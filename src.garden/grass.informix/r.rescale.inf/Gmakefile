@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/r.rescale.inf
+PGM       = $(BIN_MAIN_CMD)/r.rescale.inf
 LIBES     = $(GISLIB)
 
 # EXTRA_CFLAGS	= -Dunlink=puts
@@ -11,6 +11,6 @@ OBJS = \
 
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(MATH)
 
 $(LIBES): #

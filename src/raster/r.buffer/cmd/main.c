@@ -22,13 +22,21 @@ int main (int argc, char *argv[])
     int count;
     int step, nsteps;
     int quiet;
+	struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4;
     struct Flag *flag1;
+    struct Flag *flag2;
+    int ZEROFLAG;
 
 	/* initialize GRASS */
 
 
     init_grass(pgm_name = argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Creates a raster map layer showing buffer zones "
+		"surrounding cells that contain non-NULL category values.";
 
     opt1 = G_define_option() ;
     opt1->key        = "input" ;
@@ -63,6 +71,9 @@ int main (int argc, char *argv[])
     flag1->key         = 'q';
     flag1->description = "Run quietly";
 
+    flag2 = G_define_flag() ;
+    flag2->key         = 'z' ;  
+    flag2->description = "Ignore zero (0) data cells instead of NULL cells" ;
 
     if (G_parser(argc, argv))
         exit(-1);
@@ -76,7 +87,9 @@ int main (int argc, char *argv[])
     units     = opt4->answer;
 
     quiet = flag1->answer;
-
+    ZEROFLAG = 0; /* default: use NULL for non-data cells */
+    ZEROFLAG = (flag2->answer);                                               
+        
     mapset = G_find_cell (input, "");
     if (mapset == NULL)
     {
@@ -129,7 +142,7 @@ int main (int argc, char *argv[])
 	 *         2 == distance zone #1,   3 == distance zone #2, etc.
 	 */
 
-    read_input_map (input, mapset, quiet);
+    read_input_map (input, mapset, quiet, ZEROFLAG);
 
     offset = 0;
 

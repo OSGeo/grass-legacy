@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/d.what.r.ora
+PGM       = $(BIN_MAIN_CMD)/d.what.r.ora
 LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
 
 
@@ -14,6 +14,6 @@ OBJS = \
 
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(LIBES): #

@@ -1,0 +1,824 @@
+<html>
+<TITLE>r.combine</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.combine</b></EM>  - Allows 
+category values from several raster map layers to be combined. 
+<BR>
+<EM>(GRASS Raster Program)</EM> 
+
+<H2>SYNOPSIS</H2>
+
+<B>r.combine</B> 
+<BR>
+<B>r.combine</B> &lt; <EM>inputfile</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.combine</EM>
+accepts commands that are similar to those used for 
+boolean combinations (AND, OR, NOT) in order to 
+overlay user-selected groups of categories from 
+different raster map layers. 
+After the 
+<EM>r.combine</EM>
+program is started, the users are asked if they want 
+the graphic output to go to a color 
+graphics monitor. 
+If a color graphics monitor is not used, 
+the graphic output is displayed on the terminal screen. 
+This display is, of course, quite rough. It consists 
+of numerals representing the various categories that 
+result from the 
+<EM>r.combine</EM>
+analysis. Following this question, the user will see a 
+<KBD>[1]:</KBD>. 
+This is the first prompt, and indicates that <EM>r.combine</EM> is ready to 
+receive input from the user. 
+
+<P>
+
+The following commands perform operations in 
+<EM>r.combine:</EM>
+<PRE>
+ Command  |                      |
+ [Alias]  |      Followed by     |              Such as
+__________|______________________|________________________
+NAME      |  name for raster     |  sandstone
+[name]    |  map output          |
+__________|______________________|________________________
+GROUP     |  category values     |  1-40 (elevation.255)
+[group]   |  and a raster map    |
+[grp]     |                      |
+__________|______________________|________________________
+AND       |  expression describ- |  (grp 4 (soils)) 
+[and]     |  ing a raster map    |  (grp 2 (owner))
+[&amp;][&amp;&amp;]   |  and categories      |
+__________|______________________|________________________
+OR        |  expression describ- |  (grp 4 (soils)) 
+[or]      |  ing a raster map    |  (grp 2 (owner))
+[| ][| | ]|  and categories      |
+__________|______________________|________________________
+NOT       |  expression describ- |  (grp 2 3 (roads))
+[not]     |  ing a raster map    |
+[~]       |  and categories      |
+__________|______________________|________________________
+OVER      |  existing raster map |  sandstone yellow
+[over]    |  and color           |
+[overlay] |                      |
+__________|______________________|________________________
+COVER     |  existing raster map |  sandstone
+[cover]   |                      |
+__________|______________________|________________________
+</PRE>
+
+<EM>r.combine</EM>
+uses the same colors for all the operating commands. 
+This is the 
+<EM>r.combine</EM>
+color table: 
+
+<PRE>
+0 black    4 blue     8 grey           12 blue/grey
+1 red      5 purple   9 red/grey       13 purple/grey
+2 yellow   6 green    10 yellow/grey   14 green/grey
+3 orange   7 white    11 orange/grey   15 dark grey
+</PRE>
+
+The user may enter commands either line-by-line from within
+<EM>r.combine</EM>, or by typing the commands into a file
+which is then read into r.combine using the UNIX
+redirection symbol &lt;. The command format is the same for
+the two methods. The line-by-line method, however, does not
+allow as much flexibility as does use of an input file. If
+a line containing a syntax error is entered on the
+<EM>r.combine</EM> command line, it is cleared; the line
+must then be re-entered in its entirety.  Input files
+containing mistakes, however, can easily be modified
+(rather than recreated). An input file is especially
+advantageous when a more complex series of statements is
+input to <EM>r.combine</EM>.
+
+<P>
+
+<EM>r.combine</EM>
+uses two types of commands: those which perform 
+operations, and those which have some other function. 
+
+<P> 
+
+<EM>r.combine</EM>
+can probably best be learned by following examples, so pay 
+special attention to those included below with the operating 
+command descriptions. Notice two things in particular: 
+
+<OL>
+<LI>All parentheses must be closed. 
+A raster map layer 
+name must often be enclosed within parentheses; each time one 
+of the above commands is used, it and its appropriate 
+companions must also be enclosed within parentheses. 
+<LI>Certain spaces are important. Generally, 
+<EM>r.combine</EM>
+requires at least one space before an opening parenthesis (except 
+when it is the first character in an expression). 
+<EM>r.combine</EM>
+ignores extra spaces and tab characters. 
+</OL>
+
+<H3>OPERATING COMMANDS</H3>
+
+Below is a summary of the syntax of the operating commands, a 
+description of each command, and 
+examples using the Spearfish sample 
+data base. 
+
+<DL>
+<DT>NAME 
+<BR>
+(NAME new_map_name (Expression)) 
+<DD>
+
+Allows graphic output to be saved in the raster map layer
+<EM>new_map_name</EM>, so that it is available for
+additional analysis or for future viewing. The results of
+performing the expression in parentheses is then placed
+into the named output raster map layer (here,
+<EM>new_map_name</EM>).  Note that this means that
+<EM>r.combine</EM> may be used to create new raster map
+layers from existing ones.  <EM>r.combine</EM>
+automatically creates a color table for the new raster map
+layers; however, the user should run the GRASS program
+<EM><A HREF="r.support.html">r.support</A></EM> 
+to fill in category assignments and history information if
+the new raster map layer is to be saved for future use in
+the mapset.
+
+<P>
+example: 
+<BR>
+<B>(NAME sandstone (GROUP 4 (geology))) </B>
+<BR>
+The above command will result in the creation of a new raster map layer 
+named <EM>sandstone</B>,</EM> noting the 
+locations of cells with <EM>geology</EM> category value 4. 
+You must then run the GRASS program 
+<EM><A HREF="r.support.html">r.support</A></EM> in order 
+to label the categories present in the new raster map layer. 
+
+<P>
+
+Resultant categories: 
+<PRE>
+0  - black: other than sandstone 
+1  - red:   sandstone 
+</PRE>
+
+<P>
+<DT>
+GROUP 
+<BR>
+(GROUP category_values (existing raster map layer)) 
+<DD>
+Selects out categories of the desired values from the 
+existing raster map layer which is indicated in parentheses directly 
+after the category grouping. It also works to select out just 
+one category from the map layer. 
+Any of the following are legal category groupings: 
+<PRE>
+2 
+1-18 
+1 2 5-7. 
+</PRE>
+
+<P>
+example: 
+<BR>
+<B> (GROUP 1-40 (elevation.255)) </B>
+<BR>
+Depicts only the area with elevation 1187 meters or less 
+(i.e., <EM>elevation</EM> map layer category values 1 through 40 only). 
+<BR>
+Resultant categories: 
+<PRE>
+0  - black: elevation &gt; 1187 m 
+1  - red  : elevation &lt;= 1187 m 
+</PRE>
+
+<P>
+example: 
+<BR>
+<B> (NAME low.hi (GROUP 1-40 238-255 (elevation.255))) </B>
+<BR>
+
+Depicts only those areas with elevations of either 1187
+meters or less, or in excess of 1787 meters
+(<EM>elevation</EM> categories 1-40, and 238-255).  The
+graphic output is saved in the new raster map layer called
+<EM>low.hi</EM>.
+
+<BR>
+Resultant categories: 
+<PRE>
+0  - black : elevation &gt; 1187 m and &lt; 1787 m 
+1  - red   : elevation &lt;= 1187 m and &gt;= 1787 m 
+</PRE>
+
+<P>
+<DT>
+AND 
+<BR>
+(AND (Expression A) (Expression B)) 
+<DD>
+Combines two map layers 
+and creates a new one; when BOTH of the 
+category values associated with the same given 
+cell location in the two combined map layers 
+are non-zero, a category value of 1 is assigned to that 
+cell in the new map layer. If, however, 
+<B>either</B>
+map layer assigns a category value of zero to the same given 
+cell location, the category value associated with this cell's location 
+in the resultant map layer also becomes zero. 
+
+<P>
+
+For example, 
+
+<PRE>
+raster map  1   2 2 0
+                2 1 0
+                0 0 0         1 0 0  results
+                       AND--&gt; 1 1 0
+raster map  2   1 0 1         0 0 0
+                1 1 0
+                1 1 0
+</PRE>
+
+<P>
+example: 
+<BR>
+<B> (AND (GROUP 4 7-9 (geology)) (GROUP 2 (owner))) </B>
+<BR>
+Depicts the occurrences of categories 
+4, 7, 8, and 9 from the map layer 
+<EM>geology</EM> whenever they occur on U.S. 
+Forest Service property. Results are displayed to the terminal screen. 
+<BR>
+Resultant categories: 
+<PRE>
+0  - black : no data occurred any of the 
+             raster map layers 
+1  - red   : the AND condition is met 
+</PRE>
+
+<P>
+
+Note that if neither 
+map layer contained any areas of "no data", 
+the resultant raster map layer would include only 1's. 
+
+<P>
+
+Example: 
+<BR>
+<B> (NAME sand (AND (GROUP 4 7-9 (geology)) (GROUP 2 (owner)))) </B>
+<BR>
+Same as above, except the results are saved in the map layer 
+<EM>sand</EM>.
+
+<P>
+<DT>
+OR 
+<BR>
+(OR (Expression A) (Expression B)) 
+<DD>
+Combines two map layers 
+and creates a new one; when EITHER of the 
+category values associated with the same given 
+cell location in the two combined map layers is non-zero, a 
+category value of 1 is assigned to that cell in the new map layer. 
+If, however, 
+<B>both</B>
+map layers assign a category value of zero to the same given 
+cell location, the category value of this cell in the resultant 
+map layer also becomes zero. Only two map layers 
+may be combined at one time. For example: 
+
+<PRE>
+raster map  1   2 2 0
+                2 1 0
+                0 0 0          1 1 1  results
+                     OR --&gt;    1 1 0
+raster map  2   1 0 1          1 1 0
+                1 1 0
+                1 1 0
+</PRE>
+</DL>
+
+<P>
+Example: 
+<BR>
+<B> (OR (GROUP 4 7-9 (geology)) (GROUP 2 (owner))) </B>
+<BR>
+Depicts all occurrences of categories 4, 7, 8, and 9 
+from the map layer <EM>geology</EM> as well as showing 
+all the land which is U.S. Forest Service property. Results are 
+displayed to the terminal screen. 
+<BR>
+Resultant categories: 
+<PRE>
+0  - black: this area has neither the values of 4, 
+            7, 8, or 9 nor is it on U.S. Forest Service 
+            property 
+1  - red  : this area meets one or the other of the 
+            conditions noted above 
+</PRE>
+
+<P>
+
+Note that no distinction is made 
+between those places where conditions are met in both map layers 
+and where they are met in only one. See the 
+<EM>r.combine</EM>
+command OVER if it is necessary to make that distinction. 
+
+
+<P>
+<DT>
+NOT
+<BR>
+(NOT (Expression)) 
+<DD>
+Negates <EM>Expression</EM> in order to define a new map layer 
+which contains the opposite of what is defined by 
+<EM>Expression</EM>. The new raster map layer will contain 
+category values of either 0 or 1. 0 values would 
+indicate that the NOT conditions were not met. 
+Cell values of 1 would indicate that the NOT conditions were met. 
+In order to specify the map layer in which to save the output 
+from NOT, use the 
+<EM>r.combine</EM>
+command NAME. 
+
+<P>
+Example: 
+<BR>
+<B> (NAME rds (NOT (GROUP 0 (roads)))) </B>
+<BR>
+Areas containing category zero in the existing map layer 
+<EM>roads</EM> indicate those locations 
+within the data base where roads do not exist. 
+Negating that expression leaves us with all other areas  - i.e., those 
+locations at which roads do exist. Here, the graphic output is saved in the 
+raster map layer named <EM>rds</EM>.
+<BR>
+Resultant categories: 
+<PRE>
+0  - black: no roads 
+1  - red  : roads 
+</PRE>
+
+<P>
+The same results could have been obtained with: 
+<B> (NAME rds (GROUP 1-5 (roads)))</B>.
+NOT is most useful in those cases where it is simpler 
+to define something on the basis of what it is not 
+than on the basis of what it is. 
+
+<P>
+<DT>
+OVER 
+<BR>
+(OVER color (Expression)) or (OVER existing_rastermap color (Expression)) 
+<DD>
+Performs a <EM>transparent</EM> overlay operation. This means 
+that when a map layer 
+which depicts some feature in blue is 
+overlain with one which depicts a feature in yellow, the resulting 
+raster map layer will show areas of overlap in green; areas in the two 
+raster map layer that do not overlap other areas maintain their 
+original colors (i.e., yellow or blue). 
+
+<P>
+
+OVER may be run with or without an existing map layer name. 
+If the user does not specify an existing raster map layer 
+name, OVER applies the color specified to the 
+expression in parentheses and displays the results. If an existing 
+raster map layer name is specified, OVER applies the color to 
+the expression (just as before) and then overlays the results on top of 
+the existing raster map layer. 
+In order to make sense of the colors which result, use only those existing 
+map layers created using OVER. 
+
+<P>
+
+OVER allows the user to specify just four colors: 
+<PRE>
+ color value
+ red     1
+ yellow  2
+ blue    4
+ grey    8
+</PRE>
+
+These four colors are then combined to form other colors.
+The number of progressive overlays allowed is limited to
+four (one for each of the basic colors above). The actual
+number of colors on the resultant raster map layer,
+however, varies depending on the distribution of the
+features and on the interaction of the features from the
+different map layers which are overlain. When two or more
+of these colors are overlain, new colors are created. The
+numerical values associated with the colors above are
+significant, in that the values of any additional colors
+created reflect the sum of two or more of the four above.
+These overlain color values appear on the resultant overlay
+as <EM>cell</EM> (category) values. The user should know
+what these values represent in order to know what category
+information is to be associated with the new map layer
+(entered using the GRASS <EM>
+<A HREF="r.support.html">r.support</A></EM> command), and
+to know the significance of this and subsequent analyses
+involving the new map layer.
+
+<P>
+
+Any of these colors and category values may result from 
+OVER. Note that this is the same as the 
+<EM>r.combine</EM>
+color table listed above. 
+
+<PRE>
+0 black   4 blue    8 grey          12 blue/grey
+1 red     5 purple  9 red/grey      13 purple/grey
+2 yellow  6 green   10 yellow/grey  14 green/grey
+3 orange  7 white   11 orange/grey  15 dark grey
+</PRE>
+
+The syntax for OVER 
+makes no provision for a new raster map layer 
+name. It is necessary to use the 
+<EM>r.combine</EM>
+operator NAME to specify a new raster map layer 
+name in which to save 
+the graphic output generated by OVER. If the user runs OVER without 
+specifying an output raster map layer name, 
+output is displayed to the terminal. 
+However, this output is available for future use only if it is saved 
+using the NAME command. 
+
+<P>
+example: 
+<BR>
+<B> (NAME park.or.priv (OVER red (GROUP 1 (owner)))) </B>
+<BR>
+
+The new raster map layer <EM>park.or.priv</EM> displays
+private land (i.e., category 1 of the raster map layer
+<EM>owner</EM>) in red, and displays U.S. Forest Service
+land (i.e., "no data" areas within the <EM>owner</EM> map
+layer) as black.
+<BR>
+Resultant categories: 
+<PRE>
+0  - black: park 
+1  - red  : private land 
+</PRE>
+
+<P>
+example: 
+<BR>
+<B> (NAME roads.or.not (OVER park.or.priv yellow (GROUP 0 (roads)))) </B>
+<BR>
+Category 0 in the map layer 
+<EM>roads</EM> is overlain in yellow on top of the <EM>park.or.priv</EM> 
+map layer created above. The output is placed in a new map layer 
+named <EM>roads.or.not</B>.</EM> 
+<BR>
+Resultant categories in <EM>roads.or.not</EM> are: 
+<PRE>
+0  - black  : park; road 
+1  - red    : private; road 
+2  - yellow : park; no road 
+3  - orange : private; no road 
+</PRE>
+
+<P>
+
+example: 
+<BR>
+<B> (NAME low.elev (OVER park.or.priv blue 
+(GROUP 1-19 (elevation.255)))) </B>
+<BR>
+The elevation categories of 1123 meters or less from the 
+map layer
+<EM>elevation.255</EM> are assigned the color blue and 
+then overlain on <EM>park.or.priv</EM> (generated in the previous example). 
+<BR>
+Resultant categories in the new map layer <EM>low.elev</EM> are: 
+<PRE>
+0  - black  : park; &gt; 1123 m 
+1  - red    : private; &gt; 1123m 
+4  - blue   : park; &lt;=</B> 1123 m 
+5  - purple : private; &lt;=</B> 1123m 
+</PRE>
+Note how category 5 is the sum of red (1) + blue (4) (i.e., the 
+intersection of areas containing low elevations and private lands 
+with roads). 
+
+<P>
+<DT>
+COVER 
+<BR>
+(COVER existing_map (Expression)) 
+<DD>
+Performs an <EM>opaque</EM> overlay operation. This 
+means that where the top map layer contains "holes" (cell category 
+values of 0), the bottom map layer will show through. Where the top 
+map layer contains information on a feature, it will cover (substitute its 
+category value for) whatever is below it. The top map layer 
+is that which is defined by <EM>Expression</B>.</EM> The bottom map layer 
+is <EM>existing_map</B>;</EM> this map layer must already exist. 
+
+<P>
+
+The user does not specify colors with COVER. 
+COVER uses the default color table that is listed 
+above with OVER. 
+Colors are assigned starting with the lower map layer. 
+The category values are assigned the color 
+from the table that corresponds with that value. 
+For example, 1 would be red; 2, yellow; 3, orange, etc. 
+Moving to the upper map layer COVER starts wherever 
+it left off after the lower one. If the highest value of the lower 
+map layer was 5, then all 
+non-zero (i.e., places where a feature exists) cells 
+of the upper map layer would be assigned the value of 6 
+(green). Note that if, in this case, the upper map layer 
+did not have any cells of value zero, then 
+the entire resulting new map layer would be green. The upper 
+map layer would have been assigned the value 6 and 
+would have completely covered that which was below it. 
+
+<P>
+This is what happens: 
+<PRE>
+Expression           1 1 1 0
+ (top raster map)    1 1 0 0
+                     0 0 0 0      6 6 6 0   result
+                             --&gt;  6 6 2 0
+oldmap               2 5 0 0      5 5 2 2
+ (bottom raster map) 0 5 2 0
+                     5 5 2 2
+</PRE>
+
+As many map layers may be overlain as is desired. 
+However, there is a practical limit on the number of map layers 
+that can be used while still generating sensible output. 
+That number depends on the features involved in each map layer, 
+and how many 
+cells within the upper (overlying) map layers contain 
+category values of zero (holes through 
+which underlying data can be seen). 
+
+<P>
+COVER has no provision for saving graphic output. Use the 
+<EM>r.combine</EM>
+command NAME to save output in a raster map layer. 
+
+<P>
+
+Example: 
+<BR>
+<B>(NAME</B> lo.elev (COVER owner (GROUP 1-19 (elevation.255)))) </B> 
+<BR>
+The categories that indicate elevation of 1123 meters or 
+less are placed on top of the existing map layer 
+<EM>owner</EM>. Output is saved in <EM>lo.elev</EM>.
+<BR>
+Resultant categories: 
+<PRE>
+1  - red    : private ownership; elev &gt; 1123 m 
+2  - yellow : park property; elev &gt; 1123 m 
+3  - orange : park or private; elev &lt;=</B> 1123 m 
+</PRE>
+
+<P>
+
+Example: 
+<BR>
+<B>(NAME</B> sand.lo (COVER lo.elev (GROUP 4 (geology)))) </B> 
+<BR>
+Category 4 of <EM>geology</EM> (sandstone) is placed on top 
+of <EM>lo.elev</EM>, the raster map layer created in the previous example. 
+The output is saved in <EM>sand.lo</EM>.
+<BR>
+Resultant categories: 
+<PRE>
+1  - red    : private ownership; elev &gt; 1123 m; 
+              no sandstone 
+2  - yellow : park property; elev &gt; 1123 m ; 
+              no sandstone 
+3  - orange : park or private; elev &lt;= 1123 m; 
+              no sandstone 
+4  - blue   : park or private; any elev; sandstone 
+</PRE>
+</DL>
+
+<H3>ADDITIONAL COMMANDS</H3>
+
+<EM>r.combine</EM>
+also contains a number of commands which are not used for 
+operations, but serve a variety of other functions. 
+Additional commands: 
+<PRE>
+Command|        Alias       |                Followed By
+_______|____________________|______________________________
+QUIT   |  quit  q  exit  bye|
+CATS   |  categories  cats  |  existing raster map
+EXP    |  exp  expr         |  number of an expression
+!      |                    |  shell command e.g. vi comb.1
+&lt;      |                    |  existing input file
+WINDOW |  window            |  existing raster map layer
+HISTORY|  history  hist     |
+HELP   |  help              |  combine command 
+ERASE  |  erase             |
+</PRE>
+
+<DL>
+<DT>
+QUIT 
+<DD>
+Allows the user to exit from
+<EM>r.combine</EM>
+while remaining within the GRASS session. 
+
+<P>
+<DT>
+CATS 
+<BR>
+CATS raster map 
+<DD>
+Gives user an on-line listing of categories and labels for the 
+map layer specified. For example: 
+<KBD>[1]:</KBD><B>CATS owner</B>
+
+<P>
+<DT>
+EXP 
+<BR>
+EXP expression number 
+<DD>
+During an 
+<EM>r.combine</EM>
+session, each completed expression and command is assigned a number. 
+This number may be used to reference the expression to which it 
+is assigned; this means that the user can substitute the <EM>number</EM> of 
+the expression for the expression itself. 
+
+<P>
+
+For example: 
+<BR>
+<KBD>[4]:</KBD><B>(GROUP 5 (geology))</B>
+<BR>
+<KBD>[5]:</KBD><B>(NAME limestone (EXP 4))</B>
+<BR>
+Use the UNIX history mechanism (explained below) to determine the 
+specific numbers associated with particular expressions in your current 
+<EM>r.combine</EM> session. 
+
+<DT>!
+<BR> 
+!shell command 
+<DD>
+Allows user to temporarily suspend 
+<EM>r.combine</EM>
+and go run another command, as in the two examples below: 
+<PRE>
+!vi input 
+!g.list type=rast
+</PRE>
+
+<P>
+Unless otherwise specified by the user, when a file is created using a 
+system editor (like <EM>vi</EM>) from within 
+<EM>r.combine,</EM>
+this file will be placed in the user's mapset under 
+the COMBINE directory. 
+After the command is completed, control returns to 
+<EM>r.combine</EM>.
+
+<P>
+<DT>
+&lt;
+<BR>
+&lt; input filename
+<DD>
+Takes input from the specified <EM>filename</EM> containing 
+<EM>r.combine</EM>
+commands. The user, of course, must previously have entered the commands 
+into this named input file. If no pathname is given, the input file 
+is assumed to be in the user's mapset under the COMBINE directory. 
+For example, the user would perform the following steps to redirect 
+input from the file <EM>comb.in</EM> into the <EM>r.combine</EM> program 
+(while within <EM>r.combine</EM>):
+
+<P>
+
+First, the user would create the file: <B> !vi comb.in</B> 
+<BR>
+Second, the user would direct <EM>r.combine</EM> to take its input 
+from the <BR> file: <B> &lt; comb.in</B> 
+
+<P>
+<DT>
+WINDOW 
+<BR>
+WINDOW raster_map 
+<DD>
+Gives on-line geographic region (window) information about the 
+raster map layer specified. 
+
+<P>
+<DT>
+HISTORY 
+<DD>
+Provides a listing of all previously completed expressions used 
+within the current <EM>r.combine</EM> session, and the numbers associated 
+with the execution of these commands. 
+
+<P>
+<DT>
+HELP 
+<BR>
+HELP command 
+<DD>
+An on-line help facility for <EM>r.combine</EM> commands only. Type in the 
+name of the <EM>r.combine</EM> command for which help is needed, to see 
+the entry for that command. 
+
+<P>
+<DT>
+ERASE 
+<DD>
+Will cause the color graphics monitor to clear. 
+</DL>
+
+<H2>NOTES</H2>
+
+In all of the above examples, only a single line of input
+was provided to <EM>r.combine</EM>. However, since
+<EM>r.combine</EM> conveniently ignores extra spaces and
+tabs, it is possible to type input to <EM>r.combine</EM> in
+the manner outlined below. Users may find this to more
+clearly exhibit the relationships involved and parentheses
+needed. This can be typed as shown below either directly at
+the <EM>r.combine</EM> command line, or redirected into
+<EM>r.combine</EM> from an already existing file.
+
+<P>
+example: 
+<PRE>
+(NAME good.place
+       (AND
+                (OR
+                        (GROUP 1 2 5 (geology))
+                        (GROUP 1-5 (elevation.255))
+                )
+                (NOT
+                        (GROUP 1-4 (landuse))
+                )
+      )
+)
+</PRE>
+
+Such involved input to <EM>r.combine</EM> might conveniently be 
+typed into an input file, and then input to <EM>r.combine</EM> 
+using the UNIX redirection mechanism <B>&lt;</B>. 
+
+<H2>SEE ALSO</H2>
+
+<P>
+<EM><A HREF="r.infer.html">r.infer</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><br>
+<EM><A HREF="r.weight.html">r.weight</A></EM>
+
+<H2>AUTHORS</H2>
+
+L. Van Warren, 
+Michael Shapiro,
+James Westervelt, <br>
+U.S. Army Construction Engineering 
+Research Laboratory
+</body>
+</html>

@@ -3,7 +3,7 @@ PANEL_INCDIR = $(SRC)/../src.contrib/CERL/SGI/panel/9.6/include
 PANEL_LIBDIR = $(SRC)/../src.contrib/CERL/SGI/panel/9.6/lib
 IMG_LIBDIR = $(SRC)/../src.contrib/CERL/SGI/libimage/lib
 
-EXTRA_CFLAGS= -I${PANEL_INCDIR} $(VECT_INCLUDE) -DVERSION_NUMBER="\"$(VERSION_NUMBER)\""
+EXTRA_CFLAGS= -I${PANEL_INCDIR} -DVERSION_NUMBER="\"$(VERSION_NUMBER)\""
 
 # use this line if you have two versions of the panel library -
 # one for pre-IRIX 5.0, other for IRIX 5.0+, in architecture-specific

@@ -19,6 +19,7 @@ OBJ = \
     cell_stats.o\
     cellstats_eq.o\
     cell_title.o\
+    chop.o\
     clear_scrn.o\
     clicker.o\
     closecell.o\
@@ -68,6 +69,8 @@ OBJ = \
     geodesic.o\
     geodist.o\
     get_cellhd.o\
+    get_datum.o\
+    get_datum_name.o\
     get_ellipse.o\
     get_ell_name.o\
     get_projname.o\
@@ -137,6 +140,8 @@ OBJ = \
     range.o\
     raster.o\
     rd_cellhd.o\
+    readsites.o\
+    readsites_xyz.o\
     reclass.o\
     remove.o\
     rename.o\
@@ -174,13 +179,15 @@ OBJ = \
     zone.o\
     G_dump.o
 
- all: version.h \
-      $(GISLIB) \
-      $(ETC)/ellipse.table \
-      $(ETC)/projections \
-      $(ETC)/FIPS.code \
-      $(ETC)/state27 \
-      $(ETC)/state83
+all: version.h \
+	$(GISLIB) \
+	$(ETC)/ellipse.table \
+	$(ETC)/projections \
+	$(ETC)/FIPS.code \
+	$(ETC)/state27 \
+	$(ETC)/state83
+	cp $(LIBDIR)/libgis.a $(GISBASE)/lib
+	cp $(SRC)/include/gis.h $(GISBASE)/include
 
 $(GISLIB): $(OBJ)
 	$(AR)
@@ -223,6 +230,7 @@ gisinit.o: G.h
 gisinit.o: version.h
 maskfd.o: G.h
 opencell.o: G.h
+# openvect.o ***DEPRECATED*** delete next line for 5.1
 openvect.o: G.h
 put_row.o: G.h
 radii.o: pi.h

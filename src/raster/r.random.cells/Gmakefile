@@ -1,0 +1,15 @@
+PGM = r.random.cells
+HOME = $(BIN_MAIN_CMD)
+# HOME = ../..
+
+#These functions are obtained by specifying -ldl as an option to ld(1).
+
+OBJS =  main.o init.o indep.o flag.o gasdev.o random.o
+
+$(HOME)/$(PGM): $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) $(XDRLIB) $(MATHLIB) -o $@
+
+$(OBJS): ransurf.h
+$(OBJS): flag.h
+
+$(GISLIB): #

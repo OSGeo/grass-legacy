@@ -153,6 +153,8 @@ change_color_assignment (int x, int y)
     }
     else
 	return 0;
+draw_image(VIEW_IMAGE, 0);
+
     return 1;
 }
 

@@ -19,50 +19,83 @@ int main (int argc, char *argv[])
 	int	row, col, basin_fd, drain_fd;
 	CELL	*cell_buf;
 	char	drain_name[80], *drain_mapset, E_f, dr_f, ba_f, N_f,  errr;
+	struct GModule *module;
+        struct Option *opt1, *opt2, *opt3, *opt4;
+	char buf[400];
+
+	module = G_define_module();
+	module->description =
+		"Watershed basin creation program.";
+
+	opt1 = G_define_option() ;
+	opt1->key        = "drainage" ;
+	opt1->type       = TYPE_STRING ;
+	opt1->required   = YES ;
+	opt1->gisprompt  = "any,cell,raster" ;
+	opt1->description= "Name of input raster map" ;
+
+	opt2 = G_define_option() ;
+	opt2->key        = "basin" ;
+	opt2->type       = TYPE_STRING ;
+	opt2->required   = YES ;
+	opt2->gisprompt  = "any,cell,raster" ;
+	opt2->description= "Name of raster map to contain results" ;
+
+	opt3 = G_define_option() ;
+	opt3->key        = "easting" ;
+	opt3->type       = TYPE_STRING ;
+	opt3->key_desc   = "x" ;
+	opt3->multiple   = NO;
+	opt3->required   = YES ;
+	opt3->description= "The map E  grid coordinates" ;
+
+	opt4 = G_define_option() ;
+	opt4->key        = "northing" ;
+	opt4->type       = TYPE_STRING ;
+	opt4->key_desc   = "y" ;
+	opt4->multiple   = NO;
+	opt4->required   = YES ;
+	opt4->description= "The map N grid coordinates" ;
+
 
 	G_gisinit(argv[0]);
+	if (G_get_window(&window) < 0)
+	{
+		sprintf (buf,"can't read current window parameters");
+		G_fatal_error (buf);
+		exit(1);
+	}
+
+	/*   Parse command line */
+	if (G_parser(argc, argv))
+		exit(-1);
+
+                    strcpy (drain_name, opt1->answer);
+                    strcpy (basin_name, opt2->answer);
+                    if(!G_scan_easting(*opt3->answers, &E, G_projection()))
+		{
+			fprintf (stderr, "Illegal east coordinate <%s>\n",
+					 *opt3->answer);
+			G_usage();
+			exit(1);
+		}
+	if(!G_scan_northing(*opt4->answers, &N, G_projection()))
+		{
+			fprintf (stderr, "Illegal north coordinate <%s>\n",
+					 *opt4->answer);
+			G_usage();
+			exit(1);
+		}
+
+	if(E < window.west ||  E > window.east ||  N < window.south ||  N > window.north)
+		{
+			fprintf(stderr,"Warning, ignoring point outside window: \n") ;
+			fprintf(stderr,"   %.4f,%.4f\n", E, N) ;
+		}
+
 	G_get_set_window (&window);
 	dr_f = ba_f = N_f = E_f = errr = 0;
-        for (row = 1; row < argc; row++) {
-		if 	(sscanf (argv[row], "dr=%[^\n]", drain_name) == 1) 
-			dr_f++;
-		else if (sscanf (argv[row], "ba=%[^\n]", basin_name) == 1)
-			ba_f++;
-		else if (sscanf (argv[row], "n=%lf", &N) == 1)
-			N_f++;
-		else if (sscanf (argv[row], "e=%lf", &E) == 1)
-			E_f++;
-		else {
-			printf ("%s bad input: [%s]\n", G_program_name(), argv[row]);
-			errr++;
-		}
-	}
-        /* Nothing was set! inserted by Markus Neteler 12/97*/
-        if(!N_f) {
-           if(!E_f) {
-              if(!ba_f) { G_fatal_error(
-		    "No parameters specified!\nThis module creates a watershed basin (catchment area) raster map using a drainage pointer map (create with:\nr.watershed elevation=elevfile drainage=drainage) from an outlet point\ndefined by easting and northing (use d.what.rast).\nusage: %s dr=drainage_map ba=basin_map n=outlet_northing e=outlet_easting\n", 
-		    G_program_name());
-	                }
-                    }
-                 }
-
-        /* One or more isn't set */
-        if(!N_f) {
-		printf ("%s missing n=outlet_northing\n", G_program_name()); errr++;
-	}
-	if(!E_f) {
-		printf ("%s missing e=outlet_easting\n", G_program_name()); errr++;
-	}
-	if(!ba_f) {
-		printf ("%s missing ba=basin_map to be created\n", G_program_name());
-		errr++;
-	}
-	if (errr) {
-		G_fatal_error(
-"usage: %s dr=drainage_map ba=basin_map n=outlet_northing e=outlet_easting\n", 
-		    G_program_name());
-	}
+ 
 	drain_mapset = do_exist (drain_name);
 	do_legal (basin_name);
 	nrows = G_window_rows();

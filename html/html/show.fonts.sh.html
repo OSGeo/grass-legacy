@@ -1,0 +1,73 @@
+<TITLE>show.fonts.sh</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>show.fonts.sh</b></EM>  - Displays and names available font
+types in the active display frame on the graphics monitor.
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>show.fonts.sh</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>show.fonts.sh</EM>
+is a UNIX Bourne shell macro which runs the 
+<EM><A HREF="d.erase.html">d.erase</A> -a</EM> command,
+then names and displays the font types that can be selected using
+<EM><A HREF="d.font.html">d.font</A></EM>.  
+This macro also runs the GRASS
+commands <EM><A HREF="d.font.html">d.font</A></EM> and 
+<EM><A HREF="d.text.html">d.text</A></EM>.  See the manual entry for
+<EM><A HREF="d.font.html">d.font</A></EM> for 
+instructions on choosing a font type.
+
+
+<P>
+
+No program arguments are required to run this program.
+
+<H2>BUGS</H2>
+
+The font is set to
+<EM>romans</EM>
+(Roman simplex) after running
+<EM>show.fonts.sh</EM>.
+There is no mechanism to query the current font, so
+there is no way to automatically restore the font.
+The user will have to reset the font type using
+<EM><A HREF="d.font.html">d.font</A></EM>
+if
+<EM>romans</EM>
+is not desired.
+
+<H2>FILES</H2>
+
+This program is simply a shell script stored under the
+<KBD>$GISBASE/scripts</KBD> directory.  Users are encouraged to
+examine the shell script programs stored here and to
+produce others for their own use.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.display.html">d.display</A></EM><br>
+<EM><A HREF="d.erase.html">d.erase</A></EM><br>
+<EM><A HREF="d.font.html">d.font</A></EM><br>
+<EM><A HREF="grass.logo.sh.html">grass.logo.sh</A></EM><br>
+<EM><A HREF="d.label.html">d.label</A></EM><br>
+<EM><A HREF="d.legend.html">d.legend</A></EM><br>
+<EM><A HREF="d.paint.labels.html">d.paint.labels</A></EM><br>
+<EM><A HREF="d.text.html">d.text</A></EM><br>
+<EM><A HREF="d.title.html">d.title</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S.Army Construction Engineering 
+Research Laboratory

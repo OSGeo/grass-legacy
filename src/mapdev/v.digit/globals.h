@@ -67,27 +67,29 @@ Global char Disp_outline;
 Global char Disp_markers;
 Global char Disp_llines;
 Global char Disp_llabels;
+Global char Disp_ulines;
 Global char Disp_thresh;
 Global char Disp_sites;
 Global char Disp_slabels;
 Global char Disp_over_label;
 
-Global char CLR_LINE;
-Global char CLR_AREA;
-Global char CLR_SITE;
-Global char CLR_LSITE;
-Global char CLR_LLINE;
-Global char CLR_LAREA;
-Global char CLR_AMARK;
-Global char CLR_ALABEL;
-Global char CLR_LLABEL;
-Global char CLR_HIGHLIGHT;
-Global char CLR_ERASE;
-Global char CLR_UNKNOWN;
-Global char CLR_OVERLAY;
-Global char CLR_0_NODE;
-Global char CLR_1_NODE;
-Global char CLR_2_NODE;
+/* Color selections */
+Global int CLR_LINE;
+Global int CLR_AREA;
+Global int CLR_SITE;
+Global int CLR_LSITE;
+Global int CLR_LLINE;
+Global int CLR_LAREA;
+Global int CLR_AMARK;
+Global int CLR_ALABEL;
+Global int CLR_LLABEL;
+Global int CLR_HIGHLIGHT;
+Global int CLR_ERASE;
+Global int CLR_UNKNOWN;
+Global int CLR_OVERLAY;
+Global int CLR_0_NODE;
+Global int CLR_1_NODE;
+Global int CLR_2_NODE;
 
 
 /* hold the names of files etc.  mostly used by main.c */
@@ -106,6 +108,9 @@ Global char *N_backdrop;
 Global char *N_backdrop_mapset;
 
 Global char *N_subj_file;	/* scs */
+
+Global char *Cat_name;
+Global double pan_threshold;
 
 
 /* these are a hack to get the point used to select a line

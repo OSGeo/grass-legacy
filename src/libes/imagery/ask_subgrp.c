@@ -22,7 +22,7 @@ int I_ask_subgroup_old ( char *prompt, char *group, char *subgroup)
 	    return 0;
 	if (I_find_subgroup (group, subgroup))
 	    return 1;
-	fprintf (stdout,"\n** %s - not found **\n\n", subgroup);
+	fprintf (stderr,"\n** %s - not found **\n\n", subgroup);
     }
 }
 
@@ -41,7 +41,7 @@ int I_ask_subgroup_new (
 	    return 0;
 	if (!I_find_subgroup (group, subgroup))
 	    return 1;
-	fprintf (stdout,"\n** %s - exists, select another name **\n\n", subgroup);
+	fprintf (stderr,"\n** %s - exists, select another name **\n\n", subgroup);
     }
 }
 
@@ -51,15 +51,15 @@ static int ask_subgroup( char *prompt, char *group, char *subgroup)
 
     while (1)
     {
-	fprintf (stdout,"\n%s\n", prompt);
-	fprintf (stdout,"Enter 'list' for a list of subgroups in group [%s]\n", group);
-	fprintf (stdout,"Enter 'list -f' for a verbose listing\n");
-	fprintf (stdout,"Hit RETURN %s\n", G_get_ask_return_msg());
-	fprintf (stdout,"> ");
+	fprintf (stderr,"\n%s\n", prompt);
+	fprintf (stderr,"Enter 'list' for a list of subgroups in group [%s]\n", group);
+	fprintf (stderr,"Enter 'list -f' for a verbose listing\n");
+	fprintf (stderr,"Hit RETURN %s\n", G_get_ask_return_msg());
+	fprintf (stderr,"> ");
 	if (!G_gets(buf)) continue;
 
 	G_squeeze (buf);
-	fprintf (stdout,"<%s>\n", buf);
+	fprintf (stderr,"<%s>\n", buf);
 	if (*buf == 0) return 0;
 
 	if (strcmp (buf, "list") == 0)
@@ -67,7 +67,7 @@ static int ask_subgroup( char *prompt, char *group, char *subgroup)
 	else if (strcmp (buf, "list -f") == 0)
 	    I_list_subgroups (group, 1);
 	else if (G_legal_filename(buf) < 0)
-	    fprintf (stdout,"\n** <%s> - illegal name **\n\n", buf);
+	    fprintf (stderr,"\n** <%s> - illegal name **\n\n", buf);
 	else
 	    break;
     }

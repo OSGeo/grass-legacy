@@ -2,13 +2,14 @@ interface_build {
     {d.site.labels} 0
     {Displays site labels.}
     {entry file {Site file:} 0 sites}
-    {entry ref {Relative text position [center]:} 0 ""}
-    {entry color {Color of text [white]:} 0 color}
+    {entry attr {Site Attribute [string]:} 0 ""}
+    {entry index {Attribute index [1]:} 0 ""}
+    {entry xref {Relative horizontal text position [center]:} 0 ""}
+    {entry yref {Relative vertical text position [bottom]:} 0 ""}
     {entry size {Size of text, in pixels (0-1000) [10]:} 0 ""}
-    {entry width {Width of text, in pixels (0-1000) [1]:} 0 ""}
+    {entry color {Color of text [white]:} 0 color}
     {entry backgr {Background color of text [none]:} 0 Color}
     {entry border {Border color of text [none]:} 0 Color}
-    {entry opaque {Opaque (yes / [no]):} 0 ""}
     {entry font {Fontname [romans]:} 0 font}
     {checkbox -m {Use mouse to place labels interactively} "" -m}
 }

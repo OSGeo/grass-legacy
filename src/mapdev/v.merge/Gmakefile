@@ -1,5 +1,4 @@
 
-EXTRA_CFLAGS	=   $(VECT_INCLUDE) 
 
 SOURCES = \
 	main.c

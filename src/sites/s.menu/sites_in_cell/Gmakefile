@@ -10,8 +10,7 @@ LIST =  main.o\
         utm_to_rc.o
 
 $(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
-		$(CC) ${LDFLAGS} -o $(PGM) $(LIST) $(SITELIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
-		mv $(PGM) $(SITE)/$(PGM)
+		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):	$I/site.h  site_count.h
 $(SITELIB):	#

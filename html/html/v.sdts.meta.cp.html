@@ -1,0 +1,182 @@
+<HTML>
+<HEAD>
+<TITLE>v.sdts.meta.cp</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+
+<EM><b>v.sdts.meta.cp</b></EM>  - installs supplementary metadata file preparatory 
+to creation of an SDTS export dataset.
+
+<BR>
+
+<EM>(GRASS Vector Data Export/Processing Program)</EM>
+
+<BR>
+
+
+<H2>SYNOPSIS</H2>
+
+<B>v.sdts.meta.cp</B>
+
+<BR>
+
+<B>v.sdts.meta.cp help</B>
+
+<BR>
+
+<B>v.sdts.meta.cp</B> [<B>-f</B>] <B>metafile</B>=<EM>name</EM> <B>map</B>=<B>name</B>
+
+<BR>
+
+
+<H2>DESCRIPTION</H2>
+
+The program provides assistance for the preparation of supplemental metadata
+for an SDTS export dataset.  The user specifies a map layer in his current
+mapset, and then a file of metadata information pertaining to the named
+map.  The program copies the specified metadata file to a standard location
+(in the user's mapset, under the <EM>dig_misc</EM> directory).  Later, when 
+<EM>v.out.sdts</EM> is run for the same map layer, the items in the metadata 
+file will be incorporated in various places in the export dataset.
+
+
+<P>
+
+While the metadata file can be prepared by the user, it's format and
+contents are strictly defined.  An alternative is to use the interface
+program, <EM>v.sdts.meta</EM>, with which the user can prepare and install a
+correctly formatted metadata file.
+
+<BR>
+
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+
+<P>
+
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-f</B> 
+
+<DD>force overwriting of pre-exisiting metadata file.
+</DL>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>map=</B><EM>name</EM> 
+
+<DD>name of vector map layer to which the specified metadata file applies.
+
+<DT><B>metafile=</B><EM>name</EM> 
+
+<DD>name of file to be installed as a metadata file for the specified map.
+</DL>
+
+
+<P>
+
+
+<H2>NOTES</H2>
+
+
+
+<P>
+
+The format of the metadata source file is rather highly specified. Following 
+is a list of the items that can be included in the file. Note that each item
+is preceded by a particular code. The code, and the following ':' must
+be entered intact for each included metadata item.  The colon is then
+immediately followed by the user-supplied information: 
+
+<P>
+
+IDEN_MPDT:(creation date of original source map; YYYY or YYMMDD format)
+
+<P>
+
+IDEN_TITL:(general TITLE for contents of transfer, for TITL field in
+IDEN module. If not specified, vector header "map_name" will be
+used)
+
+<P>
+
+IDEN_COMT:(general comment on transfer, for IDEN module's COMT field)
+
+<P>
+
+XREF_HDAT:(name of geodetic datum to which export data are referenced, for
+HDAT fieid in XREF module.)
+
+<p>
+
+DDSH_ENT_NAME:(for Dictionary/Schema module; name of kind of entity that
+<EM>dig_att</EM> and <EM>dig_cats</EM> values represent. If not specified, map name will be used.)
+
+<P>
+
+DDDF_GRASS_ENT:(definition for entity in "DDSH_ENT_NAME", for Dictionary/
+Definition module. if not supplied, simple default is used.)
+
+<P>
+
+DDDF_ATTR_NUM:(definition for <EM>dig_att</EM> values, for Dictionary/Definition
+module; if not specified, simple default is used.)
+
+<P>
+
+DDDF_ATTR_LABEL:(definition for <EM>dig_cats</EM> values, for Dictionary/Definition
+module; if not specified, simple default is used.)
+
+<P>
+
+As noted above, the metadata file can be prepared, and installed, without 
+the user having to worry about format details, with <EM>v.sdts.meta</EM>.
+
+<H2>SEE ALSO</H2>
+
+
+<P>
+
+<EM><A HREF="m.sdts.read.html">m.sdts.read</A>, </EM>
+<EM><A HREF="v.in.sdts.html">v.in.sdts</A>, </EM>
+<EM><A HREF="v.out.sdts.html">v.out.sdts</A>, </EM>
+<EM><A HREF="v.sdts.dq.cp.html">v.sdts.dp.cp</A>, </EM>
+<EM><A HREF="v.sdts.meta.cp.html">v.sdts.meta.cp</A>, </EM>
+<EM><A HREF="v.sdts.meta.html">v.sdts.meta</A></EM>
+
+<BR>
+
+
+<H2>AUTHORS</H2>
+
+
+
+<P>
+
+David Stigberg, U.S.Army Construction Engineering 
+Research Laboratory
+
+<BR>
+
+Tin Qian, University of Illinois
+
+
+

@@ -2,18 +2,18 @@ all:
 	$(GMAKE) D
 	$(GMAKE) bitmap
 	$(GMAKE) btree
-	$(GMAKE) coorcnv
 	$(GMAKE) datetime
-#	$(GMAKE) dbmi
+	$(GMAKE) dbmi
 	$(GMAKE) dig_atts
 	$(GMAKE) digitizer
 	$(GMAKE) display
 	$(GMAKE) dlg
 #	$(GMAKE) dspf
 #	$(GMAKE) g3d
-	$(GMAKE) geom
 	$(GMAKE) gis
+	$(GMAKE) coorcnv
 	$(GMAKE) ibtree
+#	$(GMAKE) gmath
 	$(GMAKE) icon
 	$(GMAKE) imagery
 	$(GMAKE) linkm
@@ -22,6 +22,7 @@ all:
 	$(GMAKE) proj
 	$(GMAKE) raster
 	$(GMAKE) rowio
+	$(GMAKE) rst_gmsl
 	$(GMAKE) segment
 	$(GMAKE) vect32
 #	$(GMAKE) vect32_64

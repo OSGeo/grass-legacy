@@ -1,0 +1,16 @@
+$Id: README,v 1.3 2000-07-26 11:54:14 markus Exp $
+
+# r.to.pg:
+# exports GRASS raster map to PostgreSQL database
+# supports only one value, no attribute cats
+#
+# Bug fixed: rastermap name will be used if celltable is not set.
+#	     '==' should be changed to '='.
+#	     PG_DBASE is used instead of DB_DATABASE in case g.select.pg used.
+#
+# Jul 26 02:13:30 KST 2000
+# by  Huidae Cho <hdcho@geni.knu.ac.kr>
+#
+## Jul 19 17:42:19 MEST 2000
+# by  Markus Neteler
+#     neteler@geog.uni-hannover.de

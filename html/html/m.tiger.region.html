@@ -1,0 +1,272 @@
+<TITLE>m.tiger.region</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>m.tiger.region</b></EM>  - Finds geographic region information
+for U.S. Census Bureau TIGER input data.
+
+<BR>
+
+<EM>(GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.tiger.region</B>
+
+<BR>
+
+<B>m.tiger.region help</B>
+
+<BR>
+
+<B>m.tiger.region infile=</B><EM>name [</EM><B>zone=</B><EM>value</EM>] [<B>spheroid=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.tiger.region</EM> is a program designed to evaluate a file of
+raw type 1 Census (TIGER) data and determine the geographic region
+covered by that input file.  Output is sent to standard out,
+and gives the east, west, north, and south boundaries
+for the given input data file.
+
+
+<P>
+
+If the user specifies the input file name and (optionally) the zone
+number or spheroid to be used on the command line, the program will
+run non-interactively; if no zone number or spheroid name is given,
+the default(s) will be used (see below).  Alternately, the user may
+simply type <EM>m.tiger.region</EM> on the command line; in this case, the
+program will prompt the user for parameter values using the standard
+GRASS 
+<A HREF="parser.html">parser</A>
+ interface described in the manual entry for <EM>parser</EM>.
+
+<H2>OPTIONS</H2>
+
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>infile=</B><EM>name</EM> 
+
+<DD>Input file name in which raw TIGER data (type 1) are stored.
+
+<DT><B>zone=</B><EM>value</EM> 
+
+<DD>Universal Transverse Mercator (UTM) zone for this county.
+
+<BR>
+
+Options:  -60 - 60
+
+<BR>
+
+Default:  0
+
+<DT><B>spheroid=</B><EM>name</EM> 
+
+<DD>Name of spheroid to be used.
+
+<BR>
+
+Default:  clark66
+
+
+<P>
+
+Available spheroids are:
+
+
+<P>
+
+    australian
+    bessel
+    clark66
+    clark80
+    everest
+    international
+    wgs72
+    wgs84
+
+
+<P>
+
+It is recommended that the user choose the clark66 (default) spheroid 
+when dealing with TIGER data as it is the most consistent with 
+the original data.  
+
+
+<P>
+
+</DL>
+
+<H2>EXAMPLES</H2>
+
+If the user typed simply:
+
+
+<P>
+
+<DL>
+<DD>
+<B>m.tiger.region infile=</B><EM>inputfilename</EM>
+</DL>
+
+
+<P>
+
+program output would look similar to this:
+
+
+<P>
+
+Number of calculated zones is: 2
+
+
+<P>
+
+
+<PRE>
+	INFO FOR ZONE 1:
+	zone number:			13
+	percentage of data points
+	in this zone:			0.799489
+	regional spread of points
+	within this zone:
+	north:				5092049.155918
+	south:				5049238.983803
+	east:				734139.517650
+	west:				732514.747908
+
+	INFO FOR ZONE 2:
+	zone number:			14
+	percentage of data points
+	in this zone:			99.200508
+	regional spread of points
+	within this zone:
+	north:				5092041.463966
+	south:				5036134.342322
+	east:				398030.217441
+	west:				265527.656108
+</PRE>
+
+
+<P>
+
+If the user does not input the UTM zone number, it is calculated for
+them.  Then the zone number and region information are output, and
+if the program finds that the input data contains information in more
+than one UTM zone, then the output is given for all applicable zones.
+<P>
+<P>
+If instead the user supplies the UTM zone number, the output would
+look like that shown below:
+<P>
+<PRE>
+	REGION FOR THIS DATA FILE:;
+
+	north border:			5092049.155918
+	south border:			5036134.342322
+	east border:			398030.217441
+	west border:			265527.656108
+	(zone number:			14)
+
+</PRE>
+
+<H2>NOTES</H2>
+
+This command must be compiled separately.  It will not
+automatically be included in the compile of the main GRASS
+code.  Although <EM>m.tiger.region</EM> does not need a FORTRAN
+compiler, it is used to support other TIGER data functions
+(like <EM>
+<A HREF="v.db.rim.html">v.db.rim</A>
+</EM>, <EM>v.in.tiger</EM>, and <EM>rim</EM>) which do require
+access to a FORTRAN compiler.
+
+
+<P>
+
+TIGER data are presented in latitude/longitude format, and are converted to 
+UTM coordinates using coordinate conversion routines contained in the
+GRASS library.  If no UTM zone number is supplied by the user,
+the program calculates the appropriate zone(s) based on the input data
+provided.  The output then provides the UTM zone numbers found
+(if more than one), the geographic region covered within each zone,
+and the percentage of data points found in each zone.  The user must 
+then decide which of these UTM zones contains the major or most 
+important portion of data values, so that the zone number can be 
+supplied in creating the GRASS location to hold the imported data 
+and can be provided to the importing program (<EM>v.in.tiger</EM>).  
+Zone edges will be extended (reasonably) to include data values 
+lying outside the chosen zone.  If desired, <EM>m.tiger.region</EM> 
+can be re-run, supplying the chosen zone number, in order to 
+evaluate the region edges of the input data set (with the extended zone).
+
+<H2>FILES</H2>
+
+Source code for RIM is located under $GISBASE/../src.related/rim
+<P>
+The <A HREF="../Postscript/rimref.ps.gz">RIM Users manual</A>.<BR>
+The <A HREF="../Postscript/rimint.ps.gz">RIM reference manual</A>.
+
+<P>
+
+Source code for <EM>
+<A HREF="v.db.rim.html">v.db.rim</A>
+</EM> is located
+under $GISBASE/../src.garden/grass.rim/
+<A HREF="v.db.rim.html">v.db.rim</A>
+
+
+
+<P>
+
+Source code for <EM>v.in.tiger</EM> is located
+under $GISBASE/../src.garden/grass.tiger/v.in.tiger
+
+
+<P>
+
+Source code for <EM>m.tiger.region</EM> is located
+under $GISBASE/../src.garden/grass.tiger/m.tiger.region
+
+<H2>SEE ALSO</H2>
+
+<P>
+
+<EM>Gen.Maps</EM>,
+<EM>Gen.tractmap</EM>,
+<EM><br>
+<A HREF="g.region.html">g.region</A>
+</EM><br>
+<EM>
+<A HREF="v.db.rim.html">v.db.rim</A>
+</EM><br>
+<EM>v.in.tiger</EM><br>
+
+<A HREF="r.info.html">r.info</A>
+.sh</EM>
+
+<H2>AUTHOR</H2>
+
+Marjorie Larson, U.S. Army Construction Engineering 
+Research Laboratory
+
+
+<P>
+

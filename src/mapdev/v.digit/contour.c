@@ -167,7 +167,7 @@ int label_contour (struct Map_info *map, int interval)
 	}
     }
 
-    if (ret = check_list (map, list, cnt))
+    if ((ret = check_list (map, list, cnt)) != 0)
     {
 	Curses_error ("ERROR: Crosses same line more than once");
     }
@@ -294,7 +294,7 @@ int label_contour (struct Map_info *map, int interval)
 
 	for (n = 0 ; n < 2 ; n++)	/* do both directions */
 	{
-	    for (j = 0 ; next_line = lines[n][j] ; j++)
+	    for (j = 0 ; (next_line = lines[n][j]) ; j++)
 	    {
 		if (!next_line)	/* no more lines */
 		    break;

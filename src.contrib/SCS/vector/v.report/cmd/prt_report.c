@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include "global.h"
 #include <string.h>
 
@@ -60,7 +64,7 @@ print_report (int unit1, int unit2)
 	case LN_KILOMETERS:
 	    unit[i].label[0] = "";
 	    unit[i].label[1] = "kilometers";
-	    unit[i].factor   = 1.0e+3;
+	    unit[i].factor   = 1.0e-3;
 	    break;
 
 	case ACRES:

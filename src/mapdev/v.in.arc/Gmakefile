@@ -50,7 +50,6 @@ INTER_OBJ = Build_inter.o\
       process_inp.o\
       main_inter.o
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 PGM = v.in.arc
 

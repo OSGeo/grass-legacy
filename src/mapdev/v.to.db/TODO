@@ -1,0 +1,10 @@
+- add qsort and bsearch to find_cat() (find.c) (speed)
+- where option ( update only records selected by where )
+- check imput parameters
+- check column datatypes
+- load to DB point, line, area coordinates in Open GIS format. 
+  requires:
+  - some Open GIS library (find or write, see 
+    src/libes/vect32_64/shapelib-1.2.8/contrib/shpgeo.c)
+  - add binary type to dbmilib dbValue structure     
+ 

@@ -66,6 +66,10 @@ G_fully_qualified_name (name, mapset)
     char fullname[1024];
     char *G_store();
 
-    sprintf (fullname, "%s@%s", name, mapset);
+    if(strchr(name, '@'))
+    	sprintf (fullname, "%s", name);
+    else
+    	sprintf (fullname, "%s@%s", name, mapset);
+
     return G_store(fullname);
 }

@@ -1,0 +1,12 @@
+interface_build {
+    d.rast.pg 0
+    {Reclasses and displays the raster map with DB query.}
+    {entry key {Column with cat-ID:} 0 ""}
+    {entry tab  {DB table:} 0 ""}
+    {entry col  {Column reclass base:} 0 ""}
+    {entry where  {Where clause:} 0 ""}
+    {entry input  {Raster map:} 0 raster}
+    {entry output  {Reclass map (new, optional):} 0 raster}
+    {checkbox -s {SQL file input} "" -s}
+    {entry sql  {Name of SQL file:} 0 file}
+}

@@ -1,0 +1,82 @@
+
+<http>
+
+<head>
+    <title>  
+	DPG Library
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    DPG Library
+</h1>
+
+This library was built in support of the GRASS 5.0 Vector API.
+But it was designed to provide several useful reusable functions.  It
+started out as a collection of independant libraries.  My concept
+of a library is a re-usable module of independant code.  This, when
+taken to an extreme (like I do with most things), can turn out to be 
+a very small piece of code which does not deserve the title of library.
+So I have gathered these all together placed them into a single library.
+This is not unreasonable as many of the modules are built on top
+of other modules.<p>
+
+All names in the global name space begin with either the prefix <em>dpg</em>
+or <em>tavl</em> in any combination of upper and lower case letters. DPG
+are my initials and I couldn't come up with anything more creative than that.
+Tavl is there because that is the prefix of a library for an 
+AVL tree writen by <a href=../credits.html#tavl>Bert C. Hughes</a>. It was
+so well designed and written almost in the same way I was designing my
+libraries that I didn't want to desecrate it by changing its prefix.<p>
+
+Here is an image the modules in the library and their dependancy relationships.
+
+<img src=libt.gif>
+
+<p>
+The modules available in the DPG libarary are:<p>
+
+<ul>
+    <li> <a href=ocache.html>	Object Cache				</a>
+    <li> <a href=ostore.html>	Object Storage				</a>
+    <li> <a href=string.html>	String management			</a>
+    <li> <a href=age.html>	Age manager				</a>
+    <li> <a href=debug.html>	Debug					</a>
+    <li> <a href=bitmap.html>	Bitmap					</a>
+    <li> <a href=darray.html>	Dynamic Array				</a>
+    <li> <a href=dict.html>	Dictionary				</a>
+    <li> <a href=linkm.html>	Linked List Memory Manager		</a>
+    <li> <a href=linkmm.html>	Linked List Memory Manager Manager	</a>
+    <li> <a href=itree.html>	Integer Tree Tavl Front end		</a>
+    <li> <a href=tavl.txt>	TAVL Tree 				</a>
+    <li> <a href=stdio.html>	Stdio					</a>
+    <li> <a href=xdr.html>	Xdr Front end				</a>
+    <li> <a href=malloc.html>	Malloc Front end			</a>
+</ul>
+
+Note I am not real proud of a few of these.  I was very rushed in
+building this library and there are a few things that should be 
+done differently.  Unlike the Vector API, this library did not have
+a design document before coding began.  None the less, a few of them are quite 
+powerful and have a lot of potential. <p>
+
+
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

@@ -1,0 +1,243 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (Win98; I) [Netscape]">
+   <TITLE>r.slope.aspect</TITLE>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>r.slope.aspect</i></b> - Generates raster map layers of slope, aspect,
+curvatures and partial derivatives from a raster map layer of true elevation
+values.
+<br><i>(GRASS Raster Program)</i>
+<br>&nbsp;
+<h2>
+SYNOPSIS</h2>
+<b>r.slope.aspect</b>
+<br><b>r.slope.aspect help</b>
+<br><b>r.slope.aspect </b>[<b>-aq</b>] <b>elevation=</b><i>name </i>[<b>slope=</b><i>name</i>]
+[<b>aspect=</b><i>name</i>] [<b>format=</b><i>name</i>] [<b>zfactor=</b><i>value</i>]
+[<b>prec</b>=<i>name]</i>&nbsp; [<b>pcurv</b>=<i>name</i>] [<b>tcurv</b>=<i>name]</i>
+[<b>dx</b>=<i>name</i>] [<b>dy</b>=<i>name</i>] [<b>dxx</b>=<i>name</i>]
+[<b>dyy</b>=<i>name</i>] [<b>dxy</b>=<i>name</i>]&nbsp; [<b>min_slp_allowed</b>=<i>value</i>]
+<br>&nbsp;
+<h2>
+DESCRIPTION</h2>
+<b>r.slope.aspect </b>generates raster maps of slope, aspect, curvatures
+and first and second order partial derivatives from a raster map layer
+of true elevation values. The user must specify the input <i>elevation</i>
+file name and at least one output file name. The user can also specify
+the <i>format</i> for slope (degrees, percent; default=degrees), and <i>zfactor</i>:
+multiplicative factor to convert elevation units to meters; (default 1.0).
+<br>&nbsp;
+<h2>
+OPTIONS</h2>
+The program will be run non-interactively if the user specifies program
+inputs and any desired options on the command line, using the form
+<dl>
+<dd>
+<b>r.slope.aspect </b>[<b>-aq</b>] <b>elevation=</b><i>name </i>[<b>slope=</b><i>name</i>]
+[<b>aspect=</b><i>name</i>] [<b>format=</b><i>name</i>] [<b>zfactor=</b><i>value</i>]
+[<b>prec</b>=<i>name]</i>&nbsp; [<b>pcurv</b>=<i>name</i>] [<b>tcurv</b>=<i>name]</i>
+[<b>dx</b>=<i>name</i>] [<b>dy</b>=<i>name</i>] [<b>dxx</b>=<i>name</i>]
+[<b>dyy</b>=<i>name</i>] [<b>dxy</b>=<i>name</i>]&nbsp; [<b>min_slp_allowed</b>=<i>value</i>]</dd>
+</dl>
+If the user runs:
+<dl>
+<dd>
+<b>r.slope.aspect</b></dd>
+</dl>
+without command line arguments, the program will prompt the user for flag
+settings and parameter values.
+<h3>
+Flags:</h3>
+
+<dl>
+<dt>
+<b>-a</b></dt>
+
+<dd>
+Do not align the settings of the current geographic region (to which the
+output slope and aspect map layers will be set) to those of the elevation
+layer. See NOTES.</dd>
+
+<dt>
+<b>-q</b></dt>
+
+<dd>
+Run quietly, and suppress the printing of information on program operations
+during execution.</dd>
+
+<dd>
+</dd>
+</dl>
+
+<h3>
+Parameters:</h3>
+
+<dl>
+<dt>
+<b>elevation=</b><i>name</i></dt>
+
+<dd>
+Name of the raster map layer of true elevation values to be used as input.</dd>
+
+<dt>
+<b>slope=</b><i>name</i></dt>
+
+<dd>
+Name of a raster map layer of slope values created from the elevation map.</dd>
+
+<dt>
+<b>aspect=</b><i>name</i></dt>
+
+<dd>
+Name of a raster map layer of aspect values created from the elevation
+map.</dd>
+
+<dt>
+<b>format</b>=name</dt>
+
+<dd>
+format for reporting the slope; options: degrees,percent; default: degrees.</dd>
+</dl>
+
+<dl><b>zfactor=</b><i>value</i>
+<dd>
+Multiplicative factor to convert elevation units to meters (default: 1.0).</dd>
+
+<br>&nbsp;<b>pcurv =</b><i>name</i>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output profile
+curvature filename
+<br>&nbsp;<b>tcurv =</b><i>name</i>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output tangential
+curvature filename
+<br>&nbsp;<b>dx=</b><i>name</i>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output E-W slope
+filename
+<br>&nbsp;<b>dy=</b><i>name</i>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output N-S slope
+filename
+<br><b>dxx=</b><i>name</i>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output partial
+derivative dxx filename
+<br><b>dyy=</b><i>name</i>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output partial
+derivative dyy filename
+<br><b>dxy =</b><i>name</i>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Output partial derivative
+dxy filenam
+<br><b>min_slp_allowed</b> =<i>value</i>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Minimum slope
+value (in percent) for which aspect is computed.(default: 0.0)
+<br><b>prec</b>=<i>name</i>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type of output
+aspect and slope maps
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; options: default,double,float,int
+<br>&nbsp;</dl>
+The raster <i>elevation</i> map layer specified by the user must contain
+true elevation values, <i>not</i> rescaled or categorized data.
+<br>The raster <i>aspect</i> map layer which is created indicates the direction
+that slopes are facing. The aspect categories represent the number degrees
+of east. Category and color table files are also generated for the aspect
+map layer. The aspect categories represent the number degrees
+of east and they increase counterclockwise: 90deg is North, 180 is West, 270 is 
+South and 360 is East.
+
+<br>The resulting raster <i>slope</i> map layer will contain slope values,
+stated in degrees of inclination from the horizontal if <i>format</i>=degrees
+option (which is also default ) is chosen, and in percent rise if <i>format</i>=percent
+option is chosen. The category file, but not the color table, is generated
+by <i>r.slope.aspect</i> for the raster slope map layer.Profile and tangential
+curvatures are the curvatures in the direction of steepest slope and in
+the direction of the countour tangent respectively.
+<p>For some applications, the user will wish to use a reclassified map
+layer of slope that groups slope values into ranges of slope. This can
+be done using <i><a href="r.reclass.html">r.reclass</a></i>. An example
+of a useful reclassification is given below:
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; range&nbsp;&nbsp; category labels
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (in degrees)&nbsp;&nbsp;&nbsp; (in percent)
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0-&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0-&nbsp; 2%
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2-&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3-&nbsp; 5%
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4-&nbsp; 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6- 10%
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6-&nbsp; 8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11- 15%
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 9- 11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 16- 20%
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 12- 14&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 21- 25%
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15- 90&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 26% and higher
+
+&nbsp;&nbsp;&nbsp;&nbsp; The following color table works well with the above
+&nbsp;&nbsp;&nbsp;&nbsp; reclassification.
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; category&nbsp;&nbsp; red&nbsp;&nbsp; green&nbsp;&nbsp; blue
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 179&nbsp;&nbsp;&nbsp; 179&nbsp;&nbsp;&nbsp;&nbsp; 179
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp; 102&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp; 153&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128&nbsp;&nbsp;&nbsp; 153&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 204&nbsp;&nbsp;&nbsp; 179&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 128&nbsp;&nbsp;&nbsp;&nbsp; 51&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 51
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 255&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0</pre>
+
+<h2>
+NOTES</h2>
+To ensure that the raster elevation map layer is not inappropriately resampled,
+the settings for the current region are modified slightly (for the execution
+of the program only): the resolution is set to match the resolution of
+the elevation map and the edges of the region (i.e. the north, south, east
+and west) are shifted, if necessary, to line up along edges of the nearest
+cells in the elevation map. If the user really wants the elevation map
+resampled to the current region resolution, the -a flag should be specified.
+<p>The current mask, if set, is ignored.
+<p>The algorithm used to determine slope and aspect uses a 3x3 neighborhood
+around each cell in the elevation file. Thus, it is not possible to determine
+slope and aspect for the cells adjacent to the edges in the elevation map
+layer. These cells are assigned a "no data" value (category 0) in both
+the slope and aspect raster map layers.
+<p>Because Horn's formula is used to find the derivatives in x and y directions,
+the aspect is biased in 0, 45, 90, 180, 225, 270, 315, and 360 directions;
+i.e., the distribution of aspect categories is very uneven, with peaks
+at 0, 45,..., 360 categories.
+<br>Because most cells with a very small slope end up having category 0,
+45,..., 360 it is sometimes possible to reduce bias in these directions
+by filtering out computation of aspect in areas where terrain is almost
+flat. The new option
+<dl>
+<dd>
+<b>min_slp</b>=<i>value</i></dd>
+</dl>
+was added (minimum slope for which aspect is computed). The aspect for
+all cells with slope &lt; min_slp is set to 0 (no value).
+<h2>
+WARNING</h2>
+the following may not be true anymore because of introduction of NULL,
+but it has not been tested
+<p>Elevations of zero (as well as below sea level elevations) are valid.
+This means that areas assigned category value 0 may have one of two possible
+meanings: they may either be areas of "no data" or areas having 0 elevation.
+<p>If the user wishes <i>r.slope.aspect</i> to assume that cells assigned
+category value zero in the elevation map layer represent true elevation
+values, not areas of "no data", the user should set the -z flag when running
+this program.
+<p>If the -z flag is not set and the raster map layer of true elevation
+contains areas of "no data" that are assigned to category 0, either at
+its edges or in its interior, incorrect (and usually quite large) slopes
+will result.
+<h2>
+SEE ALSO</h2>
+<i><a href="r.mapcalc.html">r.mapcalc</a></i>
+<br><i><a href="r.neighbors.html">r.neighbors</a></i>
+<br><i><a href="r.reclass.html">r.reclass</a></i>
+<br><i><a href="r.rescale.html">r.rescale</a></i>
+<h2>
+AUTHORS</h2>
+Michael Shapiro, U.S.Army Construction Engineering Research Laboratory
+<p>Olga Waupotitsch, U.S.Army Construction Engineering Research Laboratory
+</body>
+</html>

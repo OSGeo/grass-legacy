@@ -1,17 +1,15 @@
-#include "interface.h"
+/*	Alex Shevlakov sixote@yahoo.com 02/2000
+*	function added to handle postgres queries
+*/
 #include <stdlib.h>
+#include "interface.h"
 
-extern int get_idnum();
-extern int att_atoi();
-extern void free();
-
-
-int 
-Ninit_view_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int Ninit_view_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
      
 {
   GS_init_view();
@@ -20,12 +18,12 @@ Ninit_view_cmd(data, interp, argc, argv)
 
 /* TODO: Need Nset_to_cmd or use viewdir*/
 
-int
-Nget_to_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int Nget_to_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float to[3];
   char x[32], y[32], z[32];
@@ -47,12 +45,13 @@ Nget_to_cmd (data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nget_from_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_from_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float from[3];
   char x[32], y[32], z[32];
@@ -76,12 +75,13 @@ Nget_from_cmd (data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nlook_here_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nlook_here_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   if (argc != 3)
     return (TCL_ERROR);
@@ -90,12 +90,13 @@ Nlook_here_cmd (data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nhas_focus_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nhas_focus_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float realto[3];
 
@@ -108,12 +109,13 @@ Nhas_focus_cmd (data, interp, argc, argv)
 
 }
 
-int
-Nset_focus_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nset_focus_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float realto[3];
 
@@ -128,23 +130,25 @@ Nset_focus_cmd (data, interp, argc, argv)
 
 }
 
-int
-Nset_no_focus_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nset_no_focus_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   GS_set_nofocus();
   return (TCL_OK);
 }
 
-int
-Nset_focus_map_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nset_focus_map_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   int id;
   
@@ -167,26 +171,32 @@ Nset_focus_map_cmd (data, interp, argc, argv)
 }
 
 
-int
-Nmove_to_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int Nmove_to_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
+  float	ftmp;
+  int i;
+
   if (argc != 4)
     return (TCL_ERROR);
-  GS_moveto(atof(argv[1]), atof(argv[2]), atof(argv[3]));
+  for(i=1;i<argc;i++) {
+    ftmp = atof(*(++argv));
+    GS_moveto(&ftmp);
+  }
   
   return (TCL_OK);
 }
 
-int
-Nset_fov_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int Nset_fov_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   if (argc != 2)
     return (TCL_ERROR);
@@ -195,12 +205,13 @@ Nset_fov_cmd (data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nget_region_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_region_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float n, s, e, w;
   char  *list[5]; 
@@ -224,12 +235,13 @@ Nget_region_cmd (data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nget_point_on_surf_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_point_on_surf_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float x, y, z;
   int sx, sy,id;
@@ -272,12 +284,123 @@ fprintf(stderr,"x= %d  :  y= %d\n", sx, sy);
   return (TCL_OK);
     
 }
-
-Nget_dist_along_surf_cmd (data, interp, argc, argv)
+int
+Nget_point_on_surf_pg_grass (data, interp, argc, argv)
      Nv_data *data;
      Tcl_Interp *interp;                 /* Current interpreter. */
      int argc;                           /* Number of arguments. */
      char **argv;                        /* Argument strings. */
+{
+  float x, y, z;
+  int sx, sy,id;
+  char cx[32], cy[32], cz[32], idname[128];
+  char *list[6];
+  
+  char *name, *keytable, *col;
+  
+  if (argc != 6)
+    return (TCL_ERROR);
+  
+  sx = atoi(argv[1]);
+  sy = atoi(argv[2]);
+  name = argv[3];
+  keytable = argv[4];
+  col=argv[5];
+
+#ifdef DEBUG_MSG
+fprintf(stderr,"x= %d  :  y= %d\n", sx, sy);
+#endif
+  
+  if (!GS_get_selected_point_on_surface(sx, sy, &id, &x, &y, &z))
+    {
+      list[0] = NULL;
+      interp->result = Tcl_Merge (0, list);
+      interp->freeProc = (Tcl_FreeProc *)free;
+      
+      return (TCL_OK);
+    }
+  
+  sprintf (cx, "%f", x);
+  sprintf (cy, "%f", y);
+  sprintf (cz, "%f", z);
+  sprintf (idname, "Nsurf%d", id);
+  
+  list[0] = cx;
+  list[1] = cy;
+  list[2] = cz;
+  list[3] = idname;
+  list[4] = (char*) query_postgr(name,keytable,col,x,y);
+  list[5] = NULL;
+  
+  interp->result = Tcl_Merge (5, list);
+  interp->freeProc = (Tcl_FreeProc *)free;
+  
+  return (TCL_OK);
+    
+}
+int
+Nget_point_on_surf_pg_site (data, interp, argc, argv)
+     Nv_data *data;
+     Tcl_Interp *interp;                 /* Current interpreter. */
+     int argc;                           /* Number of arguments. */
+     char **argv;                        /* Argument strings. */
+{
+  float x, y, z;
+  int sx, sy,id;
+  char cx[32], cy[32], cz[32], idname[128];
+  char *list[6];
+  
+  char *name, *xcol, *ycol;
+  int dist;
+  
+  if (argc != 7)
+    return (TCL_ERROR);
+  
+  sx = atoi(argv[1]);
+  sy = atoi(argv[2]);
+  name = argv[3];
+  xcol = argv[4];
+  ycol=argv[5];
+  dist = atoi(argv[6]);
+
+#ifdef DEBUG_MSG
+fprintf(stderr,"x= %d  :  y= %d\n", sx, sy);
+#endif
+  
+  if (!GS_get_selected_point_on_surface(sx, sy, &id, &x, &y, &z))
+    {
+      list[0] = NULL;
+      interp->result = Tcl_Merge (0, list);
+      interp->freeProc = (Tcl_FreeProc *)free;
+      
+      return (TCL_OK);
+    }
+  
+  sprintf (cx, "%f", x);
+  sprintf (cy, "%f", y);
+  sprintf (cz, "%f", z);
+  sprintf (idname, "Nsurf%d", id);
+  
+  list[0] = cx;
+  list[1] = cy;
+  list[2] = cz;
+  list[3] = idname;
+  list[4] = (char*) query_pg_site(name,xcol,ycol,dist,x,y);
+  list[5] = NULL;
+  
+  interp->result = Tcl_Merge (5, list);
+  interp->freeProc = (Tcl_FreeProc *)free;
+  
+  return (TCL_OK);
+    
+}
+int 
+Nget_dist_along_surf_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float x, y, px, py, d;
   int id, exag;
@@ -306,11 +429,13 @@ Nget_dist_along_surf_cmd (data, interp, argc, argv)
 #define DO_TEST
 */
 
-Nget_cat_at_xy_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_cat_at_xy_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float x, y; 
   int id, att;
@@ -342,11 +467,13 @@ GS_done_draw();
 }
 
 
-Nget_val_at_xy_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_val_at_xy_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float x, y; 
   int id, att;
@@ -368,18 +495,19 @@ Nget_val_at_xy_cmd (data, interp, argc, argv)
   
 }
 
-int
-Nget_focus_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_focus_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float realto[3];
   char x[32], y[32], z[32];
   char  *list[4]; 
   
-  if(GS_get_focus(&realto)){
+  if(GS_get_focus(realto)){
       sprintf (x, "%f", realto[0]);
       sprintf (y, "%f", realto[1]);
       sprintf (z, "%f", realto[2]);
@@ -399,12 +527,13 @@ Nget_focus_cmd (data, interp, argc, argv)
 }
 
 
-int
-Nget_longdim_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_longdim_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float dim;
   char buf[128];
@@ -416,12 +545,13 @@ Nget_longdim_cmd (data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nget_zrange_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_zrange_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   float min, max;
   char *list[3], cmin[32], cmax[32];
@@ -451,12 +581,8 @@ Nget_zrange_cmd (data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nget_xyrange_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int argc;
-     char **argv;
+int 
+Nget_xyrange_cmd (Nv_data *data, Tcl_Interp *interp, int argc, char **argv)
 {
   char temp[40];
   
@@ -470,12 +596,13 @@ Nget_xyrange_cmd (data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nget_zextents_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_zextents_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   int id;
   float min, max, mid;
@@ -501,12 +628,13 @@ Nget_zextents_cmd (data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nget_exag_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nget_exag_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   char buf[128];
   float exag;
@@ -519,12 +647,13 @@ Nget_exag_cmd(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nset_exag_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nset_exag_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   if (argc != 2)
     return (TCL_ERROR);
@@ -541,12 +670,13 @@ Nset_exag_cmd(data, interp, argc, argv)
  * 	the view to.  By default we choose the first surface
  *	available or 0 if no surfaces have been loaded.
  */
-int
-Nsave_3dview_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nsave_3dview_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   char **list_space;
   int list_count, first_surf;
@@ -587,12 +717,13 @@ Nsave_3dview_cmd(data, interp, argc, argv)
  * 	the view to.  By default we choose the first surface
  *	available or 0 if no surfaces have been loaded.
  */
-int
-Nload_3dview_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nload_3dview_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   char **list_space;
   int list_count, first_surf;

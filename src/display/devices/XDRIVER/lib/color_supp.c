@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "gis.h"
 
 #define MAX_STD_COLORS  15
 
@@ -95,10 +96,10 @@ static int check_alloc_color(int n)
             to_alloc += 512;
 
         if (posLookAlloc)
-            pos_lookup = (int *) realloc((char *) pos_lookup,
-                    to_alloc * sizeof(int));
+            pos_lookup = (int *)G_realloc((void *) pos_lookup,
+                    (size_t) (to_alloc * sizeof(int)));
         else
-            pos_lookup = (int *) malloc(to_alloc * sizeof(int));
+            pos_lookup = (int *) G_malloc((size_t) (to_alloc * sizeof(int)));
         if (!pos_lookup) {
             perror("ERROR: can't alloc in check_alloc_color.");
             exit(-1);
@@ -114,10 +115,10 @@ static int check_alloc_color(int n)
             to_alloc += 512;
 
         if (negLookAlloc)
-            neg_lookup = (int *) realloc((char *) neg_lookup,
-                    to_alloc * sizeof(int));
+            neg_lookup = (int *)G_realloc((void *) neg_lookup,
+                    (size_t) (to_alloc * sizeof(int)));
         else
-            neg_lookup = (int *) malloc(to_alloc * sizeof(int));
+            neg_lookup = (int *) G_malloc((size_t) (to_alloc * sizeof(int)));
         if (!neg_lookup) {
             perror("ERROR: can't alloc in check_alloc_color.");
             exit(-1);

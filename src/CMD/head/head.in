@@ -3,9 +3,14 @@ FC                  = @F77@
 LEX                 = @LEX@
 YACC                = yacc
 ARCH                = @host@
+MAKE                = make
+prefix              = @prefix@
+exec_prefix         = @exec_prefix@
 
-GISBASE             = @prefix@
+GISBASE             = @prefix@/grass@NAME_VER@
 UNIX_BIN            = @BINDIR@
+#VERSION             = @VERSION@
+NAME_VER            = @NAME_VER@
 
 DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =
@@ -13,6 +18,7 @@ DEFAULT_LOCATION    =
 COMPILE_FLAGS       = @CFLAGS@ @INCLUDE_DIRS@
 LDFLAGS             = @STRIPFLAG@ @LIBRARY_DIRS@
 
+DLLIB               = @DLLIB@
 XCFLAGS             = @X_CFLAGS@
 # XXX - replace SYSV in code with configure results in config.h
 # XXX - need SYSV defined for hpux10
@@ -30,11 +36,51 @@ XEXTRALIBS          = @X_EXTRA_LIBS@
 COMPATLIB           = @COMPATLIB@
 TERMLIB             = @TERMLIB@
 CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
-MATHLIB             = -lm
+MATHLIB             = @MATHLIB@ 
 XDRLIB              = @XDRLIB@
+ZLIB                = @ZLIB@
+
+#PostgreSQL:
+PQINCPATH           = @PQINCPATH@
+PQLIBPATH           = @PQLIBPATH@
+PQLIB               = @PQLIB@
+
+#ODBC:
+ODBCINC             = @ODBCINC@
+
+#Image formats:
+PNGINC              = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
+PNGLIB              = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
+
+#JPEGINCPATH         = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
+#JPEGLIBPATH         = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
+JPEGINCPATH         = @JPEGINCPATH@
+JPEGLIBPATH         = @JPEGLIBPATH@
+JPEGLIB             = @JPEGLIB@
 
 TIFFINCPATH         = @TIFF_INCLUDE_DIRS@
 TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
 
+#openGL files for NVIZ/r3.showdspf
+OPENGLINC           = @OPENGLINC@
+OPENGLwINC          = @OPENGLwINC@
+OPENGLLIB           = @OPENGLLIB@
+OPENGLULIB          = @OPENGLULIB@
+LGLWM               = @LGLWM@
+
+#tcl/tk stuff
+TCLINCDIR           = @TCLINCDIR@
+TKINCDIR            = @TKINCDIR@
+TCLTKLIBPATH        = @TCLTKLIBPATH@
+TCLTKLIBS           = @TCLTKLIBS@
+
 LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
 USE_TERMIO          = @USE_TERMIO@
+
+# Uncomment below to input Korean(Asian?) characters in v.digit or etc.
+#DASIAN_CHARS        = -DASIAN_CHARS
+
+# It's hard to click two buttons simultaneously with two button mouse.
+# Situation is worse, if it requires continuous clicking.
+# In this case uncomment below.
+#DANOTHER_BUTTON     = -DANOTHER_BUTTON

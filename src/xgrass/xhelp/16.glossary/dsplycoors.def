@@ -1,9 +1,0 @@
-
-
-display coordinate system - An x,y coordinate system based on the
-user's graphics monitor (display device).  Some GRASS programs use
-this coordinate system, rather than a map coordinate system, to
-specify where on the graphics monitor objects will be displayed.
-Typically, x and y coordinate values are stated as percentages
-of the display frame's (horizontal) width and (vertical) height,
-measured from the frame's lower left corner.

@@ -1,0 +1,129 @@
+<TITLE>v.cutter</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.cutter</b></EM>  - Polygon Cookie Cutter  (Boolean <EM>AND</EM> Overlay)
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.cutter</B>
+
+<BR>
+
+<B>v.cutter help</B>
+
+<BR>
+
+<B>v.cutter [-u] [-q] cutter=</B><EM>name</EM> <B>data=</B><EM>name</EM> <B>out=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+This program provides a way to generate new maps based on an intersection
+of two existing maps.  It in effect provides a way to create masked
+versions of vector maps.  Both lines, sites, and polygons are clipped 
+correctly.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-q</B>   
+<DD>Run quietly.  Don't print percent information.
+<DT><B>-u</B>   
+<DD>Intersect all areas even those that are unlabeled. Not generally useful
+and also not fully tested.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>cutter</B>=<EM>mapname</EM> 
+<DD>Name of the binary vector file to use for the cookie cutter.
+
+<DT><B>data=</B><EM>mapname</EM> 
+<DD>Name of the binary vector file which is to be cut.
+
+<DT><B>out=</B><EM>mapname</EM> 
+<DD>Name ofnew vector file to be created.
+</DL>
+
+<H2>NOTES</H2>
+
+The user must run <EM>
+<A HREF="v.spag.html">v.spag</A>
+ -i</EM> after running <EM>v.cutter</EM> to remove
+identical lines.
+
+
+<P>
+
+The polygons of the cutter map must be labeled to be effective unless
+the -u flag is specified.
+
+
+<P>
+
+The attributes of created polygons will be generated from the attributes
+of the <EM>data</EM> map.
+
+<H2>BUGS</H2>
+
+There are a few rare situations that are not currently handled correctly.
+These mostly involve nodes or vertices intersecting exactly with lines
+of the opposite map.  You will know you have hit one of these cases
+because a lot of strange text will start spitting out.
+
+
+<P>
+
+Currently the program generates many duplicate lines.  So <EM>
+<A HREF="v.spag.html">v.spag</A>
+ -i</EM>
+must be run on the new file to clean them up.  The -i flag specifies
+to only do the identical line removal phase and is a new option 
+to <EM>
+<A HREF="v.spag.html">v.spag</A>
+</EM> in release 4.1.  Don't forget to use this flag, as
+it will run much faster, and will not make any other changes to your data.
+
+
+<P>
+
+Borders between areas with the same attributes are not disolved.
+
+
+<P>
+
+There is no <EM>fuzzy</EM> data handling code, so expect to see slivers.
+
+
+<P>
+
+There are many places where the code could be optimized greatly.
+
+
+<P>
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.spag.html">v.spag</A></EM><BR>
+<EM><A HREF="v.digit.html">v.digit</A></EM><BR>
+<EM><A HREF="v.support.html">v.support</A></EM><BR>
+<EM><A HREF="v.clean.html">v.clean</A></EM>
+
+<H2>AUTHOR</H2>
+
+Dave Gerdes, U.S.Army Construction Engineering 
+Research Laboratory
+
+
+<P>
+

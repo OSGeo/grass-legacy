@@ -1,10 +1,9 @@
+#include <stdlib.h>
+#include "gis.h"
 #include "dlg.h"
-#include "dig_head.h"
+#include "Vect.h"
 
 #define METERS_PER_INCH	0.0254
-
-char *G_strncpy ();
-long atol ();
 
 double greater ();
 double lesser ();

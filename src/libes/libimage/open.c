@@ -121,9 +121,9 @@ fseek(f1, 0L, 0);
   putlong (f1, 0L);
   fwrite  ("no name", (size_t) 8, (size_t) 1,f1);
 
-  if (ferror(f1)) { fclose(f1);  return -1; }
+  if (ferror(f1)) { fclose(f1);  return NULL; }
 
-
+  fclose(f1);
 
 
 /*		if (write(f,image,sizeof(IMAGE)) != sizeof(IMAGE)) {

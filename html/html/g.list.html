@@ -1,0 +1,123 @@
+<html>
+
+<TITLE>g.list</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>g.list</b></EM>   - Lists available GRASS data base files
+of the user-specified data type to standard output.
+
+<BR>
+
+<EM>(GRASS File Management Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>g.list</B>
+
+<BR>
+
+<B>g.list help</B>
+
+<BR>
+
+<B>g.list</B> [<B>-f</B>] 
+<B>type=</B><EM>datatype</EM> [<B>mapset=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>g.list</EM> allows the user to list user-specified, available
+and accessible files from <EM>mapsets</EM> under the user's current location.
+
+<H2>OPTIONS</H2>
+
+When invoked simply as <B>g.list</B>, the program prompts
+the user for the type of data to be listed from all
+<EM>mapsets</EM> in the user's current mapset search path.
+The user can list files from a mapset not listed in the
+current mapset search path by running the program
+non-interactively, specifying the (optional) flag setting
+and parameter values on the command line.  Program flag and
+parameters are described below.
+
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-f</B> 
+<DD>Returns a verbose file listing, that includes map TITLEs.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+
+<DT><B>type=</B><EM>datatype</EM> 
+<DD>The type of data to be listed.
+
+<BR>
+
+Options:  (listed in bold)
+<DL>
+<DT><B>rast</B>
+<DD> Raster files
+<DT><B>vect</B>
+<DD>Binary vector files
+<DT><B>icon</B>
+<DD>Paint icon files
+<DT><B>labels</B>
+<DD>Paint labels files
+<DT><B>sites</B>
+<DD>Site list files
+<DT><B>region</B>
+<DD>Region definition files
+<DT><B>group</B>
+<DD>Imagery group files
+</DL>
+
+
+<DT><B>mapset=</B><EM>name</EM> 
+
+<DD>The name of a mapset to be searched for files of the
+specified <EM>type</EM>.  Any mapset name under the current
+location, whether or not it is listed in the user's current
+mapset search path, can be specified.
+
+<BR>
+
+Default:  If unspecified, files of the specified
+<EM>type</EM> from all mapsets in the user's current search
+path will be listed to standard output.
+
+</DL>
+
+<H2>NOTES</H2>
+
+If the user requests that files from a mapset to which
+access has been restricted (see
+
+<EM><A HREF="g.access.html">g.access</A></EM>)
+
+be listed, no files from this mapset will be listed.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.access.html">g.access</A></EM><br>
+<EM><A HREF="g.mapsets.html">g.mapsets</A></EM>
+
+<H2>AUTHOR</H2>
+
+
+Michael Shapiro,
+U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

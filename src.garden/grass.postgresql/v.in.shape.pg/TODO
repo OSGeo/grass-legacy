@@ -1,0 +1,12 @@
+ 11th May 2000
+
+ o Still to fix mapset/projection handling.
+ o Create option to build restore and back-up files
+ o s.in.shape still to be finished (in progress)
+ o Add site list and/or postgres support for database
+ o Possibly add option to split large files on import
+   to facilitate the process.
+
+	DD Gray  <ddgray@armadce.demon.co.uk>
+
+ o +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

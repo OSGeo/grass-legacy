@@ -1,0 +1,145 @@
+<TITLE>r.nntool</TITLE>
+
+<head>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+</head>
+
+<H2>NAME</H2>
+
+<EM><b>r.nntool</b></EM> - Neural Network classification tool for raster maps.
+<BR>
+
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.nntool</B>
+
+<BR>
+
+<H2>DESCRIPTION</H2> r.nntool is a fully interactive, menu-driven
+GRASS routine that uses a neural network to train landuse
+classifications and build a classified image. r.nntool facilitates the
+use of neural networks and linear classifiers in supervised
+classification of raster cell files. <br>
+Neural networks are composed of
+simple non-linear computational units called neurons that are linked
+together and work cooperatively to solve complex mapping
+problems. Neural network output is validated by the use of a
+controlled training dataset. For application in the GRASS framework,
+each input unit (equal to one satellite image pixel) to the neural
+network is assigned a raster map layer, and training data for the
+network is collected on a cell by cell basis. Typically, a single map
+layer is used for selecting training sites, although this requirement
+can be relaxed so that output units can be assigned to more than one
+map layer, and the map layer used in selecting training sites need not
+be used as output to the neural network. Since a maximum likelihood
+classifier (i.maxlik) already exists in GRASS, many of the utilities
+of i.maxlik in selecting and analyzing training data were used in the
+neural network tool. Among these utilities is the ability to visualize
+and, if necessary, change histograms from each training site.
+<p>
+ The program for the neural network tool is structured in such as a way
+that training classes selected in the neural network tool could also
+be used in the maximum likelihood classifier. This facilitates the
+implementation of i.maxlik within GRASS for validation of neural
+network outut. <br>
+In GRASS, the maximum likelihood classifier assumes a
+Gaussian distribution for the training data, which is a widely used
+method for satellie imagery classification. In the use of the tool,
+the user is asked to enter the name of the output map layer, the
+number of output classes, and the names of the input map layers. 
+<br>
+Using the lump option of the menu, the tool selects the "dominant" category
+within a specified window and generates a new map layer. The user can
+reset the resolution to the specified window, or retain the old
+resolution in which he entered the tool. In existing GRASS routines,
+when resolution (window) of a region is enlarged, the middle pixel of
+the window in the lower resolution is selected.  <br>
+Training areas are selected using the define areas option. <br>
+Using the zoom option the user can zoom out parts of the output map 
+in which he wishes to delineate training areas. Training areas can be 
+delineated by clicking on points, drawing circles, or by drawing 
+polygons. <br>
+Using the delete function, the users can interactively select 
+and delete polygons, with the number of samples after deletion shown in the window. <br>
+Histograms of training sites can be examined and signatures saved so that the
+user can use i.maxlik. Once the user is satisfied with the training
+sites selected, all input map layers are sampled for their data. At
+intersections of training areas with input map layers, training data
+for the neural network are gathered. <br>
+Training data are stored as an
+ASCII file so that the user may examine and change it, if
+necessary. Input data to the network is obtained cell-wise from all
+areas of the input maps. <br>
+The classes option of the neural network tool
+lets a user examine the distribution of data when two input map layers
+are used. For higher input dimensions, it is necessary to link the
+tool to a more sophisticated program such as xgobi. The user may
+eliminate outliers, and data conflicts by drawing rectangular boxes
+around data points. If necessary a whitening and diagonalization
+operation can be done on the data so that better class separability is
+achieved. Unlike in using traditional classifiers, careful
+preprocessing of the training data should be performed since neural
+networks give equal consideration to all data. <br>
+Once the user is
+satisfied with the class distributions, the configure option is
+selected. Here the user selects a quick propagation network, or the
+traditional back propagation The quick propagation network uses
+gradient descent to adjust weights and assumes a parabolic shape for
+global minimum. Iterations of the network are performed by the number
+of training cycles set by the user. Back propagation uses gradient
+descent and converges to a root mean square error value set by the
+user. <br>
+In r.nntool, performance of the network as training progresses
+is shown on the left half of the GRASS screen. Once training of the
+neural network is complete, the user propagates cell values of the
+input map layers through the network. The new map layer generated by
+the neural network can then be queried. Upon completion of network
+training, the user may save the neural network structure such as the
+number of input, hidden, and output units, and the network weights.
+ 
+<H2>Notes</H2>
+The training site I/O data is stored in a file called o_train 
+(o_ for "old" training file). This is the default file used for training 
+the neural network. If the random option is used to rearrange the 
+training data, the network training data is stored in a file called 
+TRAIN. The classes option can only be used right now for visualization 
+of two input vectors. The color scheme isn't all that exciting and 
+future upgrades are working on using a better color scheme to represent 
+the training data in each class. [Users may wish to also ftp xgobi.tar.gz, 
+and use that tool to visualize training samples in the o_train/TRAIN file]. 
+The Bayes' classifier right now can only be used if you have access to 
+IMSL (otherwise, you'll have to wait until routines are written for diagonalizing a covariant matrix etc in C). Users will have to do a 
+priori determine the attribute value for each class in the output map:
+<p>
+ Ex., Say there are 5 classes. Extend the attribute values for the classes 
+from 0 to 100. So that, 
+<p>
+<pre>
+       0 - class 1 
+      25 - class 2 
+      50 - class 3 
+      75 - class 4 
+     100 - class 5. 
+</pre>
+
+This is a limitation of GRASS since the color intensities of a map are determined by the attribute values. The input values to the network are 
+scaled by the highest attribute of each input. Users may wish to try other 
+schemese such as sgn(x)(1 + ln|x|), or transform the data using a squashing 
+function such as tahn(x). Users will have to look at the source code to 
+do this (see nntool.c).
+ 
+
+ <H2>SEE ALSO</H2>
+
+<EM><A HREF="../imagery.html">imagery</A></EM><br>
+<EM><A HREF="i.maxlik.html">i.maxlik</A></EM><br>
+<EM><A HREF="r.reclass.html">r.reclass</A></EM><br>
+
+
+<H2>AUTHORS</H2>
+Ranjan Muttiah, TAES, Blackland Research Center <br>
+Bruce Byars, GRASS Research Group, Baylor University

@@ -1,0 +1,140 @@
+<TITLE>r.los</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.los</b></EM>  - Line-of-sight raster analysis program. 
+<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.los</B> 
+<BR>
+<B>r.los help</B> 
+<BR>
+<B>r.los</B> 
+<B>input=</B><EM>name</EM>
+<B>output=</B><EM>name</EM>
+<B>coordinate=</B><EM>x,y</EM> 
+[<B>patt_map=</B><EM>name</EM>] 
+[<B>obs_elev=</B><EM>value</EM>] 
+[<B>max_dist=</B><EM>value</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.los</EM> generates a raster map output in which the
+cells that are visible from a user-specified observer
+location are marked with integer values that represent the
+vertical angle (in degrees) required to see those cells.
+
+<P>
+
+
+The program can be run either non-interactively or interactively. 
+To run <EM>r.los</EM> non-interactively, the user must specify at least 
+an <B>input</B> file name, <B>output</B> file name, and the geographic 
+<B>coordinate</B>s of the user's viewing location on the command line; 
+any remaining parameters whose values are unspecified on the command line 
+will be set to their default values (see below). 
+Non-interactive usage format is: 
+
+<DL>
+<DD>
+<B>r.los</B> 
+<B>input=</B><EM>name</EM>
+<B>output=</B><EM>name</EM>
+<B>coordinate=</B><EM>x,y</EM> 
+[<B>patt_map=</B><EM>name</EM>] 
+[<B>obs_elev=</B><EM>value</EM>] 
+[<B>max_dist=</B><EM>value</EM>] 
+</DL>
+
+<P>
+Alternately, the user can type simply <B>r.los</B> on the command line; 
+in this case, the program will prompt the user for parameter values 
+using the standard GRASS 
+<EM><A HREF="parser.html">parser</A></EM>.
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+
+<DD>Name of a raster map layer containing elevation data,
+used as program input.
+
+<DT><B>output=</B><EM>name</EM>
+
+<DD>Name assigned to the file in which the raster program output 
+will be stored. 
+
+<DT><B>coordinate=</B><EM>x,y</EM>
+
+<DD>Geographic coordinates (i.e., easting and northing values) 
+identifying the desired location of the viewing point. 
+
+<DT><B>patt_map=</B><EM>name</EM>
+
+<DD>Name of a binary (1/0) raster map layer in which cells
+within the areas of interest are assigned the category
+value '1', and all other cells are assigned the category
+value '0'. If this parameter is omitted, the analysis will
+be performed for the whole area within a certain distance
+of the viewing point inside the geographic region
+boundaries.
+
+<BR>
+
+Default: assign all cells that are within the
+<B>max_dist</B> and within the user's current geographic
+region boundaries a value of 1.
+
+<DT><B>obs_elev=</B><EM>value</EM>
+
+<DD>Height of the observer (in meters) above the viewing
+point's elevation.
+
+<BR>
+Default: 1.75 (meters) 
+
+<DT><B>max_dist=</B><EM>value</EM>
+
+<DD>Maximum distance (in meters) from the viewing point
+inside of which the line of sight analysis will be
+performed. The cells outside this distance range are
+assigned the category value '0'.
+
+<BR>
+Options: 0-99999 (stated in map units) 
+<BR>
+Default: 100 
+</DL>
+
+<H2>NOTES</H2>
+
+For accurate results, the program must be run with the resolution of the 
+geographic region set equal to the resolution of the data 
+(see <EM><A HREF="g.region.html">g.region</A></EM>).
+
+<P>
+
+It is advisable to use a 'pattern layer' which identifies
+the areas of interest in which the line of sight analysis
+is required.  Such a measure will reduce the time taken by
+the program to run.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.region.html">g.region</A></EM>
+<br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Kewan Q. Khawaja, Intelligent Engineering
+Systems Laboratory, M.I.T.

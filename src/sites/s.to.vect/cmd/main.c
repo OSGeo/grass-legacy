@@ -1,14 +1,16 @@
-/* Changes by PWC 2/6/95  from NRCS */
-
-/*  @(#)main.c    1.0  2/26/91  */
-/*
-**  Created by R.L.Glenn
-**  USDA, Soil Conservation Service
-**
-**  Input arguements:
-**        s.to.vect input=site_list file to read
-**                  output=vector (digit) file to create
-*/
+/* 
+ * $Id$
+ * Changes by PWC 2/6/95  from NRCS
+ * 1.0  2/26/91
+ *
+ *  Created by R.L.Glenn
+ *  USDA, Soil Conservation Service
+ *
+ *  Input arguements:
+ *        s.to.vect input=site_list file to read
+ *                  output=vector (digit) file to create
+ */
+ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -38,15 +40,18 @@ int main (int argc, char *argv[])
     char sname[40], *mapset, desc[256];
     char path[128], map_name[20], buf[200], command[256];
     char *ptr;
-    int i, type, vect_read, ier, cat, have_site;
-    int alloc_points, n_points ;
+    int type, vect_read, ier, count, index;
+    int alloc_points, n_points, dims, dbls, strs ;
     double east, north;
     double *xarray, *yarray;
     FILE *fopen(), *attr, *site, *cats, *tmp ;
-    struct Option *sitein, *outvect;
+    struct Option *sitein, *outvect, *opt_desc;
     struct Cell_head window;
+    struct GModule *module;
     struct Map_info Map;
     struct line_pnts *Points ;
+    Site *s;
+	RASTER_MAP_TYPE map_type; 
 
     sitein = G_define_option();
     sitein->key          = "input";
@@ -54,6 +59,7 @@ int main (int argc, char *argv[])
     sitein->type         = TYPE_STRING;
     sitein->required     = YES;
     sitein->multiple     = NO;
+	sitein->gisprompt    = "old,site_lists,site list";
 
     outvect = G_define_option();
     outvect->key          = "output";
@@ -63,7 +69,19 @@ int main (int argc, char *argv[])
     outvect->multiple     = NO;
     outvect->gisprompt    = "new,dig,vector";
 
+    opt_desc = G_define_option();
+    opt_desc->key         = "desc";
+    opt_desc->description = "String field in site_list to use in vector file";
+    opt_desc->type        = TYPE_INTEGER;
+    opt_desc->required    = NO;
+    opt_desc->answer      = "1";
+	
     G_gisinit(argv[0]);
+    
+    module = G_define_module();
+    module->description =        
+                    "Converts a GRASS site_lists file into a vector file.";
+                    
     if (G_parser(argc, argv)) exit(-1);
 
     G_get_window (&window);
@@ -74,7 +92,6 @@ int main (int argc, char *argv[])
 
     sprintf(map_name,"%s",outvect->answer);
     sprintf(sname,"%s",sitein->answer);
-    have_site = 0;
 
     mapset = G_find_vector (map_name, G_mapset());
     if (mapset != NULL)
@@ -88,7 +105,7 @@ int main (int argc, char *argv[])
     mapset = G_find_file (SITE_DIR,sname,"");
     if (mapset == NULL)
 	{
-	sprintf(buf,"Site file file [%s] not available",sname);
+	sprintf(buf,"Site file file [%s] not available\n",sname);
 	G_fatal_error(buf) ;
 	}
     S_name = sname;
@@ -109,37 +126,44 @@ int main (int argc, char *argv[])
 	N_site_file = G_store (buf);
     }
 
-    if ((site = fopen (N_site_file, "r+")) != NULL)
-	have_site = 1;
-    else
+    if ((site = fopen (N_site_file, "r+")) == NULL)
     {
-	sprintf (buf, "Not able to open site file <%s>\n", N_site_file);
-	G_fatal_error (buf);
+        sprintf (buf, "Not able to open site file <%s>\n", N_site_file);
+        G_fatal_error (buf);
     }
 
     if ( (attr = fopen(N_att_file, "w+") ) == NULL )
-       {
-       sprintf (buf, "Not able to open attribute file <%s>\n", N_att_file);
-       G_fatal_error (buf);
-       }
+    {
+        sprintf (buf, "Not able to open attribute file <%s>\n", N_att_file);
+        G_fatal_error (buf);
+    }
 
     temp_file = G_tempfile();
     if ( (tmp = fopen(temp_file, "w+") ) == NULL )
-       {
+    {
        sprintf (buf, "Not able to open temporary category file <%s>\n", temp_file);
        G_fatal_error (buf);
-       }
+    }
 
                     /* Create new digit file */
     if ((vect_read = Vect_open_new (&Map, map_name)) < 0)
-	{
-	G_fatal_error("Creating new vector file.") ;
+    {
+	G_fatal_error("Creating new vector file.\n") ;
 	exit(-1) ;
-	}
+    }
 
+	/* added for string field description */
+    index = atoi(opt_desc->answer);
+    if(index <= 0) {
+        G_warning("Got field number less than 1 for string attribute.\n"
+                                        "Setting to 1...\n");
+        index = 1;
+    }
+    index--;
+	
     get_head_info(&(Map.head));
 
-    fprintf (stderr,"\n\ntransfering sites to vect file      ");
+    fprintf (stderr,"\n\ntransfering sites to vect file      \n");
 
                     /* Initialize the Point structure, ONCE */
     Points = Vect_new_line_struct();
@@ -155,71 +179,70 @@ int main (int argc, char *argv[])
     ************************************************/
 
     n_points = 2;
-    i = 1;
 
-    while (fgets (buf, sizeof(buf), site) != NULL)
-            {
-	                    /* skip comment lines */
-	    if (!isdigit(*buf) && *buf != '-') continue; 
-            fprintf(stderr,"\b\b\b\b\b%5d",i); 
-            ptr = buf;
-            for (;;)
-            {
-               while (*ptr == ' ' || *ptr == '\t') ptr++;
-               if (*ptr == '\174') *(ptr) = '\040';      /* | */
-               if (*ptr == '\043') *(ptr) = '\040';      /* # */
-               if (*ptr == '\012' || *ptr == '\015' || *ptr == 0) break;
-               ptr++;
-            }
-            ier = sscanf (buf, "%lf %lf %d %[^\n]", 
-                  &east, &north, &cat, desc);
+    /******** Modified for 5.0 sites API EGM 10/2000 ********/
+    count = 0;
+    if (G_site_describe(site, &dims, &map_type, &strs, &dbls) != 0) {
+        G_fatal_error("Unable to guess site_list format!\n");
+    }
+    s = G_site_new_struct(map_type, dims, strs, dbls);
+    
+    if ((index + 1) > s->str_alloc) {
+        if(s->str_alloc <= 0) {
+            G_warning("No string attributes in site_list\n");
+            index = -1;
+        }
+        else {
+            index = 0;
+            G_warning("String attribute index out of range.\n"
+                                    "Using first attribute instead.\n");
+        }
+    }
+    while (G_site_get(site,s) >= 0) {
+        xarray[1] = xarray[0] = s->east;
+        yarray[1] = yarray[0] = s->north;
+        count++;
+        
+        switch (s->cattype) {
+            case CELL_TYPE:
+                fprintf(attr,"P %15.6f %15.6f %d\n",
+                                        s->east, s->north, s->ccat);
+                fprintf(tmp, "%d:", s->ccat);
+                break;
+            case FCELL_TYPE:
+                fprintf(attr,"P %15.6f %15.6f %-15.6f\n",
+                                        s->east, s->north, s->fcat);
+                fprintf(tmp, "%f:", s->fcat);
+                break;
+            case DCELL_TYPE:
+                fprintf(attr,"P %15.6f %15.6f %15.6f\n",
+                                        s->east, s->north, s->dcat);
+                fprintf(tmp, "%f:", s->dcat);
+                break;
+            default:
+                fprintf(attr,"P %15.6f %15.6f %d\n",
+                                        s->east, s->north, count);
+                fprintf(tmp, "%d:", count);
+        }
 
-  	    if ( ier < 3)
-	        {
-	        fprintf (stderr, "\nBad line '%s'\n", buf);
-		sleep(2);
-                fprintf (stderr,"\n\ntransfering sites to vect file      ");
-	        continue;
-	        }
+        if (index >= 0) {
+            fprintf(tmp, "%s\n", s->str_att[index]);
+        }
+        else {
+            fprintf(tmp, "\n");
+        }
 
-                     /* put in x,y coord record */
-	    /*********** changed by PWC 2/6/95 ************
-            *x = east; xarray[1] = xarray[0];
-            *y = north; yarray[1] = yarray[0];
-	    **********************************************/
-            xarray[1] = xarray[0] = east;
-            yarray[1] = yarray[0] = north;
-
-		     /* make an attribute record */
-  	    fprintf(attr,"P %15.7f %15.7f%7d\n",east,north,cat); 
-                     /* make a category record */
-
-	    /*********** changed by PWC 2/6/95 ***********
-            fprintf(tmp,"%d:%s\n",cat,desc);
-	    *********************************************/
-            fprintf(tmp,"%d:",cat);
-            if (ier == 4) fprintf(tmp,"%s",desc);
-            fprintf(tmp,"\n");
-
-		     /* make a vector dig record */
-	    if (0 > Vect_copy_xy_to_pnts (Points, xarray, yarray, n_points))
-	      G_fatal_error ("Vect_copy error");
-/*
-fprintf(stderr,"\t#points= %d\n",Points->n_points);
-for (ier = 0; ier < Points->n_points; ier++)
-{
-fprintf(stderr,"Points[%d] x= %f, y= %f\n",ier,Points->x[ier],Points->y[ier]);
-}
-fprintf(stderr,"\twrite line\n");
-*/
-	    Vect_write_line (&Map,  (unsigned int) type, Points);
-	    i++;
-	    }
+                 /* make a vector dig record */
+        if (0 > Vect_copy_xy_to_pnts (Points, xarray, yarray, n_points))
+            G_fatal_error ("Vect_copy error\n");
+        Vect_write_line (&Map,  (unsigned int) type, Points);
+    }
     fprintf(stderr,"\n");
     fclose(attr);
     fclose(site);
     fclose(tmp);
     Vect_close (&Map);
+	G_site_free_struct(s);
 
     /************* added by PWC 2/6/95 **************/
     sprintf(buf, "sort -o%s -t: +0n -1 %s", temp_file, temp_file);
@@ -240,16 +263,14 @@ fprintf(stderr,"\twrite line\n");
        }
 
                      /* make a category file header */
-    fprintf(cats,"# %d categories\n%s\n\n0.00 0.00 0.00 0.00\n0:no data\n",i-1,N_name);
+    fprintf(cats,"# %d categories\n%s\n\n0.00 0.00 0.00 0.00\n0:no data\n",
+					count,N_name);
     while (fgets (buf, sizeof(buf), tmp) != NULL)
-            fprintf(cats,"%s",buf);
+        fprintf(cats,"%s",buf);
 
     fclose(cats);
     fclose(tmp);
-
     sprintf( command, "%s/etc/v.build map=%s thresh=no",G_gisbase(), N_name) ;
-
-/*  fprintf(stderr,"%s\n",command);   */
     ier = system ( command );
     if (ier && 0xff00)
 	{
@@ -261,3 +282,4 @@ fprintf(stderr,"\twrite line\n");
     fprintf (stdout,"\n<%s> vector file complete\n", N_name); 
     exit (1);
 }
+/* vim: softtabstop=4 shiftwidth=4 expandtab */

@@ -47,8 +47,12 @@ main (int argc, char **argv)
   {
     struct Option *input, *lag, *lagtol, *angle, *angtol, *save;
   } parm;
-
+  struct GModule *module;
+  
   G_gisinit (argv[0]);
+  module = G_define_module();
+  module->description =      
+                      "Sample semivariogram of a GRASS sites list.";
 
   parm.input = G_define_option ();
   parm.input->key = "sites";

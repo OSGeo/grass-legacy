@@ -1,3 +1,4 @@
+#include "gis.h"
 #include <stdio.h>
 #include "includes.h"
 
@@ -22,8 +23,53 @@ int Panel_save (char *name, int top, int bottom, int left, int right)
     int width, height, i;
     XImage *impanel;
     char *dpoint;
+    XWindowAttributes xwa;
+    Window	mywin;
+    int		win_px, win_py;
+    int 	win_qx, win_qy;
+    Window 	trashwin;
+    int new_x, new_y;
+    
+    if ( !XGetWindowAttributes(dpy,grwin, &xwa) )
+      return (-1);
+ 
+    XTranslateCoordinates(dpy, grwin, xwa.root, -xwa.border_width,
+	-xwa.border_width, &win_px, &win_py, &trashwin);
 
-    /* Adjust panel edges if outside window necessary */
+    win_qx = (DisplayWidth(dpy,DefaultScreen(dpy)) - win_px - 
+ 		xwa.border_width * 2 - xwa.width );
+    win_qy = (DisplayHeight(dpy,DefaultScreen(dpy)) - win_py - 
+                xwa.border_width * 2 - xwa.height );
+
+    if ( win_px < 0 | win_py < 0 | win_qx < 0 | win_qy < 0 )
+    {
+       new_x = win_px;
+       new_y = win_py;
+       if (  win_px < 0 )
+         new_x = 10;
+       if ( win_py < 0 )
+         new_y = 10;
+       if ( win_qx < 0 )
+          new_x = DisplayWidth(dpy,DefaultScreen(dpy)) - xwa.width - 10;
+       if ( win_qy < 0 )
+          new_y = DisplayHeight(dpy,DefaultScreen(dpy)) - xwa.height - 10;
+
+       fprintf (stderr, "Interactive Windows must be fully visible\n");
+       fprintf (stderr, "moving window \n");
+
+       XMoveWindow(dpy, grwin, new_x, new_y);
+       if ( !XGetWindowAttributes(dpy,grwin, &xwa) )
+       return (-1);
+       XFlush (dpy);
+       sleep(1);
+    }
+
+    SCREEN_TOP = xwa.x+1;
+    SCREEN_LEFT = xwa.y+1;
+    SCREEN_RIGHT = xwa.width - 1 ;
+    SCREEN_BOTTOM = xwa.height - 1;
+
+   /* Adjust panel edges if outside window necessary */
     if (top < SCREEN_TOP)
         top = SCREEN_TOP;
     if (bottom > SCREEN_BOTTOM)
@@ -34,7 +80,7 @@ int Panel_save (char *name, int top, int bottom, int left, int right)
         right = SCREEN_RIGHT;
 
     height = bottom - top + 1;
-    width = right - left+1;
+    width = right - left + 1;
 
     /* Get the image off the window */
     if (!backing_store)
@@ -78,7 +124,7 @@ int Panel_restore (char *name)
 {
     int fd, i;
     int top, left, width, height, bytes_per_line, xoffset, depth;
-    char *data, *tdata, *malloc();
+    char *data, *tdata; /* , *G_malloc(); */
     XImage *newimage;
     XWindowAttributes xwa;
 
@@ -97,9 +143,9 @@ int Panel_restore (char *name)
 
     /* allocate space and read the data points */
     /*
-    data = malloc((unsigned) width * height);
+    data = (char *) G_malloc((unsigned) width * height);
     */
-    data = malloc((unsigned) bytes_per_line * height);
+    data = (char *) G_malloc((size_t) (bytes_per_line * height));
     /*   another way of reading data
     read(fd, (char *) &data, bytes_per_line * height);
     */

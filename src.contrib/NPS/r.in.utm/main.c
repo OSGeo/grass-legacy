@@ -44,7 +44,7 @@ main (int argc, char *argv[])
     int row, col;		/* Holds row/col value. */
     int lrow, lcol;		/* Values passed to functions. */
     double a,e;
-    int zone, len;
+    int zone, len = 1024;
     char buf[1024], buf1[1024];
     struct
     {

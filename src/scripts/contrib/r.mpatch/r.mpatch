@@ -1,0 +1,134 @@
+#!/bin/sh
+#
+# $Id$
+#
+############################################################################
+#
+# MODULE:	r.mpatch
+# AUTHOR(S):	Huidae Cho - hdcho@geni.knu.ac.kr
+# PURPOSE:	unlimited number of raster maps to be patched
+# COPYRIGHT:	(C) 2000 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+program=`basename $0`
+
+if [ ! "$GISBASE" ]
+then
+	echo
+	echo "ERROR: must be in GRASS to use $program"
+	echo
+	exit 1
+fi
+
+if [ $# -lt 2 -o "$1" = "-help" -o "$1" = "help" ]
+then
+	echo
+	echo "Usage:"
+	echo " $program input=name[,name,...] output=name"
+	echo
+	exit 1
+fi
+
+for i
+do
+	case $i in
+		i=*|in=*|inp=*|inpu=*|input=*)
+			input=`echo $i | awk -F '=' '{print $2}'` ;;
+		o=*|ou=*|out=*|outp=*|outpu=*|output=*)
+			output=`echo $i | awk -F '=' '{print $2}'` ;;
+		*)
+			echo
+			echo "Unrecognized option: $i"
+			echo "Usage: $program input=name[,name,...] output=name"
+			echo
+			exit 1 ;;
+	esac
+done
+
+echo $input | grep ',' > /dev/null
+if [ $? -ne 0 ]
+then
+	echo
+	echo "ERROR: The min number of input is two."
+	echo
+	exit 1
+fi
+
+if [ -f $LOCATION/cell/$output ]
+then
+	echo
+	echo "ERROR: $output already exists."
+	echo
+	exit 1
+fi
+
+iout=${output}_
+while :
+do
+	if [ ! -f $LOCATION/cell/$iout ]
+	then
+		break
+	fi
+	iout=${iout}_
+done
+
+echo "Use temporary map '$iout'"
+
+list=`echo $input | awk 'BEGIN{FS=","}{for(i=1;i<=NF;i++) print $i}'`
+
+n=0
+firsttwo=""
+rest=""
+for i in $list
+do
+	if [ ! -f $LOCATION/cell/$i ]
+	then
+		continue
+	fi
+
+	n=`expr $n + 1`
+	case $n in
+		1)
+			firsttwo=$i ;;
+		2)
+			firsttwo="$firsttwo,$i" ;;
+		*)
+			rest="$rest $i" ;;
+	esac
+done
+
+if [ $n -eq 0 ]
+then
+	echo
+	echo "ERROR: No input exists"
+	echo
+	exit 1
+elif [ $n -lt 2 ]
+then
+	echo
+	echo "ERROR: The min number of input is two."
+	echo
+	exit 1
+fi
+
+echo
+echo "	Patching $firsttwo..."
+$GISBASE/bin/r.patch input=$firsttwo output=$output
+g.rename rast=$output,$iout
+
+for i in $rest
+do
+	echo "	Patching $i..."
+	$GISBASE/bin/r.patch input=$iout,$i output=$output
+	g.remove rast=$iout
+	g.rename rast=$output,$iout
+done
+g.rename rast=$iout,$output
+
+exit 0
+

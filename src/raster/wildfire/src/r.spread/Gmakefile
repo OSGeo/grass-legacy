@@ -1,0 +1,29 @@
+# $Id: Gmakefile,v 1.3 2000-09-11 09:47:58 justin Exp $
+
+PGM = r.spread 
+LIST =  main.o \
+	collect_ori.o \
+	display.o \
+	insertHa.o \
+	spread.o \
+        deleteHa.o \
+	insert2Ha.o \
+	replaceHa.o \
+	get_minHa.o \
+	fixHa.o \
+	ram2out.o \
+        select_linksB.o \
+	spot.o \
+	pick_dist.o \
+	pick_ignite.o
+#       select_linksC.o \
+#       select_linksD.o
+        
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
+
+$(LIBES): #
+
+$(LIST): costHa.h cell_ptrHa.h

@@ -6,7 +6,6 @@
 #include "line_pnts.h"
 #include "display_line.h"
 #include "dig_curses.h"
-#include "dig_head.h"
 #include "Map_proto.h"
 #include "local_proto.h"
 
@@ -52,7 +51,7 @@ int move_line (struct Map_info *map)
 	}
 
     /*  find which point in line to move  */
-	if (is_site = (map->Line[line].type == DOT))
+	if ((is_site = (map->Line[line].type == DOT)))
 	    point_num = 0;
 	else
 	{

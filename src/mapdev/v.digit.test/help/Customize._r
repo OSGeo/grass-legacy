@@ -1,4 +1,0 @@
- TOGGLE BLOCK-REMOVE DISPLAY OPTION
-   This option allows you to select the mode that the screen is updated
- after a Block Remove operation. REMOVE  specifies to show each line being
- removed.  REDRAW specifies to redraw the entire screen.

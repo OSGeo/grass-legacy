@@ -227,7 +227,7 @@ void
 db_init_column (column)
     dbColumn *column;
 {
-    db_zero (column, sizeof(dbColumn));
+    db_zero ((void *)column, sizeof(dbColumn));
     db_init_string (&column->columnName);
     db_init_string (&column->description);
     db_init_string (&column->value.s);

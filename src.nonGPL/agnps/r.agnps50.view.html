@@ -1,0 +1,457 @@
+<TITLE>r.agnps_output</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>Guidelines for AGNPS-GRASS Output Interface (The Visualization Tool)</h2>
+<p>
+Current NPS models including AGNPS have very limited graphics capability
+for visualizing
+and analyzing the model output.
+A distributed parameter model should assist in pinpointing the critical areas
+where one needs to pay attention for controlling NPS pollution.
+Even though AGNPS gives detailed output, users often can not make use of it,
+due to lack of proper analyzation and visualization tools.
+Graphical displays of the results have proven to be a more effective
+and efficient way of interpreting the results and in making decisions
+than scaning through pages and pages of numerical output in the form
+of tables.
+The following sections discuss the visualization tool in detail.
+<p>
+r.agnps50.view
+<p>
+<EM>AGNPS Output Parameters</EM>
+<p>
+Various output options are available with the AGNPS model. Primary output
+given for watersheds being analyzed includes watershed area, cell size,
+storm precipitation, rainfall erosivity (EI), estimates of runoff volume, peak 
+flow rate at the watershed outlet, area-weighted erosion, both upland
+and channel. Also given are estimates of the sediment delivery ratio, sediment
+enrichment ratio, mean sediment concentration, and total sediment yield for
+each of five sediment particle size classes. Also available is a nutrient analysis,
+which include N, P and COD mass per unit area for both soluble and sediment
+adsorbed nutrients, and N, P and COD concentrations in the runoff. Table 1 lists
+a summary of output parameters that can be obtained for each cell or all cells
+if desired.
+<p>
+<b>Table 1: AGNPS output parameters at the watershed outlet or any cell</b>
+<p>
+
+<p>
+Hydrology output
+<ul>
+<li>Runoff volume (inches)
+<li>Peak runoff rate (cubic feet/second)
+<li>Fraction of runoff generated within the cell
+</ul>
+
+Sediment output
+<ul>
+<li>Sediment yield (tons)
+<li>Sediment concentration (ppm)
+<li>Sediment particle size distribution
+<li>Upland erosion (tons/acre)
+<li>Amount of deposition (%)
+<li>Sediment generated within the cell (tons)
+<li>Enrichment ratios by particle size
+<li>Delivery ratios by particle size
+</ul>
+
+Chemical output!Nitrogen
+<ul>
+<li>Sediment associated mass (pounds/acre)
+<li>Concentration of soluble material (ppm)
+<li>Mass of soluble material (pounds/acre)
+</ul>
+
+Phosphorus
+<ul>
+<li>Sediment associated mass (pounds/acre)
+<li>Concentration of soluble material (ppm)
+<li>Mass of soluble material (pounds/acre)
+</ul>
+
+Chemical oxygen demand (COD)
+<ul>
+<li>Concentration (ppm)
+<li>Mass (pounds/acre)
+</ul>
+
+<p>
+
+Initially the visualization interface generates 17 maps (Table 2) from the
+ASCII output files of an AGNPS run. The generated
+maps can be saved for future evaluation of output.
+All maps are generated using the <B>reclass</B> principle of the GRASS
+GIS tool, thereby minimum disk space is required. The map
+from which all output maps were reclassed (cell number map,
+<EM>filename_cell_num</EM>, where filename refers to the AGNPS ASCII input/output 
+file without its extension) should not be removed.
+<p>
+
+<b>Table 2: List of AGNPS output maps created using Visualization tool</b>
+<p>
+
+Cell number map
+<p>
+Hydrology output
+<ul>
+<li>Runoff generated map
+<li>Runoff from upstream map
+<li>Runoff to downstream map
+</ul>
+
+Sediment output
+
+<ul>Erosion map
+<li>Deposition map
+<li>Sediment leaving the cell map
+</ul>
+
+Chemical output
+<ul>
+<li>Nitrogen associated with Sediment (generated) map
+<li>Nitrogen associated with Sediment (leaving) map
+<li>Nitrogen associated with Runoff (generated) map
+<li>Nitrogen associated with Runoff (leaving) map
+<li>Phosphorus associated with Sediment (generated) map
+<li>Phosphorus associated with Sediment (leaving) map
+<li>Phosphorus associated with Runoff (generated) map
+<li>Phosphorus associated with Runoff (leaving) map
+<li>COD associated with Runoff (generated) map
+<li>COD associated with Runoff (leaving) map
+</ul>
+
+<p>
+
+<B>Name of the AGNPS-GRASS Output Interface Program</B>: <EM>r.agnps50.view</EM>.
+<p>
+<B>Procedures to follow while executing the Output Interface (the Visualization Tool)</B>:
+<p>
+First start GRASS 5.x from a shelltool window with the mapset where
+the data resides.
+<p>
+Resize the graphics monitor to fit the full screen of the workstation and
+use the <EM>Dselect.mon</EM> program to select the monitor. 
+The GRASS shelltool window
+should be at the right hand side bottom of the screen.
+<p>
+Execute the <EM>r.agnps50.view</EM> program from the shelltool window where GRASS
+is running
+<p>
+A <EM>Visualization Tool Input</EM> menu will appear on the shelltool window requesting the
+following data/information from the user:
+<p>
+Enter Watershed Map name: Enter the name of the watershed boundary map 
+containing cell values greater than zero and zero's for cells outside the watershed boundary.
+<p>
+Enter the cell size in meters: The length of the side of a cell in meters for which the model was run is entered. 
+<p>
+Enter Aspect Map name: Enter the name of the aspect map for the watershed.
+It should have been created for the same resolution as the cell size above. 
+<p>
+Enter the ASCII AGNPS file name without its extension: Enter the ASCII AGNPS file name
+without its extension since the program takes the default extension of <EM>.dat</EM>
+and <EM>.nps</EM> for input and output of the model, respectively. These files should be
+in the current working directory, else give the full path with the file name.
+<p>
+
+Then hit the <EM>Esc</EM> key to continue.
+Always look for a message at the bottom of the ASCII screen for continuing
+the execution, if there is no message then hit <EM>Enter</EM> after answering
+the question else hit <EM>Esc</EM> to continue.
+<p>
+In the following sections, each output screen of the visualization tool is
+discussed. The visualization tool splits the screen into various screens to display
+the output of the model. The number of windows created depends on the type
+of output displayed. The tool always reserves an ASCII terminal (non graphics)
+for interacting with the user. 
+The first screen (Figure 1) provides various options including a
+watershed summary (no graphics) and spatially distributed soil loss, nutrients,
+runoff and feedlot movement (graphics) output of a watershed.
+<p>
+Figure 1: Initial screen of the Visualization tool
+<p>
+<PRE>
+<p>
+Visualization Tool Main Menu
+<p>
+Output Display Options
+1. Watershed Summary including sediment (no graphics)
+2. Soil Loss (graphics)
+3. Nutrients Movement (graphics)
+4. Feedlot Analysis (graphics)
+5. Runoff Movement (graphics)
+6. Analyze Different Scenarios
+7. Save Output Maps
+8. Exit to GRASS (to come back type 'return')
+9. Quit
+Enter the choice (1-9):
+
+</PRE>
+<p>
+Option 1 (Figure 1) displays the watershed summary for soil loss,
+runoff and nutrient movement at the watershed outlet.
+This output is displayed in the non-graphics window. The
+watershed summary can be accessed from any part of the visualization tool,
+providing an opportunity for decision makers/users to compare the detailed cell
+output with the watershed outlet output for making decisions.
+<p>
+Options 2-5 (Figure 1) move to the next screen (Figure 2)
+where the appropriate output option maps are displayed.
+This screen is divided into numerous windows depending on the
+output option chosen. The screen is divided in half, having
+a series of top row windows and bottom row windows with an ASCII terminal.
+The top row windows display the output
+maps (Table 2). A scale for each of the output maps is displayed showing
+the color and the numerical value associated with it. The color of the output
+maps range from green-yellow-red, with increasing intensity of output.
+The right hand top corner window displays the watershed
+map with cell numbers by laying a grid on top of it for reference.
+Below this cell number map, the aspect map of the watershed with arrows
+pointing in the flow directions is displayed.
+In the bottom row, two windows display the
+output and input statistics for any cell. The left window shows cell inputs.
+The output window shows a bar chart and key features
+of the output option statistics for the same cell. The default
+cell statistics displayed in the bottom row windows are the statistics
+for the outlet cell of the watershed.
+The tool provides error checking and also explains
+what to do at each step.
+<p>
+In the next section, options 6-9 of Figure 1 are discussed.
+<p>
+<EM>Analyze Different Scenarios</EM>: This option allows the user to visualize and 
+analyze a different simulation for the same resolution of the 
+original run. The user is asked to enter the name of the ASCII AGNPS file
+name without its extension. The AGNPS run that was started with the visualization
+tool is called the 'current' and the simulation that was selected using
+this option is referred as 'selected' hereafter in this documentation.
+The program checks the resolutions between the 'current' and the 'selected' runs and checks for the same file names.
+Then the program creates the 17 output maps (Table 2) and displays the 'current' and the 'selected' output maps on the screen in the top row windows. The default
+output is the sediment movement maps. Bottom row
+windows display the output histograms of the 'current' and the 'selected' simulations.
+The left bottom row window corresponds to the 'current' input/output
+window and the right bottom row window corresponds to the 'selected'
+input/output.
+<p>
+Under this option the user has the same options (Figure 2) discussed 
+earlier in this document. In addition to this, the user can alter the
+output visualization/analyzation to other model outputs such as sediment,
+nutrients, feedlot or runoff movement. While using options 2 and 3 (Figure 2),
+the user is asked to select either input or output to view in the bottom row windows.
+<p>
+For options 5 and 8 (Figure 2), the user is asked to select either
+the 'current' or the 'selected' simulation results to view in a window.
+<p>
+This option is one of the strongest feature of the visualization tool
+for analyzing different scenarios simultaneously.
+<p>
+<EM>Save Output Maps</EM>: This option allows the user to save the maps created
+using the visualization tool. The user
+can save all or only those outputs of interest, which include sediment, N, P, 
+COD, and runoff. The program asks the user to enter a map name for 
+saving the output
+maps. The program attaches proper extensions depending on the type of outputs (Appendix 1).
+Please refer to the appendix 1 for the extensions of different map names.
+It also contains reserved map names that should not exist in the current mapset.
+Do not remove the <EM>filename_cell_num</EM> map, since all output maps
+created in the visualization tool are reclassed from the created cell number
+map.
+<p>
+<EM>Exit to GRASS (to come back type 'return')</EM>: This option allows the user
+to exit to the GRASS temporarily to perform normal operations under the GRASS GIS
+tool. To come back to the same menu in the visualization tool, type <EM>return</EM> and hit enter.
+<p>
+<EM>Quit</EM>: This option takes the user back the GRASS prompt and exits from
+the visualization tool. The output maps created will be removed from the
+current mapset, but will not affect those maps that are saved using the
+<EM>Save Output Maps</EM> option. If you plan to use output maps at some future
+time, be sure to save them.
+<p>
+Figure 2: Generic options screen of the visualization tool for spatially distributed output
+<p>
+<PRE>
+<p>
+Cell input and output Display Options
+<p>
+1. Zoom
+2. View a Cell
+3. View an area output
+4. Toggle between flow direction map/viewing area
+5. Show the watershed summary output
+6. Displayed range of output maps
+7. Display user's choice map
+8. Draw Cumulative and Frequency Distribution Stats
+9. Restore the initial screen
+10. Exit to GRASS (to come back type 'return')
+11. Quit
+Enter the choice (1-11):
+
+</PRE>
+<p>
+Each of the options in Figure 2 is discussed below: Its usage and
+how this assists users or decision makers is described.
+These options can be used alone or in combination with other options.
+<p>
+<EM>1. Zoom</EM>: Allows users to zoom in or zoom out of any section of
+the watershed by choosing one of the displayed windows. Once the zoom operation is
+performed, the tool automatically adjusts or redisplays all the maps in the
+top row windows to the same area, enabling users to take a closer look
+at an area of interest. This option is particularly helpful on large watersheds.
+Once the <EM>Zoom</EM> option is selected, the tool requests for a window 
+to perform zoom operations. The user has to use the left mouse key to click
+on one of the top row windows and then click on the right mouse key to complete
+the selection process. Then the <EM>zoom</EM> function asks the user to use
+the left mouse to click on a place to define the area in the selected window,
+and then drag the mouse to the desired location and click on the right mouse key
+to complete the zoom process. Always follow the instructions displayed
+on the ASCII terminal. Failing to do so can cause the program to stop. Similarly,
+the unzoom operation can be performed.
+<p>
+<EM>2. View a cell</EM>: This option allows the user to enter a cell number of
+interest to display the statistics of that cell's inputs and outputs in the
+bottom row of windows. The displayed bar chart depends on the type of
+option chosen in the initial screen (Figure 1). The cell number can be either
+entered directly using the keyboard in the ASCII terminal or the mouse can be 
+used to point out a cell on the graphics monitor using the left mouse key after
+choosing one of the top row windows. The window selection process is detailed
+in the <EM>Zoom</EM> section.
+This feature is helpful to visualize characteristics of both inputs
+and outputs of a critical area.
+<p>
+<EM>3. View an area output</EM>: This option allows the user to select an area
+from one of the top row windows and displays the average input and output
+statistics for that area in the bottom row windows. Here also, the user
+is asked to select a window from the top row windows using the
+selection procedure explained earlier. Then using the left
+mouse key, the user selects a corner of the desired area and drags the
+mouse to build a box. Click the right mouse key to complete the process.
+This information is helpful to study the statistics of the
+critical areas and its neighbors. Using this option, one could estimate
+average inputs and outputs for a field which should assist in making further
+decisions.
+<p>
+<EM>4. Toggle between flow direction map and viewing window location</EM>: This
+feature is helpful when users use <EM>Zoom</EM> to view any particular section
+of the watershed. After a couple of zoom operations, users may
+loose track of which part of the watershed is displayed. This option
+toggles between the flow direction map and the whole watershed map showing a
+box around the current viewing area.
+<p>
+<EM>5. Show the watershed summary output</EM>: The summary at the
+outlet of the watershed for all the outputs is displayed in the
+ASCII (non graphics) terminal. This option is useful to correlate
+cell outputs with those of watershed outputs to make decisions.
+<p>
+<EM>6. Display ranges of output maps</EM>: This option allows users to visualize
+output maps (Table 2) for a specified range between maximum
+and minimum values of the output (Figure 1) chosen. This helps users locate
+critical areas easily. For example, users can use this option to display
+problematic areas that are exceeding the soil tolerance limit (T factor).
+Options are available
+to save the displayed maps for later reference, compare various scenarios or
+overlay one map on another in order to make decisions.
+<p>
+<EM>7. Display user's choice map</EM>: Users have an option to display a cell
+map, overlay a map on another map or display a vector map. The chosen map
+can be displayed on one of the existing windows or users have an option to
+create
+a new window anywhere in the graphics monitor to display the map.
+Further, the map chosen for display can be one of the AGNPS output maps (Table 2)
+generated from the AGNPS output files or one of the existing maps in the
+database. From of the users/decision makers point of view, this option is helpful
+to reach conclusions about management strategies. For example, by overlaying
+a field boundary or property boundary on an erosion map,
+fields within critical limits can be located.
+Combinations of various outputs can be viewed simultaneously on the designed
+graphic windows.
+On selection of this option, the user is prompted for the map to be displayed.
+If the user
+selects to display the map in one of the existing windows, then the selection of the window
+operation is performed followed by the selection of the type of display. This could
+be to display a cell map, overlay a map on another map or display a vector map.
+Maps are listed for selection. If the user selected the option to
+create a new window to display a map, then the program requests 
+a location to start the window. Using the left mouse key, drag the mouse
+to create a box of desired size and click the right mouse key to end the
+process. 
+<p>
+<EM>8. Draw Cumulative and Frequency Distribution Statistics</EM>: This option
+allows the user to view the percentage of cumulative and frequency distribution 
+area curves for
+any of the output maps (Table 2) or selective input variables for either
+user specified ranges of intervals/classes or for 10 equal ranges of intervals/classes between the maximum and minimum
+of the selected variable. This option is helpful to see how that particular
+variable is distributed both cumulatively and the number of occurrences 
+in that interval. It is believed this information in combination with
+spatial referenced maps could be of very useful in the decision making process.
+The steepness of the curve shows how that variable is increasing within a corresponding range.
+By choosing this option, the program requests a window to display
+the statistical curves. Then, the program asks the user to select
+either an input or output variable for which to draw the curves. The
+user then has the option of keeping the previously selected X-axis intervals/classes or can
+select a new range of intervals/classes. The selection of new ranges of intervals can
+be done in one of two ways. Either the user can select 10 equal intervals between
+the maximum and minimum of the selected variable or he can enter the ranges between
+the maximum and minimum values. In either case, the number of intervals can't
+exceed 10.
+<p>
+<EM>9. Restore the initial screen</EM>: This option restores the original or
+initial display screen that was initiated when one of the options from Figure 1
+was chosen.
+<p>
+<EM>10. Exit to GRASS (to come back type 'return')</EM>: This option allows the user
+to exit to the GRASS temporarily to perform normal operations under the GRASS GIS
+tool. To come back to the same menu in the visualization tool, type <EM>return</EM> and hit enter.
+<p>
+<EM>11. Quit</EM>: This option takes the user back to the initial screen (Figure 1).
+If the user has created any maps using option 6, the program asks if these 
+are to be saved before quiting.
+<p>
+<b>Appendix 1: List of AGNPS output maps and reserved map names</b>
+<p>
+<PRE>
+
+<p>
+Hydrology output<br>
+Runoff generated map					ro_gen		<EM>X</EM>.ro_gen
+Runoff from upstream map				ro_us		<EM>X</EM>.ro_us
+Runoff to downstream map				ro_ds		<EM>X</EM>.ro_ds
+<p>
+Sediment output<br>
+Erosion map						Sed_in 		<EM>X</EM>.Sed_in
+Deposition map						Sed_gen		<EM>X</EM>.Sed_gen
+Sediment leaving the cell map				Sed_out		<EM>X</EM>.Sed_out
+<p>
+Chemical output<br>
+Nitrogen associated with Sediment (generated) map	N_sed_in	<EM>X</EM>.N_sed_in
+Nitrogen associated with Sediment (leaving) map		N_sed_out	<EM>X</EM>.N_sed_out
+Nitrogen associated with Runoff (generated) map		N_ro_in		<EM>X</EM>.N_ro_in
+Nitrogen associated with Runoff (leaving) map		N_ro_out	<EM>X</EM>.N_ro_out
+Phosphorus associated with Sediment (generated) map	P_sed_in	<EM>X</EM>.P_sed_in
+Phosphorus associated with Sediment (leaving) map	P_sed_out	<EM>X</EM>.P_sed_out
+Phosphorus associated with Runoff (generated) map	P_ro_in		<EM>X</EM>.P_ro_in
+Phosphorus associated with Runoff (leaving) map		P_ro_out	<EM>X</EM>.P_ro_out
+COD associated with Runoff (generated) map		COD_ro_in	<EM>X</EM>.COD_ro_in
+COD associated with Runoff (leaving) map		COD_ro_out	<EM>X</EM>.COD_ro_out
+
+</PRE>
+<p><EM>filename</EM>: Refers to the AGNPS ASCII input/output file without its extension
+<p>
+<EM>X</EM>: Refers to the name supplied by the user. The maps are saved with 
+the extension in the current mapset.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.agnps50.input.html">r.agnps50.input</A></EM><BR>
+<EM><A HREF="r.agnps50.run.html">r.agnps50.run</A></EM><BR>
+<p>
+<a href=http://www.geog.uni-hannover.de/phygeo/grass/agnps.html>AGNPS Page</a>
+
+
+<P>
+</body>
+</html>

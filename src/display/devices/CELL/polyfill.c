@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "gis.h"
 #include "cell.h"
 
 /********************************************************
@@ -56,7 +57,7 @@ int polyfill (
 /* traverse the perimeter */
 
     np = 0;
-    P = (POINT *) calloc (npmax = 32, sizeof (POINT));
+    P = (POINT *) G_calloc (npmax = 32, sizeof (POINT));
 
     xN = x0 = *x++;
     yN = y0 = *y++;
@@ -137,7 +138,7 @@ static int edge_point ( register int x, register int y)
 {
 
     if (np >= npmax)
-        P = (POINT *) realloc (P, (npmax += 32) * sizeof (POINT));
+        P = (POINT *) G_realloc (P, (npmax += 32) * sizeof (POINT));
     P[np].x   = x;
     P[np++].y = y;
 

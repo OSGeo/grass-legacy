@@ -1,5 +1,0 @@
-
-@man("p.screen") - Prints a graphics monitor display image file that has been
-saved by @man("d.savescreen").
-
-(GRASS Paint/Print Output Program)

@@ -6,7 +6,6 @@
 #include "digit.h"
 #include "debug.h"
 #include "raster.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "wind.h"
 #include "local_proto.h"
@@ -29,10 +28,15 @@ set_window_w_mouse (void)
 
     Clear_info ();
     _Clear_base ();
-    _Write_base (12, "Buttons:") ;
-    _Write_base (13, "Left:   Establish a corner") ;
-    _Write_base (14, "Middle: Widen view") ;
-    Write_base  (15, "Right:  Accept window") ;
+    _Write_base (12, "   Buttons:") ;
+    _Write_base (13, "      Left:   Establish a corner") ;
+#ifdef ANOTHER_BUTTON
+    _Write_base (14, "      Middle: Widen view") ;
+    Write_base  (15, "      Right:  Accept window") ;
+#else
+    _Write_base (14, "      Middle: Accept window") ;
+    Write_base  (15, "      Right:  Widen view") ;
+#endif
 
     cur_screen_x = (int)D_west ;
     cur_screen_y = (int)D_south ;
@@ -54,13 +58,23 @@ top:
 	Clear_info ();
 
 	switch (button) {
-	    case 1:
+	    case LEFTB:
 		cur_screen_x = screen_x ;
 		cur_screen_y = screen_y ;
 		screen_to_utm ( cur_screen_x, cur_screen_y, &ux1, &uy1) ;
 		break;
 
-	    case 2:
+	    case MIDDLEB:
+		if ( cur_screen_x == screen_x  ||  cur_screen_y == screen_y)
+		{
+		    Write_info(2, "Window is too small to display") ;
+		    continue ;
+		}
+		screen_to_utm ( screen_x, screen_y, &ux2, &uy2) ;
+		    goto foo;
+		break;
+
+	    case RIGHTB:
 	    {
 		double sN, sS, sE, sW;
 
@@ -104,15 +118,6 @@ top:
 /*DEBUG*/ debugf ("MKWIND default (%lf, %lf, %lf, %lf)\n", sN, sS, sE, sW);
 		draw_default_window (sN, sS, sE, sW);
 	    }
-		break;
-	    case 3:
-		if ( cur_screen_x == screen_x  ||  cur_screen_y == screen_y)
-		{
-		    Write_info(2, "Window is too small to display") ;
-		    continue ;
-		}
-		screen_to_utm ( screen_x, screen_y, &ux2, &uy2) ;
-		    goto foo;
 		break;
 	}
 

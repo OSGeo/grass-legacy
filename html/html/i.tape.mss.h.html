@@ -1,0 +1,69 @@
+<html>
+
+<TITLE>i.tape.mss.h</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>i.tape.mss.h</b></EM>  - 
+An imagery function that extracts header information from LANDSAT 
+Multispectral Scanner (MSS) imagery data stored on half-inch tape. 
+<BR>
+<EM>(GRASS</EM> Image Processing Program)</B> 
+
+<H2>SYNOPSIS</H2>
+
+<B>i.tape.mss.h</B> 
+<BR>
+<B>i.tape.mss.h help</B> 
+<BR>
+<B>i.tape.mss.h</B> <EM>tape_drive_name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>i.tape.mss.h</EM>
+reads the header information on a Multispectral Scanner (MSS) 
+tape. This program reads the specified input file 
+(the computer-compatible tape <EM>tape_drive_name</B>),</EM> 
+and by default displays the output to the user's terminal. 
+The user may redirect output to a file by using the UNIX redirection 
+mechanism. For example: 
+<DL>
+<DT>
+<DD><B>i.tape.mss.h /dev/rmt0 &gt; h.out</B> 
+</DL>
+The name of the tape drive depends on the computer being used. 
+
+<P>
+
+This program can be run either non-interactively or interactively. 
+The user can run the program by specifying program arguments 
+on the command line. 
+Alternately, the user can simply type 
+<B>i.tape.mss.h</B> on the 
+command line, without program arguments. In this event, the program 
+will prompt the user to enter a tape device name using the standard 
+user interface described in the manual entry for 
+<EM><A HREF="parser.html">parser</A></EM>.
+
+<H2>SEE ALSO</H2>
+
+<EM>GRASS Tutorial: <A HREF="../Postscript/imagery.ps">Image Processing</A></EM>
+
+<P>
+<EM><A HREF="i.tape.mss.html">i.tape.mss</A></EM> <br>
+<EM><A HREF="parser.html">parser</A></EM> 
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>
+

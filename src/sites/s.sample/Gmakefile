@@ -13,7 +13,6 @@ TUTORIAL = s.sample-tutorial
 SOURCE  = \
 	bilinear.c \
 	cubic.c \
-	readsite.c \
 	main.c \
 	nearest.c \
 	utils.c
@@ -21,10 +20,11 @@ SOURCE  = \
 LIST  = \
 	bilinear.o \
 	cubic.o \
-	readsite.o \
 	main.o \
 	nearest.o \
 	utils.o
+
+all: $(PROGRAM)
 
 $(PROGRAM): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
@@ -62,5 +62,4 @@ bilinear.o:     methods.h
 cubic.o:        methods.h
 main.o:       	methods.h
 nearest.o:      methods.h
-readsite.o:	methods.h
 utils.o:	methods.h

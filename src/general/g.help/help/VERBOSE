@@ -1,4 +1,4 @@
-   d - Scrolls down one line        r         - Redraws the screen 
-   D - Scrolls down a screen        RETURN    - Moves "*" to a topic/word 
-   u - Scrolls up one line          SPACE BAR - Selects a topic/word 
-   U - Scrolls up a screen          ESC       - Returns to previous topic 
+  d        - Scrolls down one line   r         - Redraws the screen 
+  PAGEUP   - Scrolls down a screen   RETURN    - Moves "*" to a topic/word
+  u        - Scrolls up one line     SPACE BAR - Selects a topic/word 
+  PAGEDOWN - Scrolls up a screen     q         - Returns to previous topic

@@ -1,0 +1,5363 @@
+m.in.ntf 
+
+GRASS module that converts Ordnace Survey NTF files into
+  GRASS format.
+
+Each line in an NTF file starts with a 2 digit record type. 
+Included here is a list of supported and unsupported
+rocord types. 
+
+--------------------------------------------
+The following NTF record types are supported
+
+00 Continuation record
+01 Volume header record
+02 Database header record
+03 Data description record
+04 Data format record
+05 Feature classification record
+07 Section header record
+11 Name record
+12 Name position record
+14 Attribute record
+15 Point record
+16 Node record
+21 Geometry record
+22 3D Geometry record
+23 Line record
+40 Attribute description record
+43 Text record
+44 Text position record
+45 Text representation record
+50 Grid header record
+51 Grid data record
+99 Volume termination record
+
+
+-----------------------------------
+The following are not yet supported
+
+24 Chain record
+31 Polygon record
+33 Complex polygon
+34 Collection of features
+
+
+---------------------------------------------------------
+Coding history:
+
+Jo Wood, Department of Geography, V1.0
+29th May 1993
+
+Modified, 10th February, 1995
+
+Modified 18th October, 1995 - Incorporates 'STRATEGI' vector files.
+	Minor bug modifications, 19th October, 1995.
+				 23rd October, 1995.
+Last modified 24th October - Fixed attribute labelling problem.
+
+
+/****************************************************************/
+/***                    ntf_format.h                          ***/
+/*** Header for programs examining Ordnance Survey NTF files  ***/
+/*** To conform with BS 7567 (NTF V2.0)			      ***/
+/*** Jo Wood, Project ASSIST, 26th May 1993 		      ***/
+/****************************************************************/
+
+/*------------------------------------------------------------------------------*/
+/* 	     	      HEADER STRUCTURES - 01 02 03 04 05.			*/
+/*------------------------------------------------------------------------------*/
+
+struct VOLHDREC
+{
+    char	REC_DESC_1;	/* 01 for Volume header record.			*/
+    char	DONOR[21];	/* Will usually be ORDNANCE SURVEY.		*/ 
+    char 	RECIPIENT[21];	/* Customer name.				*/
+    char	TRANDATE[9];	/* Date of processing.				*/
+    int		SERIAL;		/* Not used.					*/
+    char	VOLNUM;		/* Volume number incremented for each vol.	*/
+    char 	NTFLEVEL;	/* NTF level.					*/
+    float	NTFVER;		/* NTF version (2.00)				*/
+    char	NTFOR;		/* 'V' for variable length record.		*/
+    char	EOR_1;		/* '%' on mag tape ' ' if not terminated here.	*/
+    char	DIVIDER;	/* '\' used to terminate variable len txt fields*/
+    char 	CONT_MARK_1;	/* '0' No further records.			*/
+    char	EOR_2;		/* '%' End of record.				*/
+};
+
+struct DBHDREC
+{
+    char	REC_DESC_1;	/* 02 for Database header record.		*/
+    char	DBNAME[21];	/* Indicates product name.			*/ 
+    char 	DDNAME[21];	/* Standard NTF data dictionary name.		*/
+    char	DDATE[9];	/* Date of standard data dictionary.		*/
+    char	DDBASE[21];	/* Not used.					*/
+    char	DDBDATE[9];	/* Not used.					*/
+    char 	CONT_MARK_1;	/* '0' No further records '1' continuation.	*/
+    char	EOR_1;		/* '%' End of record.				*/
+    char	REC_DESC_2;	/* 00 for continuation of Database header rec.	*/
+    char	FCNAME[21];	/* Not used.					*/
+    char	FCDATE[9];	/* Not used.					*/
+    char	DQNAME[21];	/* Not used.					*/
+    char	DQDATE[9];	/* Not used.					*/
+    char	DATA_MODEL;	/* Not used.					*/
+    char	CONT_MARK_2;	/* '0' No further records.			*/
+    char	EOR_2;		/* '% End of record.				*/
+};
+
+struct DATADESC
+{
+    char	REC_DESC_1;	/* 03 for Data description record.		*/
+    char	FIELD_NAME[11];	/* Field name, eg. GRID_ID.			*/ 
+    int 	FWIDTH;		/* Field width, eg. 010.			*/
+    char	FINTER[6];	/* Interpretation of field, eg. I10<2S		*/
+    char	FDESC[39];	/* Field description (variable length).		*/
+				/* INCOMPLETE: rest merged with FDESC.		*/
+    char 	CONT_MARK_1;	/* '0' No further records.			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+struct DATAFMT
+{
+    char	REC_DESC_1;	/* 04 for Data format record.			*/
+    char	REC_TYPE;	/* Either 50 or 51 describing record defined.	*/ 
+    char 	REC_NAME[11];	/* Record name.					*/
+    char	NUM_FIELD;	/* Number of fields in the record.		*/
+    char	FIELD_NAME[11];	/* Field name (repeating field).		*/
+    char	FUSE;		/* Field use (repeating field).			*/
+    char 	CONT_MARK_1;	/* '0' No further records '1' continuation.	*/
+    char	EOR_1;		/* '%' End of record.				*/
+    char	REC_DESC_2;	/* 00 for continuation of Database header rec.	*/
+    char	COMMENT[77];	/* If continued, used for description.		*/
+				/* INCOMPLETE: merged in single comment field.	*/
+    char	CONT_MARK_2;	/* '0' No further records.			*/
+    char	EOR_2;		/* '% End of record.				*/
+};
+
+struct FEATCLASS
+{
+    char	REC_DESC_1;	/* 05 for feature classification record.	*/
+    int		FEAT_CODE;	/* Contains 4 digit feature code.		*/ 
+    char 	CODE_COM[11];	/* Not used.					*/
+    char	STCLASS[21];	/* Not used.					*/
+    char	FEATDES[43];	/* Feature description.				*/
+    char	CONT_MARK_1;	/* '0' No further records.			*/
+    char	EOR_1;		/* '% End of record.				*/
+};
+
+
+/*------------------------------------------------------------------------------*/
+/* 	     	 	   SECTION HEADER STRUCTURES - 07.			*/
+/*------------------------------------------------------------------------------*/
+
+struct SECHREC
+{
+    char	REC_DESC_1;	/* 07 for Section Header Record.		*/
+    char	SECT_REF[11];	/* Section Reference, eg. SK22.			*/
+    char	COORD_TYPE;	/* '2' - for rectangular maps.			*/
+    char	STRUC_TYPE;	/* '1' - for vectors.				*/
+    int		XY_LEN;		/* Length of (x,y) coordinates (0 for vectors).	*/
+    char	XY_UNIT;	/* '2' - for metres.				*/
+    float	XY_MULT;	/* (x,y) scaling factor (1.0 is default).	*/
+    int		Z_LEN;		/* Length of (z) coordinates (0 for vectors).	*/
+    char	Z_UNIT;		/* '2' - for metres.				*/
+    float	Z_MULT;		/* (z) scaling factor (1.0 is default).		*/
+    int		X_ORIG;		/* (x) coordinate of SW corner.			*/
+    int		Y_ORIG;		/* (y) coordinate of SW corner.			*/
+    int		Z_DATUM;	/* Vertical datum (usually 0)			*/
+    char	CONT_MARK_1;	/* '0' No further records, '1' continuation.	*/
+    char	EOR_1;		/* '%' End of record.				*/
+    char	REC_DESC_2;	/* 00 for continuation.				*/
+    int		XMIN;		/* Minimum (x) value.				*/
+    int		YMIN;		/* Minimum (y) value.				*/
+    int		XMAX;		/* Maximum (x) value.				*/
+    int		YMAX;		/* Maximum (y) value.				*/
+    float	XY_ACC;		/* (x,y) accuracy - '0.0' Not used !		*/
+    float	Z_ACC;		/* (z) accuracy - eg '5.0'.			*/
+    char	SURV_DATE[9];	/* Nominal date of survey.			*/
+    char	LAST_AMND[9];	/* Date of last amendment.			*/
+    char	COPYRIGHT[9];	/* Copyright date.				*/
+    char	CONT_MARK_2;	/* '0' No further records or '1' Continuation	*/
+    char	EOR_2;		/* '%' End of record.				*/
+    char	REC_DESC_3;	/* 00 for continuation.				*/
+    char	SQNAME[21];	/* Not used.					*/
+    char	SQDATE[9];	/* Not used.					*/
+    int		SCALE;		/* 1:1250, 1:2500, or 1:10000 scale data.	*/
+    float	GRID_OR_X;	/* Not used.					*/
+    float	GRID_OR_Y;	/* Not used.					*/
+    float	PROJ_OR_LAT;	/* Not used.					*/
+    float	PROJ_OR_LNG;	/* Not used.					*/
+    char	CONT_MARK_3;	/* '0' No further records or '1' Continuation	*/
+    char	EOR_3;		/* '%' End of record.				*/
+    char	REC_DESC_4;	/* 00 for continuation.				*/
+    char	SPHER_NAME[10];	/* Not used.					*/
+    float	MAJOR_AXIS;	/* Not used.					*/
+    float	ECCENTRICITY;	/* Not used.					*/
+    float	FLATTENING;	/* Not used.					*/
+    char	PROJECTION[10];	/* Not used.					*/
+    int		PARAMETER_1;	/* Not used.					*/
+    char	P_TYPE;		/* Not used.					*/
+    int		PARAMETER_2;	/* Not used.					*/
+    char	DBANK_DATE[9];	/* Initial data banking date.			*/
+    char	CONT_IND[9];	/* Defines map content/accuracy.		*/
+    char	CONT_MARK_4;	/* '0' No further records or '1' Continuation	*/
+    char	EOR_4;		/* '%' End of record.				*/
+    char	REC_DESC_5;	/* 00 for continuation.				*/
+    char	BOUND_DATE[9];	/* 						*/
+    char	DIG_U_DATE[9];	/* 						*/
+    char	SPEC_REF[15];	/* Digitizing specification at time od digitn.	*/
+    char	EMATCH_N[2];	/* Northern Edge Matching ( ' ' if not matched) */
+    char	EMATCH_N_DATE[9];/* Date of edge match.				*/
+    char	EMATCH_E[2];	/* Eastern Edge Matching ( ' ' if not matched) 	*/
+    char	EMATCH_E_DATE[9];/* Date of edge match.				*/
+    char	EMATCH_S[2];	/* Southern Edge Matching ( ' ' if not matched) */
+    char	EMATCH_S_DATE[9];/* Date of edge match.				*/
+    char	EMATCH_W[2];	/* Western Edge Matching ( ' ' if not matched)	*/
+    char	EMATCH_W_DATE[9];/* Date of edge match.				*/
+    int		HO_UNIT_COUNT;	/* Cumulative count of the change to the map.	*/
+    char	CONT_MARK_5;	/* '0' No further records or '1' Continuation	*/
+    char	EOR_5;		/* '%' End of record.				*/
+				/* NOTE: POSSIBLE FREE TEXT IN CONTINUATION RECS*/
+
+};
+
+    
+/*------------------------------------------------------------------------------*/
+/* 	     		TEXT INFORMATION - 11,12,43,44 and 45			*/
+/*------------------------------------------------------------------------------*/
+
+struct NAMEREC
+{
+    char	REC_DESC_1;	/* 11 for Name Record.				*/
+    int		NAME_ID;	/* Feature serial number.			*/
+    char	TEXT_CODE[5];	/* Feature classification number.		*/
+    char	TEXT_LEN;	/* Number of characters in text string.		*/
+    char	TEXT[100];	/* The text string.				*/
+    char	SECURITY;	/* Not used.					*/
+    char	CHG_TYPE;	/* Not used.					*/
+    char	CHG_DATE[9];	/* Not used.					*/
+    char	QLABEL;		/* Not used.					*/
+    char	SVY_DATE[9];	/* Not used.					*/
+    char	CONT_MARK_1;	/* '0' No further records or '1' Continuation	*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+struct NAMPOSTN
+{
+    char	REC_DESC_1;	/* 12 For Name Position Record.			*/
+    int		FONT;		/* Font used for text string.			*/
+    float	TEXT_HT;	/* Text height in mm.				*/
+    char	DIG_POSTN;	/* Text location code (0-8).			*/
+    float	ORIENT;		/* Text orientation (0.0 - 359.9 degrees).	*/
+    char	CONT_MARK_1;	/* '0' No further records.			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};				/* NOTE: SHOULD BE FOLLOWED BY GEOMETRY RECORD.	*/
+
+struct TEXTREC
+{
+    char	REC_DESC_1;	/* 43 for Text Record.				*/
+    int		TEXT_ID;	/* Sequential number of text record.		*/
+    char	NUM_SEL;	/* Number selected (01)				*/
+    char	SELECT;		/* Selection (00)				*/
+    int		TEXT_CODE;	/* (0000)					*/
+    int		TEXP_ID;	/* Sequential number of text position record.	*/
+    char	NUM_ATT;	/* Number of attributes selected (01)		*/
+    int		ATT_ID;		/* Sequential number of attribute record.	*/
+    char	CONT_MARK_1;	/* '0' No further records or '1' Continuation	*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+struct TEXTPOS
+{
+    char	REC_DESC_1;	/* 44 For Text Position Record.			*/
+    int		TEXP_ID;	/* Sequential number of text position record.	*/
+    char	NUM_TEXR;	/* Number of text records selected (01)		*/
+    int		TEXR_ID;	/* Sequential num of text representation record.*/
+    int		GEOM_ID;	/* Geometry record holding name position.	*/
+    char	CONT_MARK_1;	/* '0' No further records.			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};				
+
+struct TEXTREP
+{
+    char	REC_DESC_1;	/* 45 For Text Representation Record.		*/
+    int		TEXR_ID;	/* Sequential num of text representation record.*/
+    int		FONT;		/* Font used for text string.			*/
+    float	TEXT_HT;	/* Text height in mm.				*/
+    char	DIG_POSTN;	/* Text location code (0-8).			*/
+    float	ORIENT;		/* Text orientation (0.0 - 359.9 degrees).	*/
+    char	CONT_MARK_1;	/* '0' No further records.			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};	
+
+
+/*------------------------------------------------------------------------------*/
+/* 	     	 	  ATTRIBUTE DATA STRUCTURES - 14, 40.			*/
+/*------------------------------------------------------------------------------*/
+
+struct ATTREC
+{
+    char	REC_DESC_1;	/* 14 for Attribute Record.			*/
+    int		ATT_ID;		/* Attribute identifier.			*/
+    char	VAL_TYPE[3];	/* Code for attribute mnemonic.			*/
+    char	VALUE[70];	/* Attribute value (could be int or char).	*/
+    char 	CONT_MARK_1;	/* '0' No further records.			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+
+struct ATTDESC
+{
+    char	REC_DESC_1;	/* 40 for Attribute Description record.		*/
+    char	VAL_TYPE[3];	/* Code for description type.			*/
+    char	FWIDTH[4];	/* Field width of attribute name.		*/
+    char	FINTER[6];	/* Format of attribute name.			*/
+    char	ATT_NAME[65];	/* Attribute Name.				*/
+    char	DIVIDER_1;	/* Divides attribute name from description.	*/
+    char	FDESC[63];	/* Attribure description (optional).		*/
+    char	DIVIDER_2;	/* End of attribute description.		*/
+    char 	CONT_MARK_1;	/* '0' No further records.			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+
+
+/*------------------------------------------------------------------------------*/
+/* 	     	  VECTOR STRUCTURES - 15 16 21 22 23.				*/
+/*------------------------------------------------------------------------------*/
+
+struct POINTREC
+{
+    char	REC_DESC_1;	/* 15 for Point Record.				*/
+    int		POINT_ID;	/* Point Identity.				*/
+    int		GEOM_ID;	/* Geometry Identity.				*/
+    char	NUM_ATT;	/* Number of attributes '01'.			*/
+    int		ATT_ID;		/* Attribute identity.				*/
+    char	CONT_MARK_1;	/* '0' No further records			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+struct POINTREC_C
+{
+    char	REC_DESC_1;	/* 15 for Point Record (Contour variation).	*/
+    int		POINT_ID;	/* Point Identity.				*/
+    char	VAL_TYPE[3];	/* Will be HT for height values.		*/
+    int		VALUE;		/* Height value.				*/
+    int		FEAT_CODE;	/* Feature code (200 for spot heights).		*/
+    char	CONT_MARK_1;	/* '0' No further records			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+struct POINTREC_L
+{
+    char	REC_DESC_1;	/* 15 for Point Record (Land-Line variation).	*/
+    int		POINT_ID;	/* Point Identity.				*/
+    char	VAL_TYPE[3];	/* Will be DT for distance mnemonic.		*/
+    float	VALUE;		/* Orientation value (0.0 - 359.9).		*/
+    int		FEAT_CODE;	/* Feature code (1-400 for Land-Line).		*/
+    char	SECURITY;	/* Not used.					*/
+    char	CHG_TYPE;	/* Not used.					*/
+    char	CHG_DATE[7];	/* Not used.					*/ 
+    char	QLABEL;		/* Not used.					*/
+    char	SVY_DATE[7];	/* Not used.					*/
+    char	CONT_MARK_1;	/* '0' No further records			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+   
+
+struct NODEREC
+{
+    char	REC_DESC_1;	/* 16 for Node Record.				*/
+    int		NODE_ID;	/* Node Identity (same as for Point [15] ).	*/
+    int		GEOM_ID;	/* Geometry Identity (same as for Geom [21] ).	*/
+    int		NUM_LINKS;	/* Number of links at node (always <10).	*/
+				/* INCOMPLETE					*/
+    char	CONT_MARK_1;	/* '0' No further records			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+struct GEOMREC
+{
+    char	REC_DESC_1;	/* 21 for two dimensional geometry record.	*/
+    int		GEOM_ID;	/* Geometry identity.				*/
+    char	G_TYPE;		/* '1' for point features, '2' for lines.	*/
+    int		NUM_COORD;	/* Number of following coordinate pairs.	*/
+    int		X_COORD;	/* X coordinate or easting.			*/
+    int		Y_COORD;	/* Y coordinate or northing.			*/
+    char	Q_PLAN;		/* Not used.					*/
+    char	CONT_MARK_1;	/* '1' further record, '0' No firther records.	*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+struct GEOMREC2
+{
+    char	REC_DESC_1;	/* 22 for three dimensional geometry record.	*/
+    int		GEOM_ID;	/* Geometry identity.				*/
+    char	G_TYPE;		/* '1' for point features, '2' for lines.	*/
+    int		NUM_COORD;	/* Number of following coordinate pairs.	*/
+    int		X_COORD;	/* X coordinate or easting.			*/
+    int		Y_COORD;	/* Y coordinate or northing.			*/
+    char	Q_PLAN;		/* Not used.					*/
+    int		Z_COORD;	/* Z coordinate or elevation.			*/
+    char	QHT;		/* Not used.					*/
+    char	CONT_MARK_1;	/* '1' further record, '0' No firther records.	*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+
+struct LINEREC
+{
+    char	REC_DESC_1;	/* 23 for Line Record.				*/
+    int		LINE_ID;	/* Line Identity.				*/
+    int		GEOM_ID;	/* Geometry Identity.				*/
+    char	NUM_ATT;	/* Number of attributes '01'.			*/
+    int		ATT_ID;		/* Attribute identity.				*/
+    char	CONT_MARK_1;	/* '0' No further records			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+struct LINEREC_C
+{
+    char	REC_DESC_1;	/* 23 for Line Record (Contour variation).	*/
+    int		LINE_ID;	/* Line Identity.				*/
+    char	VAL_TYPE[3];	/* Will be HT for height values.		*/
+    int		VALUE;		/* Height value.				*/
+    int		FEAT_CODE;	/* Feature code (201 for contours).		*/
+    char	CONT_MARK_1;	/* '0' No further records			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+struct LINEREC_L
+{
+    char	REC_DESC_1;	/* 23 for Line Record (Land-Line variation).	*/
+    int		LINE_ID;	/* Line Identity.				*/
+    char	VAL_TYPE[3];	/* Will be DT for distance mnemonic.		*/
+    int		VALUE;		/* Not used.					*/
+    int		FEAT_CODE;	/* Feature code (1-400 for Land-Line).		*/
+    char	SECURITY;	/* Not used.					*/
+    char	CHG_TYPE;	/* Not used.					*/
+    char	CHG_DATE[7];	/* Not used.					*/ 
+    char	QLABEL;		/* Not used.					*/
+    char	SVY_DATE[7];	/* Not used.					*/
+    char	CONT_MARK_1;	/* '0' No further records			*/
+    char	EOR_1;		/* '%' End of record.				*/
+};
+
+
+/*------------------------------------------------------------------------------*/
+/* 	     	 	  DTM GRID STRUCTURES - 50 51.				*/
+/*------------------------------------------------------------------------------*/
+
+struct GRIDHREC
+{
+    char	REC_DESC_1;	/* 50 for Grid Header Record.			*/
+    int		GRID_ID;	/* 1km Grid Reference of map sheet square.	*/
+    int		N_COLUMNS;	/* Number of columns in Grid. (should be 401).	*/
+    int		N_ROWS;		/* Number of rows in Grid. (should be 401).	*/
+    int		N_PLANES;	/* Number of planes in Grid. (should be 1).	*/
+    int		X_COORD_1;	/* Grid corner values.				*/
+    int		Y_COORD_1;	/* Grid corner values.				*/
+    int		Z_COORD_1;	/* Grid corner values.				*/
+    int		X_COORD_2;	/* Grid corner values.				*/
+    int		Y_COORD_2;	/* Grid corner values.				*/
+    int		Z_COORD_2;	/* Grid corner values.				*/
+    char	CONT_MARK_1;	/* First continuation mark.			*/
+    char	EOR_1;		/* First record termination mark.		*/
+    char	REC_DESC_2;	/* Continuation descriptor.			*/
+    int		X_COORD_3;	/* Grid corner values.				*/
+    int		Y_COORD_3;	/* Grid corner values.				*/
+    int		Z_COORD_3;	/* Grid corner values.				*/
+    int		X_COORD_4;	/* Grid corner values.				*/
+    int		Y_COORD_4;	/* Grid corner values.				*/
+    int		Z_COORD_4;	/* Grid corner values.				*/
+    char	CONT_MARK_2;	/* Second continuation mark.			*/
+    char	EOR_2;		/* Second record termination mark.		*/
+    char	REC_DESC_3;	/* Continuation descriptor.			*/
+    int		X_COORD_5;	/* Grid corner values.				*/
+    int		Y_COORD_5;	/* Grid corner values.				*/
+    int		Z_COORD_5;	/* Grid corner values.				*/
+    int		X_COORD_6;	/* Grid corner values.				*/
+    int		Y_COORD_6;	/* Grid corner values.				*/
+    int		Z_COORD_6;	/* Grid corner values.				*/
+    char	CONT_MARK_3;	/* Third continuation mark.			*/
+    char	EOR_3;		/* Third record termination mark.		*/
+    char	REC_DESC_4;	/* Continuation descriptor.			*/
+    int		X_COORD_7;	/* Grid corner values.				*/
+    int		Y_COORD_7;	/* Grid corner values.				*/
+    int		Z_COORD_7;	/* Grid corner values.				*/
+    int		X_COORD_8;	/* Grid corner values.				*/
+    int		Y_COORD_8;	/* Grid corner values.				*/
+    int		Z_COORD_8;	/* Grid corner values.				*/
+    char	CONT_MARK_4;	/* Fourth continuation mark.			*/
+    char	EOR_4;		/* Fourth record termination mark.		*/
+};
+
+
+struct GRIDREC
+{
+    char	REC_DESC_1;	/* 51 for Grid Data Record.			*/
+    int		GRID_ID;	/* Grid reference for mapsheet square.		*/
+    char	SURVEY[8];	/* Method and date of survey.			*/
+    char	CHANGE[8];	/* Type and date of change.			*/
+    int		COL_START;	/* First column in record.			*/
+    int		COL_END;	/* Last column in record.			*/
+    int		ROW_START;	/* First row in record.				*/
+    int 	ROW_END;	/* Last row in record.				*/
+    int		PLA_START;	/* First plane in record.			*/
+    int		PLA_END;	/* Last plane in record.			*/
+    char	COL_INV;	/* Column inversion ('0' = FALSE).		*/
+    char	ROW_INV;	/* Row inversion ('0'=FALSE).			*/
+    char	PLA_INV;	/* Plane inversion ('0' = FALSE).		*/
+    char	ORDER;		/* '1' = col,row,plane.				*/
+    char	INTERPRET;	/* '1' = numerical interpretation of data.	*/
+    int		V_OFFSET;	/* Constant to be added to z values.		*/
+    float	V_SCALE;	/* Scaling factor for z values.			*/
+    char	CONT_MARK_1;	/* Continuation mark.				*/
+    char	EOR_1;		/* Record termination mark.			*/
+    char	REC_DESC_2;	/* Continuation descriptor.			*/
+    int		N_GRIDVAL;	/* Number of grid values.			*/
+    char	CONT_MARK_2;	/* Second continuation mark.			*/
+    char	EOR_2;		/* Second record termination mark.		*/
+    char	REC_DESC_3;	/* Continuation descriptor.			*/
+    char	GRIDVAL_1[77];	/* 19 Grid values each of four digits.		*/
+    char	CONT_MARK_3;	/* Continuation mark.				*/
+    char	EOR_3;		/* Record termination mark.			*/
+    char	REC_DESC_4;	/* Final continuation descriptor.		*/
+    char	GRIDVAL_2[9];	/* 2 Grid values each of four digits.		*/
+    char	CONT_MARK_4;	/* Final continuation mark.			*/
+    char	EOR_4;		/* Final record termination mark.		*/
+};
+
+
+/*------------------------------------------------------------------------------*/
+/* 	     	  		FOOTER STRUCTURES - 99.				*/
+/*------------------------------------------------------------------------------*/
+
+struct VOLTERM
+{
+    char	REC_DESC_1;	/* 99 for Volume Termination record.		*/
+    char	FREE_TEXT[77];	/* Either 'End of Transfer Set' or.		*/
+				/* 'End of volume (n). Transfer continues on...	*/ 
+    char	CONT_MARK_1;	/* '0' No further records.			*/
+    char	EOR_1;		/* '% End of record.				*/
+};
+/************************************************************************/
+/*** 								      ***/
+/***			       ntf_in.h			   	      ***/
+/***  Header file for use with m.in.ntf - 			      ***/
+/***  Jo Wood, ASSIST, Dept of Geography, University of Leicester     ***/
+/***  V1.1  - 19th May, 1993				     	      ***/
+/***								      ***/
+/************************************************************************/
+
+#include "gis.h" 	/* This MUST be included in all GRASS programs	*/
+			/* It sets up the necessary prototypes for all	*/
+			/* GRASS library calls.				*/
+
+#include "Vect.h"       /* Must be included in programs that manipulate */
+                        /* vectors.                                     */
+
+#include "ntf.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define TRUE 1
+#define FALSE 0
+#define NO_ATTRIB -1
+
+#define MODE_READ  0
+#define MODE_WRITE 1
+#define MODE_RW    2
+
+#define TEXT_CODE 9999
+
+
+/* Map Types */
+
+#define CONTOUR 1
+#define DEM 2
+#define LANDLINE 3
+#define BOUNDARYLINE 4
+#define OSCAR 5
+#define ONE250 6
+#define ONE625 7
+#define STRATEGI 8
+#define TEXT_LABEL 9999
+#define DONT_KNOW -1
+
+
+/* ------ Global variables ------ */
+
+#ifndef MAIN
+    extern			/* Externally defined if not main()	*/
+#endif
+
+char		*ntf_in_name,	/* Name of the raster file to process.	*/
+    		*file_out_name,	/* Name of the raster output file.	*/
+		*mapset_out,	/* GRASS mapset holding output file.	*/
+		conversion_log,	/* Determines if conversion log printed.*/
+		outfile,	/* Determines if an outfile is created.	*/
+		nodes,		/* Determines if nodes are transferred.	*/
+		O_raster,	/* Determines if raster is already open	*/
+		O_vector,	/* Determines if vector is already open	*/
+		O_temp,
+		O_spot,		/* Flags that determine whether files	*/
+		O_cont,		/*   are already open.			*/
+		O_lake,		/*   Include:	Spot Heights, Contours,	*/
+		O_break,	/* 	    	Lakes, Breaklines,	*/
+		O_coast,	/*	    	Coastlines, Ridgelines,	*/
+				/*	    	and Form Lines.		*/
+		O_form,
+		O_other,	/* Any other type of vector coverage.	*/
+	        text[128],	/* Stores a line (record) of NTF file.	*/
+		H_organ[30],	/* Organisation supplying data.		*/
+		H_ddate[11],	/* Digitisation date			*/
+		H_mname[40],	/* Title of map.			*/
+		H_mdate[11],	/* Date of map survey.			*/
+		V_name[40],	/* Vector object name.			*/
+		Write_vect;	/* Flag to defermine if vector written	*/
+
+#ifndef MAIN
+    extern			/* Externally defined if not main()	*/
+#endif
+
+float		XY_mult,	/* X, Y, and Z Scaling factors.		*/
+		Z_mult;
+
+
+#ifndef MAIN
+    extern			/* Externally defined if not main()	*/
+#endif
+
+FILE		*ntf_fptr,	/* File descriptor for input and	*/
+		*out_fptr,	/* output raster files.			*/
+		*new_fptr,	/* New converted NTF 2.0 file.		*/
+
+		*fptr_spot,	/* File descriptor for vector files.	*/
+		*fptr_spot_att,
+		*fptr_cont,
+		*fptr_cont_att,
+		*fptr_lake,
+		*fptr_lake_att,
+		*fptr_break,
+		*fptr_break_att,
+		*fptr_coast,
+		*fptr_coast_att,
+		*fptr_ridge,
+		*fptr_ridge_att,
+		*fptr_form,
+		*fptr_form_att,
+		*fptr_other,
+		*fptr_other_att;
+
+
+#ifndef MAIN
+    extern			/* Externally defined if not main()	*/
+#endif
+
+int		line_number,	/* Current line of NTF file being read.	*/
+		fd_out,		/* Raster output file descriptor.	*/
+		num_rlines,	/* Number of raster lines read.		*/
+		X_min,Y_min,	/* Boundaries of vector map.		*/
+		X_max,Y_max,
+		X_origin,	/* SW corner of vector map.		*/
+		Y_origin,
+		V_featcode,	/* Feature code of vector map.		*/
+		H_scale,	/* Original scale of map data.		*/
+		geom_type;	/* Point line or area type of vector	*/
+
+
+
+#ifndef MAIN
+    extern			/* Externally defined if not main()	*/
+#endif
+
+struct Map_info  vect_info;	/* Structure to hold vector information	*/
+
+#ifndef MAIN
+    extern			/* Externally defined if not main()	*/
+#endif
+
+struct line_pnts *points;	/* Holds x,y coordinates of vector.	*/
+
+#ifndef MAIN
+    extern			/* Externally defined if not main()	*/
+#endif
+
+struct Categories cats,		/* Stores vector categories.		*/
+		  feature_desc;	/* Temporary structure for storing	*/
+				/* feature descriptions.		*/
+
+
+#ifndef MAIN
+    extern			/* Externally defined if not main()	*/
+#endif
+
+CELL		raster[401][401];
+				/* Array holding entire raster tile.	*/
+
+   
+/***********************************************************************************/
+/***                                                                             ***/
+/***                                 m.in.ntf                                	 ***/
+/***		 GRASS module to read in any Ordnance Survey NTF data. 		 ***/
+/***  		   Assumes National Transfer Format V2.0 (BS 7567).		 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.1 19th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#define MAIN
+
+#include "ntf_in.h"			/* Must be included for program to work		*/
+
+main(argc,argv) 
+    int argc;
+    char *argv[];		
+{
+
+    /*----------------------------------------------------------------------------------*/
+    /*                           INITIALISE GLOBAL VARIABLES				*/
+    /*----------------------------------------------------------------------------------*/ 
+
+    O_raster	= FALSE;
+    O_vector	= FALSE;
+
+    O_cont	= FALSE;
+O_temp	= FALSE;
+    O_spot	= FALSE;
+    O_lake	= FALSE;
+    O_break	= FALSE;
+    O_coast	= FALSE;
+    O_form	= FALSE;
+
+    num_rlines	= 0;
+
+    X_min 	= 0;
+    Y_min	= 0;
+    X_max	= 0;
+    Y_max	= 0;
+    X_origin	= 0;
+    Y_origin	= 0;
+
+    XY_mult	= 1.0;
+    Z_mult	= 1.0;
+
+    strcpy (H_organ,"Not Known                    ");
+    strcpy (H_ddate,"          ");
+    strcpy (H_mname,"Not Known                              ");
+    strcpy (H_mdate,"          ");
+    strcpy (V_name,"                                        ");
+    H_scale = 0;
+
+    points = Vect_new_line_struct();
+
+    Write_vect = FALSE;
+
+				/* Initialise the two category classess, one for vector	*/
+				/* classes, the other for feature descriptions.		*/
+    G_init_cats((CELL)0,"Ordnance Survey NTF",&cats);
+    G_init_cats((CELL)0,"Feature Descriptions",&feature_desc);
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                               GET INPUT FROM USER				*/
+    /*----------------------------------------------------------------------------------*/
+
+    interface(argc,argv);
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                          OPEN INPUT AND OUTPUT FILES			*/
+    /*----------------------------------------------------------------------------------*/
+
+    open_files();
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                                PROCESS NTF FILE					*/
+    /*----------------------------------------------------------------------------------*/
+   
+    read_ntf();
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                     CLOSE ALL OPENED FILES AND FREE MEMORY			*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (outfile)
+    	close_vect();
+
+    fclose(ntf_fptr);
+
+    G_free_cats(&cats);
+    G_free_cats(&feature_desc);
+
+
+}
+/**************************************************************************/
+/***				interface()				***/
+/***    Function to get input from user and check files can be opened	***/
+/*** 									***/
+/***      Jo Wood, Department of Geography, V1.2, 7th February 1992	***/
+/**************************************************************************/
+
+#include "ntf_in.h"
+
+interface(argc,argv) 
+
+    int	     argc;		/* Number of command line arguments.	*/
+    char    *argv[];		/* Contents of command line arguments.	*/
+
+{
+    /*------------------------------------------------------------------*/
+    /*                          INITIALISE				*/
+    /*------------------------------------------------------------------*/ 
+
+    struct Option *ntf_in;	/* Pointer to a structure holding	*/
+				/* all the text to describe each option.*/
+				/* It also stores the user's input.	*/
+
+    struct Option *file_out;
+			
+
+    struct Flag	  *out_log;	/* Conversion log flag.			*/
+
+/* ---- Ignore ---- 
+    struct Flag	  *nde_inc;	Include node flag.		
+ ---- End Ignore ---*/
+
+    G_gisinit (argv[0]);	/* This GRASS library function MUST be 
+				/* called to initialise the program.	*/
+
+    /*------------------------------------------------------------------*/
+    /*                       SET PARSER OPTIONS				*/
+    /*------------------------------------------------------------------*/
+
+    /* Each option needs a 'key' (short description), a 'description` 	*/
+    /* (a longer one), a 'type' (eg intiger, or string), and an 	*/
+    /* indication whether manditory or not.				*/
+
+    ntf_in  		  = G_define_option();
+    ntf_in->key	  	  = "ntf";
+    ntf_in->description   = "NTF file to read";
+    ntf_in->type	  = TYPE_STRING;
+    ntf_in->required	  = YES;
+
+    file_out 		  = G_define_option();	
+    file_out->key	  = "out";
+    file_out->description = "Output file";
+    file_out->type	  = TYPE_STRING;
+    file_out->required	  = NO;
+    file_out->answer	  ="No output file";
+
+    out_log		  = G_define_flag();
+    out_log->key	  ='l';
+    out_log->description  ="Sends an NTF conversion log to standard output";
+
+/* --- Ignore --- 
+    nde_inc		  = G_define_flag();
+    nde_inc->key	  ='n';
+    nde_inc->description  ="Include transfer of nodes into vector";
+ --- End Ignore --- */
+
+    if (G_parser(argc,argv))	/* Actually performs the prompting for	*/
+	exit(-1);		/* keyboard input. Returns 0 on sucess.	*/
+
+				/* Transfer command line answers 	*/
+				/* to variables.			*/
+    ntf_in_name = ntf_in->answer;	
+    file_out_name = file_out->answer;
+
+    conversion_log = out_log->answer;
+
+/* --- Ignore ---
+    nodes = nde_inc->answer;
+ --- End Ignore --- */
+
+    if (strcmp(file_out_name,"No output file"))
+	outfile = TRUE;
+    else
+	outfile = FALSE;
+
+}
+/*****************************************************************************/
+/***                                                                       ***/
+/***                             open_files()                              ***/
+/***   	                    Opens NTF input file.  			   ***/
+/***               Jo Wood, Project ASSIST, 19th May 1993                  ***/
+/***                                                                       ***/
+/*****************************************************************************/
+
+#include "ntf_in.h"
+
+
+open_files()
+{
+    /* Open existing file and set the input file descriptor. */
+
+    if ( (ntf_fptr=fopen(ntf_in_name,"r")) == NULL)
+    {
+        char err[256];
+        sprintf(err,"Problem opening NTF file.");
+        G_fatal_error(err);
+    }
+
+    line_number= 0;		/* Initialise line counter	*/
+
+}
+/*****************************************************************************/
+/***                                                                       ***/
+/***                             open_raster()                             ***/
+/***   	              Opens output GRASS raster file.  			   ***/
+/***               Jo Wood, Project ASSIST, 29th May 1993                  ***/
+/***                                                                       ***/
+/*****************************************************************************/
+
+#include "ntf_in.h"
+
+open_raster(xorigin,yorigin,nrows,ncols)
+    int	xorigin,yorigin,		/* Origin of SW corner of raster.     	*/
+	nrows,ncols;			/* Number of rows and columns in raster.*/
+{
+    /*--------------------------------------------------------------------------*/
+    /*				    INITIALISE					*/
+    /*--------------------------------------------------------------------------*/
+
+    struct  Cell_head	region; 	/* Stores GRASS region information.	*/
+
+
+    /*--------------------------------------------------------------------------*/
+    /*		      CHECK OUTPUT RASTER DOES NOT ALREADY EXIST		*/
+    /*--------------------------------------------------------------------------*/
+
+    mapset_out = G_mapset();            /* Set output to current mapset.	*/
+
+    if (G_legal_filename(file_out_name)==NULL)
+    {
+        char err[256];
+        sprintf(err,"Illegal GRASS file name. Please try another.");
+        G_fatal_error(err);
+    }
+    else
+    {
+        if (G_find_cell2(file_out_name,mapset_out) !=NULL)
+        {
+            char err[256];
+            sprintf(err,"Raster map [%s] already exists.\n",file_out_name);
+            G_fatal_error(err);
+        }
+    }
+
+
+    /*--------------------------------------------------------------------------*/
+    /*		        CHECK CURRENT REGION AND CHANGE IF NECESSARY		*/
+    /*--------------------------------------------------------------------------*/
+
+    G_get_window(&region);
+
+    if ( (region.ew_res != 50) || (region.ns_res != 50)	||
+	 (region.south != yorigin-25.0)			|| 
+	 (region.west  != xorigin-25.0) 		||
+	 (region.north != yorigin + (50*(nrows-1) + 25))||
+	 (region.east  != xorigin + (50*(ncols-1) + 25))  )
+    {
+        char warn[256];
+        sprintf(warn, "Current GRASS region does not match NTF grid.");
+        G_warning(warn);
+
+    	region.ew_res = (double) 50.0;
+    	region.ns_res = (double) 50.0;
+    	region.south  = (double) (yorigin - 25.0);
+    	region.west   = (double) (xorigin - 25.0);
+	region.north  = (double) (yorigin + (50*(nrows-1) + 25));
+	region.east   = (double) (xorigin + (50*(ncols-1) + 25));
+
+    	G_set_window(&region);
+    }
+
+
+    /*--------------------------------------------------------------------------*/
+    /*		          OPEN THE NEW RASTER OUTPUT FILE			*/
+    /*--------------------------------------------------------------------------*/
+
+
+    if ( (fd_out=G_open_cell_new(file_out_name)) <0)
+    {
+        char err[256];
+        sprintf(err,"Problem opening output raster file.");
+        G_fatal_error(err);
+    }
+
+    O_raster = TRUE;			/* Flag to indicate file is open.	*/
+}
+/*****************************************************************************/
+/***                                                                       ***/
+/***                             open_vector()                             ***/
+/***   	                  Opens  GRASS vector files.  			   ***/
+/***                 Jo Wood, Project ASSIST, 30th May 1993.               ***/
+/***                                                                       ***/
+/*****************************************************************************/
+
+#include "ntf_in.h"
+
+open_vector(extension)
+    char	*extension;		/* Filename extension.			*/
+{
+    /*--------------------------------------------------------------------------*/
+    /*                              INITIALISE                                  */
+    /*--------------------------------------------------------------------------*/ 
+
+    struct dig_head  vect_head;      	/* Structure holding vector header info */
+    struct Cell_head region;         	/* Structure to hold region information */
+
+
+    char             text[255],      	/* Used to hold a line of text.         */
+		     vect_out_name[80]; /* Name of vector to open.		*/
+
+    strcpy(vect_out_name,file_out_name);
+    strcat(vect_out_name,extension);	/* Append extension to default file name*/
+
+    G_get_window(&region);
+
+
+    /*--------------------------------------------------------------------------*/
+    /*                          OPEN NEW VECTOR FILE                            */
+    /*--------------------------------------------------------------------------*/ 
+
+    mapset_out = G_mapset();            /* Current mapset.			*/
+
+    if (G_legal_filename(vect_out_name)==NULL)
+    {
+        char err[256];
+        sprintf(err,"Illegal vector file name. Please try another.");
+        G_fatal_error(err);
+    }
+    else
+    {
+        if (G_find_vector2(vect_out_name,mapset_out) !=NULL)
+        {
+            char err[256];
+            sprintf(err,"Vector map [%s] exists.\nPlease try another.\n",vect_out_name);
+            G_fatal_error(err);
+        }
+    }
+
+    if (Vect_open_new(&vect_info,vect_out_name) < 0)
+    {
+    	char err[256];
+    	sprintf(err,"Unable to open vector map [%s].\n",vect_out_name);
+    	G_fatal_error(err);
+    }
+
+    if ( (vect_info.att_fp = G_fopen_new("dig_att",vect_out_name)) <0)
+    {
+    	char err[256];
+    	sprintf(err,"Unable to open vector attribute map [%s].\n",vect_out_name);
+    	G_fatal_error(err);
+    }
+
+    O_vector = TRUE;
+
+    /*--------------------------------------------------------------------------*/
+    /*                    WRITE OUT VECTOR HEADER INFORMATION                   */
+    /*--------------------------------------------------------------------------*/ 
+
+    strcpy(vect_head.organization,H_organ);
+
+    strcpy(vect_head.date,H_ddate);
+
+    sprintf(text,"created by m.in.ntf");
+    strcpy(vect_head.your_name,text);
+
+    strcpy(vect_head.map_name,H_mname);
+
+    strcpy(vect_head.source_date,H_mdate);
+
+    vect_head.orig_scale        = H_scale;
+    vect_head.line_3[0]         = 0;
+    vect_head.plani_zone        = region.zone;
+    vect_head.digit_thresh      = 0;
+    vect_head.map_thresh        = 0;
+
+    vect_head.N    = (double)Y_max;      
+    vect_head.S    = (double)Y_min;
+    vect_head.E    = (double)X_max;
+    vect_head.W    = (double)X_min;
+
+
+    Vect_copy_head_data(&vect_head,&(vect_info.head));
+                                                /* This line MUST be included   */
+                                                /* as it tells GRASS that the   */
+                                                /* header has been updated.     */
+
+}
+/***********************************************************************************/
+/***                                 old2new()					 ***/
+/***  		    Converts NTF Version 1.1 to NTF Version 2.0	 	 	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 3rd June 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+old2new()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    char	newfile[128],		/* Name of new NTF file to create.		*/
+		rec_desc,		/* Record Descriptor.				*/
+		end_of_file=FALSE,	/* Flag indicating end of file.			*/
+		vol_num = 1,		/* Counts through multiple volume numbers.	*/
+		fixed_length = FALSE;	/* Flag indicating fixed/variable length files.	*/
+
+    /*----------------------------------------------------------------------------------*/
+    /*                        GET NAME OF NEW NTF FILE TO CREATE			*/
+    /*----------------------------------------------------------------------------------*/
+
+    fprintf(stderr,"WARNING: Volume header indicates old NTF version.\n");
+
+    do
+    {
+	fprintf(stderr,"Would you like to create a new NTF Version 2.00 file ?\n> ");
+    }
+    while ( G_gets(newfile) == 0);
+
+
+    if(	(strcmp(newfile,"YES") !=0) &&	(strcmp(newfile,"Yes") !=0) &&
+	(strcmp(newfile,"yes") !=0) &&	(strcmp(newfile,"Y")   !=0) &&
+	(strcmp(newfile,"y")   !=0) )
+    	exit(0);
+
+
+    /* Prompt user for new file name. */
+
+    do
+    {
+	fprintf(stderr,"Type in the name of the new NTF file to be created:\n> ");
+    }
+    while ( G_gets(newfile) == 0);
+
+
+    /* Open new file */
+
+    if ( (new_fptr=fopen(newfile,"r")) != NULL )
+    {
+	fprintf(stderr,"ERROR: File <%s> already exists. Please try another\n",newfile);
+	fclose(new_fptr);
+	exit(-1);
+    }
+
+    if ( (new_fptr=fopen(newfile,"w")) == NULL )
+    {
+	fprintf(stderr,"ERROR: Could not open output file <%s>\n",newfile);
+	exit(-1);
+    }
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                         CONVERT THE VOLUME HEADER RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    strncpy(text+57,"0200",4);		/* Change Version number to 2.00		*/
+
+    if (*(text+61) == 'F')		/* Change from fixed to variable length records	*/
+    {
+	*(text+61) = 'V';
+	fixed_length = TRUE;
+
+	while(text[strlen(text) - 2] == ' ')		/* Remove surplus spaces from 	*/
+	{						/* end of line.			*/
+	    text[strlen(text) - 2] = text[strlen(text) - 1];
+	    text[strlen(text)-1] = NULL;
+	}
+    }
+
+    strcpy(text+strlen(text),"%\n");	/* Add line terminator '%' to end.		*/
+
+    if ((text[66] == '%') && (text[64] == ' ') ) /* Remove extra space. 		*/
+    {
+	text[64] = text[65];
+     	strcpy(text+65,"%\n");
+    }	
+
+    fputs(text,new_fptr);		/* Write new record to file.			*/
+
+    /*----------------------------------------------------------------------------------*/
+    /*                           CONVERT THE REST OF THE FILE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    do
+    {
+	rec_desc = read_line();
+
+    	if (fixed_length == TRUE)
+	    while(text[strlen(text) - 2] == ' ')	/* Remove surplus spaces from 	*/
+	    {						/* end of line.			*/
+	    	text[strlen(text) - 2] = text[strlen(text) - 1];
+	    	text[strlen(text) - 1] = NULL;
+	    }
+
+
+	switch(rec_desc)
+	{
+	    case 02:
+		new02();
+		break;
+
+	    case 03:
+		new03();
+		break;
+
+	    case 04:
+		new04();
+		break;
+
+	    case 05:
+		new05();
+		break;
+
+	    case 06:
+		new06();
+		break;
+
+	    case 07:
+		new07();
+		break;
+
+	    case 14:
+		new14();
+		break;
+
+	    case 15:
+		new15();
+		break;
+
+	    case 23:
+		new23();
+		break;
+
+	    case 40:
+		new40();
+		break;
+
+	    case 90:
+		new90();
+		break;
+
+	    case 99:
+		if ( (text[strlen(text) - 1] == '0') || (text[strlen(text) - 2] == '0') )
+		{
+		    end_of_file = TRUE;
+		    strcpy(text,"99End of Transfer Set0\%\n");
+		}
+		else
+		{
+		    sprintf(text,
+			"99End of Volume (%d). Transfer Set continues on Volume (%d)"
+									,vol_num,vol_num+1);
+		    strcat (text,".1\%\n");
+		    vol_num++;
+		}
+    		fputs(text,new_fptr);		/* Write new record to file.		*/
+		break;
+
+	    default:
+    		strcpy(text+strlen(text),"%\n");/* Add line terminator '%' to end.	*/
+    		fputs(text,new_fptr);		/* Write new record to file.		*/
+		break;
+	}
+    }
+    while (end_of_file == FALSE);
+		
+
+    /*----------------------------------------------------------------------------------*/
+    /*                             CLOSE NEW FILE AND QUIT				*/
+    /*----------------------------------------------------------------------------------*/
+
+    fclose (new_fptr);
+
+    fprintf(stderr,"\n");
+    fprintf(stderr,"*************************************************************\n");
+    fprintf(stderr,"**             CONVERSION TO NTF V2.00 COMPLETE            **\n");
+    fprintf(stderr,"*************************************************************\n");
+    exit(0);
+
+}
+
+/****************************************************************************************/
+/***										      ***/
+/***                            Conversion Routines to NTF V2.0			      ***/
+/***  			Jo Wood, Project ASSIST, V1.0 12th June 1993                  ***/
+/***										      ***/
+/****************************************************************************************/
+
+new02()	/* ADD 3 EMPTY ELEMENTS */
+{
+
+    strcpy(text+strlen(text),"%\n");		/* Add line terminator '%' to end.	*/
+
+    if (strncmp(text+2,"OS_1:625",8) == 0)	/* Change DBNAME field.			*/
+	strncpy(text+2,"OS_ROUTEPLANNER_DATA",20);
+ 
+    fputs(text,new_fptr);			/* Write new record to file.		*/
+   
+    if ( text[strlen(text) - 3] == '1')		/* Modify continuation record.		*/
+    {
+	read_line();
+	strcpy(text+30,"                    00000000000%\n");
+    	fputs(text,new_fptr);			/* Write new record to file.		*/
+    }
+}
+
+new03()	/* ADD 3 EMPTY ELEMENTS */
+{
+    char	temp[80],			/* Temporarily stores new record.	*/
+
+		cont_mark;
+
+    strncpy(temp,text+50,strlen(text) - 51);
+    temp[strlen(text)-51] = '\\';
+    strncpy(temp+strlen(text)-50,text+20,6);
+    strncpy(temp+strlen(text)-45,text+26,24);
+    strcpy(temp+strlen(text)-23,"  0\%\n");
+
+    cont_mark = text[strlen(text) - 3];
+
+    strcpy(text+20,temp);
+    fputs(text,new_fptr);			/* Write new record to file.		*/
+
+
+    if (cont_mark == '1')			/* Ignore any continuation lines.	*/
+    {
+	read_line();
+
+    	while (text[strlen(text)] == '1')
+	    read_line();
+    }
+}
+
+new04() /* ADD ONE EMPTY ELEMENT */
+{
+    char 	cont_mark,			/* Identifies continuation lines.	*/
+ 		posn=16,offset=0,		/* Position along string.		*/
+		temp[90];			/* Temporary storage of record.		*/
+
+    while(posn+11 < strlen(text)-10) 
+    {
+	strncpy(temp+posn-16+offset,text+posn,10);
+	temp[posn-6+offset] = ' ';
+	posn +=10;
+	offset ++;
+    }
+    strcpy(temp+posn-16+offset,text+posn);
+    strcpy(text+16,temp);
+    strcpy(text+strlen(text),"%\n");		/* Add line terminator '%' to end.	*/
+    fputs(text,new_fptr);			/* Write new record to file.		*/
+
+    while (text[strlen(text) - 3] == '1')	/* Add extra element to continuation 	*/
+    {						/* lines.				*/
+	read_line();
+	offset=0;
+	posn=2;
+    	while(posn+11 < strlen(text)-10)
+    	{
+	    strncpy(temp+posn-2+offset,text+posn,10);
+	    temp[posn+8+offset] = ' ';
+	    posn +=10;
+	    offset ++;
+    	}
+    	strcpy(temp+posn-2+offset,text+posn);
+    	strcpy(text+2,temp);
+    	strcpy(text+strlen(text),"%\n");	/* Add line terminator '%' to end.	*/
+    	fputs(text,new_fptr);			/* Write new record to file.		*/
+    }
+}
+
+
+new05()	/* ADD THE FEAT_CODE ELEMENT */
+{
+    char buffer[5],
+	 letter_code;
+    int	 feat_code;
+
+    strcpy(text+strlen(text),"%\n");		/* Add line terminator '%' to end.	*/
+
+    if ((strncmp(text+2,"    ",4) == 0) &&	/* If attribute is referenced by the 	*/
+	(strncmp(text+6,"          ",10) != 0))	/* CODE_COM, convert it into 4 digit FC	*/
+    {
+
+	/* To convert a 7 digit CODE_COM to a 4 digit FEAT_CODE:
+
+		1. Feature code comprises of digits 3,4,5 & 6 of CODE_COM.
+		2. Add the numeric equivalent (A=0, Z=25) of digit 1.
+		3. Add 26 * digit 2.
+		4. Add 260 for Line data, and 520 for Area data.
+
+	   eg.
+		H11032L  becomes 1032 + 7 + (26*1) + 260 = 1325
+
+	   Note, there could be an overflow, if the central 4 digits > 9220
+
+	*/
+
+	strncpy(buffer,	text+8,4);		/* Copy main numeric code		*/
+	buffer[4] = NULL;
+    	feat_code = atoi(buffer);		/* Step 1.				*/
+
+	letter_code = text[6];			/* Step 2.				*/
+    	feat_code += letter_code - 'A';		
+	feat_code += 26 * text[7];		/* Step 3.				*/
+	
+	switch(text[12])			/* Step 4.				*/
+	{
+	    case 'P':
+		feat_code += 0 * 260;
+		break;
+	    case 'L':
+		feat_code += 1 * 260;
+		break;
+	    case 'A':
+		feat_code += 2 * 260;
+		break;
+	    default:
+		fprintf(stderr,"WARNING: Non standard attribute code.\n");
+		break;
+	}
+
+	sprintf(text+2,"%d",feat_code);
+	text[6] = letter_code;
+    }
+
+    fputs(text,new_fptr);			/* Write new record to file.		*/
+   
+}
+
+
+new06() /* IGNORE THIS RECORD */
+{
+    while (text[strlen(text)-1] == '1')
+	read_line();
+}
+
+new07() /* CONVERT Z_DATUM TO 10 DIGITS */
+{
+    char 	cont_mark;			/* Identifies continuation lines.	*/
+
+    strcpy(text+74,"  1\%\n");
+    fputs(text,new_fptr);			/* Write new record to file.		*/
+
+    read_line();
+    cont_mark = text[strlen(text)-1];
+    strcpy(text+strlen(text)-1,"0%\n");		/* Add line terminator '%' to end.	*/
+    fputs(text,new_fptr);			/* Write new record to file.		*/
+
+
+    if (cont_mark == '1')
+    {
+    	do					/* Read following lines.		*/
+    	{	
+	    read_line();
+    	}
+    	while (text[strlen(text)-1] == '1');
+    }
+}
+
+
+new14()	/* CONVERT ANY LC(LONG CODE) VALUES TO FC (FEAT_CODE) VALUES */
+{
+    char buffer[5],
+	 letter_code,
+	 new_text[80],
+	 new_textscan=0,
+	 orient,
+	 txt_string=FALSE;
+
+    int	 feat_code,
+	 textscan;
+
+    do
+    {
+	for (textscan=0; textscan<strlen(text); textscan++)
+	{
+	    if ((strncmp(text+textscan,"LC",2) ==0 ) && (txt_string == FALSE))
+	    {
+		/* To convert a 7 digit CODE_COM to a 4 digit FEAT_CODE:
+
+		1. Feature code comprises of digits 3,4,5 & 6 of CODE_COM.
+		2. Add the numeric equivalent (A=0, Z=25) of digit 1.
+		3. Add 26 * digit 2.
+		4. Add 260 for Line data, and 520 for Area data.
+
+		   eg.
+			H11032L  becomes 1032 + 7 + (26*1) + 260 = 1325
+
+		Note, there could be an overflow, if the central 4 digits > 9220
+
+		*/
+
+		strncpy(buffer,	text+textscan+4,4);	/* Copy main numeric code	*/
+		buffer[4] = NULL;
+    		feat_code = atoi(buffer);		/* Step 1.			*/
+
+		letter_code = text[textscan+2];		/* Step 2.			*/
+	    	feat_code += letter_code - 'A';		
+		feat_code += 26 * text[textscan+3];	/* Step 3.			*/
+	
+		switch(text[textscan+8])		/* Step 4.			*/
+		{
+		    case 'P':
+			feat_code += 0 * 260;
+			break;
+		    case 'L':
+			feat_code += 1 * 260;
+			break;
+		    case 'A':
+			feat_code += 2 * 260;
+			break;
+		    default:
+			fprintf(stderr,"WARNING: Non standard attribute code.\n");
+			break;
+		}
+		sprintf(new_text+new_textscan,"FC%d",feat_code);
+		new_textscan += 6;
+		textscan     += 9;
+	    }
+	    else
+	    	if ((strncmp(text+textscan,"OR",2) == 0) && (txt_string == FALSE))
+	    	{
+		    for (orient=0; orient<5; orient++)
+		        *(new_text+new_textscan+orient) = *(text+textscan+orient);
+
+		    new_textscan += orient;
+		    textscan += orient+1;		/* Ignore last digit of number.	*/
+		}
+		else
+	    	{
+		    *(new_text+new_textscan) = *(text+textscan);
+		    new_textscan++;
+
+		    if ((strncmp(text+textscan,"PN",2) == 0) ||
+			(strncmp(text+textscan,"NU",2) == 0) )
+			txt_string = TRUE;
+		    else
+		        if (*(text+textscan) == '\\')
+			    txt_string = FALSE;
+	    	}
+	}
+
+    }
+    while (*(text+strlen(text)-1) == 1);	/* Repeat for continuation lines.	*/
+
+    strcpy(new_text+new_textscan,"%\n");	/* Add line terminator '%' to end.	*/
+
+    fputs(new_text,new_fptr);			/* Write new record to file.		*/
+}
+
+
+
+new15()	/* REMOVE NAME ID AND ADD NUM_ATT */
+{
+    char cont_mark;				/* Identifies continuation lines.	*/
+    cont_mark = text[strlen(text) - 1];
+
+    strcpy(text+strlen(text),"%\n");		/* Add line terminator '%' to end.	*/
+
+    if (text[27] == '%')			/* Default configuration		*/
+    {
+	text[16] = text[14];			/* Move ATT_ID forward two characters.	*/
+	text[17] = text[15];
+	text[18] = text[16];
+	text[19] = text[17];
+	text[20] = text[18];
+	text[21] = text[19];
+
+	text[14] = '0';				/* Add NUM_ATT				*/
+	text[15] = '1';
+	
+
+	text[22] = text[26];			/* Move terminator back 4 spaces.	*/
+    	strcpy(text+23,"%\n");
+    }
+    else
+	if ((text[37] == '%') && (text[35] == ' ') ) /* Remove extra space. 		*/
+	{
+	    text[35] = text[36];
+     	    strcpy(text+36,"%\n");
+	}	
+
+    fputs(text,new_fptr);			/* Write new record to file.		*/
+  
+}
+
+
+new23()	/* REMOVE NAME ID AND ADD NUM_ATT */
+{
+    char cont_mark;				/* Identifies continuation lines.	*/
+    cont_mark = text[strlen(text) - 1];
+
+    strcpy(text+strlen(text),"%\n");		/* Add line terminator '%' to end.	*/
+
+    if (text[27] == '%')			/* Default configuration		*/
+    {
+	text[16] = text[14];			/* Move ATT_ID forward two characters.	*/
+	text[17] = text[15];
+	text[18] = text[16];
+	text[19] = text[17];
+	text[20] = text[18];
+	text[21] = text[19];
+
+	text[14] = '0';				/* Add NUM_ATT				*/
+	text[15] = '1';
+	
+
+	text[22] = text[26];			/* Move terminator back 4 spaces.	*/
+    	strcpy(text+23,"%\n");
+    }
+    else
+	if ((text[37] == '%') && (text[35] == ' ') ) /* Remove extra space. 		*/
+	{
+	    text[35] = text[36];
+     	    strcpy(text+36,"%\n");
+	}		
+
+    fputs(text,new_fptr);			/* Write new record to file.		*/
+}
+
+new40()	/* ADD SECOND DIVIDER TO END OF STRING */
+{
+    char cont_mark;				/* Identifies continuation lines.	*/
+    cont_mark = text[strlen(text) - 1];
+
+
+    strcpy(text+strlen(text)-1,"\\0%\n");	/* Add second '\' to string and		*/
+						/* line terminator '%' to end.		*/
+    text[strlen(text) - 3] = cont_mark;
+
+    fputs(text,new_fptr);			/* Write new record to file.		*/
+  
+}
+
+
+
+new90() /* IGNORE THIS RECORD */
+{
+    while (text[strlen(text)-1] == '1')
+	read_line();
+}
+
+
+/***********************************************************************************/
+/***                               read_ntf()					 ***/
+/**    Function to read in Ordnance Survey NTF record description data. 	 ***/
+/***  		   Assumes National Transfer Format V2.0 (BS 7567).		 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 19th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+read_ntf()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    char    	rec_desc,	/* Record Descriptor.					*/
+    		cont_mark,	/* Continuation code - 0 is no continue, 1 to continue.	*/
+
+    		end_of_file = FALSE;	
+				/* Flag indicating all volumes have been read.		*/
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN EACH RECORD IN NTF FILE				*/
+    /*----------------------------------------------------------------------------------*/ 
+
+    
+    do
+    {
+    	rec_desc = read_line();
+
+    	switch (rec_desc)
+    	{
+	    case 1:					/* MAP HEADER INFORMATION 	*/
+	    	vol_head();
+	    	break;
+	    case 2:
+	    	db_head();
+	   	break;
+	    case 3:
+	    	data_desc();
+	    	break;
+	    case 4:
+	    	data_fmt();
+	    	break;
+	    case 5:
+	    	feat_class();
+	    	break;
+
+	    case 7:					/* SECTION HEADER INFORMATION 	*/
+		sect_head();
+		break;
+
+ 	    case(11):					/* TEXT INFORMATION 		*/
+		name_rec();		
+		break;
+	    case(12):
+		name_postn();
+		break;
+ 	    case(43):					
+		text_rec();		
+		break;
+	    case(44):
+		text_postn();
+		break;
+	    case(45):
+		text_rep();
+		break;
+
+
+   	    case(14):					/* ATTRIBUTE INFORMATION	*/
+		att_rec();
+		break;
+	    case 40:
+		att_desc();
+		break;
+
+	    case 15:					/* VECTOR COORD INFORMATION 	*/
+		point_rec();
+		break;
+	    case 16:
+		node_rec();
+		break;
+	    case 21:
+		geom_rec(NO_ATTRIB,NO_ATTRIB);
+		break;
+	    case 22:
+		geom_rec2(NO_ATTRIB,NO_ATTRIB);
+	  	break;
+	    case 23:
+		line_rec();
+		break;
+
+	    case 50:					/* RASTER INFORMATION 		*/
+		grid_head();
+		break;
+
+	    case 51:
+		grid_rec();
+		break;
+
+	    case 99:					/* VOLUME TERMINATION INFO	*/
+	    	if (vol_term() == 0)
+		    end_of_file = TRUE;
+	    	break;
+
+	    case 0:					/* ERRORS			*/
+	    	cont_error();
+	    	break;
+	    default:
+	    	unknown_desc(rec_desc);
+	    	break;
+    	}
+    }
+    while (end_of_file == FALSE);
+
+}
+/****************************************************************************************/
+/***                          	       read_line()				      ***/
+/***          Reads a line from an NTF file and returns the record descriptor	      ***/
+/***  Jo Wood, Project ASSIST, V1.0 27th May 1993             	                      ***/
+/****************************************************************************************/
+
+#include "ntf_in.h"
+
+int read_line()
+{
+    /* ------ Initialise ------ */
+
+    char rec_desc[3],		/* Stores 2 digit ASCII record descriptor		*/
+   	 *posn_ptr=NULL;	/* Points to contrl-M character in string.		*/
+
+    rec_desc[2] =NULL;
+
+
+    /* ------ Read in a line (record) from the NTF file ------ */
+
+    if (fgets(text,128,ntf_fptr) == NULL)
+    {
+	fprintf(stderr,"ERROR during read of NTF file\n");
+	exit(-1);
+    }
+
+    line_number ++;		/* Accumulate line counter.				*/
+
+
+    /* ------ Strip line of Ctrl-M (Return) Characters ------				*/
+
+    posn_ptr = strchr(text,13);
+    if (posn_ptr != NULL)
+       *(posn_ptr) = NULL; 	/* Terminate string at first occurance of Ctrl-M.	*/
+
+
+    /* ------ Find and return the Record Descriptor ------ */
+
+    strncpy(rec_desc,text,2);		/* Copy first two characters.			*/
+    return (atoi(rec_desc));		/* Convert into integer.			*/
+}
+
+/***********************************************************************************/
+/***                                  cont_error()				 ***/
+/***    Identifies and reports error if unexpected continuation code is found.	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 27th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+cont_error()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/
+
+    char	*posn_ptr;	/* Position in string of continuation code.		*/
+    char	cont_mark;	/* Continuation code.					*/
+
+    fprintf(stderr,
+	"WARNING: Line %d - Record contains unexpected continuation code.\n",
+									line_number);
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            IDENTIFY CONTINUATION CODE				*/
+    /*----------------------------------------------------------------------------------*/             
+    if ((posn_ptr = strrchr(text,'%')) == NULL)
+        fprintf(stderr,
+	"WARNING: Line %d - No record terminator found in line.\n",line_number);
+
+    cont_mark = *(posn_ptr-1) - '0';
+	
+    /*----------------------------------------------------------------------------------*/
+    /*                              READ CONTINUATION LINES				*/
+    /*----------------------------------------------------------------------------------*/ 
+    if (cont_mark != 0)
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+
+}
+
+
+/***********************************************************************************/
+/***                               unknown_desc()				 ***/
+/***    Identifies and reports error if unknown description code is found.	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 27th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+unknown_desc(rec_desc)
+    char rec_desc;		/* The unknown record descriptor.			*/
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/
+
+    char	*posn_ptr;	/* Position in string of continuation code.		*/
+    char	cont_mark;	/* Continuation code.					*/
+
+    fprintf(stderr,
+	"WARNING: Line %d - Unknown record descriptor [%d].\n",line_number,rec_desc);
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            IDENTIFY CONTINUATION CODE				*/
+    /*----------------------------------------------------------------------------------*/             
+    if ((posn_ptr = strrchr(text,'%')) == NULL)
+        fprintf(stderr,
+	"WARNING: Line %d - No record terminator found in line.\n",line_number);
+
+    cont_mark = *(posn_ptr-1) - '0';
+
+    /*----------------------------------------------------------------------------------*/
+    /*                              READ CONTINUATION LINES				*/
+    /*----------------------------------------------------------------------------------*/ 
+    if (cont_mark != 0)
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+}
+
+
+/***********************************************************************************/
+/***                                read_blank()				 ***/
+/***         Reads in an NTF record when the contents are to be ignored.	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 27th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+read_blank()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+
+
+    char   cont_mark,		/* Continuation code ('0' or '1').			*/
+    	   rec_desc_txt[3],	/* Stores 2 digit ASCII record descriptor		*/
+	   rec_desc,		/* Integer record descriptor.				*/
+	   *posn_ptr;		/* Used to find position of characters in string.	*/
+
+    rec_desc_txt[2] = NULL;
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            READ A LINE FROM THE NTF FILE				*/
+    /*----------------------------------------------------------------------------------*/             
+
+    /* ------ Read in a line (record) from the NTF file ------ */
+
+    if (fgets(text,128,ntf_fptr) == NULL)
+    {
+	fprintf(stderr,"ERROR during read of NTF line.\n");
+	exit(-1);
+    }
+    line_number++;		/* Accumulate line counter.				*/
+
+    /*----------------------------------------------------------------------------------*/
+    /*                              CHECK RECORD DESCRIPTOR				*/
+    /*----------------------------------------------------------------------------------*/
+
+    strncpy(rec_desc_txt,text,2);	/* Copy first two characters.			*/
+    rec_desc = atoi(rec_desc_txt);	/* Convert into integer.			*/
+    if (rec_desc != 0)			
+    	fprintf(stderr,
+	"WARNING: Line %d - Record descriptor is %d for continuation line.\n",
+								line_number,rec_desc);
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            IDENTIFY CONTINUATION CODE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if ((posn_ptr = strrchr(text,'%')) == NULL)
+        fprintf(stderr,
+	"WARNING: Line %d - No record terminator found in continuation line.\n",
+								line_number);
+
+    cont_mark = *(posn_ptr-1) - '0'; 
+
+    return(cont_mark);
+}
+/*****************************************************************************/
+/***                                                                       ***/
+/***                             write_raster()                            ***/
+/***   	            Writes out and closes  GRASS raster file.  		   ***/
+/***                 Jo Wood, Project ASSIST, 29th May 1993.               ***/
+/***                                                                       ***/
+/*****************************************************************************/
+
+#include "ntf_in.h"
+
+write_raster()
+{
+    /* ------ Initialise ------ */
+
+    int	   rast_row,rast_col;		/* Counts through each raster row.   */
+
+    CELL  *row_buf;
+    row_buf  = G_allocate_cell_buf();   /* Allocate enough memory to store   */
+                                        /* one raster row.		     */
+
+    /* ------ Copy raster to GRASS buffer and write out ------ */
+
+    for (rast_row=0;rast_row<401; rast_row++)
+    {
+	row_buf = raster[rast_row];
+	G_put_map_row(fd_out, row_buf);	/* Write the row buffer to  	     */
+    					/* the output raster.       	     */
+    }
+
+    /* ------ Close GRASS raster ------ */
+
+    G_close_cell(fd_out);
+    G_init_cats((CELL)0,"Elevation",&cats);
+    G_write_cats(file_out_name,&cats);
+
+    /* ------ Update file name so new one may be opened ------ */
+
+    strcat(file_out_name,"%");
+
+    O_raster     = FALSE;		/* Flag to indicate file is now closed	*/
+    num_rlines   = 0;
+
+}
+/*****************************************************************************/
+/***                                                                       ***/
+/***                              write_supp()                             ***/
+/***    Writes out supplimentary information for raster and vector files.  ***/
+/***                 Jo Wood, Project ASSIST, 31st May 1993.               ***/
+/***                                                                       ***/
+/*****************************************************************************/
+
+#include "ntf_in.h"
+
+write_supp()
+{
+
+}
+
+
+/*****************************************************************************/
+/***                                get_date()                             ***/
+/***          Converts numerical date into 10 character text date          ***/
+/***                 Jo Wood, Project ASSIST, 31st May 1993.               ***/
+/***                                                                       ***/
+/*****************************************************************************/
+
+get_date(date_num)
+    char	*date_num;		/* Text string holding numerical     */
+					/* version of date: YYYYMMDD	     */
+{
+
+     
+     char	date_txt[11],
+		pair[3];		/* Pair of digits YY or MM or DD     */
+
+
+     strcpy(date_txt,"          ");
+     strcpy(pair,"  ");
+
+
+    /* Check for NULL strings */
+
+    if ( (strcmp(date_num,"00000000")==0) || (strcmp(date_num,"        ")==0) )
+    {
+	strcpy(date_num,"Not Given");
+	return(0);
+    }
+
+
+    /* Get Day */
+
+    strncpy(date_txt,date_num+6,2);
+    if (*(date_num+7) == '1')
+	strncpy(date_txt+2,"st",2);
+    else
+    	if (*(date_num+7) == '2')
+	    strncpy(date_txt+2,"nd",2);
+    	else
+    	    if (*(date_num+7) == '3')
+	    	strncpy(date_txt+2,"rd",2);
+   	    else
+	    	strncpy(date_txt+2,"th",2);
+
+
+    /* Get Month */
+
+    if (strncmp(date_num+4,"01",2) == 0 )
+	strncpy(date_txt+4," Jan",4);
+    else
+    	if (strncmp(date_num+4,"02",2) == 0 )
+	    strncpy(date_txt+4," Feb",4);
+    	else
+   	    if (strncmp(date_num+4,"03",2) == 0 )
+	    	strncpy(date_txt+4," Mar",4);
+    	    else
+   	    	if (strncmp(date_num+4,"04",2) == 0 )
+	    	    strncpy(date_txt+4," Apr",4);
+    	    	else
+   	    	    if (strncmp(date_num+4,"05",2) == 0 )
+	    	    	strncpy(date_txt+4," May",4);
+    	    	    else
+   	    	    	if (strncmp(date_num+4,"06",2) == 0 )
+	    	    	    strncpy(date_txt+4," Jun",4);
+    	    	    	else
+   	    	    	    if (strncmp(date_num+4,"07",2) == 0 )
+	    	    	    	strncpy(date_txt+4," Jul",4);
+    	    	    	    else
+   	    	    	    	if (strncmp(date_num+4,"08",2) == 0 )
+	    	    	    	    strncpy(date_txt+4," Aug",4);
+    	    	    	    	else
+  	    	    	    	    if (strncmp(date_num+4,"09",2) == 0 )
+	    	    	    	    	strncpy(date_txt+4," Sep",4);
+    	    	    	    	    else
+  	    	    	    	    	if (strncmp(date_num+4,"10",2) == 0 )
+	    	    	    	    	    strncpy(date_txt+4," Oct",4);
+    	    	    	    	    	else
+   	    	    	    	    	    if (strncmp(date_num+4,"11",2) == 0 )
+	    	    	    	    	    	strncpy(date_txt+4," Nov",4);
+    	    	    	    	    	    else
+   	    	    	    	    	    	if (strncmp(date_num+4,"12",2) == 0 )
+	    	    	    	    	    	    strncpy(date_txt+4," Dec",4);
+    /* Get Year */
+    strncpy(date_txt+8,date_num+2,2);
+
+    strcpy(date_num,date_txt);
+}
+
+
+
+
+
+
+
+    
+
+
+
+
+    
+
+
+
+
+
+
+
+/*****************************************************************************/
+/***                                                                       ***/
+/***                             write_vector()                            ***/
+/***   	               Writes out to GRASS vector files.  		   ***/
+/***                 Jo Wood, Project ASSIST, 30th May 1993.               ***/
+/***                                                                       ***/
+/*****************************************************************************/
+
+#include "ntf_in.h"
+
+write_vector(geom_type,attribute)
+    int		geom_type,		/* Point, Line or Area			*/
+		attribute;		/* Numerical attribute.			*/
+{
+    /*--------------------------------------------------------------------------*/
+    /*                              INITIALISE                                  */
+    /*--------------------------------------------------------------------------*/ 
+  
+    FILE	*vect_fptr,		/* Points to one of the opened vect maps*/
+		*vect_fptr_att;
+
+    /*--------------------------------------------------------------------------*/
+    /*                    FIND OUT WHICH VECTOR TO WRITE TO                     */
+    /*--------------------------------------------------------------------------*/
+
+    switch (V_featcode)			/* Each feature code written out to a	*/
+    {					/*  separate vector map layer.		*/
+
+	case 200:			/* Spot heights.			*/
+	    if (O_spot == FALSE)	/* If false, haven't been opened yet.	*/
+	    {
+		open_vector(".spot");
+		fptr_spot = vect_info.dig_fp;
+		fptr_spot_att = vect_info.att_fp;
+		O_spot = TRUE;
+	    }
+	    vect_fptr = fptr_spot;	/* This is the file to write to.	*/
+	    vect_fptr_att = fptr_spot_att;
+	    break;
+
+	case 201:			/* Contour lines.			*/
+	    if (O_cont == FALSE)	/* If false, haven't been opened yet.	*/
+	    {
+		open_vector(".cont");
+		fptr_cont = vect_info.dig_fp;
+		fptr_cont_att = vect_info.att_fp;
+		O_cont = TRUE;
+	    }
+	    vect_fptr = fptr_cont;	/* This is the file to write to.	*/
+	    vect_fptr_att = fptr_cont_att;
+	    break;
+
+	case 202:			/* Lake boundaries.			*/
+	    if (O_lake == FALSE)	/* If false, haven't been opened yet.	*/
+	    {
+		open_vector(".lake");
+		fptr_lake = vect_info.dig_fp;
+		fptr_lake_att = vect_info.att_fp;
+		O_lake = TRUE;
+	    }
+	    vect_fptr = fptr_lake;	/* This is the file to write to.	*/
+	    vect_fptr_att = fptr_lake_att;
+	    break;
+
+	case 203:			/* Break lines.				*/
+	    if (O_break == FALSE)	/* If false, haven't been opened yet.	*/
+	    {
+		open_vector(".break");
+		fptr_break = vect_info.dig_fp;
+		fptr_break_att = vect_info.att_fp;
+		O_break = TRUE;
+	    }
+	    vect_fptr = fptr_break;	/* This is the file to write to.	*/
+	    vect_fptr_att = fptr_break_att;
+	    break;
+
+	case 204:			/* Coastlines.				*/
+	    if (O_coast == FALSE)	/* If false, haven't been opened yet.	*/
+	    {
+		open_vector(".coast");
+		fptr_coast = vect_info.dig_fp;
+		fptr_coast_att = vect_info.att_fp;
+		O_coast = TRUE;
+	    }
+	    vect_fptr = fptr_coast;	/* This is the file to write to.	*/
+	    vect_fptr_att =fptr_coast_att;
+	    break;
+
+	case 205:			/* Ridge lines.				*/
+	    if (O_temp == FALSE)	/* If false, haven't been opened yet.	*/
+	    {
+		open_vector(".ridge");
+		fptr_ridge = vect_info.dig_fp;
+		fptr_ridge_att = vect_info.att_fp;
+		O_temp = TRUE;
+	    }
+	    vect_fptr = fptr_ridge;	/* This is the file to write to.	*/
+	    vect_fptr_att = fptr_ridge_att;
+
+	    break;
+
+	case 207:			/* Form lines.				*/
+	    if (O_form == FALSE)	/* If false, haven't been opened yet.	*/
+	    {
+		open_vector(".form");
+		fptr_form = vect_info.dig_fp;
+		fptr_form_att = vect_info.att_fp;
+		O_form = TRUE;
+	    }
+	    vect_fptr = fptr_form;	/* This is the file to write to.	*/
+	    vect_fptr_att = fptr_form_att;
+	    break;
+
+	default:
+	    if (O_other == FALSE)	/* If false, haven't been opened yet.	*/
+	    {
+		open_vector("");
+		fptr_other = vect_info.dig_fp;
+		fptr_other_att = vect_info.att_fp;
+		O_other = TRUE;
+	    }
+	    vect_fptr = fptr_other;	/* This is the file to write to.	*/
+	    vect_fptr_att = fptr_other_att;
+	    break;
+    }
+
+    /*--------------------------------------------------------------------------*/
+    /*                   WRITE OUT X,Y COORDINATES AND ATTRIBUTES		*/
+    /*--------------------------------------------------------------------------*/ 
+
+    if (vect_fptr == NULL)
+	return(0);
+
+    vect_info.dig_fp = vect_fptr;
+    vect_info.att_fp = vect_fptr_att;
+    Vect_write_line(&vect_info,geom_type,points);
+
+    if (geom_type == DOT)
+    	write_att(vect_fptr_att, 'P', *(points->x), *(points->y), attribute);
+    else
+    	if (geom_type == LINE)
+    	    write_att(vect_fptr_att, 'L', *(points->x+1), *(points->y+1), attribute);
+	else    
+	    if (geom_type == AREA)
+    		write_att(vect_fptr_att, 'A', *(points->x), *(points->y), attribute);
+
+}
+/*****************************************************************************/
+/***                                                                       ***/
+/***                            close_vect()                               ***/
+/***   	            Closes down all opened vector files.  		   ***/
+/***               Jo Wood, Project ASSIST, 12 June 1993                   ***/
+/***                                                                       ***/
+/*****************************************************************************/
+
+#include "ntf_in.h"
+
+
+close_vect()
+{
+    
+    if (O_spot == TRUE)
+    {
+	vect_info.dig_fp = fptr_spot;
+        if (vect_info.mode == MODE_WRITE || vect_info.mode == MODE_RW)
+        	Vect__write_head_binary (&vect_info, &(vect_info.head));
+	fclose(fptr_spot);
+	fclose(fptr_spot_att);
+
+	G_free_cats(&cats);			/* Just save category title */
+    	G_init_cats((CELL)0,"Elevation",&cats);
+    	
+	O_spot = FALSE;
+    }
+
+    if (O_cont == TRUE)
+    {
+	vect_info.dig_fp = fptr_cont;
+        if (vect_info.mode == MODE_WRITE || vect_info.mode == MODE_RW)
+        	Vect__write_head_binary (&vect_info, &(vect_info.head));
+	fclose(fptr_cont);
+	fclose(fptr_cont_att);
+
+	G_free_cats(&cats);			/* Just save category title */
+    	G_init_cats((CELL)0,"Elevation",&cats);
+
+	O_cont = FALSE;
+    }
+
+    if (O_lake == TRUE)
+    {
+	vect_info.dig_fp = fptr_lake;
+        if (vect_info.mode == MODE_WRITE || vect_info.mode == MODE_RW)
+        	Vect__write_head_binary (&vect_info, &(vect_info.head));
+	fclose(fptr_lake);
+	fclose(fptr_lake_att);
+
+	G_free_cats(&cats);			/* Just save category title */
+    	G_init_cats((CELL)0,"Elevation",&cats);
+
+	O_lake = FALSE;
+    }
+
+    if (O_break == TRUE)
+    {
+	vect_info.dig_fp = fptr_break;
+        if (vect_info.mode == MODE_WRITE || vect_info.mode == MODE_RW)
+        	Vect__write_head_binary (&vect_info, &(vect_info.head));
+	fclose(fptr_break);
+	fclose(fptr_break_att);
+
+	G_free_cats(&cats);			/* Just save category title */
+    	G_init_cats((CELL)0,"Elevation",&cats);
+
+	O_break = FALSE;
+    }
+
+    if (O_coast == TRUE)
+    {
+	vect_info.dig_fp = fptr_coast;
+        if (vect_info.mode == MODE_WRITE || vect_info.mode == MODE_RW)
+        	Vect__write_head_binary (&vect_info, &(vect_info.head));
+	fclose(fptr_coast);
+	fclose(fptr_coast_att);
+
+	G_free_cats(&cats);			/* Just save category title */
+    	G_init_cats((CELL)0,"Elevation",&cats);
+
+	O_coast = FALSE;
+    }
+
+    if (O_temp == TRUE)
+    {
+	vect_info.dig_fp = fptr_ridge;
+        if (vect_info.mode == MODE_WRITE || vect_info.mode == MODE_RW)
+        	Vect__write_head_binary (&vect_info, &(vect_info.head));
+	fclose(fptr_ridge);
+	fclose(fptr_ridge_att);
+
+	G_free_cats(&cats);			/* Just save category title */
+    	G_init_cats((CELL)0,"Elevation",&cats);
+
+	O_temp = FALSE;
+    }
+
+    if (O_form == TRUE)
+    {
+	vect_info.dig_fp = fptr_form;
+        if (vect_info.mode == MODE_WRITE || vect_info.mode == MODE_RW)
+        	Vect__write_head_binary (&vect_info, &(vect_info.head));
+	fclose(fptr_form);
+	fclose(fptr_form_att);
+
+	G_free_cats(&cats);			/* Just save category title */
+    	G_init_cats((CELL)0,"Elevation",&cats);
+
+	O_form = FALSE;
+    }
+
+
+    if (O_other == TRUE)
+    {
+	vect_info.dig_fp = fptr_other;
+        if (vect_info.mode == MODE_WRITE || vect_info.mode == MODE_RW)
+        	Vect__write_head_binary (&vect_info, &(vect_info.head));
+	fclose(fptr_other);
+	fclose(fptr_other_att);
+
+    	G_write_vector_cats(file_out_name,&cats);
+	O_other = FALSE;
+    }
+
+    if (O_vector == TRUE)
+    {
+    	strcat(file_out_name,"%");	/* Change name of output files.		*/
+/*	strcpy (H_organ,"Not Known                    ");
+    	strcpy (H_ddate,"          ");
+    	strcpy (H_mname,"Not Known                              ");
+    	strcpy (H_mdate,"          ");
+*/    }
+
+
+}
+/***********************************************************************************/
+/***                                  vol_head()				 ***/
+/***  	Reads in the Volume header Record (01) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 27th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+vol_head()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  VOLHDREC	volhdrec;	/* Volume header structure.			*/
+    char    		buffer[80];	/* Temporary storage of text data 		*/
+
+    /* Initialise all string structures */
+
+    strcpy(volhdrec.DONOR,	"                    ");
+    strcpy(volhdrec.RECIPIENT,	"                    ");
+    strcpy(volhdrec.TRANDATE,	"        ");
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    volhdrec.REC_DESC_1	= 	1;
+    strncpy(volhdrec.DONOR,	text+2,20);
+    strncpy(volhdrec.RECIPIENT,	text+22,20);
+    strncpy(volhdrec.TRANDATE,	text+42,8);
+    strncpy(buffer,		text+50,4);
+	buffer[4] = NULL;
+    	volhdrec.SERIAL =	atoi(buffer);
+    strncpy(buffer,		text+54,2);
+	buffer[2] = NULL;
+    	volhdrec.VOLNUM =	atoi(buffer);
+    volhdrec.NTFLEVEL =		text[56] - '0';
+    strncpy(buffer,		text+57,4);
+	buffer[4] = NULL;
+    	volhdrec.NTFVER =	atoi(buffer) / 100.0;
+    volhdrec.NTFOR =		text[61];
+    volhdrec.EOR_1 =		text[62];
+
+    if (volhdrec.EOR_1 != '%')
+    {
+    	volhdrec.DIVIDER =	text[63];
+    	volhdrec.CONT_MARK_1 = 	text[64] - '0';
+  	volhdrec.EOR_2 =	text[65];
+    }
+    else
+    {
+    	volhdrec.DIVIDER =	' ';
+    	volhdrec.CONT_MARK_1 = 	0;
+  	volhdrec.EOR_2 =	'%';
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                                CHECK NTF VERSION					*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (volhdrec.NTFVER < 2.0)
+    	old2new();
+    else
+	if (volhdrec.NTFVER != 2.0)
+	    fprintf(stderr,
+	    "WARNING: Line %d - Volume header indicates unknown NTF version [%.2f].\n",
+								line_number,volhdrec.NTFVER);
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (volhdrec.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Volume header record has continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    if (volhdrec.EOR_2 != '%')
+	fprintf(stderr,
+	"WARNING: Line %d - Volume header record has no line terminator.\n",
+									line_number);
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (conversion_log)		/* Print out log if requested.				*/
+    {
+	printf("\n\n");
+	printf("      National Transfer Format - Conversion Log\n");
+	printf("      =========================================\n");
+	printf("\n");
+	printf("Donor:			%s\n",volhdrec.DONOR);
+	printf("Processed for		%s\n",volhdrec.RECIPIENT);
+	printf("Extracted from volume	%d\n",volhdrec.VOLNUM);
+	printf("Uses NTF		Version %.2f\n",volhdrec.NTFVER);
+	printf("			Level %d\n",volhdrec.NTFLEVEL); 
+    }
+
+    if (outfile)
+    {
+	strcpy(H_organ,volhdrec.DONOR);
+	strcpy(H_ddate,volhdrec.TRANDATE);
+	get_date(H_ddate);
+    }
+}
+/***********************************************************************************/
+/***                                  db_head()					 ***/
+/***  	Reads in the Database Header Record (02) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 27th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+db_head()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  DBHDREC	dbhdrec;	/* Database header structure.			*/
+    char    		buffer[80];	/* Temporary storage of text data 		*/
+
+    /* Initialise all string structures */
+
+    strcpy(dbhdrec.DBNAME,	"                    ");
+    strcpy(dbhdrec.DDNAME,	"                    ");
+    strcpy(dbhdrec.DDATE,	"        ");
+    strcpy(dbhdrec.DDBASE,	"                    ");
+    strcpy(dbhdrec.DDBDATE,	"        ");
+    strcpy(dbhdrec.FCNAME,	"                    ");
+    strcpy(dbhdrec.FCDATE,	"        ");
+    strcpy(dbhdrec.DQNAME,	"                    ");
+    strcpy(dbhdrec.DQDATE,	"        ");
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    dbhdrec.REC_DESC_1	= 	2;
+    strncpy(dbhdrec.DBNAME,	text+2,20);
+    strncpy(dbhdrec.DDNAME,	text+22,20);
+    strncpy(dbhdrec.DDATE,	text+42,8);
+    strncpy(dbhdrec.DDBASE,	text+50,20);
+    strncpy(dbhdrec.DDBDATE,	text+70,8);
+    dbhdrec.CONT_MARK_1 =	text[78] - '0';
+    dbhdrec.EOR_1 =		text[79];
+
+    if (dbhdrec.CONT_MARK_1 == 1)
+    {
+	if ( (dbhdrec.REC_DESC_2 = read_line()) != 0)
+	    fprintf(stderr,
+   "WARNING: Line %d - Continuation of Database header has unexpected descriptor [%d] \n",
+									line_number);
+    	strncpy(dbhdrec.FCNAME,	text+2,20);
+    	strncpy(dbhdrec.FCDATE,	text+22,8);
+    	strncpy(dbhdrec.DQNAME,	text+30,20);
+    	strncpy(dbhdrec.DQDATE,	text+50,8);
+    	strncpy(buffer,		text+58,2);
+	    buffer[2] = NULL;
+    	    dbhdrec.DATA_MODEL =atoi(buffer);
+    	dbhdrec.CONT_MARK_2 =	text[60] - '0';
+    	dbhdrec.EOR_2 =		text[61];
+    }
+    else
+	dbhdrec.EOR_2 =		'%';
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (dbhdrec.CONT_MARK_2 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Database header record has second continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    if (dbhdrec.EOR_2 != '%')
+	fprintf(stderr,
+	"WARNING: Line %d - Database header record has no line terminator.\n",
+									line_number);
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (conversion_log)		/* Print out log if requested.				*/
+    {
+	printf("Database Header:\n");
+	printf("----------------\n");
+	printf("\tDatabase Name:\t\t%s\n",dbhdrec.DBNAME);
+	printf("\tData Dictionary Name:\t%s\n",dbhdrec.DDNAME);
+    }
+
+    strcpy(H_mname,dbhdrec.DBNAME);
+
+}
+
+/***********************************************************************************/
+/***                                 data_desc()				 ***/
+/***  	Reads in the Data Description Record (03) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 27th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+data_desc()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  DATADESC 	datadesc;	/* Volume header structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			*posn_ptr;	/* Points to '\' divider at end of descriptor.	*/
+
+    /* Initialise all string structures */
+
+    strcpy(datadesc.FIELD_NAME,	"          ");
+    strcpy(datadesc.FINTER,	"     ");
+    strcpy(datadesc.FDESC,	"                                      ");
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    datadesc.REC_DESC_1	= 	3;
+    strncpy(datadesc.FIELD_NAME,text+2,10);
+    strncpy(buffer,		text+12,3);
+	buffer[3] = NULL;
+    	datadesc.FWIDTH =	atoi(buffer);
+    strncpy(datadesc.FINTER,	text+15,5);
+
+    if ( (posn_ptr = strrchr(text,'\\')) == NULL)
+	fprintf(stderr,
+	"WARNING: Line %d - Data Description Record has no divider.\n",line_number);
+    else
+	strncpy(datadesc.FDESC,	text+20,posn_ptr - (text+20));
+
+    if ( (posn_ptr = strrchr(text,'%')) == NULL)
+	fprintf(stderr,
+	"WARNING: Line %d - Data Description Record has no terminator.\n",line_number);
+
+    datadesc.CONT_MARK_1 =	*(posn_ptr-1) - '0';
+    datadesc.EOR_1 =		*posn_ptr;
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (datadesc.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Data Description Record has continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (conversion_log)		/* Print out log if requested.				*/
+    {
+	printf("Data Description Record:\n");
+	printf("------------------------\n");
+	printf("\tField name:\t\t%s\n",datadesc.FIELD_NAME);
+	printf("\tField description\t%s\n",datadesc.FDESC);
+    }
+
+}
+
+/***********************************************************************************/
+/***                                  data_fmt()				 ***/
+/***  	Reads in the Data Format Record (04) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 27th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+data_fmt()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  DATAFMT	datafmt;	/* Data format record structure.		*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			*posn_ptr;	/* Position of record terminator.		*/
+
+    /* Initialise all string structures */
+
+    strcpy(datafmt.REC_NAME,	"          ");
+    strcpy(datafmt.FIELD_NAME,	"          ");
+ 
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    datafmt.REC_DESC_1	= 	4;
+    strncpy(buffer,		text+2,2);
+	buffer[2] = NULL;
+    	datafmt.REC_TYPE =	atoi(buffer);
+    strncpy(datafmt.REC_NAME,	text+4,10);
+    strncpy(buffer,		text+14,2);
+	buffer[2] = NULL;
+    	datafmt.NUM_FIELD =	atoi(buffer);
+    strncpy(datafmt.FIELD_NAME,	text+16,10);
+    datafmt.FUSE =		text[26];
+
+    if ( (posn_ptr = strrchr(text,'%')) == NULL)
+	fprintf(stderr,
+	"WARNING: Line %d - Data Format Record has no terminator.\n",line_number);
+
+    datafmt.CONT_MARK_1 =	*(posn_ptr-1) - '0';
+    datafmt.EOR_1 =		*posn_ptr;
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (datafmt.CONT_MARK_1 != 0)
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (conversion_log)		/* Print out log if requested.				*/
+    {
+	printf("Data Format for record %d:\n", datafmt.REC_TYPE);
+	printf("--------------------------\n");
+	printf("\tRecord name:\t\t%s\n",datafmt.REC_NAME);
+	printf("\tField name:\t\t%s\n",datafmt.FIELD_NAME);
+    }
+
+
+}
+
+/***********************************************************************************/
+/***                                  feat_class()				 ***/
+/***  Reads in Feature Classification Record (05) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 27th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+feat_class()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  FEATCLASS	featclass;	/* Feature classification record structure.	*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			*posn_ptr;	/* Position of terminator in record.		*/
+
+    /* Initialise all string structures */
+
+    strcpy(featclass.CODE_COM,	"          ");
+    strcpy(featclass.STCLASS,	"                    ");
+    strcpy(featclass.FEATDES,	"                                           ");
+ 
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    featclass.REC_DESC_1	= 	5;
+    strncpy(buffer,		text+2,4);
+	buffer[4] = NULL;
+    	featclass.FEAT_CODE =	atoi(buffer);
+    strncpy(featclass.CODE_COM,	text+6,10);
+    strncpy(featclass.STCLASS,	text+16,20);
+
+    if ( (posn_ptr = strrchr(text,'%')) == NULL)
+	fprintf(stderr,
+	"WARNING: Line %d - Feature Classification Record has no terminator.\n",
+									line_number);
+
+						/* Ignore last \ in description record.	*/
+    strncpy(featclass.FEATDES,	text+36,(posn_ptr-2) - (text+36));
+    featclass.CONT_MARK_1 =	*(posn_ptr-1) - '0';
+    featclass.EOR_1 =		*posn_ptr;
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (featclass.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Feature Classification Record has continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (conversion_log)		/* Print out log if requested.				*/
+    {
+	printf("Feature Classification:\n");
+	printf("-----------------------\n");
+	printf("\tCode:\t\t\t%d\n",featclass.FEAT_CODE);
+	printf("\tDescription\t\t%s\n",featclass.FEATDES);
+    }
+
+				/* Store feature description and code.			*/
+    if (outfile)
+       G_set_cat(featclass.FEAT_CODE,featclass.FEATDES,&feature_desc);
+
+}
+
+/***********************************************************************************/
+/***                                 sect_head()				 ***/
+/***  	Reads in the Section Header Record (07) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 28th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+sect_head()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  SECHREC	sechrec;	/* Section header structure.			*/
+    char    		buffer[80];	/* Temporary storage of text data 		*/
+
+    /* Initialise all string structures */
+
+    strcpy(sechrec.SECT_REF,	"          ");
+    strcpy(sechrec.SURV_DATE,	"        ");
+    strcpy(sechrec.LAST_AMND,	"        ");
+    strcpy(sechrec.COPYRIGHT,	"        ");
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    sechrec.REC_DESC_1	= 	7;
+    strncpy(sechrec.SECT_REF,	text+2,10);
+    sechrec.COORD_TYPE =	text[12] - '0';
+    sechrec.STRUC_TYPE =	text[13] - '0';
+    strncpy(buffer,		text+14,5);
+	buffer[5] = NULL;
+    	sechrec.XY_LEN =	atoi(buffer);
+    sechrec.XY_UNIT =		text[19] - '0';
+    strncpy(buffer,		text+20,10);
+	buffer[10] = NULL;
+    	sechrec.XY_MULT =	atoi(buffer)/1000.0;
+    strncpy(buffer,		text+30,5);
+	buffer[5] = NULL;
+    	sechrec.Z_LEN =		atoi(buffer);
+    sechrec.Z_UNIT =		text[35] - '0';
+    strncpy(buffer,		text+36,10);
+	buffer[10] = NULL;
+    	sechrec.Z_MULT =	atoi(buffer)/1000.0;
+    strncpy(buffer,		text+46,10);
+	buffer[10] = NULL;
+    	sechrec.X_ORIG =	atoi(buffer);
+    strncpy(buffer,		text+56,10);
+	buffer[10] = NULL;
+    	sechrec.Y_ORIG =	atoi(buffer);
+    strncpy(buffer,		text+66,10);
+	buffer[10] = NULL;
+    	sechrec.Z_DATUM =	atoi(buffer);
+    sechrec.CONT_MARK_1 =	text[76] - '0';
+    sechrec.EOR_1 =		text[77];
+
+    if (sechrec.CONT_MARK_1 == 1)
+    {
+	if ( (sechrec.REC_DESC_2 = read_line()) != 0)
+	    fprintf(stderr,
+    "WARNING: Line %d - Continuation of Section header has unexpected descriptor [%d] \n"
+							,line_number,sechrec.REC_DESC_2);
+    	strncpy(buffer,		text+2,10);
+	    buffer[10] = NULL;
+    	    sechrec.XMIN =	atoi(buffer);
+    	strncpy(buffer,		text+12,10);
+	    buffer[10] = NULL;
+    	    sechrec.YMIN =	atoi(buffer);
+    	strncpy(buffer,		text+22,10);
+	    buffer[10] = NULL;
+    	    sechrec.XMAX =	atoi(buffer);
+    	strncpy(buffer,		text+32,10);
+	    buffer[10] = NULL;
+    	    sechrec.YMAX =	atoi(buffer);
+    	strncpy(buffer,		text+42,5);
+	    buffer[5] = NULL;
+    	    sechrec.XY_ACC =	atoi(buffer)/100.0;
+    	strncpy(buffer,		text+47,5);
+	    buffer[5] = NULL;
+    	    sechrec.Z_ACC =	atoi(buffer)/100.0;
+	strncpy(sechrec.SURV_DATE,text+52,8);
+	strncpy(sechrec.LAST_AMND,text+60,8);
+	strncpy(sechrec.COPYRIGHT,text+68,8);
+    	sechrec.CONT_MARK_2 =	text[76] - '0';
+    	sechrec.EOR_2 =		text[77];
+
+    	if (sechrec.CONT_MARK_2 == 1)
+    	{
+	    if ( (sechrec.REC_DESC_3 = read_line()) != 0)
+	    	fprintf(stderr,
+    "WARNING: Line %d - Continuation of Section header has unexpected descriptor [%d] \n"
+							,line_number,sechrec.REC_DESC_3);
+	    strncpy(sechrec.SQNAME,	text+2,20);
+	    strncpy(sechrec.SQDATE,	text+22,8);
+    	    strncpy(buffer,		text+30,9);
+	    	buffer[9] = NULL;
+	    	sechrec.SCALE =		atoi(buffer);
+    	    strncpy(buffer,		text+39,10);
+	    	buffer[10] = NULL;
+	    	sechrec.GRID_OR_X =	atoi(buffer)/1000.0;
+    	    strncpy(buffer,		text+49,10);
+	    	buffer[10] = NULL;
+	    	sechrec.GRID_OR_Y =	atoi(buffer)/1000.0;
+    	    strncpy(buffer,		text+59,8);
+	    	buffer[8] = NULL;
+	    	sechrec.PROJ_OR_LAT =	atoi(buffer)/10.0;
+    	    strncpy(buffer,		text+67,8);
+	    	buffer[8] = NULL;
+	    	sechrec.PROJ_OR_LNG =	atoi(buffer)/10.0;
+    	    sechrec.CONT_MARK_3 =	text[75] - '0';
+    	    sechrec.EOR_3 =		text[76];
+	}
+	else
+	{
+	    if (strncmp(H_mname,"OSCAR",5) == 0)
+		sechrec.SCALE = 10000;
+    	    else
+    		if (strncmp(H_mname,"OS_ROUTEPLANNER",15) == 0)
+	   	    sechrec.SCALE = 625000;
+    		else
+    	    	    if (strncmp(H_mname,"OS_TRAVELMASTER",15) == 0)
+	   		sechrec.SCALE = 250000;
+		    else
+	    		sechrec.SCALE = 0;
+
+	    sechrec.CONT_MARK_3 = 0;
+	    sechrec.EOR_3 = '%';
+	}
+    }
+    else
+    {
+	sechrec.EOR_3 =	'%';
+	sechrec.CONT_MARK_3 = 0;
+    }
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (sechrec.EOR_3 != '%') 
+	fprintf(stderr,
+	"WARNING: Line %d - Section header record has no line terminator.\n",
+									line_number);
+
+    if (sechrec.CONT_MARK_3 != 0)
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;				/* NOTE: INCOMPLETE - NOT READING CONTINUATION	*/
+					/*                    DATA INTO STRUCTURE.	*/
+
+  
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (conversion_log)			/* Print out log if requested.			*/
+    {
+	printf("\n");
+	printf("Section Header:\n");
+	printf("---------------\n");
+	printf("\tDatabase Name:\t\t%s\n",sechrec.SECT_REF);
+	printf("\tMeasurement units:");
+	if (sechrec.XY_UNIT == 2)
+	    printf("\tmetres.\n");
+	else
+	    printf("\tunknown.\n");
+	printf("\tOrigin (SW corner):\t(%10d,%10d)\n",sechrec.X_ORIG,sechrec.Y_ORIG);
+	printf("\tHorizontal Accuracy:");
+	if (sechrec.XY_ACC == 0.0)
+	    printf("\tnot recorded.\n");
+	else
+	    printf("\t%.2f\n",sechrec.XY_ACC);
+	printf("\tVertical Accuracy:");
+	if (sechrec.Z_ACC == 0.0)
+	    printf("\tnot recorded.\n");
+	else
+	    printf("\t%.2f\n",sechrec.Z_ACC);
+    }
+
+    if (outfile)			
+    {
+	close_vect();			/* Close any previously opened vectors.		*/
+	
+	X_origin = sechrec.X_ORIG;	/* Identify map boundaries.			*/
+	Y_origin = sechrec.Y_ORIG;
+
+	X_min = sechrec.X_ORIG + (sechrec.XMIN*sechrec.XY_MULT);
+	Y_min = sechrec.Y_ORIG + (sechrec.YMIN*sechrec.XY_MULT);
+	X_max = sechrec.X_ORIG + ( (sechrec.XMAX - sechrec.XMIN)*sechrec.XY_MULT);
+	Y_max = sechrec.Y_ORIG + ( (sechrec.YMAX - sechrec.YMIN)*sechrec.XY_MULT);
+
+	XY_mult = sechrec.XY_MULT;
+	Z_mult = sechrec.Z_MULT;
+
+    	strcat(H_mname," - ");
+	strcat(H_mname,sechrec.SECT_REF);
+	strcpy(H_mdate,sechrec.SURV_DATE);
+	get_date(H_mdate);
+	H_scale = sechrec.SCALE;
+    }
+}
+
+/***********************************************************************************/
+/***                                name_rec()					 ***/
+/***  	Reads in the Name Record (11) into structure for processing		 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 16th June 1993                               ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+name_rec()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  NAMEREC	namerec;	/* Name record structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			rec_desc,	/* Record descriptor.				*/
+			*posn_ptr;	/* Points to line terminator.			*/
+
+    /* Initialise all string structures */
+
+    strcpy(namerec.TEXT,"                                                                                                   ");
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    namerec.REC_DESC_1 = 	11;
+
+    /********* NOTE : INCOMPLETE **********/
+
+    posn_ptr = strrchr(text,'%');
+    namerec.CONT_MARK_1 =	*(posn_ptr-1) - '0';
+    namerec.EOR_1 =		*(posn_ptr);
+  
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (namerec.CONT_MARK_1 != 0)
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+}
+/***********************************************************************************/
+/***                               name_postn()					 ***/
+/***  	Reads in the Name Position Record (12) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 16th June 1993                               ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+name_postn()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  NAMPOSTN	nampostn;	/* Name record structure.			*/
+    char		rec_desc,	/* Record descriptor.				*/
+                        *posn_ptr;      /* Position of terminator in record.		*/
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    nampostn.REC_DESC_1 = 	12;
+
+    /********* NOTE : INCOMPLETE **********/
+
+    if ( (posn_ptr = strrchr(text,'%')) == NULL)
+        fprintf(stderr,
+        "WARNING: Line %d - Name Position Record has no terminator.\n",
+                                                                        line_number);
+    nampostn.CONT_MARK_1 =       *(posn_ptr-1) - '0';
+    nampostn.EOR_1 =             *posn_ptr;
+
+  
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (nampostn.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Name Position Record has unexpected continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                       READ GEOMETRY ASSOCIATED WITH TEXT				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if( (rec_desc = read_line()) != 21)
+    {
+	if (rec_desc == 99)
+	    vol_term();			/* Allow for merged volumes between records	*/
+
+	if (read_line() != 21)
+	{
+	    fprintf(stderr,
+	"WARNING: Line %d - Name Position Record is not followed by geometry record.\n",
+									line_number);
+	    return(0);
+	}
+
+    }
+
+    geom_rec(0,TEXT_LABEL);
+}
+
+/***********************************************************************************/
+/***                                 att_rec()					 ***/
+/***  	      Reads in the Node Record (14) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 21st June 1993                               ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+att_rec()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  ATTREC	attrec;		/* Attribute record structure.			*/
+
+    char		buffer[80],	/* Temporary buffer for storing text.		*/
+			*posn_ptr,	/* Points to line terminator '%' in string.	*/
+			offset,loffset,	/* Offset along text line.			*/
+			label[80],	/* Category labels for vector object.		*/
+			vect_name[80],
+			writecats = TRUE;
+
+    int			value;		/* Value of attribute (Height only)		*/
+
+    /* Initialise string structures */
+
+    strcpy(attrec.VAL_TYPE,"  ");
+    label[0] = NULL;
+    strcpy(vect_name," ");
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    attrec.REC_DESC_1	= 	14;
+    strncpy(buffer,		text+2,6);
+	buffer[6] = NULL;
+    	attrec.ATT_ID =		atoi(buffer);
+
+    offset = 8;				/* First value type in text string.		*/
+    loffset =0;
+					/* Scan through value types.			*/
+    do
+    {
+    	strncpy(attrec.VAL_TYPE,text+offset,2);
+
+    	if (strcmp(attrec.VAL_TYPE,"FC") == 0)				/* Feature Code */
+	{
+    	    strncpy(buffer,text+offset+2,4);
+	    buffer[4] = NULL;
+	    V_featcode = atoi(buffer);
+
+	    offset += 6;
+    	}
+
+
+   	else if (strcmp(attrec.VAL_TYPE,"HT") == 0)			/* Height	*/
+	{
+    	    strncpy(buffer,text+offset+2,11);
+	    buffer[11] = NULL;
+	    value = atoi(buffer);
+
+	    if (Write_vect == TRUE)
+	    {
+	    	write_vector(geom_type,value);
+		Write_vect = FALSE;
+	    }
+	    sprintf(buffer,"%dm",value);
+	    G_set_cat(value,buffer,&cats);
+
+	    offset += 13;
+	    writecats = FALSE;
+
+    	}
+
+
+    	else if (strcmp(attrec.VAL_TYPE,"SC") == 0)			/* Scale 	*/
+	{
+    	    switch(*(text+offset+2))
+	    {
+		case 'A':
+		    H_scale = 2500;
+		    break;
+
+		case 'B':
+		    H_scale = 10000;
+		    break;
+
+		case 'C':
+		    H_scale = 50000;
+		    break;
+
+		case 'D':
+		    H_scale = 100000;
+		    break;
+
+		default:
+		    fprintf(stderr, "WARNING: Line %d - Unknown digitization scale.\n",
+										line_number);
+		    break;
+	    }
+	    offset += 3;
+    	}
+
+   	else if (strcmp(attrec.VAL_TYPE,"SY") == 0)		/* Date (ignored) 	*/
+	    offset +=8;
+
+  	else if (strcmp(attrec.VAL_TYPE,"LL") == 0)		/* Link Length (ignored)*/
+	    offset +=7;
+
+  	else if (strcmp(attrec.VAL_TYPE,"PN") == 0)		/* Proper Name		*/
+	{
+	    do
+	    {
+		vect_name[loffset] = *(text + offset + loffset + 2);
+		loffset++;
+	    }
+	    while(*(text + offset + loffset + 2) != '\\');
+
+	    vect_name[loffset] = ' ';
+	    loffset++;
+	    vect_name[loffset] = NULL;
+	    offset += loffset + 2;
+	}
+
+  	else if (strcmp(attrec.VAL_TYPE,"RN") == 0) 		/* Road Number.		*/
+	{
+	    strcat(vect_name," "); 
+	    strncat(vect_name,text+offset+2,8);
+	    vect_name[loffset+9] = NULL;
+	    offset+=10;
+	}
+
+  	else if (strcmp(attrec.VAL_TYPE,"FW") == 0) 		/* Form of way (ignord)	*/
+	    offset += 3;
+
+ 	else if (strcmp(attrec.VAL_TYPE,"RB") == 0)		/* Rep. point (bounded)	*/
+	    offset += 3;
+
+ 	else if (strcmp(attrec.VAL_TYPE,"RU") == 0)		/* Rep. pnt (unbounded)	*/
+	    offset += 3;		 	
+ 	    	    	    	    	
+	else if (strcmp(attrec.VAL_TYPE,"OR") == 0)		/* Orientation (ignord)	*/
+	    offset += 6;	
+
+	else if (strcmp(attrec.VAL_TYPE,"NU") == 0)		/* Numbered feature.	*/
+	{
+	    do
+	    {
+		vect_name[loffset] = *(text + offset + loffset + 2);
+		loffset++;
+	    }
+	    while(*(text + offset + loffset + 2) != '\\');
+
+	    vect_name[loffset] = ' ';
+	    loffset++;
+	    vect_name[loffset] = NULL;
+	    offset += loffset + 2;
+	}
+
+	else if (strcmp(attrec.VAL_TYPE,"TC") == 0)		/* Orientation (ignord)	*/
+	    offset += 6;	
+
+	else if (strcmp(attrec.VAL_TYPE,"TL") == 0)		/* Orientation (ignord)	*/
+	    offset += 4;
+
+	else if (strcmp(attrec.VAL_TYPE,"TX") == 0)		/* Text string		*/
+	{
+	    loffset=0;
+	    do
+	    {
+		vect_name[loffset] = *(text + offset + loffset + 2);
+		loffset++;
+	    }
+	    while(*(text + offset + loffset + 2) != '\\');
+
+	    vect_name[loffset] = NULL;
+	    loffset++;
+	    offset += loffset + 2;
+	}
+				    	    
+	else
+	{
+	    fprintf(stderr, "WARNING: Line %d - Unrecognised attribute value type.\n",
+									line_number);
+	    offset +=1;
+	}			
+
+	if ( (*(text+offset+1) == '%') && (*(text+offset) == '1'))
+	{
+	    read_line();			/* If at the end of line and it has a	*/
+	    offset = 2;				/* continuation code read next line.	*/
+	}
+    }
+    while( *(text+offset+1) != '%');
+	
+    posn_ptr = strrchr(text,'%');	/* Search for line terminator.			*/
+
+    attrec.CONT_MARK_1 =	*(posn_ptr-1) - '0';
+    attrec.EOR_1 =		*(posn_ptr);
+    
+ 
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (attrec.EOR_1 != '%') 
+	fprintf(stderr,
+	"WARNING: Line %d - Attribute record has no line terminator.\n",
+									line_number);
+   
+    if (attrec.CONT_MARK_1 != 0)
+    {
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD ?				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (writecats == TRUE)
+    {
+	strcpy(label," ");
+    	strcpy(label,vect_name);
+    	strcat(label,"- ");
+    	strcat(label,G_get_cat(V_featcode,&feature_desc));
+
+    	G_set_cat(attrec.ATT_ID,label,&cats);
+    }
+}
+/***********************************************************************************/
+/***                                point_rec()					 ***/
+/***  	Reads in the Point Record (15) into structure for processing		 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.1 15th June 1993                               ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+point_rec()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*		IDENTIFY WHICH VARIATION OF THE POINT RECORD STRUCTURE IS REQUIRED	*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (text[21] == '%')		/* Contour Variation.				*/
+    	point_rec_c();
+    else
+    	if (text[23] == '%')		/* Default (OSCAR, 1:250k, 1:625k).		*/
+	    point_rec_def();
+	else
+    	    if (text[36] == '%')	/* Land-Line Variation.				*/
+		point_rec_l();
+	    else
+	    	fprintf(stderr,"WARNING: Line %d - Can't identify Point Record Type.\n"
+									,line_number);
+}
+	
+
+/****************************************************************************************/
+/***										      ***/
+/*** Point record structure - Default format.				      	      ***/
+/***										      ***/
+/****************************************************************************************/
+
+point_rec_def()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  POINTREC	pointrec;	/* Point record structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			rec_desc,	/* Record descriptor.				*/
+			maptype;	/* Type of map data to read.			*/
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    pointrec.REC_DESC_1 = 	15;
+
+    strncpy(buffer,		text+2,6);
+	buffer[6] = NULL;
+    	pointrec.POINT_ID =	atoi(buffer);
+    strncpy(buffer,		text+8,6);
+	buffer[6] = NULL;
+    	pointrec.GEOM_ID =	atoi(buffer);
+    strncpy(buffer,		text+14,2);
+	buffer[2] = NULL;
+    	pointrec.NUM_ATT =	atoi(buffer);
+    strncpy(buffer,		text+16,6);
+	buffer[6] = NULL;
+    	pointrec.ATT_ID =	atoi(buffer);
+ 
+    pointrec.CONT_MARK_1 =	text[22] - '0';
+    pointrec.EOR_1 =		text[23];
+  
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (pointrec.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Point record has unexpected continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                       READ GEOMETRY ASSOCIATED WITH POINT			*/
+    /*----------------------------------------------------------------------------------*/
+
+    if( (rec_desc = read_line()) != 21)
+    {
+	if (rec_desc == 99)
+	    vol_term();			/* Allow for merged volumes between records	*/
+
+	if (rec_desc == 14)
+	{
+					/* Ignore Attribute description record if it 	*/
+					/* does not follow a geometry record.		*/
+	    return(0);
+	}
+	    
+
+	if (read_line() != 21)
+	{
+	    fprintf(stderr,
+	"WARNING: Line %d - Point record is not followed by geometry record.\n",
+									line_number);
+	    return(0);
+	}
+
+    }
+
+    if (strncmp(H_mname,"OSCAR",5) == 0)
+	maptype = OSCAR;
+    else
+    	if (strncmp(H_mname,"OS_ROUTEPLANNER",15) == 0)
+	    maptype = ONE625;
+	else
+    	    if (strncmp(H_mname,"OS_TRAVELMASTER",15) == 0)
+	   	maptype = ONE250;
+	    else
+		if ((strncmp(H_mname,"Strategi",8) == 0) || (strncmp(H_mname,"STRATEGI",8) ==0))
+		    maptype = STRATEGI;
+                else
+	 	    maptype = NO_ATTRIB;
+
+    geom_rec(pointrec.GEOM_ID,maptype);
+}
+
+
+/****************************************************************************************/
+/***										      ***/
+/*** Point record structure - Contour variation.				      ***/
+/***										      ***/
+/****************************************************************************************/
+
+point_rec_c()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  POINTREC_C	pointrec_c;	/* Point record structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			rec_desc;	/* Record descriptor.				*/
+
+    /* Initialise all string structures */
+
+    strcpy(pointrec_c.VAL_TYPE,	"  ");
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    pointrec_c.REC_DESC_1 = 	15;
+    strncpy(buffer,		text+2,6);
+	buffer[6] = NULL;
+    	pointrec_c.POINT_ID =	atoi(buffer);
+    strncpy(pointrec_c.VAL_TYPE,text+8,2);
+    strncpy(buffer,		text+10,6);
+	buffer[6] = NULL;
+    	pointrec_c.VALUE =	atoi(buffer);
+    strncpy(buffer,		text+16,4);
+	buffer[4] = NULL;
+    	pointrec_c.FEAT_CODE =	atoi(buffer);
+
+    pointrec_c.CONT_MARK_1 =	text[20] - '0';
+    pointrec_c.EOR_1 =		text[21];
+  
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (pointrec_c.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Point record has unexpected continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                       READ GEOMETRY ASSOCIATED WITH POINT			*/
+    /*----------------------------------------------------------------------------------*/
+
+    if( (rec_desc = read_line()) != 21)
+    {
+	if (rec_desc == 99)
+	    vol_term();			/* Allow for merged volumes between records	*/
+
+	if (read_line() != 21)
+	{
+	    fprintf(stderr,
+	"WARNING: Line %d - Point record is not followed by geometry record.\n",
+									line_number);
+	    return(0);
+	}
+
+    }
+
+    V_featcode = pointrec_c.FEAT_CODE;
+
+    geom_rec(pointrec_c.VALUE,CONTOUR);
+}
+
+
+/****************************************************************************************/
+/***										      ***/
+/*** Point record structure - Land-Line variation.				      ***/
+/***										      ***/
+/****************************************************************************************/
+
+point_rec_l()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  POINTREC_L	pointrec_l;	/* Point record structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			rec_desc;	/* Record descriptor.				*/
+
+    /* Initialise all string structures */
+
+    strcpy(pointrec_l.VAL_TYPE,	"  ");
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    pointrec_l.REC_DESC_1 = 	15;
+    strncpy(buffer,		text+2,6);
+	buffer[6] = NULL;
+    	pointrec_l.POINT_ID =	atoi(buffer);
+    strncpy(pointrec_l.VAL_TYPE,text+8,2);
+    strncpy(buffer,		text+10,6);
+	buffer[6] = NULL;
+    	pointrec_l.VALUE =	atoi(buffer)/10.0;
+    strncpy(buffer,		text+16,4);
+	buffer[4] = NULL;
+    	pointrec_l.FEAT_CODE =	atoi(buffer);
+
+    /******** INCOMPLETE **********/
+
+    pointrec_l.CONT_MARK_1 =	text[35] - '0';
+    pointrec_l.EOR_1 =		text[36];
+  
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (pointrec_l.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Point record has unexpected continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                       READ GEOMETRY ASSOCIATED WITH POINT			*/
+    /*----------------------------------------------------------------------------------*/
+
+    if( ((rec_desc = read_line()) != 21) && (rec_desc != 22))
+    {
+	if (rec_desc == 99)
+	    vol_term();			/* Allow for merged volumes between records	*/
+
+	if (((rec_desc=read_line() != 21)) && (rec_desc != 22))
+	{
+	    fprintf(stderr,
+	"WARNING: Line %d - Point record is not followed by geometry record.\n",
+									line_number);
+	    return(0);
+	}
+
+    }
+
+    V_featcode = pointrec_l.FEAT_CODE;
+
+    if (rec_desc == 21)
+        geom_rec(pointrec_l.POINT_ID,DONT_KNOW);  /* 2D Geometry Variation */
+			/* Have chaged from FEAT_CODE */
+    else
+        geom_rec2(pointrec_l.FEAT_CODE,LANDLINE); /* 3D Geometry Variation */
+}
+
+/***********************************************************************************/
+/***                                 node_rec()					 ***/
+/***  	      Reads in the Node Record (16) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 21st June 1993                               ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+node_rec()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  NODEREC	noderec;	/* Node record structure.			*/
+
+    char		buffer[80],	/* Temporary buffer for storing text.		*/
+			*posn_ptr,	/* Points to line terminator '%' in string.	*/
+			rec_desc;	/* Record descriptor.				*/
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    noderec.REC_DESC_1	= 	16;
+    strncpy(buffer,		text+2,6);
+	buffer[6] = NULL;
+    	noderec.NODE_ID =	atoi(buffer);
+    strncpy(buffer,		text+8,6);
+	buffer[6] = NULL;
+    	noderec.GEOM_ID =	atoi(buffer);
+    strncpy(buffer,		text+14,4);
+	buffer[4] = NULL;
+    	noderec.NUM_LINKS =	atoi(buffer);
+
+    /******** INCOMPLETE  ********/
+
+
+
+    posn_ptr = strrchr(text,'%');	/* Search for line terminator.			*/
+
+    noderec.CONT_MARK_1 =	*(posn_ptr-1) - '0';
+    noderec.EOR_1 =		*(posn_ptr);
+    
+ 
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (noderec.EOR_1 != '%') 
+	fprintf(stderr,
+	"WARNING: Line %d - Node data record has no line terminator.\n",
+									line_number);
+   
+    if (noderec.CONT_MARK_1 != 0)
+    {
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                       READ GEOMETRY ASSOCIATED WITH NODE                         */
+    /*----------------------------------------------------------------------------------*/
+
+    if( (rec_desc = read_line()) != 21)
+    {
+        if (rec_desc == 99)
+            vol_term();                 /* Allow for merged volumes between records     */
+
+        if (read_line() != 21)
+        {
+            fprintf(stderr,
+        "WARNING: Line %d - Node record is not followed by geometry record.\n",
+                                                                        line_number);
+            return(0);
+        }
+
+    }
+
+    /******* Ignore the contents of node geometry for time being ******/
+
+    /* ie, don't call geom_rec() */
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD ?				*/
+    /*----------------------------------------------------------------------------------*/
+
+
+    /* Should precede a geometry record */
+}
+/***********************************************************************************/
+/***                              geom_rec()					 ***/
+/***  	Reads in the Geometry Record (21) into structure for processing		 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 30th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+geom_rec(value,maptype)
+    int	value,				/* Numerical attribute of vector to be read.	*/
+        maptype;			/* Type of map being converted.			*/
+{	
+
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  GEOMREC	geomrec;	/* Geometry record structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			*posn_ptr;	/* Points to line terminator in string.		*/
+    int			coords;		/* Counts through each coordinate pair in object*/
+
+    char		coord_digits=10;/* Number of digits representing a coordinate.	*/
+
+    /*----------------------------------------------------------------------------------*/
+    /*                WRITE OUT PREVIOUS VECTOR (IF THERE IS ONE TO WRITE)		*/
+    /*----------------------------------------------------------------------------------*/  
+
+    if (outfile)
+	if (Write_vect == TRUE)
+	{
+    	    write_vector(geom_type,value);
+	    Write_vect = FALSE;
+	}
+
+    /*----------------------------------------------------------------------------------*/
+    /*		MAKE SURE THAT A POINT OR LINE RECORD HAS JUST BEEN READ		*/
+    /*----------------------------------------------------------------------------------*/
+
+    if ( (value==NO_ATTRIB) && (maptype==NO_ATTRIB) )
+    {
+ 	fprintf(stderr,
+	"WARNING: Line %d - Geometry record has no preceding point or line record\n",
+									 line_number);
+	if ( (posn_ptr=strrchr(text,'%')) == NULL)
+	    fprintf(stderr,
+	    "WARNING: Line %d - Geometry record has no line terminator\n",line_number);
+
+    	if (*(posn_ptr-1) != 0)
+	    while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	    ;
+    	return(0);
+    }
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                        IDENTIFY THE TYPE OF MAP TO CONVERT			*/
+    /*----------------------------------------------------------------------------------*/
+
+    switch (maptype)
+    {
+	case CONTOUR:
+	    coord_digits = 10;
+	    break;
+
+	case LANDLINE:
+	case BOUNDARYLINE:
+	case ONE625:
+	    coord_digits = 6;
+	    break;
+
+	case ONE250:
+	case STRATEGI:
+	    coord_digits = 5;
+	    break;
+
+	case OSCAR:
+	    coord_digits = 4;
+	    break;
+
+    	case TEXT_LABEL:		/* Ignore for the moment */
+	    return(1);
+
+    	case DONT_KNOW:
+	    coord_digits = guess();
+	    break;
+
+	default:
+ 	    fprintf(stderr,
+	    "WARNING: Line %d - Geometry record associated with unknown record type\n",
+									 line_number);
+	    break;
+    }
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    geomrec.REC_DESC_1 = 	21;
+    strncpy(buffer,		text+2,6);
+	buffer[6] = NULL;
+    	geomrec.GEOM_ID =	atoi(buffer);
+    geomrec.G_TYPE =		text[8] - '0';
+    strncpy(buffer,		text+9,4);
+	buffer[4] = NULL;
+    	geomrec.NUM_COORD =	atoi(buffer);
+
+
+    /* Allocate enough memory to hold coordinates of segment.	*/
+
+    if ( dig_alloc_points(points,geomrec.NUM_COORD) < 0)
+	fprintf(stderr,
+	"WARNING: Line %d - Not enough memory to hold entire vector segment.\n",
+									line_number);
+
+
+    posn_ptr = text+13;			/* Set position to first coordinate pair.	*/
+
+    for (coords=0; coords<geomrec.NUM_COORD; coords++)
+    {
+    	strncpy(buffer,		posn_ptr,coord_digits);
+	    buffer[coord_digits] = NULL;
+    	    geomrec.X_COORD =	atoi(buffer);
+
+    	if (*(posn_ptr+coord_digits+1) != '%')	
+					/* If we are not at the end of the record,	*/
+	    posn_ptr += coord_digits;	/*  move to the y coordinate in the record.	*/
+	else
+	{
+	    if (read_line() == 0) 	/* If we are at the end of a record, read	*/
+	        posn_ptr = text+2;	/* next record and position ptr at start.	*/
+	    else
+		fprintf(stderr,
+   "WARNING: Line %d - Geometry record does not have expected continuation descriptor.\n",
+									line_number);
+	}
+
+    	strncpy(buffer,		posn_ptr,coord_digits);
+	    buffer[coord_digits] = NULL;
+    	    geomrec.Y_COORD =	atoi(buffer);
+
+    	if (*(posn_ptr+coord_digits+1) != '%')	
+					/* If we are not at the end of the record,	*/
+	    posn_ptr += coord_digits;	/*  move to the QPlan element in the record	*/
+	else
+	{
+	    if (read_line() == 0) 	/* If we are at the end of a record, read	*/
+	        posn_ptr = text+2;	/* next record and position ptr at start.	*/
+	    else
+		fprintf(stderr,
+   "WARNING: Line %d - Geometry record does not have expected continuation descriptor.\n",
+									line_number);
+	}
+
+    	geomrec.Q_PLAN =	*(posn_ptr);
+
+	if (outfile)
+	{
+	    points->x[coords] = (double)(X_origin + XY_mult*geomrec.X_COORD);
+	    points->y[coords] = (double)(Y_origin + XY_mult*geomrec.Y_COORD);
+	    points->n_points = coords+1;
+	}
+
+    	if (*(posn_ptr+2) != '%')	/* If we are not at the end of the record,	*/
+	    posn_ptr += 1;		/*  move to next coordinate pair in the record.	*/
+	else
+	    if (*(posn_ptr+1) == '1')	/* If continuation code, read the next line and	*/
+	    {				/* set the pointer to the first coordinate pair.*/
+
+	    	if (read_line() == 0) 	/* If we are at the end of a record, read	*/
+	            posn_ptr = text+2;	/* next record and position ptr at start.	*/
+	    	else
+		    fprintf(stderr,
+   "WARNING: Line %d - Geometry record does not have expected continuation descriptor.\n",
+									line_number);
+	    }
+	    
+    }
+    geomrec.CONT_MARK_1 =	*(posn_ptr+1) - '0';
+    geomrec.EOR_1 =		*(posn_ptr+2);
+
+  
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (geomrec.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Geometry record has unexpected continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                          WRITE OUT VECTOR COORDINATES				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (outfile)
+    {
+	if (geomrec.G_TYPE == 1)
+	    geom_type = DOT;
+	else
+	    if (geomrec.G_TYPE == 2)
+		geom_type = LINE;
+	    else
+	    {
+		fprintf(stderr,
+	"WARNING: Line %d - Unknown geometry type for vector object (will assume line).\n",
+									line_number);
+		geom_type = LINE;
+	    }
+	Write_vect = TRUE;
+    }
+}
+
+
+guess()
+{
+	if (text[23] == '%')	/* One pair only */
+	    return(4);
+
+	if (text[25] == '%')	/* One pair only */
+	    return(5);
+
+	if (text[27] == '%') 	/* One pair only */
+	    return(6);
+
+	if (text[35] == '%')	/* One pair only */
+	    return(10);
+
+	if (text[36] == '%')		/* Two pairs only */
+	    return(5);
+
+	if (text[40] == '%')		/* Two pairs only */
+	    return(6);
+
+	if (text[47] == '%')			/* Three pairs only */
+	    return(5);
+
+	if (text[53] == '%')			/* Three pairs only */
+	    return(6);
+
+	if (text[56] == '%')		/* Two pairs only */
+	    return(10);
+
+	if (text[58] == '%')				/* Four pairs only */
+	    return(5);
+
+	if (text[66] == '%')				/* Four pairs only */
+	    return(6);
+
+	if (text[69] == '%')					/* Five pairs only */
+	    return(5);
+
+	if (text[77] == '%')			/* Three pairs only */
+	    return(10);
+
+	if (text[79] == '%')					/* Five pairs only */
+	    return(6);
+
+
+	fprintf(stderr,
+	"WARNING: Line %d - Can't guess number of digits in geometry record (will assume 4).\n",
+									line_number);
+	return(4);
+}
+/***********************************************************************************/
+/***                              geom_rec()					 ***/
+/***  	Reads in a three dimensional  Geometry Record (22) into structure	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 29th July 1993                               ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+geom_rec2(value,maptype)
+    int	value,				/* Numerical attribute of vector to be read.	*/
+        maptype;			/* Type of map being converted.			*/
+{	
+
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  GEOMREC2	geomrec;	/* Geometry record structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			*posn_ptr;	/* Points to line terminator in string.		*/
+    int			coords,		/* Counts through each coordinate pair in object*/
+			geom_type;	/* Point line or area type of vector object.	*/
+    char		coord_digits=10;/* Number of digits representing a coordinate.	*/
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*		MAKE SURE THAT A POINT OR LINE RECORD HAS JUST BEEN READ		*/
+    /*----------------------------------------------------------------------------------*/
+
+    if ( (value==NO_ATTRIB) && (maptype==NO_ATTRIB) )
+    {
+ 	fprintf(stderr,
+	"WARNING: Line %d - 3D Geometry record has no preceding point or line record\n",
+									 line_number);
+	if ( (posn_ptr=strrchr(text,'%')) == NULL)
+	    fprintf(stderr,
+	    "WARNING: Line %d - 3D Geometry record has no line terminator\n",line_number);
+
+    	if (*(posn_ptr-1) != 0)
+	    while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	    ;
+    	return(0);
+    }
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                        IDENTIFY THE TYPE OF MAP TO CONVERT			*/
+    /*----------------------------------------------------------------------------------*/
+
+    switch (maptype)
+    {
+	case LANDLINE:
+	    coord_digits = 6;
+	    break;
+
+	default:
+ 	    fprintf(stderr,
+	    "WARNING: Line %d - 3D Geometry record associated with unknown record type\n",
+									 line_number);
+	    break;
+    }
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    geomrec.REC_DESC_1 = 	22;
+    strncpy(buffer,		text+2,6);
+	buffer[6] = NULL;
+    	geomrec.GEOM_ID =	atoi(buffer);
+    geomrec.G_TYPE =		text[8] - '0';
+    strncpy(buffer,		text+9,4);
+	buffer[4] = NULL;
+    	geomrec.NUM_COORD =	atoi(buffer);
+
+
+    /* Allocate enough memory to hold coordinates of segment.	*/
+
+    if ( dig_alloc_points(points,geomrec.NUM_COORD) < 0)
+	fprintf(stderr,
+	"WARNING: Line %d - Not enough memory to hold entire vector segment.\n",
+									line_number);
+
+
+    posn_ptr = text+13;			/* Set position to first coordinate pair.	*/
+
+    for (coords=0; coords<geomrec.NUM_COORD; coords++)
+    {
+    	strncpy(buffer,		posn_ptr,coord_digits);
+	    buffer[coord_digits] = NULL;
+    	    geomrec.X_COORD =	atoi(buffer);
+
+    	if (*(posn_ptr+coord_digits+1) != '%')	
+					/* If we are not at the end of the record,	*/
+	    posn_ptr += coord_digits;	/*  move to the y coordinate in the record.	*/
+	else
+	{
+	    if (read_line() == 0) 	/* If we are at the end of a record, read	*/
+	        posn_ptr = text+2;	/* next record and position ptr at start.	*/
+	    else
+		fprintf(stderr,
+"WARNING: Line %d - 3D Geometry record does not have expected continuation descriptor.\n",
+									line_number);
+	}
+
+    	strncpy(buffer,		posn_ptr,coord_digits);
+	    buffer[coord_digits] = NULL;
+    	    geomrec.Y_COORD =	atoi(buffer);
+
+    	if (*(posn_ptr+coord_digits+1) != '%')	
+					/* If we are not at the end of the record,	*/
+	    posn_ptr += coord_digits;	/*  move to the QPlan element in the record	*/
+	else
+	{
+	    if (read_line() == 0) 	/* If we are at the end of a record, read	*/
+	        posn_ptr = text+2;	/* next record and position ptr at start.	*/
+	    else
+		fprintf(stderr,
+"WARNING: Line %d - 3D Geometry record does not have expected continuation descriptor.\n",
+									line_number);
+	}
+
+    	geomrec.Q_PLAN =	*(posn_ptr);
+
+    	if (*(posn_ptr+2) != '%')	/* If we are not at the end of the record,	*/
+	    posn_ptr += 1;		/*  move to the z coordinate in the record.	*/
+	else
+	    if (*(posn_ptr+1) == '1')	/* If continuation code, read the next line and	*/
+	    {				/* set the pointer to the first coordinate pair.*/
+
+	    	if (read_line() == 0)	/* If we are at the end of a record, read	*/
+	            posn_ptr = text+2;	/* next record and position ptr at start.	*/
+	    	else
+		    fprintf(stderr,
+"WARNING: Line %d - 3D Geometry record does not have expected continuation descriptor.\n",
+									line_number);
+	    }
+	    else
+		break;
+
+    	strncpy(buffer,		posn_ptr,coord_digits);
+	    buffer[coord_digits] = NULL;
+    	    geomrec.Z_COORD =	atoi(buffer);
+
+    	if (*(posn_ptr+coord_digits+1) != '%')	
+					/* If we are not at the end of the record,	*/
+	    posn_ptr += coord_digits;	/*  move to the QHT element in the record	*/
+	else
+	{
+	    if (read_line() == 0) 	/* If we are at the end of a record, read	*/
+	        posn_ptr = text+2;	/* next record and position ptr at start.	*/
+	    else
+		fprintf(stderr,
+"WARNING: Line %d - 3D Geometry record does not have expected continuation descriptor.\n",
+									line_number);
+	}
+
+    	geomrec.QHT =	*(posn_ptr);
+
+	if (outfile)
+	{
+	    points->x[coords] = (double)(X_origin + XY_mult*geomrec.X_COORD);
+	    points->y[coords] = (double)(Y_origin + XY_mult*geomrec.Y_COORD);
+	    points->n_points = coords+1;
+	}
+
+    	if (*(posn_ptr+2) != '%')	/* If we are not at the end of the record,	*/
+	    posn_ptr += 1;		/*  move to next coordinate pair in the record.	*/
+	else
+	    if (*(posn_ptr+1) == '1')	/* If continuation code, read the next line and	*/
+	    {				/* set the pointer to the first coordinate pair.*/
+
+	    	if (read_line() == 0)	/* If we are at the end of a record, read	*/
+	            posn_ptr = text+2;	/* next record and position ptr at start.	*/
+	    	else
+		    fprintf(stderr,
+"WARNING: Line %d - 3D Geometry record does not have expected continuation descriptor.\n",
+									line_number);
+	    }
+	    
+    }
+    geomrec.CONT_MARK_1 =	*(posn_ptr+1) - '0';
+    geomrec.EOR_1 =		*(posn_ptr+2);
+
+  
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (geomrec.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - 3D  Geometry record has unexpected continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                          WRITE OUT VECTOR COORDINATES				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (outfile)
+    {
+	if (geomrec.G_TYPE == 1)
+	    geom_type = DOT;
+	else
+	    if (geomrec.G_TYPE == 2)
+		geom_type = LINE;
+	    else
+	    {
+		fprintf(stderr,
+	"WARNING: Line %d - Unknown geometry type for vector object (will assume line).\n",
+									line_number);
+		geom_type = LINE;
+	    }
+    	write_vector(geom_type,value);
+
+    }
+}
+/***********************************************************************************/
+/***                                line_rec()					 ***/
+/***  	Reads in the Line Record (23) into structure for processing		 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 27th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+line_rec()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*		IDENTIFY WHICH VARIATION OF THE LINE RECORD STRUCTURE IS REQUIRED	*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (text[21] == '%')		/* Contour Variation.				*/
+    	line_rec_c();
+    else
+   	if (text[23] == '%')		/* Default (OSCAR, 1:250k, 1:625k)		*/
+	    line_rec_def();	
+	else
+	    if(text[36] == '%')		/* Land-Line Variation.				*/
+	    	line_rec_l();
+   	    else
+	    	fprintf(stderr,"WARNING: Line %d - Can't identify Line Record Type.\n"
+									,line_number);
+}
+	
+/****************************************************************************************/
+/***										      ***/
+/*** Line record structure - Default format.				      	      ***/
+/***										      ***/
+/****************************************************************************************/
+
+line_rec_def()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  LINEREC	linerec;	/* Line record structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			rec_desc,	/* Record descriptor.				*/
+			maptype;	/* Type of map data to read.			*/
+
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    linerec.REC_DESC_1 = 	23;
+
+    strncpy(buffer,		text+2,6);
+	buffer[6] = NULL;
+    	linerec.LINE_ID =	atoi(buffer);
+    strncpy(buffer,		text+8,6);
+	buffer[6] = NULL;
+    	linerec.GEOM_ID =	atoi(buffer);
+    strncpy(buffer,		text+14,2);
+	buffer[2] = NULL;
+    	linerec.NUM_ATT =	atoi(buffer);
+    strncpy(buffer,		text+16,6);
+	buffer[6] = NULL;
+    	linerec.ATT_ID =	atoi(buffer);
+ 
+    linerec.CONT_MARK_1 =	text[22] - '0';
+    linerec.EOR_1 =		text[23];
+  
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (linerec.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Line record has unexpected continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                       READ GEOMETRY ASSOCIATED WITH POINT			*/
+    /*----------------------------------------------------------------------------------*/
+
+    if( (rec_desc = read_line()) != 21)
+    {
+	if (rec_desc == 99)
+	    vol_term();			/* Allow for merged volumes between records	*/
+
+	if (read_line() != 21)
+	{
+	    fprintf(stderr,
+	"WARNING: Line %d - Line record is not followed by geometry record.\n",
+									line_number);
+	    return(0);
+	}
+
+    }
+
+    if (strncmp(H_mname,"OSCAR",5) == 0)
+	maptype = OSCAR;
+    else
+    	if (strncmp(H_mname,"OS_ROUTEPLANNER",15) == 0)
+	    maptype = ONE625;
+	else
+    	    if (strncmp(H_mname,"OS_TRAVELMASTER",15) == 0)
+	   	maptype = ONE250;
+	    else
+    	    	if ((strncmp(H_mname,"Strategi",8) == 0) || (strncmp(H_mname,"STRATEGI",8) ==0))
+	   	    maptype = STRATEGI;
+	    	else
+	    	    maptype = NO_ATTRIB;
+
+    geom_rec(linerec.GEOM_ID,maptype);
+}
+
+
+/****************************************************************************************/
+/***										      ***/
+/*** Line record structure - Contour variation.					      ***/
+/***										      ***/
+/****************************************************************************************/
+
+line_rec_c()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  LINEREC_C	linerec_c;	/* Line record structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data. 		*/
+			rec_desc;	/* Record descriptor.				*/
+
+    /* Initialise string structure */
+
+    strcpy(linerec_c.VAL_TYPE,	"  ");
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    linerec_c.REC_DESC_1 = 	23;
+    strncpy(buffer,		text+2,6);
+	buffer[6] = NULL;
+    	linerec_c.LINE_ID =	atoi(buffer);
+    strncpy(linerec_c.VAL_TYPE,text+8,2);
+    strncpy(buffer,		text+10,6);
+	buffer[6] = NULL;
+    	linerec_c.VALUE =	atoi(buffer);
+    strncpy(buffer,		text+16,4);
+	buffer[4] = NULL;
+    	linerec_c.FEAT_CODE =	atoi(buffer);
+
+    linerec_c.CONT_MARK_1 =	text[20] - '0';
+    linerec_c.EOR_1 =		text[21];
+  
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (linerec_c.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Line record has unexpected continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                       READ GEOMETRY ASSOCIATED WITH LINE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if( (rec_desc = read_line()) != 21)
+    {
+	if (rec_desc == 99)
+	    vol_term();			/* Allow for merged volumes between records	*/
+
+	if (read_line() != 21)
+	{
+	    fprintf(stderr,
+	"WARNING: Line %d - Line record is not followed by geometry record.\n",
+									line_number);
+	    return(0);
+	}
+
+    }
+    
+    V_featcode = linerec_c.FEAT_CODE;
+
+    geom_rec(linerec_c.VALUE,CONTOUR);
+}
+
+
+/****************************************************************************************/
+/***										      ***/
+/*** Line record structure - Land-Line variation.				      ***/
+/***										      ***/
+/****************************************************************************************/
+
+line_rec_l()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  LINEREC_L	linerec_l;	/* Line record structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data. 		*/
+			rec_desc;	/* Record descriptor.				*/
+
+    /* Initialise string structure */
+
+    strcpy(linerec_l.VAL_TYPE,	"  ");
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    linerec_l.REC_DESC_1 = 	23;
+    strncpy(buffer,		text+2,6);
+	buffer[6] = NULL;
+    	linerec_l.LINE_ID =	atoi(buffer);
+    strncpy(linerec_l.VAL_TYPE,text+8,2);
+    strncpy(buffer,		text+10,6);
+	buffer[6] = NULL;
+    	linerec_l.VALUE =	atoi(buffer);
+    strncpy(buffer,		text+16,4);
+	buffer[4] = NULL;
+    	linerec_l.FEAT_CODE =	atoi(buffer);
+
+
+    /********** INCOMPLETE **********/
+
+
+    linerec_l.CONT_MARK_1 =	text[35] - '0';
+    linerec_l.EOR_1 =		text[36];
+  
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (linerec_l.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Line record has unexpected continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                       READ GEOMETRY ASSOCIATED WITH LINE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if( ((rec_desc = read_line()) != 21) && (rec_desc != 22))
+    {
+	if (rec_desc == 99)
+	    vol_term();			/* Allow for merged volumes between records	*/
+
+	if (((rec_desc=read_line()) != 21) && (rec_desc != 22))
+	{
+	    fprintf(stderr,
+	"WARNING: Line %d - Line record is not followed by geometry record.\n",
+									line_number);
+	    return(0);
+	}
+
+    }
+
+    V_featcode = linerec_l.FEAT_CODE;
+
+    if (rec_desc == 21)
+        geom_rec(linerec_l.LINE_ID,DONT_KNOW);	 /* 2D Geometry */
+		/* Have Changd from FEAT_CODE */
+    else
+	geom_rec2(linerec_l.FEAT_CODE,LANDLINE); 	 /* 3D Geometry */
+}
+
+
+/***********************************************************************************/
+/***                                  att_desc()				 ***/
+/***  Reads in Attribute Description Record (40) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 28th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+att_desc()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  ATTDESC	attdesc;	/* Attribute description record structure.	*/
+    char    		buffer[80],	/* Temporary storage of text data. 		*/
+			*posn_ptr1,	/* Position of first divider  in record.	*/
+			*posn_ptr2;	/* Position of divider and terminator in record.*/
+
+    /* Initialise all string structures */
+
+    strcpy(attdesc.VAL_TYPE,	"  ");
+    strcpy(attdesc.FWIDTH,	"   ");
+    strcpy(attdesc.FINTER,	"     ");
+    strcpy(attdesc.ATT_NAME,	"                                                                ");
+    strcpy(attdesc.FDESC,	"                                                              ");
+ 
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    attdesc.REC_DESC_1 = 	5;
+    strncpy(attdesc.FWIDTH,	text+2,2);
+    strncpy(attdesc.FWIDTH,	text+4,3);
+    strncpy(attdesc.FINTER,	text+7,5);
+
+    if ( (posn_ptr1 = strchr(text,'\\')) == NULL)
+	fprintf(stderr,
+	"WARNING: Line %d - Attribute Description Record has no divider.\n",
+									line_number);
+    strncpy(attdesc.ATT_NAME,	text+12,posn_ptr1 - (text+12));
+    if (*(posn_ptr1+2) != '%')
+    {
+    	if (( (posn_ptr2 = strrchr(text,'\\')) == NULL) || (posn_ptr2 == posn_ptr1) )
+	    fprintf(stderr,
+	    "WARNING: Line %d - Attribute Description Record has no second divider.\n",
+									line_number);
+	strncpy(attdesc.FDESC,	posn_ptr1+1,(posn_ptr2-1)-posn_ptr1);
+    }
+
+    if ( (posn_ptr2 = strrchr(text,'%')) == NULL)
+	fprintf(stderr,
+	"WARNING: Line %d - Attribute Description Record has no terminator.\n",
+									line_number);
+    attdesc.CONT_MARK_1 =	*(posn_ptr2-1) - '0';
+    attdesc.EOR_1 =		*posn_ptr2;
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (attdesc.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Attribute Description Record has continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (conversion_log)		/* Print out log if requested.				*/
+    {
+	printf("Attribute Description:\n");
+	printf("-----------------------\n");
+	printf("\tName:\t\t\t%s\n",attdesc.ATT_NAME);
+	printf("\tDescription:\t\t%s\n",attdesc.FDESC);
+    }
+
+}
+
+/***********************************************************************************/
+/***                                 text_rec()					 ***/
+/***  	Reads in the Text Record (43) into structure for processing (incomplete) ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 4th July 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+text_rec()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  TEXTREC	textrec;	/* Text structure.				*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			*posn_ptr;	/* Points to line terminator.			*/
+    /* INCOMPLETE */
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    /* INCOMPLETE */
+
+
+    posn_ptr =  strrchr(text,'%');
+
+    textrec.EOR_1 = *posn_ptr;
+    textrec.CONT_MARK_1 = *(posn_ptr - 1) - '0';
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (textrec.EOR_1 != '%')
+	fprintf(stderr,
+	"WARNING: Line %d - Text record has no line terminator.\n", line_number);
+
+    if (textrec.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Text record has second continuation mark.\n", line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD ?				*/
+    /*----------------------------------------------------------------------------------*/
+
+ }
+/***********************************************************************************/
+/***                                 text_postn()				 ***/
+/***  	Reads in the Text Position Record (44) into structure for processing 	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 4th July 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+text_postn()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  TEXTPOS	textpos;	/* Text position structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			*posn_ptr;	/* Points to line terminator.			*/
+    /* INCOMPLETE */
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    /* INCOMPLETE */
+
+
+    posn_ptr =  strrchr(text,'%');
+
+    textpos.EOR_1 = *posn_ptr;
+    textpos.CONT_MARK_1 = *(posn_ptr - 1) - '0';
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+
+    if (textpos.EOR_1 != '%')
+	fprintf(stderr,
+	"WARNING: Line %d - Text position record has no line terminator.\n", line_number);
+
+
+    if (textpos.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Text position record has second continuation mark.\n",
+									 line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD ?				*/
+    /*----------------------------------------------------------------------------------*/
+
+ }
+/***********************************************************************************/
+/***                                 text_rep()					 ***/
+/*** Reads in the Text Representation Record (45) into structure for processing  ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 4th July 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+text_rep()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  TEXTREP	textrep;	/* Text representation structure.		*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			*posn_ptr;	/* Points to line terminator.			*/
+
+    char                rec_desc;       /* Record descriptor.                           */
+
+    int			maptype;	/* Type of map to reconstruct.			*/
+
+    /* INCOMPLETE */
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    /* INCOMPLETE */
+
+
+    posn_ptr =  strrchr(text,'%');
+
+    textrep.EOR_1 = *posn_ptr;
+    textrep.CONT_MARK_1 = *(posn_ptr - 1) - '0';
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (textrep.EOR_1 != '%')
+	fprintf(stderr,
+	"WARNING: Line %d - Text representation record has no line terminator.\n",
+									 line_number);
+
+    if (textrep.CONT_MARK_1 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Text representation record has second continuation mark.\n",
+									 line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                       READ GEOMETRY ASSOCIATED WITH TEXT                         */
+    /*----------------------------------------------------------------------------------*/
+
+    if( (rec_desc = read_line()) != 21)
+    {
+        if (rec_desc == 99)
+            vol_term();                 /* Allow for merged volumes between records     */
+
+        if (read_line() != 21)
+        {
+            fprintf(stderr,
+        "WARNING: Line %d - Text Representation Record is not followed by geometry record.\n",
+                                                                        line_number);
+            return(0);
+        }
+
+    }
+
+    if (strncmp(H_mname,"OSCAR",5) == 0)
+        maptype = OSCAR;
+    else
+        if (strncmp(H_mname,"OS_ROUTEPLANNER",15) == 0)
+            maptype = ONE625;
+        else
+            if (strncmp(H_mname,"OS_TRAVELMASTER",15) == 0)
+                maptype = ONE250;
+            else
+                if ((strncmp(H_mname,"Strategi",8) == 0) || (strncmp(H_mname,"STRATEGI",8) ==0))
+                    maptype = STRATEGI;
+                else
+                    maptype = NO_ATTRIB;
+
+    geom_rec(0,maptype);
+
+ }
+
+/***********************************************************************************/
+/***                                 grid_head()				 ***/
+/***  	  Reads in the Grid Header Record (50) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 28th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+grid_head()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  GRIDHREC	gridhrec;	/* Grid header structure.			*/
+    char    		buffer[80];	/* Temporary storage of text data 		*/
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    gridhrec.REC_DESC_1	= 	50;
+    strncpy(buffer,		text+2,10);
+	buffer[10] = NULL;
+    	gridhrec.GRID_ID =	atoi(buffer);
+    strncpy(buffer,		text+12,4);
+	buffer[4] = NULL;
+    	gridhrec.N_COLUMNS =	atoi(buffer);
+    strncpy(buffer,		text+16,4);
+	buffer[4] = NULL;
+    	gridhrec.N_ROWS =	atoi(buffer);
+    strncpy(buffer,		text+20,4);
+	buffer[4] = NULL;
+    	gridhrec.N_PLANES =	atoi(buffer);
+    strncpy(buffer,		text+24,10);
+	buffer[10] = NULL;
+    	gridhrec.X_COORD_1 =	atoi(buffer);
+    strncpy(buffer,		text+34,10);
+	buffer[10] = NULL;
+    	gridhrec.Y_COORD_1 =	atoi(buffer);
+    strncpy(buffer,		text+44,6);
+	buffer[6] = NULL;
+    	gridhrec.Z_COORD_1 =	atoi(buffer);
+    strncpy(buffer,		text+50,10);
+	buffer[10] = NULL;
+    	gridhrec.X_COORD_2 =	atoi(buffer);
+    strncpy(buffer,		text+60,10);
+	buffer[10] = NULL;
+    	gridhrec.Y_COORD_2 =	atoi(buffer);
+    strncpy(buffer,		text+70,6);
+	buffer[6] = NULL;
+    	gridhrec.Z_COORD_2 =	atoi(buffer);
+
+    gridhrec.CONT_MARK_1 =	text[76] - '0';
+    gridhrec.EOR_1 =		text[77];
+
+    if (gridhrec.CONT_MARK_1 == 1)
+    {
+	if ( (gridhrec.REC_DESC_2 = read_line()) != 0)
+	    fprintf(stderr,
+    "WARNING: Line %d - Continuation of Grid header has unexpected descriptor [%d] \n",
+							gridhrec.REC_DESC_2,line_number);
+    	strncpy(buffer,		text+2,10);
+	    buffer[10] = NULL;
+    	    gridhrec.X_COORD_3 =atoi(buffer);
+    	strncpy(buffer,		text+12,10);
+	    buffer[10] = NULL;
+    	    gridhrec.Y_COORD_3 =atoi(buffer);
+    	strncpy(buffer,		text+22,6);
+	    buffer[6] = NULL;
+    	    gridhrec.Z_COORD_3 =atoi(buffer);
+    	strncpy(buffer,		text+28,10);
+	    buffer[10] = NULL;
+    	    gridhrec.X_COORD_4 =atoi(buffer);
+    	strncpy(buffer,		text+38,10);
+ 	    buffer[10] = NULL;
+    	    gridhrec.Y_COORD_4 =atoi(buffer);
+    	strncpy(buffer,		text+48,6);
+	    buffer[6] = NULL;
+    	    gridhrec.Z_COORD_4 =atoi(buffer);
+
+    	gridhrec.CONT_MARK_2 =	text[54] - '0';
+    	gridhrec.EOR_2 =	text[55];
+
+    	if (gridhrec.CONT_MARK_2 == 1)
+    	{
+	    if ( (gridhrec.REC_DESC_3 = read_line()) != 0)
+	    	fprintf(stderr,
+    "WARNING: Line %d - Continuation of Grid header has unexpected descriptor [%d] \n",
+							gridhrec.REC_DESC_3,line_number);
+    	    strncpy(buffer,		text+2,10);
+	    	buffer[10] = NULL;
+    	    	gridhrec.X_COORD_5 =atoi(buffer);
+    	    strncpy(buffer,		text+12,10);
+	    	buffer[10] = NULL;
+    	    	gridhrec.Y_COORD_5 =atoi(buffer);
+    	    strncpy(buffer,		text+22,6);
+	    	buffer[6] = NULL;
+    	    	gridhrec.Z_COORD_5 =atoi(buffer);
+    	    strncpy(buffer,		text+28,10);
+	    	buffer[10] = NULL;
+    	    	gridhrec.X_COORD_6 =atoi(buffer);
+    	    strncpy(buffer,		text+38,10);
+ 	    	buffer[10] = NULL;
+    	    	gridhrec.Y_COORD_6 =atoi(buffer);
+    	    strncpy(buffer,		text+48,6);
+	    	buffer[6] = NULL;
+    	    	gridhrec.Z_COORD_6 =atoi(buffer);
+
+    	    gridhrec.CONT_MARK_3 =	text[54] - '0';
+    	    gridhrec.EOR_3 =		text[55];
+
+    	    if (gridhrec.CONT_MARK_3 == 1)
+    	    {
+	    	if ( (gridhrec.REC_DESC_4 = read_line()) != 0)
+	    	    fprintf(stderr,
+    "WARNING: Line %d - Continuation of Grid header has unexpected descriptor [%d] \n",
+							gridhrec.REC_DESC_4,line_number);
+    	    	strncpy(buffer,		text+2,10);
+	    	    buffer[10] = NULL;
+    	    	    gridhrec.X_COORD_7 =atoi(buffer);
+    	    	strncpy(buffer,		text+12,10);
+	    	    buffer[10] = NULL;
+    	    	    gridhrec.Y_COORD_7 =atoi(buffer);
+    	    	strncpy(buffer,		text+22,6);
+	    	    buffer[6] = NULL;
+    	    	    gridhrec.Z_COORD_7 =atoi(buffer);
+    	    	strncpy(buffer,		text+28,10);
+	    	    buffer[10] = NULL;
+    	    	    gridhrec.X_COORD_8 =atoi(buffer);
+    	    	strncpy(buffer,		text+38,10);
+ 	    	    buffer[10] = NULL;
+    	    	    gridhrec.Y_COORD_8 =atoi(buffer);
+    	    	strncpy(buffer,		text+48,6);
+	    	    buffer[6] = NULL;
+    	    	    gridhrec.Z_COORD_8 =atoi(buffer);
+
+    	    	gridhrec.CONT_MARK_4 =	text[54] - '0';
+    	    	gridhrec.EOR_4 =	text[55];
+	    }
+	}
+    }
+    else
+	fprintf(stderr,
+	"WARNING: Line %d - Expected Grid header continuation mark is missing.\n",
+									line_number);
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (gridhrec.CONT_MARK_4 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Grid header record has fourth continuation mark.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    if (gridhrec.EOR_4 != '%') 
+	fprintf(stderr,
+	"WARNING: Line %d - Grid header record has no line terminator.\n",
+									line_number);
+   
+    if ( (gridhrec.N_ROWS != 401) || (gridhrec.N_COLUMNS != 401) )
+	fprintf(stderr,
+	"WARNING: Line %d - Number of rows and cols not equal to 401: (r,c) = (%d,%d).\n",
+					line_number,gridhrec.N_ROWS,gridhrec.N_COLUMNS);
+   
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                   OUTPUT CONTENTS OF RECORD TO CONVERSION LOG			*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (conversion_log)		/* Print out log if requested.				*/
+    {
+	printf("Grid Header:\n");
+	printf("----------------\n");
+	printf("\tMap Square:\t%10d\n",gridhrec.GRID_ID);
+	printf("\tNo of rows:\t%d\n",gridhrec.N_ROWS);
+	printf("\tNo of columns:\t%d\n",gridhrec.N_COLUMNS);
+	printf("\tCorners:\t(%10d,%10d)\n",gridhrec.X_COORD_1,gridhrec.Y_COORD_1);
+	printf("\t\t\t(%10d,%10d)\n",gridhrec.X_COORD_2,gridhrec.Y_COORD_2);
+	printf("\t\t\t(%10d,%10d)\n",gridhrec.X_COORD_3,gridhrec.Y_COORD_3);
+	printf("\t\t\t(%10d,%10d)\n",gridhrec.X_COORD_4,gridhrec.Y_COORD_4);
+	printf("\n");
+    }
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                    WRITE OUT NECESSARY INFORMATION TO GRASS			*/
+    /*----------------------------------------------------------------------------------*/
+
+    /* Grid Header Record [50] must mean we need to open a raster */
+
+    if (outfile)
+    {
+    	if (O_raster)
+	    fprintf(stderr,
+	    "WARNING: Line %d - More than one Grid Header Record found.\n",line_number);
+    	else
+    	    open_raster(gridhrec.X_COORD_1,gridhrec.Y_COORD_1,
+						gridhrec.N_ROWS,gridhrec.N_COLUMNS);
+    }
+
+}
+
+
+/***********************************************************************************/
+/***                                 grid_rec()					 ***/
+/***  	  Reads in the Grid Data Record (51) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 28th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+grid_rec()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  GRIDREC	gridrec;	/* Grid data record structure.			*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			gridvals[1604];	/* Holds a line of the raster.			*/
+    int			num_lines,	/* Counts through the body of 21 grid records.	*/
+			col;
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    gridrec.REC_DESC_1	= 	50;
+    strncpy(buffer,		text+2,10);
+	buffer[10] = NULL;
+    	gridrec.GRID_ID =	atoi(buffer);
+    strncpy(gridrec.SURVEY,	text+12,7);
+    strncpy(gridrec.CHANGE,	text+19,7);
+    strncpy(buffer,		text+26,4);
+	buffer[4] = NULL;
+    	gridrec.COL_START =	atoi(buffer);
+    strncpy(buffer,		text+30,4);
+	buffer[4] = NULL;
+    	gridrec.COL_END =	atoi(buffer);
+    strncpy(buffer,		text+34,4);
+	buffer[4] = NULL;
+    	gridrec.ROW_START =	atoi(buffer);
+    strncpy(buffer,		text+38,4);
+	buffer[10] = NULL;
+    	gridrec.ROW_END =	atoi(buffer);
+    strncpy(buffer,		text+42,4);
+	buffer[10] = NULL;
+    	gridrec.PLA_START =	atoi(buffer);
+    strncpy(buffer,		text+46,4);
+	buffer[6] = NULL;
+    	gridrec.PLA_END =	atoi(buffer);
+    gridrec.COL_INV =		text[50] - '0';
+    gridrec.ROW_INV =		text[51] - '0';
+    gridrec.PLA_INV =		text[52] - '0';
+    gridrec.ORDER =		text[53] - '0';
+    gridrec.INTERPRET =		text[54] - '0';
+    strncpy(buffer,		text+55,10);
+	buffer[10] = NULL;
+    	gridrec.V_OFFSET =	atoi(buffer);
+    strncpy(buffer,		text+65,10);
+	buffer[10] = NULL;
+    	gridrec.V_SCALE =	atoi(buffer) / 1000.0;
+    gridrec.CONT_MARK_1 =	text[75] - '0';
+    gridrec.EOR_1 =		text[76];
+
+    if (gridrec.CONT_MARK_1 == 1)
+    {
+	if ( (gridrec.REC_DESC_2 = read_line()) != 0)
+	    fprintf(stderr,
+    "WARNING: Line %d - Continuation of Grid data has unexpected descriptor [%d] \n",
+							gridrec.REC_DESC_2,line_number);
+    	strncpy(buffer,		text+2,8);
+	    buffer[8] = NULL;
+    	    gridrec.N_GRIDVAL =atoi(buffer);
+    	gridrec.CONT_MARK_2 =	text[10] - '0';
+    	gridrec.EOR_2 =	text[11];
+    }
+    else
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Expected Grid header continuation mark is missing.\n",
+									line_number);
+    	gridrec.CONT_MARK_2 =	1;
+    }
+
+    if (gridrec.CONT_MARK_2 == 1)
+    {
+	for (num_lines=0; num_lines<21; num_lines++)
+	{
+	    if ( (gridrec.REC_DESC_3 = read_line()) != 0)
+	    	fprintf(stderr,
+    "WARNING: Line %d - Continuation of Grid data has unexpected descriptor [%d] \n",
+							gridrec.REC_DESC_3,line_number);
+    	    strncpy(gridrec.GRIDVAL_1,	text+2,76);
+    	    gridrec.CONT_MARK_3 =	text[10] - '0';
+    	    gridrec.EOR_3 =		text[11];
+
+	    /* Add text string to gridvals */
+	    if (outfile)
+		strncpy(gridvals + num_lines*76,gridrec.GRIDVAL_1,76);
+	}
+	if ( (gridrec.REC_DESC_4 = read_line()) != 0)
+	    fprintf(stderr,
+    "WARNING: Line %d - Continuation of Grid data has unexpected descriptor [%d] \n",
+							gridrec.REC_DESC_4,line_number);
+    	strncpy(gridrec.GRIDVAL_2,	text+2,8);
+    	gridrec.CONT_MARK_4 =	text[10] - '0';
+    	gridrec.EOR_4 =		text[11];
+
+	/* Write out contents to raster array */
+	if (outfile)
+	    strncpy(gridvals + 1596,gridrec.GRIDVAL_2,8);
+    }
+    else
+	fprintf(stderr,
+	"WARNING: Line %d - Expected Grid header continuation mark is missing.\n",
+									line_number);
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (gridrec.CONT_MARK_4 != 0)
+    {
+	fprintf(stderr,
+	"WARNING: Line %d - Grid data record has too many continuation marks.\n",
+									line_number);
+	while (read_blank() != 0)	/* Read following continuation lines.		*/
+ 	;
+    }
+
+    if (gridrec.EOR_4 != '%') 
+	fprintf(stderr,
+	"WARNING: Line %d - Grid data record has no line terminator.\n",
+									line_number);
+   
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (conversion_log)		/* Print out log if requested.				*/
+    {
+	printf("Grid Data:\tFirst Row:\tLast Row\tFirst Col\tLast Col\t\n");
+	printf("          \t  %d\t\t  %d\t\t  %d\t\t  %d\n",
+		gridrec.ROW_START,gridrec.ROW_END,gridrec.COL_START,gridrec.COL_END);
+    }
+
+    if (outfile)
+    {
+	col = gridrec.COL_START;
+	printf("%d ",col);
+	fill_raster(gridvals,col);
+
+	/* fill_raster(gridvals,gridrec.ROW_START,gridrec.ROW_END,
+			     gridrec.COL_START,gridrec.COL_END);
+	*/
+
+        num_rlines++;
+	if (num_rlines == 401)		/* When entire raster is read, output to GRASS	*/
+	    write_raster();
+    }
+
+}    
+
+
+
+/***********************************************************************************/
+/***                                fill_raster()				 ***/
+/***  	  Extracts the raster values from a set of 22 Grid Data Records		 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 29th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+
+
+fill_raster(gridvals,col)
+    char	gridvals[1604];		/* Text string containing raster values.   */
+    int col;
+{
+    int		scany;			/* Scans a line through raster.		   */
+
+    char	gridval_txt[5];		/* Stores a single grid value as text.	   */
+    strncpy (gridval_txt,"    ");
+printf("col = %d\n",col);
+
+
+    for (scany=401; scany>=1; scany--)
+    {
+	strncpy(gridval_txt,gridvals,4);
+    	raster[scany-1][col-1] = (CELL)atoi(gridval_txt);
+	
+	gridvals += 4;			/* Move to next number.			   */
+
+   }
+
+
+}
+
+/*********************************************************/
+/*** -- OLD VERSION WHICH DOESNT SEEM TO WORK ON SGI-- ***/
+/*********************************************************/
+
+fill_raster_OLD(gridvals,row_start,row_end,col_start,col_end)
+    char	*gridvals;		/* Text string containing raster values.   */
+    int		row_start,row_end,	/* Begining and ending row numbers. 	   */
+		col_start,col_end;	/* Begining and ending column numbers.	   */
+{
+    int		row_ch, col_ch;		/* Change in r and c value with scan.	   */
+    int		scanx,scany;		/* Scans a line through raster.		   */
+
+    char	gridval_txt[5];		/* Stores a single grid value as text.	   */
+    strncpy (gridval_txt,"    ");
+
+    /* row_ch =  1,	col_ch =  0	->  Scan from bottom to top. 		   */
+    /* row_ch = -1,	col_ch =  0	->  Scan from top to bottom. 		   */
+    /* row_ch =  0,	col_ch =  1	->  Scan from left to right. 		   */
+    /* row_ch =  0,	col_ch = -1	->  Scan from right to left. 		   */
+    /* Any other combinations are invalid.					   */
+
+    row_ch = (row_end-row_start) / (abs(row_end-row_start) - 0.0000001);
+    col_ch = (col_end-col_start) / (abs(col_end-col_start) - 0.0000001);
+
+    if (abs(row_ch + col_ch) != 1)	/* Problem with header data.		   */
+	fprintf(stderr,
+	"WARNING: Line %d - Row and column numbers in Grid Data Record incorrect.\n",
+									line_number);
+
+    for (scanx=col_start,scany=row_end;
+			scanx <= col_ch*col_end, scany >= row_ch*row_start; 
+						scanx += col_ch, scany -= row_ch)
+
+
+    scanx=0;
+    for (scany=401; scany >=1; scany--)
+    {
+	strncpy(gridval_txt,gridvals,4);
+    	raster[scany-1][scanx-1] = (CELL)atoi(gridval_txt);
+	
+	gridvals += 4;			/* Move to next number.			   */
+
+    }
+
+
+}
+
+
+/***********************************************************************************/
+/***                                  vol_term()				 ***/
+/***    Reads in Volume Termination Record (99) into structure for processing	 ***/
+/***                                                                             ***/
+/***  Jo Wood, Project ASSIST, V1.0 27th May 1993                                ***/
+/***                                                                             ***/
+/***********************************************************************************/
+
+#include "ntf_in.h"
+
+vol_term()
+{
+    /*----------------------------------------------------------------------------------*/
+    /*                                   INITIALISE					*/
+    /*----------------------------------------------------------------------------------*/             
+    struct  VOLTERM	volterm;	/* Feature classification record structure.	*/
+    char    		buffer[80],	/* Temporary storage of text data 		*/
+			*posn_ptr;	/* Points to record termination mark.		*/
+
+    strcpy(volterm.FREE_TEXT,	"                                                           ");
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            SCAN RECORD INTO STRUCTURE				*/
+    /*----------------------------------------------------------------------------------*/
+
+    volterm.REC_DESC_1 =	99;
+
+    if ( (posn_ptr = strrchr(text,'%')) == NULL)
+	fprintf(stderr,
+	"WARNING: Line %d - Volume Termination Record has no terminator.\n",
+									line_number);
+
+    strncpy(volterm.FREE_TEXT,	text+2, (posn_ptr-1) - (text+2) );
+    volterm.CONT_MARK_1 = 	*(posn_ptr-1) - '0';
+    volterm.EOR_1 =	 	*posn_ptr;
+
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            CHECK INTEGRITY OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (volterm.CONT_MARK_1 != 0)
+ 	if (read_line() != 1)	/* Read following volume header record.		*/
+	    fprintf(stderr,
+	    "WARNING: Line %d - Volume Header Record is missing.\n",line_number);
+
+
+
+    /*----------------------------------------------------------------------------------*/
+    /*                            OUTPUT CONTENTS OF RECORD				*/
+    /*----------------------------------------------------------------------------------*/
+
+    if (conversion_log)		/* Print out log if requested.				*/
+    {
+       printf("\n");
+       printf("************************************************************************\n");
+       printf("\t%s\n",volterm.FREE_TEXT);
+       printf("************************************************************************\n");
+    }
+
+
+    return (volterm.CONT_MARK_1);
+}

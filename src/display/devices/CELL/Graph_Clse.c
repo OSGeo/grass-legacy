@@ -29,8 +29,8 @@ int Graph_Close (void)
 #define NEWCODE
 #ifdef NEWCODE
     fseek (Temp_fp, 0L, 0);
-    Window.north=SCREEN_BOTTOM-1;
-    Window.east=SCREEN_RIGHT-1;
+    Window.north=SCREEN_BOTTOM;
+    Window.east=SCREEN_RIGHT;
     Window.south=0;
     Window.west=0;
     Window.proj=0;

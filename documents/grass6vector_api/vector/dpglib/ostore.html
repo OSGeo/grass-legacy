@@ -1,0 +1,250 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Object Store
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Object Store
+</h1>
+
+<hr>   <!--------------------------------------------------->
+
+<blockquote><i>
+    Status:  Gamma<br>
+    This module has been designed, reviewed and coded.
+    It should be considered stable.
+</i></blockquote>
+<hr>   <!--------------------------------------------------->
+
+<p>
+This library exists primarily to support the <a href=ocache.html>dpgOCache</a>
+library, but is general purpose and should be useable for other things.
+It is designed as a general purpose object storage library.  It takes
+as input an open <a href="stdio.html>dpgFileP</a> descriptor and provides
+a general disk-based first-fit memory management utility.  Thus freespace
+holes in the file are managed for you.
+<p>
+
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li> <a href=#>  </a>
+    
+
+<li>dpgOSP     <a href=#dpgOSinit> dpgOSinit </a>
+        (dpgFileP fp, char *mode, long size);
+
+
+<li>void       <a href=#dpgOScleanup> dpgOScleanup </a>
+     (dpgOSP osp);
+
+
+<li>char *     <a href=#dpgOSallocate> dpgOSallocate </a>
+    (dpgOSP osp, long size, dpgOStag tag, dpgOStag *newtag);
+
+
+<li>dpgOStag   <a href=#dpgOSwrite> dpgOSwrite </a>
+       (dpgOSP osp, dpgOStag tag, char *buffer);
+
+
+<li>void       <a href=#dpgOSdelete> dpgOSdelete </a>
+      (dpgOSP osp, dpgOStag tag);
+
+
+<li>int        <a href=#dpgOSread> dpgOSread </a>
+        (dpgOSP osp, dpgOStag tag, char **buffer);
+
+
+<li>int       <a href=#dpgOSreleaseBuffer> dpgOSreleaseBuffer </a>
+    (dpgOSP osp, char *buffer);
+
+
+<li>void       <a href=#dpgOSsetUserString> dpgOSsetUserString </a>
+    (dpgOSP osp, char *str);
+
+
+<li>char *     <a href=#dpgOSgetUserString> dpgOSgetUserString </a>
+    (dpgOSP osp);
+
+
+<li>void       <a href=#dpgOSsetIndexSize> dpgOSsetIndexSize </a>
+    (long size);
+
+
+<li>long       <a href=#dpgOSgetFreelistSize> dpgOSgetFreelistSize </a>
+    (dpgOSP osp);
+
+
+<li>void       <a href=#dpgOSsetMaxIntFrag> dpgOSsetMaxIntFrag </a>
+    (dpgOSP osp, int num);
+
+
+<li>long       <a href=#dpgOSgetTagSize> dpgOSgetTagSize </a>
+       (dpgOSP osp, dpgOStag tag);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+
+<ul>
+<a name="dpgOSinit">
+<li>dpgOSP     <strong>dpgOSinit</strong>     (dpgFileP fp, char *mode, long size);
+<p>
+This function initializes an object file.  If the file is to use fixed
+length objects, then that <em>size</em> should be specified.  Otherwize, simply
+set <em>size</em> to zero and it will support variable length objects. Note
+fixed size has not been thoroughly tested.
+<p>
+
+
+
+<a name="dpgOScleanup">
+
+<li>void       <strong>dpgOScleanup</strong>  (dpgOSP osp);
+<p>
+Use this function when closing an object file.
+<p>
+
+
+
+<a name="dpgOSallocate">
+
+<li>char *     <strong>dpgOSallocate</strong> (dpgOSP osp, long size, dpgOStag tag, dpgOStag *newtag);
+
+<p>
+This function must be called to allocate a buffer to fill for writing
+an object to disk.  If the object previously had a dpgOStag, then it 
+must be passed in as <em>tag</em>.  If the size of the object has changed,
+then, new space will be allocated on the disk and a new dpgOStag will be 
+returned in <em>newtag</em>.  <em>Size</em> must be the exact memory
+requirement to store the object on disk.
+<p>
+
+
+
+<a name="dpgOSwrite">
+
+<li>dpgOStag   <strong>dpgOSwrite</strong>    (dpgOSP osp, dpgOStag tag, char *buffer);
+
+<p>
+This function is used to write out a buffer that was allocated with
+<em>dpgOSallocate</em>.  Note that if the application requires network
+portabilty, the object should be written out using XDR or similar library.
+<p>
+
+
+<a name="dpgOSdelete">
+
+<li>void       <strong>dpgOSdelete</strong>   (dpgOSP osp, dpgOStag tag);
+<p>
+Delete the specified object
+<p>
+
+
+
+<a name="dpgOSread">
+
+<li>int        <strong>dpgOSread</strong>     (dpgOSP osp, dpgOStag tag, char **buffer);
+
+<p>
+Read on object specified by <em>tag</em>.  Buffer will be allocated for
+you and <strong>must</strong> be release by calling 
+<em>dpgOSreleaseBuffer</em>().
+<p>
+
+
+<a name="dpgOSreleaseBuffer">
+
+<li>int       <strong>dpgOSreleaseBuffer</strong> (dpgOSP osp, char *buffer);
+<p>
+Release a buffer allocated by <em>dpgOSread</em>().
+<p>
+
+
+
+<a name="dpgOSsetUserString">
+
+<li>void       <strong>dpgOSsetUserString</strong> (dpgOSP osp, char *str);
+<p>
+Store a string in the file. This can be used for versioning.
+<p>
+
+
+
+<a name="dpgOSgetUserString">
+
+<li>char *     <strong>dpgOSgetUserString</strong> (dpgOSP osp);
+<p>
+Get the user string from the file.
+<p>
+
+
+
+<a name="dpgOSsetIndexSize">
+
+<li>void       <strong>dpgOSsetIndexSize</strong> (long size);
+<p>
+This function should rarely be needed.  It is used to set size of 
+the freelist index. It will affect the next call to <em>dpgOSinit</em>.
+<p>
+
+
+
+<a name="dpgOSgetFreelistSize">
+
+<li>long       <strong>dpgOSgetFreelistSize</strong> (dpgOSP osp);
+<p>
+This will return the current length of the freelist.
+<p>
+
+
+
+<a name="dpgOSsetMaxIntFrag">
+
+<li>void       <strong>dpgOSsetMaxIntFrag</strong> (dpgOSP osp, int num);
+
+<p>
+Currently disabled, it allows the user to specify the maximum size of 
+internal fragmentation.  Internal fragmentation has been turned off
+because it seems to increase the size of the free list.
+<p>
+
+
+<a name="dpgOSgetTagSize">
+
+<li>long       <strong>dpgOSgetTagSize</strong>    (dpgOSP osp, dpgOStag tag);
+<p>
+Returns the size of an object given its dpgOStag.
+<p>
+
+</ul>
+
+
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

@@ -1,13 +1,13 @@
-#include	<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include	<signal.h>
-#include	"gis.h"
-#include	"lock.h"
-#include	"bin_digit.h"
-#include	"georef.h"
+#include <signal.h>
+#include "gis.h"
+#include "lock.h"
+#include "bin_digit.h"
+#include "georef.h"
 
 
-#define		DRIVER_PROG	"geo.reg"
+#define	DRIVER_PROG "geo.reg"
 
 /*  Sun needs a null string, not just a null  */
 #define		NULL_STRING	""

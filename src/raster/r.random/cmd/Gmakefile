@@ -1,6 +1,0 @@
-OFILES = main.o count.o creat_rand.o random.o support.o
-
-$(BIN_MAIN_CMD)/r.random: $(OFILES) $(GISLIB) $(DATETIMELIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(DATETIMELIB) $(XDRLIB) $(MATHLIB)
-
-$(GISLIB) $(DATETIMELIB): #

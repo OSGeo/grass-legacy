@@ -1,7 +1,24 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       coorcnv library
+ * AUTHOR(S):    Original author unknown - probably CERL
+ *               Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE: 	 scanning of coordinates from strings
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
 #include <stdio.h>
 #include "CC.h"
 
-static int scan_ll ( char *, char *, double *);
+static int scan_ll (char *, char *, double *);
 
 int 
 CC_lat_scan (char *buf, double *lat)
@@ -15,10 +32,11 @@ CC_lon_scan (char *buf, double *lon)
     return scan_ll (buf, "ew", lon);
 }
 
-static int scan_ll ( char *buf, char *dir, double *result)
+static int 
+scan_ll (char *buf, char *dir, double *result)
 {
     char temp[3];
-    int d,m,s;
+    int d, m, s;
     char ps[20], *pps;
     double p, f;
 

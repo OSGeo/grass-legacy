@@ -196,11 +196,12 @@ help_expr:     LP HLP_TKN RP
 		|		HLP_TKN
 		{
 			G_gishelp("COMBINE",NULL) ;
-		}
+		} /* next removed because twice included 
+		     (Andreas Lange, 10/2000): 
 		|		HLP_TKN HLP_TKN
 		{
 			G_gishelp("COMBINE",NULL) ;
-		}
+		} */
 		|		HLP_TKN NAM_STR
 		{
 			G_gishelp("COMBINE",$2) ;
@@ -275,9 +276,10 @@ exit_expr:      BYE_TKN
 /* ========================================================================= */
 int yyerror(message) char *message ;
 {
-/*
-	fprintf (stderr, "parser: %s, try again:\n", message);
-*/
+/* Andreas Lange: i uncommeted the next section for debugging 10/2000 
+   and commented it again ...
+	fprintf (stderr, "parser: %s, try again:\n", message); */
+	
 	return 0;
 }
 /* ========================================================================= */

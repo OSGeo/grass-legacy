@@ -1,0 +1,110 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (Win98; I) [Netscape]">
+   <TITLE>d.sites.qual</TITLE>
+</head>
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<h2>
+NAME</h2>
+<b><i>d.sites.qual</i></b> - Displays a subset of a sites list based on
+site attributes (<i>GRASS Display Program</i>)
+<h2>
+SYNOPSIS</h2>
+<b>d.sites.qual</b>
+<br><b>d.sites.qual help</b>
+<br><b>d.sites.qual [-n] sitefile</b>=<i>name</i> [<b>color</b>=<i>name</i>]
+[<b>size</b>=<i>value</i>] [<b>type</b>=<i>name</i>] [<b>rules</b>=<i>name</i>[,<i>name</i>,...]]
+[<b>output</b>=<i>name</i>]
+<h2>
+DESCRIPTION</h2>
+<i>d.sites.qual</i> displays sites from a sites file only if they match
+criteria established by <b>rules</b>.
+<p>Syntax of rule string is:
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [D|C|A]#.RANGE</pre>
+where D, C, or A specify Dimension, Category, or Attribute and RANGE is
+one of:
+<pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #-#, ge#, le#, eq#</pre>
+examples:
+<ul>
+<pre>&nbsp; <b>D1.le-88.125</b>&nbsp;&nbsp;&nbsp; <i>easting &lt;= -88.125
+</i>&nbsp; <b>D3.100-200</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>dimension 3 in range 100 to 200
+</i>&nbsp; <b>C.eq7.2</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>category equal 7.2 (note no number after C)
+</i>&nbsp; <b>A2.ge5000</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i>2nd double attribute &gt;= 5000
+</i>&nbsp; <b>A1.-2.0--1.0</b>&nbsp;&nbsp;&nbsp; <i>1st double attribute in range -2.0 to -1.0</i></pre>
+</ul>
+If an output filename is provided, a new sites file containing the subset
+defined by the command will be written in the user's mapset. Header information
+will be copied from the original sites file and the d.sites.qual command
+and current window will be written as comments to the new file. Note that
+only those qualifying sites within the current window are written to the
+new file. The <b>-n</b> flag is useful when calling d.sites.qual from a
+script, as the number of qualifying sites may be needed to further process
+the file or report to the user in an interface, as in <a href="d.siter.html">d.siter</a>.
+
+<h2>
+OPTIONS</h2>
+This program can be run non-interactively or interactively. If the user
+gives the name of a GRASS site_lists map and (optionally) specifies other
+parameter values on the command line the program will be run non-interactively;
+any parameter values left unspecified are set to their default values (see
+below). Alternately, the user can type simply <b> d.sites.qual</b> on the command
+line; in this case, the program will prompt the user for parameter values
+using the standard GRASS parser interface described in the manual entry
+for parser.
+<P>
+<b>Flags</b>
+<P>
+<b>-n</b><br>
+Output number of sites displayed
+
+<P>
+<b>Parameters</b>
+<P>
+<b>sitefile</b><br>
+Name of a site file
+
+<b>color</b><br>
+Sets the current color to that stated:
+<br>options: red, orange, yellow, green, blue, indigo, white, black, brown,
+magenta, aqua, gray, grey
+<br>default: gray
+
+<P>
+<b>size</b><br>
+Size, in pixels, in which the icon is to be drawn&nbsp;
+<br>options: 0-1000&nbsp;
+<br>default: 5
+
+<p><b>type</b><br>
+Specify the type of the icon&nbsp;
+<br>options: x, diamond, box, +&nbsp;
+<br>default: x
+
+<p>
+<b>rules</b><br>
+qualifying rules for display: [D|C|A]#.RANGE&nbsp;
+<br>where RANGE is one of #-#, ge#, le#, eq#
+
+<p>
+<b>output</b><br>
+Name of a site file to output drawn sites
+
+<h2>
+SEE ALSO</h2>
+
+<a href="d.mon.html">d.mon</a>, <a href="d.sites.html">d.sites</a>, <a href="d.siter.html">d.siter</a>
+
+<h2>
+AUTHOR</h2>
+
+Bill Brown, UI GMS Laboratory
+
+</body>
+</html>

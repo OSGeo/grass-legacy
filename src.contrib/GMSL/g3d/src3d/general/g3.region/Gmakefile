@@ -1,0 +1,33 @@
+PGM      = g3.region
+HOME     = $(BIN_MAIN_INTER)
+
+
+LIST     = main.o\
+	   cur_frm_3ddb.o\
+	   cur_frm_3ddf.o\
+	   cur_frm_db.o\
+	   cur_frm_df.o\
+	   cur_to_db.o\
+	   edit.o\
+	   editcellhd3d.o\
+	   lister.o\
+	   from_cell.o\
+	   from_3dcell.o\
+	   from_vect.o\
+	   mke_curr.o\
+	   modify_cur.o\
+	   modify_db.o\
+	   new_db.o\
+	   set.o\
+	   from_view.o\
+	   yes.o
+
+$(HOME)/$(PGM): $(LIST) $(G3DLIB) $(GISLIB) $(VASKLIB) $(VECTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(G3DLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+
+$(LIST): glob.h
+
+$(G3DLIB):   #
+$(GISLIB):   #
+$(VASKLIB): #
+$(VECTLIB): #

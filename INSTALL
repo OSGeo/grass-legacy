@@ -1,66 +1,64 @@
                    INSTALL GRASS 5.0 source code
-                    (updated 7th December 1999)
+
+($Id: INSTALL,v 1.10 2000-12-06 17:37:16 markus Exp $)
+
+Welcome to the GRASS GIS source code distribution. This is the installation
+instruction file and contains the following sections:
+    
+    INSTALLATION
+    CONFIGURE OPTIONS
+    FILES TO CHECK
+    KNOWN EXCEPTIONS
+    CLEANING UP
+    COMPILING MODULES NOT COMPILED BY DEFAULT
+    THINGS TO DO
+
+Please read through these sections before installing GRASS.
+ 
+
+INSTALLATION
+
+Before you compile GRASS, please read the file REQUIREMENTS. Note: If your
+system does not fullfil all requirements, some modules won't be
+compiled.
 
 The intent of the new install method is to have the following sequence
-of commands work to install GRASS on any platform.  If for some reason
-you wish to use the old "GISGEN" method, refer to the file called
-INSTALL.gmake for instruction.
+of commands work to install GRASS on any platform.
 
 	./configure
 	make install
 
 The `configure' command (possibly with options; see below) should
 identify all relevant system dependencies and create several files
-(see below) containing dependency information.  The `make' command
-should compile the programs but not touch the filesystem outside of
-the extracted source.  The `make install' command should install GRASS
-in the main filesystem.  NOTE:  You may need to be 'root' to do this!
+(see below) containing dependency information. The `make install' command
+should compile and install GRASS in the main filesystem.
 
-If you want to change this, use a sequence like this:
+By default, the majority of the GRASS files are stored under
+/usr/local/grass5, while a few user executable files (eg. the GRASS
+executable) are stored under /usr/local/bin. These directories are typically
+only writable by user 'root'. Thus, you will probably need to have root
+access if you use the default locations.
 
-	./configure --prefix=/opt/grass5.0 --with-bindir=/usr/bin/
+If you want to change the default locations, use a sequence like this:
+
+	./configure --prefix=/opt/ --bindir=/opt/bin/
 	make install
 
-This will install the GRASS modules, help, and other need libraries
-etc. in the directory /opt/grass5.0 and the startup file 'grass5.0'
-in the directory /usr/bin.  See the configure options below for more
-information.
+Here the default directories have been changed to /opt/grass5 for most
+of the GRASS files, and /opt/bin/ for the executable files. See the
+configure options below for more information.
 
-At this point that system should work as above, with a few known
-exceptions (see below).  If you identify problems (e.g., system
-dependencies not already accounted for by `configure') please pass
-along the relevant information (e.g., operating system, dependency
+At this point the system should be installed and ready to run by typing
+grass5, with a few known exceptions (see below).  If you identify problems
+(e.g., system dependencies not already accounted for by `configure') please
+pass along the relevant information (e.g., operating system, dependency
 information, and ideally a fix) so the configuration system can be
-fixed.
-
-Note that the old install method based on running GISGEN directly
-should still work (though be sure to check the files created by
-`configure').  In this case, something along the lines of the
-following should work.
-
-	./configure
-	setenv GRASSSRC `pwd`/src
-	setenv GMAKE `pwd`/src/CMD/gmake5.0
-	sh src/CMD/generic/GISGEN.sh
-	sh src/CMD/generic/MAKELINKS.sh
-
-Note that if you are using something akin to the Bourne shell you must
-set the environment variables differently (e.g., VAR=value; export
-VAR).  If you wish to use the old "head" files, you will need to
-follow the old INSTALL directions after running `configure'.
-
-Finally, note that because the source files now depend on
-src/include/config.h and src/scripts/shells/create_fifos.sh, it is
-imperative to run the `configure' script regardless of the ultimate
-installation method.
-
-A general "gmake5" script is created in /usr/local/bin (standard)
-which allows to compile modules separately. It is required to run
-the "configure" process in advance and to compile the required
-library files.
+fixed. Please see information about our bug report page at
+http://www.geog.uni-hannover.de/grass/grass5/index.html
 
 Note for Alpha64 users: Please read the ALPHA64/README.alpha64
-                        and apply the 64bit patches.
+and apply the 64bit patches.
+
 
 CONFIGURE OPTIONS
 
@@ -71,7 +69,7 @@ normal options.  The following lists a few that are relevant to GRASS.
 	--help				lists all available options
 	--prefix=DIR			install GRASS (except user
 					executable program) in DIR
-	--with-bindir=DIR		install user executable
+	--bindir=DIR		    	install user executable
 					program in DIR 
 	--with-includes=DIRS		add DIRS to the compiler flags (-I) 
 	--with-libs=DIRS		add DIRS to the compiler flags (-L)
@@ -79,6 +77,12 @@ normal options.  The following lists a few that are relevant to GRASS.
 					(-I) for locating TIFF files
 	--with-tiff-libs=DIRS		add DIRS to the compiler flags
 					(-L) for locating TIFF libraries
+	--with-tcltk-includes=DIRS	add DIRS to the compiler flags
+					(-I) for locating Tcl/Tk files
+	--with-tcltk-libs=DIRS		add DIRS to the compiler flags
+					(-L) for locating Tcl/Tk libraries
+        --without-PACKAGE               do not use PACKAGE (same as
+                                        --with-PACKAGE=no)
 	--with-SYSV			define the SYSV macro
 	--with-USE_TERMIO		define the USE_TERMIO macro
 
@@ -88,6 +92,12 @@ account for system dependencies that are not yet included within the
 `configure' script (see below).  They will be removed in future
 versions.
 
+To disable the support of a specific package you can use the
+        --without-PACKAGE
+option.
+Example: To disable PostgreSQL support you will specify
+        configure --without-postgresql
+
 
 FILES TO CHECK
 
@@ -95,13 +105,16 @@ The `configure' script creates the following files to contain system
 dependencies: 
 
 	Makefile
-	src/CMD/head/head
+	src/CMD/head/head.$ARCH
 	src/include/config.h
 	src/scripts/shells/create_fifos.sh
 
+$ARCH is a variable containing the host system (example:
+head.i686-pc-linux-gnu).
+
 After running `configure' it is wise to check these files to verify
 that they contain the correct information.  In particular, several
-known exceptions (see below) might need fixing in src/CMD/head/head.
+known exceptions (see below) might need fixing in src/CMD/head/head.$ARCH.
 
 
 KNOWN EXCEPTIONS
@@ -112,11 +125,62 @@ fixed, especially if people with these systems can help (see below).
 
 Scattered throughout the source code are dependencies on the C
 preprocessor macro `SYSV'.  Only `hpux10' machines need to define this
-macro in src/CMD/head/head:
+macro in src/CMD/head/head.$ARCH:
 
 	XLDFLAGS = -DSYSV
 
 This is accomplished by the --with-SYSV option to `configure'.
+
+
+CLEANING UP
+
+There are five options for cleaning the GRASS source code. The first four
+options are based on the GNU guidelines at:
+
+http://www.gnu.org/manual/make-3.77/html_node/make_118.html
+
+A fifth option is specific to the GRASS development project and does not
+conform to the GNU standard. Each option performs the following operations:
+
+make mostlyclean  	- delete all object files, the next step file, and the
+   	    	    	  binary install script if it exists, keep the compiled
+   	    	    	  GRASS libraries - good for saving disk space
+make clean        	- delete object files, next step file, libraries, and
+ 		      	  generated directories like etc/ and dev/ - good for
+                     	  recompiling on the same system (keep configure files)
+make distclean    	- delete object files, next step file, libraries,
+   	    	    	  generated directories, head file, configure files,
+   	    	    	  and Makefile - good for starting the whole
+   	    	    	  installation from scratch
+make maintainer-clean 	- delete object files, next step file, libraries,
+   	    	    	  generated directories, and generated lex/flex and
+   	    	     	  yacc/bison files - good for recompiling on the same
+   	    	    	  system and also generating the lex/flex and
+   	    	    	  yacc/bison files again
+make savebinclean    	- delete object files, next step file, the binary
+   	    	    	  install script if it exists, libraries, head file,
+   	    	    	  configure files, and Makefile - good for deleting
+   	    	    	  everything but the binary files
+
+
+COMPILING MODULES NOT COMPILED BY DEFAULT
+
+As part of the installation a general "gmake5" script is created in
+/usr/local/bin (default) which allows you to compile modules separately.
+
+To compile a single module go into the module's directory and compile it with:
+
+   gmake5
+
+Finally the module has to be linked to the GRASS front.end by:
+  
+   gmakelinks5
+
+Then you should be able to use the module. Note that gmakelinks5 only needs to
+be run once after the module is compiled.
+
+If you want to compile your own modules then please see the SUBMITTING file
+for instructions regarding programming and submitting GRASS modules.
 
 
 THINGS TO DO
@@ -124,15 +188,3 @@ THINGS TO DO
 A major task remaining is to replace the GISGEN system with a
 proper set of Makefiles, all of which include a common one containing
 the system dependencies.
-
-Finally, to ensure that this system continues to work, GRASS
-programmers need to be encouraged to include
-
-	#include "config.h"
-
-in their files and to make use of the various system dependencies
-contained therein.  As one example of this, see
-src/paint/Interface/driverlib/io.c.  Programmers also need to be
-encouraged to refrain from declaring system functions within the
-software; include the proper header files (conditionally dependent on
-config.h macros if necessary) instead.

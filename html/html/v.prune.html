@@ -1,0 +1,110 @@
+<TITLE>v.prune</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.prune</b></EM>  - Prunes points from binary GRASS vector
+data files.
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.prune</B>
+
+<BR>
+
+<B>v.prune help</B>
+
+<BR>
+
+<B>v.prune</B> [<B>-i</B>] <B>input=</B><EM>name</EM>
+<B>output=</B><EM>name</EM> <B>thresh=</B><EM>value</EM>
+
+<H2>DESCRIPTION</H2>
+
+The GRASS program <EM>v.prune</EM> allows the user to
+remove extra points from a vector file.  This allows users
+to reduce disk space required by a vector file and still
+have data accuracy within a given tolerance.
+
+<H2>OPTIONS</H2>
+
+<H3>Flag:</H3>
+
+<DL>
+<DT><B>-i</B> 
+<DD>The pruning threshold value is specified in map inches,
+rather than in data base units on the ground.
+</DL>
+
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM> 
+<DD>Name of binary GRASS vector file containing data to be pruned.
+
+<DT><B>output=</B><EM>name</EM> 
+<DD>Name to be assigned to new, pruned vector output file.
+
+<DT><B>thresh=</B><EM>value</EM> 
+<DD>Threshold value used for pruning.
+</DL>
+
+
+The program will be run non-interactively if the user
+specifies all parameters and (optionally) the <EM>-i</EM> flag
+on the command line, using the form:
+
+<DL>
+<DD>
+<B>v.prune</B> [<B>-i</B>] <B>input=</B><EM>name</EM>
+<B>output=</B><EM>name</EM> <B>thresh=</B><EM>value</EM>
+</DL>
+
+If the user simply types <B>v.prune</B> without specifying
+program arguments on the command line, the program will
+prompt the user to enter parameter values.
+
+<H2>NOTES</H2>
+
+The threshold value is the same as the 
+
+<EM><A HREF="v.digit.html">v.digit</A></EM> pruning threshold.
+
+This is specified in data base units on the ground (e.g.,
+in ground meters for UTM data bases).  The threshold can
+also be specified in inches on the map, and the program
+will convert these to data base ground units using the
+<EM>scale</EM> in the vector file.  If you specify the
+scale in map inches rather than in ground units, you must
+specify that inches are used by setting the <EM>-i</EM>
+flag.  The input vector data layer will be read and the
+resultant pruned vector data layer will be placed into a
+newly created output file whose name is specified by the
+user, leaving the original vector map unchanged.
+
+
+<P>
+
+The pruning algorithm throws away redundant points within
+the specified threshold.  It works on each vector
+separately, working from node to node.  It does not change
+the position or number of nodes.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>,
+<EM><A HREF="v.in.ascii.html">v.in.ascii</A></EM>
+
+<H2>AUTHOR</H2>
+
+Dave Gerdes, U.S.Army Construction Engineering 
+Research Laboratory

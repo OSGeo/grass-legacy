@@ -80,7 +80,7 @@ main_menu (void)
     case 3:
     /* zoom */
            R_close_driver();
-           G_system("d.rast.zoom");
+           G_system("d.zoom");
            R_open_driver();
            use_mouse();
            break;
@@ -195,9 +195,12 @@ color_menu (char *title)
     int div_color;
     int answer;
 
+/*
     if(strlen(title) > 20)
         error(1, "color_menu: title too long");
-   
+*/
+    options[0] = (char *) malloc(sizeof(char) * strlen(title) + 1);
+
     strcpy(options[0], title);
 
     background_color = D_translate_color("indigo");

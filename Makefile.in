@@ -1,13 +1,29 @@
 # Makefile.in
+# $Id$
 
 SHELL=			/bin/sh
 
 PREFIX=			@prefix@
 
+prefix=                 @prefix@
+
+exec_prefix=            @exec_prefix@
+
 BINDIR=			@BINDIR@
 
-SRCDIR=			`pwd`
+USE_OPENGL=             @USE_OPENGL@
+
+SRCDIR=			@SRCDIR@
 SERVERNAME=		`uname -n`
+SYSTEM=			`uname -s`
+ARCH=			@ARCH@
+#GISBASE=                @GISBASE@
+GISBASE=		@prefix@/grass@NAME_VER@
+VERSION=		@VERSION@
+
+# Get the major release number from the version for appending to gmake,
+# gmakelinks, and grass command names eg VERSION = 5.0beta8 NAME_VER = 5
+NAME_VER=   	    	@NAME_VER@
 
 INSTALL=		@INSTALL@
 INSTALL_DATA=		@INSTALL_DATA@ -m 644
@@ -17,43 +33,204 @@ INSTALL_SCRIPT=		@INSTALL@ -m 755
 INSTALL_DATA_DIR=	mkdir -p -m 755
 
 ENV=			@ENV@
+MAKE=			make
 
-MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0
+# these variables will be passed to the scripts below:
+MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0 HEADER=head.${ARCH} MAKE=${MAKE}
 
 IS64BIT=		${SRCDIR}/src/CMD/generic/is64bit.sh
 
-MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR}
+MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR} MAKE=${MAKE} NAME_VER=${NAME_VER}
 
-MAKE_POST_ENV=		GISBASE=${PREFIX} MACHINENAME=${SERVERNAME}
+MAKE_POST_ENV=		GISBASE=${GISBASE}  MACHINENAME=${SERVERNAME}
+
+# the cutline we need to find out to shorten the ChangeLog:
+CUTLINE=		`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1 | head.${ARCH} -1`
+
+# Variables for the DejaGNU testing suite:
+EXPECT=`which expect`
+# EXPECT=`\
+#	if [ -f $${SRCDIR}/../../../expect/expect ] ; then \
+#	  echo $${SRCDIR}/../../../expect/expect ; \
+#       else echo expect ; fi`
+RUNTEST=`which runtest`
+# RUNTEST=`\
+#  if [ -f $${SRCDIR}/../../../dejagnu/runtest ] ; then \
+#    echo $${SRCDIR}/../../../dejagnu/runtest ; \
+#  else echo runtest ;  fi`
+RUNTESTFLAGS=-v
+
+# Files to include in a binary distribution
+BIN_DIST_FILES =    	AUTHORS \
+    	    	    	BUGS \
+    	    	    	COPYING \
+			NEWS.html \
+			README \
+			REQUIREMENTS \
+			TODO \
+    	    	    	bin/ \
+			bwidget/ \
+			dev/ \
+			driver/ \
+			etc/ \
+			fonts/ \
+			documents/ \
+			include/ \
+			lib/ \
+			man/ \
+			scripts/ \
+			tcltkgrass/ \
+			txt/
+
+#######################
+#make targets:
 
 all: pre-install
 
 install: pre-install do-install
 
 pre-install:
-	${ENV} ${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh
-	${INSTALL_DATA_DIR} ${PREFIX}
-	${SHELL} ${IS64BIT}
+	test -d ${PREFIX} || ${INSTALL_DATA_DIR} ${PREFIX}
+	test -d src/CMD/next_step || mkdir -p src/CMD/next_step
+	test ! -f src/CMD/head/head || mv src/CMD/head/head src/CMD/head/head.${ARCH}
+	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh ${ARCH} ${BINDIR}
+	${SHELL} ${IS64BIT} ${ARCH}
+	@ echo "Now proceed with make install"
 
 do-install:
-	${ENV} ${MAKE_ENV} ${SHELL} src/CMD/generic/GISGEN.sh
-	${ENV} ${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
-	${ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh
+	@ rm -f src/CMD/next_step/${ARCH}
+	${MAKE_ENV} ${SHELL} src/CMD/generic/GISGEN.sh
+	${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
+	${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh ${ARCH}
 
-clean:
-	echo "Removing object files..."
-	find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true
-	rm -f src/CMD/next_step/*              2>/dev/null ; true
-	# Cleaning finished.
+# GRASS source code cleaning options:
+#
+# There are five options for cleaning the GRASS source code. The first four
+# options are based on the GNU guidelines at:
+#
+# http://www.gnu.org/manual/make-3.77/html_node/make_118.html
+#
+# A fifth option is specific to the GRASS development project and does not
+# conform to the GNU standard. Each option performs the following operations:
+#
+# make mostlyclean  	- delete all object files, the next step file, and the
+#   	    	    	  binary install script if it exists, keep the compiled
+#   	    	    	  GRASS libraries - good for saving disk space
+# make clean        	- delete object files, next step file, libraries, and
+# 		      	  generated directories like etc/ and dev/ - good for
+#                     	  recompiling on the same system (keep configure files)
+# make distclean    	- delete object files, next step file, libraries,
+#   	    	    	  generated directories, head.${ARCH} file, configure files,
+#   	    	    	  and Makefile - good for starting the whole
+#   	    	    	  installation from scratch
+# make maintainer-clean - delete object files, next step file, libraries,
+#   	    	    	  generated directories, and generated lex/flex and
+#   	    	     	  yacc/bison files - good for recompiling on the same
+#   	    	    	  system and also generating the lex/flex and
+#   	    	    	  yacc/bison files again
+# make savebinclean    	- delete object files, next step file, the binary
+#   	    	    	  install script if it exists, libraries, head.${ARCH} file,
+#   	    	    	  configure files, and Makefile - good for deleting
+#   	    	    	  everything but the binary files
+mostlyclean:
+	@ echo "Performing mostlyclean step..."
+	${SHELL} -c "find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/CMD/next_step/${ARCH}   	    2>/dev/null ; true"
+	${SHELL} -c "rm -f grass*install.sh   	    	    2>/dev/null ; true"
+	${SHELL} -c "rm -f testsuite/*log                   2>/dev/null ; true"
+	${SHELL} -c "rm -f testsuite/*.sum                  2>/dev/null ; true"
+	${SHELL} -c "rm -f testsuite/core                   2>/dev/null ; true"
 
-veryclean:
-	echo "Removing object files..."
-	find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true
-	#delete all LIB.<arch>/* files:
-	find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true
-	rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true
-	# remove system dependent files:
-	rm -f src/CMD/next_step/* src/CMD/head/head 2>/dev/null ; true
-	rm -f config.cache config.log config.status 2>/dev/null ; true
-	rm -f Makefile                              2>/dev/null ; true
-	# Cleaning finished.
+clean: mostlyclean
+	@ echo "Performing clean step..."
+	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
+	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
+	${SHELL} -c "rm -f ${BINDIR}/gmake${NAME_VER}	    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${BINDIR}/gmakelinks${NAME_VER}  2>/dev/null ; true"
+	${SHELL} -c "rm -f ${BINDIR}/grass${NAME_VER}       2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/bin/	    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/bwidget/    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/dev/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/driver/     	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/documents/	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/etc/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/fonts/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/include/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/lib/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/man/	   	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/locks/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/scripts/    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/tcltkgrass/ 	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/txt/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -f error.log     	    	    2>/dev/null ; true"
+
+distclean: clean
+	@ echo "Performing distclean step..."
+	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head 2>/dev/null ; true"
+	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/scripts/shells/create_fifos.sh    2>/dev/null ; true"
+	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
+	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
+
+maintainer-clean: distclean
+	@ echo "Performing maintainer-clean step..."
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.binfer/gram.c    	    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.binfer/lex.c     	    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.combine/cmd/gis_lxcl.c    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.combine/cmd/gis_pars.c    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.combine/cmd/gis_pars.h    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.combine/cmd/gis_pars.out  2>/dev/null ; true"
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.mapcalc/polish/lex.yy.c   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.mapcalc/polish/y.tab.c    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.weight/inter/gis_lxcl.c   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.weight/inter/gis_pars.c   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.weight/inter/gis_pars.h   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.weight/inter/gis_pars.out 2>/dev/null ; true"
+
+savebinclean: mostlyclean
+	@ echo "Performing savebinclean step..."
+	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
+	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head  2>/dev/null ; true"
+	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/scripts/shells/create_fifos.sh    2>/dev/null ; true"
+	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
+	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
+
+# make a source package for distribution:
+srcdist: distclean
+	@ echo "create Changelog file without initial messages..."
+# cvs2cl.pl creates a GNU style ChangeLog file:
+# http://www.red-bean.com/~kfogel/cvs2cl.shtml
+	cvs2cl.pl
+	@ echo "reduce Changelog file... Dont want the initial upload included."
+	head -${CUTLINE} ChangeLog    > ChangeLog.cut
+	echo "   initial CVS import" >> ChangeLog.cut
+	${SHELL} -c "mv ChangeLog.cut ChangeLog"
+	${SHELL} -c "rm -f ChangeLog.bak"
+	tar cvfz grass${VERSION}_src.tar.gz * --exclude=CVS
+	@ echo "Distribution source package: grass${VERSION}_src.tar.gz ready."
+
+# make a binary package for distribution:
+#  Bug: VER is not expanded properly (wrong directory):
+bindist:
+	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ${GISBASE}/  2>/dev/null ; true"
+	${SHELL} -c "sed -e \"s/BIN_DIST_VERSION/${NAME_VER}/\" -e \"s#BIN_DIST_DIR#'${GISBASE}'#\" -e \"s/TEST_STR=/TEST_STR=executable/\" -e \"s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#\" -e \"s/# executable shell.*//\" -e \"s/# make bindist.*//\"  binaryInstall.src > grass${NAME_VER}install.sh 2>/dev/null ; true"
+	${SHELL} -c "chmod a+x grass${NAME_VER}install.sh  2>/dev/null ; true"
+	(cd ${GISBASE}; tar cf - ${BIN_DIST_FILES} | gzip -fc > grass${VERSION}_${SYSTEM}_bin.tar.gz )
+	@ echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
+	@ echo "DO NOT FORGET!! Upload grass${VERSION}_${SYSTEM}_bin.tar.gz and grass${NAME_VER}install.sh to the GRASS ftp server"
+	@ echo "The binary package is stored at ${GISBASE}"
+
+# automatically run DejaGNU tests:
+# added 10/2000 by Andreas Lange
+check: install
+	@ echo "running tests on GRASS ${VERSION}"
+	@ echo "logfile for all tests is in ./testsuite/grass.log,"
+	@ echo "a summary of all test results is in ./testsuite/grass.sum"
+	@ echo "please report all bugs and problems to neteler@geog.uni-hannover.de "
+	EXPECT=${EXPECT} ; export EXPECT; \
+	if [ -f $${SRCDIR}/../../expect/expect ] ; then \
+	  TCL_LIBRARY=$${SRCDIR}/../../tcl/library ; \
+	  export TCL_LIBRARY; fi; export GISBASE=${PREFIX} ; export SRCDIR=${SRCDIR} ; \
+	(cd ${SRCDIR}/testsuite && ${RUNTEST} ${RUNTESTFLAGS} --tool grass --srcdir .  || exit 0)

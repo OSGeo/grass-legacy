@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/g.select.inf
+PGM       = $(BIN_MAIN_CMD)/g.select.inf
 LIBES     = $(GISLIB) 
 
 
@@ -10,6 +10,6 @@ OBJS = \
 
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(MATH)
 
 $(LIBES): #

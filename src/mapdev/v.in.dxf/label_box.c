@@ -5,8 +5,7 @@
 #include "dxf2vect.h"
 #include <math.h>
 #include <stdlib.h>
-#include "dig_defines.h"
-#include "dig_head.h"
+#include "Vect.h"
 
 #ifndef PI
 #define PI  3.141592

@@ -1,0 +1,614 @@
+Known bugs in GRASS 5
+$Id: BUGS,v 1.94 2000-12-06 12:43:01 markus Exp $
+[In sync with GRASS 5 beta CVS version]
+
+Maintained by
+   Markus Neteler
+   neteler@geog.uni-hannover.de
+Please send a note if detecting an unknown bug.
+Bugfixes are very welcome!
+
+Bug report page:
+http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html
+
+
+For the forthcoming GRASS 5 stable release there are some bugs
+being release-critical. They are indicated [RC].
+
+----------- drivers ---------------------------------------------
+[RC] CELL-Driver: colors are not correct
+   Comment from Carl Anderson <candrsn@mindspring.com>
+    Tracking of the "bug" will have to start in
+    src/display/d.rast/cmd/display.c
+    Since GRASS4 did the colors right, using both GRASS4 and GRASS5
+    drivers, I suspect one of the Libraries and not the XDRIVER.
+    look at D_set_colors ().
+    (being worked on by ?)
+
+----------- libraries ---------------------------------------------
+G3D libraries bug:
+ Markus Neteler wrote:
+  If I have more than around 60.000 cubes (tiles) (when setting high 
+  resolutions in WIND3) I regularly get this error message:
+  r3.out.v5d map=3dvol out=3d.v5d
+    FATAL ERROR: G3d_getDoubleRegion: error in G3d_getTilePtr
+ 
+  r3.out.ascii map=3dvol > 3d.asc
+    FATAL ERROR: G3d_getDoubleRegion: error in G3d_getTilePtr
+
+ Jaro Hofierka wrote:
+ Markus,
+  briefly, the problem might be in cache modes. The functions G3d_getValue () should be 
+  used in a cache mode, however, we open maps using non-cache mode:
+  map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
+   G3D_TILE_SAME_AS_FILE,
+   G3D_NO_CACHE);
+
+  Please try to change G3D_NO_CACHE parameter to G3D_USE_CACHE_DEFAULT, and 
+  re-compile main.c for r3.out.ascii with G3d_getWindow() and G3d_getValue() 
+  commands or previous version of r3.out.v5d. Currently I have not enough 
+  time to try it.
+   Jaro
+ -> needs to be fixed
+   (being worked on by Jaro)
+
+
+- GRASS raster colors bug:
+  GRASS becomes extremely slow in case more than 8000 colors are within
+  a raster map (therefore color quantization in r.in.tiff etc).
+   (being worked on by ?)
+
+----------- modules ---------------------------------------------
+
+d.param.scale
+ - lower axis description not readable
+ - sometimes "floating point exeption", especially in par=geary
+    (being worked on by ?)
+
+d.rast.num: some numbers are displayed in wrong (unreadable) color
+  (being worked on by ?)
+
+d.rgb: Is there a difference between d.rgb and i.composite?
+  (being worked on by ?)  
+
+[RC]d.sites.qual: not all the sites are used/displayed
+  d.sites.qual doesn't work properly: not all the sites 
+  are used/displayed if the number of fields of the input site file is 
+  not constant. Compare with d.sites.
+ Comment from Eric G Miller:
+    However, I do not believe this is a bug.  d.sites.qual needs consistent
+    dimension, category and attribute data to work.  Besides, I think the  
+    site_list is broken if it doesn't have a constant number and type of   
+    fields (We're looking at allowing null fields for 5.1...). 
+  (being worked on by ?)  
+
+g.select.pg
+ > When trying to run g.select.pg I get the classic error message :
+ > Error: select Postgres:PQconnectPoll() -- connect() failed: Connection
+ >  refused
+ >         Is the postmaster running (with -i) at 'localhost'
+ >         and accepting connections on TCP/IP port '5432'? 
+ > However, postmaster is running on 5432. I can see the databases with
+ > 'g.select.pg -l' and I can connect to them with pg_access. The only thing
+ > that seems a bit bizarre is that I cannot enter a host name when
+ > connecting through pg_access. If I do I get the same message as above. 
+ > But when I don't I can connect without any trouble. I remember getting
+ > this hint from the pg_access web page or mailing list, so it seems to be
+ > a known phenomenon.  Could this be the same problem with g.select.pg ?
+ (reported by Moritz Lennert  mlennert@club.worldonline.be)
+ Eric Miller:
+ Yes, I brought this up before.  Seems the code hasn't been changed (I           
+ didn't want to change others code).  The problem is the the interface with
+ username/password pairs.  The code should be sending user=NULL,
+ password=NULL, hostname=NULL, but instead sends hostname="localhost", which
+ causes a TCP/IP connection vs. a UNIX socket, which will probably make your
+ configuration demand a valid username/password pair.  It's definitely a bug,
+ IMHO.
+  (being worked on by ?)
+
+i.in.gtc/i.in.pri
+  i.in.gtc, putting in input leadername voldirname and dataname        
+  as required but....I get core dumped.
+  (reported by Stefano Merler <merler@itc.it>)
+  (being worked on by ?)
+
+i.ortho.photo
+ - if second control point is set by mouse, it is not indicated
+   immediately in orange color (right window)
+ - GIS WARNING: Can't write embedded null values for map open for random
+   access: i.ortho.photo/photo.rectify/write.c needs to be updated.
+  (being worked on by ?)  
+
+i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
+ - Attempting to change the default Title causes a segfault.
+  (being worked on by ?)  
+
+g.help:
+ - implement correct keycodes for "arrow down/up" instead of d, u
+
+g3.region:
+ - no parser implemented yet
+ - bug: if modeling soils data (top=0, bottom=-100 cm), you cannot set
+   top below surface:
+   [...]
+     top:        -20
+  bottom:        -30
+  e-w res:     10
+  n-s res:     10
+  t-b res:     10
+  [...]
+  total depths:                1
+  total cells:         2,280,000
+  warning - top falls outside the default region
+  -> this test is incorrect!
+  (being worked on by ?)  
+
+[RC]nviz2.2:
+ - I have a surface with VERY small floating point values (ie 7.7e-011 etc). 
+   I've imported using r.in.ascii and all is OK in normal GRASS display.      
+   However, starting nviz you see the surface the right way up, then it flips 
+   as if all values become negative. Incr the zexagg just stretches the values
+   towards the bottom of the screen. Any suggestions?
+   (reported by Phil <P.Atkinson@cdsc.nthames.nhs.uk>)
+   Note: This bug can be easily reproduced by:
+     r.mapcalc sine="sin(row()) * sin(col())"
+     nviz2.2 el=sine
+   (being worked on by ?)
+
+ - I am unable to view data from a Latitude-Longitude database. No matter
+   how much I adjust the lights I am unable to render a viewable surface.   
+   The wire-frame mode appears fine. I assume the problem is related to the
+   resolution calculation which it interprets as metres?? Should NVIZ work 
+   for a Lat.-Long. database? Does it prefer integer, floating point, or           
+   double elevation values?
+   (reported by Bob Covill" <bcovill@tekmap.ns.ca>)
+   -> hint: If you go into a lat/long location, load a surface
+            and display it, you get a dark surface as described.
+            If you go to the panel "lights" then and set
+            "Height" to 0.0, the colors are o.k. !
+  (being worked on by ?)  
+
+ - If loading a region too large for the memory available, the nviz
+   should stop (before freezing the machine).
+  (being worked on by ?)  
+
+
+p.map.new:
+ - p.map.new now works but only with the grass4.2 raster files
+   With the GRASS5.0 floating point raster files it gives the following
+   error.
+   WARNING: [desi] in mapset [PERMANENT] - format field in header file
+   invalid
+   WARNING: unable to open raster map [desi] in mapset [PERMANENT]
+   desi in PERMANENT : can't open raster file
+   I think it is to do with the new format of GRASS5.0 raster files.
+ -> 5/2000: still a problem??
+  (being worked on by ?)  
+
+[RC]r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
+  Though it is not a stability problem, I've found that if this module is
+  run on an elev raster with an active old-style mask, i.e applied with
+  r.mask, the contour lines which terminate on the mask boundary (but only
+  these) are duplicated, as if reflected off the mask boundary. The
+  resulting line is then closed giving a closed loop that is folded in on
+  itself with a node at one end or in the middle of the line, and no node
+  at the other. This is most clearly seen when viewed with v.digit. I have
+  not seen a prior report of this problem though I have looked. My
+  apologies if this has already been documented. Though I can't look into
+  this myself at the moment, I have prepared a quick fix in the form of an
+  awk post-processor which ´cleans' this problem, splitting the loop and
+  removing the duplicate segment (it also removes ´degenerate' lines ie.  
+  lines of one point which r.contour creates occasionally.) I have added  
+  this as an extension, though I stress it is just a temporary fix.
+  (script: v.asc.degen)
+  (being worked on by David D Gray)
+
+[rc]r.cost
+ somehow I have the feeling that r.cost is not working for me:
+ Here is the command;
+ r.cost -k input=g10g coord=30:44:45E,28:40:45N
+   stop_coord=30:59:45E,31:23:15N output=g10g.cost max_cost=999999
+ The basic idea is to look for flow patterns in the Nile basin as a test,
+ but similar results obtain for the Danube, Mississippi, and Po.  In each
+ case (see the attached images for dem and cost maps) the cost map seems
+ to arbitrarily truncate at some cost value.
+ This leaves a map which is mostly null unassigned pixels.  The max cost
+ values in each case are not particularly large (always less than ~20,000),
+ but the program acts as if, in calculating the costs to nearest pixels
+ it reaches some innate maximum or limit, and shuts down.
+ Perhaps some carried sum exceeds the MAXINT value, or some such.  I have
+ no more good ideas.
+ Chris Cornuelle <bob@math.umn.edu> 
+
+
+r.flow
+  bugreport: Issuing the command (-M switch is the problem):
+  r.flow -M elevin=fill aspin=dir flout=flowout_M dsout=density_M
+  [...] Writing density file...ERROR: r.flow: cannot write segment file for
+        density_M
+  r.flow seems to work OK with no switch and with the -m switch.
+  (reported by david_finlayson@yahoo.com)
+   -> floating point exception fix already done, -M to be tested
+  (being worked on by ?)
+
+r.in.bin:
+ - does it accept coordinates in dec. degree as well as DD:mm:ss?
+   -> put a note in html/html/r.in.bin.html
+
+r.in.hdf/r.out.hdf (src.garden/grass.hdf)
+ - needs updating to HDF5.x lib (already there)
+  (being worked on by ?)
+
+[RC]r.in.png:
+ - remove dependency on "netpbm" libs: pnm.h
+ -  seg. faults on Pentium CPU (compare r.binfer)
+ -  r.in.png refused to import a 24-bit image.  However it seems to work 
+    OK with an 8-bit image.
+    (reported by Steve Trick <TrickSG1@cf.ac.uk>)
+  (being worked on by David D Gray)
+
+[RC]r.in.ppm
+  seg. fault on Pentium CPU (compare r.binfer)
+  Memory bug fixed by Alex Shevlakov
+  (being worked on by David D Gray)
+
+[RC]r.los:
+  r.los seems to work perfectly if the elevation data is UTM.  But if the         
+  elevation data is latitude-longitude, like most of my elevation data, the       
+  output map looks like a hollow footprint: mostly "N" for cell values, except    
+  for a few arcs of cells with values like 179 and 180, out where the horizon     
+  might be expected.  If indeed these values mark the horizon, why do so few      
+  (if any) cells between these arcs and the observer's cell have non-"N"          
+  values?
+  I tried a previous Grass version (5.0 beta 6) to see if r.los works with        
+  latitude-longitude-projected elevation data, but the output maps look just      
+  as bad.  Sometimes the output map looks like a TV-test-pattern: a really        
+  bizarre pattern of radial lines emanating from the observer towards the         
+  west.  Cells in this region have values in the millions or billions (I          
+  forget how many digits).  The lines don't converge all the way to the           
+  observer because the radial pattern is cut off along a vertical                 
+  (north-south) line.  To the east of this vertical line, the cells have          
+  smaller values - typically a few hundred - and form vertical stripes when       
+  when the color map is rescaled to the lower values.                             
+  Presumably the TV-test-pattern anomalies plagued only old versions of r.los,    
+  but the hollow footprint anomaly persists in the current version.  What am I    
+  doing wrong?
+  (reported by Pelizzari, Michael <michael.pelizzari@lmco.com>)
+  (being worked on by ?)
+
+
+[RC]r.mapcalc
+ - Values -129 in GRASS raster files are treated as Null
+   (already fixed for FreeBSD/Linux. Check for other platforms, 
+   further corrections go here:   src/libes/gis/null_val.c)
+   test with r.mapcalc test=-129, if you get range: -129 -129 it's fixed.
+  (being worked on by ?)
+ -  r.mapcalc does not like it if the cellvalues are very high for eg.,            
+    initially I put the col=fips which ranges from 1001 to 55141 - it 
+    core dumped ... I guess the limit in r.mapcalc is 32xxx which 
+    is a "huge" limitation
+    (reported by Anantha Prasad  aprasad@fs.fed.us)
+  (being worked on by Andreas Lange)
+ - r.mapcalc/polish: (when compiling)
+  make[2]: Entering directory
+  /home/neteler/src5/grass5.0beta/src/raster/r.mapcalc/polish'
+  rm -f lex.yy.c y.tab.c
+  rm -f OBJ.i586-linux-elf/main.o
+  gcc -g -O2   -I/home/neteler/src5/grass5.0beta/src/include  -c main.c
+  mv main.o OBJ.i586-linux-elf/main.o
+  flex pol.l
+  yacc pol.y
+  yacc: 14 shift/reduce conflicts, 17 reduce/reduce conflicts.
+  (being worked on by Andreas Lange)
+
+[RC]r.neighbors 
+  seems doesn't work with a float number                   
+  when use median method. It fails in -0.001 value with 3x3 window. 
+  (reported by Bruno Crippa <bruno@ipmtf4.topo.polimi.it>)
+  (being worked on by ?)
+
+r.null:
+ does not work with reclassified maps.
+ Comment from Eric G. Miller:
+   The problem is, if r.null was run on the reclass raster it would alter    
+   the original and any other reclass rasters of the original.  So, there are
+   two basic approaches, let the user make a raster out of the reclass that  
+   isn't a reclass (e.g. cho 'newmap = reclass' | r.mapcalc) or have        
+   r.null do this for them.  With the second, a new raster has to be made     
+   and what do you name it?  If you name it the same as the reclass and      
+   blow away the reclass, is that okay? 
+ (being worked on by ?)
+
+
+[RC]r.poly
+bugreport 1: I've noticed that r.poly doesn't extract polygons for 0
+category areas. This was correct in GRASS 4, but not in GRASS 5. 
+I don't know if it works correctly with null values.
+
+bugreport 2: I've noticed that v.support complains about labels when
+r.poly exports polygons with islands. In fact, I've seen that in
+dig_att's file there is one label for each island (that's correct),
+but the container +polygon is associated with n+1 labels, where n is
+the number of contained islands. Everithing seems to work fine anyway,
+but I may be related with another bug on v.trim that I'm going to
+point out in a separate bug report
+(reported by: Andrea Aime <aaime@comune.modena.it>)
+
+
+r.random.surface
+ needs to be updated to GRASS 5 FP/NULL
+ (being worked on by ?)
+
+r.resamp.rst:
+  When processing quite a big DEM file with r.resamp.rst I got the  
+  following message for output file:                                                                                                               
+     WARNING: quantization file [z_50] in mapset [erdep] empty.                                                                             
+  Does anybody knows what is going on? I tried to run r.support but no
+  success. Iseems that r.resamp.rst finished its correctly.
+  (Reported by Rado Bonk <rado@cosmos.dsc.unomaha.edu>)
+  (being worked on by ?)
+
+r.rescale:
+  r.rescale input=asp1 from=0,180 output=test_north to=1,1                      
+  r.rescale does not set cells outside the "from" range to 0 (described in the    
+  help), but to NULL
+  (reported by timcera@earthlink.net)
+  Andreas Lange, 10/2000: This is IMHO not a bug, but a feature. All modules
+  should write NULL instead of 0 (zero) for missing values for patching 
+  maps or display overlays. 
+  But if the problem with r.reclass is solved i can add a "-z" flag that
+  switches this behaviour from writing NULL to writing "0" (zero).
+  (being worked on by Andreas Lange)
+
+r.surf.contour
+  (supports currently CELL type only)
+  (being worked on by ?)
+  -> v.surf.rst could be used
+
+r.stats: some inconsistent results comparing to r.average
+ *First, I compute the per-class averages:
+     r.average base=medv cover=test out=borra.me
+ *Second, I check the result for, i.e., class 23:
+     d.what.rast map=medv,borra.me
+     2676500(E) 4409500(N)
+           medv in user1  (23)S_SUPRAMEDITERRANEAN_ZONE
+           borra.me in user1, quant   (111)
+           borra.me in user1, actual  (110.794075)
+ *Third, I compute the statistics for each class, but the results are not
+  the same as given by d.what.rast. For example, for class 23:
+     r.stats -c in=medv,borra.me
+     r.stats:  100%
+       ...
+       23 110.299171-110.744906 6082
+       ...
+ *While d.what.rast was giving 110.794075. Is this a bug?
+     Dr. Agustin Lobo, alobo@ija.csic.es
+  (being worked on by ?)
+
+
+r.to.sites:
+ -  r.to.sites -z does not output third dimension
+    however r.to.sites -cz works o.k.
+  (being worked on by ?)
+
+r.water.outlet:
+ needs to be updated to GRASS 5 FP/NULL
+ (being worked on by ?)
+
+[RC]r.watershed:
+ needs to be *partly* updated to GRASS 5 FP/NULL:
+ Helena Mitasova wrote:
+   Drainage map should be INT, there is no reason for it to be FP 
+   because the program uses D8 algorithm, there are only 8 directions
+   of flow. only L and S factor could be output as FP (here they are
+   multiplied by 100) but I am not sure whether it is worth the effort 
+   because they are not very good anyway.
+ (being worked on by ?)
+
+r3.in.v5d/r3.out.v5d:
+ src.contrib/GMSL/g3d/src3d/raster/r3.in.v5d/binio.c
+ src.contrib/GMSL/g3d/src3d/raster/r3.out.v5d/binio.c
+ -> does not yet contain little/big endian sensivity (currently set only by
+   compiler flag)
+  solution:  code could be taken from src/libes/ogsf/gsd_img_ppm.c
+  (being worked on by ?)
+
+r3.mapcalc/polish: (when compiling)
+  mv main.o OBJ.i586-linux-elf/main.o
+  flex pol.l
+  yacc pol.y
+  yacc: 14 shift/reduce conflicts, 17 reduce/reduce conflicts.
+  (being worked on by Andreas Lange)
+
+r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
+ - the dependency to OpenGL and Mesa should be checked automatically
+   and maybe the sgi-widget should be compiled in statically.
+   it will not work with standard Mesa RPMS, because the sgi-widgets
+   are missing. Generally you need to have the Mesa source and compile 
+   the libGLw yourself (which is described in the README.mesa31 in the
+   source for grass.) [Bernhard]
+   -> partly done by global configure
+   -> runs fine with MESA 3.2
+  (being worked on by ?)
+
+r3.to.sites:
+ - get it running. It is useful to extract parts of a volume into
+   a common x,y,z list
+  (being worked on by ?)
+
+
+s.kcv 
+ - needs modified for the new Sites API
+  (being worked on by ?)
+
+[RC]s.surf.krig                                                                    
+  Not working. Needs various bugfixes.                                     
+  Calls to G_distance() seem to suffer stack corruption. The values        
+  of parameters passed in and out of G_distance() are corrupted.      
+  (being worked on by David D Gray)
+
+v.cutter: 
+  For reducing the volume a rather large vectormap (16.000 polygons) I wrote a    
+  grass5-script which                                                            
+    1. automatically generates a rectangle around the current region (works at
+       least with tmerc,lat/long,lambert-projection)                                        
+    2. cuts the original map with v.cutter                                          
+    3. runs v.spag -i and v.support                                                 
+  This works fine, but only sometimes. I cut country outlines, DEM-contours       
+  (created with r.contour) and a map with soil properties and I noticed that
+  the size of the region seems to influence v.cutter. If, for example, i cut
+  parts of the coastline of norway, v.cutter works for a region with a maximum width
+  of 6 geographic degrees, a wider region produces an empty vector file. The          
+  DEM-contour-map, which seems to contain much more data, can be cut using a     
+  region of any size.                                                            
+  Thus it appears that certain combinations of datafile and cutterfile cause      
+  v.cutter to generate no vectors at all. I don't see any rule as to when it     
+  works an when it doesn't so I think that this might be some bug in
+  v.cutter.  
+ (reported by Stefan.Neumann@agrar.uni-giessen.de)
+  (being worked on by ?)
+
+v.out.e00:
+  Doesn't output any information about projection, datum, etc.
+  (being worked on by ?)
+
+[RC]v.out.shape:
+  segmentation fault on Pentium II CPUs /Linux
+  (reported by Stephan.Holl@stud.uni-hannover.de
+   and David Finlayson <david_finlayson@yahoo.com>)
+  (being worked on by David D Gray)
+
+v.sdts.meta
+ src.contrib/SDTS/mapdev/v.sdts.meta/inter/v.sdts.meta
+ -> tcl bugs (probably update needed to tcl/tk 8.x)
+  (being worked on by ?)
+
+v.support/v.build                                                               
+  During the build process an area (polygon edge) that is just a single     
+  link between two nodes is often not recognised so the polygon is          
+  registered 'open' and so does not build. At least one intervening point      
+  on the line will always fix this. It seems to me this shouldn't happen   
+  and so is a bug. But where is it? It affects manually digitised maps      
+  much more than autodigitised (like those done with v.mkgrid), so         
+  perhaps it is in v.digit, or maybe in v.build.                           
+  (being worked on by ?)
+
+[RC]v.trim 
+ bugreport: If a polygon has island, v.trim removes such islands
+ from the vector file... urgh! I've obtained such a behaviour with a
+ map obtained with r.poly, v.support (see my other bug report about
+ r.poly), I don't know if there is a relation (my map was a
+ reclassified DEM).
+ (reported by: Andrea Aime <aaime@comune.modena.it>)
+
+-----------------------------------------------------------------------
+Modules with interface problems (parser etc): 
+-----------------------------------------------------------------------
+(collected by Andreas Lange, not release critical, bu should be fixed
+ sometimes for consistency)
+
+--------------- script used --------------------                                
+cd $GISBASE/bin                                                                 
+for f in ?.*; do echo '---> '$f; $f -help; done 2>&1 | more                     
+------------------------------------------------- 
+
+d.colors, d.pan, d.save, d.what.sites, d.zoom,                         
+Thoses commands give only the text help when a monitor is running         
+Without a running monitor, they print the following error message :      
+No graphics monitor has been selected for output.                        
+Please run "d.mon" to select a graphics monitor.    
+-> change order of parsing and R_driver()?
+
+d.site.pg, d.vect.pg, d.what.r.pg, d.what.s.pg, d.what.v.pg,        
+g.column.pg, g.stats.pg, g.table.pg, v.reclass.pg print :                
+ Please run g.select.pg to identify a current database.      
+
+g.gisenv:
+  g.gisenv help says nothing (not a bug, just to remind that it is
+  always listed in grass.sum as FAILED).
+  -help prints nothing
+
+g3.region:
+  no parser
+
+i.tape.tm.fast:
+  ERROR (only for xy-locations), no "Usage: " Info
+
+m.region.ll -help prints :                                                      
+m.region.ll - must be in a UTM database
+
+m.in.stf1.tape:
+ must be run in command mode only (USAGE:) ... no parser interface
+
+r.mapcalc -help prints :
+you have confused me
+
+v.in.arc.pg -help prints :
+ Coverage type:
+Enter "polygon(area)" or "line"
+Hit RETURN to cancel.
+
+v.in.dlg: 
+  ????
+
+v.in.tig.basic -help prints :
+ERROR: You are not in a UTM or Lat-Long location. Don't use this program.
+
+v.in.tig.lndmk -help prints :
+ERROR: Must be in UTM or Lat-Long location to use this program.
+
+NOTE: When the location is in UTM, m.region.ll,v.in.tig.basic and
+      v.in.tig.lndmk print a correct help message
+
+v.mkquads -help prints the escape sequence <ESC>[H<ESC>[2J
+before the help for erasing screen and put the help on top
+
+m.lulc.USGS -help prints :
+Cannot open USGS CTG file
+
+tcltkgrass launch itself, ignoring the -help option...
+
+All interactive functions print only:
+Usage : <name of the command>
+  (This command must be run interactively)
+
+On the other hand, some help messages are huge (75 lines...)
+
+Sometimes, a blank line is printed before the "Usage:" string 
+this is also not consistent...
+
+-----------------------------------------------------------------------
+Further discussion/hints:
+-----------------------------------------------------------------------
+
+ - Comments on updating 4.x vector modules to 5.x vector:
+   There is a slightly modified category support:
+
+  Comment on vector cats from Bill Hughes:
+  The Categories structure was changed between 4.x and 5.0beta.
+  The change seems to have moved the *labels element out of the list
+  structure and replace list.num with the index to **labels.  The fix
+  is to change the SCS/* code to use 'cats->labels[i]' instead of
+  'cats->list[i].labels'  There will be breakage around 'list[i].num'
+  as well, and probably these can be deleted, or use 'cats->num' instead.
+  The cats.count is cats.ncats now (see src/include/gis.h).
+
+  Already sucessfully updated: v.random,v.extract,v.merge,v.autocorr
+  updated src.contrib tree as well (10/99, Bill H.)
+
+
+--------------------------------------------------------------------
+Libraries bugs:
+
+src/libes/geom: optri  -> used by s.geom, v.geom
+   I [Bill Hughes] have been working through some errors in 
+   src/libes/geom/optri and I have a tarball of the directory attached below.  
+   This is not done yet, but it needs some expertise from somebody who 
+   understands it.  Two references to grAllocate() have only 3 parameters.  
+   I don't understand what it does, so I can't really guess at what
+   should be passed as the final parameter.  I have put in 0 for the
+   moment to get the compile to work.
+   (being worked on by Andreas Lange)
+
+Vector:
+ R_polygon_abs() seems to ignore islands. Correct?

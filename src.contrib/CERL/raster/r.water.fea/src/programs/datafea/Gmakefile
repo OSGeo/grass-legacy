@@ -1,11 +1,11 @@
+# $Id: Gmakefile,v 1.5 2000-09-11 09:48:05 justin Exp $
+
 PGM = datafea
 RFEA=$(GISBASE)/etc/r.fea
-LIBES = $(GISLIB) $(XDRLIB)
-LDFLAGS = $(MATHLIB)
+LIBES = $(GISLIB)
 LIST = data.o
 
-$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
-	mv $(PGM) $(RFEA)
+$(RFEA)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $LIBES: #

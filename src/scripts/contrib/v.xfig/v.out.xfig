@@ -14,7 +14,7 @@ echo "You must be in GRASS to run this program."
 exit
 fi
 
-if test "$1" = ""
+if [ "$1" = "" -o "$1" = "-help" -o "$1" = "help" ]
 then
  echo ""
  echo "This module exports a GRASS vector layer to XFIG format."

@@ -1,0 +1,33 @@
+EXTRA_CFLAGS = -I../lib
+
+GRAPH = 
+
+OFILES =  \
+	connect.o\
+	Can_do.o\
+	Color.o\
+	Draw_line.o\
+	Get_w_box.o\
+	Get_w_line.o\
+	Get_w_pnt.o\
+	Graph_Clse.o\
+	Graph_Set.o\
+	Panel.o\
+	Polygn_abs.o\
+	Reset_clr.o \
+	Returns.o \
+	Text.o
+
+$(GISBASE)/driver/HTMLMAP: HTMLMAP
+	@if egrep '^HTMLMAP' $(ETC)/monitorcap >/dev/null 2>&1 ; then \
+	echo HTMLMAP already defined in $(ETC)/monitorcap ; \
+	else \
+	echo adding HTMLMAP driver to $(ETC)/monitorcap ; \
+	cat moncap.entry | sed -e s:BASEDIR:$(GISBASE):g >>$(ETC)/monitorcap ; \
+	fi
+
+HTMLMAP: $(OFILES) $(DRIVERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $(GISBASE)/driver/HTMLMAP $(OFILES) $(DRIVERLIB) $(GRAPH) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(DRIVERLIB): #
+$(GISLIB): #

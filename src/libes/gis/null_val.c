@@ -3,6 +3,20 @@
 #endif
 #include "G.h"
 #include "gis.h"
+
+#ifdef __FreeBSD__
+#	define ANOTHER_CELL_NULL
+#endif
+
+#ifdef linux
+#	define ANOTHER_CELL_NULL
+#endif
+
+/* add other platforms here if
+ *  r.mapcalc test=-129
+ * fails.
+ */
+
 /*************************************************************
 *   G_set_f_null_value(f, n)
 *      FCELL *f;
@@ -333,18 +347,52 @@ int G_set_c_null_value(
     CELL *c,
     int n)
 {
-    int i;
+    int i, size;
     unsigned char *p;
+#ifdef ANOTHER_CELL_NULL
+    int j;
+    union {
+	    unsigned char *p;
+	    int *NEG_HUGE;
+    } conv;
+    int NEG_HUGE;
+
+    NEG_HUGE = 0;
+
+    size = sizeof(CELL);
+    i = size * 8 - 1;
+    while (i-- > 0)
+       NEG_HUGE += (1 << i);
+
+    NEG_HUGE++;
+
+    conv.p = (unsigned char *) G_malloc(size);
+    *(conv.NEG_HUGE) = NEG_HUGE;
+#endif
 
     p = (unsigned char *) c;
 
-    G__init_null_bits(p, n * sizeof(CELL) * 8);
+#ifndef ANOTHER_CELL_NULL
+    size = sizeof(CELL);
+    G__init_null_bits(p, n * size * 8);
+#endif
+
     i = n;
     while(i-- > 0)
     {
+#ifdef ANOTHER_CELL_NULL
+       for(j = 0; j < size; j++){
+          p[j]=conv.p[j];
+       }
+#else
        *p = *p >> 1;
-       p += sizeof(CELL);
+#endif
+       p += size;
     }
+
+#ifdef ANOTHER_CELL_NULL
+    G_free(conv.p);
+#endif
 
     return 0;
 } 

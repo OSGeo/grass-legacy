@@ -15,12 +15,10 @@ LIST_CMD = main_cmd.o dsply_path.o dsply_maps.o get_maps.o
 all:  $(BIN_MAIN_INTER)/$(PGM)	$(BIN_MAIN_CMD)/$(PGM)
 
 $(BIN_MAIN_INTER)/$(PGM): $(LIST_INTER) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) $(LIST_INTER) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
-	mv a.out $@
+	$(CC) -o $@ $(LDFLAGS) $(LIST_INTER) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
 
 $(BIN_MAIN_CMD)/$(PGM): $(LIST_CMD) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST_CMD) $(GISLIB) $(MATHLIB) $(XDRLIB)
-	mv a.out $@
+	$(CC) -o $@ $(LDFLAGS) $(LIST_CMD) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 #==============================================================
 # include dependencies

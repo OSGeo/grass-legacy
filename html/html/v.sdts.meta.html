@@ -1,0 +1,80 @@
+<HTML>
+<HEAD>
+<TITLE>v.sdts.meta</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+
+<EM><b>v.sdts.meta</b></EM>  - Interactive menu-driven utility to create and install 
+supplementary metadata and data quality reports for a vector map, preparatory 
+to their incorporation in an SDTS transfer dataset.
+
+<BR>
+
+<EM>(GRASS Vector Data Export/Processing Program)</EM>
+
+<BR>
+
+
+<H2>SYNOPSIS</H2>
+
+<B>v.sdts.meta</B>
+
+<H2>DESCRIPTION</H2>
+
+This menu-driven Tcl/Tk program enables the user to prepare and install supplementary
+metadata and data quality reports for a vector map preceding the creation of
+an SDTS transfer dataset.  With v<EM>.sdts.meta</EM>, metadata and data quality 
+files 
+can be edited, saved, retrieved, and modified, and then installed in the 
+GRASS database in association with a particular vector map layer.  
+Subsequently, <EM>v.out.sdts</EM> will incorporate this metadata along with the 
+associated vector map in an SDTS transfer dataset.
+
+
+<P>
+
+In addition to the five data quality modules, supplementary metadata items 
+currently able to be edited and installed include 
+<DL>
+<DD>(1) creation 
+date for the original source map; 
+<DD>(2) a general TITLE for the transfer; 
+<DD>(3) a general comment about the transfer; 
+<DD>(4) name of geographic 
+datum; 
+<DD>(4) and (5), name and definition for the kind of entity contained in 
+the GRASS vector layer being transferred; 
+<DD>(6) and (7) custom definitions for
+the <EM>dig_att</EM> and <EM>dig_cats</EM> values being transferred.
+</Dl>
+
+<H2>SEE ALSO</H2>
+
+<P>
+
+<EM><A HREF="m.sdts.read.html">m.sdts.read</A>, </EM>
+<EM><A HREF="v.in.sdts.html">v.in.sdts</A>, </EM>
+<EM><A HREF="v.out.sdts.html">v.out.sdts</A>, </EM>
+<EM><A HREF="v.sdts.dq.cp.html">v.sdts.dp.cp</A>, </EM>
+<EM><A HREF="v.sdts.meta.cp.html">v.sdts.meta.cp</A>, </EM>
+<EM><A HREF="v.sdts.meta.html">v.sdts.meta</A></EM>
+
+<BR>
+
+
+<H2>AUTHORS</H2>
+
+David Stigberg, U.S.Army Construction Engineering 
+Research Laboratory
+
+<BR>
+
+Tin Qian, University of Illinois
+
+
+<P>
+

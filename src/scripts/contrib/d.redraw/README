@@ -1,0 +1,3 @@
+d.redraw allows users to redraw current displayed maps without saving d.save
+info before d.erase.
+

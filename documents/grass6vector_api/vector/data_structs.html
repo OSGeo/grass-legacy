@@ -1,0 +1,135 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Data Structures
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Data and Data Structures
+</h1>
+
+<h2>  
+    Data Structures
+</h1>
+
+
+One goal of the API was to minimize the access of programmers to data
+structures.  Most data structures are completly hidden from the application
+developer and typicaly are presented only as type-checked tokens which the
+client is responsible to hand back to the API.  <p>
+
+There are currently only two data structures which the programmer has
+access to. These are provided as a convenience and in most cases are not
+even required.  They are
+
+<h3> gvCoord </h3>
+
+<pre>
+    typedef struct _gvCoord {
+	double x;
+	double y;
+	double z;
+	gvBoolean hasZ;
+    } gvCoord, *gvCoordP;
+</pre>
+
+This data structure is used to pass single coordinate data to/from the API.<p>
+
+<h3> gvMbr </h3>
+
+<pre>
+    typedef struct _gvMbr {
+	double n;
+	double s;
+	double e;
+	double w;
+
+	double top;
+	double bottom;
+
+	gvBoolean hasZ;
+    } gvMbr, *gvMbrP;
+
+</pre>
+
+This data structure is used to pass Minimum Bounding Rectangle (MBR) 
+data to/from the API.  <p>
+
+Note that for both of these structures a third dimension is supported tho
+currently not much is done with it.  If you populate either of these
+structures, you must be sure to set the <em> hasZ </em> flag. <p>
+
+<hr>
+
+<h2>  
+    Data Structure References
+</h1>
+
+The rest of the data structures are either completely hidden from the client
+or their contents are hidden and only a typedef for a pointer to it is 
+made available.  For example the declaration which is provided for the Map
+pointer is simply: <p>
+
+<blockquote>
+    <code>
+	typedef struct _gvMap    * gvMapP;
+    </code>
+</blockquote>
+
+The <strong>P</strong> suffix on a typedef denotes that the type 
+is a pointer.  This convention is used consistantly through the code.<p>
+
+Note that the actual definition of struct _gvMap is completely hidden
+and not accessable to the client.  This is typically done by providing
+two header files for a given library or subset of the API.  Private 
+headerfiles are suffixed with <strong>P</strong> (not to be confused
+with Pointer specifications on typedefs).  So for example there is
+a file gv.h which is public and a gvP.h which is private and should 
+<strong>not</strong> be referenced by the application developer.  
+<em> gv.h </em> should be the only file which needs to be included
+to access the Vector library.<p>
+
+<hr>
+
+<h2>  
+    The Primitive Identifier (PID)
+</h1>
+
+In GRASS 4.x the only unique identifier for a map object was the so called
+<em> internal identifier</em> which was not guaranteed to be the same
+for the life of the file.  This has been improved upon in 5.0 and now
+each map feature object has a unique identifier which will exist as long
+as the object exists  (note the PID will be changed if the object is modified 
+in a major way, eg broken into two lines, joined, deleted, etc).
+This identifier is refered to as the <em>PID</em> or Map Primitive ID.
+This is currently represented as an integer number but for upgradability
+it is accessed by a type called <em>gvPidP</em>.<p>
+
+It is via this PID that all map objects can be accessed.  Note that there
+is another data type which does not necessarily uniquely identify a feature;
+the <em>FID</em> or Feature ID.  This too is a numeric type
+and will be the key link into the DBMS interface.  This will be equivalent
+to the raster category number. <p>
+
+
+
+
+<!--hr------------------------------------------------>
+
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

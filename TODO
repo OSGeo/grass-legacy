@@ -1,0 +1,542 @@
+$Id: TODO,v 1.59 2000-12-03 21:48:53 markus Exp $
+
+TODO for GRASS GIS:
+
+See ONGOING for ONGOING GRASS projects.
+
+---------------------------------------------------------------------
+Wishlist for GRASS 5
+---------------------------------------------------------------------
+
+- Fix the bugs described in BUGS
+
+---------------------------------------------------------------------
+
+Configure:
+- update missing features in "configure" (see src/CMD/head/head.in)
+     - search for JPEGINCPATH, JPEGLIBPATH
+     - libg2c is required to make r.fill.dir, but configure doesn't check 
+       for it's availability
+     - search for "yacc" and "(f)lex"
+  (Being worked on by )
+ -> a new make system is on the way... (by Eric Mitchell)
+
+--------------------------------------------------------------------
+Removal of absolute path codings:
+ - etc/monitorcap:
+   Here the paths should be replaced by $GISBASE environment
+
+--------------------------------------------------------------------
+Regression test suite:
+- see testsuite/TODO !
+ (Being worked on by Andreas Lange)
+
+--------------------------------------------------------------------
+Font selection:
+- add truetype support (replace old font system). This is urgently required
+  for internationalization. 
+  Suggestion: Use "FreeType" http://freetype.sourceforge.net
+  or, better: VFlib: http://typehack.aial.hiroshima-u.ac.jp/VFlib/
+  (Being worked on by ?)
+
+---------------------------------------------------------------------
+Multiple languages support:
+
+- use "gettext" (.po files)
+  http://www.gnu.org/software/gettext/gettext.html
+  (Being worked on by ?)
+
+---------------------------------------------------------------------
+
+Libraries:
+- new 3D vector format: evetually http://gts.sourceforge.net/ ??
+  (Being worked on by David D Gray, Radim Blazek)
+
+- TIN support: Probably use this library:
+    http://www.cs.cmu.edu/~quake/triangle.html
+  (Being worked on by ?)
+
+- Metadata: improved support, probably write a GRASS daemon serving
+  the metadata for external applications like "R" statistics interface
+  (Being worked on by ?) 
+
+- Parallel CPU support
+  (Being worked on by ?) 
+
+- remove LZW compression from rasterlib/g3dlib and use libz:
+  src/libes/gis > grep -l lzw *                                                 
+   G.h          - just compression_bits from header
+   G_dump.c     - same
+   closecell.c  - same
+   get_row.c    - see grep below
+   lzw.c        - to be replaced
+   put_row.c    - see grep below 
+
+    Occurrences of files other than lzw.c using the following G_lzw_*
+    routines:
+
+    G_lzw_nof_read_bytes 
+    G_lzw_max_used_bits
+    G_lzw_set_bits 
+    G_lzw_compress
+    G_lzw_expand 
+    G_lzw_compress_count_only_array
+    G_lzw_compress_count_only_file
+    G_lzw_write
+    G_lzw_write_noCompress
+    G_lzw_test_status 
+    G_lzw_read2 
+    G_lzw_read 
+    G_lzw_transfer_compress
+    G_lzw_transfer_expand 
+
+    Functions in lzw.c other than those above were not grep'ed for because
+    they were not part of the defined API.
+
+    grass/src/libes/g3d/fpcompress.c:
+	    G_lzw_set_bits (9);
+    grass/src/libes/g3d/fpcompress.c:
+	    status = G_lzw_write (fd, 
+	    		compressBuf + offsetMantissa - rleLength,
+    grass/src/libes/g3d/fpcompress.c:
+	    G_lzw_write_noCompress (fd, 
+	     		compressBuf + offsetMantissa - rleLength,
+    grass/src/libes/g3d/fpcompress.c:
+	    status = G_lzw_write (fd, compressBuf, nBytes + 1);
+    grass/src/libes/g3d/fpcompress.c:
+	    status = G_lzw_write_noCompress (fd, compressBuf, nBytes + 1);
+    grass/src/libes/g3d/fpcompress.c:
+	    status = G_lzw_read2 (fd, compressBuf, nofNum * nBytes + 1, 
+	    		fileBytes);
+    grass/src/libes/gis/get_row.c: 
+	    if (G_lzw_read (fd, data_buf, DATA_NCOLS * FCB.nbytes) != 
+    grass/src/libes/gis/put_row.c:
+	    G_lzw_set_bits (l);
+    grass/src/libes/gis/put_row.c:
+	    if ((nwrite = G_lzw_write (fd, G__.work_buf, nwrite)) < 0) {
+    grass/src/libes/gis/put_row.c: 
+	    if ((row == 0) || (FCB.compression_bits < G_lzw_max_used_bits ()))
+    grass/src/libes/gis/put_row.c:    
+	    FCB.compression_bits = G_lzw_max_used_bits ();
+
+    Doesn't look like too bad of a job, provided a suitable replacement 
+    implementation can be written and a *robust* translator for old 
+    data sets can be made available.
+
+    Eric G. Miller <egm2@jps.net> Nov. 15, 2000
+
+  (Being worked on by Eric G. Miller, maybe not 'til 5.1?)
+
+---------------------------------------------------------------------
+XDriver
+- replace fifos by sockets
+  (Being worked on by ?) 
+  -> there is a new concept based on IPC available (see README.ipc)
+
+- Auto-redraw after resizing the monitor:
+  Andreas Lange wrote:
+  I had the idea of implementing some sort of "auto-redraw" after resizing
+  the grass monitor, but this is not possible because the driver can not  
+  be opended from the XDRIVER process with R_open_driver(); to read out   
+  the pad contents (because of locking/different owners of process). Again
+  my problem is getting the overall picture of the design without
+  documentation.
+
+---------------------------------------------------------------------
+Package concept:
+- split into packages: GRASS-CORE, GRASS-Raster, ...
+  (Being worked on by ?)
+
+- reorganize directory structure
+  (Being worked on by Markus et al.)
+  see documents/new_directory_structure.txt
+
+---------------------------------------------------------------------
+Lock system:
+
+Comment:
+Some lockfiles have to be global, just think of the number of
+graphic display pipes used or physical inputs devices.
+So two ways from there to improve the situation:
+ 
+      Make the locking executables setgid or setuid.
+      (and have just one executable doing the locking.)
+      And/or use the /tmp directory.
+ 
+      Localise all global lockable resources.
+      (Unlikely to work.)
+ Bernhard
+  (Being worked on by ?)
+
+- this might be related to a daemon serving a session key (see there).
+  (Being worked on by ?)
+---------------------------------------------------------------------
+Code merge:
+ - v.in.dxf/v.in.dxf2
+ - r.info: integrate functionality of r.univar
+ - reduce the number of import/export modules. Add a parameter for the file
+   format (or auto-detection) instead of having tons of modules. r.in.gdal
+   is on the right way
+   compare:documents/new_directory_structure.txt for file list
+ - r.reclass/r.reclass.scs
+ - ...
+ It is important to reduce the number of modules (not to overwhelm the
+ users like now)
+
+---------------------------------------------------------------------
+Modules:
+
+-IMPORT/EXPORT modules:
+  They should read/write from current directory instead of subdirectory
+  in mapset.
+  v.in.shape/v.out.shape and m.in.e00 already meet this convention.
+  (Being worked on by ?)
+
+- Implement new G_readsites_xyz function into
+   src.contrib/CERL/sites/s.surf.krig/read_sites.c
+   src.contrib/GMSL/g3d/src3d/sites/s.to.rast3/read_sites.c
+   src.contrib/GMSL/g3d/src3d/sites/s.vol.idw/read_sites.c
+   src.contrib/NPS/v.circle/cmd/readsites.c
+   src.contrib/PURDUE/s.medp/readsites.c
+   src.garden/grass.rim/s.db.rim/cmd/read_sites.c
+   src.garden/grass.rim/s.db.rim/inter/read_sites.c
+   src/raster/r.surf.idw2/cmd/read_sites.c
+   src/sites/s.kcv/readsite.c
+   src/sites/s.menu/Lib/read_sites.c
+   src/sites/s.normal/readz.c
+   src/sites/s.probplt/readz.c
+   src/sites/s.qcount/readsite.c
+   src/sites/s.sample/readsite.c
+   src/sites/s.surf.idw/cmd/read_sites.c
+   src/sites/s.sv/readsite.c
+   src/sites/s.univar/readsite.c
+   src/mapdev/v.bubble/v.bubble.c
+   src/sites/*
+
+   All these files/functions should be replaced by a common
+   G_readsites() function with attribute selection etc.
+ (being worked by Eric G. Miller)
+
+
+- d.legend:
+  - there is no facility to place the legend     
+    exactly on the screen and also control the size of the text and boxes           
+    d.frames is not adequate..finer control is needed
+  - For categorical maps with more than 10 classes, where user                   
+    discrimination among colors becomes difficult, there should be a flash 
+    utility. Based on d.legend ... we should be able to click on any legend 
+    box and have the corresponding class flash on the map (on-off sequence
+    with user defined color).
+  (Being worked on by ?)
+
+- d.mon:
+  if monitor is already in use, the next higher one should be tried instead
+  of just printing an error (x0 busy -> open x1 etc.). This would be nice in
+  network usage of GRASS.
+  (Being worked on by ?)
+  
+- g.list, g.remove should accept wildcards (*, ?) for convenience
+  (Being worked on by ?)
+
+- g.manual: change list of manual pages in g.manual
+  organized according to objects (vector files, raster files, ...)
+  not to "status" of module (which is even confused at time)
+  (Being worked on by ?)
+
+- nviz2.2
+  - Z axis scalable when displaying 3D sites
+    (Being worked on by ?)
+
+  - eventually color problem in lat/long locations
+    (Being worked on by ?)
+
+  - high resolution output (definable extent like CELL driver)
+    (Being worked on by 
+     probably Bob Covill <bcovill@tekmap.ns.ca>)
+
+  - fix legend, scale and box drawings
+    (Being worked on by Bill Brown, Helena Mitasova)
+
+  - have immediate refresh of surface/vectors etc. instead of manual
+    redrawing
+
+  - see:
+    ./src.contrib/GMSL/NVIZ2.2/src/TODO
+    ./src.contrib/GMSL/NVIZ2.2/TODO.linux
+    ./src.contrib/GMSL/NVIZ2.2/TODO
+
+- r.buffer: should save info about used buffers into map history
+  (Being worked on by ?)
+
+- r.in.hdf/r.out.hdf
+  - update to HDF 5
+  (Being worked on by ?)
+
+- r.info 
+  should also report statistics (min, max, mean, stddev, 1st            
+  quartile, median, 3rd quartile and sum)
+  (merge function of r.univar into r.info)
+  (Being worked on by ?)
+
+- r.line 
+ r.line properly extracts geometry, but it doesn't attach
+ any label to the vector file generated. I've read the manual page, but
+ it doesn't speaks about attributes. In my application I also need
+ attributes.  
+ (reported by: Andrea Aime <aaime@comune.modena.it>)
+ Comment from David:
+  The problem with the r.line issue is that it is not immediately obvious 
+  what should be assigned as an attribute, because attribute (and           
+  category) values will depend largely on what produces the lines and what  
+  information you would expect to get out of it, and this will vary with    
+  usage.                                                                    
+  The results of r.watershed was an example you gave. Also you might want   
+  to autodigitise a raster layer from a drawing package (eg. gimp - the    
+  new gimp is quite good at this as it handles large image files better).   
+  This can produce good results with some care, though I don't know how    
+  scalable it is. Another option might be to extract features from a       
+  scanned map based on colour, such as rivers or contours (untested). The   
+  different usages here mean that we would need different 'Methods' as      
+  options for data extraction I think.
+
+- r.profile
+   r.profile only give the values of the cell between the two 
+   coordinates, but does not give any information of the distance between
+   those cell values. 
+   An (optional) table would be fine:
+     1 Km        200m                                                                
+     2 Km        210m                                                                
+     3 Km        150m  
+  (Being worked on by Bob Covill) 
+
+- r.proj
+ Idea: r.proj could be used for easy map copying between locations:
+
+ Morten Hulden <morten@ngb.se> wrote:
+ item: The idea (you mentioned some messages ago) of allowing r.proj and
+ (v.proj) to do lonlat->lonlat conversions by just copying the files is
+ something that needs more planning:
+ * First, lonlat handling is not part of the routines that pro handles in
+ grass. Many modules (or the wrapper part in them) check for 99 (other
+ projections) before passing the task to the proj dependent routines. The
+ reason is that grass is a patchwork of band-aid when it comes to projection
+ routines. The original projections XY, UTM, LL are handled separately and
+ the wrapper will not pass these to proj. UTM could well be handled by proj,
+ but often is not, because, like LL, it is one of the 'original' projections
+ that were there before '99 other' were added. So, letting proj do LL->LL
+ handling would require rewriting the 'wrapper' part of each module. It
+ should be done eventually, but in connection with clearing up the messy
+ handling of projection in grass.
+ * Second, sometimes there is a need to project LL->LL with different spheroid
+ or datum, and in these cases a simple copy is not what we want. Only if
+ spheroid and datum are the same on the input and output side should a
+ straight copy be done, I think.
+
+
+- r.surf.distance: write it
+  this module would generate a distance surface (improved version of
+  r.buffer) containing continuously distances from a raster line/area
+  Meanwhile r.buffer generates defined buffers, we need continuous
+  distance values, too.
+  (Being worked on by)
+
+- r.water.outlet
+  - needs FP update
+
+- r3.out.v5d:
+  Add check for cols/rows settings *before* starting to export:
+      Too many rows: 1200 (400 is maximum)
+      Too many columns: 1900 (800 is maximum)
+  (Being worked on by ?)
+ 
+- v.buffer: write it
+  (Being worked on by ?)
+
+- v.digit:
+  add an optional circle with radius of snapping threshold
+  (Being worked on by ?)
+
+- tcltkgrass:
+ - Change the tcltkgrass code so that lists of choices appear as
+   a list instead of needing to use a push button to create the
+   list. For example when using d.rast we must click a "Raster"
+   button to get a list of raster files instead of having the
+   raster files appear automatically when we call the d.rast
+   module from the menu (edit gui.tcl)
+   (Being worked on by ?)
+ - added nice icons for mostly used commands
+ - generate module windows by parser.c
+ - integrate src/tcltkgrass/todo/r_mapcalc.tcl (map calculator)
+
+---------------------------------------------------------------------
+PostgreSQL/ODBC support:
+
+ - store host/database not in .grassrc5, but in location itself
+   Then you can keep the settings along with your database for
+   convenience
+ - store a username/password pair in a "secured" file (that is, a file
+   read/writeable *only* by the user that owns it).  The ~/.grass5rc file
+   must be readable by others if you allow access to a dataset.
+
+
+---------------------------------------------------------------------
+Numerical Recipes: removal of code:
+From ddgray@armadce.demon.co.uk Tue Sep 26 22:31:31 2000
+
+The following references to Numerical Recipes was found.
+
+Shortlist.
+
+*r.proj
+*r.surf.fractal
+*r.surf.gauss
+*r.surf.random
+*i.cca
+*i.pca
+*i.zc
+*i.fft
+i.shape
+*r.param.scale
+*d.param.scale
+
+* currently in `main' !!
+
+Details.
+
+r.proj:  Makes reference to algorithm in cmd/bilinear.c, I will have to
+check that it is not the same code. I think the author just used the
+maths from the book.
+
+r.surf.fractal: Uses NR algorithm for fft in fft.c.  As above.
+
+r.surf.gauss: Uses NR algorithm for Gaussian random generator. As above
+
+r.surf.random: As for r.surf.gauss but uses linear random generator.
+
+i.cca :  *PROBLEM*. Although `based on' Numerical Recipes routines, the
+authors considered it covered by NR's copyright. See comments in
+i.cca/cmd/jacobi.c. This is an eigenvector routine so can be replaced.
+
+Similar considerations apply to i.pca, i.zc, i.fft and i.shape (in
+src.contrib/CERL). These use either eigsrt (a simple routine for sorting
+eigensystems), or fourn (for fast fourier transforms). These are easy to
+replace.
+
+r.param.scale, d.param.scale: These contain considerable tracts of NR
+stuff, including the NR data types. They will require more work to
+replace. 
+
+It's difficult to know how much more NR stuff there is around, as the
+last two in particular don't acknowledge the NR dependency.
+
+Can I suggest moving the last two at least to src.nonGPL, so that we can
+retain a working copy of the functions till the offending routines can
+be replaced, as they would be in the slot held by the existing modules.
+The other routines require only minor modifications, so we can patch
+them all sometime during the freeze.
+[done.]
+
+Regards
+
+David
+
+---------------------------------------------------------------------
+Further local TODO files:
+./src/libes/coorcnv/TODO
+./src/libes/dbmi/clients/TODO
+./src/libes/dbmi/drivers/odbc/TODO
+./src/libes/dbmi/drivers/sqlbase/TODO
+./src/libes/dbmi/lib/TODO
+./src/libes/ogsf/TODO
+./src/mapdev/v.area/TODO
+./src/mapdev/v.db.reclass/TODO
+./src/mapdev/v.in.shape/TODO
+./src/mapdev/v.out.shape/TODO
+./src/mapdev/v.to.db/TODO
+./src/mapdev/v.to.sites/TODO
+./src/raster/r.agnps50/TODO
+./src/raster/r.circle/TODO
+./src/raster/r.random.surface/TODO
+./src/raster/r.to.sites/TODO
+./src/raster/r.water.outlet/TODO
+./src/sites/s.to.rast/TODO
+./src/sites/s.to.vect/cmd/TODO
+./src/sites/s.datum.shift/TODO
+./src/tcltkgrass/docs/TODO.txt
+./src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.sgi/TODO
+./src.garden/answers/src.answers/raster/r.fill.dir/TODO
+./src.garden/grass.java/TODO
+./src.garden/grass.postgresql/v.in.shape.pg/TODO
+./src.garden/grass.postgresql/TODO
+./src/tcltkgrass/todo
+./src/scripts/contrib/r.out.arctiff/TODO
+
+---------------------------------------------------------------------
+New GRASS help system concept:
+
+Andreas Lange <Andreas.Lange@Rhein-Main.de>
+Re: [GRASS5] keep g.help ?
+
+I recently discovered that the GRASS man pages/help system contain a lot        
+of information that is not included in the html-pages, e. g. "Glossary          
+of GIS Terms" etc.                                                              
+I think that the organization of the help system (topic and task                
+oriented rather than sorted by module name) is a lot better than the            
+html-system.                                                                    
+                                                                                
+For the GRASS/GIS beginner the html-pages are very confusing, because           
+one does not know how to find a certain functionality.                          
+                                                                                
+I can imagine a html-based help system that starts from the opening             
+screen in tcltkgrass. It should be possible to integrate html-output (or        
+xml) into tcltkgrass in a manner that allows to navigate the                    
+documentation.                                                                  
+                                                                                
+But all that would require someone who can update the contents and the          
+structure of the help system from roff to html.                                 
+                                                                                
+So my conclusion is: Keep it for grass5.0stable as it is.                       
+For grass5.1 we should discuss how this can be improved. 
+---------------------------------------------------------------------
+PDF documentation (all HTML in one file)
+
+-> see html/Gmakefile
+ 
+---------------------------------------------------------------------
+New GRASS Startup concept:
+
+Markus Neteler wrote:
+> Now a menu would appear with following items:                             
+>                                                                           
+>  (1) Open existing session (using Justins forthcoming session manager)    
+>  (2) Define new location (using Justins forthcoming definition manager)   
+>  (3) Import data from file/cdrom... (using Frank Warmerdams GDAL import   
+>        module and others) and define location on-the-fly from data        
+>        settings                                                               
+>                                                                          
+> As (1) and (2) are generally nothing new (except the new graphical       
+> layout), (3) would be very welcome. Here a general change in GRASS        
+> import modules (raster, vector and sites) would be required. Like         
+> commercial GIS software GRASS should be capable of defining a location    
+> while importing external data *without* additional user input.            
+> Technically it's possible in my opinion. The import module would          
+> read the projection/coordinates parameters from the spatial data file,    
+> generate the DEFAULT_WIND and other files (look into "testgrass.sh" how   
+> this can be done by script), create the location and import the data.     
+> Especially for new users this is much more convenient.      
+
+Frank Warmerdam wrote:
+>I do have a version of r.in.gdal now working that includes an optional 
+>location parameter.  If provided it will initialize a new location on     
+>the basis of the extents, projection and units of the dataset being       
+>read.  However, this only works with GDAL supported datasets, so it       
+>isn't entirely general.   
+>Perhaps g.region could have an additional option to extend the current    
+>region bounds based on a scan of all raster, and vector extents in the     
+>mapset (or location)?    
+
+---------------------------------------------------------------------
+Datum support:
+
+- upgrade r.proj, s.proj, v.proj
+- ?

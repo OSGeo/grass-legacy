@@ -4,7 +4,6 @@ OFILES = \
 	openvect.o\
 	what.o
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 all: $(BIN_MAIN_CMD)/$(PGM)
 

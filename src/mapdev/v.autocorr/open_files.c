@@ -1,7 +1,7 @@
 #include	<stdio.h>
 #include <string.h>
 #include	"gis.h"
-#include	"dig_structs.h"
+#include	"Vect.h"
 
 #define		DIG_DIR		"dig"
 #define		PLUS_DIR	"dig_plus"
@@ -16,8 +16,6 @@ open_dig_files (char *name, FILE **fp_plus, struct Map_info *Map, struct Plus_he
   static char att_file[128];
   static char *mapset;
   char errmsg[80];
-
-  FILE *fopen ();
 
   mapset = G_store (G_mapset ());
 

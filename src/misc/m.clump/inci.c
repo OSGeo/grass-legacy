@@ -1,4 +1,3 @@
-#include "proto.h"
 #include "geom/basic.h"
 #include "geom/optri.h"
 #define NOT_AN_EDGE -1

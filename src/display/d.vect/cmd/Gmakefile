@@ -1,7 +1,6 @@
 PGM       = d.vect
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 OBJS = \
 	main.o \

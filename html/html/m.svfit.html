@@ -1,0 +1,149 @@
+<html>
+<TITLE>m.svfit</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM>m.svfit</EM> - Semivariogram model fitting.
+<BR>
+<EM>(GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.svfit</B>
+<BR>
+<B>m.svfit help</B>
+<BR>
+<B>m.svfit</B> </EM>[<B>-pqw</EM>] 
+[<B>input=</B><EM>name</EM>]
+<B>model=</B><EM>value</EM> 
+<B>range=</B><EM>value</EM>
+[<B>graph=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.svfit</EM> calculates a sample semivariogram and
+either plots it in the GRASS graphics window or writes the
+estimated parameters to standard output, or both.
+
+<P>
+
+For more information, refer to the 
+<A HREF="../../sites/s.sv_m.svfit_tutorial.pdf">tutorial</A> or see
+the <A HREF="#example">example</A> below.
+
+<P>
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-q</EM> 
+<DD>Quiet. Cut out the chatter.
+
+<DT><B>-p</EM> 
+<DD>Plot model and sample semivariogram (requires 
+    <EM><A HREF="g.gnuplot.html">g.gnuplot</A></EM>).
+
+<DT><B>-w</EM> 
+<DD>Use weighted least squares (default is general least squares)
+
+</DL>
+
+<H3>Parameters:</H3>
+
+<DT><B>sites=</B><EM>name</EM> 
+<DD>UNIX file containing sample semivariogram (see <A HREF="#notes">NOTES</A>).
+Default is standard input.
+
+<DT><B>model=</B><EM>value</EM> 
+<DD>Integer Model Index, one of 
+
+<OL>
+<LI> Linear, 
+<LI> Spherical,
+<LI> Exponential,
+<LI> Gaussian,
+<LI> Quadratic, or
+<LI> Wave or Hole Effect.
+</OL>
+
+<DT><B>range=</B><EM>value</EM>
+<DD>Range of semivariogram.
+
+<DT><B>graph=</B><EM>name</EM>
+<DD>Basename to save graphing data/commands files.
+Graphs are saved in the current working directory with
+the extensions <KBD>.gp</KBD> and <KBD>.dat</KBD>. Implies
+the <B>-p</B> flag. 
+
+</DL>
+
+<A NAME="notes"><H2>NOTES</H2></A>
+
+Three columns of data are expected as input: lag distance
+(<EM>h</EM>), semivariogram value (<EM>gamma</EM>), and the
+number of data pairs used to compute it (<EM>N(h)</EM>).
+This may either be from a UNIX file, entered from the
+command line (terminated by control-d), or via a pipe or
+redirection.
+
+<A NAME="example"><H2>EXAMPLE</H2></A>
+
+<EM>m.svfit</EM> was designed to be used in conjunction
+with
+
+<EM><A HREF="s.sv.html">s.sv</A></EM>,
+
+a GRASS sites program for calculating sample
+semivariograms. The following example calculates a sample
+semivariogram of the sites list <EM>wells</EM> with a
+nominal lag distance of 5 and then fits a linear model with
+a range of 100.  The sample semivariogram and model are
+plotted in the GRASS graphics monitor and the graphing
+instructions and data are saved to files with the basename
+<EM>svwells</EM> in the current working directory:
+
+<DL>
+<DD><B>s.sv -q </B><EM>wells</EM> <B>lag=</B><EM>5</EM> | <B>m.svfit -p m=</B><EM>1</EM> <B>r=</B><EM>100</EM> <B>g=</B><EM>svwells</EM>
+</DL>
+
+By saving the graphing instructions and data, the
+semivariogram may be plotted again later by the following
+command:
+
+<DL>
+<DD><B>g.gnuplot </B><EM>svwells.gp</EM>
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="s.univar.html">s.univar</A></EM>,
+<EM><A HREF="s.normal.html">s.normal</A></EM>,
+<EM><A HREF="g.gnuplot.html">g.gnuplot</A></EM>,
+<EM><A HREF="s.sv.html">s.sv</A></EM>
+and
+
+<P>
+
+<EM>Semivariogram Modeling</EM> -
+A GRASS Tutorial on Exploratory
+Data Analysis and Semivariogram Modeling.
+
+<H2>BUGS</H2>
+
+Please send all bug fixes and comments to the author.
+
+<H2>AUTHOR</H2>
+
+<A HREF="mailto:darrell@mccauley-usa.com">James Darrell McCauley</A>, 
+<A HREF="http://pasture.ecn.purdue.edu/~agenhtml/">Agricultural
+Engineering</A>,
+<A HREF="http://www.purdue.edu">Purdue University</A>

@@ -1,0 +1,36 @@
+<TITLE>r.circle</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+
+<H2>NAME</H2>
+<EM><B>r.circle</B></EM> - Creates a raster map containing concentric rings around a given point.
+
+<H2>GRASS VERSION</H2>
+5.x
+
+<H2>SYNOPSIS</H2>
+<B>r.circle output=</B><EM>name</EM> <B>coordinate=</B><EM>x,y</EM> [<B>mult=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+This module creates a raster map containing concentric rings around a given point.  The cell values are increasing linear from the center point to outer rings.
+
+<H2>OPTIONS</H2>
+<H3>Parameters:</H3>
+<DL>
+<DT><B>output=</B><EM>name</EM>
+<DD>name for new raster file.
+
+<DT><B>coordinate=</B><EM>x,y</EM>
+<DD>The coordinate of the center (easting, northing).
+
+<DT><B>mult=</B><EM>value</EM>
+<DD>Multiplier
+</DL>
+
+<H2>AUTHOR</H2>
+Bill Brown, U.S. Army Construction Engineering Research Laboratory

@@ -1,9 +1,0 @@
-
-
-m.dem.examine - 
-
-m.dem.examine reads Digital Elevation Model (@glossary("DEM",16.glossary/dem.def)) terrain elevation
-data files stored on 1/2-inch magnetic tape which are produced and
-supplied by the USGS.
-
-Manual entry for @man("m.dem.examine")

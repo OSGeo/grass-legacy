@@ -4,31 +4,27 @@
  * US Army Construction Engineering Research Lab
  * Copyright 1993, H. Mitasova (University of Illinois),
  * I. Kosinovsky, (USA-CERL), and D.Gerdes (USA-CERL)
+ * 
+ *
+ *This program is free software; you can redistribute it and/or
+ *modify it under the terms of the GNU General Public License
+ *as published by the Free Software Foundation; either version 2
+ *of the License, or (at your option) any later version.
+ *
+ *This program is distributed in the hope that it will be useful,
+ *but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *GNU General Public License for more details.
+ *
+ *You should have received a copy of the GNU General Public License
+ *along with this program; if not, write to the Free Software
+ *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+ *
  *
  * modified by McCauley in August 1995
  * modified by Mitasova in August 1995
  * modified by Mitasova in November 1999
  *
- */
-
-
-/*
- * The interpolation library and interpolation programs, both binary and
- * source is copyrighted, but available without fee for education,
- * research and non-commercial purposes. Users may distribute the binary
- * and source code to third parties provided that the copyright notice and
- * this statement appears on all copies and that no charge is made for
- * such copies.  Any entity wishing to integrate all or part of the source
- * code into a product for  commercial use or resale, should contact the
- * U.S.Army CERL and authors of the software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY. THE
- * U.S.Army CERL or authors SHALL NOT BE LIABLE FOR ANY DAMAGES SUFFERED
- * BY THE USER OF THIS SOFTWARE.
- * 
- * By copying this program, you, the user, agree to abide by the copyright
- * conditions and understandings with respect to any software which is
- * marked with a copyright notice.
  */
 
 
@@ -141,6 +137,7 @@ int main (int argc, char *argv[])
   DCELL cellmin, cellmax;
   FCELL *cellrow,fcellmin;
 
+  struct GModule *module;
   struct
   {
     struct Option *input, *elev, *slope, *aspect, *pcurv, *tcurv, *mcurv, *smooth,
@@ -154,6 +151,13 @@ int main (int argc, char *argv[])
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =
+	"Reinterpolates and computes topographic analysis from "
+	"input raster file to a new raster file (possibly with "
+	"different resolution) using regularized spline with "
+	"tension and smoothing.";
+			          
   if (G_get_set_window (&winhd) == -1)
     G_fatal_error ("G_get_set_window failed");
 

@@ -1,0 +1,254 @@
+<TITLE>d.menu</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.menu</b></EM> - Creates and displays a menu 
+within the active frame on the graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.menu</B> 
+<BR>
+<B>d.menu help</B> 
+<BR>
+<B>d.menu</B> 
+[<B>bcolor=</B><EM>name</B>] 
+[<B>tcolor=</B><EM>name</B>] 
+[<B>dcolor=</B><EM>name</B>] 
+[<B>size=</B><EM>value</B>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.menu</EM> allows the user to create a menu containing
+a TITLE and options, and to display this menu in the active
+frame on the graphics monitor.  After the menu is displayed
+in the active frame, the pointing device (mouse) is
+activated and must be used to select one of the menu
+options.  The number associated with the selected menu
+option is then printed to standard output and the program
+exits.  This program provides
+GRASS macro writers with a mouse interface for users.
+
+<P>
+
+Parameters can be stated on the command line, from within
+standard input, or (as illustrated in <A HREF="#EXAMPLE.html">EXAMPLE</A>) 
+from within a script file.
+
+<P>
+
+The user can specify the menu's background, text, and line
+colors (<B>bcolor</B>, <B>tcolor</B>, and
+<B>dcolor</B>) and the menu size (<B>size</B>) on
+the command line. If the user sets at least one of these
+values on the command line, any remaining values that are
+not specified on the command line will be set
+(automatically) to their default values (see below).
+Alternately, the user can simply type <B>d.menu</B> on the
+command line; in this case, the program will prompt the
+user for the menu colors and text size using the standard
+GRASS <A HREF="parser.html">parser</A> interface.  The
+user will then be (silently) prompted to enter the menu's
+location and contents through standard input (see Menu
+Information, below).
+
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>bcolor=</B><EM>name</EM>
+<DD>Sets the color of the menu background (the rectangle on 
+    which the text sits). 
+<BR>
+    Options: red, orange, yellow, green, blue, indigo,
+    violet, magenta, brown, gray, white, and black.
+<BR>
+    Default: <EM>black</EM> 
+
+<DT><B>tcolor=</B><EM>name</EM>
+<DD>Sets the color of the menu text. 
+<BR>
+    Options: Same as those for <EM>bcolor</EM>.
+<BR>
+    Default: <EM>white</EM> 
+
+<DT><B>dcolor=</B><EM>name</EM>
+<DD>Sets the line color used to divide text lines in the menu. 
+<BR>
+    Options: Same as those for <EM>bcolor</EM>.
+<BR>
+    Default: <EM>white</EM> 
+
+<DT><B>size=</B><EM>value</EM>
+<DD>Sets the menu's text size to the specified value. Sizes are stated as 
+    percentages of the height of the active graphics display frame. 
+<BR>
+    Options: 1 - 100 
+<BR>
+    Default: 3 (i.e., 3%) 
+
+</DL>
+
+<H3>Menu Information:</H3> 
+
+After the user has (optionally) specified menu colors and
+size, the program expects the user to enter information
+about the menu's location and content.  The menu will be
+placed in the lower left corner of the active display frame
+by default if the user does not position it elsewhere using
+the .T or .L commands.
+
+<P>
+
+The user specifies the menu contents by typing in a menu
+TITLE followed by the option choices to appear in the menu
+when displayed.  The user <EM>must</EM> enter a menu TITLE
+and at least one menu option.
+
+<DL>
+<DT>
+<B>.T</B> <EM>value</EM> 
+<DD>
+Specifies the menu's distance from the active display frame's top edge 
+(as a percentage of the active frame's height). 
+<BR>
+Note: Not required 
+
+<DT>
+<B>.L</B> <EM>value</EM> 
+<DD>
+Specifies the menu's distance from the active display frame's left edge 
+(as a percentage of the active frame's width). 
+<BR>
+Note: Not required 
+
+<DT>
+<EM>menu TITLE</EM> 
+<DD>
+A TITLE that describes the type of options listed in the menu, 
+and that will appear at the top of the menu when it is displayed. 
+
+<DT>
+<EM>option name</EM>(s) 
+<DD>
+The options that will appear in the menu when displayed. 
+Each menu option should appear on a separate line. 
+The user may enter as many options as desired, but must enter at least 
+one menu option. 
+
+</DL>
+
+Note: The user should choose a menu size and location that will allow 
+all menu options to be displayed in the active frame. 
+
+<P>
+
+If the user enters the menu TITLE and option(s) from
+standard input (i.e., at the keyboard rather than from a
+file), the user should enter <EM>control-d</EM> </B> to end
+input and display the menu in the active frame on the
+graphics monitor.  (Note: The <EM>d.menu</EM> program can
+also be incorporated into UNIX Bourne shell script macros.
+The below example shows how this might be done.)
+
+<H2><A NAME="EXAMPLE.html">EXAMPLE</A></H2>
+
+In the following example, the shell script <EM>menu2</EM>
+calls the shell script <EM>color.select</EM> which contains
+<EM>d.menu</EM> commands to display a menu in the current
+frame on the graphics monitor.  After the user selects an
+option from the display menu, the selection number is
+available for use by <EM>menu2</EM>.
+
+<H3>Contents of file <EM>menu2</EM>:</H3> 
+
+<PRE>
+#! /bin/csh -f
+set option = 0
+set colors = (red green blue black white )
+@ option = `color.select`
+
+if ($option &lt;= 5) then
+     set color = $colors[$option]
+     echo $color
+
+endif
+exit
+</PRE>
+
+<H3>Contents of file <EM>color.select</EM>:</H3> 
+
+<PRE>
+#! /bin/csh -f
+d.menu bcolor=red tcolor=green dcolor=yellow size=5 &lt;&lt; EOF
+.T 25
+.L 25
+Color Choices
+Option 1
+Option 2
+Option 3
+Option 4
+Option 5
+EOF
+</PRE>
+
+<P>
+
+If the user runs <EM>menu2</EM>, a menu will be displayed
+on the graphics monitor that has red background, green
+text, with menu options divided by yellow lines, and a text
+size of 5% of the active display frame height.  The mouse
+cursor will become active, allowing the user to select (by
+pointing with the mouse) one of the displayed menu
+options.  Here, these menu options are called
+<EM>Option 1</EM>, <EM>Option 2</EM>, and
+<EM>Option 3</EM>, etc.  The first line of text (here,
+the words <EM>Color Choices</EM>) contains the TITLE of
+the menu; this line is <B>not</B> a menu option that can be
+chosen by the user with the mouse. When the user presses
+one of the mouse buttons while pointing to the desired menu
+choice, the number of the option chosen will be available
+for capture by the shell script <EM>menu2</EM>.
+<EM>menu2</EM> is a simple example that takes this
+information and only echoes it to the screen.
+
+<H2>NOTES</H2>
+
+Although the user can vary text size, all text within the
+same menu is displayed in a single text size (and font). If
+the user specifies that items included in the menu's text
+be displayed in different sizes, all text will be displayed
+in the size stated last.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.display.html">d.display</A></EM><br>
+<EM><A HREF="d.font.html">d.font</A></EM><br>
+<EM><A HREF="d.frame.html">d.frame</A></EM><br>
+<EM><A HREF="d.grid.html">d.grid</A></EM><br>
+<EM><A HREF="d.label.html">d.label</A></EM><br>
+<EM><A HREF="d.legend.html">d.legend</A></EM><br>
+<EM><A HREF="d.paint.labels.html">d.paint.labels</A></EM><br>
+<EM><A HREF="d.text.html">d.text</A></EM><br>
+<EM><A HREF="d.title.html">d.title</A></EM><br>
+<EM><A HREF="show.fonts.sh.html">show.fonts.sh</EM><BR>
+
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt,
+ U.S. Army Construction Engineering 
+Research Laboratory
+

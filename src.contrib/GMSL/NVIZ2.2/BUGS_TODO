@@ -1,0 +1,89 @@
+From: Helena Mitasova - staff <helena@gis.uiuc.edu>
+Date: Thu, 19 Oct 2000 12:57:55 -0500
+To: nvizlist@geog.uni-hannover.de
+Subject: [NVIZ] NVIZ-todo-bugs-problems
+
+I am testing the LINUX version of NVIZ thouroughly
+and here are some of my findings, so that you don't have to wonder
+why some things don't work as expected.
+Don't get discouraged by the long list, the NVIZ is still great
+and I got a lot done with it for my presentation at GISC2000 -
+it just needs continuing improvements.
+
+(Markus, this is updated from what I gave you before.)
+
+NVIZ2.2 runs pretty well on LINUX, however there are several 
+things which are 
+
+1. missing/not working which worked in SGI version
+-------------------------------------------------
+1.0 For certain combination of zscale and resolution the surface
+does not render completely (only its parts), you have to lower
+zscale to get it render completely - this may be caused by
+limits in OPENGL or the integer normals issue (see problem 1.2)
+
+1.1 Scripting is not there at all, if I remember correctly
+it did not work in the SGI OpenGL version but it worked very well
+in the original SGI version - it is a powerful tool for 
+doing complex animations (especially if you know tcl/tk,
+but even if you don't know it the tutorial and GUI is good enough
+to be able to some advanced dynamic visualization.
+Does anybody know where the script_tools are?
+
+Error in startup script: couldn't read file "script_tools": no such file or directory
+
+1.2  The lights do not work if the surface values are floating point
+between 0.0 - 1.0 - this was fixed in SGI version and I believe that it
+was due to the fact that the surface normals were computed as integers.
+It is still possible to view a surface with small numbers by using high
+value of ambient light, however the lighting and shading won't be there.
+With very small numbers or values stretching over several magnitudes
+you have to adjust the height of view by typing in the numbers to get
+it right - this is not a bug though.
+
+1.3 nviz2.2 -q 
+is looking for a -q map, 
+
+WARNING: unable to find [-q] in [(null)]
+WARNING: unable to open raster map [-q in (null)]
+Not able to open cellfile for [-q]
+
+but then it opens as if it had -q map
+it should not be doing this, this flag is
+for running it without any input - it is needed for running scripts
+and when using load state.
+
+it does the same with -help
+
+1.4 when mask is removed it still draws a hole there
+but otherwise the mask seems to be working OK.
+
+1.5 After hitting the maximum site files loaded, it correctly displays
+an error but then hangs-on with "please wait" (probably trying
+to load them - it should return back where it was
+and not attempt to load)
+
+1.6 Most of you have probably already experienced the following feature:
+for a mysterious reason the rendered image is occasionally replaced by the 
+grid mesh image - on SGI it happened when you moved the mouse accross
+the height or zscale slide, but on LINUX it happens even more often, We
+spent quite a bit of time with Bill trying to find out what it is
+with no success. Whoever fixes this should win a prize.
+
+2. things which were in SG3d but were never ported to nviz
+----------------------------------------------------------
+
+2.1 Legends, labels, including labels for sites
+2.2 Scale, north
+2.3 More options for display of sites based on their attributes
+
+3. Experimental capabilities for combining volumes and surfaces in sg4d
+----------------------------------------------------------------------
+
+3.1 Integration of r3.showdspf with surface visualization
+
+other than that it runs great so far - although I haven't yet tried
+everything
+
+Helena
+

@@ -1,4 +1,3 @@
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
 LIBPROJ     = $(SRC)/../src.related/mapgen/lib/libproj.a 
 LIBSUPP     = $(SRC)/../src.related/mapgen/lib/libsupp.a
 SCSFIPS      = $(LIBDIR)/scsfips.a
@@ -24,9 +23,7 @@ all:  START $(PROG)
 
 
 $(PROG): $(OFILES) $(GISLIB) $(VECTLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OFILES) $(SCSFIPS) $(LIBPROJ) $(LIBSUPP) $(GISLIB) $(VECTLIB) $(COORCNVLIB) $(MATHLIB) $(EXTRALIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(SCSFIPS) $(LIBPROJ) $(LIBSUPP) $(GISLIB) $(VECTLIB) $(COORCNVLIB) $(MATHLIB) $(EXTRALIB) $(MATHLIB)
 
 	 
 START:

@@ -26,7 +26,6 @@
 #include <math.h>
 #include "gis.h"
 #include "Vect.h"
-#include "dig_structs.h"
 #include "vo_defs.h"
 
 struct Cell_head window;
@@ -53,8 +52,15 @@ main (int argc, char **argv)
     struct Option *input, *output;
   } parm;
 
+  struct GModule *module;
+
 
   G_gisinit (argv[0]);
+
+  module = G_define_module();
+  module->description = 
+    "Create a Delaunay triangulation from a sites list "
+    "in a GRASS binary vector file.";
 
   parm.input = G_define_option ();
   parm.input->key = "sites";
@@ -112,11 +118,11 @@ main (int argc, char **argv)
   init_header (Map.dig_fp, &window, &Map.head);
 
   tmpfiled = G_tempfile ();
-  sprintf(buf, "s.out.ascii %s sites=%s | s.sweep -d > %s", aflag,
+  sprintf(buf, "s.out.ascii %s sites=%s | $GISBASE/etc/s.sweep -d > %s", aflag,
           sitefile, tmpfiled);
   G_system(buf);
   tmpfilet = G_tempfile ();
-  sprintf(buf, "s.out.ascii %s sites=%s | s.sweep -t > %s", aflag,
+  sprintf(buf, "s.out.ascii %s sites=%s | $GISBASE/etc/s.sweep -t > %s", aflag,
           sitefile, tmpfilet);
   G_system(buf);
   write_triangles (&Map, tmpfiled, tmpfilet,  verbose);

@@ -1,0 +1,21 @@
+
+? t T# + - (xyz)# (XYZ)# r S B(xyz)# E(xyz)# R C c s w d Q h
+ > D
+ Threshold 1 = 5.000000
+ Threshold 8 = 40.000000
+ Segmentation fault (core dumped)
+
+ Mapset <brown3d> in Location <germany> 
+ GRASS 4.2 > dbx /GRASS.bin/4.2/sgi5/etc/bin/contrib/cmd/r3.showdspf
+ dbx version 3.18 Feb 14 1994 00:52:47
+ Type 'help' for help.
+ Process died at pc 0xfae4f34 of signal : Segmentation fault
+ [using memory image in core]
+ (dbx) where
+>  0 fseek(0x0, 0x3d090, 0x0, 0x0, 0xf805db0) ["fseek.c":31, 0xfae4f30]
+   1 draw_cap_side(0x10033300, 0x10039740, 0x0, 0x10033f10, 0xffffffff) ["cap_data.c":95, 0x409768]
+   2 do__draw_solid(0x10039740, 0x100399c0, 0xc1c40000, 0x10033f10, 0x3e8) ["main.c":805, 0x411d78]
+   3 do_draw(0x10039740, 0x100399c0, 0x0, 0x10033f10, 0x5) ["main.c":611, 0x410ecc]
+   4 dispatch_cmd(0x7fffadbc, 0x1000e798, 0xfb51c1c, 0xfb51c1c, 0x4045a690) ["main.c":399, 0x4104e0]
+   5 main(0x3, 0x7fffaf04, 0x0, 0x0, 0x1001ea70) ["main.c":176, 0x40fb88]
+(dbx)

@@ -1,0 +1,21 @@
+#LIBDIG = $(SRC)/mapdev/lib
+#  DIGLIB = $(LIBDIG)/libdig.a
+
+
+OFILES = \
+	main.o \
+	site_to_mpinfo.o \
+        pnt_to_mpinfo.o \
+	line_to_mpinfo.o \
+	area_to_mpinfo.o \
+        prune_points.o \
+	wr_mpinfo_head.o \
+	wr_mpinfo_coor.o \
+        get_isle_xy.o
+
+all: $(BIN_CONTRIB_INTER)/v.out.mapinfo
+
+$(BIN_CONTRIB_INTER)/v.out.mapinfo: $(OFILES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(EXTRALIB) $(DATETIMELIB) $(XDRLIB)
+
+#$(OFILES):	$(LIBDIG)/digit.h $(LIBDIR)/gis.h

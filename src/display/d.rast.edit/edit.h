@@ -6,6 +6,22 @@
 #include "raster.h"
 #include "display.h"
 
+/* Define ANOTHER_BUTTON to click conveniently for two button mouse.
+ * Read src/CMD/head/head and do not define here for consistency.
+#define ANOTHER_BUTTON
+*/
+
+#define LEFTB	1
+
+#ifndef	ANOTHER_BUTTON
+#	define MIDDLEB	2
+#	define RIGHTB	3
+#else
+#	define MIDDLEB	3
+#	define RIGHTB	2
+#endif
+
+
 #ifndef GLOBAL
 #define GLOBAL extern
 #endif
@@ -62,7 +78,11 @@ int use_mouse(void);
 /* main.c */
 int do_edit(int, int, double);
 int error(int, char [128]);
+#ifdef __GNUC_MINOR__
 int ext(void) __attribute__ ((__noreturn__));
+#else
+int ext(void);
+#endif
 /* menu.c */
 int main_menu(void);
 int option_menu(void);

@@ -53,10 +53,16 @@ int main (int argc, char *argv[])
 
         int save_args();
         int error = 0 ;
+		struct GModule *module;
         struct Option *opt1, *opt2, *opt3, *opt4 ;
 
         /***** Start of main *****/
         G_gisinit(argv[0]);
+
+		module = G_define_module();
+		module->description =
+			"Canonical components analysis (cca) "
+			"program for image processing.";
 
         opt1 = G_define_option() ;
         opt1->key        = "group";

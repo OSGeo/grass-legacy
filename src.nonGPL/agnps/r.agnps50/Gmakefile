@@ -1,0 +1,11 @@
+# $Id: Gmakefile,v 1.4 2000-09-19 14:31:41 markus Exp $
+
+all:
+	if [ ! -d $(GISBASE)/etc/agnps50 ]; then mkdir $(GISBASE)/etc/agnps50 ; fi
+	$(GMAKE) agnps-source
+	$(GMAKE) agview
+	$(GMAKE) hydro_tools
+	$(GMAKE) src_agnps_input_1
+	$(GMAKE) src_agnps_input_2a
+	cp scripts/r.agnps50.input $(GISBASE)/scripts/
+	(cd scripts/ ; tar -cf - * | ( cd $(GISBASE)/etc/agnps50 ; tar -xf - ) 2>/dev/null ; true )

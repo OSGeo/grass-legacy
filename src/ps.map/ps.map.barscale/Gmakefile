@@ -1,0 +1,3 @@
+all:
+	cp ps.map.barscale $(GISBASE)/scripts
+	chmod 755 $(GISBASE)/scripts/*

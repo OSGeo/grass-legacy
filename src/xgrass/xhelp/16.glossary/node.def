@@ -1,9 +1,0 @@
-
-
-node - In GRASS, @glossary("vector data",16.glossary/vecdata.def) are stored in an @glossary("arc-node",16.glossary/arcnode.def) representation.
-An @glossary("arc",16.glossary/arc.def) (vector) is stored as a series of x,y coordinate pairs.  The
-arc's end-points are called nodes.  Two consecutive x,y pairs define
-an arc segment (line segment).  Arcs, either singly or in combination
-with other arcs, form higher-level @glossary("map features",16.glossary/mapfeat.def): @glossary("line",16.glossary/line.def) features
-(e.g., roads or streams) and @glossary("area",16.glossary/area.def) features (e.g., soil types or
-timber-cutting units).

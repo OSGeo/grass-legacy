@@ -50,7 +50,7 @@ struct start_pt{
 
 #endif
 
-int process_answers(char **, struct start_pt **);
+int process_answers(char **, struct start_pt **, struct start_pt **);
 int time_to_stop(int, int);
 
 /****************END OF "GCOST_CMD_LINE.H"**********************/ 

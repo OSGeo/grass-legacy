@@ -6,7 +6,7 @@ MSEC	= 4
 MDIR	= $(SRC)/../man/man$(MSEC)
 MUTL	= $(SRC)/../man/utilities
 
-all:  $(PROGRAM) man
+all:  $(PROGRAM)
 
 $(PROGRAM): $(NAME)
 	-cp $(NAME) $(PROGRAM)

@@ -1,0 +1,18 @@
+PGM       = $(BIN_CONTRIB_CMD)/d.what.s.pg
+LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(PQLIB) $(XEXTRALIBS)
+EXTRA_CFLAGS = $(PQINCPATH)
+# EXTRA_CFLAGS 	= -Dunlink=puts
+
+OBJS = \
+	main.o  \
+	getArea.o \
+	returns.o \
+        getAllOpts.o \
+        getSopts.o \
+        buildInfxQry.o \
+        runInfxFile.o 
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

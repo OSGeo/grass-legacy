@@ -1,6 +1,0 @@
-To create a session, you may enter its name here and click the button
-just to the right.  A session may only be created if the database,
-location, and mapset fields below are all filled in.  You may also
-select an existing session by typing its name here and pressing
-return.  This action is equivalent to clicking on the session name in
-the list of sessions, in the previous dialog.

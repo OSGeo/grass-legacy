@@ -3,20 +3,32 @@
 TMP=`g.tempfile pid=$$`
 TMP2=`g.tempfile pid=$$`
 
-if [ $# = 0 ] || [ $1. = . ]
+if [ ! -d $LOCATION/site_lists ]
+    then
+        echo "ERROR: No site lists in this mapset ($MAPSET)"
+        exit
+fi
+   
+if [ $# = 0 ] || [ "$1." = "." ]
     then
 	g.ask type=old element=site_lists unixfile=$TMP2
 	. $TMP2
-    elif [ $1 = "help" ]
+    elif [ "$1" = "help" ]
 	then
 	    echo "USAGE: d.siter [sites_filename]"
 	    exit
-    elif [ $1 = "-help" ]
+    elif [ "$1" = "-help" ]
 	then
 	    echo "USAGE: d.siter [sites_filename]"
 	    exit
     else
 	name=$1
+fi
+
+if [ ! -f $LOCATION/site_lists/$name ]
+    then
+        echo "ERROR: Site list \"$1\" does not exist in this mapset ($MAPSET)"
+	exit
 fi
 
 if [ ! "$name" ]
@@ -82,8 +94,7 @@ then
     done
 fi
 
-tclsiter $name $str
+$GISBASE/etc/d.siter/tclsiter.tcl $name $str
 
 /bin/rm -f $TMP
 /bin/rm -f $TMP2
-

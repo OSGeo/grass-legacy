@@ -275,7 +275,11 @@ char *G__get_gisrc_file(void);
 int G__create_alt_env(void);
 int G__switch_env(void);
 /* error.c */
+#ifdef __GNUC_MINOR__
 int G_fatal_error(char *,...) __attribute__ ((__noreturn__));
+#else
+int G_fatal_error(char *,...);
+#endif
 int G_warning(char *,...);
 int G_suppress_warnings(int);
 int G_sleep_on_error(int);
@@ -292,6 +296,12 @@ char *G_find_file2(char *, char *, char *);
 /* find_vect.c */
 char *G_find_vector(char *, char *);
 char *G_find_vector2(char *, char *);
+/* flate.c */
+int G_zlib_compress(unsigned char *, int, unsigned char *, int);
+int G_zlib_expand(unsigned char *, int, unsigned char *, int);
+int G_zlib_write(int, unsigned char *, int);
+int G_zlib_read(int, int, unsigned char *, int);
+int G_zlib_write_noCompress (int, unsigned char *, int);
 /* fork.c */
 int G_fork(void);
 /* format.c */
@@ -334,13 +344,23 @@ double G_geodesic_distance_lon_to_lon(double, double);
 double G_geodesic_distance(double, double, double, double);
 /* get_cellhd.c */
 int G_get_cellhd(char *, char *, struct Cell_head *);
+/*get_datum.c */
+int G_get_datum_parameters(double *, double *, double *, double *, double *, double *);
+int G_get_datum_parameters7(double *, double *, double *, double *, double *, double *, double *, double *, double *, double *);
+/* get_datum_name.c */
+int G_ask_datum_name(char *);
 /* get_ell_name.c */
 int G_ask_ellipse_name(char *);
 /* get_ellipse.c */
 int G_get_ellipsoid_parameters(double *, double *);
-int G_get_ellipsoid_by_name(char *, double *, double *);
+/* new by al 05/2000 */
+/* this function is needed for datum shift, which needs the f parameter */
+int G_get_spheroid_by_name(const char *, double *, double *, double*);
+int G_get_ellipsoid_by_name(const char *, double *, double *);
 char *G_ellipsoid_name(int);
+char *G_ellipsoid_description(int);
 /* get_proj_name.c */
+/* empty file, al 05/2000 */
 /* get_projinfo.c */
 struct Key_Value *G_get_projunits(void);
 struct Key_Value *G_get_projinfo(void);
@@ -494,6 +514,7 @@ char *G_tolcase(char *);
 char *G_toucase(char *);
 /* mapset.c */
 char *G_mapset(void);
+char *G__mapset(void);
 /* mapset_msc.c */
 int G__make_mapset_element(char *);
 int G__mapset_permissions(char *);
@@ -572,6 +593,7 @@ int G_set_quant_rules(int, struct Quant *);
 /* openvect.c */
 /* parser.c */
 int G_disable_interactive(void);
+struct GModule *G_define_module(void);
 struct Flag *G_define_flag(void);
 struct Option *G_define_option(void);
 int G_parser(int, char **);
@@ -606,9 +628,12 @@ char *G__projection_name(int);
 char *G_database_unit_name(int);
 char *G_database_projection_name(void);
 double G_database_units_to_meters_factor(void);
+char *G_database_datum_name();
+char *G_database_ellipse_name();
 /* put_cellhd.c */
 int G_put_cellhd(char *, struct Cell_head *);
 /* put_row.c */
+int G_zeros_r_nulls(int);
 int G_put_map_row(int, CELL *);
 int G_put_map_row_random(int, CELL *, int, int, int);
 int G__put_null_value_row(int, char *);

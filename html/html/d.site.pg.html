@@ -1,0 +1,139 @@
+<html>
+<A NAME="d.site.pg">
+<TITLE>d.site.pg</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>d.site.pg</B></EM> - Display select sites from a database query.
+(GRASS-RDBMS Interface Display Program)
+
+<H2>SYNOPSIS</H2>
+<B>d.site.pg</B><BR>
+<B>d.site.pg help</B><BR>
+<B>d.site.pg tab</B><EM>=name</EM> <B>coords</B><EM>=X-column,Y-column</EM> <B>where</B><EM>=name</EM> [<B>map</B><EM>=name</EM>] [<B>plot</B><EM>=color,icon,size</EM>] [<B>join</B><EM>=tab,tabkey,pkey</EM>]
+
+<H2>ALTERNATE</H2>
+<B>d.site.pg -s help</B><BR>
+<B>d.site.pg -s pql</B><EM>=filename</EM> [<B>map</B><EM>=name</EM>][<B>plot</B><EM>=color,icon,size</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>d.site.pg</EM> displays select point location information returned from a database query.  The site locations returned from the database query are displayed as icons in the active frame. The user controls the color, size and icon used in the graphic output. At the users option a site list of the database output is generated and placed in the current mapset/location.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>tab=databasetablename</B>
+<DD>Table containing X, Y coordinate values.
+<P>
+
+<DT><B>coords=databasecolumnnames</B>
+<DD>Columns containing x,y coordinate values.
+<P>
+
+<DT><B>where=postQUELwhereclause</B>
+<DD>postQUEL "where" clause which specifies the query criteria to be used in subsetting the database. The information specified in the where option must indicate the column(s) to be used, the operators to be used in the evaluation and the values which the data in the column will be evaluated against.
+</DL>
+<P>
+For example, if you want to select only those records from the table well where the value for depth is either 58 or 75 the following could be entered:
+<P>
+<DD><EM>well.depth = 58 or well.depth = 75</EM>
+<P>
+To select all wells in an area where the value for well is between 50 and 120:
+<P>
+<DD><EM>well.depth &gt; 50 and well.depth &lt; 120</EM>
+<P>
+To select all wells of depth greater than 75 where the value for owner is not equal to SMITH:
+<P>
+<DD><EM>well.depth &gt; 75 and well.owner != "SMITH"</EM>
+<P>
+If the database column used as the selection criteria is a character field then the associated value must be placed in double quotes. To determine the data types associated with columns in the currently selected database use the <EM>g.column.pg</EM> command with the <EM>-v</EM> flag.
+<P>
+In addition to the operators presented in the examples above a range of relational operators including and, or, etc. are supported. There may be some differences in the relational operators which are supported with different database drivers.
+<P>
+The examples presented above were created using the command line parser.  If <EM>d.site.pg</EM> is being called from a shell script remember to escape quoted strings.  The follwing example presents a component of a shell script used to join two tables and display vector features where the database column ad.pgo is set to "NONE".
+<P>
+<DD><EM>d.site.pg tab=well coords=utme,utmy
+<DD>where=ad.info='"NONE"'map=$1 plot=green,plus,2  join=rds2,rds2.cat2,well.cat</EM>
+<P>
+Queries which are more complex than these are best implemented using the <EM>-s</EM> flag and a prepared postQUEL file.
+
+<DL>
+<DT><B>map=list</B>
+<DD>Name of sites list to output
+<P>
+
+<DT><B>plot=color,icon,size</B>
+<DD>Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown, gray, white, black
+<DD>Icon: diamond, box, plus, x
+<DD>Size: 1-9
+<DD>Default: gray, x, 3
+<P>
+
+<DT><B>join=tab,tabkey,pkey</B>
+<DD>Tab is the table used to develop the current postQUEL query. Tabkey is the database column used to relate.pgormation in this table with data in the table linked to the GRASS category file. Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+</DL>
+<P>
+For instance, assume that well is a table containing X,Y coordinate values and that wellowners is a table containing ownership.pgormation associated with well logs.  To base a query on site location which would return attribute data on ownership and locational.pgormation in the table well the following join would be needed on the command line:
+<P>
+<DD><EM>tab = well</EM>
+<DD><EM>join=wellowners,wellowners.wellid,well.wellid</EM>
+<P>
+The column wellid is common to both the well and the wellowners table.  Because of this attribute data from both tables will be returned if the coordinates registered by the mouse return a record from the table well within a radius specified by the distance parameter on the command line.  Specifying these conditions would insure that all rows from table roads which satisfy the query criteria would be matched with the corresponding rows in table main, which are then related to the spatial features in the GRASS data layer via the GRASS category values.
+<P>
+This syntax is adequate to accomplish 2 table joins.  However, if the query demands joins between more than 2 tables it is advisable to use the <EM>-s</EM> option [see Alternate Command Line Usage] to read a user prepared query, complete with join require­ments, from a file.
+
+<H2>ALTERNATE COMMAND LINE USAGE</H2>
+The alternate command line usage is provided to simplify the process of retrieving.pgormation from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line. When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed postQUEL retrieve statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
+<P>
+The user must also specify the name of the GRASS data layer containing these category values on the command line.  The following example illustrates the syntax which must be used in constructing a retrieve statement for use with the <EM>-s</EM> flag.
+<P>
+
+<DD><EM>retrieve unique (utm.utme, utm.utmn)
+<DD>where utm.mlra="116A" and utm.hydunit=11110103 and utm.utme &gt; 0 and utm.utmn &gt; 0 sort by utme, utmn</EM>
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-s</B>
+<DD>postQUEL retrieve statements are input from a prepared file.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>pql=filename</B>
+<DD>PostQUEL statements specifying well formed selection criteria
+<P>
+
+<DT><B>map=list</B>
+<DD>Name of sites list to output
+<P>
+
+<DT><B>plot=color,icon,size</B>
+<DD>Colors: red, orange, yellow, green, blue, indigo, violet, magenta, brown, gray, white, black
+<DD>Icon: diamond, box, plus, x
+<DD>Size: 1-9
+<DD>Default: gray, x, 3
+</DL>
+
+<H2>BUGS</H2>
+None known.
+
+<H2>NOTE</H2>
+This program requires the Postgres database software.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
+
+<H2>AUTHOR</H2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
+<P>
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+<P>
+Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</BODY>
+</HTML>
+

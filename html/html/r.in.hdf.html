@@ -1,0 +1,78 @@
+<TITLE>r.in.hdf </TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+<EM><B>r.in.hdf</B></EM> - Convert data in HDF format into a (binary) raster map layer.<BR>
+<EM>(GRASS Raster Data Import Program)</EM>
+
+<H2>GRASS VERSION</H2>
+4.x
+
+<H2>SYNOPSIS</H2>
+<B>r.in.hdf</B><BR>
+<B>r.in.hdf help</B><BR>
+<B>r.in.hdf</B> [<B>-qal</B>] <B>input=</B><EM>name</EM> [<B>output=</B><EM>name</EM>] [<B>mult=</B><EM>value</EM>] [<B>dsets=</B><EM>value[,value,...]</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>r.in.hdf</EM> allows a user to create a GRASS raster map layer from a file in NCSA Hierarchical Data Format (HDF).
+
+<H2>OPTIONS</H2>
+<H3>Flags:</H3>
+<DL>
+<DT><B>-q</B>
+<DD>Run quietly.
+
+<DT><B>-a</B>
+<DD>Convert ALL data sets in the HDF file.
+
+<DT><B>-l</B>
+<DD>Only list the contents of the HDF file (no conversion).
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input</B>
+<DD>HDF file to be converted.
+
+<DT><B>output</B>
+<DD>Name of new raster file.
+<DD>Default: hdf.rast
+
+<DT><B>mult</B>
+<DD>Floating point multiplier. (rastfile = (int)(file.hdf * multiplier))
+
+<DT><B>dsets</B>
+<DD>A list of reference numbers for datasets to be extracted.
+</DL>
+
+The raster file created will have its southwest origin at 0 East and 0 North, with resolution of 1.  To view the new GRASS raster file, use <EM>g.region rast=newfile</EM>, then use <EM>d.rast</EM> as normal.  You may wish to manually change the new raster's cellhd file.
+
+<P>
+
+NCSA HDF is a multi-object file format developed by The National Center for Supercomputing Applications at Champaign, Illinois for the transfer of graphical and floating-point data between machines.  NASA Pathfinder AVHRR data is stored in HDF format.  The HDF format defines both a raster type and a SDS (scientific data set) type.  The later is basically a highly structured multi-dimensional array of values.  A single HDF file may contain more than one SDS or raster; using the <EM>-a</EM> option will extract all data sets from the HDF file, creating a separate GRASS raster file from each data set and naming the raster files outputname01, outputname02, outputname03.... If the <EM>-a</EM> option is not specified and the HDF file contains more than one data set, only the first data set is extracted unless the user specifies specific reference numbers for desired data sets in the file using the dsets option.  To see a list of reference numbers for data sets in an HDF file, use the <EM>-l</EM> flag.  If the HDF file contains labels or descriptions of the data, these will be shown when using the <EM>-l</EM> flag. Labels and descriptions from the HDF file will also be written to the GRASS history file when creating the raster map.  If a multiplier is given using the mult option, every file created will be the product of the input data set and the multiplier.  If the HDF file contains an SDS, it must be only two dimensional in order for <EM>r.in.hdf</EM> to accept it as input.  If the HDF file contains an 8-bit raster image with an associated palette, a GRASS color file will be created.  This program will not import 24-bit HDF raster images.
+
+<P>
+
+NCSA distributes the HDF library and several public domain visualization applications which use the HDF format.  Some commercial applications also support HDF.  For more information, use the NCSA anonymous ftp server ftp.ncsa.uiuc.edu or contact:
+
+<P>
+
+NCSA<BR>
+152 Computing Applications Building<BR>
+605 E. Springfield Ave.<BR>
+Champaign, IL 61820<BR>
+(217) 244-0072
+
+<H2>BUGS</H2>
+If a data set contains long labels and descriptions, some of it may be truncated when writing to the GRASS history file. The GRASS history structure currently allows 50 lines of 80 characters each.  But when editing history using r.support, only 20 lines of 65 characters may be used.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.out.hdf.html">r.out.hdf</A>, <A HREF="r.support.html">r.support</A>, <A HREF="g.region.html">g.region</A></EM>
+
+<H2>AUTHOR</H2>
+Bill Brown, U.S. Army Construction Engineering Research Laboratory

@@ -1,0 +1,10 @@
+interface_build {
+    d.what.r.pg 0
+    {Queries the database on the category of raster map.}
+    {entry map  {Raster map:} 0 raster}
+    {entry tab {DB table:} 0 ""}
+    {entry col  {Key column name:} 0 ""}
+    {entry hv  {Output - v(ert)/h(oriz):} 0 ""}
+    {checkbox -s {SQL file input} "" -s}
+    {entry sql  {Name of SQL file:} 0 file}
+}

@@ -1,7 +1,0 @@
-
-
-element - A fundamental geographic unit of information, such as a
-@glossary("point",16.glossary/point.def), linear feature, area edge, @glossary("cell",16.glossary/cell.def) or pixel.
-
-In GRASS, the term element is also used to refer to database elements,
-which are UNIX directories located under each GRASS mapset.

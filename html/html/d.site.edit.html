@@ -1,0 +1,185 @@
+<HTML>
+
+<TITLE>d.site.edit GRASS Reference Manual d.site.edit</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<i><b>d.site.edit</b></i> - Allows the user to interactively query and update/delete the
+category contents of single site map layer at user-
+specified locations within the current geographic region.
+(GRASS Display Program)
+
+<BR>
+
+<H2>SYNOPSIS</H2>
+
+<P>
+
+     <B>d.site.edit</B><BR>
+     <B>d.site.edit</B> help<BR>
+     <B>d.site.edit</B> [<B>input</B>=old_site_name] [<B>output</B>=output_site] [<B>dcolor</B>=color]<BR> 
+
+
+<P>
+
+
+<H2>DESCRIPTION</H2>
+
+d.site.edit outputs the east, north coordinate values and labels
+associated with site(s) nearest to the user-specified location(s) on
+user-named site map layer.
+
+
+<P>
+
+The program will query the contents of site map layer
+named by the user on the command line and allow 
+to either update the description of a site or
+remove a site.  The input site layer
+must exist in the user's current mapset search path. 
+
+
+<P>
+
+The program activates the mouse, and expects the user to
+indicate the site location(s) to be queried by depressing a
+mouse button over desired location(s) within the current
+geographic region in the active display frame on the graphic
+monitor.
+
+<BR>
+
+
+
+<P>
+
+     Parameters:
+
+
+<P>
+
+     <B>input</B>=old_site_name          Name of existing site map layer.
+
+
+<P>
+
+     <B>output</B>=new_site_name         Name of a new site map layer.
+
+
+<P>
+
+     <B>dcolor</B>=name       Sets the display color to name.
+<DL>
+<DD>                       Options:  red, orange, yellow, green,
+                       blue, indigo, violet, magenta, brown,
+                       gray, white, and black
+                       Default:  red
+
+</DL>
+<P>
+
+
+<BR>
+
+d.site.edit allows to edit or display the contents 
+of the geographic coordinates of
+a location pointed to, and, for the site map layer, 
+and category label nearest site in the
+named site map layers at this location.
+
+
+<P>
+
+
+<H2>EXAMPLE</H2>
+
+It is helpful, but not necessary, to first display a map to
+be used for reference in the active display frame before
+running d.site.edit.  For example, the user might type the
+following series of commands and receive the output below.
+
+<DL>
+	<DD><B><A HREF="d.sites.html">d.sites</A> map</B><EM>=wells</EM>
+</DL>
+<P>
+To first display the soils map in the active frame.
+
+<P>
+<DL>
+	<DD><B>d.site.edit input=</B><EM>wells</EM> <B>output=</B><EM>new_wells</EM>
+</DL>
+<P>
+User then moves the mouse to desired
+location on the displayed well map layer,
+and presses the middle mouse button to query
+the category contents of the nearest well location.
+The program then outputs the below
+information to the user's terminal.
+<P>
+
+<DL>
+	<DD>-613988.990000 east, 804343.040000 north, 08376300 1968 1980 1 3
+</DL>
+<P>
+
+The query may be repeated as often as desired using the left
+mouse button.  The right button on the mouse is used to quit
+the d.site.edit session. The left button will allow get into update
+menu where using left click the category information can be updated,
+using middle mouse option a site could be deleted and the right
+mouse option will bring back to main menu.
+
+
+<P>
+
+
+<H2>NOTES</H2>
+
+
+<BR>
+
+d.site.edit will always print its output to the terminal
+screen.  d.site.edit output can be redirected into a file;
+however, if it is, the output will go both to the screen and
+to the file.  For example:
+.nf
+          d.site.edit input=wells output=new_wells &gt; what.out
+.fi
+will both send d.site.edit output to the screen and capture
+its output in the file named what.out.
+
+<H2>SEE ALSO</H2>
+
+
+<A HREF="d.sites.html">d.sites</A><br>
+ 
+<A HREF="d.what.site.html">d.what.site</A><br>
+
+<A HREF="d.what.rast.html">d.what.rast</A><br>
+
+<A HREF="d.what.vect.html">d.what.vect</A><br>
+
+<A HREF="d.where.html">d.where</A><br>
+
+<A HREF="g.region.html">g.region</A><br>
+
+<A HREF="parser.html">parser</A>
+
+
+
+<P>
+
+
+<H2>AUTHOR</H2>
+
+Raghavan Srinivasan, Blackland Research Center, TAES, Temple, TX 76502
+
+</body>
+
+</HTML>

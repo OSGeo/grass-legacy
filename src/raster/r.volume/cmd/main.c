@@ -11,6 +11,8 @@
  * Washington University (revised April 1989).
  *
  * Revised Jul 1995 to use new sites API (McCauley)
+ *
+ * $Id$
  */
 #include <string.h>
 #include "gis.h"
@@ -35,8 +37,15 @@ int main (
   FILE *fd_sites = NULL;
   Site *mysite;
   Site_head site_info;
+  struct GModule *module;
   struct Option *opt1, *opt2, *opt3;
   struct Flag *flag1, *flag2;
+
+  module = G_define_module();
+  module->description =
+	"Calculates the volume of data \"clumps\", "
+	"and (optionally) produces a GRASS site_lists file "
+	"containing the calculated centroids of these clumps.";
 
   opt1 = G_define_option ();
   opt1->key = "data";
@@ -261,6 +270,6 @@ int main (
   }
   if (total_vol > 0.0 && out_mode)
     fprintf (stdout,"%58s %14.2f", "Total Volume =", total_vol);
-
-	exit(0);
+    fprintf (stdout,"\n");
+  exit(0);
 }				/* end of main() */

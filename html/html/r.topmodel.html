@@ -1,0 +1,98 @@
+<html>
+<A NAME="r.topmodel">
+<TITLE>r.model</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<B><EM>r.topmodel</EM></B> - simulates TOPMODEL which is physically based hydrologic model<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.topmodel</B> [<B>-iow</B>] [<B>elevation</B><EM>=name</EM>] [<B>basin</B><EM>=name</EM>] [<B>depressionless</B><EM>=name</EM>] [<B>direction</B><EM>=name</EM>] [<B>belevation</B><EM>=name</EM>] [<B>topidx</B><EM>=name</EM>] [<B>nidxclass</B><EM>=value</EM>] <B>idxstats</B><EM>=name</EM> <B>parameters</B><EM>=name</EM> <B>input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>Qobs</B><EM>=name</EM>] [<B>timestep</B><EM>=value</EM>] [<B>idxclass</B><EM>=value</EM>]
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-i</B>
+<DD>Input data given for (i/o).  Without this flag, all input data, (i) or (i/o), should be given and intermediate output can not be input for run.
+<P>
+			
+<DD>In example, [belevation] map will be created from [elevation] and [basin] every run.  However, every [belevation] output map is the same and this is useless process if [belevation] map is already given.
+<P>
+
+<DD>With this flag, intermediate output can be input for run.  (i/o) parameters can be affected by this flag.
+
+<DT><B>-o</B>
+<DD>Overwrite outputs
+
+<DT><B>-w</B>
+<DD>Wide output.  No limit for 80 columns output
+</DL>
+
+<H3>Parameters:</H3>
+Note: (i) means input; (o) means output; (i/o) means input or output
+
+<DL>
+<DT><B>elevation</B>
+<DD>(i)   Rectangular elevation map
+
+<DT><B>basin</B>
+<DD>(i)   Basin map created by <EM>r.water.outlet</EM>
+
+<DT><B>depressionless</B>
+<DD>(o)   Depressionless elevation map
+<DD>This can be omitted if [elevation] map is already depressionless map.  If this is given, [depressionless]	map will be used as [elevation] map.
+
+<DT><B>direction</B>
+<DD>(o)   Direction map with depressionless elevation map
+
+<DT><B>belevation</B>
+<DD>(i/o) Basin elevation map (extracted).  Study basin extracted elevation map
+
+<DT><B>topidx</B>
+<DD>(i/o) Topographic index ln(a/tanB) map (extracted).  Study basin extracted topographic index map
+
+<DT><B>nidxclass</B>
+<DD>(i)   Number of topographic index classes
+<DD>Default: 30
+
+<DT><B>idxstats</B>
+<DD>(i/o) Topographic index statistics file
+
+<DT><B>parameters</B>
+<DD>(i)   TOPMODEL parameters file
+
+<DT><B>input</B>
+<DD>(i)   Rainfall and potential evapotranspiration data file
+
+<DT><B>output</B>
+<DD>(o)   Output file
+
+<DT><B>Qobs</B>
+<DD>Observed Q file.  Compare Qt with Qobs and calculate model efficiency
+
+<DT><B>timestep</B>
+<DD>OPTIONAL output for given time step
+
+<DT><B>idxclass</B>
+<DD>OPTIONAL output for given topographic index class
+</DL>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.topidx.html">r.topidx</A></EM>
+
+<H2>AUTHORS</H2>
+Main algorithm sources are rewritten from TMOD9502.FOR.
+TMOD9502.FOR is available from <A HREF=http://www.es.lancs.ac.uk/hfdg/topmodel.html>
+www.es.lancs.ac.uk/hfdg/topmodel.html</A>.
+<BR>
+Thanks to Keith Beven.
+<P>
+GRASS port by <A HREF=mailto:hdcho@geni.knu.ac.kr>Huidae Cho</A><BR>
+Hydro Laboratory, Kyungpook National University, South Korea
+
+</BODY>
+</HTML>

@@ -1,8 +1,10 @@
+# $Id$
+
 SHELL=/bin/sh
 export SHELL
 umask 002
 ##################################################################
-# This file is sourced (with the . command) by the real gmake
+# This file is sourced (with the . command) by the real gmake5
 me=$0
 if test "$SRC" = ""
 then
@@ -218,6 +220,10 @@ then
     echo "  mkdir $OBJARCH"
     mkdir $OBJARCH || exit 1
 fi
+if test -f $makefile
+then
+    rm -f $makefile
+fi
 
 (
 # build the make.rules file
@@ -267,14 +273,18 @@ sed -e 's/=/ /' -e 's/\\//' Gmakefile |\
 	if test -f $file.f
 	then
 	    echo '$(OBJARCH)/'${file}.o: ${file}.f
-	    echo '	rm -f $@'
-	    echo '	$(FC) $(FFLAGS) -c' ${file}.f
-	    echo '	mv' ${file}.o '$@'
+#	    echo '	rm -f $@'
+#	    echo '	$(FC) $(FFLAGS) -c' ${file}.f
+#	    echo '	mv' ${file}.o '$@'
+# new version MN:
+	    echo '	$(FC) $(FFLAGS) -c' ${file}.f -o '$@'
 	else
 	    echo '$(OBJARCH)/'${file}.o: ${file}.c
-	    echo '	rm -f $@'
-	    echo '	$(CC) $(CFLAGS) -c' ${file}.c
-	    echo '	mv' ${file}.o '$@'
+#	    echo '	rm -f $@'
+#	    echo '	$(CC) $(CFLAGS) -c' ${file}.c
+#	    echo '	mv' ${file}.o '$@'
+# new version MN:
+	    echo '	$(CC) $(CFLAGS) -c' ${file}.c -o '$@'
 	fi
     done
  )
@@ -284,7 +294,7 @@ cat $TAIL
 
 echo "  make -f $makefile $*"
 echo ""
-make -f $makefile $*
+${MAKE} -f $makefile $*
 status=$?
 if test $status != 0 
 then

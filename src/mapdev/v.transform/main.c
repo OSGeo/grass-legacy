@@ -1,4 +1,3 @@
-
 /*
 *  This takes an ascii digit file in one coordinate system and converts
 *  the map to another coordinate system.
@@ -24,8 +23,7 @@
 #include <string.h>
 #include  "trans.h"
 #include "gis.h"
-#include "dig_head.h"
-#include "digit.h"
+#include "Vect.h"
 #include "local_proto.h"
 
 static  char  *Prog_name ;
@@ -37,6 +35,7 @@ int main (int argc, char *argv[])
 	struct  file_info  Current ;
 	struct  file_info  Trans ;
 	struct  file_info  Coord ;
+	struct GModule *module;
 	struct Option *old, *new, *pointsfile;
 	struct Flag *quiet_flag;
 
@@ -46,6 +45,11 @@ int main (int argc, char *argv[])
 #endif
 
 	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Transforms an ASCII vector map layer from one "
+		"coordinate system into another coordinate system.";
 
 	quiet_flag = G_define_flag();
 	quiet_flag->key		= 'y';

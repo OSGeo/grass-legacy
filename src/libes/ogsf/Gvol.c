@@ -1,3 +1,6 @@
+/*
+* $Id$
+*/
 
 /*  Gvol.c 
     Bill Brown, USACERL  
@@ -18,15 +21,11 @@ typedef int FILEDESC;
 
 #define NO_DATA_COL 0xffffff
 
-Gvol_open_dspf(filename, dspfname, dspinfo)
-char *filename, *dspfname;
-geodsp *dspinfo;
+int Gvol_open_dspf(char *filename, char *dspfname, geodsp *dspinfo)
 {
-/* TODO
+    /* TODO */
 
-*/
     return(1);
-
 }
 
 

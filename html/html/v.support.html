@@ -1,0 +1,201 @@
+<TITLE>v.support</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.support</b></EM>  - Creates GRASS support files for
+(binary) GRASS vector data.
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.support</B>
+
+<BR>
+
+<B>v.support help</B>
+
+<BR>
+
+<B>v.support</B> [<B>-spr</B>] 
+<B>map=</B><EM>name</EM> 
+[<B>option=</B><EM>name</EM>] 
+[<B>threshold=</B><EM>value</EM>]
+
+
+<P>
+
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.support</EM> builds GRASS support files for (binary)
+GRASS vector data files.  These support files supply
+topology (<KBD>dig_plus</KBD>) and category
+(<KBD>dig_att</KBD>) information that are needed by other
+GRASS programs
+
+(e.g., by <EM><A HREF="v.digit.html">v.digit</A></EM>, 
+<EM><A HREF="v.to.rast.html">v.to.rast</A></EM>, etc.).
+
+
+<P>
+
+The program gives the user the options of:
+
+<OL>
+
+<LI> building topological information (the
+<KBD>dig_plus</KBD> file) needed by
+
+<EM><A HREF="v.digit.html">v.digit</A></EM> for
+the vector data file, and/or
+
+<LI> editing the category label (<KBD>dig_cats</KBD>) file
+associated with the vector data file.
+
+</OL>
+
+<H2>OPTIONS</H2>
+
+Program parameters and flags have the following meanings.
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-s</B> 
+
+<DD>Snap nodes.  Valid only with <EM>build</EM> option.
+
+<DT><B>-p</B> 
+
+<DD>Prompt user for threshold value.  Valid only with
+<EM>build</EM> option.  This flag is designed to be used
+only by the 
+
+<EM><A HREF="v.import.html">v.import</A></EM>
+program, and can usually be ignore.
+
+<DT><B>-r</B> 
+
+<DD>Reset corners of map region from range of data values.
+
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>map=</B><EM>name</EM> 
+
+<DD>Name of binary GRASS vector data file for which support
+files are to be created or modified.  This map layer must
+exist in the user's current GRASS mapset.
+
+<DT><B>option=</B><EM>name</EM> 
+
+<DD>Build topology information (<KBD>dig_plus</KBD> file),
+or edit categories (<KBD>dig_att</KBD> file) for
+<EM>map</EM>.
+
+<BR>
+
+Options:  <EM>build</EM>, <EM>edit</EM>
+
+<BR>
+
+Default:  <EM>edit</EM>
+
+<DT><B>threshold=</B><EM>value</EM> 
+
+<DD>Snapping threshold value to be used when building
+topology.  Valid only with <EM>build</EM> option and 
+<B>-s</B> flag.
+
+</DL>
+
+The user can run this program non-interactively by
+specifying parameter values (and optionally, flag settings)
+on the command line.
+
+<P>
+
+Alternately, the user can simply type the command
+<B>v.support</B> on the command line.  In this event, the
+program will prompt the user to enter parameter values and
+flag settings.
+
+
+<P>
+
+If the <EM>build</EM> option is chosen, the user may
+further specify the <B>-s</B> flag, to snap nodes in the
+vector file.  If nodes are to be snapped, the user can
+either:  (1) use the calculated default threshold (based on
+the scale of vector data); (2) enter the -p flag, causing
+the program to prompt the user for a snapping threshold
+value;  or (3) enter a specific threshold value on the
+command line.
+
+
+<P>
+
+The spatial assignment of category values (found in the
+<KBD>dig_att</KBD> file) is also performed during building of
+file topology.
+
+
+<P>
+
+The <EM>edit</EM> option allows the user to edit the
+category labels to be associated with the category values
+attached to the vector data during topology building.
+These labels, if created, are then used for raster map
+layers derived from their vector counterparts.  The labels
+are placed in the <KBD>dig_cats</KBD> directory.
+
+<H2>NOTES</H2>
+
+A <KBD>dig_plus</KBD> file must be created for each imported vector map
+before it can be used in post-GRASS 3.0 versions of <EM>digit</EM>
+(now referred to as <EM><A HREF="v.digit.html">v.digit</A></EM>).
+
+<P>
+
+Topological information for GRASS vector files can also be built using
+<EM>option 4</EM> of the 
+<EM><A HREF="v.import.html">v.import</A></EM> program.
+
+<P>
+
+This program will convert pre-4.0 version GRASS vector files to 4.0 format.
+
+<P>
+
+<EM>v.support</EM> creates support files only for binary
+vector files located in the user's current mapset.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>,
+<EM><A HREF="v.import.html">v.import</A></EM>,
+<EM><A HREF="v.in.ascii.html">v.in.ascii</A></EM>,
+<EM><A HREF="v.prune.html">v.prune</A></EM>,
+<EM><A HREF="v.to.rast.html">v.to.rast</A></EM>
+
+<H2>AUTHORS</H2>
+
+Dave Gerdes, U.S.Army Construction Engineering 
+Research Laboratory
+
+<BR>
+
+Michael Higgins,
+U.S.Army Construction Engineering 
+Research Laboratory

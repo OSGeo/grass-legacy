@@ -1,0 +1,7 @@
+interface_build {
+    {s.to.vect} 0
+    {Converts a GRASS sites map to a GRASS vector map.}
+    {entry input {Name of input site list:} 0 sites}
+    {entry output {Name of new vector file:} 0 vector}
+    {entry desc {String field in site_list to use in vector file (default=1):} 0 ""}
+}

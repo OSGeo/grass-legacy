@@ -1,0 +1,148 @@
+<TITLE>m.ipf</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>m.ipf</b></EM> - Iterative proportional fitting for error matrices.
+
+<BR>	
+
+<EM>(GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.ipf</B>
+<BR>
+<B>m.ipf help</B>
+<BR>
+<B>m.ipf</B> [<B>-emz</B>] 
+[<B>input=</B><EM>name</EM>] 
+[<B>format=</B><EM>string</EM>]
+[<B>stop=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.ipf </EM>
+uses an error or confusion matrix produced by 
+
+<EM><A HREF="r.coin.html">r.coin</A></EM>
+
+or
+
+<EM><A HREF="r.kappa.html">r.kappa</A></EM>,
+
+smooths zero counts, and does iterative proportional
+fitting to normalize the matrix.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-e</B> 
+<DD>Indicate when the iterative algorithm finished.
+
+<DT><B>-m</B>
+<DD>Print the marginals (row and column totals) with each matrix.
+
+<DT><B>-z</B>
+<DD>Print the intermediate (smoothed) matrix.
+
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM> 
+<DD>The input file must have the following format:  the
+first line contains an integer K which is the number of
+rows and columns in the matrix; the remainder of the file
+is the matrix, i.e., K lines, each containing K integers.
+If the input is not specified on the command line, it may
+come from standard input.
+
+<DT><B>format=</B><EM>string</EM> 
+<DD>Specifies the format conversion string used to print
+the results.  Default is <EM>%7.3f</EM>. For details, see
+the UNIX man page for <EM>printf.</EM>
+
+<DT><B>stop=</B><EM>value</EM> 
+
+<DD>The stopping criteria is a floating point number which
+actually specifies an integer maximum number of iterations
+and a fractional change in marginal. The default, 100.01,
+specifies that the interative proportional fitting will
+stop at 100 iterations or when marginals do not change by
+0.01, whichever comes first.
+
+</DL>
+
+<H2>EXAMPLE</H2>
+
+For the following input,
+<PRE>
+3
+712    0   12
+  0  584    2
+ 18    0  434
+</PRE>
+
+zero counts in the matrix will be smoothed:
+
+<PRE>
+711.249   0.438  12.314 
+  0.443 583.289   2.268 
+ 18.309   0.273 433.418 
+</PRE>
+
+and the matrix will be normalized to yield:
+
+<PRE>
+0.969 0.001 0.022 
+0.001 0.999 0.004 
+0.031 0.001 0.973 
+</PRE>
+
+<H2>NOTES</H2>
+
+Iterative proportional curve fitting is useful when comparing
+the output of image classification algorithms (for example,
+
+<EM><A HREF="i.maxlik.html">i.maxlik</A></EM> and 
+<EM><A HREF="i.smap.html">i.smap</A></EM>),
+
+especially when training fields (signatures) and/or test fields
+are different. The diagonals of the normalized matrix can be used 
+in a Tukey multiple comparison test.
+
+<H2>SEE ALSO</H2>
+
+<EM>Assessing Multiple Classifications</EM> - GRASS Tutorial on <EM>m.ipf</EM>
+
+<P>
+
+<EM><A HREF="r.coin.html">r.coin</A></EM><br>
+<EM><A HREF="r.kappa.html">r.kappa</A></EM><br>
+
+<P>
+
+Zhuang, X., B.A. Engel, X. Xiong, and C. Johanssen. 1994.
+Analysis of Classification Results of Remotely
+Sensed Data and Evaluation of Classification Algorithms,
+<EM> Photogrammetric Engineering and Remote Sensing</EM>
+(in press)
+
+
+<H2>AUTHOR</H2>
+
+James Darrell McCauley, 
+Agricultural
+Engineering,
+Purdue University

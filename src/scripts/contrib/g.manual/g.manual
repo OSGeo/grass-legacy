@@ -1,0 +1,190 @@
+#!/bin/sh
+
+if [ ! "$GISBASE" ]
+then
+  echo "You must be in GRASS to run this program"
+  exit 1
+fi
+
+HELP="
+Usage:
+ `basename $0` [-1] [-a] [-d] [-m] [-s] [-q] [browser=name] [entries=name[,name,...]]
+   name name ...
+
+Flags:
+  -1   List all manual entries, one per line.
+  -a   List all manual entries in a more appealing format.
+  -d   Display a short description of all manual entries specified(NOT YET).
+  -m   Force to use man program rather than GRASS_TEXT_BROWSER, if any.
+  -s   Run silently to set exit status if entry exists.
+       Requires only one command name.
+  -q   Print man pages and quit.
+       Requires rman:
+          Please install RosettaMan (rman) version to 3.0.2 or later!
+          Get it at:
+          ftp://ftp.cs.berkeley.edu/ucb/people/phelps/tcltk/rman.tar.Z
+
+Parameters:
+  browser   Override GRASS_TEXT_BROWSER env variable to browser html pages.
+  entries   Exists for compatibility.
+
+Note:
+  To use hyperlink features of html pages, set env variable GRASS_TEXT_BROWSER
+  to any text-based web browser that you want, e.g., lynx, w3m.
+"
+
+if [ $# -lt 1 ]
+then
+  echo "$HELP"
+  exit 1
+fi
+
+desc=
+forceman=
+silent=
+quit=
+tentries=
+until [ $# -eq 0 ]
+do
+  case $1 in
+    help|-help|-f|-e)
+      echo "$HELP"
+      exit 1 ;;
+
+    -1) /bin/ls $GISBASE/man/man1 | $PAGER; exit 0 ;;
+
+    -a) /bin/ls -C $GISBASE/man/man1 | $PAGER; exit 0 ;;
+
+    -d) desc=1 ;;
+
+    -m) forceman=1 ;;
+
+    -s) silent=1 ;;
+
+    -q) quit=1
+      which rman > /dev/null 2>&1
+      if [ $? -ne 0 ]
+      then
+        echo ERROR: rman not installed.
+        exit 1
+      fi ;;
+
+    b=*|br=*|bro=*|brow=*|brows=*|browse=*|browser=*)
+      GRASS_TEXT_BROWSER=`echo $1 | awk -F '=' '{print $2}'` ;;
+
+    e=*|en=*|ent=*|entr=*|entri=*|entrie=*|entries=*)
+      tentries="$tentries `echo $1 | awk -F '=' '{print $2}' | sed 's|, *| |g'`" ;;
+
+    *) tentries="$tentries $1" ;;
+  esac
+  shift
+done
+
+if [ "$desc" -o "$quit" ]
+then
+  GRASS_TEXT_BROWSER=
+else
+  which $GRASS_TEXT_BROWSER > /dev/null 2>&1
+  if [ $? -ne 0 -o "$forceman" ]
+  then
+    if [ "$GRASS_TEXT_BROWSER" -a ! "$forceman" -a ! "$silent" ]
+    then
+      echo
+      echo Warning: $GRASS_TEXT_BROWSER does not exist. Use man.
+      sleep 1
+    fi
+    GRASS_TEXT_BROWSER=
+  fi
+fi
+
+msg=
+entries=
+for i in $tentries
+do
+  html=$GISBASE/documents/html/$i.html
+  man=$GISBASE/man/man1/$i.1
+  
+  if [ -e $html -a "$GRASS_TEXT_BROWSER" ]
+  then
+    if [ "$silent" ]
+    then
+      exit 0
+    fi
+    entries="$entries $html"
+  elif [ -e $man -a ! "$GRASS_TEXT_BROWSER" ]
+  then
+    if [ "$silent" ]
+    then
+      exit 0
+    fi
+    entries="$entries $i"
+  else
+    if [ "$silent" ]
+    then
+      exit 1
+    fi
+    msg="$msg
+No entry for $i"
+  fi
+done
+
+if [ "$desc" ]
+then
+  if [ ! "$tentries" ]
+  then
+    entries=`(cd $GISBASE/documents/html; ls *.html | sed 's|\.html$||g')`
+  fi
+
+  for i in $entries
+  do
+    if [ "$i" = "aboutus" ]
+    then
+      continue
+    fi
+    awk 'BEGIN{i=0}
+         {if(match(tolower($0),"<br>")){print $0; exit;}
+          if(NF&&i==1) printf "%s ",$0;
+	  if(match(tolower($0),"<h2> *name *<\/h2>")) i=1;}
+    ' $GISBASE/documents/html/$i.html | sed 's@</*[^>]*>@@g; s@ *- *@  -  @'
+    echo
+  done
+else
+  if [ "$GRASS_TEXT_BROWSER" ]
+  then
+    for i in $entries
+    do
+      $GRASS_TEXT_BROWSER $i
+    done
+  else
+    if [ ! "$quit" ]
+    then
+      man -P $PAGER -M $GISBASE/man 1 $entries
+    else
+      n=`echo $entries | awk '{print NF}'`
+      ni=0
+      for i in $entries
+      do
+        ni=`expr $ni + 1`
+	echo "man: $i
+"
+        rman $GISBASE/man/man1/$i.1
+	if [ $n -gt 1 -a $ni -lt $n ]
+	then
+	  echo "
+================================================================================
+"
+	fi
+	echo
+      done
+    fi
+  fi
+fi
+
+if [ "$msg" ]
+then
+  echo
+  echo "$msg"
+fi
+
+exit 0
+

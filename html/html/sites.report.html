@@ -1,0 +1,237 @@
+<TITLE>sites.report</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>sites.report</b></EM>  - Description of the machine readable report
+output by <EM><A HREF="s.menu.html">s.menu</A></EM>.
+
+<H2>DESCRIPTION</H2>
+
+This is a description of the machine readable report produced by the
+<EM><A HREF="s.menu.html">s.menu</A></EM>
+program.
+
+<H2>SAMPLE REPORT</H2>
+
+<PRE>
+location|yakima|Yakima Firing Center, Washington
+mapset|sample
+region north|5199975.000000
+region south|5154975.000000
+region west|692975.000000
+region east|737975.000000
+resolution|50.000000
+site list|sample|sample site list
+
+point|1|728220|5182440|27
+point|2|727060|5181710|28
+point|3|725500|5184000|29
+point|4|719800|5187200|30
+
+layer|1|arch_survey|Archeologic Survey Areas (arch_survey)
+layer|2|vegetation|Vegetation Study Plots
+
+cat|1|0|764310|No data
+cat|1|1|25821|Hartmann,phase 1
+cat|1|2|11032|Hartmann,phase 2
+cat|1|3|8837|Wapora,phase 3
+cat|2|0|774333|no data
+cat|2|1|9299|stiff sagebrush/sandberg bluegrass type (S-1)
+cat|2|2|732|big sagebrush/sandberg bluegrass type (S-2)
+cat|2|3|397|buckwheat/sandberg bluegrass type (S-3)
+cat|2|4|2526|bluebunch wheatgrass/sandberg wheatgrass type (S-4)
+cat|2|5|20184|big sagebrush/bluebunch wheatgrass type (L-1)
+cat|2|6|82|big sagebrush/needle-and-thread type (L-2)
+
+matrix size|9
+
+matrix|-1|-1|0|-1|1|-1
+matrix|-1|0|0|0|1|0
+matrix|-1|1|0|1|1|1
+
+data|1|1|0|0|0|0|0|0|0|0|0
+data|1|2|1|1|1|1|1|1|1|1|1
+data|1|3|1|1|1|1|1|1|1|1|1
+data|1|4|1|1|1|1|1|1|1|1|1
+data|2|1|0|0|0|0|0|0|0|0|0
+data|2|2|0|0|0|0|0|0|0|0|0
+data|2|3|4|4|4|0|0|0|0|0|0
+data|2|4|1|5|5|5|5|5|5|5|5
+</PRE>
+
+<H2>EXPLANATION</H2>
+
+The machine readable report file consist of lines of text,
+with fields that are separated by the pipe character |.
+The first field on a line defines the record type, and the
+remaining fields are defined according to the record type.
+
+<DL>
+<DT><b>location</b>
+
+<DD>This record gives the GRASS database location.
+
+<BR>
+location &lt;name&gt; &lt;full name&gt;
+<DL> 
+<DT>&lt;name&gt;          
+<DD>database location
+<DT>&lt;full name&gt;     
+<DD>long name for the location
+</DL>
+
+<DT><b>mapset</b>
+<DD>This record gives the GRASS mapset.
+<BR>
+mapset &lt;mapset&gt;
+<DL>
+<DT>&lt;mapset&gt;        
+<DD>mapset under which the report was run
+</DL>
+
+<DT><b>region</b>
+
+<DD>The region records give the mapset region coordinates.
+
+<P>
+region north &lt;N&gt;<BR>
+region south &lt;S&gt;<BR>
+region west &lt;W&gt;<BR>
+region east &lt;E&gt;<BR>
+
+<DL>
+<DT> &lt;N&gt;     <DD>north for current region (float)
+<DT> &lt;S&gt;     <DD>south for current region (float)
+<DT> &lt;W&gt;     <DD>west for current region (float)
+<DT> &lt;E&gt;     <DD>east for current region (float)
+</DL>
+
+<DT><b>resolution</b>
+
+<DD>This record gives the GRASS database resolution in meters.
+
+<BR>
+resolution &lt;res&gt;
+<DL>
+<DT>&lt;res&gt;     <DD>resolution of the database, in meters (float)
+</DL>
+
+<DT><b>point</b>
+
+<DD>These records describe the sites that were used in the report.
+There is one 'point' record for each site.
+
+
+<BR>
+point &lt;site_ref&gt; &lt;E&gt; &lt;N&gt; &lt;desc&gt;
+
+<DL>
+<DT>&lt;site_ref&gt;     <DD>a reference number, used by other lines
+               in the report to reference this site
+<DT>&lt;E&gt;            <DD>site easting
+<DT>&lt;N&gt;            <DD>site northing
+<DT>&lt;desc&gt;         <DD>a description of the site (usually an site number)
+</DL>
+
+<DT><b>layer</b>
+
+<DD>These records describe the map layers that were used in the report.
+There is one 'layer' record for each layer.
+
+<BR>
+layer &lt;layer_ref&gt; &lt;name&gt; &lt;full_name&gt;
+
+<DL>
+<DT>&lt;layer_ref&gt;    <DD>a reference number, used by other lines
+               in the report to reference this layer
+<DT>&lt;name&gt;         <DD>name of the map layer (raster file name)
+<DT>&lt;full name&gt;    <DD>full name (TITLE of raster file)
+</DL>
+
+<DT><b>cat</b>
+<DD>These records give information about each category in each layer.
+
+
+<BR>
+
+cat &lt;layer_ref&gt; &lt;cat&gt; &lt;count&gt; &lt;name&gt;
+
+<DL>
+<DT>&lt;layer_ref&gt;    <DD>reference number of the layer
+<DT>&lt;cat&gt;          <DD>category number
+<DT>&lt;count&gt;        <DD>number of times this category occurred
+<DT>&lt;name&gt;         <DD>full name of the category
+</DL>
+
+<DT><b>matrix size</b>
+
+<DD>This record gives the number of cells in each site.
+
+<BR>
+matrix size &lt;matrix size&gt;
+
+<DL>
+<DT>&lt;matrix size&gt;  <DD>number of cells per site.
+</DL>
+
+
+<DT><b>matrix</b>
+
+<DD>These records describe the locations of each cell in the site
+relative to the center of the site.
+
+
+<BR>
+
+matrix &lt;ew_disp&gt; &lt;ns_disp&gt; ...
+
+<DL>
+<DT>&lt;ew_disp&gt;      <DD>east-west displacement from the site
+<DT>&lt;ns_disp&gt;      <DD>north-south displacement from the site
+</DL>
+
+The displacements are in units of 1 cell, which is equal to the
+resolution of the database.
+They are paired, and there will be &lt;matrix size&gt; pairs.
+To compute the coordinates for the cell:
+
+
+<P>
+
+    north = site_north - &lt;ns_disp&gt; * resolution<BR>
+    east  = site_east  + &lt;ew_disp&gt; * resolution<BR>
+
+
+<DT><b>data</b>
+
+<DD>This is the site data. There is one 'data' record
+for each site for each layer.
+The &lt;cat&gt; field is repeated &lt;matrix size&gt; times.
+
+
+<BR>
+
+data &lt;layer_ref&gt; &lt;site_ref&gt; &lt;cat&gt; ...
+
+<DL>
+<DT>&lt;layer_ref&gt;     <DD>reference number of the layer
+<DT>&lt;site_ref&gt;      <DD>reference number of the site
+<DT>&lt;cat&gt;           <DD>category which occurred
+</DL>
+
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="s.db.rim.html">s.db.rim</A></EM><br>
+<EM><A HREF="s.in.ascii.html">s.in.ascii</A></EM><br>
+<EM><A HREF="s.menu.html">s.menu</A></EM><br>
+<EM><A HREF="s.out.ascii.html">s.out.ascii</A></EM><br>
+<EM><A HREF="s.surf.idw.html">s.surf.idw</A></EM><br>
+<EM><A HREF="sites.S.html">sites.S</A></EM><br>
+<EM><A HREF="sites.format.html">sites.format</A></EM><br>
+<EM><A HREF="sites.occur.html">sites.occur</A></EM>
+

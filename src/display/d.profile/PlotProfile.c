@@ -31,6 +31,7 @@
 #include "display.h"
 #include "D.h"
 #include "raster.h"
+#include <limits.h>
 
 #define ORIGIN_X	0.13
 #define ORIGIN_Y	0.07
@@ -38,6 +39,8 @@
 #define XAXIS_END	0.95
 #define TEXT_HEIGHT	0.11
 #define TEXT_COLUMN    	0.07
+
+double _get_cat(UCAT *, int);
 
 int PlotProfile( struct Profile profile,
             char *letter, int min,int max)
@@ -92,13 +95,13 @@ for (i=0; i<=profile.count; i++)
    if (xscale > 1)
       {
       R_cont_abs((int)(xoffset+xscale*i),
-                 (int)(yoffset-yscale*(double)(ptr->cat-min)));
+                 (int)(yoffset-yscale* _get_cat(&ptr->cat, min)));
       R_cont_abs((int)(xoffset+xscale*(i+1.0)),
-                 (int)(yoffset-yscale*(double)(ptr->cat-min)));
+                 (int)(yoffset-yscale* _get_cat(&ptr->cat, min)));
       }
    else
       R_cont_abs((int)(xoffset+xscale*i),
-                 (int)(yoffset-yscale*(double)(ptr->cat-min)));
+                 (int)(yoffset-yscale* _get_cat(&ptr->cat, min)));
    ptr = ptr->next;
    } 
 R_standard_color(D_translate_color("red"));
@@ -145,3 +148,29 @@ R_flush();
 
     return 0;
 }
+
+
+double _get_cat(UCAT *theCat, int min)
+{
+    switch (theCat->type)
+    {
+        case CELL_TYPE:
+            if (theCat->val.c >= min)
+                return (double) (theCat->val.c - (double) min);
+            else
+                return (double) 0.0;
+        case FCELL_TYPE:
+            if (theCat->val.f >= min)
+                return (double) (theCat->val.f - (double) min);
+            else
+                return (double) 0.0;
+        case DCELL_TYPE:
+            if (theCat->val.d >= min)
+                return (theCat->val.d - (double) min);
+            else
+                return (double) 0.0;
+        default: /* Shouldn't happen */
+            return (double) 0.0;
+    }
+}
+/* vim: set softtabstop=4 shiftwidth=4 expandtab: */

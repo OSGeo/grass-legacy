@@ -1,0 +1,183 @@
+<TITLE>v.in.transects</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.transects</b></EM>  - import transect data to a GRASS vector map
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.transects</B>
+
+<BR>
+
+<B>v.in.transects help</B>
+
+<BR>
+<DT>
+<B>v.in.transects</B> [<B>-a</B>] <B>input=</B><EM>name</EM> 
+[<B>fs=\*"</B><EM>character</EM>"] <B>length=</B><EM>value</EM>
+<DD>[<B>units=</B><EM>name</EM>] 
+[<B>decl=</B><EM>name</EM>] <B>vect=</B><EM>name</EM> [<B>TITLE=\*"</B><EM>name</EM>"]
+</DL>
+<P>
+<H2>DESCRIPTION</H2>
+
+<B>v.in.transects</B>
+imports "transects" into a GRASS vector map. A transect is a line (or an area)
+which is described by a starting coordinate, a direction or azimuth, (or 
+backward, forward, rightside, and leftside distances from the line transect), 
+and a length (in meters or feet). The information describing the transects must 
+be in a file prepared by the user before running
+<B>v.in.transects.</B>
+The format of this file is described below in the section
+<B>"TRANSECT FILE FORMAT".</B>
+<P>
+<H2>OPTIONS</H2>
+<P>
+<H3>Flags:</H3>
+<DL>
+<DT><B>-a</B> 
+<DD>Run for area transects. Default is line transects, i.e., this flag is not used.
+<P>
+</DL>
+<P>
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input</B> 
+<DD>transect information file
+<P>
+This is the file containing the transect information to be imported.
+The format of this file is described below in the section
+<B>"TRANSECT FILE FORMAT"</B>
+
+<DT><B>fs</B> 
+<DD>input data field separator
+<P>
+The transect file is organized one transect per line with at least 4 fields.
+The <EM>fs</EM> option specifies the character that is used in the transect information file to separate the fields. If not specified, fields are assumed to be separated by blanks (white space). (Quote the delimeter whenever you are not sure whether it has special meaning in UNIX or not, to avoid the misunderstanding by GRASS.)
+
+<DT><B>length</B> 
+<DD>transect length
+<P>
+This is the length of the transects (default is in grid units, e.g., meters).
+It is assumed that all transects have the same length. If they do not,
+then more than one import process must be run to create two or more
+vector files and the results patched together (using 
+<A HREF="v.patch.html">v.patch</A>
+).
+
+<DT><B>units</B> 
+<DD>units of the length
+<BR>
+default: meter
+<P>
+This is the unit of the transect. It can be meter or foot.
+
+<DT><B>decl</B> 
+<DD>declination - angle (in degrees) to be added to input azimuth angles
+<BR>
+default: 0
+<P>
+Each transect has a direction or azimuth angle associated with it. The
+map projection may have a declination associated with it and if
+the azimuth angles embedded in the transect input file do not account
+for this declination, it may be specified here.
+
+<DT><B>vect</B> 
+<DD>Vector map to be created
+
+<DT><B>TITLE</B> 
+<DD>Title for resultant vector map
+<BR>
+default: Transect map
+<P>
+If TITLE is more than one word, it should always be quoted.
+
+
+<P>
+
+</DL>
+
+<H2>TRANSECT FILE FORMAT</H2>
+
+The format for the transect file consists of one record or line per transect
+with 4 mandatory fields and a 5th optional field for line transects. The first 
+field is the GRASS category number to be assigned to the transect.
+The second and third fields are the
+easting and northing (respectively) of the starting coordinate for the transect.
+The fourth field is the azimuth in degrees clockwise from north of the transect.
+Following the fourth field is an optional fifth field that is the category label
+for the transect. The following is a simple example with 3 transects:
+<P>
+<PRE>
+1 709818   5453991   246.0   P CLGR 4 73 1 21 0 0 0 0 1
+2 698350   5464162   128.0   P CLGR 0 55 0 36 0 0 0 0 1
+3 704615   5461874   190.5   P DEGR 0 34 4 15 0 0 0 0 0
+</PRE>
+Note that the fifth field (i.e., the label)
+is really everything after the azimuth, not just
+the P.
+<P>
+This file could be formatted as follows:
+<P>
+<PRE>
+1:709818:5453991:246.0:P:CLGR:4:73:1:21:0:0:0:0:1
+2:698350:5464162:128.0:P:CLGR:0:55:0:36:0:0:0:0:1
+3:704615:5461874:190.5:P:DEGR:0:34:4:15:0:0:0:0:0
+</PRE>
+In this case the fields are separated by a colon so 
+<EM>fs=:</EM> must be specified on the command line. The labels (starting with the P)
+would retain the colons (i.e., they are not removed from the label even
+though they act to define the first 4 fields).
+<P>
+<P>
+When area transects are required, the transects file should include four (4) 
+more fields for backward, forward, rightside, and leftside distance from 
+the corresponding line transect. The format will be as the following:
+<P>
+<PRE>
+1   709818   5453991   246.0   10.0   15.0   20.0    5.0   P CLGR 4 73 1 21 0 0 0 0 1
+2   698350   5464162   128.0    5.0   15.0   10.0   25.0   P CLGR 0 55 0 36 0 0 0 0 1
+3   704615   5461874   190.5   15.0   20.0   10.0    5.0   P DEGR 0 34 4 15 0 0 0 0 0
+</PRE>
+Note that delimiter could be other than white space in transect file. Vector
+files of line transects can be generated from the above area transects file
+by not using 
+<EM>-a</EM>
+flag. However, the label will include four (4) more items.
+
+
+<P>
+
+
+
+<P>
+
+
+<H2>NOTES</H2>
+
+The resulting vector map is a complete GRASS vector map: it will have
+a category file with the labels from the input file
+and it will have the topology file already built.
+(
+<A HREF="v.support.html">v.support</A>
+ is run automatically by 
+<B>v.in.transects</B>
+as the final step in creating the GRASS vector map.)
+
+<P>
+<H2>AUTHORS</H2>
+
+Tao Wen, University of Illinois at Urbana-Champaign, Illinois.
+
+<BR>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory

@@ -1,0 +1,88 @@
+This file lists most of ongoing GRASS 5 Projects
+
+$Id: ONGOING,v 1.9 2000-11-19 17:29:20 markus Exp $
+
+
+GRASS 5.0 (stable) is scheduled for Autumn 2000.
+
+--------------------------------------------------------------------------
+What's currently going on (you are encouraged to assist):
+
+auto-conf:
+- extended "autoconf" for entire package:
+  new Makefile system
+  (Being worked on by Eric Mitchell <emitchell@altaira.com>)
+  -> will go into GRASS 5.1
+
+GRASS initialization:
+- GRASS graphical initialization (startup screens, location settings etc)
+  -> will go into GRASS 5.1
+- new env var handling
+  (Being worked on by Justin <jhickey@impact1.hpcc.nectec.or.th>)
+  -> will go into GRASS 5.1
+
+
+Libraries:
+- projection datum support for maps
+  (Being worked on by Andreas Lange <Andreas.Lange@Rhein-Main.de>)
+  -> will go into GRASS 5.0stable
+  -> library done 10/2000.
+
+- release import/export routines separately under LGPL
+  add GDAL support (for OSSIM and OpenEV projects)
+  (Being worked on by Frank Warmerdam <warmerda@home.com> /
+   Bernhard Reiter <bernhard@intevation.de>)
+  -> libgrass initial version done.
+
+- new 3D vector format: see documents/v3d_proposal.txt
+  Being worked on by: 
+  David D Gray, Radim Blazek
+   <ddgray@armadce.demon.co.uk>
+   <Radim.Blazek@dhv.cz>
+  -> will go into GRASS 5.1
+
+XDRIVER
+- remove fifos, use sockets (required for faster XDRIVER and WINDOWS port)
+  (Being worked on by Carl Anderson <candrsn@mindspring.com>)
+  -> will go into GRASS 5.1
+
+
+Modules:
+- full RGB support to all display modules
+  (Pierre de Mouveaux <pmx@audiovu.com> <pmx@free.fr>)
+  -> will go into GRASS 5.1
+
+- vector network analysis
+  (Being worked on by Roberto Micarelli <mi.ro@iol.it>)
+ 
+- v.out.e00: make it working
+  (Being worked on by Michel Wurtz <mw@engees.u-strasbg.fr>)
+
+- r.out.e00: write it
+  (Being worked on by Michel Wurtz)
+
+- Reorganize initialization routines and write a Tcl/Tk interface
+  for initialization
+  (Being worked on by Justin <jhickey@impact1.hpcc.nectec.or.th>)
+  -> will go into GRASS 5.1
+
+- Create a Tcl/Tk interface for v.digit
+  (Being worked on by Justin <jhickey@impact1.hpcc.nectec.or.th>)
+  -> will go into GRASS 5.1
+
+- Stereo Visualization/Analysis (aerial photos)
+  (Being worked on by Cesare Furlanello/IRST <furlan@itc.it>)
+  -> will go into GRASS 5.1
+
+- bug fixes
+
+- testsuite
+   (Being worked on by Andreas Lange <Andreas.Lange@Rhein-Main.de>)
+  -> initial testsuite done.
+
+External projects:
+
+  OSSIM (www.ossim.org) and 
+  OpenEV (http://openev.sourceforge.net/) will get a GRASS interface
+  to access the GRASS database
+

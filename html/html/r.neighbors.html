@@ -1,0 +1,228 @@
+<TITLE>r.neighbors</TITLE>
+
+<head>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+</head>
+
+<H2>NAME</H2>
+
+<EM><b>r.neighbors</b></EM>  - Makes each cell category value a
+function of the category values assigned to the cells
+around it, and stores new cell values in an output raster
+map layer.
+
+<BR>
+
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.neighbors</B>
+
+<BR>
+
+<B>r.neighbors help</B>
+
+<BR>
+
+<B>r.neighbors</B> [<B>-aq</B>] 
+<B>input=</B><EM>name </EM><B>output=</B><EM>name </EM>
+<B>method=</B><EM>name </EM><B>size=</B><EM>value</EM> 
+[<B>TITLE=</B><EM>"phrase"</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.neighbors</EM> looks at each cell in a raster input
+file, and examines the category values assigned to the
+cells in some user-defined "neighborhood" around it.  It
+outputs a new raster map layer in which each cell is
+assigned a category value that is some (user-specified)
+function of the values in that cell's neighborhood.  For
+example, each cell in the output layer might be assigned a
+category value equal to the average of the category values
+appearing in its 3 x 3 cell "neighborhood" in the input
+layer.
+
+
+<P>
+
+The program will be run non-interactively if the user
+specifies program arguments (see OPTIONS) on the command
+line.  Alternately, the user can simply type
+<B>r.neighbors</B> on the command line, without program
+arguments.  In this case, the user will be prompted for
+flag settings and parameter values.
+
+<H2>OPTIONS</H2>
+
+The user must specify the names of the raster map layers to
+be used for <EM>input</EM> and <EM>output</EM>, the
+<EM>method</EM> used to analyze neighborhood category
+values (i.e., the neighborhood function or operation to be
+performed), and the <EM>size</EM> of the neighborhood.
+Optionally, the user can also specify the <EM>TITLE</EM> to
+be assigned to the raster map layer <EM>output</EM>, elect
+to not align the resolution of the output with that of the
+input (the <EM>-a</EM> option), and elect to run
+<EM>r.neighbors</EM> quietly (the <EM>-q</EM> option).
+These options are described further below.
+
+
+<P>
+
+<EM>Neighborhood Operation Methods:</EM>
+The <EM>neighborhood</EM> operators determine what new 
+category value a center cell in a neighborhood will have after examining
+category values inside its neighboring cells.
+Each cell in a raster map layer becomes the center cell of a neighborhood 
+as the neighborhood window moves from cell to cell throughout the map layer.
+<EM>r.neighbors</EM>
+can perform the following operations:
+
+
+<P>
+
+
+<DT><B>average</B> 
+
+<DD>The average category value within the neighborhood.
+In the following example, the result would be:
+
+<BR>
+
+(7*4 + 6 + 5 + 4*3)/9 = 5.66
+
+<BR>
+
+The result is rounded to the nearest integer (in this case 6).
+
+<DT><B>median</B> 
+
+<DD>The category value found half-way through a list of the
+neighborhood's category values,
+when these are ranged in numerical order.
+
+<DT><B>mode</B> 
+
+<DD>The most frequently occurring category value in the neighborhood.
+
+<DT><B>minimum</B> 
+
+<DD>The minimum category value within the neighborhood.
+
+<DT><B>maximum</B> 
+
+<DD>The maximum category value within the neighborhood.
+<PRE>
+       Raw Data     Operation     New Data
+   ----------------          ----------------
+   | 7  | 7  |  5 |          |    |    |    |
+   |----|----|----| average  |----|----|----|
+   | 4  | 7  |  4 |---------&gt;|    |  6 |    |
+   |----|----|----|          |----|----|----|
+   | 7  | 6  |  4 |          |    |    |    |
+   |----|----|----|          |----|----|----|
+</PRE>
+
+<DT><B>stddev</B> 
+
+<DD>The statistical standard deviation of category values
+within the neighborhood (rounded to the nearest integer).
+
+<DT><B>variance</B> 
+
+<DD>The statistical variance of category values
+within the neighborhood (rounded to the nearest integer).
+
+<DT><B>diversity</B> 
+
+<DD>The number of different category values within the neighborhood.
+In the above example, the diversity is 4.
+
+<DT><B>interspersion</B> 
+
+<DD>The percentage of cells containing categories which differ from the category
+assigned to the center cell in the neighborhood, plus 1.
+In the above example, the interspersion is:
+
+<BR>
+
+5/8 * 100 + 1 = 63.5
+
+<BR>
+
+The result is rounded to the nearest integer (in this case 64).
+ERROR .RE
+
+
+<P>
+
+<EM>Neighborhood Size:</EM>
+The neighborhood size specifies which cells surrounding any given
+cell fall into the neighborhood for that cell.
+The size must be an odd integer.
+Options are:  1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, and 25.
+For example,
+<PRE>
+                              _ _ _
+                             |_|_|_| 
+    3 x 3 neighborhood ---&gt;  |_|_|_|
+                             |_|_|_|
+
+</PRE>
+
+<DT><B>-a</B> 
+
+<DD>If specified, <EM>r.neighbors</EM> will not align the output
+raster map layer with that of the input raster map layer.
+The <EM>r.neighbors</EM> program works in the current geographic region.
+It is recommended, but not required, that the resolution
+of the geographic region be the same as that of the raster map layer.
+By default, if unspecified,
+<EM>r.neighbors</EM> will align these geographic region settings.
+
+<DT><B>-q</B> 
+
+<DD>If specified, <EM>r.neighbors</EM> will run relatively quietly
+(i.e., without printing to standard output notes on the program's progress).
+If unspecified, the program will print messages to standard output by default.
+</DL>
+<H2>NOTES</H2>
+
+The <EM>r.neighbors</EM> program works in the current geographic region
+with the current mask, if any.  It is recommended, but not required,
+that the resolution of the geographic region be the same as that
+of the raster map layer.  By default, <EM>r.neighbors</EM> will align
+these geographic region settings.  However, the user can elect to keep
+original input and output resolutions which are not aligned by specifying
+this (e.g., using the <EM>-a</EM> option).
+
+
+<P>
+
+<EM>r.neighbors</EM> copies the GRASS <EM>color</EM> files associated with
+the input raster map layer for those output map layers that are based
+on the neighborhood average, median, mode, minimum, and maximum.
+Because standard deviation, variance, diversity, and interspersion are indices,
+rather than direct correspondents to input category values,
+no <EM>color</EM> files are copied for these map layers.
+(The user should note that although the <EM>color</EM> file is copied
+for <EM>average</EM>d neighborhood function output,
+whether or not the color file makes sense for the output
+will be dependent on the input data values.)
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="r.clump.html">r.clump</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><br>
+<EM><A HREF="r.mask.html">r.mask</A></EM><br>
+<EM><A HREF="r.mfilter.html">r.mfilter</A></EM><BR>
+<EM><A HREF="r.support.html">r.support</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,
+U.S.Army Construction Engineering Research Laboratory 

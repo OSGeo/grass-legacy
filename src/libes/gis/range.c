@@ -489,8 +489,15 @@ int G_get_range_min_max(
     }
     else
     {
-       *min = range->min;
-       *max = range->max;
+       if(G_is_c_null_value(&(range->min)))
+           G_set_c_null_value(min,1);
+       else
+           *min = range->min;
+
+       if(G_is_c_null_value(&(range->max)))
+	   G_set_c_null_value(max,1);
+       else
+           *max = range->max;
     }
 
     return 0;
@@ -519,8 +526,15 @@ int G_get_fp_range_min_max(
     }
     else
     {
-       *min = range->min;
-       *max = range->max;
+       if(G_is_d_null_value(&(range->min)))
+           G_set_d_null_value(min,1);
+       else
+           *min = range->min;
+
+       if(G_is_d_null_value(&(range->max)))
+	   G_set_d_null_value(max,1);
+       else
+           *max = range->max;
     }
 
     return 0;

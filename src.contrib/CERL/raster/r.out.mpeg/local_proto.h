@@ -2,7 +2,6 @@
 int load_files(void);
 int use_r_out(void);
 char **gee_wildfiles(char *, char *, int *);
-int parse_command(int, char *[], char *[][], int *, int *, int *, int *);
 /* write.c */
 int write_ycc(char *, char *, char *, int, int, int *, int *, char *);
 int write_ppm(char *, char *, char *, int, int, int *, int *, char *);

@@ -1,0 +1,160 @@
+<html>
+
+<TITLE>g.remove</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>g.remove</b></EM>  - Removes data base element files from
+the user's current mapset.
+
+<BR>
+
+<EM>(GRASS File Management Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>g.remove</B>
+<BR>
+<B>g.remove help</B>
+<BR>
+
+<B>g.remove</B> 
+[<B>rast=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>vect=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>icon=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>labels=</B><EM>name</EM>[,<EM>name</EM>,...]]
+[<B>sites=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>region=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>group=</B><EM>name</EM>[,<EM>name</EM>,...]]
+
+<H2>DESCRIPTION</H2>
+
+<EM>g.remove</EM> allows the user to remove specified data
+base element files from the current mapset.  
+
+<H2>OPTIONS</H2>
+
+If <EM>g.remove</EM> is invoked without arguments on the
+command line, a menu will appear listing possible data
+element types, as below:
+
+<KBD>
+<OL>
+<LI>raster maps
+<LI>vector maps    
+<LI><A HREF="paint.html">paint</A> icon files               
+<LI><A HREF="paint.html">paint</A> label files               
+<LI>site list files
+<LI>region files
+<LI><A HREF="i.group.html">imagery</A> group files
+</OL>
+RETURN to exit
+</KBD>
+
+<P>
+
+Once the element type is selected, the user is prompted to
+name a specific file of this element type for removal.
+(This list will vary, depending on what files currently
+exist in the user's mapset.)  The specified file is
+removed, and the user is again prompted for the name of a
+file of this element type to be removed.  When prompted for
+a file name, the user may enter <B>list</B> to see a list
+of existing files of this element type, or hit RETURN to
+get back to the above menu.
+
+<P>
+
+Alternately, the user can specify the data base element
+type and file(s) to be removed on the command line.  Data
+base element types are specified by the names to the left,
+below.
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>rast=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name(s) of raster file(s) to be removed.
+
+<DT><B>vect=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name(s) of vector file(s) to be removed.
+
+<DT><B>icon=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name(s) of <A HREF="paint.html">paint</A> 
+    icon file(s) to be removed.
+
+<DT><B>labels=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name(s) of <A HREF="paint.html">paint</A> 
+    labels file(s) to be removed.
+
+<DT><B>sites=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name(s) of site list file(s) to be removed.
+
+<DT><B>region=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name(s) of region file(s) to be removed.
+
+<DT><B>group=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name(s) of <A HREF="i.group.html">imagery</A> 
+   group file(s) to be removed.
+</DL>
+
+The data base element file(s) named by the user on the command line
+are subsequently removed from the user's current mapset.
+
+<H2>EXAMPLE</H2>
+
+For example, the below command will cause the raster files
+named <EM>soils</EM>, <EM>slope</EM>, and <EM>temp</EM>,
+the vector files named <EM>roads</EM> and <EM>rail</EM>,
+and the
+
+<A HREF="i.group.html">imagery</A> group files
+
+named <EM>nhap.1</EM> and <EM>nhap.2</EM>, and these files'
+associated support files (e.g., cell header files, category
+files, etc.), to be removed from the user's current
+mapset.
+
+
+<DL>
+<DD>
+<B>g.remove rast=</B><EM>soils,slope,temp</EM> <B>vect=</B><EM>roads,rail</EM> <B>group=</B><EM>nhap.1,nhap.2</EM>
+</DL>
+
+<H2>NOTE</H2>
+
+If a particular data base element file has support files
+associated with it (e.g., as is commonly the case with
+raster files), <EM>g.remove</EM> will remove these support
+files along with the data base element file specified.
+
+<P>
+
+The user can only use <EM>g.remove</EM> to remove data
+files existing under the user's <EM>current mapset</EM>.
+
+<H2>FILES</H2>
+
+<KBD>$GISBASE/etc/element_list</KBD> lists the element 
+types whose files can be removed by the user.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.copy.html">g.copy</A></EM><br>
+<EM><A HREF="g.list.html">g.list</A></EM><br>
+<EM><A HREF="g.rename.html">g.rename</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,
+U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

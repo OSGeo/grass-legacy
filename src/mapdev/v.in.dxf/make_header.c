@@ -1,4 +1,4 @@
-#include "dig_head.h"
+#include "Vect.h"
 #include "dxf2vect.h"
 /* JUST FOR REFERENCE */
 /*  struct dig_head

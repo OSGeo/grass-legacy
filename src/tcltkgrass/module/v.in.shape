@@ -1,0 +1,15 @@
+interface_build {
+    {v.in.shape} 0
+    {Converts data in ESRI shapefile format to GRASS's vector format, and stores output in the user's current GRASS mapset.}
+    {entry input {Shapefile:} 0 file}
+    {entry verbose {Debugging level (0-9):} 0 ""}
+    {entry logfile {File to log operations:} 0 File }
+    {entry snapdist {Snap distance for nodes during import:} 0 ""}
+    {entry sliver {Colinearity tolerance at node. Default 0.01 degree:} 0 ""}
+    {entry scale {Initial scale of vector map [1:2400]:} 0 ""}
+    {entry attribute {Name of field with category attribute number:} 0 ""}
+    {entry label {Name of field with category label:} 0 ""}
+    {checkbox -l {List fields in database(dbf).} "" -l}
+    {checkbox -r {Create reject lines map.} "" -r}
+}
+

@@ -1,4 +1,6 @@
 :
+ARCH=$1
+
 # copy the standard digcap file
 cp $GISBASE/etc/digcap.sample $GISBASE/etc/digcap
 
@@ -15,18 +17,13 @@ chmod -R 1777 $GISBASE/locks
 echo ""
 echo "GRASS GIS source code compiled successfully."
 
-# do warning about ps.map compilation:
-echo "HINT for ps.map on Linux: "
-echo "  You have to recompile this module with additional compile flag:"
-echo "  COMPILE_FLAGS = -fwritable-strings"
-echo "Add the flag in src/CMD/head/head and clean ps.map OBJ-files before"
-echo "recompiling."
+# talk about stuff not yet compiled:
+echo "* GRID3D raster volume support please compile as:"
+echo "       gmake5 src.contrib/GMSL/g3d"
 echo ""
-
-# talk about NVIZ
-echo "NVIZ Visualization tool:"
-echo "   Please compile it separately in"
-echo "          src.contrib/GMSL/NVIZ2.2/"
-echo "   Change to this directory. Use ./configure, gmake5 and gmakelinks5 "
-echo "   to compile the NVIZ."
+echo "* PostgreSQL support please compile as:"
+echo "       gmake5 src.garden/grass.postgresql"
 echo ""
+echo "* If you additionally compiled GRID3D and PostgreSQL support,"
+echo "  then run 'gmakelinks5' to finish the installation process."
+echo "* Check file error.log for modules not been compiled due to error."

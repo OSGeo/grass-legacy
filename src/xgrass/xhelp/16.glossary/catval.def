@@ -1,8 +1,0 @@
-
-
-category value - In GRASS, the numeric tag associated with an
-@glossary("attribute",16.glossary/attribu.def) (a.k.a., category).  Category values must be integers; each
-map may contain category values falling in the range +/- 2 to the 31.
-Maps in vector format store category values beneath the 'dig_att'
-directory, while maps in raster format store these values under
-the 'cats' directory.

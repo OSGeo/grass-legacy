@@ -1,0 +1,85 @@
+<TITLE>r.out.mpeg </TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r.out.mpeg</B></EM> - Raster File Series to MPEG Conversion Program
+
+<H2>GRASS VERSION</H2>
+4.x, 5.x
+
+<H2>SYNOPSIS</H2>
+<B>r.out.mpeg</B><BR>
+<B>r.out.mpeg help</B><BR>
+<B>r.out.mpeg</B> [<B>-qc</B>] <B>view1=</B><EM>name[,name,...]</EM>[<B>view2=</B><EM>name[,name,...]</EM>][<B>view3=</B><EM>name[,name,...]</EM>][<B>view4=</B><EM>name[,name,...]</EM>] [<B>output=</B><EM>name</EM>] [<B>qual=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>r.out.mpeg</EM> is a tool for combining a series of GRASS raster files into a single MPEG-1 (Motion Pictures Expert Group) format file.  MPEG-1 is a "lossy" video compression format, so the quality of each resulting frame of the animation will be much diminished from the original raster image.  The resulting output file may then be viewed using your favorite mpeg-format viewing program.
+<P>
+The user may define up to four "views", or sub-windows, to animate simultaneously.  e.g., View 1 could be rainfall, View 2 flooded areas, View 3 damage to bridges or levees, View 4 other economic damage, all animated as a time series. A black border 2 pixels wide is drawn around each view. There is an arbitrary limit of 100 files per view (100 animation frames).  Temporary files are created in the conversion process, so lack of adequate tmp space could also limit the number of frames you are able to convert.
+<P>
+The environment variable GMPEG_SIZE is checked for a value to use as the dimension, in pixels, of the longest dimension of the animation image.  If GMPEG_SIZE is not set, the animation size defaults to the rows &amp; columns in the current GRASS region, scaling if necessary to a default minimum size of 200 and maximum of 500.  These size defaults are overridden when using the -c flag (see below).  The resolution of the current GRASS region is maintained, independent of image size.  Playback programs have to decode the compressed data "on-the-fly", therefore smaller dimensioned animations will provide higher frame rates and smoother animations.
+<P>
+UNIX - style wild cards may be used with the command line version in place of a raster file name, but it must be quoted.
+<P>
+Example:
+<DD><EM>r.out.mpeg view1="rain[1-9]","rain1[0-2]" view2="temp*"</EM>
+<P>
+If the number of files differs for each view, the view with the fewest files will determine the number of frames in the animation.
+
+<H2>OPTIONS</H2>
+<H3>Flags:</H3>
+<DL>
+<DT><B>-q</B>
+<DD>Quiet - suppress progress report.
+
+<DT><B>-c</B>
+<DD>Convert "on the fly", uses less disk space by using <EM>r.out.ppm</EM> with stdout option to convert frames as needed instead of converting all frames to ppm before encoding.  Only use when encoding a single view.  Use of this option also overrides any size defaults, using the CURRENTLY DEFINED GRASS REGION for the output size. So be careful to set region to a reasonable size prior to encoding.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>view1</B>
+<DD>Raster file(s) for View1.
+
+<DT><B>view2</B>
+<DD>Raster file(s) for View2.
+
+<DT><B>view3</B>
+<DD>Raster file(s) for View3.
+
+<DT><B>view4</B>
+<DD>Raster file(s) for View4.
+
+<DT><B>output</B>
+<DD>Name for MPEG output file.
+<DD>Default: gmovie.mpg
+
+<DT><B>qual</B>
+<DD>Quality factor (1-5).
+<DD>Default: 3
+</DL>
+
+A quality value of <EM>qual=1</EM> will yield higher quality images, but with less compression (larger MPEG file size).  Compression ratios will vary depending on the number of frames in the animation, but an MPEG produced using <EM>qual=5</EM> will usually be about 60% the size of the MPEG produced using <EM>qual=1</EM>.
+
+<H2>BUGS</H2>
+MPEG images must be 16-pixel aligned for successful compression, so if the rows &amp; columns of the calculated image size (scaled, with borders added) are not evenly divisible by 16, a few rows/columns will be cut off the bottom &amp; right sides of the image. The MPEG format is optimized to recognize image MOTION, so abrupt changes from one frame to another will cause a "noisy" encoding.
+
+<H2>NOTES</H2>
+This program requires the program <EM>mpeg_encode</EM>:
+<P>
+MPEG-1 Video Software Encoder<BR>
+(Version 1.3; March 14, 1994)
+<P>
+Lawrence A. Rowe, Kevin Gong, Ketan Patel, and Dan Wallach Computer Science Division-EECS, <DD>Univ. of Calif. at Berkeley 
+<P>
+Available by anonymous ftp from: s2k-ftp.CS.Berkeley.EDU
+<P>
+Use of the <EM>-c</EM> flag also requires the program <EM>r.out.ppm</EM> with the <EM>stdout</EM> option.
+
+<H2>AUTHOR</H2>
+Bill Brown, U.S. Army Construction Engineering Research Laboratories

@@ -49,11 +49,13 @@ EOF
 if [ $i -ge $MAXVAL ] 
 then
 	g.region $region
+        d.frame -e
 	exit 1
 fi
 
-$i
+./$i
 
 do
 echo "" > /dev/null
 done
+d.frame -e

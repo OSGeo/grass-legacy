@@ -1,0 +1,143 @@
+<html>
+
+<TITLE>g.findfile</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM>g.findfile</EM>   - Searches for GRASS data base files
+and sets variables for the shell.
+
+<BR>
+
+<EM>(GRASS File Management Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>g.findfile</B>
+
+<BR>
+
+<B>g.findfile help</B>
+
+<BR>
+
+<B>g.findfile element=</B><EM>name</EM> 
+[<B>mapset=</B><EM>name</EM>] <B>file=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>g.findfile</EM>
+is designed for Bourne shell scripts that need to search for raster map
+layer files, vector files, site list files,
+geographic region definition (windows) files, and 
+
+<A HREF="i.group.html">imagery</A> group files
+
+in the GRASS data base.
+
+<H2>OPTIONS</H2>
+
+If the user runs <EM>g.findfile</EM> without command line arguments,
+he will be prompted for the names of a GRASS element, file, and mapset,
+through the standard 
+
+<EM><A HREF="parser.html">parser</A></EM>.
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>element=</B><EM>name</EM> 
+
+<DD>The data base element (i.e., directory within a GRASS
+mapset) to be searched.
+
+<DT><B>mapset=</B><EM>name</EM> 
+
+<DD>The mapset in which to search for the specified file
+<EM>name</EM>.  If not specified, all mapsets in the user's
+GRASS search path are searched.  Otherwise, the specified
+mapset is searched.  As a convenience, if specified as a
+single dot (.) only the current mapset is searched.
+
+<DT><B>file=</B><EM>name</EM> 
+
+<DD>The name of a GRASS data file (of the stated
+<EM>element</EM> type) for which to search.
+
+</DL>
+
+<H2>OUTPUT</H2>
+
+<EM>g.findfile</EM> writes four lines to standard output:
+
+<DL>
+<DD>
+<KBD>
+name='<EM>file_name</EM>'<BR>
+mapset='<EM>mapset_name</EM>'<BR>
+file='<EM>unix_filename</EM>'<BR>
+fullname='<EM>grass_fullname</EM>'
+</KBD>
+</DL>
+
+The output is <EM>/bin/sh</EM> commands to set the variable
+<EM>name</EM> to the GRASS data base file name,
+<EM>mapset</EM> to the mapset in which the file resides,
+and <EM>file</EM> to the full UNIX path name for the named
+file.  These variables may be set in the <EM>/bin/sh</EM>
+as follows:
+
+<DL>
+<DD>
+<B>eval `g.findfile element=</B><EM>name 
+</EM><B>mapset=</B><EM>name </EM><B>name=</B><EM>name</EM><B>`</B>
+</DL>
+
+<H2>NOTES</H2>
+
+If the specified file does not exist, the variables will be set as follows:
+
+<DL>
+<DD>
+<KBD>
+name=<BR>
+mapset=<BR>
+fullname=<BR>
+file=
+</KBD>
+</DL>
+
+The following is a way to test for this case:
+
+<PRE>
+          if [ ! "$file" ]
+          then
+               exit
+          fi
+</PRE>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.ask.html">g.ask</A></EM><br>
+<EM><A HREF="g.filename.html">g.filename</A></EM><br>
+<EM><A HREF="g.gisenv.html">g.gisenv</A></EM><br>
+<EM><A HREF="g.mapsets.html">g.mapsets</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,
+U.S.Army Construction Engineering 
+Research Laboratory
+</body>
+</html>

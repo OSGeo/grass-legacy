@@ -1,0 +1,131 @@
+<TITLE>ps.select</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>ps.select</b></EM>  - Selects a PostScript device for GRASS hardcopy output.
+
+<BR>
+
+<EM>(GRASS Hardcopy PostScript Output Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>ps.select</B>
+
+<BR>
+
+<B>ps.select help</B>
+
+<BR>
+
+<B>ps.select</B> [<B> -lpq</B>] [<B>painter</B>=<EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<B>ps.select</B>
+allows the user to select the PostScript device for GRASS hardcopy output.
+If the user has not selected a device
+<EM>before</EM>
+running <EM>
+<A HREF="ps.map.html">ps.map</A>
+</EM>, the default device configuration (shown under 
+<B>NOTES</B> below, will be used.
+
+<H2>OPTIONS</H2>
+
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-l</B> 
+
+<DD>List all available PostScript painters.
+
+<DT><B>-p</B> 
+
+<DD>Print name of currently selected PostScript painter.
+
+<DT><B>-q</B> 
+
+<DD>Quietly select PostScript painter.
+</DL>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>painter=</B><EM>name</EM> 
+
+<DD>Name of PostScript painter to select.
+
+<BR>
+
+Options:  (this will be a list of available hardcopy output PostScript devices)
+</DL>
+
+<H2>INTERACTIVE MODE</H2>
+
+If the user runs <EM>ps.select</EM> without specifying program arguments on the
+command line, the program will prompt the user for the name of a hardcopy output
+PostScript device to select.
+
+<H2>NOTES</H2>
+
+Each PostScript device must have a device description file in the
+$GISBASE/etc/paint/ps\*.devices directory.  The name of the device description
+file is used as the name of the PostScript painter.  A device description
+file contains the following information (default values are shown):
+
+
+<P>
+
+
+<PRE>
+	level: 2
+	page width: 8.5
+	page height: 11.0
+	top margin: 0.5
+	bottom margin: 0.5
+	left margin: 0.25
+	right margin: 0.25
+	resolution: 75
+
+</PRE>
+
+
+<P>
+
+where 
+<EM>level</EM> is the PostScript level supported by the device (1 or 2);
+<EM>page width</EM> and <EM>page height</EM> are the
+paper dimensions (in inches);
+<EM>top margin</EM>,
+<EM>bottom margin</EM>,
+<EM>left margin</EM> and
+<EM>right margin</EM>
+are the unprintable edges of the page (in inches);
+and <EM>resolution</EM> is the effective resolution (in pixels per inch).  
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="ps.map.html">ps.map</A>
+</EM>
+
+<H2>AUTHOR</H2>
+
+Paul Carlson, USDA, SCS, NHQ-CGIS

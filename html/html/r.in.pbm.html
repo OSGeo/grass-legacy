@@ -1,0 +1,55 @@
+<TITLE>r.in.pbm</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+<EM><B>r.in.pbm</B></EM> - Converts an ASCII/BINARY PPM image file to a GRASS raster file.<BR>
+<EM>(GRASS Raster Data Import Program) </EM>
+
+<H2>GRASS VERSION</H2>
+4.x
+
+<H2>SYNOPSIS</H2>
+<B>r.in.pbm</B> [<B>-v</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+This program converts a PPM raster file to a GRASS raster file. Output is placed in the /cell directory under the user's current GRASS mapset. 
+
+<H2>OPTIONS</H2>
+<H3>Flag:</H3>
+<DL>
+<DT><B>-v</B>
+<DD>Verbose mode.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing PPM raster file to be imported. 
+
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to resultant binary raster map layer. 
+</DL>
+
+The program prompts the user to enter the name of the PPM raster file to be converted and the name to be assigned to the GRASS raster file to contain the resultant image. Currently PPM ASCII and PPM BINARY (PBM) formats are supported. 
+
+<P>
+
+The user should adjust boundary coordinates stored in the cell header after import using <EM>r.support</EM>. 
+
+<P>
+
+The user must, of course, first create the PPM raster file to be converted (e.g., from a scanning system that produces PPM raster file format). 
+
+<H2>NOTE</H2>
+The maximum color number is limited to 32768 colors. 
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.support.html">r.support</A>, <A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+Bill Brown, GMS Labs, UIUC

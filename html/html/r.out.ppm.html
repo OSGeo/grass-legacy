@@ -1,0 +1,57 @@
+<html>
+<TITLE>r.out.ppm</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+<b>r.out.ppm</b> - converts a GRASS raster file to a PPM image file
+at the pixel resolution of the CURRENTLY DEFINED REGION.
+<P>
+
+<H2>Usage:</H2>
+ <b>r.out.ppm</b> [-qG] <b>input=</b>name <b>output=</b>name
+
+<h2>Flags:</H2>
+  -q   Run quietly<p>
+  -G   Output greyscale instead of color<p>
+
+<H2>Parameters:</H2>
+   input   Raster file to be converted.<p>
+  output   Name for new PPM file. (use out=- for stdout)<br>
+ &nbsp;&nbsp;          default: &lt;rasterfilename&gt;.ppm<p>
+
+<p>
+This program converts a GRASS raster file to a PPM image file
+at the pixel resolution of the CURRENTLY DEFINED REGION. 
+e.g., to get the resolution of the raster map, do:<p>
+
+&nbsp;&nbsp;	g.region rast=[mapname]<p>
+
+before running r.out.ppm.<p>
+
+The PPM file created is 24bit color, rawbits storage by default.
+Using -G, you may force r.out.ppm to use 8bit greyscale instead.
+The greyscale conversion uses the NTSC conversion:<p>
+
+&nbsp;&nbsp;Y = .30*Red + .59*Green + .11*Blue
+
+<p>
+One pixel is written for each cell value, so if ew_res and ns_res
+differ, the aspect ratio of the resulting image will be off.
+<p>
+<H2>NOTE</H2>
+A few ppm file comments are written - the name of the GRASS
+raster file, resolution, etc.  Although these are perfectly legal,
+I've found one PD image utility that chokes on them, so if you need 
+a commentless ppm file, use out=- &gt; outfile.ppm. (When sending 
+output to stdout, no comments are written.)<p>
+
+<H2>TODO</H2>
+ Allow combination of 3 grass files to represent R, G, B components  of ppm file?
+
+<HR>
+<ADDRESS>
+ Bill Brown <a href=mailto:brown@gis.uiuc.edu>&lt;brown@gis.uiuc.edu&gt;</a>
+</ADDRESS>
+</BODY>
+</HTML>

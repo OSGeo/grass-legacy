@@ -1,0 +1,183 @@
+<HTML>
+
+<TITLE>i.tape.tm.fast</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>i.tape.tm.fast</b></EM>  - An imagery function that
+extracts Thematic Mapper (TM) imagery from tape media
+
+<BR>
+
+<EM>(GRASS Image Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>i.tape.tm.fast</B>
+
+<BR>
+
+<B>i.tape.tm.fast help</B>
+
+<BR>
+
+<B>i.tape.tm.fast help</B>
+[<B>-q</B>] <B>input=</B><EM>name</EM> <B>group=</B><EM>name</EM> 
+<B>bands=</B><EM>value</EM>[,<EM>value</EM>,...] 
+[<B>rows=</B><EM>firstrow-lastrow</EM>] 
+[<B>cols=</B><EM>firstcol-lastcol</EM>] [<B>TITLE=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>i.tape.tm.fast</EM> is a program that extracts TM
+imagery from tape media with different blocking factors
+(its value indicates how many rows are combined into one
+physical record on the tape).
+
+<P>
+
+<EM>i.tape.tm.fast</EM> must be run in a LOCATION_NAME with
+a (x,y) coordinate system (i.e., a coordinate system with
+projection 0). For further information regarding the
+LOCATION_NAME type, please refer to the
+
+<EM><A HREF="../imagery.html">imagery</A></EM> manual entry.
+
+
+<P>
+
+<EM>i.tape.tm.fast</EM> reads the blocking factor from the
+header file as well as other parameters, such as gains and
+offsets for each band, map projection, sun elevation and
+azimuth, etc., and writes into history file (depending upon
+the contents of the header file).
+
+<H2>OPTIONS</H2>
+
+This program can be run either non-interactively or
+interactively. It will be run non-interactively if the user
+specifies the name of input device, the name of output
+group file, bands to be extracted, and optionally other
+parameters (see below) on the command line using the form:
+
+
+<P>
+
+<DL>
+<DD>
+<B>i.tape.tm.fast help</B>
+[<B>-q</B>] <B>input=</B><EM>name</EM> <B>group=</B><EM>name</EM> 
+<B>bands=</B><EM>value</EM>[,<EM>value</EM>,...] 
+[<B>rows=</B><EM>firstrow-lastrow</EM>] 
+[<B>cols=</B><EM>firstcol-lastcol</EM>] [<B>TITLE=</B><EM>name</EM>]
+</DL>
+
+where the <EM>input</EM> should be the device name on which
+the tape media are mounted. The <EM>group</EM> is an
+imagery group which will store the extracted TM imagery.
+The <EM>bands</EM> value in a list separated by commas is
+the bands the user wants to extract from the imagery. The
+<EM>rows</EM> and <EM>cols</EM> represent the region which
+the user wishes to extract, where the default is whole
+imagery.  At last an optional <EM>TITLE</EM> is for
+information only.  Alternatively, the program will be run
+interactively if the user types only
+<EM>i.tape.tm.fast</EM>; in this case the program will
+prompt the user for parameter values using the standard
+GRASS
+
+<EM><A HREF="parser.html">parser</A></EM> interface.
+
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-q</B> 
+<DD>Run quietly.  Supresses output of program
+percent-complete messages.  If this flag is not used, these
+messages are printed out.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>The name of the device on which the tape media
+containing the imagery files mounted.
+
+<DT><B>group=</B><EM>name</EM> 
+
+<DD>The name of the group, which will store the imagery
+extracted from tape media.
+
+<DT><B>bands=</B><EM>value</EM>[,<EM>value</EM>,...] 
+
+<DD>The bands the user wishes to extracted from the tape media.
+
+<BR>
+
+Options: 1-7
+
+<DT><B>rows=</B><EM>firstrow-lastrow</EM> 
+
+<DD>The values of first and last row of the extracting region.
+
+<BR>
+
+Default: full imagery
+
+<DT><B>cols=</B><EM>firstcol-lastcol</EM> 
+
+<DD>The values of first and last column of the extracting region.
+
+<BR>
+
+Default: full imagery
+
+<DT><B>TITLE=</B><EM>name</EM> 
+
+<DD>The TITLE of the extracting imagery.
+
+<BR>
+
+Default: TM Imagery File Extracted from Tape
+
+</DL>
+
+
+<H2>NOTES</H2>
+
+Running in command line mode, <EM>i.tape.tm.fast</EM> will
+overwrite the group file and support files without
+prompting if the files existed.
+
+<H2>SEE ALSO</H2>
+
+<EM>GRASS Tutorial: <A HREF="../Postscript/imagery.ps">Image Processing</A></EM>
+
+<P>
+
+<EM><A HREF="i.group.html">i.group</A></EM><BR>
+<EM><A HREF="i.tape.mss.html">i.tape.mss</A></EM><BR>
+<EM><A HREF="i.tape.mss.h.html">i.tape.mss.h</A></EM><BR>
+<EM><A HREF="i.tape.other.html">i.tape.other</A></EM><BR>
+<EM><A HREF="i.tape.tm.html">i.tape.tm</A></EM><BR>
+<EM><A HREF="i.tape.spot.html">i.tape.spot</A></EM><BR>
+<EM><A HREF="../imagery.html">imagery</A></EM><BR>
+<EM><A HREF="m.examine.tape.html">m.examine.tape</A></EM>
+
+<H2>AUTHOR</H2>
+
+Tao Wen, University of Illinois at 
+Urbana-Champaign
+
+</BODY>
+</HTML>

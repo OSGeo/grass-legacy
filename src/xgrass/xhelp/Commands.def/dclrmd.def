@@ -1,8 +1,0 @@
-
-
-d.colormode - 
-
-d.colormode establishes what color table will be used to display maps
-to the graphics monitor.
-
-Manual entry for @man("d.colormode")

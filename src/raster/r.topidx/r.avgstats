@@ -1,0 +1,48 @@
+#!/bin/sh
+program=`basename $0`
+
+if [ ! "$GISBASE" ]
+then
+	echo 
+	echo "ERROR: must be in GRASS to use $program"
+	echo 
+	exit 1
+fi
+
+if [ $# -lt 1 -o "x$1" = "xhelp" ]
+then
+	echo
+	echo "Usage: $program map=name [nsteps=value]"
+	echo
+	exit 1
+fi
+
+nsteps=30
+
+for i
+do
+	case $i in
+		nsteps=*)
+			nsteps=`echo $i | sed s/^nsteps=//` ;;
+		*)
+			map=`echo $i | sed s/^map=//` ;;
+	esac
+done
+
+r.stats -nc input=$map nsteps=$nsteps | perl -e '
+@allLines = <STDIN>;
+$i=$#allLines;
+for(@allLines){
+	$line = $_;
+	$line =~ s/([0-9])-(-?[\.0-9])/\1 \2/;
+	@vals = split(/ /,$line);
+	$outLines[$i][0]=($vals[0]+$vals[1])/2;
+	$outLines[$i][1]=$vals[2];
+	$i--;
+}
+for($i=0;$i<=$#outLines;$i++){
+	printf "%15f  %15d\n",$outLines[$i][0],$outLines[$i][1];
+}
+'
+
+exit 0

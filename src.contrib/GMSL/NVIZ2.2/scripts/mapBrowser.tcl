@@ -1,5 +1,8 @@
 global map_browser
 
+global src_boot
+#set src_boot $env(GISBASE)
+
 proc grass_ls {element {mapset .}} {
     set dir [grass_element_name $element $mapset]
     if {[file isdir $dir]} {
@@ -13,10 +16,11 @@ proc grass_element_name {element {mapset .}} {
 }
 
 proc grass_file_name {element name {mapset .}} {
+    global src_boot
     if {[string compare $mapset .] == 0} {
-	    set mapset [g.gisenv MAPSET]
+	    set mapset [exec $src_boot/bin/g.gisenv MAPSET]
     }
-    return [g.gisenv GISDBASE]/[g.gisenv LOCATION_NAME]/$mapset/$element/$name
+    return [exec $src_boot/bin/g.gisenv GISDBASE]/[exec $src_boot/bin/g.gisenv LOCATION_NAME]/$mapset/$element/$name
 }
 
 proc grass_location {} {
@@ -24,15 +28,17 @@ proc grass_location {} {
 }
 
 proc g.gisenv {name} {
-    #  g.gisenv fixed in GRASS 5 beta4d
-    return [exec g.gisenv $name]
+    global src_boot
+    return [exec $src_boot/bin/g.gisenv $name]
 }
 
 proc grass_mapset_list {} {
+    global src_boot
+
     set list {}
     set location [grass_location]
 
-    foreach name [exec g.mapsets -p] {
+    foreach name [exec $src_boot/bin/g.mapsets -p] {
 	if {[file isdir $location/$name]} {
 	    lappend list $name
 	}

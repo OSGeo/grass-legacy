@@ -1,5 +1,4 @@
 #include	<stdio.h>
-#include	"dig_structs.h"
 #include	"Vect.h"
 #include "vbuildlib.h"
 

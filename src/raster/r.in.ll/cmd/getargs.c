@@ -5,6 +5,7 @@ int getargs (int argc, char *argv[], struct GEO *geo, char **infile, char **outf
 {
     double lat,lon;
 
+	struct GModule *module;
     struct
     {
 	struct Option *input, *output,
@@ -19,6 +20,11 @@ int getargs (int argc, char *argv[], struct GEO *geo, char **infile, char **outf
     } flag;
     char corner_description[256];
     char *G_lat_format_string(), *G_lon_format_string();
+
+	module = G_define_module();
+	module->description =
+		"Converts raster data referenced using latitude and longitude "
+		"coordinates to a UTM-referenced map layer in GRASS raster format.";
 
     parm.input = G_define_option();
     parm.input->key = "input";

@@ -1,0 +1,182 @@
+<html>
+
+<TITLE>m.dmaUSGSread</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>m.dmaUSGSread</b></EM>  - Extracts digital terrain elevation data (DTED)
+produced by the Defense Mapping Agency (DMA)
+but supplied by the USGS (in a different tape format)
+on 1/2-inch magnetic tape.
+
+<BR>
+
+<EM>(GRASS Data Import/Processing Program) </EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>dd</B> [<B>if=</B><EM>tapedev</EM>] 
+<B>ibs=</B><EM>input-block-size</EM> | 
+<B>m.dmaUSGSread
+top=</B><EM>value</EM><B>
+bottom=</B><EM>value</EM><B>
+left=</B><EM>value</EM><B>
+right=</B><EM>value</EM><B>
+output=</B><EM>name</EM><B>
+logfile=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.dmaUSGSread</EM>
+extracts digital terrain elevation data (DTED) that was produced by the
+Defense Mapping Agency (DMA) but bought from the USGS;  these two agencies
+distribute the same data in a slightly different tape formats.
+This program requires the use of the UNIX command <EM>dd</EM>
+to read the 1/2-inch magnetic tape.
+<EM>m.dmaUSGSread</EM>
+should be used prior to using the GRASS programs
+<EM><A HREF="m.rot90.html">m.rot90</A></EM> and <EM><A HREF="r.in.ll.html">r.in.ll</A></EM>.
+
+
+<P>
+
+Parameters for the UNIX <EM>dd</EM> command are listed below.
+
+
+<P>
+
+
+<DT><B>if=</B><EM>tapedev</EM> 
+
+<DD>The path name of the tape drive from which input will be taken
+(usually <KBD>/dev/rmt0</KBD>).
+
+<DT><B>ibs=</B><EM>input-block-size</EM> 
+
+<DD>The physical blocking value of the data on tape,
+usually written on the tape spool.
+If this value is unknown, run <EM><A HREF="m.examine.tape.html">m.examine.tape</A></EM>
+prior to running <EM>m.dmaUSGSread</EM>.
+
+
+<P>
+
+
+
+<P>
+
+Parameters for <EM>m.dmaUSGSread</EM> are listed below.
+
+
+<P>
+
+
+<DT><B>top=</B><EM>value</EM> 
+
+<DD>Beginning row number of data.
+
+<BR>
+
+Options:  1-1201
+
+<DT><B>bottom=</B><EM>value</EM> 
+
+<DD>Ending row number of data.
+
+<BR>
+
+Options:  1-1201
+
+<DT><B>left=</B><EM>value</EM> 
+
+<DD>Beginning column number of data.
+
+<BR>
+
+Options:  1-1201
+
+<DT><B>right=</B><EM>value</EM> 
+
+<DD>Ending column number of data.
+
+<BR>
+
+Options:  1-1201
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Name of the output file to hold the extracted DEM data.
+
+<DT><B>logfile=</B><EM>name</EM> 
+
+<DD>Name of a file to hold related information about the extracted data.
+
+</DL>
+
+<H2>EXAMPLE:</H2>
+
+For example, the command:
+
+<DL>
+<DD>
+<B>dd if=/dev/rmt0 ibs=10240 | \<BR>
+m.dmaUSGSread top=</B><EM>1</EM> <B>bottom=</B><EM>400</EM> <B>left=</B><EM>1</EM> <B>right=</B><EM>500</EM> \<BR>
+    <B>output=</B><EM>dem</EM> <B>logfile=</B><EM>log</EM>
+</DL>
+
+will extract data from <KBD>/dev/rmt0</KBD> and 
+put the first 400 rows and first 500 columns into the file <EM>dem</EM>
+located in the user's current directory.
+
+<H2>SEE ALSO</H2>
+
+<EM>Options for Acquiring Elevation Data</EM>, by 
+Stuart Bradshaw,
+(ADP Report N-87/22, USACERL, 1988).
+
+
+<P>
+
+<EM>DTED and DEM Elevation Data Extraction</EM>, by
+Stuart Bradshaw, 
+Mary Martin, 
+and Chester Kos (ADP Report N-87/22, USACERL, 1988).
+
+
+<P>
+
+and the UNIX manual entry for <EM>dd</EM>
+
+
+<P>
+
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="m.dted.examine.html">m.dted.examine</A></EM><br>
+<EM><A HREF="m.dted.extract.html">m.dted.extract</A></EM><br>
+<EM><A HREF="m.examine.tape.html">m.examine.tape</A></EM><br>
+<EM><A HREF="m.region.ll.html">m.region.ll</A></EM><br>
+<EM><A HREF="m.rot90.html">m.rot90</A></EM><br>
+<EM><A HREF="r.describe.html">r.describe</A></EM><br>
+<EM><A HREF="r.in.ll.html">r.in.ll</A></EM><br>
+<EM><A HREF="r.rescale.html">r.rescale</A></EM><br>
+<EM><A HREF="r.slope.aspect.html">r.slope.aspect</A></EM>
+
+<H2>AUTHORS</H2>
+
+James Farley, 
+Arkansas Archeological Survey, 
+University of Arkansas
+
+<BR>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

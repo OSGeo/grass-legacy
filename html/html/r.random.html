@@ -1,0 +1,204 @@
+<HTML>
+<HEAD>
+<TITLE>r.random</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.random</b></EM>  - Creates a raster map layer and site list file 
+containing randomly located sites. 
+<BR>
+<EM>(GRASS</EM> Raster Program)</B> 
+
+<H2>SYNOPSIS</H2>
+
+<B>r.random</B>
+<BR>
+<B>r.random help</B> 
+<BR>
+<B>r.random</B> 
+[<B>-iqz</B>] 
+<B>input=</B><EM>name</EM> 
+<B>nsites=</B><EM>number</EM>[<B>%</B>]
+[<B>raster_output=</B><EM>name</EM>] 
+[<B>sites_output=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+The program <EM>r.random</EM> allows the user to create a
+raster map layer and a site list file containing 
+coordinates of points whose locations have been randomly
+determined.  The program locates these randomly generated
+sites within the current geographic region and mask (if
+any), on non-zero category value data areas within a
+user-specified raster map layer.  If the user sets the
+<B>-z</B> flag, sites will be randomly generated across all
+cells (even those with NULL values).
+
+<P>
+
+The <EM>raster_output</EM> raster map layer is created in
+the user's current mapset.  The category values and
+corresponding category names already associated with the
+random site locations in the <EM>input</EM> map layer are
+assigned to these sites in the <EM>raster_output</EM> map
+layer. If the <B>-z</B> is specified, then a unique entry
+is made for the value used where the <EM>input</EM> was NULL.
+This value is at least 1 less than the smallest value in the
+<EM>input</EM> raster and is given a medium gray color.
+
+<P>
+
+The <EM>site_lists</EM> file created by <EM>r.random</EM>
+contains a listing of the sites' coordinates;
+these coordinates are the <EM>center points</EM> of the
+randomly selected cells.  A double attribute contains the cell value
+of the <EM>input</EM> raster (or the assigned value
+when <B>-z</B> is used.
+
+<H2>OPTIONS</H2>
+
+The user may specify the quantity of random locations to be
+generated either as a <EM>positive integer</EM> (e.g., 10),
+or as a <EM>percentage of the raster map layer's cells</EM> 
+(e.g., 10%, or 3.05%).  The number of cells considered for 
+the percentage reflects whether or not the <B>-z</B> flag
+was given.   Options are 0-100; percentages less than
+one percent may be stated as decimals.  
+
+<P>
+
+<EM>r.random</EM> can be run interactively or
+non-interactively.  The user may provide program arguments
+on the command line, specifying an input map layer name
+(<B>input=</B><EM>name</EM>), output raster map layer name
+(<B>raster_output=</B><EM>name</EM>), output site list file
+name (<B>sites_output=</B><EM>name</EM>), and 
+the number of sites to be randomly generated as a
+total number of sites (<B>nsites=</B><EM>number</EM>) or as
+a percentage of the map's size
+(<B>nsites=</B><EM>number</EM><B>%</B>).  The user can also
+direct that <EM>r.random</EM> run quietly (using the
+<B>-q</B>)</EM> option, and/or direct <EM>r.random</EM> to
+also generate random site locations against cells
+containing NULL values (using the <B>-z</B> option).  The
+<B>-i</B> can be used to get a count of the total cells and
+NULL cells given the current region settings.
+
+<P>
+
+Alternately, the user can simply type <B>r.random</B> on the command line 
+without program arguments. In this case, the user will be prompted for 
+needed inputs and option choices using the standard GRASS 
+<EM><A HREF="parser.html">parser</A></EM>
+interface.
+
+<P>
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-q</B>
+
+<DD>Run quietly. <EM>r.random</EM> will normally print
+output messages to standard output as it runs. The
+<B>-q</B> option will suppress the printing of these
+messages.
+
+<DT><B>-z</B>
+
+<DD>Include NULL cells in the pool
+from which <EM>r.random</EM> will randomly generate site locations. 
+
+<DT><B>-i</B>
+
+<DD>Print the raster map's name and location, 
+the total number of cells under the current region settings, and
+the number of NULL valued cells under the current region settings.
+Then exit without doing anything.  Useful for deciding on the number
+of sites to have <EM>r.random</EM> create.
+</DL>
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>An existing raster map layer in the user's current mapset search path. 
+<EM>r.random</EM> will randomly generate sites on a user-specified portion 
+of the cells in this <EM>input</EM> raster map. 
+<DT><B>nsites=</B><EM>number</EM>
+<DD>Specify the quantity of sites to be randomly generated as 
+either a <EM>positive</EM> integer</B>, or 
+as a <EM>percentage</EM> value</B> of the number of cells in the <EM>input</EM> map layer. 
+If stated as a positive integer, <EM>number</EM> is 
+the number of sites (i.e., number of cells) to appear 
+in the <EM>raster_output</EM> layer and/or <EM>sites_output</EM> file. 
+<BR>
+Options: Non-percentage values should be given as positive integer values 
+less than or equal to the number of cells in the input map layer. 
+Percentage values given should be within the range 0.00 - 100.00 
+(decimal values are allowed). 
+<DT><B>raster_output=</B><EM>name</EM>
+<DD>The new raster map layer to hold program output. This map will contain 
+the sites randomly generated by <EM>r.random</B>.</EM> If the -z flag is not set, 
+all sites will be assigned whatever category values were assigned these 
+cell locations in the <EM>input</EM> raster map layer. 
+If the -z flag is set, all sites except those falling on NULL cells
+in the <EM>input</EM> value will be assigned the category values 
+assigned these cells in the input layer; sites falling on NULL cells 
+in the <EM>input</EM> layer will be assigned to a newly created 
+category in the <EM>raster_output</EM> layer with at least one integer
+value less than the minimum value in the <EM>input</EM> layer. 
+<DT><B>sites_output=</B><EM>name</EM>
+<DD>The new GRASS <EM>site_lists</EM> file to hold program output. 
+If no <EM>sites_output</EM> file name is given on the command line, 
+no <EM>site_lists</EM> file will be created by <EM>r.random</B>.</EM> 
+(See <EM>raster_output</EM> parameter description, above.) 
+
+Note. Although the user need not request that <EM>r.random</EM> output 
+both a raster map layer (<EM>raster_output</EM>) 
+and a site list file (<EM>sites_output</EM>), the user must 
+specify that at least one of these outputs be produced. 
+</DL>
+
+<H2>NOTES</H2>
+
+To create random site locations within some, but not all, 
+non-zero categories of the input raster map layer, 
+the user must first create a reclassified raster map layer 
+of the original raster map layer (e.g., using the GRASS 
+program <EM><A HREF="r.reclass.html">r.reclass</A></EM>) 
+that contains only the desired categories, 
+and then use the reclassed raster map layer as input to <EM>r.random</B>.</EM> 
+
+<H2>BUGS</H2>
+
+It's not possible to use the <B>-i</B> flag and not also specify the <B>nsites</B> 
+parameter.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="r.mask.html">r.mask</A></EM><br>
+<EM><A HREF="r.reclass.html">r.reclass</A></EM><br>
+<EM><A HREF="s.random.html">s.random</A></EM><br>
+
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Dr. James Hinthorne,
+GIS Laboratory, 
+Central Washington University
+
+<P>
+Modified for GRASS 5.0 by Eric G. Miller
+
+</BODY>
+</HTML>

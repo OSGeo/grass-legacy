@@ -1,0 +1,80 @@
+<TITLE>d.rast.leg.sh</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.rast.leg.sh </b></EM> - Displays a raster map and its legend on a graphics
+window.
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.rast.leg.sh</B>
+
+<BR>
+
+<B>d.rast.leg.sh help</B>
+
+<BR>
+
+<B>d.rast.leg.sh </B> <EM>rast_map</EM> [<EM>num_of_lines</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.rast.leg.sh</EM>
+is a UNIX Bourne shell macro which clears the entire screen, divides it 
+into a main (left) and a minor (right) frames, and then display a raster 
+map in the main frame and the map legend in the minor frame. The main
+frame remains active when the program finishs. 
+
+<H2>OPTIONS</H2>
+
+The user can run the program interactively or
+non-interactively.
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>rast_map</B>
+
+<DD>A raster map to be displayed.
+
+<DT><B>num_of_lines</B>
+
+<DD>Number of lines to appear in the legend. If this number
+is not given, the legend frame will display as many lines
+as number of categories in the map, otherwise, it will
+display the first <B>num_of_lines</B> minus 1 categories with the
+rest being truncated.
+
+</DL>
+
+<H2>NOTES</H2>
+
+The user may adjust the <B>num_of_lines</B> parameter or
+the size of graphics window to get an appropriate result.
+
+<H2>FILES</H2>
+
+See the file <EM>d.rast.leg.sh</EM> under <KBD>$GISBASE/scripts</KBD>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.legend.html">d.legend</A></EM><BR>
+<EM><A HREF="d.rast.html">d.rast</A></EM>
+
+<H2>AUTHORS</H2>
+
+Jianping Xu, <BR>
+Scott Madry, <BR>
+Rutgers University
+

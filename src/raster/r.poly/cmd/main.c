@@ -20,8 +20,14 @@
 int main (int argc, char *argv[])
 {
   char *input, *output;
+  struct GModule *module;
 
   G_gisinit(argv[0]);
+
+  module = G_define_module();
+  module->description =
+	"Extracts area edges from a raster map layer and converts "
+	"data to GRASS vector format.";
 
   if (syntax(argc,argv,&input,&output))
   {

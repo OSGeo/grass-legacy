@@ -1,0 +1,67 @@
+#!/bin/sh
+# the next line restarts using wish \
+exec wish8.0 "$0" "$@"
+
+lappend auto_path $env(GISBASE)/bwidget
+package require BWidget 
+
+gets stdin table
+wm title . "db.attr: table $table"  
+
+set colen 0
+set i 0
+while { [gets stdin in] > -1 } { 
+    set col($i) $in
+    set len [string length $in]
+    if { $len > $colen } { set colen $len } 
+    gets stdin in
+    set type($i) $in
+    gets stdin in
+    set val($i) $in
+    incr i
+}
+set ncols $i
+
+set sw [ScrolledWindow .sw -relief sunken -borderwidth 2]
+set sf [ScrollableFrame $sw.sf -width 300 -height 400]
+$sw setwidget $sf
+set suf [$sf getframe]
+
+for {set i 0} {$i < $ncols} {incr i} {
+    frame $suf.rw$i -width 300
+    label $suf.rw$i.col -width $colen -text "$col($i)" -anchor w
+   
+    Entry $suf.rw$i.val -width 100 -text $val($i) -textvariable val($i)
+    if { $i == 0} { $suf.rw$i.val configure -editable 0 }
+    pack $suf.rw$i $suf.rw$i.col -side left
+    pack $suf.rw$i $suf.rw$i.val -side left
+    pack $sf $suf.rw$i -side top
+}
+$suf.rw0.val configure -editable 0
+pack $sw $sf
+
+button .update -text "Update" -command {
+	set cmd "update $table set " 
+	for {set i 1} {$i < $ncols} {incr i} {
+	    if { $i > 1 } { append cmd ", " }
+	    if { [string length $val($i)] > 0 } {
+		if { [string compare $type($i) "s"] == 0 || [string compare $type($i) "t"] == 0 } {
+		    append cmd "$col($i)='$val($i)' "
+		} else {
+		    append cmd "$col($i)=$val($i) "
+		}
+	    } else {
+		    append cmd "$col($i)=null "
+	    }	
+	}
+	append cmd "where $col(0)=$val(0)"
+	puts stdout $cmd 
+	exec echo $cmd | db.execute  
+	destroy .
+    }
+pack .update -side left -padx 20 -pady 5
+
+button .close -text "Close" -command {
+	destroy .
+    }
+pack .close -side right -padx 20 -pady 5

@@ -1,4 +1,10 @@
- o Figure out correct way of handling polygons. 
- o Consider producing a category file with all the attributes. 
- o Try and get the v.to.rast process to work. 
- o Implement a v.out.shape
+ 26th Oct 2000
+
+ o Still to fix mapset/projection handling.
+ o Possibly add option to split large files on import
+   to facilitate the process.
+ o Massive cleanup and modularisation of code
+
+	DD Gray  <ddgray@armadce.demon.co.uk>
+
+ o +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -1,0 +1,16 @@
+PGM=s.datum.shift
+HOME=$(BIN_ALPHA_CMD)
+
+OFILES = \
+	main.o \
+	dat.o
+
+LIBES = $(GPROJLIB) $(COORCNVLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
+
+$(HOME)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES)
+
+$(COORCNVLIB): #
+$(GISLIB): #
+$(DATETIMELIB): #
+$(GPROJLIB): #

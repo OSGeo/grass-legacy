@@ -1,0 +1,49 @@
+<html>
+<A NAME="v.in.mif">
+<TITLE>v.in.mif</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>v.in.mif</B></EM> - Import of MapInfo vector files<BR>
+<EM>(GRASS Vector Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>v.in.mif [-l] input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>logfile</B><EM>=name</EM>] [<B>scale</B><EM>=name</EM>] [<B>attribute</B><EM>=name</EM>]
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-l</B>
+<DD>List fields of coverage
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input</B>
+<DD>Name of .MIF/.MID file to be imported
+
+<DT><B>output</B>
+<DD>Name of target vector file
+
+<DT><B>logfile</B>
+<DD>Name of file where log operations
+
+<DT><B>scale</B>
+<DD>Set initial scale [1:200]
+<DD>Default: 200
+
+<DT><B>attribute</B>
+<DD>Name of attribute to use as category
+</DL>
+
+<H2>NOTE</H2>
+The MapInfo vector map is read from current directory.
+
+<H2>AUTHOR</H2>
+David D. Gray
+
+</BODY>
+</HTML>

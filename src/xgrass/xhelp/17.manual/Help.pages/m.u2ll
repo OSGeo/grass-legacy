@@ -1,5 +1,0 @@
-
-@man("m.u2ll") - Converts Universal Transverse Mercator (UTM) coordinates
-to geographic (latitude/longitude) coordinates.
-
-(GRASS Data Import/Processing Program)

@@ -1,0 +1,12 @@
+interface_build {
+    d.vect.pg 0
+    {Displays vectors selected with DB query.}
+    {entry key {Column cat_ID:} 0 ""}
+    {entry tab  {DB table:} 0 ""}
+    {entry where  {Where clause:} 0 ""}
+    {entry map  {Vector map:} 0 vector}
+    {entry color  {Color:} 0 color}
+    {checkbox -f {Fill areas} "" -f}
+    {checkbox -s {SQL file input} "" -s}
+    {entry sql  {Name of SQL file:} 0 file}
+}

@@ -39,7 +39,13 @@ int main(int argc, char **argv )
 	char *options[128] ;
 	int i ;
 	int len ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
+
+	module = G_define_module();
+	module->description =
+		"Creates and displays a menu within the active "
+		"frame on the graphics monitor.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "bcolor" ;

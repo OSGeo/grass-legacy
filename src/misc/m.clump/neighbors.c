@@ -1,7 +1,10 @@
-#include "proto.h"
 #include <math.h>
 #include "geom/basic.h"
 #include "geom/optri.h"
+
+#ifndef MAX
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
+#endif
 
 /*--------------------------------------------------------------------------*/
 
@@ -24,7 +27,7 @@ doMakeNeighbors (g, neighbors, n)
   *n = nofSites = siNS (grSI (g));
 
   if (nofSites == 0) {
-    ***neighbors = NULL;
+    **neighbors = NULL;
     return;
   }
 

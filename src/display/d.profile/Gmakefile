@@ -1,3 +1,5 @@
+EXTRA_CFLAGS	= $(DANOTHER_BUTTON)
+
 OFILES = \
 	DrawText.o\
         InitProfile.o\
@@ -7,6 +9,7 @@ OFILES = \
         What.o\
         Range.o\
         bnw_line.o\
+	utils.o\
 	main.o
 
 $(BIN_MAIN_CMD)/d.profile: $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)

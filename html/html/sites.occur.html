@@ -1,0 +1,174 @@
+<TITLE>sites.occur</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>sites.occur</b></EM>  - Description of the site occurrence
+report produced by 
+<EM><A HREF="s.menu.html">s.menu</A></EM>.
+
+<H2>DESCRIPTION</H2>
+
+This is a discussion of the site occurrence report produced by
+<EM><A HREF="s.menu.html">s.menu</A>.</EM>
+
+<H2>SAMPLE OUTPUT</H2>
+
+<PRE>
+
+                             SITE OCCURRENCE REPORT
+                        Yakima Firing Center, Washington
+
+Location:  yakima
+Mapset:    sample
+Site List: arch_erosion - archeology (34 sites)
+
+Analysis Region:
+                    north: 5199975.00
+   west:  692975.00                       east:  737975.00
+                    south: 5154975.00
+
+============================================================================
+
+Layer: arch_survey          Archeologic Survey Areas (arch_survey)
+
+cells in analysis region:     810000
+sites in analysis region:         34
+
+                                                                     degrees
+                             cells     %    expected actual   chi      of   
+Site Characteristics         cover   cover   sites    sites  square  freedom
+--------------------        ------- ------- -------- ------ -------- -------
+(  0) No data                764310                      11               
+
+(  1) Hartmann,phase 1        25821    56.5     19.2      6    9.088     1
+(  2) Hartmann,phase 2        11032    24.1      8.2     14    4.084     1
+(  3) Wapora,phase 3           8837    19.3      6.6      3    1.945     1
+                            ------- ------- -------- ------ -------- -------
+      Totals                  45690   100.0     34.0     23   15.117     2
+
+============================================================================
+</PRE>
+
+<H2>EXPLANATION</H2>
+
+The "Site Occurrence Report" provides aggregate site
+information organized by raster map layers.
+
+
+<P>
+
+The report header contains the following information:
+
+<DL>
+<DT><b>Location</b>
+<DD>GRASS database location (e.g., yakima),
+<DT><b>Mapset</b>
+<DD>GRASS mapset (e.g., sample)
+<DT><b>Analysis Region</b>
+<DD>the rectangular area in which the
+analysis was run, reflecting the
+current geographic settings of the user's mapset.
+<DT><b>Site List</b>
+<DD>name and description of the site list used for the report
+and the number of sites in the list.  See manual entry for
+<EM><A HREF="s.menu.html">s.menu</A></EM> 
+for more discussion about these site lists.
+</DL>
+
+The rest of the report is divided into reports for each
+raster map layers specified by the user.  In this SAMPLE
+OUTPUT, only one map layer (arch_survey) was specified.
+
+<P>
+
+Certain information heads up each of these reports:
+
+
+<DL>
+<DT><b>layer</b>
+
+<DD>identifies the raster map layer along with the map layer TITLE.
+
+<DT><b>cells in analysis region</b>
+
+<DD>the size of the analysis region (in cells).
+
+<DT><b>sites in analysis region</b>
+
+<DD>the number of sites in the analysis region.
+
+</DL>
+
+For each map layer category which occurs in a cell falling
+within the boundaries of the analysis region, as well as
+totals for the map layer as a whole, various statistics are
+presented:
+
+
+<DL>
+<DT><b>Site Characteristics</b>
+
+<DD>These are the numbers (i.e., values)
+and names (i.e., descriptions)
+for each category (i.e., characteristic)
+which occurs in the map layer.
+
+<DT><b>cells cover</b>
+
+<DD>the number of cells in the analysis region having the
+category value (i.e., site characteristic).
+
+<DT><b>% cover</b>
+
+<DD>the predominance of the category within the analysis region.
+
+<DT><b>expected sites</b>
+
+<DD>the number of sites in the analysis region which would be
+expected to be observed having the
+category value if all sites were evenly
+distributed by in the region.
+
+<DT><b>actual sites</b>
+
+<DD>the number of sites in the analysis region
+which were occurred in cells having the category value.
+
+
+<DT><b>chi square</b>
+
+<DD>gives the user a statistical test of the hypothesis that
+'site distribution is dependent on environmental factors'.
+For this hypothesis to be true,
+the chi-square test must fail since we are
+calculating expected sites according to the hypothesis that
+'sites are randomly distributed'.
+
+<DT><b>degrees of freedom</b>
+
+<DD>Number of degrees of freedom for the chi-square test.
+Each category value will have 1 degree of freedom, and can be
+tested alone.  The entire map layer will have 1 less degree of freedom
+than the number of categories.
+
+</DL>
+
+<H2>NOTE</H2>
+
+Category zero (0) throughout GRASS represents "no data".
+Therefore, it is reported, but not included in the totals
+or in the computation of the chi-square statistics.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="s.db.rim.html">s.db.rim</A></EM><br>
+<EM><A HREF="s.in.ascii.html">s.in.ascii</A></EM><br>
+<EM><A HREF="s.menu.html">s.menu</A></EM><br>
+<EM><A HREF="s.out.ascii.html">s.out.ascii</A></EM><br>
+<EM><A HREF="s.surf.idw.html">s.surf.idw</A></EM><br>
+<EM><A HREF="sites.S.html">sites.S</A></EM><br>
+<EM><A HREF="sites.format.html">sites.format</A></EM><br>
+<EM><A HREF="sites.report.html">sites.report</A></EM>

@@ -1,0 +1,13 @@
+interface_build {
+    d.site.pg 0
+    {Displays and copies sites selected with DB query.}
+    {entry tab {DB table:} 0 ""}
+    {entry coordx  {Column X-coor:} 0 ""}
+    {entry coordy  {Column Y-coor:} 0 ""}
+    {entry cats  {Categories column:} 0 ""}
+    {entry where  {Where clause:} 0 ""}
+    {entry map  {Sites map (new, optional):} 0 sites}
+    {entry plot  {Color,icon,size:} 0 ""}
+    {checkbox -s {SQL file input} "" -s}
+    {entry sql  {Name of SQL file:} 0 file}
+}

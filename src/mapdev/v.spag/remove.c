@@ -5,7 +5,6 @@
 */
 
 #include "Vect.h"
-#include "digit.h"
 #include "local_proto.h"
 
 /* delete a line, erasing it from the screen  

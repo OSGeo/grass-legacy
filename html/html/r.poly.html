@@ -1,0 +1,121 @@
+<TITLE>r.poly</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.poly</b></EM>  - Extracts area edges from a raster map layer and converts 
+data to GRASS vector format. 
+<BR>
+<EM>(GRASS</EM> Raster Program)</B> 
+
+<H2>SYNOPSIS</H2>
+
+<B>r.poly</B>
+<BR>
+<B>r.poly help</B> 
+<BR>
+<B>r.poly</B> [<B>-l</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.poly</EM> scans the named <B>input</B> raster map
+layer, extracts area edge features from it, converts data
+to GRASS vector format, and smoothes vectors.
+
+<P>
+
+<EM>r.poly</EM> first traces the perimeter of each unique
+area in the raster map layer and creates vector data to
+represent it.  The cell category values for the raster map
+layer will be used to create attribute information for the
+resultant vector area edge data.
+
+<P>
+
+A true vector tracing of the area edges might appear
+blocky, since the vectors outline the edges of raster data
+that are stored in rectangular cells.  To produce a
+better-looking vector map, <EM>r.poly</EM> smoothes the
+corners of the vector data as they are being extracted. At
+each change in direction (i.e., each corner), the two
+midpoints of the corner cell (half the cell's height and
+width) are taken, and the line segment connecting them is
+used to outline this corner in the resultant vector file.
+(The cell's cornermost node is ignored.) Because vectors
+are smoothed by this program, the resulting vector map will
+not be "true" to the raster map from which it was created.
+The user should check the resolution of the geographic
+region (and the original data) to estimate the possible
+error introduced by smoothing.
+
+<H2>OPTIONS</H2>
+
+The user can run this program either non-interactively or
+interactively.  The program will be run non-interactively
+if the user specifies program arguments and flag settings
+on the command line using the form:
+<DL>
+<DD>
+<B>r.poly</B> [<B>-l</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
+</DL>
+Alternately, the user can simply type <B>r.poly</B> on the command line 
+without program arguments. In this case, the user will be prompted for 
+parameter values and flag settings using the standard GRASS 
+<EM><A HREF="parser.html">parser</A></EM> interface.
+
+<H3>Flag:</H3> 
+
+<DL>
+<DT><B>-l</B>
+<DD>Smooth corners. 
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Use the existing raster map <EM>name</EM> as input. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Set the new vector output file name to <EM>name</EM>.
+</DL>
+
+<H2>NOTES</H2>
+
+<EM>r.poly</EM>
+extracts only area edges from the named raster input file. 
+If the raster file contains other data (i.e., line edges, or point data) 
+the output may be wrong. 
+
+<P>
+
+The user must run <EM><A HREF="v.support.html">v.support</A></EM> 
+on the resultant file to build the needed 
+topology information stored in the <EM>dig_plus</EM> file. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.support.html">v.support</A></EM>
+<br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+<EM>Original</EM> version of <EM>r.poly</EM>: 
+<BR>
+Jean Ezell and
+
+
+
+Andrew Heekin, 
+<br>
+U.S. Army Construction Engineering 
+Research Laboratory
+
+<P>
+<EM>Modified</EM> program for smoothed lines: 
+<BR>
+David Satnik, 
+Central Washington University

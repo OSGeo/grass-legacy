@@ -1,0 +1,144 @@
+<TITLE>d.points</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.points</b></EM>  - Displays point graphics in the
+active frame on the graphics display monitor.
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.points</B> 
+<BR>
+<B>d.points help</B> 
+<BR>
+<B>d.points</B>
+[<B>color=</B><EM>name</EM>] 
+[<B>size=</B><EM>value</EM>] 
+[<B>type=</B><EM>name</EM>] 
+[<B>file=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.points</EM> displays points whose coordinate
+locations are specified by the user and located within the
+current geographic region in the active display frame on
+the graphics monitor.  Point coordinates are read either
+from standard input or from a file stated by the
+<B>file=</B><EM>name</EM> option. When entering coordinates
+through standard input, the user presses <EM>control-d</EM>
+to signal the end of input to <EM>d.points</EM>.
+
+<H2>OPTIONS</H2>
+
+The program can be run interactively or non-interactively.
+The user can run the program completely non-interactively
+by specifying the name of a points <B>file</B>
+(containing the geographic coordinates of icons to be
+sited) and the values of all needed parameters on the
+command line.  If the name of an input <B>file</B> to
+<EM>d.points</EM> is given on the command line, any other
+parameter values left unspecified on the command line
+(e.g., the icon <B>color</B>, <B>size</B>, and/or
+<B>type</B>) are set to their default values.
+
+<P>
+
+The user can instead elect to run the program partially
+interactively, by specifying any/all of the parameters
+<EM>except</EM> the points <B>file=</B><EM>name</EM>
+parameter on the command line.  In this case,
+<EM>d.points</EM> will expect the user to enter icon
+locations from standard input (i.e., at the keyboard) and
+will prompt the user for these locations. Each icon
+location should be entered as an easting and northing pair
+separated by a space, followed by a carriage return.
+Coordinates should be stated in whatever map coordinate
+system is used by the user's current GRASS location.  The
+user presses <EM>control-d</EM> to signal the end of
+standard input to <EM>d.points</EM>.
+
+<P>
+
+Alternately, the user can simply type <B>d.points</B> on
+the command line, and be prompted for the values of all
+parameters (the user can still input icon coordinates from
+an input file using this form). In this case, the user is
+presented with the standard GRASS 
+<EM><A HREF="parser.html">parser</A></EM> interface.
+
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>color=</B><EM>name</EM>
+<DD>Sets the current color to the <EM>name</EM> stated. 
+<BR>
+Options: red, orange, yellow, green, blue, indigo, violet, 
+gray, white, and black 
+<BR>
+Default: <EM>gray</EM> 
+
+<DT><B>size=</B><EM>value</EM>
+<DD>Size of icon in pixels. 
+<BR>
+Options: 0-1000 (pixels) 
+<BR>
+Default: 5 (pixels) 
+
+<DT><B>type=</B><EM>name</EM>
+<DD>Sets the shape (type) of the icon to be drawn to <EM>name</B>.</EM> 
+<BR>
+Options: x, diamond, box, + 
+<BR>
+Default: + 
+
+<DT><B>file=</B><EM>name</EM>
+<DD>Take input from the UNIX file <EM>name</EM>.
+(Note: This file must be in the user's current directory 
+or given by its full path name.) 
+<BR>
+Default: Standard input. 
+<BR>
+The file contents should consist of a series of geographic
+coordinates that fit within the boundaries of the current
+geographic region falling within the active display frame
+(refer to <EM><A HREF="d.where.html">d.where</A></EM>
+or <EM><A HREF="g.region.html">g.region</A></EM> for
+these coordinates).  Each icon location should be specified
+by an easting and northing (in that order) separated by a
+single blank space, and followed by a carriage return.
+Eastings and northings should be stated in whatever map
+coordinate system is being used by the user's current GRASS
+location.
+
+</DL>
+
+<H2>NOTES</H2>
+
+<EM>d.points</EM> will display a point at the location specified in the 
+active frame, even if the point lies outside the boundaries of 
+current geographic region. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.frame.html">d.frame</A></EM><BR>
+<EM><A HREF="d.where.html">d.where</A></EM><BR>
+<EM><A HREF="d.sites.html">d.sites</A></EM><BR>
+<EM><A HREF="g.region.html">g.region</A></EM><BR>
+<EM><A HREF="s.out.ascii.html">s.out.ascii</A></EM><BR>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, 
+U.S. Army Construction Engineering 
+Research Laboratory
+

@@ -2,23 +2,22 @@
  * s.normal - GRASS program for distributional testing.
  * Copyright (C) 1994-1995. James Darrell McCauley.
  *
- * Author: James Darrell McCauley (mccauley@ecn.purdue.edu)
- *         USDA Fellow
- *         Department of Agricultural Engineering
- *         Purdue University
- *         West Lafayette, Indiana 47907-1146 USA
+ * Author: James Darrell McCauley darrell@mccauley-usa.com
+ * 	                          http://mccauley-usa.com/
  *
- * Permission to use, copy, modify, and distribute this software and its
- * documentation for non-commercial purposes is hereby granted. This
- * software is provided "as is" without express or implied warranty.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- * JAMES DARRELL MCCAULEY (JDM) MAKES NO EXPRESS OR IMPLIED WARRANTIES
- * (INCLUDING BY WAY OF EXAMPLE, MERCHANTABILITY) WITH RESPECT TO ANY
- * ITEM, AND SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL
- * OR CONSEQUENTAL DAMAGES ARISING OUT OF THE POSSESSION OR USE OF
- * ANY SUCH ITEM. LICENSEE AND/OR USER AGREES TO INDEMNIFY AND HOLD
- * JDM HARMLESS FROM ANY CLAIMS ARISING OUT OF THE USE OR POSSESSION
- * OF SUCH ITEMS.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  * Modification History:
  * <27 Aug 1994> - began coding. Adapted cdh.f from statlib (jdm)
@@ -27,6 +26,7 @@
  * <02 Jan 1995> - cleaned man page, added html page (jdm)
  * <25 Feb 1995> - cleaned 'gcc -Wall' warnings (jdm)
  * <21 Jun 1995> - adapted to use new sites API (jdm)
+ * <13 Sep 2000> - released under GPL
  *
  */
 
@@ -45,6 +45,7 @@ int main (argc, argv)
 
   long x, y;
   struct Cell_head window;
+  struct GModule *module;
   struct
   {
     struct Option *input, *tests;
@@ -58,6 +59,9 @@ int main (argc, argv)
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "tests for normality for sites.";
   parm.input = G_define_option ();
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;

@@ -1,0 +1,701 @@
+
+
+proc put_command { } {
+
+
+  global ldd
+  global lmm
+  global lss
+  global ns
+  global mdd
+  global mmm
+  global mss
+  global ew
+  global insphere
+  global outsphere
+  global dx
+  global dy
+  global dz
+
+
+  set cmd ""
+
+  if {  $ldd != "" || $lmm != "" || $lss != "" || $ns != "" } {
+         set cmd "$cmd lat=$ldd,$lmm,$lss,$ns"
+  }
+
+  if {  $mdd != "" || $mmm != "" || $mss != "" || $ew != "" } {
+         set cmd "$cmd lon=$mdd,$mmm,$mss,$ew"
+  }
+
+  if {  $insphere != "" } {
+         set cmd "$cmd is=$insphere"
+  }
+
+  if {  $outsphere != "" } {
+         set cmd "$cmd os=$outsphere"
+  }
+
+  if {  $dx != "" } {
+         set cmd "$cmd xshift=$dx"
+  }
+
+  if {  $dy != "" } {
+         set cmd "$cmd yshift=$dy"
+  }
+
+  if {  $dz != "" } {
+         set cmd "$cmd zshift=$dz"
+  }
+
+  if { $cmd != "" } {
+     set cmd "m.datum.shift $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_m.datum.shift { } {
+
+
+  global ldd
+  global lmm
+  global lss
+  global ns
+  global mdd
+  global mmm
+  global mss
+  global ew
+  global insphere
+  global outsphere
+  global dx
+  global dy
+  global dz
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Datum Shifting Utility"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {m.datum.shift}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {Latitude Degrees}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  scale .cmd.frame2.scale \
+     -label "Latitude Minutes" \
+     -from 0 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.scale { left expand fill }
+
+  .cmd.frame2.scale set 0
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  scale .cmd.frame3.scale \
+     -label "Latitude Seconds" \
+     -from 0 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.scale { left expand fill }
+
+  .cmd.frame3.scale set 0
+
+
+  frame .cmd.frame4 \
+    -relief {flat}
+
+  label .cmd.frame4.label \
+    -anchor {w} \
+    -text {North/South} \
+    -padx {2}
+
+  scrollbar .cmd.frame4.hscrollbar \
+    -command {.cmd.frame4.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame4.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame4.hscrollbar set}
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.label { top fillx } \
+    .cmd.frame4.entry { top fillx } \
+    .cmd.frame4.hscrollbar { bottom fillx }
+
+  .cmd.frame4.entry configure -state normal
+
+  bind .cmd.frame4.entry <Return> {
+       set ns [%W get] }
+
+
+
+  frame .cmd.frame5 \
+    -relief {flat}
+
+  scale .cmd.frame5.scale \
+     -label "Latitude Degrees" \
+     -from 0 \
+     -to 90 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .cmd.frame5 \
+    .cmd.frame5.scale { left expand fill }
+
+  .cmd.frame5.scale set 0
+
+
+  frame .cmd.frame6 \
+    -relief {flat}
+
+  scale .cmd.frame6.scale \
+     -label "Longitude Minutes" \
+     -from 0 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .cmd.frame6 \
+    .cmd.frame6.scale { left expand fill }
+
+  .cmd.frame6.scale set 0
+
+
+  frame .cmd.frame7 \
+    -relief {flat}
+
+  scale .cmd.frame7.scale \
+     -label "Longitude Seconds" \
+     -from 0 \
+     -to 60 \
+     -length 350 \
+     -orient {horizontal}
+
+  pack append .cmd.frame7 \
+    .cmd.frame7.scale { left expand fill }
+
+  .cmd.frame7.scale set 0
+
+
+  frame .cmd.frame8 \
+    -relief {flat}
+
+  label .cmd.frame8.label \
+    -anchor {w} \
+    -text {East/West} \
+    -padx {2}
+
+  scrollbar .cmd.frame8.hscrollbar \
+    -command {.cmd.frame8.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame8.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame8.hscrollbar set}
+
+  pack append .cmd.frame8 \
+    .cmd.frame8.label { top fillx } \
+    .cmd.frame8.entry { top fillx } \
+    .cmd.frame8.hscrollbar { bottom fillx }
+
+  .cmd.frame8.entry configure -state normal
+
+  bind .cmd.frame8.entry <Return> {
+       set ew [%W get] }
+
+
+
+  frame .cmd.frame9 \
+    -relief {flat}
+
+  label .cmd.frame9.label \
+     -anchor {w} \
+     -text {Input spheroid} \
+     -padx {2}
+
+  listbox .cmd.frame9.listbox \
+     -relief sunken \
+     -yscrollcommand {.cmd.frame9.vscrollbar set}
+
+  scrollbar .cmd.frame9.vscrollbar \
+     -command {.cmd.frame9.listbox yview}
+
+
+  pack append .cmd.frame9 \
+    .cmd.frame9.label { top fillx } \
+    .cmd.frame9.listbox { left expand fill } \
+    .cmd.frame9.vscrollbar { right fill }
+
+  bind .cmd.frame9.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set insphere [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame9.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set insphere [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame9.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set insphere [%W get [%W nearest %y]]
+  }
+
+  .cmd.frame9.listbox delete 0 end
+  foreach i {airy australian bessel clark66 everest grs80 hayford international krasovsky wgs66 wgs72 wgs84} {
+      .cmd.frame9.listbox insert 0 $i
+  }
+
+
+  frame .cmd.frame10 \
+    -relief {flat}
+
+  label .cmd.frame10.label \
+     -anchor {w} \
+     -text {Output spheroid} \
+     -padx {2}
+
+  listbox .cmd.frame10.listbox \
+     -relief sunken \
+     -yscrollcommand {.cmd.frame10.vscrollbar set}
+
+  scrollbar .cmd.frame10.vscrollbar \
+     -command {.cmd.frame10.listbox yview}
+
+
+  pack append .cmd.frame10 \
+    .cmd.frame10.label { top fillx } \
+    .cmd.frame10.listbox { left expand fill } \
+    .cmd.frame10.vscrollbar { right fill }
+
+  bind .cmd.frame10.listbox <Button-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set outsphere [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame10.listbox <ButtonRelease-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set outsphere [%W get [%W nearest %y]]
+  }
+
+  bind .cmd.frame10.listbox <Double-ButtonPress-1> {
+       %W select from [%W nearest %y]
+       %W select to [%W nearest %y]
+       set outsphere [%W get [%W nearest %y]]
+  }
+
+  .cmd.frame10.listbox delete 0 end
+  foreach i {airy australian bessel clark66 everest grs80 hayford international krasovsky wgs66 wgs72 wgs84} {
+      .cmd.frame10.listbox insert 0 $i
+  }
+
+
+  frame .cmd.frame11 \
+    -relief {flat}
+
+  label .cmd.frame11.label \
+    -anchor {w} \
+    -text {X Shift (meters)} \
+    -padx {2}
+
+  scrollbar .cmd.frame11.hscrollbar \
+    -command {.cmd.frame11.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame11.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame11.hscrollbar set}
+
+  pack append .cmd.frame11 \
+    .cmd.frame11.label { top fillx } \
+    .cmd.frame11.entry { top fillx } \
+    .cmd.frame11.hscrollbar { bottom fillx }
+
+  .cmd.frame11.entry configure -state normal
+
+  bind .cmd.frame11.entry <Return> {
+       set dx [%W get] }
+
+
+
+  frame .cmd.frame12 \
+    -relief {flat}
+
+  label .cmd.frame12.label \
+    -anchor {w} \
+    -text {Y Shift (meters)} \
+    -padx {2}
+
+  scrollbar .cmd.frame12.hscrollbar \
+    -command {.cmd.frame12.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame12.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame12.hscrollbar set}
+
+  pack append .cmd.frame12 \
+    .cmd.frame12.label { top fillx } \
+    .cmd.frame12.entry { top fillx } \
+    .cmd.frame12.hscrollbar { bottom fillx }
+
+  .cmd.frame12.entry configure -state normal
+
+  bind .cmd.frame12.entry <Return> {
+       set dy [%W get] }
+
+
+
+  frame .cmd.frame13 \
+    -relief {flat}
+
+  label .cmd.frame13.label \
+    -anchor {w} \
+    -text {Z Shift (meters)} \
+    -padx {2}
+
+  scrollbar .cmd.frame13.hscrollbar \
+    -command {.cmd.frame13.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame13.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame13.hscrollbar set}
+
+  pack append .cmd.frame13 \
+    .cmd.frame13.label { top fillx } \
+    .cmd.frame13.entry { top fillx } \
+    .cmd.frame13.hscrollbar { bottom fillx }
+
+  .cmd.frame13.entry configure -state normal
+
+  bind .cmd.frame13.entry <Return> {
+       set dz [%W get] }
+
+
+
+  frame .cmd.frame14 \
+     -borderwidth {2}
+
+  button .cmd.frame14.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $ldd != "" && $lmm != "" && $lss != "" && $ns != "" && $mdd != "" && $mmm != "" && $mss != "" && $ew != "" && $insphere != "" && $outsphere != "" && $dx != "" && $dy != "" && $dz != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   eval " exec xterm -title m.datum.shift -geometry 50x5 -exec $cmd " 
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame14.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame14 \
+    .cmd.frame14.ok { left expand } \
+    .cmd.frame14.cancel { right expand }
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame4 { top expand fill } \
+    .cmd.frame5 { top expand fill } \
+    .cmd.frame6 { top expand fill } \
+    .cmd.frame7 { top expand fill } \
+    .cmd.frame8 { top expand fill } \
+    .cmd.frame9 { top expand fill } \
+    .cmd.frame10 { top expand fill } \
+    .cmd.frame11 { top expand fill } \
+    .cmd.frame12 { top expand fill } \
+    .cmd.frame13 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame14 { bottom expand fill }
+
+
+bind .cmd.frame2.scale <ButtonPress-1> {
+		set lmm [.cmd.frame2.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame2.scale <ButtonRelease-1> {
+		set lmm [.cmd.frame2.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame3.scale <ButtonPress-1> {
+		set lss [.cmd.frame3.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame3.scale <ButtonRelease-1> {
+		set lss [.cmd.frame3.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <KeyRelease> {
+		set ns [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame4.entry <Return> {
+		set ns [.cmd.frame4.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame5.scale <ButtonPress-1> {
+		set mdd [.cmd.frame5.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame5.scale <ButtonRelease-1> {
+		set mdd [.cmd.frame5.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame6.scale <ButtonPress-1> {
+		set mmm [.cmd.frame6.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame6.scale <ButtonRelease-1> {
+		set mmm [.cmd.frame6.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame7.scale <ButtonPress-1> {
+		set mss [.cmd.frame7.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame7.scale <ButtonRelease-1> {
+		set mss [.cmd.frame7.scale get]
+		set_command_entry
+}
+
+bind .cmd.frame8.entry <KeyRelease> {
+		set ew [.cmd.frame8.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame8.entry <Return> {
+		set ew [.cmd.frame8.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame9.listbox <ButtonPress-1> {
+ %W select from [%W nearest %y]
+ %W select to [%W nearest %y]
+		set insphere [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+bind .cmd.frame9.listbox <ButtonRelease-1> {
+ %W select from [%W nearest %y]
+ %W select to [%W nearest %y]
+		set insphere [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+bind .cmd.frame10.listbox <ButtonPress-1> {
+ %W select from [%W nearest %y]
+ %W select to [%W nearest %y]
+		set outsphere [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+bind .cmd.frame10.listbox <ButtonRelease-1> {
+ %W select from [%W nearest %y]
+ %W select to [%W nearest %y]
+		set outsphere [%W get [%W nearest %y]]
+		set_command_entry
+}
+
+bind .cmd.frame11.entry <KeyRelease> {
+		set dx [.cmd.frame11.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame11.entry <Return> {
+		set dx [.cmd.frame11.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame12.entry <KeyRelease> {
+		set dy [.cmd.frame12.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame12.entry <Return> {
+		set dy [.cmd.frame12.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame13.entry <KeyRelease> {
+		set dz [.cmd.frame13.entry get]
+		set_command_entry
+}
+
+bind .cmd.frame13.entry <Return> {
+		set dz [.cmd.frame13.entry get]
+		set_command_entry
+}
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global ldd
+set ldd ""
+
+global lmm
+set lmm ""
+
+global lss
+set lss ""
+
+global ns
+set ns ""
+
+global mdd
+set mdd ""
+
+global mmm
+set mmm ""
+
+global mss
+set mss ""
+
+global ew
+set ew ""
+
+global insphere
+set insphere ""
+
+global outsphere
+set outsphere ""
+
+global dx
+set dx ""
+
+global dy
+set dy ""
+
+global dz
+set dz ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_m.datum.shift

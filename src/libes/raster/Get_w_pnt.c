@@ -9,6 +9,8 @@ int R_get_location_with_pointer(int *wx,int *wy,int *button )
 	_send_int(&z) ;
 	z = *wy ;
 	_send_int(&z) ;
+	z = *button ;
+	_send_int(&z) ;
 	_get_int(wx) ;
 	_get_int(wy) ;
 	_get_int(button) ;

@@ -1,20 +1,23 @@
 # gsf release for Grass5.0
+# $Id: Gmakefile,v 1.8 2000-11-08 09:17:03 justin Exp $
+# changed file names to fix name conflicts on WINDOWS 5/2000
 # changed gsd_img.c 10/99 to uncompressed IRIS RGB
 # History:
 #   2/26/96 - some minor cleanup (mca)
 
-#EXTRA_CFLAGS= $(VECT_INCLUDE) -DUSE_OGL -DTRACE_FUNCS
-#EXTRA_CFLAGS= $(VECT_INCLUDE) -DUSE_OGL -ansi
-EXTRA_CFLAGS= $(VECT_INCLUDE) -DUSE_OGL
+EXTRA_CFLAGS= $(XCFLAGS) $(TIFFINCPATH)
 
 LDFLAGS=
 
-OBJ = GS.o GSX.o GS_util.o Gs.o gs.o gsd_wire.o gsd_surf.o gsd_views.o gsd_prim.o \
-	gs_bm.o gs_norms.o gs_query.o gsd_objs.o gsd_img.o gsd_cplane.o trans.o \
-	GV.o Gv.o gv.o gvd.o gv_quick.o gsdrape.o GP.o Gp.o gp.o gpd.o gsds.o \
-	GK.o gsdiff.o gsget.o gk.o \
+OBJ = GS2.o GSX.o GS_util.o Gs3.o gs.o gsd_wire.o gsd_surf.o gsd_views.o \
+	gsd_prim.o \
+	gs_bm.o gs_norms.o gs_query.o gsd_objs.o gsd_img.o gsd_img_ppm.o \
+	gsd_img_tif.o gsd_cplane.o trans.o \
+	GV2.o Gv3.o gv.o gvd.o gv_quick.o gsdrape.o GP2.o Gp3.o gp.o \
+	gpd.o gsds.o \
+	GK2.o gsdiff.o gsget.o gk.o \
 	gsd_label.o gsd_fonts.o   \
- 	Gvol.o gvl.o GVL.o
+ 	Gvol.o gvl.o GVL2.o
 
 all: libgsf.a
 

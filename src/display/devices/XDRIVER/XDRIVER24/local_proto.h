@@ -4,7 +4,7 @@ int Box_rel(int, int);
 int can_do_float(void);
 /* Clr_table.c */
 int Color_table_float(void);
-Colormap InitColorTableFixed(void);
+Colormap InitColorTableFixed(Colormap cmap);
 int Color_table_fixed(void);
 /* Draw_line.c */
 int draw_line(int, int, int, int);

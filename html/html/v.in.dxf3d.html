@@ -1,0 +1,115 @@
+<TITLE>v.in.dxf3d</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<b><i>v.in.dxf3d</i></b>  - Converts the Z values of DXF files to attribute GRASS vector file format.
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+Bv.in.dxf3dR
+
+<BR>
+
+Bv.in.dxf3d helpR
+
+<BR>
+
+<B>v.in.dxf3d</B> <B>dxf=</B><EM>name</EM> <B>[lines=</B><EM>name[,name,...]]</EM>
+
+<H2>DESCRIPTION</H2>
+
+The v.in.dxf3d data conversion program generates GRASS dig_att files from a
+DXF file with Z values.
+
+
+<P>
+
+This program, in conjunction with v.in.dxf, is ideal for automaticaly importing,
+to GRASS vector file, layers with Z values (isolines and level contours) from 
+DXF format files.
+
+
+<P>
+
+Firts should be run the v.in.dxf program for import the DXF polylines to binary
+GRASS vector file format (dig). Later, the DXF Z values of the isolines layers 
+with v.in.dxf3d (dig_att) must be imported, and finally run v.support to 
+attach at this layers their elevations.
+The v.in.dxf3d.sh script can be used to make all this automaticaly, for a maximun
+of two isolines layers (normally contours and master contours) from one DXF file.
+
+
+<P>
+
+The v.in.dxf program only recognizes, by now, the Z values  from polylines 
+entities in the DXF format.
+
+
+<P>
+
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+
+<P>
+
+Parameters
+
+<DT><EM>dxf</EM> 
+
+<DD>Name of the DXF input design file from where will be extracted the Z values.
+
+<DT><EM>lines</EM> 
+
+<DD>Name(s) of layer(s) in DXF input file containing isoline data with Z values,
+and the name(s) to be assigned to the GRASS vector data (dig_att) files
+output.
+
+
+<P>
+
+
+<H2>BUGS</H2>
+
+The program only recognizes the Z values if they are in the "30" field of the
+POLYLINE entity section.
+
+
+<P>
+
+If the input DXF file is in MS-DOS text format, with CR/LF instead of Unix LF, 
+the program doesn't run. To avoid this problem, import to Unix your DXF-MSDOS 
+format files with FTP in ascii mode or with a command able to convert this files 
+(DOS-COPY, mcopy, etc).
+
+
+<P>
+
+
+<H2>SEE ALSO</H2>
+
+v.in.dxf, v.support, v.digit, v.in.dxf3d.sh
+
+
+<P>
+
+
+<H2>AUTHOR</H2>
+
+The original program dxf3d2gras.bas written in GWBASIC (MS-DOS) by Evaristo 
+Quiroga, Hidrologic and Extern Geodinamic Unity of the University Autonoma of
+Barcelona (6/93).
+
+
+<P>
+
+The program was rewritten in C for Grass-Unix environment by Evaristo

@@ -1,8 +1,0 @@
-The File-Resume Menu Option
-
-This choice allows you to resume editing an existing raster map
-@ref("segment file",xgre/segfile.def) that was created during a previous editing session.  
-You will be presented with a list of the available segment files 
-(in an xgbrowser dialog) so that you may select the one that you would 
-like to resume.
-

@@ -35,7 +35,8 @@ $(BIN_MAIN_INTER)/r.weight: weight.sh
 help:
 	rm -rf $(TXT)/WEIGHT
 	mkdir $(TXT)/WEIGHT
-	cp HELP_TEXT/* $(TXT)/WEIGHT
+#	cp HELP_TEXT/* $(TXT)/WEIGHT
+	(cd HELP_TEXT/ ; tar -cvf - * | (cd $(TXT)/WEIGHT ; tar -xvf - 2>/dev/null ) ; true )
 
 clean:
 	-rm -f gis_pars.c gis_pars.h gis_lxcl.c gis_pars.o gis_lxcl.o

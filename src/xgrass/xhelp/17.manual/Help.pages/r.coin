@@ -1,5 +1,0 @@
-
-@man("r.coin") - Tabulates the mutual occurrence (coincidence) of categories
-for two raster map layers.
-
-(GRASS Raster Program)

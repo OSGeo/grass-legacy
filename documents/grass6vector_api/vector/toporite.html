@@ -1,0 +1,284 @@
+
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Toplogy Modification
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Topology Modification
+</h1>
+
+
+<blockquote><i>
+    Status:  Alpha<br>
+    This module has been designed but not thoroughly reviewed.
+</i></blockquote>
+
+
+These functions allow the caller to modify the information for a map 
+which has been opened for write.  
+<p>
+
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li>gvStatus  <a href="#gvBuildTopology"> gvBuildTopology </a>
+    (gvMapP map, int method)
+
+
+<li>gvStatus  <a href="#gvUpdatetLinePoints"> gvUpdatetLinePoints </a>
+    (gvMapP map, gvPidP line, gvPointP points)
+
+
+<li>gvStatus  <a href="#gvSetSnapThresh"> gvSetSnapThresh </a>
+     (gvMapP map, double thresh)
+
+
+<li>gvStatus  <a href="#gvSetMapThresh"> gvSetMapThresh </a>
+      (gvMapP map, double thresh)
+
+
+<li>gvStatus  <a href="#gvSetScale"> gvSetScale </a>
+    (gvMapP map, int scale)
+
+
+<li>gvStatus  <a href="#gvSetMbr"> gvSetMbr </a>
+    (gvMapP map, gvMbr mbr)
+
+
+<li>gvStatus  <a href="#gvComputeMbr"> gvComputeMbr </a>
+    (gvMapP map, gvMbr *mbr)
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvBuildTopology">
+<pre>
+gvStatus <strong>gvBuildTopology</strong> (gvMapP map, int method)
+
+Rebuild polygon topology.  All area and island information will be
+built.  The caller can specify whether it is to be build incrementally
+or completely.  Incremental builds should be more efficient, as they
+assume that existing area information is correct, and it simply finds
+any other areas that are not currently built.  A total build assumes
+that there could be an error somewhere in the polygon topology and
+throws all current knowledge out and rebuilds it from scratch. A total
+build also rebuilds the arc-node topology.
+
+
+INPUT
+    gvMapP map
+    int method		One of:  GV_TOPO_INCR	Incremental Build
+				 GV_TOPO_TOTAL	Total Build
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+	GV_MEMORY_ERR	Out of memory
+
+NOTE
+    Arc-Node topology is dynamically maintained as lines are added to 
+    the map so this call is not necessary if that is all that is needed.
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+
+<a name="gvUpdatetLinePoints">
+<pre>
+gvStatus <strong>gvUpdatetLinePoints</strong> (gvMapP map, gvPidP line, gvPointP points)
+
+This function allows the caller to modify the points on a line.  They
+can add to or delete from the number of points, and they can modify any
+number of the points.  Currently they may NOT changed the endpoints,
+i.e. the nodes.  This restriction will probably be removed in the
+future.
+
+INPUT
+    gvMapP map
+    gvPidP line		Line to modify
+    gvPointP points	Point for new line definition
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+	GV_MEMORY_ERR	Out of memory
+
+NOTE
+    The caller is responsible to make sure that the modified line does
+    NOT violate any toplogy rules, such as crossing other existing lines.
+
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="gvSetSnapThresh">
+<pre>
+gvStatus <strong>gvSetSnapThresh</strong>  (gvMapP map, double thresh)
+    
+Modify the snapping threshold.  This is the threshold in map units at
+which point the end of a newly added line will 'snap' to a previously 
+existing connecting node.
+
+INPUT
+    gvMapP map
+    double thresh	New snapping threshold.  In map units
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="gvSetMapThresh">
+<pre>
+gvStatus <strong>gvSetMapThresh</strong>   (gvMapP map, double thresh)
+    
+Modify the map threshold.  This threshold controls all thresholds
+for the map.  The snapping threshold and the pruning threshold are 
+derived from the Map threshold.  If you want controll over the
+snapping threshold you should call gvSetSnapThresh() after calling
+gvSetMapThresh().
+
+INPUT
+    gvMapP map
+    double thresh	New map threshold.  In map units
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="gvSetScale">
+<pre>
+gvStatus <strong>gvSetScale</strong> (gvMapP map, int scale)
+    
+This function allows the caller to modify the map scale information.
+This value is the right portion of the ration 1:N.  This value should
+not be changed hap-hazardly.  All thresholds are based on this value
+and will change after this function is called.  If you want to maintain
+control over thresholds you should call gvSetMapThresh() and or 
+gvSetSnapThresh() after calling gvSetScale().
+
+INPUT
+    gvMapP map
+    int scale		New map scale
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+	GV_MEMORY_ERR	Out of memory
+
+SEE ALSO
+    gvSetMapThresh(), gvSetSnapThresh()
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="gvSetMbr">
+<pre>
+gvStatus <strong>gvSetMbr</strong> (gvMapP map, gvMbr mbr)
+
+Change the Minimum Bounding Rectangle (MBR) for the map.
+
+INPUT
+    gvMapP map
+    gvMbr mbr		Filled MBR structure
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+
+SEE ALSO
+    gvComputeMbr()
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="gvComputeMbr">
+<pre>
+gvStatus <strong>gvComputeMbr</strong> (gvMapP map, gvMbr *mbr)
+
+Compute the map MBR as derived by a union of the MBRs for each feature
+in the map and returns the information.  This does not change the
+Map MBR.  Use gvSetMbr() with the result to update the map MBR.
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    gvMbr *mbr		Pointer to gvMbr structure
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+
+SEE ALSO
+    gvSetMbr(), gvGetMbr()
+
+</pre>
+<a href="#index">index</a>
+
+
+<!--hr------------------------------------------------>
+<p>
+
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>
+

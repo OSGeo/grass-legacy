@@ -44,9 +44,14 @@ int main ( int argc, char **argv)
     struct Option *input, *dfield;
   } parm;
   extern struct Cell_head window;
-
+  struct GModule *module;
+  
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "Univariate statistics for a GRASS sites list.";
+                  
   parm.input = G_define_option ();
   parm.input->key = "sites";
   parm.input->type = TYPE_STRING;

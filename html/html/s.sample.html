@@ -1,0 +1,158 @@
+<TITLE>s.sample</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.sample</b></EM> - Sample a raster file at site locations. 
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.sample</B> 
+<BR>
+<B>s.sample help</B>
+<BR>
+<B>s.sample</B> 
+[<B>-BClq</B>] <B>input=</B><EM>name</EM> 
+[<B>attr=</B><EM>type</EM>] [<B>index=</B><EM>value</EM>] 
+[<B>output=</B><EM>name</EM>] 
+<B>rast=</B><EM>name</EM> [<B>z=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.sample</EM> samples a GRASS raster map at the site
+locations in the input file by either cubic convolution
+interpolation, bilinear interpolation, or nearest neighbor
+sampling (default).  Category label values may sampled.
+
+<P>
+
+This program may be especially useful when sampling for
+cross validation of interpolations whose output is a raster
+map.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-B</B>
+
+<DD>Use bilinear interpolation. 
+
+<DT><B>-C</B>
+
+<DD>Use cubic convolution interpolation. 
+
+<DT><B>-l</B>
+
+<DD>Use raster category label values instead of cell values. Labels
+must be numeric.
+
+<DT><B>-q</B>
+
+<DD>Quiet. Cut out the chatter. 
+
+</DL>
+
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of sites list defining sample points. 
+
+<DT><B>attr=</B><EM>type</EM>
+<DD>Site attribute type to use for comparison.<BR>
+<B>Options:</B> <EM>none, dim, cat, decimal</EM><BR>
+If <EM>none</EM> is chosen no comparison will be done.
+
+<DT><B>index=</B><EM>value</EM>
+<DD>Site attribute index to use for comparison.<BR>
+Ignored when the attribute is <EM>none</EM> or <EM>cat</EM>.
+
+<DT><B>output=</B><EM>name</EM>
+<DD>Optional name of sites list in which output will be
+stored.  Standard output is used if this is missing.
+
+<DT><B>rast=</B><EM>name</EM>
+<DD>Name of raster map to be sampled. 
+
+<DT><B>z=</B><EM>value</EM>
+<DD>Option scaling factor for values read from raster map.
+Sampled values will be multiplied by this factor. If
+omitted, this is set to 1.0.
+
+</DL>
+
+<H2>NOTES</H2>
+
+<P>
+
+The output site list will have the easting and northing of the input site list.
+The category value will either be the same as the value in the input site list
+or a unique value if there were no categories in the input site list.  One
+decimal attribute will be output containing either, the cell value of the
+raster if no comparison was done (i.e. <B>attr=none</B>) or it will be the
+difference between the cell value and the site list attribute value.
+
+<P>
+
+If <B>-l</B> is specified, it is important that
+the raster category label is
+numeric. No error checking is done except for "no data"
+values as raster category labels. In this instance, a
+warning is issued and a zero value is assumed.
+
+<P>
+When NULL values are encountered for a cell, zero value is used
+instead.  In these cases, more acurrate results may be obtained
+by using the default nearest neighbor comparisons.
+
+<P>
+
+This program may not work properly with lat-long data when
+the <B>-BC</B> flags are used.
+
+<P>
+
+When interpolation is done (i.e., the <B>-BC</B> flags are
+used), values are assumed to be located at the centroid of
+grid cells.  Therefore, current resolution settings are
+important.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="s.random.html">s.random</A></EM><br>
+<EM><A HREF="s.kcv.html">s.kcv</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+
+
+<EM>Image Sampling Methods</EM> - GRASS Tutorial on <EM>s.sample</EM>
+(available as 
+<A HREF="../../sites/">s.sample-tutorial.ps.gz</A>) 
+
+
+<H2>BUGS</H2>
+Please send all bug fixes and comments to the author
+or the grass development team. <br>
+<a href="http://www.geog.uni-hannover.de/grass/"><tt>http://www.geog.uni-hannover/grass/</tt></A>
+
+<H2>AUTHOR</H2>
+
+<A HREF="http://mccauley-usa.com/">James Darrell McCauley</A>
+<A HREF="mailto:darrell@mccauley-usa.com">&lt;darrell@mccauley-usa.com&gt;</A>,
+<br>when he was at: 
+<A HREF="http://ABE.www.ecn.purdue.edu/ABE/">Agricultural
+Engineering</A>
+<A HREF="http://www.purdue.edu/">Purdue University</A>
+<P>
+Updated for GRASS 5.0 by Eric G. Miller
+
+</BODY>
+</HTML>

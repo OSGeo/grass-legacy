@@ -1,21 +1,33 @@
-:
+#!/bin/sh
+
+# $Id$
+# 2000: updated to GRASS 5
 # 1998 from NRCS, slightly modified for GRASS 4.2.1
 
 file=$1
 
-if ( test "$1" = "help" ) || ( test "$1" = "" ); then
+if ( test "$1" = "help" ) || ( test "$1" = "" ) ( test "$1" = "-help" ); then
 echo ""
 echo "GRASS script to reclass a raster map greater or less than "
 echo "user specified area size (in hectares)."
 echo ""
 echo "Usage: r.reclass.area [-l val] [-g val] rast_file out_file
 where 
-  -l val option that sets the <= acreage limit [hectares]
-  -g val option that sets the >= acreage limit [hectares]
+  -l val option that sets the <= area size limit [hectares]
+  -g val option that sets the >= area size limit [hectares]
   rast_file sets the raster file name
   out_file sets the output raster file name
 "
 exit
+fi
+
+g.region -p |head -1 |grep 0 > /dev/null
+if test $? ;
+then
+ echo ""
+ echo "Sorry: xy-locations are not supported."
+ echo "Need projected data with grids in meter."
+ exit
 fi
 
 if test "$file" = "-l"; then
@@ -64,22 +76,23 @@ fi
 #  fi
 #fi
 
-## calculation in square kilometer
+## calculation in hectares
 if test "$limit" = ""; then
 echo 
 echo "Generating a reclass rules file categorized by hectares"
-r.stats -az in=$file2,$file |awk '{hectares=$3 * 0.0001; printf("%d = %.0f\n",$1,hectares)}' >$file.rules
+ r.stats -an in=$file2,$file |awk '{hectares=$3 * 0.0001; 
+ printf("%d = %d %.4f\n",$1,hectares,hectares)}' > $file.rules
 else
   if test $op = 0; then
 echo 
 echo "Generating a reclass rules file with area size less than or equal to $limit hectares"
-  r.stats -az in=$file2,$file | awk '{limit='$limit'; hectares=$3 * 0.0001; 
-{if (hectares <= limit) printf("%d = %d\n",$1,$2)}}' >$file.rules
+  r.stats -an in=$file2,$file | awk '{limit='$limit'; hectares=$3 * 0.0001; 
+{if (hectares <= limit) printf("%d = %d %d\n",$1,$2,$2)}}' > $file.rules
   else
 echo 
 echo "Generating a reclass rules file with area size greater than or equal to $limit hectares"
-  r.stats -az in=$file2,$file | awk '{limit='$limit'; hectares=$3 * 0.0001; 
-{if (hectares >= limit) printf("%d = %d\n",$1,$2)}}' >$file.rules
+  r.stats -an in=$file2,$file | awk '{limit='$limit'; hectares=$3 * 0.0001; 
+{if (hectares >= limit) printf("%d = %d %d\n",$1,$2,$2)}}' > $file.rules
   fi
 fi
 
@@ -88,7 +101,7 @@ outfile=${file}_${limit}
 fi
 echo
 echo "Generating reclass raster file <$outfile>"
-r.reclass i=$file2 o=$outfile <$file.rules
+cat $file.rules | r.reclass i=$file2 o=$outfile
 
 #####cleanup
 rm -f $file.rules

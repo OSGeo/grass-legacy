@@ -4,9 +4,9 @@
 *  This also sets up the map the first time.
 */
 
-#include	<stdio.h>
+#include <stdio.h>
 #include <string.h>
-#include "dig_inter.h"
+#include "Vect.h"
 #include "georef.h"
 
 int reset_map (void)

@@ -13,7 +13,7 @@ MODHEAD = modhead.o ask_format.o hitreturn.o row_addr.o\
 	  check_un.o check_new.o check_old.o factors.o
 
 $(ETC)/modcolr: $(MODCOLR) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(MODCOLR) $(GISLIB) $(TERMLIB) $(MATHLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(MODCOLR) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(ETC)/modhead: $(MODHEAD) $(GISLIB) $(VASLIB)
 	$(CC) $(LDFLAGS) -o $@ $(MODHEAD) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)

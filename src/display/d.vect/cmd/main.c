@@ -13,18 +13,19 @@
 #include "Vect.h"
 #define MAIN
 #include "local_proto.h"
+int quiet = 1;
 
 int 
 main (int argc, char **argv)
 {
 	char *mapset ;
 	char buf[128] ;
-	int stat ;
+	int stat;
 	int color;
 	char *D_color_list();
 	char map_name[128] ;
 	struct Option *opt1, *opt2;
-	struct Flag   *levone;
+	struct Flag   *levone,  *_quiet;
 	struct line_pnts *Points;
 
 	opt1 = G_define_option() ;
@@ -46,6 +47,10 @@ main (int argc, char **argv)
 	levone->key		= 'm';
 	levone->description	= "Use less memory";
 
+	_quiet = G_define_flag ();
+	_quiet->key		= 'v';
+	_quiet->description	= "Run verbosely";
+
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
@@ -57,6 +62,7 @@ main (int argc, char **argv)
 
 	color = D_translate_color(opt2->answer);
 
+	quiet = !_quiet->answer;
 	/* Make sure map is available */
 	mapset = G_find_file2 ("dig", map_name, "") ;
 	if (mapset == NULL)
@@ -85,6 +91,9 @@ main (int argc, char **argv)
 	}
 	if(stat == 0)
 		D_add_to_list(G_recreate_command()) ;
+
+	D_set_dig_name(G_fully_qualified_name(map_name, mapset));
+	D_add_to_dig_list(G_fully_qualified_name(map_name, mapset));
 
 	Vect_destroy_line_struct (Points);
 

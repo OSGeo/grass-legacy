@@ -14,7 +14,6 @@ PAINT = $(ETC)/paint
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
 LIBES =	$(VECTLIB) $(GISLIB) $(ICONLIB) $(DATETIMELIB)
 
-EXTRA_CFLAGS=$(VECT_INCLUDE)
 
 LIST =	main.o\
 	alloc_pats.o\
@@ -178,7 +177,7 @@ all: $(PGM) \
      $(PAINT)/patterns.index
 
 $(PGM):	$(LIST) $(INTERFACE) $(LIBES)
-	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB) -o $@ $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB)
 
 saber:
 	#load $(CFLAGS) $(SRCLIST) nildriver/lib.a $(LIBES) $(INTERFACE) $(MATHLIB)

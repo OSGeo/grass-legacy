@@ -1,0 +1,103 @@
+<TITLE>d.grid</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.grid</b></EM> - Overlays a user-specified grid 
+in the active display frame on the graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.grid</B> 
+<BR>
+<B>d.grid help</B> 
+<BR>
+<B>d.grid size=</B><EM>value</EM> 
+[<B>color</B>=</B><EM>name</EM>] 
+[<B>origin</B>=<EM>easting,northing</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.grid</EM> overlays a grid of user-defined size and
+color in the active display frame on the graphics monitor.
+The grid will overlay, not overwrite, the contents of the
+active display frame.
+
+<P>
+
+<EM>d.grid</EM> can be run non-interactively or
+interactively.  If the user specifies the grid
+<EM>size</EM> and (optionally) the grid <EM>color</EM> on
+the command line the program will run non-interactively; if
+no grid <EM>color</EM> is given the default will be used.
+Alternately, the user may simply type <B>d.grid</B> on the
+command line; in this case, the program will prompt the
+user for parameter values using the standard GRASS user
+interface described in the manual entry for 
+<EM><A HREF="parser.html">parser</A>.</EM>
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>size=</B><EM>value</EM>
+<DD>Size of grid to be drawn in the active display frame, 
+    in current map coordinate system units. 
+    It should be noted that, depending on the scale of the map layer 
+    displayed in this frame, the grid may fall outside the user's 
+    viewing range. 
+<BR>
+    Options: 0-100000 
+<DT><B>color=</B><EM>name</EM>
+<DD>Sets the current grid color to <EM>name</EM>.</EM> 
+<BR>
+    Options: red, orange, yellow, green, blue, 
+    indigo, violet, magenta, brown, 
+    gray, white, and black. 
+<BR>
+    Default: <EM>gray</EM> 
+<DT><B>origin</B>=<EM>easting,northing</EM>
+<DD>Lines of the grid pass through this coordinate. 
+    The coordinate need not be 
+    within the current frame. 
+</DL>
+
+<H2>NOTES</H2>
+
+<EM>d.grid</EM> will not erase grids already displayed in
+the active graphics display frame by previous invocations
+of <EM>d.grid</EM>; multiple invocations of <EM>d.grid</EM>
+will therefore result in the drawing of multiple grids
+inside the active graphics frame.  (A command like 
+<EM><A HREF="d.erase.html">d.erase</A></EM>, which erases the
+entire contents of the active display frame, must be run to
+erase previously drawn grids from the display frame.)
+
+<P>
+
+Currently, the grid size can only be drawn in the units of
+the map coordinate system used by the current GRASS
+location.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.display.html">d.display</A></EM><br>
+<EM><A HREF="d.erase.html">d.erase</A></EM><br>
+<EM><A HREF="d.frame.html">d.frame</A></EM><br>
+<EM><A HREF="d.legend.html">d.legend</A></EM><br>
+<EM><A HREF="d.rast.html">d.rast</A></EM><br>
+<EM><A HREF="d.scale.html">d.scale</A></EM><br>
+
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S. Army Construction Engineering Research Laboratory

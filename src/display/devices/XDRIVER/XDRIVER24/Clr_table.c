@@ -7,7 +7,7 @@
  * example; nlev=8 means 8bit for each R, G, B equal to 24bit truecolor
 */
      
-     
+#include "gis.h"     
 #include <stdio.h>
 #include <stdlib.h>
 #include "includes.h"
@@ -193,14 +193,14 @@ int trueAllocColor(
 
 #endif /* ORIG */
 
-Colormap InitColorTableFixed (void)
+Colormap InitColorTableFixed (Colormap cmap)
 {
     float span;
     int r, g, b, i;
     unsigned char R, G, B;
     static int n_levels = 0;
     XColor xcolor;
-    Colormap cmap;
+/*    Colormap cmap;  */
 
     table_type = FIXED;
     /* figure out how many equal levels of r, g, and b are possible
@@ -216,9 +216,10 @@ Colormap InitColorTableFixed (void)
             Blu[i] = (int) ((i / 256.0) * n_levels);
         }
 	/* allocate xpixels array */
-	xpixels = (u_long *) calloc(n_levels*n_levels*n_levels, sizeof(u_long));
+	xpixels = (u_long *) G_calloc((size_t) (n_levels*n_levels*n_levels), (size_t)sizeof(u_long));
     }
-    cmap = DefaultColormap(dpy, scrn);
+/*    cmap = DefaultColormap(dpy, scrn);  */
+
     /* Generate "fixed" color table */
     span = 255.0 / (float) (n_levels - 1);
     i = 0;

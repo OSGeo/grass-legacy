@@ -1,5 +1,0 @@
-
-@man("r.average") - Finds the average of values in a values map within polygons of
-a user-specified base map.
-
-(GRASS Raster Program)

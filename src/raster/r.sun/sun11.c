@@ -1,25 +1,26 @@
 /*******************************************************************************
-r.sun: it was writen by Jaro Hofierka in Summer 1993 and re-engineered
-in 1996, 1997 and 1999.
-(C) Copyright Jaro Hofierka, Gresaka 22, 085 01 Bardejov, Slovakia, 
-email: hofierka@netlab.sk, hofierka@nextra.sk
-*******************************************************************************/
+ * r.sun: it was writen by Jaro Hofierka in Summer 1993 and re-engineered
+ *  in 1996, 1997 and 1999.
+ * (C) Copyright Jaro Hofierka, Gresaka 22, 085 01 Bardejov, Slovakia, 
+ * email: hofierka@geomodel.sk
+ ******************************************************************************/
+
 /*
- * This program, both binary and source is copyrighted, but available without 
- * fee for education, research and non-commercial purposes. Users may distribute
- * the binary and source code to third parties provided that the copyright 
- * notice and this statement appears on all copies and that no charge is made 
- * for such copies.  Any entity wishing to integrate all or part of the source
- * code into a product for  commercial use or resale, should contact the
- * author of the software.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- * THE SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY. THE
- * AUTHOR SHALL NOT BE LIABLE FOR 
- * ANY DAMAGES SUFFERED BY THE USER OF THIS SOFTWARE.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- * By copying this program, you, the user, agree to abide by the copyright
- * conditions and understandings with respect to any software which is
- * marked with a copyright notice.
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the
+ *   Free Software Foundation, Inc.,
+ *   59 Temple Place - Suite 330,
+ *   Boston, MA  02111-1307, USA.
  */
 
 #define M2_PI    2 * M_PI
@@ -99,6 +100,7 @@ int
 main (int argc, char *argv[])
 {
 
+ struct GModule *module;
  struct
   {
   struct Option *elevin, *aspin, *slopein, *incidout, *energyout, *latitude, *dej, *lum_time, *linke;
@@ -109,6 +111,17 @@ main (int argc, char *argv[])
         } flag;
 
 	  G_gisinit (argv[0]);
+
+	  module = G_define_module();
+	  module->description =
+		"Computes solar illumination (incidence) angle raster maps "
+		"for given time and latitude and solar irradiance (direct "
+		"solar radiation) raster maps for given day and latitude. "
+		"They are computed from elevation, slope and aspect raster "
+		"maps. Sunrise, sunset times, declination for given day "
+		"are displayed along with solar azimuth and zenith angle "
+		"for specified local time. The shadowing effect of the "
+		"topography is optionally incorporated.";
 
 		if(G_get_set_window(&cellhd)==-1) exit(0);
 		/*ew_res = cellhd.ew_res;*/

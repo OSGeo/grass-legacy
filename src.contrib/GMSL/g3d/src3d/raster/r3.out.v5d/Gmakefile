@@ -1,0 +1,14 @@
+OBJ=main.o binio.o v5d.o
+SOURCES=main.c binio.c v5d.c
+
+EXTRA_CFLAGS = -DLITTLE
+
+DIR=.
+
+PGM=r3.out.v5d
+HOME=$(BIN_MAIN_CMD)
+
+$(HOME)/$(PGM): $(OBJ) $(G3DLIB) $(GISLIB) $(LINKMLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(G3DLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB) $(XDRLIB)
+
+$(GISLIB): #

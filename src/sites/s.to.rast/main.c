@@ -1,5 +1,8 @@
+/* 
+ * $Id$ 
+ *
+ */
 /*
-
 s.to.rast - this program was created to provided a command-line operability
 of what could have been done interactively with the s.menu program. Thus,
 much of what you find here is simply a modified version of the sites_to_rast
@@ -16,8 +19,6 @@ the first reading is by-passed.
 Chris Rewerts, U.S. Army Construction Engineering Research Laboratory
 rewerts@zorro.cecer.army.mil
 May 20, 1993
-
-Update 12/99 Markus Neteler for GRASS 5
 */
 
 #include <string.h>
@@ -33,31 +34,41 @@ int main (int argc, char *argv[])
     FILE *fd;
     Site *s;
     struct Cell_head window;
+    struct GModule *module;
     struct Categories cats;
     char *layer;
     char *name, *mapset;
     char title_buf[1024];
     char *prev_cat;
     int quad_size;
-    int quiet;
+    int quiet, retcode;
     int zero_one;
     int dims, strs, dbls;
     int said_it;
     int temp_fd;
     char *temp_name;
     int rows, cols, row;
+    int num_index, str_index, rec_count, region_check;
+    int scan_int, num_type;
  
     struct Option *input;
     struct Option *output;
     struct Option *size;
     struct Option *given_title;
+    struct Option *field;
+    struct Option *findex;
+    struct Option *sindex;
     struct Flag   *verbose;
     struct Flag   *one_cat;
     void *rast;
-    RASTER_MAP_TYPE map_type;
+    RASTER_MAP_TYPE map_type, real_map_type;
 
     G_gisinit (argv[0]);
 
+    module = G_define_module();
+    module->description =        
+                    "Converts a site file to a raster map";
+                    
     input = G_define_option();
     input->key          ="input";
     input->description  ="Name of input site list";
@@ -83,7 +94,29 @@ int main (int argc, char *argv[])
     given_title->required	= NO;
     given_title->type		= TYPE_STRING;
     given_title->description	= "Title for the resulting raster map";
+    
+    field = G_define_option();
+    field->key = "field";
+    field->type = TYPE_STRING;
+    field->required = NO;
+    field->description = "Attribute field type to use for operation";
+    field->options ="dim,decimal,cat";
+    field->answer = "decimal";
+
+    findex = G_define_option();
+    findex->key = "findex";
+    findex->type = TYPE_INTEGER;
+    findex->required = NO;
+    findex->description = "Attribute field number to use for operation";
+    findex->answer = "1";
  
+    sindex = G_define_option();
+    sindex->key = "string";
+    sindex->type = TYPE_INTEGER;
+    sindex->required = NO;
+    sindex->description = "String attribute number to use for description";
+    sindex->answer = "1";
+
     verbose = G_define_flag() ;
     verbose->key         = 'q' ;
     verbose->description = "Run quietly";
@@ -116,6 +149,42 @@ int main (int argc, char *argv[])
     else
         quad_size = 0;  /* our default - one cell per site */
 
+    if (strncmp(field->answer,"dim",3) == 0 )
+        num_type = SITE_COL_DIM;
+    else if (strncmp(field->answer, "decimal", 7) == 0)
+        num_type = SITE_COL_DBL;
+    else if (strncmp(field->answer, "cat", 3) == 0)
+        num_type = SITE_COL_NUL;
+    else { /* Shouldn't happen */
+       char msg[256];
+       snprintf(msg, 256, "%s: \"%s\" is an unknown field type.\n",
+                       G_program_name(), field->answer);
+       G_fatal_error(msg);
+    }
+
+    scan_int=sscanf(findex->answer,"%d",&num_index);
+    if ((scan_int <= 0) || num_index < 1)
+    {
+        char msg[256];
+        sprintf(msg,"%s: \"%s\" is an incorrect value for attribute field number.\n",
+        G_program_name(), findex->answer );
+        G_fatal_error (msg);
+        exit(1);
+    }
+    num_index--;
+    
+    scan_int = sscanf(sindex->answer, "%d", &str_index);
+    if ((scan_int <= 0) || str_index < 1)
+    {
+        char msg[256];
+        sprintf(msg,"%s: \"%s\" is an incorrect value "
+                        "for attribute field number.\n",
+                        G_program_name(), findex->answer );
+        G_fatal_error (msg);
+        exit(1);
+    }
+    str_index--;
+	    
     if (G_legal_filename(layer) < 0)
     {
         fprintf (stderr, "\n%s: <%s> - illegal name\n", 
@@ -128,11 +197,10 @@ int main (int argc, char *argv[])
 
     if (!quiet)
     {
-        fprintf (stdout, "\n\n%s\n", G_program_name());
-        fprintf (stdout, "using size option: %d\n", quad_size);
+        fprintf (stdout, "Using size option: %d\n", quad_size);
         if (zero_one)
-            fprintf (stdout, "forcing single-valued (no-data/1) raster map\n");
-        fprintf (stdout, "\nfinding and opening site list...\n");
+            fprintf (stdout, "Forcing single-valued (no-data/1) raster map\n");
+        fprintf (stdout, "Finding and opening site list...\n");
     }
 
     mapset = G_find_sites(name, "");
@@ -154,30 +222,49 @@ int main (int argc, char *argv[])
     {
 	fprintf (stderr, "\n%s: wrong site format",G_program_name());
     }
+    real_map_type = map_type;
+
+    switch(num_type) {
+        case SITE_COL_DBL:
+            if(num_index >= dbls){
+                fprintf(stderr,"\n");
+                G_fatal_error("selected decimal field column no. %d "
+                        "not present in sites list.", num_index+1);
+            }
+            map_type = DCELL_TYPE;
+            break;
+        case SITE_COL_DIM:
+            if(num_index >= dims || num_index < 2 ) {
+                fprintf(stderr,"\n");
+                G_fatal_error("selected dimension no. %d "
+                        "not present in sites list. or is a coordinate", num_index+1);
+            }
+            num_index -= 2;
+            map_type = DCELL_TYPE;
+            break;
+        case SITE_COL_NUL:
+            if(map_type < 0 && !zero_one) {
+                fprintf(stderr, "\n");
+                G_fatal_error("site_list does not have any category values");
+            }
+        default: /* Already caught.. */
+        break;
+    }
+    
+    if (str_index > strs) {
+        G_warning("String attribute index out of range, resetting to default.");
+        str_index = 0;
+    }
     if(!quiet)
-       fprintf (stderr, "\nMap Type: %d, Dims: %d, Strs: %d, Dbls: %d\n", map_type, dims, strs, dbls);
+       fprintf (stderr, "\nSites map Type: %d, Dims: %d, Strs: %d, Dbls: %d\n", 
+		       real_map_type, dims, strs, dbls);
 
-    zero_one = 0;
-    if(map_type < 0)
+    if (zero_one)
     {
-        zero_one = 1;
-	map_type = CELL_TYPE;
-        if (!quiet )
-        {
-	    fprintf (stderr, 
-            "\nNOTE: some site(s) did not have category values in the\n");
-            fprintf (stderr, 
-            "description field, so we can only create a no-data/1 raster file.\n");
-        }
+        map_type = CELL_TYPE;
     }
-    if(map_type == 0)
-    {
-        zero_one = 0;
-	map_type = FCELL_TYPE;
-    }
-
-    s = G_site_new_struct (map_type, dims, strs, dbls);
-
+    
+    s = G_site_new_struct (real_map_type, dims, strs, dbls); 
     temp_name = G_tempfile();
     temp_fd = creat(temp_name,0660);
     rast = G_allocate_raster_buf(map_type);	
@@ -185,20 +272,20 @@ int main (int argc, char *argv[])
     cols = window.cols;
 
     /*  zero out the entire file that will receive data   */
+    if (!quiet)
+    {
+        fprintf (stderr, "\ninput sites map: <%s> in <%s>\n", name, mapset);
+        /*fprintf (stdout, "\ncreating empty raster file ...\n");*/
+    }
+
     G_set_null_value(rast, cols, map_type);
     for(row = 0; row < rows; row++)
         if(write(temp_fd, rast, cols * G_raster_size(map_type))!=
 					      cols * G_raster_size(map_type))
-	       G_fatal_error("error while writing to temp file");
+            G_fatal_error("error while writing to temp file");
 
     if (!quiet)
-        fprintf (stdout, "\noutput: <%s> in <%s>\n", layer, G_mapset());
-
-    if (!quiet)
-    {
-        fprintf (stdout, "\ninput: <%s> in <%s>\n", name, mapset);
-        fprintf (stdout, "\ncreating empty raster file ...\n");
-    }
+        fprintf (stderr, "output raster map: <%s> in <%s>\n", layer, G_mapset());
 
 /* 
    if the site descriptions are all of the form: #n <label>
@@ -211,33 +298,49 @@ int main (int argc, char *argv[])
     G_init_raster_cats (title_buf, &cats);
 
     if (!quiet)
-        fprintf (stdout, "\ntransferring sites to raster file...\n");
-
+        fprintf (stdout, "transferring sites to raster file...\n");
+    
+    region_check = 0;
+    rec_count = 1;
     said_it = 0;
     fseek (fd,0L,0);
-    while  (G_site_get (fd, s)>=0)
+    while  ((retcode = G_site_get (fd, s))==0)
     {
+        rec_count++;
+        if(!G_site_in_region(s, &window)) {
+            region_check = 1;
+        }
         if(!zero_one)
         {
-            switch(map_type)
-            {
-	      case CELL_TYPE:
-	        G_set_raster_value_c(rast, s->ccat, map_type);
-	        break;
-	      case FCELL_TYPE:
-	        G_set_raster_value_f(rast, s->dbl_att[0], map_type); /* updated 12/99 M.N. */
-	        break;
-	      case DCELL_TYPE:
-	        G_set_raster_value_d(rast, s->dbl_att[0], map_type); /* updated 12/99 M.N. */
-	        break;
-            }		 
+	    switch(num_type) {
+	        case SITE_COL_NUL:
+		    switch(map_type) {
+		        case CELL_TYPE:
+		            G_set_raster_value_c(rast, s->ccat, map_type);
+			    break;
+			case FCELL_TYPE:
+			    G_set_raster_value_f(rast, s->fcat, map_type);
+			    break;
+			case DCELL_TYPE:
+			    G_set_raster_value_d(rast, s->dcat, map_type);
+			    break;
+		    }
+		    break;
+		case SITE_COL_DBL:
+		    G_set_raster_value_d(rast, s->dbl_att[num_index], map_type);
+		    break;
+		case SITE_COL_DIM:
+		    G_set_raster_value_d(rast, s->dim[num_index], map_type);
+		    break;
+		default: /* Should never happen */
+	    }
 
             if(s->str_att)
 	    {
                 prev_cat = G_get_raster_cat(rast, &cats, map_type);
-                if (strcmp(prev_cat, "") && strcmp(prev_cat,s->str_att[0]) && !quiet)
+                if (strcmp(prev_cat, "") && strcmp(prev_cat,s->str_att[str_index]) && !quiet)
                 {
-                    if (said_it)
+                    if (!said_it)
                     {
                         fprintf (stderr,
                         "\nNOTE: Category description mismatch -\n");
@@ -251,31 +354,54 @@ int main (int argc, char *argv[])
                     fprintf (stderr,
                     "    Previous label found: %s\n", prev_cat);
                     fprintf (stderr,
-                    "    Current label found:  %s\n", s->str_att[0]);
+                    "    Current label found:  %s\n", s->str_att[str_index]);
                 }
-	        G_set_raster_cat (rast, rast, s->str_att[0], &cats, map_type);
-		fprintf (stdout,"setting raster cats %f %s", *((FCELL *) rast), *s->str_att);
+	        G_set_raster_cat (rast, rast, s->str_att[str_index], &cats, map_type);
+		/*
+		fprintf (stdout,"setting raster cats %f %s\n", *((FCELL *) rast), *s->str_att);
+		*/
             }
         }
         else /* zero_one */
 	    G_set_raster_value_c(rast, (CELL) 1, map_type);
         write_temp (temp_fd, &window, s->east, s->north, quad_size, rast, map_type);
      }  /* while */
-        
+    
+     if(!quiet) {
+         switch (retcode) {
+             case -1:
+                 fprintf(stderr, "Site list read successfully.\n");
+                 break;
+             case 1:
+                 G_warning("Extra attributes found in a site record %d "
+                                 "Remaining data skipped", rec_count);
+                 break;
+             case -2:
+                 G_warning("Error reading sites list at record %d. "
+                         "Remaining data skipped.", rec_count);
+                 break;
+             default: /* Unknown return code */
+                 G_warning("Got unknown return code: %d", retcode);
+        }
+        if (region_check) /* Some sites out of region */
+            G_warning("Some sites were outside the current region "
+                    "and were not included.");
+    }
+
      if(zero_one)
      {
 	 G_set_cat((CELL ) 0, "no data", &cats);
 	 G_set_cat((CELL ) 1, "site data", &cats);
      }
 	
-
-    if (!quiet)
-	     fprintf (stdout, "\ncopying temp file to raster file ...\n");
+    /* if (!quiet)
+	     fprintf (stdout, "copying temp file to raster file ...\n");*/
     close_temp(temp_fd, layer, temp_name, rows, cols, map_type);
     if (!quiet)
-        fprintf (stdout, "\ncreating support files ...\n");
+        fprintf (stdout, "creating support files ...\n");
     G_write_cats (layer, &cats);
     if (!quiet)
         fprintf(stdout, "\n<%s> raster file complete. Bye.\n\n", layer);
     exit(0);
 }
+/* vim: softtabstop=4 shiftwidth=4 expandtab */

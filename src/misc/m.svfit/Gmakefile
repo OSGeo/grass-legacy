@@ -1,0 +1,59 @@
+PGM=m.svfit
+
+MSEC=4
+MDIR=$(SRC)/../man/man$(MSEC)
+MUTL=$(SRC)/../man/utilities
+
+#all: $(BIN_CONTRIB_CMD)/$(PGM) man
+all: $(BIN_CONTRIB_CMD)/$(PGM)
+
+LIST=main.o premodel.o cdpath.o dparam.o updparam.o solve.o hgnio.o save.o\
+	pltmodl.o pltline.o pltsph.o pltexp.o pltgaus.o pltquad.o plthole.o
+
+LIBES=$(RASTERLIB) $(GISLIB) $(MESCHACH)
+
+$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(MATHLIB) $(XDRLIB)
+
+man:  
+	-cp $(PGM).man $(MDIR)/$(PGM)
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	   $(MUTL)/man.header $(PGM).man $(MDIR)/.class-notice \
+	   > $(GISBASE)/man/$(MSEC)/$(PGM)
+
+clean: 
+	-rm -f *.BAK core *~ $(PGM) tags plt.dat plt.gp 
+	-rm -f *.bbl *.blg *.dvi *.aux *.log *.toc
+
+realclean: clean
+	-rm -rf OBJ* LIB*
+
+veryclean: realclean
+
+dist: veryclean
+	(cd .. ; tar cvf $(PGM).tar $(PGM); gzip $(PGM).tar; mv $(PGM).tar.gz /home/pasture/a/ftp/pub/mccauley/grass)
+
+
+#
+cdpath.c	: 
+solve.c		:
+#
+main.c		: svfit.h
+hgnio.c		: svfit.h
+dparam.c	: svfit.h
+readsites.c	: svfit.h
+premodel.c	: svfit.h
+updparam.c	: svfit.h
+save.c		: svfit.h
+#
+pltcrst.c	: svfit.h
+pltexp.c	: svfit.h
+pltgaus.c	: svfit.h
+plthole.c	: svfit.h
+pltline.c	: svfit.h
+pltmodl.c	: svfit.h
+pltquad.c	: svfit.h
+pltsph.c	: svfit.h

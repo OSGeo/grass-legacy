@@ -28,12 +28,13 @@
   Side Effects:
       Sets the interpolation mode for the current keyframe animation.
 ******************************************************** */
-int
-Nset_interp_mode_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nset_interp_mode_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
   int mode;
@@ -72,12 +73,13 @@ Nset_interp_mode_cmd(data, interp, argc, argv)
    Side Effects:
        Sets tension for interpolating splines
 ******************************************************** */
-int
-Nset_tension_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nset_tension_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
   double tension;
@@ -119,12 +121,13 @@ Nset_tension_cmd(data, interp, argc, argv)
    Side Effects:
        None.
 ******************************************************** */
-int
-Nshowtension_start_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nshowtension_start_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
 
@@ -139,12 +142,13 @@ Nshowtension_start_cmd(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nupdate_tension_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nupdate_tension_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
 
@@ -159,12 +163,13 @@ Nupdate_tension_cmd(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nshowtension_stop_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nshowtension_stop_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
 
@@ -196,12 +201,13 @@ Nshowtension_stop_cmd(data, interp, argc, argv)
    Side Effects:
        None.
 ******************************************************** */
-int
-Nupdate_frames_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nupdate_frames_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
 
@@ -232,12 +238,13 @@ Nupdate_frames_cmd(data, interp, argc, argv)
    Side Effects:
        Sets the current number of frames.
 ******************************************************** */
-int
-Nset_numsteps_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nset_numsteps_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
   long num_frames;
@@ -271,12 +278,13 @@ Nset_numsteps_cmd(data, interp, argc, argv)
    Side Effects:
        Nukes all keyframes.
 ******************************************************** */
-int
-Nclear_keys_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nclear_keys_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
 
@@ -342,12 +350,13 @@ Here's the function def from Bill:
        Adds or replaces the given key with the given values.
 
 ******************************************************** */
-int
-Nadd_key_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nadd_key_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
   double pos, precis;
@@ -429,12 +438,13 @@ Nadd_key_cmd(data, interp, argc, argv)
        first (lowest pos) keyframe within precision of position.
 
 ******************************************************** */
-int
-Ndelete_key_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Ndelete_key_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
   double pos, precis;
@@ -479,12 +489,13 @@ Ndelete_key_cmd(data, interp, argc, argv)
        to new_position +- precision
 
 ******************************************************** */
-int
-Nmove_key_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nmove_key_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
   double new_pos, old_pos, precis;
@@ -530,12 +541,13 @@ Nmove_key_cmd(data, interp, argc, argv)
    Side Effects:
        Moves the animation to the given frame.
 ******************************************************** */
-int
-Ndo_framestep_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Ndo_framestep_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
   long step;
@@ -573,12 +585,13 @@ Ndo_framestep_cmd(data, interp, argc, argv)
    Side Effects:
        Draws the current path on the screen.
 ******************************************************** */
-int
-Nshow_site_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nshow_site_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   int arg1;
 
@@ -599,12 +612,13 @@ Nshow_site_cmd(data, interp, argc, argv)
 
 }
 
-int
-Nshow_vect_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nshow_vect_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   int arg1;
 
@@ -625,12 +639,13 @@ Nshow_vect_cmd(data, interp, argc, argv)
 
 }
 
-int
-Nshow_path_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nshow_path_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   int arg1;
 
@@ -665,12 +680,13 @@ Nshow_path_cmd(data, interp, argc, argv)
    Side Effects:
        Saves the current GL screen to the given file.
 ******************************************************** */
-int
-Nwrite_rgb_cmd(data, interp, argc, argv)
-     Nv_data *data;         /* Local data */
-     Tcl_Interp *interp;    /* Current interpreter */
-     int argc;              /* Number of arguments */
-     char **argv;           /* Argument strings */
+int 
+Nwrite_rgb_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
 {
   /* Parse arguments */
   if (argc != 2) {
@@ -685,13 +701,74 @@ Nwrite_rgb_cmd(data, interp, argc, argv)
 
 }
 
+/* ********************************************************
+   Nwrite_ppm -
 
+   Save current GL screen to an ppm file.
 
+   Arguments:
+       String - name of file to save to.
 
+   Returns:
+       None.
 
+   Side Effects:
+       Saves the current GL screen to the given file.
+******************************************************** */
+int
+Nwrite_ppm_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
+{
+  /* Parse arguments */
+  if (argc != 2) {
+    interp->result="Error: should be Nwrite_ppm file_name";
+    return (TCL_ERROR);
+  }
 
+  /* Call the function */
+  GS_write_ppm(argv[1]);
 
+  return (TCL_OK);
 
+}
 
+/* ********************************************************
+   Nwrite_tif -
+
+   Save current GL screen to a TIFF file.
+
+   Arguments:
+       String - name of file to save to.
+
+   Returns:
+       None.
+
+   Side Effects:
+       Saves the current GL screen to the given file.
+******************************************************** */
+int
+Nwrite_tif_cmd (
+    Nv_data *data,         /* Local data */
+    Tcl_Interp *interp,    /* Current interpreter */
+    int argc,              /* Number of arguments */
+    char **argv           /* Argument strings */
+)
+{
+  /* Parse arguments */
+  if (argc != 2) {
+    interp->result="Error: should be Nwrite_ppm file_name";
+    return (TCL_ERROR);
+  }
+
+  /* Call the function */
+  GS_write_tif(argv[1]);
+
+  return (TCL_OK);
+
+}
 
 

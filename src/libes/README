@@ -1,0 +1,59 @@
+$Id: README,v 1.6 2000-11-26 16:40:15 andreas Exp $
+
+Contents of this directory:
+
+D          : display library
+bitmap     : bitmap library for X Window Bitmaps
+btree      : binary tree library
+bwidget    : tcl/tk extra library
+coorcnv    : coordinate conversion and datum support library
+datetime   : DateTime library
+dbmi       : database management interface database drivers
+dig_atts   : library to read and write from attribute files
+digitizer  : raw library for general digitizer support
+display    : library for CELL driver
+dlg        : library to manage DLG files
+dspf       : G3D display files library
+g3d        : G3D raster volume library
+geom       : geometrical calculations, long-integer arithmetics, delaunay 
+             triangulation, planesweep algorithm, simulation of simplicity 
+             and others
+gis        : main GRASS library
+gmath      : generic mathematical functions (matrix, fft etc.) added by 
+             D D Gray (later to be extended, BLAS/LAPACK library)
+ibtree     : integer clone of binary tree library (btree)
+icon       : icon library (required for PS/Paint icons, read, write, 
+             manipulate icons)
+image3     : extra imagery library
+imagery    : imagery library
+libimage   : image library required for SG3d/Iris, saving images in SGIs 
+             rgb-format
+linkm      : linked list memory manager
+lock       : locking mechanism for GRASS monitors and files
+ogsf       : ported gsurf library (required for NVIZ)
+proj       : PROJ4.4.x projection library
+raster     : GRASS raster library
+rowio      : row in/out library
+rst_gmsl   : library for interpolation with regularized splines with tension 
+segment    : segment library
+unused     : maybe treasures here?
+vask       : Curses management library
+vect32     : GRASS vector library
+vect32_64  : new approach for a 32/64bit GRASS vector library (to be
+             integrated in vect32)
+
+some proposals for library re-design:
+all data/metadata that are currently hardcoded into the libraries should be read from files from the etc directory of the GISBASE, or if they are project/location dependend, they should be read from a file in $GISDBASE/$LOCATION_NAME/PERMANENT/filename.
+
+Functions should be added to read these values.
+
+The files are:
+~~~~~~~~~~~~~~
+element_list, this should be unified with tcltkgrass array featuredir/Featuredir
+
+units (distance, area), there should be a central registry for all units that go into PROJ_UNITS etc.
+
+colors, there should be a central registry file for all available colors, maybe in the format "color-name r g b" or such.
+
+methods, where is this used except in tcltkgrass?
+

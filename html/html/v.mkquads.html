@@ -1,0 +1,143 @@
+<TITLE>v.mkquads</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.mkquads</b></EM>  - Creates a GRASS vector map layer 
+and/or sites list 
+and/or geographic region definition file 
+for a USGS 7.5-minute quadrangle. 
+<BR>
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.mkquads</B>
+<BR>
+<B>v.mkquads help</B>
+<BR>
+<B>v.mkquads</B> [<B>-esrvx</B>] <B>map=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+There are three types of output available from the GRASS 
+program <EM>v.mkquads</EM>: 
+<OL>
+<LI>a vector map of all the full USGS quadrangles that will fit within the 
+boundaries of the current geographic region. 
+<LI>a GRASS sites list containing the corner coordinates of 
+each of these quads. 
+<LI>GRASS geographic region definition files 
+associated with each of the quads created. 
+</OL>
+
+<P>
+
+A <EM>quad</EM> is defined as the area covered by a USGS
+7.5-minute (1:24,000) map.  This program is useful for
+managing a GRASS data base LOCATION which contains a number
+of quads which are to be patched together.
+
+<P>
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-e</B>
+<DD>Encompass current geographic region with quads 
+    (rather than only creating those quads that lie inside of 
+    the geographic region). 
+    Use of this option will affect all output options. 
+<DT><B>-s</B>
+<DD>Create a GRASS sites list file. 
+    The sites list will contain all the corner coordinates of all the 
+    full quads that can be built in the current geographic region. 
+    The sites list file can then be displayed using the 
+    <EM><A HREF="d.sites.html">d.sites</A></EM> 
+    program. 
+<DT><B>-r</B>
+<DD>Create region file(s): quad.1 quad.2 ... 
+    The program will generate a separate geographic region
+    definition file for each quad; each of the geographic
+    region files created will have the prefix <EM>quad.</EM>
+    with some number attached to it.  For example, if only one
+    quad were created, the geographic region file
+    <EM>quad.1</EM> would also be created in the
+    <EM>windows</EM> directory under the user's current
+    mapset.  To make the program-generated geographic region
+    definition file <EM>quad.1</EM> your <EM>current</EM>
+    geographic region setting, run the GRASS 
+    <EM><A HREF="g.region.html">g.region</A></EM> program.
+
+<DT><B>-v</B>
+<DD>Create vector file (default). 
+    Only full quads will be created.  The binary vector map
+    layer output is placed under the user's <EM>dig</EM>
+    directory and can be used like any other vector map layer.
+    Run <EM><A HREF="v.support.html">v.support</A></EM> to
+    build the topology information for the vector map before
+    using <EM>v.mkquads</EM> map layer outputs in the 
+    <EM><A HREF="v.digit.html">v.digit</A></EM> program.  Since
+    the quads are computer-generated, the corner coordinates
+    will be exact.  This simplifies digitizing if one or more
+    quad sheets will have to be brought together for a data
+    base, because all of the quad corner points to be joined
+    will be guaranteed to match.
+
+<DT><B>-x</B>
+<DD>Create a GRASS registration (<EM>reg</EM>) file. 
+</DL>
+
+<P>
+<H3>Parameter:</H3> 
+<DL>
+<DT><B>map=</B><EM>name</EM>
+<DD>The name of a file to contain program output. 
+</DL>
+
+<P>
+
+If the user runs <EM>v.mkquads</EM> without including
+program parameter value and desired flags on the command
+line, the program will prompt the user for the above
+information using the standard GRASS interface described in
+the manual entry for 
+<EM><A HREF="parser.html">parser</A></EM>.
+
+<H2>NOTES</H2>
+
+All output options can be used on the command line at the
+same time.  A listing of all the quad points in
+latitude/longitude and UTM coordinates will be displayed
+each time the program is executed. The spheroid being used
+for the lat/lon to UTM conversions is <EM>clark66</EM>.
+
+<H2>BUGS</H2>
+
+Currently, this program only works for GRASS locations in a
+Universal Transverse Mercator (UTM) coordinate system (in
+meters).  There are no guarantees that <EM>v.mkquads</EM>
+will function properly if a quadrangle crosses UTM zones.
+This program has not been tested outside the northwest UTM
+quadrant.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.sites.html">d.sites</A>,</EM>
+<EM><A HREF="g.region.html">g.region</A>,</EM>
+<EM><A HREF="v.digit.html">v.digit</A>,</EM>
+<EM><A HREF="v.mkgrid.html">v.mkgrid</A>,</EM>
+<EM><A HREF="v.support.html">v.support</A></EM>
+and 
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHORS</H2>
+
+Michael Higgins, 
+U.S. Army Construction Engineering 
+Research Laboratory
+<BR>
+Marilyn Ruiz, U.S. Army Construction Engineering 
+Research Laboratory

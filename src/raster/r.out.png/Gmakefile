@@ -1,0 +1,12 @@
+# $Id: Gmakefile,v 1.8 2000-11-25 16:53:35 andreas Exp $
+
+PGM=r.out.png
+EXTRA_CFLAGS=$(PNGINC)
+LIBES = $(PNGLIB) -lpng -lz
+
+LIST= r.out.png.o
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(EXTRA_CFLAGS) -o $@ $(LIST) $(GISLIB) $(LIBES) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

@@ -3,10 +3,16 @@
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct Option *input, *output, *rows;
     int n;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Converts a binary GRASS vector map layer "
+		"into a GRASS raster map layer.";
 
     input = G_define_option();
     input->key             = "input";

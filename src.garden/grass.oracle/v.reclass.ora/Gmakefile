@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/v.reclass.ora
+PGM       = $(BIN_MAIN_CMD)/v.reclass.ora
 LIBES     = $(DISPLAYLIB) $(VECTLIB) $(DIG2LIB) $(DIG_ATTLIB) $(RASTERLIB) $(GISLIB) 
 
 
@@ -10,10 +10,9 @@ OBJS = \
 	infxQry.o \
 	modCat.o 
 
-EXTRA_CFLAGS = $(VECT_INCLUDE) # -Dunlink=puts
 
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(LIBES): #

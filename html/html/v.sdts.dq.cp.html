@@ -1,0 +1,152 @@
+<HTML>
+<HEAD>
+<TITLE>v.sdts.dq.cp</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+
+<EM><b>v.sdts.dq.cp</b></EM>  - installs SDTS data quality reports.
+
+<BR>
+
+<EM>(GRASS Vector Data Export/Processing Program)</EM>
+
+<BR>
+
+
+<H2>SYNOPSIS</H2>
+
+<B>v.sdts.dq.cp</B>
+
+<BR>
+
+<B>v.sdts.dq.cp help</B>
+
+<BR>
+
+<B>v.sdts.dq.cp</B> [<B>-f</B>] <B>map=</B><EM>name</EM> [<B>HL=</B><EM>name</EM>] [<B>PA=</B><EM>name</EM>] [<B>AA=</B><EM>name</EM>] [<B>LC=</B><EM>name</EM>] [<B>CG=</B><EM>name</EM>]
+
+<BR>
+
+
+<H2>DESCRIPTION</H2>
+
+The program provides assistance for the preparation of the five data quality
+report modules (Lineage, Positional Accuracy, Attribute Accuracy, Logical
+Consistency, and Completeness) required in an SDTS transfer dataset.
+The program has one simple function:  the user specifies a map layer in
+his current mapset, and then one or more files to be used for SDTS data 
+quality reports for this map layer.  The program copies the specified files 
+to a standard location (in the user's current mapset, under the <EM>dig_misc</EM>
+directory).  Later, when <EM>v.out.sdts</EM> is run for the same map layer, the 
+data quality reports will be incorporated into an SDTS export dataset.
+.sp
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+
+<P>
+
+<B>Flags:</B>
+
+<DT><B>-f</B>
+
+<DD>force overwriting of pre-exisiting data quality report(s).
+</DT>
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DT><B>map=</B><EM>name</EM> 
+<DD>name of vector map layer to which the specified data quality report files
+apply.
+
+<BR>
+
+<DT><B>HL=</B><EM>name</EM>
+<DD>name of file to be used for the SDTS Lineage (HL) data quality report.
+
+<BR>
+
+<DT><B>PA=</B><EM>name</EM>
+<DD>name of file to be used for the SDTS Positional Accuracy (PA) data quality 
+report.
+
+<BR>
+
+<DT><B>AA=</B><EM>name</EM>
+<DD>name of file to be used for the SDTS Attribute Accuracy (AA) data quality 
+report.
+
+<BR>
+
+<DT><B>LC=</B><EM>name</EM>
+<DD>name of file to be used for the SDTS Logical Consistency (LC) data quality 
+report.
+
+<BR>
+
+<DT><B>CG=</B><EM>name</EM>
+<DD>name of file to be used for the SDTS Completeness (CG) data quality report.
+
+<BR>
+
+</DT>
+
+<H2>NOTES</H2>
+
+Data Quality report files should be simple narrative text files.  After the
+files have been installed with <EM>v.sdts.dq.cp</EM>, <EM>v.out.sdts</EM> will 
+convert the
+installed copy of each report to SDTS ISO 8211 format.  Each paragraph in
+the original file will become a separate record in the SDTS data quality 
+module.
+
+
+<P>
+
+Parameter names--HL, PA, AA, LC, CG--are SDTS codes for different
+data quality modules (HL=Lineage, PA=Positional Accuracy, etc.).
+
+
+<P>
+
+Data quality files to be installed can be created as well as installed
+with <EM>v.sdts.meta</EM>.
+
+<H2>SEE ALSO</H2>
+
+<P>
+
+<EM><A HREF="m.sdts.read.html">m.sdts.read</A>, </EM>
+<EM><A HREF="v.in.sdts.html">v.in.sdts</A>, </EM>
+<EM><A HREF="v.out.sdts.html">v.out.sdts</A>, </EM>
+<EM><A HREF="v.sdts.dq.cp.html">v.sdts.dp.cp</A>, </EM>
+<EM><A HREF="v.sdts.meta.cp.html">v.sdts.meta.cp</A>, </EM>
+<EM><A HREF="v.sdts.meta.html">v.sdts.meta</A></EM>
+
+<BR>
+
+
+<H2>AUTHORS</H2>
+
+
+
+<P>
+
+David Stigberg, U.S.Army Construction Engineering 
+Research Laboratory
+
+<BR>
+
+Tin Qian, University of Illinois
+

@@ -1,0 +1,90 @@
+<TITLE>v.rmedge</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.rmedge</b></EM>  - Selects edge vectors from an existing vector map,
+removes them, and creates a new vector map.
+
+<BR>
+
+<EM>"(SCS GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.rmedge</B>
+
+<BR>
+
+<B>v.rmedge help</B>
+
+<BR>
+
+<B>v.rmedge input=</B><EM>name </EM><B>output=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+allows a user to create a new vector map from an existing vector map,
+however <EM>ALL OUTER</EM> boundaries will be gone. Any outer edge that
+needs to be retained will require adding another outside boundary,
+<EM>v.digit</EM> can be used to provide this additional boundary.
+
+
+<P>
+
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>Name of vector input file.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Name of vector output file.
+</DL>
+
+<H2>NOTES</H2>
+
+When using <EM>v.digit</EM> to add an additional boundary to a map, it may be
+necessary to break the boundary of an existing area.
+The user  <EM>*** MUST REMEMBER ***</EM> that breaking the boundary of a
+named area <EM>*** REMOVES THE LABEL ***</EM>,
+and the area <EM>*** MUST BE RE-LABELED ***</EM> prior to leaving <EM>v.digit</EM>;
+
+<BR>
+
+-OR-
+
+<BR>
+
+<EM>*** v.rmedge will REMOVE that area boundary ALSO ***</EM>
+
+
+<P>
+
+This will result in MISSING data in a patching operation.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM><br>
+<EM><A HREF="v.merge.html">v.merge</A></EM><br>
+<EM><A HREF="v.patch.html">v.patch</A></EM>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

@@ -1,0 +1,1210 @@
+
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Topology Read
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Topology Read
+</h1>
+
+<blockquote><i>
+    Status:  Alpha<br>
+    This module has been designed but not thoroughly reviewed.
+</i></blockquote>
+
+These routines provide access to the data contained in the map.  This
+functionally was available in previous versions only by digging into the
+data structures themselves.  In 5.0 the data structures are no longer 
+accessable and all requests for information must go though this interface.
+All information about connectivity of map features is accessable.<p>
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li>gvStatus    <a href="#gvGetLinePoints"> gvGetLinePoints </a>
+    (gvMapP map, gvPidP line, gvPointsP points)
+
+
+<li>gvStatus    <a href="#gvGetAreaPoints"> gvGetAreaPoints </a>
+    (gvMapP map, gvPidP area, gvPointsP points)
+
+
+<li>gvStatus    <a href="#gvGetIslePoints"> gvGetIslePoints </a>
+    (gvMapP map, gvPidP isle, gvPointsP points)
+
+
+<li>int    <a href="#gvPrimCount"> gvPrimCount </a>
+    (gvMapP map, gvAllType type)
+
+
+<li>double    <a href="#gvGetSnapThresh"> gvGetSnapThresh </a>
+    (gvMapP map)
+
+
+<li>double    <a href="#gvGetMapThresh"> gvGetMapThresh </a>
+    (gvMapP map)
+
+
+<li>gvBoolean    <a href="#gvIsTopoComplete"> gvIsTopoComplete </a>
+    (gvMapP map)
+
+
+<li>gvOpenMode    <a href="#gvGetRwMode"> gvGetRwMode </a>
+    (gvMapP map)
+
+
+<li>gvTopoMode    <a href="#gvGetTopoMode"> gvGetTopoMode </a>
+    (gvMapP map)
+
+
+<li>int    <a href="#gvGetScale"> gvGetScale </a>
+    (gvMapP map)
+
+
+<li>char *  <a href="#gvGetName"> gvGetName </a>
+    (gvMapP map)
+
+
+<li>char *  <a href="#gvGetMapset"> gvGetMapset </a>
+    (gvMapP map)
+
+
+<li>gvMbr    <a href="#gvGetMbr"> gvGetMbr </a>
+    (gvMapP map)
+
+
+<li>gvPid    <a href="#gvGetLineNode1"> gvGetLineNode1 </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>gvPid    <a href="#gvGetLineNode2"> gvGetLineNode2 </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>gvPid    <a href="#gvGetLineLeftPoly"> gvGetLineLeftPoly </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>gvPid    <a href="#gvGetLineRightPoly"> gvGetLineRightPoly </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>double    <a href="#gvGetLineAngle1"> gvGetLineAngle1 </a>
+    (gvMapP map, gvPidP line)
+
+
+<li>double    <a href="#gvGetLineAngle2"> gvGetLineAngle2 </a>
+    (gvMapP map, gvPidP line)
+
+
+<li>gvMbr    <a href="#gvGetLineMbr"> gvGetLineMbr </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>gvPrimType    <a href="#gvGetLineType"> gvGetLineType </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>gvCoord    <a href="#gvGetNodeCoord"> gvGetNodeCoord </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>int        <a href="#gvGetNodeNumLines"> gvGetNodeNumLines </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>gvPid      <a href="#gvGetNodeLine"> gvGetNodeLine </a>
+    (gvMapP map, gvPidP pid, int i)
+
+
+<li>gvPrimType    <a href="#gvGetNodeType"> gvGetNodeType </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>gvMbr    <a href="#gvGetAreaMbr"> gvGetAreaMbr </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>int      <a href="#gvGetAreaNumLines"> gvGetAreaNumLines </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>int      <a href="#gvGetAreaNumIsles"> gvGetAreaNumIsles </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>gvPid    <a href="#gvGetAreaLine"> gvGetAreaLine </a>
+    (gvMapP map, gvPidP pid, int i)
+
+
+<li>gvPid    <a href="#gvGetAreaIsle"> gvGetAreaIsle </a>
+    (gvMapP map, gvPidP pid, int i)
+
+
+<li>gvMbr     <a href="#gvGetIsleMbr"> gvGetIsleMbr </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>gvPid     <a href="#gvGetIsleArea"> gvGetIsleArea </a>
+    (gvMapP map, gvPidP isle)
+
+
+<li>int     <a href="#gvGetIsleNumLines"> gvGetIsleNumLines </a>
+    (gvMapP map, gvPidP pid)
+
+
+<li>gvPid     <a href="#gvGetIsleLine"> gvGetIsleLine </a>
+    (gvMapP map, gvPidP pid, int i)
+
+
+<li>gvBoolean    <a href="#gvPidsEqual"> gvPidsEqual </a>
+    (gvPidP pid1, gvPidP pid2)
+
+
+<li>int    <a href="#gvGetPidDirection"> gvGetPidDirection </a>
+    (gvPidP pid)
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+
+<h2>GETTING POINTS INFO </h2>
+
+
+
+<a name="gvGetLinePoints">
+
+<pre>
+gvStatus <strong>gvGetLinePoints</strong> (gvMapP map, gvPidP line, gvPointsP points)
+
+This routine will populate the initialized gvPointsP structure with the
+vertices of the specified line.
+
+INPUT
+    gvMapP map
+    gvPidP line		Line of interest
+
+OUTPUT
+    gvPointsP points	The user provides an initialized gvPointsP 
+			structure which is filled with the line vertices.
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+	GV_MEMORY_ERR	Out of memory
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetAreaPoints">
+
+<pre>
+gvStatus <strong>gvGetAreaPoints</strong> (gvMapP map, gvPidP area, gvPointsP points)
+
+This routine will populate the initialized gvPointsP structure with the
+vertices of the specified area.  The points will be returned in order
+clockwise around the area.  The starting point is arbitrarily chosen.
+
+INPUT
+    gvMapP map
+    gvPidP area		Area of interest
+
+OUTPUT
+    gvPointsP points	The user provides an initialized gvPointsP 
+			structure which is filled with the area vertices.
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+	GV_MEMORY_ERR	Out of memory
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetAreaPoints">
+
+<pre>
+gvStatus <strong>gvGetIslePoints</strong> (gvMapP map, gvPidP isle, gvPointsP points)
+
+This routine will populate the initialized gvPointsP structure with the
+vertices of the specified island.  The points will be returned in order
+counter-clockwise around the island.  The starting point is arbitrarily chosen.
+
+INPUT
+    gvMapP map
+    gvPidP isle		Isle of interest
+
+OUTPUT
+    gvPointsP points	The user provides an initialized gvPointsP 
+			structure which is filled with the isle vertices.
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+	GV_MEMORY_ERR	Out of memory
+
+
+<h2>General Map Info</h2>
+
+
+The following routines provide access to information about a specific
+map.  The first set of routines cover general information and the latter
+routine provide access to individual information about each primitive 
+feature.<p>
+
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvPrimCount">
+
+<pre>
+int <strong>gvPrimCount</strong> (gvMapP map, gvAllType type)
+
+Returns count of active primitive types in map 
+
+INPUT
+    gvMapP map
+    gvAlltype type   One of:
+			GV_PT_LINE    All Lines
+			GV_PT_AREA    All Areas
+			GV_PT_NODE    All Nodes
+			GV_PT_ISLE    All Isles
+			GV_PT_LLINE   Lines of type LINE
+			GV_PT_ALINE   Lines of type AREA
+			GV_PT_NLINE   Lines of type NEAT
+			GV_PT_CNODE   Connecting Nodes
+			GV_PT_ENODE   Entity Nodes
+
+OUTPUT
+    gvPointsP points	The user provides an initialized gvPointsP 
+			structure which is filled with the isle vertices.
+RETURN
+    int		0 and positive:    Number of specified elements
+		Negative:	   Bad inputs
+
+NOTE
+    The only primitives are LINE, AREA, NODE.  The others are subsets 
+    of these.  Isles are there for convenience.
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetSnapThresh">
+
+<pre>
+double <strong>gvGetSnapThresh</strong> (gvMapP map)	
+
+This routine returns the current value of the snapping threshold.  This
+is the distance in map units in which a new line will automatically snap
+to an existing node.
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    None
+
+RETURN
+    double 	Snapping threshold
+
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetMapThresh">
+
+<pre>
+double <strong>gvGetMapThresh</strong> (gvMapP map)	
+
+This routine returns the current value of the map threshold.  This 
+value is by default determined based on map scale and an arbitrary
+factor based on assumptions about map accuracy.  By default the snapping
+threshold and pruning threshold are derived from this value.
+    
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    None 
+
+RETURN
+    double 	Map threshold
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvIsTopoComplete">
+
+
+<p>
+A map can be in one of at least three states.  <p>
+<dl>
+    <dt>1. Partially complete topology  
+    <dt>2. Fully complete topology  
+    <dt>3. Fully complete toplogy with inconsistancies
+</dl>
+These inconsistancies can be things such as polygons with more than
+one area marker within them, polygons with no area markers within them 
+(which is not an error), incompleted polygons (in LINE/AREA mode).<p>
+
+
+<pre>
+gvBoolean <strong>gvIsTopoComplete</strong> (gvMapP map)
+
+This function will tell whether the topology information is complete
+or not.  If it is not, that means edits have been done recently and
+a topology build is required to complete the topologic information.
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    None 
+
+RETURN
+    gvBoolean 	  GV_TRUE   Topology is complete
+              	  GV_FALSE  Topology is not complete
+		
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetRwMode">
+
+<pre>
+gvOpenMode <strong>gvGetRwMode</strong> (gvMapP map)
+
+This function will tell which mode the map has been opened in.  The
+mode is one of READ, WRITE or UPDATE.  In read mode, NO modification
+of the map can be done.   The primary difference between write and
+update modes, is that update works with a temporary copy of the map
+and only updates the permanent copy on request.
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    None 
+
+RETURN
+    gvOpenMode		One of:         GV_OPEN_READ
+					GV_OPEN_UPDATE
+
+		
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetTopoMode">
+
+<pre>
+gvTopoMode <strong>gvGetTopoMode</strong> (gvMapP map)
+
+This function returns whether the topology for this map is in the old
+GRASS 4.0 format or the new GRASS 5.0 format.
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    None 
+
+RETURN
+    gvTopoMode		One of:         GV_TOPO_OLD
+					GV_TOPO_NEW
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetScale">
+
+<pre>
+int <strong>gvGetScale</strong> (gvMapP map)
+
+This function returns the currently set scale for the map.  This 
+value is the right portion of the ratio  1:N.
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    None 
+
+RETURN
+    int		Map scale 
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetName">
+
+<pre>
+char * <strong>gvGetName</strong> (gvMapP map)
+
+This function returns the name of the current map.
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    None 
+
+RETURN
+    char *		Map name 
+
+NOTE    
+    The string returned is allocated and the caller is responsible
+    for freeing the memory when done with it.
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetMapset">
+
+<pre>
+char *<strong>gvGetMapset</strong> (gvMapP map)
+
+This function returns the mapset name for the current map.
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    None 
+
+RETURN
+    char *		Mapset name 
+
+NOTE    
+    The string returned is allocated and the caller is responsible
+    for freeing the memory when done with it.
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetMbr">
+
+<pre>
+gvMbr <strong>gvGetMbr</strong> (gvMapP map)		/* returns gvMbr (not pointer) */
+
+This function returns the Minimum Bounding Rectangle (MBR) [Previously
+refered to as bounding box] of the entire map.  This can be considered
+the map 'region'.
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    None 
+
+RETURN
+    gvMbr		Map MBR 
+
+</pre>
+<a href="#index">index</a>
+
+
+<hr>   <!--------------------------------------------------->
+
+
+<H2>Geographic Primitives</H2>
+
+
+Every geographic primitive feature in a given map has its own set of data 
+associated with it.  This information varies with the various primitive
+types.  The functions below provide access to this information given
+the PID for the feature.<P>
+
+</pre>
+
+
+<H3>LINE STRUCTURE</H3>
+
+
+
+<a name="gvGetLineNode1">
+
+<pre>
+gvPid <strong>gvGetLineNode1</strong> (gvMapP map, gvPidP pid)
+
+This function returns the PID of the start node on the line.  All lines
+have a direction and Node 1 is the starting node.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    gvPid	PID of the start node of the line
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetLineNode2">
+
+<pre>
+gvPid <strong>gvGetLineNode2</strong> (gvMapP map, gvPidP pid)
+
+This function returns the PID of the end node on the line.  All lines
+have a direction and Node 2 is the ending node.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    gvPid	PID of the end node of the line
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetLineLeftPoly">
+
+<pre>
+gvPid <strong>gvGetLineLeftPoly</strong> (gvMapP map, gvPidP pid)
+
+This function returns the PID of the polygon to the left of the line.  
+All lines can border up to two polygons, one on either side.  The gvPid
+can be for either an AREA or an ISLAND.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    gvPid	PID of the polygon to the left of the line
+
+NOTE    
+    Islands are not proper geographic primitives but are supported
+    simply for convenience.  They can not be attributed and should
+    not be referenced outside of the vector map.
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetLineRightPoly">
+
+<pre>
+gvPid <strong>gvGetLineRightPoly</strong> (gvMapP map, gvPidP pid)
+
+This function returns the PID of the polygon to the right of the line.  
+All lines can border up to two polygons, one on either side.  The gvPid
+can be for either an AREA or an ISLAND.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    gvPid	PID of the polygon to the right of the line
+
+NOTE    
+    Islands are not proper geographic primitives but are supported
+    simply for convenience.  They can not be attributed and should
+    not be referenced outside of the vector map.
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetLineAngle1">
+
+<pre>
+double <strong>gvGetLineAngle1</strong>  (gvMapP map, gvPidP line)
+
+This function returns the angle at which the start of the specified line 
+goes into Node1.  
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    double	Angle 2
+
+NOTE
+    This information is typically used for determining the order of
+    lines around nodes.  Since this order is already established by the
+    system and available via the NODE routines, this information may be
+    of limited use to the end user but is provided for completeness.
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetLineAngle2">
+
+<pre>
+double <strong>gvGetLineAngle2</strong>  (gvMapP map, gvPidP line)
+
+This function returns the angle at which the end of the specified line 
+goes into Node2.  
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    double	Angle 2
+
+NOTE
+    This information is typically used for determining the order of
+    lines around nodes.  Since this order is already established by the
+    system and available via the NODE routines, this information may be
+    of limited use to the end user but is provided for completeness.
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetLineMbr">
+
+<pre>
+gvMbr <strong>gvGetLineMbr</strong> (gvMapP map, gvPidP pid)
+
+This function returns the Minimum Bounding Rectangle (MBR) for the specified
+line.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    gvMbr	MBR of line
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetLineType">
+
+<pre>
+gvPrimType <strong>gvGetLineType</strong> (gvMapP map, gvPidP pid)
+
+This function returns the type of the line.  A line can be classified
+as type  AREA [boundary], LINE, or NEAT.  A Neat line is used to represent
+the outer extent of a map and can be used for various types of functions 
+such as automatic snapping and line breaking, disolving of borders on 
+merge, as well as being used to form polygons in normal use.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    gvPrimType	    One of:	GV_PT_LINE 
+				GV_PT_AREA 
+				GV_PT_NEAT 
+
+NOTE   
+    In the new 5.0 topology design, the LINE/AREA distinction is 
+    eliminated.  Thus the only types that will be returned in 
+    in GV_TOPO_NEW maps are  GV_PT_AREA and GV_PT_NEAT.
+
+
+
+</pre>
+
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+
+<H3>NODE STRUCTURE</H3>
+
+
+<a name="gvGetNodeCoord">
+
+<pre>
+gvCoord <strong>gvGetNodeCoord</strong> (gvMapP map, gvPidP pid)
+
+This function returns the coordinates of the specified node.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    gvCoord	Coordinates of node.
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetNodeNumLines">
+
+<pre>
+int     <strong>gvGetNodeNumLines</strong> (gvMapP map, gvPidP pid)
+
+This function returns the number of lines which are attached to 
+the specified node.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    int		Number of lines attached to node.
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetNodeLine">
+
+<pre>
+gvPid   <strong>gvGetNodeLine</strong> (gvMapP map, gvPidP pid, int i)
+
+This function returns the PID of the selected line which is attached
+to the node.  The last argument 'i' determines which line is selected.
+The values are from 0 to N-1.  Where N is the value returned by
+gvGetNodeNumLines ().
+
+INPUT
+    gvMapP map
+    gvPidP pid
+    int i		selected line index
+
+OUTPUT
+    None
+
+RETURN
+    gvPid	PID of the selected line
+
+NOTE
+    The information about which end of the returned line is attached
+    to the node can be determined by calling gvGetPidDirection () on 
+    the returned PID.   TODO  (more info on direction value)
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetNodeType">
+
+<pre>
+gvPrimType <strong>gvGetNodeType</strong> (gvMapP map, gvPidP pid)
+
+This function returns the type of the node.  A line can be classified
+as Connecting or Entity.   A connecting node is a node that exists
+at the end of a line segment.  It is used for joining 1 or more lines
+together at a point.  An entity node must NOT intersect with any 
+map line or node feature and is used to represent zero dimensional
+spatial data.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    gvPrimType	    One of:	GV_PT_CNODE 
+				GV_PT_ENODE 
+
+</pre>
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<h3> AREA STRUCTURE  </h3>
+
+<a name="gvGetAreaMbr">
+
+<pre>
+gvMbr <strong>gvGetAreaMbr</strong> (gvMapP map, gvPidP pid)
+
+This function returns the Minimum Bounding Rectangle (MBR) for the specified
+area.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    gvMbr	MBR of area
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetAreaNumLines">
+
+<pre>
+int   <strong>gvGetAreaNumLines</strong> (gvMapP map, gvPidP pid)
+
+This function returns the number of lines that participate in forming
+the boundary of the area.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    int		Number of lines that border the area.
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetAreaNumIsles">
+
+<pre>
+int   <strong>gvGetAreaNumIsles</strong> (gvMapP map, gvPidP pid)
+
+This function returns the number of islands which are children to the
+specified area.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    int		Number of islands in area
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetAreaLine">
+
+<pre>
+gvPid <strong>gvGetAreaLine</strong> (gvMapP map, gvPidP pid, int i)
+
+This function returns the PID of the selected line which borders
+the area.  The last argument 'i' determines which line is selected.
+The values are from 0 to N-1.  Where N is the value returned by
+gvGetAreaNumLines ().
+
+INPUT
+    gvMapP map
+    gvPidP pid
+    int i		selected line index
+
+OUTPUT
+    None 
+
+RETURN
+    gvPid	PID of the first node of the line
+
+
+NOTE
+    Lines have direction, and the direction of vertices of an area
+    are specified in clockwise order.  Whether or not the ordering
+    of the vertices of the line needs to be reversed can be determined
+    by calling gvGetPidDirection () on the returned PID.   
+    TODO  (more info on direction value)
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetAreaIsle">
+
+<pre>
+gvPid <strong>gvGetAreaIsle</strong> (gvMapP map, gvPidP pid, int i)
+
+This function returns the PID of the selected island in the area.
+The last argument 'i' determines which island is selected.
+The values are from 0 to N-1.  Where N is the value returned by
+gvGetAreaNumIsles ().
+
+INPUT
+    gvMapP map
+    gvPidP pid
+    int i		selected island index
+
+OUTPUT
+    None 
+
+RETURN
+    gvPid	PID of the first node of the line
+
+</pre>
+
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+
+
+<H3>ISLE STRUCTURE</H3>
+
+NOTE: An island is NOT a proper geographic primitive feature.  It is provided
+simply for the capability to represent area holes in their entirety.
+Every island will in effect contain one or more valid area features.
+Although for consistancy of the interface, islands can be represented
+with a gvPidP data type, this should never be used for attributing
+or indexing into a database.
+<p>
+
+<a name="gvGetIsleMbr">
+
+<pre>
+gvMbr  <strong>gvGetIsleMbr</strong> (gvMapP map, gvPidP pid)
+
+This function returns the Minimum Bounding Rectangle (MBR) for the specified
+island.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    gvMbr	MBR of island
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetIsleArea">
+
+<pre>
+gvPid  <strong>gvGetIsleArea</strong> (gvMapP map, gvPidP isle)
+
+This function returns the Minimum Bounding Rectangle (MBR) for the specified
+island.
+
+INPUT
+    gvMapP map
+    gvPidP pid			Island of interest
+
+OUTPUT
+    None
+
+RETURN
+    gvPidP 			Area information
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetIsleNumLines">
+
+<pre>
+int  <strong>gvGetIsleNumLines</strong> (gvMapP map, gvPidP pid)
+
+This function returns the number of lines that participate in forming
+the boundary of the island.
+
+INPUT
+    gvMapP map
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    int		Number of lines that border the island.
+
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetIsleLine">
+
+<pre>
+gvPid  <strong>gvGetIsleLine</strong> (gvMapP map, gvPidP pid, int i)
+
+This function returns the PID of the selected line which borders
+the island.  The last argument 'i' determines which line is selected.
+The values are from 0 to N-1.  Where N is the value returned by
+gvGetIsleNumLines ().
+
+INPUT
+    gvMapP map
+    gvPidP pid
+    int i		selected line index
+
+OUTPUT
+    None 
+
+RETURN
+    gvPid	PID of the the selected line
+
+NOTE
+    Lines have direction, and the direction of vertices of an island
+    are specified in counter-clockwise order.  Whether or not the ordering
+    of the vertices of the line needs to be reversed can be determined
+    by calling gvGetPidDirection () on the returned PID.   
+    TODO  (more info on direction value)
+
+</pre>
+<a href="#index">index</a>
+
+
+<hr>   <!--------------------------------------------------->
+
+
+<H2>MISCELANEOUS PID SUPPORT</H2>
+
+
+<a name="gvPidsEqual">
+
+<pre>
+gvBoolean <strong>gvPidsEqual</strong> (gvPidP pid1, gvPidP pid2)
+
+This function can be used to determine if to PIDs are equivalent.
+
+INPUT
+    gvPidP pid1
+    gvPidP pid2
+
+OUTPUT
+    None 
+
+RETURN
+    gvBoolean	One of:
+			TRUE   PIDs are equal
+			FALSE  PIDs are not equal
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetPidDirection">
+
+<pre>
+int <strong>gvGetPidDirection</strong> (gvPidP pid)
+
+This function returns the direction of a pid, 
+have a direction and Node 1 is the starting node.
+
+INPUT
+    gvPidP pid
+
+OUTPUT
+    None 
+
+RETURN
+    int		One of:
+			-1	Reverse, Start
+			 0	Not set
+			 1	Forward, End
+
+NOTE
+    When refering to nodes, reference Start and End, when refering
+    to ordering of lines, reference Reverse and Forward.  Reverse
+    meaning that the ordering of the points need to be reversed.
+
+    This function could be replaced by a function that queries 
+    the appropriate information from the Node, Area and Isle objects.
+
+</pre>
+
+<a href="#index">index</a>
+    
+
+<!--hr------------------------------------------------>
+<p>
+
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

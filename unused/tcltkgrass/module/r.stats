@@ -1,0 +1,943 @@
+
+
+proc get_feature { type } {
+
+  set dir ""
+  case $type in {
+
+       {raster} {
+                      set dir "cell"
+                  }
+
+       {vector} {
+                      set dir "dig"
+                  }
+
+       {sites} {
+                      set dir "site_lists"
+                  }
+
+       {label} {
+                      set dir "paint/labels"
+                  }
+
+       {group} {
+                      set dir "group"
+                  }
+
+       {icon} {
+                      set dir "paint/icons"
+                  }
+
+       {region} {
+                      set dir "windows"
+                  }
+
+       {dlg} {
+                      set dir "dlg"
+                  }
+
+       {dlg_ascii} {
+                      set dir "dlg_ascii"
+                  }
+
+  }
+  return $dir
+
+}
+
+
+
+
+proc put_list { the_listbox the_list } {
+
+  $the_listbox delete 0 end
+  foreach i $the_list {
+      $the_listbox insert end $i
+  }
+}
+
+
+
+
+proc get_list { path } {
+  set list ""
+  if { [file isdirectory $path] != 1 } {
+     return $list
+  }
+  set current_dir [exec pwd]
+  cd $path
+  foreach i [exec ls -a [exec pwd]] {
+     if { [string compare $i "."] != 0 && [string compare $i ".."] != 0 } {
+        lappend list $i
+     }
+  }
+  cd $current_dir
+  return $list
+}
+
+
+
+
+proc mapset_listbox { type } {
+
+  global database
+  global location
+  global mapset
+  global feature
+
+  global file_name
+  set file_name ""
+
+  toplevel .mapset
+
+  wm geometry .mapset +100+100
+  wm title .mapset {spatial layer}
+
+  set feature [get_feature $type]
+
+  global mapset_list
+
+  frame .mapset.frame0 \
+    -borderwidth {2} \
+    -relief {flat}
+
+  label .mapset.frame0.label \
+    -anchor {w} \
+    -text "Mapset"
+
+  entry .mapset.frame0.mapset \
+    -relief {sunken} \
+   -width 20
+
+  menubutton .mapset.frame0.mapsets \
+    -bitmap {@../bitmap/arrow} \
+    -menu {.mapset.frame0.mapsets.pulldown}
+
+  menu .mapset.frame0.mapsets.pulldown
+
+  set mapset_list [get_list "$database/$location"]
+  foreach i $mapset_list {
+      .mapset.frame0.mapsets.pulldown add command \
+          -label $i \
+          -command {
+                     set mapset [lindex $mapset_list \
+                               [.mapset.frame0.mapsets.pulldown index active] ]
+                     .mapset.frame0.mapset delete 0 end
+                     .mapset.frame0.mapset insert 0 $mapset
+                     put_list .mapset.frame1.listbox \
+                         [get_list "$database/$location/$mapset/$feature"]
+                     set file_name ""
+                   }
+  }
+
+  pack append .mapset.frame0 \
+    .mapset.frame0.label { left } \
+    .mapset.frame0.mapset { left } \
+    .mapset.frame0.mapsets { right }
+
+  frame .mapset.frame1 \
+    -borderwidth {2} \
+    -relief {raised}
+
+  listbox .mapset.frame1.listbox \
+    -relief {sunken} \
+    -geometry 20x10 \
+    -yscrollcommand {.mapset.frame1.vscrollbar set}
+
+  scrollbar .mapset.frame1.vscrollbar \
+    -command {.mapset.frame1.listbox yview}
+
+  pack append .mapset.frame1 \
+    .mapset.frame1.listbox { left expand fill } \
+    .mapset.frame1.vscrollbar { right fill }
+
+  frame .mapset.frame2 \
+    -borderwidth {2}
+
+  frame .mapset.frame2.frame
+
+  button .mapset.frame2.frame.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { if { $file_name != "" } {
+                   destroy .mapset
+               }
+              }
+
+  button .mapset.frame2.frame.cancel \
+    -text Cancel \
+    -relief raised \
+    -padx 10 \
+    -command { set file_name ""
+               destroy .mapset
+             }
+
+  pack append .mapset.frame2.frame \
+    .mapset.frame2.frame.ok { left expand } \
+    .mapset.frame2.frame.cancel { right expand }
+
+  pack append .mapset.frame2 \
+    .mapset.frame2.frame { bottom frame center fill }
+
+  pack append .mapset \
+    .mapset.frame0 { top expand fill } \
+    .mapset.frame1 { top expand fill } \
+    .mapset.frame2 { bottom expand fill }
+
+  bind .mapset.frame1.listbox <Button-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  bind .mapset.frame1.listbox <ButtonRelease-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  bind .mapset.frame1.listbox <Double-ButtonPress-1> {
+        %W select from [%W nearest %y]
+        %W select to [%W nearest %y]
+	    set file_name [%W get [%W nearest %y]]
+  }
+
+  .mapset.frame0.mapset delete 0 end
+  .mapset.frame0.mapset insert 0 $mapset
+
+  .mapset.frame1.listbox delete 0 end
+  put_list .mapset.frame1.listbox \
+             [get_list "$database/$location/$mapset/$feature"]
+
+  grab set .mapset
+  tkwait window .mapset
+
+  return $file_name
+
+}
+
+
+
+
+proc output { } {
+
+
+  toplevel .output
+
+  wm geometry .output +100+20
+  wm title .output "output"
+
+
+  global oname
+
+
+  frame .output.frame0 \
+    -relief {flat}
+
+  label .output.frame0.label \
+    -anchor {w} \
+    -text {Name of ASCII output file:} \
+    -padx {2}
+
+  scrollbar .output.frame0.hscrollbar \
+    -command {.output.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .output.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.output.frame0.hscrollbar set}
+
+  pack append .output.frame0 \
+    .output.frame0.label { top fillx } \
+    .output.frame0.entry { top fillx } \
+    .output.frame0.hscrollbar { bottom fillx }
+
+  .output.frame0.entry configure -state normal
+
+  bind .output.frame0.entry <Return> {
+       set oname [%W get] }
+
+
+
+  frame .output.frame1 \
+     -borderwidth {2}
+
+  button .output.frame1.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set oname [.output.frame0.entry get]
+                 destroy .output }
+
+  button .output.frame1.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set oname ""
+                 destroy .output }
+
+  pack append .output.frame1 \
+    .output.frame1.ok { left expand } \
+    .output.frame1.cancel { right expand }
+
+
+
+  pack append .output \
+    .output.frame0 { top expand fill } \
+    .output.frame1 { bottom expand fill }
+
+
+
+  grab set .output
+  tkwait window .output
+
+}
+
+
+
+
+proc field_separator { } {
+
+
+  toplevel .field_separator
+
+  wm geometry .field_separator +100+20
+  wm title .field_separator "field_separator"
+
+
+  global fs1
+
+
+  frame .field_separator.frame0 \
+    -relief {flat}
+
+  label .field_separator.frame0.label \
+    -anchor {w} \
+    -text {Field separator (one character only)} \
+    -padx {2}
+
+  scrollbar .field_separator.frame0.hscrollbar \
+    -command {.field_separator.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .field_separator.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.field_separator.frame0.hscrollbar set}
+
+  pack append .field_separator.frame0 \
+    .field_separator.frame0.label { top fillx } \
+    .field_separator.frame0.entry { top fillx } \
+    .field_separator.frame0.hscrollbar { bottom fillx }
+
+  .field_separator.frame0.entry configure -state normal
+
+  bind .field_separator.frame0.entry <Return> {
+       set fs1 [%W get] }
+
+
+  global fs2
+
+
+  frame .field_separator.frame1 \
+    -relief {flat}
+
+  checkbutton .field_separator.frame1.checkbutton \
+     -text "Use a space as the field separator" \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "space" \
+     -offvalue "" \
+     -variable fs2
+
+  pack append .field_separator.frame1 \
+    .field_separator.frame1.checkbutton { left }
+
+
+  frame .field_separator.frame2 \
+     -borderwidth {2}
+
+  button .field_separator.frame2.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set fs1 [.field_separator.frame0.entry get]
+                 destroy .field_separator }
+
+  button .field_separator.frame2.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                  set fs1 ""
+                 destroy .field_separator }
+
+  pack append .field_separator.frame2 \
+    .field_separator.frame2.ok { left expand } \
+    .field_separator.frame2.cancel { right expand }
+
+
+bind .field_separator.frame0.entry <Return> {
+     focus .field_separator.frame1.checkbutton
+}
+
+bind .field_separator.frame1.checkbutton <Return> {
+     focus .field_separator.frame0.entry
+}
+
+
+  pack append .field_separator \
+    .field_separator.frame0 { top expand fill } \
+    .field_separator.frame1 { top expand fill } \
+    .field_separator.frame2 { bottom expand fill }
+
+
+
+  grab set .field_separator
+  tkwait window .field_separator
+
+}
+
+
+
+
+proc flags { } {
+
+
+  toplevel .flags
+
+  wm geometry .flags +100+20
+  wm title .flags "flags"
+
+
+  global one
+
+
+  frame .flags.frame0 \
+    -relief {flat}
+
+  checkbutton .flags.frame0.checkbutton \
+     -text "Output data one cell per line." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "1" \
+     -offvalue "" \
+     -variable one
+
+  pack append .flags.frame0 \
+    .flags.frame0.checkbutton { left }
+
+  global a
+
+
+  frame .flags.frame1 \
+    -relief {flat}
+
+  checkbutton .flags.frame1.checkbutton \
+     -text "Print area totals." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "a" \
+     -offvalue "" \
+     -variable a
+
+  pack append .flags.frame1 \
+    .flags.frame1.checkbutton { left }
+
+  global c
+
+
+  frame .flags.frame2 \
+    -relief {flat}
+
+  checkbutton .flags.frame2.checkbutton \
+     -text "Print total cell counts." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "c" \
+     -offvalue "" \
+     -variable c
+
+  pack append .flags.frame2 \
+    .flags.frame2.checkbutton { left }
+
+  global m
+
+
+  frame .flags.frame3 \
+    -relief {flat}
+
+  checkbutton .flags.frame3.checkbutton \
+     -text "Mask is present.  Report zero values." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "m" \
+     -offvalue "" \
+     -variable m
+
+  pack append .flags.frame3 \
+    .flags.frame3.checkbutton { left }
+
+  global q
+
+
+  frame .flags.frame4 \
+    -relief {flat}
+
+  checkbutton .flags.frame4.checkbutton \
+     -text "Run quietly and suppress the output of messages." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "q" \
+     -offvalue "" \
+     -variable q
+
+  pack append .flags.frame4 \
+    .flags.frame4.checkbutton { left }
+
+  global z
+
+
+  frame .flags.frame5 \
+    -relief {flat}
+
+  checkbutton .flags.frame5.checkbutton \
+     -text "Report only non-zero data values." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "z" \
+     -offvalue "" \
+     -variable z
+
+  pack append .flags.frame5 \
+    .flags.frame5.checkbutton { left }
+
+  global g
+
+
+  frame .flags.frame6 \
+    -relief {flat}
+
+  checkbutton .flags.frame6.checkbutton \
+     -text "Print the grid coordinates (easting and northing) for each cell." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "g" \
+     -offvalue "" \
+     -variable g
+
+  pack append .flags.frame6 \
+    .flags.frame6.checkbutton { left }
+
+  global x
+
+
+  frame .flags.frame7 \
+    -relief {flat}
+
+  checkbutton .flags.frame7.checkbutton \
+     -text "Print the x and y (column and row) values for each cell." \
+     -relief flat \
+     -anchor {w} \
+     -onvalue "x" \
+     -offvalue "" \
+     -variable x
+
+  pack append .flags.frame7 \
+    .flags.frame7.checkbutton { left }
+
+
+  frame .flags.frame8 \
+     -borderwidth {2}
+
+  button .flags.frame8.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flags }
+
+  button .flags.frame8.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command {
+                 destroy .flags }
+
+  pack append .flags.frame8 \
+    .flags.frame8.ok { left expand } \
+    .flags.frame8.cancel { right expand }
+
+
+bind .flags.frame0.checkbutton <Return> {
+     focus .flags.frame1.checkbutton
+}
+
+bind .flags.frame1.checkbutton <Return> {
+     focus .flags.frame2.checkbutton
+}
+
+bind .flags.frame2.checkbutton <Return> {
+     focus .flags.frame3.checkbutton
+}
+
+bind .flags.frame3.checkbutton <Return> {
+     focus .flags.frame4.checkbutton
+}
+
+bind .flags.frame4.checkbutton <Return> {
+     focus .flags.frame5.checkbutton
+}
+
+bind .flags.frame5.checkbutton <Return> {
+     focus .flags.frame6.checkbutton
+}
+
+bind .flags.frame6.checkbutton <Return> {
+     focus .flags.frame7.checkbutton
+}
+
+bind .flags.frame7.checkbutton <Return> {
+     focus .flags.frame0.checkbutton
+}
+
+
+  pack append .flags \
+    .flags.frame0 { top expand fill } \
+    .flags.frame1 { top expand fill } \
+    .flags.frame2 { top expand fill } \
+    .flags.frame3 { top expand fill } \
+    .flags.frame4 { top expand fill } \
+    .flags.frame5 { top expand fill } \
+    .flags.frame6 { top expand fill } \
+    .flags.frame7 { top expand fill } \
+    .flags.frame8 { bottom expand fill }
+
+
+
+  grab set .flags
+  tkwait window .flags
+
+}
+
+
+
+
+proc put_command { } {
+
+
+  global one
+  global a
+  global c
+  global m
+  global q
+  global z
+  global g
+  global x
+  global iname
+  global fs1
+  global fs2
+  global oname
+
+
+  set cmd ""
+
+  if {  $one != "" || $a != "" || $c != "" || $m != "" || $q != "" || $z != "" || $g != "" || $x != "" } {
+         set cmd "$cmd -$one$a$c$m$q$z$g$x"
+  }
+
+  if {  $iname != "" } {
+         set cmd "$cmd input=$iname"
+  }
+
+  if {  $fs1 != "" || $fs2 != "" } {
+         set cmd "$cmd fs=\"$fs1,$fs2\"
+  }
+
+  if {  $oname != "" } {
+         set cmd "$cmd output=$oname"
+  }
+
+  if { $cmd != "" } {
+     set cmd "r.stats $cmd"
+  }
+}
+
+
+
+
+proc set_command_entry { } {
+
+  .cmd.frame0.entry configure -state normal
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 [put_command]
+  .cmd.frame0.entry configure -state disabled
+
+}
+
+
+proc proc_r.stats { } {
+
+
+  global one
+  global a
+  global c
+  global m
+  global q
+  global z
+  global g
+  global x
+  global iname
+  global fs1
+  global fs2
+  global oname
+
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "Generate Area Statistics"
+
+
+  frame .cmd.frame0 \
+    -relief {flat}
+
+  label .cmd.frame0.label \
+    -anchor {w} \
+    -text {Command:} \
+    -padx {2}
+
+  scrollbar .cmd.frame0.hscrollbar \
+    -command {.cmd.frame0.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame0.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame0.hscrollbar set}
+
+  pack append .cmd.frame0 \
+    .cmd.frame0.label { top fillx } \
+    .cmd.frame0.entry { top fillx } \
+    .cmd.frame0.hscrollbar { bottom fillx }
+
+  .cmd.frame0.entry delete 0 end
+  .cmd.frame0.entry insert 0 {r.stats}
+
+  .cmd.frame0.entry configure -state disabled
+
+
+
+  frame .cmd.frame1 \
+    -relief {flat}
+
+  label .cmd.frame1.label \
+    -anchor {w} \
+    -text {Description:} \
+    -padx {2}
+
+  scrollbar .cmd.frame1.hscrollbar \
+    -command {.cmd.frame1.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame1.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame1.hscrollbar set}
+
+  pack append .cmd.frame1 \
+    .cmd.frame1.label { top fillx } \
+    .cmd.frame1.entry { top fillx } \
+    .cmd.frame1.hscrollbar { bottom fillx }
+
+  .cmd.frame1.entry delete 0 end
+  .cmd.frame1.entry insert 0 {r.stats generates area statistics for raster map layers.}
+
+  .cmd.frame1.entry configure -state disabled
+
+
+
+  frame .cmd.frame2 \
+    -relief {flat}
+
+  label .cmd.frame2.label \
+    -anchor {w} \
+    -text {Raster map layer(s) whose cell counts or area statistics are to be calculated:} \
+    -padx {2}
+
+  scrollbar .cmd.frame2.hscrollbar \
+    -command {.cmd.frame2.entry view} \
+    -orient {horizontal}
+
+  entry .cmd.frame2.entry \
+    -relief {sunken} \
+    -width 50 \
+    -scrollcommand {.cmd.frame2.hscrollbar set}
+
+  button .cmd.frame2.button \
+    -relief {raised} \
+    -anchor {n} \
+    -text {raster} \
+    -command { set file [mapset_listbox raster]
+                if { $file != "" } {
+                   set iname $file
+                   .cmd.frame2.entry delete 0 end
+                   .cmd.frame2.entry insert 0 $file
+                   set_command_entry
+                }
+             }
+
+
+  pack append .cmd.frame2 \
+    .cmd.frame2.label { top fillx } \
+    .cmd.frame2.button { right frame n } \
+    .cmd.frame2.entry { top fill } \
+    .cmd.frame2.hscrollbar { top fillx }
+
+
+
+  bind .cmd.frame2.entry <Return> {
+       set iname [%W get] }
+
+
+  frame .cmd.frame3 \
+    -relief {flat}
+
+  label .cmd.frame3.label \
+    -anchor {w} \
+    -text {Other options available:} \
+    -padx {2}
+
+  button .cmd.frame3.button0 \
+     -text "output ..." \
+     -relief raised \
+     -padx 10 \
+     -command "output
+                set_command_entry"
+
+
+  button .cmd.frame3.button1 \
+     -text "field_separator ..." \
+     -relief raised \
+     -padx 10 \
+     -command "field_separator
+                set_command_entry"
+
+
+  button .cmd.frame3.button2 \
+     -text "flags ..." \
+     -relief raised \
+     -padx 10 \
+     -command "flags
+                set_command_entry"
+
+
+  frame .cmd.frame4 \
+     -borderwidth {2}
+
+  button .cmd.frame4.ok \
+     -text Ok \
+     -relief raised \
+     -padx 10 \
+     -command { 
+		if {  $iname != "" } {
+ 		set cmd [put_command]
+ 		if { $cmd != "" } {
+                   catch { eval "exec $cmd " } mesres  
+		   editor $mesres
+ 		   destroy .cmd
+ 		}
+ 	}
+ }
+
+  button .cmd.frame4.cancel \
+     -text Cancel \
+     -relief raised \
+     -padx 10 \
+     -command { destroy .cmd }
+
+  pack append .cmd.frame4 \
+    .cmd.frame4.ok { left expand } \
+    .cmd.frame4.cancel { right expand }
+
+  pack append .cmd.frame3 \
+    .cmd.frame3.label { top fillx } \
+    .cmd.frame3.button0 { left } \
+    .cmd.frame3.button1 { left } \
+    .cmd.frame3.button2  { left }
+
+
+
+  pack append .cmd \
+    .cmd.frame1 { top expand fill } \
+    .cmd.frame2 { top expand fill } \
+    .cmd.frame3 { top expand fill } \
+    .cmd.frame0 { top expand fill } \
+    .cmd.frame4 { bottom expand fill }
+
+
+  grab set .cmd
+  tkwait window .cmd
+
+}
+
+global one
+set one ""
+
+global a
+set a ""
+
+global c
+set c ""
+
+global m
+set m ""
+
+global q
+set q ""
+
+global z
+set z ""
+
+global g
+set g ""
+
+global x
+set x ""
+
+global iname
+set iname ""
+
+global fs1
+set fs1 ""
+
+global fs2
+set fs2 ""
+
+global oname
+set oname ""
+
+
+global database
+global location
+global mapset
+global feature
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_r.stats

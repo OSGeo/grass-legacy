@@ -11,7 +11,6 @@
 #include    "gis.h"
 #include    "Vect.h"
 #include "dig_atts.h"
-/*#include    "dig_head.h" */
 
 
 #define MAIN

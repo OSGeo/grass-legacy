@@ -1,0 +1,71 @@
+<html>
+<A NAME="r3.in.grid3">
+<TITLE>r3.in.grid3</TITLE>
+
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r3.in.grid3</b></EM>  - Imports files in Bill Brown's <EM>grid3</EM> 
+format into G3D format.<BR>
+
+<EM>(GRASS 3D Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r3.in.grid3 [type = </B><EM>default | double | float</EM><B>]
+[precision = </B><EM>default | max | 0 - 52</EM><B>]
+[compression = </B><EM>default | rle | lzw | rle+lzw | none</EM><B>]
+[tiledimension = </B><EM>XxYxZ</EM><B>]
+[nv = </B><EM>yes | no</EM><B>]
+input = </B><EM>grid3-file</EM><B>
+output = </B><EM>g3d-map</EM>
+
+<H2>DESCRIPTION</H2>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>type</B>
+<DD>The default cell-type is float.
+<DD>Options: default, double, float
+
+<DT><B>precision</B>
+<DD>Options: default, max, 0-52
+
+<DT><B>compression</B>
+<DD>Note that the <EM>none</EM> option only specifies 
+that neither LZW nor RLE is used for compression.  It 
+does not turn off the compression all together.  G3D does
+not support non-compressed files.
+<DD>Options: default, rle, lzw, rle+lzw, none
+
+<DT><B>tiledimension</B>
+<DD>Format: XxYxZ
+
+<DT><B>nv</B>
+<DD>Specifies whether zeros in the grid3 file are converted to NULL-values.  Conversion
+is performed if the value is <EM>yes</EM>.  Default is <em>no</em>.
+
+<DT><B>input</B>
+<DD>Path and name of grid3 file to be imported
+
+<DT><B>output</B>
+<DD>Name of the G3D output map
+</DL>
+
+<H2>NOTES</H2>
+<EM>r3.in.grid3</EM> uses <EM>float</EM> as default cell-<EM>type</EM>.
+<P>
+Currently, after the file has been imported, the stored values are 
+compared with the original data. This feature is used to find bugs in the
+library at an early stage and will be turned off as soon as confidence has
+built up.
+
+<H2>AUTHORS</H2>
+Roman Waupotitsch, Michael Shapiro, 
+Helena Mitasova, Bill Brown, Lubos Mitas, Jaro Hofierka
+
+</body>
+</html>

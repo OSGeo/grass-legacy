@@ -1,0 +1,11 @@
+PGM=r3.out.ascii
+HOME=$(BIN_MAIN_CMD)
+EXTRA_CFLAGS= -ansi
+
+#./$(PGM): main.o $(G3DLIB) $(GISLIB)
+$(HOME)/$(PGM): main.o $(G3DLIB) $(GISLIB) 
+	$(CC) $(LDFLAGS) -o $@ main.o $(G3DLIB) $(GISLIB) $(XDRLIB) $(MATHLIB)
+
+$(G3DLIB): #
+$(GISLIB): #
+

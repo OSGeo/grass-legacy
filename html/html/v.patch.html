@@ -1,0 +1,163 @@
+<TITLE>v.patch</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.patch</b></EM>  - Creates a new binary vector map layer
+by combining other binary vector map layers.
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.patch</B>
+
+<BR>
+
+<B>v.patch help</B>
+
+<BR>
+
+<B>v.patch</B> 
+<B>input=</B><EM>name</EM>[,<EM>name</EM>,...] 
+<B>output=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.patch</EM> allows the user to combine any number of
+vector map layers together to create one composite vector
+map layer.
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM>,<EM>name</EM>, ...
+
+<DD>Name(s) of input vector map(s) to be patched together.
+
+<DT><B>output=</B><EM>name</EM>
+
+<DD>Name assigned to composite "patched" vector output map.
+</DL>
+
+<P>
+
+The program will be run non-interactively if the user
+specifies the names of the vector map(s) to be patched and
+the name of an output file to store the resulting composite
+patched vector map on the command line, in the form:
+
+<DL>
+<DD>
+<B>v.patch</B> <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] 
+<B>output=</B><EM>name</EM>
+</DL>
+
+
+<P>
+
+Alternately, if the user runs <EM>v.patch</EM> without
+specifying input and output file names on the command line
+(by typing simply <B>v.patch</B>), the program will prompt
+the user for inputs using the standard GRASS interface
+described in the manual entry for
+
+<EM><A HREF="parser.html">parser</A></EM>.
+
+<H2>NOTES</H2>
+
+The vector map layers to be patched together must exist in
+the user's current mapset search path, and the composite
+vector map layer name given must not already exist in the
+user's current mapset.
+
+
+<P>
+
+After running <EM>v.patch</EM>, the header file will
+contain only information taken from the first
+<EM>input</EM> file name given in the string
+<B>input=</B><EM>name,name, ...</EM>, with the exception of
+the geographic region's edge information, and the scale and
+threshold information.  (The user's current geographic
+region settings are ignored; this information is instead
+extracted from the vector file headers.) In the new
+composite vector map layer, the boundaries of the
+geographic region will be expanded to encompass all of the
+geographic area included in the map layers being patched,
+and the scale will be set equal to the smallest (i.e., most
+gross) scale used by any of the patched map layers (this
+will affect default node-snapping thresholds).  The map
+threshold is calculated automatically from the map scales
+given in the file headers, and (currently) is not used
+directly.  The composite vector map layer's header will
+probably need to be edited; this can be done from within
+the GRASS program
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>.
+
+
+<P>
+
+The GRASS programs 
+
+<EM><A HREF="v.mkgrid.html">v.mkgrid</A></EM> and 
+
+<EM><A HREF="v.mkquads.html">v.mkquads</A></EM> 
+
+can be used to ensure that the borders of the maps to be
+patched together align neatly.
+
+
+<P>
+
+Any vectors that are duplicated among the maps being
+patched together (e.g., border lines) will have to be
+edited or removed after <EM>v.patch</EM> is run.  Such
+editing can be done using
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>.
+
+
+<P>
+
+After running <EM>v.patch</EM> the user must run 
+<EM><A HREF="v.support.html">v.support</A></EM> on
+the composite vector map layer in order to create a
+<KBD>dig_plus</KBD> (topology) file for it.  At this time,
+you can request that a <EM>very</EM> small snapping
+threshold be used, to cause the nodes that match up across
+vector map layers to snap together without affecting the
+integrity of the remainder of the vector map layer.
+
+<H2>BUGS</H2>
+
+The <KBD>dig_cats</KBD> and <KBD>reg</KBD> file information
+for the maps being patched together is not copied to the
+composite, patched map layer.  The user should therefore
+run
+<EM><A HREF="v.support.html">v.support</A></EM> 
+on the output file produced by this program.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>,
+<EM><A HREF="v.in.ascii.html">v.in.ascii</A></EM>,
+<EM><A HREF="v.mkgrid.html">v.mkgrid</A></EM>,
+<EM><A HREF="v.mkquads.html">v.mkquads</A></EM>,
+<EM><A HREF="v.support.html">v.support</A></EM>,
+and
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Dave Gerdes, U.S.Army Construction Engineering 
+Research Laboratory

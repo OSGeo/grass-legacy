@@ -1,8 +1,0 @@
-
-When playing back, if a field hasn't been set, use current settings.
-
-When creating views from keys, if a field hasn't been set yet, use
-first key, if only one has been set previously, and none follow, use the
-one set.  If only one key set on each side, use linear, otherwise use
-spline if requested.
-

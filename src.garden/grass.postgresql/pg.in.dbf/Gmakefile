@@ -1,0 +1,11 @@
+PGM = pg.in.dbf
+HOME = $(BIN_CONTRIB_CMD)
+EXTRA_CFLAGS = $(PQINCPATH)
+LIST = 	main.o \
+	dbfopen.o \
+	pgdump.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB) $(XEXTRALIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(DATETIMELIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB) $(PQLIB)
+
+$(GISLIB): # 

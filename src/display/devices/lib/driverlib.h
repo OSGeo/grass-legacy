@@ -25,7 +25,7 @@ int Polyline_rel(int *, int *, int);
 int Polygon_abs(int *, int *, int);
 int Polygon_rel(int *, int *, int);
 /* Raster.c */
-int Raster_int(int, int, unsigned int *, int, int);
+int Raster_int(int, int, int *, int, int);
 /* Returns.c */
 int Screen_left(int *);
 int Screen_rite(int *);
@@ -49,7 +49,9 @@ int get_color_offset(void);
 int Cont_abs(int,int);
 int Cont_rel(int,int);
 int Erase(void);
+#ifndef __CYGWIN__
 int GFont( char *);
+#endif
 int Get_text_box( char *,int *t,int *,int *,int *);
 int Linemod(void *);
 int Move_abs(int,int);
@@ -64,13 +66,15 @@ int Polygon_rel(int *,int *,int);
 int Set_RGB_color(unsigned char *,unsigned char *,unsigned char *);
 int RGB_raster(int,int,unsigned char *,unsigned char *,unsigned char *,int);
 int Raster_char( int ,int ,unsigned char *,int,int);
-int Raster_int_def( int ,int ,unsigned int *,int,int);
-int Raster_int( int ,int ,unsigned int *,int,int);
+int Raster_int_def( int ,int ,int *,int,int);
+int Raster_int( int ,int ,int *,int,int);
 int Reset_colors( int ,int ,unsigned char *,unsigned char *,unsigned char *);
 int Reset_color( unsigned char ,unsigned char ,unsigned char ,int );
 int Set_window(int,int,int,int);
 int window_clip(double *,double *,double *,double *);
+#ifndef __CYGWIN__
 int Text( char *);
+#endif
 int Text_size( int,int );
 int Text_rotation( double );
 int clip(double,double,double,double,double *,double *,double *,double *);

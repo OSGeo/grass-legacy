@@ -1,0 +1,9 @@
+reworked m.datum.shift for GRASS 5.0
+If you need a 7-parameter-datum shift (bursa wolf transformation),
+please uncomment the #define BURSAWOLF at the top of main.c.
+The values for Rx, Ry, Rz and M must be given on the command
+line, as the coordinate conversion library has no support for
+this.
+
+-- 
+andreas.lange@rhein-main.de

@@ -1,0 +1,36 @@
+Hi GRASS developers,                               9th Oct. 1999
+
+find attached my first steps in tcltk... I used "visual tcl" (vtcl) from
+www.neuron.com/stewart/vtcl/
+which made writing this rather easy. Because I do not have (yet) a tcl/tk 
+introduction, I could not implement all features I wanted to.
+
+This shall be a mapcalculator for TclTkGRASS. Hope we can include
+it soon.
+
+Here is what I am suggesting, I expect that several topics can be realized easily
+(they will need one or two command extensions). 
+
+  - formula entry needs scrollbar (I didn't understand the scroll command)
+  - formula entry should be active for keyboard without clicking into the field 
+    (possible ?)
+  - the raster maps listing should be integrated directly into the window, no 
+    extra window (files to be selectable by mouse: click or doubleclick)
+  - for all commands with braces (ex. "if()" ) the cursor should be 
+    repositioned *between* the braces. Giving the braces prevents the user 
+    from syntax errors, I hope.
+  - the backspace button should work
+  - "about" button / "syntax helper" button should be own windows with 
+    "dismiss" button, "syntax help" button should have scrollbar 
+     (contents here: special hints 
+    on r.mapcalc not in the manual page)
+
+I would be happy if this calculator (outlook is free for discussion!) 
+could be integrated into TclTkGRASS... Comparing to the calculator from 
+GPZ (this Motif user interface) I believe that this layout is less 
+confusing. GPZ calculator is a mixture of all buttons in one field only.
+
+Have a nice day
+
+   Markus
+

@@ -1,0 +1,123 @@
+<TITLE>r.what</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+<EM><b>r.what</b></EM>  - Queries raster map layers on their category values and category labels. <BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.what</B> 
+<BR>
+<B>r.what help</B> 
+<BR>
+<B>r.what</B> [<B>-fci</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] [<B>cache=</B><EM>value</EM>] [<B>null=</B><EM>string</EM>]
+<BR>
+<B>r.what</B> [<B>-fci</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] 
+[&lt; <EM>inputfile</EM>] [<B>cache=</B><EM>value</EM>] [<B>null=</B><EM>string</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>r.what</EM> outputs the category values and (optionally) the category  labels associated with user-specified locations on raster input map(s). Locations are specified as geographic x,y coordinate pairs (i.e., pair of eastings and northings); the user can also (optionally) 
+associate a label with each location. 
+
+<P>
+The program will be run non-interactively if the user specifies the program  parameter values and (optionally) the flag setting on the command line, using the form: 
+<DL>
+<DD>
+<B>r.what</B> [<B>-f</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...]
+</DL>
+
+where each input <EM>name</EM> is the name of a raster map layer whose category values are to be queried, and the (optional) flag <B>-f</B> directs <EM>r.what</EM> to also output category labels. The user can also redirect a user-created ASCII input file containing 
+a list of geographic coordinate pairs and (optionally) user-named labels, into <EM>r.what</EM> using the form: 
+
+<DL>
+<DD>
+<B>r.what</B> [<B>-f</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] 
+[&lt; <EM>inputfile</EM>]
+</DL>
+
+If the user does not redirect an input file containing these coordinates into the program, the program will query the user for point locations and labels. 
+
+<P>
+Alternately, the user can simply type: 
+<DL>
+<DD>
+<B>r.what</B> 
+</DL>
+on the command line, without program arguments. In this case, the user will be prompted for the flag setting and parameter values using the standard GRASS <EM><A HREF="parser.html">parser</A></EM>.
+
+<H2>OPTIONS</H2>
+<H3>Flags:</H3> 
+<DL>
+<DT><B>-f</B>
+<DD>Also output the category label(s) associated with the cell(s) at the user-specified location(s).
+
+<DT><B>-c</B>
+<DD>Turn on cache reporting.
+
+<DT><B>-i</B>
+<DD>Output integer category values, not cell values.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input=</B><EM>name</EM>[<EM>,name,name,...</EM>]
+<DD>The name(s) of one or more existing raster map layers to be queried. 
+
+<DT><B>cache=</B><EM>value</EM>
+<DD>Size of point cache.
+
+<DT><B>null=</B><EM>string</EM>
+<DD>Character string to represent no data cell.
+</DL>
+
+<H2>EXAMPLES</H2>
+The contents of the ASCII <EM>inputfile</EM> to <EM>r.what</EM> can be typed in at the keyboard, redirected from a file, or piped from another program (like <EM><A HREF="d.where.html">d.where</A></EM>). Each line of the input consists of an easting, a northing, and an optional label, which are separated by spaces. The word <B>end</B> 
+is typed to end input of coordinates to <EM>r.what</EM>. For example: 
+
+<DL>
+<DT>
+<DD>635342.21 7654321.09 site 1 
+<DD>653324.88 7563412.42 site 2 
+<DD>end  
+</DL>
+<EM>r.what</EM> output consists of the input geographic location and label, and, for each user-named raster map layer, the category value, and (if <EM>-f</EM> is specified) the category label associated with the cell(s) at this geographic location. Sample input (in regular font) to and output (in plain text) from <EM>r.what</EM> are given below. 
+
+<DL>
+<DT>
+<DD><B> r.what input</B>=soils,aspect
+<DD>635342.21 7654321.09 site 1
+<DD>653324.88 7563412.42 site 2
+<DD>end
+<DT>
+<KBD>
+<DD>635342.21|7654321.09|site 1|45|21 <BR>
+<DD>653324.88|7563412.42|site 2|44|20 
+</KBD>
+
+<P>
+<DT>
+<DD><B> r.what -f input=</B>soils,aspect <BR>
+<DD>635342.21 7654321.09 site 1 <BR>
+<DD>653324.88 7563412.42 site 2 <BR>
+end </B> 
+<DT>
+<KBD>
+<DD>635342.21|7654321.09|site 1|45|NaC|21|30 degrees NW 
+<DD>653324.88|7563412.42|site 2|44|NdC|20|15 degrees NW 
+</KBD>
+</DL>
+
+<H2>NOTES</H2>
+The maximum number of raster map layers that can be queried at one time is 14. 
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="d.sites.html">d.sites</A>, <A HREF="d.where.html">d.where</A>, <A HREF="r.cats.html">r.cats</A>, <A HREF="r.report.html">r.report</A>, <A HREF="r.stats.html">r.stats</A>, <A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+

@@ -1,0 +1,107 @@
+<HTML>
+<HEAD>
+<TITLE>r.in.tiff</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.in.tiff</b></EM>  - Converts a TIFF (8 or 24 bit) raster file to GRASS raster file(s).
+
+<BR>
+
+<EM>(GRASS Raster Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+
+<B>r.in.tiff </b>[<b>-vb</b>] 
+	<b>input=</b><em>name</em> <b>output=</b><em>name</em>
+	[<B>nlev=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+This program imports a TIFF raster file (8 or 24 bit) to GRASS raster file(s).
+Output is placed in the <EM>/cell</EM> directory
+under the user's current GRASS mapset.
+<p>
+<H3>Flag:</H3>
+<DL>
+<DT><B>-v</B>
+<DD>Verbose mode</DD>
+
+<DT><B>-b</B>
+<DD>Import TrueColor (24 bit) TIFF into separate red, blue, and green bands. 
+Each band file will be named <em>output</em>.[r|b|g] depending on the band.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing TIFF raster file to be imported. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to resultant binary raster map layer. 
+<DT><B>nlev=</B><EM>value</EM>
+<DD>Optionally specify the number of colors per band for TrueColor 
+TIFF files.<BR>
+<B>Options:</B> 1 - 256<BR>
+<B>Default:</B> 20 (8000 colors)
+</DL>
+
+
+
+<P>
+
+The program prompts the user to enter the name of the TIFF raster file to be
+converted and the name to be assigned to the GRASS raster file
+to contain the resultant image. Currently "TIFF/uncompressed", 
+"TIFF/PackBits-compression" and "TIFF/deflate" formats are supported.  Other
+compression schemes may not be read correctly.
+LZW compression is not supported due to UNISYS patent.
+
+<P>
+If a TIFF World file exists with an extension of "tfw", "tifw", "TFW", or
+"TIFW", it will be used to set the boundary coordinates and cell size. 
+Rotation in the TIFF World file is not supported (second and third numbers).
+If no TIFF World file exists, the user should adjust boundary 
+coordinates stored in the cell header after 
+import using <EM> <A HREF="r.support.html">r.support</A>
+</EM>.
+
+
+<H2>NOTE</H2>
+
+For non-*nix Operating Systems, the TIFF World file may not be found
+if it's under a directory tree that has one of ".tfw", ".tifw", ".TFW" or
+".TIFW".  Also, be aware that the TIFF World file is a text file.  Therefore,
+if it has come from an operating system with a different idea about the
+end of line character(s), it may not be read properly.  The input routine
+expects each entry on a separate line.  Scripts like dos2unix can be used
+to fixed this.
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="r.support.html">r.support</A>
+</EM>
+<EM>
+<A HREF="parser.html">parser</A>
+</EM>
+and
+<EM><A HREF="r.in.tiff.html">r.in.tiff</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory
+<P>
+GRASS 5.0 team
+
+</BODY>
+</HTML>

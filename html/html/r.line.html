@@ -1,0 +1,145 @@
+
+<TITLE>r.line</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.line</b></EM>  - Creates a new binary GRASS vector 
+(<EM><A HREF="v.digit.html">v.digit</A></EM>) file by
+extracting linear features from a thinned raster file.
+
+<BR>
+
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.line</B>
+
+<BR>
+
+<B>r.line help</B>
+
+<BR>
+
+<B>r.line input=</B><EM>name</EM>
+<B>output=</B><EM>name</EM> [<B>type=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.line</EM>
+scans the named raster map layer (<B>input=</B><EM>name</EM>)
+and extracts thinned linear features into the named vector file
+(<B>output=</B><EM>name</EM>).
+
+<H2>OPTIONS</H2>
+
+The user can run this program either non-interactively or
+interactively.  The program will be run non-interactively
+if the user specifies program arguments on the command
+line, using the form:
+
+<DL>
+<DD>
+<B>r.line input=</B><EM>name</EM>
+<B>output=</B><EM>name</EM> [<B>type=</B><EM>name</EM>]
+</DL>
+
+If the user specifies input raster and output vector map names
+on the command line, any other parameter values left unspecified
+on the command line will be set to their default values (see below).
+Alternately, the user can simply type <B>r.line</B> on the command line,
+without program arguments.  In this case, the user will be prompted for
+parameter values using the standard GRASS 
+<EM><A HREF="parser.html">parser</A></EM> interface.
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>Name of existing raster file to be used as input.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Name of new vector file to be output.
+
+<DT><B>type=</B><EM>name</EM> 
+
+<DD>Line type of the extracted vectors; either <EM>line</EM> or <EM>area</EM>.
+Specifying <B>line</B> will type extracted vectors as linear edges.
+Specifying <B>area</B> will type extracted vectors as area edges.
+
+<BR>
+
+Options:  <EM>line</EM> or <EM>area</EM>
+
+<BR>
+
+Default:  <B>type=line</B>
+</DL>
+
+<P>
+
+<EM>r.line</EM> assumes that the <EM>input</EM> map has been thinned
+using <EM><A HREF="r.thin.html">r.thin</A></EM>.
+
+<H2>NOTES</H2>
+
+<EM>r.line</EM> extracts vectors (aka, "arcs") from a
+raster file.  These arcs may represent linear features
+(like roads or streams), or may represent area edge
+features (like political boundaries, or soil mapping
+units).  The attribute <EM>type</EM> option allows the user
+to establish the use of either linear or area edge
+attributes for all of the extracted vectors.
+
+
+<P>
+
+<EM><A HREF="r.poly.html">r.poly</A></EM> 
+may be used to extract vectors that represent area features
+(like soil mapping units, elevation ranges, etc.) from a raster file.
+
+
+<P>
+
+The user must run <EM><A HREF="v.support.html">v.support</A></EM> 
+on the resultant vector
+(<EM><A HREF="v.digit.html">v.digit</A></EM>) 
+files to build the <EM>dig_plus</EM> information. 
+
+
+<P>
+
+<EM><A HREF="r.thin.html">r.thin</A></EM> and <EM>r.line</EM>
+may create excessive nodes at every junction, and may create small spurs
+or "dangling lines" during the thinning and vectorization process.
+These excessive nodes and spurs may be removed using 
+<EM><A HREF="v.trim.html">v.trim</A></EM>.
+
+<H2>BUGS</H2>
+
+The input raster file MUST be thinned by 
+<EM><A HREF="r.thin.html">r.thin</A></EM>;
+if not, <EM>r.line</EM> may crash.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.poly.html">r.poly</A></EM><br>
+<EM><A HREF="r.thin.html">r.thin</A></EM><br>
+<EM><A HREF="v.digit.html">v.digit</A></EM><br>
+<EM><A HREF="v.support.html">v.support</A></EM><br>
+<EM><A HREF="v.trim.html">v.trim</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Mike Baba<BR>
+DBA Systems, Inc.<BR>
+10560 Arrowhead Drive<BR>
+Fairfax, Virginia 22030

@@ -48,7 +48,7 @@ int main(int argc, char **argv)
 
 	strcpy(file_stack[0], INDEX_FILE) ;
 	strcpy(response_stack[0], 
-	"GRASS ON-LINE HELP                      Press ESC key to exit program") ;
+	"GRASS ON-LINE HELP                     Press [q]uit to exit program");
 	cur_hilite[0] = 1 ;
 	cur_line[0] = 1 ;
 	stack_ptr = 0 ;

@@ -1,0 +1,263 @@
+<TITLE>v.out.arc</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.out.arc</b></EM>  - Converts GRASS vector files to ARC/INFO's "Generate" file format.
+
+<BR>
+
+<EM>(GRASS Vector Data Export Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.out.arc </B>
+
+<BR>
+
+<B>v.out.arc help </B>
+
+<BR>
+
+<B>v.out.arc type=</B><EM>name </EM><B>vect=</B><EM>name </EM><B>arc_prefix=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.out.arc</EM>
+is a GRASS data export program that converts files in GRASS vector format
+to ARC/INFO's "Generate" file format.  The companion program <EM>
+<A HREF="v.in.arc.html">v.in.arc</A>
+</EM>
+imports data in ARC/INFO's "Generate" format and
+converts them to GRASS vector format.
+
+
+<P>
+
+This program can be run either non-interactively or interactively.
+The program will be run non-interactively if the user specifies parameter values
+on the command line using the following format:
+
+
+<P>
+
+<DL>
+<DD>
+<B>v.out.arc type=</B><EM>name </EM><B>vect=</B><EM>name </EM><B>arc_prefix=</B><EM>name</EM>
+</DL>
+
+
+<P>
+
+Alternately, the user can simply type:
+
+
+<P>
+
+<DL>
+<DD>
+<B>v.out.arc</B>
+</DL>
+
+
+<P>
+
+on the command line;  in this case, the program will prompt the user for
+parameter values.
+<P>
+<P>
+<H3>Parameters:</H3>
+<DL>
+<DT><B>type=</B><EM>name</EM> 
+<DD>Coverage (feature) type.
+<BR>
+
+Options:  polygon, line
+
+<DT><B>vect=</B><EM>name</EM> 
+
+<DD>The name of a GRASS vector file to be converted to ARC/INFO format.
+
+<DT><B>arc_prefix=</B><EM>name</EM> 
+
+<DD>A prefix to be assigned to the ARC/INFO-format files output by <EM>v.out.arc</EM>.
+<P>
+<P>
+</DL>
+
+<H2>INTERACTIVE MODE: USER PROMPTS</H2>
+
+<EM>v.out.arc</EM> will prompt
+the user to enter the name of a GRASS vector file to be exported to 
+ARC/INFO and for a filename prefix to be used in naming the files
+created by the program.
+<P>
+A GRASS vector file to be exported to ARC/INFO must either
+contain only linear features (i.e., have only line coverage)
+or contain only area edge features (i.e., have only polygon coverage).
+<EM>v.out.arc</EM>
+will begin by asking the user which type of coverage (line or polygon)
+is to be imported:
+<PRE>
+     COVERAGE TYPE
+     Enter "polygon" or "line"
+     Hit RETURN to cancel request
+     &gt;
+</PRE> 
+The program then prompts the user for the name of the GRASS vector file to be
+converted to ARC/INFO format:
+<PRE>
+     VECTOR (DIGIT) FILENAME 
+     Enter 'list' for a list of existing binary vector files
+     Hit RETURN to cancel request
+     &gt;
+</PRE>
+
+Next, the user is asked for a file-name prefix to be used in naming
+the output ARC/INFO Generate format files:
+<PRE>
+     ARC/INFO (GENERATE) FILENAME PREFIX
+     Hit RETURN to cancel request
+     &gt;
+</PRE>
+
+The filename prefix will be used to name the various files
+that will be created for export to ARC/INFO.
+When labeled polygon coverage data are exported,
+three such files will be created:  a <EM>lines file</EM> with the suffix .lin,
+a <EM>label-points file</EM> with the suffix .lab, and a 
+<EM>label-text file</EM> with the suffix .txt.
+When line coverage data are exported, two such files will be created:
+a <EM>lines file</EM> with the suffix .lin, and a <EM>label-text file</EM>
+with the suffix .txt.
+Export of unlabeled polygon or line coverage data will result in creation
+of a <EM>lines file</EM> (.lin suffix) only.
+See the DATA FILE FORMATS section for more information on these files.
+<P>
+<P>
+<H2>EXAMPLE</H2>
+
+Linear features and polygon data are made up of the series of arcs
+(aka, vectors) outlining their perimeters.
+The <EM>ARC/INFO Users' Guide</EM>, in its discussion of the <EM>Ungenerate</EM>
+command, explains how line and polygon coverage data can be created from files
+(like <EM>prefix.lin</EM> and <EM>prefix.pol</EM>)
+containing the geographic coordinates of these arcs,
+and from files (like <EM>prefix.lab</EM>)
+containing the geographic coordinates of label-points.
+Below is an example which illustrates
+the creation, within ARC/INFO, of a polygon coverage data file
+(named <EM>soils</EM>) from the files <EM>soils.pol</EM> and <EM>soils.lab</EM>.
+<PRE>
+   Arc: GENERATE SOILS 
+   Generate: INPUT soils.pol
+   Generate: LINES 
+   Generating lines ...
+   Generate: INPUT soils.lab
+   Generate: POINTS
+   Generating points ...
+   Generate: QUIT
+   Arc: _
+</PRE>
+
+The above example would create a polygon coverage data file named <EM>soils</EM>
+with label-points. 
+The label-points would have ID numbers that correspond to the GRASS
+category values for the polygons in the coverage.  The INFO portion 
+of ARC/INFO can be used to associate these label-point ID numbers 
+with descriptive text from the <EM>soils.txt</EM> file.
+
+
+<P>
+
+
+<H2>DATA FILE FORMATS</H2>
+
+LINES FILE, also know as <EM>prefix.lin</EM> or <EM>prefix.pol</EM> file:
+
+<BR>
+
+This text file is a "Generate" format lines file.  The <EM>lines</EM> option of the 
+ARC/INFO <EM>Generate</EM> command can be used to read this file into ARC/INFO.  
+Each line in the file has a unique line-ID number.
+<PRE>
+101
+223343.62 218923.15
+223343.62 222271.06
+259565.31 222271.06
+259565.31 195577.37
+END
+102
+237862.53 203392.37
+244970.75 203744.28
+253137.66 195577.37
+259565.31 195577.37
+END
+103
+237862.53 203392.37
+237862.53 203744.28
+223343.62 218392.37
+END
+104
+239072.44 186200.56
+237862.53 187410.50
+237862.53 203392.37
+END
+END
+</PRE>
+
+LABEL-POINTS FILE, also known as <EM>prefix.lab</EM> file:
+
+<BR>
+
+This text file will be created by
+<EM>v.out.arc</EM>
+if the vector file being exported represents a polygon coverage.
+<EM>prefix.lab</EM> consists of a list of label-point (x,y) coordinates,
+each with a unique label-point ID number.  
+<PRE>
+1 242777.81 211533.09
+2 243458.37 199282.28
+3 243458.37 195199.28
+</PRE>
+
+LABEL-TEXT FILE, also known as <EM>prefix.txt</EM> file:
+
+<BR>
+
+In the case of polygon coverage data, this file associates an integer
+category value
+and a category label ("attribute") text string (containing no spaces)
+with each label-point ID number.
+In the case of line coverage data, this file associates an integer category value
+and an attribute text string with each line-ID number.
+
+
+<P>
+
+The first column is the row number (which is arbitrary), the second column 
+contains the category value, the third column holds the line or label-point ID
+number, and the fourth column contains the attribute text string.
+<PRE>
+1 4 1 Coniferous
+2 5 2 Deciduous
+3 2 3 Rangeland
+</PRE>
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="v.in.arc.html">v.in.arc</A>
+</EM><br>
+<EM>
+<A HREF="v.support.html">v.support</A>
+</EM>
+
+<H2>AUTHOR</H2>
+
+Dave Johnson
+<BR>DBA Systems, Inc.
+<BR>10560 Arrowhead Drive
+<BR>Fairfax, Virginia 22030

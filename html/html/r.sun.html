@@ -1,0 +1,182 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+
+<html>
+
+<head>
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ 
+<meta name="GENERATOR" content="Mozilla/4.6 [en] (WinNT; I) [Netscape]">
+
+<TITLE>r.sun</TITLE>
+</head>
+<body bgcolor="#FFFFFF">
+
+<img SRC="grass.smlogo.gif" >
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<b>r.sun</b> - computes solar illumination (incidence) angle raster
+maps for given time and latitude and solar irradiance (direct solar radiation)
+raster maps for given day and latitude. They are computed from elevation,
+slope and aspect raster maps. Sunrise, sunset times, declination for given
+day are displayed along with solar azimuth and zenith angle for specified
+local time. The shadowing effect of the topography is optionally incorporated.
+
+<H2>SYNOPSIS</H2>
+<b>r.sun</b> [-s] <b>elevin</b>=name [<b>zmult</b>=value] <b>aspin</b>=name
+<b>slopein</b>=name [<b>incidout</b>=name] [<b>energyout</b>=name] <b>latitude</b>=value
+<b>dej</b>=value [<b>lum_time</b>=value] [<b>linke</b>=value]
+
+<H2>DESCRIPTION</H2>
+This program computes solar illumination angle raster map <i>incidout</i>
+for given day <i>dej</i>, time <i>lum_time</i> and latitude <i>latitude</i>
+and solar irradiance raster map <i>energyout</i> for a given day <i>dej</i>
+and latitude <i>latitude</i> from elevation <i>elevin</i>, slope <i>slopein</i>
+and aspect <i>aspin</i> raster files. Elevation, slope as well as aspect
+must be floating point raster maps. Null data in cells must be valid data
+(zeroes). Please, run r.support to create/reset null file for your input
+raster maps.
+
+<br>Specified day <i>dej</i> is the number where January 1 is day no.1
+and December 31 is 365 (366). Time <i>lum_time</i> must be a local time
+(NOT a zone time, e.g. GMT, CET) in a decimal system, e.g. 7.5 (i.e. 7h
+30m A.M.), 16.1 is 4h 6m P.M.. The terrestrial latitude must be also in
+decimal system with positive values for northern hemisphere and negative
+for southern one. The program uses the Linke's atmosphere turbidity coefficient.
+The default <i>linke</i>=2.5 is near the annual average for rural areas
+in Central Europe. The absolute clear atmosphere has <i>linke</i> = 1.0.
+The illumination angle is the incidence angle between horizon and solar
+ray vector. Output illumination angle is in degrees. The irradiance for
+given day is direct solar radiation computed integrating the illumination
+angles between sunrise and sunset times for given day. A time step is one
+hour. The output units are in Wh per squared meter per given day (Wh/(m*m)/day).
+The illumination angle and irradiance can be computed without shadowing
+influence of relief by default, they can be computed with this influence
+using the flag <EM>-s</EM>.
+
+<p>
+In mountainous and even hilly areas this can lead to very different
+results! Incorporating the shadowing effect of relief can dramatically
+slow down the speed of computing especially when the Sun is near above
+the horizon. The shadowed areas written in ouput maps as zero values. The
+solar declination is computed internally using Cooper's approximation for
+each day and irradiance using the solar constant = 1370 W per squared meter.
+The sunrise and sunset times, solar declination, solar zenith angle (vertical
+angle) and solar azimuth angle (horizontal angle) are displayed as on-
+screen information. There is a possibility to compute irradiance for some
+time interval within the year (e.g. for specified vegetation period). This
+can be done using a shell script loop. Elevation, aspect and slope input
+values should not be reclassified into coarser categories. This could lead
+to incorrect results.
+
+<H2>OPTIONS</H2>
+The user can run this program either interactively or
+non- interactively. The program will be run non-interactively if the user
+specifies program arguments and flag settings on the command line using
+the form:
+<p>
+r.sun [-s] elevin=name [zmult=val] aspin=name slopein=name [incidout=name]
+[energyout=name] latitude=val dej=val [lum_time=val] [linke=value]
+
+<p>
+Alternately, the user can simply type <EM>r.sun</EM> on the command line without
+program arguments. In this case, the user will be prompted for parameter
+values using the standard GRASS parser interface. Currently, user may specify
+either illumination angle map ncidout or irradiance energy map nergyout
+during one command run.
+
+<H3>Flag:</H3>
+<DL>
+<DT><b>-s</b>
+<DD>Incorporates shadowing effect of terrain (default not)
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><b>elevin</b>=name
+<DD>Use the existing FCELL raster file with elevationsname
+as input.
+
+<DT><b>zmult</b>=val
+<DD>Set a multiplier for elevations to val.
+
+<DT><b>aspin</b>=name
+<DD>Use the existing FCELL raster file with aspectname
+as input.
+
+<DT><b>slopein</b>=name
+<DD>Use the existing FCELL raster file with slopename
+as input.
+
+<DT><b>incidout</b>=name
+<DD>Output solar rays illumination angle values to
+FCELL raster file named name.
+
+<DT><b>energyout</b>=name
+<DD>Output direct solar irradiance (direct radiation)
+values to FCELL raster file named name.
+
+<DT><b>latitude</b>=val
+<DD>Set the value of latitude of given region to val.
+
+<DT><b>dej</b>=val
+<DD>Set the serial number of day to val.
+
+<DT><b>lum_time</b>=val
+<DD>Set the decimal value of time to val.
+
+<DT><b>linke</b>=val
+<DD>Set the Linke's atmosphere tubidity coefficient to
+val.
+</DL>
+
+<H2>NOTES</H2>
+Solar energy is an important input parameter in different models
+concerning energy industry, landscape, vegetation, evapotranspiration,
+snowmelt or remote sensing. Solar rays illumination angle can be effectively
+used in radiometric and topographic corrections in mountainous and hilly
+terrain where very accurate investigations should be performed. For details,
+see the literature. Average monthly values of the Linke's turbidity coefficient
+for a mild climate:
+
+<pre>
+&nbsp;&nbsp;&nbsp;&nbsp; Month Jan&nbsp; Feb&nbsp; Mar&nbsp; Apr&nbsp; May&nbsp; Jun&nbsp; Jul&nbsp; Aug&nbsp; Sep&nbsp; Oct&nbsp; Nov&nbsp; Dec&nbsp; annual
+mountains&nbsp; 1.5&nbsp; 1.6&nbsp; 1.8&nbsp; 1.9&nbsp; 2.0&nbsp; 2.3&nbsp; 2.3&nbsp; 2.3&nbsp; 2.1&nbsp; 1.8&nbsp; 1.6&nbsp; 1.5&nbsp; 1.90&nbsp;&nbsp;
+rural&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.1&nbsp; 2.2&nbsp; 2.5&nbsp; 2.9&nbsp; 3.2&nbsp; 3.4&nbsp; 3.5&nbsp; 3.3&nbsp; 2.9&nbsp; 2.6&nbsp; 2.3&nbsp; 2.2&nbsp; 2.75&nbsp;&nbsp;
+city&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.1&nbsp; 3.2&nbsp; 3.5&nbsp; 4.0&nbsp; 4.2&nbsp; 4.3&nbsp; 4.4&nbsp; 4.3&nbsp; 4.0&nbsp; 3.6&nbsp; 3.3&nbsp; 3.1&nbsp; 3.75&nbsp;&nbsp;
+industrial 4.1&nbsp; 4.3&nbsp; 4.7&nbsp; 5.3&nbsp; 5.5&nbsp; 5.7&nbsp; 5.8&nbsp; 5.7&nbsp; 5.3&nbsp; 4.9&nbsp; 4.5&nbsp; 4.2&nbsp; 5.00
+</pre>
+It should by noted that <EM>r.sun</EM> currently uses a lot of memory, some improvements
+are under way. As the latitude latitude and local time <i>lum_time</i>
+are defined as a constant value, the user should take into account extent
+of the area/region.
+
+<H2>SEE ALSO</H2>
+<EM><a href="s.surf.rst.html">s.surf.rst</a>,
+<a href="r.slope.aspect.html">r.slope.aspect</a></EM>
+
+<H2>AUTHOR</H2>
+Original version of the program : Jaroslav Hofierka and Maros Zlocha,
+Comenius University, Bratislava, Slovakia,
+<br>
+Modified program (adapted for GRASS): Jaroslav Hofierka, J. Gresaka
+22, 08501 Bardejov, Slovakia,
+<br>
+&copy; 1999, Jaroslav Hofierka
+<ADDRESS><A HREF="MAILTO:hofi@geomodel.sk">hofi@geomodel.sk</A></ADDRESS>      
+
+
+<H2>REFERENCES</H2>
+Hofierka, J. (1997): Direct solar radiation modelling within an open
+GIS environment. Proceedings of the JEC- GI'97 Conference in Vienna, pp.
+575-584.
+<p>Jenco, M. (1992): Distribution of direct solar radiation on georelief
+and its modelling by means of complex digital model of terrain. Geograficky
+casopis 44, pp.342-355.(in Slovak)
+<p>Kittler, R., Mikler, J. (1986): Basis of the utilization of solar radiation.
+VEDA Bratislava, p. 150.(in Slovak)
+
+</body>
+</html>

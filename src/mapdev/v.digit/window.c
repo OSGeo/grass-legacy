@@ -1,4 +1,5 @@
 /*
+** $Id$
 **  Written by Dave Gerdes  4/1988
 **  US Army Construction Engineering Research Lab
 */
@@ -52,7 +53,7 @@ int Window (void)
 	{
 	    switch(command) {
 		case MWC_WIND:
-		    zoom_window ();
+		    zoom_window (0, NULL);
 		    break;
 		case MWC_PREV:
 		    break;
@@ -110,6 +111,12 @@ int Window (void)
 		case MWC_LLINES:
 		    Zero_Disp_settings();
 		    Disp_llines = 1;
+		    replot (CMap);
+		    Restore_Disp_settings ();
+		    break;
+		case MWC_ULINES:
+		    Zero_Disp_settings();
+		    Disp_ulines = 1;
 		    replot (CMap);
 		    Restore_Disp_settings ();
 		    break;
@@ -550,6 +557,7 @@ static char S_Disp_outline;
 static char S_Disp_markers;
 static char S_Disp_llines;
 static char S_Disp_llabels;
+static char S_Disp_ulines;
 static char S_Disp_sites;
 static char S_Disp_slabels;
 
@@ -566,6 +574,7 @@ Save_Disp_settings (void)
     S_Disp_markers = Disp_markers;
     S_Disp_llines = Disp_llines;
     S_Disp_llabels = Disp_llabels;
+    S_Disp_ulines = Disp_ulines;
     S_Disp_sites = Disp_sites;
     S_Disp_slabels = Disp_slabels;
 
@@ -585,6 +594,7 @@ Restore_Disp_settings (void)
     Disp_markers = S_Disp_markers;
     Disp_llines = S_Disp_llines;
     Disp_llabels = S_Disp_llabels;
+    Disp_ulines = S_Disp_ulines;
     Disp_sites = S_Disp_sites;
     Disp_slabels = S_Disp_slabels;
 
@@ -604,6 +614,7 @@ Zero_Disp_settings (void)
     Disp_markers = 0;
     Disp_llines = 0;
     Disp_llabels = 0;
+    Disp_ulines = 0;
     Disp_sites = 0;
     Disp_slabels = 0;
 
@@ -619,7 +630,7 @@ zoom_window ()
 	if (Window_Device == MOUSE)
 	    set_window_w_mouse ();
 	else
-	    set_window();
+	    set_window_w();
 	clear_window ();
 	replot(CMap);
     }
@@ -629,7 +640,7 @@ zoom_window ()
 */
 
 int 
-zoom_window (void)
+zoom_window (unsigned char type, struct line_pnts *Xpoints)
 {
     int button, button1 ;
     int	screen_x, screen_y ;
@@ -644,9 +655,14 @@ zoom_window (void)
 		Clear_info ();
 		_Clear_base ();
 		_Write_base (12, "Buttons:") ;
-		_Write_base (13, "Left:   Select new window  ") ;
-		_Write_base (14, "Middle: Abort/Quit ") ;
-		Write_base  (15, "Right:  Zoom/Pan MENU") ;
+		_Write_base (13, "   Left:   Select new window  ") ;
+#ifdef ANOTHER_BUTTON
+		_Write_base (14, "   Middle: Abort/Quit ") ;
+		 Write_base (15, "   Right:  Zoom/Pan MENU") ;
+#else
+		_Write_base (14, "   Middle: Zoom/Pan MENU") ;
+		 Write_base (15, "   Right:  Abort/Quit ") ;
+#endif
 
 		R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;
 		flush_keyboard (); /*ADDED*/
@@ -654,15 +670,14 @@ zoom_window (void)
 
 		switch (button)
 		{
-		    case 1:
+		    case LEFTB:
 			set_window_w_mouse ();
 			clear_window ();
 			replot(CMap); 
+			if(Xpoints)
+				highlight_line (type, Xpoints, 0, NULL);
 			break ;
-		    case 2:
-			return(0);
-			break;
-		    case 3:
+		    case MIDDLEB:
 		    {
 			int zoom_pan = 1;
 			while (zoom_pan)
@@ -670,23 +685,28 @@ zoom_window (void)
 			    Clear_info ();
 			    _Clear_base ();
 			    _Write_base (12, "Buttons:") ;
-			    _Write_base (13, "Left:   Zoom MENU") ;
-			    _Write_base (14, "Middle: Abort/Quit ") ;
-			    Write_base  (15, "Right:  Pan  MENU") ;
+			    _Write_base (13, "   Left:   Zoom MENU") ;
+#ifdef ANOTHER_BUTTON
+			    _Write_base (14, "   Middle: Abort/Quit ") ;
+			     Write_base (15, "   Right:  Pan  MENU") ;
+#else
+			    _Write_base (14, "   Middle: Pan  MENU") ;
+			     Write_base (15, "   Right:  Abort/Quit") ;
+#endif
 
 			    R_get_location_with_pointer ( &screen_x, &screen_y, &button1) ;
 			    flush_keyboard (); /*ADDED*/
 			    Clear_info ();
 			    switch(button1)
 			    {
-				case 1:
-				    scal_window ();
+				case LEFTB:
+				    scal_window (type, Xpoints);
 				    break;
-				case 2:
+				case MIDDLEB:
+				    slid_window (type, Xpoints);
+				    break;
+				case RIGHTB:
 				    zoom_pan = 0;
-				    break;
-				case 3:
-				    slid_window ();
 				    break;
 				default:
 				    return(1);
@@ -694,6 +714,9 @@ zoom_window (void)
 			    }
 			}
 		    }
+			break;
+		    case RIGHTB:
+			return(0);
 			break;
 		    default:
 			return(1) ;
@@ -704,7 +727,7 @@ zoom_window (void)
 	} 
 	else
 	{
-	    set_window();
+	    set_window_w();
 	    clear_window ();
 	    replot(CMap);
 	}
@@ -716,16 +739,16 @@ leave:
     return 1;
 }
 
-int slid_window (void)
+int slid_window (unsigned char type, struct line_pnts *Xpoints)
 {
-    slid_window_w_mouse ();
+    slid_window_w_mouse (type, Xpoints);
 
     return 0;
 }
 
-int scal_window (void)
+int scal_window (unsigned char type, struct line_pnts *Xpoints)
 {
-    scal_window_w_mouse ();
+    scal_window_w_mouse (type, Xpoints);
 
     return 0;
 }

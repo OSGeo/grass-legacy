@@ -2,10 +2,9 @@
 ** 7/23/90
 */
 
-#include "dxf2vect.h"
 #include <stdlib.h>
-#include "dig_defines.h"
-#include "dig_head.h"
+#include "dxf2vect.h"
+#include "Vect.h"
 
 int dxf_add_point (FILE *dxf_file)
 {

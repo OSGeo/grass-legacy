@@ -1,8 +1,6 @@
-#include "interface.h"
 #include <stdlib.h>
+#include "interface.h"
 #define BG_COLOR 0xFF000000
-
-extern void free();
 
 /* 
 *  Have to look into why we can't draw to BOTH in OpenGL/tcl
@@ -23,7 +21,7 @@ Tcl_Interp *cancel_interp;
  * call a particular script when the
  * cancel button is pressed during a draw
  */
-void CancelFunc_Hook() {
+void CancelFunc_Hook (void) {
   if (cancel_script != NULL) {
     TkCopyAndGlobalEval(cancel_interp, cancel_script);
   }
@@ -32,11 +30,13 @@ void CancelFunc_Hook() {
 /* Occasionally we want the cancel script ignored,
    this handles such a case.
    */
-int Nunset_cancel_func_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nunset_cancel_func_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   if (cancel_script != NULL)
     free(cancel_script);
@@ -47,11 +47,13 @@ int Nunset_cancel_func_cmd(data, interp, argc, argv)
 /* Set the cancel script to invoke when the cancel function
  * is called.
  */
-int Nset_cancel_func_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nset_cancel_func_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   if (argc != 2) {
     Tcl_SetResult(interp, "Usage: Nset_cancel_func script",
@@ -72,11 +74,12 @@ int Nset_cancel_func_cmd(data, interp, argc, argv)
 }
 
 int 
-Nset_draw_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+Nset_draw_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   int where;
   if (argc != 2)
@@ -95,12 +98,13 @@ Nset_draw_cmd(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Ntransp_is_set_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Ntransp_is_set_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   char on[128];
   
@@ -109,12 +113,13 @@ Ntransp_is_set_cmd(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nis_masked_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nis_masked_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   char masked[128];
@@ -134,11 +139,12 @@ Nis_masked_cmd(data, interp, argc, argv)
 }
 
 int 
-Nhas_transparency_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+Nhas_transparency_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   char *t;
@@ -151,11 +157,12 @@ Nhas_transparency_cmd(data, interp, argc, argv)
 }
 
 int 
-Nget_def_color_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+Nget_def_color_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   char clr[128];
@@ -166,11 +173,12 @@ Nget_def_color_cmd(data, interp, argc, argv)
 }
 
 int 
-Nclear_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+Nclear_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int clr;
@@ -182,11 +190,12 @@ Nclear_cmd(data, interp, argc, argv)
 }
 
 int 
-Ndraw_wire_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+Ndraw_wire_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
      
 {
   int id;
@@ -202,11 +211,12 @@ Ndraw_wire_cmd(data, interp, argc, argv)
 
 
 int 
-Ndraw_X_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+Ndraw_X_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int id;
@@ -223,11 +233,12 @@ Ndraw_X_cmd(data, interp, argc, argv)
 }
 
 int 
-Ndraw_line_on_surf_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+Ndraw_line_on_surf_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int id;
@@ -248,23 +259,25 @@ Ndraw_line_on_surf_cmd(data, interp, argc, argv)
 }
 
 int 
-Ndraw_model_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+Ndraw_model_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
      
 {
   GS_draw_lighting_model();
   return (TCL_OK);
 }
 
-int
-Nsurf_draw_one_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nsurf_draw_one_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
 
   if (argc != 2) {
@@ -285,12 +298,13 @@ Nsurf_draw_one_cmd(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nvect_draw_one_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nvect_draw_one_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
 
   if (argc != 2) {
@@ -311,12 +325,13 @@ Nvect_draw_one_cmd(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nsite_draw_one_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nsite_draw_one_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   if (argc != 2) {
     Tcl_SetResult(interp,"Usage: Nsite_draw_one site_id", TCL_VOLATILE);
@@ -336,12 +351,69 @@ Nsite_draw_one_cmd(data, interp, argc, argv)
   return (TCL_OK);
 }
 
+
+/**********************
+* Routine to routine value of
+* auto-redraw check-button
+***********************/
 int
-Nsurf_draw_all_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+Nauto_draw_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+{
+  GS_set_cancel(0);
+  auto_draw(data, interp);
+  GS_set_cancel(0);
+  return (TCL_OK);
+}
+
+/**********************
+* Routine to call all draw
+* functions ... rast, vect
+* and sites
+**********************/
+int
+auto_draw (Nv_data *dc, Tcl_Interp *interp)
+{
+char *buf;
+int autodraw;
+char abuf[128];
+
+buf = Tcl_GetVar (interp, "auto_draw", TCL_GLOBAL_ONLY);
+if( buf != NULL) {
+autodraw = atoi(buf);
+sprintf(abuf, "%d", autodraw);
+Tcl_SetResult(interp, abuf, TCL_VOLATILE);
+}
+}
+
+int
+Ndraw_all_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
+{
+
+if(GS_check_cancel) { /* Probably irrelevant */
+Nsurf_draw_all_cmd(data, interp, argc, argv);
+Nvect_draw_all_cmd(data, interp, argc, argv);
+Nsite_draw_all_cmd(data, interp, argc, argv);
+}
+
+}
+
+int 
+Nsurf_draw_all_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   GS_set_cancel(0);
   surf_draw_all(data, interp);
@@ -353,9 +425,8 @@ Nsurf_draw_all_cmd(data, interp, argc, argv)
    Puts ordered id numbers in id_sort, leaving id_orig unchanged.
    Puts ordered indices of surfaces from id_orig in indices.
    */
-sort_surfs_max(surf, id_sort, indices, num)
-     int *surf;
-     int *id_sort, *indices, num;
+int 
+sort_surfs_max (int *surf, int *id_sort, int *indices, int num)
 {
   int i, j;
   float maxvals[MAX_SURFS];
@@ -383,9 +454,8 @@ sort_surfs_max(surf, id_sort, indices, num)
   return (TCL_OK);
 }
 
-surf_draw_all(dc, interp)
-     Nv_data *dc;
-     Tcl_Interp *interp;
+int 
+surf_draw_all (Nv_data *dc, Tcl_Interp *interp)
 {
   int i, j, nsurfs;
   int sortSurfs[MAX_SURFS], sorti[MAX_SURFS];
@@ -430,12 +500,8 @@ surf_draw_all(dc, interp)
 }
 
 /* Set cancel mode for drawing */
-int
-Nset_cancel_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int argc;
-     char **argv;
+int 
+Nset_cancel_cmd (Nv_data *data, Tcl_Interp *interp, int argc, char **argv)
 {
   int c;
   
@@ -449,12 +515,13 @@ Nset_cancel_cmd(data, interp, argc, argv)
   return TCL_OK;
 }
 
-int
-Nvect_draw_all_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nvect_draw_all_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   int i, nvects;
   int *vect_list;
@@ -484,12 +551,13 @@ Nvect_draw_all_cmd(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nsite_draw_all_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int 
+Nsite_draw_all_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   int i, nsites;
   int *site_list;
@@ -525,15 +593,15 @@ Nsite_draw_all_cmd(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int
-Nready_draw_cmd()
+int 
+Nready_draw_cmd (void)
 {
   GS_ready_draw();
   return (TCL_OK);
 }
 
-int
-Ndone_draw_cmd()
+int 
+Ndone_draw_cmd (void)
 {
   GS_done_draw();
   return (TCL_OK);

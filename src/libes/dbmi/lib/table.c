@@ -30,7 +30,7 @@ void
 db_init_table (table)
     dbTable *table;
 {
-    db_zero (table, sizeof(dbTable));
+    db_zero ((void *)table, sizeof(dbTable));
     db_init_string (&table->tableName);
     db_init_string (&table->description);
 }

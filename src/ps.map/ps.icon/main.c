@@ -7,6 +7,8 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "raster.h"
 #include "display.h"
 #include "gis.h"
@@ -18,19 +20,26 @@ main (int argc, char **argv)
 {
     char window_name[64], buf[8];
     int t, b, l, r;
-
-    /* check for file name */
-    if (argc != 2)
-    {
-	fprintf(stderr, "\nUsage: ps.icon <filename>\n");
-	exit(-1);
-    }
-
+    struct Option *input_file;
+    char *infile;
+    
     /* initialize the GIS calls */
-    G_gisinit(argv[0]);
+    G_gisinit (argv[0]);
+
+    input_file = G_define_option();
+    input_file->key = "input";
+    input_file->type = TYPE_STRING;
+    input_file->description = "icon filename";
+    input_file->required = YES;
+
+    if (G_parser(argc,argv))
+                exit(1);
+                
+        
+    infile = input_file->answer;
 
     /* open the icon file */
-    open_icon_file(argv[1]);
+    open_icon_file(infile);
 
     /* set up display */
     R_open_driver();
@@ -66,9 +75,9 @@ main (int argc, char **argv)
     	    G_clear_screen();
 	    exit(0);
 	}
-	if ((icon.fp = G_fopen_new("ps_icons", argv[1])) == NULL)
+	if ((icon.fp = G_fopen_new("ps_icons", infile)) == NULL)
 	{
-	    fprintf(stderr, "Can't overwrite \"%s\" ps_icon file.\n", argv[1]);
+	    fprintf(stderr, "Can't overwrite \"%s\" ps_icon file.\n", infile);
 	    exit(-1);
 	}
         draw_grid(t, b, l, r);
@@ -101,7 +110,7 @@ main (int argc, char **argv)
 	if (*buf == '2')
 	{
 	    fclose(icon.fp);
-    	    G_remove("ps_icons", argv[1]);
+    	    G_remove("ps_icons", infile);
 	    break;
 	}
     	draw_grid(t, b, l, r);

@@ -1,0 +1,3 @@
+set tool grass
+set srcdir .
+set objdir .

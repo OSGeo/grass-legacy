@@ -15,8 +15,15 @@ int main (int argc, char *argv[])
     int cellhd_ok;
     int is_reclass;
     int error();
+	struct GModule *module;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Allows the user to create and/or modify raster map layer "
+		"support files.";
+
     if (G_ask_cell_in_mapset ("Enter name of raster file for which you will create/modify support files", name) == NULL)
 	exit(0) ;
 

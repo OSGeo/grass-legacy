@@ -1,5 +1,0 @@
-
-
-map layer - A set of data, commonly relating to a single theme (e.g.,
-soil mapping units, geology types, etc.) which are represented and
-stored on maps.  See also @glossary("raster map",16.glossary/rastmap.def) and @glossary("vector map",16.glossary/vecmaps.def).

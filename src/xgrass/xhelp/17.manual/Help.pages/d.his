@@ -1,6 +1,0 @@
-
-@man("d.his") - Produces and displays a raster map layer combining hue,
-intensity, and saturation (his) values from user-specified input raster
-map layers.
-
-(GRASS Display Program)

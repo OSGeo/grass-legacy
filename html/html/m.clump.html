@@ -1,0 +1,245 @@
+<html>
+<A NAME="m.clump">
+<TITLE>m.clump</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<B><EM>m.clump</EM></B> - Aggregates point data into clusters of like data using a Voronoi tesselation.
+
+<H2>SYNOPSIS</H2>
+<B>m.clump</B><BR>
+<B>m.clump help</B><BR>
+<B>m.clump [-rq] input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>fs</B><EM>=char</EM>] [<B>attributes</B><EM>=field#[,field#,...]</EM>] [<B>barriers</B><EM>=vector file[,vectorfile,...]</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>m.clump</EM> clusters points together based on points' proximity, point attributes, and the presence of physical constraints (vector barriers) dividing such clusters.  It first triangulates the points using a Voronoi tesselation to determine the proximity of points to one another.  Connections among points are maintained where adjacent points have same attribute values; connections are broken where adjacent points have different values for a given attribute (field).  Connections between adjacent points will also be broken where points fall on different sides of arcs in user-specified vector maps.
+
+<H2>OPTIONS</H2>
+The user can run the program by specifying input and output file names and any desired options on the command line, using the form:
+<P>
+
+<DD><EM>m.clump [-rq] input=name output=name [fs=char] [attributes=field#[,field#,...]] [barriers=vector­ file[,vectorfile,...]]</EM>
+
+<P>
+where parameters and flags have the meanings given below.
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-r</B>
+<DD>Only process points in the input file that fall within the user's current geographic region.
+
+<DT><B>-q</B>
+<DD>Run quietly (without sending comments on program progress to stdout).
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>inputname</B>
+<DD>Name of an existing file containing, minimally, the easting and northing of the points to be formed into clusters, and having the format given in section "INPUT FILE FORMAT".
+
+<DT><B>outputname</B>
+<DD>Name to be assigned the file to contain program output.  Output will have the format specified in section "OUTPUT FILE FORMAT".
+
+<DT><B>fscharacter</B>
+<DD>A single character, specifying the field separator used in the input file (also used in the output file).  The default delimiter used, if unspecified, is any white space.
+
+<DT><B>attributesfield#[,field#,...]</B>
+<DD>One or more attributes to be compared in the input file, to determine which data points are to be grouped.  This is a list of field numbers (columns) in the input file which are to be used when forming clumps.  Different points which do not have the same attributes in all fields specified will be placed in distinct clumps.  Fields are numbered starting with 1.  (For example, the x,y coordinates are in fields 1 and 2 respectively.)
+
+<DT><B>barriersvectorfile[,vectorfile,...]</B>
+<DD>One or more vector files to constrain points from joining the same clump.  Points which appear on different sides of any line or area edges in a user-specified vectorfile will be placed in distinct clumps in the output file.
+</DL>
+
+<H2>INPUT FILE FORMAT</H2>
+Each line of the input file minimally should have the format:
+<P>
+
+<DD><EM>x,y[,text,text,...]</EM>
+
+<P>
+The input file is required only to contain the easting (x) and northing (y) values for each point, unless the user has specified use of the attributes parameter.  The field delimiter (indicated here by a comma) between x and y and between y and text can be any single character as specified by the 'fs' parameter.  The default delimiter is white space if 'fs' is not specified.  Additional data fields (columns) may also be present in the input file, and will be preserved in the output.
+<P>
+
+Leading spaces in the input are automatically removed.  Blanks lines and lines starting with # are treated as comment and ignored.
+
+<H2>OUTPUT FILE FORMAT</H2>
+The output file has the general format:
+<P>
+<PRE>
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+               x,y[,text,text,...]
+
+               x,y[,text,text,...]
+</PRE>
+The comma here represents the field delimiter and will be the same character as the delimiter specified to be used in the input file.
+<P>
+
+The output format is structured.  Lines with the 'x' at the left margin are the original input points.  Lines with the 'x' indented one space are the points that are 'neighbors' of the non-indented point.  Empty lines indicate the end of a clump.
+<P>
+
+Clumps are groups of points either or both: (1) having the same attribute(s) values in the data field(s) specified by the user with the attributes parameter, and/or (2) falling within polygons formed by the vector barriers specified by the user with the barriers parameter.
+
+<H2>EXAMPLES</H2>
+In the following example the comma-delimited input file treepecker is of the form:
+<PRE>
+              # x,y,treeid,treespp,woodpeckersuit,woodpeckeruse
+              432222.22,4651095.23,8074,loblolly pine,high,0
+              432618.65,4651156.30,8075,loblolly pine,medium,0
+              432702.67,4651169.82,8076,sugar maple,low,0
+              432702.63,4651165.72,8077,loblolly pine,high,1
+              432702.57,4651159.61,8078,loblolly pine,high,1
+              432702.79,4651173.82,8079,loblolly pine,high,1
+              432177.53,4651072.01,8080,peach,low,0
+              432181.50,4650466.25,8081,loblolly pine,high,0
+              432169.82,4650466.03,8082,loblolly pine,low,0
+              432235.76,4650467.18,8083,loblolly pine,high,1
+              432274.53,4650467.81,8084,loblolly pine,medium,1
+              432216.47,4650225.19,8085,loblolly pine,medium,0
+              432381.46,4651077.28,8086,loblolly pine,low,1
+              432640.08,4651005.86,8087,loblolly pine,low,0
+              432972.11,4651095.98,8088,loblolly pine,high,1
+</PRE>
+where:
+<PRE>
+              field 1 = x (easting)
+              field 2 = y (northing)
+              field 3 = tree identification number
+              field 4 = tree species
+              field 5 = suitability for use as red-cockaded woodpecker habitat
+              field 6 = current red-cockaded woodpecker nesting site
+</PRE>
+
+Assume constraints imposed on clustering include a vector map of roadways and a vector map of waterways.  The following command will produce an output file in which all trees having both the same suitability for use as wookpecker habitat and the same nesting use status, bounded by roads and waterways, will appear as clusters of points in the output.
+<P>
+
+<DD><EM>m.clump input=treepecker output=treepecker.clumps fs=, attributes=5,6 barriers=roads,waters</EM>
+
+<P>
+In this case, program output might look like:
+<PRE>
+              432222.22,4651095.23,8074,loblolly pine,high,0
+
+              432618.65,4651156.30,8075,loblolly pine,medium,0
+
+              432702.67,4651169.82,8076,sugar maple,low,0
+
+              432702.63,4651165.72,8077,loblolly pine,high,1
+               432972.11,4651095.98,8088,loblolly pine,high,1
+               432702.57,4651159.61,8078,loblolly pine,high,1
+              432972.11,4651095.98,8088,loblolly pine,high,1
+               432702.79,4651173.82,8079,loblolly pine,high,1
+               432702.63,4651165.72,8077,loblolly pine,high,1
+               432702.57,4651159.61,8078,loblolly pine,high,1
+              432702.79,4651173.82,8079,loblolly pine,high,1
+               432972.11,4651095.98,8088,loblolly pine,high,1
+              432702.57,4651159.61,8078,loblolly pine,high,1
+               432972.11,4651095.98,8088,loblolly pine,high,1
+               432702.63,4651165.72,8077,loblolly pine,high,1
+
+              432177.53,4651072.01,8080,peach,low,0
+               432169.82,4650466.03,8082,loblolly pine,low,0
+              432169.82,4650466.03,8082,loblolly pine,low,0
+               432177.53,4651072.01,8080,peach,low,0
+
+              432181.50,4650466.25,8081,loblolly pine,high,0
+
+              432235.76,4650467.18,8083,loblolly pine,high,1
+
+              432274.53,4650467.81,8084,loblolly pine,medium,1
+
+              432216.47,4650225.19,8085,loblolly pine,medium,0
+
+              432381.46,4651077.28,8086,loblolly pine,low,1
+
+              432640.08,4651005.86,8087,loblolly pine,low,0
+</PRE>
+
+<H2>UTILITIES</H2>
+The user can display program output using GRASS display functions like <EM>d.mapgraph</EM> and <EM>d.points</EM>.  The following Bourne shell script allows the user to graph the clustering of points output by <EM>m.clump</EM>.
+
+<PRE>
+                   : ${GISRC?}
+                   file=
+                   label=0
+                   for arg
+                   do
+                       case "$arg" in
+                            fs=*) F=-F"`echo $arg|sed s/fs=//`";;
+                          label=*) eval $arg ;;
+                          file=*) eval $arg;;
+                          *)
+                           echo "Usage: $0 [fs=c] file=filename [label=#]" &gt;&amp; 2
+                           exit 1
+                           ;;
+                       esac
+                   done
+                   if [ "$file" = "" ]
+                   then
+                       echo "Usage: $0 [fs=c] file=filename [label=#]" &gt;&amp; 2
+                       exit 1
+                   fi
+
+                   awk "$F" "BEGIN {label=$label}"'
+                   NF == 0 {next}
+                   /^ / {next}
+                        {if (label!=0) print $1,$2,$label
+                         else print $1,$2}
+                   ' $file | d.points size=10
+
+                   awk "$F" '
+                   NF == 0 {next}
+                   /^ /{ print "move",east,north; print "draw",$1,$2; next}
+                       { east=$1; north=$2}
+                   ' $file | d.mapgraph color=red
+</PRE>
+
+<H2>NOTES</H2>
+If the user specifies neither 'attributes' nor 'barriers' parameters, the resultant output file will have only one clump (because there will be no basis for breaking any proximity connections among points).
+<P>
+
+Input lines that <EM>m.clump</EM> doesn't understand are ignored.  This means that if a line in the input file is not a comment but doesn't have (or doesn't appear to have) an x,y coordinate-pair as its first two fields, the line will be ignored.  The most common cause of ignored lines will be user error (e.g., the user's failure to specify the input file field separator).  If unrecognized lines in the input file exist, <EM>m.clump</EM> will print one message (to stderr) noting that some unrecognized lines were found.
+
+<H2>BUGS</H2>
+Input lines which are longer that 4095 characters will be silently truncated.  Fields which are longer than 1023 characters will probably cause <EM>m.clump</EM> to core dump (at best) or to produce invalid results (not so great).
+
+<H2>SEE ALSO</H2>
+UNIX Manual entries for awk and sed.
+<P>
+<EM><A HREF="d.mapgraph.html">d.mapgraph</A>, <A HREF="d.points.html">d.points</A>, <A HREF="g.region.html">g.region</A>, <A HREF="s.geom.html">s.geom</A>, <A HREF="v.geom.html">v.geom</A>, <A HREF="parser.html">parser</A></EM>
+<P>
+
+Example Bourne-shell scripts which process the output from <EM>m.clump</EM> can be found with the source code for <EM>m.clump</EM>:
+<P>
+<DL>
+<DT>mapgraph.sh:
+<DD>Tool to graph the connections among data points found by <EM>m.clump</EM>.
+
+<DT>points.sh:
+<DD>Tool to display the centroids of clumps created by <EM>m.clump</EM>.
+
+<DT>area.sh:
+<DD>Tool to sum the area of points associated with each clump created by <EM>m.clump</EM>, using data stored in a user-specified field of the input data file.
+</DL>
+
+<H2>AUTHOR</H2>
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratories
+
+</BODY>
+</HTML>

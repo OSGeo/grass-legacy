@@ -1,0 +1,52 @@
+<TITLE>s.to.vect</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.to.vect</b></EM>  - Converts a GRASS site_lists file into
+a vector file.
+
+<BR>
+
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.to.vect</B>
+<BR>
+<B>s.to.vect help</B>
+<BR>
+<B>s.to.vect input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+<B>desc=</B><EM>value</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.to.vect</EM> converts GRASS <KBD>site_lists</KBD>
+file into vector files.  The resulting vector file can be
+treated as any other vector file.  The requirements of the
+site_lists file are standard (i.e., a regular
+<KBD>site_lists</KBD> file format is required).
+<KBD>site_lists</KBD> file values are used as
+<KBD>dig_cats</KBD> category values.
+
+<H2>OPTIONS</H2>
+
+<H2>Parameters:</H2>
+
+<DL>
+<DT><B>input=</B><EM>name</EM> 
+<DD>Name of input GRASS <KBD>site_lists</KBD> file to be
+converted.
+
+<DT><B>output=</B><EM>name</EM> 
+<DD>Name to be assigned to the vector output file.
+
+<DT><B>desc=</B><EM>value</EM> 
+<DD>String field in site_list to use in vector file (default: 1)
+</DL>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS

@@ -3,8 +3,7 @@
 **  US Army Construction Engineering Research Lab
 */
 #include <string.h>
-#include "digit.h"
-#include "dig_head.h"
+#include "Vect.h"
 #include "gis.h"
 #include "export_dlg.h"
 #include "local_proto.h"

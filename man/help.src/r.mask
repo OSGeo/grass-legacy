@@ -1,4 +1,0 @@
-
-\r.mask\ - Establish/remove the current working mask.
-
-(GRASS Raster Program)

@@ -1,6 +1,0 @@
-
-@man("m.lulc.read") - Extracts Landuse/Landcover data in the ASCII Composite
-Theme Grid (CTG) data format distributed by the USGS into a working
-file for @man("m.lulc.USGS").
-
-(GRASS Data Import/Processing Program)

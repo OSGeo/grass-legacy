@@ -1,0 +1,175 @@
+<TITLE>v.extract</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.extract</b></EM>  - Selects vectors from an existing vector map and
+creates a new map containing only the selected vectors.
+
+<BR>
+
+<EM>(SCS GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.extract</B>
+
+<BR>
+
+<B>v.extract help</B>
+
+<BR>
+
+<B>v.extract[ -dn</B>] <B>type=</B><EM>name </EM><B>input=</B><EM>name</EM>
+<B>output=</B><EM>name </EM><B>new=</B><EM>value</EM>
+   [<B>list=</B><EM>range</EM>] [<B>file=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.extract</EM> allows a user to create a new vector map layer
+from an existing vector map layer.
+User provides the program with category numbers or option (n) names,
+input vector file name, an output vector name, and the
+type of input map.  There is an option (d) to dissolve common boundaries
+between adjoining map areas in the same category list.  The user may
+specify a file containing category values or names.
+
+
+<P>
+
+Note:
+
+<DT> 
+
+<DD>The dissolve option will work on only those areas which are in the
+given category list.  If a map area is inside (island) a listed category
+area and is NOT in the given category list, its boundaries are output
+to the resultant map.
+</DT> 
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Flags:</H3>
+
+<DT><B>-d</B> 
+
+<DD>Dissolve common boundaries (default is no) .
+
+<DT><B>-n</B> 
+
+<DD>Use category names NOT category values.
+</DT>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DT><B>type=</B><EM>name</EM> 
+
+<DD>Select area, line, or site.
+
+<BR>
+
+Options:  area, line, site
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>Input vector map name.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Output vector map name.
+
+<DT><B>new=</B><EM>value</EM> 
+
+<DD>Enter 0 or a desired NEW category value.
+
+<DT><B>list=</B><EM>range</EM> 
+
+<DD>Category ranges.
+
+<BR>
+
+For example:  1, 3-8, 13
+
+<BR>
+
+For example:  Abc, Def2, XyZ
+
+<DT><B>file=</B><EM>name</EM> 
+
+<DD>Text file name for category range/list .
+
+
+<P>
+
+</DT>
+
+<H2>EXAMPLE</H2>
+
+
+<DT> 
+
+<DD><B>v.extract -d list=</B>1,2,3,4 
+<B>input=</B>soils <B>output=</B>soil_groupa <B>type=</B>area <B>new=</B>1
+
+<P>
+Produces a new vector area file <EM>soil_groupa</EM> containing 'area'
+boundaries from <EM>soils</EM> with area category values of 1 thru 4;  any
+common boundaries are dissolved, and all areas of the new map will be
+assigned category value 1.
+<P>
+<DT> 
+<DD><B>v.extract -dn list=</B>Abc,Def1,12A,WWd 
+<B>input=</B>soils <B>output=</B>soil_groupa <B>type=</B>area <B>new=</B>0  </B>
+<P>
+Produces a new vector area file <EM>soil_groupa</EM> containing 'area'
+boundaries from <EM>soils</EM> with area category names of Abc,Def1, 12A,WWd;
+these names correspond to values 1 thru 4 of <EM>soils</EM>.  Any common
+boundaries are dissolved, all areas of the new map will be retain their
+original category values 1 thru 4, in this case, since new was set to
+0.
+<P>
+<DT> 
+<DD><B>v.extract -n input=</B>soils <B>output=</B>soil_groupa 
+<B>type=</B>area <B>new=</B>1 <B>file=</B>sample  
+<P>
+
+Produces a new vector area file <EM>soil_groupa</EM> containing 'area'
+boundaries from <EM>soils</EM>.  No common boundaries are dissolved, all areas
+of the new map will be assigned category value 1.  The "names" (-n option)
+can be found in the file sample of the current directory.
+
+<DT> 
+
+<DD>The format for "sample" is:
+<P>
+Abc
+
+<BR>
+
+Def1
+
+<BR>
+
+12A
+
+<BR>
+
+WWd
+</DL>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

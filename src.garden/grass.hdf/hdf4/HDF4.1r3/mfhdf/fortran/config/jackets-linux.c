@@ -2,7 +2,8 @@
  *	Copyright 1990, University Corporation for Atmospheric Research
  *      See netcdf/COPYRIGHT file for copying and redistribution conditions.
  */
-/* $Id$ */
+/* 
+ * $Id$ */
 /*
  * OVERVIEW
  *

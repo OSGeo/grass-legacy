@@ -1,0 +1,105 @@
+<TITLE>v.to.gnuplot</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.to.gnuplot</b></EM>  - outputs an ASCII vector map in GNUPLOT format
+<BR>
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.to.gnuplot help</B>
+<BR>
+<B>v.to.gnuplot</B> <EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.to.gnuplot</EM>
+is an <EM>awk</EM> shell script that converts an ASCII vector map into
+a format suitable for plotting with
+
+<EM><A HREF="g.gnuplot.html">g.gnuplot</A></EM>
+
+and writes the results to standard output.
+
+<H2>OPTIONS</H2>
+
+This program runs non-interactively;  the user must either
+state all parameter values on the command line or use redirection.
+
+<H3>Parameter:</H3>
+
+<DL>
+<DT><EM>name</EM> 
+<DD>Full path of an ASCII vector  map layer.
+</DL>
+
+<H2>EXAMPLE</H2>
+
+Typing the following at the command line:
+
+
+<P>
+
+<DL>
+<DD>
+<B>v.to.gnuplot &lt; LOCATION/dig_ascii/elevation &gt; elev.dat </B>
+</DL>
+
+
+<P>
+
+will write the raster data to <EM>elev.dat</EM>.
+After staring the GRASS graphics monitor, the following
+dialogue:
+
+
+<P>
+
+<DL>
+<DD>
+<B><A HREF="g.gnuplot.html">g.gnuplot</A></B><BR>
+gnuplot&gt; <B>plot 'elev.dat' noTITLE with lines</B>
+</DL>
+
+
+<P>
+
+will plot a map of <EM>elevation</EM>.
+
+<H2>NOTES</H2>
+
+Output may be saved as 
+PostScript, FrameMaker, TeX, etc (approximately 2 dozen output
+formats).
+
+
+<P>
+
+<EM><A HREF="v.clean.html">v.clean</A></EM>
+and
+<EM><A HREF="v.out.ascii.html">v.out.ascii</A></EM>,
+must
+be run prior to <EM>v.to.gnuplot</EM>.
+
+<H2>FILES</H2>
+
+<KBD>$GISBASE/scripts/v.to.gnuplot</KBD>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.clean.html">v.clean</A></EM>,
+<EM><A HREF="v.out.ascii.html">v.out.ascii</A></EM>,
+<EM><A HREF="r.to.gnuplot.html">r.to.gnuplot</A></EM>
+and
+<EM><A HREF="g.gnuplot.html">g.gnuplot</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Darrell McCauley,
+Agricultural
+Engineering, 
+Purdue University

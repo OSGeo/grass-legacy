@@ -1,0 +1,59 @@
+<html>
+<head>
+<TITLE>s.proj</TITLE>
+</head>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.proj</b></EM>  - Allows the user to re-project a sites file from
+     one location to the current location.<BR>
+<EM>(GRASS Sites Program)</EM> 
+
+<H2>SYNOPSIS</H2>
+
+<B>s.proj</B><BR>
+<B>s.proj help</B><BR>
+<B>s.proj input=</B><EM>name</EM> location=</B><EM>name</EM>
+<B>[dbase=</B><EM>name</EM><B>]</B> [mapset=</B><EM>name</EM><B>]
+<B>[output=</B><EM>name</EM><B>]
+
+<H2>DESCRIPTION</H2>
+Allows the user to create a new sites file in the current location by
+re-projecting a sites file from another location, similar to <EM>v.proj</EM>
+and <EM>r.proj</EM>.  Each site will retain all associated category, double,
+and string attributes.  The header information is copied and an additional
+header comment is written containing the <EM>s.proj</EM> command line used
+to create the new file.
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input</B>
+<DD>Name of the input sites list.
+
+
+<DT><B>mapset</B>
+<DD>Mapset of input sites list.
+
+<DT><B>location</B>
+<DD>Location of the input sites list.
+
+<DT><B>dbase</B>
+<DD>path to GRASS database of input location.
+
+<DT><B>output</B>
+<DD>Name of the output sites list.
+</DL>
+
+<H2>SEE ALSO</H2> 
+<EM><A HREF="m.proj.html">m.proj</A>, <A
+HREF="r.proj.html">r.proj</A>, <A HREF="v.proj.html">v.proj</A></EM>
+
+<H2>AUTHOR</H2>
+Bill Brown
+
+</body>
+</HTML>

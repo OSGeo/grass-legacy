@@ -1,0 +1,127 @@
+<TITLE>s.surf.idw</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.surf.idw</b></EM>  - Surface interpolation from sites data by
+Inverse Distance Weighted algorithm.
+<BR>
+<EM>(GRASS</EM> Raster Program)</B> 
+
+<H2>SYNOPSIS</H2>
+
+<B>s.surf.idw input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+[<B>npoints=</B><EM>count</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.surf.idw</EM> fills a raster matrix with interpolated
+values generated from a set of irregularly spaced data
+points using numerical approximation (weighted averaging)
+techniques. The interpolated value of a cell is determined
+by values of nearby data points and the distance of the
+cell from those input points.  In comparison with other
+methods, numerical approximation allows representation of
+more complex surfaces (particularly those with anomalous
+features), restricts the spatial influence of any errors,
+and generates the interpolated surface from the data
+points. It is the most appropriate method to apply to most
+spatial data.
+
+<P>
+
+This program allows the user to use a GRASS site list file,
+rather than a raster map layer, as input.
+
+<P>
+
+The program will be run non-interactively if the user
+specifies the values of needed program parameters and any
+desired optional parameter values on the command line,
+using the form:
+
+<P>
+<DL>
+<DD>
+<B>s.surf.idw input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+[<B>npoints=</B><EM>count</EM>] 
+</DL>
+
+Alternately, the user can simply type <B>s.surf.idw</B> on the command line, 
+without program arguments. In this case, the user will be prompted for 
+needed inputs and option choices using the standard GRASS 
+
+<EM><A HREF="parser.html">parser</A></EM>
+
+interface.
+
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+
+<DD>Name of an input site list file that contains a set of
+irregularly spaced data values; i.e., some cells contain
+known data values while the rest contain zero (0).
+
+<DT><B>output=</B><EM>name</EM>
+
+<DD>Name to be assigned to the new output raster map layer
+containing a smooth surface generated from the known data
+values in the input site list file.
+
+<DT><B>npoints=</B><EM>count</EM>
+
+<DD>The number of points to use for interpolation.  By
+default, the 12 nearest points are used for interpolation.
+<BR>
+Default: 12 
+
+</DL>
+
+<H2>NOTES</H2>
+
+The amount of memory used by this program is related to the
+number of non-zero data values in the <B>input</B> sites
+list file.  If the <B>input</B> site list is very dense
+(i.e., contains many non-zero data points), the program may
+not be able to get all the memory it needs from the
+system.  The time required to execute increases with the
+number of input data points.
+
+<P>
+
+If the user has a mask set, then interpolation is only done
+for those cells that fall within the mask. However, all
+non-zero data points in the <B>input</B> map are used even
+if they fall outside the mask.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.sites.html">d.sites</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="r.mask.html">r.mask</A></EM><br>
+<EM><A HREF="r.surf.contour.html">r.surf.contour</A></EM><br>
+<EM><A HREF="r.surf.idw.html">r.surf.idw</A></EM><br>
+<EM><A HREF="r.surf.idw2.html">r.surf.idw2</A></EM><br>
+<EM><A HREF="r.surf.gauss.html">r.surf.gauss</A></EM><br>
+<EM><A HREF="r.surf.fractal.html">r.surf.fractal</A></EM><br>
+<EM><A HREF="r.surf.random.html">r.surf.random</A></EM><br>
+<EM><A HREF="v.surf.rst.html">v.surf.rst</A></EM><br>
+<EM><A HREF="s.db.rim.html">s.db.rim</A></EM><br>
+<EM><A HREF="s.menu.html">s.menu</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,  
+U.S. Army Construction Engineering 
+Research Laboratory
+

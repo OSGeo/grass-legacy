@@ -1,6 +1,9 @@
 frame .main_menu
 pack .main_menu -expand yes -fill both
 
+# $Id$
+#
+
 # menus used several times in the main menu
 
 set monitors_menu {
@@ -123,6 +126,9 @@ set image_processing {
          "User defined matrix filter" "" {
              "source $env(TCLTKGRASSBASE)/module/r.mfilter"
          }
+	 "Assign a histrogram contrast stretch qrey scale" "" {
+	     "source $env(TCLTKGRASSBASE)/module/i.grey.scale"
+	 }
     }
     "Image transformation" "" {
          "Canonical component" "" {
@@ -164,6 +170,62 @@ set image_processing {
     }
 }
 
+set misc {
+    "Coordinate Conversions" "" {
+	"Projection/Coordinate conversion" "" {
+	    "run m.proj &"
+	}
+	"Datum Shift" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.datum.shift"
+	}
+	"geocentric to lat/lon" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.gc2ll"
+	}
+	"lat/lon to geocentric" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.ll2gc"
+	}
+	"UTM to lat/lon" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.u2ll"
+	}
+	"lat/lon to UTM" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.ll2u"
+	}
+    }
+    -separator
+    "DEM/DTED" "" {
+	"DEM examination" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.dem.examine"
+	}
+	"DEM extraction" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.dem.extract"
+	}
+	"DTED examination" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.dted.examine"
+	}
+	"DTED extraction" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.dted.extract"
+	}
+    }
+    -separator
+    "Other" "" {
+	"Rotate elevation data 90 degree" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.rot90"
+	}
+	"Flip elevation data" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.flip"
+	}
+	"CTG data from USGS lulc file" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.lulc.USGS"
+	}
+	"Information on Tiger Region" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.tiger.region"
+	}
+	"UTM Region to lat/lon Region" "" {
+	    "source $env(TCLTKGRASSBASE)/module/m.region.ll"
+	}
+    }
+}
+
 # main menu
 
 menu_build 1 .main_menu {
@@ -199,6 +261,18 @@ menu_build 1 .main_menu {
         }
         "Resize menu" "" {resize_menu}
         -separator
+	Scripting "" {
+	    "Start scripting" "" {
+		"script_start"
+	    }
+	    "Stop scripting"  "" {
+		"script_stop"
+	    }
+	    "Play script"     "" {
+		"script_play"
+	    }
+	}
+	-separator
         Options "" {
             "Menu font" "" {
                 "fontsel {Menu font} main_menu(font);\
@@ -220,6 +294,10 @@ menu_build 1 .main_menu {
             "Display dimensions" "" {
                 setdisplay
             }
+	    -separator
+	    "Configure html-browser" "" {
+		"config_netscape"
+	    }
         }
         -separator
         "Save config" "" {
@@ -258,11 +336,11 @@ menu_build 1 .main_menu {
         }
     }
     Region "Region coordinates management" {
-        "ZOOM in the monitor" "" {
-            "source $env(TCLTKGRASSBASE)/module/d.zoom.sh"
+        "ZOOM/UNZOOM in the monitor" "" {
+            "source $env(TCLTKGRASSBASE)/module/d.zoom"
         }
         "PAN in the monitor" "" {
-            "source $env(TCLTKGRASSBASE)/module/d.pan.sh"
+            "source $env(TCLTKGRASSBASE)/module/d.pan"
         }
         "Set/Remove MASK" "" {
             "run r.mask &"
@@ -331,11 +409,14 @@ menu_build 1 .main_menu {
             "source $env(TCLTKGRASSBASE)/module/d.where"
         }
         -separator
+        "NVIZ visualization tool" "" {
+            "source $env(TCLTKGRASSBASE)/module/nviz"
+        }
         "ERASE display frame" "" {
             "source $env(TCLTKGRASSBASE)/module/d.erase"
         }
-        "ZOOM in the monitor" "" {
-        "source $env(TCLTKGRASSBASE)/module/d.zoom.sh"
+        "ZOOM/UNZOOM in the monitor" "" {
+        "source $env(TCLTKGRASSBASE)/module/d.zoom"
         }
         "Manage display frames" "" {
             "source $env(TCLTKGRASSBASE)/module/d.frame"
@@ -423,6 +504,11 @@ menu_build 1 .main_menu {
                 }
             }
         }
+        "Convert map" "" {
+            "To sites format" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.to.sites"
+            }
+        }
         "Extract vector map" "" {
             "Lines from thinned raster" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.line"
@@ -460,6 +546,9 @@ menu_build 1 .main_menu {
             "Modify color table" "" {
                 "source $env(TCLTKGRASSBASE)/module/d.colors"
             }
+	    "Assign histogram contrast grey scale color table" "" {
+		"source $env(TCLTKGRASSBASE)/module/i.grey.scale"
+	    }
             -separator
             "Digitize" "" {
                 "run r.digit &"
@@ -568,6 +657,9 @@ menu_build 1 .main_menu {
             "Trim small spurs" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.trim"
             }
+            "Build polylines" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.build.polylines"
+            }            
             -separator
             "Change projection on ASCII vector" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.proj"
@@ -612,35 +704,44 @@ menu_build 1 .main_menu {
     }
     Site "Site map analysis" {
         Display "" $display_sites
-        "Query with mouse" "" {
-            "source $env(TCLTKGRASSBASE)/module/d.what.sites"
+        "Analyse map" "" {
+            "Query with mouse" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.what.sites"
+            }
         }
         Interpolation "" {
-            "Kriging" "" {
-                "source $env(TCLTKGRASSBASE)/module/s.surf.krig"
-            }
             "Inverse distance weighted" "" {
                 "source $env(TCLTKGRASSBASE)/module/s.surf.idw"
             }
             "Spline with tension" "" {
-                 "source $env(TCLTKGRASSBASE)/module/s.surf.tps"
+                 "source $env(TCLTKGRASSBASE)/module/s.surf.rst"
             }
         }
-        Triangulation "" {
-            "source $env(TCLTKGRASSBASE)/module/s.geom"
+        "Convert map" "" {
+            "To raster format" "" {
+                "source $env(TCLTKGRASSBASE)/module/s.to.rast"
+            }
+            "To vector format" "" {
+                "source $env(TCLTKGRASSBASE)/module/s.to.vect"
+            }
         }
-        "Miscellanous (s.menu)" "" {
-            "run s.menu &"
+        "Report map" "" {
+            "Basic information" "" {
+                "source $env(TCLTKGRASSBASE)/module/s.info"
+            }
         }
     }
     Image "Image processing" $image_processing
     Import "Import maps into GRASS" {
         "Raster map" "" {
-            "GIF (8bit)" "" {
-                "source $env(TCLTKGRASSBASE)/module/r.in.gif"
+            "ESRI ARC/INFO ASCII-GRID" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.in.arc"
             }
-            "TIFF 8bit" "" {
+            "TIFF 8/24bit" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.in.tiff"
+            }
+            "PNG (24bit)" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.in.png"
             }
             "PPM (24bit)" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.in.ppm"
@@ -666,21 +767,33 @@ menu_build 1 .main_menu {
             "ARC/INFO ungenerate file" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.in.arc"
             }
+            "ESRI shapefile" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.in.shape"
+            }
             "Various formats" "" {
                 "run v.import &"
             }
+	    "Garmin GPS Waypoints/Routes/Tracks" "" {
+		"source $env(TCLTKGRASSBASE)/module/v.in.garmin"
+	    }
         }
         "Site data" "" {
-            "ASCII file" "" {
+            "ASCII file/spot heights" "" {
                 "source $env(TCLTKGRASSBASE)/module/s.in.ascii"
             }
-            "ASCII SPOT heights file" "" {
-                "source $env(TCLTKGRASSBASE)/module/s.in.ascii.dem"
-            }
+	    "Garmin GPS Waypoints/Routes/Tracks" "" {
+		"source $env(TCLTKGRASSBASE)/module/s.in.garmin"
+	    }
         }
     }
     Export "Export maps from GRASS" {
         "Raster map" "" {
+            "Binary file" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.out.bin"
+            }
+            "ESRI ARC/INFO ASCII-GRID" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.out.arc"
+            }
             "TIFF (8/24bit)" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.out.tiff"
             }
@@ -690,10 +803,16 @@ menu_build 1 .main_menu {
             "HDF" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.out.hdf"
             }
+            "ERDAS/LAN" "" {
+                "source $env(TCLTKGRASSBASE)/module/i.out.erdas"
+            }
         }
         "Vector map" "" {
             "ASCII GRASS vector file" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.out.ascii"
+            }
+            "ARC/INFO E00 file" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.out.e00"
             }
             "ARC/INFO ungenerate file" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.out.arc"
@@ -738,7 +857,87 @@ menu_build 1 .main_menu {
              }
         }
         "Xfig (external)" "" {
-            "run xfig&"
+            "run xfig &"
+        }
+    }
+    Misc "Miscellanous Conversions" $misc
+    Databases "Databases" {
+        "PostgreSQL" "" {
+            "General" "" {
+                "Select DB" "" {
+                    "source $env(TCLTKGRASSBASE)/module/g.select.pg"
+                }
+    	    "List tables" "" {
+                    "source $env(TCLTKGRASSBASE)/module/g.table.pg"
+                }
+            "List columns" "" {
+                    "source $env(TCLTKGRASSBASE)/module/g.column.pg"
+                }
+	    "Column stats" "" {
+                    "source $env(TCLTKGRASSBASE)/module/g.stats.pg"
+                }
+            }
+            "Query" "" {
+                "Vector" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.what.v.pg"
+                }
+	        "Sites" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.what.s.pg"
+                }
+	        "Raster" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.what.r.pg"
+                }
+            }
+	    "Display" "" {
+                "Vector" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.vect.pg"
+                }
+	        "Sites" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.site.pg"
+                }
+	        "Raster" "" {
+                    "source $env(TCLTKGRASSBASE)/module/d.rast.pg"
+                }
+            "Reclass vector" "" {
+                    "source $env(TCLTKGRASSBASE)/module/v.reclass.pg"
+                }
+            }
+        }
+	-separator
+	"DBMI" "" {
+            "Select driver" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.connect.driver"
+            }
+            "Connect" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.connect"
+            }
+            -separator
+	    "List tables" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.tables"
+            }	    	    
+            "List columns" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.columns"
+            }
+            "Describe table" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.describe"
+            }
+            -separator
+            "Select all" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.select.all"
+            }	    
+            "Select" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.select"
+            } 
+            "Execute" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.execute"
+            }
+	    -separator
+            "Reclass vector" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.db.reclass"
+            }
+            "Load vector to DB" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.to.db"
+            }	    	    
         }
     }
     Help Help {
@@ -749,9 +948,19 @@ menu_build 1 .main_menu {
         "Help" "" {
            "source $env(TCLTKGRASSBASE)/main/help.tcl"
         }
-        About "" {
+        "About tcltkgrass" "" {
            "source $env(TCLTKGRASSBASE)/main/about.tcl"
         }
+        "About GRASS" "" {
+           "source $env(TCLTKGRASSBASE)/main/grassabout.tcl"
+        }
+	-separator
+	"Help on scripting" "" {
+	    "source $env(TCLTKGRASSBASE)/main/help-scripting.tcl"
+	}
+	"Help on html-browser" "" {
+	    "source $env(TCLTKGRASSBASE)/main/help-netscape.tcl"
+	}
     }
     Quit Bye quit
 }

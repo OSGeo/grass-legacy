@@ -1,0 +1,25 @@
+r.in.tiff / r.out.tiff Requirements:
+
+  TIFF library:
+    libtiff:
+	     http://www.libtiff.org/
+             (old) ftp://ftp.sgi.com/graphics/tiff/
+             (old) http://www-mipl.jpl.nasa.gov/~ndr/tiff/
+         
+  ZLib compression library:
+    zlib:  ftp://ftp.cdrom.com/pub/infozip/zlib/zlib.tar.gz
+           ftp://ftp.uu.net/graphics/png/code/
+           ftp://ftp.uu.net/pub/archiving/zip/zlib
+    The zlib home page is http://www.cdrom.com/pub/infozip/zlib/
+
+
+Usually these libraries should be installed on your machine.
+Otherwise get the source code and compile them.
+-----------------------------------------
+Bugfixes from Carl Anderson 5/2000
+
+Bugfixes from Jacques Bouchard 19. Nov. 98
+
+---------------
+This r.tiff version uses the standard libtiff from your system.
+8. June 98 Marco Valagussa <marco@duffy.crcc.it>

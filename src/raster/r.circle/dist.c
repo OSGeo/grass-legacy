@@ -14,6 +14,7 @@ int main(
     char *argv[])
 {
 
+	struct GModule *module;
     struct Option 	*coord, *out_file, *mult;
     char 		errbuf[100];
     int			*int_buf;
@@ -23,6 +24,11 @@ int main(
 
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Creates a raster map containing concentric "
+		"rings around a given point.";
 
     out_file = G_define_option();
     out_file->key                    = "output";

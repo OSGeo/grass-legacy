@@ -1,6 +1,5 @@
 OFILES = main.o bound.o io.o
 DIGINC = $(SRC)/mapdev/lib
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 PROG = $(BIN_MAIN_CMD)/r.poly
 

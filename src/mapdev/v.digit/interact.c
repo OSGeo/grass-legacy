@@ -1,13 +1,15 @@
 /*
+ * $Id$
+ */
+ 
+/*
 **  Last modified by Dave Gerdes  5/1988
 **  US Army Construction Engineering Research Lab
 */
 
 #include <stdio.h>
-#include "local_proto.h"
 #include "digit.h"
 #include "debug.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "local_proto.h"
 
