@@ -8,7 +8,7 @@
 #   global options
 #
 COPTS= -g -DDEBUG
-COPTS= -g
+COPTS= -g -cckr
 #
 #
 #
