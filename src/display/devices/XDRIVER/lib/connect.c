@@ -49,7 +49,7 @@ char *me, *link;
     int time, in_file, out_file;
     void (*def) () = NULL;
 
-    time = 10;                  /* time to wait for opens below */
+    time = 1;                  /* time to wait for opens below */
     sscanf(link, "%s %s", in_fifo, out_fifo);
     /* Check existence and access of in_fifo */
     if (-1 == stat(in_fifo, &buf)) {
