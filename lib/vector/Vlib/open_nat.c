@@ -76,6 +76,12 @@ V1_open_new_nat (
 
   sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
 
+  /* Set the 'coor' file version */
+  Map->head.Version_Major = GV_COOR_VER_MAJOR;
+  Map->head.Version_Minor = GV_COOR_VER_MINOR;
+  Map->head.Back_Major = GV_COOR_EARLIEST_MAJOR;
+  Map->head.Back_Minor = GV_COOR_EARLIEST_MINOR;
+
   /* TODO open better */
   dig_file_init ( &(Map->dig_fp) );
   Map->dig_fp.file = G_fopen_new (buf, GRASS_VECT_COOR_ELEMENT);

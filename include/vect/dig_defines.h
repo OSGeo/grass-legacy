@@ -97,8 +97,14 @@
 #define GV_COOR_HEAD_SIZE 14
 
 #define GRASS_V_VERSION       "5.0"
-#define GV_COOR_VER_MAJOR  5
+/* The latest versions of files known by current version of the library. Used for new files */
+#define GV_COOR_VER_MAJOR  5 
+#ifdef GV_FORMAT_51
+#define GV_COOR_VER_MINOR  1
+#else /* format 5.0 */
 #define GV_COOR_VER_MINOR  0
+#endif
+
 #define GV_TOPO_VER_MAJOR  5
 #define GV_TOPO_VER_MINOR  0
 #define GV_SIDX_VER_MAJOR  5
@@ -106,9 +112,14 @@
 #define GV_CIDX_VER_MAJOR  5
 #define GV_CIDX_VER_MINOR  0
 
-/* the earliest version that can read this current format  */
+/* The oldest versions of the library, which are capable to read the files created by the current version */
 #define GV_COOR_EARLIEST_MAJOR  5
+#ifdef GV_FORMAT_51
+#define GV_COOR_EARLIEST_MINOR	1
+#else /* format 5.0 */
 #define GV_COOR_EARLIEST_MINOR	0
+#endif
+
 #define GV_TOPO_EARLIEST_MAJOR  5
 #define GV_TOPO_EARLIEST_MINOR	0
 #define GV_SIDX_EARLIEST_MAJOR  5
@@ -195,8 +206,14 @@ typedef enum {
 #define CLR_2_NODE	RED
 #endif
 
+#ifdef GV_FORMAT_51
+#define GV_NCATS_MAX PORT_INT_MAX  /* maximum number of categories for one element */
+#define GV_FIELD_MAX PORT_INT_MAX /* maximum field */
+#else
 #define GV_NCATS_MAX PORT_CHAR_MAX  /* maximum number of categories for one element */
 #define GV_FIELD_MAX PORT_SHORT_MAX /* maximum field */
+
+#endif
 #define GV_CAT_MAX   PORT_INT_MAX   /* maximum category value */
 
 #define BUILD_PROG "v.build"

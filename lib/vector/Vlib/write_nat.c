@@ -320,15 +320,25 @@ V1__rewrite_line_nat (
     return -1;
 
   if (cats->n_cats > 0) {
-      nc = (char) cats->n_cats;
-      if (0 >= dig__fwrite_port_C (&nc, 1, dig_fp))
-	return -1;
+      if ( Map->head.Version_Minor == 1 ) { /* coor format 5.1 */
+	  if (0 >= dig__fwrite_port_I ( &(cats->n_cats), 1, dig_fp))
+	    return -1;
+      } else { /* coor format 5.0 */
+	  nc = (char) cats->n_cats;
+	  if (0 >= dig__fwrite_port_C (&nc, 1, dig_fp))
+	    return -1;
+      }
 
       if (cats->n_cats > 0) {
-	  for (i = 0; i < cats->n_cats; i++) { 
-	      field = (short) cats->field[i];
-	      if (0 >= dig__fwrite_port_S (&field, 1, dig_fp))
+          if ( Map->head.Version_Minor == 1 ) { /* coor format 5.1 */
+	      if (0 >= dig__fwrite_port_I (cats->field, cats->n_cats, dig_fp))
 		return -1;
+          } else { /* coor format 5.0 */
+	      for (i = 0; i < cats->n_cats; i++) { 
+		  field = (short) cats->field[i];
+		  if (0 >= dig__fwrite_port_S (&field, 1, dig_fp))
+		    return -1;
+	      }
 	  }
 	  if (0 >= dig__fwrite_port_I (cats->cat, cats->n_cats, dig_fp))
 	    return -1;

@@ -115,11 +115,14 @@ Vect_cat_set (struct line_cats *Cats, int field, int cat)
 
   /* field was not found so we shall append new cat */
   /* test if space exist */
-  if (n >= GV_NCATS_MAX)
-    return (0);
+  if (n >= GV_NCATS_MAX) {
+      G_fatal_error ( "Too many categories (%d), cannot set cat %d (field %d).", Cats->n_cats, cat, field);
+  }
 
-  if (0 > dig_alloc_cats (Cats, Cats->n_cats + 1))
-    return (-1);
+  if ( Cats->n_cats == Cats->alloc_cats ) {
+      if (0 > dig_alloc_cats (Cats, Cats->n_cats + 100))
+	return (-1);
+  }
 
   n = Cats->n_cats;
   Cats->field[n] = field;

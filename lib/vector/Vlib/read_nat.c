@@ -240,9 +240,14 @@ Vect__Read_line_nat (
       c->n_cats = 0;
   
   if ( do_cats ) { 
-      if (0 >= dig__fread_port_C (&nc, 1, &(Map->dig_fp) )) return (-2);
-
-      n_cats = (int) nc;
+      if ( Map->head.Version_Minor == 1 ) { /* coor format 5.1 */
+	  if (0 >= dig__fread_port_I ( &n_cats, 1, &(Map->dig_fp) )) return (-2);
+      } else { /* coor format 5.0 */
+	  if (0 >= dig__fread_port_C (&nc, 1, &(Map->dig_fp) )) return (-2);
+	  n_cats = (int) nc;
+      }
+      G_debug (3, "    n_cats = %d", n_cats);
+      
       if ( c != NULL )
 	{	  
 	  c->n_cats = n_cats;
@@ -251,9 +256,13 @@ Vect__Read_line_nat (
 	    if (0 > dig_alloc_cats (c, (int) n_cats + 1))
 	      return (-1);
             
-	    for (i = 0; i < n_cats; i++) { 
-		if (0 >= dig__fread_port_S (&field, 1, &(Map->dig_fp) )) return (-2);
-                c->field[i] = (int) field; 
+            if ( Map->head.Version_Minor == 1 ) { /* coor format 5.1 */
+	        if (0 >= dig__fread_port_I (c->field, n_cats, &(Map->dig_fp) )) return (-2);
+	    } else { /* coor format 5.0 */
+		for (i = 0; i < n_cats; i++) { 
+		    if (0 >= dig__fread_port_S (&field, 1, &(Map->dig_fp) )) return (-2);
+		    c->field[i] = (int) field; 
+		}
 	    }
 	    if (0 >= dig__fread_port_I (c->cat, n_cats, &(Map->dig_fp) )) return (-2);
 	    
@@ -261,7 +270,12 @@ Vect__Read_line_nat (
 	}
       else
 	{
-	  size = ( PORT_SHORT + PORT_INT ) * n_cats;
+          if ( Map->head.Version_Minor == 1 ) { /* coor format 5.1 */
+	      size = ( 2 * PORT_INT ) * n_cats;
+	  } else { /* coor format 5.0 */
+	      size = ( PORT_SHORT + PORT_INT ) * n_cats;
+	  }
+	      
 	  dig_fseek ( &(Map->dig_fp), size, SEEK_CUR);
 	}
   }
