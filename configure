@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.31 2000-10-10 04:06:47 cho Exp $
+# $Id: configure,v 1.32 2000-10-10 10:17:17 cho Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -84,6 +84,8 @@ includedir='${prefix}/include'
 oldincludedir='/usr/include'
 infodir='${prefix}/info'
 mandir='${prefix}/man'
+
+POSTGRESQL=yes
 
 WANT_TCLTK=yes
 TKDIR=/usr
@@ -3184,11 +3186,20 @@ fi
 if test "${with_postgresql+set}" = set; then
   withval="$with_postgresql"
   POSTGRESQL=$withval
-  if test "$POSTGRESQL" = "no"; then
-  	POSTGRESQL=NO
-  else
+fi
+
+if test "$POSTGRESQL" = "yes" -o "$POSTGRESQL" = "YES"; then
+	POSTGRESQL=
+	inPOSTGRESQL=
+elif test "$POSTGRESQL" = "no" -o "$POSTGRESQL" = "NO"; then
+	POSTGRESQL=NO
+elif test -n "$POSTGRESQL"; then
+	inPOSTGRESQL=" in $POSTGRESQL"
+fi
+
+if test "$POSTGRESQL" != "NO"; then
 echo "configure: checking for libpq-fe.h" >&5
-echo $ac_n "checking for libpq-fe.h  in $POSTGRESQL... $ac_c" 1>&6
+echo $ac_n "checking for libpq-fe.h$inPOSTGRESQL... $ac_c" 1>&6
 for i in /usr /usr/include /usr/local/include /usr/local/pgsql /usr/lib/pgsql $POSTGRESQL; do
   if test -r $i/libpq-fe.h; then PGSQL_DIR=$i; PGSQL_INCDIR=$i
   elif test -r $i/include/libpq-fe.h; then PGSQL_DIR=$i; PGSQL_INCDIR=$i/include
@@ -3258,7 +3269,6 @@ else
  PQLIB="$PQLIB -L$PQLIBPATH -lpq -lcrypt"
 fi
 
-  fi
 fi #PostgreSQL
 
 #DLLIB=
