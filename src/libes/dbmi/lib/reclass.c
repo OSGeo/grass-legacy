@@ -90,8 +90,16 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
 
         column = db_get_table_column(table, 0); /* first column (key) */
 	value  = db_get_column_value(column);
-	nmax += db_get_value_int(value);
-	
+    
+    	/* New Postgres returns count as char instead of int! */
+	ctype = db_sqltype_to_Ctype( db_get_column_sqltype(column) ); 
+        if ( ctype == DB_C_TYPE_INT )
+            nmax += db_get_value_int(value);
+	else if ( ctype == DB_C_TYPE_STRING )
+	    nmax += atoi( db_get_value_string(value));
+	else
+	     G_fatal_error ("Count returned in not supported type");
+		    
 	db_close_cursor(&cursor);
     }
     
