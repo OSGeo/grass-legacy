@@ -1,7 +1,16 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.in.ascii</em> converts a vector map in ASCII format to a vector map in 
-binary format.  
+binary format. The module may be run in 2 modes:
+<UL>
+<LI><B>standard</B>: if <B>'input'</B> option is used the module reads GRASS ASCII vector from 
+                     <B>dig_ascii</B> directory
+<LI><B>points</B>: if <B>'input'</B> is not used the module reads points from standard input.
+    Each point must be defined on one row, values are separated by '|' (pipe).
+    If 'columns' are not defined, default names are used. It is possible to select columns
+    for x,y,z coordinate and category.
+</UL>
+
 
 <h2>NOTES</h2>
 
@@ -79,6 +88,23 @@ Generate a points vector file 'coords.txt' as ASCII file:
 Import into GRASS:
 <pre>
 cat coords.txt | v.in.ascii out=mymap
+</pre>
+
+<p>
+<b>Example 3</b><br>
+
+Generate a points vector file 'points.dat' as ASCII file:
+<pre>
+  1|1664619|5103481|studna
+  2|1664473|5095782|kadibudka
+  3|1664273|5101919|hruska
+  4|1663427|5105234|mysi dira
+  5|1663709|5102614|mineralni pramen
+</pre>
+<P>
+Import into GRASS:
+<pre>
+cat points.dat | v.in.ascii out=mypoints xcol=2 ycol=3 catcol=1 columns='cat int, x double, y double, label varchar(20)'
 </pre>
 <P>
 <b>The module is reading from standard input, delimiter is '|' (pipe).</b>
