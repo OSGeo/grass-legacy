@@ -59,10 +59,10 @@ line_fixup (map, from, to)
     node1 = Line[to].N1;
     node2 = Line[to].N2;
     for (line = 0 ; line < Node[node1].n_lines ; line++)
-	if (ABS (Node[node1].lines[line]) == from)
+	if (abs (Node[node1].lines[line]) == from)
 	    Node[node1].lines[line] = Node[node1].lines[line] < 0 ? -to : to;
     for (line = 0 ; line < Node[node2].n_lines ; line++)
-	if (ABS (Node[node2].lines[line]) == from)
+	if (abs (Node[node2].lines[line]) == from)
 	    Node[node2].lines[line] = Node[node2].lines[line] < 0 ? -to : to;
 
     /* FIXUP atts */
@@ -81,7 +81,7 @@ line_fixup (map, from, to)
 	area = Line[to].right;
 	for (i = 0 ; i < Area[area].n_lines ; i++)
 	{
-	    if (from == ABS(Area[area].lines[i]))
+	    if (from == abs(Area[area].lines[i]))
 	    {
 		Area[area].lines[i] = Area[area].lines[i] < 0 ? -to : to;
 		break;
@@ -95,7 +95,7 @@ line_fixup (map, from, to)
 	area = Line[to].left;
 	for (i = 0 ; i < Area[area].n_lines ; i++)
 	{
-	    if (from == ABS(Area[area].lines[i]))
+	    if (from == abs(Area[area].lines[i]))
 	    {
 		Area[area].lines[i] = Area[area].lines[i] < 0 ? -to : to;
 		break;
@@ -108,10 +108,10 @@ line_fixup (map, from, to)
     /* FIXUP ISLES */
     if (Line[to].right < 0)
     {
-	isle = ABS (Line[to].right);
+	isle = abs (Line[to].right);
 	for (i = 0 ; i < Isle[isle].n_lines ; i++)
 	{
-	    if (from == ABS(Isle[isle].lines[i]))
+	    if (from == abs(Isle[isle].lines[i]))
 	    {
 		Isle[isle].lines[i] = Isle[isle].lines[i] < 0 ? -to : to;
 		break;
@@ -122,10 +122,10 @@ line_fixup (map, from, to)
     }
     if (Line[to].left < 0)
     {
-	isle = ABS (Line[to].left);
+	isle = abs (Line[to].left);
 	for (i = 0 ; i < Isle[isle].n_lines ; i++)
 	{
-	    if (from == ABS(Isle[isle].lines[i]))
+	    if (from == abs(Isle[isle].lines[i]))
 	    {
 		Isle[isle].lines[i] = Isle[isle].lines[i] < 0 ? -to : to;
 		break;
