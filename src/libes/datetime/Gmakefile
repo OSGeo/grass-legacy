@@ -18,6 +18,9 @@ OBJ =  \
 	tz2.o\
 	values.o
 
+all: $(DATETIMELIB) \
+	#Required for gstats interface:
+	cp $(LIBDIR)/libdatetime.a $(GISBASE)/lib
 
 $(DATETIMELIB): $(OBJ)
 	$(AR)
