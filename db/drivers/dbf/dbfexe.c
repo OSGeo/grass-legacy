@@ -55,8 +55,7 @@ int execute(char *sql, cursor * c)
     if (yyparse() != 0) {
 	sqpFreeStmt(st);
 	free ( tmpsql) ;
-	G_debug(0,"SQL parser error in statement:\n%s", sql);
-	sprintf(errMsg, "SQL parser error in statement:\n%s\n", sql);
+	append_error("SQL parser error in statement:\n%s\n", sql);
 	return DB_FAILED;
     }
     free ( tmpsql) ;
@@ -68,7 +67,7 @@ int execute(char *sql, cursor * c)
     /* find table */
     tab = find_table(st->table);
     if (tab < 0 && st->command != SQLP_CREATE) {
-	sprintf(errMsg, "Table '%s' doesn't exist.\n", st->table);
+	append_error("Table '%s' doesn't exist.\n", st->table);
 	return DB_FAILED;
     }
 
@@ -76,7 +75,7 @@ int execute(char *sql, cursor * c)
     if ((st->command != SQLP_CREATE)) {
 	ret = load_table_head(tab);
 	if ( ret == DB_FAILED ) { 
-	    sprintf(errMsg, "%sCannot load table head.\n", errMsg);
+	    append_error( "Cannot load table head.\n");
 	    return DB_FAILED;
 	}
     }
@@ -85,7 +84,7 @@ int execute(char *sql, cursor * c)
         (st->command == SQLP_INSERT) || (st->command == SQLP_UPDATE)
     ) {
 	if ( db.tables[tab].write == FALSE ) {
-  	    sprintf(errMsg, "Cannot modify table, don't have write permission for DBF file.\n");
+  	    append_error( "Cannot modify table, don't have write permission for DBF file.\n");
 	    return DB_FAILED;
 	}
     }
@@ -99,8 +98,7 @@ int execute(char *sql, cursor * c)
 	    for (i = 0; i < ncols; i++) {
 		cols[i] = find_column(tab, st->Col[i].s);
 		if ( cols[i] == -1 ) {
-	            G_debug(0,"Column '%s' not found\n", st->Col[i].s);
-		    sprintf(errMsg, "Column '%s' not found\n", st->Col[i].s);
+	            append_error( "Column '%s' not found\n", st->Col[i].s);
 	            return DB_FAILED;
 		}
 	    }
@@ -123,8 +121,7 @@ int execute(char *sql, cursor * c)
 	    if ((dtype == DBF_INT && stype != SQLP_I)
 		|| (dtype == DBF_DOUBLE && stype == SQLP_S)
 		|| (dtype == DBF_CHAR && stype != SQLP_S)) {
-		G_debug(0,"Incompatible value type.");
-		sprintf(errMsg, "Incompatible value type.\n");
+		 append_error("Incompatible value type.\n");
 		return DB_FAILED;
 	    }
 	}
@@ -134,7 +131,7 @@ int execute(char *sql, cursor * c)
     switch (st->command) {
     case (SQLP_CREATE):
 	if (tab >= 0) {
-	    sprintf(errMsg, "Table %s already exists\n", st->table);
+	    append_error("Table %s already exists\n", st->table);
 	    return DB_FAILED;
 	}
 	sprintf ( name, "%s.dbf", st->table );
@@ -213,16 +210,17 @@ int execute(char *sql, cursor * c)
 	c->ncols = ncols;
 	c->nrows = sel(st, tab, &(c->set));
 	if (c->nrows < 0) {
-	    sprintf(errMsg, "%sError in selecting rows\n", errMsg);
+	    append_error("Error in selecting rows\n");
 	    return DB_FAILED;
 	}
 	c->cur = -1;
+
 	break;
 
     case (SQLP_UPDATE):
 	nrows = sel(st, tab, &selset);
 	if (nrows < 0) {
-	    sprintf(errMsg, "%sError in selecting rows\n", errMsg);
+	    append_error("Error in selecting rows\n");
 	    return DB_FAILED;
 	}
 	dbrows = db.tables[tab].rows;
@@ -241,7 +239,7 @@ int execute(char *sql, cursor * c)
     case (SQLP_DELETE):
 	nrows = sel(st, tab, &selset);
 	if (nrows < 0) {
-	    sprintf(errMsg, "%sError in selecting rows\n", errMsg);
+	    append_error("Error in selecting rows\n");
 	    return DB_FAILED;
 	}
 	dbrows = db.tables[tab].rows;
@@ -282,6 +280,44 @@ int set_val(int tab, int row, int col, SQLPVALUE * val)
     return (1);
 }
 
+/* Comparison of 2 rows */
+static int cur_cmp_table;
+static int cur_cmp_ocol;
+static int cmp_row ( const void *pa, const void *pb ) 
+{
+    int *row1 = (int*) pa;
+    int *row2 = (int*) pb;
+    char *c1, *c2;
+    int i1, i2;
+    double d1, d2;
+    TABLE *tbl;
+
+    tbl = &(db.tables[cur_cmp_table]);
+    
+    switch ( tbl->cols[cur_cmp_ocol].type ) {
+	case DBF_CHAR:
+	    c1 = tbl->rows[*row1].values[cur_cmp_ocol].c;
+	    c2 = tbl->rows[*row2].values[cur_cmp_ocol].c;
+	    return ( strcmp(c1, c2) );
+	    break;
+	case DBF_INT: 
+	    i1 = tbl->rows[*row1].values[cur_cmp_ocol].i;
+	    i2 = tbl->rows[*row2].values[cur_cmp_ocol].i;
+	    if ( i1 < i2 ) return -1; 
+	    if ( i1 > i2 ) return 1; 
+	    return 0;
+	    break;
+	case DBF_DOUBLE: 
+	    d1 = tbl->rows[*row1].values[cur_cmp_ocol].d;
+	    d2 = tbl->rows[*row2].values[cur_cmp_ocol].d;
+	    if ( d1 < d2 ) return -1; 
+	    if ( d1 > d2 ) return 1; 
+	    return 0;
+	    break;
+    }
+    return 0;
+}
+
 /* Select records, sets 'selset' to new array of items and returns
 *  number of items or -1 for error */
 int sel(SQLPSTMT * st, int tab, int **selset)
@@ -294,7 +330,7 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 
     ret = load_table(tab);
     if ( ret == DB_FAILED ) {
-	sprintf(errMsg, "%sCannot load table.\n", errMsg);
+	append_error( "Cannot load table.\n");
 	return -1;
     }
 
@@ -333,8 +369,29 @@ int sel(SQLPSTMT * st, int tab, int **selset)
 	}
 	nset = db.tables[tab].nrows;
     }
-    *selset = set;
 
+    /* Order */
+    if ( st->command == SQLP_SELECT && st->orderCol ) {
+	G_debug(3, "Order selection by %s", st->orderCol);
+    
+        /* Find order col */
+	cur_cmp_ocol = -1;
+	for ( i = 0; i < db.tables[tab].ncols; i++ ) {
+	    if ( strcmp ( db.tables[tab].cols[i].name, st->orderCol ) == 0 ) {
+		cur_cmp_ocol = i;
+		break;
+	    }
+	}
+	if ( cur_cmp_ocol < 0 ) {
+	    append_error( "Cannot find order column '%s'\n", st->orderCol);
+	    return -1;
+	}
+
+	cur_cmp_table = tab;
+	qsort(set, nset, sizeof(int), cmp_row);
+    }
+    
+    *selset = set;
     return nset;
 }
 

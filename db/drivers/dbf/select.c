@@ -44,8 +44,8 @@ db_driver_open_select_cursor(sel, dbc, mode)
 		    
     if ( ret == DB_FAILED )
       {
-        sprintf( errMsg, "%sError in db_open_select_cursor()", errMsg );
-	report_error( errMsg );
+        append_error("Error in db_open_select_cursor()");
+	report_error( );
 	return DB_FAILED;
       } 
 		
