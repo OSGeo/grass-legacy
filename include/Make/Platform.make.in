@@ -146,6 +146,10 @@ GDALCFLAGS          = @GDAL_CFLAGS@
 FTINC               = @FTINC@
 FTLIB               = @FTLIB@
 
+#PROJ.4:
+PROJINC             = @PROJINC@
+PROJLIB             = @PROJLIB@
+
 # Uncomment below to input Korean(Asian?) characters in v.digit or etc.
 #DASIAN_CHARS        = -DASIAN_CHARS
 
