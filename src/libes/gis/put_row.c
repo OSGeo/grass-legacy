@@ -3,6 +3,22 @@
  */
 /**********************************************************************
  *
+ *   G_zeros_r_nulls (zeros_r_nulls)
+ *      int zeros_r_nulls	the last argument of put_data()
+ *
+ *   zeros_r_nulls > 0		zero values of buf to be written into files
+ *   				are null values by default.
+ *
+ *   zeros_r_nulls == 0		zero values are just zero itself.
+ *
+ *   zeros_r_nulls < 0		do not set. return current setting.
+ *   				1: set
+ *   				0: not set
+ *
+ *   Return setting values in all cases.
+ *
+ ********************************************************************** 
+ *
  *   G_put_[f/d_]raster_row (fd, buf)
  *      int fd           file descriptor of the opened map
  *      [F/D]CELL *buf   buffer holding row info to be written
@@ -130,6 +146,7 @@
 static int ERROR;
 static char *me;
 static RASTER_MAP_TYPE write_type;
+static _zeros_r_nulls = 1;
 
 static int put_raster_data (int,void *,int,int,int,int,RASTER_MAP_TYPE);
 static int put_data (int,CELL *,int, int,int,int);
@@ -158,6 +175,14 @@ static void (*convert_and_write_FtypeOtype [3][3])() =
 #define CONVERT_AND_WRITE \
      (convert_and_write_FtypeOtype [F2I (write_type)] [F2I (FCB.map_type)])
 
+int G_zeros_r_nulls (int zeros_r_nulls)
+{
+    if (zeros_r_nulls >= 0)
+	_zeros_r_nulls = zeros_r_nulls > 0;
+
+    return _zeros_r_nulls;
+}
+
 int G_put_map_row (int fd, CELL *buf)
 {
     me = "G_put_map_row";
@@ -176,7 +201,7 @@ int G_put_map_row (int fd, CELL *buf)
 
     G_zero (NULL_BUF, FCB.cellhd.cols * sizeof(char));
 
-    switch(put_data (fd, buf, FCB.cur_row, 0, FCB.cellhd.cols, 1))
+    switch(put_data (fd, buf, FCB.cur_row, 0, FCB.cellhd.cols, _zeros_r_nulls))
     {
         case -1: return -1;
         case  0: return  1;
@@ -201,7 +226,7 @@ int G_put_map_row_random (int fd, CELL *buf, int row, int col, int n)
         return -1;
 
     buf += adjust (fd, &col, &n);
-    switch(put_data (fd, buf, row, col, n, 1))
+    switch(put_data (fd, buf, row, col, n, _zeros_r_nulls))
     {
         case -1: return -1;
         case  0: return  1;
