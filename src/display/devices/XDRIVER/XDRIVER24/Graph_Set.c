@@ -282,7 +282,7 @@ int Graph_Set (int argc, char **argv, int nlev)
     /* Deal with providing the window with an initial position & size.
      * Window is is not resizable */
 #ifdef X11R3
-    szhints = (XSizeHints *)malloc((size_t) sizeof(XSizeHints));
+    szhints = (XSizeHints *)G_malloc((size_t) sizeof(XSizeHints));
 #else
     szhints = XAllocSizeHints();
 #endif
@@ -319,7 +319,7 @@ int Graph_Set (int argc, char **argv, int nlev)
 
     /* properties for window manager */
 #ifdef X11R3
-    wmhints = (XWMHints *)malloc((size_t) sizeof(XWMHints));
+    wmhints = (XWMHints *)G_malloc((size_t) sizeof(XWMHints));
 #else
     wmhints = XAllocWMHints();
 #endif
@@ -328,7 +328,7 @@ int Graph_Set (int argc, char **argv, int nlev)
     wmhints->flags |= IconPixmapHint;
 
 #ifdef X11R3
-    clshints = (XClassHint *)malloc((size_t) sizeof(XClassHint));
+    clshints = (XClassHint *)G_malloc((size_t) sizeof(XClassHint));
 #else
     clshints = XAllocClassHint();
 #endif

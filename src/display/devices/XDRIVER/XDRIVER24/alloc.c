@@ -9,7 +9,7 @@ XPoint *AllocXPoints (int count)
 {
     if (num_alloc < count) {
         if (num_alloc == 0)
-            pnts = (XPoint *) malloc((size_t) (count * sizeof(XPoint)));
+            pnts = (XPoint *) G_malloc((size_t) (count * sizeof(XPoint)));
         else
             pnts = (XPoint *) realloc((void *) pnts, (size_t) (count *
                             sizeof(XPoint)));
