@@ -52,7 +52,7 @@ C     MACRO TABLE
       PARAMETER (MACMXL=300,MACMRL=NW)
       INTEGER MACKEY(MACMXL), MACBUF(MACMRL,MACMXL), MACLEN(MACMXL)
 C
-      open (2,file='rim_help.data',status='old')
+      open (2,file='rim_help.data',status='old',iostat=RMSTAT)
  
  
       IF (.NOT.RIM(1,'OPEN rim_help')) THEN
@@ -140,7 +140,7 @@ C
       WRITE(6,1810) RMSTAT
 1810  FORMAT(' ERROR: ',I5)
 C
-900   IF (RIM(1,'CLOSE')) CALL EXIT
+900   IF (RIM(1,'CLOSE')) CALL EXIT(1)
       STOP
       END
       FUNCTION GETLIN(COM)

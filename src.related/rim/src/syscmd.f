@@ -7,7 +7,7 @@ C     EXECUTE A SYSTEM (UNIX shell) COMMAND
 C
       CHARACTER*(*) CMD
 C
-      err = system(cmd)
+C      err = system(cmd)
 C
       RETURN
       END

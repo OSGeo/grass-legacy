@@ -26,7 +26,7 @@ C        INPUT IS FILE
          OPEN(UNIT=ZNINT,FILE=FNAME,STATUS='OLD',IOSTAT=ERR)
          IF (ERR.NE.0) THEN
             CALL MSG(' ','COULD NOT OPEN FILE: ' // FNAME,' ')
-            CALL EXIT
+            CALL EXIT(1)
          ENDIF
          BATCH = .TRUE.
          conni = .false.

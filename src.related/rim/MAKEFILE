@@ -5,8 +5,8 @@
 rim::
 	(cd src;     make rim)
 	(cd src;     make rimlib)
-	$(PILE) -o rim src/rim.o src/rimlib
-#	$(PILE) -Bstatic -o rim src/rim.o src/rimlib
+#	$(PILE) -o rim src/rim.o src/rimlib
+	$(PILE) -Bstatic -o rim src/rim.o src/rimlib
 #
 # Rim file editor (for debugging)
 #
@@ -21,7 +21,7 @@ rimh::
 	(cd src;     make rimh)
 	(cd src;     make rimlib)
 	(cd src;     make librim.a)
-	$(PILE) -o rimh src/rimh.o src/rimlib -L. -lrim
+	$(PILE) -o rimh src/rimh.o src/rimlib -Lsrc -lrim
 #
 # Program to test text i/o and parsing routines
 #

@@ -10,7 +10,7 @@ C     CATCH SYSTEM INTERRUPTS (CTRL-C)
  
 C     THE MESSAGES SHOULD NEVER PRINT
  
-      TTSTAT = signal(2,UNIXTRP,-1)
+C      TTSTAT = signal(2,UNIXTRP,-1)
       IF (TTSTAT.lt.0) PRINT *, 'CTRL-C handling error ',TTSTAT
       RETURN
       END

@@ -16,7 +16,7 @@ C
       PARAMETER (RSBCH=93, COLCH=58)
  
       STATUS = 0
-      DBDIR = ' '
+C      DBDIR = ' '
       IF (ITEMS.NE.DBX) GOTO 800
  
 c     note dbdrf contains both dir and name
