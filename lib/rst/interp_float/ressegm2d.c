@@ -43,7 +43,6 @@ int IL_resample_interp_segments_2d (
     double *ertot,		/* total interplating func. error */
     int offset1,			/* offset for temp file writing */
     double *dnorm,
-    int iselev,
     int overlap,
     int inp_rows,
     int inp_cols,
@@ -183,15 +182,12 @@ int IL_resample_interp_segments_2d (
     {
       if (!G_is_f_null_value (&(in_points[k - 1].z)))
       {
-	if ((iselev) || (in_points[k - 1].z + zmin != 0.))
-	{
 	  data->points[m1].x = in_points[k - 1].x / (*dnorm);
 	  data->points[m1].y = in_points[k - 1].y / (*dnorm);
 /*	  data->points[m1].z = (double) (in_points[k - 1].z) / (*dnorm);*/
         data->points[m1].z = (double) (in_points[k - 1].z);
 	  data->points[m1].sm = in_points[k - 1].smooth;
 	  m1++;
-	}
       }
     }
     data->n_points = m1;
@@ -350,8 +346,6 @@ int IL_resample_interp_segments_2d (
 	  index = k * inp_cols + l;
 	  if (!G_is_f_null_value (&(in_points[index].z)))
 	  {
-	    if ((iselev) || (in_points[index].z + zmin != 0.))
-	    {
 	      /* if the point is inside the segment (not overlapping) */
 	      if ((in_points[index].x - x_or >= 0) &&
 		  (in_points[index].y - y_or >= 0) &&
@@ -364,9 +358,6 @@ int IL_resample_interp_segments_2d (
               data->points[m].z = (double) (in_points[index].z);
 	      data->points[m].sm = in_points[index].smooth;
 	      m++;
-	    }
-	    else
-	      new_comp = 1;
 	  }
 	  else
 	    new_comp = 1;

@@ -31,7 +31,6 @@ int IL_vector_input_data_2d (
     int    field,               /* category field number */
     char   *zcol,                /* name of the column containing z values */
     char   *scol,                /* name of the column containing smooth values */
-    int    iselev,		/* do zeroes reprezent elevation? */
     struct tree_info *info,	/* quadtree info */
     double *xmin,
     double *xmax,
@@ -129,12 +128,9 @@ int IL_vector_input_data_2d (
       if ( field > 0 ) { /* use cat or attribute */
         Vect_cat_get( Cats, field, &cat);
         if ( zcol == NULL  ){ /* use categories */
-	    if ( cat < 0 && !iselev ) continue;
 	    z = (double) cat;
 	} else { /* read att from db */
 	    int ret, intval;
-	    
-	    if ( cat == 0 ) continue;
 
 	    if ( zctype == DB_C_TYPE_INT ) {
 		ret = db_CatValArray_get_value_int ( &zarray, cat, &intval );
@@ -164,7 +160,7 @@ int IL_vector_input_data_2d (
       for ( i = 1; i < Points->n_points - 1; i++ ) { 
         if ( field == 0 ) z = Points->z[i];
 	process_point ( Points->x[i], Points->y[i], z, sm, info, params->zmult, xmin,
-	                xmax, ymin, ymax, zmin, zmax, &npoint, &OUTRANGE, iselev, &k);
+	                xmax, ymin, ymax, zmin, zmax, &npoint, &OUTRANGE, &k);
 
       }
 
@@ -186,7 +182,7 @@ int IL_vector_input_data_2d (
               if ( field == 0 ) z = z1 - j1 * ((z1 - zprev) / times);
 	      
 	      process_point (xt, yt, z, sm, info, params->zmult, 
-		             xmin, xmax, ymin, ymax, zmin, zmax, &npoint, &OUTRANGE, iselev, &k);
+		             xmin, xmax, ymin, ymax, zmin, zmax, &npoint, &OUTRANGE, &k);
 	    }
 	  }
 	  xprev = x1;
@@ -209,7 +205,7 @@ int IL_vector_input_data_2d (
 	ltype = Vect_read_line ( Map, NULL, Cats, line );
         Vect_cat_get( Cats, field, &cat);
         if ( zcol == NULL  ){ /* use categories */
-	    if ( cat < 0 && !iselev ) continue;
+	    if ( cat < 0 ) continue;
 	    z = (double) cat;
 	} else { /* read att from db */
 	    int ret, intval;
@@ -240,7 +236,7 @@ int IL_vector_input_data_2d (
     }
 
     process_point (x1, y1, z, sm, info, params->zmult, xmin, xmax, ymin, ymax, zmin, zmax, 
-	           &npoint, &OUTRANGE, iselev, &k);
+	           &npoint, &OUTRANGE, &k);
   }
 
   if ( field > 0 && zcol != NULL )
@@ -324,7 +320,6 @@ int process_point (
     double *zmax,
     int *npoint,
     int *OUTRANGE,
-    int iselev,
     int *total
 )
 
@@ -355,8 +350,6 @@ int process_point (
   }
   else
   {
-    if (!((z == 0.) && (!iselev)))
-    {
       if (!(point = quad_point_new (x, y, z, sm)))
       {
 	fprintf (stderr, "cannot allocate memory for point\n");
@@ -389,7 +382,6 @@ int process_point (
       *xmax = amax1 (*xmax, x);
       *ymax = amax1 (*ymax, y);
       *zmax = amax1 (*zmax, z);
-    }
   }
   return 1;
 }
