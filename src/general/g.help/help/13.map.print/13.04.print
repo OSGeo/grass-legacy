@@ -1,0 +1,11 @@
+                     PRINTING HARDCOPY MAP OUTPUT 
+
+The following commands are used to print or save the output
+produced by the various GRASS print commands:
+
+	\-  p.map \
+    \-  p.ppm \
+	\-  p.screen \
+
+For more information on a specific command, select a command and press
+ESC.
