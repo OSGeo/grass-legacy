@@ -7,7 +7,7 @@ EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
 
 OBJS = \
 	main.o \
-	infxColumn.o
+	pgColumn.o
 
 
 $(PGM): $(OBJS) $(DEPLIBS)

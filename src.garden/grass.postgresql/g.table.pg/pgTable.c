@@ -1,28 +1,22 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <libpq-fe.h>
 #include "gis.h"
+#include <stdlib.h>
+#include <libpq-fe.h>
 #include "glocale.h"
 
-int getdbname(dbtemp)
-     char *dbtemp;
-
+int pgTables()
 {
+
+    int i;
 
     PGconn *pg_conn;
     PGresult *res;
-
     char *pghost;
-
-    int i;
-    int ok = 1;
+    char *pgdbase;
     int rec_num;
 
-    pghost = (char *) G__getenv("PG_HOST");
-
-    pg_conn = PQsetdb(pghost, NULL, NULL, NULL, "template1");
-
+    pghost = G__getenv("PG_HOST");
+    pgdbase = G_getenv("PG_DBASE");
+    pg_conn = PQsetdb(pghost, NULL, NULL, NULL, pgdbase);
 
     if (PQstatus(pg_conn) == CONNECTION_BAD) {
 	fprintf(stderr, _("Error: connect Postgres:%s\n"),
@@ -31,8 +25,8 @@ int getdbname(dbtemp)
 	exit(-1);
     }
 
-    res = PQexec(pg_conn, "select datname from pg_database");
-
+    res = PQexec(pg_conn,
+	       "select tablename from pg_tables where tablename !~ 'pg_*' order by tablename");
     if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
 	fprintf(stderr, _("Error: select Postgres:%s\n"),
 		PQerrorMessage(pg_conn));
@@ -42,13 +36,12 @@ int getdbname(dbtemp)
     }
 
     rec_num = PQntuples(res);
-    for (i = 0; i < rec_num; i++) {
-	ok = strcmp(dbtemp, PQgetvalue(res, i, 0));
-	if (!ok)
-	    break;
-    }
+    for (i = 0; i < rec_num; i++)
+	printf("%s\n", PQgetvalue(res, i, 0));
+
 
     PQclear(res);
     PQfinish(pg_conn);
-    return (ok);
+
+    exit(0);
 }

@@ -11,8 +11,8 @@ OBJS = \
 	main.o \
         getAllOpts.o \
         getSopts.o \
-	buildInfxQry.o \
-	runInfxFile.o
+	buildPg.o \
+	runPg.o
 
 $(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)
