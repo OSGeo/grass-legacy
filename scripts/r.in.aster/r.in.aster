@@ -1,0 +1,167 @@
+#!/bin/sh
+############################################################################
+#
+# MODULE:		r.in.aster v.2 for GRASS 6.0 (2004/12/20)
+# AUTHOR(S):	Michael Barton (michael.barton@asu.edu) and Paul Kelly
+# PURPOSE:	Rectifies, georeferences, & imports Terra-ASTER imagery 
+#			using gdalwarp
+# COPYRIGHT:	(C) 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+#%Module
+#%  description: r.in.aster - georeferencing, rectification, and import of Terra-ASTER imagery and relative DEM's using gdalwarp
+#%End
+#%option
+#% key: input
+#% type: string
+#% gisprompt: file,file,file
+#% description: Input ASTER image to be georeference & rectified
+#% required : yes
+#%end
+#%option
+#% key: proctype
+#% type: string
+#% description: ASTER imagery processing type (Level 1A, Level 1B, or relative DEM)
+#% options: L1A,L1B,DEM
+#% required : yes
+#%end
+#%option
+#% key: band
+#% type: string
+#% description: L1A or L1B band to translate (1, 2,3n,3b,4-14). Can only translate a single band
+#% answer: 1
+#% required : yes
+#%end
+#%option
+#% key: output
+#% type: string
+#% description: Output GRASS image file
+#% gisprompt: old,cell,raster
+#% required : yes
+#%end
+
+
+if  [ -z "$GISBASE" ]
+then
+	echo ""
+	echo "You must be in GRASS GIS to run this program"
+	echo ""
+	exit 1
+fi
+
+if   [ "$1" != "@ARGS_PARSED@" ]
+then
+	exec g.parser "$0" "$@"
+fi
+
+
+#initialize datasets for L1A and L1B
+
+if [ "$GIS_OPT_proctype" = "L1A" ]
+then
+	case $GIS_OPT_band in
+		1)
+		dataset=9 ;;
+		2)
+		dataset=20 ;;
+		3n)
+		dataset=31 ;;
+		3b)
+		dataset=42 ;;
+		4)
+		dataset=56 ;;
+		5)
+		dataset=70 ;;
+		6)
+		dataset=84 ;;
+		7)
+		dataset=98 ;;
+		8)
+		dataset=112 ;;
+		9)
+		dataset=126 ;;
+		10)
+		dataset=138 ;;
+		11)
+		dataset=150 ;;
+		12)
+		dataset=162 ;;
+		13)
+		dataset=174 ;;
+		14)
+		dataset=186 ;;
+	esac
+	srcfile="HDF4_SDS:ASTER_L1A:"\"$GIS_OPT_input\"":"$dataset
+elif [ "$GIS_OPT_proctype" = "L1B" ] 
+then
+	case $GIS_OPT_band in
+		1)
+		dataset=2 ;;
+		2)
+		dataset=3 ;;
+		3n)
+		dataset=4 ;;
+		3b)
+		dataset=5 ;;
+		4)
+		dataset=8 ;;
+		5)
+		dataset=9 ;;
+		6)
+		dataset=10 ;;
+		7)
+		dataset=11 ;;
+		8)
+		dataset=12 ;;
+		9)
+		dataset=13 ;;
+		10)
+		dataset=16 ;;
+		11)
+		dataset=17 ;;
+		12)
+		dataset=18 ;;
+		13)
+		dataset=19 ;;
+		14)
+		dataset=20 ;;
+	esac
+	srcfile="HDF4_SDS:ASTER_L1B:"\"$GIS_OPT_input\"":"$dataset
+elif [ "$GIS_OPT_proctype" = "DEM" ] 
+then
+	srcfile=$GIS_OPT_input
+fi
+
+tempfile=`g.tempfile $$`.tif
+
+#run gdalwarp with selected options (must be in $PATH)
+#to translate aster image to geotiff
+echo ""
+echo "georeferencing aster image"
+echo gdalwarp -t_srs "`g.proj -jf`" $srcfile $tempfile
+echo ""
+
+gdalwarp -t_srs "`g.proj -jf`" $srcfile $tempfile
+
+#import geotiff to GRASS
+echo ""
+echo "importing into GRASS"
+echo ""
+
+r.in.gdal input=$tempfile output=$GIS_OPT_output
+
+#cleanup
+echo ""
+echo "cleaning up"
+echo ""
+rm -f $tempfile
+
+echo ""
+echo ""
+echo "DONE"
+
