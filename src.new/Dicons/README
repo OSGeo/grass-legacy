@@ -1,0 +1,9 @@
+
+Jim:
+
+Dicons is just a quick hack on Dpoints to allow use of icons for
+point markers.  It needs some improvements (which I've noted in its manual
+page) but may be useful to some as it is now.  It is a give-away, so
+put it in src.contrib, src.alpha, or wherever.   
+
+Dave
