@@ -27,7 +27,7 @@ if [ "$1" = "help" ]; then
  echo "r.to.pg exports GRASS raster map to PostgreSQL database"
  echo "        into a one column table (raster values only)."
  echo "Usage:"
- echo "        r.to.pg rastermap [celltable]"
+ echo "        r.to.pg rastermap [celltable_name]"
  exit
 fi
 
@@ -35,7 +35,7 @@ if [ "$#" -lt 1 ]; then
  echo "r.to.pg exports GRASS raster map to PostgreSQL database"
  echo "        into a one column table (raster values only)."
  echo "Usage:"
- echo "        r.to.pg rastermap [celltable]"
+ echo "        r.to.pg rastermap [celltable_name]"
  exit
 fi
 
@@ -47,11 +47,11 @@ if [ $? != 0 ]; then
 fi
 
 #replacing eventual dots from table name to avoid name conflicts:
-FIELDNAME=`echo $1 | sed 's/\./\_/'`
+FIELDNAME=`echo $1 | sed 's/\.//'`
 
 if [ "x$2" != "x" ]
 then
- CELLTABLE=`echo $2 | sed 's/\./\_/'`
+ CELLTABLE=`echo $2 | sed 's/\.//'`
 else
  CELLTABLE=$FIELDNAME
 fi
@@ -105,6 +105,7 @@ if [ $? != 0 ]; then
      exit
   fi
 fi
+rm -f $TMP/pgimport.sql
 
 #get the raster values and write out SQL:
 # (needs awk=gawk)
