@@ -194,7 +194,7 @@ y_condition:
 
 y_sub_condition:	
 		y_comparison { $$ = $1;	}	
-	|	'(' y_sub_condition ')' { $$ = $2 }
+	|	'(' y_sub_condition ')' { $$ = $2; }
 	|	y_sub_condition AND y_sub_condition { $$ = sqpNewExpressionNode (SQLP_AND, $1, $3); }
 	|	y_sub_condition OR y_sub_condition { $$ = sqpNewExpressionNode (SQLP_OR, $1, $3); }
 	|	NOT y_sub_condition { $$ = sqpNewExpressionNode ( SQLP_NOT, NULL, $2); }
