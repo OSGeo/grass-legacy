@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       r.support (GRASS core)
@@ -64,10 +62,10 @@ int main (int argc, char *argv[])
 
     name = map->answer;
 
-    inmapset = G_find_cell2 (name, "");
+    inmapset = G_find_cell (name, G_mapset());
     if (inmapset == NULL)
     {
-     fprintf(stderr,"%s: raster map not found\n", name);
+     fprintf(stderr,"%s: raster map not found in current mapset\n", name);
      exit(1);
     }
                                 
