@@ -32,7 +32,9 @@ menu_build 1 .main_menu {
 		"Various formats using OGR" "v.in.ogr" {
 		"exec v.in.ogr &"}
 		-separator
-		"ASCII points file or GRASS vector file" "v.in.ascii" {
+		"ASCII points file" "" {
+		"exec v.in.asciipoints &"}
+		"GRASS vector file" "v.in.ascii" {
 		"exec v.in.ascii &"}
 		"Import/export old GRASS vector format" "v.convert" {
 		"exec  v.convert &"}
@@ -86,7 +88,7 @@ menu_build 1 .main_menu {
 		"Various formats using OGR (SHAPE, MapInfo etc)" "v.out.ogr" {
 		"exec v.out.ogr &"}
 		-separator
-		"ASCII points file or GRASS vector file" "v.out.ascii" {
+		"GRASS vector file" "v.out.ascii" {
 		"exec v.out.ascii &"}
 		"Import/export old GRASS vector format" "v.convert" {
 		"exec  v.convert &"}
@@ -249,7 +251,7 @@ menu_build 1 .main_menu {
 	    "Display RGB overlays" "" {
 	    "exec d.rgb &"}
 	    "Drape raster map over shaded relief or aspect map" "" {
-	    "exec d.shadedmap"}
+	    "exec d.shadedmap &"}
 	    -separator
 	    "Slide show of all raster maps in current mapset" "" {
 	    "exec d.slide.show &"}
