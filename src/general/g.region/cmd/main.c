@@ -13,7 +13,10 @@
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
  * $Log$
- * Revision 1.6  2001-01-12 08:16:18  justin
+ * Revision 1.7  2001-04-02 21:37:21  andreas
+ * changed to suppress datum/ellipsoid output in XY-Locations
+ *
+ * Revision 1.6  2001/01/12 08:16:18  justin
  * Added site.h since it was removed from gis.h
  *
  * Revision 1.5  2000/12/20 14:42:42  jan
@@ -650,15 +653,18 @@ static int print_window(struct Cell_head *window,int print_flag)
 	{
 		prj = G_database_projection_name();
 		if (!prj) prj = "** unknown **";
-		datum = G_database_datum_name();
+                datum = G_database_datum_name();
 		if (!datum) datum = "** unknown (default: WGS84) **";
 		ellps = G_database_ellipse_name();
 		if (!ellps) ellps = "** unknown (default: WGS84) **";
 		fprintf (stdout, "%-11s %d (%s)\n","projection:", window->proj, prj);
 		fprintf (stdout, "%-11s %d\n","zone:",  window->zone);
-
-		fprintf (stdout, "%-11s %s\n","datum:", datum);
-		fprintf (stdout, "%-11s %s\n","ellipsoid:", ellps);
+		/* don't print datum/ellipsoid in XY-Locations */
+		if (window->proj != 0) 
+		{
+			fprintf (stdout, "%-11s %s\n","datum:", datum);
+			fprintf (stdout, "%-11s %s\n","ellipsoid:", ellps);
+		}
 		fprintf (stdout, "%-11s %s\n","north:", north);
 		fprintf (stdout, "%-11s %s\n","south:", south);
 		fprintf (stdout, "%-11s %s\n","west:",  west);

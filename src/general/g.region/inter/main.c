@@ -12,7 +12,10 @@
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
  * $Log$
- * Revision 1.4  2000-11-26 16:33:15  andreas
+ * Revision 1.5  2001-04-02 21:38:32  andreas
+ * changed to suppress datum/ellipsoid output in XY-Locations
+ *
+ * Revision 1.4  2000/11/26 16:33:15  andreas
  * added module description, file header, output of ellipsoid with cmdline and inter
  *
  * Revision 1.3  2000/11/08 20:31:28  andreas
@@ -98,8 +101,12 @@ main (int argc, char *argv[])
 	if (!ellps) ellps = "** unknown (default WGS84) **";
 	fprintf (stderr, "PROJECTION: %d (%s)\n", cur_window.proj, prj);
 	fprintf (stderr, "ZONE:       %d\n", cur_window.zone);
-	fprintf (stderr, "DATUM:      %s\n", datum);
-	fprintf (stderr, "ELLIPSOID:  %s\n", ellps);
+	/* don't print datum and ellipsoid in XY Locations */
+	if (cur_window.proj != 0) 
+	{
+		fprintf (stderr, "DATUM:      %s\n", datum);
+		fprintf (stderr, "ELLIPSOID:  %s\n", ellps);
+	}
 
 	fprintf (stderr, "\nPlease select one of the following options:\n\n");
 	fprintf (stderr, "   Current Region                           Region Database\n\n");
