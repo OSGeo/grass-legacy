@@ -1028,6 +1028,16 @@ int G_trim_decimal(char *);
 /* unctrl.c */
 char *G_unctrl(int);
 
+/* unix_socks.c */
+/**** Not hooked up yet ************************
+char *G_sock_get_fname(char *);
+int G_sock_exists(char *);
+int G_sock_bind(char *);
+int G_sock_listen(int, unsigned int);
+int G_sock_accept(int);
+int G_sock_connect(char *);
+************************************************/
+
 /* view.c */
 int G_3dview_warning(int);
 int G_get_3dview_defaults(struct G_3dview *, struct Cell_head *);
