@@ -94,10 +94,6 @@ if [ -z `g.findfile elem=cell file="$GIS_OPT_input" | grep ^file | cut -f2 -d=` 
     exit 1
 fi
 
-#save current region and zoom to extents of input map
-g.region save=r_fillnulls_$$
-g.region rast="$GIS_OPT_input"
-
 #check if a MASK is already present:
 MASKFILE=
 if test -f $LOCATION/cell/MASK
@@ -129,7 +125,6 @@ if [ $? -ne 0 ] ; then
     echo "ERROR detected: $0 abandoned. Removing temporary map:"
     g.remove rast=$TMP1
     g.rename mask_$$,MASK > /dev/null
-    g.region region=r_fillnulls_$$   &&   g.remove region=r_fillnulls_$$
     exit 1
 fi
 
@@ -143,7 +138,6 @@ if [ $? -ne 0 ] ; then
     echo "ERROR detected: $0 abandoned. Removing temporary maps:"
     g.remove rast=MASK,$TMP1,$TMP1.buf
     g.rename mask_$$,MASK > /dev/null
-    g.region region=r_fillnulls_$$   &&   g.remove region=r_fillnulls_$$
     exit 1
 fi
 
@@ -168,7 +162,7 @@ if [ $POINTSNUMBER -lt 2 ] ; then
   
   #cleanup
   g.remove rast=$TMP1,$TMP1.buf > /dev/null
-  g.region region=r_fillnulls_$$   &&   g.remove region=r_fillnulls_$$
+
   exit 1
 fi
 
@@ -212,8 +206,6 @@ r.patch in=$GIS_OPT_input,rfillnulls_$TMP1 out=$GIS_OPT_output --o
 #cleanup
 g.remove rast=$TMP1,$TMP1.buf,rfillnulls_$TMP1 > /dev/null
 g.remove vect=vecttmp_fillnulls_$$ > /dev/null
-#restore original region settings
-g.region region=r_fillnulls_$$   &&   g.remove region=r_fillnulls_$$
 
 echo ""
 echo "Filled raster map is: $GIS_OPT_output"
