@@ -43,6 +43,7 @@
  *********************************************************************/
 
 #include "gis.h"
+#include "glocale.h"
 #include <unistd.h>
 #include <signal.h>
 #include <string.h>
@@ -102,7 +103,7 @@ int G_list_element (
     if (!broken_pipe)
     {
 	if (count == 0)
-	    fprintf (more,"no %s files available\n", desc);
+	    fprintf (more,_("no %s files available\n"), desc);
 
 	fprintf (more,"----------------------------------------------\n");
     }
@@ -113,7 +114,7 @@ int G_list_element (
     signal (SIGPIPE, sigpipe);
     if (hit_return && isatty(1))
     {
-	fprintf (stderr, "hit RETURN to continue -->");
+	fprintf (stderr, _("hit RETURN to continue -->"));
 	while (getchar() != '\n')
 	    ;
     }
@@ -168,7 +169,7 @@ static int list_element( FILE *out, char *element,
 	    {
 		if (count++ == 0)
 		{
-		    fprintf(out, "%s files available in mapset %s:\n", desc, mapset);
+		    fprintf(out, _("%s files available in mapset %s:\n"), desc, mapset);
 		    if (lister)
 		    {
 			char title[400];

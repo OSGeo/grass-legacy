@@ -19,6 +19,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "gis.h"
+#include "glocale.h"
 
 char *
 G_location_path()
@@ -30,7 +31,7 @@ G_location_path()
     {
 	char msg[400];
 
-	sprintf(msg,"LOCATION  << %s >>  not available", location) ;
+	sprintf(msg,_("LOCATION  << %s >>  not available"), location) ;
 	G_fatal_error (msg);
     }
 

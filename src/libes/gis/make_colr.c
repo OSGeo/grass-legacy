@@ -20,6 +20,7 @@
  **********************************************************************/
 
 #include "gis.h"
+#include "glocale.h"
 
 int G_make_colors (name, mapset, pcolr)
     char *name ;
@@ -39,7 +40,7 @@ int G_make_colors (name, mapset, pcolr)
     G_get_fp_range_min_max (&range, &min, &max);
     if(G_is_d_null_value(&min) || G_is_d_null_value(&max))
     {
-       sprintf(buff, " The raster map %s@%s is empty", name, mapset);
+       sprintf(buff, _(" The raster map %s@%s is empty"), name, mapset);
        G_warning(buff);
        return -1;
     }
@@ -47,19 +48,19 @@ int G_make_colors (name, mapset, pcolr)
 /* Prompting */
 ASK:
     G_clear_screen() ;
-    fprintf (stderr, "\n\nColor table needed for file [%s] in mapset [%s].\n",
+    fprintf (stderr, _("\n\nColor table needed for file [%s] in mapset [%s].\n"),
 	    name, mapset) ;
 
-    fprintf (stderr, "\nPlease identify the type desired:\n") ;
-    fprintf (stderr, "    1:  Random colors\n") ;
-    fprintf (stderr, "    2:  Red, green, and blue color ramps\n") ;
-    fprintf (stderr, "    3:  Color wave\n") ;
-    fprintf (stderr, "    4:  Gray scale\n") ;
-    fprintf (stderr, "    5:  Aspect\n") ;
-    fprintf (stderr, "    6:  Rainbow colors\n") ;
-    fprintf (stderr, "    7:  Red through yellow to green\n");
-    fprintf (stderr, "    8:  Green through yellow to red\n");
-    fprintf (stderr, "RETURN  quit\n");
+    fprintf (stderr, _("\nPlease identify the type desired:\n")) ;
+    fprintf (stderr, _("    1:  Random colors\n")) ;
+    fprintf (stderr, _("    2:  Red, green, and blue color ramps\n")) ;
+    fprintf (stderr, _("    3:  Color wave\n")) ;
+    fprintf (stderr, _("    4:  Gray scale\n")) ;
+    fprintf (stderr, _("    5:  Aspect\n")) ;
+    fprintf (stderr, _("    6:  Rainbow colors\n")) ;
+    fprintf (stderr, _("    7:  Red through yellow to green\n"));
+    fprintf (stderr, _("    8:  Green through yellow to red\n"));
+    fprintf (stderr, _("RETURN  quit\n"));
     fprintf (stderr, "\n> ") ;
 
     for(;;)
@@ -80,7 +81,7 @@ ASK:
 	case 7: return G_make_ryg_fp_colors (pcolr, min, max);
 	case 8: return G_make_gyr_fp_colors (pcolr, min, max);
 	default:
-	    fprintf (stderr, "\n%s invalid; Try again > ", buff) ;
+	    fprintf (stderr, _("\n%s invalid; Try again > "), buff) ;
 	    break;
 	}
     }
