@@ -22,7 +22,8 @@
 #include "libtrans.h"
 
 int 
-transform_digit_file (struct Map_info *Old, struct Map_info *New, float zscale, float zshift)
+transform_digit_file (struct Map_info *Old, struct Map_info *New,
+                      float ztozero, float zscale, float zshift)
 {
     int    i, type;
     static struct line_pnts *Points;
@@ -42,7 +43,9 @@ transform_digit_file (struct Map_info *Old, struct Map_info *New, float zscale, 
 	
 	for ( i = 0; i < Points->n_points; i++ ) {
             transform_a_into_b( Points->x[i], Points->y[i], &(Points->x[i]), &(Points->y[i]) );
-            Points->z[i] = (Points->z[i] * zscale) + zshift;
+            /* ztozero shifts oldmap z to zero, zshift shifts rescaled object
+             * to target elevation: */
+            Points->z[i] = ((Points->z[i] + ztozero) * zscale) + zshift;
 	}
 	
 	Vect_write_line (New,  type, Points, Cats);
