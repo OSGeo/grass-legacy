@@ -47,6 +47,12 @@ Report all line lengths of a map:<br>
 Report number of featurs for each category in map:<br>
 <tt>v.to.db -p roads option=count type=line</tt>
 
+<h2>NOTES</h2>
+
+If the module is apparently slow <b>and</b> the map attributes are stored 
+in an external DBMS such as PostgreSQL, it is highly recommended to
+create an index on the key (category) column.
+
 <h2>SEE ALSO</h2>
 
 <em><a href="v.category">v.category</a></em>
