@@ -100,11 +100,8 @@ main (int argc, char *argv[])
 		: parse_stream(stdin);
 
 	pre_exec();
-	ok = execute(result);
+	execute(result);
 	post_exec();
-
-	if (!ok)
-		return 1;
 
 	all_ok = 1;
 
@@ -119,6 +116,7 @@ main (int argc, char *argv[])
 		fprintf(stderr, "NOTE: overflow occured in the calculation\n");
 		all_ok = 0;
 	}
+
 	return all_ok ? 0 : 1;
 }
 
