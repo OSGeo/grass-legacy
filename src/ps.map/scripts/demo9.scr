@@ -12,15 +12,7 @@ vector roads
   color black
   masked y
   end
-vector streams.dead
-  width 1
-  color black
-  style 111100
-  hcolor white
-  hwidth 1
-  masked y
-  end
-vector streams.spear
+vector streams
   width 1
   color black
   style 111100
