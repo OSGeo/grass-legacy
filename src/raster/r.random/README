@@ -15,12 +15,10 @@
  * A sitefile may optionally be created.
  *
  * Usage:
- *  r.random [-qz] input=name [raster_output=name] [sites_output=name] n=n[%]
+ *  r.random [-iqz] input=name [raster_output=name] [sites_output=name] n=n[%]
  *
+ *    -i mean report number of total cells and null cells
  *    -q means run quietly
  *    -z means generate random locations for zero-data as well
  *
- *
- * Note if called by interactive r.random, the first arg will be ####n
- *      where n is the number of cells in the input map.
  *********************************************************************/
