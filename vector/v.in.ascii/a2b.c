@@ -34,9 +34,9 @@ int asc_to_bin(
 	end_of_file = 0 ;
 	/*alloc_points     = 1000 ; */
 	alloc_points     = 1;
-	xarray = (double *) dig_falloc(alloc_points, sizeof(double)) ;
-	yarray = (double *) dig_falloc(alloc_points, sizeof(double)) ;
-	zarray = (double *) dig_falloc(alloc_points, sizeof(double)) ;	
+	xarray = (double *) G_calloc(alloc_points, sizeof(double)) ;
+	yarray = (double *) G_calloc(alloc_points, sizeof(double)) ;
+	zarray = (double *) G_calloc(alloc_points, sizeof(double)) ;	
 
 
 	while ( fgets(buff,BUFFSIZE,ascii) != NULL  )
@@ -107,10 +107,10 @@ int asc_to_bin(
 	
 			if (n_points >= alloc_points)
 			{
-				xarray = (double *)dig_frealloc((char *)xarray, alloc_points + 1000, sizeof(double), alloc_points);
-				yarray = (double *)dig_frealloc((char *)yarray, alloc_points + 1000, sizeof(double), alloc_points);
-				zarray = (double *)dig_frealloc((char *)zarray, alloc_points + 1000, sizeof(double), alloc_points);				
 				alloc_points = n_points + 1000 ;
+				xarray = (double *) G_realloc((void *)xarray, alloc_points * sizeof(double) );
+				yarray = (double *) G_realloc((void *)yarray, alloc_points * sizeof(double) );
+				zarray = (double *) G_realloc((void *)zarray, alloc_points * sizeof(double) );				
 				x = xarray + n_points ;
 				y = yarray + n_points ;
 				z = zarray + n_points ;				
