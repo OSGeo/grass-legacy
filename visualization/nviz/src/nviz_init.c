@@ -416,6 +416,9 @@ int Ninit(Tcl_Interp * interp, Tk_Window w)
 
     Ninitdata(interp, &data);
 
+/*** ACS_MODIFY flythrough  ONE LINE ******************************************/
+	togl_flythrough_init_tcl(interp, &data);
+
     if (!script_mode)
 	    Tcl_Eval(interp, nviz_script); /* source nviz_script to start main window */
 

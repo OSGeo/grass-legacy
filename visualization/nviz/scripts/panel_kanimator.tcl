@@ -1071,9 +1071,10 @@ proc keyanimAddKey { BASE } {
                 "FromX" { set value [lindex [Nget_from] 0] }
                 "FromY" { set value [lindex [Nget_from] 1] }
                 "FromZ" { set value [lindex [Nget_from] 2] }
-		"DirX"  { set value [lindex [Nget_focus] 0] }
-		"DirY"  { set value [lindex [Nget_focus] 1] }
-		"DirZ"  { set value [lindex [Nget_focus] 2] }
+# ACS_MODIFY: Nget_focus replaced by Nget_viewdir to work with flythrough
+		"DirX"  { set value [lindex [Nget_viewdir] 0]}
+		"DirY"  { set value [lindex [Nget_viewdir] 1]}
+		"DirZ"  { set value [lindex [Nget_viewdir] 2]}
                 "FOV"   { set value [lindex [Nget_fov] 0] }
                 "TWIST" { set value [lindex [Nget_twist] 0] }
                 }

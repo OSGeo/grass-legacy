@@ -6,6 +6,10 @@
 #  10 cannot be bumped
 #  Panels will be loaded by the greater of 5 or their current priority
 
+#*** ACS_MODIFY 1.0 BEGIN ******************************************************
+# flags to enable(1)/disable(0) added FlyThrough Functions
+	set Nv_(FlyThrough) 1
+	if {$Nv_(FlyThrough)} {source $src_boot/etc/nviz2.2/scripts/flythrough.tcl}
 
 ###########################################################################
 # procedure to make main control area
@@ -68,7 +72,7 @@ proc mkmainPanel { BASE } {
 #Execute buttons
 
    button $BASE.redrawf.f2.exec -text DRAW 
-   bind $BASE.redrawf.f2.exec <1> "Nset_cancel 1"
+   bind $BASE.redrawf.f2.exec <1> "Nset_cancel 0"
    bind $BASE.redrawf.f2.exec <B1-ButtonRelease> { \
         if {$surface == 1 && $vector == 1 && $sites == 1 && $volume == 1} {
         {Ndraw_all}
@@ -112,7 +116,14 @@ proc mkmainPanel { BASE } {
 	$draw_var1 select
 
 
-    pack $draw_lab $draw_var1 $draw_var2 -side left -expand 0
+#*** ACS_MODIFY 1.0 BEGIN ******************************************************
+	if {$Nv_(FlyThrough)} {
+		mkFlyButtons $BASE "midt" $draw_lab $draw_var1 $draw_var2
+	} else {
+		# original code
+	    pack $draw_lab $draw_var1 $draw_var2 -side left -expand 0
+	}
+#*** ACS_MODIFY 1.0 END ********************************************************
 
     # make  position "widget"
     set XY [Nv_mkXYScale $BASE.midf.pos puck XY_POS 125 125 105 105 update_eye_position]
@@ -164,6 +175,14 @@ proc mkmainPanel { BASE } {
     pack $BASE.bframe.reset  -side right -expand 1
     pack $BASE.bframe -side top -fill x -expand 1
     pack $BASE.bframe.cframe -side top -fill x -expand 1
+
+#*** ACS_MODIFY 1.0 BEGIN ******************************************************
+	if {$Nv_(FlyThrough)} {
+		set Nv_(TWIST_SLIDER) $T
+		set Nv_(EXAG_SLIDER) $E
+	}
+#*** ACS_MODIFY 1.0 END ******************************************************
+
 
 # According to the documentation, the Main panel can never be closed
 #	button $BASE.close -text Close -command "Nv_closePanel $BASE" -anchor s
@@ -333,8 +352,13 @@ proc update_exag {exag} {
 	Nv_floatscaleCallback $Nv_(main_BASE).midf.zexag e 2 null $exag
     }
     Nchange_exag $exag
-    Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height \
-	[$Nv_(HEIGHT_SLIDER).f.entry get]
+#*** ACS_MODIFY 1.0 BEGIN ******************************************************
+	if {$Nv_(FlyThrough) == 0} {
+		# original 2 lines
+	    Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height \
+		[$Nv_(HEIGHT_SLIDER).f.entry get]
+	}
+#*** ACS_MODIFY 1.0 END ********************************************************
 #    Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height [lindex [Nget_height] 0]
 #    Nquick_draw
 }
@@ -373,6 +397,9 @@ global XY Nv_
        set NAME2 [winfo parent $NAME]
        catch "destroy $XY"
 
+	# *** ACS_MODIFY 1.0 - one line
+	if {$Nv_(FlyThrough)} {Nset_fly_mode -1}
+
 if {$flag == 1} {
 #draw eye position
 set XY [Nv_mkXYScale $NAME puck XY_POS 125 125 105 105 update_eye_position]
@@ -395,7 +422,13 @@ update
 } else {
 #draw center position
 set XY [Nv_mkXYScale $NAME cross XY_POS 125 125 109 109 update_center_position]
-pack $XY -side left -before $NAME2.height
+
+#*** ACS_MODIFY 1.0 BEGIN ******************************************************
+	if {$Nv_(FlyThrough) == 0} {
+		# original line
+		pack $XY -side left -before $NAME2.height
+	}
+#*** ACS_MODIFY 1.0 END ******************************************************
 
 set E [lindex [Nget_focus_gui] 0]
 if {$E > 1.} { set E 1.}
@@ -414,8 +447,14 @@ update
 
 }
 
+#*** ACS_MODIFY 1.0 BEGIN ******************************************************
+	if {$Nv_(FlyThrough)} {
+		pack_XY
+	} else {
+		# original line
        pack $XY -side left -before $NAME2.height
-
+	}
+#*** ACS_MODIFY 1.0 END ******************************************************
 }
 
 proc update_height {h} {

@@ -338,7 +338,11 @@ int GK_add_key(float pos, unsigned long fmask, int force_replace,
 /* View Dir is implied from eye and center position */
 /*    GS_get_viewdir(tmp); */
 
-    GS_get_focus(tmp);
+/* ACS 1 line: was 	GS_get_focus(tmp);
+ 	with this kanimator works also for flythrough navigation
+	also changed in gk.c
+*/
+    GS_get_viewdir(tmp);
     newk->fields[KF_DIRX] = tmp[X];
     newk->fields[KF_DIRY] = tmp[Y];
     newk->fields[KF_DIRZ] = tmp[Z];

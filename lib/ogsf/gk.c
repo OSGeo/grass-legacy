@@ -135,7 +135,11 @@ void gk_follow_frames(Viewnode * view, int numsteps, Keylist * keys, int step,
 	if ((mask & KF_DIRZ_MASK)) {
 	    tmp[Z] = v->fields[KF_DIRZ];
 	}
-	GS_set_focus(tmp);
+/* ACS 1 line: was 	GS_set_focus(tmp);
+ 	with this kanimator works also for flythrough navigation
+	also changed in GK2.c
+*/
+	GS_set_viewdir(tmp);
 
 
 #ifdef KDEBUG
@@ -537,7 +541,10 @@ Viewnode *gk_make_linear_framesfromkeys(Keylist * keys, int keysteps,
 					     tkeys, &k1, &k2);
 		}
 
-		if (len == 0.0) {
+/* ACS 1 line: was	if (len == 0.0) {
+ 	when disabling a channel no calculation must be made at all (otherwise core dump)
+*/
+		if (len == 0.0 || nvk == 0) {
 		    if (!k1) {
 			/* none valid - use first.
 			   (when showing , will be ignored anyway) */
