@@ -29,14 +29,13 @@ char	*argv[];
 	int     i, j; 
 	int	row_id, col_id;
 	int 	G_get_map_row_nomask();
-/*	int	cell_open(), cell_open_new();*/ /*6/2000 MN */
+	int	cell_open(), cell_open_new();
 	int	rules(), hy_soil_group(),amc_conversion();
 	CELL    *hy_soil_group_rbuf, *veg_cover_rbuf, *hy_cond_rbuf;
 	CELL    *land_use_rbuf, *cn_rbuf;
 	int     hy_soil_group_id, veg_cover_id,cn_id;
 	int     hy_cond_id,land_use_id;
-	int amc;
-	struct Flag *flag1, *flag2, *flag3, *flag4;
+	int     amc;
 	struct Option *parm1, *parm2, *parm3, *parm4, *parm5, *parm6;
         
 /* 6/2000: is it correct that we need *all* parameters? 
@@ -73,9 +72,9 @@ char	*argv[];
         parm5 = G_define_option() ;
         parm5->key        = "amc" ;
         parm5->type       = TYPE_STRING ;
-        parm5->required   = YES ;
+        parm5->required   = NO ;
         parm5->gisprompt  = "old,cell,raster" ;
-        parm5->description= "AMC_condition_number(1,2 or 3)" ;
+        parm5->description= "AMC_condition_number(1,2 or 3, default: 2)" ;
               
         parm6 = G_define_option() ;
         parm6->key        = "cn" ;
@@ -84,52 +83,11 @@ char	*argv[];
         parm6->gisprompt  = "any,cell,raster" ;
         parm6->description= "curve_number_map (output)" ;
 
-        flag1 = G_define_flag();
-        flag1->key = 'v';
-        flag1->description = "veg_cover_flag";
-              
-        flag2 = G_define_flag();
-        flag2->key = 'l';
-        flag2->description = "land_use_flag";
-              
-        flag3 = G_define_flag();
-        flag3->key = 'h';
-        flag3->description = "hy_soil_group_flag";
-                      
-        flag4 = G_define_flag();
-        flag4->key = 'c';
-        flag4->description = "cn_flag";
-
 /*  Initialize the GRASS environment variables */
 	G_gisinit (argv[0]);
 
         if (G_parser(argc, argv))
                         exit(-1);
-
-	hy_soil_group_flag = land_use_flag = veg_cover_flag = cn_flag = 0;
-
-/* Check for any error at the command line key words */
-/* Commented 6/2000 MN, replaced by parm stuff */
-
-/*	for (i = 1; i < argc; i++)
-	{
-	    if  (sscanf(argv[i], "sg=%[^\n]", hy_soil_group_name) == 1) hy_soil_group_flag = 1;
-	    else if (sscanf(argv[i], "lu=%[^\n]", land_use_name) == 1) land_use_flag = 1;
-	    else if (sscanf(argv[i], "pr=%[^\n]", veg_cover_name) == 1) veg_cover_flag = 1;
-	    else if (sscanf(argv[i], "hc=%[^\n]", hy_cond_name) == 1) hy_cond_flag = 1;
-	    else if (sscanf(argv[i], "cn=%[^\n]", cn_name) == 1) cn_flag = 1;
-	    else if (sscanf(argv[i], "amc=%[^\n]", amc_name) == 1) amc_flag = 1;
-	    else usage(argv[0]);
-	}
-*/
-
-
-/* Commented 6/2000 MN */
-/*	if((hy_soil_group_flag != 1) && (land_use_flag != 1) && (veg_cover_flag != 1) && (hy_cond_flag != 1) && (cn_flag != 1))
-	 {  
-	    usage(argv[0]);
-	 }
-*/
 
 /* Here we go....*/
          strcpy (amc_name, parm5->answer);
@@ -233,58 +191,25 @@ char	*argv[];
 	 ncols = G_window_cols();
 
 /*	open the map and get their file id  */
-	hy_soil_group_id = G_open_cell_old(hy_soil_group_name,hy_soil_group_mapset);
-        if (hy_soil_group_id < 0)
-        {
-          sprintf (buf, "%s - can't open raster file", hy_soil_group_name);
-          G_fatal_error (buf);
-          exit(1);
-        }
-                                                                
-	veg_cover_id = G_open_cell_old(veg_cover_name,veg_cover_mapset);
-        if ( veg_cover_id < 0)
-        {
-          sprintf (buf, "%s - can't open raster file", veg_cover_name);
-          G_fatal_error (buf);
-          exit(1);
-        }
-
-	hy_cond_id = G_open_cell_old(hy_cond_name,hy_cond_mapset);
-        if (hy_cond_id < 0)
-        {
-          sprintf (buf, "%s - can't open raster file", hy_cond_name);
-          G_fatal_error (buf);
-          exit(1);
-        }
-
-	cn_id = G_open_cell_new(cn_name);
-        if (cn_id < 0)
-        {
-          sprintf (buf, "%s - can't open new raster file", cn_name);
-          G_fatal_error (buf);
-          exit(1);
-        }
-
-	land_use_id = G_open_cell_old(land_use_name,land_use_mapset);
-        if (land_use_id < 0)
-        {
-          sprintf (buf, "%s - can't open raster file", land_use_name);
-          G_fatal_error (buf);
-          exit(1);
-        }
+	hy_soil_group_id = cell_open(hy_soil_group_name,hy_soil_group_mapset);
+	veg_cover_id = cell_open(veg_cover_name,veg_cover_mapset);
+	hy_cond_id = cell_open(hy_cond_name,hy_cond_mapset);
+	cn_id = cell_open_new(cn_name);
+	land_use_id = cell_open(land_use_name,land_use_mapset);
+fprintf(stderr,"1 %s\n",veg_cover_name);
 
 
 /* get the category names and cell title */
-fprintf(stderr,"%s\n",hy_soil_group_name);
+fprintf(stderr,"2 %s\n",hy_soil_group_name);
 	if (G_read_cats (hy_soil_group_name, hy_soil_group_mapset, &hy_soil_group_cats) < 0)
 	    exit(-1);
-fprintf(stderr,"%s\n",land_use_name);
+fprintf(stderr,"3 %s\n",land_use_name);
 	if (G_read_cats (land_use_name, land_use_mapset, &land_use_cats) < 0)
 	    exit(-1);
-fprintf(stderr,"%s\n",veg_cover_name);
+fprintf(stderr,"4 %s\n",veg_cover_name);
 	if (G_read_cats (veg_cover_name, veg_cover_mapset, &veg_cover_cats) < 0)
 	    exit(-1);
-fprintf(stderr,"%s\n",hy_cond_name);
+fprintf(stderr,"5 %s\n",hy_cond_name);
 	if (G_read_cats (hy_cond_name, hy_cond_mapset, &hy_cond_cats) < 0)
 	    exit(-1);
 
