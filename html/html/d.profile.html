@@ -17,18 +17,24 @@
 <H2>SYNOPSIS</H2>
 
 <B>d.profile</B> 
+<BR>
+<B>d.profile</B> <B>map=</B><EM>name</EM> [<B>plotfile=</B><EM>name</EM>]
 
 <H2>DESCRIPTION</H2>
 
 This command works only interactively. It clears the entire
 graphics screen and provides a graphical interaction
 allowing the selection of transects for which profiles are
-then generated.
+then generated. Input parameters can be specified on the command line
+for quicker start-up.
 
 <H2>USER PROMPTS</H2>
 
 First, you will be presented with a prompt asking you to
-choose a raster map layer to be profiled. Once you specify
+choose a raster map layer to be profiled. Next, you will
+be prompted for the name out an output file for your profiles. 
+This is an optional feature.
+Once you specify
 a valid raster map layer name, the map layer will be
 displayed in the left half of the graphics display, and the
 right half of the dispay will be divided into four display
@@ -83,6 +89,35 @@ raster map layer and clear out the four profile frames,
 click on the middle mouse-button. If you would like to
 quit, then click on the right button.
 
+<P>
+
+If you selected the <B>plotfile</B> option, you will have up to
+four files starting with the <EM>name</EM> and followed by a suffix
+of the plot letter <EM>A, B, C,</EM> or <EM>D</EM>.  The plots that
+are written to these files reflect the last of each plot done with that
+letter (i.e. They will match what's in the display when you quit).
+
+<P>
+The format of the plot files is not geared toward any particular software,
+but should be easy to coax into a number of other programs.  The first 
+three lines contain some header information about the plot, each prefixed
+with a <TT>#</TT> sign to denote a comment.  This is followed by a blank
+line, and then each value for every stop along the way of the profile.
+The number of values will vary depending on the length of the profile, cell 
+resolution and the slope angle of the profile line.  Below is an example
+of a plotfile:
+<P>
+<TT>
+# Profile A of fract@PERMANENT<BR>
+# From (-311.5727003, 700.29673591) to (560.83086053, 267.06231454)<BR>
+# Stats: Count = 45, Min = -3332.379353, Max = 1389.142386<BR>
+<BR>
+-273.619575<BR>
+-434.155326<BR>
+-805.505372<BR>
+...<P>
+</TT>
+
 <H2>NOTES</H2>
 
 Useful enhancements to <EM>d.profile</EM> would include: 
@@ -96,7 +131,7 @@ colors, like a bar-chart.
 points, not just two.
 
 <LI>Allowing profiles to be saved in a file, for later
-viewing.
+viewing by GRASS.
 
 <LI>Allowing the user to enter profile line points by
 typing coordinates.
@@ -105,11 +140,7 @@ typing coordinates.
 
 <H2>BUGS</H2>
 
-<P>
-<EM>d.profile</EM> reads every raster map as if it were a CELL type.
-Therefore, if the range for floating point rasters is very small, 
-it will not be profiled very well (possibly not at all).
-</P>
+None known.
 
 <H2>AUTHOR</H2>
 
@@ -118,6 +149,9 @@ Dave Johnson
 10560 Arrowhead Drive <BR>
 Fairfax, Virginia 22030
 
+<P>
+Modified by Eric G. Miller for profile output, and support of 
+floating point rasters (11-Nov-2000).
 </BODY>
 </HTML>
 
