@@ -24,11 +24,11 @@
 
 
 /* allocate new node structure */
-P_NODE_2D *
-dig_alloc_node_2d ( ){
-    P_NODE_2D *Node;
+P_NODE *
+dig_alloc_node ( ){
+    P_NODE *Node;
 
-    Node = (P_NODE_2D *) malloc ( sizeof(P_NODE_2D) );
+    Node = (P_NODE *) malloc ( sizeof(P_NODE) );
     if (Node == NULL) return NULL;
 
     Node->n_lines = 0;
@@ -47,11 +47,11 @@ dig_alloc_node_2d ( ){
 */
 
 int 
-dig_node_alloc_line_2d ( P_NODE_2D * node, int add) {
+dig_node_alloc_line ( P_NODE * node, int add) {
   int  num;
   char *p;
 
-  G_debug (3, "dig_node_alloc_line_2d(): add = %d", add); 
+  G_debug (3, "dig_node_alloc_line(): add = %d", add); 
   
   num = node->n_lines + add;
 
@@ -75,26 +75,26 @@ dig_node_alloc_line_2d ( P_NODE_2D * node, int add) {
 *          -1 error
 */
 int 
-dig_alloc_nodes_2d ( struct Plus_head *Plus, int add) {
+dig_alloc_nodes ( struct Plus_head *Plus, int add) {
     int  size;
     char *p;
 
     size = Plus->alloc_nodes + 1 + add;
-    p = realloc ( Plus->Node_2d, size * sizeof(P_NODE_2D *) );
+    p = realloc ( Plus->Node, size * sizeof(P_NODE *) );
     if ( p == NULL ) return -1;
 	 
-    Plus->Node_2d = (P_NODE_2D **) p;
+    Plus->Node = (P_NODE **) p;
     Plus->alloc_nodes = size - 1;
 
     return (0);
 }
 
 /* allocate new line structure */
-P_LINE_2D *
-dig_alloc_line_2d ( ){
-    P_LINE_2D *Line;
+P_LINE *
+dig_alloc_line ( ){
+    P_LINE *Line;
 
-    Line = (P_LINE_2D *) malloc ( sizeof(P_LINE_2D) );
+    Line = (P_LINE *) malloc ( sizeof(P_LINE) );
     if (Line == NULL) return NULL;
 
     return (Line);
@@ -107,15 +107,15 @@ dig_alloc_line_2d ( ){
 *          -1 error
 */
 int 
-dig_alloc_lines_2d ( struct Plus_head *Plus, int add) {
+dig_alloc_lines ( struct Plus_head *Plus, int add) {
     int  size;
     char *p;
 
     size = Plus->alloc_lines + 1 + add;
-    p = realloc ( Plus->Line_2d, size * sizeof(P_LINE_2D *) );
+    p = realloc ( Plus->Line, size * sizeof(P_LINE *) );
     if ( p == NULL ) return -1;
 	 
-    Plus->Line_2d = (P_LINE_2D **) p;
+    Plus->Line = (P_LINE **) p;
     Plus->alloc_lines = size - 1;
 
     return (0);
@@ -128,15 +128,15 @@ dig_alloc_lines_2d ( struct Plus_head *Plus, int add) {
 *          -1 error
 */
 int 
-dig_alloc_areas_2d ( struct Plus_head *Plus, int add) {
+dig_alloc_areas ( struct Plus_head *Plus, int add) {
     int  size;
     char *p;
 
     size = Plus->alloc_areas + 1 + add;
-    p = realloc ( Plus->Area_2d, size * sizeof(P_AREA_2D *) );
+    p = realloc ( Plus->Area, size * sizeof(P_AREA *) );
     if ( p == NULL ) return -1;
 	 
-    Plus->Area_2d = (P_AREA_2D **) p;
+    Plus->Area = (P_AREA **) p;
     Plus->alloc_areas = size - 1;
 
     return (0);
@@ -149,27 +149,27 @@ dig_alloc_areas_2d ( struct Plus_head *Plus, int add) {
 *          -1 error
 */
 int 
-dig_alloc_isles_2d ( struct Plus_head *Plus, int add) {
+dig_alloc_isles ( struct Plus_head *Plus, int add) {
     int  size;
     char *p;
 
-    G_debug (3, "dig_alloc_isle_2d():");
+    G_debug (3, "dig_alloc_isle():");
     size = Plus->alloc_isles + 1 + add;
-    p = realloc ( Plus->Isle_2d, size * sizeof(P_ISLE_2D *) );
+    p = realloc ( Plus->Isle, size * sizeof(P_ISLE *) );
     if ( p == NULL ) return -1;
 	 
-    Plus->Isle_2d = (P_ISLE_2D **) p;
+    Plus->Isle = (P_ISLE **) p;
     Plus->alloc_isles = size - 1;
 
     return (0);
 }
 
 /* allocate new area structure */
-P_AREA_2D *
-dig_alloc_area_2d (){
-    P_AREA_2D *Area;
+P_AREA *
+dig_alloc_area (){
+    P_AREA *Area;
 
-    Area = (P_AREA_2D *) malloc ( sizeof(P_AREA_2D) );
+    Area = (P_AREA *) malloc ( sizeof(P_AREA) );
     if (Area == NULL) return NULL;
 
     Area->n_lines = 0;
@@ -188,12 +188,12 @@ dig_alloc_area_2d (){
 }
 
 /* alloc new isle structure */
-P_ISLE_2D * 
-dig_alloc_isle_2d ()
+P_ISLE * 
+dig_alloc_isle ()
 {
-    P_ISLE_2D *Isle;
+    P_ISLE *Isle;
 
-    Isle = (P_ISLE_2D *) malloc ( sizeof(P_ISLE_2D) );
+    Isle = (P_ISLE *) malloc ( sizeof(P_ISLE) );
     if (Isle == NULL) return NULL;
 
     Isle->n_lines = 0;
@@ -292,7 +292,7 @@ dig_alloc_cats (
 **  Returns   0 ok    or    -1 on error
 */
 int 
-dig_area_alloc_line_2d ( P_AREA_2D * area, int add) {
+dig_area_alloc_line ( P_AREA * area, int add) {
   int num;
   char *p;
 
@@ -313,7 +313,7 @@ dig_area_alloc_line_2d ( P_AREA_2D * area, int add) {
 **  Returns   0 ok    or    -1 on error
 */
 int 
-dig_area_alloc_isle_2d ( P_AREA_2D * area, int add) {
+dig_area_alloc_isle ( P_AREA * area, int add) {
   int num;
   char *p;
 
@@ -333,7 +333,7 @@ dig_area_alloc_isle_2d ( P_AREA_2D * area, int add) {
 **  Returns   0 ok    or    -1 on error
 */
 int 
-dig_area_alloc_centroid_2d ( P_AREA_2D * area, int add) {
+dig_area_alloc_centroid ( P_AREA * area, int add) {
   int num;
   char *p;
 
@@ -354,14 +354,14 @@ dig_area_alloc_centroid_2d ( P_AREA_2D * area, int add) {
  */
 
 int 
-dig_isle_alloc_line_2d (
-		      P_ISLE_2D * isle,
+dig_isle_alloc_line (
+		      P_ISLE * isle,
 		      int add)
 {
   int num;
   char *p;
 
-  G_debug (3, "dig_isle_alloc_line_2d():");
+  G_debug (3, "dig_isle_alloc_line():");
   num = isle->alloc_lines + add;
 
   p = realloc ( isle->lines, num * sizeof(plus_t) );

@@ -41,13 +41,13 @@ dig_Rd_P_node (
 		  int  n,
 		  FILE * fp)
 {
-  P_NODE_2D *ptr;
+  P_NODE *ptr;
 
 #ifdef GDEBUG
   G_debug (3, "dig_Rd_P_node()");
 #endif
   
-  ptr = dig_alloc_node_2d();
+  ptr = dig_alloc_node();
   
   if (0 >= dig__fread_port_D (&(ptr->x), 1, fp))
     return (-1);
@@ -56,7 +56,7 @@ dig_Rd_P_node (
   if (0 >= dig__fread_port_P (&(ptr->n_lines), 1, fp))
     return (-1);
 
-  if ( dig_node_alloc_line_2d ( ptr, ptr->n_lines) == -1)
+  if ( dig_node_alloc_line ( ptr, ptr->n_lines) == -1)
      return -1; 
 
   if (ptr->n_lines)		/* Not guaranteed what fread does w/ 0 */
@@ -67,7 +67,7 @@ dig_Rd_P_node (
 	return (-1);
     }
   
-  Plus->Node_2d[n] = ptr;
+  Plus->Node[n] = ptr;
   
   return (0);
 }
@@ -78,9 +78,9 @@ dig_Wr_P_node (
 		  int  n,
 		  FILE * fp)
 {
-  P_NODE_2D *ptr; 
+  P_NODE *ptr; 
 
-  ptr = Plus->Node_2d[n];
+  ptr = Plus->Node[n];
   
   if (0 >= dig__fwrite_port_D (&(ptr->x), 1, fp))
     return (-1);
@@ -105,12 +105,12 @@ dig_Rd_P_line (
 		  int  n,
 		  FILE * fp)
 {
-  P_LINE_2D *ptr; 
+  P_LINE *ptr; 
 #ifdef GDEBUG
   G_debug (3, "dig_Rd_P_line()");
 #endif
 
-  ptr = dig_alloc_line_2d();
+  ptr = dig_alloc_line();
 
   if (0 >= dig__fread_port_P (&(ptr->N1), 1, fp))
     return -1;
@@ -136,7 +136,7 @@ dig_Rd_P_line (
   if (0 >= dig__fread_port_C (&(ptr->type), 1, fp))
     return (-1);
 
-  Plus->Line_2d[n] = ptr;
+  Plus->Line[n] = ptr;
   return (0);
 }
 
@@ -146,9 +146,9 @@ dig_Wr_P_line (
 		  int  n,
 		  FILE * fp)
 {
-  P_LINE_2D *ptr; 
+  P_LINE *ptr; 
 
-  ptr = Plus->Line_2d[n];
+  ptr = Plus->Line[n];
   
   if (0 >= dig__fwrite_port_P (&(ptr->N1), 1, fp))
     return (-1);
@@ -182,12 +182,12 @@ dig_Rd_P_area (
 		  int  n,
 		  FILE * fp)
 {
-  P_AREA_2D *ptr; 
+  P_AREA *ptr; 
 #ifdef GDEBUG
   G_debug (3, "dig_Rd_P_area(): n = %d", n );
 #endif
 
-  ptr = dig_alloc_area_2d();
+  ptr = dig_alloc_area();
 
   if (0 >= dig__fread_port_D (&(ptr->N), 1, fp))
     return -1;
@@ -207,13 +207,13 @@ dig_Rd_P_area (
   if (0 >= dig__fread_port_P (&(ptr->n_isles), 1, fp))
     return -1;
 
-  if ( dig_area_alloc_line_2d ( ptr, ptr->n_lines) == -1)
+  if ( dig_area_alloc_line ( ptr, ptr->n_lines) == -1)
      return -1; 
 
-  if ( dig_area_alloc_centroid_2d ( ptr, ptr->n_centroids) == -1)
+  if ( dig_area_alloc_centroid ( ptr, ptr->n_centroids) == -1)
      return -1; 
 
-  if ( dig_area_alloc_isle_2d ( ptr, ptr->n_isles) == -1)
+  if ( dig_area_alloc_isle ( ptr, ptr->n_isles) == -1)
      return -1; 
 
   if (ptr->n_lines)
@@ -228,7 +228,7 @@ dig_Rd_P_area (
     if (0 >= dig__fread_port_P (ptr->isles, ptr->n_isles, fp))
       return -1;
 
-  Plus->Area_2d[n] = ptr;
+  Plus->Area[n] = ptr;
   
   return (0);
 }
@@ -239,9 +239,9 @@ dig_Wr_P_area (
 		  int  n,
 		  FILE * fp)
 {
-  P_AREA_2D *ptr; 
+  P_AREA *ptr; 
 
-  ptr = Plus->Area_2d[n];
+  ptr = Plus->Area[n];
   
   if (0 >= dig__fwrite_port_D (&(ptr->N), 1, fp))
     return (-1);
@@ -280,12 +280,12 @@ dig_Rd_P_isle (
 		  int  n,
 		  FILE * fp)
 {
-  P_ISLE_2D *ptr; 
+  P_ISLE *ptr; 
 #ifdef GDEBUG
   G_debug (3, "dig_Rd_P_isle()");
 #endif
 
-  ptr = dig_alloc_isle_2d();
+  ptr = dig_alloc_isle();
 
   if (0 >= dig__fread_port_D (&(ptr->N), 1, fp))
     return -1;
@@ -302,14 +302,14 @@ dig_Rd_P_isle (
   if (0 >= dig__fread_port_P (&(ptr->n_lines), 1, fp))
     return -1;
 
-  if ( dig_isle_alloc_line_2d ( ptr, ptr->n_lines) == -1)
+  if ( dig_isle_alloc_line ( ptr, ptr->n_lines) == -1)
      return -1;
   
   if (ptr->n_lines)
     if (0 >= dig__fread_port_P (ptr->lines, ptr->n_lines, fp))
       return -1;
 
-  Plus->Isle_2d[n] = ptr;
+  Plus->Isle[n] = ptr;
   
   return (0);
 }
@@ -320,9 +320,9 @@ dig_Wr_P_isle (
 		  int  n,
 		  FILE * fp)
 {
-  P_ISLE_2D *ptr; 
+  P_ISLE *ptr; 
 
-  ptr = Plus->Isle_2d[n];
+  ptr = Plus->Isle[n];
   
   if (0 >= dig__fwrite_port_D (&(ptr->N), 1, fp))
     return (-1);

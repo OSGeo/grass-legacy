@@ -13,7 +13,7 @@
 
 
 double 
-dig_point_in_area (struct Map_info *map, double X, double Y, P_AREA_2D * Area)
+dig_point_in_area (struct Map_info *map, double X, double Y, P_AREA * Area)
 {
   static int first_time;
   static struct line_pnts Points;
@@ -27,7 +27,7 @@ dig_point_in_area (struct Map_info *map, double X, double Y, P_AREA_2D * Area)
   int n_segs;
   int l;
   int n;
-  P_LINE_2D *Line;
+  P_LINE *Line;
   struct Plus_head *Plus;
 
   Plus = &(map->plus);
@@ -49,7 +49,7 @@ dig_point_in_area (struct Map_info *map, double X, double Y, P_AREA_2D * Area)
       /* Read in line coordinates */
       at_line = abs (Area->lines[l]);
 
-      Line = Plus->Line_2d[at_line];
+      Line = Plus->Line[at_line];
 
       /* dont check lines that obviously do not 
          ** intersect with test ray    -dpg 3.1
@@ -136,7 +136,7 @@ dig_x_intersect (
 
 int 
 dig_in_area_bbox (
-		   P_AREA_2D * Area,
+		   P_AREA * Area,
 		   double x, double y)
 {
 #ifdef GDEBUG

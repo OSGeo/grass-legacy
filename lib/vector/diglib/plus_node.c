@@ -21,16 +21,16 @@ dig_node_add_line ( struct Plus_head *plus, int nodeid, int lineid,
     register int i, j, nlines;
     float angle;
     int end, ret;
-    P_NODE_2D *node;
+    P_NODE *node;
     char *p;
 
     G_debug (3, "dig_node_add_line(): node = %d line = %d", nodeid, lineid);
 
-    node = plus->Node_2d[nodeid];
+    node = plus->Node[nodeid];
     nlines = node->n_lines;
 
     /* reallocate memory */
-    ret = dig_node_alloc_line_2d ( node, 1);
+    ret = dig_node_alloc_line ( node, 1);
     if ( ret == -1 ) return -1;
     
     //end = line < 0 ? points->n_points - 1 : 0;
@@ -87,22 +87,22 @@ int
 dig_add_node ( struct Plus_head *plus, double x, double y) {
     int  nnum;
     char *p;
-    P_NODE_2D *node;
+    P_NODE *node;
     
     /* First look if we have space in array of pointers to nodes
     *  and reallocate if necessary */
     G_debug(3, "dig_add_node(): n_nodes = %d, alloc_nodes = %d", plus->n_nodes, plus->alloc_nodes );
     if ( plus->n_nodes >= plus->alloc_nodes ) { /* array is full */
-	if ( dig_alloc_nodes_2d(plus,1000) == -1 )
+	if ( dig_alloc_nodes(plus,1000) == -1 )
             return -1;
     }
     
     /* allocate node structure */
     nnum = plus->n_nodes + 1;
 
-    plus->Node_2d[nnum] = dig_alloc_node_2d();
+    plus->Node[nnum] = dig_alloc_node();
       
-    node = plus->Node_2d[nnum];
+    node = plus->Node[nnum];
     node->x = x;
     node->y = y;
   
@@ -124,7 +124,7 @@ dig_which_node ( struct Plus_head *plus, double x, double y, double thresh) {
   register int have_match;
   int winner;
   double least_dist, dist;
-  P_NODE_2D *node;
+  P_NODE *node;
 
   first_time = 1;
   have_match = 0;
@@ -132,10 +132,10 @@ dig_which_node ( struct Plus_head *plus, double x, double y, double thresh) {
   least_dist = 0.0;
   for (i = 1; i <= plus->n_nodes; i++)
     {
-      if (plus->Node_2d[i] == NULL)
+      if (plus->Node[i] == NULL)
 	continue;
 
-      node = plus->Node_2d[i];
+      node = plus->Node[i];
       if ((fabs (node->x - x) <= thresh) &&
 	  (fabs (node->y - y) <= thresh))
 	{

@@ -12,19 +12,19 @@ int
 dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long offset){
     int  lineid, node, lp;
     char *p;
-    P_LINE_2D *line;
+    P_LINE *line;
     
     /* First look if we have space in array of pointers to lines
     *  and reallocate if necessary */
     if ( plus->n_lines >= plus->alloc_lines ) { /* array is full */
-	if ( dig_alloc_lines_2d(plus,1000) == -1 )
+	if ( dig_alloc_lines(plus,1000) == -1 )
 	    return -1;
     }
     
     /* allocate line structure */
     lineid = plus->n_lines + 1;
-    plus->Line_2d[lineid] = dig_alloc_line_2d();
-    line = plus->Line_2d[lineid];
+    plus->Line[lineid] = dig_alloc_line();
+    line = plus->Line[lineid];
     
     /* Add nodes */
     G_debug ( 3, "Register node: type = %d,  %f,%f", type, Points->x[0], Points->y[0]);
@@ -68,6 +68,21 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
     line->W = 0;
     plus->n_lines++;
 
+    switch ( type ) {
+	case GV_POINT:
+            plus->n_plines++;
+	    break;
+	case GV_LINE:
+            plus->n_llines++;
+	    break;
+	case GV_BOUNDARY:
+            plus->n_blines++;
+	    break;
+	case GV_CENTROID:
+            plus->n_clines++;
+	    break;
+    }
+         
     return ( lineid );
 }
 
@@ -80,9 +95,9 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
 */
 plus_t
 dig_line_get_area (struct Plus_head *plus, plus_t line, int side) {
-    P_LINE_2D *Line;
+    P_LINE *Line;
     
-    Line = plus->Line_2d[line];
+    Line = plus->Line[line];
     if ( side == GV_LEFT  ) { 
 	G_debug ( 3, "dig_line_get_area(): line = %d, side = %d (left), area = %d", 
 		      line, side, Line->left ); 
@@ -104,9 +119,9 @@ dig_line_get_area (struct Plus_head *plus, plus_t line, int side) {
 */
 int
 dig_line_set_area (struct Plus_head *plus, plus_t line, int side, plus_t area ) {
-    P_LINE_2D *Line;
+    P_LINE *Line;
     
-    Line = plus->Line_2d[line];
+    Line = plus->Line[line];
     if ( side == GV_LEFT  ) { Line->left = area; }
     else if ( side == GV_RIGHT ) { Line->right = area; }
 

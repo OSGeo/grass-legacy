@@ -135,8 +135,8 @@ dig_add_area (struct Plus_head *plus,
 {
     register int i;
     register int area, line;
-    P_AREA_2D *Area;
-    P_LINE_2D *Line;
+    P_AREA *Area;
+    P_LINE *Line;
     char *p;
 
 #ifdef GDEBUG
@@ -145,22 +145,22 @@ dig_add_area (struct Plus_head *plus,
     /* First look if we have space in array of pointers to areas
     *  and reallocate if necessary */
     if ( plus->n_areas >= plus->alloc_areas ) { /* array is full */
-	if ( dig_alloc_areas_2d(plus,1000) == -1 )
+	if ( dig_alloc_areas(plus,1000) == -1 )
             return -1;
     }
 
     /* allocate area structure */
     area = plus->n_areas +1;
-    Area = dig_alloc_area_2d();
+    Area = dig_alloc_area();
     if (Area == NULL) return -1;
 
-    if ( dig_area_alloc_line_2d (Area, n_lines) == -1 )
+    if ( dig_area_alloc_line (Area, n_lines) == -1 )
         return -1;
     
     for (i = 0; i < n_lines; i++) {
         line = lines[i];
         Area->lines[i] = line;	
-        Line = plus->Line_2d[abs(line)];
+        Line = plus->Line[abs(line)];
         if (line < 0) { /* revers direction -> area on left */
 	    if ( Line->left != 0 )
 	        G_warning ("Line %d already had area/isle %d to left.", line, Line->left);
@@ -177,7 +177,7 @@ dig_add_area (struct Plus_head *plus,
     }
     Area->n_lines = n_lines;
   
-    plus->Area_2d[area] = Area;
+    plus->Area[area] = Area;
     plus->n_areas++;
   
     return (area);
@@ -205,20 +205,20 @@ dig_angle_next_line (
   register int current;
   int line;
   plus_t node;
-  P_NODE_2D *Node;
-  P_LINE_2D *Line;
+  P_NODE *Node;
+  P_LINE *Line;
 
 #ifdef GDEBUG
   G_debug (3, "dig_angle_next_line: line = %d, side = %d, type = %d", 
 	           current_line, side, type);
 #endif
-  Line = plus->Line_2d[abs(current_line)];
+  Line = plus->Line[abs(current_line)];
   if ( current_line > 0 )
     node = Line->N1;
   else {
     node = Line->N2;
   }
-  Node = plus->Node_2d[node];
+  Node = plus->Node[node];
 
   /* first find index for that line */
   next = -1;
@@ -241,7 +241,7 @@ dig_angle_next_line (
 	    next--;
       }
       line = abs ( Node->lines[next] );
-      Line = plus->Line_2d[line];
+      Line = plus->Line[line];
       if ( Line->type == GV_BOUNDARY ) {
 	  return ( Node->lines[next] );
       }
@@ -307,8 +307,8 @@ dig_add_isle (struct Plus_head *plus,
 {
     register int i;
     register int isle, line;
-    P_ISLE_2D *Isle;
-    P_LINE_2D *Line;
+    P_ISLE *Isle;
+    P_LINE *Line;
     char *p;
 
 #ifdef GDEBUG
@@ -317,16 +317,16 @@ dig_add_isle (struct Plus_head *plus,
     /* First look if we have space in array of pointers to isles
     *  and reallocate if necessary */
     if ( plus->n_isles >= plus->alloc_isles ) { /* array is full */
-	if ( dig_alloc_isles_2d(plus,1000) == -1 )
+	if ( dig_alloc_isles(plus,1000) == -1 )
 	     return -1;
     }
 
     /* allocate isle structure */
     isle = plus->n_isles + 1;
-    Isle = dig_alloc_isle_2d();
+    Isle = dig_alloc_isle();
     if (Isle == NULL) return -1;
 
-    if ( ( dig_isle_alloc_line_2d (Isle, n_lines) ) == -1 )
+    if ( ( dig_isle_alloc_line (Isle, n_lines) ) == -1 )
         return -1;
 
     Isle->area = -1;
@@ -340,7 +340,7 @@ dig_add_isle (struct Plus_head *plus,
         line = lines[i];
         G_debug (3, " i = %d line = %d", i, line);
         Isle->lines[i] = line;	
-        Line = plus->Line_2d[abs(line)];
+        Line = plus->Line[abs(line)];
         if (line < 0) { /* revers direction -> isle on left */
 	    if ( Line->left != 0 )
 	        G_warning ("Line %d already had area/isle %d to left.", line, Line->left);
@@ -356,7 +356,7 @@ dig_add_isle (struct Plus_head *plus,
 
     Isle->n_lines = n_lines;
   
-    plus->Isle_2d[isle] = Isle;
+    plus->Isle[isle] = Isle;
     plus->n_isles++;
   
     return (isle);
