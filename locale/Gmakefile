@@ -52,7 +52,7 @@ tcltkgrass:
 	        test -d $$h && continue; \
 	        cp $$h $$NLOC_DIR/tcltkgrass/module; \
 	    done); \
-	test -d $$LCL/tcltkgrass/script/msgs && (cp -a $$LCL/tcltkgrass/script/msgs $(GISBASE)/tcltkgrass/script;) \
+	test -d $$LCL/tcltkgrass/script/msgs && (cp -pR $$LCL/tcltkgrass/script/msgs $(GISBASE)/tcltkgrass/script;) \
 	done
 
 textintro:
