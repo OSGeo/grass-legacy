@@ -46,6 +46,18 @@ int main(int argc, char *argv[])
 
     G_gisinit(argv[0]);
 
+    input = G_define_option();
+    input->key = "input";
+    input->type = TYPE_STRING;
+    input->required = NO;
+    input->description = "Input coordinate file";
+
+    output = G_define_option();
+    output->key = "output";
+    output->type = TYPE_STRING;
+    output->required = NO;
+    output->description = "Output coordinate file";
+
     p_in = G_define_option();
     p_in->key = "inproj";
     p_in->type = TYPE_STRING;
@@ -59,18 +71,6 @@ int main(int argc, char *argv[])
     p_out->required = NO;
     p_out->multiple = YES;
     p_out->description = "Comma separated output projection parameters";
-
-    input = G_define_option();
-    input->key = "input";
-    input->type = TYPE_STRING;
-    input->required = NO;
-    input->description = "Input coordinate file";
-
-    output = G_define_option();
-    output->key = "output";
-    output->type = TYPE_STRING;
-    output->required = NO;
-    output->description = "Output coordinate file";
 
     wgs84_in = G_define_flag();
     wgs84_in->key = 'i';
@@ -355,9 +355,7 @@ int main(int argc, char *argv[])
 	    strcat(buf, label);
 	}
 	/* Write Out Results */
-	if (output->answer)
-	    fprintf(stderr, "%s", buf);
-	else
+	if (! output->answer)
 	    fprintf(stdout, "%s", buf);
 	put_output(buf, (int)output->answer);
     }	/* end for loop */
