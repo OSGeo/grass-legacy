@@ -1,0 +1,13 @@
+Mmain	main.c	/^main(argc, argv) char *argv[];$/
+_reclass	reclass.c	/^_reclass (rules, cats, old, new)$/
+add_rule	add_rule.c	/^add_rule (tail, lo, hi, new)$/
+input	input.c	/^input(buf) char *buf;$/
+new_colors	colors.c	/^new_colors (name, reclass)$/
+new_histogram	histo.c	/^new_histogram (name, reclass)$/
+new_range	range.c	/^new_range (name, reclass, range)$/
+new_stats	stats.c	/^new_stats (name, reclass)$/
+parse	parse.c	/^parse (line, rules, tail, cats)$/
+percent	percent.c	/^percent (n, d, m)$/
+re_reclass	reclass.c	/^re_reclass (rules, cats, old, new)$/
+reclass	reclass.c	/^reclass (old_name, old_mapset, new_name, rules, ca/
+scan_value	parse.c	/^scan_value (v)$/
