@@ -1,0 +1,42 @@
+.\" @(#)MAN	2.1 6/26/87
+.TH Dsave 2D D-language
+.SH NAME
+Dsave \- Saves description of graphics window
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dsave
+save_file
+.SH DESCRIPTION
+.I Dsave 
+saves the graphics description information associated with the current graphics
+window in a 
+.I GRASS
+file
+.I save_file.
+This file can then be used to regenerate the image in another graphics window
+or on another graphics device at a later time.   See the 
+.I D
+macro,
+.I Dmove
+for an example of saving and redrawing a saved image.
+The saved instructions are stored in the current
+.I mapset.
+For a list of saved windows, use the
+.PP
+.I Dsave
+is intended for future commands which will reproduce the window
+display on a a hard copy device.  It should be considered experimental
+for now.
+.I GRASS
+command:
+.I "list screen".
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
+.SH BUGS
+Only works for information in a
+.I map
+window.
+Misses information that was provided to a 
+.I D
+command through standard input.
