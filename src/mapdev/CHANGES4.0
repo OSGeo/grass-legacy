@@ -1,0 +1,106 @@
+The following programs have been modified for GRASS4.0.  Each of the following 
+is different, in one or more ways, from it's counterpart in GRASS 3.2 
+([y] in inter column below means interactive version supplied by parser):
+
+                                                               needs recompile
+							       and testing
+NEW versions  cmd     inter      Old versions  dig_init done   post lib bug
+------------                    ------------   -------------   ----------
+v.in.ascii	y	y	a.b.vect           DNA             yes
+v.out.ascii     y       y       b.a.vect           yes             yes
+v.digit		n	y	digit 	           DNA             yes
+v.prune		y	y	Vprune and prune   yes             yes
+v.stats		y	y	Vstat              DNA             yes
+v.to.sites	y	y	Vmake.sites        DNA             yes
+v.mkcontour	y      [y]      Vmkcontour         DNA             done
+v.mkgrid        y       y       V.mkgrid           DNA             done
+v.mkquads       y      [y]      V.mkquads          DNA             done
+v.patch		y      [y]	Vpatch             yes             done
+v.out.dlg	y	y	[V]export.dlg	
+v.to.rast       y       y       vect.to.cell
+v.transform     y       n       v.transform
+v.build		y	y       build
+v.support		y       support.vect
+v.import
+v.cadlabel      y               
+
+
+done 1.v.build   was build.vect
+
+    --replace snap= thresh= args with flags
+
+done 2. v.support 
+
+      calls to build.vect:
+	 v.build,, change call params to flags
+
+      change modcats call
+
+done 3. v.import  was import_to_vect (changed from v.in) 
+
+         interactive version only (so far)
+         calls:
+	       etc/v.a.b.dlg
+	       etc/v.dlg_to_digit
+	       v.build
+	       v.in.ascii
+	       DOESN'T CALL in.dxf
+
+	 TODO: command-line version of v.import   
+	  will call  v.in.dxf, v.in.ascii, v.build, eventually v.in.dlg
+	    so will need command args of ascii= vect= dlg= dxf=
+		OR flags: e.g. -avd(x??)
+
+done 4. etc/v.a.b.dlg - goes to /etc, will be called by v.in.dlg
+
+done 5. etc/v.b.a.dlg - goes to /etc, won't be used
+
+
+done in ALPHA:  7. v.out.dxf      dxf_out (was ??)
+         still needs conversion to BINARY input, plus find bug, if
+	 it exists, that produces pppp0 output to stderr at end!!!
+
+done:  8. v.in.dxf       dxf_in  (was dxf2dig)
+
+done:  9. v.cadlabel
+
+-------------
+
+still leaves:
+
+v.in.dlg
+      calls v.a.b.dlg and v.dlg_to_dig
+      DO by extracting appropriate code from v.import
+
+v.db -- can't do: original (Gdbvect) has fortran code, so, I just
+      copied all code from /grass.src/3.2.src.new/Gdbvect to
+			   /grass.src/4.0/src.contrib/Gdbvect
+v.out.arc
+v.out.moss
+v.state.plane
+
+**********************************************************************
+
+1.	 changed a.b.dlg to v.a.b.dlg  bin in ../etc
+
+2.	   "     dlg_to_digit to v.dlg_to_digit  bin in ../etc
+		    in Gmakefile for this, removed bdig_head.h dependency
+
+3.      v.import (was import_to_vect)  bin in BIN_MAIN_INTER as v.import
+	 set up system calls to:
+	  v.a.b.dlg
+	  v.dlg_to_digit
+	  v.in.ascii
+	  v.build
+	    IMPORTANT:  call to v.build FORMERLY set thresh=no, meaning
+	      use default thresh value.  
+
+	      NOW, from import.vect,
+	      the call to v.build is either "-sp" or ""; which  means
+	      snap nodes and prompt for value, or don't snap.
+	      this is identical to what v.support does.
+
+4.  all of the above are compiled and installed, but not tested. thought
+i could let you do that. (along with v.support)  heh-heh
+
+5.STILL to DO:  cmd version of v.import, etc.        
