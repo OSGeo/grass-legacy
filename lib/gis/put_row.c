@@ -135,6 +135,7 @@
 #endif
 
 #include "G.h"
+#include "glocale.h"
 
 #define FCB          G__.fileinfo[fd]
 #define MIN_NULL_ROW FCB.min_null_row
@@ -606,7 +607,7 @@ static int write_error (int fd,int row)
 {
     if (FCB.io_error) return 0;
 
-    G_warning("map [%s] - unable to write row %d", FCB.name, row);
+    G_warning(_("map [%s] - unable to write row %d"), FCB.name, row);
     FCB.io_error = 1;
 
     return 0;
@@ -850,12 +851,12 @@ int G__write_null_bits (int null_fd, unsigned char *flags, int row, int cols, in
    offset = (long) (size * row * sizeof(unsigned char)) ; 
    if (lseek (null_fd, offset, 0) < 0)
    {
-       G_warning("error writing null row %d\n",row);
+       G_warning(_("error writing null row %d\n"),row);
        return -1;
    }
    if (write (null_fd, flags, size) != size)
    {
-       G_warning("error writing null row %d\n",row);
+       G_warning(_("error writing null row %d\n"),row);
        return -1;
    }
    return 1;
@@ -893,13 +894,13 @@ static void convert_and_write_id (int fd, CELL *buf)
 
 static void convert_and_write_fi (int fd, FCELL *buf)
 {
-    G_warning("can't put float row into integer map"); 
+    G_warning(_("can't put float row into integer map")); 
     ERROR = 1;
 }
 
 static void convert_and_write_di (int fd, DCELL *buf)
 {
-    G_warning("can't put double row into integer map"); 
+    G_warning(_("can't put double row into integer map")); 
     ERROR = 1;
 }
 
