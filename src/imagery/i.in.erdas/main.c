@@ -1,3 +1,4 @@
+static char rcsid[]="$Header$";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,10 +38,6 @@
   For what it is worth, the swapping code was originally written on a k6-2, running
   	Slackware Linux 4.0. It was tested using homebrew files in arbitrary byte order.
   	Some time soon, I will have to release i.out.erdas, if only for completeness. 	
-
-LAN Format:
-       http://www2.erdas.com/SupportSite/documentation/files/erdas7xfiles.pdf
-
 */
 
 
@@ -151,7 +148,7 @@ printhd (struct edheader *hd)
 	int i;
 	for (i=0;i<6;i++) fprintf(stderr,"%c",hd->hdwrd[i]);
 	fprintf(stderr,"\n");
-	fprintf(stderr,"pack type ------------- %d == ",hd->pack);
+	fprintf(stderr,"pack type------ %d == ",hd->pack);
 	if (hd->pack == 0) fprintf(stderr,"8 bit/pixel\n");
 	else if(hd->pack == 1) fprintf(stderr,"4 bit/pixel\n");
 	else if(hd->pack == 2) fprintf(stderr,"16 bit/pixel\n");
@@ -159,10 +156,9 @@ printhd (struct edheader *hd)
 	fprintf(stderr,"number bands----------- %d\n",hd->nbands);
 	fprintf(stderr,"number cols,rows------- %ld, %ld\n",hd->rcols,hd->rrows);
 	fprintf(stderr,"starting coordinate --- %ld, %ld\n",hd->rx,hd->ry);
-	fprintf(stderr,"map type (projection) - %d\n",hd->maptyp);
+	fprintf(stderr,"map type -------------- %d\n",hd->maptyp);
 	fprintf(stderr,"number classes -------- %d\n",hd->nclass);
-	fprintf(stderr,"unit-type: ------------ %c (N=None A=Acre H=Hectare O=Other)\n", IAUTYP[hd->utyp]);
-	fprintf(stderr,"area per pixel -------- %f\n",hd->area);
+	fprintf(stderr,"area ------------------ %f %c\n",hd->area,IAUTYP[hd->utyp]);
 	fprintf(stderr,"map coordinate -------- %f, %f\n",hd->mx,hd->my);
 	fprintf(stderr,"pixel size ------------ %f, %f\n\n",hd->xcel,hd->ycel);
 }
@@ -181,7 +177,7 @@ static void getbands (int out[], int bands)
 	fprintf(stderr, "Do you want to select a subset of the bands in the ERDAS file (y/n)[n] ");
 	if (G_gets(line)) {
 		if (line[0] == 'y') {
-			fprintf(stderr, "Enter the selected bands one per line stop with a carriage return\n");
+			fprintf(stderr, "Enter the selcted bands one per line stop with a cariage return\n");
 			while (length > 0 && i <= MAXBND) {
 				fprintf(stderr, ":");
 				G_gets(line);
@@ -201,7 +197,7 @@ int
 getwin (double *row, double *col, double *lrow, double *lcol)
 {
 	double srow = -1.0, scol = -1.0, nrow = MAXNUMBER, ncol = MAXNUMBER;
-	char line[150];
+	char OK = 0,line[150];
 
 	fprintf(stderr, "Do you want to subwindow the erdas file (y/n)[n] ");
 
@@ -242,31 +238,29 @@ getwin (double *row, double *col, double *lrow, double *lcol)
 
 /******************** Routine to put data into CELL file ****************/
 int 
-put_row (int fd, unsigned char *buf, int row, int pack, int maptyp)
+put_row (int fd, unsigned char *buf, int row, int pack)
 {
 	CELL *c,*cellbuf;
-	FCELL *f,*fcellbuf;
 	int ncols;
 	short *buf1;
-	float *buf2;
 
-	if(maptyp == CELL_TYPE) { /* integer map */
-		buf1 = (short*) buf;
-		ncols = G_window_cols();
-		if ((cellbuf = (CELL *)G_malloc(ncols*sizeof(CELL))) == NULL) {
-			fprintf(stderr, "integer memory error\n");
-			exit(0);
-		}
-		c = cellbuf;
-		while(ncols-- > 0) {
-			if (pack == 2){
-				*c++ = *buf1++;
-			}else{
-				*c++ = *buf++;
-			}
-		}
 
-/*************** DEBUG ********************
+	buf1 = (short*) buf;
+	ncols = G_window_cols();
+	if ((cellbuf = (CELL *)G_malloc(ncols*sizeof(CELL))) == NULL) {
+		fprintf(stderr,"memory error\n");
+		exit(0);
+	}
+	c = cellbuf;
+	while(ncols-- > 0) {
+		if (pack == 2){
+			*c++ = *buf1++;
+		}else{
+			*c++ = *buf++;
+		}
+	}
+
+	/*************** DEBUG ********************
     ncols = G_window_cols(); c = cellbuf;
     while(ncols-- > 0) {
 fprintf(stderr," %d ",*c++);
@@ -274,27 +268,8 @@ fprintf(stderr," %d ",*c++);
 fprintf(stderr,"\n");
 ******************************************/
 
-		if (G_put_raster_row (fd, cellbuf, CELL_TYPE) < 0) return (-1);
-		free(cellbuf);
-	} 
-	else { /* float map */
-		buf2 = (float*) buf;
-		ncols = G_window_cols();
-		if ((fcellbuf = (FCELL *)G_malloc(ncols*sizeof(FCELL))) == NULL) {
-			fprintf(stderr, "float memory error\n");
-			exit(0);
-		}
-		f = fcellbuf;
-		while(ncols-- > 0) {
-			if (pack == 2){
-				*f++ = *buf2++;
-			}else{
-				*f++ = *buf++;
-			}
-		}
-		if (G_put_raster_row (fd, cellbuf, FCELL_TYPE) < 0) return (-1);
-		free(fcellbuf);
-	}
+	if (G_put_raster_row (fd, cellbuf, CELL_TYPE) < 0) return (-1);
+	free(cellbuf);
 	return (0);
 }
 /******************** End put_row ***************************/
@@ -468,9 +443,7 @@ int main (int argc, char *argv[])
 	struct Option *start_row, *start_col, *num_rows, *num_cols, *sel_bands;
 	struct Flag *headflag,*autoswapflag,*swapflag,*mapcoord;
 	struct GModule *module;
-	int fixint;
-	float *fptr;
-	RASTER_MAP_TYPE data_type;
+
 
 	G_gisinit(argv[0]);
 
@@ -483,16 +456,16 @@ int main (int argc, char *argv[])
 	headflag->description = "List the ERDAS header only";
 
 	autoswapflag = G_define_flag();
-	autoswapflag->key = 'a';
-	autoswapflag->description = "Disable autoswap detection";
+    autoswapflag->key = 'a';
+    autoswapflag->description = "Disable autoswap detection";
 	
-	swapflag = G_define_flag();
-	swapflag->key = 's';
-	swapflag->description = "Force Swapping (overrides default auto)";
+    swapflag = G_define_flag();
+    swapflag->key = 's';
+    swapflag->description = "Force Swapping (overrides default auto)";
 
-	mapcoord = G_define_flag();
-	mapcoord->key = 'm';
-	mapcoord->description = "Use \"Map Coordinates\" for coordinates";
+    mapcoord = G_define_flag();
+    mapcoord->key = 'm';
+    mapcoord->description = "Use \"Map Coordinates\" for coordinates";
 
 	erdasopt = G_define_option();
 	erdasopt->key             = "input";
@@ -549,7 +522,6 @@ int main (int argc, char *argv[])
 		exit (-1);
 	
 	showhead = headflag->answer;
-	data_type = -1;
 	
 	if ((erdf = open(erdasopt->answer,0)) < 0) {
 		fprintf(stderr,"Error can not open ERDAS file\n");
@@ -606,24 +578,21 @@ int main (int argc, char *argv[])
 /*skip anything less than 7.4 file type */
 	if ((erdashd.hdwrd[4] - 0x30) < 7 || (erdashd.hdwrd[5] - 0x30) < 4)
 		G_fatal_error("ERDAS files before version 7.4 are not supported.");
-	if (ERDFTYP != 4 && erdashd.hdwrd[4] == 'E' && erdashd.hdwrd[5] == 'R'){
+/*	if (ERDFTYP != 4){
 		fptr = (float *)&(erdashd.rrows);
 		fixint = *fptr;
 		erdashd.rrows = fixint;
-		
 		fptr = (float *)&(erdashd.rcols);
 		fixint = *fptr;
 		erdashd.rcols = fixint;
-		
 		fptr = (float *)&(erdashd.rx);
 		fixint = *fptr;
 		erdashd.rx = fixint;
-		
 		fptr = (float *)&(erdashd.ry);
 		fixint = *fptr;
 		erdashd.ry = fixint;
 	}
-
+*/
 	printhd(&erdashd);
 	if (showhead)
 		exit(1);
@@ -709,17 +678,9 @@ int main (int argc, char *argv[])
 		}
 
 	i=0;
-
-	if(erdashd.maptyp == 99) { /* floating-point data */
-		data_type = FCELL_TYPE;
-		G_fatal_error("Floating point import doesn't work yet.");
-	}
-
-	data_type = CELL_TYPE;
-
 	for (band=outband[0];band!=0;band=outband[++i]) {
 		sprintf(grassname,"%s.%d",outopt->answer,band);
-		if ((new[band]=G_open_raster_new(grassname, data_type)) <= 0) {
+		if ((new[band]=G_open_cell_new(grassname)) <= 0) {
 			fprintf(stderr,"Error in opening grass cell file band %d",band);
 			exit(0);
 		}
@@ -753,7 +714,7 @@ int main (int argc, char *argv[])
 			if (row >= firstrow) {
 				for (i=0;i<erdashd.nbands;i++) {
 					if (band == outband[i]) {
-						if (put_row(new[band],startbuf,row,pack,data_type) < 0) {
+						if (put_row(new[band],startbuf,row,pack) < 0) {
 							fprintf(stderr,"Error in putting row %d band %d\n",row,band);
 							exit(0);
 						}
