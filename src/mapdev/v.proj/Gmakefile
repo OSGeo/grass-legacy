@@ -4,7 +4,7 @@ OFILES = \
 	main.o setenv.o 
 
 SRCS = \
-	main.c setenv.c 
+	main.c setenv.c
 
 LIBES=$(GPROJLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(LIBPROJSUPP) $(LIBPROJ)
 DEPLIBS=$(DEPGPROJLIB) $(DEPVECTLIB) $(DEPDIG_ATTLIB) $(DEPGISLIB) $(LIBPROJSUPP) $(LIBPROJ)

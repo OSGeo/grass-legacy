@@ -53,6 +53,9 @@ int main (int argc, char *argv[])
             } flag;
         char buf[1024];
 
+	/* added for datum conversion */
+	char in_datum[64],out_datum[64],in_ellipse[64],out_ellipse[64];
+ 
         G_gisinit (argv[0]);
      
 		module = G_define_module();
@@ -227,6 +230,11 @@ int main (int argc, char *argv[])
 				    map_name, iloc_name, iset_name);
 	            G_fatal_error(buffb) ;
 	         }
+
+		/*for datum conversion find input location datum and ellipse */
+		strncpy(in_datum,G_database_datum_name(),sizeof(in_datum));
+		strncpy(in_ellipse,G_database_ellipse_name(),sizeof(in_ellipse));
+
            /*** Get projection info for input mapset ***/
                  in_proj_keys = G_get_projinfo();
                  if (in_proj_keys == NULL) {
@@ -270,6 +278,10 @@ int main (int argc, char *argv[])
 
            select_current_env();
 
+
+	    /* for datum conversion find output location datum and ellipse */
+	    strncpy(out_datum,G_database_datum_name(),sizeof(out_datum));
+	    strncpy(out_ellipse,G_database_ellipse_name(),sizeof(out_ellipse));
 
 	     /****** get the output projection parameters ******/
            Out_proj = G_projection();
@@ -323,9 +335,12 @@ int main (int argc, char *argv[])
 
         oform = "%.10f";
 
+	/* determine which do_proj function to use */
+	set_datumshift(in_datum,in_ellipse,out_datum,out_ellipse);
+
         /*SE*/
-        if(pj_do_proj(&HE,&HS,&info_in,&info_out)<0) {
-          fprintf(stderr,"Error in pj_do_proj\n");
+        if(proj_f(&HE,&HS,&info_in,&info_out)<0) {
+          fprintf(stderr,"Error in proj_f\n");
           exit(0);
         }
         E = HE;
@@ -334,8 +349,8 @@ int main (int argc, char *argv[])
         HS = Map.head.S;
 
         /*NE*/
-        if(pj_do_proj(&HE,&HN,&info_in,&info_out)<0) {
-          fprintf(stderr,"Error in pj_do_proj\n");
+        if(proj_f(&HE,&HN,&info_in,&info_out)<0) {
+          fprintf(stderr,"Error in proj_f\n");
           exit(0);
         }
         N = HN;
@@ -344,8 +359,8 @@ int main (int argc, char *argv[])
         else Out_Map.head.E = HE;
 
         /*SW*/
-        if(pj_do_proj(&HW,&HS,&info_in,&info_out)<0) {
-          fprintf(stderr,"Error in pj_do_proj\n");
+        if(proj_f(&HW,&HS,&info_in,&info_out)<0) {
+          fprintf(stderr,"Error in proj_f\n");
           exit(0);
         }
         W = HW;
@@ -355,8 +370,8 @@ int main (int argc, char *argv[])
         HW = Map.head.W;
 
         /*NW*/
-        if(pj_do_proj(&HW,&HN,&info_in,&info_out)<0) {
-          fprintf(stderr,"Error in pj_do_proj\n");
+        if(proj_f(&HW,&HN,&info_in,&info_out)<0) {
+          fprintf(stderr,"Error in proj_f\n");
           exit(0);
         }
         if (HN < N) Out_Map.head.N = N;
@@ -439,8 +454,8 @@ int main (int argc, char *argv[])
             {
               X = Points->x[cnt];
               Y = Points->y[cnt];
-              if(pj_do_proj(&X,&Y,&info_in,&info_out)<0) { 
-                fprintf(stderr,"Error in pj_do_proj\n");
+              if(proj_f(&X,&Y,&info_in,&info_out)<0) { 
+                fprintf(stderr,"Error in proj_f\n");
                 exit(0);
               }
               Points->x[cnt] = X;
@@ -474,7 +489,7 @@ int main (int argc, char *argv[])
 	       strncmp(buffa,"P",1) == 0 )
 		 {
                  sscanf(buffa,"%s %lf %lf %d", ctype, &X, &Y, &cat);
-                 pj_do_proj(&X,&Y,&info_in,&info_out);
+                 proj_f(&X,&Y,&info_in,&info_out);
                           /* write line */
                   sprintf(buffb,"%1s %14.10f %14.10f %7d\n",ctype,X,Y,cat);
                   fputs(buffb,out1);
