@@ -81,8 +81,12 @@ function getstats()
 {
  r.stats -1 $tasscap,$1 > $2
  r.linear.regression in=$2 out=$3
+ if [ $? -eq 1 ] ; then
+  echo "An error occurred. Stop."
+  exit
+ fi
 # result="`tail $3 | grep a\[1\] | cut -d' ' -f2,3 | tr -s '=' ' '`"
-  result="`tail $3 | grep "a\[1\]" | tr -s '=' ' '`"
+ result="`tail $3 | grep "a\[1\]" | tr -s '=' ' '`"
 }
 
 
