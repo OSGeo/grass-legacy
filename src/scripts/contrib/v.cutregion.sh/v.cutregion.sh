@@ -212,7 +212,7 @@ fi
 
 #### cut input map to region to output vector file
 echo "cutting \"$INPUT\" map with region file to \"$OUTPUT\" map"
-v.cutter cutter=region$$ data=$INPUT out=$OUTPUT 2>&1 > /dev/null
+v.cutter cutter=region$$ input=$INPUT out=$OUTPUT 2>&1 > /dev/null
 if [ $? -eq 0 ] ; then
    echo "$PROG: cutting ok" 2>&1
 else
