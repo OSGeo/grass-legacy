@@ -165,6 +165,9 @@ sub DoFont {
   s#<B>#\\fB#ig;
   s#</B>#\\fR#ig;
 
+  s#<FONT .*>##ig;
+  s#</FONT>##ig;
+
   s# *</I> *_ *<I> *#_#ig;
   s#</I> *<I># #ig;
   s#<I>#\\fI#ig;

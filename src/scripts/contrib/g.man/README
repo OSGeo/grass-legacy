@@ -1,6 +1,0 @@
-Replacement for g.manual script for man, which can not browse generated
-manpages correctly, especially BSDis man program.
-
-This uses lynx text-based web browser to use documents/html/*.html with
-hyperlinks.
-

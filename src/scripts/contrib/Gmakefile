@@ -4,7 +4,6 @@ all:
 	cp d.rast.rescale/d.rast.rescale $(GISBASE)/scripts
 	cp d.redraw/d.redraw $(GISBASE)/scripts
 	cp g.html2man/g.html2man $(GISBASE)/scripts
-	cp g.man/g.man $(GISBASE)/scripts
 	cp g.man2html/g.man2html $(GISBASE)/scripts
 	cp g.manual/g.manual $(GISBASE)/scripts
 	$(GMAKE) i.oif
