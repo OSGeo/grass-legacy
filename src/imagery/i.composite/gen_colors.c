@@ -1,4 +1,3 @@
-/* %W%  %G% */
 #include "globals.h"
 
 gen_colors ()
