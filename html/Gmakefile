@@ -6,6 +6,7 @@ all:
 #	html/convert_to_man.sh
 
 #Postscript-docs:
+#http://www.tdb.uu.se/~jan/html2ps.html
 #	if [ ! -d $(GISBASE)/postscript ]; then mkdir $(GISBASE)/postscript; fi
 #	html2ps html/d*.html > $(GISBASE)/postscript/grass5display.ps
 #	html2ps html/g*.html > $(GISBASE)/postscript/grass5general.ps
