@@ -19,5 +19,8 @@ to migrate a 5.0 module into the 5.1 environment.
      are many which return 0 on success and a negative value on failure.
      Proposal for 5.1?
 
+3. Style of file: We can reach pretty indenting through:
+    indent -i4 -npsl -di0 -br -nce -d0 -cli0 -npcs -nfc1 FILE.c
+   This should be done before uploading.
 
 ... to be extended...
