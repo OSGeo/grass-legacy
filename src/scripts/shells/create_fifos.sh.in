@@ -1,3 +1,4 @@
+#!/bin/sh
 # create_fifos.sh.in
 
 DEV=@prefix@/dev
