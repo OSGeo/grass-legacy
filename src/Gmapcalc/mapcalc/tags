@@ -1,0 +1,112 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+_exp	xexp.c	/^_exp (a, cell, ncols)$/
+_pow	xexp.c	/^_pow (a, b, cell, ncols)$/
+add	math.c	/^add (a, b, n)$/
+add_x	math.c	/^add_x (a, b, n)$/
+and_i	logical.c	/^and_i (a, b, n)$/
+and_x	logical.c	/^and_x (a, b, n)$/
+apply_mask	execute.c	/^apply_mask(mask, cell, ncols)$/
+assignment	assign.c	/^assignment (fd, name)$/
+buffer_is_double	convert.c	/^buffer_is_double (s)$/
+closemaps	maps.c	/^closemaps()$/
+column_shift	maps.c	/^column_shift (cell, col, ncols)$/
+compare_ints	maps.c	/^compare_ints (a, b)$/
+configmaps	maps.c	/^configmaps(ncols)$/
+convert_to_cell	convert.c	/^convert_to_cell (s)$/
+convert_to_double	convert.c	/^convert_to_double (s)$/
+copy_cell_to_variable	variables.c	/^copy_cell_to_variable (cell, n, ncols)$/
+copy_double_to_variable	variables.c	/^copy_double_to_variable (cell, n, ncols)$/
+copy_variable_to_cell	variables.c	/^copy_variable_to_cell (cell, n, ncols)$/
+copy_variable_to_double	variables.c	/^copy_variable_to_double (cell, n, ncols)$/
+create_variable	variables.c	/^create_variable(n)$/
+divide	math.c	/^divide (a, b, n)$/
+divide_x	math.c	/^divide_x (a, b, n)$/
+eq_i	compare.c	/^eq_i (a, b, n)$/
+eq_x	compare.c	/^eq_x (a, b, n)$/
+evaluate	evaluate.c	/^evaluate (row, nrows, ncols)$/
+execute	execute.c	/^execute(outfd)$/
+find_function	function.c	/^find_function (name, n)$/
+find_min_max	min_max.c	/^find_min_max (cell, ncols)$/
+fpe	fpe.c	/^fpe(n)$/
+free_execute_stack	execute.c	/^free_execute_stack()$/
+free_expression_stack	expression.c	/^free_expression_stack()$/
+ge_i	compare.c	/^ge_i (a, b, n)$/
+ge_x	compare.c	/^ge_x (a, b, n)$/
+get_buffer_from_pool	pool.c	/^get_buffer_from_pool (n)$/
+grow_execute_stack	evaluate.c	/^grow_execute_stack()$/
+gt_i	compare.c	/^gt_i (a, b, n)$/
+gt_x	compare.c	/^gt_x (a, b, n)$/
+i_2int	x2int.c	/^i_2int (argc, argv, cell, ncols)$/
+i_abs	xabs.c	/^i_abs (argc, argv, cell, ncols)$/
+i_eval	xeval.c	/^i_eval (argc, argv, cell, ncols)$/
+i_if	xif.c	/^i_if (argc, argv, cell, ncols)$/
+i_max	xmax.c	/^i_max (argc, argv, cell, ncols)$/
+i_min	xmin.c	/^i_min (argc, argv, cell, ncols)$/
+i_round	xround.c	/^i_round (argc, argv, cell, ncols)$/
+initcats	maps.c	/^initcats(i)$/
+initcolors	maps.c	/^initcolors(i)$/
+input	input.c	/^input (file)$/
+le_i	compare.c	/^le_i (a, b, n)$/
+le_x	compare.c	/^le_x (a, b, n)$/
+lt_i	compare.c	/^lt_i (a, b, n)$/
+lt_x	compare.c	/^lt_x (a, b, n)$/
+modulus	math.c	/^modulus (a, b, n)$/
+modulus_x	math.c	/^modulus_x (a, b, n)$/
+multiply	math.c	/^multiply (a, b, n)$/
+multiply_x	math.c	/^multiply_x (a, b, n)$/
+n_2float	x2float.c	/^n_2float(n,name) char *name;$/
+n_2int	x2int.c	/^n_2int(n,name) char *name;$/
+n_abs	xabs.c	/^n_abs(n,name) char *name;$/
+n_atan	xatan.c	/^n_atan(n,name) char *name;$/
+n_cos	xcos.c	/^n_cos(n,name) char *name;$/
+n_eval	xeval.c	/^n_eval (n,name) char *name;$/
+n_exp	xexp.c	/^n_exp(n,name) char *name;$/
+n_if	xif.c	/^n_if (n,name) char *name;$/
+n_log	xlog.c	/^n_log(n,name) char *name;$/
+n_max	xmax.c	/^n_max (n,name) char *name;$/
+n_min	xmin.c	/^n_min (n,name) char *name;$/
+n_round	xround.c	/^n_round(n,name) char *name;$/
+n_sin	xsin.c	/^n_sin(n,name) char *name;$/
+n_sqrt	xsqrt.c	/^n_sqrt(n,name) char *name;$/
+n_tan	xtan.c	/^n_tan(n,name) char *name;$/
+ne_i	compare.c	/^ne_i (a, b, n)$/
+ne_x	compare.c	/^ne_x (a, b, n)$/
+openmap	maps.c	/^openmap (name, mapset, code, row)$/
+or_i	logical.c	/^or_i (a, b, n)$/
+or_x	logical.c	/^or_x (a, b, n)$/
+percent	percent.c	/^percent (n,d,s)$/
+polish	polish.c	/^polish (exp_fd, result)$/
+print_function_names	function.c	/^print_function_names()$/
+push_expression	expression.c	/^push_expression (type, k, nargs, x, row, col)$/
+push_expression_double	expression.c	/^push_expression_double (x, row, col)$/
+push_expression_function	expression.c	/^push_expression_function (k, nargs)$/
+push_expression_get_variable	expression.c	/^push_expression_get_variable (k)$/
+push_expression_integer	expression.c	/^push_expression_integer (k, row, col)$/
+push_expression_map	expression.c	/^push_expression_map (k, flag, row, col)$/
+push_expression_op	expression.c	/^push_expression_op (op)$/
+push_expression_set_variable	expression.c	/^push_expression_set_variable (k)$/
+readmap	maps.c	/^readmap(i, cell, row, col, nrows, ncols)$/
+readrow	maps.c	/^readrow(fd, cell, row, dummy)$/
+return_buffer_to_pool	pool.c	/^return_buffer_to_pool (n)$/
+round	round.c	/^round (x)$/
+subtract	math.c	/^subtract (a, b, n)$/
+subtract_x	math.c	/^subtract_x (a, b, n)$/
+translate_from_cats	maps.c	/^translate_from_cats (cell, xcell, ncols, k)$/
+translate_from_colors	maps.c	/^translate_from_colors (cell, ncols, k, code)$/
+trim_neighborhood	execute.c	/^trim_neighborhood (cell, row, nrows, ncols)$/
+variable_is_double	variables.c	/^variable_is_double(n)$/
+x_2float	x2float.c	/^x_2float (argc, argv, cell, ncols)$/
+x_2int	x2int.c	/^x_2int (argc, argv, cell, ncols)$/
+x_abs	xabs.c	/^x_abs (argc, argv, cell, ncols)$/
+x_atan	xatan.c	/^x_atan (argc, argv, cell, ncols)$/
+x_cos	xcos.c	/^x_cos (argc, argv, cell, ncols)$/
+x_eval	xeval.c	/^x_eval (argc, argv, cell, ncols)$/
+x_exp	xexp.c	/^x_exp (argc, argv, cell, ncols)$/
+x_if	xif.c	/^x_if (argc, argv, cell, ncols)$/
+x_log	xlog.c	/^x_log (argc, argv, cell, ncols)$/
+x_max	xmax.c	/^x_max (argc, argv, cell, ncols)$/
+x_min	xmin.c	/^x_min (argc, argv, cell, ncols)$/
+x_round	xround.c	/^x_round (argc, argv, cell, ncols)$/
+x_sin	xsin.c	/^x_sin (argc, argv, cell, ncols)$/
+x_sqrt	xsqrt.c	/^x_sqrt (argc, argv, cell, ncols)$/
+x_tan	xtan.c	/^x_tan (argc, argv, cell, ncols)$/
