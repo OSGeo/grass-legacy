@@ -1,4 +1,3 @@
-
 /*******************************************************************************
 r.sun: This program was writen by Jaro Hofierka in Summer 1993 and re-engineered
 in 1996-1999. In cooperation with Marcel Suri and Thomas Huld from JRC in Ispra
@@ -117,8 +116,8 @@ float **lumcl, **beam, **insol, **diff, **refl;
 double xmin, xmax, ymin, ymax, zmax = 0.;
 int d, day, tien = 0;
 double length, zmult = 1.0, c, declin, linke, alb, step, dist;
-double li_max = 0., li_min = 100., al_max = 0., al_min = 1.0, la_max =
-    0., la_min = 90.;
+double li_max = 0., li_min = 100., al_max = 0., al_min = 1.0, la_max = 0.,
+    la_min = 90.;
 char *tt, *lt;
 double z_orig, o_orig, slope, aspect, z1, zp;
 double lum_C11, lum_C13, lum_C22, lum_C31, lum_C33, lum_Lx, lum_Ly, lum_Lz;
@@ -204,7 +203,7 @@ int main(int argc, char *argv[])
     parm.linkein->required = NO;
     parm.linkein->gisprompt = "old,cell,raster";
     parm.linkein->description =
-	"Name of the Linke's turbidity coefficient raster file";
+	"Name of the Linke turbidity coefficient raster file";
 
     if (parm.linkein->answer == NULL) {
 	parm.lin = G_define_option();
@@ -213,7 +212,7 @@ int main(int argc, char *argv[])
 	parm.lin->answer = LINKE;
 	parm.lin->required = NO;
 	parm.lin->description =
-	    "A single value of the Linke's turbidity coefficient";
+	    "A single value of the Linke turbidity coefficient";
     }
 
     parm.albedo = G_define_option();
@@ -685,7 +684,6 @@ int OUTGR(void)
     FCELL *cell7, *cell8, *cell9, *cell10, *cell11;
     int fd7, fd8, fd9, fd10, fd11;
     int i, iarc, j;
-    int dsmax = 0;
     char msg[100];
 
 
@@ -1274,9 +1272,9 @@ void line_y(jmin, imin)
 void cube(jmin, imin)
     int jmin, imin;
 {
-    int i, j, ig = 0;
+    int i, ig = 0;
     double x1, x2, y1, y2;
-    double v0, v[4], vmin = BIG;
+    double v[4], vmin = BIG;
     double c[4], cmax = -BIG;
 
     x1 = (double)imin *stepx;
