@@ -34,7 +34,10 @@ int bin_to_asc(
 		switch(type)
 		{
 		case GV_BOUNDARY:
-			ctype = 'B';
+		    	if ( ver == 5 )
+			    ctype = 'B';
+			else 
+			    ctype = 'A';
 			break;
 		case GV_CENTROID:
 			if ( ver < 5 ) { continue; }
