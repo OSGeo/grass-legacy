@@ -1,0 +1,54 @@
+site.to.vect()
+
+  --convert site_list to vect file
+
+questions:
+
+   --HEADER info:
+		
+		--name and title: get the same way as sites_to_cell
+		--scale:  isn't this only relevant to actual digitizing? or
+		   to the window you make?  if the latter, it's arbitary
+        --make NSWE borders 1% bigger than closest sites
+		--threshold = 0.0
+
+   --cat or att size limit is 7 digits in dig_att.  might this be a problem
+	  with data in sites file?  and what about negative data?
+
+
+Two passes through site_list:
+
+       1. Pass 1 read each line:
+    
+    	--check desc format on each line-- must be "x|y|#int desc".  
+    		 set flags for ALL, SOME, or NONE
+    		 if ALL desc lines are in format  #int desc
+    			 set flag to good_cat_data
+    		 if SOME desc lines are in format #int desc
+    			 set flags some_good, 
+             if NO desc lines
+	
+	    2. if SOME
+			 print message that 1/0 file will be created; advise
+			 to edit site file for more detailed vect
+			
+        3.  rewind site_list
+
+		4. Pass2 through each line:
+
+			  write dig file
+              if SOME or NONE
+				  dig_att file:   each line gets attr of 1
+
+		      if ALL
+				  dig_att file: use #int from site line
+				  accumulate dig_cats table
+
+        5. Write dig_cats file:
+
+			 if SOME or NONE
+				enter 0 = "no data"  1 = "sites data"
+             if ALL
+				enter 0 = no data
+				1-n from cats table
+
