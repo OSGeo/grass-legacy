@@ -1,0 +1,20 @@
+for i in  \
+../raw.tape.data/URBAN.DAI \
+../raw.tape.data/OBSTACLES.DAI \
+../raw.tape.data/POINTS.DAI \
+../raw.tape.data/SLOPE.DAI \
+../raw.tape.data/SPFEA.DAI \
+../raw.tape.data/SURFDRAIN.DAI \
+../raw.tape.data/SURFM.DAI \
+../raw.tape.data/TILE4.DAI \
+../raw.tape.data/TRANS.DAI \
+../raw.tape.data/VEG.DAI
+do
+j=`echo $i | sed -e 's:.*/::' -e s/.DAI//`
+echo $j
+make_digit < $i > $LOCATION/dig_ascii/fifo &
+cat << junk | a.b.vect
+fifo
+$j
+junk
+done
