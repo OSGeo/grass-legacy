@@ -143,21 +143,29 @@ proc do_flag {optn key desc} {
 }
 
 proc do_button_file {optn} {
-	global optval suf
+	global optval optmulti suf
 	button $suf.val$optn.sel -text {>} -command {
 		set filename [tk_getOpenFile -title {Load File}]
-		if { [string length $filename] > 0 } {
-			set optval($optn) $filename
+		if {$filename != ""} {
+			if {$optmulti($optn) && $optval($optn) != ""} {
+				append optval($optn) "," $filename
+			} {
+				set optval($optn) $filename
+			}
 		}
 	}
 	pack $suf.val$optn.sel -side left -fill x
 }
 
 proc get_map {optn elem} {
-	global optval
+	global optval optmulti
 	set val [GSelect_::create $elem]
-	if { [string length $val] > 0 } {
-		set optval($optn) $val
+	if {$val != ""} {
+		if {$optmulti($optn) && $optval($optn) != ""} {
+			append optval($optn) "," $val
+		} {
+			set optval($optn) $val
+		}
 	}
 }
 
