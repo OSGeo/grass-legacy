@@ -1,0 +1,17 @@
+LIST =	main.o \
+		modify.o \
+		output.o\
+		gather.o\
+		proc_new.o\
+		proc_old.o\
+		setup.o\
+		update.o
+
+####################################################################
+$(BIN_MAIN_INTER)/p.labels: $(LIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(VASK) -o $@
+
+$(LIST): config.h
+####################################################################
+$(GISLIB):	# in case the library changes
+$(VASKLIB):	# in case the library changes
