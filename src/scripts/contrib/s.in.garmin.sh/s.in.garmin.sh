@@ -7,11 +7,13 @@
 # $Id$
 # 
 # requirements: GRASS 4.x or GRASS 5.0 with s.in.ascii
-#               gpstrans from Carsten Tschach et al. 
-#                 get gpstrans from: ftp://www.mayko.com/pub/gpstrans or from
-#                 http://www.metalab.unc.edu/pub/Linux/science/cartography/
-#               bourne shell
-#               unix tools: grep, cat, cut, paste, sed
+#      -  gpstrans from Carsten Tschach et al. 
+#           get gpstrans from one of:
+#             http://gpstrans.sourceforge.net
+#             http://www.metalab.unc.edu/pub/Linux/science/cartography/
+#             ftp://www.mayko.com/pub/gpstrans
+#      -  bourne shell
+#      -  unix tools: grep, cat, cut, paste, sed
 #
 
 PROG=`basename $0`
@@ -55,7 +57,7 @@ trap 'rm -f ${TMP}*' 2 3 15
 
 
 #### process command line arguments 
-WPT=0 ; RTE=0 ; TRK=0 ; OK=0 ; SWP=0
+WPT=0 ; RTE=0 ; TRK=0 ; OK=0 ; SWP=0 ; KEEP_WGS84=0
 while [ $# -ge 1 ] ; do
 
     case "$1" in
@@ -81,6 +83,8 @@ while [ $# -ge 1 ] ; do
        ;;
     -s) SWP=1
        ;;
+    -k) KEEP_WGS84=1
+       ;;
     *)  OK=0
        ;;
     esac
@@ -91,11 +95,11 @@ done
 #### print usage and exit
 if [ $OK -ne 1 ] ; then
     echo "Description: " 1>&2
-    echo " Upload Waypoints, Routes and Tracks from garmin gps reciever into" 1>&2
-    echo " GRASS sites file." 1>&2
+    echo " Upload Waypoints, Routes and Tracks from a Garmin GPS reciever into" 1>&2
+    echo " a GRASS sites file, transformed into the current projection." 1>&2
     echo " " 1>&2
     echo "Usage: " 1>&2
-    echo " $PROG name=sites port=/dev/gps [-v] [-w] [-r] [-t] [-h]" 1>&2
+    echo " $PROG name=sites port=/dev/gps [-v] [-w] [-r] [-t] [-k] [-h]" 1>&2
     echo " " 1>&2
     echo "Flags: " 1>&2
     echo "   -v      verbose output" 1>&2
@@ -103,6 +107,7 @@ if [ $OK -ne 1 ] ; then
     echo "   -r      upload Routes" 1>&2
     echo "   -t      upload Track" 1>&2
 #   echo "   -s      swap easting/northing (for tmerc projection)" 1>&2
+    echo "   -k      do not attempt projection transform from WGS84" 1>&2
     echo "   -h      print this message" 1>&2
     echo " " 1>&2
     echo "Parameters: " 1>&2
@@ -110,12 +115,14 @@ if [ $OK -ne 1 ] ; then
     echo "   port=/dev/gps  port garmin receiver is connected to" 1>&2
     echo " " 1>&2
     echo $VERSION 1>&2
+    echo " " 1>&2   
     rm -f ${TMP}*
     exit 0
 fi
 
 
 #### check that receiver is responding on $GPSPORT
+# sadly gpstrans 0.39 returns 0 after timeout.. hopefully fixed someday.
 $GPSTRANS "$GPSPORT" -i 1> /dev/null
 if [ $? -ne 0 ] ; then
     echo "$PROG: Receiver on $GPSPORT not responding, exiting" 1>&2
@@ -167,6 +174,7 @@ fi
 #### check which projection we are working with
 PROJ="`head -1 $TMP | sed -e 's/Format: //' | sed -e 's/  UTC.*//'`"
 # echo ${PROJ}_
+IS_WGS84="`head -1 $TMP | grep 'WGS 84'`"
 
 
 #### process waypoint format
@@ -187,7 +195,7 @@ case "$PROJ" in
 	cat $TMP | grep "^W" | tr -s '[:space:]' | cut -f2,3,4 >> ${TMP}_WN
 	;;
     *)
-	echo "Unsupported format" 1>&2
+	echo "Unsupported format [$PROJ]" 1>&2
 	exit 1
 	;;
 esac
@@ -211,25 +219,39 @@ case "$PROJ" in
 	cat $TMP | grep "^T" | tr -s '[:space:]' | cut -f2 >> ${TMP}_WN
 	;;
     *)
-	echo "Unsupported format" 1>&2
+	echo "Unsupported format [$PROJ]" 1>&2
 	exit 1
 	;;
 esac
 
 
 #### paste together import file
-paste -d"\t$DELIM" $WPTS ${TMP}_WN | sed "s/$DELIM/ $DELIM/g" >> ${TMP}_P
+paste -d"\t$DELIM" $WPTS ${TMP}_WN | sed "s/$DELIM/ $DELIM/g" > ${TMP}_P_raw
+
+
+#### convert from WGS84 to current projection
+if [ -z "$IS_WGS84" ] || [ $KEEP_WGS84 -eq 1 ] ; then
+    echo "No projection transformation performed" 1>&2
+    mv -f ${TMP}_P_raw ${TMP}_P
+else
+    echo "Attempting projection transform with m.proj2" 1>&2
+    m.proj2 -i input=${TMP}_P_raw output=${TMP}_P
+    if [ $? -ne 0 ] ; then
+        echo "Projection transform failed, retaining WGS84" 1>&2
+        mv -f ${TMP}_P_raw ${TMP}_P
+    fi
+fi
 
 
 #### if no name for sites file given, cat to stdout
 if [ "$NAME" = "" ] ; then
-    echo "output to stdout" 1>&2
+    echo "Output to stdout" 1>&2
     cat ${TMP}_P 2>/dev/null
 else 
 
 
     #### import to sites file 
-    echo "importing with s.in.ascii" 1>&2
+    echo "Importing with s.in.ascii" 1>&2
     s.in.ascii sites=$NAME input=${TMP}_P $OPTS 1>&2 >/dev/null
     # fs=tab
 
@@ -250,3 +272,4 @@ rm -f ${TMP}* 1>&2 > /dev/null
 
 #### end
 exit 0
+
