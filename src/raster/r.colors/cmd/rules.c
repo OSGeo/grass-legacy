@@ -105,8 +105,14 @@ int read_color_rules(
 	rule[nrules-1].set = 1;
     }
 
-    if((rule[0].val > min || rule[nrules-1].val < max) && !quiet)
-       G_warning(_("Your color rules do not cover the whole range of data!"));
+    if (min < 0.0 && max < 0.0){
+       if((rule[0].val < min || rule[nrules-1].val > max) && !quiet)
+          G_warning(_("Your color rules do not cover the whole range of data!"));
+    }
+    else{
+       if((rule[0].val > min || rule[nrules-1].val < max) && !quiet)
+          G_warning(_("Your color rules do not cover the whole range of data!"));
+    }
 
 /* fill in all unset val */
     for (n=0; n < nrules; n++)
