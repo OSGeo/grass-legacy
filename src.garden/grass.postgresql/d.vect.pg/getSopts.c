@@ -35,6 +35,8 @@ int getSelectOpts(argc, argv)
     struct Option *map, *color, *sql;
     struct Flag *select, *flag1, *flag2;
 
+    memset(SQL_stmt, '\0', sizeof(SQL_stmt));
+    
     select = G_define_flag();
     select->key = 's';
     select->description =

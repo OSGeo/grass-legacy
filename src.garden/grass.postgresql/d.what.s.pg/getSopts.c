@@ -35,6 +35,7 @@ int getSelectOpts(argc, argv)
     int stat = 0;
     char *print_out;
 
+    memset(SQL_stmt, '\0', sizeof(SQL_stmt));
 
 
     select = G_define_flag();
