@@ -52,14 +52,14 @@
 #%  key: altitude
 #%  type: integer
 #%  description: Altitude of the sun in degrees above the horizon (must be 1-89).
-#%  required : yes
+#%  required : no
 #%  answer: 30
 #% end
 #% option
 #%  key: azimuth
 #%  type: integer
 #%  description: Azimuth of the sun in degrees to the east of north (must be 0-360).
-#%  required : yes
+#%  required : no
 #%  answer: 270
 #% end
 #% option
