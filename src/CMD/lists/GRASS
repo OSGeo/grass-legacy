@@ -66,7 +66,9 @@ src/display/d.barscale
 src/display/d.colormode
 src/display/d.colors
 src/display/d.colortable
+src/display/d.db
 src/display/d.display
+src/display/d.dm
 src/display/d.erase
 src/display/d.font
 src/display/d.frame
@@ -110,6 +112,7 @@ src/display/d.title
 src/display/d.vect
 src/display/d.vect.cats
 src/display/d.vect.zoom
+src/display/d.what.db
 src/display/d.what.rast
 src/display/d.what.sites
 src/display/d.what.vect
@@ -226,6 +229,7 @@ src/mapdev/v.stats
 src/mapdev/v.support
 src/mapdev/v.surf.rst
 src/mapdev/v.timestamp
+src/mapdev/v.to.db
 src/mapdev/v.to.rast
 src/mapdev/v.to.sites
 src/mapdev/v.transform
