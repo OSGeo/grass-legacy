@@ -149,10 +149,10 @@ int R_open_driver()
     int verbose;
     int try, key, lock;
     char our_input_file[512], our_output_file[512];
-    struct MON_CAP *mon, *R_parse_monitorcap();
-    char *name, *G__getenv(), *key_string;
+    struct MON_CAP *mon;
+    char *name, *key_string;
     char *user, *who_locked_driver();
-    struct passwd *pw, *getpwuid();
+    struct passwd *pw;
 
     verbose = !quiet;
     quiet = 0;
@@ -434,9 +434,6 @@ int _hold_signals (int hold)
 
 static int lockfile(char *file)
 {
-	char *G__getenv();
-	char *G_getenv();
-	char *G__machine_name();
 	char *name;
 	char *disp, display[64] ;
 	char *base ;

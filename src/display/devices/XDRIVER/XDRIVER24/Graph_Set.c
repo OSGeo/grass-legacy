@@ -98,19 +98,6 @@ sigint (int sig)
     exit(-1);
 }
 
-static int
-get_user(char *name, int *n, int value)
-{
-    char *p;
-
-    if ((p=getenv(name)) && sscanf (p, "%i", n) == 1)
-	return 1;
-
-    *n = value;
-
-    return 0;
-}
-
 static void
 find_truecolor_visual(void)
 {
@@ -272,6 +259,7 @@ Graph_Set(int argc, char **argv, int nlev)
 {
     XWindowAttributes xwa;      /* Get Window Attribute struct */
     const char *privcmap;
+    char *p;
     int win_id;
     int i;
 
@@ -284,8 +272,7 @@ Graph_Set(int argc, char **argv, int nlev)
 
     privcmap = getenv("XDRIVER_PRIVATE_CMAP");
 
-    get_user ("XDRIVER_WINDOW", &win_id, 0);
-    if (win_id)
+    if ((p = getenv("XDRIVER_WINDOW")) && sscanf (p, "%i", &win_id) == 1)
 	use_window(win_id);
     else
 	create_window(argc, argv, nlev);

@@ -376,9 +376,7 @@ GLOBAL Panel *P_Lights, *P_Mvmt, *P_Script, *P_Options, *P_Vect;
 GLOBAL Panel *P_Path, *P_Keyframe, *P_Scale, *P_Label, *P_Animate, *P_Sites;
 GLOBAL Panel *P_CustColor;
 
-/* Extern routines */
-char *getenv ();
-char *malloc ();
+#include <stdlib.h>
 
 #ifdef MAIN
     Matrix ID_matrix = {

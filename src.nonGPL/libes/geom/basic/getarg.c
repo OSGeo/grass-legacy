@@ -50,13 +50,7 @@
 # define rindex strrchr
 #endif /* added rindex for consistency and changed all str{r}chr below --EPM */
 
-/* #include <stdlib.h>  ... doesn't exist?  --EPM */
-#if ! (defined (__GNUC__) || (__convex__))
-#include <malloc.h>
-extern char* getenv();  /* added this & changed NULL to silent lint  --EPM */
-#else
 #include <stdlib.h>
-#endif
 #include <ctype.h>
 
 #ifdef lint

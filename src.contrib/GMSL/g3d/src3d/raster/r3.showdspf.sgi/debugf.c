@@ -1,11 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <varargs.h>
 
 #define DEBUG
 
 #ifdef DEBUG
 
-char *getenv ();
 /*VARARGS*/
 void
 debugf (va_alist)

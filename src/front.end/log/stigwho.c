@@ -7,11 +7,12 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
 #include <pwd.h>
 #include "defines.h"
-
-struct passwd *getpwuid();
-char *getenv(), *getlogin(), *strcpy();
 
 char *
 whoisuser ()
