@@ -22,7 +22,6 @@
 #include <string.h>
 
 /* Grass and local include files */
-#include "G.h"
 #include "gis.h"
 #include "glocale.h"
 
