@@ -195,6 +195,7 @@ int main (int argc, char **argv)
 	for (p = npads-1; p >= 0; p--) {
 		if (all_flag->answer || in_frame_list(opt1, pads[p]))
 		{
+			init_globals();
 			if(!cur_frame->answer && !only_object->answer)
 				fprintf (stdout,"\n# Here are the commands to create window: %s\n", pads[p]);
 			stat = R_pad_select (pads[p]);
@@ -349,7 +350,6 @@ int main (int argc, char **argv)
 				free(temp_list);
 			}
 			List_last = NULL;
-			init_globals();
 		}
 		if (! all_flag->answer && ! strcmp(opt1->answer, pads[p])) break;
 	}
