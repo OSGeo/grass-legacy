@@ -1,0 +1,21 @@
+MAN	  = doc/g.select.db
+PGM       = g.select.db
+LIBES     = $(GISLIB) $(VASKLIB) -ltermcap
+
+
+
+OBJS = \
+	main.o
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	#cp $(MAN)  $(GISBASE)/man/4
+
+$(LIBES): #
+#####################################
+#
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
+
