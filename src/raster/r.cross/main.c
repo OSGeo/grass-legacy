@@ -25,6 +25,7 @@ main (int argc, char *argv[])
     char buf[1024];
     CELL result;
     CELL cross();
+	struct GModule *module;
     struct
     {
 	struct Option *input, *output;
@@ -38,6 +39,11 @@ main (int argc, char *argv[])
 
 /* Define the different options */
 
+	module = G_define_module();
+	module->description =
+		"Creates a cross product of the category values from "
+		"multiple raster map layers.";
+			
     parm.input = G_define_option() ;
     parm.input->key        = "input";
     parm.input->type       = TYPE_STRING;

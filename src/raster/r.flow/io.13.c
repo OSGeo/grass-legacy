@@ -88,6 +88,7 @@ parse_command_line(argc, argv)
     int     argc;
     char   *argv[];
 {
+	struct GModule *module;
     struct Option *pelevin, *paspin, *pbarin, *pskip, *pbound, *poffset,
               *pflout, *plgout, *pdsout;
 
@@ -99,6 +100,12 @@ parse_command_line(argc, argv)
     char *default_skip_ans, *default_bound_ans, *skip_opt;
     char *default_offset_ans, *offset_opt;
     
+	module = G_define_module();
+	module->description =
+		"Construction of slope curves (flowlines), flowpath "
+		"lengths, and flowline densities (upslope areas) from "
+		"a raster digital elevation model(DEM).";
+
     larger = ((region.cols < region.rows) ? region.rows : region.cols);
     if (larger < 50)
 	default_skip = 1;

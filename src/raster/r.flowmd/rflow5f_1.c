@@ -99,6 +99,7 @@ char *argv[];
  int    max();
  int    min();
 
+ struct GModule *module;
  struct
   {
 	struct Option *elevin, *aspin, *barierin, *skip, *flout, *lgout, *dsout;
@@ -109,6 +110,12 @@ char *argv[];
 
 
 	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"construction of slope lines (flowlines),  flowpath lengths "
+		"and flowline  densities from a raster digital elevation "
+		"model using a modified multiple directions algorithm.";
 
         if(G_get_set_window(&cellhd)==-1) exit(0);
         stepx = cellhd.ew_res/cellhd.ew_res;

@@ -42,6 +42,7 @@ int main (int argc, char *argv[])
     double          adfGeoTransform[6];
     char	error_msg[8096];
 
+	struct GModule *module;
     struct
     {
         struct Option *input, *output, *title, *outloc, *band;
@@ -52,6 +53,10 @@ int main (int argc, char *argv[])
 /*      Initialize.                                                     */
 /* -------------------------------------------------------------------- */
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Import GDAL supported raster file into a binary raster map layer.";
 
 /* -------------------------------------------------------------------- */
 /*      Setup and fetch parameters.                                     */
