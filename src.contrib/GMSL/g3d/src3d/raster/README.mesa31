@@ -1,14 +1,19 @@
+From:
 <Andreas.Lange@Rhein-Main.de>
+Location of file: src.contrib/GMSL/g3d/src3d/raster/README.mesa31
 
-Requirements for NVIZ: shared libraries of OpenGL or Mesa 3.0 or higher
-Requirements for r3.showdspf.openGL: shared libraries 
-	of OpenGL or Mesa 3.0 or higher, 
+Requirements for NVIZ: 
+        shared libraries of OpenGL or Mesa 3.0 or higher
+Requirements for r3.showdspf.openGL: 
+        shared libraries of OpenGL or Mesa 3.0 or higher,
 	Motif or lesstif libraries and headers 
 
 written by
 Andreas Lange, Wiesbaden, Germany
 <Andreas.Lange@Rhein-Main.de>
+and remarks form Dietrich Lange derdietrich@yahoo.de, 05.04.2002
 
+----------------------------------------------------------
 Installing Mesa 3.1 libraries (do this as root!) on linux:
 
 I did not test this on other unix platforms, but the mesa
@@ -88,5 +93,89 @@ the documentation of your distribution which packets you need.
    Now copy the libraries to /usr/lib (root priviledges needed):
    cp -dpa libGLw.so* /usr/lib   
    Now run /sbin/ldconfig and you are done! 
+
+---------------------------------------------------------------------------
+Remarks von Dietrich Lange (derdietrich@yahoo.de) 05.04.2002 to this point:
+
+Compiling of the SGI Widgets for r3.showdspf.openGL and the r3* commands.
+
+i downloaded Mesa-3.5, and in the directory wiedgets-sgi i didn't find an configure file and 
+none Makefile.X11.
+
+Therefore i used the code in widgets-mesa:
+
+./configure --with-motif --prefix=/usr
+make
+
+produces the libaries in ./src:
+
+-rw-r--r--    1 dietrich users       25428 Apr  5 14:17 libMesaGLw.a
+-rw-r--r--    1 dietrich users       27718 Apr  5 14:17 libMesaGLwM.a
+
+i copied these files to /usr/lib:
+
+cp -dpai libMesaGL* /usr/lib  
+updated the linker:
+/sbin/ldconfig
+
+still the compiling process of 
+
+gmake5 -i src.contrib/GMSL/g3d
+
+didn't work, because there the linker couldnt find libaries. 
+
+Afer some testing it worked with the following:
+
+There i changed the file:
+
+src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL/Gmakefile
+
+as shown below, and not as described in [GRASSLIST:1489]:Re: r3.showdspf, 
+because there they seem to work in ,my case with other libaries:
+
+original: 
+
+OGLLIB=  $(OPENGLULIB) -lGL $(LGLWM) -lXm -lX11 -lXt -lXext
+
+after some experiments it worked in my case with following configuration: 
+
+OGLLIB=  $(OPENGLULIB)  -lGL -lGLw -lMesaGLw -lMesaGLwM ${LGLWM} -lXm -lX11 -lXt -lXext
+
+then i changed back to the main-directory of grass and did:
+
+gmake5 -i src.contrib/GMSL/g3d
+gmakelinks5 -i
+
+and could use the r3* commands.
+
+Greetings Dietrich Lange
+derdietrich@yahoo.de
+
+My configuration:
+
+computer with GL-graphics card 
+
+and:
+xf86-4.1.0-45
+xf86_glx-4.1.0-45
+xf86glu-4.1.0-45
+xf86glx-devel-4.1.0-63
+xf86glu-devel-4.1.0-63
+mesa-3.4.2-42
+mesaglut-3.4.2-42
+mesasoft-3.4.2-42
+mesademos-3.4.2-57
+mesa-devel-3.4.2-57
+mesaglu-devel-3.4.2-57
+mesaglut-devel-3.4.2-57
+mesaglu-3.4.2-57
+libtiff-3.5.5-195
+lesstif-devel-0.92.32-47
+lesstif-0.92.32-47
+openmotif-devel-2.1.3
+
+
+End Remarks for Dietrich Lange
+-----------------------------------------------------------
 
 andreas.lange@rhein-main.de, 2000/05/10
