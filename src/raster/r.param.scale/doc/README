@@ -1,0 +1,24 @@
+Terrain analysis model by Jo Wood, PROJECT ASSIST
+                  http://www.geog.le.ac.uk/assist/grass/
+
+----------
+
+r.param.scale
+
+GRASS module that extracts terrain parameters from a DEM.
+Uses a multi-scalar approach by taking fitting quadratic
+parameters to any size window (via least squares).
+
+Jo Wood, 27th November, 1994.
+
+Modified to include constrained fitting, April, 1995 
+
+Modified to include weighting matrix and double precision arithmetic,
+9th May, 1995.
+
+Modified 23rd May to inclue two separate tolerance values for feature detection.
+
+Still to do:
+	Fix bug when `constrain through central cell' option selected.
+	Create colour tables for all output files (presently on features).
+
