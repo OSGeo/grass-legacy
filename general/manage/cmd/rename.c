@@ -39,7 +39,8 @@ main (int argc, char *argv[])
 	if ( strcmp(list[n].alias, "sites") == 0 ) p->gisprompt   = "old,site_lists,sites" ;
 	if ( strcmp(list[n].alias, "region") == 0 ) p->gisprompt   = "old,windows,region" ;
 	if ( strcmp(list[n].alias, "icon") == 0 ) p->gisprompt   = "old,icons,icon" ;
-	/* ?? group, 3dview ?*/
+	if ( strcmp(list[n].alias, "group") == 0 ) p->gisprompt   = "old,group,group" ;
+	/* ?? 3dview ?*/
 	p->description = G_malloc (64);
 	sprintf (p->description, "%s file(s) to be renamed", list[n].alias);
     }
