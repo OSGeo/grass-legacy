@@ -1,0 +1,132 @@
+
+
+
+Gfindfile(2G)        GRASS Reference Manual         Gfindfile(2G)
+
+
+
+NAME
+     Gfindfile  - Search for database files
+     (G Language Tool)
+
+SYNOPSIS
+     Gfindfile element name [mapset]
+
+DESCRIPTION
+     Gfindfile is designed for Bourne shell scripts that need to
+     search for cell files, vector files, site list files, window
+     files, and imagery group files in the database.
+
+
+     element
+          The database element (i.e., directory within the GRASS
+          mapset location) to be searched.
+
+     name The name of the data file for which to search.
+
+     mapset
+          Where to search. If not specified, all mapsets in the
+          user's search path are searched. Otherwise, the
+          specified mapset is searched.  As a convenience, if
+          specified as a single dot (.) only the current mapset
+          is searched.
+
+OUTPUT
+     Gfindfile writes three lines to standard output:
+
+          name=[somename]
+          mapset=[somemapset]
+          file=[filename]
+
+     The output is /bin/sh commands to set the variable name to
+     the database file name, mapset to the mapset where the file
+     resides, and file to the full UNIX name for the database
+     file. These variables may be set in the /bin/sh as follows:
+
+          eval `Gfindfile element name`
+
+NOTES
+     If the specified file does not exist the variables will be
+     set as follows:
+
+          name=
+          mapset=
+          file=
+
+     The following is a way to test for this case:
+
+          if [ ! "$file" ]
+          then
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Gfindfile(2G)        GRASS Reference Manual         Gfindfile(2G)
+
+
+
+               exit
+          fi
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
