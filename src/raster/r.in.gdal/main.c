@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string.h>
 #include "gis.h"
+#include "imagery.h"
 #include "gdalbridge.h"
 
 static int oldval = 0, newval = 0;
@@ -19,6 +20,8 @@ G_compare_projections( struct Key_Value *proj_info1,
                        struct Key_Value *proj_info2, 
                        struct Key_Value *proj_units2 );
 
+static void ImportBand( GDALRasterBandH hBand, const char *output );
+
 /************************************************************************/
 /*                                main()                                */
 /************************************************************************/
@@ -28,26 +31,20 @@ int main (int argc, char *argv[])
     char *input;
     char *output;
     char *title;
-    FILE *fd;
-    int cf;
     struct Cell_head cellhd, loc_wind;
     struct Key_Value *proj_info, *proj_units;
     struct Key_Value *loc_proj_info, *loc_proj_units;
-    CELL *cell;
-    int row, col;
-    int nrows, ncols;
     unsigned char *x, *y;
     char *err;
     char dummy[2];
     GDALDatasetH  hDS;
     GDALRasterBandH hBand;
-    RASTER_MAP_TYPE data_type;
-    GDALDataType    eGDT;
     double          adfGeoTransform[6];
+    char	error_msg[8096];
 
     struct
     {
-        struct Option *input, *output, *title, *outloc;
+        struct Option *input, *output, *title, *outloc, *band;
     } parm;
     struct Flag *flag_o;
 
@@ -64,6 +61,12 @@ int main (int argc, char *argv[])
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
     parm.input->description = "Bin raster file to be imported";
+
+    parm.band = G_define_option();
+    parm.band->key = "band";
+    parm.band->type = TYPE_INTEGER;
+    parm.band->required = NO;
+    parm.band->description = "Band to select (default is all bands)";
 
     parm.output = G_define_option();
     parm.output->key = "output";
@@ -171,18 +174,45 @@ int main (int argc, char *argv[])
                || !G_compare_projections( loc_proj_info, loc_proj_units, 
                                           proj_info, proj_units ) )
     {
-        char	error_msg[8096];
         int     i_value;
 
         strcpy( error_msg, 
-          "Projection of dataset does not appear to match current location.\n"
-                "Dataset PROJ_INFO is:\n" );
+                "Projection of dataset does not"
+                " appear to match current location.\n\n");
 
-        for( i_value = 0; i_value < proj_info->nitems; i_value++ )
-            sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
-                     proj_info->key[i_value],
-                     proj_info->value[i_value] );
-
+        if( proj_info != NULL )
+        {
+            strcat( error_msg, "Dataset PROJ_INFO is:\n" );
+            for( i_value = 0; 
+                 proj_info != NULL && i_value < proj_info->nitems; 
+                 i_value++ )
+                sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                         proj_info->key[i_value],
+                         proj_info->value[i_value] );
+        }
+        else
+        {
+            if( cellhd.proj == PROJECTION_XY )
+                sprintf( error_msg + strlen(error_msg), 
+                         "cellhd.proj = %d (unreferenced)\n", 
+                         cellhd.proj );
+            else if( cellhd.proj == PROJECTION_LL )
+                sprintf( error_msg + strlen(error_msg), 
+                         "cellhd.proj = %d (lat/long)\n", 
+                         cellhd.proj );
+            else if( cellhd.proj == PROJECTION_UTM )
+                sprintf( error_msg + strlen(error_msg), 
+                         "cellhd.proj = %d (UTM), zone = %d\n", 
+                         cellhd.proj, cellhd.zone );
+            else if( cellhd.proj == PROJECTION_SP )
+                sprintf( error_msg + strlen(error_msg), 
+                         "cellhd.proj = %d (State Plane), zone = %d\n", 
+                         cellhd.proj, cellhd.zone );
+            else 
+                sprintf( error_msg + strlen(error_msg), 
+                         "cellhd.proj = %d (unknown), zone = %d\n", 
+                         cellhd.proj, cellhd.zone );
+        }
         G_fatal_error( error_msg );
     }
     
@@ -192,13 +222,80 @@ int main (int argc, char *argv[])
     if(G_set_window (&cellhd) < 0)
         exit(3);
 
-    nrows = cellhd.rows;
-    ncols = cellhd.cols;
+/* -------------------------------------------------------------------- */
+/*      Simple case.  Import a single band as a raster cell.            */
+/* -------------------------------------------------------------------- */
+    if( parm.band->answer != NULL || GDALGetRasterCount(hDS) == 1 )
+    {
+        int	nBand = 1;
+        
+        if( parm.band->answer != NULL )
+            nBand = atoi(parm.band->answer);
+        
+        hBand = GDALGetRasterBand(hDS,1);
+        if( hBand == NULL )
+        {
+            sprintf( error_msg, "Selected band (%d) does not exist.\n", 
+                     nBand );
+            G_fatal_error( error_msg );
+        }
+        
+        ImportBand( hBand, output );
+
+        if (title)
+            G_put_cell_title (output, title);
+    }
+
+/* -------------------------------------------------------------------- */
+/*      Complete case, import a set of raster bands as an imagery       */
+/*      group.                                                          */
+/* -------------------------------------------------------------------- */
+    else 
+    {
+        struct Ref ref;
+        char	szBandName[512];
+        int     nBand;
+
+        I_init_group_ref( &ref );
+
+        for( nBand = 1; nBand <= GDALGetRasterCount(hDS); nBand++ )
+        {
+            hBand = GDALGetRasterBand(hDS,nBand);
+
+            sprintf( szBandName, "%s.%d", output, nBand );
+            ImportBand( hBand, szBandName );
+            I_add_file_to_group_ref (szBandName, G_mapset(), &ref);
+
+            if (title)
+                G_put_cell_title (szBandName, title);
+        }
+
+        I_put_group_ref( output, &ref );
+        I_free_group_ref( &ref );
+
+        /* make this group the current group */
+        I_put_group( output );
+    }
+
+    exit (0);
+}
+
+/************************************************************************/
+/*                             ImportBand()                             */
+/************************************************************************/
+
+static void ImportBand( GDALRasterBandH hBand, const char *output )
+
+{
+    RASTER_MAP_TYPE data_type;
+    GDALDataType    eGDT;
+    int row, col, nrows, ncols;
+    int cf;
+    CELL *cell;
 
 /* -------------------------------------------------------------------- */
 /*      Select a cell type for the new cell.                            */
 /* -------------------------------------------------------------------- */
-    hBand = GDALGetRasterBand(hDS,1);
     if( GDALGetRasterDataType( hBand ) == GDT_Float32
         || GDALGetRasterDataType( hBand ) == GDT_Float64 )
     {
@@ -214,7 +311,7 @@ int main (int argc, char *argv[])
 /* -------------------------------------------------------------------- */
 /*      Create the new raster                                           */
 /* -------------------------------------------------------------------- */
-    cf = G_open_raster_new(output, data_type);
+    cf = G_open_raster_new((char *)output, data_type);
     if (cf < 0)
     {
         char msg[100];
@@ -226,12 +323,15 @@ int main (int argc, char *argv[])
 /* -------------------------------------------------------------------- */
 /*      Write the raster one scanline at a time.                        */
 /* -------------------------------------------------------------------- */
+    ncols = GDALGetRasterBandXSize(hBand);
+    nrows = GDALGetRasterBandYSize(hBand);
+
     cell = G_allocate_raster_buf(data_type);
 
     for (row = 1; row <= nrows; row++)
     {
-        GDALRasterIO( hBand, GF_Read, 0, row-1, cellhd.cols, 1, 
-                      cell, cellhd.cols, 1, eGDT, 0, 0 );
+        GDALRasterIO( hBand, GF_Read, 0, row-1, ncols, 1, 
+                      cell, ncols, 1, eGDT, 0, 0 );
 
         G_percent(row, nrows, 2);
         G_put_raster_row (cf, cell, data_type);
@@ -242,11 +342,6 @@ int main (int argc, char *argv[])
 /* -------------------------------------------------------------------- */
     fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", output);
     G_close_cell (cf);
-
-    if (title)
-        G_put_cell_title (output, title);
-
-    exit (0);
 }
 
 /************************************************************************/
