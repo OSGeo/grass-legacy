@@ -92,7 +92,7 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->description = "Find the nearest element in vector 'to' for elements in vector 'from'. "
-            "Various informations about this relation may be uploaded to the attribute table of "
+            "Various information about this relation may be uploaded to the attribute table of "
 	    "input vector 'from' or printed to stdout.";
 
     from_opt = G_define_standard_option(G_OPT_V_INPUT);
