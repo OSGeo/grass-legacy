@@ -19,7 +19,6 @@
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
-#include "../dialog/dbd.h"
 
 typedef struct { 
     char *host,  *socket, *dbname, *user, *password;
@@ -118,34 +117,11 @@ int db_driver_open_database(handle)
     ret_conn = mysql_real_connect(&mysql_conn, myconn.host, myconn.user, myconn.password, myconn.dbname, 
 		myconn.port, myconn.socket, 0);
 
-    if ( ret_conn == NULL ) {
-	G_debug (3, "First attempt to connect to mysql failed");
-	if ( mysql_errno(&mysql_conn) == ER_DBACCESS_DENIED_ERROR || 
-	     mysql_errno(&mysql_conn) == ER_ACCESS_DENIED_ERROR )
-	{
-	    /* Either user or password is not correct */
-	    if ( myconn.user == NULL || strlen(myconn.user) == 0 || 
-		 myconn.password == NULL || strlen(myconn.password) == 0 ) {
-	       /* Ask user for login/password */
-	       G_debug (3, "User/password missing");
-	       if ( dbd_user ( "mysql", name, &myconn.user, &myconn.password ) < 0 ) {
-                    snprintf(emsg, sizeof(emsg), "cannot get user/password\n" );
-		    report_error(emsg);
-		    return DB_FAILED;
-	       }
-	       G_debug ( 3, "user =  %s", myconn.user ); 
-
-               /* Try to connect again in loop until success or quit by user */	       
-               ret_conn = mysql_real_connect(&mysql_conn, myconn.host, myconn.user, myconn.password, 
-		                             myconn.dbname, myconn.port, myconn.socket, 0);
-	    }
-	}
-	if ( ret_conn == NULL ) {  
-	      snprintf(emsg, sizeof(emsg), "mysql_real_connect() error (%d): %s\n",
-		                            mysql_errno(&mysql_conn), mysql_error(&mysql_conn));
-	      report_error(emsg);
-	      return DB_FAILED;
-	}
+    if ( ret_conn == NULL ) {  
+	  snprintf(emsg, sizeof(emsg), "mysql_real_connect() error (%d): %s\n",
+					mysql_errno(&mysql_conn), mysql_error(&mysql_conn));
+	  report_error(emsg);
+	  return DB_FAILED;
     }
 
     if ((res = mysql_list_tables(&mysql_conn, NULL)) == NULL) {
