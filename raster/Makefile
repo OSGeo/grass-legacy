@@ -24,7 +24,7 @@ SUBDIRS = \
 	r.drain \
 	r.fill.dir \
 	r.flow \
-	r.grow \
+	r.grow2 \
 	r.his \
 	r.in.arc \
 	r.in.ascii \
