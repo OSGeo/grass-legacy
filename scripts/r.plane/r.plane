@@ -4,7 +4,7 @@
 #
 ############################################################################
 #
-# MODULE:		r.plane for GRASS 5.7; based on r.plane for GRASS 5
+# MODULE:	r.plane for GRASS 5.7; based on r.plane for GRASS 5
 # AUTHOR(S):	CERL?; updated to GRASS 5.7 by Michael Barton
 # PURPOSE:	Creates a raster plane map from user specified inclination and azimuth
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
@@ -106,7 +106,7 @@ then
 fi
 
 echo $ea > /tmp/$$
-awk '{ printf"eaint=%d",$1 }' /tmp/$$ > /tmp/$$ea
+awk '{ printf "eaint=%d",$1 }' /tmp/$$ > /tmp/$$ea
 	eval `cat /tmp/$$ea`
 rm /tmp/$$*
 if test $eaint -le $e -a $eaint -ge $w
@@ -122,7 +122,7 @@ fi
 
 
 echo $no > /tmp/$$
-awk '{ printf"noint=%d",$1 }' /tmp/$$ > /tmp/$$no
+awk '{ printf "noint=%d",$1 }' /tmp/$$ > /tmp/$$no
 	eval `cat /tmp/$$no`
 rm /tmp/$$*
 if test $noint -gt $s -a $noint -lt $n
