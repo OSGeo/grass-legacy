@@ -1,14 +1,14 @@
 #include "datetime.h"
 
 static void 
-copy (char *src, char *dst, int n)
+copy (char *dst, char *src, int n)
 {
       while (n-- > 0)
   	*dst++ = *src++;
 }
   
 void 
-datetime_copy (DateTime *src, DateTime *dst)
+datetime_copy (DateTime *dst, DateTime *src)
 {
-      copy ((char *)src, (char *)dst, sizeof(DateTime));
+    copy ((char *)dst, (char *)src, sizeof(DateTime));
 }
