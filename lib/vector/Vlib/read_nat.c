@@ -232,7 +232,7 @@ Vect__Read_line_nat (
       do_cats = 0;
   
   rhead >>= 2;
-  type = Vect_type_from_store ( (int) rhead );  
+  type = dig_type_from_store ( (int) rhead );  
  
   G_debug (3, "    type = %d, do_cats = %d dead = %d", type, do_cats, dead);
 	  

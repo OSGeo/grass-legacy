@@ -106,7 +106,7 @@ void dig_free_plus_lines (struct Plus_head *);
 void dig_free_plus_areas (struct Plus_head *);
 void dig_free_plus_isles (struct Plus_head *);
 void dig_free_plus (struct Plus_head *);
-int dig_load_plus (struct Plus_head *, GVFILE *);
+int dig_load_plus (struct Plus_head *, GVFILE *, int);
 int dig_map_to_head (struct Map_info *, struct Plus_head *);
 int dig_head_to_map (struct Plus_head *, struct Map_info *);
 int dig_spindex_init ( struct Plus_head *);
@@ -131,6 +131,10 @@ void dig_line_reset_updated ( struct Plus_head *Plus );
 void dig_line_add_updated ( struct Plus_head *Plus, int line );
 void dig_node_reset_updated ( struct Plus_head *Plus );
 void dig_node_add_updated ( struct Plus_head *Plus, int node );
+
+/* conversion of types */
+int dig_type_to_store (int);
+int dig_type_from_store (int);
 
 /* spatial index */
 
@@ -159,6 +163,17 @@ void dig_spidx_free (struct Plus_head *);
 int dig_write_spidx (GVFILE *, struct Plus_head *);
 int dig_dump_spidx (FILE *, struct Plus_head *);
 int dig_read_spidx (GVFILE *, struct Plus_head *);
+
+/* category index */
+int dig_cidx_init ( struct Plus_head *);
+void dig_cidx_free ( struct Plus_head *);
+int dig_cidx_add_cat ( struct Plus_head *, int, int, int, int);
+void dig_cidx_sort ( struct Plus_head *);
+
+int dig_write_cidx_head ( GVFILE *, struct Plus_head *);
+int dig_read_cidx_head ( GVFILE *, struct Plus_head *);
+int dig_write_cidx ( GVFILE *, struct Plus_head *);
+int dig_read_cidx ( GVFILE *, struct Plus_head *, int);
 
 /* int dig_in_line_bbox (P_LINE *, double, double); */
 int dig_check_dist (struct Map_info *, int, double, double, double *);

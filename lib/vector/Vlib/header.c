@@ -71,7 +71,7 @@ Vect__write_head (struct Map_info *Map)
     return (GRASS_OK);
 }
 
-/* Vect__read_head () reads head information from text file.
+/* Vect__read_head () reads head information from text file (GRASS_VECT_HEAD_ELEMENT). 
  * returns: GRASS_OK - success
  *          GRASS_ERR - error
  */
@@ -131,7 +131,6 @@ Vect__read_head (struct Map_info *Map)
     fclose (head_fp);
     return (GRASS_OK);
 }
-
 
 /* set and get header informations */
 /* name, mapset, full name */

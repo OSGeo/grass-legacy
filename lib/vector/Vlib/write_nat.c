@@ -309,7 +309,7 @@ V1__rewrite_line_nat (
   *              6-7 bit: not used  
   */
   
-  rhead = (char) Vect_type_to_store ( type );
+  rhead = (char) dig_type_to_store ( type );
   rhead <<= 2;
   if (cats->n_cats > 0) {
       rhead |=  0x02;

@@ -215,6 +215,18 @@ struct Format_info {
 #endif
 } ;
 
+/* Category index */
+struct Cat_index {
+    int field; /* field number */
+    int n_cats;    /* number of items in cat array */ 
+    int a_cats;    /* allocated space in cat array */
+    int (*cat)[3]; /* array of cats (cat,type, lines/area) */ 
+    int n_ucats;  /* number of unique cats */
+    int n_types; /* number of types in type */
+    int type[7][2]; /* number of elements for each type (point, line, boundary, centroid, area, face, kernel) */
+    long offset; /* offset of the beginning of this index in cidx file */
+};
+
 struct Plus_head
   {
     int Version_Major;		/* version codes */
@@ -227,14 +239,21 @@ struct Plus_head
     int spidx_Back_Major;		/* earliest version that can use this data format */
     int spidx_Back_Minor;
     
+    int cidx_Version_Major;	/* version codes for category index */
+    int cidx_Version_Minor;
+    int cidx_Back_Major;	/* earliest version that can use this data format */
+    int cidx_Back_Minor;
+    
     int with_z;
     int spidx_with_z;
 
     long head_size;             /* topo header size */
     long spidx_head_size;       /* spatial index header size */
+    long cidx_head_size;        /* category index header size */
 
-    struct Port_info port;      /* Portability information */
-    struct Port_info spidx_port;      /* Portability information for spatial index */
+    struct Port_info port;        /* Portability information */
+    struct Port_info spidx_port;  /* Portability information for spatial index */
+    struct Port_info cidx_port;   /* Portability information for category index */
     int mode;			/* Read, Write, RW */
 
     int built;                 /* the highest level of topology currently available (GV_BUILD_*) */
@@ -292,6 +311,12 @@ struct Plus_head
     struct Node *Area_spidx;
     struct Node *Isle_spidx;
 
+    /* Category index */
+    int    n_cidx; /* number of cat indexes (one for each field) */
+    int    a_cidx; /* allocated space for cat indexes */
+    struct Cat_index *cidx; /* Array of category indexes */
+    int    cidx_up_to_date; /* set to 1 when cidx is created and reset to 0 whenever any line is changed */
+
     long coor_size;		/* size of coor file */
     long coor_mtime;		/* time of last coor modification */
 
@@ -335,6 +360,8 @@ struct Map_info
                                 /* never been initialized                   */
     int mode;			/*  Read, Write, RW                         */
     int level;			/*  1, 2, (3)                               */
+    int head_only;              /* Only header is opened */ 
+    int support_updated;        /* Support files were updated */
     plus_t next_line;		/* for Level II sequential reads */
 
     char *name;			/* for 4.0  just name, and mapset */
@@ -358,7 +385,6 @@ struct Map_info
     /* format specific */
     /* native */
     GVFILE dig_fp;		/* Dig file pointer */
-    char   *digit_file;		/* digit file */
     struct dig_head head;	/* coor file head */
     
     /* non native */
@@ -405,7 +431,7 @@ struct P_line
     double B;           /* bottom */ 
 
     long offset;	/* offset in coor file for line */
-    char type;	
+    int  type;	
   };
 
 struct P_area

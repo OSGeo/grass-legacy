@@ -233,7 +233,7 @@ Vect__Read_line_post (struct Map_info *Map,
 
   /***********Geometry Parser ***********************/
   gType = atoi (PQgetvalue (res, 0, 0)); /* int4 Geom type */
-  type = Vect_type_from_store (gType);
+  type = dig_type_from_store (gType);
   npoints = atoi (PQgetvalue (res, 0, 1)); /* int4 Number of line points */
   dimension = atoi (PQgetvalue (res, 0, 2)); /* int4 Dimension 2/3 */
   PQclear (res);

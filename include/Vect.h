@@ -94,6 +94,22 @@ void Vect_spatial_index_add_item ( SPATIAL_INDEX *, int, BOUND_BOX * );
 void Vect_spatial_index_del_item ( SPATIAL_INDEX *, int );
 int Vect_spatial_index_select ( SPATIAL_INDEX *, BOUND_BOX *, struct ilist * );
 
+    /* Category index */
+int Vect_cidx_get_num_fields ( struct Map_info *);
+int Vect_cidx_get_field_number ( struct Map_info *, int);
+int Vect_cidx_get_field_index ( struct Map_info *, int);
+int Vect_cidx_get_num_unique_cats_by_index ( struct Map_info *, int);
+int Vect_cidx_get_num_cats_by_index ( struct Map_info *, int);
+int Vect_cidx_get_num_types_by_index ( struct Map_info *, int);
+int Vect_cidx_get_type_count_by_index ( struct Map_info *, int, int, int *, int *);
+int Vect_cidx_get_type_count ( struct Map_info *, int, int);
+int Vect_cidx_get_cat_by_index ( struct Map_info *, int, int, int *, int *, int *);
+int Vect_cidx_find_next ( struct Map_info *, int, int, int, int, int *, int *);
+int Vect_cidx_dump ( struct Map_info *, FILE *);
+int Vect_cidx_save ( struct Map_info *);
+int Vect_cidx_open ( struct Map_info *, int);
+
+
     /* Set/get Map header info */
 char *Vect_get_name (struct Map_info *);
 char *Vect_get_mapset (struct Map_info *);
@@ -140,6 +156,7 @@ int Vect_get_fatal_error ();
 int Vect_legal_filename(char *);
 int Vect_set_open_level (int);
 int Vect_open_old (struct Map_info *, char *, char *);
+int Vect_open_old_head (struct Map_info *, char *, char *);
 int Vect_open_new (struct Map_info *, char *, int);
 int Vect_open_update (struct Map_info *, char *, char *);
 int Vect_copy_head_data (struct Map_info *, struct  Map_info *);
@@ -211,6 +228,10 @@ int Vect_find_node (struct Map_info *, double, double, double, double, int);
 int Vect_find_line (struct Map_info *, double, double, double, int, double, int, int);
 int Vect_find_area (struct Map_info *, double, double);
 int Vect_find_island (struct Map_info *, double, double);
+int Vect_select_lines_by_polygon ( struct Map_info *, struct line_pnts *, int, struct line_pnts **, 
+                          	   int, struct ilist *);
+int Vect_select_areas_by_polygon ( struct Map_info *, struct line_pnts *, int, struct line_pnts **, 
+                          	   struct ilist *);
 
       /* Analysis */
 int Vect_point_in_area (struct Map_info *, int, double, double);
@@ -287,7 +308,7 @@ int Vect__init_head (struct Map_info *);
     /* Open/close/rewind map */
 int Vect_coor_info ( struct Map_info *, struct Coor_info *);
 char *Vect_maptype_info ( struct Map_info *);
-int Vect_open_topo (struct Map_info *);
+int Vect_open_topo (struct Map_info *, int);
 int Vect_save_topo ( struct Map_info *);
 int Vect_open_spatial_index (struct Map_info *);
 int Vect_save_spatial_index ( struct Map_info *);
@@ -303,10 +324,6 @@ int V1_open_new_nat (struct Map_info *, char *, int);
 int V1_open_new_shp (struct Map_info *, char *, int);
 int V1_open_new_ogr (struct Map_info *, char *, int);
 int V1_open_new_post (struct Map_info *, char *, int);
-int V2_open_old_nat (struct Map_info *, int);
-int V2_open_old_shp (struct Map_info *, int);
-int V2_open_old_ogr (struct Map_info *, int);
-int V2_open_old_post (struct Map_info *, int);
 int V1_rewind_nat (struct Map_info *);
 int V1_rewind_shp (struct Map_info *);
 int V1_rewind_ogr (struct Map_info *);
@@ -319,10 +336,6 @@ int V1_close_nat (struct Map_info *);
 int V1_close_shp (struct Map_info *);
 int V1_close_ogr (struct Map_info *);
 int V1_close_post (struct Map_info *);
-int V2_close_nat (struct Map_info *);
-int V2_close_shp (struct Map_info *);
-int V2_close_ogr (struct Map_info *);
-int V2_close_post (struct Map_info *);
 
     /* Read/write lines */
 int Vect_read_line_by_offset (struct Map_info *, struct line_pnts *, struct line_cats *, long);

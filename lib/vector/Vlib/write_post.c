@@ -265,7 +265,7 @@ insert_geom (struct Map_info *Map, int type, int id, struct line_pnts *points,
   query = (char *) G_malloc ( size );
   sprintf (query, "INSERT INTO %s VALUES (%d", Map->fInfo.post.geom_table, id);
 
-  sprintf (query, "%s,%d,%s", query, Vect_type_to_store (type), gquery );
+  sprintf (query, "%s,%d,%s", query, dig_type_to_store (type), gquery );
   sprintf (query, "%s );", query);
 
   G_debug (5, "%s", query );

@@ -13,6 +13,7 @@
 #define GRASS_VECT_HIST_ELEMENT "hist" /* history file */
 #define GV_TOPO_ELEMENT "topo"   /* topology */
 #define GV_SIDX_ELEMENT "sidx"   /* spatial index */
+#define GV_CIDX_ELEMENT "cidx"   /* category index */
 
 #define ENDIAN_LITTLE 0
 #define ENDIAN_BIG    1
@@ -102,6 +103,8 @@
 #define GV_TOPO_VER_MINOR  0
 #define GV_SIDX_VER_MAJOR  5
 #define GV_SIDX_VER_MINOR  0
+#define GV_CIDX_VER_MAJOR  5
+#define GV_CIDX_VER_MINOR  0
 
 /* the earliest version that can read this current format  */
 #define GV_COOR_EARLIEST_MAJOR  5
@@ -110,6 +113,8 @@
 #define GV_TOPO_EARLIEST_MINOR	0
 #define GV_SIDX_EARLIEST_MAJOR  5
 #define GV_SIDX_EARLIEST_MINOR	0
+#define GV_CIDX_EARLIEST_MAJOR  5
+#define GV_CIDX_EARLIEST_MINOR	0
 
 #define WITHOUT_Z	0
 #define WITH_Z		1
@@ -149,6 +154,8 @@
 #define GV_STORE_CENTROID 4
 #define GV_STORE_FACE     5
 #define GV_STORE_KERNEL   6
+#define GV_STORE_AREA     7   /* used in category index file */
+#define GV_STORE_VOLUME   8   /* used in category index file */
 
 /* Overlay operators */
 #define GV_ON_AND     "AND"     /* intersect */

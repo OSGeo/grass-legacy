@@ -217,49 +217,6 @@ V1_open_old_post (struct Map_info *Map, int update)
   return (0);
 }
 
-/* Open old file on level 2.
-*  Map->name and Map->mapset must be set before
-*  
-*  Return: 0 success
-*         -1 error */
-int
-V2_open_old_post (struct Map_info *Map, int update)
-{
-  int ret;
-
-  G_debug (1, "V2_open_old_post(): name = %s mapset = %s", Map->name,
-	   Map->mapset);
-
-  /* open topo */
-  ret = Vect_open_topo (Map);
-
-  if (ret == -1) {/* topo file is not available */
-      G_debug( 1, "Cannot open topo file for vector '%s'.", Vect_get_full_name (Map));
-      return -1;
-  }
-
-  /* open spatial index */
-  ret = Vect_open_spatial_index ( Map );
-      
-  if ( ret == -1 ) { /* spatial index is not available */
-      G_debug( 1, "Cannot open spatial index file for vector '%s'.", Vect_get_full_name (Map) );
-      /* free topology */
-      dig_free_plus ( &(Map->plus) );
-      return -1;
-  }
-  
-  ret = V1_open_old_post (Map, update);
-  if (ret != 0) {
-      dig_free_plus (&(Map->plus));
-      /* TODO: free spatial index */
-      return -1;
-  }
-
-  Map->next_line = 1;
-
-  return 0;
-}
-
 /* Open PostGIS vector.
 *
 *  Return: 0 success

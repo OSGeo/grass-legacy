@@ -125,11 +125,16 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
     /* If topology is already build (map on level2), set level to 1 so that lines will
     *  be read by V1_read_ (all lines) */
     Map->level = 1; /* may be not needed, because  V1_read is used directly by Vect_build_ */
+    Map->support_updated = 1;
     
     plus = &(Map->plus);
     prnmsg ("Building topology ...\n") ;
     plus->with_z = Map->head.with_z;
     plus->spidx_with_z = Map->head.with_z;
+
+    if ( build == GV_BUILD_ALL ) {
+	dig_cidx_free(plus); /* free old (if any) category index) */
+    }
     
     ret = ( (*Build_array[Map->format]) (Map, build, msgout) );
 
@@ -137,6 +142,11 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
     
     Map->level = LEVEL_2;
     plus->mode = GV_MODE_WRITE;
+    
+    if ( build == GV_BUILD_ALL ) {
+        plus->cidx_up_to_date = 1; /* category index was build */
+	dig_cidx_sort ( plus );
+    }
     
     /* prnmsg ("Topology was built.\n") ; */
    
