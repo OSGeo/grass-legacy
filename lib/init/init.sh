@@ -178,7 +178,7 @@ fi
 
 # Set some environment variables if they are not set
 if [ ! "$GRASS_PAGER" ] ; then
-    if [ -x /bin/more ] ; then
+    if [ -x /bin/more ] || [ -x /usr/bin/more ] ; then
         GRASS_PAGER=more
     else 
         GRASS_PAGER=less
