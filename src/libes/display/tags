@@ -29,6 +29,7 @@ D_get_d_east	cnversions.c	/^D_get_d_east()$/
 D_get_d_north	cnversions.c	/^D_get_d_north()$/
 D_get_d_south	cnversions.c	/^D_get_d_south()$/
 D_get_d_west	cnversions.c	/^D_get_d_west()$/
+D_get_erase_color	list.c	/^D_get_erase_color(colorname)$/
 D_get_ew_resolution	cnversions.c	/^D_get_ew_resolution()$/
 D_get_ns_resolution	cnversions.c	/^D_get_ns_resolution()$/
 D_get_screen_window	window.c	/^D_get_screen_window(t, b, l, r)$/
@@ -58,6 +59,7 @@ D_set_clip_window	draw.c	/^D_set_clip_window (Top, Bottom, Left, Right)$/
 D_set_clip_window_to_map_window	draw.c	/^D_set_clip_window_to_map_window ()$/
 D_set_colors	raster2.c	/^D_set_colors (colors)$/
 D_set_cur_wind	window.c	/^D_set_cur_wind(name)$/
+D_set_erase_color	list.c	/^D_set_erase_color(colorname)$/
 D_set_overlay_mode	raster2.c	/^D_set_overlay_mode (n)$/
 D_setup	setup.c	/^D_setup (clear)$/
 D_show_window	window.c	/^D_show_window(color)$/
