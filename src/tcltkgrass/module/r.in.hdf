@@ -1,0 +1,11 @@
+interface_build {
+    {r.in.hdf} 0
+    {Imports a HDF file as a GRASS raster file.}
+    {entry input {HDF file (input):} 0 file}
+    {entry output {GRASS raster file (output):} 0 raster}
+    {entry mult {Floating point multiplier for cell values):} 0 ""}
+    {entry dsets {List of reference number of data sets to be imported:} 0 ""}
+    {checkbox -l {Only list contents of HDF file (no import).} "" -l}
+    {checkbox -a {Import all datasets in HDF file.} "" -a}
+    {checkbox -q {Run quietly.} "" -q}
+}
