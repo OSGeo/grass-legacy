@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.15 2000-10-04 17:08:25 cho Exp $
+# $Id: configure,v 1.16 2000-10-04 17:17:50 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -3482,7 +3482,7 @@ echo $ac_n "Checking for GL/gl.h... $ac_c"
 OPENGLINCLIBs="$OPENGL $OPENGL/include /usr/include /usr/local/include \
               /usr/include/Mesa /usr/local/include/Mesa /usr/Mesa/include \
               /usr/local/Mesa/include /usr/Mesa /usr/local/Mesa /opt/Mesa \
-              /opt/Mesa/include /usr/X11R6/include"
+              /opt/Mesa/include /usr/X11R6/include /opt/include"
 
 if [ -z "$OPENGLINC" ]; then
    OPENGLINC=NO
@@ -3504,7 +3504,7 @@ OPENGLLIBdirs="$OPENGL $OPENGL/lib /usr/lib /usr/local/lib /usr/lib/X11 \
               /usr/X11R6/lib /usr/local/lib/X11 /usr/local/X11R6/lib \
               /usr/X11/lib /usr/lib/Mesa /usr/local/lib/Mesa /usr/Mesa/lib \
               /usr/local/Mesa/lib /usr/Mesa /usr/local/Mesa /opt/Mesa \
-              /opt/Mesa/lib"
+              /opt/Mesa/lib /opt/lib"
 OPENGLLIBs="libGL.a libGL.so"    # favour .a over .so
 OPENGLLIB=NO
 
