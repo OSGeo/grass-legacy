@@ -1,0 +1,123 @@
+.\" $Header: /usr/people/sam/tiff/man/man3/RCS/open.3t,v 1.4 90/11/25 11:59:57 sam Exp $
+.\"
+.\" Copyright (c) 1990 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFFOpen 3T "November 24, 1990"
+.SH NAME
+TIFFOpen, TIFFFdOpen \- open a
+.SM TIFF
+file for reading or writing
+.SH SYNOPSIS
+.B "#include <tiffio.h>"
+.br
+.B "TIFF* TIFFOpen(const char* filename, const char* mode)"
+.br
+.B "TIFF* TIFFFdOpen(const int fd, const char* filename, const char* mode)"
+.SH DESCRIPTION
+.IR TIFFOpen ()
+open a
+.SM TIFF
+file whose name is
+.I filename
+and return a handle to be used in subsequent calls to routines in
+.I libtiff
+(if the operation fails, then a null handle is returned).
+The
+.I mode
+parameter specifies if the file is to be opened for reading (``r''),
+writing (``w''), or appending (``a'').
+When a file is opened for appending, any existing data will not
+be touched; instead new data will be written as additional subfiles.
+If an existing file is opened for writing, all previous data is
+overwritten.
+.PP
+If a file is opened for reading, the first
+.SM TIFF
+directory in the file is automatically read
+(also see
+.IR TIFFSetDirectory (3T)
+for reading directories other than the first).
+If a file is opened for writing or appending, a default directory
+is automatically created for writing subsequent data.
+This directory has all the default values specified in
+.SM TIFF
+Revision 5.0:
+.IR BitsPerSample =1,
+.IR ThreshHolding "=bilevel art scan,"
+.IR FillOrder =1
+(most significant bit of each data byte is filled first),
+.IR Orientation =1
+(the 0th row represents the visual top of the image, and the 0th
+column represents the visual left hand side),
+.IR SamplesPerPixel =1,
+.IR RowsPerStrip =infinity,
+.IR GrayResponseUnit =2
+(hundredths of a unit),
+.IR ColorResponseUnit =2
+(hundredths of a unit),
+.IR ResolutionUnit =2
+(inches), and
+.IR Compression =1
+(no compression).
+To alter these values, or to define values for additional fields,
+.IR TIFFSetField (3T)
+must be used.
+.PP
+It is not possible to append data to a file that has a
+byte ordering opposite to the native byte ordering of a machine.
+That is, for example, the library will not allow
+a file with little-endian byte ordering to be appended to
+on a machine that has a native big-endian byte ordering.
+.PP
+.IR TIFFFdOpen ()
+is like
+.IR TIFFOpen ()
+except that it opens a
+.SM TIFF
+file given an open file descriptor
+.IR fd .
+The file's name and mode must reflect that of the open descriptor.
+.SH DIAGNOSTICS
+All error messages are directed to the
+.IR TIFFError (3T)
+routine.
+Likewise, warning messages are directed to the
+.IR TIFFWarning (3T)
+routine.
+.PP
+\fB"%s": Bad mode\fP.
+The specified
+.I mode
+parameter was not one of ``r'' (read), ``w'' (write), or ``a'' (append).
+.PP
+.BR "%s: Cannot open" .
+.IR TIFFOpen ()
+was unable to open the specified filename for read/writing.
+.PP
+.BR "Cannot read TIFF header" .
+An error occurred while attempting to read the header information.
+.PP
+.BR "Error writing TIFF header" .
+An error occurred while writing the default header information
+for a new file.
+.PP
+.BR "Not a TIFF file, bad magic number %d (0x%x)" .
+The magic number in the header was not (hex)
+0x4d4d or (hex) 0x4949.
+.PP
+.BR "Not a TIFF file, bad version number %d (0x%x)" .
+The version field in the header was not 42 (decimal).
+.PP
+.BR "Cannot append to file that has opposite byte ordering" .
+A file with a byte ordering opposite to the native byte
+ordering of the current machine was opened for appending (``a'').
+This is a limitation of the library.
+.SH "SEE ALSO"
+.IR intro (3T),
+.IR TIFFClose (3T)
