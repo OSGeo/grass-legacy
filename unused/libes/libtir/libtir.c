@@ -16,6 +16,295 @@
  *		for details.
  *
  *****************************************************************************/
+
+#include <stdio.h>
+#include "gis.h"
+#include "libtir.h"
+
+
+double
+r_get_c(RASTER_MAP_ROW data, int col)
+{
+	if(col < 0){
+		G_warning("r_get_c(): col < 0");
+		return 0;
+	}
+
+	return (double) data.c[col];
+}
+
+
+double
+r_get_f(RASTER_MAP_ROW data, int col)
+{
+	if(col < 0){
+		G_warning("r_get_f(): col < 0");
+		return 0;
+	}
+
+	return (double) data.f[col];
+}
+
+
+double
+r_get_d(RASTER_MAP_ROW data, int col)
+{
+	if(col < 0){
+		G_warning("r_get_d(): col < 0");
+		return 0;
+	}
+
+	return (double) data.d[col];
+}
+
+
+double *
+r_get_cs(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
+{
+	int	i;
+
+	if(col < 0 || num <= 0 || val == NULL){
+		G_warning("r_get_cs(): col < 0 || num <= 0 || val == NULL");
+		return NULL;
+	}
+
+	for(i=0; i<num; i++)
+		val[idx+i] = (double) data.c[col+i];
+
+	return val;
+}
+
+
+double *
+r_get_fs(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
+{
+	int	i;
+
+	if(col < 0 || num <= 0 || val == NULL){
+		G_warning("r_get_fs(): col < 0 || num <= 0 || val == NULL");
+		return NULL;
+	}
+
+	for(i=0; i<num; i++)
+		val[idx+i] = (double) data.f[col+i];
+
+	return val;
+}
+
+
+double *
+r_get_ds(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
+{
+	int	i;
+
+	if(col < 0 || num <= 0 || val == NULL){
+		G_warning("r_get_ds(): col < 0 || num <= 0 || val == NULL");
+		return NULL;
+	}
+
+	for(i=0; i<num; i++)
+		val[idx+i] = (double) data.d[col+i];
+
+	return val;
+}
+
+
+void
+r_set_c(RASTER_MAP_ROW data, int col, double val, int num)
+{
+	int	i;
+
+	if(col < 0 || num <= 0){
+		G_warning("r_set_c(): col < 0 || num <= 0");
+		return;
+	}
+
+	for(i=0; i<num; i++)
+		data.c[col+i] = (CELL) val;
+
+	return;
+}
+
+
+void
+r_set_f(RASTER_MAP_ROW data, int col, double val, int num)
+{
+	int	i;
+
+	if(col < 0 || num <= 0){
+		G_warning("r_set_f(): col < 0 || num <= 0");
+		return;
+	}
+
+	for(i=0; i<num; i++)
+		data.f[col+i] = (FCELL) val;
+
+	return;
+}
+
+
+void
+r_set_d(RASTER_MAP_ROW data, int col, double val, int num)
+{
+	int	i;
+
+	if(col < 0 || num <= 0){
+		G_warning("r_set_d(): col < 0 || num <= 0");
+		return;
+	}
+
+	for(i=0; i<num; i++)
+		data.d[col+i] = (DCELL) val;
+
+	return;
+}
+
+
+void
+r_set_null_c(RASTER_MAP_ROW data, int col, int num)
+{
+	if(col < 0 || num <= 0){
+		G_warning("r_set_null_c(): col < 0 || num <= 0");
+		return;
+	}
+
+	return G_set_c_null_value(&data.c[col], num);
+}
+
+
+void
+r_set_null_f(RASTER_MAP_ROW data, int col, int num)
+{
+	if(col < 0 || num <= 0){
+		G_warning("r_set_null_f(): col < 0 || num <= 0");
+		return;
+	}
+
+	return G_set_f_null_value(&data.f[col], num);
+}
+
+
+void
+r_set_null_d(RASTER_MAP_ROW data, int col, int num)
+{
+	if(col < 0 || num <= 0){
+		G_warning("r_set_null_d(): col < 0 || num <= 0");
+		return;
+	}
+
+	return G_set_d_null_value(&data.d[col], num);
+}
+
+
+int
+r_is_null_c(RASTER_MAP_ROW data, int col)
+{
+	if(col < 0){
+		G_warning("r_is_null_c(): col < 0");
+		return;
+	}
+
+	return G_is_c_null_value(&data.c[col]);
+}
+
+
+int
+r_is_null_f(RASTER_MAP_ROW data, int col)
+{
+	if(col < 0){
+		G_warning("r_is_null_f(): col < 0");
+		return;
+	}
+
+	return G_is_f_null_value(&data.f[col]);
+}
+
+
+int
+r_is_null_d(RASTER_MAP_ROW data, int col)
+{
+	if(col < 0){
+		G_warning("r_is_null_d(): col < 0");
+		return;
+	}
+
+	return G_is_d_null_value(&data.d[col]);
+}
+
+
+int
+r_str_c(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
+{
+	if(str == NULL || col < 0){
+		G_warning("r_str_c(): str == NULL || col < 0");
+		return 0;
+	}
+
+	sprintf(str, "%*d", width, data.c[col]);
+
+	if(width <= 0){
+		int	i, j, l;
+
+		l = strlen(str);
+		for(i=0; i<l && str[i]==' '; i++);
+		for(j=i; j<=l; j++)
+			str[j-i] = str[j];
+	}
+
+	return strlen(str);
+}
+
+
+int
+r_str_f(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
+{
+	if(str == NULL || col < 0){
+		G_warning("r_str_f(): str == NULL || col < 0");
+		return 0;
+	}
+
+	sprintf(str, "%*.*f", width, prec, data.f[col]);
+
+	if(width <= 0){
+		int	i, j, l;
+
+		l = strlen(str);
+		for(i=0; i<l && str[i]==' '; i++);
+		for(j=i; j<=l; j++)
+			str[j-i] = str[j];
+	}
+
+	return strlen(str);
+}
+
+
+int
+r_str_d(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
+{
+	if(str == NULL || col < 0){
+		G_warning("r_str_d(): str == NULL || col < 0");
+		return 0;
+	}
+
+	sprintf(str, "%*.*lf", width, prec, data.d[col]);
+
+	if(width <= 0){
+		int	i, j, l;
+
+		l = strlen(str);
+		for(i=0; i<l && str[i]==' '; i++);
+		for(j=i; j<=l; j++)
+			str[j-i] = str[j];
+	}
+
+	return strlen(str);
+}
+
+
+
+/*****************************************************************************
+ * Old method
+ *****************************************************************************/
 /*
  * char	*
  * r_type_name[] = { "CELL", "FCELL", "DCELL" };
@@ -65,115 +354,6 @@
  *
  *		copies sbuf[scol] value to dbuf[dcol]
  */
-
-
-#include <stdio.h>
-#include "gis.h"
-#include "libtir.h"
-
-
-/*****************************************************************************
- * Here is a full example 'r.show'
- *****************************************************************************/
-#ifdef	R_SHOW
-int
-main(int argc, char **argv)
-{
-	struct	Option *opt;
-	struct	Cell_head cellhd;
-	char	*name, *mapset;
-	int	fd, row, rows, col, cols;
-	char	str[20];
-	RASTER_ROW	buf;
-
-	opt		 = G_define_option();
-	opt->key         = "map";
-	opt->description = "Map to manipulate";
-	opt->type        = TYPE_STRING;
-	opt->required    = YES;
-	opt->gisprompt   = "old,cell,raster";
-
-	G_gisinit(argv[0]);
-
-	if(G_parser(argc, argv))
-	        exit(-1);
-
-	name   = opt->answer;
-	mapset = G_mapset();
-	if(!G_find_file("cell", name, mapset)){
-		fprintf(stderr, "\n** %s - not found **\n", name);
-		exit(1);
-	}
-
-	G_get_cellhd(name, mapset, &cellhd);
-
-	rows = cellhd.rows;
-	cols = cellhd.cols;
-
-	buf.type  = G_raster_map_type(name, mapset);
-	buf.row.v = G_allocate_raster_buf(buf.type);
-
-	fprintf(stderr, "%s\n", r_type_name[buf.type]);
-
-	if((fd = G_open_cell_old(name, mapset)) < 0){
-		fprintf(stderr, "\n** %s - could not read **\n", name);
-		exit(1);
-	}
-
-	for(row=0; row<rows; row++){
-		G_percent(row, rows, 2);
-		if(G_get_raster_row(fd, buf.row.v, row, buf.type) < 0){
-			G_close_cell(fd);
-			exit(1);
-		}
-
-		for(col=0; col<cols; col++){
-			if(r_is_null_value(buf, col)){
-				printf("NULL ");
-			}else{
-				r_str_value(str, 15, 5, buf, col);
-				printf("%s ", str);
-			}
-		}
-		printf("\n");
-	}
-	G_close_cell(fd);
-
-	fprintf(stderr, "\n%d rows, %d cols\n", rows, cols);
-
-	{
-		RASTER_ROW tmp;
-		double	dval;
-
-		fprintf(stderr, "\n*** Test ***\n");
-
-		tmp.type   = buf.type;
-		tmp.row.v = G_allocate_raster_buf(buf.type);
-
-		dval = 123.322;
-		fprintf(stderr, " buf[10] = (%s) %lf\n",
-				r_type_name[buf.type], dval);
-
-		r_set_value(buf, 10, dval);
-		r_str_value(str, 10, 5, buf, 10);
-		fprintf(stderr, " buf[10] = %s,", str);
-
-		r_str_value(str, 10, 5, tmp, 2);
-		fprintf(stderr, " tmp[2] = %s\n", str);
-
-		fprintf(stderr, "\n copy buf[10] to tmp[2]\n");
-		r_copy_value(buf, 10, tmp, 2);
-		r_str_value(str, 0, 5, tmp, 2);
-		fprintf(stderr, " tmp[2] = %s,", str);
-
-		r_set_value(tmp, 2, 10*r_get_value(tmp, 2));
-		r_str_value(str, 0, 5, tmp, 2);
-		fprintf(stderr, " tmp[2]*10 = %s\n", str);
-	}
-
-	exit(0);
-}
-#endif
 
 
 double
@@ -549,287 +729,5 @@ r_copy_value2(RASTER_MAP_TYPE stype, RASTER_MAP_ROW sdata, int scol,
 	}
 
 	return;
-}
-
-
-/*****************************************************************************
- * New approach
- *****************************************************************************/
-double
-r_get_c(RASTER_MAP_ROW data, int col)
-{
-	if(col < 0){
-		G_warning("r_get_c(): col < 0");
-		return 0;
-	}
-
-	return (double) data.c[col];
-}
-
-
-double
-r_get_f(RASTER_MAP_ROW data, int col)
-{
-	if(col < 0){
-		G_warning("r_get_f(): col < 0");
-		return 0;
-	}
-
-	return (double) data.f[col];
-}
-
-
-double
-r_get_d(RASTER_MAP_ROW data, int col)
-{
-	if(col < 0){
-		G_warning("r_get_d(): col < 0");
-		return 0;
-	}
-
-	return (double) data.d[col];
-}
-
-
-double *
-r_get_cs(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
-{
-	int	i;
-
-	if(col < 0 || num <= 0 || val == NULL){
-		G_warning("r_get_cs(): col < 0 || num <= 0 || val == NULL");
-		return NULL;
-	}
-
-	for(i=0; i<num; i++)
-		val[idx+i] = (double) data.c[col+i];
-
-	return val;
-}
-
-
-double *
-r_get_fs(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
-{
-	int	i;
-
-	if(col < 0 || num <= 0 || val == NULL){
-		G_warning("r_get_fs(): col < 0 || num <= 0 || val == NULL");
-		return NULL;
-	}
-
-	for(i=0; i<num; i++)
-		val[idx+i] = (double) data.f[col+i];
-
-	return val;
-}
-
-
-double *
-r_get_ds(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
-{
-	int	i;
-
-	if(col < 0 || num <= 0 || val == NULL){
-		G_warning("r_get_ds(): col < 0 || num <= 0 || val == NULL");
-		return NULL;
-	}
-
-	for(i=0; i<num; i++)
-		val[idx+i] = (double) data.d[col+i];
-
-	return val;
-}
-
-
-void
-r_set_c(RASTER_MAP_ROW data, int col, double val, int num)
-{
-	int	i;
-
-	if(col < 0 || num <= 0){
-		G_warning("r_set_c(): col < 0 || num <= 0");
-		return;
-	}
-
-	for(i=0; i<num; i++)
-		data.c[col+i] = (CELL) val;
-
-	return;
-}
-
-
-void
-r_set_f(RASTER_MAP_ROW data, int col, double val, int num)
-{
-	int	i;
-
-	if(col < 0 || num <= 0){
-		G_warning("r_set_f(): col < 0 || num <= 0");
-		return;
-	}
-
-	for(i=0; i<num; i++)
-		data.f[col+i] = (FCELL) val;
-
-	return;
-}
-
-
-void
-r_set_d(RASTER_MAP_ROW data, int col, double val, int num)
-{
-	int	i;
-
-	if(col < 0 || num <= 0){
-		G_warning("r_set_d(): col < 0 || num <= 0");
-		return;
-	}
-
-	for(i=0; i<num; i++)
-		data.d[col+i] = (DCELL) val;
-
-	return;
-}
-
-
-void
-r_set_null_c(RASTER_MAP_ROW data, int col, int num)
-{
-	if(col < 0 || num <= 0){
-		G_warning("r_set_null_c(): col < 0 || num <= 0");
-		return;
-	}
-
-	return G_set_c_null_value(&data.c[col], num);
-}
-
-
-void
-r_set_null_f(RASTER_MAP_ROW data, int col, int num)
-{
-	if(col < 0 || num <= 0){
-		G_warning("r_set_null_f(): col < 0 || num <= 0");
-		return;
-	}
-
-	return G_set_f_null_value(&data.f[col], num);
-}
-
-
-void
-r_set_null_d(RASTER_MAP_ROW data, int col, int num)
-{
-	if(col < 0 || num <= 0){
-		G_warning("r_set_null_d(): col < 0 || num <= 0");
-		return;
-	}
-
-	return G_set_d_null_value(&data.d[col], num);
-}
-
-
-int
-r_is_null_c(RASTER_MAP_ROW data, int col)
-{
-	if(col < 0){
-		G_warning("r_is_null_c(): col < 0");
-		return;
-	}
-
-	return G_is_c_null_value(&data.c[col]);
-}
-
-
-int
-r_is_null_f(RASTER_MAP_ROW data, int col)
-{
-	if(col < 0){
-		G_warning("r_is_null_f(): col < 0");
-		return;
-	}
-
-	return G_is_f_null_value(&data.f[col]);
-}
-
-
-int
-r_is_null_d(RASTER_MAP_ROW data, int col)
-{
-	if(col < 0){
-		G_warning("r_is_null_d(): col < 0");
-		return;
-	}
-
-	return G_is_d_null_value(&data.d[col]);
-}
-
-
-int
-r_str_c(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
-{
-	if(str == NULL || col < 0){
-		G_warning("r_str_c(): str == NULL || col < 0");
-		return 0;
-	}
-
-	sprintf(str, "%*d", width, data.c[col]);
-
-	if(width <= 0){
-		int	i, j, l;
-
-		l = strlen(str);
-		for(i=0; i<l && str[i]==' '; i++);
-		for(j=i; j<=l; j++)
-			str[j-i] = str[j];
-	}
-
-	return strlen(str);
-}
-
-
-int
-r_str_f(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
-{
-	if(str == NULL || col < 0){
-		G_warning("r_str_f(): str == NULL || col < 0");
-		return 0;
-	}
-
-	sprintf(str, "%*.*f", width, prec, data.f[col]);
-
-	if(width <= 0){
-		int	i, j, l;
-
-		l = strlen(str);
-		for(i=0; i<l && str[i]==' '; i++);
-		for(j=i; j<=l; j++)
-			str[j-i] = str[j];
-	}
-
-	return strlen(str);
-}
-
-
-int
-r_str_d(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
-{
-	if(str == NULL || col < 0){
-		G_warning("r_str_d(): str == NULL || col < 0");
-		return 0;
-	}
-
-	sprintf(str, "%*.*lf", width, prec, data.d[col]);
-
-	if(width <= 0){
-		int	i, j, l;
-
-		l = strlen(str);
-		for(i=0; i<l && str[i]==' '; i++);
-		for(j=i; j<=l; j++)
-			str[j-i] = str[j];
-	}
-
-	return strlen(str);
 }
 
