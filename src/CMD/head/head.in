@@ -56,6 +56,8 @@ OPENGLLIB           = @OPENGLLIB@
 OPENGLULIB          = @OPENGLULIB@
 
 #tcl/tk stuff
+TCLINCDIR           = @TCLINCDIR@
+TKINCDIR            = @TKINCDIR@
 TCLTKLIBS           = @TCLTKLIBS@
 
 LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
