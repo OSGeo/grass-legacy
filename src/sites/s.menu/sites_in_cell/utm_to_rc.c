@@ -4,6 +4,7 @@
 struct RCLIST *
 utm_to_rc(window,north,east,rc,count)
     struct Cell_head *window;
+    double north, east;
     struct RCLIST *rc;
     int *count;
 {
