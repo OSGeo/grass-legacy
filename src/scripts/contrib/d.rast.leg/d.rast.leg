@@ -32,23 +32,14 @@
 # October 19, 1993
 ##############################################################################
 
-if [ $# -gt 0 -o "$1" = "-help" -o "$1" = "help" ] 
+if [ $# -lt 1 -o "$1" = "-help" -o "$1" = "help" ] 
+then
 	echo 
     	echo "Usage:	d.rast.leg"
     	echo "    or	d.rast.leg help"
     	echo "    or	d.rast.leg rast_map [num_of_lines]"
     	echo
     	exit 1
-fi
-
-if [ $# -gt 2 ]
-then
-    echo 
-    echo "Usage:	d.rast.leg"
-    echo "    or	d.rast.leg help"
-    echo "    or	d.rast.leg rast_map [num_of_lines]"
-    echo
-    exit 1
 fi
 
 d.frame -e
