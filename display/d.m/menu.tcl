@@ -184,7 +184,7 @@
 			{command "Redraw active display (Note: some items may not be redrawn)" {} "" {} -command {execute d.redraw }}
 			{command "Save file of commands to recreate active display" {} "" {} -command {execute d.save }}
         	{separator}
-			{command "Measure lengths and areas" {} "" {} -command {execute d.measure }}
+			{command "Measure lengths and areas" {} "" {} -command {term d.measure -s}}
 			{command "Show geographical position" {} "" {} -command {execute d.where }}
         	{separator}
 			{command "Zoom/Unzoom/Pan with options" {} "" {} -command {execute d.zoom }}	
