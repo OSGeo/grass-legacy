@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs fr 5.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-21 06:05+0100\n"
-"PO-Revision-Date: 2004-11-21 06:34+0100\n"
+"POT-Creation-Date: 2004-11-25 17:33+0100\n"
+"PO-Revision-Date: 2004-11-25 17:38+0100\n"
 "Last-Translator: Emmanuel Saracco <esaracco@users.labs.libre-entreprise>\n"
 "Language-Team: French <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -84,8 +84,8 @@ msgid "Select type: point, line, boundary, centroid or area"
 msgstr "Sélectionnez un type: point, ligne, intervalle, centroïd ou zone"
 
 #: ../lib/gis/parser.c:366
-msgid "Field value"
-msgstr "Valeur du champ"
+msgid "Layer number"
+msgstr "Numéro de la couche"
 
 #: ../lib/gis/parser.c:372
 msgid "Category value"
@@ -1929,7 +1929,9 @@ msgstr "Le champ doit être supérieur ou égal à 1."
 
 #: ../lib/vector/Vlib/field.c:78
 msgid "Cannot add database link, map is not opened in WRITE mode."
-msgstr "Impossible d'ajouter un lien base de données, la carte n'est pas ouverte en ECRITURE."
+msgstr ""
+"Impossible d'ajouter un lien base de données, la carte n'est pas ouverte en "
+"ECRITURE."
 
 #: ../lib/vector/Vlib/field.c:84
 msgid "Cannot add database link."
@@ -1944,56 +1946,47 @@ msgstr "Impossible d'ajouter des liens base de données."
 msgid "Field number <%d> or name <%s> already exists"
 msgstr "Le numéro de champ <%d> ou nom <%s> existe déjà"
 
-#: ../lib/vector/Vlib/field.c:247
+#: ../lib/vector/Vlib/field.c:248
 msgid ""
-"Default driver / database for vectors set to:\n"
+"Default driver / database set to:\n"
 "driver: dbf\n"
 "database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
 msgstr ""
-"Propriété du driver par défaut / base de données vecteurs:"
+"Driver par défaut / base de données :\n"
 "driver: dbf\n"
-"database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
+"base de données: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
 
-#: ../lib/vector/Vlib/field.c:255
-msgid ""
-"Database connection (for db.* modules) set to:\n"
-"driver: dbf\n"
-"database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
-msgstr ""
-"Propriété de la connexion à la base de données (pour les modules db.*):\n"
-"driver: dbf\n"
-"database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
-
-#: ../lib/vector/Vlib/field.c:267
+#: ../lib/vector/Vlib/field.c:258
 msgid "Default driver is not set"
 msgstr "Le driver par défaut n'est pas défini"
 
-#: ../lib/vector/Vlib/field.c:269
+#: ../lib/vector/Vlib/field.c:260
 msgid "Default database is not set"
 msgstr "La base de données par défaut n'est pas définie"
 
-#: ../lib/vector/Vlib/field.c:319
+#: ../lib/vector/Vlib/field.c:311
 #, c-format
 msgid "Requested dblink %d, maximum link number %d"
 msgstr "dblink demandé %d, nombre maximum du lien %d"
 
-#: ../lib/vector/Vlib/field.c:398
+#: ../lib/vector/Vlib/field.c:390
 msgid "Cannot open OGR DBMI driver."
 msgstr "Impossible d'ouvrir le driver OGR DBMI."
 
-#: ../lib/vector/Vlib/field.c:418
+#: ../lib/vector/Vlib/field.c:410
 #, c-format
 msgid "Don't know how to read links for format %d"
 msgstr "Aucun gestionnaire pour lire les liens de format %d"
 
-#: ../lib/vector/Vlib/field.c:446
+#: ../lib/vector/Vlib/field.c:438
 #, c-format
 msgid "Error in rule on row %d in %s"
 msgstr "Erreur dans la règle à la ligne %d dans %s"
 
-#: ../lib/vector/Vlib/field.c:573
+#: ../lib/vector/Vlib/field.c:565
 msgid "Bug: attempt to update map which is not in current mapset."
-msgstr "Bug: tentative de mise à jour d'une carte qui n'est pas dans le mapset."
+msgstr ""
+"Bug: tentative de mise à jour d'une carte qui n'est pas dans le mapset."
 
 #: ../lib/vector/Vlib/legal_vname.c:23
 #, c-format
@@ -2028,7 +2021,7 @@ msgid "Output map '%s' is used as input"
 msgstr "La carte de sortie '%s' est utilisée en entrée"
 
 #: ../lib/vector/Vlib/map.c:108 ../lib/vector/Vlib/map.c:202
-#: ../lib/vector/Vlib/open.c:499
+#: ../lib/vector/Vlib/open.c:505
 #, c-format
 msgid "The vector '%s' already exists and will be overwritten."
 msgstr "Le vecteur '%s' existe déjà et va être écrasé."
@@ -2043,7 +2036,7 @@ msgstr "Le vecteur d'entrée '%s' n'a pas été trouvé"
 msgid "Cannot copy vector '%s' to '%s'"
 msgstr "Impossible de copier le vecteur '%s' vers '%s'"
 
-#: ../lib/vector/Vlib/open.c:42
+#: ../lib/vector/Vlib/open.c:42 ../lib/vector/Vlib/write.c:35
 msgid "Requested format is not compiled in this version"
 msgstr "Le format demandé n'est pas compatible avec cette version"
 
@@ -2059,60 +2052,118 @@ msgstr "Impossible de trouver le vecteur %s"
 
 #: ../lib/vector/Vlib/open.c:165
 msgid "A map which is not in the current mapset cannot be opened for update."
-msgstr "Une carte qui n'est pas dans le mapset courant ne peut pas être ouverte en modification."
+msgstr ""
+"Une carte qui n'est pas dans le mapset courant ne peut pas être ouverte en "
+"modification."
 
 #: ../lib/vector/Vlib/open.c:183
 #, c-format
 msgid "Cannot open old vector %s"
 msgstr "Impossible d'ouvrir l'ancien vecteur %s"
 
-#: ../lib/vector/Vlib/open.c:193 ../lib/vector/Vlib/open.c:246
-#: ../lib/vector/Vlib/open.c:262
+#: ../lib/vector/Vlib/open.c:193 ../lib/vector/Vlib/open.c:252
+#: ../lib/vector/Vlib/open.c:268
 #, c-format
 msgid "Cannot open old vector %s on level %d"
 msgstr "Impossible d'ouvrir l'ancien vecteur %s au niveau %d"
 
-#: ../lib/vector/Vlib/open.c:309 ../lib/vector/Vlib/open.c:526
+#: ../lib/vector/Vlib/open.c:315 ../lib/vector/Vlib/open.c:532
 #, c-format
 msgid "Cannot open history file for vector '%s'"
 msgstr "Impossible d'ouvrir le fichier d'historique pour le vecteur '%s'"
 
-#: ../lib/vector/Vlib/open.c:480
+#: ../lib/vector/Vlib/open.c:486
 #, c-format
 msgid "Map name is not SQL compliant."
 msgstr "Le nom de la carte n'est pas compatible avec le SQL."
 
-#: ../lib/vector/Vlib/open.c:496
+#: ../lib/vector/Vlib/open.c:502
 #, c-format
 msgid "The vector '%s' already exists."
 msgstr "Les vecteur '%s' existe déjà."
 
-#: ../lib/vector/Vlib/open.c:503
+#: ../lib/vector/Vlib/open.c:509
 #, c-format
 msgid "Cannot delete existing vector %s"
 msgstr "Impossible de supprimer le vecteur %s"
 
-#: ../lib/vector/Vlib/open.c:517
+#: ../lib/vector/Vlib/open.c:523
 #, c-format
 msgid "Cannot open new vector %s"
 msgstr "Impossible d'ouvrir le nouveau vecteur %s"
 
-#: ../lib/vector/Vlib/open.c:569
+#: ../lib/vector/Vlib/open.c:575
 #, c-format
 msgid "Could not stat file '%s'"
 msgstr "Impossible d'obtenir des informations sur le fichier '%s'"
 
-#: ../lib/vector/Vlib/open.c:655
+#: ../lib/vector/Vlib/open.c:669
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr "La taille du fichier 'coord' est différente de la valeur sauvegardée dans le fichier de topo."
+msgstr ""
+"La taille du fichier 'coord' est différente de la valeur sauvegardée dans le "
+"fichier de topo."
 
-#: ../lib/vector/Vlib/open.c:666
+#: ../lib/vector/Vlib/open.c:680
 #, c-format
 msgid "Please rebuild topology for vector '%s@%s'"
 msgstr "Veuillez reconstruire la topologie pour le vecteur '%s@%s'"
 
+#: ../lib/vector/Vlib/write.c:23
+msgid "Vect_write_line() for this format/level not supported"
+msgstr "Vect_write_line() n'est pas supportée pour ce format/niveau"
+
+#: ../lib/vector/Vlib/write.c:27
+msgid "Vect_rewrite_line() for this format/level not supported"
+msgstr "Vect_rewrite_line() n'est pas supportée pour ce format/niveau"
+
+#: ../lib/vector/Vlib/write.c:31
+msgid "Vect_delete_line() for this format/level not supported"
+msgstr "Vect_delete_line() n'est pas supportée pour ce format/niveau"
+
+#: ../lib/vector/Vlib/write.c:93
+msgid "Cannot write line, the map is not opened"
+msgstr "Impossible d'écrire la ligne, la carte n'est pas ouverte"
+
+#: ../lib/vector/Vlib/write.c:104
+msgid "Cannot write line"
+msgstr "Impossible d'écrire la ligne"
+
+#: ../lib/vector/Vlib/write.c:136
+msgid "Cannot rewrite line, the map is not opened"
+msgstr "Impossible de réécrire la ligne, la carte n'est pas ouverte"
+
+#: ../lib/vector/Vlib/write.c:147
+msgid "Cannot rewrite line"
+msgstr "Impossible de réécrire la ligne"
+
+#: ../lib/vector/Vlib/write.c:189
+#, c-format
+msgid "Cannot delete the line, map '%s' is not opened on level 2"
+msgstr "Impossible de supprimer la ligne, la carte '%s' n'est pas ouverte en niveau 2"
+
+#: ../lib/vector/Vlib/write.c:193
+#, c-format
+msgid "Cannot delete the line, map '%s' is not in opened in 'write' mode"
+msgstr "Impossible de supprimer la ligne, la carte '%s' n'est pas ouverte en mode 'écriture'"
+
+#: ../lib/vector/Vlib/write.c:205
+msgid "Cannot delete line"
+msgstr "Impossible de supprimer la ligne"
+
+#~ msgid "Field value"
+#~ msgstr "Valeur du champ"
+
+#~ msgid ""
+#~ "Database connection (for db.* modules) set to:\n"
+#~ "driver: dbf\n"
+#~ "database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
+#~ msgstr ""
+#~ "PropriÃ©tÃ© de la connexion Ã  la base de donnÃ©es (pour les modules db.*):\n"
+#~ "driver: dbf\n"
+#~ "database: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/"
+
 #~ msgid "generated by %s"
-#~ msgstr "gÃ©nÃ©rÃ© par %s"
+#~ msgstr "gÃƒÂ©nÃƒÂ©rÃƒÂ© par %s"
 
 #~ msgid "no %s files available\n"
 #~ msgstr "auncun fichier %s disponible\n"

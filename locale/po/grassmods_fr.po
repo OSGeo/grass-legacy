@@ -8,23 +8,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods fr 5.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-21 06:05+0100\n"
-"PO-Revision-Date: 2004-11-21 07:36+0100\n"
+"POT-Creation-Date: 2004-11-25 17:33+0100\n"
+"PO-Revision-Date: 2004-11-25 17:42+0100\n"
 "Last-Translator: Emmanuel Saracco <esaracco@users.labs.libre-entreprise>\n"
 "Language-Team: French <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit"
 
-#: ../db/base/connect.c:107
+#: ../db/base/connect.c:112
 #, c-format
 msgid "driver:%s\n"
 msgstr "driver:%s\n"
 
-#: ../db/base/connect.c:108
+#: ../db/base/connect.c:113
 #, c-format
 msgid "database:%s\n"
 msgstr "database:%s\n"
+
+#: ../db/base/connect.c:114
+#, c-format
+msgid "schema:%s\n"
+msgstr "schéma:%s\n"
 
 #: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
 #: ../db/base/select.c:126 ../vector/v.transform/creat_trans.c:90
@@ -142,6 +147,10 @@ msgstr "échelle%s%d\n"
 msgid "precision%s%d\n"
 msgstr "précision%s%d\n"
 
+#: ../db/db.login/main.c:56
+msgid "Cannot set user/password"
+msgstr "Impossible de définir l'utilisateur/mot de passe"
+
 #: ../display/d.font.freetype/main.c:52
 msgid ""
 "Selects the font in which text will be displayed on the user's graphics "
@@ -155,7 +164,8 @@ msgid ""
 "Font name (not supported interactively, see also -l flag) or path to "
 "TrueType font (including file name)"
 msgstr ""
-"Nom de police (pas supporté de manière interactive, voir aussi le drapeau -l) ou chemin vers une police TrueType (nom de fichier inclus)"
+"Nom de police (pas supporté de manière interactive, voir aussi le drapeau -"
+"l) ou chemin vers une police TrueType (nom de fichier inclus)"
 
 #: ../display/d.font.freetype/main.c:62
 msgid "Path to TrueType font (including file name)"
@@ -186,12 +196,14 @@ msgstr "Erreur: %s\n"
 #: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:211
 #, c-format
 msgid "Region size is lower than minreg, nothing displayed.\n"
-msgstr "La taille de la région est plus petite que minreg, rien n'a été affiché.\n"
+msgstr ""
+"La taille de la région est plus petite que minreg, rien n'a été affiché.\n"
 
 #: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:220
 #, c-format
 msgid "Region size is greater than maxreg, nothing displayed.\n"
-msgstr "La taille de la région est plus grande que maxreg, rien n'a été affiché.\n"
+msgstr ""
+"La taille de la région est plus grande que maxreg, rien n'a été affiché.\n"
 
 #: ../display/d.path/select.c:32
 #, c-format
@@ -239,7 +251,8 @@ msgstr "Traçage ... "
 msgid ""
 "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr ""
-"Les limites de la carte sont en-dehors de la région courante, rien n'a été affiché.\n"
+"Les limites de la carte sont en-dehors de la région courante, rien n'a été "
+"affiché.\n"
 
 #: ../display/d.vect/main.c:481
 #, c-format
@@ -345,7 +358,8 @@ msgstr "           Acres: %.3f\t\tSq Miles: %.4f\n"
 msgid ""
 "field: %d\n"
 "category: %d\n"
-msgstr "champ: %d\n"
+msgstr ""
+"champ: %d\n"
 "catégorie: %d\n"
 
 #: ../display/d.what.vect/what.c:362
@@ -460,7 +474,8 @@ msgstr ""
 #: ../display/d.zoom/zoom.c:42
 #, c-format
 msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
-msgstr "Note: lancer 'd.erase' pour la nouvelle région pour modifier l'affichage.\n"
+msgstr ""
+"Note: lancer 'd.erase' pour la nouvelle région pour modifier l'affichage.\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
@@ -611,6 +626,18 @@ msgstr "%s - couleur inconnue\n"
 msgid "Valid colors are:\n"
 msgstr "Les couleurs valides sont:\n"
 
+#: ../vector/v.category/main.c:173
+msgid "Too many layers for this operation"
+msgstr "Trop de couches pour cette opération"
+
+#: ../vector/v.category/main.c:176
+msgid "2 layers must be specified"
+msgstr "2 couches doivent être spécifiées"
+
+#: ../vector/v.category/main.c:180
+msgid "Output vector wasn't entered."
+msgstr "Le vecteur de sortie n'a pas été entré."
+
 #: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
 msgid "Input vector was not found."
 msgstr "Le vecteur d'entrée n'a pas été trouvé."
@@ -699,7 +726,9 @@ msgid ""
 "WARNING: Input file is not portable.We will attempt to convert anyway but "
 "conversion may fail.Please read manual for detail information."
 msgstr ""
-"ATTENTION: Le fichier d'entrée n'est pas portable. Nous allons essayer de le convertir quand même mais la conversion peut échouer. Veuillez lire le manuel pour plus d'informations."
+"ATTENTION: Le fichier d'entrée n'est pas portable. Nous allons essayer de le "
+"convertir quand même mais la conversion peut échouer. Veuillez lire le "
+"manuel pour plus d'informations."
 
 #: ../vector/v.convert/read.c:161
 #, c-format
@@ -815,6 +844,10 @@ msgstr "SYSTEM_ERROR: OLD_T_NEW avec un mauvais type de code %x"
 msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
 msgstr "SYSTEM_ERROR: NEW_T_OLD Mauvais code de type %x"
 
+#: ../vector/v.in.region/main.c:46
+msgid "Select type: line or area"
+msgstr "Sélectionner le type: ligne ou zone"
+
 #: ../vector/v.surf.idw/read_sites.c:34
 msgid "Cannot read field info"
 msgstr "Impossible de lire les informations du champ"
@@ -925,8 +958,7 @@ msgid ""
 " POINT      X coord    Y coord  |        X coord   Y coord    |      "
 "residuals\n"
 msgstr ""
-" POINT      coord X   coordY |       coord X   coord Y    |      "
-"résidus\n"
+" POINT      coord X   coordY |       coord X   coord Y    |      résidus\n"
 
 #: ../vector/v.transform/print_trans.c:43
 #, c-format
