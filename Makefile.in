@@ -93,18 +93,16 @@ pre-install:
 	${SHELL} ${IS64BIT} ${ARCH}
 	@ echo "Now proceed with make install"
 
-
 do-install:
 	@ rm -f src/CMD/next_step/${ARCH}
 	${MAKE_ENV} ${SHELL} src/CMD/generic/GISGEN.sh
 	${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
 	${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh ${ARCH}
 
-
 # GRASS source code cleaning options:
 #
 # There are five options for cleaning the GRASS source code. The first four
-# options are based on the GNU guidlines at:
+# options are based on the GNU guidelines at:
 #
 # http://www.gnu.org/manual/make-3.77/html_node/make_118.html
 #
