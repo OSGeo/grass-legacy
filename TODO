@@ -1,4 +1,4 @@
-$Id: TODO,v 1.33 2000-10-18 13:33:58 markus Exp $
+$Id: TODO,v 1.34 2000-10-18 14:37:15 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -330,3 +330,7 @@ structure of the help system from roff to html.
 So my conclusion is: Keep it for grass5.0stable as it is.                       
 For grass5.1 we should discuss how this can be improved. 
 ---------------------------------------------------------------------
+PDF documentation (all HTML in one file)
+
+-> we need a script for that.
+
