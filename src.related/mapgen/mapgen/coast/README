@@ -1,0 +1,40 @@
+An unfortunate error existed in the old version of the coastline
+system.  In general, its effects were negligible but a great deal
+of data was transformed into coastline files with the error.
+
+To allow the program coast to continue to process the old files
+compile with the make option OLD=OLD.  The resultant file coast
+or the new version of coast should be renamed so general users
+are aware of what release they are using.
+
+The new version also has some new variations in the directory file.
+
+Once all the old coastline files have been corrected the OLD
+function should be removed from Makefile and coast.c.
+
+The coastline material is large enough to be considered a sub-
+system and given its own directory.  Ancillary to the user routine
+coast there are routines of primary interest to system maintenance:
+
+	mcoast - make coastline file
+
+	strpcst - strip data from a coastline file and display
+		it in ascii
+
+	bsdcvt - convert 68000 coastline directory
+		structure to VAX 7x0 BSD compatible
+
+	remakedir - convert 68000 coastline directory
+		structure to 286 Microport, XENIX(?) compatible
+		Either routine may be used as a template for
+		other conversions.
+
+	newdir - change current system dependent coastline
+		directories to system INdependent.
+		newdir <old.cdr >new.cdr
+
+The reason for the later routines is that distribution of large
+coastline files is by means of the compressed MAPGEN version rather
+than the potentially humungous source.  Since most of the original
+work was done on the 68000 systems conversion from this system
+was the basis of the examples.
