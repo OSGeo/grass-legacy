@@ -1923,7 +1923,7 @@ fi
 	    if test "$have_dl" = yes; then
 		SHLIB_LD="${CC} -shared"
 		LDFLAGS="-Wl,--export-dynamic"
-		CC_SEARCH_FLAGS='-Wl,-rpath,${LIB_RUNTIME_DIR}'
+		CC_SEARCH_FLAGS='-Wl,-rpath-link,${LIB_RUNTIME_DIR}'
 		LD_SEARCH_FLAGS=${CC_SEARCH_FLAGS}
 	    else
 		ac_safe=`echo "dld.h" | sed 'y%./+-%__p_%'`
