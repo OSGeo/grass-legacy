@@ -454,7 +454,7 @@ menu_build 1 .main_menu {
                     "source $env(TCLTKGRASSBASE)/module/r.binfer"
                 }
                 "Map calculator" "" {
-                    "run r.mapcalc &"
+                    "source $env(TCLTKGRASSBASE)/module/mapcalculator"
                 }
                 "Logical operation" "" {
                     "source $env(TCLTKGRASSBASE)/module/r.combine"
@@ -554,7 +554,7 @@ menu_build 1 .main_menu {
                 "run r.digit &"
             }
             "Map calculator" "" {
-                "run r.mapcalc &"
+                "source $env(TCLTKGRASSBASE)/module/mapcalculator"
             }
             "Randomly located sites" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.random"

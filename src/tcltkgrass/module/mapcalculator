@@ -1,0 +1,16 @@
+interface_build {
+	{mapcalculator.sh} 0
+	{Calculates a new raster map from raster maps.}
+	{checkbox help {Show short help} "" help }
+	{checkbox help {Help: man r.mapcalc} "" man }
+	{checkbox expert {Expert mode} "" expert }
+	{entry A_MAP {A:} 0 raster }
+	{entry B_MAP {B:} 0 raster }
+	{entry C_MAP {C:} 0 raster }
+	{entry D_MAP {D:} 0 raster }
+	{entry E_MAP {E:} 0 raster }
+	{entry F_MAP {F:} 0 raster }
+	{entry formula {Formula: outfile = (e.g.: A-B or A*C+B)} 0 "" }
+	{entry outfile {Resulting output map (required): } 0 raster }
+	{checkbox not_over {Don't overwrite existing raster map} "" true }
+	}
