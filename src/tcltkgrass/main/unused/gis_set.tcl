@@ -257,7 +257,7 @@ proc gisSetWindow {} {
 
   frame .frame0.intro -borderwidth 2
   text .frame0.intro.msg -relief ridge -height 4 -width 50 \
-      -font {Helvitica -12 bold}
+      -font {Helvetica -12 bold}
   pack .frame0.intro -side top
   pack .frame0.intro.msg -side top
   
@@ -399,7 +399,7 @@ proc gisSetWindow {} {
               }
 
   button .frame0.frame4.newLoc \
-    -text "New Location" \
+    -text "Create New Location" \
     -relief raised \
     -padx 10 \
     -command {
