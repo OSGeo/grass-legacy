@@ -114,13 +114,13 @@ int main (int argc, char *argv[])
 
 	              /* Open dig_cats file(i) */
             sprintf(path,"%s/%s/%s/dig_cats/%s",
-		getenv("GISDBASE"),getenv("LOCATION_NAME"),mapset,in_name);
+		G_gisdbase(), G_location(),mapset,in_name);
             if ( (cat = fopen(path, "r") ) == NULL )
 		G_fatal_error("Reading category file.") ;
 
 	              /* Open dig_att file(i) */
             sprintf(path,"%s/%s/%s/dig_att/%s",
-		getenv("GISDBASE"),getenv("LOCATION_NAME"),mapset,in_name);
+		G_gisdbase(), G_location(),mapset,in_name);
             if ( (att = fopen(path, "r") ) == NULL )
 		G_fatal_error("Reading attribute file.") ;
 
@@ -264,7 +264,7 @@ sleep(1);
 
                 /* now copy the tmp_file to the att file */
              sprintf(path,"%s/%s/%s/dig_att/%s",
-		getenv("GISDBASE"),getenv("LOCATION_NAME"),mapset,in_name);
+		G_gisdbase(), G_location(),mapset,in_name);
   	     sprintf( buffer, "cp %s %s", tempname,path);
 
              if (system( buffer) )
@@ -295,8 +295,8 @@ sleep(1);
 
                   /* copy the SUBJ file to patched dig_cats file */
         sprintf(buffer,"cp %s/%s/%s/SUBJ/%s %s/%s/%s/dig_cats/%s",
-		getenv("GISDBASE"),getenv("LOCATION_NAME"),mapset,subj_file,
-		getenv("GISDBASE"),getenv("LOCATION_NAME"),mapset,new->answer);
+		G_gisdbase(), G_location(),mapset,subj_file,
+		G_gisdbase(), G_location(),mapset,new->answer);
         if (system(buffer) )
 	   G_fatal_error ("ERROR(v.merge):  Could not create dig_cats file for %s\n",
 	      new->answer ) ;
