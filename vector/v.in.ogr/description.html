@@ -74,6 +74,28 @@ imported with the indicated <b>output</b> name into the PERMANENT mapset.<P>
     <b>layer=</b><em>polymap</em> <b>output=</b><em>polygons</em>
     <b>type=</b><em>boundary,centroid</em>
 
+<P>
+<B>Support of database schema:</B>
+<P>
+First  <em>v.database</em>  has to be used to set a default
+schema for the new vector table(s). In db.* modules the schema name 
+must be always specified if used.
+
+Example:
+<pre>
+   v.database driver=pg database=test schema=user1
+   v.in.ogr dsn=./ layer=river output=river     # -> table user1.river
+   db.select table=user1.river
+</pre>
+
+The user can ignore schemas, if desired:
+<pre>
+   v.database driver=pg database=test
+   v.in.ogr dsn=./ layer=river output=river     # -> table public.river
+   db.select table=river
+</pre>
+
+
 <h2>NOTES</h2>
 
 The characters used for table column names are limited. Supported are:<br>
@@ -91,15 +113,16 @@ column names. Also a table name must start with a character, not a number.<br>
 
 <H2>REFERENCES</H2>
 
-<a href="http://gdal.velocet.ca/projects/opengis/">OGR vector library</a>
+<a href="http://www.remotesensing.org/gdal/ogr/">OGR vector library</a>
 <br>
-<a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/ogr__api_8h.html">OGR vector library C API</a>
+<a href="http://www.remotesensing.org/gdal/ogr/ogr__api_8h.html">OGR vector library C API</a>
 documentation
 
 
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.clean.html">v.clean</a></em>,
+<em><a HREF="v.database.html">v.database</a></em>,
 <em><a HREF="v.db.connect.html">v.db.connect</a></em>,
 <em><a HREF="v.format.html">v.format</a></em>,
 <em><a HREF="v.out.ogr.html">v.out.ogr</a></em>
