@@ -1,0 +1,14 @@
+      SUBROUTINE SYSCMD(CMD,ERR)
+      INCLUDE 'TEXT.DCK'
+      INCLUDE 'SYSPAR.DCK'
+C
+C     *** VAX SYSTEM DEPENDENT ROUTINE ***
+C
+C     EXECUTE A SYSTEM (VMS) COMMAND
+C
+      CHARACTER*(*) CMD
+C
+C     Not available yet   
+C
+      RETURN
+      END
