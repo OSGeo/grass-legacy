@@ -1,0 +1,43 @@
+#########################################################################
+# these define the various directories which contain GRASS programs
+# or files used by GRASS programs
+BIN         = $(GISBASE)/bin
+ETC         = $(GISBASE)/etc
+TXT         = $(GISBASE)/txt
+MAN1        = $(GISBASE)/man/1
+MAN2        = $(GISBASE)/man/2
+MAN3        = $(GISBASE)/man/3
+HELP        = $(GISBASE)/man/help
+
+# other
+CFLAGS      = $(COMPILE_FLAGS) -I$(LIBDIR) $(USE_TERMIO) $(EXTRA_CFLAGS)
+AR          = $(GMAKE) -makeparentdir $@; $(LIBRULE)
+#MANROFF     = tbl -TX $(SRC)/man.help/man.version $(SRC)/man.help/man.header $? | nroff -Tlp | col -b > $@
+MANROFF     = tbl -TX $(SRC)/man.help/man.version $(SRC)/man.help/man.header $? | nroff | col -b > $@
+MAKEALL     = $(GMAKE) -all
+
+# various source directories and libraries
+LIBDIR      = $(SRC)/libes
+DIG_LIBDIR  = $(SRC)/mapdev/libes
+DIG_INCLUDE = $(SRC)/mapdev/lib
+
+VASKLIB     = $(LIBDIR)/libvask.a
+VASK        = $(VASKLIB) $(CURSES)
+
+GISLIB      = $(LIBDIR)/libgis.a
+LOCKLIB     = $(LIBDIR)/liblock.a
+IMAGERYLIB  = $(LIBDIR)/libI.a
+ROWIOLIB    = $(LIBDIR)/librowio.a
+COORCNVLIB  = $(LIBDIR)/libcoorcnv.a
+SEGMENTLIB  = $(LIBDIR)/libsegment.a
+BTREELIB    = $(LIBDIR)/libbtree.a
+DLGLIB      = $(LIBDIR)/libdlg.a
+RASTERLIB   = $(LIBDIR)/libraster.a
+DISPLAYLIB  = $(LIBDIR)/libdisplay.a
+D_LIB       = $(LIBDIR)/libD.a
+
+DIGLIB      = $(LIBDIR)/libdig.a
+DIG_ATTLIB  = $(LIBDIR)/libdig_atts.a
+
+XDISPLAYLIB = $(LIBDIR)/libXdisplay.a
+#########################################################################
