@@ -108,6 +108,9 @@
 /* define if PNG support exists */
 #undef HAVE_PNG
 
+/* define if postgres is to be used */
+#undef HAVE POSTGRES
+
 /* define if postgres client header exists */
 #undef HAVE_LIBPQ_FE_H
 
