@@ -1,78 +1,65 @@
 .TH r.in.miads
 .SH NAME
-\fIr.in.miads\fR \- Converts a MIADS output ASCII text file
-into an GRASS raster import (\fIr.in.ascii\fR) formatted file.
+\fIr.in.miads\fR \- convert MIADS output ascii text file into an GRASS raster import (r.in.ascii) formatted file.
 .br
-.I "(SCS GRASS Raster Program)"
+.I "(GRASS Raster Program)"
 .SH SYNOPSIS
 \fBr.in.miads\fR
 .br
 \fBr.in.miads help\fR
 .br
-\fBr.in.miads input\*=\fIname \fBoutput\*=\fIname \fBstrip\*=\fIvalue \fBline\*=\fIvalue \fBcell\*=\fIvalue\fR 
-   \fBNorthing\*=\fIvalue \fBEasting\*=\fIvalue \fBsize\*=\fIvalue\fR
+\fBr.in.miads\fR \fBinput=\fIname\fR \fBoutput=\fIname\fR \fBstrip=\fIvalue\fR \fBline=\fIvalue\fR \fBcell=\fIvalue\fR 
+   \fBNorthing=\fIvalue\fR \fBEasting=\fIvalue\fR \fBsize=\fIvalue\fR
 .SH DESCRIPTION
-\fIr.in.miads\fR allows a user to create a \fIr.in.ascii\fR formatted
-ASCII file from a MIADS output printer format ASCII file.
+allows a user to create a r.in.ascii formatted ascii file from a MIADS output printer format ascii file. 
 .br
-The program will actively read the MIADS data file, selectively remove
-and process each strip, creating a individual \fIr.in.ascii\fR formatted file
-for each strip, and finally create one category file for all strips.
-The program also produces a report file summarizing all pertinent
-information for each strip.
+The program will actively read the MIADS data file, selectively remove and process each strip, creating a individual r.in.ascii formatted file for each strip, and finally create one category file for all strips. The program also produces a report file summarizing all pertainent information on each strip.
 
-The resulting \fIr.in.ascii\fR files for each strip are then used in
-conjunction with the GRASS commands \fIr.in.ascii\fR and \fIr.patch\fR to
-create a complete raster file.
-.SH "COMMAND LINE OPTIONS"
-\fBParameters:\fR
-.IP \fBinput\*=\fIname\fR 18
-MIADS input file name.
-.IP \fBoutput\*=\fIname\fR 18
-GRASS raster data output file name.
-.IP \fBstrip\*=\fIvalue\fR 18
-MIADSs strip number of reference cell.
-.IP \fBline\*=\fIvalue\fR 18
-MIADSs line number of reference cell.
-.IP \fBcell\*=\fIvalue\fR 18
-MIADS cell number of reference cell.
-.IP \fBNorthing\*=\fIvalue\fR 18
-UTM Easting at the cell reference.
-.IP \fBEasting\*=\fIvalue\fR 18
-UTM Northing at the cell reference.
-.IP \fBsize\*=\fIvalue\fR 18
-Cell size (length one side) in meters.
+The resulting r.in.ascii files for each strip are then used in conjunction with the GRASS commands "r.in.ascii" and "r.patch" to create a complete raster file.
 
-.LP
-SCS has developed scripts \fIrun.miads\fR, \fIgetstrip\fR,
-and \fIstrip.99s\fR.  These scripts make the MIADS to GRASS
-conversion easier.
+SCS has developed scripts run.miads, getstrip, and strip.99s. These scripts make the MIADS to GRASS conversion easier.
 .LP    
-\fIrun.miads\fR -
+run.miads -
 .IP
-SCS macro to perform the complete conversion of a MIADS printer format data
-set to a GRASS raster file.
+SCS macro to do the complete conversion of a MIADS printer format data set to a GRASS raster file. 
 .LP
-\fIgetstrip\fR -
+getstrip -
 .IP
-Reads each MIADS strip file and converts it to a independent GRASS data
-file.  Support may be run on any one of these strip files;  however,
-there is no category information available.  Each strip may be viewed at
-this time with \fId.rast or \fId.display\fR.
+reads each miads strip file and converts it to a independent GRASS data file. Support may be run on any one of these strip files, however, there is no category information available. Each strip may be viewed at this time with r.rast or d.display.
 .LP
-\fIstrip.99s\fR -
+strip.99s -
 .IP
-Special pre-\fIr.in.miads\fR macro that removes the 99's from the MIADS data
-file.  This effectively removes border information, replacing it with
-"no data" values.
+special pre-r.in.miads macro which removes the 99's from the MIADS data file. This effectively removes border information, replacing it with no_data.
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Usage.
+.IP \fIr.in.miads\fR
+input=name output=name strip=value line=value cell=value \.
+.IP \fINorthing=value\fR
+Easting=value size=value.
+.LP
+Parameters.
+.IP \fIinput\fR
+Miads input file name .
+.IP \fIoutput\fR
+GRASS raster data output file name .
+.IP \fIstrip\fR
+Miads strip number of reference cell.
+.IP \fIline\fR
+Miads line number of reference cell.
+.IP \fIcell\fR
+Miads cell number of reference cell.
+.IP \fINorthing\fR
+UTM Easting at the cell reference.
+.IP \fIEasting\fR
+UTM Northing at the cell reference.
+.IP \fIsize\fR
+Cell size(length one side) in meters.
+.SH BUGS
 .SH "SEE ALSO"
-.I d.display,
-.I d.rast,
-.I r.in.ascii,
-.I r.patch,
-.I r.support
+r.patch, r.in.ascii
 .SH AUTHOR
-\fIr.in.miads\fR - R.L.Glenn, USDA, SCS, NHQ-CGIS
-.br
-\fIrun.miads, strip.99s\fR - Harold Kane, USDA, SCS, Oklahoma State Office
+r.in.miads - R.L.Glenn, USDA, SCS, NHQ-CGIS
+run.miads, strip.99s - Harold Kane, USDA, SCS, Oklahoma State Office
 
