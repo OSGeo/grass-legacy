@@ -162,7 +162,7 @@ Vect_break_polygons ( struct Map_info *Map, int type, struct Map_info *Err, FILE
 	    } else { 
 		/* Add to tree and to structure */
 	        RTreeInsertRect( &rect, npoints, &RTree, 0);
-	        if ( (npoints - 1) == apoints ) {
+	        if ( npoints >= apoints ) {
 		    apoints += 10000;
 		    XPnts = (XPNT *) G_realloc ( XPnts, (apoints + 1) * sizeof (XPNT) );
 		}
@@ -290,7 +290,7 @@ Vect_break_polygons ( struct Map_info *Map, int type, struct Map_info *Err, FILE
     /* Write points on breaks */
     if ( Err ) {
 	Vect_reset_cats ( Cats );
-	for ( i = 1; i <= npoints; i++ ){ 
+	for ( i = 1; i < npoints; i++ ){ 
 	    if ( XPnts[i].used ) {
 		Vect_reset_line ( Points );
 		Vect_append_point ( Points, XPnts[i].x, XPnts[i].y, 0 ); 
