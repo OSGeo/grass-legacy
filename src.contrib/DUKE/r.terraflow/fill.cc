@@ -362,7 +362,7 @@ computeFlowDirections(AMI_STREAM<elevation_type>*& elstr,
   waterstr = new AMI_STREAM<waterType>();
   long dc = assignDirections(statstr, platstr, waterstr);
   if(dc) {
-    *stats << form("WARNING: %ld depressions (islands) detected\n", dc);
+    *stats << "WARNING: " << dc << " depressions (islands) detected\n";
   }
   delete platstr;
   delete statstr;

@@ -135,14 +135,17 @@ public:
 			elevation_type elev_neighb) {
     
     if (skipit && get(di,dj) == true) {
-      cout << "WARNING ";
-      cout << form(" at (%d,%d, h=%d, dir=%d) ", i, j, elev_crt, dir);
-      cout << form("direction points to non-valid neighbor (%d,%d,h=%d)\n",
-		   i + di, j + dj, elev_crt - elev_neighb);
+      cout << "WARNING:  at (" 
+	   << i << "," << j << " , h=" << elev_crt << ", dir=" << dir << ")"
+	   << "direction points to non-valid neighbor ("
+	   <<  i + di << ","
+	   <<  j + dj << ", h="
+	   << elev_crt - elev_neighb
+	   << ")\n";
       set(di,dj, false); /* correct it */
     }
     if (!skipit && elev_crt > elev_neighb &&  !is_nodata(elev_neighb)
-		&& get(di,dj) == 0) {
+	&& get(di,dj) == 0) {
       set(di,dj, true); /* correct it */
     }
   }
