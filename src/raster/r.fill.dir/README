@@ -1,3 +1,11 @@
+Updated by Huidae Cho 4/2001
+
+runs with all non-NULL data.
+
+However, problems still exist.
+
+
+------------------------------------------------------
 Converted to C by Huidae Cho 4/2001
 
 runs with positive (no NULLs) data only!
