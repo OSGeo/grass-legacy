@@ -13,9 +13,8 @@
 #
 #############################################################################
 
-
 #%Module
-#%  description: r.blend - Blends color components of 2 raster maps by a given % first map'
+#%  description: Blends color components of 2 raster maps by a given % first map'
 #%End
 #%option
 #% key: first

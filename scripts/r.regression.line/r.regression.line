@@ -1,12 +1,10 @@
 #!/bin/sh
 #
-# $Id: r.regression.line,v 2 2004/04/11 
-#
 ############################################################################
 #
-# MODULE:		r.regression line
+# MODULE:	r.regression line
 # AUTHOR(S):	Dr. Agustin Lobo - alobo@ija.csic.es
-#              Updated to GRASS 5.7 by Michael Barton
+#               Updated to GRASS 5.7 by Michael Barton
 # PURPOSE:	Calculates linear regression from two raster maps: y = a + b*x
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
 #
@@ -18,7 +16,7 @@
 
 
 #%Module
-#%  description: r.regression.line - Calculates linear regression from two raster maps: y = a + b*x
+#%  description: Calculates linear regression from two raster maps: y = a + b*x
 #%End
 #%option
 #% key: map1
