@@ -16,7 +16,8 @@ all: 	$(HOME)/db.columns \
 	$(HOME)/db.execute \
 	$(HOME)/db.select \
 	$(HOME)/db.tables \
-	$(HOME)/db.connect 	
+	$(HOME)/db.connect \
+	$(GISBASE)/db.attr
 
 $(HOME)/db.columns: columns.o $(LIBES)
 	$(CC) -o $@ columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
@@ -50,5 +51,9 @@ $(HOME)/db.tables: tables.o $(LIBES)
 
 $(HOME)/db.connect: connect.o $(LIBES)
 	$(CC) -o $@ connect.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	
+$(GISBASE)/db.attr: db.attr
+	if [ ! -d $(GISBASE)/scripts ]; then mkdir $(GISBASE)/scripts; fi
+	cp db.attr $(GISBASE)/scripts
 	
 $(LIBES): #
