@@ -23,10 +23,10 @@ SUBDIRS = \
 	segment \
 	vask \
 	vector \
-	\
 	front.end \
 	rst \
 	ogsf \
+	symbol \
 	init
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
