@@ -25,9 +25,9 @@
 #define		ATT_DIR		"dig_att"
 #define		CAT_DIR		"dig_cats"
 
-int  codes();
-int  new_cat();
-int  srch();
+static int  codes();
+static int  new_cat();
+static int  srch();
 
 int reclass (char *in_name, char *out_name, dbCatValI *new, int ncat, unsigned int type, int optiond)
 {
@@ -226,7 +226,7 @@ int reclass (char *in_name, char *out_name, dbCatValI *new, int ncat, unsigned i
 }
 
 int
-new_cat (dbCatValI *new,  int ncat, int old) /* should be optimized by bsearch() */
+new_cat (dbCatValI *new,  int ncat, int old)
 {
     dbCatValI *newcat;
     
@@ -268,12 +268,12 @@ codes (int type)
 
 int srch ( const void *pa, const void *pb)
 {
-    dbCatValI *p1 = (dbCatValI *) pa;
+    int       *p1 = (int *) pa;
     dbCatValI *p2 = (dbCatValI *) pb;
 
-    if( p1->cat < p2->cat)
+    if( *p1 < p2->cat)
         return -1;
-    if( p1->cat > p2->cat)
+    if( *p1 > p2->cat)
         return 1;
     return 0;
 }
