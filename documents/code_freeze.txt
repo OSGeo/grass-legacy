@@ -8,15 +8,14 @@ Things to focus on for GRASS 5.0 stable
     Init means: graphical startup of GRASS (default) aditionally to
                  script based  startup (option)
       -> important for wide acceptance of GRASS
-      -> may allow location change on-the-fly
+      -> may allow location enlargement on-the-fly (just modify DEFAULT_WINDOW)
       -> not critical, but time consuming
 
  2) Datum support for projections (Andreas Lange)
-      -> due to personal communication with Andreas nearly finished
-         nothing critical
+      -> update r/v/s/m.proj
 
  3) new env variable management (Justin Hickey)
-      -> nothing critical, rather completed
+      -> 5.1
 
  4) extent the test-suite testgrass.sh (all)
       -> nothing critical, but important
@@ -25,17 +24,12 @@ Things to focus on for GRASS 5.0 stable
       -> very important
       -> John Huddleston/David Gray are currently implementing a replacement
          for "Numerical recipe" stuff
-      -> Helena/Bill B./Jaro Hofierka et al. have released their software
-         under GPL
       -> time consuming to reach involved people (former programmers)
 
  6) introduce G_readsites() function, replace all individual
     readz.c and readsites.c files (Eric G . Miller)
 
  7) Modify GRASS monitor driver to enable "close by clicking"
-
- 8) Add wildcard support to g.list, g.remove and few other modules
-
 
 
 Things to go into GRASS 5.1 development (after Oct. 15th):
@@ -58,13 +52,9 @@ Things to go into GRASS 5.1 development (after Oct. 15th):
     * needs modification of all vector modules
     * link DMBS to vector model tightly
 
- 5) sockets Xdriver (Carl Anderson)
-      -> no idea about status, but required for Windows port finalization
- 
- 6) layered XDRIVER (Pierre de Mouveaux)
+ 5) layered XDRIVER (Pierre de Mouveaux)
   
- 7) full RGB support in all display modules (Pierre de Mouveaux)
-
+ 6) full RGB support in all display modules (Pierre de Mouveaux)
  
  X) tons of other stuff (see TODO file)
 
@@ -79,5 +69,3 @@ Timeline:
 
  - xx.xx.2000: - release GRASS 5.0stable
                - continue work on development tree
-
-
