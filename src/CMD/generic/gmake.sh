@@ -262,9 +262,9 @@ echo GMAKE = $me
 
 # prepend all .o with $(OBJARCH) and .a files with $(LIBARCH)
 sed \
-    -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.o[ \	]#$(OBJARCH)/&#g' \
-    -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.o:[ \	]#$(OBJARCH)/&#g' \
-    -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.o$#$(OBJARCH)/&#g' \
+    -e 's#[\/\*0-9a-zA-Z_\.\-\$\(\)]*\.o[ \	]#$(OBJARCH)/&#g' \
+    -e 's#[\/\*0-9a-zA-Z_\.\-\$\(\)]*\.o:[ \	]#$(OBJARCH)/&#g' \
+    -e 's#[\/\*0-9a-zA-Z_\.\-\$\(\)]*\.o$#$(OBJARCH)/&#g' \
     -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.a[ \	]#$(LIBARCH)/&#g' \
     -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.a:[ \	]#$(LIBARCH)/&#g' \
     -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.a$#$(LIBARCH)/&#g' \
@@ -280,7 +280,7 @@ echo ""
 
 sed -e 's/=/ /' -e 's/\\//' Gmakefile |\
  awk '{for(i=1;i<=NF;i++) \
-    if ($i ~ /^[a-zA-Z0-9_\.\-\$\(\)]*\.o$/) print substr($i,1,length($i)-2)} ' |\
+    if ($i ~ /^[\/a-zA-Z0-9_\.\-\$\(\)]*\.o$/) print substr($i,1,length($i)-2)} ' |\
  sort -u |\
  (
     while read file
