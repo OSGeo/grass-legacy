@@ -540,7 +540,7 @@ int main( int   argc, char *argv[])
     if( f_att != NULL ) {
       if(cat_field == -1)
 	G_warning( "No attribute value field assigned. Using record ID.\n" );	
-      else if(fd0[cat_field+4].fldType != 1 || fd0[cat_field+4].fldType != 2)
+      else if(fd0[cat_field+4].fldType != 1 && fd0[cat_field+4].fldType != 2)
 	G_warning( "Named attribute field is not numeric value. Using record ID.\n" );	
       for( iRec = 0; iRec < fd0[0].nRec; ++iRec ) {
 	if( cover_type == LINE ) {
