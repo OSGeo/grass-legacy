@@ -1,0 +1,11 @@
+#!/bin/sh
+GISBASE=$1
+shift 1
+echo CHECKING for utilities $*
+for i in $*
+do
+./exists $i
+if [ $? = 1 ]
+	then cp system/$i $GISBASE/$i
+fi
+done
