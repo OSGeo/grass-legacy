@@ -1,6 +1,7 @@
-Known bugs in GRASS 5
-$Id: BUGS,v 1.98 2000-12-18 17:09:31 markus Exp $
-[In sync with GRASS 5 beta CVS version]
+Known bugs in current GRASS GIS version 5.0 CVS
+
+$Id: BUGS,v 1.99 2000-12-28 09:08:31 markus Exp $
+[In sync with GRASS 5.0 beta CVS version]
 
 Maintained by
    Markus Neteler
@@ -12,7 +13,7 @@ Bug report page:
 http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html
 
 
-For the forthcoming GRASS 5 stable release there are some bugs
+For the forthcoming GRASS 5.0 stable release there are some bugs
 being release-critical. They are indicated [RC].
 
 ----------- drivers ---------------------------------------------
@@ -26,6 +27,20 @@ being release-critical. They are indicated [RC].
     (being worked on by ?)
 
 ----------- libraries ---------------------------------------------
+src/libes/geom: optri  -> used by s.geom, v.geom
+   I [Bill Hughes] have been working through some errors in 
+   src/libes/geom/optri and I have a tarball of the directory attached below.  
+   This is not done yet, but it needs some expertise from somebody who 
+   understands it.  Two references to grAllocate() have only 3 parameters.  
+   I don't understand what it does, so I can't really guess at what
+   should be passed as the final parameter.  I have put in 0 for the
+   moment to get the compile to work.
+   (being worked on by Andreas Lange)
+
+Vector:
+ R_polygon_abs() seems to ignore islands. Correct?
+    (being worked on by ?)
+
 G3D libraries bug:
  Markus Neteler wrote:
   If I have more than around 60.000 cubes (tiles) (when setting high 
@@ -75,7 +90,7 @@ d.rast.num: some numbers are displayed in wrong (unreadable) color
 d.rgb: Is there a difference between d.rgb and i.composite?
   (being worked on by ?)  
 
-[RC]d.sites.qual: not all the sites are used/displayed
+d.sites.qual: not all the sites are used/displayed
   d.sites.qual doesn't work properly: not all the sites 
   are used/displayed if the number of fields of the input site file is 
   not constant. Compare with d.sites.
@@ -114,6 +129,7 @@ i.in.gtc/i.in.pri
   i.in.gtc, putting in input leadername voldirname and dataname        
   as required but....I get core dumped.
   (reported by Stefano Merler <merler@itc.it>)
+  -> r.in.gdal offers SAR import
   (being worked on by ?)
 
 i.ortho.photo
@@ -159,17 +175,10 @@ g3.region:
      nviz2.2 el=sine
    (being worked on by ?)
 
- - I am unable to view data from a Latitude-Longitude database. No matter
-   how much I adjust the lights I am unable to render a viewable surface.   
-   The wire-frame mode appears fine. I assume the problem is related to the
-   resolution calculation which it interprets as metres?? Should NVIZ work 
-   for a Lat.-Long. database? Does it prefer integer, floating point, or           
-   double elevation values?
-   (reported by Bob Covill" <bcovill@tekmap.ns.ca>)
-   -> hint: If you go into a lat/long location, load a surface
-            and display it, you get a dark surface as described.
-            If you go to the panel "lights" then and set
-            "Height" to 0.0, the colors are o.k. !
+ - in some circumstances viewing data in Latitude-Longitude database
+   leads to partly dark surface:
+   - large distance to surface
+   - surface resolution = 1 (with 2 and less res. it's o.k.)
   (being worked on by ?)  
 
  - If loading a region too large for the memory available, the nviz
@@ -223,30 +232,23 @@ p.map.new:
  Perhaps some carried sum exceeds the MAXINT value, or some such.  I have
  no more good ideas.
  Chris Cornuelle <bob@math.umn.edu> 
+ -> r.cost works fine in Gauss-Krueger-locations (tmerc proj)
   (being worked on by ?)
 
 r.fill.dir:
  -  stops working somewhere in the map if DEM contains NULL holes
     (reported by Markus Neteler)
- - required FP update
-   (being worked on by ?)
-
-r.flow
-  bugreport: Issuing the command (-M switch is the problem):
-  r.flow -M elevin=fill aspin=dir flout=flowout_M dsout=density_M
-  [...] Writing density file...ERROR: r.flow: cannot write segment file for
-        density_M
-  r.flow seems to work OK with no switch and with the -m switch.
-  (reported by david_finlayson@yahoo.com)
-   -> floating point exception fix already done, -M to be tested
-  (being worked on by ?)
+ - requires FP update
+   (being worked on by Markus, Fortran help needed)
 
 r.in.bin:
+ not a bug:
  - does it accept coordinates in dec. degree as well as DD:mm:ss?
    -> put a note in html/html/r.in.bin.html
 
 r.in.hdf/r.out.hdf (src.garden/grass.hdf)
  - needs updating to HDF5.x lib (already there)
+ -> or add this to r.in.gdal
   (being worked on by ?)
 
 [RC]r.in.png:
@@ -290,13 +292,6 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
   (reported by Pelizzari, Michael <michael.pelizzari@lmco.com>)
   (being worked on by ?)
 
-
-[RC]r.mapcalc
- - Values -129 in GRASS raster files are treated as Null
-   (already fixed for FreeBSD/Linux. Check for other platforms, 
-   further corrections go here:   src/libes/gis/null_val.c)
-   test with r.mapcalc test=-129, if you get range: -129 -129 it's fixed.
-   -> Any platforms mising?
 
 [RC]r.neighbors 
   seems doesn't work with a float number                   
@@ -383,7 +378,7 @@ r.stats: some inconsistent results comparing to r.average
   (being worked on by ?)
 
 
-r.to.sites:
+[RC]r.to.sites:
  -  r.to.sites -z does not output third dimension
     however r.to.sites -cz works o.k.
   (being worked on by ?)
@@ -392,7 +387,7 @@ r.water.outlet:
  needs to be updated to GRASS 5 FP/NULL
  (being worked on by ?)
 
-[RC]r.watershed:
+r.watershed:
  needs to be *partly* updated to GRASS 5 FP/NULL:
  Helena Mitasova wrote:
    Drainage map should be INT, there is no reason for it to be FP 
@@ -421,12 +416,6 @@ r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
    -> runs fine with MESA 3.2
   (being worked on by ?)
 
-r3.to.sites:
- - get it running. It is useful to extract parts of a volume into
-   a common x,y,z list
-  (being worked on by ?)
-
-
 s.kcv 
  - needs modified for the new Sites API
   (being worked on by ?)
@@ -437,7 +426,8 @@ s.kcv
   of parameters passed in and out of G_distance() are corrupted.      
   (being worked on by David D Gray)
 
-v.cutter: 
+v.cutter:
+ Case history:
   For reducing the volume a rather large vectormap (16.000 polygons) I wrote a    
   grass5-script which                                                            
     1. automatically generates a rectangle around the current region (works at
@@ -490,6 +480,7 @@ v.support/v.build
  r.poly), I don't know if there is a relation (my map was a
  reclassified DEM).
  (reported by: Andrea Aime <aaime@comune.modena.it>)
+ (being worked on by ?)
 
 -----------------------------------------------------------------------
 Modules with interface problems (parser etc): 
@@ -587,18 +578,3 @@ Further discussion/hints:
   updated src.contrib tree as well (10/99, Bill H.)
 
 
---------------------------------------------------------------------
-Libraries bugs:
-
-src/libes/geom: optri  -> used by s.geom, v.geom
-   I [Bill Hughes] have been working through some errors in 
-   src/libes/geom/optri and I have a tarball of the directory attached below.  
-   This is not done yet, but it needs some expertise from somebody who 
-   understands it.  Two references to grAllocate() have only 3 parameters.  
-   I don't understand what it does, so I can't really guess at what
-   should be passed as the final parameter.  I have put in 0 for the
-   moment to get the compile to work.
-   (being worked on by Andreas Lange)
-
-Vector:
- R_polygon_abs() seems to ignore islands. Correct?
