@@ -53,6 +53,7 @@ int draw_scale (int use_mouse)
 	R_text_size(size, size) ;
 
 	meters  = D_get_u_east() - D_get_u_west() ;
+	meters *= G_database_units_to_meters_factor() ;
 
 /* get the dot coordinates for the position */
 	if (coord_inp==0) {
@@ -84,7 +85,8 @@ int draw_scale (int use_mouse)
 		if (! incr)
 			return(-1) ;
 
-		line_len = D_get_a_to_d_xconv() * (scales[incr].size / D_get_ew_resolution())  ;
+		line_len = D_get_a_to_d_xconv() * (scales[incr].size / D_get_ew_resolution())
+			/ G_database_units_to_meters_factor();
 		seg_len = line_len / scales[incr].seg;
 
 	/* Blank out area with background color */
