@@ -4,6 +4,7 @@
 */
 
 #include "gis.h"
+#include "glocale.h"
 #include <string.h>
 
 #define ERROR(x,line) return error(x,line)
@@ -71,7 +72,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "proj", 4) == 0)
 	{
 	    if (TEST(F_PROJ))
-		ERROR ("duplicate projection field", line);
+		ERROR (_("duplicate projection field"), line);
 
 	    if (!scan_int (value, &cellhd->proj))
 		ERROR(buf,line);
@@ -82,7 +83,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "zone", 4) == 0)
 	{
 	    if (TEST(F_ZONE))
-		ERROR ("duplicate zone field", line);
+		ERROR (_("duplicate zone field"), line);
 
 	    if (!scan_int (value, &cellhd->zone))
 		ERROR(buf,line);
@@ -92,9 +93,9 @@ char *G__read_Cell_head ( FILE *fd,
 	}
     }
     if (!TEST(F_PROJ))
-	ERROR ("projection field missing",0);
+	ERROR (_("projection field missing"),0);
     if (!TEST(F_ZONE))
-	ERROR ("zone field missing",0);
+	ERROR (_("zone field missing"),0);
 
 /* read the other info */
     fseek (fd, 0L, 0);
@@ -115,7 +116,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "nort", 4) == 0)
 	{
 	    if (TEST(F_NORTH))
-		ERROR("duplicate north field", line);
+		ERROR(_("duplicate north field"), line);
 	    if (!G_scan_northing (value, &cellhd->north, cellhd->proj))
 		ERROR(buf,line);
 	    SET(F_NORTH);
@@ -124,7 +125,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "sout", 4) == 0)
 	{
 	    if (TEST(F_SOUTH))
-		ERROR("duplicate south field", line);
+		ERROR(_("duplicate south field"), line);
 	    if (!G_scan_northing (value, &cellhd->south, cellhd->proj))
 		ERROR(buf,line);
 	    SET(F_SOUTH);
@@ -133,7 +134,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "east", 4) == 0)
 	{
 	    if (TEST(F_EAST))
-		ERROR("duplicate east field", line);
+		ERROR(_("duplicate east field"), line);
 	    if (!G_scan_easting (value, &cellhd->east, cellhd->proj))
 		ERROR(buf,line);
 	    SET(F_EAST);
@@ -142,7 +143,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "west", 4) == 0)
 	{
 	    if (TEST(F_WEST))
-		ERROR("duplicate west field", line);
+		ERROR(_("duplicate west field"), line);
 	    if (!G_scan_easting (value, &cellhd->west, cellhd->proj))
 		ERROR(buf,line);
 	    SET(F_WEST);
@@ -151,7 +152,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "e-w ", 4) == 0)
 	{
 	    if (TEST(F_EWRES))
-		ERROR("duplicate e-w resolution field", line);
+		ERROR(_("duplicate e-w resolution field"), line);
 	    if (!G_scan_resolution (value, &cellhd->ew_res, cellhd->proj))
 		ERROR(buf,line);
 	    if (cellhd->ew_res <= 0.0)
@@ -162,7 +163,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "n-s ", 4) == 0)
 	{
 	    if (TEST(F_NSRES))
-		ERROR("duplicate n-s resolution field", line);
+		ERROR(_("duplicate n-s resolution field"), line);
 	    if (!G_scan_resolution (value, &cellhd->ns_res, cellhd->proj))
 		ERROR(buf,line);
 	    if (cellhd->ns_res <= 0.0)
@@ -173,7 +174,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "rows", 4) == 0)
 	{
 	    if (TEST(F_ROWS))
-		ERROR("duplicate rows field", line);
+		ERROR(_("duplicate rows field"), line);
 	    if (!scan_int (value, &cellhd->rows))
 		ERROR (buf, line);
 	    if (cellhd->rows <= 0)
@@ -184,7 +185,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "cols", 4) == 0)
 	{
 	    if (TEST(F_COLS))
-		ERROR("duplicate cols field", line);
+		ERROR(_("duplicate cols field"), line);
 	    if (!scan_int (value, &cellhd->cols))
 		ERROR (buf, line);
 	    if (cellhd->cols <= 0)
@@ -195,7 +196,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "form", 4) == 0)
 	{
 	    if (TEST(F_FORMAT))
-		ERROR("duplicate format field", line);
+		ERROR(_("duplicate format field"), line);
 	    if (!scan_int (value, &cellhd->format))
 		ERROR(buf,line);
 	    SET(F_FORMAT);
@@ -204,7 +205,7 @@ char *G__read_Cell_head ( FILE *fd,
 	if (strncmp (label, "comp", 4) == 0)
 	{
 	    if (TEST(F_COMP))
-		ERROR("duplicate compressed field", line);
+		ERROR(_("duplicate compressed field"), line);
 	    if (!scan_int (value, &cellhd->compressed))
 		ERROR(buf,line);
 	    SET(F_COMP);
@@ -215,17 +216,17 @@ char *G__read_Cell_head ( FILE *fd,
 
 /* check some of the fields */
     if (!TEST(F_NORTH))
-	ERROR ("north field missing",0);
+	ERROR (_("north field missing"),0);
     if (!TEST(F_SOUTH))
-	ERROR ("south field missing",0);
+	ERROR (_("south field missing"),0);
     if (!TEST(F_WEST))
-	ERROR ("west field missing",0);
+	ERROR (_("west field missing"),0);
     if (!TEST(F_EAST))
-	ERROR ("east field missing",0);
+	ERROR (_("east field missing"),0);
     if (!TEST(F_EWRES) && !TEST(F_COLS))
-	ERROR ("cols field missing",0);
+	ERROR (_("cols field missing"),0);
     if (!TEST(F_NSRES) && !TEST(F_ROWS))
-	ERROR ("rows field missing",0);
+	ERROR (_("rows field missing"),0);
 /* This next stmt is commented out to allow wr_cellhd.c to write
  * headers that will be readable by GRASS 3.1
     if ((TEST(F_ROWS) && TEST(F_NSRES))
@@ -272,7 +273,7 @@ static char *error( char *msg, int line)
     char buf[1024];
 
     if (line)
-	sprintf (buf, "line %d: <%s>", line, msg);
+	sprintf (buf, _("line %d: <%s>"), line, msg);
     else
 	sprintf (buf, "<%s>", msg);
 
