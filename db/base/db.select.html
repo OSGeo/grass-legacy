@@ -16,20 +16,25 @@ be directed to a file.
 <tt>echo "select * from roads" | db.select</tt>
 <br>or<br>
 <tt>cat file.sql | db.select</tt>
-
+<br>or<br>
+<tt>db.select sql=file.sql
 <p>
 
-<em>Select all from table roads</em><br>
+<em>Example: Select all from table roads</em><br>
 <b>db.select -c driver</b><em>=odbc</em> <b>database=</b><em>g51test</em> 
 <b>table=</b><em>roads</em> <b>sql=</b><em>file.sql</em> > <em>result.csv</em>
 
 <P>
-<em>Select some string attribute, exclude others:</em><br>
-<tt>echo "SELECT * FROM archsites WHERE str1 <> 'No Name'" | db.select</tt>
+<em>Example: Select some string attribute, exclude others:</em><br>
+<tt>echo "SELECT * FROM archsites WHERE str1 <> 'No Name'" |</tt> <b>db.select</b>
 
 <P>
-<em>Select some string attribute with ZERO length:</em><br>
-<tt>echo "SELECT * FROM archsites WHERE str1 IS NULL" | db.select</tt>
+<em>Example: Select some string attribute with ZERO length:</em><br>
+<tt>echo "SELECT * FROM archsites WHERE str1 IS NULL" |</tt> <b>db.select</b>
+
+<P>
+<em>Example: Select coordinates from PostGIS table:</em><br>
+<tt>echo "SELECT x(geo),y(geo) FROM localizzazione" |</tt> <b>db.select</b>
 
 <h2>SEE ALSO</h2>
 
