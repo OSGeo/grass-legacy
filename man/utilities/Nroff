@@ -7,6 +7,8 @@
 #	    date	date of this GRASS version, e.g. "Spring 1993"
 #	    directory	GISBASE directory, e.g. /home/local/src/grass4.1
 #
+# $Id: Nroff,v 1.2 2000-01-05 18:38:24 markus Exp $
+#
 umask 0
 
 if test $# -lt 3
@@ -42,6 +44,8 @@ done
 #
 for dir in cat?
 do
+ echo $dir | grep CVS  # ignore CVS diretories (added 1/2000 M.N.)
+ if [ $? -eq 0 ]; then
     srcdir=`echo $dir | sed -e s/cat/man/`
     list=`echo $dir/*`
     if [ "$list" != "$dir/*" ]; then		# in case directories are empty
@@ -54,6 +58,7 @@ do
 	    fi
 	done
     fi
+  fi
 done
 
 #	Main loop.  Find all the source man pages in the 'man' directories,
@@ -81,7 +86,7 @@ do
 	    echo 'all: list' >> .makefile
 	fi
 	i=`expr $i + 1`
-	cat=`echo $man | sed s/man/cat/`
+	cat=`echo $man | sed s/CVS// |sed s/man/cat/`
 	list="$list $cat"
 	echo "$cat: $man $header $notice ; tbl -TX $wd/man.version $header $wd/man.header $man $notice" \| nroff \| col -b \> $cat >> .makefile
 #
