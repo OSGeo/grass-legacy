@@ -4,6 +4,7 @@
 #Markus Neteler, 2003
 
 #exclude following list of modules from help index:
+# does not yet work for several modules:
 EXCLUDEHTML="v.topo.check"
 
 ############# nothing to configure below ############
@@ -42,7 +43,7 @@ echo "[ " >> index.html
 k=0
 for i in $CMDLIST
 do
-  k=`echo $k + 1 | bc`
+  k=`expr $k + 1`
   echo -n "<b><a href=\"#$i\">$i.*</a></b>" >> index.html
   if [ $k -lt $CMDLISTNO ] ; then
      echo -n " | " >> index.html
