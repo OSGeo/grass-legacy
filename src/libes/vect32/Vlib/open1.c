@@ -79,7 +79,7 @@ int V1_open_new (
 	G__file_name (name_buf, "dig_plus", name, G_mapset());
 	if (stat (name_buf, &info) == 0)	/* file exists? */
 	{
-	    unlink (name_buf);
+	    remove ( name_buf );
 	}
     }
 

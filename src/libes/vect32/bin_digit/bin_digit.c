@@ -21,7 +21,10 @@ main(argc, argv)
 	int   lock ;
 	int   err ;
 	int   tmp_file ;
-	int   (*sigint)(),  (*sigquit)() ;
+	int   (*sigint)();
+#ifdef SIGQUIT            
+        int   (*sigquit)();
+#endif        
 
 	char  *mapset ;
 	char  *env_digitizer ;
@@ -170,8 +173,9 @@ askagain:
 /********  everything is okay, block signals and lock the digitizer  */
 
 	sigint = (int (*)())signal(SIGINT, SIG_IGN) ;
+#ifdef SIGQUIT        
 	sigquit = (int (*)())signal(SIGQUIT, SIG_IGN) ;
-
+#endif
 	if (strcmp (Driver.name, "none"))
 	{
 	    lock = lock_file( lock_name, pid) ;
@@ -327,7 +331,7 @@ static unlock_file (file)
 {
     if (access (file,0) != 0)
 	return 0;
-    unlink (file);
+    remove ( file );
     if (access (file,0) != 0)
 	return 1;
     return -1;

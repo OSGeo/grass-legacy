@@ -65,11 +65,7 @@ int G_ask_ellipse_name( char *spheriod)
           }
         }
         sprintf(spheriod,"%s",answer);
-#ifdef __MINGW32__
         remove ( Tmp_file );
-#else        
-        unlink(Tmp_file);
-#endif        
         if (strcmp(spheriod,"sphere") == 0) {
           return 2;
         }

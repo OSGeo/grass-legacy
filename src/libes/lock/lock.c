@@ -84,7 +84,7 @@ int lock_file(char *file, int lock_pid)
     if (locked)
 	return ALREADY_LOCKED;
     mask = umask (0);
-    unlink (file);
+    remove ( file );
     fd = creat (file, 0666) ;
     umask (mask);
     if (fd < 0)

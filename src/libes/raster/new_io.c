@@ -613,7 +613,7 @@ static int unlock_driver (int wipeout)
     }
     if (wipeout)
     {
-        unlink (file);
+        remove ( file );
         if (access (file,0) != 0)
             return 1;
     }

@@ -21,7 +21,10 @@ main (int argc, char *argv[])
     char  driver_name[80] ;
     char  lock_name[80] ;
     char  command[500] ;
-    void   (*sigint)(),  (*sigquit)() ;
+    void   (*sigint)();
+#ifdef SIGQUIT
+    void   (*sigquit)();
+#endif    
 
     FILE   *fp, *fopen();
 
@@ -63,7 +66,9 @@ main (int argc, char *argv[])
 /********  everything is okay, block signals */
 
 	sigint = signal(SIGINT, SIG_IGN) ;
+#ifdef SIGQUIT    
 	sigquit = signal(SIGQUIT, SIG_IGN) ;
+#endif    
 
 /*  NOW execute the geo.point program in etc  */
 

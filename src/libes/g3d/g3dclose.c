@@ -40,7 +40,7 @@ G3d_closeNew (map)
       return 0;
     }
   } else 
-    unlink (map->tempName); 
+    remove ( map->tempName ); 
 
   return 1;
 }

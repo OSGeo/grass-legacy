@@ -68,13 +68,13 @@ int G_list_element (
     int n;
     FILE *more;
     int count;
-#ifndef __MINGW32__
+#ifdef SIGPIPE
     void (*sigpipe)();
 #endif
 
 /* must catch broken pipe in case "more" quits */
     broken_pipe = 0;
-#ifndef __MINGW32__
+#ifdef SIGPIPE
     sigpipe = signal (SIGPIPE, sigpipe_catch);
 #endif
 
@@ -115,7 +115,7 @@ int G_list_element (
  * close the more
  */
     if (more != stdout) G_pclose (more);
-#ifndef __MINGW32__
+#ifdef SIGPIPE
     signal (SIGPIPE, sigpipe);
 #endif
 if (hit_return && isatty(1))

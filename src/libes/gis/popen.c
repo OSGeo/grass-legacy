@@ -78,10 +78,12 @@ FILE *G_popen(
 
 int G_pclose( FILE *ptr)
 {
-#ifdef __MINGW32__
     void (*sigint)();
-#else    
-    void (*sighup)(), (*sigint)(), (*sigquit)();
+#ifdef SIGHUP    
+    void (*sighup)();
+#endif
+#ifdef SIGQUIT
+    void (*sigquit)();
 #endif
     int f, r;
     int status;
@@ -96,18 +98,26 @@ int G_pclose( FILE *ptr)
       status = -1;
     }
 #else
+
+#ifdef SIGQUIT
     sigquit = signal(SIGQUIT, SIG_IGN);
+#endif
+#ifdef SIGHUP    
     sighup  = signal(SIGHUP, SIG_IGN);
+#endif
     while((r = wait(&status)) != popen_pid[f] && r != -1)
 	    ;
     if(r == -1)
 	status = -1;
-#endif
+
+#endif /* __MINGW32__ */
 
     signal(SIGINT, sigint);
 
-#ifndef __MINGW32__
+#ifdef SIGQUIT
     signal(SIGQUIT, sigquit);
+#endif
+#ifdef SIGHUP    
     signal(SIGHUP, sighup);
 #endif
 

@@ -23,7 +23,7 @@ main (int argc, char *argv[])
 	int   lock ;
 	int   return_value ;
 	void   (*sigint)()
-#ifndef __MINGW32__
+#ifdef SIGQUIT
             ,  (*sigquit)()
 #endif
                 ;
@@ -94,7 +94,7 @@ main (int argc, char *argv[])
 /********  everything is okay, block signals and lock the digitizer  */
 
 	sigint = signal(SIGINT, SIG_IGN) ;
-#ifndef __MINGW32__
+#ifdef SIGQUIT
 	sigquit = signal(SIGQUIT, SIG_IGN) ;
 #endif
     
