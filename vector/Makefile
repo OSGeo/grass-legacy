@@ -20,7 +20,6 @@ SUBDIRS = \
 	v.in.db \
 	v.in.region \
 	v.in.sites \
-	v.kernel \
 	v.label \
 	v.proj \
 	v.net \
