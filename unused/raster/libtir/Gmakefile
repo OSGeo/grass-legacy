@@ -1,6 +1,0 @@
-LIBTIR	= $(UNUSED)/raster/libes/libtir.a
-OBJS	= libtir.o
-
-$(LIBTIR): $(OBJS)
-	$(AR)
-

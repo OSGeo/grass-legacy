@@ -1,9 +1,9 @@
 PGM    = r.show
 OBJS   = main.o
-URASTER= $(UNUSED)/raster
-LIBTIR = $(URASTER)/libtir
+LIBDIR = $(UNUSED)/libes
+LIBTIR = $(LIBDIR)/libtir
 CFLAGS+= -I$(LIBTIR) -DR_SHOW
-LIBES  = $(GISLIB) $(URASTER)/libes/libtir.a
+LIBES  = $(GISLIB) $(LIBDIR)/libtir.a
 
 $(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) -o $@ $(OBJS) $(LDFLAGS) $(LIBES) $(MATHLIB) $(XDRLIB)
