@@ -3,12 +3,20 @@
 <em>v.database</em> is used to set the default driver/database for 
 vector attributes storage. All created vector maps will get
 stored their attributes according to these settings.
+<P>
+A database schema is stored with table name in 'dbln' file (qualified name). 
 
 <h3>EXAMPLE</h3>
 
 Define PostgreSQL attribute storage settings for map 'botswanaUTM34':<br>
 <tt>
 v.database driver=pg database="host=pgserver.itc.it,dbname=botswanaUTM34,user=postgres"
+</tt>
+
+<P>
+It is possible to set a default schema for a new vector table:
+<tt>
+v.database driver=pg database=test schema=user1
 </tt>
 
 <H2>SEE ALSO</H2>
