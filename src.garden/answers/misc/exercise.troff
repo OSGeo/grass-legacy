@@ -1,0 +1,453 @@
+.ls 1
+.H 1 "Class Exercise Using the ANSWERS-GRASS Integration"
+.P
+\fBNote:\fI  This exercise was used as part of a class assignment
+for the Spring, 1992 AGEN 526 Class in Agricultural Engineering,
+Purdue University. The exercise was ostensively part of the
+class instruction about watershed modeling, but also served
+as test of the programs created for the ANSWERS-GRASS integration.
+Map names used herein are references to layers existing in
+the sample mapbase for the Indian Pine Natural Resource Laboratory.\fR
+
+\fBIntroduction\fR
+.P
+This exercise introduces the use of the ANSWERS watershed simulation
+program integrated with GRASS. ANSWERS (Areal Nonpoint Source Watershed Environmental Response Simulation)
+is an event oriented, distributed parameter model that
+was developed to simulate the behavior of watersheds having agriculture
+as their primary land use.
+Its primary applications are watershed planning for erosion and
+sediment control on complex watersheds,
+and water quality analysis associated with sediment associated chemicals.
+
+Because ANSWERS is a distributed parameter model that divides the
+watershed area into a series of grid elements, one of the primary
+inputs to the model are spatial data, since each element requires
+input describing land use, soil type, slope and flow direction.
+Other spatial input data used by the model include the area
+of the watershed, the location of its outlet, elements 
+containing channels, Best Management Practices (BMPs), and subsurface
+drainage. The ANSWERS-GRASS integration uses GRASS map layers
+for these spatial ANSWERS inputs.
+
+Other data required by ANSWERS include physically-descriptive
+parameters for each soil and land use type, the size (in meters)
+to be used for dividing the watershed into grid elements,
+and data describing the storm event(s) to be modeled.
+  
+You will be using a tool called \f7r.answers\fR for this exercise. 
+The \f7r.answers\fR program is central to the
+integration of ANSWERS with GRASS by providing organization and
+management of simulation scenarios.
+When the inputs have been collected and prepared using
+\f7r.answers\fR, it can then run the simulation and
+capture the results, which include maps of sediment loss and deposition
+for the watershed, as well as data about the runoff and sediment
+leaving the watershed.
+
+Before you use \f7r.answers\fR, some preparations map layers
+to be used as ANSWERS input data are necessary. This will
+be described below. It is also recommended that you refer to
+the GRASS manual entry for more specific information about
+the \f7r.answers\fR program.
+For information about ANSWERS, refer to the \fIANSWERS User's
+Manual\fR (1991) by David Beasley and Larry Huggins, that is 
+available from Dr. Bernard Engel, Agricultural
+Engineering, Purdue University, West Lafayette, Indiana, 47906-1146.
+.SK
+\fBInput data description\fR
+
+.AL I
+.LI
+Watershed mask
+
+A layer is required to serve as a watershed mask. All cell values
+in the map that are greater than zero will be considered by 
+\f7r.answers\fR to be part of the watershed. Note that the current region
+and mask will be ignored. Use the map \fIa.wshd\fR.
+
+.LI
+Slope and aspect 
+
+Your current mapset may include prepared maps of slope and aspect,
+but they cannot be used unless they were prepared as described
+here. (For instance, maps produced by the regular GRASS program,
+\f7r.slope.aspect\fR will contain values in the wrong format
+as required by ANSWERS).
+
+To prepare slope and aspect maps for ANSWERS, the starting point
+is an elevation surface layer, otherwise known as a Digital
+Elevation Map (DEM). Elevation values should be in meters.
+Use the map \fIa.elevation\fR.
+
+.AL a
+.LI 
+Creating ANSWERS slope input from a DEM
+
+ANSWERS requires slope map with slope values in percent
+multiplied by 10. (Thus, a cell value of 15 would represent a slope of
+1.5%). The slope map is produced from the elevation map. The program to
+do this with is called \f7r.slope\fR.
+
+.nf
+Usage:
+ \f7r.slope elevation=\fIname \f7slope=\fIname\fR
+ (i.e. \f7r.slope elevation=\fRa.elevation \f7slope=\fIname\fR)
+
+Parameters:
+  elevation   Raster elevation file name
+      slope   Output slope filename
+
+.fi
+.LI 
+Creating ANSWERS aspect input from a DEM
+
+ANSWERS requires an aspect map with flow directions for each
+cell in the watershed.
+The aspects for ANSWERS are given values from 1-360. Cells where flow
+direction is east are given a value of 360, south east are 315, south
+are 270, south west are 225, and so on in 45 degree increments.
+A flow direction map is produced from the elevation map 
+using the \f7r.direct\fR program. 
+.nf
+
+Usage:
+ \f7r.direct input=\fIname \f7output=\fIname \f7type=\fIname\fR
+ (i.e. \f7r.direct input=\fRa.elevation \f7output=\fIname \f7type=\fRanswers)
+
+Parameters:
+   input   Name of existing raster map containing elevation surface
+  output   Output direction raster map
+    type   Output direction type (GRASS, AGNPS, or ANSWERS)  
+
+.fi
+.LI
+Inspection and editing of the aspect map
+
+Currently, the algorithms available
+are not able to create flawless flow direction maps. Thus manual inspection
+and editing is required. 
+When editing the aspect map, pay careful attention to 1) cells on the watershed border, which all
+must flow \fIinto\fR the watershed; 2) cells that will be declared as "channels"
+must flow directly \fIfrom one to another\fR; 
+3) flow from two cells must not point directly to each other
+(-><-) or otherwise form circuitous routes. In the final flow map, one 
+should be able to start at any cell in
+the watershed and follow the flow directions from cell to cell until arriving
+at the outlet cell.
+
+The inspection and editing of the aspect map is facilitated by the 
+\f7d.rast.edit\fR program. This program allows you to display a
+raster map and edit individual elements. It also includes several 
+GRASS programs as internal functions to help with this process, namely
+the \f7d.rast.zoom\fR program what provides a means to "zoom" in
+to areas for close inspection; 
+the \f7d.rast.arrow\fR program that reads the aspect map value
+for each element and draws an arrow over the displayed element on
+the screen to indicate the flow direction; the \f7d.rast.num\fR
+program that displays the element value over the displayed
+cell on the screen; and the \f7d.vect\fR program that can be used
+to display vector maps over the aspect map being edited (this is
+useful to indicate locations of channels).
+.LE
+
+.LI 
+Soils and land use layers
+
+Maps will be required for both soils and land use classes to
+be represented in the watershed. No special pre-processing
+of these layers is required, however, the \f7r.answers\fR
+program will prompt for parameter values describing each
+category of the maps found in the watershed.
+Use the maps \fIa.soils\fR and \fIa.cover\fR.
+
+.LI
+Preparing rainfall data
+
+In this exercise you will prepare four storm events. 
+Using methods covered in the class earlier this semester,
+you will create files of simulated design storm data. The storms
+will be of a 2 hour duration with 1, 2, 5, and 10 year
+return periods.
+For each storm event you design, create a file with two columns
+of numbers, such as in the following example: 
+
+.nf
+	0	0
+	6	2
+	12	4
+	18	3
+	24	10
+	 .	 .
+	 .	 .
+	 .	 .
+	120	0
+.fi
+
+In this example, the first column is time (minutes) and the second column
+is rainfall intensity (mm/hour). This is the basic format of the input file
+\f7r.answers\fR will expect as rain gauge data. The program will ask how
+many gauges you are using in the watershed. We will only use one,
+however, if more are used, a map layer will be required to indicate
+the groups of elements that represented by each gauge. 
+.LI
+\fBBuilding an \f7r.answers\fR project\fR
+
+When you run \f7r.answers\fR it will first ask about a project.
+A project is a collection of all the information, maps, and data
+needed to run an ANSWERS simulation scenario in GRASS.
+Initially, you will create a new project. Once a project is created
+and progress is made toward its completion, \f7r.answers\fR will 
+automatically save
+the project's current status in your GRASS workspace so you can 
+quit at any point and later return to the same state by starting
+\f7r.answers\fR and giving the name of the existing project.
+
+The primary operation of \f7r.answers\fR is through the main menu
+(shown below):
+.in 5         
+                                                                  
+.nf
+   ANSWERS on GRASS Project Manager Main Menu 
+   Project Name: <\fIsample\fR>
+
+ Status Option Description
+--------------------------------------------------------- 
+          0    Quit
+          1    Set mask, region, and resolution
+          2    Catalogue soils parameters
+          3    Catalogue land use and surface parameters
+          4    Identify elevation-based input layers
+          5    Prepare rain gauge data
+          6    Identify outlet cell
+          7    Specify areas with subsurface drainage
+          8    Catalogue channel parameters
+          9    Define channel slopes
+         10    Specify BMP's in watershed
+         11    Prepare ANSWERS input and run simulation
+         12    Miscellaneous Command Menu
+
+ Option: 0__
+
+.fi
+.in
+The following is a description of what you will need to do for
+each step to complete your ANSWERS project.
+
+\fBStep 1\fR 
+.br
+This step is initiated automatically when a new project is started.
+It will ask for a layer to use as a project mask (use \fIa.wshd\fR),
+project resolution (use 100 meters) and will then establish a project
+region. This step will create a new map with a name 
+<\fIproject name\fR>.ELEMENT;  This map will act as a reference to
+ANSWERS' methods of referring to raster cells. Raster values of the
+element map will indicate element number, with the category description giving
+row and column numbers.
+
+\fBStep 2 - Soils\fR 
+.br
+Use the map \fIa.soils\fR for this exercise. Each soil category found in
+the watershed will require 8 parameters. This step will provide
+a worksheet for entering the parameters as shown below:
+.S 9
+.TS
+center, box tab(!);
+c c c c s s c c c
+c c c c c c c c c
+c c c c c c c c c
+_ _ _ _ _ _ _ _ _
+c c c c c c c c c.
+ !Total!Field!Infiltration Constants!Zone!Antecedent! 
+Map!Porosity!Capacity!!!!Depth!Moisture!USLE
+Category!(TP)!(FP)!(FC)!(A)!(P)!(DF)!(ASM)!(K)
+29!54%!87%!21 mm/h!24 mm/h!0.63!133 mm!60%!0.28
+51!47%!93%!21 mm/h!24 mm/h!0.56!108 mm!60%!0.33
+79!46%!74%!7 mm/h!14 mm/h!0.60!96 mm!60%!0.28
+103!47%!68%!7 mm/h!14 mm/h!0.55!57 mm!60%!0.32
+105!48%!96%!21 mm/h!24 mm/h!0.55!95 mm!60%!0.32
+106!47%!93%!21 mm/h!24 mm/h!0.55!108 mm!60%!0.32
+.TE
+.S
+
+After entering the above parameters, two other inputs are 
+requested by step 2; complete them as shown:
+
+ - Tile drainage coefficient: 8.20 mm/day
+
+ - Groundwater release fraction: .001 
+
+\fBStep 3 - Land cover\fR 
+.br
+Use the map \fIa.cover\fR for this exercise. For each land cover
+class found in the watershed, ANSWERS requires 6 parameters. Fill
+out the table in this step with the values as shown:
+.TS
+center box tab (!);
+c c c c c c c c
+_ _ _ _ _ _ _ _
+c c c c c c c c.
+Category!(CROP)!(PIT)!(PER)!(RC)!(HU)!(N)!(USLE C)
+
+1!pasture!3.4 mm!97%!0.52!25 mm!0.115!0.50
+2!corn!0.1 mm!5%!0.47!75 mm!0.099!0.45
+.TE
+
+\fBStep 4 - elevation-based layers\fR 
+.br
+Enter the names of the slope and
+aspect files you created previously.
+
+\fBStep 5 - rain gauge data\fR 
+.br
+Use the names of the four rain data files (that
+you created previously) to enter the storm data under
+different event names.
+
+\fBStep 6 - outlet cell\fR 
+.br
+To find the row and column of the outlet cell,
+display the <\fIproject name\fR>.ELEMENT on the GRASS graphics monitor,
+then \f7d.vect\fR the \fIa.channel\fR map. Use the program \f7d.what.rast\fR
+to click on the cell at the outlet of the watershed (which you can tell
+by the vector map of channels). The output of \f7d.what.rast\fR will 
+give you the row and column
+of the outlet.
+
+\fBStep 7 - subsurface drainage\fR 
+.br
+Complete this step by indicating all of the watershed has subsurface
+drainage installed.
+
+\fBStep 8 - channels and their parameters\fR 
+.br
+Use the raster channel map
+\fIa.channel\fR. There are 2 categories of channels, the parameters 
+are to be filled in as follows:
+
+.nf
+Category: 1         Width: 2.0_  meters       Roughness: 0.060
+Category: 2         Width: 1.5_  meters       Roughness: 0.070
+.fi
+
+\fBStep 9 - channel slopes\fR 
+.br
+Run this step to tell it you do not
+wish to input channel slopes.
+
+\fBStep 10 - Best Management Practices\fR 
+.br
+We will only simulate
+one of the four possible BMPs, Grassed Waterways. Use the map
+\fIa.waterway\fR, and when you are prompted for the width of the waterway,
+use 20 meters.
+.LI
+\fBTest inputs by running ANSWERS\fR
+
+\fBStep 11\fR will compile the inputs from Steps 1 through 10 to create
+ANSWERS input, then will run the simulation and capture and process
+the output. Because of the complexity of the simulation and its inputs,
+it is quite possible the simulation does not run without error on
+the first attempts. (The most common problems typically stem from
+the aspect map routing runoff in directions the program cannot follow).
+
+Some errors may be captured and displayed to the screen by \f7r.answers\fR,
+while others may be buried in the answers output file created when the
+simulation is run. This means you may have to use the facilities in
+\fBStep 12\fR to read file \fIanswers_output\fR in the project
+database. (The project database is where all data files used by 
+\f7r.answers\fR are stored). 
+.LI
+\fBRun scenarios\fR
+
+You will run four simulations using the each of the design storms
+you create (as described above).
+Once you are successfully getting results with your first
+scenario, use the "copy an existing project"
+function on the initial menu of \f7r.answers\fR. Create three copies
+of your original project, so that you have a total of four.
+Now you can modify the new scenarios to simulate different conditions
+of the watershed.
+The initial inputs for the project gave land cover inputs for
+corn at the beginning stage of its growth. In the other three projects
+you will simulate the corn at later stages of growth. For each of
+the stages of corn growth, model the four design rain storms.
+
+To simulate the changing land cover conditions of the different 
+stages of corn growth, you will run step 3 again in each of
+the copied projects. Use the same
+cover map (\fIa.cover\fR, and edit the existing parameters
+from the earlier simulation
+as shown below (note, only corn values are shown, pasture values
+will remain the same as before):
+.TS
+center box tab (!);
+c c c c c c c c
+_ _ _ _ _ _ _ _
+c s s s s s s s
+c c c c c c c c
+_ _ _ _ _ _ _ _
+c s s s s s s s
+c c c c c c c c
+_ _ _ _ _ _ _ _
+c s s s s s s s
+c c c c c c c c.
+Category!(CROP)!(PIT)!(PER)!(RC)!(HU)!(N)!(USLE C)
+Crop Stage 2
+.sp
+2!corn!0.5 mm!20 %!0.40!70 mm!0.12!0.30
+Crop Stage 3
+.sp
+2!corn!1.0 mm!55 %!0.37!65 mm!0.15!0.20
+Crop Stage 4
+.sp
+2!corn!1.4 mm!80 %!0.35!63 mm!0.18!0.14
+.TE
+
+Thus you will have 4 projects for the 4 stages of corn growth.
+Each project will model 4 design storms, so you will have
+a total of 16 simulations.
+Note that running sequential simulations in a given project will
+overwrite previously created output files... so you will want
+to use the facilities of Step 12 to copy files you want to 
+keep to another place before running another simulation with
+that project (or you can create a different project for each
+simulation).
+.LI
+\fBAnalyze results\fR
+
+Now generate a summary of what happened by analyzing the results. 
+
+ANSWERS output includes data for sediment movement for
+watershed elements. The \f7r.answers\fR program will use this
+output to create new maps of net sediment loss, net sediment
+deposition, and channel deposition in your GRASS workspace. 
+You can use GRASS raster map tools to generate reports comparing the results of 
+the outputs; plus you can look at the input maps to correlate to the results.
+You may also wish to use the \f7d.answers\fR
+shell script to view a summary of input and output maps.
+\f7d.answers\fR provides an option to use the \f7d.linegraph\fR
+program to display graph plots of the outlet hydrograph data.
+
+Another place to look
+are the project database files, accessible via
+the Miscellaneous Command Menu (Step 12 of the \f7r.answers\fR
+Main Menu. 
+See the appropriate section of the \f7r.answers\fR manual
+handout under the description for Step 12 and the "FILES"
+section.) 
+The data files of the output which you will want to focus
+on will be the files in the project database starting with 
+"out_". Hydrograph data will be stored in the file "out_hydro".
+This file is processed to be used as input to the \f7d.linegraph\fR
+program in the files "hydro_time", "hydro_rain", "hydro_runoff",
+"hydro_sed1", and "hydro_sed2". A shell script is available
+called \f7d.hydro_graph\fR which demonstrates the use of the 
+\f7d.linegraph\fR program to graph hydrograph data. To use,
+type \f7d.hydro_graph \fIproject name\fR (where project name is
+the name of the project where an ANSWERS simulation has been
+successfully ran). These data can also be imported to other
+programs, such as your favorite spreadsheet, statistical
+analysis, or plotting package, for analysis and display.
+.LE
+
