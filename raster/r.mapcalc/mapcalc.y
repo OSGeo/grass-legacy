@@ -9,6 +9,7 @@
 #include "mapcalc.h"
 
 #define YYDEBUG 1
+#define YYERROR_VERBOSE 1
 
 %}
 
@@ -164,6 +165,8 @@ exp_cond	: exp_log
 
 exp_let		: exp_cond
 		| NAME '=' exp_let	{ $$ = binding($1,$3);
+						define_variable($$);	}
+		| VARNAME '=' exp_let	{ $$ = binding($1,$3);
 						define_variable($$);	}
 		;
 
