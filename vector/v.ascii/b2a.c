@@ -62,6 +62,9 @@ int bin_to_asc(
 		case GV_FACE:
 			ctype = 'F';
 			break;
+		case GV_KERNEL:
+			ctype = 'K';
+			break;
 		default:
 			ctype = 'X';
 			fprintf (stderr, "got type %d\n", (int) type);
