@@ -1,0 +1,45 @@
+From: Helena Mitasova - staff <helena@gis.uiuc.edu>
+Date: Wed, 14 Feb 2001 11:00:04 -0600
+To: neteler@geog.uni-hannover.de
+Subject: g3dhistory
+
+> I thought Roman has
+>been developing *grid3d* and not g3d. However, these mails talk
+>about g3d (I thought this was done my Mark Astley).
+
+It was Roman who has
+written the entire g3d library with some input from Mike Shapiro - Mike has been 
+always very careful about keeping things consistent in GRASS, that is
+why I believed that g3d is as consistent with old GRASS as possible.
+ Mark Astley did mostly NVIZ tcltk work
+and when Roman had the first version of g3d running I asked
+him to port s.vol.rst and write some basic programs to test it.
+
+grid3 goes well back into 1991-1993 and it was written by Dave Gerdes -
+he was the real leader of the visualization effort at CERL
+- he actually designed a lot of sg3d and nviz, and he designed
+and written makedspf and showdspf programs too (along with Jane whos
+last name I don't know because when I came she was already gone.
+Dave has hired Bill, Terry, me and other people to CERL to work 
+on visualization and other related tools (interpolation, etc.)
+There is no documentation for grid3 - it is a stand alone format
+and has very little supporting programs. It is not worth
+going back to it. Romans library should be much better, it just
+needs testing and clean-up as it was never really used and tested,
+as there wasn't really any data or applications to use it for
+at CERL.
+
+We had also considered using HDF, but there were too many concerns 
+about where it would go and that we would be too much dependent
+upon their fate - we knew the HDF group very well as they are
+at NCSA and I think that Mike actually now works with them.
+
+thats just a little bit of history, but it may clarify why things
+are as they are,
+
+Helena
+
+p.s. I have finally a new, normal email now - I will soon
+re-susbscribe through that email to the grass5 list,
+you may email me there : hmitaso@unity.ncsu.edu
+
