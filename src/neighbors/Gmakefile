@@ -1,0 +1,44 @@
+# %W%  %G%
+PGM = neighbors
+
+METHODS =\
+	c_ave.o\
+	c_max.o\
+	c_min.o\
+	c_mode.o\
+	c_divr.o\
+	c_intr.o
+
+CAT_NAMES =\
+	null_cats.o\
+	divr_cats.o\
+	intr_cats.o
+
+
+OTHERS = main.o\
+	ask_method.o\
+	ask_nsize.o\
+	bufs.o\
+	complete.o\
+	explain.o\
+	gather.o\
+	new_screen.o\
+	readcell.o\
+	scan_int.o\
+	sort_cell.o\
+	sort_int.o\
+	title.o\
+	uppercase.o\
+	zero.o
+
+LIST = $(OTHERS) $(METHODS) $(CAT_NAMES)
+
+$(BIN)/$(PGM):  $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) -o $@
+
+$(LIST):        ncb.h
+main.o:         method.h
+ask_method.o:   method.h
+
+
+$(GISLIB):      # incase this changes
