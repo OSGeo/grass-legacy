@@ -11,7 +11,6 @@ read_sites (name)
     static char Sname[128];
     double xx,yy,zz, ww;
     int n, c, i, d,ret;
-    int G_fatal_error(),G_warning();
     int count, errors, k=0;
 	char    buf[500];
   Site            *site_mgt;
