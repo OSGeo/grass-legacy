@@ -60,6 +60,8 @@ f_pow(int argc, const int *argt, void **args)
 		{
 			if (IS_NULL_F(&arg1[i]) || IS_NULL_F(&arg2[i]))
 				SET_NULL_F(&res[i]);
+			else if (arg1[i] < 0 && arg2[i] != ceil(arg2[i]))
+				SET_NULL_F(&res[i]);
 			else
 			{
 				floating_point_exception = 0;
@@ -78,6 +80,8 @@ f_pow(int argc, const int *argt, void **args)
 		for (i = 0; i < columns; i++)
 		{
 			if (IS_NULL_D(&arg1[i]) || IS_NULL_D(&arg2[i]))
+				SET_NULL_D(&res[i]);
+			else if (arg1[i] < 0 && arg2[i] != ceil(arg2[i]))
 				SET_NULL_D(&res[i]);
 			else
 			{
