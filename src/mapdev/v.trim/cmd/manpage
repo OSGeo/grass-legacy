@@ -1,0 +1,54 @@
+.\" %M% %B%
+.TH Gtrim 2G G-language
+.SH NAME
+Gtrim \- Trim small spurs, and remove excessive nodes in a digit file
+.br
+.I "(G Language Tool)"
+.SH SYNOPSIS
+.B Gtrim
+.I "digit-file trimmed-file [trimming-factor]"
+.SH DESCRIPTION
+.I Gtrim
+scans the selected \fIdigit-file\fR and removes all lines with a length 
+less than the specified
+trimming factor.  Excessive nodes between line junctions are also removed.
+.I Gtrim
+will create a new vector data file.  The original vector (digit)
+file is not modified.  
+
+The trimming parameter gives you control over the size of 
+small spurs or "dangling lines" to be removed.  The trimming factor is 
+expressed in the same units (coordinates) as the vector (digit) data 
+within the current
+Grass Location, (i.e. meters for UTM locations, and in pixels or cells
+for non-UTM locations).
+
+The default trimming factor is 10 (either meters or cells, depending
+upon the current location).
+
+.SH NOTES
+.I support.vect   
+must be run prior to 
+.I Gtrim.
+
+.I support.vect
+must be run on the resultant files to build the dig_plus information. 
+
+.I Gline
+maintains the same format (binary or ascii) and attribute type 
+(linear or area edge) as the original digit file.
+
+A trimming factor of zero (0) will not remove any small spurs, but will 
+remove all excessive nodes.
+
+.SH "SEE ALSO"
+\fIGthin[1]\fR, \fIGline[1]\fR, \fIsupport.vect[1]\fR
+
+.SH "AUTHOR"
+.nf
+Mike Baba
+DBA Systems, Inc.
+10560 Arrowhead Drive
+Fairfax, Virginia 22030
+
+
