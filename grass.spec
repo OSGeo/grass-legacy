@@ -3,19 +3,20 @@
 %define PACKAGE_NAME grass
 %define PACKAGE_VERSION 5.7.0
 %define PACKAGE_URL http://grass.itc.it/index.html
-%define _prefix /opt
+%define _prefix /usr/local
 %define shortver 57
 
 Summary:	GRASS - Geographic Resources Analysis Support System
 Name:		%PACKAGE_NAME
 Version:	%PACKAGE_VERSION
 Release:	1
-Source:		grass-5.7.0.tar.gz
+Source:		grass-%{PACKAGE_VERSION}.tar.gz
 Copyright:	GPL; Copyright by the GRASS Development Team
 Group:		Sciences/Geosciences
 Requires:	gdal >= 1.1.9
 Requires:	tcl >= 8
 Requires:	tk >= 8
+Requires:	mysql
 Requires:	postgresql >= 7.3
 Requires:	proj >= 4.4.7
 Requires:	lesstif
@@ -29,8 +30,9 @@ BuildRequires:	libpng-devel >= 1.2.2
 BuildRequires:	man
 BuildRequires:	lesstif-devel
 BuildRequires:	ncurses-devel >= 5.2
+BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
-BuildRequires:	unixODBC-devel
+#BuildRequires:	unixODBC-devel
 BuildRequires:	zlib-devel
 Vendor: GRASS Development Team <http://grass.itc.it>
 
@@ -60,11 +62,18 @@ CFLAGS="-O2" LDFLAGS="-s" ./configure \
 	--with-cxx \
 	--with-gdal=/usr/local/bin/gdal-config \
 	--with-postgres-includes=/usr/include/pgsql --with-postgres-libs=/usr/lib \
+	--with-mysql-includes=/usr/include/mysql --with-mysql-libs=/usr/lib/mysql \
+	--without-odbc \
 	--with-fftw \
 	--with-freetype --with-freetype-includes=/usr/include/freetype2
 
 %build
-make mix
+
+#no 'make mix' in case of a release package needed:
+if test ! -f SRCPKG ; then
+  make mix
+fi
+
 make prefix=%{buildroot}/%{_prefix} BINDIR=%{buildroot}/%{_bindir} \
 PREFIX=%{buildroot}%{_prefix}
 
@@ -72,19 +81,13 @@ PREFIX=%{buildroot}%{_prefix}
 make prefix=%{buildroot}/%{_prefix} BINDIR=%{buildroot}/%{_bindir} \
 PREFIX=%{buildroot}%{_prefix} install
 
-# changing GISBASE (deleting %{buildroot} from path)
+# changing GISBASE in startup script (deleting %{buildroot} from path)
 mv %{buildroot}%{_prefix}/bin/grass%{shortver} %{buildroot}%{_prefix}/bin/grass%{shortver}.tmp
 cat  %{buildroot}%{_prefix}/bin/grass%{shortver}.tmp |
 	sed -e "1,\$s&^GISBASE.*&GISBASE=%{_prefix}/grass%{shortver}&" |
     cat - > %{buildroot}%{_prefix}/bin/grass%{shortver}
 rm %{buildroot}%{_prefix}/bin/grass%{shortver}.tmp
 chmod +x %{buildroot}%{_prefix}/bin/grass%{shortver}
-
-install -d %{buildroot}/usr/bin
-mv %{buildroot}%{_prefix}/bin/* %{buildroot}/usr/bin
-
-#Get rid of lock dir for hostname:
-#??rmdir %{buildroot}%{_prefix}/grass%{shortver}/locks/`hostname`
 
 %clean
 rm -rf %{buildroot}
@@ -93,14 +96,26 @@ rm -rf grass-%{version}
 
 %files
 %defattr(-,root,root)
-%doc COPYING GPL.TXT README REQUIREMENTS.html
+%doc AUTHORS COPYING GPL.TXT README REQUIREMENTS.html
 
-%attr(0755,root,root) /usr/bin/grass%{shortver}
-# %attr(1777,root,root) %{_prefix}/grass%{shortver}/locks
-/usr/bin/grass%{shortver}
-%{_prefix}/grass%{shortver}/
+%attr(0755,root,root) %{_prefix}/bin/grass%{shortver}
+# %attr(1777,root,root) %{_prefix}/grass-%{PACKAGE_VERSION}/locks
+%{_prefix}/bin/grass%{shortver}
+%{_prefix}/grass-%{PACKAGE_VERSION}/
+
+# Not functional yet.
+#%post
+# # changing GISBASE (deleting %{buildroot} from path), needed for
+# # relocatable packaging:
+# mv %{_prefix}/bin/grass%{shortver} %{_prefix}/bin/grass%{shortver}.tmp
+# cat  %{_prefix}/bin/grass%{shortver}.tmp |
+#	sed -e "1,\$s&^GISBASE.*&GISBASE=%{_prefix}/grass%{shortver}&" |
+#	cat - > %{_prefix}/bin/grass%{shortver}
+# rm %{_prefix}/bin/grass%{shortver}.tmp
+# chmod +x %{_prefix}/bin/grass%{shortver}
 
 %changelog
-* Tue May 24 2004 Markus Neteler <neteler itc it> 5.7.0-1
+* Wed Jun 16 2004 Markus Neteler <neteler itc it> 5.7.0-1
+- removed unixODBC, added mysql
+* Tue May 24 2004 Markus Neteler <neteler itc it>
 - rewritten from 5.3 specs
-
