@@ -12,6 +12,7 @@ int argc ;
 char **argv ;
 {
 	char buff[128] ;
+	char *D_color_list();
 	int i ;
 	int color ;
 	double size ;
@@ -30,7 +31,7 @@ char **argv ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = NO;
 	opt1->answer     = "gray" ;
-	opt1->options="red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black";
+	opt1->options    = D_color_list();
 	opt1->description= "Sets the current grid color";
 
 	opt3 = G_define_option() ;
