@@ -1,4 +1,4 @@
-$Id: README,v 1.4 2000-10-19 15:47:49 andreas Exp $
+$Id: README,v 1.5 2000-10-19 16:18:36 markus Exp $
 
 Contents of this directory:
 
@@ -15,14 +15,19 @@ display    : library for CELL driver
 dlg        : library to manage DLG files
 dspf       : G3D display files library
 g3d        : G3D raster volume library
-geom       : geometrical calculations, long-integer arithmetics, delaunay triangulation, planesweep algorithm, simulation of simplicity and others
+geom       : geometrical calculations, long-integer arithmetics, delaunay 
+             triangulation, planesweep algorithm, simulation of simplicity 
+             and others
 gis        : main GRASS library
-gmath      : generic mathematical functions (matrix, fft etc.) added by D D Gray (later to be extended, BLAS/LAPACK library)
+gmath      : generic mathematical functions (matrix, fft etc.) added by 
+             D D Gray (later to be extended, BLAS/LAPACK library)
 ibtree     : integer clone of binary tree library (btree)
-icon       : icon library (required for PS/Paint icons, read, write, manipulate icons)
+icon       : icon library (required for PS/Paint icons, read, write, 
+             manipulate icons)
 image3     : extra imagery library
 imagery    : imagery library
-libimage   : image library required for SG3d/Iris, saving images in SGIs rgb-format
+libimage   : image library required for SG3d/Iris, saving images in SGIs 
+             rgb-format
 linkm      : linked list memory manager
 lock       : locking mechanism for GRASS monitors and files
 ogsf       : ported gsurf library (required for NVIZ)
@@ -31,8 +36,8 @@ raster     : GRASS raster library
 rowio      : row in/out library
 rst_gmsl   : library for interpolation with regularized splines with tension 
 segment    : segment library
-unused     : maybe treasure here
+unused     : maybe treasures here?
 vask       : Curses management library
 vect32     : GRASS vector library
-vect32_64  : new approach for a 32/64bit GRASS vector library
-
+vect32_64  : new approach for a 32/64bit GRASS vector library (to be
+             integrated in vect32)
