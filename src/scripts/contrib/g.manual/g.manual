@@ -1,32 +1,103 @@
 #!/bin/sh
 
-if test "$GISBASE" = ""; then
-echo "You must be in GRASS to run this program"
-exit
+if [ ! "$GISBASE" ]
+then
+  echo "You must be in GRASS to run this program"
+  exit
 fi
+
+HELP="
+Usage:
+ `basename $0` [-1] [-a] [-m] [browser=name] [entries=command,command]
+   command command ...
+
+Flags:
+  -1   List all manual entries, one per line.
+  -a   List all manual entries in a more appealing format.
+  -m   Force to use man program rather than MAN_BROWSER, if any.
+
+Parameters:
+  browser   Override MAN_BROWSER environmental variable to browser html pages.
+  entries   Exists for compatibility.
+
+Note:
+  To use hyperlink features of html pages, set environmental variable
+  MAN_BROWSER to any text-based web browser that you want, e.g., lynx, w3m.
+"
 
 if [ $# -lt 1 ]
-  then
-    echo Usage: `basename $0` [-1] [-a] entries=command,command,...
-    exit -1
+then
+  echo "$HELP"
+  exit 1
 fi
-case $1 in
-help|-help) echo Usage: `basename $0` [-1] [-a] entries=command,command,...; exit -1 ;;
 
--1) /bin/ls $GISBASE/man/man1 | $PAGER ;;
+forceman=
+tentries=
+until [ $# -eq 0 ]
+do
+  case $1 in
+    help|-help|-f|-e|-s)
+      echo "$HELP"
+      exit 1 ;;
 
--a) /bin/ls -C $GISBASE/man/man1 | $PAGER ;;
+    -1) /bin/ls $GISBASE/man/man1 | $PAGER ;;
 
--f|-e|-s) echo Usage: `basename $0` [-1] [-a] entries=command,command,...; exit -1 ;;
+    -a) /bin/ls -C $GISBASE/man/man1 | $PAGER ;;
 
-# only for Linux man?
-#entries=*) man $GISBASE/man/man1/`echo $1 | sed -e 's!entries=!!' \
-#           -e "s!, *!.1 $GISBASE/man/1/!g"`.1;;
-#
-#*) man $GISBASE/man/man1/$1.1;;
+    -m) forceman=1 ;;
 
-entries=*) man -M $GISBASE/man 1 `echo $1 | sed -e 's!entries=!!' \
-           -e "s!, *!.1 $GISBASE/man/1/!g"`.1;;
+    b=*|br=*|bro=*|brow=*|brows=*|browse=*|browser=*)
+      MAN_BROWSER=`echo $1 | awk -F '=' '{print $2}'` ;;
 
-*) man -M $GISBASE/man 1 $1;;
-esac
+    e=*|en=*|ent=*|entr=*|entri=*|entrie=*|entries=*)
+      tentries=`echo $1 | awk -F '=' '{print $2}' | sed 's|, *| |g'` ;;
+
+    *) tentries="$tentries $1" ;;
+  esac
+  shift
+done
+
+which $MAN_BROWSER > /dev/null 2>&1
+if [ $? -ne 0 -o "$forceman" ]
+then
+  if [ "$MAN_BROWSER" -a ! "$forceman" ]
+  then
+    echo
+    echo Warning: $MAN_BROWSER does not exist. Use man.
+    sleep 1
+  fi
+  MAN_BROWSER=
+fi
+
+msg=
+entries=
+for i in $tentries
+do
+  html=$GISBASE/documents/html/$i.html
+  man=$GISBASE/man/man1/$i.1
+  
+  if [ -e $html -a "$MAN_BROWSER" ]
+  then
+    entries="$entries $html"
+  elif [ -e $man -a ! "$MAN_BROWSER" ]
+  then
+    entries="$entries $i"
+  else
+    msg="$msg
+No entry for $i"
+  fi
+done
+
+if [ "$MAN_BROWSER" ]
+then
+  for i in $entries
+  do
+    $MAN_BROWSER $i
+  done
+else
+  man -M $GISBASE/man 1 $entries
+fi
+
+echo
+echo "$msg"
+
