@@ -1,0 +1,66 @@
+
+
+
+v.zoom <main>        GRASS Reference Manual         <main> v.zoom
+
+
+
+NAME
+     v.zoom - Allows the user to change the current geographic
+     region settings by selecting area(s) in a vector file.
+     (GRASS VECTOR Programs)
+
+SYNOPSIS
+     v.zoom
+     v.zoom help
+     v.zoom [input=name] [margin=float]
+
+DESCRIPTION
+     v.zoom allows the user to adjust the settings of the current
+     geographic region by specifying an area or areas in a vector
+     file.  Like g.region, v.zoom re-defines the settings of the
+     geographic region.  However, v.zoom allows the user to
+     change the current region settings using a vector layer.
+     The user should run d.erase after v.zoom is run for the new
+     region settings to affect the graphics display.
+
+     Parameter:
+
+     input=name        Name is the name of a GRASS vector file.
+                       v.zoom reads a list of category numbers
+                       from standard input to identify selected
+                       categories. It then searches all areas in
+                       the selected vector file to determine the
+                       areas selected. v.zoom then determines the
+                       smallest rectangular region that
+                       completely encloses the selected areas.
+                       v.zoom then sets the current graphic
+                       region.
+
+     margin=float      Float specifies an additional margin to
+                       allow around the determined region. The
+                       number float is a fraction of the
+                       determined window.  For example margin=.1
+                       allows for a margin on the East and West
+                       that is one tenth the East/West distance
+                       and a margin for North and South that is
+                       one tenth the North/South distance.
+
+SEE ALSO
+     g.region
+
+AUTHOR
+     Marty Holko, Soil Conservation Service, Washingto DC
+
+
+
+
+
+
+
+
+
+GRASS 4.12               U.S. Army CERL                         1
+
+
+
