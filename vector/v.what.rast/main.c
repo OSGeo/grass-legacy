@@ -268,6 +268,8 @@ int main(int argc,char *argv[])
     /* select existing categories to array (array is sorted) */
     select = db_select_int( driver, Fi->table, Fi->key, NULL, &catexst);
     
+    db_begin_transaction ( driver );
+    
     norec_cnt = update_cnt = upderr_cnt = dupl_cnt = 0;
     for (point = 0 ; point < point_cnt ; point++) {
 	if ( cache[point].count > 1 ) {
@@ -315,7 +317,8 @@ int main(int argc,char *argv[])
 	    upderr_cnt++;
 	}
     }
-    
+
+    db_commit_transaction ( driver );
     free(catexst);	
     db_close_database_shutdown_driver ( driver );
     db_free_string (&stmt);

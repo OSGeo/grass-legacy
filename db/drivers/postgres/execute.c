@@ -35,3 +35,42 @@ int db_driver_execute_immediate(sql)
 
     return DB_OK;
 }
+
+int db_driver_begin_transaction(void)
+{
+    PGresult *res;
+
+    G_debug (2, "pg : BEGIN");
+    res = PQexec(pg_conn, "BEGIN");
+
+    if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
+	sprintf(errMsg, "%s Cannot 'BEGIN' transaction", errMsg);
+	report_error(errMsg);
+	PQclear(res);
+	return DB_FAILED;
+    }
+    
+    PQclear(res);
+
+    return DB_OK;
+}
+
+int db_driver_commit_transaction(void)
+{
+    PGresult *res;
+
+    G_debug (2, "pg : COMMIT");
+    res = PQexec(pg_conn, "COMMIT");
+
+    if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
+	sprintf(errMsg, "%s Cannot 'COMMIT' transaction", errMsg);
+	report_error(errMsg);
+	PQclear(res);
+	return DB_FAILED;
+    }
+    
+    PQclear(res);
+
+    return DB_OK;
+}
+

@@ -11,6 +11,8 @@ extern int db_d_drop_column();
 extern int db_d_drop_index();
 extern int db_d_drop_table();
 extern int db_d_execute_immediate();
+extern int db_d_begin_transaction();
+extern int db_d_commit_transaction();
 extern int db_d_fetch();
 extern int db_d_get_num_rows();
 extern int db_d_find_database();
@@ -38,6 +40,8 @@ static struct
   DB_PROC_INSERT,		db_d_insert,
   DB_PROC_DELETE,		db_d_delete,
   DB_PROC_EXECUTE_IMMEDIATE,	db_d_execute_immediate,
+  DB_PROC_BEGIN_TRANSACTION,	db_d_begin_transaction,
+  DB_PROC_COMMIT_TRANSACTION,	db_d_commit_transaction,
   DB_PROC_OPEN_SELECT_CURSOR,	db_d_open_select_cursor,
   DB_PROC_OPEN_UPDATE_CURSOR,	db_d_open_update_cursor,
   DB_PROC_BIND_UPDATE,		db_d_bind_update,
