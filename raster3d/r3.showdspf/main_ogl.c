@@ -128,8 +128,15 @@ int main(int argc,char **argv)
     init_caps (&D_Cap,&g3reg);
 
     /* open display file for reading */
-    sprintf(buff,"grid3/%s/dsp", g3->answer);
-    if(NULL == (mapset = G_find_file2 (buff, dsp, ""))){
+/* changes 9/2000: Bev Wallace <beverly.t.wallace@lmco.com> */
+/*    sprintf(buff,"grid3/%s/dsp", g3->answer);
+ *   if(NULL == (mapset = G_find_file2 (buff, dsp, ""))){
+ */
+ /* Remove the mapset within buff, add to G_find_file2 - Bev Wallace */
+    i = strcspn (wname, "@");
+    if (i>0) wname[i] = (char)NULL;
+    sprintf(buff,"grid3/%s/dsp", wname);
+    if(NULL == (mapset = G_find_file2 (buff, dsp, mapset))){
         sprintf(buff,"Not able to find display file for [%s]", dsp);
         G_fatal_error(buff);
     }
