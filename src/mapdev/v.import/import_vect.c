@@ -4,12 +4,12 @@
 *  trying to create the files necessary to for the 'digit' program.
 *
 *  Programs used by this program:
-*      (/usr/gis/etc)  a.b.dlg, dlg.to.dig, a.b.vect, build.vect
+*      (/usr/gis/etc)  v.in.dlg  a.b.vect, build.vect
 *      
 *      dlg.to.dig also forces all unlabeled Area lines to Line lines.
 *
 *  Data files used by this program:
-*      ascii dlg,  binary dlg,  ascii vector,  binary vector,  dig_att
+*      ascii dlg,  ascii vector,  binary vector,  dig_att
 *  
 *  Note: all the programs that this calls must exit with a zero value on 
 *  successful completion and a true value on error.
@@ -23,7 +23,6 @@
 /**  data directories   **/
 #define		B_DIG		"dig"
 #define		A_DIG		"dig_ascii"
-#define		B_DLG		"bdlg"
 #define		A_DLG		"dlg"
 #define		ATT			"dig_att"
 #define		PLUS		"dig_plus"
@@ -44,6 +43,7 @@ main (argc, argv)
 
 	int   snap ;
 	int   ram ;
+        int   base = 0;
 
 	char  name[128] ;
 
@@ -51,6 +51,7 @@ main (argc, argv)
 	char  file1[128] ;
 	char  file2[128] ;
 	char  file3[128] ;
+	char  matt_file[128] ;
 	char *p;
 	char  *getenv();
 
@@ -97,34 +98,17 @@ fprintf (stderr, "\nThere are NO arguments required.\n\n");
 
 
 
-/**************************  phase:   a.b.dlg  **************************/
 
+/**************************  phase:  dlg.to.digit  **************************/
+/*  file2 - binary digit,   file1 - ascii dlg,   file3 - att file    */
 	if (level == 1 )
 	{
 		ask_for_name( file1, " DLG FILENAME ", name, A_DLG, "ascii dlg") ;
 		force_areas = ask_force() ;
+                if (ask_mult_att_base(matt_file,&base) == 0) matt_file[0]='\0';
 		snap = ask_snap()  ;
-		show_phase( &phase, "Convert ascii dlg file to binary dlg file.\n") ;
-		run_a_b_dlg( command, name, file1, file2) ;
-	}
-
-
-/**************************  phase:  dlg.to.digit  **************************/
-/*  file2 - binary dlg,   file1 - binary digit,   file3 - att file    */
-
-	if (level < 3 )
-	{
-
-		/*  starting with binary dlg file  */
-		if (level == 2 )
-		{
-			ask_for_name( file2, " DLG FILENAME ", name, B_DLG, "binary dlg") ;
-			force_areas = ask_force() ;
-			snap = ask_snap()  ;
-		}
-
 		show_phase( &phase, "Convert binary dlg file to binary digit file.\n") ;
-		run_dlg_to_digit( command, name, file2, file1, file3, force_areas) ;
+		run_dlg_to_digit( command, name, file1, file2, file3, force_areas, matt_file, base) ;
 	}
 
 
@@ -132,7 +116,7 @@ fprintf (stderr, "\nThere are NO arguments required.\n\n");
 /**************************  phase:  a.b.vect  **************************/
 /*  file2 - ascii dig,   file1 - binary vector               */
 
-	if (level == 3 )
+	if (level == 2 )
 	{
 		ask_for_name( file2, " VECTOR (DIGIT) FILENAME ", name, A_DIG, "ascii vector") ;
 		snap = ask_snap()  ;
@@ -146,13 +130,13 @@ fprintf (stderr, "\nThere are NO arguments required.\n\n");
 /*    file1 - binary digit    */
 
 
-	if (level == 4)
+	if (level == 3)
 	{
 		ask_for_name( file2, " VECTOR (DIGIT) FILENAME ", name, B_DIG, "binary vector") ;
 		snap = ask_snap()  ;
 	}
 
-	/*if level == 1 or 2 or 3 or 4*/
+	/*if level == 1 or 2 or 3 */
 
 	show_phase( &phase, "Create vector support files.\n") ;
 	run_build_vect( command, name, snap, ram) ;
@@ -170,16 +154,15 @@ ask_which_level()
 
 	printf("\n     Imports to GRASS Vector Format and Creates Needed Support Files\n\n") ;
 	printf("     1  -   Ascii DLG file  to GRASS Vector Format\n") ;
-	printf("     2  -   Binary DLG file to GRASS Vector Format\n") ;
-	printf("     3  -   Ascii VECTOR file  to GRASS Vector Format\n") ;
-	printf("     4  -   Binary VECTOR file to GRASS Vector Format\n") ;
-	printf("\n\n Enter a number <1-4>\n anything else to quit: ") ;
+	printf("     2  -   Ascii VECTOR file  to GRASS Vector Format\n") ;
+	printf("     3  -   Binary VECTOR file to GRASS Vector Format\n") ;
+	printf("\n\n Enter a number <1-3>\n anything else to quit: ") ;
 
 	if (gets (buf) == NULL)
 		clearerr (stdin), exit (1) ;
 
 	num = atoi(buf) ;
-	if( num < 1  ||  num > 4)
+	if( num < 1  ||  num > 3)
 		fprintf(stderr, "\n\n ...Leaving %s\n\n", PROG),   exit(1) ;
 
 	return(num) ;
@@ -254,6 +237,29 @@ return( G_yes( " Do you want to give precedence to Areas (opposed to Lines) ", 1
 
 }
 
+
+ask_mult_att_base(matt_file, base)
+ char *matt_file;
+ int  *base;
+{
+ char answer[128];
+
+printf("\n During the DLG-3 file conversion to Vector:\n") ;
+if( G_yes( " Do you want to create multiple attribute file? ", 1)) {
+  fprintf(stderr,"Enter multiple attributes file name>");
+  gets(answer);
+  sprintf(matt_file,"%s",answer);
+  fprintf(stderr,"Enter base for multiple attributes (0)>");
+  gets(answer);
+  if (strlen(answer) == 0) *base = 0;
+  else *base = atoi(answer); 
+  return 1;
+}
+else return 0;
+}
+
+
+
 ask_snap()
 {
 printf("\n\n During the building of the Vector format:\n") ;
@@ -265,30 +271,12 @@ return( G_yes(" Do you want to snap nodes to other nodes within a threshold ", 0
 /** ----- functions to run the commands ------ **/
 
 
-run_a_b_dlg( command, name, ascii_dlg, binary_dlg)
-	char	*command, *name, *ascii_dlg, *binary_dlg ;
+
+run_dlg_to_digit( command, name, ascii_dlg, binary_dig, att, force_areas,matt_file, base)
+	char	*command, *name, *ascii_dlg, *binary_dig, *att, *matt_file ;
+	int	force_areas, base ;
 {
-
-	G__file_name( binary_dlg, B_DLG, name, current_mapset) ;
-	G__make_mapset_element(B_DLG) ;
-
-/*  execute the a.b.dlg program  */
-	sprintf( command, "%s/etc/v.a.b.dlg %s %s ", gbase, ascii_dlg, binary_dlg) ;
-
-	if (system( command) )
-	{
-		fprintf(stderr, "ERROR(%s):  Could not convert ascii dlg file: '%s' to binary dlg file: '%s'\n", PROG,  ascii_dlg, binary_dlg) ;
-		exit(-1) ;
-	}
-
-}  
-
-
-
-run_dlg_to_digit( command, name, binary_dlg, binary_dig, att, force_areas)
-	char	*command, *name, *binary_dlg, *binary_dig, *att ;
-	int	force_areas ;
-{
+        char temp[20];
 
 	G__file_name( binary_dig, B_DIG, name, current_mapset) ;
 	G__make_mapset_element(B_DIG) ;
@@ -297,22 +285,23 @@ run_dlg_to_digit( command, name, binary_dlg, binary_dig, att, force_areas)
 	G__make_mapset_element(ATT) ;
 
 /*  execute the program  */
-	/*
-	sprintf( command, "%s/etc/v.dlg.to.digit %s %s %s ", gbase, binary_dlg, binary_dig, att) ;
-	*/
-	sprintf( command, "%s/etc/v.dlg.to.digit %s %s %s ", gbase, binary_dlg, name, att) ;
+	sprintf( command, "v.in.dlg in=%s out=%s ", name, name) ;
 
 	/*  assumes lines making up unlabeled areas are Area edges
 	*  unless specified, then their Lines
 	*/
+	if( matt_file[0] != '\0') {
+		sprintf( temp, "matt=%s base=%d ", matt_file, base) ;
+		strcat( command, temp) ;
+        }
 
 	if( !force_areas)
-		strcat( command, "line") ;
+		strcat( command, "-l") ;
 
 
 	if (system( command) )
 	{
-		fprintf(stderr, "ERROR(%s):  Could not convert binary dlg file: '%s' to binary digit file: '%s'\n", PROG, binary_dlg, binary_dig) ;
+		fprintf(stderr, "ERROR(%s):  Could not convert dlg file: '%s' to binary digit file: '%s'\n", PROG, ascii_dlg, binary_dig) ;
 		exit(-1) ;
 	}
 
