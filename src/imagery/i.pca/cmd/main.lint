@@ -1,0 +1,169 @@
+main.c:
+
+main.c
+==============
+(33)  warning: fname unused in function main
+(34)  warning: c unused in function main
+(128)  warning: main() returns random value to invocation environment
+command.c:
+allocate.c:
+
+allocate.c
+==============
+(34)  warning: struct/union Command_keys never defined
+jacobi.c:
+
+jacobi.c
+==============
+(90)  warning: struct/union Command_keys never defined
+matrix.c:
+
+matrix.c
+==============
+(63)  warning: struct/union Command_keys never defined
+stats.c:
+
+stats.c
+==============
+(33)  warning: l unused in function covariance
+(48)  warning: struct/union Command_keys never defined
+transform.c:
+
+transform.c
+==============
+(39)  warning: struct/union Command_keys never defined
+
+
+==============
+name used but not defined
+    G_gisinit           main.c(42)
+    G_parse_command     main.c(45)
+    G_parse_command_usage       main.c(47)
+    G_fatal_error       main.c(48)
+    G_window_rows       main.c(72)
+    G_window_cols       main.c(73)
+    G_allocate_cell_buf         command.c?(11)
+    G_find_cell         command.c?(46)
+    G_open_cell_old     main.c(84)
+    G_get_map_row       main.c(91)
+    G_close_cell        main.c(95)
+    G_open_cell_new     main.c(113)
+    G_put_map_row       main.c(119)
+    G_malloc    main.c?(60)
+    G_legal_filename    command.c(11)
+    fabs        matrix.c?(2)
+    sqrt        matrix.c?(3)
+name declared but never used or defined
+    G_fopen_new         main.c?(3)
+    G_fopen_old         main.c?(4)
+    G_fopen_append      main.c?(5)
+    G_fopen_sites_old           main.c?(6)
+    G_fopen_sites_new           main.c?(7)
+    G_fopen_vector_old          main.c?(8)
+    G_fopen_vector_new          main.c?(9)
+    G_number_of_cats    main.c?(12)
+    G_get_histogram_cat         main.c?(13)
+    G_get_histogram_count       main.c?(15)
+    G__file_name        main.c?(17)
+    G__getenv           main.c?(18)
+    G__home     main.c?(19)
+    G__mapset_name      main.c?(20)
+    G__location_path    main.c?(21)
+    G_ask_any           main.c?(22)
+    G_ask_any_ext       main.c?(23)
+    G_ask_cell_in_mapset        main.c?(24)
+    G_ask_cell_new      main.c?(25)
+    G_ask_cell_old      main.c?(26)
+    G_ask_in_mapset     main.c?(27)
+    G_ask_in_mapset_ext         main.c?(28)
+    G_ask_new           main.c?(29)
+    G_ask_new_ext       main.c?(30)
+    G_ask_old           main.c?(31)
+    G_ask_old_ext       main.c?(32)
+    G_ask_sites_any     main.c?(33)
+    G_ask_sites_in_mapset       main.c?(34)
+    G_ask_sites_new     main.c?(35)
+    G_ask_sites_old     main.c?(36)
+    G_ask_vector_any    main.c?(37)
+    G_ask_vector_in_mapset      main.c?(38)
+    G_ask_vector_new    main.c?(39)
+    G_ask_vector_old    main.c?(40)
+    G_calloc    main.c?(41)
+    G_get_ask_return_msg        main.c?(42)
+    G_get_cell_title    main.c?(43)
+    G_color_name        main.c?(44)
+    G_date      main.c?(45)
+    G_find_cell2        main.c?(47)
+    G_find_file         main.c?(48)
+    G_find_file2        main.c?(49)
+    G_find_vector       main.c?(50)
+    G_find_vector2      main.c?(51)
+    G_get_cat           main.c?(52)
+    G_get_cats_title    main.c?(53)
+    G_getenv    main.c?(54)
+    G_gisbase           main.c?(55)
+    G_gisdbase          main.c?(56)
+    G_home      main.c?(57)
+    G_location          main.c?(58)
+    G_location_path     main.c?(59)
+    G_mapset    main.c?(61)
+    G_mask_info         main.c?(62)
+    G_myname    main.c?(63)
+    G_program_name      main.c?(64)
+    G_realloc           main.c?(65)
+    G_squeeze           main.c?(66)
+    G_store     main.c?(67)
+    G_tempfile          main.c?(68)
+    G_tokenize          main.c?(69)
+    G_tolcase           main.c?(70)
+    G_toucase           main.c?(71)
+    G_whoami    main.c?(72)
+    index       main.c?(73)
+    rindex      main.c?(74)
+    G_projection_name           main.c?(75)
+    G_unit_name         main.c?(76)
+    G_strcpy    main.c?(78)
+    G_chrcpy    main.c?(79)
+    G_strncpy           main.c?(80)
+    G_strmov    main.c?(81)
+    G_chrmov    main.c?(82)
+    G_strcat    main.c?(83)
+    G_chrcat    main.c?(84)
+    floor       jacobi.c?(2)
+    ceil        jacobi.c?(2)
+    fmod        jacobi.c?(2)
+    hypot       jacobi.c?(3)
+    sin         jacobi.c?(4)
+    cos         jacobi.c?(4)
+    tan         jacobi.c?(4)
+    asin        jacobi.c?(4)
+    acos        jacobi.c?(4)
+    atan        jacobi.c?(4)
+    atan2       jacobi.c?(4)
+    exp         jacobi.c?(5)
+    log         jacobi.c?(5)
+    log10       jacobi.c?(5)
+    pow         jacobi.c?(5)
+    sinh        jacobi.c?(6)
+    cosh        jacobi.c?(6)
+    tanh        jacobi.c?(6)
+    gamma       jacobi.c?(7)
+    j0          jacobi.c?(8)
+    j1          jacobi.c?(8)
+    jn          jacobi.c?(8)
+    y0          jacobi.c?(8)
+    y1          jacobi.c?(8)
+    yn          jacobi.c?(8)
+value type declared inconsistently
+    exit        llib-lc(49) :: main.c(50)
+    free        llib-lc(353) :: main.c(126)
+    strcpy      llib-lc(439) :: command.c(52)
+    G_malloc    main.c?(60) :: allocate.c(13)
+    free        llib-lc(353) :: allocate.c(31)
+    G_malloc    main.c?(60) :: jacobi.c(16)
+    exit        llib-lc(49) :: jacobi.c(20)
+    free        llib-lc(353) :: jacobi.c(41)
+function argument ( number ) used inconsistently
+    free( arg 1 )       llib-lc(353) :: main.c(126)
+function returns value which is always ignored
+    sprintf         printf          strcpy
