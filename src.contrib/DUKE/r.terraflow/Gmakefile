@@ -53,8 +53,8 @@ DEPLIBS = $(DEPGISLIB)
 all: dofirst $(BIN_CMD)/r.terraflow $(BIN_CMD)/r.terraflow.short
 
 dofirst:
-	-mkdir $(OBJARCH)/FLOAT ; true
-	-mkdir $(OBJARCH)/SHORT ; true
+	-mkdir -p $(OBJARCH)/FLOAT
+	-mkdir -p $(OBJARCH)/SHORT
 
 $(BIN_CMD)/r.terraflow: $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
 	(cd IOStream/lib ; make)
