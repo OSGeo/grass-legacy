@@ -69,6 +69,7 @@ int c_table_definition (ClientData , Tcl_Interp *, int, char **);
 int c_var_set (ClientData , Tcl_Interp *, int, char **);
 int c_create_bgcmd (ClientData , Tcl_Interp *, int, char **);
 int c_set_bgcmd (ClientData , Tcl_Interp *, int, char **);
+int c_add_blank_bgcmd (ClientData , Tcl_Interp *, int, char **);
 
 int i_prompt (char *);
 int i_prompt_buttons (char *, char *, char *);

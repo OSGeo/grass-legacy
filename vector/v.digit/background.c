@@ -33,6 +33,6 @@ bg_add ( char *cmd )
     Bgcmd[nbgcmd].on = 1;
     nbgcmd++;
 
-    return 1;
+    return nbgcmd;
 }
 

@@ -29,7 +29,8 @@ typedef enum
     TOOL_ZOOM_PAN, 
     TOOL_ZOOM_DEFAULT, 
     TOOL_ZOOM_REGION, 
-    TOOL_REDRAW 
+    TOOL_REDRAW,
+    TOOL_DISPLAY_SETTINGS  
 } ToolNumber;
     
 /* Xdriver coordinate value considered to bu null*/
