@@ -15,15 +15,15 @@ REM with additions from Malcolm Blue
 REM
 REM
 REM ----- Path to your CYGWIN ROOT
-set CYGWIN=c:\cygwin
+set CYGWIN=C:\cygwin
 REM
 REM ----- set your resolution and color depth here:
 set RES=1024x768x16
 REM
 REM ----- Path to your StarNet XWin-32 Server install directory
 REM       Do not remove the "", as bash will bail out else. 
-set STARNET="C:\PROGRAMME\StarNet\X-Win32 5.1\"
-set STARLIB="C:\PROGRAMME\StarNet\X-Win32 5.1\Lib"
+set STARNET="C:\Program Files\StarNet\X-Win32\"
+set STARLIB="C:\Program Files\StarNet\X-Win32\Lib"
 REM
 REM -------------------------------------------------------------------------
 REM ----- nothing to change below!
@@ -33,7 +33,7 @@ REM ----- This is your local DISPLAY
 set display=127.0.0.1:0.0
 REM 
 REM ----- export PATH as we need it
-set Path=%PATH%;%CYGWIN%\usr\X11R6\bin;%CYGWIN%\usr\X11R6\lib;%CYGWIN%\usr\local\bin;%STARNET%;%STARLIB%
+set Path=%PATH%;%CYGWIN%\bin;%CYGWIN%\usr\X11R6\bin;%CYGWIN%\usr\X11R6\lib;%CYGWIN%\usr\local\bin;%STARNET%;%STARLIB%
 REM 
 REM ----- start the XWin32 server
 start /B XWin32 -screen 0 %RES% -whitepixel 255 -blackpixel 0
