@@ -62,7 +62,7 @@ backup_and_write_coords (fpout, lead_id)
         return (0);
      } 
 
-	 if (!wr123sfld (fpout, "SADR", lead_id, bit_y, 4, 4))
+	 if (!wr123sfld (fpout, "SADR", lead_id, (char *) bit_y, 4, 4))
 	 {
 		put_err_mess ("Failed to re-write 123 SADR subfield after backing up.", 0);
         return (0);
@@ -154,12 +154,12 @@ write_coords (fpout, x, y, zone, lead_id, option1, option2, tag)
 
 #endif /* NO_CONVERSION */
 
-	if (!wr123sfld (fpout, tag, lead_id, bit_x, 4, option1))
+	if (!wr123sfld (fpout, tag, lead_id, (char *) bit_x, 4, option1))
 	{
 	   put_err_mess ("Failed to write 123 SADR field.", 0);
 	   return (0);
 	}
-	if (!wr123sfld (fpout, tag, lead_id, bit_y, 4, option2))
+	if (!wr123sfld (fpout, tag, lead_id, (char *) bit_y, 4, option2))
 	{
 	   put_err_mess ("Failed to write 123 SADR field.", 0);
 	   return (0);

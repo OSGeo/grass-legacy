@@ -14,7 +14,7 @@ int main (int argc, char *argv[])
 {
     char *mapset ;
     char name[40] ;
-    unsigned char buffer[256] ;
+    char buffer[256] ;
     struct Cell_head cellhd ;
     int cellhd_ok;
     int compressed_old;
@@ -130,7 +130,9 @@ int main (int argc, char *argv[])
     compressed_old = 0;
     lseek (fd, 0L, 0);
     if (read (fd, buffer, 3) == 3 &&
-	buffer[0] == 251 && buffer[1] == 255 && buffer[2] == 251)
+	buffer[0] == (char) 251 &&
+	buffer[1] == (char) 255 &&
+	buffer[2] == (char) 251)
     {
 	rows_old = 0;
 	offset = -1;

@@ -8,7 +8,7 @@ main (int argc, char *argv[])
 {
 	struct GModule *module;
     struct Option *tapename;
-    unsigned char buf[4096];
+    char buf[4096];
     char type[5];
     int lat_d, lat_m, lat_s;
     int lon_d, lon_m, lon_s;
@@ -51,7 +51,7 @@ main (int argc, char *argv[])
 	    continue;
 	}
 	eof = 0;
-	if ((*buf) == 0252)
+	if ((*buf) == '\252')
 	{
 	    if (count == 0)
 	    {

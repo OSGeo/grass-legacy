@@ -53,7 +53,8 @@ int paint_interface (int argc, char *argv[])
     float red, grn, blu ;
     int rlevel, glevel, blevel;
     int nrows, ncols, count, nc;
-    unsigned char *databuf, *dp ;
+    char *databuf ;
+    unsigned char *dp ;
     int databuflen;
     int i,j;
     char *env ;
@@ -189,13 +190,13 @@ int paint_interface (int argc, char *argv[])
     case DATA:
 	TRACE("DATA");
 	rec (databuf, ncols);
-	Pdata (databuf, ncols);
+	Pdata ((unsigned char *) databuf, ncols);
 	break;
     case RLE:
 	TRACE("RLE");
 	count = 0 ;
 	nc = 0 ;
-	dp = databuf ;
+	dp = (unsigned char *) databuf ;
 	while (nc < ncols)
 	{
 	    rec (dp, 2);

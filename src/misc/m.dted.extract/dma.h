@@ -9,7 +9,7 @@
 GLOBAL int tapefd;		/* tape input file descriptor */
 GLOBAL int outfd;		/* output file descriptor */
 GLOBAL FILE *headfd;		/* header file descriptor */
-GLOBAL unsigned char *tapebuf;	/* tape buffer */
+GLOBAL char *tapebuf;		/* tape buffer */
 GLOBAL int tapebuflen;
 GLOBAL int nrows, ncols;	/* output rows, cols */
 

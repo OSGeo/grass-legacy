@@ -64,9 +64,9 @@ int Set_RGB_color( u_char r[256],u_char g[256],u_char b[256])
 int RGB_raster( int n,int nrows,
 register u_char *r,register u_char *g,register u_char *b, int withzeros)
 {
-    static unsigned *array = NULL;
-    static unsigned array_alloc = 0;
-    register unsigned *a;
+    static int *array = NULL;
+    static int array_alloc = 0;
+    register int *a;
     register int i;
 
     if (n > array_alloc) {
@@ -75,10 +75,10 @@ register u_char *r,register u_char *g,register u_char *b, int withzeros)
             array_alloc += 512;
         /* Make sure sufficient space is allocated */
         if (array == NULL)
-            array = (unsigned *) G_malloc((size_t) (array_alloc * sizeof(unsigned)));
+            array = (int *) G_malloc((size_t) (array_alloc * sizeof(int)));
         else
-            array = (unsigned *) G_realloc((void *) array,
-                    (size_t) (array_alloc * sizeof(unsigned)));
+            array = (int *) G_realloc((void *) array,
+                    (size_t) (array_alloc * sizeof(int)));
         if (array == NULL) {
             fprintf(stderr, "ERROR: can't alloc RGB_raster\n");
             exit(-1);

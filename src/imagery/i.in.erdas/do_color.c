@@ -6,13 +6,12 @@ static char rcsid[]="$Header$";
 #include <fcntl.h>
 #include "gis.h"
 
-static void convchar (char sbuf[], int dbuf[])
+static void convchar (char sbuf[], unsigned int dbuf[])
 {
-int i;
+	int i;
 
-for (i=0;i<256;i++) 
-	if (sbuf[i] < 0) dbuf[i] = sbuf[i] + 256;
-	else dbuf[i] = sbuf[i];
+	for (i=0;i<256;i++) 
+		dbuf[i] = ((unsigned char *) sbuf)[i];
 }
 
 
@@ -29,7 +28,7 @@ struct Colors colors;
 
 
 
-if ((erdf = open(trl,0)) < 0) {
+if ((erdf = open(trl,O_RDONLY)) < 0) {
 	fprintf(stderr,"Error can not open ERDAS trailer file\n");
 	exit(0);
 	}

@@ -6,9 +6,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "driverlib.h"
+#include "config.h"
 
 static jmp_buf save;
-static void timeout (void)
+static RETSIGTYPE timeout (int signo)
 {
 	longjmp(save,-1);
 }

@@ -34,7 +34,11 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2001-01-19 09:07:28  markus
+ * Revision 1.2  2001-04-10 13:17:04  glynn
+ * Fix various "char" vs "unsigned char" warnings, plus a couple of things
+ *  which I didn't fix last time.
+ *
+ * Revision 1.1  2001/01/19 09:07:28  markus
  * added for Dbase import into sites list
  *
  * Revision 1.2  2000/07/07 11:50:22  markus
@@ -595,7 +599,7 @@ static void *DBFReadAttribute(DBFHandle psDBF, int hEntity, int iField,
 
 {
     int	       	nRecordOffset;
-    uchar	*pabyRec;
+    char	*pabyRec;
     void	*pReturnField = NULL;
 
     static double dDoubleField;
@@ -618,7 +622,7 @@ static void *DBFReadAttribute(DBFHandle psDBF, int hEntity, int iField,
 	psDBF->nCurrentRecord = hEntity;
     }
 
-    pabyRec = (uchar *) psDBF->pszCurrentRecord;
+    pabyRec = psDBF->pszCurrentRecord;
 
 /* -------------------------------------------------------------------- */
 /*	Ensure our field buffer is large enough to hold this buffer.	*/
@@ -796,7 +800,7 @@ static int DBFWriteAttribute(DBFHandle psDBF, int hEntity, int iField,
 
 {
     int	       	nRecordOffset, i, j;
-    uchar	*pabyRec;
+    char	*pabyRec;
     char	szSField[40], szFormat[12];
 
 /* -------------------------------------------------------------------- */
@@ -838,7 +842,7 @@ static int DBFWriteAttribute(DBFHandle psDBF, int hEntity, int iField,
 	psDBF->nCurrentRecord = hEntity;
     }
 
-    pabyRec = (uchar *) psDBF->pszCurrentRecord;
+    pabyRec = psDBF->pszCurrentRecord;
 
 /* -------------------------------------------------------------------- */
 /*      Assign all the record fields.                                   */
@@ -855,7 +859,7 @@ static int DBFWriteAttribute(DBFHandle psDBF, int hEntity, int iField,
 	    if( strlen(szSField) > psDBF->panFieldSize[iField] )
 	        szSField[psDBF->panFieldSize[iField]] = '\0';
 
-	    strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
+	    strncpy(pabyRec+psDBF->panFieldOffset[iField],
 		    szSField, strlen(szSField) );
 	}
 	else
@@ -866,7 +870,7 @@ static int DBFWriteAttribute(DBFHandle psDBF, int hEntity, int iField,
 	    sprintf(szSField, szFormat, *((double *) pValue) );
 	    if( strlen(szSField) > psDBF->panFieldSize[iField] )
 	        szSField[psDBF->panFieldSize[iField]] = '\0';
-	    strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
+	    strncpy(pabyRec+psDBF->panFieldOffset[iField],
 		    szSField, strlen(szSField) );
 	}
 	break;
@@ -881,7 +885,7 @@ static int DBFWriteAttribute(DBFHandle psDBF, int hEntity, int iField,
 	    j = strlen((char *) pValue);
         }
 
-	strncpy((char *) (pabyRec+psDBF->panFieldOffset[iField]),
+	strncpy(pabyRec+psDBF->panFieldOffset[iField],
 		(char *) pValue, j );
 	break;
     }
@@ -943,7 +947,7 @@ int DBFWriteTuple(DBFHandle psDBF, int hEntity, void * pRawTuple )
 
 {
     int	       	nRecordOffset, i;
-    uchar	*pabyRec;
+    char	*pabyRec;
 
 /* -------------------------------------------------------------------- */
 /*	Is this a valid record?						*/
@@ -984,7 +988,7 @@ int DBFWriteTuple(DBFHandle psDBF, int hEntity, void * pRawTuple )
 	psDBF->nCurrentRecord = hEntity;
     }
 
-    pabyRec = (uchar *) psDBF->pszCurrentRecord;
+    pabyRec = psDBF->pszCurrentRecord;
 
     memcpy ( pabyRec, pRawTuple,  psDBF->nRecordLength );
 
@@ -1004,7 +1008,7 @@ const char *DBFReadTuple(DBFHandle psDBF, int hEntity )
 
 {
     int	       	nRecordOffset;
-    uchar	*pabyRec;
+    char	*pabyRec;
     static char	*pReturnTuple = NULL;
 
     static int	nTupleLen = 0;
@@ -1027,7 +1031,7 @@ const char *DBFReadTuple(DBFHandle psDBF, int hEntity )
 	psDBF->nCurrentRecord = hEntity;
     }
 
-    pabyRec = (uchar *) psDBF->pszCurrentRecord;
+    pabyRec = psDBF->pszCurrentRecord;
 
     if ( nTupleLen < psDBF->nRecordLength) {
       nTupleLen = psDBF->nRecordLength;
