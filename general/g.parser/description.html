@@ -68,8 +68,8 @@ echo "Value of GIS_OPT_vect: '$GIS_OPT_vector'"
 The <tt>test.sh</tt> script will provide following help text:
 <P>
 <pre>
-./test.sh help
- 
+./test.sh --help
+
 Description:
  g.parser test script
  
@@ -83,6 +83,20 @@ Parameters:
   option   an option
 </pre>
 
+<H2>NOTES</H2>
+
+An option can be instructed to allow multiple inputs by adding the following line:
+<pre>#% multiple : yes</pre>
+While this will only directly change the <i>Usage</i> section of the help
+screen, the option's environmental string may be easily parsed from within
+a script. For example, individual comma separated identities for an option 
+named "input" can be parsed with the following Bash shell code:
+
+<pre>IFS=,
+for opt in $GIS_OPT_input ; do
+	... "$opt"
+done
+</pre>
 
 <H2>SEE ALSO</H2>
 
