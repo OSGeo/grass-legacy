@@ -12,7 +12,7 @@ typedef struct _cursor {
 } cursor;  
 
 typedef struct {
-        char *host, *port, *options, *tty, *dbname, *user, *password;
+        char *host, *port, *options, *tty, *dbname, *user, *password, *schema;
 } PGCONN;
 
 /* Postgres data types defined in GRASS */

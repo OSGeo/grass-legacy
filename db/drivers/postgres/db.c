@@ -29,9 +29,9 @@ int db__driver_open_database(handle)
 	return DB_FAILED;
     }
     
-    G_debug(3, "host = %s, port = %s, options = %s, tty = %s, dbname = %s, user = %s, password = %s",
-                pgconn.host, pgconn.port, pgconn.options, pgconn.tty,  
-		pgconn.dbname, pgconn.user, pgconn.password );
+    G_debug(3, "host = %s, port = %s, options = %s, tty = %s, dbname = %s, user = %s, password = %s, "
+	       "schema = %s", pgconn.host, pgconn.port, pgconn.options, pgconn.tty,  
+		pgconn.dbname, pgconn.user, pgconn.password, pgconn.schema );
 
     db_get_login ( "pg", name, &user, &password );
 
@@ -57,6 +57,10 @@ int db__driver_open_database(handle)
     if ( schema ) 
 	schema = connection.schemaName;
     */
+
+    if ( pgconn.schema ) {
+	schema = pgconn.schema;
+    }
     
     if ( schema && strlen(schema) > 0 ) {
 	sprintf ( buf, "set search_path to %s", schema );
