@@ -3,6 +3,7 @@ MODULE_TOPDIR = ..
 
 SUBDIRS = \
 	drivers \
+	d.barscale \
 	d.erase \
 	d.his \
 	d.m \
