@@ -15,7 +15,7 @@
 #define MODE_FULL              2
 #define MODE_PRELOAD           3
 
-#define MODE_DEFAULT		   3
+#define MODE_DEFAULT		   0
 
 #define STATUS_READY           0
 #define STATUS_BUSY            1
@@ -398,59 +398,77 @@ int read_g3d_value(IFLAG type, void *map, int x, int y, int z, void *value)
 /* read slice of values at level from g3d file */
 int read_g3d_slice(IFLAG type, void *map, int level, void *data)
 {
-    G3D_Region *w3;
-    double v1[3], v2[3];
-
-    /* read window */
-    w3 = GVL_get_window();
-
-    /* coordinates of volume */
-    v1[0] = w3->north; v1[1] = w3->west; v1[2] = w3->bottom + level * w3->tb_res;
-    v2[0] = w3->south; v2[1] = w3->east; v2[2] = w3->bottom + (level + 1) * w3->tb_res;
-
+    int x, y;
+    
     switch (type) {
         /* float data type */
         case (VOL_DTYPE_FLOAT) :
-            G3d_getVolume (map, v1[0], v1[1], v1[2], v2[0], v1[1], v1[2],
-                v1[0], v2[1], v1[2],  v1[0], v1[1], v2[2],
-                Cols, Rows, 1, (char *) data, G3D_FLOAT);
+            for (x = 0; x < Cols; x++) {
+                for (y = 0; y < Rows; y++) {       
+                    ((float *) data)[x + y * Cols] =
+                        G3d_getFloat(map, x, y, level);
+                }
+            }       
+        
             break;
-
+        
         /* double data type */
-        case (VOL_DTYPE_DOUBLE) :
-            G3d_getVolume (map, v1[0], v1[1], v1[2], v2[0], v1[1], v1[2],
-                v1[0], v2[1], v1[2],  v1[0], v1[1], v2[2],
-                Cols, Rows, 1, (char *) data, G3D_DOUBLE);
-            break;
-
+        case (VOL_DTYPE_DOUBLE) :                        
+            for (x = 0; x < Cols; x++) {
+                for (y = 0; y < Rows; y++) {       
+                    ((double *) data)[x + y * Cols] =
+                        G3d_getDouble(map, x, y, level);
+                }
+            }       
+            
+            break; 
+        
         /* unsupported data type */
         default :
             return (-1);
-    }
-
+    }        
+        
     return (1);
 }
 
 /******************************************************************/
 /* read all values from g3d file */
 int read_g3d_vol(IFLAG type, void *map, void *data)
-{
+{    
+    int x, y, z;
+    
     switch (type) {
         /* float data type */
         case (VOL_DTYPE_FLOAT) :
-			   G3d_getBlock(map, 0, 0, 0, Cols, Rows, Depths, (char *) data, G3D_FLOAT);
+            for (x = 0; x < Cols; x++) {
+                for (y = 0; y < Rows; y++) {
+                    for (z = 0; z < Depths; z++) {
+                        ((float *) data)[x + y * Cols + z * Rows * Cols] =
+                            G3d_getFloat(map, x, y, z);
+                    }
+                }
+            }       
+        
             break;
-
+        
         /* double data type */
-        case (VOL_DTYPE_DOUBLE) :
-			   G3d_getBlock(map, 0, 0, 0, Cols, Rows, Depths, (char *) data, G3D_DOUBLE);
-            break;
-
+        case (VOL_DTYPE_DOUBLE) :                        
+            for (x = 0; x < Cols; x++) {
+                for (y = 0; y < Rows; y++) {
+                    for (z = 0; z < Depths; z++) {
+                        ((double *) data)[x + y * Cols + z * Rows * Cols] =
+                            G3d_getDouble(map, x, y, z);
+                    }
+                }
+            }       
+            
+            break; 
+        
         /* unsupported data type */
         default :
             return (-1);
-    }
-
+    }        
+        
     return (1);
 }
 
@@ -717,13 +735,13 @@ int get_slice_value(geovol_file *vf, int x, int y, int z, void *value)
 /* start read - allocate memory buffer a read first data into buffer */
 int gvl_file_start_read(geovol_file *vf)
 {
-     int i;
+    int i;
     slice_data *sd;
 
-     /* check status */
-     if (vf->status == STATUS_BUSY)
+    /* check status */
+    if (vf->status == STATUS_BUSY)
          return (-1);
-
+         
     switch (vf->mode) {
         /* read whole volume into memory */
         case (MODE_FULL) :
