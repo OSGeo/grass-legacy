@@ -2,16 +2,18 @@
 
 get_hdr()
 {
-	int		i;
+	int		i, accuracy;
 	float dummy;
 	float angle;
 
+        record_pos = 0;
 	buffer = buf_start;
 	if(!(filestat = get_buf())) return(0);
 
-	for(i = 0; i < 50; i++) name[i] = buffer[i];
-	name[50] = 0;
+	for(i = 0; i < 40; i++) name[i] = buffer[i];
+	name[40] = 0;
 
+        record_pos +=144;
 	buffer += 144;
 	buffer += get_int(&DEM);
 	buffer += get_int(&pattern);
@@ -35,14 +37,15 @@ get_hdr()
 
 	buffer += get_dfloat (&angle);
 
-/* now skip over accuracy code */
+/* now skip over accuracy code 
 	while (*buffer++ == ' ')
 		;
+		*/
+	buffer += nget_int(&accuracy);
 
-
-	buffer += get_efloat(&x_res);
-	buffer += get_efloat(&y_res);
-	buffer += get_efloat(&z_res);
+	buffer += get_float(&x_res);
+	buffer += get_float(&y_res);
+	buffer += get_float(&z_res);
 
 	if(!x_res) x_res = y_res;
 	if(!y_res) y_res = x_res;
@@ -68,10 +71,10 @@ get_hdr()
 hdr_list(file)
 FILE *file;
 {
-	int		i;
-
-	for(i = 0 ; i < 80; i++) fprintf(file,"-");
-	fprintf(file,"\n\n"); fflush (file);
+   int i;
+        for(i=0;i<80;i++)fprintf(file, "-");
+	fprintf(file, "\n\n");fflush(file);
+	fprintf(file,"file #%d\n", count);
 	fprintf(file,"%s\n",name);
 	fprintf(file,"\n");
 	fprintf(file,"min elevation: %f  max elevation: %f\n",min_elev,max_elev);
