@@ -84,14 +84,14 @@ char *G_adjust_Cell_head(struct Cell_head *cellhd,int row_flag,int col_flag)
 /* compute rows and columns, if not set */
     if (!row_flag)
     {
-	cellhd->rows = (cellhd->north - cellhd->south + cellhd->ns_res/2.0)
+	cellhd->rows = (cellhd->north - cellhd->south + 1.0 + cellhd->ns_res/2.0)
 			    / cellhd->ns_res;
 	if (cellhd->rows == 0)
 	    cellhd->rows = 1;
     }
     if (!col_flag)
     {
-	cellhd->cols = (cellhd->east - cellhd->west + cellhd->ew_res/2.0)
+	cellhd->cols = (cellhd->east - cellhd->west + 1.0 + cellhd->ew_res/2.0)
 			    / cellhd->ew_res;
 	if (cellhd->cols == 0)
 	    cellhd->cols = 1;
