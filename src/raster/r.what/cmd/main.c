@@ -33,7 +33,7 @@ char *argv[];
     opt1->type       = TYPE_STRING ;
     opt1->required   = YES ;
     opt1->multiple   = YES ;
-	opt1->gisprompt  = "old,cell,raster" ;
+    opt1->gisprompt  = "old,cell,raster" ;
     opt1->description= "Name of existing raster map" ;
 
     flag1 = G_define_flag() ;
