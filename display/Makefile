@@ -12,6 +12,7 @@ SUBDIRS = \
 	d.path \
 	d.rast \
 	d.vect \
+	d.vect.chart \
 	d.text \
 	d.what.rast \
 	d.what.vect \
