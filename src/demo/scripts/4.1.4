@@ -1,0 +1,30 @@
+#!/bin/sh
+
+Dchoose text
+Dtext << EOF
+.S 10
+
+.S 9
+.C yellow
+
+
+
+  * 
+EOF
+
+Dchoose explain
+Derase
+Dtext << EOF
+.S 5
+
+  Various types of reports are available:
+     Available data
+     Data categories
+     Data statistics
+     Category correlations between maps
+     Area calculations
+EOF
+
+./continue.yes
+
+exit 1
