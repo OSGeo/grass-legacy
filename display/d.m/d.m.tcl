@@ -1,7 +1,3 @@
-#!/bin/sh
-# the next line restarts using wish \
-exec $GRASS_WISH "$0" "$@"
-
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
 
