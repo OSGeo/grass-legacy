@@ -22,6 +22,7 @@
 extern struct line_pnts *lrep; /* Define in main() function */
 extern site_array *site0;
 extern line_array *line0;
+extern line_array *area0;
 extern type_array *type0;
 extern int header_only;
 extern double *xcenter;
@@ -36,6 +37,12 @@ extern field_data field_type;
 extern int numcols;
 extern int nsites;
 extern int nglines;
+extern int nrings;
+extern int site_index;
+extern int line_index;
+extern int region_index;
+extern int line_grps;
+extern int ring_grps;
 extern int recs;
 extern int has_mid;
 extern FILE *mif_file;
@@ -53,7 +60,7 @@ int nparts, numparts, nvertices;
 char *ssx, *ssy, *ssx1, *ssy1, *ssx2, *ssy2;
 double sx, sy, sx1, sy1, sx2, sy2;
 
-char dels[3];
+char dels[4];
 d_type del0;
 char delchar;
 
@@ -78,13 +85,12 @@ line (LINE|line|Line)
 pline (PLINE|pline|Pline)
 mult (MULTIPLE|multiple|Multiple)
 ldata [ \t]*{float}[ \t]+{float}[ \t]*
-region (REGION|region|Region){whitespace}
-word [a-z0-9_A-Z]*{whitespace}
-chardef Char\([0-9]+\)
-pen (Pen|pen|PEN){whitespace}\(.*\)
-brush (Brush|BRUSH|brush){whitespace}\(.*\)
-symbol (SYMBOL|Symbol|symbol){whitespace}\(.*\)
-center Center{whitespace}
+region (REGION|region|Region)
+pen (Pen|pen|PEN){whitespace}
+brush (Brush|BRUSH|brush)
+symbol (SYMBOL|Symbol|symbol)
+center (Center|CENTER|center)
+param \(.*\)
 
 charf [Cc]har[ \t]*\([ \t]*[1-9][0-9]*[ \t]*\)
 intf [Ii]nteger
@@ -104,6 +110,7 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 %x DATA
 %x LDATALINES
 %x MLDATALINES
+%x RDATALINES
 %x GPOINT
 %x GLINE
 %x GPLINE
@@ -113,6 +120,7 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 %x DATALINES
 %x PEN
 %x BRUSH
+%x SYMBOL
 %x CENTER
 %x MID
 %x MIDLINE
@@ -138,7 +146,8 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
                           delchar = del0[1]; 
 			  dels[0] = del0[1];
 			  dels[1] = '(';
-			  dels[2] = '\0';
+			  dels[2] = ')';
+			  dels[3] = '\0';
 			}
 
 <DELIM>{end}            {BEGIN 0;}
@@ -171,14 +180,15 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 					not match specified number");
 			    numcols = ncols;
 			  }
-			  nsites = 0; nglines = 0;
+			  nsites = 0; nglines = 0; nrings = 0; ncenter = 0;
+			  site_index = line_index = region_index = 0;
 			  type0 = type_array_init();
 			  if(header_only) return 1;
 			  BEGIN DATA;
 			}
 
 <DATA>{point}           {
-                          if( append_type_spec(type0, DOT) < 0 ) {
+                          if( append_type_spec(type0, DOT, site_index++ ) < 0 ) {
 			    return -1;
 			  }
 			  BEGIN GPOINT;
@@ -201,7 +211,7 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 <DATA>[ \t]*Symbol[ \t]*.*                     ;
 
 <DATA>{line}                                   { 
-                                                 if( append_type_spec(type0, LINE) < 0 ) {
+                                                 if( append_type_spec(type0, LINE, line_index++ ) < 0 ) {
 						   return -1;
 						 }
 
@@ -225,21 +235,18 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 <GLINE>{end}             { BEGIN DATA;}
 
 <DATA>{pline}            { 
-                           if( append_type_spec(type0, LINE) < 0 ) {
-			     return -1;
-			   }
 			   BEGIN GPLINE;
                          }
 
 <GPLINE>{mult}           {
-                           if( append_type_spec(type0, LINE) < 0 ) {
-			     return -1;
-			   }
 			   BEGIN GMLINE;
 			   numparts = 0;
                          }
 
 <GPLINE>[1-9][0-9]*      { 
+                           if( append_type_spec(type0, LINE, line_index++ ) < 0 ) {
+			     return -1;
+			   }
                            linex = Vect_new_line_struct();                
                            nvertices = atoi(yytext);
                            BEGIN LDATALINES; 
@@ -266,6 +273,9 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
                           }
 
 <MLDATALINES>[1-9][0-9]*             {
+                                       if( append_type_spec(type0, LINE, line_index ) < 0 ) {
+					 return -1;
+				       }
                                        numparts++;
 				       linex = Vect_new_line_struct();                
 				       nvertices = atoi(yytext);
@@ -283,62 +293,127 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 					   return -1;
 					 memcpy(&line0->gplines[nglines++], linex, sizeof(struct line_pnts) );
 					 free(linex);
-					 if(numparts == nparts)
+					 if(numparts == nparts) {
+					   line_index++;
 					   BEGIN DATA;
+					 }
 				       }
                                      }
 
 
-<DATA>{region}     {   
-                       BEGIN REGION;
-		       current_ring++;
-		       if( allocreg == 0 )  {
-			 if( (lrep = (struct line_pnts *)malloc( 50 *
-								 sizeof(struct line_pnts) )) == NULL )
-			   return -1;	
-			 allocreg = 50;
-		       }
-		       else if(current_ring > allocreg) {
-			 if( (lrep = (struct line_pnts *)realloc(lrep, (allocreg + 20) *
-								 sizeof(struct line_pnts) )) == NULL )
-			   return -1;
-			 allocreg += 20;
-		       }
-		       tmp_line = Vect_new_line_struct();
-		       memcpy(&lrep[current_ring-1], tmp_line, sizeof(struct line_pnts));
-		       Vect_destroy_line_struct(tmp_line);
-		   }
-
-<REGION>[0-9]+	{BEGIN NUMLINES; current_region = atoi(yytext);}
+<DATA>{region}           { 
+			   numparts = 0;
+			   BEGIN REGION;
+                         }
 
 
-<NUMLINES>[0-9]+  {BEGIN DATALINES; nlines = atoi(yytext);
-			cnt = 0;}
+<REGION>[1-9][0-9]*       { 
+                            nparts = atoi(yytext);
+			    BEGIN RDATALINES;
+                          }
+
+<RDATALINES>[1-9][0-9]*             {
+                                       if( append_type_spec(type0, AREA, region_index ) < 0 ) {
+					 return -1;
+				       }
+                                       numparts++;
+				       linex = Vect_new_line_struct();                
+				       nvertices = atoi(yytext);
+                                     }
 
 
+<RDATALINES>{ldata}/{end}           {
+                                       ssx = strtok(yytext, " \t");
+				       sx = atof(ssx);
+				       ssy = strtok(NULL, " \t");
+				       sy = atof(ssy);
+				       Vect_append_point(linex, sx, sy);
+				       if(linex->n_points == nvertices) {
+					 if(alloc_glines( area0, nrings + 1))
+					   return -1;
+					 memcpy(&area0->gplines[nrings++], linex, sizeof(struct line_pnts) );
+					 free(linex);
+					 if(numparts == nparts) {
+					   region_index++;
+					   BEGIN DATA;
+					 }
+				       }
+                                     }
+
+<DATA>{center}          {
+                          BEGIN CENTER;
+			  cnt = 0;
+                        }
 			
+<CENTER>{float}                 	 {
 
-<CENTER>{float}		{
-                          if(current_region + 1 > ncenter) {
-			    if( (xcenter = (double *)realloc(xcenter, (ncenter + 20) *
-							     sizeof(double)) ) == NULL )
-			      return -1;
-			    if( (ycenter = (double *)realloc(ycenter, (ncenter + 20) *
-							     sizeof(double)) ) == NULL )
-			      return -1;
-			    ncenter += 20;
-			  }
-			  
-			  if(cnt++) xcenter[current_ring-1] = atof(yytext);
-			  else ycenter[current_ring-1] = atof(yytext);
-			  
-			  if(cnt > 1) BEGIN MID;
-			}
+                                           int j; /* loop variable */
 
-<DATA>{pen} |
-    {brush} |
-   {symbol}             ;
+                                           if(ncenter == 0) {
+					     if( (xcenter = (double *)G_malloc(20 *
+									       sizeof(double)) ) == NULL )
+					       return -1;
+					     if( (ycenter = (double *)G_malloc(20 *
+									       sizeof(double)) ) == NULL )
+					       return -1;
 
+					     ncenter = 20;
+
+					     for( j = 0; j < 20; j++ ) {
+					       xcenter[j] = -999999999.999;
+					       ycenter[j] = -999999999.999;
+					     }
+
+					   }
+					     
+					   else if(nrings + 1 > ncenter) {
+					     if( (xcenter = (double *)realloc(xcenter, (ncenter + 20) *
+									      sizeof(double)) ) == NULL )
+					       return -1;
+					     if( (ycenter = (double *)realloc(ycenter, (ncenter + 20) *
+									      sizeof(double)) ) == NULL )
+					       return -1;
+
+					     ncenter += 20;
+
+					     for( j = ncenter - 20; j < ncenter; j++ ) {
+					       xcenter[j] = -999999999.999;
+					       ycenter[j] = -999999999.999;
+					     }
+
+					   }
+					   
+					   if(cnt++) ycenter[region_index - 1] = atof(yytext);
+					   else xcenter[region_index - 1] = atof(yytext);
+					   
+					   if(cnt > 1) BEGIN DATA;
+                                         }
+
+<DATA>{pen}              {
+                           BEGIN PEN;
+                         }
+
+<DATA>{brush}            {
+                           BEGIN BRUSH;
+                         }
+
+<DATA>{symbol}           { 
+                           BEGIN SYMBOL;
+                         }
+
+<PEN>{param}             {
+                           parse_pen(yytext);
+			   BEGIN DATA;
+                         }
+
+<BRUSH>{param}           {
+                           parse_brush(yytext);
+			   BEGIN DATA;
+                         }
+
+<SYMBOL>{param}          {
+                           BEGIN DATA;
+                         }
 
 			
 <MID>[^ \t].*[ \t]*	{ 
@@ -365,19 +440,26 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 
 	
 void parse_pen(char *pen_info)  {
-	int fx1, fx2, fx3;
+	int fx1, fx2; 
+	long fx3;
+	char *ff1, *ff2, *ff3;
 	
-	fx1 = atoi(strtok(pen_info, dels));
-	fx2 = atoi(strtok(NULL, dels));
-	fx3 = atoi(strtok(NULL, dels));
+	ff1 = strtok(pen_info, ",() ");
+	fx1 = atoi(ff1);
+
+	ff2 = strtok(NULL, ",() ");
+	fx2 = atoi(ff2);
+
+	ff3 = strtok(NULL, ",() ");
+	fx3 = atol(ff3);
 	
 	proc_pen_info(SET_VAL, &fx1, &fx2, &fx3);
 }
 
-int proc_pen_info(int fflag, int *f1, int *f2, int *f3) {
+int proc_pen_info(int fflag, int *f1, int *f2, long *f3) {
 	static int fs1 = 1;
 	static int fs2 = 2;
-	static int fs3 = 0;
+	static long fs3 = 0;
 	
 	if(fflag == SET_VAL)  {
 		fs1 = *f1;
@@ -396,20 +478,29 @@ int proc_pen_info(int fflag, int *f1, int *f2, int *f3) {
 }
 
 void parse_brush(char *brush_info)  {
-	int brx1, brx2, brx3;
+	int brx1; 
+	long brx2, brx3;
+	char *b1, *b2, *b3;
 	
-	brx1 = atoi(strtok(brush_info, dels));
-	brx2 = atoi(strtok(NULL, dels));
-	brx3 = atoi(strtok(NULL, dels));
+	b1 = strtok(brush_info, ",() ");
+	brx1 = atoi(b1);
+
+	b2 = strtok(NULL, ",() ");
+	brx2 = atol(b2);
+
+	if( ( b3 = strtok(NULL, ",() ")) == NULL )
+	  brx3 = 16777215;
+	else 
+	  brx3 = atol(b3);
 	
 	proc_brush_info(SET_VAL, &brx1, &brx2, &brx3);
 	
 }
 
-int proc_brush_info(int fflag, int *br1, int *br2, int *br3) {
+int proc_brush_info(int fflag, int *br1, long *br2, long *br3) {
 	static int brs1 = 1;
-	static int brs2 = 0;
-	static int brs3 = 16777215;
+	static long brs2 = 0;
+	static long brs3 = 16777215;
 	
 	if(fflag == SET_VAL)  {
 		brs1 = *br1;
@@ -508,13 +599,14 @@ type_array *type_array_init(void) {
 
   tp0 = (type_array *)G_malloc( sizeof(type_array) );
   tp0->list = (char *)G_malloc( 128 );
+  tp0->entities = (int *)G_malloc( 128 * sizeof(int) );
   tp0->alloc_chars = 128;
   tp0->n_chars = 0;
 
   return tp0;
 }
 
-int append_type_spec(type_array *arr0, const char val) {
+int append_type_spec(type_array *arr0, const char val, const int cnt) {
 
   if(arr0->n_chars == 0) {
     if( (arr0->list = (char *)malloc(128) ) == NULL ) {
@@ -534,6 +626,12 @@ int append_type_spec(type_array *arr0, const char val) {
       return -1;
     }
 
+    if( (arr0->entities = (int *)realloc(arr0->entities, 
+					  (arr0->alloc_chars + 128) * sizeof(int) )) == NULL ) {
+      fprintf(stderr, "Unable to allocate space\n");
+      return -1;
+    }
+
     else {
       arr0->alloc_chars += 128;
     }
@@ -541,6 +639,7 @@ int append_type_spec(type_array *arr0, const char val) {
   }
 
   arr0->list[arr0->n_chars] = val;
+  arr0->entities[arr0->n_chars] = cnt;
   arr0->n_chars++;
 
   return 0;

@@ -29,6 +29,7 @@ typedef struct _type_array {
   int n_chars;
   int alloc_chars;
   char *list;
+  int *entities;
 } type_array;
 
 #endif /* LOCAL_STRUCTS_H_ */

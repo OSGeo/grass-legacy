@@ -39,7 +39,7 @@
 struct line_pnts *lrep;
 site_array *site0;  /* Deals with collecting point data */
 line_array *line0;  /* Deals with collecting line data  */
-/* line_array *area0;     Deals with collecting area data  */
+line_array *area0;  /* Deals with collecting area data  */
 type_array *type0;
 
 double *xcenter;
@@ -50,6 +50,12 @@ int has_mid;
 int recs;
 int nsites;
 int nglines;
+int nrings;
+int site_index;
+int line_index;
+int region_index;
+int line_grps;
+int ring_grps;
 
 FILE *mif_file;
 FILE *mid_file;
