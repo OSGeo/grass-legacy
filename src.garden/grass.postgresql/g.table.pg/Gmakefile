@@ -1,6 +1,6 @@
 PGM       = $(BIN_CMD)/g.table.pg
 EXTRA_CFLAGS = $(PQINCPATH)
-LIBES     = $(GISLIB) $(PQLIB) $(XEXTRALIBS)
+LIBES     = $(GISLIB) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS)
 
 OBJS = \
 	main.o \
