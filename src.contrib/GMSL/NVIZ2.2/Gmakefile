@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.3 2000-03-06 17:18:24 markus Exp $
+# $Id: Gmakefile,v 1.4 2000-10-02 15:59:48 markus Exp $
 # updated 2. Nov. 1999 
 # updated 31 octobre 1999 to build libimage.a - Pierre de Mouveaux.
 #                                       (p_de_mouveaux@hotmail.com)
@@ -49,7 +49,7 @@ install:
 	(cd scripts; cp script_get_line script_play script_tools script_file_tools $(INSTALL_DIR)/scripts)
 	'cp' scripts/*.tcl $(INSTALL_DIR)/scripts
 	'cp' scripts/*Index $(INSTALL_DIR)/scripts
-	(cd bitmaps; tar -cvf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xvf - 2>/dev/null ); true)
+	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
 	cp scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
 	cp scripts/$(NV_VER) $(GISBASE)/bin
 	chmod ugo+x $(INSTALL_DIR)/scripts/$(NV_VER)_script \
