@@ -60,7 +60,8 @@ Recursively processes each segment in a tree by
     double pr;
     struct triple *point;
     struct triple skip_point;
-    int m_skip, skip_index,j,k;
+    int m_skip, skip_index,j,k, segtest;
+    double xx, yy, zz;
 
 /* find the size of the smallest segment once */
     if (first_time) {
@@ -224,7 +225,13 @@ Recursively processes each segment in a tree by
             m_skip = 1;
 
  for(skip_index=0;skip_index<m_skip;skip_index++) {
+      segtest = 0;
       j = 0;
+      xx = point[skip_index].x * dnorm + data->x_orig + params->x_orig;
+      yy = point[skip_index].y * dnorm + data->y_orig + params->y_orig;
+      zz = point[skip_index].z;
+      if (xx >= data->x_orig + params->x_orig && xx <= data->xmax + params->x_orig&& yy >= data->y_orig + params->y_orig && yy <= data->ymax + params->y_orig) {
+      segtest = 1;
       skip_point.x = point[skip_index].x;
       skip_point.y = point[skip_index].y;
       skip_point.z = point[skip_index].z;
@@ -236,12 +243,14 @@ Recursively processes each segment in a tree by
           j++;
         }
      }
+      }/* segment area test */
 
         if (!params->cv){
         if (params->matrix_create(params,data->points,data->n_points,
                                        matrix,indx) < 0)  return -1;
         }
-        else {
+        else if (segtest == 1)
+	{
                 if (params->matrix_create(params,data->points,data->n_points-1,
                                         matrix,indx) < 0)  return -1;
         }
@@ -252,7 +261,7 @@ Recursively processes each segment in a tree by
         b[0] = 0.;
         G_lubksb(matrix,data->n_points+1,indx,b);
         params->check_points(params,data,b,ertot,zmin,dnorm,skip_point);
-        } else
+        } else if (segtest == 1)
         {
                 for (i = 0; i < data->n_points-1; i++)
                   b[i+1] = data->points[i].z;
