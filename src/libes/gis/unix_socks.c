@@ -47,6 +47,11 @@
 #define PF_LOCAL PF_UNIX
 #endif
 
+/* For switching between putting socket file in <mapset>/.tmp/<host>/
+ * and $HOME/.grass (see user_config.c)
+ */
+#define USE_TEMP_ELEMENT
+
 /* ----------------------------------------------------------------------
  * G_sock_get_fname(), builds the full path for a UNIX socket using the
  * G__temp_element() routine (tempfile.c).  Caller should free() the
@@ -63,6 +68,7 @@
  *     create with world rw permissions anyway [depends on the system]).
  * ---------------------------------------------------------------------*/
 
+#ifdef USE_TEMP_ELEMENT
 char *
 G_sock_get_fname (char *name)
 {
@@ -77,7 +83,19 @@ G_sock_get_fname (char *name)
 
     return G_store (path);
 }
-
+#else
+char *
+G_sock_get_fname (char *name)
+{
+    if (name == NULL)
+        return NULL;
+    
+    /* G_rc_path will make the whole path, and make sure the directories
+     * exist with good permissions.
+     */
+    return G_rc_path ("com", name);
+}
+#endif
 
 /* -------------------------------------------------------------------
  * G_sock_exists(char *): Returns 1 if path is to a UNIX socket that
