@@ -59,7 +59,7 @@ int main (int argc, char *argv[])
 {
   char *output, errmsg[256];
   double (*rng) (), max;
-  int i, c, n, b;
+  int i, n, b;
   Site *s;
   FILE *fd;
   struct Cell_head window;
@@ -105,7 +105,7 @@ int main (int argc, char *argv[])
   n = atoi(parm.nsites->answer);
   b = (flag.drand48->answer == '\0') ? 0 : 1;
 
-  s = G_site_new_struct (c, 2, 0, 1);
+  s = G_site_new_struct (CELL_TYPE, 2, 0, 1);
 
   if (strcmp(output,"stdout")==0 || strcmp(output,"-")==0)
     fd=stdout;
