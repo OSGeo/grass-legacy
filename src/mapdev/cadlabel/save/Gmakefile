@@ -1,0 +1,25 @@
+EXTRA_CFLAGS	= -I../lib
+
+
+SRC = Vcontour.c \
+	line_center.c
+
+OBJ = Vcontour.o \
+	line_center.o 
+
+all:  $(BIN)/Vcontour $(BIN)/Vstate
+	
+
+
+
+$(BIN)/Vcontour: $(OBJ)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(DIGLIB) $(MATHLIB) $(DIG_ATTLIB)
+
+$(BIN)/Vstate: stat.o
+	$(CC) $(LDFLAGS) -o $@ stat.o $(GISLIB) $(DIGLIB) $(MATHLIB) $(DIG_ATTLIB)
+
+saber_src:
+	#load $(SRC) $(CFLAGS) $(DIGLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB) /usr/lib/libc.a
+
+Vcontour.o:  corridor.c
+
