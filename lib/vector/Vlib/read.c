@@ -63,7 +63,7 @@ static long (*Last_line_offset_array[]) () =
    Vect_last_line_offset_nat 
    , Vect_last_line_offset_shp  
 #ifdef HAVE_POSTGRES
-   , last_offset_dummy 
+   , Vect_last_line_offset_post
 #endif
 };
 

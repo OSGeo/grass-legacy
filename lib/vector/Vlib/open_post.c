@@ -30,6 +30,8 @@
 #include <stdio.h>
 int connectionEstablished = 0;	/* No Connection Made */
 
+/* TODO: 3D */
+
 int setup (struct Map_info *Map);
 /************************************************************************************ 
 * Function name: setup.
@@ -47,39 +49,47 @@ setup (struct Map_info *Map)
   char CAT_ID[20] = "CAT_ID";
   char CAT_FIELD[20] = "CAT_FIELD";
   char CAT_CAT[20] = "CAT_CAT";
-  fprintf (stderr, "setup\n");
-/* If some option parameter are not defined..define here (be quite and drive)*/
-  if ((Map->fInfo.post.geom_id == NULL)
-      || (strlen (Map->fInfo.post.geom_id) == 0))
+  
+  G_debug (3, "setup()\n");
+  
+  /* If some option parameter are not defined..define here (be quite and drive)*/
+  if ((Map->fInfo.post.geom_id == NULL) || (strlen (Map->fInfo.post.geom_id) == 0))
     Map->fInfo.post.geom_id = strdup (GEOM_ID);
-  if ((Map->fInfo.post.geom_type == NULL)
-      || (strlen (Map->fInfo.post.geom_type) == 0))
+  if ((Map->fInfo.post.geom_type == NULL) || (strlen (Map->fInfo.post.geom_type) == 0))
     Map->fInfo.post.geom_type = strdup (GEOM_TYPE);
-  if ((Map->fInfo.post.geom_geom == NULL)
-      || (strlen (Map->fInfo.post.geom_geom) == 0))
+  if ((Map->fInfo.post.geom_geom == NULL) || (strlen (Map->fInfo.post.geom_geom) == 0))
     Map->fInfo.post.geom_geom = strdup (GEOM_GEOM);
 
-  if ((Map->fInfo.post.cat_id == NULL)
-      || (strlen (Map->fInfo.post.cat_id) == 0))
+  if ((Map->fInfo.post.cat_id == NULL) || (strlen (Map->fInfo.post.cat_id) == 0))
     Map->fInfo.post.cat_id = strdup (CAT_ID);
-  if ((Map->fInfo.post.cat_field == NULL)
-      || (strlen (Map->fInfo.post.cat_field) == 0))
+  if ((Map->fInfo.post.cat_field == NULL) || (strlen (Map->fInfo.post.cat_field) == 0))
     Map->fInfo.post.cat_field = strdup (CAT_FIELD);
-  if ((Map->fInfo.post.cat_cat == NULL)
-      || (strlen (Map->fInfo.post.cat_cat) == 0))
+  if ((Map->fInfo.post.cat_cat == NULL) || (strlen (Map->fInfo.post.cat_cat) == 0))
     Map->fInfo.post.cat_cat = strdup (CAT_CAT);
-  Map->fInfo.post.geomRes = NULL;
+  
+  /* Check if table names are set */
+  if ( Map->fInfo.post.geom_table == NULL || strlen (Map->fInfo.post.geom_table) == 0 ) {
+      G_warning ("Geometry table name not available for vector '%s'", Map->name);
+      return -1;
+  }
+  if ( Map->fInfo.post.cat_table == NULL || strlen (Map->fInfo.post.cat_table) == 0 ) {
+      G_warning ("Gategory table name not available for vector '%s'", Map->name);
+      return -1;
+  }
+  
   /* Try to make a connection to the specified database */
   Map->fInfo.post.conn =
-    PQsetdbLogin (Map->fInfo.post.host, Map->fInfo.post.port, NULL, NULL,
-		  Map->fInfo.post.database, Map->fInfo.post.user,
-		  Map->fInfo.post.password);
+       PQsetdbLogin (Map->fInfo.post.host, Map->fInfo.post.port, NULL, NULL,
+  		     Map->fInfo.post.database, Map->fInfo.post.user,
+		     Map->fInfo.post.password);
 
-  if (PQstatus (Map->fInfo.post.conn) == CONNECTION_BAD)
-    {
-      Map->fInfo.post.geomRes = NULL;
+  if (PQstatus (Map->fInfo.post.conn) == CONNECTION_BAD) {
+      G_warning ("Cannot make connection to PostGIS:\nhost = %s\nport = %s\n"
+	          "database = %s\nuser = %s\n", 
+		  Map->fInfo.post.host, Map->fInfo.post.port, 
+		  Map->fInfo.post.database, Map->fInfo.post.user);
       return (-1);
-    }
+  }
   connectionEstablished = 1;
   return (0);
 }
@@ -102,79 +112,15 @@ setup (struct Map_info *Map)
 int
 V1_open_old_post (struct Map_info *Map, int update)
 {
-  char *query = (char *) calloc (65536, sizeof (char));
-  fprintf (stderr, "V1_open_old_post\n");
-  if (!connectionEstablished)
-    {
-      if (setup (Map))
-	{
-	  return (-1);
-	}
-    }
- /*******************************************************************************************/
-  /*Create binary cursor for selecting a geometry row */
-  sprintf (query, "BEGIN");
-  Map->fInfo.post.geomRes = PQexec (Map->fInfo.post.conn, query);
-  if (!Map->fInfo.post.geomRes
-      || PQresultStatus (Map->fInfo.post.geomRes) != PGRES_COMMAND_OK)
-    {
-      PQclear (Map->fInfo.post.geomRes);
-      Map->fInfo.post.geomRes = NULL;
-      PQfinish (Map->fInfo.post.conn);
-      free (query);
-      return (-1);
-    }
+  G_debug (1, "V1_open_old_post()");
+  
+  if (!connectionEstablished) {
+      if (setup (Map)) return (-1);
+  }
 
-  PQclear (Map->fInfo.post.geomRes);
-  Map->fInfo.post.geomRes = NULL;
-  sprintf (query,
-	   "DECLARE  g_cursor   CURSOR FOR SELECT %s, %s, NumPoints(%s) , Dimension(%s)  FROM  %s;",
-	   Map->fInfo.post.geom_id, Map->fInfo.post.geom_type,
-	   Map->fInfo.post.geom_geom, Map->fInfo.post.geom_geom,
-	   Map->fInfo.post.geom_table);
-
-  Map->fInfo.post.geomRes = PQexec (Map->fInfo.post.conn, query);
-  if (!Map->fInfo.post.geomRes
-      || PQresultStatus (Map->fInfo.post.geomRes) != PGRES_COMMAND_OK)
-    {
-      PQclear (Map->fInfo.post.geomRes);
-      Map->fInfo.post.geomRes = NULL;
-      PQfinish (Map->fInfo.post.conn);
-      free (query);
-      return (-1);
-    }
-
-
-  PQclear (Map->fInfo.post.geomRes);
-  Map->fInfo.post.geomRes = NULL;
-  /*Count the rows */
-  sprintf (query, "SELECT  count(%s),max(%s),min(%s) from %s",
-	   Map->fInfo.post.geom_id, Map->fInfo.post.geom_id,
-	   Map->fInfo.post.geom_id, Map->fInfo.post.geom_table);
-  Map->fInfo.post.geomRes = PQexec (Map->fInfo.post.conn, query);
-  if (!Map->fInfo.post.geomRes
-      || PQresultStatus (Map->fInfo.post.geomRes) != PGRES_TUPLES_OK)
-    {
-      PQclear (Map->fInfo.post.geomRes);
-      Map->fInfo.post.geomRes = NULL;
-      PQfinish (Map->fInfo.post.conn);
-      free (query);
-      return (-1);
-    }
-
-  Map->fInfo.post.nGeom = atoi (PQgetvalue (Map->fInfo.post.geomRes, 0, 0));
-  if (Map->fInfo.post.nGeom == 0)
-    Map->fInfo.post.nextId = 0;
-  else
-    Map->fInfo.post.nextId =
-      atoi (PQgetvalue (Map->fInfo.post.geomRes, 0, 1)) + 1;
-  Map->fInfo.post.nextRow = atoi (PQgetvalue (Map->fInfo.post.geomRes, 0, 2));
-  PQclear (Map->fInfo.post.geomRes);
-  Map->fInfo.post.geomRes = NULL;
   Map->head.with_z = WITHOUT_Z;
-  Map->fInfo.post.nCat = 0;
-  Map->fInfo.post.catRes = NULL;
-  free (query);
+  Map->fInfo.post.lastRead = 0;
+
   return (0);
 }
 
@@ -202,11 +148,10 @@ V2_open_old_post (struct Map_info *Map, int update)
     }
 
   ret = V1_open_old_post (Map, update);
-  if (ret != 0)
-    {
+  if (ret != 0) {
       dig_free_plus (&(Map->plus));
       return -1;
-    }
+  }
 
   Map->next_line = 1;
 
@@ -221,106 +166,97 @@ V2_open_old_post (struct Map_info *Map, int update)
 int
 V1_open_new_post (struct Map_info *Map, char *name, int with_z)
 {
-  char *query = (char *) calloc (65536, sizeof (char));
+  char query[2000];
+  PGresult *res;
 
   G_debug (1, "V1_open_new_post()");
 
- /************************************************************************************/
-
-  if (!connectionEstablished)
-    {
-      if (setup (Map))
-	return (-1);
-    }
- /************************************************************************************/
+  if (!connectionEstablished) {
+      if (setup (Map)) return (-1);
+  }
+  
   /*Check if geom table doesn't exist */
-  sprintf (query, "SELECT existtable('%s')", Map->fInfo.post.geom_table);
-  Map->fInfo.post.geomRes = PQexec (Map->fInfo.post.conn, query);
+  sprintf (query, "SELECT COUNT (tablename) FROM pg_tables WHERE tablename = '%s'", 
+	                  Map->fInfo.post.geom_table);
+  G_debug (1, "%s", query);
+  res = PQexec (Map->fInfo.post.conn, query);
 
-  if (!Map->fInfo.post.geomRes
-      || PQresultStatus (Map->fInfo.post.geomRes) != PGRES_TUPLES_OK)
-    {
-      PQclear (Map->fInfo.post.geomRes);
+  if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
+      G_warning ("%s", PQresultErrorMessage(res) );
+      PQclear (res);
       PQfinish (Map->fInfo.post.conn);
-      Map->fInfo.post.geomRes = NULL;
-      free (query);
       return (-1);
-    }
+  }
+  
+  if ( atoi( PQgetvalue(res,0,0) ) ) { /* table already exist */
+      G_warning ( "Table '%s' already exist", Map->fInfo.post.geom_table );
+      return -1;
+  }
+  PQclear (res);
 
-  if (!atoi (PQgetvalue (Map->fInfo.post.geomRes, 0, 0)))
-    {
-      /*Create geometry table if not exist */
-      PQclear (Map->fInfo.post.geomRes);
-      Map->fInfo.post.geomRes = NULL;
-      sprintf (query,
-	       "CREATE TABLE %s  ( %s int4 PRIMARY KEY, %s int4 CHECK ((%s > 0) AND (%s < 5)), %s  geometry);\n"
-	       "GRANT SELECT ON  %s TO PUBLIC;\n"
-	       "CREATE INDEX %s_sidx ON %s USING GIST (%s GIST_GEOMETRY_OPS ) WITH ( ISLOSSY );\n",
-	       Map->fInfo.post.geom_table, Map->fInfo.post.geom_id,
-	       Map->fInfo.post.geom_type, Map->fInfo.post.geom_type,
-	       Map->fInfo.post.geom_type, Map->fInfo.post.geom_geom,
-	       Map->fInfo.post.geom_table, Map->fInfo.post.geom_table,
-	       Map->fInfo.post.geom_table, Map->fInfo.post.geom_geom);
-      fprintf (stderr, "%s", query);
-      Map->fInfo.post.geomRes = PQexec (Map->fInfo.post.conn, query);
-      if (!Map->fInfo.post.geomRes
-	  || PQresultStatus (Map->fInfo.post.geomRes) != PGRES_COMMAND_OK)
-	{
-	  PQclear (Map->fInfo.post.geomRes);
-	  PQfinish (Map->fInfo.post.conn);
-	  Map->fInfo.post.geomRes = NULL;
-	  free (query);
-	  return (-1);
-	}
-    }
-  PQclear (Map->fInfo.post.geomRes);
-  Map->fInfo.post.geomRes = NULL;
- /***********************************************************************************/
   /*Check if category table doesn't exist */
-  sprintf (query, "SELECT existtable('%s')", Map->fInfo.post.cat_table);
-  Map->fInfo.post.catRes = PQexec (Map->fInfo.post.conn, query);
-  if (!Map->fInfo.post.catRes
-      || PQresultStatus (Map->fInfo.post.catRes) != PGRES_TUPLES_OK)
-    {
-      PQclear (Map->fInfo.post.catRes);
+  sprintf (query, "SELECT COUNT (tablename) FROM pg_tables WHERE tablename = '%s'", 
+	                  Map->fInfo.post.cat_table);
+  res = PQexec (Map->fInfo.post.conn, query);
+  if (!res || PQresultStatus (res) != PGRES_TUPLES_OK) {
+      G_warning ("%s", PQresultErrorMessage(res) );
+      PQclear (res);
       PQfinish (Map->fInfo.post.conn);
-      Map->fInfo.post.catRes = NULL;
-      free (query);
       return (-1);
-    }
+  }
+  if ( atoi( PQgetvalue(res,0,0) ) ) { /* table already exist */
+      G_warning ( "Table '%s' already exist", Map->fInfo.post.cat_table );
+      return -1;
+  }
+  PQclear (res);
 
+  /* TODO: both tables should be in transaction */
+  /* Create geometry table */
+  sprintf (query, "CREATE TABLE %s  ( %s int4 PRIMARY KEY, %s int4 CHECK ((%s > 0) "
+	   "AND (%s < 5)), %s  geometry);\n"
+	   "GRANT SELECT ON  %s TO PUBLIC;\n"
+	   "CREATE INDEX %s_sidx ON %s USING GIST (%s GIST_GEOMETRY_OPS ) WITH ( ISLOSSY );\n",
+	   Map->fInfo.post.geom_table, Map->fInfo.post.geom_id,
+	   Map->fInfo.post.geom_type, Map->fInfo.post.geom_type,
+	   Map->fInfo.post.geom_type, Map->fInfo.post.geom_geom,
+	   Map->fInfo.post.geom_table, Map->fInfo.post.geom_table,
+	   Map->fInfo.post.geom_table, Map->fInfo.post.geom_geom);
 
-  if (!atoi (PQgetvalue (Map->fInfo.post.catRes, 0, 0)))
-    {				/*Create category table if not exist */
-      PQclear (Map->fInfo.post.catRes);
-      Map->fInfo.post.catRes = NULL;
-      sprintf (query,
-	       "CREATE TABLE %s( %s int4, %s int4, %s int4, PRIMARY KEY (%s, %s), CONSTRAINT if_geom_exists  FOREIGN KEY(%s) REFERENCES %s  ON UPDATE CASCADE ON DELETE CASCADE );\n"
-	       "GRANT SELECT ON  %s TO PUBLIC;\n",
-	       Map->fInfo.post.cat_table,
-	       Map->fInfo.post.cat_id,
-	       Map->fInfo.post.cat_field,
-	       Map->fInfo.post.cat_cat,
-	       Map->fInfo.post.cat_id, Map->fInfo.post.cat_field,
-	       Map->fInfo.post.cat_id,
-	       Map->fInfo.post.geom_table, Map->fInfo.post.cat_table);
-      fprintf (stderr, "%s", query);
-      Map->fInfo.post.catRes = PQexec (Map->fInfo.post.conn, query);
-      if (!Map->fInfo.post.catRes
-	  || PQresultStatus (Map->fInfo.post.catRes) != PGRES_COMMAND_OK)
-	{
-	  PQclear (Map->fInfo.post.catRes);
-	  Map->fInfo.post.catRes = NULL;
-	  PQfinish (Map->fInfo.post.conn);
-	  free (query);
-	  return (-1);
-	}
-    }
-  PQclear (Map->fInfo.post.catRes);
-  Map->fInfo.post.catRes = NULL;
+  G_debug(1,"%s", query);
+  res = PQexec (Map->fInfo.post.conn, query);
+  if (!res || PQresultStatus (res) != PGRES_COMMAND_OK) {
+      G_warning ("Cannot create geometry table\n%s", PQresultErrorMessage(res) );
+      PQclear (res);
+      PQfinish (Map->fInfo.post.conn);
+      return (-1);
+  }
+  PQclear (res);
 
-/************************************************************************************/
-  return (V1_open_old_post (Map, 1));
+  /* Create category table */
+  sprintf (query,
+	   "CREATE TABLE %s( %s int4, %s int4, %s int4, PRIMARY KEY (%s, %s), CONSTRAINT if_geom_exists  FOREIGN KEY(%s) REFERENCES %s  ON UPDATE CASCADE ON DELETE CASCADE );\n"
+	   "GRANT SELECT ON  %s TO PUBLIC;\n",
+	   Map->fInfo.post.cat_table,
+	   Map->fInfo.post.cat_id,
+	   Map->fInfo.post.cat_field,
+	   Map->fInfo.post.cat_cat,
+	   Map->fInfo.post.cat_id, Map->fInfo.post.cat_field,
+	   Map->fInfo.post.cat_id,
+	   Map->fInfo.post.geom_table, Map->fInfo.post.cat_table);
+  G_debug (1, query);
+  res = PQexec (Map->fInfo.post.conn, query);
+  if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
+      G_warning ("Cannot create category table\n%s", PQresultErrorMessage(res) );
+      PQclear (res);
+      PQfinish (Map->fInfo.post.conn);
+      return (-1);
+  }
+  PQclear (res);
+
+  Map->head.with_z = WITHOUT_Z;
+  Map->fInfo.post.lastRead = 0;
+
+  return (0);
 }
 
 #endif

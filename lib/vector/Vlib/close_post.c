@@ -38,12 +38,9 @@
 int
 V1_close_post (struct Map_info *Map)
 {
-  char *query = (char *) calloc (65536, sizeof (char));
-
   G_debug (1, "V1_close_post():");
 
-  if (!VECT_OPEN (Map))
-    return -1;
+  if (!VECT_OPEN (Map)) return -1;
 
   if (Map->mode & (GV_MODE_WRITE | GV_MODE_RW))
     Vect__write_head (Map);
@@ -55,25 +52,7 @@ V1_close_post (struct Map_info *Map)
   Map->digit_file = NULL;
   Map->open = VECT_CLOSED_CODE;
 
-  Map->fInfo.post.geomRes = PQexec (Map->fInfo.post.conn, "CLOSE g_cursor");
-
-  if (!Map->fInfo.post.geomRes
-      || PQresultStatus (Map->fInfo.post.geomRes) != PGRES_COMMAND_OK)
-    {
-      PQclear (Map->fInfo.post.geomRes);
-      PQfinish (Map->fInfo.post.conn);
-    }
-
-
-  PQexec (Map->fInfo.post.conn, "COMMIT");
-  if (Map->fInfo.post.catRes != NULL)
-    PQclear (Map->fInfo.post.catRes);
-  if (Map->fInfo.post.geomRes != NULL)
-    PQclear (Map->fInfo.post.geomRes);
-  Map->fInfo.post.catRes = NULL;
-  Map->fInfo.post.geomRes = NULL;
   PQfinish (Map->fInfo.post.conn);
-  free (query);
   return 0;
 }
 
@@ -92,11 +71,10 @@ V2_close_post (struct Map_info *Map)
   Plus = &(Map->plus);
 
   /* Save topo if necessary */
-  if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW))
-    {
+  if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW)) {
       Vect_save_topo (Map);
       dig_free_plus (Plus);
-    }
+  }
 
   return (V1_close_post (Map));
 
