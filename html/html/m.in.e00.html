@@ -138,6 +138,12 @@ to stderr.</dd>
 
 <h2>
 BUGS AND CAVEAT</h2>
+
+If the E00 file contains areas, it is recommended to set the map scale (in
+v.digit) to some big value (1:1), and run v.support again. Otherwise map
+threshold is too big, and v.support may fail even on clean data.
+<p>
+
 You must know what to do with all the dig_cats file generated when importing
 a vector coverage.
 <p>No attribute (cats) file is produced when importing a grid.
