@@ -1,0 +1,20 @@
+LIBES = $(IMAGERYLIB) $(GISLIB)
+
+LIST = main.o\
+	ask_options.o\
+	ask_title.o\
+	ask_window.o\
+	tm_extract.o
+
+PGM = i.tape.tm.fast
+
+$(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(IMAGERYLIB) $(LIBES) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(LIBES) $(VASK)
+
+$(LIST): tape.h
+
+$(LIBES) $(VASKLIB): #
+
+saber:
+	#load $(LIST) $(LIBES);
+	#swap $(LIST)
