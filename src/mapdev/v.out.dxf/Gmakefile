@@ -1,10 +1,4 @@
-PGM=cell.to.dat
-
-LIST = cell.to.dat.o
-
-#all:  $(BIN)/cell.to.dat $(BIN)/dig2dxf
-
-PROG =    $(BIN_ALPHA_CMD)/v.out.dxf
+PROG =    $(BIN_MAIN_CMD)/v.out.dxf
 
 all:   $(PROG)
 
@@ -12,9 +6,6 @@ $(PROG): v.out.dxf.o $(GISLIB)
 	rm -f a.out $@
 	$(CC) $(LDFLAGS) v.out.dxf.o $(GISLIB) $(TERMLIB) $(MATHLIB)
 	mv a.out $@
-
-$(BIN)/cell.to.dat: $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) $(MATHLIB) -o $@
 
 $(GISLIB): #
 
