@@ -9,6 +9,8 @@ main (argc, argv)	char *argv[];
     int site;
     int ncats;
     char sfile[1024];
+    char buff[50];
+    char *format_east(), *format_north(), *format_res();
     long mode();
 
     if (argc < 2)
@@ -43,22 +45,22 @@ main (argc, argv)	char *argv[];
     end_vector();
 
     assign("wind.n");
-    fprintf(out,"%lf\n", rpt->north);
+    fprintf(out,"%s\n", format_north(rpt->north, buff, -1));
 
     assign("wind.s");
-    fprintf(out,"%lf\n", rpt->south);
+    fprintf(out,"%s\n", format_north(rpt->south, buff, -1));
 
     assign("wind.w");
-    fprintf(out,"%lf\n", rpt->west);
+    fprintf(out,"%s\n", format_east(rpt->west, buff, -1));
 
     assign("wind.e");
-    fprintf(out,"%lf\n", rpt->east);
+    fprintf(out,"%s\n", format_east(rpt->east, buff, -1));
 
     assign("wind.ns.res");
-    fprintf(out,"%lf\n", rpt->ns_res);
+    fprintf(out,"%s\n", format_res(rpt->ns_res, buff, -1));
 
     assign("wind.ew.res");
-    fprintf(out,"%lf\n", rpt->ew_res);
+    fprintf(out,"%s\n", format_res(rpt->ew_res, buff, -1));
 
 
 /* find the maximum number of categories */
