@@ -47,40 +47,38 @@ static int _clipper(gnGrpGraph_s * pgraphIn,
 
 int main( int argc , char ** argv )
 {
-	gnGrpGraph_s  	graph , graphOut;
-	gnInt32_t		nVertex;
-	int			 	nret , fd;
+	gnGrpGraph_s  	graph;
+#define MY_MAX_COMPONENTS	1024
+	gnGrpGraph_s  	agraphComponents[MY_MAX_COMPONENTS];
+	int			 	nret , fd , i , cComponents;
+	char			szGraphOutFilename[1024];
 
 	/* program options
 	 */
  	char	*	pszGraph;
  	char	*	pszGraphOut;
- 	char	*	pszVertex;
  
 	GNO_BEGIN/* short   long        	default     variable        help */
  	GNO_OPTION( "g", 	"graph", 		NULL ,  	& pszGraph ,	"Input Graph file" )
  	GNO_OPTION( "o", 	"graphout", 	NULL ,  	& pszGraphOut ,	"Output Graph file" )
- 	GNO_OPTION( "v", 	"vertex", 		NULL ,  	& pszVertex ,	"Vertex Node Id" )
  	GNO_END
  
 
-	if ( GNO_PARSE( argc , argv ) < 0 )
-	{
+	if ( GNO_PARSE( argc , argv ) < 0 ) {
 		return 1;
 	}
 	/*
 	 * options parsed
 	 */
 
-	if ( pszVertex == NULL ) {
-		GNO_HELP("span usage");
+	if ( pszGraph == NULL || pszGraphOut == NULL ) {
+		GNO_HELP("components usage");
 		return 1;
 	}
-	nVertex = atol(pszVertex);
+
 
 	printf( "Graph read:\n" );
-	if ( (fd = open( pszGraph , O_RDONLY )) < 0 )
-	{
+	if ( (fd = open( pszGraph , O_RDONLY )) < 0 ) {
 		perror( "open" ); return 1;
 	}
 	nret = gnGrpRead( & graph , fd );
@@ -91,43 +89,50 @@ int main( int argc , char ** argv )
 	close( fd );
 	printf( "Done.\n" );
 
-	printf( "Graph depth spanning:\n" );
-	nret = gnGrpDepthSpanning( & graph , & graphOut , nVertex , _clipper , NULL );
-	if ( nret < 0 ) {
+
+
+	printf( "Graph depth components spanning:\n" );
+	cComponents = gnGrpDepthComponents( & graph , agraphComponents , MY_MAX_COMPONENTS , _clipper , NULL );
+	if ( cComponents < 0 ) {
 		fprintf( stderr , "gnGrpDepthSpanning error: %s\n", gnGrpStrerror( & graph ) );
 		return 1;
 	}
 	printf( "Done.\n" );
 
+	printf( "Connected Component(s) Found: %d\n", cComponents );
 
-	printf( "Graph flatten:\n" );
-	nret = gnGrpFlatten( & graphOut );
-	printf( "Done.\n" );
+	for( i = 0 ; i < cComponents ; i ++ ) {
+		printf( "Component %d of %d: ", i+1 , cComponents ); fflush(stdout);
 
-	if ( gnGrpGet_LinkCount( & graphOut ) > 0 ) {
+		printf( "[flatten..." ); fflush(stdout);
+		nret = gnGrpFlatten( & agraphComponents[i] );
+		printf( "done] " ); fflush(stdout);
 
-
-		if ( pszGraphOut ) {
-			printf( "Graph write:\n" );
-			if ( (fd = open( pszGraphOut , O_WRONLY | O_CREAT | O_TRUNC, 0666 )) < 0 )
-			{
-				perror( "open" ); return 1;
+		if ( gnGrpGet_LinkCount( & agraphComponents[i] ) > 0 ) {
+			if ( pszGraphOut ) {
+				snprintf( szGraphOutFilename, sizeof(szGraphOutFilename), "%s-component-%d", pszGraphOut, i );
+				printf( "[write <%s>...", szGraphOutFilename ); fflush(stdout);
+				if ( (fd = open( szGraphOutFilename , O_WRONLY | O_CREAT | O_TRUNC, 0666 )) < 0 ) {
+					perror( "open" ); return 1;
+				}
+				gnGrpWrite( & agraphComponents[i], fd );
+				if ( nret < 0 ) {
+					fprintf( stderr , "gnGrpWrite error: %s\n" , gnGrpStrerror( & graph ) );
+					return 1;
+				}
+				close( fd );
+				printf( "done] " ); fflush(stdout);
 			}
-			gnGrpWrite( & graphOut, fd );
-			if ( nret < 0 )
-			{
-				fprintf( stderr , "gnGrpWrite error: %s\n" , gnGrpStrerror( & graphOut ) );
-				return 1;
-			}
-			close( fd );
-			printf( "Done.\n" );
 		}
-	}
-	else {
-		printf( "Empty span. No output produced.\n" );
+		else {
+			printf( "component is empty. No output produced.\n" );
+		}
+
+		printf( "[release..." );
+		gnGrpRelease( & agraphComponents[i] );
+		printf( "done]\n" );
 	}
 
 	gnGrpRelease( & graph );
-	gnGrpRelease( & graphOut );
 	return 0;
 }
