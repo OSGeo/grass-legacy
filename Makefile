@@ -101,12 +101,12 @@ distclean: clean
 	${SHELL} -c "rm -f include/config.h include/version.h include/winname.h include/Make/Grass.make include/Make/Platform.make 2>/dev/null ; true"
 
 strip: FORCE
-	@ if [ ! -f ${GRASS_BIN}/grass${NAME_VER} ] ; then \
+	@ if [ ! -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ] ; then \
 		echo "ERROR: Grass has not been compiled. Try \"make\" first."; \
 		echo "  Strip aborted, exiting Make."; \
 		exit; \
 	fi; \
-	${SHELL} -c "cd ${GISBASE} ; find . -type f -perm +111 -exec strip {} \; ; true"	
+	${SHELL} -c "cd ${ARCH_DISTDIR} ; find . -type f -perm +111 -exec strip {} \; ; true"	
 
 install-strip: FORCE
 	${MAKE} strip
