@@ -75,112 +75,119 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
+# Open tempfiles
+temp_stddev="`g.tempfile $$`"
+temp_correlation="`g.tempfile $$`"
+temp_sum="`g.tempfile $$`"
+temp_calc="`g.tempfile $$`"
+temp_result="`g.tempfile $$`"
+temp_result2="`g.tempfile $$`"
+temp_bands="`g.tempfile $$`"
 
 # save the Stddev for TM bands
 echo "Calculation Standarddeviations for all bands:"
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image1 |tail -1 >/tmp/i.oif.stddev
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image2 |tail -1 >>/tmp/i.oif.stddev
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image3 |tail -1 >>/tmp/i.oif.stddev
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image4 |tail -1 >>/tmp/i.oif.stddev
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image5 |tail -1 >>/tmp/i.oif.stddev
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image7 |tail -1 >>/tmp/i.oif.stddev
+$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image1 |tail -1 >"$temp_stddev"
+$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image2 |tail -1 >>"$temp_stddev"
+$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image3 |tail -1 >>"$temp_stddev"
+$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image4 |tail -1 >>"$temp_stddev"
+$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image5 |tail -1 >>"$temp_stddev"
+$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image7 |tail -1 >>"$temp_stddev"
 echo "Calculation Correlation Matrix"
-r.covar -r map=$GIS_OPT_image1,$GIS_OPT_image2,$GIS_OPT_image3,$GIS_OPT_image4,$GIS_OPT_image5,$GIS_OPT_image7 |tail -6 > /tmp/i.oif.correlation
+r.covar -r map=$GIS_OPT_image1,$GIS_OPT_image2,$GIS_OPT_image3,$GIS_OPT_image4,$GIS_OPT_image5,$GIS_OPT_image7 |tail -6 > "$temp_correlation"
 
 # Calculate all combinations
 echo "Calculate OIF for the 20 band combinations..."
 echo "Calculate OIF for combination 123"
-echo "123: "> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 1 2 3 >  /tmp/i.oif.result
+echo "123: "> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 1 2 3 >  "$temp_result"
 
 echo "Calculate OIF for combination 124"
-echo "124: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 1 2 4 >> /tmp/i.oif.result
+echo "124: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 1 2 4 >> "$temp_result"
 
 echo "Calculate OIF for combination 125"
-echo "125: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 1 2 5 >> /tmp/i.oif.result
+echo "125: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 1 2 5 >> "$temp_result"
 
 echo "Calculate OIF for combination 127"   
-echo "127: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 1 2 7 >> /tmp/i.oif.result
+echo "127: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 1 2 7 >> "$temp_result"
 
 echo "Calculate OIF for combination 134"   
-echo "134: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 1 3 4 >> /tmp/i.oif.result
+echo "134: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 1 3 4 >> "$temp_result"
 
 echo "Calculate OIF for combination 135"   
-echo "135: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 1 3 5 >> /tmp/i.oif.result
+echo "135: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 1 3 5 >> "$temp_result"
 
 echo "Calculate OIF for combination 137"   
-echo "137: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 1 3 7 >> /tmp/i.oif.result
+echo "137: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 1 3 7 >> "$temp_result"
 
 echo "Calculate OIF for combination 145"   
-echo "145: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 1 4 5 >> /tmp/i.oif.result
+echo "145: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 1 4 5 >> "$temp_result"
 
 echo "Calculate OIF for combination 147"   
-echo "147: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 1 4 7 >> /tmp/i.oif.result
+echo "147: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 1 4 7 >> "$temp_result"
 
 echo "Calculate OIF for combination 157"   
-echo "157: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 1 5 7 >> /tmp/i.oif.result
+echo "157: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 1 5 7 >> "$temp_result"
 
 echo "Calculate OIF for combination 234"   
-echo "234: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 2 3 4 >> /tmp/i.oif.result
+echo "234: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 2 3 4 >> "$temp_result"
 
 echo "Calculate OIF for combination 235"   
-echo "235: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 2 3 5 >> /tmp/i.oif.result
+echo "235: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 2 3 5 >> "$temp_result"
 
 echo "Calculate OIF for combination 237"   
-echo "237: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 2 3 7 >> /tmp/i.oif.result
+echo "237: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 2 3 7 >> "$temp_result"
 
 echo "Calculate OIF for combination 245"   
-echo "245: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 2 4 5 >> /tmp/i.oif.result
+echo "245: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 2 4 5 >> "$temp_result"
 
 echo "Calculate OIF for combination 247"   
-echo "247: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 2 4 7 >> /tmp/i.oif.result
+echo "247: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 2 4 7 >> "$temp_result"
 
 echo "Calculate OIF for combination 257"   
-echo "257: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 2 5 7 >> /tmp/i.oif.result
+echo "257: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 2 5 7 >> "$temp_result"
 
 echo "Calculate OIF for combination 345"   
-echo "345: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 3 4 5 >> /tmp/i.oif.result
+echo "345: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 3 4 5 >> "$temp_result"
 
 echo "Calculate OIF for combination 347"   
-echo "347: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 3 4 7 >> /tmp/i.oif.result
+echo "347: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 3 4 7 >> "$temp_result"
 
 echo "Calculate OIF for combination 357"   
-echo "357: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 3 5 7 >> /tmp/i.oif.result
+echo "357: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 3 5 7 >> "$temp_result"
 
 echo "Calculate OIF for combination 457"   
-echo "457: " >> /tmp/i.oif.bands
-$GISBASE/etc/i.oif/i.oifcalc 4 5 7 >> /tmp/i.oif.result
+echo "457: " >> "$temp_bands"
+$GISBASE/etc/i.oif/i.oifcalc 4 5 7 >> "$temp_result"
 
-paste -d' ' /tmp/i.oif.bands /tmp/i.oif.result > /tmp/i.oif.result2
-sort -k 2 -n -r /tmp/i.oif.result2 > ./i.oif.result
-rm -f /tmp/i.oif.stddev
-rm -f /tmp/i.oif.correlation
-rm -f /tmp/i.oif.sum
-rm -f /tmp/i.oif.calc
-rm -f /tmp/i.oif.result
-rm -f /tmp/i.oif.result2
-rm -f /tmp/i.oif.bands
-
+paste -d' ' "$temp_bands" "$temp_result" > "$temp_result2"
 echo "Ready."
 echo ""
 echo "The Optimum Index Factor analysis result:"
 echo "    (Best combination comes first.)"
-cat ./i.oif.result
+sort -k 2 -n -r "$temp_result2" | tee ./i.oif.result
+
+rm -f "$temp_stddev"
+rm -f "$temp_correlation"
+rm -f "$temp_sum"
+rm -f "$temp_calc"
+rm -f "$temp_result"
+rm -f "$temp_result2"
+rm -f "$temp_bands"
