@@ -429,6 +429,7 @@ if test "$silent" = yes; then
 else
   exec 6>&1
 fi
+rm -f ./config.log
 exec 5>./config.log
 
 echo "\
