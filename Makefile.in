@@ -444,8 +444,6 @@ clean: FORCE mostlyclean
 	@ echo "Performing clean step..."
 	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
 	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
-	${SHELL} -c "rm -f ${SRCDIR}/src/include/version.h  2>/dev/null ; true"
-	${SHELL} -c "rm -f ${SRCDIR}/src/include/winname.h  2>/dev/null ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/gmake${NAME_VER}    2>/dev/null ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/gmakelinks${NAME_VER}  2>/dev/null ; true"
 	${SHELL} -c "rm -f ${GRASS_BIN}/grass${NAME_VER}    2>/dev/null ; true"
@@ -470,6 +468,8 @@ clean: FORCE mostlyclean
 distclean: FORCE clean
 	@ echo "Performing distclean step..."
 	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head 2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/include/version.h  2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/include/winname.h  2>/dev/null ; true"
 	${SHELL} -c "rm -f config.cache config.log               2>/dev/null ; true"
 	${SHELL} -c "rm -f config.status config.status.${ARCH}   2>/dev/null ; true"
 	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
