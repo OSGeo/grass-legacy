@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     float val_f;	/* for misc use */
     double val_d;	/* for misc use */
 
-    char *infile, *outfile, *mapset;
+    char *infile, *outfile, *mapset, *maptitle;
     struct Cell_head region;
     void *raster, *ptr;
     RASTER_MAP_TYPE map_type;
@@ -156,6 +156,38 @@ int main(int argc, char *argv[]) {
     /* array data */
     fprintf(fp1, "%s", infile);
 
+
+    /********** Write title (if there is one) **********/
+    maptitle = G_get_cell_title (infile, mapset);
+    if(strlen(maptitle) >= 1) {
+	/** write text element (map title) **/
+	strncpy(array_name, "map_title", 31);
+	mrows=1;
+	ncols=strlen(maptitle);
+	data_format = 5; /* 0=double  1=float  2=32bit signed int  5=8bit unsigned int(text) */
+	data_type = 1;   /* 0=numbers  1=text */
+
+	/* 4 byte data format */
+	format_block = endianness*1000 + data_format*10 + data_type;
+	fwrite(&format_block, sizeof(long), 1, fp1);
+
+	/* 4 byte number of rows & columns */
+	fwrite(&mrows, sizeof(long), 1, fp1);
+	fwrite(&ncols, sizeof(long), 1, fp1);
+
+	/* 4 byte real/imag flag   0=real vals only */
+	fwrite(&realflag, sizeof(long), 1, fp1);
+
+	/* length of array_name+1 */
+	name_len = strlen(array_name) + 1;
+	fwrite(&name_len, sizeof(long), 1, fp1);
+
+	/* array name */
+	fprintf(fp1, "%s%c", array_name, '\0');
+
+	/* array data */
+	fprintf(fp1, "%s", maptitle);
+    }
 
 
     /***** Write bounds *****/
