@@ -15,6 +15,7 @@ union target {
 	long *l ;
 	float *f ;
 	double *d ;
+	double for_alignement;
 };
 
 /**
