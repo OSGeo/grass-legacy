@@ -18,8 +18,8 @@
     struct symtab *cur_att;
     struct names namelist;
     struct names problist;
-    char *probbuf[256];
-    char *reclassbuf[256];
+    char probbuf[256];
+    char reclassbuf[256];
     int valno = 1;
     int expected_type;
     int value_type;
