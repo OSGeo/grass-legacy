@@ -1,0 +1,24 @@
+.TH ppmmake 1 "01 August 1990"
+.SH NAME
+ppmmake - create a pixmap of a specified size
+.SH SYNOPSIS
+.B ppmmake
+.I color width height
+.SH DESCRIPTION
+Produces a portable pixmap of the specified color, width, and height.
+.PP
+The color can be specified in three ways.  One, as a name, assuming
+that a pointer to an X11-style color names file was compiled in.  Two,
+as an X11-style hexidecimal number: #rgb, #rrggbb, #rrrgggbbb, or
+#rrrrggggbbbb.  Three, as a triplet of decimal floating point numbers
+separated by commas: r.r,g.g,b.b.
+.SH "SEE ALSO"
+ppm(5), pbmmake(1)
+.SH AUTHOR
+Copyright (C) 1991 by Jef Poskanzer.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
