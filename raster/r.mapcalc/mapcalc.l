@@ -4,6 +4,15 @@
 #include <string.h>
 #include <unistd.h>
 
+#include "config.h" 
+
+#ifdef HAVE_READLINE_READLINE_H
+#include <readline/readline.h>
+#include <readline/history.h>
+#endif
+
+#include "gis.h"
+
 #include "mapcalc.h"
 
 #include "y.tab.h"
@@ -34,11 +43,36 @@ static int get_input_stream(char *buf, int max_size)
 	if (feof(input_stream))
 		return YY_NULL;
 
+#ifdef HAVE_READLINE_READLINE_H
+	if (isatty(fileno(input_stream)))
+	{
+		char *line_read;
+
+		line_read = readline("mapcalc> ");
+		if (!line_read)
+			return YY_NULL;
+		if (strlen(line_read) > max_size - 2)
+			G_fatal_error("input line too long");
+		strcpy(buf, line_read);
+		strcat(buf, "\n");
+		free(line_read);
+
+		if (!*buf)
+			return YY_NULL;
+		add_history(buf);
+	}
+	else
+	{
+		if (!fgets(buf, max_size, input_stream))
+			return YY_NULL;
+	}
+#else
 	if (isatty(fileno(input_stream)))
 		fputs("mapcalc> ", stderr);
 
 	if (!fgets(buf, max_size, input_stream))
 		return YY_NULL;
+#endif
 
 	return strlen(buf);
 }
