@@ -1,0 +1,28 @@
+EXTRA_CFLAGS = -I../lib  -I../libes -I../digit
+
+OFILES = \
+	do_areas.o \
+	do_lines.o \
+	do_sites.o \
+	find_line.o \
+	bres_line.o \
+	polyfill.o \
+	clock.o \
+	update_hist.o \
+	vtoc.o
+
+all: $(ETC)/vect.to.cell $(BIN)/vect.to.cell
+
+$(ETC)/vect.to.cell: $(OFILES) $(DIGLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DIGLIB) $(GISLIB) $(MATHLIB)
+
+$(BIN)/vect.to.cell:	vect.t.cel.sh
+	rm -f $@
+	cp vect.t.cel.sh $@
+	chmod  ugo+x $@
+
+$(OFILES):	vtoc.h ../digit/digit.h $(LIBDIR)/gis.h  ../libes/head.h
+
+$(DIGLIB): #
+$(GISLIB): #
+
