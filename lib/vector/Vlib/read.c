@@ -116,12 +116,13 @@ V1_read_line (Map, line_p, line_c, offset )
 /*!
  \fn int Vect_read_line ( struct Map_info *Map,
     struct line_pnts *line_p,
-    struct line_cats *line_c)
+    struct line_cats *line_c,
+    int    line)
  \brief get vector line ?
  \return line type,
            -1 on Out of memory,
            -2 on EOF   
- \param Map_info structure, line_pnts structure, line_cats structure
+ \param Map_info structure, line_pnts structure, line_cats structure, line number
 */
 int
 Vect_read_line (
