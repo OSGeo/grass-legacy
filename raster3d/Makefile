@@ -12,6 +12,13 @@ SUBDIRS = \
 	r3.out.v5d \
 	r3.timestamp
 
+OPENGLBASED = r3.mkdspf r3.showdspf
+
+#compile if OPENGLU present:
+ifneq ($(strip $(OPENGLULIB)),)
+    SUBDIRS += $(OPENGLBASED)
+endif
+
 default: subdirs
 
 clean: cleansubdirs
