@@ -36,28 +36,31 @@ G_get_cellhd (name, mapset, cellhd)
     char *tail;
     char *err, *G__read_Cell_head();
 
+/*
     is_reclass = G_is_reclass (name, mapset, real_name, real_mapset);
     if (is_reclass < 0)
     {
-	sprintf (buf,"Can't read cell header for [%s in %s]\n", name, mapset);
+	sprintf (buf,"Can't read header file for [%s in %s]\n", name, mapset);
 	tail = buf + strlen(buf);
 	strcpy (tail, "It is a reclass file, but with an invalid format");
 	G_warning(buf);
 	return -1;
     }
+*/
+    is_reclass = (G_is_reclass (name, mapset, real_name, real_mapset) > 0);
     if (is_reclass)
     {
 	fd = G_fopen_old ("cellhd", real_name, real_mapset);
 	if (fd == NULL)
 	{
-	    sprintf (buf,"Can't read cell header for [%s in %s]\n", name, mapset);
+	    sprintf (buf,"Can't read header file for [%s in %s]\n", name, mapset);
 	    tail = buf + strlen(buf);
 	    sprintf (tail, "It is a reclass of [%s in %s] ", real_name, real_mapset);
 	    tail = buf + strlen(buf);
 	    if (!G_find_cell (real_name, real_mapset))
 		sprintf (tail, "which is missing");
 	    else
-		sprintf (tail, "whose cell header can't be opened");
+		sprintf (tail, "whose header file can't be opened");
 	    G_warning (buf);
 	    return -1;
 	}
@@ -67,7 +70,7 @@ G_get_cellhd (name, mapset, cellhd)
 	fd = G_fopen_old ("cellhd", name, mapset);
 	if (fd == NULL)
 	{
-	    sprintf (buf, "Can't open cell header for [%s in %s]", name, mapset);
+	    sprintf (buf, "Can't open header file for [%s in %s]", name, mapset);
 	    G_warning (buf);
 	    return -1;
 	}
@@ -79,11 +82,11 @@ G_get_cellhd (name, mapset, cellhd)
     if (err == NULL)
 	return 0;
 
-    sprintf (buf, "Can't read cell header for [%s in %s]\n", name, mapset);
+    sprintf (buf, "Can't read header file for [%s in %s]\n", name, mapset);
     tail = buf + strlen(buf);
     if (is_reclass)
     {
-	sprintf (tail, "It is a reclass of [%s in %s] whose cell header is invalid\n",
+	sprintf (tail, "It is a reclass of [%s in %s] whose header file is invalid\n",
 		real_name, real_mapset);
     }
     else
