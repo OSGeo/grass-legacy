@@ -120,7 +120,7 @@ char *inp, *out, *tmp;
 				if(a2<b23-1)  /*must be 2 or more points*/
 				{
 					fprintf(fp3,"%s,%s,%d\n",b21,b22,b23-a2);
-/*printf("After match call %s: b23=%d\n",b21,b23);/**/
+/*printf("After match call %s: b23=%d\n",b21,b23); */
 					for(n=a2; n<b23; n++)
 						fprintf(fp3,"%lf,%lf\n",x2pts[n],y2pts[n]);
 				}
@@ -131,7 +131,7 @@ char *inp, *out, *tmp;
 					b23=ab[q];
 					if(a2<b23-1)  /*must be 2 or more points*/
 					{
-/*printf("From q-stack %s: a2=%d b23=%d\n",b21,a2,b23);/**/
+/*printf("From q-stack %s: a2=%d b23=%d\n",b21,a2,b23); */
 						fprintf(fp3,"%s,%s,%d\n",b21,b22,b23-a2);
 						for(n=a2; n<b23; n++)
 							fprintf(fp3,"%lf,%lf\n",x2pts[n],y2pts[n]);
@@ -267,7 +267,7 @@ match()
 						}
 						else break;
 					}
-/*printf("In match: j= %d\n",j);/**/
+/*printf("In match: j= %d\n",j); */
 					fix(i,j,k-1,m);
 					return m;
 				}
@@ -297,7 +297,7 @@ int i, j, k, m;
 			fprintf(fp3,"%lf,%lf\n",x1pts[n],y1pts[n]);
 	}
 	a1 = i+k;
-/*printf("In fix: j= %d\n",j);/**/
+/*printf("In fix: j= %d\n",j); */
 
 	if(j>a2 && m==1)
 	{

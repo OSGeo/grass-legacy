@@ -26,7 +26,7 @@
 int dxf_add_labelbox (FILE *dxf_file)
 {
 	DXF_DIG	*layer_fd, *label_fd;
-/*	int	count, char_cnt, label, code;	/* changing label BCH-J */
+/*	int	count, char_cnt, label, code; */	/* changing label BCH-J */
 	int	count, char_cnt, code;
 	char    label[256];			/* same size as dxf_line */
 	double  start_x, start_y, angle, theta, height, length, diag;
@@ -35,7 +35,7 @@ int dxf_add_labelbox (FILE *dxf_file)
 
 
 	/*  initialize defaults */
-/*	label = 0;				/* changed label BCH-J */
+/*	label = 0;			*/	/* changed label BCH-J */
 	char_cnt = 0;
 	layer_fd = NULL;
 	start_x = 0.0;
