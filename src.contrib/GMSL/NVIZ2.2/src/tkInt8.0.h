@@ -1,6 +1,9 @@
 /* 
   $Log$
-  Revision 1.3  2000-02-22 19:19:38  markus
+  Revision 1.1  2000-10-16 16:14:32  markus
+  renamed from tkInt.h to tkInt8.0.h
+
+  Revision 1.3  2000/02/22 19:19:38  markus
   added definition for Tk_SendCmd
 
   Revision 1.2  2000/01/12 08:52:08  markus
