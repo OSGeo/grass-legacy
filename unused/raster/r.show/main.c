@@ -80,13 +80,12 @@ void	r_copy_value(RASTER_MAP dst, int dcol, RASTER_MAP src, int scol);
 int
 main(int argc, char **argv)
 {
-	struct	Option		*opt;
-	struct	Cell_head	cellhd;
+	struct	Option *opt;
+	struct	Cell_head cellhd;
 	char	*name, *mapset;
 	int	fd, row, rows, col, cols;
-
-	struct	RASTER_MAP	buf;
 	char	str[20];
+	RASTER_MAP	buf;
 
 	opt = G_define_option() ;
 	opt->key        = "map" ;
