@@ -55,7 +55,7 @@ main (int argc, char **argv)
 {
   char siteslist[256], errmsg[256], *mapset;
   double east, north, (*rng) (), max, myrand ();
-  int i, j, k, m, n, a, b, nsites, verbose, np, *p, dcmp ();
+  int i, j, k, m, n, b, nsites, verbose, np, *p, dcmp ();
   FILE *fdsite, *fdtest, *fdtrain;
   int all, field;
   D *d;
@@ -64,7 +64,7 @@ main (int argc, char **argv)
   struct GModule *module;
   struct
   {
-    struct Option *output, *npartitions, *dfield;
+    struct Option *input, *npartitions, *dfield;
   } parm;
   struct
   {
@@ -77,19 +77,20 @@ main (int argc, char **argv)
   module->description =        
                 "Randomly partition sites into test/train sets.";
                 
+
+  parm.input = G_define_option ();
+  parm.input->key = "sites";
+  parm.input->type = TYPE_STRING;
+  parm.input->required = YES;
+  parm.input->description = "sites list to be sampled";
+  parm.input->gisprompt = "old,site_lists,sites";
+
   parm.npartitions = G_define_option ();
   parm.npartitions->key = "k";
   parm.npartitions->type = TYPE_INTEGER;
   parm.npartitions->required = YES;
   parm.npartitions->description = "number of partitions";
   parm.npartitions->options = "1-32767";
-
-  parm.output = G_define_option ();
-  parm.output->key = "sites";
-  parm.output->type = TYPE_STRING;
-  parm.output->required = YES;
-  parm.output->description = "sites list to be sampled";
-  parm.output->gisprompt = "old,site_lists,sites";
 
   parm.dfield = G_define_option ();
   parm.dfield->key = "field";
@@ -115,7 +116,7 @@ main (int argc, char **argv)
   if (G_parser (argc, argv))
     exit (1);
 
-  G_strcpy (siteslist, parm.output->answer);
+  G_strcpy (siteslist, parm.input->answer);
   sscanf(parm.dfield->answer,"%d", &field);
   verbose = (!flag.q->answer);
   all = flag.all->answer;
@@ -163,7 +164,10 @@ main (int argc, char **argv)
   nsites = G_readsites (fdsite, all, verbose, field, &z);
 
   if (nsites < np)
+  {
+    fprintf(stderr, "Sites found: %i\n", nsites);
     G_fatal_error ("More partitions than sites");
+  }
 
   G_begin_distance_calculations ();
 
