@@ -1,14 +1,28 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       d.save
+ * AUTHOR(S):    David Satnik - Central Washington University
+ * PURPOSE:      Output all commands that have been used to create the 
+ *               current display graphics with the help of the internal Pad 
+ *               contents. 
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *    	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
 
-struct list_struct {
-	char *string;
-	struct list_struct *ptr;
-};
-
+#include "locals.h"
 
 /* globals !!! */
 int Sheight, Swidth;
@@ -45,6 +59,7 @@ int main (int argc, char **argv)
 	struct Flag *cur_frame;
 	struct Flag *only_object;
 	struct Option *opt1;
+	struct GModule *module;
 	char buff[1024];
 	char current_frame[64] ;
 
@@ -94,6 +109,11 @@ int main (int argc, char **argv)
 	only_object->key = 'o';
 	only_object->description = "Only map objects without extra header and tailer";
 	only_object->answer = 0;
+
+        module = G_define_module();
+        module->description = 
+	  "Create a list of commands for "
+	  "recreating screen graphics.";
 
 	if (G_parser(argc, argv))
 		exit(1);
