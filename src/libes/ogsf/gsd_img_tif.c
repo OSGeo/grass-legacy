@@ -17,10 +17,6 @@ u_short config = PLANARCONFIG_CONTIG;
 u_short compression = -1;
 u_short rowsperstrip = 0;
 
-unsigned short rbuf[8192];
-unsigned short gbuf[8192];
-unsigned short bbuf[8192];
-
 int GS_write_tif(char *name)
 {   
     TIFF *out;

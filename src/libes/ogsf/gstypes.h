@@ -245,8 +245,8 @@ typedef struct{        /* need to add elements here for off_screen drawing */
     int bgcol;
 } geodisplay;
 
-void (*Cxl_func)();
-void (*Swap_func)();
+extern void (*Cxl_func)();
+extern void (*Swap_func)();
 
 /* Bring all the function prototypes */
 #include "local_proto.h"

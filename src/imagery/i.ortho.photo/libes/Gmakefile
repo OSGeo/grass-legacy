@@ -6,7 +6,6 @@ all: $(IMAGERYLIB2)
 
 OBJ =\
 	ask_camera.o\
-	ask_initial.o\
 	cam.o\
 	cam_info.o\
 	camera.o\
