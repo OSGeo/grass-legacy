@@ -299,8 +299,8 @@ V2_read_line_ogr (struct Map_info *Map, struct line_pnts *line_p,  struct line_c
 
 	/* category */
 	if (line_c != NULL) {
-	    /* cat = FID+1 and offset = FID for centroid */
-	    Vect_cat_set (line_c, 1, (int) offset + 1); 
+	    /* cat = FID and offset = FID for centroid */
+	    Vect_cat_set (line_c, 1, (int) offset); 
 	}
 
 	return (GV_CENTROID);
@@ -332,7 +332,7 @@ V2_read_line_ogr (struct Map_info *Map, struct line_pnts *line_p,  struct line_c
 	    
 	/* category */
 	if (line_c != NULL) {
-	    Vect_cat_set (line_c, 1, FID + 1);
+	    Vect_cat_set (line_c, 1, FID);
 	}
 
 	return Line->type;

@@ -24,7 +24,7 @@
 *      - centroids   : FID
 *      - other types : index of the first record (which is FID) in offset array.
 *
-*   Category: FID+1, not all layer have FID, OGRNullFID is defined (5/2004) as -1, so FID should be only >= 0
+*   Category: FID, not all layer have FID, OGRNullFID is defined (5/2004) as -1, so FID should be only >= 0
 *
 */
 
@@ -128,7 +128,7 @@ static int add_line ( struct Map_info *Map, int type, struct line_pnts *Points,
     else Vect_box_extend (&(plus->box), &box);
 
     if ( type != GV_BOUNDARY ) { 
-	dig_cidx_add_cat (plus, 1, (int)FID + 1, line, type);
+	dig_cidx_add_cat (plus, 1, (int)FID, line, type);
     } else {
 	dig_cidx_add_cat (plus, 0, 0, line, type);
     }

@@ -28,7 +28,6 @@ int point_area ( struct Map_info *Map, int field, double x, double y, struct lin
 
     if (!area) return 0;
 
-    cat = Vect_get_area_cat ( Map, area, field );
     centr = Vect_get_area_centroid ( Map, area );
 
     if ( centr <= 0) return 0;

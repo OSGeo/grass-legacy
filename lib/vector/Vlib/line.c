@@ -705,11 +705,12 @@ void Vect_line_reverse ( struct line_pnts *Points )
 
 
 /*!
-\brief fetches category number for given vector line and field
+\brief fetches FIRST category number for given vector line and field
 \param vmap: Map input
 \param varea: line number
 \param vfield: field number
-\return 0: no category, >0: category number
+\return -1 no category
+\return category number (>=0)
 */
 int
 Vect_get_line_cat ( struct Map_info *Map, int line, int field ) {
@@ -726,3 +727,4 @@ Vect_get_line_cat ( struct Map_info *Map, int line, int field ) {
 
     return cat;
 }
+

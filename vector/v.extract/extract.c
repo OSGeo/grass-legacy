@@ -36,7 +36,7 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 	     G_debug ( 2, "Line = %d", line );
 	     type = Vect_read_line ( In, Points, Cats, line);
 	     
-	     cat = catr = catl = 0;
+	     cat = catr = catl = -1;
 	     /* get the line category */
 	     Vect_cat_get ( Cats, field, &cat );
 	     
@@ -77,7 +77,7 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 			 /* TODO */
 		     }
 		     /* write line */
-		     if ( cat_new > 0 && cat > 0 ) { /* assign the new category value */
+		     if ( cat_new > 0 && cat >= 0 ) { /* assign the new category value */
 			 Vect_field_cat_del ( Cats, field, -1 ); /* delete all cats of given field */
 		         Vect_cat_set (Cats, field, cat_new); 
 		     }

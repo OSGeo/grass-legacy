@@ -434,7 +434,6 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	i = 1; j = 1;
 	while ( 1 ) {
 	    /* register line */
-	    offset = dig_ftell ( &(Map->dig_fp) );
 	    type = Vect_read_next_line (Map, Points, Cats);
 	    /* Note: check for dead lines is not needed, because they are skipped by V1_read_next_line_nat() */
 	    if ( type == -1 ) { 
@@ -443,6 +442,9 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	    } else if ( type == -2 ) {
 		break;
 	    }
+	    
+	    offset = Map->head.last_offset;
+
 	    G_debug ( 3, "Register line: offset = %d", offset );
 	    lineid = dig_add_line ( plus, type, Points, offset );
 	    dig_line_box ( Points, &box );

@@ -295,7 +295,7 @@ int main (int argc, char *argv[])
 	    if ( !(ftype & from_type) && (ftype != GV_CENTROID || !(from_type & GV_AREA)) ) continue;
 	    
 	    Vect_cat_get ( FCats, from_field, &fcat );
-	    if ( fcat == 0 ) continue;
+	    if ( fcat < 0 ) continue;
 	    Near[nfcats].from_cat = fcat; 
 	    nfcats++;
 	}
@@ -330,7 +330,7 @@ int main (int argc, char *argv[])
 	    if ( !(ftype & from_type) ) continue;
 
 	    Vect_cat_get ( FCats, from_field, &fcat );
-	    if ( fcat == 0 && !all ) continue;
+	    if ( fcat < 0 && !all ) continue;
 	    
 	    box.E = FPoints->x[0] + max ; box.W = FPoints->x[0] - max ; 
 	    box.N = FPoints->y[0] + max ; box.S = FPoints->y[0] - max;
@@ -347,6 +347,8 @@ int main (int argc, char *argv[])
 				   &tmp_tx, &tmp_ty, NULL, &tmp_dist, NULL, &tmp_talong);
 
 		if ( tmp_dist > max ) continue; /* not in threshold */
+		
+		/* TODO: more cats of the same field */
 		Vect_cat_get(TCats, to_field, &tmp_tcat);
 	        G_debug (4, "  tmp_dist = %f tmp_tcat = %d", tmp_dist, tmp_tcat);
 
@@ -356,7 +358,7 @@ int main (int argc, char *argv[])
 
 		    /* store info about relation */
 		    near->from_cat = fcat;
-		    near->to_cat = tmp_tcat;  /* 0 is OK */
+		    near->to_cat = tmp_tcat;  /* -1 is OK */
 		    near->dist = tmp_dist;
 		    near->from_x = FPoints->x[0];
 		    near->from_y = FPoints->y[0];
@@ -385,7 +387,7 @@ int main (int argc, char *argv[])
 		G_debug (4, "  near.from_cat = %d near.count = %d", near->from_cat, near->count);
 		/* store info about relation */
 		if ( near->count == 0 || near->dist > dist ) {
-		    near->to_cat = tcat;  /* 0 is OK */
+		    near->to_cat = tcat;  /* -1 is OK */
 		    near->dist = dist;
 		    near->from_x = FPoints->x[0];
 		    near->from_y = FPoints->y[0];
@@ -406,7 +408,7 @@ int main (int argc, char *argv[])
 	    if ( !(ftype & from_type) ) continue;
 
 	    Vect_cat_get ( FCats, from_field, &fcat );
-	    if ( fcat == 0 && !all ) continue;
+	    if ( fcat < 0 && !all ) continue;
 	    
 
 	    /* select areas by box */
@@ -454,8 +456,16 @@ int main (int argc, char *argv[])
 
 		}
 	        if ( tmp_dist > max ) continue; /* not in threshold */
-		tmp_tcat = Vect_get_area_cat ( &To, area, to_field ) ;
-		if ( tmp_tcat < 0 ) tmp_tcat = 0;
+		Vect_get_area_cats ( &To, area, TCats );
+		tmp_tcat = -1;
+		/* TODO: all cats of given field ? */
+		for ( j = 0; j < TCats->n_cats; j++) {
+		    if ( TCats->field[j] == to_field ) {
+			if ( tmp_tcat >= 0 ) 
+			    G_warning ( "more cats of to_field" );
+			tmp_tcat = TCats->cat[j];
+		    }
+		}
 
 	        G_debug (4, "  tmp_dist = %f tmp_tcat = %d", tmp_dist, tmp_tcat);
 
@@ -465,7 +475,7 @@ int main (int argc, char *argv[])
 
 		    /* store info about relation */
 		    near->from_cat = fcat;
-		    near->to_cat = tmp_tcat;  /* 0 is OK */
+		    near->to_cat = tmp_tcat;  /* -1 is OK */
 		    near->dist = tmp_dist;
 		    near->from_x = FPoints->x[0];
 		    near->from_y = FPoints->y[0];
@@ -491,7 +501,7 @@ int main (int argc, char *argv[])
 
 		/* store info about relation */
 		if ( near->count == 0 || near->dist > dist ) {
-		    near->to_cat = tcat;  /* 0 is OK */
+		    near->to_cat = tcat;  /* -1 is OK */
 		    near->dist = dist;
 		    near->from_x = FPoints->x[0];
 		    near->from_y = FPoints->y[0];
@@ -583,7 +593,7 @@ int main (int argc, char *argv[])
 		} else { 
 		    switch ( Upload[j].upload ) {
 			case CAT:
-			    if ( Near[i].to_cat > 0 ) 
+			    if ( Near[i].to_cat >= 0 ) 
 			        fprintf(stdout, "|%d", Near[i].to_cat );
 			    else 
 			        fprintf(stdout, "|null" );

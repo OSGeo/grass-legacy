@@ -205,7 +205,7 @@ main (int argc, char *argv[])
 	    G_percent ( aline, nalines, 1 ); /* must be before any continue */
 	    
 	    /* Check category */
-	    if ( !Vect_get_line_cat(&(In[0]), aline, field[0]) ) continue;
+	    if ( Vect_get_line_cat(&(In[0]), aline, field[0]) < 0 ) continue;
 	    
 	    /* Read line and check type */
 	    if ( !(Vect_read_line(&(In[0]), APoints, NULL, aline) & type[0]) ) continue;
@@ -228,7 +228,7 @@ main (int argc, char *argv[])
 		    G_debug (3, "  bline = %d", bline);
 		    
 		    /* Check category */
-		    if ( !Vect_get_line_cat(&(In[1]), bline, field[1]) ) continue;
+		    if ( !Vect_get_line_cat(&(In[1]), bline, field[1]) < 0 ) continue;
 
 		    Vect_read_line ( &(In[1]), BPoints, NULL, bline);
 
@@ -255,7 +255,7 @@ main (int argc, char *argv[])
 		    barea = List->value[i];
 		    G_debug (3, "  barea = %d", barea);
 
-		    if ( Vect_get_area_cat(&(In[1]), barea, field[1]) < 1 ) continue;
+		    if ( Vect_get_area_cat(&(In[1]), barea, field[1]) < 0 ) continue;
 
 		    if ( line_overlap_area(&(In[0]), aline, &(In[1]), barea) ) {
 		        ALines[aline] = 1;
@@ -280,7 +280,7 @@ main (int argc, char *argv[])
 	    
 	    G_percent ( aarea, naareas, 1 ); /* must be before any continue */
 
-	    if ( Vect_get_area_cat(&(In[0]), aarea, field[0]) < 1 ) continue;
+	    if ( Vect_get_area_cat(&(In[0]), aarea, field[0]) < 0 ) continue;
 	    Vect_get_area_box ( &(In[0]), aarea, &abox );
 
 	    /* x Lines in B */
@@ -292,7 +292,7 @@ main (int argc, char *argv[])
 		    
 		    bline = List->value[i];
 		
-		    if ( !Vect_get_line_cat(&(In[1]), bline, field[1]) ) continue;
+		    if ( Vect_get_line_cat(&(In[1]), bline, field[1]) < 0 ) continue;
 
 		    if ( line_overlap_area(&(In[1]), bline, &(In[0]), aarea) ) {
 			add_aarea ( &(In[0]), aarea, ALines );
