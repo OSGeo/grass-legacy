@@ -282,12 +282,12 @@ set_window (double firstrow, double lastrow, double firstcol, double lastcol)
 {
 	struct Cell_head window;
 
-	window.south  = -(lastrow + .5);
-	window.north  = -(firstrow - .5);
+	window.south  = firstrow - .5;
+	window.north  = lastrow  + .5;
 	window.west   = firstcol - .5;
 	window.east   = lastcol  + .5;
-	window.cols   = lastcol - firstcol + 1.0;
-	window.rows   = lastrow - firstrow + 1.0;
+	window.cols   = lastcol - firstcol + 1.;
+	window.rows   = lastrow - firstrow + 1.;
 	window.ns_res = window.ew_res = 1.0;
 
 	window.proj   = 0;
