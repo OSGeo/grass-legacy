@@ -63,7 +63,7 @@ int main (int argc, char **argv)
     struct Flag *ram_flag;
 #endif /*RAM*/
    struct Option *map, *s_val;
-   struct Flag *ident;
+   struct Flag *ident, *s_flag, *p_flag;
 
 
     setbuf(stdout, 0) ;
@@ -92,16 +92,25 @@ int main (int argc, char **argv)
     ident->key 			= 'i';
     ident->description 		= "Only run identical line tests";
 
+    s_flag = G_define_flag();
+    s_flag->key = 's';
+    s_flag->description = "Snap nodes"; 
+
+    p_flag = G_define_flag();
+    p_flag->key = 'p';
+    p_flag->description = "Prompt user for threshold"; 
+
+
     if (G_parser (argc, argv))
 	exit (-1);
 
     file_name = map->answer;
 
-    if (snap_ok == 1)
+    if (snap_ok = s_flag->answer)
     {
 	if (s_val->answer != NULL)
 	    snap_val = atof(s_val->answer);
-	thresh_flag = 0;
+	thresh_flag = p_flag->answer;
     }
     else
     {
