@@ -14,7 +14,7 @@ static int nlines = 50;
 
 #define WDTH 5
 
-int what(int once, int txt, int terse, int flash, int width, int mwidth, int topo )
+int what(int once, int txt, int terse, int flash, int width, int mwidth, int topo, int edit )
 {
     int type, edit_mode;
     int row, col;
@@ -374,7 +374,7 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 			    db_append_string (&html, buf);
 			}
 			
-			if ( strcmp(Map[i].mapset, G_mapset() ) == 0 ) edit_mode = F_EDIT;
+			if ( edit && strcmp(Map[i].mapset, G_mapset() ) == 0 ) edit_mode = F_EDIT;
 			else edit_mode = F_VIEW;
 
 			if ( txt ) format = F_TXT; else format = F_HTML;
