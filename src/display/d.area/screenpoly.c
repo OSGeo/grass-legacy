@@ -62,10 +62,10 @@
  * SCREENPOINT using the _avail flags.  This routine should never be called
  * from outside this file
  * ------------------------------------------------------------------------- */
-static uint32_t
+static unsigned int
 _FindOpening (SCREENPOLY *sp)
 {
-    uint32_t i, where, size;
+    unsigned int i, where, size;
     
     if (sp == NULL)
     {
@@ -87,8 +87,8 @@ _FindOpening (SCREENPOLY *sp)
      */
     for (i = 0; i < size ; i++)
     {
-        register uint8_t j = sp->_avail[i];
-        register uint8_t mask = (1 << 7);
+        register unsigned char j = sp->_avail[i];
+        register unsigned char mask = (1 << 7);
         
         if (!j)  /* All zeros */
             continue;
@@ -148,7 +148,7 @@ _FindOpening (SCREENPOLY *sp)
  * _FindUsed():  Returns the index for the current "this" in the SCREENPOLY
  * array.  This function should never be called from outside this file.
  * ------------------------------------------------------------------------- */
-static uint32_t
+static unsigned int
 _FindUsed (SCREENPOLY *sp)
 {
     if (sp == NULL)
@@ -166,7 +166,7 @@ _FindUsed (SCREENPOLY *sp)
      * difference is supposed to work that way!  Therefore, we can safely
      * cast to an unsigned integer.
      */
-    return (uint32_t) (sp->this - sp->_array);
+    return (unsigned int) (sp->this - sp->_array);
 }
 
 /* ------------------------------------------------------------------------- *
@@ -175,10 +175,10 @@ _FindUsed (SCREENPOLY *sp)
  * side of this file.
  * ------------------------------------------------------------------------- */
 static void 
-_SetUsed (SCREENPOLY *sp, uint32_t where)
+_SetUsed (SCREENPOLY *sp, unsigned int where)
 {
-    uint32_t i;
-    uint8_t mask = (1 << 7);
+    unsigned int i;
+    unsigned char mask = (1 << 7);
     
     if (sp == NULL)
     {
@@ -212,10 +212,10 @@ _SetUsed (SCREENPOLY *sp, uint32_t where)
  * called from outside this file.
  * ------------------------------------------------------------------------- */
 static void 
-_SetFree (SCREENPOLY *sp, uint32_t where)
+_SetFree (SCREENPOLY *sp, unsigned int where)
 {
-    uint32_t i;
-    uint8_t mask = (1 << 7);
+    unsigned int i;
+    unsigned char mask = (1 << 7);
 
     if (sp == NULL)
     {
@@ -250,10 +250,10 @@ _SetFree (SCREENPOLY *sp, uint32_t where)
  * is so our pointer bit flag array will match up correctly.
  * ------------------------------------------------------------------------- */
 SCREENPOLY *
-ScreenPolyNew (uint32_t sz)
+ScreenPolyNew (unsigned int sz)
 {
     SCREENPOLY *new;
-    uint32_t i, size;
+    unsigned int i, size;
 
     /* Round up to nearest size divisible by 8 */
     size = sz;
@@ -281,7 +281,7 @@ ScreenPolyNew (uint32_t sz)
     /* Make bitfield size... */
     size /= 8;
     
-    new->_avail = (uint8_t *) malloc (size);
+    new->_avail = (unsigned char *) malloc (size);
 
     if (new->_avail == NULL)
     {
@@ -328,7 +328,7 @@ ScreenPolyDestroy (SCREENPOLY *sp)
 int
 ScreenPolyCopy (SCREENPOLY *old, SCREENPOLY *new)
 {
-    uint32_t i;
+    unsigned int i;
     SCREENPOINT *this;
 
     if (old == NULL || new == NULL)
@@ -367,7 +367,7 @@ ScreenPolyCopy (SCREENPOLY *old, SCREENPOLY *new)
  * elements.  "elems" must be at least 1.  The return value is useless.
  * ------------------------------------------------------------------------- */
 int
-ScreenPolyGrow (SCREENPOLY *sp, uint32_t elems)
+ScreenPolyGrow (SCREENPOLY *sp, unsigned int elems)
 {
     SCREENPOLY  *newPoly;
 
@@ -429,7 +429,7 @@ int
 ScreenPolyAddPoint (SCREENPOLY *sp, int x, int y)
 {
     SCREENPOINT *before, *after, *this;
-    uint32_t where;
+    unsigned int where;
     
     if (sp == NULL)
     {
@@ -507,7 +507,7 @@ ScreenPolyAddPoint (SCREENPOLY *sp, int x, int y)
 int
 ScreenPolyDeletePoint (SCREENPOLY *sp)
 {
-    uint32_t where;
+    unsigned int where;
     SCREENPOINT *this, *before, *after;
 
     if (sp == NULL)
@@ -622,7 +622,7 @@ ScreenPolyPrint (SCREENPOLY *sp)
 int
 ScreenPolyMoveNearest (SCREENPOLY *a, SCREENPOLY *b)
 {
-    uint32_t i, j;
+    unsigned int i, j;
     double dmin, dcur, dx, dy;
     SCREENPOINT *aSave, *bSave, *aThis, *bThis;
 
@@ -692,7 +692,7 @@ finish:
 SCREENPOLY *
 ScreenPolyMerge (SCREENPOLY *a, SCREENPOLY *b)
 {
-    uint32_t i;
+    unsigned int i;
     SCREENPOINT *aPnt, *bPnt, *pnt;
     SCREENPOLY  *new;
 
@@ -868,7 +868,7 @@ _YLineIntersectSegment (double Y, double ax, double ay, double bx, double by)
 static int
 _RealPolyClip (SCREENPOLY *sp, SCREENPOLY *clip)
 {
-    uint32_t i, j, n_crossings;
+    unsigned int i, j, n_crossings;
     double ax, ay, bx, by, X, Y, X2 ;
     SCREENPOINT *pnt;
 
@@ -937,7 +937,7 @@ _RealPolyClip (SCREENPOLY *sp, SCREENPOLY *clip)
 SCREENPOLY *
 ScreenPolyClip (SCREENPOLY *sp, SCREENPOLY *clip)
 {
-    uint32_t i, j;
+    unsigned int i, j;
     int alloced, count, x, y, status;
     struct dist_point *dp, *tmp;
     SCREENPOINT *a, *b;
@@ -984,7 +984,7 @@ ScreenPolyClip (SCREENPOLY *sp, SCREENPOLY *clip)
                 else if (status == -1) /* colinear */
                     count += 2;
                 else /* huh */
-                    G_fatal_error ("Unexpected return value from "\
+                    G_fatal_error ("Unexpected return value from "
                             "_SegmentIntersection");
                 if (count > alloced)
                 {
@@ -1122,10 +1122,10 @@ ScreenPolyToArrays (SCREENPOLY *sp, int **x, int **y)
  * bit_print(): Utility function to print the state of the bit flag array.
  * ------------------------------------------------------------------------- */
 static void 
-bit_print (uint8_t *bits, uint32_t count)
+bit_print (unsigned char *bits, unsigned int count)
 {
-    uint32_t i, j;
-    uint8_t mask;
+    unsigned int i, j;
+    unsigned char mask;
     for (i = 0; i < count; i++)
     {
         mask = (1 << 7);
@@ -1141,14 +1141,14 @@ static void
 _print_menu (void)
 {
     fprintf (stdout,
-    "\n\tBitfield Menu\n"\
-    "\t------------------------\n\n"\
-    "\tA - Add A Point\n"\
-    "\tD - Delete Current Point\n"\
-    "\tF - Make Next Point the Current Point\n"\
-    "\tL - Make Previous Point the Current Point\n"\
-    "\tP - Print Info\n"\
-    "\tQ - Quit\n\n"\
+    "\n\tBitfield Menu\n"
+    "\t------------------------\n\n"
+    "\tA - Add A Point\n"
+    "\tD - Delete Current Point\n"
+    "\tF - Make Next Point the Current Point\n"
+    "\tL - Make Previous Point the Current Point\n"
+    "\tP - Print Info\n"
+    "\tQ - Quit\n\n"
     "Bitfield: ");
     fflush(stdout);
 }
@@ -1159,8 +1159,8 @@ int main (void)
     int  size = 0, x, y;
     SCREENPOLY *pnts;
 
-    fprintf (stdout, "Bitfield: Test bitfield accounting code\n"\
-            "Bitfield: Select an initial size less than 50\n"\
+    fprintf (stdout, "Bitfield: Test bitfield accounting code\n"
+            "Bitfield: Select an initial size less than 50\n"
             "Bitfield: ");
     fflush (stdout);
     if (fgets (buffer, 512, stdin) == NULL)

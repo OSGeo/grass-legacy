@@ -29,19 +29,6 @@
 /* Nothing */
 #else
 #define SCREENPOLY_H
-/* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
- * TODO: If we could rely on stdint.h
- * we'd do "#include <stdint.h>" here.
- * Since we can't, we do the following
- * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
- */
-
-#  if !defined(uint8_t)
-      typedef unsigned char uint8_t;
-#  endif
-#  if !defined(uint32_t)
-      typedef unsigned long uint32_t;
-#  endif
 
 /* ------------------------------------ *
  * The SCREENPOINT and SCREENPOLY types
@@ -54,9 +41,9 @@ struct _screenpoint {
 typedef struct _screenpoint SCREENPOINT;
 
 struct _screenpoly {
-    uint32_t _alloced, count;
+    unsigned int _alloced, count;
     SCREENPOINT *this, *_array;
-    uint8_t  *_avail;
+    unsigned char  *_avail;
 };
 
 typedef struct _screenpoly SCREENPOLY;
@@ -68,7 +55,7 @@ typedef struct _screenpoly SCREENPOLY;
 /* Create a new SCREENPOLY with an inital size of
  * "x" SCREENPOINT elements
  */
-SCREENPOLY *ScreenPolyNew(uint32_t /* elems */);
+SCREENPOLY *ScreenPolyNew(unsigned int /* elems */);
 
 
 /* Destroy a SCREENPOLY and all of its memory */
@@ -92,7 +79,7 @@ int ScreenPolyAddPoint(SCREENPOLY * /* sp */, int /* x */, int /* y */);
  * you will add a large number of points above what was originally
  * specified in ScreenPolyNew().
  */
-int ScreenPolyGrow (SCREENPOLY * /* sp */, uint32_t /* elems */);
+int ScreenPolyGrow (SCREENPOLY * /* sp */, unsigned int /* elems */);
 
 
 /* Delete the current point referenced by "sp->this".
