@@ -25,7 +25,7 @@
             		{command "ASCII points file or GRASS ASCII vector file" {} "v.in.ascii" {} -command { execute v.in.ascii }}
             		{command "Import/export old GRASS vector format" {} "v.convert" {} -command { execute v.convert }}
         		    {separator}
-        	    	{command "ESRI e00 format" {} "v.in.e00" {} -command { execute v.in.v00 }}
+        	    	{command "ESRI e00 format" {} "v.in.e00" {} -command { execute v.in.e00 }}
         	    	{command "Garmin GPS Waypoints/Routes/Tracks" {} "v.in.garmin" {} -command { execute v.in.garmin }}
             		{command "MATLAB MapGen files" {} "v.in.mapgen.sh" {} -command { execute v.in.mapgen.sh }}
             		{separator}
