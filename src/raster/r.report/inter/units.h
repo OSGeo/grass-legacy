@@ -8,7 +8,7 @@ struct units units[] = {
 	{"meters","me"},
 	{"kilometers","k"},
 	{"acres","a"},
-	{"hectacres","h"},
+	{"hectares","h"},
 	{"miles","mi"},
 	{"cell counts","c"},
 	{"percent cover","p"},
