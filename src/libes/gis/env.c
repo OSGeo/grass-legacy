@@ -256,18 +256,12 @@ static FILE *open_env ( char *mode)
 char *G_getenv( char *name)
 {
     char *value;
-    char rsbbuf[40]; /* RSB 17 June 2000 */
 
     if ((value = G__getenv(name)))
 	return value;
 
-    /* fprintf(stderr,"ERROR: %s not set\n", name);
-    sleep(3);
-    exit(-1); */
-    /* Roger Bivand 17 June 2000 */
-    sprintf(rsbbuf, _("%s not set"), name);
-    G_fatal_error(rsbbuf);
-    return;
+    G_fatal_error(_("%s not set"), name);
+    return NULL;
 }
 
 char *G__getenv ( char *name)
