@@ -56,7 +56,7 @@
 [Uu][Pp][Dd][Aa][Tt][Ee]	{ return UPDATE; }
 [Vv][Aa][Ll][Uu][Ee][Ss]	{ return VALUES; }
 [Ww][Hh][Ee][Rr][Ee]		{ return WHERE; }
-[Aa][Nn][Dd]			{ return AND; }
+[Aa][Nn][Dd]			{ return AND; } 
 [Cc][Rr][Ee][Aa][Tt][Ee]	{ return CREATE; }
 [Dd][Rr][Oo][Pp]		{ return DROP; }
 [Tt][Aa][Bb][Ll][Ee]		{ return TABLE; }
@@ -81,17 +81,29 @@
 		}
  
  /***************************************
-  * COMPARISON
+  * ARITHMETICAL OPERATOR
+  * Conflict of  * as operator with * as all columns, what to do?    
   ***************************************/
 
-"~" 	|
+"+" 	|
+"-" 	|
+"/" 		{
+			yylval.strval = (char*)strdup(yytext);
+			return ARITHMETICAL_OPERATOR;
+		}
+
+ /***************************************
+  * COMPARISON OPERATOR
+  ***************************************/
+
 "<>" 	|
 "<"	|
 ">"	|
 "<="	|
-">="		{
+">="	|	
+"~" 	 	{
 			yylval.strval = (char*)strdup(yytext);
-			return COMPARISON;
+			return COMPARISON_OPERATOR;
 		}
 
  /***************************************

@@ -18,7 +18,7 @@ main (int argc, char **argv)
     db_init_string (&stmt);
 
     while ( fgets (buf, 5000, stdin) ) {
-	fprintf ( stdout, "Input row: -->>%s<<--\n", buf );
+	fprintf ( stdout, "\nInput row: -->>%s<<--\n", buf );
 	strcpy ( buf2, buf );
 	G_chop (buf2);
 	len = strlen (buf2);
