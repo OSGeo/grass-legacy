@@ -1,0 +1,45 @@
+.TH Vmake.site 2
+.SH NAME
+Vmake.sites \- Convert GRASS vector 
+.CT data map
+to a 
+.CT "sites files" "site map"
+.br
+.SH SYNOPSIS
+.B Vmake.sites
+input=dig_in output=site_out
+.SH DESCRIPTION
+The GRASS tool
+.I Vmake.sites
+allows the user to convert GRASS vector 
+.CT files maps
+that contain 
+.I site
+information into GRASS site 
+.CT files maps
+for use with the 
+.I sites[1]
+program.  
+The program expects two command line arguments:  input, which
+is the vector 
+.CT file map
+to convert from, and output, which is the resultant site 
+.CT file map
+to be created.
+If any of the sites have been labelled in 
+.I digit[1],
+then the resultant 
+.CT file "site map"
+will contain category information.
+If none of the sites are labelled, it will produce a binary (0/1) site
+.CT "file." "map."
+
+.br
+.SH NOTES
+This program is called by 
+.I make.sites[1] .
+.br
+.SH "SEE ALSO"
+\fImake.sites[1]  sites[1]  digit[1]\fR
+.SH "AUTHOR"
+Dave Gerdes, U.S. Army Construction Engineering Research Lab
