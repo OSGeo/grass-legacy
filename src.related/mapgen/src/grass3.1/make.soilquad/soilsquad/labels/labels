@@ -1,0 +1,2 @@
+cat ../sites_geo/NAME | points -m map.def -c "-d 1,2 -f 3 -p 1 -cs .2 -cf -sr
+-cx 0 -cy 0 -c" -o ovm/NAME.l
