@@ -9744,72 +9744,40 @@ echo "  FORTRAN compiler:          ${F77}"
 echo ""
 
 
-echo -n "  NVIZ:                       "
-if test -n "${USE_TOGL}" ; then echo yes ; else echo no ; fi
-
+echo "  NVIZ:                       `if test -n "${USE_TOGL}" ; then echo yes ; else echo no ; fi`"
 
 echo ""
 
 
-echo -n "  X11 support:                "
-if test -n "${USE_X11}" ; then echo yes ; else echo no ; fi
+echo "  X11 support:                `if test -n "${USE_X11}" ; then echo yes ; else echo no ; fi`"
 
+echo "  DBM support:                `if test -n "${USE_DBM}" ; then echo yes ; else echo no ; fi`"
 
-echo -n "  DBM support:                "
-if test -n "${USE_DBM}" ; then echo yes ; else echo no ; fi
+echo "  JPEG support:               `if test -n "${USE_JPEG}" ; then echo yes ; else echo no ; fi`"
 
+echo "  TIFF support:               `if test -n "${USE_TIFF}" ; then echo yes ; else echo no ; fi`"
 
-echo -n "  JPEG support:               "
-if test -n "${USE_JPEG}" ; then echo yes ; else echo no ; fi
+echo "  PNG support:                `if test -n "${USE_PNG}" ; then echo yes ; else echo no ; fi`"
 
+echo "  GD support:                 `if test -n "${USE_GD}" ; then echo yes ; else echo no ; fi`"
 
-echo -n "  TIFF support:               "
-if test -n "${USE_TIFF}" ; then echo yes ; else echo no ; fi
+echo "  Tcl/Tk support:             `if test -n "${USE_TCLTK}" ; then echo yes ; else echo no ; fi`"
 
+echo "  PostgreSQL support:         `if test -n "${USE_POSTGRES}" ; then echo yes ; else echo no ; fi`"
 
-echo -n "  PNG support:                "
-if test -n "${USE_PNG}" ; then echo yes ; else echo no ; fi
+echo "  OpenGL(R) support:          `if test -n "${USE_OPENGL}" ; then echo yes ; else echo no ; fi`"
 
+echo "  ODBC support:               `if test -n "${USE_ODBC}" ; then echo yes ; else echo no ; fi`"
 
-echo -n "  GD support:                 "
-if test -n "${USE_GD}" ; then echo yes ; else echo no ; fi
+echo "  FFTW support:               `if test -n "${USE_FFTW}" ; then echo yes ; else echo no ; fi`"
 
+echo "  BLAS support:               `if test -n "${USE_BLAS}" ; then echo yes ; else echo no ; fi`"
 
-echo -n "  Tcl/Tk support:             "
-if test -n "${USE_TCLTK}" ; then echo yes ; else echo no ; fi
+echo "  LAPACK support:             `if test -n "${USE_LAPACK}" ; then echo yes ; else echo no ; fi`"
 
+echo "  Motif support:              `if test -n "${USE_MOTIF}" ; then echo yes ; else echo no ; fi`"
 
-echo -n "  PostgreSQL support:         "
-if test -n "${USE_POSTGRES}" ; then echo yes ; else echo no ; fi
-
-
-echo -n "  OpenGL(R) support:          "
-if test -n "${USE_OPENGL}" ; then echo yes ; else echo no ; fi
-
-
-echo -n "  ODBC support:               "
-if test -n "${USE_ODBC}" ; then echo yes ; else echo no ; fi
-
-
-echo -n "  FFTW support:               "
-if test -n "${USE_FFTW}" ; then echo yes ; else echo no ; fi
-
-
-echo -n "  BLAS support:               "
-if test -n "${USE_BLAS}" ; then echo yes ; else echo no ; fi
-
-
-echo -n "  LAPACK support:             "
-if test -n "${USE_LAPACK}" ; then echo yes ; else echo no ; fi
-
-
-echo -n "  Motif support:              "
-if test -n "${USE_MOTIF}" ; then echo yes ; else echo no ; fi
-
-
-echo -n "  FreeType support:           "
-if test -n "${USE_FREETYPE}" ; then echo yes ; else echo no ; fi
-
+echo "  FreeType support:           `if test -n "${USE_FREETYPE}" ; then echo yes ; else echo no ; fi`"
 
 echo ""
 

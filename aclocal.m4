@@ -204,6 +204,4 @@ AC_DEFUN(LOC_PAD_26,[substr([                           ],len($1))])
 AC_DEFUN(LOC_YES_NO,[if test -n "${$1}" ; then echo yes ; else echo no ; fi])
 
 AC_DEFUN(LOC_MSG_USE,[
-[echo -n "  $1:]LOC_PAD_26($1)"
-LOC_YES_NO($2)
-])
+[echo "  $1:]LOC_PAD_26($1)`LOC_YES_NO($2)`"])
