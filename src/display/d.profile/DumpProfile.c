@@ -49,15 +49,21 @@ int WriteProfile(char *raster, char *mapset,
     G_format_northing (profile->n2, coords[3], proj);
     fprintf (outFile, "# From (%s, %s) to (%s, %s)\n",
             coords[0], coords[1], coords[2], coords[3]);
-    fprintf (outFile, "# Stats: Count = %d, Min = %s, Max = %s\n\n",
+    fprintf (outFile, "# Stats: Count = %d, Min = %s, Max = %s\n",
             profile->count, 
             _fmt_ucat(&profile->MinCat, &profile->MinCat, buf),
             _fmt_ucat(&profile->MaxCat, &profile->MinCat, buf2));
+    fprintf (outFile, "# dist value east north\n");
 
     /* Now loop through the nodes, one value per line */
     for (ptr = profile->ptr ; ptr != NULL ; ptr = ptr->next)
     {
-        fprintf (outFile, "%s\n", _fmt_ucat (&ptr->cat, &profile->MinCat, buf));
+        fprintf (outFile, "%f %s %f %f\n",
+                ptr->dist,
+                _fmt_ucat (&ptr->cat, &profile->MinCat, buf),
+                ptr->east,
+                ptr->north
+                );
     }
 
     G_free(buf); G_free(buf2); G_free(outfile);

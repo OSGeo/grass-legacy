@@ -8,7 +8,7 @@
 
 #define DEBUG 
 #define MAIN
-#define USE_OLD_CODE   /* Frame set-up still needs old code ATM. */
+#define USE_OLD_CODE  /* Frame set-up still needs old code ATM. */
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -24,7 +24,7 @@ void myDcell (char *name, char *mapset, int overlay);
 
 int main (int argc, char **argv)
 {
-    char   *old_mapset, *old_mapname ;
+    char   *old_mapset, *old_mapname, *d_mapset, *d_mapname ;
     double cur_ux, cur_uy ;
     double ux, uy ;
     char   ltr[10];
@@ -37,24 +37,37 @@ int main (int argc, char **argv)
     int    t, b, l, r ;
     int    i,CurrentWin=0;
     long   min,max;
-    struct Option *map, *plotfile;
+    struct Option *map, *dmap, *plotfile;
+    struct GModule *module;
 
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+        "Interactive profile plotting utility with optional output.";
+    
     /* set up command line */
     map              = G_define_option();
-    map->key         = "map";
+    map->key         = "rast";
     map->type        = TYPE_STRING;
     map->required    = YES;
     map->gisprompt   = "old,cell,raster" ;
     map->description = "Raster map to be profiled";
 
+    dmap              = G_define_option();
+    dmap->key         = "drast";
+    dmap->type        = TYPE_STRING;
+    dmap->required    = NO;
+    dmap->gisprompt   = "old,cell,raster" ;
+    dmap->description = "Optional display raster";
+    
     plotfile              = G_define_option();
     plotfile->key         = "plotfile";
     plotfile->type        = TYPE_STRING;
     plotfile->required    = NO;
-    plotfile->description = "Output profile data to a file";
+    plotfile->description = "Output profile data to file(s) with prefix 'name'";
 
     if (G_parser(argc, argv))
         exit(1);
@@ -73,6 +86,25 @@ int main (int argc, char **argv)
         doplot = 1;
     else
         doplot = 0;
+    
+    /* If the user wants to display a different raster */
+    if (dmap->answer != NULL)
+    {
+        d_mapname = dmap->answer;
+        d_mapset  = G_find_cell2 (d_mapname, "") ;
+        if (d_mapset == NULL)
+        {
+            G_warning("Display raster [%s] not found. Using profile raster.",
+                    d_mapname);
+            d_mapname = old_mapname;
+            d_mapset  = old_mapset;
+        }
+    }
+    else
+    {
+        d_mapname = old_mapname;
+        d_mapset  = old_mapset;
+    }
     
     /* get cell-file range */
     WindowRange(old_mapname,old_mapset,&min,&max);
@@ -120,7 +152,7 @@ if (max < 0) max = 0;
     
     /* Plot cell-file in map window */
     D_set_cur_wind (MAP.name);
-    myDcell(old_mapname, old_mapset, 1);
+    myDcell(d_mapname, d_mapset, 1);
 	
 
     /* loop until user wants to quit */
@@ -380,7 +412,7 @@ if (max < 0) max = 0;
         {
             D_set_cur_wind (MAP.name);
             Derase("black") ;
-            myDcell (old_mapname, old_mapset, 1);
+            myDcell (d_mapname, d_mapset, 1);
             for (i=0; i<=3; i++)
             {
                 D_set_cur_wind (profiles[i].name);
