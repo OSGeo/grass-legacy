@@ -11,7 +11,7 @@ CFILES = \
 all: $(BIN_CONTRIB_CMD)/v.in.EE
 
 $(BIN_CONTRIB_CMD)/v.in.EE: $(OFILES) $(VECTLIB) $(GISLIB)
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(XDRLIB) $(MATHLIB)
 
 
 $(OFILES):      vtoc.h
