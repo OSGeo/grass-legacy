@@ -16,9 +16,17 @@
 #% required : yes
 #%end
 #%option
-#% key: optionB
+#% key: raster
 #% type: string
-#% description: another option
+#% gisprompt: old,cell,raster
+#% description: raster input map
+#% required : yes
+#%end
+#%option
+#% key: vector
+#% type: string
+#% gisprompt: old,dig,vector
+#% description: vector input map
 #% required : yes
 #%end
 
@@ -35,6 +43,7 @@ else
 fi
 
 echo "Value of GIS_OPT_option1: '$GIS_OPT_option1'"
-echo "Value of GIS_OPT_optionB: '$GIS_OPT_optionB'"
+echo "Value of GIS_OPT_raster: '$GIS_OPT_raster'"
+echo "Value of GIS_OPT_vect: '$GIS_OPT_vector'"
 
 #add your code here

@@ -13,6 +13,7 @@ int color2;
 double east;
 double north;
 int use_feet;
+int do_background = 1;
 
 int main (int argc, char **argv)
 {
@@ -46,15 +47,14 @@ int main (int argc, char **argv)
 	opt1 = G_define_option() ;
 	opt1->key        = "bcolor" ;
 	opt1->type       = TYPE_STRING ;
-	opt1->answer     = "black" ;
+	opt1->answer     = DEFAULT_BG_COLOR ;
 	opt1->required   = NO ;
-	opt1->options    = D_color_list();
-	opt1->description= "Color used for the background" ;
+	opt1->description= "Color used for the background, or \"none\"" ;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "tcolor" ;
 	opt2->type       = TYPE_STRING ;
-	opt2->answer     = "white" ;
+	opt2->answer     = DEFAULT_FG_COLOR ;
 	opt2->required   = NO ;
 	opt2->options    = D_color_list();
 	opt2->description= "Color used for the text" ;
@@ -78,8 +78,16 @@ int main (int argc, char **argv)
 
 	use_feet = feet->answer ? 1 : 0;
 
-	color1 = D_translate_color(opt1->answer) ;
-
+	if (opt1->answer && !strcmp ("none", opt1->answer)) {
+		do_background = 0;
+		color1 = 1;	/* dummy value */
+	}
+	else {
+		color1 = D_translate_color(opt1->answer) ;
+		if( 0 == color1 )
+			G_fatal_error ("Bad color name");
+	}
+	
 	color2 = D_translate_color(opt2->answer) ;
 
 	sscanf(opt3->answers[0], "%lf", &east) ;

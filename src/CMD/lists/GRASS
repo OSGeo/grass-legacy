@@ -127,6 +127,7 @@ src/general/g.findfile
 src/general/g.gisenv
 src/general/g.help
 src/general/g.mapsets
+src/general/g.parser
 src/general/g.region
 src/general/g.tempfile
 src/general/g.setproj
