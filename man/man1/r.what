@@ -1,0 +1,133 @@
+.TH r.what
+.SH NAME
+\fIr.what\fR \- Queries raster map layers on their category values
+and category labels.
+.br
+.I (GRASS Raster Program)
+.SH SYNOPSIS
+\fBr.what\fR
+.br
+\fBr.what help\fR
+.br
+\fBr.what \fR[\fB-f\fR] \fBinput\*=\fIname\fR[,\fIname\fR,...]
+.br
+\fBr.what \fR[\fB-f\fR] \fBinput\*=\fIname\fR[,\fIname\fR,...] [< \fIinputfile\fR]
+.SH DESCRIPTION
+\fIr.what\fR outputs the category values and (optionally) the category
+labels associated with user-specified locations on raster input map(s).
+Locations are specified as geographic x,y coordinate pairs
+(i.e., pair of eastings and northings);  the user can also (optionally)
+associate a label with each location.
+
+The program will be run non-interactively if the user specifies the program
+parameter values and (optionally) the flag setting on the command line,
+using the form:
+.LP
+.RS
+\fBr.what \fR[\fB-f\fR] \fBinput\*=\fIname\fR[,\fIname\fR,...]
+.RE
+.LP
+where each input \fIname\fR is the name of a raster map layer
+whose category values are to be queried, and the (optional) flag
+\fI-f\fR directs \fIr.what\fR to also output category labels.
+The user can also redirect a user-created ASCII input file containing
+a list of geographic coordinate pairs and (optionally) user-named labels,
+into \fIr.what\fR using the form:
+.LP
+.RS
+\fBr.what \fR[\fB-f\fR] \fBinput\*=\fIname\fR[,\fIname\fR,...] [< \fIinputfile\fR]
+.RE
+.LP
+
+If the user does not redirect an input file containing these coordinates
+into the program, the program will query the user for point locations
+and labels.
+.LP
+Alternately, the user can simply type:
+.LP
+.RS
+\fBr.what\fR
+.RE
+.LP
+on the command line, without program arguments.  In this case,
+the user will be prompted for the flag setting and parameter values using the
+standard GRASS parser interface described in the manual entry for \fIparser\fR.
+
+.LP
+\fBFlag:\fR
+.IP \fB-f\fR 18
+Also output the category label(s) associated with the cell(s)
+at the user-specified location(s).
+
+.LP
+\fBParameters:\fR
+.IP "\fBinput\*=\fIname\fR[\fI,name,name,...\fR]" 18
+The name(s) of one or more existing raster map layers to be queried.
+.SH EXAMPLES
+The contents of the ASCII \fIinputfile\fR to \fIr.what\fR can be typed
+in at the keyboard,
+redirected from a file, or piped from another program (like \fId.where\fR).
+Each line of the input consists of an easting, a northing, and
+an optional label, which are separated by spaces.  The word \fBend\fR
+is typed to end input of coordinates to \fIr.what\fR.  For example:
+.LP
+.RS
+\fB635342.21\ 7654321.09\ site 1
+.br
+653324.88\ 7563412.42\ site 2
+.br
+end \fR
+.RE
+
+\fIr.what\fR output consists of the input geographic location
+and label, and, for each user-named raster map layer,
+the category value, and (if \fI-f\fR is specified) the category label
+associated with the cell(s) at this geographic location.
+Sample input (in bold) to and output (in plain text) from \fIr.what\fR
+are given below.
+.LP
+.RS
+\fBr.what input\*=soils,aspect \fR
+.br
+\fB635342.21\ 7654321.09\ site 1 \fR
+.br
+\fB653324.88\ 7563412.42\ site 2 \fR
+.br
+\fBend \fR
+.RE
+.LP
+.RS
+635342.21\||\|7654321.09\||\|site 1\||\|45\||\|21
+.br
+653324.88\||\|7563412.42\||\|site 2\||\|44\||\|20
+.RE
+
+.RS
+\fBr.what\ -f input\*=soils,aspect \fR
+.br
+\fB635342.21\ 7654321.09\ site 1 \fR
+.br
+\fB653324.88\ 7563412.42\ site 2 \fR
+.br
+\fBend \fR
+.RE
+.LP
+.RS
+635342.21\||\|7654321.09\||\|site 1\||\|45\||\|NaC\||\|21\||\|30 degrees NW
+.br
+653324.88\||\|7563412.42\||\|site 2\||\|44\||\|NdC\||\|20\||\|15 degrees NW
+.RE
+.SH NOTES
+The maximum number of raster map layers that can be queried at one time
+is 14.
+.SH SEE ALSO
+.I d.sites,
+.I d.where,
+.I r.cats,
+.I r.report,
+.I r.stats,
+.I sites,
+.and
+.I parser
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
