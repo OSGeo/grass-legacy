@@ -1,0 +1,11 @@
+interface_build {
+    {r.mfilter} 0
+    {Raster file matrix filter.}
+    {entry input {Input raster map:} 0 raster}
+    {entry output {Output raster map:} 0 raster}
+    {entry filter {ASCII filter file:} 0 file}
+    {entry repeat {Number of times the filter is applied [1]:} 0 ""}
+    {entry title {Title of the output raster map:} 0 ""}
+    {checkbox -q {Run quietly.} "" -q}
+    {checkbox -z {Apply filter only to zero data values.} "" -z}
+}

@@ -1,0 +1,11 @@
+PGM = d.linegraph
+OFILES = linegraph.o
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(MATHLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(XDRLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
+linegraph.o:	linegraph.h

@@ -1,0 +1,10 @@
+
+------------------------------------------------------------------
+KEYWORD: bye
+    "bye" causes an immediate exit from WEIGHT.  Note that you
+    must "save" a current analysis description if you want
+    to "recover" it in another "weight" session.
+
+ALIASES: q stop exit quit BYE
+------------------------------------------------------------------
+

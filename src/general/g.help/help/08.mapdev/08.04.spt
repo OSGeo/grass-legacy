@@ -1,0 +1,28 @@
+                CREATING SUPPORT FILES FOR GRASS MAPS
+
+A variety of supporting information is needed for each GRASS
+\map layer\.  For data stored in GRASS vector format, information on
+the location of vectors, the file \topology\, vector \category values\,
+and \category labels\ are stored in separate files.  For data stored
+in GRASS raster format, additional files are also stored to hold
+information on category colors, the map's development history, etc. 
+The programs below help the user build necessary GRASS support files
+for raster and vector data.  Prefixes indicate whether command create
+support files for raster ("r.") or for vector ("v.") data.
+
+              \-  r.support \          \-  v.support \
+
+For more information on a specific command, select a command and press
+ESC.
+
+Many GRASS commands automatically generate necessary support files.
+Refer to specific GRASS program manual entries to learn when the user
+must explicitly create support files.
+
+
+
+
+
+
+
+

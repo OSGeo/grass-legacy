@@ -1,0 +1,10 @@
+{
+  test select file for r.rescale.inf
+  database=tiger,
+  GISdb=spearfish
+ 
+  curly brackets are Informix comment delimiters
+}
+
+r.rescale.inf tab=stf1_main key=tract_blck col=pop100 cats=5 \
+input=blkgrp.ids output=pop.rescale

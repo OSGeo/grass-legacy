@@ -1,0 +1,4 @@
+interface_build {
+    {i.rectify2} 1
+    {This routine rectifies an image by computing a coordinate transformation for each pixel in the image based on the control points created by the GRASS program i.points or i.vpoints.}
+}

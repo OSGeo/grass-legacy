@@ -1,0 +1,14 @@
+#  Luca Palmeri - 02 Nov 1999
+# 
+# patch to r.mask
+#
+# To be applied in src/raster/r.reclass/inter
+# 
+# The segfaulting was due to the fact
+# that char_table[-1] was malloc and
+# then freed.
+# I do not understand the meaning of
+# the int nalloc=0 definition in
+# maketable.c. So this patch may not
+# be absolutely correct
+#

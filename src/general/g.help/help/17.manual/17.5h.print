@@ -1,0 +1,10 @@
+               BRIEF HELP ENTRIES FOR PRINT COMMANDS       
+
+Below is a list of GRASS 5.0 print commands.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC.
+
+  \p.chart help\         \p.colors help\         \p.icons help\
+  \p.labels help\        \p.map help\            \p.ppm help\
+  \p.screen help\        \p.select help\

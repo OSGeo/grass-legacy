@@ -1,0 +1,36 @@
+f.econ
+
+This tool takes as input the results of f.wsurf along with a user-supplied vector map of
+building sites and two ASCII files of economic data.  As output f.econ generates a vector
+map of total damage to each building in the floodplain along with a summary ASCII report
+of flood damages categorized by building types (residential, public, ...) and damage type
+(structure or content).  f.econ also reports areal extent of flooding.
+
+The user may choose to run f.econ on selected flood events.  Events are specified in
+terms of their recurrence interval and may be selected interactively or through the use
+of a control file.  Only those events previously processed by f.wsurf are available to
+f.econ.  If run interactively, f.econ provides the user with a list of available flood
+events.
+
+The user must define for f.econ a recurrence interval to associate with an SPF flood
+event.  The specified recurrence interval affects only the calculation of expected annual
+damage (EAD), not river hydraulics or floodplain delineation.
+
+EAD is calculated on the following equation:
+
+           [(D-E1 + D-E2) / 2] * [1/E1 - 1/E2]
+           + [(D-E2 + D-E3) / 2] * [1/E2 - 1/E3]
+           + ...
+           + [(D-En + D-Espf) / 2] * [1/En - 1/Espf]
+           + [D-Espf] * [1/Espf]
+
+
+
+
+
+where:
+
+     Ex    is the recurrence interval for flood event x.
+     1/Ex  is the probability of flood event x occurring in a given year.
+     D-Ex  is the calculated damage for flood event x.
+     spf   is the "standard project flood"

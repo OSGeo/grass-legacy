@@ -1,0 +1,3582 @@
+:
+
+#                  ****** g.meta ********
+#    
+#
+# Written by Rick Thompson (Center for Advanced Spatial Technologies)
+#
+# @(#) g.meta: creates a metadata file for GRASS map layers
+# Last revision: 5/25/94 7/14/94
+
+METAHOME=`dirname ${0}`
+export METAHOME
+
+if [ `uname -m` = mips ] ; then
+  ECHON="/usr/bsd43/bin/echo -n"
+elif [ `uname -s` = SunOS -a `uname -r | sed 's/\...*$//'` = 5 ] ; then
+  ECHON="/usr/ucb/echo -n"
+else
+  ECHON="echo -n"
+fi
+
+if [ -z "$GISRC" ] ; then
+  clear
+  echo "This command must be run from GRASS!"
+  echo ''
+  exit 1
+fi
+clear
+
+echo ''
+name=""
+echo "Which file type do you want?"
+echo ''
+echo "1 - cell"
+echo "2 - dig"
+echo "3 - site"
+echo ''
+$ECHON "Please enter the number: "
+read ftypeno
+case $ftypeno in
+1) echo ''
+   g.ask type=mapset prompt="Add metadata to which raster map?" element=cell desc=raster unixfile=/tmp/$$
+   . /tmp/$$
+   rm -f /tmp/$$
+   ftype="cell"
+   if [ ! -f $LOCATION/cell/$name ]; then
+     echo "Raster map $name not found in mapset $MAPSET."
+     echo ''
+     exit 1
+   else
+     reclcheck=`cat $LOCATION/cellhd/$name | grep reclass`
+     if [ -z "$reclcheck" ] ; then
+     compress=`cat $LOCATION/cellhd/$name | grep compressed | cut -d":" -f2 | tr -d ' '`
+       if [ $compress = 0 ] ; then
+         echo ''
+	 echo "$name is not compressed. Would you like to exit this program and"
+	 $ECHON "compress the file? (y) "
+	 read ans
+	 if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+	   break
+	 else
+	   echo "This program is terminating. Please compress $name before"
+	   echo "collecting metadata. Thanks."
+	   exit 0
+	 fi
+       fi
+     elif [ -n "$reclcheck" ] ; then
+         echo ''
+	 echo "$name is a reclassed file. Please use r.mapcalc"
+	 echo "or r.resample, then rerun g.meta. "
+	   exit 0
+     fi
+     echo ''
+     $ECHON "Is $name an imagery file? (y/n) (n) "
+     read ans
+   	if [ "$ans" = "Y" -o "$ans" = "y" ] ; then
+	  tmeta="imeta"
+	else
+	  tmeta="rmeta"
+	fi
+   fi;;
+2) echo ''
+   g.ask type=mapset prompt="Add metadata to which vector map?" element=dig desc=vector unixfile=/tmp/$$
+   . /tmp/$$
+   rm -f /tmp/$$
+   ftype="dig"
+   tmeta="vmeta"
+   if [ ! -f $LOCATION/dig/$name ]; then
+     echo "Vector map $name not found in mapset $MAPSET."
+     echo ''
+     exit 1
+   fi
+   tmp1=`g.tempfile $$`
+   v.stats -h $name > $tmp1
+   suppchk1=`cat $tmp1 | grep incomplete`
+   suppchk2=`cat $tmp1 | grep incomplete`
+   trap "rm $tmp1 ; exit 0" 2
+   if [ -n "$suppchk1" -o -n "$suppchk2" ] ; then
+     echo ''
+     echo "Exiting program. $name needs updating with"
+     echo 'v.support. Please support the file, then restart g.meta.'
+     exit 0
+   fi;;
+3) echo ''
+   g.ask type=mapset prompt="Add metadata to which site map?" element=site_lists desc=site unixfile=/tmp/$$
+   . /tmp/$$
+   rm -f /tmp/$$
+   ftype="site_lists"
+   tmeta="smeta"
+   if [ ! -f $LOCATION/site_lists/$name ]; then
+     echo "Site map $name not found in mapset $MAPSET."
+     echo ''
+     exit 1
+   fi;;
+esac
+clear
+export tmeta
+
+if [ -f $METAHOME/meta.system ] ; then
+  break
+else
+  $METAHOME/g.meta.distrib
+fi
+
+echo ''
+echo "Please wait . . . testing for existence of PROJ_INFO."
+
+perm="$GISDBASE/$LOCATION_NAME/PERMANENT"
+xycheck=`cat "$perm"/DEFAULT_WIND | grep proj | cut -c13 | tr -d ' '`
+user=`whoami`
+projowner=`ls -la $GISDBASE/$LOCATION_NAME | awk '/PERMANENT/ {print $3}'`
+if [ ! -f "$perm/PROJ_INFO" -a "$user" != "$projowner" -a "$xycheck" != "0" ] ; then
+    echo 'Inform PERMANENTs owner that he/she must use g.setproj before'
+    echo 'you generate metadata for $LOCATION/$name!'
+    exit 1
+
+elif [ ! -f "$perm/PROJ_INFO" -a "$user" = "$projowner" -a "`echo $MAPSET`" = "PERMANENT" -a "$xycheck" != "0" ] ; then
+  echo ''
+  echo 'After this program exits, please run g.setproj to set projection'
+  echo 'parameters, then reenter g.meta. Thanks.'
+  exit 0
+elif [ ! -f "$perm/PROJ_INFO" -a "$user" = "$projowner" -a $MAPSET != "PERMANENT" -a "$xycheck" != "0" ] ; then
+  echo "$user, please exit out of $LOCATION,"
+  echo "reenter GRASS in the PERMANENT mapset and run g.setproj."
+  echo "Afterward, you may return here to complete the metadata entry."
+  exit 1
+
+elif [ ! -f "$perm/PROJ_INFO" -a "$xycheck" = "0" ] ; then
+  echo ''
+  echo "$name is in an x,y location. Do you want to stop now and"
+  $ECHON "record metadata after registration? (y) "
+  read ans
+  if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+     continue
+  else
+     exit 0
+  fi
+
+elif [ -f "$perm/PROJ_INFO" ] ; then
+  echo ''
+  echo 'PROJ_INFO found . . . continuing.'
+  ellipsoid=`cat "$perm"/PROJ_INFO | awk '/ellps/ {print $2}' | tr -d ' '`
+    if [ "$ellipsoid" = "clrk66" ] ; then
+    ellipsoid="clark66"
+    fi
+  proj=`cat "$perm"/PROJ_INFO | awk '/proj/ {print $2}' | tr -d ' '`
+  zone=`cat "$perm"/PROJ_INFO | awk '/zone/ {print $2}' | tr -d ' '`
+  units=`cat "$perm"/PROJ_UNITS | awk '/units:/ {print $2}' | tr -d ' '`
+  unit=`cat "$perm"/PROJ_UNITS | awk '/unit:/ {print $2}' | tr -d ' '`
+fi
+
+if [ "$ftype" = "cell" -a ! -d "$LOCATION/cell_misc" ] ; then
+  mkdir "$LOCATION/cell_misc"
+  mkdir "$LOCATION/cell_misc/$name"
+  metadir="$LOCATION/cell_misc/$name"
+  metafile="$LOCATION/cell_misc/$name/metadata"
+elif [ "$ftype" = "cell" -a -d "$LOCATION/cell_misc" -a ! -d "$LOCATION/cell_misc/$name" ] ; then
+  mkdir $LOCATION/cell_misc/$name
+  metadir="$LOCATION/cell_misc/$name"
+  metafile="$LOCATION/cell_misc/$name/metadata"
+elif [ "$ftype" = "cell" -a -d "$LOCATION/cell_misc/$name" ] ; then
+  metadir="$LOCATION/cell_misc/$name"
+  metafile="$LOCATION/cell_misc/$name/metadata"
+fi
+
+if [ "$ftype" = "dig" -a ! -d "$LOCATION/dig_misc" ] ; then
+  mkdir $LOCATION/dig_misc
+  mkdir $LOCATION/dig_misc/$name
+  metadir="$LOCATION/dig_misc/$name"
+  metafile="$LOCATION/dig_misc/$name/metadata"
+elif [ "$ftype" = "dig" -a  -d "$LOCATION/dig_misc" -a ! -d "$LOCATION/dig_misc/$name" ] ; then
+  mkdir $LOCATION/dig_misc/$name
+  metadir="$LOCATION/dig_misc/$name"
+  metafile="$LOCATION/dig_misc/$name/metadata"
+elif [ "$ftype" = "dig" -a  -d "$LOCATION/dig_misc" -a  -d "$LOCATION/dig_misc/$name" ] ; then
+  metadir="$LOCATION/dig_misc/$name"
+  metafile="$LOCATION/dig_misc/$name/metadata"
+fi
+
+if [ "$ftype" = "site_lists" -a ! -d $LOCATION/site_misc ] ; then
+  mkdir "$LOCATION/site_misc"
+  mkdir "$LOCATION/site_misc/$name"
+  metadir="$LOCATION/site_misc/$name"
+  metafile="$LOCATION/site_misc/$name/metadata"
+elif [ "$ftype" = "site_lists" -a ! -d "$LOCATION/site_misc/$name" ] ; then
+  mkdir "$LOCATION/site_misc/$name"
+  metadir="$LOCATION/site_misc/$name"
+  metafile="$LOCATION/site_misc/$name/metadata"
+elif [ "$ftype" = "site_lists" -a -d "$LOCATION/site_misc/$name" ] ; then
+  metadir="$LOCATION/site_misc/$name"
+  metafile="$LOCATION/site_misc/$name/metadata"
+fi
+
+export name
+export metadir
+export metafile
+metaproj="$METAHOME/meta.proj"
+
+if [ ! -f $metafile ] ; then
+  break
+
+# if the metadata file already exists & "Metadata" ref. can be grepped from it
+
+elif [ -f $metafile ] ; then
+  construct=`cat $metafile | grep Contact_Instructions`
+  if [ -n "$construct" ] ; then
+     clear
+     echo ''
+     echo "Additional metadata has already been added to $ftype map $name."
+     sleep 2
+     echo ''
+     $ECHON "Would you like to see the file? (y/n) (n) "
+	read ans
+	if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+	more $metafile
+	fi
+	echo ""
+        $ECHON "Would you like to edit minor changes with vi? (y/n) (n) "
+        read ans
+      		if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+        	  vi $metafile
+		  clear
+	 	  echo ''
+     		  sleep 1
+		  echo "Editing complete. Exiting program."
+		  exit 0
+		fi
+     sleep 1
+     echo ''
+     echo "Would you like to backup the info, remove the metadata"
+     $ECHON 'file and start from scratch ? (y/n) [n] '
+     read ans
+        if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+ 	 echo ''
+       	 echo "I am making a copy in $LOCATION called"
+         echo "$name.$tmeta, then removing the original metadata file."
+         sleep 5
+         cp $metafile $LOCATION/$name.$tmeta
+         rm $metafile
+       else
+	    echo ''
+            echo "Leaving $metafile" 
+	    echo "unmodified"
+	    echo ''
+            echo "Exiting..."
+            exit 0
+       fi
+
+# there is a metadata file, but there is no needed "Contact_Instructions" line 
+# in the metadata file; additionally, there is no backup of the file in 
+# $LOCATION.
+
+  elif [ -z "$construct" -a ! -f $LOCATION/$name.$tmeta ] ; then
+    echo ''
+    echo "Do not worry. The normal conclusion line is missing from the"
+    echo "metadata file. I am making a copy in $LOCATION "
+    echo "called $name.$tmeta, then removing the original metadata file."
+    echo "Let us continue."
+    sleep 7
+    cp $metafile $LOCATION/$name.$tmeta
+    rm $metafile
+
+# there is a metadata file, there is no needed "Contact" line in the metadata 
+# file, but there is a backup of the file in $LOCATION.
+
+  elif [ -z "$construct" -a -f $LOCATION/$name.$tmeta ] ; then
+    tmetacheck=`du -s $LOCATION/$name.$tmeta | cut -d'/' -f1 | tr -d ' '`
+    realmetacheck=`du -s $metafile | cut -d'/' -f1 | tr -d ' '`
+    if [ $tmeta -gt $realmetacheck ] ; then
+      break
+    else
+      cp $metafile $LOCATION/$name.$tmeta
+    rm $metafile
+    echo ''
+    echo 'A copy of your metadata file now is present in'
+    echo "$LOCATION entitled $name.$tmeta."
+    echo ''
+    echo 'If necessary, you may refer to it for help in entering metadata.'
+    echo ''
+    echo "You will have the option of removing this file at the end"
+    echo "of this program."
+    sleep 6
+    fi
+  fi
+fi
+clear
+
+echo "Data_Set_Identity: $name" >> $metafile
+$ECHON "Identification_Code: $user" >> $metafile
+date +%Y%m%d%H%M%S >> $metafile
+wordwrap="$METAHOME/wordwrap"
+thesaurus="$METAHOME/metadata.thesaurus"
+clear
+echo ''
+echo "Enter a description of $name including its intended use and"
+echo "limitations. Word-wrap is provided, so do not worry about" 
+echo "how data is entered from the keyboard."
+echo ''
+echo "Whenever you see an     >   , an entry is expected."
+echo ''
+echo 'Description/Use/Limits: '
+$ECHON '>  '
+read input
+tmpfile=''
+tmpfile=`g.tempfile $$`
+echo "$input" > $tmpfile
+while [ -n "$input" ] ; do
+$ECHON '> '
+read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+done
+clear
+echo ''
+echo "Long entries utilizing wordwrap will take several moments to complete."
+echo "Please be patient."
+$wordwrap Data_Set_Description $tmpfile
+trap "rm $tmp2 ; exit 0" 2
+rm $tmpfile
+
+clear
+echo ''
+echo "Please use the following thesaurus to describe"
+echo "the thematic content of $name." 
+echo ''
+sleep 2
+"$thesaurus"
+
+clear
+echo ''
+echo 'Enter any additional theme keywords.'
+echo ''
+$ECHON "Theme Keyword> "
+read input
+tmpfile=''
+tmpfile=`g.tempfile $$`
+echo "$input" > $tmpfile
+while [ -n "$input" ] ; do
+$ECHON '             > '
+read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+done
+"$wordwrap" Theme_Keywords $tmpfile
+trap "rm $tmpfile ; exit 0" 2
+rm $tmpfile
+clear
+
+echo ''
+if [ "$proj" = "utm" ] ; then
+  echo "Determining the geographic extent in $proj & lat/lon."
+else
+  echo "Determining the geographic extent in $proj."
+fi
+
+# Determining the geographic extent in utm and lat/long
+
+if [ $tmeta = "vmeta" ] ; then
+  west=`cat $tmp1 | grep WEST | cut -c15-21 | tr -d ' ' | tr -d '.'`
+  east=`cat $tmp1 | grep EAST | cut -c15-21 | tr -d ' ' | tr -d '.'`
+  north=`cat $tmp1 | grep NORTH | cut -c15-22 | tr -d ' ' | tr -d '.'`
+  south=`cat $tmp1 | grep SOUTH | cut -c15-22 | tr -d ' ' | tr -d '.'`
+elif [ $tmeta = "rmeta" -o $tmeta = "imeta" -a -z "$reclcheck" ] ; then
+  west=`cat $LOCATION/cellhd/$name | grep west | cut -d":" -f2 | tr -d ' '`
+  east=`cat $LOCATION/cellhd/$name | grep east | cut -d":" -f2 | tr -d ' '`
+  north=`cat $LOCATION/cellhd/$name | grep north | cut -d":" -f2 | tr -d ' '`
+  south=`cat $LOCATION/cellhd/$name | grep south | cut -d":" -f2 | tr -d ' '`
+elif [ $tmeta = "rmeta" -o $tmeta = "imeta" -a -n "$reclcheck" ] ; then
+  west=`r.info $name | grep E: | cut -d: -f3 | tr -d ' ' | tr -d '[A-Za-z]'`
+  east=`r.info $name | grep E: | cut -d: -f2 | tr -d ' ' | tr -d '[A-Za-z]'`
+  north=`r.info $name | grep N: | cut -d: -f2 | tr -d ' ' | tr -d '[A-Za-z]'`
+  south=`r.info $name | grep N: | cut -d: -f3 | tr -d ' ' | tr -d '[A-Za-z]'`
+elif [ $tmeta = "smeta" ] ; then
+  sitetmp=`g.tempfile $$`
+
+# The number of sites is calculated below. Any 0 value coordinates or
+# duplicate sites were not used in calculating the number of sites.
+
+  cat $LOCATION/site_lists/$name | awk 'BEGIN { FS = "|" } $1 > 0.00 && $2 > 0.00 {print $1 "|" $2 "|"$3}' | sort -u | sed '/name/d' | sed '/desc/d' > $sitetmp
+  sitewc=`cat $sitetmp | wc -l | tr -d ' '`
+  east=`cat $sitetmp | sort -t"|" | sed -n "$sitewc""p"| cut -d"|" -f1`
+  west=`cat $sitetmp | sort -t"|" | sed -n '1p' | cut -d"|" -f1`
+  north=`cat $sitetmp | sort +1n -t"|" | sed -n "$sitewc""p" | cut -d"|" -f2`
+  south=`cat $sitetmp | sort +1n -t"|" | sed -n '1p' | cut -d"|" -f2`
+  trap "rm $sitetmp ; exit 0" 2
+  rm $sitetmp
+fi
+
+if [ "$proj" = "utm" ] ; then
+  utmin=`g.tempfile $$`
+  utmout=`g.tempfile $$`
+  echo "$west   ""$north" > $utmin
+  echo "$east   ""$north" >> $utmin
+  echo "$west   ""$south" >> $utmin
+  echo "$east   ""$south" >> $utmin
+  echo "end" >> $utmin
+  m.u2ll -d sph=$ellipsoid zo=$zone in=$utmin ou=$utmout
+  nw=`awk 'NR == 1 {print $0}' $utmout`
+  ne=`awk 'NR == 2 {print $0}' $utmout`
+  sw=`awk 'NR == 3 {print $0}' $utmout`
+  se=`awk 'NR == 4 {print $0}' $utmout`
+  trap "rm $utmout $utmin ; exit 0" 2
+  rm $utmin $utmout
+fi
+
+echo "West_Bounding_Coordinate: $west" >> $metafile
+echo "East_Bounding_Coordinate: $east" >> $metafile
+echo "North_Bounding_Coordinate: $north" >> $metafile
+echo "South_Bounding_Coordinate: $south" >> $metafile
+if [ "$proj" = "utm" ] ; then
+  echo "Lat_Long_Box: $nw ; $ne" >> $metafile
+  echo "              $sw ; $se" >> $metafile
+  latnw=`echo $nw | cut -d' ' -f2 | tr -d ' '`
+  latne=`echo $ne | cut -d' ' -f2 | tr -d ' '`
+  latsw=`echo $sw | cut -d' ' -f2 | tr -d ' '`
+  latse=`echo $se | cut -d' ' -f2 | tr -d ' '`
+  longnw=`echo $nw | cut -d' ' -f1 | tr -d ' '`
+  longne=`echo $ne | cut -d' ' -f1 | tr -d ' '`
+  longsw=`echo $sw | cut -d' ' -f1 | tr -d ' '`
+  longse=`echo $se | cut -d' ' -f1 | tr -d ' '`
+fi
+
+#echo "Data_Set_G-Polygon_Outer_G-Ring_Latitude:" >> $metafile
+#echo "Data_Set_G-Polygon_Outer_G-Ring_Longitude:" >> $metafile
+#echo "Data_Set_G-Polygon_Exclusion_G-Ring_Latitude:" >> $metafile
+#echo "Data_Set_G-Polygon_Exclusion_G-Ring_Longitude:" >> $metafile
+clear
+echo ''
+
+echo "From the following list, please select the geographic type of significant"
+echo "areas and/or places within the geographic extent of $name."
+echo ''
+$ECHON "airport"
+$ECHON "		channel"
+$ECHON "		island	"
+$ECHON "		ridge"
+echo
+$ECHON "arch"
+$ECHON "		church"
+$ECHON "		isthmus	"
+$ECHON "		river"
+echo
+$ECHON "area"
+$ECHON "		city"
+$ECHON "		lake	"
+$ECHON "		school"
+echo
+$ECHON "arroyo"
+$ECHON "		cliff"
+$ECHON "		lava	"
+$ECHON "		sea"
+echo
+$ECHON "bar"
+$ECHON "		county"
+$ECHON "		levee	"
+$ECHON "		slope"
+echo
+$ECHON "basin"
+$ECHON "		crater"
+$ECHON "		locale	"
+$ECHON "		spring"
+echo
+$ECHON "bay	"
+$ECHON "	crossing"
+$ECHON "	mine	"
+$ECHON "		state/territory"
+echo
+$ECHON "beach"
+$ECHON "		dam"
+$ECHON "		minor civil division	"
+$ECHON "stream"
+echo
+$ECHON "bench"
+$ECHON "		falls"
+$ECHON "		nation	"
+$ECHON "		summit"
+echo
+$ECHON "bend"
+$ECHON "		flat"
+$ECHON "		oilfield"
+$ECHON "		swamp"
+echo
+$ECHON "bridge"
+$ECHON "		forest"
+$ECHON "		park	"
+$ECHON "		tower"
+echo
+$ECHON "building"
+$ECHON "	gap"
+$ECHON "		pillar	"
+$ECHON "		trail"
+echo
+$ECHON "canal"
+$ECHON "		geyser"
+$ECHON "		plain	"
+$ECHON "		tunnel"
+echo
+$ECHON "cape"
+$ECHON "		glacier"
+$ECHON "		range	"
+$ECHON "		valley"
+echo
+$ECHON "cave"
+$ECHON "		gut"
+$ECHON "		rapids	"
+$ECHON "		well"
+echo
+$ECHON "cemetery"
+$ECHON "	harbor"
+$ECHON "		reserve	"
+$ECHON "		woods"
+echo
+$ECHON "census unit"
+$ECHON "	hospital"
+echo "	reservoir"
+echo ''
+echo ''
+echo "Please enter one of the above geographic types. If you have a more"
+echo 'appropriate geographic type, enter it: '
+echo ''
+$ECHON '> '
+read geogtype
+echo ''
+echo ''
+echo 'Please enter in the names of a significant areas or places that fall'
+echo "within the extent of $name:"
+echo ''
+$ECHON "> "
+read input
+if [ -n "$input" ] ; then
+  tmpfile=''
+  tmpfile=`g.tempfile $$`
+  echo "$input" > $tmpfile
+  while [ -n "$input" ] ; do
+    $ECHON '> '
+    read input
+    if [ -z "$input" ] ; then
+      break
+      else
+      echo "$input" >> $tmpfile
+    fi
+  done
+  "$wordwrap" Geographic_Keyword_Name $tmpfile
+  echo "Geographic_Keyword_Type: $geogtype" >> $metafile
+  trap "rm $tmpfile ; exit 0" 2
+  rm $tmpfile
+fi
+
+if [ -f $metadir/graphic_misc/graphic ] ; then
+  echo "Browse_Graphic_File_Name: $name" >> $metafile
+  tmpfile=''
+  tmpfile=`g.tempfile $$`
+  cat "$metadir/graphic_misc/graphic.txt" > $tmpfile
+  "$wordwrap" Browse_Graphic_File_Description $tmpfile
+  trap "rm $tmpfile ; exit 0" 2
+  rm $tmpfile
+  echo "Browse_Graphic_File_Type: `cat $metadir/graphic_misc/graphic.type`" >> $metafile
+else
+  clear
+  echo ''
+  $ECHON "Does a browse graphic exist for $name? (n) "
+  read ans
+  if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+    echo ''
+    $ECHON "Enter the graphic name for $name: "
+    read gname
+    echo "Browse_Graphic_File_Name: $gname" >> $metafile
+    echo ''
+    echo "Please enter a description of $gname."
+    echo ''
+    $ECHON "> "
+    read input
+    if [ -n "$input" ] ; then
+      tmpfile=''
+      tmpfile=`g.tempfile $$`
+      echo "$input" > $tmpfile
+      while [ -n "$input" ] ; do
+        $ECHON '> '
+        read input
+        if [ -z "$input" ] ; then
+          break
+        else
+          echo "$input" >> $tmpfile
+        fi
+      done
+      "$wordwrap" Browse_Graphic_File_Description $tmpfile
+      trap "rm $tmpfile ; exit 0" 2
+      rm $tmpfile
+    fi
+    clear
+    echo ''
+    echo "Which graphic type is $gname?"
+    echo ''
+    echo '1 - CGM (Computer Graphics Metafile)'
+    echo '2 - EPS (Encapsulated Postscript Format)'
+    echo '3 - GIF (Graphic Interchange Format)'
+    echo '4 - JPEG (Joint Photographic Experts Group Format)'
+    echo '5 - PBM (Portable Bit Map Format)'
+    echo '6 - PS (Postscript Format)'
+    echo '7 - TIFF (Tagged Image File Format)'
+    echo '8 - XWD (X-Windows Dump)'
+    echo ''
+    $ECHON "Please enter the appropriate number: "
+    read number
+    case $number in
+	1) echo "Browse_Graphic_File_Type: CGM" >> $metafile;;
+	2) echo "Browse_Graphic_File_Type: EPS" >> $metafile;;
+	3) echo "Browse_Graphic_File_Type: GIF" >> $metafile;;
+	4) echo "Browse_Graphic_File_Type: JPEG" >> $metafile;;
+	5) echo "Browse_Graphic_File_Type: PBM" >> $metafile;;
+	6) echo "Browse_Graphic_File_Type: PS" >> $metafile;;
+	7) echo "Browse_Graphic_File_Type: TIFF" >> $metafile;;
+	8) echo "Browse_Graphic_File_Type: XWD" >> $metafile;;
+    esac
+  fi
+fi
+clear
+echo ''
+
+echo "Is there a recommended reference work to be used"  
+$ECHON "for $name? (y) "
+read ans
+if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+  echo "Data_Set_Citation: none" >> $metafile
+else
+  echo ''
+  echo "Please enter the citation for $name:"
+  $ECHON "> "
+  read input
+  tmpfile=''
+  tmpfile=`g.tempfile $$`
+  echo "$input" > $tmpfile
+  while [ "$input" != "" ] ; do
+  $ECHON '> '
+  read input
+  if [ "$input" = "" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+done
+"$wordwrap" Data_Set_Citation $tmpfile
+trap "rm $tmp2 ; exit 0" 2
+rm $tmpfile
+fi
+echo ''
+echo 'Would you like to credit those who contributed'
+$ECHON 'to the data set? (y) '
+read ans
+if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+  echo "Data_Set_Credit: none" >> $metafile
+else
+  echo ''
+  echo "Please enter the credits:"
+  $ECHON "> "
+  read input
+  tmpfile=''
+  tmpfile=`g.tempfile $$`
+  echo "$input" > $tmpfile
+  while [ "$input" != "" ] ; do
+  $ECHON '> '
+  read input
+  if [ "$input" = "" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+done
+"$wordwrap" Data_Set_Credit $tmpfile
+trap "rm $tmp2 ; exit 0" 2
+rm $tmpfile
+fi
+clear
+echo ''
+
+echo "Does $name have use restrictions, including copyright"
+echo 'that govern the use of the data set after access has'
+$ECHON 'been provided? (n) '
+read ans
+if [ "$ans" = "Y" -o "$ans" = "y" ] ; then
+  echo ''
+  echo "Please state the use restrictions:"
+  $ECHON "> "
+  read input
+  tmpfile=''
+  tmpfile=`g.tempfile $$`
+  echo "$input" > $tmpfile
+  while [ -n "$input" ] ; do
+  $ECHON '> '
+  read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+  done
+  "$wordwrap" Use_Restrictions $tmpfile
+  trap "rm $tmpfile ; exit 0" 2
+  rm $tmpfile
+else
+  echo "Use_Restrictions: none" >> $metafile
+fi
+clear
+echo ''
+$ECHON 'Enter your company name (briefly): '
+read organ
+organ=`echo "$organ"`
+group=`ls -lag $LOCATION/$ftype/$name | awk '{print $4}'`
+echo ''
+response=no
+until [ "$response" = yes ] ; do
+  echo 'Which permissions should be set?'
+  echo ''
+  echo "1 - $organ use only: Unix permissions will be rwx-r-x---"
+  echo "2 - Public Domain: Unix permissions will be rwxr-xr-x"
+  echo "3 - $user only: Unix permissions will be rwx------"
+  echo "4 - disregard"
+  echo ''
+  $ECHON "Please type in the appropriate number: "
+  read input
+  case $input in
+	1) chmod -R 750 $LOCATION/$ftype/$name
+	   response=yes
+	   echo "Access_Restrictions: $organ use only" >> $metafile;;
+	2) chmod -R 755 $LOCATION/$ftype/$name
+	   response=yes
+	   echo "Access_Restrictions: Public Domain" >> $metafile;;
+	3) chmod -R 700 $LOCATION/$ftype/$name
+	   response=yes
+	   echo "Access_Restrictions: $user only" >> $metafile;;
+	4) response=yes
+	   break;; 
+        *) response=no;;
+esac
+done
+
+clear
+echo ''
+echo "Is a specific security classification system used"
+$ECHON "for $name? (n) "
+read ans
+if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+  echo ''
+  echo "Enter the security classification system name:"
+  $ECHON '> '
+  read input
+  if [ -n "$input" ] ; then
+    tmpfile=''
+    tmpfile=`g.tempfile $$`
+    echo "$input" > $tmpfile
+    while [ -n "$input" ] ; do
+      $ECHON '> '
+      read input
+      if [ -z "$input" ] ; then
+        break
+      else
+        echo "$input" >> $tmpfile
+      fi
+    done
+    "$wordwrap" Security_Classification_System $tmpfile
+    trap "rm $tmpfile ; exit 0" 2
+    rm $tmpfile
+  fi
+fi
+echo ''
+echo "Which handling restrictions apply to $name?"
+echo ''
+echo '1 - Top Secret'
+echo '2 - Secret'
+echo '3 - Confidential'
+echo '4 - Restricted'
+echo '5 - Unclassified'
+echo ''
+$ECHON "Please enter the desired number: "
+read ans
+case $ans in
+	1) echo "Security_Classification: Top Secret" >> $metafile;;
+	2) echo "Security_Classification: Secret" >> $metafile;;
+	3) echo "Security_Classification: Confidential" >> $metafile;;
+	4) echo "Security_Classification: Restricted" >> $metafile;;
+	5) echo "Security_Classification: Unclassified" >> $metafile;;
+esac
+echo ''
+echo 'Please enter any other information about the'
+echo "restrictions imposed on $name."
+echo ''
+$ECHON "> "
+read input
+if [ -n "$input" ] ; then
+  tmpfile=''
+  tmpfile=`g.tempfile $$`
+  echo "$input" > $tmpfile
+  while [ -n "$input" ] ; do
+    $ECHON '> '
+    read input
+    if [ -z "$input" ] ; then
+      break
+    else
+      echo "$input" >> $tmpfile
+    fi
+  done
+  "$wordwrap" Security_Handling_Description $tmpfile
+  trap "rm $tmpfile ; exit 0" 2
+  rm $tmpfile
+fi
+clear
+echo ''
+
+echo "The Native_Data_Set_Environment is being collected! Info includes the"
+echo "operating system, system architecture, release, hostname, and file size."
+echo "The total size (including the metadata file) will be appended later."
+host=`cat $METAHOME/meta.system | grep Network_Address | cut -d: -f2 | sed 's/.//'`
+architect=`arch`
+opsys=`showrev | grep 'Kernel version' | cut -d':' -f2 | sed 's/.//'`
+echo "Native_Data_Set_Environment: $opsys" >> $metafile
+echo "                             Architecture is $architect." >> $metafile
+echo "                             host=$host ; File Size= Mb" >> $metafile
+
+clear
+echo ''
+storage=$LOCATION
+echo "What is the earliest valid date for the data in $ftype" 
+echo "$name? (If unknown, so state.)"
+echo ''
+echo "Here is some possible help:"
+echo ''
+if [ "$ftype" = "dig" ] ; then
+  cat $tmp1 | grep 'DIGIT DATE' | cut -c15-70
+  echo ''
+  $ECHON "Do you want to accept this date? (y) "
+  read ans
+    if [ "$ans" = "N" -o "$ans" = "n" ] ; then
+      echo ''
+      $ECHON "Enter earliest valid date: "
+      read earlydate
+      echo "Beginning_Date_of_Information_Content: $earlydate" >> $metafile
+    else
+      earlydate=`cat $tmp1 | grep 'DIGIT DATE' | cut -c15-70`
+      echo "Beginning_Date_of_Information_Content: $earlydate" >> $metafile
+    fi
+elif [ "$ftype" = "site_lists" ] ; then
+  sitewhen=`cat "$LOCATION/site_lists/$name" | grep name | cut -d'|' -f2`
+  sitewhen2=`cat "$LOCATION/site_lists/$name" | grep desc | cut -d'|' -f2`
+  if [ -n "$sitewhen" ] ; then
+    echo ''
+    echo "$sitewhen"
+    echo "$sitewhen2"
+    echo ''
+  fi
+    echo ''
+    $ECHON "Please enter the earliest valid date: "
+    read earlydate
+    echo "Beginning_Date_of_Information_Content: $earlydate" >> $metafile
+elif [ "$ftype" = "cell" ] ; then
+  cat $LOCATION/hist/$name | sed -n '1p'
+  echo ''
+  $ECHON "Do you want to accept this date? (n) "
+  read ans
+    if [ "$ans" = "Y" -o "$ans" = "y" ] ; then
+      echo ''
+      earlydate=`cat $LOCATION/hist/$name | sed -n '1p' | tr -d ":"`
+      echo "Beginning_Date_of_Information_Content: $earlydate (hhmmss)" >> $metafile
+    else
+      echo ''
+      $ECHON "Enter earliest valid date: "
+      read earlydate
+      echo "Beginning_Date_of_Information_Content: $earlydate" >> $metafile
+    fi
+fi
+echo ''
+echo ''
+echo "What is the latest valid date for the data in $ftype" 
+echo "$name? (If unknown or not applicable, so state.)"
+echo ''
+#echo "Here is some possible help:"
+if [ "$ftype" = "dig" ] ; then
+  cat $tmp1 | grep 'DIGIT DATE' | cut -c15-70
+  echo ''
+  $ECHON "Do you want to accept this date? (y) "
+  read ans
+    if [ "$ans" = "N" -o "$ans" = "n" ] ; then
+      echo ''
+      $ECHON "Enter latest valid date: "
+      read latedate
+      echo "Ending_Date_of_Information_Content: $ans" >> $metafile
+    else
+      latedate=`cat $tmp1 | grep 'DIGIT DATE' | cut -c15-70`
+      echo "Ending_Date_of_Information_Content: $latedate" >> $metafile
+    fi
+elif [ "$ftype" = "site_lists" ] ; then
+  sitewhen=`cat $LOCATION/site_lists/$name | grep name | cut -d'|' -f2`
+  sitewhen2=`cat $LOCATION/site_lists/$name | grep desc | cut -d'|' -f2`
+  if [ -n "$sitewhen" ] ; then
+    echo ''
+    echo "Does this information help with the latest valid date?"
+    echo ''
+    echo "$sitewhen"
+    echo "$sitewhen2"
+    echo ''
+  fi
+    echo ''
+    $ECHON "Please enter the latest valid date: "
+    read latedate
+    echo "Beginning_Date_of_Information_Content: $latedate" >> $metafile
+elif [ "$ftype" = "cell" ] ; then
+  cat $LOCATION/hist/$name | sed -n '1p'
+  echo ''
+  $ECHON "Do you want to accept this date? (n) "
+  read ans
+    if [ "$ans" = "Y" -o "$ans" = "y" ] ; then
+      echo ''
+      latedate=`cat $LOCATION/hist/$name | sed -n '1p' | tr -d ":"`
+      echo "Ending_Date_of_Information_Content: $latedate (hhmmss)" >> $metafile
+    else
+      echo ''
+      $ECHON "Enter latest valid date: "
+      read latedate
+      echo "Ending_Date_of_Information_Content: $latedate" >> $metafile
+    fi
+fi
+clear
+
+echo ''
+echo "Please explain the accuracy of the identification of the entities and"
+echo "assignments of values in $name and a description of the tests used."
+echo ''
+$ECHON "> "
+read input
+if [ -n "$input" ] ; then
+  tmpfile=''
+  tmpfile=`g.tempfile $$`
+  echo "$input" > $tmpfile
+  while [ -n "$input" ] ; do
+    $ECHON '> '
+    read input
+    if [ -z "$input" ] ; then
+      break
+    else
+      echo "$input" >> $tmpfile
+    fi
+  done
+  "$wordwrap" Thematic_Accuracy_Report $tmpfile
+  trap "rm $tmpfile ; exit 0" 2
+  rm $tmpfile
+fi
+clear
+echo ''
+echo "Please estimate the thematic accuracy of $name by selecting one"
+echo "of the following."
+echo ''
+	echo "1 - A percentage to be specified"
+	echo "2 - Unknown"
+	echo "3 - Not applicable"
+echo ''
+$ECHON 'Type the number and press Return. '
+read input
+case $input in
+	1) echo ""
+	   $ECHON 'Please specify a percentage (0 <= Thematic Accuracy <= 100): '
+	   read input
+	   input=`echo $input | cut -d'.' -f1 | tr -d '%'`
+	   echo "Thematic_Accuracy: $input%" >> $metafile
+	   echo ''
+	   echo "Please define the thematic accuracy measure and describe how the"
+	   echo "$input% estimate was derived."
+	   echo ''
+	   $ECHON "> "
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+ 	     $ECHON '> '
+	     read input
+	       if [ -z "$input" ] ; then
+	         break
+	       else
+	         echo "$input" >> $tmpfile
+	       fi
+	   done
+	   "$wordwrap" Thematic_Accuracy_Explanation $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile;;
+	2) echo "Thematic_Accuracy: Unknown" >> $metafile
+	   echo "Thematic_Accuracy_Explanation: Unknown" >> $metafile;;
+	3) echo "Thematic_Accuracy: Not applicable" >> $metafile
+	   echo "Thematic_Accuracy_Explanation: Not applicable" >> $metafile;;
+esac
+
+clear
+
+echo ''
+echo "Explain the logic behind the data relationships in $name for the."
+echo 'Logical Consistency entry.'
+echo ''
+	echo "1 - Explanation to be entered"
+	echo "2 - Unknown"
+	echo "3 - Not applicable"
+echo ''
+$ECHON 'Type the number and press Return. '
+read input
+case $input in
+	1) echo ""
+	   $ECHON "> "
+	   read input
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	     while [ -n "$input" ] ; do
+  		$ECHON '> '
+		read input
+    		if [ -z "$input" ] ; then
+      		  break
+    		else
+      		  echo "$input" >> $tmpfile
+    		fi
+	    done
+	   "$wordwrap" Logical_Consistency_Report $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile;;
+	2) echo "Logical_Consistency_Report: Unknown" >> $metafile;;
+	3) echo "Logical_Consistency_Report: Not applicable" >> $metafile;;
+esac
+clear
+
+echo ''
+echo "How complete is $name regarding omissions, selection,"
+echo "criteria, generalizations, definitions used, and other"
+echo "rules used to derive the data set?"
+echo ''
+	echo "1 - Explanation to be entered"
+	echo "2 - Unknown"
+	echo "3 - Not applicable"
+echo ''
+$ECHON 'Type the number and press Return. '
+read input
+case $input in
+	1) echo ""
+	   $ECHON "> "
+	   read input
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	     while [ -n "$input" ] ; do
+  		$ECHON '> '
+		read input
+    		if [ -z "$input" ] ; then
+      		  break
+    		else
+      		  echo "$input" >> $tmpfile
+    		fi
+	    done
+	   "$wordwrap" Completeness_Report $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile;;
+	2) echo "Completeness_Report: Unknown" >> $metafile;;
+	3) echo "Completeness_Report: Not applicable" >> $metafile;;
+esac
+clear
+echo ''
+
+# determining horizontal and vertical positional accuracy
+
+count=1
+while [ $count -lt 3 ] ; do
+  if [ $count = 1 ] ; then
+    acc="horizontal"
+    acc2="Horizontal"
+  elif [ $count = 2 ] ; then
+    acc="vertical"
+    acc2="Vertical"
+  fi
+  $ECHON "Do you know the $acc accuracy of $name? (n) "
+  read ans
+  if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+    echo ''
+    echo "Enter the $acc accuracy in"
+    echo ''
+    echo '1 - feet'
+    echo '2 - meters'
+    echo ''
+    $ECHON 'Please select the appropriate number: '
+    read ans
+    case $ans in
+        1) echo ''
+           $ECHON "$acc2 accuracy in how many feet? "
+           read howacc
+           accunit=feet;;
+        2) echo ''
+           $ECHON "$acc2 accuracy in how many meters? "
+           read howacc
+           accunit=meters;;
+    esac
+    clear
+    echo ''
+    echo "How did you determine accuracy in $name?"
+    echo ''
+    $ECHON "> "
+    read input
+    if [ -n "$input" ] ; then
+      tmpfile=''
+      tmpfile=`g.tempfile $$`
+      echo "$input" > $tmpfile
+      while [ -n "$input" ] ; do
+      $ECHON '> '
+      read input
+      if [ -z "$input" ] ; then
+        break
+      else
+        echo "$input" >> $tmpfile
+      fi
+      done
+      "$wordwrap" "$acc2"_Accuracy_Report $tmpfile
+      trap "rm $tmpfile ; exit 0" 2
+      rm $tmpfile
+    fi
+      echo "$acc2""_Positional_Accuracy: $howacc $accunit" >> $metafile
+      echo ''
+      echo "Please enter a definition of the $acc positional accuracy measure."
+      echo ''
+      $ECHON "> "
+      read input
+      if [ -n "$input" ] ; then
+        tmpfile=''
+        tmpfile=`g.tempfile $$`
+        echo "$input" > $tmpfile
+        while [ -n "$input" ] ; do
+        $ECHON '> '
+        read input
+        if [ -z "$input" ] ; then
+          break
+        else
+          echo "$input" >> $tmpfile
+        fi
+        done
+        "$wordwrap" "$acc2"_Accuracy_Explanation $tmpfile
+        trap "rm $tmpfile ; exit 0" 2
+        rm $tmpfile
+      fi
+      count=`expr $count + 1`
+  else
+    echo "$acc2""_Positional_Accuracy: unknown" >> $metafile
+    count=`expr $count + 1`
+  fi
+      echo ''
+      echo ''
+done
+clear
+echo ''
+
+if [ $tmeta = "imeta" ] ; then
+  echo "What sensor type acquired the data ?"
+  echo ''
+  echo '1 - AVHRR> Advanced Very High Resolution Radiometer'
+  echo '2 - AVIRIS> Airborne Visible/Infrared Imaging Spectrometer '
+  echo '3 - MSS> Multispectral Scanner'
+  echo '4 - TM> Thematic Mapper'
+  echo "5 - SPOT> Systeme Probatoire d""'""Observation de la Terre"
+  echo '6 - SLAR> Side Looking Airborne Radar'
+  echo '7 - Aerial Photography Camera'
+  $ECHON "Type the number and press Enter:  "
+  read file_number
+  case $file_number in
+        1) sense="avhrr"
+           echo "Sensor_Type: AVHRR" >> $metafile
+           echo "Sensor_Agency: NOAA" >> $metafile;;
+        2) sense="aviris"
+           echo "Sensor_Type: AVIRIS" >> $metafile
+           echo "Sensor_Agency: NASA" >> $metafile;;
+        3) echo ''
+           sense="landsat"
+           $ECHON "Which Landsat satellite acquired the data? (1,2, or 3) "
+	   read landsatno
+	   echo "Landsat_number: $landsatno" >> $metafile
+	   echo ''
+	   $ECHON "What is the row number of the image? "
+	   read irow
+	   echo ''
+	   $ECHON "What is the path number of the image? "
+	   read ipath
+	   echo "Path_number: Row $irow   Path $ipath" >> $metafile
+           echo "Sensor_Type: MSS" >> $metafile
+           echo "Sensor_Agency: EOSAT" >> $metafile;;
+        4) echo ''
+           sense="landsat"
+           $ECHON "Which Landsat satellite acquired the data? (4 or 5) "
+	   read landsatno
+	   echo "Landsat_number: $landsatno" >> $metafile
+	   echo ''
+	   $ECHON "What is the row number of the image? "
+	   read irow
+	   echo ''
+	   $ECHON "What is the path number of the image? "
+	   read ipath
+	   echo "Path_number: Row $irow   Path $ipath" >> $metafile
+           echo "Sensor_Type: TM" >> $metafile
+           echo "Sensor_Agency: EOSAT" >> $metafile;;
+        5) echo ''
+           sense="spot"
+           echo "Sensor_Type: SPOT" >> $metafile
+	   $ECHON "Which SPOT vehicle acquired your data? (Example: SPOT 2) "
+	   read sensorname
+	   echo "SPOT_number: $sensorname" >> $metafile
+	   $ECHON 'What is the row number of the image?  '
+  	   read row
+  	   echo ''
+	   $ECHON 'Enter the path number of the image:  '
+  	   read path
+	   echo "Path_number: Row $row  Path $path" >> $metafile
+           echo "Sensor_Agency: SPOT" >> $metafile;;
+        6) echo ''
+           sense="slar"
+           echo "What band of radar are you using?"
+           $ECHON 'Possibilities are: Ka, K, Ku, X, C, S, L, or P > '
+           read radband
+           $ECHON 'Enter the wavelength if known (in cm): '
+           read wave
+           $ECHON 'Enter frequency if known (in GHz) '
+           read freq
+           $ECHON 'What company/agency flew the mission? '
+           read agency
+           echo "Sensor_Type: SLAR $radband band   $wave cm   $freq GHz" >> $metafile
+           echo "Sensor_Agency: $agency" >> $metafile;;
+        7) echo ''
+           sense="camera"
+           $ECHON 'Camera Name: '
+           read camname
+           $ECHON 'Camera Identification: '
+           read camid
+           $ECHON 'Calibrated focal length mm.: '
+           read foclength
+           $ECHON 'Point of Symmetry (X) mm.: '
+           read symx
+           $ECHON 'POINT of Symmetry (Y) mm.: '
+           read symy
+           $ECHON 'Maximum Number of Fiducials: '
+           read fiducials
+           $ECHON 'What company/agency flew the mission? '
+           read agency
+           echo "Sensor_Type: Air Photo Camera" >> $metafile
+           echo "Camera_Info: $camname" >> $metafile
+           echo "             $camid  $foclength mm" >> $metafile
+           echo "Sensor_Agency: $agency" >> $metafile;;
+        8) echo ''
+           $ECHON "Please specify your sensor type. "
+           read sensor
+           $ECHON 'What company/agency flew the mission? '
+           read agency
+           echo "Sensor_Type: $sensor" >> $metafile
+           echo "Sensor_Agency: $agency" >> $metafile;;
+        *) $ECHON "Invalid entry, please type in the sensor type. "
+           read sensor
+           $ECHON 'What company/agency flew the mission? '
+           read agency
+           echo "Sensor_Type: $sensor" >> $metafile
+           echo "Sensor_Agency: $agency" >> $metafile;;
+  esac
+fi
+
+if [ $tmeta = "imeta" ] && [ $sense = "landsat" -o $sense = "spot" -o $sense = "camera" ] ; then
+   echo ''
+   echo "What percentage cloud cover does this image have?"
+   $ECHON "Please enter an integer value between 0 and 100: "
+   read clouds
+   echo "Cloud_Cover: $clouds" >> $metafile
+fi
+
+clear
+echo ''
+echo 'How are types of geographic features, addressing schemes, or other'
+echo "locations referenced in $name? (Example: towns over 500 and less"
+echo 'than 1000 people).'
+echo ''
+$ECHON '>  '
+read input
+tmpfile=''
+tmpfile=`g.tempfile $$`
+echo "$input" > $tmpfile
+while [ -n "$input" ] ; do
+$ECHON '> '
+read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+done
+"$wordwrap" Indirect_Spatial_Reference $tmpfile
+trap "rm $tmp2 ; exit 0" 2
+rm $tmpfile
+clear
+echo ''
+echo 'Determining object types, units, and counts.'
+
+if [ $ftype = "dig" ] ; then
+  echo "Direct_Spatial_Reference_Method: vector" >> $metafile
+elif [ $tmeta = "rmeta" ] ; then
+  echo "Direct_Spatial_Reference_Method: raster (non-imagery)" >> $metafile
+elif [ $tmeta = "imeta" ] ; then
+  echo "Direct_Spatial_Reference_Method: raster (imagery)" >> $metafile
+elif [ $tmeta = "smeta" ] ; then
+  echo "Direct_Spatial_Reference_Method: site (point)" >> $metafile
+fi
+
+if [ $ftype = "site_lists" ] ; then
+  sitetmp=`g.tempfile $$`
+  cat "$LOCATION/site_lists/$name" | awk 'BEGIN { FS = "|" } $1 > 0.00 && $2 > 0.00 {print $1 "|" $2 "|"$3}' | sort -u > $sitetmp
+  sitelines=`cat $sitetmp | wc -l | tr -d ' '`
+  echo 'Which type of sitefile is this?'
+  echo ''
+  echo '1 - Entity Point (a point used to identify the location of point features'
+  echo '                  such as towers, buoys, buildings, etc.)'
+  echo '2 - Label Point  (reference point for displaying map and chart text to'
+  echo '                  assist in feature identification)'
+  echo '3 - Area Point   (a representative point within an area usually carrying'
+  echo '                  attribute information about that area)'
+  echo ''
+  $ECHON 'Please select one of the above: '
+  read ans
+  case $ans in
+	1) echo "Point_Object_Type: Entity Point (NE)" >> $metafile;;
+	2) echo "Point_Object_Type: Label Point (NL)" >> $metafile;;
+	3) echo "Point_Object_Type: Area Point (NA)" >> $metafile;;
+  esac
+  echo "Point_Object_Count: $sitelines" >> $metafile
+#  echo "Point/Vector_vertical_encoding_method: Attribute values" >> $metafile
+#  echo "Point/Vector_vertical_resolution: 1.0 $unit" >> $metafile
+  trap "rm $site.tmp ; exit 0" 2
+fi
+
+if [ $ftype = "dig" ] ; then
+  lines=`cat $tmp1 | grep 'Number of Lines' | cut -d: -f2 | tr -d ' '`
+  nodes=`cat $tmp1 | grep 'Number of Nodes' | cut -d: -f2 | tr -d ' '`
+  areas=`cat $tmp1 | grep 'Number of Areas' | cut -d'(' -f1 | cut -d: -f2 | tr -d ' '`
+  isles=`cat $tmp1 | grep 'Number of Isles' | cut -d'(' -f1 | cut -d: -f2 | tr -d ' '`
+  atts=`cat $tmp1 | grep 'Number of Atts' | cut -d: -f2 | tr -d ' '`
+  echo "Vector_Object_Count: $lines lines ; $nodes nodes ; $areas areas" >> $metafile 
+  echo "                     $isles isles ; $atts atts" >> $metafile
+fi
+
+if [ $tmeta = "rmeta" -o $tmeta = "imeta" ] ; then
+  if [ -n "$reclcheck" ] ; then
+    nsres=`r.info $name | grep N: | cut -d: -f4 | tr -d ' ' | tr -d '|'`
+    ewres=`r.info $name | grep E: | cut -d: -f4 | tr -d ' ' | tr -d '|'`
+    rows=`r.info $name| grep Rows | cut -d: -f2 | tr -d ' ' | tr -d '|'`
+    cols=`r.info $name | grep Columns | cut -d: -f2 | tr -d ' ' | tr -d '|'`
+    rowcols=`expr $rows \* $cols`
+  else
+    nsres=`cat $LOCATION/cellhd/$name | grep n-s | cut -c13-30 | tr -d ' '`
+    ewres=`cat $LOCATION/cellhd/$name | grep e-w | cut -c13-30 | tr -d ' '`
+    rows=`cat $LOCATION/cellhd/$name | grep rows | cut -c13-30 | tr -d ' '`
+    cols=`cat $LOCATION/cellhd/$name | grep cols | cut -c13-30 | tr -d ' '`
+    rowcols=`expr $rows \* $cols`
+  fi
+  echo "Raster_horizontal_distance_units: $units" >> $metafile
+  echo "Raster_vertical_encoding_method: Attribute values" >> $metafile
+  echo "Raster_vertical_resolution: 1.0 $unit" >> $metafile
+  echo "Raster_Object_Type: Pixel" >> $metafile
+  echo "Raster_object_count: $rowcols" >> $metafile
+  echo "Row_Count: $rows" >> $metafile
+  echo "Column_Count: $cols" >> $metafile
+  echo "Depth_Count: n/a" >> $metafile
+fi
+
+#if [ $tmeta = "vmeta" -a -f $LOCATION/dig_cats/$name ] ; then
+#  categories=`cat $LOCATION/dig_cats/$name | sed -n '1p' | sed '1s/[#A-Za-z]//g' | tr -d ' '`
+#  echo "Categories: $categories" >> $metafile
+#elif [ $tmeta = "rmeta" -o $tmeta = "imeta" ] ; then
+#  categories=`cat $LOCATION/cats/$name | grep '#' | cut -d' ' -f2  | tr -d ' '`
+#  echo "Categories: $categories" >> $metafile
+#fi
+
+if [ $ftype = "cell" ] ; then
+  echo "Longitude_Resolution: $ewres" >> $metafile
+  echo "Latitude_Resolution: $nsres" >> $metafile
+fi
+
+if [ $ftype = "dig" ] ; then
+  scale=`cat $tmp1 | grep 'MAP SCALE' | cut -d':' -f2 | tr -d ' '`
+  echo "Scale: $scale" >> $metafile
+fi
+
+if [ "$proj" = "ll" ] ; then
+  coloncheck=`echo $west | grep "\:"`
+  if [ -n "$coloncheck" ] ; then
+    geogunits="Degrees, minutes, and decimal seconds"
+  elif [ -z "$coloncheck" ] ; then
+    geogunits="Decimal degrees"
+  fi
+fi
+
+if [ "$proj" = "aea" ] ; then
+  lat_1=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_1:" | cut -d":" -f2 | tr -d ' '`
+  lat_2=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_2:" | cut -d":" -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d":" -f2 | tr -d ' '`
+  if [ -z "$lat1" -a -z "$lat2" ] ; then
+    lat1="29.5 degrees N"
+    lat2="45.5 degrees N"
+  fi
+  echo "Map_Projection_Name: Albers Equal Area" >> $metafile
+  echo "Standard_Parallel: $lat1" >> $metafile
+  echo "Standard_Parallel: $lat2" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "aeqd" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Azimuth Equidistant" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "eqdc" ] ; then
+  lat_1=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_1:" | cut -d":" -f2 | tr -d ' '`
+  lat_2=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_2:" | cut -d":" -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d":" -f2 | tr -d ' '`
+  if [ -z "$lat_1" -a -z "$lat_2" ] ; then
+    lat_1="29.5 degrees N"
+    lat_2="45.5 degrees N"
+  fi
+  echo "Map_Projection_Name: Equidistant Conic" >> $metafile
+  echo "Standard_Parallel: $lat_1" >> $metafile
+  echo "Standard_Parallel: $lat_2" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "gnom" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Gnomonic" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "laea" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Lambert Azimuthal Equal Area" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "lcc" ] ; then
+  lat_1=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_1:" | cut -d":" -f2 | tr -d ' '`
+  lat_2=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_2:" | cut -d":" -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d":" -f2 | tr -d ' '`
+  if [ -z "$lat_1" -a -z "$lat_2" ] ; then
+    lat_1="33 degrees N"
+    lat_2="45 degrees N"
+  fi
+  echo "Map_Projection_Name: Lambert Conformal Conic" >> $metafile
+  echo "Standard_Parallel: $lat_1" >> $metafile
+  echo "Standard_Parallel: $lat_2" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "merc" ] ; then
+  k_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "k_0" | cut -d":" -f2 | tr -d ' '`
+  lat_ts=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_ts:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0" | cut -d":" -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Mercator" >> $metafile
+  if [ -n "$lat_ts" ] ; then
+    echo "Standard_Parallel: $lat_ts" >> $metafile
+  elif [ -z "$lat_ts" -a -n "$k_0" ] ; then
+    echo "Scale_Factor_at_Equator: $k_0" >> $metafile
+  fi
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "alsk" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Alaska Modified Stereographic" >> $metafile
+  echo "Latitude_of_Projection_Origin: 64 degrees N" >> $metafile
+  echo "Longitude_of_Central_Meridian: 152 degrees W" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "mill" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Miller Cylindrical" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+
+if [ "$proj" = "nsper" ] ; then
+  h=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "h:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Near-Sided Perspective" >> $metafile
+  echo "Longitude_of_Projection_Center: $lon_0" >> $metafile
+  echo "Height_of_Perspective_Point_Above_Surface: $h $units" >> $metafile
+fi
+
+if [ "$proj" = "omerc" ] ; then
+  alpha=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "alpha:" | cut -d":" -f2 | tr -d ' '`
+  k_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "k_0" | cut -d":" -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d":" -f2 | tr -d ' '`
+  lat_1=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_1:" | cut -d":" -f2 | tr -d ' '`
+  lat_2=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_2:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0" | cut -d":" -f2 | tr -d ' '`
+  lon_1=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_1" | cut -d":" -f2 | tr -d ' '`
+  lon_2=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_2" | cut -d":" -f2 | tr -d ' '`
+  lonc=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lonc:" | cut -d":" -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0" | cut -d":" -f2 | tr -d ' '`
+  if [ -z "$alpha" ] ; then
+    echo "Oblique_Line_Latitude: $lat1 ; $lat2" >> $metafile
+    echo "Oblique_Line_Longitude: $lon1 ; $lon2" >> $metafile
+  elif [ -n "$alpha" ] ; then
+    echo "Azimuthal_Angle: $alpha" >> $metafile
+    echo "Azimuth_Measure_Point_Longitude: $lonc" >> $metafile
+  fi
+  echo "Map_Projection_Name: Oblique Mercator" >> $metafile
+  echo "Scale_Factor_at_Center_Line: $k_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "ortho" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Orthographic" >> $metafile
+  echo "Longitude_of_Projection_Center: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Center: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "poly" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Polyconic" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "robin" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Robinson" >> $metafile
+  echo "Longitude_of_Projection_Center: $lon_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "sinu" ] ; then
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Sinusoidal" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "lsat" ] ; then
+  n=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "^n:" | cut -d":" -f2 | tr -d ' '`
+  p=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "^p:" | cut -d":" -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Space Oblique Mercator" >> $metafile
+  echo "Landsat_Number: $n" >> $metafile
+  echo "Path_Number: $p" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "stere" ] ; then
+  k_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "k_0" | cut -d":" -f2 | tr -d ' '`
+  if [ -z "$k_0" ] ; then
+    k_0="1."
+  fi
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Stereographic" >> $metafile
+  echo "Longitude_of_Projection_Center: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Center: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+  echo "Scale_Factor_at_Tangency_Point: $k_0" >> $metafile
+fi
+
+if [ "$proj" = "tmerc" ] ; then
+  k_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "k_0" | cut -d":" -f2 | tr -d ' '`
+  if [ -z "$k_0" ] ; then
+    k_0="1." 
+  fi
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  lat_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lat_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: Transverse Mercator" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "Latitude_of_Projection_Origin: $lat_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+  echo "Scale_Factor_at_Central_Meridian: $k_0" >> $metafile
+fi
+
+if [ "$proj" = "vandg" ] ; then
+  lon_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "lon_0:" | cut -d":" -f2 | tr -d ' '`
+  x_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "x_0:" | cut -d":" -f2 | tr -d ' '`
+  y_0=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep "y_0:" | cut -d":" -f2 | tr -d ' '`
+  echo "Map_Projection_Name: van der Grinten" >> $metafile
+  echo "Longitude_of_Central_Meridian: $lon_0" >> $metafile
+  echo "False_Easting: $x_0" >> $metafile
+  echo "False_Northing: $y_0" >> $metafile
+fi
+
+if [ "$proj" = "utm" ] ; then
+  echo "Grid_Coordinate_System: Universal Transverse Mercator" >> $metafile
+  echo "UTM_Zone_Number: $zone" >> $metafile
+fi
+
+if [ "$proj" = "ups" ] ; then
+  echo "Grid_Coordinate_System: Universal Polar Stereographic" >> $metafile
+  echo "UPS_Zone_Number: $zone" >> $metafile
+fi
+
+if [ "$proj" = "lcc" -o "$proj" = "tmerc" -o "$proj" = "omerc" -o "$proj" = "poly" -a -n "$zone" ] ; then 
+  echo "Grid_Coordinate_System: State Plane Coordinate System" >> $metafile
+  echo "SPCS_Zone_Number: $zone" >> $metafile
+fi
+
+clear
+echo ''
+planarcheck=''
+if [ "$proj" = "0" ] ; then
+  echo 'Is this a right-handed coordinate system of which the z-axis coincides'
+  echo 'with a plumb line through the origin that locally is aligned with'
+  $ECHON 'the surface of the Earth?  (y) '
+  read ans
+  if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+    break
+  else
+    planarcheck="yes"
+    echo 'Describe the local planar system that you used (x,y).'
+    echo ''
+    $ECHON '> '
+    read input
+    tmpfile=''
+    tmpfile=`g.tempfile $$`
+    echo "$input" > $tmpfile
+    while [ -n "$input" ] ; do
+      $ECHON '> '
+      read input
+      if [ -z "$input" ] ; then
+        break
+      else
+        echo "$input" >> $tmpfile
+      fi
+    done
+    "$wordwrap" Local_Planar_Description $tmpfile
+    trap "rm $tmpfile ; exit 0" 2
+    rm $tmpfile
+    echo ''
+    echo 'Which of the following was used to register this local planar system'
+    echo 'to the Earth?'
+    echo ''
+    echo '1 - control points'
+    echo '2 - satellite ephemeral data'
+    echo '3 - inertial navigation data'
+    echo '4 - other'
+    echo ''
+    $ECHON 'Please choose one of the above: '
+    read no
+    case $no in
+	1) echo 'Local_Planar_Georeference_Information: control points' >> $metafile;;
+	2) echo 'Local_Planar_Georeference_Information: satellite ephemeral data' >> $metafile;;
+	3) echo 'Local_Planar_Georeference_Information: inertial navigation data' >> $metafile;;
+	4) echo ''
+	   $ECHON 'What method was used to register this system? '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Local_Planar_Georeference_Information $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile;;
+    esac
+    clear
+    echo ''
+    echo 'What encoding method was used to represent horizontal positions?'
+    echo ''
+    echo '1 - coordinate pair'
+    echo '2 - distance and bearing'
+    echo '3 - row and column'
+    echo ''
+    $ECHON 'Please select the suitable number: '
+    read no
+    case $no in
+	1) echo 'Planar_Coordinate_Encoding_Method: coordinate pair' >> $metafile
+	   echo ''
+	   echo 'What is the (nominal) minimum distance between the "x" or'
+	   echo 'column values of two adjacent points, expressed in Planar'
+ 	   echo 'Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Abscissa_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile
+	   echo ''
+	   echo 'What is the (nominal) minimum distance between the "y" or'
+	   echo 'row values of two adjacent points, expressed in Planar'
+ 	   echo 'Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Ordinate_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile;;
+	2) echo 'Planar_Coordinate_Encoding_Method: distance and bearing' >> $metafile
+	   echo ''
+	   echo 'What is the minimum distance measurable between two points,'
+	   echo 'expressed in Planar Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Distance_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile
+	   echo ''
+	   echo 'What is the minimum angle measurable between two points,'
+	   echo 'expressed in Bearing Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Bearing_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile
+	   echo ''
+	   echo ''
+ 	   echo 'What units of measure are used for angles?'
+	   echo ''
+	   echo '1 - Decimal degrees'
+	   echo '2 - Decimal minutes'
+	   echo '3 - Decimal seconds'
+	   echo '4 - Degrees and decimal minutes'
+	   echo '5 - Degrees, minutes, and decimal seconds'
+	   echo '6 - Radians'
+	   echo '7 - Grads'
+	   echo ''
+	   $ECHON 'Please select one of the above: '
+	   read no
+	   case $no in
+		1) echo 'Bearing_Units: Decimal degrees' >> $metafile;;
+		2) echo 'Bearing_Units: Decimal minutes' >> $metafile;;
+		3) echo 'Bearing_Units: Decimal seconds' >> $metafile;;
+		4) echo 'Bearing_Units: Degrees and decimal minutes' >> $metafile;;
+		5) echo 'Bearing_Units: Degrees, minutes, and decimal seconds' >> $metafile;;
+		6) echo 'Bearing_Units: Radians' >> $metafile;;
+		7) echo 'Bearing_Units: Grads' >> $metafile;;
+           esac
+           clear
+           echo ''
+           echo 'From which direction is the bearing measured?'
+           echo ''
+           echo '1 - North'
+           echo '2 - South'
+           echo ''
+           $ECHON 'Please select one of the above: '
+           read no
+           case $no in
+		1) echo 'Bearing_Reference_Direction: North' >> $metafile;;
+		2) echo 'Bearing_Reference_Direction: South' >> $metafile;;
+           esac
+           echo ''
+           echo ''
+           echo 'What is the axis from which the bearing is measured?'
+           echo ''
+           echo '1 - Assumed'
+           echo '2 - Grid'
+           echo '3 - Magnetic'
+           echo '4 - Astronomic'
+           echo '5 - Geodetic'
+           echo ''
+           $ECHON 'Please select one of the above: '
+           read no
+           case $no in
+		1) echo 'Bearing_Reference_Meridian: Assumed' >> $metafile;;
+		2) echo 'Bearing_Reference_Meridian: Grid' >> $metafile;;
+		3) echo 'Bearing_Reference_Meridian: Magnetic' >> $metafile;;
+		4) echo 'Bearing_Reference_Meridian: Astronomic' >> $metafile;;
+		5) echo 'Bearing_Reference_Meridian: Geodetic' >> $metafile;;
+           esac;;
+ 	3) echo 'Planar_Coordinate_Encoding_Method: row and column' >> $metafile
+	   echo ''
+	   echo 'What is the (nominal) minimum distance between the x or'
+	   echo 'column values of two adjacent points, expressed in Planar'
+ 	   echo 'Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Abscissa_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile
+	   echo ''
+	   echo 'What is the (nominal) minimum distance between the y or'
+	   echo 'row values of two adjacent points, expressed in Planar'
+ 	   echo 'Distance Units of measure?'
+	   echo ''
+	   $ECHON '> '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Ordinate_Resolution $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile;;
+    esac
+    echo ''
+    echo ''
+    echo 'What units of measure are used for distances?'
+    echo ''
+    echo '1 - meters'
+    echo '2 - international feet'
+    echo '3 - survey feet'
+    echo '4 - Others'
+    echo ''
+    echo 'Please select one of the above: '
+    read no
+    case $no in
+	1) echo 'Planar_Distance_Units: meters' >> $metafile;;
+  	2) echo 'Planar_Distance_Units: international feet' >> $metafile;;
+  	3) echo 'Planar_Distance_Units: survey feet' >> $metafile;;
+  	4) echo ''
+	   echo 'Please enter the distance units of measure:'
+   	   echo ''
+	   $ECHON '> '
+   	   read input
+   	   tmpfile=''
+   	   tmpfile=`g.tempfile $$`
+   	   echo "$input" > $tmpfile
+   	   while [ -n "$input" ] ; do
+     	   $ECHON '> '
+     	   read input
+     	   if [ -z "$input" ] ; then
+       	     break
+     	   else
+       	     echo "$input" >> $tmpfile
+     	   fi
+   	   done
+   	   "$wordwrap" Planar_Distance_Units $tmpfile
+   	   trap "rm $tmpfile ; exit 0" 2
+           rm $tmpfile;;
+    esac
+  fi
+fi
+
+if [ "$proj" = "0" -a -z "$planarcheck" ] ; then
+  echo ''
+  echo 'Is this coordinate system not aligned with the surface of the Earth?'
+  $ECHON '(y) '
+  read ans
+  if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+    break
+  else
+    echo 'Describe the coordinate system you used and its orientation to the'
+    echo 'surface of the Earth.'
+    echo ''
+    $ECHON '> '
+    read input
+    tmpfile=''
+    tmpfile=`g.tempfile $$`
+    echo "$input" > $tmpfile
+    while [ -n "$input" ] ; do
+      $ECHON '> '
+      read input
+      if [ -z "$input" ] ; then
+        break
+      else
+        echo "$input" >> $tmpfile
+      fi
+    done
+    "$wordwrap" Local_Description $tmpfile
+    trap "rm $tmpfile ; exit 0" 2
+    rm $tmpfile
+    echo ''
+    echo 'Which of the following was used to register this local system'
+    echo 'to the Earth?'
+    echo ''
+    echo '1 - control points'
+    echo '2 - satellite ephemeral data'
+    echo '3 - inertial navigation data'
+    echo '4 - other'
+    echo ''
+    $ECHON 'Please choose one of the above: '
+    read no
+    case $no in
+	1) echo 'Local_Planar_Georeference_Information: control points' >> $metafile;;
+	2) echo 'Local_Planar_Georeference_Information: satellite ephemeral data' >> $metafile;;
+	3) echo 'Local_Planar_Georeference_Information: inertial navigation data' >> $metafile;;
+	4) echo ''
+	   $ECHON 'What method was used to register this system? '
+	   read input
+	   tmpfile=''
+	   tmpfile=`g.tempfile $$`
+	   echo "$input" > $tmpfile
+	   while [ -n "$input" ] ; do
+	     $ECHON '> '
+	     read input
+	     if [ -z "$input" ] ; then
+    	       break
+   	     else
+    	       echo "$input" >> $tmpfile
+       	     fi
+	   done
+	   "$wordwrap" Local_Georeference_Information $tmpfile
+	   trap "rm $tmpfile ; exit 0" 2
+	   rm $tmpfile;;
+    esac
+  fi
+fi
+
+if [ $ellipsoid = clark66 -o $ellipsoid = clrk66 ] ; then
+  echo "Horizontal_Datum_Name: NAD27" >> $metafile
+elif [ $ellipsoid = grs80 ] ; then
+  echo "Horizontal_Datum_Name: NAD83" >> $metafile
+elif [ $ellipsoid = wgs72 ] ; then
+  echo "Horizontal_Datum_Name: WGS72" >> $metafile
+elif [ $ellipsoid = wgs84 ] ; then
+  echo "Horizontal_Datum_Name: WGS84" >> $metafile
+fi
+
+if [ -n "$ellipsoid" ] ; then
+  echo "Ellipsoid_Name: $ellipsoid" >> $metafile
+fi
+
+semajax=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep 'a:' | cut -d":" -f2 | tr -d ' '`
+if [ -n "$semajax" ] ; then
+  echo "Semi-major_Axis: $semajax" >> $metafile
+fi
+
+f=`cat $LOCATION/../PERMANENT/PROJ_INFO | grep 'f:' | cut -d":" -f2 | tr -d ' '`
+if [ -n "$f" ] ; then
+  echo "Denominator_of_Flattening_Ratio: $f" >> $metafile
+fi
+
+clear
+echo ''
+
+echo 'For height information, which of the following datum'
+echo 'types are you using?'
+echo ''
+echo '1 - vertical'
+echo '2 - depth'
+echo '3 - unknown'
+echo ''
+echo ''
+$ECHON 'Please select one of the above: '
+read eldatum
+case $eldatum in
+	1) echo ''
+	   echo 'Which vertical datum are you using ? (If you are using USGS'
+           echo 'quad data, you may find the vertical datum below the'
+	   echo 'barscales or determine the datum by the following.)'
+	   echo ''
+  	   echo '1 - Natl Geodetic Vert. Datum of 1929 (NGVD)'
+	   echo '2 - North American Vert. Datum of 1988 (NAVD)'
+	   echo ''
+	   $ECHON "Type the number and press Enter:  " 
+	   read vdatum
+	   case $vdatum in
+		1) echo "Altitude_Datum_Name: Nat'l Geodetic Vert. Datum of 1929 (NGVD)" >> $metafile;;
+		2) echo "Altitude_Datum_Name: N. American Vert. Datum of 1988 (NAVD)" >> $metafile;;
+	   esac
+	   echo ''
+	   echo "In what units were the elevations recorded?"
+	   echo ''
+	   echo "1) meters"
+	   echo "2) feet"
+	   echo ""
+	   $ECHON "Type the number and press Enter:  "
+	   read vertunits
+	   echo ''
+	   if [ $vertunits = 1 ] ; then
+             vunits="meters"
+	   elif [ $vertunits = 2 ] ; then
+             vunits="feet"
+	   elif [ -z $vertunits ] ; then
+             vunits=""
+           fi
+	   echo ''
+	   echo 'What is the minimum distance possible between two adjacent'
+	   $ECHON "altitude values, expressed in $vunits? " 
+	   read vamt
+	   case $vertunits in
+	 	1) echo "Altitude_Resolution: $vamt" >> $metafile
+	 	   echo "Altitude_Distance_Units: meters" >> $metafile;;
+		2) echo "Altitude_Resolution: $vamt" >> $metafile
+		   echo "Altitude_Distance_Units: feet" >> $metafile;;
+           esac
+	   echo ''
+	   echo 'What are the means used to encode the altitudes?'
+	   echo ''
+	   echo '1 - Explicit elevation coordinate included with horizontal coordinates'
+	   echo '2 - Implicit coordinate'
+	   echo '3 - Attribute values'
+ 	   echo ''
+	   $ECHON 'Please select 1 of the above: '
+	   read no
+	   case $no in
+		  1) echo 'Altitude_Encoding_Method: Explicit elevation coordinate included with' >> $metafile
+		     echo '                          horizontal coordinates' >> $metafile;;
+		  2) echo 'Altitude_Encoding_Method: Implicit coordinate' >> $metafile;;
+		  3) echo 'Altitude_Encoding_Method: Attribute values' >> $metafile;;
+  	   esac;;
+  	2) echo ''
+	   echo 'Please select the appropriate datum from this list.'
+	   echo ''
+	   $ECHON ' 1 - Local surface		'
+	   echo ' 2 - Chart datum; datum for sounding reduction'
+	   $ECHON ' 3 - Lowest astronomical tide	'
+	   echo ' 4 - Highest astronomical tide'
+	   $ECHON ' 5 - Mean low water		'
+	   echo ' 6 - Mean high water'
+	   $ECHON ' 7 - Mean sea level		'
+	   echo ' 8 - Land survey datum'
+	   $ECHON ' 9 - Mean low water springs	'
+	   echo '10 - Mean high water springs'
+	   $ECHON '11 - Mean low water neap	'
+	   echo '12 - Mean high water neap'
+	   $ECHON '13 - Mean lower low water	'
+	   echo '14 - Mean lower low water springs'
+	   $ECHON '15 - Mean higher high water	'
+	   echo '16 - Mean higher low water'
+	   $ECHON '17 - Mean lower high water	'
+	   echo '18 - Spring tide'
+	   $ECHON '19 - Tropic lower low water	'
+	   echo '20 - Neap tide'
+	   $ECHON '21 - High water			'
+	   echo '22 - Higher high water'
+	   $ECHON '23 - Low water			'
+	   echo '24 - Low-water datum'
+	   $ECHON '25 - Lowest low water		'
+	   echo '26 - Lower low water'
+	   $ECHON '27 - Lowest normal low water	'
+	   echo '28 - Mean tide level'
+	   $ECHON '29 - Indian spring low water	'
+	   echo '30 - High-water full and charge'
+	   $ECHON '31 - Low-water full and charge	'
+	   echo '32 - Columbia River datum'
+	   $ECHON '33 - Gulf Coast low water datum	'
+	   echo '34 - Equatorial springs low water'
+	   echo '35 - Approximate lowest astronomical tide'
+	   echo '36 - No correction'
+	   echo ''
+	   echo ''
+	   echo '37 - Other'
+	   echo ''
+	   echo ''
+	   $ECHON 'Please select one of the above: '
+	   read ans
+	   case $ans in
+		1) echo 'Depth_Datum_Name: Local surface' >> $metafile;;
+		2) echo 'Depth_Datum_Name: Chart datum; datum for sounding reduction' >> $metafile;;
+		3) echo 'Depth_Datum_Name: Lowest astronomical tide' >> $metafile;;
+		4) echo 'Depth_Datum_Name: Highest astronomical tide' >> $metafile;;
+		5) echo 'Depth_Datum_Name: Mean low water' >> $metafile;;
+		6) echo 'Depth_Datum_Name: Mean high water' >> $metafile;;
+		7) echo 'Depth_Datum_Name: Mean sea level' >> $metafile;;
+		8) echo 'Depth_Datum_Name: Land survey datum' >> $metafile;;
+		9) echo 'Depth_Datum_Name: Mean low water springs' >> $metafile;;
+		10) echo 'Depth_Datum_Name: Mean high water springs' >> $metafile;;
+		11) echo 'Depth_Datum_Name: Mean low water neap' >> $metafile;;
+		12) echo 'Depth_Datum_Name: Mean high water neap' >> $metafile;;
+		13) echo 'Depth_Datum_Name: Mean lower low water' >> $metafile;;
+		14) echo 'Depth_Datum_Name: Mean lower low water springs' >> $metafile;;
+		15) echo 'Depth_Datum_Name: Mean higher high water' >> $metafile;;
+		16) echo 'Depth_Datum_Name: Mean higher low water' >> $metafile;;
+		17) echo 'Depth_Datum_Name: Mean lower high water' >> $metafile;;
+		18) echo 'Depth_Datum_Name: Spring tide' >> $metafile;;
+		19) echo 'Depth_Datum_Name: Tropic lower low water' >> $metafile;;
+		20) echo 'Depth_Datum_Name: Neap tide' >> $metafile;;
+		21) echo 'Depth_Datum_Name: High water' >> $metafile;;
+ 		22) echo 'Depth_Datum_Name: Higher high water' >> $metafile;;
+		23) echo 'Depth_Datum_Name: Low water' >> $metafile;;
+		24) echo 'Depth_Datum_Name: Low-water datum' >> $metafile;;
+		25) echo 'Depth_Datum_Name: Lowest low water' >> $metafile;;
+		26) echo 'Depth_Datum_Name: Lower low water' >> $metafile;;
+		27) echo 'Depth_Datum_Name: Lowest normal low water' >> $metafile;;
+		28) echo 'Depth_Datum_Name: Mean tide level' >> $metafile;;
+		29) echo 'Depth_Datum_Name: Indian spring low water' >> $metafile;;
+		30) echo 'Depth_Datum_Name: High-water full and charge' >> $metafile;;
+		31) echo 'Depth_Datum_Name: Low-water full and charge' >> $metafile;;
+		32) echo 'Depth_Datum_Name: Columbia River datum' >> $metafile;;
+		33) echo 'Depth_Datum_Name: Gulf Coast low water datum' >> $metafile;;
+		34) echo 'Depth_Datum_Name: Equatorial springs low water' >> $metafile;;
+		35) echo 'Depth_Datum_Name: Approximate lowest astronomical tide' >> $metafile;;
+		36) echo 'Depth_Datum_Name: No correction' >> $metafile;;
+		37) echo ''
+		    $ECHON 'Please enter the depth datum name: '
+		    read ddname
+		    echo "Depth_Datum_Name: $ddname" >> $metafile;;
+  	   esac
+  echo ''
+  echo "In what units were the depths recorded?"
+  echo ''
+  echo "1) meters"
+  echo "2) feet"
+  echo ""
+  $ECHON "Type the number and press Enter:  "
+  read vertunits
+  echo ''
+  if [ $vertunits = 1 ] ; then
+    vunits="meters"
+  elif [ $vertunits = 2 ] ; then
+    vunits="feet"
+  fi
+  echo ''
+  echo 'What is the minimum distance possible between two adjacent'
+  $ECHON "depth values, expressed in $vunits? " 
+  read vamt
+  case $vertunits in
+ 	1) echo "Depth_Resolution: $vamt" >> $metafile
+ 	   echo "Depth_Distance_Units: meters" >> $metafile;;
+	2) echo "Depth_Resolution: $vamt" >> $metafile
+	   echo "Depth_Distance_Units: feet" >> $metafile;;
+  esac
+  echo ''
+  echo ''
+  echo 'What are the means used to encode the depths?'
+  echo ''
+  echo '1 - Explicit depth coordinate included with horizontal coordinates'
+  echo '2 - Implicit coordinate'
+  echo '3 - Attribute values'
+  echo ''
+  $ECHON 'Please select 1 of the above: '
+  read no
+  case $no in
+  1) echo 'Depth_Encoding_Method: Explicit depth coordinate included with' >> $metafile
+     echo '                       horizontal coordinates' >> $metafile;;
+  2) echo 'Depth_Encoding_Method: Implicit coordinate' >> $metafile;;
+  3) echo 'Depth_Encoding_Method: Attribute values' >> $metafile;;
+  esac;;
+esac
+clear
+echo ''
+
+echo "What is the status of $name?"
+echo ''
+echo '1 - Available'
+echo '2 - In work'
+echo '3 - Planned'
+echo ''
+echo ''
+$ECHON 'Please select one of the above: '
+read no
+case $no in
+	1) echo 'Data_Set_Status: Available' >> $metafile;;
+	2) echo ''
+	   $ECHON 'Is a release date scheduled? (y) '
+	   read ans
+	   if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+	     echo 'Release_Date: not scheduled' >> $metafile
+	   else
+	     echo ''
+	     $ECHON 'What is the release date? (Example: 19940315) '
+	     read reldate
+	     echo 'Data_Set_Status: In work' >> $metafile
+	     echo "Release_Date: $reldate" >> $metafile
+	   fi;;
+	3) echo ''
+           $ECHON 'Is a release date scheduled? (y) '
+           read ans
+           if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+             echo 'Release_Date: not scheduled' >> $metafile
+           else
+             echo ''
+	     $ECHON 'What is the release date? (Example: 19940315) '
+             read reldate
+             echo 'Data_Set_Status: Planned' >> $metafile
+             echo "Release_Date: $reldate" >> $metafile
+	   fi;;
+esac
+clear
+echo ''
+ 
+echo ''
+echo 'Once completed, what will be the frequency of changes/additions'
+echo "to $name?"
+echo ''
+echo '1 - Unknown'
+echo '2 - As needed'
+echo '3 - Irregular'
+echo '4 - None planned'
+echo '5 - Other'
+echo ''
+echo ''
+$ECHON 'Please select the appropriate answer: '
+read no
+case $no in
+	1) echo 'Maintenance_and_Update_Frequency: Unknown' >> $metafile;;
+	2) echo 'Maintenance_and_Update_Frequency: As needed' >> $metafile;;
+	3) echo 'Maintenance_and_Update_Frequency: Irregular' >> $metafile;;
+	4) echo 'Maintenance_and_Update_Frequency: None planned' >> $metafile;;
+	5) echo ''
+	   echo "Please enter the frequency of changes/additions for $name." 
+	   echo ''
+	   $ECHON '> '
+	   read mfreq
+	   echo "Maintenance_and_Update_Frequency: $mfreq" >> $metafile;;
+esac
+clear
+echo ''
+
+$ECHON "Was $name produced by an outside agency? (y) "
+read ans
+if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+  break
+else
+  echo ''
+  echo 'Possible data sources:'
+  echo ''
+  echo ' 1 - Agriculture Stabilization and Conservation Service (ASCS)'
+  echo ' 2 - Bureau of the Census (BC)'
+  echo ' 3 - Bureau of Economic Analysis (BEA)'
+  echo ' 4 - Bureau of Land Management (BLM)'
+  echo ' 5 - Bureau of Mines (BM)'
+  echo ' 6 - Bureau of Reclamation (BR)'
+  echo ' 7 - Centers for Disease Control (CDC)'
+  echo ' 8 - Defense Mapping Agency (DMA)'
+  echo ' 9 - Earth Observation Satellite Company (EOSAT)'
+  echo '10 - EROS Data Center (EDC)'
+  echo '11 - Federal Emergency Management Agency (FEMA)'
+  echo '12 - Federal Highway Administration (FHWA)'
+  echo '13 - Minerals Management Service (MMS)'
+  echo '14 - National Aeronautics and Space Administration (NASA)'
+  echo '15 - National Environmental Satellite, Data, & Information Service (NESDIS)'
+  echo '16 - National Oceanic and Atmospheric Administration (NOAA)'
+  echo '17 - National Park Service (NPS)'
+  echo '18 - Soil Conservation Service (SCS)'
+  echo '19 - SPOT Image Corporation (SPOT)'
+  echo '20 - Tennessee Valley Authority (TVA)'
+  echo '21 - U.S. Fish and Wildlife Service (USFWS)'
+  echo '22 - U.S. Forest Service (USFS)'
+  echo '23 - U.S. Geological Survey (USGS)'
+  echo ''
+  echo '24 - Other'
+  echo ''
+  echo ''
+  $ECHON 'Please select one of the above: '
+  read no
+  case $no in
+  1) echo 'Source_Citation: USDA Agriculture Stabilization and Conservation Service' >> $metafile
+     echo 'Source_Citation_Abbreviation: (USDA) ASCS' >> $metafile
+     echo ''
+     echo "From which of the following is $name based?"
+     echo ''
+     echo '1 - Aerial Photos'
+     echo '2 - Other'
+     echo ''
+     $ECHON 'Please select one of the above: '
+     read ans
+     case $ans in
+	1) echo 'Source_Data_Type: Scanned Aerial Photos' >> $metafile;;
+      	2) echo ''
+	   echo "$name is based on what data?"
+	   echo ''
+	   $ECHON '> '
+      	   read input
+      	   if [ -n "$input" ] ; then
+    	     tmpfile=''
+    	     tmpfile=`g.tempfile $$`
+    	     echo "$input" > $tmpfile
+    	     while [ -n "$input" ] ; do
+               $ECHON '> '
+   	       read input
+    	     if [ -z "$input" ] ; then
+               break
+      	     else
+      	       echo "$input" >> $tmpfile
+    	     fi
+    	     done
+    	     "$wordwrap" Source_Data_Type $tmpfile
+    	     trap "rm $tmpfile ; exit 0" 2
+    	     rm $tmpfile
+  	   fi;;
+     esac;;
+  2) echo 'Source_Citation: Bureau of the Census' >> $metafile
+     echo 'Source_Citation_Abbreviation: BC' >> $metafile
+     echo ''
+     echo "From which of the following did $name originate?"
+     echo ''
+     echo ' 1 - Census of Agriculture'
+     echo ' 2 - Census of Economics'
+     echo ' 3 - Census of Governments'
+     echo ' 4 - Construction'
+     echo ' 5 - Current Business Data'
+     echo ' 6 - Foreign Trade Data'
+     echo ' 7 - Housing'
+     echo ' 8 - Manufactures'
+     echo ' 9 - Population'
+     echo '10 - Population and Housing'
+     echo '11 - Statistical Compendia'
+     echo '12 - Summary Tape File 1A data (STF-1A)'
+     echo '13 - TIGER Line Files'
+     echo '14 - Other'
+     echo ''
+     $ECHON 'Please select one of the above: '
+     read no
+     case $no in
+	1) echo "Source_Data_Type: Census of Agriculture" >> $metafile;;
+	2) echo "Source_Data_Type: Census of Economics" >> $metafile;;
+	3) echo "Source_Data_Type: Census of Governments" >> $metafile;;
+	4) echo "Source_Data_Type: Construction" >> $metafile;;
+	5) echo "Source_Data_Type: Current Business Data" >> $metafile;;
+	6) echo "Source_Data_Type: Foreign Trade Data" >> $metafile;;
+	7) echo "Source_Data_Type: Housing" >> $metafile;;
+	8) echo "Source_Data_Type: Manufactures" >> $metafile;;
+	9) echo "Source_Data_Type: Population" >> $metafile;;
+	10) echo "Source_Data_Type: Population and Housing" >> $metafile;;
+	11) echo "Source_Data_Type: Statistical Compendia" >> $metafile;;
+	12) echo "Source_Data_Type: STF-1A" >> $metafile;;
+	13) echo "Source_Data_Type: TIGER/Line" >> $metafile;;
+      	14) echo ''
+	    echo "$name is based on what data?"
+	    echo ''
+	    $ECHON '> '
+      	    read input
+      	    if [ -n "$input" ] ; then
+    	      tmpfile=''
+    	      tmpfile=`g.tempfile $$`
+    	      echo "$input" > $tmpfile
+    	      while [ -n "$input" ] ; do
+                $ECHON '> '
+   	        read input
+    	      if [ -z "$input" ] ; then
+                break
+      	      else
+      	        echo "$input" >> $tmpfile
+    	      fi
+    	      done
+    	      "$wordwrap" Source_Data_Type $tmpfile
+    	      trap "rm $tmpfile ; exit 0" 2
+    	      rm $tmpfile
+  	    fi
+     esac;;
+  3) echo 'Source_Citation: Bureau of Economic Analysis' >> $metafile
+     echo 'Source_Citation_Abbreviation: BEA' >> $metafile
+     echo ''
+     echo "From which of the following did $name originate?"
+     echo ''
+     echo '1 - Regional Economic Information System (REIS)'
+     echo '2 - Other'
+     echo ''
+     $ECHON 'Please select one of the above: '
+     read ans
+     case $ans in
+	1) echo 'Source_Data_Type: Regional Economic Information System (REIS)' >> $metafile;;
+      	2) echo ''
+	    echo "$name is based on what data?"
+	    echo ''
+	    $ECHON '> '
+      	    read input
+      	    if [ -n "$input" ] ; then
+    	      tmpfile=''
+    	      tmpfile=`g.tempfile $$`
+    	      echo "$input" > $tmpfile
+    	      while [ -n "$input" ] ; do
+                $ECHON '> '
+   	        read input
+    	      if [ -z "$input" ] ; then
+                break
+      	      else
+      	        echo "$input" >> $tmpfile
+    	      fi
+    	      done
+    	      "$wordwrap" Source_Data_Type $tmpfile
+    	      trap "rm $tmpfile ; exit 0" 2
+    	      rm $tmpfile
+  	    fi
+     esac;;
+  4) echo 'Source_Citation: Bureau of Land Management' >> $metafile
+     echo 'Source_Citation_Abbreviation: BLM' >> $metafile
+     echo ''
+     echo "From which of the following did $name originate?"
+     echo ''
+     echo ' 1 - Aerial Photography'
+     echo ' 2 - Cadastral Survey Records'
+     echo ' 3 - Land Records Information'
+     echo ' 4 - Public Land Statistics'
+     echo ' 5 - Recreation 2000 & Fish & Wildlife 2000 Publications'
+     echo ' 6 - 1:1,000,000 & 1:500,000 Scale Land Status State Maps'
+     echo ' 7 - 1:100,000 Scale Surface Mgmt. Status'
+     echo ' 8 - 1:100,000 Scale Surface/Minerals Mgmt. Status'
+     echo ' 9 - 1:100,000 Scale Wilderness Status State Maps'
+     echo '10 - Other'
+     echo ''
+     $ECHON 'Please select one of the above: '
+     read ans
+     case $ans in
+	1) echo 'Source_Data_Type: Aerial Photography' >> $metafile;;
+	2) echo 'Source_Data_Type: Cadastral Survey Records' >> $metafile;;
+	3) echo 'Source_Data_Type: Land Records Information' >> $metafile;;
+	4) echo 'Source_Data_Type: Public Land Statistics' >> $metafile;;
+	5) echo 'Source_Data_Type: Recreation 2000 & Fish & Wildlife 2000 Publications' >> $metafile;;
+	6) echo 'Source_Data_Type: 1:1,000,000 & 1:500,000 Scale Land Status State Maps' >> $metafile;;
+	7) echo 'Source_Data_Type: 1:100,000 Scale Surface Mgmt. Status' >> $metafile;;
+	8) echo 'Source_Data_Type: 1:100,000 Scale Surface/Minerals Mgmt. Status' >> $metafile;;
+	9) echo 'Source_Data_Type: 1:100,000 Scale Wilderness Status State Maps' >> $metafile;;
+      	10) echo ''
+	    echo "$name is based on what data?"
+	    echo ''
+	    $ECHON '> '
+      	    read input
+      	    if [ -n "$input" ] ; then
+    	      tmpfile=''
+    	      tmpfile=`g.tempfile $$`
+    	      echo "$input" > $tmpfile
+    	      while [ -n "$input" ] ; do
+                $ECHON '> '
+   	        read input
+    	      if [ -z "$input" ] ; then
+                break
+      	      else
+      	        echo "$input" >> $tmpfile
+    	      fi
+    	      done
+    	      "$wordwrap" Source_Data_Type $tmpfile
+    	      trap "rm $tmpfile ; exit 0" 2
+    	      rm $tmpfile
+  	    fi
+     esac;;
+  5) echo 'Source_Citation: Bureau of Mines' >> $metafile
+     echo 'Source_Citation_Abbreviation: BM' >> $metafile;;
+  6) echo 'Source_Citation: Bureau of Reclamation' >> $metafile
+     echo 'Source_Citation_Abbreviation: BR' >> $metafile;;
+  7) echo 'Source_Citation: Centers for Disease Control' >> $metafile
+     echo 'Source_Citation_Abbreviation: CDC' >> $metafile;;
+  8) echo 'Source_Citation: Defense Mapping Agency' >> $metafile
+     tape=yes
+     echo 'Source_Citation_Abbreviation: DMA' >> $metafile
+     echo ''
+     echo "From which of the following is $name based?"
+     echo ''
+     echo '1 - ARC Digitized Raster Graphics (ADRGs)'
+     echo '2 - Digital Chart of the World (DCW)'
+     echo '3 - World Mean Elevation Data'
+     echo '4 - World Vector Shorelines (WVS)'
+     echo '5 - Other'
+     echo ''
+     $ECHON 'Please select one of the above: '
+     read no
+     case $no in
+	1) echo 'Source_Data_Type: ARC Digitized Raster Graphics (ADRGs)' >> $metafile;;
+	2) echo 'Source_Data_Type: Digital Chart of the World (DCW)' >> $metafile;;
+	3) echo 'Source_Data_Type: World Mean Elevation Data' >> $metafile;;
+	4) echo 'Source_Data_Type: World Vector Shorelines (WVS)' >> $metafile;;
+      	5) echo ''
+	   echo "$name is based on what data?"
+	   echo ''
+	   $ECHON '> '
+      	   read input
+      	   if [ -n "$input" ] ; then
+    	     tmpfile=''
+    	     tmpfile=`g.tempfile $$`
+    	     echo "$input" > $tmpfile
+    	     while [ -n "$input" ] ; do
+               $ECHON '> '
+   	       read input
+    	     if [ -z "$input" ] ; then
+               break
+      	     else
+      	       echo "$input" >> $tmpfile
+    	     fi
+    	     done
+    	     "$wordwrap" Source_Data_Type $tmpfile
+    	     trap "rm $tmpfile ; exit 0" 2
+    	     rm $tmpfile
+  	   fi
+      esac;;
+  9)  echo 'Source_Citation: Earth Observation Satellite Company' >> $metafile
+      tape=yes
+      echo 'Source_Citation_Abbreviation: EOSAT' >> $metafile;;
+  10) echo 'Source_Citation: EROS Data Center' >> $metafile
+      tape=yes
+      echo 'Source_Citation_Abbreviation: EDC' >> $metafile;;
+  11) echo 'Source_Citation: Federal Emergency Management Agency' >> $metafile
+     echo 'Source_Citation_Abbreviation: FEMA' >> $metafile;;
+  12) echo 'Source_Citation: Federal Highway Administration ' >> $metafile
+      echo 'Source_Citation_Abbreviation: FHWA' >> $metafile;;
+  13) echo 'Source_Citation: Minerals Management Service' >> $metafile
+      echo 'Source_Citation_Abbreviation: MMS' >> $metafile;;
+  14) echo 'Source_Citation: National Aeronautics and Space Administration' >> $metafile
+      echo 'Source_Citation_Abbreviation: NASA' >> $metafile;;
+  15) echo 'Source_Citation: National Environmental Satellite, Data, & Information Service' >> $metafile
+      echo 'Source_Citation_Abbreviation: NESDIS' >> $metafile;;
+  16) echo 'Source_Citation: National Oceanic and Atmospheric Administration' >> $metafile
+      echo 'Source_Citation_Abbreviation: NOAA' >> $metafile;;
+  17) echo 'Source_Citation: National Park Service' >> $metafile
+      echo 'Source_Citation_Abbreviation: NPS' >> $metafile;;
+  18) echo 'Source_Citation: Soil Conservation Service' >> $metafile
+      echo 'Source_Citation_Abbreviation: SCS' >> $metafile;;
+  19) echo 'Source_Citation: SPOT Image Corporation' >> $metafile
+      tape=yes
+      echo 'Source_Citation_Abbreviation: SPOT' >> $metafile;;
+  20) echo 'Source_Citation: Tennessee Valley Authority' >> $metafile
+      echo 'Source_Citation_Abbreviation: TVA' >> $metafile;;
+  21) echo 'Source_Citation: U.S. Fish and Wildlife Service' >> $metafile
+      echo 'Source_Citation_Abbreviation: USFWS' >> $metafile;;
+  22) echo 'Source_Citation: U.S. Forest Service' >> $metafile
+      echo 'Source_Citation_Abbreviation: USFS' >> $metafile;;
+  23) echo 'Source_Citation: U.S. Geological Survey' >> $metafile
+      echo 'Source_Citation_Abbreviation: USGS' >> $metafile
+      tape=yes
+      echo ''
+      echo "From which of the following did $name originate?"
+      echo ''
+      echo '1 - Digital Data Series (DDS)'
+      echo '2 - Digital Elevation Model (DEM)'
+      echo '3 - Digital Line Graph (DLG)'
+      echo '4 - Digital Sidescan Sonar Images of the Sea Floor (Gloria Atlases)'
+      echo '5 - Geographic Names Information System (GNIS)'
+      echo '6 - Land Use & Land Cover (LULC)'
+      echo '7 - Other'
+      echo ''
+      $ECHON 'Please select one of the above: '
+      read no
+      case $no in
+	1) echo 'Source_Data_Type: Digital Data Series (DDS)' >> $metafile;;
+	2) echo 'Source_Data_Type: Digital Elevation Model (DEM)' >> $metafile;;
+	3) echo 'Source_Data_Type: Digital Line Graph (DLG)' >> $metafile;;
+	4) echo 'Source_Data_Type: Digital Sidescan Sonar Images of the Sea Floor (Gloria Atlases)' >> $metafile;;
+	5) echo 'Source_Data_Type: Geographic Names Information System (GNIS)' >> $metafile;;
+	6) echo 'Source_Data_Type: Land Use & Land Cover (LULC)' >> $metafile;;
+      	7) echo ''
+	   echo "$name is based on what data?"
+	   echo ''
+	   $ECHON '> '
+      	   read input
+      	   if [ -n "$input" ] ; then
+    	     tmpfile=''
+    	     tmpfile=`g.tempfile $$`
+    	     echo "$input" > $tmpfile
+    	     while [ -n "$input" ] ; do
+               $ECHON '> '
+   	       read input
+    	     if [ -z "$input" ] ; then
+               break
+      	     else
+      	       echo "$input" >> $tmpfile
+    	     fi
+    	     done
+    	     "$wordwrap" Source_Data_Type $tmpfile
+    	     trap "rm $tmpfile ; exit 0" 2
+    	     rm $tmpfile
+  	   fi
+       esac;;
+  24) echo ''
+      echo "Please enter the source provider of $name."
+      $ECHON '> '
+      read sourcename
+      echo "Source_Citation: $sourcename" >> $metafile
+      echo ''
+      $ECHON "Does $sourcename have an abbreviation that represents it? (y) "
+      read ans
+      if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+        echo 'Source_Citation_Abbreviation: none' >> $metafile
+      else
+    	$ECHON 'Abbreviation> '
+        read sabbrev
+        echo "Source_Citation_Abbreviation: $sabbrev" >> $metafile
+      fi
+      echo ''
+      echo "$name is based on what data?"
+      echo ''
+      $ECHON '> '
+      read input
+      if [ -n "$input" ] ; then
+        tmpfile=''
+        tmpfile=`g.tempfile $$`
+        echo "$input" > $tmpfile
+        while [ -n "$input" ] ; do
+          $ECHON '> '
+          read input
+          if [ -z "$input" ] ; then
+            break
+          else
+            echo "$input" >> $tmpfile
+          fi
+        done
+        "$wordwrap" Source_Data_Type $tmpfile
+        trap "rm $tmpfile ; exit 0" 2
+        rm $tmpfile
+      fi;;
+  esac
+
+  if [ -n "$tape" ] ; then
+    echo ''
+    $ECHON "Was $name sent to $organ on tape? (y) "
+    read ans
+    if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+      break
+    else
+      echo ''
+      echo 'Which tape format was used?'
+      echo ''
+      echo '1 - 9-track'
+      echo '2 - 8mm'
+      echo ''
+      $ECHON 'Please select one of the above: '
+      read no
+      case $no in
+	1) tformat="9-Track";;
+	2) tformat="8mm";;
+      esac
+      echo "What is the $organ tape no. or title? Example: JKB938"
+      $ECHON 'TAPE NO.> '
+      read tape
+      echo ''
+      echo ''
+      $ECHON 'Type in the work order # of the tape? '
+      read order
+      echo ''
+      $ECHON 'Which reel or reels did this file get downloaded from? '
+      read reels
+      echo "Archive: Format $tformat ; tape $tape ; order $order ; reel $reels" >> $metafile
+    fi
+  fi
+fi
+clear
+echo ''
+source=`cat $metafile | grep "Source_Citation\:" | cut -d":" -f2 | sed 's/.//'`
+echo 'Are the dates of data currency specified by the'
+echo "$source the same dates"
+echo 'specified by the dates of beginning and ending'
+echo 'information content already entered?'
+echo 'Here is what you previously entered:'
+echo ''
+cat $metafile | grep 'Information_Content'
+echo ''
+$ECHON 'Are source currency dates the same as the above? (y) '
+read ans
+if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+  echo ''
+  storage=$LOCATION
+  echo "What is the earliest valid source date for the data in $ftype" 
+  echo "$name? (If unknown, so state.)"
+  echo ''
+  echo "Here is some possible help:"
+  echo ''
+  if [ "$ftype" = "dig" ] ; then
+    cat $tmp1 | grep 'DIGIT DATE' | cut -c15-70
+    echo ''
+    $ECHON "Is this the correct source date? (y) "
+    read ans
+      if [ "$ans" = "N" -o "$ans" = "n" ] ; then
+        echo ''
+        $ECHON "Enter earliest valid source date: "
+        read earlydate
+        echo "Beginning_Date_of_Source_Currentness: $earlydate" >> $metafile
+      else
+        earlydate=`cat $tmp1 | grep 'DIGIT DATE' | cut -c15-70`
+        echo "Beginning_Date_of_Source_Currentness: $earlydate" >> $metafile
+      fi
+  elif [ "$ftype" = "site_lists" ] ; then
+    sitewhen=`cat "$LOCATION/site_lists/$name" | grep name | cut -d'|' -f2`
+    sitewhen2=`cat "$LOCATION/site_lists/$name" | grep desc | cut -d'|' -f2`
+    if [ -n "$sitewhen" ] ; then
+      echo ''
+      echo "$sitewhen"
+      echo "$sitewhen2"
+      echo ''
+    fi
+    echo ''
+    $ECHON "Please enter the earliest valid date: "
+    read earlydate
+    echo "Beginning_Date_of_Source_Currentness: $earlydate" >> $metafile
+  elif [ "$ftype" = "cell" ] ; then
+    cat $LOCATION/hist/$name | sed -n '1p'
+    echo ''
+    $ECHON "Is this the correct source date? (n) "
+    read ans
+    if [ "$ans" = "Y" -o "$ans" = "y" ] ; then
+      echo ''
+      earlydate=`cat $LOCATION/hist/$name | sed -n '1p' | tr -d ":"`
+      echo "Beginning_Date_of_Source_Currentness: $earlydate (hhmmss)" >> $metafile
+    else
+      echo ''
+      $ECHON "Enter earliest valid date: "
+      read earlydate
+      echo "Beginning_Date_of_Source_Currentness: $earlydate" >> $metafile
+    fi
+  fi
+clear
+echo ''
+  echo ''
+  storage=$LOCATION
+  echo "What is the latest valid source date for the data in $ftype" 
+  echo "$name? (If unknown, so state.)"
+  echo ''
+  echo "Here is some possible help:"
+  echo ''
+  if [ "$ftype" = "dig" ] ; then
+    cat $tmp1 | grep 'DIGIT DATE' | cut -c15-70
+    echo ''
+    $ECHON "Is this the correct source date? (y) "
+    read ans
+      if [ "$ans" = "N" -o "$ans" = "n" ] ; then
+        echo ''
+        $ECHON "Enter the latest valid source date: "
+        read latedate
+        echo "Ending_Date_of_Source_Currentness: $latedate" >> $metafile
+      else
+        latedate=`cat $tmp1 | grep 'DIGIT DATE' | cut -c15-70`
+        echo "Ending_Date_of_Source_Currentness: $latedate" >> $metafile
+      fi
+  elif [ "$ftype" = "site_lists" ] ; then
+    sitewhen=`cat "$LOCATION/site_lists/$name" | grep name | cut -d'|' -f2`
+    sitewhen2=`cat "$LOCATION/site_lists/$name" | grep desc | cut -d'|' -f2`
+    if [ -n "$sitewhen" ] ; then
+      echo ''
+      echo "$sitewhen"
+      echo "$sitewhen2"
+      echo ''
+    fi
+    echo ''
+    $ECHON "Please enter the latest valid date: "
+    read latedate
+    echo "Ending_Date_of_Source_Currentness: $latedate" >> $metafile
+  elif [ "$ftype" = "cell" ] ; then
+    cat $LOCATION/hist/$name | sed -n '1p'
+    echo ''
+    $ECHON "Is this the correct source date? (n) "
+    read ans
+    if [ "$ans" = "Y" -o "$ans" = "y" ] ; then
+      echo ''
+      earlydate=`cat $LOCATION/hist/$name | sed -n '1p' | tr -d ":"`
+      echo "Ending_Date_of_Source_Currentness: $latedate (hhmmss)" >> $metafile
+    else
+      echo ''
+      $ECHON "Enter the latest valid date: "
+      read latedate
+      echo "Ending_Date_of_Source_Currentness: $latedate" >> $metafile
+    fi
+  fi
+else
+  echo "Beginning_Date_of_Source_Currentness: `cat $metafile | grep Beginning_Date_of_Information_Content | cut -d: -f2 | sed 's/.//'`" >> $metafile
+  echo "Ending_Date_of_Source_Currentness: `cat $metafile | grep Ending_Date_of_Information_Content | cut -d: -f2 | sed 's/.//'`" >> $metafile
+fi
+clear
+echo ''
+echo 'Briefly describe the contribution made by the'
+echo "$source to $name."
+echo ''
+$ECHON "> "
+read input
+tmpfile=''
+tmpfile=`g.tempfile $$`
+echo "$input" > $tmpfile
+while [ -n "$input" ] ; do
+$ECHON '> '
+read input
+  if [ -z "$input" ] ; then
+    break
+  else
+    echo "$input" >> $tmpfile
+  fi
+done
+"$wordwrap" Source_Contribution $tmpfile
+trap "rm $tmpfile ; exit 0" 2
+rm $tmpfile
+clear
+echo ''
+
+# Seeing if the file is reclassed . . .
+if [ "$ftype" = "dig" -a -f $LOCATION/dig_cats/$name ] ; then
+  reclcheck=`cat $LOCATION/dig_cats/$name | grep Reclass`
+  if [ "$reclcheck" = "" ] ; then
+    echo 'Here is some help to determine lineage.'
+    cat $tmp1 | grep 'NAME'
+    echo ''
+    echo "Does $name have any parent files? Parent files are those "
+    $ECHON "used to make the file. (n) "
+    read ans
+    if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+      echo "Enter parent\'s names and also their "'$LOCATION.'
+      $ECHON 'PARENT(s)> '
+      read input
+      if [ -n "$input" ] ; then
+    	tmpfile=''
+    	tmpfile=`g.tempfile $$`
+    	echo "$input" > $tmpfile
+    	while [ -n "$input" ] ; do
+          $ECHON '> '
+   	  read input
+    	  if [ -z "$input" ] ; then
+            break
+      	  else
+      	    echo "$input" >> $tmpfile
+    	  fi
+    	done
+    	"$wordwrap" Source_Parents $tmpfile
+    	trap "rm $tmpfile ; exit 0" 2
+    	rm $tmpfile
+  	fi
+    fi
+  else
+    echo "$name is a reclass file. Source_Parents has been automatically"
+    echo "entered for you."
+    sleep 3
+    reclass=`cat $LOCATION/dig_cats/$name | grep Reclass`
+    echo "Source_Parents: $reclass" >> $metafile
+  fi
+
+elif [ "$ftype" = "dig" -a ! -f $LOCATION/dig_cats/$name ] ; then
+  echo 'Here is some help to determining lineage.'
+  cat $tmp1 | grep 'NAME'
+  echo ''
+  echo "Does $name have any parent files? Parent files are those files used"
+  $ECHON "those files used to make $name. (n) "
+  read ans
+        if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+        echo ''
+        echo 'Enter parents names and also their $LOCATION.'
+        $ECHON 'PARENT(s)> '
+  	read input
+  	if [ -n "$input" ] ; then
+    	  tmpfile=''
+    	  tmpfile=`g.tempfile $$`
+    	  echo "$input" > $tmpfile
+    	  while [ -n "$input" ] ; do
+    	    $ECHON '> '
+   	    read input
+    	    if [ -z "$input" ] ; then
+              break
+      	    else
+      	      echo "$input" >> $tmpfile
+    	    fi
+    	  done
+    	  "$wordwrap" Source_Parents $tmpfile
+    	  trap "rm $tmpfile ; exit 0" 2
+    	  rm $tmpfile
+  	fi
+  clear
+  echo ''
+  cat $tmp1 | grep 'DIGIT'
+  cat $tmp1 | grep 'MAP'
+  cat $metafile | grep FileP
+  echo ''
+  $ECHON "PROCEDURE> "
+  read input
+  if [ -n "$input" ] ; then
+    tmpfile=''
+    tmpfile=`g.tempfile $$`
+    echo "$input" > $tmpfile
+    while [ -n "$input" ] ; do
+    $ECHON '> '
+    read input
+    if [ -z "$input" ] ; then
+      break
+      else
+      echo "$input" >> $tmpfile
+    fi
+    done
+    "$wordwrap" Process_Description $tmpfile
+    trap "rm $tmpfile ; exit 0" 2
+    rm $tmpfile
+  fi
+fi
+fi
+
+if [ "$ftype" = "cell" ] ; then
+  reclcheck=`cat $LOCATION/cellhd/$name | grep reclass`
+  if [ -n "$reclcheck" ] ; then
+    filep=`cat $LOCATION/hist/$name | grep Map | sed 's/..//'`
+    echo "Source_Parent: $filep" >> $metafile
+  fi
+  buffcheck=`cat $LOCATION/cats/$name | grep 'Distance Zones'`
+  if [ -n "$buffcheck" ] ; then
+    tmpfile=''
+    tmpfile=`g.tempfile $$`
+    cat $LOCATION/cats/$name | awk '/:/{print $0}' > $tmpfile
+    "$wordwrap" Buffer_Description $tmpfile
+    echo 'Entering buffer categories into the metadata file.'
+    sleep 2
+    trap "rm $tmpfile ; exit 0" 2
+    rm $tmpfile
+    $ECHON "What is the parent file of $name? "
+    read fpar
+    echo "Source_Parent: $fpar" >> $metafile
+  fi
+  clear
+  echo ''
+  echo "Procedure: What did you do to make $name?"
+  echo ''
+  echo 'Here is some possible help.'
+  echo ''
+  cat $LOCATION/hist/$name | sed '2,5d' | sed '/^$/d'
+  echo ''
+  echo 'Procedure:'
+  $ECHON "> "
+  read input
+  if [ -n "$input" ] ; then
+    tmpfile=''
+    tmpfile=`g.tempfile $$`
+    echo "$input" > $tmpfile
+    while [ -n "$input" ] ; do
+    $ECHON '> '
+    read input
+    if [ -z "$input" ] ; then
+      break
+      else
+      echo "$input" >> $tmpfile
+    fi
+    done
+    "$wordwrap" Process_Description $tmpfile
+    trap "rm $tmpfile ; exit 0" 2
+    rm $tmpfile
+  fi
+fi
+clear
+echo ''
+pmon=`ls -l $LOCATION/$ftype/$name | tr -s ' ' ' ' | cut -d' ' -f6`
+pday=`ls -l $LOCATION/$ftype/$name | tr -s ' ' ' ' | cut -d' ' -f7`
+if [ "$pmon" = "Jan" ] ; then
+  pmon="01"
+elif [ "$pmon" = "Feb" ] ; then
+  pmon="02"
+elif [ "$pmon" = "Mar" ] ; then
+  pmon="03"
+elif [ "$pmon" = "Apr" ] ; then
+  pmon="04"
+elif [ "$pmon" = "May" ] ; then
+  pmon="05"
+elif [ "$pmon" = "Jun" ] ; then
+  pmon="06"
+elif [ "$pmon" = "Jul" ] ; then
+  pmon="07"
+elif [ "$pmon" = "Aug" ] ; then
+  pmon="08"
+elif [ "$pmon" = "Sep" ] ; then
+  pmon="09"
+elif [ "$pmon" = "Oct" ] ; then
+  pmon="10"
+elif [ "$pmon" = "Nov" ] ; then
+  pmon="11"
+elif [ "$pmon" = "Dec" ] ; then
+  pmon="12"
+fi
+pyearchk=`ls -l $LOCATION/$ftype/$name | tr -s ' ' ' ' | cut -d' ' -f8 | grep "\:"`
+if [ -n "$pyearchk" ] ; then
+  pyear=`date +%Y`
+  ptime=`ls -l $LOCATION/"$ftype"/$name | tr -s ' ' ' ' | cut -d' ' -f8 | sed 's/\://'`
+  echo ''
+  echo "Process_Date: $pyear$pmon$pday (YYYYMMDD) " >> $metafile
+  echo "Process_Time: $ptime (HHMMSSSS)" >> $metafile
+else
+  pyear=`ls -l $LOCATION/"$ftype"/$name | tr -s ' ' ' ' | cut -d' ' -f8 | sed 's/\://'`
+  echo "Process_Date: $pyear$pmon$pday (YYYYMMDD)" >> $metafile
+  echo "Process_Time: none (previous year)" >> $metafile
+fi
+
+if [ "$ftype" = "cell" ] ; then
+  pcon=`ls -l $LOCATION/cell/$name | tr -s ' ' ' ' | cut -d' ' -f3`
+  pconname=`finger $pcon | grep 'In real life' | sed -n '1p' | cut -d":" -f3 | cut -c2-40`
+  echo "Process_Contact: $pconname" >> $metafile
+elif [ "$ftype" = "dig" ] ; then
+  pcon=`ls -l $LOCATION/dig/$name | tr -s ' ' ' ' | cut -d' ' -f3`
+  pconname=`finger $pcon | grep 'In real life' | sed -n '1p' | cut -d":" -f3 | cut -c2-40`
+  echo "Process_Contact: $pconname" >> $metafile
+elif [ "$ftype" = "site_lists" ] ; then
+  pcon=`ls -l $LOCATION/site_lists/$name | tr -s ' ' ' ' | cut -d' ' -f3`
+  pconname=`finger $pcon | grep 'In real life' | sed -n '1p' | cut -d":" -f3 | cut -c2-40`
+  echo "Process_Contact: $pconname" >> $metafile
+fi
+
+if [ "$ftype" = "cell" ] ; then
+  lcat=`cat $LOCATION/cell_misc/$name/range | cut -d' ' -f3`
+  hcat=`cat $LOCATION/cell_misc/$name/range | cut -d' ' -f4`
+  echo "Range_Domain_Minimum: $lcat" >> $metafile
+  echo "Range_Domain_Maximum: $hcat" >> $metafile
+elif [ "$ftype" = "dig" ] ; then
+  lcat=`cat $LOCATION/dig_att/$name | tr -s ' ' ' ' | cut -d' ' -f4 | sort -n | sed -n '1p`
+  hcatlines=`cat $LOCATION/dig_att/$name | wc -l | tr -d ' '`
+  hcat=`cat $LOCATION/dig_att/$name | tr -s ' ' ' ' | cut -d' ' -f4 | sort -n | sed -n "$hcatlines""p`
+  echo "Range_Domain_Minimum: $lcat" >> $metafile
+  echo "Range_Domain_Maximum: $hcat" >> $metafile
+fi
+
+if [ "$tmeta" = "rmeta" -o "$tmeta" = "imeta" -a -z "$reclcheck" ] ; then
+  echo 'Entering compression info.'
+  if [ "$compress" = 0 ] ; then
+    echo "File_Compression_Information: none" >> $metafile
+  elif [ "$compress" = 1 ] ; then
+    echo "File_Compression_Information: run-length-encoding" >> $metafile
+  elif [ "$compress" != 0 -o "$compress" != 1 ] && [ -z "$reclcheck" ] ; then
+    echo "File_Compression_Information: check script or cellhd for problem" >> $metafile
+    echo ''
+    echo "Check the cellhd for a compression problem."
+    sleep 4
+  fi
+else
+  echo "File_Compression_Information: n/a for $ftype files" >> $metafile
+fi 
+
+echo "Transfer_Size:  Mb" >> $metafile
+
+onlinechk=`echo $GISDBASE | grep optical`
+if [ -z "$onlinechk" ] ; then
+  echo 'Entering on-line file name.'
+  tmpfile=''
+  tmpfile=`g.tempfile $$`
+  echo "$LOCATION/$ftype/$name" > $tmpfile
+  "$wordwrap" Online_File_Name $tmpfile
+  trap "rm $tmpfile ; exit 0" 2
+  rm $tmpfile
+else
+  echo 'Entering off-line file name.'
+  tmpfile=''
+  tmpfile=`g.tempfile $$`
+  echo "$LOCATION/$ftype/$name" > $tmpfile
+  "$wordwrap" Offline_File_Name $tmpfile
+  trap "rm $tmpfile ; exit 0" 2
+  rm $tmpfile
+fi
+
+echo 'Software name and version are being entered.'
+echo "Format_Name: GRASS" >> $metafile
+grver1=`g.version | cut -d'(' -f1 | tr -s ' ' ' '`
+grver2=`g.version | cut -d')' -f2 | tr -s ' ' ' '`
+grverd=`g.version | sed "s/$grver1//" | sed "s/$grver2//" | tr -s ' ' ' ' | tr -d '(' | tr -d ')'`
+echo "Format_Version_Number: $grver1 $grver2" >> $metafile
+echo "Format_Version_Date: $grverd" >> $metafile
+echo "Format_Specification: n/a" >> $metafile
+echo "Format_Information_Content: n/a" >> $metafile
+sleep 1
+
+# Metadata info is collected, but first the metadata file is checked.
+
+if [ -f "$LOCATION/$name.$tmeta" ] ; then
+  metadat=`cat $LOCATION/$name.$tmeta | grep Metadata_Date | cut -d":" -f2 | tr -d ' '`
+  metarev=`cat $LOCATION/$name.$tmeta | grep Metadata_Review_Date | cut -d":" -f2 | tr -d ' '`
+  metafutrev=`cat $LOCATION/$name.$tmeta | grep Metadata_Future_Review_Date | cut -d":" -f2 | tr -d ' '`
+  metacon=`cat $LOCATION/$name.$tmeta | grep Metadata_Contact | cut -d":" -f2 | tr -s ' ' ' '`
+  if [ -z "$metadat" ] ; then
+    $ECHON "Metadata_Date:  " >> $metafile
+    date +%Y%m%d >> $metafile
+  else
+    cat $LOCATION/$name.$tmeta | grep Metadata_Date >> $metafile
+  fi
+  if [ -z "$metarev" ] ; then
+    clear
+    echo ''
+    echo 'No previous record of the latest (past) review date exists.'
+    echo ''
+    echo "Please enter the date of the latest review: (Example: 19940321) "
+    $ECHON '> '
+    read metarev
+    echo "Metadata_Review_Date: $metarev" >> $metafile
+  else
+    cat $LOCATION/$name.$tmeta | grep Metadata_Review_Date >> $metafile
+  fi
+  if [ -z "$metafutrev" ] ; then
+    echo "Please specify the future review date: "
+    echo ''
+    echo '1 - in one year from today'
+    echo '2 - undetermined'
+    echo '3 - other'
+    echo ''
+    $ECHON "Please enter the appropriate number: "
+    read number
+    case $number in
+	1) metafutrev=`date +%Y%m`
+	   newfutrev=`expr $metafutrev + 0100`
+           echo "Metadata_Future_Review_Date: $newfutrev" >> $metafile;;
+	2) echo "Metadata_Future_Review_Date: undetermined" >> $metafile;;
+	3) echo ''
+	   echo "Please enter the future metadata review date in the form:"
+	   $ECHON "941123 (yearmonthday): "
+	   read metafutrev
+	   echo "Metadata_Future_Review_Date: $metafutrev" >> $metafile;;
+	*) echo ''
+	   echo "Please re-enter the future metadata review date in the form:"
+	   $ECHON "9411 (yearmonth): "
+	   read metafutrev
+	   echo "Metadata_Future_Review_Date: $metafutrev" >> $metafile
+	   echo "Metadata_Contact: `finger $user | grep 'In real life' | sed -n '1p' | cut -d":" -f3 | cut -c2-40`" >> $metafile;;
+    esac
+  else
+    cat $LOCATION/$name.$tmeta | grep Metadata_Future_Review_Date >> $metafile
+  fi
+  if [ -z "$metacon" ] ; then
+    $ECHON "Please enter the login of the metadata contact person: "
+    read metacon
+    metacon=`finger $metacon | grep 'In real life' | sed -n '1p' | cut -d":" -f3 | cut -c2-40 | tr -s ' ' ' '`
+    echo "Metadata_Contact: $metacon" >> $metafile
+  else
+    echo ''
+    $ECHON "Should $metacon continue to be the metadata contact? (y) "
+    read ans
+    if [ "$ans" = "N" -o "$ans" = "n" ] ; then
+      echo ''
+      $ECHON "Enter the login of the new metadata contact: "
+      read metacon
+      metacon=`finger $metacon | grep 'In real life' | sed -n '1p' | cut -d":" -f3 | cut -c2-40 | tr -s ' ' ' '`
+      echo "Metadata_Contact: $metacon" >> $metafile
+    else
+      cat $LOCATION/$name.$tmeta | grep Metadata_Contact>> $metafile
+    fi
+  fi
+elif [ ! -f $LOCATION/$name.$tmeta ] ; then
+  $ECHON "Metadata_Date: " >> $metafile
+  date +%Y%m%d%H%M >> $metafile
+  $ECHON "Metadata_Review_Date: " >> $metafile
+  date +%Y%m%d >> $metafile
+  echo ''
+  echo "What date will $name""'""s metadata be reviewed?"
+  echo ''
+  echo '1 - in one year'
+  echo '2 - undetermined'
+  echo '3 - other'
+  echo ''
+  $ECHON "Please enter the appropriate number: "
+  read number
+  case $number in
+	1) futrevdate=`date +%Y%m`
+	   newfutrevdate=`expr $futrevdate + 000100`
+           echo "Metadata_Future_Review_Date: $newfutrevdate" >> $metafile;;
+	2) echo "Metadata_Future_Review_Date: undetermined" >> $metafile;;
+	3) echo ''
+	   echo "Please enter the future metadata review date in the form:"
+	   $ECHON "9411 (yearmonth): "
+	   read futrevdate
+	   echo "Metadata_Future_Review_Date: $futrevdate" >> $metafile;;
+	*) echo ''
+	   echo "Please re-enter the future metadata review date in the form:"
+	   $ECHON "9411 (yearmonth): "
+	   read futrevdate
+	   echo "Metadata_Future_Review_Date: $futrevdate" >> $metafile
+	   echo "Metadata_Contact: `finger $user | grep 'In real life' | sed -n '1p' | cut -d":" -f3 | cut -c2-40`" >> $metafile;;
+  esac
+  metacon=`finger $user | grep 'In real life' | sed -n '1p' | cut -d":" -f3 | cut -c2-40 | tr -s ' ' ' '`
+  echo "Metadata_Contact: $metacon" >> $metafile
+fi
+echo "Metadata_Standard_Name: FGDC Content Standards for Digital Spatial Metadata" >> $metafile
+echo "Metadata_Standard_Version: March 31, 1994" >> $metafile
+clear
+echo ''
+
+if [ -f $LOCATION/$name.$tmeta ] ; then
+  congrepcheck=`cat $LOCATION/$name.$tmeta | grep 'Contact_'`
+fi
+if [ -f $LOCATION/$name.$tmeta -a -n "$congrepcheck" ] ; then
+  echo ''
+  echo "Contact information already exists in $name.$tmeta."
+  echo ''
+  cat $LOCATION/$name.$tmeta | grep 'Contact_'
+  echo ''
+  $ECHON "Would you like to keep this info and update it later with vi? (y) "
+  read ans
+    if [ "$ans" = "N" -o "$ans" = "n" ] ; then
+      break
+    else
+      linecount=`cat $LOCATION/$name.$tmeta | wc -l | tr -d ' '`
+      linecoplus=`expr $linecount + 1`
+      congrepchk1=`cat $LOCATION/$name.$tmeta | grep '^Contact_Person'`
+      congrepchk2=`cat $LOCATION/$name.$tmeta | grep '^Contact_Organization'`
+      if [ -n "$congrepchk1" ] ; then
+        congrepline=`cat $LOCATION/$name.$tmeta | grep -n 'Contact_Person_Primary_Contact_Person' | cut -d':' -f1`
+      elif [ -n "$congrepchk2" ] ; then
+        congrepline=`cat $LOCATION/$name.$tmeta | grep -n 'Contact_Organization_Primary_Contact_Person' | cut -d':' -f1`
+      fi
+        cat $LOCATION/$name.$tmeta | sed -n "$congrepline"",""$linecoplus""p" >> $metafile
+    fi
+else
+  echo ''
+  $ECHON "Did $organ receive $name from an individual or an agency? (y) "
+  read ans
+    if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+#      echo "Contact_Person_Primary_Contact_Person: none" >> $metafile
+#      echo "Contact_Person_Primary_Contact_Organization: none" >> $metafile
+#      echo "Contact_Organization_Primary_Contact_Person: none" >> $metafile
+#      echo "Contact_Organization_Primary_Contact_Organization: none" >> $metafile
+#      echo "Contact_Position: none" >> $metafile
+#      echo "Contact_Mail_Address: none" >> $metafile
+#      echo "                      none" >> $metafile
+#      echo "                      none" >> $metafile
+#      echo "                      none" >> $metafile
+#      echo "Contact_Physical_Address: none" >> $metafile
+#      echo "                          none" >> $metafile
+#      echo "                          none" >> $metafile
+#      echo "                          none" >> $metafile
+#      echo "Contact_Voice_Telephone: none" >> $metafile
+#      echo "Contact_Facsimile_Telephone: none" >> $metafile
+#      echo "Contact_Electronic_Mail_Address: none" >> $metafile
+#      echo "Contact_Instructions: none" >> $metafile
+      break
+    else
+      echo ''
+      echo "Who is more significant to the data set $name?"
+      echo ''
+      echo '1 - a person'
+      echo '2 - an organization'
+      echo ''
+      $ECHON "Please enter the appropriate number: "
+      read input
+      case $input in
+	1) echo ''
+	   if [ "$tmeta" = "dig" ] ; then
+ 	     echo 'Here is some possible help.'
+	     cat $tmp1 | grep ORGAN
+ 	     cat $tmp1 | grep 'OTHER INFO'
+	   fi
+ 	   echo ''
+	   echo "What is the person""'""s name?"
+	   $ECHON "PERSON> "
+ 	   read person
+	   echo ''
+	   echo "Who does $person work for?"
+	   echo ''
+	   $ECHON "COMPANY> "
+	   read company
+	   echo "Contact_Person_Primary_Contact_Person: $person" >> $metafile
+	   echo "Contact_Person_Primary_Contact_Organization: $company" >> $metafile;;
+	2) echo "What is the organization""'""s name who provided $name?"
+	   $ECHON "COMPANY> "
+	   read company
+	   echo ''
+	   echo "Enter the name of a person associated with $name."
+	   echo ''
+	   $ECHON "PERSON> "
+	   read person
+	   echo "Contact_Organization_Primary_Contact_Person: $person" >> $metafile
+	   echo "Contact_Organization_Primary_Contact_Organization: $company" >> $metafile;;
+      esac
+      echo ''
+      echo "What is $person""'""s position in $company?"
+      echo ''
+      $ECHON 'POSITION> '
+      read position 
+      echo "Contact_Position: $position" >> $metafile
+      echo ''
+      echo "What is the mailing address at $company . . ."
+      echo ''
+      $ECHON 'STREET ADDRESS> '
+      read street
+      echo ''
+      $ECHON 'CITY> '
+      read city
+      echo ''
+      $ECHON 'STATE> '
+      read stateadd
+      echo ''
+      $ECHON 'ZIP CODE> '
+      read zip
+      echo "Contact_Mail_Address: $street" >> $metafile
+      echo "                      $city" >> $metafile
+      echo "                      $stateadd" >> $metafile
+      echo "                      $zip" >> $metafile
+      echo ''
+      echo ''
+      echo ''
+      echo "What is the physical address of $company . . ."
+      $ECHON 'STREET ADDRESS> '
+      read street
+      echo ''
+      $ECHON 'CITY> '
+      read city
+      echo ''
+      $ECHON 'STATE> '
+      read stateadd
+      echo ''
+      $ECHON 'ZIP CODE> '
+      read zip
+      echo "Contact_Physical_Address: $street" >> $metafile
+      echo "                          $city" >> $metafile
+      echo "                          $stateadd" >> $metafile
+      echo "                          $zip" >> $metafile
+      echo ''
+      $ECHON 'PHONE NO.> '
+      read phone
+      echo ''
+      $ECHON 'EXTENSION? '
+      read extension
+      echo "Contact_Voice_Telephone: $phone  x$extension" >> $metafile
+      echo ''
+      $ECHON 'FAX NO.> '
+      read fax
+      echo "Contact_Facsimile_Telephone: $fax" >> $metafile
+      echo ''
+      echo "Enter an electronic mail address if known."
+      $ECHON "EMAIL> "
+      read email
+      if [ -n "$email" ] ; then
+        echo "Contact_Electronic_Mail_Address: $email" >> $metafile
+      fi
+      echo ''
+      echo "Enter any instructions for $person at $company."
+      $ECHON "> "
+      read input
+      if [ -n "$input" ] ; then
+        tmpfile=''
+        tmpfile=`g.tempfile $$`
+        echo "$input" > $tmpfile
+        while [ -n "$input" ] ; do
+        $ECHON '> '
+        read input
+        if [ -z "$input" ] ; then
+          break
+          else
+          echo "$input" >> $tmpfile
+        fi
+        done
+        "$wordwrap" Contact_Instructions $tmpfile
+        trap "rm $tmpfile ; exit 0" 2
+        rm $tmpfile
+      fi
+   fi
+fi
+clear
+echo ''
+
+
+# Substitution of size in earlier line to include metadata file.
+
+tmpfile=''
+tmpfile=`g.tempfile $$`
+if [ "$ftype" = "dig" ] ; then
+  du -s $LOCATION/dig*/$name | cut -d'/' -f1 | tr -d ' ' > $tmpfile
+  formula=`paste -d'+' -s $tmpfile | sed 's/+/ + /g'`
+  totalsize=`expr $formula`
+elif [ "$ftype" = "site_lists" ] ; then
+  sitesize1=`du -s $LOCATION/site_lists/$name | cut -d'/' -f1 | tr -d ' '`
+  sitesize2=`du -s $LOCATION/site_misc/$name | cut -d'/' -f1 | tr -d ' '`
+  siteall=`expr $sitesize1 + $sitesize2`
+  totalsize=$siteall
+elif [ "$ftype" = "cell" ] ; then
+  du -s $LOCATION/cell*/$name | cut -d'/' -f1 | tr -d ' '> $tmpfile
+  if [ -f $LOCATION/cats/$name ] ; then
+    du -s $LOCATION/cats/$name | cut -d'/' -f1 | tr -d ' ' >> $tmpfile
+  fi
+  if [ -f $LOCATION/colr/$name ] ; then
+    du -s $LOCATION/colr/$name | cut -d'/' -f1 | tr -d ' ' >> $tmpfile
+  fi
+  if [ -f $LOCATION/hist/$name ] ; then
+    du -s $LOCATION/hist/$name | cut -d'/' -f1 | tr -d ' ' >> $tmpfile
+  fi
+  formula=`paste -d' ' -s $tmpfile | sed 's/ / + /g'`
+  totalsize=`expr $formula`
+fi
+totalcount=`echo $totalsize | wc -c`
+if [ $totalcount = "2" ] ; then
+  megasize=".00$totalsize"
+elif [ $totalcount = "3" ] ; then
+  megasize=".0$totalsize"
+elif [ $totalcount = "4" ] ; then
+  megasize=".$totalsize"
+elif [ $totalcount = "5" ] ; then
+  thou=`echo $totalsize | cut -c1`
+  hun=`echo $totalsize | cut -c2`
+  ten=`echo $totalsize | cut -c3`
+  one=`echo $totalsize | cut -c4`
+  megasize="$thou.$hun$ten$one"
+elif [ $totalcount = "6" ] ; then
+  tenthou=`echo $totalsize | cut -c1`
+  thou=`echo $totalsize | cut -c2`
+  hun=`echo $totalsize | cut -c3`
+  ten=`echo $totalsize | cut -c4`
+  one=`echo $totalsize | cut -c5`
+  megasize="$tenthou$thou.$hun$ten$one"
+elif [ $totalcount = "7" ] ; then
+  hunthou=`echo $totalsize | cut -c1`
+  tenthou=`echo $totalsize | cut -c2`
+  thou=`echo $totalsize | cut -c3`
+  hun=`echo $totalsize | cut -c4`
+  ten=`echo $totalsize | cut -c5`
+  one=`echo $totalsize | cut -c6`
+  megasize="$hunthou$tenthou$thou.$hun$ten$one"
+elif [ $totalcount = "8" ] ; then
+  mil=`echo $totalsize | cut -c1`
+  hunthou=`echo $totalsize | cut -c2`
+  tenthou=`echo $totalsize | cut -c3`
+  thou=`echo $totalsize | cut -c4`
+  hun=`echo $totalsize | cut -c5`
+  ten=`echo $totalsize | cut -c6`
+  one=`echo $totalsize | cut -c7`
+  megasize="$mil$hunthou$tenthou$thou.$hun$ten$one"
+fi
+trap "rm $tmpfile ; exit 0" 2
+rm $tmpfile
+tmpmetadata=`g.tempfile $$`
+tmpmetadata2=`g.tempfile $$`
+oldline="Size="
+oldline2="Transfer_Size: "
+newline="$oldline$megasize"
+newline2="$oldline2$megasize"
+cat $metafile | eval sed 's/"$oldline"/"$newline"/' > $tmpmetadata
+cat $tmpmetadata | eval sed 's/"$oldline2"/"$newline2"/' > $tmpmetadata2
+rm $metafile $tmpmetadata
+mv $tmpmetadata2 $metafile
+trap "rm $tmpmetadata $tmpmetadata2 ; exit 0" 2
+
+echo "Metadata entry is complete!"
+echo "Your metadata file is now in $metadir."
+echo ''
+
+if [ $tmeta = "vmeta" ] ; then
+  rm $tmp1
+elif [ $tmeta = "smeta" ] ; then
+  rm $sitetmp
+fi
+
+echo ""
+$ECHON "Do you want to look at the file or do a final edit with vi? (n) "
+read ans
+  if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+    vi $metafile
+    clear
+    echo ''
+    sleep 1
+    echo "Editing complete."
+  fi
+sleep 1
+
+clear
+echo ''
+if [ -f $LOCATION/$name.$tmeta ] ; then
+echo "Do you want to remove the old backup"
+$ECHON "$LOCATION/$name.$tmeta? (y) "
+read ans
+  if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+    echo "The backup copy will be kept."
+  else
+    rm $LOCATION/$name.$tmeta
+  fi
+fi

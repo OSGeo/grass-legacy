@@ -1,0 +1,21 @@
+interface_build {
+    {r.watershed} 0
+    {Watershed basin analysis program.}
+    {entry elevation {Elevation (input map):} 0 raster}
+    {entry depression {Depressions in the landscape (input map):} 0 raster}
+    {entry flow {Amount of overland flow per cell (input map):} 0 raster}
+    {entry disturbed.land {Percent of disturbed land (input map or value):} 0 raster}
+    {entry blocking {Terrain blocking overland surface flow (input map):} 0 raster}
+    {entry threshold {Minimum size of an exterior watershed basin in cells:} 0 ""}
+    {entry max.slope.length {Maximum length of overland surface flow in meters:} 0 ""}
+    {entry accumulation {Number of cells that drain through each cell (output map):} 0 raster}
+    {entry drainage {Drainage direction (output map):} 0 raster}
+    {entry basin {Unique label for each watershed basin (output map):} 0 raster}
+    {entry stream {Stream segments (output map):} 0 raster}
+    {entry half.basin {Unique label for each half-basin (output map):} 0 raster}
+    {entry visual {Visual display of results (output map):} 0 raster}
+    {entry length.slope {Slope length and steepness (LS) factor (output map):} 0 raster}
+    {entry slope.steepness {Slope steepness (S) factor for RUSLE (output map):} 0 raster}
+    {checkbox -m {Manage memory on disk (slow !).} "" -m}
+    {checkbox -4 {Allow only horizontal and vertical flow of water.} "" -4}
+}

@@ -1,0 +1,12 @@
+
+
+g.mapsets - 
+
+g.mapsets shows the user available \mapsets\ under the current GRASS
+\location\, lists mapsets to which the user currently has access and
+lists the order in which accessible mapsets will be accessed by GRASS
+programs searching for data files.  The user is then given the
+opportunity to add or delete mapset names from his search path, or
+modify the order in which mapsets will be accessed.
+
+Manual entry for \g.mapsets\

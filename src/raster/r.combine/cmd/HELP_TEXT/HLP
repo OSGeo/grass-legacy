@@ -1,0 +1,12 @@
+HELP - command
+
+Provides run time help information.
+
+syntax: (HELP)
+        HELP COMMAND
+
+'COMMAND' is replaced with any key-word command.  Help information for that
+command is then printed to the terminal.
+
+aliases:
+	HELP   help   ?

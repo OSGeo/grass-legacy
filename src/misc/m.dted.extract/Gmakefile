@@ -1,0 +1,23 @@
+HOME = $(BIN_MAIN_CMD)
+PGM      = m.dted.extract
+
+LIST = main.o\
+	extract.o\
+	error.o\
+	getargs.o\
+	io.o\
+	printgeo.o\
+	readtape.o\
+	round.o\
+	usage.o\
+	uhl.o\
+	write_hd.o\
+	zero_out.o
+
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(LIST): dma.h
+
+$(GISLIB):      # in case library changes

@@ -1,0 +1,16 @@
+
+EXTRA_CFLAGS	=   $(VECT_INCLUDE) 
+
+SOURCES = \
+	main.c
+
+OBJ = \
+	main.o
+
+PROG =   $(BIN_CONTRIB_CMD)/v.merge
+all:  $(PROG)
+
+
+$(PROG): $(OBJ) $(GISLIB) $(VECTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB)
+

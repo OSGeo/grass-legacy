@@ -1,0 +1,6 @@
+interface_build {
+    {d.rhumbline} 0
+    {Displays the rhumbline joining two user-specified points.}
+    {entry coor {Starting and ending coordinates (lon1,lat1,lon2,lat2):} 0 ""}
+    {entry lcolor {Rhumbline color [white]:} 0 color}
+}

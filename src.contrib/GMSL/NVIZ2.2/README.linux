@@ -1,0 +1,45 @@
+This file describes the installation of nviz version 2.2 for Linux
+users running XFree86 and Mesa (OpenGL-like) graphics library.  
+
+INSTALLATION
+------------
+
+nviz requires Tcl/Tk 8.0, OpenGL or Mesa, ogsf and image libraries.
+The primary Mesa ftp site is iris.ssec.wisc.edu in the pub/Mesa directory.
+Mesa is also mirrored on sunsite in the directory pub/packages/development
+/graphics/mesa. There is also an official home for Tcl and Tk on the Web:
+        http://www.scriptics.com
+The ogsf and image libraries should be in grass5/src/libes/ and 
+grass5.0/nviz distribution.
+
+Once you have all these installed you can proceed with the nviz installation.
+
+To install:
+
+1. Run the configure script in this directory with:
+	configure
+
+2. Make the distribution in this directory with:
+	gmake5
+
+3. run 
+   gmakelinks5
+
+The configure script sets a few default values and attempts to figure
+out where the tcl/tk libraries reside.  If configure can't find a
+particular library it will ask for the directory where that library
+resides. 
+
+The Gmakefile created in this directory first builds the C portion of
+nviz and the gsf library, and then builds and installs the Tcl scripts
+in the appropriate GRASS directories.  After installing nviz you may
+remove any of the subdirectories contained in the distribution except
+for the bitmaps and scripts directories.  Furthermore, note that the
+location of the Tcl scripts is compiled into nviz.  This means that if
+you need to move these scripts for some reason you will most likely
+have to reinstall nviz.  
+
+KNOWN BUGS
+----------
+
+Check out TODO.linux file.

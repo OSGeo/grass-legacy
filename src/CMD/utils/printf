@@ -1,0 +1,7 @@
+fmt=$1
+shift
+if test $# = 0
+then
+    set ""
+fi
+echo "$@" | awk '{printf("'$fmt'",$0)}'

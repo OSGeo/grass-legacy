@@ -1,0 +1,6 @@
+
+
+label - A name, or other nominal code, assigned to a graphic
+representation of a feature on a map.  Labels are comprised of small
+amounts of \attribute\ data (in alpha-numeric from) descriptive of
+and assigned to the graphic representation of a map feature.

@@ -1,0 +1,4 @@
+all:
+	$(GMAKE) lib
+	$(GMAKE) drivers
+	$(GMAKE) clients

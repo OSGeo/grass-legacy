@@ -1,0 +1,39 @@
+plot_vect.c:102: warning: unused variable `buf'
+plot_vect.c:100: warning: unused variable `cellhd'
+plot_vect.c:231: warning: unused variable `tmp_mapset'
+plot_vect.c:231: warning: unused variable `msg'
+plot_vect.c:231: warning: unused variable `buf'
+plot_vect.c:230: warning: unused variable `Map'
+plot_vect.c:229: warning: unused variable `tmp_window'
+plot_vect.c:229: warning: unused variable `cellhd'
+plot_vect.c:50: warning: `use' defined but not used
+view_clear.c:5: warning: static declaration for `clear_tar' follows non-static
+view_clear.c:33: warning: unused variable `cellhd'
+view_clear.c:32: warning: unused variable `mapset'
+view_clear.c:32: warning: unused variable `name'
+view_clear.c:52: warning: unused variable `i'
+view_conv.c:11: warning: control reaches end of non-void function
+view_conv.c:19: warning: control reaches end of non-void function
+view_conv.c:27: warning: control reaches end of non-void function
+view_conv.c:35: warning: control reaches end of non-void function
+view_points.c:61: warning: `return' with no value, in function returning non-void
+view_points.c:80: warning: `row' might be used uninitialized in this function
+view_points.c:80: warning: `col' might be used uninitialized in this function
+view_refresh.c:9: `cancel' undeclared (first use this function)
+view_refresh.c:9: (Each undeclared identifier is reported only once
+view_refresh.c:9: for each function it appears in.)
+view_refresh.c:9: initializer element for `objects[0].handler' is not constant
+view_refresh.c: At top level:
+view_refresh.c:22: `cancel' used prior to declaration
+view_refresh.c:27: warning: static declaration for `refresh_img' follows non-static
+view_refresh.c: In function `refresh_img':
+view_refresh.c:29: warning: unused variable `cellhd'
+view_refresh.c:28: warning: unused variable `mapset'
+view_refresh.c:28: warning: unused variable `name'
+view_refresh.c: At top level:
+view_refresh.c:51: warning: static declaration for `refresh_tar' follows non-static
+view_refresh.c: In function `refresh_tar':
+view_refresh.c:53: warning: unused variable `cellhd'
+view_refresh.c:52: warning: unused variable `mapset'
+view_refresh.c:52: warning: unused variable `name'
+view_refresh.c:22: warning: `cancel' defined but not used

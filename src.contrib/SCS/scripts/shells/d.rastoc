@@ -1,0 +1,171 @@
+#!/bin/sh
+
+# d.rast Command with Legend and Only Categories in the 
+#      current window and MASK.
+# Version 1 - Written by Lane Price, CGIS
+# February 13, 1990
+# Revised April 23, 1991, RL Glenn, grass4.0
+
+if [ $# != 1 ]
+	then
+          tput clear
+	  echo "Usage: d.rastoc rast_file
+
+NAME 
+     d.rastoc - Tool for creating a map and legend on the screen
+               with a legend containing only the categories in 
+               the current window.
+
+DESCRIPTION
+     d.rastoc creates three windows on the screen, and displays a 
+     legend, the raster file, and a title for the raster file named
+     on the command line.  The legend window contains only those
+     categories in your current window, and is sized according
+     to the text labels in the cats file. 
+
+     If there are too many categories for legible text in the 
+     on-screen legend, then a message is displayed and the map
+     is then displayed without a graphics legend.
+
+SEE ALSO
+     d.rastwl"
+	  exit
+fi
+
+for i in `cat $LOCATION/SEARCH_PATH`
+	do
+	  if test -f $GISDBASE/$LOCATION_NAME/$i/cats/$1
+	    then file=$GISDBASE/$LOCATION_NAME/$i/cats/$1
+		 break
+	  fi
+	done
+
+if test "$file" = ""
+	then
+	  echo "Did not find the file $1";exit
+fi
+
+#############################################
+# Create new map with only cats in window and MASK
+
+# Identify categories to be in legend ...
+echo "\nIdentifying categories to include ... \c"
+r.stats -zq $1 > $HOME/temp1 
+
+# Check to see if there are no categories in temp1
+check=`wc -l $HOME/temp1 | awk '{print $1}'`
+if [ "$check" = '0' ]
+   then 
+      echo "\n\nWARNING -- No data within WINDOW and/or MASK -- Exiting ..."
+      sleep 2
+      exit
+fi
+echo "COMPLETE"
+
+# Show only cat numbers ...
+echo "Sorting categories ... \c"
+awk -F: '{print $1 ":"}' < $HOME/temp1 > $HOME/temp2
+echo "COMPLETE"
+
+# Add labels to file ...
+rm $HOME/temp3 >/dev/null 2>/dev/null
+echo "Creating legend labels ... \c"
+for i in `cat $HOME/temp2`
+do
+   grep \^$i $file >> $HOME/temp3
+done
+echo "COMPLETE"
+
+# Create reclass script ...
+echo "Creating reclass script ... \c"
+awk -F: '{print $1 " = " c+1 " " $2
+          c=c+1}' < $HOME/temp3 > $HOME/temp4
+echo "0 = 0 No Data" >> $HOME/temp4
+echo "COMPLETE"
+
+# Do reclass ...
+echo "Reclassifying the map ... \c"
+r.reclass input=$1 output=leg_tmp < $HOME/temp4
+echo "COMPLETE"
+rm $HOME/temp1 $HOME/temp2 $HOME/temp3 $HOME/temp4
+
+# Set new file to build legend from ...
+file2=$file
+file=$LOCATION/cats/leg_tmp
+
+echo "Determining legend dimensions ... \c"
+hlegend=`awk 'NR==1 {if ($1 == "#") {
+			print ($2 + 3) * 2.5}
+			else {
+			print ($1 + 3) * 2.5}
+		    }' < $file`
+
+if test $hlegend -gt 100
+	then 
+	echo "\nToo many categories for graphics legend display\n";
+        d.frame -e 
+        d.rast $1
+  	exit 1
+fi
+
+mapname=`awk 'NR==2 {print $0}' < $file2`
+
+wlegend=`awk 'NR>4 {if (length($0) > maxlen) {
+		maxlen = length($0)}
+	        }
+	      END {print (maxlen + 2) * 1.2 + 8}' < $file`
+
+# Fommula for legend window width is # chars * a % of screen 
+# required for each char * an add-on factor for boxes...
+
+# Round off width Number
+echo $wlegend > $HOME/temp6 
+wlegend=`awk -F. '{print $1}' < $HOME/temp6`
+rm $HOME/temp6
+
+# Round off height number
+echo $hlegend > $HOME/temp6
+hlegend=`awk -F. '{print $1}' < $HOME/temp6`
+rm $HOME/temp6
+echo "COMPLETE"
+
+# Create Windows
+echo "Drawing map ... \c"
+d.frame -e > /dev/null 
+d.frame legend  at=`expr 100 - $hlegend`,100,`expr 100 - $wlegend`,100 > /dev/null
+d.frame legend > /dev/null
+d.legend leg_tmp
+
+# Create map window and map
+if test "$hlegend" -gt "$wlegend"
+	then
+	  tborder=90
+	  rborder=`expr 99 - $wlegend`
+	else
+	  tborder=`expr 99 - $hlegend`
+	  rborder=100
+fi
+
+d.frame map at=0,$tborder,0,$rborder > /dev/null
+d.frame map
+d.rast leg_tmp
+
+# Create Title window and map
+d.frame title at=91,100,0,`expr 99 - $wlegend` > /dev/null
+d.frame title
+d.font romant
+d.text << EOF
+.C red
+.S 38
+`echo $mapname`
+EOF
+d.font romans
+d.text << EOF
+.C yellow
+.S 28
+
+
+`echo Map Name: $1`
+EOF
+d.frame map
+echo "COMPLETE"

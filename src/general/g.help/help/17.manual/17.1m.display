@@ -1,0 +1,34 @@
+                  MANUAL ENTRIES FOR DISPLAY COMMANDS         
+
+Below is a list of GRASS 5.0 display commands. 
+Commands with the suffix ".sh" are shell scripts.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC.
+
+ \d.3d\              \d.ask\               \d.colormode\
+ \d.colors\          \d.colortable\        \d.display\ 
+ \d.erase\           \d.font\              \d.frame\ 
+ \d.geodesic\        \d.graph\             \d.grid\
+ \d.his\             \d.histogram\         \d.icons\  
+ \d.label\           \d.labels\            \d.legend\  
+ \d.mapgraph\        \d.measure\           \d.menu\  
+ \d.mon\             \d.paint.labels\      \d.points\ 
+ \d.profile\         \d.rast\              \d.rast.arrow\
+ \d.rast.edit\       \d.rast.num\          \d.rast.zoom\
+ \d.rgb\             \d.rhumbline\         \d.save\
+ \d.savescreen\      \d.scale\             \d.sites\
+ \d.text\            \d.title\             \d.vect\
+ \d.vect.dlg\        \d.what.rast\         \d.what.vect\
+ \d.where\           \d.zoom\ 
+
+ \3d.view.sh\        \dcorrelate.sh\       \grass.logo.sh\
+ \show.color.sh\     \show.fonts.sh\       \slide.show.sh\
+ \split.sh\
+
+For a discussion of how these commands work with graphics device
+drivers, see \monitorcap\.
+
+
+
+

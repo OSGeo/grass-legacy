@@ -1,0 +1,5 @@
+                       STOPPING A MONITOR 
+
+The @man("d.mon") program can regulate control of graphics monitors both in
+systems using multiple monitors and in systems using a single graphics
+monitor.

@@ -1,0 +1,1012 @@
+#!/bin/sh
+#
+# v.meta       
+#
+# BASED on r.meta supplied by:
+# Author:  Ronald Thomas, Rocky Mountain National Park GIS Specialist
+#
+#-------------------------------------------------------------------------
+#  Ronald Thomas                         ^  ront@meeker.cfnr.colostate.edu
+#   Natural Resource Spec. (GIS)         ^  
+#    Resource Management Division        ^   Phone: 303-586-3565  x285
+#     Rocky Mountain National Park       ^          700-323-7285  (FTS)
+#      Estes Park, CO  80517             ^   FAX:   303-586-4702
+#--------------------------------------------------------------------------
+#
+# Check to see if GRASS is running
+#
+if [ ! "$GISRC" ]
+then 
+  echo "GRASS is not running" 
+  exit 1
+fi
+#----------------------------------------------------------------------------
+#
+#  Evaluate arguments
+#
+if [ $# != 1 ]
+then clear
+    echo
+    echo "Usage: `basename $0 `  mapname "
+    echo "          <or>        "
+    echo "       `basename $0 ` m=mapname "
+    echo "          <or>        "
+    echo "       `basename $0 ` map=mapname "
+    echo
+    echo " Where \"mapname\" is a vector map in your current mapset. "
+    echo 
+    echo " Please try again."
+    echo
+    exit 1
+fi
+#
+#  parse input arguments
+#
+case $1 in
+	map=*) META=`echo $1 | sed s/map=//` ;;
+	m=*)     META=`echo $1 | sed s/m=//` ;;
+	*)                    META=`echo $1` ;;
+esac
+#-----------------------------------------------------------------------
+#
+#  See if the vector map exists in the current mapset
+#
+eval `g.findfile mapset=$MAPSET element=dig file=$META`
+if [ ! "$file" ]
+then echo
+    echo "$META -  vector file not found in mapset: $MAPSET"
+    echo
+    echo " This program only creates METADATA files "
+    echo
+    echo "  for vector maps in your current mapset. "
+    echo
+    exit 1
+fi
+#
+#
+# ------------------------------------------------------------------
+# Check to see if $LOCATION/metadata already exists
+#
+#
+#
+element=`ls $LOCATION | grep dig_meta`
+if [ "$element" != dig_meta ]
+then clear
+    echo
+    echo "        ***** METADATA DIRECTORY OPTION MENU ***** "
+    echo
+    echo
+    echo  "The directory dig_meta at $LOCATION does not exist "
+    echo  
+    echo -n "Create?  Type Y to continue, anything else to quit:   "
+    read ans
+      case $ans in 
+          y|yes|Y|YES|Yes)        mkdir $LOCATION/dig_meta ;;
+          *)                                        ans="N" ;;
+      esac
+    if [ "$ans" = N  ]
+    then echo
+    echo "        Let's clarify this: "
+    echo
+    echo "        You MUST have a dig_meta directory at"
+    echo
+    echo "        $LOCATION if you wish to continue."
+    echo
+    echo "        That's were the metadata file will reside. "
+    echo
+    echo -n "Create?  Type Y to continue, anything else to quit:   "
+    read ans
+      case $ans in 
+          y|yes|Y|YES|Yes)        mkdir $LOCATION/metadata ;;
+              *)                                   ans="N" ;;
+      esac
+    echo
+    exit 1
+    fi
+fi
+#
+# Define some variables -----
+#
+METADIR="$LOCATION/dig_meta"
+METAFILE="$METADIR/$META"
+#
+#---------------------------------------------------------------------
+#
+# What to do if METAFILE already exists.
+#
+while [ -s "$METAFILE" ]
+	do clear
+        echo
+	echo "     ***** MAIN OPTIONS MENU *****"
+        echo 
+        echo
+	echo "    METADATA file $META already exists !"
+        echo
+        echo "Do you want to:"
+        echo "               (S) ee "
+        echo "               (D) elete "
+        echo "               (E) dit   "
+        echo
+        echo " the existing METADATA file $META in mapset: $MAPSET ?"
+        echo
+        echo "         or    (Q) uit  " 
+        echo
+        echo -n "Enter your choice.... "
+        read ans1
+	case "$ans1" in
+          s|S|see|SEE|See) cat $METAFILE | more; sleep 2; continue ;;
+          d|D|delete|DELETE|Delete)     ans2="D" ;;
+          e|E|edit|EDIT|Edit)           ans2="E" ;;
+          q|Q|quit|Quit|QUIT)           exit 1  ;;
+          *)                           continue ;;
+	esac
+        if [ "$ans2" = D ]
+        then clear
+	echo
+	echo
+	echo "     ***** DELETE OPTIONS MENU *****"
+	echo
+	echo
+        echo "           ARE YOU SURE ?"
+	echo "                   ^^^^"
+        echo
+        echo "Enter (Y) es to delete, anything else to return "
+        echo
+        echo -n "to the Main Options Menu.... "
+        read ans3
+        case "$ans3" in
+           y|yes|Y|YES|Yes)       rm $METAFILE 
+		echo
+		echo
+		echo "You just deleted your METADATA file $META"
+		echo
+		echo "Do you want to create a new METADATA file?"
+		echo
+       		echo -n "Enter (Y) es to go on, anything else to quit.... "
+		read ans
+		case $ans in 
+       		y|yes|Y|YES|Yes)        break  ;;
+		*)                     exit 1  ;;
+		esac     ;;
+           *)                  continue ;;
+        esac
+        fi
+	if [ "$ans2" = E ]
+	then clear
+	echo
+	echo "     ***** EDITING OPTIONS MENU *****"
+	echo
+	echo
+	echo "If you only have a few corrections/additions, "
+	echo
+	echo "It will be easier to do that work in a text editor"
+	echo
+	echo "Do you want to Continue (using vi to edit) or Quit?"
+	echo
+	echo "Enter (C) to continue or (Q) to quit... "
+	echo
+	echo -n "or any other key to return to previous menu.... "
+	read ans4
+	case "$ans4" in
+          q|Q|quit|Quit|QUIT)   exit 1  ;;
+	  c|C|continue|Continue|CONTINUE)    
+			vi $METAFILE
+ 			echo
+ 			echo
+			echo " Editing of metafile $META now finished "
+ 			echo
+			echo "You will now be returned to the MAIN options menu"
+			sleep 5
+			continue ;;
+	  *)            continue ;;
+	esac
+	break
+	fi
+done
+#
+#----------------------------------------------------------
+#
+## define some more variables ##
+
+CATS="$LOCATION/dig_cats/$META"
+CATLINES=`wc -l "$CATS" | awk '{print $1}'`
+if [ $CATLINES = 4 ]
+	then
+	CATNUM=`head -1 "$CATS" | awk '{print $2+1}'`
+	else
+	NODATA=`tail +5 "$CATS" | head -1 | awk -F: '{print $1}'`
+	if [ $NODATA = 0 ]
+		then
+		CATNUM=`tail +5 "$CATS" | wc -l`
+		else
+		CATNUM=`tail +4 "$CATS" | wc -l`
+	fi
+fi
+v.stats -h $META > $LOCATION/.tmp/metastats.$$
+STATS="$LOCATION/.tmp/metastats.$$"
+DIGDATE=`tail +5 "$STATS" | head -1 | sed 's/DIGIT DATE:   //' | awk '{print $0}'`
+ZONE=`tail +11 "$STATS" | head -1 | awk '{print $2}'`
+N=`tail +15 "$STATS" | head -1 | awk '{print $3}'`
+S=`tail +14 "$STATS" | head -1 | awk '{print $3}'`
+E=`tail +13 "$STATS" | head -1 | awk '{print $3}'`
+W=`tail +12 "$STATS" | head -1 | awk '{print $3}'`
+MAPTHRESH=`tail +16 "$STATS" | head -1 | awk '{print $3}'`
+TITLE=`tail +2 "$CATS" | head -1 | awk '{print $0}'`
+VERSION=`tail +2 "$STATS" | head -1 | sed 's/Format: //' | awk '{print $0}'`
+
+## end variable definitions ##
+#
+#---------------------------------------------------
+#
+# Reading some info from the cellhd and cats file and write to $METAFILE
+#
+#
+clear
+echo
+echo " Reading some info from dig_cats and v.stats "
+echo
+echo "  and writing to $METAFILE"
+#
+echo "GRASS Map Layer History Report" >> $METAFILE
+echo >> $METAFILE
+echo >> $METAFILE
+echo "Layer name:  "$META"" >> $METAFILE
+echo "Location:  "$LOCATION"" >> $METAFILE
+echo "Mapset:  "$MAPSET"" >> $METAFILE
+echo "Layer title:  "$TITLE"" >> $METAFILE
+echo "Date of creation:  "$DIGDATE"" >> $METAFILE 
+echo "Format:  "$VERSION"" >> $METAFILE
+echo "Type of layer:   vector" >> $METAFILE
+echo "Number of categories:	"$CATNUM"" >> $METAFILE
+echo "Intended Use of Data:  	Reconnaissance level planning and regional assessment" >> $METAFILE
+SENT="Data Description:  "
+while [ -n "$SENT" ]
+do
+clear
+echo
+echo " The field requiring an answer is:"
+echo
+echo "Data Description:  "
+echo
+echo -n "Your answer..."
+read ANS
+        if [ -z "$ANS" ]
+        then echo
+        echo "You must make an entry of some type."
+        sleep 2
+        continue
+        else
+        echo "$SENT $ANS" >> $METAFILE
+        break
+        fi   
+done
+echo >> $METAFILE
+echo >> $METAFILE
+echo "Vector Layer Information" >> $METAFILE
+echo >> $METAFILE
+echo "Coordinate system (UTM/State Plane):  	UTM" >> $METAFILE
+echo "Zone:  "$ZONE"" >> $METAFILE
+echo "N:  "$N"" >> $METAFILE
+echo "S:  "$S"" >> $METAFILE
+echo "E:  "$E"" >> $METAFILE
+echo "W:  "$W"" >> $METAFILE
+echo "Map Threshold:     "$MAPTHRESH"" >> $METAFILE
+echo >> $METAFILE
+rm $LOCATION/.tmp/metastats.$$
+SENT="Description of Geographic Region:  "
+while [ -n "$SENT" ]
+do
+clear
+echo
+echo " The field requiring an answer is:"
+echo
+echo "Description of Geographic Region:  "
+echo
+echo -n "Your answer..."
+read ANS
+        if [ -z "$ANS" ]
+        then echo
+        echo "You must make an entry of some type."
+        sleep 2
+        continue
+        else
+        echo "$SENT $ANS" >> $METAFILE
+        break
+        fi   
+done
+echo >> $METAFILE
+echo >> $METAFILE
+sleep 3
+echo "General Information about Source Data" >> $METAFILE 
+echo >> $METAFILE 
+clear
+echo "General Information about Source Data" 
+sleep 3
+SENT="Name/Description of source data:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Name/Description of source data:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Date source data was published/created:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Date source data was published/created:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Publisher/Creator of source data:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Publisher/Creator of source data:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Scale of source data:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Scale of source data:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Source medium:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Source medium:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Condition/quality of source data:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Condition/quality of source data:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Format of source data if digital:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Format of source data if digital:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="If source data is a format other than GRASS, programs used to import data:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "If source data is a format other than GRASS, programs used to import data:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Comments on source data:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Comments on source data:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+echo >> $METAFILE 
+echo >> $METAFILE 
+clear
+echo "Automation of Source Data" >> $METAFILE
+echo >> $METAFILE
+clear
+echo "Automation of Source Data"
+sleep 3
+SENT="Base Map Used:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Base Map Used:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="  Base Map date:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "  Base Map date:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="  Base Map scale:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "  Base Map scale:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="  Base Map threshold/resolution:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "  Base Map threshold/resolution:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="  Base Map publisher/creator of base map:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "  Base Map publisher/creator of base map:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="  Comments on Base Map:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "  Comments on Base Map:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Date of creation of manuscript map:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Date of creation of manuscript map:  "
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Name of person/agency who transcribed manuscript map:  "
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Name of person/agency who transcribed manuscript map:  "
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Procedure for creating manuscript map:  "
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Procedure for creating manuscript map:  "
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Relevant references:  "
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Relevant references:  "
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Comments on manuscript map:  "
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Comments on manuscript map:  "
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+echo >> $METAFILE
+SENT="Date data was digitized/scanned:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Date data was digitized/scanned:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Name of person/agency who digitized/scanned:" 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Name of person/agency who digitized/scanned:" 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Digitizing threshold/resolution:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Digitizing threshold/resolution:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Comments on digitizing:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Comments on digitizing:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+echo >> $METAFILE 
+echo >> $METAFILE 
+clear
+echo "Post-Automation Data Recompilation"
+sleep 3
+clear
+echo "Post-Automation Data Recompilation" >> $METAFILE 
+echo >> $METAFILE 
+SENT="Date of (re)compilation:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Date of (re)compilation:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Name of person/agency responsible for (re)compilation:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Name of person/agency responsible for (re)compilation:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Procedures for recompilation:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Procedures for recompilation:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Relevant references:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Relevant references:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Comments on recompilation:  " 
+while [ -n "$SENT" ] 
+do
+clear
+echo 
+echo " The field requiring an answer is:" 
+echo 
+echo "Comments on recompilation:  " 
+echo 
+echo -n "Your answer..." 
+read ANS
+	if [ -z "$ANS" ] 
+	then echo 
+	echo "You must make an entry of some type." 
+	sleep 2 
+	continue 
+	else 
+	echo "$SENT $ANS" >> $METAFILE 
+	break
+	fi 
+done
+SENT="Any additional comments, statements, copyrights, etc.:  "
+while [ -n "$SENT" ]
+do
+clear
+echo 
+echo " The optional field is:" 
+echo 
+echo "Any additional comments, statements, copyrights, etc.:  "
+echo 
+echo -n "Your answer..."
+read ANS   
+        if [ "$ANS" == "" ]
+        then echo 
+        else     
+        echo "$ANS" >> $METAFILE
+        echo >> $METAFILE
+        echo >> $METAFILE
+        break
+        fi   
+done
+echo >> $METAFILE
+echo >> $METAFILE
+echo "Contact Information:" >> $METAFILE
+echo "        REGIS" >> $METAFILE
+echo "        Center for Environmental Design Research" >> $METAFILE
+echo "        390 Wurster Hall" >> $METAFILE
+echo "        University of California" >> $METAFILE
+echo "        Berkeley, CA  94720" >> $METAFILE
+echo "" >> $METAFILE
+echo "        phone:  +01 (510) 642-2896" >> $METAFILE
+echo "        fax:    +01 (510) 643-5571" >> $METAFILE
+echo "        internet: regis@ced.berkeley.edu" >> $METAFILE
+echo "" >> $METAFILE
+echo "        Contacts:  Robert Twiss, Principal Investigator" >> $METAFILE
+echo "                   Kenn Gardels, GIS Specialist" >> $METAFILE
+echo "" >> $METAFILE
+echo "        Copyright (c) 1993" >> $METAFILE
+echo "        The Regents of the University of California" >> $METAFILE
+echo "" >> $METAFILE
+echo "" >> $METAFILE
+echo "        Permission to use, copy, modify, and distribute this" >> $METAFILE
+echo "        dataset and its documentation for any non-profit" >> $METAFILE
+echo "        purpose or activity and without fee is hereby granted," >> $METAFILE 
+echo "        provided that the above copyright notice appear in all" >> $METAFILE
+echo "        copies and that both that copyright notice and this" >> $METAFILE
+echo "        permission notice appear in supporting documentation." >> $METAFILE
+echo "        The name of the Regents of the University of California" >> $METAFILE
+echo "        may not be used in advertising or publicity pertaining" >> $METAFILE
+echo "        to distribution of the dataset without specific, written" >> $METAFILE
+echo "        prior permission." >> $METAFILE
+echo "" >> $METAFILE
+echo "        The Regents of the University of California make no" >> $METAFILE
+echo "        representation or warranties with respect to the contents" >> $METAFILE
+echo "        hereof and specifically disclaim any implied warranties" >> $METAFILE
+echo "        of merchantability or fitness for any particular purpose." >> $METAFILE
+echo "" >> $METAFILE
+#
+#---------------------------------------
+#
+#
+#
+#

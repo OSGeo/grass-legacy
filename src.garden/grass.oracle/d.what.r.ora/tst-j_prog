@@ -1,0 +1,7 @@
+:
+# test for d.what.r.db where all required command line args are provided
+# uses command line version of 2 table join
+# DB=seco_soils, GISdb=SECO
+#
+
+d.what.r.db  map=seco.soils keytable=seco_soil_cats col=grass_cat join=comp,muid,muid

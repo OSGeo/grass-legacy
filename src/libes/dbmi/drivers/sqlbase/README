@@ -1,0 +1,10 @@
+Unix env:
+    $SQLBASE:   set to the /SQLBASE directory
+    $SQLBASE_SERVER: set to a server name (otherwise get local databases )
+
+PASSWORDS: (also read file PASSWORDS)
+$HOME/.sqlbase/db.passwd: password file for databases
+	dbname//passwd
+	dbname/username/passwd
+$HOME/.sqlbase/server.passwd: password file for servers
+	server/passwd

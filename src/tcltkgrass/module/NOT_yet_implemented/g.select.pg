@@ -1,0 +1,248 @@
+
+proc DB_listbox {} {
+	global file_name
+	toplevel .files
+	wm geometry .files +100+100
+	wm title .files files
+	
+	frame .files.frame0 \
+	    -borderwidth {2} \
+	    -relief {flat}
+
+	listbox .files.frame0.listbox \
+	    -relief {sunken} \
+	    -geometry 20x10 \
+	    -yscrollcommand {.files.frame0.vscrollbar set}
+
+	  scrollbar .files.frame0.vscrollbar \
+	    -command {.files.frame0.listbox yview}
+	 button .files.close -text "Cancel" -command {
+		destroy .files
+                set file_name ""
+	 }
+
+	  pack append .files.frame0 \
+	    .files.frame0.listbox { left expand fill } \
+	    .files.frame0.vscrollbar { right fill }
+	  pack .files.close
+	  pack .files.frame0
+
+	  set first 1
+	  foreach i [ PQquery {} {retrieve ( pg.datname ) from pg in pg_database sort by datname} ] {
+     	     if { $first == 1 } {
+		set first 0
+	     } else {
+	        .files.frame0.listbox insert end $i
+	     }
+	  }
+	
+	bind .files.frame0.listbox <Double-ButtonPress-1> {
+	        set file_name [selection get]
+		destroy .files
+	}
+	tkwait window .files
+	return $file_name
+}
+
+
+proc put_command { } {
+
+
+
+  global name1
+  global name2
+
+
+  set cmd ""
+
+  if { $name1 != "" } {
+         set cmd "$cmd database=$name1"
+  }
+
+  if { $cmd != "" } {
+     set cmd "g.select.pg $cmd"
+  }
+}
+
+proc set_command_entry {} {
+
+   .cmd.frame.frame4.entry configure -state normal
+   .cmd.frame.frame4.entry delete 0 end
+   .cmd.frame.frame4.entry insert 0 [put_command]
+   .cmd.frame.frame4.entry configure -state disabled
+
+}
+
+# procedure to show window .
+proc proc_g.select.pg { } {# xf ignore me 7
+
+  # Window manager configurations
+
+
+  global name1
+  global name2
+
+  toplevel .cmd
+
+  wm geometry .cmd +100+20
+
+  wm title .cmd "g.select.pg  j.soimasuo"
+
+
+  # build widget .cmd.frame
+  frame .cmd.frame \
+    -borderwidth {2} \
+    -height {220} \
+    -width {350}
+
+  # build widget .cmd.frame.label
+  label .cmd.frame.label \
+    -text {Description:}
+  label .cmd.frame.label2 \
+	-text {Selecton of a Postgres database}
+
+
+  # build widget .cmd.frame.frame2
+  frame .cmd.frame.frame2 \
+    -borderwidth {2} \
+    -geometry {30x30} \
+    -relief {raised}
+
+  # build widget .cmd.frame.frame2.label
+  label .cmd.frame.frame2.label \
+    -text {Input file:}
+
+  # build widget .cmd.frame.frame2.entry
+  entry .cmd.frame.frame2.entry \
+    -borderwidth {3} \
+    -relief {sunken}
+
+  button .cmd.frame.frame2.button \
+    -text {DBs} \
+    -command { set file [DB_listbox ]
+                if { $file != "" } {
+                   set name1 $file
+                   .cmd.frame.frame2.entry delete 0 end
+                   .cmd.frame.frame2.entry insert 0 $file
+                   set_command_entry
+                }
+             }
+
+
+  bind .cmd.frame.frame2.entry <Return> {
+       set name1 [%W get]
+       set_command_entry  }
+
+  # place
+  place .cmd.frame.frame2.button -x 300 -y 30 -anchor nw
+
+  # place
+  place .cmd.frame.frame2.label -x 0 -y 0 -anchor nw
+
+  # place
+  place .cmd.frame.frame2.entry -x 0 -y 30 -width 300 -anchor nw
+
+
+
+  # build widget .cmd.frame.frame4
+  frame .cmd.frame.frame4 \
+    -borderwidth {2} \
+    -geometry {30x30} \
+    -relief {raised}
+
+  # build widget .cmd.frame.frame4.label
+  label .cmd.frame.frame4.label \
+    -text {Command:}
+
+  # build widget .cmd.frame.frame4.entry
+  entry .cmd.frame.frame4.entry \
+    -borderwidth {3} \
+    -relief {sunken}
+
+  .cmd.frame.frame4.entry delete 0 end
+  .cmd.frame.frame4.entry insert 0 {g.select.pg}
+
+  .cmd.frame.frame4.entry configure -state disabled
+
+  # place
+  place .cmd.frame.frame4.label -x 0 -y 0 -anchor nw
+
+  # place
+  place .cmd.frame.frame4.entry -x 0 -y 30 -width 300 -anchor nw
+
+
+  # build widget .cmd.frame.button1
+  button .cmd.frame.button1 \
+    -text {Ok} \
+    -width {8} \
+     -command { set name1 [.cmd.frame.frame2.entry get]
+  		set cmd [put_command]
+ 		if { $cmd != "" } {
+ 		   catch { eval " exec $cmd " } 
+ 		   destroy .cmd
+ 		}
+ 	}
+
+  # build widget .cmd.frame.button2
+  button .cmd.frame.button2 \
+    -text {Cancel} \
+    -command { destroy .cmd } \
+    -width {8}
+
+
+
+  # place
+  place .cmd.frame.frame4 -x 0 -y 115 -width 347 -height 65 -anchor nw
+
+  # place
+  place .cmd.frame.button1 -x 56 -y 185 -anchor nw
+
+  # place
+  place .cmd.frame.button2 -x 220 -y 185 -anchor nw
+
+  # place
+  place .cmd.frame.frame2 -x 0 -y 50 -width 347 -height 65 -anchor nw
+
+ 
+
+  # place
+  place .cmd.frame.label -x 0 -y 0 -anchor nw
+  place .cmd.frame.label2 -x 0 -y 20 -anchor nw
+ 
+
+  # pack widget .
+  pack append .cmd \
+    .cmd.frame {top frame center}
+
+
+  if {"[info procs XFEdit]" != ""} {
+    catch "XFMiscBindWidgetTree ."
+    after 2 "catch {XFEditSetShowWindows}"
+  }
+}
+
+
+global name1
+set name1 ""
+global name2
+set name2 ""
+
+global tcltkgrassbase
+global database
+global location
+global mapset
+global feature
+set auto_path "$tcltkgrassbase/module  $auto_path"
+if { [info exists env(GISDBASE)] == 0 ||
+     [info exists env(LOCATION_NAME)] == 0 ||
+     [info exists env(MAPSET)] == 0 } {
+   puts stdout "GISDBASE, LOCATION_NAME and MAPSET must be set !!!"
+   return
+}
+set database $env(GISDBASE)
+set location $env(LOCATION_NAME)
+set mapset $env(MAPSET)
+set feature ""
+
+proc_g.select.pg
+

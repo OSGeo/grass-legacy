@@ -1,0 +1,13 @@
+
+
+LIBRARIES = $(GISLIB) $(DATETIMELIB) 
+
+PGM = $(BIN_CONTRIB_CMD)/r.sum
+
+OFILES = main.o 
+
+
+$(PGM): $(OFILES) $(LIBRARIES) 
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB)
+
+

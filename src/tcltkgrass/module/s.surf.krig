@@ -1,0 +1,18 @@
+interface_build {
+    {s.surf.krig} 0
+    {Raster surface generation from sites map with Kriging interpolation.}
+    {entry input {Input site map:} 0 sites}
+    {entry outz {Output z value raster map:} 0 raster}
+    {entry outvarz {Output z variance raster map:} 0 raster}
+    {checkbox model {Power model.} "" power}
+    {checkbox model {Spherical model.} "" spherical}
+    {checkbox model {Exponential model.} "" exp}
+    {checkbox model {Logarithmic model.} "" log}
+    {checkbox model {Gaussian model.} "" gaussian}
+    {entry npoints {Number of interpolation points [12]:} 0 ""}
+    {entry range {Range (not used with log or power models) [1.0]:} 0 ""}
+    {entry power {Power (only for use with the power model) [1.0]:} 0 ""}
+    {entry nugget {Variogram nugget variance [0.0]:} 0 ""}
+    {entry sill {Variogram sill scaled to the sample variance [1.0]:} 0 ""}
+    {entry max_lag {Max.lag (only used with the power model) [1000.0]:} 0 ""}
+}

@@ -1,0 +1,64 @@
+
+
+
+r.miadin(1)  	     GRASS Reference Manual	     r.miadin(1)
+
+
+
+NAME
+     r.miadin - convert MIADS output ascii text file into an 
+	       GRASS raster import (r.in.ascii) formatted file.
+               (SCS Map Development Tool)
+
+SYNOPSIS
+     r.miadin input=Miads data file to read 
+              output=raster data file to create
+              strip=Miads file strip number of reference cell
+              line=Miads file line number of reference cell
+              cell=Miads file cell number of reference cell
+              north=UTM Northing at the cell reference
+              east=UTM Easting at the cell reference
+              size=Cell size(length one side) in meters
+
+DESCRIPTION
+     r.miadin:
+       allows a user to create a r.in.ascii formatted ascii file
+       from a MIADS output printer format ascii file. 
+
+       The program will actively read the MIADS data file, 
+       selectively remove and process each strip, creating a 
+       individual r.in.ascii formatted file for each strip, and 
+       finally create one category file for all strips. The 
+       program also produces a report file summarizing all 
+       pertainent information on each strip.
+
+       The resulting r.in.ascii files for each strip are then 
+       used in conjunction with the GRASS commands "r.in.ascii" 
+       and "r.patch" to create a complete raster file.
+
+       grass4/local/bin contains SCS macros run.miads, getstrip, 
+       and strip.99s. These macros make the MIADS to GRASS 
+       conversion easier.
+     
+       run.miads - SCS macro to do the complete conversion of a 
+	   MIADS printer format data set to a GRASS raster file. 
+       getstrip - reads each r.miads strip file and converts it 
+	   to a independent GRASS data file. Support may be run 
+	   on any one of these strip files, however, there is no 
+	   category information available. Each strip may be 
+	   viewed at this time with r.rast or d.display.
+       strip.99s - special pre-r.miads macro which removes the 
+	    99 's from the MIADS data file. This effectively 
+	    removes border information, replacing it with no_data.
+
+SEE ALSO
+       r.patch, r.in.ascii
+
+AUTHOR
+r.miadin - Ron Glenn, USDA, Soil Conservation Service, CGIS Division.
+run.miads, strip.99s - Harold Kane, USDA, Soil Conservation Service,
+                        Oklahoma State Office
+
+
+GRASS 4.0		 U.S.D.A. SCS  				1
+

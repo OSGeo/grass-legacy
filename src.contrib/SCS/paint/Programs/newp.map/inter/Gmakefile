@@ -1,0 +1,31 @@
+PGM=p.mapinter2
+INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+ICONLIB = $(LIBDIR)/libicon.a
+LIST = main.o\
+	Pmap.o\
+	ask_bg.o \
+	ask_cell.o\
+	ask_color.o\
+	ask_legend.o\
+	ask_grid.o\
+	ask_icon.o\
+	ask_labels.o\
+	ask_masked.o\
+	ask_scale.o\
+	ask_sites.o\
+	ask_vect.o\
+	ask_width.o\
+	hitreturn.o\
+	input.o\
+	newscreen.o\
+	record.o\
+	scan_color.o\
+	scan_scale.o\
+	yes.o
+
+$(PGM): $(LIST) $(GISLIB) $(INTERFACE) $(ICONLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(ICONLIB) $(GISLIB) $(TERMLIB) $(INTERFACE) -o $@
+
+$(INTERFACE): #
+$(ICONLIB): #
+$(GISLIB): #

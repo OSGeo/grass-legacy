@@ -1,0 +1,6 @@
+WINDOW - command
+
+Lists the window for a named map.
+
+syntax: WINDOW
+        WINDOW MAP_NAME

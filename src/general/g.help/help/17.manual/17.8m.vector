@@ -1,0 +1,18 @@
+                 MANUAL ENTRIES FOR VECTOR COMMANDS            
+
+Below is a list of GRASS 5.0 vector commands.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC.
+				
+  \v.area\          \v.cadlabel\       \v.clean\
+  \v.db.rim\        \v.digit\          \v.import\
+  \v.in.arc\        \v.in.ascii\       \v.in.dlg\
+  \v.in.dxf\        \v.in.tiger\       \v.mkgrid\ 
+  \v.mkquads\       \v.out.arc\        \v.out.ascii\ 
+  \v.out.dlg\       \v.out.dxf\        \v.out.moss\   
+  \v.patch\         \v.prune\          \v.spag\ 
+  \v.stats\         \v.support\        \v.to.rast\
+  \v.to.sites\      \v.transform\      \v.trim\
+
+  \Gen.Maps\        \Gen.tractmap\

@@ -1,0 +1,11 @@
+LIBRARIES = $(GISLIB) 
+
+PGM = $(BIN_CONTRIB_CMD)/r.circle
+
+OFILES = dist.o
+
+
+$(PGM): $(OFILES) $(LIBRARIES) 
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB)
+
+

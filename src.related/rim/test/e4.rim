@@ -1,0 +1,32 @@
+report                                                                          
+  header                                                                        
+    1 1 '  Id'                                                                  
+    1 10 Name                                                                   
+    1 60 'Page: '                                                               
+    1 66 page_number i5                                                         
+    2 5 '(measurements)'                                                        
+    3 1 ' '                                                                     
+  end header                                                                    
+                                                                                
+  select from techs where position = 'Tech 1'                                   
+    print                                                                       
+      1 1 id     i4                                                             
+      1 10 name  a20                                                            
+    end print                                                                   
+    mid = id                                                                    
+      print                                                                     
+        2 5 'symbol   date      resistivity'                                    
+        3 5 '------   ----      -----------'                                    
+      end print                                                                 
+    select from measures where id = mid                                         
+      print                                                                     
+        1 5 symbol a8                                                           
+        1 15 m_date 'yy/mm/dd'                                                  
+        1 25 resistivity f6.2                                                   
+      end print                                                                 
+    end select                                                                  
+      print                                                                     
+      1 1 ' '                                                                   
+      end print                                                                 
+  end select                                                                    
+end report                                                                      

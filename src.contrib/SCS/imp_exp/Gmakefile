@@ -1,0 +1,8 @@
+all:
+	$(GMAKE) dig_dlg
+	$(GMAKE) dig_gef
+	$(GMAKE) dlg_dig
+	$(GMAKE) gef_dig
+	$(GMAKE) v.export
+	$(GMAKE) v.import
+

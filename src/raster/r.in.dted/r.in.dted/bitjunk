@@ -1,0 +1,15 @@
+{
+int d1,d2;
+
+d1=0x80000000;
+d2=0x80000000;
+
+if(d1&d2){
+fprintf(stderr,"%d & %d = TRUE\n", d1, d2);
+fprintf(stderr,"-1 = %X\n", -1);
+fprintf(stderr,"0x80000001 = %d\n", 0x80000001);
+}
+else
+fprintf(stderr,"%d & %d = FALSE\n", d1, d2);
+
+}

@@ -1,0 +1,12 @@
+
+
+d.histogram - 
+
+d.histogram plots the \category value\ distribution for a
+user-specified \raster\ map layer in the form of a bar chart or a pie
+chart.  The plot will be displayed in the active display \frame\ on the
+graphics monitor, using the colors in the raster map layer's color
+table.  The program determines the raster file's category value
+distribtution by counting \cells\.
+
+Manual entry for \d.histogram\

@@ -1,0 +1,4 @@
+interface_build {
+    {v.import} 1
+    {SCS user interface to GRASS import programs.}
+}

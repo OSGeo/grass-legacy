@@ -1,0 +1,6 @@
+:
+# test for d.vect.db using prebuilt SQL command file
+# DB=tiger, GISdb=SECO
+#
+
+d.what.v.db -s sql=tst_dwv.sql map=$1 

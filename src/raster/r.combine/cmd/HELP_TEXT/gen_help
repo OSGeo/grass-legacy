@@ -1,0 +1,19 @@
+                COMBINE general help facility
+
+COMBINE is a language driven GRASS analysis tool.  
+
+You can locate landscape sites which meet your criteria using the boolean
+keywords AND and OR, and the grouping command GROUP.
+
+Other keywords extract information from the data base, create new maps,
+and overlay analysis results.
+
+For help with any combine command, type help followed by the command name.
+    For example:  help TOPIC
+
+where TOPIC is one of the following:
+    syntax         MAP_NAME   RANGE         HISTORY
+    example1       AND        WINDOW        ERASE
+    example2       OR         CATEGORIES    HELP 
+                   GROUP      OVER          QUIT
+                   NOT        COVER

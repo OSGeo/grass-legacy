@@ -1,0 +1,9 @@
+
+
+v.out.dxf - 
+
+v.out.dxf generates an ASCII DXF (AutoCad) file from a GRASS \vector\
+ASCII file.  The output file is placed in the user's current working
+directory unless the user specifies an alternate directory.
+
+Manual entry for \v.out.dxf\

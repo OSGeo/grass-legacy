@@ -1,0 +1,25 @@
+PGM=i.fft
+
+PGMI=i.ifft
+
+OBJS = fftmain.o fft.o orig_wind.o save_fft.o fft_colors.o
+
+#OBJS = fftmain2.o fft2.o orig_wind.o save_fft2.o
+
+INVOBJS = ifftmain.o fft.o orig_wind.o
+
+#INVOBJS = ifftmain2.o fft2.o orig_wind.o
+
+LIBES= $(GISLIB)
+
+
+all: $(BIN_MAIN_CMD)/$(PGM) $(BIN_MAIN_CMD)/$(PGMI)
+
+$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+
+$(BIN_MAIN_CMD)/$(PGMI): $(INVOBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(INVOBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

@@ -1,0 +1,138 @@
+                   INSTALL GRASS 5.0 source code
+                    (updated 7th December 1999)
+
+The intent of the new install method is to have the following sequence
+of commands work to install GRASS on any platform.  If for some reason
+you wish to use the old "GISGEN" method, refer to the file called
+INSTALL.gmake for instruction.
+
+	./configure
+	make install
+
+The `configure' command (possibly with options; see below) should
+identify all relevant system dependencies and create several files
+(see below) containing dependency information.  The `make' command
+should compile the programs but not touch the filesystem outside of
+the extracted source.  The `make install' command should install GRASS
+in the main filesystem.  NOTE:  You may need to be 'root' to do this!
+
+If you want to change this, use a sequence like this:
+
+	./configure --prefix=/opt/grass5.0 --with-bindir=/usr/bin/
+	make install
+
+This will install the GRASS modules, help, and other need libraries
+etc. in the directory /opt/grass5.0 and the startup file 'grass5.0'
+in the directory /usr/bin.  See the configure options below for more
+information.
+
+At this point that system should work as above, with a few known
+exceptions (see below).  If you identify problems (e.g., system
+dependencies not already accounted for by `configure') please pass
+along the relevant information (e.g., operating system, dependency
+information, and ideally a fix) so the configuration system can be
+fixed.
+
+Note that the old install method based on running GISGEN directly
+should still work (though be sure to check the files created by
+`configure').  In this case, something along the lines of the
+following should work.
+
+	./configure
+	setenv GRASSSRC `pwd`/src
+	setenv GMAKE `pwd`/src/CMD/gmake5.0
+	sh src/CMD/generic/GISGEN.sh
+	sh src/CMD/generic/MAKELINKS.sh
+
+Note that if you are using something akin to the Bourne shell you must
+set the environment variables differently (e.g., VAR=value; export
+VAR).  If you wish to use the old "head" files, you will need to
+follow the old INSTALL directions after running `configure'.
+
+Finally, note that because the source files now depend on
+src/include/config.h and src/scripts/shells/create_fifos.sh, it is
+imperative to run the `configure' script regardless of the ultimate
+installation method.
+
+A general "gmake5" script is created in /usr/local/bin (standard)
+which allows to compile modules separately. It is required to run
+the "configure" process in advance and to compile the required
+library files.
+
+Note for Alpha64 users: Please read the ALPHA64/README.alpha64
+                        and apply the 64bit patches.
+
+CONFIGURE OPTIONS
+
+The `configure' script takes a number of options.  Because it is
+derived from the GNU autoconf system, `configure' accepts all the
+normal options.  The following lists a few that are relevant to GRASS.
+
+	--help				lists all available options
+	--prefix=DIR			install GRASS (except user
+					executable program) in DIR
+	--with-bindir=DIR		install user executable
+					program in DIR 
+	--with-includes=DIRS		add DIRS to the compiler flags (-I) 
+	--with-libs=DIRS		add DIRS to the compiler flags (-L)
+	--with-tiff-includes=DIRS	add DIRS to the compiler flags
+					(-I) for locating TIFF files
+	--with-tiff-libs=DIRS		add DIRS to the compiler flags
+					(-L) for locating TIFF libraries
+	--with-SYSV			define the SYSV macro
+	--with-USE_TERMIO		define the USE_TERMIO macro
+
+Note that DIRS can be a space separated list of directories.  Note
+also that the last two options are needed only on a few systems to
+account for system dependencies that are not yet included within the
+`configure' script (see below).  They will be removed in future
+versions.
+
+
+FILES TO CHECK
+
+The `configure' script creates the following files to contain system
+dependencies: 
+
+	Makefile
+	src/CMD/head/head
+	src/include/config.h
+	src/scripts/shells/create_fifos.sh
+
+After running `configure' it is wise to check these files to verify
+that they contain the correct information.  In particular, several
+known exceptions (see below) might need fixing in src/CMD/head/head.
+
+
+KNOWN EXCEPTIONS
+
+Several known system dependencies are currently not handled
+automatically by the `configure' script.  Eventually these will be
+fixed, especially if people with these systems can help (see below).
+
+Scattered throughout the source code are dependencies on the C
+preprocessor macro `SYSV'.  Only `hpux10' machines need to define this
+macro in src/CMD/head/head:
+
+	XLDFLAGS = -DSYSV
+
+This is accomplished by the --with-SYSV option to `configure'.
+
+
+THINGS TO DO
+
+A major task remaining is to replace the GISGEN system with a
+proper set of Makefiles, all of which include a common one containing
+the system dependencies.
+
+Finally, to ensure that this system continues to work, GRASS
+programmers need to be encouraged to include
+
+	#include "config.h"
+
+in their files and to make use of the various system dependencies
+contained therein.  As one example of this, see
+src/paint/Interface/driverlib/io.c.  Programmers also need to be
+encouraged to refrain from declaring system functions within the
+software; include the proper header files (conditionally dependent on
+config.h macros if necessary) instead.

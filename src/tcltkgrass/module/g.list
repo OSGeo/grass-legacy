@@ -1,0 +1,15 @@
+interface_build {
+    {g.list} 0
+    {Lists available GRASS data base files of the user-specified data type.}
+    {entry mapset {Mapset to list [mapsets in current search path]:} 0 ""}
+    {checkbox type {Raster files.}		"" rast}
+    {checkbox type {binary vector files.}	"" vect}
+    {checkbox type {paint icon files.}		"" icon}
+    {checkbox type {paint label files.}		"" labels}
+    {checkbox type {site list files.}		"" sites}
+    {checkbox type {region definition files.}	"" region}
+    {checkbox type {imagery group files.} 	"" group}
+    {checkbox type {3D view parameters.}	"" 3dview}
+    {separator grey 1}
+    {checkbox -f {Verbose listing.} "" -f}
+}

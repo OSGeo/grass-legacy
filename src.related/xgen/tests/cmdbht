@@ -1,0 +1,24 @@
+environment a
+initialshells:b
+{
+    commandboard b
+       width:500
+       height:500
+       forcesize:on
+    (
+	toggle Vertical
+	    y:35
+	    toggletype:radio
+	    orientation:vertical
+	    listelement:a
+	    listelement:b
+	    listelement:c
+	    ;
+	toggle Horizontal
+	    orientation:horizontal
+	    listelement:alpha
+	    listelement:beta
+	    listelement:cats
+	    ;
+    )
+}

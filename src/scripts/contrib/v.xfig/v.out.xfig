@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# Name       : v.out.xfig
+# Version    : 0.3
+# Date       : Wed Jan 14 1999
+# Author     : Jacques Bouchard
+# Description: convert an ASCII vector file exported from GRASS
+#              to a file in FIG 3.2 format (to be drawn with xfig)
+# Usage      : v.out.xfig ascii_vectormap > outputfile.fig
+# get xfig from:  http://www-epb.lbl.gov/xfig/
+
+if test "$GISBASE" = ""; then
+echo "You must be in GRASS to run this program."
+exit
+fi
+
+if test "$1" = ""
+then
+ echo ""
+ echo "This module exports a GRASS vector layer to XFIG format."
+ echo "You can paint your maps with XFIG then."
+ echo ""
+ echo "Usage: v.out.xfig vectorlayer"
+ echo ""
+ exit
+fi
+
+echo "First step: Converting binary vector layer to ASCII-vector layer..."
+# as far as the atts are not supported, we don´t need v.export:
+v.out.ascii in=$1 out=$1
+
+echo "Saving to xfig-file into current directory... "
+grass2fig < $LOCATION/dig_ascii/$1 > $1.fig
+
+echo "Done."

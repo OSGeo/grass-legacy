@@ -1,0 +1,6 @@
+interface_build {
+    {d.rast} 0
+    {Displays or overlays raster map layers.}
+    {entry map {Raster map to be displayed:} 0 raster}
+    {checkbox -o {Overlay (displays non-zero values only):} "" -o}
+}

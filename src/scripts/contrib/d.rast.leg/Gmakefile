@@ -1,0 +1,2 @@
+all:
+	cp d.rast.leg $(GISBASE)/scripts

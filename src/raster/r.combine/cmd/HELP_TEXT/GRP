@@ -1,0 +1,23 @@
+GROUP
+
+The GROUP operator groups desired category codes from a chosen map layer,
+discarding others.
+
+syntax:   (GROUP CAT-NUMS EXPR)
+operation:
+    (GROUP 3 soils)
+              222332                  000330
+    soils --  211333 --- GROUP 3 -->  000333        (Note that GROUP preserves
+              144453                  000003         the original desired 
+                                                     values)
+    (GROUP 1 3-5 soils)
+              222332                  000330
+    soils --  211333 - GROUP 1 3-5 -> 011333
+              144453                  044453
+
+    (GROUP 0 EXPR)
+          000000                      111111
+    EXPR  011100 - GROUP 0 EXPR ->    100011  (GROUP 0 functions
+          100000                      011111   as a NOT operator)
+aliases:
+    GROUP     group     GRP     grp

@@ -1,0 +1,45 @@
+Requirement for NVIZ: OpenGL or MESA3.0
+
+Notes on OpenGL:
+If you are using OpenGL instead of Mesa3.0, change the Gmakefile in the 
+cmd directory to use libGLU and libGL instead of libMesaGLU and 
+libMesaGL respectively.
+
+Compiling Mesa:
+Source: 
+  http://www.mesa3d.org/ 
+  http://gd.tuwien.ac.at/graphics/libs/Mesa/
+
+Extract the MESA package. There is a makefile available for
+each supported platform. It will be auto-selected with a
+parameter for the "make" command.
+The list of supported platforms you get with simple
+ "make"
+
+Check for your platform in the list. Example:
+ SUN/Solaris2.6:       make sunos5-gcc-sl
+ Linux/Intel with gcc: make linux-386-elf
+ ...
+
+Compile the mesa with
+  make <platform>
+
+Now you go for the SGI widgets. You can find the source for this in the 
+widgets-sgi  subdirectory of the Mesa source distribution. 
+
+To make the required libGLw shared library (libGLw.so):
+
+        - edit the Makefile: change libGLw.a to libGLw.so
+        - type make linux-386-elf (or whatever platform you have)
+        - create /usr/include/GL
+        - cp *.h /usr/include/GL
+        - cd ../lib
+        - cp  libGLw.so* /lib
+        - cd ../include/GL
+        - cp gl.h /usr/include/GL
+        - ldconfig -v   (not on SUN)
+
+Now you will be able to use NVIZ.
+
+Eliot Cline/ Markus Neteler
+(Nov. 1999)

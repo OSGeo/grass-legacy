@@ -1,0 +1,285 @@
+<html>
+<title>TclTKGRASS - a graphical user interface for GRASS</title>
+<body bgcolor=#FFFFE0>
+<pre>
+                          TCLTKGRASS History
+
+Changes from Jacques Bouchard <bouchard@onera.fr>
+             Markus Neteler <neteler@geog.uni-hannover.de>
+             Phisan Santitamnont <phisan@ipi.uni-hannover.de>
+             Marco Valagussa <marco@duffy.crcc.it>
+
+------------------------------------------------------------------
+12. July 99 - TCLTKGRASS 2.9 (Jacques Bouchard, Markus Neteler)
+------------------------------------------------------------------
+- added improved mapset management
+- changed X monitor start behavior (so that problems can be seen)
+- added ZOOM entry in display menu
+- added customizable quit window
+- added missing Gmakefile
+
+------------------------------------------------------------------
+29. March 99 - TCLTKGRASS 2.8 (Jacques Bouchard)
+------------------------------------------------------------------
+- added missing modules:
+    + r.mask
+- bugfix for man-page display (starts on top of page now)
+- bugfix for "child process exited abnormally" message
+
+
+------------------------------------------------------------------
+6. March 99 - TCLTKGRASS 2.7 (Jacques Bouchard)
+------------------------------------------------------------------
+- corrected Gmakefile
+- added ballon help to main menu
+
+
+------------------------------------------------------------------
+22. December 98 - TCLTKGRASS 2.6 (Jacques Bouchard/Markus Neteler)
+------------------------------------------------------------------
+- added missing modules:
+    + i.gensig
+    + i.gensigset
+    + i.cluster
+    + i.maxlik
+    + i.smap
+
+- bugfix for
+    + r.buffer
+
+
+------------------------------------------------------------------
+4. December 98 - TCLTKGRASS 2.5 (Jacques Bouchard/Markus Neteler)
+------------------------------------------------------------------
+ - bugfixes
+
+ - new installation procedure (with "make")
+   the "tcltkgrass" directory can be put anywhere
+
+ - "tcltkgrass" must now be launched from the GRASS shell
+   (as the TCL/TK shell is not very pleasant to use);
+   GRASS and TCLTKGRASS can be used at the same time
+
+ - new "Config" menu
+       + several monitors can be started / stopped with one action
+       + global management of module windows
+       + font selection
+       + default driver geometry can be set
+
+ - the monitors geometry is saved / restored
+   (unfortunately, this is known to be bugged on SGI IRIX)
+
+ - the active monitor is now erased after region operations
+
+ - corrected module/r.out.tiff (24bit support)
+ - corrected module/d.3d
+ - corrected module/d.what.sites
+ - corrected module/r.slope.aspect
+ - corrected module/d.zoom
+
+------------------------------------------------------------------
+ TCLTKGRASS 2.4 - internal release
+------------------------------------------------------------------
+21. July 98 - TCLTKGRASS 2.3   (Jacques Bouchard/Markus Neteler)
+ - New buttons for picking coordinates on the active monitor:
+     xy and xyz.map -> read Programming_intro.txt for details
+ - added "reinitialize" feature in right mouse popup window
+ - splitted menu structure: Monitor and Display
+ - changes to Raster menu structure
+ - updated Help-page
+ - New modules:
+     d.barscale    (replaces d.scale)
+     d.profile
+     d.site.labels
+     d.where
+     g.region_-p   (replaces g.region)
+     i.in.erdas
+     r.combine
+     r.in.ppm
+     r.profile
+     r.statistics
+     r.support
+ - Updated modules for mouse entering coordinate support:
+     d.3d
+     d.grid
+     r.los
+     r.cost
+     r.drain
+     r.transect
+     v.mkgrid
+- corrected:
+     d.colors
+     d.scale
+     d.shadedmap
+     d.what.rast
+     d.what.vect
+     g.manual
+     r.average
+     r.coin
+     r.covar
+     r.clump
+     r.in.bin
+     r.in.ll
+     r.stats
+- corrected, to improve portability:
+     - STOP/CONT/KILL buttons in script/gui.tcl (exec ps -j)
+     - script/pause
+     - start script main/tcltkgrass
+------------------------------------------------------------------
+29. June 98 - TCLTKGRASS 2.2   (Markus Neteler)
+- added display/raster/d.shadedmap: creation of shaded maps based 
+  on shadows from aspect map
+- added raster/r.flow: Flowline calculation from DEM
+- corrected s.surf.krig 
+- added new user support in start tcltkgrass script
+    (query for location, mapset, database directory)
+
+------------------------------------------------------------------
+14. June 98 - TCLTKGRASS 2.1   (Markus Neteler/Jacques Bouchard)
+- added scollbars to TCLTKGRASS Help
+- Implemented new modules:
+   Help-section:
+      g.manual_scripts g.manual_modules 
+   Paint driver section: 
+      p.select p.map.new p.icons 
+   Postscript driver section:
+      ps.select ps.map ps.icon
+   MapManagement:
+      g.mapsets
+   Vector:
+      v.info
+   Display:
+      d.area
+- updated:
+     v.out.arc v.in.arc (corrected file selection)
+     r.slope.aspect (corrected file selection)
+     d.3d (corrected color selection, GRASS modules d.3d must be 
+           updated also!)
+
+------------------------------------------------------------------
+20. May 98 - Jacques Bouchard
+                       TCLTKGRASS 2.0
+
+TCLTKGRASS is totally rewritten!
+
+- new module concept:
+  -> modules totally rewritten
+  -> internal GUI builder created
+  -> added quit/resize popup menu (right mouse button in module window)
+  -> added run/help buttons (right mouse button on run button)
+- colors implemented
+- file selection windows implemented
+- 149 module windows programmed
+
+------------------------------------------------------------------
+23. April 98 - Markus Neteler
+- easy monitor (d.mon) choice now
+     -> changed script/tcltkgrass.tcl
+
+------------------------------------------------------------------
+18. April 1998 - Jacques Bouchard
+
+- change in src.alpha/tcltkgrass/module :
+    Prevent to use Display/Manage/Control Display Monitor:
+file d.mon:
+------------ cut here -----------------------
+182c182
+<     -yscrollcommand {.cmd.frame2.vscrollbar set}
+---
+>     -yscrollcommand {.cmd.frame2.vscrollbar set} \
+248c248
+<     -yscrollcommand {.cmd.frame3.vscrollbar set}
+---
+>     -yscrollcommand {.cmd.frame3.vscrollbar set} \
+------------ cut here -----------------------
+
+
+file: d.rast  - Marco Valagussa 
+------------ cut here -----------------------
+119c119
+<   menu .mapset.frame0.mapsets.pulldown -tearoff 0
+---
+>   menu .mapset.frame0.mapsets.pulldown
+------------ cut here -----------------------
+
+
+----------------------------------------------------------------
+
+14. April 1998 - Phisan Santitamnont/Markus Neteler
+
+- moved unused modules in
+   ../module/
+  to
+   ../module/NOT_yet_implemented
+
+
+-  tcltkgrass v1.1 'd.mon' module
+   has a problem with 800x600 pixel screen and for sake 
+   of geometry following patch is to be applied:
+   This the result of substitution of '-geometry WxH'
+   with '-width H -height H'
+
+-------- cut here --------------------
+182c182,184
+<     -yscrollcommand {.cmd.frame2.vscrollbar set}
+---
+>     -yscrollcommand {.cmd.frame2.vscrollbar set} \
+>     -width 25 \
+>     -height 8
+246c248,250
+<     -yscrollcommand {.cmd.frame3.vscrollbar set}
+---
+>     -yscrollcommand {.cmd.frame3.vscrollbar set} \
+>     -width 25 \
+>     -height 5
+
+---------- cut here -------------------------
+
+8. April - Jacques Bouchard
+
+- new start script:
+    script/tcltkgrass
+
+  This new script does not need the binaries any more unless the
+  "super view" is not implemented properly. The old start script 
+  is renamed to:
+    script/tcltkgrass_start_with_superview
+
+
+
+-----------------------------------------------------------
+1. April 98 - Markus Neteler
+
+- new Menus included (not yet fully available) 
+- new Intro-screen
+- Corrected path in script/tcltkgrass
+    src.extra -> src.alpha
+- New INSTRUCTIONS textfile
+
+----------------------------------------------------------
+26.3.98 - Jacques Bouchard
+
+- New src/main2.c file
+- New src/Gmakefile
+- New script/tcltkgrass
+
+----------------------------------------------------------
+20.3.98
+
+Following (new) changes: - Jacques Bouchard
+
+1) I changed the path of the -bitmap option in the scripts
+   of tcltkgrass/module.
+   tcltkgrass can now be used from every directory
+   (formerly you had to be in tcltkgrass/*).
+
+2) I changed the prompts of tcltkgrass
+   in tcltkgrass/script/tcltkgrass.tcl.
+
+3) tcltkgrass.c / TclTkInit.c were extremly complex.
+   I merged them into a single, easy to understand,
+   better working (?) and canonical file: main.c
+   (tcltkgrass.c / TclTkInit.c have been moved to unused).
+</pre>
+</body>
+</html>

@@ -1,0 +1,9 @@
+
+
+area - A homogeneous region containing data having the same 
+\category value\.  An area (a.k.a., \polygon\) is formed by the series
+of \arcs\ outlining its perimeter.  GRASS vector format does not
+store polygons explicitly; when used to describe \vector data\, 
+therefore, areas refer to area edges.  More generally, area can refer 
+to a geographically defined region (rather than to a region defined by 
+a category value).

@@ -1,0 +1,30 @@
+
+To build a test data base for Gdbsites:
+
+1) Run GRASS using the Spearfish location.
+
+2) cd to this directory.
+
+3) Run these commands:
+   Gdbsites arch
+   .input arch.make1
+   .input arch.add
+   .ex
+
+4) Gdbsites can now be used on this data base following the
+   information in the manual pages.  dbsites can also be used.
+
+5) Rim can also be used to access this data base; however, do not
+make changes using Rim unless you are highly experienced with both
+Gdbsites and Rim.
+
+
+
+The file arch.make can be used in dbsites to build the same
+data base.  The arch.add script must be used through Gdbsites to
+load the data base.
+
+
+See directory $GISBASE/src.contrib/rim/test for two sample Rim
+data bases (sample and arch).  These are not intended for use with
+Gdbsites or dbsites.

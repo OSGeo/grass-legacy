@@ -1,0 +1,10 @@
+PGM =d.points
+OBJ = main.o draw.o setup.o
+
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #
+
+$(OBJ): globals.h

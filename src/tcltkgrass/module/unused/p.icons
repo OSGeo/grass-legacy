@@ -1,0 +1,4 @@
+interface_build {
+    {p.icons} 1
+    {Creates and modifies icons for paint map display and output.}
+}

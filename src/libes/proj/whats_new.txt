@@ -1,0 +1,72 @@
+    -------------------- P R O J . 4 --------------------
+                      @(#)README        4.11 95/09/24 GIE REL"
+
+This is Release 4.3 of cartographic projection software.
+
+PLEASE read the following information as well as READMEs in the src
+and nad directories.
+
+PLEASE send information on any problems encountered or general inquiries to
+
+        gie@kai.er.usgs.gov
+
+or call Gerald I. Evenden at (508)563-6766 or write to same at:
+
+        P.O. Box 1027
+        N. Falmouth, MA 02556-1027
+        USA
+
+   ---------------------------------------------------
+
+New projections in Proj 4.3: (against PROJ4.2)
+
+PJ_crast.o
+PJ_denoy.o
+PJ_fahey.o
+PJ_fouc_s.o
+PJ_gins8.o
+PJ_gn_sinu.o
+PJ_hatano.o
+PJ_imw_p.o
+PJ_labrd.o
+PJ_larr.o
+PJ_lask.o
+PJ_mbt_fps.o
+PJ_mpoly.o
+PJ_nell.o
+PJ_nell_h.o
+PJ_nzmg.o
+PJ_ob_tran.o
+PJ_oea.o
+PJ_putp3.o
+PJ_putp4p.o
+PJ_putp6.o
+PJ_sconics.o
+PJ_somerc.o
+PJ_sts.o
+PJ_urm5.o
+PJ_urmfps.o
+PJ_wag2.o
+PJ_wag3.o
+PJ_wink2.o
+
+
+Renamed/removed files (projections modified):
+PJ_dense.o
+PJ_eck6.o
+PJ_eisen.o
+PJ_fourn.o
+PJ_hataea.o
+PJ_mbtfps.o
+PJ_parab.o
+PJ_pconic.o
+PJ_quau.o
+PJ_sinu.o
+
+
+Things currently left undone: (1995)
+----------------------------
+
+proj_def.dat NOT fully in place.  Needs additional settings for
+many of the projections.  Probably will not be completed until main
+manual rewritten.

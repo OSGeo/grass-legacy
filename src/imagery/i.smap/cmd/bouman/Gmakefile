@@ -1,0 +1,16 @@
+OBJ = decimate.o\
+	interp.o\
+	alpha_max.o\
+	model.o\
+	solve.o\
+	eigen.o\
+	invert.o\
+	multialloc.o\
+	reg_util.o\
+        read_block.o\
+	segment.o
+
+lib.a: $(OBJ)
+	$(AR)
+
+$(OBJ): bouman.h

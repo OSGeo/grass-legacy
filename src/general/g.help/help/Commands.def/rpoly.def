@@ -1,0 +1,12 @@
+
+
+r.poly - 
+
+r.poly extracts \area\ edges from a \raster\ \map layer\ and converts
+data to GRASS \vector\ format.  The program first traces the permieter
+of each unique area in the raster map layer and creates vector data to
+represent it.  The cell \category values\ for the raster map layer
+will be used to create \attribute\ information for the resultant vector
+area edge data.
+
+Manual entry for \r.poly\

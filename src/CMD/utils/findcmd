@@ -1,0 +1,28 @@
+:
+
+# looks for command ($1) in user's path. skips directories that don't
+# start with /
+print=no
+if test "$1" = "-p"
+then
+	shift
+	print=yes
+fi
+
+for dir in `echo $PATH | sed 's/:/ /g'`
+do
+	case "$dir" in
+
+	/*) if test ! -d $dir/$1 && access x $dir/$1
+	    then
+		if test $print = yes
+		then
+			echo $dir/$1
+		fi
+		exit 0
+	    fi
+	    ;;
+
+	esac
+done
+exit 1

@@ -1,0 +1,13 @@
+interface_build {
+    m.u2ll 0
+    {Converts Universal Transverse Mercator (UTM) coordinates to geographic (latitude/longitude) coordinates.}
+    {entry spheroid {Spheroid:} 0 spheroid}
+    {entry zone {Utm zone (1-60):} 0 ""}
+    {entry input {Input file:} 0 file}
+    {entry output {Output file:} 0 File}
+    {checkbox -s {Specified zone is in the southern hemisphere.} "" -s}
+    {checkbox -r {Input is reversed: north,east.} "" -r}
+    {checkbox -w {Do not flag invalid east,north input lines as errors.} "" -w}
+    {checkbox -o {Flag other input lines as errors.} "" -o}
+    {checkbox -d {Output in decimal degrees.} "" -d}
+}

@@ -1,0 +1,401 @@
+#!/bin/csh
+# Chris Rewerts, AGEN, Purdue University
+# Shell script to display primary inputs and outputs for
+# an ANSWERS on GRASS project
+# Aug 25, 1992
+
+
+# IMPORTANT - edit this part to tell d.answers
+# where the menus are located - this shellscript depends on
+# the files d.range, menu1, menu2, menu3. set the menu_dir
+# variable to the path of the directory where these files
+# live
+
+set menu_dir=/home/diego/rewerts/answers/scripts
+
+if ($?GISRC == 0) then
+   echo ""
+   echo "You must be running grass 4 to use this program"
+   echo ""
+   exit
+endif
+
+set MON=`g.gisenv MONITOR`
+
+#if ("$MON" != "sun1" && $MON != "x1") then
+if ("$MON" == "") then
+  echo ""
+  echo "It doesn't look like you have a GRASS graphics monitor running."
+  echo ""
+  exit
+endif
+
+# build LOCATION variable, since it is not always set
+set LOC=`g.gisenv LOCATION`
+if ("$LOC" == "") then
+  set BASE=`g.gisenv GISDBASE`
+  set LOCNAME=`g.gisenv LOCATION_NAME`
+  set MSET=`g.gisenv MAPSET`
+  set LOCATION="$BASE/$LOCNAME/$MSET"
+endif
+
+
+if ($1 == "") then
+  echo ""
+  echo "USAGE: $0 project_name"
+  echo ""
+  echo ""
+  echo "Here are your ANSWERS on GRASS projects that I could find:"
+  echo ""
+  ls $LOCATION/answers/project
+  echo ""
+  echo "Enter the name of an r.answers watershed simulation project"
+  echo "which has been successfully run."
+  echo "[enter nothing and press RETURN to exit]"
+  echo ""
+  echo -n "-> "
+  set project=$<
+  if ($project == "") then
+     exit
+  endif
+else
+  set project=$1
+endif
+
+# where database is
+set DB=$LOCATION/answers/data/$project
+
+cd $LOCATION/answers/project
+
+echo ""
+if (-f $project) then
+   clear
+   echo ""
+   echo "ANSWERS on GRASS $project project"
+   echo ""
+   echo "reading project data file..."
+else
+   echo "could not find <$project> ANSWERS project in"
+   echo "your <$MAPSET> GRASS mapset"
+   exit
+endif
+
+echo ""
+
+# get the names of maps
+
+echo ""
+echo "Names of Primary Input Maps used in this Project"
+echo ""
+set mask=`grep mask: $project | awk '{print $2}'`
+echo "MASK map:	$mask"
+set cover=`grep cover: $project | awk '{print $2}'`
+echo "Cover map:	$cover"
+set soils=`grep soils: $project | awk '{print $2}'`
+echo "Soils map:	$soils"
+set aspect=`grep aspect: $project | awk '{print $2}'`
+echo "Aspect map:	$aspect"
+set slope=`grep ^slope: $project | awk '{print $2}'`
+echo "Slope map:	$slope"
+set channel=`grep channel: $project | awk '{print $2}'`
+echo "Channel map:	$channel"
+echo "-------------------------------------------------"
+set deposit=`grep deposit: $project | awk '{print $2}'`
+echo "Sediment Deposition map:	$deposit"
+set loss=`grep loss: $project | awk '{print $2}'`
+echo "Sediment Loss map:		$loss"
+set chandep=`grep deposition: $project | awk '{print $3}'`
+echo "Channel Deposition map:		$chandep"
+echo ""
+echo -n "setting project mask...  "
+cd $LOCATION/answers/data/$project
+r.reclass input=$mask output=MASK < reclass
+echo "done"
+echo -n "setting project region...  "
+cp region $LOCATION/WIND
+echo "done"
+cd $LOCATION/answers/project
+echo -n "resetting the monitor...  "
+d.frame -e
+d.erase
+echo "done"
+
+# set the font to use
+
+d.font font=romans
+
+# beginning of primary loop
+while (1)
+#####################################################
+# call main menu                                    #
+#####################################################
+set option=0
+@ option = `$menu_dir/menu1`
+
+# main menu case switch
+switch ($option)
+ case 1:
+#####################################################
+# option 1 is to display input maps                 #
+#####################################################
+#
+# display flow map
+#
+    d.frame -e
+    d.frame -c frame=tl at=0,90,0,70
+    d.rast $aspect
+    d.rast -o $channel
+    d.rast.arrow map=$aspect type=answers arrow_color=green grid_color=black x_color=black 
+    d.frame -c frame=tr at=45,90,70,100
+    d.rast $mask
+    d.rast -o $channel
+    d.frame -c frame=br at=0,45,70,100
+    d.3d -l map=$mask elevation=ansi.surf.metric  \
+    from_coordinate=502000,4473520,9100 to_coordinate=500004,4481969,5730  \
+    exaggeration=20 lines=1 field=30 color=blue
+
+    d.frame -c frame=top at=90,100,0,100
+    d.text << EOF
+.S 15
+
+.S 50
+.C green
+             Flow direction and channels
+EOF
+# put up continue? menu
+    set option3=0
+    @ option3 = `$menu_dir/menu3`
+    switch ($option3)
+      case 1:
+         breaksw
+      case 2:
+         echo "Bye"
+         exit
+      default:
+         breaksw
+    endsw
+    
+##############
+#
+# display soils map
+#
+    d.frame -e
+    d.frame -c frame=tl at=35,90,0,70
+    d.rast $soils
+
+    d.frame -c frame=tr at=35,90,70,100
+    d.histogram -q map=$soils style=pie
+    d.frame -c frame=b at=0,35,0,100
+    d.legend map=$soils 
+    d.frame -c frame=top at=90,100,0,100
+    d.text << EOF
+.S 15
+
+.S 50
+.C green
+             Soils Map
+EOF
+# put up continue? menu
+    set option3=0
+    @ option3 = `$menu_dir/menu3`
+    switch ($option3)
+      case 1:
+         breaksw
+      case 2:
+         echo "Bye"
+         exit
+      default:
+         breaksw
+    endsw
+    
+##############
+#
+# display cover map
+#
+    d.frame -s frame=tl
+    d.rast $cover
+    d.frame -s frame=tr
+    d.erase black
+    d.histogram -q map=$cover style=bar
+    d.frame -s frame=b
+    d.erase black
+    d.legend map=$cover
+    d.frame -s frame=top
+    d.erase black
+    d.text << EOF
+.S 15
+
+.S 50
+.C green
+             Cover Map
+EOF
+# put up continue? menu
+    set option3=0
+    @ option3 = `$menu_dir/menu3`
+    switch ($option3)
+      case 1:
+         breaksw
+      case 2:
+         echo "Bye"
+         exit
+      default:
+         breaksw
+    endsw
+    breaksw
+##############
+
+ case 2:
+#####################################################
+# option 2 of main menu: display sediment movement  #
+#####################################################
+    d.frame -e
+    d.frame -c frame=main at=15,93,0,100
+    d.rast $loss
+    d.rast.num map=$loss grid_color=black
+    d.rast -o $deposit
+    d.rast.num map=$deposit grid_color=black
+    d.font font=romans
+    d.frame -c frame=top at=93,100,0,100
+d.text << EOF
+.S 15
+
+.S 50
+.C green
+                    Sediment Movement for $project
+EOF
+    d.frame -c frame=bottom at=0,15,0,100
+
+set loss_string=`r.stats -1zq $loss | awk '{total = $1 + total; if ($1 > max) max = $1}  END {printf "Total: %d KG     Average: %.2f KG     Max: %d KG     No. Cells: %d  \n", total, total/NR, max, NR}'`
+
+set dep_string=`r.stats -1zq $deposit | awk '{total = $1 + total; if ($1 > max) max = $1}  END {printf "Total: %d KG    Average: %.2f KG     Max: %d KG      No. Cells: %d  \n", total, total/NR, max, NR}'`
+
+d.text << EOF
+.B 1
+.S 7
+
+.S 17
+.C red
+Sediment Loss:               (Map: $loss)
+.C white
+ $loss_string
+.S 7
+
+.S 17
+.C indigo
+Sediment Deposition:         (Map: $deposit)
+.C white
+ $dep_string
+EOF
+#d.frame -s main
+#d.what.rast map=$cover,$soils,$aspect,$slope,$channel
+# put up continue? menu
+    set option3=0
+    @ option3 = `$menu_dir/menu3`
+    switch ($option3)
+      case 1:
+         breaksw
+      case 2:
+         echo "Bye"
+         exit
+      default:
+         breaksw
+    endsw
+    breaksw
+ case 3:
+#####################################################
+# option 3 of main menu: display loss ranges        #
+#####################################################
+    $menu_dir/d.range $loss erosion
+# put up continue? menu
+    set option3=0
+    @ option3 = `$menu_dir/menu3`
+    switch ($option3)
+      case 1:
+         breaksw
+      case 2:
+         echo "Bye"
+         exit
+      default:
+         breaksw
+    endsw
+    breaksw
+ case 4:
+#####################################################
+# option 4 of main menu: display deposition ranges  #
+#####################################################
+    $menu_dir/d.range $deposit deposition
+# put up continue? menu
+    set option3=0
+    @ option3 = `$menu_dir/menu3`
+    switch ($option3)
+      case 1:
+         breaksw
+      case 2:
+         echo "Bye"
+         exit
+      default:
+         breaksw
+    endsw
+    breaksw
+ case 5:
+#####################################################
+# option 4 of main menu: display hydrograph data    #
+#####################################################
+    d.frame -e
+    d.frame -c frame=tr at=45,90,50,100
+    d.linegraph directory=$DB x_file=hydro_time y_file=hydro_rain y_color=indigo title=Rainfall y_title=Rainfall_mm/h x_title=Minutes
+
+    d.frame -c frame=br at=0,45,50,100
+    d.linegraph directory=$DB x_file=hydro_time y_file=hydro_runoff y_color=magenta title=Outlet_Hydrograph_Runoff y_title=Runoff_mm/h x_title=Minutes
+
+    d.frame -c frame=tl at=45,90,0,50
+    d.linegraph directory=$DB x_file=hydro_time y_file=hydro_sed1 y_color=green y_title=Sediment_Kg x_title=Minutes title=Cumulative_Sediment_Yield
+
+    d.frame -c frame=bl at=0,45,0,50
+    d.linegraph directory=$DB x_file=hydro_time y_file=hydro_sed2 y_color=yellow title=Sediment_Concentration y_title=Sediment_Concentration_mg/l x_title=Minutes
+
+    d.frame -c frame=top at=90,100,0,100
+    d.text << EOF
+.S 15
+
+.S 50
+.C green
+           Outlet Hydrograph Data for $project
+EOF
+# put up continue? menu
+    set option3=0
+    @ option3 = `$menu_dir/menu3`
+    switch ($option3)
+      case 1:
+         breaksw
+      case 2:
+         echo "Bye"
+         exit
+      default:
+         breaksw
+    endsw
+    breaksw
+ case 6: 
+#####################################################
+# option 6 of main menu: exit                       #
+#####################################################
+exit
+    set option2=0
+    @ option2 = `$menu_dir/menu2`
+    switch ($option2)
+      case 1:
+         echo "Bye"
+         exit
+      case 2:
+         breaksw
+      default:
+         breaksw
+    endsw
+    breaksw
+ default: 
+    echo "Unknown Main Menu Option: $option"
+    breaksw
+endsw
+
+# end of primary loop
+end

@@ -1,0 +1,18 @@
+Raster map display with automated visualization rescaling"
+        echo "depending on the histogram."
+        echo "  (Minimum saturation=0 and maximum saturation=255"
+        echo "The raster file will be left unchanged."
+
+d.rast.rescale : using r.mapcalc
+d.rast.rescale2: using r.rescale
+
+Dr. Agustin Lobo
+Instituto de Ciencias de la Tierra (CSIC)
+Lluis Sole Sabaris s/n
+08028 Barcelona SPAIN
+tel 34 3 330 2716
+fax 34 3 411 0012
+alobo@ija.csic.es
+alobo@eno.princeton.edu
+http://pangea.ija.csic.es/alobo
+

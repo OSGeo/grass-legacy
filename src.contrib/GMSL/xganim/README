@@ -1,0 +1,15 @@
+
+You need X11 and Motif in order to compile this program!
+
+Things I'd like to do if I get time:
+
+1) Enable the use of TrueColor for displays that support it, instead of
+   just 256 colors.
+
+2) Allow the overlaying of vector files.
+
+3) Add a "save as MPEG" button.
+
+4) Spend 3 months on an Island in the South Pacific.
+
+For usage info, see doc/*

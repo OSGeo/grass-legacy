@@ -1,0 +1,15 @@
+The 
+   sys_err
+
+was changed (not ANSI C) to
+
+   strerror
+
+to make the source compilable
+on Linux Redhat, Slackware, SGI and Solaris.
+Changed: infer.c
+
+Declaration removed: infer.h
+   
+Jacques Bouchard
+March 1998

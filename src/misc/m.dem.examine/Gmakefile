@@ -1,0 +1,11 @@
+PGM      = m.dem.examine
+
+LIST	= main.o usgs_buf.o usgs_hdr.o usgs_num.o \
+          profile.o
+
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB) -o $@
+
+$(LIST):        usgs.h
+
+$(GISLIB):      # in case library changes

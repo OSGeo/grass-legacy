@@ -1,0 +1,12 @@
+PGM=r.mask.points
+HOME=$(BIN_ALPHA_CMD)
+
+LIST = main.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB)
+
+$(GISLIB): #
+
+saber_src:
+	#load main.c $(GISLIB)

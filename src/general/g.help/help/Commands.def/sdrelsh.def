@@ -1,0 +1,11 @@
+
+
+shade.rel.sh - 
+
+shade.rel.sh is a Bourne shell script that creates a \raster\ shaded
+relief map based on current \resolution\ settings and on sun altitude
+and azimuth values entered by the user.  The new shaded relief map is
+named 'shade' and stored in the user's current \mapset\.  The map is
+assigned a grey-scale color table.
+
+Manual entry for \shade.rel.sh\

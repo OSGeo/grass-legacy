@@ -1,0 +1,44 @@
+Summagraphics MGIII driver for GRASS 4.0 v.digit/GRASS 4.1 v.digit2
+
+This driver is meant for the Summagraphics Microgrid III series
+digitizers using a 16 button cursor and 1000 lpi resolution.
+It uses Summagraphics Microgrid Universal Input/Output (UIOF) format.
+The right (yellow) led on the cursor is used to give a visual response
+if the driver detects a button press. If a button is pressed, the driver
+waits until it is released.
+
+This code uses BSD port setup, if you don't have /usr/include/sgtty.h,
+it will not compile.
+
+The following dip switch settings of the MG III are assumed:
+
+		     DIP #1      |       DIP #2      |       DIP #3
+	switch:	1 2 3 4 5 6 7 8  |  1 2 3 4 5 6 7 8  |  1 2 3 4 5 6 7 8
+		                 |                   |
+	set:	0 1 1 1 1 0 0 U  |  U U U U U U U U  |  U U 0 U U U U U
+
+	key:	0 : off
+		1 : on
+		U : undefined
+
+	See the manual for documentation on switch combinations.
+	The computer serial port characteristics (DIP #1, sw1-7) can
+	be changed in D_open_serial() (dig_dev.c). The port operates
+	at 9600 baud, 7 data bits, even parity, 1 stop bit.
+	Echo mode (DIP #3, sw3) should be disabled.
+
+To change the resolution, change #define SCALE and #define SETRES
+in dig_dev.c.
+Don't forget to change the third argument of write() in D_digit_init()
+and D_digit_setup() (dig_dev.c), if a different initialization is required.
+
+We use this driver with a Summagraphics Microgrid III series 42" * 60"
+digitizer. I've heard it works on a Microgrid II series with some
+minor changes in dig_dev.c.
+
+Send comments, bugs (and fixes) to: venn@geo.vu.nl
+
+	Raymond Venneker
+	Inst. of Earth Sciences	- Vrije Universiteit
+	Amsterdam - The Netherlands
+

@@ -1,0 +1,20 @@
+PBIN = /usr/tmp 
+LIB    = libdata.a 
+
+LIST   =  dataquad.o
+
+SRCS   =  dataquad.c
+
+$(LIB): $(LIST) 
+	$(AR)
+
+saber_src:
+	#load $(CFLAGS) $(LDFLAGS) $(SRCS)  $(BITMAPLIB) $(LINKMLIB) $(GISLIB) $(MATHLIB) 
+
+dataquad.o : dataquad.h
+
+$(GISLIB): #
+
+
+
+

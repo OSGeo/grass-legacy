@@ -1,0 +1,755 @@
+.TH parser
+.SH NAME
+\fIparser \fR\- Routines used to assist in GRASS command line parsing.
+.br
+.I "(GRASS parser program)"
+.SH SYNOPSIS
+
+.SH DESCRIPTION
+.ls 2
+
+When a user runs a program by entering all needed program flag settings and
+parameter values on the GRASS command line in the format expected by the program,
+the program runs non-interactively and the user is not queried for additional input.
+However, if the user enters the program name by itself on the GRASS command line,
+the user will be presented with an interface that prompts the user, interactively,
+for flag settings and parameter values.
+Similarly, if the user attempts to run a program without providing all needed
+program arguments, assigns an impermissible value to a program parameter,
+or otherwise enters incorrect or incomplete program syntax on the command line,
+an interface should note the proper program syntax and query the user for needed inputs.
+
+Some GRASS programs have a unique user interface that is shown to users who run
+the program interactively.  All other GRASS programs simply present the user with
+a standard interface, built by the standard parser routines, when the program is
+run interactively.
+
+
+In GRASS version 4.0, users type the same command name to run non-interactive
+and interactive versions of the same program function.
+A standard user interface appears when the user invokes a command without
+setting needed parameter values and flags,
+unless a special interface has been written for that particular command.
+
+
+Standard routines have been written to help parse command statements
+entered by the user to GRASS.
+These routines help to parse the command line for GRASS programs which do not do this.
+In previous versions of GRASS software, each GRASS command had to supply its own
+instructions on how the user's command line arguments were to be parsed.
+
+
+Commonly, in GRASS versions 2.0 through 3.1,
+each of two program names could be used to run each GRASS function.
+One of these ran the function without providing any user interaction,
+while the other interfaced/interacted with the user.
+This was done intentionally, as part of the move to separate user interfaces from
+the actual command functions.
+For example, in GRASS 3.0, users ran \fId.3d\fR to display 3-dimensional graphics
+using an interactive interface,
+and users ran \fID3d\fR with parameter settings on the command line
+to non-interactively display 3-dimensional graphics.  Both commands performed
+essentially identical functions;  however, the former queried users for
+inputs, while the latter expected users to correctly provide all necessary inputs
+on the command line.  In GRASS 4.0, users can access either the command line-driven
+version or the interactive version of this function using the program name \fId.3d\fR.
+
+The parser routines evaluate statements entered by the user on the command line.
+If the user simply types the command name without supplying needed command
+line arguments, the parser queries the user for these parameter values
+and flag settings using a standard interface.
+
+.ls 1
+
+
+
+.nf
+
+/***************************************************************************
+ * Routines used to assist in command line parsing.  
+ ***************************************************************************
+ * define_flag()
+ *
+ * Returns a pointer to a flag structure.
+ * Flags are always represented by single letters.  A user "turns them on"
+ * at the command line using a minus sign followed by the character
+ * representing the flag.
+ *
+ ***************************************************************************
+ * define_option()
+ *
+ * Returns a pointer to a flag structure.
+ * Options are provided by user on command line using the standard
+ * format:  key=value
+ * Options identified as REQUIRED must be specified by user on command line.
+ * The option string can either specify a range of values (e.g. "10-100") or
+ * a list of acceptable values (e.g. "red,orange,yellow").  Unless the option
+ * string is NULL, user provided input will be evaluated agaist this string.
+ *
+ ***************************************************************************
+ * parser(argc, argv)
+ *    int argc ;
+ *    char **argv ;
+ *
+ * Parses the command line provided through argc and argv.  Example:
+ * Assume the previous calls:
+ *   define_flag("a","Test flag one") ;
+ *   define_flag("b","Test flag two") ;
+ *   define_option("map",STRING,YES,"","","Input map name") ;
+ *   define_option("num",INTEGER,OPTIONAL,"5","0-10","Test number") ;
+ *
+ * parser() will respond to the following command lines as described:
+ *
+ * command      (No command line arguments)
+ *    Parser will treat this as a request for help and will provide
+ *    command line syntax and option meaning information.
+ *
+ * command map=map.name
+ *    Parser will accept this line.  Map will be set to "map.name", the
+ *    'a' and 'b' flags will remain off and the num option will be set
+ *    to the default of 5.
+ *
+ * command -ab map=map.name num=9
+ * command -a -b map=map.name num=9
+ * command -ab map.name num=9
+ * command map.name num=9 -ab
+ * command num=9 -a map=map.name -b
+ *    These are all treated as acceptable and identical. Both flags are
+ *    set to on, the map option is "map.name" and the num option is "9".
+ *    Note that the "map=" may be omitted from the command line if it
+ *    is part of the first option (flags do not count).
+ *
+ * command num=12
+ *    This command line is in error in two ways.  The user will be told 
+ *    that the "map" option is required and also that the number 12 is
+ *    out of range.  The acceptable range (or list) will be printed.
+ *
+ * On error, parser() returns a -1; otherwise it returns 0.
+ *
+ ***************************************************************************
+ * get_flag(name)
+ *
+ * A 1 is returned if the flag was set, a zero otherwise.
+ *
+ ***************************************************************************
+ * char *get_option(name)
+ *
+ * A pointer to the string containing the option value for option name
+ * is returned.
+ *
+ ***************************************************************************
+*/
+
+#include "gis.h"
+#include "parse.h"
+
+#define BAD_SYNTAX  1
+#define OUT_OF_RANGE    2
+#define MISSING_VALUE   3
+
+static int n_opts = 0 ;
+static int n_flags = 0 ;
+
+static struct flag first_flag ;    /* First flag in a linked list      */
+static struct flag *current_flag ; /* Pointer for traversing list      */
+
+static struct option first_option ;
+static struct option *current_option ;
+
+struct flag *
+define_flag()
+{
+    struct flag *flag ;
+    char *ptr ;
+    int i ;
+
+/* Allocate memory if not the first flag */
+
+    if (n_flags)
+    {
+        flag = (struct flag *)G_malloc(sizeof(struct flag)) ;
+        (*current_flag).next_flag = flag ;
+    }
+    else
+        flag = &first_flag ;
+    
+/* Zero structure */
+
+    for(ptr=(char *)flag, i=0; i<sizeof(struct flag); i++, *ptr++ = NULL)
+        ;
+
+    current_flag = flag ;
+    n_flags++ ;
+    return(flag) ;
+}
+
+struct option *
+define_option()
+{
+    struct option *opt ;
+    char *ptr ;
+    int i ;
+
+/* Allocate memory if not the first option */
+
+    if (n_opts)
+    {
+        opt = (struct option *)G_malloc(sizeof(struct option)) ;
+        (*current_option).next_opt = opt ;
+    }
+    else
+        opt = &first_option ;
+    
+    opt->required = NO ;
+    opt->multiple = NO ;
+    
+/* Zero structure */
+
+    for(ptr=(char *)opt, i=0; i<sizeof(struct option); i++, *ptr++ = NULL)
+        ;
+
+    current_option = opt ;
+    n_opts++ ;
+
+    return(opt) ;
+}
+
+/* The main parsing routine */
+
+parser(argc, argv)
+    int argc ;
+    char **argv ;
+{
+    int need_first_opt ;
+    int error ;
+    char *ptr ;
+    char *cmd ;
+
+    error = 0 ;
+    need_first_opt = 1 ;
+    cmd = *argv ;
+
+/* If there are NO arguments, give a usage/syntax message */
+
+    if (argc == 1)
+    {
+        give_help(cmd) ;
+        return(-1) ;
+    }
+
+    argc-- ;
+
+/* Loop thru all command line arguments */
+
+    while(argc--)
+    {
+        ptr = *(++argv) ;
+
+    /* If we see a flag */
+        if(*ptr == '-')
+            while(*(++ptr))
+                error += set_flag(*ptr) ;
+
+    /* If we see standard option format (option=val) */
+        else if (contains(ptr, '='))
+        {
+            set_option(ptr) ;
+            need_first_opt = 0 ;
+        }
+    
+    /* If we see the first option with no equal sign */
+        else if (need_first_opt && n_opts)
+        {
+            free(first_option.answer) ;
+            first_option.answer = G_malloc(strlen(ptr)) ;
+            strcpy(first_option.answer, ptr) ;
+            first_option.required = 0 ;
+            need_first_opt = 0 ;
+        }
+    }
+
+    /* Split options where multiple answers are OK */
+    split_opts() ;
+
+    /* Check answers against options and check subroutines */
+    error += check_opts() ;
+
+    /* Make sure all required options are set */
+    error += check_required() ;
+
+    if(error)
+    {
+        give_help(cmd) ;
+        return(-1) ;
+    }
+    return(0) ;
+}
+
+/**************************************************************************
+ *
+ * The remaining routines are all local (static) routines used to support
+ * the parsing process.
+ *
+ **************************************************************************
+*/
+static
+give_help(cmd)
+    char *cmd ;
+{
+    struct option *opt ;
+    struct flag *flag ;
+
+    fprintf(stderr,"Syntax for %s:\n", cmd) ;
+
+/* Print help info for flags */
+
+    if(n_flags)
+    {
+        flag=&first_flag;
+        while(flag != NULL)
+        {
+            printf("     -%c  (%s)\n",
+                (*flag).key, (*flag).description) ;
+            flag = (*flag).next_flag ;
+        }
+    }
+
+/* Print help info for options */
+
+    if(n_opts)
+    {
+        opt=&first_option;
+        while(opt != NULL)
+        {
+            if( opt->required )
+                printf("     %s=option  (%s)\n",
+                    opt->key,
+                    opt->description) ;
+            else
+                printf("     [%s=option] (%s)\n",
+                    opt->key,
+                    opt->description) ;
+
+            opt = opt->next_opt ;
+        }
+    }
+}
+
+static
+set_flag(f)
+    char f ;
+{
+    struct flag *flag ;
+
+/* Flag is not valid if ther are no flags to set */
+
+    if(!n_flags)
+    {
+        fprintf(stderr,"Sorry, <%c> is not a valid flag\n", f) ;
+        return(1) ;
+    }
+
+/* Find flag with corrrect keyword */
+
+    flag=&first_flag;
+    while(flag != NULL)
+    {
+        if( (*flag).key == f)
+        {
+            (*flag).answer = 1 ;
+            return(0) ;
+        }
+        flag = (*flag).next_flag ;
+    }
+
+    fprintf(stderr,"Sorry, <%c> is not a valid flag\n", f) ;
+    return(1) ;
+}
+
+/* contents() is used to find things strings with characters like commas and
+ * dashes.
+ */
+static
+contains(s, c)
+    char *s ;
+    char c ;
+{
+    while(*s)
+    {
+        if(*s == c)
+            return(1) ;
+        s++ ;
+    }
+    return(0) ;
+}
+
+static
+set_option(string)
+    char *string ;
+{
+    struct option *opt ;
+
+/* Find option with same keyword */
+    opt=&first_option;
+    while(opt != NULL)
+    {
+        if( ! strncmp(opt->key,string,strlen(opt->key)) )
+        {
+            while(*(string++) != '=') ;
+        /* Allocate memory where answer is stored */
+            free(opt->answer) ;
+            opt->answer = G_malloc(strlen(string)) ;
+            strcpy(opt->answer, string) ;
+            opt->required = 0 ;
+            return(0) ;
+        }
+
+        opt = opt->next_opt ;
+    }
+
+    fprintf(stderr,"Sorry, <") ;
+    while(*string != '=')
+        putc(*(string++), stderr) ;
+    fprintf(stderr,"> is not a valid option\n") ;
+    return(1) ;
+}
+
+static
+check_opts()
+{
+    struct option *opt ;
+    int error ;
+    int ans ;
+
+    error = 0 ;
+
+    if(! n_opts)
+        return(0) ;
+
+    opt=&first_option;
+    while(opt != NULL)
+    {
+        /* Check answer against options if any */
+
+        if(opt->options && opt->answer)
+        {
+            if(opt->multiple == 0)
+                error += check_an_opt(opt->key, opt->type,
+                     opt->options, opt->answer) ;
+            else
+            {
+                for(ans=0; opt->answers[ans] != NULL; ans++)
+                    error += check_an_opt(opt->key, opt->type,
+                         opt->options, opt->answers[ans]) ;
+            }
+        }
+
+        /* Check answer against user's check subroutine if any */
+
+        if(opt->subroutine)
+            error += opt->subroutine(opt->answer) ;
+
+        opt = opt->next_opt ;
+    }
+    return(error) ;
+}
+
+static
+check_an_opt(key, type, options, answer)
+    char *key ;
+    int type ;
+    char *options, *answer ;
+{
+    int error ;
+
+    error = 0 ;
+
+    switch(type)
+    {
+    case INT:
+        error = check_int(answer,options) ;
+        break ;
+    case DOUBLE:
+        error = check_double(answer,options) ;
+        break ;
+    case STRING:
+        error = check_string(answer,options) ;
+        break ;
+    }
+    switch(error)
+    {
+    case 0:
+        break ;
+    case BAD_SYNTAX:
+        fprintf(stderr,"Error: illegal range syntax for option %s\n",
+            key) ;
+        fprintf(stderr,"       Presented as: %s\n", options) ;
+        break ;
+    case OUT_OF_RANGE:
+        fprintf(stderr,"Error: value <%s> out of range for option <%s>\n",
+            answer, key) ;
+        fprintf(stderr,"       Legal range: %s\n", options) ;
+        break ;
+    case MISSING_VALUE:
+        fprintf(stderr,"Error: Missing value for option <%s>\n",
+            key) ;
+    }
+    return(error) ;
+}
+
+static
+check_int(ans, opts)
+    char *ans ;
+    char *opts ;
+{
+    int d, lo, hi;
+
+    if (1 != sscanf(ans,"%d", &d))
+        return(MISSING_VALUE) ;
+
+    if (contains(opts, '-'))
+    {
+        if (2 != sscanf(opts,"%d-%d",&lo, &hi))
+            return(BAD_SYNTAX) ;
+        if (d < lo || d > hi)
+            return(OUT_OF_RANGE) ;
+        else
+            return(0) ;
+    }
+    else if (contains(opts, ','))
+    {
+        for(;;)
+        {
+            if (1 != sscanf(opts,"%d",&lo))
+                return(BAD_SYNTAX) ;
+            if (d == lo)
+                return(0) ;
+            while(*opts != NULL && *opts != ',')
+                opts++ ;
+            if (*opts == NULL)
+                return(OUT_OF_RANGE) ;
+            if (*(++opts) == NULL)
+                return(OUT_OF_RANGE) ;
+        }
+    }
+    else
+    {
+        if (1 != sscanf(opts,"%d",&lo))
+            return(BAD_SYNTAX) ;
+        if (d == lo)
+            return(0) ;
+        return(OUT_OF_RANGE) ;
+    }
+}
+
+static
+check_double(ans, opts)
+    char *ans ;
+    char *opts ;
+{
+    double d, lo, hi;
+
+    if (1 != sscanf(ans,"%lf", &d))
+        return(MISSING_VALUE) ;
+
+    if (contains(opts, '-'))
+    {
+        if (2 != sscanf(opts,"%lf-%lf",&lo, &hi))
+            return(BAD_SYNTAX) ;
+        if (d < lo || d > hi)
+            return(OUT_OF_RANGE) ;
+        else
+            return(0) ;
+    }
+    else if (contains(opts, ','))
+    {
+        for(;;)
+        {
+            if (1 != sscanf(opts,"%lf",&lo))
+                return(BAD_SYNTAX) ;
+            if (d == lo)
+                return(0) ;
+            while(*opts != NULL && *opts != ',')
+                opts++ ;
+            if (*opts == NULL)
+                return(OUT_OF_RANGE) ;
+            if (*(++opts) == NULL)
+                return(OUT_OF_RANGE) ;
+        }
+    }
+    else
+    {
+        if (1 != sscanf(opts,"%lf",&lo))
+            return(BAD_SYNTAX) ;
+        if (d == lo)
+            return(0) ;
+        return(OUT_OF_RANGE) ;
+    }
+}
+
+static
+check_string(ans, opts)
+    char *ans ;
+    char *opts ;
+{
+    if (*opts == NULL)
+        return(0) ;
+
+    if (contains(opts, ','))
+    {
+        for(;;)
+        {
+            if ((! strncmp(ans, opts, strlen(ans)))
+                && *(opts+strlen(ans)) == ',')
+                return(0) ;
+            while(*opts != NULL && *opts != ',')
+                opts++ ;
+            if (*opts == NULL)
+                return(OUT_OF_RANGE) ;
+            if (*(++opts) == NULL)
+                return(OUT_OF_RANGE) ;
+        }
+    }
+    else
+    {
+        if (! strcmp(ans, opts))
+            return(0) ;
+        return(OUT_OF_RANGE) ;
+    }
+}
+static
+check_required()
+{
+    struct option *opt ;
+    int err ;
+
+    err = 0 ;
+
+    if(! n_opts)
+        return(0) ;
+
+    opt=&first_option;
+    while(opt != NULL)
+    {
+        if(opt->required)
+        {
+            fprintf(stderr,"Required option <%s> not set (%s).\n",
+                opt->key, opt->description) ;
+            err++ ;
+        }
+        opt = opt->next_opt ;
+    }
+
+    return(err) ;
+}
+
+static
+split_opts()
+{
+    struct option *opt ;
+    char *ptr1 ;
+    char *ptr2 ;
+    int allocated ;
+    int ans_num ;
+    int len ;
+
+
+    if(! n_opts)
+        return ;
+
+    opt=&first_option;
+    while(opt != NULL)
+    {
+    if (opt->multiple)
+    {
+        /* Allocate some memory to store array of pointers */
+        allocated = 10 ;
+        opt->answers = (char **)G_malloc(allocated * sizeof(char *)) ;
+
+        ans_num = 0 ;
+        ptr1 = opt->answer ;
+        opt->answers[ans_num] = NULL ;
+
+        for(;;)
+        {
+            for(len=0, ptr2=ptr1; *ptr2 != NULL && *ptr2 != ','; ptr2++, len++)
+                ;
+            opt->answers[ans_num]=G_malloc(len+1) ;
+            G_copy(opt->answers[ans_num], ptr1, len) ;
+
+            if(*ptr2 == NULL)
+                break ;
+            
+            ptr1 = ptr2+1 ;
+                
+            if(*ptr1 == NULL)
+                break ;
+            
+            ans_num++ ;
+
+            if(ans_num >= allocated)
+            {
+                allocated += 10 ;
+                opt->answers =
+                    (char **)G_realloc((char *)opt->answers,
+                        allocated * sizeof(char *)) ;
+            }
+
+            opt->answers[ans_num] = NULL ;
+        }
+    }
+    opt = opt->next_opt ;
+    }
+}
+
+.fi
+
+.TH d.scale
+.SH NAME
+\fId.scale \fR\- Displays a map scale and north arrow relevant to a the user's
+current geographic region setting in the active display frame
+on the graphics monitor.
+.br
+.I "(GRASS Display Program)"
+.SH SYNOPSIS
+.SH DESCRIPTION
+This program can be run either non-interactively or interactively.
+If the user specifies either the
+background and/or foreground color(s) on the command line,
+the program will run non-interactively;  an unspecified parameter
+will be set to its default value.
+Alternately, the user can type simply \fBd.scale\fR on the command line;
+in this case, the program will prompt the user for parameter values
+using the standard GRASS parser interface described in the manual entry
+for \fIparser\fR.
+
+.LP
+\fBParameters:\fR
+.IP \fBbackground\*=\fIname\fR 20
+Background color used.
+.br
+Options:  \fIred, orange, yellow, green, blue, indigo, violet, gray\fR,
+\fIbrown, magenta, white\fR, and \fIblack\fR
+.br
+Default:  \fIblack\fR
+.IP \fBforeground\*=\fIname\fR 20
+Foreground color, in which the scale and north arrow are displayed.
+.br
+Options:  Same as \fIbackground\fR color options.
+.br
+Default:  \fIwhite\fR
+.SH NOTES 
+The user has no option to choose where in the active frame the scale is drawn,
+and
+.I d.scale
+assumes that units are in meters.
+.LP
+The scale that \fId.scale\fR generates is unsuitable for very tiny maps.
+.SH "SEE ALSO"
+.I d.INTRO,
+.I d.legend,
+.I d.scale2,
+and
+.I parser
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory

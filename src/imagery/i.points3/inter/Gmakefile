@@ -1,0 +1,86 @@
+####
+#### 	i.points3 (inter) 	
+####
+
+PGR  	= i.points3
+
+HOME 	= $(BIN_MAIN_INTER)
+
+all:	$(HOME)/$(PGR)
+
+####	required - suplimental imagery libary 
+IMAGERY_SUBINC = ../../image3
+IMAGERYLIB_SUP  = ../../image3/libimage_sup.a
+
+####	object files
+LIST	= \
+	anal_fid.o\
+	anal_control.o\
+	camera.o\
+	camera_mod.o\
+	digit.o\
+	draw_cell.o\
+	draw_grid.o\
+	draw_vect.o\
+	driver.o\
+	expose_mod.o\
+	graph_ask.o\
+	graph_askmag.o\
+	graph_dot.o\
+	graph_init.o\
+	graph_title.o\
+	input.o\
+	list_colors.o\
+	list_group.o\
+	list_target.o\
+	main.o\
+	mark_fid.o\
+	mark_control.o\
+	mouse.o\
+	overlay.o\
+	plot.o\
+	plot_cell.o\
+	plot_grid.o\
+	plot_vect.o\
+	read_elev.o\
+	target.o\
+	text_tty.o\
+	transform.o\
+	view_config.o\
+	view_clear.o\
+	view_colors.o\
+	view_conv.o\
+	view_outline.o\
+	view_points.o\
+	view_refresh.o\
+	view_where.o\
+	zoom_box.o\
+	zoom_pnt.o
+
+
+####	object dependencies
+$(LIST): globals.h defs.h camera_ref.h
+
+
+####	libaries to link
+LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
+	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
+	 $(GPROJLIB) $(LIBTRANS) $(PROJLIB) \
+	 $(GISLIB) $(VASK) $(XDRLIB)
+
+####	libarary dependencies
+$(LIBES): 			# in case of lib changes
+
+####   required compile flags
+####   NOTE: probably needs -D_NO_PROTO for now
+EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
+
+####	any required link flags
+#EXTRA_LDFLAGS =  
+
+
+####	the rules
+$(HOME)/$(PGR): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+
+

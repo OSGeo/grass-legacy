@@ -1,0 +1,9 @@
+
+
+r.support - 
+
+r.support allows the user to create and/or modify \raster\ map layer
+support files.  It may be run only on raster \map layers\ in the user's
+current \mapset\.
+
+Manual entry for \r.support\

@@ -1,0 +1,4 @@
+
+
+graphics display frame - A rectangular area on a @glossary("graphics monitor",16.glossary/graphmon.def)
+to which GRASS display output can be sent.

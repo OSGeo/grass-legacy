@@ -1,0 +1,15 @@
+         BRIEF HELP ENTRIES FOR IMPORT/PROCESSING COMMANDS     
+
+Below is a list of GRASS 5.0 data import and processing commands.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC.
+ 
+ \m.datum.shift help\    \m.dem.examine help\    \m.dem.extract help\
+ \m.dmaUSGSread help\    \m.dted.examine help\   \m.dted.extract help\
+ \m.examine.tape help\   \m.flip help\           \m.gc2ll help\ 
+ \m.ll2gc help\          \m.ll2u help\           \m.lulc.USGS help\
+ \m.lulc.read help\      \m.proj help\           \m.region.ll help\
+ \m.rot90 help\          \m.tiger.region help\   \m.u2ll help\
+
+ \tig.rim.sh help\       \tiger.info.sh help\

@@ -1,0 +1,7 @@
+
+
+vector file - A file storing data in an \arc-node\ (vector format).
+Previous versions of GRASS referred to this type of a file as a
+"digit file".  A GRASS vector file is generally associated with
+other supporting files describing \attribute\ (category) values and
+\labels\, and \topology\.

@@ -1,0 +1,57 @@
+                                                   18. July 1998
+
+      -------------------------------------------------
+        This text describes the installation of the 
+       required TCL/TK 8.0 libraries, if you get them
+                      in !! SOURCE !! code.
+      -------------------------------------------------
+
+   The graphical user interface "TCLTKGRASS" needs some library 
+   files etc. for creating buttons and menus. These libraries 
+   are required, their name is  "Tcl/Tk 8.0 library". These files 
+   are stored in Internet (http://sunscript.sun.com/TclTkCore/8.0.html).
+   Get the source code from the UNIX section there, it is
+   platform independent.
+
+
+A. Compiling of the Tcl/TK 8.0 libraries 
+
+   Log in as "root".
+   
+   Create an empty directory somewhere and unpack both 
+   tcl8.0.tar.gz and
+   tk8.0.tar.gz there:
+
+       gunzip tcl8.0.tar.gz
+       gunzip tk8.0.tar.gz
+       tar xvf tcl8.0.tar.gz
+       tar xvf tk8.0.tar.gz
+
+   Now configure and compile the packages. The optional 
+   parameter "--enable-gcc" is only required, when using gcc
+   (for example, when "configure --enable-shared" fails, while
+   using cc-compiler). 
+   
+       cd tcl8.0/unix
+       configure --enable-shared [--enable-gcc]
+       make
+       make install
+
+       cd ../..
+       cd tk8.0/unix
+       configure --enable-shared [--enable-gcc]
+       make
+       make install
+
+  Usually you should not have problems, we have tested it on SUN
+  Solaris 2.6/2.6 and Linux platforms successfully.
+   
+  Now the TCL/TK 8.0 libraries are installed.
+
+
+B. Installation of  TCLTKGRASS
+
+   -> Read INST_tcltkgrass.txt for details.
+
+Markus Neteler 1998
+ neteler@geog.uni-hannover.de

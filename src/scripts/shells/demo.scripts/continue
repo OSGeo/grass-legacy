@@ -1,0 +1,19 @@
+#!/bin/sh
+
+i=`d.menu << 'EOF'
+# set the background color
+.B red
+# set the text color
+.C yellow
+# set the text size in % of entire screen height
+.S 2
+# set the top edge
+.T 2
+# set the LEFT edge
+.L 10
+Continue ?
+Yes
+No
+EOF
+`
+exit `expr 2 - $i`

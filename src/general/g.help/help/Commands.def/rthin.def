@@ -1,0 +1,12 @@
+
+
+r.thin - 
+
+r.thin scans a \raster\ file and thins non-zero cells that denote
+linear features into linear features having a single cell width.
+The program will thin only the non-zero cells of the input raster
+file within the current \geographic region\ settings.  The cell width
+of the thinned output raster file will be equal to the cell
+\resolution\ of the currently set geographic region.
+
+Manual entry for \r.thin\

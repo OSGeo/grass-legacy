@@ -1,0 +1,41 @@
+LIST=main.o\
+	ask.o\
+	ask_mag.o\
+	analyze.o\
+	call.o\
+	cell.o\
+	cellhd.o\
+	conv.o\
+	colors.o\
+	curses.o\
+	debug.o\
+	digit.o\
+	dot.o\
+	drawcell.o\
+	driver.o\
+	equ.o\
+	find.o\
+	graphics.o\
+	group.o\
+	input.o\
+	mark.o\
+	mouse.o\
+	points.o\
+	target.o\
+	title.o\
+	tty.o\
+	view.o\
+	where.o\
+	zoom.o\
+	zoom_box.o\
+	zoom_pnt.o
+
+EXTRA_CFLAGS = -D_NO_PROTO
+
+LIBES = $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
+$(BIN_MAIN_INTER)/i.points: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+$(LIST): globals.h defs.h
+
+$(LIBES): #

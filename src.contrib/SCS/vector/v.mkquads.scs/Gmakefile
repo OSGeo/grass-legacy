@@ -1,0 +1,36 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+LIBPROJ     = $(SRC)/../src.related/mapgen/lib/libproj.a 
+LIBSUPP     = $(SRC)/../src.related/mapgen/lib/libsupp.a
+SCSFIPS      = $(LIBDIR)/scsfips.a
+
+
+OFILES = \
+	mkquads_cm.o \
+	ask_for.o \
+	calc_quads.o \
+	convert.o \
+	init_head.o \
+	init_quad.o \
+	reg_quads.o \
+	report_quads.o \
+	sites_quads.o \
+	wind_quads.o \
+	write_quads.o \
+	SetProj.o
+
+PROG =   $(BIN_CONTRIB_CMD)/v.mkquads.scs
+
+all:  START $(PROG)
+
+
+$(PROG): $(OFILES) $(GISLIB) $(VECTLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OFILES) $(SCSFIPS) $(LIBPROJ) $(LIBSUPP) $(GISLIB) $(VECTLIB) $(COORCNVLIB) $(MATHLIB) $(EXTRALIB) $(MATHLIB)
+	mv a.out $@
+
+	 
+START:
+	cp $(SRC)/../src.related/mapgen/proj/SetProj.c SetProj.c
+	cp $(SRC)/../src.related/mapgen/proj/projects.h projects.h
+			  
+

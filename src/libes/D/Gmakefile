@@ -1,0 +1,11 @@
+OBJ = \
+    Dcell.o\
+    Dclear.o\
+    Dscreen.o\
+    Dchoose.o\
+    Derase.o\
+    Dnew.o\
+    Dremove.o
+
+$(D_LIB): $(OBJ)
+	${AR}

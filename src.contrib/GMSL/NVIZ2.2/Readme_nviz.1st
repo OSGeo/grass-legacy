@@ -1,0 +1,28 @@
+Comments on NVIZ 2.2
+
+In general, you will need tcl/tk8.0.4 or later, Mesa3.x (OpenGL clone) and 
+image libraries. The image library is included in the
+grass5/src/libes/libimagery/.
+
+Steps:
+
+1. Make sure you have installed Tcl/tk8.0.4 or later, and Mesa3.0
+   Tcl/tk8.0: http://www.scriptics.com/products/tcltk/8.0.html
+   Take care to get 8.0.4 or later.
+
+   Mesa:    http://www.mesa3d.org/ and http://gd.tuwien.ac.at/graphics/libs/Mesa/
+  
+   Check NVIZ2.2/README.mesa3d on how to compile MESA for NVIZ.
+
+2. cd NVIZ2.2
+   Run configure script (check out paths in the NVIZ2.2/src/Gmakefile)
+3. Install nviz
+     gmake5
+     gmakelinks5
+
+Problems, known bugs on Linux are in TODO.linux file. Feel free to fix them.
+
+Jaro Hofierka
+hofierka@netlab.sk
+
+Nov. 1999

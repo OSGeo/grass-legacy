@@ -1,0 +1,74 @@
+11/99 glwrappers.c
+      change_view.c modified:
+This update correctes the following problems:
+Screen redrawn in wire mode when mouse passes over 
+vertical sliders.
+Also a potential problem with colors in glwrappers.c 
+(adress of a local variable returned  in color selection)
+Modified intesection function to allow the "look here"
+functionality and the "What's here" functionality.
+
+   Pierre de Mouveaux
+   p_de_mouveaux@hotmail.com
+
+10/99
+ Moved ogsf-lib and libimage to src/libes/ and changed Gmakefiles
+
+
+Modified for Linux/tlc/tk8.x  Markus Neteler neteler@geog.uni-hannover.de
+  files:
+     compat/
+     tkBind.c
+     tkSend.c
+     tkSpecial_Wait.c
+     tkUnixInt.h
+     tkAppInit.c
+     Gmakefile.in.old
+     Gmakefile.in
+     Gmakefile
+     tkInt.h
+     tkPort.h
+     tkUnixPort.h
+     nviz_init.c
+  -> fixed path errors.
+
+Tue Mar 19 16:31:46 1996  Mark Astley  <astley@gambit.gis.uiuc.edu (Mark Astley)>
+
+	* map_obj.c (get_char_marker): Changed the default return value of
+	"get_char_marker" so that an empty string is returned to tcl.  It
+	is up to the tcl code to figure out what to do in this case.
+
+Mon Mar 11 15:37:58 1996  Mark Astley  <astley@gambit.gis.uiuc.edu (Mark Astley)>
+
+	* Gmakefile (OBJS): The "mkdspf" panel and C support is expected
+	to be obsolete soon so I have removed these features from Nviz.
+	See the directory ../archive for details.
+
+Wed Mar  6 12:29:40 1996  Mark Astley  <astley@gambit.gis.uiuc.edu (Mark Astley)>
+
+	* Gmakefile (TK_LIB_PATH): Made this version link to the tk4.0
+	compatible version of tkGLX.  Eventually we will want to move all
+	the libraries to their usual places in /usr/local.
+
+Tue Mar  5 14:46:30 1996  Mark Astley  <astley@gambit.gis.uiuc.edu (Mark Astley)>
+
+	* tkSend.c: Disabled security on tksend.  Make sure that script
+	writers are aware of this option as nvwish interpreters will now
+	accept any and all scripts.
+
+Mon Mar  4 17:09:18 1996  Mark Astley  <astley@gambit.gis.uiuc.edu (Mark Astley)>
+
+	* tkScale.c: Removed this file as apparently the old tk3.6 way of
+	handling mouse events from C code has been removed and done in the
+	usual fashion via the scale.tcl file in /usr/local/include/tk.
+	
+	* Gmakefile (TKGLX_INCLUDES): Start of upgrade to Tcl 7.4 and Tk
+	4.0.  So far this has required mostly minor changes.  In
+	particular, I have created updated versions of the tkBind and
+	tkSpecial_Wait files.  Still need to update tkScale and tkSend.
+	Also, none of the nviz scripts have been updated and the old tkGLX
+	widget stuff is still being used with this version.
+
+	(nvwish): Cleaned up the Gmakefile a bit using the recent GRASS
+	4.2 distribution version as the template.
+

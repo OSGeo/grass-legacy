@@ -1,0 +1,19 @@
+This driver has to behave differently for the standard engine vs the
+online engine. The routine informix_engine() can be used to determine
+the engine.  (Look at engine.ec for the way this was implemented).
+
+The engine determines how the database env external to SQL is managed.
+This mostly will effect the logic for:
+
+	create-database  ***
+	drop-database    ***
+	open-database
+
+	list-databases
+	find-database
+	etc.
+
+anything that has to do with the 'dbpath' - how/where the engine looks
+for databases.
+
+*** means that I have coded something to distinguish SE from ONLINE

@@ -1,0 +1,29 @@
+
+   r.erd2grass erdas=erdasfile prefix=cellfile [trl=trailerfile]
+
+	erdasfile : The name of the ERDAS image file.
+
+	cellfile : The prefix of the grass cell files to generate.
+           The files for the n bands will be:
+           cellfile.1 ....... cellfile.n
+
+	trailerfile : The name of the erdas trailer file.
+
+This command is used to create a grass cell file for each band of data
+in the ERDAS file. The user can then execute the support and group
+commands in GRASS to associate these cell files together as a GRASS 
+image group.
+
+This command prompts the user twice:
+	First the user is asked if he/she wants to select a subset of
+	the bands available in the ERDAS file for output. The default
+	is all bands.
+
+	Secondly the user is asked if he/she wants to select a subwindow 
+	of the image available in the ERDAS file. The default is the
+	complete image.
+
+Note: Remeber that it is necessary to run:
+	support : To create the histogram and change the color table.
+	group: To associate the individual cell files as an image group.
+

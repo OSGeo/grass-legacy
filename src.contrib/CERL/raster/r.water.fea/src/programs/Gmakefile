@@ -1,0 +1,8 @@
+RFEA= $(GISBASE)/etc/r.fea
+
+all:
+	rm -rf $(RFEA)
+	-mkdir $(RFEA)
+	cp show.sh $(RFEA)
+	chmod 755 $(RFEA)/show.sh
+	$(MAKEALL)

@@ -1,0 +1,13 @@
+
+
+d.label - 
+
+d.label allows the user to create and display text \labels\ in the
+active \frame\ on the graphics monitor.  It \interactively\ requests
+that the user type in text and use the pointing device (\mouse\) to
+identify where this text is to be placed within the active graphics
+frame.  The program will prompt the user for label size, background
+color, text color, and text font type, if the user fails to specify
+these values on the command line.
+
+Manual entry for \d.label\

@@ -1,0 +1,18 @@
+
+This library must be compiled before compiling SG3d.
+
+This source code comes from Paul Haeberli at SGI.
+It is distributed with all SGI computers in 
+/usr/people/4Dgifts/iristools/libimage.
+We include it here as a convenience to GRASS users.
+
+This library allows SG3d to save images from the graphics window 
+in .rgb files, the IRIS image format.
+
+See also:
+ipaste, movie, snapshot, istat, showcase, imged.
+
+See also file format conversion programs:
+tops, togif, tosun, toscitex, totarga, toppm, etc. 
+
+

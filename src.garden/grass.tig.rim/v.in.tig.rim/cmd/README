@@ -1,0 +1,10 @@
+The source code contained here creates only a front-end grass parser
+to get input from the user and then call a shell script (placed in
+etc) called v.in.tg.rm.sh.  The shell script makes calls to rim and to
+v.db.rim, both of which contain fortran code and therefore require
+that a site have a fortran compiler.  Do NOT compile this command
+without first having done the following:
+
+1.  obtain a fortran compiler
+2.  compile rim (in src.related)
+3.  compile v.db.rim (in src.garden/grass.rim)

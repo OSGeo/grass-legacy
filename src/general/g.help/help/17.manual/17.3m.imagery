@@ -1,0 +1,27 @@
+                 MANUAL ENTRIES FOR IMAGERY COMMANDS         
+
+Below is a list of GRASS 5.0 imagery commands.
+Commands with the suffix ".sh" are shell scripts.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC.
+
+  \i.build.blk\           \i.camera\                 \i.cca\    
+  \i.class\               \i.cluster\                \i.colors\ 
+  \i.composite\           \i.fft\                    \i.grey.scale\ 
+  \i.group\               \i.his.rgb\                \i.ifft\ 
+  \i.maxlik\              \i.median\                 \i.mod.camera\ 
+  \i.pca\                 \i.points\                 \i.rectify\  
+  \i.rectify.blk\         \i.rgb.his\                \i.tape.mss\
+  \i.tape.mss.h\          \i.tape.other\             \i.tape.tm\
+  \i.target\              \i.zc\
+
+  \hsv.rgb.sh\            \rgb.hsv.sh\
+
+For a description of GRASS image processing functions, select 
+\imagery discussion\.
+
+
+
+
+

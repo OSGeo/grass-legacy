@@ -1,0 +1,13 @@
+
+------------------------------------------------------------------
+
+KEYWORDS: add -and- multiply
+    "add" and "multiply" are used to specify how weights shall be combined
+	in your analysis.  "add" requests that the weights be added, while
+	"multiply" requests that weights be multiplied.
+
+EXAMPLES:
+    add
+    multiply
+------------------------------------------------------------------
+

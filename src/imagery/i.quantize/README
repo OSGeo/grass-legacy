@@ -1,0 +1,19 @@
+
+
+This program will take 3 image files  (assumed to be in the range of
+0-255) and combine them as Red, Green, and Blue color components.  It
+then quantizes these using Paul Heckbert's Color Quantization method
+[Siggraph '82 proceedings, pp. 297-307] down to around 256 discrete colors
+and creates a color table for it.  The method is also refered to as
+Median Cut which is why the name i.median.
+
+The results are similar to i.composite except that:
+
+    results are in range 0-255 so it can be displayed in float mode
+on monitors that can handle it (SUNVIEW can! if you first set
+GRASS_COLOR256 environment variable.)  This is important, as the
+fixed color table does a poor job of representing colors from this program.
+
+    The algorithm used produces nicer images when combining 
+color components from true photos (as opposed to multispectral
+data) like nhap, or rgb components from image processing systems.

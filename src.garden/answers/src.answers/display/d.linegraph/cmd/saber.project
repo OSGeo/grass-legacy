@@ -1,0 +1,117 @@
+/* Saber-C Project File */
+/* Options for project */
+unsetopt ansi
+setopt auto_compile
+unsetopt auto_reload
+setopt auto_replace
+unsetopt batch_load
+unsetopt batch_run
+unsetopt cc_prog
+setopt ccargs               -g
+unsetopt create_file
+unsetopt debug_child
+unsetopt echo
+setopt edit_jobs            5
+unsetopt eight_bit
+setopt line_edit
+setopt line_meta
+setopt lint_load            2
+setopt lint_run             2
+setopt list_action
+setopt load_flags           -I/home/pasture4/aggrass/grass4/src/libes -I/home/pasture4/aggrass/grass4/src/mapdev/lib -L/home/pasture4/aggrass/grass4/src/libes/LIB.sun4 -L/home/pasture4/aggrass/grass4/src/mapdev/lib/LIB.sun4
+unsetopt long_not_int
+unsetopt make_args
+setopt make_hfiles
+unsetopt make_offset
+setopt make_prog            make -f OBJ.sun4/make.rules
+setopt make_symbol          #
+setopt mem_config           16384
+unsetopt mem_trace
+setopt num_proc             1
+unsetopt page_cmds
+setopt page_list            32
+unsetopt page_load
+unsetopt path
+setopt proto_path           . /home/ups/SYSTEM/saber_dir30/sun4-40/proto /home/ups/SYSTEM/saber_dir30/sun4-40/../common/proto
+unsetopt preprocessor
+setopt program_name         a.out
+unsetopt print_custom
+setopt print_pointer
+setopt print_string         20
+unsetopt save_memory
+setopt sbrk_size            1048576
+setopt src_err              3
+setopt src_step             1
+setopt src_stop             3
+setopt sys_load_flags       -L/lib -L/usr/lib -L/usr/local/lib -I/usr/include -Dunix -Dsun -Dsparc
+unsetopt tab_stop
+unsetopt terse_suppress
+unsetopt terse_where
+setopt unset_value          191
+unsetopt win_fork_nodup
+unsetopt win_no_raise
+setopt win_message_list
+setopt win_project_list
+/* Suppressions for project */
+suppress 55 in main 
+/* Information lost <conversion> */
+suppress 68 in main 
+/* Benign argument mismatch */
+suppress 112 in main 
+/* Memory retrieval */
+suppress 530 in main 
+/* Empty body of statement */
+suppress 544 in main 
+/* Questionable argument type */
+suppress 560 in main 
+/* Assignment within conditional */
+suppress 592 on GRASS_copyright 
+/* Unused static */
+suppress 594 in main 
+/* Set but not used */
+suppress 595 
+/* Used before set */
+
+/* Contents of project */
+load -I/home/pasture4/aggrass/grass4/src/libes\ -I/home/pasture4/aggrass/grass4/src/mapdev/lib\ -L/home/pasture4/aggrass/grass4/src/libes/LIB.sun4\ -L/home/pasture4/aggrass/grass4/src/mapdev/lib/LIB.sun4 /lib/libc.a
+load -I/home/pasture4/aggrass/grass4/src/libes\ -I/home/pasture4/aggrass/grass4/src/mapdev/lib\ -L/home/pasture4/aggrass/grass4/src/libes/LIB.sun4\ -L/home/pasture4/aggrass/grass4/src/mapdev/lib/LIB.sun4 /home/pasture4/aggrass/grass4/src/libes/LIB.sun4/libgis.a
+load -I/home/pasture4/aggrass/grass4/src/libes\ -I/home/pasture4/aggrass/grass4/src/mapdev/lib\ -L/home/pasture4/aggrass/grass4/src/libes/LIB.sun4\ -L/home/pasture4/aggrass/grass4/src/mapdev/lib/LIB.sun4 /lib/libm.a
+load -I/home/pasture4/aggrass/grass4/src/libes\ -I/home/pasture4/aggrass/grass4/src/mapdev/lib\ -L/home/pasture4/aggrass/grass4/src/libes/LIB.sun4\ -L/home/pasture4/aggrass/grass4/src/mapdev/lib/LIB.sun4 /usr/grass4/src/libes/LIB.sun4/libraster.a
+load -I/home/pasture4/aggrass/grass4/src/libes\ -I/home/pasture4/aggrass/grass4/src/mapdev/lib\ -L/home/pasture4/aggrass/grass4/src/libes/LIB.sun4\ -L/home/pasture4/aggrass/grass4/src/mapdev/lib/LIB.sun4 /usr/grass4/src/libes/LIB.sun4/libdisplay.a
+load -I/home/pasture4/aggrass/grass4/src/libes\ -I/home/pasture4/aggrass/grass4/src/mapdev/lib\ -L/home/pasture4/aggrass/grass4/src/libes/LIB.sun4\ -L/home/pasture4/aggrass/grass4/src/mapdev/lib/LIB.sun4 linegraph.c
+link
+
+/* Signals caught and ignored */
+catch HUP
+catch INT
+catch QUIT
+catch ILL
+catch TRAP
+catch IOT
+catch EMT
+catch FPE
+catch KILL
+catch BUS
+catch SEGV
+catch SYS
+catch PIPE
+catch TERM
+catch URG
+catch STOP
+catch TSTP
+catch TTIN
+catch TTOU
+catch IO
+catch XCPU
+catch XFSZ
+catch VTALRM
+catch PROF
+catch LOST
+catch USR1
+catch USR2
+ignore ALRM
+ignore CONT
+ignore CHLD
+ignore WINCH
+
+/* Status of project */

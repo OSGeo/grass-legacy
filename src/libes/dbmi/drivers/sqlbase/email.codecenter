@@ -1,0 +1,323 @@
+From jeffd@centerline.com Wed Aug 24 15:45:35 1994
+From: Jeff DiPallo <jeffd@centerline.com>
+Date: Wed, 24 Aug 94 16:39:42 EDT
+Subject: RE:  longjmp
+Cc: jeffd@centerline.com
+Content-Length: 8901
+X-Lines: 313
+Status: RO
+
+Hello Mr. Shapiro:
+
+  I am contacting you in regards to your recent e-mail
+  that you sent to the CenterLine Technical Support
+  Department:
+
+> Date: Wed, 24 Aug 94 10:27:06 CDT
+> From: shapiro@bison.cecer.army.mil (Michael Shapiro)
+> Message-Id: <9408241527.AA19437@bison.cecer.army.mil>
+> To: codecenter-support
+> Subject: CodeCenter: Version 3.1.1 (sun4 SunOS 4.1) (SN: 6269)
+> 
+> Is there a known problem with code that uses longjmp()? I am debugging 
+> a program and keep running into the RUN_TIME error:
+> 
+> sqloutr.a(apisnd.o): E#191, Cannot long jump to a function that has 
+> already returned
+> 
+> The sqloutr.a library is not one I wrote so I don't have access to the 
+> source code for this library. That's is why I ask if this may be a real 
+> problem in the library, or if it might be a "bug" in codecenter.
+
+
+  Our records show that you are currently on support.  This means
+  that you would have received a update of CodeCenter 4.0.4 for
+  the Sun OS 4.1.x platform.  CodeCenter 4.0.4 is our current version 
+  for the Sun OS platform.  Is this some reason you are not using this
+  version, if you do indeed have it ?
+
+  Yes, they have been reported problems with longjmp/setjmp.  It looks
+  like you are linking to some SQL library.  We have seen problems with
+  the Sysbase library in the past.  I have included a document which 
+  describes this senario.
+
+  longjmp/setjmp are library routines which *Center replaces by default
+  to provide extra error checking and such.  There have been problems
+  with these built-in CenterLine functions as well.  I will include
+  a couple of documents which discuss this senario and a few workarounds.
+
+  I could find anything specific to CodeCenter 3.1.1 and E#191.  So, 
+  if the documents I mail to you do not help, is it possible to send
+  me some code for a test case.  And, depending on if we have the
+  SQL library you have, I could reproduce the problem.
+
+  It seems in the past, we have had customers suppress this error 
+  message.  This seemed to cause some more problems so we had
+  them extract setjmp.o and longjmp.o from libc and then link
+  inside the environment.  This seemed to work. 
+  
+  Good Luck !
+
+  If you have any further questions/comments, please do not
+  hesitate to contact us again.
+
+  Thank You.
+
+  - jeff
+
+----------------------------------------------------------------------------
+Jeffrey J. DiPallo	    Email:  jeffd@centerline.com
+Technical Support                     support@centerline.com or
+CenterLine Software, Inc.             objectcenter_support@centerline.com or
+10 Fawcett Street		            uunet!centerline.com!support or
+Cambridge, MA  U.S.A. 02138           uunet!centerline.com!objectcenter_support
+
+		For automated Install & Licensing help, mail to:
+
+			    help@centerline.com
+
+          Include get help in the Subject line of your message
+
+Technical Support: (617) 498-3100
+Fax:               (617) 868-6655
+----------------------------------------------------------------------------
+ 
+Short Description:
+
+E#191/E#183 with Sybase library libserv.a (scheutil.o)
+
+Long Description:
+
+ObjectC 1.1
+
+Problem:
+
+E#191 with Sybase library libserv.a (schedutil.o)
+
+
+Application compiles and runs fine outside of environment.
+
+We tracked the error down to a call to longjmp() in one of 
+the Sybase library routines.
+
+User is sending in transcript of session with breakpoints and
+stack traces at setjmp and longjmp.
+
+Solution:
+
+Tried suppressing 191, but the user's program just dies after the
+longjmp call.
+
+To get around using ObjectC's built in setjmp/longjmp
+Before linking the user's project
+
+1) extract setjmp.o and longjmp.o from libc
+
+2) load setjmp.o and longjmp.o
+
+3) link
+
+This worked.
+
+The user then ran into E#233 for SIGIO.
+
+-> ignore SIGIO
+
+This worked.
+
+
+----------------------------------------------------------------------------
+
+
+Short Description:
+
+replacing CenterLine builtin functions
+
+Before linking project, extract the .o from libc, 
+load these modules as .o, then link.
+
+Long Description:
+For example with setjmp/longjmp...
+To get around using ObjectC's built in setjmp/longjmp
+Before linking the user's project
+
+1) extract setjmp.o and longjmp.o from libc
+
+2) load setjmp.o and longjmp.o
+
+3) link
+
+----------------------------------------------------------------------------
+
+Short Description: setjmp/longjmp - E#165 - problems dereferencing a pointer
+
+
+
+Long Description:
+
+
+The infamous error E#165 "Dereferencing a pointer that is out of bounds".
+Here is a simple test case that fails with CodeCenter 3.1.1, but has
+been fixed with CodeCenter 4.0 (yahoo!).  This is also a problem with
+ObjectCenter 1.1.0.
+
+This error occurs because of setjmp and longjmp.  The workaround is to
+load both in as source or both in as object.  If this main.c is loaded
+in as object and the function.c is loaded in as source, this will
+produce error number 165.
+
+% codecenter
+  1 -> load main.o function.c
+  2 -> run
+
+----- main.c -----
+
+#include <stdio.h>
+#include <setjmp.h>
+
+jmp_buf JumpBuf;
+void function();
+
+main()
+    {
+    int length;
+    int x = 1;
+    int y = 13;
+
+    x += y - 1;
+
+    setjmp(JumpBuf);
+    length = 0;
+
+    function(&length);
+    printf("length = %d\n", length);
+    }
+
+----- function.c -----
+
+#include <setjmp.h>
+ 
+extern jmp_buf JumpBuf;
+static int one = 0;
+
+void function(numlen)
+int *numlen;
+    {
+    *numlen = 1;
+
+    if (one == 0)
+        {
+        one = 1;
+        longjmp(JumpBuf, 1);
+        }
+    }
+
+
+
+------------------------------------------------------------------------
+
+Short Description: setjmp/longjmp don't seem to work within ObjectCenter
+
+
+
+Long Description:
+
+
+The function setjmp()/longjmp() don't seem to work from within
+ObjectCenter.  The longjmp() function produces error E#191:
+	"Cannot long jump back to a function that has already returned.
+
+This could be due to setting the setjmp() from within an inline
+function.  Then when ObjectCenter loads in that inline function it
+actually creates a function that sets the setjmp() then exits.  Then
+the longjmp() actually does try to jump back to a function that has
+exited.  Note that cfront does not have to inline a function just because
+you wanted it inlined.  This is just a directive to the compiler.
+
+This may also be because the function that executed the setjmp() has
+exited (a real problem with the code).
+
+------ inline.c ------
+
+#include <stdio.h>
+#include <setjmp.h>
+
+class Jump
+    {
+    private:
+        jmp_buf JumpBuf;
+
+    public:
+        int set() { return setjmp(JumpBuf); }
+        void reset() { longjmp(JumpBuf, 1); }
+    };
+
+main()
+    {
+    Jump jmp;
+
+    if (jmp.set() == 0)
+        printf("Just called set()\n");
+    else
+        {
+        printf("exiting.\n");
+        return 0;
+        }
+
+    printf("Before reset()\n");
+    jmp.reset();
+
+    return 0;
+    }
+
+----------------------------------------------------------------------------
+
+Short Description:
+==================
+
+Library routines that *Center replaces by default.
+
+Long Description:
+=================
+    
+ Q.	What library routines does *Center replace by default?
+
+
+ A.	The platform guide for *Center for the specific Operating System 
+        lists the functions replaced by *Center. That's the place to check,
+        however, here is a listing from the CodeCenter reference manual of
+        some functions:
+        
+	_exit, _longjmp, _setjmp, alloca, bcopy, brk, bzero, close,
+	dup2, fork, free, getdtablesize, longjmp, malloc, mallopt,
+	memcpy, memccpy, mmap, munmap, realloc, sbrk, setjmp, 
+	shmat, shmdt, shmget, shmctl, sigblock, signal, sigpause,
+	sigsetjmp, siglongjmp, sigsetmask, sigstack, sigvec,
+	strcpy, strncpy, strcat, strncat, syscall, vfork.
+
+
+These are the functions for which we attempt lots of error checking.
+Some of these (signal stuff, for example) are on the list for
+reasons of making *Center work, as well.
+
+We don't implement all the routines defined in memory(3), 
+but we do implement some of them.
+
+On the HP there's also sigvector, sigset, sighold, sigrelse, and
+sigignore (ie we trap all signal-related functions in all standard
+libraries).
+
+*Center replaces these functions for several reasons.  Some because as a
+single-process debugger (as opposed to dbx which is a two-process debugger)
+*Center needs to perform its own memory allocation (sbrk is a good example.)
+Others because they are used to perform extra error detection.
+
+If you have an application which depends heavily on rapid signal
+delivery it may have a hard time under *Center.  When running object
+code we try to deliver signals quickly but there's quite a bit of
+overhead between receipt and delivery of a signal.  When running
+source code signal delivery can be delayed until the interpreter is in
+a reasonable state.  The short of it is that your application will
+probably run ok unless it's time-critical (ie has real-time
+constraints) but will receive interrupts much slower than normal.
+

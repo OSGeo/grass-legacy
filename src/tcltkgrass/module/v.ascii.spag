@@ -1,0 +1,7 @@
+interface_build {
+    {v.ascii.spag} 0
+    {Process spaghetti-digitized ASCII GRASS vector map.}
+    {entry input  {Input  vector map:} 0 vector_ascii}
+    {entry output {Output vector map:} 0 vector_ascii}
+    {checkbox -i {Only run identical line tests.} "" -i}
+}

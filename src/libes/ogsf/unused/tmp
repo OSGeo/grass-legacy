@@ -1,0 +1,5 @@
+{
+    GLint mat;
+    glGetIntegerv(GL_COLOR_MATERIAL_PARAMETER,&mat);
+    fprintf(stderr,"Color Material: %d\n", mat);
+}

@@ -1,0 +1,4 @@
+ o Figure out correct way of handling polygons. 
+ o Consider producing a category file with all the attributes. 
+ o Try and get the v.to.rast process to work. 
+ o Implement a v.out.shape

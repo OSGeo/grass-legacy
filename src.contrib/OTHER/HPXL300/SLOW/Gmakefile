@@ -1,0 +1,18 @@
+NAME=hp300xlS
+LIBS = $(SRC)/paint/Interface/driverlib/lib.a $(LOCKLIB)
+PAINT = $(ETC)/paint
+LIST = main.o alpha.o data.o \
+       pictsize.o raster.o rle.o text.o\
+       init.o npixels.o finish.o esc.o
+
+all: $(PAINT)/driver.sh/$(NAME) $(PAINT)/driver/$(NAME)
+
+$(PAINT)/driver/$(NAME): $(LIST) $(LIBS)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBS) -o $@
+$(PAINT)/driver.sh/$(NAME): DRIVER.sh
+	cp $? $@
+	chmod +x $@
+
+$(LIST): P.h
+
+$(LIBS): #

@@ -1,0 +1,2 @@
+ SHOW SITE LABELS
+    Display the category number of all labeled sites.

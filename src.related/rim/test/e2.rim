@@ -1,0 +1,12 @@
+report                                                                          
+  select from notes *(sort by M_date M_time )                                   
+    print                                                                       
+      1 1 " "                                                                   
+      2 5 id     i8                                                             
+      3 5 symbol a8                                                             
+      2 15 m_date 'yy/mm/dd'                                                    
+      3 18 m_time 'hh:mm'                                                       
+      2 25 notes   a20                                                          
+    end print                                                                   
+  end select                                                                    
+end report                                                                      

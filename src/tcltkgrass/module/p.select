@@ -1,0 +1,8 @@
+interface_build {
+    {p.select} 0
+    {Selects a device (printer) for GRASS hardcopy output.}
+    {entry painter {Select painter device:} 0 paint}
+    {checkbox -l {List all available printers.} "" -l}
+    {checkbox -p {Print name of currently selected printer.} "" -p}
+    {checkbox -q {Run quietly.} "" -q}
+}

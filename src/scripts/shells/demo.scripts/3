@@ -1,0 +1,283 @@
+#!/bin/sh
+d.frame -e
+d.erase	
+
+d.frame -c f=text a=1,99,1,60
+d.frame -c f=digit a=67,99,61,99
+d.frame -c f=image a=34,66,61,99
+d.frame -c f=other  a=1,33,61,99
+
+d.frame -s f=text
+d.text << EOF
+.F romant
+.S 10
+.C green
+.B 1
+ GRASS DATA
+.C white
+.F romans
+.B 0
+.S 3
+
+  GRASS data originates from three
+  distinct sources.
+
+  The most common is hardcopy  maps.
+.C yellow
+    For example: landuse
+EOF
+d.frame -s f=digit
+d.erase red
+d.rast landuse
+
+# Erase the word landuse
+d.frame -s f=text
+d.text << EOF
+.S 10
+
+.S 3
+
+ 
+ 
+
+ 
+.C black
+                 landuse
+EOF
+# Put the word geology
+d.frame -s f=text
+d.text << EOF
+.S 10
+
+.S 3
+
+ 
+ 
+
+ 
+.C white
+                 geology
+EOF
+
+d.frame -s f=digit
+d.erase red
+d.rast geology
+
+# Erase the word geology
+d.frame -s f=text
+d.text << EOF
+.S 10
+
+.S 3
+
+
+ 
+ 
+ 
+.C black
+                 geology
+EOF
+# Put the word soils
+d.frame -s f=text
+d.text << EOF
+.S 10
+
+.S 3
+
+ 
+ 
+
+ 
+.C white
+                 soils
+EOF
+
+d.frame -s f=digit
+d.erase red
+d.rast soils
+
+d.frame -s f=text
+d.text << EOF
+.S 10
+
+.C white
+.S 3
+
+
+
+ 
+  
+ 
+
+  The second common source is image data.
+.C yellow
+    This could be satellite or high
+    altitude photography.
+EOF
+d.frame -s f=image
+d.erase white
+#d.rast mss.image
+d.rast spot.image
+
+d.frame -s f=text
+d.text << EOF
+.S 10
+
+.C white
+.S 3
+
+
+ 
+
+ 
+  
+ 
+
+
+
+
+  The last most common source is other
+  computers.
+.C yellow
+    This could mean a complete data base
+    from another machine, or a special
+    map like: elevation.
+EOF
+
+d.frame -s f=other
+d.erase blue
+#d.rast elevation
+d.rast elevation.dem	
+
+if ./continue
+then
+        exit 1
+fi
+
+d.frame -s f=text
+d.text << EOF
+.S 10
+
+.C white
+.S 3
+
+ 
+  
+ 
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+  A final type of data is "interpreted
+  data".  This is information which is
+  based on one or more of the above
+  sources.
+.C yellow
+    For example, from elevation we can
+    interpret slope percent and aspect
+    (direction of slope.)
+EOF
+
+d.frame -s f=other
+d.erase blue
+d.frame -c f=elev.a  a=1,33,61,80
+d.frame -c f=slope  a=17,33,80,99
+d.frame -c f=aspect  a=1,17,80,99
+d.frame -s f=elev.a
+#Dcell elevation
+d.rast elevation.dem
+d.frame -s f=slope
+#Dcell slope
+d.rast slope
+d.frame -s f=aspect
+#Dcell aspect
+d.rast aspect
+
+if ./continue
+then
+        exit 1
+fi
+
+d.frame -s f=text
+d.erase
+d.text << EOF
+.S 5
+.C green
+How to get data into GRASS
+.C white
+.S 3
+
+  Data is brought into GRASS through:
+
+  * Hand digitizing using a cursor on
+    a drafting table.
+
+  * Hand digitizing using an image on
+    the screen
+
+  * Reading data on computer tape from
+    another GIS.
+
+  * Manipulation of existing data
+EOF
+
+if ./continue
+then
+        exit 1
+fi
+
+d.frame -s f=digit; d.erase
+d.frame -s f=image; d.erase
+d.frame -s f=other; d.erase
+
+d.frame -s f=text
+d.erase
+d.text << EOF
+.S 5
+.C green
+Themes and Categories
+.C white
+.S 3
+
+  GRASS data bases consist of maps.
+  Each map contains a different theme.
+  Each theme is characterized by a set
+  of "categories". E.g.:
+
+.C yellow
+  Map theme        Categories
+.C white
+   landuse          roads
+                    buildings
+                    park
+   vegetation       none
+                    trees
+                    grass
+   etc.
+
+   Each category in a given map is
+   displayed with a distinct color.
+.C yellow
+
+   For example, a landuse map with
+   its categories displayed.
+EOF
+
+d.frame -s f=image
+#Dcell landuse
+d.rast landuse
+d.frame -s f=other
+d.legend landuse
+
+continue.yes
+
+exit 1

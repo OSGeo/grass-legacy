@@ -1,0 +1,55 @@
+<html><body bgcolor=#FFFFE0><pre>
+
+
+Welcome to TCLTKGRASS                   5. March 1999
+
+This text describes how to install TCLTKGRASS, if
+you have already installed the TCL/TK-libraries 8.0 on
+your system. For installing these libraries, please
+read INST_tcl_libs.txt
+
+
+Requirements:
+  - GRASS 4.x (4.1 as well as 4.2.1)
+  - GRASS 5.x
+  - Tcl/Tk 8.0 libraries for your unix platforms
+  - five minutes of your time
+    
+
+A. Check your existing TCL-TK libraries
+   
+   The "wish" program must be available (in path):
+       which wish8.0
+   The file wish8.0 may be in in the 
+   <directory> either /usr/local/bin or /usr/X11/bin etc.
+
+   The name must be: wish8.0   (wish4.2 cannot be used! It is too old!)
+   
+
+B. Install TCLTKGRASS
+
+ - TCLTKGRASS can be unpacked anywhere, for example:
+
+     cd /usr/local/grass42/
+     gunzip < tcltkgrass_2.6.tar.gz | tar xvf -
+
+   That will create the directory "tcltkgrass".
+   If one was already there, please remove it before.
+
+ - run the GRASS shell
+
+ - type "make" to generate the tcltkgrass run script ($GISBASE/bin/tcltkgrass)
+
+
+C. Run TCLTKGRASS
+
+ - Start TCLTKGRASS from the GRASS shell with 
+
+     tcltkgrass &
+
+Have fun!
+
+Jacques Bouchard    and   Markus Neteler 1999
+bouchard@onera.fr         neteler@geog.uni-hannover.de
+
+</pre></body></html>

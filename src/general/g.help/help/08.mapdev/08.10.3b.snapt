@@ -1,0 +1,28 @@
+                     THE SNAPPING OF NODES
+
+The geographic coordinates associated with digitized points (defining
+line segments and nodes) will be added to a GRASS data file in the order
+in which they are digitized.  If two node points fall within the
+geographic snapping threshold of one another, the node that appears
+second in the data file will snap to the one that is listed first.
+In GRASS, the default snapping threshold is .04 map inches (in terms
+of distance on the map).  The snapping threshold can also be expressed
+as actual ground distance in database mapping units (e.g., in meters for
+a UTM database).  When expressed in database mapping units, the number
+given for the snapping threshold will be dependent on the scale of the map.
+
+Please refer to \Setting the Snapping Threshold Value\ for important
+information on setting the snapping threshold.
+
+See \"Cartographic Issues in the Development of a Digital GRASS Database"\
+from which the information in this section was obtained, for further
+information on map development issues.
+
+
+
+
+
+
+
+
+

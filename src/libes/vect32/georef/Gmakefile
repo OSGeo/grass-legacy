@@ -1,0 +1,75 @@
+EXTRA_CFLAGS	= $(DIGITFLAGS)  $(VECT_INCLUDE) -I../digitizers -I../libes
+
+#  Note that this rd_cap.c is a little different then ../dig_front/read_cap.c
+
+#OBJ = \
+#	curses.o \
+#	geo_file.o \
+#	geo_point.o \
+#	geo_get_pt.o \
+#	geo_reg.o \
+#	geo_reset.o \
+#	reset_map.o \
+#	map_setup.o \
+#	pr_instruct.o \
+#	rd_cap.o \
+#	../digit/map_ask.o \
+#	../digit/leave.o \
+#	../digit/map_scale.o \
+#	../digit/select_digit.o \
+#	../digit/set_key.o \
+#	../digit/ask_driver.o \
+#	../digit/flush_input.o \
+#	../digit/map_reg.o \
+#	../digit/map_resid.o \
+#	../digit/tty.o
+
+OBJ = \
+	curses.o \
+	geo_file.o \
+	geo_point.o \
+	geo_get_pt.o \
+	geo_reg.o \
+	geo_reset.o \
+	reset_map.o \
+	map_setup.o \
+	pr_instruct.o \
+	rd_cap.o \
+	map_ask.o \
+	leave.o \
+	map_scale.o \
+	select_digit.o \
+	set_key.o \
+	ask_driver.o \
+	flush_input.o \
+	map_reg.o \
+	map_resid.o \
+	tty.o
+
+all:  libgeo.a  $(ETC)/geo.reg  $(ETC)/geo.point  $(ETC)/geo.quest   $(ETC)/geo.unlock 
+
+libgeo.a: $(OBJ)
+	$(AR)
+
+#  notice that bin_reg becomes geo.reg in the etc directory
+
+$(ETC)/geo.reg: bin_reg.o $(GISLIB) $(LOCKLIB)
+	$(CC) $(LDFLAGS)  -o bin_reg  bin_reg.o  libgeo.a  $(GISLIB) $(LOCKLIB) $(MATHLIB) $(XDRLIB) 
+	mv  bin_reg  $(ETC)/geo.reg
+
+
+#  notice that bin_point becomes geo.point in the etc directory
+
+$(ETC)/geo.point: bin_point.o $(GISLIB) $(LOCKLIB)
+	$(CC) $(LDFLAGS)  -o bin_point  bin_point.o  libgeo.a $(GISLIB) $(LOCKLIB) $(MATHLIB) $(XDRLIB)
+	mv  bin_point  $(ETC)/geo.point
+
+
+$(ETC)/geo.quest: geo_quest.o $(GISLIB) 
+	$(CC) $(LDFLAGS)  -o $@  geo_quest.o  libgeo.a $(GISLIB) $(MATHLIB) $(XDRLIB) 
+
+
+$(ETC)/geo.unlock: geo_unlock.o $(GISLIB) $(LOCKLIB)
+	$(CC) $(LDFLAGS)  -o $@  geo_unlock.o  libgeo.a $(GISLIB)  $(LOCKLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB) $(LOCKLIB): #

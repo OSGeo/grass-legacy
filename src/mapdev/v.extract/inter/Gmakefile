@@ -1,0 +1,4 @@
+$(BIN_CONTRIB_INTER)/v.extract: main.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

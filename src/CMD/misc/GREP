@@ -1,0 +1,13 @@
+:
+
+# GREP [grep options] pattern.
+# search all .c and .h files for pattern
+
+if test $# = 0
+then
+    echo Usage: `basename $0` pattern 1>&2
+    exit 1
+fi
+echo "find . -name '*.[ch]' -print | xargs grep $@ /dev/null" 1>&2
+find . -name '*.[ch]' -print | xargs grep "$@" /dev/null
+exit 0

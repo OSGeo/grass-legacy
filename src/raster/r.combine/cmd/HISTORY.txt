@@ -1,0 +1,6 @@
+Markus Neteler 7/98
+
+LEX-problems fixed (idea from Marco Valagussa, marco@crcc.it):
+ - changed Gmakefile
+ - changed gis_lxcl.l and gis_lxcl.c
+ -init_comb.c

@@ -1,0 +1,17 @@
+         MANUAL ENTRIES FOR GENERAL FILE MANAGEMENT COMMANDS
+
+Below is a list of GRASS 5.0 general file management commands. 
+Commands with the suffix ".sh" are shell scripts.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC.
+
+  \exit\
+
+  \g.access\        \g.ask\            \g.copy\
+  \g.filename\      \g.findfile\       \g.gisenv\
+  \g.help\          \g.list\           \g.manual\
+  \g.mapsets\       \g.region\         \g.remove\
+  \g.rename\        \g.tempfile\       \g.version\
+
+  \bug.report.sh\   \old.cmd.sh\       \start.man.sh\

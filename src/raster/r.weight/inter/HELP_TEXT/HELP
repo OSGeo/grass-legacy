@@ -1,0 +1,11 @@
+
+------------------------------------------------------------------
+KEYWORD: help     
+    "help" provides you with reference information about the GIS WEIGHT
+    tool. 
+
+EXAMPLES:
+    help
+    help KEYWORD       (where KEYWORD is any reserved word)
+------------------------------------------------------------------
+

@@ -1,0 +1,134 @@
+/* CodeCenter Project File */
+/* Options for project */
+unsetopt ansi
+setopt auto_compile
+unsetopt auto_reload
+setopt auto_replace
+unsetopt batch_load
+unsetopt batch_run
+unsetopt cc_prog
+setopt ccargs               -g
+unsetopt create_file
+unsetopt debug_child
+unsetopt echo
+setopt edit_jobs            5
+unsetopt eight_bit
+unsetopt ignore_sharp_lines
+setopt line_edit
+setopt line_meta
+setopt lint_load            2
+setopt lint_run             2
+setopt list_action
+setopt load_flags           -I/GRASS.src/4.1/src/include -I/GRASS.src/4.1/src/mapdev/Vlib -I/GRASS.src/4.1/src/mapdev/diglib -L/GRASS.src/4.1/src/libes/LIB.sun4 -L/GRASS.src/4.1/src/mapdev/lib/LIB.sun4
+unsetopt long_not_int
+unsetopt make_args
+setopt make_hfiles
+unsetopt make_offset
+setopt make_prog            make -f OBJ.sun4/make.rules
+setopt make_symbol          #
+setopt mem_config           16384
+unsetopt mem_trace
+setopt num_proc             1
+unsetopt page_cmds
+setopt page_list            15
+unsetopt page_load
+unsetopt path
+setopt proto_path           . /apps/CenterLine/c_3.1.1-r1.0/sun4-40/proto /apps/CenterLine/general/proto
+unsetopt preprocessor
+setopt program_name         a.out
+unsetopt print_custom
+setopt print_pointer
+setopt print_string         20
+unsetopt save_memory
+setopt sbrk_size            1048576
+setopt src_err              3
+setopt src_step             1
+setopt src_stop             3
+unsetopt swap_uses_path
+setopt sys_load_flags       -L/lib -L/usr/lib -L/usr/local/lib -L../lib/LIB.sun4 -I../include -I/usr/include -Dunix -Dsun -Dsparc
+unsetopt tab_stop
+unsetopt terse_suppress
+unsetopt terse_where
+setopt unset_value          191
+unsetopt win_fork_nodup
+# unsetopt win_fork
+unsetopt win_no_raise
+unsetopt win_message_list
+unsetopt win_project_list
+/* Suppressions for project */
+suppress 5 
+/* DEFAULT SUPPRESSION: Over/underflow unsigned <minus> */
+suppress 7 
+/* DEFAULT SUPPRESSION: Over/underflow unsigned <plus> */
+suppress 51 /usr/include/regexp.h 
+/* DEFAULT SUPPRESSION: Information lost <assignment> */
+suppress 52 
+/* DEFAULT SUPPRESSION: Information lost <float> */
+suppress 97 in xfree 
+/* DEFAULT SUPPRESSION: Freeing memory */
+suppress 157 on __builtin_va_alist 
+/* DEFAULT SUPPRESSION: Formal variable */
+suppress 450 /usr/include/math.h 
+/* DEFAULT SUPPRESSION: Float constant overflow */
+suppress 460 /usr/include/ 
+/* DEFAULT SUPPRESSION: Nested comment */
+suppress 476 
+/* DEFAULT SUPPRESSION: Extra text in directive */
+suppress 495 on alloca 
+/* DEFAULT SUPPRESSION: Too few macro arguments */
+suppress 592 
+/* Unused static */
+suppress 731 /lib/libsuntool.a(sel_common.o) 
+/* DEFAULT SUPPRESSION: Text/data redefinition */
+suppress 733 
+/* DEFAULT SUPPRESSION: `static' formerly `extern' */
+suppress 734 
+/* DEFAULT SUPPRESSION: CenterLine function redefined */
+suppress 760 
+/* DEFAULT SUPPRESSION: Non-ANSI field syntax */
+suppress 761 
+/* DEFAULT SUPPRESSION: Result of ?: used as lvalue */
+suppress 762 
+/* DEFAULT SUPPRESSION: Result of cast used as lvalue */
+
+/* Contents of project */
+load -I/GRASS.src/4.1/src/include\ -I/GRASS.src/4.1/src/mapdev/Vlib\ -I/GRASS.src/4.1/src/mapdev/diglib\ -L/GRASS.src/4.1/src/libes/LIB.sun4\ -L/GRASS.src/4.1/src/mapdev/lib/LIB.sun4 /lib/libc.so.1.8
+load -I/GRASS.src/4.1/src/include\ -I/GRASS.src/4.1/src/mapdev/Vlib\ -I/GRASS.src/4.1/src/mapdev/diglib\ -L/GRASS.src/4.1/src/libes/LIB.sun4\ -L/GRASS.src/4.1/src/mapdev/lib/LIB.sun4 /GRASS.src/4.1/src/libes/LIB.sun4/libgis.a
+load -I/GRASS.src/4.1/src/include\ -I/GRASS.src/4.1/src/mapdev/Vlib\ -I/GRASS.src/4.1/src/mapdev/diglib\ -L/GRASS.src/4.1/src/libes/LIB.sun4\ -L/GRASS.src/4.1/src/mapdev/lib/LIB.sun4 /lib/libm.a
+load -I/GRASS.src/4.1/src/include\ -I/GRASS.src/4.1/src/mapdev/Vlib\ -I/GRASS.src/4.1/src/mapdev/diglib\ -L/GRASS.src/4.1/src/libes/LIB.sun4\ -L/GRASS.src/4.1/src/mapdev/lib/LIB.sun4 /export/home/amber/shapiro/dbmi/src/lib/LIB.sun4/libdbmi.a
+link
+
+/* Signals caught and ignored */
+catch HUP
+catch INT
+catch QUIT
+catch ILL
+catch TRAP
+catch IOT
+catch EMT
+catch FPE
+catch KILL
+catch BUS
+catch SEGV
+catch SYS
+catch PIPE
+catch TERM
+catch URG
+catch STOP
+catch TSTP
+catch TTIN
+catch TTOU
+catch IO
+catch XCPU
+catch XFSZ
+catch VTALRM
+catch PROF
+catch LOST
+catch USR1
+catch USR2
+ignore ALRM
+ignore CONT
+ignore CHLD
+ignore WINCH
+
+/* Status of project */

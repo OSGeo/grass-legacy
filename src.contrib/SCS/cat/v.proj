@@ -1,0 +1,65 @@
+
+
+
+v.proj               GRASS Reference Manual	           v.proj
+
+
+
+NAME
+     v.proj - allows projection conversion of vector files
+           (SCS map Development Tool)
+
+SYNOPSIS
+     v.proj map=input_vector_file inset=mapset_name_for_INput_map
+	 outset=mapset_name_for_OUTput_map 
+
+DESCRIPTION
+     v.proj:
+       - allows a user to create a new vector map in another
+	 mapset with a different projection, from an existing
+	 vector map in some specified mapset.
+
+     v.proj arguements are:
+
+       map=input vector file      an existing vector map in
+			          current mapset.
+
+       inset=mapset                 mapset which contains
+				  the input vector file
+       outset=mapset                 mapset which will contain 
+				  the new vector file 
+      Note:
+       If the "outset" mapset is not available, v.proj will create it
+       in the current location.
+       If the "outset" mapset exists, v.proj reads it's projection
+       information, and uses it to convert to the output projection.
+
+       If the outset projection information is not available v.proj
+	   runs the program g.setproj to create it.
+
+EXAMPLE
+       The current mapset (Map_utm14) has a utm projection,
+       the coordinates are for zone14 meters, and contains the
+       map "sample". The user wants to create a new map of
+       "sample" in the mapset lambert which is a Lambert Conformal
+	   Conic projection mapset.
+
+       The command :	 v.proj map=sample outset=lambert 
+
+       Will create a new map "sample" in the mapset lambert,
+       changing the utm coordinates of "sample" into lambert
+       coordinates. If the mapset "lambert" did not exist, 
+       v.proj will create it.
+
+       v.proj will create dig, dig_att, and dig_cats directories
+       in the output mapset, if they do NOT exist. Map files
+       for dig, dig_att, and dig_cats are also created for the
+       new map.
+
+
+AUTHOR
+     M.L.Holko, USDA, SCS, Cart. / Geo. Information Systems Division
+
+GRASS 4.0		 U.S.D.A. SCS  				1
+
+

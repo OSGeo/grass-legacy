@@ -1,0 +1,20 @@
+
+TUTORIAL = s.qcount-tutorial
+
+tutorial:
+	latex $(TUTORIAL).tex
+	bibtex $(TUTORIAL)
+	latex $(TUTORIAL).tex
+	latex $(TUTORIAL).tex
+	dvips $(TUTORIAL).dvi
+	compress -f $(TUTORIAL).ps
+	mv $(TUTORIAL).ps.Z ..
+ 
+ 
+clean: 
+	-rm -f *.BAK *~ *.dvi *.aux *.bbl *.blg *.log
+ 
+realclean: clean
+	-rm -rf OBJ*
+ 
+veryclean: realclean

@@ -1,0 +1,5 @@
+
+@man("r.support") - Allows the user to create and/or modify raster map layer
+support files.
+
+(GRASS Raster Program)

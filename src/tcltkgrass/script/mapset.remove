@@ -1,0 +1,19 @@
+#!/bin/csh
+
+if ($#argv != 1) then
+    set error = 1
+else if ($argv !~ mapset=*) then
+    set error = 1
+else
+    rm -rf $GISDBASE/$LOCATION_NAME/$1:s/mapset=//
+endif
+
+if ($?usage) then
+    printf '\
+Usage:\
+ mapset.remove mapset=name\
+\
+Parameters:\
+  mapset   mapset to be removed\n'
+    exit 1
+endif

@@ -1,0 +1,14 @@
+int cur_from_db();
+int cur_from_def();
+int cur_to_db();
+int edit_window (struct Cell_head *);
+int from_cellhd();
+int from_vect();
+int from_view();
+int lister ( char *, char *, char *);
+int make_current (struct Cell_head *, char *);
+int modify_cur();
+int modify_db();
+int new_db();
+int set_window (struct Cell_head *, char * );
+int yes (int , int );

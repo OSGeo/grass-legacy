@@ -1,0 +1,17 @@
+OBJ = \
+	create.o\
+	find.o\
+	free.o\
+	next.o\
+	rewind.o\
+	update.o
+
+all: $(IBTREELIB)
+
+$(IBTREELIB): $(OBJ) 
+	$(AR)
+
+$(OBJ): $(INCLUDE_DIR)/ibtree.h
+
+try: try.o $(IBTREELIB)
+	$(CC) $(LDFLAGS) try.o $(IBTREELIB) -o try

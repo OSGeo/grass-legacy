@@ -1,0 +1,289 @@
+% UCS manual style
+%
+\typeout{[UCS manual style. November 10, 1989]}
+\input book.sty
+\input makeidx.sty
+%
+%
+% ------------ Page numbering --------------
+%
+% modify stepcounter to decriment if the argument is negative.
+% We need this because Texrox uses the page number to order pages.
+%
+\def\stepcounter#1{%
+  \expandafter\ifnum\csname c@#1\endcsname<0
+     \global\expandafter\advance\csname c@#1\endcsname\m@ne
+  \else \global\expandafter\advance\csname c@#1\endcsname\@ne\fi
+     {\let\@elt\@stpelt \csname cl@#1\endcsname}}
+%
+\def\@roman#1{\ifnum#1<0\romannumeral -#1\else\romannumeral #1\fi}
+%
+%
+% ------------ Margins and Paragraphs -------------------
+%
+\textheight 530pt \textwidth 362pt
+\oddsidemargin .5in \evensidemargin 1.0in
+\marginparwidth 8pc \marginparsep 2pc
+\topmargin .73in \headheight 12pt \headsep .275in
+\footheight 12pt \footskip .38in
+\footnotesep=14pt
+\textfloatsep30pt
+\intextsep20pt
+%
+%  sans-serif fonts
+%
+%
+\font\normalss=cmssdc10 scaled\magstephalf
+\font\largess=cmssdc10 scaled\magstep1
+\font\smallss=cmssdc10
+\font\Largess=cmssdc10 scaled\magstep2
+%
+%
+% ------------ Page headings ----------------------------
+%
+% Left header is:      page no      chapter title
+%
+% Right header is:     section title      page no
+%
+%
+\newdimen\Hwidth \Hwidth=\textwidth\advance\Hwidth by5pc
+\def\ps@writeup{\let\@mkboth\markboth
+  \def\@oddfoot{}\def\@evenfoot{}%
+  \def\@oddhead{\raisebox{2pc}[1pc]{%
+     \makebox[\textwidth][l]{\parbox[b]{\Hwidth}{\it\rightmark\hfill
+          \thepage\\\rule{\Hwidth}{1pt}}}}}
+  \def\@evenhead{\raisebox{2pc}[1pc]{%
+     \makebox[\textwidth][r]{\parbox[b]{\Hwidth}{\it\thepage\hfill
+          {\small\rm\leftmark}\\\rule{\Hwidth}{1pt}}}}}
+  \def\chaptermark##1{\markboth
+     {\uppercase{\ifnum\c@secnumdepth>\m@ne
+        \@chapapp\ \thechapter. \ \fi ##1}}{}}
+  \def\sectionmark##1{\markright
+     {{\ifnum\c@secnumdepth>\z@
+        \thesection. \ \fi ##1}}}
+  }
+%
+%
+%  -----------  Title page -----------------------------------
+%
+\def\UCSauthor#1{\gdef\@UCSauthor{#1}}
+\def\UCScopy#1{\gdef\@UCScopy{#1}}
+\def\UCStitle#1{\gdef\@UCStitle{#1}}
+\def\UCSdoc#1{\gdef\@UCSdoc{#1}}
+\def\UCSrev#1{\gdef\@UCSrev{#1}}
+\def\UCSabs#1{\gdef\@UCSabs{#1}}
+\let\UCScopytext\relax
+%
+%  \maketitle prints both the title page and it's backside
+%
+\def\maketitle{
+  \pagestyle{empty}   
+  \thispagestyle{empty}   
+  \begin{titlepage}
+    \setcounter{page}{-1}
+    \oddsidemargin .75in \evensidemargin .75in
+    \let\footnotesize\small      % Local definitions to make \thanks produce
+    \let\footnoterule\relax   % \normalsize footnotes with no separating rule.
+    %
+    \hbox to\textwidth{\hfill\raisebox{6pc}[\z@][\z@]{\large\@UCSdoc}}
+    \vskip40pt
+    \begin{flushright}
+     \lineskip 3ex
+     {\Huge\@UCStitle}\\
+     \strut\\
+     \rule{\textwidth}{4pt}\\
+     \strut\\
+     by\ {\Large\strut\@UCSauthor}\\
+     \vskip30pt
+     {\sf University Computing Services\\
+          University of Washington}\\
+     \vfill
+     {\large Revision date:\ \@UCSrev}
+     \end{flushright}
+     \vskip 30pt
+     \@UCSabs
+     \par
+     \vskip20pt
+  \end{titlepage}
+  %
+  % print the backside
+  %
+ {\parindent0pt\parskip\baselineskip
+    \leftmargini 0pt
+    \null
+    \vfill
+    \begin{verse}
+      copyright \copyright  \@UCScopy \\
+      \@UCStitle \\
+      UCS UCS Document \@UCSdoc \\
+      Revision Date \@UCSrev \\
+    \end{verse}\par
+    \vspace{2pc}
+    \UCScopytext\par}
+  \newpage
+  %
+  \setcounter{footnote}{0}       % Footnotes start at zero again.
+  \let\thanks\relax
+  \let\maketitle\relax
+  \let\UCSabs\relax
+  \let\UCScopytext\relax}
+%
+%
+%   --------- Table of contents -------------------------
+%
+% table of contents has more defaults
+%
+\def\tableofcontents{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+ \fi\chapter*{Contents\@mkboth{CONTENTS}{CONTENTS}}
+   \pagenumbering{roman}
+   \pagestyle{plain}
+   \setcounter{page}{-1}
+   \@starttoc{toc}\if@restonecol\twocolumn\fi
+   \newpage}
+%
+%   List of figures
+%
+\def\listoffigures{\chapter*{List of Figures\@mkboth{}{}}
+   \addcontentsline{toc}{chapter}{List of Figures}
+   {\let\footnotemark\relax  % in case one is in the title
+   \@starttoc{lof}
+    }
+   \newpage}
+%
+%   List of tables
+%
+\def\listoftables{\chapter*{List of Tables\@mkboth{}{}}
+   \addcontentsline{toc}{chapter}{List of Tables}
+   {\let\footnotemark\relax  % in case one is in the title
+   \@starttoc{lot}
+    }
+   \newpage}
+%
+%  ------------ Chapters -------------------------------------
+%
+\def\textpages{\cleardoublepage
+  \setcounter{page}{1}
+  \pagestyle{writeup}
+  \pagenumbering{arabic}
+  \parindent0pt \parskip\baselineskip}
+\def\narrower{\advance\leftskip\leftmargini
+  \advance\rightskip\leftmargini}
+%
+%
+\def\chapter{\cleardoublepage  % Starts new right-hand page.
+   \thispagestyle{empty}     % Page style of chapter page is 'empty'
+   \global\@topnum\z@        % Prevents figures from going at top of page.
+   \@afterindentfalse        % Suppresses indent in first paragraph.  Change
+   \secdef\@chapter\@schapter}   % to \@afterindenttrue to have indent.
+%
+\def\@makechapterhead#1{ \vspace*{40pt} { \parindent\z@ \raggedleft
+ \ifnum \c@secnumdepth >\m@ne \LARGE    \@chapapp{} \thechapter \par
+ \vskip 25pt \fi{\Huge #1}\par
+ \rule{\textwidth}{2pt}\par
+ \nobreak \vskip 55pt } }
+%
+\def\@makeschapterhead#1{ \vspace*{40pt} { \parindent\z@ \raggedleft
+ {\Huge #1}\par
+ \rule{\textwidth}{2pt}\par
+ \nobreak \vskip 55pt } }
+%
+%
+\def\section{\@startsection {section}{1}{\z@}%
+ {-6pc plus -16pc minus -2pc}{2pc plus 1pc}{\Large\Largess }}
+\def\subsection{\@startsection{subsection}{2}{\z@}%
+ {-4pc plus -4pc minus -1pc}{1pc plus 6pt}{\large\largess }}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+ {-2pc plus -2pc minus -1pc}{9pt plus 6pt}{\normalsize\normalss      }}
+%
+%  default environments  (mods for non-zero parskip
+%
+\leftmargini 30pt
+\leftmarginii 20pt \leftmarginiii 16pt \leftmarginiv 12pt \leftmarginv 8pt
+\leftmarginvi 8pt
+\leftmargin\leftmargini
+\labelsep 8pt
+\labelwidth\leftmargini\advance\labelwidth-\labelsep
+%
+\def\@listI{\leftmargin\leftmargini \parsep 5pt plus 2.5pt minus 1pt
+\topsep\z@ plus 4pt minus 2pt\itemsep 5pt plus 2.5pt minus 1pt}
+\let\@listi\@listI
+\@listi
+%
+%  --------------  Index -------------------------------------
+%
+\def\theindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi
+ \columnseprule \z@
+ \columnsep 35pt\twocolumn[\@makeschapterhead{Index}]
+ \markboth{Index}{}\thispagestyle{empty}\parindent\z@
+ \parskip\z@ plus .3pt\relax\let\item\@idxitem}
+%
+%  in draft mode \I also puts the index text into the margin
+%
+\def\I{\index}
+\def\draftmode{\def\I{\begingroup\@sanitize\@I}
+  \def\@I##1{\index{##1}\marginpar{\tiny##1}\endgroup}}
+\let\draftmode\relax % rewrite to put items at page bottom
+\makeindex % always write the idx file
+%
+%  --------------  Footnotes  -------------------------------
+%
+\def\footnoterule{\kern-3\p@
+ \hrule width \columnwidth \kern 2.6\p@}
+\long\def\@makefntext#1{\parindent\z@\noindent \hang
+ \hbox to 1.8em{\hss$^{\@thefnmark}$}#1}
+ 
+%
+%  --------------  Misc -------------------------------------
+%
+% Some definitions to make life easier
+%
+\def\UCS{University Computing Services}
+%
+% easy bold text:  " bold text "
+% done this way to allow "text" in \index, toc, and etc.
+%
+\catcode`\"=\active
+\def"{\protect\QuoteBold}
+\def\QuoteBold{\begingroup\bf\let\QuoteBold\endgroup}
+%
+% easy italic text:  < italic text >
+% (except in math made)
+%
+\def\ArrowIt{\ifmmode\def\next{<}\else\let\next\ArrowIIt\fi\next}
+\def\ArrowIIt#1>{{\relax\it #1\/}}
+\catcode`\<=\active
+\def<{\protect\ArrowIt}
+\def\it@und{\def\_{\rule{.5em}{.1ex}}}
+%
+% allow underscore as text
+%
+\def\special@und{\ifmmode\def\next{_}\else\def\next{\_}\fi\next}
+\catcode`\_=\active
+\def_{\protect\special@und}
+%
+% add our active chars to the dospecials list
+%
+\def\dospecials{\do\ \do\\\do\{\do\}\do\$\do\&%
+  \do\#\do\^\do\^^K\do\_\do\^^A\do\%\do\~\do\<\do\"\do\_}
+%
+% sample commands are displayed equations
+%
+\input fleqn.sty
+\mathindent=\leftmargini    % align displays on left
+\def\showcommand#1{\[\kern-\tabcolsep\begin{tabular}{ll}#1\end{tabular}\]}
+\def\<{\begin{displaymath}\let\>\endcmd@
+   \kern-\tabcolsep\begin{tabular}{ll}}
+\def\endcmd@{\end{tabular}\end{displaymath}}
+%
+% code listings: \code\begin{verbatim} ... \end{verbatim}\endcode
+%
+\def\code{\par\begingroup   % could also print rules, etc.
+    \advance\@totalleftmargin by\leftmargini}
+\def\endcode{\par\endgroup}
+%
+% another environment (description with flush left labels)
+%
+\def\List{\list{}{\leftmargin2\leftmargini
+      \def\makelabel##1{\bf##1\hfill}}}
+\let\endList\endlist
+%

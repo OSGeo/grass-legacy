@@ -1,0 +1,10 @@
+
+
+m.dted.examine - 
+
+m.dted.examine scans digit terrain elevation data (\DTED\- Levels 1 and
+2) that was produced and supplied by the Defense Mapping Agency (\DMA\)
+on 1/2-inch magnetic tape and prints to the screen a terse description
+of each file.
+
+Manual entry for \m.dted.examine\

@@ -1,0 +1,11 @@
+* fully test the describe/privs
+   combinations to test
+	if user is a DBA
+	    if no explicit entry in sysprivs tables, then granted
+	    else ??? (can a DBA be denied privs? don't know this yet)
+	if user is owner of the table
+	    if no explicit entry in sysprivs tables, then granted
+	    else ??? (can owner be denied privs? don't know this yet)
+	else if PUBLIC has privs
+	else if PUBLIC doesn't have privs
+

@@ -1,0 +1,121 @@
+#!/bin/sh
+
+d.frame -s f=text
+d.text << EOF
+.S 10
+
+.S 9
+.F romats
+.C yellow
+  * 
+.C black
+  *
+  *
+  *
+  *
+  *
+  *
+EOF
+
+d.frame -s f=explain
+d.erase
+d.text << EOF
+.F romans
+.S 5
+
+  Boolean overlays (and/or) allow you
+  to give GRASS commands to:
+
+.C yellow
+    Show the soil-pH map and then
+    just the low pH soils.  (top map)
+EOF
+
+d.frame -s f=map1
+d.rast soils.ph
+r.combine << EOF
+(over RED (group 1-3 (soils.ph)))
+bye
+EOF
+d.frame -s f=explain
+d.text << EOF
+.S 5
+
+ 
+
+
+
+.C yellow
+
+
+    Now show the elevation map and then
+    just the high elevations. (middle map)
+EOF
+
+d.frame -s f=map2
+d.rast elevation.dem
+r.combine << EOF
+(over YELLOW (group 1500-1900 (elevation.dem)))
+bye
+EOF
+
+d.frame -s f=explain
+d.text << EOF
+.S 5
+
+ 
+
+
+
+
+
+
+
+.C yellow
+
+    Finally show the high elevations
+    AND the low pH areas on one map.
+		       (bottom map)
+EOF
+
+d.frame -s f=map3
+r.combine << EOF
+(name junk (over RED (group 1-3 (soils.ph))))
+(over YELLOW junk (group 1500-1900 (elevation.dem)))
+bye
+EOF
+
+g.remove junk
+
+d.frame -s f=explain
+d.text << EOF
+.S 5
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+  An actual GRASS commands looks like:
+.C yellow
+    (group 1500-1900 (elevation.dem))
+  The numbers reference map categories;
+  here categories 1500-1900 of the
+  elevation map.
+EOF
+
+./continue.yes
+
+d.frame -s f=explain
+#d.frame -e f=map1
+#d.frame -e f=map2
+#d.frame -e f=map3
+exit 1

@@ -1,0 +1,8 @@
+
+
+r.in.ascii - 
+
+r.in.ascii allows a user to create a GRASS \raster\ file from an ASCII 
+input file with an optional title designation.
+
+Manual entry for \r.in.ascii\

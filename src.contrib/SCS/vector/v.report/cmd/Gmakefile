@@ -1,0 +1,26 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+PGM=v.report
+
+LIBES= $(GISLIB)
+LIST = main.o\
+	format.o\
+	header.o\
+	label.o\
+	parse.o\
+	prt_report.o\
+	do_v_stats.o\
+	prt_unit.o\
+	perimeter.o\
+	report.o\
+	stats.o\
+	sums.o
+
+all: $(BIN_CONTRIB_CMD)/$(PGM)
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIST): global.h
+
+$(LIBES): #

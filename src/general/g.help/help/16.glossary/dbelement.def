@@ -1,0 +1,9 @@
+
+
+database element - An entity within a \database\.  In GRASS,
+database elements are the names of the UNIX directories located under
+a GRASS mapset in which GRASS data and support files are stored.
+These elements include:  cell (\cell maps\), dig (\vector maps\),
+site_lists (\site maps\), icons (p.map icon files), paint (p.map
+\label\ files), window (\window\ files), group (imagery group files),
+etc.

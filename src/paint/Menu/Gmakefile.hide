@@ -1,0 +1,4 @@
+$(BIN_MAIN_INTER)/paint: paint.sh
+	rm -f $@
+	cp $? $@
+	chmod 0755 $@

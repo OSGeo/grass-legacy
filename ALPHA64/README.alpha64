@@ -1,0 +1,95 @@
+04 December 1999    Luca Palmeri   lpalmeri@ux1.unipd.it
+--------------------------------------------------------
+
+<<< Compiling GRASS 5.0 beta5i on Digital Unix Alpha >>>
+
+--------------------------------------------------------
+
++ Choosing the compiler:
+  
+  You can compile grass on DU alpha with gcc or with cc. The 
+  latter is recomendend for code optimization on the 64 bit 
+  pipes. 
+
+  to force the use of the proper compiler:
+
+   $  export  CC=cc ; ./configure \
+                [ --prefix=myprefix --with-bin-dir=mybindir ]
+        
+	or
+	
+   $  export CC=gcc ; ./configure \
+                [ --prefix=myprefix --with-bin-dir=mybindir ]
+
+
+--------------------------------------------------------
+
++ Possible libraries problems 
+    (to check after running ./configure):
+
+  Check your alpha box and answer to the following:
+  
+   Do I have:
+   
+     curses or ncurses ?
+       check in src/CMD/head/head
+     
+     libtiff, libjpg, zlib ?
+       Yet ./configure do not recognize the absence of libtiff, 
+       so if you do not have it installed you should comment 
+       "r.tiff" in src/list/GRASS 
+
+     lex or/and flex ?
+       see patches 2), 3) and 4) below.
+     
+  
+-------------------------------------------------------
+
++ Usefull patches:
+  
+  1) g.help - < g.help_patch > problem with curses
+     may be usefull if you have old "curses" in place of "ncurses"
+  
+  2) r.combine - < r.combine_patch > problems with flex's yywrap
+
+  3) r.mapcalc - < r.mapcalc_patch >  " "      "    "       "
+
+  4) r.weight - < r.weight_patch >    " "      "    "       "
+  
+  Patches 2), 3) and 4) are usefull with cc if you have lex but
+  not flex
+
+--------------------------------------------------------------
+
++ Do not compile on DU (with DU cc compiler):
+
+  1) i.points3  should be commented in src/list/GRASS
+
+  2) i.tape.tm3 should be commented in src/list/GRASS
+  
+  3) r.statistics should be commented in src/list/GRASS
+   
+  
+
+--------------------------------------------------------------
+
++ Some notes about GRASS on 64bit machines:
+
+Even if working perfectly, there are some compatibility
+problems with the portable vector format (PVF). Vector
+files generated on 32bit machines cannot be read by 64bit
+machines and viceversa (the grass development team is working
+on this and is planned a future release that will be totally 
+64/32bit independent). For this reason the default mapset 
+"spearfish" is not fully working on the alpha.
+To find more info about this problem and 64bit mapsets go to 
+Bill Hughes page at:
+    http://grasshopper.grasshoppernet.com/~bhughes/
+    
+For the moment being a walkaround exists for passing vector
+files between 64 and 32 bit machines: you can do that by exporting
+the vector file to ascii (v.out.ascii) copy the ascii files on
+the other machine and then importing it (v.in.ascii).
+
+
+A prototype of this library you find in src/libes/vect32_64/

@@ -1,0 +1,28 @@
+             MANUAL ENTRIES FOR RASTER ANALYSIS COMMANDS 
+
+Below is a list of GRASS 5.0 raster analysis commands.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC.
+  
+  \r.average\       \r.basins.fill\     \r.binfer\
+  \r.buffer\        \r.cats\            \r.clump\
+  \r.coin\          \r.colors\          \r.combine\
+  \r.compress\      \r.cost\            \r.covar\
+  \r.cross\         \r.describe\        \r.drain\
+  \r.grow\          \r.in.ascii\        \r.in.ll\
+  \r.in.sunrast\    \r.infer\           \r.info\
+  \r.line\          \r.los\             \r.mapcalc\
+  \r.mask\          \r.mfilter\         \r.neighbors\
+  \r.out.ascii\     \r.patch\           \r.poly\
+  \r.profile\       \r.random\          \r.reclass\  
+  \r.report\        \r.resample\        \r.rescale\ 
+  \r.slope.aspect\  \r.stats\           \r.support\   
+  \r.surf.contour\  \r.surf.idw\        \r.surf.idw2\
+  \r.thin\          \r.traj\            \r.traj.data\ 
+  \r.transect\      \r.watershed\       \r.weight\  
+  \r.weight.new\    \r.what\
+
+  \blend.sh\        \shade.rel.sh\
+
+

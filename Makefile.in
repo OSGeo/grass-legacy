@@ -1,0 +1,59 @@
+# Makefile.in
+
+SHELL=			/bin/sh
+
+PREFIX=			@prefix@
+
+BINDIR=			@BINDIR@
+
+SRCDIR=			`pwd`
+SERVERNAME=		`uname -n`
+
+INSTALL=		@INSTALL@
+INSTALL_DATA=		@INSTALL_DATA@ -m 644
+INSTALL_PROGRAM=	@INSTALL_PROGRAM@
+INSTALL_SCRIPT=		@INSTALL@ -m 755
+####INSTALL_DATA_DIR=	install -d -m 755
+INSTALL_DATA_DIR=	mkdir -p -m 755
+
+ENV=			@ENV@
+
+MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0
+
+IS64BIT=		${SRCDIR}/src/CMD/generic/is64bit.sh
+
+MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR}
+
+MAKE_POST_ENV=		GISBASE=${PREFIX} MACHINENAME=${SERVERNAME}
+
+all: pre-install
+
+install: pre-install do-install
+
+pre-install:
+	${ENV} ${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh
+	${INSTALL_DATA_DIR} ${PREFIX}
+	${SHELL} ${IS64BIT}
+
+do-install:
+	${ENV} ${MAKE_ENV} ${SHELL} src/CMD/generic/GISGEN.sh
+	${ENV} ${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
+	${ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh
+
+clean:
+	echo "Removing object files..."
+	find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true
+	rm -f src/CMD/next_step/*              2>/dev/null ; true
+	# Cleaning finished.
+
+veryclean:
+	echo "Removing object files..."
+	find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true
+	#delete all LIB.<arch>/* files:
+	find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true
+	rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true
+	# remove system dependent files:
+	rm -f src/CMD/next_step/* src/CMD/head/head 2>/dev/null ; true
+	rm -f config.cache config.log config.status 2>/dev/null ; true
+	rm -f Makefile                              2>/dev/null ; true
+	# Cleaning finished.

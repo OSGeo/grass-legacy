@@ -1,0 +1,6 @@
+interface_build {
+    {r.combine} 1
+    {Allows category values from several raster map layers to be combined.}
+    {entry < {File containing commands.} 0 file}
+    {checkbox -s {Use symbols (instead of graphics)} "" -s}
+}

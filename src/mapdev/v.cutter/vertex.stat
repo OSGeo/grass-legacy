@@ -1,0 +1,18 @@
+int inter_to_poly_vert (struct t_data *, struct poly_t *, int,
+    struct poly_vert_info *);
+int node_to_poly_vert ( struct poly_t *, struct poly_vert_info *,
+    struct poly_vert_info *);
+int add_point ( struct poly_vert_info *, struct line_pnts *,
+    struct line_pnts *, int);
+int add_points_till_eol ( struct poly_t *, struct poly_vert_info *,
+    struct line_pnts *, struct line_pnts *);
+int add_points_till_inter ( struct poly_t *, struct poly_vert_info *,
+    struct poly_vert_info *, struct line_pnts *, struct line_pnts *);
+int sub_poly_line_start_pos ( struct sub_poly *, int line);
+int dump_poly ( struct poly_t *);
+int dump_vert ( struct poly_vert_info *);
+int inter_to_line_vert ( struct t_data *, int, struct poly_vert_info *);
+int add_line_points_till_eol (struct poly_vert_info *, struct line_pnts *,
+    struct line_pnts *, int);
+int add_line_points_till_inter (struct poly_vert_info *,
+    struct poly_vert_info *, struct line_pnts *, struct line_pnts *, int);

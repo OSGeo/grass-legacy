@@ -1,0 +1,64 @@
+
+
+
+v.merge(1)	     GRASS Reference Manual	       v.merge(1)
+
+
+
+NAME
+     v.merge	- Merge vector map files
+
+SYNOPSIS
+     v.merge [-mv] map=name[,name,...] subj=name
+
+DESCRIPTION
+     v.merge will read the dig_cats file for each named map.
+     The program then compares the category label (NOT the value)
+     to the labels in the named subject file. If the label is found
+     in the subject file, the corresponding attribute values of the
+     map are changed to the subject file category value. When all
+     maps are completed a patch operation is performed.
+
+     This program was designed to merge mapsets for areas that
+     have unique category labels, but similar category values.
+
+     There are two flags for v.merge:
+
+             m - use RAM to hold subject file category values,
+		 this may be faster than the default (use of
+		 disc files), however, memory may not be large
+		 enough for all of the subject file.
+
+             v - verbose mode, default provides only the name
+		 of the mapset processing, verbose gives the
+		 user some action notation.
+
+NOTES
+     The program v.make.subj can be run prior to using v.merge.
+     v.make.subj will read the category labels of each map in
+     it's list and create a subject file of labels and values.
+     The user may opt to create the subject file by other means
+     if they wish.
+
+     v.rmedge must be run on any mapsets in the v.merge list
+     prior to issuing the v.merge command. Common edges will
+     need to be removed prior to the v.merge operation.
+
+SELL ALSO
+     v.make.subj, v.rmedge 
+
+
+
+
+
+
+
+
+
+
+
+AUTHOR
+     R.L.Glenn , U.S.D.A, Soil Conservation Service
+     Carto. and Geographic Informations Systems Division, NHQ
+
+GRASS 4.0		 U.S.D.A.				1

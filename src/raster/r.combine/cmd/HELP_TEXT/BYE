@@ -1,0 +1,9 @@
+QUIT - command
+
+The QUIT command is used to leave COMBINE
+
+syntax: QUIT
+
+alias:
+    quit     q      stop     exit     bye      BYE
+

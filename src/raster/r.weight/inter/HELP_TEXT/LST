@@ -1,0 +1,14 @@
+
+------------------------------------------------------------------
+KEYWORD: list
+    "list" can be used to request several important types of information.
+
+EXAMPLES:
+    list maps                 list available map layers
+    list categories <name>    list categories for map layer <name>
+    list analysis             display current analysis request
+    list saved analysis       list recoverable analyses
+
+ALIASES: type show list 
+------------------------------------------------------------------
+

@@ -1,0 +1,10 @@
+
+
+d.measure - 
+
+d.measure provides the user with an \interactive\ way to measure the
+lengths and areas of \lines\ and \polygons\ drawn by the user in the
+active \frame\ on the graphics monitor.  Lines and polygons are drawn
+using a pointing device (\mouse\).
+
+Manual entry for \d.measure\

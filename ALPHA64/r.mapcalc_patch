@@ -1,0 +1,9 @@
+src/raster/r.mapcalc/polish/pol.y
+84c84
+< int yywrap()
+---
+> /*int yywrap()
+87c87
+< }
+---
+> }*/

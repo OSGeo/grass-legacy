@@ -1,0 +1,10 @@
+interface_build {
+    {r.los} 0
+    {Line-of-sight raster analysis program.}
+    {entry input {Elevation raster map (input):} 0 raster}
+    {entry output {Output raster map:} 0 raster}
+    {entry coordinate {Coordinates of viewing point (east,north) :} 0 xy}
+    {entry patt_map {Binary (1/0) map defining areas of interest:} 0 raster}
+    {entry obs_elev {Observer's height above viewing point [1.75]:} 0 ""}
+    {entry max_dist {Maximum viewing distance in meters (0-99999) [100]:} 0 ""}
+}

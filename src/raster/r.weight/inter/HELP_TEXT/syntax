@@ -1,0 +1,39 @@
+
+------------------------------------------------------------------
+WEIGHT: command formats
+
+command:                  action:
+---------------------------------------------------------------------
+list maps                 list available map layers
+list categories <name>    list categories for map layer <name>
+list analysis             display current analysis request
+list saved analyses       list analysis instructions that have been saved
+
+choose <name>             choose map layer <name> to be used in analysis
+delete <name>             delete a map layer currently in the analysis
+
+assign <name>                     assign for map <name> interactively
+assign <name> <cat> <val>         assign <val> to <cat> for map <name>
+assign <name> <cat> <cat> <val>   assign <val> to categories
+
+save                      save current analysis
+recover                   recover old analysis
+
+add                       cause weights to be added during execution
+multiply                  cause weights to be multiplied during execution
+
+execute                   run analysis
+
+erase                     erase (if using color monitor)
+
+colors grey               select grey scale (for graphic output)
+colors wave               select color ramp (for graphic output)
+
+quit                      leave weight
+------------------------------------------------------------------
+note: if <name> is the same as a keyword (eg, add), it can be
+      quoted "name" or in parenthesis (name) to force it to be
+      a name and not a keyword. The quotes and parenthesis are
+      not required for other names
+------------------------------------------------------------------
+

@@ -1,0 +1,4 @@
+#define HELP_FILE	"HELP"
+#define VERBOSE_FILE	"VERBOSE"
+#define INDEX_FILE	"INDEX"
+#define LOOKUP	"LOOKUP"

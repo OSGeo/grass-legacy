@@ -1,0 +1,27 @@
+TRANSLIB        = $(SRC)/libes/vect32/libes/libtrans.a
+EXTRA_CFLAGS	= $(VECT_INCLUDE) -I../libes -I$(SRC)/libes/vect32/libes
+
+PROG	= $(BIN_MAIN_CMD)/v.transform
+
+
+O_FILES = \
+	ask_trans.o \
+	main.o \
+	creat_trans.o \
+	get_coor.o \
+	open_files.o \
+	print_trans.o \
+	setup_trans.o \
+	trans_digit.o \
+	trans_head.o \
+	trans_att.o
+
+all:    $(PROG)
+
+
+$(PROG): $(O_FILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB) $(VASKILB)
+	$(CC) $(LDFLAGS) -o $@ $(O_FILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB)  $(VASK) $(MATHLIB) $(XDRLIB)
+
+$(O_FILES):	trans.h
+
+$(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB) $(VASKILB): #

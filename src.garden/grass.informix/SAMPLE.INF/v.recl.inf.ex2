@@ -1,0 +1,11 @@
+#!/bin/sh
+# test for v.reclass.inf 
+# all required command line args are provided
+# DB=tiger, GISdb=spearfish
+# Output: vector display of tiger roads reclassed by
+#         cfcc code (primary and secondary roads).
+#
+#
+v.reclass.inf sql=lines.sql key=tlid input=t.roads.inf \
+output=roads.a2.a3 type=line 
+

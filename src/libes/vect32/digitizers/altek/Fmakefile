@@ -1,0 +1,100 @@
+
+LIBTRANS	= ../../libes/libtrans.a
+LIBDIGIT	= ../../digit/libdigit.a
+LIBDIG		= ../../lib/libdig.a
+LIBATTS		= $(LIBDIR)/libdig_atts.a
+LIBGEO		= ../../georef/libgeo.a
+
+DIG_DRIVER		= $(ETC)/dig_drivers
+#  specific driver we are compiling
+DRIVER_DIR	= $(DIG_DRIVER)/altek
+DRIVER_NAME	= ALTEK
+
+
+COMPILE_DIGIT 	= $(LDFLAGS) -o  digit  $(OBJ) $(LIBDIGIT)  $(LIBDIG) $(LIBTRANS) $(LIBATTS) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
+
+EXTRA_CFLAGS	= -I../libes -I../lib 
+
+
+OBJ = \
+	coll_pts.o \
+	dig_curses.o \
+	dig_dev.o \
+	interface.o \
+	setup_driver.o
+
+GEO_REG = \
+	dig_dev.o \
+	geo_reg.o \
+	interface.o \
+	setup_driver.o
+
+GEO_POINT = \
+	dig_dev.o \
+	geo_point.o \
+	interface.o \
+	setup_driver.o
+
+all:  driver  geo.reg  geo.point
+
+#
+#  These directories will be made by this Gmake:
+#  $(ETC)/dig_drivers  $(ETC)/dig_drivers/altek
+#
+#  The 'none' driver is a NULL driver .
+#
+#  If a new digitizer driver is created a directory
+#  $(ETC)/dig_drivers/driver_name will have to be created to store the driver
+#  programs.  The directory MUST match the 'name' in the digitcap file.
+#
+
+
+driver: mk_driver_dev  mk_driver_dig
+
+
+$(DIG_DRIVER):
+    mkdir $(DIG_DRIVER)
+    
+$(DRIVER_DIR)
+    mkdir $(DRIVER_DIG)
+
+
+mk_driver_dev: $(DIG_DRIVER) $(DRIVER_DIR)
+	@echo "";   echo	'  Compiling  $(DRIVER_NAME)  driver.';  echo ""
+#  make sure libdigit.a is there
+	$(GIS)/src/CMD/Gmake  $(SRC)/mapdev/digit
+
+mk_driver_dig: $(OBJ)
+#  compile driver into the program
+	cc $(COMPILE_DIGIT)
+	rm -f $(DRIVER_DIR)/digit
+	mv digit $(DRIVER_DIR)/digit
+
+#  'digit'  must be owned by root and have mode 06775
+#  chown  root digit
+#  chmod   06775 digit
+
+
+#    geo.reg goes to etc/dig_drivers/? and is called by geo.reg in etc
+
+geo.reg: $(GEO_REG)
+	cc $(LDFLAGS) -o  geo.reg  $(GEO_REG)  $(LIBGEO) $(LIBTRANS)  $(LIBDIG) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
+	rm -f $(DRIVER_DIR)/geo.reg
+	mv geo.reg $(DRIVER_DIR)/geo.reg
+
+#    geo.point goes to etc/dig_drivers/? and is called by geo.point in etc
+
+geo.point: $(GEO_POINT)
+#  compile driver into the program
+	cc $(LDFLAGS) -o  geo.point  $(GEO_POINT)  $(LIBGEO) $(LIBTRANS) $(CURSES) $(MATHLIB) $(GISLIB)  $(LOCKLIB)
+	rm -f $(DRIVER_DIR)/geo.point
+	mv geo.point $(DRIVER_DIR)/geo.point
+
+
+coll_pts.o: ../../libes  ../../digit/digit.h  ../../digit/globals.h 
+dig_curses.o:  dig_menu.h
+dig_curses.o:  ../../digit/digit.h
+dig_curses.o:  ../../digit/menu.h
+dig_curses.o:  ../../digit/curses.c
+dig_curses.o:  ../../libes/head.h
+

@@ -1,0 +1,47 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+COMP_LIBES = $(VECTLIB) $(GISLIB) $(LINKMLIB)
+
+
+OFILES = \
+	v.export_dlg.o \
+	area_one.o\
+	shuffle_dots.o\
+	struct_swap.o\
+	write_lines.o\
+	write_areas.o\
+	write_nodes.o\
+	write_head.o\
+	write.o
+
+CFILES = \
+	v.export_dlg.c \
+	area_one.c\
+	shuffle_dots.c\
+	struct_swap.c\
+	write_lines.c\
+	write_areas.c\
+	write_nodes.c\
+	write_head.c\
+	write.c
+
+
+
+PROG = $(BIN_MAIN_CMD)/v.out.dlg
+
+all:  $(PROG)
+
+
+$(PROG): $(OFILES) $(COMP_LIBES) $(LINKMLIB) 
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(COMP_LIBES) $(MATHLIB) $(XDRLIB)
+
+$(COMP_LIBES): #
+
+
+saber_src:
+	#load $(CFLAGS) $(CFILES) $(COMP_LIBES) $(MATHLIB)
+
+write_lines.o: export_dlg.h
+write_areas.o: export_dlg.h
+write_nodes.o: export_dlg.h
+write_head.o:  export_dlg.h
+write.o:       export_dlg.h

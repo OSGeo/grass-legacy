@@ -1,0 +1,8 @@
+local:/tmp/dbmi/driver/informix:informix
+diego:/usr/net/rsh diego /tmp/dbmi/driver/informix:informix
+devon:/usr/net/rsh devon /tmp/dbmi/driver/informix:informix
+max:/usr/net/rsh max /tmp/dbmi/driver/informix:informix
+herman:/usr/net/rsh herman /tmp/dbmi/driver/informix:informix
+amber:/usr/net/rsh amber /tmp/dbmi/driver/informix:informix
+zorro:/usr/net/rsh zorro /tmp/dbmi/driver/informix:informix
+ziggy:/usr/net/rsh ziggy /tmp/dbmi/driver/informix:informix

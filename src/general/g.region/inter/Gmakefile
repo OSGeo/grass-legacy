@@ -1,0 +1,29 @@
+PGM      = g.region
+HOME     = $(BIN_MAIN_INTER)
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+LIST     = main.o\
+	   cur_frm_db.o\
+	   cur_frm_df.o\
+	   cur_to_db.o\
+	   edit.o\
+	   lister.o\
+	   from_cell.o\
+	   from_vect.o\
+	   mke_curr.o\
+	   modify_cur.o\
+	   modify_db.o\
+	   new_db.o\
+	   set.o\
+	   from_view.o\
+	   yes.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB) $(VECTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+
+$(LIST): glob.h
+
+$(GISLIB):   #
+$(VASKLIB): #
+$(VECTLIB): #

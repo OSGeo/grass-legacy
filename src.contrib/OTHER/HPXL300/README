@@ -1,0 +1,9 @@
+These are the drivers for the HP Paintjet XL300.
+
+The directories are as follows:
+
+FAST		150 dpi version of driver
+NULL1		300 dpi version, prints to file
+NULL2		150 dpi version, prints to file
+SLOW		300 dpi version
+cmd		command to print to file and initiate lpr for spooling

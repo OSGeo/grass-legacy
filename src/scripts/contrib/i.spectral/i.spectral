@@ -1,0 +1,73 @@
+#!/bin/sh
+# written by Markus Neteler 18. August 1998
+#            neteler@geog.uni-hannover.de
+#
+# bugfix: 25. Nov.98/20. Jan. 1999
+# this script needs gnuplot (copy to grass42/bin/g.gnuplot)
+
+#--------------------------------------------------
+if test "$1" = ""; then
+      echo ""
+      echo "GRASS script to display spectral response at user specific "
+      echo "locations in satellite images."
+      echo ""
+      echo "Please specify image file(s)!"
+      echo "Usage:"
+      echo "   i.spectral band1 [band2] [band3] ... [band7]"
+      echo ""
+      exit
+fi
+PARAM_NUM=$#
+
+# get y-data for gnuplot-data file
+d.where -1 |r.what input=$1,$2,$3,$4,$5,$6,$7 > /tmp/spectr.dum1
+cat /tmp/spectr.dum1 | cut -d'|' -f4,5,6,7,8,9,10| tr '|' '\012' > /tmp/spectr.dum2
+COORD="`cat /tmp/spectr.dum1 | cut -d'|' -f1,2 | tr '|' ' '`"
+NUM="`cat /tmp/spectr.dum2 |wc -l`"
+NUM2=`expr $NUM + 1`
+
+
+# build data file
+# the x-axis... depending on number of bands
+rm -f spectrum.data.dum
+file=/tmp/spectr.dum2
+i=1
+
+while [ $i != $NUM2 ]
+do
+ echo $i >> spectrum.data.dum
+ i=`expr $i + 1`
+done 
+# paste to data file
+paste -d' ' spectrum.data.dum /tmp/spectr.dum2 > spectrum.data
+rm -f /tmp/spectr.dum1 /tmp/spectr.dum2
+echo ""
+echo "TM band - DN at $COORD"
+cat  spectrum.data
+
+# build g.gnuplot script
+echo "set xtics ('$1' 1, '$2' 2, '$3' 3, '$4' 4, '$5' 5, '$6' 6, '$7' 7)" >> spectrum.gnuplot
+echo "set grid" >> spectrum.gnuplot
+echo "set title 'Spectral response at $COORD'" >> spectrum.gnuplot
+##echo "set yrange [0:255]" >> spectrum.gnuplot
+echo "set xrange [0:$NUM2]" >> spectrum.gnuplot
+echo "set noclabel" >> spectrum.gnuplot
+echo "set xlabel 'Band number'" >> spectrum.gnuplot
+echo "set ylabel 'DN Value'" >> spectrum.gnuplot
+
+## if more then 2 points we can draw an interpolated spline:
+#if [ $PARAM_NUM -gt 2 ]
+#then
+#   echo "Plotting curve and cubic spline with $PARAM_NUM points."
+#   echo "set data style linespoints" >> spectrum.gnuplot
+#   echo "plot 'spectrum.data' with points pt 779, '' smooth csplines t 'spline interpolated'" >> spectrum.gnuplot
+#else
+   echo "Plotting curve with $PARAM_NUM points."
+   echo "set data style lines" >> spectrum.gnuplot
+   echo "plot 'spectrum.data' with linespoints pt 779" >> spectrum.gnuplot
+#fi
+
+# display it...
+g.gnuplot -persist spectrum.gnuplot
+
+rm -f spectrum.data spectrum.data.dum spectrum.gnuplot

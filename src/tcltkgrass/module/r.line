@@ -1,0 +1,8 @@
+interface_build {
+    {r.line} 0
+    {Creates a new binary GRASS vector (v.digit) file by extracting linear features from a thinned raster file.}
+    {entry input {Input raster map:} 0 raster}
+    {entry output {Output vector file:} 0 vector}
+    {checkbox type {Line vectors (default).} "" line}
+    {checkbox type {Area vectors.} "" area}
+}

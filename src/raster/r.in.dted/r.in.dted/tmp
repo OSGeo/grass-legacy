@@ -1,0 +1,20 @@
+int sbytes_to_int(inc,num)
+char *inc;
+int num;
+{
+int ret=0;
+int i, nbit;
+
+    for (i=0; i<num; i++){
+	if(i) ret <<= 8;
+	ret |= inc[i];
+    }
+
+    /* check for negative */
+    nbit = 0x80 << (8*(num-1));
+    if( nbit & ret )
+	ret = -(ret^nbit);
+
+    return (ret);
+
+}

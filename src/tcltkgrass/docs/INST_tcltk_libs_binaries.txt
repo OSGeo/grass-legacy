@@ -1,0 +1,35 @@
+                                                 18. July 1998
+
+      -------------------------------------------------
+        This text describes the installation of the 
+       required TCL/TK 8.0 libraries, if you get them
+                   as pre-compiled BINARY.
+      -------------------------------------------------
+
+   TCLTKGRASS needs some library files etc. for creating buttons
+   and menus. You can get pre-compiled library binaries for
+   Linux and SOLARIS 2.6.
+
+
+A. Log in as "root".
+
+   Change to root directory:
+     cd /
+
+
+   unpack the TCL/TK 8.0 libraries (xxxxx stands for the platform):
+     gunzip tcltk8.0libs_xxxxx.tar.gz
+
+    E.g. gunzip tcltk8.0libs_linux.tar.gz
+     
+   Install them:
+     tar xvf tcltk8.0libs_xxxxx.tar.
+   
+  Now the TCL/TK 8.0 libraries are installed.
+
+B. Install TCLTKGRASS
+
+   -> Read INST_tcltkgrass.txt for details.
+
+Markus Neteler 1998
+ neteler@geog.uni-hannover.de

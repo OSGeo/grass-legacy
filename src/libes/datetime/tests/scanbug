@@ -1,0 +1,8 @@
+scan "1 apr 1963 00:00"
+1 Apr 1963 00:00
+scan "1 apr 1963 0:00"
+1 Apr 1963 00:00
+scan "1 apr 1963 0:0"
+ERROR(-2): Invalid absolute datetime format
+#seems that after initial zero, others have to be double digits
+

@@ -1,0 +1,22 @@
+System requirement for HDF3.2 release 3 on Macintosh   :
+
+     . MPW C or Think C
+     . About 4Meg of memory
+     . About 20Meg of DiskSpace
+     . Absoft or Language Systems Fortran Compilers (optional)
+
+To build HDF3.2r3 library on a Mac, users should use the
+makefile Mac-Makefile.hqx
+
+To compile HDF3.2r3 utilities and the test suite, users should use
+the makefile Mac-Makefile.tests.hqx.  To do so, all the programs
+of the utility and test program source should be in the same
+folder when running this makefile.
+
+The FORTRAN calling interfaces for HDF have not been completed
+for HDF 3.2 for the Macintosh.  Although the FORTRAN interface
+is included with this release, it will probably not work
+correctly on a Macintosh. If you need to use FORTRAN to
+write HDF files on a Mac, you probably should stick with
+HDF version 3.1 for the time being.
+

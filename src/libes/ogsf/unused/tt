@@ -1,0 +1,11 @@
+/************************************************************************/
+gsd_viewport(l,r,b,t)
+int l,r,b,t;
+/* Screencoord */
+{
+#ifdef SGI_GL
+    viewport((Screencoord)l, (Screencoord)r, (Screencoord)b, (Screencoord)t);
+#endif
+}
+
+/************************************************************************/

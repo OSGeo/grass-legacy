@@ -1,0 +1,40 @@
+EXTRA_CFLAGS = 
+
+LIB = ../libstubs.a
+OBJ = \
+	add_col.o	\
+	bindupdate.o	\
+	close_cursor.o	\
+	closedb.o	\
+	create_index.o	\
+	create_table.o	\
+	createdb.o	\
+	delete.o	\
+	deletedb.o	\
+	desc_table.o	\
+	drop_col.o	\
+	drop_index.o	\
+	drop_table.o	\
+	execute.o	\
+	fetch.o		\
+	finddb.o	\
+	finish.o	\
+	init.o		\
+	insert.o	\
+	list_index.o	\
+	list_tables.o	\
+	listdb.o	\
+	open_insert.o	\
+	open_select.o	\
+	open_update.o	\
+	opendb.o	\
+	update.o
+
+$(LIB): $(OBJ)
+	$(AR)
+
+$(OBJ): $(INCLUDE_DIR)/dbmi.h
+
+proto:
+	./BUILD.PROTO > /tmp/driver_proto.hh
+	mv /tmp/driver_proto.hh ../prototypes.h

@@ -1,0 +1,4 @@
+$(ETC)/paint/driver.uninst/v3236.slow: DRIVER.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@

@@ -1,0 +1,9 @@
+PGM    = r.in.bin
+HOME   = $(BIN_MAIN_CMD)
+
+LIST   = main.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB)
+
+$(GISLIB): #

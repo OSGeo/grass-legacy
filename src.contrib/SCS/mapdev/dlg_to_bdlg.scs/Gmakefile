@@ -1,0 +1,41 @@
+A_B_OFILES = \
+	a_b_main.o \
+	a_b_dlg.o \
+	read_write.o \
+	r_dlg_head.o \
+	pad.o \
+	w_bdlg_hd.o \
+	bound_box.o
+
+B_A_OFILES = \
+	b_a_main.o \
+	b_a_dlg.o \
+	b_a_head.o \
+	pad.o \
+	read_write.o \
+	r_dlg_head.o \
+	w_bdlg_hd.o
+
+A_B_F = \
+	a_b_front.o 
+
+B_A_F = \
+	b_a_front.o 
+
+all:	$(ETC)/v.a.b.dlg.scs 
+
+
+$(ETC)/v.a.b.dlg.scs:	$(A_B_OFILES)
+	$(CC) $(LDFLAGS) -o $@ $(A_B_OFILES) $(GISLIB) $(MATHLIB) $(EXTRALIB)
+
+$(BIN_CONTRIB_CMD)/a.b.dlg: $(A_B_F)
+	$(CC) $(LDFLAGS) -o $@ $(A_B_F) $(GISLIB) $(MATHLIB) $(EXTRALIB)
+
+a_b_dlg.o:	dlghead.h  format.h
+a_b_main.o:	dlghead.h  format.h
+bound_box.o:	dlghead.h
+r_dlg_head.o:	dlghead.h
+w_bdlg_head.o:	dlghead.h
+
+$(GISLIB): #
+

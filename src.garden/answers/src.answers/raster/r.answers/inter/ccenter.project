@@ -1,0 +1,147 @@
+/* CodeCenter Project File */
+/* Options for project */
+unsetopt ansi
+setopt auto_compile
+unsetopt auto_reload
+setopt auto_replace
+unsetopt batch_load
+unsetopt batch_run
+unsetopt cc_prog
+setopt ccargs               -g
+unsetopt create_file
+unsetopt debug_child
+unsetopt echo
+setopt edit_jobs            5
+unsetopt eight_bit
+unsetopt ignore_sharp_lines
+setopt line_edit
+setopt line_meta
+setopt lint_load            2
+setopt lint_run             2
+setopt list_action
+setopt load_flags           -I${SRC}/libes -I${SRC}/mapdev/lib -L${SRC}/libes/LIB.sun4 -L${SRC}/mapdev/LIB.sun4
+unsetopt long_not_int
+unsetopt make_args
+setopt make_hfiles
+unsetopt make_offset
+unsetopt make_prog
+setopt make_symbol          #
+setopt mem_config           16384
+unsetopt mem_trace
+setopt num_proc             1
+unsetopt page_cmds
+setopt page_list            29
+unsetopt page_load
+unsetopt path
+setopt proto_path           . /home/ups/SYSTEM/CenterLine/c_3.1.1-r1.0/sun4-40/proto /home/ups/SYSTEM/CenterLine/general/proto
+unsetopt preprocessor
+setopt program_name         a.out
+unsetopt print_custom
+setopt print_pointer
+setopt print_string         20
+unsetopt save_memory
+setopt sbrk_size            1048576
+setopt src_err              3
+setopt src_step             1
+setopt src_stop             3
+unsetopt swap_uses_path
+setopt sys_load_flags       -L/lib -L/usr/lib -L/usr/local/lib -I/usr/include -Dunix -Dsun -Dsparc
+unsetopt tab_stop
+unsetopt terse_suppress
+unsetopt terse_where
+setopt unset_value          191
+unsetopt win_fork_nodup
+unsetopt win_no_raise
+setopt win_message_list
+setopt win_project_list
+/* Suppressions for project */
+suppress 5 
+/* DEFAULT SUPPRESSION: Over/underflow unsigned <minus> */
+suppress 7 
+/* DEFAULT SUPPRESSION: Over/underflow unsigned <plus> */
+suppress 51 /usr/include/regexp.h 
+/* DEFAULT SUPPRESSION: Information lost <assignment> */
+suppress 52 
+/* DEFAULT SUPPRESSION: Information lost <float> */
+suppress 68 on V_ques 
+/* Benign argument mismatch */
+suppress 68 on V_const 
+/* Benign argument mismatch */
+suppress 97 in xfree 
+/* DEFAULT SUPPRESSION: Freeing memory */
+suppress 113 in map_sediment 
+/* Unset value */
+suppress 113 "/export/home/diego/rewerts/answers/src.alpha/raster/r.answers/inter/map_sediment.c":135 
+/* Unset value */
+suppress 157 on __builtin_va_alist 
+/* DEFAULT SUPPRESSION: Formal variable */
+suppress 450 /usr/include/math.h 
+/* DEFAULT SUPPRESSION: Float constant overflow */
+suppress 460 /usr/include/ 
+/* DEFAULT SUPPRESSION: Nested comment */
+suppress 476 
+/* DEFAULT SUPPRESSION: Extra text in directive */
+suppress 495 on alloca 
+/* DEFAULT SUPPRESSION: Too few macro arguments */
+suppress 530 in user_file 
+/* Empty body of statement */
+suppress 592 
+/* Unused static */
+suppress 731 /lib/libsuntool.a(sel_common.o) 
+/* DEFAULT SUPPRESSION: Text/data redefinition */
+suppress 733 
+/* DEFAULT SUPPRESSION: `static' formerly `extern' */
+suppress 734 
+/* DEFAULT SUPPRESSION: CenterLine function redefined */
+suppress 760 
+/* DEFAULT SUPPRESSION: Non-ANSI field syntax */
+suppress 761 
+/* DEFAULT SUPPRESSION: Result of ?: used as lvalue */
+suppress 762 
+/* DEFAULT SUPPRESSION: Result of cast used as lvalue */
+
+/* Contents of project */
+load -I/GRASS.src/4.1/src/include\ -I/GRASS.src/4.1/src/mapdev/Vlib\ -I/GRASS.src/4.1/src/mapdev/diglib\ -L/GRASS.src/4.1/src/libes/LIB.sun4\ -L/GRASS.src/4.1/src/mapdev/lib/LIB.sun4 /lib/libc.so.1.7
+load -I/GRASS.src/4.1/src/include\ -I/GRASS.src/4.1/src/mapdev/Vlib\ -I/GRASS.src/4.1/src/mapdev/diglib\ -L/GRASS.src/4.1/src/libes/LIB.sun4\ -L/GRASS.src/4.1/src/mapdev/lib/LIB.sun4 /GRASS.src/4.1/src/libes/LIB.sun4/libgis.a
+load -I/GRASS.src/4.1/src/include\ -I/GRASS.src/4.1/src/mapdev/Vlib\ -I/GRASS.src/4.1/src/mapdev/diglib\ -L/GRASS.src/4.1/src/libes/LIB.sun4\ -L/GRASS.src/4.1/src/mapdev/lib/LIB.sun4 /lib/libm.a
+load -I/GRASS.src/4.1/src/libes\ -I/GRASS.src/4.1/src/mapdev/lib /GRASS.src/4.1/src/libes/LIB.sun4/librowio.a
+load -I/GRASS.src/4.1/src/libes\ -I/GRASS.src/4.1/src/mapdev/lib /GRASS.src/4.1/src/libes/LIB.sun4/libvask.a
+load -I/GRASS.src/4.1/src/libes\ -I/GRASS.src/4.1/src/mapdev/lib /lib/libtermlib.a
+load -I/GRASS.src/4.1/src/libes\ -I/GRASS.src/4.1/src/mapdev/lib /lib/libcurses.a
+load -I/GRASS.src/4.1/src/libes\ -I/GRASS.src/4.1/src/mapdev/lib answers_input.c answers_run.c bmp_menu.c copy_project.c croak.c edit_region.c extract.c extract_bmp.c extract_chnl_slp.c extract_rain.c extract_tile.c get_bmp.c get_channel.c get_chnl_slp.c get_cover.c get_elevation.c get_mask.c get_outlet.c get_rain.c get_res.c get_soils.c get_tile.c hit_return.c hydro_filter.c main.c map_sediment.c menu.c misc.c mk_bmp_tbl.c mk_cat_tbl.c mk_chnl_tbl.c mk_cover_tbl.c mk_elev.c mk_rain.c mk_soil_tbl.c percent.c read_project.c remove_files.c save_project.c set_mask.c set_region.c show_status.c step1.c trim_region.c user_file.c
+link
+
+/* Signals caught and ignored */
+catch HUP
+catch INT
+catch QUIT
+catch ILL
+catch TRAP
+catch IOT
+catch EMT
+catch FPE
+catch KILL
+catch BUS
+catch SEGV
+catch SYS
+catch PIPE
+catch TERM
+catch URG
+catch STOP
+catch TSTP
+catch TTIN
+catch TTOU
+catch IO
+catch XCPU
+catch XFSZ
+catch VTALRM
+catch PROF
+catch LOST
+catch USR1
+catch USR2
+ignore ALRM
+ignore CONT
+ignore CHLD
+ignore WINCH
+
+/* Status of project */

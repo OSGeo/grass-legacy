@@ -1,0 +1,17 @@
+EXAMPLE1 - simple examples
+
+# comment line:  Any line starting with '#' is not interpreted,
+#                but instead is copied to screen.
+
+# Print out the soils map
+(soils)
+
+# Show just categories 1, 2, 5, 6, 7, and 10 of soils
+(group 1 2 5-7 (soils) )
+
+# Show all locations that contain these soils and also contain 
+# categories 3, 4, 5, 10, 11, or 12 of geology
+(and 
+   (group 1 2 5-7   (soils)   ) 
+   (group 3-5 10-12 (geology) )
+)

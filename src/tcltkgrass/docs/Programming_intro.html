@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.08 [en] (X11; I; SunOS 5.6 sun4m) [Netscape]">
+   <TITLE>TclTkGRASS programming page</TITLE>
+<!-- Created by: (c) 1999 Markus Neteler, Hannover, Germany -->
+<!-- email: neteler@geog.uni-hannover.de -->
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFE0">
+<pre>
+Welcome to the <a href="../main_tclgrass.html">TclTkGRASS</a>!                      22. December 1999
+
+The programming of new modules within the TCLTKGRASS environment
+is quite easy now.
+
+<b>1. Adding a module window into TCLTKGRASS</b>
+
+   To add a module into the TCLTKGRASS windows environment
+   you have to edit
+       main/menu.tcl
+   
+   The structure is as follows:
+    
+1.a) Menu with submenu:
+
+   &lt;Menuentry&gt; {
+     "&lt;Submenu entry 1&gt; {
+         "source $env(TCLTKGRASSBASE)/module/&lt;module.definitionfile&gt;"
+         }
+     "&lt;Submenu entry 2&gt; {
+         "source $env(TCLTKGRASSBASE)/module/&lt;module.definitionfile&gt;"
+         }
+   } 
+
+1.b) Simple Submenu
+    "&lt;Submenu entry 1&gt; {
+         "source $env(TCLTKGRASSBASE)/module/&lt;module.definitionfile&gt;"
+         }
+
+1.c) Direct module call (if the module has to used interactively)
+    "&lt;Submenu entry 1&gt; {
+         "exec xterm -exec &lt;grassmodule&gt;"
+         }
+
+
+Example:
+
+     "Misc tools" {
+            "Convert raster to lines from a thinned raster" {
+                "source $env(TCLTKGRASSBASE)/module/r.line"
+            }
+            "Vector digitizer" {
+                "exec xterm -exec v.digit"
+            }
+
+
+
+<b>2. Programming the module window itself</b> (the module.definitionfile)
+
+2.a) Programming of non-interactive module windows
+
+Here a listing of the entries follows (the braces are important, but do not
+insert "&lt;" and "&gt;" !). See an example below.
+
+First entry:
+  interface_build {
+Second entry:
+  {&lt;grass module name&gt;} 
+Third entry (interactive flag):
+      1 &lt;if data must be input interactively from terminal (xterm),&gt; 
+&lt;or&gt;  0 &lt;...else (for setting paramters through module menu)&gt;
+Fourth entry:
+  {&lt;Comment to be displayed in first module windows line&gt;.}
+Fifth to xxx line: query for variables:
+  {entry &lt;module variable&gt; {&lt;Comment for this variable&gt;:} 0 &lt;button&gt;}
+Fifth to xxx line: checkboxes for options:
+  {checkbox &lt;module option&gt; {&lt;Comment for this option&gt;.} "" &lt;module option&gt;}
+Last line:
+  }
+
+Module variables have to be specified for input and output files.
+Module options allow for example to run this module quietly, or output 
+special information in a tcltkgrass window etc. 
+The "interactive flag" indicates if the module will be directed through
+the window entries or through a xterm (see description and example below).
+You get all required information about a specific GRASS module 
+from the GRASS man pages, if you want to define the module yourself.
+
+The &lt;button&gt; may be:
+ raster:     query GRASS raster map
+ +raster:    query several GRASS raster maps (for multiple input separated 
+               with comma
+ vector:     query GRASS vector map
+ +vector:    query several GRASS vector maps (for multiple input separated 
+               with comma
+ sites:      query GRASS site file
+ +sites:     query several GRASS sites maps (for multiple input separated 
+               with comma
+ file:       choose file for reading from user's home directory
+ File:       choose file for writing from user's home directory
+ xy:         pick x,y coordinates on the active monitor window
+ xyz.&lt;map&gt;:  pick x,y coordinates on the active monitor window
+                + z value for the raster map whose name is in variable &lt;map&gt;
+                (compare d.3d)
+ "":         no query button
+ arc:        choose ARC/INFO file in &lt;location&gt;/&lt;mapset&gt;/arc
+ area:       choose area unit
+ color:      choose a color from a list (for display commands)
+ Color:      choose a color from a list including color "none" in the list
+ 3Dcolor:    choose a color from a list including color "color" in the list
+                 (only used in d.3d)
+ distance:   choose distance unit (km, m, etc.)
+ dlg:        choose dlg file
+ dlg_ascii:  choose dlg ascii file
+ font:       choose font
+ group:      choose image group
+ subgroup:   choose image subgroup
+ signature:  choose signature file from subgroup
+ icon:       choose paint icon file
+ label:      choose paint label file
+ paint:      choose painter device
+ monitor:    choose monitor
+ region:     choose region definition file
+ spheroid:   choose spheroid
+
+...some more feature: see script/gui.tcl for details.
+
+
+To create fields in the module window, you have three possibilities:
+ - "entry": This is an empty line
+
+    Generally:  {entry parameter {description:} 0 button} 
+                                  (you may specify "" instead of button)
+    Example:    {entry input {Input site map:} 0 sites}
+
+ - "checkbox": Use this clickable box for flags
+    Generally:  {checkbox flag {description} "" flag}
+    Example:    {checkbox -h {Display reference information.} "" -h}
+
+ - "scale": This displays a numbered adjust bar
+    Generally:  {scale parameter {description} min max interval}
+    Example:    {scale size {Neighborhood size:} 1 25 2}
+
+<b>The easiest way is to develop new module windows from
+existing definitions.</b>
+
+Example:
+
+interface_build {
+    {s.surf.tps} 0
+    {Interpolates and computes topographic analysis from site map using spline with tension.}
+    {entry input {Input site map:} 0 sites}
+    {entry elev {Output elevation raster map:} 0 raster}
+    {entry slope {Output slope raster map (optional):} 0 raster}
+    {entry aspect {Output aspect raster map (optional):} 0 raster}
+    {entry pcurv {Output profile curvature raster map (optional):} 0 raster}
+    {entry tcurv {Output tangential curvature raster map (optional):} 0 raster}
+    {entry mcurv {Output mean curvature raster map (optional):} 0 raster}
+    {entry maskmap {Use this existing raster file name as a mask (optional):} 0 raster}
+    {entry dmin {Minimum distance between points (default: 0.5 grid cell):} 0 ""}
+    {entry zmult {Multiplier for z-value in site map (default: 1):} 0 ""}
+    {entry tension {Tension parameter (appropriate for smooth surfaces) (default: 40):} 0 ""}
+    {entry smooth {Smoothing parameter (default: 0 = no smoothing:} 0 ""}
+    {entry segmax {Maximum number of points per segment (default: 40):} 0 ""}
+    {entry npmin {Minimum number of points for interpolation (default: 150, see man page):} 0 ""}
+    {checkbox -h {Display reference information.} "" -h}
+}
+
+
+2.b) Speciality: The GRASS module shall be used interactively from xterm 
+
+This will be achieved through "1" in the second line of the module
+definition.
+
+Example:
+
+interface_build {
+    {r.mapcalc} 1
+    {Raster map layer data calculator.}
+}
+
+2.c) Speciality: Define standard options for GRASS modules
+
+Some modules need options which the user should not be able to change.
+You can enter a command name with several words in the second line of the
+module.definitionfile. 
+
+Example: v.support
+interface_build {
+    {v.support option=build} 0
+    {(Re)Builds topology of vector file.}
+    {entry map {Name of the GRASS vector file to be (re)build:} 0 vector}
+    {entry threshold {Snap threshold value (valid only with -s option):} 0 ""}
+    {checkbox -s {Snap nodes.} "" -s}
+    {checkbox -r {Set map region from data.} "" -r}
+}
+ 
+
+The easiest way is to copy existing module.definitionfile and change
+this copy to your purposes. Some more internal details are stored in 
+the comments of script/gui.tcl.
+
+So, we hope to receive new module window files from you for the 
+integration into TCLTKGRASS...
+
+Have fun with this new concept!
+
+
+   Jacques Bouchard (bouchard@onera.fr) (who did all this programming work!)
+   Markus Neteler (neteler@geog.uni-hannover.de) (who  wrote texts and some
+                                                  module files)
+
+</pre>
+</body>
+</html>;

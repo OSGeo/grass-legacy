@@ -1,0 +1,10 @@
+            BRIEF HELP ENTRIES FOR SITE DATA COMMANDS
+
+Below is a list of GRASS 5.0 site data manipulation commands.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC.
+
+       \s.db.rim help\       \s.in.ascii help\      \s.menu help\
+       \s.out.ascii help\    \s.surf.idw help\      \s.surf.tps help\
+

@@ -1,0 +1,16 @@
+interface_build {
+    {i.cluster} 0
+    {Generates spectral signatures for land cover types using minimum distance algorithm for unsupervised classification}
+    {entry group {Image group:} 0 group}
+    {entry subgroup {Image subgroup:} 0 subgroup}
+    {entry sigfile {Signaturefile to be created:} 0 signature}
+    {entry seed {File contains initial signatures:} 0 signature}
+    {entry classes {Initial number of classes [1-255]:} 0 ""}
+    {entry sample {Sampling intervals (by row and col) [default]:} 0 ""}
+    {entry iterations {Maximum number of iterations [default: 30]:} 0 ""}
+    {entry convergence {Percent convergence [0-100, default: 98.0]:} 0 ""}
+    {entry separation {Cluster separation [default: 0.0]:} 0 ""}
+    {entry min_size {Minimum number of pixels in a class [default: 17]:} 0 ""}
+    {entry reportfile {Name of an output file to contain final report:} 0 file}
+    {checkbox -q {Run quietly.} "" -q}
+}

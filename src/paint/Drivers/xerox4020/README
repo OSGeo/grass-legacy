@@ -1,0 +1,58 @@
+****************************************************************
+*
+*       Driver for XEROX 4020 color ink jet printer for GRASS
+*       built from driver for diablo c150 ink jet  for GRASS
+*       Author: Australian Army, Engineering Development Establishment
+*
+================================================================
+Dip switches will need to set to suit your particular system.
+
+We have been using a serial (RS232) version of the printer at 9600
+baud, and have had good results on an SGI IRIS (under GRASS 3.0, 3.1
+and 4.0) and on a PC386 running DBA's GRASS/X86 3.1+ (without changing
+our dip switches)
+
+This driver compiled and installed without any drama on both systems.
+
+To compile the driver add paint/Drivers/xerox4020 to your list.local
+(or run gmake4.0 in the directory)
+
+We understand that the XEROX 4020 is now only available with a parallel
+port and for this version a parallel to serial converter will be
+necessary.
+
+As at the date of writing we have not tried to set this version of the
+printer on a system running GRASS.
+
+The driver does not utilise the full width of printing available (it is
+capable of 1088 dots per line in graphics mode) but I suspect that this
+is controlled in the Paint Interface software. One Of These Days we
+will see if we can get a little more out of it.
+
+The printer has been extremely reliable. (No problems whatsoever in
+over 3 yrs of continual use ) and gives very good color.
+
+Note that ink and paper supplies can be procured from Tektronix (uses
+the same consumables as the 4696.
+
+Tektronix part numbers are as follows:
+
+cyan ink package .....016-0840-01
+yellow ink package....016-0842-01
+magenta ink package...016-0841-01
+black ink package.....016-0839-01
+
+11 inch wide roll paper ...016-0920-00
+
+
+Any queries (helpful) advice re this driver, please contact:
+
+Mr T.L.Duell
+Army Engineering Development Establishment
+Private Bag 12
+PO Ascot Vale 
+Victoria 3032
+Australia
+
+Phone 61-3-3193935
+FAX   61-3-3193933

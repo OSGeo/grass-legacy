@@ -1,0 +1,11 @@
+
+
+geographic window - A rectangular region, stated in the
+\map coordinate system\ of the user's current GRASS location, whose
+sides are parallel to the coordinate axes.  A geographic window also
+has an east-west \resolution\ and a north-south resolution associated
+with it, which specify the dimensions assumed by \cells\ within the
+geographic window.
+
+NOTE:  This term is now obsolete.  Geographic windows are referred to
+as "geographic regions" in GRASS version 4.0.

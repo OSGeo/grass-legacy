@@ -1,0 +1,11 @@
+
+
+r.stats - 
+
+r.stats calculates the area present in each of the \categories\ of
+user-selected \raster\ map layer(s).  Area statistics can be given in
+units of acres, hectares, square miles and \cell\ counts.  This
+analysis uses the current \geographic region\ and \mask\ settings.
+Output can be sent to a file in the user's current working directory.
+
+Manual entry for \r.stats\

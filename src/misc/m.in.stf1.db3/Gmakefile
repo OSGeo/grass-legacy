@@ -1,0 +1,14 @@
+LIB = $(LIBDIR)/libcoorcnv.a
+DOCS = $(ETC)/census.docs 
+
+all:	$(BIN_ALPHA_CMD)/m.in.stf1.db3
+
+$(BIN_ALPHA_CMD)/m.in.stf1.db3: m.in.stf1.db.o
+	$(CC) $(LDFLAGS) -o $@ m.in.stf1.db.o
+
+m.in.stf1.db.o: id_section.h
+
+$(LIB): # in case LIB changes
+$(GISLIB): #
+$(VECTLIB): #
+$(DIG_ATTLIB): #

@@ -1,0 +1,22 @@
+#!/bin/sh
+d.frame -e
+d.erase
+d.frame -c f=text a=90,99,1,99
+d.frame -s f=text
+d.text << EOF
+.F romans
+.S 20
+  Graphics come in many forms in GRASS.
+
+  The basic form is a two dimensional map displayed on the screen
+  Examples: 
+EOF
+d.frame -c f=b a=10,50,10,50
+d.frame -s f=b
+d.rast landuse
+d.rast -o roads
+d.frame -c f=c a=50,80,20,40
+d.frame -s f=c
+d.rast vegcover
+
+exit 1

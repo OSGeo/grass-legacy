@@ -1,0 +1,28 @@
+          INTRODUCTION: GRASS COMMANDS FOR REPORT GENERATION
+
+Several commands exist in GRASS to report information about a map's
+contents, or the results of an analysis on one or more maps, back to
+the user.  The user can also develop macros specific to his needs to
+prepare other types of reports (see, for example, past issues of the
+newsletter \"GRASSClippings"\).
+
+The following GRASS commands report on the contents of one or more map
+layers.  Command prefixes indicate the format of the data reported on.
+"d." commands report information on map layers displayed on the user's
+graphics monitor.  "r." commands report information on raster data
+layers.  "v." commands report information on vector data layers.
+"s." commands report information on site data.  The "ESC" key can be
+used to select specific information on each of these programs.
+
+ \-  d.geodesic \    \-  r.average \   \-  v.stats \   \-  s.menu \
+ \-  d.histogram \   \-  r.cats \      \-  v.db \      \-  s.db.rim \
+ \-  d.legend \      \-  r.coin \
+ \-  d.measure \     \-  r.covar \
+ \-  d.profile \     \-  r.describe \
+ \-  d.rhumbline \   \-  r.info \
+ \-  d.what.rast \   \-  r.profile \
+ \-  d.what.vect \   \-  r.report \
+ \-  d.where \       \-  r.stats \
+ \-  d.rast.arrow \  \-  r.volume \
+ \-  d.rast.num \    \-  r.what \
+

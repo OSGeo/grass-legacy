@@ -1,0 +1,66 @@
+#COMPILE_FLAGS= -g
+#LDFLAGS= -g
+
+LIST=main.o\
+	add_point.o\
+	analyze_sig.o\
+	ask_files.o\
+	band_files.o\
+	cellhd.o\
+	complete_reg.o\
+	conv.o\
+	curses.o\
+	define_reg.o\
+	del_point.o\
+	draw_reg.o\
+	draw_cell.o\
+	driver.o\
+	edge.o\
+	edge_order.o\
+	edge_point.o\
+	erase_reg.o\
+	g_init.o\
+	graphics.o\
+	histograms.o\
+	init_reg.o\
+	input.o\
+	input_color.o\
+	input_std.o\
+	mouse.o\
+	outline.o\
+	readbands.o\
+	redisplay.o\
+	remove_mask.o\
+	restore_reg.o\
+	save_reg.o\
+	set_signals.o\
+	sigalarm.o\
+	sigint.o\
+	signature.o\
+	title.o\
+	tty.o\
+	view.o\
+	zoom_box.o
+
+LIBES = $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VASK)
+
+
+$(BIN_MAIN_INTER)/i.class: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIST): globals.h defs.h
+
+cp_man: i.class.man
+	cp i.class.man ../../man.help/man1/i.class
+
+cp_help: i.class.help
+	cp i.class.help ../../man.help/help/i.class
+
+man_help: cp_man cp_help
+	(cd ../../man.help; Nroff)
+	$(GMAKE) ../../man.help
+
+$(LIBES): #
+
+
+

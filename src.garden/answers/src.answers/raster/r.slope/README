@@ -1,0 +1,20 @@
+
+   Chris Rewerts and Raghaven Srinivasan
+   (rewerts@ecn.purdue.edu and srin@ecn.purdue.edu)
+   Agricultural Engineering, Purdue University
+   March 1992
+
+   Program name: r.slope
+
+   Input is an elevation surface map (elevation in meters).
+
+   This is a modification of the r.slope.aspect program.
+
+   The purpose is to compute slope percent in the format ANSWERS
+   requires (slope * 10; i.e. a slope of 1.1% will be a cat value
+   of 11). Therefore, even if you are not using the r.answers
+   programs, you may still find use for the slope layers created if
+   you want a bit more gradient data. (check out Raghaven's paper
+   on comparing methods of calculating slopes, by the way).
+
+

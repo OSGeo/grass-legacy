@@ -1,0 +1,10 @@
+
+------------------------------------------------------------------
+KEYWORD: catrgories
+    "categories" refers to category names associated with available
+    map layers.
+
+EXAMPLES:
+    list categories geology
+------------------------------------------------------------------
+

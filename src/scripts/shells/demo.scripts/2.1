@@ -1,0 +1,222 @@
+#!/bin/sh
+d.frame -e
+d.erase
+d.frame -c f=abc a=95,99,1,99
+d.frame -s f=abc
+d.text << EOF
+.F romant
+.S 90
+.C green
+                           What is a RASTER based GIS?
+EOF
+d.frame -c f=graph a=1,40,1,40
+d.frame -c f=text a=41,94,1,40
+d.frame -c f=name a=1,5,41,99
+d.frame -c f=map a=6,94,41,99
+d.frame -c f=mapa a=6,35,41,99
+d.frame -c f=mapb a=35,64,41,99
+d.frame -c f=mapc a=64,93,41,99
+d.frame -s f=text
+d.text << EOF
+.F romans
+.S 7
+.C white
+Features:
+*Data stored in a
+ checkerboard fashion.
+EOF
+d.frame -s f=graph
+d.graph << EOF
+color yellow
+polygon
+10 10
+10 40
+20 40
+20 10
+color red
+polygon
+10 50
+30 50
+30 60
+50 60
+50 70
+60 70
+60 80
+40 80
+40 90
+10 90
+color green
+polygon
+10 40
+10 50
+30 50
+30 60
+50 60
+50 70
+90 70
+90 10
+80 10
+80 20
+70 20
+70 30
+30 30
+30 20
+20 20
+20 40
+color violet
+polygon
+40 90
+90 90
+90 70
+60 70
+60 80
+40 80
+40 90
+color blue
+polygon
+80 10
+80 20
+70 20
+70 30
+30 30
+30 20
+20 20
+20 10
+80 10
+# Cross hatch
+color white
+move 10 10
+draw 90 10
+move 10 20
+draw 90 20
+move 10 30
+draw 90 30
+move 10 40
+draw 90 40
+move 10 50
+draw 90 50
+move 10 60
+draw 90 60
+move 10 70
+draw 90 70
+move 10 80
+draw 90 80
+move 10 90
+draw 90 90
+#
+move 10 10
+draw 10 90
+move 20 10
+draw 20 90
+move 30 10
+draw 30 90
+move 40 10
+draw 40 90
+move 50 10
+draw 50 90
+move 60 10
+draw 60 90
+move 70 10
+draw 70 90
+move 80 10
+draw 80 90
+move 90 10
+draw 90 90
+# Identify areas
+size 5 5
+color black
+move 50 50
+text area A
+move 15 75
+text area B
+move 60 85
+text area C
+move 30 20
+text area D
+move 11 20
+text E
+EOF
+
+if ./continue
+then
+	exit 1
+fi
+
+d.frame -s f=text
+d.text << EOF
+.F romans
+.S 7
+.C white
+
+
+
+*Data comes from
+   - hand digitizing
+EOF
+d.frame -s f=mapc
+d.erase red
+d.rast landuse
+
+d.frame -s f=text
+d.text << EOF
+.F romans
+.S 7
+.C white
+
+
+
+
+
+   - satellite and
+     photography
+EOF
+d.frame -s f=mapb
+d.erase white
+d.rast  spot.image
+
+d.frame -s f=text
+d.text << EOF
+.F romans
+.S 7
+
+
+
+
+
+
+
+   - other computers
+EOF
+d.frame -s f=mapa
+d.erase blue
+d.rast elevation.dem
+
+if ./continue
+then
+	exit 1
+fi
+
+d.frame -s f=text
+d.text << EOF
+.F romans
+.S 7
+.C white
+
+
+
+
+
+
+
+
+Map Overlays
+   - e.g. landuse
+     on elevation
+EOF
+
+d.frame -s f=mapa
+d.rast -o landuse
+
+./continue.yes
+
+exit 1

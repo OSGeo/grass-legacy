@@ -1,0 +1,32 @@
+                  DIGITIZER SETTINGS AND CONNECTIONS
+
+Currently, USACERL supports software linking GRASS with the following
+digitizers:
+
+              \ Altek \
+              \ CalComp \
+              \ Kurta \
+                Numonics
+                Geographics
+                Hitachi
+                none    --  (for on-screen digitizing)
+
+Instructions for installing these digitizer device drivers on your system
+is included in the \"GRASS 4.0 Installation Guide"\ distributed with the
+\"GRASS 4.0 User's Reference Manual"\.  Instructions are also on-line in
+individual digitizer directories under $GISBASE/src/mapdev/digitizers.
+
+These instructions detail specific settings and cabling requirements for
+different systems.  These (sometimes lengthy) instructions can be read by
+using the ESC key to select one of the following:  
+
+              \ Altek Settings and Connections \
+              \ CalComp Settings and Connections \
+              \ Kurta Settings and Connections \
+              \ Numonics Settings and Connections \
+              \ Geographics Settings and Connections \
+              \ Hitachi Settings and Connections \
+              \ Null Driver Settings \
+
+The \GRASS Information Center\ at USACERL maintains a partial listing of
+digitizers and other peripherals being used by other GRASS user sites.

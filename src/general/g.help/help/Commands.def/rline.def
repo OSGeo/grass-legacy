@@ -1,0 +1,8 @@
+
+
+r.line - 
+
+r.line creates a new GRASS \vector\ file by extracting linear features
+from a thinned \raster\ file.
+
+Manual entry for \r.line\

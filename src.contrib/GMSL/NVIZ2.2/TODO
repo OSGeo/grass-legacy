@@ -1,0 +1,6 @@
+
+Check out Nv_force_panel in nviz.in
+
+Change to relative paths with $(GISBASE):
+  - configure
+  -> for scripts/config.tcl

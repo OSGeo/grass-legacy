@@ -1,0 +1,9 @@
+local:/tmp/dbmi/driver/informix:informix
+b:/usr/bin/rcmd devon /tmp/dbmi/driver/informix:informix
+devon:/usr/bin/rcmd devon /tmp/dbmi/driver/informix:informix
+diego:/usr/bin/rcmd diego /tmp/dbmi/driver/informix:informix
+max:/usr/bin/rcmd max /tmp/dbmi/driver/informix:informix
+herman:/usr/bin/rcmd herman /tmp/dbmi/driver/informix:informix
+amber:/usr/bin/rcmd amber /tmp/dbmi/driver/informix:informix
+zorro:/usr/bin/rcmd zorro /tmp/dbmi/driver/informix:informix
+ziggy:/usr/bin/rcmd ziggy /tmp/dbmi/driver/informix:informix

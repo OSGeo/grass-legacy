@@ -1,0 +1,16 @@
+This library contains routines called both by client and drivers.
+
+The low level communication is in the xdr*.c files. The routines
+All the xdr*.c files create and destroy and XDRS structure.
+the xdr_destroy() calls fflush() on the FILE * which is necessary
+for the communication along both pipes to work properly.
+
+The client stubs are in c_*.c files.
+
+The driver implementation for any routine, say db_xxxx() is
+to be named db_driver_xxxx().
+
+The drivers must write the db_driver_xxxx()
+For example
+	db_ls()        /* client routine */
+	db_driver_ls() /* driver routine */

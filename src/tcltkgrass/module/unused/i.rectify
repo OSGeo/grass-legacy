@@ -1,0 +1,4 @@
+interface_build {
+    {i.rectify} 1
+    {An imagery function that rectifies an image by computing a coordinate transformation for each cell (pixel) in the image using the transformation coefficient matrix created by the GRASS program i.points.}
+}

@@ -1,0 +1,16 @@
+
+This is the s.surf.rst5.0 version 
+
+latest modification in 11/1999
+by Bill Brown
+
+Nov. 1999: (M. Neteler)
+New structure:
+- moved tree/ data/ interp_float/ to
+  src/libes/rst_gmsl/
+- moved v.surf.rst to src/mapdev/
+- moved r.resamp.rst to src/raster/
+
+Spring 1999: changes which allows you to select 
+which attribute to interpolate and which 
+one to use for smoothing)

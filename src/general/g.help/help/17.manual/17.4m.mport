@@ -1,0 +1,14 @@
+         MANUAL ENTRIES FOR DATA IMPORT AND PROCESSING COMMANDS           
+
+Below is a list of GRASS 5.0 data import and processing commands.
+
+To access information on a command, highlight the command using the
+RETURN key, then press ESC.
+  
+ \m.datum.shift\      \m.dem.examine\      \m.dem.extract\
+ \m.dmaUSGSread\      \m.dted.examine\     \m.dted.extract\
+ \m.examine.tape\     \m.flip\             \m.gc2ll\ 
+ \m.ll2gc\            \m.ll2u\             \m.lulc.USGS\ 
+ \m.lulc.read\        \m.region.ll\        \m.rot90\ 
+ \m.tiger.region\     \m.u2ll\
+

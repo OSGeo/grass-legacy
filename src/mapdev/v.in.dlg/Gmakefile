@@ -1,0 +1,21 @@
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+OFILES = \
+	v.in.dlg.o \
+	doit.o \
+	head_conv.o \
+	rw_bdig.o \
+	r_dlg_head.o \
+	dlg_to_dig.o \
+	pad.o \
+        read_write.o
+
+
+all:  $(BIN_MAIN_CMD)/v.in.dlg
+
+LIBS = $(GISLIB) $(VECTLIB) $(IBTREELIB) $(DIG_ATTLIB)
+
+$(BIN_MAIN_CMD)/v.in.dlg:	$(OFILES) $(LIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBS) $(MATHLIB) $(XDRLIB)
+
+$(LIBS): #

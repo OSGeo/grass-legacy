@@ -1,0 +1,17 @@
+
+environment a
+initialshells:b
+{
+    commandboard b
+       pane:on
+    (
+	toggle Vertical
+	    toggletype:radio
+	    togglestate:"a,b"
+	    orientation:vertical
+	    listelement:a
+	    listelement:b
+	    listelement:c
+	    ;
+    )
+}

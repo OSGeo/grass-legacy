@@ -1,0 +1,4 @@
+
+@man("v.clean") - Cleans out dead lines in GRASS vector files.
+
+(GRASS Vector Program)

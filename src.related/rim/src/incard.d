@@ -1,0 +1,8 @@
+C
+C  *** / I N C A R D / ***
+C
+C  ONE CARD OF INPUT
+C
+      COMMON /INCARD/ INCARD
+      CHARACTER*160 INCARD
+C

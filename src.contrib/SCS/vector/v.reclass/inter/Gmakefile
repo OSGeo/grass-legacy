@@ -1,0 +1,4 @@
+$(BIN_CONTRIB_INTER)/v.reclass: main.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(TERMLIB) $(MATHLIB)
+
+$(GISLIB): #

@@ -1,0 +1,15 @@
+
+
+v.import - 
+
+v.import is an \interactive\ program which runs other \vector\ import
+programs.  It allows the user to import \DLG\ or ASCII vector files and
+ASCII vector files into binary vector files.  It also creates two
+support files, the 'dig_plus' file and the 'dig_att' file (only created
+when importing DLG files).  The 'dig_plus' file contains topological
+information obtained by analyzing the vector file.  The 'dig-att' file
+contains \category\ (attribute) information files by the labeling
+function of the GRASS \v.digit\ program.  All of the above files must
+be run through v.import before they can be used in the v.digit program.
+
+Manual entry for \v.import\

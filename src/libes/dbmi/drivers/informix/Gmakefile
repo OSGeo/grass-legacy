@@ -1,0 +1,53 @@
+# note INFORMIXDIR is obtained from the Unix env. If make
+# doesn't support this, then it will have to be added to
+# the CMD/head file.
+
+
+#HOME=$(DBMIDIR)/driver
+HOME=/tmp/dbmi/driver
+
+EXTRA_CFLAGS = -I$(INFORMIXDIR)/incl/esql
+
+.SUFFIXES: .ec
+.ec.c:
+	rm -f $@; esql -e $?
+
+# STUBLIB = ../libstubs.a
+
+LIB = ../../lib/libdbmi.a $(STUBLIB)
+
+OBJ = main.o	\
+	close_cur.o	\
+	column.o	\
+	connect.o	\
+	cursor.o	\
+	database.o	\
+	delete.o	\
+	descriptor.o	\
+	describe.o	\
+	engine.o	\
+	execute.o	\
+	fetch.o		\
+	finddb.o	\
+	insert.o	\
+	listdb.o	\
+	listtab.o	\
+	index.o		\
+	open_ins.o	\
+	open_sel.o	\
+	open_upd.o	\
+	path.o		\
+	sql_eof.o	\
+	sql_error.o	\
+	table.o		\
+	tbname.o	\
+	update.o
+
+$(HOME)/informix: $(HOME) $(OBJ) $(LIB)
+	esql $(LDFLAGS) -o $@ $(OBJ) $(LIB) $(XDRLIB)
+
+$(HOME):
+	-mkdir -p $(HOME)
+
+$(OBJ): $(INCLUDE_DIR)/dbmi.h globals.h
+$(LIB): #

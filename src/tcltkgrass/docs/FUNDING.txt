@@ -1,0 +1,50 @@
+TCLTKGRASS
+An open graphical user interface for GRASS
+
+written in 1999 by Jacques Bouchard, France
+<bouchard@onera.fr>
+
+for
+
+GRASS Research Group
+Baylor University, Texas
+www.baylor.edu/~grass/
+
+Please send your comments to:
+
+Markus Neteler
+<neteler@geog.uni-hannover.de>
+
+or
+
+Jacques Bouchard
+<bouchard@onera.fr>
+
+-----
+
+The software is inspired by TCL/TK GRASS
+developed in 1994 by
+
+L.A.S.
+Logiciels et Applications Scientifiques Inc.
+Montreal, Canada
+tel.: (514) 858-1104
+fax: (514) 389-9373
+email: gc@copernic.lasinc.qc.ca
+
+funding for the basic development of this interface till 1994:
+
+Hydro-Quebec 
+Vice-presidence Environnement
+Montreal, Canada
+scientific authority: Laurent Girouard and Guy Moisan
+
+National Defense Canada
+Defense Research Establishment Valcartier
+Courcelette, Canada
+scientific authority: Marc Parenteau and Dominic Roy
+
+Natural Resources Canada
+Petawawa National Forestry Institute
+Chalk River, Canada
+scientific authority: Thomas Moore

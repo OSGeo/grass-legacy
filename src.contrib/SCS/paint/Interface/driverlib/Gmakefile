@@ -1,0 +1,11 @@
+EXTRA_CFLAGS=-I..
+
+OBJ = interface.o io.o colors.o
+
+lib.a: $(OBJ)
+	$(AR)
+$(OBJ): ../interface.h
+
+try: try.o colors.o
+	cc try.o colors.o
+	mv a.out $@

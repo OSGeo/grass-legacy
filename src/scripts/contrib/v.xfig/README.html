@@ -1,0 +1,45 @@
+<html>
+Map creation:<p>
+
+Vector/raster maps can be easily draw with 
+ <A HREF="http://www-epb.lbl.gov/xfig/"> xfig</A>, a freeware drawing 
+program for X-Windows environment. 
+Xfig allows saving the maps in image formats or Postscript.
+Luckily it can handle BIG raster maps. You can define the paper size and
+the current version offers a "scale window" to tell you the <b>line lengths in
+ground coordinates</b> (e.g. line length in meters) while drawing. This is very
+helpful for creating the coordinate system map borders and for measurement.<br>
+The following conversion scripts were written by <A HREF=mailto:bouchard@onera.fr>Jacques Bouchard</a>:<p>
+ <ul>
+  <li> Import <b>GRASS raster maps</b> into xfig: GRASS raster maps can be 
+        imported into xfig in GIF-format 
+        (convert with "xv" or "netpbm"-tools before). For 3D-high resolution
+        output we recommend the <A HREF=admin/d.3d_CELL.html>CELL driver</a>
+        (when you want to make prints of <A
+        HREF=gdp/html_421/html/d.3d.html>d.3d</a>).
+  <li> <b>GRASS vector maps</b> have to be converted by following script to the 
+        xfig-format (use inside GRASS):
+  <ul>
+  <li> Import GRASS vector maps into xfig: Export your GRASS binary vector map 
+       to GRASS ascii vector 
+       map with <A HREF=gdp/html_421/html/v.out.ascii.html>v.out.ascii</a>, get 
+       the file from
+       $LOCATION/dig_ascii and  convert it to 
+       xfig format with:  <A HREF=related/fig/grass2fig>grass2fig</a> (26.1.99).
+        You may configure the script for your convenience (see configuration
+        part within the script).
+  <li> Export xfig vector maps to GRASS: Convert the xfig map to GRASS ASCII 
+       vector format with
+       <A HREF=related/fig/fig2grass>fig2grass</a> (26.1.99), store it in 
+        $LOCATION/dig_ascii and use 
+        <A HREF=gdp/html_421/html/v.in.ascii.html>v.in.ascii</a> to import it 
+        into GRASS.
+       You may configure the script for your convenience (see configuration
+        part within the script).
+ </ul> 
+</ul>
+</dl>
+<p>
+<A HREF="mailto:neteler@geog.uni-hannover.de">Markus Neteler</A> (26. Jan. 1999)</ADDRESS>
+</body>
+</html>

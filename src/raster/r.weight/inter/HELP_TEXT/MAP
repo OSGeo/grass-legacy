@@ -1,0 +1,10 @@
+
+------------------------------------------------------------------
+KEYWORD: maps
+    "maps" refers to the map layers available in your current
+    geographic location.
+
+EXAMPLE:
+    list maps
+------------------------------------------------------------------
+

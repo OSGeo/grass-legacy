@@ -1,0 +1,13 @@
+System requirement for HDF3.2 release 3 on IBM PC:
+
+    . MS DOS v3.3 or higher
+    . 640 KB or more of memory size
+    . MS C Compiler v7.0
+    . MS Fortran Compiler v5.1 (option)
+    . MS Windows v3.0 or 3.1   (option)
+
+To install HDF3.2r3 library on IBMPC, users may use the makepc.msc
+in the subdirectory src/.     
+
+
+

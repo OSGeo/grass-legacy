@@ -1,0 +1,4 @@
+interface_build {
+    {i.ortho.photo} 1
+    {An interactive imagery function for the ortho-rectification of imagery group files.}
+}

@@ -1,0 +1,16 @@
+                  MAP DISPLAY REPORTING FUNCTIONS
+
+The GRASS functions listed below report information about map layers
+that are displayed in the current frame on the user's graphics monitor.
+Some of these functions use the map layer displayed merely as a frame of
+reference, and allow the user to query the contents of other maps in his
+search path at a user-cited coordinate location.
+
+       \-  d.geodesic \                  \-  d.histogram \ 
+       \-  d.measure \                   \-  d.rhumbline \
+       \-  d.rast.arrow \                \-  d.rast.num \
+       \-  d.what.rast \                 \-  d.what.vect \
+       \-  d.where \                     \-  d.ask \
+
+For more information on a specific command, select a command and press
+ESC.

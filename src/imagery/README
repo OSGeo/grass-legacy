@@ -1,0 +1,111 @@
+Nov 1993/Oct 1999/Dec. 1999
+
+# 12/99: moved "image3/" to src/libes/
+
+------------------
+# 10/99: the supplemental library "libe/" renamed to "image3/"
+         and updated related Gmakefiles.
+
+------------------
+This is the ALPHA source for three programs:
+i.points3      - modified i.points program
+i.rectify3     - modified i.rectify program
+i.tape.tm3     - modified i.tape.tm program.
+
+The nroff manual pages can be found in man/man1 and the processed man pages
+under man/cat1. 
+
+The TODO file contains a general list of thing to be finished or modified.
+
+All three programs require the library routines $(IMAGERYLIB_SUP) which
+are built from the source under image3/.
+
+To compile, just run gmake5.x from the top most directory (i.e. where you
+found this README file).  The source has been compiled successfully on 
+SUN Sparc2 (SUN O/S 4.1.2) and SGI IRIS4/D (IRIX 4.something) and Linux.
+
+These programs have not yet been tested on other machines or O/Ss, and 
+have only been tested with very limited data.  
+
+These programs are NOT guarenteed
+to be bug-free, but should at present provide some users with improved 
+performance over the existing programs.
+
+
+-------------------------------------------------------------------------------
+I.TAPE.TM3
+  i.tape.tm3 is intended to replace both i.tape.tm and i.tape.tm.fast
+i.tape.tm3 can distinquish between FULL SCEEN, QUAD SCEEN, and FAST-FORMAT
+LANDSAT Thematic Mapper data sets.  i.tape.tm3 can be used with tape devices
+(1/4 inch, 8-mm, and 9-track) as well as data stored on a filesystem in 
+normal (or linked)  UNIX files.
+
+  i.tape.tm3 provides similary capabilities to the original programs.  You
+can examine the data set, extract selected TM bands, and extract the full
+image or a windowed sub-set of the image.
+
+  i.tape.tm3 has also be enhanced to extract CONTROL-POINT data from the
+data set to be used with the i.points3 and i.rectify3 programs.  At present
+the extracted control point data does not work for FAST-FORMAT Landsat data
+sets.  
+
+  This program is probally not as portable as it should be.  It need to 
+be tested with different LANDSAT formats on a variety of media.
+
+
+
+-------------------------------------------------------------------------------
+I.POINTS3
+  i.points3 is intended to be a more generic program used to mark control
+points used in the image rectification process.  It looks and works much
+like the original i.points program as well as i.vpoints.
+
+  i.points3 can be used for POLYNOMAIAL, ORTHO-PHOTO, or LANDSAT-TM 
+transfromations.   Polynomial transformation can be 1rst order like 
+the original i.points program, or 2nd or 3rd order (like i.vpoints).
+
+  The ORTHO-PHOTO transformation can be used along with an elevation model
+to rectify and remove relief displacements in aerial photography.  This 
+transformation preforms the same manipulations as the earlier program 
+i.ortho.photo. 
+
+  The LANDSAT-TM transformation is to be used with Thematic Mapper data
+extracted by i.tape.tm3.  This transformation can be used with an elevation
+model to remove relief displacement much like the ORTHO-PHOTO transformation.
+
+  You can switch among the transformations using the same set of control
+points.  However additional (auxillary) data may be required for the ORTHO-
+PHOTO and LANDSAT-TM transformations.
+
+  i.points3 alows you to display both raster and vector files in the 
+target location from which control points can be selected.  You can 
+also preform an "overlay" and "grid" routine to visually examine how
+well the transformation will proceed without haveing to run the i.rectify
+program.
+
+  Currently the POLYNOMIAL transformation works very well.  The ORTHO-PHOTO
+and LANDSAT-TM transformation work (for me) but have not been tested with
+a lot of data or by other people. 
+
+
+-------------------------------------------------------------------------------
+I.RECTIFY3
+  i.rectify3 is also intended as a more generic program than the original 
+i.rectify program.  It works with the control point data and auxillary
+information collected by i.points3.
+
+  i.rectify3 can use the POLYNOMIAL, ORTHO-PHOTO, or LANDSAT-TM transfromations
+discussed in i.points3.
+
+  There should be not difference using the POLYNOMIAL transfromation in 
+i.rectify3 from the earlier i.rectify or i.rectify2 programs.
+
+  The ORTHO-PHOTO transformation provides a more detailed transfromation
+than the earlier i.ortho.photo.  The LANDSAT-TM transformation is new to GRASS. 
+
+  Currently the POLYNOMIAL transformation works very well.  The ORTHO-PHOTO
+and LANDSAT-TM transformation work (for me) but have not been tested with
+a lot of data or by other people. 
+
+
+
