@@ -9,13 +9,13 @@ G_open_support_old (element, name, mapset)
     char *mapset ;
 {
     char support[500];
-    char rname[256], rmapset[256];
+    char xname[512], xmapset[512];
 
-    if (G__name_in_mapset (name, rname, rmapset))
+    if (G__name_is_fully_qualified (name, xname, xmapset))
     {
-	if (strcmp (rmapset, mapset) != 0)
+	if (strcmp (xmapset, mapset) != 0)
 	    return -1;
-	name = rname;
+	name = xname;
     }
 
 /* look first in G_mapset()/support/element/mapset/name */
@@ -53,13 +53,13 @@ G_open_support_new (element, name, mapset)
     char *mapset ;
 {
     char support[500];
-    char rname[256], rmapset[256];
+    char xname[512], xmapset[512];
 
-    if (G__name_in_mapset (name, rname, rmapset))
+    if (G__name_is_fully_qualified (name, xname, xmapset))
     {
-	if (strcmp (rmapset, mapset) != 0)
+	if (strcmp (xmapset, mapset) != 0)
 	    return -1;
-	name = rname;
+	name = xname;
     }
 
 /* if mapset isn't current mapset, put into support */
