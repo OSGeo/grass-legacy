@@ -1,0 +1,202 @@
+
+
+                                   APPENDIX I                    1
+                              GRASS-MAPGEN User's Guide
+            make.mapdef                                     make.mapdef
+            
+            
+            NAME 
+            make.mapdef - Sets up the definition parameters for the map
+            composition.
+            
+            SYNOPSIS
+            make.mapdef [filename] 
+            
+            DESCRIPTION 
+            make.mapdef uses the users current GRASS window to establish 
+            the parameters for the map composition through a map
+            definition file.  The definition file identifies the scale
+            of the data to be shown and the position of the data in
+            relation to the white space on the plot (i.e. margins).
+            These positional relationships are identified as a data (d)
+            window and a map plotting (p) window.  Since MAPGEN uses
+            only coordinates in latitude/longitude (L/L) values, GRASS
+            window values are converted to L/L during this process.
+            
+            For ease in operation, make a single map definition for each
+            map; numerous maps can be plotted on the same paper at
+            different locations and in different scales.  More than one
+            map definition, however, can be developed for one map
+            composition.  For instance, a state base map which shows a
+            location map may be developed as two separate maps plotted
+            on the same paper, or it could be developed as one map
+            containing two separate map definitions.  If given,
+            [filename] is used for the name of the definition file
+            generated.  Multiple map definition files may be generated
+            for the map composition by using unique file names (e.g.
+            map.def, map.def2).
+            
+            The user is required to provide the following:
+            
+                 - map definition file name (if not specified on the
+                      command line)
+                 - denominator for data scale
+                 - margins around the data
+                 - parameters for the output map projection (if
+                      necessary)
+            
+            Developing the map definition file is the major phase in
+            constructing the map composition because all commands use a
+            map definition file.  In the GRASS-MAPGEN Interface, and in
+            the USGS version of MAPGEN, the map composition is separated
+            and identified as two windows: 1) a data window that 
+            replicates the extent of the geographic data coordinates
+            (i.e. set by the GRASS window) and 2) a plot window (i.e. 
+            called map size in the verbose readout of the map
+            definition) that includes the marginal space around the data 
+
+                                   APPENDIX I                    2
+                              GRASS-MAPGEN User's Guide
+            make.mapdef                                     make.mapdef
+
+
+
+            window.  Prior planning (i.e. a pencilled sketch) of the map
+            composition layout is, therefore, advisable before executing
+            the make.mapdef command.  (See paper size in APPENDIX I-A 
+            for an addition discussion regarding the map layout.)
+            
+            The user may repeat the make.mapdef command numerous times, 
+            writing over the earlier version, to precisely define the
+            map layout.  Changing the map definition after any or all
+            map layers are produced negates existing layers due to the
+            revised map definition.  The all option of the redo command
+            will reconstruct them based on the new definition.
+            
+            Completing the response sequence generates the required
+            files to construct the map definition.  Definition
+            parameters are stored in the [filename].par file. 
+            
+            Changing the parameters of the map definition (e.g. scale,
+            margins, window, etc.) can also be done by editing the
+            parameter file, and using the redo.mapdef or redo commands.
+            
+                 (edit) example:       vi [filename].par 
+                                       vi map.def.par  
+            
+            For optimum efficiency in using the MAPGEN interface,
+            finalize the layout plan (i.e. the map definition) before
+            proceeding with the development of any additional map
+            layers.
+            
+            Information entered through the interactive make.mapdef 
+            command has been reformatted to meet the requirements of the
+            MAPGEN command mapdef, prefacing the element characteristics
+            with options for the mapdef command.  All options available 
+            in the mapdef command are available for use in the GRASS- 
+            MAPGEN Interface.  Commonly used mapdef options associated
+            with making the interface map definition(s) are:
+                 
+              Line 1:
+                 W-Long E-Long S-Lat N-Lat [Central Meridian]
+              Line 2:
+                 +proj=name [+projarg=value]
+              Line 3:
+                 [scale]
+              Line 4:           # degrees of counterclockwise rotation
+                 [angle]          of the data window
+              Line 5:
+                 [left margin] [bottom margin]
+              Line 6:
+                 [right margin] [top margin]
+
+                                   APPENDIX I                    3
+                              GRASS-MAPGEN User's Guide
+            make.mapdef                                     make.mapdef
+
+
+            EXAMPLE 1
+            The file map.def.par for the map named "gf.newwildlife"
+            reflects the values for one 7-1/2 minute topographic
+            quadrangle of data established for the Caldwell (location)
+            granite.falls (mapset).  The map is designed to plot at
+            1:48,000 scale, on C size paper.  The data will be
+            positioned 2 cm in x and 2.54 cm in y away from the lower
+            left corner of the plotting area, leaving 20.32 cm in x and
+            2 cm in y white space beyond the upper right corner of the
+            data window.
+            
+                 -81d30'38.461"w -81d21'49.806"w 35d44'21.645"n
+                      (wrap) 35d52'33.099"n
+                 +proj=utm
+                 48000
+            
+                 2 2.54
+                 20.32 2
+            
+            EXAMPLE 2
+            The file map.def.par for the map named "soilsquad" reflects
+            the values for one 7-1/2 minute topographic quadrangle of
+            data established for the Caldwell (location) granite.falls
+            (mapset). The map is designed to plot at 1:24,000 scale, on
+            D size paper.  The data will be positioned 1.3 cm in x and 7
+            cm in y away from the lower left corner of the plotting
+            area, leaving 1 cm in x and 3.5 cm in y white space beyond
+            the upper right corner of the data window.  The GRASS window
+            has been trimmed to extend only .0001 degrees beyond the
+            quadrangle unit so that sufficient room will be left for
+            grid annotation and still fit within C size paper.  The
+            0.250 entry (line 4) corrects for the tilt of the UTM
+            projection to align the data vertically.
+            
+                 81.50010dw 81.37490dw 35.74990dn 35.87510dn
+                 +proj=utm
+                 24000
+                 0.250
+                 1.3 7
+                 1 3.5
+            
+            The following is an example of the verbose information
+            produced by executing the make.mapdef command:
+            
+                 Mapgen - mapdef file initialization (Ver: III (1/26/89)
+                    file name: map.def
+            
+                 projection: +proj=utm + long_0=-81.437500000000
+                 longitude range: 81d30'0.36"w 81d22'29.64"w
+                  latitude range: 35d44'59.64"n 35d52'30.36"n
+                 scale 1 : 24000.0
+
+                                   APPENDIX I                    4
+                              GRASS-MAPGEN User's Guide
+            make.mapdef                                     make.mapdef
+
+
+
+                 map size x: 49.47, y: 68.37
+                 data window x from 1.30 to 48.47, y from 7.00 to 64.87
+                 plotter counts/cm: 400.00
+            
+                  Mapset <granite.falls> in Location <Caldwell> in MAP
+                    <soilsquad>
+            
+            NOTE 
+            If only one map will be drawn on the map composition, the
+            default selection for the map definition is recommended for
+            use.
+            
+            The delete key will abort the make.mapdef command.
+            
+            SEE ALSO            
+                 mapdef         User Manual for MAPGEN (UNIX Version),
+                                USGS, p. 11.
+                 TASK 2         GRASS-MAPGEN User's Guide, USDA-SCS.
+                 redo           GRASS-MAPGEN User's Guide, APPENDIX I,
+                                USDA-SCS.
+                 redo.mapdef    (Same)
+                 paper size     (Same, APPENDIX I-A)
+                 window         GRASS User's Manual, CERL. 
+            
+            AUTHOR 
+            Marty Holko, Computer Systems Analyst, Cartography and
+            Geographic Information Systems Division, USDA, Soil
