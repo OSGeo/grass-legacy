@@ -20,10 +20,10 @@ from user-specified input raster map layers.
 <BR>
 <B>d.his help</B> 
 <BR>
-<B>d.his h_map=</B><EM>name</EM>
+<B>d.his</B> [<B>-o</B>] <B>h_map=</B><EM>name</EM>
 [<B>i_map=</B><EM>name</EM>] 
 [<B>s_map=</B><EM>name</EM>] 
-[<B>out=</B><EM>name</EM>] 
+[<B>output=</B><EM>name</EM>] 
 
 <H2>DESCRIPTION</H2>
 
@@ -54,7 +54,7 @@ specifies on the command line the name of a map containing
 hue values (<B>h_map</B>), and the name(s) of map(s)
 containing intensity values (<B>i_map</B>) and/or
 saturation values (<B>s_map</B>).  If the user also names
-an output map (<B>out</B>) on the command line, the
+an output map (<B>output</B>) on the command line, the
 combined hue, saturation, and intensity values will be
 saved as a raster map layer in the user's current mapset;
 otherwise, the resulting image will only be displayed in
@@ -69,6 +69,16 @@ user for parameter values using the standard GRASS
 <A HREF="parser.html">parser</A> interface.
 
 <P>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-o</B>
+
+<DD>Overwrite output map.
+
+</DL>
 
 <H3>Parameters:</H3>
 
@@ -86,7 +96,7 @@ user for parameter values using the standard GRASS
 
 <DD>Name of input raster map layer to be used for SATURATION values. 
 
-<DT><B>out=</B><EM>name</EM>
+<DT><B>output=</B><EM>name</EM>
 
 <DD>Name of the output raster map layer combining hue,
     intensity, and saturation values from input layers.
