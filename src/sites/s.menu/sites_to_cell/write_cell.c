@@ -1,10 +1,12 @@
 #include "gis.h"
 write_cell (fd, window, north, east, quad_size, cat)
+    int fd;
     struct Cell_head *window;
+    double north, east;
+    int quad_size;
     CELL cat;
 {
     CELL cell;
-    int count;
     int row;
     int col;
     int startrow, endrow;
@@ -17,7 +19,7 @@ write_cell (fd, window, north, east, quad_size, cat)
     col = (int) easting_to_col (east, window);
 
 #ifdef DEBUG
-printf("point N %d E %d at row %d col %d (cat %ld) - ", north, east, row, col, 
+printf("point N %lf E %lf at row %d col %d (cat %ld) - ", north, east, row, col, 
  (long) cat);
 hitreturn();
 #endif DEBUG
