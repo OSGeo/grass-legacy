@@ -1,0 +1,14 @@
+Proj: 3
+Zone: 0
+North: 90N
+South: 90S
+East: 180E
+West: 180W
+Top: 1
+Bottom: 0
+nofRows: 180
+nofCols: 360
+nofDepths: 1
+e-w resol: 1
+n-s resol: 1
+t-b resol: 1

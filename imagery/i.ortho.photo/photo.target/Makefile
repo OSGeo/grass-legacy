@@ -11,5 +11,5 @@ include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: etc
 
-htmletc:
-	@echo no docs needed for $(PGM)
+htmletc1:
+	@echo No docs needed for $(PGM)

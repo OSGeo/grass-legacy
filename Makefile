@@ -71,7 +71,7 @@ BIN_DIST_FILES = $(FILES) \
 	scripts \
 	tcltkgrass
 
-default:
+default: builddemolocation
 	@echo "GRASS GIS compilation log"     > $(GRASS_HOME)/error.log
 	@echo "-------------------------"    >> $(GRASS_HOME)/error.log
 	@echo "Started compilation: `date`"  >> $(GRASS_HOME)/error.log
@@ -315,3 +315,15 @@ changelog:
 	@ # cvs2cl.pl creates a GNU style ChangeLog file:
 	@ # http://www.red-bean.com/cvs2cl
 	GRASS_PERL=${PERL} sh tools/cvs2cl.pl -f ./ChangeLog
+
+
+GISRCFILE = ${ARCH_DISTDIR}/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}
+
+builddemolocation:
+	@ cp -rpf demolocation/ ${ARCH_DISTDIR}/
+	@ echo "GISDBASE: ${ARCH_DISTDIR}" > ${GISRCFILE}
+	@ echo "LOCATION_NAME: demolocation" >> ${GISRCFILE}
+	@ echo "MAPSET: PERMANENT" >> ${GISRCFILE}
+	@ echo "GRASS_DB_ENCODING: utf-8" >> ${GISRCFILE}
+	@ echo "DEBUG: 0" >> ${GISRCFILE}
+	@ echo "GRASS_GUI: text" >> ${GISRCFILE}

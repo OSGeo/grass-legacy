@@ -34,8 +34,6 @@ $(OBJDIR)/%.o : %.c $(DEPENDENCIES) $(LOCAL_HEADERS)
 clean:
 	-rm -rf $(OBJDIR) $(EXTRA_CLEAN_DIRS) $(EXTRA_CLEAN_FILES)
 
-#below is a dirty hack (feel free to rewrite):
-
 # generic html rules for all commands
 htmlgen:
 	@if test -f $(PGM).html ; then \
@@ -51,7 +49,7 @@ htmlgen:
 	-$(INSTALL) *.png *.jpg $(GISBASE)/docs/html 2> /dev/null ; true
 
 htmldesc = \
-	GRASS_FAKE_START=1 \
+	GISRC=$(GISBASE)/demolocation/.grassrc${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR} \
 	GISBASE=$(GISBASE) \
 	PATH=$(GISBASE)/bin:$$PATH \
 	$(LD_LIBRARY_PATH_VAR)="$($(LD_LIBRARY_PATH_VAR)):$(GISBASE)/lib" \
