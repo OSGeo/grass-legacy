@@ -23,6 +23,7 @@
 <BR>
 <B>v.llabel</B> [<B>-in</B>] <B>map=</B><EM>name</EM> 
 [<B>type=</B><EM>name</EM>] [<B>value=</B><EM>value</EM>]
+[<B>label=</B><EM>value</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -59,7 +60,8 @@ after labelling so that the changes will be made evident.
 
 builds GRASS support files for (binary) GRASS vector
 data files.  These support files supply topology (<EM>dig_plus</EM>)
-and category (<EM>dig_att</EM>) information that are needed by other GRASS
+and category (<EM>dig_att</EM>, <EM>dig_cats</EM>) information that
+are needed by other GRASS
 programs 
 (e.g., by <EM><A HREF="v.digit.html">v.digit</A></EM>,
 <EM><A HREF="v.to.rast.html">v.to.rast</A></EM>, etc.).
@@ -72,7 +74,7 @@ Program parameters and flags have the following meanings.
 
 <DL>
 <DT><B>-i</B> 
-<DD>Label lines incrementally.  For each unique, unlabeled line in the
+<DD>Label incrementally.  For each unique, unlabeled line or point in the
 vector file, increment the category value by one, starting from the
 initial default or user-assigned <EM>value</EM>.
 
@@ -97,22 +99,27 @@ immediately.
 lines are to be labelled.  This map layer must exist in the
 user's current GRASS mapset.
 
-<DT><B>type=name</B>
+<DT><B>type=</B><EM>name</EM>
 <DD>Select type of primitives to be labeled.
-<DD>Options: point, line, both
+<BR>Options: point, line, both
 <BR>
 Default:  line
-</DL>
 
 <DT><B>value=</B><EM>value</EM> 
-<DD>The category value to be assigned to all unlabeled lines in the
+<DD>The category value to be assigned to all unlabeled points or lines in the
 vector map layer.  If the <EM>-i</EM> flag is set, <EM>v.llabel</EM>
 will increment the initial <EM>value</EM> by one for each unique unlabeled
-polygon in the vector map.
+point or line in the vector map.
 
 <BR>
 
 Default:  1
+
+<DT><B>label=</B><EM>value</EM>
+<DD>The category label to assign to all unlabeled points or lines in
+the vector map layer.  If unspecified, all added categories will be
+given an empty label the the <EM>dig_cats</EM> file.
+
 </DL>
 
 The user can run this program non-interactively by specifying parameter
