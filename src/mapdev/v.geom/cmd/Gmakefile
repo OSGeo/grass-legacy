@@ -1,9 +1,8 @@
-# $Id: Gmakefile,v 1.5 2000-09-11 09:47:34 justin Exp $
+# $Id: Gmakefile,v 1.6 2000-11-28 09:18:25 andreas Exp $
 
 EXTRA_CFLAGS	=  -I$(SRC)/include/geom
 
-TRIANGLIB = $(SRC)/libes/liboptri.a $(SRC)/libes/libsos.a $(SRC)/libes/liblia.a $(SRC)/libes/libbasic.a \
-	$(LIB_MALLOC)
+TRIANGLIB = $(SRC)/libes/liboptri.a $(SRC)/libes/libsos.a $(SRC)/libes/liblia.a $(SRC)/libes/libbasic.a
 
 LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(TRIANGLIB)
 
@@ -18,12 +17,16 @@ PROG =   $(BIN_CONTRIB_CMD)/v.geom
 all:  $(PROG)
 
 # SGI machines need to include a -lmalloc for SGI specific code
+# no longer needed, because removed in libgeom/basic (al 11/2000)
+#$(PROG): $(OBJ) $(LIBES)
+#	if [ "`echo $(ARCH) | grep -i sgi`" = "" ] ;\
+#	then \
+#	    $(CC) $(EXTRA_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB) ;\
+#	else \
+#	    $(CC) $(EXTRA_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) -lmalloc $(MATHLIB) $(XDRLIB) ;\
+#	fi
+
 $(PROG): $(OBJ) $(LIBES)
-	if [ "`echo $(ARCH) | grep -i sgi`" = "" ] ;\
-	then \
-	    $(CC) $(EXTRA_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB) ;\
-	else \
-	    $(CC) $(EXTRA_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) -lmalloc $(MATHLIB) $(XDRLIB) ;\
-	fi
+	$(CC) $(EXTRA_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
