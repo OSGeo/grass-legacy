@@ -1,6 +1,5 @@
-#include <X11/Xos.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+#include "includes.h"
+
 /* Using mouse device, get a new screen coordinate and button number.
  * Button numbers must be the following values which correspond to the
  * following software meanings: 1 - left button 2 - middle button 3 -
