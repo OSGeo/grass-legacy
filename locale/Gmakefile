@@ -12,7 +12,7 @@ LOC_DIR = $(GISBASE)/locale
 MSGFMT = msgfmt
 LOCALES = ru
 
-all: mofiles tcltkgrass
+all: mofiles tcltkgrass textintro
 
 mofiles:
 	@test -d $(LOC_DIR) || mkdir $(LOC_DIR)
@@ -46,5 +46,13 @@ tcltkgrass:
 	        test -d $$h && continue; \
 	        test -d $(GISBASE)/tcltkgrass/module && cp $$h $(GISBASE)/tcltkgrass/module; \
 	    done); \
+	done
+
+textintro:
+	for LCL in $(LOCALES) ; do \
+		test -f $$LCL/init.sh && test -f $(SRC)/general/init/version.sed && cd $$LCL/; \
+sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" init.sh > $(GISBASE)/etc/Init.sh; \
+		test -f $$LCL/grass_intro.txt && test -f $(SRC)/general/init/version.sed && cd $$LCL/; \
+sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" grass_intro.txt > $(GISBASE)/etc/grass_intro; \
 	done
 
