@@ -1,0 +1,117 @@
+#!/bin/sh
+# EDIT the next line to reflect the placement of GRASS in your system.
+
+GIS=/home/grass3.1
+
+# DO NOT EDIT BELOW THIS LINE
+##########################################################################
+
+base=$GIS/src
+gmake="nice $base/CMD/Gmake"
+
+# Make sure directories exist
+umask 0
+for i in \
+    bin \
+    man man/help man/1 man/2 man/3 man/4 man/5 \
+    etc etc/paint etc/paint/driver etc/paint/driver.sh etc/sites \
+    etc/dig_drivers etc/imagery \
+    txt txt/COMBINE txt/DIGIT txt/WEIGHT txt/MONITOR \
+    driver locks dev
+do
+    if test ! -d $GIS/$i
+    then
+	mkdir $GIS/$i
+	echo $GIS/$i created
+    fi
+    chmod u+rwx $GIS/$i
+    chmod go+rx $GIS/$i
+done
+chmod ugo+rwx $GIS/locks
+umask 022
+
+cd $base/CMD
+
+# create fifo files for graphics drivers
+for i in 1a 1b 2a 2b 3a 3b 4a 4b 5a 5b 6a 6b
+do
+    if test ! -f $GIS/dev/fifo.$i
+    then
+	/etc/mknod $GIS/dev/fifo.$i p
+	chmod 0666 $GIS/dev/fifo.$i
+	echo $GIS/dev/fifo.$i created
+    fi
+done
+
+
+# determine where to start and what's left to do
+case $# in
+0)
+    if test -f next_step
+    then
+	STEP=`cat next_step`
+    else
+	STEP=`awk '{print $0;exit}' list`
+    fi
+    echo first step: $STEP
+
+    cat list > .list.full
+    if test -f list.local
+    then
+	cat list.local >> .list.full
+    fi
+    echo DONE >> .list.full
+
+    rm -f .list
+    rm -f .list.awk
+    echo "a == 1 { print \$0 ; next }" > .list.awk
+    echo "\$0 == \"$STEP\" { a = 1; print \$0 }" >> .list.awk
+    awk -f .list.awk .list.full > .list
+    rm -f .list.awk .list.full
+
+    STEPS=`cat .list`
+    rm -f .list
+    set $STEPS
+    ;;
+*)
+    single=1
+    ;;
+esac
+
+for i
+do
+    cd $base
+    echo ""
+    echo GISGEN: $i - `date`
+    echo ""
+    bailout=0
+    if test "$single" != 1
+    then
+	echo $i > $base/CMD/next_step
+    fi
+
+    case $i in
+    DONE)
+	echo DONE generating GIS binary code
+	exit
+	;;
+
+    *)
+	$gmake $i
+	case $? in
+	0) ;;
+	*) bailout=1 ;;
+	esac
+	;;
+    esac
+
+    case $bailout in
+    1)
+	echo $bailout
+	echo GISGEN failure at STEP: $i
+	exit
+	;;
+    *) ;;
+    esac
+
+done
