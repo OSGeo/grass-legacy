@@ -12,4 +12,4 @@ y.tab.c: pol.y lex.yy.c
 	$(YACC) pol.y
 
 lex.yy.c: pol.l
-	$(LEX) pol.l
+	$(LEX) -t pol.l > $@
