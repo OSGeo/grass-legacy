@@ -33,15 +33,8 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
 
     /* TODO: handle error messages */
 
-    if (NULL == (mapset = G_find_vector2(grassname,""))) {
-	fprintf(stderr,"Can't find vector file %s.\n",grassname);
-	return(NULL);
-    }
-
-    if (1 > Vect_open_old (&map, grassname, mapset)) {
-	fprintf(stderr,"Can't open vector file %s.\n",grassname);
-	return(NULL);
-    }
+    Vect_set_open_level (2); 
+    Vect_open_old (&map, grassname, "");
     
     if (NULL == (top=gln=(geoline *)malloc(sizeof(geoline)))) {
 	fprintf(stderr,"Can't malloc.\n");
