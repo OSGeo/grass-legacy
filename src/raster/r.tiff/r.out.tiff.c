@@ -115,9 +115,13 @@ main (int argc, char *argv[])
 		fprintf(stderr, "%s - can't read raster cellhd\n", inopt->answer);
 		exit(1);
 	}
-	if ((G_get_window(&cellhd) < 0))
+	if ((G_set_window(&cellhd) < 0))
 		G_fatal_error("Can't set window");
 	G_read_colors(inopt->answer, mapset, &colors);
+	G_set_null_value_color (255, 255, 255, &colors);
+	if (pflag->answer && (colors.cmax - colors.cmin > 255))
+		G_fatal_error ("Color map for palette must have less than 256 "\
+			"colors for the available range of data");
 	cell = G_allocate_cell_buf();
 	if((in = G_open_cell_old (inopt->answer, mapset)) < 0){
 		fprintf(stderr, "%s - can't open raster map\n", inopt->answer);
@@ -149,29 +153,23 @@ main (int argc, char *argv[])
 
 		if (DEBUG)
 			fprintf (stdout,"max %f min %f mapsize %d\n ",colors.cmax, colors.cmin,mapsize);
-		mapptr = (u_short *)malloc(mapsize * 3 * sizeof (u_short));
+		mapptr = (u_short *)G_calloc(mapsize* 3, sizeof (u_short));
 		redp = mapptr;
 		grnp = redp + mapsize;
 		blup = redp + mapsize * 2;
 
 		/* XXX -- set pointers up before we step through arrays */
 #define	SCALE(x)	(((x)*((1L<<16)-1))/255)
-		for (i = 0; i <= colors.cmax;i++,redp++,grnp++,blup++){
+		for (i = colors.cmin; i <= colors.cmax;i++,redp++,grnp++,blup++){
 			G_get_color(i, &red, &grn, &blu, &colors);
 			*redp = (u_short)(SCALE(red));
 			*grnp = (u_short)(SCALE(grn));
 			*blup = (u_short)(SCALE(blu));
-			/*fprintf (stdout," %d : %d %d %d   %d %d %d\n", i,red,grn,blu, *redp, *grnp, *blup);*/
+			if (DEBUG)
+			    fprintf (stderr," %d : %d %d %d   %d %d %d\n", 
+					    i,red,grn,blu, *redp, *grnp, *blup);
 		}
-		if ((i = colors.cmax) < mapsize) {
-			i = mapsize - i;
-			bzero(redp, i*sizeof (u_short));
-			bzero(grnp, i*sizeof (u_short));
-			bzero(blup, i*sizeof (u_short));
-			redp += i;
-			grnp += i;
-			blup += i;
-		}
+
 		TIFFSetField(out, TIFFTAG_COLORMAP,
 		    mapptr, mapptr + mapsize, mapptr + mapsize * 2);
 		TIFFSetField(out, TIFFTAG_PHOTOMETRIC, PHOTOMETRIC_PALETTE);
@@ -205,12 +203,12 @@ main (int argc, char *argv[])
 		tmpptr = buf;
 		if (verbose)
 			G_percent (row, h.ras_height, 2);
-		if (G_get_map_row (in, cell, row) < 0)
+		if (G_get_c_raster_row (in, cell, row) < 0)
 			exit(1);
 		cellptr = cell;
 		if (pflag->answer){
 			for ( col=0; col < h.ras_width; col++){
-				*tmpptr++ = (u_char)*cellptr++;
+				*tmpptr++ = (u_char)(*cellptr++ - colors.cmin);
 			}
 		} else{
 			for ( col=0; col < h.ras_width; col++){
@@ -256,12 +254,12 @@ write_tfw(char *fname, struct Cell_head *win, int verbose) {
 	if (outfile == NULL)
 		G_fatal_error("Couldn't open TIFF world file for writing");
 	
-	fprintf (outfile, "%36.*f\n", width, win->ew_res);
-	fprintf (outfile, "%36.*f\n", width, 0.0);
-	fprintf (outfile, "%36.*f\n", width, 0.0);
-	fprintf (outfile, "%36.*f\n", width, -1 * win->ns_res);
-	fprintf (outfile, "%36.*f\n", width, win->west + win->ew_res / 2.0 );
-        fprintf (outfile, "%36.*f\n", width, win->north - win->ns_res / 2.0);
+	fprintf (outfile, "%36.*f \n", width, win->ew_res);
+	fprintf (outfile, "%36.*f \n", width, 0.0);
+	fprintf (outfile, "%36.*f \n", width, 0.0);
+	fprintf (outfile, "%36.*f \n", width, -1 * win->ns_res);
+	fprintf (outfile, "%36.*f \n", width, win->west + win->ew_res / 2.0 );
+        fprintf (outfile, "%36.*f \n", width, win->north - win->ns_res / 2.0);
 
 	fclose(outfile);
 	if (verbose)
