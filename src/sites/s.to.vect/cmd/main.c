@@ -1,16 +1,24 @@
-/* 
+/*
  * $Id$
- * Changes by PWC 2/6/95  from NRCS
- * 1.0  2/26/91
+ * 
+ ******************************************************************************
+ * MODULE:       s.to.vect -- Convert site_list to a vector point layer.
+ * 
+ * AUTHOR(S):    Original author (1991) R.L. Glenn 
+ *                  - USDA, Soil Conservation Service
+ *               Changes (1995) -- PWC (??) from NRCS
+ *               Modified (2000-1) Eric G. Miller <egm2@jps.net>
+ *               
+ * PURPOSE:      A general module to convert site_lists to vector point layers.
+ * 	    
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
  *
- *  Created by R.L.Glenn
- *  USDA, Soil Conservation Service
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
  *
- *  Input arguements:
- *        s.to.vect input=site_list file to read
- *                  output=vector (digit) file to create
- */
- 
+ ******************************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -26,8 +34,6 @@
 #define	DIG_ATT		"dig_att"
 #define	DIG_CAT		"dig_cats"
 #define	SITE_DIR	"site_lists"
-
-/*#define DEBUG*/
 
 static char *N_dig_file;
 static char *N_att_file;
@@ -117,9 +123,6 @@ int main (int argc, char *argv[])
 	}
     S_name = sname;
 
-#ifdef DEBUG
-    fprintf (stderr, "Parsing opt_desc\n");
-#endif
     /* figure out what to use for category values */
     if (opt_desc->answer != NULL && (cptr = opt_desc->answers[0]) != NULL)
     {
@@ -163,9 +166,7 @@ int main (int argc, char *argv[])
         index = -1;
         field = SITE_COL_NUL;
     }
-#ifdef DEBUG
-    fprintf (stderr, "DONE.\n");
-#endif
+
     /* store the original file names */
     {
 
@@ -195,9 +196,6 @@ int main (int argc, char *argv[])
     if ((s = G_site_new_struct(map_type, dims, strs, dbls)) == NULL)
         G_fatal_error ("Failed to allocate site structure");
    
-#ifdef DEBUG
-    fprintf (stderr, "Checking attribute exists\n");
-#endif
     switch (field)
     {
         case SITE_COL_STR:
@@ -222,9 +220,7 @@ int main (int argc, char *argv[])
                     "field type");
             break;
     }
-#ifdef DEBUG
-    fprintf (stderr, "DONE.\n");
-#endif
+
     /* Can't use floating point categories in vectors ! */
     if (map_type == FCELL_TYPE || map_type == DCELL_TYPE)
     {
@@ -284,11 +280,6 @@ int main (int argc, char *argv[])
     xarray = (double *) dig_falloc(alloc_points, sizeof(double));
     yarray = (double *) dig_falloc(alloc_points, sizeof(double));
 
-    /*********** removed by PWC 2/6/95 **************
-    x = xarray;
-    y = yarray;
-    ************************************************/
-
     n_points = 2;
     count = 0;
     while (G_site_get(site,s) >= 0) {
@@ -343,9 +334,8 @@ int main (int argc, char *argv[])
 	G_site_free_struct(s);
 
     /************* added by PWC 2/6/95 **************/
-/*    sprintf(buf, "sort -o%s -t: +0n -1 %s", temp_file, temp_file);
- *    system(buf);
- */
+    sprintf(buf, "sort -o%s -t: +0n -1 %s", temp_file, temp_file);
+    system(buf);
     /************************************************/
 
     fprintf (stdout,"creating support files ...\n");
@@ -385,4 +375,4 @@ int main (int argc, char *argv[])
     
     return 0;
 }
-/* vim: softtabstop=4 shiftwidth=4 expandtab */
+/* vim: set softtabstop=4 shiftwidth=4 expandtab: */

@@ -3,7 +3,7 @@
  * 
  ******************************************************************************
  * MODULE:       s.to.vect -- Convert site_list to a vector point layer.
- * AUTHOR(S):    Original author unknown - probably CERL
+ * AUTHOR(S):    Original authors (see main.c)
  *               Eric G. Miller <egm2@jps.net>
  * PURPOSE:      A general module to convert site_lists to vector point layers.
  * 	        This file handles some vector header data.
