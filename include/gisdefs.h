@@ -564,11 +564,6 @@ int G_get_c_raster_row(int, CELL *, int);
 int G_get_f_raster_row(int, FCELL *, int);
 int G_get_d_raster_row(int, DCELL *, int);
 int G_get_null_value_row(int, char *, int);
-int G_get_null_value_row_nomask(int, char *, int);
-int G__open_null_read(int);
-int G__read_null_bits(int, unsigned char *, int, int, int);
-int embed_nulls_nomask(int, void *, int, RASTER_MAP_TYPE, int);
-int embed_nulls(int, void *, int, RASTER_MAP_TYPE, int);
 
 /* get_row_colr.c */
 int G_get_raster_row_colors(int, int, struct Colors *,
