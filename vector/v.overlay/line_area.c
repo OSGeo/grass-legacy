@@ -147,7 +147,9 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 			if ( j >= 0 )
 			    sprintf ( buf, ", %d )", ACats->cat[j] );
 			else 
-			     sprintf ( buf, ", null )");
+			    sprintf ( buf, ", null )");
+
+			db_append_string ( &stmt, buf);
 
 			G_debug ( 3, db_get_string ( &stmt ) );
 
