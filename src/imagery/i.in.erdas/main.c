@@ -442,9 +442,14 @@ int main (int argc, char *argv[])
 	struct Option *erdasopt, *outopt, *trlopt;
 	struct Option *start_row, *start_col, *num_rows, *num_cols, *sel_bands;
 	struct Flag *headflag,*autoswapflag,*swapflag,*mapcoord;
+	struct GModule *module;
 
 
 	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Creates raster files from ERDAS files.";
 
 	headflag = G_define_flag();
 	headflag->key = 'l';

@@ -21,6 +21,7 @@ int main (int argc, char *argv[])
   int i, band_no;
   int firstrow, lastrow, firstcol, lastcol;
   char *inf, *outf, *version, bands[10];
+  struct GModule *module;
   struct
   {
         struct Option *input, *group, *win_rows, *win_cols, 
@@ -35,6 +36,11 @@ int main (int argc, char *argv[])
   firstrow = lastrow = firstcol = lastcol = 0;
 
   G_gisinit(argv[0]);
+
+  module = G_define_module();
+  module->description =
+	"An imagery function that extracts Thematic "
+	"Mapper (TM) imagery from tape media.";
 
   parm.input = G_define_option();
   parm.input->key         ="input";
