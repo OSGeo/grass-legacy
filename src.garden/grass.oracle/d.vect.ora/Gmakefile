@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/d.vect.ora
+PGM       = $(BIN_MAIN_CMD)/d.vect.ora
 LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB) 
 
 
