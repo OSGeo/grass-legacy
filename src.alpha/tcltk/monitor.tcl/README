@@ -1,0 +1,20 @@
+
+You need to compile v.out and make sure it is in your path.
+
+Run monitor.tcl from w/in GRASS.
+
+On our system xgbrowser takes a long time to start up.  - be patient if 
+    this is the case.
+
+I had to do a lot of hacking to get zoom in /out to make the resulting
+displayed window reasonable.  This is one of the areas that should be improved.
+
+Pan window extents are set from current GRASS region. 
+
+Also panning is slow because it redraws the entire map.  This could
+possibly be improved by using bitmaps to pan instead of redrawing 
+everything.
+
+I have looked at the canvas code, and it seems reasonable.  Nice code,
+Nothing obviously slow about it. (except mallocs w/ over 1000 data points/line,
+which I haven't hit yet)
