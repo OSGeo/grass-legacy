@@ -78,7 +78,7 @@ proc check_shp {  } {
         set shperr 1
     } else {
         set shape ""
-        regexp {^/.*/([a-zA-Z][^/.]+)\.[Ss][Hh][Pp]} $s x shape
+        regexp {^/.*/([a-zA-Z][^/.]+)\.[Ss][Hh][Pp]$} $s x shape
 	if { $shape  == "" } {
 	    set shperrmsg "Wrong shapefile name (relative path or first char digit or dot in name or not shape)"
             set shperr 1
@@ -107,6 +107,7 @@ set row [ frame $efframe.vect ]
 Label $row.a -text "Vector name:" -justify left -width $labwidth 
 set vectentry [Entry $row.b -width $entrywidth -text "" -textvariable vector -command check_vect]
 bind $vectentry <KeyRelease> check_vect
+bind $vectentry <Motion> check_vect
 pack $row.a $vectentry -side left
 pack $row -side top -fill both -expand yes
 
@@ -199,15 +200,17 @@ proc create_vect { } {
 
     set fpath "$vdir/frmt"
     set f [open $fpath w]
+        
+    regexp {(.*/[a-zA-Z][^/.]+)\.[Ss][Hh][Pp]$} $shapefile x baseshape
     puts $f "FORMAT: shape"
-    puts $f "SHAPE: $shapefile"
+    puts $f "SHAPE: $baseshape"
     close $f
 
     set cmd "v.build map=$v"
     set shell $env(SHELL)
     eval "exec echo \"$cmd\" | $shell >@stdout 2>@stdout"
 
-    check_vect
+    set vector ""
     set resultmsg "Vector created"
 }
 
