@@ -44,12 +44,19 @@ int G_system ( char *command)
     fflush (stdout);
     fflush (stderr);
 
+#ifdef __MINGW32__
+    signal (SIGINT,  SIG_DFL);
+    _spawnl ( P_WAIT,
+              "command",
+              "command",
+              "/c",
+              command,
+              NULL );
+#else    
     if ( (pid = fork()) == 0)
     {
 	signal (SIGINT,  SIG_DFL);
-#ifndef __MINGW32__
 	signal (SIGQUIT, SIG_DFL);
-#endif
     
 	execl ("/bin/sh", "sh", "-c", command, 0);
 	_exit(127);
@@ -62,12 +69,13 @@ int G_system ( char *command)
     }
     else
     {
-	while ( (w = wait (&status)) != pid && w != -1)
-	    ;
+	while ( (w = wait (&status)) != pid && w != -1);
 
 	if (w == -1)
 	    status = -1;
     }
+
+#endif
 
     signal (SIGINT,  sigint);
 #ifndef __MINGW32__

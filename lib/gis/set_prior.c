@@ -127,6 +127,7 @@ int unset_priority ()
 
 static int swap_re_uids (void)
 {
+#ifndef __MINGW32__    
     static int flipflop = 0;
 
 #ifdef HAVE_SETREUID
@@ -157,12 +158,14 @@ static int swap_re_uids (void)
 #endif /* HAVE_SETEUID */
 #endif /* HAVE_SETRUID */
 #endif /* HAVE_SETREUID */
+#endif /* __MINGW32__ */    
     return 0;
 }
 
 /* returns -1 if cannot create a user other than root */
 int set_uid_to_user ()
 {
+#ifndef __MINGW32__    
     uid_t user;
 
     user =  geteuid ();
@@ -175,6 +178,7 @@ int set_uid_to_user ()
     }
 
     setuid (user);
+#endif /* __MINGW32__ */   
     return (0);
 }
 
