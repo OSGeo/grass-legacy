@@ -1,16 +1,18 @@
 #include <stdio.h>
 #include "gis.h"
-/*
- ***********************************************************
- *  G_getl(buf, n, fd)
- *     char *buf         buffer to receive read data
- *     int n             max num of bytes to read
- *     FILE *fd          file descriptor structure
+
+/*!
+ * \brief gets a line of text from a file
  *
- *  does fgets() and removes trailing newline
- *  
- *  returns: 1 ok, 0 eof
- ************************************************************/
+ * This routine runs fgets() to fetch a line of text from a file (advancing
+ * file pointer) and removes trailing newline. fgets() does not recognize
+ * '<code>\\r</code>' as an EOL and will read past it.<br>
+ *
+ * \param buf: string buffer to receive read data
+ * \param n: maximum number of bytes to read
+ * \param fd: file descriptor structure
+ * \return 1 if ok, 0 if EOF
+ */
 
 int G_getl ( char *buf, int n, FILE *fd)
 {
@@ -24,20 +26,28 @@ int G_getl ( char *buf, int n, FILE *fd)
     return 1;
 }
 
-/*
- ***********************************************************
- *  G_getl2(buf, n, fd)
- *     char *buf         buffer to receive read data, at least n+1 must be allocated
- *     int n             max num of bytes to read
- *     FILE *fd          file descriptor structure
+
+
+/*!
+ * \brief gets a line of text from a file of any pedigree
  *
- *  Reads in at most n characters from stream and stores them into the  buffer pointed to by buf.
- *  Reading stops after an EOF or a newline. New line is not stored in the buffer.
- *  It supports text files created on various platforms (UNIX, DOS, MacOS9),
- *  i.e. \n (\012), \r (\015) and \r\n (\015\012)
- *  
- *  returns: 1 ok, 0 eof
- ************************************************************/
+ * This routine is like G_getl() but is more portable. 
+ * It supports text files created on various platforms (UNIX, MacOS9, DOS),
+ * i.e. <code>\\n (\\012)</code>, <code>\\r (\\015)</code>, and 
+ * <code>\\r\\n (\\015\\012)</code> style newlines.
+ * <br>
+ * <br>
+ * Reads in at most <b>n</b> characters from stream and stores them into the 
+ * buffer pointed to by <b>buf</b>. Reading stops after an EOF or a newline.
+ * New line is not stored in the buffer. At least <b>n</b>+1 must be allocated
+ * for the string buffer.<br>
+ *
+ * \param buf: string buffer to receive read data, at least <b>n</b>+1 must
+ *   be allocated
+ * \param n: maximum number of bytes to read
+ * \param fd: file descriptor structure
+ * \return 1 if ok, 0 if EOF
+ */
 
 int G_getl2 ( char *buf, int n, FILE *fd)
 {
