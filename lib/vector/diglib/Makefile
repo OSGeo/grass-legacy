@@ -19,7 +19,6 @@ LIB_OBJS = \
     plus_struct.o \
     poly.o \
     portable.o \
-    rw_ascii.o  \
     spindex.o  \
     struct_alloc.o
 
