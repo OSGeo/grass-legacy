@@ -111,6 +111,8 @@ int main(argc, argv)
 
     G3d_getWindow (&current_region);
     G3d_readWindow(&current_region,NULL);
+    fprintf(stderr,"Region from getWindow: %d %d %d\n",current_region.rows, 
+                                current_region.cols, current_region.depths);
 
 	output = parm.output->answer;
 
@@ -186,16 +188,17 @@ int main(argc, argv)
 
     fprintf (stderr, "Note: Percentage output is status per level!\n");
     fprintf (stderr, "Interpolating raster map <%s> ... %d levels ... ",
-	parm.output->answer, Nl);
+    parm.output->answer, Nl);
+     
+    cnt=0;
 
-	cnt=0;
-
-	z = current_region.top + lev_res/2.0;
+    z = current_region.top + lev_res/2.0;
 
   for (lev = 0; lev < Nl; lev++)
   {
-	
-	z -=lev_res;/* daj input*/
+    fprintf (stderr, "\n  Calculating level no. %-10d ", Nl-lev);
+    
+    z -=lev_res;/* daj input*/
 
     north = current_region.north + current_region.ns_res/2.0; 
 
