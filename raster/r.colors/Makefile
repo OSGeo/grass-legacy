@@ -7,7 +7,7 @@ LIST=main.o\
 	log.o\
 	rules.o
 
-COLRFILES = aspect bcyr byg byr elevation grey gyr rainbow ramp ryg slope terrain wave
+COLRFILES = aspect bcyr byg byr elevation grey gyr rainbow ramp ryg slope srtm terrain wave
 
 LIBES = $(GISLIB)
 DEPENDENCIES = $(GISDEP)
