@@ -5,7 +5,7 @@
 #
 # Markus Neteler
 
-#this will change in future: (testing purpose)
+#this will be changed in future to ../../man/: (testing purpose)
 GISBASE=.
 
 ######### nothing to change below (hope so) ##############
