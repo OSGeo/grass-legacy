@@ -2,6 +2,7 @@
 #include "odbc.h"
 #include "globals.h"
 #include "proto.h"
+#include <stdio.h>
 
 /* NAME: db_driver_create_table 
  * INPUT:
