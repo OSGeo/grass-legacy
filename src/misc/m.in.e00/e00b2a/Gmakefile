@@ -1,0 +1,2 @@
+all:
+	$(CC) -O2 e00b2a.c -o $(GISBASE)/bin/e00b2a
