@@ -65,6 +65,7 @@ grass51/
 	    /linkm      : linked list memory manager
 	    /lock       : locking mechanism for GRASS monitors and files
 	    /ogsf       : ported gsurf library (required for NVIZ)
+                               -> perhaps store under NVIZ only?
 	    /plugins      (keeps external libs)
 		/bwidget : tcl/tk extra library
 		/gdal    : GDAL raster lib
@@ -84,7 +85,7 @@ grass51/
 		/dig_atts : library to read and write from attribute files
 		/diglib   : more GRASS vector functions
 		/georef   : Imagery Georeferencing Programs
-		/libes    : transformations from one coord. system to another  
+		/transform: transformations from one coord. system to another (was libes/)
 
 	/docs
 	    /docs
