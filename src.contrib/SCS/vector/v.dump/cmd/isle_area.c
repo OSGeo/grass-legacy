@@ -1,11 +1,14 @@
 /*  @(#)isle_area.c     1.0  04/02/91   */
 /*  created by:         R.L.Glenn, SCS */
 
+/* added ABS-definition */
+
 #include "Vect.h"
 
 isle_area (map, isle, totalarea)
     struct Map_info *map;
     int  isle;
+#define ABS(x)          (((x) < 0) ? -(x) : (x))
     double *totalarea;
 {
     int cur_line;
