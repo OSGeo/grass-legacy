@@ -1,39 +1,38 @@
 <html>
+<A NAME="r3.showdspf">
 <!-- This file added 4/12/96 -->
-<H2>r3.showdspf</H2>
-<!-- 9 July 1997 (bb) -->
+<!-- updated 9 July 1997 (bb) -->
+<TITLE>r3.showdspf</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
 
-<B>Usage:</B><BR><pre>
- r3.showdspf grid3=name dspf=name [color=name]
-</pre>
+<IMG SRC="showdspf.gif" align=RIGHT>
 
-<BR>
-<B>Parameters:</B><BR>
+<H2>NAME</H2>
+<EM><B>r3.showdspf</B></EM> - Visualization program which loads 
+the isosurfaces previously calculated using r3.mkdspf and displays 
+them according to commands given at the prompt.<BR>
+<EM>(GRASS 3D Program)</EM>
 
-<UL>
-<TABLE>
-<TD align=right>
-  <I>grid3</I>   
-  <br>
-  <I>dspf</I>    
-  <br>
-  <I>color</I>   
-  <br>
-</TD>
-<TD align=left>
-  Name of an existing 3dcell map
-  <br>
-  Name of an existing display file
-  <br>
-  Name of existing color table
-  <br>
-</TD>
-</TABLE>
-</UL>
+<H2>SYNOPSIS</H2>
+<B>r3.showdspf grid3=</B><EM>name</EM> <B>dspf=</B><EM>name</EM><B> 
+[color=</B><EM>name</EM><B>]</B>
 
-<B>Description:</B><BR>
+<H3>Parameters:</H3>
+<DL>
+<DT><B>grid3</B>   
+<DD>Name of an existing 3dcell map
 
-<br>
+<DT><B>dspf</B>
+<DD>Name of an existing display file
+
+<DT><B>color</B>   
+<DD>Name of existing color table
+</DL>
+
+<H2>DESCRIPTION</H2>
+
 Visualization program which loads the isosurfaces previously calculated
 using r3.mkdspf and displays them according to commands given at the
 prompt.  Upon initialization of the program, two graphics windows are
@@ -41,6 +40,8 @@ opened, one for the color table and the other for data display.  The
 display window initially contains a red bounding box.  Command options
 are then printed to the terminal and user is prompted for drawing 
 instructions:
+
+<BR>
 <pre>
 THE INTERACTIVE OPTIONS ARE:
 
@@ -96,8 +97,7 @@ THE INTERACTIVE OPTIONS ARE:
 </pre>
 <p>
 
-<B>Hints:</B><BR>
-
+<H3>Hints:</H3>
 <UL>
 <LI>To navigate around the data, use the <B>r</B> command, then place
 the mouse pointer in the graphics window and drag with the left mouse 
@@ -114,10 +114,12 @@ Use the <B>#</B> sign as the first character on a line to indicate a comment.
 
 </UL>
 
-<HR>
+<H2>SEE ALSO</H2>
+<EM><A HREF="r3.mkdspf.html">r3.mkdspf</A></EM>
+<H2>AUTHORS</H2>
 <SIGNATURE>Bill Brown,
-<A HREF="mailto:brown@gis.uiuc.edu">bbrown@gis.uiuc.edu</A>
+<A HREF="mailto:brown@gis.uiuc.edu">brown@gis.uiuc.edu</A>
 </SIGNATURE>
 
-
+</body>
 </html>
