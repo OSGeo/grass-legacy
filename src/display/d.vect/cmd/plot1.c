@@ -1,4 +1,10 @@
-/* plot1() - Level One vector reading */
+/* plot1() - Level One vector reading 
+*
+* Michael Shapiro,
+* U.S. Army Construction Engineering
+* Research Laboratory
+*
+*/
 
 #include "gis.h"
 #include "Vect.h"
@@ -14,7 +20,6 @@ int plot1 (
     struct Map_info Map;
     double *x, *y;
 
-    /*fd = open_vect (name, mapset);*/
     Vect_set_open_level (1);
     if (1 > Vect_open_old (&Map, name, mapset))
 	G_fatal_error ("Failed opening vector file");

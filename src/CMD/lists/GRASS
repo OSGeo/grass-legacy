@@ -110,7 +110,6 @@ src/display/d.sites.qual
 src/display/d.text
 src/display/d.title
 src/display/d.vect
-src/display/d.vect.cats
 src/display/d.vect.labels
 src/display/d.what.db
 src/display/d.what.rast
