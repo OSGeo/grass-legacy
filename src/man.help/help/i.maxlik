@@ -1,0 +1,3 @@
+An imagery function that classifies the pixel spectral reflectances
+in imagery data based on the 
+spectral signature information generated in \fIi.cluster\fR
