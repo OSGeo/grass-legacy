@@ -52,6 +52,7 @@
 
 #include	<stdio.h>
 #include	<tools.h>
+#include        "colors.h"
 #include	"igraphics.h"
 
 
@@ -73,6 +74,13 @@ int VSNO ;
 /* DEBUG */
 FILE *fp, *fopen() ;
 
+char *malloc ();
+
+static int size_changed = -1;
+static short *Parray = NULL;
+static long x_size, y_size;
+
+
 Graph_Set() 
 {
 
@@ -92,12 +100,13 @@ set_debug() ;
 	Set_screen_parameters() ;
 
 /*   perhaps set color offset here:
-     if NCOLORS is set to more than 32, then offset grass-made colors
-	   if (NCOLORS > 32)
-		  I_COLOR_OFFSET = 14;
-       else
-		  I_COLOR_OFFSET = 0;
+*     if NCOLORS is set to more than 32, then offset grass-made colors
+*	   if (NCOLORS > 32)
+*		  I_COLOR_OFFSET = 14;
+*       else
+*		  I_COLOR_OFFSET = 0;
 */
+
 /*  Store the info to .grassrc  */
 	Put_to_grass_env() ;
 
@@ -143,13 +152,23 @@ set_debug() ;
 	make_cross_cursor() ;
 
 /*  hide the cursor,  only show it when needed.  */
+	/*do we really wnat to do this?"
 	Hide_cursor() ;
+	*/
 
 /*  Set text size and land rotation value  */
 	Text_size(25, 25) ;
 	Text_rotation(0.0) ;
 /*  Set font */
 	init_font ("romant") ;
+
+/*  Clear the window with a color that will contrast with the screen bkgrnd*/
+		/*color(BLUE)*/
+        color (get_standard_color (BLUE));
+        Erase (); 
+
+	_setsize(); /*set the size of window and Parray*/
+				/*(Raster_Buffer set in Set_env.c*/
 
 }
 
@@ -178,3 +197,101 @@ write_debug( s)
 	if ( ! debug_on) return;
 	fprintf( fp, "%s\n", s) ;
 }
+
+/*lifted from IRIS--at present, this is only called once, since we
+   can't resize windows in the igraph driver--yet  dks*/
+
+_setsize ()
+{
+    int jj;
+
+
+    if (Parray == NULL)	/* first time */
+    {
+		x_size = SCREEN_RIGHT - SCREEN_LEFT + 1;
+		y_size = SCREEN_BOTTOM - SCREEN_TOP + 1;
+
+/*
+*		reshapeviewport ();
+*		getsize (&x_size, &y_size);
+*		ortho2 (-.5, x_size-.5, -.5, y_size-.5);
+*/
+		size_changed = 1;
+    }
+    else 
+    {
+/*
+*	reshapeviewport ();
+*	getsize (&tmp_x, &tmp_y);
+*	if (tmp_x != x_size || tmp_y != y_size)
+*	{
+**/
+/*DEBUG*//*  fprintf (stderr, "SIZE CHANGE  %d,%d    %d,%d\n", x_size, y_size, tmp_x, tmp_y);*/
+/*
+*	    size_changed = 1;
+*	    x_size = tmp_x;
+*	    y_size = tmp_y;
+*	}
+*	ortho2 (-.5, tmp_x-.5, -.5, tmp_y-.5);
+*/
+	}
+
+	if (size_changed)
+	{
+		if (Parray != NULL)
+			free (Parray);
+		Parray = (short *) malloc (x_size * y_size * sizeof (short));
+
+       /*Raster_Buffer already alloted in Set_env.c*/
+
+		if (Parray == NULL)
+			fprintf (stderr, "Driver Malloc out of memory\n"), exit (0);
+       /*Raster_Buffer already alloted in Set_env.c*/
+
+/*
+*   clear_all_pads ();
+*	SCREEN_RIGHT = x_size - 1;
+*	SCREEN_BOTTOM = y_size - 1;
+*	SCREEN_LEFT	  	= 0;
+*	SCREEN_TOP    	= 0;
+*/
+		/*clear ();*/
+
+		size_changed = 0;
+	
+    }
+    else
+    {
+		long x, y;
+/*
+*		getorigin (&x, &y);
+*
+
+* rect stuff MUST be inside screen *
+* IRIS
+*       if (x < 0 || y < 0 || 
+*			(x+x_size-1) > XMAXSCREEN || (y+y_size-1) > YMAXSCREEN)
+*		{
+*			color (MAGENTA);
+*			clear ();
+*		}
+*		else
+*			lrectwrite (0, 0, x_size-1, y_size-1, Parray);
+*/
+
+
+/*DEBUG*//*      fprintf (stderr, "WINDOW %d (%d %d)  (%d %d)\n", WNO, SCREEN_LEFT, 
+		SCREEN_TOP, SCREEN_RIGHT, SCREEN_BOTTOM);
+		*/
+
+		if (0 != putpixelblock16 (WNO, (int)VSI_PLANE_MASK, (short) 0, (short) 0, (short) (SCREEN_RIGHT-SCREEN_LEFT), (short) (SCREEN_BOTTOM-SCREEN_TOP), Parray))
+        flushbuffer(WNO);
+    }
+
+}
+
+_save_screen ()
+{
+     getpixelblock16 (WNO, (int)VSI_PLANE_MASK, 0, 0, (short) (SCREEN_RIGHT-SCREEN_LEFT), (short) (SCREEN_BOTTOM-SCREEN_TOP), Parray);
+}
+
