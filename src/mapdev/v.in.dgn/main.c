@@ -33,6 +33,7 @@ int main( int argc, char ** argv )
     char   att_file[2000]; 
     struct Categories Cats;    
     char   ctype;
+    int bUpdate;
     
     DGNHandle         hDGN;
     DGNElemCore       *psElement;
@@ -139,7 +140,10 @@ int main( int argc, char ** argv )
 
     startcat = atoi ( startcat_opt->answer );
 
-    hDGN = DGNOpen( dgn_opt->answer );
+    /* bUpdate should the file be opened with read+update (rb+) mode instead
+       of rb */
+    bUpdate =0;
+    hDGN = DGNOpen( dgn_opt->answer, bUpdate);
     if( hDGN == NULL )
     {
         sprintf(errmsg, "Not able to open dgn file <%s>\n", dgn_opt->answer) ;
