@@ -1,0 +1,14 @@
+
+WELCOME TO GRASS              Version VERSION_NUMBER         VERSION_DATE
+
+   1) Have at your side all available GRASS tutorials
+
+   2) When working on your location, the following materials
+      are extremely useful:
+      - A topo map of your area
+      - Current catalog of available computer maps
+
+   3) Check the GRASS webpages for feedback mailinglists and more:
+      http://www.geog.uni-hannover.de/grass 
+      http://grass.baylor.edu 
+
