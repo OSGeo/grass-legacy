@@ -29,10 +29,10 @@ dig_snap_line_to_node (map, line, node, points)
     P_LINE *MLN;
 
     /* remove line from old node */
-    whichnode = line < 0 ? map->Line[ABS (line)].N2 : map->Line[line].N1;
+    whichnode = line < 0 ? map->Line[abs (line)].N2 : map->Line[line].N1;
     dig_node_del_line (&(map->Node[whichnode]), line);
 
-    MLN = &(map->Line[ABS(line)]);
+    MLN = &(map->Line[abs(line)]);
 
     if (line < 0) 
 	MLN->N2 = node;
@@ -63,7 +63,7 @@ dig_node_del_line (node, line)
 {
     register int i, lines;
 
-    line = ABS (line);
+    line = abs (line);
     lines = node->n_lines;
 
 /*	taken care of by the next test  
@@ -72,7 +72,7 @@ dig_node_del_line (node, line)
 */
 
     for (i = 0 ; i < lines ; i++)
-	if (ABS (node->lines[i]) == line)
+	if (abs (node->lines[i]) == line)
 	    break;
     /* line is not connected to node */
     if (i > lines)
