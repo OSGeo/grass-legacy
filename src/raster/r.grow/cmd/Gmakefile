@@ -1,0 +1,9 @@
+PGM=r.grow
+HOME=$(BIN_MAIN_CMD)
+
+LIST = main.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(MATHLIB) -o $@
+
+$(GISLIB): #
