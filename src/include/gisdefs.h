@@ -626,6 +626,7 @@ char *G_database_ellipse_name();
 /* put_cellhd.c */
 int G_put_cellhd(char *, struct Cell_head *);
 /* put_row.c */
+int G_zeros_r_nulls(int);
 int G_put_map_row(int, CELL *);
 int G_put_map_row_random(int, CELL *, int, int, int);
 int G__put_null_value_row(int, char *);
