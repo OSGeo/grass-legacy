@@ -98,8 +98,7 @@ int main (int argc, char **argv)
       
     G_debug ( 3, "Mapset = %s", mapset);
 
-    Vect_set_open_level (1);
-    Vect_open_old ( &Map, inopt->answer, mapset);
+    Vect_open_update ( &Map, inopt->answer, G_mapset());
 
     if (print->answer)
     {
@@ -117,6 +116,7 @@ int main (int argc, char **argv)
     }
     else /* define new dbln settings */
     {
+       G_warning ( "The table becomes part of the vector and may be deleted or overwritten by GRASS modules.");
        if (field_opt->answer && dbtable->answer && dbkey->answer
            && dbdatabase->answer && dbdriver->answer)
        {
