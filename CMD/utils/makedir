@@ -1,0 +1,6 @@
+if test -d ${1?}
+then
+    exit 0
+fi
+makedir `dirname $1` && mkdir $1
+exit $?
