@@ -125,6 +125,8 @@ plus_t walk_forward_and_pick_up_coords (
   plus_t n = 1;       /* Forces Vect_copy_pnts_to_xy to copy 1 point,
 			 that function then internally sets n to the
 			 actual number of points */
+  double *x, *y;
+  int i;
 
   line = start_line;
 
@@ -159,8 +161,23 @@ plus_t walk_forward_and_pick_up_coords (
       
       /* If already at end of line, try going the other way */
 
-      if (map->Node [end_node].n_lines != 2)
+      if (map->Node [end_node].n_lines != 2){
 	end_node = map->Line [line].N1;
+	if(!(x=(double *) malloc(n * sizeof(double))))
+		G_fatal_error ("Unable to allocate memory for `x'");
+	if(!(y=(double *) malloc(n * sizeof(double))))
+		G_fatal_error ("Unable to allocate memory for `y'");
+	for(i=0; i<n; i++){
+		x[i] = coords->x[n-1-i];
+		y[i] = coords->y[n-1-i];
+	}
+	for(i=0; i<n; i++){
+		coords->x[i] = x[i];
+		coords->y[i] = y[i];
+	}
+	free(x);
+	free(y);
+      }
 
       while (map->Node [end_node].n_lines == 2)
 	{
@@ -251,6 +268,23 @@ plus_t walk_forward_and_pick_up_coords (
 	  
 	  Vect_copy_pnts_to_xy (points, &coords->x[no_coords],
 				&coords->y[no_coords], &n);
+
+	  if(end_node != map->Line [line].N2){
+	    if(!(x=(double *) malloc(n * sizeof(double))))
+		G_fatal_error ("Unable to allocate memory for `x'");
+	    if(!(y=(double *) malloc(n * sizeof(double))))
+		G_fatal_error ("Unable to allocate memory for `y'");
+	    for(i=0; i<n; i++){
+		x[i] = coords->x[no_coords+n-1-i];
+		y[i] = coords->y[no_coords+n-1-i];
+	    }
+	    for(i=0; i<n; i++){
+		coords->x[no_coords+i] = x[i];
+		coords->y[no_coords+i] = y[i];
+	    }
+	    free(x);
+	    free(y);
+	  }
 	  
 	  no_coords += coords_this_line - 1;
 
