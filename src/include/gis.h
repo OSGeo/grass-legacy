@@ -80,6 +80,9 @@ static const char *GRASS_copyright __attribute__((unused))
 #define YES           1
 #define NO            0
 
+#define DEFAULT_FG_COLOR "white"
+#define DEFAULT_BG_COLOR "black"
+
 /*=========================== Typedefs/Structures ==========================*/
 
 typedef int CELL;
