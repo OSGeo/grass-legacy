@@ -311,10 +311,9 @@ main (int argc, char *argv[])
     
     Vect_build ( &Map, stdout );
     if (Vect_get_num_areas(&Map) > 0)
-        G_warning ("Area boundaries are not cleaned by this module. Run v.clean (tool=bpol,rmdupl) on imported vector on new map <%s>.", out_opt->answer);
+       G_warning ("Boundaries in <%s> are not cleaned. Run (suggestion):\n v.clean in=%s out=%s_clean tool=bpol,rmdupl", out_opt->answer, out_opt->answer, out_opt->answer);
 
     Vect_close ( &Map );
 
     exit(0) ;
 }
-
