@@ -262,7 +262,6 @@ G_define_standard_option (int opt)
 	    Opt->key          = "where";
 	    Opt->type         = TYPE_STRING;
 	    Opt->required     = NO;
-	    Opt->answer       = "";
 	    Opt->description  = "WHERE conditions of SQL statement without 'where' keyword. (example: income < 1000 and inhab >= 10000)";
 	    break;
 	    
