@@ -115,11 +115,34 @@ coordinate list to the target projection.
 <B>Note:</B> NO column headings are required, just the numbers.
 
 
+<p>Datum conversions are automatically handled by the PROJ.4 library, if 'datum='
+is specified in *both* the input *and* output projections.</p>
+
+<p>If a datum is specified there is no need for the 'ellps=' or underlying
+parameters, 'a=', 'es=' etc.</p>
+
+<p><strong>Another Usage example:</strong>
+<pre>
+m.proj2 inproj="proj=tmerc,datum=ire65,lat_0=53.5,lon_0=-8,x_0=200000,\
+y_0=250000,k=1.000035" outproj="proj=ll,datum=wgs84" input=test.txt
+</pre>
+or without datum transformation:
+<pre>
+m.proj2 inproj="proj=tmerc,ellps=modif_airy,lat_0=53.5,lon_0=-8,x_0=200000,\
+y_0=250000,k=1.000035" outproj="proj=ll,datum=wgs84" input=test.txt
+</pre>
+In this example no datum transformation will take place as a datum was not
+specified for the input projection. The datum specified for the output
+projection will thus be silently ignored and may be left out; all that is
+achieved a simple conversion from projected to geodetic co-ordinates,
+keeping the same datum (and thus also the same ellipsoid).</p>
+
+<p>For more usage examples, see documentation for the PROJ.4 'cs2cs'
+program.</p>
+
+
 
 <h2>BUGS</h2> 
-
-Datum transformations are not yet supported.
-<p>
 
 <h2>References:</h2>
 [1]Evenden, G.I.  (1990) Cartographic projection procedures for
@@ -130,6 +153,7 @@ the UNIX environment - a user's manual.  USGS Open-File Report 90-284
 
 <EM>
 <A HREF="m.proj.html">m.proj</A>,
+<A HREF="r.proj.html">s.proj</A>,
 <A HREF="s.proj.html">s.proj</A>,
 <A HREF="v.proj.html">v.proj</A>,
 <A HREF="g.setproj.html">g.setproj</A>,
