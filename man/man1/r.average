@@ -1,6 +1,6 @@
 .TH r.average
 .SH NAME
-\fIr.average\fR \- Finds the average of values in a values map within
+\fIr.average\fR \- Finds the average of values in a cover map within
 areas assigned the same category value in a user-specified base map.
 .br
 .I (GRASS Raster Program)
@@ -9,26 +9,26 @@ areas assigned the same category value in a user-specified base map.
 .br
 \fBr.average help\fR
 .br
-\fBr.average\fR [\fB-c\fR] \fBbase\*=\fIname \fBvalues\*=\fIname \fBresult\*=\fIname\fR
+\fBr.average\fR [\fB-c\fR] \fBbase\*=\fIname \fBcover\*=\fIname \fBoutput\*=\fIname\fR
 .SH DESCRIPTION
 .I r.average 
-calculates the average value of data contained in a \fIvalues\fR raster map layer
+calculates the average value of data contained in a \fIcover\fR raster map layer
 for areas assigned the same category value in the user-specified \fIbase\fR
 raster map layer.
 These averaged values are stored in the category labels file associated with a
-new \fIresult\fR map layer.
+new \fIoutput\fR map layer.
 
-The values to be averaged are taken from a user-specified \fIvalues\fR map.
-The \fIcategory values\fR for the \fIvalues\fR map will be averaged,
+The values to be averaged are taken from a user-specified \fIcover\fR map.
+The \fIcategory values\fR for the \fIcover\fR map will be averaged,
 unless the -c flag is set.
 If the -c flag is set, the values that appear in the \fIcategory labels\fR file
-for the \fIvalues\fR map will be averaged instead (see example below).
+for the \fIcover\fR map will be averaged instead (see example below).
 
-The \fIresult\fR map is actually a \fIreclass\fR of the \fIbase\fR map
+The \fIoutput\fR map is actually a \fIreclass\fR of the \fIbase\fR map
 (see \fIr.reclass\fR), and will have exactly the same \fIcategory values\fR
 as the \fIbase\fR map.
 The averaged values computed by \fIr.average\fR are stored
-in the \fIresult\fR map's \fIcategory labels\fR file.
+in the \fIoutput\fR map's \fIcategory labels\fR file.
 
 If the user simply types \fBr.average\fR on the command line, the
 user is prompted for the flag setting and parameter values
@@ -40,23 +40,23 @@ on the command line.
 \fBFlag:\fR
 .IP \fB-c\fR 18
 Take the average of the values found in the \fIcategory labels\fR
-for the \fIvalues\fR map,
-rather than the average of the \fIvalue\fR map's \fIcategory values\fR.
+for the \fIcover\fR map,
+rather than the average of the \fIcover\fR map's \fIcategory values\fR.
 
 .LP
 \fBParameters:\fR
 .IP \fBbase\*=\fIname\fR 18
 An existing raster map layer in the user's current mapset search path.
 For each group of cells assigned the same category value in the \fIbase\fR
-map, the values assigned these cells in the \fIvalues\fR map will be averaged.
-.IP \fBvalues\*=\fIname\fR 18
+map, the values assigned these cells in the \fIcover\fR map will be averaged.
+.IP \fBcover\*=\fIname\fR 18
 An existing raster map layer containing the values
 (in the form of cell category values or cell category labels)
 to be averaged within each category of the \fIbase\fR map.
-.IP \fBresult\*=\fIname\fR 18
+.IP \fBoutput\*=\fIname\fR 18
 The name of a new map layer to contain program output
 (a \fIreclass\fR of the \fIbase\fR map).  Averaged values will be stored
-in the \fIresult\fR map's category labels file under the user's $LOCATION/cats
+in the \fIoutput\fR map's category labels file under the user's $LOCATION/cats
 directory.
 .bp
 .SH EXAMPLE
@@ -88,11 +88,11 @@ value|label
 Then
 .LP
 .RS
-\fBr.average  -c  base\*=farms  values\*=soils.Kfactor  result\*=K.by.farm\fR
+\fBr.average  -c  base\*=farms  cover\*=soils.Kfactor  output\*=K.by.farm\fR
 .RE
 .LP
 will compute the average soil K factor for each farm, and store the result
-in the resultant map
+in the output map
 .I K.by.farm,
 which will be a reclass of
 .I farms
@@ -115,7 +115,7 @@ value|label
 .TE
 .SH NOTES
 The -c option requires that the category label for each category in the 
-\fIvalues\fR map be a valid number, integer, or decimal.
+\fIcover\fR map be a valid number, integer, or decimal.
 To be exact, if the first item in the label is numeric, then
 that value is used.  Otherwise, zero is used.
 The following table covers all possible cases:
@@ -123,14 +123,14 @@ The following table covers all possible cases:
 .TS
 center tab(|);
 ll.
-category label|value used by @
+category label|value used by -c
 _
    .12|   .12
    .80 KF|   .8
    no data|   0
 .TE
 .LP
-(This operator is very similar to the @ operator in 
+(This flag is very similar to the @ operator in 
 .I r.mapcalc,
 and the user is encouraged to read the manual entry for 
 .I r.mapcalc
@@ -152,6 +152,7 @@ Results are affected by the current region settings and mask.
 .I r.mapcalc,
 .I r.mask,
 .I r.mfilter,
+.I r.mode,
 .I r.neighbors,
 .I r.reclass,
 .I r.stats,
