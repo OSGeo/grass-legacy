@@ -5,6 +5,7 @@
 #include "Vect.h"
 #include "conv.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int read_line ( GVFILE *, struct line_pnts *);
 
@@ -37,7 +38,7 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     /* Version 3 dig files were not portable and some version 4 
      * files may be also non portable */
 
-    fprintf(stdout,"Reading dig file...\n");
+    G_message ( _("Reading dig file..."));
 
     /* read and copy head */
     dig_fseek (&gvf, 0L, SEEK_SET) ;   /* set to beginning */
@@ -71,10 +72,10 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     if (buf[0] != '%' || buf[1] != '%') { /* Version3.0 */
 	In_head.Version_Major = 3;
 	portable = 0;  /* input vector is not portable format*/
-        fprintf(stdout,"Input file is version 3.\n") ;	
+        G_message ( _("Input file is version 3.")) ;	
     } else {
 	In_head.Version_Major = 4;
-	fprintf(stdout,"Input file is version 4.\n") ;	
+	G_message ( _("Input file is version 4.")) ;	
 	/* determine if in portable format or not */
 	if (buf[6] == 1 && (~buf[6]&0xff) == (buf[7]&0xff)) {   /* portable ? */
 	    portable = 1;  /* input vector is portable format*/
@@ -83,11 +84,11 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 	}
     }
     if ( portable == 1) {
-	fprintf(stdout,"Input file is portable.\n") ;
+	G_message ( _("Input file is portable.")) ;
     } else {
-	fprintf(stdout,"WARNING: Input file is not portable.\n"
-		       "We will attempt to convert anyway but conversion may fail.\n"
-		       "Please read manual for detail information.\n") ;	    
+	G_warning ( _("WARNING: Input file is not portable."
+		       "We will attempt to convert anyway but conversion may fail."
+		       "Please read manual for detail information.")) ;	    
     }
 	    
     /* set Cur_Head because it is used by dig__*_convert()
@@ -157,19 +158,19 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 	}
     }
     if (att) {
-        fprintf(stdout,"%-5d points read to memory\n", npoints);
-        fprintf(stdout,"%-5d lines read to memory\n", nlines);
+        G_message ( _("%-5d points read to memory"), npoints);
+        G_message ( _("%-5d lines read to memory"), nlines);
     } else {
-        fprintf(stdout,"%-5d points read and written to output\n", npoints);
-        fprintf(stdout,"%-5d lines read and written to output\n", nlines);
+        G_message ( _("%-5d points read and written to output"), npoints);
+        G_message ( _("%-5d lines read and written to output"), nlines);
     }
-    fprintf(stdout,"%-5d area boundaries read and written to output\n", nbounds);    
-    fprintf(stdout,"%-5d dead points skipped\n", ndpoints);
-    fprintf(stdout,"%-5d dead lines skipped\n", ndlines);    
-    fprintf(stdout,"%-5d dead area boundaries skipped\n", ndbounds);        
-    fprintf(stdout,"%-5d elements of unknown type skipped\n", nunknown);
+    G_message ( _("%-5d area boundaries read and written to output"), nbounds);    
+    G_message ( _("%-5d dead points skipped"), ndpoints);
+    G_message ( _("%-5d dead lines skipped"), ndlines);    
+    G_message ( _("%-5d dead area boundaries skipped"), ndbounds);        
+    G_message ( _("%-5d elements of unknown type skipped"), nunknown);
 
-    fprintf(stdout,"%-5d elements read to memory.\n", line);
+    G_message ( _("%-5d elements read to memory."), line);
 
     *plines = lines;
     return (line);
@@ -208,7 +209,7 @@ int read_att (FILE *Attin, struct Categ **pcats )
     double x, y;
     struct Categ *cats;
     
-    fprintf(stdout,"Reading dig_att file...\n");
+    G_message ( _("Reading dig_att file..."));
     
     ctalloc = 0;
     cats = NULL;
@@ -216,7 +217,7 @@ int read_att (FILE *Attin, struct Categ **pcats )
     while ( fgets( buf, 200, Attin ) != NULL) {
         ret = sscanf( buf, "%c %lf %lf %d", &ctype, &x, &y, &rcat);
         if (ret != 4) { 
-            fprintf(stderr,"Error: %s\n", buf);
+            G_warning ( _("Error: %s"), buf);
 	    continue;
 	}
 	switch (ctype) {
@@ -237,7 +238,7 @@ int read_att (FILE *Attin, struct Categ **pcats )
 	    case 'a':
 		type = 0;  /* dead */
             default:
-                fprintf(stderr,"Unknown type: %c\n", ctype);
+                G_warning ( _("Unknown type: %c"), ctype);
 		type = 0;
 		nunknown++;
                 break;
@@ -256,15 +257,15 @@ int read_att (FILE *Attin, struct Categ **pcats )
 	
     }
     
-    fprintf(stdout,"%-5d point categories read\n", npoints);
-    fprintf(stdout,"%-5d line categories read\n", nlines);    
-    fprintf(stdout,"%-5d centroids read\n", ncentroids);    
-    fprintf(stdout,"%-5d dead point categories skipped\n", ndpoints);
-    fprintf(stdout,"%-5d dead line categories skipped\n", ndlines);    
-    fprintf(stdout,"%-5d dead centroids skipped\n", ndcentroids);        
-    fprintf(stdout,"%-5d categories of unknown type skipped\n", nunknown);
+    G_message ( _("%-5d point categories read"), npoints);
+    G_message ( _("%-5d line categories read"), nlines);    
+    G_message ( _("%-5d centroids read"), ncentroids);    
+    G_message ( _("%-5d dead point categories skipped"), ndpoints);
+    G_message ( _("%-5d dead line categories skipped"), ndlines);    
+    G_message ( _("%-5d dead centroids skipped"), ndcentroids);        
+    G_message ( _("%-5d categories of unknown type skipped"), nunknown);
     
-    fprintf(stdout,"%-5d categories read into memory.\n", cat);
+    G_message ( _("%-5d categories read into memory."), cat);
     
     *pcats = cats; 
     return (cat);    

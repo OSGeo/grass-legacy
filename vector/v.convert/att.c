@@ -5,6 +5,7 @@
 #include "gis.h"
 #include "dbmi.h"
 #include "Vect.h"
+#include "glocale.h"
 
 /* *  convert dig_cats to database table
 *  return: number of records inserted
@@ -26,18 +27,18 @@ int attributes (char *in, struct Map_info *Out )
 
     /* Find vector mapset */
     if ( NULL == (mapset = G_find_file ("dig", in, "") )) {
-        G_warning ("Input vector was not found.") ; /* Should not happen */
+        G_warning ( _("Input vector was not found.")) ; /* Should not happen */
 	return 0;
     }
 
     /* Find dig_cats if exists */
     if ( NULL == G_find_file ("dig_cats", in, mapset) ) {
-        fprintf(stderr,"No category labels (dig_cats) found, no table created.\n") ;
+        G_message ( _("No category labels (dig_cats) found, no table created.")) ;
 	return 0;
     }
     
     if (G_read_vector_cats ( in, mapset, &Cats) == -1) {
-	G_warning ("Cannot open dig_cats file.");
+	G_warning ( _("Cannot open dig_cats file."));
 	return -1;
     }
 	
@@ -64,13 +65,13 @@ int attributes (char *in, struct Map_info *Out )
     db_set_handle (&handle, Vect_subst_var(fi->database, Out), NULL);
     if (db_open_database(driver, &handle) != DB_OK) {
 	db_shutdown_driver(driver);
-	G_fatal_error ( "Cannot open database %s", fi->database );
+	G_fatal_error ( _("Cannot open database %s"), fi->database );
     }
 
     if (db_execute_immediate (driver, &sql) != DB_OK ) {
 	db_close_database(driver);
 	db_shutdown_driver(driver);
-	G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
+	G_fatal_error ( _("Cannot create table: %s"), db_get_string ( &sql )  );
     }
 
     G_debug ( 1, "ncats = %d", Cats.ncats );	
@@ -88,7 +89,7 @@ int attributes (char *in, struct Map_info *Out )
 	if (db_execute_immediate (driver, &sql) != DB_OK ) {
 	    db_close_database(driver);
 	    db_shutdown_driver(driver);
-	    G_fatal_error ( "Cannot insert into table: %s", db_get_string ( &sql )  );
+	    G_fatal_error ( _("Cannot insert into table: %s"), db_get_string ( &sql )  );
 	}
         count++;
     }
