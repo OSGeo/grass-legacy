@@ -1,0 +1,69 @@
+#include "xgrass_dlib.h"
+
+#define ABS(x) (((x) < 0) ? -(x):(x))
+
+Boolean
+#ifdef _NO_PROTO
+_XgdDetermineIfClose(color, close, entry)
+    XColor *color;
+    unsigned int close;
+    int *entry;
+#else
+_XgdDetermineIfClose( XColor *color, unsigned short close, int *entry)
+#endif
+{
+    int closest = -1;
+    unsigned short closeOff = (unsigned short)close;
+    unsigned short closestRoff = 65535;
+    unsigned short closestGoff = 65535;
+    unsigned short closestBoff = 65535;
+    unsigned short roff, goff, boff;
+    int totOff, closeTotOff;
+    int i;
+
+    for ( i = 0; i < __XGDTotalCells; i++ ) {
+	roff = ABS(__XGDLut[i].red - color->red);
+	goff = ABS(__XGDLut[i].green - color->green);
+	boff = ABS(__XGDLut[i].blue - color->blue);
+	if (roff + goff + boff < closeOff) {
+            totOff = roff + goff + boff;
+            closeTotOff = closestRoff + closestGoff + closestBoff;
+	    if ( totOff < closeTotOff ){
+		closest = i;
+		closestRoff = roff;
+		closestGoff = goff;
+		closestBoff = boff;
+	    }
+	}
+    }
+    *entry = closest;
+    if ( closest != -1 ) {
+        return True;
+    }
+    return False;
+}
+
+#ifdef _NO_PROTO
+_XgdBorrowColor(color)
+    XColor *color;
+#else
+_XgdBorrowColor( XColor *color)
+#endif
+{
+    int i;
+    int entry;
+
+    for ( i = 5; i < 255; i += 5 ) {
+        if ( _XgdDetermineIfClose(color, (unsigned short)(i << 8), &entry) ) {
+	    color->pixel = __XGDLut[entry].pixel;
+	    if ( __XGDLut[entry].mode == XG_LUT_MODE_RW ) {
+		if ( __XGDLut[entry].status == XG_LUT_STATUS_IN_USE ) {
+		    __XGDLut[entry].status = XG_LUT_STATUS_SHARED;
+		}
+		__XGDLut[entry].accesses++;
+	    }
+            return;
+        }
+    }
+}
+
