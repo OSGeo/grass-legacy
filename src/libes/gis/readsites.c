@@ -10,7 +10,9 @@
  * based on support.c by Job Spijker (v.bubble)
  *
  * TODO:
- *   - only 2D sites supported 
+ *   - only 2D sites supported
+ *   - no string support yet
+ *   - problems, if double entries missing in second row
  */
 
 #include "readsites.h"
@@ -35,6 +37,7 @@ int G_readsites (FILE *fdsite, int all, int verbose, int dec_field, site **xyz)
   if (verbose)
     fprintf (stderr, "Reading sites list ...              ");
 
+  /* note: G_site_describe only reads first record to guess format */
   if (G_site_describe (fdsite, &dims, &map_type, &strs, &dbls)!=0)
     G_fatal_error("failed to guess format");
   s = G_site_new_struct (map_type, dims, strs, dbls);
@@ -43,14 +46,14 @@ int G_readsites (FILE *fdsite, int all, int verbose, int dec_field, site **xyz)
       fprintf(stderr,"\n");
       G_fatal_error("selected decimal field column no. %d not present in sites list.", dec_field+1);
   }
-fprintf(stderr, "%d\n", dbls);
+
   if (dbls==0)
   {
     fprintf(stderr,"\n");
     G_warning("I'm finding records that do not have a floating point attributes (fields prefixed with '%').");
   }
 
-  /* added multi-dimension support here based on dims*/
+  /* add multi-dimension support here based on dims !*/
   
   
   /* allocate chunk of memory */
