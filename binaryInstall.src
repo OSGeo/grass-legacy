@@ -229,7 +229,13 @@ cd $PWD
 
 # Creating start script
 echo "Creating start script: $BINDIR/grass$NAME_VER"
-echo ":"                          >$BINDIR/grass$NAME_VER
+awk '
+{
+    if ($1 ~ /^GISBASE/)
+    	print "GISBASE='$DESTDIR'"
+    else
+    	print
+}' $DESTDIR/grass$NAME_VER > $BINDIR/grass$NAME_VER 
 
 if [ $? -eq 1 ] ; then
     echo "An error occured trying to create the grass start script! Exiting."
@@ -238,9 +244,9 @@ if [ $? -eq 1 ] ; then
     exit
 fi
 
-echo "GISBASE=$DESTDIR"           >>$BINDIR/grass$NAME_VER
-echo "export GISBASE"             >>$BINDIR/grass$NAME_VER
-echo "exec \$GISBASE/etc/Init.sh" >>$BINDIR/grass$NAME_VER
+#echo "GISBASE=$DESTDIR"           >>$BINDIR/grass$NAME_VER
+#echo "export GISBASE"             >>$BINDIR/grass$NAME_VER
+#echo "exec \$GISBASE/etc/Init.sh" >>$BINDIR/grass$NAME_VER
 chmod ugo+x $BINDIR/grass$NAME_VER
 
 echo "Creating the locks directory for monitors..."
