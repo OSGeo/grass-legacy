@@ -1,0 +1,39 @@
+Link	spag2.c	/^Link (host, link, dir)$/
+Mmain2	main2.c	/^main(argc, argv)$/
+Same_lines	intersect.c	/^Same_lines (Map, A, B)$/
+_do_break_line	break2.c	/^_do_break_line (map, Points, label, type, node)$/
+_remove_line	remove.c	/^_remove_line (map, line)$/
+add_near	spag2.c	/^add_near (A, B, dir, x, y)$/
+bboxes_cross	spag2.c	/^bboxes_cross (Aline, Bline)$/
+break_line_at_seg_w_point	break2.c	/^break_line_at_seg_w_point (map, ux, uy, line, segm/
+break_line_at_segs_w_point	break2.c	/^break_line_at_segs_w_point (map, ux, uy, line, Ase/
+break_lines_at_segs_w_point	break2.c	/^break_lines_at_segs_w_point (map, ux, uy, A, Aseg,/
+build_relations	spag2.c	/^build_relations (Ahead, Bhead)$/
+clean_lines	intersect.c	/^clean_lines (Map, thresh)$/
+compress	compress.c	/^compress (map, tell)$/
+cross_lines	intersect.c	/^cross_lines (Map, A, B)$/
+debug_graphic	graphic.c	/^debug_graphic (map, A, B, X, Y)$/
+debug_interact	spag2.c	/^debug_interact (Ahead, Bhead)$/
+debugf	main2.c	/^debugf (format, a, b, c, d, e, f, g, h, i, j, k, l/
+debugf2	main2.c	/^debugf2 (format, a, b, c, d, e, f, g, h, i, j, k, /
+debugf3	linecros.c	/^#define debugf3(x)$/
+find_intersection	linecros.c	/^find_intersection (ax1,ay1,ax2,ay2,bx1,by1,bx2,by2/
+free_line	spag2.c	/^free_line (Head)$/
+g_graph_line	graphic.c	/^g_graph_line (map, A, B, x, y)$/
+g_reset_window	graphic.c	/^g_reset_window ()$/
+g_set_window	graphic.c	/^g_set_window (N, S, E, W)$/
+get_window	spag2.c	/^get_window (ptr, flag, n, s, e, w)$/
+graph_hits	spag2.c	/^graph_hits (fp, ptr)$/
+graph_line	spag2.c	/^graph_line (fp, ptr)$/
+intersect	intersect.c	/^intersect (Map)$/
+is_a_node	spag2.c	/^is_a_node (ptr)$/
+line_length	intersect.c	/^line_length (Points)$/
+load_line	spag2.c	/^load_line (Map, Line, Head)$/
+local_check_dist	break2.c	/^local_check_dist (map, points, ux, uy, dist)$/
+new_line	new_line.c	/^new_line (map, type, node, points)$/
+process_lines	spag2.c	/^process_lines (Map, A, B)$/
+reset_d_window	graphic.c	/^reset_d_window ()$/
+reset_window	spag2.c	/^reset_window ()$/
+set_window	spag2.c	/^set_window (N, S, E, W)$/
+spagetti	spag2.c	/^spagetti (Map, thresh)$/
+too_small	intersect.c	/^too_small (Line, Points)$/
