@@ -13,6 +13,7 @@ echo "CMD=$SRC/src/CMD"                   >> $UNIX_BIN/gmake5
 echo "HEADER=head"                        >> $UNIX_BIN/gmake5
 echo "HASX=yes"                           >> $UNIX_BIN/gmake5
 echo "HASMotif=no"                        >> $UNIX_BIN/gmake5
+echo "MAKE=$MAKE"                         >> $UNIX_BIN/gmake5
 echo ". $SRC/src/CMD/generic/gmake.sh"    >> $UNIX_BIN/gmake5
 chmod ugo+x $UNIX_BIN/gmake5
 
