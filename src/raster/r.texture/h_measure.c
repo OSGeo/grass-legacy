@@ -81,7 +81,7 @@ h_measure (int **grays, int rows, int cols, int t_m, int t_d)
     for (col = 0; col < cols; ++col)
     {
       if (grays[row][col] > PGM_MAXMAXVAL)
-	G_fatal_error ("Too many categories... try recompiling or reclassifying");
+	G_fatal_error ("Too many categories (max: %i). Try to rescale or reclassify the map", PGM_MAXMAXVAL);
       tone[grays[row][col]] = grays[row][col];
     }
   for (row = PGM_MAXMAXVAL, tones = 0; row >= 0; --row)
