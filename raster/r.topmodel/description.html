@@ -3,18 +3,17 @@
 <B><EM>r.topmodel</EM></B> simulates TOPMODEL which is a physically based
 hydrologic model.
 <P>
-Note: (i) means input; (o) means output; (i/o) means input or output
+Note: (i) means input; (o) means output; (o/i) means input or output
 <P>
-The <B>-i</B> flag defines that input data are given for (i/o).  Without
-this flag, all input data, (i) or (i/o), should be given and intermediate
-output can not be input for run.
-As example, [belevation] map will be created from [elevation] and
-[basin] every run.  However, every [belevation] output map is the same and
+The <B>-i</B> flag defines that input data are given for (o/i).  Without
+this flag, all input data (i) and intermediate output (o/i) should be given
+and intermediate output can not be input for run.
+For example, [belevation] map will be created from [elevation] and
+[basin] in every run.  However, every [belevation] output is the same and
 this is useless process if [belevation] map is already given.
-With this flag, intermediate output can be input for run.  (i/o) parameters
-can be affected by this flag.
+With this flag, intermediate output can be input for run.  (o/i) parameters
+will be affected by this flag.
 <P>
-The <B>-w</B> flag enables wide output (No limit for 80 columns output).
 
 <H3>Selected Parameters:</H3>
 
@@ -24,11 +23,11 @@ The <B>-w</B> flag enables wide output (No limit for 80 columns output).
 If this is given, [depressionless] map will be used as [elevation] map.
 
 <DT><B>belevation</B>
-<DD>(i/o) Basin elevation map (extracted).  Study basin extracted elevation
+<DD>(o/i) Basin elevation map (extracted).  Study basin extracted elevation
 map
 
 <DT><B>topidx</B>
-<DD>(i/o) Topographic index ln(a/tanB) map (extracted).  Study basin
+<DD>(o/i) Topographic index ln(a/tanB) map (extracted).  Study basin
 extracted topographic index map
 
 <DT><B>Qobs</B>
