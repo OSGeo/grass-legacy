@@ -1,12 +1,12 @@
 
 
 
-g.remove <main>      GRASS Reference Manual       <main> g.remove
+g.remove <main>	     GRASS Reference Manual	  <main> g.remove
 
 
 
 NAME
-     g.remove - Removes data base element files from the user's
+     g.remove -	Removes	data base element files	from the user's
      current mapset.
      (GRASS File Management Program)
 
@@ -14,102 +14,102 @@ SYNOPSIS
      g.remove
      g.remove help
      g.remove [rast=name[,name,...]] [vect=name[,name,...]] [icon=name[,name,...]] [labels=name[,name,...]]
-          [sites=name[,name,...]] [region=name[,name,...]] [group=name[,name,...]]
+	  [sites=name[,name,...]] [region=name[,name,...]] [group=name[,name,...]]
 
 DESCRIPTION
-     g.remove allows the user to remove specified data base
-     element files from the current mapset.  If g.remove is
+     g.remove allows the user to remove	specified data base
+     element files from	the current mapset.  If	g.remove is
      invoked without arguments on the command line, a menu will
      appear listing possible data element types, as below:
 
 
-            1  raster maps
+	    1  raster maps
 
-            2  vector maps
+	    2  vector maps
 
-            3  paint icon files
+	    3  paint icon files
 
-            4  paint label files
+	    4  paint label files
 
-            5  site list files
+	    5  site list files
 
-            6  region files
+	    6  region files
 
-            7  imagery group files
+	    7  imagery group files
 
-          RETURN to exit
+	  RETURN to exit
 
-     Once the element type is selected, the user is prompted to
+     Once the element type is selected,	the user is prompted to
      name a specific file of this element type for removal.
-     (This list will vary, depending on what files currently
+     (This list	will vary, depending on	what files currently
      exist in the user's mapset.)  The specified file is removed,
-     and the user is again prompted for the name of a file of
+     and the user is again prompted for	the name of a file of
      this element type to be removed.  When prompted for a file
-     name, the user may enter list to see a list of existing
-     files of this element type, or hit RETURN to get back to the
+     name, the user may	enter list to see a list of existing
+     files of this element type, or hit	RETURN to get back to the
      above menu.
 
-     Alternately, the user can specify the data base element type
+     Alternately, the user can specify the data	base element type
      and file(s) to be removed on the command line.  Data base
-     element types are specified by the names to the left, below.
+     element types are specified by the	names to the left, below.
 
      Parameters:
 
-          rast=name[,name,...]     Name(s) of raster file(s) to
-                                   be removed.
+	  rast=name[,name,...]	   Name(s) of raster file(s) to
+				   be removed.
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
 
 
 
-g.remove <main>      GRASS Reference Manual       <main> g.remove
+g.remove <main>	     GRASS Reference Manual	  <main> g.remove
 
 
 
-          vect=name[,name,...]     Name(s) of vector file(s) to
-                                   be removed.
+	  vect=name[,name,...]	   Name(s) of vector file(s) to
+				   be removed.
 
-          icon=name[,name,...]     Name(s) of paint icon file(s)
-                                   to be removed.
+	  icon=name[,name,...]	   Name(s) of paint icon file(s)
+				   to be removed.
 
-          labels=name[,name,...]   Name(s) of paint labels
-                                   file(s) to be removed.
+	  labels=name[,name,...]   Name(s) of paint labels
+				   file(s) to be removed.
 
-          sites=name[,name,...]    Name(s) of site list file(s)
-                                   to be removed.
+	  sites=name[,name,...]	   Name(s) of site list	file(s)
+				   to be removed.
 
-          region=name[,name,...]   Name(s) of region file(s) to
-                                   be removed.
+	  region=name[,name,...]   Name(s) of region file(s) to
+				   be removed.
 
-          group=name[,name,...]    Name(s) of imagery group
-                                   file(s) to be removed.
+	  group=name[,name,...]	   Name(s) of imagery group
+				   file(s) to be removed.
 
-     The data base element file(s) named by the user on the
-     command line are subsequently removed from the user's
+     The data base element file(s) named by the	user on	the
+     command line are subsequently removed from	the user's
      current mapset.
 
 
 EXAMPLE
      For example, the below command will cause the raster files
      named soils, slope, and temp, the vector files named roads
-     and rail, and the imagery group files named nhap.1 and
+     and rail, and the imagery group files named nhap.1	and
      nhap.2, and these files' associated support files (e.g.,
-     cell header files, category files, etc.), to be removed from
-     the user's current mapset.
+     cell header files,	category files,	etc.), to be removed from
+     the user's	current	mapset.
 
-          g.remove rast=soils,slope,temp vect=roads,rail
-          group=nhap.1,nhap.2
+	  g.remove rast=soils,slope,temp vect=roads,rail
+	  group=nhap.1,nhap.2
 
 NOTE
-     If a particular data base element file has support files
-     associated with it (e.g., as is commonly the case with
+     If	a particular data base element file has	support	files
+     associated	with it	(e.g., as is commonly the case with
      raster files), g.remove will remove these support files
-     along with the data base element file specified.
+     along with	the data base element file specified.
 
      The user can only use g.remove to remove data files existing
      under the user's current mapset.
@@ -122,18 +122,18 @@ SEE ALSO
      g.copy, g.list, g.rename
 
 AUTHOR
-     Michael Shapiro, U.S. Army Construction Engineering Research
+     Michael Shapiro, U.S. Army	Construction Engineering Research
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
 
 
 
-g.remove <main>      GRASS Reference Manual       <main> g.remove
+g.remove <main>	     GRASS Reference Manual	  <main> g.remove
 
 
 
@@ -192,7 +192,7 @@ g.remove <main>      GRASS Reference Manual       <main> g.remove
 
 
 
-GRASS 4.1                U.S. Army CERL                         3
+GRASS 4.2		Baylor University			3
 
 
 
