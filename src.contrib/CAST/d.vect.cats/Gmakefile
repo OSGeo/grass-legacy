@@ -1,0 +1,15 @@
+PGM       = d.vect.cat
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB)
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+OBJS = \
+	main.o \
+	plotCat.o
+
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+#        cp $@  $(SRC)/man/cat4
+$(LIBES): #
+
