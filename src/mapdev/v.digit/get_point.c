@@ -26,19 +26,23 @@ new_point_with_digitizer (x, y, str)
     double *x, *y;
     char *str;
 {
-    int button;
+    int button, i;
 
     _Clear_base ();
     /*
     _Clear_info ();
     */
+#ifdef CURSORKEYS
     if (D_cursor_buttons())
+#endif
     {
-	_Write_base (13, "Press any key on DIGITIZER:");
+	i = D_start_button();
+	_Write_base (13, "Press any key <%d> - <%d>:", i, i+4);
 	Write_base (14, str);
 	button = get_digitizer_button_xy (x, y);
 	return (button);
     }
+#ifdef CURSORKEYS
     else
     {
 	char buf[BUFSIZ];
@@ -51,4 +55,5 @@ new_point_with_digitizer (x, y, str)
 	_coll_a_pnt (x, y);
 	return (-1);
     }
+#endif
 }
