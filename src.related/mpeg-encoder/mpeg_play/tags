@@ -1,0 +1,207 @@
+ASSIGN1	decoders.c	/^#define ASSIGN1(start, end, step, val, num) \\$/
+ASSIGN2	decoders.c	/^#define ASSIGN2(start, end, quant, motion_forward,/
+ASSIGN3	decoders.c	/^#define ASSIGN3(start, end, step, val, num) \\$/
+CollectStats	video.c	/^CollectStats()$/
+Color16DitherImage	16bit.c	/^Color16DitherImage(lum, cr, cb, out, rows, cols)$/
+Color32DitherImage	16bit.c	/^Color32DitherImage(lum, cr, cb, out, rows, cols)$/
+ComputeBackVector	motionvector.c	/^ComputeBackVector(recon_right_back_ptr, recon_down/
+ComputeForwVector	motionvector.c	/^ComputeForwVector(recon_right_for_ptr, recon_down_/
+ComputeVector	motionvector.c	/^#define ComputeVector(recon_right_ptr, recon_down_/
+ConvertColor	gdith.c	/^ConvertColor(l, cr, cb, r, g, b)$/
+CreateFullColorWindow	util32.c	/^CreateFullColorWindow (dpy, x, y, w, h)$/
+DESCALE	jrevdct.c	/^#define DESCALE(x,n)  RIGHT_SHIFT((x) + (ONE << ((/
+DeInstallXErrorHandler	gdith.c	/^void DeInstallXErrorHandler()$/
+DecodeCBP	decoders.h	/^#define DecodeCBP(coded_bp)						\\$/
+DecodeDCTCoeff	decoders.h	/^#define DecodeDCTCoeff(dct_coeff_tbl, run, level)	/
+DecodeDCTCoeffFirst	decoders.h	/^#define DecodeDCTCoeffFirst(runval, levelval)     /
+DecodeDCTCoeffNext	decoders.h	/^#define DecodeDCTCoeffNext(runval, levelval)      /
+DecodeDCTDCSizeChrom	decoders.h	/^#define DecodeDCTDCSizeChrom(macro_val)           /
+DecodeDCTDCSizeLum	decoders.h	/^#define DecodeDCTDCSizeLum(macro_val)             /
+DecodeMBAddrInc	decoders.h	/^#define DecodeMBAddrInc(val)				\\$/
+DecodeMBTypeB	decoders.h	/^#define DecodeMBTypeB(quant, motion_fwd, motion_bw/
+DecodeMBTypeI	decoders.h	/^#define DecodeMBTypeI(quant, motion_fwd, motion_bw/
+DecodeMBTypeP	decoders.h	/^#define DecodeMBTypeP(quant, motion_fwd, motion_bw/
+DecodeMotionVectors	decoders.h	/^#define DecodeMotionVectors(value)			\\$/
+DestroyPictImage	video.c	/^DestroyPictImage(apictimage)$/
+DestroyVidStream	video.c	/^DestroyVidStream(astream)$/
+DoDitherImage	main.c	/^DoDitherImage(l, gcl, Cr, Cb, disp, h, w) $/
+DoPictureDisplay	video.c	/^DoPictureDisplay(vid_stream)$/
+EndTime	video.c	/^EndTime()$/
+ExecuteDisplay	gdith.c	/^ExecuteDisplay(vid_stream)$/
+ExecutePPM	gdith.c	/^ExecutePPM(vid_stream)$/
+FIX	jrevdct.c	/^#define FIX(x)	((INT32) ((x) * CONST_SCALE + 0.5))/
+FIX2	jrevdct.c	/^#define FIX2(x)	((INT32) ((x) * CONST_SCALE))$/
+FS2DitherImage	fs2.c	/^void FS2DitherImage(lum, cr, cb, disp, rows, cols)/
+FS2FastDitherImage	fs2fast.c	/^FS2FastDitherImage (lum, cr, cb, out, h, w)$/
+FS4DitherImage	fs4.c	/^FS4DitherImage(lum, cr, cb, disp, rows, cols)$/
+FindFullColorVisual	util32.c	/^FindFullColorVisual (dpy, depth)$/
+Gray16DitherImage	gray.c	/^Gray16DitherImage(lum, cr, cb, p_out, h, w)$/
+Gray216DitherImage	gray.c	/^Gray216DitherImage(lum, cr, cb, p_out, h, w)$/
+Gray232DitherImage	gray.c	/^Gray232DitherImage(lum, cr, cb, p_out, h, w)$/
+Gray2DitherImage	gray.c	/^Gray2DitherImage(lum, cr, cb, p_out, h, w)$/
+Gray32DitherImage	gray.c	/^Gray32DitherImage(lum, cr, cb, p_out, h, w)$/
+GrayDitherImage	gray.c	/^GrayDitherImage(lum, cr, cb, out, h, w)$/
+HandleXError	gdith.c	/^int HandleXError(dpy, event)$/
+HybridDitherImage	hybrid.c	/^HybridDitherImage (lum, cr, cb, out, h, w)$/
+HybridErrorDitherImage	hybriderr.c	/^HybridErrorDitherImage (lum, cr, cb, out, h, w)$/
+IS_2x2_DITHER	video.h	/^#define IS_2x2_DITHER(a) ((a) == Twox2_DITHER || (/
+Init2x2Dither	2x2.c	/^Init2x2Dither()$/
+InitColor	gdith.c	/^InitColor()$/
+InitColorDisplay	gdith.c	/^void InitColorDisplay(name)$/
+InitColorDither	16bit.c	/^InitColorDither(int thirty2)$/
+InitDisplay	gdith.c	/^void InitDisplay(name)$/
+InitFS2Dither	fs2.c	/^void InitFS2Dither()$/
+InitFS2FastDither	fs2fast.c	/^void InitFS2FastDither()$/
+InitFS4Dither	fs4.c	/^InitFS4Dither()$/
+InitGray256Display	gdith.c	/^void InitGray256Display(name)$/
+InitGrayDisplay	gdith.c	/^void InitGrayDisplay(name)$/
+InitHybridDither	hybrid.c	/^InitHybridDither()$/
+InitHybridErrorDither	hybriderr.c	/^InitHybridErrorDither()$/
+InitMBOrderedDither	mb_ordered.c	/^InitMBOrderedDither()$/
+InitMonoDisplay	gdith.c	/^void InitMonoDisplay(name)$/
+InitOrdered2Dither	ordered2.c	/^InitOrdered2Dither()$/
+InitOrderedDither	ordered.c	/^InitOrderedDither()$/
+InstallXErrorHandler	gdith.c	/^void InstallXErrorHandler()$/
+MBOrderedDitherDisplayCopy	mb_ordered.c	/^MBOrderedDitherDisplayCopy(vid_stream, mb_addr, mo/
+MBOrderedDitherImage	mb_ordered.c	/^MBOrderedDitherImage (lum, cr, cb, out, h, w)$/
+MULTIPLY	jrevdct.c	/^#define MULTIPLY(var,const)  (((INT16) (var)) * ((/
+MakeFloatClockTime	readfile.c	/^int MakeFloatClockTime(hiBit,low4Bytes,floatClockT/
+MakeWindow	gdith.c	/^MakeWindow(name) $/
+Mmain	main.c	/^main(argc, argv)$/
+MonoDitherImage	mono.c	/^MonoDitherImage(lum, cr, cb, out, h, w)$/
+MonoThresholdImage	mono.c	/^MonoThresholdImage(lum, cr, cb, out, h, w)$/
+NewPictImage	video.c	/^NewPictImage(width, height)$/
+NewVidStream	video.c	/^NewVidStream(buffer_len)$/
+OPP_SHIFT_SEED_BIT	mono.c	/^#    define OPP_SHIFT_SEED_BIT(b) (b >>= 1)$/
+Ordered2DitherImage	ordered2.c	/^Ordered2DitherImage (lum, cr, cb, out, h, w)$/
+OrderedDitherImage	ordered.c	/^OrderedDitherImage (lum, cr, cb, out, h, w)$/
+ParseAwayBlock	parseblock.c	/^ParseAwayBlock(n)$/
+ParseGOP	video.c	/^ParseGOP(vid_stream)$/
+ParseMacroBlock	video.c	/^ParseMacroBlock(vid_stream)$/
+ParsePicture	video.c	/^ParsePicture(vid_stream, time_stamp)$/
+ParseReconBlock	parseblock.c	/^ParseReconBlock(n)$/
+ParseSeqHead	video.c	/^ParseSeqHead(vid_stream)$/
+ParseSlice	video.c	/^ParseSlice(vid_stream)$/
+PostInit2x2Dither	2x2.c	/^PostInit2x2Dither() $/
+PrintAllStats	video.c	/^PrintAllStats()$/
+PrintOneStat	video.c	/^PrintOneStat()$/
+PrintTimeInfo	video.c	/^PrintTimeInfo()$/
+ProcessSkippedBFrameMBlocks	video.c	/^ProcessSkippedBFrameMBlocks(vid_stream)$/
+ProcessSkippedPFrameMBlocks	video.c	/^ProcessSkippedPFrameMBlocks(vid_stream)$/
+RIGHT_SHIFT	jrevdct.c	/^#define RIGHT_SHIFT(x,shft)  \\$/
+RandInit	2x2.c	/^void RandInit(h, w)$/
+ReadPackHeader	readfile.c	/^int ReadPackHeader(systemClockTime,muxRate)$/
+ReadPacket	readfile.c	/^int ReadPacket(packetID, bs_ptr, max_length, lengt/
+ReadRate	readfile.c	/^void ReadRate(inputBuffer,rate)$/
+ReadSTD	readfile.c	/^void ReadSTD(inputBuffer,stdBufferScale,stdBufferS/
+ReadStartCode	readfile.c	/^int ReadStartCode(startCode)$/
+ReadSysClock	video.c	/^ReadSysClock()$/
+ReadSystemHeader	readfile.c	/^int ReadSystemHeader()$/
+ReadTimeStamp	readfile.c	/^void ReadTimeStamp(inputBuffer,hiBit,low4Bytes)$/
+ReconBMBlock	video.c	/^ReconBMBlock(vid_stream, bnum, recon_right_back, r/
+ReconBiMBlock	video.c	/^ReconBiMBlock(vid_stream, bnum, recon_right_for, r/
+ReconIMBlock	video.c	/^ReconIMBlock(vid_stream, bnum)$/
+ReconPMBlock	video.c	/^ReconPMBlock(vid_stream, bnum, recon_right_for, re/
+ReconSkippedBlock	video.c	/^ReconSkippedBlock(source, dest, row, col, row_size/
+ResizeDisplay	gdith.c	/^void ResizeDisplay(w, h)$/
+SHIFT_SEED_BIT	mono.c	/^#    define SHIFT_SEED_BIT(b) (b <<= 1)$/
+SeekStream	readfile.c	/^  SeekStream(vid_stream)$/
+SetBFlag	video.c	/^SetBFlag(val)$/
+SetPFlag	video.c	/^SetPFlag(val)$/
+Sign	video.c	/^#define Sign(num) ((num > 0) ? 1 : ((num == 0) ? 0/
+StartTime	video.c	/^StartTime()$/
+Twox2Color16DitherImage	16bit.c	/^Twox2Color16DitherImage(lum, cr, cb, out, rows, co/
+Twox2Color32DitherImage	16bit.c	/^Twox2Color32DitherImage(lum, cr, cb, out, rows, co/
+Twox2DitherImage	2x2.c	/^Twox2DitherImage(lum, cr, cb, out, h, w)$/
+UPDATE_COUNT	util.h	/^#define UPDATE_COUNT(numbits) bitCount += numbits$/
+_ANSI_ARGS_	floatdct.c	/^#define _ANSI_ARGS_(x) ()$/
+assertCrop	video.c	/^#define assertCrop(x)	myassert(x,((x) >= -MAX_NEG_/
+bitCountRead	video.c	/^bitCountRead()$/
+clear_data_stream	readfile.c	/^  clear_data_stream(bs_ptr, max_length, length_ptr/
+correct_underflow	util.c	/^correct_underflow() {$/
+decodeDCTCoeff	decoders.c	/^decodeDCTCoeff(dct_coeff_tbl, run, level)$/
+decodeDCTCoeffFirst	decoders.c	/^decodeDCTCoeffFirst(run, level)$/
+decodeDCTCoeffNext	decoders.c	/^decodeDCTCoeffNext(run, level)$/
+decodeDCTDCSizeChrom	decoders.c	/^decodeDCTDCSizeChrom(value)$/
+decodeDCTDCSizeLum	decoders.c	/^decodeDCTDCSizeLum(value)$/
+find_start_code	readfile.c	/^int find_start_code()$/
+float_idct	floatdct.c	/^void float_idct(block)$/
+flush_bits	util.h	/^#define flush_bits(num)                           /
+free_bits_at_bottom	16bit.c	/^free_bits_at_bottom(unsigned long a)$/
+free_bits_at_top	16bit.c	/^free_bits_at_top(unsigned long a)$/
+get_bits1	util.h	/^#define get_bits1(result)                         /
+get_bits10	util.h	/^#define get_bits10(result) get_bitsX(10, 0xffc0000/
+get_bits11	util.h	/^#define get_bits11(result) get_bitsX(11, 0xffe0000/
+get_bits12	util.h	/^#define get_bits12(result) get_bitsX(12, 0xfff0000/
+get_bits14	util.h	/^#define get_bits14(result) get_bitsX(14, 0xfffc000/
+get_bits16	util.h	/^#define get_bits16(result) get_bitsX(16, 0xffff000/
+get_bits18	util.h	/^#define get_bits18(result) get_bitsX(18, 0xffffc00/
+get_bits2	util.h	/^#define get_bits2(result)                         /
+get_bits3	util.h	/^#define get_bits3(result) get_bitsX(3,   0xe000000/
+get_bits32	util.h	/^#define get_bits32(result) get_bitsX(32, 0xfffffff/
+get_bits4	util.h	/^#define get_bits4(result) get_bitsX(4,   0xf000000/
+get_bits5	util.h	/^#define get_bits5(result) get_bitsX(5,   0xf800000/
+get_bits6	util.h	/^#define get_bits6(result) get_bitsX(6,   0xfc00000/
+get_bits7	util.h	/^#define get_bits7(result) get_bitsX(7,   0xfe00000/
+get_bits8	util.h	/^#define get_bits8(result) get_bitsX(8,   0xff00000/
+get_bits9	util.h	/^#define get_bits9(result) get_bitsX(9,   0xff80000/
+get_bitsX	util.h	/^#define get_bitsX(num, mask, shift,  result)      /
+get_bitsn	util.h	/^#define get_bitsn(num, result) get_bitsX((num), nB/
+get_ext_data	util.c	/^char *get_ext_data ()$/
+get_extra_bit_info	util.c	/^char *get_extra_bit_info ()$/
+get_more_data	readfile.c	/^get_more_data(bs_ptr, max_length, length_ptr, buf_/
+init_float_idct	floatdct.c	/^void init_float_idct()$/
+init_mb_addr_inc	decoders.c	/^init_mb_addr_inc()$/
+init_mb_type_B	decoders.c	/^init_mb_type_B()$/
+init_mb_type_P	decoders.c	/^init_mb_type_P()$/
+init_motion_vectors	decoders.c	/^init_motion_vectors()$/
+init_pre_idct	jrevdct.c	/^init_pre_idct() {$/
+init_stat_struct	video.c	/^init_stat_struct(astat)$/
+init_stats	video.c	/^init_stats()$/
+init_tables	decoders.c	/^init_tables()$/
+int_handler	main.c	/^int_handler()$/
+j_rev_dct	jrevdct.c	/^j_rev_dct (data)$/
+j_rev_dct_sparse	jrevdct.c	/^j_rev_dct_sparse (data, pos)$/
+mpegVidRsrc	video.c	/^mpegVidRsrc(time_stamp, vid_stream)$/
+myassert	video.c	/^#define myassert(x,expression)\\$/
+next_bits	util.c	/^int next_bits(num, mask)$/
+next_start_code	util.c	/^int next_start_code()$/
+number_of_bits_set	16bit.c	/^number_of_bits_set(unsigned long a)$/
+pure_get_more_data	readfile.c	/^pure_get_more_data(buf_start, max_length, length_p/
+read_sys	readfile.c	/^int read_sys(bs_ptr, max_length, length_ptr, buf_p/
+shifted_down	16bit.c	/^shifted_down(unsigned long a)$/
+show_bits1	util.h	/^#define show_bits1(result)  show_bitsX(1,  0x80000/
+show_bits10	util.h	/^#define show_bits10(result) show_bitsX(10, 0xffc00/
+show_bits11	util.h	/^#define show_bits11(result) show_bitsX(11, 0xffe00/
+show_bits12	util.h	/^#define show_bits12(result) show_bitsX(12, 0xfff00/
+show_bits13	util.h	/^#define show_bits13(result) show_bitsX(13, 0xfff80/
+show_bits14	util.h	/^#define show_bits14(result) show_bitsX(14, 0xfffc0/
+show_bits15	util.h	/^#define show_bits15(result) show_bitsX(15, 0xfffe0/
+show_bits16	util.h	/^#define show_bits16(result) show_bitsX(16, 0xffff0/
+show_bits17	util.h	/^#define show_bits17(result) show_bitsX(17, 0xffff8/
+show_bits18	util.h	/^#define show_bits18(result) show_bitsX(18, 0xffffc/
+show_bits19	util.h	/^#define show_bits19(result) show_bitsX(19, 0xffffe/
+show_bits2	util.h	/^#define show_bits2(result)  show_bitsX(2,  0xc0000/
+show_bits20	util.h	/^#define show_bits20(result) show_bitsX(20, 0xfffff/
+show_bits21	util.h	/^#define show_bits21(result) show_bitsX(21, 0xfffff/
+show_bits22	util.h	/^#define show_bits22(result) show_bitsX(22, 0xfffff/
+show_bits23	util.h	/^#define show_bits23(result) show_bitsX(23, 0xfffff/
+show_bits24	util.h	/^#define show_bits24(result) show_bitsX(24, 0xfffff/
+show_bits25	util.h	/^#define show_bits25(result) show_bitsX(25, 0xfffff/
+show_bits26	util.h	/^#define show_bits26(result) show_bitsX(26, 0xfffff/
+show_bits27	util.h	/^#define show_bits27(result) show_bitsX(27, 0xfffff/
+show_bits28	util.h	/^#define show_bits28(result) show_bitsX(28, 0xfffff/
+show_bits29	util.h	/^#define show_bits29(result) show_bitsX(29, 0xfffff/
+show_bits3	util.h	/^#define show_bits3(result)  show_bitsX(3,  0xe0000/
+show_bits30	util.h	/^#define show_bits30(result) show_bitsX(30, 0xfffff/
+show_bits31	util.h	/^#define show_bits31(result) show_bitsX(31, 0xfffff/
+show_bits32	util.h	/^#define show_bits32(result)                       /
+show_bits4	util.h	/^#define show_bits4(result)  show_bitsX(4,  0xf0000/
+show_bits5	util.h	/^#define show_bits5(result)  show_bitsX(5,  0xf8000/
+show_bits6	util.h	/^#define show_bits6(result)  show_bitsX(6,  0xfc000/
+show_bits7	util.h	/^#define show_bits7(result)  show_bitsX(7,  0xfe000/
+show_bits8	util.h	/^#define show_bits8(result)  show_bitsX(8,  0xff000/
+show_bits9	util.h	/^#define show_bits9(result)  show_bitsX(9,  0xff800/
+show_bitsX	util.h	/^#define show_bitsX(num, mask, shift,  result)     /
+show_bitsn	util.h	/^#define show_bitsn(num,result) show_bitsX((num), (/
+usage	main.c	/^usage(s)$/
