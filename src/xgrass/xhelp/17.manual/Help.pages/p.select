@@ -1,5 +1,0 @@
-
-@man("p.select") - Selects a device (printer) for GRASS hardcopy output.
-Outputs can also be previewed on the graphics display monitor.
-
-(GRASS Paint/Print Output Program)

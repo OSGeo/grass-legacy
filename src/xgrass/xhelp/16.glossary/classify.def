@@ -1,6 +1,0 @@
-
-
-classification - The categorization of features in a remotely-
-sensed @glossary("image",16.glossary/img.def), based on similarities in their spectral reflectance. 
-The process of determining a set of defined features from image
-data.

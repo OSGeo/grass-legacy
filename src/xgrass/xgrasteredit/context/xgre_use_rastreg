@@ -1,8 +1,0 @@
-If this toggle button is set when the OK button
-is pressed, then the selected raster map will be 
-opened an loaded according to its region.
-
-The entire raster map will be loaded into the 
-raster-editor using the boundaries and cell-size
-defined by the raster map's region.
-

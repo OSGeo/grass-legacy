@@ -1,5 +1,0 @@
-
-
-island - In GIS usage, the term island refers to a @glossary("polygon",16.glossary/polygon.def) which
-lies completely within another polygon.  The two polygons contain
-data with different @glossary("category values",16.glossary/catval.def).

@@ -1,5 +1,0 @@
-
-@man("d.colormode") - Allows the user to establish whether a map will be displayed
-using its own color table or the fixed color table of the graphics monitor.
-
-(GRASS Display Program)

@@ -1,7 +1,0 @@
-
-
-join - Typically refers to the connection of two or more digital
-maps containing data for different (often adjacent) geographic
-@glossary("regions",16.glossary/georeg.def).  Such maps may originally have been @glossary("digitized",16.glossary/digitize.def)
-separately due to digitizer size limits.  Sometimes, join refers to
-the joining of digital data (e.g., two line segments) within a map.

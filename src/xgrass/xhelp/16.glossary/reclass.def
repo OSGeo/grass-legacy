@@ -1,7 +1,0 @@
-
-
-reclass - To recategorize the tagged @glossary("attributes",16.glossary/attribu.def) (category values)
-in a map.  The function is commonly used to create new maps (e.g.,
-reclassing a map of soil mapping units into a map of soil
-permeabilities) or to reduce the level of detail (e.g., reclassing
-a map of true elevation values into a map of elevation ranges).

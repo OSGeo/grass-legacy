@@ -1,9 +1,0 @@
-
-
-search path - In GRASS, users may access maps, created by others,
-that are stored in @glossary("mapsets",16.glossary/mapset.def) under the same geographic @glossary("location",16.glossary/loc.def).
-The user can specify the names and order in which mapsets will be
-searched for maps in his mapset search path.  More generally, in
-@glossary("UNIX",16.glossary/unix.def) terminology, a search path specifies the names of and order
-in which directories will be searched for user-specified files and
-programs.

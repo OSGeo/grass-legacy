@@ -1,7 +1,0 @@
-Brush Highlight Color
-
-When the brush is applied to the raster map, the raster map
-cells whose values are changed are redisplayed in a highlight
-color so that you can see which cells you have changed.  You
-can set this color by use of the @ref("Brush-Color",xgre/brush_color) menu option.
-

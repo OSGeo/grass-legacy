@@ -1,8 +1,0 @@
-
-
-Digital Terrain Elevation Data (DTED) - Elevation data produced and
-supplied by the Defense Mapping Agency (@glossary("DMA",16.glossary/dma.def)); the @glossary("digital",16.glossary/digdata.def)
-equivalent of the elevation data on a @glossary("topographic map",16.glossary/topomap.def).  Currently
-available at two @glossary("resolutions",16.glossary/res.def); Level 1 (DTED-1) data has resolution
-of roughly 100 meters, while Level 2 (DTED-2) data has a resolution
-of roughly 30 meters.
