@@ -1,0 +1,106 @@
+$Id: BUGS,v 1.1 2001-02-12 16:24:19 markus Exp $
+
+G3D bugs list
+
+Currently there are severe G3D inconsistencies: 
+The basic problem is that the "for" loops are different. 
+I would prefer if G3D orders the data from
+ - north to south (like 2D GRASS)
+ - west to east   (like 2D GRASS)
+ - top to bottom
+
+Maybe this was intended by Mark Astely? I can't find anything documented
+except what's in the GRASS Programmer's manual:
+http://www.geog.uni-hannover.de/grass/grassdevel.html#prog
+
+However, if you check these modules:
+
+ - s.vol.rst: does not use G3D to read/write data, but seems to
+   read as described above (N->S, W->E, T->B)
+   Looks good.
+
+ - src/libes/g3d/writeascii.c (unused sample application):
+   G3d_writeAscii()
+     for (z = 0; z < depths; z++) 
+       for (y = 0; y < rows; y++) {
+         for (x = 0; x < cols; x++) {
+ 
+ - but in r3.out.ascii/main.c:
+     for (z = 0; z < depths; z++) 
+       for (y = rows-1; y >= 0; y--) {    /* north to south */
+         for (x = 0; x < cols; x++) {
+
+   y is read reverted, indicates that the g3d-storage is not consistent
+   with 2D GRASS.
+
+ - r3.in.ascii/main.c
+     for (z = 0; z < region->depths; z++) {
+       for (y = region->rows-1; y >= 0; y--)    /* go north to south */
+        for (x = 0; x < region->cols; x++) {
+
+   y reverted, but at least consistent with r3.out.ascii
+
+ - r3.out.v5d/main.c
+
+     for (z = 0; z < depths; z++) {
+       for (x = 0; x < cols; x++) {
+         for (y = rows-1; y >= 0; y--) {  /* north to south */
+
+   x and y changed (I have done this to get consistency with 2D GRASS and
+   to avoid problems with Vis5D)
+
+
+ - s.vol.idw/main.c
+     for (lev = 0; lev < Nl; lev++)
+      for (row = 0; row < Nr; row++)
+        for (col = 0; col < Nc; col++)
+   the output of s.vol.idw does not match s.vol.rst (somewhat flipped)
+
+
+ - r3.mkdspf/r3_data.c | r3.showdspf.openGL/r3_data.c
+    no for loops but:
+      G3d_getBlock ()
+    is used
+   Is G3d_getBlock () consistent with "for" loops used in other modules?
+
+
+ - r3.to.sites/main.c
+
+     for (z = 0; z < depths; z++) {
+       for (y = rows-1; y >= 0; y--) {    /* north to south */
+         for (x = 0; x < cols; x++) {
+
+   derived from r3.out.ascii, same story
+
+ - r3.mapcalc
+    ?
+
+
+ - r3.null/main.c
+
+    for (z = 0; z < region.depths; z++) {
+     for (y = 0; y < region.cols; y++)
+      for (x = 0; x < region.rows; x++) {
+
+This confusion needs to be fixed.
+
+-------------------------------------------------------------------
+General bug:
+
+ If you generate a volume with small region settings and enlarge the
+ region later, all modules will crash with a "error in G3d_getTilePtr" 
+ from:
+ src/libes/g3d/tileio.c
+
+ However, in 2D GRASS this region enlargement is allowed. It would be
+ definitly an improvement to get rid of this bug.
+
+ To follow this bug, the new "g3.setregion" script can be used:
+ In CVS at:
+ http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass/src.contrib/GMSL/g3d/src3d/scripts/g3.setregion
+
+
+Regards
+
+ Markus Neteler
+ neteler@geog.uni-hannover.de
