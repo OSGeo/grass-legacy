@@ -1,4 +1,3 @@
-/* %W%  %G% */
 static int red = 8;
 static int grn = 8;
 static int blu = 8;
