@@ -18,27 +18,35 @@ lengths, and flowline densities (upslope areas) from a raster digital elevation
 model(DEM)
 
 <P><I>(GRASS Raster/Vector Program)</I>
-<BR>&nbsp;
+
 <H2>SYNOPSIS</H2>
 <B>r.flow</B>
 <BR><B>r.flow </B>help
-<BR><B>r.flow [ -u3mMqh ] elevin </B>= name [ <B>aspin </B>= name ] [ <B>barin
-</B>= name ] [ <B>skip </B>= val ] [ <B>bound </B>= val ] [ <B>offset </B>=
-val ] [ <B>flout </B>= name ] [ <B>lgout </B>= name ] [ <B>dsout </B>=
-name ]
-<BR>&nbsp;
-<BR>&nbsp;
+<BR><B>r.flow [-u3mMqh] 
+elevin </B>=name
+[<B>aspin</B>=name]
+[<B>barin</B>=name] 
+[<B>skip</B>=value]
+[<B>bound</B>=value]
+[<B>offset</B>=value] 
+[<B>flout</B>=name]
+[<B>lgout</B>=name]
+[<B>dsout </B>=name]
+
 <H2>DESCRIPTION</H2>
 This program<B> </B>generates flowlines using a combined raster-vector
-approach (see<A HREF="http://www2.gis.uiuc.edu:2280/modviz/papers/hmg.rev1.ps"> Mitasova and Hofierka
-1993 </A>and <A HREF="http://www2.gis.uiuc.edu:2280/modviz/papers/ijgis.html">Mitasova et al. 1995)</A>) from an input
-elevation raster map <I>elevin</I><B> </B>(integer or floating point),
-and optionally an input aspect raster map <I>aspin</I> and/or an input
-barrier raster map <I>barin</I>. There are three possible output maps which
-can be produced in any combination simultaneously: a vector file <I>flout</I>
-of flowlines, a raster map <I>lgout</I> of flowpath lengths, and a raster
-map <I>dsout</I> of flowline densities (which are equal upslope contributed
-areas per unit width, when multiplied by resolution).
+approach (see<A
+HREF="http://www2.gis.uiuc.edu:2280/modviz/papers/hmg.rev1.ps"> Mitasova and
+Hofierka 1993 </A>and <A
+HREF="http://www2.gis.uiuc.edu:2280/modviz/papers/ijgis.html">Mitasova et
+al. 1995)</A>) from an input elevation raster map <I>elevin</I><B>
+</B>(integer or floating point), and optionally an input aspect raster map
+<I>aspin</I> and/or an input barrier raster map <I>barin</I>. There are
+three possible output maps which can be produced in any combination
+simultaneously: a vector file <I>flout</I> of flowlines, a raster map
+<I>lgout</I> of flowpath lengths, and a raster map <I>dsout</I> of flowline
+densities (which are equal upslope contributed areas per unit width, when
+multiplied by resolution).
 
 
 <P>Aspect used for input must follow the same rules as aspect computed
