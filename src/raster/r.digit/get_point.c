@@ -28,7 +28,7 @@ int get_point (int *x, int *y, char *east, char *north)
         fprintf (stdout,"NORTH: %s\n", north);
         instructions(1) ;
 
-    } while (button == 1) ;
+    } while (button == LEFTB) ;
 
     *x = curx;
     *y = cury;
