@@ -1,0 +1,10 @@
+
+This directory contains the FORTRAN source code for the ANSWERS program,
+for use with the d.answers program. See the comments in the answers.f 
+file for more information about the version of ANSWERS we used for 
+development of the r.answers tool.
+
+ANSWERS on GRASS Project
+Chris Rewerts  rewerts@ecn.purdue.edu
+Bernie Engel   engelb@ecn.purdue.edu
+Agricultural Engineering, Purdue University
