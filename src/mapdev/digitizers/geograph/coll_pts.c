@@ -5,8 +5,8 @@
 *	coll_a_pnt() -  collect a point from digitizer.
 */
 
-#include "../../digit/digit.h"
-#include "../../digit/globals.h"
+#include "../../v.digit/digit.h"
+#include "../../v.digit/globals.h"
 
 #include <sgtty.h>
 
