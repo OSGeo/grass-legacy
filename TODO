@@ -1,4 +1,4 @@
-$Id: TODO,v 1.47 2000-11-06 15:59:22 markus Exp $
+$Id: TODO,v 1.48 2000-11-08 20:24:23 andreas Exp $
 
 TODO for GRASS GIS:
 
@@ -417,5 +417,4 @@ Frank Warmerdam wrote:
 Datum support:
 
 - upgrade r.proj, s.proj, v.proj
-- add datum printout for g.region -p
 - ?
