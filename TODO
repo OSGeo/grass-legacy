@@ -1,4 +1,4 @@
-$Id: TODO,v 1.36 2000-10-19 14:24:51 markus Exp $
+$Id: TODO,v 1.37 2000-10-19 16:06:36 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -9,6 +9,8 @@ Wishlist for GRASS 5
 ---------------------------------------------------------------------
 
 - Fix the bugs described in BUGS
+
+---------------------------------------------------------------------
 
 Configure:
 - update missing features in "configure" (see src/CMD/head/head.in)
@@ -70,7 +72,7 @@ XDriver
   (Being worked on by ?) 
 
 ---------------------------------------------------------------------
-Package:
+Package concept:
 - split into packages: GRASS-CORE, GRASS-Raster, ...
   (Being worked on by ?)
 
@@ -96,6 +98,18 @@ So two ways from there to improve the situation:
 
 - this might be related to a daemon serving a session key (see there).
   (Being worked on by ?)
+---------------------------------------------------------------------
+Code merge:
+ - v.in.dxf/v.in.dxf2
+ - r.info: integrate functionality of r.univar
+ - reduce the number of import/export modules. Add a parameter for the file
+   format (or auto-detection) instead of having tons of modules. r.in.gdal
+   is on the right way
+   compare:documents/new_directory_structure.txt for file list
+ - r.reclass/r.reclass.scs
+ - ...
+ It is important to reduce the number of modules (not to overwhelm the
+ users like now)
 
 ---------------------------------------------------------------------
 Modules:
