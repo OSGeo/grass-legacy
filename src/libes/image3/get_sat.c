@@ -143,9 +143,9 @@ static int read_group_sat (FILE *fd, Satellite *sat_info)
   /* always have four corners for the satellite */
   
 /**  G_getl (buf, sizeof buf, fd); 
-/**  G_strip(buf);
-/**  if (sscanf(buf,"NUM FID       %d \n",&num_fid) == 1)
-/**    cam_info->num_fid = num_fid;
+  *  G_strip(buf);
+  *  if (sscanf(buf,"NUM FID       %d \n",&num_fid) == 1)
+  *    cam_info->num_fid = num_fid;
 **/
   
   for (n=0; n<4; n++) 
