@@ -54,7 +54,9 @@
 #include "gis.h"
 #include "mfhdf.h"
 
-/* #define DEBUG */
+
+/*#define DEBUG*/
+
 
 #define  FIELD_SIZE     1024	/* maximum length of all the field names */
 #define  MAX_DIMS         20	/* maximum number of dimensions in sds  */
@@ -246,6 +248,7 @@ int main(int argc, char *argv[])
  * Prompt user for desired parameters to be written as binary file 
  */
 
+#ifdef ORIGCODE /* currently we can read only one map at time*/
     fprintf(stderr,
 	    "\nEnter total NUMBER of maps to write out or 0 to exit program\n");
     scanf("%d", &nparm);
@@ -270,7 +273,24 @@ int main(int argc, char *argv[])
 		sds_index[nindex++] = temparm;
 	}
     }
+    if (nparm > 0) {
+	fprintf(stderr, " The valid parameter numbers you Enter are: ");
+	for (index = 0; index < nindex; index++)
+	    fprintf(stderr, " %d ", sds_index[index]);
+    }
+    else
+	fprintf(stderr, " No sds selected -- # of parameters = 0 \n");
+#endif
 
+     nparm = 1; /*read one map */
+     fprintf(stderr,
+		"\nEnter map number from above list:\n");
+     nindex = 0;
+     for (index = 0; index < nparm; index++) {
+	    scanf("%d", &temparm);
+	    if (temparm <= n_datasets)
+		sds_index[nindex++] = temparm;
+     }
     if (nparm > 0) {
 	fprintf(stderr, " The valid parameter numbers you Enter are: ");
 	for (index = 0; index < nindex; index++)
@@ -505,7 +525,7 @@ dims[0] = YL;
 	    }
 
 	    if (rank == 3) {
-		/* write two temp files */
+		/* write two temp files for day and night images*/
 		tempfile = strdup(infile);
 		strcpy(outfile, tempfile);
 		strcat(outfile, sds_name);
@@ -551,7 +571,7 @@ dims[0] = YL;
 #ifdef DEBUG
 		for (row = 0; row < edges[0]; row++)
 		    for (col = 0; col < edges[1]; col++)
-			fprintf(stdout, "row: %d col: %d val: %c\n", row, col,
+			fprintf(stdout, "row: %d col: %d val: 0x%2x\n", row, col,
 				ui16[col]);
 #endif
 		/* write 1st half of array = night image */
@@ -613,7 +633,7 @@ dims[0] = YL;
 		fprintf(stderr, "Applying Grey.eq color table...\n");
 		sprintf(cmd, "g.region save=%s.tmpreg.%s; g.region rast=%s;\
                       r.colors %s col=grey.eq;\
-                      g.region region=%s.tmpreg.%s; g.remove region = %s.tmpreg. % s > /dev / null ", outfile, outfile, outfile, outfile, outfile, outfile, outfile, outfile);
+                      g.region region=%s.tmpreg.%s; g.remove region=%s.tmpreg.%s > /dev/null ", outfile, outfile, outfile, outfile, outfile, outfile, outfile, outfile);
 		G_system(cmd);
 
 		/* delete interim binary file */
@@ -657,7 +677,8 @@ dims[0] = YL;
 		fprintf(stderr, "Applying Grey.eq color table...\n");
 		sprintf(cmd, "g.region save=%s.tmpreg.%s; g.region rast=%s;\
                       r.colors %s col=grey.eq;\
-                      g.region region=%s.tmpreg.%s; g.remove region = %s.tmpreg. % s > /dev / null ", outfile, outfile, outfile, outfile, outfile, outfile, outfile, outfile);
+                      g.region region=%s.tmpreg.%s; g.remove region = %s.tmpreg. %s > /dev/null ", 
+                                                    outfile, outfile, outfile, outfile, outfile, outfile, outfile, outfile);
 		G_system(cmd);
 
 		/* delete interim binary file */
