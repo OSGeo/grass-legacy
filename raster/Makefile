@@ -7,7 +7,6 @@ SUBDIRS1 = \
 	r.colors \
 	r.composite \
 	r.cost \
-	r.gdal \
 	r.his \
 	r.mapcalc \
 	r.proj \
