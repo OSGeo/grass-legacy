@@ -1,0 +1,10 @@
+
+LIST=main.o\
+     read_specs.o\
+     print_lut.o\
+     build_lut.o
+
+$(BIN)/Gcell.colors2: $(LIST) $(GISLIB)
+	cc -g $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
+
+$(GISLIB): #
