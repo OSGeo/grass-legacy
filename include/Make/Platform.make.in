@@ -151,8 +151,9 @@ PROJINC             = @PROJINC@
 PROJLIB             = @PROJLIB@
 
 #OPENDWG:
-OPENDWGINC             = @OPENDWGINC@
-OPENDWGLIB             = @OPENDWGLIB@ ad2.a
+OPENDWGINCPATH      = @OPENDWGINCPATH@
+OPENDWGLIBPATH      = @OPENDWGLIBPATH@
+OPENDWGLIB          = @OPENDWGLIB@
 
 # Uncomment below to input Korean(Asian?) characters in v.digit or etc.
 #DASIAN_CHARS        = -DASIAN_CHARS
