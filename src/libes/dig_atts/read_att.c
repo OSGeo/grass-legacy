@@ -111,7 +111,7 @@ read_att_struct (fp, att)
 
 	if (num_read != 4)
 		return(-1) ;
-	return( check_type(att->type) ? 0 : -1) ;
+	return( check_type(&(att->type)) ? 0 : -1) ;
 
 }	/*  read_att_struct()  */
 
