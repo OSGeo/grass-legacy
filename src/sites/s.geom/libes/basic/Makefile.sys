@@ -1,0 +1,47 @@
+/* Generic include-file for Makefile.cpp files. */
+
+/* Uses predefined C pre-processor macros to select target machine. */
+/* Add more machines if necessary.                                  */
+
+/*--------------------------------------------------------------------------*/
+/* default setting, works for SUN 3 and 4 */
+ CC= cc
+ LINT= lint -u
+ LLOUT= -C_OUT
+ AR= ar ruv lib_OUT.a
+ RANLIB= ranlib lib_OUT.a
+ MALLOC=
+
+/*--------------------------------------------------------------------------*/
+/* for Silicon Graphics (Personal) IRISes running IRIX 4.0.1 (System V) */
+#if defined (sgi) || defined (__sgi)
+ CC= cc -cckr -prototypes -float -signed 
+ LINT= lint -u -h -n -cckr -prototypes -float -signed
+ LLOUT= -o_OUT
+ AR= ar ruv lib_OUT.a
+ RANLIB= true
+ MALLOC= -lmalloc
+#endif
+
+/*--------------------------------------------------------------------------*/
+/* for NeXT stations */
+#if defined (NeXT)
+ CC= cc
+ LINT= true
+ LLOUT= -o_OUT
+ AR= ar ruv lib_OUT.a
+ RANLIB= ranlib lib_OUT.a
+ MALLOC=
+#endif
+
+/*--------------------------------------------------------------------------*/
+/* for IBM RS/6000 systems */
+#if defined (_IBMR2)
+ CC= cc
+ LINT= lint -u -h -n -whclkpCD -x
+ LLOUT= -C_OUT
+ AR= ar ruv lib_OUT.a
+ RANLIB= ranlib lib_OUT.a
+ MALLOC=
+#endif
+
