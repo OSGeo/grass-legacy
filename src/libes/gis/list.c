@@ -45,24 +45,24 @@ G_list_element (element, desc, mapset, lister)
 {
     int n;
     FILE *more;
-    FILE *popen();
+    FILE *G_popen();
     int count;
-    int sigpipe_catch();
-    int (*sigpipe)();
+    void sigpipe_catch();
+    void (*sigpipe)();
 
 /* must catch broken pipe in case "more" quits */
     broken_pipe = 0;
-    sigpipe = (int (*)()) signal (SIGPIPE, sigpipe_catch);
+    sigpipe = signal (SIGPIPE, sigpipe_catch);
 
     count = 0;
     if (desc == 0 || *desc == 0)
 	desc = element;
 /*
- * popen() the more command to page the output
+ * G_popen() the more command to page the output
  */
     if (isatty(1))
     {
-	more = popen ("more","w");
+	more = G_popen ("more","w");
 	if (!more) more = stdout;
     }
     else
@@ -90,7 +90,7 @@ G_list_element (element, desc, mapset, lister)
 /*
  * close the more
  */
-    if (more != stdout) pclose (more);
+    if (more != stdout) G_pclose (more);
     signal (SIGPIPE, sigpipe);
     if (hit_return && isatty(1))
     {
@@ -100,7 +100,7 @@ G_list_element (element, desc, mapset, lister)
     }
 }
 
-static
+static void
 sigpipe_catch(n)
 {
     broken_pipe = 1;
@@ -118,7 +118,7 @@ list_element (out, element, desc, mapset, lister)
     char path[1000];
     char buf[400];
     FILE *ls;
-    FILE *popen();
+    FILE *G_popen();
     int count;
 
     count = 0;
@@ -147,7 +147,7 @@ list_element (out, element, desc, mapset, lister)
 	else
 	    sprintf(buf,"ls -C %s", path);
 
-	if (ls = popen(buf,"r"))
+	if (ls = G_popen(buf,"r"))
 	{
 	    while (!broken_pipe && fgets(buf, sizeof buf, ls))
 	    {
@@ -181,7 +181,7 @@ list_element (out, element, desc, mapset, lister)
 		else
 		    fprintf(out,"%s", buf);
 	    }
-	    pclose (ls);
+	    G_pclose (ls);
 	}
     }
     if (!broken_pipe && (count > 0))
