@@ -394,6 +394,40 @@ if test -z "$has_tiff_lib"; then
 fi
 AC_SUBST(TIFF_LIBRARY_DIRS)
 
+# Do we want to build with a static GDAL?  
+
+AC_MSG_CHECKING(check if we should build directly against GDAL)
+
+AC_ARG_WITH(gdal,
+[  --with-gdal[=path]        Build directly against GDAL (path is gdal-config)],,)
+
+if test "`basename xx/$with_gdal`" = "gdal-config" ; then
+  GDAL_CONFIG="$with_gdal"
+  AC_MSG_RESULT(yes)
+fi
+
+if test "$with_gdal" = "yes" ; then
+  AC_MSG_RESULT(yes)
+  AC_PATH_PROG(GDAL_CONFIG, gdal-config, no)
+
+  if test "$GDAL_CONFIG" = "no" ; then
+    AC_MSG_ERROR([couldn't find gdal-config])
+  fi
+fi
+
+GDAL_LIBS=
+GDAL_CFLAGS=
+
+if test "$GDAL_CONFIG" != "" ; then
+  GDAL_LIBS="`$GDAL_CONFIG --libs`"
+  GDAL_CFLAGS="`$GDAL_CONFIG --cflags` -DUSE_GDAL_H"
+else
+  AC_MSG_RESULT(no)
+fi
+
+AC_SUBST(GDAL_LIBS)
+AC_SUBST(GDAL_CFLAGS)
+
 # TCL/TK includes and library tests...
 
 AC_ARG_WITH(tcltk-includes,
