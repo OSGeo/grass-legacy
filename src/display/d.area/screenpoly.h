@@ -35,7 +35,6 @@
  * Since we can't, we do the following
  * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
  */
-#if !defined ( __CYGWIN32__ )
 
 #  if !defined(uint8_t)
       typedef unsigned char uint8_t;
@@ -44,7 +43,6 @@
       typedef unsigned long uint32_t;
 #  endif
 
-#endif 
 /* ------------------------------------ *
  * The SCREENPOINT and SCREENPOLY types
  * ------------------------------------ */
