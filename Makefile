@@ -264,6 +264,8 @@ srcdist: FORCE distclean
 
 	@ # needed to store code in package with grass-version path:
 	-mv * ./grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}
+	@ # do not include the debian control files:
+	-mv ./grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}/debian .
 	@ #we use -h to get the linked files into as real files:
 	tar cvfzh grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}.tar.gz ./grass-${GRASS_VERSION_MAJOR}.${GRASS_VERSION_MINOR}.${GRASS_VERSION_RELEASE}/* --exclude=CVS
 	@ # restore src code location:
