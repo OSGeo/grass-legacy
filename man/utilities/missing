@@ -4,7 +4,7 @@ bin=$GISBASE/bin
 list=
 for f in `cd $bin; ls`
 do
-    if [ ! -f help/$f ]
+    if [ ! -f help.src/$f ]
     then
 	list="$list $f"
     fi
@@ -17,11 +17,11 @@ then
 fi
 
 list=
-for f in `ls help`
+for f in `ls help.src`
 do
     if [ ! -f $bin/$f ]
     then
-	list="$list  help/$f"
+	list="$list  help.src/$f"
     fi
 done
 if test "$list" != ""
