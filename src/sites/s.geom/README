@@ -1,0 +1,50 @@
+
+NOTE: This is an updated version of "geom". From now on the coordinates (of 
+      the input sites) saved in the output file are truncated to the chosen 
+      precision. This update fixes some problems with the voronoi option,
+      which resulted in lines crossing the diagram and unclosed polygons.
+      some minor changes were also made in the optri library and in most of
+      the "main.c"s. the man pages were modified and contain more information
+      about the triangulations, "flat" triangles and how to handle messy 
+      input data.
+
+IMPORTANT: read the file README.before.you.gmake before you gmake!!!!
+
+geom containes sourcecode for the s.geom and v.geom triangulation packages for 
+site and vector files. 
+
+in addition the following two programs are provided:
+
+v.in.minmaxer ... reads the output of the program minmaxer and converts it into
+                  vector format.
+
+s.out.minmaxer ... reads site data in grass format and computes an input
+                   file for minmaxer.
+
+minmaxer is a program developed for NCSA and is available via anoymous
+ftp from ftp.ncsa.uiuc.edu. It is a tool which allows visualization of 2 1/2
+dimensional triangulations. The current version of minmaxer (v1.04) cannot
+yet read edges, and requires coordinates to be integer. s.out.minmaxer can be
+used to convert grass site data into minmaxer format. a new implementation
+of minmaxer is planned but postponed because of lack of time. 
+
+about the libraries:
+
+"basic", "lia", and "sos" are used by "optri" for long-integer computations.
+they were implemented by ernst mucke and are available by anonymous
+ftp from ftp.ncsa.uiuc.edu as part of the "NCSA-alvis" (3d alpha shape) package.
+
+"optri" is a library which provides implementations of algorithms for
+optimal triangulations in 2 dimensions. an earlier, less organized,
+version of these algorithms is part of minmaxer v1.04.
+
+please send any comments to
+
+	roman waupotitsch
+	waupo@cs.uiuc.edu
+
+enjoy,
+
+roman
+
+Wed Jun 22 16:03:26 CDT 1994
