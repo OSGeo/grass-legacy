@@ -40,8 +40,8 @@
 #define F9  "Entropy               "
 #define F10 "Difference Variance   "
 #define F11 "Difference Entropy    "
-#define F12 "Meas of Correlation-1 "
-#define F13 "Meas of Correlation-2 "
+#define F12 "Measure of Correlation-1 "
+#define F13 "Measure of Correlation-2 "
 #define F14 "Max Correlation Coeff "
 
 #define SIGN(x,y) ((y)<0 ? -fabs(x) : fabs(x))
