@@ -66,7 +66,6 @@ typedef struct {            /* Rule */
 
 extern char *progname;
 extern int errno;
-extern char *sys_errlist[];
 extern int verbose;
 extern STR *SP;
 extern MAPS *MAP;
