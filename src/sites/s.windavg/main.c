@@ -34,6 +34,10 @@
 
 #define XYZ_SIZE 10000
 
+int count_sites(FILE *, struct Cell_head *);
+int average_sites(SITE_XYZ *, int, int,
+    double, double, double, double, double *);
+
 int main (argc, argv)
   char **argv;
   int argc;
@@ -53,7 +57,7 @@ int main (argc, argv)
   } flag;
   FILE *fdisite = NULL, *fdosite = NULL;
   SITE_XYZ xyz[XYZ_SIZE];
-  int ftype, findex;
+  int ftype, findex, noreadloop, nsites;
   Site *theSite = G_site_new_struct(CELL_TYPE, 2, 0, 1);
 
   G_gisinit (argv[0]);
@@ -176,10 +180,13 @@ int main (argc, argv)
     }
   }
 
+  /* See if we'll need to loop or not */
+  noreadloop = (count_sites(fdisite, &window) < XYZ_SIZE) ? 1 : 0;
+
   if (verbose)
     fprintf (stderr, "Averaging ...                       ");
  
-  k = 1;
+  k = 1; nsites = 0;
   for(i=0 ;i<window.cols;++i)
   {
     W=G_col_to_easting((double)i, &window);
@@ -192,33 +199,22 @@ int main (argc, argv)
       N=G_row_to_northing((double)j, &window);
       avg=0.0;
       n=0;
-      rewind(fdisite); /* Make sure were at the beginning */
-      while ((nread = 
-            G_readsites_xyz(fdisite, ftype, findex, XYZ_SIZE, &window, &(xyz[0]))) > 0)
+
+      if (k > 1 && noreadloop)  /* all fits in array and has been read */
       {
-        for (nread-- ; nread > 0; nread--)
+        n = average_sites(xyz, nsites, ftype, N, S, E, W, &avg);
+      }
+      else
+      {
+        rewind(fdisite); /* Make sure were at the beginning */
+        while ((nread = 
+            G_readsites_xyz(fdisite, ftype, findex, XYZ_SIZE, &window, &(xyz[0]))) > 0)
         {
-          if (xyz[nread].x <= E && xyz[nread].x >= W 
-              && xyz[nread].y <= N && xyz[nread].y >= S)
-          {
-            n++;
-            if (ftype == SITE_COL_NUL) /* Use cat */
-              switch (xyz[nread].cattype) {
-                case CELL_TYPE:
-                  avg+=(double)xyz[nread].cat.c; break;
-                case FCELL_TYPE:
-                  avg+=(double)xyz[nread].cat.f; break;
-                case DCELL_TYPE:
-                  avg+=xyz[nread].cat.d; break;
-                default: /* Programmer Error ?? */
-                  G_fatal_error("%s: No cat values exist in sites_list",
-                      G_program_name());
-              }
-            else
-              avg+=xyz[nread].z;
-          }
+          nsites += nread;
+          n += average_sites(xyz, nread, ftype, N, S, E, W, &avg);
         }
       }
+      
       if (n>0)
         avg/=n;
       else
@@ -249,4 +245,70 @@ int main (argc, argv)
   exit (0);
 }
 
+int average_sites(SITE_XYZ *xyz, int count, int ftype,
+    double N, double S, double E, double W, double *avg)
+{
+  int i, n = 0;
+  
+  for (i = 0; i < count; i++)
+  {
+    if (xyz[i].x <= E && xyz[i].x > W 
+        && xyz[i].y <= N && xyz[i].y > S)
+    {
+      n++;
+      if (ftype == SITE_COL_NUL) /* Use cat */
+        switch (xyz[i].cattype) {
+          case CELL_TYPE:
+            *avg+=(double)xyz[i].cat.c; break;
+          case FCELL_TYPE:
+            *avg+=(double)xyz[i].cat.f; break;
+          case DCELL_TYPE:
+            *avg+=xyz[i].cat.d; break;
+          default: /* Programmer Error ?? */
+            G_fatal_error("%s: No cat values exist in sites_list",
+                G_program_name());
+        }
+      else
+        *avg+=xyz[i].z;
+    }
+  }
+  return n;
+}
+
+int count_sites(FILE *infile, struct Cell_head *window)
+{
+  int dims, strs, dbls, i = 0;
+  RASTER_MAP_TYPE map_type;
+  Site *theSite;
+
+  if (G_site_describe(infile, &dims, &map_type, &strs, &dbls) < 0)
+    G_fatal_error("%s: Unable to guess sites format", G_program_name());
+
+  theSite = G_site_new_struct(map_type, dims, strs, dbls);
+  if (theSite == NULL)
+    G_fatal_error("%s: Memory exhausted", G_program_name());
+
+  while(G_site_get(infile, theSite) == 0)
+  {
+    if (window != NULL) 
+    {
+      if (G_site_in_region(theSite,window)) 
+      {
+        i++;
+      }
+    }
+    else 
+    {  
+      i++;
+    }
+  }
+
+  G_site_free_struct(theSite);
+  rewind(infile);
+
+  return i;
+}
+  
+  
+  
 /* vim: set softtabstop=2 shiftwidth=2 expandtab: */
