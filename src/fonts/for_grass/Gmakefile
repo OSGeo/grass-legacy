@@ -1,0 +1,34 @@
+FONT=$(GISBASE)/fonts
+
+RAWFONT = \
+	../fonts/hersh.oc1 \
+	../fonts/hersh.oc2 \
+	../fonts/hersh.oc3 \
+	../fonts/hersh.oc4
+
+all: ...clean ...fonts
+
+...fonts: ...dir splitfont font.bin
+	splitfont $(FONT)
+	rm -f splitfont font_2_bin font.bin
+
+
+...dir:
+	rm -rf $(FONT)
+	mkdir $(FONT)
+
+...clean:
+	rm -f splitfont font_2_bin font.bin
+
+
+font.bin: font_2_bin $(RAWFONT)
+	cat $(RAWFONT) | font_2_bin
+
+font_2_bin: font_2_bin.o
+	$(CC) $(LDFLAGS) font_2_bin.o -o $@
+
+splitfont: splitfont.o fontmap.o
+	$(CC) $(LDFLAGS) splitfont.o fontmap.o -o $@
+
+try: try.o showchar.o font.o
+	$(CC) $(LDFLAGS) try.o showchar.o font.o -o try $(CURSES)
