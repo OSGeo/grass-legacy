@@ -30,7 +30,7 @@ main (argc, argv) char *argv[];
 		struct Option
 		*north,*south,*east,*west,
 		*res, *nsres, *ewres,
-		*save, *region,
+		*save, *region, *view,
 		*raster, *align, *zoom, *vect, *sites;
 	} parm;
 
@@ -40,7 +40,7 @@ main (argc, argv) char *argv[];
  * if current region not valid, set it from default
  * note: G_get_default_window() dies upon error
  */
-	if (G__get_window (&window, "", "WIND", G_mapset()) < 0)
+	if (G__get_window (&window, "", "WIND", G_mapset()) != NULL)
 	{
 		G_get_default_window (&window);
 		G_put_window (&window);
@@ -98,6 +98,14 @@ main (argc, argv) char *argv[];
 	parm.sites->multiple    = NO;
 	parm.sites->type        = TYPE_STRING;
 	parm.sites->description = "Set region to match this sites map";
+
+	parm.view = G_define_option();
+	parm.view->key         = "3dview";
+	parm.view->key_desc    = "name";
+	parm.view->required    = NO;
+	parm.view->multiple    = NO;
+	parm.view->type        = TYPE_STRING;
+	parm.view->description = "Set region to match this 3dview file";
 
 	parm.north = G_define_option();
 	parm.north->key         = "n";
@@ -209,6 +217,53 @@ main (argc, argv) char *argv[];
 		}
 	}
 
+	/* 3dview= */
+	if (name = parm.view->answer)
+	{
+		struct G_3dview v;
+		FILE *fp;
+		int ret;
+		
+		mapset = G_find_file2 ("3d.view", name, "");
+		if (!mapset)
+		{
+			sprintf (msg, "3dview file <%s> not found", name);
+			G_fatal_error (msg);
+		}
+
+		G_3dview_warning(0); /* suppress boundary mismatch warning */
+
+		if(NULL == (fp = G_fopen_old("3d.view",name,mapset))){
+		    sprintf (msg, "can't open 3dview file <%s> in <%s>", name, mapset);
+		    G_fatal_error (msg);
+		}
+
+		G_copy (&temp_window, &window, sizeof(window));
+
+		if(0 > (ret = G_get_3dview(name, mapset, &v))){
+		    sprintf (msg, "can't read 3dview file <%s> in <%s>", name, mapset);
+		    G_fatal_error (msg);
+		}
+		if (ret == 0){
+		    sprintf (msg, "Old 3dview file. Region not found in <%s> in <%s>", name, mapset);
+		    G_fatal_error (msg);
+		}
+
+                 
+		window.north = v.vwin.north;
+		window.south = v.vwin.south;
+		window.west  = v.vwin.west;
+		window.east  = v.vwin.east;
+
+		window.rows = v.vwin.rows;
+		window.cols = v.vwin.cols;
+		window.ns_res = v.vwin.ns_res;
+		window.ew_res = v.vwin.ew_res;
+
+		fclose (fp);
+
+	}
+
 	/* raster= */
 	if (name = parm.raster->answer)
 	{
@@ -250,6 +305,18 @@ main (argc, argv) char *argv[];
 		window.south = Map.head.S;
 		window.west  = Map.head.W;
 		window.east  = Map.head.E;
+
+       	        if(window.north == window.south)
+       	        {
+       	              window.north = window.north + 0.5 * temp_window.ns_res;
+                      window.south = window.south - 0.5 * temp_window.ns_res;
+                }
+                if(window.east==window.west)
+                {
+                      window.west = window.west - 0.5 * temp_window.ew_res;
+                      window.east = window.east + 0.5 * temp_window.ew_res;
+                }
+
 		G_align_window (&window, &temp_window);
 
 		Vect_close (&Map);
@@ -293,8 +360,23 @@ main (argc, argv) char *argv[];
 		}
 		fclose (fp);
 		if (i)
-			G_align_window (&window, &temp_window);
+		{
+       	             if(window.north == window.south)
+       	             {
+       	                   window.north = window.north + 0.5 * temp_window.ns_res;
+                           window.south = window.south - 0.5 * temp_window.ns_res;
+                     }
+                     if(window.east==window.west)
+                     {
+                           window.west = window.west - 0.5 * temp_window.ew_res;
+                           window.east = window.east + 0.5 * temp_window.ew_res;
+                     }
+
+		     G_align_window (&window, &temp_window);
+                }
 	}
+
+
 
 	/* n= */
 	if (value = parm.north->answer)
