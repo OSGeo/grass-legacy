@@ -18,6 +18,7 @@ LIB_OBJS = \
 	ask.o\
 	ask_cell.o\
 	ask_vctrs.o\
+	asprintf.o\
 	auto_mask.o\
 	bres_line.o\
 	cats.o\
