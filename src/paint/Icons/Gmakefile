@@ -1,0 +1,9 @@
+# %W% %G%
+ICONLIB = $(LIBDIR)/libicon.a
+OBJS = main.o menu.o edit.o preview.o divider.o
+
+$(ETC)/paint/Icons: $(OBJS) $(ICONLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OBJS) $(ICONLIB) $(GISLIB) $(TERMLIB) -o $@
+
+$(ICONLIB): #
+$(GISLIB): #
