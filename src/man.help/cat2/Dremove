@@ -1,0 +1,68 @@
+
+
+
+Dremove(2D)          GRASS Reference Manual           Dremove(2D)
+
+
+
+NAME
+     Dremove - Removes graphics window
+     (D Language Tool)
+
+SYNOPSIS
+     Dremove [window_name]
+
+DESCRIPTION
+     Dremove provides a method for removing windows individually
+     from the graphics screen.  If a window name is provided in
+     the command line, that window is removed from the graphics
+     device.  If no window name is provided, Dremove runs
+     interactively, using the pointing device (mouse) to indicate
+     which window is to be removed.  Dremove will not remove the
+     current window.
+
+BUGS
+     The current window cannot be removed;  to Dremove this
+     window you must first use Dchoose to choose another window
+     as the current window.
+
+SEE ALSO
+     DINTRO[2D]          Introduction to the GRASS D tools
+     Dchoose[2D]         To choose a current window for display
+     Dclear.screen[2D]
+
+                         To clear the monitor and memory of all existing
+                         graphics windows
+     Derase[2D]          To erase only the contents of the current window
+     Dnew[2D]            To create new graphics windows
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
