@@ -1,7 +1,5 @@
 MODULE_TOPDIR = ../../../..
 
-PGM=poly_to_bmif
-
 OBJS = \
 	do_dots.o\
 	do_line.o\
@@ -16,7 +14,12 @@ DEPENDENCIES= $(DEPGISLIB)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: cmd
+default: $(BIN_CMD)/bmif_to_cell $(BIN_CMD)/poly_to_bmif
 
-htmlcmd:
-	@echo "nothing to do"
+$(BIN_CMD)/bmif_to_cell: bmf_to_cll.o $(DEPENDENCIES)
+	$(CC) $(LDFLAGS) -o $@ bmf_to_cll.o $(LIBES) $(XDRLIB)
+	
+$(BIN_CMD)/poly_to_bmif: $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS)
+		
+OBJS: ply_to_cll.h
