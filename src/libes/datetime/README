@@ -20,6 +20,13 @@
  *   Boston, MA  02111-1307, USA.
 */
 
+Note: The timestamp routines 
+       G_read_grid3_timestamp +
+       G_remove_grid3_timestamp + 
+       G_write_grid3_timestamp
+      are stored in src/libes/gis/timestamp.c
+      (added 3/2001)
+---------------------------------------------------------------------------
 
 This is the DateTime structure
 
