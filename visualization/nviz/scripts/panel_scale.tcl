@@ -55,7 +55,7 @@ proc mkscalePanel { BASE } {
     button $rbase.bottom.place2 -text "Place Arrow" \
 	-command "bind $Nv_(TOP).canvas <Button> {place_narrow %W %x %y }"
     checkbutton $rbase.bottom.narrow -text "North Arrow" -anchor w \
-	-variable n_arrow -onvalue 1 -offvalue 0
+	-variable n_arrow -onvalue 1 -offvalue 0 
     pack $rbase.bottom.place2 $rbase.bottom.narrow -expand no -side left
 
     ##########################################################################
@@ -128,7 +128,7 @@ set y [expr $Nv_(height) - $y]
 if {$n_arrow == 1} {
     set curr [Nget_current surf]
     if {$curr} {
-    Ndraw_Narrow $x $y $curr
+    Ndraw_Narrow $x $y $curr 
     }
 #remove canvas binding
     bind $W <Button> {}
