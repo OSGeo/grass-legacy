@@ -1,5 +1,9 @@
 #include "kappa.h"
 
+static reclass_text ();
+static do_text ();
+static char *append ();
+
 char *
 maskinfo()
 {
