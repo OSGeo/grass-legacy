@@ -22,6 +22,11 @@ static dummy () {}
 
 static int Open_level = 0;
 
+/* The line below is here so I can be sure that code that requires version 
+**  4.1 of the library won't compile for 4.0
+*/
+int Vect__four_point_one;	
+
 int V1_open_old ();
 int V2_open_old ();
 int V1__open_update_1 ();
