@@ -53,7 +53,7 @@ struct V__
 
 	int	decimal_places;
 	char    interrupt_msg[80];
-} V__;
+};
 
 /* one of the library routines (V_call) will define this struct */
 extern struct V__ V__ ;
