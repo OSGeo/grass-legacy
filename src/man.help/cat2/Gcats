@@ -1,0 +1,132 @@
+
+
+
+Gcats(2G)            GRASS Reference Manual             Gcats(2G)
+
+
+
+NAME
+     Gcats - print category labels for cell files
+     (G Language Tool)
+
+SYNOPSIS
+     Gcats [-t'tabchar'] layer [catlist]
+
+DESCRIPTION
+     The category labels for the cell file layer are printed to
+     the screen.  If no specific categories are list on the
+     command line (using the optional catlist arguments), then
+     all the catgegory labels for the data layer are printed.
+     (The entire layer is read, using Gdescribe(2), to determine
+     which categories occur in the layer.) If a list of
+     categories are specified, then the labels for those
+     categories only are printed. The catlist may be single
+     catgory numbers, or ranges of numbers.
+
+     The output is one label per line, with the category number
+     first, then an ascii TAB character, then the label for the
+     category.
+
+OPTIONS
+     -tc  Changes the TAB character to c (see example below).
+
+EXAMPLES
+          Gcats soils
+
+     prints the labels for all the categories for the "soils"
+     map;
+
+          Gcats soils 10 12 15-20
+
+     prints only the labels for categories 10, 12, and 15 through
+     20; and
+
+          Gcats -t: soils 10 20
+
+     prints the labels for categories 10 and 20 of "soils", but
+     with ":" as the separator character.
+
+     Example output:
+
+          10:Dumps, mine, Cc
+          20:Kyle clay, KaA
+
+NOTES
+     Any ascii TAB characters which may be in the label are
+     replaced by spaces.
+
+     The output from Gcats can be redirected into a file, or
+     piped into another program.
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Gcats(2G)            GRASS Reference Manual             Gcats(2G)
+
+
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
