@@ -42,10 +42,13 @@ makeview(bottom, top, left, right)
 
 Init_graphics()
 {
+    /*
     R_color_table_fixed();
+    */
     R_color_offset (0);
 
-    Dclearscreen();
+    Dscreen();
+
 
     SCREEN_TOP    = R_screen_top();
     SCREEN_BOTTOM = R_screen_bot();
@@ -75,6 +78,9 @@ Init_graphics()
     VIEW_MAP1_ZOOM   = makeview (2.5,   47.5,  0.0,  50.0);
     VIEW_MAP2_ZOOM   = makeview (2.5,   47.5, 50.0, 100.0);
     VIEW_MENU        = makeview (0.0,    2.5,  0.0, 100.0);
+
+    G_init_colors (&VIEW_MAP1->cell.colors);
+    G_init_colors (&VIEW_MAP2->cell.colors);
 }
 
 Outline_box (top, bottom, left, right)
