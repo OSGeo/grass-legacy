@@ -1,0 +1,6 @@
+all:
+	$(GMAKE) fonts
+	$(GMAKE) libes
+	$(GMAKE) devices
+	$(GMAKE) prog_cmd
+	$(GMAKE) prog_inter
