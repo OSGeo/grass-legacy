@@ -1,0 +1,13 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+annotation	annotation.c	/^annotation(buf)$/
+ask_info	ask_info.c	/^ask_info ()$/
+ask_window	ask_window.c	/^ask_window (tape_cols, tape_rows)$/
+extract	extract.c	/^extract(tapefd, buf, tape_startrow, tape_endrow, s/
+get_tapename	tapename.c	/^get_tapename (name)$/
+header	header.c	/^header(buf)$/
+image_fmt	image_fmt.c	/^image_fmt (buf, lfill, pixels, rfill)$/
+mount_tape	mount_tape.c	/^mount_tape (tapename)$/
+put_row	put_row.c	/^put_row (fd, buf, row)$/
+read_tape	read_tape.c	/^read_tape(tape, buf, full)$/
+tape_dir	tape_dir.c	/^tape_dir (buf)$/
+tape_vol	tape_vol.c	/^tape_vol(v)$/
