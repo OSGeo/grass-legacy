@@ -409,7 +409,7 @@ main (int argc, char *argv[])
 	/* Make a list of categories */
 	
 	
-        OFi = Vect_default_field_info ( &Out, 1, NULL, GV_1TABLE );
+        OFi = Vect_default_field_info ( &Out, field[0], NULL, GV_1TABLE );
 	
 
         ret = db_copy_table_by_ints ( IFi->driver, IFi->database, IFi->table,
@@ -419,7 +419,7 @@ main (int argc, char *argv[])
 	if ( ret == DB_FAILED ) {
 	    G_warning ( "Cannot copy table" );
 	} else {
-	    Vect_map_add_dblink ( &Out, 1, NULL, OFi->table, IFi->key, OFi->database, OFi->driver);
+	    Vect_map_add_dblink ( &Out, field[0], NULL, OFi->table, IFi->key, OFi->database, OFi->driver);
 	}
     }
     
