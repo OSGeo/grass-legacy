@@ -52,7 +52,7 @@ main (int argc, char *argv[])
     } 
 
     /* allocate list */
-    vstat.cat = vstat.alloc = Map.n_atts;
+    vstat.cat = vstat.alloc = Map.n_atts + 1; /* + 1 for cat = 0 (not labeled) */
     vstat.rcat = 0;
     vstat.sort = 0;    
     alloc_list();
