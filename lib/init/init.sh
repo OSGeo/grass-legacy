@@ -92,9 +92,14 @@ export GIS_LOCK
 GISRCRC="$HOME/.grassrc6"
 export GISRCRC
 # Set the session grassrc file
-USER=`whoami`
-mkdir -p /tmp/grass6-$USER-$GIS_LOCK
-GISRC="/tmp/grass6-$USER-$GIS_LOCK/gisrc"
+USER="`whoami`"
+tmp=${TMPDIR-/tmp}  # use TMPDIR if it exists, otherwise /tmp
+tmp="$tmp/grass6-$USER-$GIS_LOCK"
+(umask 077 && mkdir "$tmp") || {
+    echo "Cannot create temporary directory! Exiting." 1>&2
+    exit 1
+}
+GISRC="$tmp/gisrc"
 export GISRC
 
 # remove invalid GISRC file to avoid disturbing error messages:
@@ -531,11 +536,12 @@ case $? in
     0) ;;
     1)
     	echo `whoami` is currently running GRASS in selected mapset. Concurrent use not allowed.
-    	exit ;;
+    	rm -rf "$tmp"  # remove session files from tmpdir
+    	exit 1 ;;
     *)
     	echo Unable to properly access "$lockfile"
     	echo Please notify system personel.
-    	exit ;;
+    	exit 1 ;;
 esac
 
 trap "" 2 3 15
@@ -721,7 +727,7 @@ rm -f "$lockfile"
 
 # Save GISRC
 cp "$GISRC" "$GISRCRC"
-rm -rf /tmp/grass6-$USER-$GIS_LOCK
+rm -rf "$tmp"  # remove session files from tmpdir
 
 echo "done"
 echo 
