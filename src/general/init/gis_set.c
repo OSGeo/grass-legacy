@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
  */
     G_no_gisinit();
     umask(0);
-    G_unsetenv ("GISBASE");      /* this takes it out of .gisrc */
+    G_unsetenv ("GISBASE");      /* this cleans the variable */
     G_getenv ("GISBASE") ;         /* this reads it from the unix environment */
 
 /* Gather all existing variables **********************************************/
