@@ -18,7 +18,7 @@
 #include "proto.h"
 
 int
-db_driver_execute_immediate (sql)
+db__driver_execute_immediate (sql)
     dbString *sql;
 {
     char *s;

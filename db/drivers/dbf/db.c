@@ -22,7 +22,7 @@
 #include "proto.h" 
 
 int
-db_driver_open_database (handle)
+db__driver_open_database (handle)
     dbHandle *handle;
 {
     char   *name;
@@ -100,7 +100,7 @@ db_driver_open_database (handle)
 }
 
 int
-db_driver_close_database()
+db__driver_close_database()
 {
     int i;
 

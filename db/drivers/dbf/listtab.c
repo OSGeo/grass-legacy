@@ -19,7 +19,7 @@
 #include "proto.h"
 
 int
-db_driver_list_tables (tlist, tcount, system)
+db__driver_list_tables (tlist, tcount, system)
     dbString **tlist;
     int *tcount;
     int system;

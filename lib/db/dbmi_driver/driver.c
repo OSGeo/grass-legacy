@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include "dbmi.h"
 #include "procs.h"
+#define	DB_DRIVER_C
+#include "dbstubs.h"
 
 extern char *getenv();
 

@@ -4,7 +4,7 @@
 #include "proto.h"
 #include <stdio.h>
 
-db_driver_execute_immediate (sql)
+db__driver_execute_immediate (sql)
     dbString *sql;
 {
     char *s, msg[OD_MSG], emsg[DB_MSG];

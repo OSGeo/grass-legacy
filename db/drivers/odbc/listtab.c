@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "proto.h"
 
-db_driver_list_tables (tlist, tcount, system)
+db__driver_list_tables (tlist, tcount, system)
     dbString **tlist;
     int *tcount;
     int system;

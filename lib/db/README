@@ -6,3 +6,10 @@ stubs: stubs for unimplemented DB functions
 
 The DBMI drivers are stored in 
 ../../db/drivers/
+
+
+NOTE:
+Please read grass51/db/drivers/README
+
+To generate dbmi_driver/dbstubs.h automatically, run './mk_dbstubs' in
+dbmi_driver/ directory.

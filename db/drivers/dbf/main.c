@@ -20,12 +20,14 @@
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
+#include "dbdriver.h"
 
 int
 main(int argc, char *argv[])
 {
     char *name;
 
+    init_dbdriver();
     init_error();
 
     /* Do not call G_getenv() nor other functions reading GISRC here! It may be that grass variables are

@@ -21,7 +21,7 @@
 #include "proto.h"
 
 int
-db_driver_describe_table (table_name, table)
+db__driver_describe_table (table_name, table)
     dbString *table_name;
     dbTable **table;
 {

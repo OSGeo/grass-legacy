@@ -18,8 +18,10 @@
 #include "dbmi.h"
 #include "ogr_api.h"
 #include "globals.h"
+#include "dbdriver.h"
 
 int main( int argc, char *argv[] )
 {
-    exit (db_driver (argc, argv));
+	init_dbdriver();
+	exit (db_driver (argc, argv));
 }

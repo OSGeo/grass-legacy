@@ -19,7 +19,7 @@
 #include "globals.h"
 #include "proto.h"
 
-int db_driver_list_tables( dbString **tlist, int *tcount, int system )
+int db__driver_list_tables( dbString **tlist, int *tcount, int system )
 {
     int i, nlayers;
     dbString *list;

@@ -20,7 +20,7 @@
 #include "proto.h"
 
 int
-db_driver_open_select_cursor(sel, dbc, mode)
+db__driver_open_select_cursor(sel, dbc, mode)
     dbString *sel;
     dbCursor *dbc;
     int mode;

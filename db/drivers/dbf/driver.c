@@ -18,13 +18,13 @@
 #include "globals.h"
 
 int
-db_driver_init (argc, argv) char *argv[];
+db__driver_init (argc, argv) char *argv[];
 {
     return DB_OK;
 }
 
 int
-db_driver_finish()
+db__driver_finish()
 {
     return DB_OK;
 }

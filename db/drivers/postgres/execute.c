@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "proto.h"
 
-int db_driver_execute_immediate(sql)
+int db__driver_execute_immediate(sql)
      dbString *sql;
 {
     PGresult *res;
@@ -42,7 +42,7 @@ int db_driver_execute_immediate(sql)
     return DB_OK;
 }
 
-int db_driver_begin_transaction(void)
+int db__driver_begin_transaction(void)
 {
     PGresult *res;
 
@@ -63,7 +63,7 @@ int db_driver_begin_transaction(void)
     return DB_OK;
 }
 
-int db_driver_commit_transaction(void)
+int db__driver_commit_transaction(void)
 {
     PGresult *res;
 

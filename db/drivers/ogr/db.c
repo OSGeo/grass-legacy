@@ -21,7 +21,7 @@
 #include "globals.h"
 #include "proto.h"
 
-int db_driver_open_database( dbHandle *handle )
+int db__driver_open_database( dbHandle *handle )
 {
     char *name;
     dbConnection connection;
@@ -51,7 +51,7 @@ int db_driver_open_database( dbHandle *handle )
     return DB_OK;
 }
 
-int db_driver_close_database()
+int db__driver_close_database()
 {
     G_debug(3, "db_driver_close_database()" );
 
