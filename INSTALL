@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.9 2000-11-30 11:38:01 justin Exp $)
+($Id: INSTALL,v 1.10 2000-12-06 17:37:16 markus Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -41,10 +41,10 @@ access if you use the default locations.
 
 If you want to change the default locations, use a sequence like this:
 
-	./configure --prefix=/opt/grass5.0 --bindir=/opt/bin/
+	./configure --prefix=/opt/ --bindir=/opt/bin/
 	make install
 
-Here the default directories have been changed to /opt/grass5.0 for most
+Here the default directories have been changed to /opt/grass5 for most
 of the GRASS files, and /opt/bin/ for the executable files. See the
 configure options below for more information.
 
