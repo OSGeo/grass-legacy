@@ -10,7 +10,7 @@ OBJ = \
 	cell_open_new.o\
 	rules.o\
 	data.o\
-	amc_conversion.c
+	amc_conversion.o
 
 
 #$(PROG): $(LIST) $(LIBES)
