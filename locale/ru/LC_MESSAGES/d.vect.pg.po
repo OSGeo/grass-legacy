@@ -2,12 +2,13 @@
 # Copyright (C) 2002 Free Software Foundation, Inc.
 # Alex Shevlakov<sixote@yahoo.com>, 2002.
 #
-#: buildInfxQry.c:19 getAllOpts.c:86 getSopts.c:98 main.c:42
+#: buildInfxQry.c:19 getAllOpts.c:91 getSopts.c:104 runInfxFile.c:37
+#: runInfxFile.c:41 runInfxFile.c:42
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 5.0\n"
-"POT-Creation-Date: 2002-03-20 12:23+0300\n"
+"POT-Creation-Date: 2002-05-30 14:49+0400\n"
 "PO-Revision-Date: 2002-03-05 19:20+0300\n"
 "Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
 "Language-Team: ru <ru@li.org>\n"
@@ -77,19 +78,23 @@ msgstr "Цвет прорисовки выбранных линий/площадей:"
 msgid "Fill polygons"
 msgstr "Закрасить полигоны"
 
-#: getAllOpts.c:73
+#: getAllOpts.c:73 getSopts.c:75
+msgid "Extract vector objects to new map"
+msgstr "Сохранить выбранные векторы в новую карту"
+
+#: getAllOpts.c:77
 msgid "d.vect.pg -s help"
 msgstr ""
 
-#: getAllOpts.c:78 getSopts.c:89
+#: getAllOpts.c:82 getSopts.c:94
 msgid "white"
 msgstr ""
 
-#: getAllOpts.c:86 getSopts.c:98
+#: getAllOpts.c:91 getSopts.c:104 runInfxFile.c:99
 msgid "dig"
 msgstr ""
 
-#: getAllOpts.c:87
+#: getAllOpts.c:92
 #, c-format
 msgid "Vector map %s not found.\n"
 msgstr "Векторная карта %s не найдена.\n"
@@ -118,33 +123,33 @@ msgstr "SQL команды в файле."
 msgid "Color for vector draw."
 msgstr "Цвет прорисовки."
 
-#: getSopts.c:76 getSopts.c:77
+#: getSopts.c:81 getSopts.c:82
 msgid "help"
 msgstr ""
 
-#: getSopts.c:79 main.c:64
+#: getSopts.c:84 main.c:60
 msgid "-s"
 msgstr ""
 
-#: getSopts.c:99
+#: getSopts.c:105
 #, c-format
 msgid "Vector file %s not found.\n"
 msgstr "Векторная карта %s не найдена.\n"
 
-#: getSopts.c:103
+#: getSopts.c:109
 msgid "r"
 msgstr ""
 
-#: getSopts.c:104
+#: getSopts.c:110
 #, fuzzy, c-format
 msgid "File read error on %s\n"
 msgstr "Ошибка чтения - EOF\n"
 
-#: main.c:55 runInfxFile.c:61
+#: main.c:51 runInfxFile.c:72
 msgid "PG_DBASE"
 msgstr ""
 
-#: main.c:57
+#: main.c:53
 msgid "Please run g.select.pg to identify a current database.\n"
 msgstr "Выполните g.select.pg и выберите БД.\n"
 
@@ -165,12 +170,12 @@ msgstr "Ошибка чтения - EOF\n"
 msgid "Read error\n"
 msgstr "Ошибка чтения\n"
 
-#: runInfxFile.c:50
+#: runInfxFile.c:61
 #, c-format
 msgid "Error opening vector map %s in mapset %s\n"
 msgstr "Ошибка открытия векторной карты %s в наборе %s\n"
 
-#: runInfxFile.c:57
+#: runInfxFile.c:68
 #, c-format
 msgid ""
 "Executing\n"
@@ -178,26 +183,88 @@ msgid ""
 "\n"
 msgstr ""
 
-#: runInfxFile.c:59
+#: runInfxFile.c:70
 msgid "PG_HOST"
 msgstr ""
 
-#: runInfxFile.c:63
-#, c-format
-msgid "Error Selecting from Postgres:%s\n"
-msgstr "Ошибка: Selecting from Postgres:%s\n"
-
-#: runInfxFile.c:70
+#: runInfxFile.c:74
 #, c-format
 msgid "Error Connecting to Postgres:%s\n"
 msgstr "Ошибка: Connecting to Postgres:%s\n"
 
-#: runInfxFile.c:74
+#: runInfxFile.c:81
+#, c-format
+msgid "Error Selecting from Postgres:%s\n"
+msgstr "Ошибка: Selecting from Postgres:%s\n"
+
+#: runInfxFile.c:85
 #, c-format
 msgid "%d Rows\n"
 msgstr "%d записей\n"
 
-#: runInfxFile.c:84
+#: runInfxFile.c:91
+msgid ""
+"\n"
+" Extract areas [y]/lines[n]:"
+msgstr ""
+"\n"
+" Сохранить как площади[y]/линии[n]:"
+
+#: runInfxFile.c:93
+msgid "line"
+msgstr ""
+
+#: runInfxFile.c:94
+msgid "area"
+msgstr ""
+
+#: runInfxFile.c:97
+msgid "Enter name for new vector map:"
+msgstr "Введите имя новой векторной карты:"
+
+#: runInfxFile.c:99
+msgid "vector"
+msgstr ""
+
+#: runInfxFile.c:103
+msgid ""
+"\n"
+"\n"
+" Dissolve common boundaries?"
+msgstr ""
+"\n"
+"\n"
+" Убрать общие границы?"
+
+#: runInfxFile.c:106
+msgid "Module v.extract loaded:\n"
+msgstr "Модуль v.extract:\n"
+
+#: runInfxFile.c:107
+msgid "w"
+msgstr ""
+
+#: runInfxFile.c:108
+#, fuzzy
+msgid "File write error on temporary file\n"
+msgstr "Ошибка чтения - EOF\n"
+
+#: runInfxFile.c:118
+#, c-format
+msgid "%d\n"
+msgstr ""
+
+#: runInfxFile.c:126
 #, c-format
 msgid "Error plotting category %d\n"
 msgstr "Ошибка рисования категории %d\n"
+
+#: runInfxFile.c:135
+#, c-format
+msgid "v.extract -d input=%s output=%s type=%s new=0 file=%s\n"
+msgstr ""
+
+#: runInfxFile.c:138
+#, c-format
+msgid "v.extract input=%s output=%s type=%s new=0 file=%s\n"
+msgstr ""
