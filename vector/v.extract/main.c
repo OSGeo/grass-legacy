@@ -99,7 +99,7 @@ int main (int argc, char **argv)
     newopt->type             =  TYPE_INTEGER;
     newopt->required         =  NO;
     newopt->answer           = "0";
-    newopt->description      = "Enter 0 or a desired NEW category value ";
+    newopt->description      = "Enter 0 to keep original category or a desired NEW category value";
 
     listopt = G_define_option();
     listopt->key             = "list";
