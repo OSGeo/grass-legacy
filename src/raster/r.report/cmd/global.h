@@ -51,6 +51,8 @@ GLOBAL int use_formfeed INIT(0);
 GLOBAL int nlines INIT(0);
 GLOBAL int with_headers INIT(1);
 GLOBAL int verbose INIT(1);
+GLOBAL int e_format INIT(0);
+GLOBAL int z_option INIT(0);
 
 GLOBAL char *stats_file;
 GLOBAL int stats_flag INIT(0);
