@@ -1,0 +1,43 @@
+
+
+----------------------------------------------------------------------
+Usage:
+ d.sites.qual sitefile=name [color=name] [size=value] [type=name]
+   [rules=name[,name,...]]
+
+Parameters:
+  sitefile   Name of a site file
+     color   Sets the current color to that stated
+             options: red,orange,yellow,green,blue,indigo,white,black,brown,
+                      magenta,aqua,gray,grey
+             default: gray
+      size   Size, in pixels, in which the icon is to be drawn
+             options: 0-1000
+             default: 5
+      type   Specify the type of the icon
+             options: x,diamond,box,+
+             default: x
+     rules   qualifying rules for display: [DCA]#.RANGE
+                where RANGE is one of #-#, gt#, lt#, eq#
+    output   Name of a site file to output drawn sites
+
+----------------------------------------------------------------------
+Syntax of rule string is:
+
+        [DCA]#.RANGE
+        where RANGE is one of #-#, gt#, lt#, eq#
+
+        examples:
+
+              D1.lt-88.125    easting less than (or =) -88.125
+              D3.100-200      dimension 3 in range 100 to 200
+              C.eq7.2         category equal 7.2 (note no number after C)
+              A2.gt5000       2nd double attribute greater than (or =) 5000
+              A1.-2.0--1.0    1st double attribute in range -2.0 to -1.0
+----------------------------------------------------------------------
+You can also use multiple rules (all of which must be true for display):
+
+	d.sites.qual places rules=A1.gt20000,A5.lt1.0
+----------------------------------------------------------------------
+
+
