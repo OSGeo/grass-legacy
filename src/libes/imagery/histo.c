@@ -11,8 +11,7 @@ I_get_histogram (name, mapset, histogram)
 
 /* fake the histogram */
     G_read_range (name, mapset, &range);
-    min = range.nmin?range.nmin:range.pmin;
-    max = range.pmax?range.pmax:range.nmax;
+    G_get_range_min_max (&range, &min, &max);
     G_init_histogram (histogram);
     for (i = min; i <= max; i++)
 	G_set_histogram (i, (long)1, histogram);
