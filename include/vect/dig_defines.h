@@ -121,14 +121,6 @@
 #define GV_FORWARD 1
 #define GV_BACKWARD 2
 
-/* These are from mode.h which is no longer supported w/ digit 3.0 */
-/*                               ^     for the most part...        */
-/*     and definately gone by 4.0                                  */
-#define POINT	0
-#define STREAM	1
-
-#define POINTS		3	/* this is thrown in for get_type_cnt() */
-
 /* types used in memory on run time - may change */
 #define GV_POINT      0x01
 #define GV_LINE	      0x02
