@@ -179,11 +179,22 @@ Vect_delete ( char *map )
 	    }
 	    G_debug (3, "Delete drv:db:table '%s:%s:%s'", Fi->driver, Fi->database, Fi->table);
 	    
-	    ret = db_delete_table ( Fi->driver, Fi->database, Fi->table );
-	    if ( ret == DB_FAILED ) {
-		G_warning ( "Cannot delete table" );
+	    ret = db_table_exists ( Fi->driver, Fi->database, Fi->table );
+	    if ( ret == -1 ) {
+		G_warning ( "Cannot get info if table '%s' linked to vector exists.", Fi->table );
 		Vect_close ( &Map );
 		return -1;
+            }
+	    
+	    if ( ret == 1 ) {
+		ret = db_delete_table ( Fi->driver, Fi->database, Fi->table );
+		if ( ret == DB_FAILED ) {
+		    G_warning ( "Cannot delete table" );
+		    Vect_close ( &Map );
+		    return -1;
+		}
+	    } else {
+		G_warning ( "Table '%s' linked to vector did not exist.", Fi->table );
 	    }
 	}
     }

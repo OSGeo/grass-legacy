@@ -19,7 +19,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "Vect.h"
-#include "gis.h"
 
 /*!
  \fn struct dblinks *Vect_new_dblinks_struct ( void )
@@ -65,7 +64,25 @@ int
 Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table, char *key, 
 	             char *db, char *driver )
 {
-    return ( Vect_add_dblink ( Map->dblnk, number, name, table, key, db, driver ) );
+    int ret;
+
+    if (Map->mode != GV_MODE_WRITE && Map->mode != GV_MODE_RW) {
+        G_warning ("Cannot add database link, map is not opened in WRITE mode.");
+	return -1;
+    }
+    
+    ret = Vect_add_dblink ( Map->dblnk, number, name, table, key, db, driver );
+    if ( ret == -1 ) {
+        G_warning ("Cannot add database link.");
+	return -1;
+    }
+    /* write it immediately otherwise it is lost if module crashes */
+    ret = Vect_write_dblinks ( Map->name, Map->mapset, Map->dblnk );
+    if ( ret == -1 ) {
+        G_warning ("Cannot write database links.");
+	return -1;
+    }
+    return 0;
 }
     
 /*!
