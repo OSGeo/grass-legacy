@@ -1,0 +1,20 @@
+<html>
+<pre>                                              28. June 1998
+
+You still have problems with this release?
+
+Problems with the ps.map command:
+
+Solution:
+       1. the ps.map needs to be compiled with the -fwritable-strings flag
+       2. the way is to edit the src/CMD/head/linux header-file
+             + add -fwritable-strings at the end of COMPILE_FLAGS line
+               COMPILE_FLAGS = -O -fwritable-strings
+             + cd to src.alpha/ps.map
+             + run gmake4.2
+             + cd to src/CMD
+             + run MAKELINKS.my
+  
+
+</pre>
+</html>
