@@ -1,0 +1,14 @@
+Mt_atts	t_atts.c	?^main()$?
+Mtt	tt.c	?^main()$?
+atts_init	atts_init.c	?^atts_init(fp, atts_ptr)$?
+check_alloc	atts_init.c	?^check_alloc(num, n_alloc, arr, size)$?
+check_type	read_att.c	?^check_type(type)$?
+free_atts	atts_init.c	?^free_atts(atts_ptr)$?
+make_code	write_att.c	?^make_code (type)$?
+read_area_att	read_att.c	?^read_area_att (fp, atts_index, att, num)$?
+read_att	read_att.c	?^read_att (fp, type, x, y, cat, offset)$?
+read_att_struct	read_att.c	?^read_att_struct (fp, att)$?
+read_line_att	read_att.c	?^read_line_att (fp, atts_index, att, num)$?
+write_att	write_att.c	?^write_att (fp, type, x, y, cat)$?
+write_att_line	write_att.c	?^write_att_line (fp, x_coors, y_coors, n_coors, cat?
+write_att_struct	write_att.c	?^write_att_struct (fp, att)$?
