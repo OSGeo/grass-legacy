@@ -172,6 +172,7 @@ LOC_ARG_WITH(glw, GLw, no)
 LOC_ARG_WITH(nls, NLS, no)
 LOC_ARG_WITH(readline, Readline, no)
 LOC_ARG_WITH(proj, External PROJ.4, yes)
+LOC_ARG_WITH(opendwg, openDWG, no)
 
 # With includes and libs options
 
@@ -238,6 +239,9 @@ LOC_ARG_WITH_LIB(glw, GLw)
 
 LOC_ARG_WITH_INC(proj, External PROJ.4)
 LOC_ARG_WITH_LIB(proj, External PROJ.4)
+
+LOC_ARG_WITH_INC(opendwg, openDWG)
+LOC_ARG_WITH_LIB(opendwg, openDWG)
 
 # Enable SysV option
 
@@ -1184,6 +1188,35 @@ AC_SUBST(PROJLIB)
 
 # Done checking PROJ
 
+# Enable openDWG option
+
+LOC_CHECK_USE(opendwg,openDWG,USE_OPENDWG)
+
+OPENDWGINC=
+OPENDWGLIB=
+
+if test -n "${USE_OPENDWG}"; then
+
+# With OPENDWG includes directory
+
+LOC_CHECK_INC_PATH(opendwg,openDGW,OPENDWGINC)
+
+LOC_CHECK_INCLUDES(ad2.h,openDWG,$OPENDWGINC)
+
+# With OPENDWG library directory
+
+LOC_CHECK_LIB_PATH(opendwg,openDWG,OPENDWGLIB)
+
+# how to program that:
+# LOC_CHECK_LIBS(ad2,adSeekLayer,openDWG,$OPENDWGLIB,OPENDWGLIB,,,)
+
+fi # $USE_OPENDWG
+
+AC_SUBST(OPENDWGINC)
+AC_SUBST(OPENDWGLIB)
+
+# Done checking OPENDWG
+
 USE_TERMIO=
 AC_SUBST(USE_TERMIO)
 
@@ -1245,4 +1278,5 @@ LOC_MSG_USE(NLS support,USE_NLS)
 LOC_MSG_USE(Readline support,USE_READLINE)
 LOC_MSG_USE(C++ support,USE_CXX)
 LOC_MSG_USE(PROJ.4 support,USE_PROJ)
+LOC_MSG_USE(openDWG support,USE_OPENDWG)
 LOC_MSG()
