@@ -1,0 +1,18 @@
+# %W% %G%
+
+
+GPATCH = Gpatch.o do_patch.o support.o
+PATCH  = patch.o
+
+all: $(BIN)/Gpatch $(BIN)/patch
+
+$(BIN)/Gpatch: $(GPATCH) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(GPATCH) $(GISLIB)
+
+$(BIN)/patch: $(PATCH) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(PATCH) $(GISLIB) $(TERMLIB)
+
+Gpatch.o: nfiles.h
+patch.o: nfiles.h
+
+$(GISLIB): #
