@@ -14,48 +14,26 @@
  * 		r_type_spec[DCELL_TYPE] or r_type_spec[2]:	"%%lf"
  *
  *		it's not flexible for precision control.
- *		use r_str_for_value() instead. see main_old.c for more info.
+ *		use r_str_value() instead. see main_old.c for more info.
  *
  * double
- * r_get_value(struct R_MAP_PTR buf, int col);
+ * r_get_value(RASTER_MAP buf, int col);
  *
  *		returns double value from any types
  *
- * 		r_value(buf, col) macro is the same.
- *
- * int
- * r_get_value2(double *ret, struct R_MAP_PTR buf, int col)
- *
- * 		sets *ret to double value.
- * 		
- * 		returns 1		if successful
- * 			0		if given type is unknown
- *
- * double
- * r_set_value(struct R_MAP_PTR buf, int col, double val)
+ * void
+ * r_set_value(RASTER_MAP buf, int col, double val)
  *
  * 		sets buf[col] to val
  *
- * 		returns buf[col]
- *
  * int
- * r_set_value2(struct R_MAP_PTR buf, int col, double val)
- *
- * 		sets buf[col] to val
- *
- * 		returns 1		if successful
- * 			0		if given type is unknown
- *
- * int
- * r_is_null_value(struct R_MAP_PTR buf, int col);
+ * r_is_null_value(RASTER_MAP buf, int col);
  *
  * 		returns 1		if buf[col] is NULL
- * 			0		if buf[col] is not NULL
- * 		       -1		if given type is unknown
+ * 			0		if buf[col] is not NULL or unknown type
  *
  * int
- * r_str_for_value(char *str, int width, int prec,
- *		struct R_MAP_PTR buf, int col);
+ * r_str_value(char *str, int width, int prec, RASTER_MAP buf, int col);
  *
  * 		fill str buffer with given value.
  *		for CELL type, prec is meaningless.
@@ -63,50 +41,40 @@
  *		returns str length	if successful
  *			0		if given type is unknown
  *
- * int
- * r_copy_value(struct R_MAP_PTR dst, int dcol,
- * 		struct R_MAP_PTR src, int scol);
+ * void
+ * r_copy_value(RASTER_MAP dst, int dcol, RASTER_MAP src, int scol);
  *
- *		copys src[scol] value to dst[dcol]
- *
- * 		returns 1		if successful
- * 			0		if given type is unknown
+ *		copies src[scol] value to dst[dcol]
  */
 
 
 #include <stdio.h>
 #include "gis.h"
 
-union	R_PTR
+typedef	union	_RASTER_MAP_DATA
 {
 	void	*v;
 	CELL	*c;
 	FCELL	*f;
 	DCELL	*d;
-};
+} RASTER_MAP_DATA;
 
-struct	R_MAP_PTR
+typedef	struct	_RASTER_MAP
 {
-	RASTER_MAP_TYPE		type;
-	union R_PTR	data;
-};
+	RASTER_MAP_TYPE	type;
+	RASTER_MAP_DATA	data;
+} RASTER_MAP;
 
 
 char	*r_type_name[] = { "CELL", "FCELL", "DCELL" };
 char	*r_type_spec[] = { "%%d",  "%%f",   "%%lf"  };
 
 
-#define	r_value(buf, col)	r_get_value(buf, col);
-
-double	r_get_value(struct R_MAP_PTR buf, int col);
-int	r_get_value2(double *ret, struct R_MAP_PTR buf, int col);
-double	r_set_value(struct R_MAP_PTR buf, int col, double val);
-int	r_set_value2(struct R_MAP_PTR buf, int col, double val);
-int	r_is_null_value(struct R_MAP_PTR buf, int col);
-int	r_str_for_value(char *str, int width, int prec,
-		struct R_MAP_PTR buf, int col);
-int	r_copy_value(struct R_MAP_PTR dst, int dcol,
-		struct R_MAP_PTR src, int scol);
+double	r_get_value(RASTER_MAP buf, int col);
+void	r_set_value(RASTER_MAP buf, int col, double val);
+int	r_is_null_value(RASTER_MAP buf, int col);
+int	r_str_value(char *str, int width, int prec, RASTER_MAP buf, int col);
+void	r_copy_value(RASTER_MAP dst, int dcol, RASTER_MAP src, int scol);
 
 
 int
@@ -117,7 +85,7 @@ main(int argc, char **argv)
 	char	*name, *mapset;
 	int	fd, row, rows, col, cols;
 
-	struct	R_MAP_PTR	buf;
+	struct	RASTER_MAP	buf;
 	char	str[20];
 
 	opt = G_define_option() ;
@@ -165,7 +133,7 @@ main(int argc, char **argv)
 			if(r_is_null_value(buf, col)){
 				printf("NULL ");
 			}else{
-				r_str_for_value(str, 15, 5, buf, col);
+				r_str_value(str, 15, 5, buf, col);
 				printf("%s ", str);
 			}
 		}
@@ -176,17 +144,17 @@ main(int argc, char **argv)
 	fprintf(stderr, "\n%d rows, %d cols\n", rows, cols);
 
 	{
-		struct R_MAP_PTR tmp;
+		RASTER_MAP tmp;
 
 		tmp.type   = buf.type;
 		tmp.data.v = G_allocate_raster_buf(buf.type);
 
-		r_str_for_value(str, 15, 5, tmp, 2);
+		r_str_value(str, 15, 5, tmp, 2);
 		printf("\n >> %s ", str);
 
 		r_copy_value(tmp, 2, buf, 10);
 
-		r_str_for_value(str, 15, 5, tmp, 2);
+		r_str_value(str, 15, 5, tmp, 2);
 		printf("<< %s ", str);
 	}
 
@@ -195,78 +163,34 @@ main(int argc, char **argv)
 
 
 double
-r_get_value(struct R_MAP_PTR buf, int col)
+r_get_value(RASTER_MAP buf, int col)
 {
-	double	retval;
+	double	ret;
 
 	switch(buf.type)
 	{
 		case CELL_TYPE:
-			retval = (double) buf.data.c[col];
+			ret = (double) buf.data.c[col];
 			break;
 		case FCELL_TYPE:
-			retval = (double) buf.data.f[col];
+			ret = (double) buf.data.f[col];
 			break;
 		case DCELL_TYPE:
-			retval = (double) buf.data.d[col];
-			break;
-	}
-
-	return retval;
-}
-
-
-int
-r_get_value2(double *ret, struct R_MAP_PTR buf, int col)
-{
-	switch(buf.type)
-	{
-		case CELL_TYPE:
-			*ret = (double) buf.data.c[col];
-			break;
-		case FCELL_TYPE:
-			*ret = (double) buf.data.f[col];
-			break;
-		case DCELL_TYPE:
-			*ret = (double) buf.data.d[col];
+			ret = (double) buf.data.d[col];
 			break;
 		default:
-			return 0;
+			G_warning("Illegal raster type\n");
+			return 0.0;
 			break;
 	}
 
-	return 1;
+	return ret;
 }
 
 
-double
-r_set_value(struct R_MAP_PTR buf, int col, double val)
+void
+r_set_value(RASTER_MAP buf, int col, double val)
 {
-	switch(buf.type)
-	{
-		case CELL_TYPE:
-			buf.data.c[col] = (CELL) val;
-			return (double) buf.data.c[col];
-			break;
-		case FCELL_TYPE:
-			buf.data.f[col] = (FCELL) val;
-			return (double) buf.data.f[col];
-			break;
-		case DCELL_TYPE:
-			buf.data.d[col] = (DCELL) val;
-			return (double) buf.data.d[col];
-			break;
-	}
-
-	return val;
-}
-
-
-int
-r_set_value2(struct R_MAP_PTR buf, int col, double val)
-{
-	double	retval;
-
 	switch(buf.type)
 	{
 		case CELL_TYPE:
@@ -279,36 +203,43 @@ r_set_value2(struct R_MAP_PTR buf, int col, double val)
 			buf.data.d[col] = (DCELL) val;
 			break;
 		default:
+			G_warning("Illegal raster type\n");
+			return;
+			break;
+	}
+
+	return;
+}
+
+
+int
+r_is_null_value(RASTER_MAP buf, int col)
+{
+	int	ret;
+
+	switch(buf.type)
+	{
+		case CELL_TYPE:
+			ret = G_is_c_null_value(&buf.data.c[col]);
+			break;
+		case FCELL_TYPE:
+			ret = G_is_f_null_value(&buf.data.f[col]);
+			break;
+		case DCELL_TYPE:
+			ret = G_is_d_null_value(&buf.data.d[col]);
+			break;
+		default:
+			G_warning("Illegal raster type\n");
 			return 0;
 			break;
 	}
 
-	return 1;
+	return ret;
 }
 
 
 int
-r_is_null_value(struct R_MAP_PTR buf, int col)
-{
-	switch(buf.type)
-	{
-		case CELL_TYPE:
-			return G_is_c_null_value(&buf.data.c[col]);
-			break;
-		case FCELL_TYPE:
-			return G_is_f_null_value(&buf.data.f[col]);
-			break;
-		case DCELL_TYPE:
-			return G_is_d_null_value(&buf.data.d[col]);
-			break;
-	}
-
-	return -1;
-}
-
-
-int
-r_str_for_value(char *str, int width, int prec, struct R_MAP_PTR buf, int col)
+r_str_value(char *str, int width, int prec, RASTER_MAP buf, int col)
 {
 	switch(buf.type)
 	{
@@ -322,6 +253,7 @@ r_str_for_value(char *str, int width, int prec, struct R_MAP_PTR buf, int col)
 			sprintf(str, "%*.*lf", width, prec, buf.data.d[col]);
 			break;
 		default:
+			G_warning("Illegal raster type\n");
 			return 0;
 			break;
 	}
@@ -330,8 +262,8 @@ r_str_for_value(char *str, int width, int prec, struct R_MAP_PTR buf, int col)
 }
 
 
-int
-r_copy_value(struct R_MAP_PTR dst, int dcol, struct R_MAP_PTR src, int scol)
+void
+r_copy_value(RASTER_MAP dst, int dcol, RASTER_MAP src, int scol)
 {
 	switch(dst.type)
 	{
@@ -351,7 +283,8 @@ r_copy_value(struct R_MAP_PTR dst, int dcol, struct R_MAP_PTR src, int scol)
 						(CELL) src.data.d[scol];
 					break;
 				default:
-					return 0;
+					G_warning("Illegal raster type\n");
+					return;
 					break;
 			}
 			break;
@@ -371,7 +304,8 @@ r_copy_value(struct R_MAP_PTR dst, int dcol, struct R_MAP_PTR src, int scol)
 						(FCELL) src.data.d[scol];
 					break;
 				default:
-					return 0;
+					G_warning("Illegal raster type\n");
+					return;
 					break;
 			}
 			break;
@@ -391,15 +325,17 @@ r_copy_value(struct R_MAP_PTR dst, int dcol, struct R_MAP_PTR src, int scol)
 						(DCELL) src.data.d[scol];
 					break;
 				default:
-					return 0;
+					G_warning("Illegal raster type\n");
+					return;
 					break;
 			}
 			break;
 		default:
-			return 0;
+			G_warning("Illegal raster type\n");
+			return;
 			break;
 	}
 
-	return 1;
+	return;
 }
 
