@@ -12,6 +12,11 @@ fi
 
 tmpfile=$LOCATION/.tmp/$HOSTNAME/$$.1
 mon=`d.mon -L | fgrep selected | awk '{print $1}'`
+if [ $? -eq 0 ]
+then
+ echo "ERROR: No monitor selected"
+ exit
+fi
 
 d.save -a > $tmpfile
 
