@@ -1,0 +1,51 @@
+.\" %W% %G%
+.TH Dstatus 2D D-language
+.SH NAME
+Dstatus \- Prints the status of monitor windows
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dstatus
+.SH DESCRIPTION
+.I Dstatus 
+prints to standard output information about the windows on the monitor.
+This information includes:
+.RS
+.br
+The time (number) of creation of the current window (\fItime\fR)
+.br
+Current window name (\fIcur_w\fR)
+.br
+Monitor window names (\fIWINDOW\fR)
+.br
+Map window coordinates associated with monitor windows (\fIm_win\fR)
+.br
+Display window coordinates associated with monitor windows (\fId_win\fR)
+(display window coordinates assume (0,0) is located in the upper left
+corner of the monitor)
+.br
+The list of commands used to create the contents of monitor windows
+(i.e., \fIDcell: soils in PERMANENT\fR, \fIDgrid 100\fR, etc.)
+.br
+The times (numbers) of creation of all monitor windows
+(from most recently created, to earliest created) (\fItime\fR)
+.br
+.br
+.RE
+.SH "NOTES"
+This command is generally used for program debugging, and is not needed
+by the casual user.
+\fIDstatus\fR will complain if no graphics monitor has been selected for
+output.
+.br
+If the user performs an action in a window that overwrites information
+already there (i.e., the user runs \fIDcell\fR after having run
+\fIDgrid\fR), the overwritten information will be lost in the \fIDstatus\fR
+file as well.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
