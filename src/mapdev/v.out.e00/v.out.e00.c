@@ -24,6 +24,12 @@
 /* warned that it will run at your own risks.                     */
 /*                                                                */
 /******************************************************************/
+/* - Number of areas corrected to number of active areas.         */
+/* - unlabeled areas will only optionally be exported  (option -A)*/
+/*   like in v.out.shape                                          */
+/* 16.09.03  H. Wziontek - hwz@gmx.de                             */
+/*                                                                */
+/******************************************************************/
 
 FILE *fde00;			/* output file descriptor */
 
@@ -53,6 +59,7 @@ int main( int argc, char *argv[])
     int i, j, k, l, n, m;
     int level;			/* level of vector file (should be at least 2 */
     int nareas, nlines;		/* number of areas and lines */
+    int naareas;                /* number of active areas */
     double x, y, *px, *py;
     double xmin, ymin, xmax, ymax;
     double ybase, *length, *perim, *lareas, *area;
@@ -69,6 +76,7 @@ int main( int argc, char *argv[])
 	struct GModule *module;
     struct {
 	struct Option *input, *output, *mapset;
+      struct Flag *allAreas;
     } parm;
 
     /* Are we running in Grass environment ? */
@@ -100,6 +108,9 @@ int main( int argc, char *argv[])
     parm.output->required   = NO;
     parm.output->description= "Name of .e00 output file (Default: stdout)";
 
+    parm.allAreas = G_define_flag();
+    parm.allAreas->key = 'A';
+    parm.allAreas->description = "Output all areas (include unlabelled areas)";
 
     /* get options and test their validity */
 
@@ -155,6 +166,13 @@ int main( int argc, char *argv[])
     ymin = region.south;
     ymax = region.north;
 
+    /* delete all unlabeled areas if not explicitely wished! 
+       and count the number of active areas */
+    if (!parm.allAreas->answer)
+      naareas = del_zeroatts(&map);
+    else
+      naareas = cnt_actareas(&map);
+    
     /* change left/right area number accordingly to Arc/info usage  */
     /* "external" world is numbered 0, while grass uses a negative  */
     /* number. The Isles in Arc/Info are traversed counterclockwise */
@@ -258,7 +276,7 @@ int main( int argc, char *argv[])
     fprintf( fde00, "%10ld%10ld%10ld%10ld%10ld%10ld%10ld\n",
 	    -1L, 0L, 0L, 0L, 0L, 0L, 0L);
 
-    if (nareas == 0)	/* should we also test if dig_att file is empty ? */
+    if (naareas == 0)	/* should we also test if dig_att file is empty ? */
 	goto no_area;	/* We could the go to the PAL section...          */
 
     /* CNT SECTION */
@@ -530,13 +548,13 @@ no_area:
 
     /* PAT table : Polygon attribute table */
 
-    if (nareas == 0)
+    if (naareas == 0)
 	goto finish;
     strcpy( nm, name);
     strncat( nm, ".PAT", 31);
 
     /* don't forget we add one area : the unnverse polygon */
-    fprintf( fde00, "%-32.32sXX   4   4  16%10ld\n", nm, nareas+1L);
+    fprintf( fde00, "%-32.32sXX   4   4  16%10ld\n", nm, naareas+1L);
     fprintf( fde00, "%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n%-16.16s%s\n",
 	"AREA", "  4-1   14-1  12 3 60-1  -1  -1-1                   1-",
 	"PERIMETER", "  4-1   54-1  12 3 60-1  -1  -1-1                   2-",
@@ -550,6 +568,7 @@ no_area:
     
     /* write other polygons */
     for (i=1; i<=nareas; i++) {
+      if (map.Area[i].alive != 0)
 	fprintf( fde00, "%14.7lE%14.7lE%11ld%11ld\n",
 	  area[i], perim[i], i+1L, (long)map.Att[map.Area[i].att].cat);
     }
@@ -601,3 +620,36 @@ void add_line_universe( int l, struct P_line p_line) {
     stack = new;
     return;
 }
+
+
+/* function to delete all unlabeled areas in map
+   returns number of <active> areas 
+   (map->n_areas is only number of allocated elements!) */
+int del_zeroatts(struct Map_info *map) {
+  
+  int i, n = 0;
+  
+  for (i=1; i<=map->n_areas; i++) {
+    if (map->Area[i].alive == 0)
+      continue;
+    if (V2_area_att(map, i) == 0) {
+      dig_del_area (map, i);
+      G_warning("unlabeled Area %d ignored ! \n", i);
+    }
+    else
+      n ++;
+  }
+
+  return(n);
+}
+
+/* function to count the number of active areas 
+   (map->n_areas is only number of allocated elements!) */
+int cnt_actareas(struct Map_info *map) {
+  int i, n = 0;
+  
+  for (i=1; i<=map->n_areas; i++)
+    if (map->Area[i].alive != 0)
+      n ++;
+    return(n);
+}  
