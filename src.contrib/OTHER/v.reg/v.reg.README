@@ -21,9 +21,6 @@ when filling out the data chart in "v.digit". Select the option to use
 "previous registration points" in "v.digit". In "v.digit" use the 
 option in the Toolbox Menu to Build Neatline, if so desired.
 
-*** To compile program:
-
-    1. cc v.reg.c -o v.reg
 
 For more info:
 
