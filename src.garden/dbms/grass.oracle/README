@@ -1,0 +1,132 @@
+
+
+
+dbSQL Tools README   GRASS Reference Manual   dbSQL Tools README
+
+
+
+
+     INTRODUCTION
+
+     The dbSQL tools provide a command line interface between the
+     GRASS GIS and INFORMIX relational database products. These
+     tools have been developed by the University of Arkansas,
+     Center for Advanced Spatial Technologies (CAST), under
+     contract to the SCS NCGIS.
+
+     The dbSQL tools consist of 13 seperate command line tools
+     which can be used in conjunction with the GRASS GIS (V4.0)
+     and the INFORMIX standard engine (SE), SQL database
+     products. Use of these tools requires a basic familiarity
+     with SQL syntax and the 4.0 version of GRASS.
+
+     Three realtional databases are included with the GRASS 4.1
+     release, along with a corresponding GRASS location (SECO).
+     These databases contain data for 4 counties in Texas within
+     the SECO Creek drainage. The databases included here have
+     been developed by the SCS, National Cartography and GIS
+     Center at Fort Worth and CAST.
+
+     A detailed description of the sample databases is provided
+     in the README file in the directory SECO_DB. This
+     description includes annotated database schemas for the
+     relational files and a complete list of the raster, vector
+     and pointfiles which are distributed with the spatial data.
+     The sample relational databases are not built and populated
+     as part of the standard GRASS compilation. Users who wish to
+     build these sample daatbases should consult the specific
+     instructions in the README file in the directory SECO_DB.
+
+     GRASS manual pages are available for each of the toools.
+     These manual pages can be accessed by using the g.manual
+     GRASS command.  The manual pages include examples which have
+     been developed using the sample databases, both spatial and
+     relational. The user is encouraged to become familiar with
+     these examples prior to developing ad hoc applications using
+     the dbSQL tools.
+
+     Relational databases and corresponding GRASS data are being
+     provided because of the data requirements needed to
+     effectively use these tools.  In order to use the spatial
+     data in GRASS in conjunction with the attribute data in a
+     relational database some form of linkage must be established
+     between the two sets of data. In most instances this linkage
+     will be between a column in the database and either the
+     GRASS category values (raster data), or the dig_att values
+     (vector data), or the locational data which can be obtained
+     from a raster surface using the mouse (point data). Because
+     few, if any current GRASS users, will have spatial and
+     realtional databases which conform to these requirements and
+
+
+
+GRASS                    U.S. Army CERL                         1
+
+
+
+
+
+
+dbSQL Tools README   GRASS Reference Manual   dbSQL Tools README
+
+
+
+     because of the effort requred to retrofit these types of
+     linkages after the fact it was decided that the current
+     release should include a "pre-linked" set of spatial and
+     attribute data.
+
+
+
+
+
+     COMPILATION
+
+     To compile the the GRASS-Informix RDBMS interface run
+     gmake4.0 from the src.garden directory in the GRASS source
+     code. The resulting binaries will be placed in the
+     $GISBASE/garden/bin directory.  To run these tools the
+     Informix database engine software and the ISQL software must
+     be accessible to the user. In addition, the environment
+     variables needed by Informix must be set (eg. INFORMIXDIR
+     and DBPATH). For additional discussion concerning these
+     variables see the Informix SQL Reference Manual or consult
+     your Systems Administrator.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS                    U.S. Army CERL                         2
+
+
+
