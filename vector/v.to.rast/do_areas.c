@@ -100,7 +100,7 @@ int sort_areas ( struct Map_info *Map, struct line_pnts *Points, int field)
 	} else {
 	    Vect_read_line ( Map, NULL, Cats, centroid );
 	    Vect_cat_get (Cats, field, &cat);
-	    if ( cat <= 0 ) {
+	    if ( cat < 0 ) {
 		SETNULL( &cat );
 		G_warning ("Area centroid without category");
 	    } 

@@ -254,7 +254,7 @@ int main(int argc, char **argv)
 	    int i, isle, nisles;
 	    
 	    centroid = Vect_get_area_centroid ( &In, area );
-	    cat = 0;
+	    cat = -1;
 	    if ( centroid > 0 ) {
 		Vect_read_line (&In, NULL, LCats, centroid );
 		Vect_cat_get (LCats, field, &cat);

@@ -23,7 +23,7 @@ int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cv
     for ( index = 1; index <= nlines; index++) {
 	type = Vect_read_line ( Map, Points, Cats, index );
 	Vect_cat_get (Cats, field, &cat);
-	if ( cat <= 0 ) { continue; } 
+	if ( cat < 0 ) { continue; } 
 
 	if ( use == USE_ATTR ) {
 	    if ( ctype == DB_C_TYPE_INT ) {

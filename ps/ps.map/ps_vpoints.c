@@ -89,7 +89,6 @@ int PS_vpoints_plot (struct Map_info *P_map, int vec, int type)
 	if ( Varray != NULL && Varray->c[line] == 0 ) continue; /* is not in array */
 	
 	pPoints = Points; nPoints=0;
-	cat = 0;
 	Vect_cat_get( Cats, 1, &cat);
 
 	nn = Points->y[0];

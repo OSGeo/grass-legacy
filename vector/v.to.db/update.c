@@ -56,7 +56,7 @@ update (struct Map_info *Map)
     /* update */
     for ( i = 0; i < vstat.rcat; i++ ) {
 	fcat = Values[i].cat;
-	if ( fcat == 0 ) continue;
+	if ( fcat < 0 ) continue;
 	switch (options.option) {
     	    case O_CAT:	 
 	        sprintf (buf2, "%s ( %d )", buf1, Values[i].cat);

@@ -155,7 +155,7 @@ main (int argc, char *argv[])
 	for ( i = 1; i <= Vect_get_num_areas(&In) ; i++ ) {
 	    /* TODO : Use this later for attributes from database: */
 	    centroid = Vect_get_area_centroid ( &In, i );
-	    cat = 0;
+	    cat = -1;
 	    if ( centroid > 0 ) {
 		Vect_read_line (&In, NULL, Cats, centroid );
 		Vect_cat_get (Cats, field, &cat);

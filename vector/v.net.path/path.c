@@ -52,7 +52,7 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield )
 
         Vect_cat_get ( Cats, nfield, &cat );
 
-        if ( cat == 0 ) continue;
+        if ( cat < 0 ) continue;
 	
 	Cidx[count].cat = cat;
 	Cidx[count].line = line;

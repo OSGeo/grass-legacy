@@ -203,7 +203,7 @@ main (int argc, char **argv)
 	if ( !( type & ltype) ) continue;
 
 	Vect_cat_get(Cats, field, &cat);
-	if ( cat == 0 ) continue; /* no cat for this field */
+	if ( cat < 0 ) continue; /* no cat for this field */
 	
 	/* Read label from database */
 
