@@ -6,55 +6,57 @@
 
 /******************************************************************/
  /*02/2000 dbf dump to Postgres
- *	Alex Shevlakov sixote@yahoo.com
- ******************************************************************/
-int PgDumpFromDBF (char *, int);
+    *   Alex Shevlakov sixote@yahoo.com
+    ***************************************************************** */
+int PgDumpFromDBF(char *, int);
 
-int main( int   argc, char *argv[])
+int main(int argc, char *argv[])
 {
- 
+
 
     int no_rattle;
     char *infile;
 
 
-    struct {
+    struct
+    {
 	struct Option *input, *dumpmode;
-    } parm;
+    }
+    parm;
 
     /* Are we running in Grass environment ? */
 
-    G_gisinit (argv[0]);
+    G_gisinit(argv[0]);
 
     /* define the different options */
 
-    parm.input = G_define_option() ;
-    parm.input->key        = "input";
-    parm.input->type       = TYPE_STRING;
-    parm.input->required   = YES;
-    parm.input->description= _("Name of .dbf file to be imported");
+    parm.input = G_define_option();
+    parm.input->key = "input";
+    parm.input->type = TYPE_STRING;
+    parm.input->required = YES;
+    parm.input->description = _("Name of .dbf file to be imported");
 
-    
-    parm.dumpmode = G_define_option() ;
-    parm.dumpmode->key        = "dumpmode";
-    parm.dumpmode->type       = TYPE_STRING;
-    parm.dumpmode->required   = NO;
-    parm.dumpmode->description= _("Admin/normal user dump mode (Default = Postgres super-user)");
-    
+
+    parm.dumpmode = G_define_option();
+    parm.dumpmode->key = "dumpmode";
+    parm.dumpmode->type = TYPE_STRING;
+    parm.dumpmode->required = NO;
+    parm.dumpmode->description =
+	_("Admin/normal user dump mode (Default = Postgres super-user)");
+
 
     /* get options and test their validity */
 
     if (G_parser(argc, argv))
 	exit(-1);
-    
+
     infile = parm.input->answer;
     no_rattle = (int) parm.dumpmode->answer;
-    
-
-    	PgDumpFromDBF(infile, no_rattle);
 
 
-    
+    PgDumpFromDBF(infile, no_rattle);
+
+
+
     exit(0);
 }
-

@@ -7,7 +7,7 @@ EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
 
 OBJS = \
 	main.o \
-	infxStats.o
+	pgStats.o
 
 $(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)  $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)

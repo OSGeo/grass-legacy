@@ -1,7 +1,6 @@
 /*
  *   g.stats.inf
  *
- *#----------------------A.Sh -12.99
  *   Generate simple staistics (MIN, MAX, MEAN, MODE and FREQ),
  *   of selected database column for a specified table
  *   in the currently selected SQL database identified
@@ -25,73 +24,75 @@
 */
 
 #include "gis.h"
-#include "infx.h"
-#include "stats.h"
 #include <stdlib.h>
 #include "glocale.h"
 
 #define MAIN
 
+int pgStats(char *, char *, char, char *, char);
+
 int main(argc, argv)
-int argc ;
-char **argv ;
+     int argc;
+     char **argv;
 {
-    char *dbname;  
+    char *dbname;
 
     int stat;
     struct Option *opt1, *opt2, *cond;
     struct Flag *flag, *verb;
 
 
-	stat = 0;
+    stat = 0;
 
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]);
 
-	opt1 = G_define_option() ;
-	opt1->key        = "table" ;
-	opt1->type       = TYPE_STRING ;
-	opt1->required   = YES  ;
-	opt1->multiple   = NO ;
-	opt1->description= _("Name of the table in the selected database:");
+    opt1 = G_define_option();
+    opt1->key = "table";
+    opt1->type = TYPE_STRING;
+    opt1->required = YES;
+    opt1->multiple = NO;
+    opt1->description = _("Name of the table in the selected database:");
 
-	opt2 = G_define_option() ;
-	opt2->key        = "column" ;
-	opt2->type       = TYPE_STRING ;
-	opt2->required   = YES  ;
-	opt2->multiple   = NO ;
-	opt2->description= _("Column in [table].") ;
+    opt2 = G_define_option();
+    opt2->key = "column";
+    opt2->type = TYPE_STRING;
+    opt2->required = YES;
+    opt2->multiple = NO;
+    opt2->description = _("Column in [table].");
 
-	cond = G_define_option() ;
-	cond->key        = "where" ;
-	cond->type       = TYPE_STRING ;
-	cond->required   = NO ;
-	cond->multiple   = NO ;
-	cond->description= _("Clause (where) for the query, without WHERE") ;
+    cond = G_define_option();
+    cond->key = "where";
+    cond->type = TYPE_STRING;
+    cond->required = NO;
+    cond->multiple = NO;
+    cond->description = _("Clause (where) for the query, without WHERE");
 
-        flag = G_define_flag();
-        flag->key               = 'f';
-        flag->description       = _("Use -f for frequencies \n\tinstead of min, max, mean.");
+    flag = G_define_flag();
+    flag->key = 'f';
+    flag->description =
+	_("Use -f for frequencies \n\tinstead of min, max, mean.");
 
-        verb = G_define_flag();
-        verb->key               = 'v';
-        verb->description       = _("Use -v for full output.");
+    verb = G_define_flag();
+    verb->key = 'v';
+    verb->description = _("Use -v for full output.");
 
-	/* Check DATABASE env variable */
-        if ((dbname=G__getenv("PG_DBASE")) == NULL) {
-            fprintf(stderr,
-                   _("Please run g.select.pg to identify a current database..\n"));
-	    exit(-1);
-           }
+    /* Check DATABASE env variable */
+    if ((dbname = G__getenv("PG_DBASE")) == NULL) {
+	fprintf(stderr,
+		_
+		("Please run g.select.pg to identify a current database..\n"));
+	exit(-1);
+    }
 
-	/* Invoke parser */
-	if (G_parser(argc, argv))
-	    exit(-1);
+    /* Invoke parser */
+    if (G_parser(argc, argv))
+	exit(-1);
 
-        
-	stat = infxStats(opt1->answer,opt2->answer,flag->answer,cond->answer,verb->answer);
-	exit(stat);
+
+    stat =
+	pgStats(opt1->answer, opt2->answer, flag->answer, cond->answer,
+		verb->answer);
+    exit(stat);
 
 }
-
-
