@@ -1,0 +1,66 @@
+
+
+
+Dsplit(2D)           GRASS Reference Manual            Dsplit(2D)
+
+
+
+NAME
+     Dsplit - Divides the monitor into two windows and then
+     displays two maps
+     (D Language Tool)
+
+SYNOPSIS
+     Dsplit mapname1 mapname2 [cmd=GRASS command] [view=horiz]
+
+DESCRIPTION
+     Dsplit is a UNIX Bourne shell macro which clears the entire
+     screen and divides it into two windows.  Maps are then
+     displayed in each of the two windows.  This command is very
+     useful for visually comparing maps (cell, vector, 3D views)
+     and can be used by other GRASS shell macros.  It is also
+     useful for creating demos.
+
+Options:
+     cmd=        The default command that displays the map is
+                 Dcell, but it can be changed to any GRASS
+                 command (D3d, Dvect, etc...).
+
+     view=horiz  The screen can be split either horizontally or
+                 vertically.  The default view splits the screen
+                 into two screens, one on the left and one on the
+                 right (vertical split).  Some maps ( 3D views)
+                 are better represented with more width then
+                 height (horizontal split).  The first map name
+                 listed on the command line will be displayed in
+                 the top or left window, depending on whether the
+                 screen was split, horizontally or vertically.
+                 The second map will be displayed in the bottom
+                 or right window.
+
+                 Example: Dsplit soils vegcover
+
+                 Example: Dsplit elevation vegcover cmd=D3d
+                 view=horiz
+
+Comments
+          Dsplit leaves the window that the last map was drawn in
+          as the active window.
+
+SEE ALSO
+     DINTRO[2D], Dcell[2D], Dvect[2D], D3d[2D]
+
+COMMANDS USED IN THE MACRO
+     Dclear.screen[2D], Dnew[2D], Dchoose[2D]
+
+AUTHOR
+     Michael Higgins, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+Printed 3/28/90            D-language                           1
+
+
+
