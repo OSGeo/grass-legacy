@@ -157,6 +157,9 @@
 /* define if X is disabled or unavailable */
 #undef X_DISPLAY_MISSING
 
+/* define to path of locale directory */
+#undef LOCALEDIR
+
 /*
  * It's hard to click two buttons simultaneously with two button mouse.
  * Situation is worse, if it requires continuous clicking.
