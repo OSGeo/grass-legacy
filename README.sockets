@@ -161,6 +161,12 @@ then
 	chmod 755 $GISBASE/dev/create_buffers.sh
 fi
 
+if [ ! -f $GISBASE/dev/create_fifos.sh ]
+then
+	sed "s|@prefix@|$GISBASE|g" src/scripts/shells/create_fifos.sh.in > $GISBASE/dev/create_fifos.sh
+	chmod 755 $GISBASE/dev/create_fifos.sh
+fi
+
 if [ "$cmd" = "new" -a -p $GISBASE/dev/fifo.1a ]
 then
 	sh $GISBASE/dev/create_buffers.sh
