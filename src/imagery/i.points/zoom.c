@@ -22,6 +22,7 @@ zoom()
     return 0;	/* return, but don't QUIT */
 }
 
+static
 cancel()
 {
     return -1;
