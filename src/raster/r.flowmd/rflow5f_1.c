@@ -200,7 +200,8 @@ char *argv[];
        INPUT();
        calculate();
        OUTGR(); 
-
+       fprintf(stderr,"\n");
+       
    return 1;
 }
 
@@ -1427,7 +1428,7 @@ void calculate()
 
 	w = 3.*sqrt((double)(n * n + m * m));
 	k = (int) w;
-	fprintf(stdout, "\n\nWorking...");
+	fprintf(stderr, "\n\nWorking...");
         px = (double *)malloc(k * sizeof(double)); 
 	py = (double *)malloc(k * sizeof(double));
 
