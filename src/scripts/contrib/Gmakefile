@@ -1,5 +1,6 @@
 all:
 	$(GMAKE) d.rast.leg
+	cp d.monsize/d.monsize $(GISBASE)/scripts
 	cp d.rast.rescale/d.rast.rescale $(GISBASE)/scripts
 	cp g.html2man/g.html2man $(GISBASE)/scripts
 	$(GMAKE) i.oif
