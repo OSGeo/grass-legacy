@@ -234,7 +234,7 @@ static void spawnRedrawProcess(void)
 
 static void handleResizeEvent(void)
 {
-    PAD *curpad;
+    PAD *curpad, *nextpad;
     char buf[64];
     XWindowAttributes xwa;
     XGCValues gc_values;
@@ -254,9 +254,12 @@ static void handleResizeEvent(void)
     delete_item(curpad,"cur_w");
 
     /* delete all other pads */
-    for ( curpad = pad_list(); curpad != NULL; curpad = curpad->next )
+    for ( curpad = pad_list(); curpad != NULL; curpad = nextpad )
+    {
+	nextpad = curpad->next;
 	if ( *curpad->name  )
 	    delete_pad(curpad);
+    }
 
     curpad = NULL;
 
