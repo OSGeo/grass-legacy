@@ -1,0 +1,559 @@
+
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Spatial Query
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Spatial Query
+</h1>
+
+<blockquote><i>
+    Status:  Beta<br>
+    This module has been designed and reviewed but not yet coded.  
+    It is considered fairly stable.
+</i></blockquote>
+
+
+These routines provided spatial querying capabilies.  This includes
+selecting one or more features based on nearness to a point or one or
+more other features, selecting features based on their relationship to
+a given polygon, and functions to generate a point that is guaranteed
+to be uniquely inside a given area or polygon.   The routines which can
+result in one or more features return their results to a caller
+provided group class.  Refer to the group section of the manual for
+more information.
+<p>
+
+In any query which takes a <em>types</em> parameter.  This 
+parameter is a type mask which specifies which primitive feature types
+are to be included in the query.  See the section 
+<em><a href="types.html">Primitive Feature Types</a> </em> for more 
+information.   Note that some functions only accept a subset of the
+available types.
+<p>
+
+<hr>
+
+
+gvStatus <strong>gvPointToLine</strong> (gvMapP <em>map</em>, gvPid *<em>pid</em>, gvCoord <em>coord</em>)
+<p>
+    This routine returns the PID of a line given a point specified in the
+    gvCoord structure.
+<p>
+
+<pre>
+INPUT
+    gvMapP map
+    gvCoord coord   Contains x and y values of query point
+
+OUTPUT
+    gvPid *pid 	    Fills in the caller provided gvPid structure which 
+		    references the line which was found.
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	No line found
+	GV_MEMORY_ERR	Out of memory
+</pre>
+
+
+<hr>
+
+gvStatus <strong>gvPointToLineRaw</strong> (gvMapP <em>map</em>, gvPid *<em>pid</em>, double <em>x</em>, double <em>y</em>)
+<p>
+    Same function as gvPointToLine(), except input is as X, Y
+<p>
+<pre>
+INPUT 
+    gvMapP map	    Active map
+    double x	    X value
+    double y	    Y value
+OUTPUT
+    gvPid *pid	    Fills in the caller provided gvPid structure which
+		    which references the line which was found
+RETURN
+    Same as gvPointToLine()
+	
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvPointToArea</strong> (gvMapP map, gvPid *pid, gvCoord coord)
+<p>
+    This routine returns the PID of an area given a point specified in the
+    gvCoord structure.
+<p>
+<pre>
+INPUT
+    gvMapP map
+    gvCoord coord   Contains x and y values of query point
+
+OUTPUT
+    gvPid *pid 	    Fills in the caller provided gvPid structure which 
+		    references the area which was found.
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	No area found
+	GV_MEMORY_ERR	Out of memory
+
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvPointToAreaRaw</strong> (gvMapP map, gvPid *pid, double x, double y)
+<p>
+    Same function as gvPointToArea(), except input is as X, Y
+<p>
+<pre>
+INPUT 
+    gvMapP map	    Active map
+    double x	    X value
+    double y	    Y value
+OUTPUT
+    gvPid *pid	    Fills in the caller provided gvPid structure which
+		    which references the area which was found
+RETURN
+    Same as gvPointToArea()
+	
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvPointToNode</strong> (gvMapP map, gvPid *pid, gvCoord coord, char *type)
+<p>
+    This routine returns the PID of an node given a point specified in the
+    gvCoord structure.
+<p>
+<pre>
+INPUT
+    gvMapP map
+    gvCoord coord   Contains x and y values of query point
+    char *type	    Type(s) of nodes to search ["", "C", "E", "CE"]
+
+OUTPUT
+    gvPid *pid 	    Fills in the caller provided gvPid structure which 
+		    references the node which was found.
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	No node found
+	GV_MEMORY_ERR	Out of memory
+
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvPointToNodeRaw</strong> (gvMapP map, gvPid *pid, double x, 
+         double y, char *type)
+<p>
+    Same function as gvPointToNode(), except input is as X, Y
+<p>
+<pre>
+INPUT 
+    gvMapP map	    Active map
+    double x	    X value
+    double y	    Y value
+    char *type	    Type(s) of nodes to search. Any combination
+		    of the letters C and E  [e.g. "", "C", "E", "CE"]
+		    The special cases "" and NULL are the same as "CE".
+OUTPUT
+    gvPid *pid	    Fills in the caller provided gvPid structure which
+		    which references the node which was found
+RETURN
+    Same as gvPointToNode()
+	
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvIsPointInArea</strong> (gvMapP map, gvPid Area, gvCoord coord)
+<p>
+    This routine checks to see if the given point is within
+    the specified area.
+<p>
+<pre>
+INPUT
+    gvMapP map
+    gvPid Area      PID of area of interest
+    gvCoord coord   Coord structure with value of point of interest
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Point is within area
+	GV_FAILED	Point is NOT within area
+	GV_MEMORY_ERR	Out of memory
+
+NOTE
+    This routine does NOT guarantee that the point is *uniquely* within
+    the area with respect to the map.  
+
+SEE ALSO
+    gvIsPointInAreaRaw(), gvPointToArea(), gvGeneratePointInArea()
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvIsPointInAreaRaw</strong> (gvMapP map, gvPid Area, double x, double y)
+<p>
+    Same function as gvIsPointInArea() except that input is as X, Y
+<p>
+<pre>
+INPUT
+    gvMapP map
+    gvPid Area      PID of area of interest
+    double x	    X value
+    double y	    Y value
+
+OUTPUT
+    None
+
+RETURN
+    Same as gvIsPointInArea()
+
+SEE ALSO
+    gvIsPointInRaw()
+
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvGeneratePointInArea</strong> (gvMapP map, gvPid *Area, gvCoord *coord)
+<p>
+    Given and existing area, this function will generate a point
+    which is uniquely within the area.  The point is guaranteed 
+    to not exist within any of that area's islands.  The point is
+    guaranteed to NOT lie on an edge of the area, assuming a
+    valid input area.
+<p>
+<pre>
+INPUT
+    gvMapP map
+    gvPid *Area         PID of area of interest.  Structure will not be
+			modified.
+
+OUTPUT
+    gvCoord *coord	Pointer to caller supplied gvCoord structure.
+			This structure will contain the found point on 
+			success.
+
+RETURN
+    gvStatus
+	GV_OK		Point successfully found.
+	GV_FAILED	Failed to find point (probably bad area)
+	GV_MEMORY_ERR	Out of memory
+
+SEE ALSO
+    gvGeneratePointInPoly()
+
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvGeneratePointInPoly</strong> (gvMapP map, gvArc *poly, gvCoord *coord)
+<p>
+    Given and existing polygon, this function will generate a point
+    which is within that polygon.   The point is guaranteed to NOT lie 
+    on an edge of the polygon, assuming a valid input polygon.
+<p>
+
+<pre>
+INPUT
+    gvMapP map
+    gvArc *Poly      Populated gvArc structure representing
+			a valid polygon
+
+OUTPUT
+    gvCoord *coord	Pointer to caller supplied gvCoord structure.
+			This structure will contain the found point on 
+			success.
+
+RETURN
+    gvStatus
+	GV_OK		Point successfully found.
+	GV_FAILED	Failed to find point (probably bad polygon)
+	GV_MEMORY_ERR	Out of memory
+
+SEE ALSO
+    gvGeneratePointInComplexPoly(), gvGeneratePointInArea()
+
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvGeneratePointInComplexPoly</strong> (gvMapP map, gvArcP poly, 
+         gvArcP Isles[], int n_isles,
+					 gvCoord *coord)
+<p>
+    Given and existing polygon, this function will generate a point
+    which is within that polygon.   The point is guaranteed to NOT lie 
+    on an edge of the polygon, assuming a valid input polygon.
+<p>
+<pre>
+INPUT
+    gvMapP map
+    gvArc *Poly      Populated gvArc structure representing
+			a valid polygon.
+    gvArcP Isles[]   Array of pointers to populated gvArc structs
+			each of which represents a valid island which is 
+			entirely within the parent polygon and entirely 
+			outside of any peer islands.
+    int n_isles		The number of elements in the Isles array.
+
+OUTPUT
+    gvCoord *coord	Pointer to caller supplied gvCoord structure.
+			This structure will contain the found point on 
+			success.
+
+RETURN
+    gvStatus
+	GV_OK		Point successfully found.
+	GV_FAILED	Failed to find point (probably bad polygon)
+	GV_MEMORY_ERR	Out of memory
+
+SEE ALSO
+    gvGeneratePointInPoly(), gvGeneratePointInArea()
+
+
+Spatial set queries
+-------------------
+The following routines perform a spatial query and their output is a
+group of 0 or more geographic primitives that satisfy the query.
+
+For each of the queries a list of primitive types is requested.  The
+list of options are  "A" Area, "L" Line, "E" Entity Node, and "C" Connecting
+Node.  These may be combined in any comination to specify the search
+space by geographic primitive type.
+    e.g. "A", "L", "E", "C", "ALEC" etc 
+
+
+****The existance of many of these functions depends on acquiring code
+to provide the specified functionality.  Note that these functions
+are all 'toolbox' level functions and thus non critical to the API. ****
+
+
+
+
+*******  TODO  Do I need to provide some units capabilities here?  ******* 
+
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvSelectAllFeaturesDistFromPoint</strong> (gvMapP map, double dist, int types,
+         gvCoord *coord, gvGroup *out)
+<p>
+    Select all features of type 'types' that are within dist map units
+    from the specified point and return them as a group.
+<p>
+
+<pre>
+INPUT
+    gvMapP map
+    double dist		Distance in map units to search within.
+    int types		Types of geographic primitives to search for.
+    gvCoord *coord	Pointer gvCoord structure containing the point
+			from which to search.
+
+OUTPUT
+    gvGroup *out	The group of features which satisfy the search.
+
+RETURN
+    gvStatus
+	GV_OK		One or more features found.
+	GV_FAILED	Failed to find any features matching that criteria
+	GV_MEMORY_ERR	Out of memory
+
+NOTE
+    The entire feature does not have to be within the specified distance.  
+    In other words, if only one corner of an area, for example, is within
+    the search criteria, then that feature will be returned.
+
+    The caller is responsible for providing a valid initialized group
+    structure and for destroying it properly when finished with it.
+
+
+SEE ALSO
+    gvSelectAllFeaturesDistFromFeature(), GROUP
+    
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvSelectAllFeaturesDistFromFeature</strong> (gvMapP map, double dist, 
+	 int types, gvPid *feature, 
+					      gvGroup *out)
+<p>
+    Select all features of type 'types' that are within dist map units
+    from the specified feature and return them as a group.
+<p>
+
+<pre>
+INPUT
+    gvMapP map
+    double dist		Distance in map units to search within.
+    int types		Types of geographic primitives to search for.
+    gvPid *feature	Pointer to gvPid structure identifying the feature
+			from which to search.
+
+OUTPUT
+    gvGroup *out	The group of features which satisfy the search.
+
+RETURN
+    gvStatus
+	GV_OK		One or more features found.
+	GV_FAILED	Failed to find any features matching that criteria
+	GV_MEMORY_ERR	Out of memory
+
+NOTE
+    The entire feature does not have to be within the specified distance.  
+    In other words, if only one corner of an area, for example, is within
+    the search criteria, then that feature will be returned.
+
+    The caller is responsible for providing a valid initialized group
+    structure and for destroying it properly when finished with it.
+
+
+SEE ALSO
+    gvSelectAllFeaturesDistFromPoint(), gvSelectAllFeaturesDistFromGroup(), 
+    GROUP
+    
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvSelectAllFeaturesDistFromGroup</strong> (gvMapP map, double dist, int types,
+	 gvGroup *group, gvGroup *out)
+<p>
+
+    Select all features of type 'types' that are within dist map units
+    from any feature specified in group 'group' and return them as a group.
+<p>
+
+<pre>
+INPUT
+    gvMapP map
+    double dist		Distance in map units to search within.
+    int types		Types of geographic primitives to search for.
+    gvGroup *group	Group structure identifying the list of features
+			from which to search.
+
+OUTPUT
+    gvGroup *out	The group of features which satisfy the search.
+
+RETURN
+    gvStatus
+	GV_OK		One or more features found.
+	GV_FAILED	Failed to find any features matching that criteria
+	GV_MEMORY_ERR	Out of memory
+
+NOTE
+    The entire feature does not have to be within the specified distance.  
+    In other words, if only one corner of an area, for example, is within
+    the search criteria, then that feature will be returned.
+
+    The caller is responsible for providing a valid initialized group
+    structure and for destroying it properly when finished with it.
+
+
+SEE ALSO
+    gvSelectAllFeaturesDistFromFeature(), GROUP
+
+
+</pre>
+
+<hr>
+
+
+gvStatus <strong>gvSelectAllFeaturesWrtPoly</strong> (gvMapP map, gvArcP poly,
+	 int mode, int types, gvGroup *out)
+<p>
+    Select all features of type 'types' which meet the 'mode' criteria with
+    respect to the given polygon and return them as a group.
+<p>
+
+<pre>
+INPUT
+    gvMapP map
+    gvArcP poly	Points structure containing a valid simple polygon 
+			representation.
+    int mode		Relationships between features and given polygon
+			that will satisfy the query.  Options are one
+			and only one of GV_POLY_INSIDE, GV_POLY_OUTSIDE,
+			or GV_POLY_CROSS See notes below
+    int types		Types of geographic primitives to search.
+
+OUTPUT
+    gvGroup *out	The group of features which satisfy the search.
+
+RETURN
+    gvStatus
+	GV_OK		One or more features found.
+	GV_FAILED	Failed to find any features matching that criteria
+	GV_MEMORY_ERR	Out of memory
+
+NOTE
+    If only INSIDE is specified, then a line feature which crosses
+    the boundary of the polygon will not satisfy the query.  Similarly
+    for OUTSIDE.  If CROSS is specified, neither a line fully inside
+    nor outside the polygon will satisfy the query, but only a line
+    which intersect the boundary of the polygon.
+
+    The caller is responsible for providing a valid initialized group
+    structure and for destroying it properly when finished with it.
+
+
+SEE ALSO
+    gvSelectAllFeaturesDistFromFeature(), GROUP
+    
+
+<!--hr------------------------------------------------>
+<p>
+
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>
+

@@ -1,0 +1,115 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Allocation
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Allocation
+</h1>
+
+<blockquote><i>
+    Status:  Delta<br>
+    This module has been designed, and coded but is currently under review.
+    It is fairly stable but its interface could change.<p>
+
+    Currently this library does very little.  I would like a library
+    that can tell me exactly how much memory is in use, and what the
+    fragmentation looks like.
+</i></blockquote>
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li> <a href=#>  </a>
+    
+
+<li>PTR   <a href=#dpg_calloc> dpg_calloc </a>
+    (size_t nelem, size_t elsize);
+
+
+<li>PTR   <a href=#dpg_malloc> dpg_malloc </a>
+    (size_t size);
+
+
+<li>PTR   <a href=#dpg_realloc> dpg_realloc </a>
+    (PTR p, size_t size);
+
+
+<li>PTR   <a href=#dpg_crealloc> dpg_crealloc </a>
+    (PTR oldptr, int nelem, int elsize, int oldnelem);
+
+
+<li>void  <a href=#dpg_free> dpg_free </a>
+    (PTR p);
+
+
+<li>PTR   <a href=#dpg_allocSpace> dpg_allocSpace </a>
+    (int n_wanted, int *n_elements, int chunk_size, PTR ptr, int element_size);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+<a name="dpg_calloc">
+<pre>
+PTR   <strong>dpg_calloc</strong> (size_t nelem, size_t elsize);
+
+</pre>
+
+<a name="dpg_malloc">
+<pre>
+PTR   <strong>dpg_malloc</strong> (size_t size);
+
+</pre>
+
+<a name="dpg_realloc">
+<pre>
+PTR   <strong>dpg_realloc</strong> (PTR p, size_t size);
+
+</pre>
+
+<a name="dpg_crealloc">
+<pre>
+PTR   <strong>dpg_crealloc</strong> (PTR oldptr, int nelem, int elsize, int oldnelem);
+
+</pre>
+
+<a name="dpg_free">
+<pre>
+void  <strong>dpg_free</strong> (PTR p);
+
+</pre>
+
+<a name="dpg_allocSpace">
+<pre>
+PTR   <strong>dpg_allocSpace</strong> (int n_wanted, int *n_elements, int chunk_size, PTR ptr, int element_size);
+
+</pre>
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

@@ -1,0 +1,239 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Bitmap
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Bitmap Library
+</h1>
+
+<blockquote><i>
+    Status:  Delta<br>
+    This module has been designed, and coded but is currently under review.
+    It is fairly stable but its interface could change.<p>
+    The reason for this change is that I put too much functionality
+    down too low. The stuff for supporting groups should be moved
+    up to the gvGroups module or at least into another module here.
+</i></blockquote>
+
+<p>
+This library was uniquely designed to support the API Group (set) functions.
+It is more than a simple bitmap library in that it supports a concept
+of bitmap <em>types</em>.  These types provide a way to classify bitmaps
+and form associations between bitmaps of similar types.  The primary 
+reason for this is to resize bitmap types.  If one bitmap of a given
+type is resized, then <em>all</em> bitmaps of the same type are also
+resized.  The purpose of this is for the group functions.  Since groups
+represent all of the objects in a map, then as the universe of objects
+for the map changes, I want all groups to be updated dynamically.  Thus
+binary operations are always working with bitmaps of the same size.
+<p>
+The bitmap tag which is returned by <em>dpgBmInit</em>(), is broken down
+into three distinct parts.  It is a 32 bit value.  The high 8 bits are used
+to represent the unique tag which is returned by dpgBmInit().  Note this 
+means that there can only be up to 256 calls to dpgBmInit() per application
+run.  This should typically not be a problem, since most programs should only
+call it once.
+<p>
+The next 8 bits are used to specify the bitmap type.  Thus each instance
+of the bitmap library can have up to 256 unique types.  Again this is 
+not a problem, as at least in the case of the vector API, it requires 7 
+unique types, one for each primitive feature type.
+<p>
+The remaining 16 bits are used to identify individual bitmap instances of
+the specified type.
+<p>
+Note that the functions take as a parameter, either a bm, or a type.
+Note also that the 'tag' returned by dpgBmInit() is contained in any
+Bm value which is returned by any other functions.  Thus the library
+is quite flexible as to what you pass in as an argument.  For example,
+dpgBmDelete() can take an integer with the Instance bits zeroed out, in 
+which case, the command assumes it is to delete <em>all</em> bitmaps
+of the specified type.  If the type field is zeroed out, then it is assumed
+to destroy the entire tag, and thus the tag is no longer valid.  Or of
+course, a Bm for an individual bitmap instance could be passed in and just
+that bitmap would be deleted.
+<p>
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li>Bm    <a href=#dpgBmInit> dpgBmInit </a>
+    ();
+
+
+<li>int   <a href=#dpgBmDelete> dpgBmDelete </a>
+    (Bm bm);
+
+
+<li>Bm    <a href=#dpgBmAddType> dpgBmAddType </a>
+    (Bm bm, int size);
+
+
+<li>Bm    <a href=#dpgBmNew> dpgBmNew </a>
+    (Bm bm);
+
+
+<li>int   <a href=#dpgBmResize> dpgBmResize </a>
+    (Bm type, int size);
+
+
+<li>int   <a href=#dpgBmSet> dpgBmSet </a>
+    (Bm bm, int num, int val);
+
+
+<li>int   <a href=#dpgBmGet> dpgBmGet </a>
+    (Bm bm, int num);
+
+
+<li>int   <a href=#dpgBmGetSize> dpgBmGetSize </a>
+    (Bm bm);
+
+
+<li>void  <a href=#dpgBmPrint> dpgBmPrint </a>
+    (Bm bm);
+
+
+<li>Bm    <a href=#dpgBmBinaryOp> dpgBmBinaryOp </a>
+    (Bm a, Bm b, int op);
+
+
+<li>Bm    <a href=#dpgBmUnaryOp> dpgBmUnaryOp </a>
+    (Bm a, int op);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+<ul>
+<a name="dpgBmInit">
+<li>Bm    <strong>dpgBmInit</strong> ();
+<p>
+Return tag for new BM head
+<p>
+
+
+<a name="dpgBmDelete">
+<li>int   <strong>dpgBmDelete</strong> (Bm bm);
+<p>
+Action is dependant on what is contained in bm.
+<p>
+
+ If bm references a bitmap, then just that bitmap is
+  free up.
+ If bm reference a type, then the entire type is deleted and
+  all of the bitmap instances under it are freed
+ If bm is a head, then the entire head, all its types and bitmaps are
+  freed.
+<p>
+ Note you cannot delete EVERYTHING with this.  The most you can
+  delete is an entire head.   Thus notice that the Head array
+  can not be freed through this interface.  That is not so
+  unreasonable since it is not all that big and there can only
+  be one instance of it per program.
+<p>
+
+
+<a name="dpgBmAddType">
+<li>Bm    <strong>dpgBmAddType</strong> (Bm bm, int size);
+<p>
+Define new type for Head bm
+<p>
+
+
+<a name="dpgBmNew">
+<li>Bm    <strong>dpgBmNew</strong> (Bm bm);
+<p>
+Creates a new bitmap instance of type <em>type</em>
+the bitmap is created of the proper size for type.
+<p>
+
+
+<a name="dpgBmResize">
+<li>int   <strong>dpgBmResize</strong> (Bm type, int size);
+<p>
+Resize all of the bitmaps of type <em>type</em>
+<p>
+
+
+<a name="dpgBmSet">
+<li>int   <strong>dpgBmSet</strong> (Bm bm, int num, int val);
+<p>
+Set array value
+<p>
+
+
+<a name="dpgBmGet">
+<li>int   <strong>dpgBmGet</strong> (Bm bm, int num);
+<p>
+Get array value
+<p>
+
+
+<a name="dpgBmGetSize">
+<li>int   <strong>dpgBmGetSize</strong> (Bm bm);
+<p>
+Get array size of type
+<p>
+
+
+<a name="dpgBmPrint">
+<li>void  <strong>dpgBmPrint</strong> (Bm bm);
+<p>
+Print bitmap to stdout
+<p>
+
+
+<a name="dpgBmBinaryOp">
+<li>Bm    <strong>dpgBmBinaryOp</strong> (Bm a, Bm b, int op);
+<p>
+Perform Binary Operation<br>
+op is one of
+<ul>
+    <li> DPG_BIT_AND
+    <li> DPG_BIT_OR 
+    <li> DPG_BIT_XOR 
+    <li> DPG_BIT_DIFF (subtraction)
+</ul>
+
+
+
+
+<a name="dpgBmUnaryOp">
+<li>Bm    <strong>dpgBmUnaryOp</strong> (Bm a, int op);
+<p>
+Perform Binary Operation<br>
+op is one of
+<ul>
+    <li> DPG_BIT_COPY
+    <li> DPG_BIT_NEGATE
+</ul>
+</ul>
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

@@ -1,0 +1,100 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Debug
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Debug 
+</h1>
+
+<blockquote><i>
+    Status:  Gamma<br>
+    This module has been designed, reviewed and coded.
+    It should be considered stable.
+</i></blockquote>
+
+<p>
+<em>Debugf</em> is a debuggin function I have used for years.  It can
+be turned on or off simply by setting an environment variable DEBUG. 
+If DEBUG is set to a string, all debuging information will be directed
+to the file specified by the string. If it is NULL, then debuging information
+will go to stderr.
+<p>
+Level of debugging information can be controlled by setting the environment
+varilable DEBUG_LEVEL.  DEBUG_LEVEL is a bit mask, where each module
+can specify what level it will report on.  Unsetting DEBUG_LEVEL or setting
+it to -1 will turn on all levels.  Note DEBUG also needs to be set on.
+<p>
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li> <a href=#>  </a>
+    
+
+<li>void  <a href=#dpgInitDebug> dpgInitDebug </a>
+    (char *file);
+
+
+<li>void  <a href=#dpgCloseDebug> dpgCloseDebug </a>
+    (VOID);
+
+
+<li>int   <a href=#dpgDebugf> dpgDebugf </a>
+    ARGS ((int level, char *format, ...));
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+<a name="dpgInitDebug">
+<ul>
+<li>void  <strong>dpgInitDebug</strong> (char *file);
+<p>
+<em>File</em> is the file name of the source file and not a file to 
+open.  This function must be called to initialize the debug system.
+<p>
+
+<a name="dpgCloseDebug">
+<li>void  <strong>dpgCloseDebug</strong> (VOID);
+<p>
+This call closes the debug system.
+<p>
+
+
+<a name="dpgDebugf">
+<li>int   <strong>dpgDebugf</strong> ARGS ((int level, char *format, ...));
+<p>
+Use this function to display debugging information.  Level is a bit flag
+which can be controlled by the environment variable DEBUG_LEVEL.
+<p>
+
+</ul>
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>
