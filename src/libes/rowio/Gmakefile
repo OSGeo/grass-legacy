@@ -1,19 +1,20 @@
 OBJ=setup.o get.o forget.o release.o fileno.o put.o
 
-all: $(ROWIOLIB) $(LIBDIR)/rowio.h
+#all: $(ROWIOLIB) $(LIBDIR)/rowio.h
+all: $(ROWIOLIB)
 
 $(ROWIOLIB): $(OBJ)
 	$(AR)
 
-$(LIBDIR)/rowio.h: rowio.h
-	rm -f $@ ; cp $? $@; chmod +r $@
+#$(LIBDIR)/rowio.h: rowio.h
+#	rm -f $@ ; cp $? $@; chmod +r $@
 
-fileno.o: rowio.h
-forget.o: rowio.h
-get.o: rowio.h
-put.o: rowio.h
-release.o: rowio.h
-setup.o: rowio.h
+fileno.o: $(INCLUDE_DIR)/rowio.h
+forget.o: $(INCLUDE_DIR)/rowio.h
+get.o: $(INCLUDE_DIR)/rowio.h
+put.o: $(INCLUDE_DIR)/rowio.h
+release.o: $(INCLUDE_DIR)/rowio.h
+setup.o: $(INCLUDE_DIR)/rowio.h
 
 try: $(ROWIOLIB) try.o
 	$(CC) try.o $(ROWIOLIB) -o try
