@@ -1,0 +1,8 @@
+# %W%  %G%
+
+OBJS = main.o 
+
+$(BIN)/Gcontour.surf: $(OBJS) $(GISLIB)  $(DISPLAYLIB)
+	cc $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(DISPLAYLIB) $(MATHLIB)
+
+$(DISPLAYLIB) $(GISLIB): #
