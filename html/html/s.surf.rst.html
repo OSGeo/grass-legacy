@@ -250,7 +250,7 @@ to <i>dnorm</i> (dnorm rescales the coordinates depending on the average
 data density so that the size of segments with <i>segmax=</i>40 points
 is around 1 - this ensures the numerical stability of the computation):
 </p>
-<p>1. Default (used also in s.surf.tps): the given <i>tension</i> 
+<p>1. Default (used also in the old s.surf.tps): the given <i>tension</i> 
 is applied to normalized data (x/<i>dnorm</i>..),  that means that
 the distances are multiplied (rescaled) by <i>tension/dnorm</i>. If density
 of points is changed, e.g.,  by using higher <i>dmin</i>, the <i>dnorm</i>
@@ -260,8 +260,8 @@ is usually within the 10-100 range and does not depend on the actual scale
 (distances) of the original data (which can be km for regional applications
 or cm for field experiments).
 <br>
-2. Flag<b> -t </b>(experimental for s.surf.rst)<b>: </b>The given 
-<i>tension</i> is applied to un-normalized data (rescaled tension = t<i>ension*dnorm</i>/1000
+2. Flag<b> -t </b>(introduced for s.surf.rst)<b>: </b>The given 
+<i>tension</i> is applied to un-normalized data (rescaled tension = <i>tension*dnorm</i>/1000
 is applied to normalized data (x/<i>dnorm</i>) and therefore  <i>dnorm</i>
 cancels out) so here <i>tension</i> truly works as a rescaling parameter.
 For regional applications with distances between points in km the suitable
@@ -316,6 +316,10 @@ used for normalization (dnorm), which influences the tension.
 800), the user can skip segmentation by setting <i>segmax</i> to the number
 of data points or segmax=700.
 </p>
+<P>When the data points are dense and homogeneously distributed, such
+as lidar data, reducing segmax from the default 40 to a lower number (e.g. 20)
+and npmin from default 200 to 100-150 can speed-up the computation substantially. 
+</P>
 <p>The program gives warning when user wants to interpolate outside the
 rectangle given by minimum and maximum coordinates in site file, zoom into
 the area where the points are is suggested in this case.
@@ -366,11 +370,13 @@ SEE ALSO</h2>
 AUTHORS</h2>
 <i>Original version of program (in FORTRAN) and GRASS enhancements:</i><br>
 
-Lubos Mitas, NCSA, University of Illinois at Urbana-Champaign, Illinois,
+Lubos Mitas, Department of Physics, North Carolina State University,
+formerly NCSA, University of Illinois at Urbana-Champaign, Illinois,
 USA
 <br>
 
-Helena Mitasova, Department of Geography, University of Illinois at
+Helena Mitasova, North Carolina State University,
+formerly Department of Geography, University of Illinois at
 Urbana-Champaign, Champaign, Illinois, USA
 
 <p><i>Modified program (translated to C, adapted for GRASS, new segmentation
@@ -421,7 +427,7 @@ problem, <i>Computers and Mathematics with Applications </i>16, p. 983</p>
 <a href="http://mpa.itc.it/grassbook/">Open Source GIS: A GRASS GIS Approach.</a>
 The Kluwer international series in Engineering and Computer Science (SECS):
 Volume 689. Kluwer Academic Publishers, Boston, Dordrecht, London. ISBN:
-1-4020-7088-8. (see Chapter 7 for tuning RST parameters)</p>
+1-4020-7088-8. (see Chapter 7 for tuning RST parameters and Appendix for equations)</p>
 
 <p>Talmi, A. and Gilat, G., 1977: Method for Smooth Approximation of Data,
 <i>Journal of Computational Physics</i>, 23, p.93-123. </p>
