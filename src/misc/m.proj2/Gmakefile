@@ -8,4 +8,5 @@ $(BIN_CMD)/$(PGM): $(LIST) $(DEPGPROJLIB) $(DEPGISLIB)
 
 $(DEPGPROJLIB) $(DEPGISLIB): #
 
+$(LIST): local_proto.h
 

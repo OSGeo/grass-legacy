@@ -1,3 +1,8 @@
+#ifdef MAIN
+#define GLOBAL
+#else
+#define GLOBAL extern
+#endif
 #include "geo.h"
 void get_stp_proj(char[]);
 int get_stp_code(int, char[]);
@@ -5,15 +10,10 @@ int get_stp_num(void);
 int ask_fips(FILE *, int *, int *, int *);
 int set_proj_bool_opts(int index, char *parms, char *buffer);
 int set_proj_nonbool_opts(int index, char *parms, char *buffer, double value);
-int proj_index_in, proj_index_out;
+GLOBAL int proj_index_in, proj_index_out;
 int get_input(char *, char *, char *, char *, char *);
 int put_output(char *, int);
 
-#ifdef MAIN
-#define GLOBAL
-#else
-#define GLOBAL extern
-#endif
 struct used_opt {
 	int was;
 	double val;
@@ -37,7 +37,7 @@ GLOBAL int i, conv_typ, conv_way;
 GLOBAL int input_typ, output_typ, rec_cnt;
 GLOBAL int IDEG, IMIN, JDEG, JMIN, ST_zone;
 GLOBAL float XDEG, XMIN, YDEG, YMIN, Q, XSEC, YSEC;
-/* current lat and lon - equal either LAT and LON or LAT_res, LON_res */ ;
+/* current lat and lon - equal either LAT and LON or LAT_res, LON_res */
 GLOBAL double LAT, LON, X, Y, LAT_res, LON_res, cur_LAT, cur_LON;
 GLOBAL double NOR, EAS, NOR_res, EAS_res;
 GLOBAL char check;
