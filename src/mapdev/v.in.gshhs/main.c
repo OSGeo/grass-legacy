@@ -28,10 +28,7 @@
 #include "projects.h"
 
 
-main (argc, argv)
-int     argc;
-char **argv;
-
+int main (int argc, char **argv)
 {
         double w, e, s, n, area, lon, lat;
 	double *X, *Y, UX, UY;
