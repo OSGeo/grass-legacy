@@ -1,0 +1,3 @@
+filtermap
+    Generates output layer which is a filtered version of the 
+    input layer.  User may specify number of filtering iterations.
