@@ -177,6 +177,13 @@ read_vareas (char *name, char *mapset)
 	    vector.layer[vec].pat = G_store(data);
 	    continue;
 	}
+	
+	if (KEY("scale"))
+	{
+	    G_chop(data); 
+	    vector.layer[vec].scale = atof(data);
+	    continue;
+	}
 
 	if (KEY("pwidth"))
 	{
