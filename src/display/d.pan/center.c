@@ -49,14 +49,14 @@ int make_window_center (struct Cell_head *window, double mag)
 	east = window->east - (t+.5) * window->ew_res;
 
 	strcpy (buffer, "?");
-	G_format_easting(east, buffer, window->proj)  ;
-	len_e = max (len_e, strlen(buffer));
-	fprintf(stderr,"east: %-*s  ", len_e, buffer);
-
-	strcpy (buffer, "?");
 	G_format_northing(north, buffer, window->proj)  ;
 	len_n = max (len_n, strlen(buffer));
 	fprintf(stderr,"north: %-*s  ", len_n, buffer);
+
+	strcpy (buffer, "?");
+	G_format_easting(east, buffer, window->proj)  ;
+	len_e = max (len_e, strlen(buffer));
+	fprintf(stderr,"east: %-*s  ", len_e, buffer);
 
 	fprintf (stderr,"\r");
 	fflush (stderr);
@@ -85,20 +85,20 @@ int make_window_center (struct Cell_head *window, double mag)
 /* added for panning */
 
     strcpy (buffer, "?");
-    G_format_easting(window->east, buffer, window->proj)  ;
-    fprintf(stderr,"east: %s  ", buffer);
-
-    strcpy (buffer, "?");
-    G_format_easting(window->west, buffer, window->proj)  ;
-    fprintf(stderr,"west: %s  ", buffer);
-
-    strcpy (buffer, "?");
     G_format_northing(window->north, buffer, window->proj)  ;
     fprintf(stderr,"north: %s  ", buffer);
 
     strcpy (buffer, "?");
     G_format_northing(window->south, buffer, window->proj)  ;
     fprintf(stderr,"south: %s  ", buffer);
+
+    strcpy (buffer, "?");
+    G_format_easting(window->east, buffer, window->proj)  ;
+    fprintf(stderr,"east: %s  ", buffer);
+
+    strcpy (buffer, "?");
+    G_format_easting(window->west, buffer, window->proj)  ;
+    fprintf(stderr,"west: %s  ", buffer);
 
     fprintf(stderr, "\n\n");
 
