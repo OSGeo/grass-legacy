@@ -1,0 +1,41 @@
+#!/bin/sh
+# Startup script for d.siter
+# to make d.siter independent of local wish8.x installation
+# The script searches for wish8.x and starts d.siter
+# this script is called by d.siter with two paramters.
+
+# Markus Neteler
+# $Id$
+
+#searching for wish8.x:
+SEARCHCOMMAND=wish8
+
+k=0
+PATHLIST=""
+found=0
+
+SEARCHPATHS=`echo $PATH | tr -s ':' ' '`
+for i in $SEARCHPATHS ; do
+   k=`expr $k + 1`
+   cd $i
+   ls -1 |grep $SEARCHCOMMAND > /dev/null
+   if [ $? = 0 ]
+   then
+      #found
+      found=`expr $found + 1`
+      PATHLIST="$i/`ls -1 |grep $SEARCHCOMMAND` $PATHLIST"
+   fi
+done
+
+#now all wish8.x are stored in $PATHLIST
+#take the first and start tcltkgrass
+if [ $found -gt 0 ]
+then
+  WISH=`echo "$PATHLIST"| cut -d' ' -f1`
+  $GISBASE/etc/d.siter/tclsiter.tcl $WISH $1 $2 &
+else
+ echo ""
+ echo "ERROR: wish not found! Please install tcl8.x and tk8.x libraries"
+ echo "Hit key to continue."
+ exit 1
+fi
