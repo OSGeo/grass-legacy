@@ -1,8 +1,6 @@
-Welcome to the GRASS 5.7 development repository
+GRASS Development
 
-GRASS Development Team
-
-CVS kindly supported by Intevation GmbH, Osnabrück, Germany
+CVS repository kindly supported by Intevation GmbH, Osnabrück, Germany
 
 ##########################################################################
 How to compile:
@@ -16,12 +14,13 @@ How to generate the 'Programmer's Manual':
 This needs doxygen (http://www.doxygen.org) and optionally
 Graphviz dot (http://www.research.att.com/sw/tools/graphviz/).
 
-To build the GRASS 5.7 programmer's documentation, run
+To build the GRASS programmer's documentation, run
    make htmldocs
 here. This takes quite some time. The result is in doxygenhtml/index.html
 which refers to further document repositories in
    lib/vector/html/index.html
    lib/db/html/index.html
+   lib/gis/html/index.html
 
-The master file is: ./grass57refman.dox where all sub-documents have to
+The master file is: ./grassrefman.dox where all sub-documents have to
 be linked into.
