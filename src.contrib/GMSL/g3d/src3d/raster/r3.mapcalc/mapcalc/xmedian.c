@@ -50,7 +50,7 @@ n_median (n,name) char *name;
     return 0;
 }
 
-static
+extern
 dcmp (a,b)
     double *a,*b;
 {

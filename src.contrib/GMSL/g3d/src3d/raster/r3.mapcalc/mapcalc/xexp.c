@@ -18,7 +18,7 @@ x_exp (argc, argv, xcell, ncols)
 	_pow(argv[0], argv[1], xcell, ncols);
 }
 
-static
+extern
 _exp (a, xcell, ncols)
     register double *a;
     register double *xcell;
@@ -39,7 +39,7 @@ _exp (a, xcell, ncols)
     }
 }
 
-static
+extern
 _pow (a, b, xcell, ncols)
     register double *a, *b;
     register double *xcell;

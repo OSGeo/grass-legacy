@@ -48,7 +48,7 @@ mask_d_select (x, mask)
     return 0;
 }
 
-static
+extern
 mask_match_d_interval (x, I)
     DCELL x;
     d_Interval *I;
