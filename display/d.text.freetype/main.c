@@ -31,7 +31,7 @@
 #endif
 
 #include <ft2build.h>
-#include <freetype/freetype.h>
+#include FT_FREETYPE_H
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
@@ -625,16 +625,16 @@ read_capfile(char *capfile, capinfo **fonts, char **font_names,
 		ifont[128], ipath[4096], icharset[32], icolor[128], isize[10];
 	FILE	*fp;
 
+	*fonts = NULL;
+	*font_names = NULL;
+	*fonts_count = 0;
+	*cur_font = -1;
+
 	if(!(fp = fopen(capfile, "r")))
 	{
 		G_warning("%s: Unable to read FreeType definition file", capfile);
 		return -1;
 	}
-
-	*fonts = NULL;
-	*font_names = NULL;
-	*fonts_count = 0;
-	*cur_font = -1;
 
 	while(fgets(buf, sizeof(buf), fp) && !feof(fp))
 	{
