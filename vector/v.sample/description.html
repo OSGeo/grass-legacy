@@ -1,0 +1,72 @@
+<H2>DESCRIPTION</H2>
+
+<EM>v.sample</EM> samples a GRASS raster map at the point
+locations in the input file by either cubic convolution
+interpolation, bilinear interpolation, or nearest neighbor
+sampling (default).
+
+<P>
+
+This program may be especially useful when sampling for
+cross validation of interpolations whose output is a raster
+map.
+
+<H2>NOTES</H2>
+
+<P>
+
+The output points will have the easting and northing of the input points.
+The input category value is used. The input attribute, raster value 
+and difference is written to output.
+
+<P>
+
+<P>
+When NULL values are encountered for a cell, zero value is used
+instead.  In these cases, more acurrate results may be obtained
+by using the default nearest neighbor comparisons.
+
+<P>
+
+This program may not work properly with lat-long data when
+the <B>-BC</B> flags are used.
+
+<P>
+
+When interpolation is done (i.e., the <B>-BC</B> flags are
+used), values are assumed to be located at the centroid of
+grid cells.  Therefore, current resolution settings are
+important.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.random.html">s.random</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+
+
+<EM>Image Sampling Methods</EM> - GRASS Tutorial on <EM>s.sample</EM>
+(available as 
+<A HREF="../../sites/">s.sample-tutorial.ps.gz</A>) 
+
+
+<H2>BUGS</H2>
+Please send all bug fixes and comments to the author
+or the grass development team. <br>
+<a href="http://www.geog.uni-hannover.de/grass/"><tt>http://www.geog.uni-hannover/grass/</tt></A>
+
+<H2>AUTHOR</H2>
+
+<A HREF="http://mccauley-usa.com/">James Darrell McCauley</A>
+<A HREF="mailto:darrell@mccauley-usa.com">&lt;darrell@mccauley-usa.com&gt;</A>,
+<br>when he was at: 
+<A HREF="http://ABE.www.ecn.purdue.edu/ABE/">Agricultural
+Engineering</A>
+<A HREF="http://www.purdue.edu/">Purdue University</A>
+<P>
+Updated for GRASS 5.0 by Eric G. Miller
+<BR>
+Updated for GRASS 5.7 by Radim Blazek
+
+<p><i>Last changed: $Date$</i>
+</body>
+</html>
