@@ -46,7 +46,7 @@ struct Point
 struct Point *points = NULL;
 struct Point *list;
 
-main(argc, argv) 
+int main(argc, argv) 
     int   argc;
     char *argv[];
 {
@@ -79,7 +79,7 @@ main(argc, argv)
     parm.output->type       = TYPE_STRING ;
     parm.output->required   = YES;
     parm.output->description= "Name of output 3D - G3D file" ;
-    parm.output->gisprompt  = "new,grid3,3d raster";
+    parm.output->gisprompt  = "any,grid3,3d raster";
 
     parm.npoints = G_define_option() ;
     parm.npoints->key        = "npoints" ;
