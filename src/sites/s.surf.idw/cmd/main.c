@@ -1,21 +1,33 @@
+#include <stdlib.h>
+#include <math.h>
 #include "gis.h"
 #include "site.h"
 
 int search_points = 12;
 
-int npoints = 0;
-int **npoints_currcell;
+long npoints = 0;
+long **npoints_currcell;
 int nsearch;
+static int i;
 
 struct Point
+{
+    double north, east;
+    double z;
+};
+struct list_Point
 {
     double north, east;
     double z;
     double dist;
 };
 struct Point ***points;
-struct Point *list;
+struct Point *noidxpoints = NULL;
+struct list_Point *list;
 static struct Cell_head window;
+static struct Flag *noindex;
+void calculate_distances(int, int, double, double, int*);
+void calculate_distances_noindex(double, double);
 
 int main(int argc, char *argv[])
 {
@@ -24,19 +36,27 @@ int main(int argc, char *argv[])
     DCELL *dcell;
     struct GModule *module;
     int row, col;
-    int startrow, endrow, searchrow;
-    int startcolumn, endcolumn, searchcolumn;
-    int pointsfound, edgeregion;
+    int searchrow, searchcolumn, pointsfound;
+    int *shortlistrows=NULL, *shortlistcolumns=NULL;
+    long ncells;
     double north, east;
-    double dx,dy;
-    double maxdist,dist;
+    double dist;
     double sum1, sum2, interp_value;
-    int i,n,max, field;
+    int n, field;
     void read_sites();
     struct
     {
         struct Option *input, *npoints, *output, *dfield;
     } parm;
+    struct cell_list
+    {
+        int row, column;
+        struct cell_list *next;
+    };
+    struct cell_list **search_list, **search_list_start;
+    int max_radius, radius;
+    int searchallpoints = 0;
+   
 
     parm.input = G_define_option() ;
     parm.input->key        = "input" ;
@@ -67,6 +87,11 @@ int main(int argc, char *argv[])
     parm.dfield->multiple = NO;
     parm.dfield->required = NO;
     parm.dfield->description = "which decimal attribute (if multiple)";
+   
+    noindex = G_define_flag();
+    noindex->key = 'n';
+    noindex->description = "Don't index sites by cell (for very large regions;"
+                           " uses less memory)";
 
     G_gisinit(argv[0]);
 
@@ -78,6 +103,8 @@ int main(int argc, char *argv[])
     if (G_parser(argc, argv))
         exit(1);
 
+    fprintf(stderr, "%s:\n", G_program_name());
+   
     if (G_legal_filename(parm.output->answer) < 0)
     {
         fprintf (stderr, "%s=%s - illegal name\n", parm.output->key, parm.output->answer);
@@ -97,27 +124,31 @@ int main(int argc, char *argv[])
     if (field < 1)
       G_fatal_error ("Decimal attribute field 0 doesn't exist.");    
 
-    list = (struct Point *) G_calloc (search_points, sizeof (struct Point));
+    list = (struct list_Point *) G_calloc (search_points, sizeof (struct list_Point));
 
 
-/* get the window, dimension row/column arrays */
+/* get the window, dimension arrays */
     G_get_window (&window);
    
-    npoints_currcell = (int **)G_malloc(window.rows * sizeof(int));
+  if(!noindex->answer)
+  { 
+    npoints_currcell = (long **)G_malloc(window.rows * sizeof(long));
     points = (struct Point ***)G_malloc(window.rows * sizeof(struct Point));
-
+   
+     
     for(row = 0; row < window.rows; row++)
     {
-        npoints_currcell[row] = (int *)G_malloc(window.cols * sizeof(int));
+        npoints_currcell[row] = (long *)G_malloc(window.cols * sizeof(long));
         points[row] = (struct Point **)G_malloc(window.cols * sizeof(struct Point));
        
         for(col = 0; col < window.cols; col++)
         {
             npoints_currcell[row][col] = 0;
-            points[row][col] = NULL; 
+            points[row][col] = NULL;           
         }
     }
-
+  }
+   
 /* read the elevation points from the input sites file */
     read_sites (parm.input->answer, field);
 
@@ -128,6 +159,63 @@ int main(int argc, char *argv[])
     }
     nsearch = npoints < search_points ? npoints : search_points;
 
+  if(!noindex->answer)
+  {
+    /* Arbitrary point to switch between searching algorithms. Could do
+     * with refinement PK */
+    if( (window.rows*window.cols)/npoints > 400 )
+    {
+        /* Using old algorithm.... */
+        searchallpoints = 1;
+        ncells = 0;
+       
+        /* Make an array to contain the row and column indices that have
+         * sites in them; later will just search through all these. */
+        for( searchrow=0; searchrow<window.rows; searchrow++)
+            for(searchcolumn=0; searchcolumn<window.cols; searchcolumn++)
+                if( npoints_currcell[searchrow][searchcolumn] > 0 )
+                {
+                    shortlistrows = (int *)G_realloc(shortlistrows, 
+                                                 (1 + ncells)*sizeof(int));
+                    shortlistcolumns = (int *)G_realloc(shortlistcolumns, 
+                                                 (1 + ncells)*sizeof(int));
+                    shortlistrows[ncells] = searchrow;
+                    shortlistcolumns[ncells] = searchcolumn;
+                    ncells++;
+                }
+    }        
+    else
+    {
+        /* Fill look-up table of row and column offsets for
+         * doing a circular region growing search looking for sites */
+        /* Use units of column width */
+        max_radius = (int)(0.5 + sqrt(window.cols*window.cols +
+          (window.rows*window.ns_res/window.ew_res)*(window.rows*window.ns_res/window.ew_res)));
+
+        search_list = (struct cell_list **)G_malloc(max_radius * sizeof(struct cell_list));
+        search_list_start = (struct cell_list **)G_malloc(max_radius * sizeof(struct cell_list));
+   
+        for(radius = 0; radius < max_radius; radius++)
+            search_list[radius] = NULL;
+       
+        for(row = 0; row < window.rows; row++)
+            for(col = 0; col < window.cols; col++)
+            {
+                radius = (int)sqrt(row*row + col*col);
+                if (search_list[radius] == NULL)
+                    search_list[radius] = 
+                      search_list_start[radius] = G_malloc(sizeof(struct cell_list));
+                else
+                    search_list[radius] =
+                      search_list[radius]->next = G_malloc(sizeof(struct cell_list));
+            
+                search_list[radius]->row = row;
+                search_list[radius]->column = col;
+                search_list[radius]->next = NULL;                                        
+            }
+    }
+  }
+   
 /* allocate buffers, etc. */
    
     dcell=G_allocate_d_raster_buf();
@@ -170,115 +258,92 @@ int main(int argc, char *argv[])
                 G_set_d_null_value(&dcell[col], 1);
                 continue;
             }
-           
-            /* If current cell contains more than nsearch points just average
+
+	    /* If current cell contains more than nsearch points just average
              * all the points in this cell and don't look in any others */
            
-            if ((pointsfound = npoints_currcell[row][col]) >= nsearch)
+            if (!(noindex->answer) && npoints_currcell[row][col] >= nsearch)
             {
                 sum1 = 0.0;
-                for (i = 0; i < pointsfound; i++)                
+                for (i = 0; i < npoints_currcell[row][col]; i++)                
                     sum1 += points[row][col][i].z;
                
-                interp_value = sum1/pointsfound;
+                interp_value = sum1/npoints_currcell[row][col];
             }
             else
             {
-                startrow = endrow = row;
-                startcolumn = endcolumn = col;
-               
-                while(pointsfound < nsearch)
-                {
-                   
-                   /* Keep widening the search window in which we are looking
-                    * for the 'nsearch' nearest points, until we find them */
-                   edgeregion = 0;
-                   if (startrow>0) startrow--; else edgeregion=1;
-                   if (startcolumn>0) startcolumn--; else edgeregion=1;
-                   if (endrow<(window.rows-1)) endrow++; else edgeregion=1;
-                   if (endcolumn<(window.cols-1)) endcolumn++; else edgeregion=1;
-                   
-                   if (edgeregion == 1)
-                   {
-                       /* If we've hit the edge of the region, easier to 
-                        * scan through all the cells in the search window */
-                       pointsfound = 0;
-                       for (searchrow = startrow; searchrow <= endrow; searchrow++)
-                       {
-                           for (searchcolumn = startcolumn; searchcolumn <= endcolumn; searchcolumn++)
-                               pointsfound += npoints_currcell[searchrow][searchcolumn];
-                       }
-                   }
-                   else
-                   {
-                       /* else can just add on the new points in the outermost
-                        * rows and columns */
-                       for (searchrow = startrow; searchrow <= endrow; searchrow++)                       
-                           pointsfound = pointsfound 
-                             + npoints_currcell[searchrow][startcolumn] 
-                             + npoints_currcell[searchrow][endcolumn];
-                       
-                       for (searchcolumn = (startcolumn+1); searchcolumn <= (endcolumn-1); searchcolumn++)
-                           pointsfound = pointsfound
-                             + npoints_currcell[startrow][searchcolumn]
-                             + npoints_currcell[endrow][searchcolumn];                       
-                   }
-                }
-               
-                /* Check distances and find the points to use in interpolation */
+	      if(noindex->answer)
+	        calculate_distances_noindex(north, east);
+	      else
+	      {
+                pointsfound = 0;
                 i = 0;
-                for (searchrow = startrow; searchrow <= endrow; searchrow++)
+
+                if( searchallpoints == 1 )
                 {
-                    for (searchcolumn = startcolumn; searchcolumn <= endcolumn; searchcolumn++)
-                    {
-                        for (pointsfound = 0; pointsfound < npoints_currcell[searchrow][searchcolumn]; pointsfound ++)
-                        {
-                                   /* fill list with first nsearch points */
-                            if (i < nsearch)
-                            {
-                                dy = points[searchrow][searchcolumn][pointsfound].north - north;
-                                dx = points[searchrow][searchcolumn][pointsfound].east  - east;
-                                list[i].dist = dy*dy + dx*dx;
-                                list[i].z = points[searchrow][searchcolumn][pointsfound].z;
-                                i++;
-
-                                /* find the maximum distance */
-                                if (i == nsearch)
-                                {
-                                    maxdist = list[max=0].dist;
-                                    for (n = 1; n < nsearch; n++)
-                                    {
-                                        if (maxdist < list[n].dist)
-                                            maxdist = list[max=n].dist;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                           
-                                /* go thru rest of the points now */
-                                dy = points[searchrow][searchcolumn][pointsfound].north - north;
-                                dx = points[searchrow][searchcolumn][pointsfound].east  - east;
-                                dist = dy*dy + dx*dx;
-
-                                if (dist < maxdist)
-                                {
-                                    /* replace the largest dist */
-                                    list[max].z = points[searchrow][searchcolumn][pointsfound].z;
-                                    list[max].dist = dist;
-                                    maxdist = list[max=0].dist;
-                                    for (n = 1; n < nsearch; n++)
-                                    {
-                                        if (maxdist < list[n].dist)
-                                            maxdist = list[max=n].dist;
-                                    }
-                                }
-                            
-                            }
-                        }
-                    }
+                    /* If there aren't many sites just check them all to find
+                     * the nearest */
+                    for( n=0; n<ncells; n++)
+                        calculate_distances(shortlistrows[n], shortlistcolumns[n], 
+                                            north, east, &pointsfound);
                 }
-               
+                else
+                {
+                    radius = 0;
+                    while(pointsfound < nsearch)
+                    {
+                        /* Keep widening the search window until we find
+                         * enough points */
+                        search_list[radius] = search_list_start[radius];
+                        while(search_list[radius] != NULL)
+                        {                    
+                            /* Always */
+                            if (row < (window.rows - search_list[radius]->row) &&
+                                col < (window.cols - search_list[radius]->column))
+                            {
+                                searchrow = row + search_list[radius]->row;
+                                searchcolumn = col + search_list[radius]->column;
+                                calculate_distances(searchrow, searchcolumn, north, east, &pointsfound);
+                            }
+     
+                            /* Only if at least one offset is not 0 */
+                            if ((search_list[radius]->row > 0  ||
+                                 search_list[radius]->column > 0 ) &&
+                                row >= search_list[radius]->row &&
+                                col >= search_list[radius]->column )                           
+                            {            
+                                searchrow = row - search_list[radius]->row;
+                                searchcolumn = col - search_list[radius]->column;                          
+                                calculate_distances(searchrow, searchcolumn, north, east, &pointsfound);
+                            }
+ 
+                            /* Only if both offsets are not 0 */
+                            if (search_list[radius]->row > 0  && 
+                                search_list[radius]->column > 0 )
+                            {
+                                if (row < (window.rows - search_list[radius]->row) &&
+                                    col >= search_list[radius]->column )                           
+                                {
+                                    searchrow = row + search_list[radius]->row;
+                                    searchcolumn = col - search_list[radius]->column;
+                                    calculate_distances(searchrow, searchcolumn, north, east, &pointsfound);
+                                }
+                                if (row >= search_list[radius]->row &&
+                                    col < (window.cols - search_list[radius]->column))
+                                {
+                                    searchrow = row - search_list[radius]->row;
+                                    searchcolumn = col + search_list[radius]->column;
+                                    calculate_distances(searchrow, searchcolumn, north, east, &pointsfound);
+                                }
+                            }
+                    
+                            search_list[radius] = search_list[radius]->next;
+                        }
+                        radius++;
+                    }               
+                }
+              }
+	       
                 /* interpolate */
                 sum1 = 0.0;
                 sum2 = 0.0;
@@ -292,7 +357,8 @@ int main(int argc, char *argv[])
                     else
                     {
                         /* If one site is dead on the centre of the cell, ignore
-                         * all the other sites and just use this value. */
+                         * all the other sites and just use this value. 
+                         * (Unlikely when using floating point numbers?) */
                         sum1 = list[n].z;
                         sum2 = 1.0;
                         break;
@@ -320,12 +386,125 @@ void newpoint ( double z,double east,double north)
         ;
     else /* For now ignore sites outside current region */
     {
+  if(!noindex->answer)
+  {
         points[row][column] = (struct Point *) G_realloc (points[row][column],
                   (1 + npoints_currcell[row][column]) * sizeof (struct Point));
         points[row][column][npoints_currcell[row][column]].north = north;
         points[row][column][npoints_currcell[row][column]].east  = east;
         points[row][column][npoints_currcell[row][column]].z     = z;
         npoints_currcell[row][column]++;
+  }
+  else
+  {
+        noidxpoints = (struct Point *) G_realloc(noidxpoints, 
+                              (1 + npoints) * sizeof (struct Point));
+        noidxpoints[npoints].north = north;
+        noidxpoints[npoints].east  = east;
+        noidxpoints[npoints].z     = z;
+  }
         npoints++;
+        if(!(npoints%1000)) 
+            fprintf(stderr,"%10ld sites\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", npoints);
     }
+}
+
+void calculate_distances(int row, int column, double north, 
+                         double east, int *pointsfound)
+{
+    int j, n, max;
+    double dx, dy, dist;
+    static double maxdist;
+   
+               /* Check distances and find the points to use in interpolation */
+    for (j = 0; j < npoints_currcell[row][column]; j ++)
+    {
+               /* fill list with first nsearch points */
+        if (i < nsearch)
+        {
+            dy = points[row][column][j].north - north;
+            dx = points[row][column][j].east  - east;
+            list[i].dist = dy*dy + dx*dx;
+            list[i].z = points[row][column][j].z;
+            i++;
+
+            /* find the maximum distance */
+            if (i == nsearch)
+            {
+                maxdist = list[max=0].dist;
+                for (n = 1; n < nsearch; n++)
+                {
+                    if (maxdist < list[n].dist)
+                        maxdist = list[max=n].dist;
+                }
+            }
+        }
+        else
+        {
+       
+            /* go thru rest of the points now */
+            dy = points[row][column][j].north - north;
+            dx = points[row][column][j].east  - east;
+            dist = dy*dy + dx*dx;
+
+            if (dist < maxdist)
+            {
+                /* replace the largest dist */
+                list[max].z = points[row][column][j].z;
+                list[max].dist = dist;
+                maxdist = list[max=0].dist;
+                for (n = 1; n < nsearch; n++)
+                {
+                    if (maxdist < list[n].dist)
+                        maxdist = list[max=n].dist;
+                }
+            }
+        
+        }
+    }
+    *pointsfound += npoints_currcell[row][column];
+}
+
+void calculate_distances_noindex(double north, double east)
+{
+    int n, max;
+    double dx, dy, dist;
+    double maxdist;
+
+                /* fill list with first nsearch points */
+	    for (i = 0; i < nsearch ; i++)
+	    {
+		dy = noidxpoints[i].north - north;
+		dx = noidxpoints[i].east  - east;
+		list[i].dist = dy*dy + dx*dx;
+		list[i].z = noidxpoints[i].z;
+	    }
+		/* find the maximum distance */
+	    maxdist = list[max=0].dist;
+	    for (n = 1; n < nsearch; n++)
+	    {
+		if (maxdist < list[n].dist)
+		    maxdist = list[max=n].dist;
+	    }
+		/* go thru rest of the points now */
+	    for ( ; i < npoints; i++)
+	    {
+		dy = noidxpoints[i].north - north;
+		dx = noidxpoints[i].east  - east;
+		dist = dy*dy + dx*dx;
+
+		if (dist < maxdist)
+		{
+			/* replace the largest dist */
+		    list[max].z = noidxpoints[i].z;
+		    list[max].dist = dist;
+		    maxdist = list[max=0].dist;
+		    for (n = 1; n < nsearch; n++)
+		    {
+			if (maxdist < list[n].dist)
+			    maxdist = list[max=n].dist;
+		    }
+		}
+	    }
+
 }
