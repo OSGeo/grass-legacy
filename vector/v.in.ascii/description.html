@@ -1,7 +1,7 @@
 <h2>DESCRIPTION</h2>
 
 <em>v.in.ascii</em> converts a vector map in ASCII format to a vector map in 
-binary format. The module may import 2 formats:
+binary format. The module may import two formats:
 <UL>
 <LI><B>standard</B> contains all data types, each coordinate on one row
 <LI><B>point</B> reads only points, each point defined on one row.
@@ -16,11 +16,6 @@ The input is read from a file specified by <B>input</B> option or from standard 
 <h2>NOTES</h2>
 
 Use the <b>-z</b> flag to convert ASCII data into a 3D binary vector map.
-
-<p>
-After running this program, GRASS support files must be built with 
-<em><a HREF="v.build.html">v.build</a></em> for the binary <em>output</em> 
-map.
 
 <P>
 A GRASS ASCII vector file (in <B>standard</B> mode) may contain a mix of 
@@ -51,13 +46,12 @@ spreadsheet as a comma separated variable (.csv) text file, and then
 using the "fs=," option with <em>v.in.ascii</em> in <b>points</b> mode.
 
 <P>
-<b>Import of dig_cats</b><br>
-Data in the dig_cats file are ignored by <em>v.in.ascii</em>, the user
-has to create the database table directly (<em>db.execute</em>) and link
-it to vector map:
+<b>Import of category attributes in <i>standard</i> mode</b><br>
+The user has to create a database table directly (with <em>db.execute</em>)
+and then link it to vector map:
 
 <pre>
-       db.execute ... # (create table ..., insert into ....)
+       db.execute ... # (CREATE TABLE ..., INSERT INTO ....)
        v.db.connect ... # link table to vector map)
 </pre>
 
@@ -65,8 +59,7 @@ it to vector map:
 
 <b>Example 1</b><br>
 Direct file editing:
-Sample ASCII vector file (stored in $MAPSET/dig_ascii/). Note the blank before
-entering vertex coordinates:<p>
+Sample ASCII vector file. Note the blank before entering vertex coordinates:<p>
 <pre>
        ORGANIZATION: GRASS Development Team
        DIGIT DATE:   1/9/2002
@@ -179,7 +172,8 @@ machines.
 <em><a HREF="db.execute.html">db.execute</a></em>,
 <em><a HREF="v.db.connect.html">v.db.connect</a></em>,
 <em><a HREF="v.out.ascii.html">v.out.ascii</a></em>,
-<em><a HREF="v.build.html">v.build</a></em>,<BR>
+<em><a HREF="v.build.html">v.build</a></em><BR>
+<a HREF="sql.html">SQL command notes</a><BR> for creating databases
 <a HREF="http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass51/doc/vector/vector.html#ascii">Vector ASCII Format Specification</a>
 <BR>
 
