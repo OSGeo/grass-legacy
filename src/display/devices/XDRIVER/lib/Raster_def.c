@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include "gis.h"
 #include "../XDRIVER.h"
 #include "driver.h"
 

@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include "gis.h"
 #include "../XDRIVER.h"
 
 static u_char red[256], grn[256], blu[256];
