@@ -84,6 +84,10 @@ foo:
     G_squeeze (buf);
     if (*buf != 'y' && *buf != 'Y')
 	return (0);
+
+    sprintf (buf, " Please wait while lines are deleted...");
+    Write_info (2, buf);
+
     cnt = 0;
 
     N = GREATER (uy1, uy2);
@@ -98,11 +102,21 @@ foo:
 	{
 	    if (_line_really_in_window (Map, &(Map->Line[i]), N, S, E, W))
 	    {
-		_remove_line (Map, i);
+		if (Remove_Draw)
+		    _remove_line (Map, i);
+		else
+		    __remove_line (Map, i);
 		cnt++;
 	    }
 	}
     }
+    if (!Remove_Draw)
+    {
+	clear_window ();
+	replot (CM);
+    }
+
+	
     sprintf (buf, " %d lines removed.", cnt);
     Write_info (2, buf);
     sleep (3);
