@@ -1,13 +1,12 @@
 #!/bin/sh
 #
-# $Id$
+# $Id: g.man,v 1.1 2000-11-26 06:21:19 cho Exp $
 #
 ############################################################################
 #
-# MODULE:	d.redraw
+# MODULE:	g.man
 # AUTHOR(S):	Huidae Cho - hdcho@geni.knu.ac.kr
-# PURPOSE:	To redraw current displayed maps without saving d.save info
-#		before d.erase.
+# PURPOSE:	Replacement for g.manual script using lynx
 # COPYRIGHT:	(C) 2000 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
@@ -15,16 +14,7 @@
 #		for details.
 #
 #############################################################################
-#
-# $Log$
-# Revision 1.2  2000-11-26 06:21:18  cho
-# added g.man to browse manual pages using lynx.
-# BSDish man does not work correctly with g.manual.
-#
-# Revision 1.1  2000/11/22 09:12:02  cho
-# added
-#
-#
+
 
 program=`basename $0`
 
@@ -36,17 +26,21 @@ then
 	exit 1
 fi
 
-if [ $# -ne 0 -o "$1" = "-help" -o "$1" = "help" ]
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
 then
-	echo
-	echo "Usage: $program"
-	echo
+        echo
+        echo "Usage: g.man module_name"
 	exit 1
 fi
 
-dsave=`d.save -o`
-d.erase
-eval "$dsave"
-
+file=$GISBASE/documents/html/$1.html
+if [ -f $file ]
+then
+	lynx $file
+else
+	echo
+	echo "Error: $1 help not exist."
+	exit 1
+fi
 exit 0
 
