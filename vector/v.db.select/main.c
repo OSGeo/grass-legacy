@@ -4,9 +4,9 @@
  * 
  * AUTHOR(S):    Radim Blazek
  *               
- * PURPOSE:      prints DB connection for a given vector map
+ * PURPOSE:      Print vector attributes
  *               
- * COPYRIGHT:    (C) 2002 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2005 by the GRASS Development Team
  *
  *               This program is free software under the 
  *               GNU General Public License (>=v2). 
@@ -86,7 +86,7 @@ int main (int argc, char **argv)
     Vect_open_old_head ( &Map, map_opt->answer, "");
 
     if ( (Fi = Vect_get_field ( &Map, field)) == NULL ) 
-	G_fatal_error("Database connection not defined");
+	G_fatal_error(_("Database connection not defined"));
 
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 
@@ -94,7 +94,7 @@ int main (int argc, char **argv)
     db_append_string ( &sql, Fi->table );
 
     if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK)
-	G_fatal_error("Cannot open select cursor");
+	G_fatal_error(_("Cannot open select cursor"));
 
     table = db_get_cursor_table (&cursor);
     ncols = db_get_table_number_of_columns (table);
@@ -112,7 +112,7 @@ int main (int argc, char **argv)
     /* fetch the data */
     while(1) {
 	if(db_fetch (&cursor, DB_NEXT, &more) != DB_OK)
-	    G_fatal_error("Cannot fetch data");
+	    G_fatal_error(_("Cannot fetch data"));
 
 	if (!more) break;
 
@@ -142,7 +142,7 @@ int main (int argc, char **argv)
     }
 
     if ( !driver )
-        G_fatal_error("Cannot open database %s by driver %s", Fi->database, Fi->driver);
+        G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
 
     db_close_database_shutdown_driver(driver);
     Vect_close ( &Map);
