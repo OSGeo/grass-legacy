@@ -1,0 +1,11 @@
+Compiling on Mac OS X:
+see REQUIREMENTS file too. 
+
+you need: 
+ 
+ - Mac OS X system
+ - some of the tools from the REQUIREMENTS listing are missing:
+ - developer tools: http://developer.apple.com/membership/online.html
+   (join the "Online" ADC for free)
+
+
