@@ -1,0 +1,73 @@
+SDTS Import name proposal:
+
+The following scheme allows transfer between DOS and UNIX, and accomodates
+multiple manifold (layer) transfers.  
+
+Example:  SDTS dataset has filenames of the form PRNMxxxx.DDF
+          There are 7 different layers or manifolds, all for the
+          same partition.
+
+Assume thee data is being imported using the root name "junk"
+
+
+1. grass vector map names:
+
+11 character limit plus 1-3 character extension. use the extension to distinguish
+layers:
+
+e.g.  junkette_1, junkette_2, junkette_23  (or wmhy_del.434)
+
+2. database names (these will be "rdbms-ready" ascii files for SDTS attributes
+and the GRASS-RDBMS "link" files):
+
+a. for regular attribute tables:
+
+    4-character SDTS prefix +  4-char module name + .db extension:
+
+         e.g. PRNMAP01.db
+
+              HY01B011.db
+
+b. GRASS/database link tables:
+
+  (1) single maps   grass layer_name + .db
+  (1) multiple maps  first letter of grass layer-name 
+                     [ + number of layer ] 
+                     + sdts-prefix + .db
+
+    e.g.  if layer name is "junkette" and there are 7 surfaces:
+    
+        j_1PRNM.db
+        j_2PRNM.db
+        j_3PRNM.db
+        j_4PRNM.db
+        j_5PRNM.db
+        j_6PRNM.db
+        j_7PRNM.db
+
+
+c. composite link tables
+
+	  PRNMffel.db
+	  PRNMffat.db
+	  PRNMobat.db
+
+Special cases:
+
+1. Simple GRASS-type import, i.e., where there is only a single composite
+link-attribute database file. (this will apply to all datasets with
+1-to-1 obj-attr relations and a single attribute file)
+
+   use user-specified output name for both grass map and attribute
+   file, as follows:
+
+	  grass map:         junkette
+	  rdbms-ready file:  junkette.db
+
+2. If either the SDTS prefix, or the output maplayer name chosen by the
+user lacks a leading alpha character (e.g., as in TIGER/SDTS's 2500 prefix),
+the letter 'T' is arbitrarily prepended to the db-ready filenames in the
+db create and load scripts.  Informix and other SQL rdbms's need tables 
+and databases to begin with a letter.
+
+	 so, the db table for "2500AP57.db" will be "T2500AP57".
