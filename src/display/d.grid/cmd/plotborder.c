@@ -1,3 +1,4 @@
+/* $Id$ */
 #include <math.h>
 #include "gis.h"
 #include "display.h"
@@ -20,6 +21,7 @@ int plot_border (double grid_size, double east, double north)
 	longmark=45.;
 
 	/* plot boundary lines: */
+	/* HB 2/2004: Note the +1-1 stuff is meters/degrees not pixels! mistake? */
 	/* horizontal : */
 	G_plot_line (window.west,window.south+1,window.east,window.south+1);
 	G_plot_line (window.west,window.north-1,window.east,window.north-1);
@@ -30,7 +32,7 @@ int plot_border (double grid_size, double east, double north)
 
 	/* Draw vertical border marks */
 	if (window.west < east)
-		x = ceil((window.west - east)/grid_size) * grid_size + east ;
+		x = floor((window.west - east)/grid_size) * grid_size + east ;
 	else
 		x = east - ceil((east - window.west)/grid_size) * grid_size ;
 
@@ -74,7 +76,7 @@ int plot_border (double grid_size, double east, double north)
 /* Draw horizontal border marks */
 
 	if (window.south > north)
-		y = ceil((window.south - north)/grid_size) * grid_size + north ;
+		y = floor((window.south - north)/grid_size) * grid_size + north ;
 	else
 		y = north - ceil((north - window.south)/grid_size) * grid_size ;
 
