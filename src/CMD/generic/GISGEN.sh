@@ -95,14 +95,6 @@ fi
 # determine where to start and what's left to do
 case $# in
 0)
-    if test -r $next_step
-    then
-	STEP=`cat $next_step`
-    else
-	STEP=`awk '{print $0;exit}' $list`
-    fi
-    echo first step: $STEP
-
     tmp1=/tmp/GISGEN1.$$
     tmp2=/tmp/GISGEN2.$$
     tmp3=/tmp/GISGEN3.$$
@@ -113,6 +105,14 @@ case $# in
 		grep -v '^#' $i >> $tmp1
 	done
     echo DONE >> $tmp1
+
+    if test -r $next_step
+    then
+	STEP=`cat $next_step`
+    else
+	STEP=`awk '{print $0;exit}' $tmp1`
+    fi
+    echo first step: $STEP
 
     rm -f $tmp2
     rm -f $tmp3
