@@ -1,0 +1,13 @@
+echo  " "  >>  coor.out 
+echo  "Lower left: "  >>  coor.out 
+Mu2ll   e=590000.00   n=4914000.00  z=13 s=clark66   >>  coor.out 
+echo  " "  >>  coor.out 
+echo  "Upper left: "  >>  coor.out 
+Mu2ll   e=590000.00   n=4928000.00  z=13 s=clark66  >>  coor.out 
+echo  " "  >>  coor.out 
+echo  "Upper right: "  >>  coor.out 
+Mu2ll   e=609000.00   n=4928000.00  z=13 s=clark66  >>  coor.out 
+echo  " "  >>  coor.out 
+echo  "Lower right: "  >>  coor.out 
+Mu2ll   e=609000.00   n=4914000.00  z=13 s=clark66  >>  coor.out 
+
