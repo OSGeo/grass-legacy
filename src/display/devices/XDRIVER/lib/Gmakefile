@@ -15,7 +15,7 @@ OBJ =\
 	clip.o\
 	color_supp.o\
 	connect.o\
-	font.o\
+	Font2.o\
 	RGB.o\
 	text.o
 
