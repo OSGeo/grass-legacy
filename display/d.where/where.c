@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "gis.h"
-#include "CC.h"
+#include "gprojects.h"
 #include "display.h"
 #include "raster.h"
 #include "local_proto.h"
@@ -23,6 +23,7 @@ int where_am_i (int once, int have_spheroid, int decimal)
 	int white, black ;
 	int projection;
 	int draw_on ;
+	extern struct pj_info iproj, oproj;
 
 	projection = G_projection();
 	white = D_translate_color("white") ;
@@ -50,7 +51,7 @@ int where_am_i (int once, int have_spheroid, int decimal)
 		{
 		G_format_easting  (east,  buf1, projection);
 		G_format_northing (north, buf2, projection);
-		}		
+		}
 		if (once)
 		{
 		  fprintf (stdout,"%18s %18s %d\n", buf1, buf2, button) ;
@@ -61,10 +62,22 @@ int where_am_i (int once, int have_spheroid, int decimal)
 		sprintf(buffer,"%18s %18s", buf1, buf2) ;
 		if (have_spheroid)
 		{
-			CC_u2ll_north (north);
-			CC_u2ll (east, &lat, &lon);
-			CC_lon_format (lon, buf1);
-			CC_lat_format (lat, buf2);
+		        lat = north;
+		        lon = east;
+
+		        if( pj_do_proj(&lon, &lat, &iproj, &oproj) < 0 )
+		           G_fatal_error("Error in pj_do_proj()");
+		   
+		        if (decimal)
+		        {
+		           G_format_easting  (lon,  buf1, 0);
+		           G_format_northing (lat, buf2, 0);
+		        }
+		        else
+		        {		       
+			   G_lon_format (lon, buf1);
+		           G_lat_format (lat, buf2);
+		        }
 			sprintf (temp, " %18s %18s", buf1, buf2);
 			strcat (buffer, temp);
 		}
