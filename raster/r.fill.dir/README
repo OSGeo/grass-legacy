@@ -2,6 +2,75 @@ Converted to C by Huidae Cho 4/2001
 
 runs with positive (no NULLs) data only!
 
+r.fill.dir accepts only rectangular maps with all positive elev.
+It is the way how this and FORTRAN modules work. So until it is rewritten
+as fully native GRASS module, we can not expect this to work for maps
+containing NULLs. Its result may be wrong if NULL or negative elev is in
+maps.
+
+
+	NULL NULL 100  234  NULL		nl = 1, ns = 2
+	NULL 123  324  321  NULL		nl = 2, ns = 3
+	NULL NULL 111 NULL  NULL		nl = 3, ns = 1
+	NULL NULL 111 NULL     0		nl = 4, ns = 1
+	-1   321  111 NULL  NULL		nl = 5, ns = 2
+
+This map is written as the following in the input file of fortran modules:
+
+nl = 5, ns = 2
+
+100
+234
+123
+324
+321
+111
+111
+321
+111
+
+Then read it:
+
+nl*ns = 10 data :-(
+
+100	(1,1)
+234	(1,2)
+123	(2,1)
+324	(2,2)
+321	(3,1)
+111	(3,2)
+321	(4,1)
+111	(4,2)
+111	(5,1)
+321	(5,2)
+111	unread
+
+now map is:
+
+		100 234
+		123 324
+		321 111
+		321 111
+		111 321
+
+however, we want:
+		100 234
+	    123 324 321
+	        111
+		111
+	    321 111
+
+
+It's full story.  :-)
+
+I think that we should gather all modules into some functions and
+use these in a main() with various grass lib functions.
+
+
+Regards,
+Huidae Cho
+
+
 ------------------------------------------------------
 Updated to GRASS FP by Roger Miller 3/2001
 
