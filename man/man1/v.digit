@@ -26,6 +26,15 @@ if needed, registering a map to the digitizing surface.
 digitizing, editing, labeling, and other options are available.  It is
 within this second portion of \fIv.digit\fR that all vector creation occurs.
 .SH NOTES
+The GRASS 4.1 version of v.digit has been upgraded so that it now no longer
+requires drivers to be written for each digitizer supported.  Instead
+we are using device independent code written originally by John Dabritz
+formerly of the Forest Service, which uses ascii description files to 
+define how to communicate with the digitizer.  The result is that 
+we should be able to support just about any digitizer out there now
+with a minimum of work.  Refer to the "digitizer definition manual"
+for information on the format of these files.
+
 \fIv.digit\fR was written to optimize digitizing speed and performance.
 It has a convenient graphic display format and very convenient windowing
 capabilities.  Features are color-coded for ease of identification and
@@ -60,3 +69,5 @@ specified at the bottom of each menu.
 David Gerdes, U.S. Army Construction Engineering Research Laboratory
 .br
 Mike Higgins, U.S. Army Construction Engineering Research Laboratory
+
+
