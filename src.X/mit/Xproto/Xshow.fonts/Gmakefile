@@ -1,0 +1,4 @@
+$(BIN)/Xshow.fonts: showfonts.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
