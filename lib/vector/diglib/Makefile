@@ -49,6 +49,9 @@ $(ARCH_INCDIR)/portable.h: $(DEPENDENCIES)
 	$(CC) $(LDFLAGS) $(COMPILE_FLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $(OBJDIR)/port_test port_test.c
 	echo "/* Architecture: $(ARCH) */" > $(ARCH_INCDIR)/portable.h
 	$(OBJDIR)/port_test >> $(ARCH_INCDIR)/portable.h
+	echo "/* Architecture: $(ARCH) */" > $(ARCH_DISTDIR)/include/portable.h
+	$(OBJDIR)/port_test >> $(ARCH_DISTDIR)/include/portable.h
+	
 
 #  Test portable read/write functions
 $(OBJDIR)/test: test.c $(DEPENDENCIES) $(ARCH_LIB_OBJS)

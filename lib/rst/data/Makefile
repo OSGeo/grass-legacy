@@ -9,4 +9,5 @@ default: $(ARCH_INCDIR)/dataquad.h lib
 
 $(ARCH_INCDIR)/dataquad.h: dataquad.h
 	$(INSTALL) -m 644 dataquad.h $(ARCH_INCDIR)/dataquad.h
+	$(INSTALL) -m 644 dataquad.h $(ARCH_DISTDIR)/include/dataquad.h
 
