@@ -10,12 +10,11 @@ LIB_OBJS = \
 	lex.yy.o \
 	y.tab.o
 
-EXTRA_CLEAN_FILES = lex.yy.c y.tab.c y.output y.tab.h test/sqlptest
+EXTRA_CLEAN_FILES = lex.yy.c y.tab.c y.output y.tab.h
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
 default: lib
-	(cd test && make) || exit 1
  
 y.tab.c: yac.y
 	$(YACC) -d -v yac.y
