@@ -19,10 +19,8 @@ do not need to be spcified each time.
 <br>
 <b>v.db.connect -c map=</b><em>vectormap</em>
 
-<p>
+<h3>Connect vector map to database (DBF driver)</h3>
 
-<em>Connect vector map to database</em>
-<br>
 <b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
 <b>field=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
 <b>database=</b><em>/daten/grassdata/fire/PERMANENT/dbf</em>
@@ -42,6 +40,14 @@ do not need to be spcified each time.
 <b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
 <b>field=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
 <b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'</em>
+
+<h3>Connect vector map to database (PostgreSQL driver)</h3>
+
+<b>db.describe -c map=</b><em>vectormap</em><br>
+<b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
+<b>field=</b>1 <b>key=</b><em>oid</em> <b>driver=</b><em>pg</em> 
+<b>database=</b><em>"host=myserver.itc.it,dbname=mydb,user=name"</em> 
+ <b>table=</b><em>mytable</em> <b>key=</b><em>id</em>
 
 <h2>SEE ALSO</h2>
 
