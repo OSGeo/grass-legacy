@@ -102,32 +102,21 @@ main(int argc, char *argv[])
 	if ( group->answer )
 	    conn.group = group->answer;
 
-/* commented due to new mechanism:
-	if ( user->answer )
-	    conn.user = user->answer;
-
-	if ( password->answer )
-	    conn.password = password->answer;
-*/
-
 	db_set_connection( &conn );    
 	
-/*	if ( (conn.password != NULL) && ( strlen (conn.password) > 0))
-	    fprintf(stdout, "Warning: Your password was written to %s in readable form!!!\n", getenv ("GISRC"));    
-*/
     }
-    
-    /* get and print connection */
-    db_get_connection( &conn );    
-    
-    G_message(stdout, _("driver:%s\n"), conn.driverName);
-    G_message(stdout, _("database:%s\n"), conn.databaseName);    
-    G_message(stdout, _("schema:%s\n"), conn.schemaName);    
-    G_message(stdout, _("group:%s\n"), conn.group);    
-/* commented due to new mechanism:
-    fprintf(stdout, "user:%s\n", conn.user);
-    fprintf(stdout, "password:%s\n", conn.password);    
- */
-    exit(OK);
+    else{
+	/* get and print connection */
+	if (db_get_connection( &conn ) == DB_OK){
+	    G_message( _("driver:%s\n"), conn.driverName);
+	    G_message( _("database:%s\n"), conn.databaseName);    
+	    G_message( _("schema:%s\n"), conn.schemaName);    
+	    G_message( _("group:%s\n"), conn.group);    
+	}
+	else
+	    G_fatal_error(_("No db connection settings defined. Set with db.connect"));
+    }
+
+    return 0;
 }
 
