@@ -117,21 +117,23 @@ get_stmt(fd, stmt)
     FILE *fd;
     dbString *stmt;
 {
-    char buf[4000], *str;
+    char buf[4000], buf2[4000], *str;
     int len, row = 0;
 
     db_init_string (stmt);
 
-    while ( fgets (buf, 4000, fd) != NULL )
-    {
-	G_chop (buf);
-	db_append_string (stmt, buf);
-	len = strlen (buf);
-	if ( buf[ len - 1 ] == ';' ) {  /* end of statement */
-	    str = db_get_string(stmt);
-	    len = strlen ( str );
-	    str [len - 1] = 0;
+    while ( fgets (buf, 4000, fd) != NULL ) {
+        strcpy ( buf2, buf );
+        G_chop (buf2);
+        len = strlen (buf2);
+
+	len = strlen (buf2);
+	if ( buf2[ len - 1 ] == ';' ) {  /* end of statement */
+	    buf2 [len - 1] = 0;          /* truncate ';' */
+	    db_append_string (stmt, buf2); /* append truncated */
 	    return 1;
+	} else {
+	    db_append_string (stmt, buf); /* append not truncated string (\n may be part of value) */
 	}
 	row++;
     }
