@@ -121,6 +121,13 @@ Copyright(c) 1992 Bell Communications Research, Inc. (Bellcore)
 ->  o.k.
 
 ------------------------------
+The file unistd.h and stdlib.h have been provided for users
+of Mips/CDC Computers with a BSD-Unix because these
+header files have been missing in the Unix distribution from
+then (around 1990!). As these machines are on the scrap heap
+now, the whole directory is obsolete! Remove it completly!
+(Andreas Lange, andreas.lange@rhein-main.de)
+
 ./src/include/mips/unistd.h
 ./src/include/mips/*
 
