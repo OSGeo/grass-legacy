@@ -1,7 +1,7 @@
 
 
 
-r.reclass            GRASS Reference Manual             r.reclass
+r.reclass <main>     GRASS Reference Manual      <main> r.reclass
 
 
 
@@ -60,14 +60,14 @@ INTERACTIVE PROGRAM USE: EXAMPLE
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.reclass            GRASS Reference Manual             r.reclass
+r.reclass <main>     GRASS Reference Manual      <main> r.reclass
 
 
 
@@ -126,14 +126,14 @@ r.reclass            GRASS Reference Manual             r.reclass
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-r.reclass            GRASS Reference Manual             r.reclass
+r.reclass <main>     GRASS Reference Manual      <main> r.reclass
 
 
 
@@ -192,14 +192,14 @@ NON-INTERACTIVE PROGRAM USE: EXAMPLES
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-r.reclass            GRASS Reference Manual             r.reclass
+r.reclass <main>     GRASS Reference Manual      <main> r.reclass
 
 
 
@@ -258,14 +258,14 @@ r.reclass            GRASS Reference Manual             r.reclass
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
 
 
 
-r.reclass            GRASS Reference Manual             r.reclass
+r.reclass <main>     GRASS Reference Manual      <main> r.reclass
 
 
 
@@ -324,14 +324,14 @@ SEE ALSO
 
 
 
-GRASS 4.0                U.S. Army CERL                         5
+GRASS 4.1                U.S. Army CERL                         5
 
 
 
 
 
 
-r.reclass            GRASS Reference Manual             r.reclass
+r.reclass <main>     GRASS Reference Manual      <main> r.reclass
 
 
 
@@ -390,7 +390,7 @@ AUTHORS
 
 
 
-GRASS 4.0                U.S. Army CERL                         6
+GRASS 4.1                U.S. Army CERL                         6
 
 
 
