@@ -1,3 +1,14 @@
+/* Documentation:
+ * http://www.opendwg.org
+ * -> OpenDWG Toolkit Reference
+ *
+ * Unsupported entities must be added in wrentity()
+ *
+ * TODO: 3rd dimension is not functional for CIRCLE and ARC
+ *       -> required updated of transformation in INSERT
+ *          (how to do that??)
+ */
+
 #define AD_PROTOTYPES
 #define AD_VM_PC
 
@@ -35,7 +46,7 @@ void getEntTypeName ( PAD_ENT_HDR adenhd, char *name )
 	case AD_ENT_BLOCK:     strcpy ( name,"BLOCK");     break;
 	case AD_ENT_ENDBLK:    strcpy ( name,"ENDBLK");    break;
 	case AD_ENT_INSERT:    strcpy ( name,"INSERT");    break;
-	case AD_ENT_ATTDEF:    strcpy ( name,"ATTDEF");    break;
+        case AD_ENT_ATTDEF:    strcpy ( name,"ATTDEF");    break;
 	case AD_ENT_ATTRIB:    strcpy ( name,"ATTRIB");    break;
 	case AD_ENT_SEQEND:    strcpy ( name,"SEQEND");    break;
 	case AD_ENT_POLYLINE:  strcpy ( name,"POLYLINE");  break;
@@ -56,7 +67,7 @@ void getEntTypeName ( PAD_ENT_HDR adenhd, char *name )
 	default:
 	    if (adenhd->enttype==adOle2frameEnttype(dwghandle)) 
 		strcpy ( name, "OLE2FRAME" );
-            else if (adenhd->enttype==adLwplineEnttype(dwghandle)) 
+                        else if (adenhd->enttype==adLwplineEnttype(dwghandle)) 
 		strcpy ( name, "LWPOLYLINE" );
 	    else if (adenhd->enttype==adHatchEnttype(dwghandle)) 
 		strcpy ( name, "HATCH" );
@@ -69,7 +80,10 @@ void getEntTypeName ( PAD_ENT_HDR adenhd, char *name )
 	    else if (adenhd->enttype == adRtextEnttype(dwghandle)) 
 		strcpy ( name, "Rtext" );
 	    else /* regular proxy */
+            {
+                G_debug(3, "adenhd->enttype: %d", adenhd->enttype);
 		strcpy ( name, "Proxy" );
+            }
 	break;
       }
 }
@@ -77,7 +91,7 @@ void getEntTypeName ( PAD_ENT_HDR adenhd, char *name )
 int write_line ( PAD_ENT_HDR adenhd, int type, int level )
 {
     int i, l;
-    double x, y, r, ang;
+    double x, y, z, r, ang;
 
     adSeekLayer ( dwghandle, adenhd->entlayerobjhandle, Layer);
 
@@ -86,15 +100,21 @@ int write_line ( PAD_ENT_HDR adenhd, int type, int level )
     for ( l = level; l >= 0; l-- ) {
 	for ( i = 0; i < Points->n_points; i++ ){
 	    /* scale */
-	    x = Points->x[i] * Trans[l].xscale; y = Points->y[i] * Trans[l].yscale;
+	    x = Points->x[i] * Trans[l].xscale;
+                        y = Points->y[i] * Trans[l].yscale;
+                        z = Points->z[i] * Trans[l].zscale;
 	    /* rotate */
 	    r = sqrt ( x * x + y * y );
 	    ang = atan2 ( y, x ) + Trans[l].rotang;
-	    x = r * cos ( ang ); y = r * sin ( ang );
+	    x = r * cos ( ang );
+                        y = r * sin ( ang );
 	    /* move */
-	    x += Trans[l].dx; y += Trans[l].dy;
-	    G_debug ( 3, "level %d : %f %f -> %f %f", l, Points->x[i], Points->y[i], x, y);
-	    Points->x[i] = x; Points->y[i] = y;
+	    x += Trans[l].dx;
+	    y += Trans[l].dy;
+	    z += Trans[l].dz;
+	    Points->x[i] = x;
+	    Points->y[i] = y;
+	    Points->z[i] = z;
 	}
     }
     
@@ -167,7 +187,7 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist )
   PAD_ENT aden2;
   OdaLong il;
   double tempdouble[2],tempbulge,tempwidth[2];
-  double x, y, ang;
+  double x, y, z, ang;
   PAD_BLKH adblkh;
 
   Txt = NULL;
@@ -190,19 +210,36 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist )
   
   switch (adenhd->enttype) {
   case AD_ENT_LINE:
-    Vect_append_point ( Points, aden->line.pt0[0], aden->line.pt0[1], 0 );
-    Vect_append_point ( Points, aden->line.pt1[0], aden->line.pt1[1], 0 );
+    Vect_append_point ( Points, aden->line.pt0[0], aden->line.pt0[1], aden->line.pt0[2] );
+    Vect_append_point ( Points, aden->line.pt1[0], aden->line.pt1[1], aden->line.pt1[2] );
     write_line ( adenhd, GV_LINE, level );
+    break;
+
+  case AD_ENT_FACE3D:
+    Vect_append_point ( Points, aden->face3d.pt0[0], aden->face3d.pt0[1], aden->face3d.pt0[2] );
+    Vect_append_point ( Points, aden->face3d.pt1[0], aden->face3d.pt1[1], aden->face3d.pt1[2] );
+    Vect_append_point ( Points, aden->face3d.pt2[0], aden->face3d.pt2[1], aden->face3d.pt2[2] );
+    Vect_append_point ( Points, aden->face3d.pt3[0], aden->face3d.pt3[1], aden->face3d.pt3[2] );
+    write_line ( adenhd, GV_FACE, level );
+    break;
+
+  case AD_ENT_SOLID:
+    Vect_append_point ( Points, aden->solid.pt0[0], aden->solid.pt0[1], aden->solid.pt0[2] );
+    Vect_append_point ( Points, aden->solid.pt1[0], aden->solid.pt1[1], aden->solid.pt1[2] );
+    Vect_append_point ( Points, aden->solid.pt2[0], aden->solid.pt2[1], aden->solid.pt2[2] );
+    Vect_append_point ( Points, aden->solid.pt3[0], aden->solid.pt3[1], aden->solid.pt3[2] );
+    write_line ( adenhd, GV_FACE, level );
     break;
 
   case AD_ENT_TEXT:
     Txt = aden->text.textstr;
-    Vect_append_point ( Points, aden->text.pt0[0], aden->text.pt0[1], 0 );
+    Vect_append_point ( Points, aden->text.pt0[0], aden->text.pt0[1], aden->line.pt0[2] );
     write_line ( adenhd, GV_POINT, level );
     break;
 
+
   case AD_ENT_POINT:
-    Vect_append_point ( Points, aden->point.pt0[0], aden->point.pt0[1], 0 );
+    Vect_append_point ( Points, aden->point.pt0[0], aden->point.pt0[1], aden->line.pt0[2] );
     write_line ( adenhd, GV_POINT, level );
     break;
 
@@ -210,11 +247,13 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist )
     for ( ang = aden->arc.stang; ang < aden->arc.endang; ang += 2 * LOCPI / 360 ) {
 	x = aden->arc.pt0[0] + aden->arc.radius * cos ( ang );
 	y = aden->arc.pt0[1] + aden->arc.radius * sin ( ang );
-	Vect_append_point ( Points, x, y, 0 );
+	z = aden->arc.pt0[2] ;
+	Vect_append_point ( Points, x, y, z );
     }
     x = aden->arc.pt0[0] + aden->arc.radius * cos ( aden->arc.endang );
     y = aden->arc.pt0[1] + aden->arc.radius * sin ( aden->arc.endang );
-    Vect_append_point ( Points, x, y, 0 );
+    z = aden->arc.pt0[2] ; 
+   Vect_append_point ( Points, x, y, z );
     write_line ( adenhd, GV_LINE, level );
     break;
 
@@ -222,7 +261,8 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist )
     for ( ang = 0; ang < 2 * LOCPI; ang += 2 * LOCPI / 360 ) {
 	x = aden->circle.pt0[0] + aden->circle.radius * cos ( ang );
 	y = aden->circle.pt0[1] + aden->circle.radius * sin ( ang );
-	Vect_append_point ( Points, x, y, 0 );
+	z = aden->circle.pt0[3] ;
+	Vect_append_point ( Points, x, y, z );
     }
     Vect_append_point ( Points, Points->x[0], Points->y[0], Points->z[0] );
     write_line ( adenhd, GV_LINE, level );
@@ -244,8 +284,9 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist )
 
   case AD_ENT_INSERT: /* insert */
     /* get transformation */
-    G_debug (3, " x,y: %f, %f",aden->insert.pt0[0], aden->insert.pt0[1]);
-    G_debug (3, " xscale, yscale: %f, %f",aden->insert.xscale, aden->insert.yscale);
+    /* TODO: fix rotation for CIRCLE and ARC */
+    G_debug (3, " x,y,z: %f, %f, %f",aden->insert.pt0[0], aden->insert.pt0[1], aden->insert.pt0[2]);
+    G_debug (3, " xscale, yscale, zscale: %f, %f, %f",aden->insert.xscale, aden->insert.yscale, aden->insert.zscale);
     G_debug (3, " rotang: %f", aden->insert.rotang);
     G_debug (3, " ncols, nrows: %d, %d",aden->insert.numcols, aden->insert.numrows);
     G_debug (3, " coldist, rowdist: %f, %f",aden->insert.coldist, aden->insert.rowdist);
@@ -288,7 +329,7 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist )
             getEntTypeName ( adenhd2, buf );
 	    G_warning ( "Expected VERTEX got %s in POLYLINE -> skip", buf );
 	} else {
-            Vect_append_point ( Points, aden2->vertex.pt0[0], aden2->vertex.pt0[1], 0 );
+            Vect_append_point ( Points, aden2->vertex.pt0[0], aden2->vertex.pt0[1], aden2->vertex.pt0[2] );
 	}
     };
     write_line ( adenhd, GV_LINE, level );
@@ -300,8 +341,8 @@ void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist )
 	  bcptr=adStartBlobRead(aden->lwpline.ldblob);
 	  for (il=0; il<aden->lwpline.numpoints; il++) {
 	    adReadBlob2Double(bcptr,tempdouble);
-	    Vect_append_point ( Points, tempdouble[0], tempdouble[1], 0 );
-	    tempbulge=tempwidth[0]=tempwidth[1]=0.0;
+	    Vect_append_point ( Points, tempdouble[0], tempdouble[1], tempdouble[2] );
+	    tempbulge=tempwidth[0]=tempwidth[1]=tempwidth[2]=0.0;
 	    if (aden->lwpline.flag & AD_LWPLINE_HAS_BULGES) {
 	      adReadBlobDouble(bcptr,&tempbulge);
 	    }
