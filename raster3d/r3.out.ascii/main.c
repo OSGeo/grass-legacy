@@ -8,9 +8,11 @@
  *
  */
 
-#include <gis.h>
-#include "G3d.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "gis.h"
+#include "G3d.h"
 
 #define MAX(a,b) (a > b ? a : b)
 
@@ -198,7 +200,8 @@ void G3dToascii(FILE *fp, G3D_Region region, int decim) {
 /* Main function: open the input and output files, then call
  * G3dtoascii.
  */
-int main(int argc, char *argv[]) {
+int
+main (int argc, char *argv[]) {
   char *input, *output;
   int convertNull, decim;
   double nullValue;
@@ -207,9 +210,13 @@ int main(int argc, char *argv[]) {
   G3D_Region region;
   FILE *fp;
   int cacheSize;
+  struct GModule *module;
 
   /* Initialize GRASS */
   G_gisinit(argv[0]);
+  module = G_define_module();
+  module->description =
+   "Converts a 3D raster map layer into an ASCII text file";
 
   /* Get parameters from user */
   setParams();
@@ -254,6 +261,8 @@ int main(int argc, char *argv[]) {
   if (output)
     if (fclose (fp))
       fatalError ("main: error closing ascii file");
+
+  return 0;
 }
 
 /*---------------------------------------------------------------------------*/
