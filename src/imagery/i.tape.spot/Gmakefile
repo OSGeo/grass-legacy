@@ -1,0 +1,30 @@
+PGM = i.tape.spot
+
+LIBES = $(IMAGERYLIB) $(GISLIB)
+
+LIST = main.o\
+	ask_window.o\
+	bil.o\
+	bsq.o\
+	mnt_tape.o\
+	number.o\
+	put_row.o\
+	put_image.o\
+	read_tape.o\
+	rec_type.o\
+	tape_item.o\
+	tape_name.o\
+	text_rec.o\
+	unmnt_tape.o\
+	header.o\
+	para_read.o\
+	find_row.o\
+	mnt_vol.o
+
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES) $(VASKLIB)
+	$(CC) $(LDFLAGS) -g -o $@ $(LIST) $(LIBES) $(VASK)
+
+$(LIST): tape.h
+
+$(LIBES): 	# in case library changes
+$(VASKLIB): 	# in case library changes
