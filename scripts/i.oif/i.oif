@@ -70,33 +70,34 @@ then
 	exec g.parser "$0" "$@"
 fi
 
-     
 eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 # Open tempfiles
-temp_stddev="`g.tempfile $$`"
-temp_correlation="`g.tempfile $$`"
-temp_sum="`g.tempfile $$`"
-temp_calc="`g.tempfile $$`"
+export temp_stddev="`g.tempfile $$`"
+export temp_correlation="`g.tempfile $$`"
+export temp_sum="`g.tempfile $$`"
+export temp_calc="`g.tempfile $$`"
 temp_result="`g.tempfile $$`"
 temp_result2="`g.tempfile $$`"
 temp_bands="`g.tempfile $$`"
 
 # save the Stddev for TM bands
-echo "Calculation Standarddeviations for all bands:"
+echo "Calculating Standard deviations for all bands:"
 $GISBASE/etc/i.oif/r.stddev $GIS_OPT_image1 |tail -1 >"$temp_stddev"
 $GISBASE/etc/i.oif/r.stddev $GIS_OPT_image2 |tail -1 >>"$temp_stddev"
 $GISBASE/etc/i.oif/r.stddev $GIS_OPT_image3 |tail -1 >>"$temp_stddev"
 $GISBASE/etc/i.oif/r.stddev $GIS_OPT_image4 |tail -1 >>"$temp_stddev"
 $GISBASE/etc/i.oif/r.stddev $GIS_OPT_image5 |tail -1 >>"$temp_stddev"
 $GISBASE/etc/i.oif/r.stddev $GIS_OPT_image7 |tail -1 >>"$temp_stddev"
-echo "Calculation Correlation Matrix"
+echo "Calculating Correlation Matrix"
 r.covar -r map=$GIS_OPT_image1,$GIS_OPT_image2,$GIS_OPT_image3,$GIS_OPT_image4,$GIS_OPT_image5,$GIS_OPT_image7 |tail -6 > "$temp_correlation"
 
 # Calculate all combinations
-echo "Calculate OIF for the 20 band combinations..."
+echo
+echo "Calculating OIF for the 20 band combinations..."
+echo
 echo "Calculate OIF for combination 123"
 echo "123: "> "$temp_bands"
 $GISBASE/etc/i.oif/i.oifcalc 1 2 3 >  "$temp_result"
