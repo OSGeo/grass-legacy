@@ -1,3 +1,4 @@
+/* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
 #include <stdio.h>
 #include <string.h>
 #include "gis.h"
@@ -50,7 +51,7 @@ GLOBAL_DXF  struct line_pnts *Points;
 GLOBAL_DXF	unsigned long	file_size;
 GLOBAL_DXF	int     percent;
 GLOBAL_DXF	char	dig_path[240];
-GLOBAL_DXF	char	basename[100];   /* dpg */
+GLOBAL_DXF	char	base_name[100];   /* dpg */
 GLOBAL_DXF	int	ARR_MAX;
 GLOBAL_DXF	double	n, s, e, w;
 GLOBAL_DXF	long	n_off, s_off, e_off, w_off;
