@@ -154,7 +154,11 @@ int main (int argc, char *argv[])
   tape.lastrow=lastrow;
   tape.firstcol=firstcol;
   tape.lastcol=lastcol;
-  strcpy(tape.info.title, parm.title->answer);
+  /* tape.info.title is 75 bytes, make sure NUL terminated,
+   * truncate if necessary */
+  memset(tape.info.title, 0, 75);
+  memcpy(tape.info.title, parm.title->answer, 
+      size_t (strlen(parm.title->answer > 74) ? 74 : parm.title->answer) );
 
 /* examine file name */
   if (test_pathname(inf) == 0)
