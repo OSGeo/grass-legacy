@@ -396,10 +396,13 @@ int main ( int argc, char *argv[])
 	  rsm = -1; /* used in InterpLib to indicate variable smoothing */
       }
   }
-  if (npmin > MAXPOINTS - 50)
-    KMAX2 = npmin + 50;
+  if (npmin > MAXPOINTS - 50){
+    G_warning("The computation will last too long - lower npmin is suggested");
+    KMAX2 = 2 * npmin; /* was: KMAX2 = npmin + 50;*/
+  }
   else
-    KMAX2 = MAXPOINTS;
+    KMAX2 = 2 * npmin; /* was: KMAX2 = MAXPOINTS; fixed by JH in 12/01*/
+
   dmin = dmin * dmin;
   KMIN = npmin;
 /*  fprintf (stdout, "MAXPOINTS=%d,KMAX2=%d,KMIN=%d\n", MAXPOINTS,KMAX2,KMIN);*/
