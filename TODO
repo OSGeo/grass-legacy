@@ -1,4 +1,4 @@
-$Id: TODO,v 1.52 2000-11-14 14:39:35 markus Exp $
+$Id: TODO,v 1.53 2000-11-16 04:39:36 eric Exp $
 
 TODO for GRASS GIS:
 
@@ -64,13 +64,67 @@ Libraries:
 
 - remove LZW compression from rasterlib/g3dlib and use libz:
   src/libes/gis > grep -l lzw *                                                 
-   G.h                                                                           
-   G_dump.c                                                                      
-   closecell.c                                                                   
-   get_row.c                                                                     
-   lzw.c        <- !!!!!!                                                        
-   put_row.c          
-  (Being worked on by ?)
+   G.h          - just compression_bits from header
+   G_dump.c     - same
+   closecell.c  - same
+   get_row.c    - see grep below
+   lzw.c        - to be replaced
+   put_row.c    - see grep below 
+
+    Occurrences of files other than lzw.c using the following G_lzw_*
+    routines:
+
+    G_lzw_nof_read_bytes 
+    G_lzw_max_used_bits
+    G_lzw_set_bits 
+    G_lzw_compress
+    G_lzw_expand 
+    G_lzw_compress_count_only_array
+    G_lzw_compress_count_only_file
+    G_lzw_write
+    G_lzw_write_noCompress
+    G_lzw_test_status 
+    G_lzw_read2 
+    G_lzw_read 
+    G_lzw_transfer_compress
+    G_lzw_transfer_expand 
+
+    Functions in lzw.c other than those above were not grep'ed for because
+    they were not part of the defined API.
+
+    grass/src/libes/g3d/fpcompress.c:
+	    G_lzw_set_bits (9);
+    grass/src/libes/g3d/fpcompress.c:
+	    status = G_lzw_write (fd, 
+	    		compressBuf + offsetMantissa - rleLength,
+    grass/src/libes/g3d/fpcompress.c:
+	    G_lzw_write_noCompress (fd, 
+	     		compressBuf + offsetMantissa - rleLength,
+    grass/src/libes/g3d/fpcompress.c:
+	    status = G_lzw_write (fd, compressBuf, nBytes + 1);
+    grass/src/libes/g3d/fpcompress.c:
+	    status = G_lzw_write_noCompress (fd, compressBuf, nBytes + 1);
+    grass/src/libes/g3d/fpcompress.c:
+	    status = G_lzw_read2 (fd, compressBuf, nofNum * nBytes + 1, 
+	    		fileBytes);
+    grass/src/libes/gis/get_row.c: 
+	    if (G_lzw_read (fd, data_buf, DATA_NCOLS * FCB.nbytes) != 
+    grass/src/libes/gis/put_row.c:
+	    G_lzw_set_bits (l);
+    grass/src/libes/gis/put_row.c:
+	    if ((nwrite = G_lzw_write (fd, G__.work_buf, nwrite)) < 0) {
+    grass/src/libes/gis/put_row.c: 
+	    if ((row == 0) || (FCB.compression_bits < G_lzw_max_used_bits ()))
+    grass/src/libes/gis/put_row.c:    
+	    FCB.compression_bits = G_lzw_max_used_bits ();
+
+    Doesn't look like too bad of a job, provided a suitable replacement 
+    implementation can be written and a *robust* translator for old 
+    data sets can be made available.
+
+    Eric G. Miller <egm2@jps.net> Nov. 15, 2000
+
+  (Being worked on by Eric G. Miller, maybe not 'til 5.1?)
 
 ---------------------------------------------------------------------
 XDriver
