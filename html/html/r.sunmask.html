@@ -1,0 +1,59 @@
+<html>
+<A NAME="r.sunmask">
+<TITLE>r.sunmask</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<B><EM>r.sunmask</EM></B> - calculate cast shadow areas from sun position and DEM<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r.sunmask</B> [<B>-z</B>] 
+<B>elev</B><EM>=name</EM> 
+<B>output</B><EM>=name</EM> 
+<B>altitude</B><EM>=value</EM>
+<B>azimuth</B><EM>=value</EM>
+
+<H2>DESCRIPTION</H2>
+
+<em>r.sunmask</em> creates an output map layer based on an input elevation
+raster map layer and the sun position. The output map layer contains the
+cast shadow areas arising from sun shine and elevations.
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-z</B>
+<DD>Zero is a real elevation
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>elev</B>
+<DD>Elevation raster map to be used for shadow calculation
+
+<DT><B>output</B>
+<DD>Name for the resulting raster cast shadow map
+
+<DT><B>altitude</B>
+<DD>altitude of the sun above horizon, degrees (options: 0-89.999)
+
+<DT><B>azimuth</B>
+<DD>azimuth of the sun from the north, degrees (options: 0-360)
+</DL>
+
+<H2>SEE ALSO</H2>
+<EM>
+<a href="r.sun.html">r.sun</a>,
+<a href="r.slope.aspect.html">r.slope.aspect</a>
+</EM>
+
+<H2>AUTHOR</H2>
+Janne Soimasuo, Finland 1994<br>
+update to FP by Huidae Cho 2001
+
+</BODY>
+</HTML>
