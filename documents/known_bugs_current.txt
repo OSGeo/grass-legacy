@@ -224,6 +224,7 @@ Two severe problems (to be checked):
   is to change the SCS/* code to use 'cats->labels[i]' instead of
   'cats->list[i].labels'  There will be breakage around 'list[i].num'
   as well, and probably these can be deleted, or use 'cats->num' instead.
+  The cats.count is cats.ncats now (see src/include/gis.h).
 
   Already sucessfully updated: v.random,v.extract,v.merge,v.autocorr
   updated src.contrib tree as well (10/99, Bill H.)
@@ -265,7 +266,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.14  2000-05-15 18:13:38  markus
+ Revision 1.15  2000-05-27 08:41:25  markus
+ added cats.ncats info
+
+ Revision 1.14  2000/05/15 18:13:38  markus
  added i.ortho.photo NULL bug
 
  Revision 1.13  2000/05/11 17:57:26  markus
