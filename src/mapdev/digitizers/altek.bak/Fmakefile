@@ -1,4 +1,4 @@
-#  %W%  %G%
+#  @(#)Fmakefile	2.1.2.1  10/18/92
 
 LIBTRANS	= ../../libes/libtrans.a
 LIBDIGIT	= ../../digit/libdigit.a
