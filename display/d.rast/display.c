@@ -12,7 +12,7 @@ int display(
     char *mapset ,
     int overlay ,
     char *bg,
-    RASTER_MAP_TYPE data_type, int invert)
+    RASTER_MAP_TYPE data_type, int invert, int nocmd)
 {
     struct Colors colors ;
     int offset ;
@@ -54,10 +54,12 @@ int display(
     G_free_colors (&colors);
 
     /* record the cell file */
-    D_set_cell_name(G_fully_qualified_name(name, mapset));
-    D_add_to_cell_list(G_fully_qualified_name(name, mapset));
+    if ( !nocmd ) {
+	D_set_cell_name(G_fully_qualified_name(name, mapset));
+	D_add_to_cell_list(G_fully_qualified_name(name, mapset));
 
-    D_add_to_list(G_recreate_command());
+	D_add_to_list(G_recreate_command());
+    }
 
     /* If overlay add it to the list instead of setting the cell name */
 /*

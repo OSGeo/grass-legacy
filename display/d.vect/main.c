@@ -41,7 +41,7 @@ main (int argc, char **argv)
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
 	struct Option *attrcol_opt, *maxreg_opt, *minreg_opt;
-	struct Flag   *_quiet, *id_flag, *table_acolors_flag, *cats_acolors_flag;
+	struct Flag   *_quiet, *id_flag, *table_acolors_flag, *cats_acolors_flag, *x_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
 	LATTR lattr;
@@ -188,6 +188,10 @@ main (int argc, char **argv)
 	id_flag = G_define_flag ();
 	id_flag->key		= 'i';
 	id_flag->description	= "Use values from 'cat' option as line id";
+
+	x_flag = G_define_flag ();
+	x_flag->key		= 'x';
+	x_flag->description	= "Don't add to list of vectors and commands in monitor";
 	
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -470,10 +474,12 @@ main (int argc, char **argv)
 	    }
 	}
 	
-	D_add_to_list(G_recreate_command()) ;
+	if ( !x_flag->answer ) {
+	    D_add_to_list(G_recreate_command()) ;
 
-	D_set_dig_name(G_fully_qualified_name(map_name, mapset));
-	D_add_to_dig_list(G_fully_qualified_name(map_name, mapset));
+	    D_set_dig_name(G_fully_qualified_name(map_name, mapset));
+	    D_add_to_dig_list(G_fully_qualified_name(map_name, mapset));
+	}
 
 	R_close_driver();
 
