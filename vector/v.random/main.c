@@ -90,9 +90,7 @@ int main (int argc, char *argv[])
   parm.nsites->key = "n";
   parm.nsites->type = TYPE_INTEGER;
   parm.nsites->required = YES;
-  parm.nsites->description = "number of sites to be created";
-  parm.nsites->options = "1-32767";
-
+  parm.nsites->description = "number of sites to be created (1-32767)";
 
   flag.drand48 = G_define_flag ();
   flag.drand48->key = 'd';
