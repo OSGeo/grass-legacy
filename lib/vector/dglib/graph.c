@@ -134,7 +134,7 @@ static int _add_link_V1  (
 			pgraph->iErrno = GNGRP_ERR_MemoryExhausted;
 			return -1;
 		}
-		memset( pfrom , 0 , GNGRP_C_SIZEOF( pgraph->NodeAttrSize ) );
+		/*memset( pfrom , 0 , GNGRP_C_SIZEOF( pgraph->NodeAttrSize ) );*/
 
 		pFromNodeItem->data.pv = pfrom;
 		HeapData.pv        = pfrom;
@@ -163,7 +163,7 @@ static int _add_link_V1  (
 			pgraph->iErrno = GNGRP_ERR_MemoryExhausted;
 			return -1;
 		}
-		memset( pto , 0 , GNGRP_C_SIZEOF( pgraph->NodeAttrSize ) );
+		/*memset( pto , 0 , GNGRP_C_SIZEOF( pgraph->NodeAttrSize ) );*/
 
 		pToNodeItem->data.pv = pto;
 		HeapData.pv      = pto;
@@ -316,7 +316,7 @@ static int _unflatten_V1( gnGrpGraph_s * pgraph )
 	register gnInt32_t *		pnodeto;
 	register gnInt32_t *		plink;
 	register gnInt32_t *		plinkto;
-	register int				i , k;
+	register int				i , isave , k;
 	gnInt32_t					par[ 4 ];
 
 	if ( ! (pgraph->Flags & 0x1) )
@@ -324,9 +324,14 @@ static int _unflatten_V1( gnGrpGraph_s * pgraph )
 		pgraph->iErrno = GNGRP_ERR_BadOnNoFlatGraph;
 		return -1;
 	}
+	pgraph->Flags &= ~0x1;
 
 	for( i = 0 ; i < pgraph->cNode ; i ++ )
 	{
+		/* interlace in order to achieve better binary tree results */
+		isave = i;
+		if ( i % 2 ) i = pgraph->cNode - i;
+
 		pnode = (gnInt32_t*) (pgraph->pNodeBuffer + (GNGRP_C_SIZEOF(pgraph->NodeAttrSize) * i));
 		if ( pnode[ GNGRP_C_STATUS ] & GNGRP_NF_FROM )
 		{
@@ -345,10 +350,13 @@ static int _unflatten_V1( gnGrpGraph_s * pgraph )
 
 				if ( _add_link_V1 ( pgraph , par , &pnode[GNGRP_C_ATTR], &pnodeto[GNGRP_C_ATTR], &plinkto[GNGRP_T_ATTR] ) < 0 )
 				{
+					pgraph->Flags |= 0x1;
 					return -1;
 				}
 			}
 		}
+
+		i = isave;
 	}
 
 	free( pgraph->pNodeBuffer );
