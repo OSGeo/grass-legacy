@@ -1,0 +1,31 @@
+EXTRA_CFLAGS	= -I../lib   -I../libes
+
+
+PROG = $(BIN_MAIN_INTER)/v.digit
+
+#  filename bin_digit.c retained for consistency with 3.2
+
+OFILES = \
+	read_cap.o \
+	bin_digit.o \
+	select_digit.o
+
+
+
+all:  $(PROG)  $(ETC)/digitcap
+
+
+
+$(PROG): $(OFILES) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(OFILES) $(GISLIB) $(MATHLIB)
+	mv a.out $(PROG)
+
+#  update the digitcap file
+
+$(ETC)/digitcap:  digitcap
+	rm -f $(ETC)/digcap.sampl
+	cp  digitcap  $(ETC)/digcap.sampl
+	chmod  644  $(ETC)/digcap.sampl
+
+
