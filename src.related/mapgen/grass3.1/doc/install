@@ -1,0 +1,66 @@
+
+
+                MAPGEN INSTALLATION
+
+
+
+PROCEDURE:
+        1) First login on to your system as a grass user.
+        2) Then switch to super user (ie see su command).
+        3) You must have atleast 4 MB of free space on the
+           /usr partition.
+        4) You must not have a directory called /usr/mapgen.
+        5) Place the cartridge tape in the machine.
+        6) Type the command:
+                cpio -icudvB < /dev/rmt/c0s0
+        7) Type the command /usr/mapgen/install
+
+
+                /usr/mapgen/install
+
+> /usr/mapgen/install
+  Welcome to the mystic world of map making
+
+Enter the path to GRASS [/usr/grass]: /usr/grass3
+Enter the number for a plotter you wish to use with the MAPGEN package
+
+        1 -- HP Draftmaster plotters (hpgl)
+        2 -- HP 7475 (7475)
+        3 -- HI DMP60 (dmp60)
+        4 -- Other HPGL compatible plotters (hpgl)
+                (Note: these plotters may not work but give
+                it a shot)
+        5 -- quit
+: 1
+Enter the tty name that the plotter is connected to [tty00]: ttya7
+
+Enter the number for the plotter you wish to use with the MAPGEN package
+
+        1 -- HP Draftmaster plotters (hpgl)
+        2 -- HP 7475 (7475)
+        3 -- HI DMP60 (dmp60)
+        4 -- Other HPGL compatible plotters (hpgl)
+                (Note: these plotters may not work but give
+                it a shot)
+        5 -- quit
+: 2
+Enter the tty name that the plotter is connected to [tty00]: ttya6
+
+Enter the number for the plotter you wish to use with the MAPGEN package
+
+        1 -- HP Draftmaster plotters (hpgl)
+        2 -- HP 7475 (7475)
+        3 -- HI DMP60 (dmp60)
+        4 -- Other HPGL compatible plotters (hpgl)
+                (Note: these plotters may not work but give
+                it a shot)
+        5 -- quit
+: 5
+
+  MAPGEN is now installed on your system
+>
+
+
+
+
+
