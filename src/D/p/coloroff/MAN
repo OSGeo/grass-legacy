@@ -1,0 +1,29 @@
+.\" @(#)MAN	2.1 6/26/87
+.TH Dcoloroff 2D D-language
+.SH NAME
+Dcoloroff \- tool for viewing map
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dcoloroff
+num
+.br
+int num
+.SH DESCRIPTION
+.I Dcoloroff 
+sets the offset into the graphic device's color lookup table which will be used
+for color number one (1).  This offset number is also saved as part of the
+current graphic window's description.   This is useful (and only applicable)
+when using the 
+.B float
+option of the
+Dcolormode
+command.  It allows several different windows to
+occupy the screen without using each other's colors.
+.SH "SEE ALSO"
+.I Dcolormode
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
+.SH BUGS
+There should be a command which reports how the available colors are currently
+used in the screen's windows.
