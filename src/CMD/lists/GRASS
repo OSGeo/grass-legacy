@@ -217,7 +217,7 @@ src/mapdev/v.out.dxf
 src/mapdev/v.out.e00
 src/mapdev/v.out.idrisi
 src/mapdev/v.out.mapinfo
-src/mapdev/v.out.mif
+#src/mapdev/v.out.mif
 src/mapdev/v.out.moss
 src/mapdev/v.out.shape
 src/mapdev/v.patch
