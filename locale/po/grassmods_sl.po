@@ -1,0 +1,1370 @@
+# translation of grassmods_sl.po to Sloven¹èina
+# translation of grassmods_sl.po to Slovene
+# Miha Staut <mihastaut@yahoo.co.uk>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: grassmods_sl\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-14 19:56+0100\n"
+"PO-Revision-Date: 2004-12-20 15:01+0100\n"
+"Last-Translator: Miha Staut <mihastaut@yahoo.co.uk>\n"
+"Language-Team: Sloven¹èina <translations@grass.itc.it>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9\n"
+
+#: ../db/base/droptable.c:25 ../db/base/createdb.c:24 ../db/base/select.c:63
+#: ../db/base/columns.c:33 ../db/base/execute.c:52 ../db/base/dropdb.c:24
+#: ../db/base/describe.c:34 ../db/base/tables.c:34
+#, c-format
+msgid "No db connection for driver <%s> defined. Run db.connect"
+msgstr "Povezava z bazo podatkov za gonilnik <%s> ni definirana. Po¾eni db.connect."
+
+#: ../db/base/drivers.c:24
+msgid "Error trying to read dbmscap file\n"
+msgstr "Napaka pri branju dbmscap datoteke\n"
+
+#: ../db/base/drivers.c:47
+msgid "Full output"
+msgstr "Izpi¹em vse"
+
+#: ../db/base/drivers.c:51 ../db/base/tables.c:83
+msgid "print tables and exit"
+msgstr "natisni tabele in pojdi ven"
+
+#: ../db/base/drivers.c:55
+msgid "List all database drivers."
+msgstr "Izpi¹i vse gonilnike za upravljanje z bazami podatkov"
+
+#: ../db/base/copy.c:27
+msgid ""
+"Copy a table. Either 'from_table' (optionaly with 'where') can be used or "
+"'select' option, but not 'from_table' and 'select' at the same time."
+msgstr ""
+"Kopiraj tabelo. Mo¾no je uporabiti 'from table' (tudi 'where') ali 'select',\n"
+"ampak ne 'from table' in 'select' hkrati"
+
+#: ../db/base/copy.c:35
+msgid "Input driver name"
+msgstr "Vpi¹i ime gonilnika"
+
+#: ../db/base/copy.c:43
+msgid "Input database name"
+msgstr "Vpi¹i ime baze podatkov"
+
+#: ../db/base/copy.c:51
+msgid "Input table name (only if select is not specified)"
+msgstr "Vpi¹i ime tabele (le èe nisi uporabil 'select')"
+
+#: ../db/base/copy.c:58
+msgid "Output driver name"
+msgstr "Ime izhodnega gonilnika"
+
+#: ../db/base/copy.c:66
+msgid "Output database name"
+msgstr "Ime izhodne baze podatkov"
+
+#: ../db/base/copy.c:74
+msgid "Output table name"
+msgstr "Ime izhodne tabele"
+
+#: ../db/base/copy.c:80
+msgid ""
+"Optional where condition (without WHERE key word), e.g.:\n"
+"\t\tobec = 'Liptakov'"
+msgstr ""
+"Mo¾na je uporaba 'where' pogoja (brez kljuène besede WHERE), npr.:\n"
+"\t\tks=KS = 'Rudnik'"
+
+#: ../db/base/copy.c:87
+msgid ""
+"Full select statement (only if from_table and where is not used), e.g.:\n"
+"\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
+msgstr "Celotni 'select' stavek (le èe 'from_table' in 'where' nista" "uporabljena), npr.: SELECT ks FROM ks_table WHERE ks = 'Rudnik'"
+
+#: ../db/base/copy.c:95
+msgid "Cannot combine 'from_table' and 'select' options"
+msgstr "Ne morem uporabiti skupaj mo¾nosti 'from_table' in 'select'"
+
+#: ../db/base/copy.c:107
+msgid "Either 'from_table' or 'select' option must be given."
+msgstr "Uporabi¹ lahko ali 'from_table' ali 'select'"
+
+#: ../db/base/copy.c:110
+msgid "Cannot combine 'select' and 'where' options"
+msgstr "Ne morem uporabiti skupaj mo¾nosti 'select' in 'where'"
+
+#: ../db/base/copy.c:118
+msgid "Copy table failed"
+msgstr "Kopiranje tabele ni bilo uspe¹no"
+
+#: ../db/base/connect.c:27
+msgid "print current connection parameters and exit"
+msgstr "Izpi¹i trenutne parametre povezave in konèaj"
+
+#: ../db/base/connect.c:35
+msgid "driver name:"
+msgstr "ime gonilnika"
+
+#: ../db/base/connect.c:43
+msgid "Database name:"
+msgstr "ime baze podatkov"
+
+#: ../db/base/connect.c:52
+msgid ""
+"Database schema. Don't use this option if schemas are not supported by "
+"driver/database server."
+msgstr ""
+"Ime sheme baze podatkov. Ne uporabljaj te mo¾nosti, èe sheme niso podprte s \n"
+"strani gonilnika/stre¾nika za upravljanje z bazami"
+
+#: ../db/base/connect.c:61
+msgid "Default group of database users to which select privilege is granted."
+msgstr "Privzeta skupina uporabnikov baz podatkov, ki imajo zagotovljen dostop do baz"
+
+#: ../db/base/connect.c:81
+msgid "Connect to the database through DBMI."
+msgstr "Pove¾i se z bazo preko DBMI."
+
+#: ../db/base/connect.c:117
+msgid "No db connection settings defined. Set with db.connect"
+msgstr ""
+"Nastavitve za povezavo z bazo podatkov niso definirane. \n"
+"Nastavi jih z db.connect"
+
+#: ../db/base/databases.c:34
+#, c-format
+msgid "Cannot start driver '%s'."
+msgstr "Ne morem zagnati gonilnika '%s'."
+
+#: ../db/base/databases.c:37
+msgid "Cannot list databases."
+msgstr "Ne morem izpisati baz podatkov."
+
+#: ../db/base/databases.c:62 ../db/base/select.c:195 ../db/base/columns.c:76
+#: ../db/base/describe.c:94 ../db/base/tables.c:69
+msgid "driver name"
+msgstr "ime gonilnika"
+
+#: ../db/base/databases.c:69
+msgid "database location"
+msgstr "lokacija baze podatkov"
+
+#: ../db/base/databases.c:74
+msgid "List all databases for a given driver and location."
+msgstr "Navedi vse baze podatkov za doloèeni gonilnik in lokacijo"
+
+#: ../db/base/select.c:180
+msgid "Table name, select all from this table"
+msgstr "Ime tabele, izberi vse iz te tabele"
+
+#: ../db/base/select.c:186 ../db/base/columns.c:84 ../db/base/describe.c:102
+#: ../db/base/tables.c:77
+msgid "database name"
+msgstr "ime baze podatkov"
+
+#: ../db/base/select.c:203
+msgid ""
+"SQL select statement, for example: 'select * from rybniky where kapri = "
+"'hodne'"
+msgstr "SQL 'select' stavek, npr.: 'SELECT * FROM ks_table WHERE obèina = 'Koper''"
+
+#: ../db/base/select.c:209
+msgid "output field separator"
+msgstr "izpi¹i znak razmejitve med polji"
+
+#: ../db/base/select.c:216
+msgid "output vertical record separator"
+msgstr "izpi¹i znak za vertikalno razmejitev med enotami"
+
+#: ../db/base/select.c:222
+msgid "null value indicator"
+msgstr "znak za vrednost NULL"
+
+#: ../db/base/select.c:229
+msgid "filename with sql statement"
+msgstr "datoteka z SQL stavkom"
+
+#: ../db/base/select.c:234
+msgid "do not include column names in output"
+msgstr "izpis naj ne vsebuje imen kolon"
+
+#: ../db/base/select.c:238
+msgid "describe query only (don't run it)"
+msgstr "le opi¹i poizvedbo (ne je pognati)"
+
+#: ../db/base/select.c:242
+msgid "vertical output (instead of horizontal)"
+msgstr "vertikalni izpis (namesto horizontalnega)"
+
+#: ../db/base/select.c:246
+msgid "Select data from database."
+msgstr "Izberi podatke iz baze podatkov."
+
+#: ../db/base/columns.c:69 ../db/base/describe.c:87
+msgid "table name"
+msgstr "ime tabele"
+
+#: ../db/base/columns.c:90
+msgid "list all columns for a given table."
+msgstr "na¹tej vse kolone (spremenljivke) za dano tabelo"
+
+#: ../db/base/execute.c:66 ../db/base/execute.c:70
+#, c-format
+msgid "Error while executing: \"%s\"\n"
+msgstr "Napaka med izvajanjem: \"%s\"\n"
+
+#: ../db/base/execute.c:119
+msgid "ignore SQL errors and continue"
+msgstr "prezri SQL napake in nadaljuj"
+
+#: ../db/base/describe.c:45
+msgid "Cannot describe table"
+msgstr "Ne morem opisati tabele"
+
+#: ../db/base/describe.c:81
+msgid "print column names only instead of full column descriptions"
+msgstr "izpi¹i le imena kolon (spremenljivk) namesto celotnih opisov"
+
+#: ../db/base/describe.c:108
+msgid "Describe a table (in detail)."
+msgstr "Opi¹i tabelo (podrobno)"
+
+#: ../db/base/tables.c:87
+msgid "system tables instead of user tables"
+msgstr "sistemske tabele namesto uporabni¹kih tabel"
+
+#: ../db/base/tables.c:91
+msgid "List all tables for a given database."
+msgstr "Izpi¹i vse tabele za dano bazo podatkov."
+
+#: ../db/drivers/ogr/fetch.c:124 ../db/drivers/ogr/describe.c:151
+msgid "Unknown type"
+msgstr "Nepoznan tip"
+
+#: ../db/drivers/ogr/describe.c:87
+#, c-format
+msgid "OGR driver: column '%s', OGR type %d  is not supported"
+msgstr "OGR gonilnik: kolona '%s', OGR tip %d ni podprt"
+
+#: ../db/drivers/ogr/describe.c:143
+#, c-format
+msgid ""
+"column '%s', type 'string': unknown width -> stored as varchar(250) some "
+"data may be lost"
+msgstr ""
+"kolona '%s', tip 'string': nepoznana ¹irina -> shranjen kot varchar(250),\n"
+"nekateri podatki so lahko izgubljeni"
+
+#: ../db/drivers/mysql/db.c:69 ../db/drivers/postgres/parse.c:52
+msgid "'user' in database definition is not supported, use db.login"
+msgstr "'user' v definiciji baze podatkov ni podprt, uporabi db.login"
+
+#: ../db/drivers/mysql/db.c:72 ../db/drivers/postgres/parse.c:56
+msgid "'password' in database definition is not supported, use db.login"
+msgstr "'password' v definiciji baze podatkov ni podprt, uporabi db.login"
+
+#: ../db/drivers/mysql/db.c:75
+#, c-format
+msgid "Unknown option in database definition for mysql: '%s'"
+msgstr "Nepoznana mo¾nost v definiciji baze podatkov za mysql: '%s'"
+
+#: ../db/drivers/postgres/fetch.c:163
+msgid "Cannot recognize boolean value"
+msgstr "Ne prepoznam binarne (boolean) vrednosti"
+
+#: ../db/drivers/postgres/parse.c:58
+msgid "Unknown option in database definition for PostgreSQL: "
+msgstr "Nepoznana mo¾nost v definiciji baze podatkov za PostgreSQL"
+
+#: ../db/drivers/postgres/describe.c:102
+#, c-format
+msgid "pg driver: column '%s', type %d  is not supported"
+msgstr "pg gonilnik: kolona '%s', tip %d ni podprt"
+
+#: ../db/drivers/postgres/describe.c:107
+#, c-format
+msgid ""
+"column '%s' : type int8 (bigint) is stored as integer (4 bytes) some data "
+"may be damaged"
+msgstr ""
+"kolona '%s': tip int8 (bigint) je shranjen kot integer (4 bajti) nekateri\n"
+"podatki so lahko po¹kodovani"
+
+#: ../db/drivers/postgres/describe.c:111
+#, c-format
+msgid "column '%s' : type text is stored as varchar(250) some data may be lost"
+msgstr ""
+"kolona '%s': tip text je shranjen kot varchar(250) nekateri podatki so lahko\n"
+"izgubljeni"
+
+#: ../db/drivers/postgres/describe.c:117
+#, c-format
+msgid ""
+"column '%s' : type character varying is stored as varchar(250) some data may "
+"be lost"
+msgstr ""
+"kolona '%s': tip character varying je sharnjen kot varchar(250) nekateri\n"
+"podatki so lahko izgubljeni"
+
+#: ../db/drivers/postgres/describe.c:123
+#, c-format
+msgid ""
+"column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), 1 "
+"(true)"
+msgstr ""
+"kolona '%s': tip (bool) (binarni - boolean) je shranjen kot char(1),\n"
+"vrednosti 0 (narobe), 1 (pravilno)"
+
+#: ../db/db.login/main.c:56
+msgid "Cannot set user/password"
+msgstr "Ne morem nastaviti uporabnika/gesla"
+
+#: ../db/db.login/main.c:60
+msgid "The password was stored in file."
+msgstr "Geslo je bilo shranjeno v datoteko"
+
+#: ../vector/v.category/main.c:173
+msgid "Too many layers for this operation"
+msgstr "Preveè slojev za to operacijo"
+
+#: ../vector/v.category/main.c:176
+msgid "2 layers must be specified"
+msgstr "navedena morata biti 2 sloja"
+
+#: ../vector/v.category/main.c:180
+msgid "Output vector wasn't entered."
+msgstr "Izhodni vektor ni bil vnesen."
+
+#: ../vector/v.voronoi/dt_main.c:116
+msgid "Cannot calculate area centroid"
+msgstr "Ne morem izraèunati centroida obmoèja."
+
+#: ../vector/v.voronoi/vo_main.c:251 ../vector/v.to.points/main.c:229
+msgid "Cannot copy table"
+msgstr "Ne morem kopirati tabele"
+
+#: ../vector/v.transform/main.c:166
+#, c-format
+msgid "Could not open file with coordinates : %s\n"
+msgstr "Ne morem odpreti datoteke s koordinatami : %s\n"
+
+#: ../vector/v.transform/main.c:172
+#, c-format
+msgid "Could not find input map <%s>\n"
+msgstr "Ne morem najti vhodne datoteke <%s>\n"
+
+#: ../vector/v.transform/main.c:206
+msgid ""
+"\n"
+"Now transforming the vectors ...\n"
+msgstr ""
+"\n"
+"Spreminjam vektorje ... \n"
+
+#: ../vector/v.transform/main.c:224
+#, c-format
+msgid "New vector map <%s> boundary coordinates:\n"
+msgstr "Novi vektorski sloj <%s> mejne koordinate:\n"
+
+#: ../vector/v.transform/main.c:225
+#, c-format
+msgid " N: %-10.3f    S: %-10.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:226
+#, c-format
+msgid " E: %-10.3f    W: %-10.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:227
+#, c-format
+msgid " B: %6.3f    T: %6.3f\n"
+msgstr ""
+
+#: ../vector/v.transform/main.c:232
+#, c-format
+msgid "'%s' has finished the transformation of the vectors.\n"
+msgstr "'%s' je konèal spreminjanje vektorjev.\n"
+
+#: ../vector/v.transform/print_trans.c:29
+msgid ""
+"                          CHECK MAP RESIDUALS\n"
+"\n"
+msgstr ""
+"                          PREVERI OSTANKE V SLOJU\n"
+"\n"
+
+#: ../vector/v.transform/print_trans.c:30
+msgid "                Current Map                  New Map\n"
+msgstr "                Trenutni sloj                  Novi sloj\n"
+
+#: ../vector/v.transform/print_trans.c:31
+msgid ""
+" POINT      X coord    Y coord  |        X coord   Y coord    |      "
+"residuals\n"
+msgstr ""
+
+#: ../vector/v.transform/print_trans.c:43
+#, c-format
+msgid ""
+"\n"
+"\n"
+"  Number of points: %d\n"
+msgstr ""
+"\n"
+"\n"
+" ©tevilo toèk: %d\n"
+
+#: ../vector/v.transform/print_trans.c:44
+#, c-format
+msgid "  Residual mean average   : %f\n"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:69
+#, c-format
+msgid " Number of points that have been entered: %d\n"
+msgstr "©tevilo toèk, ki so bile vnesene: %d\n"
+
+#: ../vector/v.transform/creat_trans.c:90
+#, c-format
+msgid "%s"
+msgstr "%s"
+
+#: ../vector/v.transform/creat_trans.c:100
+msgid "Please answer yes or no"
+msgstr "Prosim odgovori 'yes' ali 'no'"
+
+#: ../vector/v.transform/creat_trans.c:123
+#, c-format
+msgid "Number of points that have been entered: %d\n"
+msgstr "©tevilo toèk, ki so bile vnesene: %d\n"
+
+#: ../vector/v.transform/setup_trans.c:88
+msgid "The points weren't spread out enough."
+msgstr "Toèke niso bile dovolj raz¹irjene."
+
+#: ../vector/v.transform/setup_trans.c:91
+#, c-format
+msgid "You need to enter at least %d points."
+msgstr "Vnesti mora¹ vsaj %d toèk."
+
+#: ../vector/v.transform/ask_trans.c:83
+msgid "ask_transform_coor():  Leaving session.. \n"
+msgstr "sak_transform_coor(): Zapu¹èam sejo... \n"
+
+#: ../vector/v.what.rast/main.c:330
+#, c-format
+msgid "%d categories loaded from table\n"
+msgstr "%d kategorij nalo¾enih iz tabele\n"
+
+#: ../vector/v.what.rast/main.c:331
+#, c-format
+msgid "%d categories loaded from vector\n"
+msgstr "%d kategorij nalo¾enih iz vektorja\n"
+
+#: ../vector/v.what.rast/main.c:332
+#, c-format
+msgid "%d categories from vector missing in table\n"
+msgstr "%d kategorij iz vektorja manjka v tabeli\n"
+
+#: ../vector/v.what.rast/main.c:333
+#, c-format
+msgid "%d duplicate categories in vector\n"
+msgstr "%d dvojnih kategorij v vektorju\n"
+
+#: ../vector/v.what.rast/main.c:334
+#, c-format
+msgid "%d records updated\n"
+msgstr "%d enot je bilo posodobljenih\n"
+
+#: ../vector/v.what.rast/main.c:335
+#, c-format
+msgid "%d update errors\n"
+msgstr "%d napak med posodabljanjem\n"
+
+#: ../vector/v.in.region/main.c:46
+msgid "Select type: line or area"
+msgstr "Izberi tip: linija ali obmoèje"
+
+#: ../vector/v.convert/type.c:29
+#, c-format
+msgid "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"
+msgstr "SISTEMSKA_NAPAKA: OLD_T_NEW ima napaèno kodo za tip %x"
+
+#: ../vector/v.convert/type.c:50
+#, c-format
+msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
+msgstr "SISTEMSKA NAPAKA: OLD_T_NEW ima napaèno kodo za tip %x"
+
+#: ../vector/v.convert/read.c:41
+msgid "Reading dig file...\n"
+msgstr "Berem dig datoteko...\n"
+
+#: ../vector/v.convert/read.c:75
+msgid "Input file is version 3.\n"
+msgstr "Vhodna datoteka je verzija 3.\n"
+
+#: ../vector/v.convert/read.c:78
+msgid "Input file is version 4.\n"
+msgstr "Vhodna datoteka je verzija 4.\n"
+
+#: ../vector/v.convert/read.c:87
+msgid "Input file is portable.\n"
+msgstr "Vhodna datoteka je prenosljiva.\n"
+
+#: ../vector/v.convert/read.c:89
+msgid ""
+"WARNING: Input file is not portable.We will attempt to convert anyway but "
+"conversion may fail.Please read manual for detail information."
+msgstr ""
+"OPOZORILO: Vhodna datoteka ni prenosljiva. Vseeno jo bom posku¹al preoblikovati,"
+"a lahko se ponesreèi. Prosim preberi priroènik za natanènej¹a navodila."
+
+#: ../vector/v.convert/read.c:161
+#, c-format
+msgid "%-5d points read to memory\n"
+msgstr "%-5d toèk prebranih v spomin\n"
+
+#: ../vector/v.convert/read.c:162
+#, c-format
+msgid "%-5d lines read to memory\n"
+msgstr "%-5d linij prebranih v spomin\n"
+
+#: ../vector/v.convert/read.c:164
+#, c-format
+msgid "%-5d points read and written to output\n"
+msgstr "%-5d prebranih in zapisanih na izhod\n"
+
+#: ../vector/v.convert/read.c:165
+#, c-format
+msgid "%-5d lines read and written to output\n"
+msgstr "%-5d linij prebranih in zapisanih na izhod\n"
+
+#: ../vector/v.convert/read.c:167
+#, c-format
+msgid "%-5d area boundaries read and written to output\n"
+msgstr "%-5d meja obmoèij prebranih in zapisanih na izhod\n"
+
+#: ../vector/v.convert/read.c:168
+#, c-format
+msgid "%-5d dead points skipped\n"
+msgstr "%-5d mrtvih toèk preskoèenih\n"
+
+#: ../vector/v.convert/read.c:169
+#, c-format
+msgid "%-5d dead lines skipped\n"
+msgstr "%-5d mrtvih linij preskoèenih\n"
+
+#: ../vector/v.convert/read.c:170
+#, c-format
+msgid "%-5d dead area boundaries skipped\n"
+msgstr "%-5d mrtvih meja obmoèij preskoèenih\n"
+
+#: ../vector/v.convert/read.c:171
+#, c-format
+msgid "%-5d elements of unknown type skipped\n"
+msgstr "%-5d elementov neznanega tipa preskoèenih\n"
+
+#: ../vector/v.convert/read.c:173
+#, c-format
+msgid "%-5d elements read to memory.\n"
+msgstr "%-5d elementov prebranih v spomin.\n"
+
+#: ../vector/v.convert/read.c:212
+msgid "Reading dig_att file...\n"
+msgstr "Berem dig_att datoteko...\n"
+
+#: ../vector/v.convert/read.c:220
+#, c-format
+msgid "Error: %s"
+msgstr "Napaka: %s"
+
+#: ../vector/v.convert/read.c:241
+#, c-format
+msgid "Unknown type: %c"
+msgstr "Nepoznan tip: %c"
+
+#: ../vector/v.convert/read.c:260
+#, c-format
+msgid "%-5d point categories read\n"
+msgstr "%-5d kategorij toèk prebranih\n"
+
+#: ../vector/v.convert/read.c:261
+#, c-format
+msgid "%-5d line categories read\n"
+msgstr "%-5d kategorij linij prebranih\n"
+
+#: ../vector/v.convert/read.c:262
+#, c-format
+msgid "%-5d centroids read\n"
+msgstr "%-5d centroidov prebranih\n"
+
+#: ../vector/v.convert/read.c:263
+#, c-format
+msgid "%-5d dead point categories skipped\n"
+msgstr "%-5d mrtvih kategorij toèk preskoèenih\n"
+
+#: ../vector/v.convert/read.c:264
+#, c-format
+msgid "%-5d dead line categories skipped\n"
+msgstr "%-5d mrtvih kategorij linij preskoèenih\n"
+
+#: ../vector/v.convert/read.c:265
+#, c-format
+msgid "%-5d dead centroids skipped\n"
+msgstr "%-5d mrtvih centroidov preskoèenih\n"
+
+#: ../vector/v.convert/read.c:266
+#, c-format
+msgid "%-5d categories of unknown type skipped\n"
+msgstr "%-5d kategorij neznanega tipa preskoèenih\n"
+
+#: ../vector/v.convert/read.c:268
+#, c-format
+msgid "%-5d categories read into memory.\n"
+msgstr "%-5d kategorij prebranih v spomin.\n"
+
+#: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
+msgid "Input vector was not found."
+msgstr "Ne najdem vhodnega vektorja."
+
+#: ../vector/v.convert/att.c:36
+msgid "No category labels (dig_cats) found, no table created.\n"
+msgstr "Ne najdem etiket (dig_cats), tabela ni bi bila ustvarjena.\n"
+
+#: ../vector/v.convert/att.c:41
+msgid "Cannot open dig_cats file."
+msgstr "Ne morem odpreti dig_cats datoteke."
+
+#: ../vector/v.convert/att.c:68
+#, c-format
+msgid "Cannot open database %s"
+msgstr "Ne morem odpreti baze podatkov %s"
+
+#: ../vector/v.convert/att.c:74 ../vector/v.to.points/main.c:246
+#, c-format
+msgid "Cannot create table: %s"
+msgstr "Ne morem ustvariti tabele: %s"
+
+#: ../vector/v.convert/att.c:99
+#, c-format
+msgid "Cannot insert into table: %s"
+msgstr "Ne morem vnesti v tabelo: %s"
+
+#: ../vector/v.convert/old2new.c:32
+msgid "Failed opening input dig file."
+msgstr "Nisem uspel odpreti vhodne datoteke."
+
+#: ../vector/v.convert/old2new.c:47
+msgid "dig_att file doesn't exist."
+msgstr "dig_att datoteka ne obstaja."
+
+#: ../vector/v.convert/old2new.c:50
+msgid "Failed opening input dig_att file."
+msgstr "Nisem mogel odpreti vhodne datoteke dig_att."
+
+#: ../vector/v.convert/old2new.c:71
+msgid "Attaching categories...\n"
+msgstr "Pripajam kategorije...\n"
+
+#: ../vector/v.convert/old2new.c:89
+#, c-format
+msgid "Failed to attach an attribute (category %d) to a line."
+msgstr "Nisem uspel pripojiti atributa (kategorije %d) liniji."
+
+#: ../vector/v.convert/old2new.c:92
+#, c-format
+msgid "WARNING: line %d label: %d matched another label: %d."
+msgstr "OPOZORILO: linija %d etiketa: %d je enaka drugi etiketi: %d."
+
+#: ../vector/v.convert/old2new.c:100
+msgid "Writing new file...\n"
+msgstr "Zapisujem novo datoteko...\n"
+
+#: ../vector/v.convert/old2new.c:121
+#, c-format
+msgid "%-5d points and lines written to output file.\n"
+msgstr "%-5d toèk in linij zapisanih v izhodno datoteko.\n"
+
+#: ../vector/v.convert/old2new.c:135
+#, c-format
+msgid "%-5d centroids written to output file.\n"
+msgstr "%-5d centroidov zapisanih v izhodno datoteko.\n"
+
+#: ../vector/v.to.points/main.c:54
+#, c-format
+msgid "Cannot insert new row: %s"
+msgstr "Ne morem vstaviti nove vrstice: %s"
+
+#: ../vector/v.to.points/main.c:152
+msgid "Create points along input lines."
+msgstr "Ustvari toèke vzdol¾ vhodnih linij."
+
+#: ../vector/v.to.points/main.c:155
+msgid "Input map containing lines"
+msgstr "Vhodni sloj vsebuje linije."
+
+#: ../vector/v.to.points/main.c:161
+msgid "Output map where points will be written"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:170
+msgid "Write line vertices."
+msgstr "Zapi¹i vmesne toèke v liniji."
+
+#: ../vector/v.to.points/main.c:174
+msgid "Interpolate points between line vertices."
+msgstr "Interpoliraj dodatne toèke med toèkami ogrodja linije."
+
+#: ../vector/v.to.points/main.c:181
+msgid "Maximum distance between points in map units."
+msgstr "Najveèja razdalja med toèkami in enotami karte."
+
+#: ../vector/v.to.points/main.c:185
+msgid "Do not create attribute table."
+msgstr "Ne ustvari tabele z atributi."
+
+#: ../vector/v.to.points/main.c:203
+#, c-format
+msgid "Could not find input %s\n"
+msgstr "Ne najdem vhodne datoteke %s\n"
+
+#: ../vector/v.to.points/main.c:239 ../vector/v.surf.idw/read_sites.c:38
+#, c-format
+msgid "Cannot open database %s by driver %s"
+msgstr "Ne morem odpreti baze podatkov %s z gonilnikom %s"
+
+#: ../vector/v.to.points/main.c:250
+msgid "Cannot create index"
+msgstr "Ne morem ustvariti indeksa"
+
+#: ../vector/v.to.points/main.c:253
+#, c-format
+msgid "Cannot grant privileges on table %s"
+msgstr "Ne morem ti garantirati (grant) privilegijev nad tabelo %s"
+
+#: ../vector/v.to.points/main.c:321
+#, c-format
+msgid "%d points written to output map\n"
+msgstr "%d toèk je bilo zapisanih na izhodno datoteko\n"
+
+#: ../vector/v.surf.idw/read_sites.c:34
+msgid "Cannot read field info"
+msgstr "Ne morem prebrati informacije polja"
+
+#: ../vector/v.surf.idw/read_sites.c:45
+msgid "Column type not supported"
+msgstr "Tip zapisa kolone ni podprt"
+
+#: ../vector/v.surf.idw/read_sites.c:48
+msgid "Cannot select data from table"
+msgstr "Ne morem izbrati (select) podatkov iz tabele"
+
+#: ../vector/v.surf.idw/read_sites.c:50
+#, c-format
+msgid "%d records selected from table"
+msgstr "Iz tabele je izbranih %d zapisov (records)"
+
+#: ../vector/v.surf.idw/read_sites.c:80
+#, c-format
+msgid "No record for line (cat = %d)"
+msgstr "Za vrstico (cat = %d) ni zapisa (record)<"
+
+#: ../vector/v.surf.idw/read_sites.c:92
+#, c-format
+msgid "%d points loaded\n"
+msgstr "nalo¾enih je bilo %d toèk\n"
+
+#: ../display/d.font.freetype/main.c:52
+msgid ""
+"Selects the font in which text will be displayed on the user's graphics "
+"monitor."
+msgstr "Izbere pisavo v kateri bo tekst zapisan na grafiènem monitorju"
+
+#: ../display/d.font.freetype/main.c:60
+msgid ""
+"Font name (not supported interactively, see also -l flag) or path to "
+"TrueType font (including file name)"
+msgstr ""
+"Ime pisave (ni podprto interaktivno, glej tudi -l izbiro ukaza) ali pot do \n"
+"TrueType pisave (vkljuèujoè ime datoteke)"
+
+#: ../display/d.font.freetype/main.c:62
+msgid "Path to TrueType font (including file name)"
+msgstr "Pot do TrueType pisav (vkljuèujoè ime datoteke)"
+
+#: ../display/d.font.freetype/main.c:71
+msgid "Character encoding"
+msgstr "Kodni nabor"
+
+#: ../display/d.font.freetype/main.c:102
+msgid "No graphics device selected"
+msgstr "Nobena grafièna naprava ni izbrana"
+
+#: ../display/d.font.freetype/main.c:170
+#, c-format
+msgid ""
+"\n"
+"Setting release of FreeType\n"
+msgstr "\nNastavljam verzijo FreeType-a\n"
+
+#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:273
+#, c-format
+msgid "Region size is lower than minreg, nothing displayed.\n"
+msgstr "Velikost regije je od najmanj¹e regije (minreg), ne morem prikazati nièesar.\n"
+
+#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:282
+#, c-format
+msgid "Region size is greater than maxreg, nothing displayed.\n"
+msgstr "Velikost regije je veèja od najveèje regije (maxreg), ne morem prikazati nièesar\n"
+
+#: ../display/d.paint.labels/do_labels.c:143
+#, c-format
+msgid "Error: %s\n"
+msgstr "Napaka: %s\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:116
+#, c-format
+msgid "found %d visuals of type TrueColor\n"
+msgstr "najdenih je bilo %d \"visuals\" tipa TrueColor\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
+#, c-format
+msgid "searching for highest bit depth\n"
+msgstr "i¹èem najveèjo mo¾no bitno globino\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:135
+#, c-format
+msgid "selected %d bit depth\n"
+msgstr "izbrana %d bitna globina\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:197
+#, c-format, fuzzy
+msgid "using default visual which is %s\n"
+msgstr "uporabljam privzeto \"visual\", ki je %s\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
+#, c-format, fuzzy
+msgid "Monitor: interactive command in redraw\n"
+msgstr "Monitor: interaktivni ukaz v ponovnem risanju\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:127
+#, c-format
+msgid "Monitor: waitpid: expected %d but got %d\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
+#, c-format
+msgid "Monitor: XGetWMName failed\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
+#, c-format
+msgid "Monitor: XGetWMName: bad result\n"
+msgstr ""
+
+#: ../display/d.zoom/main.c:161
+#, c-format
+msgid "ERROR: can not get \"list\" items\n"
+msgstr ""
+
+#: ../display/d.zoom/main.c:162
+#, c-format
+msgid "-j flag forced\n"
+msgstr "vsiljena je bila izbira -j\n"
+
+#: ../display/d.zoom/main.c:200
+#, c-format
+msgid "ERROR: No map is displayed in GRASS monitor\n"
+msgstr "NAPAKA: Na grafiènem monitorju ni prikazana nobena karta\n"
+
+#: ../display/d.zoom/main.c:324
+#, c-format
+msgid "%d raster%s, %d vector%s\n"
+msgstr "%d raster%s, %d vektor%s\n"
+
+#: ../display/d.zoom/main.c:334
+#, c-format
+msgid "this is the first d.zoom run; no previous zoom availible\n"
+msgstr "d.zoom si pognal prviè; predhodnih informacij o zoom-u ni\n"
+
+#: ../display/d.zoom/main.c:380
+#, c-format
+msgid "Zooming finished.\n"
+msgstr "Zoomiranje konèano.\n"
+
+#: ../display/d.zoom/zoom.c:15 ../display/d.zoom/pan.c:20
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr "\n\nGumbi:\n"
+
+#: ../display/d.zoom/zoom.c:16
+#, c-format
+msgid "%s Zoom menu\n"
+msgstr ""
+
+#: ../display/d.zoom/zoom.c:17 ../display/d.zoom/pan.c:21
+#, c-format
+msgid "%s Pan\n"
+msgstr ""
+
+#: ../display/d.zoom/zoom.c:18
+#, c-format
+msgid "%s Quit menu\n"
+msgstr "%s Ugasni menu\n"
+
+#: ../display/d.zoom/zoom.c:41
+#, c-format
+msgid ""
+"This region now saved as current region.\n"
+"\n"
+msgstr "Ta regija je shranjena kot trenutna regija.\n"
+
+#: ../display/d.zoom/zoom.c:42
+#, c-format
+msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
+msgstr ""
+"Po¾eni 'd.erase', èe ¾eli¹, da se nastavitve nove regije uveljavijo na \n"
+"grafiènih napravah.\n"
+
+#: ../display/d.zoom/pan.c:22
+#, c-format
+msgid "%s Quit\n"
+msgstr "%s je ugasnjen\n"
+
+#: ../display/d.path/select.c:32
+#, c-format
+msgid "L: from  M: to R: quit\n"
+msgstr ""
+
+#: ../display/d.path/select.c:57
+#, c-format
+msgid "Node %d: %f %f\n"
+msgstr "Vozel %d: %f %f\n"
+
+#: ../display/d.path/select.c:133
+#, c-format
+msgid "Destination unreachable\n"
+msgstr "Destinacijo je nemogoèe doseèi\n"
+
+#: ../display/d.path/select.c:136
+#, c-format
+msgid "Costs on the network = %f\n"
+msgstr "Stro¹ki na omre¾ju = %f\n"
+
+#: ../display/d.path/select.c:137
+#, c-format
+msgid "  Distance to the network = %f, distance from the network = %f\n"
+msgstr "Oddaljenost do omre¾ja = %f, oddaljenost od omre¾ja = %f\n"
+
+#: ../display/d.vect/main.c:479
+#, c-format
+msgid "Plotting ... "
+msgstr "Ri¹em ..."
+
+#: ../display/d.vect/main.c:488
+#, c-format
+msgid "The bounding box of the map outside current region, nothing displayed.\n"
+msgstr "Obseg sloja je izven trenutne regije, nièesar ne bom prikazal.\n"
+
+#: ../display/d.vect/main.c:545
+#, c-format
+msgid "Done\n"
+msgstr "Narejeno\n"
+
+#: ../display/d.vect/topo.c:38 ../display/d.vect/dir.c:34
+#: ../display/d.vect/attr.c:54 ../display/d.vect/label.c:32
+#: ../display/d.vect/plot1.c:51
+#, c-format
+msgid ""
+"\n"
+"ERROR: vector file - can't read\n"
+msgstr ""
+"\n"
+"NAPAKA: ne morem prebrati vektorskega sloja\n"
+
+#: ../display/d.what.vect/main.c:139
+msgid "Building spatial index ..."
+msgstr "Gradim prostorski indeks ..."
+
+#: ../display/d.what.vect/main.c:157
+#, c-format
+msgid "Done.\n"
+msgstr "Narejeno.\n"
+
+#: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
+#, c-format
+msgid "Nothing Found.\n"
+msgstr "Nièesar nisem na¹el.\n"
+
+#: ../display/d.what.vect/what.c:203
+#, c-format
+msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
+msgstr "Linija %d  Tip: %s  Levo: %d  Desno: %d  "
+
+#: ../display/d.what.vect/what.c:206
+#, c-format
+msgid "Length: %f\n"
+msgstr "Dol¾ina: %f\n"
+
+#: ../display/d.what.vect/what.c:216
+#, c-format
+msgid "  Node[%d]: %d  Number of lines: %d\n"
+msgstr " Vozel[%d]: %d  ©tevilo linij: %d\n"
+
+#: ../display/d.what.vect/what.c:221
+#, c-format
+msgid "    Line: %5d  Angle: %.8f\n"
+msgstr "Linija: %5d  Kot: %.8f\n"
+
+#: ../display/d.what.vect/what.c:227
+#, c-format
+msgid "length %f\n"
+msgstr "dol¾ina %f\n"
+
+#: ../display/d.what.vect/what.c:245
+#, c-format, fuzzy
+msgid "Point height: %f\n"
+msgstr "Vi¹ina toèke: %f\n"
+
+#: ../display/d.what.vect/what.c:257
+#, c-format
+msgid "Line height: %f\n"
+msgstr "Vi¹ina linije: %f\n"
+
+#: ../display/d.what.vect/what.c:263
+#, c-format
+msgid "Line height min: %f max: %f\n"
+msgstr "Vi¹ina linije min: %f max: %f\n"
+
+#: ../display/d.what.vect/what.c:280
+#, c-format
+msgid "Area height: %f\n"
+msgstr "Vi¹ina obmoèja: %f\n"
+
+#: ../display/d.what.vect/what.c:287
+#, c-format
+msgid "Area\n"
+msgstr "Obmoèje\n"
+
+#: ../display/d.what.vect/what.c:300
+#, c-format
+msgid "Area: %d  Number of isles: %d\n"
+msgstr "Obmoèje: %d  ©tevilo otokov: %d\n"
+
+#: ../display/d.what.vect/what.c:304
+#, c-format
+msgid "  Isle[%d]: %d\n"
+msgstr "Otok[%d]: %d\n"
+
+#: ../display/d.what.vect/what.c:311
+#, c-format
+msgid "Island: %d  In area: %d\n"
+msgstr "Otok %d  V obmoèju: %d\n"
+
+#: ../display/d.what.vect/what.c:315 ../display/d.what.vect/what.c:323
+#, c-format
+msgid "Size - Sq Meters: %.3f\t\tHectares: %.3f\n"
+msgstr "Velikost - m^2: %.3f\\t\\tHektarov: %.3f\n"
+
+#: ../display/d.what.vect/what.c:318 ../display/d.what.vect/what.c:327
+#, c-format
+msgid "           Acres: %.3f\t\tSq Miles: %.4f\n"
+msgstr "           Akrov: %.3f\\t\\tkvadratnih milj: %.4f\n"
+
+#: ../display/d.what.vect/what.c:353
+#, c-format
+msgid ""
+"field: %d\n"
+"category: %d\n"
+msgstr ""
+"polje: %d\n"
+"kategorija: %d\n"
+
+#: ../display/d.what.vect/what.c:362
+#, c-format
+msgid "Database connection not defined\n"
+msgstr "Povezava z bazo podatkov ni definirana\n"
+
+#: ../display/d.what.vect/what.c:370
+#, c-format
+msgid ""
+"driver: %s\n"
+"database: %s\n"
+"table: %s\n"
+"key column: %s\n"
+msgstr ""
+"gonilnik: %s\n"
+"baza podatkov: %s\n"
+"tabela: %s\n"
+"kolona z identifikatorjem: %s\n"
+
+#: ../display/d.what.vect/what.c:421
+#, c-format
+msgid ""
+"\n"
+"Click mouse button on desired location\n"
+msgstr ""
+"\n"
+"Klikni z mi¹ko na ¾eleno lokacijo\n"
+
+#: ../display/d.what.vect/what.c:426
+#, c-format
+msgid "Buttons\n"
+msgstr "Gumbi\n"
+
+#: ../display/d.what.vect/what.c:427
+#, c-format
+msgid " Left:  what's here\n"
+msgstr "Levi: poizveduj po karti\n"
+
+#: ../display/d.what.vect/what.c:429
+#, c-format, fuzzy
+msgid " Middle: toggle flash color\n"
+msgstr "Srednji: barvni blisk\n"
+
+#: ../display/d.what.vect/what.c:434
+#, c-format
+msgid " Right: quit\n"
+msgstr "Desni: konèaj\n"
+
+#: ../display/d.what.vect/openvect.c:12
+#, c-format
+msgid "warning: %s - vector file not found\n"
+msgstr "pozor: ne najdem vektorja %s\n"
+
+#: ../raster/r.colors/rules.c:45
+#, c-format
+msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
+msgstr "Vnesi pogoje, ko konèa¹ - \"end\", za pomoè - \"help\".\n"
+
+#: ../raster/r.colors/rules.c:47
+#, c-format
+msgid "fp: Data range is %.25f to %.25f\n"
+msgstr "fp: Razpon podatkov je %.25f do %.25f\n"
+
+#: ../raster/r.colors/rules.c:49
+#, c-format
+msgid "Data range is %ld to %ld\n"
+msgstr "Razpon podatkov je %ld do %ld\n"
+
+#: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
+msgid "Your color rules do not cover the whole range of data!"
+msgstr "Tvoja barvna paleta ne zaobsega celotnega razpona podatkov!"
+
+#: ../raster/r.colors/rules.c:188
+#, c-format
+msgid "Enter a rule in one of these formats:\n"
+msgstr "Vnesi pogoje v enem od naslednjih formatov:\n"
+
+#: ../raster/r.colors/rules.c:190
+#, c-format
+msgid " val color\n"
+msgstr " vrednost barva\n"
+
+#: ../raster/r.colors/rules.c:191
+#, c-format
+msgid " n%% color\n"
+msgstr " n%% barva\n"
+
+#: ../raster/r.colors/rules.c:192
+#, c-format
+msgid " nv color\n"
+msgstr " nv barva\n"
+
+#: ../raster/r.colors/rules.c:193
+#, c-format
+msgid " default color\n"
+msgstr " privzeta barva\n"
+
+#: ../raster/r.colors/rules.c:194
+#, c-format
+msgid "color can be one of:\n"
+msgstr "barva lahko predstavlja katero koli od naslednjih:\n"
+
+#: ../raster/r.colors/rules.c:196
+#, c-format
+msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
+msgstr "ali R:G:B barvno definicijo, npr. 0:127:255\n"
+
+#: ../raster/r.colors/rules.c:237
+#, c-format
+msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
+msgstr ""
+"** opozorilo: R:G:B vrednost(i) so izven dovoljenega razpona \n"
+"[0 do 255]: %d:%d:%d **\n"
+
+#: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
+#: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
+#: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
+#: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
+#, c-format
+msgid "** rule is not added **\n"
+msgstr "** pogoj ni dodan **\n"
+
+#: ../raster/r.colors/rules.c:253
+#, c-format
+msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
+msgstr ""
+"** opozorilo: R G B vrednost(i) so izven dovoljenega razpona \n"
+"[0 do 255]: %d %d %d **\n"
+
+#: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
+#, c-format
+msgid "** warning: no such value **\n"
+msgstr "** opozorilo: take vrednosti ni **\n"
+
+#: ../raster/r.colors/rules.c:402
+#, c-format
+msgid "%s:line %d:%s\n"
+msgstr "%s:linija %d:%s\n"
+
+#: ../raster/r.colors/rules.c:403
+#, c-format
+msgid "** bad color specification **\n"
+msgstr "** napaèna specifikacija barv **\n"
+
+#: ../raster/r.colors/rules.c:424
+#, c-format
+msgid "%s - unknown color\n"
+msgstr "%s - nepoznana barva\n"
+
+#: ../raster/r.colors/rules.c:425
+#, c-format
+msgid "Valid colors are:\n"
+msgstr "Veljavne barve so:\n"
+
+#: ../raster/r.sunmask/main.c:225
+msgid "Using map center coordinates\n"
+msgstr "Uporabljam koordinate sredi¹èa sloja\n"
+
+#: ../raster/r.sunmask/main.c:234
+msgid "Empty east coordinate specified!"
+msgstr "Koordinata za vzhod je prazna!"
+
+#: ../raster/r.sunmask/main.c:236
+msgid "Empty north coordinate specified!\n"
+msgstr "Koordinata za sever je prazna!\n"
+
+#: ../raster/r.sunmask/main.c:255
+msgid "Either define sun position or location/date/time parameters."
+msgstr "Doloèi ali polo¾aj sonca ali parametre lokacija/datum/èas"
+
+#: ../raster/r.sunmask/main.c:258
+msgid ""
+"Neither sun position nor east/north, date/time/timezone definition are "
+"complete."
+msgstr "Niti polo¾aj sonca niti vzhod/zahod, datum/èas/èasovna_cona niso popolne"
+
+#: ../raster/r.sunmask/main.c:263
+#, c-format
+msgid "Calculating sun position... (using solpos (V. %s) from NREL)\n"
+msgstr "Raèunam lego sonca... (uporabil bom solpos (V. %s) iz NREL)\n"
+
+#: ../raster/r.sunmask/main.c:268
+msgid ""
+"Using user defined sun azimuth, altitude settings (ignoring eventual other "
+"values)\n"
+msgstr ""
+"Uporabil bom azimut sonca in njegovo vi¹ino, ki si si jih doloèil (ignoriral \n"
+"bom preostale mo¾ne vrednosti)\n"
+
+#: ../raster/r.sunmask/main.c:338
+#, c-format
+msgid " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:342
+#, c-format
+msgid " long: %f, lat: %f, timezone: %f\n"
+msgstr " dol¾ina: %f, ¹irina: %f, èasovna cona: %f\n"
+
+#: ../raster/r.sunmask/main.c:343
+#, c-format
+msgid ""
+" Solar position: sun azimuth: %f,\n"
+"   sun angle above horz.(refraction corrected): %f\n"
+msgstr ""
+" Lega sonca: azimut sonca: %f,\n"
+"   vi¹ina sonca nad obzorjem (refrakcija je popravljena): %f\n"
+
+#: ../raster/r.sunmask/main.c:347
+#, c-format
+msgid " Sunrise time (without refraction): %02d:%02d:%02d\n"
+msgstr " Èas vzhoda (brez refrakcije):  %02d:%02d:%02d\n"
+
+#: ../raster/r.sunmask/main.c:348
+#, c-format
+msgid " Sunset time  (without refraction): %02d:%02d:%02d\n"
+msgstr " Èas zahoda (brez refrakcije): %02d:%02d:%02d\n"
+
+#: ../raster/r.sunmask/main.c:357
+msgid "Please correct settings."
+msgstr "Prosim popravi nastavitve."
+
+#: ../raster/r.sunmask/main.c:374
+#, c-format
+msgid "Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)!\n"
+msgstr "Èas (%02i:%02i:%02i) je pred vzhodom (%02d:%02d:%02d)!\n"
+
+#: ../raster/r.sunmask/main.c:377
+#, c-format
+msgid "Time (%02i:%02i:%02i) is before sunrise!\n"
+msgstr "Èas (%02i:%02i:%02i) je pred vzhodom!\n"
+
+#: ../raster/r.sunmask/main.c:379 ../raster/r.sunmask/main.c:388
+msgid "Nothing to calculate. Please verify settings."
+msgstr "Izraèunati ne morem nièesar. Prosim ¹e enkrat preglej nastavitve."
+
+#: ../raster/r.sunmask/main.c:384
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)!\n"
+msgstr "Èas (%02i:%02i:%02i) je po sonènem zahodu (%02d:%02d:%02d)!\n"
+
+#: ../raster/r.sunmask/main.c:387
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset!\n"
+msgstr "Èas (%02i:%02i:%02i) je po sonènem zahodu!\n"
+
+#: ../raster/r.sunmask/main.c:394
+msgid "No map calculation requested. Finished.\n"
+msgstr "Zahteval(a) nisi nobenega izraèuna. Konèano.\n"
+
+#: ../raster/r.sunmask/main.c:401
+msgid "You already know the sun position.\n"
+msgstr "Lego sonca ¾e pozna¹.\n"
+
+#: ../raster/r.sunmask/main.c:409 ../raster/r.sunmask/main.c:411
+#, c-format
+msgid "can't open %s"
+msgstr "ne morem odpreti %s"
+
+#: ../raster/r.sunmask/main.c:421
+#, c-format
+msgid "can't open range file for %s"
+msgstr "ne morem odpreti razpona za datoteko %s"
+
+#: ../raster/r.sunmask/main.c:438
+msgid "Calculating shadows from DEM..."
+msgstr "Izraèunavam sence iz DMR..."
+
+#: ../raster/r.sunmask/main.c:446
+msgid "can't read row in input elevation map"
+msgstr "ne morem prebrati vrstice v vhodnem sloju nadmorskih vi¹in"
+
+#: ../raster/r.sunmask/main.c:511
+msgid "Finished.\n"
+msgstr "Konèano.\n"
+
+#: ../imagery/i.group/main.c:86
+msgid "No input map(s) specified."
+msgstr "Doloèena ni bila nobena vhodna datoteka."
+
