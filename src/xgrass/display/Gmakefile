@@ -5,7 +5,7 @@ BOGUS = $(VECTLIB) $(GISLIB) $(DISPLAYLIB)
 XXX = $(XMLIBPATH) $(XMLIB) $(XLIBPATH) -lXext $(XTLIBPATH) $(XTLIB) \
  $(XLIB)
 
-YYY = -ll $(XEXTRALIBS) -lm
+YYY = $(LEXLIB) $(XEXTRALIBS) $(MATHLIB)
 
 LIBS = $(BOGUS) $(XGDLIB) $(XGILIB) $(XXX) $(XPMLIB) $(BOGUS) $(YYY)
 
@@ -65,8 +65,8 @@ OBJS = \
 	upbarbox.o \
 	upgridbox.o \
 	uprastpl.o \
-	xwd.o
-
+	xwd.o \
+	yywrap.o
 
 $(BIN)/xgdisplay: $(OBJS) $(XGILIB) $(XGDLIB)
 	$(CC) -o $@ $(LDFLAGS) $(XLDFLAGS) $(EXTRA_LDFLAGS) $(OBJS) $(LIBS)
@@ -81,7 +81,7 @@ y.tab.h: grammar.c
 
 grammar.c: grammar.y
 	rm -f grammar.c
-	yacc -d grammar.y
+	$(YACC) -d grammar.y
 	mv y.tab.c grammar.c
 
 saber_src:
