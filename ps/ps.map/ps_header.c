@@ -8,13 +8,18 @@
 #include "ps_info.h"
 
 static long bb_offset;
+extern int eps_output;
 extern int rotate_plot;
 
 int write_PS_header (void)
 {
     /* write PostScript header */
     /*fprintf(PS.fp, "%%!PS-Adobe-2.0 EPSF-1.2\n");*/
-    fprintf(PS.fp, "%%!PS-Adobe-3.0 EPSF-3.0\n");
+    if ( eps_output )
+        fprintf(PS.fp, "%%!PS-Adobe-3.0 EPSF-3.0\n");
+    else
+        fprintf(PS.fp, "%%!PS-Adobe-3.0\n");
+    
     bb_offset = ftell(PS.fp);
     fprintf(PS.fp, "                                       ");
     fprintf(PS.fp, "                                       \n");
