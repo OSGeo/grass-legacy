@@ -53,61 +53,64 @@ imported with the indicated <b>output</b> name into the PERMANENT mapset.<P>
 
 <h2>EXAMPLES</h2>
 
-<B>SHAPE files</B><BR>
-<b>v.in.ogr dsn=</b><em>/home/user/shape_data</em>
-<b>layer=</b><em>test_shape</em> <b>output=</b><em>grass_map</em> <br>
-<P>
-<B>MapInfo files</B><BR>
-<b>v.in.ogr dsn=</b><em>./</em> <b>layer=</b><em>mapinfo_test</em> 
-<b>output=</b><em>grass_map</em> 
-<P>
-<B>Arc Coverage</B><BR>
-We import the Arcs and Label points, the module takes care to
-build areas:<br>
-<b>v.in.ogr dsn=</b><em>gemeinden</em> <b>layer=</b><em>LAB,ARC</em> <b>type=</b><em>centroid,boundary</em>
-<b>output=</b><em>mymap</em> 
-<P>
-<B>E00 file</B><BR>
-First we have to convert the E00 file to an Arc Coverage with 'avcimport' 
-(<a href="http://avce00.maptools.org/avce00/index.html">AVCE00 tools</a>):<br>
-<b>avcimport</b> <em>e00file</em> <em>coverage</em><br>
-<b>v.in.ogr dsn=</b><em>coverage</em> <b>layer=</b><em>LAB,ARC</em> <b>type=</b><em>centroid,boundary</em>
-<b>output=</b><em>mymap</em> 
-<P>
-<B>SDTS files</B> (you have to select the CATD file)<BR>
-<b>v.in.ogr dsn=</b><em>CITXCATD.DDF</em> <b>output=</b><em>cities</em> 
-<P>
-<B>TIGER files</B><BR>
-<b>v.in.ogr dsn=</b><em>input/2000/56015/</em>
+The command imports various vector formats:
+
+<ul>
+<li><B>SHAPE files</B><BR>
+ <b>v.in.ogr dsn=</b><em>/home/user/shape_data</em>
+ <b>layer=</b><em>test_shape</em> <b>output=</b><em>grass_map</em> <br>
+ 
+<li><B>MapInfo files</B><BR>
+ <b>v.in.ogr dsn=</b><em>./</em> <b>layer=</b><em>mapinfo_test</em> 
+ <b>output=</b><em>grass_map</em> 
+
+<li><B>Arc Coverage</B><BR>
+ We import the Arcs and Label points, the module takes care to
+ build areas:<br>
+ <b>v.in.ogr dsn=</b><em>gemeinden</em> <b>layer=</b><em>LAB,ARC</em> <b>type=</b><em>centroid,boundary</em>
+ <b>output=</b><em>mymap</em> 
+
+<li><B>E00 file</B><BR>
+ First we have to convert the E00 file to an Arc Coverage with 'avcimport' 
+ (<a href="http://avce00.maptools.org/avce00/index.html">AVCE00 tools</a>,
+ use <em>e00conv</em> first in case that <em>avcimport</em> fails):<br>
+ <b>avcimport</b> <em>e00file</em> <em>coverage</em><br>
+ <b>v.in.ogr dsn=</b><em>coverage</em> <b>layer=</b><em>LAB,ARC</em> <b>type=</b><em>centroid,boundary</em>
+ <b>output=</b><em>mymap</em> 
+
+<li><B>SDTS files</B> (you have to select the CATD file)<BR>
+ <b>v.in.ogr dsn=</b><em>CITXCATD.DDF</em> <b>output=</b><em>cities</em> 
+
+<li><B>TIGER files</B><BR>
+  <b>v.in.ogr dsn=</b><em>input/2000/56015/</em>
     <b>layer=</b><em>CompleteChain,PIP</em> <b>output=</b><em>t56015_all</em>
     <b>type=</b><em>boundary,centroid</em> <b>snap=</b><em>-1</em>
-<P>
-<B>PostGIS maps (area example)</B><BR>
-<b>v.in.ogr dsn=</b><em>"PG:host=localhost dbname=postgis user=postgres"</em>
+
+<li><B>PostGIS maps (area example)</B><BR>
+  <b>v.in.ogr dsn=</b><em>"PG:host=localhost dbname=postgis user=postgres"</em>
     <b>layer=</b><em>polymap</em> <b>output=</b><em>polygons</em>
     <b>type=</b><em>boundary,centroid</em>
+  <P>
+  <B>Support of database schema:</B>
+  <P>
+  First  <em>v.database</em>  has to be used to set a default
+  schema for the new vector table(s). In db.* modules the schema name 
+  must be always specified if used.
 
-<P>
-<B>Support of database schema:</B>
-<P>
-First  <em>v.database</em>  has to be used to set a default
-schema for the new vector table(s). In db.* modules the schema name 
-must be always specified if used.
+  Example:
+  <pre>
+    v.database driver=pg database=test schema=user1
+    v.in.ogr dsn=./ layer=river output=river     # -> table user1.river
+    db.select table=user1.river
+  </pre>
 
-Example:
-<pre>
-   v.database driver=pg database=test schema=user1
-   v.in.ogr dsn=./ layer=river output=river     # -> table user1.river
-   db.select table=user1.river
-</pre>
-
-The user can ignore schemas, if desired:
-<pre>
-   v.database driver=pg database=test
-   v.in.ogr dsn=./ layer=river output=river     # -> table public.river
-   db.select table=river
-</pre>
-
+  The user can ignore schemas, if desired:
+  <pre>
+     v.database driver=pg database=test
+     v.in.ogr dsn=./ layer=river output=river     # -> table public.river
+     db.select table=river
+  </pre>
+</ul>
 
 <h2>NOTES</h2>
 
