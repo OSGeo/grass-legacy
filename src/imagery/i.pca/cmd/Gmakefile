@@ -1,5 +1,4 @@
-OBJS = main.o allocate.o jacobi.o \
-	rotate.o stats.o transform.o
+OBJS = main.o eigen.o
 
 LIBES= $(GISLIB) $(MATHLIB)
 
