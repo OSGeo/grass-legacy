@@ -18,7 +18,7 @@ LIST = main.o\
 	unmnt_tape.o\
 	header.o
 
-$(BIN)/i.tape.tm: $(LIST) $(LIBES) $(VASKLIB)
+$(BIN_MAIN_INTER)/i.tape.tm: $(LIST) $(LIBES) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK)
 
 $(LIST): tape.h
