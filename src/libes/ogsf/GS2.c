@@ -326,7 +326,7 @@ void GS_lights_off(void)
     int i;
 
     for (i = 0; i < Numlights; i++) {
-	gsd_switchlight(i, 0);
+	gsd_switchlight(i + 1, 0);
     }
 
     return;
@@ -338,7 +338,7 @@ void GS_lights_on(void)
     int i;
 
     for (i = 0; i < Numlights; i++) {
-	gsd_switchlight(i, 1);
+	gsd_switchlight(i + 1, 1);
     }
 
     return;
