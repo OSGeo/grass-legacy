@@ -170,7 +170,7 @@ print "Range:",max-min
 print "Arithmetic mean:",sum/N
 print "Variance:",(sum2 - sum*sum/N)/N
 print "Standard deviation:",sqrt((sum2 - sum*sum/N)/N)
-print "Variation coefficient:",100*(sqrt((sum2 - sum*sum/N)/N))/(sum/N),"%"
+print "Variation coefficient:",100*(sqrt((sum2 - sum*sum/N)/N))/(sqrt(sum*sum)/N),"%"
 }'
 
 #preparations:
