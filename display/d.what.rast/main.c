@@ -11,7 +11,7 @@ int main (int argc, char **argv)
 	int t, b, l, r ;
 	int i;
 	char **ptr;
-	struct Flag *once, *terse;
+	struct Flag *once, *terse, *colrow;
 	struct Option *opt1, *fs;
 
 
@@ -42,6 +42,10 @@ int main (int argc, char **argv)
 	terse = G_define_flag();
 	terse->key 	   = 't';
 	terse->description = "Terse output. For parsing by programs.";
+
+	colrow = G_define_flag();
+	colrow->key 	    = 'c';
+	colrow->description = "Print out col and row for entire map region";
 
 
 	if (argc != 1)		/* NON-interactive */
@@ -108,7 +112,7 @@ int main (int argc, char **argv)
 			cats[i].ncats = -1;
 	}
 
-	what (once->answer, terse->answer, fs->answer) ;
+	what (once->answer, terse->answer, colrow->answer, fs->answer) ;
 
 	R_close_driver();
 	exit(0);
