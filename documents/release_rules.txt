@@ -20,6 +20,7 @@ How to release GRASS 5 binaries:
  o compile NVIZ *without* PostgreSQL support
    for distribution:
      configure --enable-postgres=no
+     make pre-compile
      gmake5 src.contrib/GMSL/NVIZ2.2
 
  o check, if libgdal is in place ($GISBASE/lib/)
