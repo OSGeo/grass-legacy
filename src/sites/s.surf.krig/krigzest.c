@@ -22,8 +22,8 @@ double krig_z_est (void)
 
   for (i = 0; i < nsearch; i++)
   {
-    sum_z += G_get_matrix_element(x, i, 1) * 
-      G_get_matrix_element(smpl_z, i, 1);
+    sum_z += G_matrix_get_element(x, i, 0) * 
+      G_matrix_get_element(smpl_z, i, 0);
   }
   if (sum_z < 0)
     sum_z = 0;

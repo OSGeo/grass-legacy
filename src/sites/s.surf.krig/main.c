@@ -283,7 +283,7 @@ main (int argc, char *argv[])
     G_fatal_error("Couldn't allocate space for matrix\n");
   if( (sv_to_cell = G_matrix_init(nsearch, 1, nsearch)) == NULL )
     G_fatal_error("Couldn't allocate space for matrix\n");
-  if( (x = G_matrix_init(nsearch + 1, 1, nsearch)) == NULL )
+  if( (x = G_matrix_init(nsearch + 1, 1, nsearch + 1)) == NULL )
     G_fatal_error("Couldn't allocate space for matrix\n");
 
   if( (smpl_dist = G_matrix_init(100, 1, 100)) == NULL )

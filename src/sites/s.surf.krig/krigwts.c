@@ -44,12 +44,12 @@ void krig_weights (void) {
   /*
   for (i = 0; i < matdim; i++)
   {
-    G_set_matrix_element(w, i, 1, 0.0);
-    G_set_matrix_element(x, i, 1, 0.0);    
+    G_matrix_set_element(w, i, 0, 0.0);
+    G_matrix_set_element(x, i, 0, 0.0);    
 
     for (j = 0; j < matdim; j++)
     {
-      G_set_matrix_element(C, i, j, 0.0);
+      G_matrix_set_element(C, i, j, 0.0);
     }
   }
   */
@@ -62,10 +62,10 @@ void krig_weights (void) {
 
   for (i = 0; i < matdim - 1; i++)
   {
-    G_set_matrix_element(w, i, 1, G_get_matrix_element(sv_to_cell, i, 1));
+    G_matrix_set_element(w, i, 0, G_matrix_get_element(sv_to_cell, i, 0));
   }
 
-  G_set_matrix_element(w, matdim - 1, 1, 1.0);
+  G_matrix_set_element(w, matdim - 1, 0, 1.0);
 
   /*
    * Organize the list of between_sample_distances into a 2D array
@@ -76,19 +76,19 @@ void krig_weights (void) {
   {
     for (j = i + 1; j < matdim - 1; j++)
     {
-      G_set_matrix_element(C, i, j, G_get_matrix_element(sv_btw_smpl, i, j));
-      G_set_matrix_element(C, j, i, G_get_matrix_element(sv_btw_smpl, i, j));
+      G_matrix_set_element(C, i, j, G_matrix_get_element(sv_btw_smpl, i, j));
+      G_matrix_set_element(C, j, i, G_matrix_get_element(sv_btw_smpl, i, j));
     }
   }
 
   for (i = 0; i < matdim; i++)
   {
-    G_set_matrix_element(C, i, i, 0.0);
+    G_matrix_set_element(C, i, i, 0.0);
   }
 
   for( i = 0; i < matdim - 1; i++ ) {
-    G_set_matrix_element(C, i, matdim - 1, 1.0);
-    G_set_matrix_element(C, matdim - 1, i, 1.0);
+    G_matrix_set_element(C, i, matdim - 1, 1.0);
+    G_matrix_set_element(C, matdim - 1, i, 1.0);
   }
 
   

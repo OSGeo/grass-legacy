@@ -24,10 +24,10 @@ dist_btw_n_smpls (double range)
     for (j = i + 1; j < nsearch; j++)
     {
 
-      dist = G_distance(G_get_matrix_element(smpl_east, i, 1), 
-			G_get_matrix_element(smpl_north, i, 1),
-			G_get_matrix_element(smpl_east, j, 1),
-			G_get_matrix_element(smpl_north, j, 1));
+      dist = G_distance(G_matrix_get_element(smpl_east, i, 0), 
+			G_matrix_get_element(smpl_north, i, 0),
+			G_matrix_get_element(smpl_east, j, 0),
+			G_matrix_get_element(smpl_north, j, 0));
 
       /*
        * The statement that followsis a very annoying!  It is necessary at
@@ -40,7 +40,7 @@ dist_btw_n_smpls (double range)
        */
       if(dist == 0) dist = range / 100;
 
-      G_set_matrix_element(dist_btw_smpl, i, j, dist);
+      G_matrix_set_element(dist_btw_smpl, i, j, dist);
 
       if(dist == 0) {
 	fprintf(stderr, "Distance of zero value was obtained\n\
