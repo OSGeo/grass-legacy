@@ -67,7 +67,7 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side )
 	G_debug ( 3, "  line[%d] = %d, offset = %d", j, line, offset );
 	type = Vect_read_line (Map, Points, NULL, line );
 	if ( lines[j] > 0 ) direction = GV_FORWARD; 
-	else direction = GV_BACKWORD;
+	else direction = GV_BACKWARD;
 	Vect_append_points ( APoints, Points, direction);
     }
     
