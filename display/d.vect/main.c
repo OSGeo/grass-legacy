@@ -274,16 +274,16 @@ main (int argc, char **argv)
 	    switch ( type_opt->answers[i][0] )
 	      {
 	        case 'p':
-	            type |= DOT;
+	            type |= GV_POINT;
 		    break;
 	        case 'l':
-	            type |= LINE;
+	            type |= GV_LINE;
 		    break;
 	        case 'b':
-	            type |= BOUNDARY;
+	            type |= GV_BOUNDARY;
 		    break;
 	        case 'c':
-	            type |= CENTROID;
+	            type |= GV_CENTROID;
 		    break;
 	        case 'a':
 	            area = TRUE;

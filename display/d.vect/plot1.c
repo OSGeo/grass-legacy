@@ -55,7 +55,7 @@ int plot1 (
 	x = Points->x;
 	y = Points->y;
 
-        if ( ltype & ELEMENT_TYPE_DOT )
+        if ( ltype & GV_POINTS )
 	  {
 	    G_plot_icon(x[0], y[0], icon, 0, msize);  
 	  }

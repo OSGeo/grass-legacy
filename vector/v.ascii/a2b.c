@@ -21,8 +21,8 @@ int asc_to_bin(
 	int end_of_file ;
 	struct line_pnts *Points;
 	struct line_cats *Cats;	
-	GRASS_V_FIELD catn;
-	GRASS_V_CAT  cat;
+	int catn;
+	int cat;
 
 	/* Must always use this to create an initialized  line_pnts structure */
 	Points = Vect_new_line_struct ();
@@ -48,37 +48,27 @@ int asc_to_bin(
 		switch(ctype)
 		{
 		case 'A':
-			type = BOUNDARY ;
+			type = GV_BOUNDARY ;
 			break ;
 		case 'B':
-			type = BOUNDARY ;
+			type = GV_BOUNDARY ;
 			break ;
 		case 'C':
-			type = CENTROID ;
+			type = GV_CENTROID ;
 			break ;			
 		case 'L':
-			type = LINE ;
+			type = GV_LINE ;
 			break ;
 		case 'P':
-			type = DOT ;
+			type = GV_POINT ;
 			break ;
 		case 'a':
-			type = DEAD_BOUNDARY ;
-			break ;
 		case 'b':
-			type = DEAD_BOUNDARY ;
-			break ;
 		case 'c':
-			type = DEAD_CENTROID ;
-			break ;			
 		case 'l':
-			type = DEAD_LINE ;
-			break ;
 		case 'p':
-			type = DEAD_DOT ;
-			break ;
-		case 'E': case 'e':
-			return 0;
+			type = 0; /* dead -> ignore */
+			break;
 		default:
 			fprintf (stderr,"Error reading ascii file:\n%s\n", buff) ;
 			return 0;
@@ -152,9 +142,11 @@ int asc_to_bin(
 		if (0 > Vect_copy_xyz_to_pnts (Points, xarray, yarray, zarray, n_points))
 		    G_fatal_error ("Out of memory");
 
-	    	Vect_write_line ( Map, type, Points, Cats );
-
-		Vect_reset_cats ( Cats ); 
+		if ( type > 0 )
+		    Vect_write_line ( Map, type, Points, Cats );
+	
+    		Vect_reset_cats ( Cats ); 
 	}
 	return 0;	
 }
+

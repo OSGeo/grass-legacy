@@ -43,7 +43,7 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
 	if ( !(type & ltype) ) continue; /* used for both lines and labels */
 	
 		  
-	if ( (ltype & ELEMENT_TYPE_DOT) || Points->n_points == 1 )
+	if ( (ltype & GV_POINTS) || Points->n_points == 1 )
 	  /* point/centroid or line/boundary with one coor */     
 	  {
 	    X = (int)(D_u_to_d_col(Points->x[0])) ;

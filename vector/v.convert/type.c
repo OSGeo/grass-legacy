@@ -6,22 +6,18 @@ char dig_old_to_new_type (char type)
 {
     switch (type) {
 	case FILE_LINE:
-	    type = LINE;
+	    type = GV_LINE;
 	    break;
 	case FILE_AREA:
-	    type = BOUNDARY;
+	    type = GV_BOUNDARY;
 	    break;
 	case FILE_DOT:
-	    type = DOT;
+	    type = GV_POINT;
 	    break;
 	case FILE_DEAD_LINE:
-	    type = DEAD_LINE;
-	    break;
 	case FILE_DEAD_AREA:
-	    type = DEAD_BOUNDARY;
-	    break;
 	case FILE_DEAD_DOT:
-	    type = DEAD_DOT;
+	    type = 0;
 	    break;
 	default:
 	    fprintf (stderr, "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x\n", type);
@@ -35,23 +31,14 @@ char dig_old_to_new_type (char type)
 char dig_new_to_old_type ( char  type)
 {
     switch (type) {
-	case LINE:
+	case GV_LINE:
 	    type = FILE_LINE;
 	    break;
-	case BOUNDARY:
+	case GV_BOUNDARY:
 	    type = FILE_AREA;
 	    break;
-	case DOT:
+	case GV_POINT:
 	    type = FILE_DOT;
-	    break;
-	case DEAD_LINE:
-	    type = FILE_DEAD_LINE;
-	    break;
-	case DEAD_BOUNDARY:
-	    type = FILE_DEAD_AREA;
-	    break;
-	case DEAD_DOT:
-	    type = FILE_DEAD_DOT;
 	    break;
 	default:
 	    fprintf (stderr, "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x\n", type);
