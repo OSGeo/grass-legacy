@@ -1,7 +1,7 @@
 #include "gis.h"
 
 unzoom(window,name, mapset)
-	struct Cell_head window ;
+	struct Cell_head *window ;
 	char name[128], *mapset;
 {
 	char buffer[64] ;
@@ -17,9 +17,10 @@ unzoom(window,name, mapset)
 
 	R_open_driver();
 
-	G_set_window(&window);
-	G_get_set_window(&window);
-	D_check_map_window(&window);
+        printf("\n Restoring the window from lastwindow\n");
+	G_set_window(window);
+	G_get_set_window(window);
+	D_check_map_window(window);
 	
 	Dcell (name,mapset,0);
 
@@ -44,7 +45,7 @@ unzoom(window,name, mapset)
 		switch(button & 0x0f)
 		{
 		case 1:
-			G_put_window(&window);
+			G_put_window(window);
 			R_close_driver();
 			exit(0);
 		case 2:
