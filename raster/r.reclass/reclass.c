@@ -32,7 +32,7 @@ int reclass (char *old_name, char *old_mapset,
     {
 	strcpy (new.name, old_name);
 	strcpy (new.mapset, old_mapset);
-	_reclass (rules, cats, &old, &new);
+	_reclass (rules, cats, &new);
     }
 
     if (G_put_reclass (new_name, &new) < 0)
@@ -74,8 +74,7 @@ int reclass (char *old_name, char *old_mapset,
     return 0;
 }
 
-int _reclass (RULE *rules, struct Categories *cats,
-    struct Reclass *old, struct Reclass *new)
+int _reclass (RULE *rules, struct Categories *cats, struct Reclass *new)
 {
     RULE *r;
     register CELL i;
@@ -86,79 +85,42 @@ int _reclass (RULE *rules, struct Categories *cats,
     long num;
     struct Range range;
     struct Categories old_cats;
-/*
- * Do not uncomment this code unless you have a good reason!
- *
- * Supposing this case:
- * 
- * map range is 0 to 4 and given rules:
- *   r new
- *   1=0
- *   3=1
- *   4=2
- *   7=4		# how can we check every range of input maps
- *   *=0
- *
- * In this case, new->min = 0, new->max = 4, new->num = 4 - 0 + 1 = 5;
- * new->table size = is_default size = 5 of sizeof(DATA TYPE)
- *
- * OK, another fragment of code tries to assign table:
- *
- * for ( r = rules; r; r = r->next)
- *    for ( i = r->lo; i <= r->hi; i++)
- *    {
- *	  n = i;
- *
- *	  new->table[n-new->min] = r->new;
- *	  is_default[n-new->min] = 0;
- *
- * its index may be 1-1=0
- * 		    3-1=2
- * 		    4-1=3
- * 		    7-1=6	limit exceeded!!! index range: 0 to 4
- *
- * JUST DO NOT UNCOMMENT THIS CODE !!
- *
- *
+
+    first = 1;
+
     if(default_rule && !G_is_c_null_value(&DEFAULT))
     {
-         first = 0;
-         G_read_range(new->name, new->mapset, &range);
-         G_get_range_min_max(&range, &new->min, &new->max);
-         if(G_is_c_null_value(&new->min) || 
-            G_is_c_null_value(&new->max))
+	first = 0;
+	G_read_range(new->name, new->mapset, &range);
+	G_get_range_min_max(&range, &new->min, &new->max);
+	if(G_is_c_null_value(&new->min) || 
+	   G_is_c_null_value(&new->max))
             G_fatal_error("input range is empty!");
-         if(default_to_itself)
-         {
+	if(default_to_itself)
+	{
             if(G_read_cats (new->name, new->mapset, &old_cats)< 0)
-               cats_read = 0;
+		cats_read = 0;
             else cats_read = 1;;
-         }
-     }
-     else
-*/
-     {
-         /* first find the min,max cats */
-         first = 1;
-         for (r = rules; r; r = r->next)
-         {
-	    for (i = r->lo; i <= r->hi; i++)
-	    {
-	        n = i;
-            /* assign min,max */
-	        if (first)
-	        {
-	    	    new->min = new->max = n;
-		    first = 0;
-	        }
-	        else
-	        {
-	    	    if (n < new->min) new->min = n;
-		    if (n > new->max) new->max = n;
-	        }
-	    }
-        }
-    } /* no default */
+	}
+    }
+
+    /* first find the min,max cats */
+    for (r = rules; r; r = r->next)
+    {
+	if (first)
+	{
+	    new->min = r->lo;
+	    new->max = r->hi;
+	    first = 0;
+	}
+	else
+	{
+	    if (r->lo < new->min)
+		new->min = r->lo;
+	    if (r->hi > new->max)
+		new->max = r->hi;
+	}
+    }
 
  /* make sure we have at least one entry */
     if (first) new->min = new->max = 0;
