@@ -1,75 +1,34 @@
-<html><body><pre>
 $Id$
 
 This directory contains the experimental binary
 version of GRASS under WINDOWS/Cygnus.
 
-NOTE: The graphical output is not ported yet.
-      -> no graphics yet, friends!!
+NOTE: The graphical output is experimental!
+
+        Please test it.
 
 ---------------------------------------------------------
 
-1. Get latest GRASS source code
-http://www.geog.uni-hannover.de/grass/grass5/source/experimental/
+1. Get latest GRASS source code.  This can be found on the page at:
+http://www.geog.uni-hannover.de/grass/grass5/
 
 2. To compile and link under the Windows NT/2000 go to
-http://sourceware.cygnus.com/cygwin/download.html
-and get the setup.exe.   Download it and run it.
+http://sources.redhat.com/cygwin/.  Click on the "Install Cygwin now"
+icon, or the "install now" icon.  These start the setup.exe
+download. Run the setup.exe program to download Cygwin.
 It will prompt you for one of three choices, if you
-have never loaded Cygwin software select download
+have never loaded Cygwin software, select download
 from the internet.   If you have a previous version,
 you should know what to do.  If you have never done this,
 it will prompt you for a directory (partition) to
-install the files.  I selected C: since I have space 
-on my C: drive.  You can install it where you like.
+install the files.
 
-Now, I fine tuned my mounts, here is my list:
-Device              Directory           Type         Flags
-c:\cygwin\bin       /bin                user         binmode
-c:\cygwin\usr       /usr                user         binmode
-C:\cygwin\bin       /usr/bin            user         binmode
-C:\cygwin\lib       /usr/lib            user         binmode
-c:                  /                   user         binmode
+  If you are new to cygwin, you should look at some of the documentation
+available at this site.
 
-For instance, if yu installed it under C:\Cygwin
-it will come mounted differently. Your / will 
-start from the C:\Cygwin and not C:\   Umount it
-and mount it (from CMD window) as you prefer.  e.g.
-
-umount /bin
-umount /usr/bin
-umount /
-mkdir c:\bin
-mkdir c:\usr
-mkdir c:\usr\bin
-mkdir c:\usr\lib
-mkdir c:\usr\local
-mount -b C: /
-mount -b c:\Cygwin\bin /bin
-mount -b c:\Cygwin\usr /usr
-
-The setup changes its configuration, so depending
-upon your version 1.1, 1.1.1, 1.1.2, 1.1.3 your mileage
-may vary.   If in doubt, try compiling a small program.
-
-First though,
-
-set MAKE_MODE=unix from the CMD (COMMAND for 98) window
-before entering the sh or set it from the shell (sh,bash) 
-line before starting to compile using Cygwin.
-
-or
-
-set it permanenetly in the start-settings-control panel
-system-environmental tab.
-
-Put C:\Cygwin\bin in your PATH.   I also have the
-/usr/local/bin in my PATH.
-
-
-3. Download the sunrpc tar.gz file from Corinna Vinschen
+3. Download the sunrpc-4.0.cygwin1.bin.tar.gz file from Corinna Vinschen
   site and install the binary files:
- ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Vinschen_Corinna/B20
+ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Vinschen_Corinna/B20
 
 Yes, the cygwin 1.1 of rpc is available under her B20 directory.  Get
 the binary (not the src), go to the root (/) and use tar to unbundle
@@ -78,59 +37,102 @@ it.  e.g.
 cd /
 tar xzf /your/path/to/the/sunrpc-4.0.cygwin1.bin.tar.gz
 
-4. Download the ncurses tar.gz file from Michael Hirmke's page:
-ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Hirmke_Michael/
+4. Download the cygipc-1.08-1.tar.gz file from
 
-Install it, too.
+   http://www.neuro.gatech.edu/users/cwilson/cygutils/V1.1/cygipc/index.html
 
-5. Read about Unix running under Windows here:
-    http://cygutils.netpedia.net/V1.1/index.html
-    http://sourceware.cygnus.com/cygwin/docs.html
+ To install, change to the root directory (/) and use tar to extract:
 
-6. Get the unixODBC source, build and install it.
-   Current version is 1.8.8 as of August, 2000
+   tar xzf /[path-to]/cygipc-1.08-1.tar.gz
 
-7. Add the values.h file to the /grass/src/include
-   directory.  Put values in it for the following:
+5. Download the cygwin-XFree binaries. Read about cygwin-XFree and obtain the
+   latest faq and how-to at http://sources.redhat.com/cygwin/xfree/
 
-#define MININT      (1 << (INTBITS - 1))
-#define MAXINT      (~MININT)
-#define MAXDOUBLE   1.79769313486231470e+308
-#define MINDOUBLE   4.94065645841246544e-324
-#define BITSPERBYTE 8
-#define BITS(type)  (BITSPERBYTE * (int)sizeof(type))
-#define INTBITS     BITS(int)
+   Download the binaries (clients and libraries) from their ftp site:
 
-8  Check the src/include/config.h file, if the #define CURSORS_MAXY
-   is NONE, change this to _maxy and define
-   #define HAVE_CURSORS in one of the lines
-   previous to this line.   
- 
-9. You'll need to read the REQUIREMENTS files, download
-   the public domain libraries, such as png, and build
-   and install them.  You will need the pnm include and
-   lib files.  
+   ftp://sources.redhat.com/pub/cygwin/xfree/xc-4-binaries/
 
+   Get all of the binary files and install as before from root (/)
+
+6. Download an X-Server.  One that has been tested is can be obtained from
+
+   Startnet:  http://www.starnet.com/products/  follow the downloads link.
+
+   Instructions will be emailed to you telling you where to access the
+   downloadable file.  This is a demo version that will time out after
+   2 hours.  You can restart it again after it times out.
+
+   or you can use the X-Server included in the Cygwin-XFree.  Note
+   that this has some strange results, and only runs in full screen mode.
+   Instructions for its use are in the how-to at the cygwin-Xfree site.
+   You can go to any of the ftp mirror sites, for instance
+   ftp://ftp.sunsite.utk.edu/pub/cygwin/xfree/win32-x11/
+   and download the win32-x11.tar.bz2 file.  File names and 
+   relative directories may change.  At the time of this
+   writing, the date of that file was November, 2000.
 
 -----------------------------------------------------------------------------
 
-10. To start GRASS compilation proceed like this:
+7. To start GRASS compilation proceed like this:
 
-    ./configure
-    make
-    make install
+  In a cygwin command window (started with the desktop icon created by setup)
 
-   If you have problems, go into the src/libes directory
-   and build that first.  e.g.
+    cd /grass      (use the directory name for where you installed grass)
+    ./configure --with-ipc
 
-   cd /grass/src/libes
-   gmake5
+  Check the file src/command/head/head.  This will probably need changing.
+  Change the appropriate lines in the src/CMD/head/head.i686-pc-cygwin
+  head file to look like this:
 
-11.  The current build was made using Cygwin 1.1.3
+ YACC                = bison -y
+ COMPILE_FLAGS       = -g -O2 -I/usr/local/include
+ XLIBPATH            =  -L/usr/X11R6/lib -L/usr/local/lib
+ XLIB                =  -lSM -lICE -lX11 -lcygipc
+ XDRLIB              = -lrpclib -lz -lcygipc
 
-</pre>
+  Then proceed with compiling:
 
-For questions, send a message to the grass list 
-<a href=grass5@geog.uni-hannover.de> grass5@geog.uni-hannover.de</a>
+    make               (This installs to $GISBASE)
+  ./README.ipc -n new          (This sets up the IPC files in $GISBASE/dev
+** Obsoleted????)
+   make install     (This installs to $INST_DIR)
 
-</pre></body></html>
+
+8.  To run GRASS.
+
+    Start your X-Server. The starnet X-Server is started from the start
+    menu as:
+
+       Start->Programs->X-Win32->X-Win32
+
+    Start a MS-Dos command window and type the following commands:
+
+   SET DISPLAY=127.0.0.1:0.0
+   SET PATH=\cygwin\bin;\cygwin\usr\X11R6\bin;\cygwin\usr\bin;\cygwin\usr\local\bin;%PATH%
+
+   start /B \cygwin\usr\X11R6\bin\xterm -sl 1000 -sb -rightbar -ms red -fg
+yellow -bg black -e bash
+
+  These should be put into a dos .bat file for easier use.
+
+9. In the bash window (or a cygwin command window)start the ipc daemon as:
+
+    ipc-daemon&
+
+10. Start GRASS.  In the bash window:
+
+    grass5
+
+    then follow the normal GRASS procedures.
+
+   See the StartGrass shell script in both /bin and 
+   in /usr/local/grass5 for steps 8,9, and 10
+
+
+
+If you wish you can try the following:
+1. Get the unixODBC source, build and install it.
+   Current version is 1.8.8 as of August, 2000
+
+
+For questions, send a message to the grass list grass5@geog.uni-hannover.de
