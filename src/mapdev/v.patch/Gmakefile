@@ -2,6 +2,8 @@ EXTRA_CFLAGS	=   $(VECT_INCLUDE)
 
 #EXTRA_CFLAGS	=   -I../lib   -I../libes 
 
+LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
+
 SOURCES = \
 	patch.c
 
@@ -14,11 +16,12 @@ PROG =   $(BIN_MAIN_CMD)/v.patch
 
 all:  $(PROG)
 
-$(PROG): $(OBJ) $(GISLIB) $(VECTLIB)
+$(PROG): $(OBJ) $(LIBES)
 	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB)
 	mv a.out $@
 
 saber_src:
-	#load $(CFLAGS) patch.c $(CFILES)  $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) 
+	#load $(CFLAGS) patch.c $(CFILES)  $(LIBES) 
 
+$(LIBES): #
