@@ -56,7 +56,7 @@ main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt_h, *opt_i, *opt_s;
 	struct Option *opt_r, *opt_g, *opt_b;
-	struct Flag *flg1, *nullignore;
+	struct Flag *flg1, *nulldraw;
 
 	G_gisinit(argv[0]) ;
 
@@ -112,10 +112,9 @@ main (int argc, char **argv)
 	flg1->key	  = 'o' ;
 	flg1->description = "Overwrite output maps" ;
 
-	nullignore = G_define_flag();
-	nullignore->key = 'i';
-	nullignore->description = "Ignore NULL values when drawing";
-
+	nulldraw = G_define_flag();
+	nulldraw->key = 'i';
+	nulldraw->description = "Respect NULL values when drawing";
 
 	if (G_parser(argc, argv))
 		exit(-1);
@@ -294,7 +293,7 @@ main (int argc, char **argv)
 
 		for (atcol=0; atcol<window.cols; atcol++)
 		{
-			if (!nullignore->answer)
+			if (nulldraw->answer)
 			{
 				if (hue_n[atcol]
 				    || (int_used && int_n[atcol])
