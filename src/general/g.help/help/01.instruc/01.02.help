@@ -3,9 +3,9 @@ Help Instructions Cont'd
     The box at the bottom of the screen contains the 'active' keys for 
     the Help program.  Lower case 'u' and 'd' will scroll the text up or
     down one line at a time.  Upper case 'U' and 'D' will move the text 
-    up or down one full screen.  The SPACE BAR will return you to
-    the previous area you had accessed.  When you reach the Main Menu 
-    screen, the SPACE BAR will exit you from the Help Program.  
+    up or down one full screen.  The ESC key will return you to the
+    previous area you had accessed.  When you reach the Main Menu 
+    screen, the ESC key will exit you from the Help Program.  
     
     If you are using a modem or connected to a system that displays
     system messages on the screen during a session, you are able to delete
@@ -16,9 +16,9 @@ Help Instructions Cont'd
     which indicate whether there is text located above or below the 
     displayed text.
 
-    You are now ready to explore the world of GRASS!  Press the SPACE BAR
+    You are now ready to explore the world of GRASS!  Press the ESC key
     until you reach the Main Menu.  From there you can select a topic of
-    interest or exit the Help Program by pressing the SPACE BAR again.
+    interest or exit the Help Program by pressing the ESC key again.
 
 
 
