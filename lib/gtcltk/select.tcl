@@ -44,7 +44,7 @@ proc GSelect_::create { element } {
 
     set location_path "$env(GISDBASE)/$env(LOCATION_NAME)/"
     set current_mapset $env(MAPSET)
-    foreach dir [exec g.mapsets -l] {
+    foreach dir [exec g.mapsets -p] {
         set windfile "$location_path/$dir/WIND"
         if { ! [ file exists $windfile ] } { continue }
         $tree insert end root $dir -text $dir -data $dir -open 1 \
