@@ -1,0 +1,169 @@
+D	chars.c	/^# define D(x,y) (x << 8 | (y & 0xFF) | 0x8000)	\/* /
+D2R	graph_text.c	/^# define D2R(d) ((double)(d * RpD))         \/* deg/
+EQ	label.c	/^#define EQ(x,y) (strcmp(x,y)==0)$/
+FIELD	do_labels.c	/^#define FIELD(x) strcmp(x,field)==0$/
+KEY	getgrid.c	/^#define KEY(x) (strcmp(x,key)==0)$/
+M	chars.c	/^# define M(x,y) (x << 8 | (y & 0xFF))		\/* Moveto(x/
+Mdumpfont	dumpfont.c	/^main(argc, argv) char *argv[];$/
+Mheight	do_labels.c	/^Mheight()$/
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+Mpatcc	patcc.c	/^main (argc, argv) char *argv[];$/
+Mtry	try.c	/^main()$/
+OOPS	scale.c	/^OOPS()$/
+X	draw_line.c	/^#define X(y)  line_eq(y,y0,x0,dy,dx,yround)$/
+Y	draw_line.c	/^#define Y(x)  line_eq(x,x0,y0,dx,dy,xround)$/
+accept	session.c	/^accept()$/
+add_pattern_to_list	pattern.c	/^add_pattern_to_list (name, offset, nlines, nrows, /
+add_to_plfile	plfile.c	/^add_to_plfile (buf)$/
+add_to_session	session.c	/^add_to_session(indent,buf)$/
+any_patterns	pattern.c	/^any_patterns()$/
+append	header.c	/^append (c, buf)$/
+apply	header.c	/^apply (buf, fmt, text)$/
+begin_pattern	pattern.c	/^begin_pattern (name)$/
+blu_carryover	color.c	/^blu_carryover (color)$/
+blu_dither	color.c	/^blu_dither (color, row, col, ncols)$/
+build	color.c	/^build (nlevels, mult, level, value, level_to_255)$/
+build_color_tables	color.c	/^build_color_tables()$/
+build_dither_tables	color.c	/^build_dither_tables()$/
+builtin_patterns	builtin.c	/^builtin_patterns()$/
+cat_color_num	cat_color.c	/^cat_color_num (n)$/
+cellfile	cellfile.c	/^cellfile (name,mapset)$/
+check_font	font.c	/^check_font (name)$/
+check_scale	chk_scale.c	/^check_scale (text)$/
+close_pattern_file	pattern.c	/^close_pattern_file()$/
+commentfile	comment.c	/^commentfile(name)$/
+cont_abs	cont_move.c	/^cont_abs (x, y)$/
+copy	font.c	/^copy (a, b, n)$/
+ctable	ctable.c	/^ctable (pcats, pcolr, statf)$/
+diamond	diamond.c	/^diamond (x, y)$/
+distance	distance.c	/^distance (east, west)$/
+dither	color.c	/^dither (color, row, col, ncols, low, hi, extra)$/
+do_grid	do_grid.c	/^do_grid ()$/
+do_grid_numbers	do_grid.c	/^do_grid_numbers (panel)$/
+do_label	do_labels.c	/^do_label (fd,draw)$/
+do_labels	do_labels.c	/^do_labels (draw)$/
+do_plfile	do_plfile.c	/^do_plfile (after_masking)$/
+do_scale	scale.c	/^do_scale (window, panel, margin, text)$/
+do_sites	do_sites.c	/^do_sites ()$/
+do_vectors	do_vectors.c	/^do_vectors (after_masking)$/
+dot	dot.c	/^dot (x,y)$/
+draw	graph_text.c	/^static draw (x, y)$/
+draw_icon	draw_icon.c	/^draw_icon (icon, x, y)$/
+draw_line	draw_line.c	/^draw_line (x1,y1,x2,y2)$/
+draw_text	draw_text.c	/^draw_text (string, x, y)$/
+drawchar	graph_text.c	/^drawchar (size, sinrot, cosrot, character)$/
+dump_color_tables	color.c	/^dump_color_tables()$/
+dump_dlg	dump.c	/^dump_dlg(dlg) struct dlg *dlg;$/
+end_pattern	pattern.c	/^end_pattern ()$/
+error	error.c	/^error (a,b,c)$/
+find_pattern	pattern.c	/^find_pattern (name, offset, nlines, nrows, ncols, /
+fonterror	font.c	/^fonterror (name, msg)$/
+fontfilename	font.c	/^fontfilename (name, filename)$/
+format_easting	do_grid.c	/^char *format_easting(e, round)$/
+format_northing	do_grid.c	/^char *format_northing(n, round)$/
+get_font_char	font.c	/^get_font_char(c, n, X, Y)$/
+get_format	header.c	/^get_format (buf, fmt)$/
+get_pattern	pattern.c	/^get_pattern (name, p)$/
+getcats	getcats.c	/^getcats()$/
+getgrid	getgrid.c	/^getgrid ()$/
+gobble_input	input.c	/^gobble_input()$/
+graph_char	graph_text.c	/^graph_char (x, y, size, rotation, achar)$/
+graph_line	graph_line.c	/^graph_line (x0,y0,x1,y1)$/
+graph_point	graph_pnt.c	/^graph_point(x,y)$/
+graph_text	graph_text.c	/^graph_text (x, y, size, rotation, string)$/
+grn_carryover	color.c	/^grn_carryover (color)$/
+grn_dither	color.c	/^grn_dither (color, row, col, ncols)$/
+header	header.c	/^header (panel, npanels, date)$/
+highlight_count	vectr_info.c	/^highlight_count(i)$/
+init_graphics	set_grphcs.c	/^init_graphics (pcols)$/
+input	input.c	/^input(level, buf, help)$/
+input_pattern	input_pat.c	/^input_pattern (name)$/
+key_data	key_data.c	/^key_data (buf, k, d)$/
+labelfile	lblfile.c	/^labelfile (name, mapset)$/
+line_eq	line_eq.c	/^line_eq (x,x0,y0,dx,dy,round)$/
+list_fonts	font.c	/^list_fonts ()$/
+lookup_from_pattern	lookup.c	/^lookup_from_pattern (cat, row, col)$/
+lowercase	case.c	/^lowercase (s)$/
+map	map.c	/^map(window)$/
+mask_vectors	mask_vctrs.c	/^mask_vectors (cell)$/
+max	trailer.c	/^static max (a,b) { return a>b/a:b; }$/
+mix	color.c	/^mix (low, hi, extra, level_to_255, nlevels, steps)/
+move	graph_text.c	/^static move (x, y)$/
+move_abs	cont_move.c	/^move_abs (x, y)$/
+next_pattern	pattern.c	/^next_pattern (pat,first)$/
+offmap	do_grid.c	/^static offmap (b)$/
+open_pattern_file	pattern.c	/^open_pattern_file(file,mode)$/
+outlinefile	outline.c	/^outlinefile()$/
+output	header.c	/^output (line, panel, npanels, date)$/
+overlap	do_grid.c	/^static overlap (b1, b2)$/
+parse_number_list	parse_list.c	/^parse_number_list (buf, list)$/
+plot_lines	vectdraw.c	/^plot_lines (nc, east, north, type)$/
+print_pattern	pattern.c	/^print_pattern(p)$/
+print_session	session.c	/^print_session(out)$/
+printer_color_number	color.c	/^printer_color_number (red, grn, blu)$/
+process_text	draw_text.c	/^process_text (string, x, y)$/
+read_pats	predef_pat.c	/^static read_pats (indexfile, file)$/
+read_pattern	pattern.c	/^read_pattern (p, nlines)$/
+read_predefined_patterns	predef_pat.c	/^read_predefined_patterns()$/
+record_label	label.c	/^record_label (east, north, text)$/
+record_line	plfile.c	/^record_line (e1, n1, e2, n2)$/
+record_point	plfile.c	/^record_point (e, n)$/
+red_carryover	color.c	/^red_carryover (color)$/
+red_dither	color.c	/^red_dither (color, row, col, ncols)$/
+regress_line_style	line_style.c	/^regress_line_style()$/
+reject	session.c	/^reject()$/
+scale	scale.c	/^scale (window, panel, margin, text)$/
+scan_color	scan_color.c	/^scan_color (buf, n, r, g, b)$/
+scan_easting	scan_misc.c	/^scan_easting (buf, f)$/
+scan_gis	scan_gis.c	/^scan_gis (element, desc, key, data, name, mapset, /
+scan_northing	scan_misc.c	/^scan_northing (buf, f)$/
+scan_patcolor	patcolor.c	/^scan_patcolor (buf, n, color)$/
+scan_percent	scan_misc.c	/^scan_percent (buf, f, min, max)$/
+scan_ref	scan_ref.c	/^scan_ref (buf, xref, yref)$/
+select_font	font.c	/^select_font (name)$/
+select_standard_font	font.c	/^select_standard_font()$/
+set_all_patterns	set_pat.c	/^set_all_patterns ()$/
+set_color	set_color.c	/^set_color (color)$/
+set_colormode	color.c	/^set_colormode(s)$/
+set_graphics	set_grphcs.c	/^set_graphics (window, row, col)$/
+set_line_style	line_style.c	/^set_line_style (text, colors)$/
+set_line_style_solid	line_style.c	/^set_line_style_solid()$/
+set_pattern	set_pat.c	/^set_pattern (cat, name)$/
+set_reasonable_text_size	draw_text.c	/^set_reasonable_text_size()   { set_text_size(0.4);/
+set_text_background	draw_text.c	/^set_text_background (b)    { background = b; }$/
+set_text_border	draw_text.c	/^set_text_border (b)        { border = b; }$/
+set_text_color	draw_text.c	/^set_text_color (c)         { color = c; hcolor = -/
+set_text_hcolor	draw_text.c	/^set_text_hcolor (c)        { hcolor = c; }$/
+set_text_hwidth	draw_text.c	/^set_text_hwidth (w)        { hwidth = (w>0/(2*w):0/
+set_text_rotation	draw_text.c	/^set_text_rotation (r)      { rotation = r; }$/
+set_text_scale	draw_text.c	/^set_text_scale (s) double s; { scale = s; }$/
+set_text_size	draw_text.c	/^set_text_size (s) float s; { size = s * scale; }$/
+set_text_width	draw_text.c	/^set_text_width (w)         { width = w; hwidth = 0/
+set_text_xref	draw_text.c	/^set_text_xref (x)          { xref = x; }$/
+set_text_yref	draw_text.c	/^set_text_yref (y)          { yref = y; }$/
+set_width	set_width.c	/^set_width (n)$/
+sitefile	sitefile.c	/^sitefile (name,mapset)$/
+store_pattern	pattern.c	/^store_pattern (buf)$/
+text_bounds	draw_text.c	/^text_bounds (string,x,y,box)$/
+text_line	draw_text.c	/^text_line (x1,y1,x2,y2)$/
+title	title.c	/^title(string)$/
+trailer	trailer.c	/^trailer (window, grid, scale_text)$/
+unlink_pattern_file	pattern.c	/^unlink_pattern_file()$/
+unscaled	scale.c	/^unscaled (window, rows, cols)$/
+uppercase	case.c	/^uppercase (s)$/
+vect_type_is_dot	vectdot.c	/^vect_type_is_dot(type)$/
+vectdraw	vectdraw.c	/^vectdraw (fd)$/
+vectfile	vectfile.c	/^vectfile (name,mapset)$/
+vector_info	vectr_info.c	/^vector_info (pixels)$/
+vector_info_lines	vectr_info.c	/^vector_info_lines(i)$/
+which_color	do_labels.c	/^which_color (value)$/
+windfile	windfile.c	/^windfile (name,mapset)$/
+window_col	window_cnv.c	/^window_col (east)$/
+window_line	window_lne.c	/^window_line (north1, east1, north2, east2)$/
+window_point	window_lne.c	/^window_point (north, east)$/
+window_row	window_cnv.c	/^window_row (north)$/
+xmatch	scan_ref.c	/^xmatch (word, xref)$/
+xshift	draw_text.c	/^xshift (x)$/
+yesno	yesno.c	/^yesno (key, data)$/
+ymatch	scan_ref.c	/^ymatch (word, yref)$/
+yshift	draw_text.c	/^yshift (y)$/
