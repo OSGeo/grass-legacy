@@ -193,7 +193,7 @@ for (; ; )
       printf(" 12=Summary of pesticide yields at outlet cell\n");
       printf("  0=Quit\n\n");
       printf("Please enter 0-12 for your choice of contaminant>");              
-      mapflag=atoi(gets(mapflagstring)); 
+      mapflag=atoi(fgets(mapflagstring,2,stdin)); 
       
       printf("\nThe choice you entered was %d\n",mapflag);
       
@@ -201,7 +201,7 @@ for (; ; )
       else {
         printf("Please review the choices and make a new selection\n");
         printf("Press any key to continue> "); 
-        gets(mapflagstring); 
+        fgets(mapflagstring,2,stdin); 
         
         system("clear");
       }
@@ -216,14 +216,14 @@ for (; ; )
       for (; ; )
        { 
          printf("\nPlease enter your cell size in meters (1-9999)>");
-         res=atoi(gets(resstring)); 
+         res=atoi(fgets(resstring,2,stdin)); 
          printf("\nThe resolution you entered was %d\n",res);
                  
          if (res >= 1 && res <= 9999) break;
 
          printf("The number entered should be 1-9999\n");
          printf("Press any key to continue> ");
-         gets(resstring); 
+         fgets(resstring,2,stdin); 
          system("clear");
        }
       strcpy(cellnummapname,"cell_num.map.");
@@ -242,7 +242,7 @@ for (; ; )
       } 
    if (mapflag == 12) {
       show_pest(input_nps_filename); 
-      gets(mapflagstring);   /*put in to grab extra character */
+      fgets(mapflagstring,2,stdin);   /*put in to grab extra character */
       continue; 
       } 
 /**************End section added by Trey Askew**************/
@@ -284,7 +284,7 @@ for (; ; )
           "To see output from another cell, enter the cell number [1 - %d],\n",
           max_cell_num);
           printf("or enter 0 when done viewing cells ==========================> ");
-          cell_choice = atoi(gets(cell_choice_str));
+          cell_choice = atoi(fgets(cell_choice_str,81,stdin));
 
           system("clear"); /* clear the screen */
 
