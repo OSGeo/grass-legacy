@@ -5,8 +5,12 @@
 
 #define XRAYMAX 512
 #define YRAYMAX 512
+#define USAGE  "ISMgrd2cell input=ISM_grid_file output=GRASS_raster_file"
 
 float elvarr[XRAYMAX][YRAYMAX];         /* column major order */
+
+struct Option *old, *new, *mult;
+
 
 main (argc, argv)
     char *argv[];
@@ -17,6 +21,7 @@ main (argc, argv)
     float xgdmin, xgdmax;	/* X Min/Max */
     float ygdmin, ygdmax;	/* Y Min/Max */
     float znlval;		/* NO-DATA value */
+    float multiplier = 1.0;
 
     int prjflg;			/* projection info flag */
     int iproj;			/* GCTP projection number */
@@ -30,7 +35,8 @@ main (argc, argv)
     char sdffld[ 8];		/* Field used in namsdf */
     char namnvf[20];		/* Non-vert fault file */
     char namvfl[20];		/* Vert fault file */
-    float mult; 
+    char *in_name, *out_name;
+
 
     int i;
     struct Cell_head cellhd;
@@ -43,18 +49,50 @@ main (argc, argv)
 
     G_gisinit (argv[0]);
 
-    if (argc != 3 && argc != 4)
-	fprintf (stderr, "Usage: %s file.grd outcell [mult]\n", argv[0]), exit (1);
+        
+/************************** Command Parser ************************************/
 
-    /* allow multiplying numbers by a constant before
-    ** casting to int to allow working w/ fractions
-    */
-    if (argc == 4)
-	mult = atof (argv[3]);
-    else
-	mult = 1.;
+        old = G_define_option();
+        old->key                = "input";
+        old->type               = TYPE_STRING;
+        old->required           = YES;
+        old->multiple           = NO;
+        old->description        = "ISM grid input file";
 
-    gdread_ (   argv[1], desc, 
+        new = G_define_option();
+        new->key                = "output";
+        new->type               = TYPE_STRING;
+        new->required           = YES;
+        new->multiple           = NO;
+        new->gisprompt          = "new,cell,raster";
+        new->description        = "name of resulting raster file";
+
+        mult = G_define_option();
+        mult->key                = "mult";
+        mult->type               = TYPE_DOUBLE;
+        mult->required           = NO;
+        mult->multiple           = NO;
+	mult->answer		 = "1";
+        mult->description        = "multiplier of cell data";
+
+        if (G_parser (argc, argv))
+                exit(-1);
+
+    in_name  = old->answer;
+    out_name = new->answer;
+    multiplier = atof (mult->answer);
+
+    if (in_name == NULL  ||   out_name == NULL)
+    {
+        fprintf (stderr, "%s: Command line error.\n\n Usage: %s\n",
+                argv[0], USAGE);
+        exit (-1);
+    }
+
+/******************************************************************************/
+
+
+    gdread_ (   in_name, desc, 
     		elvarr, 
    		&idmxcl, &idmyrw,
 	        &inmxcl, &xgdmin, &xgdmax, 
@@ -62,7 +100,7 @@ main (argc, argv)
 		&znlval, 
 		namsdf, sdffld, namvfl, namnvf,
 		&prjflg, &iproj, &izone, &iunits, gctpar, 
-		&istat,  strlen(argv[1]),  40, 20,   8, 20,   20
+		&istat,  strlen(in_name),  40, 20,   8, 20,   20
 		);
 	    
     cellhd.zone = izone;
@@ -99,11 +137,11 @@ main (argc, argv)
 
 
     cell = G_allocate_cell_buf();
-    cf = G_open_cell_new (argv[2]);
+    cf = G_open_cell_new (out_name);
     if (!cf)
     {
         char msg[100];
-        sprintf (msg, "unable to create layer %s", argv[2]);
+        sprintf (msg, "unable to create layer %s", out_name);
         G_fatal_error (msg);
         exit(1);
     }
@@ -113,15 +151,16 @@ main (argc, argv)
 	for (col = 0 ; col < ncols ; col++)
 	{
 	    tmp = elvarr[nrows - row][col];
-	    cell[col] = tmp == znlval ? 0 : tmp * mult;
+	    cell[col] = tmp == znlval ? 0 : tmp * multiplier;
 	}
 	G_put_map_row (cf, cell);
     }
-    fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", argv[2]);
+    fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", out_name);
+
     G_close_cell (cf);
 
     desc[39] = 0;	/* terminate Fortran string */
-    G_put_cell_title (argv[2], desc);
+    G_put_cell_title (out_name, desc);
 
 
     printf ("Size (%d, %d) \n", inmxcl, inmyrw);
