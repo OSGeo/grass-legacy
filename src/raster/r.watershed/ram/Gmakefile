@@ -52,3 +52,5 @@ sg_factor.o: Gwater.h
 slope_len.o: Gwater.h
 split_str.o: Gwater.h
 usage.o: Gwater.h
+$(LIST): ramseg.h
+
