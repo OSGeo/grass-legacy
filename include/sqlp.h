@@ -25,6 +25,7 @@
 #define SQLP_SUBTR 8    /* - */
 #define SQLP_MLTP 9    /* * */
 #define SQLP_DIV 10    /* / */
+#define SQLP_MTCH 11    /* ~ */
 
 /* SQL VALUE TYPES, NOT COLUMN TYPES -
 -do not change these! leval/reval =2 or .5 for int/double compat.*/

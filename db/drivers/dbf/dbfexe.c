@@ -379,16 +379,26 @@ double eval_node(Node * nptr, int tab, int i)
 	    exit (-1);
 	}
 	if ( leval == reval && leval == SQLP_S) {
-	    if ( aexprptr->opname != SQLP_EQ) {
+	    if ( aexprptr->opname != SQLP_EQ && aexprptr->opname != SQLP_MTCH ) {
 	        G_debug(0,"Impossible operator for string values."); 
 		exit(-1);
-	    } 
-
-	    lres = (int) get_arithmvalue(aexprptr->lexpr, tab, i, &lstr);
-	    rres = (int) get_arithmvalue(aexprptr->rexpr, tab, i, &rstr);
+	    }
+	    if ( aexprptr->opname == SQLP_EQ) { 
+	
+	    	lres = (int) get_arithmvalue(aexprptr->lexpr, tab, i, &lstr);
+	    	rres = (int) get_arithmvalue(aexprptr->rexpr, tab, i, &rstr);
 	    
-	    if (!lres && !rres)
-	        if ( strcmp(lstr.s,rstr.s) != 0) condition = FALSE;
+	    	if (!lres && !rres)
+	        	if ( strcmp(lstr.s,rstr.s) != 0) condition = FALSE;
+	    }
+	    if ( aexprptr->opname == SQLP_MTCH) { 
+	
+	    	lres = (int) get_arithmvalue(aexprptr->lexpr, tab, i, &lstr);
+	    	rres = (int) get_arithmvalue(aexprptr->rexpr, tab, i, &rstr);
+	    
+	    	if (!lres && !rres)
+	        	if ( strstr(lstr.s,rstr.s) == NULL) condition = FALSE;
+	    }
 	    
 	} else {
 	    dleval = eval_node(aexprptr->lexpr, tab, i);
