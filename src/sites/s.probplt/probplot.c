@@ -1,7 +1,7 @@
 /*-s.probplot
 **
 ** Author: James Darrell McCauley darrell@mccauley-usa.com
-** 	                          http://www.usol.com/~mccauley/
+** 	                          http://mccauley-usa.com/
 **
 ** This program is free software; you can redistribute it and/or
 ** modify it under the terms of the GNU General Public License

@@ -64,7 +64,7 @@ http://www.geog.uni-hannover.de/grass/
 .SH AUTHOR
 James Darrell McCauley (darrell@mccauley-usa.com)
 .if n .br 
-http://www.usol.com/~mccauley/
+http://mccauley-usa.com/
 .LP
 Random number generators originally written in FORTRAN
 by Wes Peterson (wpp@ips.ethz.ch) and are
