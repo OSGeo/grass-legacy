@@ -1,4 +1,4 @@
-PGM = i.rvi.prediction
+PGM = r.rvi.prediction
 HOME = $(BIN_CONTRIB_CMD)
 LIST = main.o\
 	model.o\
