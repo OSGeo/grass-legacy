@@ -140,7 +140,7 @@ int main (int argc, char *argv[])
     upload_opt->type = TYPE_STRING;
     upload_opt->required = YES;
     upload_opt->multiple = YES;
-    upload_opt->options = "cat,dist,from_x,from_y,to_x,to_y,from_along,to_along";
+    upload_opt->options = "cat,dist,to_x,to_y,to_along";
     upload_opt->description = "Values describing the relation between two nearest features:\n"
 	"\tcat - category of the nearest feature\n"
 	"\tdist - minimum distance to nearest feature\n"
