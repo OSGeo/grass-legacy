@@ -109,7 +109,7 @@ dres=`cat $LOCATION/WIND3 | awk ' /t-b resol:/ { printf "%.0f", $3 }'`
 echo "Previous settings:"
 echo "n:$north s:$south w:$west e:$east t:$top b:$bottom r:$res dres:$dres"
 
-if [ $GIS_FLAG_u !-eq 1] ; then
+if [ $GIS_FLAG_u -ne 1] ; then
     north=$GIS_OPT_n
     south=$GIS_OPT_s
     east=$GIS_OPT_e
