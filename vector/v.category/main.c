@@ -60,7 +60,7 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description = 
-		"Attach, delete or report vector categories.";
+		"Attach, delete or report vector categories to map geometry.";
 
 	in_opt = G_define_standard_option(G_OPT_V_INPUT);
 	out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
