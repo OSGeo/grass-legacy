@@ -41,10 +41,10 @@
 #iris:driver/IRIS:Silicon Graphics IRIS Workstation: \
 #     BASEDIR/dev/fifo.11a BASEDIR/dev/fifo.11b \
 #     ::any terminal
-#sun:driver/SUNVIEW:Sun Core graphis display: \
+#sun:driver/SUNCORE:Sun Core graphis display: \
 #     BASEDIR/dev/fifo.12a BASEDIR/dev/fifo.12b \
 #     ::any terminal
-#igraph:driver/IGRAPH:Intergraph graphics display: \
+#IGRAPH:driver/IGRAPH:Intergraph graphics display: \
 #     BASEDIR/dev/fifo.13a BASEDIR/dev/fifo.13b \
 #     ::any terminal
 #mass:driver/MASS:Masscomp graphics display: \
