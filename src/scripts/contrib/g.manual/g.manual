@@ -106,7 +106,7 @@ then
   for i in $entries
   do
     awk 'BEGIN{i=0}
-        /\.PP|\.br/{if(i){for(j=1;j<NF;j++) printf "%s ",$j; printf "\n"; exit;}}
+        /\.pp|\.br/i{if(i){for(j=1;j<NF;j++) printf "%s ",$j; printf "\n"; exit;}}
     	{if(!NF) exit;
 	 if(i==1) printf "%s ",$0;
 	 if ($0==".SH NAME") i=1;
