@@ -2,8 +2,9 @@
 
     /* write out result */
 
-write_output_map (output, offset)
+write_output_map (output, offset, quiet)
     char *output;
+    int quiet;
 {
     int fd_in, fd_out;
     int row;
@@ -27,13 +28,15 @@ write_output_map (output, offset)
 	}
     }
     cell = G_allocate_cell_buf();
-    fprintf (stderr, "Writing output map (%s)   ... ", output);
+    if ( ! quiet )
+       fprintf (stderr, "Writing output map (%s)   ... ", output);
 
     ptr = map;
 
     for (row = 0; row < window.rows; row++)
     {
-	G_percent (row, window.rows, 2);
+        if ( ! quiet )
+           G_percent (row, window.rows, 2);
 	col = window.cols;
 	if (!offset)
 	{
@@ -62,7 +65,8 @@ write_output_map (output, offset)
 	    exit(1);
 	}
     }
-    G_percent (row, window.rows, 2);
+    if ( ! quiet )
+       G_percent (row, window.rows, 2);
     free(cell);
 
     if (offset)
