@@ -1,0 +1,4 @@
+#define UNIT_FILE "PROJ_UNITS"
+#define PROJECTION_FILE "PROJ_INFO"
+
+#define DEF_MAJOR 999
