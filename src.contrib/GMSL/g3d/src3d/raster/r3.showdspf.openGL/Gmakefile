@@ -1,8 +1,8 @@
 MYLIBDIR =	$(SRC)/libes/dspf
 DSPLIB	=	$(SRC)/libes/dspf/libdsp3.a
 
-XMINCPATH = -I/usr/X11R6/include -I/usr/include/GL -I/usr/X11R6/include/X11/GLw
-XINCPATH = -I/usr/X11R6/include -I/usr/include/GL -I/usr/X11R6/include/X11/GLw
+XMINCPATH = -I/usr/X11R6/include -I/usr/X11R6/include/GL -I/usr/X11R6/include/X11/GLw -I/usr/include/GL
+XINCPATH = -I/usr/X11R6/include -I/usr/X11R6/include/GL -I/usr/X11R6/include/X11/GLw -I/usr/include/GL
 
 OGLHOME = /usr
 OGLINCLUDES = $(XMINCPATH)  $(XINCPATH) -I$(OGLHOME)/include -I/usr/openwin/include/X11/GLw
