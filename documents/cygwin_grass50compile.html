@@ -10,7 +10,7 @@
 <hr size=5 noshade width="100%">
 <center>
 <h1>
-Compiling GRASS 5.0 on Win32 with Cygwin 1.x
+Compiling GRASS 5.0 on Win32 with Cygwin
 </h1>
 </center>
 
@@ -69,23 +69,14 @@ at some of the documentation available at this site.
 <p>When installing the Cygwin tools, please
 select all available packages, or at least:
 <ul>
-<li>
-ash, autoconf*, automake*, bash, binutils,
-bison,
-<br>byacc, bzip2, clear, cvs*, cygwin, dejagnu*, diff,
-expect*, 
-<br>file, fileutils, findutils, flex, gawk,
-gcc, gdb*, 
-<br>gettext, grep, groff, gzip, inetutils,
-jpeg, 
-<br>less, libpng, login, m4*, make, man,
-ncurses, 
-<br>opengl, patch, perl, readline, regex,
-sed, 
-<br>sh-utils/shellutils, tar, tcltk, tcsh,
-termcap, texinfo, 
-<br>textutils, tiff, time, unzip, vim*, w32api,
-zip, zlib.
+
+<li> ash, autoconf*, automake*, bash, binutils, bison, byacc, bzip2,
+clear, cvs*, cygwin, dejagnu*, diff, expect*, file, fileutils,
+findutils, flex, gawk, gcc, gdb*, gettext, grep, groff, gzip, inetutils,
+jpeg, less, libpng, login, m4*, make, man, ncurses, opengl, patch,
+perl, readline, regex, sed, sh-utils/shellutils, sunrpc, tar, tcltk, tcsh,
+termcap, texinfo, textutils, tiff, time, unzip, vim*, w32api, zip, zlib</li>
+
 <li>
 The packages marked with an asterisk (*) in
 this list are not strictly required for compiling GRASS, but may be
@@ -130,29 +121,13 @@ Unpack the source code in any directory of your choice, e. g. in your home direc
 <pre><tt>cd grass.src</tt></pre>
 <tt>tar xzf /path/to/file/grass5.0*_src.tar.gz</tt>
 
-<h2>3. Install sunrpc/xdrlib</h2>
+<h2>3. Install the X11 libraries and the X Server</h2>
 
-The sunrpc package contains SUN rpc (remote procedure calls) which provides
-the xdr (external data representation), a requirement for GRASS/Cygwin.
- 
-2/2003: there is now a native cygwin package sunrpc: Sun RPC (ONC/RPC)
-libraries and utilities, which should give the same functionality. The
-package can be installed with the cygwin setup.exe (expand the "Libs"
-section).
-<P>
-Old method:  Download sunrpc package binary file from (store into
-cygwin directory) file:
-<br><a
-href="http://grass.itc.it/grass5/binary/windows_cygnus/sunrpc/"><tt>http://grass.itc.it/grass5/binary/windows_cygnus/sunrpc/sunrpc-4.0.cygwin1.bin.tar.gz</a></tt>
-<p>Go to the root directory (<tt>cd
-/</tt>) and unpack
-this file:
-<pre><tt>tar xzf /where/ever/you/saved/this/sunrpc-4.0.cygwin1.bin.tar.gz</tt></pre>
-
-<h2>4a. Install the X11 libraries and the X Server</h2>
-For compiling the GRASS XDRIVER (monitors
-for graphical output), you need the X11 libraries. Get them from <a href="http://sources.redhat.com/cygwin/xfree/">http://sources.redhat.com/cygwin/xfree/</a>.
-Download at least the following packages (you find them on <a href="ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/">ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/</a>):
+For compiling the GRASS XDRIVER (monitors for graphical output), you need
+the X11 libraries. Get them from <a
+href="http://sources.redhat.com/cygwin/xfree/">http://sources.redhat.com/cygwin/xfree/</a>.
+Download at least the following packages (you find them on <a
+href="ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/">ftp://mirrors.rcn.net/pub/sourceware/cygwin/xfree/xc-4-binaries/4.0.3/</a>):
 devel, DLLs, fonts, Prog, twm, Xterm, Xwin and updates.
 
 <p>Please refer to the <a href="http://sources.redhat.com/cygwin/xfree/docs/howto/book1.htm">XFree
@@ -160,7 +135,7 @@ install guide</a> for further details.
 <p>Please check out yourself the actual version
 and source as this changes frequently.
 
-<h2>4b. Get the tcl/tk 8.x libraries</h2>
+<h2>4. Get the tcl/tk 8.x libraries</h2>
 Download the actual precompiled tcl/tk 8.x
 libraries and executables from
 <br><a href="http://grass.itc.it/grass5/binary/windows_cygnus/">http://grass.itc.it/grass5/binary/windows_cygnus/</a>.
