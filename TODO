@@ -1,4 +1,4 @@
-$Id: TODO,v 1.35 2000-10-19 09:53:05 markus Exp $
+$Id: TODO,v 1.36 2000-10-19 14:24:51 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -200,20 +200,26 @@ Modules:
      probably Bob Covill <bcovill@tekmap.ns.ca>)
 
   - fix legend, scale and box drawings
-    (Being worked on by ?)
+    (Being worked on by Bill Brown, Helena Mitasova)
+
+  - see:
+    ./src.contrib/GMSL/NVIZ2.2/src/TODO
+    ./src.contrib/GMSL/NVIZ2.2/TODO.linux
+    ./src.contrib/GMSL/NVIZ2.2/TODO
 
 
 - tcltkgrass:
-  Change the tcltkgrass code so that lists of choices appear as
-  a list instead of needing to use a push button to create the
-  list. For example when using d.rast we must click a "Raster"
-  button to get a list of raster files instead of having the
-  raster files appear automatically when we call the d.rast
-  module from the menu (edit gui.tcl)
-  (Being worked on by ?)
+ - Change the tcltkgrass code so that lists of choices appear as
+   a list instead of needing to use a push button to create the
+   list. For example when using d.rast we must click a "Raster"
+   button to get a list of raster files instead of having the
+   raster files appear automatically when we call the d.rast
+   module from the menu (edit gui.tcl)
+   (Being worked on by ?)
+ - added nice icons for mostly used commands
 
 ---------------------------------------------------------------------
-Numerical Recipes:
+Numerical Recipes: removal of code:
 From ddgray@armadce.demon.co.uk Tue Sep 26 22:31:31 2000
 
 The following references to Numerical Recipes was found.
@@ -297,9 +303,6 @@ Further local TODO files:
 ./src/sites/s.to.vect/cmd/TODO
 ./src/sites/s.datum.shift/TODO
 ./src/tcltkgrass/docs/TODO.txt
-./src.contrib/GMSL/NVIZ2.2/src/TODO
-./src.contrib/GMSL/NVIZ2.2/TODO.linux
-./src.contrib/GMSL/NVIZ2.2/TODO
 ./src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.sgi/TODO
 ./src.garden/answers/src.answers/raster/r.fill.dir/TODO
 ./src.garden/grass.java/TODO
