@@ -234,7 +234,7 @@ This new table we select in
 GRASS:
 <blockquote>g.select.pg database=humus</blockquote>
 [BTW: To destroy a database
-use: destroydb humus]
+use: dropdb [humus]
 <p>In this first step we import
 the plain attribute table only without importing geographical features.
 <br>To import the Dbase-table
@@ -280,7 +280,7 @@ Aha, quite nice. It tells us
 about humus contents of soil patches in percent.
 <br>To proceed we remove this
 table:
-<blockquote>destroydb humus</blockquote>
+<blockquote>dropdb humus</blockquote>
 ------------------------------------------------------------------------
 <br><b>D) Importing a SHAPE
 file with DBASE table (*.dbf)</b>
