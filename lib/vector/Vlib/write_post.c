@@ -371,4 +371,39 @@ V1_delete_line_post (struct Map_info *Map, long id)
   return 0;
 }
 
+/*!
+*  \fn int Vect_delete_post_tables ( struct Map_info *Map )
+*  \brief delete PostGis tables
+*  \return -1 error, 0 success
+*  \param  struct Map_info*
+*/
+int
+Vect_delete_post_tables (  struct Map_info *Map )
+{
+    char buf[1000];
+    PGresult *res = NULL;
+
+    G_debug (3, "Delete PostGis tables" );
+    
+    sprintf ( buf, "DROP TABLE %s", Map->fInfo.post.geom_table );
+    res = PQexec (Map->fInfo.post.conn, buf);
+    if ( !res || PQresultStatus (res) != PGRES_COMMAND_OK ) {
+	G_warning ("Cannot delete PostGIS table '%s'", Map->fInfo.post.geom_table );
+        PQclear (res);
+	return (-1);
+    }
+    PQclear (res);
+	
+    sprintf ( buf, "DROP TABLE %s", Map->fInfo.post.cat_table );
+    res = PQexec (Map->fInfo.post.conn, buf);
+    if ( !res || PQresultStatus (res) != PGRES_COMMAND_OK ) {
+	G_warning ("Cannot delete PostGIS table '%s'", Map->fInfo.post.cat_table );
+        PQclear (res);
+	return (-1);
+    }
+    PQclear (res);
+	
+    return 0;
+}
+
 #endif
