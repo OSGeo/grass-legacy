@@ -80,7 +80,7 @@ chmod 0777 $GISBASE/locks
 cd $CMD
 
 # create fifo files for graphics drivers
-sh $SRC/scripts/shells/create_fifos.sh
+sh $SRC/scripts/shells/create_fifos.sh $GISBASE
 
 
 if test "$1" = "-all"
