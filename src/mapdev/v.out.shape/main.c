@@ -315,28 +315,30 @@ int main( int argc, char *argv[] ) {
     strcpy(fd0[1].fldName, "CAT_ID");
     strcpy(fd0[2].fldName, "CAT_VALUE");
 
-    switch(cat_type) {
+    if(docats) { /* Only if the third field is needed */
+      switch(cat_type) {
 
-    case STR_CAT:
-      {
-	fd0[2].fldSize = 128;
-	fd0[2].fldDec = 0;
-	fd0[2].fldType = FTString;
-	break;
-      }
-    case INT_CAT:
-      {
-	fd0[2].fldSize = 10;
-	fd0[2].fldDec = 0;
-	fd0[2].fldType = FTInteger;
-	break;
-      }
-    case FLT_CAT:
-      {
-	fd0[2].fldSize = 16;
-	fd0[2].fldDec = 6;
-	fd0[2].fldType = FTDouble;
-	break;
+      case STR_CAT:
+	{
+	  fd0[2].fldSize = 128;
+	  fd0[2].fldDec = 0;
+	  fd0[2].fldType = FTString;
+	  break;
+	}
+      case INT_CAT:
+	{
+	  fd0[2].fldSize = 10;
+	  fd0[2].fldDec = 0;
+	  fd0[2].fldType = FTInteger;
+	  break;
+	}
+      case FLT_CAT:
+	{
+	  fd0[2].fldSize = 16;
+	  fd0[2].fldDec = 6;
+	  fd0[2].fldType = FTDouble;
+	  break;
+	}
       }
     }
 
@@ -347,13 +349,15 @@ int main( int argc, char *argv[] ) {
       fd0[0].fldRecs[ia].intField = ia + 1;
       fd0[1].fldRecs[ia].intField = 0;
       
-      if(fd0[2].fldType == FTString) {
-	fd0[2].fldRecs[ia].stringField = (char *)malloc(6);
-	strcpy( fd0[2].fldRecs[ia].stringField, "" );
-      }
+      if(docats) {
+	if(fd0[2].fldType == FTString) {
+	  fd0[2].fldRecs[ia].stringField = (char *)malloc(6);
+	  strcpy( fd0[2].fldRecs[ia].stringField, "" );
+	}
 
-      else if(fd0[2].fldType == FTInteger) fd0[2].fldRecs[ia].intField = 0;
-      else if(fd0[2].fldType == FTDouble) fd0[2].fldRecs[ia].doubleField = 0.0;
+	else if(fd0[2].fldType == FTInteger) fd0[2].fldRecs[ia].intField = 0;
+	else if(fd0[2].fldType == FTDouble) fd0[2].fldRecs[ia].doubleField = 0.0;
+      }
     }
 
     for( ia = 0; ia < nP; ia++ ) {
@@ -425,28 +429,30 @@ int main( int argc, char *argv[] ) {
     strcpy(fd1[1].fldName, "CAT_ID");
     strcpy(fd1[2].fldName, "CAT_VALUE");
 
-    switch(cat_type) {
+    if(docats) { /* Only if the third field is required */
+      switch(cat_type) {
 
-    case STR_CAT:
-      {
-	fd1[2].fldSize = 128;
-	fd1[2].fldDec = 0;
-	fd1[2].fldType = FTString;
-	break;
-      }
-    case INT_CAT:
-      {
-	fd1[2].fldSize = 10;
-	fd1[2].fldDec = 0;
-	fd1[2].fldType = FTInteger;
-	break;
-      }
-    case FLT_CAT:
-      {
-	fd1[2].fldSize = 16;
-	fd1[2].fldDec = 6;
-	fd1[2].fldType = FTDouble;
-	break;
+      case STR_CAT:
+	{
+	  fd1[2].fldSize = 128;
+	  fd1[2].fldDec = 0;
+	  fd1[2].fldType = FTString;
+	  break;
+	}
+      case INT_CAT:
+	{
+	  fd1[2].fldSize = 10;
+	  fd1[2].fldDec = 0;
+	  fd1[2].fldType = FTInteger;
+	  break;
+	}
+      case FLT_CAT:
+	{
+	  fd1[2].fldSize = 16;
+	  fd1[2].fldDec = 6;
+	  fd1[2].fldType = FTDouble;
+	  break;
+	}
       }
     }
 
@@ -457,13 +463,15 @@ int main( int argc, char *argv[] ) {
       fd1[0].fldRecs[ia].intField = ia + 1;
       fd1[1].fldRecs[ia].intField = 0;
 
-      if(fd1[2].fldType == FTString) {
-	fd1[2].fldRecs[ia].stringField = (char *)malloc(6);
-	strcpy( fd1[2].fldRecs[ia].stringField, "" );
-      }
+      if(docats) {
+	if(fd1[2].fldType == FTString) {
+	  fd1[2].fldRecs[ia].stringField = (char *)malloc(6);
+	  strcpy( fd1[2].fldRecs[ia].stringField, "" );
+	}
 
-      else if(fd1[2].fldType == FTInteger) fd0[2].fldRecs[ia].intField = 0;
-      else if(fd1[2].fldType == FTDouble) fd0[2].fldRecs[ia].doubleField = 0.0;
+	else if(fd1[2].fldType == FTInteger) fd0[2].fldRecs[ia].intField = 0;
+	else if(fd1[2].fldType == FTDouble) fd0[2].fldRecs[ia].doubleField = 0.0;
+      }
 
     }
 
