@@ -40,7 +40,7 @@ main (int argc, char *argv[])
     struct field_info *Fi;
     dbDriver *driver;
     dbHandle handle;
-    dbString sql;
+    dbString sql, strval;
     
     /* OGR */
     OGRDataSourceH Ogr_ds;
@@ -89,6 +89,7 @@ main (int argc, char *argv[])
 	       " if it contains areas.");
     
     db_init_string (&sql);
+    db_init_string (&strval);
     
     /* open output vector */
     Vect_open_new (&Map, out_opt->answer, 0 ); 
@@ -185,7 +186,9 @@ main (int argc, char *argv[])
 		if( Ogr_ftype == OFTInteger || Ogr_ftype == OFTReal ) { 
 		    sprintf (buf, ", %s", OGR_F_GetFieldAsString( Ogr_feature, i) );
 		} else if( Ogr_ftype == OFTString ) { 
-		    sprintf (buf, ", '%s'", OGR_F_GetFieldAsString( Ogr_feature, i) );
+                    db_set_string ( &strval,  (char *) OGR_F_GetFieldAsString( Ogr_feature, i) );
+		    db_double_quote_string (&strval);
+		    sprintf (buf, ", '%s'", db_get_string(&strval) );
 		}
 	 
 	    } else {
