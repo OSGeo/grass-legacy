@@ -49,10 +49,7 @@ int main (int argc, char *argv[])
     {
         struct Option *input, *output, *title, *outloc;
     } parm;
-    struct
-    {
-        struct Flag *s;
-    } flag;
+    struct Flag *flag_o;
 
 /* -------------------------------------------------------------------- */
 /*      Initialize.                                                     */
@@ -88,6 +85,10 @@ int main (int argc, char *argv[])
     parm.outloc->required = NO;
     parm.outloc->description = "Name for new location to create";
 
+    flag_o = G_define_flag();
+    flag_o->key = 'o';
+    flag_o->description = "Override projection (use locations projection)";
+
     if (G_parser(argc,argv))
         exit(1);
 
@@ -102,7 +103,7 @@ int main (int argc, char *argv[])
 /* -------------------------------------------------------------------- */
     if( !GDALBridgeInitialize( "/home/warmerda/gdal" ) )
     {
-        fprintf( stderr, "Unable to intiailize GDAL bridge.\n" );
+        G_fatal_error( "Unable to initialize GDAL bridge.\n" );
         exit( 10 );
     }
 
@@ -161,9 +162,14 @@ int main (int argc, char *argv[])
     loc_proj_units = G_get_projunits();
     G_get_window( &loc_wind );
 
-    if( loc_wind.proj != cellhd.proj
-        || !G_compare_projections( loc_proj_info, loc_proj_units, 
-                                   proj_info, proj_units ) )
+    if( flag_o->answer )
+    {
+        cellhd.proj = loc_wind.proj;
+        cellhd.zone = loc_wind.zone;
+    } 
+    else if( loc_wind.proj != cellhd.proj
+               || !G_compare_projections( loc_proj_info, loc_proj_units, 
+                                          proj_info, proj_units ) )
     {
         char	error_msg[8096];
         int     i_value;
