@@ -1,6 +1,6 @@
 #include "global.h"
 
-cell_stats (fd, verbose, non_zero, with_counts, with_areas, fmt)
+cell_stats (fd, verbose, non_zero, with_counts, with_areas, with_labels, fmt)
     int fd[];
     char *fmt;
 {
@@ -41,7 +41,7 @@ cell_stats (fd, verbose, non_zero, with_counts, with_areas, fmt)
 /* here we go */
     initialize_cell_stats(nfiles);
     if (verbose)
-	fprintf (stderr, "%s:  complete ... ", G_program_name());
+	fprintf (stderr, "%s: ", G_program_name());
 
     for (row = 0; row < nrows; row++)
     {
@@ -65,5 +65,5 @@ cell_stats (fd, verbose, non_zero, with_counts, with_areas, fmt)
 	G_percent (nrows, nrows, 2);
 
     sort_cell_stats();
-    print_cell_stats (fmt, non_zero, with_counts, with_areas, fs);
+    print_cell_stats (fmt, non_zero, with_counts, with_areas, with_labels, fs);
 }
