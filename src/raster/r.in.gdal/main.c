@@ -6,6 +6,7 @@
  * Author: Frank Warmerdam
  *
  * Added optional GCP transformation: Markus Neteler 10/2001
+ * TODO: most unreferenced formats are read in with negative coordinates - desired??
  */
 
 #include <stdlib.h>
@@ -33,12 +34,6 @@ wkt_to_grass( const char * wkt,
               struct Cell_head *cellhd, 
               struct Key_Value **proj_info, 
               struct Key_Value **proj_units );
-
-static int 
-G_compare_projections( struct Key_Value *proj_info, 
-                       struct Key_Value *proj_units1, 
-                       struct Key_Value *proj_info2, 
-                       struct Key_Value *proj_units2 );
 
 static void ImportBand( GDALRasterBandH hBand, const char *output,
                         struct Ref *group_ref );
@@ -90,7 +85,7 @@ int main (int argc, char *argv[])
     parm.input->key = "input";
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
-    parm.input->description = "Bin raster file to be imported";
+    parm.input->description = "Raster file to be imported";
 
     parm.band = G_define_option();
     parm.band->key = "band";
@@ -197,10 +192,11 @@ int main (int argc, char *argv[])
     }
     else
     {
-        /* use negative XY coordinates per default for unprojected data */
+        /* use negative XY coordinates per default for unprojected data
+	   but not for all formats... (MN: I don't like it at all) */
         /* for hDriver names see gdal/frmts/gdalallregister.cpp */
 
-        if ( l1bdriver || ( strcmp(GDALGetDriverShortName(hDriver),"GTiff") == 0 ))
+        if ( l1bdriver || ( strcmp(GDALGetDriverShortName(hDriver),"GTiff") ||  strcmp(GDALGetDriverShortName(hDriver),"JPEG") ) == 0 )
         {
           /* e.g. L1B - NOAA/AVHRR data must be treated differently */
           /* define positive xy coordinate system to avoid GCPs confusion */
@@ -256,6 +252,19 @@ int main (int argc, char *argv[])
                 "Projection of dataset does not"
                 " appear to match current location.\n\n");
 
+/* TODO: output this info sorted by key: */
+        if( loc_proj_info != NULL )
+        {
+            strcat( error_msg, "LOCATION PROJ_INFO is:\n" );
+            for( i_value = 0; 
+                 loc_proj_info != NULL && i_value < loc_proj_info->nitems; 
+                 i_value++ )
+                sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                         loc_proj_info->key[i_value],
+                         loc_proj_info->value[i_value] );
+            strcat( error_msg, "\n" );
+        }
+
         if( proj_info != NULL )
         {
             strcat( error_msg, "Dataset PROJ_INFO is:\n" );
@@ -291,6 +300,9 @@ int main (int argc, char *argv[])
         }
         strcat( error_msg, 
          "\nYou can use the -o flag to r.in.gdal to override this check.\n" );
+        strcat( error_msg, 
+         "Consider to generate a new location with 'location' parameter"
+         " from input data set.\n" );
         G_fatal_error( error_msg );
     }
     
@@ -1054,43 +1066,3 @@ wkt_to_grass( const char * wkt,
     return FALSE; /* error */
 }
 
-/************************************************************************/
-/*                       G_compare_projections()                        */
-/************************************************************************/
-
-static int 
-G_compare_projections( struct Key_Value *proj_info1, 
-                       struct Key_Value *proj_units1, 
-                       struct Key_Value *proj_info2, 
-                       struct Key_Value *proj_units2 )
-
-{
-    if( proj_info1 == NULL && proj_info2 == NULL )
-        return TRUE;
-    
-/* -------------------------------------------------------------------- */
-/*      Verify that the linear unit translation to meters is OK.        */
-/* -------------------------------------------------------------------- */
-    if( proj_units1 != NULL && proj_units2 != NULL
-        && G_find_key_value( "meter", proj_units1 ) != NULL
-        && G_find_key_value( "meter", proj_units1 ) != NULL
-        && atof(G_find_key_value( "meter", proj_units1 ))
-           != atof(G_find_key_value( "meter", proj_units2 )) )
-        return FALSE;
-
-/* -------------------------------------------------------------------- */
-/*      Are they both in the same projection?                           */
-/* -------------------------------------------------------------------- */
-    if( G_find_key_value( "proj", proj_units1 ) != NULL
-        && G_find_key_value( "meter", proj_units1 ) != NULL
-        && atof(G_find_key_value( "meter", proj_units1 ))
-           != atof(G_find_key_value( "meter", proj_units2 )) )
-        return FALSE;
-
-/* -------------------------------------------------------------------- */
-/*      Add more details in later.                                      */
-/* -------------------------------------------------------------------- */
-
-
-    return TRUE;
-}

@@ -2,7 +2,7 @@ PGM    = r.in.gdal
 
 EXTRA_CFLAGS = $(GDAL_CFLAGS) $(PROJINC)
 
-LIST   = main.o gbgetsymbol.o gdalbridge.o make_loc.o
+LIST   = main.o gbgetsymbol.o gdalbridge.o
 
 LIBES= $(GPROJLIB) $(GISLIB) $(IMAGERYLIB)
 DEPLIBS= $(DEPGPROJLIB) $(DEPGISLIB) $(DEPIMAGERYLIB)
