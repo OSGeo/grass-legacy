@@ -1,0 +1,136 @@
+This needs to be updated.
+
+Here's a look at the menu structure for i.points3.
+
+
+MAIN_MENU 		: driver() 	: driver.c
+  |   
+  |
+  |
+  |--QUIT   		: really_quit 	: driver.c
+  |  |
+  |  |--NO  		: dont_stop   	: driver.c   
+  |  |--YES 		: stop        	: driver.c
+  |
+  |
+  |
+  |--ZOOM   		: zoom        	: zoom.c
+  |  |
+  |  |--CANCEL  	: cancel  	: zoom.c
+  |  |
+  |  |--BOX 		: zoom_box    	: zoom_box.c
+  |  |  |
+  |  |  |--CANCEL	: cancel        : zoom_box.c
+  |  |  |--other	: zoom1		: zoom_box.c
+  |  |
+  |  |--POINT 		: zoom_point 	: zoom_pnt.c
+  |     |
+  |     |--CANCEL	: cancel        : zoom_pnt.c
+  |     |--other	: zoom1		: zoom_pnt.c
+  |     
+  |
+  |--PLOT		: plot		: plot.c
+  |  |
+  |  |--CANCEL     	: cancel	: plot.c
+  |  |
+  |  |--IMAGERY		: plotimg	: plot.c
+  |  |
+  |  |--RASTER		: plotcell	: cell.c
+  |  |
+  |  |--VECTOR		: plotvect	: vect.c
+  |  |
+  |  |
+  |  |--REFRESH		: plot_refresh 	: refresh.c
+  |  |  |
+  |  |  |--CANCEL	: cancel	: refresh.c
+  |  |  |--IMAGE   	: refresh_img   : refresh.c
+  |  |  |--TARGET	: refresh_tar   : refresh.c
+  |  |
+  |  |
+  |  |--CLEAR		: plot_clear	: clear.c
+  |     |
+  |	|--CANCEL	: cancel	: clear.c
+  |	|--TARGET	: clear_tar	: clear.c
+  |
+  |
+  |      
+  |--MARK		: mark		: mark.c
+  |   |
+  |   |--CANCEL					: cancel	: mark.c
+  |   |
+  |   |--ZOOM					: zoom		: zoom.c
+  |   |
+  |   |--other					: _mark		: mark.c  
+  |      ||
+  |      ||==/* screen input */
+  |      ||     |
+  |      ||     |--CANCEL				: get_point2_poly : mark_poly.c
+  |      ||     |--other				: screen	  : mark_poly.c
+  |      ||
+  |      ||==/* keyboard input */
+  |      ||     |
+  |      ||     |--other				: keyboard	  : mark_poly.c
+  |      ||
+  |      ||==/* digitizer input */
+  |             |
+  |             |--other				: digitizer	  : mark_poly.c
+  |  
+  |  
+  |--ANALYZE		: analyze	: analyze.c
+  |  ||
+  |  ||
+  |  ||==/* POLYNOMIAL */
+  |       |
+  |       |--DONE			: done		: analyze_poly.c
+  |       |--PRINT			: to_printer	: analyze_poly.c
+  |       |--FILE			: to_file	: analyze_poly.c
+  |       |--"delete mesage"  	: delete_mark	: analyze_poly.c
+  |       |--"order mesage;	; ask_transform : transform.c
+  |  
+  |  
+  |  
+  |
+  |
+  |--OVERLAY		: overlay	: overlay.c
+  |  |
+  |  |--CANCEL		: cancel	: overlay.c
+  |  |
+  |  |--VECTORS	       	: _warp_vect	: overlay.c
+  |  |
+  |  |--GRID		: _warp_grid	: overlay.c
+  |  |
+  |  |--TIN
+  |  |
+  |  |--REFRESH		: plot_refresh	: refresh.c
+  |
+  |
+  |
+  |
+  |--TRANSFORM		: transfrom	: transform.c
+     |
+     |
+     |--CANCEL		: cancel	: transform.c
+     |
+     |
+     |--POLYNOMIAL	: get_order	: transform.c
+     |  |
+     |  |--CANCEL	: cancel	: transform.c
+     |  |--POLY1	: do_1rst	: transform.c
+     |  |--POLY2 	: do_2nd	: transform.c
+     |  |--POLY3	: do_3rd	: transform.c
+     |
+     |
+     |--ORTHO_PHOTO	: ortho_photo	: transform.c
+     |  |
+     |  |--CANCEL	: cancel	: transform.c
+     |  |--ELEVATION	: choose_elev_photo	: transform.c
+     |  |--CAMERA PAR	: setup_camera		: transform.c
+     |  |--CAMERA EXP	: setup_expose		: transform.c
+     |
+     |
+     |--LAND_TM
+  
+  
+
+
+
