@@ -21,7 +21,6 @@ main(argc, argv)
 	struct Option *opt13 ;
 	struct Option *opt14 ;
 	struct Option *opt15 ;
-	struct Option *opt16 ;
 	struct Flag *flag1 ;
 	struct Flag *flag2 ;
 
@@ -132,12 +131,6 @@ main(argc, argv)
 	opt15->type           = TYPE_STRING ; 
 	opt15->gisprompt      = "new,cell,raster" ;
 
-	opt16 = G_define_option() ; 
-	opt16->key            = "armsed" ; 
-	opt16->description    = "Output file: input to r.grass.armsed program" ; 
-	opt16->required       = NO ; 
-	opt16->type           = TYPE_STRING ; 
-
 	flag1 = G_define_flag() ;
 	flag1->key            = 'm' ;
 	flag1->description    = "Enable extend memory option: Operation is slow" ;
@@ -159,28 +152,12 @@ main(argc, argv)
 		&& (opt12->answer == NULL)
 		&& (opt13->answer == NULL)
 		&& (opt14->answer == NULL)
-		&& (opt15->answer == NULL)
-		&& (opt16->answer == NULL))
+		&& (opt15->answer == NULL))
 	{
 		fprintf(stderr,"\nSorry, you must choose some output map\n") ;
 		exit(1) ;
 	}
 
-	/* (arm_flag == 1) && ((bas_thres <= 0) || (haf_flag != 1)) */
-	/*  ARMSED              basin.threshold     half.basin      */
-
-	if ( (opt16->answer != NULL)
-	  && ((opt6->answer == NULL) 
-	       || ((opt12->answer == NULL) && (opt10->answer == NULL))))
-	{
-		fprintf(stderr,"\nSorry, if you chose to have ARMSED output (%s), you must also\n",
-			opt16->key) ;
-        fprintf(stderr,"    specify a basin threshold (%s) and an output map to \n",
-			opt6->key) ;
-        fprintf(stderr,"    contain the basins (%s or %s)\n", opt10->key, opt12->key) ;
-		exit(1) ;
-	}
-	
 	err = 0 ;
 	/* basin and basin.thresh */
 		err += (opt10->answer != NULL && opt6->answer == NULL) ;
@@ -190,8 +167,6 @@ main(argc, argv)
 		err += (opt12->answer != NULL && opt6->answer == NULL) ;
 	/* slope and basin.thresh */
 		err += (opt15->answer != NULL && opt6->answer == NULL) ;
-	/* LS and basin.thresh */
-		err += (opt16->answer != NULL && opt6->answer == NULL) ;
 	
 	if (err)
 	{
@@ -303,12 +278,6 @@ main(argc, argv)
 		strcat(command, opt15->answer) ; strcat(command, "\"") ;
 	}
 	
-	if (opt16->answer)
-	{
-		strcat(command, " ar=") ; strcat(command, "\"") ;
-		strcat(command, opt16->answer) ; strcat(command, "\"") ;
-	}
-
 	fprintf(stderr,"Running: %s\n", command) ;
 	exit(system(command)) ;
 }
