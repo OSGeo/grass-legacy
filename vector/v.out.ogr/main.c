@@ -43,8 +43,8 @@ main (int argc, char *argv[])
     int    field;
     struct GModule *module;
     struct Option *in_opt, *dsn_opt, *layer_opt, *type_opt, *frmt_opt, *field_opt, *dsco, *lco;
-    struct Flag   *cat_flag;
-    char   buf[2000], *pbuf;
+    struct Flag   *cat_flag, *esristyle;
+    char   buf[2000];
     char   key1[200], key2[200];
     struct Key_Value *projinfo, *projunits;
     struct Cell_head cellhd;
@@ -138,6 +138,10 @@ main (int argc, char *argv[])
     cat_flag->description    = "Export features with category (labeled) only. "
 			       "Otherwise all features are exported";
 
+    esristyle = G_define_flag();
+    esristyle->key = 'e';
+    esristyle->description = "Use ESRI-style .prj file format (applies to SHAPE output only)";
+		
     if (G_parser (argc, argv)) exit(1); 
     
     /* read options */
@@ -178,6 +182,8 @@ main (int argc, char *argv[])
         projinfo = G_get_projinfo();
         projunits = G_get_projunits();
         Ogr_projection = GPJ_grass_to_osr(projinfo, projunits);
+        if (esristyle->answer && (strcmp(frmt_opt->answer, "ESRI_Shapefile") == 0))
+           OSRMorphToESRI(Ogr_projection);
     }
 
     /* Open OGR DSN */
