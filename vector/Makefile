@@ -2,6 +2,7 @@
 MODULE_TOPDIR = ..
 
 SUBDIRS1 = \
+	v.buffer \
 	v.build \
 	v.build.polylines \
 	v.category \
