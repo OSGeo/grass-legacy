@@ -1,15 +1,12 @@
-
-
-#include "htmlmap.h"
+#include <string.h>
+#include <stdlib.h>
 #include "math.h"
+#include "htmlmap.h"
+#include "driverlib.h"
 
 #define RAD_DEG 57.29578
 
-
-static void 
-delete_point(x, y, count) 
-	int *x, *y;
-        int count;
+static void delete_point (int *x, int *y, int count)
 {
     int i;
 
@@ -21,11 +18,7 @@ delete_point(x, y, count)
 
 }
 
-
-
-static double 
-find_azimuth(x1, y1, x2, y2)
-	double x1, y1, x2, y2;
+static double find_azimuth (double x1, double y1, double x2, double y2)
 {
     double xx, yy;
 
@@ -52,9 +45,7 @@ find_azimuth(x1, y1, x2, y2)
 }
 
 
-Polygon_abs(x, y, n)
-	int *x, *y;
-	int n ;
+int Polygon_abs (int *x, int *y, int n)
 {
     struct MapPoly *new;
     int i;
@@ -151,5 +142,6 @@ Polygon_abs(x, y, n)
 
     }
 
+    return 0;
 }
 

@@ -3,7 +3,8 @@
  * color table is available.
  */
 
-can_do_float()
+int 
+can_do_float (void)
 {
 	return 1 ;
 }
