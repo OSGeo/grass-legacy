@@ -8,7 +8,7 @@ static int srch();
 int 
 update (void)
 {
-    int      i, more, *catexst, *cex, upd, fcat;
+    int      i, more, *catexst, *cex, upd, fcati, ctype;
     char     buf1[1024], buf2[1024];
     dbString stmt; 
     dbDriver *driver;
@@ -39,8 +39,17 @@ update (void)
     table = db_get_cursor_table (&cursor);
     if( db_fetch (&cursor, DB_NEXT, &more ) != DB_OK ) return ERROR;
     column = db_get_table_column(table, 0);
+    ctype = db_sqltype_to_Ctype( db_get_column_sqltype(column) );
     value  = db_get_column_value(column);
-    vstat.select = db_get_value_int(value); 
+
+    /* New Postgres returns count as char instead of int! */
+    if ( ctype == DB_C_TYPE_INT )
+        vstat.select = db_get_value_int(value);
+    else if ( ctype == DB_C_TYPE_STRING )
+	vstat.select = atoi( db_get_value_string(value));
+    else
+	G_fatal_error ("Count returned in not supported type");
+    
     db_close_cursor(&cursor);
     
     /* allocate array */
