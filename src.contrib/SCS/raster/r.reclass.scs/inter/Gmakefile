@@ -1,3 +1,4 @@
+# %W%  %G%
 PGM = r.reclass.scs
 
 RECLASS = main.o
