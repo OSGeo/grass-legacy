@@ -25,6 +25,7 @@
 */
 #define MAIN
 
+#include <stdlib.h>
 #include <string.h>
 #include "trans.h"
 #include "gis.h"
