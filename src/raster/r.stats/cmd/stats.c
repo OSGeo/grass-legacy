@@ -1,11 +1,10 @@
-#include "gis.h"
+#include "global.h"
 
 /* hash definitions (these should be prime numbers) **************/
 #define HASHSIZE 7307
 #define HASHMOD  89
 
 static CELL *values;
-static int nfiles;
 static struct Node *node_pool;
 static int node_pool_count;
 static CELL *value_pool;
@@ -185,7 +184,7 @@ print_node_count()
     printf ("%d nodes\n", node_count);
 }
 
-print_cell_stats (fmt, non_zero, with_counts, with_areas, fs)
+print_cell_stats (fmt, non_zero, with_counts, with_areas, with_labels, fs)
     char *fmt;
     char *fs;
 {
@@ -201,6 +200,8 @@ print_cell_stats (fmt, non_zero, with_counts, with_areas, fs)
 	    printf ("%s0.0",fs);
 	if (with_counts)
 	    printf ("%s0",fs);
+	if (with_labels)
+	    printf ("%s%s", fs, G_get_cat ((CELL) 0, &labels[i]));
 	printf ("\n");
     }
     else
@@ -218,9 +219,13 @@ print_cell_stats (fmt, non_zero, with_counts, with_areas, fs)
 		    continue;
 	    }
 
-	    printf ("%ld", (long) node->values[0]);
-	    for (i = 1; i < nfiles; i++)
-		printf ("%s%ld", fs, (long) node->values[i]);
+	    for (i = 0; i < nfiles; i++)
+	    {
+		printf ("%s%ld", i?fs:"", (long) node->values[i]);
+		if (with_labels)
+		    printf ("%s%s", fs,
+			G_get_cat ((CELL) node->values[i], &labels[i]));
+	    }
 	    if (with_areas)
 	    {
 		printf ("%s", fs);
