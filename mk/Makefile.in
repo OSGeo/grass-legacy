@@ -18,8 +18,8 @@ dirs:
 	@echo "making directories ..."
 	-mkdir -p ${GRASS_BIN}
 	-mkdir -p ${GISBASE}
-	-for dir in bin bwidget dev documents driver etc fonts include lib \
-		locks man scripts tcltkgrass txt \
+	-for dir in bin bwidget dev documents documents/html driver etc fonts \
+		include lib locks man scripts tcltkgrass txt \
 		etc/bin etc/bin/cmd etc/bin/inter etc/imagery \
 		etc/paint/driver etc/paint/driver.sh etc/paint/driver.uninst ; \
 		do \
