@@ -1,3 +1,8 @@
+6/2000 MN 
+ updated to GRASS 5, cleaned code a bit
+
+----------------
+
 12/96
 
  Changes:  added landuse "water" (data.c)
