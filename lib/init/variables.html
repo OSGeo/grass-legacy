@@ -41,24 +41,22 @@ into GRASS, store them in:<br>
 
 
 <h2>Setting GRASS variables</h2>
-You have to use "g.gisenv" (within GRASS):<br>
+You have to use "g.gisenv" (within GRASS which then permanently predefines
+GRASS variables in the <tt>.grassrc6</tt> file):<br>
 <p>
 Use: &nbsp;&nbsp;&nbsp; <tt>g.gisenv set=VARIABLE=VALUE</tt>
 
 <p>
 
 It looks unusual with two equals signs, but g.gisenv does dual duty for
-getting and setting GRASS variables.  If the user just specifies
-a variable name, it defaults to "get" mode. Example:
+getting and setting GRASS variables.
+<P>
+If the user just specifies a variable name, it defaults to "get" mode. Example:
 <p>
 <tt>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GRASS ~> g.gisenv GRASS_GUI<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;text
 </tt>
-
-<p>
-To <b>permanently</b> predefine GRASS variables the user may specify
-the variable(s) in the <tt>.grassrc57</tt> file.
 
 <hr WIDTH="100%">
 <h2>List of selected (GRASS related) environment variables</h2>
