@@ -282,7 +282,7 @@ int Graph_Set (int argc, char **argv, int nlev)
     /* Deal with providing the window with an initial position & size.
      * Window is is not resizable */
 #ifdef X11R3
-    szhints = (XSizeHints *)malloc(sizeof(XSizeHints));
+    szhints = (XSizeHints *)malloc((size_t) sizeof(XSizeHints));
 #else
     szhints = XAllocSizeHints();
 #endif
@@ -319,7 +319,7 @@ int Graph_Set (int argc, char **argv, int nlev)
 
     /* properties for window manager */
 #ifdef X11R3
-    wmhints = (XWMHints *)malloc(sizeof(XWMHints));
+    wmhints = (XWMHints *)malloc((size_t) sizeof(XWMHints));
 #else
     wmhints = XAllocWMHints();
 #endif
@@ -328,7 +328,7 @@ int Graph_Set (int argc, char **argv, int nlev)
     wmhints->flags |= IconPixmapHint;
 
 #ifdef X11R3
-    clshints = (XClassHint *)malloc(sizeof(XClassHint));
+    clshints = (XClassHint *)malloc((size_t) sizeof(XClassHint));
 #else
     clshints = XAllocClassHint();
 #endif
@@ -439,7 +439,7 @@ int GetRealNumberOfColors(Display *dpy, int screen)
 {
     int i = DisplayCells(dpy,screen);
     int cant_alloc = 1;
-    unsigned long *mypixels = (unsigned long *)calloc(i,sizeof(unsigned long));
+    unsigned long *mypixels = (unsigned long *)calloc((size_t) i, (size_t) sizeof(unsigned long));
 
     while ( i && cant_alloc ) {
 	int result;

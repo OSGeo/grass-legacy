@@ -123,7 +123,7 @@ int Panel_restore (char *name)
 {
     int fd, i;
     int top, left, width, height, bytes_per_line, xoffset, depth;
-    char *data, *tdata, *malloc();
+    char *data, *tdata; /* , *malloc(); */
     XImage *newimage;
     XWindowAttributes xwa;
 
@@ -144,7 +144,7 @@ int Panel_restore (char *name)
     /*
     data = malloc((unsigned) width * height);
     */
-    data = malloc((unsigned) bytes_per_line * height);
+    data = (char *) malloc((size_t) (bytes_per_line * height));
     /*   another way of reading data
     read(fd, (char *) &data, bytes_per_line * height);
     */
