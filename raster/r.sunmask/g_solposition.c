@@ -33,7 +33,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "gis.h"
-#include "projects.h"
+#include "gprojects.h"
 #include "solpos00.h"
 
 struct posdata pd, *pdat; /* declare solpos data struct and a pointer for it */
