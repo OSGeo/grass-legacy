@@ -1,0 +1,18 @@
+PGM       = $(GARDEN_BIN)/d.site.inf
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
+
+# EXTRA_CFLAGS = -Dunlink=puts
+
+OBJS = \
+	main.o   \
+        getAllOpts.o \
+        getSopts.o \
+        buildInfxQry.o \
+        runInfxFile.o \
+	plotsite.o
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+
+$(LIBES): #
