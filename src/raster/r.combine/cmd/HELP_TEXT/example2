@@ -1,0 +1,19 @@
+EXAMPLE2 - not so simple example
+
+# This will cellophane overlay the soils and geology in example 1
+# 1: Run the group on soils.  Make it overlay 1 (RED) and save
+#    the results in new map layer "mymap1"
+
+(name mymap1
+   (over RED
+      (group 1 2 5-7   (soils)   ) 
+   )
+)
+
+# 2: Run the group on geology.  Make it overlay 2 (YELLOW) and save
+#    it on top of what was saved in "mymap1"
+(name mymap2
+   (over mymap1 YELLOW
+	   (group 3-5 10-12 (geology) )
+   )
+)
