@@ -20,6 +20,9 @@ int disp_attr(char *tabname, char *key, int *keyval )
 	    exit(-1);
 	}
 
+	db_init_handle (&handle);
+	db_set_handle (&handle, NULL, NULL);
+
 	if (db_open_database(driver, &handle) != DB_OK){
 	    fprintf (stderr, "Cannot open database\n");
 	    exit(-1);
