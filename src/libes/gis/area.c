@@ -25,12 +25,8 @@ static struct Cell_head window;
 static double square_meters;
 static int projection;
 
-/*
- * the next factors handle state plane systems which have
- * coordinate grids in feet. 
- */
-#define FEET_TO_METERS .3048
-#define FEET_TO_METERS_SQUARE .09290304
+extern double G_database_units_to_meters_factor();
+static double units_to_meters_squared = 0.0;
 
 /* these next are for lat-long only */
 static int next_row;
@@ -44,6 +40,7 @@ extern double G_darea0_on_sphere();
 G_begin_cell_area_calculations()
 {
     double a, e2;
+    double factor;
 
     G_get_set_window(&window);
     switch(projection = window.proj)
@@ -63,15 +60,12 @@ G_begin_cell_area_calculations()
 	next_row = 0;
 	north_value = darea0 (north = window.north);
 	return 2;
-    case PROJECTION_UTM:
+    default:
 	square_meters = window.ns_res * window.ew_res;
-	return 1;
-    case PROJECTION_SP:
-	square_meters = window.ns_res * window.ew_res * FEET_TO_METERS_SQUARE;
-	return 1;
-    default:          /* assume meters */
-	square_meters = window.ns_res * window.ew_res;
-	return window.proj != PROJECTION_XY;
+	factor = G_database_units_to_meters_factor();
+	if (factor > 0.0)
+	    square_meters *= (factor * factor);
+	return (factor > 0.0);
     }
 }
 
@@ -100,13 +94,22 @@ G_area_of_cell_at_row (row)
 G_begin_polygon_area_calculations()
 {
     double a, e2;
+    double factor;
 
     if ((projection = G_projection()) == PROJECTION_LL)
     {
 	G_get_ellipsoid_parameters (&a, &e2);
 	G_begin_ellipsoid_polygon_area (a, e2);
+	return 2;
     }
-    return projection != PROJECTION_XY;
+    factor = G_database_units_to_meters_factor();
+    if (factor > 0.0)
+    {
+	units_to_meters_squared = factor *factor;
+	return 1;
+    }
+    units_to_meters_squared = 1.0;
+    return 0;
 }
 
 double
@@ -120,9 +123,7 @@ G_area_of_polygon(x,y,n)
     if (projection == PROJECTION_LL)
 	area = G_ellipsoid_polygon_area(x,y,n);
     else
-    	area = G_planimetric_polygon_area(x,y,n);
-    if (projection == PROJECTION_SP)
-	area *= FEET_TO_METERS_SQUARE;
-    
+    	area = G_planimetric_polygon_area(x,y,n) * units_to_meters_squared;
+
     return area;
 }
