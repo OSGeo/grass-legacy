@@ -33,7 +33,7 @@ src/libes/vect32/georef
 src/libes/image3
 src/libes/bwidget
 src/general/init
-#src/display/devices/lib
+src/display/devices/lib
 src/display/devices/monitorcap
 src/display/devices/CELL
 src/display/devices/XDRIVER
