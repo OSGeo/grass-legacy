@@ -555,7 +555,7 @@ int main( int   argc, char *argv[])
 	  else if(cat_field > -1 && fd0[cat_field+4].fldType == 2)
 	    attval = round( fd0[cat_field+4].fldRecs[iRec].doubleField );
 	  else
-	    attval = iRec;
+	    attval = iRec + 1;
 	  fprintf( f_att, "L  %-14f  %-14f  %-8d \n",
 		   xlab[iRec], ylab[iRec], attval );
 	}
@@ -565,7 +565,7 @@ int main( int   argc, char *argv[])
 	  else if(cat_field > -1 && fd0[cat_field+4].fldType == 2)
 	    attval = round( fd0[cat_field+4].fldRecs[iRec].doubleField );
 	  else
-	    attval = iRec;
+	    attval = iRec + 1;
 	  fprintf( f_att, "A  %-14f  %-14f  %-8d \n",
 		   xlab[iRec], ylab[iRec], attval );
 	}
