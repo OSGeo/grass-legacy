@@ -218,6 +218,31 @@ int main( int argc, char *argv[])
     if (nareas == 0)
 	goto no_area;
 
+    /* CNT SECTION */
+
+    fprintf( fde00, "CNT  3\n");
+    
+    i=1;
+    while (map.Area[i].alive == 0 || (j=map.Area[i].att) <= 0)
+	i++;
+    x = map.Att[j].x;
+    y = map.Att[j].y;
+    fprintf( fde00, "%10d%21.14lE%21.14lE\n", 0, x, y);
+
+    for (i=1; i <= nareas; i++) {
+	if (map.Area[i].alive == 0 || (j=map.Area[i].att) <= 0)
+	    continue;
+	x = map.Att[j].x;
+	y = map.Att[j].y;
+	fprintf( fde00, "%10d%21.14lE%21.14lE\n", 1, x, y);
+/*************
+	fprintf( fde00, "%10d\n", map.Att[j].cat);
+*************/
+	fprintf( fde00, "%10d\n", i);
+    }
+    fprintf( fde00, "%10ld%10ld%10ld%10ld%10ld%10ld%10ld\n",
+	    -1, 0L, 0L, 0L, 0L, 0L, 0L);
+
     /* LAB SECTION */
 
     fprintf( fde00, "LAB  3\n");
