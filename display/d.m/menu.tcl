@@ -85,7 +85,7 @@
  "&GIS" all options 1 {
  	{cascad "Manage maps and grid3D files" {} "" 1 {			
  	 {command "Copy maps" {} "g.copy" {} -command {execute g.copy }}
- 	 {command "List maps" {} "g.list" {} -command {execute }}
+ 	 {command "List maps" {} "g.list" {} -command {execute g.list }}
  	 {command "List maps using expressions and 'wildcards'" {} "g.mlist" {} -command {execute g.mlist }}
  	 {command "Rename maps" {} "g.rename" {} -command {execute g.rename }}
  	 {command "Remove maps" {} "g.remove" {} -command {execute g.remove }}
