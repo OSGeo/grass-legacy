@@ -12,9 +12,9 @@
  *         pointer to 'path'
  *
  *   note:
- *      if name is of the form nnn in ppp then path is set
+ *      if name is of the form nnn@ppp then path is set
  *      as if name had been nnn and mapset had been ppp
- *      (actual value of mapset is ignored)
+ *      (mapset parameter itself is ignored in this case)
  *********************************************************************/
 
 #include "gis.h"
@@ -27,19 +27,19 @@ G__file_name (path, element, name, mapset)
 	char *name;
 	char *mapset;
 {
-	char cpx_name[256];
-	char cpx_maps[256];
+	char xname[512];
+	char xmapset[512];
 
 /*
  * if a name is given, build a file name
  * must split the name into name, mapset if it is
- * in the name-in-mapset format
+ * in the name@mapset format
  */
 	if (name && *name)
-		if (G__name_in_mapset(name, cpx_name, cpx_maps))
+		if (G__name_is_fully_qualified(name, xname, xmapset))
 		{
-			name = cpx_name;
-			mapset = cpx_maps;
+			name = xname;
+			mapset = xmapset;
 		}
 
 	sprintf(path,"%s/%s", G__location_path(), mapset);
