@@ -4,7 +4,7 @@ MODULE_TOPDIR = ..
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default:
-	@if [ "$(HAVE_NLS)" != "" ] ; then echo "Creating translations " ; make mo ; else echo "NLS disabled" ; fi
+	@if [ "$(HAVE_NLS)" != "" ] ; then echo "Creating translations (= 'make mo')" ; make mo ; else echo "NLS disabled, cannot translate (re-configure GRASS first)." ; fi
 
 all:
 	@echo 'Usage:'
