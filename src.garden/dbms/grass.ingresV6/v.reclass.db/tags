@@ -1,0 +1,16 @@
+Mmain	main.c	/^main(argc, argv)$/
+bin_search	bsearch.c	/^bin_search (key, n, start, cmp)$/
+build_lookup_tables	find.c	/^build_lookup_tables (M)$/
+cmp_areas1	find.c	/^static int cmp_areas1(a,b)$/
+cmp_areas2	find.c	/^static int cmp_areas2(a,n)$/
+cmp_lines1	find.c	/^static int cmp_lines1(a,b)$/
+cmp_lines2	find.c	/^static int cmp_lines2(a,n)$/
+find_area	find.c	/^find_area (cat, count, M)$/
+find_line	find.c	/^find_line (cat, count, M)$/
+infxQry	infxQry.c	/^infxQry(selectFile, key, input, output, mapset )$/
+ingresGetKey	ingresUtils.c	/^void ingresGetKey(buf)$/
+ingresUnTable	ingresUtils.c	/^void ingresUnTable(buf)$/
+modCat	modCat.c	/^modCat (name, N_map, O_map, Points, vect_cat, newc/
+read_vArea	modCat.c	/^static read_vArea(O_map,index, Points)$/
+read_vLine	modCat.c	/^static read_vLine (O_map, Points, line)$/
+sqlQry	sqlQry.c	/^sqlQry(selectFile, key, input, output, mapset )$/
