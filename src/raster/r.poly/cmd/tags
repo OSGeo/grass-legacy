@@ -1,0 +1,37 @@
+Mmain	main.c	/^main(argc,argv)$/
+add_to_list	bound.c	/^add_to_list(x,y)$/
+alloc_bufs	bound.c	/^alloc_bufs(size)$/
+assign_area	bound.c	/^assign_area(cat,kase)$/
+at_end	io.c	/^at_end (ptr)$/
+blank_line	io.c	/^static int blank_line(buf)$/
+close_file	io.c	/^close_file()$/
+end_hline	bound.c	/^end_hline()$/
+end_vline	bound.c	/^end_vline()$/
+equiv_areas	bound.c	/^equiv_areas(a1,a2)$/
+extract_areas	bound.c	/^extract_areas()$/
+fill_head	io.c	/^fill_head()$/
+find_end	io.c	/^find_end (seed,dir,result,n)$/
+get_ptr	bound.c	/^get_ptr()$/
+map_area	bound.c	/^map_area(x,y)$/
+more_areas	bound.c	/^more_areas()$/
+more_equivs	bound.c	/^more_equivs()$/
+move	io.c	/^move(point)$/
+nabors	bound.c	/^nabors()$/
+open_file	io.c	/^open_file(cell,digit)$/
+open_it	io.c	/^open_it(name)$/
+re_map_areas	io.c	/^re_map_areas()$/
+read_next	bound.c	/^read_next()$/
+read_row	io.c	/^read_row(buf)$/
+show	io.c	/^show(point)$/
+start_hline	bound.c	/^start_hline()$/
+start_vline	bound.c	/^start_vline()$/
+syntax	io.c	/^syntax(argc,argv,input,output)$/
+update_list	bound.c	/^update_list(i)$/
+update_width	bound.c	/^update_width(ptr,kase)$/
+write_area	io.c	/^write_area(a_list,e_list,n_areas,n_equiv)$/
+write_line	io.c	/^write_line(seed)$/
+write_ln	io.c	/^write_ln(begin,end,n)$/
+write_smooth_ln	io.c	/^write_smooth_ln(begin,end,n)$/
+xfree	io.c	/^xfree(addr,label)$/
+xmalloc	io.c	/^xmalloc(size,label)$/
+xrealloc	io.c	/^xrealloc(addr,size,label)$/
