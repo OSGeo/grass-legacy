@@ -31,10 +31,10 @@ G__check_for_auto_masking ()
     if (G__.auto_mask <= 0)
         return 0;
 
-/* check MASK projection/zone angains current window */
-    if (G_get_cellhd ("MASK", G_mapset(), &cellhd) > 0)
+/* check MASK projection/zone against current region */
+    if (G_get_cellhd ("MASK", G_mapset(), &cellhd) >= 0)
     {
-	if (cellhd.zone != G_zone() || cellhd.zone != G_projection())
+	if (cellhd.zone != G_zone() || cellhd.proj != G_projection())
 	{
 	    G__.auto_mask = 0;
 	    return 0;
