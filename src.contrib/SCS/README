@@ -1,33 +1,13 @@
+# Cleaned of obsolete code (Jan 98. Markus Neteler)
+
+
 The following is a list of SCS contributed programs
 
-directory display/DOS:
-  DOS.delete - deletes DOS images from a PC6300 workstation hard
-               disk, that were created by DOS.save.
-
-  DOS.list - lists stored screen images on the PC6300 MS_DOS hard disk.
-
-  DOS.save - stores screen images to the PC6300 MS_DOS hard disk.
-
-  DOS.show - reads screen images stored on the PC6300 MS_DOS hard 
-             disk by DOS.save.
-
-directory display/d.6386:
-  d.6386.del - deletes saved screen images from a PC6386 UNIX workstation hard
-               disk, that were created by d.6386.save.
-
-  d.6386.sav - stores screen images to the PC6386 UNIX workstation hard disk.
-
-  d.6386.shw - reads screen images stored on the PC6386 UNIX workstation hard 
-               disk by d.6386.save .
 
 directory display/d.to.site:
   d.to.site - Creates a site_lists file. 
 	      The user selects location in the currently selected display 
 	      window and specifies an associated label.
-
-directory display/devices:
-  These are drivers for SCS equipment only, AT&T PC's.
-
 
 directory misc/
   dotmaps - this is a preliminary attempt at random site generation
@@ -164,34 +144,12 @@ directory vector:
  v.rmedge - Automatically removes the outer edge of a vector map.
 
 
-directory  libes:
-  gis - A modification to src/libes/gis, two files cats.c and mapset_msc.c
-        cats.c - modified to pre-alloc. memory for categories, this was
-		 required for the AT&T 6386's.
-        mapset_msc.c - modified for group ownership of GRASS files, rather
-		 than individual user ownership.
-
-directory  general:
-  gis - SCS user interface to GRASS
-
-directory  psu:
-  SCS specific programs to support National Resource Inventory, 
- Primary Sample Unit digitizing. This is an application package
- of software.
-
 directory  scripts:
   SCS specific scripts
-
-directory  mapdev:
-  SCS specific modes to v.digit and v.patch
 
 directory man:
   Manual entries for SCS contributed programs
 
 directory help:
   Help entries for SCS contributed programs
-
-directory over_write:
-  SCS programs which replace CERL programs of the same name, most
-  operate the same, but have been enhanced.
 
