@@ -98,6 +98,38 @@ G_matrix_set(mat_struct *A, int rows, int cols, int ldim) {
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
+/************************************************************
+ *                                                          *
+ * G_matrix_copy()                                          *
+ *                                                          *
+ * Copy a matrix by exactly duplicating its structure       *
+ *                                                          *
+ ************************************************************/
+
+mat_struct *
+G_matrix_copy(const mat_struct *A) {
+
+  
+  mat_struct *B;
+
+  if( !A->is_init ) {
+    fprintf(stderr, "Error: Matrix is not initialised fully.\n");
+    return NULL;
+  }
+
+  if( (B = G_matrix_init(A->rows, A->cols, A->ldim)) == NULL) {
+    fprintf(stderr, "Unable to allocate space for matrix copy\n");
+    return NULL;
+  }
+
+  memcpy( &B->vals[0], &A->vals[0], A->cols * A->ldim * sizeof(doublereal) );
+
+  return B;
+  
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
 
 
 /************************************************************
@@ -314,25 +346,19 @@ G_matrix_transpose(mat_struct *mt) {
 /*** NOT YET COMPLETE: only some solutions' options available ***/
 
 int
-G_matrix_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
+G_matrix_LU_solve(const mat_struct *mt1, mat_struct **xmat0, const mat_struct *bmat,
 		  mat_type mtype) {
 
   int i; /* loop */
-  mat_struct *wmat;  /* ptr to working matrix */
+  mat_struct *wmat, *xmat, *mtx; 
 
   if(mt1->is_init == 0 || bmat->is_init == 0) {
     fprintf(stderr, "Input error: one or both data matrices uninitialised\n");
     return -1;
   }
 
-  if(mt1->rows != mt1->cols || mt1->rows < 1 || mt1->cols < 1) {
+  if(mt1->rows != mt1->cols || mt1->rows < 1) {
     fprintf(stderr, "Principal matrix is not properly dimensioned\n");
-    return -1;
-  }
-
-  if(mt1->cols != xmat->rows || mt1->cols != bmat->rows ||
-     xmat->cols != bmat->cols) {
-    fprintf(stderr, "Input matrices' dimensions are not in sync\n");
     return -1;
   }
 
@@ -341,17 +367,17 @@ G_matrix_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
     return -1;
   }
 
-  /* Now initialise the solution matrix if it has not aleady been */
+  /* Now create solution matrix by copying the original coefficient matrix */
 
-  if(xmat->is_init == 0) {
-    if( G_matrix_set(xmat, bmat->rows, bmat->cols, bmat->ldim) < 0 ) {
-      fprintf(stderr, "Could not allocate space for solution matrix\n");
-      return -1;
-    }
+  if( (xmat = G_matrix_copy(bmat)) == NULL ) {
+    fprintf(stderr, "Could not allocate space for solution matrix\n");
+    return -1;
   }
 
-  if(xmat->rows != bmat->rows || xmat->cols !=bmat->cols) {
-    fprintf(stderr, "Input error: solution matrix does not match data matrix\n");
+  /* Create working matrix for the coefficient array */
+
+  if( (mtx = G_matrix_copy(mt1)) == NULL ) {
+    fprintf(stderr, "Could not allocate space for working matrix\n");
     return -1;
   }
 
@@ -359,18 +385,10 @@ G_matrix_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
      original information 
   */
 
-  if( (wmat = G_matrix_init(bmat->rows, bmat->cols, bmat->ldim)) == NULL ) {
+  if( (wmat = G_matrix_copy(bmat)) == NULL ) {
     fprintf(stderr, "Could not allocate space for working matrix\n");
     return -1;
   }
-
-  wmat->rows = bmat->rows;
-  wmat->cols = bmat->cols;
-  wmat->ldim = bmat->ldim;
-  for( i = 0; i < bmat->cols * bmat->ldim; i++ ) {
-    wmat->vals[i] = bmat->vals[i];
-  }
-  wmat->is_init = 1;
 
   /* Now call appropriate LA driver to solve equations */
 
@@ -379,31 +397,49 @@ G_matrix_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
   case NONSYM:
     {
       integer *perm, res_info;
-      int indx; /* loop variable */
+      int indx1, indx2, iperm; /* loop variable */
       integer num_eqns, nrhs, lda, ldb;
+      doublereal *ptin, *ptout;
 
-      perm = (integer *)G_malloc(bmat->ldim);
+      perm = (integer *)G_malloc(wmat->rows);
 
       /* Set fields to pass to fortran routine */
       num_eqns = (integer)mt1->rows;
-      nrhs = (integer)xmat->cols;
+      nrhs = (integer)wmat->cols;
       lda = (integer)mt1->ldim;
-      ldb = (integer)bmat->ldim;
+      ldb = (integer)wmat->ldim;
 
       /* Call LA driver */
-      f77_dgesv(&num_eqns, &nrhs, mt1->vals, &lda, perm, bmat->vals,
+      f77_dgesv(&num_eqns, &nrhs, mtx->vals, &lda, perm, wmat->vals,
 		&ldb, &res_info);
 
       /* Copy the results from the modified data matrix, taking account of pivot
-	 permutations
+	 permutations ???
       */
-      
-      for(indx = 0; indx < bmat->rows; indx++)
-	xmat->vals[indx] = bmat->vals[perm[indx]];
 
+      /*
+      for(indx1 = 0; indx1 < num_eqns; indx1++) {
+	iperm = perm[indx1];
+	ptin = &wmat->vals[0] + indx1;
+	ptout = &xmat->vals[0] + iperm;
+
+	for(indx2 = 0; indx2 < nrhs - 1; indx2++) {
+	  *ptout = *ptin;
+	  ptin += wmat->ldim;
+	  ptout += xmat->ldim;
+	}
+
+	*ptout = *ptin;	
+	
+      }
+      */
+
+      memcpy(xmat->vals, wmat->vals, wmat->cols * wmat->ldim * sizeof(doublereal) );
+      
       /* Free temp arrays */
       G_free(perm);
       G_matrix_free(wmat);
+      G_matrix_free(mtx);
 
       if( res_info > 0 ) {
 	fprintf(stderr, "Error: matrix (or submatrix is singular). Solution undetermined\n");
@@ -422,6 +458,8 @@ G_matrix_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
       return -1;
     }
   }  /* end switch */
+
+  *xmat0 = xmat;
 
   return 0;
 }
@@ -457,11 +495,6 @@ G_matrix_inverse(mat_struct *mt) {
       return NULL;    
   }
 
-  if( (res = G_matrix_init(mt->rows, mt->rows, mt->ldim)) == NULL ) {
-      fprintf(stderr, "Unable to allocate space for matrix\n");
-      return NULL;    
-  }
-
   /* Set `B' matrix to unit matrix */
 
   for( i = 0; i < mt0->rows - 1; i++ ) {
@@ -476,7 +509,7 @@ G_matrix_inverse(mat_struct *mt) {
 
   /* Solve system */
 
-  if( (k = G_matrix_LU_solve(mt, res, mt0, NONSYM)) == 1 ) {
+  if( (k = G_matrix_LU_solve(mt, &res, mt0, NONSYM)) == 1 ) {
       fprintf(stderr, "Error: matrix is singular\n");
       G_matrix_free(mt0);
       return NULL;        
