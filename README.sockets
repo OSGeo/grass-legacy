@@ -54,7 +54,7 @@ then
 	exit
 fi
 
-if [ ! -f NEWS.html ]
+if [ ! -f NEWS.html -o "$0" != "./README.sockets" ]
 then
 	echo
 	echo "This should be run under grass root directory."
