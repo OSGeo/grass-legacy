@@ -63,8 +63,9 @@ old_GRASSH=`eval g.gisenv get=GRASS_HEIGHT`
 old_TRUECOLOR=`eval g.gisenv get=GRASS_TRUECOLOR`
 curr_mon=`d.mon -p | awk '{printf "%s", $4}'`
 
-#defaults
-res=2
+#setting variables
+output="$GIS_OPT_output"
+res="$GIS_OPT_res"
 
 #get GRASS version for display monitor name
 GRASS_VER=`g.version | awk '{printf "%s", $1 " " $2}'`
