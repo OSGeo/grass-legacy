@@ -1176,8 +1176,8 @@ menu_build 1 .main_menu {
                 	"run v.digit &"
             	}
 			-separator
-            	"Create/rebuild topology or edit vector categories" "" {
-                	"source $env(TCLTKGRASSBASE)/module/v.support"
+            	"Create/rebuild topology" "" {
+                	"source $env(TCLTKGRASSBASE)/module/v.support_option_build"
             	}
             	-separator
             	"Add intermediate points between nodes" "" {
@@ -1274,6 +1274,9 @@ menu_build 1 .main_menu {
             	}
         	}
 		"Change category values and labels" "" {
+            	"Edit vector categories" "" {
+                	"source $env(TCLTKGRASSBASE)/module/v.support_option_edit"
+            	}
             	"Reclassify features using rules" "" {
                 	"source $env(TCLTKGRASSBASE)/module/v.reclass"
             	}
