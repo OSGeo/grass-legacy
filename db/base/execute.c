@@ -109,6 +109,7 @@ parse_command_line(argc, argv) char *argv[];
     input->type 	= TYPE_STRING;
     input->required 	= NO;
     input->description 	= "filename with sql statement";
+    input->gisprompt    = "file,file,file";
 
     /* Set description */
     module              = G_define_module();
