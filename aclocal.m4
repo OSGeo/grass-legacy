@@ -1289,9 +1289,10 @@ dnl        esac
 ])
 
 
-dnl XXXXXXXXXXX Begin Stolen from cdrtools-2.01 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+dnl XXXX Begin Stolen from cdrtools-2.01 
+dnl XXXX by Joerg Schilling <schilling fokus fraunhofer de> et al. XXXXXXXXX
 
-dnl XXXXXXXXXXXXXXXXXX Begin Stolen (but modified) from GNU tar XXXXXXXXXXXXXXXXXXXXXXXXXXX
+dnl XXXXXXXXX Begin Stolen (but modified) from GNU tar XXXXXXXXXXXXXXXXXXXXX
 dnl Changes:
 
 dnl One line has been changed to:    [ac_save_CC="${CC-cc}" to default to "'cc"
@@ -1403,7 +1404,7 @@ AC_DEFUN([AC_FUNC_FSEEKO],
    fi])
 
 
-dnl XXXXXXXXXXXXXXXXXX End Stolen (but modified) from GNU tar XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+dnl XXXXXXXXXXXXXXXXXX End Stolen (but modified) from GNU tar XXXXXXXXXXXXXX
 
 AC_DEFUN([AC_HAVE_LARGEFILES],
 [AC_CACHE_CHECK([if system supports Large Files at all], ac_cv_largefiles,
