@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.36 2000-10-18 15:14:05 markus Exp $
+$Id: BUGS,v 1.37 2000-10-18 15:52:00 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -112,6 +112,12 @@ d.rast.num: some numbers are displayed in wrong (unreadable) color
   to find an obvious solution.
   (reported by Tom Strang  tstrang@trytel.com)
   (being worked on by ?)  
+
+i.in.gtc/i.in.pri
+  i.in.gtc, putting in input leadername voldirname and dataname        
+  as required but....I get core dumped.
+  (reported by Stefano Merler <merler@itc.it>)
+  (being worked on by ?)
 
 [RC]i.ortho.photo
  - if second control point is set by mouse, it is not indicated
