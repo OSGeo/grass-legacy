@@ -170,12 +170,12 @@ static int convert_str(char* from,char* in,unsigned char** out)
 	return res;
 }
 
-void release_convert_str(unsigned char* out)
+static void release_convert_str(unsigned char* out)
 {
 	free(out);
 }
 
-int draw_text(FT_Face face,FT_Vector* pen,FT_Matrix* matrix,unsigned char* out,int len,int color)
+static int draw_text(FT_Face face,FT_Vector* pen,FT_Matrix* matrix,unsigned char* out,int len,int color)
 {
 	int i=0;
 	FT_ULong ch;
@@ -206,7 +206,7 @@ int draw_text(FT_Face face,FT_Vector* pen,FT_Matrix* matrix,unsigned char* out,i
 	return 0;
 }
 
-void set_text_box(FT_Bitmap* bitmap,FT_Int x,FT_Int y)
+static void set_text_box(FT_Bitmap* bitmap,FT_Int x,FT_Int y)
 {
 	FT_Int xMax = x + bitmap->width;
 	FT_Int yMax = y + bitmap->rows;
@@ -218,7 +218,7 @@ void set_text_box(FT_Bitmap* bitmap,FT_Int x,FT_Int y)
 	return;
 }
 
-void draw_bitmap(FT_Bitmap* bitmap,FT_Int x,FT_Int y)
+static void draw_bitmap(FT_Bitmap* bitmap,FT_Int x,FT_Int y)
 {
 	FT_Int i,j,p,q;
 	unsigned char color;
