@@ -1,0 +1,12 @@
+
+LIBRARIES = $(GISLIB) 
+
+PGM = $(BIN_ALPHA_CMD)/r.out.ppm
+
+OFILES = main.c 
+
+$(PGM): $(OFILES) $(LIBRARIES)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) -I$(INCLUDE_DIR)
+	@rm -f a.out
+
+
