@@ -25,6 +25,7 @@ SUBDIRS1 = \
 	v.net.steiner \
 	v.out.ascii \
 	v.patch \
+	v.segment \
 	v.surf.rst \
 	v.transform \
 	v.to.db \
