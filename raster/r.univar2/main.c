@@ -1,4 +1,4 @@
-/* $Id$ 
+/*
  * r.univar
  *
  *  Calculates univariate statistics from the non-null cells of a GRASS raster map
@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
+#include "glocale.h"
 
 
 int main(int argc, char *argv[]) {
@@ -51,7 +52,7 @@ int main(int argc, char *argv[]) {
 
     module = G_define_module();
     module->description =
-	"Calculates univariate statistics from the non-null cells of a raster map.";
+	_("Calculates univariate statistics from the non-null cells of a raster map.");
 
     /* Define the different options */
 
@@ -60,15 +61,15 @@ int main(int argc, char *argv[]) {
     inputfile->type       = TYPE_STRING;
     inputfile->required   = YES;
     inputfile->gisprompt  = "old,cell,raster" ;
-    inputfile->description= "Name of an existing raster map";
+    inputfile->description= _("Name of an existing raster map");
 
     quiet = G_define_flag();
     quiet->key = 'q';
-    quiet->description = "Quiet mode";
+    quiet->description = _("Quiet mode");
 
     shell_style = G_define_flag();
     shell_style->key = 'g';
-    shell_style->description = "Print the stats in shell script style";
+    shell_style->description = _("Print the stats in shell script style");
 
     /*** Not yet implemented: Median, 1st Quartile, 3rd Quartile ***
     extended = G_define_flag();
@@ -83,12 +84,12 @@ int main(int argc, char *argv[]) {
 
     mapset = G_find_cell2 (infile, "");
     if (mapset == NULL) {
-	G_fatal_error("raster <%s> not found\n", infile);
+	G_fatal_error(_("raster <%s> not found"), infile);
     }
 
     fd = G_open_cell_old (infile, mapset);
     if (fd < 0)
-	G_fatal_error("unable to open <%s>\n", infile);
+	G_fatal_error(_("unable to open <%s>"), infile);
 
     map_type = G_raster_map_type(infile, mapset);
 

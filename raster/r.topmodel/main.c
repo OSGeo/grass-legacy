@@ -4,8 +4,6 @@
  *
  * TMOD9502.FOR Author: Keith Beven <k.beven@lancaster.ac.uk>
  *
- * $Id$
- *
  *	Copyright (C) 2000 by the GRASS Development Team
  *	Author: Huidae Cho <grass4u@gmail.com>
  *		Hydro Laboratory, Kyungpook National University
@@ -22,6 +20,7 @@
 #define	MAIN
 #include "local_proto.h"
 #undef	MAIN
+#include "glocale.h"
 
 
 int
@@ -29,7 +28,6 @@ main(argc, argv)
 	int	argc;
 	char	**argv;
 {
-	struct	Cell_head	cellhd;
 
 	struct GModule *module;
 	struct
@@ -62,13 +60,13 @@ main(argc, argv)
 
     module = G_define_module();
     module->description =
-		"Simulates TOPMODEL which is physically based hydrologic model.";
+		_("Simulates TOPMODEL which is physically based hydrologic model.");
 
 	/* Parameter definitions */
 	param.elev			= G_define_option();
 	param.elev->key			= "elevation";
 	param.elev->description		=
-		"(i)   Rectangular elevation map";
+		_("(i)   Rectangular elevation map");
 	param.elev->type		= TYPE_STRING;
 	param.elev->required		= NO;
 	param.elev->gisprompt		= "old,cell,raster";
@@ -76,7 +74,7 @@ main(argc, argv)
 	param.basin			= G_define_option();
 	param.basin->key		= "basin";
 	param.basin->description	=
-		"(i)   Basin map created by r.water.outlet";
+		_("(i)   Basin map created by r.water.outlet");
 	param.basin->type		= TYPE_STRING;
 	param.basin->required		= NO;
 	param.basin->gisprompt		= "old,cell,raster";
@@ -84,7 +82,7 @@ main(argc, argv)
 	param.fill			= G_define_option();
 	param.fill->key			= "depressionless";
 	param.fill->description		=
-		"(o)   Depressionless elevation map";
+		_("(o)   Depressionless elevation map");
 	param.fill->type		= TYPE_STRING;
 	param.fill->required		= NO;
 	param.fill->gisprompt		= "new,cell,raster";
@@ -92,7 +90,7 @@ main(argc, argv)
 	param.dir			= G_define_option();
 	param.dir->key			= "direction";
 	param.dir->description		=
-		"(o)   Direction map with depressionless elevation map";
+		_("(o)   Direction map with depressionless elevation map");
 	param.dir->type			= TYPE_STRING;
 	param.dir->required		= NO;
 	param.dir->gisprompt		= "new,cell,raster";
@@ -100,7 +98,7 @@ main(argc, argv)
 	param.belev			= G_define_option();
 	param.belev->key		= "belevation";
 	param.belev->description	=
-		"(i/o) Basin elevation map (extracted)";
+		_("(i/o) Basin elevation map (extracted)");
 	param.belev->type		= TYPE_STRING;
 	param.belev->required		= NO;
 	param.belev->gisprompt		= "new,cell,raster";
@@ -108,7 +106,7 @@ main(argc, argv)
 	param.topidx			= G_define_option();
 	param.topidx->key		= "topidx";
 	param.topidx->description	=
-		"(i/o) Topographic index ln(a/tanB) map (extracted)";
+		_("(i/o) Topographic index ln(a/tanB) map (extracted)");
 	param.topidx->type		= TYPE_STRING;
 	param.topidx->required		= NO;
 	param.topidx->gisprompt		= "new,cell,raster";
@@ -116,7 +114,7 @@ main(argc, argv)
 	param.nidxclass			= G_define_option();
 	param.nidxclass->key		= "nidxclass";
 	param.nidxclass->description	=
-		"(i)   Number of topographic index classes";
+		_("(i)   Number of topographic index classes");
 	param.nidxclass->type		= TYPE_INTEGER;
 	param.nidxclass->required	= NO;
 	param.nidxclass->answer		= "30";
@@ -124,49 +122,49 @@ main(argc, argv)
 	param.idxstats			= G_define_option();
 	param.idxstats->key		= "idxstats";
 	param.idxstats->description	=
-		"(i/o) Topographic index statistics file";
+		_("(i/o) Topographic index statistics file");
 	param.idxstats->type		= TYPE_STRING;
 	param.idxstats->required	= YES;
 
 	param.params			= G_define_option();
 	param.params->key		= "parameters";
 	param.params->description	=
-		"(i)   TOPMODEL Parameters file";
+		_("(i)   TOPMODEL Parameters file");
 	param.params->type		= TYPE_STRING;
 	param.params->required		= YES;
 
 	param.input			= G_define_option();
 	param.input->key		= "input";
 	param.input->description	=
-		"(i)   Rainfall and potential evapotranspiration data file";
+		_("(i)   Rainfall and potential evapotranspiration data file");
 	param.input->type		= TYPE_STRING;
 	param.input->required		= YES;
 
 	param.output			= G_define_option();
 	param.output->key		= "output";
 	param.output->description	=
-		"(o)   Output file";
+		_("(o)   Output file");
 	param.output->type		= TYPE_STRING;
 	param.output->required		= YES;
 
 	param.Qobs			= G_define_option();
 	param.Qobs->key			= "Qobs";
 	param.Qobs->description		=
-		"      Observed Q file";
+		_("      Observed Q file");
 	param.Qobs->type		= TYPE_STRING;
 	param.Qobs->required		= NO;
 
 	param.timestep			= G_define_option();
 	param.timestep->key		= "timestep";
 	param.timestep->description	=
-		"      output for given time step";
+		_("      output for given time step");
 	param.timestep->type		= TYPE_INTEGER;
 	param.timestep->required	= NO;
 
 	param.idxclass			= G_define_option();
 	param.idxclass->key		= "idxclass";
 	param.idxclass->description	=
-		"      output for given topographic index class";
+		_("      output for given topographic index class");
 	param.idxclass->type		= TYPE_INTEGER;
 	param.idxclass->required	= NO;
 
@@ -175,17 +173,17 @@ main(argc, argv)
 	flag.input			= G_define_flag();
 	flag.input->key			= 'i';
 	flag.input->description		=
-		"Input data given for (i/o)";
+		_("Input data given for (i/o)");
 
 	flag.overwr			= G_define_flag();
 	flag.overwr->key		= 'o';
 	flag.overwr->description	=
-		"Overwrite outputs";
+		_("Overwrite outputs");
 
 	flag.wide			= G_define_flag();
 	flag.wide->key			= 'w';
 	flag.wide->description		=
-		"Wide output";
+		_("Wide output");
 
 	if(G_parser(argc, argv)){
 	        exit(-1);

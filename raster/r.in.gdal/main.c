@@ -16,6 +16,7 @@
 #include "gis.h"
 #include "imagery.h"
 #include "gprojects.h"
+#include "glocale.h"
 
 #include "gdal.h"
 #include "ogr_srs_api.h"
@@ -67,7 +68,7 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-        "Import GDAL supported raster file into a binary raster map layer.";
+        _("Import GDAL supported raster file into a binary raster map layer.");
 
 /* -------------------------------------------------------------------- */
 /*      Setup and fetch parameters.                                     */
@@ -76,56 +77,56 @@ int main (int argc, char *argv[])
     parm.input->key = "input";
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
-    parm.input->description = "Raster file to be imported";
+    parm.input->description = _("Raster file to be imported");
     parm.input->gisprompt = "file,file,file";
 
     parm.output = G_define_option();
     parm.output->key = "output";
     parm.output->type = TYPE_STRING;
     parm.output->required = YES;
-    parm.output->description = "Name for resultant raster map";
+    parm.output->description = _("Name for resultant raster map");
     parm.output->gisprompt = "any,cell,raster";
 
     parm.band = G_define_option();
     parm.band->key = "band";
     parm.band->type = TYPE_INTEGER;
     parm.band->required = NO;
-    parm.band->description = "Band to select (default is all bands)";
+    parm.band->description = _("Band to select (default is all bands)");
 
     parm.target = G_define_option();
     parm.target->key = "target";
     parm.target->type = TYPE_STRING;
     parm.target->required = NO;
-    parm.target->description = "Name of location to read projection from for GCPs transformation";
+    parm.target->description = _("Name of location to read projection from for GCPs transformation");
 
     parm.title = G_define_option();
     parm.title->key = "title";
     parm.title->key_desc = "\"phrase\"";
     parm.title->type = TYPE_STRING;
     parm.title->required = NO;
-    parm.title->description = "Title for resultant raster map";
+    parm.title->description = _("Title for resultant raster map");
 
     parm.outloc = G_define_option();
     parm.outloc->key = "location";
     parm.outloc->type = TYPE_STRING;
     parm.outloc->required = NO;
-    parm.outloc->description = "Name for new location to create";
+    parm.outloc->description = _("Name for new location to create");
 
     flag_o = G_define_flag();
     flag_o->key = 'o';
-    flag_o->description = "Override projection (use location's projection)";
+    flag_o->description = _("Override projection (use location's projection)");
 
     flag_e = G_define_flag();
     flag_e->key = 'e';
-    flag_e->description = "Extend location extents based on new dataset";
+    flag_e->description = _("Extend location extents based on new dataset");
 
     flag_f = G_define_flag();
     flag_f->key = 'f';
-    flag_f->description = "List supported formats then exit";
+    flag_f->description = _("List supported formats then exit");
 
     flag_k = G_define_flag();
     flag_k->key = 'k';
-    flag_k->description = "Keep band numbers instead of using band color names";
+    flag_k->description = _("Keep band numbers instead of using band color names");
 
     if (G_parser(argc,argv))
         exit(1);

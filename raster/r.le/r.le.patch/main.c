@@ -19,6 +19,11 @@
 *				                           *
 ************************************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "gis.h"
+
 #include "config.h"
 #define MAIN
 #include "patch.h"
@@ -144,5 +149,7 @@ char **argv ;
 
   patch_fore();
   G_free(choice);
+
+  return 0;
 }
 

@@ -41,6 +41,7 @@
 #include <unistd.h>
 
 #include "gis.h"
+#include "glocale.h"
 
 #define DEBUG
 #include "tinf.h"
@@ -90,21 +91,21 @@ main(int argc, char **argv)
 
    module = G_define_module();
    module->description =
-	"Traces a flow through an elevation model on a raster map layer.";
+	_("Traces a flow through an elevation model on a raster map layer.");
 
    opt1 = G_define_option();
    opt1->key        = "input" ;
    opt1->type       = TYPE_STRING ;
    opt1->required   = YES ;
    opt1->gisprompt  = "old,cell,raster" ;
-   opt1->description= "Name of existing raster map containing elevation surface" ;
+   opt1->description= _("Name of existing raster map containing elevation surface") ;
    
    opt2 = G_define_option() ;
    opt2->key        = "output" ;
    opt2->type       = TYPE_STRING ;
    opt2->required   = YES ;
    opt2->gisprompt  = "new,cell,raster" ;
-   opt2->description= "Output drain raster map" ;
+   opt2->description= _("Output drain raster map") ;
 
    opt3 = G_define_option() ;
    opt3->key        = "coordinate" ;
@@ -112,19 +113,19 @@ main(int argc, char **argv)
    opt3->required   = YES ;
    opt3->multiple   = YES;
    opt3->key_desc   = "x,y" ;
-   opt3->description= "The map E and N grid coordinates of a starting point";
+   opt3->description= _("The map E and N grid coordinates of a starting point");
 
    flag1 = G_define_flag();
    flag1->key = 'c';
-   flag1->description = "Copy input cell values on output";
+   flag1->description = _("Copy input cell values on output");
    
    flag2 = G_define_flag();
    flag2->key = 'a';
-   flag2->description = "Accumulate input values along the path";
+   flag2->description = _("Accumulate input values along the path");
    
    flag3 = G_define_flag();
    flag3->key = 'n';
-   flag3->description = "Count cell numbers along the path";
+   flag3->description = _("Count cell numbers along the path");
 
    if(G_parser(argc, argv))
       exit(-1);

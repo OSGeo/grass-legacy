@@ -1,6 +1,7 @@
+#include <stdlib.h>
 #include "gis.h"
 #include "local_proto.h"
-#include <stdlib.h>
+#include "glocale.h"
 
 static int has_percent(char *);
 
@@ -32,48 +33,48 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-        "Creates a raster map layer and vector point map "
-        "containing randomly located sites.";
+        _("Creates a raster map layer and vector point map "
+        "containing randomly located sites.");
 
     parm.input = G_define_option() ;
     parm.input->key        = "input" ;
     parm.input->type       = TYPE_STRING ;
     parm.input->required   = YES ;
     parm.input->gisprompt  = "old,cell,raster" ;
-    parm.input->description= "Name of existing raster map" ;
+    parm.input->description= _("Name of existing raster map") ;
 
     parm.npoints = G_define_option() ;
     parm.npoints->key        = "n" ;
     parm.npoints->key_desc   = "number[%]";
     parm.npoints->type       = TYPE_STRING ;
     parm.npoints->required   = YES ;
-    parm.npoints->description= "The number of points to allocate";
+    parm.npoints->description= _("The number of points to allocate");
 
     parm.raster = G_define_option() ;
     parm.raster->key        = "raster_output" ;
     parm.raster->type       = TYPE_STRING ;
     parm.raster->required   = NO;
     parm.raster->gisprompt  = "new,cell,raster" ;
-    parm.raster->description= "Name of the output raster map" ;
+    parm.raster->description= _("Name of the output raster map") ;
 
     parm.sites = G_define_option() ;
     parm.sites->key        = "vector_output" ;
     parm.sites->type       = TYPE_STRING ;
     parm.sites->required   = NO ;
     parm.sites->gisprompt  = "new,vector,vector" ;
-    parm.sites->description= "Name of the output vector points map";
+    parm.sites->description= _("Name of the output vector points map");
 
     flag.quiet = G_define_flag() ;
     flag.quiet->key         = 'q' ;
-    flag.quiet->description = "Run quietly" ;
+    flag.quiet->description = _("Run quietly") ;
 
     flag.zero = G_define_flag() ;
     flag.zero->key         = 'z' ;
-    flag.zero->description = "Generate sites for category zero also";
+    flag.zero->description = _("Generate sites for category zero also");
 
     flag.info = G_define_flag() ;
     flag.info->key         = 'i' ;
-    flag.info->description = "Report information about input raster and exit";
+    flag.info->description = _("Report information about input raster and exit");
     
 
     if (G_parser(argc, argv) != 0)

@@ -1,4 +1,8 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "defs.h"
+#include "gis.h"
+#include "glocale.h"
 
 int 
 main (int argc, char *argv[])
@@ -14,8 +18,8 @@ main (int argc, char *argv[])
     
     /* Set description */
     module              = G_define_module();
-    module->description = ""\
-    "Locates the closest points between objects in two raster maps.";
+    module->description = 
+    _("Locates the closest points between objects in two raster maps.");
 
     parse (argc, argv, &parms);
     if (parms.labels)

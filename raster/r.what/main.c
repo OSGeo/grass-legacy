@@ -6,6 +6,7 @@
 #include <string.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 struct order {
     int point;
@@ -62,8 +63,8 @@ int main(int argc,char *argv[])
   
   /* Set description */
   module              = G_define_module();
-  module->description = ""\
-  "Queries raster map layers on their category values and category labels.";
+  module->description = 
+  _("Queries raster map layers on their category values and category labels.");
 
   opt1 = G_define_option() ;
   opt1->key        = "input" ;
@@ -71,14 +72,14 @@ int main(int argc,char *argv[])
   opt1->required   = YES ;
   opt1->multiple   = YES ;
   opt1->gisprompt  = "old,cell,raster" ;
-  opt1->description= "Name of existing raster map(s) to query";
+  opt1->description= _("Name of existing raster map(s) to query");
 
   opt2 = G_define_option() ;
   opt2->key        = "cache" ;
   opt2->type       = TYPE_INTEGER ;
   opt2->required   = NO ;
   opt2->multiple   = NO ;
-  opt2->description= "Size of point cache" ;
+  opt2->description= _("Size of point cache") ;
   opt2->answer     = "500";
 
   opt3 = G_define_option() ;
@@ -86,7 +87,7 @@ int main(int argc,char *argv[])
   opt3->type       = TYPE_STRING;
   opt3->required   = NO;
   opt3->answer     = "*";
-  opt3->description= "Char string to represent no data cell" ;
+  opt3->description= _("Char string to represent no data cell") ;
 
   opt4 = G_define_option() ;
   opt4->key        = "east_north";
@@ -94,19 +95,19 @@ int main(int argc,char *argv[])
   opt4->key_desc   = "east,north";
   opt4->required   = NO;
   opt4->multiple   = YES;
-  opt4->description= "Coordinates for query";
+  opt4->description= _("Coordinates for query");
 
   flag1 = G_define_flag() ;
   flag1->key         = 'f' ;
-  flag1->description = "Show the category label in the grid cell(s)" ;
+  flag1->description = _("Show the category label in the grid cell(s)") ;
 
   flag2 = G_define_flag() ;
   flag2->key         = 'c' ;
-  flag2->description = "Turn on cache reporting" ;
+  flag2->description = _("Turn on cache reporting") ;
 
   flag3 = G_define_flag();
   flag3->key = 'i';
-  flag3->description = "Output integer category values, not cell values";
+  flag3->description = _("Output integer category values, not cell values");
 
   if (G_parser(argc, argv))
       exit(-1);

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "glob.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 static int cmp(const void *, const void *);
 
@@ -41,8 +42,8 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Creates a cross product of the category values from "
-		"multiple raster map layers.";
+		_("Creates a cross product of the category values from "
+		"multiple raster map layers.");
 			
     parm.input = G_define_option() ;
     parm.input->key        = "input";
@@ -51,24 +52,24 @@ main (int argc, char *argv[])
     parm.input->multiple   = YES;	
     parm.input->gisprompt  = "old,cell,raster" ;
     sprintf(parm.input->description= G_malloc(60),
-	"Names of 2-%d input raster maps", NFILES);
+	_("Names of 2-%d input raster maps"), NFILES);
 
     parm.output = G_define_option() ;
     parm.output->key        = "output";
     parm.output->type       = TYPE_STRING;
     parm.output->required   = YES;
-    parm.output->description= "Name of the resulting map";
+    parm.output->description= _("Name of the resulting map");
     parm.output->gisprompt  = "new,cell,raster" ;
 
 /* Define the different flags */
 
     flag.q = G_define_flag() ;
     flag.q->key         = 'q' ;
-    flag.q->description = "Quiet" ;
+    flag.q->description = _("Quiet") ;
 
     flag.z = G_define_flag() ;
     flag.z->key         = 'z' ;
-    flag.z->description = "Non-zero data only" ;
+    flag.z->description = _("Non-zero data only") ;
 
     if (G_parser(argc, argv))
 	exit (1);

@@ -4,19 +4,19 @@
 
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 
 typedef int FILEDESC;
 
 int main( int argc, char *argv[])
 {
-	struct GModule *module;
+    struct GModule *module;
     struct Option 	*rastin, *rastout;
     struct Option 	*eastoff, *northoff;
     char                *inmap;
     FILEDESC    	infile = (FILEDESC)NULL, outfile = (FILEDESC)NULL;
     CELL		*inbuf1, *inbuf2;
     FCELL		*outbuf;
-    char 		errbuf[100];
     int			row, col; 
     struct Cell_head    w, mapw;
     float               o_east, o_north;
@@ -26,32 +26,32 @@ int main( int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Bilinear interpolation utility for raster map layers.";
+		_("Bilinear interpolation utility for raster map layers.");
 
     rastin = G_define_option();
     rastin->key            	   = "input";
     rastin->type           	   = TYPE_STRING;
     rastin->required     	           = YES;
     rastin->gisprompt    		   = "old,cell,raster";
-    rastin->description  		   = "Name of existing raster file.";
+    rastin->description  		   = _("Name of existing raster file.");
 
     rastout = G_define_option();
     rastout->key                    = "output";
     rastout->type                   = TYPE_STRING;
     rastout->required               = YES;
     rastout->gisprompt              = "new,cell,raster";
-    rastout->description            = "Name of new raster file.";
+    rastout->description            = _("Name of new raster file.");
 
     northoff = G_define_option();
     northoff->key                    = "north";
     northoff->type                   = TYPE_DOUBLE;
-    northoff->description            = "specific input value to be assigned to the north and/or south poles for longitude-latitude grids";
+    northoff->description            = _("specific input value to be assigned to the north and/or south poles for longitude-latitude grids");
     northoff->required               = NO;
 
     eastoff = G_define_option();
     eastoff->key                    = "east";
     eastoff->type                   = TYPE_DOUBLE;
-    eastoff->description            = "specific input value to be assigned to the north and/or south poles for longitude-latitude grids";
+    eastoff->description            = _("specific input value to be assigned to the north and/or south poles for longitude-latitude grids");
     eastoff->required               = NO;
 
     if (G_parser (argc, argv))
@@ -69,8 +69,7 @@ int main( int argc, char *argv[])
 
     inmap = G_find_file2 ("cell", rastin->answer, "");
     if(!inmap){
-	sprintf(errbuf,"Couldn't find raster file %s", rastin->answer);
-	G_fatal_error(errbuf);
+	G_fatal_error(_("Couldn't find raster file %s"), rastin->answer);
     }
 
     /* set window to old map */
@@ -84,8 +83,7 @@ int main( int argc, char *argv[])
     /* open old map */
     if ((infile = G_open_cell_old(rastin->answer, inmap)) == -1)
     {
-	sprintf(errbuf,"Not able to open cellfile for [%s]", rastin->answer);
-	G_fatal_error(errbuf);
+	G_fatal_error(_("Not able to open cellfile for [%s]"), rastin->answer);
     }
 
     /* reset window to current region */
@@ -96,8 +94,7 @@ int main( int argc, char *argv[])
     /* open new map */
     if ((outfile = G_open_raster_new(rastout->answer, FCELL_TYPE)) < 0)
     {
-	sprintf(errbuf,"Not able to open cellfile for [%s]", rastout->answer);
-	G_fatal_error(errbuf);
+	G_fatal_error(_("Not able to open cellfile for [%s]"), rastout->answer);
     }
     G_suppress_warnings(1);
     /* otherwise get complaints about window changes */

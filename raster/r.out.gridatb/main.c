@@ -3,8 +3,6 @@
  *
  * GRIDATB.FOR Author: Keith Beven <k.beven@lancaster.ac.uk>
  *
- * $Id$
- *
  *	Copyright (C) 2000 by the GRASS Development Team
  *	Author: Huidae Cho <grass4u@gmail.com>
  *		Hydro Laboratory, Kyungpook National University
@@ -15,10 +13,15 @@
  *
  */
 
+#include <stdlib.h>
+#include <stdio.h>
+
 #define	MAIN
 #include "local_proto.h"
 #undef	MAIN
 
+#include "gis.h"
+#include "glocale.h"
 
 int
 main(argc,argv)
@@ -41,25 +44,25 @@ main(argc,argv)
 	
 	/* Set description */
 	module              = G_define_module();
-	module->description = ""\
-	"Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)";
+	module->description = 
+	_("Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)");
 
 	params.input			= G_define_option();
 	params.input->key		= "input";
-	params.input->description	= "Input map";
+	params.input->description	= _("Input map");
 	params.input->type		= TYPE_STRING;
 	params.input->required		= YES;
 	params.input->gisprompt		= "old,cell,raster";
 
 	params.output			= G_define_option();
 	params.output->key		= "output";
-	params.output->description	= "GRIDATB i/o map file";
+	params.output->description	= _("GRIDATB i/o map file");
 	params.output->type		= TYPE_STRING;
 	params.output->required		= YES;
 
 	flags.overwr			= G_define_flag();
 	flags.overwr->key		= 'o';
-	flags.overwr->description	= "Overwrite output map file";
+	flags.overwr->description	= _("Overwrite output map file");
 
 	if(G_parser(argc, argv)){
 	        exit(-1);

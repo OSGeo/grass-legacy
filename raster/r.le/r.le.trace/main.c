@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.trace/main.c                                *
 *         Version 5.0                Nov. 1, 2001          *
@@ -18,9 +17,12 @@
 *				                           *
 ************************************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "gis.h"
 #include "config.h"
 #include "r.le.trace.h"
-#include <stdio.h>
 
 struct CHOICE 		*choice;
 int   			finput;

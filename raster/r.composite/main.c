@@ -20,6 +20,7 @@
 #include <string.h>
 
 #include "gis.h"
+#include "glocale.h"
 
 struct band {
 	struct Option *opt_name;
@@ -67,8 +68,8 @@ int main(int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Combines red, green and blue map layers into "
-		"a single composite map layer.";
+		_("Combines red, green and blue map layers into "
+		"a single composite map layer.");
 
 	for (i = 0; i < 3; i++)
 	{
@@ -85,7 +86,7 @@ int main(int argc, char **argv)
 		opt->required   = YES;
 		opt->gisprompt  = "old,cell,raster";
 
-		sprintf(buff, "Name of raster map layer to be used for <%s>",
+		sprintf(buff, _("Name of raster map layer to be used for <%s>"),
 			color_names[i]);
 		opt->description= G_store(buff);
 	}
@@ -96,7 +97,7 @@ int main(int argc, char **argv)
 	opt_lev->required   = NO;
 	opt_lev->options    = "1-256";
 	opt_lev->answer     = "32";
-	opt_lev->description= "Number of levels to be used for each component";
+	opt_lev->description= _("Number of levels to be used for each component");
 
 	for (i = 0; i < 3; i++)
 	{
@@ -112,7 +113,7 @@ int main(int argc, char **argv)
 		opt->required   = NO;
 		opt->options    = "1-256";
 
-		sprintf(buff, "Number of levels to be used for <%s>",
+		sprintf(buff, _("Number of levels to be used for <%s>"),
 			color_names[i]);
 		opt->description= G_store(buff);
 	}
@@ -122,15 +123,15 @@ int main(int argc, char **argv)
 	opt_out->type       = TYPE_STRING;
 	opt_out->required   = YES;
 	opt_out->gisprompt  = "new,cell,raster";
-	opt_out->description= "Name of raster map to contain results";
+	opt_out->description= _("Name of raster map to contain results");
 
 	flg_d = G_define_flag();
 	flg_d->key	    = 'd';
-	flg_d->description  = "Dither";
+	flg_d->description  = _("Dither");
 
 	flg_c = G_define_flag();
 	flg_c->key	    = 'c';
-	flg_c->description  = "Use closest color";
+	flg_c->description  = _("Use closest color");
 
 	if (G_parser(argc, argv))
 		exit(-1);

@@ -3,6 +3,7 @@
 #include "gis.h"
 #include "stats.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -25,27 +26,27 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Finds the median of values in a cover map within "
+		_("Finds the median of values in a cover map within "
 		"areas assigned the same category value in a "
-		"user-specified base map.";
+		"user-specified base map.");
 
     parm.base = G_define_option();
     parm.base->key = "base";
-    parm.base->description = "base raster map";
+    parm.base->description = _("Base raster map");
     parm.base->required = YES;
     parm.base->type = TYPE_STRING;
     parm.base->gisprompt = "old,cell,raster";
 
     parm.cover = G_define_option();
     parm.cover->key = "cover";
-    parm.cover->description = "cover raster map";
+    parm.cover->description = _("Cover raster map");
     parm.cover->required = YES;
     parm.cover->type = TYPE_STRING;
     parm.cover->gisprompt = "old,cell,raster";
 
     parm.output = G_define_option();
     parm.output->key = "output";
-    parm.output->description = "resultant raster map";
+    parm.output->description = _("Resultant raster map");
     parm.output->required = YES;
     parm.output->type = TYPE_STRING;
     parm.output->gisprompt = "new,cell,raster";

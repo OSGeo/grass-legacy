@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <string.h>
 #include "rule.h"
+#include "gis.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -25,29 +27,29 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
     module->description =
-		"Creates a new map layer whose category values "
+		_("Creates a new map layer whose category values "
 		"are based upon the user's reclassification of categories in an "
-		"existing raster map layer.";
+		"existing raster map layer.");
 
     parm.input = G_define_option();
     parm.input->key = "input";
     parm.input->required = YES;
     parm.input->type = TYPE_STRING;
 	parm.input->gisprompt  = "old,cell,raster" ;
-    parm.input->description =  "Raster map to be reclassified";
+    parm.input->description =  _("Raster map to be reclassified");
 
     parm.output = G_define_option();
     parm.output->key = "output";
     parm.output->required = YES;
     parm.output->type = TYPE_STRING;
 	parm.output->gisprompt  = "new,cell,raster" ;
-    parm.output->description =  "Name for the resulting raster map";
+    parm.output->description =  _("Name for the resulting raster map");
 
     parm.title = G_define_option();
     parm.title->key = "title";
     parm.title->required = NO;
     parm.title->type = TYPE_STRING;
-    parm.title->description =  "Title for the resulting raster map";
+    parm.title->description =  _("Title for the resulting raster map");
 
     if (G_parser(argc, argv))
 	exit(1);

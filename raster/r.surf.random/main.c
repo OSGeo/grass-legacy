@@ -5,10 +5,10 @@
 **
 */
 
-/* %W% %G% */
 #include <stdlib.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int 
 main (int argc, char *argv[])
@@ -31,11 +31,13 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
     module->description =
-		"GRASS module to produce a raster map layer of uniform "
-		"random deviates whose range can be expressed by the user. "
-		"It uses the random number generator described in Press, "
+		_("Produces a raster map layer of uniform "
+		"random deviates whose range can be expressed by the user.");
+
+/* still true? */
+/*		"It uses the random number generator described in Press, "
 		"Flannery, Teukolsky and Vetterling (1988) - Numerical "
-		"Recipes in C.";
+		"Recipes in C.";*/
 
     /****** SET PARSER OPTIONS ******/
 
@@ -44,17 +46,17 @@ main (int argc, char *argv[])
     max   = G_define_option();	/* 	Maximum random value				*/
 
     out->key		= "out";
-    out->description	= "Name of the random surface to be produced";
+    out->description	= _("Name of the random surface to be produced");
     out->type		= TYPE_STRING;
     out->required	= YES;
 
     min->key		= "min";
-    min->description	= "Minimum random value";
+    min->description	= _("Minimum random value");
     min->type		= TYPE_INTEGER;
     min->answer		= "0";
 
     max->key		= "max";
-    max->description	= "Maximum random value";
+    max->description	= _("Maximum random value");
     max->type		= TYPE_INTEGER;
     max->answer		= "100";
 
@@ -67,9 +69,7 @@ main (int argc, char *argv[])
 
     if (G_legal_filename(out->answer)=='\0')
     {
-	char err[256];
-	sprintf(err,"Illegal file name. Please try another.");
-	G_fatal_error(err);
+	G_fatal_error("Illegal file name. Please try another.");
     }
     else
     {

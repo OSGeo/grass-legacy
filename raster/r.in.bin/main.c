@@ -10,10 +10,12 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include "gis.h"
 #include "gmt_grd.h"
+#include "glocale.h"
 
 typedef unsigned short uint16;
 typedef unsigned int uint32;
@@ -106,41 +108,41 @@ int main (int argc, char *argv[])
 	
 	/* Set description */
 	module              = G_define_module();
-	module->description = ""\
-	"Import a binary raster file into a GRASS raster map layer.";
+	module->description =
+	_("Import a binary raster file into a GRASS raster map layer.");
 
 	flag.s = G_define_flag();
 	flag.s->key = 's';
-	flag.s->description = "Signed data (high bit means negative value)";
+	flag.s->description = _("Signed data (high bit means negative value)");
 
 	flag.f = G_define_flag();
 	flag.f->key = 'f';
-	flag.f->description = "Import as Floating Point Data (default: Integer)";
+	flag.f->description = _("Import as Floating Point Data (default: Integer)");
 
 	flag.d = G_define_flag();
 	flag.d->key = 'd';
-	flag.d->description = "Import as Double Precision Data (default: Integer)";
+	flag.d->description = _("Import as Double Precision Data (default: Integer)");
 
 	flag.b = G_define_flag();
 	flag.b->key = 'b';
-	flag.b->description = "Byte Swap the Data During Import";
+	flag.b->description = _("Byte Swap the Data During Import");
 
 	flag.gmt_hd = G_define_flag();
 	flag.gmt_hd->key = 'h';
-	flag.gmt_hd->description = "Get region info from GMT style header";
+	flag.gmt_hd->description = _("Get region info from GMT style header");
 
 	parm.input = G_define_option();
 	parm.input->key = "input";
 	parm.input->type = TYPE_STRING;
 	parm.input->required = YES;
-	parm.input->description = "Bin raster file to be imported";
+	parm.input->description = _("Bin raster file to be imported");
 	parm.input->gisprompt = "file,file,file";
 
 	parm.output = G_define_option();
 	parm.output->key = "output";
 	parm.output->type = TYPE_STRING;
 	parm.output->required = YES;
-	parm.output->description = "Name for resultant raster map";
+	parm.output->description = _("Name for resultant raster map");
 	parm.output->gisprompt = "any,cell,raster";
 
 	parm.title = G_define_option();
@@ -148,56 +150,56 @@ int main (int argc, char *argv[])
 	parm.title->key_desc = "\"phrase\"";
 	parm.title->type = TYPE_STRING;
 	parm.title->required = NO;
-	parm.title->description = "Title for resultant raster map";
+	parm.title->description = _("Title for resultant raster map");
 
 	parm.bytes = G_define_option();
 	parm.bytes->key = "bytes";
 	parm.bytes->type = TYPE_INTEGER;
 	parm.bytes->answer = "1";
 	parm.bytes->required = NO;
-	parm.bytes->description = "Number of bytes per cell (1, 2, 4)" ;
+	parm.bytes->description = _("Number of bytes per cell (1, 2, 4)") ;
 
 	parm.north = G_define_option();
 	parm.north->key = "north";
 	parm.north->type = TYPE_DOUBLE;
 	parm.north->required = NO;
-	parm.north->description = "Northern limit of geographic region (outer edge)" ;
+	parm.north->description = _("Northern limit of geographic region (outer edge)") ;
 
 	parm.south = G_define_option();
 	parm.south->key = "south";
 	parm.south->type = TYPE_DOUBLE;
 	parm.south->required = NO;
-	parm.south->description = "Southern limit of geographic region (outer edge)" ;
+	parm.south->description = _("Southern limit of geographic region (outer edge)") ;
 
 	parm.east = G_define_option();
 	parm.east->key = "east";
 	parm.east->type = TYPE_DOUBLE;
 	parm.east->required = NO;
-	parm.east->description = "Eastern limit of geographic region (outer edge)" ;
+	parm.east->description = _("Eastern limit of geographic region (outer edge)") ;
 
 	parm.west = G_define_option();
 	parm.west->key = "west";
 	parm.west->type = TYPE_DOUBLE;
 	parm.west->required = NO;
-	parm.west->description = "Western limit of geographic region (outer edge)" ;
+	parm.west->description = _("Western limit of geographic region (outer edge)") ;
 
 	parm.rows = G_define_option();
 	parm.rows->key = "rows";
 	parm.rows->type = TYPE_DOUBLE;
 	parm.rows->required = NO;
-	parm.rows->description = "Number of rows";
+	parm.rows->description = _("Number of rows");
 
 	parm.cols = G_define_option();
 	parm.cols->key = "cols";
 	parm.cols->type = TYPE_DOUBLE;
 	parm.cols->required = NO;
-	parm.cols->description = "Number of columns";
+	parm.cols->description = _("Number of columns");
 
 	parm.anull= G_define_option();
 	parm.anull->key = "anull";
 	parm.anull->type = TYPE_DOUBLE;
 	parm.anull->required = NO;
-	parm.anull->description = "Set Value to NULL";
+	parm.anull->description = _("Set Value to NULL");
 
 	if (G_parser(argc,argv))
 		exit(1);

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 static char fs = '\t';
 static struct Categories cats;
@@ -26,15 +27,15 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Prints category values and labels associated "
-		"with user-specified raster map layers.";
+		_("Prints category values and labels associated "
+		"with user-specified raster map layers.");
 
     parm.raster = G_define_option() ;
     parm.raster->key        = "map";
     parm.raster->type       = TYPE_STRING;
     parm.raster->required   = YES;
 	parm.raster->gisprompt  = "old,cell,raster" ;
-    parm.raster->description= "Name of a raster map" ;
+    parm.raster->description= _("Name of a raster map") ;
 
     parm.vals = G_define_option() ;
     parm.vals->key        = "vals" ;
@@ -42,7 +43,7 @@ main (int argc, char *argv[])
     parm.vals->type       = TYPE_STRING ;
     parm.vals->multiple   = YES;
     parm.vals->required   = NO;
-    parm.vals->description= "Comma separated value list: e.g. 1.4,3.8,13" ;
+    parm.vals->description= _("Comma separated value list: e.g. 1.4,3.8,13") ;
 
     parm.cats = G_define_option() ;
     parm.cats->key        = "cats" ;
@@ -50,20 +51,21 @@ main (int argc, char *argv[])
     parm.cats->type       = TYPE_STRING ;
     parm.cats->multiple   = YES;
     parm.cats->required   = NO;
-    parm.cats->description= "Category list: e.g. 1,3-8,13" ;
+    parm.cats->description= _("Category list: e.g. 1,3-8,13") ;
 
     parm.fs = G_define_option() ;
     parm.fs->key        = "fs" ;
     parm.fs->key_desc   = "character|space|tab";
     parm.fs->type       = TYPE_STRING ;
     parm.fs->required   = NO;
-    parm.fs->description= "Output separator character (default: tab)" ;
+    parm.fs->description= _("Output separator character (default: tab)") ;
 
     if (G_parser(argc, argv))
 	exit(-1);
 
     name = parm.raster->answer;
 
+    /* see v.in.ascii for a better solution */
     if (parm.fs->answer != NULL)
     {
 	if (strcmp(parm.fs->answer, "space") == 0)

@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  * Copyright (C) 2000 by the GRASS Development Team
  * Author: Bob Covill <bcovill@tekmap.ns.ca>
  * 
@@ -17,6 +15,7 @@
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
+#include "glocale.h"
 
 static int move(int, int);
 static int cont(int, int);
@@ -53,8 +52,8 @@ int main(int argc, char *argv[])
 
     /* Set description */
     module = G_define_module();
-    module->description = ""
-	"Outputs the raster map layer values lying on user-defined line(s).";
+    module->description =
+	_("Outputs the raster map layer values lying on user-defined line(s).");
 
     parm.opt1 = G_define_option();
     parm.opt1->key = "input";
@@ -62,7 +61,7 @@ int main(int argc, char *argv[])
     parm.opt1->required = YES;
     parm.opt1->multiple = NO;
     parm.opt1->gisprompt = "old,cell,raster";
-    parm.opt1->description = "Name of existing raster map";
+    parm.opt1->description = _("Name of existing raster map");
 
     parm.output = G_define_option();
     parm.output->key = "output";
@@ -70,7 +69,7 @@ int main(int argc, char *argv[])
     parm.output->required = NO;
     parm.output->answer     = "-";
     parm.output->gisprompt = "old,cell,raster";
-    parm.output->description = "Name of file for output (use output=- for stdout)";
+    parm.output->description = _("Name of file for output (use output=- for stdout)");
 
     parm.profile = G_define_option();
     parm.profile->key = "profile";
@@ -78,30 +77,30 @@ int main(int argc, char *argv[])
     parm.profile->required = NO;
     parm.profile->multiple = YES;
     parm.profile->key_desc = "east,north";
-    parm.profile->description = "Profile Coordinate Pairs";
+    parm.profile->description = _("Profile Coordinate Pairs");
 
     parm.res = G_define_option();
     parm.res->key = "res";
     parm.res->type = TYPE_DOUBLE;
     parm.res->required = NO;
     parm.res->description =
-	"Resolution along profile (default = current region resolution)";
+	_("Resolution along profile (default = current region resolution)");
 
     parm.null_str = G_define_option() ;
     parm.null_str->key        = "null";
     parm.null_str->type       = TYPE_STRING;
     parm.null_str->required   = NO;
     parm.null_str->answer     = "*";
-    parm.null_str->description= "Char string to represent no data cell" ;
+    parm.null_str->description= _("Character to represent no data cell") ;
 
     parm.i = G_define_flag();
     parm.i->key = 'i';
-    parm.i->description = "Interactively select End-Points";
+    parm.i->description = _("Interactively select End-Points");
 
     parm.g = G_define_flag();
     parm.g->key = 'g';
     parm.g->description =
-	"Output easting and northing in first two columns of four column output";
+	_("Output easting and northing in first two columns of four column output");
 
 
     if (G_parser(argc, argv))

@@ -1,5 +1,6 @@
-#include "rule.h"
 #include <string.h>
+#include "rule.h"
+#include "gis.h"
 
 static int scan_value (CELL *);
 static char *cur;

@@ -2,6 +2,7 @@
 #include <string.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int 
 main (int argc, char *argv[])
@@ -29,15 +30,15 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Recategorizes data in a raster map layer by grouping cells " 
-		"that form physically discrete areas into unique categories.";
+		_("Recategorizes data in a raster map layer by grouping cells " 
+		"that form physically discrete areas into unique categories.");
 						
     opt1 = G_define_option() ;
     opt1->key        = "input";
     opt1->type       = TYPE_STRING;
     opt1->required   = YES;
     opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description= "input layer name" ;
+    opt1->description= _("Input layer name");
 
 
     opt2 = G_define_option() ;
@@ -45,20 +46,20 @@ main (int argc, char *argv[])
     opt2->type       = TYPE_STRING;
     opt2->required   = YES;
     opt2->gisprompt  = "new,cell,raster" ;
-    opt2->description= "output layer name";
+    opt2->description= _("Output layer name");
 
     opt3 = G_define_option() ;
     opt3->key        = "title";
     opt3->key_desc   = "\"string\"";
     opt3->type       = TYPE_STRING;
     opt3->required   = NO;
-    opt3->description= "Title, in quotes";
+    opt3->description= _("Title, in quotes");
 
 /* Define the different flags */
 
     flag1 = G_define_flag() ;
     flag1->key         = 'q' ;
-    flag1->description = "quiet" ;
+    flag1->description = _("Quiet") ;
 
     if (G_parser(argc, argv) < 0)
 	exit(-1);

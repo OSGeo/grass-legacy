@@ -21,6 +21,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include "gis.h"
+#include "glocale.h"
 
 long newsize, oldsize;
 int process(char *, int, int);
@@ -39,7 +40,7 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Compresses and decompresses raster files.";
+		_("Compresses and decompresses raster files.");
 
     map = G_define_option();
     map->key = "map";
@@ -47,15 +48,15 @@ int main (int argc, char *argv[])
     map->required = YES;
 	map->gisprompt  = "old,cell,raster" ;
     map->multiple = YES;
-    map->description = "Name of existing raster map(s)";
+    map->description = _("Name of existing raster map(s)");
 
     uncompress = G_define_flag();
     uncompress->key = 'u';
-    uncompress->description = "Uncompress the map";
+    uncompress->description = _("Uncompress the map");
 
     quiet = G_define_flag() ;
     quiet->key         = 'q' ;
-    quiet->description = "Run quietly" ;
+    quiet->description = _("Run quietly") ;
 
 
     if (G_parser(argc,argv))

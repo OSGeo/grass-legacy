@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #include "gis.h"
+#include "glocale.h"
 
 #include "local_proto.h"
 
@@ -80,9 +81,9 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Makes each output cell value a "
+		_("Makes each output cell value a "
 		"function of the values assigned to the corresponding cells "
-		"in the input raster map layers.";
+		"in the input raster map layers.");
 
 	parm.input = G_define_option() ;
 	parm.input->key        = "input" ;
@@ -90,29 +91,29 @@ int main (int argc, char *argv[])
 	parm.input->required   = YES ;
 	parm.input->multiple   = YES ;
 	parm.input->gisprompt  = "old,cell,raster" ;
-	parm.input->description= "Names of existing raster files" ;
+	parm.input->description= _("Names of existing raster files") ;
 
 	parm.output = G_define_option() ;
 	parm.output->key        = "output" ;
 	parm.output->type       = TYPE_STRING ;
 	parm.output->required   = YES ;
 	parm.output->gisprompt  = "any,cell,raster" ;
-	parm.output->description= "Name of the new raster file" ;
+	parm.output->description= _("Name of the new raster file") ;
 
 	parm.method = G_define_option() ;
 	parm.method->key        = "method" ;
 	parm.method->type       = TYPE_STRING ;
 	parm.method->required   = YES ;
 	parm.method->options    = build_method_list();
-	parm.method->description= "Aggregate operation" ;
+	parm.method->description= _("Aggregate operation") ;
 
 	flag.quiet = G_define_flag();
 	flag.quiet->key = 'q';
-	flag.quiet->description = "Run quietly";
+	flag.quiet->description = _("Run quietly");
 
 	flag.nulls = G_define_flag();
 	flag.nulls->key = 'n';
-	flag.nulls->description = "Propagate NULLs";
+	flag.nulls->description = _("Propagate NULLs");
 
 	if (G_parser(argc,argv))
 		exit(1);

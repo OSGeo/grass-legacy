@@ -3,6 +3,7 @@
 #include <string.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 FILE *Tmp_fd = NULL;
 char *Tmp_file = NULL;
@@ -44,20 +45,20 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Convert an ASCII raster text file into a (binary) raster map layer.";
+		_("Convert an ASCII raster text file into a (binary) raster map layer.");
 
 	parm.input = G_define_option();
 	parm.input->key = "input";
 	parm.input->type = TYPE_STRING;
 	parm.input->required = YES;
-	parm.input->description = "Ascii raster file to be imported";
+	parm.input->description = _("Ascii raster file to be imported");
 	parm.input->gisprompt = "file,file,file";
 
 	parm.output = G_define_option();
 	parm.output->key = "output";
 	parm.output->type = TYPE_STRING;
 	parm.output->required = YES;
-	parm.output->description = "Name for resultant raster map";
+	parm.output->description = _("Name for resultant raster map");
 	parm.output->gisprompt = "any,cell,raster";
 
 	parm.title = G_define_option();
@@ -65,14 +66,14 @@ main (int argc, char *argv[])
 	parm.title->key_desc = "\"phrase\"";
 	parm.title->type = TYPE_STRING;
 	parm.title->required = NO;
-	parm.title->description = "Title for resultant raster map";
+	parm.title->description = _("Title for resultant raster map");
 
 	parm.mult = G_define_option();
 	parm.mult->key = "mult";
 	parm.mult->type = TYPE_DOUBLE;
 	parm.mult->answer = "1.0 or read from header";
 	parm.mult->required = NO;
-	parm.mult->description = "Multiplier for ascii data" ;
+	parm.mult->description = _("Multiplier for ascii data") ;
 
         parm.nv = G_define_option();
         parm.nv->key = "nv";
@@ -80,28 +81,28 @@ main (int argc, char *argv[])
         parm.nv->required = NO;
         parm.nv->multiple = NO;
 	parm.nv->answer = "* or read from header";
-        parm.nv->description = "String representing NULL value data cell";
+        parm.nv->description = _("String representing NULL value data cell");
 
 	flag.i = G_define_flag();
 	flag.i->key = 'i';
 	flag.i->description = 
-		"integer values are imported";
+		_("integer values are imported");
 
 	flag.f = G_define_flag();
 	flag.f->key = 'f';
 	flag.f->description = 
-		"floating point values are imported";
+		_("floating point values are imported");
 
 	flag.d = G_define_flag();
 	flag.d->key = 'd';
 	flag.d->description = 
-	     "double floating point values are imported";
+	     _("double floating point values are imported");
 
 
 	flag.s = G_define_flag();
 	flag.s->key = 's';
 	flag.s->description =
-		"SURFER (Golden Software) ascii grid file will be imported";
+		_("SURFER (Golden Software) ascii grid file will be imported");
 
 	if (G_parser(argc,argv))
 		exit(1);

@@ -5,8 +5,11 @@
 **
 */
 
+#include <stdlib.h>
+#include <stdio.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int 
 main (int argc, char *argv[])
@@ -32,11 +35,14 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"GRASS module to produce a raster map layer of "
+		_("GRASS module to produce a raster map layer of "
 		"gaussian deviates whose mean and standard deviation "
 		"can be expressed by the user. It uses a gaussian "
-		"random number generator from Press, Flannery, "
-		"Teukolsky and Vetterling (1988) - Numerical Recipes in C.";
+		"random number generator.");
+		
+/* still true ?*/
+/*		 from Press, Flannery, "
+		"Teukolsky and Vetterling (1988) - Numerical Recipes in C.";*/
 
     /****** SET PARSER OPTIONS ******/
 
@@ -45,17 +51,17 @@ main (int argc, char *argv[])
     sigma = G_define_option();	/* 	Standard deviation of the distribution		*/
 
     out->key		= "out";
-    out->description	= "Name of the random surface to be produced";
+    out->description	= _("Name of the random surface to be produced");
     out->type		= TYPE_STRING;
     out->required	= YES;
 
     mean->key		= "mean";
-    mean->description	= "Distribution mean";
+    mean->description	= _("Distribution mean");
     mean->type		=  TYPE_DOUBLE;
     mean->answer	= "0.0";
 
     sigma->key		= "sigma";
-    sigma->description	= "Standard deviation";
+    sigma->description	= _("Standard deviation");
     sigma->type		= TYPE_DOUBLE;
     sigma->answer	= "1.0";
 
@@ -71,9 +77,7 @@ main (int argc, char *argv[])
 
     if (G_legal_filename(out->answer)=='\0')
     {
-	char err[256];
-	sprintf(err,"Illegal file name. Please try another.");
-	G_fatal_error(err);
+	G_fatal_error("Illegal file name. Please try another.");
     }
     else
     {

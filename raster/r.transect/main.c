@@ -1,11 +1,8 @@
-/*
- * $Id$
- */
-
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -34,13 +31,13 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-	"Outputs raster map layer values lying along "
-	"user defined transect line(s).";
+	_("Outputs raster map layer values lying along "
+	"user defined transect line(s).");
 
     parms.map = G_define_option();
     parms.map->key = "map";
     parms.map->type = TYPE_STRING;
-    parms.map->description = "Raster map to be queried";
+    parms.map->description = _("Raster map to be queried");
     parms.map->required = YES;
     parms.map->multiple = NO;
 
@@ -48,7 +45,7 @@ int main (int argc, char *argv[])
     parms.result->key = "result";
     parms.result->key_desc = "type";
     parms.result->type = TYPE_STRING;
-    parms.result->description = "Type of result to be output";
+    parms.result->description = _("Type of result to be output");
     parms.result->required = NO;
     parms.result->multiple = NO;
     parms.result->options = "raw,median,average";
@@ -58,7 +55,7 @@ int main (int argc, char *argv[])
     parms.line->key = "line";
     parms.line->key_desc = "east,north,azimuth,distance";
     parms.line->type = TYPE_STRING;
-    parms.line->description = "Transect definition";
+    parms.line->description = _("Transect definition");
     parms.line->required = YES;
     parms.line->multiple = YES;
 
@@ -67,19 +64,19 @@ int main (int argc, char *argv[])
     parms.null_str->type       = TYPE_STRING;
     parms.null_str->required   = NO;
     parms.null_str->answer     = "*";
-    parms.null_str->description= "Char string to represent no data cell" ;
+    parms.null_str->description= _("Char string to represent no data cell") ;
 
 /*  parms.width = G_define_option();
     parms.width->key = "width";
     parms.width->type = TYPE_INTEGER;
-    parms.width->description = "Transect width, in cells (odd number)";
+    parms.width->description = _("Transect width, in cells (odd number)");
     parms.width->answer = "1";
 */
 
     coord = G_define_flag();
     coord->key = 'g';
     coord->description =
-	"Output easting and northing in first two columns of four column output";
+	_("Output easting and northing in first two columns of four column output");
 
     if (G_parser(argc,argv))
 	exit(1);

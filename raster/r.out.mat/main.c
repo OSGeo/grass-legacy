@@ -1,4 +1,4 @@
-/* $Id$ 
+/*
  * r.out.mat
  *
  * Output a GRASS raster file to a MAT-File (version 4).
@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 int main(int argc, char *argv[]) {
 
@@ -62,7 +63,7 @@ int main(int argc, char *argv[]) {
 
     module = G_define_module();
     module->description =
-         "Exports a GRASS raster to a binary MAT-File.";
+         _("Exports a GRASS raster to a binary MAT-File.");
 
     /* Define the different options */
 
@@ -71,17 +72,17 @@ int main(int argc, char *argv[]) {
     inputfile->type       = TYPE_STRING;
     inputfile->required   = YES;
     inputfile->gisprompt  = "old,cell,raster" ;
-    inputfile->description= "Name of an existing raster map" ;
+    inputfile->description= _("Name of an existing raster map") ;
 
     outputfile = G_define_option() ;
     outputfile->key        = "output";
     outputfile->type       = TYPE_STRING;
     outputfile->required   = YES;
-    outputfile->description= "Name for the output binary MAT-File" ;
+    outputfile->description= _("Name for the output binary MAT-File") ;
 
     verbose = G_define_flag();
     verbose->key = 'v';
-    verbose->description = "Verbose mode";
+    verbose->description = _("Verbose mode");
 
 
     if (G_parser(argc,argv))
@@ -94,14 +95,14 @@ int main(int argc, char *argv[]) {
     mapset = G_find_cell2 (infile, "");
 
     if (mapset == NULL) {
-        G_fatal_error("raster <%s> not found", infile);
+        G_fatal_error(_("raster <%s> not found"), infile);
     }
 
     map_type = G_raster_map_type(infile, mapset);
 
     fd = G_open_cell_old (infile, mapset);
     if (fd < 0)
-        G_fatal_error("unable to open <%s>", infile);
+        G_fatal_error(_("unable to open <%s>"), infile);
 
     /* open bin file for writing */
     fp1 = fopen(outfile, "wb");

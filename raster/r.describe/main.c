@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -35,7 +36,7 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Prints terse list of category values found in a raster map layer.";
+		_("Prints terse list of category values found in a raster map layer.");
 
 	/* define different options */
 	option.map = G_define_option() ;
@@ -43,7 +44,7 @@ int main (int argc, char *argv[])
 	option.map->type       = TYPE_STRING ;
 	option.map->required   = YES ;
 	option.map->multiple   = NO;
-	option.map->description= "Name of raster map" ;
+	option.map->description= _("Name of raster map") ;
 	option.map->gisprompt  = "old,cell,raster" ;
 
 	option.nv = G_define_option() ;
@@ -52,7 +53,7 @@ int main (int argc, char *argv[])
 	option.nv->required	= NO ;
 	option.nv->multiple	= NO ;
 	option.nv->answer	= "*" ;
-	option.nv->description	= "string representing no data cell value";
+	option.nv->description	= _("string representing no data cell value");
 
         option.nsteps = G_define_option() ;
         option.nsteps->key          = "nsteps" ;
@@ -60,29 +61,29 @@ int main (int argc, char *argv[])
         option.nsteps->required     = NO ;
         option.nsteps->multiple     = NO ;
         option.nsteps->answer       = "255" ;
-        option.nsteps->description  = "number of quantization steps";
+        option.nsteps->description  = _("number of quantization steps");
 
 	/*define the different flags */
 
 	flag.one =G_define_flag() ;
 	flag.one->key         = '1';
-	flag.one->description = "Print the output one value per line";
+	flag.one->description = _("Print the output one value per line");
 
 	flag.r =G_define_flag() ;
 	flag.r->key         = 'r';
-	flag.r->description = "Only print the range of the data";
+	flag.r->description = _("Only print the range of the data");
 
 	flag.q =G_define_flag() ;
 	flag.q->key        = 'q';
-	flag.q->description = "Quiet";
+	flag.q->description = _("Quiet");
 
 	flag.d =G_define_flag() ;
 	flag.d->key        = 'd';
-	flag.d->description = "Use the current region";
+	flag.d->description = _("Use the current region");
 
 	flag.i =G_define_flag() ;
 	flag.i->key        = 'i';
-	flag.i->description = "read fp map as integer";
+	flag.i->description = _("Read fp map as integer");
 
 	verbose = 1;
 

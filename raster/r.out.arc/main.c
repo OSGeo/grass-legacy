@@ -1,17 +1,16 @@
 #include <string.h>
-#include "gis.h"
 #include <math.h>
 #include <stdio.h>
+#include "gis.h"
+#include "glocale.h"
 
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       r.out.arc
 * AUTHOR(S):    Original author: Michael Shapiro (r.out.ascii)
 *               modified to r.out.arc by Markus Neteler, Univ. of Hannover
-*               neteler@geog.uni-hannover.de (11/99)
+*               neteler geog.uni-hannover.de (11/99)
 * PURPOSE:      r.out.arc: writes ARC/INFO ASCII GRID file
 * COPYRIGHT:    (C) 2000 by the GRASS Development Team
 *
@@ -57,7 +56,7 @@ int main(int argc, char *argv[])
 
 	module = G_define_module();
     module->description =
-		"Converts a raster map layer into an ESRI ARCGRID file.";
+		_("Converts a raster map layer into an ESRI ARCGRID file.");
 
 /* Define the different options */
 
@@ -66,30 +65,30 @@ int main(int argc, char *argv[])
     parm.map->type       = TYPE_STRING;
     parm.map->required   = YES;
     parm.map->gisprompt  = "old,cell,raster" ;
-    parm.map->description= "Name of an existing raster map layer";
+    parm.map->description= _("Name of an existing raster map layer");
 
     parm.output = G_define_option() ;
     parm.output->key        = "output";
     parm.output->type       = TYPE_STRING;
     parm.output->required   = YES;
     parm.output->gisprompt  = "old,cell,raster" ;
-    parm.output->description= "Name of an output ARC-GID map (use out=- for stdout)";
+    parm.output->description= _("Name of an output ARC-GID map (use out=- for stdout)");
 
     parm.dp = G_define_option() ;
     parm.dp->key        = "dp";
     parm.dp->type       = TYPE_INTEGER;
     parm.dp->required   = NO;
     parm.dp->answer     = "6";
-    parm.dp->description= "Number of decimal places";
+    parm.dp->description= _("Number of decimal places");
 
     flag.noheader = G_define_flag();
     flag.noheader->key = 'h';
-    flag.noheader->description = "Suppress printing of header information";
+    flag.noheader->description = _("Suppress printing of header information");
 
   /* Added to optionaly produce a single line output.     -- emes -- 12.10.92 */
     flag.singleline = G_define_flag();
     flag.singleline->key = '1';
-    flag.singleline->description = "List one entry per line instead of full row";
+    flag.singleline->description = _("List one entry per line instead of full row");
 
     if (G_parser(argc, argv))
        	exit (-1);

@@ -2,6 +2,7 @@
 #include <string.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -23,27 +24,27 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Finds the mode of values in a cover map within "
+		_("Finds the mode of values in a cover map within "
 		"areas assigned the same category value in a "
-		"user-specified base map.";
+		"user-specified base map.");
 
     parm.base = G_define_option();
     parm.base->key = "base";
-    parm.base->description = "Base map to be reclassified";
+    parm.base->description = _("Base map to be reclassified");
     parm.base->required = YES;
     parm.base->type = TYPE_STRING;
     parm.base->gisprompt = "old,cell,raster";
 
     parm.cover = G_define_option();
     parm.cover->key = "cover";
-    parm.cover->description = "Coverage map";
+    parm.cover->description = _("Coverage map");
     parm.cover->required = YES;
     parm.cover->type = TYPE_STRING;
     parm.cover->gisprompt = "old,cell,raster";
 
     parm.output = G_define_option();
     parm.output->key = "output";
-    parm.output->description = "Output map";
+    parm.output->description = _("Output map");
     parm.output->required = YES;
     parm.output->type = TYPE_STRING;
     parm.output->gisprompt = "new,cell,raster";

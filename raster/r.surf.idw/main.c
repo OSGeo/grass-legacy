@@ -18,6 +18,7 @@
 #include "gis.h"
 #define MAIN
 #include "main.h"
+#include "glocale.h"
 
 static int error_flag = 0;
 static char *input;
@@ -47,32 +48,32 @@ int main (int argc, char **argv)
 
 	module = G_define_module();
     module->description =
-		"Surface interpolation utility for raster map layers.";
+		_("Surface interpolation utility for raster map layers.");
 
     parm.input = G_define_option();
     parm.input->key = "input";
     parm.input->type = TYPE_STRING;
     parm.input->required = YES;
-    parm.input->description = "input raster map";
+    parm.input->description = _("Input raster map");
     parm.input->gisprompt = "old,cell,raster";
 
     parm.output = G_define_option();
     parm.output->key = "output";
     parm.output->type = TYPE_STRING;
     parm.output->required = YES;
-    parm.output->description = "output raster map";
+    parm.output->description = _("Output raster map");
     parm.output->gisprompt = "any,cell,raster";
 
     parm.npoints = G_define_option();
     parm.npoints->key = "npoints";
     parm.npoints->type = TYPE_INTEGER;
     parm.npoints->required = NO;
-    parm.npoints->description = "number of interpolation points";
+    parm.npoints->description = _("Number of interpolation points");
     parm.npoints->answer = "12";
 
     flag.e = G_define_flag();
     flag.e->key = 'e';
-    flag.e->description = "output is the interpolation error";
+    flag.e->description = _("Output is the interpolation error");
 
     if (G_parser(argc,argv))
 	exit(1);

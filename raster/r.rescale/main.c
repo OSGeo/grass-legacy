@@ -3,6 +3,7 @@
 #include <string.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -31,8 +32,8 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
     module->description =
-		"Rescales the range of category values "
-		"in a raster map layer.";
+		_("Rescales the range of category values "
+		"in a raster map layer.");
 				        
 	/* Define the different options */
 
@@ -41,39 +42,39 @@ int main (int argc, char *argv[])
 	parm.input->type       = TYPE_STRING;
 	parm.input->required   = YES;
 	parm.input->gisprompt  = "old,cell,raster" ;
-	parm.input->description= "The name of the raster map to be rescaled" ;
+	parm.input->description= _("The name of the raster map to be rescaled") ;
 
 	parm.from = G_define_option() ;
 	parm.from->key        = "from";
 	parm.from->key_desc   = "min,max";
 	parm.from->type       = TYPE_INTEGER;
 	parm.from->required   = NO;
-	parm.from->description= "The input data range to be rescaled (default: full range of input map)";
+	parm.from->description= _("The input data range to be rescaled (default: full range of input map)");
 
 	parm.output = G_define_option() ;
 	parm.output->key        = "output";
 	parm.output->type       = TYPE_STRING;
 	parm.output->required   = YES;
 	parm.output->gisprompt  = "new,cell,raster" ;
-	parm.output->description= "The resulting raster map name";
+	parm.output->description= _("The resulting raster map name");
 
 	parm.to = G_define_option() ;
 	parm.to->key        = "to";
 	parm.to->key_desc   = "min,max";
 	parm.to->type       = TYPE_INTEGER;
 	parm.to->required   = YES;
-	parm.to->description= "The output data range";
+	parm.to->description= _("The output data range");
 
 	parm.title = G_define_option() ;
 	parm.title->key        = "title";
 	parm.title->key_desc   = "\"phrase\"";
 	parm.title->type       = TYPE_STRING;
 	parm.title->required   = NO;
-	parm.title->description= "Title for new raster map" ;
+	parm.title->description= _("Title for new raster map") ;
 
 	flag.quiet = G_define_flag();
 	flag.quiet->key = 'q';
-	flag.quiet->description = "Quietly";
+	flag.quiet->description = _("Quietly");
 
 	if (G_parser(argc, argv))
 		exit(-1);

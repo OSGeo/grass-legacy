@@ -1,9 +1,11 @@
 /* Written by Bill Brown, UIUC GIS Laboratory
  */
 
-#include <strings.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 typedef int FILEDESC;
 
@@ -24,16 +26,16 @@ int main(
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
+    module = G_define_module();
     module->description =
-		"Sums up the raster cell values.";
+		_("Sums up the raster cell values.");
 
     rast = G_define_option();
     rast->key            	   = "rast";
     rast->type           	   = TYPE_STRING;
     rast->required     	           = YES;
     rast->gisprompt    		   = "old,cell,raster";
-    rast->description  		   = "Name of incidence or density file.";
+    rast->description  		   = _("Name of incidence or density file.");
 
 
     if (G_parser (argc, argv))
@@ -41,13 +43,11 @@ int main(
 
     cellmap = G_find_file2 ("cell", rast->answer, "");
     if(!cellmap){
-	sprintf(errbuf,"Couldn't find raster file %s", rast->answer);
-	G_fatal_error(errbuf);
+	G_fatal_error(_("Couldn't find raster file %s"), rast->answer);
     }
     if ((cellfile = G_open_cell_old(rast->answer, cellmap)) == -1)
     {
-	sprintf(errbuf,"Not able to open cellfile for [%s]", rast->answer);
-	G_fatal_error(errbuf);
+	G_fatal_error(_("Not able to open cellfile for [%s]"), rast->answer);
     }
  
     
@@ -85,10 +85,6 @@ int main(
     free(dbuf);
     G_close_cell(cellfile);
     
-    return(1);
+    return(0);
 
 }
-
-
-
-

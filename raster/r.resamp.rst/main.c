@@ -42,6 +42,7 @@
 #include "bitmap.h"
 #include "surf.h"
 #include "interpf.h"
+#include "glocale.h"
 
 /*
  * flexible, normalized segmented processing surface analysis program with
@@ -157,131 +158,130 @@ int main (int argc, char *argv[])
 
   module = G_define_module();
   module->description =
-	"Reinterpolates and computes topographic analysis from "
+	_("Reinterpolates and computes topographic analysis from "
 	"input raster file to a new raster file (possibly with "
 	"different resolution) using regularized spline with "
-	"tension and smoothing.";
+	"tension and smoothing.");
 
   parm.input = G_define_option ();
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;
   parm.input->required = YES;
   parm.input->gisprompt = "old,cell,raster";
-  parm.input->description = "Name of the input raster file";
+  parm.input->description = _("Name of the input raster file");
 
   flag.iselev = G_define_flag ();
   flag.iselev->key = 'r';
-  flag.iselev->description = "Do zeroes in input map represent elevation?";
+  flag.iselev->description = _("Do zeroes in input map represent elevation?");
 
   parm.res_ew = G_define_option ();
   parm.res_ew->key = "ew_res";
   parm.res_ew->type = TYPE_DOUBLE;
   parm.res_ew->required = YES;
-  parm.res_ew->description = "Desired East-West resolution";
+  parm.res_ew->description = _("Desired east-west resolution");
 
   parm.res_ns = G_define_option ();
   parm.res_ns->key = "ns_res";
   parm.res_ns->type = TYPE_DOUBLE;
   parm.res_ns->required = YES;
-  parm.res_ns->description = "Desired North-South resolution";
+  parm.res_ns->description = _("Desired north-south resolution");
 
   parm.elev = G_define_option ();
   parm.elev->key = "elev";
   parm.elev->type = TYPE_STRING;
   parm.elev->required = NO;
   parm.elev->gisprompt = "new,cell,raster";
-  parm.elev->description = "Output z-file (elevation)";
+  parm.elev->description = _("Output z-file (elevation)");
 
   parm.slope = G_define_option ();
   parm.slope->key = "slope";
   parm.slope->type = TYPE_STRING;
   parm.slope->required = NO;
   parm.slope->gisprompt = "new,cell,raster";
-  parm.slope->description = "Slope";
+  parm.slope->description = _("Slope");
 
   parm.aspect = G_define_option ();
   parm.aspect->key = "aspect";
   parm.aspect->type = TYPE_STRING;
   parm.aspect->required = NO;
   parm.aspect->gisprompt = "new,cell,raster";
-  parm.aspect->description = "Aspect";
+  parm.aspect->description = _("Aspect");
 
   parm.pcurv = G_define_option ();
   parm.pcurv->key = "pcurv";
   parm.pcurv->type = TYPE_STRING;
   parm.pcurv->required = NO;
   parm.pcurv->gisprompt = "new,cell,raster";
-  parm.pcurv->description = "Profile curvature";
+  parm.pcurv->description = _("Profile curvature");
 
   parm.tcurv = G_define_option ();
   parm.tcurv->key = "tcurv";
   parm.tcurv->type = TYPE_STRING;
   parm.tcurv->required = NO;
   parm.tcurv->gisprompt = "new,cell,raster";
-  parm.tcurv->description = "Tangential curvature";
+  parm.tcurv->description = _("Tangential curvature");
 
   parm.mcurv = G_define_option ();
   parm.mcurv->key = "mcurv";
   parm.mcurv->type = TYPE_STRING;
   parm.mcurv->required = NO;
   parm.mcurv->gisprompt = "new,cell,raster";
-  parm.mcurv->description = "Mean curvature";
+  parm.mcurv->description = _("Mean curvature");
 
   flag.deriv = G_define_flag ();
   flag.deriv->key = 'd';
-  flag.deriv->description = "Output partial derivatives instead";
+  flag.deriv->description = _("Output partial derivatives instead");
 
   parm.smooth = G_define_option ();
   parm.smooth->key = "smooth";
   parm.smooth->type = TYPE_STRING;
   parm.smooth->required = NO;
   parm.smooth->gisprompt = "old,cell,raster";
-  parm.smooth->description = "Name of the cell file containing smoothing";
-  parm.smooth->description = "Name of the cell file containing smoothing";
+  parm.smooth->description = _("Name of the cell file containing smoothing");
 
   parm.maskmap = G_define_option ();
   parm.maskmap->key = "maskmap";
   parm.maskmap->type = TYPE_STRING;
   parm.maskmap->required = NO;
   parm.maskmap->gisprompt = "old,cell,raster";
-  parm.maskmap->description = "Name of the raster file used as mask";
+  parm.maskmap->description = _("Name of the raster file used as mask");
 
   parm.overlap = G_define_option ();
   parm.overlap->key = "overlap";
   parm.overlap->type = TYPE_INTEGER;
   parm.overlap->required = NO;
   parm.overlap->answer = OVERLAP;
-  parm.overlap->description = "Rows/columns overlap for segmentation ";
+  parm.overlap->description = _("Rows/columns overlap for segmentation");
 
   parm.zmult = G_define_option ();
   parm.zmult->key = "zmult";
   parm.zmult->type = TYPE_DOUBLE;
   parm.zmult->answer = ZMULT;
   parm.zmult->required = NO;
-  parm.zmult->description = "Conversion factor for z-values";
+  parm.zmult->description = _("Conversion factor for z-values");
 
   parm.fi = G_define_option ();
   parm.fi->key = "tension";
   parm.fi->type = TYPE_DOUBLE;
   parm.fi->answer = TENSION;
   parm.fi->required = NO;
-  parm.fi->description = "Tension";
+  parm.fi->description = _("Tension");
 
   parm.theta = G_define_option ();
   parm.theta ->key = "theta";
   parm.theta ->type = TYPE_DOUBLE;
   parm.theta ->required = NO;
-  parm.theta ->description = "Anisotropy angle (in degrees)";
+  parm.theta ->description = _("Anisotropy angle (in degrees)");
 
   parm.scalex = G_define_option ();
   parm.scalex ->key = "scalex";
   parm.scalex ->type = TYPE_DOUBLE;
   parm.scalex ->required = NO;
-  parm.scalex ->description = "Anisotropy scaling factor";
+  parm.scalex ->description = _("Anisotropy scaling factor");
 
   flag.cprght = G_define_flag ();
   flag.cprght->key = 't';
-  flag.cprght->description = "Use dnorm independent tension";
+  flag.cprght->description = _("Use dnorm independent tension");
 
 
   if (G_parser (argc, argv))

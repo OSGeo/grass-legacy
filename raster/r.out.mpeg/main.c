@@ -24,6 +24,7 @@
 #include <unistd.h>
 
 #include "gis.h"
+#include "glocale.h"
 
 #include "rom_proto.h"
 
@@ -385,7 +386,7 @@ int *numframes, *numviews, *quality, *convert;
 
 	module = G_define_module();
 	module->description =
-		"Raster File Series to MPEG Conversion Program.";
+		_("Raster File Series to MPEG Conversion Program.");
 
     *numviews = *numframes = 0;
     for(i=0; i<MAXVIEWS; i++){
@@ -396,7 +397,7 @@ int *numframes, *numviews, *quality, *convert;
 	viewopts[i]->required 		= (i? NO: YES);
 	viewopts[i]->multiple 		= YES;
 	viewopts[i]->gisprompt 		= "old,cell,Raster";;
-	sprintf(buf,"Raster file(s) for View%d", i+1);
+	sprintf(buf,_("Raster file(s) for View%d"), i+1);
 	viewopts[i]->description 	= G_store(buf);
     }
 
@@ -406,7 +407,7 @@ int *numframes, *numviews, *quality, *convert;
     out->required 	= NO;
     out->multiple 	= NO;
     out->answer 	= "gmovie.mpg";
-    out->description 	= "Name for output file";
+    out->description 	= _("Name for output file");
 
     qual = G_define_option();
     qual->key		= "qual";
@@ -416,15 +417,15 @@ int *numframes, *numviews, *quality, *convert;
     qual->answer 	= "3";
     qual->options       = "1-5" ;
     qual->description 	= 
-	    "Quality factor (1 = highest quality, lowest compression)";
+	    _("Quality factor (1 = highest quality, lowest compression)");
 
     qt = G_define_flag ();
     qt->key = 'q';
-    qt->description = "Quiet - suppress progress report";
+    qt->description = _("Quiet - suppress progress report");
    
     conv = G_define_flag ();
     conv->key = 'c';
-    conv->description = "Convert on the fly, use less disk space\n\t(requires r.out.ppm with stdout option)";
+    conv->description = _("Convert on the fly, use less disk space\n\t(requires r.out.ppm with stdout option)");
    
     if (G_parser (argc, argv))
 	    exit (-1);

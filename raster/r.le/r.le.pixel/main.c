@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.pixel/main.c                                *
 *         Version 5.0                Nov. 1, 2001          *
@@ -19,6 +18,10 @@
 *				                           *
 ************************************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "gis.h"
 #include "pixel.h"
 #include "config.h"
 
@@ -27,7 +30,7 @@
 
 struct CHOICE *choice;
 
-main(argc, argv)
+int main(argc, argv)
 int   argc;
 char **argv;
 {
@@ -122,6 +125,8 @@ char **argv;
 
   texture_fore();
   free(choice);
+
+  return 0;
 }
 
 

@@ -7,11 +7,14 @@ Help text inserted by
  Markus Neteler 12/97
 */
 
+#include <stdlib.h>
 #include <stdio.h>
 #define MAIN
 #include "basin.h"
 #include "outletP.h"
 #undef MAIN
+#include "gis.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -27,21 +30,21 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Watershed basin creation program.";
+		_("Watershed basin creation program.");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "drainage" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES ;
 	opt1->gisprompt  = "old,cell,raster" ;
-	opt1->description= "Name of input raster map" ;
+	opt1->description= _("Name of input raster map") ;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "basin" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = YES ;
 	opt2->gisprompt  = "new,cell,raster" ;
-	opt2->description= "Name of raster map to contain results" ;
+	opt2->description= _("Name of raster map to contain results") ;
 
 	opt3 = G_define_option() ;
 	opt3->key        = "easting" ;
@@ -49,7 +52,7 @@ int main (int argc, char *argv[])
 	opt3->key_desc   = "x" ;
 	opt3->multiple   = NO;
 	opt3->required   = YES ;
-	opt3->description= "The map E  grid coordinates" ;
+	opt3->description= _("The map E  grid coordinates") ;
 
 	opt4 = G_define_option() ;
 	opt4->key        = "northing" ;
@@ -57,7 +60,7 @@ int main (int argc, char *argv[])
 	opt4->key_desc   = "y" ;
 	opt4->multiple   = NO;
 	opt4->required   = YES ;
-	opt4->description= "The map N grid coordinates" ;
+	opt4->description= _("The map N grid coordinates") ;
 
 	/*   Parse command line */
 	if (G_parser(argc, argv))

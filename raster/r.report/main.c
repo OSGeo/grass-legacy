@@ -1,5 +1,7 @@
 #define GLOBAL
 #include "global.h"
+#include "gis.h"
+#include "glocale.h"
 
 int 
 main (int argc, char *argv[])
@@ -10,7 +12,7 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Reports statistics for raster map layers.";
+		_("Reports statistics for raster map layers.");
 
     parse_command_line (argc, argv);
 

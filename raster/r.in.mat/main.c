@@ -1,5 +1,4 @@
 /* r.in.mat
- * $Id$ 
  *
  * Input a GRASS raster file from a MAT-File (version 4).
  *
@@ -37,6 +36,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 /* typedef unsigned short uint16;
 typedef unsigned int uint32; */
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
 
     module = G_define_module();
     module->description =
-	 "Import a binary MAT-File(v4) to a GRASS raster.";
+	 _("Import a binary MAT-File(v4) to a GRASS raster.");
 
 
     /* Define the different options */
@@ -101,18 +101,18 @@ int main(int argc, char *argv[]) {
     inputfile->type       = TYPE_STRING;
     inputfile->required   = YES;
     inputfile->gisprompt  = "file,file,file" ;
-    inputfile->description= "Name of an existing MAT-File(v4)" ;
+    inputfile->description= _("Name of an existing MAT-File(v4)") ;
 
     outputfile = G_define_option() ;
     outputfile->key	= "output";
     outputfile->type       = TYPE_STRING;
     outputfile->required   = NO;
     outputfile->gisprompt  = "new,cell,raster" ;
-    outputfile->description= "Name for the output raster map (override)";
+    outputfile->description= _("Name for the output raster map (override)");
 
     verbose = G_define_flag();
     verbose->key = 'v';
-    verbose->description = "Verbose mode";
+    verbose->description = _("Verbose mode");
 
 
     if (G_parser(argc,argv))

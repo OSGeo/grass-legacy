@@ -1,6 +1,7 @@
 #include <string.h>
-#include "gis.h"
 #include <stdio.h>
+#include "gis.h"
+#include "glocale.h"
 
 int main(int argc, char *argv[])
 {
@@ -31,7 +32,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-		"GRASS raster map layer data resampling capability.";
+		_("GRASS raster map layer data resampling capability.") ;
 					        
 	/* Define the different options */
 
@@ -40,20 +41,20 @@ int main(int argc, char *argv[])
 	option.input->type       = TYPE_STRING;
 	option.input->required   = YES;
 	option.input->gisprompt  = "old,cell,raster" ;
-	option.input->description= "Name of an input layer" ;
+	option.input->description= _("Name of an input layer") ;
 
 	option.output = G_define_option() ;
 	option.output->key        = "output";
 	option.output->type       = TYPE_STRING;
 	option.output->required   = YES;
 	option.output->gisprompt  = "new,cell,raster" ;
-	option.output->description= "Name of an output layer";
+	option.output->description= _("Name of an output layer") ;
 
 	/* Define the different flags */
 
 	flag1 = G_define_flag() ;
 	flag1->key         = 'q' ;
-	flag1->description = "Quiet" ;
+	flag1->description = _("Quiet");
 
 	if (G_parser(argc, argv))
 		exit (-1);
@@ -64,19 +65,10 @@ int main(int argc, char *argv[])
 
         mapset = G_find_cell2 (name, "");
         if (mapset == NULL)
-        {
-                char buf[200];
-                sprintf (buf, "cell file [%s] not found", name);
-                G_fatal_error (buf);
-        }
+                G_fatal_error ( "raster map [%s] not found", name);
 
         if (G_legal_filename (result) < 0)
-        {
-                char tmp_buf[200];
-
-                sprintf (tmp_buf, "[%s] illegal name", result);
-                G_fatal_error (tmp_buf);
-        }
+                G_fatal_error ( "[%s] illegal name", result);
 
 	/* determine the map type;
 	   data_type is the type of data being processed,
