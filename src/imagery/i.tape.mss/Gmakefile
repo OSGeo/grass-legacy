@@ -1,0 +1,20 @@
+LIST = main.o \
+	annotation.o\
+	ask_info.o\
+	ask_window.o\
+	extract.o\
+	header.o\
+	mount_tape.o\
+	put_row.o\
+	read_tape.o \
+	tape_dir.o\
+	tape_vol.o\
+	tapename.o
+
+LIBES = $(IMAGERYLIB) $(GISLIB)
+
+$(BIN)/i.tape.mss: $(LIST) $(LIBES) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK)
+
+$(LIST): tape.h
+$(LIBES) $(VASKLIB): #
