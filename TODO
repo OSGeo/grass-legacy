@@ -1,4 +1,4 @@
-$Id: TODO,v 1.27 2000-10-16 14:52:00 markus Exp $
+$Id: TODO,v 1.28 2000-10-16 15:04:23 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -12,17 +12,12 @@ Wishlist for GRASS 5
 
 Configure:
 - update missing features in "configure" (see src/CMD/head/head.in)
-     - search for PQLIB, PQINCPATH: PostgreSQL stuff
-     - search for PNGINC, PNGLIB: PNG graphics library
-     - search for TIFFINCPATH, TIFFLIBPATH
      - search for JPEGINCPATH, JPEGLIBPATH
-     - search for MESA (usr/include or usr/include/GL ?)
      - libg2c is required to make r.fill.dir, but configure doesn't check 
        for it's availability
      - search for "yacc" and "(f)lex"
-     - search, if odbc driver lib is present (src/libes/dbms/drivers/odbc/)
   (Being worked on by )
-
+ -> a new make system is on the way...
 
 --------------------------------------------------------------------
 Removal of absolute path codings:
@@ -36,7 +31,7 @@ Regression test suite:
  testing suite, but may be good as a starting point.   
  A testgrass.sh is stored in this directory. Please add further test
  routines.
- (Being worked on by )
+ (Being worked on by Andreas Lange)
 
 --------------------------------------------------------------------
 Font selection:
@@ -71,6 +66,10 @@ Libraries:
   the metadata for external applications like "R" statistics interface
 
 - Parallel CPU support
+
+---------------------------------------------------------------------
+XDriver
+- replace fifos by sockets
 
 ---------------------------------------------------------------------
 CELL driver
