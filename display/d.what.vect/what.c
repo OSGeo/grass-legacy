@@ -381,10 +381,10 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 			F_generate ( Fi->driver, Fi->database, Fi->table, Fi->key, Cats->cat[j], 
 				 NULL, NULL, edit_mode, format, &form);
 			
-			db_append_string (&html, form); 
-
 			if ( txt ) {
-			    fprintf( stdout, "%s", db_get_string ( &html) );
+			    fprintf( stdout, "%s", form );
+			} else { 
+			    db_append_string (&html, form); 
 			}
 			G_free (form);
 			G_free(Fi);
