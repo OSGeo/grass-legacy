@@ -41,18 +41,8 @@ db_driver_list_tables (tlist, tcount, system)
     SQLBindCol( c->stmt, 3, SQL_C_CHAR, tableName, sizeof(tableName),  &indi );
 
     /* Get number of rows */
-    /* WARNING: it seems that after SQLTables() SQLRowCount() sets nrow
-     * to -1, instead of number of tables. Because of that the following solution
-     * is used, may be removed when ODBC works OK.
-     */
-    /*
-    ret = SQLRowCount(c->stmt, &nrow);
-    if ( ret != SQL_SUCCESS && ret != SQL_SUCCESS_WITH_INFO)
-    {
-        report_error("SQLRowCount()");
-	return DB_FAILED;  
-    }
-    */
+    /* WARNING: after SQLTables(), SQLRowCount() doesn't sets number of rows
+     * to number of tables! ODBC developers said, this is correct. */
     nrow = 0;
     ret = SQLFetch( c->stmt );
     while ( ret == SQL_SUCCESS || ret == SQL_SUCCESS_WITH_INFO ) {
