@@ -28,41 +28,77 @@
 #include	<stdio.h>
 #include	<tools.h>
 #include  "colors.h"
+#include  "igraphics.h"
+
+extern int SCREEN_LEFT;
+extern int SCREEN_RIGHT;
+extern int SCREEN_TOP;
+extern int SCREEN_BOTTOM;
 
 extern int WNO ;
 extern int VSNO ;
 
 
+#define MY_EVENTS (REFRESH_EVENT | KEYBOARD_EVENT | BUTTON_EVENT | DELETE_EVENT)
+
 Check_window_refresh()
-{ 
+{
 	int  last_color ;
-	int  which_wno, vsno ;
-	int  x, y ;
+	int vsno;
+	int wno;
+	int wxl = 100,
+		wyl = 100,
+		wxh = 600,
+		wyh = 600;
+
+	int  which_wno;
+
+	int axl, ayl, axh, ayh;
+
+	int cx = 250,
+		cy = 250;
+
+	int curevents;
+	int tmp;
+
+	char keybuf;
+	int keycnt;
+
+	int  txl, tyl, txh, tyh ;
 	int  x_lo, y_lo, x_hi, y_hi ;
 	int  opmask;
 
-	if ( 0 != Inq_refresh_area_data( &which_wno, &vsno, &x, &y,
-		&x, &y, &x_lo, &y_lo, &x_hi, &y_hi, &opmask) )
-	{
-		return(0) ;
-	}
+
+          Inq_events (&curevents);
+          /*Wait_for_events (MY_EVENTS, &curevents);*/ 
+
+		  if (curevents & REFRESH_EVENT)
+		  {
+/*			  fprintf (stderr, "got a refresh event"); */
+			 if ( 0 != Get_refresh_area_data( &which_wno, &vsno, &txl, &tyl,
+				&txh, &tyh, &x_lo, &y_lo, &x_hi, &y_hi, &opmask) )
+					return(0) ;
+			 else
+			 {
+/*				fprintf (stderr, "got something from get_refresh..\n");*/
+
+				/*set clipbox to area needing refreshing*/
+
+				clipbox (WNO, x_lo, y_lo, x_hi, y_hi);
+				_setsize(); /*this is in Graph_Set.c*/
+
+				/* now, return clipbox to normal size*/
+				clipbox (WNO, 0, 0, 
+						 (short)(SCREEN_RIGHT-SCREEN_LEFT), 
+						 (short)(SCREEN_BOTTOM-SCREEN_TOP));
 
 
-	if ( 0 != Get_refresh_area_data( &which_wno, &vsno, &x, &y,
-		&x, &y, &x_lo, &y_lo, &x_hi, &y_hi, &opmask) )
-		return(0) ;
-/*
-	if ( which_wno != WNO)
-		return(0) ;
-*/
+				return(0) ;
+			 }
+		  }
 
-	last_color = Return_last_color() ;
-	color (GRAY) ;
-	rectf( WNO, x_lo, y_lo, x_hi, y_hi) ;
-	color (last_color) ;
-
-	return(0) ;
 }
+
 
 Mouse_window_activation()
 { 
@@ -153,4 +189,3 @@ XMouse_window_activation()
 			Deactivate_process() ;
 	}
 }
-
