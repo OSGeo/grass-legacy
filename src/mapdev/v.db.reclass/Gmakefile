@@ -1,0 +1,21 @@
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+PGM=v.db.reclass
+
+HOME=$(BIN_ALPHA_CMD)
+DBMILIB = $(LIBDIR)/libdbmi.a
+
+LIBES = $(VECTLIB) $(DIG_ATTLIB)\
+	$(DBMILIB) $(VECTLIB_REAL) $(DIG2LIB)\
+	$(MATHLIB) $(EXTRALIB) $(XDRLIB) $(GISLIB)
+
+
+LIST = main.o\
+	input.o\
+	key_data.o\
+	reclass.o
+
+$(HOME)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIBES): #
