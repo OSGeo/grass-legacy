@@ -47,13 +47,13 @@ proc GSelect_::create { element } {
     foreach dir [exec g.mapsets -p] {
         set windfile "$location_path/$dir/WIND"
         if { ! [ file exists $windfile ] } { continue }
-        $tree insert end root $dir -text $dir -data $dir -open 1 \
+        $tree insert end root ms_$dir -text $dir -data $dir -open 1 \
             -image [Bitmap::get openfold] -drawcross auto
 
         set path "$location_path/$dir/$element/"
 	foreach fp [ lsort [glob -directory $path -nocomplain *] ]  {
             set file [file tail $fp]
-            $tree insert end $dir $file@$dir -text $file -data $file \
+            $tree insert end ms_$dir $file@$dir -text $file -data $file \
                   -image [Bitmap::get file] -drawcross never
         }
     }
