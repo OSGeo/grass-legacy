@@ -1,0 +1,132 @@
+
+
+
+Gfilename(2G)        GRASS Reference Manual         Gfilename(2G)
+
+
+
+NAME
+     Gfilename  - Print database file names
+     (G Language Tool)
+
+SYNOPSIS
+     Gfilename element mapset name
+
+DESCRIPTION
+     Gfilename is designed for Bourne shell scripts that need to
+     know the full unix file name for cell files, vector files,
+     site list files, window files, imagery group files, etc., in
+     the database.
+
+
+     element
+          The database element (i.e., directory within the GRASS
+          mapset location).
+
+     mapset
+          The database mapset of the file.  As a convenience, a
+          single dot (.) can be used for the current mapset.
+
+     name The name of the data file.
+
+OUTPUT
+     Gfilename writes one line to standard output:
+
+          file=[filename]
+
+     The output is a /bin/sh command to set the variable file to
+     the full UNIX name for the database file.  This variable may
+     be set in the /bin/sh as follows:
+
+          eval `Gfilename element mapset name`
+
+NOTES
+     This routine generates the filename, but does not care if
+     the file exists or not. This feature allows shell scripts to
+     create new database files as well as use existing ones.
+
+     If the mapset is the current mapset, Gfindfile automatically
+     creates the element if it doesn't already exist.  This makes
+     it easy to add new files to the database without having to
+     worry about the existence of the required database
+     directories.
+
+     The program exits with 0 if everything is ok; non-zero if
+     there is an error, in which case file=[filename] is not
+     output.
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Gfilename(2G)        GRASS Reference Manual         Gfilename(2G)
+
+
+
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
