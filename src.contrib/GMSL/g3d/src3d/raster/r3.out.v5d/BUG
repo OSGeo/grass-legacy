@@ -1,8 +1,15 @@
-The modules (still) crashes if the the WIND3 region differs from
-the volume coordinates (region settings which where used when
-the volume was generated).
+BUGS:
+ * The modules (still) crashes if the the WIND3 region differs from
+  the volume coordinates (region settings which where used when
+  the volume was generated).
+
+ * Probably the output is flipped north/south??
+
+ * if 100 rows/cols/depth are there, only 99 rows/cols/depth will
+   be exported to Vis5D: problem of center cell and corner cell
 
 1/2001 MN
+
 
 G3D library bug?
         G3d_getValueRegion (map, x, y, z, d1p, typeIntern);                  
