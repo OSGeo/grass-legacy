@@ -155,10 +155,10 @@ struct Key_Value *in_proj_keys, *in_units_keys;
         {
             if (G_get_spheroid_by_name(str, &a, &es, &f) ) {
            
-                /* Use a and 1/f values from ellipse.table if available */
-                sprintf(buffa, "a=%f", a);
+                /* Use a and es values from ellipse.table if available */
+                sprintf(buffa, "a=%.16g", a);
                 alloc_options(buffa);
-                sprintf(buffa, "rf=%f", f);
+                sprintf(buffa, "es=%.16g", es);
                 alloc_options(buffa);
             } else {
            
@@ -203,7 +203,7 @@ struct Key_Value *in_proj_keys, *in_units_keys;
     if (!(pj = pj_init(nopt1, opt_in))) {
         fprintf(stderr, "Unable to initialise PROJ.4 with the following parameter list:\n");
         for(i=0; i<nopt1; i++)
-            fprintf(stderr, " %s", opt_in[i]);
+            fprintf(stderr, " +%s", opt_in[i]);
         fprintf(stderr,"\nThe error message was '%s'\n",pj_strerrno(pj_errno));
         return -1;
     }
