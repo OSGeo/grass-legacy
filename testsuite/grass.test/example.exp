@@ -12,7 +12,8 @@ set test "GRASS example test"
 set pgm "g.list"
 
 # test if tested module exists
-if { ![isgrassbin "$pgm"] } {
+if { ![isgrassbin "$pgm"] } \
+{
     fail "$test: module missing"
 }
 
@@ -25,6 +26,7 @@ expect {
     -re {.*core dump.*}         { fail "$test: module dumps core" }
     timeout                     { fail "$test: module timed out"; slay "$pgm" }
 }
-slay "$pgm"
+wait
+close
 
 # do clean up 

@@ -1,5 +1,9 @@
 # test if grass5 can be invoked with command line parameters
+
 set test "grass5 commandline execution"
+
+set ok 0
+
 spawn $GRASS "-" "-"
 
 expect {
@@ -8,10 +12,13 @@ expect {
     timeout                { fail "$test: Timeout starting $GRASS" ; slay $GRASS }
 }
 
-if { $ok == 1 } {
+if { $ok == 1 } \
+{
     send "exit \n"
     expect {
 	-re {.*Goodbye.*$} { verbose "$GRASS exited" }
 	timeout            { verbose "timeout" ; slay $GRASS }
     }
 }
+
+

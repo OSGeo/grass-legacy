@@ -23,7 +23,7 @@ The DejaGNU manual can be found at:
 http://dejagnu.sourceforge.net/manual/book1.html
 http://www.gnu.org/manual/dejagnu/index.html
 
-If you have build and installed the GRASS binary programs (with './configure
+If you have built and installed the GRASS binary programs (with './configure
 && make && make install') you can issue a 'make check' and the tests in the
 directories testsuite/grass.* are invoked. The output of the tests is in the
 files grass.log (long format) and grass.sum (summary). One idea is to check

@@ -1,4 +1,5 @@
 # r.buffer does not treat zero as NULL any more ?
-# 
+ 
 set test "r.buffer zero/NULL bug"
+
 unresolved "$test"

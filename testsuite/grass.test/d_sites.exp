@@ -1,4 +1,6 @@
 # d.sites
 # reported to stop after about 10 000 points displayed
+
 set test "d.sites does not display all sites for very big number of sites"
+
 unresolved "$test"

@@ -1,8 +1,12 @@
 # i.in.gtc and i.in.pri core dump after input of
 # leadername voldirname and dataname
 # 
+
 set test "i.in.gtc core dumps after input of variables"
+
 unresolved "$test"
+
 set test "i.in.pri core dumps after input of variables"
+
 unresolved "$test"
 
