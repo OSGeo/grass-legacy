@@ -17,6 +17,7 @@ SUBDIRS = \
 	r.covar \
 	r.cross \
 	r.describe \
+	r.digit \
 	r.distance \
 	r.drain \
 	r.fill.dir \
