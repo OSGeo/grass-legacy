@@ -106,6 +106,9 @@
 /* define if PQcmdTuples in lpq */
 #undef HAVE_PQCMDTUPLES
 
+/* define if jpeglib.h exists */
+#undef HAVE_JPEGLIB_H
+
 /*
  * configuration information solely dependent on the above
  * nothing below this point should need changing
