@@ -62,7 +62,22 @@ fi
 echo "Starting GRASS 5 ..."
 
 #grab the GRASS 5 install path from grass5 start script:
-BINPATH=`which grass5`
+BINPATH='##EMPTY##'
+for i in `echo $PATH | sed 's/^:/.:/
+    	    	    	    s/::/:.:/g
+			    s/:$/:./
+			    s/:/ /g'`
+do
+    if [ -f $i/grass5 ] ; then
+    	BINPATH=$i/grass5
+    fi
+done
+
+if [ $BINPATH == "##EMPTY##" ] ; then
+    echo "ERROR: grass5 script not found in path"
+    exit
+fi
+
 GISBASE=`grep GISBASE $BINPATH | head -1 | cut -d'=' -f2`
 export GISBASE
 
@@ -139,9 +154,6 @@ eval `$WISH -file $TCLTKGRASSBASE/script/gis_set.tcl`
 #
 #eval `g.gisenv`
 
-LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
-export LOCATION
-
 if [ $LOCATION_NAME == "##NONE##" ] ; then
   rm -f ~/.grassrc5
   $GISBASE/etc/set_data
@@ -151,12 +163,16 @@ if [ $LOCATION_NAME == "##NONE##" ] ; then
     echo "MAPSET: $OLD_MAP" >> $GISRC
     exit
   fi
+  eval `g.gisenv`
 fi
 
 if [ $LOCATION_NAME == "##ERROR##" ] ; then
   echo "The selected location is not a valid GRASS location"
   exit
 fi
+
+LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
+export LOCATION
 
 # echo $LOCATION
 
