@@ -1,0 +1,37 @@
+#!/bin/sh
+CHECK.MAP
+if test $? = 1
+	then
+	exit
+fi
+for overf in $*
+do
+echo $overf
+if test -f lines/$overf
+	then
+	. lines/$overf
+################ set pattern #######################
+	case $ltype in
+		a) pattern=0x5555;;
+		b) pattern=0x7777;;
+	        c) pattern=0xFCFC;;
+	        d) pattern=0xFEFE;;
+ 	        e) pattern=0xFFFC;;
+ 	        f) pattern=0xFFFE;;
+ 	        g) pattern=0xFAFA;;
+ 	        h) pattern=0xFFFA;;
+	        i) pattern=0xFFF6;;
+	        j) pattern=0xFFEA;;
+	        k) pattern=0xFFB6;;
+		s) pattern=solid;;
+		*) Invalid line type;;
+	esac
+	if test "$ltype" = "s"; then
+	        lines -c "-d 1,2 -p $pen" -m $mdef ../dig_geo/$name -o ovm/$overf
+	else
+ 	       lines -c "-d 1,2 -p $pen -lm $pattern -ls $dsize -ld" -m $mdef ../dig_geo/$name -o ovm/$overf
+	fi
+else
+	echo "Command for $name not found. Execute make.line..."
+fi
+done
