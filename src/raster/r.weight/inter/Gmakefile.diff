@@ -1,0 +1,29 @@
+*** ./Gmakefile.Orig	Tue Jul  1 02:00:51 1997
+--- Gmakefile	Wed Mar 18 16:16:01 1998
+***************
+*** 30,32 ****
+  	rm -f a.out
+! 	$(CC) $(LDFLAGS) $(OFILES) $(LIBES) $(VASK) $(MATHLIB)
+  	mv a.out $@
+--- 30,32 ----
+  	rm -f a.out
+! 	$(CC) $(LDFLAGS) $(OFILES) $(LIBES) $(VASK) $(LEXLIB) $(MATHLIB)
+  	mv a.out $@
+***************
+*** 49,51 ****
+  	rm -f gis_pars.c gis_pars.h gis_pars.out y.tab.c y.tab.h
+! 	yacc -v -d gis_pars.y
+  	mv y.tab.c gis_pars.c
+--- 49,51 ----
+  	rm -f gis_pars.c gis_pars.h gis_pars.out y.tab.c y.tab.h
+! 	$(YACC) -v -d gis_pars.y
+  	mv y.tab.c gis_pars.c
+***************
+*** 57,59 ****
+  	rm -f gis_lxcl.c
+! 	lex -t gis_lxcl.l > gis_lxcl.c
+  
+--- 57,59 ----
+  	rm -f gis_lxcl.c
+! 	$(LEX) -t gis_lxcl.l > gis_lxcl.c
+  
