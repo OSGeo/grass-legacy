@@ -135,14 +135,21 @@ dig_x_Rd_P_area (map, ptr, fp)
     if (0 >= dig__fread_port_P (&(ptr->n_isles    ), 1, fp)) return -1;
 
 
-    ptr->lines = (plus_t *) dig_falloc (sizeof (plus_t), (int) ptr->n_lines);
+    ptr->lines = (plus_t *) dig_falloc ((int) ptr->n_lines, sizeof (plus_t));
 
     if (ptr->n_lines)
 	if (0 >= dig__fread_port_P (ptr->lines, ptr->n_lines, fp)) return -1;
     ptr->alloc_lines = ptr->n_lines;
 
     /* island stuff */
-    ptr->isles = (plus_t *) dig_falloc (sizeof (plus_t), (int) ptr->n_isles);
+    if (ptr->n_isles)  /* added by dpg  8/16/91 */ /* TODO verify this */
+	ptr->isles =(plus_t *) dig_falloc ((int) ptr->n_isles, sizeof (plus_t));
+    else
+	ptr->isles = NULL;
+    /* this came up cuz cray was dying on calloc (0);  n_isles is the only
+    ** variable in this class that can == 0.  areas must have lines 
+    **  nodes must have lines.
+    */
 
     if (ptr->n_isles)
 	if (0 >= dig__fread_port_P (ptr->isles, ptr->n_isles, fp)) return -1;
@@ -191,7 +198,7 @@ dig_x_Rd_P_isle (map, ptr, fp)
     if (0 >= dig__fread_port_P (&(ptr->area    ), 1, fp)) return -1;
     if (0 >= dig__fread_port_P (&(ptr->n_lines ), 1, fp)) return -1;
 
-    ptr->lines = (plus_t *) dig_falloc (sizeof (plus_t), (int) ptr->n_lines);
+    ptr->lines = (plus_t *) dig_falloc ((int) ptr->n_lines, sizeof(plus_t));
     if (ptr->n_lines)
 	if (0 >= dig__fread_port_P (ptr->lines, ptr->n_lines, fp)) return -1;
     ptr->alloc_lines = ptr->n_lines;
