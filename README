@@ -1,5 +1,3 @@
-This is a pre-distribution of "GRASS 5.0".
-
 GRASS Development Team
 c/o Markus Neteler
 ITC-irst
@@ -13,20 +11,15 @@ The University of Illinois GMS Lab
 607 South Matthews, 
 Urbana, IL 61801
 
-Center for Applied Geographic and Spatial Research
-Baylor University
-P.O. Box 97351
-Waco, Texas  76798-7351
+General Email:         weblist@grass.itc.it
 
-General Email:            grass@baylor.edu
-
-Contributions to GRASS 5: neteler@itc.it
+Contributions to GRASS 5: weblist@grass.itc.it,grass5@grass.itc.it
 
 Internet:  http://grass.itc.it
-           http://www2.gis.uiuc.edu:2280/modviz/
-           http://www3.baylor.edu/grass/
+           http://grass.ibiblio.org
+           http://www3.baylor.edu/grass/ (partially outdated)
 
-GRASS Development Team 2002
+GRASS Development Team 2003
 
 -------------------------------------------------------
 GRASS Installation:
