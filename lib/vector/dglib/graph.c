@@ -727,32 +727,63 @@ int gnGrpRead( gnGrpGraph_s * pGraph, int fd )
 }
 
 
-gnGrpSPReport_s * gnGrpShortestPath	(
-								 	gnGrpGraph_s * 	 pGraph,
-								 	gnInt32_t 		 nFrom,
-								 	gnInt32_t 		 nTo,
-									gnGrpSPClip_fn	 fnClip,
-									void *			 pvClipArg,
-									gnGrpSPCache_s * pCache
-								 	)
+int gnGrpShortestPath	(
+					 	gnGrpGraph_s * 	 pGraph,
+						gnGrpSPReport_s **ppReport,
+					 	gnInt32_t 		 nFrom,
+					 	gnInt32_t 		 nTo,
+						gnGrpSPClip_fn	 fnClip,
+						void *			 pvClipArg,
+						gnGrpSPCache_s * pCache
+					 	)
 {
-	gnGrpSPReport_s * pRet;
+	int nRet;
 
-	pRet = NULL;
 	switch( pGraph->Version ) {
 	case 1:
-		pRet = gngrp_dijkstra_V1( pGraph, nFrom, nTo, fnClip, pvClipArg, pCache );
+		nRet = gngrp_dijkstra_V1( pGraph, ppReport, NULL, nFrom, nTo, fnClip, pvClipArg, pCache );
 		break;
 #ifdef GNGRP_V2
 	case 2:
-		pRet = gngrp_dijkstra_V2( pGraph, nFrom, nTo, fnClip, pvClipArg, pCache );
+		nRet = gngrp_dijkstra_V2( pGraph, ppReport, NULL, nFrom, nTo, fnClip, pvClipArg, pCache );
 		break;
 #endif
 	default:
 		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		nRet = -pGraph->iErrno;
 		break;
 	}
-	return pRet;
+	return nRet;
+}
+
+
+int gnGrpShortestDistance	(
+					 		gnGrpGraph_s * 	 pGraph,
+							gnInt32_t *      pnDistance ,
+					 		gnInt32_t 		 nFrom,
+					 		gnInt32_t 		 nTo,
+							gnGrpSPClip_fn	 fnClip,
+							void *			 pvClipArg,
+							gnGrpSPCache_s * pCache
+					 		)
+{
+	int nRet;
+
+	switch( pGraph->Version ) {
+	case 1:
+		nRet = gngrp_dijkstra_V1( pGraph, NULL, pnDistance, nFrom, nTo, fnClip, pvClipArg, pCache );
+		break;
+#ifdef GNGRP_V2
+	case 2:
+		nRet = gngrp_dijkstra_V2( pGraph, NULL, pnDistance, nFrom, nTo, fnClip, pvClipArg, pCache );
+		break;
+#endif
+	default:
+		pGraph->iErrno = GNGRP_ERR_BadVersion;
+		nRet = -pGraph->iErrno;
+		break;
+	}
+	return nRet;
 }
 
 
@@ -960,7 +991,7 @@ void gnGrpFreeSPReport( gnGrpGraph_s * pgraph , gnGrpSPReport_s * pSPReport )
 }
 
 int gnGrpInitializeSPCache( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache ) {
-	return gngrp_initialize_sp_cache_V1( pgraph, pCache );
+	return gngrp_initialize_sp_cache_V1( pgraph, pCache, 0 );
 }
 
 void gnGrpReleaseSPCache( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache ) {

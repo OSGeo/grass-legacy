@@ -133,8 +133,10 @@ gnInt32_t * gngrp_get_node_V1( gnGrpGraph_s * pgraph , gnInt32_t nodeid );
 gnInt32_t * gngrp_getnode_outlinkarea_V1( gnGrpGraph_s * pgraph , gnInt32_t * pnode );
 int 		gngrp_unflatten_V1( gnGrpGraph_s * pgraph );
 int 		gngrp_flatten_V1( gnGrpGraph_s * pgraph );
-void * 		gngrp_dijkstra_V1	(
+int			gngrp_dijkstra_V1	(
 			gnGrpGraph_s * 		pgraph ,
+			gnGrpSPReport_s **	ppReport ,
+			gnInt32_t *			pDistance ,
 			gnInt32_t 			from ,
 			gnInt32_t 			to ,
 			gnGrpSPClip_fn		fnClip,
@@ -152,9 +154,8 @@ int 		gngrp_depthfirst_spanning_V1(
 int 		gngrp_release_V1( gnGrpGraph_s * pgraph );
 int 		gngrp_write_V1( gnGrpGraph_s * pgraph , int fd );
 int 		gngrp_read_V1( gnGrpGraph_s * pgraph , int fd );
-int 		gngrp_initialize_sp_cache_V1( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache );
+int 		gngrp_initialize_sp_cache_V1( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache, gnInt32_t nFromNode );
 void 		gngrp_release_sp_cache_V1( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache );
-gnGrpSPReport_s * gngrp_sp_cache_report( gnGrpGraph_s * pgraph, gnGrpSPCache_s * pCache, gnInt32_t nFrom, gnInt32_t nTo );
 
 __END_DECLS
 #endif

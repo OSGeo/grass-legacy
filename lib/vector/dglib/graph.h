@@ -303,8 +303,18 @@ int gnGrpRead( gnGrpGraph_s * pGraph, int fd );
 /*
  * algorithms
  */
-gnGrpSPReport_s * gnGrpShortestPath(
+int gnGrpShortestPath(
+                     gnGrpGraph_s *     pGraph,
+					 gnGrpSPReport_s ** ppReport,
+                     gnInt32_t 		    nFrom,
+                     gnInt32_t 		    nTo,
+                     gnGrpSPClip_fn	    fnClip,
+                     void *			    pvClipArg,
+					 gnGrpSPCache_s *   pCache
+                  );
+int gnGrpShortestDistance(
                      gnGrpGraph_s *   pGraph,
+                     gnInt32_t *	  pnDistance,
                      gnInt32_t 		  nFrom,
                      gnInt32_t 		  nTo,
                      gnGrpSPClip_fn	  fnClip,
