@@ -1,157 +1,157 @@
 
 
 
-r.describe <main>    GRASS Reference Manual     <main> r.describe
+r.describe <main>    GRASS Reference Manual	<main> r.describe
 
 
 
 NAME
-     r.describe - Prints terse list of category values found in a
-     raster map layer.
+     r.describe	- Prints terse list of category	values found in	a
+     raster map	layer.
      (GRASS Raster Program)
 
 SYNOPSIS
      r.describe
-     r.describe help
-     r.describe [-1rqd] map=name
+     r.describe	help
+     r.describe	[-1rqd]	map=name
 
 DESCRIPTION
-     r.describe prints a terse listing of category values found
-     in a user-specified raster map layer.
+     r.describe	prints a terse listing of category values found
+     in	a user-specified raster	map layer.
 
-     The program will be run non-interactively, if the user
-     specifies the name of a raster map layer and any desired
-     flags on the command line, using the form
+     The program will be run non-interactively,	if the user
+     specifies the name	of a raster map	layer and any desired
+     flags on the command line,	using the form
 
-          r.describe [-1rqd] map=name
+	  r.describe [-1rqd] map=name
 
-     where the map name is the name of a raster map layer whose
-     categories are to be described, and the (optional) flags -1,
-     -r, -q, and -d have the meanings described below.
+     where the map name	is the name of a raster	map layer whose
+     categories	are to be described, and the (optional)	flags -1,
+     -r, -q, and -d have the meanings described	below.
 
      Alternately, the user can simply type r.describe on the
      command line, without program arguments.  In this case, the
-     user will be prompted for needed flag settings and the
-     parameter value using the standard GRASS parser interface
+     user will be prompted for needed flag settings and	the
+     parameter value using the standard	GRASS parser interface
      described in the manual entry for parser.
 
-PROGRAM USE
-     The user can select one of the following two output reports
+PROGRAM	USE
+     The user can select one of	the following two output reports
      from r.describe:
 
-     (1) RANGE.  A range of category values found in the raster
-     map layer will be printed.  The range is divided into three
-     groups:  negative, positive, and zero.  If negative values
-     occur, the minimum and maximum negative values will be
+     (1) RANGE.	 A range of category values found in the raster
+     map layer will be printed.	 The range is divided into three
+     groups:  negative,	positive, and zero.  If	negative values
+     occur, the	minimum	and maximum negative values will be
      printed.  If positive values occur, the minimum and maximum
      positive values will be printed.  If zero occurs, this will
-     be indicated.
+     be	indicated.
 
-     (2) FULL LIST.  A list of all category values that were
-     found in the raster map layer will be printed.
+     (2) FULL LIST.  A list of all category values that	were
+     found in the raster map layer will	be printed.
 
      The following sample output from r.describe:
 
-          0 2-4 10-13
+	  0 2-4	10-13
 
-     means that category data values 0, 2 through 4, and 10
-     through 13 occurred in the named map layer.
-
-
-
-
-GRASS 4.1                U.S. Army CERL                         1
+     means that	category data values 0,	2 through 4, and 10
+     through 13	occurred in the	named map layer.
 
 
 
 
+GRASS 4.2		Baylor University			1
 
 
-r.describe <main>    GRASS Reference Manual     <main> r.describe
 
 
 
-     The user must choose to read the map layer in one of two
+
+r.describe <main>    GRASS Reference Manual	<main> r.describe
+
+
+
+     The user must choose to read the map layer	in one of two
      ways:
 
-     (1) DIRECTLY.  The current geographic region and mask are
+     (1) DIRECTLY.  The	current	geographic region and mask are
      ignored and the full raster map layer is read.  This method
-     is useful if the user intends to reclassify or rescale the
-     data, since these functions (r.reclass and r.rescale) also
-     ignore the current geographic region and mask.
+     is	useful if the user intends to reclassify or rescale the
+     data, since these functions (r.reclass and	r.rescale) also
+     ignore the	current	geographic region and mask.
 
-     (2) REGIONED and MASKED.  The map layer is read within the
-     current geographic region, masked by the current mask.
+     (2) REGIONED and MASKED.  The map layer is	read within the
+     current geographic	region,	masked by the current mask.
 
-NON-INTERACTIVE PROGRAM USE
-     r.describe examines a user-chosen raster map layer.  If run
-     non-interactively, the layer name must be supplied on the
+NON-INTERACTIVE	PROGRAM	USE
+     r.describe	examines a user-chosen raster map layer.  If run
+     non-interactively,	the layer name must be supplied	on the
      command line.
 
-     A compact list of category values that were found in the
-     data layer will be printed.
+     A compact list of category	values that were found in the
+     data layer	will be	printed.
 
      Following is a sample output:
 
-          0 2-4 10-13
+	  0 2-4	10-13
 
-     -1   Print the output one value per line, instead of the
-          default short form.  In the above example, the -1
-          option would output:
+     -1	  Print	the output one value per line, instead of the
+	  default short	form.  In the above example, the -1
+	  option would output:
 
-               0
-               2
-               3
-               4
-               10
-               11
-               12
-               13
-
-
-     -r   Only print the range of the data.  The highest and
-          lowest positive values, and the highest and lowest
-          negative values, are output. In the above example, the
-          -r option would output:
-
-               0 2 13
-
-          If the -1 option is also specified, the output appears
-          with one category value per line.
-
-     -q   Quiet. The -q option will tell r.describe to be silent
-          while reading the raster file.  If not specified,
-          program percentage-completed messages are printed.
+	       0
+	       2
+	       3
+	       4
+	       10
+	       11
+	       12
+	       13
 
 
+     -r	  Only print the range of the data.  The highest and
+	  lowest positive values, and the highest and lowest
+	  negative values, are output. In the above example, the
+	  -r option would output:
 
+	       0 2 13
 
-GRASS 4.1                U.S. Army CERL                         2
+	  If the -1 option is also specified, the output appears
+	  with one category value per line.
+
+     -q	  Quiet. The -q	option will tell r.describe to be silent
+	  while	reading	the raster file.  If not specified,
+	  program percentage-completed messages	are printed.
 
 
 
 
+GRASS 4.2		Baylor University			2
 
 
-r.describe <main>    GRASS Reference Manual     <main> r.describe
 
 
 
-     -d   Use the current geographic region settings.  Normally,
-          r.describe will read the data layer directly, ignoring
-          both the current region settings and mask.  The -d
-          option tells r.describe to read the map layer in the
-          current region masked by the current mask (if any).
+
+r.describe <main>    GRASS Reference Manual	<main> r.describe
+
+
+
+     -d	  Use the current geographic region settings.  Normally,
+	  r.describe will read the data	layer directly,	ignoring
+	  both the current region settings and mask.  The -d
+	  option tells r.describe to read the map layer	in the
+	  current region masked	by the current mask (if	any).
 
 NOTES
-     The range report will generally run faster than the full
+     The range report will generally run faster	than the full
      list.
 
 SEE ALSO
-     g.region, r.mask, r.reclass, r.rescale and parser
+     g.region, r.mask, r.reclass, r.rescale and	parser
 
 AUTHOR
-     Michael Shapiro, U.S. Army Construction Engineering Research
+     Michael Shapiro, U.S. Army	Construction Engineering Research
      Laboratory
 
 
@@ -192,7 +192,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         3
+GRASS 4.2		Baylor University			3
 
 
 
