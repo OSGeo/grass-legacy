@@ -10,7 +10,7 @@ main(int argc, char *argv[])
 {
     dbConnection conn;
     struct Flag *print;
-    struct Option *driver, *database, *location, *user, *password, *keycol;
+    struct Option *driver, *database, *user, *password, *keycol;
     struct GModule *module;
 
     /* Initialize the GIS calls */
@@ -35,13 +35,6 @@ main(int argc, char *argv[])
     database->multiple   = NO ;
     database->description= "Database name:" ;
 
-    location = G_define_option() ;
-    location->key        = "location" ;
-    location->type       = TYPE_STRING ;
-    location->required   = NO  ;
-    location->multiple   = NO ;
-    location->description= "Database location:" ;
-    
     user = G_define_option() ;
     user->key        = "user" ;
     user->type       = TYPE_STRING ;
@@ -83,9 +76,6 @@ main(int argc, char *argv[])
 	if ( database->answer )
 	    conn.databaseName = database->answer;
 
-	if ( location->answer )
-	    conn.location = location->answer;
-
 	if ( user->answer )
 	    conn.user = user->answer;
 
@@ -107,7 +97,6 @@ main(int argc, char *argv[])
     
     fprintf(stdout, "driver:%s\n", conn.driverName);
     fprintf(stdout, "database:%s\n", conn.databaseName);    
-    fprintf(stdout, "location:%s\n", conn.location);
     fprintf(stdout, "user:%s\n", conn.user);
     fprintf(stdout, "password:%s\n", conn.password);    
     fprintf(stdout, "key:%s\n", conn.keycol);    
