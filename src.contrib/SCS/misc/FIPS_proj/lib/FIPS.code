@@ -536,6 +536,11 @@
 13 319 GA WILKINSON         1001	GAe
 13 321 GA WORTH             1002	GAw
 13 510 GA COLUMBUS          1002	GAw
+15 001 HI HAWAII            5101    HI
+15 003 HI HONOLULU          5102    HI
+15 005 HI KALAWAO           5103    HI
+15 007 HI KAUAI             5104    HI
+15 009 HI MAUI              5105    HI
 16 001 ID ADA               1103	IDw
 16 003 ID ADAMS             1103	IDw
 16 005 ID BANNOCK           1101	IDe
