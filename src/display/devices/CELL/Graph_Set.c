@@ -57,9 +57,6 @@ int Graph_Set (int argc, char **argv, int nlev)
     else
 	screen_bottom = DEF_HEIGHT;
 
-    if (NULL == (p = getenv ("LOCATION")))
-	fprintf (stderr, "You must start this driver from within GRASS\n"), exit (1);
-
     /* clear out color table */
     for (i = 0 ; i < 256 ; i++)
 	for (j = 0 ; j < 3 ; j++)
