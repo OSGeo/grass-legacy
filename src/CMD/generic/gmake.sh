@@ -92,7 +92,6 @@ then
     exit 1
 fi
 
-prefix="`sed 's/=/ /' $HEAD | awk '$1 ~ /^prefix$/ {if(NF>1)print $2}'`"
 GISBASE="`sed 's/=/ /' $HEAD | awk '$1 ~ /^GISBASE$/ {if(NF>1)print $2}'`"
 VERSION_NUMBER=
 VERSION_DATE=
@@ -119,7 +118,7 @@ if test $parseonly = sh
 then
     if test $install = yes
     then
-        GISBASE=$prefix/grass53
+        GISBASE=$INST_DIR
     fi
     echo GISBASE=$GISBASE
     echo SRC=$SRC
@@ -134,7 +133,7 @@ if test $parseonly = csh
 then
     if test $install = yes
     then
-        GISBASE=$prefix/grass53
+        GISBASE=$INST_DIR
     fi
     echo set GISBASE=$GISBASE
     echo set SRC=$SRC
@@ -334,7 +333,7 @@ then
     rm -f $makefile2
 fi
 
-sed -e 's#^GISBASE\([ 	]*\)=.*$#GISBASE\1= \${prefix}/grass53#' $makefile \
+sed -e 's#^GISBASE\([ 	]*\)=.*$#GISBASE\1= \${INST_DIR}#' $makefile \
 	> $makefile2
 
 echo "  make -f $makefile2 $*"
