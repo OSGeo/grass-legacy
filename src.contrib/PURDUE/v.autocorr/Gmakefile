@@ -33,7 +33,7 @@ PROG = $(BIN_CONTRIB_CMD)/v.autocorr
 
 $(PROG): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
 	rm -f a.out $@
-	cc $(LDFLAGS) $(OFILES) $(COORCNVLIB) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) $(OFILES) $(COORCNVLIB) $(VECTLIB) $(GISLIB) $(MATHLIB)
 	strip a.out
 	mv a.out $@
 
