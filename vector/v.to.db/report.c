@@ -23,20 +23,20 @@ report (void)
 	case O_AREA:
     	    fprintf (stdout,"cat|area\n");
 	    for ( i = 0; i < vstat.rcat; i++ )
-	        fprintf (stdout, "%d|%f\n", Values[i].cat, Values[i].d1);	
+	        fprintf (stdout, "%d|%g\n", Values[i].cat, Values[i].d1);	
             break;
 
         case O_LENGTH:
     	    fprintf (stdout,"cat|length\n");
 	    for ( i = 0; i < vstat.rcat; i++ )
-	        fprintf (stdout, "%d|%f\n", Values[i].cat, Values[i].d1);	        
+	        fprintf (stdout, "%d|%g\n", Values[i].cat, Values[i].d1);	        
             break;
 
         case O_COOR:
     	    fprintf (stdout,"cat|x|y\n");
 	    for ( i = 0; i < vstat.rcat; i++ ) {
 		if ( Values[i].count1 == 1 )
-	            fprintf (stdout, "%d|%f|%f\n", Values[i].cat, Values[i].d1, Values[i].d2);
+	            fprintf (stdout, "%d|%g|%g\n", Values[i].cat, Values[i].d1, Values[i].d2);
 	    }
             break;
 
@@ -84,7 +84,7 @@ report (void)
 	                    fprintf (stdout, "%d|%d\n", Values[i].cat, Values[i].i1);	        
 			    break;
 			case ( DB_C_TYPE_DOUBLE ):
-	                    fprintf (stdout, "%d|%f\n", Values[i].cat, Values[i].d1);       
+	                    fprintf (stdout, "%d|%g\n", Values[i].cat, Values[i].d1);       
 			    break;
 			case ( DB_C_TYPE_STRING ):
 	                    fprintf (stdout, "%d|%s\n", Values[i].cat, Values[i].str1);	        
