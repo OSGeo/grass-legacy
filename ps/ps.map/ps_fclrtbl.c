@@ -48,6 +48,9 @@ int PS_fcolortable (void)
     }
     G_get_fp_range_min_max(&range, &dmin, &dmax);
 
+    if(dmin == dmax)  /* if step==0 all sorts of infinite loops and DIV by 0 errors follow */
+        G_fatal_error("A floating point colortable must contain a range of values.");
+    
     if (G_read_colors(ct.name, ct.mapset, &colors) == -1)
     {
 	    G_warning( "Unable to read colors for colorbar\n");
@@ -89,8 +92,6 @@ int PS_fcolortable (void)
     cwidth = 0.1;
     ncols = (int) height / cwidth;
     step = (dmax - dmin) / (ncols - 1);
-    if(dmin == dmax)  /* if step==0 all sorts of infinite loops and DIV by 0 errors follow */
-        G_fatal_error("A floating point colortable must contain a range of values.");
     lwidth = 0.02 * width;
 
     /* Print color band */
@@ -99,7 +100,8 @@ int PS_fcolortable (void)
     x2 = x1 + width;
     fprintf(PS.fp, "%.8f W\n", cwidth);
     for ( i = 0; i < ncols; i++ ) {
-	val = dmin + i * step; 
+/*	val = dmin + i * step;   flip*/
+        val = dmax - i * step;
 	G_get_d_raster_color(&val, &R, &G, &B, &colors);
 	fprintf(PS.fp, "%.2f %.2f %.2f C\n", (double)R/255., (double)G/255., (double)B/255.);
 	fprintf(PS.fp, "NP\n");
@@ -169,7 +171,8 @@ int PS_fcolortable (void)
 	
     fprintf(PS.fp, "%.8f W\n", lwidth);
     while ( val <= dmax ) {
-        y = t - (val - dmin) * height / (dmax - dmin) ;
+/*      y = t - (val - dmin) * height / (dmax - dmin) ;  flip*/
+        y = t - (dmax - val) * height / (dmax - dmin);
 	fprintf(PS.fp, "NP\n");
         fprintf(PS.fp, "%f %f M\n", x1, y); 
         fprintf(PS.fp, "%f %f LN\n", x2, y); 
