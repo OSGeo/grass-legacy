@@ -49,7 +49,6 @@ int main(int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt_out;
 	struct Option *opt_lev;
-	struct Flag *flg_o;
 	struct Flag *flg_d;
 	struct Flag *flg_c;
 	int dither;
@@ -125,10 +124,6 @@ int main(int argc, char **argv)
 	opt_out->gisprompt  = "new,cell,raster";
 	opt_out->description= "Name of raster map to contain results";
 
-	flg_o = G_define_flag();
-	flg_o->key	    = 'o';
-	flg_o->description  = "Overwrite output map";
-
 	flg_d = G_define_flag();
 	flg_d->key	    = 'd';
 	flg_d->description  = "Dither";
@@ -197,10 +192,7 @@ int main(int argc, char **argv)
 	mapset = G_find_cell2(out_name, "");
 	if (mapset != NULL)
 	{
-		if (flg_o->answer)
-			G_remove("cell", out_name);
-		else
-			G_fatal_error("Cell file <%s> exists already", out_name);
+		G_remove("cell", out_name);
 	}
 
 	if ((out_file = G_open_cell_new(out_name)) < 0)
