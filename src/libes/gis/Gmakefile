@@ -56,6 +56,7 @@ OBJ = \
     edit_cellhd.o\
     edit_hist.o\
     eigen_tools.o\
+    endian.o\
     env.o\
     error.o\
     file_name.o\
