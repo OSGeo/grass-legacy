@@ -1,11 +1,9 @@
 #include "gis.h"
 
-/*
- * This factor is to handle state plane systems which have
- * coordinate grids in feet
+/* WARNING: this code is preliminary and may be changed,
+ * including calling sequences to any of the functions
+ * defined here
  */
-
-#define FEET_TO_METERS .3048
 
 static int projection = 0;
 static double factor = 1.0;
@@ -20,12 +18,15 @@ G_begin_distance_calculations()
     case PROJECTION_LL:
 	G_get_ellipsoid_parameters (&a, &e2);
 	G_begin_geodesic_distance (a, e2);
-	break;
-    case PROJECTION_SP:
-	factor = FEET_TO_METERS;
-	break;
+	return 2;
     default:
-	break;	/* assume meter grid */
+	factor = G_database_units_to_meters_factor();
+	if (factor <= 0.0)
+	{
+	    factor = 1.0;          /* assume meter grid */
+	    return 0;
+	}
+	return 1;
     }
 }
 
