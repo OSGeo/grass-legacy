@@ -1,12 +1,19 @@
-/***********************************************************************
- * GRASS 5.0 coorcnv library
- * scan_ll.c, scanning of coordinates from strings
+/*
+ * $Id$
  *
- * Andreas Lange, andreas.lange@rhein-main.de
- * version 0.9
- * modified Jun 10 2000 
+ ****************************************************************************
  *
- ***********************************************************************/
+ * MODULE:       coorcnv library
+ * AUTHOR(S):    Original author unknown - probably CERL
+ *               Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE: 	 scanning of coordinates from strings
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
 
 #include <stdio.h>
 #include "CC.h"

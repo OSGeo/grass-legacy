@@ -1,12 +1,20 @@
-/***********************************************************************
- * GRASS 5.0 coorcnv library
- * tm.c, transverse mercator to lat lon and lat lon to transverse mercator
+/*
+ * $Id$
  *
- * Andreas Lange, andreas.lange@rhein-main.de
- * version 0.9
- * modified Jun 10 2000 
+ ****************************************************************************
  *
- ***********************************************************************/
+ * MODULE:  	 coorcnv library     
+ * AUTHOR(S):    Original author unknown - probably CERL
+ *               Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE: 	 transverse mercator to lat lon and lat lon to transverse
+ *               mercator conversion.
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
 
 /***********************************************************************
  * tm to lat/lon conversion

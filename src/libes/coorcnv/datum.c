@@ -1,12 +1,19 @@
-/***********************************************************************
- * GRASS 5.0 coorcnv library
- * datum.c, datum conversion functions
+/*
+ * $Id$
  *
- * Andreas Lange, andreas.lange@rhein-main.de
- * version 0.9
- * modified Jun 10 2000 
+ ****************************************************************************
  *
- ***********************************************************************/
+ * MODULE:       coorcnv library
+ * AUTHOR(S):    Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE: 	 provide functions for reading datum parameters from the
+ *               location database.     
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
 
 #include <gis.h>
 #include "CC.h"
