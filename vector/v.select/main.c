@@ -305,6 +305,8 @@ main (int argc, char *argv[])
 		int naisles;
 		int found = 0;
 
+		/* List of areas B */
+		
 		/* Make a list of features forming area A */
 		Vect_reset_list ( List );
 
@@ -326,7 +328,6 @@ main (int argc, char *argv[])
 		    }
 		}
 
-		/* Check intersectin of lines from List with area B */
 		Vect_select_areas_by_box ( &(In[1]), &abox, TmpList);
 
 		for (i = 0; i < List->n_values; i++) {
@@ -335,13 +336,24 @@ main (int argc, char *argv[])
 		    aline = List->value[i];
 
 		    for (j = 0; j < TmpList->n_values; j++) {
-			int barea;
+			int barea, bcentroid;
 		    
 			barea = TmpList->value[j];
 			G_debug (3, "  barea = %d", barea);
 			
 			if ( Vect_get_area_cat(&(In[1]), barea, field[1]) < 0 ) continue;
+		
+			/* Check if any centroid of area B is in area A.
+		         * This test is important in if area B is completely within area A */
+			bcentroid = Vect_get_area_centroid ( &(In[1]), barea );
+	                Vect_read_line ( &(In[1]), BPoints, NULL, bcentroid);
 
+	                if ( Vect_point_in_area ( &(In[0]), aarea, BPoints->x[0], BPoints->y[0]) ) {
+			    found = 1;
+			    break;
+			}
+
+		        /* Check intersectin of lines from List with area B */
 			if ( line_overlap_area(&(In[0]), aline, &(In[1]), barea) ) {
 			    found = 1;
 			    break;
