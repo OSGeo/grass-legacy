@@ -1,46 +1,42 @@
 #include "gis.h"
 #include "local_proto.h"
 
-DCELL c_mode(DCELL *values, int n)
+void c_mode(DCELL *result, DCELL *values, int n)
 {
+	DCELL mode;
 	int max;
 	DCELL prev;
 	int count;
-	DCELL mode;
 	int i;
 
 	sort_cell(values, n);
 
-	mode = values[0];
-	max = 1;
+	max = 0;
+	count = 0;
 
-	prev = values[0];
-	count = 1;
-
-	for (i = 1; i < n; i++)
+	for (i = 0; i < n; i++)
 	{
-		if (values[i] == prev)
+		if (G_is_d_null_value(&values[i]))
+			break;
+
+		if (max == 0 || values[i] != prev)
 		{
-			count++;
-			continue;
+			prev = values[i];
+			count = 0;
 		}
+
+		count++;
 
 		if (count > max)
 		{
 			max = count;
 			mode = prev;
 		}
-
-		prev = values[i];
-		count = 1;
 	}
 
-	if (count > max)
-	{
-		max = count;
-		mode = prev;
-	}
-
-	return mode;
+	if (max == 0)
+		G_set_d_null_value(result, 1);
+	else
+		*result = mode;
 }
 

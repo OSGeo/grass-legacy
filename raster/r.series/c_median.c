@@ -1,9 +1,13 @@
 #include "gis.h"
 #include "local_proto.h"
 
-DCELL c_median(DCELL *values, int n)
+void c_median(DCELL *result, DCELL *values, int n)
 {
-	sort_cell(values, n);
-	return (values[(n-1)/2] + values[n/2]) / 2;
+	n = sort_cell(values, n);
+
+	if (n < 1)
+		G_set_d_null_value(result, 1);
+	else
+		*result = (values[(n-1)/2] + values[n/2]) / 2;
 }
 
