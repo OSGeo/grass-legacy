@@ -421,7 +421,7 @@ C
 	    }
             if ((cellinp != NULL) && (cellout != NULL)&&(i==ngstl)) {
               if (G_get_f_raster_row(fdcell,cell,nszr-k) <0)
-                G_fatal_error("Could not get row"); 
+                G_fatal_error("Could not get row (eventually WIND3 does not match WIND)");
             }
 	    for (l = ngstc; l <= nszc; l++)
 	    {
