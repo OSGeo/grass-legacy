@@ -76,6 +76,7 @@ int         db_d_open_insert_cursor   P((void ));
 int         db_d_open_select_cursor   P((void ));
 int         db_d_open_update_cursor   P((void ));
 int         db_driver                 P((int argc , char *argv []));
+char *	    db_driver_list            P((void ));
 int         db_driver_mkdir           P((char *path , int mode , int parentdirs ));
 int         db_drop_column            P((dbDriver *driver , dbString *tableName , dbString *columnName ));
 void        db__drop_cursor_from_driver_state P((dbCursor *cursor ));
