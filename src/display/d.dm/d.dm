@@ -2,6 +2,10 @@
 # the next line restarts using wish \
 exec $GRASS_WISH "$0" "$@"
 
+set env(GISDBASE) [exec g.gisenv get=GISDBASE]
+set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
+set env(MAPSET) [exec g.gisenv get=MAPSET]
+
 lappend auto_path $env(GISBASE)/bwidget
 package require BWidget 
 
