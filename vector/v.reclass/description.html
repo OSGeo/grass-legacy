@@ -1,7 +1,7 @@
 <H2>DESCRIPTION</H2>
 
 <EM>v.reclass</EM> allows user to create a new vector map based on the reclassification 
-of an existing vector map. 
+of an existing vector map.  
 
 <BR><BR>
 Rules file may contain on each row either pair: <BR> 
@@ -32,6 +32,15 @@ values selected from database by SQL select statement: <I>select id from tland w
 use = 'E14' </I> changed to category 2.
 
 <BR>
+
+<P>
+<H2>NOTES</H2>
+No table is created for reclassed layer if <B>column</B> option is used and column type is
+integer (there is nothing which could be written to the table).
+
+<P>
+<H2>BUGS</H2>
+No table is created for reclassed layer if <B>rules</B> option is used.
 
 <P>
 <H2>SEE ALSO</H2>

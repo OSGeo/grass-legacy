@@ -23,19 +23,14 @@ main (int argc, char *argv[])
     struct field_info *Fi;
     dbDriver *Driver;
     dbCatValArray cvarr;
+
+    int i, n, ttype;
 	    
     G_gisinit (argv[0]);
 
     module = G_define_module();
     module->description = "Changes vector category values for an existing vector map "
-	    "according to results of SQL queries.";
-
-    /* TODO: Dissolve common boundaries */
-    /*
-    d_flag = G_define_flag();
-    d_flag->key              = 'd';
-    d_flag->description      = "Dissolve common boundaries (default is no) ";
-    */
+	    "according to results of SQL queries or a value in attribute table column.";
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
 
@@ -48,7 +43,7 @@ main (int argc, char *argv[])
     rules_opt->description =  "Full path to the reclass rule file";
 
     col_opt = G_define_option();
-    col_opt->key            = "col";
+    col_opt->key            = "column";
     col_opt->type           = TYPE_STRING;
     col_opt->required       = NO;
     col_opt->multiple       = NO;
@@ -56,6 +51,9 @@ main (int argc, char *argv[])
 	                      "The column must be type integer.";
     
     type_opt = G_define_standard_option(G_OPT_V_TYPE);
+    type_opt->description = "Select type";
+    type_opt->options = "point,line,boundary,centroid";
+    type_opt->answer = "point,line,boundary,centroid";
 
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
 
@@ -188,13 +186,36 @@ main (int argc, char *argv[])
     
     /* reclass vector map */    
     rclelem = reclass ( &In, &Out, type, field, &cvarr, 0);
+
+    /* Copy tables */
+    n = Vect_get_num_dblinks ( &In );
+    for ( i = 0; i < Vect_get_num_dblinks ( &In ); i++ ) {
+	Fi = Vect_get_dblink ( &In, i );
+	if ( Fi->number == field ) {
+	    n--;
+	    break;
+	}
+    }
+    if ( n > 1 )
+	ttype = GV_MTABLE;
+    else 
+    	ttype = GV_1TABLE;
+
+    for ( i = 0; i < Vect_get_num_dblinks ( &In ); i++ ) {
+	Fi = Vect_get_dblink ( &In, i );
+	if ( Fi->number == field ) {
+	    continue;
+	}
+
+	Vect_copy_table ( &In, &Out, Fi->number, Fi->number, Fi->name, ttype );
+    }
     
     Vect_close (&In);
 
     Vect_build (&Out, stderr);
     Vect_close (&Out);
 
-    fprintf(stderr,"%d elments written\n", rclelem);
+    fprintf(stderr,"%d features reclassed\n", rclelem);
 
     exit(0);
 }
