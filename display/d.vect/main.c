@@ -37,6 +37,7 @@ main (int argc, char **argv)
 	struct Option *field_opt, *cat_opt, *lfield_opt;
 	struct Option *lcolor_opt, *bgcolor_opt, *bcolor_opt;
 	struct Option *lsize_opt, *font_opt, *xref_opt, *yref_opt;
+	struct Option *attrcol_opt;
 	struct Flag   *_quiet, *id_flag;
 	struct cat_list *Clist;
 	int *cats, ncat;
@@ -63,8 +64,13 @@ main (int argc, char **argv)
 	display_opt->required   = NO ;
 	display_opt->multiple   = YES ;
 	display_opt->answer     = "shape" ;
-	display_opt->options    = "shape,cat,topo,dir";
+	display_opt->options    = "shape,cat,topo,dir,attr";
 	display_opt->description= "Display" ;
+	
+	attrcol_opt = G_define_option() ;
+	attrcol_opt->key        = "attrcol" ;
+	attrcol_opt->type       = TYPE_STRING ;
+	attrcol_opt->description= "Name of column to be displayed" ;
 	
 	icon_opt = G_define_option() ;
 	icon_opt->key        = "icon" ;
@@ -275,6 +281,9 @@ main (int argc, char **argv)
 	        case 'd':
 	            display |= DISP_DIR;
 		    break;
+	        case 'a':
+	            display |= DISP_ATTR;
+		    break;
 	      }
 	    i++;
 	  }
@@ -374,6 +383,9 @@ main (int argc, char **argv)
 	
 	if ( display & DISP_CAT )
 	    stat = label ( &Map, type, area, Clist, &lattr, chcat);
+	
+	if ( display & DISP_ATTR )
+	    stat = attr ( &Map, type, attrcol_opt->answer, Clist, &lattr, chcat);
 	
 	if ( display & DISP_TOPO ) {
 	    if (level >= 2 )
