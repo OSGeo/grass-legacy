@@ -1,4 +1,3 @@
-# %W% %G%
 
 OBJ = lock.o unlock.o
 
