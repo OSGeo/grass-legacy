@@ -11,8 +11,8 @@ get_target_window()
     {
 	char buf[100];
 	printf ("Please select one of the following options\n");
-	printf (" 1. Use the current window in the target location\n");
-	printf (" 2. Determine the smallest window which covers the image\n");
+	printf (" 1. Use the current region in the target location\n");
+	printf (" 2. Determine the smallest region which covers the image\n");
 	printf ("> ");
 	if (!G_gets(buf)) continue;
 	G_strip (buf);
@@ -25,7 +25,7 @@ get_target_window()
     georef_window (&cellhd, &target_window);
     ask_window (&target_window);
 
-    if(!G_yes("Would you like this window saved as the window in the target location?\n", -1))
+    if(!G_yes("Would you like this region saved as the region in the target location?\n", -1))
 	return;
     select_target_env();
     if(G_put_window (&target_window)>=0)
