@@ -1,0 +1,13 @@
+# %W% %G%
+PGM      = Gweight
+
+LIST = Gweight.o\
+	parse.o\
+	input.o\
+	main_loop.o
+
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
+
+$(GISLIB):      # in case library changes
