@@ -15,13 +15,13 @@ proc DmToolBar::create { tb  } {
     $bbox1 add -image [image create photo -file "$dmpath/display.gif"] \
         -command "Dm::display" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Display layers"
+        -helptext "Display selected layers (current region)"
 
     # display all
     $bbox1 add -image [image create photo -file "$dmpath/display.all.gif"] \
         -command "Dm::displayall" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Display all (default region)"
+        -helptext "Display selected layers (default region)"
 
     # zoom
     $bbox1 add -image [image create photo -file "$dmpath/zoom.gif"] \
@@ -33,13 +33,13 @@ proc DmToolBar::create { tb  } {
     $bbox1 add -image [image create photo -file "$dmpath/display.region.gif"] \
         -command "Dm::display_region" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Display region"
+        -helptext "Display from saved region settings"
 
     # query
     $bbox1 add -image [image create photo -file "$dmpath/query.gif"] \
         -command "Dm::query" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Query map"
+        -helptext "Query map (select map first)"
 
     pack $bbox1 -side left -anchor w
 
@@ -90,17 +90,17 @@ proc DmToolBar::create { tb  } {
 
      $bbox3 add -image [Bitmap::get new] -command "Dm::new" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Create a new file"
+        -helptext "Create a new d.m settings file (erase current settings first)"
     # $bbox3 add -image [Bitmap::get open] \
     #    -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
     #    -helptext "Open an existing file"
     $bbox3 add -image [Bitmap::get save]  -command "Dm::save" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Save file"
+        -helptext "Save d.m settings file"
 
     $bbox3 add -image [Bitmap::get print]  -command "Dm::print" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
-        -helptext "Print"
+        -helptext "Print map"
 
     pack $bbox3 -side left -anchor w
 }
