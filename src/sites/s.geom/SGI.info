@@ -1,0 +1,5 @@
+On a sgi you have to uncomment the line
+
+	-lmalloc
+
+in the corresponding Gmakefiles if you compile.
