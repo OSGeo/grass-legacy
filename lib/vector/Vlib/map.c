@@ -171,22 +171,24 @@ Vect_delete ( char *map )
 	}
     }
     
-    /* Delete all tables */
-    n = Vect_get_num_dblinks ( &Map );
-    for ( i = 0; i < n; i++ ) {
-	Fi = Vect_get_dblink ( &Map, i );
-	if ( Fi == NULL ) {
-	    G_warning ( "Cannot get db link info" );
-	    Vect_close ( &Map );
-	    return -1;
-	}
-        G_debug (3, "Delete drv:db:table '%s:%s:%s'", Fi->driver, Fi->database, Fi->table);
-        
-	ret = db_delete_table ( Fi->driver, Fi->database, Fi->table );
-	if ( ret == DB_FAILED ) {
-	    G_warning ( "Cannot delete table" );
-	    Vect_close ( &Map );
-	    return -1;
+    /* Delete all tables, NOT external like shapefile */
+    if ( Map.format == GV_FORMAT_NATIVE || Map.format == GV_FORMAT_POSTGIS ) {
+	n = Vect_get_num_dblinks ( &Map );
+	for ( i = 0; i < n; i++ ) {
+	    Fi = Vect_get_dblink ( &Map, i );
+	    if ( Fi == NULL ) {
+		G_warning ( "Cannot get db link info" );
+		Vect_close ( &Map );
+		return -1;
+	    }
+	    G_debug (3, "Delete drv:db:table '%s:%s:%s'", Fi->driver, Fi->database, Fi->table);
+	    
+	    ret = db_delete_table ( Fi->driver, Fi->database, Fi->table );
+	    if ( ret == DB_FAILED ) {
+		G_warning ( "Cannot delete table" );
+		Vect_close ( &Map );
+		return -1;
+	    }
 	}
     }
     Vect_close ( &Map );
