@@ -48,6 +48,7 @@ int G_readsites_xyz(
 	int    type,     /* Attribute type: SITE_COL_DIM, etc...            */
 	int    index,    /* The field index (1 based) for the attribute     */
 	int    size,     /* Size of the array                               */
+	struct Cell_head *region,   /* Respect region if not NULL */
 	SITE_XYZ *xyz    /* The site array of size 'size'                   */
 	)
 {
@@ -56,8 +57,6 @@ int G_readsites_xyz(
 	Site *s;
 	long fdsave;
 	char *end_ptr;
-
-	G_sleep_on_error(0);
 
 	/* If fdsite is EOF or NULL return EOF */
 	if (fdsite == NULL || feof(fdsite)) {
@@ -82,10 +81,10 @@ int G_readsites_xyz(
 	
 	switch (type) {
 		case SITE_COL_DIM: /* Use n-dimensions */
-			if (dims == 0) {
+			if (dims < 3) {
 				G_fatal_error("No n-dims in site_list");
 			}
-			else if (index >= dims) {
+			else if (index > dims - 2) {
 				G_fatal_error("Dimension index out of range");
 			}
 			break;
@@ -116,14 +115,17 @@ int G_readsites_xyz(
 		if (G_site_get (fdsite, s) != 0) {
 			if (i == 0) {
 				G_site_free_struct(s);
-				G_sleep_on_error(1);
 				return EOF;
 			}
 			else {
 				G_site_free_struct(s);
-				G_sleep_on_error(1);
 				return i;
 			}
+		}
+		/* Check if in region */
+		if(region && !G_site_in_region(s, region)) {
+			i--;
+			continue;
 		}
 
 		/* Do 'z' based on 'type' and 'index' */
@@ -158,7 +160,6 @@ int G_readsites_xyz(
 	}
 
 	G_site_free_struct(s);
-	G_sleep_on_error (1);
 
 	return i;
 }
