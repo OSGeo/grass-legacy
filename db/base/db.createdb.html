@@ -1,0 +1,26 @@
+<h2>DESCRIPTION</h2>
+
+<em>db.createdb</em> allows the user to create a new empty database through
+different drivers. A working database connection needs to be established.  
+
+<h2>EXAMPLE</h2>
+
+<em>Create a new PostgreSQL database (if PostgreSQL connection is established
+through odbc driver)</em><br>
+<b>db.createdb driver=</b><em>odbc</em> <b>database=</b><em>grass51test</em>
+
+<p>
+
+<em>Create a new PostgreSQL database (if PostgreSQL connection is established
+through pg driver)</em><br>
+<b>db.createdb driver=</b><em>pg</em> 
+<b>database=</b><em>'host=pgserver.itc.it,dbname=grass51test,user=name'</em>
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="http://grass.itc.it/grass51/tutorial/attrib_storage.html">GRASS 5.1
+tutorial pages</a>, <a HREF="db.columns.html">db.columns</a>, <a HREF="db.databases.html">db.databases</a>, <a HREF="db.describe.html">db.describe</a>, <a HREF="db.drivers.html">db.drivers</a>, <a HREF="db.dropdb.html">db.dropdb</a>, <a HREF="db.droptable.html">db.droptable</a>, <a HREF="db.execute.html">db.execute</a>, <a HREF="db.tables.html">db.tables</a></em>
+
+<h2>AUTHOR</h2>
+
+Radim Blazek, ITC-Irst, Trento, Italy

@@ -21,10 +21,12 @@ default: \
 	$(HOME)/db.select \
 	$(HOME)/db.tables \
 	$(HOME)/db.connect \
+	allhtml
 
 $(HOME)/db.columns: $(OBJDIR)/columns.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.columns || ln $(ETC)/front.end $(BIN)/db.columns
+	PGM=$(HOME)/db.columns html
 
 $(HOME)/db.copy: $(OBJDIR)/copy.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/copy.o $(LIBES) $(XDRLIB) $(MATHLIB)
@@ -69,5 +71,14 @@ $(HOME)/db.tables: $(OBJDIR)/tables.o
 $(HOME)/db.connect: $(OBJDIR)/connect.o
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/connect.o $(LIBES) $(XDRLIB) $(MATHLIB)
 	@test -x $(BIN)/db.connect || ln $(ETC)/front.end $(BIN)/db.connect
-	
 
+PROGRAMS = db.columns db.copy db.createdb db.dropdb db.droptable db.databases db.describe db.drivers db.execute db.select db.tables db.connect
+
+allhtml: *.html
+	for pgm in $(PROGRAMS) ; do \
+		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$pgm --html-description | grep -v '</body>' > $$pgm.tmp ; true \
+		test ! -f $$pgm.html || ( cat $$pgm.html >> $$pgm.tmp ) ; \
+		echo "</body></html>" >> $$pgm.tmp ; \
+		mkdir -p $(GISBASE)/docs/html ; \
+		mv $$pgm.tmp $(GISBASE)/docs/html/$$pgm.html ; \
+	done

@@ -1,0 +1,32 @@
+<h2>DESCRIPTION</h2>
+
+<em>db.copy</em> allows the user to copy a table between two databases. Databases 
+can be connected through different drivers (see example).
+
+<h2>NOTES</h2>
+
+Attribute tables can be copied manually using db.copy and 
+<em><a HREF="v.db.connect.html">v.db.connect</a></em>. Current connection 
+settings are saved in <em>$LOCATION/vector_map/dbln</em>.  
+
+<h2>EXAMPLE</h2>
+
+<em>storing table 'markveggy.dbf' (in current directory) into PostgreSQL 
+through ODBC:</em><br>
+<b>db.copy from_driver=</b><em>dbf</em> <b>from_database=</b><em>./</em> 
+<b>from_table=</b><em>markveggy</em> <b>to_driver=</b><em>pg</em> 
+<b>to_database=</b><em>"host=pgserver,dbname=grass51test,user=neteler"</em>  
+<b>to_table=</b><em>markveggy</em>
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="http://grass.itc.it/grass51/tutorial/attrib_storage.html">GRASS 5.1
+tutorial pages</a></em><br>
+<em><a HREF="v.db.connect.html">v.db.connect</a></em><br>
+<em><a HREF="db.drivers.html">db.drivers</a></em><br>
+<em><a HREF="db.databases.html">db.databases</a></em><br>
+<em><a HREF="v.clean.html">v.clean</a></em>
+
+<h2>AUTHOR</h2>
+
+Radim Blazek, ITC-Irst, Trento, Italy

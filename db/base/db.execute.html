@@ -1,0 +1,31 @@
+<h2>DESCRIPTION</h2>
+
+<em>db.execute</em> allows the user to execute SQL statements.  
+
+<h2>NOTE</h2>
+
+If parameters for database connection are already set with 
+<a HREF="db.connect.html">db.connect</a>, they are taken as default values and
+do not need to be spcified each time.
+
+<h2>EXAMPLES</h2>
+
+<em>Create a new table with columns 'cat' and 'soiltype'</em><br>
+<tt>echo 'create table soils ("cat" int, "soiltype" text)' | db.execute</tt>
+<br>or<br>
+<tt>cat file.sql | db.execute</tt>
+
+<p>
+
+<em>Create a new table using a file with sql statements</em><br>
+<b>db.execute driver</b><em>=odbc</em> <b>database=</b><em>g51test</em> 
+<b>input=</b><em>file.sql</em>
+
+<h2>SEE ALSO</h2>
+<em><a HREF="http://grass.itc.it/grass51/tutorial/ex_complex.html#shortestpath">GRASS 5.1
+tutorial pages</a>, <em><a HREF="db.columns.html">db.columns</a>, <a HREF="db.createdb.html">db.createdb</a>, <a HREF="db.databases.html">db.databases</a>, <a HREF="db.describe.html">db.describe</a>, <a HREF="db.drivers.html">db.drivers</a>, <a HREF="db.dropdb.html">db.dropdb</a>, <a HREF="db.droptable.html">db.droptable</a>, <a HREF="db.tables.html">db.tables</a></em>
+
+<h2>AUTHOR</h2>
+
+CERL
+
