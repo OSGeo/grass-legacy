@@ -1,0 +1,11 @@
+PGM=d.rast
+HOME=$(BIN_MAIN_CMD)
+
+D__LIBES  = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+LIST   = main.o
+
+$(HOME)/$(PGM): $(LIST) $(D__LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(D__LIBES) $(MATHLIB)
+
+$(D__LIBES): #
