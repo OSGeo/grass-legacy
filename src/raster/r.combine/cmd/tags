@@ -1,0 +1,56 @@
+C_open_cell_old	r_opn_cell.c	/^C_open_cell_old(node)$/
+Mmain	main.c	/^main(argc, argv) char **argv ;$/
+U	gis_lxcl.c	/^# define U(x) x$/
+YYBACKUP	gis_pars.c	/^#define YYBACKUP( newtoken, newvalue )\\$/
+YYRECOVERING	gis_pars.c	/^#define YYRECOVERING()	(!!yyerrflag)$/
+YYU	gis_lxcl.c	/^# define YYU(x) x$/
+at_console	init_comb.c	/^at_console()$/
+check_lines	r_pr_hist.c	/^check_lines()$/
+clear_input	gis_lxcl.c	/^clear_input()$/
+cover_number	cover_num.c	/^cover_number(node) $/
+cry_and_die	cry_n_die.c	/^cry_and_die(message) char *message ;$/
+do_tabs	r_pr_tree.c	/^do_tabs(j)$/
+eval_tree	eval_tree.c	/^eval_tree(tree) struct Node *tree ;$/
+falloc	falloc.c	/^falloc(n, s, string) unsigned n, s ; char *string /
+fopen	gis_lxcl.c	/^	if ((newinput = fopen(filename,"r") ) != NULL)$/
+get_cats	get_cats.c	/^get_cats(name) char *name ;$/
+get_cur_win	get_c_win.c	/^get_cur_win()$/
+get_win	get_win.c	/^get_win(name) char *name ;$/
+init_comb	init_comb.c	/^init_comb()$/
+init_group	group.c	/^init_group (group)$/
+init_proj_win	get_c_win.c	/^init_proj_win()$/
+input	gis_lxcl.c	/^# define input() (((yytchar=yysptr>yysbuf/U(*--yys/
+make_cats_comb	r_wr_supp.c	/^make_cats_comb(node, num_cats) $/
+make_colr_comb	r_wr_supp.c	/^make_colr_comb( node, num_cats ) $/
+make_hist_comb	r_wr_supp.c	/^make_hist_comb( node ) $/
+make_node	gis_pars.c	/^make_node (oper, left, rite, name)$/
+mark_group	group.c	/^mark_group (group, lo, hi)$/
+output	gis_lxcl.c	/^# define output(c) putc(c,yyout)$/
+rcr_alc_lbuf	r_alc_lbuf.c	/^rcr_alc_lbuf(node) struct Node *node ;$/
+rcr_cls_cell	r_cls_cell.c	/^rcr_cls_cell(node) struct Node *node ;$/
+rcr_find_val	r_find_val.c	/^rcr_find_val(node, map_col) struct Node *node ; in/
+rcr_fre_lbuf	r_fre_lbuf.c	/^rcr_fre_lbuf(node) struct Node *node ;$/
+rcr_opn_cell	r_opn_cell.c	/^rcr_opn_cell(node) struct Node *node ;$/
+rcr_pr_hist	r_pr_hist.c	/^rcr_pr_hist(node, depth) struct Node *node ;$/
+rcr_pr_tree	r_pr_tree.c	/^rcr_pr_tree(node) struct Node *node ;$/
+rcr_rd_line	r_rd_line.c	/^rcr_rd_line(node, win_row) struct Node *node ; int/
+rcr_sum_tree	r_sum_tree.c	/^rcr_sum_tree(node) struct Node *node ;$/
+rcr_wr_line	r_wr_line.c	/^rcr_wr_line(node, win_row) struct Node *node ; int/
+rcr_wr_supp	r_wr_supp.c	/^rcr_wr_supp(node) struct Node *node ;$/
+reset_signals	set_sigs.c	/^reset_signals()$/
+set_signals	set_sigs.c	/^set_signals()$/
+shell_escape	gis_lxcl.c	/^shell_escape(command) $/
+sigint	sigint.c	/^sigint(n)$/
+start_line_count	r_pr_hist.c	/^start_line_count()$/
+unput	gis_lxcl.c	/^# define unput(c) {yytchar= (c);if(yytchar=='\\n')y/
+write_window	write.c	/^write_window(win)$/
+yyback	gis_lxcl.c	/^yyback(p, m)$/
+yyerror	gis_pars.c	/^yyerror(message) char *message ;$/
+yyinput	gis_lxcl.c	/^yyinput(){$/
+yylex	gis_lxcl.c	/^yylex(){$/
+yylook	gis_lxcl.c	/^yylook(){$/
+yymore	gis_lxcl.c	/^# define yymore() (yymorfg=1)$/
+yyoutput	gis_lxcl.c	/^yyoutput(c)$/
+yyparse	gis_pars.c	/^yyparse()$/
+yyunput	gis_lxcl.c	/^yyunput(c)$/
+yywrap	gis_lxcl.c	/^yywrap()$/
