@@ -1,5 +1,5 @@
 PGM=p.ppm
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = ../../Interface/applib/lib.a
 EXTRA_CFLAGS = -I$(SRC)/paint
 
 LIST  = main.o\

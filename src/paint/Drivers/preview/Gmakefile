@@ -1,5 +1,5 @@
 NAME=preview
-LIBS = $(SRC)/paint/Interface/driverlib/lib.a \
+LIBS = ../../Interface/driverlib/lib.a \
 	    $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(LOCKLIB)
 EXTRA_CFLAGS = -DPAINT_DRIVER -I../../
 

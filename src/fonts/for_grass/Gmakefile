@@ -6,27 +6,25 @@ RAWFONT = \
 	../fonts/hersh.oc3 \
 	../fonts/hersh.oc4
 
-all: ...clean ...fonts
-
-...fonts: ...dir splitfont font.bin
-	./splitfont $(FONT)
-	rm -f splitfont font_2_bin font.bin
+all: ...dir ...fonts ...clean
 
 ...dir:
 	rm -rf $(FONT)
 	mkdir $(FONT)
 
+...fonts: $(FONT)/splitfont $(FONT)/font.bin
+	$(FONT)/splitfont $(FONT) < $(FONT)/font.bin
+
 ...clean:
-	rm -f splitfont font_2_bin font.bin splitfont.exe font_2_bin.exe
+	rm -f $(FONT)/splitfont $(FONT)/font_2_bin $(FONT)/font.bin
 
+$(FONT)/font.bin: $(FONT)/font_2_bin $(RAWFONT)
+	cat $(RAWFONT) | $(FONT)/font_2_bin > $@
 
-font.bin: font_2_bin $(RAWFONT)
-	cat $(RAWFONT) | ./font_2_bin
-
-font_2_bin: font_2_bin.o
+$(FONT)/font_2_bin: font_2_bin.o
 	$(CC) $(LDFLAGS) font_2_bin.o -o $@
 
-splitfont: splitfont.o fontmap.o
+$(FONT)/splitfont: splitfont.o fontmap.o
 	$(CC) $(LDFLAGS) splitfont.o fontmap.o -o $@
 
 try: try.o showchar.o font.o

@@ -1,0 +1,31 @@
+Alternate Build Mechanism
+ - uses GNU make (maybe others, not tested)
+ - allows building in a separate directory
+ - allows use of a read-only source directory for the actual build (although 
+   write permission is required to generate the makefiles)
+
+Building everything:
+
+mkdir ~/grass-build
+cd ~/grass-build
+/usr/src/grass5/configure ...
+mv -f mk/Makefile Makefile
+make makefiles		# only needs to be done once, writes to source dir
+make all		# all == dirs binaries html links
+sudo make install
+
+Building a single directory:
+
+mkdir ~/grass-build
+cd ~/grass-build
+/usr/src/grass5/configure ...
+mv -f mk/Makefile Makefile
+make dirs
+make dir -I/usr/src/grass5/mk -I`pwd`/mk -C /usr/src/grass5/<dir>
+
+NB: You probably want do define a function for the above line, e.g.:
+
+function gmake5 {
+  make dir -I`pwd`/mk -I/usr/src/grass5/mk -C /usr/src/grass5/$1
+}
+

@@ -1,2 +1,3 @@
 all:
 	cp monitorcap $(ETC)/monitorcap
+	chmod u+w $(ETC)/monitorcap

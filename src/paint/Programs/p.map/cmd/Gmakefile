@@ -2,7 +2,7 @@ PGM = p.map
 
 PAINT = $(ETC)/paint
 
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = ../../../Interface/applib/lib.a
 LIBES =	$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(ICONLIB)
 
 EXTRA_CFLAGS= -I../../../

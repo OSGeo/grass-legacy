@@ -22,12 +22,7 @@ int main (void)
     unsigned char x[256],y[256];
     int i;
 
-    font = creat ("font.bin", 0666);
-    if (font < 0)
-    {
-	perror ("font.bin");
-	exit(1);
-    }
+    font = 1; /* stdout */
 
 /* index to the font ids will be written at end of font file.
  * pointer to index is written at top of file. write zero now
@@ -65,7 +60,6 @@ int main (void)
     write (font, index, nchars * sizeof (*index));
     lseek (font, 0L, 0);
     write (font, &offset, sizeof(offset));
-    close (font);
 
     exit(0);
 }

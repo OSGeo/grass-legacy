@@ -2,7 +2,7 @@ PGM = r.colors.paint
 
 LIST = main.o readfile.o range.o assign_color.o
 
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = ../../paint/Interface/applib/lib.a
 
 LIBES= $(GISLIB) $(INTERFACE)
 

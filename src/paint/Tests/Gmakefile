@@ -1,4 +1,4 @@
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = ../Interface/applib/lib.a
 LIBES=$(INTERFACE) $(GISLIB)
 HOME=$(ETC)/paint
 EXTRA_CFLAGS = -I$(SRC)/paint

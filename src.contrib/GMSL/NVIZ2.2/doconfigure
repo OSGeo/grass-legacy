@@ -5,8 +5,6 @@ then
 	exit 1
 fi
 
-NVWISH_VER="NVWISH$1"
-
 if [ -n "$2" -a "$PGSQL" != "no" -a "$PGSQL" != "NO" ]
 then
 ####### POSTGRESQL SUPPORTED #####################
@@ -24,7 +22,6 @@ then
 		cp scripts/panel_query_pg.tcl scripts/panel_query.tcl
 	fi
 
-	PQ_OBJS="openvect.o getCat.o buildInfxQry.o runInfxQry.o"
 ##################################################
 else
 ####### POSTGRESQL UNSUPPORTED ###################
@@ -46,12 +43,6 @@ else
 		cp scripts/panel_query_orig.tcl scripts/panel_query.tcl
 	fi
 
-	PQ_OBJS=
 ##################################################
 fi
 
-
-sed -e "\
-	s/^NVWISH_VER=sed$/NVWISH_VER=${NVWISH_VER}/g;\
-	s/^PQ_OBJS=sed$/PQ_OBJS=${PQ_OBJS}/g;\
-" src/Gmakefile.in > src/Gmakefile
