@@ -110,7 +110,12 @@ int main (int argc, char *argv[])
 
     
     label = atoi (value->answer);
-    G_init_cats ((CELL) label, vectfile->answer, &cats);
+    G_suppress_warnings (0);
+    if (G_read_vector_cats (vectfile->answer, mapset, &cats) != 0)
+    {
+        G_init_cats ((CELL) 0, vectfile->answer, &cats);
+    }
+    G_suppress_warnings (1);
     for (i = 1 ; i <= Map.n_areas ; i++)
     {
 	if (0 != Map.Area[i].att)
