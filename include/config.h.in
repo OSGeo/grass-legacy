@@ -203,4 +203,30 @@
 #define INT_MIN -MAXINT
 #endif
 
+
+
+/*
+ * Defines needed to get large file support - from cdrtools-2.01
+ */
+#ifdef	USE_LARGEFILES
+
+#undef	HAVE_LARGEFILES
+
+#ifdef	HAVE_LARGEFILES		/* If we have working largefiles at all	   */
+				/* This is not defined with glibc-2.1.3	   */
+
+#undef _FILE_OFFSET_BITS	/* # of bits in off_t if settable	   */
+#undef _LARGEFILE_SOURCE	/* To make ftello() visible (HP-UX 10.20). */
+#undef _LARGE_FILES		/* Large file defined on AIX-style hosts.  */
+#undef _XOPEN_SOURCE		/* To make ftello() visible (glibc 2.1.3). */
+				/* XXX We don't use this because glibc2.1.3*/
+				/* XXX is bad anyway. If we define	   */
+				/* XXX _XOPEN_SOURCE we will loose caddr_t */
+
+#undef HAVE_FSEEKO		/* Do we need this? If HAVE_LARGEFILES is  */
+				/* defined, we have fseeko()		   */
+
+#endif	/* HAVE_LARGEFILES */
+#endif	/* USE_LARGEFILES */
+
 #endif /* _config_h */

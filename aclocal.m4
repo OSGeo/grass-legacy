@@ -1287,3 +1287,172 @@ dnl        esac
     AC_SUBST(INSTALL_STUB_LIB)
     AC_SUBST(RANLIB)
 ])
+
+
+dnl XXXXXXXXXXX Begin Stolen from cdrtools-2.01 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+dnl XXXXXXXXXXXXXXXXXX Begin Stolen (but modified) from GNU tar XXXXXXXXXXXXXXXXXXXXXXXXXXX
+dnl Changes:
+
+dnl One line has been changed to:    [ac_save_CC="${CC-cc}" to default to "'cc"
+
+dnl AC_SYS_LARGEFILE_MACRO_VALUE test moved from AC_FUNC_FSEEKO into AC_SYS_LARGEFILE
+dnl Do not call AC_FUNC_FSEEKO because it does not check whether fseeko() is
+dnl available on non Large File mode. There are additionoal tests for fseeko()/ftello()
+dnl inside the AC_HAVE_LARGEFILES test.
+
+dnl largefile_cc_opt definition added
+
+#serial 18
+
+dnl By default, many hosts won't let programs access large files;
+dnl one must use special compiler options to get large-file access to work.
+dnl For more details about this brain damage please see:
+dnl http://www.sas.com/standards/large.file/x_open.20Mar96.html
+
+dnl Written by Paul Eggert <eggert@twinsun.com>.
+
+dnl Internal subroutine of AC_SYS_LARGEFILE.
+dnl AC_SYS_LARGEFILE_TEST_INCLUDES
+AC_DEFUN([AC_SYS_LARGEFILE_TEST_INCLUDES],
+  [[#include <sys/types.h>
+    /* Check that off_t can represent 2**63 - 1 correctly.
+       We can't simply "#define LARGE_OFF_T 9223372036854775807",
+       since some C++ compilers masquerading as C compilers
+       incorrectly reject 9223372036854775807.  */
+#   define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+    int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
+			&& LARGE_OFF_T % 2147483647 == 1)
+		       ? 1 : -1];
+  ]])
+
+dnl Internal subroutine of AC_SYS_LARGEFILE.
+dnl AC_SYS_LARGEFILE_MACRO_VALUE(C-MACRO, VALUE, CACHE-VAR, COMMENT, INCLUDES, FUNCTION-BODY)
+AC_DEFUN([AC_SYS_LARGEFILE_MACRO_VALUE],
+  [AC_CACHE_CHECK([for $1 value needed for large files], $3,
+     [$3=no
+      AC_TRY_COMPILE([$5],
+	[$6], 
+	,
+	[AC_TRY_COMPILE([#define $1 $2]
+[$5]
+	   ,
+	   [$6],
+	   [$3=$2])])])
+   if test "[$]$3" != no; then
+     AC_DEFINE_UNQUOTED([$1], [$]$3, [$4])
+   fi])
+
+AC_DEFUN([AC_SYS_LARGEFILE],
+  [AC_ARG_ENABLE(largefile,
+     [  --disable-largefile     omit support for large files])
+   if test "$enable_largefile" != no; then
+
+     AC_CACHE_CHECK([for special C compiler options needed for large files],
+       ac_cv_sys_largefile_CC,
+       [ac_cv_sys_largefile_CC=no
+        largefile_cc_opt=""
+        if test "$GCC" != yes; then
+	  # IRIX 6.2 and later do not support large files by default,
+	  # so use the C compiler's -n32 option if that helps.
+	  AC_TRY_COMPILE(AC_SYS_LARGEFILE_TEST_INCLUDES, , ,
+	    [ac_save_CC="${CC-cc}"
+	     CC="$CC -n32"
+	     AC_TRY_COMPILE(AC_SYS_LARGEFILE_TEST_INCLUDES, ,
+	       ac_cv_sys_largefile_CC=' -n32')
+	     CC="$ac_save_CC"])
+        fi])
+     if test "$ac_cv_sys_largefile_CC" != no; then
+       CC="$CC$ac_cv_sys_largefile_CC"
+       largefile_cc_opt="$ac_cv_sys_largefile_CC"
+     fi
+
+     AC_SYS_LARGEFILE_MACRO_VALUE(_FILE_OFFSET_BITS, 64,
+       ac_cv_sys_file_offset_bits,
+       [Number of bits in a file offset, on hosts where this is settable.],
+       AC_SYS_LARGEFILE_TEST_INCLUDES)
+     AC_SYS_LARGEFILE_MACRO_VALUE(_LARGE_FILES, 1,
+       ac_cv_sys_large_files,
+       [Define for large files, on AIX-style hosts.],
+       AC_SYS_LARGEFILE_TEST_INCLUDES)
+     AC_SYS_LARGEFILE_MACRO_VALUE(_LARGEFILE_SOURCE, 1,
+       ac_cv_sys_largefile_source,
+       [Define to make fseeko visible on some hosts (e.g. glibc 2.2).],
+       [#include <stdio.h>], [return !fseeko;])
+   fi
+  ])
+
+
+AC_DEFUN([AC_FUNC_FSEEKO],
+  [AC_SYS_LARGEFILE_MACRO_VALUE(_LARGEFILE_SOURCE, 1,
+     ac_cv_sys_largefile_source,
+     [Define to make fseeko visible on some hosts (e.g. glibc 2.2).],
+     [#include <stdio.h>], [return !fseeko;])
+   # We used to try defining _XOPEN_SOURCE=500 too, to work around a bug
+   # in glibc 2.1.3, but that breaks too many other things.
+   # If you want fseeko and ftello with glibc, upgrade to a fixed glibc.
+
+   AC_CACHE_CHECK([for fseeko], ac_cv_func_fseeko,
+     [ac_cv_func_fseeko=no
+      AC_TRY_LINK([#include <stdio.h>],
+        [return fseeko && fseeko (stdin, 0, 0);],
+	[ac_cv_func_fseeko=yes])])
+   if test $ac_cv_func_fseeko != no; then
+     AC_DEFINE(HAVE_FSEEKO, 1,
+       [Define if fseeko (and presumably ftello) exists and is declared.])
+   fi])
+
+
+dnl XXXXXXXXXXXXXXXXXX End Stolen (but modified) from GNU tar XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+AC_DEFUN([AC_HAVE_LARGEFILES],
+[AC_CACHE_CHECK([if system supports Large Files at all], ac_cv_largefiles,
+     	[AC_TRY_COMPILE([#include <stdio.h>
+#include <sys/types.h>],
+     		[
+/*
+ * Check that off_t can represent 2**63 - 1 correctly.
+ * We can't simply "#define LARGE_OFF_T 9223372036854775807",
+ * since some C++ compilers masquerading as C compilers
+ * incorrectly reject 9223372036854775807.
+ */
+#   define LARGE_OFF_T (((off_t) 1 << 62) - 1 + ((off_t) 1 << 62))
+    int off_t_is_large[(LARGE_OFF_T % 2147483629 == 721
+			&& LARGE_OFF_T % 2147483647 == 1)
+		       ? 1 : -1];
+return !fseeko;
+return !ftello;],
+     		[ac_cv_largefiles=yes],
+     		[ac_cv_largefiles=no])])
+	if test $ac_cv_largefiles = yes; then
+		AC_DEFINE(HAVE_LARGEFILES)
+	fi])
+
+dnl Checks for whether fseeko() is available in non large file mode
+dnl and whether there is a prototype for fseeko()
+dnl Defines HAVE_FSEEKO on success.
+AC_DEFUN([AC_SMALL_FSEEKO],
+[AC_CACHE_CHECK([for fseeko()], ac_cv_func_fseeko,
+                [AC_TRY_LINK([#include <stdio.h>],
+[return !fseeko;],
+                [ac_cv_func_fseeko=yes],
+                [ac_cv_func_fseeko=no])])
+if test $ac_cv_func_fseeko = yes; then
+  AC_DEFINE(HAVE_FSEEKO)
+fi])
+
+dnl Checks for whether ftello() is available in non large file mode
+dnl and whether there is a prototype for ftello()
+dnl Defines HAVE_FTELLO on success.
+AC_DEFUN([AC_SMALL_FTELLO],
+[AC_CACHE_CHECK([for ftello()], ac_cv_func_ftello,
+                [AC_TRY_LINK([#include <stdio.h>],
+[return !ftello;],
+                [ac_cv_func_ftello=yes],
+                [ac_cv_func_ftello=no])])
+if test $ac_cv_func_ftello = yes; then
+  AC_DEFINE(HAVE_FTELLO)
+fi])
+
+dnl XXXXXXXXXXX End Stolen from cdrtools-2.01 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
