@@ -2,6 +2,12 @@
 
 # registers a SHAPE file into GRASS 5.1
 # Markus Neteler 2/2002
+#
+# TODOs:
+#  - allow for .SHP extension (currently only .shp)
+#  - add stuff if _ID not found from ogrinfo (different name)
+#  - add stuff for multilayer SHAPE (ID field identification with ogrinfo)
+
 
 if test "$GISBASE" = ""; then
 echo "You must be in GRASS to run this program."
