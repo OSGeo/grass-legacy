@@ -1,8 +1,0 @@
-OBJ     = V_call.o V_clear.o V_const.o V_exit.o V_init.o \
-	  V_line.o V_ques.o V_error.o V_support.o V_tty.o V_acc.o \
-	  V_trim_dec.o
-
-$(VASKLIB): $(OBJ)
-	$(AR)
-
-$(OBJ): vask.h                
