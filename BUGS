@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.19 2000-09-20 15:50:22 markus Exp $
+$Id: BUGS,v 1.20 2000-09-25 14:34:21 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -228,9 +228,6 @@ reclass rule that cannot be more than 7 characters long (i.e. 11250=16 is
 eight characters long and will cause v.reclass to return an error). Someone     
 needs to look at correcting this perhaps.
 
-v.surf.rst:
-- outputs one elevation only. Bug seems to be introduced in GRASS 5 beta3
-
 --------------------------------------------------
 
 Platform specific stuff:
@@ -299,7 +296,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.19  2000-09-20 15:50:22  markus
+ Revision 1.20  2000-09-25 14:34:21  markus
+ v.surf.rst fixed by Helena
+
+ Revision 1.19  2000/09/20 15:50:22  markus
  added ps.map fwritable-strings problem
 
  Revision 1.18  2000/09/19 16:25:54  markus
