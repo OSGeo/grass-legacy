@@ -20,6 +20,8 @@ char *argv[];
 		struct Flag *m;
 		struct Flag *h;
 		struct Flag *q;
+		struct Flag *e;
+		struct Flag *z;
 	} flags;
 
 	parms.cell = G_define_option();
@@ -74,6 +76,13 @@ char *argv[];
 	flags.q->key = 'q';
 	flags.q->description = "quiet";
 
+	flags.e = G_define_flag();
+	flags.e->key = 'e';
+	flags.e->description = "scientific format";
+
+	flags.z = G_define_flag();
+	flags.z->key = 'z';
+	flags.z->description = "filter out zero category data";
 /* hidden feature.
  * if first arg is >file just run r.stats into this file and quit
  * if first arg is <file, run report from stats in file
@@ -105,6 +114,8 @@ char *argv[];
 	with_headers = !flags.h->answer;
 	masking      = !flags.m->answer;
 	verbose      = !flags.q->answer;
+	e_format     = flags.e->answer;
+	z_option     = flags.z->answer;
 
 	for (i = 0; parms.cell->answers[i]; i++)
 		parse_layer (parms.cell->answers[i]);
@@ -154,7 +165,7 @@ char *s;
 		x = SQ_KILOMETERS;
 	else if (match (s, "acres",1))
 		x = ACRES;
-	else if (match (s, "hectacres",1))
+	else if (match (s, "hectares",1))
 		x = HECTARES;
 	else if (match (s, "cell_counts",1))
 		x = CELL_COUNTS;
