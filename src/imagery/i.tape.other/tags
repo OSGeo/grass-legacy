@@ -1,0 +1,11 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+ask_format	ask_format.c	/^ask_format ()$/
+ask_window	ask_window.c	/^ask_window ()$/
+bil	bil.c	/^bil()$/
+bsq1	bsq1.c	/^bsq1()$/
+bsq2	bsq2.c	/^bsq2()$/
+get_tapename	tapename.c	/^get_tapename (name)$/
+mount_tape	mount_tape.c	/^mount_tape (tapename)$/
+put_row	put_row.c	/^put_row (fd, buf, row)$/
+readbil	readbil.c	/^readbil (row,band)$/
+readbsq	readbsq.c	/^readbsq (band)$/
