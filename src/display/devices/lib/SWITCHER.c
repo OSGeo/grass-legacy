@@ -683,6 +683,7 @@ main (int argc, char *argv[])
                 send (&l, sizeof l) ;
                 send (&r, sizeof r) ;
                 break ;
+#ifndef __CYGWIN__
             case FONT:
                 RECTEXT (text) ;
                 x = GFont(text) ;
@@ -692,6 +693,7 @@ main (int argc, char *argv[])
                 RECTEXT (text) ;
                 Text(text) ;
                 break ;
+#endif
             case TEXT_SIZE:
                 REC (&x, sizeof x) ;
                 REC (&y, sizeof y) ;
