@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -59,6 +60,7 @@ int main (int argc, char **argv)
 		while(*bptr != '\0') bptr++ ;
 		*(--bptr) = '\0' ;
 
+		memset(map, '\0', sizeof(map));
 		nmap = fontmap (buf, map);
 		if (nmap < 0)
 		{
@@ -83,11 +85,33 @@ int main (int argc, char **argv)
 		write(newfont, &newoffset, sizeof newoffset) ;
 
 		newchars = 0 ;
+		
+		/*new files containing description of additional upper 8-bit characters*/
+		
+		if (nmap>96) {
+		    for(achar=-0200; achar<1; (achar)++)
+		    {
+			offset = index [map[achar + 224]];
+			if (offset <= 0)
+				fprintf (stdout,"character <%c> (n=%d) not defined in font <%s>\n", 
+				achar, (int) achar, buf);
+			else
+			{
+				newchars ++ ;
+				lseek (font, offset, 0);
+				newmap[achar + 224] = lseek(newfont, 0L, 1) ;
+				/*showchar (font);*/
+				savechar (font, newfont);
+			}
+		    }
+		}
+		/* original 96 symbols files*/
 		for(achar=040; achar<0176; (achar)++)
 		{
 			offset = index [map[achar - 040]];
 			if (offset <= 0)
-				fprintf (stdout,"character <%c> not defined in font <%s>\n", achar, buf);
+				fprintf (stdout,"character <%c> (n=%d) not defined in font <%s>\n", 
+				achar, (int) achar, buf);
 			else
 			{
 				newchars ++ ;
