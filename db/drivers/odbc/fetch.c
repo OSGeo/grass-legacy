@@ -4,7 +4,7 @@
 #include "proto.h" 
 
 int
-db_driver_fetch(cn, position, more)
+db__driver_fetch(cn, position, more)
     dbCursor *cn;
     int position;
     int *more;
@@ -164,7 +164,7 @@ db_driver_fetch(cn, position, more)
 }
 
 int
-db_driver_get_num_rows (cn )
+db__driver_get_num_rows (cn )
     dbCursor *cn;
 {
     cursor     *c;

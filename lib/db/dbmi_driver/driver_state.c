@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "dbmi.h"
+#include "dbstubs.h"
 
 static dbDriverState state;
 

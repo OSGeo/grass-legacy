@@ -20,7 +20,7 @@
 #include "globals.h"
 #include "proto.h"
 
-int db_driver_list_databases(dbpath, npaths, dblist, dbcount)
+int db__driver_list_databases(dbpath, npaths, dblist, dbcount)
      dbString *dbpath;
      int npaths;
      dbHandle **dblist;

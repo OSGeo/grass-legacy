@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "proto.h"
 
-int db_driver_describe_table(table_name, table)
+int db__driver_describe_table(table_name, table)
      dbString *table_name;
      dbTable **table;
 {

@@ -1,4 +1,5 @@
 #include "dbmi.h"
+#include "dbstubs.h"
 
 static char *rfind();
 static int make_parent_dir();

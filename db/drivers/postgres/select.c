@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "proto.h"
 
-int db_driver_open_select_cursor(sel, dbc, mode)
+int db__driver_open_select_cursor(sel, dbc, mode)
      dbString *sel;
      dbCursor *dbc;
      int mode;

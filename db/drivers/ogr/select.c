@@ -19,7 +19,7 @@
 #include "globals.h"
 #include "proto.h"
 
-int db_driver_open_select_cursor( dbString *sel, dbCursor *dbc, int mode )
+int db__driver_open_select_cursor( dbString *sel, dbCursor *dbc, int mode )
 {
     cursor *c;
     dbTable *table;

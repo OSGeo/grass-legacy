@@ -77,7 +77,7 @@ int parse_conn ( char *str, MYCONN *myconn )
     return 0;
 }
 
-int db_driver_open_database(handle)
+int db__driver_open_database(handle)
      dbHandle *handle;
 {
     char *name;
@@ -139,7 +139,7 @@ int db_driver_open_database(handle)
     return DB_OK;
 }
 
-int db_driver_close_database()
+int db__driver_close_database()
 {
     int i;
 

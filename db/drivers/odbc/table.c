@@ -93,7 +93,7 @@ dbString *cmd;
   }
 }*/
 
-db_driver_drop_table (name)
+db__driver_drop_table (name)
 dbString *name;
 {
     char        cmd[200];

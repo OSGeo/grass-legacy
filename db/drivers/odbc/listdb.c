@@ -3,7 +3,7 @@
 #include "globals.h"
 #include "proto.h"
 
-db_driver_list_databases (dbpath, npaths, dblist, dbcount)
+db__driver_list_databases (dbpath, npaths, dblist, dbcount)
     dbString  *dbpath;
     int       npaths;
     dbHandle  **dblist;

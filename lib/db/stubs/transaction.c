@@ -2,7 +2,7 @@
 
 /* Implemented only in some drivers */
 int
-db_driver_begin_transaction (void)
+db__driver_begin_transaction (void)
 {
     G_debug (2, "Begin transaction" );
     return DB_OK;
@@ -10,7 +10,7 @@ db_driver_begin_transaction (void)
 
 /* Implemented only in some drivers */
 int
-db_driver_commit_transaction (void)
+db__driver_commit_transaction (void)
 {
     G_debug (2, "Commit transaction" );
     return DB_OK;

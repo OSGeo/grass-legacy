@@ -17,13 +17,13 @@
 #include <dbmi.h>
 #include "globals.h"
 
-int db_driver_init(argc, argv)
+int db__driver_init(argc, argv)
      char *argv[];
 {
     return DB_OK;
 }
 
-int db_driver_finish()
+int db__driver_finish()
 {
     return DB_OK;
 }

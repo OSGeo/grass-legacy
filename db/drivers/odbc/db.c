@@ -5,7 +5,7 @@
 #include "proto.h" 
 #include <stdio.h>
 
-db_driver_open_database (handle)
+db__driver_open_database (handle)
     dbHandle *handle;
 {
     char        *name, msg[OD_MSG], emsg[DB_MSG];
@@ -41,7 +41,7 @@ db_driver_open_database (handle)
 }
 
 int
-db_driver_close_database()
+db__driver_close_database()
 {
     SQLDisconnect( ODconn );  
     close_connection();

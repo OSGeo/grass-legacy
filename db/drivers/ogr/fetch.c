@@ -22,7 +22,7 @@
 #include "proto.h" 
 
 int
-db_driver_fetch( dbCursor *cn, int position, int *more )
+db__driver_fetch( dbCursor *cn, int position, int *more )
 {
     cursor     *c;
     dbToken    token;    
@@ -129,7 +129,7 @@ db_driver_fetch( dbCursor *cn, int position, int *more )
 }
 
 int
-db_driver_get_num_rows (cn )
+db__driver_get_num_rows (cn )
             dbCursor *cn;
 {
     cursor     *c;

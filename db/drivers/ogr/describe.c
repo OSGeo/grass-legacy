@@ -20,7 +20,7 @@
 #include "globals.h"
 #include "proto.h"
 
-int db_driver_describe_table( dbString *table_name, dbTable **table )
+int db__driver_describe_table( dbString *table_name, dbTable **table )
 {
     int i, nlayers;
     OGRLayerH hLayer = NULL;

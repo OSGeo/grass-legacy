@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "dbmi.h"
 #include "macros.h"
+#include "dbstubs.h"
 
 /*!
  \fn int db_d_list_databases(void)

@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 int
-db_driver_close_cursor(dbc)
+db__driver_close_cursor(dbc)
    dbCursor *dbc;
 {
     cursor *c;
