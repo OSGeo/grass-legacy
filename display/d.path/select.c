@@ -15,7 +15,7 @@ int display ( struct Map_info *Map, struct ilist *List, int color );
 
 int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 {
-    int button;
+    int button, ret;
     int screen_x, screen_y ;
     double x, y, msize;
     double x1, y1, x2, y2, maxdist;
@@ -99,8 +99,11 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 
 	    if ( from > 0 && to > 0 && from != to ) {
 		G_debug (1, "find path %d -> %d\n", from, to);
-		Vect_net_shortest_path ( Map, from, to, AList, &cost);
-		fprintf (stdout, "Number of arcs = %d, total costs = %f\n",  AList->n_values, cost);
+		ret = Vect_net_shortest_path ( Map, from, to, AList, &cost);
+		if ( ret == -1 ) 
+		    fprintf (stdout, "Destination unreachable\n" );
+		else 
+		    fprintf (stdout, "Number of arcs = %d, total costs = %f\n",  AList->n_values, cost);
 		
                 display ( Map, AList, hcolor );
 	    }
