@@ -281,6 +281,8 @@ Vect_str_to_cat_list (char *str, struct cat_list *list)
   char *s, *e, buf[100];
   int min, max;
   
+  G_debug (3, "Vect_str_to_cat_list(): str = %s", str);
+  
   list->n_ranges = 0;
   l = strlen (str); 
   
@@ -315,6 +317,7 @@ Vect_str_to_cat_list (char *str, struct cat_list *list)
         {
           l = e - s;
           strncpy (buf, s, l);
+	  buf[l] = '\0';
 	  s = e + 1;
 	}
       else
@@ -322,11 +325,14 @@ Vect_str_to_cat_list (char *str, struct cat_list *list)
           strcpy (buf, s);
 	  s = NULL;
 	}
+      
+      G_debug (3, "  buf = %s", buf);
       if ( sscanf (buf, "%d-%d", &min, &max) == 2 ) {}
       else if ( sscanf (buf, "%d", &min) == 1 )
           max = min;
       else  /* error */ 
         {
+	  G_warning ("Cannot convert category string '%s' (from '%s') to category range", buf, str);
 	  err++;	
 	  continue;
         }
