@@ -184,7 +184,8 @@ int main(int argc,char *argv[])
 	else
 	{
 	  line++;
-	  if (strcmp (buffer, "end") == 0 || strcmp (buffer, "exit") == 0)
+	  if (strncmp (buffer, "end\n",  4) == 0 ||
+	      strncmp (buffer, "exit\n", 5) == 0)
 	    done = 1;
 	  else
 	  {
