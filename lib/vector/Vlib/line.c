@@ -715,12 +715,12 @@ int
 Vect_get_line_cat ( struct Map_info *Map, int line, int field ) {
 
     static struct line_cats *cats = NULL;
-    int cat;
+    int cat, ltype;
 
     if ( cats == NULL ) 
 	cats = Vect_new_cats_struct ();
 
-    Vect_read_line (Map, NULL, cats, line );
+    ltype=Vect_read_line (Map, NULL, cats, line );
     Vect_cat_get(cats, field, &cat);
     G_debug (3, "Vect_get_line_cat: display line %d, ltype %d, cat %d", line, ltype, cat);
 
