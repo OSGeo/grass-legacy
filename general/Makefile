@@ -6,6 +6,7 @@ SUBDIRS = \
 	g.mapsets \
 	g.parser \
 	g.region \
+	g.setproj \
 	g.tempfile \
 	g.version \
 	manage
