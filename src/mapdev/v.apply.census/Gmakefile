@@ -1,0 +1,19 @@
+LIB = $(LIBDIR)/libcoorcnv.a
+DOCS = $(ETC)/census.docs 
+
+all:	$(BIN_ALPHA_CMD)/v.apply.census
+
+$(BIN_ALPHA_CMD)/v.apply.census: v.apply.cen.o $(LIB) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) v.apply.cen.o $(LIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+	-mkdir $(DOCS)
+	cp stf1_matrix $(DOCS)
+	cp pl94_matrix $(DOCS)
+	cp stf1_id $(DOCS)
+	cp stf1_sumlev $(DOCS)
+
+$(LIB): # in case LIB changes
+$(GISLIB): #
+$(VECTLIB): #
+$(DIG_ATTLIB): #
