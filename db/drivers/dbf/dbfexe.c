@@ -55,6 +55,7 @@ int execute(char *sql, cursor * c)
     if (yyparse() != 0) {
 	sqpFreeStmt(st);
 	free ( tmpsql) ;
+	G_debug(0,"SQL parser error in statement:\n%s", sql);
 	sprintf(errMsg, "SQL parser error in statement:\n%s\n", sql);
 	return DB_FAILED;
     }
@@ -98,7 +99,8 @@ int execute(char *sql, cursor * c)
 	    for (i = 0; i < ncols; i++) {
 		cols[i] = find_column(tab, st->Col[i].s);
 		if ( cols[i] == -1 ) {
-	            sprintf(errMsg, "Column '%s' not found\n", st->Col[i].s);
+	            G_debug(0,"Column '%s' not found\n", st->Col[i].s);
+		    sprintf(errMsg, "Column '%s' not found\n", st->Col[i].s);
 	            return DB_FAILED;
 		}
 	    }
@@ -121,6 +123,7 @@ int execute(char *sql, cursor * c)
 	    if ((dtype == DBF_INT && stype != SQLP_I)
 		|| (dtype == DBF_DOUBLE && stype == SQLP_S)
 		|| (dtype == DBF_CHAR && stype != SQLP_S)) {
+		G_debug(0,"Incompatible value type.");
 		sprintf(errMsg, "Incompatible value type.\n");
 		return DB_FAILED;
 	    }
