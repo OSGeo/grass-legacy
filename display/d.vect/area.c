@@ -37,7 +37,7 @@ static struct rgb_color palette[16] =  {
 };
 
 int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor, 
-	     int chcat, int id_flag, int table_colors_flag, int cats_color_flag) {
+	     int chcat, int id_flag, int table_colors_flag, int cats_color_flag, struct Cell_head *window) {
     int    num, area, isle, n_isles, n_points;
     double xl, yl;
     struct line_pnts *Points, *IPoints;
@@ -80,9 +80,16 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
     
     for ( area = 1; area <= num; area++ ) {
 	int i;
+	BOUND_BOX box;
         G_debug (3, "area = %d", area);
 
 	if ( !Vect_area_alive (Map, area) ) continue;
+	
+	/* Check box */
+	Vect_get_area_box (Map, area, &box);
+	if ( box.N < window->south || box.S > window->north || box.E < window->west || box.W > window->east)
+	    continue;
+
         if ( chcat ) /* check category: where_opt or cat_opt used */
         { 
 	     if ( id_flag ) {
