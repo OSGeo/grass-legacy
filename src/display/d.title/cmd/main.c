@@ -7,6 +7,7 @@ int argc ;
 char **argv ;
 {
 	char buff[128] ;
+	char *D_color_list();
 	char *mapset ;
 	struct Cell_head window ;
 	struct Categories cats ;
@@ -25,7 +26,7 @@ char **argv ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = "white" ;
 	opt2->required   = NO ;
-	opt2->options="red,orange,green,blue,indigo,violet,black,white,gray,yellow,brown,magenta";
+	opt2->options    = D_color_list();
 	opt2->description= "Sets the text color" ;
 
 	opt3 = G_define_option() ;
