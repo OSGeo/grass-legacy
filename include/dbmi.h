@@ -184,8 +184,8 @@ typedef struct _db_table {
     dbString   description;
     int        numColumns;
     dbColumn * columns;
-    int        insert;
-    int        delete;
+    int        priv_insert;
+    int        priv_delete;
 } dbTable;
 
 typedef struct _db_cursor {

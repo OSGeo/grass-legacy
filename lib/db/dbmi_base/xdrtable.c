@@ -15,8 +15,8 @@ db__send_table_definition(table)
     DB_SEND_STRING (&table->tableName);
     DB_SEND_STRING (&table->description);
 
-    DB_SEND_INT (table->insert);
-    DB_SEND_INT (table->delete);
+    DB_SEND_INT (table->priv_insert);
+    DB_SEND_INT (table->priv_delete);
 
     return DB_OK;
 }
@@ -40,8 +40,8 @@ db__recv_table_definition(table)
     DB_RECV_STRING (&t->tableName);
     DB_RECV_STRING (&t->description);
 
-    DB_RECV_INT (&t->insert);
-    DB_RECV_INT (&t->delete);
+    DB_RECV_INT (&t->priv_insert);
+    DB_RECV_INT (&t->priv_delete);
 
     return DB_OK;
 }
