@@ -94,7 +94,7 @@ main (int argc, char *argv[])
   angle->key = "angle";
   angle->type = TYPE_DOUBLE;
   angle->required = NO;
-  angle->description = "angle of rotation";
+  angle->description = "angle of rotation (in degrees counter-clockwise)";
   angle->answer = "0";
 
   q = G_define_flag ();
