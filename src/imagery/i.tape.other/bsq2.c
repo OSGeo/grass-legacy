@@ -7,7 +7,7 @@ bsq2()
     int tail;
     int lastband;
 
-    tail = bandsize - lastrow ;
+    tail = bandsize - (lastrow-1)/blocking_factor - 1;
 
     I_tape_advance (tapefd, skiprecords);
     for (band=0; band < nbands; band++)
@@ -17,11 +17,14 @@ bsq2()
     {
 	if (wantband[band])
 	{
+	    first[band] = 1;
 	    if(!readbsq (band))
 		break;
 	}
-	else if (band < lastband)
-	    I_tape_advance(tapefd, nrows);
+	else if (band < lastband) {
+	    /* I_tape_advance(tapefd, nrows); wrong when band not wanted */
+	    I_tape_advance(tapefd, (lastrow-1)/blocking_factor+1);
+	}
 	if (band < lastband)
 	    I_tape_advance (tapefd, tail);
     }
