@@ -18,7 +18,7 @@ HELP            = $(GISBASE)/man/help
 HTML            = $(GISBASE)/documents
 
 # other
-CFLAGS      =  $(COMPILE_FLAGS) $(EXTRA_CFLAGS) -I$(INCLUDE_DIR) $(USE_TERMIO)
+CFLAGS      =  $(COMPILE_FLAGS) -I$(INCLUDE_DIR) $(EXTRA_CFLAGS) $(USE_TERMIO)
 AR          = $(GMAKE) -makeparentdir $@; $(LIBRULE)
 MANROFF     = # 
 MAKEALL     = $(GMAKE) -all
