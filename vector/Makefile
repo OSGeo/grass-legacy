@@ -29,12 +29,16 @@ SUBDIRS = \
 	v.net.path \
 	v.net.salesman \
 	v.net.steiner \
+	v.normal \
 	v.out.ascii \
 	v.out.pov \
 	v.overlay \
 	v.patch \
+	v.perturb \
+	v.qcount \
 	v.random \
 	v.reclass \
+	v.sample \
 	v.segment \
 	v.select \
 	v.surf.idw \
