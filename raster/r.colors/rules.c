@@ -33,7 +33,7 @@ int read_color_rules(
     int nrules = 0;
     int low,high,n;
     int set,nv,others,r,g,b;
-    double val;
+    double val, rulemin, rulemax;
 
     /* initialization */
     df.r = df.g = df.b = df.set = 0;
@@ -105,14 +105,17 @@ int read_color_rules(
 	rule[nrules-1].set = 1;
     }
 
-    if (min < 0.0 && max < 0.0){
-       if((rule[0].val < min || rule[nrules-1].val > max) && !quiet)
-          G_warning(_("Your color rules do not cover the whole range of data!"));
+/* figure out max and min of new rules */
+    rulemin=rule[0].val; /* rule 0 is always set */
+    rulemax=rule[0].val;
+    for (n=0; n<nrules; n++) {
+	if(! rule[n].set) continue;
+	if(rulemin > rule[n].val) rulemin = rule[n].val;
+	if(rulemax < rule[n].val) rulemax = rule[n].val;
     }
-    else{
-       if((rule[0].val > min || rule[nrules-1].val < max) && !quiet)
-          G_warning(_("Your color rules do not cover the whole range of data!"));
-    }
+    G_debug(3, "rulemin=%.1f rulemax=%.1f", rulemin, rulemax);
+    if((rulemin > min || rulemax < max) && !quiet)
+	G_warning(_("Your color rules do not cover the whole range of data!"));
 
 /* fill in all unset val */
     for (n=0; n < nrules; n++)
