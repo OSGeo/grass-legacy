@@ -48,7 +48,7 @@ Vect_x__Read_line (
         if (0 > dig_alloc_cats (c, (int) n_cats + 1))
 	  return (-1);
 
-        if (0 >= dig__fread_port_S (c->field, n_cats, Map->dig_fp))
+        if (0 >= dig__fread_port_I (c->field, n_cats, Map->dig_fp))
 	  goto done;
         if (0 >= dig__fread_port_I (c->cat, n_cats, Map->dig_fp))
 	  goto done;
@@ -146,7 +146,7 @@ Vect_x__Rewrite_line (
 
   if (cats->n_cats > 0)
     {
-      if (0 >= dig__fwrite_port_S (cats->field, cats->n_cats, dig_fp))
+      if (0 >= dig__fwrite_port_I (cats->field, cats->n_cats, dig_fp))
 	return -1;
       if (0 >= dig__fwrite_port_I (cats->cat, cats->n_cats, dig_fp))
 	return -1;

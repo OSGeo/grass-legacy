@@ -2,6 +2,7 @@ OBJ = \
     cats_struct.o \
     close.o \
     constraint.o \
+    field.o \
     get_area.o \
     header.o \
     init_head.o \
