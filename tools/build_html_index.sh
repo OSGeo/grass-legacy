@@ -6,9 +6,14 @@
 #exclude following list of modules from help index:
 # escape it properly:
 EXCLUDEHTML="v\.topo\.check\|i\.ask\|i\.find\|photo\.elev\|photo\.target"
-GRASSVERSION=5.7
 
 ############# nothing to configure below ############
+
+#fetch the ARCH for store the files:
+ARCH="`cat ../include/Make/Platform.make | grep '^ARCH'  | sed 's+ ++g' | cut -d'=' -f2`"
+HTMLDIR="../dist.$ARCH/docs/html"
+GRASSVERSION=`cat ../dist.$ARCH/etc/VERSIONNUMBER`
+
 
 write_html_header()
 {
@@ -95,10 +100,6 @@ if [ $? -eq 1 ] ; then
  echo "ERROR: this script must be run from the tools/ directory"
  exit
 fi
-
-#fetch the ARCH for store the files:
-ARCH="`cat ../include/Make/Platform.make | grep '^ARCH'  | sed 's+ ++g' | cut -d'=' -f2`"
-HTMLDIR="../dist.$ARCH/docs/html"
 
 FULLINDEX=full_index.html
 
