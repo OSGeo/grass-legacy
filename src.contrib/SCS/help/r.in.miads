@@ -1,0 +1,10 @@
+Miadin
+    An SCS developed program for reading MIADS output files and
+    converting them to a Mimportcell format. The program requires
+    certain information before it can execute :
+       1. the strip, line, and cell for a,
+       2. UTM reference northing and easting.
+    The user is expected to have this information prior to using
+    the program.
+    This program stands alone, however, conversion to GRASS use
+    requires using the two macros "getstrip" and "joinstrip".
