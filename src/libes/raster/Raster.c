@@ -84,6 +84,37 @@ int R_raster(
 	return 0;
 }
 
+/*!
+ * \brief Send arguments to the driver
+ *
+ * Sends arguments to the driver, preceded by the RASTER_CHAR opcode; 
+ * the actual work is done by the driver. A raster drawing operation is
+ * performed. The result is that a rectangular area of width <b>num</b> 
+ * and height <b>nrows</b>, with its top-left corner at the current position,
+ * is filled with <b>nrows</b> copies of the data pointed to by <b>ras</b>.
+ *
+ * \param num is the number of columns.
+ * \param nrows is the number of rows to be drawn, all of which are identical
+ *        (this is used for vertical scaling).
+ * \param withzero should be true (non-zero) if zero pixels are to be drawn in
+ *        color zero, false (zero) if they are to be transparent (i.e.
+ *        not drawn).
+ * \param ras should point to <b>num</b> bytes of data, which constitute the 
+ *        pixels for a single row of a raster image.
+ *
+ * Example: to draw a byte-per-pixel image:
+  \code
+   unsigned char image[HEIGHT][WIDTH];
+
+   for (y = 0; y < HEIGHT; y++)
+   {
+       R_move_abs(x_left, y_top + y);
+       R_raster_char(WIDTH, 1, 1, image[y]);
+   }
+  \endcode
+ *
+ */
+
 int R_raster_char(
 	int num ,
 	int nrows ,
