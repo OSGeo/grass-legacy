@@ -75,6 +75,7 @@ int main (int argc, char **argv)
   
   struct Cell_head region;
   struct Map_info map;
+  struct GModule *module;
   struct Option *input;
   struct Option *output;
   struct Option *type;
@@ -103,6 +104,9 @@ int main (int argc, char **argv)
 
   G_gisinit(argv[0]) ;
 
+  module = G_define_module();
+  module->description =
+	"Build polylines from lines.";
 
   /* Define the options */
 

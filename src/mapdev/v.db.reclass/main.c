@@ -10,6 +10,7 @@ FILE *rulefd;
 int 
 main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct Flag *d_flag;
     struct Option *input, *output, *table, *keycol, *rule, *typopt, *title;
     struct Categories cats;
@@ -22,6 +23,11 @@ main (int argc, char *argv[])
 
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Changes vector category values for an existing vector map "
+		"according to results of SQL queries.";
 
     d_flag = G_define_flag();
     d_flag->key              = 'd';

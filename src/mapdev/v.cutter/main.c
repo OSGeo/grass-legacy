@@ -29,6 +29,7 @@ int output_open = 1;
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct ARGS Args;
     struct Categories *Cat1;
     struct table_base *PTable;
@@ -40,6 +41,10 @@ int main (int argc, char *argv[])
 
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Polygon Cookie Cutter  (Boolean AND Overlay).";
 
     Do_lines = 1;
     Do_areas = 1;

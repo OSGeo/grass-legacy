@@ -22,6 +22,8 @@ static int get_pid (char *,int *);
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
+
 	FILE	*fp;
 
 	int   pid ;
@@ -44,6 +46,11 @@ int main (int argc, char *argv[])
 
 	G_gisinit(argv[0]) ;
 
+	module = G_define_module();
+	module->description =
+		"A menu-driven, highly interactive map "
+		"development program used for vector digitizing, editing, "
+		"labeling and converting vector data to raster format.";
 
 	if (argc > 1 && !strcmp (argv[1], "help"))
 	{

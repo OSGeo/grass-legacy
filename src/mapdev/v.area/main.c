@@ -37,9 +37,14 @@ int main(int argc, char *argv[])
     char gisbase[256];
     char command[512];
     char Dvect_color[8];
+	struct GModule *module;
     struct Flag *flag1, *flag2 ;
 	struct Option *opt1 ;
 	struct Option *opt2 ;
+
+	module = G_define_module();
+	module->description =
+		"Display GRASS area and perimeter information for GRASS vector map.";
 
 	/* Define the different options */
 
