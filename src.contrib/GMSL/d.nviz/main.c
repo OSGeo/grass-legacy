@@ -27,6 +27,7 @@
 #include <string.h>
 #include "gis.h"
 #include "display.h"
+#include "raster.h"
 #include "local.h"
 
 int cut_val, frame = 0;
@@ -296,7 +297,7 @@ int main(int argc, char *argv[])
 	    G_plot_line(e1, n1, e2, n2);
 
 /* Get profile info */
-	    do_profile(e1, e2, n1, n2, name, fd, data_type, fp);
+	    do_profile(e1, e2, n1, n2, name, fd, data_type);
 
 	    n1 = n2;
 	    e1 = e2;
@@ -331,11 +332,11 @@ int main(int argc, char *argv[])
 		sscanf(parm.route->answers[i + 2], "%lf", &e2);
 		sscanf(parm.route->answers[i + 3], "%lf", &n2);
 /* Get profile info */
-		do_profile(e1, e2, n1, n2, name, fd, data_type, fp);
+		do_profile(e1, e2, n1, n2, name, fd, data_type);
 		
 /* Get last coord */
 		if (i == k - 2)
-		    do_profile(e2, e2, n2, n2, name, fd, data_type, fp);
+		    do_profile(e2, e2, n2, n2, name, fd, data_type);
 	    }
 	}
     }				/* done with coordinates */
