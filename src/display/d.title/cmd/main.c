@@ -61,7 +61,7 @@ int main (int argc, char **argv)
 	opt3 = G_define_option() ;
 	opt3->key        = "size" ;
 	opt3->type       = TYPE_DOUBLE ;
-	opt3->answer     = "15.0" ;
+	opt3->answer     = "4.0" ;
 	opt3->options    = "0-100" ;
 	opt3->description= "Sets the text size as percentage of the frame's height" ;
 
