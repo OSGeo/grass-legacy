@@ -39,7 +39,7 @@ underlying display untouched.
 
 <H2>NOTES</H2>
 
-This is a new version of <B>d.rgb</B>, which uses sends the
+This is a new version of <B>d.rgb</B>, which sends the
 data to the graphics monitor in true-color RGB format.
 
 Unlike the previous version, it does not attempt to
@@ -52,10 +52,30 @@ of the RGB color-space.
 <P>
 
 If color quality of satellite image color composites seems to appear poor,
-consider to run <EM><B>r.colors</B></EM> (greq.eq color table) on the
-selected satellite channels. <P>
+run <EM><a href="r.colors.html">r.colors</A></EM> on the selected satellite 
+channels.<P>
+Example:
+<dl>
+<dd><B>r.info -r</B> <EM>image.1</EM><BR>
+<tt>min=0<BR>
+max=255</tt><BR>
 
-To write out the color composite to a R/G/B raster maps, use <EM><a href="r.composite.html">r.composite</A></EM> (three maps) or <EM><a href="i.composite.html">i.composite</A></EM> (single composite map).
+<dd><B>r.colors map=</B><EM>image.1</EM> <B>color=</B><EM>rules</EM> 
+<< EOF<BR>
+0 black<BR>
+255 white<BR>
+EOF<BR>
+
+<dd><B>r.colors map=</B><EM>image.2</EM> <B>rast=</B><EM>image.1</EM>
+<dd><B>r.colors map=</B><EM>image.3</EM> <B>rast=</B><EM>image.1</EM>
+</dl>
+
+<EM>Note: Future GRASS versions may do this for you automatically.</EM>
+<BR><BR><BR>
+
+To write out the color composite to a R/G/B raster maps, use 
+<EM><a href="r.composite.html">r.composite</A></EM> (three maps) or 
+<EM><a href="i.composite.html">i.composite</A></EM> (single composite map).
 
 
 <H2>SEE ALSO</H2>
