@@ -1,7 +1,10 @@
 PGM    = r.fill
-SRCS   = main.c ../libr/libr.c
-OBJS   = main.o libr.o
-LIBES  = $(GISLIB)
+SRCS   = main.c
+OBJS   = main.o
+URASTER= $(UNUSED)/raster
+LIBR   = $(URASTER)/libr
+CFLAGS+= -I$(LIBR)
+LIBES  = $(GISLIB) $(URASTER)/libes/libr.a
 
 $(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) -o $@ $(OBJS) $(LDFLAGS) $(LIBES) $(MATHLIB) $(XDRLIB)
