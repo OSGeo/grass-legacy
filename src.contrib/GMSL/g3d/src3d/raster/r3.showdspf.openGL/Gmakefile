@@ -1,5 +1,5 @@
 MYLIBDIR = $(SRC)/libes/dspf
-DSPLIB	 = $(SRC)/libes/dspf/libdsp3.a
+DSPLIB	 = $(LIBDIR)/dspf/libdsp3.a
 OGSF_DIR     = $(SRC)/libes/ogsf
 
 EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OPENGLINC) $(OPENGLwINC) $(XCFLAGS) $(XMINC)
