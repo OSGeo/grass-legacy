@@ -186,6 +186,27 @@ static int read_data_fp_compressed(int fd, int row, unsigned char *data_buf, int
 
 /*--------------------------------------------------------------------------*/
 
+static void rle_decompress(
+    unsigned char *dst, const unsigned char *src, int nbytes, int size)
+{
+    int pairs = size / (nbytes + 1);
+    int i;
+
+    for (i = 0; i < pairs; i++)
+    {
+	int repeat = *src++;
+	int j;
+
+	for (j = 0; j < repeat; j++)
+	{
+	    memcpy(dst, src, nbytes);
+	    dst += nbytes;
+	}
+
+	src += nbytes;
+    }
+}
+
 static int read_data_compressed(int fd, int row, unsigned char *data_buf, int *nbytes)
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
@@ -197,7 +218,7 @@ static int read_data_compressed(int fd, int row, unsigned char *data_buf, int *n
 
     if (lseek(fd, t1, 0) < 0)
 	return -1;
-  
+
     if (read(fd, cmp, readamount) != readamount)
 	return -1;
   
@@ -214,22 +235,10 @@ static int read_data_compressed(int fd, int row, unsigned char *data_buf, int *n
   
     if (fcb->cellhd.compressed < 0 || readamount < n * fcb->cellhd.cols)
     {
-	int pairs = readamount / (n+1);
-	int i;
-
-	for (i = 0; i < pairs; i++)
-	{
-	    int repeat = *cmp++;
-	    int j;
-
-	    for (j = 0; j < repeat; j++)
-	    {
-		memcpy(data_buf, cmp, n);
-		data_buf += n;
-	    }
-
-	    cmp += n;
-	}
+	if (fcb->cellhd.compressed == 2)
+	    G_zlib_expand(cmp, readamount, data_buf, n * fcb->cellhd.cols);
+	else
+	    rle_decompress(data_buf, cmp, n, readamount);
     }
     else
 	memcpy(data_buf, cmp, readamount);
