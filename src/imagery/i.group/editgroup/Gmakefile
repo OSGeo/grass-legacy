@@ -2,10 +2,14 @@
 LIST = main.o\
 	ask_files1.o\
 	ask_files2.o\
-	cellfiles.o\
-	$(GISLIB) $(IMAGERYLIB)
+	cellfiles.o
 
-$(ETC)/imagery/editgroup: $(LIST) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
+LIBES= $(GISLIB) $(IMAGERYLIB) $(VASKLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPIMAGERYLIB) $(DEPVASKLIB)
 
-$(GISLIB) $(IMAGERYLIB) $(VASKLIB): #
+$(ETC)/imagery/editgroup: $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+$(DEPGISLIB): #
+$(DEPIMAGERYLIB): #
+$(DEPVASKLIB): #

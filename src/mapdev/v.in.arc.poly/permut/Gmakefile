@@ -5,5 +5,5 @@ all:    $(PGM)
 $(PGM): permut.o  
 	$(CC) $(LDFLAGS) -o $@ permut.o    
 
-$(GISLIB): #
-$(VECTLIB): #
+$(DEPGISLIB): #
+$(DEPVECTLIB): #

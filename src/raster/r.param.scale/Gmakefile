@@ -15,6 +15,7 @@ PROG = $(BIN_CMD)/r.param.scale
 
 
 LIBES = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 
 
 INCLUDES =\
@@ -47,7 +48,7 @@ OBJ =\
 
 ######### DEPENDENCIES #########
 
-$(PROG): $(OBJ) $(LIBES)
+$(PROG): $(OBJ) $(DEPLIBS)
 	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 #
 #-----^ This compiles the whole program bringing all labels together.
@@ -55,7 +56,7 @@ $(PROG): $(OBJ) $(LIBES)
 $(OBJ): $(INCLUDES)
 
 
-$(LIBES): #
+$(DEPLIBS): #
 #---^ Ignore this line (used for future additions of the library).
 
 

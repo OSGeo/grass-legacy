@@ -44,8 +44,9 @@ LIST = main.o\
 	xtan.o
 
 LIBES = $(GISLIB) $(BTREELIB) $(ROWIOLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPBTREELIB) $(DEPROWIOLIB)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): glob.h
@@ -54,4 +55,4 @@ function.o: function.h
 main.o: function.h
 polish.o: function.h
 
-$(LIBES): #
+$(DEPLIBS): #

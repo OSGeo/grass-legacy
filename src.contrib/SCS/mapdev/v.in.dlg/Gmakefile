@@ -6,6 +6,6 @@ PROG = $(BIN_CMD)/v.in.dlg.scs
 all:  $(PROG)
 	
 
-$(PROG): $(OBJ) $(GISLIB)
+$(PROG): $(OBJ) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(EXTRALIB) $(XDRLIB)
 

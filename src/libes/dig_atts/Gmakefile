@@ -5,10 +5,10 @@ OBJ = \
 
 #ATTS = $(LIBDIR)/dig_atts.h
 
-#all: $(ATTS) $(DIG_ATTLIB) 
-all: $(DIG_ATTLIB) 
+#all: $(ATTS) $(DEPDIG_ATTLIB) 
+all: $(DEPDIG_ATTLIB) 
 
-$(DIG_ATTLIB): $(OBJ)
+$(DEPDIG_ATTLIB): $(OBJ)
 	$(AR)
 
 #$(ATTS): dig_atts.h

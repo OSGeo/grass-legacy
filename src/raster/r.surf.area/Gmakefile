@@ -1,7 +1,8 @@
 LIBES = $(GISLIB) 
+DEPLIBS= $(DEPGISLIB) 
 PGM = r.surf.area
 
 OFILES = main.o
 
-$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)

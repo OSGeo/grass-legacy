@@ -2,7 +2,7 @@ PGM=r.in.ppm
 
 OBJ=r.in.ppm.o
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

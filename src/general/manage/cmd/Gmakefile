@@ -1,20 +1,24 @@
 LIB = ../lib.a
 HOME=$(BIN_CMD)
 EXTRA_CFLAGS=-I..
-LIST = init.o $(LIB) $(GISLIB)
+LIST = init.o $(LIB)
+LIBES = $(GISLIB)
+DEPLIBS = $(DEPGISLIB)
 
 all: $(HOME)/g.copy $(HOME)/g.list $(HOME)/g.remove $(HOME)/g.rename 
 
 #############################################################
-$(HOME)/g.copy: copy.o $(LIST)
-	$(CC) $(LDFLAGS) -o $@ copy.o $(LIST) $(MATHLIB) $(XDRLIB)
-$(HOME)/g.list: list.o $(LIST)
-	$(CC) $(LDFLAGS) -o $@ list.o $(LIST) $(MATHLIB) $(XDRLIB)
-$(HOME)/g.remove: remove.o $(LIST)
-	$(CC) $(LDFLAGS) -o $@ remove.o $(LIST) $(MATHLIB) $(XDRLIB)
-$(HOME)/g.rename: rename.o $(LIST)
-	$(CC) $(LDFLAGS) -o $@ rename.o $(LIST) $(MATHLIB) $(XDRLIB)
+$(HOME)/g.copy: copy.o $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ copy.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+$(HOME)/g.list: list.o $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ list.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+$(HOME)/g.remove: remove.o $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ remove.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+$(HOME)/g.rename: rename.o $(LIST) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ rename.o $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 init.o copy.o list.o rename.o remove.o: ../list.h
 
-$(LIB) $(GISLIB): #
+$(LIB): #
+
+$(DEPGISLIB): #

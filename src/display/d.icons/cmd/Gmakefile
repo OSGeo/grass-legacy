@@ -2,8 +2,9 @@ PGM=d.icons
 OFILES = main.o plot_points.o draw_icon.o setup.o
 
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(ICONLIB) $(GISLIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPICONLIB) $(DEPGISLIB)
 
-$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -1,5 +1,6 @@
 PGM=d.zoom
 LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB) $(DEPGISLIB) $(DEPDATETIMELIB)
 
 LIST   = main.o \
 	 ask.o\
@@ -9,9 +10,9 @@ LIST   = main.o \
 	 zoom.o \
 	 redraw.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 returns.o: graphics.h
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -4,7 +4,7 @@ LIST=main.o\
      eq.o\
      rules.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(G3DLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPG3DLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

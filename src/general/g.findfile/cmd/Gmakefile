@@ -1,4 +1,4 @@
 PGM=g.findfile
-$(BIN_CMD)/$(PGM): main.o $(GISLIB)
+$(BIN_CMD)/$(PGM): main.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
-$(GISLIB): #
+$(DEPGISLIB): #

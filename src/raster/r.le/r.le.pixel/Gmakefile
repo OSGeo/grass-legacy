@@ -3,8 +3,9 @@ PGM = r.le.pixel
 OFILES =  main.o input.o driver.o cellclip.o texture.o
 
 LIBES = $(GISLIB) $(VECTLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPVECTLIB)
 
-$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

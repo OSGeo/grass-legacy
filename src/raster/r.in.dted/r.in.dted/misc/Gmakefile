@@ -14,9 +14,9 @@ LIST = main.o\
 	zero_out.o
 
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST): dma.h
 
-$(GISLIB):      # in case library changes
+$(DEPGISLIB):      # in case library changes

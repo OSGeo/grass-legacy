@@ -40,9 +40,9 @@ OBJ =\
 	RGB.o\
 	Text2.o
 
-all: $(DRIVERLIB)
+all: $(DEPDRIVERLIB)
 
-$(DRIVERLIB): $(OBJ)
+$(DEPDRIVERLIB): $(OBJ)
 	$(AR)
 
 Cont_abs.o: driver.h

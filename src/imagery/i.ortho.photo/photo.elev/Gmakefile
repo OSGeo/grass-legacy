@@ -7,11 +7,12 @@ IMAGERYLIB2  = ../libes/libortho.a
 LIST = main.o ask_elev.o mod_elev.o
 
 LIBES=$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+DEPLIBS=$(IMAGERYLIB2) $(DEPIMAGERYLIB) $(DEPGISLIB) $(DEPVASKLIB)
 
-$(HOME)/$(PROGRAM): $(LIST) $(LIBES)
+$(HOME)/$(PROGRAM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(IMAGERYLIB2) $(LIBES): #
+$(IMAGERYLIB2) $(DEPLIBS): #
 
 main.o: elev.h
 ask_elev.o: elev.h

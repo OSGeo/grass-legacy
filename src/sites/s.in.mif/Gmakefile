@@ -5,11 +5,12 @@ LIST = 	lex.yy.o \
 	writesite.o
 
 LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(VASKLIB)
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB) $(DEPDATETIMELIB) $(DEPVASKLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 lex.yy.c : mif.l
 	$(LEX) mif.l
 
-$(VECTLIB): #
-$(GISLIB): # 
+$(DEPVECTLIB): #
+$(DEPGISLIB): # 

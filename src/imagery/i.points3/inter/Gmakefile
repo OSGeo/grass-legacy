@@ -60,6 +60,11 @@ LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
 	 $(GPROJLIB) $(LIBTRANS) $(PROJLIB)\
 	 $(GISLIB) $(VASKLIB)
 
+DEPLIBS= $(DEPIMAGERYLIB) $(IMAGERYLIB_SUP) $(DEPD_LIB)\
+	 $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPVECTLIB)\
+	 $(DEPGPROJLIB) $(DEPLIBTRANS) $(DEPPROJLIB)\
+	 $(DEPGISLIB) $(DEPVASKLIB)
+
 
 ####   required compile flags
 ####   NOTE: probably needs -D_NO_PROTO for now
@@ -67,11 +72,11 @@ EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 
 
 ####	the rules
-$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 ####	object dependencies
 $(LIST): globals.h defs.h camera_ref.h
 
 ####	libarary dependencies
-$(LIBES): 			# in case of lib changes
+$(DEPLIBS): 			# in case of lib changes

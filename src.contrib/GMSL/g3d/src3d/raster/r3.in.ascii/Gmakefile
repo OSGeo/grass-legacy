@@ -1,7 +1,7 @@
 PGM=r3.in.ascii
 
-$(BIN_CMD)/$(PGM): main.o $(G3DLIB) $(GISLIB) 
+$(BIN_CMD)/$(PGM): main.o $(DEPG3DLIB) $(DEPGISLIB) 
 	$(CC) $(LDFLAGS) -o $@ main.o $(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(G3DLIB): #
-$(GISLIB): #
+$(DEPG3DLIB): #
+$(DEPGISLIB): #

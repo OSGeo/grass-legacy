@@ -2,6 +2,7 @@ PGM=d.ask
 
 LIST = main.o
 LIBES = $(RASTERLIB) $(GISLIB) 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+DEPLIBS= $(DEPRASTERLIB) $(DEPGISLIB) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
-$(LIBES): #
+$(DEPLIBS): #

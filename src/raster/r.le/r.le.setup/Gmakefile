@@ -3,11 +3,12 @@ PGM = r.le.setup
 OFILES =  main.o sample.o setup.o mv_wind.o ask_group.o user_input.o
 
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASKLIB) $(VECTLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) $(DEPVASKLIB) $(DEPVECTLIB) $(DEPDATETIMELIB)
 
 all: $(BIN_CMD)/$(PGM)
 	$(GMAKE) polytocell
 	
-$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

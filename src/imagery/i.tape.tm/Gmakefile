@@ -1,5 +1,6 @@
 PGM=i.tape.tm
 LIBES = $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPGISLIB) $(DEPVASKLIB)
 
 LIST = main.o\
 	ask_window.o\
@@ -19,9 +20,9 @@ LIST = main.o\
 	unmnt_tape.o\
 	header.o
 
-$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): tape.h
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -10,11 +10,11 @@ LIST = main.o\
 	open_files.o\
 	timer.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(IMAGERYLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPIMAGERYLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 open_files.o: global.h
 checkpt.o: global.h
 main.o: global.h
 
-$(IMAGERYLIB) $(GISLIB): #
+$(DEPIMAGERYLIB) $(DEPGISLIB): #

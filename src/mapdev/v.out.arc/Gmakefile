@@ -7,10 +7,11 @@ OBJ =	main.o\
 	writ_a_lines.o
 
 LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+DEPLIBS=$(DEPVECTLIB) $(DEPGISLIB) $(DEPDIG_ATTLIB)
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPLIBS)
 	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(VECTLIB): #
-$(DIG_ATTLIB): #
-$(GISLIB): #
+$(DEPVECTLIB): #
+$(DEPDIG_ATTLIB): #
+$(DEPGISLIB): #

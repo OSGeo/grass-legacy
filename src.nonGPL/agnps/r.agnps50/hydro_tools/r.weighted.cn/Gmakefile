@@ -4,8 +4,8 @@ OBJ = r.weighted.cn.o\
 	cell_open.o\
 	cell_open_new.o
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPGISLIB)
 	$(CC) -o $(BIN)/$(PGM) $(LDFLAGS) $(OBJ) $(GISLIB) $(XDRLIB) $(MATHLIB)
 
 
-$(GISLIB): #
+$(DEPGISLIB): #

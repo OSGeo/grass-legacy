@@ -4,10 +4,11 @@ LIST = main.o get_train.o lookup_class.o opencell.o openfiles.o parse.o \
 	write_sig.o subcluster.o
 
 LIBES = $(IMAGERYLIB) $(GISLIB)
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPGISLIB)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #
 
 $(LIST): parms.h files.h

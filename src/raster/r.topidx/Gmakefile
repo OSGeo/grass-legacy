@@ -1,5 +1,6 @@
 PGM1   = $(BIN_CMD)/r.topidx
 LIBES  = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 SRCS   = main.c check_ready.c adjcellhd.c file_io.c topidx.c
 OBJS   = main.o check_ready.o adjcellhd.o file_io.o topidx.o
 
@@ -8,7 +9,7 @@ PGM2   = $(GISBASE)/scripts/r.avgstats
 
 all:	 $(PGM1) $(PGM2)
 
-$(PGM1): $(OBJS) $(LIBES)
+$(PGM1): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(PGM2): r.avgstats

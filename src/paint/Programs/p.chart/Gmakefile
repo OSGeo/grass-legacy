@@ -4,9 +4,9 @@ EXTRA_CFLAGS = -I../../
 
 LIST =	main.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(INTERFACE) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(INTERFACE) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(INTERFACE) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 
 $(INTERFACE):	# in case the library changes
-$(GISLIB):	# in case the library changes
+$(DEPGISLIB):	# in case the library changes

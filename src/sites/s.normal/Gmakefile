@@ -7,6 +7,7 @@ CDHCLIB = $(CDHCDIR)/libcdhc.a
 EXTRA_CFLAGS =  -I$(CDHCINC)
 
 LIBES = $(GISLIB) $(DATETIMELIB) $(CDHCLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPDATETIMELIB) $(CDHCLIB)
 
 SOURCE  = \
 	main.c \
@@ -16,7 +17,7 @@ LIST  = \
 	main.o \
 	scancats.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 main.o:       	$(CDHCINC)/cdhc.h 
@@ -24,4 +25,4 @@ main.o:       	$(CDHCINC)/cdhc.h
 $(CDHCLIB) : #
 	$(GMAKE) $(CDHCDIR)
 
-$(GISLIB) : #
+$(DEPGISLIB) : #

@@ -18,5 +18,5 @@ dgesv: dgesv.o
 	$(CC) $(LDFLAGS) -o $@ $< $(LA) $(G2C) \
 	$(GMATHLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
-$(GMATHLIB): #
+$(DEPGISLIB): #
+$(DEPGMATHLIB): #

@@ -1,9 +1,10 @@
 PGM=d.geodesic
 LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB)
+DEPLIBS=$(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) $(MATHLIB)
 
 LIST = main.o mouse.o plot.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

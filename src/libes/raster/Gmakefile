@@ -50,7 +50,7 @@ OBJ = \
 	parse_mon.o\
 	perror.o
 
-$(RASTERLIB): $(OBJ)
+$(DEPRASTERLIB): $(OBJ)
 	${AR}
 
 $(OBJ): $(INCLUDE)/graph.h

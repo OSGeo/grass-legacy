@@ -5,8 +5,9 @@ LIST = main.o readfile.o range.o assign_color.o
 INTERFACE = ../../paint/Interface/applib/lib.a
 
 LIBES= $(GISLIB) $(INTERFACE)
+DEPLIBS= $(DEPGISLIB) $(INTERFACE)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 	rm -rf $(ETC)/Gcolortab
 	mkdir $(ETC)/Gcolortab
@@ -17,7 +18,7 @@ $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	(cd Gcolortab/shinko635 ; tar -cf - * | (cd $(ETC)/Gcolortab/shinko635; tar -xf - 2>/dev/null ); true )
 	(cd Gcolortab/preview ; tar -cf - * | (cd $(ETC)/Gcolortab/preview; tar -xf - 2>/dev/null ); true )
 
-$(GISLIB): #
-$(DISPLAYLIB): #
-$(RASTERLIB): #
+$(DEPGISLIB): #
+$(DEPDISPLAYLIB): #
+$(DEPRASTERLIB): #
 $(INTERFACE): #

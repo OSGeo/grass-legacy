@@ -4,7 +4,7 @@ OBJ = 324.o
 
 all:  $(PROG)
 
-$(PROG): $(OBJ) $(VECTLIB) $(GISLIB)
+$(PROG): $(OBJ) $(DEPVECTLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(VECTLIB) $(GISLIB): #
+$(DEPVECTLIB) $(DEPGISLIB): #

@@ -36,9 +36,9 @@ OBJ = \
 CFILES = 
 
 
-all:  $(VECTLIB_REAL)
+all:  $(DEPVECTLIB_REAL)
 
-$(VECTLIB_REAL): $(OBJ)
+$(DEPVECTLIB_REAL): $(OBJ)
 	$(AR)
 
 

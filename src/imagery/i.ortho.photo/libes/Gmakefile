@@ -64,4 +64,4 @@ m_transpose.o: matrixdefs.h
 try: try.o $(IMAGERYLIB2)
 	$(CC) try.o $(IMAGERYLIB2) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB) -o try
 
-$(IMAGERYLIB@) $(GISLIB) $(VASKLIB): #
+$(IMAGERYLIB@) $(DEPGISLIB) $(DEPVASKLIB): #

@@ -5,12 +5,13 @@ OFILES = \
     normal.o
 
 LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
-$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+DEPLIBS=$(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) 
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
-$(RASTERLIB): #
-$(DISPLAYLIB): #
+$(DEPGISLIB): #
+$(DEPRASTERLIB): #
+$(DEPDISPLAYLIB): #
 
 main.o:	options.h
 fancy.o:	options.h

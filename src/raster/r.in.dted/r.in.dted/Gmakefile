@@ -7,7 +7,7 @@ all: $(BIN_CMD)/$(PGM)
 
 $(OBJS): dtedgis.h
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -13,7 +13,7 @@ saber_src:
 
 dataquad.o : dataquad.h
 
-$(GISLIB): #
+$(DEPGISLIB): #
 
 
 

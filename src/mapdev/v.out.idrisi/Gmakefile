@@ -1,4 +1,4 @@
 PGM = v.out.idrisi
 
-$(BIN_CMD)/$(PGM): main.o $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): main.o $(DEPVECTLIB) $(DEPGISLIB)
 	$(CC) -o $@ $(LDFLAGS) main.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)

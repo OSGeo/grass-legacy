@@ -25,7 +25,7 @@ OBJ	=	\
 		main.o
 
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DSPLIB) $(DEPG3DLIB) $(DEPGISLIB) $(DEPDATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 fill_cfax.o: vizual.h $(LDIR)/cell_table.h

@@ -19,15 +19,16 @@ LIST =	main.o \
         update.o
 
 LIBES=$(VASKLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
+DEPLIBS=$(DEPVASKLIB) $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) 
 
-$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): config.h
 check_resp.o : check_resp.c helptext.h
 ####################################################################
-$(GISLIB):	# in case the library changes
-$(VASKLIB):	# in case the library changes
-$(DISPLAYLIB):  #
-$(RASTERLIB):   #
+$(DEPGISLIB):	# in case the library changes
+$(DEPVASKLIB):	# in case the library changes
+$(DEPDISPLAYLIB):  #
+$(DEPRASTERLIB):   #
 

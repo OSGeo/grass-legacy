@@ -4,7 +4,7 @@ H2H = GRASS_PERL=${PERL} sh $(SRC)/general/g.help/help2html.pl
 
 all: $(BIN_INTER)/$(PGM)  the_help  html_help
 
-$(BIN_INTER)/$(PGM): $(OFILES) $(GISLIB)
+$(BIN_INTER)/$(PGM): $(OFILES) $(DEPGISLIB)
 	$(CC) ${LDFLAGS} -o $@ $(OFILES) $(GISLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 the_help:
@@ -21,4 +21,4 @@ do_climb.o: menu.h
 do_leave.o: menu.h
 menu.o: menu.h
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -1,7 +1,7 @@
 PGM=r.rescale.eq
 LIST = main.o get_stats.o get_range.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -5,12 +5,13 @@ LIST =handle.o readsites.o main.o medpolish.o examine.o cats_att.o \
 	wind_overlap.o georesid.o report.o iteration.o
 
 LIBES= $(GISLIB) $(VECTLIB) $(MATHLIB) $(DIG_ATTLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPGISLIB) $(DEPVECTLIB) $(MATHLIB) $(DEPDIG_ATTLIB) $(DEPDATETIMELIB)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)
 $(LIST): polish.h 
 
-$(LIBES): #
+$(DEPLIBS): #
 
 
 

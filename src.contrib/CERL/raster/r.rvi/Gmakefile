@@ -3,7 +3,7 @@ LIST = main.o\
 	model.o\
 	closefiles.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) globals.h
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB) globals.h
 	 $(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

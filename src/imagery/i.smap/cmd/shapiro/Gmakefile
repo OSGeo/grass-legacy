@@ -6,12 +6,13 @@ PGM = i.smap
 EXTRA_CFLAGS = -I../bouman/
 
 LIBES = ../bouman/lib.a $(GISLIB) $(IMAGERYLIB)
+DEPLIBS= ../bouman/lib.a $(DEPGISLIB) $(DEPIMAGERYLIB)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): ../bouman/bouman.h
 read_block.o: ../bouman/region.h
 
-$(LIBES): #
+$(DEPLIBS): #
 

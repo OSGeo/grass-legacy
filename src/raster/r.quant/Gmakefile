@@ -4,8 +4,8 @@ HOME=$(BIN_CMD)
 LIST =  main.o\
 	read_rules.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
+$(HOME)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -2,8 +2,8 @@ PGM = r.buffer
 
 LIST = main.o getdists.o
 
-$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPVASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
-$(VASKLIB): #
+$(DEPGISLIB): #
+$(DEPVASKLIB): #

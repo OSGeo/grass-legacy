@@ -13,6 +13,7 @@ PAINT = $(ETC)/paint
 
 INTERFACE = ../../../Interface/applib/lib.a
 LIBES =	$(VECTLIB) $(GISLIB) $(ICONLIB) $(DATETIMELIB)
+DEPLIBS=	$(DEPVECTLIB) $(DEPGISLIB) $(DEPICONLIB) $(DEPDATETIMELIB)
 
 
 LIST =	main.o\
@@ -176,7 +177,7 @@ all: $(BIN_CMD)/$(PGM) \
      $(PAINT)/header \
      $(PAINT)/patterns.index
 
-$(BIN_CMD)/$(PGM): $(LIST) $(INTERFACE) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(INTERFACE) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB)
 
 $(PAINT)/patterns.index: $(PAINT)/patterns $(PAINT)/patcc
@@ -288,9 +289,9 @@ vectr_info.o: misc.h
 windfile.o: misc.h
 window_cnv.o: graphics.h
 
-dumpfont: dumpfont.o font.o $(GISLIB)
+dumpfont: dumpfont.o font.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ dumpfont.o font.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 ######################################################################
 $(INTERFACE):	#
-$(LIBES):	#
+$(DEPLIBS):	#
 

@@ -5,11 +5,11 @@ all: $L $L/cell $L/dig $L/site_lists
 $L:
 	mkdir $L
 
-$L/cell: cell.o $(GISLIB)
+$L/cell: cell.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ cell.o $(GISLIB) $(MATHLIB) $(XDRLIB)
-$L/dig: dig.o $(GISLIB)
+$L/dig: dig.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ dig.o $(GISLIB) $(MATHLIB) $(XDRLIB)
-$L/site_lists: site_lists.o $(GISLIB)
+$L/site_lists: site_lists.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ site_lists.o $(GISLIB) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

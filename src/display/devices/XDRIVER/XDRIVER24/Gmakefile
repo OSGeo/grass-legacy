@@ -1,6 +1,7 @@
 PGM=XDRIVER
 
 LIBES = $(DRIVERLIB) $(GISLIB)
+DEPLIBS= $(DEPDRIVERLIB) $(DEPGISLIB)
 
 # if you are compiling under X11R3 add this define
 #R3DEFINE=-DX11R3
@@ -51,7 +52,7 @@ OFILES =  \
 
 all: $(GISBASE)/driver/$(PGM)
 
-$(GISBASE)/driver/$(PGM): $(OFILES) $(LIBES)
+$(GISBASE)/driver/$(PGM): $(OFILES) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(OFILES) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

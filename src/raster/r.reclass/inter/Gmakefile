@@ -6,11 +6,11 @@ MASK    = mask.o maskinfo.o makemask.o $(COMMON)
 
 all: $(HOME)/r.reclass $(HOME)/r.mask
 
-$(HOME)/r.reclass: $(RECLASS) $(GISLIB) $(VASKLIB) $(EDITLIB)
+$(HOME)/r.reclass: $(RECLASS) $(DEPGISLIB) $(DEPVASKLIB) $(DEPEDITLIB)
 	$(CC) $(LDFLAGS) -o $@ $(RECLASS) $(EDITLIB) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(HOME)/r.mask: $(MASK) $(GISLIB) $(VASKLIB)
+$(HOME)/r.mask: $(MASK) $(DEPGISLIB) $(DEPVASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(MASK) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
-$(VASKLIB): #
+$(DEPGISLIB): #
+$(DEPVASKLIB): #

@@ -4,7 +4,11 @@ DBMILIB = $(LIBDIR)/libdbmi.a
 
 LIBES = $(VECTLIB) $(DIG_ATTLIB)\
 	$(DBMILIB) $(VECTLIB_REAL) $(DIG2LIB)\
-	$(EXTRALIB) $(GISLIB) 
+	$(GISLIB) 
+
+DEPLIBS= $(DEPVECTLIB) $(DEPDIG_ATTLIB)\
+	$(DEPDBMILIB) $(DEPVECTLIB_REAL) $(DEPDIG2LIB)\
+	$(DEPGISLIB) 
 
 
 LIST = main.o\
@@ -12,7 +16,7 @@ LIST = main.o\
 	key_data.o\
 	reclass.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

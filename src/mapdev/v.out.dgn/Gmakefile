@@ -2,7 +2,7 @@ PGM=v.out.dgn
 
 VFILES = dgn.o element.o write.o line.o main.o
 
-$(BIN_CMD)/$(PGM): $(VFILES) $(GISLIB) $(VECTLIB)
+$(BIN_CMD)/$(PGM): $(VFILES) $(DEPGISLIB) $(DEPVECTLIB)
 	$(CC) $(LDFLAGS) -o $@ $(VFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -21,4 +21,4 @@ saber_src:
 
 $(LIST): interpf.h
 ressegm2d.o : points.h
-$(GISLIB): #
+$(DEPGISLIB): #

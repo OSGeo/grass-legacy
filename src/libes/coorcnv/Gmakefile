@@ -9,7 +9,7 @@ OBJ = \
     datum.o\
     molodens.o
 
-all: $(COORCNVLIB)
+all: $(DEPCOORCNVLIB)
 
-$(COORCNVLIB): $(OBJ)
+$(DEPCOORCNVLIB): $(OBJ)
 	$(AR)

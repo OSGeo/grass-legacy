@@ -1,8 +1,9 @@
 
 LIBES = $(IMAGERYLIB) $(GISLIB)
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPGISLIB)
 LIST = main.o
 
-$(ETC)/imagery/colors: $(LIST) $(LIBES) $(VASKLIB)
+$(ETC)/imagery/colors: $(LIST) $(DEPLIBS) $(DEPVASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES) $(VASKLIB): #
+$(DEPLIBS) $(DEPVASKLIB): #

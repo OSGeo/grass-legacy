@@ -1,8 +1,9 @@
 PGM=v.apply.census
 LIBES = $(LIBDIR)/libcoorcnv.a $(GISLIB) $(VECTLIB) $(DIG_ATTLIB)
+DEPLIBS= $(LIBDIR)/libcoorcnv.a $(DEPGISLIB) $(DEPVECTLIB) $(DEPDIG_ATTLIB)
 DOCS = $(ETC)/census.docs 
 
-$(BIN_CMD)/$(PGM): v.apply.cen.o $(LIBES)
+$(BIN_CMD)/$(PGM): v.apply.cen.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ v.apply.cen.o $(LIBES) $(MATHLIB) $(XDRLIB)
 	if [ ! -d $(DOCS) ]; then mkdir $(DOCS); fi
 	cp stf1_matrix $(DOCS)
@@ -10,4 +11,4 @@ $(BIN_CMD)/$(PGM): v.apply.cen.o $(LIBES)
 	cp stf1_id $(DOCS)
 	cp stf1_sumlev $(DOCS)
 
-$(LIBES): # in case LIB changes
+$(DEPLIBS): # in case LIB changes

@@ -16,11 +16,12 @@ LIST	= main.o\
 	  tapename.o
 
 LIBES= $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPGISLIB) $(DEPVASKLIB)
 
-$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST):	tape.h
 
-$(LIBES):	# in case library changes
+$(DEPLIBS):	# in case library changes
 

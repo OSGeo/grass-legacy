@@ -1,13 +1,14 @@
 PGM=m.kappa
 
 LIBES= $(GISLIB) $(VASKLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPVASKLIB)
 
 OBJS = main.o\
 	calc_kappa.o\
 	prt_hdr.o\
 	readin_data.o
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

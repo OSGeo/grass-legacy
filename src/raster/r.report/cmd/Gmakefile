@@ -1,6 +1,7 @@
 PGM=r.report
 
 LIBES= $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 LIST = main.o\
 	format.o\
 	header.o\
@@ -13,9 +14,9 @@ LIST = main.o\
 	stats.o\
 	sums.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h
 
-$(LIBES): #
+$(DEPLIBS): #

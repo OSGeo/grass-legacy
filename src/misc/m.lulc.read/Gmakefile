@@ -1,7 +1,7 @@
 PGM=m.lulc.read
 OBJ = main.o header.o
 
-$(BIN_CMD)/$(PGM): $(OBJ) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -27,11 +27,11 @@ LIST =	main.o init_vars.o find_pour.o \
 	dseg_put.o dseg_read.o dseg_write.o \
 	sseg_close.o sseg_get.o sseg_open.o sseg_put.o
 
-$(BIN)/$(PGM): $(LIST) $(GISLIB)
+$(BIN)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(ADD_LIBS) $(GISLIB) $(SEGMENTLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
-$(SEGMENTLIB): #
+$(DEPGISLIB): #
+$(DEPSEGMENTLIB): #
 
 add_pt.o: Gwater.h
 close_maps2.o: Gwater.h

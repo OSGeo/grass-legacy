@@ -1,11 +1,12 @@
-LIBRARIES = $(GISLIB) 
+LIBES = $(GISLIB)
+DEPLIBS = $(DEPGISLIB)
 
 PGM = r.out.mpeg
 
 OFILES = main.o \
 	 write.o
 
-$(BIN_CMD)/$(PGM): $(OFILES) $(LIBRARIES)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB) -I$(INCLUDE_DIR)
+$(BIN_CMD)/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB) -I$(INCLUDE_DIR)
 
-$(GISLIB): #
+$(DEPGISLIB): #

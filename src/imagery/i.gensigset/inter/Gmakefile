@@ -1,8 +1,9 @@
 PGM=i.gensigset
 
 LIBES = $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+DEPLIBS= $(DEPIMAGERYLIB) $(DEPGISLIB) $(DEPVASKLIB)
 
-$(BIN_INTER)/$(PGM): main.o $(LIBES)
+$(BIN_INTER)/$(PGM): main.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

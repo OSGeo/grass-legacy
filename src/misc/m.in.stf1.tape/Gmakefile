@@ -3,10 +3,10 @@ PGM=m.in.stf1.tape
 LIB = $(LIBDIR)/libcoorcnv.a
 DOCS = $(ETC)/census.docs 
 
-$(BIN_CMD)/$(PGM): m.in.stf1.tp.o $(GISLIB)
+$(BIN_CMD)/$(PGM): m.in.stf1.tp.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ m.in.stf1.tp.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIB): # in case LIB changes
-$(GISLIB): #
-$(VECTLIB): #
-$(DIG_ATTLIB): #
+$(DEPGISLIB): #
+$(DEPVECTLIB): #
+$(DEPDIG_ATTLIB): #

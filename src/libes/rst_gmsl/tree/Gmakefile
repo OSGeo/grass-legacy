@@ -13,7 +13,7 @@ saber_src:
 
 tree.o: tree.h
 
-$(GISLIB): #
+$(DEPGISLIB): #
 
 
 

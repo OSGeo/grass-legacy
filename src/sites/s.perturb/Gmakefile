@@ -1,6 +1,7 @@
 PGM=s.perturb
 
 LIBES = $(GISLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPGISLIB) $(DEPDATETIMELIB)
 
 LIST  = \
 	main.o \
@@ -15,7 +16,7 @@ LIST  = \
 	normalsv.o   \
 	fische.o     
  
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 main.o:       	perturb.h 

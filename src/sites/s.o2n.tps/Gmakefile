@@ -1,9 +1,10 @@
 PGM=s.o2n.tps
 HOME=$(ETC)
 LIBES=$(GISLIB) $(DATETIMELIB)
+DEPLIBS=$(DEPGISLIB) $(DEPDATETIMELIB)
 
-$(HOME)/$(PGM): convert.o $(LIBES)
+$(HOME)/$(PGM): convert.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ convert.o  $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
-$(DATETIMELIB): #
+$(DEPGISLIB): #
+$(DEPDATETIMELIB): #

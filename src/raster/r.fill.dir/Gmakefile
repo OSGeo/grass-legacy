@@ -8,7 +8,7 @@ OBJ = main.o\
 	tinf.o\
 	resolve.o
 
-$(PGM): $(OBJ) $(GISLIB)
+$(PGM): $(OBJ) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

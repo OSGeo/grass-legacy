@@ -18,8 +18,9 @@ LIST = main.o\
 	write.o
 
 LIBES=$(IMAGERYLIB) $(VASKLIB) $(GISLIB)
-$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+DEPLIBS=$(DEPIMAGERYLIB) $(DEPVASKLIB) $(DEPGISLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 $(LIST): global.h rowcol.h crs.h
 
-$(LIBES): # in case libraries change
+$(DEPLIBS): # in case libraries change

@@ -5,7 +5,7 @@ EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 LIST   = main.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
+$(HOME)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(GPROJLIB) $(MATHLIB) $(XDRLIB) 
 
-$(GISLIB): #
+$(DEPGISLIB): #

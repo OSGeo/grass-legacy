@@ -2,9 +2,9 @@ PGM  = m.proj2
 
 LIST =  main.o get_deg.o get_stp.o geo_func.o process.o input.o output.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(GPROJLIB) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPGPROJLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(GPROJLIB) $(MATHLIB) $(XDRLIB)
 
-$(GPROJLIB) $(GISLIB): #
+$(DEPGPROJLIB) $(DEPGISLIB): #
 
 

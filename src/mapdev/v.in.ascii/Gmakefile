@@ -32,22 +32,22 @@ all: $(CMD_IN) $(CMD_OUT)
 
 #   compile the interactive versions
 
-$(INT_IN):  a_b_front.o $(GISLIB)
+$(INT_IN):  a_b_front.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ a_b_front.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(INT_OUT):  b_a_front.o $(GISLIB)
+$(INT_OUT):  b_a_front.o $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ b_a_front.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 
 #   compile the command programs
 
-$(CMD_IN):  $(A_B_OFILES) $(VECTLIB) $(GISLIB)
+$(CMD_IN):  $(A_B_OFILES) $(DEPVECTLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(A_B_OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(CMD_OUT):  $(B_A_OFILES) $(VECTLIB) $(GISLIB)
+$(CMD_OUT):  $(B_A_OFILES) $(DEPVECTLIB) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(B_A_OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(VECTLIB) $(GISLIB) $(DIG_ATTLIB): #
+$(DEPVECTLIB) $(DEPGISLIB) $(DEPDIG_ATTLIB): #
 
 saber_ab:
 	#load $(CFLAGS) $(A_B_CFILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)

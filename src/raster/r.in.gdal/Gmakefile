@@ -5,8 +5,9 @@ EXTRA_CFLAGS = $(GDAL_CFLAGS)
 LIST   = main.o gbgetsymbol.o gdalbridge.o make_loc.o
 
 LIBES= $(GISLIB) $(IMAGERYLIB) $(GPROJLIB)
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPIMAGERYLIB) $(DEPGPROJLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) \
 		$(GDAL_LIBS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

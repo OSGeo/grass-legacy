@@ -7,5 +7,5 @@ OBJ = \
     Dnew.o\
     Dremove.o
 
-$(D_LIB): $(OBJ)
+$(DEPD_LIB): $(OBJ)
 	${AR}

@@ -3,7 +3,7 @@ OBJ = \
 	main.o \
 	rw_bdig.o
 
-all: $(ETC)/v.dlg.to.digit $(VECTLIB) $(GISLIB)
+all: $(ETC)/v.dlg.to.digit $(DEPVECTLIB) $(DEPGISLIB)
 
 $(ETC)/v.dlg.to.digit: $(OBJ)
 	$(CC) $(LDFLAGS)  -o $(ETC)/v.dlg.to.digit $(OBJ) $(DLGLIB) $(VECTLIB) $(GISLIB) $(MATHLIB) $(DIG_ATTLIB)

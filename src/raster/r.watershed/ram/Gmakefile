@@ -19,10 +19,10 @@ LIST =	main.o init_vars.o find_pour.o \
 	flag_destroy.o flag_get.o flag_set.o flag_unset.o\
 	usage.o
 
-$(BIN)/$(PGM): $(LIST) $(GISLIB)
+$(BIN)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(ADD_LIBS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #
 
 Gwater.h: ramseg.h
 add_pt.o: Gwater.h

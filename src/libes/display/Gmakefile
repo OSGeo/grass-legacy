@@ -17,10 +17,10 @@ OBJ =\
 	tran_colr.o\
 	window.o
 
-#all: $(LIBDIR)/colors.h $(DISPLAYLIB)
-all: $(DISPLAYLIB)
+#all: $(LIBDIR)/colors.h $(DEPDISPLAYLIB)
+all: $(DEPDISPLAYLIB)
 
-$(DISPLAYLIB): $(OBJ)
+$(DEPDISPLAYLIB): $(OBJ)
 	$(AR)
 
 #$(LIBDIR)/colors.h: colors.h

@@ -15,8 +15,9 @@ LIST = \
 	main.o
 
 LIBES= $(GISLIB) $(DATETIMELIB) 
+DEPLIBS= $(DEPGISLIB) $(DEPDATETIMELIB) 
 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 count.o:  quaddefs.h 

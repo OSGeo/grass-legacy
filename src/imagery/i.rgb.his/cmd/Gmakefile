@@ -3,18 +3,19 @@ R2HOBJS = r2hmain.o rgb2his.o openfiles.o closefiles.o
 H2ROBJS = h2rmain.o his2rgb.o openfiles.o closefiles.o
 
 LIBES= $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 
 all:	$(BIN_CMD)/i.rgb.his \
 	$(BIN_CMD)/i.his.rgb 
 
-$(BIN_CMD)/i.rgb.his: $(R2HOBJS) $(LIBES)
+$(BIN_CMD)/i.rgb.his: $(R2HOBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(R2HOBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(BIN_CMD)/i.his.rgb: $(H2ROBJS) $(LIBES)
+$(BIN_CMD)/i.his.rgb: $(H2ROBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(H2ROBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(R2HOBJS): globals.h
 
 $(H2ROBJS): globals.h
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -3,9 +3,9 @@ PGM      = m.dem.extract
 LIST	= usgs_init.o usgs_buf.o usgs_hdr.o usgs_num.o \
           main.o getgrid.o get_prof.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):        usgs.h
 
-$(GISLIB):      # in case library changes
+$(DEPGISLIB):      # in case library changes

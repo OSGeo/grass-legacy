@@ -8,6 +8,7 @@ DBMILIB= ../../lib/libdbmi.a
 HOME = $(DBMIDIR)/driver
 
 LIBES = $(DBMILIB) $(STUBLIB) $(SQLBASE)/sqlroutr.\a
+DEPLIBS= $(DBMILIB) $(STUBLIB) $(SQLBASE)/sqlroutr.\a
 EXTRA_CFLAGS = -I$(SQLBASE) -I$(INCLUDE_DIR)
 
 OBJ 	=  \
@@ -54,17 +55,17 @@ OBJ 	=  \
 DRIVER = main.o $(OBJ)
 TRY = try.o $(OBJ)
 
-$(HOME)/sqlbase: $(HOME) $(DRIVER) $(LIBES)
+$(HOME)/sqlbase: $(HOME) $(DRIVER) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) -lnsl
 
-try: $(TRY) $(LIBES)
+try: $(TRY) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(TRY) $(LIBES) -lnsl
 
 $(HOME):
 	-mkdir -p $(HOME)
 
 $(DRIVER) $(TRY):  $(INCLUDE_DIR)/dbmi.h globals.h proto.h
-$(LIBES): #
+$(DEPLIBS): #
 
 
 proto:

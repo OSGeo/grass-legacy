@@ -9,10 +9,11 @@ LIST =  color_rnge.o\
 	segment.o
 
 LIBES=$(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB) 
-$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+DEPLIBS=$(DEPGISLIB) $(DEPDISPLAYLIB) $(DEPSEGMENTLIB) 
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
  
-$(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB): #
+$(DEPGISLIB) $(DEPDISPLAYLIB) $(DEPSEGMENTLIB): #
 
 delete.o:	point.h
 main.o:	cmd_line.h

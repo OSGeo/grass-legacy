@@ -2,7 +2,7 @@ PGM    = r.in.doq
 
 LIST   =  main.o gethead.o get_newhead.o
 
-$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPDATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #
