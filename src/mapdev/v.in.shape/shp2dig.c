@@ -840,6 +840,7 @@ void partCalcFieldsPolygon( partDescript *partd ) {
     /* assert( totalCirc > 1.0 || totalCirc < -1.0 ); */
     if(totalCirc < 1.0 && totalCirc > -1.0 ) {
       totalCirc = 0;
+    }
 
   }
 
