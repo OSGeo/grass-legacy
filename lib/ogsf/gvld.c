@@ -74,12 +74,12 @@ int gvld_isosurf(geovol *gvl)
 
 	int n_i = gvl->n_isosurfs;
 
-	int check_color[n_i], check_transp[n_i], check_material[n_i], check_emis[n_i], check_shin[n_i];
-	float kem[n_i], ksh[n_i], pkem, pksh;
-    unsigned int ktrans[n_i], curcolor[n_i];
+	int *check_color, *check_transp, *check_material, *check_emis, *check_shin;
+	float *kem, *ksh, pkem, pksh;
+    unsigned int *ktrans, *curcolor;
 	int pktransp = 0;
 
-	int pos[n_i], nz[n_i], e_dl[n_i], tmp_pos, edge_pos[12];
+	int *pos, *nz, *e_dl, tmp_pos, edge_pos[12];
 
     GLdouble modelMatrix[16], projMatrix[16];
     GLint viewport[4];
@@ -87,6 +87,24 @@ int gvld_isosurf(geovol *gvl)
 
 	geovol_isosurf *isosurf;
 
+    /* Allocate memory for arrays */
+    
+    check_color = G_malloc( n_i * sizeof(int) );
+    check_transp = G_malloc( n_i * sizeof(int) );
+    check_material = G_malloc( n_i * sizeof(int) );
+    check_emis = G_malloc( n_i * sizeof(int) );
+    check_shin = G_malloc( n_i * sizeof(int) );
+   
+    kem = G_malloc( n_i * sizeof(float) );
+    ksh = G_malloc( n_i * sizeof(float) );
+
+    ktrans = G_malloc( n_i * sizeof(unsigned int) );   
+    curcolor = G_malloc( n_i * sizeof(unsigned int) );   
+
+    pos = G_malloc( n_i * sizeof(int) );
+    nz = G_malloc( n_i * sizeof(int) );
+    e_dl = G_malloc( n_i * sizeof(int) );
+   
 #ifdef TRACE_DFUNCS
     {
 	Gs_status("gvld_isosurf");

@@ -148,7 +148,7 @@ int iso_get_cube_value(geovol_isosurf *isosurf, int desc, int x, int y, int z, f
 
 /************************************************************************/
 /* get volume file values range */
-void iso_get_range(geovol_isosurf *isosurf, int desc, float *min, float *max)
+void iso_get_range(geovol_isosurf *isosurf, int desc, double *min, double *max)
 {
 	gvl_file_get_min_max(gvl_file_get_volfile(isosurf->att[desc].hfile), min, max);
 }
@@ -447,9 +447,12 @@ int gvl_isosurf_calc(geovol *gvol)
     geovol_file *vf;
     geovol_isosurf *isosurf;
 
-    data_buffer dbuff[gvol->n_isosurfs];
-    int need_update[gvol->n_isosurfs], need_update_global;
+    data_buffer *dbuff;
+    int *need_update, need_update_global;
 
+    dbuff = G_malloc( gvol->n_isosurfs * sizeof(data_buffer) );
+    need_update = G_malloc( gvol->n_isosurfs * sizeof(int) );
+   
     /* flag - changed any isosurface */
 	need_update_global = 0;
 
