@@ -125,7 +125,7 @@ int main( int   argc, char *argv[])
     /* define the different options */
 
     parm.input = G_define_option() ;
-    parm.input->key        = "in";
+    parm.input->key        = "input";
     parm.input->type       = TYPE_STRING;
     parm.input->required   = YES;
     parm.input->description= "Name of .shp (or just .dbf) file to be imported";
@@ -550,23 +550,23 @@ int main( int   argc, char *argv[])
 	G_warning( "Named attribute field is not numeric value. Using record ID.\n" );	
       for( iRec = 0; iRec < fd0[0].nRec; ++iRec ) {
 	if( cover_type == LINE ) {
-	  if(fd0[cat_field+4].fldType == 1)
+	  if(cat_field > -1 && fd0[cat_field+4].fldType == 1)
 	    attval = fd0[cat_field+4].fldRecs[iRec].intField;
-	  else if(fd0[cat_field+4].fldType == 2)
+	  else if(cat_field > -1 && fd0[cat_field+4].fldType == 2)
 	    attval = round( fd0[cat_field+4].fldRecs[iRec].doubleField );
 	  else
 	    attval = iRec;
-	  fprintf( f_att, "L  %-12f  %-12f  %-8d \n",
+	  fprintf( f_att, "L  %-14f  %-14f  %-8d \n",
 		   xlab[iRec], ylab[iRec], attval );
 	}
 	else if( cover_type == AREA ) {
-	  if(fd0[cat_field+4].fldType == 1)
+	  if(cat_field > -1 && fd0[cat_field+4].fldType == 1)
 	    attval = fd0[cat_field+4].fldRecs[iRec].intField;
-	  else if(fd0[cat_field+4].fldType == 2)
+	  else if(cat_field > -1 && fd0[cat_field+4].fldType == 2)
 	    attval = round( fd0[cat_field+4].fldRecs[iRec].doubleField );
 	  else
 	    attval = iRec;
-	  fprintf( f_att, "A  %-12f  %-12f  %-8d \n",
+	  fprintf( f_att, "A  %-14f  %-14f  %-8d \n",
 		   xlab[iRec], ylab[iRec], attval );
 	}
 
@@ -590,11 +590,6 @@ int main( int   argc, char *argv[])
 	    G_warning("Error in category type assignment, not assigning category text.\n");
 	    strcpy(AttText, "");
 	    break;
-	  }
-
-	  if( strcmp( G_get_cat( attval, &cats ), "" ) != 0 ) {
-	    sprintf( errbuf, "Label `%s' already assigned to category value %d. Overwriting.\n",
-		     G_get_cat( attval, &cats ), attval );
 	  }
 
 	  if (G_set_cat(attval, AttText, &cats) != 1)
