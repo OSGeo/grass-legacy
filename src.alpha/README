@@ -1,0 +1,39 @@
+This "src.alpha" directory contains GRASS code which is intended to be
+included in the "src" directory in a future release.   They should all:
+  1.  Be organized in the same manner as the code in the "src" directory.
+  2.  Be Compileable with "Gmake"
+  3.  Contain MAN and HELP files in the man.help directory.
+
+All programs here should be considered to be in ALPHA release.  That means
+that they have been run by at least the original programmer.  The health of
+the programs are not guaranteed.  Reports on the programs are highly
+encouraged.
+
+All users/programmers are invited to test these programs and
+  1. Verify to CERL that they work
+  2. Identify to CERL bugs
+  3. Send repairs to CERL
+
+D/prog_cmd/split  (Michael Higgins, CERL)
+                  Simple two cell file display program.
+D/prog_inter/area (Bruce Powell, NPS)
+                  Area calculations for digit files.
+D/prog_inter/rgb  (Westervelt, CERL)
+                  Multi cell file display program.
+Gline             (Jean Ezell, CERL)
+                  Raster line to digit vector line conversion.
+Glut              (Dave Johnson, DBA)
+                  Create color tables for cell files.
+Gthin             (Jean Ezell, CERL)
+                  Thins raster lines to single pixel thickness.
+Gtraj             (Chuck Ehlschlaeger, CERL)
+                  Ballistic trajectory program.
+Gvolume           (Jim Hinthorn, Central Washington University)
+                  Calculate volumes of areas based on "elevataion" data.
+Gwatershed        (Chuck Ehlschlaeger, CERL)
+                  Find watersheds, streams, etc.
+Mflip             (Donald Newcomb, NAVOCEANO)
+                  Flip an uncompressed raster file north to south 
+binfer            (Kurt Buehler, Purdue)
+                  Inference program for analyzing maps.
+mapdev/digitizers/calcomp  (Michael Higgins, CERL)
