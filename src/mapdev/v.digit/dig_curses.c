@@ -21,6 +21,10 @@
  *
  * If you have any problems with this, please inform me.
  * <hdcho@geni.knu.ac.kr>
+ *
+ * I recommend that you don't touch this source files for further CVS checkout.
+ * Instead, add "DASIAN_CHARS = -DASIAN_CHARS" into grass/src/CMD/head/head
+ * file. This method does not confuse CVS checkout process.
  */
 /*
 #define ASIAN_CHARS
