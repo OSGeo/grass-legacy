@@ -16,7 +16,9 @@ Erase()
 	Screen_rite(&rite) ;
 	Screen_left(&left) ;
 
+    Hide_cursor();	
 	rectf( WNO, left, top, rite, bot) ;
+	Show_cursor();
 
 /***  old way
 	Box_abs(left, top, rite, bot) ;
