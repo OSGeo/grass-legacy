@@ -7,7 +7,7 @@
 #include "plot.h"
 
 
-int dir ( struct Map_info *Map, int type, struct cat_list * Clist )
+int dir ( struct Map_info *Map, int type, struct cat_list * Clist, int chcat )
 {
     int    i, ltype, dsize, msize;
     double len, x, y, angle;
@@ -38,7 +38,7 @@ int dir ( struct Map_info *Map, int type, struct cat_list * Clist )
 
 	if ( !(type & ltype & GV_LINES )  ) continue;
 
-        if ( Clist->n_ranges > 0)
+        if ( chcat )
           { 
              if ( Vect_cat_get(Cats, Clist->field, &cat) ) { 
 	         if ( !(Vect_cat_in_cat_list (cat, Clist)) )

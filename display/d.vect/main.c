@@ -23,6 +23,7 @@ main (int argc, char **argv)
 	char buf[128] ;
 	int ret, level;
 	int i, stat, type, area, display;
+	int chcat = 0;
 	int color, fcolor;
 	char ncolist[200];
 	char map_name[128] ;
@@ -195,8 +196,10 @@ main (int argc, char **argv)
 	 * otherwise parse cat_opt */
         Clist = Vect_new_cat_list ();
 	Clist->field = atoi (field_opt->answer);
+	
 	if (where_opt->answer)
 	  {
+            chcat = 1;  
             fi = Vect_get_field_info(map_name, mapset, Clist->field);
             if ( fi != NULL )
 	      {
@@ -229,6 +232,7 @@ main (int argc, char **argv)
 	  {
 	    if (cat_opt->answer)
 	      {
+		chcat = 1;  
 	        ret = Vect_str_to_cat_list ( cat_opt->answer, Clist);
 	        if ( ret > 0 )
 	            G_warning ( "%d errors in cat option\n", ret);
@@ -340,7 +344,7 @@ main (int argc, char **argv)
         */
 	if ( area ) {
 	    if ( level >= 2 )
-	        stat = darea ( &Map, Clist, color, fcolor );
+	        stat = darea ( &Map, Clist, color, fcolor, chcat );
 	    else
 		G_warning ("Cannot display areas, topology not available");
         }
@@ -351,15 +355,15 @@ main (int argc, char **argv)
 	        stat = plot2 ( &Map, type, area, Clist, color, fcolor);
 	    else
 	    */
-	        stat = plot1 ( &Map, type, area, Clist, color, fcolor);
+	        stat = plot1 ( &Map, type, area, Clist, color, fcolor, chcat);
 	}
 
 	R_standard_color(color);
 	if ( display & DISP_DIR )
-	    stat = dir ( &Map, type, Clist );
+	    stat = dir ( &Map, type, Clist, chcat );
 	
 	if ( display & DISP_CAT )
-	    stat = label ( &Map, type, area, Clist, &lattr);
+	    stat = label ( &Map, type, area, Clist, &lattr, chcat);
 	
 	if ( display & DISP_TOPO ) {
 	    if (level >= 2 )
