@@ -1,0 +1,8 @@
+Pretester for pre-candidates:
+
+ -Juhana Nieminen-----------------------------------------------
+ jussi <juhana.nieminen@helsinki.fi>
+ Division of Environmental Biology,GIS Laboratory
+ P.O.Box 44 (Jyrangontie 2)                  tel: +358-9-191 50050
+ FIN-00014 University of Helsinki        fax: +358-9-191 50048  
+ Finland                               http://ginkgo.pc.helsinki.fi
