@@ -1,4 +1,4 @@
-$Id: TODO,v 1.9 2000-07-25 11:43:58 markus Exp $
+$Id: TODO,v 1.10 2000-08-19 14:18:30 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -6,8 +6,9 @@ TODO for GRASS GIS:
   (Being worked on by )
 
 
+---------------------------------------------------------------------
 Wishlist for GRASS 5
-
+---------------------------------------------------------------------
 Configure:
 - update missing features in "configure" (see src/CMD/head/head.in)
      - search for PQLIB, PQINCPATH: PostgreSQL stuff
@@ -15,12 +16,16 @@ Configure:
      - search for TIFFINCPATH, TIFFLIBPATH
      - search for JPEGINCPATH, JPEGLIBPATH
      - search for MESA (usr/include or usr/include/GL ?)
+     - libg2c is required to make r.fill.dir, but configure doesn't check 
+       for it's availability
   (Being worked on by )
 
 - extended "autoconf" for entire package
   (Being worked on by )
 
-- is "-fwritable-strings" o.k. for all platforms?
+- ps.map:
+  set CC option "-fwritable-strings" on Linux or, better, update ps.map!
+  (Being worked on by )
 
 --------------------------------------------------------------------
 Font selection:
