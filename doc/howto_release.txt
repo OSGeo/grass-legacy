@@ -44,16 +44,16 @@ Note: This text contains *some* rules only applicable to the
    http://spatialnews.geocomm.com/submitnews.html (not free any more)
    http://freshmeat.net/projects/grass/?highlight=GRASS
    http://www.linuxapps.com/?page=application&database=current&id=40
+   http://linuxtoday.com/contribute.php3
    http://www.newsforge.com/submit.pl
-   http://osx.macnn.com/ (email to news tips)
+   http://osx.macnn.com/    (email to news tips)
    http://www.gis-news.de/  (news@gismngt.de)
-   http://www.giscafe.com/   (link: submit material, needs registration)
-   http://www.geopoint.de/  (German GIS journal)
+   http://www.giscafe.com/  (link: submit material, needs registration)
    http://www.freegis.org
    http://www.directionsmag.com/pressreleases.php (click on 'Contact Us')
    http://www.gisdevelopment.net (click on 'Submit Press Release')
    http://www.gnu.org/directory/science/geography/grass.html
    http://www.kde-apps.org/content/show.php?content=19776
 
-   ... anywhere else?
+   ... anywhere else? Please add here.
 
