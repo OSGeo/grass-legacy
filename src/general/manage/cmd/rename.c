@@ -96,7 +96,8 @@ main (int argc, char *argv[])
     		char buf1[256], buf2[256], buf3[256], *str;
 		FILE *fp;
 
-		fprintf(stderr, "Renaming in reclass maps...\n");
+		fprintf(stderr, "Renaming in reclass map%s...\n",
+				(nrmaps > 1 ? "s" : ""));
 
 		for(; *rmaps; rmaps++)
 		{
