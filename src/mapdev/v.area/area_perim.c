@@ -273,18 +273,18 @@ int area_perim (double y, double x, struct Map_info *map,
  f_area = G_area_of_polygon(Points->x, Points->y, Points->n_points);
  fprintf(stderr,"Area:  \t%.2f sq meters   \t%.2f hectares\n",
          f_area,(f_area/10000.) );
+ fprintf(stderr,"       \t%.3f acres  \t\t%.4f sq miles\n",
+ ((f_area*10.763649)/43560.),(((f_area*10.763649)/43560.)/640.) );
+ fprintf(stderr,"Area centroid: %.2f (N) %.2f (E)\n",y,x);
 
 /* added 4/2000 MN: */
  cat_no = map->Att[a_index].cat;
  if (cats->num > 0)
  {
     label_name = G_get_cat( cat_no, cats);
-    fprintf(stderr,"\ncat#= %d, label= <%s>\n", cat_no, label_name);
+    fprintf(stderr,"cat#= %d, label= <%s>\n", cat_no, label_name);
  }
                         
- fprintf(stderr,"       \t%.3f acres  \t\t%.4f sq miles\n",
- ((f_area*10.763649)/43560.),(((f_area*10.763649)/43560.)/640.) );
- fprintf(stderr,"Area centroid: %.2f (N) %.2f (E)\n\n",y,x);
  R_flush();
  return(6);
 }
