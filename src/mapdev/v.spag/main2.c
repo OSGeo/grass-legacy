@@ -39,6 +39,7 @@ static  int do_islands = 1; /*ISLE*/
 
 double dig_unit_conversion ();
 static	int   snapped = 0 ;
+static int ident_only = 0;
 
 main(argc, argv)
     int argc;
@@ -64,6 +65,7 @@ main(argc, argv)
     struct Flag *ram_flag;
 #endif /*RAM*/
    struct Option *map, *s_val;
+   struct Flag *ident;
 
 
     setbuf(stdout, 0) ;
@@ -88,12 +90,16 @@ main(argc, argv)
     s_val->multiple		= NO;
     s_val->description		= "snap threshold value";
 
+    ident = G_define_flag ();
+    ident->key 			= 'i';
+    ident->description 		= "Only run identical line tests";
+
     if (G_parser (argc, argv))
 	exit (-1);
 
     file_name = map->answer;
 
-    if (snap_ok = 1)
+    if (snap_ok == 1)
     {
 	if (s_val->answer != NULL)
 	    snap_val = atof(s_val->answer);
@@ -104,6 +110,8 @@ main(argc, argv)
 	snap_val = 0.0;
 	thresh_flag = 0;
     }
+
+    ident_only = ident->answer == NULL ? 0 : 1;
 
     if ( !file_name || !*file_name )
     {
@@ -200,7 +208,7 @@ main(argc, argv)
 /*Here it is:           		*/
 /*            VVVVVVVVVV		*/
 /****************************************/
-    /*init_extents ();  let v.build do this*/
+    init_extents (); /* TEST.. was commened out let v.build do this*/
     snapped = read_digit( &Map, &Plus);
     if (snapped < 0)
 	fprintf (stderr, "Could not build support (dig_plus) file.\n"), exit (-1);
@@ -220,14 +228,23 @@ main(argc, argv)
     tot_atts = read_atts (&Map, Map.att_file);
 #endif
     /* TODO: try cleaning before and after for now */
-    printf ("    Cleaning lines less than thresh\n");
-    clean_lines (&Map, Map.snap_thresh);
+    if (!ident_only)
+    {
+	printf ("    Cleaning lines less than thresh\n");
+	clean_lines (&Map, Map.snap_thresh);
+    }
 
-    printf ("    Line intersections\n");
+    printf ( "Identical lines check");
+    if (!ident_only)
+	printf ("  and   Line intersections");
+    printf ( "\n");
 
-    intersect (&Map);
+    intersect (&Map, ident_only);
 
-    clean_lines (&Map, Map.snap_thresh);
+    if (!ident_only)
+    {
+	clean_lines (&Map, Map.snap_thresh);
+    }
 
     compress (&Map, 1);
 
@@ -265,7 +282,8 @@ main(argc, argv)
     printf (" Snapped lines  :   %d\n", snapped) ;
 
 /*==========================================*/
-    printf ("WARNING: Beta version. You must run v.support before using this data\n");
+    if (!ident_only)
+      printf ("WARNING: Beta version. You must run v.support before using this data\n");
 /*==========================================*/
 
 /*  write out all the accumulated info to the plus file  */
@@ -279,8 +297,11 @@ main(argc, argv)
 /*==========================================*/
 /* TODO:  For now make this file unuseable without first running v.support */
 
+    if (!ident_only)	/* for ident_only, is ok */
+    {
 	Plus.all_areas = 0;
 	Plus.all_isles = 0;
+    }
 
 /*==========================================*/
     dig_map_to_head (&Map, &Plus);
