@@ -20,13 +20,13 @@ int main(int argc, char *argv[])
     get               = G_define_option() ;
     get->key          = "get" ;
     get->type         = TYPE_STRING ;
-    get->description  = "GRASS Environment variable to get" ;
+    get->description  = "GRASS variable to get" ;
     get->required     = NO;
 
     set               = G_define_option() ;
     set->key          = "set" ;
     set->type         = TYPE_STRING ;
-    set->description  = "GRASS Environment variable to set" ;
+    set->description  = "GRASS variable to set" ;
     set->required     = NO;
     
     /* Print or optionally set environment variables */
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
                 if (tty)
                     fprintf (stdout,"%s=%s\n", name, value);
                 else
-                    fprintf (stdout,"%s='%s'; export %s;\n", name, value, name);
+                    fprintf (stdout,"%s='%s';\n", name, value, name);
         }
         return 0;
     }

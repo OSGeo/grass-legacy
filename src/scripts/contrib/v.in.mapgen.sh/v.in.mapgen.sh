@@ -6,17 +6,19 @@
 # $Id$
 # 
 
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
 
 PROG=`basename $0`
 VERSION="$PROG c) 2000 Andreas Lange, andreas.lange@rhein-main.de"
 OPTS=""
-
-
-#### test if GRASS is running
-if [ "$GISRC" = "" ] ; then
-  echo "$PROG: You must be running GRASS to execute $PROG" 1>&2
-  exit 1
-fi
 
 
 #### check if we have awk
@@ -26,12 +28,6 @@ if [ "$AWK" = "" ] ; then
   echo "$PROG: awk required, please install awk/gawk first" 1>&2
   exit 1
 fi
-
-
-#### check that GRASS variables are set
-eval `g.gisenv`
-
-: $GISDBASE $LOCATION $MAPSET
 
 
 #### set temporary file

@@ -214,7 +214,6 @@ else
     	    echo "$LOCATION: No such location"
     	    exit
     	fi
-    	export GISDBASE LOCATION_NAME MAPSET
     
     	if [ -s $GISRC ] ; then
     	    sed -e "s|^GISDBASE:.*$|GISDBASE: $GISDBASE|; \
@@ -264,8 +263,6 @@ if [ ! "$LOCATION" ] ; then
 		    exit
 		    ;;
     	    esac
-	    
-	    eval `g.gisenv`
 	    ;;
 	
 	# Check for tcltk interface
@@ -307,8 +304,6 @@ if [ ! "$LOCATION" ] ; then
 			    exit
 			    ;;
     		    esac
-	    
-		    eval `g.gisenv`
 		    ;;
 	    
      	    	0)
@@ -321,7 +316,6 @@ if [ ! "$LOCATION" ] ; then
     	    		    echo "MAPSET: $OLD_MAP" >> $GISRC
     	    		    exit
     	    		fi
-    	    		eval `g.gisenv`
     		    fi
 
 		    if [ "$LOCATION_NAME" = "##ERROR##" ] ; then
@@ -347,8 +341,8 @@ if [ ! "$LOCATION" ] ; then
     esac
 fi
 
+eval `g.gisenv`
 LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
-export LOCATION
 
 trap "" 2 3
 CYGWIN=`uname | grep CYGWIN`

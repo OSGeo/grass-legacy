@@ -32,6 +32,11 @@
 # October 19, 1993
 ##############################################################################
 
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+
 if [ $# -lt 1 -o "$1" = "-help" -o "$1" = "help" ] 
 then
 	echo 
