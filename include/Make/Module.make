@@ -26,3 +26,9 @@ cmd: $(BIN_CMD)/$(PGM)
 $(BIN_CMD)/$(PGM): $(ARCH_CMD_OBJS) $(DEPENDENCIES) 
 	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) -o $@ $(ARCH_CMD_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 	@test -e $(BIN)/$(PGM) || ln $(ETC)/front.end $(BIN)/$(PGM)
+
+inter: $(BIN_INTER)/$(PGM)
+
+$(BIN_INTER)/$(PGM): $(ARCH_INTER_OBJS) $(DEPENDENCIES) 
+	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) -o $@ $(ARCH_INTER_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+	@test -e $(BIN)/$(PGM) || ln $(ETC)/front.end $(BIN)/$(PGM)
