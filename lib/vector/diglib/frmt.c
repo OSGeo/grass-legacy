@@ -198,6 +198,7 @@ dig_write_frmt_ascii ( FILE *dascii, struct Format_info *finfo, int format)
     if ( format != GV_FORMAT_POSTGIS )
 	G_fatal_error ("Format not supported by dig_write_frmt_ascii()");
 
+#ifdef HAVE_POSTGRES	      
     fprintf (dascii, "FORMAT: postgis\n");
     fprintf (dascii, "DATABASE: %s\n", finfo->post.db);
     fprintf (dascii, "GEOM_TABLE: %s\n", finfo->post.geom_table);
@@ -208,6 +209,7 @@ dig_write_frmt_ascii ( FILE *dascii, struct Format_info *finfo, int format)
     fprintf (dascii, "CAT_ID: %s\n", finfo->post.cat_id);
     fprintf (dascii, "CAT_FIELD: %s\n", finfo->post.cat_field);
     fprintf (dascii, "CAT_CAT: %s\n", finfo->post.cat_cat);
+#endif
 
     return 0;
 }
