@@ -1,0 +1,14 @@
+Mmain	main.c	/^main(argc, argv)$/
+check_alloc	do_graph.c	/^check_alloc(num)$/
+do_color	do_graph.c	/^do_color(buff)$/
+do_draw	do_graph.c	/^do_draw(buff)$/
+do_icon	do_graph.c	/^do_icon(buff)$/
+do_move	do_graph.c	/^do_move(buff)$/
+do_poly	do_graph.c	/^do_poly(buff, infile)$/
+do_size	do_graph.c	/^do_size(buff)$/
+do_text	do_graph.c	/^do_text(buff)$/
+falloc	allocation.c	/^falloc(nelem, elsize)$/
+frealloc	allocation.c	/^frealloc(oldptr, nelem, elsize, oldnelem)$/
+graphics	graphics.c	/^graphics(infile)$/
+set_graph_stuff	do_graph.c	/^set_graph_stuff()$/
+set_text_size	do_graph.c	/^set_text_size()$/
