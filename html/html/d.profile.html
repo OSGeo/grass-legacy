@@ -1,5 +1,7 @@
+<HTML>
+<HEAD>
 <TITLE>d.profile</TITLE>
-
+</HEAD>
 <body bgcolor="white">
 
 <img src="grass.smlogo.gif">
@@ -101,9 +103,21 @@ typing coordinates.
 
 </OL>
 
+<H2>BUGS</H2>
+
+<P>
+<EM>d.profile</EM> reads every raster map as if it were a CELL type.
+Therefore, if the range for floating point rasters is very small, 
+it will not be profiled very well (possibly not at all).
+</P>
+
 <H2>AUTHOR</H2>
 
 Dave Johnson
 <BR> DBA Systems, Inc. <BR>
 10560 Arrowhead Drive <BR>
-Fairfax, Virginia 22030 
+Fairfax, Virginia 22030
+
+</BODY>
+</HTML>
+
