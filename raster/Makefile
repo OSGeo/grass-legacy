@@ -6,6 +6,7 @@ SUBDIRS = \
 	r.average \
 	r.basins.fill \
 	r.bilinear \
+	r.bitpattern \
 	r.buffer \
 	r.cats \
 	r.circle \
