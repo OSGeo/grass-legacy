@@ -10,7 +10,6 @@ BINDIR=			@BINDIR@
 SRCDIR=			@SRCDIR@
 SERVERNAME=		`uname -n`
 SYSTEM=			`uname -s`
-#ARCH=			`grep "host\@" config.status | tr -s '%' ' ' | cut -d' ' -f 3`
 ARCH=			@ARCH@
 VERSION=		`cat src/CMD/VERSION | head -1`
 
