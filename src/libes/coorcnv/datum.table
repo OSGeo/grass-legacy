@@ -32,8 +32,8 @@ aus    "Australian Geodetic"              australian    dx=-122.0   dy=-41.0    
 # Ordnance Survey of Great Britain (1936)
 osgb36 "Ordnance Survey of Great Britain" airy          dx=368.0    dy=-120.0   dz=425.0
 # South American 1969 (= SAD-69/Brazil)
-# SAm69 "South American 1969"             SAm69         dx=-77.0    dy=3.0      dz=-45.0
-SAD-69 "SAD-69/Brasil"	            	  SAm69	        dx=-60.0    dy=-2.0     dz=-41.0
+sam69 "South American 1969"               sam69         dx=-77.0    dy=3.0      dz=-45.0
+SAD-69 "SAD-69/Brasil"	            	  SAD-69        dx=-60.0    dy=-2.0     dz=-41.0
 # Pulkovo 1942 ( = S-42)
 pulkovo "Pulkovo 1942"                    krassovsky    dx=28.0     dy=-130.0   dz=-95.0
 # European 1950 mean
