@@ -495,6 +495,7 @@ int _show_mode (int mode, int type, int label)
     }
     else
     {
+#ifndef SCS_MODS
 	if(Cat_name)
 	{
 	    char *p;
@@ -507,6 +508,7 @@ int _show_mode (int mode, int type, int label)
 			    (strlen(Cat_name) > 15 ? '~' : ' '));
 	    wmove (BASE_WIN, 16, 51); waddstr (BASE_WIN,  buffer);
 	}
+#endif
 	sprintf (buffer, "%4d      ", label);
 	wmove (BASE_WIN, 17, 64); waddstr (BASE_WIN,  buffer);
     }
