@@ -11,7 +11,6 @@ LIST = main.o\
 	prt_report.o\
 	do_v_stats.o\
 	prt_unit.o\
-	perimeter.o\
 	report.o\
 	stats.o\
 	sums.o
