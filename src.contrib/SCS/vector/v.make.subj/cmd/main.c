@@ -45,7 +45,7 @@ char *argv[];
 	subj->type			= TYPE_STRING;
 	subj->required		= YES;
 	subj->multiple		= NO;
-	subj->gisprompt		= "SUBJ";
+	subj->gisprompt		= "new";
 	subj->description		= "new SUBJ file";
 
 	if (G_parser (argc, argv))
@@ -195,7 +195,8 @@ sleep(1);*/
   fprintf(stderr,"\tSUBJect category processing finished\n\t  %d categorie(s) added\n",cat_cnt - old_cat_cnt);
                  /* make a final mapset master category file
                  put in first three records  */
-	sprintf(path,"SUBJ/%s",out_name);
+        sprintf(path,"%s/%s/%s/SUBJ/%s",
+		getenv("GISDBASE"),getenv("LOCATION_NAME"),mapset,out_name);
         Out = fopen (path,"w");
 /*      rewind (Out); */
         sprintf (Obuffer,"#%5d categories\n\0",cat_cnt);
@@ -217,7 +218,7 @@ sleep(1);*/
 		  /* now read the subj file for sorting */
         G_suppress_warnings (1);
 	G__read_cats ("SUBJ", out_name, G_mapset(), &cats, 1);
-  	G_suppress_warnings (0);
+  	G_suppress_warnings (0); 
 	sort_by_label (&cats);
 		  /* have to put in "no data" category */
 	cats.list[0].label = G_store("no data");
