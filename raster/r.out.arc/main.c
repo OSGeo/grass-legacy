@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
     int nrows, ncols, i, dp;
     int number;
     double cellsize;
+	struct GModule *module;
     struct
     {
 	struct Option *map ;
@@ -41,6 +42,10 @@ int main(int argc, char *argv[])
     } flag;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+    module->description =
+		"Converts a raster map layer into an ESRI ARCGRID file.";
 
 /* Define the different options */
 

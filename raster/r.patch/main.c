@@ -25,9 +25,16 @@ int main (int argc, char *argv[])
     char *new_name;
     char **names;
     char **ptr; 
+	struct GModule *module;
     struct Flag *flag1 ;
     struct Flag *zeroflag;
     struct Option *opt1, *opt2 ;
+
+    module = G_define_module();
+	module->description =
+		"Creates a composite raster map layer by using "
+		"known category values from one (or more) map layer(s) "
+		"to fill in areas of \"no data\" in another map layer.";
 
 /* Define the different options */
 

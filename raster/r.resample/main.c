@@ -20,12 +20,17 @@ int main(int argc, char *argv[])
 	int verbose;
 	char buf[256] ;
 	RASTER_MAP_TYPE data_type, out_type ;
+	struct GModule *module;
 	struct
 	{
 	  struct Option *input, *output;
 	} option ;
 	struct Flag *flag1 ;
 
+    module = G_define_module();
+    module->description =
+		"GRASS raster map layer data resampling capability.";
+					        
 	/* Define the different options */
 
 	option.input = G_define_option() ;

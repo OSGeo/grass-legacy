@@ -372,10 +372,15 @@ char *argv[];
 char *vfiles[MAXVIEWS][MAXIMAGES];
 int *numframes, *numviews, *quality, *convert;
 {
+	struct GModule *module;
     struct Option *viewopts[MAXVIEWS], *out, *qual; 
     struct Flag *qt, *conv;
     char buf[BUFSIZ], **wildfiles;
     int i,j,k, numi, wildnum;
+
+	module = G_define_module();
+	module->description =
+		"Raster File Series to MPEG Conversion Program.";
 
     *numviews = *numframes = 0;
     for(i=0; i<MAXVIEWS; i++){

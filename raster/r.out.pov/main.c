@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
     int number;
     double bias;
     char fmt[20];
+	struct GModule *module;
     struct
     {
 	struct Option *map ;
@@ -97,6 +98,10 @@ int main(int argc, char *argv[])
         struct Option *bias ;
         struct Option *scaleFactor ;
     } parm;
+
+	module = G_define_module();
+    module->description =
+		"Converts a raster map layer into a height-field file for POVRAY.";
 
 /* Define the different options */
 

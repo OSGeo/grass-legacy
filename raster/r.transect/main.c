@@ -13,6 +13,7 @@ int main (int argc, char *argv[])
     int projection;
     char *name, *mapset;
 
+	struct GModule *module;
     struct
     {
 	struct Option *map;
@@ -23,6 +24,11 @@ int main (int argc, char *argv[])
 
     G_gisinit (argv[0]);
     projection = G_projection();
+
+	module = G_define_module();
+	module->description =
+		"Outputs raster map layer values lying along "
+		"user defined transect line(s).";
 
     parms.map = G_define_option();
     parms.map->key = "map";

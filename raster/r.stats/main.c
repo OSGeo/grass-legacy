@@ -27,6 +27,7 @@ int main (int argc, char *argv[])
     struct Quant q;
     CELL min, max, null_set=0;
     DCELL dmin, dmax;
+	struct GModule *module;
     struct
     {
 	struct Flag *a ;   /* area */
@@ -60,6 +61,10 @@ int main (int argc, char *argv[])
 				   is int, nsteps is ignored */
     } option;
 
+    module = G_define_module();
+    module->description =
+		"Generates area statistics for raster map layers.";
+					        
 /* Define the different options */
 
     option.cell = G_define_option() ;

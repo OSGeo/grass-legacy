@@ -100,6 +100,8 @@ int main (int argc, char **argv)
 	         *out_proj_info, 
 	         *out_unit_info;
 
+	struct GModule *module;
+
 	struct Option *imapset,		 /* name of input mapset	 */
 	         *inmap,		 /* name of input layer		 */
 	         *outmap,		 /* name of output layer	 */
@@ -115,6 +117,10 @@ int main (int argc, char **argv)
 
 
 	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Projects raster maps between two projections.";
 
 	inmap = G_define_option();
 	inmap->key = "input";

@@ -12,6 +12,7 @@ int main(
     char *argv[])
 {
 
+	struct GModule *module;
     struct Option 	*rast;
     char		*cellmap;
     FILEDESC    	cellfile = 0;
@@ -22,6 +23,10 @@ int main(
 
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+    module->description =
+		"Sums up the raster cell values.";
 
     rast = G_define_option();
     rast->key            	   = "rast";
