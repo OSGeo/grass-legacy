@@ -361,5 +361,7 @@ char *      db_whoami                 P((void ));
 void        db_zero                   P((void *s , int n ));
 void         db_zero_string            P((dbString *x ));
 unsigned    int                       db_sizeof_string P((dbString *x ));
+int         db_set_login ( char *, char *, char *, char * );
+int         db_get_login ( char *, char *, char **, char ** );
 
 #undef P
