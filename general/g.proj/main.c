@@ -52,8 +52,13 @@ int main(int argc, char *argv[])
     struct Key_Value *projinfo = NULL, *projunits = NULL;
     struct Key_Value *old_projinfo = NULL, *old_projunits = NULL;
     struct Cell_head cellhd, old_cellhd;
+    struct GModule *module;
 
     G_gisinit(argv[0]);
+
+    module = G_define_module();
+    module->description =
+	"module to manipulate GRASS projection information files";
 
     printinfo = G_define_flag();
     printinfo->key = 'p';
