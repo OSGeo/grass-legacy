@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "global.h"
 
 ask_parms()
@@ -27,7 +26,7 @@ ask_parms()
     ncols = G_window_cols();
 
     sprintf (window_line,
-	"Your current window contains %d rows and %d cols (%d cells)",
+	"Your current region contains %d rows and %d cols (%d cells)",
 	nrows, ncols, nrows*ncols);
     sample_rows = nrows/100;
     if (sample_rows < 1)
