@@ -10,7 +10,7 @@ DEPENDENCIES = $(VECTDEP) $(SYMBDEP) $(GISDEP) $(DATETIDEP) $(IMAGERYDEP) $(VASK
                colortable.h group.h labels.h map_info.h ps_info.h vector.h \
                comment.h header.h local_proto.h
 
-EXTRA_INC = $(VECT_INC)
+EXTRA_INC = $(VECT_INC) $(PROJINC)
 EXTRA_CFLAGS = $(VECT_CFLAGS)
  
 include $(MODULE_TOPDIR)/include/Make/Module.make
