@@ -1,7 +1,4 @@
 NAME
-
-
-
 v.in.dlg
 -
 Converts
@@ -25,9 +22,6 @@ Data
 Import
 Program)
 SYNOPSIS
-
-
-
 v.in.dlg
 v.in.dlg
 help
@@ -39,9 +33,6 @@ output=name
 [matt=name]
 [base=val]
 DESCRIPTION
-
-
-
 This
 program
 converts
@@ -158,12 +149,12 @@ base
 would
 be:
 
-        34      0       0
-        35      180     201
-        36      180     208
-                170     240
-                190     201
-        37      160     220
+	34	0	0
+	35	180	201
+	36	180	208
+		170	240
+		190	201
+	37	160	220
 
 With
 the
@@ -173,19 +164,19 @@ looking
 like
 this:
 
-        A
+	A
 648467.190000
 4456367.320000
 34
-        L
+	L
 667989.290000
 4458393.520000
 35
-        L
+	L
 651002.470000
 4473793.390000
 36
-        L
+	L
 663816.680000
 4471412.080000
 37
@@ -254,51 +245,53 @@ GRASS
 program
 v.import.
 
--l                Give
-                  precedence
-                  to
-                  line
-                  information
-                  (default
-                  is
-                  area).
+l
+-
+				    Give
+		  precedence
+		  to
+		  line
+		  information
+		  (default
+		  is
+		  area).
 
 Parameters:
-input=name        Name
-                  of
-                  USGS
-                  DLG-
-                  3
-                  Optional
-                  format
-                  input
-                  file.
-output=name       Name
-                  to
-                  be
-                  assigned
-                  to
-                  the
-                  binary
-                  GRASS
-                  vector
-                  files
-                  created.
-matt=name         Name
-                  of
-                  file
-                  with
-                  multiple
-                  attributes
-                  (optional).
-base=val          Identifier
-                  base
-                  for
-                  multiple
-                  attributes
-                  (default
-                  is
-                  1).
+input=name	  Name
+		  of
+		  USGS
+		  DLG-
+		  3
+		  Optional
+		  format
+		  input
+		  file.
+output=name	  Name
+		  to
+		  be
+		  assigned
+		  to
+		  the
+		  binary
+		  GRASS
+		  vector
+		  files
+		  created.
+matt=name	  Name
+		  of
+		  file
+		  with
+		  multiple
+		  attributes
+		  (optional).
+base=val	  Identifier
+		  base
+		  for
+		  multiple
+		  attributes
+		  (default
+		  is
+		  1).
 If
 the
 user
@@ -323,9 +316,6 @@ to
 enter
 these.
 NOTES
-
-
-
 Area
 vs
 Line
@@ -542,15 +532,10 @@ snapping
 threshold.
 SEE
 ALSO
-
-
 v.digit,
 v.import,
 v.support
 AUTHOR
-
-
-
 Dave
 Gerdes,
 U.S.
@@ -567,6 +552,21 @@ Construction
 Engeneering
 Research
 Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
