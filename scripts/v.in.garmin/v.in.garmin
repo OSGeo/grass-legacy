@@ -133,10 +133,6 @@ if [ -n "$GIS_OPT_output" ] ; then
     if [ $VERBOSE -eq 1 ] ; then
 	echo "output=$NAME" 1>&2
     fi
-    if [ -n `g.findfile elem=vector file="$NAME" | grep ^file | cut -f2 -d=` ] ; then
-	echo "<$NAME> already exists! Aborting."
-	exit 1
-    fi
 fi
 if [ -n "$GIS_OPT_port" ] ; then
     GPSPORT="-p$GIS_OPT_port"
