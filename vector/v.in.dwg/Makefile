@@ -11,7 +11,10 @@ EXTRA_CFLAGS = $(VECT_CFLAGS)
  
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: cmd $(ADINIT)
+default: chck cmd $(ADINIT)
+
+chck:
+	./check
 
 #a bit ugly:
 $(ADINIT):

@@ -1,18 +1,28 @@
-/* ***************************************************************
- * *
- * * MODULE:       v.in.dwg
- * * 
- * * AUTHOR(S):    Radim Blazek
- * *               
- * * PURPOSE:      Import DWG/DXF vectors
- * *               
- * * COPYRIGHT:    (C) 2003 by the GRASS Development Team
- * *
- * *               This program is free software under the 
- * *               GNU General Public License (>=v2). 
- * *               Read the file COPYING that comes with GRASS
- * *               for details.
- * *
+/* **************************************************************
+ * 
+ *  MODULE:       v.in.dwg
+ *  
+ *  AUTHOR(S):    Radim Blazek
+ *                
+ *  PURPOSE:      Import of DWG/DXF files
+ *                
+ *  COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ * 
+ *                This program is free software under the 
+ *                GNU General Public License (>=v2). 
+ *                Read the file COPYING that comes with GRASS
+ *                for details.
+ * 
+ * In addition, as a special exception, Radim Blazek gives permission
+ * to link the code of this program with the OpenDWG libraries (or with
+ * modified versions of the OpenDWG libraries that use the same license
+ * as OpenDWG libraries), and distribute linked combinations including the two.
+ * You must obey the GNU General Public License in all respects for all
+ * of the code used other than. If you modify this file, you may extend
+ * this exception to your version of the file, but you are not obligated
+ * to do so. If you do not wish to do so, delete this exception statement
+ * from your version.
+ * 
  * **************************************************************/
 #define AD_PROTOTYPES
 #define AD_VM_PC
