@@ -6,7 +6,7 @@ int segment_put (SEGMENT *SEG, void *buf,int row,int col)
     int n;
     int index;
     int i;
-    char *b;
+    char *b, *p=buf;
 
     segment_address (SEG, row, col, &n, &index);
     if((i = segment_pagein (SEG, n)) < 0)
@@ -16,6 +16,6 @@ int segment_put (SEGMENT *SEG, void *buf,int row,int col)
 
     n = SEG->len;
     while (n-- > 0)
-	*b++ = *((char*)buf)++;
+	*b++ = *p++;
     return 1;
 }
