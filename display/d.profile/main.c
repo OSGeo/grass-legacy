@@ -151,6 +151,7 @@ if (max < 0) max = 0;
 			if(button == RIGHTB)
 			{
 				D_set_cur_wind (ORIG.name);
+				fprintf (stdout,"Use 'd.frame -e' to remove left over frames\n");
 				return(0) ;
                         }
 
