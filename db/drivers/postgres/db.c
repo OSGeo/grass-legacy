@@ -19,12 +19,73 @@
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
+#include "../dialog/dbd.h"
+
+typedef struct { 
+    char *host, *port, *options, *tty, *dbname, *user, *password;
+} PGCONN;
+
+/* Parse connection string in form: 1) 'database_name'
+*  2) 'host=xx,port=xx,dbname=xx,user=xx,password=xx'
+*  
+*  returns:  0 OK
+*           -1 error
+*/
+int parse_conn ( char *str, PGCONN *pgconn )
+{
+    int  i;
+    char **tokens, delm[2];
+    
+    /* reset */
+    pgconn->host = NULL;
+    pgconn->port = NULL;
+    pgconn->options = NULL;
+    pgconn->tty = NULL;
+    pgconn->dbname = NULL;
+    pgconn->user = NULL;
+    pgconn->password = NULL;
+ 
+    G_debug (3, "parse_conn : %s", str ); 
+    
+    if ( strchr(str, '=') == NULL ) { /*db name only */
+	pgconn->dbname = G_store ( str );
+    } else {
+	delm[0] = ','; delm[1] = '\0';
+        tokens = G_tokenize ( str, delm );
+	i = 0;
+	while ( tokens[i] ) {
+	   G_debug (3, "token %d : %s", i, tokens[i] ); 
+	   if ( strncmp(tokens[i], "host", 4 ) == 0 )
+	       pgconn->host = G_store ( tokens[i] + 5 );
+	   else if ( strncmp(tokens[i], "port", 4 ) == 0 )
+	       pgconn->port = G_store ( tokens[i] + 5 );
+	   else if ( strncmp(tokens[i], "options", 7 ) == 0 )
+	       pgconn->options = G_store ( tokens[i] + 8 );
+	   else if ( strncmp(tokens[i], "tty", 3 ) == 0 )
+	       pgconn->tty = G_store ( tokens[i] + 4 );
+	   else if ( strncmp(tokens[i], "dbname", 6 ) == 0 )
+	       pgconn->dbname = G_store ( tokens[i] + 7 );
+	   else if ( strncmp(tokens[i], "user", 4 ) == 0 )
+	       pgconn->user = G_store ( tokens[i] + 5 );
+	   else if ( strncmp(tokens[i], "password", 8 ) == 0 )
+	       pgconn->password = G_store ( tokens[i] + 9 );
+	   else 
+               G_warning ( "Unknown option in database definition for postgres: '%s'", tokens[i] );
+	   
+	   i++;
+	}
+	G_free_tokens ( tokens );	
+    }
+
+    return 0;
+}
 
 int db_driver_open_database(handle)
      dbHandle *handle;
 {
-    char *name, emsg[PG_MSG], buf[500];
+    char *name, emsg[PG_MSG];
     dbConnection connection;
+    PGCONN pgconn;
 
     int i;
 
@@ -45,21 +106,35 @@ int db_driver_open_database(handle)
 	name = connection.databaseName;
     }
 
+    G_debug(3, "db_driver_open_database() driver=pg database definition = '%s'", name );
+
+    parse_conn ( name, &pgconn );
     
-    /* 'name' may be: 1) database name
-    *                 2) connection string in form: host=abc,dbname=db1  */
-    if ( strchr(name, '=') == NULL ) { /*db name only */
-	sprintf ( buf, "dbname=%s", name );
-        strcpy(db.name, buf);
-    } else {
-        strcpy(db.name, name);
-	G_strchg( db.name, ',', ' ');
+    G_debug(3, "host = %s, port = %s, options = %s, tty = %s, dbname = %s, user = %s, password = %s",
+                pgconn.host, pgconn.port, pgconn.options, pgconn.tty,  
+		pgconn.dbname, pgconn.user, pgconn.password );
+
+    pg_conn = PQsetdbLogin( pgconn.host, pgconn.port, pgconn.options, pgconn.tty, 
+		            pgconn.dbname, pgconn.user, pgconn.password );
+    
+    if (PQstatus(pg_conn) == CONNECTION_BAD) {
+        if ( pgconn.user == NULL || strlen(pgconn.user) == 0 || 
+	     pgconn.password == NULL || strlen(pgconn.password) == 0 ) {
+	   /* Ask user for login/password */
+	   G_debug (3, "User/password missing");
+	   if ( dbd_user ( "pg", name, &pgconn.user, &pgconn.password ) < 0 ) {
+		snprintf(emsg, sizeof(emsg), "cannot get user/password\n" );
+		report_error(emsg);
+		return DB_FAILED;
+	   }
+	   G_debug ( 3, "user =  %s", pgconn.user ); 
+	   
+           pg_conn = PQsetdbLogin( pgconn.host, pgconn.port, pgconn.options, pgconn.tty, 
+	 	                    pgconn.dbname, pgconn.user, pgconn.password );
+
+	}
     }
 
-    G_debug(3, "db_driver_open_database() driver=pg connection='%s'", db.name );
-
-    pg_conn = PQconnectdb( db.name );
-    
     if (PQstatus(pg_conn) == CONNECTION_BAD) {
 	snprintf(emsg, sizeof(emsg), "Error: connect Postgres: %s\n", PQerrorMessage(pg_conn));
 	report_error(emsg);
