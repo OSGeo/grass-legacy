@@ -1,0 +1,20 @@
+#  %W%  %G%
+GRAPH=$(GISBASE)/mapgen
+MAPGEN_BIN = $(GRAPH)/interface
+MAP_SRC = $(SRC)/../src.related/mapgen
+
+EXTRA_CFLAGS = -I$(MAP_SRC)/SCS/include
+OFILES = main.o 
+GMAPLIB = ../libes/gmaplib.a
+
+$(MAPGEN_BIN)/get.coord: get.coord $(MAPGEN_BIN)/get_coord
+	cp get.coord $(MAPGEN_BIN)/get.coord
+	chmod 755 $(MAPGEN_BIN)/get.coord
+$(MAPGEN_BIN)/get_coord: $(OFILES) $(DISPLAYLIB) $(RASTERLIB)  $(GISLIB) $(GMAPLIB)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(GMAPLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+
+$(GMAPLIB): #
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
