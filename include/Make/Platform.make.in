@@ -135,10 +135,10 @@ TIFFINCPATH         = @TIFF_INCLUDE_DIRS@
 TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
 TIFFLIB             = @TIFFLIB@
 
-#GD library (for PNGdriver):
-GDINC               = @GDINC@
-GDLIB               = @GDLIB@
-USE_GD              = @USE_GD@
+#GD library:
+#GDINC               = @GDINC@
+#GDLIB               = @GDLIB@
+#USE_GD              = @USE_GD@
 
 #openGL files for NVIZ/r3.showdspf
 OPENGLINC           = @OPENGLINC@
