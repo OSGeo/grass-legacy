@@ -14,7 +14,7 @@ main (int argc, char *argv[])
 	struct GModule *module;
 	struct Option *old, *new, *columns_opt, *xcol_opt, *ycol_opt, *zcol_opt, *catcol_opt;
 	int    xcol, ycol, zcol, catcol;
-	struct Flag *zcoorf, *t_flag;
+	struct Flag *zcoorf, *t_flag, *e_flag;
 	char   *mapset, *table;
 	char   errmsg[200];
 	int    zcoor=WITHOUT_Z, points_format, make_table; 
@@ -87,6 +87,10 @@ main (int argc, char *argv[])
 	t_flag = G_define_flag();
 	t_flag->key              = 't';
 	t_flag->description      = "Do not create table in points mode.";
+
+	e_flag = G_define_flag();
+	e_flag->key              = 'e';
+	e_flag->description      = "Create a new empty map and exit. Nothing is read from input.";
 	
 	if (G_parser (argc, argv))
 		exit(-1);
@@ -127,6 +131,12 @@ main (int argc, char *argv[])
 
 	Vect_open_new (&Map, new->answer, zcoor);
 	Vect_hist_command ( &Map );
+
+	if ( e_flag->answer ) { 
+	    Vect_build ( &Map, stdout );
+	    Vect_close ( &Map );
+	    exit(0) ;
+	}
 
 	if ( points_format ) {
 	    int i, rowlen, ncols, minncols, *coltype, *collen;
