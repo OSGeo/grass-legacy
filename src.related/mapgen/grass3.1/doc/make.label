@@ -1,0 +1,100 @@
+
+
+                                   APPENDIX I                    1
+                              GRASS-MAPGEN User's Guide
+            make.label                                      make.label            make.label                                      make.label
+
+
+
+
+            
+            
+            NAME            NAME
+            make.label - Draws text labels on the map composition at a
+            point location of a GRASS or MAPGEN sites file.
+            
+            SYNOPSIS            SYNOPSIS
+            make.label [filename]            make.label                                   ________ 
+            
+            DESCRIPTION            DESCRIPTION
+            make.label constructs map labels from a MAPGEN sites file in            __________                                                  
+            the sites_geo directory.  GRASS sites, attribute, or                _________                                       
+            category files can be used and are converted to MAPGEN sites
+            files during this process.
+            
+            The user is required to provide the following:
+            
+                 - MAPGEN sites file name
+                 - overlay file name (if not specified in the command
+                      line)
+                 - map definition file name
+                 - plotter pen number
+                 - text font
+                 - text size
+                 - text rotation angle
+                 - label justification
+                 - x coordinate offset
+                 - y coordinate offset
+            
+            Completing the response sequence generates the required
+            files to construct the map element.  Definition parameters
+            are stored in the labels directory; graphic elements to draw                              ______                                    
+            the map on the screen or plotter are stored in the ovm                                                               ___
+            directory.  The default file name for both directories is
+            the sites file name, suffixed with ".l", where l denotes a                                                __                    
+            label file.
+            
+            Changing the appearance of the label (e.g. label size or
+            font, pen, etc.) can be done by regenerating the make.label                                                             __________
+            command and overwriting the initial file, or by editing the
+            text definition file, and using the redo.label command.                                                __________         
+            
+                 (edit) example:          vi labels/[filename]                                                     ________ 
+                                          vi labels/archsites.l                                             __________________
+                 
+            EXAMPLE            EXAMPLE
+            The file labels/archsites.l will display labels from the                     __________________                             
+            archsites file in the -sr font, at each archeological site
+            location.  The labels will be plotted with the pen in
+            position 1, .2 cm high.  Each label will be left justified
+            and begin .2 cm away from the actual site location.
+
+                                   APPENDIX I                    2
+                              GRASS-MAPGEN User's Guide
+            make.label                                      make.label            make.label                                      make.label
+
+
+
+
+            
+                 mdef=map.def
+                 name=archsites
+                 pen=1
+                 size=.2
+                 rot=0
+                 just=l
+                 font=sr
+                 x=.2
+                 y=0
+            
+            NOTE            NOTE
+            If the MAPGEN sites file specified does not exist, the
+            command assumes the user wants to use a GRASS file.
+            
+            The delete key will abort the make.label command.                                          __________         
+            
+            SEE ALSO            SEE ALSO
+                 points         User Manual for MAPGEN (UNIX Version),                 ______                                               
+                                USGS, p. 47.
+                 TASK 6         GRASS-MAPGEN User's Guide, USDA-SCS.                 _______                                            
+                 redo           GRASS-MAPGEN User's Guide, APPENDIX I,                 ____                                                 
+                                USDA-SCS.
+                 redo.label     (Same)                 __________           
+                 att.to.geo     (Same)                 __________           
+                 cat.to.geo     (Same)                 __________           
+                 sites.to.geo   (Same)                 ____________         
+            
+            AUTHOR            AUTHOR
+            Marty Holko, Computer Systems Analyst, Cartography and
+            Geographic Information Systems Division, USDA, Soil
+            Conservation Service, Washington, DC. (October l990).
