@@ -1,34 +1,34 @@
-$Id: README,v 1.2 2000-07-12 11:47:55 markus Exp $
+$Id: README,v 1.3 2000-10-15 11:46:46 andreas Exp $
 
 Contents of this directory:
 
 D          : display library
-bitmap     : bitmap library
-btree      : binary trees library
+bitmap     : bitmap library for X Window Bitmaps
+btree      : binary tree library
 bwidget    : tcl/tk extra library
-coorcnv    : coordinate transform library
+coorcnv    : coordinate conversion and datum support library
 datetime   : DateTime library
-dbmi       : database drivers
+dbmi       : database management interface database drivers
 dig_atts   : library to read and write from attribute files
 digitizer  : raw library for general digitizer support
 display    : library for CELL driver
 dlg        : library to manage DGL files
 dspf       : G3D display files library
 g3d        : G3D raster volume library
-geom       : geometrical calculations
+geom       : geometrical calculations, long-integer-arithmetics, delaunay triangulation, planesweep algorithm, simulation of simplicity and others
 gis        : main GRASS library
-ibtree     : integer clone of binary trees library (btree)
-icon       : icon library (required for PS/Paint icons?)
+ibtree     : integer clone of binary tree library (btree)
+icon       : icon library (required for PS/Paint icons, read, write, manipulate icons)
 image3     : extra imagery library
 imagery    : imagery library
-libimage   : required for SG3d/Iris
+libimage   : image library required for SG3d/Iris, saving images in SGIs rgp-format
 linkm      : linked list memory manager
-lock       : locking mechanism for GRASS monitors
+lock       : locking mechanism for GRASS monitors and files
 ogsf       : ported gsurf library (required for NVIZ)
-proj       : PROJ4.x projections library
+proj       : PROJ4.4.x projection library
 raster     : GRASS raster library
 rowio      : row in/out library
-rst_gmsl   : regularized splines with tension interpolation library
+rst_gmsl   : library for interpolation with regularized splines with tension 
 segment    : segment library
 unused     : maybe treasure here
 vask       : Curses management library
