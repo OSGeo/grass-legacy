@@ -18,17 +18,25 @@ main(int argc, char **argv)
 	printf("ENTER NL,NS,TOPO FILE,SYSTEM(UNIX,VMS,PRIME)\n");
 #endif
 	scanf("%s", file);
-	tmpfp = fopen(file, "r");
+	if(!(tmpfp = fopen(file, "r"))){
+		fprintf(stderr, "%s: No such file or open failed\n", file);
+		exit(1);
+	}
+
 	fscanf(tmpfp, "%d %d", &nl, &ns);
 	fscanf(tmpfp, "%s", tofile);
 	fscanf(tmpfp, "%s", system);
 	fclose(tmpfp);
 
+	if(!(infile = fopen(tofile, "r+"))){
+		fprintf(stderr, "%s: No such file or open failed\n", tofile);
+		exit(1);
+	}
+
 	data = (double **)malloc(ns*sizeof(double *)) - 1;
 	for(i=1; i<=ns; i++)
 		data[i] = (double *)malloc(3*sizeof(double)) - 1;
 
-	infile = fopen(tofile, "r+");
 	i1 = 1;
 	i2 = 2;
 	i3 = 3;
