@@ -129,7 +129,7 @@ int points_analyse ( FILE *ascii_in, FILE *ascii, char *fs, int head_type,
 
 	/* Determine column types */
 	for ( i = 0; i < ntokens; i++ ) {
-	    G_debug (4, "row %d col %d: %s is_int = %d is_double = %d", 
+	    G_debug (4, "row %d col %d: '%s' is_int = %d is_double = %d", 
 		         row, i, tokens[i], is_int(tokens[i]), is_double(tokens[i]) );
 	    if ( is_int(tokens[i]) ) continue; /* integer */
 	    if ( is_double(tokens[i]) ) { /* double */
