@@ -86,9 +86,9 @@ int what(int once, int terse, int width, int mwidth,
         {
 	  /* Try to find point first and only if no one was found try lines,
 	  *  otherwise point on line could not be selected */
-          line = Vect_find_line (&Map[i], east, north, 0, GV_POINT|GV_CENTROID, maxdist, 0);
+          line = Vect_find_line (&Map[i], east, north, 0, GV_POINT|GV_CENTROID, maxdist, 0, 0);
 	  if ( line == 0 ) 
-              line = Vect_find_line (&Map[i], east, north, 0, GV_LINE|GV_BOUNDARY, maxdist, 0);
+              line = Vect_find_line (&Map[i], east, north, 0, GV_LINE|GV_BOUNDARY, maxdist, 0, 0);
 
           area = Vect_find_area (&Map[i], east, north) ;
 	  getz = Vect_tin_get_z (&Map[i], east, north, &z, NULL, NULL);
