@@ -1,0 +1,4 @@
+Mmain	main.c	/^main (argc, argv) 	char *argv[];$/
+ask_quad	ask_quad.c	/^ask_quad (quadsize)$/
+new_screen	new_screen.c	/^new_screen()$/
+write_cell	write_cell.c	/^write_cell (fd, window, north, east, quad, cat)$/
