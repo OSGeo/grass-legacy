@@ -80,6 +80,9 @@ int ps_map (void)
     if (PS.mask_needed) 
         do_masking();
 
+    /* do the unmasked vector plots, if any */
+    if (vector.count) do_vectors(1);
+
     /* do the grid, if any */
     if (PS.grid_cross)
 	    do_grid_cross();
@@ -88,10 +91,6 @@ int ps_map (void)
 
     /* do geo-grid, if any */
     do_geogrid();
-
-
-    /* do the unmasked vector plots, if any */
-    if (vector.count) do_vectors(1);
 
     /* do the grid numbers, if any */
     if (PS.grid_numbers > 0) do_grid_numbers();
