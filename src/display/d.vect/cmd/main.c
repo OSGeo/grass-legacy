@@ -92,6 +92,9 @@ main (int argc, char **argv)
 	if(stat == 0)
 		D_add_to_list(G_recreate_command()) ;
 
+	if(!strchr(map_name, '@'))
+		D_set_digit_name(G_fully_qualified_name(map_name, mapset));
+
 	Vect_destroy_line_struct (Points);
 
 	R_close_driver();
