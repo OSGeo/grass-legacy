@@ -153,10 +153,18 @@ make_location (char *gisdbase, char *location_name)
     /* set the dummy window */
     window.north =1.;
     window.south = 0.;
+    window.top = 1.;
+    window.bottom = 0.;
     window.rows = 1;
+    window.rows3 = 1;
     window.cols = 1;
+    window.cols3 = 1;
+    window.depths = 1;
     window.ew_res = 1.;
+    window.ew_res3 = 1.;
     window.ns_res = 1.;
+    window.ns_res3 = 1.;
+    window.tb_res = 1.;
     window.east = 1.;
     window.west = 0.;
     window.zone = 0.;
