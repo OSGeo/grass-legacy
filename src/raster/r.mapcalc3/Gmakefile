@@ -58,9 +58,6 @@ $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 
 $(LIBES): #
 
-LFLAGS = -b -Cf
-YFLAGS = -v
-
 y.tab.c y.tab.h: mapcalc.y
 	$(YACC) $(YFLAGS) -d mapcalc.y
 
