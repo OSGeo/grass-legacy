@@ -2991,6 +2991,7 @@ if test "$WITH_BINDIR"; then
 			BINDIR="$dir"
 		else
 			echo "configure: warning: *** installation directory $dir does not exist." 1>&2
+			BINDIR="$dir"
 		fi
 	done
 	echo $ac_n "checking user executable directory""... $ac_c" 1>&6
