@@ -51,11 +51,19 @@ plot (name, mapset, Points, filename, colors, Mapcats)
     strcpy(midname,filename);
     strcpy(mifname,filename);
 
-    mif = G_fopen_new("mapinfo",strcat(mifname, ".mif"));
-    mid = G_fopen_new("mapinfo",strcat(midname, ".mid"));
+/*  mif = G_fopen_new("mapinfo",strcat(mifname, ".mif"));
+ *  mid = G_fopen_new("mapinfo",strcat(midname, ".mid"));
+ */
+    if ((mif= fopen( strcat(mifname, ".mif"), "w")) == NULL)
+      G_fatal_error("Cannot open output file \"%s\"", strcat(mifname, ".mif"));
+    if ((mid= fopen( strcat(midname, ".mid"), "w")) == NULL)
+      G_fatal_error("Cannot open output file \"%s\"", strcat(midname, ".mid"));
 
     nareas = sort_areas(&Map, Points);
-    
+
+ /* added to avoid segfault with line vectors MN */
+  if (nareas>0)
+  {
     ncats = fillcats(&Map, nareas);
     j = 0;
     wmifheader();
@@ -74,8 +82,13 @@ plot (name, mapset, Points, filename, colors, Mapcats)
 	}
 	if (colors->version > -9) wmifcolor(colors, cats[i].cat);
     }
-    fclose(mif); fclose(mid);
-    Vect_close(&Map);
+  }
+  else
+  {
+    fprintf(stderr, "Sorry, no areas found (lines export not supported yet)");
+  }
+  fclose(mif); fclose(mid);
+  Vect_close(&Map);
 }
 
 wmifcolor(colors, cat)

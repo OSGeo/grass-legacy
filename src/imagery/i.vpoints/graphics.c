@@ -1,9 +1,10 @@
-#include "raster.h"
+#include "globals.h"
 #include "display.h"
 #include "D.h"
-#include "globals.h"
+#include "raster.h"
 
-static View *makeview (double bottom, double top, double left, double right)
+static View *
+makeview (double bottom, double top, double left, double right)
 {
     View *view;
 
@@ -40,49 +41,33 @@ static View *makeview (double bottom, double top, double left, double right)
     return view;
 }
 
-int Init_graphics (void)
+int 
+Init_graphics (void)
 {
-    struct Colors colors;
-
-    R_color_table_float();
+    /*
+    R_color_table_fixed();
+    */
     R_color_offset (0);
 
     Dscreen();
+
 
     SCREEN_TOP    = R_screen_top();
     SCREEN_BOTTOM = R_screen_bot();
     SCREEN_LEFT   = R_screen_left();
     SCREEN_RIGHT  = R_screen_rite();
 
+
     BLACK  = D_translate_color ("black");
     BLUE   = D_translate_color ("blue");
     BROWN  = D_translate_color ("brown");
     GREEN  = D_translate_color ("green");
-    GREY   = D_translate_color ("gray");
+    GREY   = D_translate_color ("grey");
     ORANGE = D_translate_color ("orange");
     PURPLE = D_translate_color ("purple");
     RED    = D_translate_color ("red");
     WHITE  = D_translate_color ("white");
     YELLOW = D_translate_color ("yellow");
-
-    G_init_colors (&colors);
-
-    set_menu_colors (&colors);
-
-    /*
-    fd = popen("lp","w");
-    fprintf(fd,"ver = %d, shift = %d, cmin = %d, cmax = %d\n",
-        colors.version,colors.shift,colors.cmin,colors.cmax);
-    for (i = 0; i < 10; i++)
-	fprintf(fd,"%d. %d %d %d\n",i,colors.fixed.lookup.red[i],
-            colors.fixed.lookup.grn[i],colors.fixed.lookup.blu[i]);
-    fflush(fd);
-    sleep(2);
-    pclose(fd);
-    */
-
-    R_standard_color (BLACK);      /* Put screen background to black */
-    R_box_abs( SCREEN_LEFT, SCREEN_TOP, SCREEN_RIGHT, SCREEN_BOTTOM);
 
     R_standard_color (WHITE);
 
@@ -96,18 +81,14 @@ int Init_graphics (void)
     VIEW_MAP2_ZOOM   = makeview (2.5,   47.5, 50.0, 100.0);
     VIEW_MENU        = makeview (0.0,    2.5,  0.0, 100.0);
 
-    G_copy(&VIEW_MAP1->cell.colors, &colors, sizeof(colors));
-    G_copy(&VIEW_MAP2->cell.colors, &colors, sizeof(colors));
-
-/*
     G_init_colors (&VIEW_MAP1->cell.colors);
     G_init_colors (&VIEW_MAP2->cell.colors);
-*/
 
     return 0;
 }
 
-int Outline_box (int top, int bottom, int left, int right)
+int 
+Outline_box (int top, int bottom, int left, int right)
 {
     R_move_abs (left,  top);
     R_cont_abs (left,  bottom);
@@ -119,7 +100,8 @@ int Outline_box (int top, int bottom, int left, int right)
 }
 
 
-int Text_width (char *text)
+int 
+Text_width (char *text)
 {
     int top, bottom, left, right;
 
@@ -131,7 +113,8 @@ int Text_width (char *text)
 	return left-right+1;
 }
 
-int Text (char *text, int top, int bottom, int left, int right, int edge)
+int 
+Text (char *text, int top, int bottom, int left, int right, int edge)
 {
     R_set_window (top, bottom, left, right);
     R_move_abs (left+edge, bottom-edge);
@@ -141,7 +124,8 @@ int Text (char *text, int top, int bottom, int left, int right, int edge)
     return 0;
 }
 
-int Uparrow (int top, int bottom, int left, int right)
+int 
+Uparrow (int top, int bottom, int left, int right)
 {
     R_move_abs ((left+right)/2, bottom);
     R_cont_abs ((left+right)/2, top);
@@ -152,7 +136,8 @@ int Uparrow (int top, int bottom, int left, int right)
     return 0;
 }
 
-int Downarrow (int top, int bottom, int left, int right)
+int 
+Downarrow (int top, int bottom, int left, int right)
 {
     R_move_abs ((left+right)/2, top);
     R_cont_abs ((left+right)/2, bottom);

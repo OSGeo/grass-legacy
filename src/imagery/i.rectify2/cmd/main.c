@@ -82,6 +82,9 @@ int main (int argc, char *argv[])
  strcpy(extension, ext->answer);
  order = atoi(val->answer);
 
+ if(!ifile->answers)
+    a->answer=1;   /* force all */
+ 
 /* Find out how files on command line */
  if (!a->answer) {
    for (m = 0; ifile->answers[m]; m++) {
@@ -96,7 +99,9 @@ if (order < 1 || order > MAXORDER) {
 }
 
 /* determine the number of files in this group */
-    I_get_group_ref (group, &ref);
+    if (I_get_group_ref (group, &ref) <= 0 )
+        G_fatal_error("Group %s does not exist.", grp->answer);
+
     if (ref.nfiles <= 0)
     {
 	fprintf (stderr, "No files in this group - %s!\n", grp->answer);

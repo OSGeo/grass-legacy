@@ -12,7 +12,7 @@
 #include <math.h>
 
 
-CELL feature(double *coeff)	/* Set of six quadratic coefficents. 	*/
+DCELL feature(double *coeff)	/* Set of six quadratic coefficents. 	*/
 {
 
     /* Quadratic function in the form of
@@ -23,8 +23,7 @@ CELL feature(double *coeff)	/* Set of six quadratic coefficents. 	*/
 		b=C_B*zscale,
 		c=C_C*zscale,
 		d=C_D*zscale,
-		e=C_E*zscale,
-		f=C_F*zscale;
+		e=C_E*zscale;
 
     double maxic,minic,		/* Minimium and maximum curvature.	*/
 	   slope,		/* Slope.				*/
