@@ -1,0 +1,20 @@
+#  %W%  %G%
+
+OFILES = \
+	allocation.o \
+	command.o \
+	do_graph.o \
+	graphics.o \
+	main.o
+
+Dgraph: $(BIN)/Dgraph
+
+$(BIN)/Dgraph: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
+command.o:	options.h
+main.o:	options.h
