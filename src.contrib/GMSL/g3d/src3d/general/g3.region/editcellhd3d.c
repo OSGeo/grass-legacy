@@ -355,7 +355,7 @@ SHOW:
     fprintf(stderr, "  total depths:  %15d\n",    cellhd->depths);
     sprintf ( buf,"%ld",    (long) cellhd->rows * cellhd->cols * cellhd->depths);
     G_insert_commas(buf);
-    fprintf(stderr, "  total cells: %15s\n",    buf);
+    fprintf(stderr, "  total cells:   %15s\n",    buf);
     fprintf(stderr, "\n");
 
     if (cellhd->north > def_wind.north) {
