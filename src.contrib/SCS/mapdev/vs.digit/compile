@@ -1,0 +1,3 @@
+cd ../digitizers/screen
+gmake4.1
+cd ../../vs.digit
