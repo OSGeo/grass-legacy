@@ -68,14 +68,14 @@ get_point2 (east, north)
     int digitizer();
     int keyboard();
     int stat;
-    int screen();
+    int Screen();
     int cancel();
     static int use = 1;
     static Objects objects[] =
     {
 	MENU ("CANCEL", cancel, &use),
 	INFO ("Mark point on target image", &use),
-	OTHER (screen, &use),
+	OTHER (Screen, &use),
 	{0}
     };
 
@@ -157,7 +157,7 @@ digitizer()
 
 
 static
-screen (x,y,button)
+Screen (x,y,button)
 {
     int row,col;
     char buf[50];
