@@ -16,6 +16,7 @@ OBJS 	=  \
 	db.o \
 	driver.o \
 	error.o \
+	listdb.o \
 	listtab.o \
 	main.o \
 	table.o \

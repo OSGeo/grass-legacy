@@ -16,8 +16,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <dirent.h>
-#include <gis.h>
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
