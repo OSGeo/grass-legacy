@@ -1,0 +1,65 @@
+.TH cats2paint 1
+.SH NAME
+cats2paint - create paint "legend" for a cell file, using
+cell category and color information.
+.SH DESCRIPTION
+This module creates a paint labels file from the category and color information
+associated with a cell file. The label file can then be used in paint
+as a legend that is drawn on the map instead of below it.
+The legend will have color boxes followed by a text labels. The colors
+will correspond to the cell colors for each category.
+
+The user specifies the cell file from which to extract the category label
+and color information, and a labels file to hold the result.
+Since the labels file as an entity itself forms a legend, the user
+also specifies the size and placement of the legend, as follows:
+
+
+.ne 18
+.B
+.TS
+tab(#);
+ll.
+_
+Enter the following parameters
+
+Legend height (as percent of window):#25.00_______
+Inter-label spacing (as percent of text height):#40.00_______
+Vertical reference (as percent of window):#1.00________
+Horizontal reference (as percent of window):#1.00________
+
+Reference handle (center/top/bottom):#__t
+.sp 6
+.T&
+cs.
+AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+(OR <Ctrl-C> TO CANCEL)
+_
+.TE
+.R
+
+.ne 4
+where
+.IP "Legend height -"
+specifies the height of the legend as a percentage of the resultant
+map.
+.ne 4
+.IP "Inter-label spacing -"
+specifies how much vertical space to leave between each legend item.
+.ne 4
+.IP "Vertical reference -"
+specifies the vertical placement of the legend on the map. For example,
+0% means at the bottom, 50% in the middle, and 100% at the top.
+.ne 4
+.IP "Horizontal reference -"
+specifies the horizontal placement of the legend on the map. For example,
+0% means at the left, 50% in the middle, and 100% at the right.
+.ne 4
+.IP "Reference handle -"
+Specifies which part of the legend is used to locate the vertical reference.
+If center,
+then the center of the legend is placed at the vertical reference point.
+If top,
+then the top of the legend is placed at the vertical reference point.
+If bottom,
+then the bottom of the legend is placed at the vertical reference point.
