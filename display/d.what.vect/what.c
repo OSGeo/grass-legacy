@@ -14,7 +14,7 @@ static int nlines = 50;
 
 #define WDTH 5
 
-int what(int once, int txt, int terse, int width, int mwidth, int topo )
+int what(int once, int txt, int terse, int flash, int width, int mwidth, int topo )
 {
     int type, edit_mode;
     int row, col;
@@ -45,7 +45,8 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
     
     G_get_set_window(&window);
 
-    G_setup_plot(D_get_d_north(), D_get_d_south(), D_get_d_west(),
+    if(flash)
+	G_setup_plot(D_get_d_north(), D_get_d_south(), D_get_d_west(),
 		 D_get_d_east(), D_move_abs, D_cont_abs);
 
 
@@ -63,24 +64,30 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
     if (!isatty(fileno(stdout))) notty = 1; /* no terminal */
     else notty = 0;
 
-    panell = G_tempfile();
-    flash_basecolr=YELLOW;
+    if(flash){
+	panell = G_tempfile();
+	flash_basecolr=YELLOW;
+    }
 
     do {
-	R_panel_save(panell, R_screen_top(), R_screen_bot(),
-		     R_screen_left(), R_screen_rite());
+        if(flash)
+	   R_panel_save(panell, R_screen_top(), R_screen_bot(),
+		        R_screen_left(), R_screen_rite());
 
-	if (!terse) show_buttons(once);
+	if (!terse) show_buttons(once, flash);
 	R_get_location_with_pointer(&screen_x, &screen_y, &button);
 	if (!once) {
 	    if (button == 3) {
-		R_panel_delete(panell);
+		if(flash)
+		   R_panel_delete(panell);
 		break;
 	    }
 	    if (button == 2) {
-		R_panel_delete(panell);
-		flash_basecolr++;
-		if (flash_basecolr > MAX_COLOR_NUM) flash_basecolr = 1;
+		if(flash){
+		   R_panel_delete(panell);
+		   flash_basecolr++;
+		   if (flash_basecolr > MAX_COLOR_NUM) flash_basecolr = 1;
+		}
 		continue;
 	    }
 	}
@@ -105,14 +112,15 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
 	else maxdist = y1;
 	G_debug(1, "Maximum distance in map units = %f\n", maxdist);
 
-	flash_colr = flash_basecolr;
+	if(flash)
+	   flash_colr = flash_basecolr;
 	F_clear ();
 	for (i = 0; i < nvects; i++) {
 	    Vect_reset_cats ( Cats );
 	    /* Try to find point first and only if no one was found try lines,
 	       *  otherwise point on line could not be selected ans similarly for areas */
-	    line = Vect_find_line(&Map[i], east, north, 0, GV_POINT | GV_CENTROID, maxdist, 0, 0);
-	    if (line == 0) line = Vect_find_line(&Map[i], east, north, 0,
+	    line = Vect_find_line(&Map[i], east, north, 0.0, GV_POINT | GV_CENTROID, maxdist, 0, 0);
+	    if (line == 0) line = Vect_find_line(&Map[i], east, north, 0.0,
 			                         GV_LINE | GV_BOUNDARY | GV_FACE, maxdist, 0, 0);
 
 	    area = 0; 
@@ -260,8 +268,10 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
 		    }
 		}
 
-		flash_line(&Map[i], line, Points, BLACK);
-		flash_line(&Map[i], line, Points, flash_colr);
+		if(flash){
+		   flash_line(&Map[i], line, Points, BLACK);
+		   flash_line(&Map[i], line, Points, flash_colr);
+		}
 	    }
 
 	    if (area > 0) {
@@ -328,8 +338,10 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
 		    Vect_read_line(&Map[i], Points, Cats, centroid);
 		}
 
-		flash_area(&Map[i], area, Points, BLACK);
-		flash_area(&Map[i], area, Points, flash_colr);
+		if(flash){
+		   flash_area(&Map[i], area, Points, BLACK);
+		   flash_area(&Map[i], area, Points, flash_colr);
+		}
 	    }
 
 	    if ( Cats->n_cats > 0 ) {
@@ -386,11 +398,14 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
 		F_open ( title, db_get_string(&html) );
 	    }
 	 
-	 flash_colr++; if (flash_colr > MAX_COLOR_NUM) flash_colr=1;
+	 if(flash)
+	    flash_colr++; if (flash_colr > MAX_COLOR_NUM) flash_colr=1;
 	}
 
-	R_panel_restore(panell);
-	R_panel_delete(panell);
+	if(flash){
+	   R_panel_restore(panell);
+	   R_panel_delete(panell);
+	}
 
     } while (!once);
     Vect_destroy_line_struct(Points);
@@ -399,7 +414,7 @@ int what(int once, int txt, int terse, int width, int mwidth, int topo )
 }
 
 /* TODO */
-int show_buttons(int once)
+int show_buttons(int once, int flash)
 {
     if (once) {
 	fprintf(stderr, "\nClick mouse button on desired location\n\n");
@@ -409,9 +424,13 @@ int show_buttons(int once)
 	fprintf(stderr, "\n");
 	fprintf(stderr, "Buttons\n");
 	fprintf(stderr, " Left:  what's here\n");
-	fprintf(stderr, " Middle: toggle flash color\n");
-	fprintf(stderr, " Right: quit\n");
-	nlines = 5;
+	if(flash){
+	   fprintf (stderr, " Middle: toggle flash color\n");
+	   nlines = 5;
+	}
+	else
+	   nlines = 4;	
+	fprintf (stderr, " Right: quit\n");
     }
 
     return 0;
