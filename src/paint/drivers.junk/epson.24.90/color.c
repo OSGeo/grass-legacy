@@ -1,4 +1,3 @@
-/* %W% %G% */
 select_color (n)
 {
     esc ("r");
