@@ -11,6 +11,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "gis.h"
 #include "Vect.h"
 #include "display.h"
@@ -20,17 +21,22 @@
 #include "local_proto.h"
 int quiet = 1;
 
-static int check_catlist (char *answer)
+static int check_catlist (const char *answer)
 {
     int status = 0;
-    char *cptr;
+    const char *cptr;
     
     if (answer) {
         cptr = answer;
-        do {
-            if (!atoi (cptr))
+        while (*cptr) {
+            if (!isdigit(*cptr) && !(*cptr == ','))
+            {
+                G_warning ("bad argument <catnum=%s>", answer);
                 status = 1;
-        } while ((cptr = strchr (cptr, ',')) && *(++cptr));
+                break;
+            }
+            cptr++;
+        }
     }
     return status;
 }
