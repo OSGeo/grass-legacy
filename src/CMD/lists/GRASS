@@ -263,6 +263,7 @@ src/raster/r.in.arc
 src/raster/r.in.ascii
 src/raster/r.in.bin
 src/raster/r.in.dted/r.in.dted
+src/raster/r.in.dem
 src/raster/r.in.ll
 src/raster/r.in.png
 src/raster/r.in.ppm
@@ -325,6 +326,7 @@ src/raster/r.watershed
 src/raster/r.weight
 src/raster/r.weight2
 src/raster/r.what
+src/raster/wildfire
 src/scripts
 #src/sites/s.geom # needs update to 5.0 API
 src/sites/s.in.ascii
