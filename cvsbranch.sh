@@ -30,7 +30,8 @@
 
 #enter branch tag here later:
 # (note: no $,. allowed)
-TAG="testbranch_5_0_0stable"
+TAG="releasebranch_500"
+BRANCH="releasebranch_500"
 
 #catch all active modules from compile list:
 MODULE_LIST=`cat src/CMD/lists/GRASS | grep -v '#'`
@@ -53,3 +54,5 @@ FURTHER_DIRECTORIES="documents ALPHA64 testsuite tools unused \
 
 #tag it...
 cvs tag $TAG  $FURTHER_FILES $FURTHER_DIRECTORIES $MODULE_LIST
+
+# branch it....
