@@ -142,14 +142,12 @@ msgstr ""
 "パラメータ:\n"
 
 #: ../lib/gis/parser.c:805
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "  %*s   default: %s\n"
 msgstr "  %*s   デフォルト: %s\n"
 
 #: ../lib/gis/parser.c:1355
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "  %*s   options: "
 msgstr "  %*s   オプション: "
 
@@ -677,8 +675,7 @@ msgid "category support for [%s] in mapset [%s] %s"
 msgstr ""
 
 #: ../lib/gis/cats.c:423
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "category support for vector file [%s] in mapset [%s] %s"
 msgstr "���"
 
@@ -842,8 +839,7 @@ msgid "Lines%s of ellipsoid table file <%s> are invalid"
 msgstr ""
 
 #: ../lib/gis/get_ellipse.c:456
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Line%s of ellipsoid table file <%s> is invalid"
 msgstr "���"
 
@@ -964,8 +960,7 @@ msgid "%s files available in mapset %s:\n"
 msgstr ""
 
 #: ../lib/gis/histogram.c:60
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Histogram for [%s in %s] missing (run r.support)"
 msgstr "������"
 
@@ -1013,8 +1008,7 @@ msgid "LOCATION  << %s >>  not available"
 msgstr ""
 
 #: ../lib/gis/make_colr.c:43
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid " The raster map %s@%s is empty"
 msgstr "��"
 
@@ -1213,8 +1207,7 @@ msgid "error writing null row %d"
 msgstr ""
 
 #: ../lib/gis/put_title.c:28
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "category information for [%s] in [%s] missing or invalid"
 msgstr "������"
 
@@ -1237,14 +1230,12 @@ msgid "can't write category information for [%s] in [%s]"
 msgstr ""
 
 #: ../lib/gis/quant_io.c:91
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "The floating data range for %s@%s is empty"
 msgstr "��"
 
 #: ../lib/gis/quant_io.c:100
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "The integer data range for %s@%s is empty"
 msgstr "��"
 
@@ -1618,7 +1609,8 @@ msgstr ""
 
 #: ../lib/gis/view.c:548
 #, c-format
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
 
 #: ../lib/proj/ellipse.c:85
@@ -1636,8 +1628,7 @@ msgid "Unable to allocate memory\n"
 msgstr "����� ���� ���\n"
 
 #: ../lib/raster/io.c:211
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "ERROR %s from graphics driver.\n"
 msgstr "��� %s ������ ����.\n"
 
@@ -1652,8 +1643,7 @@ msgid "Please run \"d.mon\" to select a graphics monitor.\n"
 msgstr "���� \"d.mon\" ����� ������ ����\n"
 
 #: ../lib/raster/io.c:293
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "No such graphics monitor as <%s>.\n"
 msgstr "����������<%s> � �����.\n"
 
@@ -1663,14 +1653,12 @@ msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
 msgstr "���� \"d.mon\" ����� �����������\n"
 
 #: ../lib/raster/io.c:306
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Failed to get socket name for monitor <%s>.\n"
 msgstr "����� ���� ���������<%s>.\n"
 
 #: ../lib/raster/io.c:319
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "No socket to connect to for monitor <%s>.\n"
 msgstr "����� ������������������<%s>.\n"
 
@@ -1718,8 +1706,7 @@ msgid "Can't stat %s\n"
 msgstr ""
 
 #: ../lib/raster/io.c:408
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error - Monitor <%s> is in use.\n"
 msgstr "��� - ����<%s> ���\n"
 
@@ -1729,8 +1716,7 @@ msgid "Error - Monitor <%s> is in use by %s.\n"
 msgstr ""
 
 #: ../lib/raster/io.c:420
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error - Could not complete locking process for monitor <%s>.\n"
 msgstr "��� - � �� ����������(lock) ������<%s>.\n"
 
@@ -1740,14 +1726,12 @@ msgid "Error - Can't set up pipe to graphics device.\n"
 msgstr "��� - ����� (pipe) ������� �����.\n"
 
 #: ../lib/raster/io.c:440
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error - Graphics monitor <%s> not running!\n"
 msgstr "��� - ����������<%s> � ����\n"
 
 #: ../lib/raster/io.c:444
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Please start graphics monitor <%s>.\n"
 msgstr "��������������<%s>.\n"
 
@@ -1757,8 +1741,7 @@ msgid "ERROR - eof from graphics monitor.\n"
 msgstr "��� - eof from graphics monitor.\n"
 
 #: ../lib/raster/io.c:526
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Warning - no response from graphics monitor <%s>.\n"
 msgstr "�������- ����������<%s> � ����.\n"
 
@@ -1768,8 +1751,7 @@ msgid "Check to see if the mouse is still active.\n"
 msgstr "����, ���� � ��.\n"
 
 #: ../lib/raster/io.c:531
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr "��� - ����������<%s> � ����.\n"
 
@@ -1978,26 +1960,22 @@ msgid "Bug: attempt to update map which is not in current mapset."
 msgstr ""
 
 #: ../lib/vector/Vlib/legal_vname.c:23
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'.\n"
 msgstr "���"
 
 #: ../lib/vector/Vlib/legal_vname.c:29
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Illegal vector map name <%s>. Must start with a letter.\n"
 msgstr "���"
 
 #: ../lib/vector/Vlib/legal_vname.c:35
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
 msgstr "���"
 
 #: ../lib/vector/Vlib/legal_vname.c:60 ../lib/vector/Vlib/legal_vname.c:62
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Output name '%s' is not valid vector name."
 msgstr "���."
 
@@ -2013,20 +1991,17 @@ msgstr ""
 
 #: ../lib/vector/Vlib/map.c:109 ../lib/vector/Vlib/map.c:215
 #: ../lib/vector/Vlib/open.c:493
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "The vector '%s' already exists and will be overwritten."
 msgstr "���."
 
 #: ../lib/vector/Vlib/map.c:223
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Input vector '%s' not found"
 msgstr "���"
 
 #: ../lib/vector/Vlib/map.c:226
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot copy vector '%s' to '%s'"
 msgstr "���"
 
@@ -2039,8 +2014,7 @@ msgid "Warning, Programmer requested unknown open_level\n"
 msgstr ""
 
 #: ../lib/vector/Vlib/open.c:155
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot find vector %s"
 msgstr "���"
 
@@ -2049,21 +2023,18 @@ msgid "A map which is not in the current mapset cannot be opened for update."
 msgstr ""
 
 #: ../lib/vector/Vlib/open.c:183
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot open old vector %s"
 msgstr "���"
 
 #: ../lib/vector/Vlib/open.c:193 ../lib/vector/Vlib/open.c:252
 #: ../lib/vector/Vlib/open.c:268
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot open old vector %s on level %d"
 msgstr "���"
 
 #: ../lib/vector/Vlib/open.c:315 ../lib/vector/Vlib/open.c:520
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot open history file for vector '%s'"
 msgstr "���"
 
@@ -2072,14 +2043,12 @@ msgid "Map name is not SQL compliant."
 msgstr ""
 
 #: ../lib/vector/Vlib/open.c:497
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot delete existing vector %s"
 msgstr "���"
 
 #: ../lib/vector/Vlib/open.c:511
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot open new vector %s"
 msgstr "���"
 
@@ -2093,8 +2062,7 @@ msgid "Size of 'coor' file differs from value saved in topo file."
 msgstr ""
 
 #: ../lib/vector/Vlib/open.c:668
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Please rebuild topology for vector '%s@%s'"
 msgstr "���"
 
@@ -2139,4 +2107,3 @@ msgstr ""
 #: ../lib/vector/Vlib/write.c:205
 msgid "Cannot delete line"
 msgstr ""
-

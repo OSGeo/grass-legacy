@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs_it\n"
-"POT-Creation-Date: 2005-01-10 17:05+0100\n"
+"POT-Creation-Date: 2005-01-20 18:30+0100\n"
 "PO-Revision-Date: 2005-01-12 09:39+0100\n"
 "Last-Translator: Maurizio Napolitano <napo@itc.it>\n"
 "Language-Team:  <translations@grass.itc.it>\n"
@@ -45,7 +45,9 @@ msgstr "MAPSET %s non trovato"
 
 #: ../lib/gis/gisinit.c:68
 msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
-msgstr "ERRORE: Sistema non inizializzato. Il programmatore si è scordato di usare la funzione G_gisinit()\n"
+msgstr ""
+"ERRORE: Sistema non inizializzato. Il programmatore si è scordato di usare "
+"la funzione G_gisinit()\n"
 
 #: ../lib/gis/mapset_msc.c:69
 #, c-format
@@ -334,14 +336,12 @@ msgid "Flag denoting automatic masking %d\n"
 msgstr ""
 
 #: ../lib/gis/G_dump.c:12
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "CELL mask buffer %p\n"
 msgstr "CELL maschera del buffer %p\n"
 
 #: ../lib/gis/G_dump.c:13
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "buffer for reading null rows %p\n"
 msgstr "buffer per la lettura delle righe vuote %p\n"
 
@@ -351,8 +351,7 @@ msgid "Pre/post compressed data buffer %p\n"
 msgstr ""
 
 #: ../lib/gis/G_dump.c:15
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "sizeof compressed_buf %d\n"
 msgstr "dimensione del compressed_buf %d\n"
 
@@ -387,8 +386,7 @@ msgid "G_dump: file #%d\n"
 msgstr "G_dump: file #%d\n"
 
 #: ../lib/gis/G_dump.c:23
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "open mode = %d\n"
 msgstr "modalità di apertura = %d\n"
 
@@ -418,8 +416,7 @@ msgid "float Range structure %p\n"
 msgstr ""
 
 #: ../lib/gis/G_dump.c:29
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "want histogram?  %d\n"
 msgstr "vuoi un istogramma?  %d\n"
 
@@ -459,8 +456,7 @@ msgid "nbytes per cell for current row %d\n"
 msgstr ""
 
 #: ../lib/gis/G_dump.c:37
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Decompressed data buffer %s\n"
 msgstr "Buffer di dati decompresso %s\n"
 
@@ -470,68 +466,57 @@ msgid "bytes per cell %d\n"
 msgstr "byte per cella %d\n"
 
 #: ../lib/gis/G_dump.c:39
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "type: int, float or double map %d\n"
 msgstr "tipi: mappe int,float o double %d\n"
 
 #: ../lib/gis/G_dump.c:40
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Temporary name for NEW files %s\n"
 msgstr "Nome temporaneo per NUOVI file %s\n"
 
 #: ../lib/gis/G_dump.c:41
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Temporary name for NEW NULL files %s\n"
 msgstr "Nome temporaneo per NUOVI file VUOTI %s\n"
 
 #: ../lib/gis/G_dump.c:42
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "for existing raster maps %d\n"
 msgstr "per mappe raster presenti %d\n"
 
 #: ../lib/gis/G_dump.c:43
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Name of open file %s\n"
 msgstr "Nome del file d'aprire %s\n"
 
 #: ../lib/gis/G_dump.c:44
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Mapset of open file %s\n"
 msgstr "Mapset del file d'aprire%s\n"
 
 #: ../lib/gis/G_dump.c:45
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "io error warning given %d\n"
 msgstr "errore avvertimento n"
 
 #: ../lib/gis/G_dump.c:46
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "xdr stream for reading fp %p\n"
 msgstr "per n"
 
 #: ../lib/gis/G_dump.c:47
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "NULL_ROWS array[%d] = %p\n"
 msgstr "n"
 
 #: ../lib/gis/G_dump.c:48
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "data buffer for reading null rows %p\n"
 msgstr "per n"
 
 #: ../lib/gis/G_dump.c:49
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Minimum row null row number in memory %d\n"
 msgstr "Minimo riga riga numero in memoria n"
 
@@ -621,26 +606,22 @@ msgid "to cancel request"
 msgstr "per annullare la richiesta"
 
 #: ../lib/gis/ask.c:432
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Enter a new %s file name"
 msgstr "Digita un nuovo nome di file %s "
 
 #: ../lib/gis/ask.c:437
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Enter the name of an existing %s file"
 msgstr "Digita il nome di un file %s esistente"
 
 #: ../lib/gis/ask.c:440
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Enter %s file name"
 msgstr "Inserisci il nome del file %s"
 
 #: ../lib/gis/ask.c:459
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Enter 'list' for a list of existing %s files\n"
 msgstr "Digita 'list' per una lista dei %s file esistenti\n"
 
@@ -650,8 +631,7 @@ msgid "Enter 'list -f' for "
 msgstr "Digita 'list -f' per "
 
 #: ../lib/gis/ask.c:464
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "a list %s"
 msgstr "una lista %s"
 
@@ -661,46 +641,40 @@ msgid "an extended list"
 msgstr "una lista estesa"
 
 #: ../lib/gis/ask.c:470
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Hit RETURN %s\n"
 msgstr "Premi INVIO %s\n"
 
 #: ../lib/gis/ask.c:492 ../lib/gis/ask.c:599 ../lib/gis/ask.c:621
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "\n"
 "** %s - not found **\n"
 msgstr "n s non n"
 
 #: ../lib/gis/ask.c:499 ../lib/gis/ask.c:585
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "\n"
 "** %s exists. ok to overwrite? "
 msgstr "n s ok a sovrascrivi "
 
 #: ../lib/gis/ask.c:545
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "\n"
 "**<%s> illegal name **\n"
 msgstr "n s nome n"
 
 #: ../lib/gis/ask.c:560
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "\n"
 "** %s - illegal request **\n"
 msgstr "n s n"
 
 #: ../lib/gis/ask.c:575
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "\n"
 "** %s - exists, select another name **\n"
@@ -728,20 +702,17 @@ msgid "Unable to open automatic MASK file"
 msgstr "Impossibile aprire il file MASK automatico"
 
 #: ../lib/gis/cats.c:384
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "category support for [%s] in mapset [%s] %s"
 msgstr "categoria di supporto per [%s] nel mapset [%s] %s"
 
 #: ../lib/gis/cats.c:423
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "category support for vector file [%s] in mapset [%s] %s"
 msgstr "categoria di supporto per il file vettoriale [%s] nel mapset [%s] %s"
 
 #: ../lib/gis/color_read.c:123
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "color support for [%s] in mapset [%s] %s"
 msgstr "supporto colore per [%s] nel mapset [%s] %s"
 
@@ -761,39 +732,33 @@ msgstr "Premi INVIO per annullare la richiesta\n"
 
 #: ../lib/gis/datum.c:353 ../lib/gis/datum.c:433 ../lib/proj/datum.c:344
 #: ../lib/proj/datum.c:418
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "unable to open datum table file: %s"
 msgstr "impossibile aprire il file tabella dati: %s"
 
 #: ../lib/gis/datum.c:368 ../lib/gis/datum.c:458 ../lib/proj/datum.c:357
 #: ../lib/proj/datum.c:432
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "error in datum table file, line %d"
 msgstr "errore nel file tabella dati, linea %d"
 
 #: ../lib/gis/done_msg.c:29
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s complete. %s\n"
 msgstr "%s completo. %s\n"
 
 #: ../lib/gis/format.c:162
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Fail of initial read of compressed file [%s in %s]"
 msgstr "Errore nella lettura iniziale del file compresso [%s in %s]"
 
 #: ../lib/gis/get_cellhd.c:75 ../lib/gis/get_cellhd.c:104
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Can't read header file for [%s in %s]\n"
 msgstr "Non riesco a leggere il file di intestazione per [%s in %s]\n"
 
 #: ../lib/gis/get_cellhd.c:77
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "It is a reclass of [%s in %s] "
 msgstr "è a di s in s "
 
@@ -808,14 +773,12 @@ msgid "whose header file can't be opened"
 msgstr "t"
 
 #: ../lib/gis/get_cellhd.c:92
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Can't open header file for [%s in %s]"
 msgstr "Non riesco ad aprire il file di intestazione per [%s in %s]"
 
 #: ../lib/gis/get_cellhd.c:108
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "It is a reclass of [%s in %s] whose header file is invalid\n"
 msgstr "è a di s in s di cui header file è non valido n"
 
@@ -825,32 +788,27 @@ msgid "Invalid format\n"
 msgstr "Formato non valido\n"
 
 #: ../lib/gis/get_datum.c:80 ../lib/gis/get_ellipse.c:81
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Unable to open file %s in %s"
 msgstr "Impossibile aprire il file %s in %s"
 
 #: ../lib/gis/get_datum.c:107
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error reading datum shift parameters for %s from table"
 msgstr "Errore per s tabella"
 
 #: ../lib/gis/get_datum.c:115
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error reading ellipsoid parameters for %s from table"
 msgstr "Errore nella lettura dei parametri dell'elissoide per %s dalla tabella"
 
 #: ../lib/gis/get_datum.c:120
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "No ellipsoid field %s in file %s in %s"
 msgstr "Nessun campo elissoide %s nel file %s in %s"
 
 #: ../lib/gis/get_datum.c:174
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "invalid value: field %s in file %s in %s"
 msgstr "valore non valido: campo %s nel file %s in %s"
 
@@ -893,68 +851,58 @@ msgid ""
 msgstr "n"
 
 #: ../lib/gis/get_ellipse.c:89 ../lib/gis/get_ellipse.c:114
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "invalid a: field %s in file %s in %s"
 msgstr "uno non valido: campo %s nel file %s in %s"
 
 #: ../lib/gis/get_ellipse.c:102
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "invalid ellipsoid %s in file %s in %s"
 msgstr "elissoide %s non valido nel file %s in %s"
 
 #: ../lib/gis/get_ellipse.c:119
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "invalid es: field %s in file %s in %s"
 msgstr "non valido es. campo %s nel file %s in %s"
 
 #: ../lib/gis/get_ellipse.c:133
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "No ellipsoid info given in file %s in %s"
 msgstr "Nessun informazione sull'elissoide disponibile nel file %s in %s"
 
 #: ../lib/gis/get_ellipse.c:406 ../lib/proj/ellipse.c:228
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "unable to open ellipsoid table file: %s"
 msgstr "impossibile aprire il file con la tabella dell'elissoide: %s"
 
 #: ../lib/gis/get_ellipse.c:455
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Lines%s of ellipsoid table file <%s> are invalid"
-msgstr "Le linee %s della tabella degli elissoidi nel file <%s> non sono valide"
+msgstr ""
+"Le linee %s della tabella degli elissoidi nel file <%s> non sono valide"
 
 #: ../lib/gis/get_ellipse.c:456
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Line%s of ellipsoid table file <%s> is invalid"
 msgstr "La linea %s della tabella degli elissoidi nel file <%s> non è valida"
 
 #: ../lib/gis/get_projinfo.c:17 ../lib/gis/get_projinfo.c:45
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s file not found for location %s\n"
 msgstr "file %s non trovato nella locazione %s\n"
 
 #: ../lib/gis/get_projinfo.c:24 ../lib/gis/get_projinfo.c:52
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "ERROR in reading %s file for location %s\n"
 msgstr "ERRORE nella lettura del file %s per la locazione %s\n"
 
 #: ../lib/gis/get_projname.c:36
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s not found"
 msgstr "%s non trovato"
 
 #: ../lib/gis/get_projname.c:42
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "ERROR in reading %s"
 msgstr "ERRORE nella lettura %s"
 
@@ -979,20 +927,18 @@ msgid ""
 msgstr "n"
 
 #: ../lib/gis/get_row.c:110
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "[%s in %s] - read request for row %d is outside region"
-msgstr "[%s in %s] - la lettura richiesta per la riga %d è al di fuori dalla regione"
+msgstr ""
+"[%s in %s] - la lettura richiesta per la riga %d è al di fuori dalla regione"
 
 #: ../lib/gis/get_row.c:426
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "cell_values_double: xdr_double failed for index %d."
 msgstr "double double fallito per indice."
 
 #: ../lib/gis/get_row.c:569
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "error reading %smap [%s] in mapset [%s], row %d"
 msgstr "errore nella lettura %s mappa [%s] nel mapset [%s] righe %d"
 
@@ -1002,8 +948,7 @@ msgid "Too many open raster files"
 msgstr "Troppi file raster aperti"
 
 #: ../lib/gis/get_row.c:923 ../lib/gis/get_row.c:929
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "error reading null row %d"
 msgstr "errore nella lettura della riga vuota %d"
 
@@ -1013,16 +958,14 @@ msgid "Could not realloc buffer"
 msgstr "Non riesco a riallocare il buffer"
 
 #: ../lib/gis/get_window.c:58
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "region for current mapset %s\n"
 "run \"g.region\""
 msgstr "per s g"
 
 #: ../lib/gis/get_window.c:94
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "default region %s"
 msgstr "regione predefinita %s"
 
@@ -1032,8 +975,7 @@ msgid "is not set"
 msgstr "non è impostato"
 
 #: ../lib/gis/get_window.c:125
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "is invalid\n"
 "%s"
@@ -1045,20 +987,17 @@ msgid "one moment...\n"
 msgstr "un momento...\n"
 
 #: ../lib/gis/gishelp.c:55
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "No help available for command [%s]\n"
 msgstr "Nessun aiuto disponibile per il comando [%s]\n"
 
 #: ../lib/gis/list.c:111
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "no %s files available in current mapset\n"
 msgstr "Nessun file %s disponibile nel mapset in uso\n"
 
 #: ../lib/gis/list.c:113
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "no %s files available in mapset %s\n"
 msgstr "nessun file %s disponibile nel mapset %s\n"
 
@@ -1068,44 +1007,37 @@ msgid "hit RETURN to continue -->"
 msgstr "premi INVIO per continuare -->"
 
 #: ../lib/gis/list.c:182
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s files available in mapset %s:\n"
 msgstr "%s file disponibili nel mapset %s:\n"
 
 #: ../lib/gis/histogram.c:60
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Histogram for [%s in %s] missing (run r.support)"
 msgstr "Istogramma per [%s in %s] mancante (esegui r.support)"
 
 #: ../lib/gis/histogram.c:67
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Can't read histogram for [%s in %s]"
 msgstr "Non riesco a leggare l'istogramma per [%s in %s]"
 
 #: ../lib/gis/histogram.c:78 ../lib/gis/histogram.c:87
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Invalid histogram file for [%s in %s]"
 msgstr "Istogramma non valido per [%s in %s]"
 
 #: ../lib/gis/histogram.c:341
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "can't create histogram for [%s in %s]"
 msgstr "non riesco a creare l'istogramma per [%s in %s]"
 
 #: ../lib/gis/history.c:120
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "can't get history information for [%s] in mapset [%s]"
 msgstr "Non riesco a trovare lo storico per [%s] nel mapset [%s]"
 
 #: ../lib/gis/history.c:170
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "can't write history information for [%s]"
 msgstr "non riesco a scrivere lo storico per [%s]"
 
@@ -1120,26 +1052,22 @@ msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
 msgstr "Nome file non valido. Non può essere '.' oppure 'NULL'\n"
 
 #: ../lib/gis/legal_name.c:34
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Illegal filename. character <%c> not allowed."
 msgstr "Nome del file non valido. Il carattere <%c> non è concesso."
 
 #: ../lib/gis/location.c:48
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "LOCATION  << %s >>  not available"
 msgstr "LOCATION  << %s >>  non disponibile"
 
 #: ../lib/gis/make_colr.c:43
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid " The raster map %s@%s is empty"
 msgstr " La mappa raster %s@%s è vuota"
 
 #: ../lib/gis/make_colr.c:51
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "\n"
 "\n"
@@ -1199,8 +1127,7 @@ msgid "RETURN  quit\n"
 msgstr "INVIO  esce\n"
 
 #: ../lib/gis/make_colr.c:84
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "\n"
 "%s invalid; Try again > "
@@ -1212,8 +1139,7 @@ msgid "MAPSET is not set"
 msgstr "MAPSET non selezionato"
 
 #: ../lib/gis/mask_info.c:42
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "<%s> in mapset <%s>"
 msgstr "<%s> nel mapset <%s>"
 
@@ -1258,28 +1184,25 @@ msgid "G_set_null_value: wrong data type!"
 msgstr "G_set_null_value: tipo di dato non valido!"
 
 #: ../lib/gis/opencell.c:165
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "unable to open raster map [%s in %s]"
 msgstr "impossibile aprire un raster [%s in %s]"
 
 #: ../lib/gis/opencell.c:248
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "unable to open [%s] in [%s] since it is a reclass of [%s] in [%s] which does "
 "not exist"
 msgstr "a s in s è a di s in s non"
 
 #: ../lib/gis/opencell.c:271
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "[%s] in mapset [%s]-format field in header file invalid"
-msgstr "[%s] nel mapset [%s] - formato campo nell'intestazione del file invalido"
+msgstr ""
+"[%s] nel mapset [%s] - formato campo nell'intestazione del file invalido"
 
 #: ../lib/gis/opencell.c:280
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "[%s] in mapset [%s] - in different projection than current region:\n"
 " found map [%s] in: <%s>, should be <%s> "
@@ -1288,20 +1211,17 @@ msgstr ""
 " s in s s "
 
 #: ../lib/gis/opencell.c:287
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "[%s] in mapset [%s] - in different zone [%d] than current region [%d]"
 msgstr "[%s] nel mapset [%s] - zona [%d] diversa dalla regione in uso [%d]"
 
 #: ../lib/gis/opencell.c:295
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "[%s] in [%s] - bytes per cell (%d) too large"
 msgstr "[%s] in [%s] - bytes per cella (%d) troppo grande"
 
 #: ../lib/gis/opencell.c:598
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "opencell: %s - illegal file name"
 msgstr "s file nome"
 
@@ -1311,32 +1231,27 @@ msgid "Can't write embedded null values for map open for random access"
 msgstr "t per per casuale"
 
 #: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "unable to find [%s] in [%s]"
 msgstr "impossibile trovare [%s] in [%s]"
 
 #: ../lib/gis/opencell.c:982
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "unable to find [%s]"
 msgstr "impossibile trovare [%s]"
 
 #: ../lib/gis/opencell.c:988
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Unable to open %s"
 msgstr "Impossibile aprire %s"
 
 #: ../lib/gis/opencell.c:997
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "invalid type: field %s in file %s "
 msgstr "tipo non valido: campo %s nel file %s"
 
 #: ../lib/gis/opencell.c:1042
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s - ** illegal name **"
 msgstr "%s - ** nome illegale **"
 
@@ -1356,28 +1271,25 @@ msgid "Unknown projection"
 msgstr "Proiezione sconosciuta"
 
 #: ../lib/gis/put_cellhd.c:26
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Unable to create header file for [%s]"
 msgstr "Impossibile creare il file di intestazione per [%s]"
 
 #: ../lib/gis/put_row.c:311
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "map [%s] - unable to write row %d"
 msgstr "mappa [%s] - impossibile scrivere nella riga %d"
 
 #: ../lib/gis/put_row.c:785 ../lib/gis/put_row.c:791
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "error writing null row %d"
 msgstr "errore nella scrittura della riga vuota %d"
 
 #: ../lib/gis/put_title.c:28
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "category information for [%s] in [%s] missing or invalid"
-msgstr "La categoria informazione per [%s] in [%s] non è presente oppure non è valida"
+msgstr ""
+"La categoria informazione per [%s] in [%s] non è presente oppure non è valida"
 
 #: ../lib/gis/put_title.c:38
 #, fuzzy
@@ -1385,8 +1297,7 @@ msgid "G_put_title - can't create a temp file"
 msgstr "G_put_title - non riesco a creare un file temporaneo"
 
 #: ../lib/gis/put_title.c:58
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "category information for [%s] in [%s] invalid"
 msgstr "informazioni per s in s non valido"
 
@@ -1396,38 +1307,32 @@ msgid "G_put_title - can't reopen temp file"
 msgstr "G_put_title - non riesco a riaprire il file temp"
 
 #: ../lib/gis/put_title.c:75
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "can't write category information for [%s] in [%s]"
 msgstr "non riesco a scrivere la categoria informazioni per [%s] in [%s]"
 
 #: ../lib/gis/quant_io.c:91
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "The floating data range for %s@%s is empty"
 msgstr "per s s è vuoto"
 
 #: ../lib/gis/quant_io.c:100
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "The integer data range for %s@%s is empty"
 msgstr "Il valore intero per l'intervallo %s@%s è vuoto"
 
 #: ../lib/gis/quant_io.c:171
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "quantization file [%s] in mapset [%s] %s"
 msgstr "file s in s s"
 
 #: ../lib/gis/quant_rw.c:208
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot write quant rules: map %s is integer"
 msgstr "s è"
 
 #: ../lib/gis/quant_rw.c:218
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot write quant rules for map %s"
 msgstr "per s"
 
@@ -1437,20 +1342,17 @@ msgid "Too many open files"
 msgstr "Troppi file aperti"
 
 #: ../lib/gis/range.c:206
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "can't read f_range file for [%s in %s]"
 msgstr "non riesco a leggere il file f_range per [%s in %s]"
 
 #: ../lib/gis/range.c:330
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "can't read range file for [%s in %s]"
 msgstr "non riesco a leggere il range file per [%s in %s]"
 
 #: ../lib/gis/range.c:390 ../lib/gis/range.c:441
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "can't write range file for [%s in %s]"
 msgstr "non posso scrivere il range file per [%s in %s]"
 
@@ -1615,8 +1517,7 @@ msgid "rows3 field missing"
 msgstr "campo rows3 mancante"
 
 #: ../lib/gis/rd_cellhd.c:404
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "line %d: <%s>"
 msgstr "linea %d: <%s>"
 
@@ -1631,8 +1532,7 @@ msgid "failed to guess format"
 msgstr "fallito a formattare"
 
 #: ../lib/gis/readsites.c:49
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "decimal field %i not present in sites file"
 msgstr "campo decimale %i non presente nel file sites"
 
@@ -1686,7 +1586,9 @@ msgstr "Indice dell'attributo stringa fuori dall'intervallo"
 #: ../lib/gis/readsites_xyz.c:159
 #, fuzzy
 msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
-msgstr "Tipo di attributo sconosciuto nella chiamata a G_readsites_xyz()!\n "
+msgstr ""
+"Tipo di attributo sconosciuto nella chiamata a G_readsites_xyz()!\n"
+" "
 
 #: ../lib/gis/readsites_xyz.c:191
 #, fuzzy
@@ -1694,16 +1596,15 @@ msgid "Failed to convert string attribute."
 msgstr "Impossibile convertire l'attributo della stringa"
 
 #: ../lib/gis/reclass.c:156
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Too many reclass categories for [%s in %s]"
 msgstr "Troppe categorie di riclassificazione per [%s in %s]"
 
 #: ../lib/gis/reclass.c:159
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
-msgstr "Formato illegare di riclassificazione nel file di intestazione per [%s in %s]"
+msgstr ""
+"Formato illegare di riclassificazione nel file di intestazione per [%s in %s]"
 
 #: ../lib/gis/reclass.c:236
 #, fuzzy
@@ -1716,14 +1617,12 @@ msgid "Illegal reclass type"
 msgstr "Tipo illegale di riclassificazione"
 
 #: ../lib/gis/reclass.c:248
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Unable to create header file for [%s in %s]"
 msgstr "Impossibile creare il file di intestazione per [%s in %s]"
 
 #: ../lib/gis/reclass.c:299
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Unable to create dependency file in [%s in %s]"
 msgstr "Impossibile creare il file delle dipendenze in [%s in %s]"
 
@@ -1750,50 +1649,42 @@ msgid "unable to execute command"
 msgstr "impossibile eseguire il comando"
 
 #: ../lib/gis/spawn.c:164 ../lib/gis/spawn.c:172
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "G_spawn: unable to restore signal %d"
 msgstr "G_spawn: impossibile recuperare il segnale %d"
 
 #: ../lib/gis/spawn.c:205
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "G_spawn: unable to reset signal %d"
 msgstr "G_spawn: impossibile resettare il segnale %d"
 
 #: ../lib/gis/spawn.c:215
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "G_spawn: unable to ignore signal %d"
 msgstr "G_spawn: impossibile ignorare il segnale %d"
 
 #: ../lib/gis/spawn.c:226
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "G_spawn: unable to block signal %d"
 msgstr "G_spawn: impossibile bloccare il segnale %d"
 
 #: ../lib/gis/spawn.c:235
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "G_spawn: unable to unblock signal %d"
 msgstr "G_spawn: impossibile sbloccare il segnale %d"
 
 #: ../lib/gis/spawn.c:261
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "G_spawn: unable to open file %s"
 msgstr "G_spawn: impossibile aprire il file %s"
 
 #: ../lib/gis/spawn.c:267 ../lib/gis/spawn.c:277
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "G_spawn: unable to duplicate descriptor %d to %d"
 msgstr "G_spawn: impossibile duplicare la descrizione %d in %d"
 
 #: ../lib/gis/spawn.c:405
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "unable to change directory to %s"
 msgstr "impossibile cambiare la directory %s"
 
@@ -1803,38 +1694,32 @@ msgid "WARNING: can not create a new process\n"
 msgstr "ATTENZIONE: non riesco a creare un nuovo processo\n"
 
 #: ../lib/gis/timestamp.c:257
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Can't create timestamp file for %s map %s in mapset %s"
 msgstr "t file per s s in s"
 
 #: ../lib/gis/timestamp.c:267
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Invalid timestamp specified for %s map %s in mapset %s"
 msgstr "Non valida per s s in s"
 
 #: ../lib/gis/timestamp.c:292
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Can't open timestamp file for %s map %s in mapset %s"
 msgstr "Non riesco ad aprire il file timestamp per la mappa %s  nel mapset %s"
 
 #: ../lib/gis/timestamp.c:302
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Invalid timestamp file for %s map %s in mapset %s"
 msgstr "Invalido timestamp file per la mappa %s nel mapset %s"
 
 #: ../lib/gis/view.c:164
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Unable to open %s for writing"
 msgstr "Impossibile aprire %s per la scrittura"
 
 #: ../lib/gis/view.c:253 ../lib/gis/view.c:472
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Unable to open %s for reading"
 msgstr "Impossibile aprire %s per la lettura"
 
@@ -1844,20 +1729,22 @@ msgid "GRASS window when view was saved:\n"
 msgstr "La finestra GRASS dove la vista è stata salvata:\n"
 
 #: ../lib/gis/view.c:544
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid " Window saved in \"%s\" is completely outside of current GRASS window."
-msgstr " La finestra salvata in \"%s\" è completamente al di fuori della finestra GRASS attualmente in uso."
+msgstr ""
+" La finestra salvata in \"%s\" è completamente al di fuori della finestra "
+"GRASS attualmente in uso."
 
 #: ../lib/gis/view.c:548
-#, c-format
-#, fuzzy
-msgid " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
-msgstr " Solo  %d%% della finestra salvata in \"%s\" si sovrappone alla finestra GRASS in uso"
+#, fuzzy, c-format
+msgid ""
+" Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
+msgstr ""
+" Solo  %d%% della finestra salvata in \"%s\" si sovrappone alla finestra "
+"GRASS in uso"
 
 #: ../lib/proj/ellipse.c:85
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "invalid ellipsoid %s in file"
 msgstr "Nessun elissoide valido %s nel file"
 
@@ -1872,8 +1759,7 @@ msgid "Unable to allocate memory\n"
 msgstr "Impossibile allocare memoria\n"
 
 #: ../lib/raster/io.c:211
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "ERROR %s from graphics driver.\n"
 msgstr "ERRORE %s dal driver grafico.\n"
 
@@ -1888,25 +1774,23 @@ msgid "Please run \"d.mon\" to select a graphics monitor.\n"
 msgstr "Per piacere avvia \"d.mon\" per selezionare un monitor grafico.\n"
 
 #: ../lib/raster/io.c:293
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "No such graphics monitor as <%s>.\n"
 msgstr "Non trovo un monitor grafico per <%s>.\n"
 
 #: ../lib/raster/io.c:294
 #, fuzzy
 msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
-msgstr "Per piacere avvia \"d.mon\" per selezionare un monitor grafico valido.\n"
+msgstr ""
+"Per piacere avvia \"d.mon\" per selezionare un monitor grafico valido.\n"
 
 #: ../lib/raster/io.c:306
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Failed to get socket name for monitor <%s>.\n"
 msgstr "Fallimento nel dare un nome alla socket per il monitor <%s>.\n"
 
 #: ../lib/raster/io.c:319
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "No socket to connect to for monitor <%s>.\n"
 msgstr "Nessuna socket per connettersi al monitor <%s>.\n"
 
@@ -1927,7 +1811,8 @@ msgstr "a a non a programma errore n"
 #: ../lib/raster/io.c:361
 #, fuzzy
 msgid "Connect attempt timed out. Probably an error with the server.\n"
-msgstr "Tempo di connessione scaduto. Probabilmente ci sono errore con il server.\n"
+msgstr ""
+"Tempo di connessione scaduto. Probabilmente ci sono errore con il server.\n"
 
 #: ../lib/raster/io.c:368
 #, fuzzy
@@ -1945,28 +1830,26 @@ msgid "Connection failed.\n"
 msgstr "Connessione fallita.\n"
 
 #: ../lib/raster/io.c:392
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Can't stat %s\n"
 msgstr "t s n"
 
 #: ../lib/raster/io.c:408
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error - Monitor <%s> is in use.\n"
 msgstr "Errore - Monitor <%s> in uso.\n"
 
 #: ../lib/raster/io.c:410
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error - Monitor <%s> is in use by %s.\n"
 msgstr "Errore - il Monitor <%s> è in uso da %s.\n"
 
 #: ../lib/raster/io.c:420
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error - Could not complete locking process for monitor <%s>.\n"
-msgstr "Errore - non riesco a completare il blocco del processo per il monitor <%s>.\n"
+msgstr ""
+"Errore - non riesco a completare il blocco del processo per il monitor <%"
+"s>.\n"
 
 #: ../lib/raster/io.c:434
 #, fuzzy
@@ -1974,14 +1857,12 @@ msgid "Error - Can't set up pipe to graphics device.\n"
 msgstr "Errore - non riesco a creare una pipe al dispositivo grafico.\n"
 
 #: ../lib/raster/io.c:440
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error - Graphics monitor <%s> not running!\n"
 msgstr "Errore -il monitor grafico <%s> non è stato avviato!\n"
 
 #: ../lib/raster/io.c:444
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Please start graphics monitor <%s>.\n"
 msgstr "Per piacere avvisa il monitor grafico <%s>.\n"
 
@@ -1991,8 +1872,7 @@ msgid "ERROR - eof from graphics monitor.\n"
 msgstr "ERRORE - eof del monitor grafico.\n"
 
 #: ../lib/raster/io.c:526
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Warning - no response from graphics monitor <%s>.\n"
 msgstr "Attenzione - nessuna risposta dal monitor grafico <%s>.\n"
 
@@ -2002,8 +1882,7 @@ msgid "Check to see if the mouse is still active.\n"
 msgstr "Controlla se il mouse è ancora attivo.\n"
 
 #: ../lib/raster/io.c:531
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "ERROR - no response from graphics monitor <%s>.\n"
 msgstr "ERRORE: nessuna risposta dai monitor grafici <%s>.\n"
 
@@ -2023,86 +1902,72 @@ msgid "Topology was built.\n"
 msgstr "La topologia è stata creata.\n"
 
 #: ../lib/vector/Vlib/build.c:154
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of nodes     :   %d\n"
 msgstr "Numero di nodi     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:155
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of primitives:   %d\n"
 msgstr "Numero di primitive:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:156
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of points    :   %d\n"
 msgstr "Numero di punti    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:157
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of lines     :   %d\n"
 msgstr "Numero di righe     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:158
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of boundaries:   %d\n"
 msgstr "Numero di confini:   %d\n"
 
 #: ../lib/vector/Vlib/build.c:159
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of centroids :   %d\n"
 msgstr "Numero di centroidi :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:162
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of faces     :   %d\n"
 msgstr "Numero di n"
 
 #: ../lib/vector/Vlib/build.c:165
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of kernels   :   %d\n"
 msgstr "Numero di n"
 
 #: ../lib/vector/Vlib/build.c:200
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of areas     :   %d\n"
 msgstr "Numero di aree     :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:201
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of isles     :   %d\n"
 msgstr "Numero di n"
 
 #: ../lib/vector/Vlib/build.c:204
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of incorrect boundaries   :   %d\n"
 msgstr "Numero di confini non corretti   :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:207
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of centroids outside area :   %d\n"
 msgstr "Numero di centroidi al di fuori dell'area :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:210
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of duplicate centroids    :   %d\n"
 msgstr "Numero di centroidi duplicati    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:213
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Number of areas without centroid :   %d\n"
 msgstr "Numero di aree senza centroide :   %d\n"
 
@@ -2117,8 +1982,7 @@ msgid "Number of isles     :   -\n"
 msgstr "Numero di n"
 
 #: ../lib/vector/Vlib/build.c:246
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Can't open topo file for write: %s\n"
 msgstr "Non riesco ad aprire il tipo file in scrittura: %s\n"
 
@@ -2128,8 +1992,7 @@ msgid "Error writing out topo file.\n"
 msgstr "Errore nella scrittura del file topo.\n"
 
 #: ../lib/vector/Vlib/build.c:385
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Can't open spatial index file for write: %s\n"
 msgstr "Non riesco ad aprire il file di indice spaziale in scrittura: %s\n"
 
@@ -2158,14 +2021,12 @@ msgid "Registering lines: "
 msgstr "Linee registrate:"
 
 #: ../lib/vector/Vlib/build_nat.c:506
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "\r%d primitives registered      \n"
 msgstr "\r%d primitive registrate      \n"
 
 #: ../lib/vector/Vlib/build_nat.c:533
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "\r%d areas built      \n"
 "%d isles built\n"
@@ -2189,7 +2050,9 @@ msgstr "Il numero di campi deve essere 1 o maggiore."
 #: ../lib/vector/Vlib/field.c:78
 #, fuzzy
 msgid "Cannot add database link, map is not opened in WRITE mode."
-msgstr "Non riesco ad aprire un collegamento database, la mappa non è stata aperta in modalità di SCRITTURA."
+msgstr ""
+"Non riesco ad aprire un collegamento database, la mappa non è stata aperta "
+"in modalità di SCRITTURA."
 
 #: ../lib/vector/Vlib/field.c:84
 #, fuzzy
@@ -2202,8 +2065,7 @@ msgid "Cannot write database links."
 msgstr "Non posso scrivere i collegamenti del database"
 
 #: ../lib/vector/Vlib/field.c:188
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Field number <%d> or name <%s> already exists"
 msgstr "Numero di campo <%d> o nome <%s> già in uso"
 
@@ -2226,8 +2088,7 @@ msgid "Default database is not set"
 msgstr "Il valore predefinito del database non è impostato"
 
 #: ../lib/vector/Vlib/field.c:311
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Requested dblink %d, maximum link number %d"
 msgstr "collegamento numero"
 
@@ -2237,74 +2098,70 @@ msgid "Cannot open OGR DBMI driver."
 msgstr "Non riesco ad aprire il driver OGR DBMI"
 
 #: ../lib/vector/Vlib/field.c:410
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Don't know how to read links for format %d"
 msgstr "Non so come leggere i collegamenti per il formato %d"
 
 #: ../lib/vector/Vlib/field.c:438
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Error in rule on row %d in %s"
 msgstr "Errore nella regola alla riga %d in %s"
 
 #: ../lib/vector/Vlib/field.c:565
 #, fuzzy
 msgid "Bug: attempt to update map which is not in current mapset."
-msgstr "Bug: attesa per aggiornare una mappa che non è presente non mapset in uso"
+msgstr ""
+"Bug: attesa per aggiornare una mappa che non è presente non mapset in uso"
 
 #: ../lib/vector/Vlib/legal_vname.c:23
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'.\n"
-msgstr "Nome non valido per una mappa vettoriale <%s>. Non deve contenere '.' oppure 'NULL'.\n"
+msgstr ""
+"Nome non valido per una mappa vettoriale <%s>. Non deve contenere '.' oppure "
+"'NULL'.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:29
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Illegal vector map name <%s>. Must start with a letter.\n"
-msgstr "Nome non valido per una mappa vettoriale <%s>. Deve cominciare con una lettera.\n"
+msgstr ""
+"Nome non valido per una mappa vettoriale <%s>. Deve cominciare con una "
+"lettera.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:35
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
-msgstr "Il nome <%s> non è valido per una mappa vettoriale. Il carattere <%c> non è concesso.\n"
+msgstr ""
+"Il nome <%s> non è valido per una mappa vettoriale. Il carattere <%c> non è "
+"concesso.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:60 ../lib/vector/Vlib/legal_vname.c:62
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Output name '%s' is not valid vector name."
 msgstr "Il nome '%s' in output non è valido nome di vettoriale"
 
 #: ../lib/vector/Vlib/legal_vname.c:73 ../lib/vector/Vlib/legal_vname.c:75
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot find input map '%s'"
 msgstr "Non riesco a trovare la mappa '%s' di input"
 
 #: ../lib/vector/Vlib/legal_vname.c:93 ../lib/vector/Vlib/legal_vname.c:95
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Output map '%s' is used as input"
 msgstr "La mappa '%s' in output è utilizzato come input"
 
 #: ../lib/vector/Vlib/map.c:109 ../lib/vector/Vlib/map.c:215
 #: ../lib/vector/Vlib/open.c:493
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "The vector '%s' already exists and will be overwritten."
 msgstr "Il vettoriale '%s' è già presente e sarà sovrascritto"
 
 #: ../lib/vector/Vlib/map.c:223
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Input vector '%s' not found"
 msgstr "Non riesco a trovare il vettoriale '%s' di input"
 
 #: ../lib/vector/Vlib/map.c:226
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot copy vector '%s' to '%s'"
 msgstr "Non posso copiare il vettoriale '%s' nel '%s'"
 
@@ -2319,32 +2176,30 @@ msgid "Warning, Programmer requested unknown open_level\n"
 msgstr "Attenzion, il programmatore ha richiesto un open_level sconosciuto\n"
 
 #: ../lib/vector/Vlib/open.c:155
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot find vector %s"
 msgstr "Non riesco a trovare il vettoriale %s"
 
 #: ../lib/vector/Vlib/open.c:165
 #, fuzzy
 msgid "A map which is not in the current mapset cannot be opened for update."
-msgstr "Una mappa non presente nel mapset in uso non può essere aperta per gli aggiornamenti"
+msgstr ""
+"Una mappa non presente nel mapset in uso non può essere aperta per gli "
+"aggiornamenti"
 
 #: ../lib/vector/Vlib/open.c:183
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot open old vector %s"
 msgstr "Non riesco ad aprire il vecchio vettoriale %s"
 
 #: ../lib/vector/Vlib/open.c:193 ../lib/vector/Vlib/open.c:252
 #: ../lib/vector/Vlib/open.c:268
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot open old vector %s on level %d"
 msgstr "Non riesco ad aprire il vettoriale %s al livello %d"
 
 #: ../lib/vector/Vlib/open.c:315 ../lib/vector/Vlib/open.c:520
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot open history file for vector '%s'"
 msgstr "Non riesco ad aprire lo storico per il vettoriale '%s'"
 
@@ -2354,31 +2209,28 @@ msgid "Map name is not SQL compliant."
 msgstr "Il non della mappa non è conforme al SQL."
 
 #: ../lib/vector/Vlib/open.c:497
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot delete existing vector %s"
 msgstr "Non posso cancellare il vettoriale %s"
 
 #: ../lib/vector/Vlib/open.c:511
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot open new vector %s"
 msgstr "Non posso aprire il nuovo vettoriale %s"
 
 #: ../lib/vector/Vlib/open.c:563
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Could not stat file '%s'"
 msgstr "non file s"
 
 #: ../lib/vector/Vlib/open.c:657
 #, fuzzy
 msgid "Size of 'coor' file differs from value saved in topo file."
-msgstr "Il valore del file 'coor' è differente dal valore salvato nel topo file"
+msgstr ""
+"Il valore del file 'coor' è differente dal valore salvato nel topo file"
 
 #: ../lib/vector/Vlib/open.c:668
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Please rebuild topology for vector '%s@%s'"
 msgstr "per piacere ricrea la topologia per il vettoriale '%s@%s'"
 
@@ -2418,19 +2270,19 @@ msgid "Cannot rewrite line"
 msgstr "Non riesco a riscrivere la linea"
 
 #: ../lib/vector/Vlib/write.c:189
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot delete the line, map '%s' is not opened on level 2"
-msgstr "Non riesco a cancellare la linea, la mappa '%s' non è aperta a livello 2"
+msgstr ""
+"Non riesco a cancellare la linea, la mappa '%s' non è aperta a livello 2"
 
 #: ../lib/vector/Vlib/write.c:193
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Cannot delete the line, map '%s' is not in opened in 'write' mode"
-msgstr "Non posso cancellare la linea, la mappa '%s' non è aperta in modalità di scrittura"
+msgstr ""
+"Non posso cancellare la linea, la mappa '%s' non è aperta in modalità di "
+"scrittura"
 
 #: ../lib/vector/Vlib/write.c:205
 #, fuzzy
 msgid "Cannot delete line"
 msgstr "Non posso cancellare la linea"
-

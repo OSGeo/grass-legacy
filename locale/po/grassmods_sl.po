@@ -5,45 +5,85 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_sl\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-14 19:56+0100\n"
+"POT-Creation-Date: 2005-01-20 18:31+0100\n"
 "PO-Revision-Date: 2004-12-20 15:01+0100\n"
 "Last-Translator: Miha Staut <mihastaut@yahoo.co.uk>\n"
 "Language-Team: Sloven¹èina <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.9\n"
 
-#: ../db/base/droptable.c:25 ../db/base/createdb.c:24 ../db/base/select.c:63
-#: ../db/base/columns.c:33 ../db/base/execute.c:52 ../db/base/dropdb.c:24
-#: ../db/base/describe.c:34 ../db/base/tables.c:34
+#: ../db/base/columns.c:33 ../db/base/createdb.c:24 ../db/base/describe.c:34
+#: ../db/base/dropdb.c:24 ../db/base/droptable.c:25 ../db/base/execute.c:52
+#: ../db/base/select.c:63 ../db/base/tables.c:34
 #, c-format
 msgid "No db connection for driver <%s> defined. Run db.connect"
-msgstr "Povezava z bazo podatkov za gonilnik <%s> ni definirana. Po¾eni db.connect."
+msgstr ""
+"Povezava z bazo podatkov za gonilnik <%s> ni definirana. Po¾eni db.connect."
 
-#: ../db/base/drivers.c:24
-msgid "Error trying to read dbmscap file\n"
-msgstr "Napaka pri branju dbmscap datoteke\n"
+#: ../db/base/columns.c:69 ../db/base/describe.c:87
+msgid "table name"
+msgstr "ime tabele"
 
-#: ../db/base/drivers.c:47
-msgid "Full output"
-msgstr "Izpi¹em vse"
+#: ../db/base/columns.c:76 ../db/base/databases.c:62 ../db/base/describe.c:94
+#: ../db/base/select.c:195 ../db/base/tables.c:69
+msgid "driver name"
+msgstr "ime gonilnika"
 
-#: ../db/base/drivers.c:51 ../db/base/tables.c:83
-msgid "print tables and exit"
-msgstr "natisni tabele in pojdi ven"
+#: ../db/base/columns.c:84 ../db/base/describe.c:102 ../db/base/select.c:186
+#: ../db/base/tables.c:77
+msgid "database name"
+msgstr "ime baze podatkov"
 
-#: ../db/base/drivers.c:55
-msgid "List all database drivers."
-msgstr "Izpi¹i vse gonilnike za upravljanje z bazami podatkov"
+#: ../db/base/columns.c:90
+msgid "list all columns for a given table."
+msgstr "na¹tej vse kolone (spremenljivke) za dano tabelo"
+
+#: ../db/base/connect.c:27
+msgid "print current connection parameters and exit"
+msgstr "Izpi¹i trenutne parametre povezave in konèaj"
+
+#: ../db/base/connect.c:35
+msgid "driver name:"
+msgstr "ime gonilnika"
+
+#: ../db/base/connect.c:43
+msgid "Database name:"
+msgstr "ime baze podatkov"
+
+#: ../db/base/connect.c:52
+msgid ""
+"Database schema. Don't use this option if schemas are not supported by "
+"driver/database server."
+msgstr ""
+"Ime sheme baze podatkov. Ne uporabljaj te mo¾nosti, èe sheme niso podprte "
+"s \n"
+"strani gonilnika/stre¾nika za upravljanje z bazami"
+
+#: ../db/base/connect.c:61
+msgid "Default group of database users to which select privilege is granted."
+msgstr ""
+"Privzeta skupina uporabnikov baz podatkov, ki imajo zagotovljen dostop do baz"
+
+#: ../db/base/connect.c:81
+msgid "Connect to the database through DBMI."
+msgstr "Pove¾i se z bazo preko DBMI."
+
+#: ../db/base/connect.c:117
+msgid "No db connection settings defined. Set with db.connect"
+msgstr ""
+"Nastavitve za povezavo z bazo podatkov niso definirane. \n"
+"Nastavi jih z db.connect"
 
 #: ../db/base/copy.c:27
 msgid ""
 "Copy a table. Either 'from_table' (optionaly with 'where') can be used or "
 "'select' option, but not 'from_table' and 'select' at the same time."
 msgstr ""
-"Kopiraj tabelo. Mo¾no je uporabiti 'from table' (tudi 'where') ali 'select',\n"
+"Kopiraj tabelo. Mo¾no je uporabiti 'from table' (tudi 'where') ali "
+"'select',\n"
 "ampak ne 'from table' in 'select' hkrati"
 
 #: ../db/base/copy.c:35
@@ -82,7 +122,9 @@ msgstr ""
 msgid ""
 "Full select statement (only if from_table and where is not used), e.g.:\n"
 "\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
-msgstr "Celotni 'select' stavek (le èe 'from_table' in 'where' nista" "uporabljena), npr.: SELECT ks FROM ks_table WHERE ks = 'Rudnik'"
+msgstr ""
+"Celotni 'select' stavek (le èe 'from_table' in 'where' nistauporabljena), "
+"npr.: SELECT ks FROM ks_table WHERE ks = 'Rudnik'"
 
 #: ../db/base/copy.c:95
 msgid "Cannot combine 'from_table' and 'select' options"
@@ -100,40 +142,6 @@ msgstr "Ne morem uporabiti skupaj mo¾nosti 'select' in 'where'"
 msgid "Copy table failed"
 msgstr "Kopiranje tabele ni bilo uspe¹no"
 
-#: ../db/base/connect.c:27
-msgid "print current connection parameters and exit"
-msgstr "Izpi¹i trenutne parametre povezave in konèaj"
-
-#: ../db/base/connect.c:35
-msgid "driver name:"
-msgstr "ime gonilnika"
-
-#: ../db/base/connect.c:43
-msgid "Database name:"
-msgstr "ime baze podatkov"
-
-#: ../db/base/connect.c:52
-msgid ""
-"Database schema. Don't use this option if schemas are not supported by "
-"driver/database server."
-msgstr ""
-"Ime sheme baze podatkov. Ne uporabljaj te mo¾nosti, èe sheme niso podprte s \n"
-"strani gonilnika/stre¾nika za upravljanje z bazami"
-
-#: ../db/base/connect.c:61
-msgid "Default group of database users to which select privilege is granted."
-msgstr "Privzeta skupina uporabnikov baz podatkov, ki imajo zagotovljen dostop do baz"
-
-#: ../db/base/connect.c:81
-msgid "Connect to the database through DBMI."
-msgstr "Pove¾i se z bazo preko DBMI."
-
-#: ../db/base/connect.c:117
-msgid "No db connection settings defined. Set with db.connect"
-msgstr ""
-"Nastavitve za povezavo z bazo podatkov niso definirane. \n"
-"Nastavi jih z db.connect"
-
 #: ../db/base/databases.c:34
 #, c-format
 msgid "Cannot start driver '%s'."
@@ -143,11 +151,6 @@ msgstr "Ne morem zagnati gonilnika '%s'."
 msgid "Cannot list databases."
 msgstr "Ne morem izpisati baz podatkov."
 
-#: ../db/base/databases.c:62 ../db/base/select.c:195 ../db/base/columns.c:76
-#: ../db/base/describe.c:94 ../db/base/tables.c:69
-msgid "driver name"
-msgstr "ime gonilnika"
-
 #: ../db/base/databases.c:69
 msgid "database location"
 msgstr "lokacija baze podatkov"
@@ -155,70 +158,6 @@ msgstr "lokacija baze podatkov"
 #: ../db/base/databases.c:74
 msgid "List all databases for a given driver and location."
 msgstr "Navedi vse baze podatkov za doloèeni gonilnik in lokacijo"
-
-#: ../db/base/select.c:180
-msgid "Table name, select all from this table"
-msgstr "Ime tabele, izberi vse iz te tabele"
-
-#: ../db/base/select.c:186 ../db/base/columns.c:84 ../db/base/describe.c:102
-#: ../db/base/tables.c:77
-msgid "database name"
-msgstr "ime baze podatkov"
-
-#: ../db/base/select.c:203
-msgid ""
-"SQL select statement, for example: 'select * from rybniky where kapri = "
-"'hodne'"
-msgstr "SQL 'select' stavek, npr.: 'SELECT * FROM ks_table WHERE obèina = 'Koper''"
-
-#: ../db/base/select.c:209
-msgid "output field separator"
-msgstr "izpi¹i znak razmejitve med polji"
-
-#: ../db/base/select.c:216
-msgid "output vertical record separator"
-msgstr "izpi¹i znak za vertikalno razmejitev med enotami"
-
-#: ../db/base/select.c:222
-msgid "null value indicator"
-msgstr "znak za vrednost NULL"
-
-#: ../db/base/select.c:229
-msgid "filename with sql statement"
-msgstr "datoteka z SQL stavkom"
-
-#: ../db/base/select.c:234
-msgid "do not include column names in output"
-msgstr "izpis naj ne vsebuje imen kolon"
-
-#: ../db/base/select.c:238
-msgid "describe query only (don't run it)"
-msgstr "le opi¹i poizvedbo (ne je pognati)"
-
-#: ../db/base/select.c:242
-msgid "vertical output (instead of horizontal)"
-msgstr "vertikalni izpis (namesto horizontalnega)"
-
-#: ../db/base/select.c:246
-msgid "Select data from database."
-msgstr "Izberi podatke iz baze podatkov."
-
-#: ../db/base/columns.c:69 ../db/base/describe.c:87
-msgid "table name"
-msgstr "ime tabele"
-
-#: ../db/base/columns.c:90
-msgid "list all columns for a given table."
-msgstr "na¹tej vse kolone (spremenljivke) za dano tabelo"
-
-#: ../db/base/execute.c:66 ../db/base/execute.c:70
-#, c-format
-msgid "Error while executing: \"%s\"\n"
-msgstr "Napaka med izvajanjem: \"%s\"\n"
-
-#: ../db/base/execute.c:119
-msgid "ignore SQL errors and continue"
-msgstr "prezri SQL napake in nadaljuj"
 
 #: ../db/base/describe.c:45
 msgid "Cannot describe table"
@@ -232,6 +171,74 @@ msgstr "izpi¹i le imena kolon (spremenljivk) namesto celotnih opisov"
 msgid "Describe a table (in detail)."
 msgstr "Opi¹i tabelo (podrobno)"
 
+#: ../db/base/drivers.c:24
+msgid "Error trying to read dbmscap file\n"
+msgstr "Napaka pri branju dbmscap datoteke\n"
+
+#: ../db/base/drivers.c:47
+msgid "Full output"
+msgstr "Izpi¹em vse"
+
+#: ../db/base/drivers.c:51 ../db/base/tables.c:83
+msgid "print tables and exit"
+msgstr "natisni tabele in pojdi ven"
+
+#: ../db/base/drivers.c:55
+msgid "List all database drivers."
+msgstr "Izpi¹i vse gonilnike za upravljanje z bazami podatkov"
+
+#: ../db/base/execute.c:66 ../db/base/execute.c:70
+#, c-format
+msgid "Error while executing: \"%s\"\n"
+msgstr "Napaka med izvajanjem: \"%s\"\n"
+
+#: ../db/base/execute.c:119
+msgid "ignore SQL errors and continue"
+msgstr "prezri SQL napake in nadaljuj"
+
+#: ../db/base/select.c:180
+msgid "Table name, select all from this table"
+msgstr "Ime tabele, izberi vse iz te tabele"
+
+#: ../db/base/select.c:203
+msgid ""
+"SQL select statement, for example: 'select * from rybniky where kapri = "
+"'hodne'"
+msgstr ""
+"SQL 'select' stavek, npr.: 'SELECT * FROM ks_table WHERE obèina = 'Koper''"
+
+#: ../db/base/select.c:209 ../vector/v.db.select/main.c:52
+msgid "output field separator"
+msgstr "izpi¹i znak razmejitve med polji"
+
+#: ../db/base/select.c:216 ../vector/v.db.select/main.c:59
+msgid "output vertical record separator"
+msgstr "izpi¹i znak za vertikalno razmejitev med enotami"
+
+#: ../db/base/select.c:222 ../vector/v.db.select/main.c:65
+msgid "null value indicator"
+msgstr "znak za vrednost NULL"
+
+#: ../db/base/select.c:229
+msgid "filename with sql statement"
+msgstr "datoteka z SQL stavkom"
+
+#: ../db/base/select.c:234 ../vector/v.db.select/main.c:69
+msgid "do not include column names in output"
+msgstr "izpis naj ne vsebuje imen kolon"
+
+#: ../db/base/select.c:238
+msgid "describe query only (don't run it)"
+msgstr "le opi¹i poizvedbo (ne je pognati)"
+
+#: ../db/base/select.c:242 ../vector/v.db.select/main.c:73
+msgid "vertical output (instead of horizontal)"
+msgstr "vertikalni izpis (namesto horizontalnega)"
+
+#: ../db/base/select.c:246
+msgid "Select data from database."
+msgstr "Izberi podatke iz baze podatkov."
+
 #: ../db/base/tables.c:87
 msgid "system tables instead of user tables"
 msgstr "sistemske tabele namesto uporabni¹kih tabel"
@@ -240,9 +247,18 @@ msgstr "sistemske tabele namesto uporabni¹kih tabel"
 msgid "List all tables for a given database."
 msgstr "Izpi¹i vse tabele za dano bazo podatkov."
 
-#: ../db/drivers/ogr/fetch.c:124 ../db/drivers/ogr/describe.c:151
-msgid "Unknown type"
-msgstr "Nepoznan tip"
+#: ../db/drivers/mysql/db.c:69 ../db/drivers/postgres/parse.c:53
+msgid "'user' in database definition is not supported, use db.login"
+msgstr "'user' v definiciji baze podatkov ni podprt, uporabi db.login"
+
+#: ../db/drivers/mysql/db.c:72 ../db/drivers/postgres/parse.c:57
+msgid "'password' in database definition is not supported, use db.login"
+msgstr "'password' v definiciji baze podatkov ni podprt, uporabi db.login"
+
+#: ../db/drivers/mysql/db.c:75
+#, c-format
+msgid "Unknown option in database definition for mysql: '%s'"
+msgstr "Nepoznana mo¾nost v definiciji baze podatkov za mysql: '%s'"
 
 #: ../db/drivers/ogr/describe.c:87
 #, c-format
@@ -258,26 +274,9 @@ msgstr ""
 "kolona '%s', tip 'string': nepoznana ¹irina -> shranjen kot varchar(250),\n"
 "nekateri podatki so lahko izgubljeni"
 
-#: ../db/drivers/mysql/db.c:69 ../db/drivers/postgres/parse.c:52
-msgid "'user' in database definition is not supported, use db.login"
-msgstr "'user' v definiciji baze podatkov ni podprt, uporabi db.login"
-
-#: ../db/drivers/mysql/db.c:72 ../db/drivers/postgres/parse.c:56
-msgid "'password' in database definition is not supported, use db.login"
-msgstr "'password' v definiciji baze podatkov ni podprt, uporabi db.login"
-
-#: ../db/drivers/mysql/db.c:75
-#, c-format
-msgid "Unknown option in database definition for mysql: '%s'"
-msgstr "Nepoznana mo¾nost v definiciji baze podatkov za mysql: '%s'"
-
-#: ../db/drivers/postgres/fetch.c:163
-msgid "Cannot recognize boolean value"
-msgstr "Ne prepoznam binarne (boolean) vrednosti"
-
-#: ../db/drivers/postgres/parse.c:58
-msgid "Unknown option in database definition for PostgreSQL: "
-msgstr "Nepoznana mo¾nost v definiciji baze podatkov za PostgreSQL"
+#: ../db/drivers/ogr/describe.c:151 ../db/drivers/ogr/fetch.c:124
+msgid "Unknown type"
+msgstr "Nepoznan tip"
 
 #: ../db/drivers/postgres/describe.c:102
 #, c-format
@@ -297,7 +296,8 @@ msgstr ""
 #, c-format
 msgid "column '%s' : type text is stored as varchar(250) some data may be lost"
 msgstr ""
-"kolona '%s': tip text je shranjen kot varchar(250) nekateri podatki so lahko\n"
+"kolona '%s': tip text je shranjen kot varchar(250) nekateri podatki so "
+"lahko\n"
 "izgubljeni"
 
 #: ../db/drivers/postgres/describe.c:117
@@ -318,6 +318,14 @@ msgstr ""
 "kolona '%s': tip (bool) (binarni - boolean) je shranjen kot char(1),\n"
 "vrednosti 0 (narobe), 1 (pravilno)"
 
+#: ../db/drivers/postgres/fetch.c:163
+msgid "Cannot recognize boolean value"
+msgstr "Ne prepoznam binarne (boolean) vrednosti"
+
+#: ../db/drivers/postgres/parse.c:61
+msgid "Unknown option in database definition for PostgreSQL: "
+msgstr "Nepoznana mo¾nost v definiciji baze podatkov za PostgreSQL"
+
 #: ../db/db.login/main.c:56
 msgid "Cannot set user/password"
 msgstr "Ne morem nastaviti uporabnika/gesla"
@@ -325,6 +333,3190 @@ msgstr "Ne morem nastaviti uporabnika/gesla"
 #: ../db/db.login/main.c:60
 msgid "The password was stored in file."
 msgstr "Geslo je bilo shranjeno v datoteko"
+
+#: ../display/d.font.freetype/main.c:52
+msgid ""
+"Selects the font in which text will be displayed on the user's graphics "
+"monitor."
+msgstr "Izbere pisavo v kateri bo tekst zapisan na grafiènem monitorju"
+
+#: ../display/d.font.freetype/main.c:60
+msgid ""
+"Font name (not supported interactively, see also -l flag) or path to "
+"TrueType font (including file name)"
+msgstr ""
+"Ime pisave (ni podprto interaktivno, glej tudi -l izbiro ukaza) ali pot do \n"
+"TrueType pisave (vkljuèujoè ime datoteke)"
+
+#: ../display/d.font.freetype/main.c:62
+msgid "Path to TrueType font (including file name)"
+msgstr "Pot do TrueType pisav (vkljuèujoè ime datoteke)"
+
+#: ../display/d.font.freetype/main.c:71
+msgid "Character encoding"
+msgstr "Kodni nabor"
+
+#: ../display/d.font.freetype/main.c:102
+msgid "No graphics device selected"
+msgstr "Nobena grafièna naprava ni izbrana"
+
+#: ../display/d.font.freetype/main.c:170
+msgid ""
+"\n"
+"Setting release of FreeType\n"
+msgstr ""
+"\n"
+"Nastavljam verzijo FreeType-a\n"
+
+#: ../display/d.paint.labels/do_labels.c:143
+#, c-format
+msgid "Error: %s\n"
+msgstr "Napaka: %s\n"
+
+#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:295
+msgid "Region size is lower than minreg, nothing displayed.\n"
+msgstr ""
+"Velikost regije je od najmanj¹e regije (minreg), ne morem prikazati "
+"nièesar.\n"
+
+#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:304
+msgid "Region size is greater than maxreg, nothing displayed.\n"
+msgstr ""
+"Velikost regije je veèja od najveèje regije (maxreg), ne morem prikazati "
+"nièesar\n"
+
+#: ../display/d.path/select.c:32
+msgid "L: from  M: to R: quit\n"
+msgstr ""
+
+#: ../display/d.path/select.c:57
+#, c-format
+msgid "Node %d: %f %f\n"
+msgstr "Vozel %d: %f %f\n"
+
+#: ../display/d.path/select.c:133
+msgid "Destination unreachable\n"
+msgstr "Destinacijo je nemogoèe doseèi\n"
+
+#: ../display/d.path/select.c:136
+#, c-format
+msgid "Costs on the network = %f\n"
+msgstr "Stro¹ki na omre¾ju = %f\n"
+
+#: ../display/d.path/select.c:137
+#, c-format
+msgid "  Distance to the network = %f, distance from the network = %f\n"
+msgstr "Oddaljenost do omre¾ja = %f, oddaljenost od omre¾ja = %f\n"
+
+#: ../display/d.vect/attr.c:53 ../display/d.vect/dir.c:34
+#: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
+#: ../display/d.vect/topo.c:38
+msgid ""
+"\n"
+"ERROR: vector file - can't read\n"
+msgstr ""
+"\n"
+"NAPAKA: ne morem prebrati vektorskega sloja\n"
+
+#: ../display/d.vect/main.c:501
+msgid "Plotting ... "
+msgstr "Ri¹em ..."
+
+#: ../display/d.vect/main.c:510
+msgid ""
+"The bounding box of the map outside current region, nothing displayed.\n"
+msgstr "Obseg sloja je izven trenutne regije, nièesar ne bom prikazal.\n"
+
+#: ../display/d.vect/main.c:567
+msgid "Done\n"
+msgstr "Narejeno\n"
+
+#: ../display/d.what.vect/main.c:139
+msgid "Building spatial index ..."
+msgstr "Gradim prostorski indeks ..."
+
+#: ../display/d.what.vect/main.c:157
+msgid "Done.\n"
+msgstr "Narejeno.\n"
+
+#: ../display/d.what.vect/openvect.c:12
+#, c-format
+msgid "warning: %s - vector file not found\n"
+msgstr "pozor: ne najdem vektorja %s\n"
+
+#: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
+msgid "Nothing Found.\n"
+msgstr "Nièesar nisem na¹el.\n"
+
+#: ../display/d.what.vect/what.c:203
+#, c-format
+msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
+msgstr "Linija %d  Tip: %s  Levo: %d  Desno: %d  "
+
+#: ../display/d.what.vect/what.c:206
+#, c-format
+msgid "Length: %f\n"
+msgstr "Dol¾ina: %f\n"
+
+#: ../display/d.what.vect/what.c:216
+#, c-format
+msgid "  Node[%d]: %d  Number of lines: %d\n"
+msgstr " Vozel[%d]: %d  ©tevilo linij: %d\n"
+
+#: ../display/d.what.vect/what.c:221
+#, c-format
+msgid "    Line: %5d  Angle: %.8f\n"
+msgstr "Linija: %5d  Kot: %.8f\n"
+
+#: ../display/d.what.vect/what.c:227
+#, c-format
+msgid "length %f\n"
+msgstr "dol¾ina %f\n"
+
+#: ../display/d.what.vect/what.c:245
+#, fuzzy, c-format
+msgid "Point height: %f\n"
+msgstr "Vi¹ina toèke: %f\n"
+
+#: ../display/d.what.vect/what.c:257
+#, c-format
+msgid "Line height: %f\n"
+msgstr "Vi¹ina linije: %f\n"
+
+#: ../display/d.what.vect/what.c:263
+#, c-format
+msgid "Line height min: %f max: %f\n"
+msgstr "Vi¹ina linije min: %f max: %f\n"
+
+#: ../display/d.what.vect/what.c:280
+#, c-format
+msgid "Area height: %f\n"
+msgstr "Vi¹ina obmoèja: %f\n"
+
+#: ../display/d.what.vect/what.c:287
+msgid "Area\n"
+msgstr "Obmoèje\n"
+
+#: ../display/d.what.vect/what.c:300
+#, c-format
+msgid "Area: %d  Number of isles: %d\n"
+msgstr "Obmoèje: %d  ©tevilo otokov: %d\n"
+
+#: ../display/d.what.vect/what.c:304
+#, c-format
+msgid "  Isle[%d]: %d\n"
+msgstr "Otok[%d]: %d\n"
+
+#: ../display/d.what.vect/what.c:311
+#, c-format
+msgid "Island: %d  In area: %d\n"
+msgstr "Otok %d  V obmoèju: %d\n"
+
+#: ../display/d.what.vect/what.c:315 ../display/d.what.vect/what.c:323
+#, c-format
+msgid "Size - Sq Meters: %.3f\t\tHectares: %.3f\n"
+msgstr "Velikost - m^2: %.3f\\t\\tHektarov: %.3f\n"
+
+#: ../display/d.what.vect/what.c:318 ../display/d.what.vect/what.c:327
+#, c-format
+msgid "           Acres: %.3f\t\tSq Miles: %.4f\n"
+msgstr "           Akrov: %.3f\\t\\tkvadratnih milj: %.4f\n"
+
+#: ../display/d.what.vect/what.c:353
+#, fuzzy, c-format
+msgid ""
+"Layer: %d\n"
+"category: %d\n"
+msgstr ""
+"polje: %d\n"
+"kategorija: %d\n"
+
+#: ../display/d.what.vect/what.c:362
+msgid "Database connection not defined\n"
+msgstr "Povezava z bazo podatkov ni definirana\n"
+
+#: ../display/d.what.vect/what.c:370
+#, c-format
+msgid ""
+"driver: %s\n"
+"database: %s\n"
+"table: %s\n"
+"key column: %s\n"
+msgstr ""
+"gonilnik: %s\n"
+"baza podatkov: %s\n"
+"tabela: %s\n"
+"kolona z identifikatorjem: %s\n"
+
+#: ../display/d.what.vect/what.c:421
+#, fuzzy
+msgid ""
+"\n"
+"Click mouse button on desired location\n"
+"\n"
+msgstr ""
+"\n"
+"Klikni z mi¹ko na ¾eleno lokacijo\n"
+
+#: ../display/d.what.vect/what.c:426
+msgid "Buttons\n"
+msgstr "Gumbi\n"
+
+#: ../display/d.what.vect/what.c:427
+msgid " Left:  what's here\n"
+msgstr "Levi: poizveduj po karti\n"
+
+#: ../display/d.what.vect/what.c:429
+#, fuzzy
+msgid " Middle: toggle flash color\n"
+msgstr "Srednji: barvni blisk\n"
+
+#: ../display/d.what.vect/what.c:434
+msgid " Right: quit\n"
+msgstr "Desni: konèaj\n"
+
+#: ../display/d.zoom/main.c:161
+msgid "ERROR: can not get \"list\" items\n"
+msgstr ""
+
+#: ../display/d.zoom/main.c:162
+msgid "-j flag forced\n"
+msgstr "vsiljena je bila izbira -j\n"
+
+#: ../display/d.zoom/main.c:200
+msgid "ERROR: No map is displayed in GRASS monitor\n"
+msgstr "NAPAKA: Na grafiènem monitorju ni prikazana nobena karta\n"
+
+#: ../display/d.zoom/main.c:324
+#, c-format
+msgid "%d raster%s, %d vector%s\n"
+msgstr "%d raster%s, %d vektor%s\n"
+
+#: ../display/d.zoom/main.c:334
+msgid "this is the first d.zoom run; no previous zoom availible\n"
+msgstr "d.zoom si pognal prviè; predhodnih informacij o zoom-u ni\n"
+
+#: ../display/d.zoom/main.c:380
+msgid "Zooming finished.\n"
+msgstr "Zoomiranje konèano.\n"
+
+#: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr ""
+"\n"
+"\n"
+"Gumbi:\n"
+
+#: ../display/d.zoom/pan.c:21 ../display/d.zoom/zoom.c:17
+#, c-format
+msgid "%s Pan\n"
+msgstr ""
+
+#: ../display/d.zoom/pan.c:22
+#, c-format
+msgid "%s Quit\n"
+msgstr "%s je ugasnjen\n"
+
+#: ../display/d.zoom/zoom.c:16
+#, c-format
+msgid "%s Zoom menu\n"
+msgstr ""
+
+#: ../display/d.zoom/zoom.c:18
+#, c-format
+msgid "%s Quit menu\n"
+msgstr "%s Ugasni menu\n"
+
+#: ../display/d.zoom/zoom.c:41
+msgid ""
+"This region now saved as current region.\n"
+"\n"
+msgstr "Ta regija je shranjena kot trenutna regija.\n"
+
+#: ../display/d.zoom/zoom.c:42
+msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
+msgstr ""
+"Po¾eni 'd.erase', èe ¾eli¹, da se nastavitve nove regije uveljavijo na \n"
+"grafiènih napravah.\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
+#, fuzzy
+msgid "Monitor: interactive command in redraw\n"
+msgstr "Monitor: interaktivni ukaz v ponovnem risanju\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:116
+#, c-format
+msgid "found %d visuals of type TrueColor\n"
+msgstr "najdenih je bilo %d \"visuals\" tipa TrueColor\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
+msgid "searching for highest bit depth\n"
+msgstr "i¹èem najveèjo mo¾no bitno globino\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:135
+#, c-format
+msgid "selected %d bit depth\n"
+msgstr "izbrana %d bitna globina\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:197
+#, fuzzy, c-format
+msgid "using default visual which is %s\n"
+msgstr "uporabljam privzeto \"visual\", ki je %s\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:127
+#, c-format
+msgid "Monitor: waitpid: expected %d but got %d\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
+msgid "Monitor: XGetWMName failed\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
+msgid "Monitor: XGetWMName: bad result\n"
+msgstr ""
+
+#: ../imagery/i.group/main.c:84
+msgid "No input map(s) specified."
+msgstr "Doloèena ni bila nobena vhodna datoteka."
+
+#: ../raster/r.average/main.c:31
+msgid ""
+"Finds the average of values in a cover map within areas assigned the same "
+"category value in a user-specified base map."
+msgstr ""
+
+#: ../raster/r.average/main.c:40
+msgid "base raster map"
+msgstr ""
+
+#: ../raster/r.average/main.c:47
+msgid "cover raster map"
+msgstr ""
+
+#: ../raster/r.average/main.c:54
+msgid "resultant raster map"
+msgstr ""
+
+#: ../raster/r.average/main.c:58
+msgid "cover values extracted from the category labels of the cover map"
+msgstr ""
+
+#: ../raster/r.basins.fill/main.c:34
+msgid "Generates a raster map layer showing watershed subbasins."
+msgstr ""
+
+#: ../raster/r.basins.fill/main.c:41
+msgid "Number of passes through the dataset"
+msgstr ""
+
+#: ../raster/r.basins.fill/main.c:48
+msgid "Coded stream network file name"
+msgstr ""
+
+#: ../raster/r.basins.fill/main.c:55
+msgid "Thinned ridge network file name"
+msgstr ""
+
+#: ../raster/r.basins.fill/main.c:62
+msgid "Name for the resultant watershed partition file"
+msgstr ""
+
+#: ../raster/r.bilinear/main.c:29
+msgid "Bilinear interpolation utility for raster map layers."
+msgstr ""
+
+#: ../raster/r.bilinear/main.c:36
+msgid "Name of existing raster file."
+msgstr ""
+
+#: ../raster/r.bilinear/main.c:43
+msgid "Name of new raster file."
+msgstr ""
+
+#: ../raster/r.bilinear/main.c:48 ../raster/r.bilinear/main.c:54
+msgid ""
+"specific input value to be assigned to the north and/or south poles for "
+"longitude-latitude grids"
+msgstr ""
+
+#: ../raster/r.bilinear/main.c:72 ../raster/r.sum/main.c:46
+#, fuzzy, c-format
+msgid "Couldn't find raster file %s"
+msgstr "Ne najdem vhodne datoteke %s\n"
+
+#: ../raster/r.bilinear/main.c:86 ../raster/r.bilinear/main.c:97
+#: ../raster/r.sum/main.c:50
+#, fuzzy, c-format
+msgid "Not able to open cellfile for [%s]"
+msgstr "ne morem odpreti razpona za datoteko %s"
+
+#: ../raster/r.buffer/main.c:48
+msgid ""
+"Creates a raster map layer showing buffer zones surrounding cells that "
+"contain non-NULL category values."
+msgstr ""
+
+#: ../raster/r.buffer/main.c:56
+msgid "Name of input map"
+msgstr ""
+
+#: ../raster/r.buffer/main.c:63
+msgid "Name of output map"
+msgstr ""
+
+#: ../raster/r.buffer/main.c:70
+msgid "Distance zone(s)"
+msgstr ""
+
+#: ../raster/r.buffer/main.c:77
+msgid "Units of distance"
+msgstr ""
+
+#: ../raster/r.buffer/main.c:86
+msgid "Ignore zero (0) data cells instead of NULL cells"
+msgstr ""
+
+#: ../raster/r.cats/main.c:30
+msgid ""
+"Prints category values and labels associated with user-specified raster map "
+"layers."
+msgstr ""
+
+#: ../raster/r.cats/main.c:38
+msgid "Name of a raster map"
+msgstr ""
+
+#: ../raster/r.cats/main.c:46
+msgid "Comma separated value list: e.g. 1.4,3.8,13"
+msgstr ""
+
+#: ../raster/r.cats/main.c:54
+msgid "Category list: e.g. 1,3-8,13"
+msgstr ""
+
+#: ../raster/r.cats/main.c:61
+msgid "Output separator character (default: tab)"
+msgstr ""
+
+#: ../raster/r.clump/main.c:33
+msgid ""
+"Recategorizes data in a raster map layer by grouping cells that form "
+"physically discrete areas into unique categories."
+msgstr ""
+
+#: ../raster/r.clump/main.c:41
+#, fuzzy
+msgid "Input layer name"
+msgstr "Vpi¹i ime gonilnika"
+
+#: ../raster/r.clump/main.c:49
+#, fuzzy
+msgid "Output layer name"
+msgstr "Ime izhodne tabele"
+
+#: ../raster/r.clump/main.c:56
+msgid "Title, in quotes"
+msgstr ""
+
+#: ../raster/r.clump/main.c:62 ../raster/r.covar/main.c:53
+#: ../raster/r.cross/main.c:68 ../raster/r.describe/main.c:78
+#: ../raster/r.grow2/main.c:162 ../raster/r.mfilter/main.c:79
+#: ../raster/r.patch/main.c:64 ../raster/r.report/parse.c:99
+#: ../raster/r.resample/main.c:57 ../raster/r.rescale.eq/main.c:78
+#: ../raster/r.slope.aspect/main.c:253 ../raster/r.stats/main.c:141
+#: ../raster/r.texture/main.c:114
+#, fuzzy
+msgid "Quiet"
+msgstr "%s je ugasnjen\n"
+
+#: ../raster/r.colors/main.c:135
+msgid "Creates/Modifies the color table associated with a raster map layer."
+msgstr ""
+
+#: ../raster/r.colors/main.c:143 ../raster/r.timestamp/main.c:26
+msgid "Raster map name"
+msgstr ""
+
+#: ../raster/r.colors/main.c:151
+msgid "Type of color table"
+msgstr ""
+
+#: ../raster/r.colors/main.c:158
+msgid "Raster map name from which to copy color table"
+msgstr ""
+
+#: ../raster/r.colors/main.c:164
+msgid "Name of predefined rules file"
+msgstr ""
+
+#: ../raster/r.colors/main.c:169
+msgid "Keep existing color table"
+msgstr ""
+
+#: ../raster/r.colors/main.c:173 ../raster/r.rescale/main.c:77
+msgid "Quietly"
+msgstr ""
+
+#: ../raster/r.colors/main.c:177
+msgid "List rules"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:45
+msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
+msgstr "Vnesi pogoje, ko konèa¹ - \"end\", za pomoè - \"help\".\n"
+
+#: ../raster/r.colors/rules.c:47
+#, c-format
+msgid "fp: Data range is %.25f to %.25f\n"
+msgstr "fp: Razpon podatkov je %.25f do %.25f\n"
+
+#: ../raster/r.colors/rules.c:49
+#, c-format
+msgid "Data range is %ld to %ld\n"
+msgstr "Razpon podatkov je %ld do %ld\n"
+
+#: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
+msgid "Your color rules do not cover the whole range of data!"
+msgstr "Tvoja barvna paleta ne zaobsega celotnega razpona podatkov!"
+
+#: ../raster/r.colors/rules.c:188
+msgid "Enter a rule in one of these formats:\n"
+msgstr "Vnesi pogoje v enem od naslednjih formatov:\n"
+
+#: ../raster/r.colors/rules.c:190
+msgid " val color\n"
+msgstr " vrednost barva\n"
+
+#: ../raster/r.colors/rules.c:191
+#, c-format
+msgid " n%% color\n"
+msgstr " n%% barva\n"
+
+#: ../raster/r.colors/rules.c:192
+msgid " nv color\n"
+msgstr " nv barva\n"
+
+#: ../raster/r.colors/rules.c:193
+msgid " default color\n"
+msgstr " privzeta barva\n"
+
+#: ../raster/r.colors/rules.c:194
+msgid "color can be one of:\n"
+msgstr "barva lahko predstavlja katero koli od naslednjih:\n"
+
+#: ../raster/r.colors/rules.c:196
+msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
+msgstr "ali R:G:B barvno definicijo, npr. 0:127:255\n"
+
+#: ../raster/r.colors/rules.c:237
+#, c-format
+msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
+msgstr ""
+"** opozorilo: R:G:B vrednost(i) so izven dovoljenega razpona \n"
+"[0 do 255]: %d:%d:%d **\n"
+
+#: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
+#: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
+#: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
+#: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
+msgid "** rule is not added **\n"
+msgstr "** pogoj ni dodan **\n"
+
+#: ../raster/r.colors/rules.c:253
+#, c-format
+msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
+msgstr ""
+"** opozorilo: R G B vrednost(i) so izven dovoljenega razpona \n"
+"[0 do 255]: %d %d %d **\n"
+
+#: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
+msgid "** warning: no such value **\n"
+msgstr "** opozorilo: take vrednosti ni **\n"
+
+#: ../raster/r.colors/rules.c:402
+#, c-format
+msgid "%s:line %d:%s\n"
+msgstr "%s:linija %d:%s\n"
+
+#: ../raster/r.colors/rules.c:403
+msgid "** bad color specification **\n"
+msgstr "** napaèna specifikacija barv **\n"
+
+#: ../raster/r.colors/rules.c:424
+#, c-format
+msgid "%s - unknown color\n"
+msgstr "%s - nepoznana barva\n"
+
+#: ../raster/r.colors/rules.c:425
+msgid "Valid colors are:\n"
+msgstr "Veljavne barve so:\n"
+
+#: ../raster/r.composite/main.c:71
+msgid ""
+"Combines red, green and blue map layers into a single composite map layer."
+msgstr ""
+
+#: ../raster/r.composite/main.c:89
+#, c-format
+msgid "Name of raster map layer to be used for <%s>"
+msgstr ""
+
+#: ../raster/r.composite/main.c:100
+msgid "Number of levels to be used for each component"
+msgstr ""
+
+#: ../raster/r.composite/main.c:116
+#, c-format
+msgid "Number of levels to be used for <%s>"
+msgstr ""
+
+#: ../raster/r.composite/main.c:126 ../raster/r.cost/main.c:115
+#: ../raster/r.water.outlet/main.c:47
+msgid "Name of raster map to contain results"
+msgstr ""
+
+#: ../raster/r.composite/main.c:130
+msgid "Dither"
+msgstr ""
+
+#: ../raster/r.composite/main.c:134
+msgid "Use closest color"
+msgstr ""
+
+#: ../raster/r.compress/main.c:43
+msgid "Compresses and decompresses raster files."
+msgstr ""
+
+#: ../raster/r.compress/main.c:51
+msgid "Name of existing raster map(s)"
+msgstr ""
+
+#: ../raster/r.compress/main.c:55
+msgid "Uncompress the map"
+msgstr ""
+
+#: ../raster/r.compress/main.c:59 ../raster/r.distance/parse.c:38
+#: ../raster/r.neighbors/main.c:110 ../raster/r.out.ppm/main.c:64
+#: ../raster/r.out.ppm3/main.c:76 ../raster/r.random/main.c:69
+#: ../raster/r.series/main.c:112
+msgid "Run quietly"
+msgstr ""
+
+#: ../raster/r.contour/main.c:71
+msgid ""
+"Produces a GRASS binary vector map of specified contours from GRASS raster "
+"map layer."
+msgstr ""
+
+#: ../raster/r.contour/main.c:79 ../raster/r.out.ascii/main.c:70
+#: ../raster/r.out.bin/main.c:78 ../raster/r.out.mat/main.c:75
+#: ../raster/r.out.pov/main.c:116 ../raster/r.univar2/main.c:64
+msgid "Name of an existing raster map"
+msgstr ""
+
+#: ../raster/r.contour/main.c:85
+msgid "Name of output vector file"
+msgstr ""
+
+#: ../raster/r.contour/main.c:92
+msgid "List of contour levels"
+msgstr ""
+
+#: ../raster/r.contour/main.c:98
+msgid "Minimum contour level"
+msgstr ""
+
+#: ../raster/r.contour/main.c:104
+msgid "Maximum contour level"
+msgstr ""
+
+#: ../raster/r.contour/main.c:110
+msgid "Increment between contour levels"
+msgstr ""
+
+#: ../raster/r.contour/main.c:117
+msgid "Minimum number of points for a contour line (0 -> no limit)"
+msgstr ""
+
+#: ../raster/r.contour/main.c:121
+msgid "Suppress progress report & min/max information"
+msgstr ""
+
+#: ../raster/r.contour/main.c:125
+msgid "Suppress single crossing error messages"
+msgstr ""
+
+#: ../raster/r.cost/main.c:98
+msgid ""
+"Outputs a raster map layer showing the cumulative cost of moving between "
+"different geographic locations on an input raster map layer whose cell "
+"category values represent cost."
+msgstr ""
+
+#: ../raster/r.cost/main.c:108
+msgid "Name of raster map containing grid cell cost information"
+msgstr ""
+
+#: ../raster/r.cost/main.c:122
+msgid "Starting points vector map"
+msgstr ""
+
+#: ../raster/r.cost/main.c:129
+msgid "Stop points vector map"
+msgstr ""
+
+#: ../raster/r.cost/main.c:136
+msgid "Starting points raster file"
+msgstr ""
+
+#: ../raster/r.cost/main.c:143
+msgid "The map E and N grid coordinates of a starting point (E,N)"
+msgstr ""
+
+#: ../raster/r.cost/main.c:150
+msgid "The map E and N grid coordinates of a stopping point (E,N)"
+msgstr ""
+
+#: ../raster/r.cost/main.c:159
+msgid "An optional maximum cumulative cost"
+msgstr ""
+
+#: ../raster/r.cost/main.c:167
+msgid "Cost assigned to null cells. By default, null cells are excluded"
+msgstr ""
+
+#: ../raster/r.cost/main.c:176
+msgid "Percent of map to keep in memory"
+msgstr ""
+
+#: ../raster/r.cost/main.c:180 ../raster/wildfire/r.ros/main.c:297
+msgid "Run verbosely"
+msgstr ""
+
+#: ../raster/r.cost/main.c:184
+msgid "Use the 'Knight's move'; slower, but more accurate"
+msgstr ""
+
+#: ../raster/r.cost/main.c:188
+msgid "Keep null values in output map"
+msgstr ""
+
+#: ../raster/r.cost/main.c:192
+msgid "Start with values in raster map"
+msgstr ""
+
+#: ../raster/r.covar/main.c:36
+msgid ""
+"Outputs a covariance/correlation matrix for user-specified raster map layer"
+"(s)."
+msgstr ""
+
+#: ../raster/r.covar/main.c:45
+msgid "Raster map(s) to be read"
+msgstr ""
+
+#: ../raster/r.covar/main.c:49
+msgid "Print correlation matrix"
+msgstr ""
+
+#: ../raster/r.cross/main.c:45
+msgid ""
+"Creates a cross product of the category values from multiple raster map "
+"layers."
+msgstr ""
+
+#: ../raster/r.cross/main.c:55
+#, c-format
+msgid "Names of 2-%d input raster maps"
+msgstr ""
+
+#: ../raster/r.cross/main.c:61
+msgid "Name of the resulting map"
+msgstr ""
+
+#: ../raster/r.cross/main.c:72
+msgid "Non-zero data only"
+msgstr ""
+
+#: ../raster/r.describe/main.c:39
+msgid "Prints terse list of category values found in a raster map layer."
+msgstr ""
+
+#: ../raster/r.describe/main.c:47
+msgid "Name of raster map"
+msgstr ""
+
+#: ../raster/r.describe/main.c:56
+msgid "string representing no data cell value"
+msgstr ""
+
+#: ../raster/r.describe/main.c:64
+msgid "number of quantization steps"
+msgstr ""
+
+#: ../raster/r.describe/main.c:70
+msgid "Print the output one value per line"
+msgstr ""
+
+#: ../raster/r.describe/main.c:74
+msgid "Only print the range of the data"
+msgstr ""
+
+#: ../raster/r.describe/main.c:82
+msgid "Use the current region"
+msgstr ""
+
+#: ../raster/r.describe/main.c:86
+msgid "Read fp map as integer"
+msgstr ""
+
+#: ../raster/r.digit/main.c:25
+msgid ""
+"Interactive tool used to draw and save vector features on a graphics monitor "
+"using a pointing device (mouse)."
+msgstr ""
+
+#: ../raster/r.distance/main.c:22
+msgid "Locates the closest points between objects in two raster maps."
+msgstr ""
+
+#: ../raster/r.distance/parse.c:21
+msgid "Maps for computing inter-class distances"
+msgstr ""
+
+#: ../raster/r.distance/parse.c:30 ../raster/r.stats/main.c:89
+#, fuzzy
+msgid "Output field separator"
+msgstr "izpi¹i znak razmejitve med polji"
+
+#: ../raster/r.distance/parse.c:34
+#, fuzzy
+msgid "Include category labels in the output"
+msgstr "izpis naj ne vsebuje imen kolon"
+
+#: ../raster/r.drain/main.c:94
+msgid "Traces a flow through an elevation model on a raster map layer."
+msgstr ""
+
+#: ../raster/r.drain/main.c:101 ../raster/r.fill.dir/main.c:94
+msgid "Name of existing raster map containing elevation surface"
+msgstr ""
+
+#: ../raster/r.drain/main.c:108
+#, fuzzy
+msgid "Output drain raster map"
+msgstr "Ime izhodnega gonilnika"
+
+#: ../raster/r.drain/main.c:116
+msgid "The map E and N grid coordinates of a starting point"
+msgstr ""
+
+#: ../raster/r.drain/main.c:120
+#, fuzzy
+msgid "Copy input cell values on output"
+msgstr "izpis naj ne vsebuje imen kolon"
+
+#: ../raster/r.drain/main.c:124
+msgid "Accumulate input values along the path"
+msgstr ""
+
+#: ../raster/r.drain/main.c:128
+msgid "Count cell numbers along the path"
+msgstr ""
+
+#: ../raster/r.fill.dir/main.c:86
+msgid ""
+"Filters and generates a depressionless elevation map and a flow direction "
+"map from a given elevation layer"
+msgstr ""
+
+#: ../raster/r.fill.dir/main.c:101
+msgid "Output elevation raster map after filling"
+msgstr ""
+
+#: ../raster/r.fill.dir/main.c:108
+#, fuzzy
+msgid "Output direction raster map"
+msgstr "Ime izhodnega gonilnika"
+
+#: ../raster/r.fill.dir/main.c:115
+msgid "Output raster map of problem areas"
+msgstr ""
+
+#: ../raster/r.fill.dir/main.c:121
+msgid ""
+"Output direction type AGNPS, ANSWERS or GRASS aspect\n"
+"              default: GRASS"
+msgstr ""
+
+#: ../raster/r.fill.dir/main.c:125
+msgid "find unresolved areas only"
+msgstr ""
+
+#: ../raster/r.grow2/main.c:116
+msgid "Generates a raster map layerwith contiguous areas grown by one cell."
+msgstr ""
+
+#: ../raster/r.grow2/main.c:124
+#, fuzzy
+msgid "Name of existing input raster file"
+msgstr "Nisem mogel odpreti vhodne datoteke dig_att."
+
+#: ../raster/r.grow2/main.c:131 ../raster/r.thin/main.c:49
+msgid "Name of output raster file"
+msgstr ""
+
+#: ../raster/r.grow2/main.c:137
+msgid "Radius of buffer"
+msgstr ""
+
+#: ../raster/r.grow2/main.c:144
+msgid "Metric"
+msgstr ""
+
+#: ../raster/r.grow2/main.c:152
+msgid "Value to write for input cells which are non-NULL (-1 => NULL)"
+msgstr ""
+
+#: ../raster/r.grow2/main.c:158
+msgid "Value to write for \"grown\" cells"
+msgstr ""
+
+#: ../raster/r.his/main.c:64
+msgid ""
+"Generates red, green and blue raster map layers combining hue, intensity, "
+"and saturation (his) values from user-specified input raster map layers."
+msgstr ""
+
+#: ../raster/r.his/main.c:73
+msgid "Name of layer to be used for HUE"
+msgstr ""
+
+#: ../raster/r.his/main.c:80
+msgid "Name of layer to be used for INTENSITY"
+msgstr ""
+
+#: ../raster/r.his/main.c:87
+msgid "Name of layer to be used for SATURATION"
+msgstr ""
+
+#: ../raster/r.his/main.c:94
+msgid "Name of output layer to be used for RED"
+msgstr ""
+
+#: ../raster/r.his/main.c:101
+msgid "Name of output layer to be used for GREEN"
+msgstr ""
+
+#: ../raster/r.his/main.c:108
+msgid "Name of output layer to be used for BLUE"
+msgstr ""
+
+#: ../raster/r.his/main.c:112
+msgid "Respect NULL values while drawing"
+msgstr ""
+
+#: ../raster/r.in.arc/main.c:41
+msgid ""
+"Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
+"layer."
+msgstr ""
+
+#: ../raster/r.in.arc/main.c:48
+msgid "ARC/INFO ascii raster file (GRID) to be imported"
+msgstr ""
+
+#: ../raster/r.in.arc/main.c:55 ../raster/r.in.ascii/main.c:61
+#: ../raster/r.in.bin/main.c:145 ../raster/r.in.gdal/main.c:87
+msgid "Name for resultant raster map"
+msgstr ""
+
+#: ../raster/r.in.arc/main.c:64
+msgid "Storage type for resultant raster map"
+msgstr ""
+
+#: ../raster/r.in.arc/main.c:71 ../raster/r.in.ascii/main.c:69
+#: ../raster/r.in.bin/main.c:153 ../raster/r.in.gdal/main.c:107
+#: ../raster/r.in.poly/main.c:39
+msgid "Title for resultant raster map"
+msgstr ""
+
+#: ../raster/r.in.arc/main.c:78 ../raster/r.in.ascii/main.c:76
+msgid "Multiplier for ascii data"
+msgstr ""
+
+#: ../raster/r.in.ascii/main.c:48
+msgid "Convert an ASCII raster text file into a (binary) raster map layer."
+msgstr ""
+
+#: ../raster/r.in.ascii/main.c:54
+msgid "Ascii raster file to be imported"
+msgstr ""
+
+#: ../raster/r.in.ascii/main.c:84
+msgid "String representing NULL value data cell"
+msgstr ""
+
+#: ../raster/r.in.ascii/main.c:89
+msgid "integer values are imported"
+msgstr ""
+
+#: ../raster/r.in.ascii/main.c:94
+msgid "floating point values are imported"
+msgstr ""
+
+#: ../raster/r.in.ascii/main.c:99
+msgid "double floating point values are imported"
+msgstr ""
+
+#: ../raster/r.in.ascii/main.c:105
+msgid "SURFER (Golden Software) ascii grid file will be imported"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:112
+msgid "Import a binary raster file into a GRASS raster map layer."
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:116
+msgid "Signed data (high bit means negative value)"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:120
+msgid "Import as Floating Point Data (default: Integer)"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:124
+msgid "Import as Double Precision Data (default: Integer)"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:128
+msgid "Byte Swap the Data During Import"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:132
+msgid "Get region info from GMT style header"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:138
+msgid "Bin raster file to be imported"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:160
+msgid "Number of bytes per cell (1, 2, 4)"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:166
+msgid "Northern limit of geographic region (outer edge)"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:172
+msgid "Southern limit of geographic region (outer edge)"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:178
+msgid "Eastern limit of geographic region (outer edge)"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:184
+msgid "Western limit of geographic region (outer edge)"
+msgstr ""
+
+#: ../raster/r.in.bin/main.c:190
+#, fuzzy
+msgid "Number of rows"
+msgstr ""
+"\n"
+"\n"
+" ©tevilo toèk: %d\n"
+
+#: ../raster/r.in.bin/main.c:196
+#, fuzzy
+msgid "Number of columns"
+msgstr ""
+"\n"
+"\n"
+" ©tevilo toèk: %d\n"
+
+#: ../raster/r.in.bin/main.c:202
+msgid "Set Value to NULL"
+msgstr ""
+
+#: ../raster/r.in.gdal/main.c:71
+msgid "Import GDAL supported raster file into a binary raster map layer."
+msgstr ""
+
+#: ../raster/r.in.gdal/main.c:80
+msgid "Raster file to be imported"
+msgstr ""
+
+#: ../raster/r.in.gdal/main.c:94
+msgid "Band to select (default is all bands)"
+msgstr ""
+
+#: ../raster/r.in.gdal/main.c:100
+msgid "Name of location to read projection from for GCPs transformation"
+msgstr ""
+
+#: ../raster/r.in.gdal/main.c:113
+msgid "Name for new location to create"
+msgstr ""
+
+#: ../raster/r.in.gdal/main.c:117
+msgid "Override projection (use location's projection)"
+msgstr ""
+
+#: ../raster/r.in.gdal/main.c:121
+msgid "Extend location extents based on new dataset"
+msgstr ""
+
+#: ../raster/r.in.gdal/main.c:125
+msgid "List supported formats then exit"
+msgstr ""
+
+#: ../raster/r.in.gdal/main.c:129
+msgid "Keep band numbers instead of using band color names"
+msgstr ""
+
+#: ../raster/r.in.gridatb/main.c:45
+msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
+msgstr ""
+
+#: ../raster/r.in.gridatb/main.c:49 ../raster/r.out.gridatb/main.c:59
+msgid "GRIDATB i/o map file"
+msgstr ""
+
+#: ../raster/r.in.gridatb/main.c:55 ../raster/r.mode/main.c:47
+msgid "Output map"
+msgstr ""
+
+#: ../raster/r.in.mat/main.c:95
+msgid "Import a binary MAT-File(v4) to a GRASS raster."
+msgstr ""
+
+#: ../raster/r.in.mat/main.c:104
+msgid "Name of an existing MAT-File(v4)"
+msgstr ""
+
+#: ../raster/r.in.mat/main.c:111
+msgid "Name for the output raster map (override)"
+msgstr ""
+
+#: ../raster/r.in.mat/main.c:115 ../raster/r.out.mat/main.c:85
+msgid "Verbose mode"
+msgstr ""
+
+#: ../raster/r.in.poly/main.c:16
+msgid ""
+"Create raster maps from ascii polygon/line data files in the current "
+"directory."
+msgstr ""
+
+#: ../raster/r.in.poly/main.c:24
+msgid "Input file"
+msgstr ""
+
+#: ../raster/r.in.poly/main.c:32
+msgid "Raster output file"
+msgstr ""
+
+#: ../raster/r.in.poly/main.c:46
+msgid "Number of rows to hold in memory"
+msgstr ""
+
+#: ../raster/r.info/main.c:48
+msgid "Outputs basic information about a user-specified raster map layer."
+msgstr ""
+
+#: ../raster/r.info/main.c:56 ../raster/r.profile/main.c:64
+#: ../raster/r.random/main.c:44 ../raster/r.thin/main.c:42
+msgid "Name of existing raster map"
+msgstr ""
+
+#: ../raster/r.info/main.c:60
+msgid "Print range only"
+msgstr ""
+
+#: ../raster/r.info/main.c:64
+msgid "Print resolution (NS-res, EW-res) only"
+msgstr ""
+
+#: ../raster/r.info/main.c:68
+msgid "Print raster map type only"
+msgstr ""
+
+#: ../raster/r.kappa/main.c:28
+msgid ""
+"Calculate error matrix and kappa parameter for accuracy assessment of "
+"classification result."
+msgstr ""
+
+#: ../raster/r.kappa/main.c:36
+msgid "File name of classification result"
+msgstr ""
+
+#: ../raster/r.kappa/main.c:42
+msgid "File name of reference classes"
+msgstr ""
+
+#: ../raster/r.kappa/main.c:48
+msgid "Name of an output file containing of error matrix and kappa"
+msgstr ""
+
+#: ../raster/r.kappa/main.c:54
+msgid "Title for error matrix and kappa"
+msgstr ""
+
+#: ../raster/r.kappa/main.c:59
+msgid "wide report, 132 columns (default: 80)"
+msgstr ""
+
+#: ../raster/r.kappa/main.c:63
+msgid "quiet"
+msgstr ""
+
+#: ../raster/r.kappa/main.c:67
+msgid "no header in the report"
+msgstr ""
+
+#: ../raster/r.los/main.c:62
+msgid "Line-of-sight raster analysis program."
+msgstr ""
+
+#: ../raster/r.los/main.c:71
+#, fuzzy
+msgid "Raster map containing elevation data"
+msgstr "Vhodni sloj vsebuje linije."
+
+#: ../raster/r.los/main.c:78
+msgid "Raster map name for storing results"
+msgstr ""
+
+#: ../raster/r.los/main.c:85
+msgid "Coordinate identifying the viewing location"
+msgstr ""
+
+#: ../raster/r.los/main.c:91
+msgid "Binary (1/0) raster map"
+msgstr ""
+
+#: ../raster/r.los/main.c:99
+msgid "Height of the viewing location"
+msgstr ""
+
+#: ../raster/r.los/main.c:107
+#, fuzzy
+msgid "Max distance from the viewing point (meters)"
+msgstr "Najveèja razdalja med toèkami in enotami karte."
+
+#: ../raster/r.median/main.c:29
+msgid ""
+"Finds the median of values in a cover map within areas assigned the same "
+"category value in a user-specified base map."
+msgstr ""
+
+#: ../raster/r.median/main.c:35 ../raster/r.statistics/main.c:50
+msgid "Base raster map"
+msgstr ""
+
+#: ../raster/r.median/main.c:42 ../raster/r.statistics/main.c:57
+msgid "Cover raster map"
+msgstr ""
+
+#: ../raster/r.median/main.c:49
+msgid "Resultant raster map"
+msgstr ""
+
+#: ../raster/r.mfilter/main.c:33
+msgid "Raster file matrix filter."
+msgstr ""
+
+#: ../raster/r.mfilter/main.c:43 ../raster/r.resamp.rst/main.c:171
+#, fuzzy
+msgid "Name of the input raster file"
+msgstr "Nisem mogel odpreti vhodne datoteke dig_att."
+
+#: ../raster/r.mfilter/main.c:51
+msgid "Name of the output raster file"
+msgstr ""
+
+#: ../raster/r.mfilter/main.c:58
+msgid "Name of the filter file"
+msgstr ""
+
+#: ../raster/r.mfilter/main.c:66
+msgid "Number of times to repeat the filter"
+msgstr ""
+
+#: ../raster/r.mfilter/main.c:73
+msgid "Output raster file title"
+msgstr ""
+
+#: ../raster/r.mfilter/main.c:89
+msgid "Apply filter only to zero data values"
+msgstr ""
+
+#: ../raster/r.mode/main.c:27
+msgid ""
+"Finds the mode of values in a cover map within areas assigned the same "
+"category value in a user-specified base map."
+msgstr ""
+
+#: ../raster/r.mode/main.c:33
+#, fuzzy
+msgid "Base map to be reclassified"
+msgstr "navedena morata biti 2 sloja"
+
+#: ../raster/r.mode/main.c:40
+msgid "Coverage map"
+msgstr ""
+
+#: ../raster/r.neighbors/main.c:56
+msgid ""
+"Makes each cell category value a function of the category values assigned to "
+"the cells around it, and stores new cell values in an output raster map "
+"layer."
+msgstr ""
+
+#: ../raster/r.neighbors/main.c:66
+msgid "Name of existing raster file"
+msgstr ""
+
+#: ../raster/r.neighbors/main.c:73 ../raster/r.series/main.c:101
+msgid "Name of the new raster file"
+msgstr ""
+
+#: ../raster/r.neighbors/main.c:88
+msgid "Neighborhood operation"
+msgstr ""
+
+#: ../raster/r.neighbors/main.c:95
+msgid "Neighborhood size"
+msgstr ""
+
+#: ../raster/r.neighbors/main.c:102
+msgid "Title of the output raster file"
+msgstr ""
+
+#: ../raster/r.neighbors/main.c:106
+msgid "Do not align output with the input"
+msgstr ""
+
+#: ../raster/r.out.arc/main.c:59
+msgid "Converts a raster map layer into an ESRI ARCGRID file."
+msgstr ""
+
+#: ../raster/r.out.arc/main.c:68
+msgid "Name of an existing raster map layer"
+msgstr ""
+
+#: ../raster/r.out.arc/main.c:75
+msgid "Name of an output ARC-GID map (use out=- for stdout)"
+msgstr ""
+
+#: ../raster/r.out.arc/main.c:82
+msgid "Number of decimal places"
+msgstr ""
+
+#: ../raster/r.out.arc/main.c:86 ../raster/r.out.ascii/main.c:100
+msgid "Suppress printing of header information"
+msgstr ""
+
+#: ../raster/r.out.arc/main.c:91
+msgid "List one entry per line instead of full row"
+msgstr ""
+
+#: ../raster/r.out.ascii/main.c:61
+msgid "Converts a raster map layer into an ASCII text file."
+msgstr ""
+
+#: ../raster/r.out.ascii/main.c:77
+msgid "Name of an output ASCII grid map (use out=- for stdout)"
+msgstr ""
+
+#: ../raster/r.out.ascii/main.c:83
+msgid "Number of significant digits (floating point only)"
+msgstr ""
+
+#: ../raster/r.out.ascii/main.c:89
+msgid ""
+"Number of values printed before wrapping a line (only SURFER or MODFLOW "
+"format)"
+msgstr ""
+
+#: ../raster/r.out.ascii/main.c:96
+msgid "String to represent null cell (GRASS grid only)"
+msgstr ""
+
+#: ../raster/r.out.ascii/main.c:104
+msgid "Write SURFER (Golden Software) ASCII grid"
+msgstr ""
+
+#: ../raster/r.out.ascii/main.c:108
+msgid "Write MODFLOW (USGS) ASCII array"
+msgstr ""
+
+#: ../raster/r.out.ascii/main.c:112
+msgid "Force output of integer values"
+msgstr ""
+
+#: ../raster/r.out.bin/main.c:69
+msgid "Exports a GRASS raster to a binary array."
+msgstr ""
+
+#: ../raster/r.out.bin/main.c:84
+msgid "Name for output binary map (use out=- for stdout)"
+msgstr ""
+
+#: ../raster/r.out.bin/main.c:91
+msgid "Value to write out for null"
+msgstr ""
+
+#: ../raster/r.out.bin/main.c:95 ../raster/r.what/main.c:110
+msgid "Output integer category values, not cell values"
+msgstr ""
+
+#: ../raster/r.out.bin/main.c:99
+msgid "Export Array with GMT compatible header"
+msgstr ""
+
+#: ../raster/r.out.bin/main.c:103
+msgid "Generate BIL world and header files"
+msgstr ""
+
+#: ../raster/r.out.bin/main.c:107
+msgid "Byte Swap output"
+msgstr ""
+
+#: ../raster/r.out.gridatb/main.c:48
+msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)"
+msgstr ""
+
+#: ../raster/r.out.gridatb/main.c:52
+msgid "Input map"
+msgstr ""
+
+#: ../raster/r.out.gridatb/main.c:65
+msgid "Overwrite output map file"
+msgstr ""
+
+#: ../raster/r.out.mat/main.c:66
+msgid "Exports a GRASS raster to a binary MAT-File."
+msgstr ""
+
+#: ../raster/r.out.mat/main.c:81
+msgid "Name for the output binary MAT-File"
+msgstr ""
+
+#: ../raster/r.out.mat/main.c:98 ../raster/r.univar2/main.c:87
+#, fuzzy, c-format
+msgid "raster <%s> not found"
+msgstr "Ne najdem vhodnega vektorja."
+
+#: ../raster/r.out.mat/main.c:105 ../raster/r.univar2/main.c:92
+#, fuzzy, c-format
+msgid "unable to open <%s>"
+msgstr "ne morem odpreti %s"
+
+#: ../raster/r.out.mpeg/main.c:389
+msgid "Raster File Series to MPEG Conversion Program."
+msgstr ""
+
+#: ../raster/r.out.mpeg/main.c:400
+#, c-format
+msgid "Raster file(s) for View%d"
+msgstr ""
+
+#: ../raster/r.out.mpeg/main.c:410
+msgid "Name for output file"
+msgstr ""
+
+#: ../raster/r.out.mpeg/main.c:420
+msgid "Quality factor (1 = highest quality, lowest compression)"
+msgstr ""
+
+#: ../raster/r.out.mpeg/main.c:424
+msgid "Quiet - suppress progress report"
+msgstr ""
+
+#: ../raster/r.out.mpeg/main.c:428
+msgid ""
+"Convert on the fly, use less disk space\n"
+"\t(requires r.out.ppm with stdout option)"
+msgstr ""
+
+#: ../raster/r.out.pov/main.c:107
+msgid "Converts a raster map layer into a height-field file for POVRAY."
+msgstr ""
+
+#: ../raster/r.out.pov/main.c:122
+msgid "Name of output povray file (TGA height field file)"
+msgstr ""
+
+#: ../raster/r.out.pov/main.c:128
+msgid "Height-field type (0=actual heights 1=normalized)"
+msgstr ""
+
+#: ../raster/r.out.pov/main.c:134
+msgid "Elevation bias"
+msgstr ""
+
+#: ../raster/r.out.pov/main.c:140 ../raster/r.param.scale/interface.c:107
+msgid "Vertical scaling factor"
+msgstr ""
+
+#: ../raster/r.out.ppm/main.c:42
+msgid ""
+"Converts a GRASS raster file to a PPM image file at the pixel resolution of "
+"the CURRENTLY DEFINED REGION."
+msgstr ""
+
+#: ../raster/r.out.ppm/main.c:51
+msgid "Raster input map"
+msgstr ""
+
+#: ../raster/r.out.ppm/main.c:60 ../raster/r.out.ppm3/main.c:72
+msgid "Name for new PPM file. (use out=- for stdout)"
+msgstr ""
+
+#: ../raster/r.out.ppm/main.c:68
+msgid "Output greyscale instead of color"
+msgstr ""
+
+#: ../raster/r.out.ppm3/main.c:47
+msgid ""
+"Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel "
+"resolution of the CURRENTLY DEFINED REGION."
+msgstr ""
+
+#: ../raster/r.out.ppm3/main.c:53
+#, c-format
+msgid "Name of raster map to be used for <%s>"
+msgstr ""
+
+#: ../raster/r.out.ppm3/main.c:80
+msgid "Add comments to describe the region"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:46
+msgid ""
+"Extracts terrain parameters from a DEM. Uses a multi-scalar approach by "
+"taking fitting quadratic parameters to any size window (via least squares)"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:64
+msgid "Raster surface layer to process"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:70
+msgid "Output raster layer containing morphometric parameter"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:75
+msgid "Slope tolerance that defines a 'flat' surface (degrees)"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:81
+msgid "Curvature tolerance that defines 'planar' surface"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:86
+#, c-format
+msgid "Size of processing window (odd number only, max: %i)"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:94
+msgid "Morphometric parameter in 'size' window to calculate"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:101
+msgid "Exponent for distance weighting (0.0-4.0)"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:113
+msgid "Constrain model through central window cell"
+msgstr ""
+
+#: ../raster/r.patch/main.c:39
+msgid ""
+"Creates a composite raster map layer by using known category values from one "
+"(or more) map layer(s) to fill in areas of \"no data\" in another map layer."
+msgstr ""
+
+#: ../raster/r.patch/main.c:51
+msgid "Name of raster maps to be patched together"
+msgstr ""
+
+#: ../raster/r.patch/main.c:58
+msgid "Name of the result map"
+msgstr ""
+
+#: ../raster/r.patch/main.c:68
+msgid "Use zero (0) for transparency instead of NULL"
+msgstr ""
+
+#: ../raster/r.profile/main.c:56
+msgid "Outputs the raster map layer values lying on user-defined line(s)."
+msgstr ""
+
+#: ../raster/r.profile/main.c:72
+msgid "Name of file for output (use output=- for stdout)"
+msgstr ""
+
+#: ../raster/r.profile/main.c:80
+msgid "Profile Coordinate Pairs"
+msgstr ""
+
+#: ../raster/r.profile/main.c:87
+msgid "Resolution along profile (default = current region resolution)"
+msgstr ""
+
+#: ../raster/r.profile/main.c:94
+msgid "Character to represent no data cell"
+msgstr ""
+
+#: ../raster/r.profile/main.c:98
+msgid "Interactively select End-Points"
+msgstr ""
+
+#: ../raster/r.profile/main.c:103 ../raster/r.transect/main.c:79
+msgid "Output easting and northing in first two columns of four column output"
+msgstr ""
+
+#: ../raster/r.proj/main.c:138
+msgid "Re-project a raster map from one location to the current location."
+msgstr ""
+
+#: ../raster/r.proj/main.c:144 ../raster/r.surf.idw/main.c:57
+#, fuzzy
+msgid "Input raster map"
+msgstr "Vpi¹i ime gonilnika"
+
+#: ../raster/r.proj/main.c:150
+msgid "Location of input map"
+msgstr ""
+
+#: ../raster/r.proj/main.c:156
+msgid "Mapset of input map"
+msgstr ""
+
+#: ../raster/r.proj/main.c:162
+msgid "Path to GRASS database of input location"
+msgstr ""
+
+#: ../raster/r.proj/main.c:168 ../raster/r.surf.idw/main.c:64
+#, fuzzy
+msgid "Output raster map"
+msgstr "Ime izhodnega gonilnika"
+
+#: ../raster/r.proj/main.c:178
+msgid "Interpolation method to use"
+msgstr ""
+
+#: ../raster/r.proj/main.c:184
+#, fuzzy
+msgid "Resolution of output map"
+msgstr "%d toèk je bilo zapisanih na izhodno datoteko\n"
+
+#: ../raster/r.proj/main.c:188
+msgid "List raster files in input location and exit"
+msgstr ""
+
+#: ../raster/r.proj/main.c:192
+msgid "Do not perform region cropping optimization"
+msgstr ""
+
+#: ../raster/r.quant/main.c:26
+msgid "This routine produces the quantization file for a floating-point map."
+msgstr ""
+
+#: ../raster/r.quant/main.c:34
+msgid "Base map to take quant rules from"
+msgstr ""
+
+#: ../raster/r.quant/main.c:42
+msgid "Raster map(s) to be quantized"
+msgstr ""
+
+#: ../raster/r.quant/main.c:47
+msgid "Floating point range: dmin,dmax"
+msgstr ""
+
+#: ../raster/r.quant/main.c:55
+msgid "Integer range: min,max"
+msgstr ""
+
+#: ../raster/r.quant/main.c:62
+msgid "Truncate floating point data"
+msgstr ""
+
+#: ../raster/r.quant/main.c:66
+msgid "Round floating point data"
+msgstr ""
+
+#: ../raster/r.random/main.c:36
+msgid ""
+"Creates a raster map layer and vector point map containing randomly located "
+"sites."
+msgstr ""
+
+#: ../raster/r.random/main.c:51
+msgid "The number of points to allocate"
+msgstr ""
+
+#: ../raster/r.random/main.c:58
+msgid "Name of the output raster map"
+msgstr ""
+
+#: ../raster/r.random/main.c:65
+msgid "Name of the output vector points map"
+msgstr ""
+
+#: ../raster/r.random/main.c:73
+msgid "Generate sites for category zero also"
+msgstr ""
+
+#: ../raster/r.random/main.c:77
+msgid "Report information about input raster and exit"
+msgstr ""
+
+#: ../raster/r.random.cells/main.c:33
+msgid "Generates random cell values with spatial dependence."
+msgstr ""
+
+#: ../raster/r.random.surface/main.c:30
+msgid "Generates random surface(s) with spatial dependence."
+msgstr ""
+
+#: ../raster/r.reclass/main.c:30
+msgid ""
+"Creates a new map layer whose category values are based upon the user's "
+"reclassification of categories in an existing raster map layer."
+msgstr ""
+
+#: ../raster/r.reclass/main.c:39
+#, fuzzy
+msgid "Raster map to be reclassified"
+msgstr "navedena morata biti 2 sloja"
+
+#: ../raster/r.reclass/main.c:46 ../raster/r.recode/main.c:40
+msgid "Name for the resulting raster map"
+msgstr ""
+
+#: ../raster/r.reclass/main.c:52 ../raster/r.recode/main.c:46
+msgid "Title for the resulting raster map"
+msgstr ""
+
+#: ../raster/r.recode/main.c:26
+msgid "Recode raster maps."
+msgstr ""
+
+#: ../raster/r.recode/main.c:33
+msgid "Raster map to be recoded"
+msgstr ""
+
+#: ../raster/r.recode/main.c:50
+msgid "Align the current region to the input map"
+msgstr ""
+
+#: ../raster/r.recode/main.c:54
+msgid "Force output to double map type (DCELL)"
+msgstr ""
+
+#: ../raster/r.region/main.c:53
+msgid "Sets the boundary definitions for a raster map."
+msgstr ""
+
+#: ../raster/r.region/main.c:71
+msgid "Set from current region"
+msgstr ""
+
+#: ../raster/r.region/main.c:75
+msgid "Set from default region"
+msgstr ""
+
+#: ../raster/r.region/main.c:86
+msgid "Raster map to change"
+msgstr ""
+
+#: ../raster/r.region/main.c:94
+msgid "Set current region from named region"
+msgstr ""
+
+#: ../raster/r.region/main.c:102
+msgid "Set region to match this raster map"
+msgstr ""
+
+#: ../raster/r.region/main.c:110
+msgid "Set region to match this vector map"
+msgstr ""
+
+#: ../raster/r.region/main.c:118
+msgid "Set region to match this 3dview file"
+msgstr ""
+
+#: ../raster/r.region/main.c:126
+msgid "Value for the northern edge"
+msgstr ""
+
+#: ../raster/r.region/main.c:134
+msgid "Value for the southern edge"
+msgstr ""
+
+#: ../raster/r.region/main.c:142
+msgid "Value for the eastern edge"
+msgstr ""
+
+#: ../raster/r.region/main.c:150
+msgid "Value for the western edge"
+msgstr ""
+
+#: ../raster/r.region/main.c:158
+msgid "Raster map to align to"
+msgstr ""
+
+#: ../raster/r.region/main.c:167 ../raster/r.region/main.c:224
+#: ../raster/r.region/main.c:359
+#, fuzzy, c-format
+msgid "raster map <%s> not found"
+msgstr "Ne najdem vhodnega vektorja."
+
+#: ../raster/r.region/main.c:169 ../raster/r.region/main.c:226
+#: ../raster/r.region/main.c:361
+#, c-format
+msgid "can't read header for <%s> in <%s>"
+msgstr ""
+
+#: ../raster/r.region/main.c:183
+#, c-format
+msgid "region <%s> not found"
+msgstr ""
+
+#: ../raster/r.region/main.c:185
+#, c-format
+msgid "can't read region <%s> in <%s>"
+msgstr ""
+
+#: ../raster/r.region/main.c:196
+#, c-format
+msgid "3dview file <%s> not found"
+msgstr ""
+
+#: ../raster/r.region/main.c:202
+#, fuzzy, c-format
+msgid "can't open 3dview file <%s> in <%s>"
+msgstr "ne morem odpreti razpona za datoteko %s"
+
+#: ../raster/r.region/main.c:206
+#, c-format
+msgid "can't read 3dview file <%s> in <%s>"
+msgstr ""
+
+#: ../raster/r.region/main.c:208
+#, c-format
+msgid "Old 3dview file. Region not found in <%s> in <%s>"
+msgstr ""
+
+#: ../raster/r.region/main.c:236
+#, fuzzy, c-format
+msgid "vector map <%s> not found"
+msgstr "Ne najdem vhodnega vektorja."
+
+#: ../raster/r.region/main.c:240
+#, fuzzy, c-format
+msgid "can't open vector file <%s> in <%s>"
+msgstr "ne morem odpreti razpona za datoteko %s"
+
+#: ../raster/r.region/main.c:370
+#, c-format
+msgid "invalid region: %s"
+msgstr ""
+
+#: ../raster/r.region/main.c:378
+msgid "unable to update boundaries"
+msgstr ""
+
+#: ../raster/r.report/main.c:15
+msgid "Reports statistics for raster map layers."
+msgstr ""
+
+#: ../raster/r.report/parse.c:44
+msgid "Raster map(s) to report on"
+msgstr ""
+
+#: ../raster/r.report/parse.c:52
+msgid ""
+"mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
+"(ercent_cover)"
+msgstr ""
+
+#: ../raster/r.report/parse.c:60
+msgid "Character representing no data cell value"
+msgstr ""
+
+#: ../raster/r.report/parse.c:66
+#, c-format
+msgid "Page length (default: %d lines)"
+msgstr ""
+
+#: ../raster/r.report/parse.c:73
+#, c-format
+msgid "Page width (default: %d characters)"
+msgstr ""
+
+#: ../raster/r.report/parse.c:80
+msgid "Name of an output file to hold the report"
+msgstr ""
+
+#: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:112
+msgid "Number of fp subranges to collect stats from"
+msgstr ""
+
+#: ../raster/r.report/parse.c:91
+msgid "Suppress page headers"
+msgstr ""
+
+#: ../raster/r.report/parse.c:95
+msgid "Use formfeeds between pages"
+msgstr ""
+
+#: ../raster/r.report/parse.c:103
+msgid "Scientific format"
+msgstr ""
+
+#: ../raster/r.report/parse.c:107
+msgid "Filter out all no data cells"
+msgstr ""
+
+#: ../raster/r.report/parse.c:111
+msgid "Filter out cells where all maps have no data"
+msgstr ""
+
+#: ../raster/r.report/parse.c:115 ../raster/r.stats/main.c:161
+msgid "Report for cats fp ranges (fp maps only)"
+msgstr ""
+
+#: ../raster/r.report/parse.c:119
+msgid "Read fp map as integer (use map's quant rules"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:161
+msgid ""
+"Reinterpolates and computes topographic analysis from input raster file to a "
+"new raster file (possibly with different resolution) using regularized "
+"spline with tension and smoothing."
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:175
+msgid "Do zeroes in input map represent elevation?"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:181
+msgid "Desired east-west resolution"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:187
+msgid "Desired north-south resolution"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:194
+msgid "Output z-file (elevation)"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:201
+msgid "Slope"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:208
+msgid "Aspect"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:215
+msgid "Profile curvature"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:222
+msgid "Tangential curvature"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:229
+msgid "Mean curvature"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:233
+msgid "Output partial derivatives instead"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:240
+msgid "Name of the cell file containing smoothing"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:247
+msgid "Name of the raster file used as mask"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:254
+msgid "Rows/columns overlap for segmentation"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:261
+msgid "Conversion factor for z-values"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:268
+msgid "Tension"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:274
+msgid "Anisotropy angle (in degrees)"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:280
+msgid "Anisotropy scaling factor"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:284
+msgid "Use dnorm independent tension"
+msgstr ""
+
+#: ../raster/r.resample/main.c:35
+msgid "GRASS raster map layer data resampling capability."
+msgstr ""
+
+#: ../raster/r.resample/main.c:44
+msgid "Name of an input layer"
+msgstr ""
+
+#: ../raster/r.resample/main.c:51
+msgid "Name of an output layer"
+msgstr ""
+
+#: ../raster/r.rescale/main.c:35
+msgid "Rescales the range of category values in a raster map layer."
+msgstr ""
+
+#: ../raster/r.rescale/main.c:45 ../raster/r.rescale.eq/main.c:46
+msgid "The name of the raster map to be rescaled"
+msgstr ""
+
+#: ../raster/r.rescale/main.c:52 ../raster/r.rescale.eq/main.c:53
+msgid "The input data range to be rescaled (default: full range of input map)"
+msgstr ""
+
+#: ../raster/r.rescale/main.c:59 ../raster/r.rescale.eq/main.c:60
+msgid "The resulting raster map name"
+msgstr ""
+
+#: ../raster/r.rescale/main.c:66 ../raster/r.rescale.eq/main.c:67
+#, fuzzy
+msgid "The output data range"
+msgstr "Ime izhodne baze podatkov"
+
+#: ../raster/r.rescale/main.c:73 ../raster/r.rescale.eq/main.c:74
+msgid "Title for new raster map"
+msgstr ""
+
+#: ../raster/r.rescale.eq/main.c:36
+msgid ""
+"Rescales histogram equalized the range of categoryvalues in a raster map "
+"layer."
+msgstr ""
+
+#: ../raster/r.series/main.c:84
+msgid ""
+"Makes each output cell value a function of the values assigned to the "
+"corresponding cells in the input raster map layers."
+msgstr ""
+
+#: ../raster/r.series/main.c:94
+msgid "Names of existing raster files"
+msgstr ""
+
+#: ../raster/r.series/main.c:108
+msgid "Aggregate operation"
+msgstr ""
+
+#: ../raster/r.series/main.c:116
+msgid "Propagate NULLs"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:134
+msgid ""
+"Generates raster map layers of slope, aspect, curvatures and partial "
+"derivatives from a raster map layer of true elevation values. Aspect is "
+"calculated counterclockwise from east."
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:143
+msgid "Raster elevation file name"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:151
+#, fuzzy
+msgid "Output slope filename"
+msgstr "Ime izhodne tabele"
+
+#: ../raster/r.slope.aspect/main.c:159
+msgid "Format for reporting the slope"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:167
+msgid "Type of output aspect and slope maps"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:175
+#, fuzzy
+msgid "Output aspect filename"
+msgstr "Ime izhodne tabele"
+
+#: ../raster/r.slope.aspect/main.c:183
+#, fuzzy
+msgid "Output profile curvature filename"
+msgstr "Ime izhodnega gonilnika"
+
+#: ../raster/r.slope.aspect/main.c:191
+#, fuzzy
+msgid "Output tangential curvature filename"
+msgstr "Ime izhodne baze podatkov"
+
+#: ../raster/r.slope.aspect/main.c:199
+msgid "Output first order partial derivative dx (E-W slope) filename"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:207
+msgid "Output first order partial derivative dy (N-S slope) filename"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:215
+msgid "Output second order partial derivative dxx filename"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:223
+msgid "Output second order partial derivative dyy filename"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:231
+msgid "Output second order partial derivative dxy filename"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:235
+msgid "Multiplicative factor to convert elevation units to meters"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:242
+msgid "Minimum slope val. (in percent) for which aspect is computed"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:249
+msgid "Do not align the current region to the elevation layer"
+msgstr ""
+
+#: ../raster/r.statistics/main.c:43
+msgid "Category or object oriented statistics."
+msgstr ""
+
+#: ../raster/r.statistics/main.c:72
+msgid "Method of object-based statistic"
+msgstr ""
+
+#: ../raster/r.statistics/main.c:79
+msgid "Resultant raster map (not used with 'distribution')"
+msgstr ""
+
+#: ../raster/r.statistics/main.c:84
+msgid "Cover values extracted from the category labels of the cover map"
+msgstr ""
+
+#: ../raster/r.stats/main.c:70
+msgid "Generates area statistics for raster map layers."
+msgstr ""
+
+#: ../raster/r.stats/main.c:80
+msgid "Raster input maps(s)"
+msgstr ""
+
+#: ../raster/r.stats/main.c:97
+msgid "String representing no data cell value"
+msgstr ""
+
+#: ../raster/r.stats/main.c:104
+#, fuzzy
+msgid "Output file name"
+msgstr "Ime izhodne tabele"
+
+#: ../raster/r.stats/main.c:121
+msgid "One cell (range) per line"
+msgstr ""
+
+#: ../raster/r.stats/main.c:125
+msgid "Print area totals"
+msgstr ""
+
+#: ../raster/r.stats/main.c:129
+msgid "Print cell counts"
+msgstr ""
+
+#: ../raster/r.stats/main.c:133
+msgid "Print APPROXIMATE percents (total percent may not be 100%)"
+msgstr ""
+
+#: ../raster/r.stats/main.c:137
+msgid "Print category labels"
+msgstr ""
+
+#: ../raster/r.stats/main.c:145
+msgid "Suppress reporting of any NULLs"
+msgstr ""
+
+#: ../raster/r.stats/main.c:149
+msgid "Suppress reporting of NULLs when all values are NULL"
+msgstr ""
+
+#: ../raster/r.stats/main.c:153
+msgid "Print grid coordinates (east and north)"
+msgstr ""
+
+#: ../raster/r.stats/main.c:157
+msgid "Print x and y (column and row)"
+msgstr ""
+
+#: ../raster/r.stats/main.c:165
+msgid "Print raw indexes of fp ranges (fp maps only)"
+msgstr ""
+
+#: ../raster/r.stats/main.c:169
+msgid "Read fp map as integer (use map's quant rules)"
+msgstr ""
+
+#: ../raster/r.sum/main.c:31
+msgid "Sums up the raster cell values."
+msgstr ""
+
+#: ../raster/r.sum/main.c:38
+msgid "Name of incidence or density file."
+msgstr ""
+
+#: ../raster/r.sun/main.c:156
+msgid ""
+"Computes direct (beam), diffuse and reflected solar irradiation raster maps "
+"for given day, latitude, surface and atmospheric conditions. Solar "
+"parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
+"irradiance, daylight length) are saved in a local text file. Alternatively, "
+"a local time can be specified to compute solar incidence angle and/or "
+"irradiance raster maps. The shadowing effect of the topography is optionally "
+"incorporated."
+msgstr ""
+
+#: ../raster/r.sun/main.c:184
+msgid "Name of the elevation raster file"
+msgstr ""
+
+#: ../raster/r.sun/main.c:191
+msgid "Name of the aspect raster file"
+msgstr ""
+
+#: ../raster/r.sun/main.c:198
+msgid "Name of the slope raster file"
+msgstr ""
+
+#: ../raster/r.sun/main.c:206
+msgid "Name of the Linke turbidity coefficient raster file"
+msgstr ""
+
+#: ../raster/r.sun/main.c:215
+msgid "A single value of the Linke turbidity coefficient"
+msgstr ""
+
+#: ../raster/r.sun/main.c:223
+msgid "Name of the albedo coefficient raster file"
+msgstr ""
+
+#: ../raster/r.sun/main.c:231
+msgid "A single value of the albedo coefficient"
+msgstr ""
+
+#: ../raster/r.sun/main.c:239
+msgid "Name of the latitude raster file"
+msgstr ""
+
+#: ../raster/r.sun/main.c:246
+msgid "A single value of latitude"
+msgstr ""
+
+#: ../raster/r.sun/main.c:254
+msgid "The real-sky beam radiation coefficient file"
+msgstr ""
+
+#: ../raster/r.sun/main.c:262
+msgid "The real-sky diffuse radiation coefficient file"
+msgstr ""
+
+#: ../raster/r.sun/main.c:269
+msgid "Output incidence angle file (raster)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:277
+msgid "Output direct (beam) irradiance/irradiation file (raster)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:284
+msgid "Output insolation time file (raster)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:292
+msgid "Output diffuse irradiance/irradiation file (raster)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:300
+msgid "Output reflected irradiance/irradiation file (raster)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:306
+msgid "No. of day of the year (1-365)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:313
+msgid "Time step computing all-day radiation"
+msgstr ""
+
+#: ../raster/r.sun/main.c:320
+msgid "Required declination value (overriding the internal value)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:327
+msgid "Local (solar) time [decimal hours]"
+msgstr ""
+
+#: ../raster/r.sun/main.c:334
+msgid "Sampling distance step coefficient (0.5-1.5)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:339
+msgid "Incorporate the shadowing effect of terrain"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:109
+msgid ""
+"Calculates cast shadow areas from sun position and DEM. Either A: exact sun "
+"position is specified, or B: date/time to calculate the sun position by r."
+"sunmask itself."
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:119
+msgid "Name of elevation raster map"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:127
+msgid "Output raster map having shadows"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:134
+msgid "A: altitude of the sun above horizon, degrees"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:141
+msgid "A: azimuth of the sun from the north, degrees"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:147
+msgid "B: year (1950..2050)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:153
+msgid "B: month (0..12)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:159
+msgid "B: day (0..31)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:165
+msgid "B: hour (0..24)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:171
+msgid "B: minutes (0..60)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:177
+msgid "B: seconds (0..60)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:183
+msgid ""
+"B: timezone (east positive, offset from GMT, also use to adjust daylight "
+"savings)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:190
+msgid "east coordinate (point of interest, default: map center)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:197
+msgid "north coordinate (point of interest, default: map center)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:201
+msgid "Zero is a real elevation"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:205
+msgid "verbose output (also print out sun position etc.)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:209
+msgid "calculate sun position only and exit"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:213
+msgid "Print the sun position output in shell script style"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:225
+msgid "Using map center coordinates\n"
+msgstr "Uporabljam koordinate sredi¹èa sloja\n"
+
+#: ../raster/r.sunmask/main.c:234
+msgid "Empty east coordinate specified!"
+msgstr "Koordinata za vzhod je prazna!"
+
+#: ../raster/r.sunmask/main.c:236
+#, fuzzy
+msgid "Empty north coordinate specified!"
+msgstr "Koordinata za sever je prazna!\n"
+
+#: ../raster/r.sunmask/main.c:255
+msgid "Either define sun position or location/date/time parameters."
+msgstr "Doloèi ali polo¾aj sonca ali parametre lokacija/datum/èas"
+
+#: ../raster/r.sunmask/main.c:258
+msgid ""
+"Neither sun position nor east/north, date/time/timezone definition are "
+"complete."
+msgstr ""
+"Niti polo¾aj sonca niti vzhod/zahod, datum/èas/èasovna_cona niso popolne"
+
+#: ../raster/r.sunmask/main.c:263
+#, c-format
+msgid "Calculating sun position... (using solpos (V. %s) from NREL)\n"
+msgstr "Raèunam lego sonca... (uporabil bom solpos (V. %s) iz NREL)\n"
+
+#: ../raster/r.sunmask/main.c:268
+msgid ""
+"Using user defined sun azimuth, altitude settings (ignoring eventual other "
+"values)\n"
+msgstr ""
+"Uporabil bom azimut sonca in njegovo vi¹ino, ki si si jih doloèil "
+"(ignoriral \n"
+"bom preostale mo¾ne vrednosti)\n"
+
+#: ../raster/r.sunmask/main.c:338
+#, c-format
+msgid " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:342
+#, c-format
+msgid " long: %f, lat: %f, timezone: %f\n"
+msgstr " dol¾ina: %f, ¹irina: %f, èasovna cona: %f\n"
+
+#: ../raster/r.sunmask/main.c:343
+#, c-format
+msgid ""
+" Solar position: sun azimuth: %f,\n"
+"   sun angle above horz.(refraction corrected): %f\n"
+msgstr ""
+" Lega sonca: azimut sonca: %f,\n"
+"   vi¹ina sonca nad obzorjem (refrakcija je popravljena): %f\n"
+
+#: ../raster/r.sunmask/main.c:347
+#, c-format
+msgid " Sunrise time (without refraction): %02d:%02d:%02d\n"
+msgstr " Èas vzhoda (brez refrakcije):  %02d:%02d:%02d\n"
+
+#: ../raster/r.sunmask/main.c:348
+#, c-format
+msgid " Sunset time  (without refraction): %02d:%02d:%02d\n"
+msgstr " Èas zahoda (brez refrakcije): %02d:%02d:%02d\n"
+
+#: ../raster/r.sunmask/main.c:357
+msgid "Please correct settings."
+msgstr "Prosim popravi nastavitve."
+
+#: ../raster/r.sunmask/main.c:374
+#, c-format
+msgid "Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)!\n"
+msgstr "Èas (%02i:%02i:%02i) je pred vzhodom (%02d:%02d:%02d)!\n"
+
+#: ../raster/r.sunmask/main.c:377
+#, c-format
+msgid "Time (%02i:%02i:%02i) is before sunrise!\n"
+msgstr "Èas (%02i:%02i:%02i) je pred vzhodom!\n"
+
+#: ../raster/r.sunmask/main.c:379 ../raster/r.sunmask/main.c:388
+msgid "Nothing to calculate. Please verify settings."
+msgstr "Izraèunati ne morem nièesar. Prosim ¹e enkrat preglej nastavitve."
+
+#: ../raster/r.sunmask/main.c:384
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)!\n"
+msgstr "Èas (%02i:%02i:%02i) je po sonènem zahodu (%02d:%02d:%02d)!\n"
+
+#: ../raster/r.sunmask/main.c:387
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset!\n"
+msgstr "Èas (%02i:%02i:%02i) je po sonènem zahodu!\n"
+
+#: ../raster/r.sunmask/main.c:394
+msgid "No map calculation requested. Finished.\n"
+msgstr "Zahteval(a) nisi nobenega izraèuna. Konèano.\n"
+
+#: ../raster/r.sunmask/main.c:401
+msgid "You already know the sun position.\n"
+msgstr "Lego sonca ¾e pozna¹.\n"
+
+#: ../raster/r.sunmask/main.c:409 ../raster/r.sunmask/main.c:411
+#, c-format
+msgid "can't open %s"
+msgstr "ne morem odpreti %s"
+
+#: ../raster/r.sunmask/main.c:421
+#, c-format
+msgid "can't open range file for %s"
+msgstr "ne morem odpreti razpona za datoteko %s"
+
+#: ../raster/r.sunmask/main.c:438
+msgid "Calculating shadows from DEM..."
+msgstr "Izraèunavam sence iz DMR..."
+
+#: ../raster/r.sunmask/main.c:446
+msgid "can't read row in input elevation map"
+msgstr "ne morem prebrati vrstice v vhodnem sloju nadmorskih vi¹in"
+
+#: ../raster/r.sunmask/main.c:511
+msgid "Finished.\n"
+msgstr "Konèano.\n"
+
+#: ../raster/r.surf.area/main.c:89
+msgid "Surface area estimation for rasters."
+msgstr ""
+
+#: ../raster/r.surf.area/main.c:97
+msgid "Raster file for surface"
+msgstr ""
+
+#: ../raster/r.surf.area/main.c:104
+msgid "Vertical scale"
+msgstr ""
+
+#: ../raster/r.surf.contour/main.c:34
+msgid "Surface generation program from rasterized contours."
+msgstr ""
+
+#: ../raster/r.surf.contour/main.c:41
+msgid "Name of existing raster map containing contours"
+msgstr ""
+
+#: ../raster/r.surf.contour/main.c:48
+msgid "Output elevation raster map"
+msgstr ""
+
+#: ../raster/r.surf.contour/main.c:52
+msgid "Invoke fast, but memory intensive operation"
+msgstr ""
+
+#: ../raster/r.surf.fractal/interface.c:33
+msgid ""
+"GRASS module to create a fractal surface of a given fractal dimension. Uses "
+"spectral synthesis method. Can create intermediate layers showing the build "
+"up of different spectral coefficients (see Saupe, pp.106-107 for an example "
+"of this). Use this module to generate naturally looking synthetical "
+"elevation models (DEM)."
+msgstr ""
+
+#: ../raster/r.surf.fractal/interface.c:54
+msgid "Name of fractal surface raster layer"
+msgstr ""
+
+#: ../raster/r.surf.fractal/interface.c:59
+msgid "Fractal dimension of surface (2 < D < 3)"
+msgstr ""
+
+#: ../raster/r.surf.fractal/interface.c:65
+msgid "Number of intermediate images to produce"
+msgstr ""
+
+#: ../raster/r.surf.gauss/main.c:38
+msgid ""
+"GRASS module to produce a raster map layer of gaussian deviates whose mean "
+"and standard deviation can be expressed by the user. It uses a gaussian "
+"random number generator."
+msgstr ""
+
+#: ../raster/r.surf.gauss/main.c:54 ../raster/r.surf.random/main.c:49
+msgid "Name of the random surface to be produced"
+msgstr ""
+
+#: ../raster/r.surf.gauss/main.c:59
+msgid "Distribution mean"
+msgstr ""
+
+#: ../raster/r.surf.gauss/main.c:64
+msgid "Standard deviation"
+msgstr ""
+
+#: ../raster/r.surf.idw/main.c:51
+msgid "Surface interpolation utility for raster map layers."
+msgstr ""
+
+#: ../raster/r.surf.idw/main.c:71 ../raster/r.surf.idw2/main.c:64
+msgid "Number of interpolation points"
+msgstr ""
+
+#: ../raster/r.surf.idw/main.c:76
+msgid "Output is the interpolation error"
+msgstr ""
+
+#: ../raster/r.surf.idw2/main.c:43
+msgid "Surface generation program."
+msgstr ""
+
+#: ../raster/r.surf.idw2/main.c:49 ../raster/r.water.outlet/main.c:40
+msgid "Name of input raster map"
+msgstr ""
+
+#: ../raster/r.surf.idw2/main.c:56
+msgid "Name of output raster map"
+msgstr ""
+
+#: ../raster/r.surf.random/main.c:34
+msgid ""
+"Produces a raster map layer of uniform random deviates whose range can be "
+"expressed by the user."
+msgstr ""
+
+#: ../raster/r.surf.random/main.c:54
+msgid "Minimum random value"
+msgstr ""
+
+#: ../raster/r.surf.random/main.c:59
+msgid "Maximum random value"
+msgstr ""
+
+#: ../raster/r.texture/main.c:72
+msgid "Generate images with textural features from a raster map"
+msgstr ""
+
+#: ../raster/r.texture/main.c:81
+msgid "Name of the input raster map"
+msgstr ""
+
+#: ../raster/r.texture/main.c:88
+msgid "Name of the ouput raster map"
+msgstr ""
+
+#: ../raster/r.texture/main.c:95
+msgid "The size of the sliding window (odd and >= 3)"
+msgstr ""
+
+#: ../raster/r.texture/main.c:104
+msgid "The distance between two samples (>= 1)"
+msgstr ""
+
+#: ../raster/r.texture/main.c:110
+msgid "Normalized"
+msgstr ""
+
+#: ../raster/r.texture/main.c:118
+msgid "Angular Second Moment"
+msgstr ""
+
+#: ../raster/r.texture/main.c:122
+msgid "Contrast"
+msgstr ""
+
+#: ../raster/r.texture/main.c:126
+msgid "Correlation"
+msgstr ""
+
+#: ../raster/r.texture/main.c:130
+msgid "Variance"
+msgstr ""
+
+#: ../raster/r.texture/main.c:134
+msgid "Inverse Diff Moment"
+msgstr ""
+
+#: ../raster/r.texture/main.c:138
+msgid "Sum Average"
+msgstr ""
+
+#: ../raster/r.texture/main.c:142
+msgid "Sum Variance"
+msgstr ""
+
+#: ../raster/r.texture/main.c:146
+msgid "Sum Entropy"
+msgstr ""
+
+#: ../raster/r.texture/main.c:150
+msgid "Entropy"
+msgstr ""
+
+#: ../raster/r.texture/main.c:154
+msgid "Difference Variance"
+msgstr ""
+
+#: ../raster/r.texture/main.c:158
+msgid "Difference Entropy"
+msgstr ""
+
+#: ../raster/r.texture/main.c:162
+msgid "Measure of Correlation-1"
+msgstr ""
+
+#: ../raster/r.texture/main.c:167
+msgid "Measure of Correlation-2"
+msgstr ""
+
+#: ../raster/r.texture/main.c:171
+msgid "Max Correlation Coeff"
+msgstr ""
+
+#: ../raster/r.thin/main.c:34
+msgid "Thins non-zero cells that denote linear features in a raster map layer."
+msgstr ""
+
+#: ../raster/r.timestamp/main.c:19
+msgid "Print/add/remove a timestamp for a raster map."
+msgstr ""
+
+#: ../raster/r.timestamp/main.c:33
+msgid "Datetime, datetime1/datetime2, or none"
+msgstr ""
+
+#: ../raster/r.to.vect/main.c:28
+msgid "Converts a raster map into a vector map layer."
+msgstr ""
+
+#: ../raster/r.to.vect/main.c:36
+msgid "raster input file"
+msgstr ""
+
+#: ../raster/r.to.vect/main.c:47
+msgid "Feature type"
+msgstr ""
+
+#: ../raster/r.to.vect/main.c:51
+msgid "Smooth Corners"
+msgstr ""
+
+#: ../raster/r.to.vect/main.c:55
+msgid "Use raster values as categories instead of unique sequence (CELL only)"
+msgstr ""
+
+#: ../raster/r.topidx/main.c:46
+msgid "Creates topographic index, ln(a/tan(beta)), map from elevation map."
+msgstr ""
+
+#: ../raster/r.topidx/main.c:50
+msgid "Elevation map"
+msgstr ""
+
+#: ../raster/r.topidx/main.c:57
+msgid "Topographic index ln(a/tanB) map"
+msgstr ""
+
+#: ../raster/r.topidx/main.c:64
+#, fuzzy
+msgid "Output verbosely"
+msgstr "Ime izhodnega gonilnika"
+
+#: ../raster/r.topmodel/main.c:63
+msgid "Simulates TOPMODEL which is physically based hydrologic model."
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:69
+msgid "(i)   Rectangular elevation map"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:77
+msgid "(i)   Basin map created by r.water.outlet"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:85
+msgid "(o)   Depressionless elevation map"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:93
+msgid "(o)   Direction map with depressionless elevation map"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:101
+msgid "(i/o) Basin elevation map (extracted)"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:109
+msgid "(i/o) Topographic index ln(a/tanB) map (extracted)"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:117
+msgid "(i)   Number of topographic index classes"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:125
+msgid "(i/o) Topographic index statistics file"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:132
+msgid "(i)   TOPMODEL Parameters file"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:139
+msgid "(i)   Rainfall and potential evapotranspiration data file"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:146
+msgid "(o)   Output file"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:153
+msgid "      Observed Q file"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:160
+msgid "      output for given time step"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:167
+msgid "      output for given topographic index class"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:176
+msgid "Input data given for (i/o)"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:181
+msgid "Overwrite outputs"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:186
+#, fuzzy
+msgid "Wide output"
+msgstr "Izpi¹em vse"
+
+#: ../raster/r.transect/main.c:34
+msgid ""
+"Outputs raster map layer values lying along user defined transect line(s)."
+msgstr ""
+
+#: ../raster/r.transect/main.c:40
+msgid "Raster map to be queried"
+msgstr ""
+
+#: ../raster/r.transect/main.c:58
+msgid "Transect definition"
+msgstr ""
+
+#: ../raster/r.transect/main.c:67 ../raster/r.what/main.c:90
+msgid "Char string to represent no data cell"
+msgstr ""
+
+#: ../raster/r.univar2/main.c:55
+msgid ""
+"Calculates univariate statistics from the non-null cells of a raster map."
+msgstr ""
+
+#: ../raster/r.univar2/main.c:68
+#, fuzzy
+msgid "Quiet mode"
+msgstr "%s Ugasni menu\n"
+
+#: ../raster/r.univar2/main.c:72
+msgid "Print the stats in shell script style"
+msgstr ""
+
+#: ../raster/r.water.outlet/main.c:33
+msgid "Watershed basin creation program."
+msgstr ""
+
+#: ../raster/r.water.outlet/main.c:55
+#, fuzzy
+msgid "The map E  grid coordinates"
+msgstr "Uporabljam koordinate sredi¹èa sloja\n"
+
+#: ../raster/r.water.outlet/main.c:63
+#, fuzzy
+msgid "The map N grid coordinates"
+msgstr "Uporabljam koordinate sredi¹èa sloja\n"
+
+#: ../raster/r.watershed/front/main.c:35
+msgid "Watershed basin analysis program."
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:39
+msgid "Input map: elevation on which entire analysis is based"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:46
+msgid "Input map: locations of real depressions"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:53
+msgid "Input map: amount of overland flow per cell"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:60
+msgid "Input map or value: percent of disturbed land, for USLE"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:67
+msgid "Input map: terrain blocking overland surface flow, for USLE"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:74
+msgid "Input value: minimum size of exterior watershed basin"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:81
+msgid "Input value: maximum length of surface flow, for USLE"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:88
+msgid "Output map: number of cells that drain through each cell"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:95
+msgid "Output map: drainage direction"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:102
+msgid "Output map: unique label for each watershed basin"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:109
+msgid "Output map: stream segments"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:116
+msgid "Output map: each half-basin is given a unique value"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:123
+msgid "Output map: useful for visual display of results"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:130
+msgid "Output map: slope length and steepness (LS) factor for USLE"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:137
+msgid "Output map: slope steepness (S) factor for USLE"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:144
+msgid "Enable extend memory option: Operation is slow"
+msgstr ""
+
+#: ../raster/r.watershed/front/main.c:148
+msgid "Allow only horizontal and vertical flow of water"
+msgstr ""
+
+#: ../raster/r.what/main.c:67
+msgid "Queries raster map layers on their category values and category labels."
+msgstr ""
+
+#: ../raster/r.what/main.c:75
+msgid "Name of existing raster map(s) to query"
+msgstr ""
+
+#: ../raster/r.what/main.c:82
+msgid "Size of point cache"
+msgstr ""
+
+#: ../raster/r.what/main.c:98
+msgid "Coordinates for query"
+msgstr ""
+
+#: ../raster/r.what/main.c:102
+msgid "Show the category label in the grid cell(s)"
+msgstr ""
+
+#: ../raster/r.what/main.c:106
+msgid "Turn on cache reporting"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:221
+msgid ""
+"Generates three, or four raster map layers showing 1) the base "
+"(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the "
+"direction of the maximum ROS, and optionally 4) the maximum potential "
+"spotting distance."
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:231
+msgid "Name of raster map containing fuel MODELs"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:237
+msgid "Name of raster map containing the 1-HOUR fuel MOISTURE (%)"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:243
+msgid "Name of raster map containing the 10-HOUR fuel MOISTURE (%)"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:249
+msgid "Name of raster map containing the 100-HOUR fuel MOISTURE (%)"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:256
+msgid "Name of raster map containing LIVE fuel MOISTURE (%)"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:262
+msgid "Name of raster map containing midflame wind VELOCITYs (ft/min)"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:268
+msgid "Name of raster map containing wind DIRECTIONs (degree)"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:274
+msgid "Name of raster map containing SLOPE (degree)"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:280
+msgid "Name of raster map containing ASPECT (degree, anti-clockwise from E)"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:286
+msgid "Name of raster map containing ELEVATION (m) (required w/ -s)"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:293
+msgid "Name of raster map to contain results (several new layers)"
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:301
+msgid "Also produce maximum SPOTTING distance"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:118
+msgid ""
+"Simulates elliptically anisotropic spread on a graphics window and generates "
+"a raster map of the cumulative time of spread, given raster maps containing "
+"the rates of spread (ROS), the ROS directions and the spread origins. It "
+"optionally produces raster maps to contain backlink UTM coordinates for "
+"tracing spread paths."
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:129
+msgid "Name of raster map containing MAX rate of spread (ROS) (cm/min)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:136
+msgid "Name of raster map containing DIRections of max ROS (degree)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:143
+msgid "Name of raster map containing BASE ROS (cm/min)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:150
+msgid "Name of raster map containing STARTing sources"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:156
+msgid ""
+"Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:162
+msgid ""
+"Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:168
+msgid ""
+"Name of raster map containing fine Fuel MOISture of the cell receiving a "
+"spotting firebrand (%) (required w/ -s)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:175
+msgid "Basic sampling window SIZE needed to meet certain accuracy (3)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:181
+msgid "Sampling DENSity for additional COMPutin (range: 0.0 - 1.0 (0.5))"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:187
+msgid "INITial TIME for current simulation (0) (min)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:193
+msgid "Simulating time duration LAG (fill the region) (min)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:199
+msgid "Name of raster map as a display backdrop"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:206
+msgid "Name of raster map to contain OUTPUT spread time (min)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:212
+msgid "Name of raster map to contain X_BACK coordiates"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:218
+msgid "Name of raster map to contain Y_BACK coordiates"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:222
+msgid "Run VERBOSELY"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:226
+msgid "DISPLAY 'live' spread process on screen"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:230
+msgid "For wildfires: consider SPOTTING effect"
+msgstr ""
+
+#: ../raster/wildfire/r.spreadpath/main.c:56
+msgid ""
+"Recursively traces the least cost path backwards to cells from which the "
+"cumulative cost was determined."
+msgstr ""
+
+#: ../raster/wildfire/r.spreadpath/main.c:64
+msgid "Name of raster map containing back-path easting information"
+msgstr ""
+
+#: ../raster/wildfire/r.spreadpath/main.c:71
+msgid "Name of raster map containing back-path norhting information"
+msgstr ""
+
+#: ../raster/wildfire/r.spreadpath/main.c:78
+msgid "The map E and N grid coordinates of starting points"
+msgstr ""
+
+#: ../raster/wildfire/r.spreadpath/main.c:85
+msgid "Name of spread path raster map"
+msgstr ""
+
+#: ../raster/wildfire/r.spreadpath/main.c:89
+msgid "Run verbosly"
+msgstr ""
 
 #: ../vector/v.category/main.c:173
 msgid "Too many layers for this operation"
@@ -338,166 +3530,72 @@ msgstr "navedena morata biti 2 sloja"
 msgid "Output vector wasn't entered."
 msgstr "Izhodni vektor ni bil vnesen."
 
-#: ../vector/v.voronoi/dt_main.c:116
-msgid "Cannot calculate area centroid"
-msgstr "Ne morem izraèunati centroida obmoèja."
+#: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
+msgid "Input vector was not found."
+msgstr "Ne najdem vhodnega vektorja."
 
-#: ../vector/v.voronoi/vo_main.c:251 ../vector/v.to.points/main.c:229
-msgid "Cannot copy table"
-msgstr "Ne morem kopirati tabele"
+#: ../vector/v.convert/att.c:36
+msgid "No category labels (dig_cats) found, no table created.\n"
+msgstr "Ne najdem etiket (dig_cats), tabela ni bi bila ustvarjena.\n"
 
-#: ../vector/v.transform/main.c:166
+#: ../vector/v.convert/att.c:41
+msgid "Cannot open dig_cats file."
+msgstr "Ne morem odpreti dig_cats datoteke."
+
+#: ../vector/v.convert/att.c:68
 #, c-format
-msgid "Could not open file with coordinates : %s\n"
-msgstr "Ne morem odpreti datoteke s koordinatami : %s\n"
+msgid "Cannot open database %s"
+msgstr "Ne morem odpreti baze podatkov %s"
 
-#: ../vector/v.transform/main.c:172
+#: ../vector/v.convert/att.c:74 ../vector/v.to.points/main.c:246
 #, c-format
-msgid "Could not find input map <%s>\n"
-msgstr "Ne morem najti vhodne datoteke <%s>\n"
+msgid "Cannot create table: %s"
+msgstr "Ne morem ustvariti tabele: %s"
 
-#: ../vector/v.transform/main.c:206
-msgid ""
-"\n"
-"Now transforming the vectors ...\n"
-msgstr ""
-"\n"
-"Spreminjam vektorje ... \n"
-
-#: ../vector/v.transform/main.c:224
+#: ../vector/v.convert/att.c:99
 #, c-format
-msgid "New vector map <%s> boundary coordinates:\n"
-msgstr "Novi vektorski sloj <%s> mejne koordinate:\n"
+msgid "Cannot insert into table: %s"
+msgstr "Ne morem vnesti v tabelo: %s"
 
-#: ../vector/v.transform/main.c:225
+#: ../vector/v.convert/old2new.c:32
+msgid "Failed opening input dig file."
+msgstr "Nisem uspel odpreti vhodne datoteke."
+
+#: ../vector/v.convert/old2new.c:47
+msgid "dig_att file doesn't exist."
+msgstr "dig_att datoteka ne obstaja."
+
+#: ../vector/v.convert/old2new.c:50
+msgid "Failed opening input dig_att file."
+msgstr "Nisem mogel odpreti vhodne datoteke dig_att."
+
+#: ../vector/v.convert/old2new.c:71
+msgid "Attaching categories...\n"
+msgstr "Pripajam kategorije...\n"
+
+#: ../vector/v.convert/old2new.c:89
 #, c-format
-msgid " N: %-10.3f    S: %-10.3f\n"
-msgstr ""
+msgid "Failed to attach an attribute (category %d) to a line."
+msgstr "Nisem uspel pripojiti atributa (kategorije %d) liniji."
 
-#: ../vector/v.transform/main.c:226
+#: ../vector/v.convert/old2new.c:92
 #, c-format
-msgid " E: %-10.3f    W: %-10.3f\n"
-msgstr ""
+msgid "WARNING: line %d label: %d matched another label: %d."
+msgstr "OPOZORILO: linija %d etiketa: %d je enaka drugi etiketi: %d."
 
-#: ../vector/v.transform/main.c:227
+#: ../vector/v.convert/old2new.c:100
+msgid "Writing new file...\n"
+msgstr "Zapisujem novo datoteko...\n"
+
+#: ../vector/v.convert/old2new.c:121
 #, c-format
-msgid " B: %6.3f    T: %6.3f\n"
-msgstr ""
+msgid "%-5d points and lines written to output file.\n"
+msgstr "%-5d toèk in linij zapisanih v izhodno datoteko.\n"
 
-#: ../vector/v.transform/main.c:232
+#: ../vector/v.convert/old2new.c:135
 #, c-format
-msgid "'%s' has finished the transformation of the vectors.\n"
-msgstr "'%s' je konèal spreminjanje vektorjev.\n"
-
-#: ../vector/v.transform/print_trans.c:29
-msgid ""
-"                          CHECK MAP RESIDUALS\n"
-"\n"
-msgstr ""
-"                          PREVERI OSTANKE V SLOJU\n"
-"\n"
-
-#: ../vector/v.transform/print_trans.c:30
-msgid "                Current Map                  New Map\n"
-msgstr "                Trenutni sloj                  Novi sloj\n"
-
-#: ../vector/v.transform/print_trans.c:31
-msgid ""
-" POINT      X coord    Y coord  |        X coord   Y coord    |      "
-"residuals\n"
-msgstr ""
-
-#: ../vector/v.transform/print_trans.c:43
-#, c-format
-msgid ""
-"\n"
-"\n"
-"  Number of points: %d\n"
-msgstr ""
-"\n"
-"\n"
-" ©tevilo toèk: %d\n"
-
-#: ../vector/v.transform/print_trans.c:44
-#, c-format
-msgid "  Residual mean average   : %f\n"
-msgstr ""
-
-#: ../vector/v.transform/creat_trans.c:69
-#, c-format
-msgid " Number of points that have been entered: %d\n"
-msgstr "©tevilo toèk, ki so bile vnesene: %d\n"
-
-#: ../vector/v.transform/creat_trans.c:90
-#, c-format
-msgid "%s"
-msgstr "%s"
-
-#: ../vector/v.transform/creat_trans.c:100
-msgid "Please answer yes or no"
-msgstr "Prosim odgovori 'yes' ali 'no'"
-
-#: ../vector/v.transform/creat_trans.c:123
-#, c-format
-msgid "Number of points that have been entered: %d\n"
-msgstr "©tevilo toèk, ki so bile vnesene: %d\n"
-
-#: ../vector/v.transform/setup_trans.c:88
-msgid "The points weren't spread out enough."
-msgstr "Toèke niso bile dovolj raz¹irjene."
-
-#: ../vector/v.transform/setup_trans.c:91
-#, c-format
-msgid "You need to enter at least %d points."
-msgstr "Vnesti mora¹ vsaj %d toèk."
-
-#: ../vector/v.transform/ask_trans.c:83
-msgid "ask_transform_coor():  Leaving session.. \n"
-msgstr "sak_transform_coor(): Zapu¹èam sejo... \n"
-
-#: ../vector/v.what.rast/main.c:330
-#, c-format
-msgid "%d categories loaded from table\n"
-msgstr "%d kategorij nalo¾enih iz tabele\n"
-
-#: ../vector/v.what.rast/main.c:331
-#, c-format
-msgid "%d categories loaded from vector\n"
-msgstr "%d kategorij nalo¾enih iz vektorja\n"
-
-#: ../vector/v.what.rast/main.c:332
-#, c-format
-msgid "%d categories from vector missing in table\n"
-msgstr "%d kategorij iz vektorja manjka v tabeli\n"
-
-#: ../vector/v.what.rast/main.c:333
-#, c-format
-msgid "%d duplicate categories in vector\n"
-msgstr "%d dvojnih kategorij v vektorju\n"
-
-#: ../vector/v.what.rast/main.c:334
-#, c-format
-msgid "%d records updated\n"
-msgstr "%d enot je bilo posodobljenih\n"
-
-#: ../vector/v.what.rast/main.c:335
-#, c-format
-msgid "%d update errors\n"
-msgstr "%d napak med posodabljanjem\n"
-
-#: ../vector/v.in.region/main.c:46
-msgid "Select type: line or area"
-msgstr "Izberi tip: linija ali obmoèje"
-
-#: ../vector/v.convert/type.c:29
-#, c-format
-msgid "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"
-msgstr "SISTEMSKA_NAPAKA: OLD_T_NEW ima napaèno kodo za tip %x"
-
-#: ../vector/v.convert/type.c:50
-#, c-format
-msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
-msgstr "SISTEMSKA NAPAKA: OLD_T_NEW ima napaèno kodo za tip %x"
+msgid "%-5d centroids written to output file.\n"
+msgstr "%-5d centroidov zapisanih v izhodno datoteko.\n"
 
 #: ../vector/v.convert/read.c:41
 msgid "Reading dig file...\n"
@@ -520,8 +3618,9 @@ msgid ""
 "WARNING: Input file is not portable.We will attempt to convert anyway but "
 "conversion may fail.Please read manual for detail information."
 msgstr ""
-"OPOZORILO: Vhodna datoteka ni prenosljiva. Vseeno jo bom posku¹al preoblikovati,"
-"a lahko se ponesreèi. Prosim preberi priroènik za natanènej¹a navodila."
+"OPOZORILO: Vhodna datoteka ni prenosljiva. Vseeno jo bom posku¹al "
+"preoblikovati,a lahko se ponesreèi. Prosim preberi priroènik za natanènej¹a "
+"navodila."
 
 #: ../vector/v.convert/read.c:161
 #, c-format
@@ -627,72 +3726,52 @@ msgstr "%-5d kategorij neznanega tipa preskoèenih\n"
 msgid "%-5d categories read into memory.\n"
 msgstr "%-5d kategorij prebranih v spomin.\n"
 
-#: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
-msgid "Input vector was not found."
-msgstr "Ne najdem vhodnega vektorja."
-
-#: ../vector/v.convert/att.c:36
-msgid "No category labels (dig_cats) found, no table created.\n"
-msgstr "Ne najdem etiket (dig_cats), tabela ni bi bila ustvarjena.\n"
-
-#: ../vector/v.convert/att.c:41
-msgid "Cannot open dig_cats file."
-msgstr "Ne morem odpreti dig_cats datoteke."
-
-#: ../vector/v.convert/att.c:68
+#: ../vector/v.convert/type.c:29
 #, c-format
-msgid "Cannot open database %s"
-msgstr "Ne morem odpreti baze podatkov %s"
+msgid "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"
+msgstr "SISTEMSKA_NAPAKA: OLD_T_NEW ima napaèno kodo za tip %x"
 
-#: ../vector/v.convert/att.c:74 ../vector/v.to.points/main.c:246
+#: ../vector/v.convert/type.c:50
 #, c-format
-msgid "Cannot create table: %s"
-msgstr "Ne morem ustvariti tabele: %s"
+msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
+msgstr "SISTEMSKA NAPAKA: OLD_T_NEW ima napaèno kodo za tip %x"
 
-#: ../vector/v.convert/att.c:99
+#: ../vector/v.in.region/main.c:46
+msgid "Select type: line or area"
+msgstr "Izberi tip: linija ali obmoèje"
+
+#: ../vector/v.surf.idw/read_sites.c:34
+msgid "Cannot read field info"
+msgstr "Ne morem prebrati informacije polja"
+
+#: ../vector/v.surf.idw/read_sites.c:38 ../vector/v.to.points/main.c:239
+#: ../vector/v.db.select/main.c:145
 #, c-format
-msgid "Cannot insert into table: %s"
-msgstr "Ne morem vnesti v tabelo: %s"
+msgid "Cannot open database %s by driver %s"
+msgstr "Ne morem odpreti baze podatkov %s z gonilnikom %s"
 
-#: ../vector/v.convert/old2new.c:32
-msgid "Failed opening input dig file."
-msgstr "Nisem uspel odpreti vhodne datoteke."
+#: ../vector/v.surf.idw/read_sites.c:45
+msgid "Column type not supported"
+msgstr "Tip zapisa kolone ni podprt"
 
-#: ../vector/v.convert/old2new.c:47
-msgid "dig_att file doesn't exist."
-msgstr "dig_att datoteka ne obstaja."
+#: ../vector/v.surf.idw/read_sites.c:48
+msgid "Cannot select data from table"
+msgstr "Ne morem izbrati (select) podatkov iz tabele"
 
-#: ../vector/v.convert/old2new.c:50
-msgid "Failed opening input dig_att file."
-msgstr "Nisem mogel odpreti vhodne datoteke dig_att."
-
-#: ../vector/v.convert/old2new.c:71
-msgid "Attaching categories...\n"
-msgstr "Pripajam kategorije...\n"
-
-#: ../vector/v.convert/old2new.c:89
+#: ../vector/v.surf.idw/read_sites.c:50
 #, c-format
-msgid "Failed to attach an attribute (category %d) to a line."
-msgstr "Nisem uspel pripojiti atributa (kategorije %d) liniji."
+msgid "%d records selected from table"
+msgstr "Iz tabele je izbranih %d zapisov (records)"
 
-#: ../vector/v.convert/old2new.c:92
+#: ../vector/v.surf.idw/read_sites.c:80
 #, c-format
-msgid "WARNING: line %d label: %d matched another label: %d."
-msgstr "OPOZORILO: linija %d etiketa: %d je enaka drugi etiketi: %d."
+msgid "No record for line (cat = %d)"
+msgstr "Za vrstico (cat = %d) ni zapisa (record)<"
 
-#: ../vector/v.convert/old2new.c:100
-msgid "Writing new file...\n"
-msgstr "Zapisujem novo datoteko...\n"
-
-#: ../vector/v.convert/old2new.c:121
+#: ../vector/v.surf.idw/read_sites.c:92
 #, c-format
-msgid "%-5d points and lines written to output file.\n"
-msgstr "%-5d toèk in linij zapisanih v izhodno datoteko.\n"
-
-#: ../vector/v.convert/old2new.c:135
-#, c-format
-msgid "%-5d centroids written to output file.\n"
-msgstr "%-5d centroidov zapisanih v izhodno datoteko.\n"
+msgid "%d points loaded\n"
+msgstr "nalo¾enih je bilo %d toèk\n"
 
 #: ../vector/v.to.points/main.c:54
 #, c-format
@@ -732,10 +3811,9 @@ msgstr "Ne ustvari tabele z atributi."
 msgid "Could not find input %s\n"
 msgstr "Ne najdem vhodne datoteke %s\n"
 
-#: ../vector/v.to.points/main.c:239 ../vector/v.surf.idw/read_sites.c:38
-#, c-format
-msgid "Cannot open database %s by driver %s"
-msgstr "Ne morem odpreti baze podatkov %s z gonilnikom %s"
+#: ../vector/v.to.points/main.c:229 ../vector/v.voronoi/vo_main.c:298
+msgid "Cannot copy table"
+msgstr "Ne morem kopirati tabele"
 
 #: ../vector/v.to.points/main.c:250
 msgid "Cannot create index"
@@ -751,620 +3829,160 @@ msgstr "Ne morem ti garantirati (grant) privilegijev nad tabelo %s"
 msgid "%d points written to output map\n"
 msgstr "%d toèk je bilo zapisanih na izhodno datoteko\n"
 
-#: ../vector/v.surf.idw/read_sites.c:34
-msgid "Cannot read field info"
-msgstr "Ne morem prebrati informacije polja"
+#: ../vector/v.transform/ask_trans.c:83
+msgid "ask_transform_coor():  Leaving session.. \n"
+msgstr "sak_transform_coor(): Zapu¹èam sejo... \n"
 
-#: ../vector/v.surf.idw/read_sites.c:45
-msgid "Column type not supported"
-msgstr "Tip zapisa kolone ni podprt"
-
-#: ../vector/v.surf.idw/read_sites.c:48
-msgid "Cannot select data from table"
-msgstr "Ne morem izbrati (select) podatkov iz tabele"
-
-#: ../vector/v.surf.idw/read_sites.c:50
+#: ../vector/v.transform/creat_trans.c:69
 #, c-format
-msgid "%d records selected from table"
-msgstr "Iz tabele je izbranih %d zapisov (records)"
+msgid " Number of points that have been entered: %d\n"
+msgstr "©tevilo toèk, ki so bile vnesene: %d\n"
 
-#: ../vector/v.surf.idw/read_sites.c:80
+#: ../vector/v.transform/creat_trans.c:90
 #, c-format
-msgid "No record for line (cat = %d)"
-msgstr "Za vrstico (cat = %d) ni zapisa (record)<"
+msgid "%s"
+msgstr "%s"
 
-#: ../vector/v.surf.idw/read_sites.c:92
+#: ../vector/v.transform/creat_trans.c:100
+msgid "Please answer yes or no"
+msgstr "Prosim odgovori 'yes' ali 'no'"
+
+#: ../vector/v.transform/creat_trans.c:123
 #, c-format
-msgid "%d points loaded\n"
-msgstr "nalo¾enih je bilo %d toèk\n"
+msgid "Number of points that have been entered: %d\n"
+msgstr "©tevilo toèk, ki so bile vnesene: %d\n"
 
-#: ../display/d.font.freetype/main.c:52
-msgid ""
-"Selects the font in which text will be displayed on the user's graphics "
-"monitor."
-msgstr "Izbere pisavo v kateri bo tekst zapisan na grafiènem monitorju"
-
-#: ../display/d.font.freetype/main.c:60
-msgid ""
-"Font name (not supported interactively, see also -l flag) or path to "
-"TrueType font (including file name)"
-msgstr ""
-"Ime pisave (ni podprto interaktivno, glej tudi -l izbiro ukaza) ali pot do \n"
-"TrueType pisave (vkljuèujoè ime datoteke)"
-
-#: ../display/d.font.freetype/main.c:62
-msgid "Path to TrueType font (including file name)"
-msgstr "Pot do TrueType pisav (vkljuèujoè ime datoteke)"
-
-#: ../display/d.font.freetype/main.c:71
-msgid "Character encoding"
-msgstr "Kodni nabor"
-
-#: ../display/d.font.freetype/main.c:102
-msgid "No graphics device selected"
-msgstr "Nobena grafièna naprava ni izbrana"
-
-#: ../display/d.font.freetype/main.c:170
+#: ../vector/v.transform/main.c:166
 #, c-format
+msgid "Could not open file with coordinates : %s\n"
+msgstr "Ne morem odpreti datoteke s koordinatami : %s\n"
+
+#: ../vector/v.transform/main.c:172
+#, c-format
+msgid "Could not find input map <%s>\n"
+msgstr "Ne morem najti vhodne datoteke <%s>\n"
+
+#: ../vector/v.transform/main.c:206
 msgid ""
 "\n"
-"Setting release of FreeType\n"
-msgstr "\nNastavljam verzijo FreeType-a\n"
+"Now transforming the vectors ...\n"
+msgstr ""
+"\n"
+"Spreminjam vektorje ... \n"
 
-#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:273
+#: ../vector/v.transform/main.c:224
 #, c-format
-msgid "Region size is lower than minreg, nothing displayed.\n"
-msgstr "Velikost regije je od najmanj¹e regije (minreg), ne morem prikazati nièesar.\n"
+msgid "New vector map <%s> boundary coordinates:\n"
+msgstr "Novi vektorski sloj <%s> mejne koordinate:\n"
 
-#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:282
+#: ../vector/v.transform/main.c:225
 #, c-format
-msgid "Region size is greater than maxreg, nothing displayed.\n"
-msgstr "Velikost regije je veèja od najveèje regije (maxreg), ne morem prikazati nièesar\n"
-
-#: ../display/d.paint.labels/do_labels.c:143
-#, c-format
-msgid "Error: %s\n"
-msgstr "Napaka: %s\n"
-
-#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:116
-#, c-format
-msgid "found %d visuals of type TrueColor\n"
-msgstr "najdenih je bilo %d \"visuals\" tipa TrueColor\n"
-
-#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
-#, c-format
-msgid "searching for highest bit depth\n"
-msgstr "i¹èem najveèjo mo¾no bitno globino\n"
-
-#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:135
-#, c-format
-msgid "selected %d bit depth\n"
-msgstr "izbrana %d bitna globina\n"
-
-#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:197
-#, c-format, fuzzy
-msgid "using default visual which is %s\n"
-msgstr "uporabljam privzeto \"visual\", ki je %s\n"
-
-#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
-#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
-#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
-#, c-format, fuzzy
-msgid "Monitor: interactive command in redraw\n"
-msgstr "Monitor: interaktivni ukaz v ponovnem risanju\n"
-
-#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:127
-#, c-format
-msgid "Monitor: waitpid: expected %d but got %d\n"
+msgid " N: %-10.3f    S: %-10.3f\n"
 msgstr ""
 
-#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
+#: ../vector/v.transform/main.c:226
 #, c-format
-msgid "Monitor: XGetWMName failed\n"
+msgid " E: %-10.3f    W: %-10.3f\n"
 msgstr ""
 
-#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
+#: ../vector/v.transform/main.c:227
 #, c-format
-msgid "Monitor: XGetWMName: bad result\n"
+msgid " B: %6.3f    T: %6.3f\n"
 msgstr ""
 
-#: ../display/d.zoom/main.c:161
+#: ../vector/v.transform/main.c:232
 #, c-format
-msgid "ERROR: can not get \"list\" items\n"
+msgid "'%s' has finished the transformation of the vectors.\n"
+msgstr "'%s' je konèal spreminjanje vektorjev.\n"
+
+#: ../vector/v.transform/print_trans.c:29
+msgid ""
+"                          CHECK MAP RESIDUALS\n"
+"\n"
+msgstr ""
+"                          PREVERI OSTANKE V SLOJU\n"
+"\n"
+
+#: ../vector/v.transform/print_trans.c:30
+msgid "                Current Map                  New Map\n"
+msgstr "                Trenutni sloj                  Novi sloj\n"
+
+#: ../vector/v.transform/print_trans.c:31
+msgid ""
+" POINT      X coord    Y coord  |        X coord   Y coord    |      "
+"residuals\n"
 msgstr ""
 
-#: ../display/d.zoom/main.c:162
-#, c-format
-msgid "-j flag forced\n"
-msgstr "vsiljena je bila izbira -j\n"
-
-#: ../display/d.zoom/main.c:200
-#, c-format
-msgid "ERROR: No map is displayed in GRASS monitor\n"
-msgstr "NAPAKA: Na grafiènem monitorju ni prikazana nobena karta\n"
-
-#: ../display/d.zoom/main.c:324
-#, c-format
-msgid "%d raster%s, %d vector%s\n"
-msgstr "%d raster%s, %d vektor%s\n"
-
-#: ../display/d.zoom/main.c:334
-#, c-format
-msgid "this is the first d.zoom run; no previous zoom availible\n"
-msgstr "d.zoom si pognal prviè; predhodnih informacij o zoom-u ni\n"
-
-#: ../display/d.zoom/main.c:380
-#, c-format
-msgid "Zooming finished.\n"
-msgstr "Zoomiranje konèano.\n"
-
-#: ../display/d.zoom/zoom.c:15 ../display/d.zoom/pan.c:20
+#: ../vector/v.transform/print_trans.c:43
 #, c-format
 msgid ""
 "\n"
 "\n"
-"Buttons:\n"
-msgstr "\n\nGumbi:\n"
-
-#: ../display/d.zoom/zoom.c:16
-#, c-format
-msgid "%s Zoom menu\n"
-msgstr ""
-
-#: ../display/d.zoom/zoom.c:17 ../display/d.zoom/pan.c:21
-#, c-format
-msgid "%s Pan\n"
-msgstr ""
-
-#: ../display/d.zoom/zoom.c:18
-#, c-format
-msgid "%s Quit menu\n"
-msgstr "%s Ugasni menu\n"
-
-#: ../display/d.zoom/zoom.c:41
-#, c-format
-msgid ""
-"This region now saved as current region.\n"
-"\n"
-msgstr "Ta regija je shranjena kot trenutna regija.\n"
-
-#: ../display/d.zoom/zoom.c:42
-#, c-format
-msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
-msgstr ""
-"Po¾eni 'd.erase', èe ¾eli¹, da se nastavitve nove regije uveljavijo na \n"
-"grafiènih napravah.\n"
-
-#: ../display/d.zoom/pan.c:22
-#, c-format
-msgid "%s Quit\n"
-msgstr "%s je ugasnjen\n"
-
-#: ../display/d.path/select.c:32
-#, c-format
-msgid "L: from  M: to R: quit\n"
-msgstr ""
-
-#: ../display/d.path/select.c:57
-#, c-format
-msgid "Node %d: %f %f\n"
-msgstr "Vozel %d: %f %f\n"
-
-#: ../display/d.path/select.c:133
-#, c-format
-msgid "Destination unreachable\n"
-msgstr "Destinacijo je nemogoèe doseèi\n"
-
-#: ../display/d.path/select.c:136
-#, c-format
-msgid "Costs on the network = %f\n"
-msgstr "Stro¹ki na omre¾ju = %f\n"
-
-#: ../display/d.path/select.c:137
-#, c-format
-msgid "  Distance to the network = %f, distance from the network = %f\n"
-msgstr "Oddaljenost do omre¾ja = %f, oddaljenost od omre¾ja = %f\n"
-
-#: ../display/d.vect/main.c:479
-#, c-format
-msgid "Plotting ... "
-msgstr "Ri¹em ..."
-
-#: ../display/d.vect/main.c:488
-#, c-format
-msgid "The bounding box of the map outside current region, nothing displayed.\n"
-msgstr "Obseg sloja je izven trenutne regije, nièesar ne bom prikazal.\n"
-
-#: ../display/d.vect/main.c:545
-#, c-format
-msgid "Done\n"
-msgstr "Narejeno\n"
-
-#: ../display/d.vect/topo.c:38 ../display/d.vect/dir.c:34
-#: ../display/d.vect/attr.c:54 ../display/d.vect/label.c:32
-#: ../display/d.vect/plot1.c:51
-#, c-format
-msgid ""
-"\n"
-"ERROR: vector file - can't read\n"
+"  Number of points: %d\n"
 msgstr ""
 "\n"
-"NAPAKA: ne morem prebrati vektorskega sloja\n"
+"\n"
+" ©tevilo toèk: %d\n"
 
-#: ../display/d.what.vect/main.c:139
-msgid "Building spatial index ..."
-msgstr "Gradim prostorski indeks ..."
-
-#: ../display/d.what.vect/main.c:157
+#: ../vector/v.transform/print_trans.c:44
 #, c-format
-msgid "Done.\n"
-msgstr "Narejeno.\n"
-
-#: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
-#, c-format
-msgid "Nothing Found.\n"
-msgstr "Nièesar nisem na¹el.\n"
-
-#: ../display/d.what.vect/what.c:203
-#, c-format
-msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
-msgstr "Linija %d  Tip: %s  Levo: %d  Desno: %d  "
-
-#: ../display/d.what.vect/what.c:206
-#, c-format
-msgid "Length: %f\n"
-msgstr "Dol¾ina: %f\n"
-
-#: ../display/d.what.vect/what.c:216
-#, c-format
-msgid "  Node[%d]: %d  Number of lines: %d\n"
-msgstr " Vozel[%d]: %d  ©tevilo linij: %d\n"
-
-#: ../display/d.what.vect/what.c:221
-#, c-format
-msgid "    Line: %5d  Angle: %.8f\n"
-msgstr "Linija: %5d  Kot: %.8f\n"
-
-#: ../display/d.what.vect/what.c:227
-#, c-format
-msgid "length %f\n"
-msgstr "dol¾ina %f\n"
-
-#: ../display/d.what.vect/what.c:245
-#, c-format, fuzzy
-msgid "Point height: %f\n"
-msgstr "Vi¹ina toèke: %f\n"
-
-#: ../display/d.what.vect/what.c:257
-#, c-format
-msgid "Line height: %f\n"
-msgstr "Vi¹ina linije: %f\n"
-
-#: ../display/d.what.vect/what.c:263
-#, c-format
-msgid "Line height min: %f max: %f\n"
-msgstr "Vi¹ina linije min: %f max: %f\n"
-
-#: ../display/d.what.vect/what.c:280
-#, c-format
-msgid "Area height: %f\n"
-msgstr "Vi¹ina obmoèja: %f\n"
-
-#: ../display/d.what.vect/what.c:287
-#, c-format
-msgid "Area\n"
-msgstr "Obmoèje\n"
-
-#: ../display/d.what.vect/what.c:300
-#, c-format
-msgid "Area: %d  Number of isles: %d\n"
-msgstr "Obmoèje: %d  ©tevilo otokov: %d\n"
-
-#: ../display/d.what.vect/what.c:304
-#, c-format
-msgid "  Isle[%d]: %d\n"
-msgstr "Otok[%d]: %d\n"
-
-#: ../display/d.what.vect/what.c:311
-#, c-format
-msgid "Island: %d  In area: %d\n"
-msgstr "Otok %d  V obmoèju: %d\n"
-
-#: ../display/d.what.vect/what.c:315 ../display/d.what.vect/what.c:323
-#, c-format
-msgid "Size - Sq Meters: %.3f\t\tHectares: %.3f\n"
-msgstr "Velikost - m^2: %.3f\\t\\tHektarov: %.3f\n"
-
-#: ../display/d.what.vect/what.c:318 ../display/d.what.vect/what.c:327
-#, c-format
-msgid "           Acres: %.3f\t\tSq Miles: %.4f\n"
-msgstr "           Akrov: %.3f\\t\\tkvadratnih milj: %.4f\n"
-
-#: ../display/d.what.vect/what.c:353
-#, c-format
-msgid ""
-"field: %d\n"
-"category: %d\n"
+msgid "  Residual mean average   : %f\n"
 msgstr ""
-"polje: %d\n"
-"kategorija: %d\n"
 
-#: ../display/d.what.vect/what.c:362
+#: ../vector/v.transform/setup_trans.c:88
+msgid "The points weren't spread out enough."
+msgstr "Toèke niso bile dovolj raz¹irjene."
+
+#: ../vector/v.transform/setup_trans.c:91
 #, c-format
-msgid "Database connection not defined\n"
+msgid "You need to enter at least %d points."
+msgstr "Vnesti mora¹ vsaj %d toèk."
+
+#: ../vector/v.voronoi/dt_main.c:119
+msgid "Cannot calculate area centroid"
+msgstr "Ne morem izraèunati centroida obmoèja."
+
+#: ../vector/v.what.rast/main.c:330
+#, c-format
+msgid "%d categories loaded from table\n"
+msgstr "%d kategorij nalo¾enih iz tabele\n"
+
+#: ../vector/v.what.rast/main.c:331
+#, c-format
+msgid "%d categories loaded from vector\n"
+msgstr "%d kategorij nalo¾enih iz vektorja\n"
+
+#: ../vector/v.what.rast/main.c:332
+#, c-format
+msgid "%d categories from vector missing in table\n"
+msgstr "%d kategorij iz vektorja manjka v tabeli\n"
+
+#: ../vector/v.what.rast/main.c:333
+#, c-format
+msgid "%d duplicate categories in vector\n"
+msgstr "%d dvojnih kategorij v vektorju\n"
+
+#: ../vector/v.what.rast/main.c:334
+#, c-format
+msgid "%d records updated\n"
+msgstr "%d enot je bilo posodobljenih\n"
+
+#: ../vector/v.what.rast/main.c:335
+#, c-format
+msgid "%d update errors\n"
+msgstr "%d napak med posodabljanjem\n"
+
+#: ../vector/v.db.select/main.c:89
+#, fuzzy
+msgid "Database connection not defined"
 msgstr "Povezava z bazo podatkov ni definirana\n"
 
-#: ../display/d.what.vect/what.c:370
-#, c-format
-msgid ""
-"driver: %s\n"
-"database: %s\n"
-"table: %s\n"
-"key column: %s\n"
-msgstr ""
-"gonilnik: %s\n"
-"baza podatkov: %s\n"
-"tabela: %s\n"
-"kolona z identifikatorjem: %s\n"
+#: ../vector/v.db.select/main.c:97
+#, fuzzy
+msgid "Cannot open select cursor"
+msgstr "Ne morem odpreti baze podatkov %s"
 
-#: ../display/d.what.vect/what.c:421
-#, c-format
-msgid ""
-"\n"
-"Click mouse button on desired location\n"
-msgstr ""
-"\n"
-"Klikni z mi¹ko na ¾eleno lokacijo\n"
-
-#: ../display/d.what.vect/what.c:426
-#, c-format
-msgid "Buttons\n"
-msgstr "Gumbi\n"
-
-#: ../display/d.what.vect/what.c:427
-#, c-format
-msgid " Left:  what's here\n"
-msgstr "Levi: poizveduj po karti\n"
-
-#: ../display/d.what.vect/what.c:429
-#, c-format, fuzzy
-msgid " Middle: toggle flash color\n"
-msgstr "Srednji: barvni blisk\n"
-
-#: ../display/d.what.vect/what.c:434
-#, c-format
-msgid " Right: quit\n"
-msgstr "Desni: konèaj\n"
-
-#: ../display/d.what.vect/openvect.c:12
-#, c-format
-msgid "warning: %s - vector file not found\n"
-msgstr "pozor: ne najdem vektorja %s\n"
-
-#: ../raster/r.colors/rules.c:45
-#, c-format
-msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
-msgstr "Vnesi pogoje, ko konèa¹ - \"end\", za pomoè - \"help\".\n"
-
-#: ../raster/r.colors/rules.c:47
-#, c-format
-msgid "fp: Data range is %.25f to %.25f\n"
-msgstr "fp: Razpon podatkov je %.25f do %.25f\n"
-
-#: ../raster/r.colors/rules.c:49
-#, c-format
-msgid "Data range is %ld to %ld\n"
-msgstr "Razpon podatkov je %ld do %ld\n"
-
-#: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
-msgid "Your color rules do not cover the whole range of data!"
-msgstr "Tvoja barvna paleta ne zaobsega celotnega razpona podatkov!"
-
-#: ../raster/r.colors/rules.c:188
-#, c-format
-msgid "Enter a rule in one of these formats:\n"
-msgstr "Vnesi pogoje v enem od naslednjih formatov:\n"
-
-#: ../raster/r.colors/rules.c:190
-#, c-format
-msgid " val color\n"
-msgstr " vrednost barva\n"
-
-#: ../raster/r.colors/rules.c:191
-#, c-format
-msgid " n%% color\n"
-msgstr " n%% barva\n"
-
-#: ../raster/r.colors/rules.c:192
-#, c-format
-msgid " nv color\n"
-msgstr " nv barva\n"
-
-#: ../raster/r.colors/rules.c:193
-#, c-format
-msgid " default color\n"
-msgstr " privzeta barva\n"
-
-#: ../raster/r.colors/rules.c:194
-#, c-format
-msgid "color can be one of:\n"
-msgstr "barva lahko predstavlja katero koli od naslednjih:\n"
-
-#: ../raster/r.colors/rules.c:196
-#, c-format
-msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
-msgstr "ali R:G:B barvno definicijo, npr. 0:127:255\n"
-
-#: ../raster/r.colors/rules.c:237
-#, c-format
-msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
-msgstr ""
-"** opozorilo: R:G:B vrednost(i) so izven dovoljenega razpona \n"
-"[0 do 255]: %d:%d:%d **\n"
-
-#: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
-#: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
-#: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
-#: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
-#, c-format
-msgid "** rule is not added **\n"
-msgstr "** pogoj ni dodan **\n"
-
-#: ../raster/r.colors/rules.c:253
-#, c-format
-msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
-msgstr ""
-"** opozorilo: R G B vrednost(i) so izven dovoljenega razpona \n"
-"[0 do 255]: %d %d %d **\n"
-
-#: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
-#, c-format
-msgid "** warning: no such value **\n"
-msgstr "** opozorilo: take vrednosti ni **\n"
-
-#: ../raster/r.colors/rules.c:402
-#, c-format
-msgid "%s:line %d:%s\n"
-msgstr "%s:linija %d:%s\n"
-
-#: ../raster/r.colors/rules.c:403
-#, c-format
-msgid "** bad color specification **\n"
-msgstr "** napaèna specifikacija barv **\n"
-
-#: ../raster/r.colors/rules.c:424
-#, c-format
-msgid "%s - unknown color\n"
-msgstr "%s - nepoznana barva\n"
-
-#: ../raster/r.colors/rules.c:425
-#, c-format
-msgid "Valid colors are:\n"
-msgstr "Veljavne barve so:\n"
-
-#: ../raster/r.sunmask/main.c:225
-msgid "Using map center coordinates\n"
-msgstr "Uporabljam koordinate sredi¹èa sloja\n"
-
-#: ../raster/r.sunmask/main.c:234
-msgid "Empty east coordinate specified!"
-msgstr "Koordinata za vzhod je prazna!"
-
-#: ../raster/r.sunmask/main.c:236
-msgid "Empty north coordinate specified!\n"
-msgstr "Koordinata za sever je prazna!\n"
-
-#: ../raster/r.sunmask/main.c:255
-msgid "Either define sun position or location/date/time parameters."
-msgstr "Doloèi ali polo¾aj sonca ali parametre lokacija/datum/èas"
-
-#: ../raster/r.sunmask/main.c:258
-msgid ""
-"Neither sun position nor east/north, date/time/timezone definition are "
-"complete."
-msgstr "Niti polo¾aj sonca niti vzhod/zahod, datum/èas/èasovna_cona niso popolne"
-
-#: ../raster/r.sunmask/main.c:263
-#, c-format
-msgid "Calculating sun position... (using solpos (V. %s) from NREL)\n"
-msgstr "Raèunam lego sonca... (uporabil bom solpos (V. %s) iz NREL)\n"
-
-#: ../raster/r.sunmask/main.c:268
-msgid ""
-"Using user defined sun azimuth, altitude settings (ignoring eventual other "
-"values)\n"
-msgstr ""
-"Uporabil bom azimut sonca in njegovo vi¹ino, ki si si jih doloèil (ignoriral \n"
-"bom preostale mo¾ne vrednosti)\n"
-
-#: ../raster/r.sunmask/main.c:338
-#, c-format
-msgid " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"
-msgstr ""
-
-#: ../raster/r.sunmask/main.c:342
-#, c-format
-msgid " long: %f, lat: %f, timezone: %f\n"
-msgstr " dol¾ina: %f, ¹irina: %f, èasovna cona: %f\n"
-
-#: ../raster/r.sunmask/main.c:343
-#, c-format
-msgid ""
-" Solar position: sun azimuth: %f,\n"
-"   sun angle above horz.(refraction corrected): %f\n"
-msgstr ""
-" Lega sonca: azimut sonca: %f,\n"
-"   vi¹ina sonca nad obzorjem (refrakcija je popravljena): %f\n"
-
-#: ../raster/r.sunmask/main.c:347
-#, c-format
-msgid " Sunrise time (without refraction): %02d:%02d:%02d\n"
-msgstr " Èas vzhoda (brez refrakcije):  %02d:%02d:%02d\n"
-
-#: ../raster/r.sunmask/main.c:348
-#, c-format
-msgid " Sunset time  (without refraction): %02d:%02d:%02d\n"
-msgstr " Èas zahoda (brez refrakcije): %02d:%02d:%02d\n"
-
-#: ../raster/r.sunmask/main.c:357
-msgid "Please correct settings."
-msgstr "Prosim popravi nastavitve."
-
-#: ../raster/r.sunmask/main.c:374
-#, c-format
-msgid "Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)!\n"
-msgstr "Èas (%02i:%02i:%02i) je pred vzhodom (%02d:%02d:%02d)!\n"
-
-#: ../raster/r.sunmask/main.c:377
-#, c-format
-msgid "Time (%02i:%02i:%02i) is before sunrise!\n"
-msgstr "Èas (%02i:%02i:%02i) je pred vzhodom!\n"
-
-#: ../raster/r.sunmask/main.c:379 ../raster/r.sunmask/main.c:388
-msgid "Nothing to calculate. Please verify settings."
-msgstr "Izraèunati ne morem nièesar. Prosim ¹e enkrat preglej nastavitve."
-
-#: ../raster/r.sunmask/main.c:384
-#, c-format
-msgid "Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)!\n"
-msgstr "Èas (%02i:%02i:%02i) je po sonènem zahodu (%02d:%02d:%02d)!\n"
-
-#: ../raster/r.sunmask/main.c:387
-#, c-format
-msgid "Time (%02i:%02i:%02i) is after sunset!\n"
-msgstr "Èas (%02i:%02i:%02i) je po sonènem zahodu!\n"
-
-#: ../raster/r.sunmask/main.c:394
-msgid "No map calculation requested. Finished.\n"
-msgstr "Zahteval(a) nisi nobenega izraèuna. Konèano.\n"
-
-#: ../raster/r.sunmask/main.c:401
-msgid "You already know the sun position.\n"
-msgstr "Lego sonca ¾e pozna¹.\n"
-
-#: ../raster/r.sunmask/main.c:409 ../raster/r.sunmask/main.c:411
-#, c-format
-msgid "can't open %s"
-msgstr "ne morem odpreti %s"
-
-#: ../raster/r.sunmask/main.c:421
-#, c-format
-msgid "can't open range file for %s"
-msgstr "ne morem odpreti razpona za datoteko %s"
-
-#: ../raster/r.sunmask/main.c:438
-msgid "Calculating shadows from DEM..."
-msgstr "Izraèunavam sence iz DMR..."
-
-#: ../raster/r.sunmask/main.c:446
-msgid "can't read row in input elevation map"
-msgstr "ne morem prebrati vrstice v vhodnem sloju nadmorskih vi¹in"
-
-#: ../raster/r.sunmask/main.c:511
-msgid "Finished.\n"
-msgstr "Konèano.\n"
-
-#: ../imagery/i.group/main.c:86
-msgid "No input map(s) specified."
-msgstr "Doloèena ni bila nobena vhodna datoteka."
-
+#: ../vector/v.db.select/main.c:115
+#, fuzzy
+msgid "Cannot fetch data"
+msgstr "Ne morem izpisati baz podatkov."
