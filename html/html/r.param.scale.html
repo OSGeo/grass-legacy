@@ -41,23 +41,30 @@ Parameters:</h2>
 <br>default: 1.0
 <br>&nbsp;
 <br>&nbsp;
-<p><b><i>r.param.scale can calculate the following:</i></b>
-<p>&nbsp;elev: Generalised elevation value.
-<p>&nbsp;slope: Maximum gradient at a point.
-<p>&nbsp;aspect: Direction of maximum gradient.
-<p>&nbsp;profc: Profile convexity (vertical in direction of steepest slope).
-<p>&nbsp;planc: Plan convexity (contour curvature).
-<p>&nbsp;crosc: Cross sectional convexity (tangent to contours, downslope).
-<p>&nbsp;longc: Longitudinal convexity (perpendicular to contours downslope).
-<p>&nbsp;minic: Minimum convexity.
-<p>&nbsp;maxic: Maximum convexity.
-<p>&nbsp;features: Morphometric features:
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-peaks, ridges, passes, channels, pits and planes.
-<br>&nbsp;
+<p><b><i>r.param.scale can calculate the following parameters:</i></b>
+<UL>
+<li>elev: Generalised elevation value (for resampling purposes at different
+    scale)
+<li>slope: Maximum gradient at a point
+<li>aspect: Direction of maximum gradient
+<li><I>profc</I> or profile convexity (intersecting with the plane of
+  the <I>Z</I> axis and aspect direction)
+<li><I>planc</I> or plan convexity (intersecting with the <I>XY</I>
+  plane)
+<li><I>longc</I> or longitudinal curvature (intersecting with the plane
+  of the slope normal and aspect direction)
+<li><I>crosc</I> or cross-sectional curvature (intersecting with the
+   plane of the slope normal and perpendicular aspect direction)
+<li><I>maxic</I> or maximum curvature (in any plane)
+<li><I>minic</I> or minimum curvature (in any plane)
+<li><I>meanc</I> or mean curvature (in any plane).
+<li>Morphometric features: 
+   peaks, ridges, passes, channels, pits and planes
+</UL>
+
 <h2>
 NOTES</h2>
-In <i>r.param.scale</i> the&nbsp; direction of maximum gradient (considered
+In <i>r.param.scale</i> the direction of maximum gradient (considered
 downslope) is stored as:
 <ul>
 <li>
