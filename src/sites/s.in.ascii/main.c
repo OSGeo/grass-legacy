@@ -1,3 +1,21 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       s.in.ascii
+ * AUTHOR(S):    Original author unknown - probably CERL
+ *               Markus Neteler - neteler@geog.uni-hannover.de
+ * PURPOSE:      Import ASCII sites lists and their descriptions into
+ *               a GRASS sites list file. 
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
 #include <string.h>
 #include "gis.h"
 #include "local_proto.h"
@@ -13,9 +31,11 @@ static int loop; /* added #cat support for site_list 11/99 M. Neteler
 int 
 main (int argc, char *argv[])
 {
+    char me;
     char *output, *input;
     char *fs;
     int dims, i, has_cat;
+    struct GModule *module;
     FILE *in_fd, *out_fd;
     Site *site;
     struct
@@ -24,7 +44,13 @@ main (int argc, char *argv[])
     } parm;
     struct Flag *elev;
 
-    G_gisinit (argv[0]);
+    G_gisinit (me = argv[0]);
+
+    module = G_define_module();
+
+    module->description = 
+      "Convert an ASCII listing of site locations "
+      "into a GRASS site list file.";
 
     parm.output = G_define_option();
     parm.output->key = "sites";
@@ -60,7 +86,7 @@ main (int argc, char *argv[])
 	in_fd = fopen (input, "r");
 	if (NULL == in_fd)
 	{
-	    fprintf (stderr, "%s - ", G_program_name());
+	    fprintf (stderr, "%s - ", me);
 	    perror (input);
 	    exit(1);
 	}
@@ -92,7 +118,7 @@ main (int argc, char *argv[])
     if (out_fd == NULL)
     {
 	fprintf (stderr, " %s - can't create sites file [%s]",
-		G_program_name(), output);
+		me, output);
 	exit(1);
     }
 
