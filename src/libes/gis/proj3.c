@@ -6,6 +6,18 @@ static int lookup(char *, char *, char *, int);
 static int equal(char *, char *);
 static int lower(char);
 
+
+/*!
+ * \brief database units
+ *
+ * Returns a
+ * string describing the database grid units. It returns a plural form (eg. feet)
+ * if <b>plural</b> is true. Otherwise it returns a singular form (eg. foot).
+ *
+ *  \param plural
+ *  \return char * 
+ */
+
 char *G_database_unit_name(int plural)
 {
     int n;
@@ -26,6 +38,18 @@ char *G_database_unit_name(int plural)
     return name;
 }
 
+
+/*!
+ * \brief query cartographic projection
+ *
+ * Returns a pointer to a string which is a printable name for
+ * projection code <b>proj</b> (as returned by <i>G_projection</i>). Returns
+ * NULL if <b>proj</b> is not a valid projection.
+ *
+ *  \param proj
+ *  \return char * 
+ */
+
 char *G_database_projection_name()
 {
     int n;
@@ -44,6 +68,18 @@ char *G_database_projection_name()
 	strcpy (name, _("Unknown projection"));
     return name;
 }
+
+
+/*!
+ * \brief conversion to meters
+ *
+ * Returns a factor which converts the grid unit to meters (by
+ * multiplication).  If the database is not metric (eg. imagery) then 0.0 is
+ * returned.
+ *
+ *  \param void
+ *  \return double
+ */
 
 double G_database_units_to_meters_factor()
 {
@@ -90,6 +126,17 @@ double G_database_units_to_meters_factor()
  * NULL otherwise
  ***********************************************************************/
  
+
+/*!
+ * \brief get datum name for database
+ *
+ * Returns a pointer to the name of the map datum of the current database. If 
+ * there is no map datum explicitely associated with the acutal database, the 
+ * standard map datum WGS84 is returned, on error a NULL pointer is returned. 
+ *
+ *  \return char * 
+ */
+
 char *G_database_datum_name()
 {
   static char name[256], params[256];

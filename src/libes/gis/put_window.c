@@ -12,6 +12,22 @@
  *********************************************************************/
 
 #include "gis.h"
+
+/*!
+ * \brief write the database region
+ *
+ * Writes the database region file (WIND) in the user's current mapset
+ * from <b>region.</b> Returns 1 if the region is written ok. Returns -1 if not
+ * (no diagnostic message is printed).
+ * <b>Warning.</b> Since this routine actually changes the database region, it
+ * should only be called by modules which the user knows will change the region.
+ * It is probably fair to say that under GRASS 3.0 only the <i>g.region</i>,
+ * and <i>d.zoom</i> modules should call this routine.
+ *
+ *  \param region
+ *  \return int
+ */
+
 int G_put_window (struct Cell_head *window )
 {
     return G__put_window (window,"", "WIND");

@@ -13,7 +13,10 @@
 
 /*-
  * $Log$
- * Revision 1.13  2002-05-06 09:49:17  eric
+ * Revision 1.14  2004-10-06 17:25:40  markus
+ * doxygenized
+ *
+ * Revision 1.13  2002/05/06 09:49:17  eric
  * Check errno after strtod() usage against ERANGE to catch overflow errors.
  *
  * Revision 1.12  2002/01/22 04:51:10  glynn
@@ -235,6 +238,17 @@
 static int format_double ( double , char *);
 char *next_att (char *);
 
+
+/*!
+ * \brief 
+ *
+ * Free memory for a <tt>site</tt>
+ * struct previously allocated using G_site_new_struct.
+ *
+ *  \param site
+ *  \return void
+ */
+
 void G_site_free_struct (Site *s)
 /* Free memory for a Site struct */
 {
@@ -248,6 +262,25 @@ void G_site_free_struct (Site *s)
 
   return;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Allocates and returns pointer to memory for a <tt>Site</tt> structure for
+ * storing <tt>n</tt> dimensions (<em>including</em> easting and northing; must be >
+ * 1), an optional category <tt>c</tt>, <tt>s</tt> string attributes, and <tt>d</tt>
+ * decimal attributes. The category <tt>c</tt> can be <tt>CELL_TYPE</tt>, <tt>FCELL_TYPE</tt>,
+ * <tt>DCELL_TYPE</tt> (as defined in <tt>gis.h</tt>), or -1
+ * (indicating no category attribute). Returns a pointer to a <tt>Site</tt>
+ * structure or <tt>NULL</tt> on error.
+ *
+ *  \param c
+ *  \param n
+ *  \param s
+ *  \param d
+ *  \return Site * 
+ */
 
 Site *G_site_new_struct (RASTER_MAP_TYPE cattype,
   int n_dim,int n_s_att,int n_d_att)
@@ -319,6 +352,21 @@ Site *G_site_new_struct (RASTER_MAP_TYPE cattype,
 				 (dim < s->dim_alloc) || \
 				 (c < s->str_alloc) || \
 				 (d < s->dbl_alloc))?0:1)
+
+
+/*!
+ * \brief 
+ *
+ * Reads one site record from <tt>fd</tt> and returns:
+ * 0 on success
+ * -1 on EOF
+ * -2 on fatal error or insufficient data
+ * 1 on format mismatch (extra data)
+ *
+ *  \param fd
+ *  \param s
+ *  \return int
+ */
 
 int G_site_get ( FILE *fptr, Site *s)
 /* Writes a site to file open on fptr. */
@@ -474,6 +522,18 @@ int G__site_get ( FILE *ptr, Site *s, int fmt)
   return (FOUND_ALL(s,n,dim,c,d)? err: -2);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Writes a site to file pointed to
+ * by <tt>fd</tt>.
+ *
+ *  \param fd
+ *  \param s
+ *  \return int
+ */
+
 int G_site_put ( FILE *fptr, Site *s)
 /* Writes a site to file open on fptr. */
 {
@@ -557,6 +617,27 @@ int G__site_put ( FILE *fptr, Site *s, int fmt)
   return 0;
 }
 
+
+
+/*!
+ * \brief 
+ *
+ * Guesses the format of a sites list (the dimensionality, the presence
+ * and type of a category, and the number of string and decimal attributes) by
+ * reading the first record in the file. The type of category will be <tt>CELL_TYPE</tt>, 
+ * <tt>FCELL_TYPE</tt> (as defined in <tt>gis.h</tt>), or -1
+ * (indicating no category attribute). Reads <tt>fd</tt>, rewinds it, and returns:
+ * 0 on success,
+ * -1 on EOF, and
+ * -2 for any other error.
+ *
+ *  \param fd
+ *  \param n
+ *  \param c
+ *  \param s
+ *  \param d
+ *  \return int
+ */
 
 int G_site_describe ( FILE *ptr,
   int *dims,int *cat,int *strs,int *dbls)
@@ -722,6 +803,18 @@ int G_site_describe ( FILE *ptr,
   return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Writes header
+ * information stored in <tt>head</tt> to <tt>fd</tt>. Only non-NULL fields of <tt>head</tt> struct are written.
+ *
+ *  \param fd
+ *  \param head
+ *  \return int
+ */
+
 int G_site_put_head ( FILE *ptr, Site_head *head)
 /*-
  * Writes site_head struct.
@@ -766,6 +859,20 @@ int G_site_put_head ( FILE *ptr, Site_head *head)
   }
   return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Reads the header from
+ * <tt>fd</tt> and stores it in <tt>head</tt>. If a type of header record is not
+ * present in <tt>fd</tt>, the corresponding element of <tt>head</tt> is returned as
+ * NULL.
+ *
+ *  \param fd
+ *  \param head
+ *  \return int
+ */
 
 int G_site_get_head (FILE *ptr, Site_head *head)
 /*-
@@ -849,11 +956,38 @@ int G_site_get_head (FILE *ptr, Site_head *head)
   return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Returns 1 if <tt>site</tt> is contained within <tt>region</tt>, 0
+ * otherwise.
+ *
+ *  \param site
+ *  \param region
+ *  \return int
+ */
+
 int G_site_in_region ( Site *site, struct Cell_head *region)
 /* returns 1 if site is contained within region, 0 otherwise */
 {
 /* northwest corner is in region, southeast corner is not. */
 double e_ing;
+
+/*!
+ * \brief returns east larger than west
+ *
+ * If the region projection is
+ * PROJECTION_LL, then this routine returns an equivalent <b>east</b> that is
+ * larger, but no more than 360 degrees larger, than the coordinate for the
+ * western edge of the region. Otherwise no adjustment is made and the original
+ * <b>east</b> is returned.
+ *
+ *  \param east
+ *  \param region
+ *  \return double
+ */
+
 double G_adjust_easting();
 
   e_ing = G_adjust_easting (site->east, region);
@@ -941,6 +1075,17 @@ char *next_att (char *buf)
   return buf;
 }
 
+
+/*!
+ * \brief 
+ *
+ * compare category attributes
+ *
+ *  \param a
+ *  \param b
+ *  \return int
+ */
+
 int G_site_c_cmp (const void *a, const void *b)
 /* qsort() comparison function for sorting an array of
    site structures by category. */
@@ -967,6 +1112,17 @@ int G_site_c_cmp (const void *a, const void *b)
   return result;
 }
 
+
+/*!
+ * \brief 
+ *
+ * compare first decimal attributes
+ *
+ *  \param a
+ *  \param b
+ *  \return int
+ */
+
 int G_site_d_cmp (const void *a, const void *b)
 /* qsort() comparison function for sorting an array of
    site structures by first decimal attribute. */
@@ -981,6 +1137,17 @@ int G_site_d_cmp (const void *a, const void *b)
     result = 1;
   return result;
 }
+
+
+/*!
+ * \brief 
+ *
+ * compare first string attributes
+ *
+ *  \param a
+ *  \param b
+ *  \return int
+ */
 
 int G_site_s_cmp (const void *a, const void *b)
 /* qsort() comparison function for sorting an array of
@@ -1044,10 +1211,34 @@ char * G_find_sites2 (char *name,char *mapset)
   return G_find_file2 ("site_lists", name, mapset);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Asks user to input
+ * name for a site list file which does not exist in the current mapset.
+ *
+ *  \param prompt
+ *  \param name
+ *  \return char * 
+ */
+
 char * G_ask_sites_new (char *prompt,char *name)
 {
   return G_ask_new (prompt, name, "site_lists", "site list");
 }
+
+
+/*!
+ * \brief 
+ *
+ * Asks user to input
+ * name of an existing site list file in any mapset in the database.
+ *
+ *  \param prompt
+ *  \param name
+ *  \return char * 
+ */
 
 char * G_ask_sites_old (char *prompt,char *name)
 {
@@ -1059,15 +1250,52 @@ char * G_ask_sites_any (char *prompt,char *name)
   return G_ask_any (prompt, name, "site_lists", "site list", 1);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Asks user to
+ * input name of an existing site list file in the current mapset.
+ *
+ *  \param prompt
+ *  \param name
+ *  \return char * 
+ */
+
 char * G_ask_sites_in_mapset (char *prompt,char *name)
 {
   return G_ask_in_mapset (prompt, name, "site_lists", "site list");
 }
 
+
+/*!
+ * \brief 
+ *
+ * Opens the site
+ * list file <tt>name</tt> in <tt>mapset</tt> for reading.
+ * Returns an open file descriptor is successful. Otherwise, returns NULL.
+ *
+ *  \param name
+ *  \param mapset
+ *  \return FILE * 
+ */
+
 FILE * G_sites_open_old (char *name,char *mapset)
 {
   return G_fopen_old ("site_lists", name, mapset);
 }
+
+
+/*!
+ * \brief 
+ *
+ * Creates an empty site list
+ * file <tt>name</tt> in the current mapset and opens it for writing.
+ * Returns an open file descriptor is successful. Otherwise, returns NULL.
+ *
+ *  \param name
+ *  \return FILE * 
+ */
 
 FILE * G_sites_open_new (char *name)
 {
@@ -1138,6 +1366,21 @@ int G_put_site ( FILE *fd, double east,double north, char *desc)
 
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Returns a string
+ * containing a formatted site record, with all fields separated by <tt>fs</tt>. If
+ * <tt>fs</tt> is NULL, a space character is used. If <tt>id</tt> is non-zero,
+ * attribute identifiers (#, %, and @) are included.
+ *
+ *  \param s
+ *  \param fs
+ *  \param id
+ *  \return char * 
+ */
 
 char *G_site_format (Site *s, char *fs, int id)
 /* sprintf analog to G_site_put with the addition of a field seperator fs 
