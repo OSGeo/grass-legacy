@@ -1,0 +1,239 @@
+
+README file/Release announcement
+
+ANSWERS  on  GRASS  Integration Project
+Beta release (Version 1.0 of r.answers)
+
+Chris C. Rewerts  
+rewerts@zorro.cecer.army.mil  
+rewerts@ecn.purdue.edu
+
+USA CECER ECS
+(US Army Corps of Engineering 
+ Construction Engineering Research Laboratories)
+PO Box 9005
+Champaign, IL 61826-9005
+Phone: (217) 352-6511
+
+Bernie A. Engel   
+engelb@ecn.purdue.edu    
+
+Agricultural Engineering
+Purdue University
+West Lafayette, IN, 47901-1146
+Phone: (317) 494-1198
+
+-------------------------------------------------------
+INTRO
+
+This is a distribution copy of the programs developed for the
+integration of ANSWERS (a watershed simulation) with GRASS. The
+integration and the associated GRASS tools were created as a part of a
+research project I (Chris Rewerts) did under the guidance of Bernie
+Engel at the Agricultural Engineering Department of Purdue University.
+The key to understanding the ANSWERS on GRASS work is to know that my
+goal was to create an integration of a GIS and a spatial simulation and
+thereby explore the issues involved.  I don't wish to reiterate a
+dissertation here, but the upshot of all this is that you will find a
+set of tools that are not only designed for a specific function but
+also can serve as a reference for GIS-integration work of your own (as
+in:  "this is how one group decided to do this
+integration-with-GIS-thing, let's use the good parts and avoid the bad
+parts").  Meanwhile, if you are someone or agency that wants to work
+with ANSWERS doing watershed simulation, the tools included in the
+distribution will do that (see disclaimers, below).  Also, the tools
+are put together to allow a wide amount of flexibility, so that you can
+mold them to your needs with a little programming and/or GRASS
+finesse.
+
+ABOUT THE RELEASE
+
+This should be considered as a "beta" version of r.answers, (some
+initial "alpha" testing has taken place before this release). If you
+decide to test or use these programs, we would like hear about it, with
+your comments, criticisms, and a description of how and why you are
+using the tools. Please send mail or email to the addresses above.
+
+We need to give the usual disclaimers, primarily that the software
+is provided "as is" without expressed or implied warranty, and
+that we or our employers cannot be held responsible for anything
+that may happen if you choose to make use of any or all of the tools.
+If you have problems or find bugs, send email or otherwise contact
+Chris Rewerts (addresses and phone above), although I cannot guarantee
+that I will always have an answer or can promptly fix all bugs.
+
+The programs were developed on SUN SparcStations, and have been
+compiled and run successfully on a number of other architectures.
+
+ABOUT THE INTEGRATION
+
+The central GRASS program used in the integration is r.answers, which
+I call a 'project manager'. Basically, it treats the ANSWERS simulation
+as a 'black box'. The ANSWERS program (included) has not been changed
+for use with this integration. This means, in part, that the model proper
+theoretically does not need re-validation. 
+
+Since ANSWERS simulates rainfall events on a watershed, we treat a
+simulation scenario (rainfall event) as a 'project'. Thus r.answers
+provides a menu-driven interface to pull together the GRASS maps and
+other ANSWERS inputs as a project, and saves all this information in
+your GRASS mapset database under a project name. You can then use
+r.answers to recall, copy, or manipulate projects. The r.answers
+program also keeps track of the status of the project, each time
+r.answers reads an existing project, it recalls the last status, and
+when one exits from r.answers it will save the current status.
+r.answers will indicate when a project has all the inputs needed to run
+ANSWERS. At that point r.answers can be used to run the simulation and
+process the outputs.
+
+Part of the assumption of the integration was that the user would have
+the basic maps of elevation, soils, and landuse, and with the help
+of the standard GRASS tools and others we created, s/he would be
+able to create the inputs needed by the model.
+
+DISTRIBUTION CONTENTS
+
+Under the src.answers directory is the program code for GRASS raster
+and display programs that are a part our 'hydrologic toolbox' for the
+ANSWERS-GRASS integration. Under the raster directory are the primary
+players, r.answers and ANSWERS.
+
+The other included programs were developed as accessories for the
+preparation of r.answers input maps, and for specialized display of
+input and output maps. Note that some of these programs have been
+distributed with GRASS 4.0 and 4.1, as part of the "src.contrib" and
+"src.alpha" directories. So, you may have already seen or used some of 
+our programs before. I am putting all the related programs together 
+in this release since it makes a more complete package.
+
+Of course, you don't necessarily have to use our programs to prepare all
+inputs to ANSWERS.  (This is in keeping with our philosophy of open GIS
+and providing the user with more control over what goes on in their
+modeling). I advise you to play around with how your inputs are created
+(especially those that are elevation-based), to see what effect this has 
+on simulation results.
+
+Following is a brief description of the programs, so you can know what
+you are getting into before you go too far (for more information, see
+the "man" files included in each program's directory.  The man pages
+can be installed "by hand" with your local GRASS documentation or
+viewed with "nroff -man <filename> | more"):
+
+Raster Programs (under src.answers/raster)
+----------------------------------------
+answers      - Areal Nonpoint Source Watershed Environmental Response
+               Simulation, version 4.880215. An event oriented, distributed 
+               parameter model that was developed to simulate the behavior  
+               of watersheds having agriculture as their primary use.
+               (The source code for ANSWERS is placed in the r.answers
+               directory in this distribution.) Note: ANSWERS is a
+               FORTRAN program, and will require a FORTRAN compiler,
+               such as f77.
+
+r.answers    - interface and simulation scenario management for ANSWERS.
+
+
+               (NOTE: r.fill.dir, r.direct, and r.slope were created to
+                meet the specialized needs of ANSWERS (and AGNPS) for
+                inputs based on elevation - flow direction and slope).
+
+r.fill.dir   - filters and generates a depressionless elevation map and 
+               a flow direction map from a given elevation surface map.
+               Note: this program (and r.direct) use modules that are 
+               FORTRAN programs, thus must be compiled with a suitable 
+               compiler.
+r.direct     - generates a flow direction map from a given elevation 
+               surface map. This is the same as r.fill.dir, minus the 
+               filling done to remove depressions in the elevation map.
+r.slope      - generates a slope map for ANSWERS from a given elevation
+               surface map.
+
+Display Programs
+------------------
+d.rast.arrow - given a displayed aspect map, draws arrows on individual
+               cells to visually indicate the flow direction.
+d.rast.num   - given a displayed map, draws the category value number on 
+               cells.
+d.rast.zoom  - a graphically interactive region zoom program 
+d.rast.edit  - a raster map editor. Uses d.rast.arrow, d.rast.num, and
+               d.rast.zoom as sub-programs.
+d.linegraph  - creates and displays X-Y line graphs on the GRASS graphics
+               monitor.
+
+Shell Script
+------------------
+d.answers    - a sample shell script for displaying the inputs and outputs
+               of r.answers simulation scenarios.
+
+Sample GRASS Database
+---------------------
+
+Included under the "data" directory is a small sample database provided
+so that you can play with r.answers to see what it is all about without
+having to go to all the work of putting together the maps needed to run
+r.answers from your local mapsets. The sample mapbase is the Purdue
+Animal Science Farm Study Watershed that was extracted from the Indian
+Pine Natural Resource Laboratory Map Database, created and maintained
+at Agricultural Engineering, Purdue University.  To use, you will need
+to install the mapbase to where ever you keep GRASS mapsets on your
+local system.
+
+After the raster and display programs (described above), or at least
+r.answers and answers, have been installed and compiled on your system,
+you can set your LOCATION to "answers" and the MAPSET as "PERMANENT"
+when you start GRASS (unless, of course, you defined different names
+when you installed the sample mapbase on your system. You should then
+be able to run r.answers, and choose "Work on an existing project" as
+the option to its first menu. Then select "sample" as the name of the
+project to work on. (To be safe, you can first choose the "Copy an
+existing project" option, to create a back-up copy of the "sample"
+project.) The "sample" project is a completed scenario using the maps
+from the included mapbase.
+
+Class Exercise and User's Manual Excerpts
+------------------------------------------
+
+In the "misc" directory are a couple documents which may be 
+helpful...
+
+1. A classroom exercise -
+
+  The file "exercise.troff" is troff/ascii; "exercise.ps" is postscript)
+  You may find this helpful to introduce you to r.answers and its 
+  associate programs. It is a step-by-step exercise created as a class 
+  assignment using r.answers and associated programs for data preparation
+  display with maps in the sample mapbase. Reading through this will 
+  hopefully provide some of the context to understand how all the parts fit 
+  together and how (we thought) the tools may be used.
+
+2. Excerpts from the ANSWERS User's Manual -
+
+  It seemed to me that the primary information that was lacking from
+  this distribution was how to come up with the soil and landuse parameters.
+  Therefore, I scanned in the parts of the User's Manual that explains 
+  this. The file is straight ASCII, and is called "manual.txt".
+
+
+INSTALLATION
+-------------
+
+I suggest you move the answers.cpio.Z file to the $GIS/src.garden
+directory and use the command:
+
+zcat answers.cpio.Z | cpio -iduc
+
+This will extract the files and directory structure from the 
+cpio archive format, creating an 'answers' directory.
+
+You can then 'cd' to the 'answers/src.answers' and use your
+'gmake' command (i.e. 'gmake4.1') to compile the programs.
+(After the compilation is complete, don't forget to run the
+'$GIS/src/CMD/MAKE.LINKS' command to properly link commands
+in your grass bin with their executables).
+
+Next you can install the sample database found under 
+'answers/data' in the same manner/system area as your other
+GRASS database(s).
+
+Take a look at the 'answers/scripts/README' file to explain
+how to install/use the d.answers shellscript.
