@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 ############################################################################
 #
-# MODULE:		r3.mapcalculator v.1.0 for GRASS 5.7 (2004/08/16)
-#			    based on r.mapcalculator for GRASS 5.7
-# AUTHOR(S):	R. Brunzema (r.brunzema@web.de), Michael Barton (michael.barton@asu.edu)
-# PURPOSE:	    Provides GUI front-end to r3.mapcalc
+# MODULE:	r3.mapcalculator v.1.0 for GRASS 5.7 (2004/08/16)
+#		based on r.mapcalculator for GRASS 5.7
+# AUTHOR(S):	R. Brunzema (r.brunzema@web.de)
+#		Michael Barton (michael.barton@asu.edu)
+# PURPOSE:	Provides GUI front-end to r3.mapcalc
 # COPYRIGHT:	(C) 2004 by the GRASS Development Team
 #
 #		This program is free software under the GNU General Public
