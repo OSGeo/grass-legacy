@@ -15,10 +15,10 @@
 
 int 
 xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_info *Out,
-             int cat_new, int select, int dissolve, int field_in, int field_out)
+             int cat_new, int select_type, int dissolve, int field)
 {
-	int cat, cat1, areal, arear, catl, catr, centroid, line;
-	int max_att=0, type;
+	int cat, areal, arear, catl, catr, centroid, line;
+	int type;
 	int i;
 	struct line_pnts *Points, *CPoints;
 	struct line_cats *Cats, *CCats;
@@ -29,6 +29,7 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 	Cats = Vect_new_cats_struct ();
 	CCats = Vect_new_cats_struct ();
 	
+	/* TODO: more categories of one field */
 	/* TODO: Dissolve common boundaries and output are centroids */ 
         /* Cycle through all lines */
         for ( line = 1; line <= Vect_get_num_lines ( In ); line++) {
@@ -37,30 +38,30 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 	     
 	     cat = catr = catl = 0;
 	     /* get the line category */
-	     Vect_cat_get ( Cats, field_in, &cat );
+	     Vect_cat_get ( Cats, field, &cat );
 	     
 	     /* skip anything other than the selected line type and get the category */
 	     if ( type == GV_BOUNDARY ) {
-	         if ( !(select & GV_BOUNDARY) && !(select & GV_AREA) ) continue;
-		 if ( select & GV_AREA ) { /* get left right category */
+	         if ( !(select_type & GV_BOUNDARY) && !(select_type & GV_AREA) ) continue;
+		 if ( select_type & GV_AREA ) { /* get left right category */
 		     Vect_get_line_areas ( In, line, &areal, &arear );
 		     if ( areal > 0 ) {
 			 centroid = Vect_get_area_centroid ( In, areal );
 			 if ( centroid > 0 ) {
 	                     Vect_read_line ( In, CPoints, CCats, centroid);
-			     Vect_cat_get ( CCats, field_in, &catl );
+			     Vect_cat_get ( CCats, field, &catl );
 			 }
 		     }
 		     if ( arear > 0 ) {
 			 centroid = Vect_get_area_centroid ( In, arear );
 			 if ( centroid > 0 ) {
 	                     Vect_read_line ( In, CPoints, CCats, centroid);
-			     Vect_cat_get ( CCats, field_in, &catr );
+			     Vect_cat_get ( CCats, field, &catr );
 			 }
 		     }
 		 }
 	     } else {
-	         if ( !(type & select) )   continue;
+	         if ( !(type & select_type) )   continue;
 	     }
 
 	     /* check against the user category list */
@@ -70,17 +71,16 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 			 /* TODO */
 		     }
 		     /* write line */
-		     cat1 = cat_new ? cat_new : num_array[i];
-		     Vect_cat_set (Cats, field_out, cat1);
+		     if ( cat_new > 0 && cat > 0 ) { /* assign the new category value */
+		         Vect_cat_set (Cats, field, cat_new); 
+		     }
 		     Vect_write_line (Out, type, Points, Cats);
 		      
-		     /* capture the highest attribute value */
-		     if (cat1 > max_att) max_att = cat1;
 		     break;
 	         }
              } /* end for num_index */
         }  /* end lines section */
 
-	return(max_att) ;
+	return(0) ;
 }
 

@@ -31,7 +31,7 @@
 
 static int *cat_array, cat_count, cat_size;
 int scan_cats(char *, int *, int *);
-int xtract_line(int, int [], struct Map_info *, struct Map_info *, int, int, int, int, int);
+int xtract_line(int, int [], struct Map_info *, struct Map_info *, int, int, int, int);
 
 static void add_cat(int x)
 {
@@ -48,7 +48,7 @@ static void add_cat(int x)
 
 int main (int argc, char **argv)
 {
-    int i, new_cat, max_att, type, ncats, *cats, field;
+    int i, new_cat, type, ncats, *cats, field;
     int dissolve=0, x, y;
     char buffr[1024], text[80];
     char *input, *output, *mapset;
@@ -108,7 +108,7 @@ int main (int argc, char **argv)
     listopt->required        =  NO;
     listopt->multiple        =  YES;
     listopt->key_desc        = "range";
-    listopt->description     = "Category ranges: e.g. 1,3-8,13\n           Category list: e.g. Abc,Def2,XyZ " ;
+    listopt->description     = "Category ranges: e.g. 1,3-8,13";
 
     fileopt = G_define_option();
     fileopt->key             = "file";
@@ -218,10 +218,7 @@ int main (int argc, char **argv)
 
     type = Vect_option_to_types ( typopt );
     
-    max_att = xtract_line( cat_count, cat_array, &In, &Out, 
-                           new_cat, type, dissolve, field, 1);
-    if ( 0 > max_att)
-	G_fatal_error("Error in line/site extraction processing");
+    xtract_line( cat_count, cat_array, &In, &Out, new_cat, type, dissolve, field);
 
     if ( !t_flag->answer && new_cat == 0 ) 
         Vect_copy_table_by_cats ( &In, &Out, field, 1, NULL, GV_1TABLE, cat_array, cat_count );
