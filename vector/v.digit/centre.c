@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "gis.h"
+#include "display.h"
 #include "global.h"
 #include "proto.h"
 
@@ -29,26 +30,55 @@ tool_centre ( void )
 {
     int go = 1;
 
+    symb_init_gui ( );
+    i_set_snap ( );
+    
     while ( go ) {
-        G_debug (3, "Tool centre: Tool_next = %d", Tool_next);
+        G_debug (5, "Tool centre: Tool_next = %d", Tool_next);
         i_update(); /* Let GUI set requests */
 	switch ( Tool_next ) {
 	    case TOOL_EXIT :
-                G_debug (0, "Quit" );
+                G_debug (2, "Quit" );
 		go = 0;
 		break;
+	    case TOOL_NEW_POINT :
+		/* Tool_next = TOOL_NOTHING; */ /* Commented -> Draw next one once first is done */
+		new_line ( GV_POINT );
+		break;
 	    case TOOL_NEW_LINE :
-		/* Tool_next = TOOL_NOTHING; */ /* Draw next one once first is done */
-		new_line ();
+		new_line ( GV_LINE );
 		break;
-	    case TOOL_DEL_LINE :
-		process_line (PROCESS_DELETE);
+	    case TOOL_NEW_BOUNDARY :
+		new_line ( GV_BOUNDARY );
 		break;
-	    case TOOL_MV_LINE :
-		process_line (PROCESS_MOVE);
+	    case TOOL_NEW_CENTROID :
+		new_line ( GV_CENTROID );
 		break;
-	    case TOOL_MV_NODE :
-		process_line (PROCESS_NODE);
+	    case TOOL_MOVE_VERTEX :
+		Tool_next = TOOL_NOTHING;
+		move_vertex ();
+		break;
+	    case TOOL_MOVE_LINE :
+		Tool_next = TOOL_NOTHING;
+		move_line ();
+		break;
+	    case TOOL_DELETE_LINE :
+		Tool_next = TOOL_NOTHING;
+		delete_line ();
+		break;
+	    case TOOL_ZOOM_WINDOW :
+		Tool_next = TOOL_NOTHING;
+		zoom_window ();
+		break;
+	    case TOOL_ZOOM_OUT_CENTRE :
+		Tool_next = TOOL_NOTHING;
+		zoom_centre ( 2 );
+		break;
+	    case TOOL_REDRAW :
+		Tool_next = TOOL_NOTHING;
+		driver_open();
+		display_redraw();
+		driver_close();
 		break;
 	    default:
 	}
@@ -61,8 +91,17 @@ tool_centre ( void )
 
 /* This function is regularly called from R_get_location_*() functions to enable GUI to kill running tool */
 int update ( int wx, int wy ) {
-    G_debug (4, "Update function wx = %d wy = %d", wx, wy);
+    double x, y;
+    
+    G_debug (5, "Update function wx = %d wy = %d", wx, wy);
     i_update ();
+
+    if ( wx != COOR_NULL && wy != COOR_NULL ) {
+        x = D_d_to_u_col ( wx ); 
+	y = D_d_to_u_row ( wy );
+        i_coor ( x, y);
+    }
+    
     return 1;
 }
 
