@@ -100,6 +100,9 @@ if [ ! -f $GISRC ] ; then
     GRASS_GUI="text"
 fi
 
+# Until GUI is updated to GRASS 5.1
+GRASS_GUI="text"
+
 echo "Starting GRASS ..."
 
 # Check if we are running X windows by checking the DISPLAY variable
