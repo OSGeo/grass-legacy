@@ -36,9 +36,6 @@
 /* to be displayed in r.sunmask */
 static char *SOLPOSVERSION = "11 April 2001";
 
-/* uncomment to get debug output */
-/* #define DEBUG*/
-
 extern struct posdata pd, *pdat; /* declare a posdata struct and a pointer for
                                     it (if desired, the structure could be
                                     allocated dynamically with malloc) */
@@ -102,7 +99,8 @@ int main(int argc, char *argv[])
     long retval;
     int solparms, locparms, use_solpos;
     double sunrise, sunset, current_time;
-
+    int sretr =0, ssetr=0;
+    
     G_gisinit (argv[0]);
 
     module = G_define_module();
@@ -303,10 +301,12 @@ int main(int argc, char *argv[])
 
   if (use_solpos)
   {
-#ifdef DEBUG
-      G_message ( _("\nlat:%f  long:%f\n"), north, east);
-#endif
+      G_debug (3, "\nlat:%f  long:%f", north, east);
       retval = G_calc_solar_position (east, north, timezone, year, month, day, hour, minutes, seconds);
+
+      sretr = (int) floor(pdat->sretr + 0.5);
+      ssetr = (int) floor(pdat->ssetr + 0.5);
+      /* Remove +0.5 above if you want round-down instead of round-to-nearest */
 
       /* print the results */
       if (retval == 0) /* error check */
@@ -323,8 +323,11 @@ int main(int argc, char *argv[])
 	  fprintf (stdout, "timezone=%f\n", pdat->timezone);
 	  fprintf (stdout, "sunazimuth=%f\n", pdat->azim);
 	  fprintf (stdout, "sunangleabovehorzizont=%f\n", pdat->elevref);
-	  fprintf (stdout, "sunrise=%02.0f:%02.0f\n", floor(pdat->sretr/60.), fmod(pdat->sretr, 60.));
-	  fprintf (stdout, "sunset=%02.0f:%02.0f\n", floor(pdat->ssetr/60.), fmod(pdat->ssetr, 60.));
+	
+	  if ( sretr/60 <= 24.0 ) {
+	       fprintf (stdout, "sunrise=%02d:%02d\n", sretr/60, sretr%60);
+	       fprintf (stdout, "sunset=%02d:%02d\n", ssetr/60, ssetr%60);
+	  }
 	 }
 	 else {
           G_message ( _(" %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"),
@@ -334,8 +337,11 @@ int main(int argc, char *argv[])
           G_message ( _(" long: %f, lat: %f, timezone: %f\n"), pdat->longitude, pdat->latitude, pdat->timezone);
           G_message ( _(" Solar position: sun azimuth: %f,\n   sun angle above horz.(refraction corrected): %f\n"),
            pdat->azim, pdat->elevref );
-          G_message ( _(" Sunrise time (without refraction): %02.0f:%02.0f\n"), floor(pdat->sretr/60.), fmod(pdat->sretr, 60.));
-          G_message ( _(" Sunset time  (without refraction): %02.0f:%02.0f\n"), floor(pdat->ssetr/60.), fmod(pdat->ssetr, 60.));
+
+	  if ( sretr/60 <= 24.0 ) {
+               G_message ( _(" Sunrise time (without refraction): %02d:%02d\n"), sretr/60, sretr%60);
+               G_message ( _(" Sunset time  (without refraction): %02d:%02d\n"), ssetr/60, ssetr%60);
+	  }
          }
        }
        sunrise=pdat->sretr/60. ; /* decimal minutes */
@@ -358,14 +364,21 @@ int main(int argc, char *argv[])
   {
     if ((current_time < sunrise))
     {
-        G_message ( _("Time (%02i:%02i:%02i) is before sunrise (%02.0f:%02.0f)!\n"), pdat->hour, pdat->minute, pdat->second,\
-                         floor(pdat->sretr/60.), fmod(pdat->sretr, 60.));
+        if ( sretr/60 <= 24.0 )
+             G_message ( _("Time (%02i:%02i:%02i) is before sunrise (%02d:%02d)!\n"), pdat->hour, pdat->minute, pdat->second,\
+                         sretr/60, sretr%60);
+	else
+             G_message ( _("Time (%02i:%02i:%02i) is before sunrise!\n"), pdat->hour, pdat->minute, pdat->second);
+	
         G_fatal_error( _("Please correct time settings."));
     }
     if ((current_time > sunset))
     {
-        G_message ( _("Time (%02i:%02i:%02i) is after sunset (%02.0f:%02.0f)!\n"), pdat->hour, pdat->minute, pdat->second,\
-                         floor(pdat->ssetr/60.), fmod(pdat->ssetr, 60.));
+        if ( sretr/60 <= 24.0 )
+             G_message ( _("Time (%02i:%02i:%02i) is after sunset (%02d:%02d)!\n"), pdat->hour, pdat->minute, pdat->second,\
+                         ssetr/60, ssetr%60);
+	else
+             G_message ( _("Time (%02i:%02i:%02i) is after sunset!\n"), pdat->hour, pdat->minute, pdat->second);
         G_fatal_error( _("Please correct time settings."));
     }
   }
@@ -469,14 +482,10 @@ int main(int argc, char *argv[])
 				  }
 				}
 			}
-#ifdef DEBUG
-	    G_message ( _("Analysing col %i\n"), col1);
-#endif
+	    G_debug (3, "Analysing col %i", col1);
 		col1+=1;
-	      }
-#ifdef DEBUG
-	    G_message ( _("Writing result row %i of %i\n"), row1, window.rows);
-#endif
+	    }
+	    G_debug (3, "Writing result row %i of %i", row1, window.rows);
 	    G_put_raster_row(output_fd, outbuf.c, CELL_TYPE);
 	    row1+=1;
 	  }
