@@ -25,6 +25,7 @@
 #define DB_PROC_OPEN_SELECT_CURSOR	206
 #define DB_PROC_OPEN_UPDATE_CURSOR	207
 #define DB_PROC_UPDATE			208
+#define DB_PROC_ROWS			209
 #define DB_PROC_BIND_UPDATE		220
 #define DB_PROC_BIND_INSERT		221
 
@@ -212,12 +213,33 @@ typedef struct _db_driver_state
     dbCursor **cursor_list;
 }dbDriverState;
 
-/* category value */
+/* category value (integer) */
 typedef struct
 {
     int  cat;  /* category */
     int  val;  /* value */
 }dbCatValI;
+
+/* category value */
+typedef struct
+{
+    int  cat;  /* category */
+    union { 
+        /* char       isNull; */
+        int        i;
+        double     d;
+        /* dbString   s; */
+        /* dbDateTime t; */
+    };
+}dbCatVal;
+
+/* category value array */
+typedef struct
+{
+    int  n_values; 
+    int  alloc;
+    dbCatVal *value;
+}dbCatValArray;
 
 /* parameters of connection */
 typedef struct _db_connection
