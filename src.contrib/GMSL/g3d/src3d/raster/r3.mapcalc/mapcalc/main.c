@@ -2,7 +2,7 @@
 #include "glob.h"
 #include "function.h"
 
-main(argc,argv) char *argv[];
+int main(argc,argv) char *argv[];
 {
     char buf[400];
     char result[100];
