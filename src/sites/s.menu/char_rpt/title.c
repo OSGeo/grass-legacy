@@ -1,9 +1,15 @@
 #include "report.h"
+#include "gis.h"
 
 title (out, report)
     FILE *out;
     REPORT *report;
 {
+    char buff1[50];
+    char buff2[50];
+    char *format_north(), *format_east();
+    int proj;
+
     fprintf (out, ".title\n");
     fprintf (out, ".center\n");
     fprintf (out, "SITE CHARACTERISTIC REPORT\n");
@@ -28,8 +34,13 @@ title (out, report)
     fprintf (out, "\n");
 
     fprintf (out, "Analysis Region:\n");
-    fprintf (out, "                    north: %10.2lf\n",report->north);
-    fprintf (out, "   west: %10.2lf                       east: %10.2lf\n", report->west,report->east);
-    fprintf (out, "                    south: %10.2lf\n\n",report->south);
+    proj = G_projection();
+    fprintf (out, "                    north: %s\n",
+                       format_north(report->north, buff1, proj));
+    fprintf (out, "   west: %s                       east: %s\n",
+           format_east( report->west, buff1, proj),
+           format_east( report->east, buff2, proj));
+    fprintf (out, "                    south: %s\n\n",
+                       format_north(report->south, buff1, proj));
     fprintf (out, ".end\n");
 }
