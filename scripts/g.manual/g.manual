@@ -31,12 +31,12 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 if [ $GIS_FLAG_i -eq 1 ] ; then
-   echo "Starting brower <$GRASS_HTML_BROWSER> for manual page index..."
+   echo "Starting browser <$GRASS_HTML_BROWSER> for manual page index..."
    $GRASS_HTML_BROWSER "$GISBASE"/docs/html/index.html
   exit 0
 fi
 
-if [ "$GIS_OPT_entry" == "(null)" ] ; then
+if [ "$GIS_OPT_entry" = "(null)" ] ; then
  g.manual help
  exit 0
 fi
@@ -45,7 +45,7 @@ if test ! -f "$GISBASE"/docs/html/"$GIS_OPT_entry".html -a "$GIS_OPT_entry" != "
     echo "ERROR: no man page entry for <$GIS_OPT_entry>."
     exit 1
 else
-    echo "Starting brower <$GRASS_HTML_BROWSER> for module $GIS_OPT_entry..."
+    echo "Starting browser <$GRASS_HTML_BROWSER> for module $GIS_OPT_entry..."
     $GRASS_HTML_BROWSER "$GISBASE"/docs/html/"$GIS_OPT_entry".html
 fi
 
