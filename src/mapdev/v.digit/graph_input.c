@@ -595,8 +595,13 @@ in the digcap file.", dev_path);
     {
         termvar.c_iflag = IGNBRK ;
         termvar.c_oflag = 0 ;
+#if defined(VMIN) && defined(VTIME)
+        termvar.c_cc[VTIME] = 0 ;
+        termvar.c_cc[VMIN] = 0 ;
+#else
         termvar.c_cc[VEOF] = 0 ;
         termvar.c_cc[VEOL] = 0 ;
+#endif
         termvar.c_lflag = 0 ;
     }
         /*** set parity    ***/
