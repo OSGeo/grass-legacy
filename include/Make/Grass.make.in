@@ -81,7 +81,7 @@ VERSION_FILE    = $(ETC)/VERSION
 
 ##################### other #############################################
 CFLAGS      =  $(INC) $(COMPILE_FLAGS) $(USE_TERMIO)
-LDFLAGS     =  $(LINK_FLAGS) $(LIBPATH) $(USE_TERMIO)
+LDFLAGS     =  $(LINK_FLAGS) $(LIBPATH) $(PQLIBPATH) $(USE_TERMIO)
 VECT_CFLAGS =  $(GDALCFLAGS) 
 ##################### library names #####################################
 
@@ -207,7 +207,7 @@ TRANSLIB    = -l$(TRANS_LIBNAME)
 SHAPELIB    = -l$(SHAPE_LIBNAME)
 GRAPHLIB    = -l$(GRAPH_LIBNAME)
 RTREELIB    = -l$(RTREE_LIBNAME)
-VECTLIB     = $(VECTRLIB) $(DIG2LIB) $(SHAPELIB) $(GRAPHLIB) $(RTREELIB) $(LINKMLIB) $(DBMILIB) $(PQLIBPATH) $(PQLIB)
+VECTLIB     = $(VECTRLIB) $(DIG2LIB) $(SHAPELIB) $(GRAPHLIB) $(RTREELIB) $(LINKMLIB) $(DBMILIB) $(PQLIB)
 
 # Interpolation
 INTERPDATALIB = -l$(INTERPDATA_LIBNAME)
