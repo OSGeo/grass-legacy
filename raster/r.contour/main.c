@@ -153,7 +153,6 @@ int main ( int argc, char *argv[])
     displaceMatrix(z_array, Wind.rows, Wind.cols, lev, nlevels, quiet->answer);
     n_cut = atoi(cut->answer);
     contour(lev, nlevels,  Map, z_array, Wind, quiet->answer, noerr->answer, n_cut);
-    writeCategorySupport(lev, nlevels, vect->answer, Head.map_name);
     
     Vect_build (&Map, stderr);
     Vect_close (&Map);
@@ -331,24 +330,5 @@ void displaceMatrix(DCELL** z, int nrow, int ncol, double* lev, int nlevels, int
 		if (!quiet)
 			G_percent (i+1, nrow , 2);
 	}
-}
-
-/* outputs dig_cats file, so that d.what.vect won't complain about
-   missing category support. True contour value (if floating point)
-   is included in the label
-*/
-void writeCategorySupport(double* lev, int nlevels, char* vName, char* mName)
-{
-	struct Categories cats;
-	char lbl[255];
-	int i;
-	
-	G_init_cats((CELL) 0, mName, &cats);
-	for(i = 0; i < nlevels; i++) {
-		sprintf(lbl, "Level: %f", lev[i]);
-		G_set_cat((int)lev[i], lbl, &cats);
-	}
-	G_write_vector_cats(vName, &cats);
-	G_free_cats(&cats);
 }
 
