@@ -17,7 +17,7 @@ static float Keystartpos = 0.0;
 static float Keyendpos = 1.0;
 static float Tension = 0.8;
 static int   Viewsteps = 0;
-static int   Numkeys;
+static int   Numkeys = 0;
 static int   Interpmode = KF_SPLINE;
 static int   Fmode = 0;
 
@@ -190,14 +190,14 @@ void GK_update_frames(void)
     Keylist *k;
     int loop = 0;
 
-    if(Keys)
+    if (Keys)
     {
-	if(i)
+	if (Numkeys > 1)
 	{
 	    k = Keytail;
 	    Keyendpos = k->pos;
 	    
-	    if(k->fields[KF_FROMX] == Keys->fields[KF_FROMX] && 
+	    if (k->fields[KF_FROMX] == Keys->fields[KF_FROMX] && 
 		k->fields[KF_FROMY] == Keys->fields[KF_FROMY] &&
 		k->fields[KF_FROMZ] == Keys->fields[KF_FROMZ])
 	    {
@@ -208,9 +208,9 @@ void GK_update_frames(void)
 	Keystartpos = Keys->pos;
     }
 
-    if(Interpmode == KF_LINEAR && Numkeys > 1)
+    if (Interpmode == KF_LINEAR && Numkeys > 1)
     {
-	if(Views)
+	if (Views)
 	{
 	    free(Views);
 	    Views = NULL;
@@ -218,15 +218,15 @@ void GK_update_frames(void)
 	
 	Views = gk_make_linear_framesfromkeys(Keys,Numkeys,Viewsteps,loop);
 	
-	if(!Views)
+	if (!Views)
 	{
 	    fprintf(stderr,
 		    "Check no. of frames requested and keyframes marked\n");
 	}
     }
-    else if(Numkeys > 2)
+    else if (Numkeys > 2)
     {
-	if(Views)
+	if (Views)
 	{
 	    free(Views);
 	    Views = NULL;
@@ -235,7 +235,7 @@ void GK_update_frames(void)
 	Views = gk_make_framesfromkeys
 		    (Keys,Numkeys,Viewsteps,loop,1.0-Tension);
 
-	if(!Views)
+	if (!Views)
 	{
 	    fprintf(stderr,
 		    "Check no. of frames requested and keyframes marked\n");
