@@ -86,15 +86,15 @@ char * _fmt_ucat(UCAT *c, UCAT *min, char *s)
             break;
         case FCELL_TYPE:
             if (c->val.f == FLT_MIN)
-                snprintf (s, UCAT_STR_SIZE, "%.8f", min->val.f);
+                snprintf (s, UCAT_STR_SIZE, "%f", min->val.f);
             else
-                snprintf (s, UCAT_STR_SIZE, "%.8f", c->val.f);
+                snprintf (s, UCAT_STR_SIZE, "%f", c->val.f);
             break;
         case DCELL_TYPE:
             if (c->val.d == DBL_MIN)
-                snprintf (s, UCAT_STR_SIZE, "%.15lf", min->val.d);
+                snprintf (s, UCAT_STR_SIZE, "%lf", min->val.d);
             else
-                snprintf (s, UCAT_STR_SIZE, "%.15lf", c->val.d);
+                snprintf (s, UCAT_STR_SIZE, "%lf", c->val.d);
             break;
         default: /* Shouldn't happen */
             snprintf (s, UCAT_STR_SIZE, "\0");
