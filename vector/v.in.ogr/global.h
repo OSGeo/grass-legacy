@@ -10,4 +10,5 @@
 typedef struct {
     double x, y;
     struct line_cats *cats;
+    int valid;
 } CENTR;

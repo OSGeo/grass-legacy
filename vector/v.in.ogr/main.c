@@ -643,6 +643,7 @@ main (int argc, char *argv[])
 	double x, y, total_area, overlap_area, nocat_area;
 	BOUND_BOX box;
 	struct line_pnts *Points;
+	int nmodif;
 
 	Points = Vect_new_line_struct ();
 
@@ -677,17 +678,22 @@ main (int argc, char *argv[])
 	fprintf ( stderr, "Remove duplicates:\n" );
 	Vect_remove_duplicates ( &Map, GV_BOUNDARY | GV_CENTROID, NULL, stderr ); 
 	
-        fprintf ( stderr, separator );
-	fprintf ( stderr, "Break boundaries:\n" );
-	Vect_break_lines ( &Map, GV_BOUNDARY, NULL, stderr ); 
+	/* Vect_clean_small_angles_at_nodes() can change the geometry so that new intersections
+	 * are created. We must call Vect_break_lines(), Vect_remove_duplicates()
+	 * and Vect_clean_small_angles_at_nodes() until no more small dangles are found */
+	do {
+	    fprintf ( stderr, separator );
+	    fprintf ( stderr, "Break boundaries:\n" );
+	    Vect_break_lines ( &Map, GV_BOUNDARY, NULL, stderr ); 
 
-        fprintf ( stderr, separator );
-	fprintf ( stderr, "Remove duplicates:\n" );
-	Vect_remove_duplicates ( &Map, GV_BOUNDARY, NULL, stderr ); 
+	    fprintf ( stderr, separator );
+	    fprintf ( stderr, "Remove duplicates:\n" );
+	    Vect_remove_duplicates ( &Map, GV_BOUNDARY, NULL, stderr ); 
 
-	fprintf ( stderr, separator );
-	fprintf ( stderr, "Clean boundaries at nodes:\n" );
-	Vect_clean_small_angles_at_nodes ( &Map, GV_BOUNDARY, NULL, stderr );
+	    fprintf ( stderr, separator );
+	    fprintf ( stderr, "Clean boundaries at nodes:\n" );
+	    nmodif = Vect_clean_small_angles_at_nodes ( &Map, GV_BOUNDARY, NULL, stderr );
+	} while ( nmodif > 0 );
 
         fprintf ( stderr, separator );
 	if ( type & GV_BOUNDARY ) { /* that means lines were converted boundaries */
@@ -718,14 +724,17 @@ main (int argc, char *argv[])
 	Centr = (CENTR *) G_calloc ( ncentr+1, sizeof(CENTR) );
 	Vect_spatial_index_init ( &si );
 	for ( centr = 1; centr <= ncentr; centr++ ) {
+	    Centr[centr].valid = 0;
 	    Centr[centr].cats = Vect_new_cats_struct ();
 	    ret = Vect_get_point_in_area ( &Map, centr, &x, &y );
 	    if ( ret < 0 ) {
 		G_warning ("Cannot calculate area centroid" );
 		continue;
 	    }
+	    
 	    Centr[centr].x = x;
 	    Centr[centr].y = y;
+	    Centr[centr].valid = 1;
 	    box.N = box.S = y;
 	    box.E = box.W = x;
 	    box.T = box.B = 0;
@@ -760,6 +769,10 @@ main (int argc, char *argv[])
 
 	    area = Vect_get_area_area ( &Map, centr );
 	    total_area += area;
+
+	    if ( !(Centr[centr].valid) ) {
+		continue;
+	    }
 
 	    if ( Centr[centr].cats->n_cats == 0 ) {
 		nocat_area += area;
