@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML VERSION="2.0">
+<HEAD>
+<!-- WEBMAGIC VERSION NUMBER="2.0" -->
+<!-- WEBMAGIC TRANSLATION NAME="ServerRoot" SRC="/var/www/htdocs/" DST="/" -->
+<!-- WEBMAGIC TRANSLATION NAME="ProjectRoot" SRC="./" DST="" -->
+<TITLE>r.1Dcorrelogram MAN Page</TITLE>
+</HEAD>
+<BODY bgcolor="white">
+<H3>MAN PAGE</H3>
+<P><KBD>r.1Dcorrelogram</KBD> - generates one dimensional correlograms and variograms from surfaces. 
+<P>(GRASS Raster Program) 
+<H3>SYNOPSIS</H3>
+<DL>
+<DT><KBD><B>r.1Dcorrelogram </KBD></B>
+<DD>
+<DT><KBD><B>r.1Dcorrelogram help </KBD></B>
+<DT><KBD><B>r.1Dcorrelogram [-q] input</KBD><VAR></B>=name(s)</VAR><KBD><B> lags</KBD><VAR></B>=value(s)</VAR><KBD><B> lagnames</KBD><VAR></B>=name(s)</VAR><KBD><B> [max_distance</KBD><VAR></B>=value</VAR><KBD><B>] </KBD></B>
+</DL>
+<H3>DESCRIPTION</H3>
+<P><KBD>r.1Dcorrelogram</KBD> generates one dimensional correlogram(s) and variograms of a surface. Non-masked cell values are used to determine the correlogram(s) and variogram(s). Correlograms and variograms are used to determine the spatial correlation of a map. Cells close to a location are more likely to be similar or identical to that location: <KBD>r.1Dcorrelogram</KBD> provides a measure of similarity of cells at various distances. The output, placed in file(s) named in <VAR>lagnames</VAR>, contains the correlation of pairs of cells grouped into ranges of distances. For example, all pairs of cells with a distance between 0 and 100 meters will be grouped together if the <VAR>lags</VAR> value is 100. 
+<H3>OPTIONS</H3>
+<P><VAR>-q</VAR> This flag prevents the program from informing user of program's progress. 
+<P><VAR>input</VAR> Input map(s): Map(s) for which correlation is calculated. Map cells should contain continuous values. Spatial correlation of categorical data can be done by reclassifying categories of interest to 1 and other categories to 0. Cell values that should not be included in the correlation should be masked out using <KBD>r.mask</KBD>. 
+<P><VAR>lags</VAR> Input values(s): Distance increment of lags. Each lag value will generate a different lag table of correlation values. Each table will contain correlation of pairs of cells grouped by distance. If a particular lag value is x, groups will be <VAR>0-x, x-2x, ..., and nx-max_distance</VAR>. 
+<P><VAR>lagnames</VAR> Input name(s): Name(s) of ASCII file(s) containing lag table(s). There must be a name for each <VAR>lags</VAR> value. 
+<P><VAR>max_distance</VAR> Optional input value: <VAR>max_distance</VAR> is the maximum distance that <KBD>r.1Dcorrelogram</KBD> will calculate correlations out to. If <VAR>max_distance</VAR> is not used, <KBD>r.1Dcorrelogram</KBD> will calculate correlations out to the extent of the current region. 
+<H3>NOTES</H3>
+<P><KBD>r.1Dcorrelogram</KBD> uses the correlogram function and the variogram function to determine the spatial correlation of a map. The correlogram function is sensitive to data outliers making it unsuitable for some applications. The correlogram function was chosen by the author for error modeling applications. 
+<H3>SEE ALSO</H3>
+<P>Isaaks, E. and Srivastava, R., 1989, <CITE>An Introduction to Applied Geostistics</CITE>, Oxford University Press, New York. 
+<P><KBD>r.random.surface, r.random.model, r.2Dcorrelogram, r.2Dto1D, r.mapcalc, r.mask, r.random</KBD> 
+<H3>AUTHOR</H3>
+<P>Charles Ehlschlaeger, Department of Geography, University of Cincinnati. 
+</BODY>
+</HTML>
