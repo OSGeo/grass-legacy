@@ -1,0 +1,23 @@
+LIB = ../lib.a
+
+all: $(LIB) $(ETC)/element_list ../list.h $(ETC)/copy
+
+#############################################################
+OBJ =\
+	add_elem.o ask.o copyfile.o do_copy.o do_list.o do_remove.o \
+	do_rename.o empty.o find.o get_len.o menu.o read_list.o \
+	show_elem.o sighold.o 
+
+$(LIB): $(OBJ)
+	$(AR)
+
+$(OBJ): list.h
+
+$(ETC)/element_list: Element_List
+	rm -f $@ ; cp $? $@ ; chmod 0444 $@ ;
+
+$(ETC)/copy: copy.sh
+	rm -f $@ ; cp $? $@ ; chmod 0755 $@
+
+../list.h: list.h
+	cp $? $@
