@@ -102,9 +102,12 @@ for (; ; )
       fprintf (stderr," 12=Summary of pesticide yields at outlet cell\n");
       fprintf (stderr,"  0=Quit\n\n");
       fprintf (stderr,"Please enter 0-12 for your choice of contaminant>");              
-      fgets(mapflagstring,2,stdin);
+      fgets(mapflagstring,3,stdin);
       mapflag=atoi(mapflagstring);
-      fgets(mapflagstring,2,stdin); /* put in to grab extra character */
+      if (mapflag > 9)
+      {
+        fgets(mapflagstring,3,stdin); /* put in to grab extra character */
+      }
       fprintf (stderr,"\nThe choice you entered was %d.\n",mapflag);
 
       if (mapflag >=0 && mapflag <= 12) break;
@@ -155,7 +158,6 @@ for (; ; )
       } 
    if (mapflag == 12) {
       show_pest(input_nps_filename); 
-      fgets(mapflagstring,2,stdin);   /*put in to grab extra character */
       continue; 
       } 
 /**************End section added by Trey Askew**************/
@@ -163,7 +165,7 @@ for (; ; )
             
    if (mapflag == 8)
     { 
-
+            
 /************************************************************/
 /* start of code section added by Dave Peterson, April 1996 */
 /************************************************************/
@@ -174,7 +176,7 @@ for (; ; )
           fprintf (stderr,"Error opening file %s.\n", input_nps_filename);
           exit(1);
         }
-
+      fprintf(stderr, "Calculating...");
        /* find outlet cell number and max cell number; then get data for cell */
        /* to display                                                          */
        if ( find_outlet_cell(input_nps_file, &outlet_cell_num) ||
