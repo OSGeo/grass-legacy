@@ -137,6 +137,7 @@ cleandistdirs:
 	-rm -rf ${ARCH_DISTDIR}/fonts/       2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/include/     2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/lib/         2>/dev/null
+	-rm -rf ${ARCH_DISTDIR}/locale/      2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/scripts/     2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/tcltkgrass/  2>/dev/null
 	-rm -f ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp 2>/dev/null
