@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include <stdio.h>
 #ifndef GLOBAL
 #define GLOBAL extern
