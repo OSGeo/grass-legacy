@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.17 2001-01-19 20:49:10 markus Exp $)
+($Id: INSTALL,v 1.18 2001-04-03 12:35:39 markus Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -89,6 +89,16 @@ http://www.geog.uni-hannover.de/grass/grass5/index.html
 
 Note for Alpha64 users: Please read the ALPHA64/README.alpha64
 and apply the 64bit patches.
+
+If you would like to set compiler optimisations, for a smaller binary, type,
+
+	CFLAGS=-O ./configure
+or,
+	setenv CFLAGS -O
+	./configure
+
+whichever works on your shell. (Use -O2 instead of -O if your compiler
+supports this.)
 
 
 CONFIGURE OPTIONS
