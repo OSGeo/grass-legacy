@@ -198,7 +198,7 @@ Vect_break_polygons ( struct Map_info *Map, int type, struct Map_info *Err, FILE
 	fprintf ( msgout, "Points marked for break: %5d\n", nmarks ); 
     }
 
-    //sleep (10);
+    /* sleep (10); */
     
     nbreaks = 0;
     if ( msgout ) fprintf (msgout, "Breaks: %5d", nbreaks ); 

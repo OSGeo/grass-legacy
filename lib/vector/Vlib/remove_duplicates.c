@@ -121,6 +121,6 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 	}
 	if ( msgout ) fprintf (stderr, "\n" ); 
 
-	return 1;
+	return;
 }
 

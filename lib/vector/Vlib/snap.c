@@ -330,7 +330,7 @@ Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info
 		
 		for ( i = 0; i < nnew; i++ ) {
 		    anchor = New[i].anchor;
-		    //Vect_line_insert_point ( Points, ++v, XPnts[anchor].x, XPnts[anchor].y, 0); 
+		    /* Vect_line_insert_point ( Points, ++v, XPnts[anchor].x, XPnts[anchor].y, 0); */
 	            Vect_append_point ( NPoints, XPnts[anchor].x, XPnts[anchor].y, 0 );
 		    ncreated++;
 		}
