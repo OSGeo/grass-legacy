@@ -1,1 +1,0 @@
-s/eval " exec $cmd "/catch { eval " exec $cmd " }/

@@ -1,6 +1,0 @@
-LIBTIR	= $(UNUSED)/libes/libtir.a
-OBJS	= libtir.o
-
-$(LIBTIR): $(OBJS)
-	$(LIBRULE)
-

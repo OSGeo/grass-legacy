@@ -1,2 +1,0 @@
-s/eval " exec.\n/eval " exec $cmd"\n/
-

@@ -1,7 +1,0 @@
-#!/bin/sh
-for file in $*
-do
-   dir=`dirname $file`
-   tbl -TX man.version $dir/.class-header man.header $file $dir/.class-notice \
-	| nroff | col -b
-done

@@ -1,7 +1,0 @@
-for i in $*
-do
-    sed -f sedfile $i > buffer
-    rm $i
-    mv buffer $i
-done
-
