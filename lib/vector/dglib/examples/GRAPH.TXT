@@ -1,5 +1,5 @@
 # GRAPH VERSION AND NODE-ATTRIBUTE SIZE (3*32bit words for X Y and Z in bytes)
-1 12
+2 12
 
 #
 # ARCS
@@ -19,7 +19,7 @@ A    2       81     22     14
 A    2       5      7      15
 A    3       1      22     16
 A    3       80     10     17
-A    4       5      10     17
+A    4       5      10     18
 
 A	10		20		10		1020
 A	10		30		10		1030

@@ -73,7 +73,7 @@ int main( int argc , char ** argv )
 	 */
 
 	if ( pszVertex == NULL ) {
-		GNO_HELP("span usage");
+		GNO_HELP("minspan usage");
 		return 1;
 	}
 	nVertex = atol(pszVertex);
@@ -91,10 +91,10 @@ int main( int argc , char ** argv )
 	close( fd );
 	printf( "Done.\n" );
 
-	printf( "Graph depth spanning:\n" );
-	nret = dglDepthSpanning( & graph , & graphOut , nVertex , _clipper , NULL );
+	printf( "Graph minimum spanning:\n" );
+	nret = dglMinimumSpanning( & graph , & graphOut , nVertex , _clipper , NULL );
 	if ( nret < 0 ) {
-		fprintf( stderr , "dglDepthSpanning error: %s\n", dglStrerror( & graph ) );
+		fprintf( stderr , "dglMinimumSpanning error: %s\n", dglStrerror( & graph ) );
 		return 1;
 	}
 	printf( "Done.\n" );

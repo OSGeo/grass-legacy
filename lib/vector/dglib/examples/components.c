@@ -36,10 +36,10 @@
 
 #include "opt.h"
 
-static int _clipper(gnGrpGraph_s * pgraphIn,
-					gnGrpGraph_s * pgraphOut,
-					gnGrpSpanClipInput_s * pArgIn,
-					gnGrpSpanClipOutput_s * pArgOut,
+static int _clipper(dglGraph_s * pgraphIn,
+					dglGraph_s * pgraphOut,
+					dglSpanClipInput_s * pArgIn,
+					dglSpanClipOutput_s * pArgOut,
 					void * pvArg)
 {
 	return 0;
@@ -47,9 +47,9 @@ static int _clipper(gnGrpGraph_s * pgraphIn,
 
 int main( int argc , char ** argv )
 {
-	gnGrpGraph_s  	graph;
+	dglGraph_s  	graph;
 #define MY_MAX_COMPONENTS	1024
-	gnGrpGraph_s  	agraphComponents[MY_MAX_COMPONENTS];
+	dglGraph_s  	agraphComponents[MY_MAX_COMPONENTS];
 	int			 	nret , fd , i , cComponents;
 	char			szGraphOutFilename[1024];
 
@@ -81,9 +81,9 @@ int main( int argc , char ** argv )
 	if ( (fd = open( pszGraph , O_RDONLY )) < 0 ) {
 		perror( "open" ); return 1;
 	}
-	nret = gnGrpRead( & graph , fd );
+	nret = dglRead( & graph , fd );
 	if ( nret < 0 ) {
-		fprintf( stderr , "gnGrpRead error: %s\n", gnGrpStrerror( & graph ) );
+		fprintf( stderr , "dglRead error: %s\n", dglStrerror( & graph ) );
 		return 1;
 	}
 	close( fd );
@@ -92,9 +92,9 @@ int main( int argc , char ** argv )
 
 
 	printf( "Graph depth components spanning:\n" );
-	cComponents = gnGrpDepthComponents( & graph , agraphComponents , MY_MAX_COMPONENTS , _clipper , NULL );
+	cComponents = dglDepthComponents( & graph , agraphComponents , MY_MAX_COMPONENTS , _clipper , NULL );
 	if ( cComponents < 0 ) {
-		fprintf( stderr , "gnGrpDepthSpanning error: %s\n", gnGrpStrerror( & graph ) );
+		fprintf( stderr , "dglDepthSpanning error: %s\n", dglStrerror( & graph ) );
 		return 1;
 	}
 	printf( "Done.\n" );
@@ -105,19 +105,19 @@ int main( int argc , char ** argv )
 		printf( "Component %d of %d: ", i+1 , cComponents ); fflush(stdout);
 
 		printf( "[flatten..." ); fflush(stdout);
-		nret = gnGrpFlatten( & agraphComponents[i] );
+		nret = dglFlatten( & agraphComponents[i] );
 		printf( "done] " ); fflush(stdout);
 
-		if ( gnGrpGet_LinkCount( & agraphComponents[i] ) > 0 ) {
+		if ( dglGet_EdgeCount( & agraphComponents[i] ) > 0 ) {
 			if ( pszGraphOut ) {
 				snprintf( szGraphOutFilename, sizeof(szGraphOutFilename), "%s-component-%d", pszGraphOut, i );
 				printf( "[write <%s>...", szGraphOutFilename ); fflush(stdout);
 				if ( (fd = open( szGraphOutFilename , O_WRONLY | O_CREAT | O_TRUNC, 0666 )) < 0 ) {
 					perror( "open" ); return 1;
 				}
-				gnGrpWrite( & agraphComponents[i], fd );
+				dglWrite( & agraphComponents[i], fd );
 				if ( nret < 0 ) {
-					fprintf( stderr , "gnGrpWrite error: %s\n" , gnGrpStrerror( & graph ) );
+					fprintf( stderr , "dglWrite error: %s\n" , dglStrerror( & graph ) );
 					return 1;
 				}
 				close( fd );
@@ -129,10 +129,10 @@ int main( int argc , char ** argv )
 		}
 
 		printf( "[release..." );
-		gnGrpRelease( & agraphComponents[i] );
+		dglRelease( & agraphComponents[i] );
 		printf( "done]\n" );
 	}
 
-	gnGrpRelease( & graph );
+	dglRelease( & graph );
 	return 0;
 }

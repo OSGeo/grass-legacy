@@ -68,35 +68,35 @@ int main( int argc , char ** argv ) {
 	char szw[1024];
 	int nret;
 	regmatch_t aregm[64];
-	gnInt32_t nVersion;
-	gnInt32_t nNodeAttrSize;
-	gnInt32_t nLinkAttrSize;
-	gnInt32_t anOpaque[16];
+	dglInt32_t nVersion;
+	dglInt32_t nNodeAttrSize;
+	dglInt32_t nEdgeAttrSize;
+	dglInt32_t anOpaque[16];
 	int i , fd , cOut;
 
 	regex_t reVersion;
 	regex_t reByteOrder;
 	regex_t reNodeAttrSize;
-	regex_t reLinkAttrSize;
+	regex_t reEdgeAttrSize;
 	regex_t reCounters;
 	regex_t reOpaque;
 	regex_t reNodeFrom;
 	regex_t reNodeAttr;
-	regex_t reLink;
+	regex_t reEdge;
 	regex_t reToNodeAttr;
-	regex_t reLinkAttr;
+	regex_t reEdgeAttr;
 
 
-	gnInt32_t	nNodeFrom , nNodeTo , nUser , nCost;
+	dglInt32_t	nNodeFrom , nNodeTo , nUser , nCost;
 
 	int fInOpaque;
 	int fInBody;
 
-	unsigned char * pbNodeAttr , * pbLinkAttr , * pbToNodeAttr;
+	unsigned char * pbNodeAttr , * pbEdgeAttr , * pbToNodeAttr;
 
 	struct stat statdata;
 
-	gnGrpGraph_s graphOut;
+	dglGraph_s graphOut;
 
 	/* program options
 	 */
@@ -134,7 +134,7 @@ int main( int argc , char ** argv ) {
 	i++;
 	if ( regcomp( &reNodeAttrSize,"^Node Attribute Size:[ ]+([0-9]+)" , REG_EXTENDED ) != 0) goto regc_error;
 	i++;
-	if ( regcomp( &reLinkAttrSize,"^Link Attribute Size:[ ]+([0-9]+)" , REG_EXTENDED ) != 0) goto regc_error;
+	if ( regcomp( &reEdgeAttrSize,"^Edge Attribute Size:[ ]+([0-9]+)" , REG_EXTENDED ) != 0) goto regc_error;
 	i++;
 	if ( regcomp( &reCounters,"^Counters:[ ]+.*" , REG_EXTENDED ) != 0) goto regc_error;
 	i++;
@@ -147,22 +147,16 @@ int main( int argc , char ** argv ) {
 	 */
 
 	printf( "Compile body expressions..."); fflush(stdout);
-	/*
-		NODE 1        - ROLE 'from/to' - LINKAREA OFFSET 0        - ATTR HEX DUMP [0a000000 2a000000 00000000]
-	*/
-	if ( regcomp( &reNodeFrom, "^NODE ([0-9]+)[ ]*- [tofrom/']+" , REG_EXTENDED ) != 0) goto regc_error;
+	if ( regcomp( &reNodeFrom, "^HEAD ([0-9]+)[ ]*- [HT/']+" , REG_EXTENDED ) != 0) goto regc_error;
 	i++;
-	if ( regcomp( &reNodeAttr, "LINKAREA.*ATTR HEX DUMP [[]([0-9a-fA-F ]+)]" , REG_EXTENDED ) != 0) goto regc_error;
+	if ( regcomp( &reNodeAttr, ".*HEAD ATTR [[]([0-9a-fA-F ]+)]" , REG_EXTENDED ) != 0) goto regc_error;
 	i++;
 
-	/*
-		LINK #0       : TO NODE 2        - COST 1000     - USER 1       
-	*/
-	if (regcomp(&reLink, "^LINK #([0-9]+)[ ]*: TO NODE ([0-9]+)[ ]*- [tofrom/']+[ ]+- COST ([0-9]+)[ ]*- USER ([0-9]+)", REG_EXTENDED) != 0) goto regc_error;
+	if (regcomp(&reEdge, "^EDGE #([0-9]+)[ ]*: TAIL ([0-9]+)[ ]*- [HT/']+[ ]+- COST ([0-9]+)[ ]*- ID ([0-9]+)", REG_EXTENDED) != 0) goto regc_error;
 	i++;
-	if (regcomp(&reToNodeAttr, ".*NODE ATTR HEX DUMP [[]([0-9a-fA-F ]+)]", REG_EXTENDED) != 0) goto regc_error;
+	if (regcomp(&reToNodeAttr, ".*TAIL ATTR [[]([0-9a-fA-F ]+)]", REG_EXTENDED) != 0) goto regc_error;
 	i++;
-	if (regcomp(&reLinkAttr,   ".*LINK ATTR HEX DUMP [[]([0-9a-fA-F ]+)]", REG_EXTENDED) != 0) goto regc_error;
+	if (regcomp(&reEdgeAttr,   ".*EDGE ATTR [[]([0-9a-fA-F ]+)]", REG_EXTENDED) != 0) goto regc_error;
 	i++;
 
 	printf( "done.\n" );
@@ -193,10 +187,10 @@ regc_ok:
 	fInBody = 0;
 
 	nNodeAttrSize = 0;
-	nLinkAttrSize = 0;
+	nEdgeAttrSize = 0;
 	pbNodeAttr = NULL;
 	pbToNodeAttr = NULL;
-	pbLinkAttr = NULL;
+	pbEdgeAttr = NULL;
 
 	cOut = 0;
 
@@ -204,7 +198,7 @@ regc_ok:
 	{
 #ifndef VERBOSE
 		if ( !(cOut++ % 512) || ftell(fp) == statdata.st_size )
-			printf( "Parse input file (first loop)... status: %ld/%ld\r", ftell(fp), statdata.st_size ); fflush(stdout);
+			printf( "Parse input file ... status: %ld/%ld\r", ftell(fp), statdata.st_size ); fflush(stdout);
 #endif
 
 #ifdef VERYVERBOSE
@@ -237,17 +231,17 @@ regc_ok:
 				printf( "-- node attr size %d\n", nNodeAttrSize );
 #endif
 			}
-			else if ( regexec( &reLinkAttrSize, sz, 64, aregm, 0 ) == 0 ) {
+			else if ( regexec( &reEdgeAttrSize, sz, 64, aregm, 0 ) == 0 ) {
 				_regmtostring( szw , sizeof(szw) , sz , & aregm[1] );
-				nLinkAttrSize = atoi( szw );
-				if ( nLinkAttrSize > 0 ) {
-					pbLinkAttr = (unsigned char *) malloc( nLinkAttrSize );
-					if ( pbLinkAttr == NULL ) {
+				nEdgeAttrSize = atoi( szw );
+				if ( nEdgeAttrSize > 0 ) {
+					pbEdgeAttr = (unsigned char *) malloc( nEdgeAttrSize );
+					if ( pbEdgeAttr == NULL ) {
 						fprintf( stderr , "Memory Exhausted\n" ); exit(1);
 					}
 				}
 #ifdef VERYVERBOSE
-				printf( "-- link attr size %d\n", nLinkAttrSize );
+				printf( "-- edge attr size %d\n", nEdgeAttrSize );
 #endif
 			}
 			else if ( regexec( &reOpaque, sz, 64, aregm, 0 ) == 0 ) {
@@ -257,20 +251,20 @@ regc_ok:
 				fInOpaque = 1;
 			}
 			else if ( strncmp( sz , "--" , 2) == 0 ) {
-				nret = gnGrpInitialize(
+				nret = dglInitialize(
 							& graphOut,
 							nVersion,
 							nNodeAttrSize,
-							nLinkAttrSize,
+							nEdgeAttrSize,
 							anOpaque
 							);
 				if ( nret < 0 ) {
-					fprintf( stderr, "gnGrpInitialize error %s\n", gnGrpStrerror( & graphOut ) );
+					fprintf( stderr, "dglInitialize error %s\n", dglStrerror( & graphOut ) );
 					exit(1);
 				}
 #ifdef VERBOSE
-				printf( "Initialize: Version=%ld NodeAttr=%ld LinkAttr=%ld\n",
-							nVersion, nNodeAttrSize, nLinkAttrSize );
+				printf( "Initialize: Version=%ld NodeAttr=%ld EdgeAttr=%ld\n",
+							nVersion, nNodeAttrSize, nEdgeAttrSize );
 #endif
 				fInBody = 1;
 			}
@@ -363,24 +357,24 @@ regc_ok:
 					}
 				}
 			}
-			else if ( regexec( &reLink, sz, 64, aregm, 0 ) == 0 ) {
+			else if ( regexec( &reEdge, sz, 64, aregm, 0 ) == 0 ) {
 				_regmtostring( szw , sizeof(szw) , sz , & aregm[2] );
 				nNodeTo = atol(szw);
 				_regmtostring( szw , sizeof(szw) , sz , & aregm[3] );
 				nCost = atol(szw);
 				_regmtostring( szw , sizeof(szw) , sz , & aregm[4] );
 				nUser = atol(szw);
-				if ( nLinkAttrSize > 0 ) {
-					if ( regexec( &reLinkAttr, sz, 64, aregm, 0 ) == 0 ) {
+				if ( nEdgeAttrSize > 0 ) {
+					if ( regexec( &reEdgeAttr, sz, 64, aregm, 0 ) == 0 ) {
 						_regmtostring( szw , sizeof(szw) , sz , & aregm[1] );
-						if ( _sztoattr( pbLinkAttr, nLinkAttrSize, szw ) != nLinkAttrSize ) {
-							fprintf( stderr, "link attr size mismatch\n" );
+						if ( _sztoattr( pbEdgeAttr, nEdgeAttrSize, szw ) != nEdgeAttrSize ) {
+							fprintf( stderr, "edge attr size mismatch\n" );
 						}
 #ifdef VERYVERBOSE
 						{
 								int k;
-								for(k=0;k<nLinkAttrSize;k++) {
-								printf("%02x", pbLinkAttr[k]);
+								for(k=0;k<nEdgeAttrSize;k++) {
+								printf("%02x", pbEdgeAttr[k]);
 								}
 								printf("\n");
 						}
@@ -404,7 +398,7 @@ regc_ok:
 #endif
 					}
 				}
-				nret = gnGrpAddLinkX(
+				nret = dglAddEdgeX(
 								& graphOut,
 								nNodeFrom,
 								nNodeTo,
@@ -412,15 +406,15 @@ regc_ok:
 								nUser,
 								pbNodeAttr,
 								pbToNodeAttr,
-								pbLinkAttr,
+								pbEdgeAttr,
 								0 );
 
 				if ( nret < 0 ) {
-					fprintf( stderr, "gnGrpAddLink error %s\n", gnGrpStrerror( & graphOut ) );
+					fprintf( stderr, "dglAddEdge error %s\n", dglStrerror( & graphOut ) );
 					exit(1);
 				}
 #ifdef VERBOSE
-				printf( "AddLink: from=%ld to=%ld cost=%ld user=%ld\n", nNodeFrom, nNodeTo, nCost, nUser);
+				printf( "AddEdge: from=%ld to=%ld cost=%ld user=%ld\n", nNodeFrom, nNodeTo, nCost, nUser);
 #endif
 			}
 		}
@@ -429,75 +423,29 @@ regc_ok:
 	printf( "\ndone.\n" );
 #endif
 
-#if 0
-	/*
-	 * reloop to set 'to' node attributes
-	 */
-	if ( nNodeAttrSize > 0 ) {
-		rewind( fp );
-		while( fgets( sz , sizeof( sz ) , fp ) )
-		{
-#ifndef VERBOSE
-		if ( !(cOut++ % 512) || ftell(fp) == statdata.st_size )
-			printf( "Parse input file (second loop)... status: %ld/%ld\r", ftell(fp), statdata.st_size ); fflush(stdout);
-#endif
-			if ( regexec( &reNodeTo, sz, 64, aregm, 0 ) == 0 ) {
-				_regmtostring( szw , sizeof(szw) , sz , & aregm[1] );
-#ifdef VERYVERBOSE
-				printf( "node to snippet = %s\n", szw);
-#endif
-				nNodeTo = atol(szw);
-				if ( regexec( &reNodeAttr, sz, 64, aregm, 0 ) == 0 ) {
-					_regmtostring( szw , sizeof(szw) , sz , & aregm[1] );
-					if ( _sztoattr( pbNodeAttr, nNodeAttrSize, szw ) != nNodeAttrSize ) {
-						fprintf( stderr, "node attr size mismatch\n" );
-					}
-#ifdef VERYVERBOSE
-					{
-							int k;
-							for(k=0;k<nNodeAttrSize;k++) {
-							printf("%02x", pbNodeAttr[k]);
-							}
-							printf("\n");
-					}
-#endif
-					 nret = gnGrpSetNodeAttr( & graphOut, pbNodeAttr, nNodeTo );
-					if ( nret < 0 ) {
-						fprintf( stderr, "gnGrpSetNodeAttr error %s\n", gnGrpStrerror( & graphOut ) );
-						exit(1);
-					}
-				}
-			}
-		}
-#ifndef VERBOSE
-		printf( "\ndone.\n" );
-#endif
-	}
-#endif
-
 	fclose( fp );
 
 	regfree( & reVersion );
 	regfree( & reByteOrder );
 	regfree( & reNodeAttrSize );
-	regfree( & reLinkAttrSize );
+	regfree( & reEdgeAttrSize );
 	regfree( & reCounters );
 	regfree( & reOpaque );
 	regfree( & reNodeFrom );
 	regfree( & reNodeAttr );
-	regfree( & reLink );
+	regfree( & reEdge );
 	regfree( & reToNodeAttr );
-	regfree( & reLinkAttr );
+	regfree( & reEdgeAttr );
 
 	if ( pbNodeAttr ) free( pbNodeAttr );
 	if ( pbToNodeAttr ) free( pbToNodeAttr );
-	if ( pbLinkAttr ) free( pbLinkAttr );
+	if ( pbEdgeAttr ) free( pbEdgeAttr );
 
 
 	printf( "Flatten..." ); fflush(stdout);
-	nret = gnGrpFlatten( & graphOut );
+	nret = dglFlatten( & graphOut );
 	if ( nret < 0 ) {
-		fprintf( stderr, "gnGrpFlatten error %s\n", gnGrpStrerror( &graphOut ) );
+		fprintf( stderr, "dglFlatten error %s\n", dglStrerror( &graphOut ) );
 		exit(1);
 	}
 	printf( "done.\n" );
@@ -509,9 +457,9 @@ regc_ok:
 		}
 
 		printf( "Write <%s>..." , pszGraphout ); fflush(stdout);
-		nret = gnGrpWrite( & graphOut , fd );
+		nret = dglWrite( & graphOut , fd );
 		if ( nret < 0 ) {
-			fprintf( stderr, "gnGrpWrite error %s\n", gnGrpStrerror( &graphOut ) );
+			fprintf( stderr, "dglWrite error %s\n", dglStrerror( &graphOut ) );
 			exit(1);
 		}
 		printf( "done.\n" );
@@ -519,7 +467,7 @@ regc_ok:
 	}
 
 	printf( "Release..." ); fflush(stdout);
-	gnGrpRelease( &graphOut );
+	dglRelease( &graphOut );
 	printf( "done.\n" );
 
 	return 0;

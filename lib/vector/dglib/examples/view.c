@@ -38,37 +38,37 @@
 
 extern int errno;
 
-#define _LINKAREA_OFFSET(pg,pl) ((int)(pl) - (int)(pg)->pLinkBuffer)
+#define _EDGESET_OFFSET(pg,pl) ((int)(pl) - (int)(pg)->pEdgeBuffer)
 
-static int _print_node( gnGrpGraph_s * pgraph , gnInt32_t * pnode , void * pvarg )
+static int _print_node( dglGraph_s * pgraph , dglInt32_t * pnode , void * pvarg )
 {
 	FILE * f = (FILE*)pvarg;
-	gnInt32_t * plinkarea;
-	gnInt32_t * plink;
-	gnInt32_t * ptonode;
-	gnInt32_t * pnattr;
+	dglInt32_t * pedgeset;
+	dglInt32_t * pedge;
+	dglInt32_t * ptonode;
+	dglInt32_t * pnattr;
 	int		iAttr, cAttr;
 	int		role;
-	int		i, c;
+	int		i;
+	dglEdgesetTraverser_s edgeaT;
 
 	role = 0;
-	if ( gnGrpGetNode_Status(pgraph,pnode) & GNGRP_NS_FROM )
+	if ( dglNodeGet_Status(pgraph,pnode) & DGL_NS_HEAD )
 	{
 		role |= 1;
 	}
-	if ( gnGrpGetNode_Status(pgraph,pnode) & GNGRP_NS_TO )
+	if ( dglNodeGet_Status(pgraph,pnode) & DGL_NS_TAIL )
 	{
 		role |= 2;
 	}
 
-	fprintf( f , "NODE %-8ld - %-s - LINKAREA OFFSET %-8ld",
-			gnGrpGetNode_Id(pgraph,pnode),
-			(role>2)?"'from/to'":(role==2)?"'to'     ":"'from'   ",
-			(long)_LINKAREA_OFFSET(pgraph,gnGrpGetNode_OutLinkarea(pgraph,pnode)) );
+	fprintf( f , "HEAD %-8ld - %-s",
+			dglNodeGet_Id(pgraph,pnode),
+			(role>2)?"'H/T'":(role==2)?"'T  '":(role==1)?"'H  '":"'A  '");
 
-	if ( (cAttr = gnGrpGet_NodeAttrSize(pgraph)) > 0 ) {
-		pnattr = gnGrpGetNode_Attr(pgraph,pnode);
-		fprintf( f , " - ATTR HEX DUMP [" );
+	if ( (cAttr = dglGet_NodeAttrSize(pgraph)) > 0 ) {
+		pnattr = dglNodeGet_Attr(pgraph,pnode);
+		fprintf( f , " - HEAD ATTR [" );
 		for ( iAttr = 0 ; iAttr < cAttr ; iAttr ++ ) {
 			if ( iAttr && !(iAttr%4) ) fprintf( f , " " );
 			fprintf( f , "%02x" , ((unsigned char*)pnattr)[iAttr] );
@@ -80,34 +80,39 @@ static int _print_node( gnGrpGraph_s * pgraph , gnInt32_t * pnode , void * pvarg
 	}
 
 	if ( role & 1 ) {
-		plinkarea = gnGrpGetNode_OutLinkarea(pgraph, pnode);
+		pedgeset = dglNodeGet_OutEdgeset(pgraph, pnode);
 
-		for( i = 0, c = gnGrpGetOutLink_Count(pgraph,plinkarea); i < c ; i ++ ) {
-			plink = gnGrpGetOutLink_ByIndex(pgraph,plinkarea,i);
-			ptonode = gnGrpGetLink_ToNode(pgraph,plink);
+		dglEdgeset_T_Initialize(&edgeaT, pgraph, pedgeset);
+		for	(
+			i = 0, pedge = dglEdgeset_T_First( &edgeaT ) ;
+			pedge ;
+			i++  , pedge = dglEdgeset_T_Next ( &edgeaT )
+			)
+		{
+			ptonode = dglEdgeGet_Tail(pgraph,pedge);
 
 			if ( ptonode ) {
 				role = 0;
-				if ( gnGrpGetNode_Status(pgraph,ptonode) & GNGRP_NS_FROM )
+				if ( dglNodeGet_Status(pgraph,ptonode) & DGL_NS_HEAD )
 				{
 					role |= 1;
 				}
-				if ( gnGrpGetNode_Status(pgraph,ptonode) & GNGRP_NS_TO )
+				if ( dglNodeGet_Status(pgraph,ptonode) & DGL_NS_TAIL )
 				{
 					role |= 2;
 				}
 
-				fprintf( f , "LINK #%-8d: TO NODE %-8ld - %-s - COST %-8ld - USER %-8ld",
+				fprintf( f , "EDGE #%-8d: TAIL %-8ld - %-s - COST %-8ld - ID %-8ld",
 					 i ,
-					 gnGrpGetNode_Id(pgraph,ptonode) ,
-					 (role>2)?"'from/to'":(role==2)?"'to'     ":"'from'   ",
-					 gnGrpGetLink_Cost(pgraph,plink) ,
-					 gnGrpGetLink_UserId(pgraph,plink)
+					 dglNodeGet_Id(pgraph,ptonode) ,
+					 (role>2)?"'H/T'":(role==2)?"'T  '":(role==1)?"'H  '":"'A  '",
+					 dglEdgeGet_Cost(pgraph,pedge) ,
+					 dglEdgeGet_Id(pgraph,pedge)
 					 );
 
-				if ( (cAttr = gnGrpGet_NodeAttrSize(pgraph)) > 0 ) {
-					pnattr = gnGrpGetNode_Attr(pgraph,ptonode);
-					fprintf( f , " - NODE ATTR HEX DUMP [" );
+				if ( (cAttr = dglGet_NodeAttrSize(pgraph)) > 0 ) {
+					pnattr = dglNodeGet_Attr(pgraph,ptonode);
+					fprintf( f , " - TAIL ATTR [" );
 					for ( iAttr = 0 ; iAttr < cAttr ; iAttr ++ ) {
 						if ( iAttr && !(iAttr%4) ) fprintf( f , " " );
 						fprintf( f , "%02x" , ((unsigned char*)pnattr)[iAttr] );
@@ -115,9 +120,9 @@ static int _print_node( gnGrpGraph_s * pgraph , gnInt32_t * pnode , void * pvarg
 					fprintf( f , "]" );
 				}
 
-				if ( (cAttr = gnGrpGet_LinkAttrSize(pgraph)) > 0 ) {
-					pnattr = gnGrpGetLink_Attr(pgraph,plink);
-					fprintf( f , " - LINK ATTR HEX DUMP [" );
+				if ( (cAttr = dglGet_EdgeAttrSize(pgraph)) > 0 ) {
+					pnattr = dglEdgeGet_Attr(pgraph,pedge);
+					fprintf( f , " - EDGE ATTR [" );
 					for ( iAttr = 0 ; iAttr < cAttr ; iAttr ++ ) {
 						if ( iAttr && !(iAttr%4) ) fprintf( f , " " );
 						fprintf( f , "%02x" , ((unsigned char*)pnattr)[iAttr] );
@@ -129,13 +134,14 @@ static int _print_node( gnGrpGraph_s * pgraph , gnInt32_t * pnode , void * pvarg
 				}
 			}
 		}
+		dglEdgeset_T_Release( &edgeaT );
 	}
 	return 0;
 }
 
 int main( int argc , char ** argv )
 {
-	gnGrpGraph_s  	graph;
+	dglGraph_s  	graph;
 	int				fd;
 	int				nret;
 
@@ -168,11 +174,11 @@ int main( int argc , char ** argv )
 		perror( "open" ); return 1;
 	}
 
-	nret = gnGrpRead( & graph , fd );
+	nret = dglRead( & graph , fd );
 
 	if ( nret < 0 )
 	{
-		fprintf( stderr , "gnGrpRead error: %s\n" , gnGrpStrerror( & graph ) );
+		fprintf( stderr , "dglRead error: %s\n" , dglStrerror( & graph ) );
 		return 1;
 	}
 
@@ -183,14 +189,14 @@ int main( int argc , char ** argv )
 	fprintf( stdout , "Version: %d\n" ,
 			 graph.Version );
 	fprintf( stdout , "Byte Order: %s\n" ,
-			 (graph.Endian == GNGRP_ENDIAN_LITTLE)?"Little Endian":"Big Endian" );
+			 (graph.Endian == DGL_ENDIAN_LITTLE)?"Little Endian":"Big Endian" );
 	fprintf( stdout , "Node Attribute Size:  %ld\n" ,
 			 graph.NodeAttrSize );
-	fprintf( stdout , "Link Attribute Size:  %ld\n" ,
-			 graph.LinkAttrSize );
-	fprintf( stdout , "Counters:  %ld Links - %ld Nodes: %ld 'from role' / %ld 'to role'\n" ,
-			 graph.cArc , graph.cNode ,
-			 graph.cFrom , graph.cTo );
+	fprintf( stdout , "Edge Attribute Size:  %ld\n" ,
+			 graph.EdgeAttrSize );
+	fprintf( stdout , "Counters:  %ld Edges - %ld Nodes: %ld HEAD / %ld TAIL / %ld ALONE\n" ,
+			 graph.cEdge , graph.cNode ,
+			 graph.cHead , graph.cTail , graph.cAlone );
 	fprintf( stdout , "Opaque Settings:\n" );
 	fprintf( stdout , "%10ld %10ld %10ld %10ld\n",
 			 graph.aOpaqueSet[ 0 ], graph.aOpaqueSet[ 1 ],
@@ -204,14 +210,22 @@ int main( int argc , char ** argv )
 	fprintf( stdout , "%10ld %10ld %10ld %10ld\n",
 			 graph.aOpaqueSet[ 12 ], graph.aOpaqueSet[ 13 ],
 			 graph.aOpaqueSet[ 14 ], graph.aOpaqueSet[ 15 ] );
+	fprintf( stdout , "Total Cost: %lld\n", graph.nnCost );
 	fprintf( stdout , "--\n" );
 
 
-	/* scan the graph
-	 */
-	gnGrpNodeScan( & graph , _print_node , stdout );
+	{
+		dglInt32_t * pnode;
+		dglNodeTraverser_s traverser;
+		dglNode_T_Initialize( &traverser, &graph );
+		for (pnode = dglNode_T_First(&traverser) ; pnode ; pnode = dglNode_T_Next(&traverser)) {
+			_print_node( &graph, pnode, stdout );
+		}
+		dglNode_T_Release   ( & traverser );
+	}
+
 	printf( "\n" );
-	gnGrpRelease( & graph );
+	dglRelease( & graph );
 	return 0;
 
 }

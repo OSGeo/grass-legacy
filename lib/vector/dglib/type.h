@@ -20,8 +20,8 @@
  * best view tabstop=4
  */
 
-#ifndef _GN_TYPE_H_
-#define _GN_TYPE_H_ 1
+#ifndef _DGL_TYPE_H_
+#define _DGL_TYPE_H_ 1
 
 /* __BEGIN_DECLS should be used at the beginning of your declarations,
    so that C++ compilers don't mangle their names.  Use __END_DECLS at
@@ -61,8 +61,9 @@ __BEGIN_DECLS
 #endif
 
 
-typedef unsigned char gnByte_t;
-typedef long gnInt32_t;
+typedef unsigned char dglByte_t;
+typedef long dglInt32_t;
+typedef long long dglInt64_t;
 	
 
 __END_DECLS /* _GN_TYPE_H_ */

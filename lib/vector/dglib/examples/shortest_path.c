@@ -42,7 +42,7 @@ extern int errno;
  * Try to change the return value to 1 and see that the program
  * will not find any more paths to destinations.
  * The clipper receives data relating the network segment being examinated.
- * The pvarg is a user pointer registered to gnGrpShortestPath() and
+ * The pvarg is a user pointer registered to dglShortestPath() and
  * passed back to the clipper.
  * As a demo, the main uses the ClipperContext_s structure to store a nodeid
  * that must be discarded during the search. The clipper receives
@@ -51,33 +51,33 @@ extern int errno;
  */
 
 typedef struct {
-	gnInt32_t node_to_discard;
+	dglInt32_t node_to_discard;
 } ClipperContext_s;
 
 static int 	clipper 	(
-						gnGrpGraph_s * 	pgraph ,
-						gnGrpSPClipInput_s * pIn ,
-						gnGrpSPClipOutput_s * pOut ,
+						dglGraph_s * 	pgraph ,
+						dglSPClipInput_s * pIn ,
+						dglSPClipOutput_s * pOut ,
 						void * 			pvarg		/* caller's pointer */
 						)
 {
 	ClipperContext_s * pclip = (ClipperContext_s*) pvarg;
 #if 0
-	gnInt32_t * pnFromXYZ = (gnInt32_t*) gnGrpGetNode_Attr( pgraph, pIn->pnNodeFrom );
-	gnInt32_t * pnToXYZ   = (gnInt32_t*) gnGrpGetNode_Attr( pgraph, pIn->pnNodeTo );
+	dglInt32_t * pnFromXYZ = (dglInt32_t*) dglNodeGet_Attr( pgraph, pIn->pnNodeFrom );
+	dglInt32_t * pnToXYZ   = (dglInt32_t*) dglNodeGet_Attr( pgraph, pIn->pnNodeTo );
 
 	printf( "clipper called:\n" );
 	printf( "        from node: %ld - attributes x=%ld y=%ld z=%ld\n",
-		gnGrpGetNode_Id(pgraph, pIn->pnNodeFrom), pnFromXYZ[0], pnFromXYZ[1], pnFromXYZ[2]);
+		dglNodeGet_Id(pgraph, pIn->pnNodeFrom), pnFromXYZ[0], pnFromXYZ[1], pnFromXYZ[2]);
 	printf( "        to   node: %ld - attributes x=%ld y=%ld z=%ld\n",
-		gnGrpGetNode_Id(pgraph, pIn->pnNodeTo), pnToXYZ[0], pnToXYZ[1], pnToXYZ[2]);
-	printf( "        link     : %ld\n",
-		gnGrpGetLink_UserId(pgraph, pIn->pnLink) );
+		dglNodeGet_Id(pgraph, pIn->pnNodeTo), pnToXYZ[0], pnToXYZ[1], pnToXYZ[2]);
+	printf( "        edge     : %ld\n",
+		dglEdgeGet_Id(pgraph, pIn->pnEdge) );
 #endif
 
 	if ( pclip )
 	{
-		if ( gnGrpGetNode_Id(pgraph, pIn->pnNodeTo) == pclip->node_to_discard )
+		if ( dglNodeGet_Id(pgraph, pIn->pnNodeTo) == pclip->node_to_discard )
 		{
 			/*
 			printf( "        discarder.\n" );
@@ -95,13 +95,13 @@ static int 	clipper 	(
 
 int main( int argc , char ** argv )
 {
-	gnGrpGraph_s  		graph;
-	gnInt32_t 			from , to;
+	dglGraph_s  		graph;
+	dglInt32_t 			from , to;
 
-	int					fd , nret;
-	gnGrpSPReport_s * 	pReport;
-	gnInt32_t			nDistance;
-	gnGrpSPCache_s		spCache;
+	int					fd , nret , version;
+	dglSPReport_s * 	pReport;
+	dglInt32_t			nDistance;
+	dglSPCache_s		spCache;
 	ClipperContext_s	clipctx , * pclipctx;
 
 	/* program options
@@ -110,14 +110,18 @@ int main( int argc , char ** argv )
  	char	*	pszFrom;
  	char	*	pszTo;
  	char	*	pszDiscard;
+ 	char	*	pszVersion;
 	Boolean		fDistance;
+	Boolean		fUnflatten;
  
 	GNO_BEGIN /*short  	long        default     variable        help */
  	GNO_OPTION( "g", 	"graph", 	NULL ,  	& pszFilein ,	"graph file to view" )
+ 	GNO_OPTION( "v", 	"version", 	NULL , 		& pszVersion ,	"alter graph version" )
  	GNO_OPTION( "f", 	"from", 	NULL ,  	& pszFrom ,		"from-node id" )
  	GNO_OPTION( "t", 	"to", 		NULL ,  	& pszTo ,		"to-node id" )
  	GNO_OPTION( "d", 	"discard", 	NULL ,  	& pszDiscard ,	"node to discard in clipper" )
  	GNO_SWITCH( "D", 	"distance",	False , 	& fDistance ,	"Report shortest distance only" )
+ 	GNO_SWITCH( "U", 	"unflatten",False ,		& fUnflatten ,	"Unflatten the graph before processing" )
  	GNO_END
  
 
@@ -142,76 +146,81 @@ int main( int argc , char ** argv )
 	else
 		pclipctx = NULL;
 
+	if ( pszVersion ) {
+		version = atoi(pszVersion);
+	}
+
 	fd = open( pszFilein , O_RDONLY );
 	if ( fd < 0 )
 	{	
 		perror( "open" ); return 1;
 	}
 
-	nret = gnGrpRead( & graph , fd );
+	nret = dglRead( & graph , fd );
 
 	close( fd );
 
 	if ( nret < 0 )
 	{
-		fprintf( stderr , "gnGrpRead error: %s\n" , gnGrpStrerror( & graph ) );
+		fprintf( stderr , "dglRead error: %s\n" , dglStrerror( & graph ) );
 		return 1;
 	}
+
+	if ( fUnflatten ) dglUnflatten( &graph );
+
+	if ( pszVersion ) dglSet_Version(&graph, version);
 
 	from = atol( pszFrom );
 	to = atol( pszTo );
 
 	printf( "shortest path: from-node %ld - to-node %ld\n\n" , from , to );
 
-	gnGrpInitializeSPCache( & graph, & spCache );
+	dglInitializeSPCache( & graph, & spCache );
 
 	if ( fDistance == False ) {
-		nret = gnGrpShortestPath( & graph , & pReport , from , to , clipper , pclipctx , & spCache );
+		nret = dglShortestPath( & graph , & pReport , from , to , clipper , pclipctx , & spCache );
 
 		if ( nret == 0 )
 		{
-			if ( gnGrpErrno(& graph) == 0 )
-			{
-				printf( "destination node is unreachable\n\n" );
-			}
+			printf( "destination node is unreachable\n\n" );
 		}
 		else if ( nret < 0 ) 
 		{
-			fprintf( stderr , "gnGrpShortestPath error: %s\n", gnGrpStrerror( & graph ) );
+			fprintf( stderr , "dglShortestPath error: %s\n", dglStrerror( & graph ) );
 		}
 		else
 		{
 			int i;
 	
-			printf( "shortest path report: total links %ld - total distance %ld\n" , pReport->cArc , pReport->distance );
+			printf( "shortest path report: total edges %ld - total distance %ld\n" , pReport->cArc , pReport->nDistance );
 	
 			for( i = 0 ; i < pReport->cArc ; i ++ )
 			{
-				printf(	"link[%d]: from %ld to %ld - travel cost %ld - user linkid %ld - distance from start node %ld\n" ,
+				printf(	"edge[%d]: from %ld to %ld - travel cost %ld - user edgeid %ld - distance from start node %ld\n" ,
 						i,
-						pReport->pArc[i].From,
-						pReport->pArc[i].To,
-						gnGrpGetLink_Cost(&graph, pReport->pArc[i].Link), /* this is the cost from clip() */
-						gnGrpGetLink_UserId(&graph, pReport->pArc[i].Link),
-						pReport->pArc[i].Distance
+						pReport->pArc[i].nFrom,
+						pReport->pArc[i].nTo,
+						dglEdgeGet_Cost(&graph, pReport->pArc[i].pnEdge), /* this is the cost from clip() */
+						dglEdgeGet_Id(&graph, pReport->pArc[i].pnEdge),
+						pReport->pArc[i].nDistance
 						);
 			}
-			gnGrpFreeSPReport( & graph , pReport );
+			dglFreeSPReport( & graph , pReport );
 		}
 	}
 	else {
-		nret = gnGrpShortestDistance( & graph , & nDistance , from , to , clipper , pclipctx , & spCache );
+		nret = dglShortestDistance( & graph , & nDistance , from , to , clipper , pclipctx , & spCache );
 
 		if ( nret == 0 )
 		{
-			if ( gnGrpErrno(& graph) == 0 )
+			if ( dglErrno(& graph) == 0 )
 			{
 				printf( "destination node is unreachable\n\n" );
 			}
 		}
 		else if ( nret < 0 ) 
 		{
-			fprintf( stderr , "gnGrpShortestDistance error: %s\n", gnGrpStrerror( & graph ) );
+			fprintf( stderr , "dglShortestDistance error: %s\n", dglStrerror( & graph ) );
 		}
 		else
 		{
@@ -219,8 +228,8 @@ int main( int argc , char ** argv )
 		}
 	}
 
-	gnGrpReleaseSPCache( & graph, & spCache );
-	gnGrpRelease( & graph );
+	dglReleaseSPCache( & graph, & spCache );
+	dglRelease( & graph );
 
 	return 0;
 

@@ -20,16 +20,18 @@
  * best view tabstop=4
  */
 
-#ifndef _GN_HELPERS_H_
-#define _GN_HELPERS_H_
+#ifndef _DGL_HELPERS_H_
+#define _DGL_HELPERS_H_
 
 #include "tree.h"
 
-extern unsigned char * gngrp_mempush( unsigned char * pstack , long * istack , long size , void * pv );
-extern unsigned char * gngrp_mempop( unsigned char * pstack , long * istack , long size );
-extern void            gngrp_swapInt32Bytes( gnInt32_t * pn );
-extern int gngrp_node_free( gnTreeNode_s * pnode , void * pv );
-extern gnTreeNode_s * gngrp__node( gnTreeNode_s * ptree , gnInt32_t nodeid );
+extern unsigned char * dgl_mempush( unsigned char * pstack , long * istack , long size , void * pv );
+extern unsigned char * dgl_mempop( unsigned char * pstack , long * istack , long size );
+extern void            dgl_swapInt32Bytes( dglInt32_t * pn );
+extern void            dgl_swapInt64Bytes( dglInt64_t * pn );
+extern int             dgl_edge_prioritizer_del(dglGraph_s * pG, dglInt32_t nId, dglInt32_t nPriId);
+extern int             dgl_edge_prioritizer_add(dglGraph_s * pG, dglInt32_t nId, dglInt32_t nPriId);
+extern void *          dgl_reduce_edgeset(void * pvSet, int * pc, dglInt32_t nKey);
 
 __END_DECLS
 #endif
