@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.14 2000-10-31 16:15:02 cho Exp $
+# $Id: Gmakefile,v 1.15 2000-11-02 15:50:16 cho Exp $
 #
 # Toplevel makefile for building everything
 
@@ -40,7 +40,7 @@ install:
 	cp scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
 	if [ `uname -s` = FreeBSD ]; \
 	then \
-		./FreeBSD.specific $(GISBASE) $(NV_VER) \
+		./FreeBSD.specific $(GISBASE) $(NV_VER); \
 	else \
 		cp scripts/$(NV_VER) $(GISBASE)/bin; \
 	fi
