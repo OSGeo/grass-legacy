@@ -102,7 +102,10 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     lines = NULL;
     
     line = 0;
-    while ( (type = read_line ( Digin, nline) )> 0 ) {
+    while ( 1 ) {
+        type = read_line ( Digin, nline);
+	G_debug (3, "read line = %d, type = %d", line, type);
+	if ( type == -2 ) break; /* EOF */
 	switch (type) {
 	    case GV_POINT:
 		npoints++;
@@ -169,16 +172,17 @@ int read_line ( FILE *Digin, struct line_pnts *nline )
     int n_points;
     long itype;
 
-    if (0 >= dig__fread_port_L (&itype, 1, Digin)) return (0);
+    if (0 >= dig__fread_port_L (&itype, 1, Digin)) return (-2);
     itype = dig_old_to_new_type ((char) itype);
 
-    if (0 >= dig__fread_port_I (&n_points, 1, Digin)) return (0);
+    if (0 >= dig__fread_port_I (&n_points, 1, Digin)) return (-2);
  
-    if (0 > dig_alloc_points ( nline, n_points)) return (-1);
+    if (0 > dig_alloc_points ( nline, n_points))
+       G_fatal_error ("Cannot allocate points");
  
     nline->n_points = n_points;
-    if (0 >= dig__fread_port_D ( nline->x, n_points, Digin)) return (0);
-    if (0 >= dig__fread_port_D ( nline->y, n_points, Digin)) return (0);    
+    if (0 >= dig__fread_port_D ( nline->x, n_points, Digin)) return (-2);
+    if (0 >= dig__fread_port_D ( nline->y, n_points, Digin)) return (-2);    
 
     return ((int) itype);
 }  
