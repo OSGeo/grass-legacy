@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 
 I_init_signatures (S, nbands)
@@ -22,11 +21,11 @@ I_new_signature (S)
     S->sig = (SIG *) G_realloc (S->sig, S->nsigs * sizeof (SIG));
 
     S->sig[i].desc[0] = 0;
-    S->sig[i].mean = (double *) G_malloc (S->nbands * sizeof(double));
-    S->sig[i].var = (double **) G_malloc (S->nbands * sizeof(double *));
+    S->sig[i].mean = (double *) G_calloc (S->nbands, sizeof(double));
+    S->sig[i].var = (double **) G_calloc (S->nbands, sizeof(double *));
 
     for (n = 0; n < S->nbands; n++)
-	S->sig[i].var[n] = (double *) G_malloc (S->nbands * sizeof(double));
+	S->sig[i].var[n] = (double *) G_calloc (S->nbands, sizeof(double));
 
     S->sig[i].status = 0;
     S->sig[i].have_color = 0;
