@@ -383,6 +383,29 @@ Vect_delete ( char *map )
     }
 
     while ( (ent = readdir (dir)) ) {
+	G_debug (3, "file = '%s'", ent->d_name );
+	if ( (strcmp (ent->d_name, ".") == 0) || (strcmp (ent->d_name, "..") == 0) ) continue;
+	sprintf ( buf, "%s/%s/vector/%s/%s", G_location_path(), G_mapset(), map, ent->d_name );
+	G_debug (3, "delete file '%s'", buf );
+	ret = unlink ( buf );
+	if ( ret == -1 ) { 
+	    G_warning ( "Cannot delete file '%s'", buf );
+	    closedir (dir);
+	    return -1;
+	}
+    }
+    closedir (dir);
+
+    /* NFS can create . files for those deleted -> second time */
+    sprintf ( buf, "%s/%s/vector/%s", G_location_path(), G_mapset(), map );
+    G_debug (3, "opendir '%s'", buf ); 
+    dir = opendir( buf );
+    if (dir == NULL) {
+	G_warning ( "Cannot open directory '%s'", buf );
+	return -1;
+    }
+    while ( (ent = readdir (dir)) ) {
+	G_debug (3, "file = '%s'", ent->d_name );
 	if ( (strcmp (ent->d_name, ".") == 0) || (strcmp (ent->d_name, "..") == 0) ) continue;
 	sprintf ( buf, "%s/%s/vector/%s/%s", G_location_path(), G_mapset(), map, ent->d_name );
 	G_debug (3, "delete file '%s'", buf );
