@@ -12,12 +12,6 @@ then
 ####### POSTGRESQL SUPPORTED #####################
 	echo "*** PostgreSQL supported ***" >&2
 
-	diff src/query_postgr_orig.c src/query_postgr.c > /dev/null
-	if [ $? -ne 0 ]
-	then
-		cp src/query_postgr_orig.c src/query_postgr.c
-	fi
-
 	diff scripts/panel_query_pg.tcl scripts/panel_query.tcl > /dev/null
 	if [ $? -ne 0 ]
 	then
@@ -33,12 +27,6 @@ else
 		echo "*** PostgreSQL library not found by global configure ***" >&2
 	fi
 	echo "*** PostgreSQL unsupported ***" >&2
-
-	diff src/query_postgr_dummy.c src/query_postgr.c > /dev/null
-	if [ $? -ne 0 ]
-	then
-		cp src/query_postgr_dummy.c src/query_postgr.c
-	fi
 
 	diff scripts/panel_query_orig.tcl scripts/panel_query.tcl > /dev/null
 	if [ $? -ne 0 ]
