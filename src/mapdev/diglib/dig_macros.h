@@ -6,7 +6,9 @@
 #define TOGGLE(x)  ((x) = _TOGGLE (x))
 #define BEEP	   putchar ('\007')
 #define ON_OFF(x)  ((x) ? "        ON" : "       OFF")
+/*
 #define ABS(x)	   ((x) < 0 ? -(x) : (x))
+*/
 
 /* ALIVE MACROS take a pointer the the structure in question */
 /*  and return 0 or non-zero */
