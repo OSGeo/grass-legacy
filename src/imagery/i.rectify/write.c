@@ -68,11 +68,14 @@ int write_map(char *name)
    void *rast;
    struct Cell_head win;
 
-	 G_set_window(&target_window); 
+
+   select_target_env();
+   if (G_set_window(&target_window)<0)
+		   fprintf(stderr,"Error setting window.\n"); 
 
    fprintf(stderr,"write_map(%s)\n",name);
    rast = G_allocate_raster_buf(map_type);
-
+   
    fd = G_open_raster_new(name,map_type);
 
    close(temp_fd);
