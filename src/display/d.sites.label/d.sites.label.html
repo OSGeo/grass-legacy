@@ -19,7 +19,7 @@ attribute value or the category value on the current graphics monitor.
 
 <b>d.sites.label</b><br>
 <b>d.sites.label sitefile=</b><em>name</em>
-	[<b>attr=</b>string|cat|double]
+	[<b>attr=</b>string|cat|double|coords|dim]
 	[<b>index=</b><em>number</em>]
 	[<b>anchor=</b>c|n|s|e|w|ne|nw|se|sw]
 	[<b>color=</b><em>colorname</em>]
@@ -30,12 +30,14 @@ attribute value or the category value on the current graphics monitor.
 <h2>DESCRIPTION</h2>
 
 <p>
-<em>d.sites.label</em> displays labels for a GRASS <em>sites_list</em>
-on the current graphics monitor.  Labels can be chosen from the category
-value, a double attribute or a string attribute.  The default uses the first
-string attribute. The <em>index</em> is a number greater than zero for the
-attribute to use as a label.  The user may select the position, color and
-sizing of the labels.  Labels are only drawn within the current region.
+
+<em>d.sites.label</em> displays labels for a GRASS <em>sites_list</em> on the
+current graphics monitor.  Labels can be chosen from the category value, a
+double attribute or a string attribute, the coordinates, or a dimension.  The
+default uses the first string attribute. The <em>index</em> is a number greater
+than zero for the attribute to use as a label.  The user may select the
+position, color and sizing of the labels.  Labels are only drawn within the
+current region.
 
 </p>
 <p>
@@ -54,13 +56,13 @@ for the parameter values using the standard GRASS
 <dt><b>sitefile=</b><em>name</em>
 <dd>Name of a GRASS <em>sites_list</em> map in the user's current mapset
 	search path.
-<dt><b>attr=</b>string|cat|double
+<dt><b>attr=</b>string|cat|double|coords|dim
 <dd>Type of attribute to use for the label.<br>
 Default: <em>string</em>
 <dt><b>index=</b><em>number</em>
 <dd>Index number to the attribute. For instance, <em>3</em> would request
 values from the third attribute column. This option is ignored if the
-<em>attr</em> option is set to <em>cat</em>.<br>
+<em>attr</em> option is set to <em>cat</em> or <em>coords</em>.<br>
 Default: <em>1</em>
 <dt><b>anchor=</b>c|n|s|e|w|ne|nw|se|sw
 <dd>Where to place the label in relation to the site point.<br>
@@ -97,7 +99,7 @@ Default: <em>10</em>
 
 <h2>AUTHOR</h2>
 <p>
-Eric G. Miller
+Eric G. Miller, <em>Unknown others</em>
 </p><p>
 <em>$Id$</em>
 </p>
