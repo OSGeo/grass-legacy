@@ -1,0 +1,37 @@
+.TH r.reclass.db
+.SH NAME
+\fIr.reclass.db\fR \- ENTER ONE LINE DESCRIPTION HERE
+.br
+.I "(GRASS Raster Program)"
+.SH SYNOPSIS
+\fBr.reclass.db\fR
+.br
+\fBr.reclass.db help\fR
+.br
+\fBr.reclass.db\fR \fBsql=\fIname\fR \fBkey=\fIname\fR \fBinput=\fIname\fR \fB[output=\fIname]\fR \fB[label=\fIname]\fR
+.SH DESCRIPTION
+enter short description of r.reclass.db here
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters
+.IP \fIsql\fR
+Name of file containing SQL query statements.
+.IP \fIkey\fR
+Key column in db.
+.IP \fIinput\fR
+Name of existing raster file to be reclassed using query output.
+.IP \fIoutput\fR
+Name of new raster (reclass),  file.
+.IP \fIlabel\fR
+Label for new categories. 
+
+.SH BUGS
+Describe known bugs here
+
+.SH "SEE ALSO"
+Refer reader to related programs here
+
+.SH AUTHOR
+Provide the programmers name and institution
+
