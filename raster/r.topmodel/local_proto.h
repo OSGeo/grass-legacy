@@ -65,9 +65,10 @@ GLOBAL	struct
 GLOBAL	struct
 {
 	char	*name;
+	double	A, qs0, lnTe, m, Sr0, Srmax, td, vch, vr;
+	int	infex;
+	double	K, psi, dtheta;
 	int	nch;
-	char	infex;
-	double	A, m, td, lnTe, vch, vr, qs0, Sr0, Srmax, K, psi, dtheta;
 	/* params.nch's */
 	double	*d, *Ad_r;
 } params;

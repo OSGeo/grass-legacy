@@ -106,12 +106,11 @@ read_inputs(void)
 	for(; !feof(fp); ){
 		get_line(fp, buf);
 
-		if(sscanf(buf, "%c %lf %lf %lf",
+		if(sscanf(buf, "%d %lf %lf %lf",
 				&(params.infex),&(params.K),
 				&(params.psi),	&(params.dtheta)) == 4)
 			break;
 	}
-	params.infex -= '0';
 
 	for(; !feof(fp); ){
 		get_line(fp, buf);
