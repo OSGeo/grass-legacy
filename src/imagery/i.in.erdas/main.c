@@ -147,7 +147,7 @@ printhd (struct edheader *hd)
 	int i;
 	for (i=0;i<6;i++) fprintf(stderr,"%c",hd->hdwrd[i]);
 	fprintf(stderr,"\n");
-	fprintf(stderr,"pack type------ %d == ",hd->pack);
+	fprintf(stderr,"pack type ------------- %d == ",hd->pack);
 	if (hd->pack == 0) fprintf(stderr,"8 bit/pixel\n");
 	else if(hd->pack == 1) fprintf(stderr,"4 bit/pixel\n");
 	else if(hd->pack == 2) fprintf(stderr,"16 bit/pixel\n");
@@ -155,9 +155,10 @@ printhd (struct edheader *hd)
 	fprintf(stderr,"number bands----------- %d\n",hd->nbands);
 	fprintf(stderr,"number cols,rows------- %ld, %ld\n",hd->rcols,hd->rrows);
 	fprintf(stderr,"starting coordinate --- %ld, %ld\n",hd->rx,hd->ry);
-	fprintf(stderr,"map type -------------- %d\n",hd->maptyp);
+	fprintf(stderr,"map type (int, float) - %d\n",hd->maptyp);
 	fprintf(stderr,"number classes -------- %d\n",hd->nclass);
-	fprintf(stderr,"area ------------------ %f %c\n",hd->area,IAUTYP[hd->utyp]);
+	fprintf(stderr,"unit-type: ------------ %c (N=None A=Acre H=Hectare O=Other)\n", IAUTYP[hd->utyp]);
+	fprintf(stderr,"area per pixel -------- %f\n",hd->area);
 	fprintf(stderr,"map coordinate -------- %f, %f\n",hd->mx,hd->my);
 	fprintf(stderr,"pixel size ------------ %f, %f\n\n",hd->xcel,hd->ycel);
 }
@@ -237,29 +238,31 @@ getwin (double *row, double *col, double *lrow, double *lcol)
 
 /******************** Routine to put data into CELL file ****************/
 int 
-put_row (int fd, unsigned char *buf, int row, int pack)
+put_row (int fd, unsigned char *buf, int row, int pack, int maptyp)
 {
 	CELL *c,*cellbuf;
+	FCELL *f,*fcellbuf;
 	int ncols;
 	short *buf1;
+	float *buf2;
 
-
-	buf1 = (short*) buf;
-	ncols = G_window_cols();
-	if ((cellbuf = (CELL *)G_malloc(ncols*sizeof(CELL))) == NULL) {
-		fprintf(stderr,"memory error\n");
-		exit(0);
-	}
-	c = cellbuf;
-	while(ncols-- > 0) {
-		if (pack == 2){
-			*c++ = *buf1++;
-		}else{
-			*c++ = *buf++;
+	if(maptyp == CELL_TYPE) { /* integer map */
+		buf1 = (short*) buf;
+		ncols = G_window_cols();
+		if ((cellbuf = (CELL *)G_malloc(ncols*sizeof(CELL))) == NULL) {
+			fprintf(stderr, "integer memory error\n");
+			exit(0);
 		}
-	}
+		c = cellbuf;
+		while(ncols-- > 0) {
+			if (pack == 2){
+				*c++ = *buf1++;
+			}else{
+				*c++ = *buf++;
+			}
+		}
 
-	/*************** DEBUG ********************
+/*************** DEBUG ********************
     ncols = G_window_cols(); c = cellbuf;
     while(ncols-- > 0) {
 fprintf(stderr," %d ",*c++);
@@ -267,8 +270,27 @@ fprintf(stderr," %d ",*c++);
 fprintf(stderr,"\n");
 ******************************************/
 
-	if (G_put_raster_row (fd, cellbuf, CELL_TYPE) < 0) return (-1);
-	free(cellbuf);
+		if (G_put_raster_row (fd, cellbuf, CELL_TYPE) < 0) return (-1);
+		free(cellbuf);
+	} 
+	else { /* float map */
+		buf2 = (float*) buf;
+		ncols = G_window_cols();
+		if ((fcellbuf = (FCELL *)G_malloc(ncols*sizeof(FCELL))) == NULL) {
+			fprintf(stderr, "float memory error\n");
+			exit(0);
+		}
+		f = fcellbuf;
+		while(ncols-- > 0) {
+			if (pack == 2){
+				*f++ = *buf2++;
+			}else{
+				*f++ = *buf++;
+			}
+		}
+		if (G_put_raster_row (fd, cellbuf, FCELL_TYPE) < 0) return (-1);
+		free(fcellbuf);
+	}
 	return (0);
 }
 /******************** End put_row ***************************/
@@ -444,6 +466,7 @@ int main (int argc, char *argv[])
 	struct GModule *module;
 	int fixint;
 	float *fptr;
+	RASTER_MAP_TYPE data_type;
 
 	G_gisinit(argv[0]);
 
@@ -522,6 +545,7 @@ int main (int argc, char *argv[])
 		exit (-1);
 	
 	showhead = headflag->answer;
+	data_type = -1;
 	
 	if ((erdf = open(erdasopt->answer,0)) < 0) {
 		fprintf(stderr,"Error can not open ERDAS file\n");
@@ -582,12 +606,15 @@ int main (int argc, char *argv[])
 		fptr = (float *)&(erdashd.rrows);
 		fixint = *fptr;
 		erdashd.rrows = fixint;
+		
 		fptr = (float *)&(erdashd.rcols);
 		fixint = *fptr;
 		erdashd.rcols = fixint;
+		
 		fptr = (float *)&(erdashd.rx);
 		fixint = *fptr;
 		erdashd.rx = fixint;
+		
 		fptr = (float *)&(erdashd.ry);
 		fixint = *fptr;
 		erdashd.ry = fixint;
@@ -678,9 +705,17 @@ int main (int argc, char *argv[])
 		}
 
 	i=0;
+
+	if(erdashd.maptyp == 0) /* integer data */
+		data_type = CELL_TYPE;
+	if(erdashd.maptyp == 99) { /* floating-point data */
+		data_type = FCELL_TYPE;
+		G_fatal_error("Floating point import doesn't work yet.");
+	}
+
 	for (band=outband[0];band!=0;band=outband[++i]) {
 		sprintf(grassname,"%s.%d",outopt->answer,band);
-		if ((new[band]=G_open_cell_new(grassname)) <= 0) {
+		if ((new[band]=G_open_raster_new(grassname, data_type)) <= 0) {
 			fprintf(stderr,"Error in opening grass cell file band %d",band);
 			exit(0);
 		}
@@ -714,7 +749,7 @@ int main (int argc, char *argv[])
 			if (row >= firstrow) {
 				for (i=0;i<erdashd.nbands;i++) {
 					if (band == outband[i]) {
-						if (put_row(new[band],startbuf,row,pack) < 0) {
+						if (put_row(new[band],startbuf,row,pack,data_type) < 0) {
 							fprintf(stderr,"Error in putting row %d band %d\n",row,band);
 							exit(0);
 						}
