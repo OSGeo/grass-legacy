@@ -30,6 +30,8 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include "gis.h"
 #include "display.h"
@@ -43,23 +45,26 @@ main (int argc, char **argv)
         char window_name[64] ;
         float size ;
         int bold ;
-        int color ;
-        int cur_dot_row ;
+        int color, R, G, B ;
+        int cur_dot_row, cur_dot_column ;
         int dots_per_line ;
         int start_line ;
         int t, b, l, r ;
         int tsize ;
-		struct GModule *module;
-        struct Option *opt1, *opt2, *opt3;
-        char *wind_file_name;
-        FILE *wind_file;
+	double x,y ;
+
+	struct GModule *module;
+	struct Option *opt1, *opt2, *opt3, *opt4;
+	struct Flag *flag_b;
+	char *wind_file_name;
+	FILE *wind_file;
 
         /* Initialize the GIS calls */
         G_gisinit(argv[0]) ;
 
-		module = G_define_module();
-		module->description =
-			"Draws text in the active display frame on the graphics monitor.";
+	module = G_define_module();
+	module->description =
+	   "Draws text in the active display frame on the graphics monitor using the current font.";
 
         opt1 = G_define_option() ;
         opt1->key        = "size" ;
@@ -74,34 +79,61 @@ main (int argc, char **argv)
         opt2->type       = TYPE_STRING ;
         opt2->answer     = "gray" ;
         opt2->required   = NO ;
-        opt2->options    = D_color_list();
-        opt2->description= "Color desired for drawing text" ;
+        opt2->description=
+	   "Text color, either a standard GRASS color or R:G:B triplet (separated by colons)" ;
 
         opt3 = G_define_option() ;
         opt3->key        = "line" ;
         opt3->required   = NO ;
         opt3->type       = TYPE_INTEGER ;
-        opt3->answer     = "1" ;
         opt3->options    = "1-1000" ;
-        opt3->description= "The screen line number on which text will begin to be drawn ";
+        opt3->description= "The screen line number on which text will begin to be drawn";
+
+	opt4 = G_define_option() ;
+	opt4->key	= "at" ;
+	opt4->key_desc  = "x,y";
+	opt4->type	= TYPE_DOUBLE ;
+	opt4->options	= "0-100";
+	opt4->required	= NO ;
+	opt4->description=
+	   "Screen postion at which text will begin to be drawn (percentage, [0,0] is lower left)";
+
+	flag_b = G_define_flag();
+	flag_b->key         = 'b';
+	flag_b->description = "Use bold text";
+
 
         /* Check command line */
         if (G_parser(argc, argv))
-                exit(-1);
+                exit(1);
 
-		if (isatty(0))
-			fprintf (stdout,"\nPlease enter text instructions.  Enter EOF (ctrl-d) on last line to quit\n") ;
+	if(opt3->answer && opt4->answer)
+		G_fatal_error("Please choose only one placement method");
+
+
+	if (isatty(0))
+		fprintf (stdout,"\nPlease enter text instructions.  Enter EOF (ctrl-d) on last line to quit\n") ;
 
         sscanf(opt1->answer,"%f",&size);
 
-        color = D_translate_color(opt2->answer) ;
-        if (color == 0)
-                G_fatal_error("Don't know the color %s\n", opt2->answer) ;
+	/* Parse and select text color */
+	if(sscanf(opt2->answer, "%d:%d:%d", &R, &G, &B) == 3) {
+		if (R>=0 && R<256 && G>=0 && G<256 && B>=0 && B<256) {
+			color = 1;
+			R_reset_color(R, G, B, color);
+			R_color(color);
+		}
+	}
+	else {
+		color = D_translate_color(opt2->answer);
+		R_standard_color(color);
+	}
 
-        sscanf(opt3->answer,"%d",&start_line);
+	if(!color)
+		G_fatal_error("[%s]: No such color", opt2->answer);
 
 
-        /* */
+	/* Open monitor window */
         if (R_open_driver() != 0)
 		G_fatal_error ("No graphics device selected");
 
@@ -117,10 +149,31 @@ main (int argc, char **argv)
 
         dots_per_line = (int)(size/100.0 * (float)(b - t)) ;
         tsize = (int)(.8 * (float)dots_per_line) ;
-        cur_dot_row = t + (start_line - 1) * dots_per_line;
+
+	if(!opt4->answer) {
+		if(opt3->answer)
+			sscanf(opt3->answer,"%d",&start_line);
+		else start_line = 1;
+
+        	cur_dot_row = t + (start_line - 1) * dots_per_line;
+		cur_dot_column = l+5;
+	}
+	else {
+		x = atof(opt4->answers[0]);
+		y = atof(opt4->answers[1]);
+		if(x<0 || x>100 || y<0 || y>100)
+			G_fatal_error("value [%.0f,%.0f] out of range [0-100]", x, y);
+
+		cur_dot_row = t+(int)((b-t)*(100.-y)/100.);
+		cur_dot_column = l+(int)((r-l)*x/100.);
+	}
+	
         R_text_size(tsize, tsize) ;
-        R_standard_color(color) ;
-        bold = 0 ;
+
+	if(flag_b->answer)
+		bold = 1;
+	else
+		bold = 0 ;
 
         wind_file_name = G_tempfile();
         if ((wind_file=fopen(wind_file_name,"w")) == NULL)
@@ -161,14 +214,15 @@ main (int argc, char **argv)
                 }
                 else
                 {
-                        cur_dot_row += dots_per_line ;
-                        R_move_abs(l+5, cur_dot_row) ;
+                        if(!opt4->answer)
+				cur_dot_row += dots_per_line ;
+                        R_move_abs(cur_dot_column, cur_dot_row) ;
                         R_text(buff) ;
                         if (bold)
                         {
-                                R_move_abs(5 + l, 1 + cur_dot_row) ;
+                                R_move_abs(cur_dot_column, 1 + cur_dot_row) ;
                                 R_text(buff) ;
-                                R_move_abs(6 + l, cur_dot_row) ;
+                                R_move_abs(cur_dot_column + 1, cur_dot_row) ;
                                 R_text(buff) ;
                         }
                 }
