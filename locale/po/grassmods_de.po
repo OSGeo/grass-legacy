@@ -1,210 +1,577 @@
-# translation of grassmods_de.po to deutch
-# translation of grassmods_de.po to deutsch
+# translation of grassmods_de.po to Deutsch
 # This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# Markus Neteler <neteler@itc.it>, 2004
-# Markus Neteler <neteler@thuille>, 2004
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Markus Neteler <neteler@itc.it>, 2004.
+# Stephan Holl <holl@gdf-hannover.de>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-17 20:12+0200\n"
-"PO-Revision-Date: 2004-09-30 18:23+0200\n"
-"Last-Translator: Markus Neteler <neteler@thuille>\n"
-"Language-Team: deutch <de@li.org>\n"
+"POT-Creation-Date: 2004-11-12 19:45+0100\n"
+"PO-Revision-Date: 2004-11-12 19:44+0100\n"
+"Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
+"Language-Team: Deutsch <de@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.0\n"
+"X-Generator: KBabel 1.9\n"
 
-#: ../db/base/connect.c:103
+#: ../db/base/connect.c:107
 #, c-format
 msgid "driver:%s\n"
-msgstr ""
+msgstr "Treiber: %s\n"
 
-#: ../db/base/connect.c:104
+#: ../db/base/connect.c:108
 #, c-format
 msgid "database:%s\n"
-msgstr ""
+msgstr "Datenbank: %s\n"
 
 #: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
 #: ../db/base/select.c:126
 #, c-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: ../db/base/databases.c:43 ../db/base/printtab.c:21 ../db/base/printtab.c:66
 #, c-format
 msgid "\n"
-msgstr ""
+msgstr "\n"
 
 #: ../db/base/describe.c:53 ../db/base/printtab.c:17
 #, c-format
 msgid "ncols:%d\n"
-msgstr ""
+msgstr "ncols:%d\n"
 
 #: ../db/base/describe.c:57
-#, fuzzy, c-format
+#, c-format
 msgid "Column %d: %s\n"
-msgstr "%s:Zeile %d:%s\n"
+msgstr "Zeile %d:%s\n"
 
 #: ../db/base/drivers.c:24
 #, c-format
 msgid "Error trying to read dbmscap file\n"
-msgstr ""
+msgstr "Fehler beim Lesen der Datei dbmscap \n"
 
 #: ../db/base/drivers.c:30
 #, c-format
 msgid ":%s"
-msgstr ""
+msgstr ":%s"
 
 #: ../db/base/printtab.c:11
 #, c-format
 msgid "table:%s\n"
-msgstr ""
+msgstr "Tabelle: %s\n"
 
 #: ../db/base/printtab.c:12 ../db/base/printtab.c:35
 #, c-format
 msgid "description:%s\n"
-msgstr ""
+msgstr "Beschreibung: %s\n"
 
 #: ../db/base/printtab.c:34
 #, c-format
 msgid "column:%s\n"
-msgstr ""
+msgstr "Spalte: %s\n"
 
 #: ../db/base/printtab.c:36
 #, c-format
 msgid "type:%s\n"
-msgstr ""
+msgstr "Typ: %s\n"
 
 #: ../db/base/printtab.c:37
 #, c-format
 msgid "len:%d\n"
-msgstr ""
+msgstr "Länge: %d\n"
 
 #: ../db/base/printtab.c:38
 #, c-format
 msgid "scale:%d\n"
-msgstr ""
+msgstr "Maßstab: %d\n"
 
 #: ../db/base/printtab.c:39
 #, c-format
 msgid "precision:%d\n"
-msgstr ""
+msgstr "Präzision: %d\n"
 
 #: ../db/base/printtab.c:40
-#, fuzzy, c-format
+#, c-format
 msgid "default:"
-msgstr " Standardfarbe\n"
+msgstr "Standard"
 
 #: ../db/base/printtab.c:48
 #, c-format
 msgid "nullok:%s\n"
-msgstr ""
+msgstr "nullok:%s\n"
 
 #: ../db/base/printtab.c:62
 #, c-format
 msgid "yes"
-msgstr ""
+msgstr "Ja"
 
 #: ../db/base/printtab.c:63
 #, c-format
 msgid "no"
-msgstr ""
+msgstr "Nein"
 
 #: ../db/base/printtab.c:64
 #, c-format
 msgid "?"
-msgstr ""
-
-#: ../db/base/select.c:307
-#, c-format
-msgid "column%s%s\n"
-msgstr ""
-
-#: ../db/base/select.c:308
-#, c-format
-msgid "type%s%s\n"
-msgstr ""
-
-#: ../db/base/select.c:309
-#, c-format
-msgid "len%s%d\n"
-msgstr ""
-
-#: ../db/base/select.c:310
-#, c-format
-msgid "scale%s%d\n"
-msgstr ""
+msgstr "?"
 
 #: ../db/base/select.c:311
 #, c-format
+msgid "column%s%s\n"
+msgstr "Spalte%s%s\n"
+
+#: ../db/base/select.c:312
+#, c-format
+msgid "type%s%s\n"
+msgstr "Type%s%s\n"
+
+#: ../db/base/select.c:313
+#, c-format
+msgid "len%s%d\n"
+msgstr "LÃ¤nge%s%d\n"
+
+#: ../db/base/select.c:314
+#, c-format
+msgid "scale%s%d\n"
+msgstr "Maßstab%s%d\n"
+
+#: ../db/base/select.c:315
+#, c-format
 msgid "precision%s%d\n"
+msgstr "Präzision%s%d\n"
+
+#: ../display/d.paint.labels/do_labels.c:143
+#, c-format
+msgid "Error: %s\n"
+msgstr "Fehler:   %s\n"
+
+#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:211
+#, c-format
+msgid "Region size is lower than minreg, nothing displayed.\n"
 msgstr ""
+"Region-Größe ist kleiner als die Minimal-Region; es wird nichts angzeigt.\n"
+
+#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:220
+#, c-format
+msgid "Region size is greater than maxreg, nothing displayed.\n"
+msgstr ""
+"Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
+
+#: ../display/d.path/select.c:32
+#, c-format
+msgid "L: from  M: to R: quit\n"
+msgstr "L: Startpunkt M: Zielpunkt R: Abbrechen\n"
+
+#: ../display/d.path/select.c:57
+#, c-format
+msgid "Node %d: %f %f\n"
+msgstr "Knoten %d: %f %f\n"
+
+#: ../display/d.path/select.c:133
+#, c-format
+msgid "Destination unreachable\n"
+msgstr "Ziel unerreichbar\n"
+
+#: ../display/d.path/select.c:136
+#, c-format
+msgid "Costs on the network = %f\n"
+msgstr "Kosten auf Basis des Netzwerkes = %f\n"
+
+#: ../display/d.path/select.c:137
+#, c-format
+msgid "  Distance to the network = %f, distance from the network = %f\n"
+msgstr "Abstand zum Netzwerk = %f, Abstand vom Netzwerk = %f\n"
+
+#: ../display/d.vect/attr.c:54 ../display/d.vect/dir.c:34
+#: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
+#: ../display/d.vect/topo.c:38
+#, c-format
+msgid ""
+"\n"
+"ERROR: vector file - can't read\n"
+msgstr ""
+"\n"
+" FEHLER: Kann Vektordatei nicht lesen.\n"
+
+#: ../display/d.vect/main.c:417
+#, c-format
+msgid "Plotting ... "
+msgstr "Zeichne..."
+
+#: ../display/d.vect/main.c:426
+#, c-format
+msgid ""
+"The bounding box of the map outside current region, nothing displayed.\n"
+msgstr ""
+"Die karte liegt auÃŸerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
+
+#: ../display/d.vect/main.c:480
+#, c-format
+msgid "Done\n"
+msgstr "Fertig\n"
+
+#: ../display/d.what.vect/main.c:150
+#, c-format
+msgid "Done.\n"
+msgstr "Fertig\n"
+
+#: ../display/d.what.vect/openvect.c:12
+#, c-format
+msgid "warning: %s - vector file not found\n"
+msgstr "Warnung: Vektordate '%s' wurde nicht gefunden.\n"
+
+#: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
+#, c-format
+msgid "Nothing Found.\n"
+msgstr "Nichts gefunden\n"
+
+#: ../display/d.what.vect/what.c:203
+#, c-format
+msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
+msgstr "Linie: %d  Typ: %s  Links: %d  Right %d"
+
+#: ../display/d.what.vect/what.c:206
+#, c-format
+msgid "Length: %f\n"
+msgstr "Länge: %f\n"
+
+#: ../display/d.what.vect/what.c:216
+#, c-format
+msgid "  Node[%d]: %d  Number of lines: %d\n"
+msgstr "Knoten[%d]: %d anzahl der Linien: %d\n"
+
+#: ../display/d.what.vect/what.c:221
+#, c-format
+msgid "    Line: %5d  Angle: %.8f\n"
+msgstr "    Linie: %5d  Winkel: %.8f\n"
+
+#: ../display/d.what.vect/what.c:227
+#, c-format
+msgid "length %f\n"
+msgstr "Länge: %f\n"
+
+#: ../display/d.what.vect/what.c:245
+#, c-format
+msgid "Point height: %f\n"
+msgstr "Punkthöhe: %f\n"
+
+#: ../display/d.what.vect/what.c:257
+#, c-format
+msgid "Line height: %f\n"
+msgstr "Länge der Linie: %f\n"
+
+#: ../display/d.what.vect/what.c:263
+#, c-format
+msgid "Line height min: %f max: %f\n"
+msgstr "Minimum der Linienhöhe: %f; Maximum der Linienhöhe: %f\n"
+
+#: ../display/d.what.vect/what.c:280
+#, c-format
+msgid "Area height: %f\n"
+msgstr "Höhe der Fläche: %f\n"
+
+#: ../display/d.what.vect/what.c:287
+#, c-format
+msgid "Area\n"
+msgstr "Fläche:\n"
+
+#: ../display/d.what.vect/what.c:300
+#, c-format
+msgid "Area: %d  Number of isles: %d\n"
+msgstr "Fläche: %d Anzahl der Inselflächen: %d\n"
+
+#: ../display/d.what.vect/what.c:304
+#, c-format
+msgid "  Isle[%d]: %d\n"
+msgstr "  Insel[%d]: %d\n"
+
+#: ../display/d.what.vect/what.c:311
+#, c-format
+msgid "Island: %d  In area: %d\n"
+msgstr "Insel: %d In Fläche: %d\n"
+
+#: ../display/d.what.vect/what.c:315 ../display/d.what.vect/what.c:323
+#, c-format
+msgid "Size - Sq Meters: %.3f\t\tHectares: %.3f\n"
+msgstr "Größe - Quadratmeter: %.3f\t\tHektar: %.3f\n"
+
+#: ../display/d.what.vect/what.c:318 ../display/d.what.vect/what.c:327
+#, c-format
+msgid "           Acres: %.3f\t\tSq Miles: %.4f\n"
+msgstr "           Acker: %.3f\t\tQuadrat-Meilen: %.4f\n"
+
+#: ../display/d.what.vect/what.c:353
+#, c-format
+msgid ""
+"field: %d\n"
+"category: %d\n"
+msgstr ""
+"Feld: %d\n"
+"Kategorie: %d\n"
+
+#: ../display/d.what.vect/what.c:362
+#, c-format
+msgid "Database connection not defined\n"
+msgstr "Datenbankverbindung ist nicht definiert.\n"
+
+#: ../display/d.what.vect/what.c:370
+#, c-format
+msgid ""
+"driver: %s\n"
+"database: %s\n"
+"table: %s\n"
+"key column: %s\n"
+msgstr ""
+"Treiber: %s\n"
+"Datenbank: %s\n"
+"Tabelle: %s\n"
+"Key-Spalte: %s\n"
+
+#: ../display/d.what.vect/what.c:421
+#, c-format
+msgid ""
+"\n"
+"Click mouse button on desired location\n"
+"\n"
+msgstr ""
+"\n"
+"Bitte klicken Sie mit der Maus an die gewünschte Stelle.\n"
+"\n"
+
+#: ../display/d.what.vect/what.c:426
+#, c-format
+msgid "Buttons\n"
+msgstr "Mausknopfbelegung:\n"
+
+#: ../display/d.what.vect/what.c:427
+#, c-format
+msgid " Left:  what's here\n"
+msgstr "Links:  Was ist hier?\n"
+
+#: ../display/d.what.vect/what.c:429
+#, c-format
+msgid " Middle: toggle flash color\n"
+msgstr ""
+"Mitte:  wechselt zwischen den Farbe, die auf dem Bildschirm aufleuchten "
+"sollen.\n"
+
+#: ../display/d.what.vect/what.c:434
+#, c-format
+msgid " Right: quit\n"
+msgstr "Rechts:  Beenden\n"
+
+#: ../display/d.zoom/zoom.c:15 ../display/d.zoom/pan.c:20
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr ""
+"\n"
+"\n"
+"Mausknöpfe:\n"
+
+#: ../display/d.zoom/zoom.c:16
+#, c-format
+msgid "%s Zoom menu\n"
+msgstr "%s Zoom-Menü\n"
+
+#: ../display/d.zoom/zoom.c:17 ../display/d.zoom/pan.c:21
+#, c-format
+msgid "%s Pan\n"
+msgstr "%s Verschieben (Pan)\n"
+
+#: ../display/d.zoom/zoom.c:18 ../display/d.zoom/pan.c:22
+#, c-format
+msgid "%s Quit\n"
+msgstr "%s Beenden\n"
+
+#: ../display/d.zoom/zoom.c:41
+#, c-format
+msgid ""
+"This region now saved as current region.\n"
+"\n"
+msgstr ""
+"Diese Region wurde nun als aktive Region abgespeichert.\n"
+"\n"
+
+#: ../display/d.zoom/zoom.c:42
+#, c-format
+msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
+msgstr ""
+"Hinweis: Bitte benutzen Sie 'd.erase', um den Graphik-Monitor auf die neue "
+"Region einzustellen.\n"
+
+#: ../display/d.zoom/main.c:158
+#, c-format
+msgid "ERROR: can not get \"list\" items\n"
+msgstr "FEHLER: Kann keine \"list\" Werte finden\n"
+
+#: ../display/d.zoom/main.c:159
+#, c-format
+msgid "-j flag forced\n"
+msgstr "Benutzung des -j Flags erzwungen.\n"
+
+#: ../display/d.zoom/main.c:196
+#, c-format
+msgid "ERROR: No map is displayed in GRASS monitor\n"
+msgstr "FEHLER: Keine Karte ist im GRASS-Monitor sichtbar\n"
+
+#: ../display/d.zoom/main.c:320
+#, c-format
+msgid "%d raster%s, %d vector%s\n"
+msgstr "%d Raster%sm %d Vektor%s\n"
+
+#: ../display/d.zoom/main.c:346
+#, c-format
+msgid "Zooming finished.\n"
+msgstr "Zoomfunktion beendet!\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
+#, c-format
+msgid "Monitor: interactive command in redraw\n"
+msgstr "Monitor: Interactives Kommando zum erneuten Zeichnen\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:116
+#, c-format
+msgid "found %d visuals of type TrueColor\n"
+msgstr "Habe %d Ansichten vom Typ TrueColor gefunden\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
+#, c-format
+msgid "searching for highest bit depth\n"
+msgstr "Suche die höchste Bit-Tiefe...\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:135
+#, c-format
+msgid "selected %d bit depth\n"
+msgstr "Ausgewählte Bit-Tiefe: %d\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:197
+#, c-format
+msgid "using default visual which is %s\n"
+msgstr "Benutze Standard-Ansicht mit %s\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:127
+#, c-format
+msgid "Monitor: waitpid: expected %d but got %d\n"
+msgstr "Monitor: Waitpid: erwarte %d, habe aber %d bekommen\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
+#, c-format
+msgid "Monitor: XGetWMName failed\n"
+msgstr "Monitor: XGetWMName fehlgeschlagen\n"
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
+#, c-format
+msgid "Monitor: XGetWMName: bad result\n"
+msgstr "Monitor: XGetWMName: Falsches Ergebnis\n"
+
+#: ../display/d.font.freetype/main.c:52
+msgid ""
+"Selects the font in which text will be displayed on the user's graphics "
+"monitor."
+msgstr ""
+"Selektiert die Schriftart, in welcher der Text auf dem Graphik-Monitor des "
+"Benutzers angezeigt wird."
+
+#: ../display/d.font.freetype/main.c:60
+msgid ""
+"Font name (not supported interactively, see also -l flag) or path to "
+"TrueType font (including file name)"
+msgstr ""
+"Schriftname oder Pfad zu den TrueType-Schriften inkiusive Dateiname. Ein "
+"interaktive Auwahl ist nicht möglich. Siehe auch Flag -l."
+
+#: ../display/d.font.freetype/main.c:62
+msgid "Path to TrueType font (including file name)"
+msgstr "Pfad zu den TrueType-Schriften (inklusive Dateiname)"
+
+#: ../display/d.font.freetype/main.c:71
+msgid "Character encoding"
+msgstr "Zeichenkodierung:"
+
+#: ../display/d.font.freetype/main.c:102
+msgid "No graphics device selected"
+msgstr "Keine Graphik-Augabe ausgewÃ¤hlt."
+
+#: ../display/d.font.freetype/main.c:170
+#, c-format
+msgid ""
+"\n"
+"Setting release of FreeType\n"
+msgstr ""
+"\n"
+" Einstellungen des FreeType-Releases\n"
 
 #: ../raster/r.colors/rules.c:45
 #, c-format
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
 msgstr ""
-"Geben Sie Regeln ein, \"end\" zum Beenden, \"help\" wenn Sie Hilfe "
-"brauchen.\n"
+"Eingabe der Regeln. Bitte am Ende \"end\" eingeben. \"help\" liefert eine "
+"Hilfe.\n"
 
 #: ../raster/r.colors/rules.c:47
 #, c-format
 msgid "fp: Data range is %.25f to %.25f\n"
-msgstr "fp: Datenbereich ist %.25f bis %.25f\n"
+msgstr "fp: Datenspanne liegt zwischen %.25f und %.25f\n"
 
 #: ../raster/r.colors/rules.c:49
 #, c-format
 msgid "Data range is %ld to %ld\n"
-msgstr "Datenbereich ist %ld bis %ld\n"
+msgstr "Datenspanne liegt zwischen %ld und %ld\n"
 
 #: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
 msgid "Your color rules do not cover the whole range of data!"
-msgstr "Die Regeln umfassen nicht den ganzen Datenbereich!"
+msgstr ""
+"Die ausgewählten Farbregeln erstrecken sich nicht über die gesamte "
+"Datenspanne!"
 
 #: ../raster/r.colors/rules.c:188
 #, c-format
 msgid "Enter a rule in one of these formats:\n"
-msgstr "Geben Sie eine Regel in einem der folgenden Formate ein:\n"
+msgstr "Bitte geben Sie eine Regel in einem der folgende Formate ein:\n"
 
 #: ../raster/r.colors/rules.c:190
 #, c-format
 msgid " val color\n"
-msgstr " val Farbe\n"
+msgstr "Wert Farbe\n"
 
 #: ../raster/r.colors/rules.c:191
 #, c-format
 msgid " n%% color\n"
-msgstr " n%% Farbe\n"
+msgstr "n%% Farbe\n"
 
 #: ../raster/r.colors/rules.c:192
 #, c-format
 msgid " nv color\n"
-msgstr " nv Farbe\n"
+msgstr "nv color\n"
 
 #: ../raster/r.colors/rules.c:193
 #, c-format
 msgid " default color\n"
-msgstr " Standardfarbe\n"
+msgstr "Standard-Farbe\n"
 
 #: ../raster/r.colors/rules.c:194
 #, c-format
 msgid "color can be one of:\n"
-msgstr "Farbe kann eine der folgenden Möglichkeiten sein:\n"
+msgstr "Farben können sich wiefolgt zusammensetzen:\n"
 
 #: ../raster/r.colors/rules.c:196
 #, c-format
 msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
-msgstr "oder ein R:G:B Triplett, z.B.: 0:127:255\n"
+msgstr "oder eine R:G:B Tripel, zum Beispiel 0:127:255\n"
 
 #: ../raster/r.colors/rules.c:237
 #, c-format
 msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
 msgstr ""
-"** Warnung: R:G:B Wert(e) außerhalb des Bereichs [0..255]: %d:%d:%d **\n"
+"** Warnung: R:G:B Werte liegen außerhalb der Spanne [0...255]: %d:%d:%d **\n"
 
 #: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
 #: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
@@ -212,28 +579,29 @@ msgstr ""
 #: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
 #, c-format
 msgid "** rule is not added **\n"
-msgstr "** Regel wurde nicht angewendet **\n"
+msgstr "** Regel nicht hinzugefügt **\n"
 
 #: ../raster/r.colors/rules.c:253
 #, c-format
 msgid "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"
 msgstr ""
-" ** warnung: R:G:B Wert(e) außerhalb des Bereichs [0..255]: %d:%d:%d **\n"
+"** Warnung: R:G:B Werte liegen außerhalb des gültigen Bereichs [0...255]: %d:"
+"%d:%d **\n"
 
 #: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
 #, c-format
 msgid "** warning: no such value **\n"
-msgstr "** Warnung: kein solcher Wert **\n"
+msgstr "** Warnung: Solche Werte sind nicht vorhanden **\n"
 
 #: ../raster/r.colors/rules.c:402
 #, c-format
 msgid "%s:line %d:%s\n"
-msgstr "%s:Zeile %d:%s\n"
+msgstr "%s:Linie %d:%s\n"
 
 #: ../raster/r.colors/rules.c:403
 #, c-format
 msgid "** bad color specification **\n"
-msgstr "** fehlerhafte Farbspezifikation **\n"
+msgstr "** Falsche Farbspezifikation **\n"
 
 #: ../raster/r.colors/rules.c:424
 #, c-format
@@ -243,4 +611,4 @@ msgstr "%s - unbekannte Farbe\n"
 #: ../raster/r.colors/rules.c:425
 #, c-format
 msgid "Valid colors are:\n"
-msgstr "Gültige Farben sind:\n"
+msgstr "Mögliche Farben sind:\n"
