@@ -4623,6 +4623,10 @@ LDFLAGS=${ac_save_ldflags}
 
 
 XDRIVER=socket
+cat >> confdefs.h <<\EOF
+#define USE_G_SOCKS 1
+EOF
+
 
 # Check whether --with-fifo or --without-fifo was given.
 if test "${with_fifo+set}" = set; then
@@ -4668,7 +4672,7 @@ fi
 
 
 echo $ac_n "checking for XDriver""... $ac_c" 1>&6
-echo "configure:4672: checking for XDriver" >&5
+echo "configure:4676: checking for XDriver" >&5
 echo "$ac_t""$XDRIVER" 1>&6
 
 

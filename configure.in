@@ -1047,6 +1047,7 @@ AC_SUBST(JPEGINCPATH)
 
 
 XDRIVER=socket
+AC_DEFINE(USE_G_SOCKS)
 
 AC_ARG_WITH(fifo,
     [  --with-fifo             use fifo XDriver instead of sockets],
