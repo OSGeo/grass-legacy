@@ -1,69 +1,145 @@
-Dcell	Dcell.c	/^Dcell (elev, name1, name2, name3, vname)$/
-G_close_cell	port.c	/^G_close_cell (fd)$/
-G_fatal_error	port.c	/^G_fatal_error (str)$/
-G_get_map_row	port.c	/^G_get_map_row(fd, buf, row, size) \/* hack! *\/$/
-G_get_set_window	port.c	/^G_get_set_window (wind) $/
-G_malloc	port.c	/^G_malloc (size)$/
-G_open_cell_old	port.c	/^G_open_cell_old(name)$/
-G_store	port.c	/^G_store (str)$/
-MKACT	panel.c	/^#define MKACT(_a, _type,_label) \\$/
-Mj	j.c	/^main ()$/
+Dcell	Dcell.c	/^Dcell (elev, name1, name2, name3, vname, sname, v3/
+FCOL	display.c	/^#define FCOL(i,c)  \\$/
 Mmain	main.c	/^main(argc, argv)$/
 P__transform	trans.c	/^P__transform (num_vert, in, out, c)$/
-P_display_matrix	trans.c	/^P_display_matrix (in, size)$/
-P_display_matrix_err	trans.c	/^P_display_matrix_err (in, size)$/
 P_matrix_copy	trans.c	/^P_matrix_copy (from, to, size)$/
-P_pnt	trans.c	/^P_pnt (x, y, z)$/
 P_popmatrix	trans.c	/^P_popmatrix ()$/
 P_pushmatrix	trans.c	/^P_pushmatrix ()$/
-P_rot_90z	trans.c	/^P_rot_90z ()$/
+P_rad_rotate	trans.c	/^P_rad_rotate (theta, axis)$/
+P_rot	trans.c	/^P_rot (angle, axis)$/
 P_rotate	trans.c	/^P_rotate (angle, axis)$/
 P_scale	trans.c	/^P_scale (x, y, z)$/
 P_transform	trans.c	/^P_transform (num_vert, in, out)$/
 P_translate	trans.c	/^P_translate (x, y, z)$/
-READ_COLORS	display.c	/^#define READ_COLORS()  							\\$/
 SET_COLOR	display.c	/^#define SET_COLOR(ROW1,COL1,ROW2,COL2)			 		    \\$/
+__drawpuck	panel.c	/^__drawpuck(a, p)$/
+_add_key	panel2.c	/^_add_key(newk,a)$/
+_do_fast_display	display.c	/^_do_fast_display ()$/
+_do_globe	panel.c	/^_do_globe()$/
+_draw_keyhslider	panel2.c	/^_draw_keyhslider(a, p)$/
+_draw_keyptslider	panel2.c	/^_draw_keyptslider(a, p)$/
+_drawdiscretehpalette	panel.c	/^_drawdiscretehpalette(a, p)$/
+_drawpuckpointer	panel.c	/^_drawpuckpointer(a, p, x, y, style)$/
 _newcell	newcell.c	/^_newcell (name1, name2, name3)$/
+_newcell_is_elev	newcell.c	/^_newcell_is_elev (name1, name1_map)$/
+_newelev	newelev.c	/^_newelev(name)$/
+_one_buf	panel.c	/^_one_buf()$/
+_two_buf	panel.c	/^_two_buf ()$/
 _update_exag	panel.c	/^_update_exag ()$/
 _update_height	panel.c	/^_update_height ()$/
+_update_lightpos	panel.c	/^_update_lightpos ()$/
+_update_ltheight	panel.c	/^_update_ltheight ()$/
 _update_persp	panel.c	/^_update_persp ()$/
+_update_view_dir	panel.c	/^_update_view_dir ()$/
 _update_xy	panel.c	/^_update_xy ()$/
 _update_zbounds	panel.c	/^_update_zbounds ()$/
-buff_init	display.c	/^buff_init()$/
-change_zbuf	display.c	/^change_zbuf ()$/
+add_key	panel2.c	/^add_key()$/
+buf_interp	vector.c	/^buf_interp(xo, yo, v)$/
+build_trigtable	latlon.c	/^build_trigtable()$/
+calculate_model	lightdefs.c	/^calculate_model()$/
+check_cancel	display.c	/^check_cancel(to_cancel)$/
+check_clipt	display.c	/^check_clipt(v, num)$/
+check_under_model	lightdefs.c	/^check_under_model ()$/
+clear_keys	panel2.c	/^clear_keys()$/
+clear_mask	display.c	/^clear_mask()$/
+correct_twist	path.c	/^correct_twist(k)$/
+display_box	fringe.c	/^display_box(center, siz, co, linew, off)$/
+display_cube	fringe.c	/^display_cube(center, siz, co, linew, off)$/
 display_fringe	fringe.c	/^display_fringe (xmod, ymod)$/
-display_init	display.c	/^display_init ()$/
-display_line_polygons	display.c	/^display_line_polygons (xmod, ymod, shading)$/
-display_line_polygons2	display.c	/^display_line_polygons2 (xmod, ymod, shading)$/
-display_line_polygons3	display.c	/^display_line_polygons3 (xmod, ymod, xmod2, ymod2, /
-display_line_tmesh	display.c	/^display_line_tmesh (xmod, ymod, shading)$/
 display_lines	display.c	/^display_lines (xmod, ymod)$/
-display_lines2	display.c	/^display_lines2 (xmod, ymod, shading)$/
-display_lines3	display.c	/^display_lines3 (xmod, ymod, shading)$/
-display_lines4	display.c	/^display_lines4 (xmod, ymod, shading)$/
-display_lines_tst	display.c	/^display_lines_tst (xmod, ymod)$/
-display_point	display.c	/^display_point (X_Mod, Y_Mod)$/
-display_polygons	display.c	/^display_polygons (xmod, ymod, shading)$/
-display_tmesh	display.c	/^display_tmesh (xmod, ymod, shading)$/
+display_north_arrow	fringe.c	/^display_north_arrow(cen, len, co)$/
+display_north_arrow3d	fringe.c	/^display_north_arrow3d(cen, len, co)$/
+display_plane	fringe.c	/^display_plane(center, siz, co, off)$/
+display_ruler	fringe.c	/^display_ruler(x1, y1, x2, y2, z, ticdir, siz, co, /
+display_solid_cube	fringe.c	/^display_solid_cube(center, siz, co, off)$/
+display_tmesh	display.c	/^display_tmesh (xmod, ymod, cancel)$/
 distance	Dcell.c	/^distance (from, to)$/
 do_clear	display.c	/^do_clear ()$/
-do_display	display.c	/^do_display (Display_type)$/
+do_display	display.c	/^do_display (Display_type, do_clr, allow_cxl)$/
 do_fast_display	display.c	/^do_fast_display ()$/
 do_fast_vect_display	vector.c	/^do_fast_vect_display ()$/
-do_test_vect_display	vector.c	/^do_test_vect_display ()$/
+do_globe	panel.c	/^do_globe()$/
+do_label_display	fringe.c	/^do_label_display(pt)$/
+do_lights	lightdefs.c	/^do_lights(check_normals)$/
+do_ortho_displays	panel2.c	/^do_ortho_displays()$/
+do_path	panel2.c	/^do_path()$/
+do_radio	panel.c	/^do_radio(a, a1, a2)$/
+do_ruler	panel3.c	/^do_ruler()$/
+do_scale_obj_display	fringe.c	/^do_scale_obj_display(pt, offsurf)$/
+do_site_display	sites.c	/^do_site_display()$/
+do_type	panel.c	/^do_type()$/
 do_vect_display	vector.c	/^do_vect_display ()$/
-fringe_horiz_line	fringe.c	/^fringe_horiz_line (bottom, xmod, ymod, xres, yres,/
-fringe_horiz_poly	fringe.c	/^fringe_horiz_poly (bottom, xmod, ymod, xres, yres,/
-fringe_vert_line	fringe.c	/^fringe_vert_line (bottom, xmod, ymod, xres, yres, /
-fringe_vert_poly	fringe.c	/^fringe_vert_poly (bottom, xmod, ymod, xres, yres, /
-if	display.c	/^    if (shading) 						            \\$/
+do_view	panel2.c	/^do_view()$/
+do_viewports	panel2.c	/^do_viewports()$/
+draw_model	lightdefs.c	/^draw_model()$/
+draw_x	focus.c	/^draw_x (center,color,siz)$/
+edge_interp	vector.c	/^edge_interp(v)$/
+export_path	panel2.c	/^export_path()$/
+fill_line	vector.c	/^fill_line (vert3a, vert3c)$/
+fill_pathstruct	path.c	/^fill_pathstruct(path,look_ahead, circular)$/
+flat_norm_vertex	latlon.c	/^flat_norm_vertex(v, n, cindex1, cindex2)$/
+flat_vertex	latlon.c	/^flat_vertex(x, y, z)$/
+follow_path	path.c	/^follow_path(path, position, look_ahead, circular, /
+follow_view	path.c	/^follow_view(view, position, onestep)$/
+font_is_set	fonts.c	/^font_is_set()$/
+free_key	path.c	/^free_key(ok)$/
+fringe_horiz_line	fringe.c	/^fringe_horiz_line (bot, xmod, ymod, xres, yres, xc/
+fringe_horiz_poly	fringe.c	/^fringe_horiz_poly (bot, xmod, ymod, xres, yres, xc/
+fringe_vert_line	fringe.c	/^fringe_vert_line (bot, xmod, ymod, xres, yres, ycn/
+fringe_vert_poly	fringe.c	/^fringe_vert_poly (bot, xmod, ymod, xres, yres, ycn/
+g_default_flat_view	Dcell.c	/^g_default_flat_view()$/
+g_default_ll_view	Dcell.c	/^g_default_ll_view()$/
+g_latlon_to_sphere	latlon.c	/^g_latlon_to_sphere(ilon, ilat, coord,rad)    $/
+get_2key_neighbors	path.c	/^get_2key_neighbors(time, loop, keys, km1, kp1)$/
+get_3d_pos	focus.c	/^get_3d_pos(use_z, zp, surf_pt, prompt)$/
+get_centroid	lightdefs.c	/^get_centroid(centroid)$/
+get_cur_matrix	lightdefs.c	/^get_cur_matrix(m)$/
+get_default_scale	panel3.c	/^get_default_scale(est_wrld)$/
+get_direction	save.c	/^get_direction (view_dir, incl_dir, vect)$/
+get_key_neighbors	path.c	/^get_key_neighbors(time, loop, keys, km1, kp1, kp2,/
+get_ll_fromto	latlon.c	/^get_ll_fromto(fr_to)$/
+get_ll_upvect	latlon.c	/^get_ll_upvect(up)$/
+get_ll_upvect2	latlon.c	/^get_ll_upvect2(up)$/
+get_los	focus.c	/^get_los(vect)$/
+get_norm_direction	save.c	/^get_norm_direction(dir, vect)$/
+get_scalez	panel3.c	/^get_scalez(scalez)$/
+get_screen_pos	lightdefs.c	/^get_screen_pos(world, screen)$/
+get_settings	save.c	/^get_settings(vname)$/
+get_txtdescender	fonts.c	/^get_txtdescender()$/
+get_txtheight	fonts.c	/^get_txtheight()$/
+get_txtwidth	fonts.c	/^get_txtwidth()$/
+get_txtxoffset	fonts.c	/^get_txtxoffset()$/
+get_viewbounds	panel2.c	/^get_viewbounds(view, nv)$/
+get_vis_pt_on_los	focus.c	/^get_vis_pt_on_los(pt, los)$/
+get_yn	panel2.c	/^get_yn()$/
+grab_key	panel2.c	/^grab_key()$/
+ierrfunc	writeimg.c	/^ierrfunc(ebuf)$/
+if	Dcell.c	/^    if(View_file)$/
 initialize	Dcell.c	/^initialize ()$/
 initialize2	Dcell.c	/^initialize2 ()$/
+install_anim_panels	panel2.c	/^install_anim_panels()$/
 install_control_panel	panel.c	/^install_control_panel ()$/
+install_hidden_panels	panel.c	/^install_hidden_panels ()$/
+install_light_panel	panel.c	/^install_light_panel ()$/
+install_menus_panel	panel.c	/^install_menus_panel ()$/
 install_movement_panel	panel.c	/^install_movement_panel ()$/
-install_object_panel	panel.c	/^install_object_panel ()$/
 install_panels	panel.c	/^install_panels ()$/
+install_scale_panel	panel3.c	/^install_scale_panel()$/
+k_show_path	panel2.c	/^k_show_path()$/
+k_step_back	panel2.c	/^k_step_back()$/
+k_step_for	panel2.c	/^k_step_for()$/
+keep_focus	focus.c	/^keep_focus()$/
+latlon_to_sphere	latlon.c	/^latlon_to_sphere(coord,rad)$/
+latlon_to_sphere_zup	latlon.c	/^latlon_to_sphere_zup(coord,rad)$/
 leave	Dcell.c	/^leave ()$/
+lin_interp	path.c	/^lin_interp(dt, val1, val2)$/
+ll_norm_vertex	latlon.c	/^ll_norm_vertex(v, n, cindex1, cindex2)$/
+ll_vertex	latlon.c	/^ll_vertex(x, y, z)$/
+look_center	panel.c	/^void look_center()$/
+los_intersect	focus.c	/^los_intersect(surf_pt, fr_to) $/
+make_keysfromvect	path.c	/^*make_keysfromvect(follow_terrain, above_t, consta/
+make_linear_viewfromkeys	path.c	/^make_linear_viewfromkeys(keys, keysteps, newsteps,/
+make_viewfromkeys	path.c	/^make_viewfromkeys(keys, keysteps, newsteps, loop, /
 my_appendscript	script.c	/^my_appendscript()$/
 my_beginscript	script.c	/^my_beginscript()$/
 my_continuescript	script.c	/^my_continuescript()$/
@@ -75,21 +151,104 @@ my_setignoredelay	script.c	/^my_setignoredelay(a)$/
 my_setreadbutton	script.c	/^my_setreadbutton(a)$/
 my_setwritebutton	script.c	/^my_setwritebutton(a)$/
 my_stopscript	script.c	/^my_stopscript()$/
+new_path	panel2.c	/^new_path()$/
+new_scalez	panel3.c	/^new_scalez()$/
+new_sites	sites.c	/^new_sites()$/
+new_vect	vector.c	/^new_vect()$/
 newcell	newcell.c	/^newcell ()$/
+newelev	newelev.c	/^newelev ()$/
+norm_needupdate	lightdefs.c	/^norm_needupdate(update)$/
+one_buf	panel.c	/^one_buf ()$/
+p_display_line_polygons3	display.c	/^p_display_line_polygons3 (xmod, ymod, xmod2, ymod2/
+p_display_lines2	display.c	/^p_display_lines2 (xmod, ymod, cancel)$/
+p_display_lines4	display.c	/^p_display_lines4 (xmod, ymod, cancel)$/
+p_display_llqstrip	latlon.c	/^p_display_llqstrip (xmod, ymod, cancel)$/
+p_display_polygons	display.c	/^p_display_polygons (xmod, ymod, cancel)$/
+p_display_qstrip	display.c	/^p_display_qstrip (xmod, ymod, cancel)$/
+pnl_discrete_hpalette	panel.c	/^pnl_discrete_hpalette(a)$/
+position_model	lightdefs.c	/^position_model()$/
+pr_fromto	save.c	/^pr_fromto(msg)     \/* for debugging  *\/$/
+print_yaodl_file	display.c	/^print_yaodl_file (xmod, ymod)$/
+pt_is_visible	focus.c	/^pt_is_visible(pt)$/
+put_label	focus.c	/^put_label()$/
+put_scale	focus.c	/^put_scale()$/
+put_scalez	panel3.c	/^put_scalez(scalez)$/
+recalc_normals	lightdefs.c	/^recalc_normals(xmod, ymod, elev, norm, zscale)$/
 redraw_event	Dcell.c	/^redraw_event ()$/
+release_key	panel2.c	/^release_key()$/
+remap_pnl_colors	Dcell.c	/^remap_pnl_colors() $/
+reset_Z_Range	Dcell.c	/^reset_Z_Range()$/
+reset_fromto	focus.c	/^reset_fromto()$/
+run_path	panel2.c	/^run_path()$/
+run_save	panel2.c	/^run_save()$/
+run_savekeys	panel2.c	/^run_savekeys()$/
+run_view	panel2.c	/^run_view()$/
+save_settings	save.c	/^save_settings()$/
+save_under_label	focus.c	/^save_under_label()$/
+save_window_img	writeimg.c	/^save_window_img()$/
 serve_actuator	panel.c	/^serve_actuator (a)$/
-set_default_options	command.c	/^set_default_options()$/
-stash_away	command.c	/^stash_away(pos, option)$/
+set_font	fonts.c	/^set_font()$/
+set_mask	display.c	/^set_mask(xmod,ymod)$/
+set_real_to	focus.c	/^set_real_to()$/
+show_cat	show.c	/^show_cat (width, mwidth, name, mapset, cat, label,/
+show_mask	display.c	/^show_mask()$/
+show_path	panel2.c	/^show_path()$/
+show_utm	show.c	/^show_utm (north, east, window, terse, button, fs)$/
+show_what	show.c	/^show_what(east,north,elevation)$/
+slow_start	panel.c	/^slow_start(a, upact, dnact, var, speed)$/
+smart_mask	display.c	/^smart_mask()$/
+spl3	path.c	/^spl3(tension, data0, data1, x, x2, x3, lderiv, rde/
+step_back	panel2.c	/^step_back()$/
+step_for	panel2.c	/^step_for()$/
+tension_init	panel2.c	/^tension_init()$/
+tension_quit	panel2.c	/^tension_quit()$/
+toggle_key	panel.c	/^toggle_key()$/
+toggle_label	panel.c	/^toggle_label()$/
+toggle_lights	panel.c	/^toggle_lights()$/
+toggle_options	panel.c	/^toggle_options ()$/
+toggle_path	panel.c	/^toggle_path()$/
+toggle_scale	panel.c	/^toggle_scale()$/
 toggle_script	panel.c	/^toggle_script ()$/
+toggle_vect	panel.c	/^toggle_vect ()$/
 transform_fromto	panel.c	/^transform_fromto ()$/
+two_buf	panel.c	/^two_buf ()$/
+undo_label	focus.c	/^undo_label()$/
+update_bg_color	panel.c	/^update_bg_color ()$/
+update_color	panel.c	/^update_color(colvar, stringbuf, val)$/
 update_exag	panel.c	/^update_exag ()$/
 update_fast_res	panel.c	/^update_fast_res ()$/
 update_height	panel.c	/^update_height ()$/
 update_incl	panel.c	/^update_incl ()$/
+update_label_color	panel3.c	/^update_label_color()$/
+update_lights	panel.c	/^update_lights ()$/
+update_lightxy	panel.c	/^update_lightxy ()$/
+update_ltheight	panel.c	/^update_ltheight ()$/
+update_path	panel2.c	/^update_path()$/
+update_pathframes	panel2.c	/^update_pathframes()$/
+update_pathsize	panel2.c	/^update_pathsize()$/
 update_persp	panel.c	/^update_persp ()$/
 update_projection	Dcell.c	/^update_projection ()$/
+update_ptension	panel2.c	/^update_ptension()$/
 update_range	panel.c	/^update_range ()$/
+update_scale_color	panel3.c	/^update_scale_color ()$/
+update_scalesiz	panel3.c	/^update_scalesiz ()$/
+update_site_color	panel.c	/^update_site_color ()$/
 update_slow_res	panel.c	/^update_slow_res ()$/
+update_tension	panel2.c	/^update_tension()$/
+update_up_vect	Dcell.c	/^update_up_vect()$/
+update_vect_color	panel.c	/^update_vect_color ()$/
+update_vect_width	panel.c	/^update_vect_width ()$/
 update_vectz	panel.c	/^update_vectz ()$/
 update_view_dir	panel.c	/^update_view_dir ()$/
+update_viewframes	panel2.c	/^update_viewframes()$/
+update_viewsize	panel2.c	/^update_viewsize()$/
 update_xy	panel.c	/^update_xy ()$/
+v_flat_vertex	latlon.c	/^v_flat_vertex(v)$/
+v_ll_vertex	latlon.c	/^v_ll_vertex(v)$/
+vcellnorm_interp	vector.c	/^vcellnorm_interp(v, norm)$/
+vd_flat_vertex	latlon.c	/^vd_flat_vertex(v)$/
+vd_ll_vertex	latlon.c	/^vd_ll_vertex(v)$/
+viewcell_interp	vector.c	/^viewcell_interp(v)$/
+whats_here	focus.c	/^whats_here()$/
+write_rgb	writeimg.c	/^write_rgb(l,b,r,t,name)$/
+zplane_intersect	focus.c	/^zplane_intersect(surf_pt, fr_to, zval)$/
