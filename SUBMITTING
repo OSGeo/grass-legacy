@@ -107,7 +107,9 @@ care of following rules:
 8.  Use fprintf instead of printf.
     
     For errors and warnings please use the G_fatal_error() function and
-    G_warning() function. For other output, please use fprintf() and specify
+    G_warning() function. General messages for the user should use
+    G_message() while debug messages should use G_debug() whenever
+    possible. For other output, please use fprintf() and specify
     the stdout stream as follows:
 
       fprintf(stdout, ...);
@@ -117,13 +119,10 @@ care of following rules:
 
     i18N: Add gettext macros with _("") (see ./locale/README for details)
 
-    TODO: clarify when to use G_message(_("..."),...); instead
-
-    G_message should be used for messages - informations about
+    G_message() should be used for messages - information about
     the process for user while fprintf(stdout,...) for data output.
-    G_message output is not expected to be send to pipe or file.
+    G_message() output is not expected to be sent to pipe or file.
     fprintf(stdout,...) output is usually send to pipe or file.
-
 
 9.  Use the following GRASS library functions instead of the standard C
     functions. The reason for this is that the following functions ensure
@@ -177,6 +176,10 @@ care of following rules:
 
     (the same applies to vector modules!)
 
+17. Standard parser options: use G_define_standard_option() whenever possible
+    to define standard module command line options. This will save you time,
+    create fewer bugs, and make things easier on the translators.
+
 18. Place the documentation in HTML format into description.html
     The easiest way to do this is to study an existing HTML page
     (to get the page style).
@@ -188,7 +191,7 @@ care of following rules:
 
 20. If you write a shell script: as a general principle, shell variables
     should almost always be quoted.
-    Use only secure temp files - see scripts/* for examples.
+    Use only secure temp files, see g.tempfile and scripts/* for examples.
 
 21. If you write a shell script and search for a command in $PATH, do NOT
     use the "which" command or the "type -p" command. Both commands are not
@@ -259,6 +262,6 @@ care of following rules:
 27. In case of questions feel free to contact the developers at the above
     mailing list.
     http://grass.itc.it/devel/index.php#submission
-    
+
 ...
 [please add further hints if required]
