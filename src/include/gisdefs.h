@@ -525,7 +525,8 @@ int embed_nulls(int, void *, int, RASTER_MAP_TYPE, int);
 
 /* get_row_colr.c */
 int G_get_raster_row_colors(int, int, struct Colors *,
-    unsigned char *, unsigned char *, unsigned char *);
+    unsigned char *, unsigned char *, unsigned char *,
+    unsigned char *);
 
 /* get_window.c */
 int G_get_window(struct Cell_head *);
