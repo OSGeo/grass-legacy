@@ -64,5 +64,5 @@ $(DEPVECTLIB): $(OBJ)
 	$(SLIBRULE)
 
 mkextradirs:
-	mkdir -p $(DSTDIR)/src/libes/vect32/Vlib
-	mkdir -p $(DSTDIR)/src/libes/vect32/diglib
+	mkdir -p $(OBJARCH)/Vlib
+	mkdir -p $(OBJARCH)/diglib
