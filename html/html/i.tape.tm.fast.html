@@ -31,7 +31,7 @@ extracts Thematic Mapper (TM) imagery from tape media
 [<B>-q</B>] <B>input=</B><EM>name</EM> <B>group=</B><EM>name</EM> 
 <B>bands=</B><EM>value</EM>[,<EM>value</EM>,...] 
 [<B>rows=</B><EM>firstrow-lastrow</EM>] 
-[<B>cols=</B><EM>firstcol-lastcol</EM>] [<B>title=</B><EM>name</EM>]
+[<B>cols=</B><EM>firstcol-lastcol</EM>] [<B>TITLE=</B><EM>name</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -75,7 +75,7 @@ parameters (see below) on the command line using the form:
 [<B>-q</B>] <B>input=</B><EM>name</EM> <B>group=</B><EM>name</EM> 
 <B>bands=</B><EM>value</EM>[,<EM>value</EM>,...] 
 [<B>rows=</B><EM>firstrow-lastrow</EM>] 
-[<B>cols=</B><EM>firstcol-lastcol</EM>] [<B>title=</B><EM>name</EM>]
+[<B>cols=</B><EM>firstcol-lastcol</EM>] [<B>TITLE=</B><EM>name</EM>]
 </DL>
 
 where the <EM>input</EM> should be the device name on which
@@ -85,7 +85,7 @@ The <EM>bands</EM> value in a list separated by commas is
 the bands the user wants to extract from the imagery. The
 <EM>rows</EM> and <EM>cols</EM> represent the region which
 the user wishes to extract, where the default is whole
-imagery.  At last an optional <EM>title</EM> is for
+imagery.  At last an optional <EM>TITLE</EM> is for
 information only.  Alternatively, the program will be run
 interactively if the user types only
 <EM>i.tape.tm.fast</EM>; in this case the program will
@@ -142,9 +142,9 @@ Default: full imagery
 
 Default: full imagery
 
-<DT><B>title=</B><EM>name</EM> 
+<DT><B>TITLE=</B><EM>name</EM> 
 
-<DD>The title of the extracting imagery.
+<DD>The TITLE of the extracting imagery.
 
 <BR>
 

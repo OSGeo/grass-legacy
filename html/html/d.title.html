@@ -1,6 +1,6 @@
 <html>
 
-<TITLE>d.title</TITLE>
+<TITLE>d.TITLE</TITLE>
 
 <body bgcolor="white">
 
@@ -10,18 +10,18 @@
 
 <H2>NAME</H2>
 
-<EM><b>d.title</b></EM>  - Outputs a title for a raster map layer in a form suitable 
+<EM><b>d.TITLE</b></EM>  - Outputs a TITLE for a raster map layer in a form suitable 
 for display by <EM><A HREF="d.text.html">d.text</A></EM>.
 <BR>
 <EM>(GRASS Display Program)</EM>
 
 <H2>SYNOPSIS</H2>
 
-<B>d.title</B> 
+<B>d.TITLE</B> 
 <BR>
-<B>d.title help</B> 
+<B>d.TITLE help</B> 
 <BR>
-<B>d.title</B>
+<B>d.TITLE</B>
 [<B>-f</B>] 
 <B>map=</B><EM>name</EM> 
 [<B>color=</B><EM>name</EM>] 
@@ -29,22 +29,22 @@ for display by <EM><A HREF="d.text.html">d.text</A></EM>.
 
 <H2>DESCRIPTION</H2>
 
-<EM>d.title</EM>
+<EM>d.TITLE</EM>
 generates to standard output a string which can be used by 
 <EM><A HREF="d.text.html">d.text</A></EM> 
-to draw a title for the raster map layer <EM>name</EM> in the active 
+to draw a TITLE for the raster map layer <EM>name</EM> in the active 
 display frame on the graphics monitor. 
-Output created by <EM>d.title</EM> can be redirected into a file, or piped 
+Output created by <EM>d.TITLE</EM> can be redirected into a file, or piped 
 directly into <EM><A HREF="d.text.html">d.text</A></EM> 
-to display the map title created by <EM>d.title</EM>. 
-The map title created will include the map layer's name, 
-title, MAPSET, LOCATION_NAME, geographic region 
+to display the map TITLE created by <EM>d.TITLE</EM>. 
+The map TITLE created will include the map layer's name, 
+TITLE, MAPSET, LOCATION_NAME, geographic region 
 boundary coordinates, and cell resolution. 
 
 <P>
 
 The user can state program arguments on the command line, or type 
-simply <B>d.title</B> on the command line. In the latter case, the program 
+simply <B>d.TITLE</B> on the command line. In the latter case, the program 
 will prompt the user for the parameter values and flag setting using the 
 standard GRASS <A HREF="parser.html">parser</A> interface.
 
@@ -52,7 +52,7 @@ standard GRASS <A HREF="parser.html">parser</A> interface.
 
 <DL>
 <DT><B>-f</B>
-<DD>Displays a fancier title. 
+<DD>Displays a fancier TITLE. 
 </DL>
 
 <H3>Parameters:</H3>
@@ -78,24 +78,24 @@ Default: 15.0
 
 <H2>EXAMPLE</H2>
 
-For example, a user wishing to create a suitable title for the 
-Spearfish, SD <EM>soils</EM> map layer and to display this title in the 
+For example, a user wishing to create a suitable TITLE for the 
+Spearfish, SD <EM>soils</EM> map layer and to display this TITLE in the 
 active display frame on the graphics monitor might type the following: 
 <DL>
-<DD> <B>d.title map=</B><EM>soils</EM> <B>color=</B><EM>red</EM> <B>size=</B><EM>5</EM><B> &gt; title.file </B>
-<DD> <B><A HREF="d.text.html">d.text</A> &lt; title.file</B> 
+<DD> <B>d.TITLE map=</B><EM>soils</EM> <B>color=</B><EM>red</EM> <B>size=</B><EM>5</EM><B> &gt; TITLE.file </B>
+<DD> <B><A HREF="d.text.html">d.text</A> &lt; TITLE.file</B> 
 </DL>
-Alternately, the user might pipe <EM>d.title</EM> output directly 
+Alternately, the user might pipe <EM>d.TITLE</EM> output directly 
 into <EM><A HREF="d.text.html">d.text</A></B>:</EM> 
 <DL>
 <DD>
-<B>d.title map=</B><EM>soils</EM> <B>color=</B><EM>red</EM> <B>size=</B><EM>5</EM> | 
+<B>d.TITLE map=</B><EM>soils</EM> <B>color=</B><EM>red</EM> <B>size=</B><EM>5</EM> | 
 <A HREF="d.text.html">d.text</A></B>
 </DL>
 
 <P>
 
-A file created by <EM>d.title</EM> can be displayed 
+A file created by <EM>d.TITLE</EM> can be displayed 
 with <EM><A HREF="d.text.html">d.text</A></EM>.
 Information contained in this file takes precedence over the 
 <EM>color</EM> and <EM>size</EM> parameters for 

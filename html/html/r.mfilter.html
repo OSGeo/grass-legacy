@@ -1,4 +1,4 @@
-<TITLE>r.mfilter</title>
+<TITLE>r.mfilter</TITLE>
 
 <body bgcolor="white">
 <img src="grass.smlogo.gif">
@@ -23,7 +23,7 @@
 <BR>
 
 <B>r.mfilter </B>[<B>-qpz</B>] <B>input=</B><EM>name </EM><B>output=</B><EM>name </EM><B>filter=</B><EM>name </EM>[<B>repeat=</B><EM>value</EM>] \
-[<B>title=</B><EM>"phrase"</EM>]
+[<B>TITLE=</B><EM>"phrase"</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -31,8 +31,8 @@
 raster <EM>output</EM> according to the matrix <EM>filter</EM> designed
 by the user (see <EM>FILTERS</EM> below).
 The filter is applied <EM>repeat</EM> times (default <EM>value</EM> is 1).
-The <EM>output</EM> raster map layer can be given a <EM>title</EM> if desired.
-(This title should be put in quotes if it contains more than one word.)
+The <EM>output</EM> raster map layer can be given a <EM>TITLE</EM> if desired.
+(This TITLE should be put in quotes if it contains more than one word.)
 
 <H2>OPTIONS</H2>
 
@@ -46,7 +46,7 @@ flag settings and parameter values on the command line, using the form:
 <DL>
 <DD>
 <B>r.mfilter </B>[<B>-qpz</B>] <B>input=</B><EM>name </EM><B>output=</B><EM>name </EM><B>filter=</B><EM>name </EM>[<B>repeat=</B><EM>value</EM>] \
-[<B>title=</B><EM>"phrase"</EM>]
+[<B>TITLE=</B><EM>"phrase"</EM>]
 </DL>
 
 
@@ -125,10 +125,10 @@ Options:  integer values
 
 Default:  1
 
-<DT><B>title="</B><EM>phrase</EM>" 
+<DT><B>TITLE="</B><EM>phrase</EM>" 
 
-<DD>A title to be assigned to the filtered raster <EM>output</EM> map.
-If the title exceeds one word, it should be quoted.
+<DD>A TITLE to be assigned to the filtered raster <EM>output</EM> map.
+If the TITLE exceeds one word, it should be quoted.
 
 <BR>
 
@@ -148,7 +148,7 @@ Default:  (none)
 The <EM>filter</EM> file is a normal UNIX ASCII file designed by the user.
 It has the following format:
 <PRE>
-     TITLE      title
+     TITLE      TITLE
      MATRIX     n
                   .
      n lines of n integers
@@ -160,9 +160,9 @@ It has the following format:
 
 <DT>TITLE 
 
-<DD>A one-line title for the filter.
-If a title was not specified on the command line, it can be specified here.
-This title would be used to construct a title for the resulting raster map
+<DD>A one-line TITLE for the filter.
+If a TITLE was not specified on the command line, it can be specified here.
+This TITLE would be used to construct a TITLE for the resulting raster map
 layer.  It should be a one-line description of the filter.
 
 <DT>MATRIX 
