@@ -54,8 +54,12 @@ main (int argc, char *argv[])
 
     conv_units();
     
-    if ( options.print ) report();
-    else update( &Map );
+    if ( options.print ) {
+	report();
+    } else {
+	update( &Map );
+	Vect_set_db_updated ( &Map );
+    }
     
     Vect_close (&Map);
 

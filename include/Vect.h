@@ -71,6 +71,7 @@ struct field_info *Vect_default_field_info ( struct Map_info *Map, int  field,
 	                char *field_name, int  type );
 struct field_info *Vect_get_dblink (  struct Map_info *Map, int link );
 struct field_info *Vect_get_field (  struct Map_info *Map, int field );
+void Vect_set_db_updated ( struct Map_info *Map );
 
       /* List of FID (feature ID) (integers) */
 struct ilist *Vect_new_list (void);
