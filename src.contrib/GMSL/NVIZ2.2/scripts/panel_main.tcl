@@ -317,6 +317,11 @@ proc mk_hgt_slider {W} {
 proc update_exag {exag} {
     global Nv_
     
+    if {$exag == 0.} {
+	set exag [lindex [$Nv_(main_BASE).midf.zexag.scale configure -resolution] 4]
+	Nv_setEntry $Nv_(main_BASE).midf.zexag.f.entry $exag
+	Nv_floatscaleCallback $Nv_(main_BASE).midf.zexag e 2 null $exag
+    } 
     Nchange_exag $exag
     Nv_floatscaleCallback $Nv_(HEIGHT_SLIDER) b 2 update_height \
 	[$Nv_(HEIGHT_SLIDER).f.entry get]
