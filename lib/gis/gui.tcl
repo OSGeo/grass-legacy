@@ -7,8 +7,6 @@ set env(GISDBASE) [exec g.gisenv get=GISDBASE]
 set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
 
-set env(GRASS_MESSAGE_FORMAT) gui
-
 set dlg 0
 set path {}
 set imagepath $env(GISBASE)/bwidget/images/
@@ -119,7 +117,7 @@ proc get_map {dlg optn elem} {
 }
 
 proc run_cmd {dlg} {
-	global opt
+	global opt env
 	set outtext $opt($dlg,outtext)
         progress $dlg -1
 
@@ -136,7 +134,11 @@ proc run_cmd {dlg} {
 	$outtext insert end "\n$cmd_string\n"
 	$outtext yview end
 	set cmd [concat | $cmd 2>@ stdout]
-	if {[catch {open $cmd r} fh]} {
+
+        set env(GRASS_MESSAGE_FORMAT) gui
+	set ret [catch {open $cmd r} fh]
+        set env(GRASS_MESSAGE_FORMAT) standard
+	if { $ret } {
 		error $fh
 	} {
 		fconfigure $fh -blocking 0
