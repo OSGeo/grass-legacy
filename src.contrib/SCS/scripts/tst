@@ -1,0 +1,2 @@
+#!/bin/sh
+for i in `ls system`;do ./exists $i; if [ $? = 1 ]; then echo $i; fi; done
