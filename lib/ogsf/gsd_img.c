@@ -1,4 +1,8 @@
-/* changed 10/99 Jaro*/
+/* 
+ * $Id$
+ * added little/big endian test Markus Neteler 9/2000 
+ * changed 10/99 Jaro*/
+
 #include "image.h"
 
 unsigned short rbuf[8192];
@@ -23,6 +27,23 @@ char *name;
     IMAGE *image;
     unsigned long *pixbuf;
 
+ /* endian test added from ./src.contrib/GMSL/NVIZ2.2/TOGL/apps/image.c
+  * Markus Neteler
+  */
+    union {
+        int testWord;
+        char testByte[4];
+    } endianTest;
+    int swapFlag;
+
+    endianTest.testWord = 1;
+    if (endianTest.testByte[0] == 1) {
+        swapFlag = 1; /*true: little endian */
+    } else {
+        swapFlag = 0;
+    }
+
+
     gsd_getimage(&pixbuf, &xsize, &ysize);
 
     if(pixbuf){
@@ -36,20 +57,23 @@ char *name;
 	for(y=0; y<ysize; y++) {
 
 	    for(x=0; x<xsize; x++){
-/*	       
-		rbuf[x] = (pixbuf[y*xsize + x] & 0xFF000000)>>24;
-		gbuf[x] = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
-		bbuf[x] = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
-*/
-                rbuf[x] = (pixbuf[y*xsize + x] & 0x000000FF);
-                gbuf[x] = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
-                bbuf[x] = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
+		if (!swapFlag) {
+			/* big endian: SUN et al. */
+			rbuf[x] = (pixbuf[y*xsize + x] & 0xFF000000)>>24;
+			gbuf[x] = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
+			bbuf[x] = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
+		}
+		else {
+			/* little endian: Linux et al. */
+	                rbuf[x] = (pixbuf[y*xsize + x] & 0x000000FF);
+        	        gbuf[x] = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
+                	bbuf[x] = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
+		}
 
+		putrow(image,rbuf,y,0);		/* red row */
+		putrow(image,gbuf,y,1);		/* green row */
+		putrow(image,bbuf,y,2);		/* blue row */
 	    }
-
-	    putrow(image,rbuf,y,0);		/* red row */
-	    putrow(image,gbuf,y,1);		/* green row */
-	    putrow(image,bbuf,y,2);		/* blue row */
 	}
 	free(pixbuf);
 	iclose(image);
