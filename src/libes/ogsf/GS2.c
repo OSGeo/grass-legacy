@@ -2046,6 +2046,8 @@ void GS_get_zrange_nz(float *min, float *max)
     int i, first = 1;
     geosurf *gs;
 
+    *min = 0;
+    *max = 0;
     for (i = 0; i < Next_surf; i++) {
 	if (gs = gs_get_surf(Surf_ID[i])) {
 	    if (first) {
