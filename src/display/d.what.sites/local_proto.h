@@ -28,4 +28,6 @@ Site *closest_site(int, double, double);
 int show_buttons(int);
 /* what.c */
 int what(int, int, int, int);
-
+void draw_sector(double, double, double, double, double, double);
+void draw_point_x(int, int, int);
+void draw_point_plus(int, int, int);

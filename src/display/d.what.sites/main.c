@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 	
 	terse = G_define_flag();
 	terse->key = 't';
-	terse->description = "Terse output. For parsing by programs.";
+	terse->description = "For parsing by programs: Terse output";
 	
 	shh = G_define_flag ();
 	shh->key = 'q';
