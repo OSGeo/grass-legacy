@@ -1,0 +1,66 @@
+
+
+
+vect.to.cell(1)      GRASS Reference Manual       vect.to.cell(1)
+
+
+
+NAME
+     vect.to.cell - Converts GRASS to
+     (Map Development Tool)
+
+SYNOPSIS
+     vect.to.cell
+
+DESCRIPTION
+     vect.to.cell is a non-interactive program that transforms
+     into GRASS It is the final phase of the GRASS MAPDEV system
+     converting a hardcopy map to a GRASS cell map.
+
+     Only the area of the that is inside the current will be
+     transformed.  Before running vect.to.cell the user should
+     make sure that the current
+      is correctly set and that the resolution is at the desired
+     level;  otherwise, an empty cell map may be created.  An
+     empty cell map will also be created if the has not been (no
+     categories have been assigned to it through the digit[1]
+     program).
+
+     The vect.to.cell program creates two files: a cell file, and
+     a history file.  The GRASS program support[1] must be run to
+
+NOTES
+     Additional problems sometimes lead to the creation of empty
+     Unfortunately, error messages explaining this do not yet
+     exist.
+
+SEE ALSO
+     digit[1], import.to.vect[1], support[1], support.vect[1]
+
+AUTHORS
+     Michael Higgins, U.S. Army Construction Engineering Research
+     Laboratory
+     Dave Gerdes, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
