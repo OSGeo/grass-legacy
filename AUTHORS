@@ -38,8 +38,8 @@ GRASS 5 Core Team (most have CVS access):
  Lubos Mitas     <lmitas@ncsa.uiuc.edu>       (grid3D and related)
  Helena Mitasova <helena@gomez.gis.uiuc.edu>  (grid3D and related, 
 						spline interpolation)
- Eric G. Miller  <egm2@jps.net>               (sites format, bugfixes etc.)
- Eric Mitchell   <emitchell@altaira.com>      (new Makefile/autoconf system)
+ Eric G. Miller  <egm2@jps.net>               (sites format, new autoconf system, bugfixes etc.)
+ Eric Mitchell   <emitchell@altaira.com>      (new Makefile system)
  Markus Neteler  <neteler@geog.uni-hannover.de> (GRASS 5 coordination, ...)
  Bernhard Reiter <bernhard@intevation.de>     (License, CVS, Bugfixes)
  Alexander Shevlakov <sixote@yahoo.com>       (PostgreSQL/GRASS interface)
