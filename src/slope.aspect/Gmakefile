@@ -1,0 +1,15 @@
+# %W% %G%
+
+
+BACK = backend.o opennew.o percent.o input.o usage.o
+FRONT = frontend.o
+
+all: $(BIN)/slope.aspect $(BIN)/Gslope.aspect
+
+$(BIN)/slope.aspect: $(FRONT) $(GISLIB)
+	$(CC) $(LDFLAGS) $(FRONT) $(GISLIB) $(TERMLIB) -o $@
+
+$(BIN)/Gslope.aspect: $(BACK) $(GISLIB)
+	$(CC) $(LDFLAGS) $(BACK) $(GISLIB) $(MATHLIB) -o $@
+
+$(GISLIB): #
