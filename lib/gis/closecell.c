@@ -175,9 +175,7 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
         } /* null_cur_row > 0 */
 
         if (FCB.open_mode == OPEN_NEW_COMPRESSED) { /* auto compression */
-            long *row_ptr;
-            row_ptr = FCB.row_ptr;
-            row_ptr[FCB.cellhd.rows] = lseek (fd, 0L, 1);
+            FCB.row_ptr[FCB.cellhd.rows] = lseek (fd, 0L, 1);
             G__write_row_ptrs (fd);
         }
         if(FCB.map_type != CELL_TYPE) {  /* floating point map */
