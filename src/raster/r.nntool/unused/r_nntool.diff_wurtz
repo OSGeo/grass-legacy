@@ -1,0 +1,873 @@
+*** r.nntool.orig/band_files.c	Wed Feb 17 22:55:33 1993
+--- r.nntool/band_files.c	Sat Jan  3 15:22:47 1998
+***************
+*** 27,32 ****
+--- 27,33 ----
+  close_band_files()
+  {
+    int n, nbands;
++   extern int numfiles;
+  
+    nbands = numfiles;
+    for (n=0; n < nbands; n++)
+*** r.nntool.orig/class.c	Wed Feb  9 20:52:15 1994
+--- r.nntool/class.c	Sat Jan  3 15:45:19 1998
+***************
+*** 103,123 ****
+  	DELx = 2;	DELy = 2;
+  	for(cl=1;cl <= Noclass;cl++) {
+  		for(i=0;i < num_cl[cl];i++) {
+! 			red = (nint)((cl*1.0)/Noclass*255);
+! 			green = (nint)((cl*1.0)/Noclass*255);
+! 			blue = (nint)((cl*1.0)/Noclass*255);
+  			R_reset_color(red, green, blue, num);
+  			R_color(num);
+  			if(sdel[0] == 'O' || sdel[0] == 'o' || DELETE == 0) {
+! 				x1 = d_left + (nint)(CLASS[0][cl][i]*width);
+! 				y1 = d_bottom - (nint)(CLASS[1][cl][i]*height);
+  				temp[0][cl][i] = CLASS[0][cl][i];
+  				temp[1][cl][i] = CLASS[1][cl][i];
+  			}
+  			else if (sdel[0] == 'D' || sdel[0] == 'd') {
+  			   if(NCLS[0][cl][i]>0. && NCLS[1][cl][i]>0.) {
+! 				x1 = d_left + (nint)(NCLS[0][cl][i]*width);
+! 				y1 = d_bottom - (nint)(NCLS[1][cl][i]*height);
+  				temp[0][cl][i] = NCLS[0][cl][i];
+  				temp[1][cl][i] = NCLS[1][cl][i];
+  			   }
+--- 103,123 ----
+  	DELx = 2;	DELy = 2;
+  	for(cl=1;cl <= Noclass;cl++) {
+  		for(i=0;i < num_cl[cl];i++) {
+! 			red = (int)((cl*1.0)/Noclass*255);
+! 			green = (int)((cl*1.0)/Noclass*255);
+! 			blue = (int)((cl*1.0)/Noclass*255);
+  			R_reset_color(red, green, blue, num);
+  			R_color(num);
+  			if(sdel[0] == 'O' || sdel[0] == 'o' || DELETE == 0) {
+! 				x1 = d_left + (int)(CLASS[0][cl][i]*width);
+! 				y1 = d_bottom - (int)(CLASS[1][cl][i]*height);
+  				temp[0][cl][i] = CLASS[0][cl][i];
+  				temp[1][cl][i] = CLASS[1][cl][i];
+  			}
+  			else if (sdel[0] == 'D' || sdel[0] == 'd') {
+  			   if(NCLS[0][cl][i]>0. && NCLS[1][cl][i]>0.) {
+! 				x1 = d_left + (int)(NCLS[0][cl][i]*width);
+! 				y1 = d_bottom - (int)(NCLS[1][cl][i]*height);
+  				temp[0][cl][i] = NCLS[0][cl][i];
+  				temp[1][cl][i] = NCLS[1][cl][i];
+  			   }
+***************
+*** 138,146 ****
+  class_del ()
+  {
+  int ncl, cl, j, k, i=0, d;
+! extern int Noclass, *num_cl;
+  int butt0, butt1, butt2, x0, y0, x1, y1, x2, y2;
+! struct xy { float x1, y1, x2, y2};
+  struct xy cl_del[200];
+  
+    count = 0;
+--- 138,146 ----
+  class_del ()
+  {
+  int ncl, cl, j, k, i=0, d;
+! extern int Noclass, *num_cl, numtrain;
+  int butt0, butt1, butt2, x0, y0, x1, y1, x2, y2;
+! struct xy { float x1, y1, x2, y2; };
+  struct xy cl_del[200];
+  
+    count = 0;
+***************
+*** 192,198 ****
+  FILE *fnewt;
+  char ssave[10], *outstr;
+  int save, cl, k, d;
+! extern int DELETE, DEL_TRAIN;
+  
+    if(SAMPLED == NO) {
+  	G_warning("Read training classes first!");
+--- 192,198 ----
+  FILE *fnewt;
+  char ssave[10], *outstr;
+  int save, cl, k, d;
+! extern int Noclass, *num_cl, DELETE, DEL_TRAIN;
+  
+    if(SAMPLED == NO) {
+  	G_warning("Read training classes first!");
+*** r.nntool.orig/configure.c	Fri Jul  2 23:00:47 1993
+--- r.nntool/configure.c	Sat Jan  3 15:27:49 1998
+***************
+*** 81,86 ****
+--- 81,88 ----
+  
+  raster()
+  {
++ 	extern int numtest;
++ 
+  	if(TESTED == YES)
+  		draw(numtest);
+  	else {
+***************
+*** 95,103 ****
+  cnet(num, Type_net)
+  int num, Type_net; 
+  {
+! FILE *fopen(), *fnet;
+  extern int thermo, numtrain, Noclass, ncols, nrows;
+! extern int  numtest, Ninput,Nhidden,Noutput;
+  char temp[20];
+  
+    if(num == 0) {
+--- 97,105 ----
+  cnet(num, Type_net)
+  int num, Type_net; 
+  {
+! FILE *fnet;
+  extern int thermo, numtrain, Noclass, ncols, nrows;
+! extern int  numtest, DELETE, DEL_TRAIN, Ninput,Nhidden,Noutput;
+  char temp[20];
+  
+    if(num == 0) {
+*** r.nntool.orig/define.c	Wed Jun 16 21:36:24 1993
+--- r.nntool/define.c	Sat Jan  3 15:36:49 1998
+***************
+*** 83,89 ****
+  extern int Noedg[25][100], *Nopc, nxm[20][100], nym[20][100];
+  extern struct coord polygon[25][50][50]; 
+  extern int *CNT, *ftr, nrows, rm[20][100];
+! float radius, pow(), sqrt();
+  double D_d_to_u_row(), D_d_to_u_col(), D_d_to_a_col();
+  double D_get_d_west(), D_get_d_south(), D_d_to_a_row();
+  CELL *pcellm, *G_allocate_cell_buf();
+--- 83,89 ----
+  extern int Noedg[25][100], *Nopc, nxm[20][100], nym[20][100];
+  extern struct coord polygon[25][50][50]; 
+  extern int *CNT, *ftr, nrows, rm[20][100];
+! float radius;
+  double D_d_to_u_row(), D_d_to_u_col(), D_d_to_a_col();
+  double D_get_d_west(), D_get_d_south(), D_d_to_a_row();
+  CELL *pcellm, *G_allocate_cell_buf();
+***************
+*** 92,97 ****
+--- 92,98 ----
+  extern long **MAP[10];
+  extern struct Cell_head cellhd;
+  double tmp_n, tmp_e, D_d_to_a_col(), D_d_to_a_row();
++ extern int pc, cnt, *store;
+  
+  label:{
+  	Curses_prompt_gets("(point=0) (circular=1) (polygon=2) (Quit=-1) ",
+***************
+*** 101,108 ****
+  
+  	use_mouse_msg();
+   
+!         nxi = (nint)(D_get_d_west());
+!         nyi = (nint)(D_get_d_south());
+          Mouse_pointer(&nxi,&nyi,&button);
+  
+  	if(In_view(VIEW_MAP1, nxi, nyi))
+--- 102,109 ----
+  
+  	use_mouse_msg();
+   
+!         nxi = (int)(D_get_d_west());
+!         nyi = (int)(D_get_d_south());
+          Mouse_pointer(&nxi,&nyi,&button);
+  
+  	if(In_view(VIEW_MAP1, nxi, nyi))
+***************
+*** 152,161 ****
+              nym[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = t_y;
+  
+              rm[ask][no_tr[area[ask][cnt]][ask][cnt]+i] =
+!                 (nint)(sqrt(pow((r_x-t_x)*1.,2.)+pow((r_y - t_y)*1.,2.)));
+  
+  	    /* rough cut of a circle! */
+! 	    rad = (nint)(sqrt(pow((radx-nxi)*1.,2.)+pow((rady-nyi)*1.,2.)));
+  
+  	    Region.npoints = 0;
+  	    add_point(nxi,nyi+rad); add_point(nxi+rad,nyi); 
+--- 153,162 ----
+              nym[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = t_y;
+  
+              rm[ask][no_tr[area[ask][cnt]][ask][cnt]+i] =
+!                 (int)(sqrt(pow((r_x-t_x)*1.,2.)+pow((r_y - t_y)*1.,2.)));
+  
+  	    /* rough cut of a circle! */
+! 	    rad = (int)(sqrt(pow((radx-nxi)*1.,2.)+pow((rady-nyi)*1.,2.)));
+  
+  	    Region.npoints = 0;
+  	    add_point(nxi,nyi+rad); add_point(nxi+rad,nyi); 
+***************
+*** 290,295 ****
+--- 291,297 ----
+  char tmpstr[20], sfile[10], *mapset;
+  double tmp_e, tmp_n;
+  extern long **MAP[10];
++ extern struct Cell_head cellhd;
+  
+  	Curses_prompt_gets("Which class does this area belong to ?",tmpstr);
+  	cl = atoi(tmpstr);	
+*** r.nntool.orig/defs.h	Mon May 10 20:58:03 1993
+--- r.nntool/defs.h	Sat Jan  3 15:11:15 1998
+***************
+*** 1,4 ****
+! #include "/usr2/grass4.0/src/libes/imagery.h"
+  #include <curses.h>
+  #include "point.h"
+  
+--- 1,4 ----
+! #include "imagery.h"
+  #include <curses.h>
+  #include "point.h"
+  
+*** r.nntool.orig/draw.c	Mon Aug  2 01:50:42 1993
+--- r.nntool/draw.c	Sat Jan  3 15:47:52 1998
+***************
+*** 9,15 ****
+  extern int nrows, ncols, **FLAG, Noclass, *actual;
+  extern float **OUT;
+  char outname[25], *G_ask_cell_new(), *mapset, *temp, tmpstr[20];
+- FILE *fopen(), *fclose();
+  CELL *pcell, *G_allocate_cell_buf();
+  int min, max, i, row, col, fout, save, j;
+  long **cellout, clss;
+--- 9,14 ----
+***************
+*** 53,59 ****
+  	        break;
+  	      }
+  	    }
+! /*	    cellout[row][col] = (nint)((clss*1./Noclass)*100.); */
+  	    cellout[row][col] = actual[clss];
+              i++;
+            }
+--- 52,58 ----
+  	        break;
+  	      }
+  	    }
+! /*	    cellout[row][col] = (int)((clss*1./Noclass)*100.); */
+  	    cellout[row][col] = actual[clss];
+              i++;
+            }
+***************
+*** 67,73 ****
+                break;
+              } 
+             }
+! /*           cellout[row][col] = (nint)(clss*1./Noclass*100); */
+  	     cellout[row][col] = actual[clss];
+             i++;
+          }
+--- 66,72 ----
+                break;
+              } 
+             }
+! /*           cellout[row][col] = (int)(clss*1./Noclass*100); */
+  	     cellout[row][col] = actual[clss];
+             i++;
+          }
+*** r.nntool.orig/lump.c	Wed Aug 11 16:13:54 1993
+--- r.nntool/lump.c	Sat Jan  3 15:41:21 1998
+***************
+*** 47,55 ****
+        }
+        attr = (int *) malloc(sizeof(int)*(maxcategory+2));
+  
+!       compress = (int **)malloc(sizeof(int)*((nint)(nrows*1./lumprow)+2));
+        for(i=0,k=0;i < nrows - lumprow;i+=lumprow,k++) {
+!         compress[k]=(int *)malloc(sizeof(int)*((nint)(ncols*1./lumpcol)+2));
+          for(j=0,jcol=0;j < ncols - lumpcol;j+=lumpcol,jcol++) {
+            for(ii=i,il=0;ii < i+lumprow;ii++,il++)
+              for(jj=j,jl=0;jj < j+lumpcol;jj++,jl++)
+--- 47,55 ----
+        }
+        attr = (int *) malloc(sizeof(int)*(maxcategory+2));
+  
+!       compress = (int **)malloc(sizeof(int)*((int)(nrows*1./lumprow)+2));
+        for(i=0,k=0;i < nrows - lumprow;i+=lumprow,k++) {
+!         compress[k]=(int *)malloc(sizeof(int)*((int)(ncols*1./lumpcol)+2));
+          for(j=0,jcol=0;j < ncols - lumpcol;j+=lumpcol,jcol++) {
+            for(ii=i,il=0;ii < i+lumprow;ii++,il++)
+              for(jj=j,jl=0;jj < j+lumpcol;jj++,jl++)
+***************
+*** 66,72 ****
+          compress[k][jcol] = checkcategory(il,jl,temparray);
+        }
+  
+!       compress[k]=(int *) malloc(sizeof(int)*((nint)(ncols*1./lumpcol)+2));
+        for(j=0,jcol=0;j < ncols - lumpcol;j+=lumpcol,jcol++)
+          for(jj=j,jl=0;jj < j+lumpcol;jj++,jl++)
+            for(i=nrows-lumprow,il=0;i < nrows;i++,il++) {
+--- 66,72 ----
+          compress[k][jcol] = checkcategory(il,jl,temparray);
+        }
+  
+!       compress[k]=(int *) malloc(sizeof(int)*((int)(ncols*1./lumpcol)+2));
+        for(j=0,jcol=0;j < ncols - lumpcol;j+=lumpcol,jcol++)
+          for(jj=j,jl=0;jj < j+lumpcol;jj++,jl++)
+            for(i=nrows-lumprow,il=0;i < nrows;i++,il++) {
+***************
+*** 86,93 ****
+  
+        new_window.format = window.format;
+        new_window.compressed = window.compressed;
+!       new_window.rows = (nint)((nrows*1.)/lumprow);
+!       new_window.cols = (nint)((ncols*1.)/lumpcol);
+        new_window.proj = window.proj;
+        new_window.zone = window.zone;
+        new_window.ew_res = window.ew_res*lumpcol;
+--- 86,93 ----
+  
+        new_window.format = window.format;
+        new_window.compressed = window.compressed;
+!       new_window.rows = (int)((nrows*1.)/lumprow);
+!       new_window.cols = (int)((ncols*1.)/lumpcol);
+        new_window.proj = window.proj;
+        new_window.zone = window.zone;
+        new_window.ew_res = window.ew_res*lumpcol;
+*** r.nntool.orig/mask.c	Fri Jun 18 17:24:43 1993
+--- r.nntool/mask.c	Sat Jan  3 15:42:12 1998
+***************
+*** 7,13 ****
+  int Yscan, elements, i, j, color, xint, left, top;
+  extern int *CNT, rm[20][100], nxm[20][100], nym[20][100], *Nopc, Noclass;
+  extern int area[25][50], *ftr, Noedg[25][100], no_tr[3][20][20], nrows, ncols;
+- float sqrt();
+  extern long **MAP[10];
+  extern struct coord polygon[25][50][50];
+  struct Colors colorg;
+--- 7,12 ----
+***************
+*** 21,34 ****
+            if(area[il][p] != NULL && area[il][p] == 1) {
+              for(k=0;k < no_tr[area[il][p]][il][p];k++) {
+                for(y=rm[il][k];y > 0;y--) {
+!                xp = (nint)(sqrt(rm[il][k]*rm[il][k]*1. - y*y*1.));
+                 for(x=0;x < xp;x++)
+                   MAP[il][nym[il][k]-y][nxm[il][k]+x] = 1;
+                 for(x=0;x < xp;x++)
+                   MAP[il][nym[il][k]-y][nxm[il][k]-x] = 1;
+                }
+                for(y=0;y <= rm[il][k];y++) {
+!                 xp = (nint)(sqrt(rm[il][k]*rm[il][k]*1. - y*y*1.));
+                  for(x=0;x < xp;x++)
+                    MAP[il][nym[il][k]+y][nxm[il][k]+x] = 1;
+                  for(x=0;x < xp;x++)
+--- 20,33 ----
+            if(area[il][p] != NULL && area[il][p] == 1) {
+              for(k=0;k < no_tr[area[il][p]][il][p];k++) {
+                for(y=rm[il][k];y > 0;y--) {
+!                xp = (int)(sqrt(rm[il][k]*rm[il][k]*1. - y*y*1.));
+                 for(x=0;x < xp;x++)
+                   MAP[il][nym[il][k]-y][nxm[il][k]+x] = 1;
+                 for(x=0;x < xp;x++)
+                   MAP[il][nym[il][k]-y][nxm[il][k]-x] = 1;
+                }
+                for(y=0;y <= rm[il][k];y++) {
+!                 xp = (int)(sqrt(rm[il][k]*rm[il][k]*1. - y*y*1.));
+                  for(x=0;x < xp;x++)
+                    MAP[il][nym[il][k]+y][nxm[il][k]+x] = 1;
+                  for(x=0;x < xp;x++)
+***************
+*** 146,152 ****
+        G_init_colors(&colorg);
+        G_close_cell(ftr[il]);
+        G_init_colors(&colorg);
+!       color = 255 - (nint)((il*1./Noclass)*255.);
+        G_set_color((CELL)1,color,color,color,&colorg);
+        G_set_color((CELL)0,255,255,255,&colorg);
+        sprintf(tmpstr,"train.cls%d",il);
+--- 145,151 ----
+        G_init_colors(&colorg);
+        G_close_cell(ftr[il]);
+        G_init_colors(&colorg);
+!       color = 255 - (int)((il*1./Noclass)*255.);
+        G_set_color((CELL)1,color,color,color,&colorg);
+        G_set_color((CELL)0,255,255,255,&colorg);
+        sprintf(tmpstr,"train.cls%d",il);
+*** r.nntool.orig/net.c	Fri Jul  2 22:39:27 1993
+--- r.nntool/net.c	Sat Jan  3 15:00:36 1998
+***************
+*** 38,44 ****
+  #include  "layer.h"
+  #include  "net.h"
+  #include  "netio.h"
+! #include "/usr2/grass4.0/src/libes/gis.h"
+  
+  
+  /*
+--- 38,44 ----
+  #include  "layer.h"
+  #include  "net.h"
+  #include  "netio.h"
+! #include  "gis.h"
+  
+  
+  /*
+*** r.nntool.orig/netio.c	Fri Jul  2 18:44:59 1993
+--- r.nntool/netio.c	Sat Jan  3 15:09:09 1998
+***************
+*** 536,542 ****
+  BEGIN
+     void  IO_my_get_string();
+     char  temp_str[MAX_WORD_SIZE];
+!    extern int RANDOM;
+  
+  /*   sprintf(IO_str, "\n   Enter name of file containing I/O pairs ");
+     IO_print(0);
+--- 536,542 ----
+  BEGIN
+     void  IO_my_get_string();
+     char  temp_str[MAX_WORD_SIZE];
+!    extern int DELETE, RANDOM;
+  
+  /*   sprintf(IO_str, "\n   Enter name of file containing I/O pairs ");
+     IO_print(0);
+*** r.nntool.orig/netmain.c	Fri Jul  2 22:38:17 1993
+--- r.nntool/netmain.c	Sat Jan  3 15:09:51 1998
+***************
+*** 84,90 ****
+  #include  "weights.h"
+  #include  "layer.h"
+  #include  "net.h"
+! #include "/usr2/grass4.0/src/libes/gis.h"
+  #define YES 1
+  #define NO 0
+  
+--- 84,90 ----
+  #include  "weights.h"
+  #include  "layer.h"
+  #include  "net.h"
+! #include  "gis.h"
+  #define YES 1
+  #define NO 0
+  
+*** r.nntool.orig/nntool.c	Tue Jun 21 15:48:16 1994
+--- r.nntool/nntool.c	Sat Jan  3 15:52:10 1998
+***************
+*** 55,61 ****
+  int t, b, l, r, localvalue, lumpcol, lumprow, j, ii, jl, jj, p,minedg;
+  char *name1, tmpstr[50];
+  char lumpfile[20], lumpedfile[20], *tempfile;
+! float radius, pow(), sqrt(), xint;
+  double D_d_to_u_row(), D_d_to_u_col(), D_d_to_a_col();
+  double D_get_d_west(), D_get_d_south(), D_d_to_a_row();
+  CELL *pcellm, *pcell;
+--- 55,61 ----
+  int t, b, l, r, localvalue, lumpcol, lumprow, j, ii, jl, jj, p,minedg;
+  char *name1, tmpstr[50];
+  char lumpfile[20], lumpedfile[20], *tempfile;
+! float radius, xint;
+  double D_d_to_u_row(), D_d_to_u_col(), D_d_to_a_col();
+  double D_get_d_west(), D_get_d_south(), D_d_to_a_row();
+  CELL *pcellm, *pcell;
+***************
+*** 191,197 ****
+     int ran, linenum=0, LINE, no_tr_cols, l,NUMTRAIN,READ=0,i;
+     short *seed48();
+     long lrand();
+!    FILE *ft, *ftnew, *fopen(), *fclose();
+     char c, *str, tran[10000][500], tmpstr[30];
+  
+     RANDOM = YES;
+--- 191,197 ----
+     int ran, linenum=0, LINE, no_tr_cols, l,NUMTRAIN,READ=0,i;
+     short *seed48();
+     long lrand();
+!    FILE *ft, *ftnew;
+     char c, *str, tran[10000][500], tmpstr[30];
+  
+     RANDOM = YES;
+***************
+*** 288,297 ****
+  int rcnt, GOOD, BAD, rt, getavg, getmask, trip=0, bit; /*trip = class*/
+  CELL *pcell, *G_allocate_cell_buf(), *pcellin, *pmask;
+  CELL *pread[10], *savg[10][25], *pavg;
+! char name[20], *sprintf(), *cellname, outstr[100], *mapset;
+  char *strcat(), *str1, *str, *estr, tmpstr[50], **check, *strcheck;
+! FILE *fopen(), *fclose(), *ft, *fin;
+! float output, fabs(), tmp, out_trip, out, *kclass;
+  int max[10], *maxin, min[10], *minin, clnt, ck, foutf, srow[500];
+  float sum[10][40], T_area[5][500][500], S_A, S_Aprime;
+  int T_A[20], ii, FOUND, I_A[20], WEIGHT, junk;
+--- 288,297 ----
+  int rcnt, GOOD, BAD, rt, getavg, getmask, trip=0, bit; /*trip = class*/
+  CELL *pcell, *G_allocate_cell_buf(), *pcellin, *pmask;
+  CELL *pread[10], *savg[10][25], *pavg;
+! char name[20], *cellname, outstr[100], *mapset;
+  char *strcat(), *str1, *str, *estr, tmpstr[50], **check, *strcheck;
+! FILE *ft, *fin;
+! float output, tmp, out_trip, out, *kclass;
+  int max[10], *maxin, min[10], *minin, clnt, ck, foutf, srow[500];
+  float sum[10][40], T_area[5][500][500], S_A, S_Aprime;
+  int T_A[20], ii, FOUND, I_A[20], WEIGHT, junk;
+***************
+*** 499,505 ****
+  				(double)(maxin[i] - minin[i]);
+  
+                    if(thermo == YES) {
+! 		     switch(nint(out*10.)) {
+  		       case 0:
+  		sprintf(str," 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 ");
+  			break;
+--- 499,505 ----
+  				(double)(maxin[i] - minin[i]);
+  
+                    if(thermo == YES) {
+! 		     switch((int)(out*10.)) {
+  		       case 0:
+  		sprintf(str," 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 ");
+  			break;
+***************
+*** 622,628 ****
+                  NO_INPUT++;
+  
+  		if(thermo == YES) {
+! 		  switch(nint(out*10.)) {
+  		   case 0:
+  		sprintf(str," 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 ");
+  		     break;
+--- 622,628 ----
+                  NO_INPUT++;
+  
+  		if(thermo == YES) {
+! 		  switch((int)(out*10.)) {
+  		   case 0:
+  		sprintf(str," 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 ");
+  		     break;
+*** r.nntool.orig/old_nn.c	Wed Feb 24 05:39:12 1993
+--- r.nntool/old_nn.c	Sat Jan  3 15:47:44 1998
+***************
+*** 135,143 ****
+        }
+        attr = (int *) malloc(sizeof(int)*(maxcategory+2));
+  
+!       compress = (int **)malloc(sizeof(int)*((nint)(nrows*1./lumprow)+2));
+        for(i=0,k=0;i < nrows - lumprow;i+=lumprow,k++) {
+! 	compress[k]=(int *)malloc(sizeof(int)*((nint)(ncols*1./lumpcol)+2));
+  	for(j=0,jcol=0;j < ncols - lumpcol;j+=lumpcol,jcol++) {
+  	  for(ii=i,il=0;ii < i+lumprow;ii++,il++)
+  	    for(jj=j,jl=0;jj < j+lumpcol;jj++,jl++)
+--- 135,143 ----
+        }
+        attr = (int *) malloc(sizeof(int)*(maxcategory+2));
+  
+!       compress = (int **)malloc(sizeof(int)*((int)(nrows*1./lumprow)+2));
+        for(i=0,k=0;i < nrows - lumprow;i+=lumprow,k++) {
+! 	compress[k]=(int *)malloc(sizeof(int)*((int)(ncols*1./lumpcol)+2));
+  	for(j=0,jcol=0;j < ncols - lumpcol;j+=lumpcol,jcol++) {
+  	  for(ii=i,il=0;ii < i+lumprow;ii++,il++)
+  	    for(jj=j,jl=0;jj < j+lumpcol;jj++,jl++)
+***************
+*** 154,160 ****
+          compress[k][jcol] = checkcategory(il,jl,temparray);
+        }
+  
+!       compress[k]=(int *) malloc(sizeof(int)*((nint)(ncols*1./lumpcol)+2));
+        for(j=0,jcol=0;j < ncols - lumpcol;j+=lumpcol,jcol++)
+          for(jj=j,jl=0;jj < j+lumpcol;jj++,jl++)
+            for(i=nrows-lumprow,il=0;i < nrows;i++,il++) {
+--- 154,160 ----
+          compress[k][jcol] = checkcategory(il,jl,temparray);
+        }
+  
+!       compress[k]=(int *) malloc(sizeof(int)*((int)(ncols*1./lumpcol)+2));
+        for(j=0,jcol=0;j < ncols - lumpcol;j+=lumpcol,jcol++)
+          for(jj=j,jl=0;jj < j+lumpcol;jj++,jl++)
+            for(i=nrows-lumprow,il=0;i < nrows;i++,il++) {
+***************
+*** 175,182 ****
+        new_window = (struct Cell_head *) malloc(sizeof(struct Cell_head));
+        new_window->format = window.format;
+        new_window->compressed = window.compressed;
+!       new_window->rows = (nint)((nrows*1.)/lumprow);
+!       new_window->cols = (nint)((ncols*1.)/lumpcol);
+        new_window->proj = window.proj;
+        new_window->zone = window.zone;
+        new_window->ew_res = window.ew_res*lumpcol;
+--- 175,182 ----
+        new_window = (struct Cell_head *) malloc(sizeof(struct Cell_head));
+        new_window->format = window.format;
+        new_window->compressed = window.compressed;
+!       new_window->rows = (int)((nrows*1.)/lumprow);
+!       new_window->cols = (int)((ncols*1.)/lumpcol);
+        new_window->proj = window.proj;
+        new_window->zone = window.zone;
+        new_window->ew_res = window.ew_res*lumpcol;
+***************
+*** 260,273 ****
+            if(area[il][p] == 1) {
+              for(k=0;k < no_tr[area[il][p]][il][p];k++) {
+                for(y=rm[il][k];y > 0;y--) {
+!  	       xp = (nint)(sqrt(rm[il][k]*rm[il][k]*1. - y*y*1.));
+                 for(x=0;x < xp;x++)
+   		 MAP[il][nym[il][k]-y][nxm[il][k]+x] = 1;
+  	       for(x=0;x < xp;x++)
+                   MAP[il][nym[il][k]-y][nxm[il][k]-x] = 1; 
+                }
+  	      for(y=0;y <= rm[il][k];y++) {
+!  	        xp = (nint)(sqrt(rm[il][k]*rm[il][k]*1. - y*y*1.));
+                  for(x=0;x < xp;x++)
+  		  MAP[il][nym[il][k]+y][nxm[il][k]+x] = 1;
+                  for(x=0;x < xp;x++)
+--- 260,273 ----
+            if(area[il][p] == 1) {
+              for(k=0;k < no_tr[area[il][p]][il][p];k++) {
+                for(y=rm[il][k];y > 0;y--) {
+!  	       xp = (int)(sqrt(rm[il][k]*rm[il][k]*1. - y*y*1.));
+                 for(x=0;x < xp;x++)
+   		 MAP[il][nym[il][k]-y][nxm[il][k]+x] = 1;
+  	       for(x=0;x < xp;x++)
+                   MAP[il][nym[il][k]-y][nxm[il][k]-x] = 1; 
+                }
+  	      for(y=0;y <= rm[il][k];y++) {
+!  	        xp = (int)(sqrt(rm[il][k]*rm[il][k]*1. - y*y*1.));
+                  for(x=0;x < xp;x++)
+  		  MAP[il][nym[il][k]+y][nxm[il][k]+x] = 1;
+                  for(x=0;x < xp;x++)
+***************
+*** 350,356 ****
+  		      xint=x22 - ((y22 - Yscan)*1./(y22 - y11))*(x22 - x11);
+  		    else
+  		      xint=x22 + ((Yscan - y22)*1./(y11 - y22))*(x11 - x22);
+! 		    interX[elements] = (nint)(xint);
+  		    elements++;
+                    }
+  		 }
+--- 350,356 ----
+  		      xint=x22 - ((y22 - Yscan)*1./(y22 - y11))*(x22 - x11);
+  		    else
+  		      xint=x22 + ((Yscan - y22)*1./(y11 - y22))*(x11 - x22);
+! 		    interX[elements] = (int)(xint);
+  		    elements++;
+                    }
+  		 }
+***************
+*** 387,393 ****
+        for(k=1;k <= Noclass;k++) {    /* will have to redo this part!!! */
+          G_close_cell(ftr[k]);
+  	G_init_colors(&colorg);
+! 	color = 255 - (nint)((k*1./Noclass)*255.);
+  	G_set_color((CELL)1,color,color,color,&colorg);
+          G_set_color((CELL)0,255,255,255,&colorg); 
+  	sprintf(tmpstr,"train.cls%d",k);
+--- 387,393 ----
+        for(k=1;k <= Noclass;k++) {    /* will have to redo this part!!! */
+          G_close_cell(ftr[k]);
+  	G_init_colors(&colorg);
+! 	color = 255 - (int)((k*1./Noclass)*255.);
+  	G_set_color((CELL)1,color,color,color,&colorg);
+          G_set_color((CELL)0,255,255,255,&colorg); 
+  	sprintf(tmpstr,"train.cls%d",k);
+***************
+*** 875,881 ****
+  					(double)(maxin[i]-minin[i]));
+  
+                     if(thermo == YES) {
+! 		     switch(nint(out*10.)) {
+  		       case 0:
+  		sprintf(str," 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 ");
+  			break;
+--- 875,881 ----
+  					(double)(maxin[i]-minin[i]));
+  
+                     if(thermo == YES) {
+! 		     switch(int(out*10.)) {
+  		       case 0:
+  		sprintf(str," 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 ");
+  			break;
+***************
+*** 998,1004 ****
+                  NO_INPUT++;
+  
+  		if(thermo == YES) {
+! 		  switch(nint(out*10.)) {
+  		   case 0:
+  		sprintf(str," 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 ");
+  		     break;
+--- 998,1004 ----
+                  NO_INPUT++;
+  
+  		if(thermo == YES) {
+! 		  switch(int(out*10.)) {
+  		   case 0:
+  		sprintf(str," 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 ");
+  		     break;
+***************
+*** 1251,1261 ****
+  	  Twindow.zone = window.zone;
+  	  Twindow.ew_res = window.ew_res;
+  	  Twindow.ns_res = window.ns_res;
+! 	  Twindow.rows = (nint)((Twindow.north-Twindow.south)/Twindow.ns_res);
+! 	  Twindow.cols = (nint)((Twindow.east-Twindow.west)/Twindow.ew_res);
+  
+! 	  nxz = (nint)(D_d_to_a_col((double)nxz));
+! 	  nyz = (nint)(D_d_to_a_row((double)nyz));
+  
+  	  G_put_window(&Twindow);	
+  	  G_set_window(&Twindow);
+--- 1251,1261 ----
+  	  Twindow.zone = window.zone;
+  	  Twindow.ew_res = window.ew_res;
+  	  Twindow.ns_res = window.ns_res;
+! 	  Twindow.rows = (int)((Twindow.north-Twindow.south)/Twindow.ns_res);
+! 	  Twindow.cols = (int)((Twindow.east-Twindow.west)/Twindow.ew_res);
+  
+! 	  nxz = (int)(D_d_to_a_col((double)nxz));
+! 	  nyz = (int)(D_d_to_a_row((double)nyz));
+  
+  	  G_put_window(&Twindow);	
+  	  G_set_window(&Twindow);
+***************
+*** 1280,1287 ****
+  
+  	printf("press the right mouse button when done\n");
+  
+! 	nxi = (nint)(D_get_d_west());
+! 	nyi = (nint)(D_get_d_south());
+  	R_get_location_with_pointer(&nxi,&nyi,&button);	
+  
+          if(area[ask][cnt] == 1) { /* Circular */
+--- 1280,1287 ----
+  
+  	printf("press the right mouse button when done\n");
+  
+! 	nxi = (int)(D_get_d_west());
+! 	nyi = (int)(D_get_d_south());
+  	R_get_location_with_pointer(&nxi,&nyi,&button);	
+  
+          if(area[ask][cnt] == 1) { /* Circular */
+***************
+*** 1292,1306 ****
+  	    printf("press any button once radius is specified\n");
+  	    R_get_location_with_line(nxi,nyi,&radx,&rady,&radbut);
+  
+! 	    nxi = (nint)(D_d_to_a_col((double)nxi)) + nxz;
+! 	    nyi = (nint)(D_d_to_a_row((double)nyi)) + nyz;
+! 	    radx = (nint)(D_d_to_a_col((double)radx)) + nxz;
+! 	    rady = (nint)(D_d_to_a_row((double)rady)) + nyz;
+  
+  	    nxm[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = /*nxz +*/ nxi;   
+              nym[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = /*nyz +*/ nyi;
+  	    rm[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = 
+! 		(nint)(sqrt(pow((radx-nxi)*1.,2.)+pow((rady - nyi)*1.,2.)));
+  
+              printf("press the left mouse button at the training site\n");
+  	    R_get_location_with_pointer(&nxi,&nyi,&button);
+--- 1292,1306 ----
+  	    printf("press any button once radius is specified\n");
+  	    R_get_location_with_line(nxi,nyi,&radx,&rady,&radbut);
+  
+! 	    nxi = (int)(D_d_to_a_col((double)nxi)) + nxz;
+! 	    nyi = (int)(D_d_to_a_row((double)nyi)) + nyz;
+! 	    radx = (int)(D_d_to_a_col((double)radx)) + nxz;
+! 	    rady = (int)(D_d_to_a_row((double)rady)) + nyz;
+  
+  	    nxm[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = /*nxz +*/ nxi;   
+              nym[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = /*nyz +*/ nyi;
+  	    rm[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = 
+! 		(int)(sqrt(pow((radx-nxi)*1.,2.)+pow((rady - nyi)*1.,2.)));
+  
+              printf("press the left mouse button at the training site\n");
+  	    R_get_location_with_pointer(&nxi,&nyi,&button);
+***************
+*** 1327,1334 ****
+            if(MORE == NO)
+               i = 0;
+            while(button != 3) {
+!             nxi = (nint)(D_d_to_a_col((double)nxi)) + nxz;
+!             nyi = (nint)(D_d_to_a_row((double)nyi)) + nyz;  
+              nxm[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = nxi;
+  	    nym[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = nyi;
+  
+--- 1327,1334 ----
+            if(MORE == NO)
+               i = 0;
+            while(button != 3) {
+!             nxi = (int)(D_d_to_a_col((double)nxi)) + nxz;
+!             nyi = (int)(D_d_to_a_row((double)nyi)) + nyz;  
+              nxm[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = nxi;
+  	    nym[ask][no_tr[area[ask][cnt]][ask][cnt]+i] = nyi;
+  
+***************
+*** 1363,1375 ****
+              if(edg == 1) {
+                firstx = nxi;	firsty = nyi; /* The 1st location */
+              }
+! 	    px = (nint)(D_d_to_a_col((double)nxi));
+! 	    py = (nint)(D_d_to_a_row((double)nyi));
+  	    polygon[ask][pc][edg].x1 = px + nxz;
+  	    polygon[ask][pc][edg].y1 = py + nyz;
+  
+! 	    px = (nint)(D_d_to_a_col((double)endx)); 
+! 	    py = (nint)(D_d_to_a_row((double)endy));
+  	    polygon[ask][pc][edg].x2 = px + nxz; 
+              polygon[ask][pc][edg].y2 = py + nyz;
+              ++edg;
+--- 1363,1375 ----
+              if(edg == 1) {
+                firstx = nxi;	firsty = nyi; /* The 1st location */
+              }
+! 	    px = (int)(D_d_to_a_col((double)nxi));
+! 	    py = (int)(D_d_to_a_row((double)nyi));
+  	    polygon[ask][pc][edg].x1 = px + nxz;
+  	    polygon[ask][pc][edg].y1 = py + nyz;
+  
+! 	    px = (int)(D_d_to_a_col((double)endx)); 
+! 	    py = (int)(D_d_to_a_row((double)endy));
+  	    polygon[ask][pc][edg].x2 = px + nxz; 
+              polygon[ask][pc][edg].y2 = py + nyz;
+              ++edg;
+***************
+*** 1466,1473 ****
+  la:	printf("Press at the center of the area you want deleted");
+  	R_get_location_with_pointer(&nx,&ny,&button);
+  
+! 	mapx = (nint)(D_d_to_a_col((double)nx));
+! 	mapy = (nint)(D_d_to_a_row((double)ny));
+     
+  	numx = numy = 0; B =0;
+  	while(B == 0) {
+--- 1466,1473 ----
+  la:	printf("Press at the center of the area you want deleted");
+  	R_get_location_with_pointer(&nx,&ny,&button);
+  
+! 	mapx = (int)(D_d_to_a_col((double)nx));
+! 	mapy = (int)(D_d_to_a_row((double)ny));
+     
+  	numx = numy = 0; B =0;
+  	while(B == 0) {
+*** r.nntool.orig/quickprop.c	Thu Feb 10 20:33:28 1994
+--- r.nntool/quickprop.c	Sat Jan  3 15:16:07 1998
+***************
+*** 166,172 ****
+  GET_NETWORK_CONFIGURATION(fname1,fname2,fname3)
+       char fname1[], fname2[], fname3[];
+  {
+!   FILE  *infile,*fopen(),*fclose(),*testfile,*trainfile;
+    char junk[5][80];
+    char stringjunk[80];
+    char realfname[80];
+--- 166,172 ----
+  GET_NETWORK_CONFIGURATION(fname1,fname2,fname3)
+       char fname1[], fname2[], fname3[];
+  {
+!   FILE  *infile,*testfile,*trainfile;
+    char junk[5][80];
+    char stringjunk[80];
+    char realfname[80];
+*** r.nntool.orig/zoom_box.c	Mon May 10 20:53:54 1993
+--- r.nntool/zoom_box.c	Sat Jan  3 15:40:46 1998
+***************
+*** 29,34 ****
+--- 29,35 ----
+  {
+      static int use = 1;
+      int zoom2();
++     int cancel();
+      static Objects objects[] =
+      {
+  	MENU("Cancel",cancel,&use),
