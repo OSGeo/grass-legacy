@@ -187,7 +187,7 @@ stream2_CELL(AMI_STREAM<T>* str, dimension_type nrows, dimension_type ncols,
   {
     char * foo;
     str->name(&foo); 
-    *stats << form("writing stream %s to cell file  %s\n", foo, cellname);
+    *stats << "writing stream " << foo << " to cell file  " << cellname << "\n";
     fprintf(stderr, "writing stream %s to cell file %s: ", foo, cellname);
   }
 
