@@ -494,6 +494,7 @@ if [ "$CYGWIN" ] ; then
     sh="cygwin"
     shellname="GNU Bash (Cygwin)"
     SHELL=/usr/bin/bash.exe
+    export SHELL
 else 
     sh=`basename "$SHELL"`
     case "$sh" in
