@@ -447,6 +447,15 @@ AC_CHECK_LIB(bsd, gtty, COMPATLIB=-lbsd, [
 ])])])
 AC_SUBST(COMPATLIB)
 
+# Note that some systems (FreeBSD for example) need an extra library for
+# cuserid
+ac_save_libs="$LIBS"
+LIBS=""
+AC_SEARCH_LIBS(cuserid,[compat])
+DBMIEXTRALIB=$LIBS
+LIBS=$ac_save_libs
+AC_SUBST(DBMIEXTRALIB)
+
 AC_CHECK_FUNC(xdrmem_create, XDRLIB=, [
 AC_CHECK_LIB(sun, xdrmem_create, XDRLIB=-lsun, [
 AC_CHECK_LIB(nsl, xdrmem_create, XDRLIB=-lnsl, [
