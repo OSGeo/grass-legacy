@@ -12,10 +12,10 @@ db_set_connection( connection )
     dbConnection   *connection;
 {
     if ( connection->driverName )
-	G_setenv2("GV_DRIVER", connection->driverName, G_VAR_MAPSET);
+	G_setenv2("DB_DRIVER", connection->driverName, G_VAR_MAPSET);
 
     if ( connection->databaseName )
-	G_setenv2("GV_DATABASE", connection->databaseName, G_VAR_MAPSET);
+	G_setenv2("DB_DATABASE", connection->databaseName, G_VAR_MAPSET);
 
   /* below commented due to new mechanism:
     if ( connection->hostName )
@@ -44,8 +44,8 @@ int
 db_get_connection( connection )
     dbConnection   *connection;
 {
-    connection->driverName = G__getenv2("GV_DRIVER", G_VAR_MAPSET);
-    connection->databaseName = G__getenv2("GV_DATABASE", G_VAR_MAPSET);    
+    connection->driverName = G__getenv2("DB_DRIVER", G_VAR_MAPSET);
+    connection->databaseName = G__getenv2("DB_DATABASE", G_VAR_MAPSET);    
 
   /* below commented due to new mechanism:
     connection->hostName = G__getenv("DB_HOST");
