@@ -1,0 +1,66 @@
+
+
+
+d.rast.leg <main>    GRASS Reference Manual	<main> d.rast.leg
+
+
+
+NAME
+     d.rast.leg	- Displays a raster map	and its	legend on a
+     graphics window.
+     (GRASS Shell Script)
+
+SYNOPSIS
+     d.rast.leg
+     d.rast.leg	help
+     d.rast.leg	rast_map [num_of_lines]
+
+DESCRIPTION
+     d.rast.leg	is a UNIX Bourne shell macro which clears the
+     entire screen, divides it into a main (left) and a	minor
+     (right) frames, and then display a	raster map in the main
+     frame and the map legend in the minor frame. The main frame
+     remains active when the program finishs. The user can run
+     the program interactively or non-interactively.
+
+     Parameters:
+
+     rast_map		 A raster map to be displayed.
+
+     num_of_lines	 Number	of lines to appear in the legend.
+			 If this number	is not given, the legend
+			 frame will display as many lines as
+			 number	of categories in the map,
+			 otherwise, it will display the	first
+			 num_of_lines minus 1 categories with the
+			 rest being truncated.
+
+NOTES
+     The user may adjust the num_of_lines parameter or the size
+     of	graphics window	to get an appropriate result.
+
+FILES
+     See the file d.rast.leg under $GISBASE/scripts.
+
+SEE ALSO
+     d.legend, d.rast,
+
+AUTHOR
+     Jianping Xu, Rutgers University
+     Scott Madry, Rutgers University
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.3		Baylor University			1
+
+
+
