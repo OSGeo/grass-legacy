@@ -2,14 +2,15 @@ OBJ = ask_old.o ask_new.o ask_any.o\
        release.o read.o write.o get.o put.o scale.o \
        get_def.o
 
-all: $(LIBDIR)/icon.h $(LIBDIR)/libicon.a
+#all: $(LIBDIR)/icon.h $(LIBDIR)/libicon.a
+all: $(LIBDIR)/libicon.a
 
-$(LIBDIR)/icon.h: icon.h
-	rm -f $@
-	cp $? $@
-	chmod +r $@
+#$(LIBDIR)/icon.h: icon.h
+#	rm -f $@
+#	cp $? $@
+#	chmod +r $@
 
 $(LIBDIR)/libicon.a: $(OBJ)
 	$(AR)
 
-$(OBJ): icon.h
+#$(OBJ): icon.h
