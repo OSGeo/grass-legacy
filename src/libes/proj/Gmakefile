@@ -51,7 +51,7 @@ LLIST = $(azimuthal) $(conic) $(cylinder) $(misc) $(pseudo) $(support)
 
 RLIB = pj_release.o
 
-GRASSINT = get_proj.o do_proj.o do_proj_nad.o datum_shift.o
+GRASSINT = get_proj.o do_proj.o
 
 NAD_DIR = $(GISBASE)/etc/nad
 NAD2BIN = $(GISBASE)/etc/nad2bin

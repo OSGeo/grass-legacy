@@ -89,8 +89,7 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	       G_fatal_error("Can't get projection key values of current location");
 	
 	   /* set output projection to lat/long */
-	   pj_zero_proj(&oproj);
-	   sprintf(oproj.proj, "%s", "ll");
+	   pj_get_string(&oproj, NULL);
 	
 	   /* do the transform
 	    * syntax: pj_do_proj(outx, outy, in_info, out_info) 

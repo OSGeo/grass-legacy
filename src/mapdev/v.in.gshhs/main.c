@@ -143,7 +143,6 @@ G_get_window (&region);
 zone = region.zone;
 
 /* In Info */
-pj_zero_proj(&info_in);
 parms_in[0] = '\0';
 pj_get_string(&info_in, parms_in);
 

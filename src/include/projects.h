@@ -28,7 +28,12 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.2  2002-04-20 22:46:16  roger
+ * Revision 1.3  2003-01-26 17:47:01  paul
+ * Implement general datum transformation support in [rsv].proj,
+ * Fix some other programs' usage of the GRASS PROJ.4 wrapper functions
+ *     to reflect changes in these.
+ *
+ * Revision 1.2  2002/04/20 22:46:16  roger
  * Changed to Proj4.4.5 header, with GRASS-specific additions
  *
  * Revision 1.9  2001/04/06 01:24:13  warmerda
@@ -365,14 +370,12 @@ struct pj_info {
 
 /* do_proj.c */
 int pj_do_proj PROTO((double *, double *, struct pj_info *, struct pj_info *));
-/* do_proj_nad.c */
-int pj_do_proj_nad PROTO((double *, double *, struct pj_info *, struct pj_info *));
+int pj_do_transform PROTO((int, double *, double *, double *, 
+                           struct pj_info *, struct pj_info *));
 /* get_proj.c */
 int pj_get_string PROTO((struct pj_info *, char *));
 int pj_zero_proj PROTO((struct pj_info *));
-
-/* pointer for datum conversion */
-int (*proj_f)(double *, double *, struct pj_info *, struct pj_info *);
+const char * set_proj_lib PROTO((const char *name));
 
 #ifdef GRASS_GIS_H
 int pj_get_kv PROTO((struct pj_info *, struct Key_Value *, struct Key_Value *));

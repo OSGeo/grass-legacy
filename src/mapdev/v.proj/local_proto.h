@@ -8,6 +8,3 @@ int set_proj(char *, int);
 /* setenv.c */
 int select_current_env(void);
 int select_target_env(void);
-
-/* datum_shift.c */
-void set_datumshift(char *, char *, char *, char *);
