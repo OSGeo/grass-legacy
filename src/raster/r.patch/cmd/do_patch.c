@@ -33,9 +33,11 @@ int do_patch (
   {
     if (ZEROFLAG)  /* use 0 for transparency instead of NULL */
     {
-	if (G_is_zero_value(result, out_type))
+	if (G_is_zero_value(result, out_type) ||
+	    G_is_null_value(result, out_type))
 	{
-	    if(G_is_zero_value(patch, out_type))
+	    if(G_is_zero_value(patch, out_type) ||
+	       G_is_null_value(result, out_type))
 		more = 1;
             else
 	    {
