@@ -1,0 +1,13 @@
+PGM    = g.region
+HOME   = $(BIN_MAIN_CMD)
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+LIST   = main.o\
+	 adjust.o\
+	 zoom.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(GISLIB) $(MATHLIB)
+
+$(GISLIB): #
