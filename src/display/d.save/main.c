@@ -14,8 +14,10 @@ char Scurwin[100];
 int Wtop, Wbot, Wleft, Wright;
 char Wcell[100]="", Wcolor[25]="";
 
-int Mtype, Mzone, Mrows, Mcols;
-double Mewres, Mnsres, Mnorth, Msouth, Meast, Mwest;
+int Mtype;
+int proj;
+struct Cell_head *Mwind; 
+char  Nstr[20], Sstr[20], Estr[20], Wstr[20], EWRESstr[20], NSRESstr[20];
 
 struct list_struct *List = NULL, *List_last = NULL;
 
@@ -42,6 +44,7 @@ char **argv;
 	Sheight = R_screen_bot() - R_screen_top() + 1;
 	Swidth = R_screen_rite() - R_screen_left() + 1;
 
+        Mwind = (struct Cell_head *) G_malloc(sizeof(struct Cell_head));
 	R_pad_list (&pads, &npads);
 
 	/* process the screen pad */
@@ -86,7 +89,7 @@ char **argv;
 		opt1->answer = current_frame ;
 	}
 
-	printf ("#!/bin/sh\n#Shell Script created by d.save %s\n\n", G_date());
+	printf (":\n#Shell Script created by d.save %s\n\n", G_date());
 
 	/* now start at the end (the earliest made window) and process them */
 	for (p = npads-1; p >= 0; p--) {
@@ -127,8 +130,8 @@ char **argv;
 				printf("d.erase color=%s\n", Wcolor);
 
 			if (Mtype != -1) {
-				printf("g.region n=%lf s=%lf e=%lf w=%lf nsres=%lf ewres=%lf\n",
-				    Mnorth, Msouth, Meast, Mwest, Mnsres, Mewres);
+				printf("g.region n=%s s=%s e=%s w=%s nsres=%s ewres=%s\n",
+				    Nstr, Sstr, Estr, Wstr, NSRESstr, EWRESstr);
 			}
 
 			if (Wcell[0]!='\0')
@@ -172,8 +175,9 @@ init_globals()
 	Wcell[0] = '\0';
 	Wcolor[0] = '\0';
 
-	Mtype = Mzone = -1;
-	Mewres = Mnsres = Mnorth = Msouth = Meast = Mwest = 0.0;
+	Mtype = Mwind->zone = -1;
+	Mwind->ew_res = Mwind->ns_res = Mwind->north = Mwind->south 
+	             = Mwind->east = Mwind->west = 0.0;
 }
 
 
@@ -221,10 +225,18 @@ char *item, **list;
 			sscanf(list[0]," %d %d %d %d ", &Wtop, &Wbot, &Wleft, &Wright);
 			break;
 		case 2:  /* m_win */
-			sscanf(list[0], " %d %d %lf %lf %lf %lf %d %d ", &Mtype, &Mzone,
-			    &Meast, &Mwest, &Mnorth, &Msouth, &Mrows, &Mcols);
-			Mewres = (Meast - Mwest) / Mcols;
-			Mnsres = (Mnorth - Msouth) / Mrows;
+			sscanf(list[0], " %d %d %s %s %s %s %d %d ", 
+			    &Mtype, &(Mwind->zone),
+			    Estr, Wstr, Nstr, Sstr, 
+			    &(Mwind->rows), &(Mwind->cols));
+                        proj = G_projection();
+			G_scan_easting(Estr, &(Mwind->east), proj);
+			G_scan_easting(Wstr, &(Mwind->west), proj);
+			G_scan_northing(Nstr, &(Mwind->north), proj);
+			G_scan_northing(Sstr, &(Mwind->south), proj);
+			G_adjust_Cell_head (Mwind, 1, 1);
+			G_format_resolution (Mwind->ew_res,  EWRESstr,  proj);
+			G_format_resolution (Mwind->ns_res,  NSRESstr,  proj);
 			break;
 		case 3: /* time */
 			break;
