@@ -1,0 +1,64 @@
+# Imakefile for pbm tools.
+#
+# Copyright (C) 1989, 1991 by Jef Poskanzer.
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted, provided
+# that the above copyright notice appear in all copies and that both that
+# copyright notice and this permission notice appear in supporting
+# documentation.  This software is provided "as is" without express or
+# implied warranty.
+
+ALLCFLAGS =	$(CFLAGS)
+LIBPBM =	libpbm.a
+
+BINARIES =	brushtopbm cmuwmtopbm g3topbm icontopbm gemtopbm \
+		macptopbm mgrtopbm pbmlife pbmmake pbmmask \
+		pbmpaste pbmreduce pbmtext pbmto10x pbmtoascii \
+		pbmtobbnbg pbmtocmuwm pbmtoepson pbmtog3 \
+		pbmtogem pbmtogo pbmtoicon pbmtolj pbmtomacp \
+		pbmtomgr pbmtopi3 pbmtoplot pbmtoptx \
+		pbmtox10bm pbmtoxbm pbmtoybm pbmtozinc \
+		pbmupc pi3topbm xbmtopbm \
+		ybmtopbm
+
+MANUALS1 =	brushtopbm.1 cmuwmtopbm.1 g3topbm.1 icontopbm.1 gemtopbm.1 \
+		macptopbm.1 mgrtopbm.1 pbmlife.1 pbmmake.1 pbmmask.1 \
+		pbmpaste.1 pbmreduce.1 pbmtext.1 pbmto10x.1 pbmtoascii.1 \
+		pbmtobbnbg.1 pbmtocmuwm.1 pbmtoepson.1  pbmtog3.1 \
+		pbmtogem.1 pbmtogo.1 pbmtoicon.1 pbmtolj.1 pbmtomacp.1 \
+		pbmtomgr.1 pbmtopi3.1 pbmtoplot.1 pbmtoptx.1 \
+		pbmtox10bm.1 pbmtoxbm.1 pbmtoybm.1 pbmtozinc.1 \
+		pbmupc.1 pi3topbm.1 xbmtopbm.1 \
+		ybmtopbm.1
+MANUALS3 =	libpbm.3
+MANUALS5 =	pbm.5
+
+all:		$(BINARIES)
+
+install::	all
+	cp $(BINARIES) $(BINDIR)
+
+install.man::
+	cp $(MANUALS1) $(MANUALS3) $(MANUALS5) $(MANDIR)
+
+# Rule for plain programs.
+$(BINARIES):	pbm.h ../pbmplus.h $(LIBPBM)
+	$(CC) $(ALLCFLAGS) $(LDFLAGS) -o $@ $@.c $(LIBPBM)
+
+# And library.
+$(LIBPBM):	libpbm1.o libpbm2.o libpbm3.o libpbm4.o libpbm5.o
+	-rm $(LIBPBM)
+	$(AR) $(LIBPBM) libpbm1.o libpbm2.o libpbm3.o libpbm4.o libpbm5.o
+	-$(RANLIB) $(LIBPBM)
+
+libpbm1.o:	pbm.h ../pbmplus.h libpbm.h libpbm1.c
+	$(CC) $(ALLCFLAGS) -c libpbm1.c
+libpbm2.o:	pbm.h ../pbmplus.h libpbm.h libpbm2.c
+	$(CC) $(ALLCFLAGS) -c libpbm2.c
+libpbm3.o:	pbm.h ../pbmplus.h libpbm.h libpbm3.c
+	$(CC) $(ALLCFLAGS) -c libpbm3.c
+libpbm4.o:	pbm.h ../pbmplus.h libpbm.h libpbm4.c
+	$(CC) $(ALLCFLAGS) -c libpbm4.c
+libpbm5.o:	pbm.h ../pbmplus.h pbmfont.h libpbm5.c
+	$(CC) $(ALLCFLAGS) -c libpbm5.c
