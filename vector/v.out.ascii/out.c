@@ -13,7 +13,6 @@ int main (int argc, char *argv[])
 	struct Option *old, *new, *format_opt;
 	struct Flag *verf;
 	int  format;
-	char *mapset;
 	struct Map_info Map;
 	int    ver=5, pnt=0; 
 	struct GModule *module;
@@ -64,7 +63,7 @@ int main (int argc, char *argv[])
 	}
 
 	Vect_set_open_level (1);	/* only need level I */
-	Vect_open_old (&Map, old->answer, mapset); 
+	Vect_open_old (&Map, old->answer, ""); 
 
 		
 	if ( new->answer ) {
