@@ -401,7 +401,7 @@ int main (int argc, char *argv[])
 					window.west : temp_window.west;
 			}
 		}
-		G_adjust_Cell_head(&window,0,0);
+		G_adjust_Cell_head3(&window,0,0,0);
 	}
 				
 

@@ -5,7 +5,7 @@ adjust_window (struct Cell_head *window)
 {
     char *err;
 
-    if (err = G_adjust_Cell_head(window,0,0))
+    if (err = G_adjust_Cell_head3(window,0,0,0))
     {
 	char msg[100];
 	sprintf (msg, "Invalid region: %s", err);
