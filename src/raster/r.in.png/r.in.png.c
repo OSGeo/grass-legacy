@@ -8,8 +8,12 @@
 #include 	<stdio.h>
 #include	<string.h>
 #include 	"gis.h"
+
+#ifndef _MYINCLUDE_H
+#define _MYINCLUDE_H
 #include	"png.h"
 #include	"pngfunc.h"
+#endif /* _MYINCLUDE_H */
 
 #include	<math.h>
 
