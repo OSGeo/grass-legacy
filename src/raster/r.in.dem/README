@@ -1,3 +1,13 @@
+2/2001:
+ r.in.dem died with a segmentation fault when I tried to import a new dem.
+ Looking closer at the program and at the USGS DEM standard I found that
+ large parts of the header are actually supposed to be FORTRAN double
+ precision values.  I'm surprised that r.in.dem works for anyone.  I guess  
+ once r.fill.dir is converted to C I can turn to writing new input functions
+ for r.in.dem (reported by Roger S. Miller).
+
+
+----------------------------
 /***********************************************************************/
 /*  r.in.dem                                                           */
 /*  version 1.1                                                        */
