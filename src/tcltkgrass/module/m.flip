@@ -1,0 +1,10 @@
+interface_build {
+    m.flip 0
+    {Flips elevation data extracted from systems that retrieve data by rows from south to north.}
+    {entry input {Raster map to flip:} 0 raster}
+    {entry output {Output raster map:} 0 raster}
+    {entry rows {Number of rows in the input map (1-9999999):} 0 ""}
+    {entry cols {Number of columns in the input map (1-9999999):} 0 ""}
+    {scale bpc {Number of bytes per cell:} 1 4 1}
+    {checkbox -q {Run quietly.} "" -q}
+}
