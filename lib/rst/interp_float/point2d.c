@@ -108,7 +108,7 @@ int IL_check_at_points_2d (
        Vect_reset_line ( Pnts );
        Vect_reset_cats ( Cats2 );
 
-       Vect_append_point ( Pnts, xmm, ymm, 0.0);
+       Vect_append_point ( Pnts, xmm, ymm, zz);
        cat = count;
        Vect_cat_set ( Cats2, 1, cat);
        Vect_write_line (&Map2, GV_POINT, Pnts, Cats2);
@@ -129,9 +129,9 @@ int IL_check_at_points_2d (
        }
        count++;
 
-      (*ertot) += err * err;
-  	}
+       }
     }
+    (*ertot) += err * err;
     }
 
      /* cv stuff */
@@ -166,7 +166,7 @@ int IL_check_at_points_2d (
        Vect_reset_line ( Pnts );
        Vect_reset_cats ( Cats2 );
 
-       Vect_append_point ( Pnts, xmm, ymm, 0.0);
+       Vect_append_point ( Pnts, xmm, ymm, zz);
        cat = count;
        Vect_cat_set ( Cats2, 1, cat);
        Vect_write_line (&Map2, GV_POINT, Pnts, Cats2);
