@@ -23,7 +23,7 @@ grab .wait_ok.wait";
 int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 		  int argc, char **argv)
 {
-    struct Option *elev, *colr, *vct;
+    struct Option *elev, *colr, *vct, *pnt;
     struct Option *panel_path, *script, *state;
     struct Flag *no_args, *script_kill, *demo;
     struct GModule *module;
@@ -72,7 +72,15 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
     vct->required = NO;
     vct->multiple = YES;
     vct->gisprompt = "old,vector,Vector";
-    vct->description = "Vector overlay file(s)";
+    vct->description = "Vector lines overlay file(s)";
+
+    pnt = G_define_option();
+    pnt->key = "points";
+    pnt->type = TYPE_STRING;
+    pnt->required = NO;
+    pnt->multiple = YES;
+    pnt->gisprompt = "old,vector,Vector";
+    pnt->description = "Vector points overlay file(s)";
 
     no_args = G_define_flag();
     no_args->key = 'q';
@@ -266,6 +274,14 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 	    arglist[2] = vct->answers[i];
 	    Nnew_map_obj_cmd(data, interp, 3, arglist);
 	}
+    }
+
+    if (pnt->answers) {
+      for (i = 0; pnt->answers[i]; i++) {
+           arglist[1] = "site";
+           arglist[2] = pnt->answers[i];
+           Nnew_map_obj_cmd(data, interp, 3, arglist);
+       }
     }
 
     return(TCL_OK);
