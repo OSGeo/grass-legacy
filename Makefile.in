@@ -45,7 +45,7 @@ MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR} MAKE=${MAKE} NAME_VER=${NAME_V
 MAKE_POST_ENV=		GISBASE=${GISBASE}  MACHINENAME=${SERVERNAME}
 
 # the cutline we need to find out to shorten the ChangeLog:
-CUTLINE=		`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1 | head.${ARCH} -1`
+CUTLINE=		`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1 | head -1`
 
 # Variables for the DejaGNU testing suite:
 EXPECT=`which expect`
