@@ -1,9 +1,9 @@
 ARCH                = sun4
 
-GISBASE             = /usr/grass4.0/sun4
-UNIX_BIN            = /usr/grass4.0/sun4/local/bin
+GISBASE             = /export/data/softail/loechl/grass_up4/grass.bin/sun4
+UNIX_BIN            = /data/softail/loechl/grass_up4/grass.bin
 
-DEFAULT_DATABASE    = /usr/grass4.0/data
+DEFAULT_DATABASE    = /data/softail/loechl/grass_up4/grass.data
 DEFAULT_LOCATION    = spearfish
 
 COMPILE_FLAGS       = -O -DSCS_MODS
