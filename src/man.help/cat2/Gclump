@@ -1,0 +1,66 @@
+
+
+
+Gclump(2G)           GRASS Reference Manual            Gclump(2G)
+
+
+
+NAME
+     Gclump - Groups physically discrete areas into unique
+     categories
+     (G Language Tool)
+
+SYNOPSIS
+     Gclump input output [title]
+
+DESCRIPTION
+     Gclump finds all areas of contiguous value cells in an input
+     layer and assigns them unique category values in the output
+     layer.
+
+SEE ALSO
+     clump[1]   For a more detailed discussion of the clump function.
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
