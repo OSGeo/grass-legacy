@@ -1,0 +1,24 @@
+TELLME	V_call.c	/^#define TELLME(x)	fprintf(stderr,"V_call %d\\n",x) /
+V__dump_window	V_support.c	/^V__dump_window()$/
+V__remove_trail	V_support.c	/^V__remove_trail(ans_col, ANSWER)$/
+V_call	V_call.c	/^V_call() $/
+V_clear	V_clear.c	/^V_clear()$/
+V_const	V_const.c	/^V_const(src, var_type, row, col, length) $/
+V_error	V_error.c	/^V_error(message)$/
+V_exit	V_exit.c	/^V_exit()$/
+V_float_accuracy	V_acc.c	/^V_float_accuracy (n)$/
+V_get_new_tty	V_tty.c	/^V_get_new_tty()$/
+V_get_old_tty	V_tty.c	/^V_get_old_tty()$/
+V_init	V_init.c	/^V_init()	$/
+V_intrpt_msg	V_call.c	/^V_intrpt_msg (msg)$/
+V_intrpt_ok	V_call.c	/^V_intrpt_ok()$/
+V_line	V_line.c	/^V_line(linenumber, text)$/
+V_ques	V_ques.c	/^V_ques(src, var_type, row, col, length) $/
+V_set_new_tty	V_tty.c	/^V_set_new_tty()$/
+V_set_old_tty	V_tty.c	/^V_set_old_tty()$/
+centered	V_call.c	/^centered(msg)$/
+fmt	V_call.c	/^fmt(s,n)$/
+get_tstp	V_tty.c	/^#  define get_tstp(x) x=signal(SIGTSTP,SIG_IGN); s/
+get_tty	V_tty.c	/^#  define get_tty(x) ioctl (0, TCGETA, x)$/
+set_tstp	V_tty.c	/^#  define set_tstp(x) signal(SIGTSTP,x)$/
+set_tty	V_tty.c	/^#  define set_tty(x) ioctl (0, TCSETAF, x)$/
