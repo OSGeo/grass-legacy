@@ -1,0 +1,10 @@
+G_strncpy	head_conv.c	/^G_strncpy (T, F, n)$/
+Mmain	main.c	/^main(argc, argv)$/
+breakout_xy	rw_bdig.c	/^breakout_xy ( coors, n_coors, x, y)$/
+dig_write_line	rw_bdig.c	/^dig_write_line (fp, x, y, n_coors, type)$/
+dig_write_point	rw_bdig.c	/^dig_write_point (fp, x, y, type)$/
+greater	head_conv.c	/^greater (a, b)$/
+hd_dlg_to_dig	head_conv.c	/^hd_dlg_to_dig (dlg, dig)$/
+lesser	head_conv.c	/^lesser (a, b)$/
+read_head_bdig	rw_bdig.c	/^read_head_bdig (digit, head)$/
+write_head_bdig	rw_bdig.c	/^write_head_bdig (digit, head)$/
