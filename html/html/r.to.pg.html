@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<A NAME="r.to.pg">
+<TITLE>r.to.pg</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+<B><EM>r.to.pg </EM></B> - exports GRASS raster map to PostgreSQL database into a one column table (raster values only).<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<P>
+
+<H2>SYNOPSIS</H2>
+<B>r.to.pg</B><BR>
+<B>r.to.pg help</B><BR>
+<B>r.to.pg <EM>rastermap</EM> [<EM>celltable_name</EM>]</B>
+
+<P>
+
+<H3>DESCRIPTION</H3>
+
+The <EM>r.to.pg</EM> program exports GRASS raster map to PostgreSQL database into a one column table (raster values only). 
+A connection to a PostgreSQL database is needed. The new table will be created in the currently connected database, if the table name 
+does not exist - please check first.   
+
+<P>
+
+<H2>Parameters:</H2>
+<DL>
+<DT><B>rastermap</B> 
+<DD>Name of an existing raster map to be exported to PostgreSQL.
+
+<DT><B>celltable_name</B>
+<DD>Name of new table to create in currently connected PostgreSQL database <EM>(Default is rastermap name)</EM>
+</DL>
+
+<P>
+
+<H2>EXAMPLE</H2>
+
+A PostgreSQl table with one column will be created: 
+
+<PRE>
+
+  column_name   
+---------------
+   45.2525		
+   45.5
+   44.124	
+   46      	
+</PRE>   
+
+<EM>with:</EM>
+
+<PRE>
+column_name:	Value of rastermap cells
+
+The datatype in the created table is set to float
+</PRE>
+
+<P>
+
+<H2>KNOWN BUGS</H2>
+
+The number check of imported values sometimes does not work properly because of some shell problems with 'asterix'(*).
+
+<P>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="db.connect.html">db.connect</A></EM>
+
+<P>
+
+<H2>AUTHOR</H2>
+Markus Neteler
+
+
+<p><i>Last changed: $Date: 2002/07/27</i>
+</body>
+</html>
