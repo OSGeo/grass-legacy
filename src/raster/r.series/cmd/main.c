@@ -13,6 +13,7 @@ struct menu
 	char *text;	/* menu display - full description */
 } menu[] = {
 	{c_ave,    "average",   "average value"},
+	{c_count,  "count",     "count of non-NULL cells"},
 	{c_median, "median",    "median value"},
 	{c_mode,   "mode",      "most frequently occuring value"},
 	{c_min,    "minimum",   "lowest value"},
