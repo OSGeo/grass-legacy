@@ -7,6 +7,8 @@
  *   successful execution results in exit(0)
  ****************************************************************/
 
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
@@ -16,13 +18,16 @@ struct {
 } parms;
 
 void parse_command_line();
-
-main(argc, argv) char *argv[];
+int get_stmt( FILE *fd, dbString *stmt);
+int stmt_is_empty( dbString *stmt );
+    
+int
+main( int argc, char *argv[] )
 {
     dbString stmt;
     dbDriver *driver;
     dbHandle handle;
-    int stat;
+    int ret;
     FILE *fd;
 
     parse_command_line (argc, argv);
@@ -52,14 +57,16 @@ main(argc, argv) char *argv[];
     {
 	if(!stmt_is_empty(&stmt)) {
 	    G_debug (3, "sql: %s", db_get_string(&stmt) );
-            db_execute_immediate (driver, &stmt);
+            ret = db_execute_immediate (driver, &stmt);
+	    if ( ret != DB_OK )
+	       G_warning ( "Error while executing: \"%s\"\n", db_get_string( &stmt ) );
 	}
     }
 
     db_close_database(driver);
     db_shutdown_driver(driver);
 
-    exit(stat);
+    exit(0);
 }
 
 void
@@ -104,12 +111,13 @@ parse_command_line(argc, argv) char *argv[];
     parms.input		= input->answer;
 }
 
+int
 get_stmt(fd, stmt)
     FILE *fd;
     dbString *stmt;
 {
     char buf[4000], *str;
-    int n, len, row = 0;
+    int len, row = 0;
 
     db_init_string (stmt);
 
@@ -132,6 +140,7 @@ get_stmt(fd, stmt)
     return 0;
 }
 
+int
 stmt_is_empty(stmt)
     dbString *stmt;
 {
