@@ -1,0 +1,5 @@
+	GNUPLOT=/usr/local/bin/gnuplot
+all:
+	echo $(GNUPLOT)
+	if [ ! -f $(GISBASE)/etc/bin/contrib/g.gnuplot ]; then cp $(GNUPLOT) $(GISBASE)/etc/bin/contrib/cmd/g.gnuplot ; fi
+	rm -f g.tmp
