@@ -115,7 +115,7 @@ float **lumcl, **beam, **insol, **diff, **refl;
 double xmin, xmax, ymin, ymax, zmax = 0.;
 int d, day, tien = 0;
 double length, zmult = 1.0, c, declin, linke, alb, step, dist;
-double li_max = 0., li_min = 100., al_max = 0., al_min = 1.0, la_max = 0.,
+double li_max = 0., li_min = 100., al_max = 0., al_min = 1.0, la_max = -90.,
     la_min = 90.;
 char *tt, *lt;
 double z_orig, o_orig, slope, aspect, z1, zp;
