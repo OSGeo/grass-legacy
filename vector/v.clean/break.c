@@ -60,7 +60,6 @@ break_lines ( struct Map_info *Out, int otype, int x_flag )
 	    for ( j = 0; j <  List->n_values; j++ ){ 
 		bline = List->value[j];
                 G_debug (1, "  j = %d bline = %d", j, bline);
-		if ( i == bline ) continue; /* TODO solve also self intersection */
 	
 	        btype = Vect_read_line (Out, BPoints, BCats, bline);
 	
@@ -72,7 +71,7 @@ break_lines ( struct Map_info *Out, int otype, int x_flag )
 		    for ( k = 0; k < naxlines; k++ ){ 
 			if ( !x_flag ) {
 			    ret = Vect_write_line ( Out, atype, AXLines[k], ACats );  
-                            G_debug (3, "Line %d written", ret);
+                            G_debug (1, "Line %d written", ret);
 			} else { /* intersection points only */
 			    Vect_reset_line ( Points );
 			    if ( k > 0 ) {
@@ -87,22 +86,27 @@ break_lines ( struct Map_info *Out, int otype, int x_flag )
 		}
 		    
 		if ( nbxlines > 0 ) { 
-		    Vect_delete_line (Out, bline); 
-		    for ( k = 0; k < nbxlines; k++ ){ 
-			if ( !x_flag ) {
-			    ret = Vect_write_line ( Out, btype, BXLines[k], BCats );  
-                            G_debug (3, "Line %d written", ret);
-			} else { /* intersection points only */
-			    Vect_reset_line ( Points );
-			    if ( k > 0 ) {
-				Vect_append_point ( Points, BXLines[k]->x[0], BXLines[k]->y[0], BXLines[k]->z[0] );                            
-				ret = Vect_write_line ( Out, GV_POINT, Points, Cats );
-			    }
-			}	
+		    if ( i != bline ) { /* Self intersection, do not write twice, TODO: is it OK? */
+			Vect_delete_line (Out, bline); 
+			for ( k = 0; k < nbxlines; k++ ){ 
+			    if ( !x_flag ) {
+				ret = Vect_write_line ( Out, btype, BXLines[k], BCats );  
+				G_debug (1, "Line %d written", ret);
+			    } else { /* intersection points only */
+				Vect_reset_line ( Points );
+				if ( k > 0 ) {
+				    Vect_append_point ( Points, BXLines[k]->x[0], BXLines[k]->y[0], BXLines[k]->z[0] );                            
+				    ret = Vect_write_line ( Out, GV_POINT, Points, Cats );
+				}
+			    }	
 			Vect_destroy_line_struct (  BXLines[k] );
+			}
+		        nbreaks += nbxlines - 1;
+		    } else {
+			for ( k = 0; k < nbxlines; k++ ) 
+			    Vect_destroy_line_struct (  BXLines[k] );
 		    }
 		    G_free ( BXLines );
-		    nbreaks += nbxlines - 1;
 		}	
 		
 		fprintf (stderr, "\rIntersections: %5d", nbreaks ); 

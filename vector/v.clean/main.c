@@ -18,25 +18,23 @@
 #include <string.h> 
 #include "gis.h"
 #include "Vect.h"
-
-#define TOOL_BREAK    1 /* break at intersection */
-#define TOOL_RMDUPL   2 /* remove duplicates */
-#define TOOL_RMDANGLE 3 /* remove dangles */ 
-#define TOOL_RTDANGLE 4 /* retype 'boundary' dangles to 'line' */ 
+#include "proto.h"
 
 int break_lines ( struct Map_info *Out, int otype, int x_flag );
 int rmdupl ( struct Map_info *Out, int otype );
+int svtl ( struct Map_info *Out, int otype, int tool, double thresh, int x_flag );
 
 int 
 main (int argc, char *argv[])
 {
 	struct Map_info In, Out;
         int    i, otype, with_z;
-	char   *mapset, errmsg[200];
+	char   *mapset;
 	struct GModule *module;
-	struct Option *in_opt, *out_opt, *type_opt, *tool_opt;
+	struct Option *in_opt, *out_opt, *type_opt, *tool_opt, *thresh_opt;
 	struct Flag   *x_flag; 
-	int tools[100], ntools;
+	int    *tools, ntools, atools;
+	double *threshs;
 
 	module = G_define_module();
 	module->description = "Break lines at intersections.";
@@ -50,11 +48,20 @@ main (int argc, char *argv[])
 	tool_opt->type =  TYPE_STRING;
 	tool_opt->required = YES;
 	tool_opt->multiple = YES;
-	tool_opt->options = "break,rmdupl";
+	tool_opt->options = "break,rmdupl,svtlx";
         tool_opt->description = "Action to be done:\n"
 	                        "\t\tbreak - break lines at each intersection\n"
-			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)";
+			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)"
+			        "\t\tsvtlx - snap vertex to a line and create new vertex at that line";
 	
+	thresh_opt = G_define_option();
+	thresh_opt ->key = "thresh";
+	thresh_opt ->type =  TYPE_DOUBLE;
+	thresh_opt ->required = NO;
+	thresh_opt ->multiple = YES;
+	thresh_opt ->answer = "";
+        thresh_opt ->description = "Threshold for each tool.\n";
+
 	x_flag = G_define_flag ();
 	x_flag->key             = 'x';
 	x_flag->description     = "Write out intersection points instead of broken lines";
@@ -63,36 +70,26 @@ main (int argc, char *argv[])
         if (G_parser (argc, argv))
 	    exit(-1); 
 	
-	i = 0;
-	while (type_opt->answers[i]) {
-	    switch ( type_opt->answers[i][0] ) {
-	        case 'p':
-	            otype |= GV_POINT;
-		    break;
-	        case 'l':
-	            otype |= GV_LINE;
-		    break;
-	        case 'b':
-	            otype |= GV_BOUNDARY;
-		    break;
-	        case 'c':
-	            otype |= GV_CENTROID;
-		    break;
-	    }
-	    i++;
-	}
+	otype = Vect_option_to_types ( type_opt );
 	
-	ntools = 0; i = 0;
+	atools = 20;
+	tools = (int *) G_malloc ( atools * sizeof(int) );
+
+	/* Read tools */
+	ntools = 0; i = 0; 
 	while (tool_opt->answers[i]) {
-	    G_debug ( 1, "tool : %s", tool_opt->answers[i] );
-	    if ( ntools >= 100 ) {
-		G_warning ("Too many tools (some ignored)");
-		break;
+            if ( i + 1 >= atools ) {
+	        atools += 20;
+		G_realloc ( tools,  atools * sizeof(int) );
 	    }
+	    
+	    G_debug ( 1, "tool : %s", tool_opt->answers[i] );
 	    if ( strcmp ( tool_opt->answers[i], "break" ) == 0 )
 		tools[ntools] = TOOL_BREAK;
 	    else if ( strcmp ( tool_opt->answers[i], "rmdupl" ) == 0 )
 		tools[ntools] = TOOL_RMDUPL;
+	    else if ( strcmp ( tool_opt->answers[i], "svtlx" ) == 0 )
+		tools[ntools] = TOOL_SVTLX;
 	    else 
 		G_fatal_error ( "Tool doesn't exist" );
 
@@ -100,11 +97,45 @@ main (int argc, char *argv[])
 	}
 	
 	G_debug ( 1, "ntools = %d", ntools );
+	threshs = (double *) G_malloc ( ntools * sizeof(double) );
+	
+	/* Read thresholds */
+	for ( i = 0; i < ntools; i++ ) threshs[i] = 0.0;
+	i = 0;
+	while ( thresh_opt->answers[i] ) {
+	    threshs[i] = atof ( thresh_opt->answers[i] ) ;
+	    G_debug ( 1, "thresh : %s -> %f ", tool_opt->answers[i], threshs[i] );
+	    
+	    if (  tools[i] == TOOL_BREAK || tools[i] == TOOL_RMDUPL ) {
+		G_warning ("Threshold for tool %d may not be > 0, set to 0", i + 1);
+		threshs[i] = 0.0;
+	    }
+	    i++;
+	}
+
+        /* Print tool table */
+	fprintf (stdout, "+-------------------+--------------+\n" );
+	fprintf (stdout, "| Tool              | Threshold    |\n" );
+	fprintf (stdout, "+-------------------+--------------+\n" );
+	for ( i = 0; i < ntools; i++ ) {
+	    switch ( tools[i] ) {
+		case ( TOOL_BREAK ) :
+	            fprintf (stdout, "| Break             |" );	    
+		    break;
+		case ( TOOL_RMDUPL ) :
+	            fprintf (stdout, "| Remove duplicates |" );	    
+		    break;
+		case ( TOOL_SVTLX ) :
+	            fprintf (stdout, "| Snap vertices     |" );	    
+		    break;
+	    }
+	    fprintf (stdout, " %e |\n", threshs[i] );	    
+	}
+	fprintf (stdout, "+-------------------+--------------+\n" );
 		    
 	/* open input vector */
         if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
-	     sprintf (errmsg, "Could not find input %s\n", in_opt->answer);
-	     G_fatal_error (errmsg);
+	     G_fatal_error ("Could not find input %s\n", in_opt->answer);
 	}
 	
         Vect_set_open_level (2); 
@@ -139,7 +170,13 @@ main (int argc, char *argv[])
 		    fflush ( stderr );
                     rmdupl ( &Out, otype );
 		    break;
+		case TOOL_SVTLX:
+		    fprintf (stderr, "Tool: Snap vertex to a line and create new vertex at that line\n" );
+		    fflush ( stderr );
+                    svtl ( &Out, otype, TOOL_SVTLX, threshs[i], (int) x_flag->answer );
+		    break;
 	    }
+	    fprintf (stdout, "------------------------------------\n" );
 	}
 
 	Vect_build (&Out, stdout);
