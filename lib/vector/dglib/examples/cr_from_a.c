@@ -26,7 +26,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <fcntl.h>
 #include <time.h>
 #include <errno.h>

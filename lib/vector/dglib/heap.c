@@ -19,7 +19,7 @@
 /* best view tabstop=4
  */
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 
 #include "type.h"
 #include "heap.h"
