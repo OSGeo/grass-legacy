@@ -7,7 +7,7 @@ LIST = main.o \
 # EXTRA_CFLAGS=-DBURSAWOLF
 
 $(HOME)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)
 
 $(GISLIB): # in case LIB changes
 $(COORCNVLIB): # in case LIB changes
