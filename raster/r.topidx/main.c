@@ -14,9 +14,6 @@
  *
  */
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #define	MAIN
 #include "local_proto.h"
 #undef	MAIN
