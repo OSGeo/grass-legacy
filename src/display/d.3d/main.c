@@ -50,7 +50,10 @@ main(argc,argv) char *argv[];
 		if(! do_it)
 			break ;
 
-		check_options() ;
+		check_options();
+
+		if (0 > G_set_window(&window) )
+			G_fatal_error("Inappropriate resolution request") ;
 
 		printf("\n3-d view request:\n") ;
 		printf("File plotted:    %s in %s\n", file, file_mapset) ;
@@ -65,9 +68,22 @@ main(argc,argv) char *argv[];
 		printf("elevation exaggeration: %4.2lf\n", exag) ;
 		printf("field of view:          %4.2lf\n", field) ;
 
-		if (0 > G_set_window(&window) )
-			G_fatal_error("Inappropriate resolution request") ;
 		G_get_set_window(&window) ;
+
+                if(PROJECTION_LL == window.proj){
+		    if(360. < (window.east - window.west + 2.*window.ew_res)){
+			window.east  -= window.ew_res ;
+			window.west  += window.ew_res ;
+			window.cols -= 2 ;
+		    }	
+		    if(180. < (window.north-window.south + 2.*window.ns_res)){
+			window.north -= window.ns_res ;
+			window.south += window.ns_res ;
+			window.rows -= 2 ;
+		    }
+		    if (0 > G_set_window(&window) )
+			G_fatal_error("Inappropriate resolution request");
+		}
 
 		/* adjust window one extra row n, s, e, w */
 		window.north += window.ns_res ;
@@ -80,7 +96,7 @@ main(argc,argv) char *argv[];
 			G_fatal_error("Inappropriate resolution request") ;
 
 
-		if(erase_color)
+		if(*erase_color)
 			Derase(erase_color) ;
 
 		if (D_get_cur_wind(window_name))
