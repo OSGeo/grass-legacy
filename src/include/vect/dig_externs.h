@@ -63,7 +63,7 @@ int dig__fwrite_port_C ( char *, int , FILE *);
 
 /******************************************************************************/
 /* proto.h */
-int dig_build_area_with_line ( struct Map_info *, int , P_AREA *);
+int dig_build_area_with_line ( struct Map_info *, int , P_AREA *, int *);
 int dig_new_area (struct Map_info *, P_AREA *,int);
 int dig__del_area ( struct Map_info *, int );
 int dig_del_area (struct Map_info *, int area);
