@@ -1,4 +1,5 @@
-/***************************************************************
+/* $Id$
+ * **************************************************************
  * D_new_window(name, t, b, l, r)
  *   creates a new window with given coordinates
  *   if "name" is an empty string, the routine returns a unique
@@ -10,7 +11,7 @@
  * D_set_cur_wind(name)
  *   saves "name" in cur_w field in "no-name" pad
  *   outlines previous current window in GRAY
- *   outlines "name" in WHITE
+ *   outlines "name" in DEFAULT_FG_COLOR
  *
  * D_get_cur_wind(name)
  *   gets the current name stored in cur_w field in "no_name" pad
@@ -128,7 +129,7 @@ int D_set_cur_wind( char *name )
 			return(stat) ;
 		
 	/* Outline new window in highlight color */
-		D_show_window(WHITE) ;
+		D_show_window(DEFAULT_FG_COLOR) ;
 	
 	/* Tell driver of current window */
 		D_get_screen_window(&t, &b, &l, &r) ;
@@ -255,14 +256,14 @@ int D_reset_screen_window(int t,int b,int l,int r)
 	int stat;
 	char buff[256];
 
-	D_show_window(BLACK) ;
+	D_show_window(DEFAULT_BG_COLOR) ;
 
 	sprintf (buff, "%d %d %d %d", t, b, l, r) ;
 	R_pad_delete_item("d_win") ;
 	if(stat = R_pad_set_item ("d_win", buff))
 		return(stat) ;
 
-	D_show_window(WHITE) ;
+	D_show_window(DEFAULT_FG_COLOR) ;
 
 	return(0) ;
 }
