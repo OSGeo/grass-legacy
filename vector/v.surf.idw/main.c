@@ -377,27 +377,28 @@ void newpoint ( double z,double east,double north)
     row   = (int)((window.north - north) / window.ns_res);
     column = (int)((east - window.west) / window.ew_res);
  
-    if (row<0 || row>=window.rows || column<0 || column>=window.cols)
-        ;
-    else /* For now ignore sites outside current region */
+    if(!noindex->answer)
     {
-  if(!noindex->answer)
-  {
-        points[row][column] = (struct Point *) G_realloc (points[row][column],
-                  (1 + npoints_currcell[row][column]) * sizeof (struct Point));
-        points[row][column][npoints_currcell[row][column]].north = north;
-        points[row][column][npoints_currcell[row][column]].east  = east;
-        points[row][column][npoints_currcell[row][column]].z     = z;
-        npoints_currcell[row][column]++;
-  }
-  else
-  {
+        if (row<0 || row>=window.rows || column<0 || column>=window.cols)
+            ;
+        else /* Ignore sites outside current region as can't be indexed */
+        {
+            points[row][column] = (struct Point *) G_realloc (points[row][column],
+                      (1 + npoints_currcell[row][column]) * sizeof (struct Point));
+            points[row][column][npoints_currcell[row][column]].north = north;
+            points[row][column][npoints_currcell[row][column]].east  = east;
+            points[row][column][npoints_currcell[row][column]].z     = z;
+            npoints_currcell[row][column]++;
+            npoints++;
+	}
+    }
+    else
+    {
         noidxpoints = (struct Point *) G_realloc(noidxpoints, 
                               (1 + npoints) * sizeof (struct Point));
         noidxpoints[npoints].north = north;
         noidxpoints[npoints].east  = east;
         noidxpoints[npoints].z     = z;
-  }
         npoints++;
     }
 }
