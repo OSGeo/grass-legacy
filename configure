@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.21 2000-10-04 18:34:16 cho Exp $
+# $Id: configure,v 1.22 2000-10-05 08:22:09 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -41,7 +41,7 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-USE_TERMIO       define the compiler macro USE_TERMIO"
 ac_help="$ac_help
-  --with-tktcl=DIR        Change default top-level Tk/Tcl directory"
+  --with-tcltk=DIR        Change default top-level Tcl/Tk directory"
 ac_help="$ac_help
   --with-tkdir=DIR        Change default top-level Tk directory"
 ac_help="$ac_help
