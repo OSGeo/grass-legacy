@@ -1,0 +1,45 @@
+f.input
+
+This tool reads the results of the HEC-2 Water Surface Profile model and generates a
+vector map of water surface elevations at hydraulic sections.  The user supplies to
+f.input a vector map of the hydraulic cross sections used in the HEC-2 model along with
+the HEC-2 model results.
+
+The results of f.input, a vector map, is generally uninteresting to the user and is
+intended to be used only as input to the f.wsurf program.  The functionality of f.input
+and f.wsurf could have been combined into a single tool but was separated out because of
+the intense CPU requirements of f.wsurf.  This functional separation allows the user to
+process single flood events through f.wsurf.
+
+In the input vector map, cross sections must be labeled with the same section numbers as
+were used in the HEC-2 model.  These section numbers must be unique within the integer
+portion of the id.
+
+It is not necessary for all cross sections from the HEC-2 model to appear in the GRASS
+map or vice versa.  Vector cross sections are not used in the HEC-2 model will be
+assigned to a water surface elevation to zero by f.input.  Modeled cross sections which
+are not in the vector map will be ignored by f.input.
+
+The user specify to f.input the flood events represented in the HEC-2 output file.  The
+order in which the user specifies the flood events must correspond to the order in which
+the events were modeled in HEC-2.  Events are specified in terms of their recurrence
+interval and may be specified interactively or through the use of a control file. 
+Enumeration of recurrence intervals is important to subsequent economic calculations
+performed in f.econ.
+
+Split flow conditions which have been modeled as two separate HEC-2 model runs yielding
+two HEC-2 output files is supported by f.input.  However, the vector sections for both
+the primary and split flow runs should appear in a single GRASS map.
+
+Only one split flow file is allowed, and f.input assumes that the flood events modeled
+for the split flow are the same as those modeled in the primary HEC-2 run.  
+
+Any cross section which is modeled in both the primary and split flow HEC-2 runs may have
+two different water surface elevations calculated by HEC-2.  When generating the vector
+map of water surface elevations, f.input will overwrite the primary water surface
+elevation with the elevation in the split flow file.
+
+GRASS maps can only contain integer values.  In order to maintain one-tenth foot
+precision in the floodplain analysis data, water surface elevations calculated by HEC-2
+are multiplied by 10 before being assigned to the GRASS vector maps.  This multiplication
+factor is accommodated by other f-tools.
