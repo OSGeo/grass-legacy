@@ -6,7 +6,7 @@ names here will become that user's "current location", "current mapset"
 and "current database" until the user exits the current GRASS session.
 
 **************************************************************************
-                              GRASS 4.0
+                              GRASS 4.2
 
 LOCATION: This is the name of an available geographic location.
           For example, "spearfish" is the sample data base location for
