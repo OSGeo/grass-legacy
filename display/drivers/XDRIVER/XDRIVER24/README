@@ -1,0 +1,5 @@
+To get information about your X11 color depth
+use:
+
+ xdpyinfo
+
