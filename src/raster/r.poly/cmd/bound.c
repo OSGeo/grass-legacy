@@ -13,7 +13,7 @@
 *
 * Fixed 3/2001 by Andrea Aime <aaime@comune.modena.it>
 *   fixed area label problem with r.poly (it was creating more        
-*   label than required it there were islands)
+*   labels than required if there were islands)
 *
 *************************
 * The algorithm allocates COOR structures as necessary to mark endpoints of
