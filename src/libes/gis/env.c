@@ -51,6 +51,7 @@
  ***************************************************************/
 
 
+#include <signal.h>
 #include "gis.h"
 #define ENV struct env
 ENV
@@ -195,7 +196,15 @@ write_env ()
     FILE *fd;
     int n;
     char dummy[2];
+    void (*sigint)(), (*sigquit)() ;
 
+
+/*
+ * THIS CODE NEEDS TO BE PROTECTED FROM INTERRUPTS
+ * If interrupted, it can wipe out the GISRC file
+ */
+    sigint  = signal (SIGINT,  SIG_IGN);
+    sigquit = signal (SIGQUIT, SIG_IGN);
 
     if(fd = open_env ("w"))
     {
@@ -205,6 +214,9 @@ write_env ()
 		fprintf(fd,"%s: %s\n", env[n].name, env[n].value);
 	fclose (fd);
     }
+
+    signal (SIGINT,  sigint);
+    signal (SIGQUIT, sigquit);
 }
 
 static FILE *
