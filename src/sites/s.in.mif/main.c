@@ -86,9 +86,17 @@ int main(int argc, char *argv[] ) {
 
   struct Flag *listflag, *rejflag;
 
+  struct GModule *module;
+
   /* Are we running in Grass environment ? */
 
   G_gisinit (argv[0]);
+
+  /* add module description, al 11/2000 */
+
+  module = G_define_module();
+
+  module->description = "Import MapInfo point data files into GRASS sites list file."; 
 
   /* define the different options */
 
