@@ -37,6 +37,7 @@ int rectify (char *name, char *mapset, char *result, int order)
 /* open the file to be rectified
  * set window to cellhd first to be able to read file exactly
  */
+	G_suppress_warnings(1);
     G_set_window (&cellhd);
     infd = G_open_cell_old (name, mapset);
     if (infd < 0)
@@ -55,7 +56,6 @@ int rectify (char *name, char *mapset, char *result, int order)
     col = 0;
 
     temp_fd = 0;
-    
     while (ncols > 0)
     {
 	if ((win.cols = ncols) > NCOLS)
@@ -81,11 +81,9 @@ int rectify (char *name, char *mapset, char *result, int order)
 	ncols -= win.cols;
 	col += win.cols;
 	win.west += (win.ew_res * win.cols);
-	G_percent(col,col+ncols,1);
     }
-
     select_target_env();
-
+    G_suppress_warnings(0);
     if (cellhd.proj == 0) { /* x,y imagery */
 			cellhd.proj = target_window.proj;
 			cellhd.zone = target_window.zone;
@@ -103,11 +101,13 @@ int rectify (char *name, char *mapset, char *result, int order)
 			G_warning(buf);
 	}  
 
+    G_suppress_warnings(1);
     target_window.compressed=cellhd.compressed;
     G_close_cell (infd); /* (pmx) 17 april 2000 */
     write_map(result);
     select_current_env();
 
+    G_suppress_warnings(0);
     G_free (rast);
 
     return 1;
