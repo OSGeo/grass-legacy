@@ -1,13 +1,8 @@
 EXTRA_CFLAGS	= $(VECT_INCLUDE) $(VECTLIBFLAGS)
 
-# include VECTLIBFLAGS for the PORTABLE_3 flag
-
-
-
 PROG =   $(BIN_ALPHA_CMD)/v.llabel
 
 all:  $(PROG)
-
 
 #   interactive version
 
@@ -15,7 +10,7 @@ all:  $(PROG)
 #   command line programs
 
 $(PROG): main.o  $(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB) $(DIG_ATTLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB) $(DIG_ATTLIB) $(XDRLIB)
 
 saber_src:
 	#load $(EXTRA_CFLAGS) $(CFLAGS) $(SRC)/mapdev//Vlib/*.c $(SRC)/mapdev/diglib/*.c main.c  $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(LINKMLIB) 
