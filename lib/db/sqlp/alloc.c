@@ -98,6 +98,8 @@ int sqpFreeStmt(SQLPSTMT *st)
     free ( st->Val );
     st->aVal = 0;
     st->nVal = 0;
+
+    free (st->orderCol);
     
     free ( st );
     return (1);

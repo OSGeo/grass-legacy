@@ -106,8 +106,11 @@ int sqpPrintStmt(SQLPSTMT *st)
 	        break;			
           }
       }
+
+    if ( sqlpStmt->command == SQLP_SELECT )
+        fprintf( stderr, "ORDER BY: %s\n", sqlpStmt->orderCol );
     
-   fprintf( stderr, "***************************************\n" );
+    fprintf( stderr, "***************************************\n" );
 
     return (1);
 }
