@@ -2,7 +2,7 @@
 
 #include <sys/types.h>
 
-#if defined(__CYGWIN__) || defined(__MAC_OS)
+#if defined(__CYGWIN__) || defined(__APPLE__)
 #define lrand48() rand()/32767.0
 #define srand48(sv) (srand((unsigned)(sv)))
 #else

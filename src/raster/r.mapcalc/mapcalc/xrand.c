@@ -9,7 +9,7 @@
  * g_randseed(): it does nothing at present
  */
 
-#if defined(__CYGWIN__) || defined(__MAC_OS_X__)
+#if defined(__CYGWIN__) || defined(__APPLE__)
 #define drand48() rand()/32767.0
 #else
 extern double drand48();
