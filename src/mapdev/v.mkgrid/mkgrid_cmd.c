@@ -14,7 +14,6 @@
 /**  data directories   **/
 #define		B_DIG		"dig"
 
-double atof ();
 static char *PROG;
 
 int 
@@ -27,6 +26,7 @@ main (int argc, char *argv[])
   /* store filename and path  */
   char *dig_file;
   char errmsg[200];
+  char buf[1024];
 
   /* array to store central points */
   double *grid_point_x, *grid_point_y;
@@ -102,7 +102,7 @@ main (int argc, char *argv[])
   type->required = NO;
   type->description = "provide attributes of type: const,rows,cols";
   type->options = "const,rows,cols";
-  type->answer = "";
+  type->answer = "const";
 
   attval = G_define_option ();
   attval->key = "value";
@@ -269,6 +269,10 @@ main (int argc, char *argv[])
   G_free_cats (&cats); 
   
   if(fatt) fclose(fatt);
+
+  /* create topology */
+  sprintf(buf,"%s/bin/v.support -r map=%s", G_gisbase(), dig_file);
+  G_system(buf);
 
   exit(0);
 }				/* main()  */
