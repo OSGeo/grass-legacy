@@ -28,6 +28,7 @@ DSTDIR              = @DSTDIR@
 
 CC                  = @CC@
 FC                  = @F77@
+CXX                 = @CXX@
 LEX                 = @LEX@
 YACC                = @YACC@
 PERL                = @PERL@
@@ -54,7 +55,8 @@ LIB_VER             = @LIB_VER@
 DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =
 
-COMPILE_FLAGS       = @CFLAGS@ @INCLUDE_DIRS@
+COMPILE_FLAGS       = @CPPFLAGS@ @CFLAGS@ @INCLUDE_DIRS@
+COMPILE_FLAGS_CXX   = @CPPFLAGS@ @CXXFLAGS@ @INCLUDE_DIRS@
 LINK_FLAGS          = @LDFLAGS@
 
 DLLIB               = @DLLIB@

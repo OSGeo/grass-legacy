@@ -293,7 +293,7 @@ sed -e 's/=/ /' -e 's/\\//' Gmakefile |\
 	elif test -f $file.cc
 	then
 	    echo '$(OBJARCH)/'${file}.o: ${file}.cc
-	    echo '	$(CXX) $(CFLAGS) -c' ${file}.cc -o '$@'
+	    echo '	$(CXX) $(CXXFLAGS) -c' ${file}.cc -o '$@'
 	else
 	    echo '$(OBJARCH)/'${file}.o: ${file}.c
 	    echo '	$(CC) $(CFLAGS) -c' ${file}.c -o '$@'
