@@ -1,0 +1,516 @@
+.TH dbsites 1
+.SH NAME
+dbsites - Menu version of RIM data base management/query interface for
+site data in GRASS 3.
+.br
+.SH SYNOPSIS
+\fBdbsites\fR
+.I [data_base]
+.SH DESCRIPTION
+\fBdbsites\fR
+allows you to create, manage and query information about site
+locations (sites) across the landscape in a batch mode or
+interactively, with input in a command line style.  Operations are done
+on a data base through a series of menus explained below. The program
+.B Gdbsites
+can use the same data bases and
+performs many of the same functions in a command-line or batch 
+format.  These programs are actually a marriage of the GRASS environment
+and the programmer's interface library of the relational data base
+management program RIM distributed publically by the University of
+Washington Academic Computing Services.
+.LP
+The site data bases are stored in a subdirectory named 'rim/sites' in the
+user's current mapset.  Data bases in other mapsets, selectable through
+the GRASS
+\fBmapsets\fR
+command, can be accessed for 'read-only' retrieval of
+records.  Each mapset may have many data bases.  Each data base within
+a mapset must have a different name; user supplied names are limited to
+seven (7) characters in order to maintain compatibility with the
+standard version of RIM.  As with other GRASS commands, mapsets are
+searched in the mapset SEARCH_PATH order when a data base needs to be
+opened.
+.LP
+Each site data base is composed of multi-field records (rows or tuples,
+in DBMS jargon).  Each field, its position on the site form (page
+layout), and any fixed text part of the site form is defined via text
+input when a data base is originally defined.  It is possible to add
+new fields or change the length of existing fields after data has been
+loaded, however this is not straightforward; deleting of fields is also
+possible, but requires even more experience and knowledge.  The user
+needs to carefully design the data base fields and form, and check the
+operation with test data before loading data for a large number of
+sites.
+.SH THE MAIN MENU
+Below is the main menu.  If a data base name is supplied on the command line,
+e.g., 
+\fBdbsites\fR
+.I water,
+then that data base is opened and option 0 is the default; otherwise,
+option 1 is the default.  Note the status line at the top of the menu,
+and the fact that 8 records have been selected by the latest find or
+query operation (between items 2 and 3).  Note, also, that CTRL-C can
+be used to exit from this menu (and most other menus in the program)
+back to the GRASS prompt.  The specifics of each menu choice are
+described below.
+.NF
+.ne 28
+
+           GRASS-RIM  DBSITES  MAIN  MENU                                 
+        Data base <water> in mapset <rono> open.  25 records.              
+                                                                               
+       1  Open a data base                                                
+       2  List available data bases                                       
+  --------  Retrieve/Output Site Records (8 currently)  --                
+       3  Find sites in proximity to a Target point                       
+       4  Query to select site records (SQL)                              
+       5  Show selected site records on Terminal                          
+       6  Display maps/selected sites on graphics terminal                     
+       7  Output selected site records to Printer or File                 
+       8  Create a site_list from selected records                        
+  ------------  Add/Edit Site Records  ----------                         
+       9  View a single site record                                       
+      10  Add a site record                                               
+      11  Change a site record                                            
+      12  Delete a single record or all selected records                  
+  ------------  Data Base Management  -----------                         
+      13  Make a New Data Base & Other Functions                          
+  -------------  Exit - Quit - Stop  ------------                         
+       0  Done -- Exit from dbsites                                       
+                                        
+    AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE              
+            (OR <Ctrl-C> TO EXIT THIS PROGRAM)                      
+
+.FI
+
+1.  Open a data base.  If a data base is already open, it is closed
+before the requested one is opened.  Only data bases in the user's
+current mapset may be modified; others are opened in read-only mode; this
+will be indicated on line 2.
+
+2.  List available data bases.  For each mapset in the current GRASS
+mapset search path, the names of the existing data bases are listed.
+
+3.  "Find" sites in the data base relative to a specified target location.
+This is used to select sites based on proximity to the target and,
+optionally, sites within the current window and, optionally, sites
+falling in active cells within the current GRASS mask.  Two modes of
+targeting are provided:  the N sites closest to the target, and all
+sites within (or outside) a circle of specified radius from the target.
+The FIND/QUERY TARGET MENU discussed below accepts window/mask/target
+specifications from the user.  The selected sites are then displayed one
+at a time until CTRL-C is entered; then other operations, choices 5-8,
+can be done with these sites. The line on the menu between 2 and 3 shows
+the number of sites currently selected by choices 3 or 4.
+
+4.  "Query" sites in the data base using an SQL-like "where clause,"
+including specifications for window/mask/target (circle only) as in
+3, above; see FIND/QUERY TARGET MENU section below.  The where clause
+can test for ranges or matches for numeric data base fields, or matches
+on full strings or substrings for text fields.  The selected sites are
+then displayed one at a time until CTRL-C is entered; then other
+operations, choices 5-8, can be done with these sites.  This clause is
+entered on a menu described below; see QUERY COMMAND MENU
+section, below.
+
+The where clause may use parentheses ( ) to control the order of
+comparisons.  Field names are not case sensitive within where clauses.
+The following comparison operators are valid for all types of fields:
+.NF
+.ne 5
+
+          eq   or   =            ne   or   <>
+          ge   or  >=            le   or   <=
+          gt   or   >            lt   or    <
+
+.FI
+
+String comparisons are case sensitive and are done character by
+character.  Substrings comparisons may be done with the "like" operator
+as in:
+.NF
+
+          where name like "*Jones*"
+
+.FI
+Note that the string being tested against the name field for each
+record is in quotes (single or double) and that wild card comparisons
+can be done in the standard way with '*' and '?' characters.
+
+Logical comparisons may also be combined with those operators above.
+The permitted logical operators are:
+.NF
+
+.ce
+and       or       not
+
+.FI
+.ne 8
+The following complex example should be examined.  The line breaks can
+occur between any tokens (words, values, operators), except within
+quoted strings.
+.NF
+.ne 5
+
+    where (name like "*Jones*" or name = "Smith")
+    and ( ( site < 300 not (site = 251 or site eq 15) )
+    or east < 601000 )
+
+.FI
+
+5.  This choice will display the site records resulting from the last
+find/query one at a time on the terminal.  Use ESC to advance to the
+next record and CTRL-C to end the display.
+
+6.  If a graphics monitor is active, the locations of the selected sites
+will be displayed.  The user may choose to erase the screen;
+display cell, vector, and/or site maps; display the selected sites
+from the data base; these maps are requested through the following
+interactive screen.  Just enter ESC to skip this step.  If no data base
+sites are currently selected, that section of the menu will not appear;
+but the menu can still be used to display the other types of maps.
+
+.NF
+.ne 22
+                                                                               
+               SELECTION MENU FOR ITEMS TO DISPLAY
+
+Enter cell and/or vector map names, if desired
+
+ ______________  Cell file to display
+
+ ______________  Vector file to display in color: _________
+
+ ______________  Site list to display
+                 Dpoints with: size=3_ type=box____ color=white____
+
+               _ Display currently selected sites (enter x)
+                 Dpoints with: size=6_ type=x______ color=red______
+
+               _ Erase graphics screen (enter x)
+                 Derase  black____
+
+                                                                               
+              AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE              
+                            (OR <Ctrl-C> TO CANCEL)                            
+
+.FI
+
+7.  This selection results in a screen prompting for the name of the
+file to output the selected site records to, and for optional formatting
+selection.  If the file name is lp, the site records are sent to the
+printer.  The optional formatting choices are for export of data in list
+format (see the .print description in the manual page for
+\fBGdbsites[2]\fR
+for information and examples).
+
+8.  Using this choice you can write (or append) the currently selected
+sites to a GRASS site_list file in your current mapset.  A short menu
+prompts for the name of the site_list file, and also for the name of a
+field to be used for the "comment" in the site_list (the site number is
+the default field).  The current date and time, and the names of the
+mapset and data base in use are entered as an information line in the
+site_list file.  Note that various kinds of cell files can be produced
+from a 
+\fBdbsites\fR
+data base by writing site_lists with different fields as "comments" then
+converting the site_lists to cell files.
+
+9.  Choices 9-12 operate on only a single site and do not use or modify
+the internal list of sites selected by find/query (choices 3 or 4).
+Choice 9 is the way to view a single site record, selected by site
+number.
+
+10.  Use this selection to add a new site record to the data base.  (A new
+site is one whose site number does not currently exist in the open data
+base.)  After making this selection, the data base layout will be
+displayed and you should enter the available information appropriate to
+each field; the only required entry is the site number field.  If values
+for numeric fields are not entered, zero values will be stored.  Unused
+portions of text fields are stored as strings of spaces.
+
+11.  After making this selection and specifying the site number to
+change field information for, the data is entered as for choice 10,
+except that the site number cannot be changed.
+
+12.  To delete a single record, enter its site number when requested.
+All site records chosen by the last find/query operation may be deleted
+by entering "list" in place of the site number.  BE CAREFUL with this,
+.I deleted records are really gone.
+
+13.  This choice starts a new menu with less commonly used functions.
+See MANAGEMENT MENU section below.
+
+.SH FIND/QUERY TARGET MENU
+
+This is the screen to set up the window/mask/target information for the
+find choice (3) and the query choice (4), except that item B is omitted
+for choice (4).  If a graphics monitor is not active, the "mouse" item
+is omitted from the screen; and, if a mask is not set, that line is
+omitted.  The choices entered on this example screen will result in the
+sites (up to 15) nearest site 12 which fall in the current mask being
+selected and stored on the internal site list by find or query.
+They are stored in order of proximity to the target.  If a site is used
+as the target, it is always the first in the retrieved list.  If a mouse
+is chosen to select the target point, a menu to display reference maps
+is shown, exactly as in choice (6).
+.NF
+.ne 27
+
+     QUERY/FIND:  WINDOW/MASK/TARGET SELECTION MENU                      
+  Data base <A> in mapset <rim_test> open.  25 records.              
+
+    Mark requests with 'x' and enter required values.                       
+
+               Respect current window _                                     
+
+               Respect current MASK   x                                     
+              (forces current window)                                       
+
+ A.  Find all sites within (or outside) a circular target  _                    
+        and give the radius (negative for outside)  0.00________              
+                      OR                                                     
+ B.  Find a number of sites nearest a point x                                   
+        and the number of sites requested 15_____                             
+
+ After selecting A or B, complete one(!) of these lines:                        
+       1. To select target point with mouse  _                                
+       2. Enter site number for target point 12_____                          
+       3. Target coordinates east 0.00______ north 0.00_______                
+ 
+          Reset to default choices for this menu _                            
+      AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE              
+                   (OR <Ctrl-C> TO CANCEL)                            
+
+.FI
+.SH QUERY COMMAND MENU
+The following screen completes the information for a query (choice 4).
+It may be left blank if no "where clause" is required.  After a
+successful query, the selected records are displayed one at a time by
+hiting escape; CTRL-C will quit the display and return to the main menu
+where several choices of operation on the retrieved sites are offered.
+.NF
+.ne 19
+
+        QUERY COMMAND CONSTRUCTION SCREEN
+  Data base <A> in mapset <rim_test> open.  25 records.
+ The SQL select query will use the current window
+ and a target clause of 'distance from 596463.15 4919041.88'
+
+where date = 10/16/89_____________________________________
+__________________________________________________________
+__________________________________________________________
+__________________________________________________________
+__________________________________________________________
+__________________________________________________________
+__________________________________________________________
+__________________________________________________________
+
+  AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE         
+              (OR <Ctrl-C> TO CANCEL)
+
+.FI
+
+.ne 23
+.SH MANAGEMENT MENU
+Choice 13 from the main menu presents this menu.  Each item is
+discussed below.
+.NF
+
+  GRASS-RIM  DBSITES  DATA  BASE  MANAGEMENT  MENU                         
+Data base <A> in mapset <rim_test> open.  25 records.              
+
+  1   Make a New Data Base in Current Mapset                               
+  2   List Available Data Bases                                            
+  3   Remove (PERMANENTLY) Data Base from Current Mapset                   
+  4   Recover a Data Base from a RIM ASCII File                            
+  5   Show Screen Layout of Current Data Base                              
+  6   Backup (UNLOAD) Data Base to RIM ASCII Format File                   
+  7   Pack the Current Data Base                                           
+  8   Read a site_list into the Current Data Base                          
+
+  0   Return to Main Menu                                                  
+                                                                               
+ 0_ Your selection                                                             
+
+ AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE              
+             (OR <Ctrl-C> TO CANCEL)                            
+
+.FI
+
+1.  Use this choice to create a new data base in the current GRASS
+mapset.  The
+\fBdbsites\fR
+and
+\fBGdbsites\fR
+programs can each make and use the other's data bases.  See section
+below on MAKE A NEW DATA BASE.
+
+2.  List available data bases.  Like 2 on main menu.
+
+3.  Delete an entire data base from the current mapset.  The name of the
+data base and additional confirmation of the action are prompted for.
+
+4.  Choice 6 allows backup of the definition and data parts of a data
+base to a transportable text file.  To rebuild (or build
+for the first time) a
+\fBdbsites\fR
+or
+\fBGdbsites\fR
+data base from one of these text files do the following steps:
+.NF
+
+        # see if the rim directory exists.
+     ls $LOCATION/rim
+        # if the directory was not found, make it.
+     mkdir $LOCATION/rim
+        # change directory to it.
+     cd $LOCATION/rim
+        # have rim build the binary data base files.
+     rim
+     RIM> input '/path/to/your/textfile'
+     RIM> exit
+
+.FI
+The data base is thus created in the current mapset.  Several 
+\fBdbsites\fR
+or
+\fBGdbsites\fR
+commands
+should be run to verify the integrity of the newly created data base.
+
+5.  This merely shows the screen layout of the currently open data base.
+It is a useful way to quickly see the layout and review the field names
+and types.
+
+6.  When backing up to a text file, the RIM UNLOAD command is run with
+the output directed to a file of the user's choice.  See 4 above.  It is
+wise to do this operation after extensive changes or additions of data
+records.  The resulting text file can be written to tape for
+preservation, or shared with other GRASS systems, if desired.
+
+7.  After changing and/or deleting a large number of site records, some
+"wasted" disk space will be present in the binary data base files.  This
+procedure will perform an unload and a reload automatically to recover
+this unusable disk space.  If there is any problem reopening the data
+base after packing, the user is notified and can recover in various ways
+depending on the backups which have been done.
+
+8.  Data may be loaded into a data base from an existing GRASS
+site_list.  This procedure will prompt for the site_list name and then
+add the sites to the currently open data base.  If all sites in the list
+have a comment field of the form "#value ....", the value is used as the data
+base site number, otherwise the sites are numbered sequentially
+beginning with 1.  Only the site number and location coordinates are
+loaded for each site record by this procedure; other fields may be later
+added with the "change" function.
+
+.SH MAKE A NEW DATA BASE
+After entering the name of the new data base you wish to create (7
+characters maximum), you then decide how to input the information
+required.  This input may be from a text file, or may be entered directly
+using the editor of your choice; the former is recommended for new
+users.
+
+You specify the following items which define the screen (record)
+layout for displaying and printing the site records, as well as the
+information fields (see example layout below).
+
+.in +5
+1)  The fixed text part of the screen layout.
+.br
+2)  The positions, types, and lengths of data fields.
+.in -5
+
+Three fields must always exist in a data base; each
+of these field types may only occur once in a data base layout:
+
+.in +5
+1) Type 's'  Site identification number field (an integer).
+.br
+2) Type 'x'  Easting coordinate of the site (a double float).
+.br
+3) Type 'y'  Northing coordinate of the site (a double float).
+.in -5
+
+The other field types, which may occur in any combination and
+order, are:
+
+.NF
+.in +5
+4) type 'i'  An integer field.
+
+5) type 'f'  A double precision float field.
+             (always 2 decimal places used for output)
+
+6) type 't'  A text field.
+.in -5
+.FI
+
+Each of the fields can be positioned anywhere within the screen
+layout, which has a limit of 19 lines by 80 columns.  A maximum of 70
+fields may be defined within this space.  A field is specified in the
+screen layout by a tilde (~), a field type character, a field name and
+enough trailing tildes to fill out the desired field length.
+
+Each line following the .make command is taken to define a line of
+the screen layout until a .end is reached.  If a mistake is made on any
+of the input lines, the .make will fail.  The .make information may be
+prepared in advance as a text file (this facilitates fixing mistakes)
+and the .input command can be used to read in this file.  An example
+text file for a data base screen layout follows, with some explanatory
+notes and restrictions.
+.NF
+.ne 14
+
+              Archaeological Sites Database
+              =============================
+
+ Site #: ~sSite~~~      Entered By: ~tEnter_by~~~~~~~~
+ Description:                     C-14 Date:  ~iAge~~~
+     ~tDescript.1~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     ~tDescript.2~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     ~tDescript.3~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Type:  ~tType~~~~~~~~~~~~~ (Should be Arch. or Hist.)
+ Date:  ~tEnter_Date~~~~~~~
+ North: ~yNorth~~~~~    East: ~xEast~~~~~~
+
+.FI
+
+Notes:
+
+1)  Any text not preceded by a tilde (~) character is taken to be
+part of the constant or fixed text portion of the form.
+
+2)  A field definition begins with a tilde (~) character
+immediately followed by a single character which indicates the data
+type of the field (s,x,y,i,f or t).  Immediately following the data
+type character is the field name of 1 to 16 characters.  Field names
+can be composed of any characters from the following set: [A-Z,a-z,_,];
+the RIM program and library do not distinguish upper and lower case in
+field names, so you should avoid making names which differ only in
+case.  The rest of the field length is padded with tilde (~)
+characters.
+
+3)  The minimum field width is three characters; e.g., "~tA".  Be
+sure field widths for all fields are wide enough for the values and
+strings you expect to store there; e.g., UTM northings require at least
+11 spaces.
+
+4)  For text fields it is possible to continue a field across more
+than one line.  This is done by appending a .1 to the field name
+forming first portion of this "split field", a .2 for the second
+portion, etc.  This text field splitting affects how information is
+entered and output; split fields are concatenated for storage in the
+data base.
+
+.SH SEE ALSO
+\fBGdbsites[2]\fR
+
+RIM User's Manual, by Jim Fox, Academic Computing Services, University
+of Washington.  See especially Appendix B on redistribution of RIM.
+.SH AUTHORS
+James Hinthorne and David Satnik, GIS Laboratory, Central Washington
+University.
+
