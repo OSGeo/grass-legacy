@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>g.mlist</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width="100%" align=center size=6 noshade>
+<h2>NAME</h2>
+<em><b>g.mlist</b></em>  - Apply regular expressions and wildcards to g.list
+<h2>SYNOPSIS</h2>
+<b>g.mlist</b><br>
+<b>g.mlist help</b><br>
+<b>g.mlist</b> [-<b>r</b>]  [<b>type</b>=<em>string</em>]   [<b>mapset</b>=<em>string</em>]   [<b>sep</b>=<em>string</em>]   [<b>pattern</b>=<em>string</em>]  
+
+<h3>Flags:</h3>
+<DL>
+<DT><b>-r</b>
+<DD>use regular expression instead of wildcard</DD>
+
+</DL>
+
+<h3>Parameters:</h3>
+<DL>
+<DT><b>type</b>=<em>string</em>
+<DD>data type (rast, vect, or sites)</DD>
+<DD>Default: <em>rast</em></DD>
+
+<DT><b>mapset</b>=<em>string</em>
+<DD>mapset to list (default: current mapset search path)</DD>
+
+<DT><b>sep</b>=<em>string</em>
+<DD>output separator (default: newline)</DD>
+
+<DT><b>pattern</b>=<em>string</em>
+<DD>map name search pattern, must be 'quoted'. (default: all)</DD>
+<DD>Default: <em>*</em></DD>
+
+</DL>
+<H2>DESCRIPTION</H2>
+
+<EM>g.mlist</EM> is an extended version of 
+<EM><a href="g.list.html">g.list</a></EM> which
+provides regular-expression and wildcard support.
+<EM>g.mlist</EM> will only print map names and an optional separator,
+without extraneous output. In addition, map search is also available.
+
+<H2>EXAMPLES</H2>
+
+<H3>Wildcards:</H3>
+
+List all vector maps starting with letter "r":
+<BR>
+<TT>g.mlist type=vect "r*"</TT>
+
+<H3>Regular expressions:</H3>
+<BR>
+Print out all soils map with "soils" in their name:<BR>
+<TT>g.mlist -r type=rast '^soils'</TT>
+<P>
+
+Print out "tmp" if "tmp" raster map exists:<BR>
+<TT>g.mlist -r pattern='^tmp$'</TT>
+<P>
+
+Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name linewise):<BR>
+<TT>g.mlist -r type=vect pattern='^tmp[0-9]$'</TT>
+<P>
+
+Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name comma separated):<BR>
+<TT>g.mlist -r type=vect sep=, pattern='^tmp[0-9]$'</TT><BR>
+This may be useful for other programs' parameter input 
+(e.g. <EM><a href="r.series.html">r.series</a></EM>).
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.list.html">g.list</A></EM>
+
+
+<H2>AUTHOR</H2>
+Huidae Cho
+<p><i>Last changed: $Date$</i>
+<HR>
+<P><a href=index.html>Help Index</a>
+</body></html>
