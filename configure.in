@@ -246,7 +246,9 @@ directory and run again, e.g. mkdir ~/grass-build; cd ~/grass-build; \
 fi
 
 # Need to use this with either build mechanism to set LD_LIBRARY_PATH_VAR
+ac_save_ldflags="$LDFLAGS"
 SC_CONFIG_CFLAGS
+LDFLAGS="${ac_save_ldflags} $LDFLAGS"
 
 # Enable SysV option
 
@@ -809,6 +811,12 @@ LOC_CHECK_LIBS(GLU,gluBeginCurve,GLU,$OPENGL_LIB_PATH,OPENGLULIB,$OPENGLLIB $X_L
 
 OPENGLLIB="$OPENGL_LIB_PATH $OPENGLLIB"
 OPENGLULIB="$OPENGL_LIB_PATH $OPENGLULIB"
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $OPENGLLIB"
+AC_CHECK_FUNC(glXCreatePbuffer, [AC_DEFINE(HAVE_PBUFFERS)])
+AC_CHECK_FUNC(glXCreateGLXPixmap, [AC_DEFINE(HAVE_PIXMAPS)])
+LDFLAGS=${ac_save_ldflags}
 
 fi # $USE_OPENGL
 
