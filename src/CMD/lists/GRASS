@@ -67,6 +67,7 @@ src/display/d.menu
 src/display/d.mon
 src/display/d.p.labels
 src/display/d.pan
+src/display/d.param.scale
 src/display/d.points
 src/display/d.profile
 src/display/d.rast
