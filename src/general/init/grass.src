@@ -106,10 +106,9 @@ fi
 # Save the user interface variable in the grassrc file - choose a temporary
 # file name that should not match another file
 if [ -f $GISRC ] ; then
-    TEMP_FILE=/tmp/__grass$$__.txt
-    awk '$1 !~ /GRASS_GUI/ {print}' $GISRC > $TEMP_FILE
-    echo "GRASS_GUI: $GRASS_GUI" >> $TEMP_FILE
-    mv $TEMP_FILE $GISRC
+    awk '$1 !~ /GRASS_GUI/ {print}' $GISRC > $GISRC.$$
+    echo "GRASS_GUI: $GRASS_GUI" >> $GISRC.$$
+    mv -f $GISRC.$$ $GISRC
 fi
 
 # Export the user interface variable
