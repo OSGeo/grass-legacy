@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.44 2000-10-21 15:24:00 andreas Exp $
+$Id: BUGS,v 1.45 2000-10-23 07:17:09 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -392,7 +392,8 @@ v.cutter:
 
 [RC]v.out.shape:
   segmentation fault on Pentium II CPUs /Linux
-  (reported by Stephan.Holl@stud.uni-hannover.de)
+  (reported by Stephan.Holl@stud.uni-hannover.de
+   and David Finlayson <david_finlayson@yahoo.com>)
   (being worked on by David D Gray)
 
 [RC]v.reclass:
