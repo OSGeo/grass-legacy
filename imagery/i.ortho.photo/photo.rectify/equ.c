@@ -5,7 +5,7 @@ Compute_ortho_equation (void)
 {
 
     /* struct Ortho_Control_Points  temp_points; */
-    double e0,e1,e2,n0,n1,n2,z0,z1,z2;
+    double e0,e1,e2,n0,n1,n2,z1,z2;
     int    status, i;
 
     /* alloc and fill temp control points */
