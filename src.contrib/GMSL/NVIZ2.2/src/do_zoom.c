@@ -29,7 +29,6 @@
 
 static Display *dpy;
 static Window root;
-static GLXDrawable xdraw;
 static GLXContext ctx_orig;
 #ifdef HAVE_PBUFFERS
 static GLXPbuffer pbuffer;
@@ -260,11 +259,6 @@ int Create_OS_Ctx(int width, int height)
     scr = DefaultScreen(dpy);
     root = RootWindow(dpy, scr);
 
-    xdraw = glXGetCurrentDrawable();
-    if (xdraw == None) {
-	fprintf(stderr, "Unable to get current drawable\n");
-	return (-1);
-    }
     ctx_orig = glXGetCurrentContext();
     if (ctx_orig == NULL) {
 	fprintf(stderr, "Unable to get current context\n");
@@ -358,12 +352,9 @@ int Destroy_OS_Ctx(void)
     if (pbuffer)
     {
 	fprintf(stderr, "GLX -- destroy pbuffer\n");
+	glXMakeCurrent(dpy, None, NULL);
 	glXDestroyPbuffer(dpy, pbuffer);
 	pbuffer = None;
-	glXMakeCurrent(dpy, xdraw, ctx_orig);
-	/*
-	  glXMakeContextCurrent(dpy, xdraw, xdraw, ctx_orig);
-	*/
 	GS_set_swap_func(swap_togl);
 	return (1);
     }
@@ -372,11 +363,11 @@ int Destroy_OS_Ctx(void)
     if (glxpixmap)
     {
 	fprintf(stderr, "Destroy Pixmap and GLXPixmap\n");
-	XFreePixmap(dpy, pixmap);
-	pixmap = None;
+	glXMakeCurrent(dpy, None, NULL);
 	glXDestroyGLXPixmap(dpy, glxpixmap);
 	glxpixmap = None;
-	glXMakeCurrent(dpy, xdraw, ctx_orig);
+	XFreePixmap(dpy, pixmap);
+	pixmap = None;
 	GS_set_swap_func(swap_togl);
 	return (1);
     }

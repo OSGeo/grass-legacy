@@ -309,6 +309,7 @@ proc menu2 { menu } {
 	if {$fname != -1} then {
 	appBusy
          Nstart_zoom $fname [winfo screenwidth .] [winfo screenheight .]
+	 .top.canvas makecurrent
 	appNotBusy
 	}	
 	} -underline 0 -label "Save Max. Resolution PPM(s)"
