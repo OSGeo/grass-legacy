@@ -1,0 +1,5 @@
+interface_build {
+    {db.tables} 0
+    {List tables.}
+    {checkbox -s {system tables.} "" -s}
+}
