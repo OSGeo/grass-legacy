@@ -1,0 +1,69 @@
+PGM = r.mapcalc
+HOME=$(BIN_MAIN_CMD)
+
+LIST = main.o\
+	compare.o\
+	convert.o\
+	evaluate.o\
+	execute.o\
+	expression.o\
+	function.o\
+	fpe.o\
+	input.o\
+	logical.o\
+	math.o\
+	maps.o\
+	min_max.o\
+	percent.o\
+	polish.o\
+	pool.o\
+	round.o\
+	support.o\
+	variables.o\
+	xexp.o\
+	x2float.o\
+	x2int.o\
+	xabs.o\
+	xcos.o\
+	xeval.o\
+	xif.o\
+	xlog.o\
+	xmax.o\
+	xmedian.o\
+	xmin.o\
+	xround.o\
+	xsqrt.o\
+	xsin.o\
+	xtan.o\
+	xatan.o
+
+LIBES = $(GISLIB) $(BTREELIB) $(ROWIOLIB)
+
+$(HOME)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(MATHLIB) -o $@
+
+compare.o: glob.h
+convert.o: glob.h
+evaluate.o: glob.h
+evaluate.o: function.h
+execute.o: glob.h
+expression.o: glob.h
+fpe.o: glob.h
+function.o: function.h
+logical.o: glob.h
+main.o: glob.h
+main.o: function.h
+math.o: glob.h
+maps.o: glob.h
+polish.o: glob.h
+polish.o: function.h
+round.o: glob.h
+variables.o: glob.h
+x2int.o: glob.h
+xlog.o: glob.h
+xsqrt.o: glob.h
+xtan.o: glob.h
+xatan.o: glob.h
+
+$(GISLIB): #
+$(BTREELIB): #
