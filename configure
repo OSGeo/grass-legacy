@@ -59,7 +59,7 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-readline         support Readline functionality (default: no)"
 ac_help="$ac_help
-  --with-proj             support External PROJ.4 functionality (default: no)"
+  --with-proj             support External PROJ.4 functionality (default: yes)"
 ac_help="$ac_help
   --with-gdal[=path]      build directly against GDAL (optional full path to \
 gdal-config, e.g. '--with-gdal=/usr/local/bin/gdal-config')"
@@ -1360,7 +1360,7 @@ if test "${with_proj+set}" = set; then
   withval="$with_proj"
   :
 else
-  with_proj=no
+  with_proj=yes
 fi
 
 
