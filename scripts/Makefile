@@ -9,6 +9,7 @@ SUBDIRS = \
 	g3_scripts \
 	g.manual \
 	g.mlist \
+	g.mremove \
 	i.spectral \
 	i.tasscap \
 	pg.postgisdb \
