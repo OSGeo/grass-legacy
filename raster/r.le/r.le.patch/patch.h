@@ -35,7 +35,12 @@
 #define  EQ(a, b)    (a-b < 0.01 && a-b > -0.01 )
 #define  BIG   1000000000.0
 #define  PI    3.14159
+
+#ifdef MAIN
 jmp_buf  jmp;
+#else
+extern jmp_buf  jmp;
+#endif
 
 typedef struct __dirdesc {
         int     dd_fd;          /* file descriptor */
