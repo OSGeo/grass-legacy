@@ -262,6 +262,8 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
         {
             cellhd->proj = PROJECTION_UTM;
             cellhd->zone = OSRGetUTMZone( hSRS, &bNorth );
+            if( !bNorth )
+                cellhd->zone *= -1;
         }
         else 
         {
