@@ -18,5 +18,4 @@ int disp_attr(char *, char *, char *, char *, int);
 GLOBAL	char **vect;
 GLOBAL	int nvects;
 GLOBAL	struct Map_info *Map;
-//GLOBAL	struct Categories *Cats;
 

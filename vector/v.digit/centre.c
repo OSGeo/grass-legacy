@@ -107,7 +107,6 @@ tool_centre ( void )
 		display_redraw();
 		driver_close();
 		break;
-	    default:
 	}
 	i_prompt ( "Select tool");
 	/* sleep ( 1 ); */
