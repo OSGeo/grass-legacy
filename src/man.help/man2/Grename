@@ -1,0 +1,68 @@
+.\" %W% %G%
+.TH Grename 2G G-language
+.SH NAME
+Grename \- Rename data 
+.CT files "base elements"
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+\fBGrename\fR \fIelement old_name new_name\fR
+.SH DESCRIPTION
+.I Grename
+allows the user to rename data 
+.CT files "base elements"
+in the current mapset.
+The user first specifies the type of data 
+.CT file "base element"
+.XT "(i.e., the data element)"
+to be renamed from among those in the below list:
+
+.RS
+.TP 14
+cell
+(cell maps)
+.TP 14
+vect
+(vector maps)
+.TP 14
+icon
+(paint icon files)
+.TP 14
+labels
+(paint labels)
+.TP 14
+sites
+(site maps)
+.TP 14
+window
+(window files)
+.TP 14
+group
+(imagery group files)
+.RE
+
+.PP
+In addition to choosing the 
+.CT data "data base"
+element, the user specifies both
+\fIold_name\fR (i.e., the 
+.CT file element
+to be renamed) and \fInew_name\fR (the
+name of a new 
+.CT file element
+in the current mapset which will hold the renamed 
+.CT "file)." "data base element)."
+
+The old 
+.CT file "data base element"
+\fIold_name\fR is then renamed to \fInew_name\fR.
+.SH NOTE
+If a data 
+.CT "element file" "base element"
+has support files (e.g., cell 
+.CT "files)," "maps),"
+these support files also are renamed.
+.SH SEE ALSO
+\fIrename[1]\fR
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
