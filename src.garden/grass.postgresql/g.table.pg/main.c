@@ -44,7 +44,7 @@ char **argv ;
     char *dbname;
     int res= 99;
 
-	G_init_locale(PACKAGE);
+	G_init_locale();
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
