@@ -170,7 +170,7 @@ int main (int argc, char *argv[])
 
 	flag.f = G_define_flag();
 	flag.f->key = 'f';
-	flag.f->description = "Import Floating Point Data";
+	flag.f->description = "Import as Floating Point Data (default: Integer)";
 
 	flag.b = G_define_flag();
 	flag.b->key = 'b';
