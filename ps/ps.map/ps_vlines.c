@@ -18,6 +18,8 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
     struct line_cats *Cats;
     VARRAY *Varray = NULL;
 
+    fprintf(PS.fp, "1 setlinejoin\n"); /* set line join to round */
+
     /* Create vector array if required */
     if ( vector.layer[vec].cats != NULL || vector.layer[vec].where != NULL ) {
 	Varray = Vect_new_varray ( Vect_get_num_lines(P_map) );
@@ -129,6 +131,7 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 	Vect_reset_line ( Points );
     }
     fprintf(PS.fp, "\n");
+    fprintf(PS.fp, "0 setlinejoin\n"); /* reset line join to miter */
     return 0;
 }
 
