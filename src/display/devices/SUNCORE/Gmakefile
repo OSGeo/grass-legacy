@@ -23,6 +23,8 @@ $(GISBASE)/driver/SUN: SUN
 SUN: $(OFILES) ../lib/driverlib.a
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)
 
+../lib/driverlib.a: #
+
 Draw_line.o:	sun.h
 Graph_Set.o:	sun.h
 Polygn_abs.o:	sun.h
