@@ -1,0 +1,101 @@
+.TH d.what.v.inf
+.SH NAME
+\fId.what.v.inf\fR \- Report database attributes associated with vector features.
+.br
+.I "(GRASS-RDBMS Attribute Interface Program)"
+.SH SYNOPSIS
+\fBd.what.v.inf\fR
+.br
+\fBd.what.v.inf help\fR
+.br
+\fBd.what.v.inf\fR \fBtab=\fIname\fR \fBcol=\fIname\fR \fBmap=\fIname\fR \fB[join=\fItab,tabkey,pkey]\fR
+.br
+.SH "ALTERNATE"
+\fBd.what.v.inf -s help\fR
+.br
+\fBd.what.v.inf\fR \fB-s\fR \fBsql=\fIfilename\fR \fBmap=\fIname\fR
+.SH DESCRIPTION
+Reports database attributes from the currently selected database which
+are associated with specific vector features
+identified using the mouse. 
+The currently selected database
+is identified by the GRASS environment variable $DATABASE which is set
+using the g.select.inf GRASS-RDBMS interface tool. If this environment
+variable is not set the program terminates with a message to the user.
+If no join parameters are provided by the user on the command line
+the attributes in the table directly linked to the GRASS raster
+structure via
+the category value are returned. However, if a join is specified then
+attributes from a related table are displayed. If the alternate form of
+this command is selected with the -s flag the user has greater control
+over the number of relational joins and the manner in which the
+attribute information is displayed. Using the -s option the
+attributes from more than one table can be returned and displayed.
+
+.SH "COMMAND LINE OPTIONS"
+.LP
+Parameters:
+.IP \fItab=database_table_name\fR
+Table containing column linked to vector attribute values.
+.IP \fIcol=database_column_name\fR
+Column associated with vector attribute values.
+.IP \fImap=map\fR
+Name of an existing vector map with attribute values linked to the currently selected database.
+.IP \fIjoin=tab,tabkey,pkey\fR
+Tab is the table used to develop the current SQL query. Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file. Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+
+For instance, assume that feature is a table containing column values associated with category values in a GRASS 
+vector file (record_num).  In addition, assume that cfcc_lookup is a table containing attribute data on the 
+transportation network in the same area. In this example cfcc_lookup.cfcc is the column linking the table 
+cfcc_lookup to the table feature via feature.cfcc. To specify a query based on attribute values in the table 
+cfcc_lookup the join statement would be:
+
+	join=cfcc_lookup,cfcc_lookup.cfcc,feature.cfcc
+
+Specifying these conditions would insure that all rows from table cfcc_lookup which satisfy the query criteria 
+would be matched with the corresponding rows in table feature, which are then related to the spatial features 
+in the GRASS data layer via the database column feature.record_num which is related to the  GRASS category values.
+
+
+This syntax is adequate to accomplish 2 table joins. However, if the query demands joins between more than 2 tables it is advisable to use the -s option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
+.SH "ALTERNATE COMMAND LINE USAGE"
+The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the [-s] flag on the command line. When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed SQL SELECT statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer. 
+
+The user must also specify the name of the GRASS data layer containing these category values on the command line. The following example illustrates the syntax which must be used in constructing a SELECT statement for use with the -s flag.
+
+.SH "EXAMPLE (single table)"
+.br
+d.what.v.inf  -s sql=example.sql map=t.roads.inf
+
+.br
+example.sql:
+.br
+	SELECT * FROM type1
+.br
+	WHERE type1.tlid=?
+.br
+
+Result: Reports all attributes from table type1 associated with the vector at current mouse location.
+
+.LP
+Flags:
+.IP \fI-s\fR
+SQL select statements are input from a prepared file.
+.LP
+Parameters:
+.IP \fIsql=filename\fR
+SQL statements specifying well formed selection criteria.
+.IP \fIinput=map\fR
+Name of an existing vector map.
+.SH BUGS
+None known.
+
+.SH "NOTE"
+This program requires the Informix database software.
+
+.SH "SEE ALSO"
+g.column.inf, g.select.inf, g.stats.inf, g.table.inf, d.rast.inf, d.site.inf, d.what.r.inf, d.what.s.inf, d.what.v.inf, r.reclass.inf, r.rescale.inf, v.reclass.inf
+.SH AUTHOR
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+
