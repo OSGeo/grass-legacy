@@ -38,7 +38,7 @@ GRASS 5 Programmer's Manual:
 
 http://www.geog.uni-hannover.de/grass/contrib.html
 
-Or Latex sources from CVS server
+Or LaTeX sources from CVS server
 (http://www.geog.uni-hannover.de/grass/grasscvs.html)
 
 cvs -z3 co progmangrass50
