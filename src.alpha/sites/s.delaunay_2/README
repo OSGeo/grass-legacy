@@ -1,0 +1,42 @@
+s.delaunay - Program to create a vector delaunay triangulation from a sites 
+	     file. Delaunay triangualtion is based on the `hull' software, by 
+	     Ken Clarkson (clarkson@research.att.com). See the directory hull 
+	     or more details.
+
+Jo Wood, Department of Geography.  19th July, 1995.
+
+----------
+
+Modified to use the GRASS 4.2 sites API. Allows x,y,z,attribute format for 
+sites files. This enables a single sites file to carry all necessary 
+information for TIN construction.
+
+Modified to allow VRML 1.0 output as indexed face set.
+
+Jo Wood, 4th September, 1996
+
+----------
+
+Modified to allow vertical scaling of elevation values.
+
+Jo Wood, 23rd July, 1997
+
+----------
+
+TODO:
+	Constrain triangulation along channels and ridges.
+
+----------
+
+Usage:
+ s.delaunay [-v] in=name out=name [zscale=value]
+
+Flags:
+  -v   Create VRML 1.0 output
+
+Parameters:
+      in   Sites file to process
+     out   Vector map layer to contain delaunay triangulation.
+  zscale   Vertical scaling of elevation.
+           default: 1.0
+
