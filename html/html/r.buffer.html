@@ -9,8 +9,7 @@
 <H2>NAME</H2>
 
 <EM><b>r.buffer</b></EM>  - Creates a raster map layer showing buffer zones 
-surrounding cells that contain non-zero category values. 
-<BR>
+surrounding cells that contain non-NULL category values.<BR>
 <EM>(GRASS Raster Program)</EM> 
 
 <H2>SYNOPSIS</H2>
@@ -30,7 +29,7 @@ surrounding cells that contain non-zero category values.
 
 <EM>r.buffer</EM> creates a new raster map layer showing
 buffer (a.k.a. "distance" or "proximity") zones around all
-cells that contain non-zero category values in an existing
+cells that contain non-NULL category values in an existing
 raster map layer.  The distances of buffer zones from cells
 with non-zero category values are user-chosen.  Suppose,
 for example, that you want to place buffer zones around
@@ -70,7 +69,7 @@ which will contain the results.
 
 <LI>Then, identify the units of measurement in which buffer
 (distance) zones are to be calculated, and the distance of
-each buffer zone from each non-zero cell in the
+each buffer zone from each non-NULL cell in the
 <EM>input</EM> map.  The user has the option of identifying
 up to 60 continuous zones.  The zones are identified by
 specifying the upper limit of each desired zone
@@ -125,7 +124,7 @@ values on the command line, using the form:
 <DL>
 <DT><B>input=</B><EM>name</EM>
 
-<DD>The name of an existing raster map layer whose non-zero
+<DD>The name of an existing raster map layer whose non-NULL
     category value cells are to be surrounded by buffer zones
     in the <EM>output</EM> map.
 
@@ -134,13 +133,13 @@ values on the command line, using the form:
 <DD>The name assigned to the new raster map layer
     containing program output.  The <EM>output</EM> map will
     contain buffer zones at the user-specified
-    <EM>distances</EM> from non-zero category value cell in the
+    <EM>distances</EM> from non-NULL category value cell in the
     <EM>input</EM> map.
 
 <DT><B>distances=</B><EM>value</EM>[,<EM>value</EM>,...]
 
 <DD>The distance of each buffer zone from cells having
-    non-zero category values in the <EM>input</EM> map.
+    non-NULL category values in the <EM>input</EM> map.
 
 <DT><B>units=</B><EM>name</EM>
 
@@ -184,13 +183,13 @@ databases.
 
 <P>
 
-<EM>r.buffer</EM> calculates distance zones from all cells having non-zero 
+<EM>r.buffer</EM> calculates distance zones from all cells having non-NULL 
 category values in the <EM>input</EM> map. 
 If the user wishes to calculate distances from only selected <EM>input</EM> map layer 
 category values, the user should run (for example) 
 <EM><A HREF="r.reclass.html">r.reclass</A></EM> prior to 
 <EM>r.buffer</EM>, to reclass all categories from which distance zones 
-are not desired to be calculated into category zero. 
+are not desired to be calculated into category NULL. 
 
 <H2>SEE ALSO</H2>
 
