@@ -7,7 +7,7 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 PGM=XDRIVER
 
-LIBES = $(DRIVERLIB) $(D_LIB) $(GISLIB)
+LIBES = $(DRIVERLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(XDRLIB)
 DEPENDENCIES = $(GISDEP)
 
 # if you are compiling under X11R3 add this define

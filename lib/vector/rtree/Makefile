@@ -15,7 +15,7 @@ include $(MODULE_TOPDIR)/include/Make/Lib.make
 RTLINC = $(ARCH_INCDIR)/rtree/
 
 default: $(RTLINC)/card.h $(RTLINC)/index.h $(RTLINC)/split_l.h $(RTLINC)/split_q.h \
-	$(ARCH_INCDIR)/rtree.h lib $(OBJDIR)/test
+	$(ARCH_INCDIR)/rtree.h lib
 
 $(RTLINC)/card.h: card.h
 	mkdir -p $(RTLINC)

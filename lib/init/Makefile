@@ -51,19 +51,19 @@ $(ETC)/Init.sh: init.sh version.sed
 	chmod +x $@
 
 $(ETC)/set_data: $(SET_DATA)
-	$(CC) $(LDFLAGS) -o $@ $(SET_DATA) $(EDITLIB) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(SET_DATA) $(EDITLIB) $(GISLIB) $(DATETIMELIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(ETC)/echo: $(OBJDIR)/echo.o
 	$(CC) $(LDFLAGS) $(OBJDIR)/echo.o -o $@
 
 $(ETC)/clean_temp: $(OBJDIR)/clean_temp.o  
-	$(CC) $(LDFLAGS) $(OBJDIR)/clean_temp.o $(GISLIB) $(MATHLIB) $(XDRLIB) -o $@
+	$(CC) $(LDFLAGS) $(OBJDIR)/clean_temp.o $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB) -o $@
 
 $(ETC)/run: $(OBJDIR)/run.o
 	$(CC) $(LDFLAGS) $(OBJDIR)/run.o -o $@
 
 $(ETC)/lock: $(OBJDIR)/lock.o
-	$(CC) $(LDFLAGS) $(OBJDIR)/lock.o $(GISLIB) -o $@
+	$(CC) $(LDFLAGS) $(OBJDIR)/lock.o $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB) -o $@
 
 $(BIN)/exit:
 	touch $@

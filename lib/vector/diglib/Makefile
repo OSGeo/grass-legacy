@@ -47,7 +47,8 @@ $(ARCH_INCDIR)/portable.h: $(DEPENDENCIES)
 	
 #  Test portable read/write functions
 $(OBJDIR)/test: test.c $(DEPENDENCIES) 
-	$(CC) $(LDFLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $@ test.c $(DIG2LIB) $(GISLIB)
-	cd $(OBJDIR); ./test
+	$(CC) $(LDFLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $@ test.c $(DIG2LIB) $(RTREELIB) \
+				$(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB) 
+	cd $(OBJDIR); LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib ./test
 
 

@@ -39,7 +39,7 @@ PROGRAMS = g.copy g.list g.remove g.rename
 
 htmlcmd:
 	for prog in $(PROGRAMS) ; do \
-		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
+		GRASS_FAKE_START=1 GISBASE=$(GISBASE) LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
 		test ! -f $$prog.html || ( cat $$prog.html >> $$prog.tmp ) ; \
 		echo "<HR>" >> $$prog.tmp ; \
 		echo "<P><a href=index.html>Help Index</a>" >> $$prog.tmp ; \
