@@ -1,0 +1,11 @@
+
+
+r.buffer - 
+
+r.buffer creates a new \raster\ \map layer\ showing buffer (aka,
+"distance" or "proximity") zones around all \cells\ that contain
+non-zero \category values\ in an existing raster map layer.  The
+distances of buffer zones from cells with non-zero category values are
+user-chosen.  
+
+Manual entry for \r.buffer\
