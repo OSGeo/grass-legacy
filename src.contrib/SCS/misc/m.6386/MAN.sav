@@ -1,0 +1,66 @@
+
+
+
+save.display(1)  	     GRASS Reference Manual	      save.display(1)
+
+
+
+NAME
+     save.display - stores screen images to the PC6386 hard disk.
+     (Available for PC6386 workstations, only)
+
+SYNOPSIS
+     save.display 
+
+DESCRIPTION
+     save.display allows a user to :
+     interactively saves PC6386 screen images produced by "display",
+     "Dcell", etc. to the PC6386 hard disk. Program will assign
+     the extension ".GRS" to the filename given, and will store
+     the image file in the current directory. The files are
+     binary image files, representing the red, green, and blue
+     planes of the display board graphic memory.
+
+AUTHOR
+     P.W.Carlson, USDA, Soil Conservation Service
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.0		 U.S.D.A. SCS  				1
+
+
+
