@@ -78,9 +78,11 @@ class sweepOutput {
   
   friend ostream& operator << (ostream& s, const sweepOutput &x) {
     return s << "[("  << x.i << ',' << x.j << "):"  
-  	     << form(" accu=%7.3f", x.accu)
+      //<< form(" accu=%7.3f", x.accu)
+	     << " accu=" << x.accu
 #ifdef OUTPUT_TCI
-	     << form(", tci=%3.1f", x.tci)
+      //<< form(", tci=%3.1f", x.tci)
+	     << ", tci=" << x.tci
 #endif
 	     << "]";
   }
