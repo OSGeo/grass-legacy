@@ -21,6 +21,12 @@ eval `g.gisenv`
 : ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
 LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
+if [ $# -eq 0 -o $1 = "-h" -o $1 = "help" -o $1 = "-help" ] ; then
+  if [ "$1" != "@ARGS_PARSED@" ] ; then
+     exec g.parser "$0" "$@"
+  fi
+fi
+
 for VECT in `g.list type=vect mapset=${MAPSET} | sed 1,2d | grep -v '^-*$'`
 do
     echo "Build topology for vector '${VECT}@${MAPSET}'"
