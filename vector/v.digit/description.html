@@ -4,6 +4,60 @@
 Attribute tables can be directly generated while digitizing (define in
 "Settings" first).
 
+<h2>NOTES</h2>
+
+The <b>bgcmd</b> is intended to be used for d.* commands.  Several
+display commands rendering the digitize background may be used, they
+have to separated by ';'. If the d.* command contains spaces the whole
+command has to be be quoted (see example).
+
+<h2>EXAMPLES</h2>
+
+<tt>
+d.mon x0<br>
+d.rast name_of_raster #just to look at and to zoom into the area of interest <br>
+</tt>
+
+<p>
+<b>1)</b> Digitizing an area based on a existing raster map, a vector
+map will be created<br>
+<p>
+<tt>v.digit -n map=name_of_new_vector_map bgcmd="d.rast map=name_of_raster"</tt><br>
+<p>
+The flag "-n" specifies that your vector map does not exist yet and
+will be created with the name given by "map=". "bgcmd=" specifies a
+display ("d.*") command and is set into quotes because it contains a
+space.
+<p>
+The v.digit GUI appears -- after exiting v.digit GUI the vector map
+"name_of_new_vector_map" exists. After leaving <em>v.digit</em>, run:
+<p>
+<tt>d.erase # to clear the monitor<br>
+d.vect "name_of_new_vector_map" 
+# the newly created vector should appear in the monitor</tt><br>
+<p>
+
+<b>2)</b> Digitizing a new vector and using the first vector and the
+raster image as background<br>
+<p>
+<tt>
+d.erase # clear monitor<br>
+v.digit -n map=name_of_second_vector bgcmd="d.rast map=name_of_your_raster;
+d.vect=name_of_new_vector_map"</tt><br>
+<p>
+The v.digit GUI appears and the layer defined in the "bgcmd=" settings are 
+displayed in the background. The "bgcmd=" settings have to be seen as a 
+series of commands separated with ";", therefore the last command "d.vect" 
+displays the previously created vector on top of the raster image. <br>
+<p>
+
+<b>3)</b> Digitizing a raster map and using a previously created
+vector map as base which is displayed in the background as well:<br>
+<p>
+<tt>v.digit  map=name_of_new_vector_map bgcmd="d.rast map=name_of_your_raster; 
+d.vect=name_of_new_vector_map"</tt>
+
+
 <h2>AUTHOR</h2>
 
 Radim Blazek, ITC-Irst, Trento, Italy
