@@ -76,8 +76,8 @@ shrink_map_coor_ll()
 	{
                 G_strip(bcx[i]);
                 G_strip(bcy[i]);
-		if ((strcmp(bcx[i],"0.0")==0 && strncmp(bcy[i],"0.0")==0)
-		   || (strcmp(bcx[i],"0.")==0 && strncmp(bcy[i],"0.")==0)
+		if ((strcmp(bcx[i],"0.0")==0 && strcmp(bcy[i],"0.0")==0)
+		   || (strcmp(bcx[i],"0.")==0 && strcmp(bcy[i],"0.")==0)
 		   || (bcx[i][0]=='\0' && bcy[i][0]=='\0'))
 			continue ;
 
