@@ -16,7 +16,7 @@ readrow(fd, buf, row, col, depth, nrows, ncols, ndepths)
             else if (depth+current_depth >= ndepths || depth+current_depth < 0)
                 SETNULL_D(buf++);
             else {
-                G3d_getValueRegion (fd, row+current_row, i+col , depth+current_depth, &x, G3D_FLOAT);
+                G3d_getValueRegion (fd, i+col, row+current_row, depth+current_depth, &x, G3D_FLOAT);
                 *buf++=(double) x;
             }
         }
@@ -30,7 +30,7 @@ readrow(fd, buf, row, col, depth, nrows, ncols, ndepths)
             else if (((depth+current_depth) >= ndepths) || ((depth+current_depth) < 0))
                 SETNULL_D(buf++);
 else
-                G3d_getValueRegion (fd, row+current_row, i+col , depth+current_depth, buf++, G3D_DOUBLE);
+                G3d_getValueRegion (fd, i+col, row+current_row, depth+current_depth, buf++, G3D_DOUBLE);
         }
     }
     return 1;
