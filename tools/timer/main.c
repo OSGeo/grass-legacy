@@ -8,7 +8,7 @@ int main()
 {
    struct timeval t; 
           
-   if (gettimeofday(&t, (struct timezone *)NULL) == -1) { 
+   if (gettimeofday(&t, NULL) == -1) {
       fprintf(stderr,"gettimeofday error"); 
       return 1; 
    } 
