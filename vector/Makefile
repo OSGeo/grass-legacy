@@ -43,7 +43,8 @@ SUBDIRS = \
 	v.to.points \
 	v.to.rast \
 	v.type \
-	v.what.rast
+	v.what.rast\
+	v.vol.rst
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
