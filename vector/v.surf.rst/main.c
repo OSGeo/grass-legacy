@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
     } parm;
     struct
     {
-	struct Flag *deriv, *cat, *iselev, *cprght, *cv;
+	struct Flag *deriv, *cprght, *cv;
     } flag;
 
 
@@ -179,10 +179,6 @@ int main(int argc, char *argv[])
     sprintf(dmaxchar, "%f", dmin * 5);
     sprintf(dminchar, "%f", dmin);
 
-    fprintf(stdout, "\n");
-    fprintf(stdout, "Authors: original version -  H.Mitasova, L.Mitas, I. Kosinovsky, D.P. Gerdes\n");
-    fprintf(stdout,
-	    "See manual pages for reference and publications\n");
 
     parm.input = G_define_option();
     parm.input->key = "input";
@@ -193,14 +189,14 @@ int main(int argc, char *argv[])
 
     parm.field = G_define_standard_option(G_OPT_V_FIELD);
     parm.field->description =
-	"Field value. If set to 0, z coordinates are used.";
+	"Field value. If set to 0, z coordinates are used (3D vector only).";
     parm.field->answer = "1";
 
     parm.zcol = G_define_option();
     parm.zcol->key = "zcolumn";
     parm.zcol->type = TYPE_STRING;
     parm.zcol->required = NO;
-    parm.zcol->description = "Name of the column containing z values";
+    parm.zcol->description = "Name of the column containing values to be interpolated";
     parm.zcol->answer = "flt1";
 
     parm.scol = G_define_option();
@@ -210,20 +206,11 @@ int main(int argc, char *argv[])
     parm.scol->description =
 	"Name of the column containing smoothing parameters";
 
-
-    flag.cat = G_define_flag();
-    flag.cat->key = 'c';
-    flag.cat->description = "Use category data instead of attribute";
-
-    flag.iselev = G_define_flag();
-    flag.iselev->key = 'r';
-    flag.iselev->description = "Use also zero attributes/cats as elevation";
-
     parm.dmax = G_define_option();
     parm.dmax->key = "dmax";
     parm.dmax->type = TYPE_DOUBLE;
     parm.dmax->required = NO;
-    parm.dmax->answer = dmaxchar;
+    parm.dmax->answer = dmaxchar; 
     parm.dmax->description = "Maximum distance between points ";
 
     parm.dmin = G_define_option();
@@ -253,7 +240,7 @@ int main(int argc, char *argv[])
     parm.elev->type = TYPE_STRING;
     parm.elev->required = NO;
     parm.elev->gisprompt = "new,cell,raster";
-    parm.elev->description = "Output z-file (elevation)";
+    parm.elev->description = "Output surface file (elevation)";
 
     flag.deriv = G_define_flag();
     flag.deriv->key = 'd';
@@ -306,7 +293,7 @@ int main(int argc, char *argv[])
     parm.zmult->type = TYPE_DOUBLE;
     parm.zmult->answer = ZMULT;
     parm.zmult->required = NO;
-    parm.zmult->description = "Conversion factor for z-values";
+    parm.zmult->description = "Conversion factor for interpolated values";
 
     parm.fi = G_define_option();
     parm.fi->key = "tension";
@@ -393,6 +380,12 @@ int main(int argc, char *argv[])
     treefile = parm.treefile->answer;
     overfile = parm.overfile->answer;
 
+    fprintf(stderr, "\n");
+    fprintf(stderr, "Authors: original version -  H.Mitasova, L.Mitas, I. Kosinovsky, D.P. Gerdes\n");
+    fprintf(stderr, "See manual pages for reference and publications T3\n");
+    fprintf(stderr, "\n");
+
+
 /*    if (treefile)
 	Vect_check_input_output_name(input, treefile, GV_FATAL_EXIT);
 
@@ -426,6 +419,8 @@ int main(int argc, char *argv[])
     sscanf(parm.segmax->answer, "%d", &KMAX);
     sscanf(parm.npmin->answer, "%d", &npmin);
     sscanf(parm.zmult->answer, "%lf", &zmult);
+
+/* if (fi=0.000000)  G_fatal_error("Tension must be > 0.000000") */
 
     if (parm.theta->answer)
 	sscanf(parm.theta->answer, "%lf", &theta);
@@ -500,10 +495,6 @@ int main(int argc, char *argv[])
     if (open_check < 2)
 	G_fatal_error("You first need to run v.build on vector file <%s>",
 		      input);
-    if (flag.cat->answer) {
-	if (G_read_vector_cats(input, mapset, &cats) < 0)
-	    G_fatal_error("Could not find category file for %s", input);
-    }
 
     /* we can't read the input file's timestamp as they don't exist in   */
     /*   the new vector format. Even so, a TimeStamp structure is needed */
@@ -635,7 +626,7 @@ int main(int argc, char *argv[])
 
     totsegm =
 	IL_vector_input_data_2d(&params, &Map, field, zcol, scol,
-				flag.iselev->answer, info, &xmin, &xmax,
+				info, &xmin, &xmax,
 				&ymin, &ymax, &zmin, &zmax, &NPOINT, &dmax);
     if (totsegm <= 0)
 	clean_fatal_error("Input failed");
