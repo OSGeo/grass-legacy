@@ -7,7 +7,7 @@
 #            neteler@geog.uni-hannover.de
 # $Id$
 
-#TODO:
+#TODO: add crash check, see below
 #
 
 if test "$GISBASE" = ""; then
@@ -21,11 +21,12 @@ function usage()
  echo "g3.setregion creates a WIND3 from current 2D region"
  echo ""
  echo "Usage:"
- echo "   g3.setregion  [n=] [s=] [w=] [e=] [t=] [b=] [res=] [dres=] [reg=] [save=]"
+ echo "   g3.setregion [-p] [n=] [s=] [w=] [e=] [t=] [b=] [res=] [dres=] [reg=] [save=]"
  echo ""
  echo "dres= is depth resolution, t/b/dres: only int numbers allowed"
  echo "save= save 3Dregion to extra file"
  echo "reg= read from saved 3dregion"
+ echo "-p   print current 3dregion settings"
  echo ""
 }
 
