@@ -644,6 +644,9 @@ zoom_window (unsigned char type, struct line_pnts *Xpoints)
 {
     int button, button1 ;
     int	screen_x, screen_y ;
+    double ux1, uy1;
+    double N, S, E, W;
+    double tmp1, tmp2;
 
     screen_x = screen_y = 1;
     if (do_graphics())
@@ -655,13 +658,13 @@ zoom_window (unsigned char type, struct line_pnts *Xpoints)
 		Clear_info ();
 		_Clear_base ();
 		_Write_base (12, "Buttons:") ;
-		_Write_base (13, "   Left:   Select new window  ") ;
+		_Write_base (13, "   Left:   Zoom menu ") ; /* Select new window */
 #ifdef ANOTHER_BUTTON
 		_Write_base (14, "   Middle: Abort/Quit ") ;
 		 Write_base (15, "   Right:  Zoom/Pan MENU") ;
 #else
-		_Write_base (14, "   Middle: Zoom/Pan MENU") ;
-		 Write_base (15, "   Right:  Abort/Quit ") ;
+		_Write_base (14, "   Middle: Pan") ; /* was Zoom/Pan MENU */
+		 Write_base (15, "   Right:  Quit ") ;
 #endif
 
 		R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;
@@ -678,42 +681,21 @@ zoom_window (unsigned char type, struct line_pnts *Xpoints)
 				highlight_line (type, Xpoints, 0, NULL);
 			break ;
 		    case MIDDLEB:
-		    {
-			int zoom_pan = 1;
-			while (zoom_pan)
-			{
-			    Clear_info ();
-			    _Clear_base ();
-			    _Write_base (12, "Buttons:") ;
-			    _Write_base (13, "   Left:   Zoom MENU") ;
-#ifdef ANOTHER_BUTTON
-			    _Write_base (14, "   Middle: Abort/Quit ") ;
-			     Write_base (15, "   Right:  Pan  MENU") ;
-#else
-			    _Write_base (14, "   Middle: Pan  MENU") ;
-			     Write_base (15, "   Right:  Abort/Quit") ;
-#endif
+			screen_to_utm ( screen_x, screen_y, &ux1, &uy1) ;
+			tmp1 =  (ux1 - ((U_east  + U_west)  / 2));
+			tmp2 =  (uy1 - ((U_north + U_south) / 2));
+			W = U_west  + tmp1;
+			E = U_east  + tmp1;
+			S = U_south + tmp2;
+			N = U_north + tmp2;
 
-			    R_get_location_with_pointer ( &screen_x, &screen_y, &button1) ;
-			    flush_keyboard (); /*ADDED*/
-			    Clear_info ();
-			    switch(button1)
-			    {
-				case LEFTB:
-				    scal_window (type, Xpoints);
-				    break;
-				case MIDDLEB:
-				    slid_window (type, Xpoints);
-				    break;
-				case RIGHTB:
-				    zoom_pan = 0;
-				    break;
-				default:
-				    return(1);
-				    break;
-			    }
-			}
-		    }
+			clear_window ();
+			window_rout (N, S, E, W);
+			Clear_base ();
+			replot(CMap);
+			if(Xpoints)
+				highlight_line (type, Xpoints, 0, NULL);
+			Clear_info();
 			break;
 		    case RIGHTB:
 			return(0);
