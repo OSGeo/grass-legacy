@@ -139,14 +139,15 @@ char	*argv[];
          
 /*	if curver number output map exists in the mapset then
 	print error message and quit */
-
-	 cn_mapset = G_find_cell2(cn_name, this_mapset);
+/* 6/2000: commented, we like to overwrite */
+/*	 cn_mapset = G_find_cell2(cn_name, this_mapset);
 	 if (cn_mapset)
 	 {
 	     sprintf(buf, "curve number file [%s] is existing\n", cn_name);
 	     G_fatal_error (buf);
 	     exit(1);
 	 }
+*/
 
 /*	find all the map in the mapset and get their mapset location */
 
@@ -208,7 +209,7 @@ char	*argv[];
 /*	assign curve number values for the array hy_soil_cover  */
 	data();
 
-	/*
+/***********
 	amc = 0;
 
 	fprintf (stderr,"\n	The Curver Number map created will contain curver number\n 	equivalent to AMC II condition.\n\n");
@@ -230,7 +231,6 @@ char	*argv[];
 */
 
 
-
 /*	allocate cell buf for all the map layers */
 
 	hy_soil_group_rbuf = G_allocate_cell_buf();
@@ -239,18 +239,16 @@ char	*argv[];
 	land_use_rbuf = G_allocate_cell_buf();
 	cn_rbuf = G_allocate_cell_buf();
 
-	for(i = 0; i < window.rows; i++) 
+	for(i = 0; i < nrows; i++) 
 	{
-	/*
-	*/
-	    G_get_map_row(veg_cover_id,veg_cover_rbuf,i);
-	    G_get_map_row(hy_soil_group_id,hy_soil_group_rbuf,i);
-	    G_get_map_row(hy_cond_id,hy_cond_rbuf,i);
-	    G_get_map_row(land_use_id,land_use_rbuf,i);
+	    G_get_c_raster_row(veg_cover_id,veg_cover_rbuf,i);
+	    G_get_c_raster_row(hy_soil_group_id,hy_soil_group_rbuf,i);
+	    G_get_c_raster_row(hy_cond_id,hy_cond_rbuf,i);
+	    G_get_c_raster_row(land_use_id,land_use_rbuf,i);
 
 	    G_zero_cell_buf(cn_rbuf);
 
-	    for(j=0;j < window.cols;j++) 
+	    for(j=0;j < ncols;j++) 
 	    {
 	        if(hy_soil_group_rbuf[j] > 0)
 		{
@@ -275,7 +273,8 @@ char	*argv[];
 		       cn_rbuf[j] = amc_conversion(hy_soil_cover[row_id][col_id],amc);
 		 }
 	    }
-	    G_put_map_row(cn_id,cn_rbuf);
+	    /* G_put_map_row(cn_id,cn_rbuf); */ /* 6/2000 MN */
+	    G_put_c_raster_row(cn_id, cn_rbuf);
 	 }
 
 	 G_close_cell(hy_soil_group_id);
