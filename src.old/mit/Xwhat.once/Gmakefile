@@ -1,0 +1,12 @@
+PGM = Xwhat.once
+OFILES = \
+	main.o \
+	opencell.o
+LIBES = $(GISLIB) $(XDISPLAYLIB)
+
+$(BIN)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) -lX11
+
+$(LIBES):	#
+
+$(OFILES): what.h
