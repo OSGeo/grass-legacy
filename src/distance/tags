@@ -1,0 +1,38 @@
+AllocArcTable	fromcell.c	/^AllocArcTable (maxdist)$/
+Arcdef	fromcell.c	/^Arcdef(radius,table,number) $/
+Fastline	fromcell.c	/^Fastline(x1, x2, y, val ) $/
+Fixmap	fromcell.c	/^Fixmap (DISTANCE)$/
+Fixpoints	fromcell.c	/^Fixpoints (baseval)$/
+Get_input	Get_input.c	/^Get_input ()$/
+MAX	fromcell.c	/^#define MAX(x,y)		(( x>y ) / x : y)$/
+MGdistance	Gdistance.c	/^main (argc, argv)$/
+MIN	fromcell.c	/^#define MIN(x,y)		(( x<y ) / x : y)$/
+Mdistance	distance.c	/^main (argc,argv) char *argv[];$/
+Mdistclust	distclust.c	/^main(argc, argv)$/
+Mfromhead	fromhead.c	/^main (argc, argv)$/
+Mmakemap	makemap.c	/^main (argc,argv) int argc ; char *argv[] ;$/
+Mtohead	tohead.c	/^main (argc, argv)$/
+Onmap	fromcell.c	/^Onmap (col,row)$/
+Plop	fromcell.c	/^Plop (row,col)$/
+check	tocell.c	/^check(ix, iy, cur_x_pos, cur_y_pos)$/
+dist_error	error.c	/^dist_error(msg, fatal)$/
+dots	dots.c	/^dots (old, new, n)$/
+findedges	makenew.c	/^findedges(pntr0, pntr1, pntr2, newbuff, ncols, sea/
+finger_cells	makenew.c	/^finger_cells(buff, table, len, ncols)$/
+fromcell	fromcell.c	/^fromcell (name, _NROWS, _NCOLS, _DISTANCE, _NUMDIS/
+getdists	getdists.c	/^getdists(resolution, dist) $/
+input	input.c	/^input(buf, prompt) $/
+makenewcell	makenew.c	/^makenewcell(oldcell, newcell, table, len, search_c/
+maketable	maketable.c	/^maketable (cats, table)$/
+my_help	Gdistance.c	/^my_help (prog, keys)$/
+open_file	io.c	/^FILE *open_file(filename, purpose) char *filename,/
+printbuf	makenew.c	/^printbuf(buff)$/
+read_cbuf	io.c	/^read_cbuf(fileptr, buf, size) FILE *fileptr ; unsi/
+set_error_msg	error.c	/^set_error_msg(msg)$/
+showmap	fromcell.c	/^showmap()$/
+stash_keys	Gdistance.c	/^stash_keys (position, key)$/
+subcmp	Get_input.c	/^subcmp (substr, str)$/
+tocell	tocell.c	/^tocell (name, ROWS, COLS, dists, ndists)$/
+update_cats	make_cats.c	/^update_cats(res, cats, ncats, dist)$/
+writ_cbuf	io.c	/^writ_cbuf(fileptr, buf, size) FILE *fileptr ; unsi/
+writecats	writecats.c	/^writecats(dist, name)$/
