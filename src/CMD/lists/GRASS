@@ -296,6 +296,7 @@ src/raster/r.in.bin
 src/raster/r.in.dem
 src/raster/r.in.doq
 src/raster/r.in.dted/r.in.dted
+src/raster/r.in.gridatb
 src/raster/r.in.ll
 #src/raster/r.in.pbm # replaced by r.in.ppm
 src/raster/r.in.png
@@ -317,6 +318,7 @@ src/raster/r.neighbors
 src/raster/r.null
 src/raster/r.out.arc
 src/raster/r.out.ascii
+src/raster/r.out.gridatb
 src/raster/r.out.mpeg
 src/raster/r.out.png
 src/raster/r.out.pov
@@ -356,6 +358,8 @@ src/raster/r.thin
 src/raster/r.tiff
 src/raster/r.timestamp
 src/raster/r.to.sites
+src/raster/r.topidx
+src/raster/r.topmodel
 src/raster/r.transect
 src/raster/r.volume
 src/raster/r.water.outlet
