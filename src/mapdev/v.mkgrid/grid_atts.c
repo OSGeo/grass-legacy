@@ -30,8 +30,8 @@ void set_grid_area_points( double *xlist, double *ylist, struct grid_description
 
   for( i = 0; i < nr; ++i ) {
     for( j = 0; j < nc; ++j ) {
-      xlist[i*nc+j] = refx + ( 0.5 + i ) * deltax;
-      ylist[i*nc+j] = refy + ( 0.5 + j ) * deltay;
+      xlist[i*nc+j] = refx + ( 0.5 + j ) * deltax;
+      ylist[i*nc+j] = refy + ( 0.5 + i ) * deltay;
       rotate( &xlist[i*nc+j], &ylist[i*nc+j], refx, refy, alpha );
     }
   }
@@ -81,9 +81,9 @@ void set_grid_attributes( int *gatts, struct grid_description *gd1, AttributeTyp
     {
       for( i = 0; i < nr; ++i ) {
 	for( j = 0; j < nc; ++j ) {
-	  rownum = i;
-	  colnum = nr - j - 1;
-	  gatts[i*nc+j] = rownum * nc + colnum + 1;
+	  rownum = nr - i - 1;
+	  colnum = j;
+	  gatts[i*nc+j] = colnum * nr + rownum + 1;
 	}
       }
       break;
@@ -92,9 +92,9 @@ void set_grid_attributes( int *gatts, struct grid_description *gd1, AttributeTyp
     {
       for( i = 0; i < nr; ++i ) {
 	for( j = 0; j < nc; ++j ) {
-	  rownum = i;
-	  colnum = nr - j - 1;
-	  gatts[i*nc+j] = colnum * nr + rownum + 1;
+	  rownum = nr - i - 1;
+	  colnum = j;
+	  gatts[i*nc+j] = rownum * nc + colnum + 1;
 	}
       }
       break;
