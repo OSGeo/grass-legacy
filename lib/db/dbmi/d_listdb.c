@@ -2,13 +2,13 @@
 #include "macros.h"
 
 /*!
- \fn 
+ \fn int db_d_list_databases(void)
  \brief 
  \return 
  \param 
 */
 int
-db_d_list_databases()
+db_d_list_databases(void)
 {
     dbHandle *handles;
     dbString *path;
