@@ -3,12 +3,13 @@
 
 int bin_to_asc(
     FILE *ascii,
+    FILE *att,
     struct Map_info *Map,
     int ver,
     int pnt)
 {
-	int type, ctype, i;
-	double *xptr, *yptr, *zptr;
+	int type, ctype, i, cat;
+	double *xptr, *yptr, *zptr, x, y;
 	static struct line_pnts *Points;
 	char buf1[100], buf2[100];
         struct line_cats *Cats;
@@ -31,6 +32,8 @@ int bin_to_asc(
 
 		if ( pnt && !(type & GV_POINT) ) continue;
 
+		if ( ver < 5 ) { Vect_cat_get ( Cats, 1, &cat ); }
+
 		switch(type)
 		{
 		case GV_BOUNDARY:
@@ -40,7 +43,14 @@ int bin_to_asc(
 			    ctype = 'A';
 			break;
 		case GV_CENTROID:
-			if ( ver < 5 ) { continue; }
+			if ( ver < 5 ) { 
+			    if ( att != NULL ) {
+				if ( cat > 0 ) {
+				    fprintf(att, "A %f %f %d\n", Points->x[0], Points->y[0], cat);
+				}
+			    }
+			    continue; 
+			}
 			ctype = 'C';			
 			break;			
 		case GV_LINE:
@@ -83,19 +93,27 @@ int bin_to_asc(
 			    G_format_northing (*yptr++, buf1, -1);
 			    G_format_easting (*xptr++, buf2, -1);
 			    
-			    
 			    if ( Map->head.with_z  && ver == 5 ) {
-				fprintf(ascii, " %-12s %-12s %-12f\n", buf1, buf2, *zptr);
+				fprintf(ascii, " %-12s %-12s %-12f\n", buf1, buf2, *zptr++);
 			    }
 			    else {
 				fprintf(ascii, " %-12s %-12s\n", buf1, buf2);
 			    }
-			    *zptr++;    
 		    }
 
 		    if ( ver == 5 ) {
 			for ( i=0; i< Cats->n_cats; i++ ) {		
 			    fprintf(ascii, " %-5d %-10d\n", Cats->field[i], Cats->cat[i]);
+			}
+		    } else {
+			if ( cat > 0 ) {
+			    if ( type == GV_POINT ) {
+				fprintf(att, "P %f %f %d\n", Points->x[0], Points->y[0], cat);
+			    } else {
+				x = (Points->x[1] + Points->x[0] ) / 2;
+				y = (Points->y[1] + Points->y[0] ) / 2;
+				fprintf(att, "L %f %f %d\n", x, y, cat);
+			    }
 			}
 		    }
 		}

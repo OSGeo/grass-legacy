@@ -1,6 +1,7 @@
 /*  @(#)b_a_dig.c	2.1  6/26/87  */
 
-#include "stdio.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include "gis.h"
 #include "Vect.h"
@@ -8,9 +9,9 @@
 
 int main (int argc, char *argv[])
 {
-	FILE *ascii;
+	FILE *ascii, *att;
 	struct Option *old, *new;
-	struct Flag *verf, *pntf;
+	struct Flag *verf;
 	char *mapset;
 	char errmsg[200];
 	struct Map_info Map;
@@ -32,14 +33,7 @@ int main (int argc, char *argv[])
         verf->key               = 'o';
         verf->description       = "create old (version 4) ascii file"; 
 
-	/*
-        pntf = G_define_flag ();
-        pntf->key               = 'p';
-        pntf->description       = "writes points and centroids only, one on one row"; 
-	*/
-	
-	if (G_parser (argc, argv))
-		exit(-1);
+	if (G_parser (argc, argv)) exit(-1);
 
 	if (!*(old->answer))
 	{
@@ -76,10 +70,20 @@ int main (int argc, char *argv[])
 	    pnt = 1;
         }
 
-	bin_to_asc (ascii, &Map, ver, pnt) ;
+	/* Open dig_att */
+	att = NULL;
+	if ( ver == 4 && !pnt ) {
+	    if ( G_find_file ("dig_att", new->answer, G_mapset() ) != NULL )
+		G_fatal_error ( "dig_att file already exist" );
+		
+	    if ( (att = G_fopen_new("dig_att", new->answer) ) == NULL )
+	        G_fatal_error ( "Not able to open dig_att file <%s>\n", new->answer) ;
+	}
 
-	if ( !pnt )
-	    fclose(ascii) ;
+	bin_to_asc (ascii, att, &Map, ver, pnt) ;
+
+	if ( !pnt )  fclose(ascii) ;
+	if ( att != NULL )  fclose(att) ;
 
 	Vect_close (&Map);
 
