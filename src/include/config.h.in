@@ -121,6 +121,9 @@
 /* define if postgres_fe.h exists */
 #undef HAVE_POSTGRES_FE_H
 
+/* define if internal/postgres_fe.h exists */
+#undef HAVE_INTERNAL_POSTGRES_FE_H
+
 /* define if PQcmdTuples in lpq */
 #undef HAVE_PQCMDTUPLES
 
