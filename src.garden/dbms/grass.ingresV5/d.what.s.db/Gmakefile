@@ -1,0 +1,30 @@
+MAN	  = doc/d.what.s.db
+PGM       = $(BIN_CONTRIB_CMD)/d.what.s.db
+LIBES     = $(GISLIB) $(COORCNVLIB) $(DISPLAYLIB) $(RASTERLIB) -ltermcap
+
+# EXTRA_CFLAGS 	= -Dunlink=puts
+
+OBJS = \
+	main.o  \
+	getArea.o \
+	returns.o \
+        getAllOpts.o \
+        getSopts.o \
+        buildSQL.o \
+        runSQL.o 
+
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	ln $(GISBASE)/etc/front.end $(BIN)/d.what.s.db
+	cp $(MAN)  $(GISBASE)/man/4
+
+$(LIBES): #
+#####################################
+#
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
+
+
