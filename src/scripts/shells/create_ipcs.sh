@@ -1,5 +1,5 @@
 #!/bin/sh
-# create_buffers.sh.in
+# create_ipcs.sh
 
 # Get the command name
 CMD_NAME=`basename $0`
