@@ -33,13 +33,13 @@ char *query_postgr(name, keytable, col, x, y)
 
     /* Check DATABASE env variable */
     if ((dbname = G__getenv("PG_DBASE")) == NULL) {
-	snprintf(buf, 32, "Please run g.select.pg first\n");
+	sprintf(buf, "Please run g.select.pg first\n");
 	return buf;
     }
 
 
     if ((mapset = openvect(name)) == NULL) {
-	snprintf(buf, 32, "Unable to open %s\n", name);
+	sprintf(buf, "Unable to open %s\n", name);
 	return buf;
     }
 
@@ -53,7 +53,7 @@ char *query_postgr(name, keytable, col, x, y)
 
 
     qry_str = (char *) getCat(&P_map, x, y, &dbCat);
-    snprintf(long_str, 2 * QRY_LENGTH, "%s", qry_str);
+    sprintf(long_str, "%s", qry_str);
     if (dbCat > 0) {
 	SQL_stmt = (char *) buildPg(keytable, col, dbCat);
 	qry_str = (char *) runPg(SQL_stmt);
@@ -106,7 +106,7 @@ char *query_pg_site(name, xcol, ycol, dist, x, y)
 
 /* Check DATABASE env variable */
     if ((dbname = G__getenv("PG_DBASE")) == NULL) {
-	snprintf(buf, 32, "Please run g.select.pg first\n");
+	sprintf(buf, "Please run g.select.pg first\n");
 	return buf;
     }
     SQL_stmt = buildPgSite(name, ycol, xcol);

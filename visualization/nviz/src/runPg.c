@@ -25,7 +25,7 @@ char *runPg(char *SQL_stmt)
     memset(buf, '\0', sizeof(buf));
     memset(chunk, '\0', sizeof(chunk));
 
-    snprintf(sqlcmd, QRY_LENGTH, "%s", SQL_stmt);
+    sprintf(sqlcmd, "%s", SQL_stmt);
 
     if (vrbs)
 	fprintf(stderr, "\n\nExecuting\n%s\n---------------------\n", sqlcmd);
@@ -55,7 +55,7 @@ char *runPg(char *SQL_stmt)
     if (nrows == 1 && vrbs) {
 	for (j = 0; j < nfields; j++) {
 	    strncpy(buf, PQgetvalue(res, 0, j), QRY_LENGTH);
-	    snprintf(chunk, QRY_LENGTH, "%10s I %s\n", PQfname(res, j), buf);
+	    sprintf(chunk, "%10s I %s\n", PQfname(res, j), buf);
 	    strncat(long_str, chunk, QRY_LENGTH);
 	}
     }
@@ -78,7 +78,7 @@ char *runPg(char *SQL_stmt)
     }
 
     if (vrbs) {
-	snprintf(chunk, QRY_LENGTH, "\n%d rows selected\n", nrows);
+	sprintf(chunk, "\n%d rows selected\n", nrows);
 	strncat(long_str, chunk, QRY_LENGTH);
     }
 
@@ -111,7 +111,7 @@ char *do_query(char *SQL_stmt, struct Sql *pts)
     memset(chunk, '\0', sizeof(chunk));
 
 
-    snprintf(sqlcmd, QRY_LENGTH,
+    sprintf(sqlcmd,
 	     "%s @ '(%f,%f,%f,%f)'::box", SQL_stmt,
 	     pts->minX, pts->minY, pts->maxX, pts->maxY);
 
@@ -143,7 +143,7 @@ char *do_query(char *SQL_stmt, struct Sql *pts)
     if (nrows == 1) {
 	for (j = 0; j < nfields; j++) {
 	    strncpy(buf, PQgetvalue(res, 0, j), QRY_LENGTH);
-	    snprintf(chunk, QRY_LENGTH, "%10s I %s\n", PQfname(res, j), buf);
+	    sprintf(chunk, "%10s I %s\n", PQfname(res, j), buf);
 	    strncat(long_str, chunk, QRY_LENGTH);
 	}
     }
@@ -166,7 +166,7 @@ char *do_query(char *SQL_stmt, struct Sql *pts)
     }
 
 
-    snprintf(chunk, QRY_LENGTH, "\n%d rows selected\n", nrows);
+    sprintf(chunk, "\n%d rows selected\n", nrows);
     strncat(long_str, chunk, QRY_LENGTH);
 
 
