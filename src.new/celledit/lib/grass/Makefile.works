@@ -1,0 +1,86 @@
+# Makefile for GrassTest
+
+CC = cc
+CFLAGS= -g
+LFLAGS=
+SRC= get_data.c make_cell_path.c
+OBJ= get_data.o make_cell_path.o
+LINTSRC = ${SRC} 
+LIBS= -L/usr/mapper/grass/src/libes -lgis -lsegment -lm
+LIBRARY= grass
+OUTLIB= ../lib${LIBRARY}.a
+LINTLIB= ../llib-l${LIBRARY}.ln
+
+default: GrassTest
+
+GrassTest: ${OBJ} main.o
+	${CC} main.o ${CFLAGS} -o GrassTest ${OBJ} ${LIBS}
+
+clean:
+	rm -f core lintout makeout tags Makefile.bak *.o
+
+lint: lintout
+
+lintout: ${SRC}
+	/bin/rm -f lintout
+	lint ${LFLAGS} ${LINTSRC} >lintout
+	checkc ${SRC} >> lintout
+
+lib: ${OUTLIB} ${LINTLIB}
+
+${LINTLIB}: ${SRC}
+	lint -C${LIBRARY} ${SRC} -o ../llib-lgrass.ln
+
+${OUTLIB}: ${OBJ}
+	ar ru ${OUTLIB} ${OBJ}
+	ranlib ${OUTLIB}
+
+errs:
+	/bin/rm -f makeout
+	make GrassTest >makeout
+
+tags:	${SRC}
+	/bin/rm -f tags
+	ctags ${SRC}
+
+source:
+	mv Makefile Makefile.bak
+	head -5 Makefile.bak >Makefile
+	echo SRC= `ls *.c` >>Makefile
+	echo OBJ= `ls *.c | sed s/c$$/o/` >>Makefile
+	tail +8 <Makefile.bak >>Makefile
+
+depend: ${SRC}
+	for i in ${SRC}; do\
+	    cc -M $$i | sed -e 's, \./, ,' | \
+	    awk '{ if ($$1 != prev) { if (rec != "") print rec; \
+		rec = $$0; prev = $$1; } \
+		else { if (length(rec $$2) > 78) { print rec; rec = $$0; } \
+		else rec = rec " " $$2 } } \
+		END { print rec }'; done >makedep
+	echo '/^# DO NOT DELETE THIS LINE/+2,$$d' >eddep
+	echo '$$r makedep' >>eddep
+	echo 'w' >>eddep
+	cp Makefile Makefile.bak
+	ed - Makefile <eddep
+	rm eddep makedep
+	echo '' >>Makefile
+	echo '# DEPENDENCIES MUST END AT END OF FILE' >>Makefile
+	echo '# IF YOU PUT STUFF HERE IT WILL GO AWAY' >>Makefile
+	echo '# see make depend above' >>Makefile
+
+.c.o:
+	${CC} ${CFLAGS} -c $*.c
+
+# DO NOT DELETE THIS LINE -- make depend uses it
+
+get_data.o: get_data.c /usr/mapper/grass/src/libes/gis.h /usr/include/stdio.h
+get_data.o: /usr/mapper/grass/src/libes/gisdefs.h
+main.o: main.c /usr/mapper/grass/src/libes/gis.h /usr/include/stdio.h
+main.o: /usr/mapper/grass/src/libes/gisdefs.h
+make_cell_path.o: make_cell_path.c /usr/mapper/grass/src/libes/gis.h
+make_cell_path.o: /usr/include/stdio.h /usr/mapper/grass/src/libes/gisdefs.h
+
+# DEPENDENCIES MUST END AT END OF FILE
+# IF YOU PUT STUFF HERE IT WILL GO AWAY
+# see make depend above
