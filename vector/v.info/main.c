@@ -70,17 +70,17 @@ main (int argc, char *argv[])
   Vect_set_fatal_error (GV_FATAL_PRINT);
 
   divider ('+');
-  sprintf (line, "Mapset:   %-29.29s  Organization: %s", mapset, Vect_get_organization(&Map));
+  sprintf (line, "Layer:    %-29.29s  Organization: %s", in_opt->answer, Vect_get_organization(&Map));
   printline (line);
-  sprintf (line, "Layer:    %-29.29s  Source Date: %s", in_opt->answer, Vect_get_map_date(&Map));
-  printline (line);
-  sprintf (line, "Orig. Scale: 1:%d", Vect_get_scale(&Map));
+  sprintf (line, "Mapset:   %-29.29s  Source Date: %s", mapset, Vect_get_map_date(&Map));
   printline (line);
   sprintf (line, "Location: %-29.29s  Name of creator: %s", G_location(), Vect_get_person(&Map));
   printline (line);
-  sprintf (line, "DataBase: %s", G_gisdbase() );
+  sprintf (line, "Database: %s", G_gisdbase() );
   printline (line);
   sprintf (line, "Title:    %s", Vect_get_map_name(&Map) );
+  printline (line);
+  sprintf (line, "Map Scale:  1:%d", Vect_get_scale(&Map));
   printline (line);
   sprintf (line, "Map format: %s",  Vect_maptype_info(&Map) );
   printline (line);
@@ -93,31 +93,32 @@ main (int argc, char *argv[])
 
   if ( Vect_level (&Map) > 1)
   {
-    sprintf (line, "                                         Number of points:     %-9ld", (long)Vect_get_num_primitives(&Map, GV_POINT));
+    printline ("");
+    sprintf (line, "  Number of points:       %-9ld       Number of areas:      %-9ld", 
+                      (long)Vect_get_num_primitives(&Map, GV_POINT), (long)Vect_get_num_areas(&Map));
     printline (line);
-    sprintf (line, "                                         Number of lines:      %-9ld", (long)Vect_get_num_primitives(&Map, GV_LINE));
+    sprintf (line, "  Number of lines:        %-9ld       Number of islands:    %-9ld",
+                      (long)Vect_get_num_primitives(&Map, GV_LINE), (long)Vect_get_num_islands(&Map));
     printline (line);
-    sprintf (line, "                                         Number of centroids:  %-9ld", (long)Vect_get_num_primitives(&Map, GV_BOUNDARY));
+    sprintf (line, "  Number of boundaries:   %-9ld       Number of faces:      %-9ld",
+                      (long)Vect_get_num_primitives(&Map, GV_BOUNDARY), (long)Vect_get_num_primitives(&Map, GV_FACE));
     printline (line);
-    sprintf (line, "                                         Number of areas:      %-9ld", (long)Vect_get_num_areas(&Map));
+    sprintf (line, "  Number of centroids:    %-9ld       Number of kernels:    %-9ld",
+                      (long)Vect_get_num_primitives(&Map, GV_CENTROID), (long)Vect_get_num_primitives(&Map, GV_KERNEL));
     printline (line);
-    sprintf (line, "                                         Number of faces:      %-9ld", (long)Vect_get_num_primitives(&Map, GV_FACE));
+    printline ("");
+    sprintf (line, "  Map is 3D:              %d", Vect_is_3d(&Map));
     printline (line);
-    sprintf (line, "                                         Number of kernels:    %-9ld", (long)Vect_get_num_primitives(&Map, GV_KERNEL));
-    printline (line);
-    sprintf (line, "                                         Number of islands:    %-9ld", (long)Vect_get_num_islands(&Map));
-    printline (line);
-    sprintf (line, "                                         Map is 3D:            %d", Vect_is_3d(&Map));
-    printline (line);
-    sprintf (line, "                                         Number of dblinks:    %-9ld", (long)Vect_get_num_dblinks(&Map));
+    sprintf (line, "  Number of dblinks:      %-9ld", (long)Vect_get_num_dblinks(&Map));
     printline (line);
   }
   else
-  {
+  { /* should not be reached */
     sprintf (line, "                No topology present.");
     printline (line);
   }
 
+  printline ("");
   sprintf (line, "  Projection: %s (zone %d)", G_database_projection_name(), G_zone());
   printline (line);
 
@@ -126,7 +127,7 @@ main (int argc, char *argv[])
   printline (line);
   sprintf (line, "           E: %-10.3f    W: %-10.3f", box.E, box.W);
   printline (line);
-  sprintf (line, "           B: %-6.3f    T: %-6.3f", box.B, box.T);
+  sprintf (line, "           B: %-6.3f         T: %-6.3f", box.B, box.T);
   printline (line);
 
   printline ("");
