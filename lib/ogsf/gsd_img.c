@@ -8,9 +8,9 @@
 
 static void ierrfunc(char *);
 
-unsigned short rbuf[8192];
-unsigned short gbuf[8192];
-unsigned short bbuf[8192];
+static unsigned short rbuf[8192];
+static unsigned short gbuf[8192];
+static unsigned short bbuf[8192];
 
 static void ierrfunc(char *ebuf)
 {

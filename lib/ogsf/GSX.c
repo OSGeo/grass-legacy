@@ -9,6 +9,9 @@
 
 #include "gstypes.h"
 
+void (*Cxl_func)();
+void (*Swap_func)();
+
 static int Cxl=0;
 
 int GS_check_cancel(void)
