@@ -301,8 +301,8 @@ scan_cats (char *s, int *x, int *y)
 
     *dummy = 0;
     if (sscanf (s, "%d-%d%1s", x, y, dummy) == 2)
-
 	return (*dummy == 0 && *x <= *y);
+
     *dummy = 0;
     if (sscanf (s, "%d%1s", x, dummy) == 1 && *dummy == 0)
     {
@@ -330,7 +330,7 @@ int scan_names (struct Categories *pcats, char *s, int *x)
     /* find input string in category struct, assign category value to the
        area_name based on category file record number*/
 
-    recd = pcats->num;             /* set the number of categories */
+    recd = pcats->ncats;             /* set the number of categories */
     for (i=0;i<recd;i++)                /* category search */
     {     /* cycle cat names, look for a match */
         cat_name[0] = '\0';
