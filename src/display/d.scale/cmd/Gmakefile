@@ -4,6 +4,8 @@ OFILES = \
 	screenscale.o \
 	main.o
 
+EXTRA_CFLAGS=$(XCFLAGS) $(XINCPATH)
+
 LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
 $(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
