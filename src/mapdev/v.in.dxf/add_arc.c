@@ -93,7 +93,7 @@ dxf_add_arc(dxf_file)
 
     if (xflag && yflag && rflag && sflag && fflag)
     {
-	arr_size = make_arc(centerx,centery,radius,start_angle,finish_angle,1);
+	arr_size = make_arc(0, centerx,centery,radius,start_angle,finish_angle,1);
 	write_polylines(layer_fd,arr_size);
     }
     return(1);
