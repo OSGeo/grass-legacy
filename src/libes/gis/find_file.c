@@ -28,8 +28,8 @@
 
 #include "gis.h"
 
-char *
-G_find_file (element, name, mapset)
+static char *
+G__find_file (element, name, mapset)
     char *element;
     char *name;
     char *mapset;
@@ -87,7 +87,7 @@ G_find_file (element, name, mapset)
 }
 
 char *
-G_find_file2 (element, name, mapset)
+G_find_file (element, name, mapset)
     char *element;
     char *name;
     char *mapset;
@@ -95,7 +95,7 @@ G_find_file2 (element, name, mapset)
     char *mp;
     char xname[512], xmapset[512];
 
-    mp = G_find_file (element, name, mapset);
+    mp = G__find_file (element, name, mapset);
     if (mp)
     {
 	if (G__name_is_fully_qualified(name, xname, xmapset))
@@ -103,4 +103,12 @@ G_find_file2 (element, name, mapset)
     }
 
     return mp;
+}
+char *
+G_find_file2 (element, name, mapset)
+    char *element;
+    char *name;
+    char *mapset;
+{
+    return G_find_file (element, name, mapset);
 }
