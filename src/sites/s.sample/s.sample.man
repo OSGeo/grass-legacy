@@ -76,8 +76,11 @@ and
 GRASS Tutorial on \fIs.sample\fR
 (available as s.sample-tutorial.ps)
 .SH BUGS
-Please send all bug fixes and comments to the author.
-.SH AUTHOR
-James Darrell McCauley, Agricultural Engineering, Purdue University 
+Please send all bug fixes and comments to the author
+or the grass development team.
 .if n .br 
-(mccauley@ecn.purdue.edu)
+http://www.geog.uni-hannover.de/grass/
+.SH AUTHOR
+James Darrell McCauley (darrell@mccauley-usa.com)
+.if n .br 
+http://www.usol.com/~mccauley/

@@ -1,5 +1,14 @@
+/*
+ * Copyright (C) 1994. James Darrell McCauley.  (darrell@mccauley-usa.com)
+ * 	                                        http://www.usol.com/~mccauley/
+ *
+ * This program is free software under the GPL (>=v2)
+ * Read the file GPL.TXT coming with GRASS for details.
+ */
+
 #include<math.h>
 #include"gis.h"
+
 double **ipf (n, m, stop, showstop)
   int n,showstop;
   double **m, stop;
