@@ -78,7 +78,7 @@ node_lines (map)
 	    first = 0;
 
 	    rline_num = map->Node[node_num].lines[next_line];
-	    line_num = ABS (rline_num);
+	    line_num = abs (rline_num);
 	    if (0 > V1_read_line (map, &Gpoints, map->Line[line_num].offset))
 		continue;
 	    highlight_line (map->Line[line_num].type, &Gpoints, line_num, map);
