@@ -1,0 +1,7 @@
+.TH r.stage3
+.SH NAME
+\fIr.stage3\fR - Import NEXRAD radar data into GRASS raster format.
+Refer to the hard-copy GRASS users manual for special instructions.
+.b
+\fI(GRASS Raster Program)\fR
+
