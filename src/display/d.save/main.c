@@ -143,6 +143,7 @@ int main (int argc, char **argv)
 				    Nstr, Sstr, Estr, Wstr, NSRESstr, EWRESstr);
 			}
 
+/* List already has commands to draw these maps.
 			if (Wcell[0]!='\0')
 				fprintf (stdout,"d.rast map=%s\n", Wcell);
 
@@ -151,6 +152,7 @@ int main (int argc, char **argv)
 
 			if (Wsite[0]!='\0')
 				fprintf (stdout,"d.sites sitefile=%s\n", Wsite);
+*/
 
 			/* print out the list */
 			while (List!=NULL) {
@@ -278,6 +280,10 @@ set_item (char *item, char **list)
 		case 8: /* site */
 			sscanf(list[0]," %s ", Wsite);
 			break;
+		case 9:
+		case 10:
+		case 11:
+			break;
 		default:
 			sprintf(tempbuf,"Unkown item type in pad: %s", item);
 			G_warning(tempbuf);
@@ -310,6 +316,10 @@ process_list (char *item, char **list, int count)
 
 			List_last = new_list;
 		}
+		break;
+	case 9:
+	case 10:
+	case 11:
 		break;
 	default: /* otherwise */
 		sprintf(tempbuf,"Unkown item type in pad: %s", item);
