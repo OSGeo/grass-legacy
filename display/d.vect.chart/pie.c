@@ -32,7 +32,9 @@ pie ( double cx, double cy, int size, double *val, int ncols, COLOR *ocolor, COL
 	sum += val[i];
         end_ang = 2 * PI * sum / tot_sum;	
 	Vect_reset_line ( Points );
-	Vect_append_point ( Points, cx, cy, 0);
+
+	if (val[0] != tot_sum) /* all in one slice, don't draw line to center */
+	    Vect_append_point ( Points, cx, cy, 0);
 
 	a = ang;
 	while ( 1 ) {
@@ -48,8 +50,9 @@ pie ( double cx, double cy, int size, double *val, int ncols, COLOR *ocolor, COL
 	       a += step;
 	   }
 	}
-	
-	Vect_append_point ( Points, cx, cy, 0);
+
+	if (val[0] != tot_sum)
+	    Vect_append_point ( Points, cx, cy, 0);
 
 	R_RGB_color ( colors[i].r, colors[i].g, colors[i].b );
 	G_plot_polygon ( Points->x, Points->y, Points->n_points);
