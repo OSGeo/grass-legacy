@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.125 2001-03-09 16:36:44 markus Exp $
+                 $Id: BUGS,v 1.126 2001-03-20 19:15:32 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -230,6 +230,15 @@ r.in.bin:
  not a bug:
  - does it accept coordinates in dec. degree as well as DD:mm:ss?
    -> put a note in html/html/r.in.bin.html
+
+r.in.dem:
+ r.in.dem died with a segmentation fault when I tried to import a new dem. 
+ Looking closer at the program and at the USGS DEM standard I found that
+ large parts of the header are actually supposed to be FORTRAN double
+ precision values.  I'm surprised that r.in.dem works for anyone.  I guess
+ once r.fill.dir is converted to C I can turn to writing new input functions
+ for r.in.dem (reported by Roger S. Miller).
+ (being worked on by Roger S. Miller <rgrmill@rt66.com>)
 
 r.in.hdf/r.out.hdf (src.garden/grass.hdf)
  - needs updating to HDF5.x lib
