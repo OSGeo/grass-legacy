@@ -217,3 +217,20 @@ void RTreeDisconnectBranch(struct Node *n, int i)
 	n->count--;
 }
 
+/* Destroy (free) node recursively. */
+void RTreeDestroyNode (struct Node *n)
+{
+	int i;
+
+	if (n->level > 0) { /* it is not leaf -> destroy childs */
+	    for ( i = 0; i < NODECARD; i++) {
+		if ( n->branch[i].child ) {
+		    RTreeDestroyNode ( n->branch[i].child );
+		}
+	    }
+	}
+
+	/* Free this node */
+        RTreeFreeNode( n );
+}
+
