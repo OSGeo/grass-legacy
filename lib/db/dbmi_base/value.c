@@ -432,3 +432,19 @@ db_CatValArray_alloc( dbCatValArray *arr, int n )
     return DB_OK;
 }
 
+/*!
+ \fn 
+ \brief 
+ \return 
+ \param 
+*/
+int
+db_CatValArray_realloc( dbCatValArray *arr, int n )
+{
+    arr->value = (dbCatVal *) G_realloc ( arr->value,  n * sizeof(dbCatVal) );
+
+    arr->alloc = n;
+
+    return DB_OK;
+}
+

@@ -281,6 +281,29 @@ int db_select_CatValArray ( dbDriver *driver, char *tab, char *key, char *col, c
     return (nrows);
 }
 
+/* Sort dbCatValArray by category */
+void
+db_CatValArray_sort ( dbCatValArray *arr )
+{
+    qsort( (void *) arr->value, arr->n_values, sizeof(dbCatVal), cmpcat);
+} 
+
+/* find value by key
+*  returns: DB_FAILED, DB_OK
+*/
+int
+db_CatValArray_get_value ( dbCatValArray *arr, int key, dbCatVal **cv )
+{
+    dbCatVal *catval;
+    
+    catval = bsearch ( (void *) &key, arr->value, arr->n_values, sizeof ( dbCatVal ), cmpcat );
+    if ( catval == NULL ) { return DB_FAILED; }
+
+    *cv = catval;
+    
+    return DB_OK;
+}
+
 /* find value by key
 *  returns: DB_FAILED, DB_OK
 */
