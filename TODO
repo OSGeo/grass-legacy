@@ -1,4 +1,4 @@
-$Id: TODO,v 1.29 2000-10-16 16:03:21 markus Exp $
+$Id: TODO,v 1.30 2000-10-16 17:03:29 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -113,6 +113,32 @@ Modules:
   They should read/write from current directory instead of subdirectory
   in mapset.
   v.in.shape/v.out.shape and m.in.e00 already meet this convention.
+
+- Implement new G_readsites_xyz function into
+   src.contrib/CERL/sites/s.surf.krig/read_sites.c
+   src.contrib/GMSL/g3d/src3d/sites/s.to.rast3/read_sites.c
+   src.contrib/GMSL/g3d/src3d/sites/s.vol.idw/read_sites.c
+   src.contrib/NPS/v.circle/cmd/readsites.c
+   src.contrib/PURDUE/s.medp/readsites.c
+   src.garden/grass.rim/s.db.rim/cmd/read_sites.c
+   src.garden/grass.rim/s.db.rim/inter/read_sites.c
+   src/raster/r.surf.idw2/cmd/read_sites.c
+   src/sites/s.kcv/readsite.c
+   src/sites/s.menu/Lib/read_sites.c
+   src/sites/s.normal/readz.c
+   src/sites/s.probplt/readz.c
+   src/sites/s.qcount/readsite.c
+   src/sites/s.sample/readsite.c
+   src/sites/s.surf.idw/cmd/read_sites.c
+   src/sites/s.sv/readsite.c
+   src/sites/s.univar/readsite.c
+   src/mapdev/v.bubble/v.bubble.c
+   src/sites/*
+
+   All these files/functions should be replaced by a common
+   G_readsites() function with attribute selection etc.
+ (being worked by Eric G. Miller)
+
 
 - d.legend:
   * there is no facility to place the legend     
