@@ -33,6 +33,7 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 
     /* allocate memory for coordinates */
     Points = Vect_new_line_struct();
+    nPoints = Vect_new_line_struct();
     Cats = Vect_new_cats_struct ();
 
     /* process only vectors in current window */
@@ -57,7 +58,7 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 
         if ( Varray != NULL && Varray->c[line] == 0 ) continue; /* is not in array */
 	
-	pPoints = Points; nPoints=0;
+	pPoints = Points;
 	cat = 0;
 	Vect_cat_get( Cats, 1, &cat);
 
@@ -81,8 +82,7 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 		d = vector.layer[vec].offset / PS.ew_to_x ;
 	    
 	    adjust_line ( Points ); /* LL projection */
-	    nPoints = parallel_line ( Points, d, tol);
-	    clean_parallel ( nPoints, Points, d );
+	    Vect_line_parallel ( Points, d, tol, 1, nPoints );
 	    pPoints = nPoints;
 	}
 	
@@ -114,9 +114,9 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 	    d = width / PS.ew_to_x; 
 	    if ( vector.layer[vec].ref == LINE_REF_RIGHT ) d =- d;
 	    adjust_line ( Points ); /* LL projection */
-	    nPoints = parallel_line ( Points, d, tol);
-	    clean_parallel ( nPoints, Points, d );
-	    reverse_line ( nPoints );
+	    Vect_line_parallel ( Points, d, tol, 1, nPoints );
+	    Vect_line_reverse ( nPoints );
+
 	    fprintf(PS.fp, "NP\n");
 	    if ( Points->n_points > 0 ) {
 		construct_path (Points, 0, START_PATH);
@@ -126,7 +126,6 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
 	    }
 	    fprintf(PS.fp, "F\n");
 	}
-	Vect_destroy_line_struct ( nPoints );
 	Vect_reset_line ( Points );
     }
     fprintf(PS.fp, "\n");

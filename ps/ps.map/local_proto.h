@@ -135,11 +135,8 @@ int PS_vlines_plot(struct Map_info *, int, int);
 /* ps_vareas.c */
 int PS_vareas_plot(struct Map_info *, int);
 /* vect.c */
-struct line_pnts *parallel_line(struct line_pnts *, double, double);
 int adjust_line(struct line_pnts *);
-void reverse_line(struct line_pnts *);
 int construct_path(struct line_pnts *, double, int);
-void clean_parallel ( struct line_pnts *Points, struct line_pnts *oPoints, double d  );
 #endif
 
 /* Read definition from script file and store for later use */
