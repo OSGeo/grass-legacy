@@ -213,6 +213,15 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
 fi
 export GRASS_HTML_BROWSER
 
+#predefine monitor size for certain architectures
+if [ "$HOSTTYPE" = "arm" ] ; then
+   #small monitor on ARM (iPAQ, zaurus... etc)
+   GRASS_HEIGHT=320
+   GRASS_WIDTH=240
+   export GRASS_HEIGHT GRASS_WIDTH
+fi
+
+
 if [ ! "$GRASS_GNUPLOT" ] ; then
     GRASS_GNUPLOT="gnuplot -persist"
     export GRASS_GNUPLOT
