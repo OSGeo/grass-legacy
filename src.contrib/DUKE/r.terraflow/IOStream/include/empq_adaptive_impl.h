@@ -268,7 +268,7 @@ EMPQueueAdaptive<T,Key>::extract_all_min(T& elt) {
   case EXTMEM_DEBUG:
 	v1 =  dim->extract_all_min(tmp);
 	v = em->extract_all_min(elt);
-	assert(dim->size() == em->size());
+	assert(dim->BasicMinMaxHeap<T>::size() == em->size());
 	assert(v == v1);
 	assert(tmp == elt);
 	break;
@@ -291,7 +291,7 @@ EMPQueueAdaptive<T,Key>::size() const {
 	v = em->size();
 	break;
   case EXTMEM_DEBUG:
-	v1 = dim->size();
+	v1 = dim->BasicMinMaxHeap<T>::size();
 	v = em->size();
 	assert(v == v1);
 	break;
@@ -322,7 +322,7 @@ EMPQueueAdaptive<T,Key>::extract_min(T& elt) {
 	  v = em->extract_min(elt);
 	  assert(v == v1);
 	  assert(tmp == elt);
-	  assert(dim->size() == em->size());
+	  assert(dim->BasicMinMaxHeap<T>::size() == em->size());
 	  break;
     }
 	return v;
@@ -356,7 +356,7 @@ EMPQueueAdaptive<T,Key>::insert(const T& elt) {
   case EXTMEM_DEBUG:
 	dim->insert(elt);
 	v = em->insert(elt);
-	assert(dim->size() == em->size());
+	assert(dim->BasicMinMaxHeap<T>::size() == em->size());
 	break;
   }
   return v;
