@@ -18,7 +18,7 @@ int main (int argc, char **argv)
 
     module = G_define_module();
     module->description =
-		"Identifies the geographic coordinates associated with\n"
+		"Identifies the geographic coordinates associated with "
 		"point locations in the active frame on the graphics monitor.";
 
     once = G_define_flag() ;
