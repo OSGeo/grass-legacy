@@ -1,4 +1,3 @@
-/*  %W%  %G%  */
 /*
 
    Chris Rewerts, Agricultural Engineering, Purdue University
@@ -21,7 +20,7 @@ make_new_cell_layer()
     int cellfd;
 
     int tmpfd;
-    int row, col;
+    int row;
 
   /* open the new cell file to contain the edited version of
      the original cell layer. open our temporary file for read
