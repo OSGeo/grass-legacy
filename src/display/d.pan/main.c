@@ -35,7 +35,7 @@ int main (int argc, char **argv)
     rmap->key = "rast";
     rmap->type = TYPE_STRING;
     rmap->multiple = YES;
-    if (nrasts)
+    if (rast)
           rmap->answers = rast;
     rmap->required = NO;
     rmap->gisprompt = "old,cell,raster" ;
@@ -45,7 +45,7 @@ int main (int argc, char **argv)
     vmap->key = "vector";
     vmap->type = TYPE_STRING;
     vmap->multiple = YES;
-    if (nrasts)
+    if (vect)
           vmap->answers = vect;
     vmap->required = NO;
     vmap->gisprompt = "old,dig,vector" ;
