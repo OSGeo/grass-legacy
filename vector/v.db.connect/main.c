@@ -30,7 +30,7 @@ int main (int argc, char **argv)
 {
     char *input, *mapset;
     struct GModule *module;
-    struct Option *inopt, *field_opt, *dbkey, *dbdriver, *dbdatabase, *dbtable;
+    struct Option *inopt, *dbdriver, *dbdatabase, *dbtable, *field_opt, *dbkey;
     struct Flag *overwrite, *print;
     dbDriver *driver;
     struct field_info *fi;
@@ -44,21 +44,6 @@ int main (int argc, char **argv)
 	"prints/sets DB connection for a vector map";
 
     inopt = G_define_standard_option(G_OPT_V_MAP);
-    field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
-
-    dbtable = G_define_option();
-    dbtable->key         = "table";
-    dbtable->type        = TYPE_STRING;
-    dbtable->required    = NO;         
-    dbtable->description = "table name";
-
-    dbkey = G_define_option() ;
-    dbkey->key        = "key" ;
-    dbkey->type       = TYPE_STRING ;
-    dbkey->required   = NO  ;
-    dbkey->multiple   = NO ;
-    dbkey->answer    = "cat";
-    dbkey->description= "key name:" ;
 
     dbdriver = G_define_option() ;
     dbdriver->key        = "driver" ;
@@ -74,6 +59,22 @@ int main (int argc, char **argv)
     dbdatabase->required   = NO  ;
     dbdatabase->multiple   = NO ;
     dbdatabase->description= "database name:" ;
+
+    dbtable = G_define_option();
+    dbtable->key         = "table";
+    dbtable->type        = TYPE_STRING;
+    dbtable->required    = NO;         
+    dbtable->description = "table name";
+
+    dbkey = G_define_option() ;
+    dbkey->key        = "key" ;
+    dbkey->type       = TYPE_STRING ;
+    dbkey->required   = NO  ;
+    dbkey->multiple   = NO ;
+    dbkey->answer    = "cat";
+    dbkey->description= "key name:" ;
+
+    field_opt = G_define_standard_option(G_OPT_V_FIELD) ;
 
     print = G_define_flag();
     print->key               = 'p';
@@ -161,7 +162,7 @@ int main (int argc, char **argv)
          }
        }
        else
-          G_fatal_error("You have to specify all connection parameters.");
+          G_fatal_error("For defining a new connection you have to specify these parameters: driver, database, table [, key [, field]]");
     } /* end define new dbln settings */
 
     Vect_close ( &Map);
