@@ -1,3 +1,6 @@
+/*
+ * $Id$
+ */
 /**********************************************************************
  *
  *   G_put_[f/d_]raster_row (fd, buf)
@@ -623,7 +626,7 @@ int G__write_data_compressed (int fd, int row, int n)
 
   nwrite = FCB.nbytes * n;
 
-  l = log ((double) nwrite) / log ((double) 2);  
+  l = log((double) nwrite) / log((double) 2);  
   
   if ((1 << l) > (nwrite * 3.0 / 4.0)) l--;     /* just a guess */
 
