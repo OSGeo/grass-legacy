@@ -70,8 +70,8 @@ int main (int argc, char *argv[])
 	FCELL *fcell;
 	RASTER_MAP_TYPE map_type;
 	int row, col;
-	int nrows, ncols;
-	int grass_nrows, grass_ncols;
+	int nrows=0, ncols=0;
+	int grass_nrows=0, grass_ncols=0;
 	int bytes, sflag, swap;
 	int no_coord=0, no_dim=0;
 	void *x_v;
@@ -107,6 +107,22 @@ int main (int argc, char *argv[])
 	module              = G_define_module();
 	module->description = ""\
 	"Import a binary raster file into a GRASS raster map layer.";
+
+	flag.s = G_define_flag();
+	flag.s->key = 's';
+	flag.s->description = "Signed data (high bit means negative value)";
+
+	flag.f = G_define_flag();
+	flag.f->key = 'f';
+	flag.f->description = "Import as Floating Point Data (default: Integer)";
+
+	flag.b = G_define_flag();
+	flag.b->key = 'b';
+	flag.b->description = "Byte Swap the Data During Import";
+
+	flag.gmt_hd = G_define_flag();
+	flag.gmt_hd->key = 'h';
+	flag.gmt_hd->description = "Get region info from GMT style header";
 
 	parm.input = G_define_option();
 	parm.input->key = "input";
@@ -160,29 +176,13 @@ int main (int argc, char *argv[])
 	parm.west->description = "Western limit of geographic region" ;
 
 	parm.rows = G_define_option();
-	parm.rows->key = "r";
+	parm.rows->key = "rows";
 	parm.rows->type = TYPE_DOUBLE;
 	parm.rows->required = NO;
 	parm.rows->description = "Number of rows";
 
-	flag.s = G_define_flag();
-	flag.s->key = 's';
-	flag.s->description = "Signed data (high bit means negative value)";
-
-	flag.f = G_define_flag();
-	flag.f->key = 'f';
-	flag.f->description = "Import as Floating Point Data (default: Integer)";
-
-	flag.b = G_define_flag();
-	flag.b->key = 'b';
-	flag.b->description = "Byte Swap the Data During Import";
-
-	flag.gmt_hd = G_define_flag();
-	flag.gmt_hd->key = 'h';
-	flag.gmt_hd->description = "Get region info from GMT style header";
-
 	parm.cols = G_define_option();
-	parm.cols->key = "c";
+	parm.cols->key = "cols";
 	parm.cols->type = TYPE_DOUBLE;
 	parm.cols->required = NO;
 	parm.cols->description = "Number of columns";
