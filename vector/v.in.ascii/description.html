@@ -3,29 +3,54 @@
 <em>v.in.ascii</em> converts a vector map in ASCII format to a vector map in 
 binary format. The module may be run in 2 modes:
 <UL>
-<LI><B>standard</B>: if <B>'input'</B> option is used the module reads GRASS ASCII vector from 
-                     the <B>dig_ascii</B> directory
-<LI><B>points</B>: if <B>'input'</B> is not used the module reads points from standard input.
-    Each point must be defined on one row, values separated by a user definable deliminator.
-    If the 'columns' option is not defined, default names are used. It is possible to specify
-    the column order for the x,y,z coordinates and category values.
+<LI><B>standard</B>: if the <B>'input'</B> option is used the module reads a
+    GRASS ASCII vector file from the <B>$MAPSET/dig_ascii/</B> directory.
+<LI><B>points</B>: if <B>'input'</B> is not used the module reads points from 
+    standard input. Each point must be defined on one row, values separated by 
+    a user definable deliminator. If the 'columns' option is not defined, 
+    default names are used. It is possible to specify the column order for the 
+    x,y,z coordinates and category values.
 </UL>
 
 
 <h2>NOTES</h2>
 
-Use the <b>-z</b> flag to convert ASCII data into a 3D binary vector map
+Use the <b>-z</b> flag to convert ASCII data into a 3D binary vector map.
 
 <p>
 After running this program, GRASS support files must be built with 
 <em><a HREF="v.build.html">v.build</a></em> for the binary <em>output</em> 
-file 
+map.
+
+<P>
+A GRASS ASCII vector file (in <B>standard</B> mode) may contain a mix of 
+primitives including points, lines, boundaries, centroids, areas, faces, 
+and kernels.
+<P>
+The primitive codes are as follows:
+<UL>
+<LI>'A': area (boundary)<BR>
+<LI>'B': boundary<BR>
+<LI>'C': centroid<BR>
+<LI>'L': line<BR>
+<LI>'P': point<BR>
+<LI>'F': face<BR>
+<LI>'K': kernel<BR>
+</UL>
+
+The coordinates are listed following the initial line containing the
+primitive code and the total number of vertices in the series. 
+For historical reasons <i>the GRASS ASCII vector format lists northings 
+before eastings.</i>
+When importing data from stdin in <B>points</B> mode however, 
+eastings are listed before northings as per the usual convention.
+Sorry about the confusion.
 
 <P>
 <b>Importing from a spreadsheet</b><br>
 Data may be imported from many spreadsheet programs by saving the 
 spreadsheet as a comma separated variable (.csv) text file, and then 
-using the "fs=," option with <em>v.in.ascii</em> in 'points' mode.
+using the "fs=," option with <em>v.in.ascii</em> in <b>points</b> mode.
 
 
 <h2>EXAMPLES</h2>
