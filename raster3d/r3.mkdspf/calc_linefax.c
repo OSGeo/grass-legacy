@@ -8,7 +8,7 @@
 /*                   						*/
 /****************************************************************/
 
-viz_calc_tvals(linefax, a_levels, a_min, a_max, a_step, a_tnum, quiet)
+int viz_calc_tvals(linefax, a_levels, a_min, a_max, a_step, a_tnum, quiet)
 cmndln_info	*linefax;
 char	**a_levels,*a_min,*a_max,*a_step,*a_tnum;
 int quiet;
@@ -93,7 +93,7 @@ int quiet;
 	fprintf(stderr,"threshold values: ");
 	for (i=0; i< linefax->nthres; i++)
 	    fprintf(stderr,"%f ",linefax->tvalue[i]);
-	fprintf(stderr,"\n");
+	fprintf(stderr,"\nNo. of thresholds: %i\n", linefax->nthres + 1);
 
     }
 
