@@ -21,7 +21,7 @@ int trans ( double *x, double *y, int n_points, double angle, double scale,
 /* Plot icon */
 int G_plot_icon (double xc, double yc, int type, double angle, double scale) 
 {
-    int    i, np;
+    int    i, np = 0;
     double x[10], y[10];
     
     

@@ -7,8 +7,10 @@ int G_cell_stats_histo_eq (
     void (*func)())
 {
     long count, total;
-    CELL prev, cat;
-    CELL x, newcat;
+    CELL prev = 0;
+    CELL cat;
+    CELL x;
+    CELL newcat = 0;
     int first;
     double span, sum;
     double range2;

@@ -69,6 +69,7 @@
 
 static int quant_parse_file (FILE *,struct Quant *);
 
+#if 0
 static int
 /* redundant: integer range doesn't exist now: it is defined by
    the quant rules */
@@ -106,6 +107,7 @@ quant_load_range (
 
   return 1;
 }
+#endif
 
 /*--------------------------------------------------------------------------*/
 

@@ -532,7 +532,7 @@ int G_site_c_cmp (const void *a, const void *b)
    site structures by category. */
 {
   int result = 0;               /* integer to be returned */
-  double diff;
+  double diff = 0;
  
   switch((*(Site **)a)->cattype)
   {

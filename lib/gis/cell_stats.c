@@ -289,7 +289,7 @@ int G_rewind_cell_stats (struct Cell_stats *s)
 	return 1;
 /* start at root and go all the way to the left */
     s->curp = 1;
-    while (q = s->node[s->curp].left)
+    while ((q = s->node[s->curp].left))
 	s->curp = q;
     s->curoffset = -1;
 
@@ -312,7 +312,7 @@ static int next_node (struct Cell_stats *s)
 	return 1;
     }
 
-    while (q = s->node[s->curp].left)   /* now go all the way left */
+    while ((q = s->node[s->curp].left))   /* now go all the way left */
 	s->curp = q;
 
     return 1;
@@ -385,7 +385,7 @@ int G_next_cell_stat (
 	    s->curoffset = -1;
 	    continue;
 	}
-	if (*count = s->node[s->curp].count[s->curoffset])
+	if ((*count = s->node[s->curp].count[s->curoffset]))
 	{
 	    idx = s->node[s->curp].idx;
 

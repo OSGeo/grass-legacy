@@ -53,7 +53,7 @@ int G_get_window (struct Cell_head *window )
     {
 	char *err;
 
-	if(err = G__get_window (&dbwindow,"","WIND",G_mapset()))
+	if((err = G__get_window (&dbwindow,"","WIND",G_mapset())))
 	{
 	    G_fatal_error (_("region for current mapset %s\nrun \"g.region\""), err);
 	    G_free (err);

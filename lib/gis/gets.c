@@ -44,7 +44,7 @@ int G_gets (char *buf)
   
   	ctrlz = 0;
 #ifdef SIGTSTP
-  	if (tty = isatty(0))
+  	if ((tty = isatty(0)))
   	{
 		sigtstp = signal (SIGTSTP, catch_ctrlz);
 		if (sigtstp != (void (*)()) SIG_DFL)

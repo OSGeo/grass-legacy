@@ -220,7 +220,7 @@ int G__open_cell_old (
     char *r_name ;
     char *r_mapset ;
     struct Cell_head cellhd ;
-    int CELL_nbytes;                   /* bytes per cell in CELL map */
+    int CELL_nbytes = 0;                   /* bytes per cell in CELL map */
     int INTERN_SIZE;
     int reclass_flag, i;
     int MAP_NBYTES;

@@ -6,6 +6,7 @@
 #include <string.h>
 #include <locale.h>
 
+#if defined(HAVE_LIBINTL_H) && defined(USE_NLS)
 static char *
 locale_dir(void)
 {
@@ -25,6 +26,7 @@ locale_dir(void)
 
 	return localedir;
 }
+#endif
 
 char *
 G_gettext(const char *package, const char *msgid)

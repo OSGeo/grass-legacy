@@ -13,9 +13,11 @@
 
 #include "config.h"
 
+#ifndef HAVE_GETHOSTNAME
 #ifdef HAVE_SYS_UTSNAME_H
 #include <sys/utsname.h>
 static struct utsname attname;
+#endif
 #endif
 
 char *
@@ -29,7 +31,7 @@ G__machine_name()
     gethostname(name, sizeof(name));
     name[sizeof(name)-1] = 0;	/* make sure null terminated */
 #else
-#ifdef HAVE_UNAME
+#ifdef HAVE_SYS_UTSNAME_H
     uname (&attname);
     strcpy (name, attname.nodename);
 #endif
