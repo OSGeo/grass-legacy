@@ -1,0 +1,301 @@
+
+
+
+RASTERLIB(3)                                         RASTERLIB(3)
+
+
+NAME
+       RASTER ORIENTED GRAPHICS LIBRARY
+
+SYNOPSIS
+       c [flags] files $(RASTERLIB) [ libraries]
+
+
+AUTHORS
+       James  Westervelt  -  Army  Corps Construction Engineering
+       Research Laboratory
+       Michael Shapiro  -  Army  Corps  Construction  Engineering
+       Research Laboratory
+
+DESCRIPTION
+       GRASS  application  programs having graphic output connect
+       themselves at run time to a user  chosen  graphics  driver
+       which controls a graphics device:
+
+       PROGRAM <--> DRIVER <--> DEVICE
+
+       The  PROGRAM  to  DRIVER  interface  is  done through this
+       RASTERLIB library of  commands.    Making  GRASS  
+       programs
+       generate  graphics  on  a new graphics device requires the
+       development of a new DRIVER. This driver is then avail­
+       able  to  all  existing GRASS programs without the need to
+       recompile or reload the individual  graphics  applications
+       programs.
+
+       The  GRASS  application programmer is completely separated
+       from the problems of  graphic  devices;  needing  only  to
+       learn  and  use  the  graphics calls listed in this manual
+       entry.
+
+       Two other reasons for the existence of this GRASS graphics
+       standard  should also be mentioned.  1) Because the graph­
+       ics code comes as part of the package, there is usually no
+       need for a site to purchase special graphics libraries. 2)
+       All graphics standards in industry are  aimed  at  CAD-CAM
+       vector  applications.   GRASS,  being  raster based in its
+       primary data format, requires the ability to work directly
+       with  a device's pixles.  This library provides that capa­
+       bility while interfacing itself to commercially  available
+       vector graphics.
+
+       This  raster  capability  in an easily ported format comes
+       with some known, but chosen, drawbacks.    Fancy  graphics
+       capabilities  supported  by  one  device  or  a particular
+       graphics library are not always available.  These  include
+       3-D, windowing, multi-buffer, panning/zooming, and display
+       lists.  Such capabilities must (and are) built into  GRASS
+       when  necessary,   but  if  your machine supports hardware
+       panning and zooming, the GRASS software panning and  zoom­
+       ing may be painfully slow to you.
+
+
+USE
+       This graphics library is raster oriented.  To be efficient
+       in the painting of raster information on a raster  device,
+       the  application programs must talk directly to the graph­
+       ics device.   To do so, this library can provide the  pro­
+       gram  with  the  left, right, top, and bottom edges of the
+       screen.  To simplify coding, the device's 0,0 location  is
+       always  in  the  upper  left.   (If necessary a particular
+       graphics driver can make the appropriate manipulations.)
+
+       To assist the  application  programs  in  identifying  the
+       actual  device  pixle  that  needs  addressing, coordinate
+       transformation calls in the GRASS  displaylib  are  avail­
+       able.
+
+       This  library  contains  two independent sets of routines.
+       The graphics calls are  responsible  for  the  drawing  of
+       lines  and  text  on  a  graphics  device.  These are used
+       directly by the  GRASS  application  programmer.  The  pad
+       calls  are  used  primarily  by  the displaylib library to
+       maintain information about the display device windows.
+
+SEE ALSO
+       displaylib(3)
+
+GRAPHICS FUNCTIONS
+      R_close_driver()
+              This should be the last call in an application pro­
+              gram.   It shuts down the connection (Usually sock­
+              ets on Berkley 4.? machines or fifos on Bell Sys 5)
+              to the graphics driver.
+
+       R_color(index)
+              int index ;
+              Subsequent lines, text will be in color index.
+
+       R_color_offset(n)
+              int n ;
+              Applicable     only     after     a     call     to
+              R_color_table_float.  Increments all color sets and
+              requests  by  offset  nn.  Ignored after requests to
+              R_color_table_fixed.
+
+       R_color_table_fixed()
+              A fixed color table will  be  used.    Requests  by
+              R_reset_color  and  R_reset_color  will  modify  an
+              internal index into the devices fixed color  table.
+
+       R_color_table_float()
+              A floating, or adjustable color table will be used.
+              Requests by R_reset_color will  modify  a  graphics
+              devices   internal  color  lookup  tables.   Colors
+              already displayed on a screen will  be  immediately
+              affected.
+
+
+       R_cont_abs(x,y)
+              int x, y ;
+              Draw  a line from the current screen location to an
+              absolute screen position.
+
+       R_cont_rel(x,y)
+              int x, y ;
+              Draw a line from the current screen location  to  a
+              relative screen position.
+
+       R_erase()
+              Erase the entire screen.
+
+       R_flush()
+              Flush   pending  graphics  calls  to  the  graphics
+              device.  Generally used for interactive graphics.
+
+       R_get_location_with_box(cx, cy, wx, wy, button)
+              int cx, cy ;
+              int *wx, *wy ;
+              int *button ;
+              Get a location  off  the  screen  using  a  pointer
+              device  (generally  a  mouse).  The cursor is a box
+              with one corner fixed at ccxx,,ccyy.  The other  follows
+              the  pointer.   Upon depression of a key (generally
+              one of three buttons on a mouse) the current  loca­
+              tion  of  the  pointer is returned in wwxx and wwyy.  A
+              value from the set {1, 2,  3}  (representing  left,
+              middle,  and  right  on  a  three  button mouse) is
+              returned in bbuuttttoonn.
+
+       R_get_location_with_line(cx, cy, wx, wy, button)
+              int cx, cy ;
+              int *wx, *wy ;
+              int *button ;
+              Same as R_get_location_with_box, except a line con­
+              nects the two points instead of a box.
+
+       R_get_location_with_pointer(wx, wy, button)
+              int *wx, *wy ;
+              int *button ;
+              Same  as G_get_location_with_box except there is no
+              fixed point.  Instead a cursor traces the  pointers
+              position on the screen.
+
+       R_move_abs(x,y)
+              int x, y ;
+              Move,  without  draw,  to  absolute screen location
+              xx,,yy.
+
+       R_move_rel(x,y)
+              int x, y ;
+              Move, without draw,  to  relative  screen  location
+              xx,,yy.
+
+       R_open_driver()
+              This  call  must  pprreecceeeedd  all  other calls to this
+              library.
+
+       R_polydots_abs(xarray, yarray, number)
+              int xarray[], yarray[], number ;
+              Draws number single pixle dots on the screen at the
+              absolute locations specified at xarray  and yarray.
+
+       R_polydots_rel(xarray, yarray, number)
+              int xarray[], yarray[], number ;
+              Draws number single pixle dots on the screen at the
+              relative locations specified at xarray  and yarray.
+              Each x,y pair updates the current position.
+
+       R_polygon_abs(xarray, yarray, number)
+              int xarray[], yarray[], number ;
+              Draws a filled polygon using the number of absolute
+              screen locations specified by the xarray and yarray
+              arrays.
+
+       R_polygon_rel(xarray, yarray, number)
+              int xarray[], yarray[], number ;
+              Draws a filled polygon using the number of relative
+              screen locations specified by the xarray and yarray
+              arrays.
+
+       R_polyline_abs(xarray, yarray, number)
+              int xarray[], yarray[], number ;
+              Draws a single line using the  number  of  absolute
+              screen locations specified by the xarray and yarray
+              arrays.
+
+       R_polyline_rel(xarray, yarray, number)
+              int xarray[], yarray[], number ;
+              Draws a single line using the  number  of  relative
+              screen locations specified by the xarray and yarray
+              arrays.
+
+       R_raster(num, nrows, ras)
+              int num, nrows ;
+              char * ras[] ;
+              Draws a nnrroowwss of nnuumm  pixles  using  colors  repre­
+              sented by the values in rraass.  Drawing begins at the
+              current location.
+
+       R_reraster()
+              Draws one more row using the last raster passed  by
+              R_raster (usually at an updated starting position).
+
+       R_reset_color(red, grn, blu, number)
+              float red, grn, blu ;
+              int number ;
+              If R_color_table_fixed() was  last  called,  resets
+
+
+
+                            rasterlib                           4
+
+
+
+
+
+RASTERLIB(3)                                         RASTERLIB(3)
+
+
+              the  software  color lookup table  for color number
+              number to display  the  color  represented  by  the
+              intensities  in rreedd, ggrreeeenn, and bblluuee.  These inten­
+              sities  are  values  between  0.0  and   1.0.    If
+              R_color_table_float()  was  last  called  (and your
+              device  supports  hardware  color  lookup  tables),
+              color number number is updated in hardware. In this
+              situation, all locations on the screen  using  this
+              color number already will be instantly changed.
+
+       R_reset_colors(red, grn, blu, tot_colr)
+              float red[], grn[], blu[] ;
+              int tot_colr ;
+              Same as RR__ccoolloorr__ttaabbllee__ffiixxeedd except that red, green,               and blue, are arrays hhoollddiinngg ttoott__ccoollrr colors.  Col­
+              ors 0 through ttoott__ccoollrr - 1 are updated.
+
+       R_screen_bot()
+              Returns  the  row number of the bottom row.  Always
+              larger than the top row.
+
+       R_screen_left()
+              Returns the  column  number  of  the  left  column.
+              Always smaller than the right column.
+
+       R_screen_rite()
+              Returns  the  column  number  of  the right column.
+              Always larger than the left column.
+
+       R_screen_top()
+              Returns the row number  of  the  top  row.   Always
+              smaller than the bottom row.
+
+       R_set_window(t, b, l, r)
+              int t, b, l, r ;
+              Sets  the  ttop,  bbottom, lleft, and rright edges of a
+              window  on  the  graphics  device.   Text  will  be
+              clipped at these limits.
+
+       R_text(sometext)
+              char *sometext ;
+              The  text  in  ssoommeetteexxtt is printed beginning at the
+              current location.  THe current  color,  text  size,
+              and text rotation are used.
+
+       R_text_rotation(rotation)
+              float rotation ;
+              Subesquent calls to RR__tteexxtt will print text at angle
+              rroottaattiioonn.  This angle is in degrees  counter-clock­
+              wise from the positive x axis.
+
+       R_text_size(width, height)
+              float width, height ;
+              Subsequent  calls to RR__tteexxtt will print text at size
+              hheeiigghhtt and wwiiddtthh.
+
+PAD FUNCTIONS
+       The monitor has a very simple database management capabil­
+       ity  which supports the windowing.  There are scratch pads
+       to be written on. Each scratch pad can contain items,  and
+       each  item can have a list of values.  These are NOT to be
+       used by the programmer.  They are used indirectly  through
+       the displaylib library calls.
