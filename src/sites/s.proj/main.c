@@ -33,7 +33,6 @@
 #include <unistd.h>
 #include "gis.h"
 #include "site.h"
-#include "local_proto.h"
 #include "gprojects.h"
 
 FILE *infile, *outfile;
@@ -46,7 +45,7 @@ main(int argc, char **argv)
 
 	int       permissions,		 /* mapset permissions		 */
 		  oldproj, newproj;
-
+	long      nsites = 0;		 /* count sites to report progress */
 
 	double    xcoord,	 /* temporary x coordinates 	 */
 	          ycoord;	 /* temporary y coordinates	 */
@@ -70,6 +69,7 @@ main(int argc, char **argv)
 	struct Flag *list;               /* list files in source location */
 	
         struct GModule *module;
+   
         
 
 	G_gisinit(argv[0]);
@@ -179,7 +179,12 @@ main(int argc, char **argv)
 
 		if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
 			G_fatal_error("Can't get projection key values of input map");
-
+	   
+                G_free_key_value( in_proj_info );	   
+                G_free_key_value( in_unit_info );
+                G_free_key_value( out_proj_info );	   
+                G_free_key_value( out_unit_info );	   
+                pj_print_proj_params(&iproj, &oproj);
 
 		infile = G_sites_open_old (inmap->answer, setname);
 		if (infile == NULL)
@@ -259,8 +264,12 @@ main(int argc, char **argv)
 	    si->east = xcoord;
 	    si->north = ycoord;
 	    G__site_put (outfile, si, newproj);
-
+	   
+	    if(!((++nsites)%1000)) 
+                fprintf(stderr,"%10ld sites\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", nsites);
 	}
+	fprintf (stderr, "%10ld sites projected\n", nsites);
+   
 
 	fclose(infile);
 	fclose(outfile);
