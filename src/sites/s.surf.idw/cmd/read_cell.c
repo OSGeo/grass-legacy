@@ -21,7 +21,7 @@ read_cell (name)
 
 /* Set window to align with input cell file */
     G_get_cellhd (name, mapset, &cellhd);
-    G_align_window (window, &cellhd);
+    G_align_window (&window, &cellhd);
     G_set_window (&window);
 
     cell = G_allocate_cell_buf();
