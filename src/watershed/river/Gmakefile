@@ -1,0 +1,13 @@
+# %W% %G%
+
+PGM=river
+
+LIST = river.o percent.o die.o usage.o startseg.o altget.o cumget.o \
+	lakeget.o ptrget.o slopeget.o wkget.o
+
+$(ETC)/Griver: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) $(SEGMENTLIB) $(MATHLIB) -o $@
+
+$(LIST): global.h
+
+$(GISLIB): #
