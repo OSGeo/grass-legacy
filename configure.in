@@ -344,6 +344,7 @@ AC_ARG_WITH(tcltk-libs,
     ])
 
 TCLTKLIBS=
+TCLTKLIBPATH=
 if test "$tcltk_lib_dirs"; then
 	for dir in $tcltk_lib_dirs; do
 		if test -d "$dir"; then
@@ -366,6 +367,7 @@ else
 fi
 LDFLAGS="$ldflags_save"
 AC_SUBST(TCLTKLIBS)
+AC_SUBST(TCLTKLIBPATH)
 
 SYSV=
 AC_ARG_WITH(SYSV,
