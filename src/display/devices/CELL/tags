@@ -1,0 +1,30 @@
+Get_location_with_box	Get_w_box.c	/^Get_location_with_box(cx, cy, wx, wy, button)$/
+Get_location_with_line	Get_w_line.c	/^Get_location_with_line(cx, cy, wx, wy, button)$/
+Get_location_with_pointer	Get_w_pnt.c	/^Get_location_with_pointer(wx, wy, button)$/
+Get_num_colors	Returns.c	/^Get_num_colors(index)$/
+Graph_Close	Graph_Clse.c	/^Graph_Close()$/
+Graph_Set	Graph_Set.c	/^Graph_Set() $/
+Panel_delete	Panel.c	/^Panel_delete(name)$/
+Panel_restore	Panel.c	/^Panel_restore(name)$/
+Panel_save	Panel.c	/^Panel_save(name, top, bottom, left, right)$/
+Polygon_abs	Polygn_abs.c	/^Polygon_abs(x, y, n)$/
+Screen_bot	Returns.c	/^Screen_bot(index)$/
+Screen_left	Returns.c	/^Screen_left(index)$/
+Screen_rite	Returns.c	/^Screen_rite(index)$/
+Screen_top	Returns.c	/^Screen_top(index)$/
+bres_line	bresline.c	/^bres_line (x1, y1, x2, y2)$/
+can_do_float	Can_do.c	/^can_do_float()$/
+check_connection	connect.c	/^check_connection(me, link)$/
+color	Color.c	/^color(number)$/
+draw_line	Draw_line.c	/^draw_line(cur_x, cur_y, x, y)$/
+edge	polyfill.c	/^edge (x0,y0,x1,y1)$/
+edge_order	polyfill.c	/^edge_order (a, b)$/
+edge_point	polyfill.c	/^edge_point (x, y)$/
+get_connection	connect.c	/^get_connection(files,rfd, wfd)$/
+get_num_colors	Returns.c	/^get_num_colors()$/
+horiz_line	file_io.c	/^horiz_line (y, x1, x2)$/
+polyfill	polyfill.c	/^polyfill (x,y,n,fill)$/
+prepare_connection	connect.c	/^prepare_connection()$/
+reset_color	Reset_clr.c	/^reset_color(number, red, grn, blu)$/
+store_xy	file_io.c	/^store_xy (x, y)$/
+timeout	connect.c	/^static timeout()$/
