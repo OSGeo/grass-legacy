@@ -21,7 +21,7 @@ int
 main(int argc, char **argv)
 {
 	struct	GModule	*module;
-	struct	Option	*opt1, *opt2, *opt3, *opt4, *opt5, *opt6;
+	struct	Option	*opt1, *opt2, *opt3, *opt4, *opt5;
 	struct	Cell_head	cellhd;
 	unsigned char	*text, *font, tcolor[128];
 	int	size, color;
@@ -72,16 +72,11 @@ main(int argc, char **argv)
 	opt4->description= "Color";
 
 	opt5 = G_define_option();
-	opt5->key        = "east";
+	opt5->key        = "east_north";
 	opt5->type       = TYPE_DOUBLE;
 	opt5->required   = NO;
-	opt5->description= "East";
-
-	opt6 = G_define_option();
-	opt6->key        = "north";
-	opt6->type       = TYPE_DOUBLE;
-	opt6->required   = NO;
-	opt6->description= "North";
+	opt5->key_desc   = "east,north";
+	opt5->description= "Coordinates";
 
 	if(G_parser(argc, argv))
 		exit(-1);
@@ -160,12 +155,13 @@ main(int argc, char **argv)
 	l = ol - i;
 #endif
 
-	G_get_set_window(&cellhd);
-	if(opt5->answer && opt6->answer){
-		east  = atof(opt5->answer);
-		north = atof(opt6->answer);
-		x = G_easting_to_col(east, &cellhd);
-		y = G_northing_to_row(north, &cellhd);
+	D_setup(0);
+
+	if(opt5->answer){
+		east  = atof(opt5->answers[0]);
+		north = atof(opt5->answers[1]);
+		x = (int)D_u_to_d_col(east);
+		y = (int)D_u_to_d_row(north);
 	}else{
 		fprintf(stdout, "Click!\n");
 		fprintf(stdout, " Left:    Place text here\n");
@@ -182,8 +178,8 @@ main(int argc, char **argv)
 #endif
 			exit(1);
 		}
-		east  = G_col_to_easting(x, &cellhd);
-		north = G_row_to_northing(y, &cellhd);
+		east  = D_d_to_u_col((double)x);
+		north = D_d_to_u_row((double)y);
 	}
 
 	fprintf(stdout, "%f(E) %f(N)\n", east, north);
