@@ -111,7 +111,8 @@ mix:
 	@echo "NOTE: 'make mix' is no longer needed (changed 9 Nov 2004)"
 
 mixclean:
-	@list='include $(SUBDIRS)'; \
+	list='$(SUBDIRS)'; \
+	find include -type l -exec rm {} \; 2>/dev/null; \
 	for subdir in $$list; do \
 		find $$subdir -type l -exec rm {} \; 2>/dev/null; \
 	done
