@@ -69,7 +69,7 @@ int main(int argc, char **argv)
     	  opt1->required = YES;
     }
     	  	      
-  if(argc > 1 && G_parser(argc,argv))
+  if((argc > 1 || !vect) && G_parser(argc,argv))
     exit(-1);
 
   if (opt1->answers && opt1->answers[0])
