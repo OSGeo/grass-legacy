@@ -3,9 +3,8 @@
 #include "dbmi.h"
 #include "codes.h"
 
-int main(argc, argv)
-int argc ;
-char **argv ;
+int
+main(int argc, char *argv[])
 {
     dbConnection conn;
     struct Flag *print;

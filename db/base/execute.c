@@ -70,13 +70,14 @@ main( int argc, char *argv[] )
 }
 
 void
-parse_command_line(argc, argv) char *argv[];
+parse_command_line(int argc, char *argv[])
 {
     struct Option *driver, *database, *location, *input;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
+    driver->options     = db_driver_list();
     driver->required 	= NO;
     driver->description = "driver name";
 
@@ -112,9 +113,9 @@ parse_command_line(argc, argv) char *argv[];
 }
 
 int
-get_stmt(fd, stmt)
+get_stmt(
     FILE *fd;
-    dbString *stmt;
+    dbString *stmt);
 {
     char buf[4000], *str;
     int len, row = 0;
@@ -141,8 +142,8 @@ get_stmt(fd, stmt)
 }
 
 int
-stmt_is_empty(stmt)
-    dbString *stmt;
+stmt_is_empty(
+    dbString *stmt);
 {
     char dummy[2];
 

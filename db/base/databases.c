@@ -1,7 +1,3 @@
-/*
- * $Id$
- */
-
 #include "dbmi.h"
 #include "gis.h"
 #include "codes.h"
@@ -15,7 +11,9 @@ struct {
 	int l;
 } parms;
 
-main(argc, argv) char *argv[];
+
+int
+main(int argc, char *argv[])
 {
     dbDriver *driver;
     dbHandle *handles;
@@ -47,7 +45,7 @@ main(argc, argv) char *argv[];
 }
 
 void
-parse_command_line(argc, argv) char *argv[];
+parse_command_line(int argc, char *argv[])
 {
     struct Option *driver, *location;
     struct Flag *l;
@@ -55,6 +53,7 @@ parse_command_line(argc, argv) char *argv[];
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
+    driver->options     = db_driver_list();
     driver->required 	= NO;               /* changed yo NO by RB, 4/2000 */
     driver->description = "driver name";
 
@@ -81,9 +80,9 @@ parse_command_line(argc, argv) char *argv[];
 }
 
 void
-get_locations (locations, nlocs)
+get_locations (
     dbString **locations;
-    int *nlocs;
+    int *nlocs);
 {
     int i,j, count;
     char *p, *colon;
