@@ -11,7 +11,7 @@ XPoint *AllocXPoints (int count)
         if (num_alloc == 0)
             pnts = (XPoint *) G_malloc((size_t) (count * sizeof(XPoint)));
         else
-            pnts = (XPoint *) realloc((void *) pnts, (size_t) (count *
+            pnts = (XPoint *)G_realloc((void *) pnts, (size_t) (count *
                             sizeof(XPoint)));
         if (pnts == NULL) {
             fprintf(stderr, "AllocXPoints: can't alloc %d XPoints.\n",
