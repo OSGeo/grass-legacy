@@ -1,6 +1,6 @@
 GRASS GIS programming style standards
 
-$Id: STYLE_PROGRAMMING,v 1.8 2000-11-02 09:23:07 justin Exp $
+$Id: STYLE_PROGRAMMING,v 1.9 2000-11-02 09:27:08 justin Exp $
 
 Please improve this list!
  
@@ -47,20 +47,19 @@ GRASS GIS programming style standards
    Use instead:
        /* C-comments */
 
-9. If you add   
-    $Id: STYLE_PROGRAMMING,v 1.8 2000-11-02 09:23:07 justin Exp $
+9. If you add the CVS Id flag (<$>Id<$>) (without angle brackets)
 
     to a file for CVS-versioning, note that this is not allowed in the
     *first* line of a comment. Some compilers will get confused. Note do
-    not include the angle brackets <>
+    NOT include the angle brackets <>
 
     Forbidden:
 
-    /* <$Id: STYLE_PROGRAMMING,v 1.8 2000-11-02 09:23:07 justin Exp $> */
+    /* <$>Id<$> */
  
     Allowed:
     /*
-     * <$Id: STYLE_PROGRAMMING,v 1.8 2000-11-02 09:23:07 justin Exp $>
+     * <$>Id<$>
      */
 
 ...
