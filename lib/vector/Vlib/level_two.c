@@ -174,11 +174,23 @@ Vect_get_node_n_lines ( struct Map_info *Map, int node )
 int 
 Vect_get_node_line ( struct Map_info *Map, int node, int line )
 {
-
     if ( Map->level < 2 )
 	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
     
     return ( Map->plus.Node[node]->lines[line] );
-
 }
 
+/*!
+ \fn int Vect_get_centroid_area ( struct Map_info *Map, int centroid )
+ \brief returns number of area the centroid is within
+ \return number of area the node is within, 0 for not in area, negative number of area if duplicate
+ \param Map_info structure, centroid number
+*/
+int 
+Vect_get_centroid_area ( struct Map_info *Map, int centroid )
+{
+    if ( Map->level < 2 )
+	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+    
+    return ( Map->plus.Line[centroid]->left );
+}

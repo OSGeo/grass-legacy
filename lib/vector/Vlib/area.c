@@ -169,6 +169,42 @@ Vect_get_area_centroid (
 }
 
 /*!
+ \fn int Vect_get_area_boundaries (
+		       struct Map_info *Map,
+		       int area,
+		       struct ilist *List )
+ \brief creates list of boundaries for area
+ \return number of boundaries
+ \param Map_info structure, area number, List pointer to list
+*/
+int 
+Vect_get_area_boundaries (
+		       struct Map_info *Map,
+		       int area,
+                       struct ilist *List )
+{
+  int i, line;
+  struct Plus_head *Plus;
+  P_AREA *Area;
+  
+  G_debug ( 3, "Vect_get_area_boundaries(): area = %d", area );	
+
+  Vect_reset_list ( List );
+  
+  Plus = &(Map->plus);
+  Area = Plus->Area[area];
+
+  if ( Area == NULL ) G_fatal_error ( "Attempt to read topo for dead area (%d)", area);
+
+  for (i = 0; i < Area->n_lines; i++) {
+      line = Area->lines[i];
+      Vect_list_append ( List, line );
+  }
+   
+  return ( List->n_values );
+}
+
+/*!
  \fn int Vect_get_area_num_isles (
 		       struct Map_info *Map,
 		       int area )
