@@ -1,0 +1,24 @@
+F_fetchfile	menu.c	/^F_fetchfile (Filename, In_buf, Length)$/
+F_helpctrl	menu.c	/^F_helpctrl (Helpfile)$/
+F_linecnt	menu.c	/^F_linecnt (Fileptr)$/
+F_longresponse	menu.c	/^F_longresponse ()$/
+F_menu	menu.c	/^F_menu (Choicefile, Helpfile, Choice, Respbuf, Fla/
+F_universe	menu.c	/^F_universe (Message)$/
+Get_new_tty	tty.c	/^Get_new_tty()$/
+Get_old_tty	tty.c	/^Get_old_tty()$/
+Mmain	main.c	/^main() $/
+New_tty	tty.c	/^New_tty()$/
+Old_tty	tty.c	/^Old_tty()$/
+P_getusrinpt	menu.c	/^P_getusrinpt (Respbuf, Prmptstr)$/
+P_menuerror	menu.c	/^P_menuerror (Screwupnum, Messg)$/
+P_menuexit	menu.c	/^P_menuexit ()$/
+P_menuinit	menu.c	/^P_menuinit ()$/
+P_termexit	menu.c	/^P_termexit()$/
+P_writo_Menu_win	menu.c	/^P_writo_Menu_win (Windoname, Bufptr, Firstline, Bu/
+P_writowin	menu.c	/^P_writowin (Windoname, Bufptr, Firstline, Buflengt/
+do_leave	do_leave.c	/^do_leave()$/
+dump_window	menu.c	/^dump_window()$/
+get	tty.c	/^#define get(x) ioctl (0, TCGETA, x)$/
+get_file_name	main.c	/^get_file_name(phrase)$/
+init_phrases	main.c	/^init_phrases()$/
+set	tty.c	/^#define set(x) ioctl (0, TCSETAF, x)$/
