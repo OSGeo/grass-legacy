@@ -336,6 +336,7 @@ src/raster/r.out.mpeg
 src/raster/r.out.png
 src/raster/r.out.pov
 src/raster/r.out.ppm
+src/raster/r.out.ppm3
 src/raster/r.out.tga
 src/raster/r.out.xyz
 src/raster/r.param.scale
