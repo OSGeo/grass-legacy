@@ -1,5 +1,5 @@
 
-: '%W% %G%'  ${PAINTER?} ${PAINT_DRIVER?}
+:  ${PAINTER?} ${PAINT_DRIVER?}
 MAPLP=${MAPLP-/dev/$PAINTER}
 
 BAUD=9600
