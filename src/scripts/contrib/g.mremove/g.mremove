@@ -15,6 +15,79 @@
 #
 #############################################################################
 
+
+#%Module
+#%  description: Apply regular expressions and wildcards to g.remove
+#%End
+
+#%flag
+#%  key: f
+#%  description: Force removal (use only if you know what you are doing)
+#%end
+
+#%option
+#% key: rast
+#% type: string
+#% description: raster to remove
+#% gisprompt: old,cell,raster
+#% required : no
+#%end
+
+#%option
+#% key: vect
+#% type: string
+#% description: vector to remove
+#% gisprompt: old,dig,vector
+#% required : no
+#%end
+
+#%option
+#% key: site
+#% type: string
+#% description: site to remove
+#% gisprompt: old,site_lists,sites
+#% required : no
+#%end
+
+#%option
+#% key: region
+#% type: string
+#% description: region to remove
+#% required : no
+#%end
+
+#%option
+#% key: icon
+#% type: string
+#% description: icon to remove
+#% required : no
+#%end
+
+#%option
+#% key: label
+#% type: string
+#% description: label to remove
+#% required : no
+#%end
+
+#%option
+#% key: dview
+#% type: string
+#% description: 3dview to remove
+#% required : no
+#%end
+
+#%option
+#% key: group
+#% type: string
+#% description: group to remove
+#% required : no
+#%end
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+    exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
 if test "$GISBASE" = ""; then
  echo "You must be in GRASS GIS to run this program." >&2
  exit 1
@@ -26,58 +99,56 @@ LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 program=`basename $0`
 
-if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
-then
-        echo
-	g.remove help 2>&1 | sed "s/g.remove/$program [-f]/"
-	echo
-	echo "Note:"
-	echo "  You can use wildcard for name. Use -f flag to force removal."
-	echo "  ? or * wildcards should be enclosed with '...' to avoid being expanded"
-	echo "  by the shell first."
-	echo "          e.g., g.mremove rast='*.dem'"
-	echo
-	echo "Warning:"
-	echo "  Use -f flag only when you know what you're doing."
-	exit 1
-fi
-
 echo "Collecting map names for current mapset <$MAPSET>..."
 
-force=
-for i
-do
-	if [ "$i" = "-f" ]
-	then
-		force=1
-		continue
-	fi
+force=$GIS_FLAG_f
 
-	echo $i | grep '=' > /dev/null 2>&1
-	if [ $? -ne 0 ]
-	then
-		i="rast=$i"
-	fi
-	wildcard=`echo $i | awk -F '=' '{print $2}'`
-	case $i in
-		ra=*|ras=*|rast=*)
-			rast=`g.mlist type=rast sep=, mapset=$MAPSET pattern="$wildcard"`;;
-		v=*|ve=*|vec=*|vect=*)
-			vect=`g.mlist type=vect sep=, mapset=$MAPSET pattern="$wildcard"`;;
-		i=*|ic=*|ico=*|icon=*)
-			icon=`g.mlist type=icon sep=, mapset=$MAPSET pattern="$wildcard"`;;
-		l=*|la=*|lab=*|labe=*|label=*|labels=*)
-			labels=`g.mlist type=labels sep=, mapset=$MAPSET pattern="$wildcard"`;;
-		s=*|si=*|sit=*|site=*|sites=*)
-			sites=`g.mlist type=sites sep=, mapset=$MAPSET pattern="$wildcard"`;;
-		re=*|reg=*|regi=*|regio=*|region=*)
-			region=`g.mlist type=region sep=, mapset=$MAPSET pattern="$wildcard"`;;
-		g=*|gr=*|gro=*|grou=*|group=*)
-			group=`g.mlist type=group sep=, mapset=$MAPSET pattern="$wildcard"`;;
-		3=*|3d=*|3dv=*|3dvi=*|3dvie=*|3dview=*)
-			dview=`g.mlist type=3dview sep=, mapset=$MAPSET pattern="$wildcard"`;;
-	esac
-done
+if [ $force -eq 1 ] ; then
+   echo forcing ......
+fi
+
+r=$GIS_OPT_rast
+v=$GIS_OPT_vect
+i=$GIS_OPT_icon
+l=$GIS_OPT_label
+s=$GIS_OPT_site
+rg=$GIS_OPT_region
+g=$GIS_OPT_group
+d=$GIS_OPT_dview
+
+if [ "$r" != "(null)" ]
+then
+			rast=`g.mlist type=rast sep=, mapset=$MAPSET pattern="$r"`
+fi
+
+if [ "$v" != "(null)" ]
+then
+			vect=`g.mlist type=vect sep=, mapset=$MAPSET pattern="$v"`
+fi
+if [ "$i" != "(null)" ]
+then
+			icon=`g.mlist type=icon sep=, mapset=$MAPSET pattern="$i"`
+fi
+if [ "$l" != "(null)" ]
+then
+			labels=`g.mlist type=labels sep=, mapset=$MAPSET pattern="$l"`
+fi
+if [ "$s" != "(null)" ]
+then
+			sites=`g.mlist type=sites sep=, mapset=$MAPSET pattern="$s"`
+fi
+if [ "$rg" != "(null)" ]
+then
+			region=`g.mlist type=region sep=, mapset=$MAPSET pattern="$rg"`
+fi
+if [ "$g" != "(null)" ]
+then
+			group=`g.mlist type=group sep=, mapset=$MAPSET pattern="$g"`
+fi
+if [ "$d" != "(null)" ]
+then
+			dview=`g.mlist type=3dview sep=, mapset=$MAPSET pattern="$d"`
+fi
 
 found=
 if [ "$rast" ]
@@ -137,7 +208,7 @@ fi
 echo g.remove $rast $vect $icon $labels $sites $region $group $dview
 
 yn=y
-if [ ! "$force" ]
+if [ "$force" == "0" ]
 then
 	echo
 	echo "Did you mean this(y/n)?"
