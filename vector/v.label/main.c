@@ -232,8 +232,10 @@ main (int argc, char **argv)
 	db_close_cursor(&cursor);
 
 	txt = db_get_string(&valstr);
-	
         G_debug (3, "Label: %s", txt);
+	
+	txtlength = strlen(txt);
+	if ( txtlength == 0 ) continue;
 	
 	/* Line length */
 	linlength = Vect_line_length ( Points );
@@ -245,7 +247,6 @@ main (int argc, char **argv)
             Vect_point_on_line ( Points, linlength/2, &x, &y, NULL, NULL, NULL);
 	    print_label (labels, x, y, 0, txt);
 	} else { /* Along line */
-	    txtlength = strlen(txt);
 	
 	    /* find best orientation (most letters by bottom to down side */
 	    rotate = 0;
