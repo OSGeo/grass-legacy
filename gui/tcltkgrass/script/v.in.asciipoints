@@ -23,7 +23,7 @@
 #% key: input
 #% type: string
 #% gisprompt: file,file,file
-#% description: ASCII points file to import (format xcol|ycol|val|...)
+#% description: ASCII points file to import (default format xcol|ycol|val|...)
 #% required : yes
 #%end
 #%option
@@ -31,6 +31,13 @@
 #% type: string
 #% description: Name of GRASS vector points file to create
 #% required : yes
+#%end
+#%option
+#% key: fs
+#% type: string
+#% answer: |
+#% description: field separator (default=|)
+#% required : no
 #%end
 #%option
 #% key: xcol
@@ -60,6 +67,14 @@
 #% answer: 3
 ##% required : no
 #%end
+#%option
+#% key: columns
+#% type: string
+#% description: Column definitions (SQL format: e.g., x double precision, y double precision, cat int, name varchar(10))
+#% required: no
+#% multiple: yes
+#%end
+
 
 
 if  [ -z $GISBASE ] ; then
@@ -71,8 +86,20 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
 fi
 
-cat $GIS_OPT_input | v.in.ascii output=$GIS_OPT_output xcol=$GIS_OPT_xcol ycol=$GIS_OPT_ycol zcol=$GIS_OPT_zcol catcol=$GIS_OPT_catcol 
+GIS_OPT_fs='"'$GIS_OPT_fs'"'
+GIS_OPT_columns="'"$GIS_OPT_columns"'"
 
+cmd="cat "$GIS_OPT_input" | v.in.ascii output="$GIS_OPT_output" xcol="$GIS_OPT_xcol" ycol="$GIS_OPT_ycol" zcol="$GIS_OPT_zcol" catcol="$GIS_OPT_catcol" fs="$GIS_OPT_fs
+#" columns="$GIS_OPT_columns 
+
+if [ "$GIS_OPT_columns" != "" ] ; then
+    cmd=$cmd" columns="$GIS_OPT_columns
+fi
+
+echo $GIS_OPT_columns
+echo $cmd
+
+eval $cmd
 
 echo ""
 echo "Done. GRASS vector points file $GIS_OPT_output created from ASCII points file $GIS_OPT_input"

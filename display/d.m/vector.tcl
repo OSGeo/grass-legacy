@@ -384,7 +384,7 @@ proc DmVector::display { node } {
         append cmd " maxreg=$opt($id,maxreg)" 
     } 
 
-    Dm::execute $cmd
+    run $cmd
 }
 
 proc DmVector::print { file node } {
@@ -491,7 +491,7 @@ proc DmVector::query { node } {
          !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
          !$opt($id,type_area) && !$opt($id,type_face) } { return } 
 
-    set cmd "d.what.vect map=$opt($id,map)"
+    set cmd "d.what.vect -xf map=$opt($id,map)"
     if { $opt($id,_query_text) } { 
         append cmd " -t" 
     } 
@@ -499,7 +499,7 @@ proc DmVector::query { node } {
         append cmd " -e" 
     } 
 
-    Dm::execute $cmd
+    term $cmd
 }
 
 proc DmVector::WorkOnVector { node } {
@@ -522,5 +522,5 @@ proc DmVector::WorkOnVector { node } {
 
     set cmd "v.digit -n map=$opt($id,map)"
     Dm::monitor
-    Dm::execute $cmd
+    spawn $cmd
 }
