@@ -1,0 +1,77 @@
+
+
+Description of this Directory, prepared November 12th, 1988.
+			        Updated Jan 26, 1989.
+     
+
+INTRODUCTION
+
+    This Directory contains source code for the X version 11 release 2
+display driver for GRASS 3.0 release. It also has a makefile and one
+include file. The code in this directory will work with the GRASS 3.0 
+official release, not the BETA release.
+
+
+CREATING THE X11 DRIVER
+
+    This directory must be placed in its proper location in the Grass
+3.0 hierarchy in order to work. It should be a sub-directory of the
+devices directory, viz. ~grass3/src/D/devices/XDRIVER. For example,
+if you loaded the GRASS 3.0 distribution into /usr/local/grass3, 
+this directory must become /usr/local/grass3/src/D/devices/XDRIVER.
+    Once the directory is in place you create the driver with the
+command 'make XDRIVER'. This should recompile and relink the XDRIVER
+module.
+
+
+INSTALLATION AND OPERATION OF THE X11 DRIVER
+
+    Like any other Grass display device driver, the X11 driver 
+must be put into the directory ~grass3/driver, and an entry for it
+added to the file ~grass3/etc/monitorcap. The command 'make install'
+will copy the XDRIVER module into ~grass3/driver. Refer to your GRASS
+Programmers Manual for directions on changing the monitorcap file.
+    Once XDRIVER is properly installed one can run GRASS3 from an X11
+window and the GRASS commands Dstart.mon, Dselect.mon, Dstop.mon, and
+monitor will be able to manipulate the driver.
+
+
+TECHNICAL DISCUSSION / PROBLEM REPORT
+
+    This is a preliminary implementation of the X11 system display 
+driver, and there are some known problems. These have to do with
+colormap switching, and the relationship between the fifos and 
+servicing X events.
+    There are some colormap inconsistancies. Things should happen such
+that the active (i.e. installed) colormap is always the colormap of
+the window that contains the pointer. If you are using a window man-
+ager that enforces this you may not notice a problem. If your window
+manager does not manage the colormaps, or you are not using a window
+manager, there can arise a condition where the GRASS display colormap
+is the active colormap even when the pointer is not in the Grass
+display window. The GRASS X11 driver tries to maintain the colormaps,
+but during certain conditions the driver will not be able to catch 
+X events, such as Expose or PointerEnter events. This happens mainly
+in the display module when waiting for a menu option (button pressed),
+or while waiting for info for the 3-d cell map display. During these 
+times the movement of the pointer will not be picked up by the code 
+that handles X events, so the fact that the pointer has been moved 
+into or out of the display window will not be noticed. 
+    Another problem that has not been fixed at this time is that the
+color interact feature of the display module does not work.
+    The X11 driver does maintain its own version of a backing store,
+so it will successfully re-draw the screen after it has been iconified
+or after it has been lowered than rasied. 
+
+
+QUESTIONS
+
+    Any questions should be directed to Ken Gardels at U.C. Berkeley's
+Center for Environmental Design Research. 
+
+	phone:		(415) 642-9205 
+	internet:	gardels@ced.berkeley.edu
+	bitnet:		gardels@UCBCED
+	uucp:		...!{hplabs,sun,uunet}!ucbvax!ced!gardels
+	grassnet:	cerl!gardels@ced.berkeley.edu
+			gardels%ced.berkeley.edu@cerl.uucp
