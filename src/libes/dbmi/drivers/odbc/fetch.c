@@ -72,7 +72,7 @@ db_driver_fetch(cn, position, more)
 	value  = db_get_column_value (column);
 	db_free_string (&value->s);
 	
-	// Is null?
+	/* Is null? */
 	SQLGetData( c->stmt, col, SQL_C_CHAR, NULL, 0, &len );
 	if ( len == SQL_NULL_DATA )
 	{
@@ -100,7 +100,7 @@ db_driver_fetch(cn, position, more)
 		db_enlarge_string (&value->s, len+1);
 		ret = SQLGetData( c->stmt, col, SQL_C_CHAR, value->s.string, len+1, NULL );    
 	    }
-	    else { // now the same as SQL_VARCHAR, could differ for other htype ?  
+	    else { /* now the same as SQL_VARCHAR, could differ for other htype ? */
 		ret = SQLGetData( c->stmt, col, SQL_C_CHAR, NULL, 0, &len );    
 		db_enlarge_string (&value->s, len+1);
 		ret = SQLGetData( c->stmt, col, SQL_C_CHAR, value->s.string, len+1, NULL );    
@@ -143,10 +143,12 @@ db_driver_fetch(cn, position, more)
 		value->t.minute = timestamp.minute;
 		value->t.seconds = timestamp.second;
 		break;
-	    //case DB_SQL_TYPE_INTERVAL:
-	    //	break;
-	    //default: 
-	    //	break;
+            /*
+	    case DB_SQL_TYPE_INTERVAL:
+	    	break;
+	    default: 
+	    	break;
+	    */
 	    }
 
 	default:
