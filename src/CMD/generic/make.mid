@@ -35,9 +35,16 @@ SRC_X       = $(SRC)/xgrass
 LIBDIR      = $(SRC)/libes
 X_LIBDIR     = $(SRC_X)/libes
 INCLUDE_DIR = $(SRC)/include
-DIG_LIBDIR  = $(SRC)/libes/vect32/libes
-DIG_INCLUDE  = $(SRC)/libes/vect32/lib
-VECT_INCLUDE = -I$(SRC)/include/vect
+
+#not required any more 7/2000:
+#DIG_LIBDIR  = $(SRC)/libes/vect32/libes
+#DIG_INCLUDE  = $(SRC)/libes/vect32/lib
+#VECT_INCLUDE = -I$(SRC)/include/vect
+
+#not required any more 7/2000:
+#DIG_LIBDIR  = $(SRC)/libes/vect32/libes
+#DIG_INCLUDE  = $(SRC)/libes/vect32/lib
+#VECT_INCLUDE = -I$(SRC)/include/vect32
 
 VASKLIB     = $(LIBDIR)/libvask.a
 VASK        = $(VASKLIB) $(CURSES)
