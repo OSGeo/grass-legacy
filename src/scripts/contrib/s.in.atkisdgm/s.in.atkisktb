@@ -30,7 +30,7 @@ echo "You must be in GRASS to run this program"
 exit
 fi
 
-if [ $# = 0 ]; then
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]; then
  echo "Script to import German ATKIS-DGM/KTB elevation data into sites map"
  echo "  usage: s.in.atkisktb ktbfile"
  exit 1

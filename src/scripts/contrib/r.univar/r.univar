@@ -14,7 +14,7 @@ echo "You must be in GRASS to run this program."
 exit
 fi
 
-if test "$1" = ""
+if [ "$1" = "" -o "$1" = "-help" -o "$1" = "help" ]
 then
  echo ""
  echo "This module calculates univariate statistics from a GRASS raster map"
@@ -26,17 +26,6 @@ then
  exit
 fi
 
-if test "$1" = "help"
-then
- echo ""
- echo "This module calculates univariate statistics from a GRASS raster map"
- echo ""
- echo "Usage: r.univar [basemap] covermap"
- echo ""
- echo "Parameter basemap is an optional masking map (containing areas)"
- echo ""
- exit
-fi
 
 # test: only one parameter specified?
 echo ""
