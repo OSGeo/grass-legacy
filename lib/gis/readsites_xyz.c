@@ -162,6 +162,7 @@ int G_readsites_xyz(
 			case DCELL_TYPE:
 				xyz[i].cat.d = s->dcat; break;
 			default: /* No cat */
+				break;
 		}
 	   
 	}
