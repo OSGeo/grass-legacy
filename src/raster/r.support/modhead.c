@@ -17,7 +17,6 @@ main(argc,argv) char *argv[];
     int nbytes;
     int quiet;
     char rname[40], rmapset[40];
-    char msg2[100];
 
     G_gisinit(argv[0]) ;
     quiet = 0;
