@@ -33,3 +33,4 @@ GLOBAL char *cmd;
 GLOBAL char **rast, **vect, **site, **list;
 GLOBAL int nrasts, nvects, nsites, nlists;
 GLOBAL double U_east, U_west, U_south, U_north;
+
