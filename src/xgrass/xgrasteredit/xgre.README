@@ -1,0 +1,29 @@
+XGRASTEREDIT
+
+xgrasteredit is a tool for interactively editing GRASS raster (cell)
+maps.  It provides utilities for displaying files, panning and
+zooming, creating and using brushes, editing category values and
+fields, and saving changes.
+
+The file xgre.tar.Z contains an executable version of the editor for
+Sun SPARC systems, which has been statically linked to the needed X
+and motif libraries.  It also contains all the source code needed to
+compile xgrasteredit, but does not contain the needed X include and
+library files or the XGRASS library code.  Finally, it contains the
+help files required to compile and run xgrasteredit.
+
+To run xgrasteredit, install it in your $GISBASE/bin directory, make
+it executable, copy the help files from xgre/help to $GISBASE/etc/xhelp
+(see xgre/help/README) and type the command xgrasteredit at the GRASS 4.1
+prompt.  Alternatively, you can add xgrasteredit to the xgrass menu.
+
+Please send comments to gardels@ced.berkeley.edu (Kenn Gardels)
+and/or to djohnson@rock.concert.net (Dave Johnson).
+
+-- 
+
+A note from OGI:
+
+xgre.gif	This is a GIF file of a working xgrasteredit screen.
+xgre2		This is an X window dump of the same demo screen.
+xgre.tar	This is the tar file mentioned above.
