@@ -75,6 +75,7 @@ PQLIB               = @PQLIB@
 
 #ODBC:
 ODBCINC             = @ODBCINC@
+ODBCLIB             = @ODBCLIB@
 
 #Image formats:
 PNGINC              = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include

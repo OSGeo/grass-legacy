@@ -29,7 +29,7 @@ OBJ 	=  \
 DRIVER = main.o $(OBJ)
 
 $(HOME)/odbc: $(HOME) $(DRIVER) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) $(EXTRA_CFLAGS) -lodbc $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) $(EXTRA_CFLAGS) $(ODBCLIB) -lodbc $(MATHLIB) $(XDRLIB)
 
 
 $(HOME):
