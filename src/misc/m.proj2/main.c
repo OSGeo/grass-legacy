@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 	char ebuf[256]="", nbuf[256]="";
 	char b1[100]="", b2[100]="", label[512]="";
 	char buf[1024]="";
-	char *proj_name;
+	char *proj_name = NULL; /* There's a bug with this, egm2 */
 	/* int proj_index = 0; */
 
 	G_gisinit (argv[0]);
@@ -81,8 +81,7 @@ int main(int argc, char *argv[])
 	sprintf(ellps_name_in, "None");
 	sprintf(ellps_name_out, "None");
 
-	init_table();
-	init_unit_table();
+	G_geo_init_table();
 	init_used_table();
 	
 
@@ -100,22 +99,22 @@ int main(int argc, char *argv[])
         pj_zero_proj(&info_in);
         for (i=0; p_in->answers[i]; i++) {
 	  if (strstr(p_in->answers[i], "ellps") != NULL) {
-	    sscanf(p_in->answers[i], "ellps=%s", &ellps);
+	    sscanf(p_in->answers[i], "ellps=%s", ellps);
 	    G_get_ellipsoid_by_name(ellps, &a, &es);
 	    sprintf(ibuf_tmp, "+a=%.10f +es=%.10f ", a, es);
 	    strcat(ibuf, ibuf_tmp);
 	  } else {
             if (strstr(p_in->answers[i], "proj") != NULL) {
-               sscanf(p_in->answers[i], "proj=%s", &proj_name_in);
+               sscanf(p_in->answers[i], "proj=%s", proj_name_in);
                strcat(ibuf, "+");
                strcat(ibuf, p_in->answers[i]);
                strcat(ibuf, " ");
             }
             else {
                if (strstr(p_in->answers[i], "name") != NULL) {
-                  sscanf(p_in->answers[i], "name=%s", &proj_name);
+                  sscanf(p_in->answers[i], "name=%s", proj_name); /*TODO: Bug!!*/
                /* test if name is o.k. */
-               /* proj_index = get_proj_index(proj_name);
+               /* proj_index = G_geo_get_proj_index(proj_name);
                   if (proj_index < 0)
                      G_fatal_error("projection %s is not specified in the table", proj_name);
                      */
@@ -150,22 +149,22 @@ int main(int argc, char *argv[])
 		pj_zero_proj(&info_out);
 		for (i=0; p_out->answers[i]; i++) {
 		   if (strstr(p_out->answers[i], "ellps") != NULL) {
-			sscanf(p_out->answers[i], "ellps=%s", &ellps);
+			sscanf(p_out->answers[i], "ellps=%s", ellps);
 			G_get_ellipsoid_by_name(ellps, &a, &es);
 			sprintf(obuf_tmp, "+a=%.10f +es=%.10f ", a, es);
 			strcat(obuf, obuf_tmp);
 		   } else {
 			if (strstr(p_out->answers[i], "proj") != NULL) {
-				sscanf(p_out->answers[i], "proj=%s", &proj_name_out);
+				sscanf(p_out->answers[i], "proj=%s", proj_name_out);
 		        strcat(obuf, "+");
 		        strcat(obuf, p_out->answers[i]);
 		       	strcat(obuf, " ");
 		       	}
 		        else {
 		         if (strstr(p_out->answers[i], "name") != NULL) {
-                    		sscanf(p_out->answers[i], "name=%s", &proj_name);
+                    		sscanf(p_out->answers[i], "name=%s", proj_name);
 	               /* test if name is o.k. */
-        	       /* proj_index = get_proj_index(proj_name);
+        	       /* proj_index = G_geo_get_proj_index(proj_name);
                 	  if (proj_index < 0)
 	                     G_fatal_error("projection %s is not specified in the table", proj_name);
         	           */
@@ -187,8 +186,8 @@ int main(int argc, char *argv[])
 			if (pj_get_string(&info_out, parms_out) < 0)
 				G_fatal_error("Cannot initialize proj_info_out");
 		}
-		proj_index_in = get_proj_index(proj_name_in);
-		proj_index_out = get_proj_index(proj_name_out);
+		proj_index_in = G_geo_get_proj_index(proj_name_in);
+		proj_index_out = G_geo_get_proj_index(proj_name_out);
 
 /* BOB start here */
 
@@ -256,7 +255,7 @@ int main(int argc, char *argv[])
 		 NOR_res = Y;
 		 cur_LAT = LAT;
 		 cur_LON = LON;
-		 sprintf (buf, "%s%lf%s%lf", b1, EAS_res, b2, NOR_res);
+		 sprintf (buf, "%s%f%s%f", b1, EAS_res, b2, NOR_res);
 		 strcat (buf, label);
 		} else {
 		 LON_res = X;
