@@ -117,6 +117,10 @@ DETAILED PROCEDURE:
 
 
 4. TRANSLATE MESSAGES
+
+   In the links section at bottom of this page you find references to the
+   'kbabel' and 'poEdit' software to easily translate the message files.
+   
    Run 'kbabel' or equivalent program
     kbabel ./po/grasslibs_<LANGUAGE>.po
     kbabel ./po/grassmods_<LANGUAGE>.po
@@ -159,6 +163,12 @@ DETAILED PROCEDURE:
 PLEASE HELP TO TRANSLATE GRASS MESSAGES!
 
 ----------------------------------------------
+
+LINKS
+
+- KBabel: http://i18n.kde.org/tools/kbabel/
+- poEdit: http://poedit.sourceforge.net/
+
 
 NOTES
 
