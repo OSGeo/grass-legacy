@@ -2,3 +2,5 @@ PGM=r.average
 
 $(BIN_MAIN_INTER)/$(PGM): main.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB)
+
+$(GISLIB): #
