@@ -1,0 +1,33 @@
+# compat.ksh - ksh aliases to allow users of old versions of PBM to keep
+#                 their habits.
+#
+# This script must be sourced - it will not work if you run it in a sub-shell.
+
+alias pbmcatlr='pnmcat -lr'
+alias pbmcattb='pnmcat -tb'
+alias pbmcrop='pnmcrop'
+alias pbmcut='pnmcut'
+alias pbmenlarge='pnmenlarge'
+alias pbmfliplr='pnmflip -lr'
+alias pbmfliptb='pnmflip -tb'
+alias pbmtops='pgmtops'
+alias pbmtorast='pnmtorast'
+alias pbmtoxwd='pnmtoxwd'
+alias pbmtrnspos='pnmflip -xy'
+alias pcxtopbm='pcxtoppm'
+alias picttopbm='picttoppm'
+alias ppmarith='pnmarith'
+alias ppmconvol='pnmconvol'
+alias ppmcscale='pnmdepth'
+alias ppmrotate='pnmrotate'
+alias ppmscale='pnmscale'
+alias ppmshear='pnmshear'
+alias ppmsmooth='pnmsmooth'
+alias ppmtorast='pnmtorast'
+alias ppmtoxwd='pnmtoxwd'
+alias rasttopbm='rasttopnm'
+alias rasttoppm='rasttopnm'
+alias tifftopbm='tifftopnm'
+alias tifftopgm='tifftopnm'
+alias xwdtopbm='xwdtopnm'
+alias xwdtoppm='xwdtopnm'
