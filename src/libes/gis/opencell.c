@@ -387,6 +387,8 @@ static int NBYTES = sizeof(CELL);
 static RASTER_MAP_TYPE WRITE_MAP_TYPE = CELL_TYPE;
 /* a type of current map */
 
+static int COMPRESSION_TYPE = 0;
+
 #define FP_NBYTES G__.fp_nbytes
 /* bytes per cell for writing floating point maps */
 #define FP_TYPE  G__.fp_type
@@ -607,6 +609,9 @@ static int G__open_raster_new (char *name, int open_mode)
     G__reallocate_null_buf();
     /* we need null buffer to automatically write embeded nulls in put_row */
 
+    if (open_mode == OPEN_NEW_COMPRESSED && !COMPRESSION_TYPE)
+	COMPRESSION_TYPE = getenv("GRASS_INT_ZLIB") ? 2 : 1;
+
 /*
  * copy current window into cell header
  * set format to cell/supercell
@@ -620,7 +625,7 @@ static int G__open_raster_new (char *name, int open_mode)
 	FCB.row_ptr = G_calloc(DATA_NROWS + 1, sizeof(off_t)) ;
 	G_zero(FCB.row_ptr,(DATA_NROWS + 1) * sizeof(off_t)) ;
 	G__write_row_ptrs (fd);
-	FCB.cellhd.compressed = 1;
+	FCB.cellhd.compressed = COMPRESSION_TYPE;
 
 	allocate_compress_buf(fd);
 	FCB.nbytes = 1;		/* to the minimum */
@@ -636,7 +641,7 @@ static int G__open_raster_new (char *name, int open_mode)
 	      FCB.row_ptr = G_calloc(DATA_NROWS + 1, sizeof(off_t)) ;
       	      G_zero(FCB.row_ptr,(DATA_NROWS + 1) * sizeof(off_t)) ;
 	      G__write_row_ptrs (fd);
-	      FCB.cellhd.compressed = 1;
+	      FCB.cellhd.compressed = COMPRESSION_TYPE;
         }
         else
 	      FCB.cellhd.compressed = 0;

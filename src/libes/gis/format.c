@@ -70,11 +70,12 @@ int G__check_format(int fd)
 
     /*
      * Check to see if the file is in compress mode
-     * 3 possibilites
+     * 4 possibilites
      *   compressed flag in cellhd is negative (meaning pre 3.0 cell file)
      *       compression flag is first 3 bytes of cell file
      *   compression flag is 0 - not compressed
-     *   compression flag is 1 - compressed
+     *   compression flag is 1 - compressed using RLE (int) or zlib (FP)
+     *   compression flag is 2 - compressed using zlib
      */
 
     if (fcb->cellhd.compressed < 0)

@@ -26,7 +26,6 @@ int G_dump (int fd){
 	fprintf(stderr,_("Cell stats %p\n"),&G__.fileinfo[fd].statf);
 	fprintf(stderr,_("Range structure %p\n"),&G__.fileinfo[fd].range);
 	fprintf(stderr,_("float Range structure %p\n"),&G__.fileinfo[fd].fp_range);
-        fprintf(stderr,_("max # bits used in lzw compression %d\n"),G__.fileinfo[fd].compression_bits);
 	fprintf(stderr,_("want histogram?  %d\n"),G__.fileinfo[fd].want_histogram);
         fprintf(stderr,_("Automatic reclass flag %d\n"),G__.fileinfo[fd].reclass_flag);
         fprintf(stderr,_("File row addresses %p\n"),G__.fileinfo[fd].row_ptr);

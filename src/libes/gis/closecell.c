@@ -274,7 +274,6 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
         else /* CELL map */
 	   FCB.cellhd.format = FCB.nbytes - 1;
 
-	FCB.cellhd.compressed = (open_mode == OPEN_NEW_COMPRESSED ? 1 : 0);
 /* write header file */
         G_put_cellhd (FCB.name, &FCB.cellhd);
 
@@ -335,7 +334,7 @@ case OPEN_NEW_RANDOM: fprintf (stderr, "close %s random\n",FCB.name); break;
 int G__write_fp_format (int fd)
 {
    struct Key_Value *format_kv;
-   char element[100], msg[500], path[4096];
+   char element[100], path[4096];
    int stat;
 
    if(FCB.map_type == CELL_TYPE)
@@ -352,10 +351,7 @@ int G__write_fp_format (int fd)
    G_set_key_value ("byte_order", "xdr", format_kv);
 
    if (FCB.open_mode == OPEN_NEW_COMPRESSED)
-   {
-      sprintf(msg, "%d", FCB.compression_bits);
-      G_set_key_value ("lzw_compression_bits", msg, format_kv);
-   }
+      G_set_key_value ("lzw_compression_bits", "-1", format_kv);
 
    sprintf(element,"cell_misc/%s",FCB.name);
    G__file_name(path,element,FORMAT_FILE,FCB.mapset);

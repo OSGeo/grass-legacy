@@ -145,7 +145,6 @@ static void write_error(int,int);
 static int same(const unsigned char *, const unsigned char *, int);
 static int seek_random(int, int, int);
 static void set_file_pointer(int,int);
-static void update_compressed_bits(int,int);
 static int put_fp_data(int,void *,int,int,int,RASTER_MAP_TYPE);
 static int put_null_data(int,char *, int);
 static int convert_and_write_if(int, CELL *);
@@ -373,16 +372,6 @@ static void set_file_pointer(int fd, int row)
 }
 
 /*--------------------------------------------------------------------------*/
-
-static void update_compressed_bits(int fd, int row)
-{
-    struct fileinfo *fcb = &G__.fileinfo[fd];
-
-    /* Not relevant to zlib, was with LZW -- we use -1 token */
-    fcb->compression_bits = -1;
-}
-
-/*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
 
@@ -490,7 +479,6 @@ static int put_fp_data(int fd, void *rast, int row, int col, int n, RASTER_MAP_T
     {
 	if (G__write_data_compressed(fd, row, n) == -1)
 	    return -1;
-	update_compressed_bits(fd, row);
     }
     else
 	if (G__write_data(fd, row, n) == -1)
@@ -603,9 +591,6 @@ static int rle_compress(unsigned char *dst, unsigned char *src, int n, int nbyte
     int nwrite = 0;
     int total = nbytes * n;
 
-    /* record the byte count */
-    *src++ = *dst++ = nbytes;
-
     while (n > 0)
     {
 	int count;
@@ -633,7 +618,7 @@ static int put_data(int fd, CELL *cell, int row, int col, int n, int zeros_r_nul
 {
     struct fileinfo *fcb = &G__.fileinfo[fd];
     int random     = (fcb->open_mode == OPEN_NEW_RANDOM);
-    int compressed = (fcb->open_mode == OPEN_NEW_COMPRESSED);
+    int compressed = fcb->cellhd.compressed;
     int len = compressed ? sizeof(CELL) : fcb->nbytes;
     unsigned char *wk = G__.work_buf;
     int nwrite;
@@ -669,8 +654,13 @@ static int put_data(int fd, CELL *cell, int row, int col, int n, int zeros_r_nul
 	if (nbytes < len)
 	    trim_bytes(wk, n, len, len - nbytes);
 
-	/* then run-length encode the data */
-	nwrite = rle_compress(G__.compressed_buf, G__.work_buf, n, nbytes);
+	G__.compressed_buf[0] = G__.work_buf[0] = nbytes;
+
+	/* then compress the data */
+	nwrite = compressed == 1
+	    ? rle_compress(G__.compressed_buf + 1, G__.work_buf + 1, n, nbytes)
+	    : G_zlib_compress(G__.work_buf + 1, n * nbytes,
+			      G__.compressed_buf + 1, G__.compressed_buf_size - 1);
 
 	if (nwrite > 0)
 	{
