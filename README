@@ -1,21 +1,22 @@
 
-To install GRASS:
+This directory contains the complete source 
+release for GRASS 4.3.  
 
-Go to the src/CMD directory and read the 
-INSTALL42 text file.  For this new version
-of GRASS, the GRASS 4.1 Installation Guide
-is still valid if you need more detailed
-information.  
+The large file grass4.3src.tar.gz is the whole source
+release in a single file.  You will need gunzip 
+to uncompress the file.  Then simply type the 
+following commands:
 
-All files and documentation are available
-through anonymous ftp at:
+        gunzip grass4.3src.tar.gz  
 
-keck.baylor.edu
-/pub/grass
+	tar -xvf grass4.3src.tar  
 
-If you have any problems, please notify 
-us at:
+This will create the necessary directories and
+files for you to compile and run GRASS.  You will 
+need to follow the instructions in the INSTALL file
+to compile.
 
-grass@baylor.edu
 
+If you experience any problems or need assistance, 
+please email us at:    grass@baylor.edu
 
