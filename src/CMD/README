@@ -1,0 +1,53 @@
+The files BRANCH, LASTRELEASE and RELEASE can be used for changelog
+generation (`make ChangeLog' from the build directory when using the alternate
+build mechanism).
+
+BRANCH should contain the current CVS branch, either TRUNK for the main branch 
+or something like releasebranch_26_april_2002_5_0_0 etc.
+
+LASTRELEASE should contain the tag of the last release made from this branch, 
+i.e. this is what the ChangeLog will be 'diffed' against. The last release
+from the TRUNK prior to 5.3.0 was 5.0.0 beta 11.
+
+RELEASE should either contain a tag, e.g. release_03_11_2003_grass5_0_3, or
+if the new release has not been made yet then the name of the branch (as in
+BRANCH). For the TRUNK put either MAIN or HEAD here (either will work);
+if another branch is being followed then there is no such
+thing as HEAD and the name of the branch will work instead.
+
+Example (prior to the 5.3.0 release---log of ongoing changes since the last 
+release from the MAIN branch):
+BRANCH:
+       TRUNK
+LASTRELEASE:
+       release_grass5beta11_4_february_2001
+RELEASE:
+       HEAD
+
+When the release is made (i.e. Changelog between the last release from the
+TRUNK and the newest one):
+BRANCH:
+       TRUNK
+LASTRELEASE:
+       release_grass5beta11_4_february_2001
+RELEASE:
+       release_??_02_2003_grass5_3_0
+
+Another example (to give a changelog between 5.0.2 and 5.0.3):
+
+BRANCH:
+       releasebranch_26_april_2002_5_0_0
+LASTRELEASE:
+       release_10_04_2003_grass5_0_2
+RELEASE:
+       release_03_11_2003_grass5_0_3
+
+And a final one (to give a log of the changes on the 5.0 release branch
+since the 5.0.3 release):
+BRANCH:
+       releasebranch_26_april_2002_5_0_0
+LASTRELEASE:
+       release_03_11_2003_grass5_0_3
+RELEASE:
+       releasebranch_26_april_2002_5_0_0
+

@@ -24,7 +24,7 @@ CURR_DIR=`pwd`
 cp $GISBASE/etc/digcap.sample $GISBASE/etc/digcap
 
 #copy the fifo creating script (in case they are broken in tarball)
-cp src/scripts/shells/create_fifos.sh $GISBASE/dev
+cp $SRCDIR/src/scripts/shells/create_fifos.sh $GISBASE/dev
 chmod ugo+x $GISBASE/dev/create_fifos.sh
 
 # create locks directory for GRASS MONITORS and set permissions

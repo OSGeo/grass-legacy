@@ -1678,8 +1678,8 @@ if test "$BUILD_MECH" = Alternate ; then
   if test "$SRCDIR" = "$DSTDIR" ; then
     { echo "configure: error: ***  Build directory should not be the same as source \
 directory for the alternate build mechanism. Create a separate build \
-directory and run again, e.g. mkdir grass-build; cd grass-build; ../configure \
-(see mk/README)" 1>&2; exit 1; };
+directory and run again, e.g. mkdir ~/grass-build; cd ~/grass-build; \
+/usr/src/grass/configure ... (see mk/README)" 1>&2; exit 1; };
   else
     
     echo $ac_n "checking how to build libraries""... $ac_c" 1>&6
@@ -12150,11 +12150,7 @@ test "$no_create" = yes || ${CONFIG_SHELL-/bin/sh} $CONFIG_STATUS || exit 1
 
 if test "$BUILD_MECH" = Alternate ; then
 
-
-echo "Generating Makefiles for alternate build mechanism"
-
 cp -f src/CMD/head/head mk/vars.mk
-cp -f Makefile ${SRCDIR}
 cp -f mk/Makefile .
 
 fi
