@@ -37,11 +37,6 @@ if test ! -f ./SRCPKG; then
     AC_MSG_CHECKING(for GRASS 5 CVS HEAD source code)
     if test -d "$with_grass50"; then
 	GRASS50="$with_grass50"
-	if grep cvs "${GRASS50}/src/CMD/VERSION" >/dev/null 2>&1 ; then
-	    AC_MSG_RESULT("$GRASS50")
-	else
-	    AC_MSG_ERROR([*** GRASS 5 source directory \"$with_grass50\" does not contain CVS HEAD version.])
-	fi
     else
 	AC_MSG_ERROR([*** GRASS 5 source directory \"$with_grass50\" does not exist.])
     fi
