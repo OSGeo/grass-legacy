@@ -1,147 +1,147 @@
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
 NAME
-     _p_s._m_a_p - Hardcopy PostScript map output utility.
-     (_G_R_A_S_S _H_a_r_d_c_o_p_y _P_o_s_t_S_c_r_i_p_t _O_u_t_p_u_t _P_r_o_g_r_a_m)
+     ps.map - Hardcopy PostScript map output utility.
+     (GRASS Hardcopy PostScript	Output Program)
 
 SYNOPSIS
      ps.map
      ps.map help
-     ps.map [r] [input=_n_a_m_e] [scale=_m_a_p_s_c_a_l_e] [copies=_n]
-     output=_n_a_m_e
+     ps.map [r]	[input=name] [scale=mapscale] [copies=n]
+     output=name
 
 DESCRIPTION
-     _p_s._m_a_p produces an output file containing a PostScript
-     program to produce hardcopy map products on your system's
-     PostScript output device.  Output can include a raster map,
-     any number of vector overlays, site data, text labels, and
+     ps.map produces an	output file containing a PostScript
+     program to	produce	hardcopy map products on your system's
+     PostScript	output device.	Output can include a raster map,
+     any number	of vector overlays, site data, text labels, and
      other spatial data.
 
-     This program has 2 distincts modes of operation.  The
-     command-line mode requires the user to prepare a file of
+     This program has 2	distincts modes	of operation.  The
+     command-line mode requires	the user to prepare a file of
      mapping instructions describing the various spatial and
-     textual information to be printed prior to running _p_s._m_a_p.
+     textual information to be printed prior to	running	ps.map.
      The interactive mode (i.e., no command-line arguments) will
-     prompt the user for items to be mapped and does not require
-     the user to prepare a file of instructions.
+     prompt the	user for items to be mapped and	does not require
+     the user to prepare a file	of instructions.
 
      The command line flag is:
 
-     r                 Rotate plot 90 degrees.
+     r		       Rotate plot 90 degrees.
 
 
      The command-line parameters are:
 
-     input=_n_a_m_e        File containing mapping instructions.  (or
-                       enter input=- to enter from keyboard).
-                       These instructions are described in detail
-                       below.
+     input=name	       File containing mapping instructions.  (or
+		       enter input=- to	enter from keyboard).
+		       These instructions are described	in detail
+		       below.
 
-     scale=_m_a_p_s_c_a_l_e    Scale of the output map,  e.g. 1:25000
-                       Default:  1 panel
+     scale=mapscale    Scale of	the output map,	 e.g. 1:25000
+		       Default:	 1 panel
 
-                       This parameter is provided as a
-                       convenience.  It is identical to the _s_c_a_l_e
-                       mapping instruction described below.
+		       This parameter is provided as a
+		       convenience.  It	is identical to	the scale
+		       mapping instruction described below.
 
-     output=_n_a_m_e       Name of output the file to contain the
-                       PostScript program.
-
-
-     Note: the user must select a PostScript output device using
-     _p_s._s_e_l_e_c_t before running _p_s._m_a_p.
+     output=name       Name of output the file to contain the
+		       PostScript program.
 
 
-
-
-
-GRASS 4.1                U.S. Army CERL                         1
+     Note: the user must select	a PostScript output device using
+     ps.select before running ps.map.
 
 
 
 
 
-
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
-
+GRASS 4.2		Baylor University			1
 
 
-MAPPING INSTRUCTIONS
-     The mapping instructions allow the user to specify various
-     spatial data to be plotted. These instructions are normally
-     prepared in a regular text file using a system editor.  Some
+
+
+
+
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
+
+
+
+MAPPING	INSTRUCTIONS
+     The mapping instructions allow the	user to	specify	various
+     spatial data to be	plotted. These instructions are	normally
+     prepared in a regular text	file using a system editor.  Some
      instructions are single line instructions while others are
      multiple line. Multiple line instructions consist of the
      main instruction followed by a subsection of one or more
-     additional instructions.
+     additional	instructions.
 
      Instructions that may be included in the subsection under
      several different main instructions are:
 
-     where _x _y         The top left corner of the bounding box of
-                       the item to be plotted is located _x inches
-                       from the left edge of the paper and _y
-                       inches from the top edge of the paper. If
-                       _x is less than or equal to zero, the
-                       default horizontal location is used.  If _y
-                       is less than or equal to zero, the default
-                       vertical location is used.
+     where x y	       The top left corner of the bounding box of
+		       the item	to be plotted is located x inches
+		       from the	left edge of the paper and y
+		       inches from the top edge	of the paper. If
+		       x is less than or equal to zero,	the
+		       default horizontal location is used.  If	y
+		       is less than or equal to	zero, the default
+		       vertical	location is used.
 
-     font _f_o_n_t _n_a_m_e    The name of the PostScript font.  The
-                       default is _H_e_l_v_e_t_i_c_a.
+     font font name    The name	of the PostScript font.	 The
+		       default is Helvetica.
 
-     fontsize _f_o_n_t _s_i_z_e
-                       The size of the PostScript font in 1/72
-                       inch.  The default is 10.
+     fontsize font size
+		       The size	of the PostScript font in 1/72
+		       inch.  The default is 10.
 
 
 colortable
-     Prints the color table for the raster map layer anywhere on
+     Prints the	color table for	the raster map layer anywhere on
      the page.
 
      USAGE:   colortable [y|n]
-                where x y
-                width table width
-                cols table columns
-                font font name
-                fontsize font size
-                color text color
-                end
+		where x	y
+		width table width
+		cols table columns
+		font font name
+		fontsize font size
+		color text color
+		end
 
      The color table will display the colors for each raster map
      layer category value and the category label.  To get a color
-     table, you must have previously requested a raster map
+     table, you	must have previously requested a raster	map
      layer.  The default location for the colortable is
      immediately below any other map legend information, starting
-     at the left margin.  The default text color is black.
+     at	the left margin.  The default text color is black.
      Omitting the colortable instruction would result in no color
-     table.  Note:  Be careful about asking for color tables for
-     raster map layers which have many categories, such as
-     elevation.  This could result in the printing of an
+     table.  Note:  Be careful about asking for	color tables for
+     raster map	layers which have many categories, such	as
+     elevation.	 This could result in the printing of an
 
 
 
-2                        U.S. Army CERL                 GRASS 4.1
+GRASS 4.2		Baylor University			2
 
 
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
      extremely long color table!!!!!
 
-     This example would print a color table immediately below any
-     other map legend information, starting at the left margin.
-     EXAMPLE:   colortable y
+     This example would	print a	color table immediately	below any
+     other map legend information, starting at the left	margin.
+     EXAMPLE:	colortable y
 
 
 
@@ -149,31 +149,31 @@ comments
      Prints comments anywhere on the page.
 
      USAGE:   comments commentfile
-                where x y
-                font font name
-                fontsize font size
-                color text color
-                end
+		where x	y
+		font font name
+		fontsize font size
+		color text color
+		end
 
-     The default location is immediately below the last item item
-     printed, starting at the left margin.  The default text
+     The default location is immediately below the last	item item
+     printed, starting at the left margin.  The	default	text
      color is black.
 
-     This example prints in blue whatever is in the file
-     _v_e_g._c_o_m_m_e_n_t_s starting at 1.5 inches from the left edge of
-     the page and 7.25 inches from the top of the page, using a
-     15/72 inch Helvetica Bold font.
-     EXAMPLE:   raster vegetation
-                comments veg.comments
-                  where 1.5 7.25
-                  font Helvetica Bold
-                  fontsize 15
-                  color blue
-                  end
+     This example prints in blue whatever is in	the file
+     veg.comments starting at 1.5 inches from the left edge of
+     the page and 7.25 inches from the top of the page,	using a
+     15/72 inch	Helvetica Bold font.
+     EXAMPLE:	raster vegetation
+		comments veg.comments
+		  where	1.5 7.25
+		  font Helvetica Bold
+		  fontsize 15
+		  color	blue
+		  end
 
-     Presumably, the file _v_e_g._c_o_m_m_e_n_t_s contain comments
-     pertaining to the raster map layer _v_e_g_e_t_a_t_i_o_n, such as "This
-     map was created by classifying a LANDSAT TM image".
+     Presumably, the file veg.comments contain comments
+     pertaining	to the raster map layer	vegetation, such as "This
+     map was created by	classifying a LANDSAT TM image".
 
 
 
@@ -187,303 +187,303 @@ copies
 
 
 greyrast
-     Selects a raster map layer for output in shades of grey.
+     Selects a raster map layer	for output in shades of	grey.
 
 
 
 
-GRASS 4.1                U.S. Army CERL                         3
+GRASS 4.2		Baylor University			3
 
 
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
-     USAGE:   greyrast mapname|_l_i_s_t
+     USAGE:   greyrast mapname|list
 
-     For each _p_s._m_a_p run, only one raster map layer can be
-     requested (using either the _g_r_e_y_r_a_s_t or the _r_a_s_t_e_r
+     For each ps.map run, only one raster map layer can	be
+     requested (using either the greyrast or the raster
      instruction).
 
 
 
 grid
-     Overlays a coordinate grid onto the output map.
+     Overlays a	coordinate grid	onto the output	map.
 
      USAGE:   grid spacing
-                color color
-                numbers # [color]
-                font font name
-                fontsize font size
-                end
+		color color
+		numbers	# [color]
+		font font name
+		fontsize font size
+		end
 
-     The spacing of the grid is given (in the geographic
-     coordinate system units) on the main instruction line.  The
-     subsection instructions allow the user to specify the color
-     of the grid lines, whether coordinate numbers should appear
-     on the grid lines, and if they should appear every grid line
-     (1), every other grid line (2), etc., and what color the
-     numbers should be.  The defaults are black grid lines,
+     The spacing of the	grid is	given (in the geographic
+     coordinate	system units) on the main instruction line.  The
+     subsection	instructions allow the user to specify the color
+     of	the grid lines,	whether	coordinate numbers should appear
+     on	the grid lines,	and if they should appear every	grid line
+     (1), every	other grid line	(2), etc., and what color the
+     numbers should be.	 The defaults are black	grid lines,
      unnumbered.
 
-     This example would overlay a green grid with a spacing of
-     10000 meters (for a metered database, like UTM) onto the
-     output map.  Alternate grid lines would be numbered with red
+     This example would	overlay	a green	grid with a spacing of
+     10000 meters (for a metered database, like	UTM) onto the
+     output map.  Alternate grid lines would be	numbered with red
      numbers.
 
-     EXAMPLE:   grid 10000
-                  color green
-                  numbers 2 red
-                  end
+     EXAMPLE:	grid 10000
+		  color	green
+		  numbers 2 red
+		  end
 
 
 
 header
-     Prints the map header above the map.
+     Prints the	map header above the map.
 
      USAGE:   header
-                file header file
-                font font name
-                fontsize font size
-                color text color
-                end
+		file header file
+		font font name
+		fontsize font size
+		color text color
+		end
 
-     If the _h_e_a_d_e_r instruction or the _f_i_l_e sub-instruction is
-     absent, the header will consist of the map title and
-     location, each centered on the page above the map.  The
-
-
-
-4                        U.S. Army CERL                 GRASS 4.1
+     If	the header instruction or the file sub-instruction is
+     absent, the header	will consist of	the map	title and
+     location, each centered on	the page above the map.	 The
 
 
+
+GRASS 4.2		Baylor University			4
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+
+
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
-     default text color is black.
+     default text color	is black.
 
      This example prints (in red) whatever is in the file
-     _s_o_i_l_s._h_d_r above the map, using a 20/72 inch Courier font.
-     EXAMPLE:   header
-                  file soils.hdr
-                  font Courier
-                  fontsize 20
-                  color red
-                  end
+     soils.hdr above the map, using a 20/72 inch Courier font.
+     EXAMPLE:	header
+		  file soils.hdr
+		  font Courier
+		  fontsize 20
+		  color	red
+		  end
 
 
 
 
 labels
-     Selects a labels file for output (see manual entry for
-     _p._l_a_b_e_l_s).
+     Selects a labels file for output (see manual entry	for
+     p.labels).
 
-     USAGE:   labels  labelfile|_l_i_s_t
-                font font name
-                end
+     USAGE:   labels  labelfile|list
+		font font name
+		end
 
-     This example would paint labels from the labels file called
-     _t_o_w_n._n_a_m_e_s.  Presumably, these labels would indicate the
+     This example would	paint labels from the labels file called
+     town.names.  Presumably, these labels would indicate the
      names of towns on the map.
 
-     EXAMPLE:   labels town.names
+     EXAMPLE:	labels town.names
 
 
 
 line
-     Draws lines on the output map.
+     Draws lines on the	output map.
 
-     USAGE:   line east north east north
-              line x% y% x% y%
-                color color
-                width #
-                masked [y|n]
-                end
+     USAGE:   line east	north east north
+	      line x% y% x% y%
+		color color
+		width #
+		masked [y|n]
+		end
 
-     The beginning and ending points of the line are entered on
-     the main instruction.  These points can be defined either by
-     map coordinates or by using percentages of the geographic
-     region.  The user may also specify line color, width in
+     The beginning and ending points of	the line are entered on
+     the main instruction.  These points can be	defined	either by
+     map coordinates or	by using percentages of	the geographic
+     region.  The user may also	specify	line color, width in
      pixels (accepts decimal points [floating points] as well as
-     integers), and if the line is to be masked by the current
-     mask. (See manual entry for _r._m_a_s_k for more information on
+     integers),	and if the line	is to be masked	by the current
+     mask. (See	manual entry for r.mask	for more information on
      the mask.)
 
-     This example would draw a yellow line from the point x=10%
-     y=80% to the point x=30% y=70%. This line would be 2 pixels
-     wide and would appear even if there is a mask.
+     This example would	draw a yellow line from	the point x=10%
+     y=80% to the point	x=30% y=70%. This line would be	2 pixels
+     wide and would appear even	if there is a mask.
 
 
 
-GRASS 4.1                U.S. Army CERL                         5
+GRASS 4.2		Baylor University			5
 
 
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
-     EXAMPLE:   line 10% 80% 30% 70%
-                  color yellow
-                  width 2
-                  masked n
-                  end
+     EXAMPLE:	line 10% 80% 30% 70%
+		  color	yellow
+		  width	2
+		  masked n
+		  end
 
-     Of course, multiple lines may be drawn with multiple _l_i_n_e
+     Of	course,	multiple lines may be drawn with multiple line
      instructions.
 
 
 
 mapinfo
-     Prints the portion of the map legend containing the scale,
-     grid and region information, on or below the map.
+     Prints the	portion	of the map legend containing the scale,
+     grid and region information, on or	below the map.
 
      USAGE:   mapinfo
-                where x y
-                font font name
-                fontsize font size
-                color text color
-                end
+		where x	y
+		font font name
+		fontsize font size
+		color text color
+		end
 
-     The default location is immediately below the map, starting
-     at the left edge of the map.  The default text color is
+     The default location is immediately below the map,	starting
+     at	the left edge of the map.  The default text color is
      black.
 
-     This example prints (in brown) the scale, grid and region
-     information immediately below the map and starting 1.5
+     This example prints (in brown) the	scale, grid and	region
+     information immediately below the map and starting	1.5
      inches from the left edge of the page, using a 12/72 inch
      Courier font.
-     EXAMPLE:   mapinfo
-                  where 1.5 0
-                  font Courier
-                  fontsize 12
-                  color brown
-                  end
+     EXAMPLE:	mapinfo
+		  where	1.5 0
+		  font Courier
+		  fontsize 12
+		  color	brown
+		  end
 
 
 
 maploc
      Positions the map on the page.
 
-     USAGE:   maploc  x y [width height]
+     USAGE:   maploc  x	y [width height]
 
-     The upper left corner of the map will be positioned _x inches
-     from the left edge of the page and _y inches from the top of
-     the page.  If _w_i_d_t_h and _h_e_i_g_h_t (in inches) are present, the
+     The upper left corner of the map will be positioned x inches
+     from the left edge	of the page and	y inches from the top of
+     the page.	If width and height (in	inches)	are present, the
      map will be rescaled, if necessary, to fit.
 
-     This example positions the upper left corner of the map 2.0
+     This example positions the	upper left corner of the map 2.0
      inches from the left edge and 3.5 inches from the top edge
-     of the map.
+     of	the map.
 
 
 
-6                        U.S. Army CERL                 GRASS 4.1
+GRASS 4.2		Baylor University			6
 
 
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
-     EXAMPLE:   maploc 2.0 3.5
+     EXAMPLE:	maploc 2.0 3.5
 
 
 
 outline
-     Outlines the areas of a raster map layer with a specified
+     Outlines the areas	of a raster map	layer with a specified
      color.
 
      USAGE:   outline
-                color  color
-                width  width of line in pixels
-                end
+		color  color
+		width  width of	line in	pixels
+		end
 
 
-     Distinct areas of the raster map will be separated from each
-     other visually by drawing a border (or outline) in the
+     Distinct areas of the raster map will be separated	from each
+     other visually by drawing a border	(or outline) in	the
      specified color (default: black). For width the program
      accepts decimal points [floating points] as well as
-     integers.  Note: it is important the user enter the
-     instruction end even if a color is not chosen.  (It is hoped
-     that in the future the outline of a different raster map
-     layer other than the one currently being painted may be
+     integers.	Note: it is important the user enter the
+     instruction end even if a color is	not chosen.  (It is hoped
+     that in the future	the outline of a different raster map
+     layer other than the one currently	being painted may be
      placed on the map.)
 
-     This example would outline the category areas of the _s_o_i_l_s
-     raster map layer in grey.
-     EXAMPLE:   raster soils
-                outline
-                color grey
-                width 2
-                end
+     This example would	outline	the category areas of the soils
+     raster map	layer in grey.
+     EXAMPLE:	raster soils
+		outline
+		color grey
+		width 2
+		end
 
 
 point
      Places additional points or icons on the output map.
 
      USAGE:   point east north
-              point x% y%
-                color color
-                icon iconfile|_l_i_s_t
-                size #
-                masked [y|n]
-                end
+	      point x% y%
+		color color
+		icon iconfile|list
+		size #
+		masked [y|n]
+		end
 
-     The point location is entered in the main instruction line
-     by giving either the map coordinates or by using percentages
-     of the geographic region.  The user may also specify the
-     point color, the icon file to be used to represent the point
-     location (see the the manual entry for _p_s._i_c_o_n_s), the size
-     of the icon as a multiple of the size of the pattern in the
-     icon file (default is 1.0, aprroximately equivalent to a 10
-     point character), and whether the point is to be masked by
-
-
-
-GRASS 4.1                U.S. Army CERL                         7
+     The point location	is entered in the main instruction line
+     by	giving either the map coordinates or by	using percentages
+     of	the geographic region.	The user may also specify the
+     point color, the icon file	to be used to represent	the point
+     location (see the the manual entry	for ps.icons), the size
+     of	the icon as a multiple of the size of the pattern in the
+     icon file (default	is 1.0,	aprroximately equivalent to a 10
+     point character), and whether the point is	to be masked by
 
 
+
+GRASS 4.2		Baylor University			7
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+
+
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
-     the current mask. (See manual entry for _r._m_a_s_k for more
-     information on the mask.)
+     the current mask. (See manual entry for r.mask for	more
+     information on the	mask.)
 
-     This example would place a purple diamond (from icon file
-     _d_i_a_m_o_n_d) at the point (E456000 N7890000).  This diamond
-     would be the approximately the size of a 15 point character
-     and would not be masked by the current mask.
+     This example would	place a	purple diamond (from icon file
+     diamond) at the point (E456000 N7890000).	This diamond
+     would be the approximately	the size of a 15 point character
+     and would not be masked by	the current mask.
 
-     EXAMPLE:   point 456000 7890000
-                  color purple
-                  icon diamond
-                  size 1.5
-                  masked n
-                  end
+     EXAMPLE:	point 456000 7890000
+		  color	purple
+		  icon diamond
+		  size 1.5
+		  masked n
+		  end
 
 
-     Of course, multiple points may be drawn with multiple _p_o_i_n_t
+     Of	course,	multiple points	may be drawn with multiple point
      instructions.
 
 
@@ -491,158 +491,158 @@ psfile
      Copies a file containing PostScript commands into the output
      file.
 
-     Note: _p_s._m_a_p will not search for this file.  The user must
-     be in the correct directory or specify the full path on the
-     psfile instruction.  (Note to /bin/csh users: ~ won't work
+     Note: ps.map will not search for this file.  The user must
+     be	in the correct directory or specify the	full path on the
+     psfile instruction.  (Note	to /bin/csh users: ~ won't work
      with this instruction).
 
      USAGE:   psfile filename
 
      This example copies the file "logo.ps" into the output file.
 
-     EXAMPLE:   psfile logo.ps
+     EXAMPLE:	psfile logo.ps
 
 
 raster
-     Selects a raster map layer for output.
+     Selects a raster map layer	for output.
 
-     USAGE:   raster mapname|_l_i_s_t
+     USAGE:   raster mapname|list
 
-     For each _p_s._m_a_p run, only one raster map layer can be
-     requested.  If no raster map layer is requested, a
-     completely white map will be produced.  It can be useful to
-     select no raster map layer in order to provide a white
-     background for vector images.
+     For each ps.map run, only one raster map layer can	be
+     requested.	 If no raster map layer	is requested, a
+     completely	white map will be produced.  It	can be useful to
+     select no raster map layer	in order to provide a white
+     background	for vector images.
 
-     This example would paint a map of the raster map layer
-     _s_o_i_l_s.
-     EXAMPLE:   raster soils
-
-
-
-
-
-8                        U.S. Army CERL                 GRASS 4.1
+     This example would	paint a	map of the raster map layer
+     soils.
+     EXAMPLE:	raster soils
 
 
 
 
 
+GRASS 4.2		Baylor University			8
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+
+
+
+
+
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
 read
-     Provides _p_s._m_a_p with a previously prepared input stream.
+     Provides ps.map with a previously prepared	input stream.
 
      USAGE:   read previously prepared UNIX file
 
-     Mapping instructions can be placed into a file and read into
-     _p_s._m_a_p.
+     Mapping instructions can be placed	into a file and	read into
+     ps.map.
 
-     Note: _p_s._m_a_p will not search for this file.  The user must
-     be in the correct directory or specify the full path on the
-     read instruction.  (Note to /bin/csh users: ~ won't work
+     Note: ps.map will not search for this file.  The user must
+     be	in the correct directory or specify the	full path on the
+     read instruction.	(Note to /bin/csh users: ~ won't work
      with this instruction).
 
-     This example reads the UNIX file _p_m_a_p._r_o_a_d_s into _p_s._m_a_p.
-     This file may contain all the _p_s._m_a_p instructions for
-     placing the vector map layer _r_o_a_d_s onto the output map.
+     This example reads	the UNIX file pmap.roads into ps.map.
+     This file may contain all the ps.map instructions for
+     placing the vector	map layer roads	onto the output	map.
 
      EXAMPLE: read pmap.roads
 
      The user may have created this file because this vector map
-     layer is particularly useful for many _p_s._m_a_p outputs.  By
-     using the read option, the user need not enter all the input
+     layer is particularly useful for many ps.map outputs.  By
+     using the read option, the	user need not enter all	the input
      for the vector instruction, but simply read the previously
-     prepared file with the correct instructions.
+     prepared file with	the correct instructions.
 
 
 region
-     Places the outline of a smaller geographic region on the
+     Places the	outline	of a smaller geographic	region on the
      output.
 
-     USAGE:   region regionfile|_l_i_s_t
-                color color
-                width #
-                end
+     USAGE:   region regionfile|list
+		color color
+		width #
+		end
 
-     Geographic region settings are created and saved using
-     _g._r_e_g_i_o_n.  The _p_s._m_a_p _r_e_g_i_o_n option can be used to show an
-     outline of a smaller region which was printed on a separate
-     run of _p_s._m_a_p on other user-created maps.
+     Geographic	region settings	are created and	saved using
+     g.region.	The ps.map region option can be	used to	show an
+     outline of	a smaller region which was printed on a	separate
+     run of ps.map on other user-created maps.
 
-     The user can specify the color and the width in pixel units
+     The user can specify the color and	the width in pixel units
      (accepts decimal points [floating points] as well as
-     integers) of the outline.  The default is a black border of
+     integers) of the outline.	The default is a black border of
      one pixel width.
 
-     This example would place a white outline, 2 pixels wide, of
-     the geographic region called _f_i_r_e._z_o_n_e_s onto the output map.
-     This geographic region would have been created and saved
-     using _g._r_e_g_i_o_n.
+     This example would	place a	white outline, 2 pixels	wide, of
+     the geographic region called fire.zones onto the output map.
+     This geographic region would have been created and	saved
+     using g.region.
 
-     EXAMPLE:   region fire.zones
-                  color white
-
-
-
-GRASS 4.1                U.S. Army CERL                         9
+     EXAMPLE:	region fire.zones
+		  color	white
 
 
+
+GRASS 4.2		Baylor University			9
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+
+
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
-                  width 2
-                  end
+		  width	2
+		  end
 
 
 scale
      Selects a scale for the output map.
 
-     USAGE:   scale _s_c_a_l_e
+     USAGE:   scale scale
 
      The scale can be selected either as:
 
-          a relative ratio, e.g. 1:25000;
+	  a relative ratio, e.g. 1:25000;
 
-          an absolute width of the printed map, e.g. 10 inches;
+	  an absolute width of the printed map,	e.g. 10	inches;
 
-          the number of printed paper panels, e.g. 3 panels (_a_t
-          _t_h_e _p_r_e_s_e_n_t _t_i_m_e, _o_n_l_y _1 _p_a_n_e_l _i_s _s_u_p_p_o_r_t_e_d);
+	  the number of	printed	paper panels, e.g. 3 panels (at
+	  the present time, only 1 panel is supported);
 
-          the number of miles per inch, e.g. 1 inch equals 4
-          miles.
+	  the number of	miles per inch,	e.g. 1 inch equals 4
+	  miles.
 
-     This example would set the scale of the map to 1 unit =
+     This example would	set the	scale of the map to 1 unit =
      25000 units.
-     EXAMPLE:   scale 1:25000
+     EXAMPLE:	scale 1:25000
 
 
 setcolor
      Overrides the color assigned to one or more categories of
-     the raster map layer.
+     the raster	map layer.
 
      USAGE:   setcolor cat(s) color
 
 
-     This example would set the color for categories 2,5 and 8 of
-     the raster map layer _w_a_t_e_r_s_h_e_d_s to white and category 10 to
+     This example would	set the	color for categories 2,5 and 8 of
+     the raster	map layer watersheds to	white and category 10 to
      green.  (NOTE: no spaces are inserted between the category
      values.)
 
-     EXAMPLE:   raster watersheds
-                setcolor 2,5,8 white
-                setcolor 10 green
+     EXAMPLE:	raster watersheds
+		setcolor 2,5,8 white
+		setcolor 10 green
 
-     Of course, _s_e_t_c_o_l_o_r can be requested more than once to
-     override the default color for additional categories.  More
+     Of	course,	setcolor can be	requested more than once to
+     override the default color	for additional categories.  More
      than one category can be changed for each request by listing
      all the category values separated by commas (but with no
      spaces).
@@ -650,92 +650,92 @@ setcolor
 
 
 sites
-     Selects sites data to be placed on the output map (see
+     Selects sites data	to be placed on	the output map (see
 
 
 
-10                       U.S. Army CERL                 GRASS 4.1
+GRASS 4.2		Baylor University		       10
 
 
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
-     manual entry for _s._m_e_n_u).
+     manual entry for s.menu).
 
-     USAGE:   sites sitemap|_l_i_s_t
-                color color
-                icon iconfile|_l_i_s_t
-                size #
-                desc [y|n]
-                font font name
-                end
+     USAGE:   sites sitemap|list
+		color color
+		icon iconfile|list
+		size #
+		desc [y|n]
+		font font name
+		end
 
-     The user may specify the the color of the sites (see section
-     on NAMED COLORS below); the icon to be used to represent the
-     presence of a site (see the manual entry for _p._i_c_o_n_s); the
+     The user may specify the the color	of the sites (see section
+     on	NAMED COLORS below); the icon to be used to represent the
+     presence of a site	(see the manual	entry for p.icons); the
      size of the icon (number of times larger than the size it is
-     in the icon file); and whether or not the description
-     associated with each site is also to be printed.  If the
+     in	the icon file);	and whether or not the description
+     associated	with each site is also to be printed.  If the
      description is to be printed, the font name may be
-     specified.  The size of the font is proportional to the icon
+     specified.	 The size of the font is proportional to the icon
      size.  This example would paint a sites map with blue
-     windmills (from an icon file created by the user using the
-     _p._i_c_o_n_s GRASS command) placed at all windmill locations
-     (from a sites list).  These windmills would be two times
+     windmills (from an	icon file created by the user using the
+     p.icons GRASS command) placed at all windmill locations
+     (from a sites list).  These windmills would be two	times
      larger than the size of the icon in the icon file and have
      descriptions from the sites list file printed beside them.
-     EXAMPLE:   sites windmills
-                  color blue
-                  icon windmill
-                  size 2
-                  desc y
-                  end
+     EXAMPLE:	sites windmills
+		  color	blue
+		  icon windmill
+		  size 2
+		  desc y
+		  end
 
 
 text
-     Places text on the map.
+     Places text on the	map.
 
      USAGE:   text  east north text
-              text  x% y% text
-                font fontname
-                color color|none
-                width #
-                hcolor color|none
-                hwidth #
-                background color|none
-                border color|none
-                size #
-                ref reference point
-                xoffset #
-                yoffset #
-                opaque [y|n]
-                end
+	      text  x% y% text
+		font fontname
+		color color|none
+		width #
+		hcolor color|none
+		hwidth #
+		background color|none
+		border color|none
+		size #
+		ref reference point
+		xoffset	#
+		yoffset	#
+		opaque [y|n]
+		end
 
 
 
 
 
-GRASS 4.1                U.S. Army CERL                        11
+GRASS 4.2		Baylor University		       11
 
 
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
-     The user specifies where the text will be placed by
+     The user specifies	where the text will be placed by
      providing map coordinates or percentages of the geographic
-     region map.  The text follows these coordinates on the same
-     instruction line.  More than one line of text can be
-     specified by notating the end of a line with \n (e.g.
+     region map.  The text follows these coordinates on	the same
+     instruction line.	More than one line of text can be
+     specified by notating the end of a	line with \n (e.g.
      USA\nCERL).
 
 
@@ -745,187 +745,187 @@ ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
      greeks italicc italiccs italict romanc romancs romand romans
      romant scriptc scripts (The default font is romans);
 
-     color (see NAMED COLORS);
+     color (see	NAMED COLORS);
 
-     width of the lines used to draw the text to make thicker
+     width of the lines	used to	draw the text to make thicker
      letters (accepts decimal points [floating points] as well as
      integers);
 
-     size as the vertical height of the letters in meters on the
-     ground (text size will grow or shrink depending on the scale
-     at which the map is painted);
+     size as the vertical height of the	letters	in meters on the
+     ground (text size will grow or shrink depending on	the scale
+     at	which the map is painted);
 
-     the highlight color (hcolor) and the width of the highlight
+     the highlight color (hcolor) and the width	of the highlight
      color (hwidth);
 
      the text-enclosing-box background color; the text box border
      color;
 
      ref. This reference point specifies the text handle - what
-     part of the text should be placed on the location specified
-     by the map coordinates.  Reference points can refer to:
+     part of the text should be	placed on the location specified
+     by	the map	coordinates.  Reference	points can refer to:
      [lower|upper|center] [left|right|center] of the text to be
      printed;
 
-     yoffset, which provides finer placement of text by shifting
-     the text a vertical distance in pixels from the specified
-     north.  The vertical offset will shift the location to the
-     south if positive, north if negative;
+     yoffset, which provides finer placement of	text by	shifting
+     the text a	vertical distance in pixels from the specified
+     north.  The vertical offset will shift the	location to the
+     south if positive,	north if negative;
 
      xoffset, which shifts the text a horizontal distance in
-     pixels from the specified east The horizontal offset will
-     shift the location east if positive, west if negative;
+     pixels from the specified east The	horizontal offset will
+     shift the location	east if	positive, west if negative;
 
-     whether or not the text should be opaque to vectors.
-     Entering no to the opaque option will allow the user to see
-     any vectors which go through the text's background box.
-     Otherwise, they will end at the box's edge.
+     whether or	not the	text should be opaque to vectors.
+     Entering no to the	opaque option will allow the user to see
+     any vectors which go through the text's background	box.
+     Otherwise,	they will end at the box's edge.
 
-     This example would place the text _S_P_E_A_R_F_I_S_H _L_A_N_D _C_O_V_E_R at
-     the coordinates E650000 N7365000. The text would be a total
-
-
-
-12                       U.S. Army CERL                 GRASS 4.1
+     This example would	place the text SPEARFISH LAND COVER at
+     the coordinates E650000 N7365000. The text	would be a total
 
 
+
+GRASS 4.2		Baylor University		       12
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+
+
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
-     of 3 pixels wide (2 pixels of red text and 1 pixel black
-     highlight), have a white background enclosed in a red box,
-     and be 500 meters in size.  The lower right corner of the
-     text would be centered over the coordinates provided.  All
-     vectors on the map would stop at the border of this text.
-     EXAMPLE:   text 650000 7365000 SPEARFISH LAND COVER
-                  font romand
-                  color red
-                  width 2
-                  hcolor black
-                  hwidth 1
-                  background white
-                  border red
-                  size 500
-                  ref lower left
-                  opaque y
-                  end
+     of	3 pixels wide (2 pixels	of red text and	1 pixel	black
+     highlight), have a	white background enclosed in a red box,
+     and be 500	meters in size.	 The lower right corner	of the
+     text would	be centered over the coordinates provided.  All
+     vectors on	the map	would stop at the border of this text.
+     EXAMPLE:	text 650000 7365000 SPEARFISH LAND COVER
+		  font romand
+		  color	red
+		  width	2
+		  hcolor black
+		  hwidth 1
+		  background white
+		  border red
+		  size 500
+		  ref lower left
+		  opaque y
+		  end
 
 
 
 vector
-     Selects a vector map layer for output.
+     Selects a vector map layer	for output.
 
-     USAGE:   vector vectormap|_l_i_s_t
-                color color
-                width #
-                hcolor color
-                hwidth #
-                masked [y|n]
-                style  0-9
-                end
+     USAGE:   vector vectormap|list
+		color color
+		width #
+		hcolor color
+		hwidth #
+		masked [y|n]
+		style  0-9
+		end
 
-     The user can specify the color of the vectors; the width of
+     The user can specify the color of the vectors; the	width of
      the vectors lines in pixels (accepts decimal points
      [floating points] as well as integers); the highlight color
-     (hcolor) for the vector lines; the width of the highlight
+     (hcolor) for the vector lines; the	width of the highlight
      color (hwidth) in pixels; whether or not the raster map
      layer is to be masked by the current mask (see manual entry
-     _r._m_a_s_k for more information on the mask); and the line
+     r.mask for	more information on the	mask); and the line
      style.  The line style allows the vectors to be dashed in
      different patterns.  This is done by typing a series of
-     numbers (0's and 1's) in a desired sequence or pattern.
-     Blanks and non-digit characters are recognized as 0's. Using
-     0 would allow the colors of the raster map layer (or the
-     background color if no raster map layer was selected) to
+     numbers (0's and 1's) in a	desired	sequence or pattern.
+     Blanks and	non-digit characters are recognized as 0's. Using
+     0 would allow the colors of the raster map	layer (or the
+     background	color if no raster map layer was selected) to
      show through.
 
-     This example would paint a map of the vector map layer named
-     _s_t_r_e_a_m_s.  These streams would be a total of 3 pixels wide
-     (the inner two pixels blue and the outer highlight pixel
-     white).  The map would not show streams outside of the
+     This example would	paint a	map of the vector map layer named
+     streams.  These streams would be a	total of 3 pixels wide
+     (the inner	two pixels blue	and the	outer highlight	pixel
+     white).  The map would not	show streams outside of	the
      current mask.
 
 
 
-GRASS 4.1                U.S. Army CERL                        13
+GRASS 4.2		Baylor University		       13
 
 
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
-     EXAMPLE:   vector streams
-                  color blue
-                  width 2
-                  hcolor white
-                  hwidth 1
-                  masked y
-                  end
+     EXAMPLE:	vector streams
+		  color	blue
+		  width	2
+		  hcolor white
+		  hwidth 1
+		  masked y
+		  end
 
 
 
 
 verbose
-     Changes the amount of talking _p_s._m_a_p will do.
+     Changes the amount	of talking ps.map will do.
 
      USAGE: verbose [0|1|2]
 
      A higher value implies more chatter.  The default is 2.
-     This example sets the amount of chatter to a minimum.
+     This example sets the amount of chatter to	a minimum.
 
-     EXAMPLE:   verbose 0
+     EXAMPLE:	verbose	0
 
 
 
 vlegend
-     Prints the portion of the map legend containing the vector
-     information, on or below the map.
+     Prints the	portion	of the map legend containing the vector
+     information, on or	below the map.
 
      USAGE:   vlegend
-                where x y
-                font font name
-                fontsize font size
-                end
+		where x	y
+		font font name
+		fontsize font size
+		end
 
      The default location is immediately below the legend
-     containing the scale, grid and region information, starting
-     at the left edge of the map.  If the _w_h_e_r_e instruction is
-     present and _y is less than or equal to zero, the vector
+     containing	the scale, grid	and region information,	starting
+     at	the left edge of the map.  If the where	instruction is
+     present and y is less than	or equal to zero, the vector
      legend will be positioned immediately below the map,
-     starting _x inches from the left edge of the page.
+     starting x	inches from the	left edge of the page.
 
      This example prints the vector legend immediately below the
      map and starting 4.5 inches from the left edge of the page,
-     using a 12/72 inch Helvetica font.
-     EXAMPLE:   vlegend
-                  where 4.5 0
-                  font Courier
-                  fontsize 12
-                  end
+     using a 12/72 inch	Helvetica font.
+     EXAMPLE:	vlegend
+		  where	4.5 0
+		  font Courier
+		  fontsize 12
+		  end
 
 
 end
-     Terminates input and begin painting the map.
+     Terminates	input and begin	painting the map.
 
 
 
-14                       U.S. Army CERL                 GRASS 4.1
+GRASS 4.2		Baylor University		       14
 
 
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
@@ -933,78 +933,78 @@ ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
 
 
 NAMED COLORS
-     The following are the colors that are accepted by _p_s._m_a_p:
+     The following are the colors that are accepted by ps.map:
 
-     aqua black blue brown cyan gray green grey indigo magenta
+     aqua black	blue brown cyan	gray green grey	indigo magenta
      orange purple red violet white yellow
 
 
 
-EXAMPLE ps.map INPUT FILE
-     The following is an example of a _p_s._m_a_p script file. The
-     file has been named _s_p_e_a_r._s_o_i_l_s.  For the purposes of
-     illustration, the file is in two columns.  This script file
+EXAMPLE	ps.map INPUT FILE
+     The following is an example of a ps.map script file. The
+     file has been named spear.soils.  For the purposes	of
+     illustration, the file is in two columns.	This script file
      can be entered at the command line:
-          ps.map input=spear.soils output=soils.ps
+	  ps.map input=spear.soils output=soils.ps
 
-                            (cont.)
-     raster soils           vlegend
-     vector roads             where 4.5 0
-        width 2               end
-        style 0011          text 608000.00 3476004.73 SPEARFISH SOILS MAP
-        color 1 black          color red
-        color 2 red            width 2
-        masked n               hcolor black
-        end                    hwidth 1
-     labels town.names         background white
-     region subregion          border red
-        color white            size 500
-        width 2                ref lower left
-        end                    opaque y
-     grid 10000                end
-        color green         line 606969.73 3423092.91 616969.73 3423092.91
-        numbers 2 red          color yellow
-        end                    width 2
-     outline                   opaque yes
-        color black            end
-        end                 point 40% 60%
-     colortable y              color purple
-     comments soil.cmt         icon diamond
-        font Helvetica         size 2
-        end                    masked n
+			    (cont.)
+     raster soils	    vlegend
+     vector roads	      where 4.5	0
+	width 2		      end
+	style 0011	    text 608000.00 3476004.73 SPEARFISH	SOILS MAP
+	color 1	black	       color red
+	color 2	red	       width 2
+	masked n	       hcolor black
+	end		       hwidth 1
+     labels town.names	       background white
+     region subregion	       border red
+	color white	       size 500
+	width 2		       ref lower left
+	end		       opaque y
+     grid 10000		       end
+	color green	    line 606969.73 3423092.91 616969.73	3423092.91
+	numbers	2 red	       color yellow
+	end		       width 2
+     outline		       opaque yes
+	color black	       end
+	end		    point 40% 60%
+     colortable	y	       color purple
+     comments soil.cmt	       icon diamond
+	font Helvetica	       size 2
+	end		       masked n
      scale 1:25000    end
      setcolor 6,8,9 white   end
      setcolor 10 green
 
 INTERACTIVE MODE
-     If the user simply enters _p_s._m_a_p without arguments, then a
+     If	the user simply	enters ps.map without arguments, then a
      simple prompting session occurs.  Some, but not all of the
      non-interactive requests are available at this level.
 
 
 
 
-GRASS 4.1                U.S. Army CERL                        15
+GRASS 4.2		Baylor University		       15
 
 
 
 
 
 
-ps.map <alpha>       GRASS Reference Manual        <alpha> ps.map
+ps.map <alpha>	     GRASS Reference Manual	   <alpha> ps.map
 
 
 
 SEE ALSO
-     _p_s._i_c_o_n_s, _p_s._s_e_l_e_c_t
+     ps.icons, ps.select
 
 AUTHOR
      Paul Carlson, USDA, SCS, NHQ-CGIS
 
 NOTICE
-     This program is part of the _a_l_p_h_a section of the GRASS
-     distribution.  Unlike the code in the _m_a_i_n section of GRASS,
-     the _a_l_p_h_a code has not yet been fully tested for one release
+     This program is part of the alpha section of the GRASS
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
      cycle.
 
 
@@ -1050,7 +1050,7 @@ NOTICE
 
 
 
-16                       U.S. Army CERL                 GRASS 4.1
+GRASS 4.2		Baylor University		       16
 
 
 
