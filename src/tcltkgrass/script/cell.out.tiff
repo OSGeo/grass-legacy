@@ -1,11 +1,10 @@
 #!/bin/bash --
-
-# Script to create a tiff output file with the cell driver
-# Reinhard Brunzema r.brunzema@web.de
-# V 1: 29.1.2001
-
-# Clean CELL
-g.remove rast=D_cell > /dev/null
+############################################################
+# Script to create a tiff output file with the cell driver #
+# Reinhard Brunzema r.brunzema@web.de                      #
+# V 1.1: 15.2.2001                                         #
+############################################################
+declare -i STIME=1
 
 function show_help  {
 echo "This program collects several display functions to create a map that can"
@@ -40,7 +39,7 @@ if [ -n "$baseraster" ]; then
 	d.rast map="$baseraster"
 	echo d.rast map="$baseraster"
 fi	
-sleep 1s
+sleep "$STIME"s
 if [ -n "$rastercount" ]; then
 		count=0
 		while [ $count -lt $rastercount ]
@@ -54,7 +53,7 @@ if [ -n "$rastercount" ]; then
 				d.rast "${rastermp[$count]}"
 			fi
 			let count=count+1
-			sleep 1s
+			sleep "$STIME"s
 	done
 fi
 
@@ -72,7 +71,7 @@ if [ -n "$vectorpolcount" ]; then
 		echo d.area "${vectorpolmp[$count]}" "${fillcol[$count]}" "${linecol[$count]}"
 		d.area "${vectorpolmp[$count]}" "${fillcol[$count]}" "${linecol[$count]}"
 		let count=count+1
-		sleep 1s
+		sleep "$STIME"s
 	done
 fi
 
@@ -88,7 +87,7 @@ if [ -n "$vectorcount" ]; then
 			d.vect "${vectormp[$count]}"
 		fi
 		let count=count+1
-		sleep 1s
+		sleep "$STIME"s
 	done
 fi
 
@@ -103,10 +102,13 @@ if [ -n "$sitecount" ]; then
 		if [ -z "${sitecls[$count]}" ]; then
 			sitecls[$count]="color=gray"
 		fi
-		echo d.sites "${sitemp[$count]}" "${sitesz[$count]}" "${sitecls[$count]}"
-		d.sites "${sitemp[$count]}" "${sitesz[$count]}" "${sitecls[$count]}"
+		if [ -z "${site_icon[$count]}" ]; then
+			site_icon[$count]="type=x"
+		fi
+		echo d.sites "${sitemp[$count]}" "${sitesz[$count]}" "${sitecls[$count]}" "${site_icon[$count]}"
+		d.sites "${sitemp[$count]}" "${sitesz[$count]}" "${sitecls[$count]}" "${site_icon[$count]}"
 		let count=count+1
-		sleep 1s
+		sleep "$STIME"s
 	done
 fi
 
@@ -124,17 +126,54 @@ fi
 return
 }
 
+function exit_func {
+
+echo "Returning to old settings..."
+export XDRIVER_WIDTH=old_XDRIVEX
+export XDRIVER_HEIGTH=old_XDRIVEY
+
+g.region region="$regionname"
+d.mon select="$monitor"
+
+export GRASS_WIDTH=$old_GRASSW
+export GRASS_HEIGHT=$old_GRASSH
+
+echo "Done";
+exit 0;
+
+}
+
 if test "$GISBASE" = ""; then
 	echo "You must be in GRASS to run this program."
 	exit
 fi
 
 argnum=$#
-if test $argnum -eq 0
+if test $argnum -eq 1
 then
 	show_help
 	exit
 fi
+
+old_GRASSW=$GRASS_WIDTH
+old_GRASSH=$GRASS_HEIGHT
+
+if [ "$old_GRASSW" = "" ]; then
+	old_GRASSW=640
+fi
+if [ "$old_GRASSH" = "" ]; then
+	old_GRASSH=480
+fi
+
+old_XDRIVEX=XDRIVER_WIDTH
+old_XDRIVEY=XDRIVER_HEIGTH
+
+regionname=before_cell_out_tiff
+g.region save="$regionname"
+
+monitor=`d.mon -p`
+monitor="x${monitor#*x}"
+
 
 # Set new default for d.erase (more usefull for export)
 erasecolor="color=white"
@@ -164,6 +203,8 @@ do
 		-p)
 			p="pause"
 		;;
+		-t)
+			t="break"
 	esac
 	
 	case $par in
@@ -193,6 +234,9 @@ do
 		;;
 		sitecols*)
 			sitecols="${par#*=}"
+		;;
+		siteicons*)
+			siteicons="${par#*=}"
 	esac
 	
 	case $par in
@@ -335,10 +379,17 @@ if [ -n "$sitecols" ]; then
 		done
 fi
 
+if [ -n "$siteicons" ]; then
+	set -- $siteicons
+	count=0
+	for sticon
+		do
+			site_icon[$count]="type=$sticon"
+			let count=count+1
+		done
+fi
 
 # test output
-monitor=`d.mon -p`
-monitor="x${monitor#*x}"
 if [ -z "$monitor" ]; then
 	echo "No monitor for preview selected."
 else
@@ -346,24 +397,38 @@ else
 	display_all
 fi
 
+if [ "$t" = "break" ] ; then
+	exit_func
+fi
+
+# Wait for additonal plot commands
+if [ -n "$p" ]; then
+	xterm -bg magenta -e wait.sh
+fi
+
 # Prepare Cell driver
 unset GRASS_WIDTH
 unset GRASS_HEIGHT
 
-#let cellx=cellx+1
-#let celly=celly+1
-
 export GRASS_WIDTH="$cellx"
 export GRASS_HEIGHT="$celly"
 
-sleep 2s
+export XDRIVER_WIDTH="$cellx"
+export XDRIVER_HEIGTH="$celly"
+sleep 1s
+
+# Clean CELL
+g.remove rast=D_cell > /dev/null
 
 # Write to D_Cell
 echo "Starting cell driver..."
 d.mon start=CELL
 d.mon select=CELL
+d.mon nlev=8
 echo "Plotting in D_cell..."
-sleep 1s
+
+STIME=0
+
 display_all
 
 sleep 1s
@@ -382,7 +447,6 @@ echo "Use 'g.region region=before_cell_out_tiff', if the"
 echo "program aborts abnormally to return to your old region"
 echo "settings."
 echo
-g.region save=before_cell_out_tiff
 
 echo "Changing to xy-projection."
 g.region raster=D_cell
@@ -391,9 +455,4 @@ echo "Exporting $outfile..."
 r.out.tiff input=D_cell output="$outfile"
 sleep 1s
 
-echo "Returning to old settings..."
-g.region region=before_cell_out_tiff
-d.mon select="$monitor"
-
-echo "Done";
-exit 0;
+exit_func
