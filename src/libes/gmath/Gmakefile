@@ -9,7 +9,12 @@ OBJ = fft.o \
 	max_pow2.o \
 	mult.o \
 	rand1.o \
-	la.o
+	la.o \
+	dalloc.o \
+	eigen_tools.o \
+	ialloc.o \
+	lu.o \
+	svd.o
 
 LIBES = $(GISLIB)
 DEPLIBS= $(DEPGISLIB)
