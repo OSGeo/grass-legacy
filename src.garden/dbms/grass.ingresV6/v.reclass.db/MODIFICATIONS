@@ -1,0 +1,47 @@
+****************************************
+v.reclass.db - Modifications for INGRES
+
+Katarina Johnsson, 930421
+****************************************
+
+INGRES version: 6
+
+INGRES version specific subroutines:
+	ingresUnTable
+
+Modified and/or renamed subroutines:
+	main
+	sqlQry <=> infxQry
+
+New subroutines:
+	ingresUnTable
+	ingresGetKey
+
+Modified and/or renamed include files:
+	None
+
+New include files:
+	ingresUtils.h
+
+INGRES modifications:
+	'\g' added at end of SQL query (sqlQry)
+	Syntax of execution of SQL command (sqlQry)
+	Reading SQL output (sqlQry):
+		ingresUnTable added (INGRES v6 specific).
+		ingresGetKey added.
+		Strcmp between the output and the column name (key) is 
+		limited to the length of the SQL output. The SQL output
+		may be truncated.
+
+Improvements:
+	Explanatory messages added
+	SQL queries on the form (select * from ...) are handled. The first
+	column is extracted from the output. It is assumed that this column
+	is the key column (ingresGetKey).
+
+Bug Fixes:
+	In loop to reclassify vectors (sqlQry):
+		Loop control by 'firstFlag' instead of 'curcat'.
+		1st argument in G_set_cat is 'catcnt' instead of 'line_cat'.
+		Label is 'dbname category catcnt' instead of 
+		'dbname category line_cat'.
