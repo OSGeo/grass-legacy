@@ -3,6 +3,11 @@
 	Copyright (C) 2000 by the GRASS Development Team
 	Author: Jan-Oliver Wagner <jan@intevation.de>
 
+	Changes: 2001-06-07 by Eric G. Miller <egm2@jps.net>
+	   * make <parameter-group> optional
+	   * move descriptions first, always optional
+	   * make <default> optional  // Should it reference <value> ?
+	   
 	This program is free software under the GPL (>=v2)
 	Read the file COPYING coming with GRASS for details.
 -->
@@ -11,7 +16,7 @@
 <!--	a grass-interface collect several tasks to
 	customize a grass application.
 -->
-<!ELEMENT grass-interface (task+, description?)>
+<!ELEMENT grass-interface (description?, task+)>
 <!ATTLIST grass-interface	name	CDATA #REQUIRED>
 
 
@@ -24,7 +29,7 @@
 	for the GRASS command and is used
 	to execute the task.
 -->
-<!ELEMENT task	(parameter-group+, description?)>
+<!ELEMENT task	        (description?, parameter-group*)>
 <!ATTLIST task	name	CDATA #REQUIRED>
 
 
@@ -35,7 +40,7 @@
 	The group consists of a number of parameters
 	and may optionally have a description.
 -->
-<!ELEMENT parameter-group	(parameter+, description?)>
+<!ELEMENT parameter-group       (description?, parameter+)>
 <!ATTLIST parameter-group	name	CDATA	#IMPLIED>
 
 
@@ -54,7 +59,7 @@
 	If multiple is "yes", then many values for the
 	parameter may be given in a comma-seperated list
 -->
-<!ELEMENT parameter	(description, default, values?)>
+<!ELEMENT parameter     (description?, default?, values?)>
 <!ATTLIST parameter	name		CDATA #REQUIRED
 			type		(flag | string | integer | float) "string"
 			required	(yes | no) "no"
@@ -66,13 +71,13 @@
 	with the parameter type. How to set up rules for that
 	(same problem for <value>)?
 -->
-<!ELEMENT default	(#PCDATA)>
+<!ELEMENT default    (#PCDATA)>
 
 
 
 <!--	contains a number of single values.
 -->
-<!ELEMENT values	(value+)>
+<!ELEMENT values     (value+)>
 
 
 
@@ -81,7 +86,7 @@
 	How to set up rules for that (same problem for
 	<default>)?
 -->
-<!ELEMENT value	(#PCDATA)>
+<!ELEMENT value	    (#PCDATA)>
 
 
 
@@ -92,4 +97,5 @@
 <!--	text that describes a grass-interface, task,
 	parameter-group or parameter.
 -->
-<!ELEMENT description	(#PCDATA)>
+<!ELEMENT description   (#PCDATA)>
+
