@@ -35,16 +35,16 @@ connecting each of the category pairs in two maps, filter the output using
 awk and then into <EM>d.map</EM> graph:
 <P>
 
-<DD><EM>r.distance maps=map1,map2 | \
-<DD>awk -F: '{print "move",$4,$5,"draw",$6,$7}' | d.mapgraph</EM>
+<EM>r.distance maps=map1,map2 | \
+<br>awk -F: '{print "move",$4,$5,"draw",$6,$7}' | d.mapgraph</EM>
 
 <P>
 To create a site list of all the "map1" coordinates, filter the output into
 awk and then into <EM>s.in.ascii</EM>:
 <P>
 
-<DD><EM>r.distance maps=map1,map2 | \
-<DD>awk -F: '{print $4,$5}' | s.in.ascii sites=name</EM>
+<EM>r.distance maps=map1,map2 | \
+<br>awk -F: '{print $4,$5}' | s.in.ascii sites=name</EM>
 
 <H2>SEE ALSO</H2>
 <EM><A HREF="r.buffer.html">r.buffer</A></EM>,
