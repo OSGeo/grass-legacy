@@ -1,0 +1,192 @@
+#!/bin/sh
+
+#import of SRTM hgt files into GRASS
+# written by Markus Neteler 11/2003 neteler AT itc it
+# $Date$
+#
+# COPYRIGHT:	(C) 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+# Dec 2004: merged with srtm_generate_hdr.sh (M. Neteler)
+# Aug 2004: modified to accept files from other directories
+#           (by H. Bowman)
+#########################
+#Derived from:
+# ftp://edcsgs9.cr.usgs.gov/pub/data/srtm/Documentation/Notes_for_ARCInfo_users.txt
+#     (bugfix: the USGS document was updated silently end of 2003)
+#
+# ftp://edcsgs9.cr.usgs.gov/pub/data/srtm/Documentation/SRTM_Topo.txt
+#  "3.0 Data Formats
+#  [...]
+#  To be more exact, these coordinates refer to the geometric center of 
+#  the lower left pixel, which in the case of SRTM-1 data will be about
+#  30 meters in extent."
+#
+#- SRTM 90 Tiles are 1 degree by 1 degree
+#- SRTM filename coordinates are said to be the *center* of the LL pixel.
+#       N51E10 -> lower left cell center
+#
+#- BIL uses *center* of the UL (!) pixel:
+#      http://downloads.esri.com/support/whitepapers/other_/eximgav.pdf
+#  
+#- GDAL uses *corners* of pixels for its coordinates.
+#
+# NOTE: Even, if small difference: SRTM is referenced to EGM96, not WGS84 ellps
+# http://earth-info.nima.mil/GandG/wgsegm/egm96.html
+#
+#########################
+
+#%Module
+#% description: Import SRTM30 HGT files into GRASS
+#%End
+#%option
+#% key: input
+#% gisprompt: file,file,file
+#% type: string
+#% description: SRTM input hgt.zip file
+#% required : yes
+#%end
+#%option
+#% key: output
+#% gisprompt: new,cell,raster
+#% type: string
+#% description: Output raster map
+#% required : yes
+#%end
+
+
+# what to do in case of user break:
+exitprocedure()
+{
+ echo "User break!"
+ exit 1
+}
+trap "exitprocedure" 2 3 15
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec g.parser "$0" "$@"
+fi
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+PERM=$GISDBASE/$LOCATION_NAME/PERMANENT
+
+grep -i 'proj: ll' $PERM/PROJ_INFO > /dev/null
+if [ $? -ne 0 ] ; then
+ echo "SRTM data are in Latitude/Longitude. The current"
+ echo "location projection differs. STOP."
+ exit 1
+fi
+
+#####################################
+# Convert input zip file to GeoTIFF:
+# e.g. N18W077.hgt.zip
+
+if test ! -f "$GIS_OPT_input" ; then
+ echo "File '$GIS_OPT_input' not found"
+ exit
+fi
+
+ls -1 "$GIS_OPT_input" | grep zip > /dev/null
+if [ $? -ne 0 ] ; then
+  echo "$GIS_OPT_input is no zip file."
+  echo "Usage: r.in.srtm in=XXYY.hgt.zip out=srtm_xxyy"
+  exit 1
+fi
+
+#basename needed?
+FILE=`echo "$GIS_OPT_input" | sed 's+.hgt++g'| sed 's+.zip++g'`
+TILE=`echo "$FILE" | sed 's+^.*/++'`
+
+echo "Converting input file to BIL..."
+
+LL_LATITUDE=`echo $TILE  | cut -b2-3`
+LL_LONGITUDE=`echo $TILE | cut -b5-7`
+
+#are we on the southern hemisphere? If yes, make LATITUDE negative.
+NORTH=`echo $TILE  | sed 's+.hgt++g' | cut -b1`
+if [ "$NORTH" = "S" ] ; then
+   LL_LATITUDE=`echo $LL_LATITUDE | awk '{printf "%.10f", $GIS_OPT_input * -1 }'`
+fi
+
+#are we west of Greenwich? If yes, make LONGITUDE negative.
+EAST=`echo $TILE  | sed 's+.hgt++g' | cut -b4`
+if [ "$EAST" = "W" ] ; then
+   LL_LONGITUDE=`echo $LL_LONGITUDE | awk '{printf "%.10f", $GIS_OPT_input * -1 }'`
+fi
+
+# Calculate Upper Left from Lower Left
+ULXMAP=`echo $LL_LONGITUDE | awk '{printf "%.1f", $GIS_OPT_input}'`
+# SRTM90 tile size is 1 deg:
+ULYMAP=`echo $LL_LATITUDE  | awk '{printf "%.1f", $GIS_OPT_input + 1.0}'`
+
+echo "BYTEORDER M
+LAYOUT BIL
+NROWS 1201
+NCOLS 1201
+NBANDS 1
+NBITS 16
+BANDROWBYTES 2402
+TOTALROWBYTES 2402
+BANDGAPBYTES 0
+NODATA -32768
+ULXMAP $ULXMAP
+ULYMAP $ULYMAP
+XDIM 0.000833333333333
+YDIM 0.000833333333333"> $TILE.hdr
+
+#rename data file:
+unzip $FILE.hgt.zip
+cp $TILE.hgt $TILE.bil
+
+#create prj file: To be precisely, we would need EGM96! But who really cares...
+echo "GEOGCS["wgs84",DATUM["WGS_1984",SPHEROID["wgs84",6378137,298.257223563],TOWGS84[0.000000,0.000000,0.000000]],PRIMEM["Greenwich",0],UNIT["degree",0.0174532925199433]]" > $TILE.prj
+
+echo "Making Geotiff (Lat/Long)..."
+gdal_translate -ot Int16 $TILE.bil $TILE.tif
+
+#echo "Verify Lat/Long SRTM DEM with:"
+#echo "   gdalinfo $TILE.tif"
+
+#####################################
+#we use the resulting GeoTIFF:
+
+# flag -o needed?
+r.in.gdal in=$TILE.tif out=$TILE
+
+g.region rast=$TILE
+echo "Byte mapping down large values due to INT16 format..."
+r.mapcalc "$GIS_OPT_output=if($TILE >= 32767, $TILE - 32768, $TILE)"
+g.remove $TILE > /dev/null
+
+#apply nice color table: (maybe better 'etopo2' of r.colors?)
+echo "-500 0 0 10
+-300 0 0 20
+-200 0 0 70
+-100 0 0 130
+-50 0 0 205
+0 aqua
+0.1   57 151 105
+100  117 194 93
+200  230 230 128
+500  202 158 75
+1000 214 187 98
+2000 185 154 100
+3000 220 220 220
+4000 245 245 245
+8850 255 255 255
+nv white" | r.colors col=rules m=$GIS_OPT_output
+
+echo "Done: generated map $GIS_OPT_output"
+echo "Holes in the data can be closed with 'r.fillnulls' (using splines)."
+
+#rm -f $TILE.bil $TILE.hdr $TILE.hgt $TILE.prj
