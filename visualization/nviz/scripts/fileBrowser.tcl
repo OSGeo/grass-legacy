@@ -4,14 +4,12 @@
 
 global file_browser
 global last_dir
-set last_dir $env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/images
+global last_dir
 
-if {![file isdirectory $last_dir]} {
-    set last_dir [pwd]
-    if {![file isdirectory $last_dir]} {
+set last_dir [pwd]
+  if {![file isdirectory $last_dir]} {
         set last_dir "."
-    }
-}
+  }
 
 proc set_file_browser_filename {w name} {
     $w.filename delete 0 end
