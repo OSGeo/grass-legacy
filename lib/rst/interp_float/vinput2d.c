@@ -51,7 +51,7 @@ int IL_vector_input_data_2d (
 {
   double  dmax2;	/* max distance between points squared*/
   double c1, c2, c3, c4;
-  int i, line, k = 0;
+  int i, line, k = 0, nlines, nnodes;
   double ns_res, ew_res;
   int npoint, OUTRANGE;
   int totsegm;
@@ -64,7 +64,7 @@ int IL_vector_input_data_2d (
   dbDriver  *driver;
   dbHandle  handle;
   dbString  stmt;
-  dbValue   value;
+  dbCatValArray zarray, sarray;
 
   OUTRANGE = 0;
   npoint = 0;
@@ -80,6 +80,8 @@ int IL_vector_input_data_2d (
   if ( field == 0 && !Vect_is_3d(Map) )  G_fatal_error ( "Vector is not 3D");
 
   if ( field > 0 && zcol != NULL ) { /* open db driver */
+    fprintf (stdout, "Loading data from attribute table ...\n");
+    
     Fi = Vect_get_field( Map, field);
     if ( Fi == NULL ) G_fatal_error ("Cannot get field info");   
     G_debug ( 3, "  driver = %s database = %s table = %s", Fi->driver, Fi->database, Fi->table);
@@ -93,41 +95,66 @@ int IL_vector_input_data_2d (
     zctype = db_column_Ctype ( driver, Fi->table, zcol );
     G_debug ( 3, " zcol C type = %d", zctype );
     if ( zctype == -1 ) G_fatal_error ( "Cannot read column type of z column" );
-    if ( zctype == DB_C_TYPE_DATETIME ) G_fatal_error ( "Column type of z column (datetime) is not supported" );
+    if ( zctype != DB_C_TYPE_INT && zctype != DB_C_TYPE_DOUBLE ) 
+	G_fatal_error ( "Column type of z column is not supported (must be integer or double)" );
+
+    db_CatValArray_init ( &zarray );
+    db_select_CatValArray ( driver, Fi->table, Fi->key, zcol, NULL, &zarray );
 
     if ( scol != NULL ) {
 	sctype = db_column_Ctype ( driver, Fi->table, scol );
 	G_debug ( 3, " scol C type = %d", sctype );
 	if ( sctype == -1 ) G_fatal_error ( "Cannot read column type of smooth column" );
 	if ( sctype == DB_C_TYPE_DATETIME ) G_fatal_error ( "Column type of smooth column (datetime) is not supported" );
+	if ( sctype != DB_C_TYPE_INT && sctype != DB_C_TYPE_DOUBLE ) 
+	    G_fatal_error ( "Column type of s column is not supported (must be integer or double)" );
+
+	db_CatValArray_init ( &sarray );
+	db_select_CatValArray ( driver, Fi->table, Fi->key, scol, NULL, &sarray );
     }
+
+  db_close_database_shutdown_driver ( driver );
   }
 	
   /* Lines without nodes */
+  fprintf (stderr, "Reading lines from vector map ... ");
   sm = 0;
-  Vect_rewind ( Map );
-  while (  ( ltype = Vect_read_next_line (Map, Points, Cats) ) > 0 )
-  {
-      G_debug ( 5, "  LINE" );
+  nlines = Vect_get_num_lines (Map);
+  for ( line = 1; line < nlines; line++ ) { 
+      G_debug ( 5, "  line %d", line );
+      G_percent ( line, nlines-1, 1 );
+      ltype = Vect_read_line (Map, Points, Cats, line);
       if ( ! (ltype & ( GV_LINE | GV_BOUNDARY ) ) ) continue;
+
       if ( field > 0 ) { /* use cat or attribute */
         Vect_cat_get( Cats, field, &cat);
         if ( zcol == NULL  ){ /* use categories */
 	    if ( cat < 0 && !iselev ) continue;
 	    z = (double) cat;
 	} else { /* read att from db */
+	    int ret, intval;
+	    
 	    if ( cat == 0 ) continue;
-	    i = db_select_value ( driver, Fi->table, Fi->key, cat, zcol, &value );
-	    if ( i == 0 )  {
+
+	    if ( zctype == DB_C_TYPE_INT ) {
+		ret = db_CatValArray_get_value_int ( &zarray, cat, &intval );
+		z = intval;
+	    } else { /* DB_C_TYPE_DOUBLE */
+		ret = db_CatValArray_get_value_double ( &zarray, cat, &z );
+	    }
+
+	    if ( ret != DB_OK ) {
 		G_warning ( "Database record for cat = %d not found", cat);
 		continue;
 	    }
-	    z = db_get_value_as_double(&value, zctype) ;
 		
             if ( scol != NULL ) {
-		i = db_select_value ( driver, Fi->table, Fi->key, cat, scol, &value );
-		if ( i == 0 ) sm = 0;
-		else sm = db_get_value_as_double(&value, sctype);
+		if ( sctype == DB_C_TYPE_INT ) {
+		    ret = db_CatValArray_get_value_int ( &sarray, cat, &intval );
+		    sm = intval;
+		} else { /* DB_C_TYPE_DOUBLE */
+		    ret = db_CatValArray_get_value_double ( &sarray, cat, &sm );
+		}
 	    }
             G_debug ( 5, "  z = %f sm = %f", z, sm );
 	}
@@ -169,9 +196,11 @@ int IL_vector_input_data_2d (
   }
 
   /* Process all nodes */
-  for (k1 = 1; k1 <= Vect_get_num_nodes ( Map ); k1++)
-  {
-    G_debug ( 5, "  NODE" );
+  fprintf (stderr, "Reading nodes from vector map ... ");
+  nnodes = Vect_get_num_nodes (Map);
+  for (k1 = 1; k1 <= nnodes; k1++) {
+    G_debug ( 5, "  node %d", k1 );
+    G_percent ( k1, nnodes-1, 1 );
     Vect_get_node_coor ( Map, k1, &x1, &y1, &z );
 
     /* TODO: check more lines ? */
@@ -183,18 +212,28 @@ int IL_vector_input_data_2d (
 	    if ( cat < 0 && !iselev ) continue;
 	    z = (double) cat;
 	} else { /* read att from db */
+	    int ret, intval;
 	    if ( cat == 0 ) continue;
-	    i = db_select_value ( driver, Fi->table, Fi->key, cat, zcol, &value );
-	    if ( i == 0 )  {
+
+	    if ( zctype == DB_C_TYPE_INT ) {
+		ret = db_CatValArray_get_value_int ( &zarray, cat, &intval );
+		z = intval;
+	    } else { /* DB_C_TYPE_DOUBLE */
+		ret = db_CatValArray_get_value_double ( &zarray, cat, &z );
+	    }
+
+	    if ( ret != DB_OK ) {
 		G_warning ( "Database record for cat = %d not found", cat);
 		continue;
 	    }
-	    z = db_get_value_as_double(&value, zctype) ;
 		
             if ( scol != NULL ) {
-		i = db_select_value ( driver, Fi->table, Fi->key, cat, scol, &value );
-		if ( i == 0 ) sm = 0;
-		else sm = db_get_value_as_double(&value, sctype);
+		if ( sctype == DB_C_TYPE_INT ) {
+		    ret = db_CatValArray_get_value_int ( &sarray, cat, &intval );
+		    sm = intval;
+		} else { /* DB_C_TYPE_DOUBLE */
+		    ret = db_CatValArray_get_value_double ( &sarray, cat, &sm );
+		}
 	    }
             G_debug ( 5, "  z = %f sm = %f", z, sm );
 	}
@@ -202,6 +241,12 @@ int IL_vector_input_data_2d (
 
     process_point (x1, y1, z, sm, info, params->zmult, xmin, xmax, ymin, ymax, zmin, zmax, 
 	           &npoint, &OUTRANGE, iselev, &k);
+  }
+
+  if ( field > 0 && zcol != NULL )
+      db_CatValArray_free ( &zarray );
+  if ( scol != NULL ) {
+      db_CatValArray_free ( &sarray );
   }
 
   c1 = *xmin - data->x_orig;
@@ -260,9 +305,7 @@ int IL_vector_input_data_2d (
   fprintf (stdout, "The number of points outside of region %d\n", OUTRANGE);
   fprintf (stdout, "The number of points being used is %d\n", npoint);
   fflush(stdout);
-  
   *n_points = npoint;
-/*  Vect_close (Map);*/
   return (totsegm);
 }
 
