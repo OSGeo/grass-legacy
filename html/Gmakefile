@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.33 2002-06-17 09:50:20 markus Exp $
+# $Id: Gmakefile,v 1.34 2004-10-08 15:48:09 paul Exp $
 #
 # MODULE:   	Grass Documentation
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -39,7 +39,7 @@ GRASS_HTMLDIR=$(GISBASE)/documents
 GRASS_PSDIR=$(GISBASE)/documents/postscript
 GRASS_PDFDIR=$(GISBASE)/documents/pdf
 HTML_DIR = html
-HTML2MAN = GRASS_PERL=${PERL} sh $(SRC)/scripts/contrib/g.html2man/g.html2man
+HTML2MAN = GRASS_PERL=${PERL} VERSION_NUMBER=${VERSION_NUMBER} sh $(SRC)/scripts/contrib/g.html2man/g.html2man
 HTML2PS  = html2ps -n
 HTML2PDF = htmldoc --footer d.1
 

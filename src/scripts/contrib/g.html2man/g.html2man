@@ -35,7 +35,7 @@ sub GetTitle {
 }
 
 sub PrintHeader {
-      print OUT ".TH $_[0] $_[1] \"\" \"GRASS 5.0\" \"Grass User's Manual\"\n";
+      print OUT ".TH $_[0] $_[1] \"\" \"GRASS " . $ENV{'VERSION_NUMBER'} . "\" \"Grass User's Manual\"\n";
 ##      print OUT ".so /usr/share/lib/tmac/sml\n";
 ##      print OUT ".so /usr/share/lib/tmac/rsml\n";
 }

@@ -14,7 +14,7 @@ MANDIR		= ${GISBASE}/man/man${MANSECT}
 CATDIR		= ${GISBASE}/man/cat${MANSECT}
 
 MAN2CAT		= man
-HTML2MAN	= @GRASS_PERL=${PERL} sh ${SRCDIR}/src/scripts/contrib/g.html2man/g.html2man
+HTML2MAN	= @GRASS_PERL=${PERL} VERSION_NUMBER=${VERSION_NUMBER} sh ${SRCDIR}/src/scripts/contrib/g.html2man/g.html2man
 
 documents:	htmlpages images manpages catpages
 
