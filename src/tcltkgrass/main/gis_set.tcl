@@ -434,6 +434,7 @@ proc gisSetWindow {} {
         	cd $location
                 file mkdir $mymapset
                 file copy $mymapset/../PERMANENT/WIND $mymapset
+                file attributes $mymapset/WIND -permissions u+rw,go+r
 		.frame0.frameMS.listbox insert end $mymapset
 		#TODO: select new MAPSET
             }
