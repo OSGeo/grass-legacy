@@ -154,6 +154,9 @@ else
   LD_LIBRARY_PATH_VAR=$GISBASE/lib:$LD_LIBRARY_PATH_VAR
 fi
 export LD_LIBRARY_PATH_VAR
+# Additional copy of variable to use with grass-run.sh
+GRASS_LD_LIBRARY_PATH=$LD_LIBRARY_PATH_VAR
+export GRASS_LD_LIBRARY_PATH
 
 # Once the new environment system is committed we can delete these lines
 # Export the PAGER environment variable for those who have it set
