@@ -177,7 +177,7 @@ all: $(PGM) \
      $(PAINT)/patterns.index
 
 $(PGM):	$(LIST) $(INTERFACE) $(LIBES)
-	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB) -o $@ $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(INTERFACE) $(MATHLIB) $(XDRLIB)
 
 saber:
 	#load $(CFLAGS) $(SRCLIST) nildriver/lib.a $(LIBES) $(INTERFACE) $(MATHLIB)
