@@ -43,7 +43,7 @@ main (int argc, char *argv[])
     /* (+ 1 is for cat -1 (no category) reported at the end ) */
     n = Vect_cidx_get_num_unique_cats_by_index ( &Map, Vect_cidx_get_field_index(&Map, options.field ) );
     G_debug ( 2, "%d unique cats", n );
-    Values = (VALUE *) G_calloc ( Vect_get_num_lines( &Map ) + 1, sizeof ( VALUE ) );
+    Values = (VALUE *) G_calloc ( n + 1, sizeof ( VALUE ) );
     vstat.rcat = 0;
 
     /* Read values from map */
