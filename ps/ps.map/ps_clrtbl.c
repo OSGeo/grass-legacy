@@ -43,6 +43,17 @@ int PS_colortable (void)
 	    G_warning("Unable to read colors for colorbar\n");
     }
 
+    /* How many categories to show */
+    num_cats = G_number_of_raster_cats(&PS.cats);
+    G_debug(3, "clrtbl: %d categories", num_cats);
+    if(!num_cats) {
+        G_warning("Your cats/ file is invalid. A cats/ file with "
+	  "categories and labels is required for 'colortable' when using "
+          "CELL rasters. No colortable will be assigned to this output "
+	  "postscript file.");
+        return 1;
+    }
+
     /* set font */
     fontsize = (double)ct.fontsize;
     fprintf(PS.fp, "(%s) FN %.1f SF\n", ct.font, fontsize);
@@ -58,9 +69,6 @@ int PS_colortable (void)
     r  = l + 72.0 * ct.width;
     col_width = ct.width / (double)ct.cols;
 
-    /* How many categories to show */
-    num_cats = G_number_of_raster_cats(&PS.cats);
-    
     /* read cats into PostScript array "a" */
     fprintf(PS.fp, "/a [\n");
     for(i = 0; i <= num_cats; i++)
