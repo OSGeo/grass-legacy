@@ -185,7 +185,7 @@ main (int argc, char **argv)
     /* open database */	
     field = atoi ( Fieldopt->answer );
     fi = Vect_get_field(&Map, field);
-    if ( fi == NULL ) G_fatal_error ( "Cannot get field info" );
+    if ( fi == NULL ) G_fatal_error ( "Cannot get layer info for vector map" );
     driver = db_start_driver_open_database ( fi->driver, fi->database );
     if ( driver == NULL ) 
 	G_fatal_error ( "Cannot open database %s by driver %s", fi->database, fi->driver );

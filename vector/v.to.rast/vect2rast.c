@@ -44,7 +44,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	db_CatValArray_init ( &cvarr );
 	Fi = Vect_get_field( &Map, field);
 	if ( Fi == NULL ) {
-	    G_fatal_error ("Cannot read field info");
+	    G_fatal_error ("Cannot get layer info for vector map");
 	}
 
 	Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
