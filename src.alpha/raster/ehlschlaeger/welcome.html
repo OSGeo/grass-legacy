@@ -1,0 +1,721 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.01 [en] (Win95; U) [Netscape]">
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
+<!-- WEBMAGIC VERSION NUMBER="2.0" --><!-- WEBMAGIC TRANSLATION NAME="ServerRoot" SRC="/var/www/htdocs/" DST="/" --><!-- WEBMAGIC TRANSLATION NAME="ProjectRoot" SRC="./" DST="" -->
+
+<P>Submitted to Computers in GeoSciences in September, 1996. Accepted in
+October, 1996. Will be published in a special issue of Computers in GeoSciences
+"about June" (1997). The special issue is to include a CD Rom containing
+all the animations and graphics. Be the first in your research lab, company,
+or university to get one!
+<CENTER>
+<H2>
+Visualizing Spatial Data Uncertainty Using Animation</H2></CENTER>
+
+<CENTER><A HREF="links.htm#homepage">Charles R. Ehlschlaeger</A>, Dept.
+of Geography, Hunter College, NY 10021, USA</CENTER>
+
+<CENTER><A HREF="links.htm#homepage">Ashton M. Shortridge</A>, NCGIA, University
+of California, Santa Barbara, CA 93106, USA</CENTER>
+
+<CENTER><A HREF="links.htm#homepage">Michael F. Goodchild</A>, NCGIA, University
+of California, Santa Barbara, CA 93106, USA</CENTER>
+
+<H3>
+Abstract</H3>
+This paper examines methodologies for dynamically displaying information
+about uncertainty. Modeling uncertainty in elevation data results in the
+generation of dozens or hundreds of realizations of the elevation surface.
+Producing animations of these surfaces is an approach to exploratory data
+visualization that may assist the researcher in understanding the effect
+of uncertainty on spatial applications as well as in communicating the
+results of the research to a wider audience. A non-linear method for interpolation
+between the surface realizations is introduced which allows for smooth
+animation while maintaining the surface characteristics prescribed by the
+uncertainty model.
+
+<P>Key words: animation, uncertainty, spatial data, digital elevation model,
+optimal route, random fields
+<H3>
+Introduction</H3>
+Recent research has resulted in several models of the uncertainty for spatial
+data and their applications (Dettinger &amp; Wilson, 1981; Heuvelink et
+al., 1989; Theobald, 1989; Goodchild, 1992; Goodchild et al., 1992; Hootsman
+&amp; van der Wel, 1993; <A HREF="links.htm#1994b">Ehlschlaeger &amp; Goodchild,
+1994b</A>). A model of uncertainty is commonly needed when the data available
+is too coarse or generalized for the application. In the example used in
+this paper, a problem needs to be solved using digital elevation data with
+a sampling interval of 30 meters, but the only data available has a sampling
+interval of 3 arc seconds, approximately three times more coarse. In such
+situations, it is useful to know the uncertainty that has been introduced
+by using data that is too coarse for the application. A model of uncertainty
+can provide the answer, if it is capable of simulating the missing variation;
+in other words, the range of possible 30m DEMs that would be consistent
+with the available 3 arc second DEM. The parameters of this model would
+come, as they do in this paper, from analysis of areas for which both 3
+arc second and 30m DEMs are available for comparison. The situation is
+not only theoretical; while complete 3 arc second DEM coverage is available
+for the 48 contiguous United States, many areas lack 30m coverage (for
+current United States 30m DEM coverage, see <A HREF="links.htm#USGS">USGS,
+1996)</A>.
+
+<P>Stochastic approaches to modeling spatial uncertainty result in the
+creation of many potential realizations for the spatial dataset of interest
+(for examples, see Openshaw, 1979; Goodchild et al., 1992; Fisher, 1993a;
+<A HREF="links.htm#1994b">Ehlschlaeger &amp; Goodchild, 1994b</A>; <A HREF="links.htm#1996">Ehlschlaeger
+&amp; Shortridge, 1996</A>). Examining these realizations (which may number
+in the hundreds) and exploring the similarities and differences between
+them can be a major challenge. The authors' efforts to accomplish this
+prompted an exploration of non-traditional forms of cartographic representation,
+including animation. A particular problem in the generation of smooth animations
+from a series of "stills" is the creation of intermediate images to blend
+from one still to the next. These intermediate images are critical for
+a smooth blending from one realization to the next, but if they lack the
+statistical characteristics of the actual realizations then the animation
+will misrepresent the data and the form is inappropriate for analysis or
+communication.
+
+<P>The following section discusses the goals and methodology involved in
+the creation of the simulated surface realizations. The third section covers
+the application of surface realizations to a least-cost path algorithm,
+which provides a measure for the expected distribution of path costs. The
+fourth section describes the role that animation can play in visualizing
+uncertainty: the user may develop a better understanding for the impact
+of generalized spatial data on the outcome of the least-cost path algorithm.
+Then, the fifth section examines conceptual and practical issues for the
+interpolation between realizations necessary for generating an animated
+sequence. Finally, the paper addresses the contribution animations may
+make in the analysis and communication of uncertainty in spatial data.
+Animation, if correctly produced, may offer an alternative to the usual
+examination of tens or hundreds of static maps during the exploratory phase
+of data analysis, or to the usual slides and transparencies developed for
+a presentation. It is worth investigating whether animation could provide
+any additional benefits for uncertainty analysis beyond simply keeping
+one's audience awake during a presentation.
+<H3>
+Potential Realizations of the Landscape</H3>
+The research which resulted in this paper was primarily concerned with
+examining the impact of spatial uncertainty in elevation data upon a corridor
+location algorithm (Church et al., 1992). The outcome of this analysis
+was a large number of potential realizations of the elevation surface and
+the cost surface. This paper concentrates on issues of representation,
+so the theory and methodology employed to generate the realizations are
+covered fairly briefly here. The interested reader is referred to <A HREF="links.htm#1996">Ehlschlaeger
+&amp; Shortridge (1996) </A>for a more detailed discussion. The following
+paragraphs provide a concise description of the elevation uncertainty model.
+
+<P>For the purposes of this paper, we assume that the corridor location
+problem to be solved requires a DEM of 30m sampling interval. However,
+such data is not always available, and thus we examine the effects of replacing
+it with coarser 3 arc second data, using an error model calibrated in regions
+for which both are available. We assume that the differences between the
+two resolutions are consistent between both areas: the area where the problem
+must be solved, and the area where both data sets are available. The relationship
+between 30m and the coarser 3 arc second data may be characterized by examining
+the distribution of differences between the two data sets at a large number,
+<I>J</I>, of randomly selected spatially uncorrelated locations on the
+surface. The difference is modeled using the mean and standard deviation
+of 96 sets of randomly drawn, spatially independent points scattered across
+the surface. Unconditional stochastic simulation can then be employed to
+define a probability density function (p.d.f). The p.d.f. generates random
+surfaces with a gaussian distribution matching the mean and standard deviation
+observed in the difference maps and is represented by:
+<CENTER><IMG SRC="1.gif" HEIGHT=28 WIDTH=522 ALIGN=CENTER>(1)</CENTER>
+
+
+<P>where <I>E</I>(<B><I>u</I></B>) is a realization of the higher quality
+30m elevation data using the more generalized 3 arc second data <I>m</I>(<B><I>u</I></B>),
+<I>T</I> is a group of sets of spatially uncorrelated sample points,&nbsp;<IMG SRC="e.gif" HEIGHT=12 WIDTH=11 ALIGN=ABSCENTER>is
+a random variable with mean 0.0 and variance 1.0 perturbing the realizations
+standard deviation, and <I>Z</I>(<B><I>u</I></B>)is a random field perturbing
+all points<B><I> u</I></B> within the realization. The following expressions
+define the remaining terms:
+<CENTER><IMG SRC="2.gif" HEIGHT=63 WIDTH=283 ALIGN=CENTER>, (2)</CENTER>
+
+<CENTER><IMG SRC="3.gif" HEIGHT=70 WIDTH=226 ALIGN=CENTER>, (3)</CENTER>
+
+<CENTER><IMG SRC="4.gif" HEIGHT=69 WIDTH=394 ALIGN=CENTER>, (4)</CENTER>
+
+
+<P>and
+<CENTER><IMG SRC="5.gif" HEIGHT=296 WIDTH=448 ALIGN=CENTER>(5)</CENTER>
+
+
+<P>where <I>m</I>(<I>m</I>(<I>T</I>)) is the average mean for all sets;
+<I>m</I>(<I>s<SUP><FONT SIZE=-1>2</FONT></SUP></I>(<I>T</I>)) is the average
+variance for all sets; <I>s<SUP><FONT SIZE=-1>2</FONT></SUP></I>(<I>s<SUP><FONT SIZE=-1>2</FONT></SUP></I>(<I>T</I>))
+is the variance of the variances for all sets; and <I>Z</I>(<B><I>u</I></B>)
+specifies the random field with spatial dependence parameters where <I>u</I>
+is a point on the random field with a theoretical mean of 0.0 and theoretical
+variance of 1.0,<B><I> v</I></B> is the set of points affecting <B><I>u</I></B>,
+<I>w<SUB><FONT SIZE=-1>u,v </FONT></SUB></I>is the spatial autocorrelative
+effect between points <I>u </I>and <I>v</I>,&nbsp;<IMG SRC="ev.gif" HEIGHT=24 WIDTH=19 ALIGN=CENTER>is
+a random variable with a mean of 0.0 and variance of 1.0, <I>d<SUB><FONT SIZE=-1>u,v
+</FONT></SUB></I>is the distance between <I>u</I> and <I>v</I>, <I>D</I>
+is the minimum distance of spatial independence, <I>E</I> is the distance
+decay exponent, and <I>F</I> is a parameter that adds flexibility to the
+probability distribution function model fitting process. Matching the spatial
+autocorrelation using <I>F</I> is important in order to capture the terrain
+texture observed in the higher resolution dataset (Goodchild, 1986; Theobald,
+1989), and was implemented as the GRASS command <A HREF="links.htm#manpage">r.random.surface</A>
+(<A HREF="links.htm#1994a">Ehlschlaeger &amp; Goodchild, 1994a</A>). The
+result of performing this analysis is a set of parameters defining the
+p.d.f. for modeling the uncertainty of the 3 arc second elevation surface:
+
+<P><IMG SRC="6.gif" HEIGHT=22 WIDTH=479 ALIGN=CENTER>(6)
+
+<P>where <I>D</I> = 4600,<I> E</I> = .07, and <I>F</I> = 200 for the parameters
+of Z(<B><I>u</I></B>). Each surface created from these parameters is a
+potential realization of what the actual difference surface might be. By
+adding each difference field to the 3 arc second surface, a large collection
+of alternative, equally probable models of the elevation surface are created.
+
+<P>This study's digital elevation models cover a large study area around
+Santa Barbara, California, as depicted in Figure 1. The 3 arc second data
+set, USGS quad los_angeles-w, extends from 119 to 120 degrees west of Greenwich,
+and from 34 to 35 degrees north. The terrain is characterized by mountainous
+topography extending inland (brown and black, to the north and east) from
+the Pacific Ocean, punctuated by river valleys and narrow coastal plains
+(green). A test area (in black and white) several kilometers on each side
+was defined within this DEM. It extends from the coastal plain at the town
+of Goleta in the south across the Santa Ynez mountains to the Santa Ynez
+river valley in the north. For the purposes of this paper, we assumed that
+no 30m data existed for this test area, and that we would have to determine
+the location of a path within this area using 30m quality data.
+
+<P><A HREF="studybig.gif"><IMG SRC="law.gif" BORDER=0 HEIGHT=240 WIDTH=199></A>
+
+<P><B>Figure 1 - Study Region: Los_Angeles-w DEM</B> (larger image link:
+29k).
+
+<P>Six 30m data sets outside of the test area were compared to collocated
+data from the Los_Angeles-w DEM to develop parameters for the p.d.f. The
+p.d.f. was used to generate 250 realizations simulating 30 meter quality
+elevation data for the test area. These elevation surfaces were processed
+to create 250 corridor realizations. The next section describes how the
+corridor realizations may be used to demonstrate uncertainty in the route
+location application caused by the coarseness of the 3 arc second elevation
+data.
+<H3>
+Corridor Location Analysis</H3>
+Generating accumulated cost surfaces is a two-step procedure. First, a
+cost surface for each of the 250 realizations of the test area elevation
+datasets was produced. Cost is a function of horizontal distance, slope
+(Horn, 1981), and absolute elevation, as calculated for each cell by the
+following:
+
+<P><IMG SRC="9.gif" HEIGHT=31 WIDTH=391 ALIGN=CENTER>(7)
+
+<P>Second, two locations in the test area were chosen to be the endpoints
+for a hypothetical path. For each of the 250 realizations created in the
+first step, an accumulated cost surface was generated. The value in each
+cell of the accumulated cost surface represents the accumulated cost to
+travel to this cell from both of the endpoints across the cost surface
+produced in step one (Church et al., 1992). The resulting cost pattern
+in any single realization gives a visual indication of the degree to which
+the character of the terrain restricts the corridor of the least-cost path.
+
+<P>The authors have explored two methods for displaying realization results.
+The first method, used in an earlier study, condenses optimal routes from
+all realizations into a single, static map. The second method presents
+route cost information in animations of cost surface realizations.
+
+<P><A HREF="allpathb.jpg"><IMG SRC="allpath2.jpg" BORDER=0 HEIGHT=384 WIDTH=480></A>
+
+<P><B>Figure 2 - Optimal Paths</B> (larger image link: 102k).
+
+<P>Using method one, as visualized in Figure 2, routes were generated connecting
+the two white spheres. This figure portrays the terrain of the study area
+(at a vertical exaggeration of 1.5) draped with a representation of the
+250 optimal paths. Because the density of paths across certain portions
+of the test area was so great, displaying each path individually on the
+same image was impossible. Instead, we have colored the raster based on
+the number of optimal routes passing through each cell. Out of the 250
+realizations, forty or more optimal paths traveled through blue cells,
+five or more paths through green cells, one path through yellow cells,
+and no optimal paths through gray cells. The white line on the surface
+outlines the optimal route traced on the original 3 arc second data set,
+which had a cost of 56,561 units. Using the actual 30 meter data for the
+test area, the optimal path cost 61,368 and followed the red line in Figure
+2. The distribution, as seen in the histogram in Figure 3, was unimodal;
+the mean cost of the 250 optimal paths was 64,034 units with a standard
+deviation of 2,991 units.
+
+<P><IMG SRC="histo.gif" HEIGHT=416 WIDTH=507>
+
+<P><B>Figure 3 - Histogram of Potential Optimal Paths</B>
+
+<P>While this information provided a good measure of expected costs, it
+left several questions unanswered. Since a major goal of spatial data uncertainty
+research is to understand impacts of generalized map data on applications,
+these questions include: Under what conditions does a realized optimal
+path deviate from the optimal path on the 3 arc second data set? While
+it is obvious that the quality of DEM necessary depends on the choice of
+start and stop locations, does the large spatial variability of optimal
+paths indicate that 3 arc second elevation data are inadequate for determining
+the optimal path between these two locations? Method two attempts to answer
+these questions through the generation and dynamic visualization of accumulated
+cost surface realizations, rather than individual optimal paths.
+
+<P>We refer to each of these realizations as accumulated cost surfaces,
+because they portray the aggregate cost to travel to any particular cell
+on the surface. These surfaces may be preferred to a simple calculation
+of the optimal route for a given elevation realization. In addition to
+showing a single specific optimal path, accumulated cost surfaces provide
+a better idea of the general optimal path corridor. By comparing the different
+patterns from all of these realizations, the researcher can gain insight
+into how uncertainty in the spatial data affects the result of the path
+algorithm. While 250 realizations were used to calculate the statistics
+of DEM uncertainty for the optimal route problem, a maximum of 35 were
+used in these animations (<A HREF="img1.jpg">1</A>, <A HREF="img2.jpg">2</A>,
+<A HREF="img3.jpg">3</A>, <A HREF="img4.jpg">4</A>, <A HREF="img5.jpg">5</A>,
+<A HREF="img6.jpg">6</A>, <A HREF="img7.jpg">7</A>, <A HREF="img8.jpg">8</A>,
+<A HREF="img9.jpg">9</A>, <A HREF="img10.jpg">10</A>, <A HREF="img11.jpg">11</A>,
+<A HREF="img12.jpg">12</A>, <A HREF="img13.jpg">13</A>, <A HREF="img14.jpg">14</A>,
+<A HREF="img15.jpg">15</A>, <A HREF="img16.jpg">16</A>, <A HREF="img17.jpg">17</A>,
+<A HREF="img18.jpg">18</A>, <A HREF="img19.jpg">19</A>, <A HREF="img20.jpg">20</A>,
+<A HREF="img21.jpg">21</A>, <A HREF="img22.jpg">22</A>, <A HREF="img23.jpg">23</A>,
+<A HREF="img24.jpg">24</A>, <A HREF="img25.jpg">25</A>, <A HREF="img26.jpg">26</A>,
+<A HREF="img27.jpg">27</A>, <A HREF="img28.jpg">28</A>, <A HREF="img29.jpg">29</A>,
+<A HREF="img30.jpg">30</A>, <A HREF="img31.jpg">31</A>, <A HREF="img32.jpg">32</A>,
+<A HREF="img33.jpg">33</A>, <A HREF="img34.jpg">34</A>, and <A HREF="img35.jpg">35</A>;
+links 18-25k).
+
+<P><IMG SRC="img20.jpg" HEIGHT=240 WIDTH=320>
+
+<P><B>Figure 4 - Cost surface for realization 20</B>
+
+<P>The colors in both static and dynamic depictions of these accumulated
+cost surfaces (see the animations in "<A HREF="movies.htm">Optimal Route
+Movie</A>", as well as Figure 4) attempt to maximize the contrast between
+the least expensive optimal route and the most expensive optimal route
+of the accumulated cost surfaces. The color scheme employed is different
+from the one used for the path image. The least expensive route (or routes
+if multiple paths have the same cost) within a realization are represented
+by white cells. Black cells indicate the cells that fall within one percent
+of the least expensive optimal route cost in the 250 realizations. The
+colors then ramp from black through blue and green to yellow (yellow cells
+have accumulated costs 10% greater than the least expensive optimal path
+in the 250 realizations). Gray cells have costs greater than 10% of the
+least expensive optimal path. The red line encompasses the set of cells
+with costs below that of the most expensive optimal path, 83,809 units,
+of any realization.
+
+<P>We were interested in determining the effectiveness of non-traditional
+methods of visualization for illustrating the impact of uncertainty on
+the application. The following section discusses the methods we employed
+to generate a smooth animation to accomplish this.
+<H3>
+Role of Animation in Visualizing Uncertainty in Spatial Data</H3>
+Data visualization may be categorized along a continuum that stretches
+throughout the duration of a research project (DiBiase, 1990). Animation
+of uncertainty may play a role in the exploratory phase of this continuum.
+During the early stages of the work, it can be an invaluable aid for exploratory
+analysis of the data. The methodology employed here to generate animation
+sequences did not consume a large amount of time, so incorporating animations
+into this phase is technically feasible. At the opposite end of the continuum,
+graphic representations of the data and analysis can assist in communicating
+results and clarifying important points to the scientific community.
+
+<P>Spatial autocorrelative characteristics can play a significant role
+in understanding the impact of uncertainty during the research process.
+This information can be especially critical in a spatial application for
+which the relative locations of objects are important (e.g., optimal path
+routes and viewshed analysis). The video "<A HREF="movies.htm">Random Fields
+and their use in Representing Spatial Autocorrelation</A>" (Ehlschlaeger,
+1994) communicates the importance of spatial autocorrelation in representing
+spatial uncertainty. The video includes two animations, both of which show
+the impact of potential sea level rise on the shoreline of Boston Harbor.
+The first animation, "<A HREF="movies.htm">Ignoring Autocorrelation Movie</A>",
+assumes the uncertainty term has a constant value for each realization.
+While the magnitude of error is represented correctly at every cell, the
+shoreline shapes do not represent potential results. The second animation,
+"<A HREF="movies.htm">Spatial Autocorrelation Included Movie</A>", incorporates
+the spatial autocorrelative characteristics of uncertainty. In both animations,
+the amount of time a section of land remains underwater represents the
+probability of submergence given a 1.9 meter rise in sea level. However,
+the second animation details the effect of ocean level rising on contiguous
+regions (e.g., "What is the probability that this road will not be covered
+with water?").
+
+<P>The spatial autocorrelative characteristics described in the second
+section are used in the realization for the animation developed in this
+study. Each realization possesses different landscape elevation values.
+As a result of the changes to each elevation surface, the accumulated cost
+surface is also unique for each realization. In an attempt to portray both
+simultaneously, the main approach adopted in this paper employed a 2.5-dimensional
+perspective view of the test area with the accumulated cost surface draped
+over the elevation surface. While visually appealing, the use of the perspective
+view is not immune from criticism because of the problems of displaying
+three-dimensional data on a flat, two-dimensional screen. People may have
+trouble perceiving perspective models (due to distortion and obscured sections)
+and gathering useful information from them (Dorling &amp; Openshaw, 1992).
+Therefore, for comparative purposes, a 2-D animation using elevation contours
+to portray the terrain was produced; it is viewable at the main animation
+page. In either instance, however, the goal of the visualization is not
+to provide precise rendering of the detail of a single scene, but to promote
+understanding of the magnitude of change between images.
+
+<P>The spatial pattern of any single realization is not of particular interest,
+for no one realization is more likely than any other to approximate the
+actual elevation surface. Instead, more interesting information may be
+gleaned from the details of the relationships between the realizations.
+The changes in the width and route of the corridor illustrate the impact
+of uncertainty. If there is little change from realization to realization,
+one can be fairly certain that the least-cost path lies along a rather
+well defined corridor. On the other hand, if change is dramatic, and a
+variety of differing corridors are suggested, then error in the spatial
+data has translated into a great deal of uncertainty in the application.
+Much can be gleaned from comparing static images of multiple realizations,
+but developing an implicit understanding of the changes between each image
+can be quite time consuming. Researchers may benefit from animation's ability
+to dynamically depict the range of uncertainty inherent in their data;
+they may spot relationships in the data, identify errors in their assumptions,
+or consider new directions for research (Fisher, 1993b; van der Wel et
+al., 1994). The particular animation method employed may affect how the
+viewer perceives the data and the relationships between variables. While
+this work does not address the impact of various animation technique on
+viewer perception, it does present a method of interpolation which avoids
+smoothing the intermediate images.
+
+<P>Another role for animation during the exploratory phase of research
+is the generation of additional information about the uncertainty of data
+and how data uncertainty affects the application. The process of interpolation
+employed here creates a very large number of statistically valid dependent
+realizations. Animating these images provides a natural way to view this
+massive influx of data in a time-effective manner (Dorling, 1992). Viewers
+also see the simultaneous movement of elevation and accumulated cost surface,
+providing greater understanding for that relationship. As mentioned in
+the third section, there were two questions we wished to answer with this
+animation: Under what conditions does a realized optimal path deviate from
+the 3 arc second optimal path? And, does the large spatial variability
+of optimal paths indicate that 3 arc second data sets are inadequate for
+determining the optimal path between these two locations? This study's
+animation, "<A HREF="movies.htm">Optimal Route Movie</A>", helps answer
+these questions.
+
+<P>Observing the animation, the viewer is bound to notice several factors.
+The most obvious fact is that optimal paths often change location and cost
+for reasons not easily perceived simply by viewing the elevation surface.
+While the overall shape of the 3 arc second data set doesn't change, many
+smaller ridges and valleys appear and disappear within the realizations.
+By comparing the images of the 3 arc second data set and the 30m data set
+side-by-side, one notices that the 3 arc second data set is missing many
+ridges and valleys apparent in the 30m data. This missing terrain texture
+is apparently why optimal routes on the realizations of the fine resolution
+30m DEM are approximately 12% more expensive than the optimal route on
+the coarse resolution 3 arc second DEM. The viewer will also notice realizations
+for which the optimal path shifts to a dramatically new location. The animation
+makes it clear that there is no simple relationship between the optimal
+routes on different realizations, or between the optimal routes computed
+at different spatial resolutions. Some fine resolution optimal paths are
+similar to the coarse resolution optimum, but some are very different.
+Clearly, the uncertainty introduced by resorting to coarse resolution data
+is propagated and amplified in the optimal routes. To answer the two questions
+posed earlier, the animations demonstrate that there are no simple relationships
+between optimal paths at the two resolutions; and coarse resolution data
+is indeed inadequate for the original purpose of finding an optimal path
+between the two endpoints originally chosen.
+
+<P><A HREF="shortbig.jpg"><IMG SRC="short.jpg" BORDER=0 HEIGHT=240 WIDTH=320></A>
+
+<P><B>Figure 5- A similar application for which the coarse 3 arc second
+DEM is adequate</B>
+
+<P>While this study's animations show a particular case for which uncertainty
+in coarse data renders that data inadequate, conditions in other cases
+may be such that uncertainty does not invalidate the same coarse dataset.
+For example, Figure 5 illustrates optimal paths between two different endpoints
+using the same cost equation and the same 250 surface realizations (graphic
+representation is the same as for Figure 2). The spatial distribution of
+these optimal paths demonstrate that there is little difference between
+corridor solutions for the second set of endpoints. In this case, 3 arc
+second data is adequate.
+<H3>
+Producing Animations of Uncertainty</H3>
+The production of animations is not technically difficult. By stringing
+together a sequence of realizations and smoothing the transitions between
+them, one can readily create an animated sequence of images using current
+technology and public domain software. Significant theoretical issues arise,
+however, in developing the interpolation method and calibrating the frame
+sequencing. This section concentrates on these factors.
+
+<P>A central issue for the production of a smooth animation is the generation
+of intermediate images to ensure that the transition of images is gentle
+and cohesive (MacEachren &amp; DiBiase, 1991). Allowing for a transition
+permits the viewer to see the magnitude and pattern of the differences
+in elevation and cost surface between the realizations. These intermediate
+images are interpolations between the original realizations; we generated
+eight interpolated images between each of the 35 realizations to develop
+a smooth transition. Nearly 90 percent of the frames in the animation,
+then, are not original realizations; they are interpolated images. In Figure
+6, the upper timeline represents the animation sequence for "Optimal Route
+Movie". The horizontal lines represent independent realizations. The dark
+line represents the flow of "<A HREF="movies.htm">Optimal Route Movie</A>".
+While there are only 35 independent realizations, the 61 second animation
+portrays 306 different realizations of the optimal path.
+
+<P><IMG SRC="comp5.gif" HEIGHT=357 WIDTH=316>
+
+<P><B>Figure 6 - Timelines of Animations: </B>Upper from Optimal Route
+Movie, lower from Spatial Autocorrelation Included
+
+<P>For this study of uncertainty, the statistical and spatial characteristics
+of the interpolated surfaces must match the error model or the resulting
+animation will become a misleading visualization tool, or at least it will
+be much more difficult to achieve desired results. For example, "<A HREF="movies.htm">Spatial
+Autocorrelation Included Movie</A>" used a linear interpolation for the
+transitions. In order for the viewer to best view actual realizations,
+the authors developed the lower timeline in Figure 6. The dark line represents
+the flow of the "<A HREF="movies.htm">SAI Movie</A>", with the horizontal
+sections representing pauses in the animation flow for two seconds at each
+independent realization. Between each independent realization, the diagonal
+lines represent intermediate frames morphing from one realization to the
+next. Because these intermediate frames were not independent realizations,
+the goal of the "<A HREF="movies.htm">SAI Movie</A>" was to allow half
+the time to be spent showing actual realizations while the other half created
+a transition between realizations. Therefore, the animation was only able
+to show 29 realizations in 113 seconds. In addition to only half of the
+time being spent viewing realizations, terrain motion was not providing
+accurate visual clues of uncertainty in terrain estimation.
+
+<P>The interpolation method is clearly quite important for animations of
+stochastic surfaces. Linear interpolation results in intermediate images
+with different characteristics than the independent realizations they tie
+together. Mean uncertainty is modeled correctly, but variance of uncertainty
+is lower for the linearly interpolated images. And, the spatial autocorrelative
+characteristics of uncertainty are also not representative. A non-linear
+interpolation presented here solves this problem. The following equations
+are used to interpolate between independent realizations in <A HREF="movies.htm">Optimal
+Route Movie</A>:
+
+<P><IMG SRC="7.gif" HEIGHT=52 WIDTH=388 ALIGN=CENTER>(8)
+
+<P>where&nbsp;<IMG SRC="e.gif" HEIGHT=12 WIDTH=11><I><FONT SIZE=-1><SUP>i</SUP><SUB>x,y
+</SUB></FONT></I>is an "interpolated" random value between random values&nbsp;<IMG SRC="e.gif" HEIGHT=12 WIDTH=11><I><SUB><FONT SIZE=-1>x</FONT></SUB></I>
+and&nbsp;<IMG SRC="e.gif" HEIGHT=12 WIDTH=11><I><SUB><FONT SIZE=-1>y</FONT></SUB></I>,
+with a mean of 0.0 and standard deviation of 1.0; and:
+
+<P><IMG SRC="8.gif" HEIGHT=56 WIDTH=477 ALIGN=CENTER>(9)
+
+<P>where <I>Z<FONT SIZE=-1><SUP>i</SUP><SUB>x,y</SUB></FONT>(<B>u</B>)</I>
+is an "interpolated" surface between surfaces <I>Z<SUB><FONT SIZE=-1>x</FONT></SUB>(<B>u</B>)</I>
+and <I>Z<SUB><FONT SIZE=-1>y</FONT></SUB>(<B>u</B>)</I>, with every point
+having a mean of 0.0 and a standard deviation of 1.0. We draw attention
+to the word "interpolated" because we are trying to create values of <I>Z<FONT SIZE=-1><SUP>i</SUP><SUB>x,y</SUB></FONT>(<B>u</B>)</I>
+and&nbsp;<IMG SRC="e.gif" HEIGHT=12 WIDTH=11><I><FONT SIZE=-1><SUP>i</SUP><SUB>x,y</SUB></FONT></I>that
+are appropriate for our p.d.f. and have values similar to nearby values
+of<I> i</I>. In place of a formal proof, imagine the two endpoints <I>x
+</I>and <I>y</I> as orthogonal unit vectors. Since each vector in <I>Z<FONT SIZE=-1><SUP>i</SUP><SUB>x,y</SUB></FONT>(<B>u</B>)</I>and&nbsp;<IMG SRC="e.gif" HEIGHT=12 WIDTH=11><I><FONT SIZE=-1><SUP>i</SUP><SUB>x,y</SUB></FONT></I>
+has a mean of 0.0 and standard deviation of 1.0, we can retain their statistical
+properties by locating intermediate realizations along a circle between
+them centered at the origin (which explains the sin() and cos() functions).
+By using the functions for <I>Z<FONT SIZE=-1><SUP>i</SUP><SUB>x,y</SUB></FONT>(<B>u</B>)</I>
+and&nbsp;<IMG SRC="e.gif" HEIGHT=12 WIDTH=11><I><FONT SIZE=-1><SUP>i</SUP><SUB>x,y</SUB></FONT></I>
+, interpolations of independent realizations are also (dependent) realizations
+in their own right. Since these interpolated images are valid representations
+of the surface, the employment of the nonlinear function allows one to
+generate visually accurate animations.
+<H3>
+Conclusion</H3>
+This paper presents a method for developing animations from realizations
+of a surface. By viewing the dynamic transformations of the surface, the
+viewer can gain an understanding for the role that uncertainty plays in
+the spatial outcome of the analysis. The non-linear interpolation method
+presented here maintains the equivalence of the intermediate images to
+the distribution from which the independent realizations are drawn. The
+resulting frames exhibit the proper statistical characteristics and are
+a valid means for visualizing uncertainty. The utility of these animations
+is perhaps greatest for exploratory analysis. The images are visually complex,
+and more general audiences may find them most useful for a quick qualitative
+impression of the magnitude of uncertainty.
+
+<P>Viewing animations of spatial data uncertainty as they affect applications
+also provides a good mechanism for allowing a greater visualization of
+the probabilistic nature of uncertainty (Beard et al., 1991). In a deterministic
+world, we expect answers to questions such as: "How long will the optimal
+route be?" or "Where are the possible locations of optimal routes?". Probabilistically,
+we may never know what the actual answers will be with very generalized
+data sets, but we may learn what factors will determine the actual answers
+and how the actual answers relate to the information we don't have. And,
+on occasion, we will find that very generalized data may be useful for
+meeting the needs of specific applications requesting precise data.
+
+<P>Several directions present themselves for further exploration. This
+example is simple, as complex interactions go. The researcher is confronted
+with only one independent variable, that being elevation, and one dependent
+variable, that being the cost surface. Many spatial applications involve
+considerably more inputs than this. Extending the methodology presented
+here may produce a method for visualizing the role uncertainty plays for
+each input layer individually upon the outcome of the analysis. This research
+focused primarily upon the interpolation method, but frame rate and duration
+are other key technical factors which affect perception of the animation.
+These were examined in earlier work on the Boston Harbor data, but relationships
+between all three factors merit continued exploration. Additional research
+is also warranted to assess the relative ease (or difficulty) people have
+in making sense of animations of abstract concepts like uncertainty (see
+<A HREF="links.htm#evans">Evans, 1996</A> for current research into viewers'
+perception of simultaneous displays of spatial data and its associated
+reliability). This direction is especially important for understanding
+the role for animations of uncertainty to communicate of results to the
+community. Understanding how people perceive spatial animation representations
+should provide a stronger basis for developing more effective animations.
+
+<P>The implementation of the non-linear interpolation method allows for
+the portrayal of uncertainty as the image shifts smoothly through a series
+of realizations. The resulting animation is a complex visualization tool
+for perception of a complex spatial phenomenon. Dynamic visualization may
+prove valuable for developing understanding and appreciation for the role
+data uncertainty plays in spatial analysis.
+<H3>
+References</H3>
+Beard, K., Buttenfield, B., Clapham, S., 1991, NCGIA research initiative
+7: visualization of spatial data quality: NCGIA Technical Paper 91-26,
+Santa Barbara, 222 p.
+
+<P>Brown, B., 1992, SG3d, supporting information: U.S. Army Corps of Engineers,
+Construction Engineering Research Lab Technical Paper, Champaign, 14 p.
+
+<P>Church, R.L., Loban, S.R., Lombard, K., 1992, An interface for exploring
+spatial alternatives for a corridor location problem: Computers &amp; Geosciences,
+v. 18, no. 8, p. 1095-1105.
+
+<P>Dettinger, M.D., Wilson, J.L., 1981, First order analysis of uncertainty
+in numerical models of groundwater flow: part 1: mathematical development:
+Water Resources Research, v. 17, no.1, p. 149-161.
+
+<P>DiBiase, D., 1990, Visualization in the earth sciences: Bulletin of
+the College of Earth and Mineral Sciences, Pennsylvania State University.
+v. 59, no. 2, p. 13-18.
+
+<P>Dorling, D., 1992, Stretching space and splicing time: from cartographic
+animation to interactive visualization: Cartography &amp; GIS, v. 19 no.
+4, p. 215-227.
+
+<P>Dorling, D, Openshaw, S., 1992, Using computer animation to visualize
+space-time Patterns: Environment &amp; Planning B, v. 19, p. 639-650.
+
+<P>Ehlschlaeger, C.R., 1994, Random fields and their use in representing
+spatial autocorrelation: Videotape, NCGIA, Santa Barbara.
+
+<P>Ehlschlaeger, C.R., Goodchild, M.F., 1994a, Uncertainty in spatial data:
+defining, visualizing, and managing data errors: proc. GIS/LIS '94, Phoenix,
+p. 246-253, LINK: &lt;<A HREF="links.htm#1994a">http://everest.hunter.cuny.edu/~chuck/gislis/gislis.html</A>>.
+
+<P>Ehlschlaeger, C.R., Goodchild, M.F., 1994b, Dealing with uncertainty
+in categorical coverage maps: defining, visualizing, and managing data
+errors: proc., Workshop on GIS, Conference on information and knowledge
+management, Gaithersburg, p. 86-91, LINK: &lt;<A HREF="links.htm#1994b">http://everest.hunter.cuny.edu/~chuck/acm/paper.html</A>>.
+
+<P>Ehlschlaeger, C., Shortridge, A., 1996, Modeling elevation uncertainty
+in geographical analysis: proc. Spatial Data Handling '96, Delft, The Netherlands,
+v. 2, p. 9B.15-9B.25, LINK: &lt;<A HREF="links.htm#1996">http://everest.hunter.cuny.edu/~chuck/SDH96/paper.html</A>>.
+
+<P>Evans, B.J., 1996, Cartographic display of data-reliability: does it
+benefit the map user?: ICA Comission on Visualization Working Papers, LINK:
+&lt;<A HREF="links.htm#evans">http://www.gis.psu.edu/ica/icavis/evans/evans.html</A>>.
+
+<P>Fisher, P.F., 1993a, Algorithm and implementation uncertainty in viewshed
+analysis: Int. Journal of Geographical Information Systems, v. 7, no. 4,
+p. 331-347.
+
+<P>Fisher, P.F., 1993b, Visualizing uncertainty in soil maps by animation:
+Cartographica, v. 30, no. 2, p. 20-27.
+
+<P>Goodchild, M.F., 1986, Spatial autocorrelation: CATMOG 47, Geo Books,
+Norwich, 57 p.
+
+<P>Goodchild, M.F., 1992, Geographical data modeling: Computers &amp; Geosciences,
+v. 18, no. 4, p. 401-408.
+
+<P>Goodchild, M.F., Sun, G., Yang, S., 1992, Development and test of an
+error model for categorical data: Int. Journal of Geographical Information
+Systems, v. 6, no. 2, p. 87-104.
+
+<P>Heuvelink, G.B.M., Burrough, P. A., Stein, A., 1989, Propagation of
+errors in spatial modelling with GIS: Int. Journal of Geographical Information
+Systems, v. 3, no. 4, p. 303-322.
+
+<P>Hootsman, R., Wel, F. van der, 1993, Detection and visualization of
+ambiguity and fuzziness in composite spatial datasets: proc. EGIS 1993,
+Genoa, p. 1035-1046.
+
+<P>Horn, B.K.P., 1981, Hill shading and the reflectance map: proc. of the
+IEEE, v. 69, no. 1, p. 14-47.
+
+<P>MacEachren, A.M., DiBiase, D., 1991, Animated Maps of Aggregate Data:
+Conceptual and Practical Problems: Cartography and GIS, v. 18, no. 4, p.
+221-229.
+
+<P>Openshaw, S., 1979, A methodology for using models for planning purposes:
+Environment and Planning, v. 11, p. 879-896.
+
+<P>Theobald, D.M., 1989, Accuracy and bias issues in surface representation,
+in Goodchild, M.F., Gopal, S., eds., Accuracy of Spatial Databases: Taylor
+&amp; Francis, London, p. 99-106.
+
+<P>USGS, 1996, USGS 7.5 Minute DEM Coverage, LINK: &lt;<A HREF="links.htm#USGS">http://www-nmd.er.usgs.gov/metadata/7.5dem.html</A>>.
+
+<P>Wel, F.J. van der, Hootsmans, R.M., Ormeling, F., 1994, Visualization
+of data quality, in MacEachren, A.M., Fraser Taylor, D.R., eds., Visualization
+in Modern Cartography: Pergamon/Elsavier, New York, p. 313-331.
+<H3>
+<A HREF="movies.htm">Appendix A Movies from: Visualizing Spatial Data Uncertainty
+Using Animation</A></H3>
+
+<H3>
+Appendix B Procedure</H3>
+Here is a step by step procedure, including shell scripts, to generate
+the potential realizations and animation in this paper. A Silicon Graphics
+workstation running IRIS 5.3 and GRASS 4.1 with SG3d (Brown, 1992) were
+used for this project.
+
+<P>1. Randomly determine 250 samples of independent random points from
+the 3 arc second data set using <I><A HREF="makeind.txt">makeInd.csh</A></I>
+
+<P>2. Develop statistics from these points by comparing the difference
+between the 3 arc second data set and available 30m data.
+
+<P>3. Find the parameters that best fit the random surface model by fitting
+the difference of 3 arc second data to available 30m data. So far, every
+time the random surface model parameters D, E, and F were used to describe
+the p.d.f., the 3D solution space was valley shaped. The following shell
+scripts test various combinations of model parameters, moving closer to
+the optimal combination: <I><A HREF="mc1.txt">mC1.csh</A></I>, <I><A HREF="mc2.txt">mC2.csh</A></I>,
+<I><A HREF="mc3.txt">mC3.csh</A></I>, and <I><A HREF="mc4.txt">mC4.csh</A></I>.
+The goal of each shell script was to test 27 locations surrounding the
+best solution identified by that stage in the analysis. If a better solution
+was found, the next shell script would choose locations around the new
+optimal parameters. Otherwise, the next shell script would test 27 locations
+closer to the previous optimal solution.
+
+<P>4. Employ the spatial statistical parameters from step 3 to generate
+250 realizations using <I><A HREF="makevis.txt">makeVis.csh</A></I>.
+
+<P>5. Build non-linear interpolations between realizations. Building an
+interpolation between realizations takes less time than building the random
+surface. <I><A HREF="makeint.txt">makeInterp.csh</A></I>
+
+<P>6. (Optional) Check to see that interpolations of random surfaces have
+similar statistical and spatial statistical characteristics as the original
+realizations. <I><A HREF="cinterp.txt">checkInterp.csh</A></I>, <I><A HREF="interpss.txt">InterpSS.txt</A></I>
+
+<P>7. Generate optimal path for 3 arc second data and render it. Generate
+optimal path for 30m data in the study area and render it. In an actual
+application, we wouldn't have this data. But, it is important to check
+and determine whether results meet expectations. <I><A HREF="visdted.txt">visDted.csh</A></I>,
+<I><A HREF="visdem.txt">visDEM.csh</A></I>
+
+<P>8. Determine range of optimum path values. Load data into spreadsheet
+for histogram. Develop color scheme to demonstrate this range, and give
+the color scheme to all the realizations. <I><A HREF="dlcp.txt">describeLCP.csh</A></I>,
+<I><A HREF="makecol.txt">makeColor.csh</A></I>
+
+<P>9. Generate the script that runs the animation creation software. Finally,
+run the animation creation software script. <I><A HREF="makemov.txt">makeMovie.csh</A></I>,
+<I><A HREF="mallmov.txt">mAllMovie.csh.</A></I>
+</BODY>
+</HTML>
