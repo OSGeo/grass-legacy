@@ -50,19 +50,19 @@ plot2 (char *name, char *mapset, struct line_pnts *Points)
 	D_move_abs, D_cont_abs);
 
 
-    nlines = V2_num_lines (&P_map);
+    nlines = Vect_get_num_lines (&P_map);
 
 #ifdef OLD
     for (line = 1; line <= nlines; line++)
     {
-	if (V2_get_line_bbox (&P_map, line, &N, &S, &E, &W) < 0)
+	if (Vect_get_line_bbox (&P_map, line, &N, &S, &E, &W) < 0)
 	{
 	    fprintf (stderr, "\nWARNING: vector file [%s] - read error\n", name);
 	    return -1;
 	}
 	if (!G_window_overlap (&window, N, S, E, W))
 	    continue;
-        if (V2_read_line (&P_map, Points, NULL, line) < 0)
+        if (Vect_read_line (&P_map, Points, NULL, line) < 0)
 	{
 	    fprintf (stderr, "\nWARNING: vector file [%s] - read error\n", name);
 	    return -1;

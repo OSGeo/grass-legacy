@@ -22,7 +22,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
     Cats = Vect_new_cats_struct ();
 
 	
-    num = V2_num_areas(Map);
+    num = Vect_get_num_areas(Map);
     G_debug (1, "n_areas = %d", num);
     
     for ( area = 1; area <= num; area++ ) {
