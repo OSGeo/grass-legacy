@@ -21,7 +21,7 @@ int readsites (fdsite, all, verbose, field, xyz)
   field -= 1;  /* field number -> array index */
 
   if (verbose)
-    fprintf (stderr, "Reading sites list ...              ");
+    fprintf (stderr, "Reading sites list ...                  ");
 
 
   if (G_site_describe (fdsite, &n, &c, &i, &d)!=0)
