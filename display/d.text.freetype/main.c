@@ -264,6 +264,7 @@ main(int argc, char **argv)
 			(!param.font && !param.path->answer)))
 		G_fatal_error("No font selected");
 
+	path = NULL;
 	charset = NULL;
 	tcolor = NULL;
 	size = 0;
