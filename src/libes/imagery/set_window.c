@@ -1,4 +1,3 @@
-/* %W% %G% */
 /* this routine is used by the tape extraction routines
  * it convert row,col windows into grass east,north windows
  * it writes the WIND file and sets the current program window
