@@ -115,13 +115,13 @@ OGRSpatialReferenceH *GPJ_grass_to_osr(struct Key_Value * proj_info,
 
     if ((errcode = OSRImportFromProj4(hSRS, proj4mod)) != OGRERR_NONE) {
 	G_warning("OGR can't parse PROJ.4-style parameter string:\n" 
-		      "%s\n(Error code was %d)", proj4mod, errcode);
+		      "%s\n(OGR Error code was %d)", proj4mod, errcode);
 	return NULL;
     }
 
     if ((errcode = OSRExportToWkt(hSRS, &wkt)) != OGRERR_NONE) {
 	G_warning("OGR can't get WKT-style parameter string\n"
-		  "(Error code was %d)", errcode);
+		  "(OGR Error code was %d)", errcode);
 	return NULL;
     }
 
