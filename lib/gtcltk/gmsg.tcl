@@ -2,7 +2,7 @@
 #
 # gmsg.tcl
 #
-# MODULE:   	Grass Tcl/Tk Initialization
+# MODULE:   	Grass Tcl/Tk I18n wrapper
 # AUTHOR(S):	Alex Shevlakov alex@motivation.ru
 # PURPOSE:  	I18N Tcl-Tk based GUI text strings wrapper procedure
 #
