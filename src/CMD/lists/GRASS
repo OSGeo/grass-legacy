@@ -1,6 +1,6 @@
 src/libes/tools
 html
-#next generates version.h file as well:
+src/libes/datetime
 src/libes/gis
 src/libes/vask
 src/libes/segment
@@ -24,7 +24,6 @@ src/libes/ibtree
 src/libes/linkm
 src/libes/bitmap
 src/libes/D
-src/libes/datetime
 src/libes/rst_gmsl
 src/libes/vect32/libes
 src/libes/vect32/Vlib
