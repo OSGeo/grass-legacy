@@ -62,6 +62,8 @@ krassovsky	"Krassovsky 1940"		a=6378245.000	f=1/298.3
 modif_airy	"Airy 1830 Modified"		a=6377340.189	f=1/299.3249646
 # South American 1969
 sam69		"South American 1969"		a=6378160.000	f=1/298.25
+# Brazil South American 1969
+SAD-69		"South American 1969"		a=6378160.000	f=1/298.25
 # WGS 1972
 wgs72		"World Geodetic System 1972"	a=6378135.000	f=1/298.26
 # WGS84 as defined by NIMA document TR8350.2
@@ -140,4 +142,7 @@ everest_p	"Everest (Pakistan)"		a=6377309.613	f=1/300.8017
 # There is a bug in libes/gis/get_ellipse.c, where a function can not
 # return e=0.0 in any case. So do not use sphere!
 # sphere  	"Spherical Earth"		a=6370997.000   e=0.0
+
+
+
 
