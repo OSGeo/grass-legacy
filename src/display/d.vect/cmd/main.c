@@ -92,11 +92,8 @@ main (int argc, char **argv)
 	if(stat == 0)
 		D_add_to_list(G_recreate_command()) ;
 
-	if(!strchr(map_name, '@'))
-	{
-		D_set_dig_name(G_fully_qualified_name(map_name, mapset));
-		D_add_to_dig_list(G_fully_qualified_name(map_name, mapset));
-	}
+	D_set_dig_name(G_fully_qualified_name(map_name, mapset));
+	D_add_to_dig_list(G_fully_qualified_name(map_name, mapset));
 
 	Vect_destroy_line_struct (Points);
 
