@@ -20,11 +20,13 @@ int main (int argc, char *argv[])
     int ok;
     int row,nrows,ncols;
     int verbose;
+    int ZEROFLAG;
     char *name, *mapset;
     char *new_name;
     char **names;
     char **ptr; 
     struct Flag *flag1 ;
+    struct Flag *zeroflag;
     struct Option *opt1, *opt2 ;
 
 /* Define the different options */
@@ -50,7 +52,15 @@ int main (int argc, char *argv[])
     flag1->key         = 'q' ;
     flag1->description = "Quiet" ;
 
+/* Not yet fully implemented in do_patch.c */
+/*
+    zeroflag = G_define_flag() ;
+    zeroflag->key         = 'z' ;
+    zeroflag->description = "Use zero (0) for transparency instead of NULL" ;
+*/
+
     verbose = 1;
+    ZEROFLAG = 0; /* default: use NULL for transparency */
     nfiles = 0;
 
     G_gisinit (argv[0]);
@@ -59,7 +69,8 @@ int main (int argc, char *argv[])
         exit(-1);
 
     verbose = (!flag1->answer);
-
+    ZEROFLAG= (zeroflag->answer);
+    
     ok = 1;
     names = opt1->answers;
     ptr = opt1->answers;
@@ -133,7 +144,7 @@ int main (int argc, char *argv[])
 	{
 	    if(G_get_raster_row (infd[i], patch, row, out_type) < 0)
 		exit(1);
-	    if(!do_patch (presult, patch, &statf[i], ncols, out_type))	
+	    if(!do_patch (presult, patch, &statf[i], ncols, out_type, ZEROFLAG))
 		break;
 	}
 	G_put_raster_row (outfd, presult, out_type);
