@@ -230,6 +230,8 @@ expr_list *parse_stream(FILE *fp)
 	expr_list *e;
 
 	initialize_scanner_stream(fp);
+	if (isatty(fileno(fp)))
+		fputs("Enter expressions, \"end\" when done.\n", stderr);
 	e = parse();
 	if (isatty(fileno(fp)))
 		fputs("\n", stderr);
