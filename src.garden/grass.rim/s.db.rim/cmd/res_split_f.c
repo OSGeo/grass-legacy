@@ -1,6 +1,6 @@
 #define RES_SPLIT_F
 
-#include <stdio.h>
+#include "gis.h"
 #include "globals.h"
 #include "make.h"
 
@@ -22,18 +22,33 @@
 res_split_f()
 {
    int num, i, last, next, flag, offset;
+   char c;
 
    /* first pass: fill next_field[1] with the first field in split field */
    for (num=0; num<Field_num; num++) {
-      if (Field_info[num].next_field[1]==0) {
-         Field_info[num].next_field[0] = MAX_FIELDS;
-         Field_info[num].next_field[1] = MAX_FIELDS;
+      c = Field_info[num].column_type;
+      if (c==F_FIELD_CHAR || c==X_FIELD_CHAR || c==Y_FIELD_CHAR) {
+        Field_info[num].next_field[0] = MAX_FIELDS;
+        if (Field_info[num].next_field[1] < 0)
+          Field_info[num].next_field[1]= - Field_info[num].next_field[1];
+        else {
+          if ((c==X_FIELD_CHAR || c==Y_FIELD_CHAR) && Projection==PROJECTION_LL)
+            Field_info[num].next_field[1] = 6;
+          else
+            Field_info[num].next_field[1] = 2;
+        }
       }
-      else if (Field_info[num].next_field[1]==-1) {
-         for (i=0; i<Field_num; i++)
+      else {
+        if (Field_info[num].next_field[1]==0) {
+          Field_info[num].next_field[0] = MAX_FIELDS;
+          Field_info[num].next_field[1] = MAX_FIELDS;
+        }
+        else if (Field_info[num].next_field[1]==-1) {
+          for (i=0; i<Field_num; i++)
             if (0==strcmp(Field_info[num].column_name,
                            Field_info[i].column_name))
                Field_info[i].next_field[0] = num;
+        }
       }
    }
 
