@@ -1,3 +1,5 @@
+#  %W%  %G%
+#@(#) 
 SCSFIPS      = $(LIBDIR)/scsfips.a
 
 
