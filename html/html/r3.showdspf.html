@@ -74,7 +74,7 @@ THE INTERACTIVE OPTIONS ARE:
  <B>R</B>   resets display along axis to show all data
  <B>F <I>grid3name colortablename</I></B> load new color file
 
- <B>C</B>   toggles the c_flag
+ <B>C</B>   toggles the clear flag
  <B>c</B>   clears the display (no thresholds)
  <B>s</B>   swap buffers
  <B>b</B>   toggles draw a box
@@ -111,8 +111,23 @@ characters, i.e. <B>+++++++</B>
 <LI>Scripts using above commands on separate lines may be 
 directed to r3.showdspf as standard input. 
 Use the <B>#</B> sign as the first character on a line to indicate a comment.
-
 </UL>
+
+<H2>EXAMPLE</H2>
+
+After generating a "dspf" control file with <em>r3.mkdspf</em> start
+<em>r3.showdspf</em>. Display/add the layers using "+".<br>
+
+List available thresholds with "?". Use "l" to select isosurfaces (available
+number can be adjusted with <em>r3.mkdspf</em>) and "L" to display:<br>
+<tt>l 1 2 3 4 5<br> L </tt> <p>
+
+To select and display a single threshold (here: 2), use:<br>
+<tt>t 2</tt> <p>
+
+To select and display a range of thresholds (here: 3-5), use:<br>
+<tt>T 3 5<br>
+D</tt> <p>
 
 <H2>SEE ALSO</H2>
 <EM><A HREF="r3.mkdspf.html">r3.mkdspf</A></EM>
