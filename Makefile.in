@@ -473,6 +473,7 @@ clean: FORCE mostlyclean
 
 distclean: FORCE clean
 	@ echo "Performing distclean step..."
+	${SHELL} -c "rm -rf src/CMD/next_step/   	    2>/dev/null ; true"
 	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head 2>/dev/null ; true"
 	${SHELL} -c "rm -f ${SRCDIR}/src/include/version.h  2>/dev/null ; true"
 	${SHELL} -c "rm -f ${SRCDIR}/src/include/winname.h  2>/dev/null ; true"
