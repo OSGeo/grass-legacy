@@ -42,7 +42,6 @@
 #include "user.h"
 #include "G3d.h"
 
-G3D_Region current_region;
 
 int secpar_loop(ngstc,nszc,i)
 	int    ngstc;

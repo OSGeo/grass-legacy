@@ -31,6 +31,9 @@
 #include <math.h>
 #include <string.h>
 #include <unistd.h>
+
+#define USERMAIN
+
 #include "gis.h"
 #include "site.h"
 #include "userglobs.h"
@@ -142,8 +145,6 @@ char *Tmp_file_cell = NULL;
 struct BM *bitmask;
 struct Cell_head cellhd;
 G3D_Region out_region;
-G3D_Region current_region;
-
 
 int main (int argc, char *argv[])
 {

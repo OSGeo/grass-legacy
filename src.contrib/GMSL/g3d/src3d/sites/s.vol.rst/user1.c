@@ -40,7 +40,6 @@
 #include "user.h"
 #include "bitmap.h"
 
-extern G3D_Region current_region;
 
 /*
        x,y,z - input data
