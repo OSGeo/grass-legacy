@@ -26,7 +26,7 @@ main(argc,argv) char *argv[];
 			me += i+1;
 			break;
 		}
-	G_gisinit(argv[0]) ;
+	G_no_gisinit(argv[0]) ;
 
 /* change argv[0] a little bit */
 	argv[0] = me;
