@@ -45,13 +45,19 @@ xtract_line (int num_index, int num_array[], struct Map_info *In, struct Map_inf
 	         if ( !(select_type & GV_BOUNDARY) && !(select_type & GV_AREA) ) continue;
 		 if ( select_type & GV_AREA ) { /* get left right category */
 		     Vect_get_line_areas ( In, line, &areal, &arear );
+		     if ( areal < 0 ) 
+			areal = Vect_get_isle_area ( In, abs(areal) ); 
+
 		     if ( areal > 0 ) {
 			 centroid = Vect_get_area_centroid ( In, areal );
 			 if ( centroid > 0 ) {
 	                     Vect_read_line ( In, CPoints, CCats, centroid);
 			     Vect_cat_get ( CCats, field, &catl );
 			 }
-		     }
+		     } 
+		     
+		     if ( arear < 0 ) 
+			arear = Vect_get_isle_area ( In, abs(arear) ); 
 		     if ( arear > 0 ) {
 			 centroid = Vect_get_area_centroid ( In, arear );
 			 if ( centroid > 0 ) {
