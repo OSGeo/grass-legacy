@@ -62,8 +62,14 @@ int main (int argc, char *argv[])
 	G_remove_raster_timestamp(name);
 	exit(0);
     }
+    
+    if(1 == G_scan_timestamp (&ts, date->answer))
+    {
+	G_write_raster_timestamp(name, &ts);
+	exit(0);
+    }
+    else
+ 	G_fatal_error("Invalid timestamp");
 
-    G_scan_timestamp (&ts, date->answer);
-    G_write_raster_timestamp(name, &ts);
-    exit(0);
+    return(1);
 }
