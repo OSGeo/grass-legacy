@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.128 2001-03-21 08:57:17 markus Exp $
+                 $Id: BUGS,v 1.129 2001-03-24 12:58:47 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -32,19 +32,7 @@ RC-Bug list:
     concerns vector maps, fonts (in d.legend), grid an d.erase. I think this
     problem did not exist in version 5b10.
     reported by: Reinhard Brunzema <r.brunzema@web.de>)
-
-[RC]r.poly
-- bugreport 1: I've noticed that r.poly doesn't extract polygons for 0
-  category areas. This was correct in GRASS 4, but not in GRASS 5. 
-  I don't know if it works correctly with null values.
-
-- bugreport 2: I've noticed that v.support complains about labels when
-  r.poly exports polygons with islands. In fact, I've seen that in dig_att's
-  file there is one label for each island (that's correct), but the container
-  +polygon is associated with n+1 labels, where n is the number of contained
-  islands. Everithing seems to work fine anyway, but I may be related with
-  another bug on v.trim that I'm going to point out in a separate bug report
-  (reported by: Andrea Aime <aaime@comune.modena.it>)
+  -> Probably we skip this driver and foxus on the PNGDriver?
 
 [RC]r.proj 
  It needs a small rewrite to not read the entire raster into
@@ -55,10 +43,10 @@ RC-Bug list:
  -> comment from Morten Hulden: This can only happen with *large* maps.
 
 [RC]v.trim 
- bugreport: If a polygon has island, v.trim removes such islands
- from the vector file... urgh! I've obtained such a behaviour with a
- map obtained with r.poly, v.support (see my other bug report about
- r.poly), I don't know if there is a relation (my map was a
+
+ bugreport: If a polygon has island, v.trim removes such islands from the
+ vector file... urgh! I've obtained such a behaviour with a map obtained
+ with r.poly, v.support, I don't know if there is a relation (my map was a
  reclassified DEM).
  (reported by: Andrea Aime <aaime@comune.modena.it>)
  (being worked on by ?)
