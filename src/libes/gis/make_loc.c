@@ -157,7 +157,7 @@ G_compare_projections( struct Key_Value *proj_info1,
 /* -------------------------------------------------------------------- */
     
     {
-        double a1, a2;
+        double a1=0, a2=0;
         if(G_find_key_value( "a", proj_info1) != NULL)
            a1 = atof(G_find_key_value( "a", proj_info1 ));
         if(G_find_key_value( "a", proj_info2) != NULL)
