@@ -15,7 +15,7 @@ debugf (va_alist)
 {
       va_list args;
       char *fmt;
-      char buf[1024], *p;
+      char *p;
       static int first = 1;
       static FILE *debugfp;
 

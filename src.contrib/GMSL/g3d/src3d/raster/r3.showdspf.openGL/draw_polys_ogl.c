@@ -8,19 +8,19 @@
 
 static float ZNexag = 1.0;
 
-set_ZNexag(exag)
+void set_ZNexag(exag)
 float exag;
 {
     ZNexag = exag;
 }
 
-get_ZNexag(exag)
+void get_ZNexag(exag)
 float *exag;
 {
     *exag = ZNexag;
 }
 
-fdraw_polys(D_spec)
+void fdraw_polys(D_spec)
 struct dspec	*D_spec;/*structure containing interactive input*/
 {
   register int x, y, z;
@@ -103,7 +103,8 @@ struct dspec	*D_spec;/*structure containing interactive input*/
   glDisable(GL_COLOR_MATERIAL);
 
 }
-normalize(v)
+
+void normalize(v)
     float v[];
 {
     float len;
@@ -115,13 +116,10 @@ normalize(v)
 }
 
 /******************************** gdraw_polys *********************************/
-/******************************** gdraw_polys *********************************/
-/******************************** gdraw_polys *********************************/
- 
- /* this subroutine draws polygons from a dspf file using 3 different normals */
+/* this subroutine draws polygons from a dspf file using 3 different normals */
 
 
-gdraw_polys(D_spec)
+void gdraw_polys(D_spec)
 struct dspec	*D_spec;
 {
   register int x, y, z;
@@ -404,7 +402,7 @@ struct dspec	*D_spec;
   glDisable(GL_COLOR_MATERIAL);
 }
 
-get_level (head, chead, z)
+int get_level (head, chead, z)
     file_info *head, *chead;
     int z;
 {
@@ -417,7 +415,7 @@ get_level (head, chead, z)
     return (level);
 }
 
-get_row (head, chead, y)
+int get_row (head, chead, y)
     file_info *head, *chead;
     int y;
 {
@@ -430,7 +428,7 @@ get_row (head, chead, y)
     return (row);
 }
 
-get_col (head, chead, x)
+int get_col (head, chead, x)
     file_info *head, *chead;
     int x;
 {
@@ -441,7 +439,8 @@ get_col (head, chead, x)
 	col = -1;
     return (col);
 }
-fill_data_cube (data, slice, row, col, ctable, xdim)
+
+void fill_data_cube (data, slice, row, col, ctable, xdim)
     short data[8][3];
     float *slice[2];
     int row[2], col[2];
@@ -463,7 +462,7 @@ fill_data_cube (data, slice, row, col, ctable, xdim)
             }
 }
 
-get_vert_color (data, vert, ctable, color)
+void get_vert_color (data, vert, ctable, color)
     short data[8][3];
     float vert[3];
     struct color_entry *ctable;
@@ -471,7 +470,6 @@ get_vert_color (data, vert, ctable, color)
 {
     short x[4][3], y[2][3];
     float dx, dy, dz;
-    float cat;
     int i, j;
 
     dx = vert[0];
@@ -520,7 +518,8 @@ get_vert_color (data, vert, ctable, color)
         for (j = 0; j < 3; j++)
 	    color[j] = (y[0][j]*(1-dz) + y[1][j]*dz);
 }
-print_color_table (ctable)
+
+void print_color_table (ctable)
     struct color_entry ctable[];
 {
     int i;

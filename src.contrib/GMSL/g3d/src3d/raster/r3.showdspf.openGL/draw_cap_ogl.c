@@ -81,7 +81,7 @@ debugf("%lf x2  %lf y2\n",x2,y2);
 ** them then draws the polygon and falls thru to left over polygon
 ** code */
 
-split_poly (ta, pnum, t)
+void split_poly (ta, pnum, t)
 int pnum;	/* index to current polygon */
 int ta;		/* current threshold array */
 int t;		/* current threshold index */
@@ -92,19 +92,13 @@ int t;		/* current threshold index */
   int hits;
   int xing[4];/* a list of the sides with hits*/
   int tnum;
-  int i,w;
+  int i;
   int new_pnum;
   int side;
   static int first;
   int n_verts;
-  double total,average;
   cmndln_info *tp;
-  int f;
   int drawn;
-  int saddle,bigger,method;
-  int a,b,c,d;/*hold the side number where there are crossings*/
-  int numverts; /* assigned to save referencing pointer alot */
-
 
   num = 0;
   hits = 0;
@@ -123,7 +117,8 @@ int t;		/* current threshold index */
       tnum = t + B_spec->low;
     else
       if (ta == 0)
-	  tnum == t;
+	  /* tnum == t;*/ /* fix ? MN 2001 */
+	  tnum = t;
       else
 	  tnum = t + B_spec->hi;
   }
@@ -293,29 +288,21 @@ double zmin, zz, zmax;
 
 /*******************************   next_higher  *******************************/
 /* given sides 0,1,2,3, return number of next side in clockwise order */
-next_higher(side,verts)
+int next_higher(side,verts)
 int side,verts;
 {
    return ((side+1) % verts);
 }
 
-draw_cap (XHeadp, XB_spec,XCap)
+int draw_cap (XHeadp, XB_spec,XCap)
   file_info *XHeadp;
   struct dspec *XB_spec;
   struct Cap *XCap;
 {
-  double minmax[2];
   int row, xdim;
-  double zz;
-  register int i;
-  int side;
-  int ta, t;
-  int corner;
+  int ta;
   cmndln_info *tp;
-  int tnum;
   int org_tnum;
-  int c,w;
-  int direction;
 
 /* if flat shading*/
   Headp = XHeadp;
