@@ -52,8 +52,6 @@
 
 static char *extract_base_name( char *, const char * );
 
-enum {ANALYSE, RASTER, LINES, VECTOR, ALL} todo;
-
 int debug = 0;			/* debug level (verbosity) */
 FILE *fde00, *fdlog;		/* input and log file descriptors */
 
@@ -70,14 +68,14 @@ int main( int   argc, char *argv[])
     int		cat_field;
     int 	pgdmp, no_rattle;
 
-    char name[128], *p;	/* name of output files */
+    char name[512], rejname[512], *p;	/* name of output files */
 
     char infile[512], *newmapset;
     int cover_type;		/* type of coverage (line, point, area) */
 
     FILE *f_att = NULL;
     FILE *f_cats = NULL;
-    struct Map_info map;
+    struct Map_info map, rej;
     struct line_pnts *points;
 
     struct Categories cats;  /* added MN 10/99 */
@@ -111,11 +109,11 @@ int main( int   argc, char *argv[])
     char buf[256];
 
     struct {
-	struct Option *input, *mapset, *logfile, *verbose, *attribute, *snapd, *minangle;
+	struct Option *input, *logfile, *verbose, *attribute, *snapd, *minangle;
 	struct Option *scale, *pgdump, *dumpmode, *catlabel;
     } parm;
 
-    struct Flag *listflag;
+    struct Flag *listflag, *rejflag;
 
     /* Are we running in Grass environment ? */
 
@@ -128,12 +126,6 @@ int main( int   argc, char *argv[])
     parm.input->type       = TYPE_STRING;
     parm.input->required   = YES;
     parm.input->description= "Name of .shp (or just .dbf) file to be imported";
-
-    parm.mapset = G_define_option() ;
-    parm.mapset->key        = "mapset";
-    parm.mapset->type       = TYPE_STRING;
-    parm.mapset->required   = NO;
-    parm.mapset->description= "Name of mapset to hold resulting files (Default = current)";
 
     parm.verbose = G_define_option() ;
     parm.verbose->key        = "verbose";
@@ -190,6 +182,11 @@ int main( int   argc, char *argv[])
     listflag->key     = 'l';
     listflag->description = "List fields of DBF file";
 
+    /* Set flag for listing fields of database */
+
+    rejflag = G_define_flag();
+    rejflag->key     = 'r';
+    rejflag->description = "Create reject lines file";
 
     /* get options and test their validity */
 
@@ -199,8 +196,9 @@ int main( int   argc, char *argv[])
     /* extract name of file and get names of dbf file */
 
     strcpy(infile, parm.input->answer);
-    newmapset = parm.mapset->answer;
     extract_base_name( name, infile );
+    strcpy( rejname, name );
+    strcat( rejname, "_rej" );
 
 
     /* Examine the flag `-l' first */
@@ -276,29 +274,6 @@ int main( int   argc, char *argv[])
     if (debug)
 	fprintf( fdlog, "\"%s\" successfully opened\n", infile);
 
-    /* Create a mapset and made it current mapset for this program */
-
-    if (newmapset != NULL) {
-	if (G_legal_filename( newmapset) < 0) {
-	    sprintf (buf, "MAPSET <%s> - illegal name\n", newmapset);
-	    G_fatal_error( buf);
-	}
-	if (todo == ANALYSE)
-	    fprintf( fdlog, "Mapset %s not created (analyse only)\n", newmapset);
-	else {    
-	    sprintf( buf, "%s/%s", G_location_path(), newmapset);
-	    if (access( buf, F_OK) == -1)
-		if (mkdir( buf, 0755) == -1) {
-		    sprintf( buf, "Cannot create MAPSET %s", newmapset);
-		    G_fatal_error( buf);
-		}
-	    G__setenv( "MAPSET", newmapset);
-	    if (debug > 2)
-		fprintf( fdlog, "Mapset \"%s\" created for import\n", G_mapset());
-	}
-    }
-    
-    
     	
     /* Establish the shape types and corresponding GRASS type */
     
@@ -341,6 +316,9 @@ int main( int   argc, char *argv[])
 /*      shapefile.							*/
 /* -------------------------------------------------------------------- */
     Vect_open_new( &map, name);
+
+    if(rejflag->answer)
+      Vect_open_new( &rej, rejname);
 
 /* -------------------------------------------------------------------- */
 /*	Identify the attribute (if any) to be extracted.		*/
@@ -407,7 +385,6 @@ int main( int   argc, char *argv[])
 	sprintf( buf, "Unable to create attribute file `%s'.", name );
 	G_fatal_error( buf );
       }
-
 
 
     /* -------------------------------------------------------------------- */
@@ -544,7 +521,10 @@ int main( int   argc, char *argv[])
       points = Vect_new_line_struct();
       Vect_copy_xy_to_pnts( points, pntxlist, pntylist,
 			    segl->segments[iArc].numVertices );
-      Vect_write_line( &map, cover_type, points);
+      if(!segl->segments[iArc].duff)
+	Vect_write_line( &map, cover_type, points);
+      else if(rejflag->answer)
+	Vect_write_line( &rej, cover_type, points);	
       Vect_destroy_line_struct( points );
 	    
       free(pntxlist);
