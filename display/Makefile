@@ -1,6 +1,8 @@
 
 MODULE_TOPDIR = ..
 
+include $(MODULE_TOPDIR)/include/Make/Dir.make
+
 SUBDIRS = \
 	drivers \
 	d.ask \
@@ -42,7 +44,12 @@ SUBDIRS = \
 	d.where \
 	d.zoom
 
-include $(MODULE_TOPDIR)/include/Make/Dir.make
+FREETYPEBASED = d.text.freetype
+
+#compile if FreeType Lib present:
+ifneq ($(strip $(FTLIB)),)
+    SUBDIRS += $(FREETYPEBASED)
+endif
 
 default: subdirs
 
