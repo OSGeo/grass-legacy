@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../..
 
-PGM=postgisdb
+PGM=pg.postgisdb
 
 PROGDIR =  $(GISBASE)/scripts/
 
