@@ -390,7 +390,7 @@ bindist:
 		echo "  Creation of binary distribution aborted. Exiting Make."; \
 		exit; \
 	fi; \
-	${MAKE} real-dist
+	${MAKE} real-bindist
 
 real-bindist:
 	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ${DIST_DIR}/  ; true"
