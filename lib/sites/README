@@ -35,3 +35,8 @@ Radim
 ##################
 
 G_site_put() currently only writes 2D sites files.
+
+##################
+This modified sites lib reads *vector* maps. Any old sites files
+have to be imported with v.in.sites first.
+
