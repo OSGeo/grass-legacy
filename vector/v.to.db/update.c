@@ -54,7 +54,10 @@ update (struct Map_info *Map)
     } 
 
     /* update */
+    fprintf ( stderr, "Updating database ... " );
     for ( i = 0; i < vstat.rcat; i++ ) {
+	G_percent( i+1, vstat.rcat, 1 );
+	
 	fcat = Values[i].cat;
 	if ( fcat < 0 ) continue;
 	switch (options.option) {
