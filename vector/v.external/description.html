@@ -22,7 +22,7 @@ installation (OGR library), for details see
 <h2>EXAMPLES</h2>
 
 <B>SHAPE files</B><BR>
-<b>v.externalr dsn=</b><em>/home/user/shape_data</em>
+<b>v.external dsn=</b><em>/home/user/shape_data</em>
 <b>layer=</b><em>test_shape</em> <b>output=</b><em>grass_map</em> <br>
 <P>
 <B>MapInfo files</B><BR>
@@ -37,7 +37,7 @@ installation (OGR library), for details see
     <b>layer=</b><em>CompleteChain,PIP</em> <b>output=</b><em>t56015_all</em>
 <P>
 <B>PostGIS maps (area example)</B><BR>
-<b>v.external dsn=</b><em>"PG:dbname=postgis"</em>
+<b>v.external dsn=</b><em>"PG:host=localhost user=postgres dbname=postgis"</em>
     <b>layer=</b><em>polymap</em> <b>output=</b><em>polygons</em>
 
 <P>
@@ -53,7 +53,7 @@ documentation
 <h2>SEE ALSO</h2>
 
 <em><a HREF="v.clean.html">v.clean</a></em>,
-<em><a HREF="v.in.ogr.html">v.in.ogr</a></em>
+<em><a HREF="v.in.ogr.html">v.in.ogr</a></em>,
 <em><a HREF="v.out.ogr.html">v.out.ogr</a></em>
 
 <h2>AUTHOR</h2>
