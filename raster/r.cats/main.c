@@ -72,6 +72,8 @@ main (int argc, char *argv[])
 	    fs = ' ';
 	else if (strcmp(parm.fs->answer, "tab") == 0)
 	    fs = '\t';
+	else if (strcmp(parm.fs->answer, "\\t") == 0)
+	    fs = '\t';
         else
 	    fs= parm.fs->answer[0];
     }
