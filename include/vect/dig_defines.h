@@ -5,11 +5,12 @@
 #define GV_FATAL_PRINT   1
 #define GV_FATAL_RETURN  2
 
-#define GRASS_VECT_DIRECTORY    "vector"
-#define GRASS_VECT_FRMT_ELEMENT "frmt"
-#define GRASS_VECT_COOR_ELEMENT "coor"
-#define GRASS_VECT_HEAD_ELEMENT "head"
-#define GV_TOPO_ELEMENT "topo"
+#define GRASS_VECT_DIRECTORY    "vector" /* name of vector directory */
+#define GRASS_VECT_FRMT_ELEMENT "frmt" /* format description, data location */ 
+#define GRASS_VECT_COOR_ELEMENT "coor" /* coordinates */
+#define GRASS_VECT_HEAD_ELEMENT "head" /* header information */
+#define GV_TOPO_ELEMENT "topo"   /* topology */
+#define GV_SIDX_ELEMENT "sidx"   /* spatial index */
 
 #define ENDIAN_LITTLE 0
 #define ENDIAN_BIG    1
@@ -59,9 +60,9 @@
 #define GV_FORMAT_SHAPE    1 /* shapefile format */
 #define GV_FORMAT_POSTGIS  2 /* postgis format */
 
-#define MODE_READ  0
-#define MODE_WRITE 1
-#define MODE_RW    2
+#define GV_MODE_READ  0
+#define GV_MODE_WRITE 1
+#define GV_MODE_RW    2
 
 #define VECT_OPEN_CODE   0x5522AA22
 #define VECT_CLOSED_CODE 0x22AA2255
@@ -77,9 +78,7 @@
 #define GRASS_V_VERSION_MAJOR  5
 #define GRASS_V_VERSION_MINOR  0
 
-/* 
-   **  the earliest version that can read this current format
- */
+/* the earliest version that can read this current format  */
 #define GRASS_V_EARLIEST_MAJOR  5
 #define GRASS_V_EARLIEST_MINOR	0
 
@@ -94,9 +93,7 @@
 #define ON	1
 #define OFF	0
 
-/* note this is changed from 
-   **  3.0  which had 0.04   -dpg
- */
+/* note this is changed from  3.0  which had 0.04   -dpg */
 #define THRESH_FUDGE   0.03
 
 #define MAXCOLORS	13
@@ -121,8 +118,6 @@
 
 #define GV_FORWARD 1
 #define GV_BACKWORD 2
-//#define GV_NODE1 1
-//#define GV_NODE2 2
 
 /* These are from mode.h which is no longer supported w/ digit 3.0 */
 /*                               ^     for the most part...        */

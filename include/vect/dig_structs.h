@@ -15,6 +15,7 @@
 #include "dgl.h"
 #include "shapefil.h"
 #include "btree.h"
+#include "rtree.h"
 
 
 #ifdef HAVE_POSTGRES
@@ -102,6 +103,8 @@ struct dig_head
     long size;                  /* coor file size */
 
     struct Port_info port;      /* Portability information */
+   
+    long last_offset;           /* offset of last read line */
     
     struct Map_info *Map;	/* X-ref to Map_info struct ?? */
   };
@@ -170,8 +173,7 @@ struct Plus_head
     int with_z;
 
     struct Port_info port;      /* Portability information */
-    
-    int mode;			/*  Read, Write, RW */
+    int mode;			/* Read, Write, RW */
 
     struct bound_box box;      /* box */
     
@@ -201,24 +203,22 @@ struct Plus_head
     long Area_offset;
     long Isle_offset;
 
+    /* Spatial index */
     long Node_spidx_offset;     /* offset of spindex */
     long Line_spidx_offset;
     long Area_spidx_offset;
     long Isle_spidx_offset;
     
-    /* Here will be spatial index, now only temporary solution for nodes */
-    BTREE Node_spidx;
-    /*
-    ???   Line_spidx;
-    ???   Area_spidx;
-    ???   Isle_spidx;
-    */
+    struct Node *Node_spidx;
+    struct Node *Line_spidx;
+    struct Node *Area_spidx;
+    struct Node *Isle_spidx;
 
     long coor_size;		/* size of coor file */
     long coor_mtime;		/* time of last coor modification */
 
-    //int all_areas;		/* if TRUE, all areas have just been calculated */
-    //int all_isles;		/* if TRUE, all islands have just been calculated */
+    /*int all_areas; */		/* if TRUE, all areas have just been calculated */
+    /*int all_isles; */		/* if TRUE, all islands have just been calculated */
   };
 
 struct Map_info
@@ -226,18 +226,18 @@ struct Map_info
     /* Common info for all formats */  
     int format;                /* format */
 
-    //char *plus_file;		/* Dig+ file */
-    //char *coor_file;		/* Point registration file */
+    /* char *plus_file;	*/	/* Dig+ file */
+    /* char *coor_file; */		/* Point registration file */
     
     struct Plus_head plus;      /* topo file *head; */
     dglGraph_s   graph;       	/* graph structure */
     dglSPCache_s spCache;     /* Shortest path cache */ 
 
-    //double snap_thresh;
-    //double prune_thresh;
+    /* double snap_thresh; */
+    /* double prune_thresh; */
 
-    //int all_areas;	/* if TRUE, all areas have just been calculated */
-    //int all_isles;	/* if TRUE, all islands have just been calculated */
+    /* int all_areas; */	/* if TRUE, all areas have just been calculated */
+    /* int all_isles; */	/* if TRUE, all islands have just been calculated */
 
     /*  All of these apply only to runtime, and none get written out
     **  to the dig_plus file 
@@ -287,7 +287,9 @@ struct P_node
     plus_t n_lines;	/* Number of attached lines (size of lines, angle) */
     /*  If 0, then is degenerate node, for snappingi ??? */
     plus_t *lines;		/* Connected lines */
-    float  *angles;		/* Respected angles */
+    float  *angles;		/* Respected angles. Angles for lines/boundaries are in radians between
+				 * -PI and PI. Value for points or lines with identical points (degenerated)
+				 * is set to -9. */  
   };
 
 struct P_line
