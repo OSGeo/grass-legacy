@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.12 2000-12-22 17:14:03 markus Exp $)
+($Id: INSTALL,v 1.13 2000-12-23 05:22:32 justin Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -50,8 +50,17 @@ of commands work to install GRASS on any platform.
 
 The `configure' command (possibly with options; see below) should
 identify all relevant system dependencies and create several files
-(see below) containing dependency information. The `make install' command
-should compile and install GRASS in the main filesystem.
+(see below) containing dependency information. The `make' command
+will compile the sources in the current directory. Note that you do not 
+need root access to run `make'. At this point you should be able to
+run grass by typing 
+
+	bin.$ARCH/grass5
+
+where $ARCH is a reference to your machine (eg mips-sgi-irix6.5 - is an
+SGI machine running IRIX 6.5). Running `ls' will show you the appropriate
+name for your system. The `make install' command should install GRASS in
+the main filesystem.
 
 By default, the majority of the GRASS files are stored under
 /usr/local/grass5, while a few user executable files (eg. the GRASS
@@ -61,12 +70,13 @@ access if you use the default locations.
 
 If you want to change the default locations, use a sequence like this:
 
-	./configure --prefix=/opt/ --bindir=/opt/bin/
+	./configure --prefix=/opt/ --bindir=/local/grass/bin
         make
 	make install
 
-Here the default directories have been changed to /opt/grass5 for most
-of the GRASS files, and /opt/bin/ for the executable files. See the
+Here the default directories have been changed to /opt/grass5 for most of
+the GRASS files, and /local/grass/bin for the executable files. If you had
+not specified --bindir then the bindir would have been /opt/bin. See the
 configure options below for more information.
 
 At this point the system should be installed and ready to run by typing
@@ -128,7 +138,6 @@ dependencies:
 	Makefile
 	src/CMD/head/head.$ARCH
 	src/include/config.h
-	src/scripts/shells/create_fifos.sh
 
 $ARCH is a variable containing the host system (example:
 head.i686-pc-linux-gnu).
@@ -182,7 +191,13 @@ make savebinclean    	- delete object files, next step file, the binary
    	    	    	  install script if it exists, libraries, head file,
    	    	    	  configure files, and Makefile - good for deleting
    	    	    	  everything but the binary files
-
+make uninstall		- deletes the installation files, by default
+			  /usr/local/grass5, /usr/local/bin/grass5, 
+			  /usr/local/bin/gmake5, and
+			  /usr/local/bin/gmakelinks5. This option does not
+			  delete any files that were compiled only the 
+			  installation files. You may need root access for
+			  this option.
 
 COMPILING MODULES NOT COMPILED BY DEFAULT
 
