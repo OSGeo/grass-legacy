@@ -10,7 +10,8 @@
 #include "raster.h"
 #include "display.h"
 #include "param.h"
-#include "local_proto.h"
+#include "gis.h"
+#include "nrutil.h"
 
 int process (void)
 {
@@ -47,10 +48,10 @@ int process (void)
 
 			*index_ptr;	/* Row permutation vector for LU decomp.*/
 
-    float		**normal_ptr,	/* Cross-products matrix.		*/
-			*obs_ptr;	/* Observed vector.			*/
-
-    double		*weight_ptr;	/* Weighting matrix for observed values.*/
+    double		*weight_ptr,	/* Weighting matrix for observed values.*/
+    			**normal_ptr,   /* Cross-products matrix.               */
+			*obs_ptr,	/* Observed vector.			*/
+    			*temp;           /* Unused */
 
 
     /*--------------------------------------------------------------------------*/
@@ -91,9 +92,9 @@ int process (void)
 					/* Reserve enough memory weights matrix.*/
     weight_ptr = (double *) G_malloc(wsize*wsize*sizeof(double));	
 
-    normal_ptr = matrix(1,6,1,6);	/* Allocate memory for 6*6 matrix	*/
+    normal_ptr = dmatrix(1,6,1,6);	/* Allocate memory for 6*6 matrix	*/
     index_ptr  = ivector(1,6);		/* and for 1D vector holding indices	*/
-    obs_ptr    = vector(1,6);		/* and for 1D vector holding observed z */
+    obs_ptr    = dvector(1,6);		/* and for 1D vector holding observed z */
 
 					/* Read entire raster into memory.	*/
     for (row=0; row<nrows; row++)
@@ -142,14 +143,23 @@ int process (void)
 
     	    /*--- Apply LU decomposition to normal equations. ---*/
 
-    	    /* To constrain the quadratic through the central cell, ignore
-       	       the calculations involving the coefficient f. Since these are
-       	       all in the last row and column of the matrix, simply redimension.*/
-
-    	    if (constrained)
-		ludcomp(normal_ptr,5,index_ptr);  
-    	    else
-    		ludcomp(normal_ptr,6,index_ptr);
+           if (constrained){
+		G_ludcmp(normal_ptr,5,index_ptr,temp);
+ 					   /* To constrain the quadtratic 
+ 					      through the central cell, ignore 
+ 					      the calculations involving the
+ 					      coefficient f. Since these are 
+ 					      all in the last row and column of
+ 					      the matrix, simply redimension.	*/
+ 		/* disp_matrix(normal_ptr,obs_ptr,obs_ptr,5);
+	 	*/
+	     }
+ 	
+	     else{
+     		G_ludcmp(normal_ptr,6,index_ptr,temp);
+	 	/* disp_matrix(normal_ptr,obs_ptr,obs_ptr,6);
+ 		*/
+	     }
 
 
     	    /*----------------------------------------------------------*/
@@ -174,9 +184,9 @@ int process (void)
 	    find_obs(window_ptr,obs_ptr,weight_ptr);
 
 	    if (constrained) 
-	    	lubksub(normal_ptr,5,index_ptr,obs_ptr);
+	    	G_lubksb(normal_ptr,5,index_ptr,obs_ptr);
 	    else
-	    	lubksub(normal_ptr,6,index_ptr,obs_ptr);
+	    	G_lubksb(normal_ptr,6,index_ptr,obs_ptr);
 
 
 	    /*--- Calculate terrain parameter based on quad. coefficients. ---*/
@@ -223,9 +233,9 @@ int process (void)
     free(rast_ptr);
     free(window_ptr);
     free(param_ptr);
-    free_matrix(normal_ptr,1,6,1,6);
-    free_vector(obs_ptr,1,6);
-    free_ivector(index_ptr,1,6);
+    free_dmatrix(normal_ptr,0,5,0,5);
+    free_dvector(obs_ptr,0,5);
+    free_ivector(index_ptr,0,5);
 
     return 0;
 }
