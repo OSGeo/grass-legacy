@@ -253,6 +253,14 @@ Modules:
   not to "status" of module (which is even confused at time)
   (Being worked on by ?)
 
+- i.rectify/2
+   - option 1 to transform the data should be extended: GRASS should
+     calculate from the original rows/cols and the target coordinates
+     the optimal resolution for the image to be rectified (round to nearest
+     .5). Example: take orig rows/cols, take target east-west, north-south
+     cal. target resolution, rectify.
+     This may become option 3 in menu.
+
 - nviz2.2
   - Z axis scalable when displaying 3D sites
     (Being worked on by ?)
