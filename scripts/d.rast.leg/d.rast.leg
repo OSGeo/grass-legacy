@@ -101,8 +101,12 @@ then
        #draw title
         d.frame -s at=90,100,65,100  frame=title
         d.erase col=white
-        echo "$GIS_OPT_map" | d.text col=black size=30
-#         d.text.freetype -sp text=$GIS_OPT_map col=black size=30 east_north=10,10
+#	if test -f $GISBASE/bin/d.text.freetype ; then
+#          d.text.freetype -sp text=$GIS_OPT_map col=black size=18 \
+#	         east_north=20,20 path=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf
+#	else
+          echo "$GIS_OPT_map" | d.text col=black size=30
+#	fi
 
        #draw legend
     	d.frame -s at=0,90,65,100 frame=right
@@ -123,8 +127,12 @@ else
        #draw title
         d.frame -s at=90,100,65,100 frame=title
         d.erase col=white
-        echo "$GIS_OPT_map" | d.text col=black size=30
-#         d.text.freetype -sp text=$GIS_OPT_map col=black size=30 east_north=10,10
+#	if test -f $GISBASE/bin/d.text.freetype ; then
+#          d.text.freetype -sp text=$GIS_OPT_map col=black size=18 \
+#	         east_north=20,20 path=/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf
+#	else
+          echo "$GIS_OPT_map" | d.text col=black size=30
+#	fi
 
        #draw legend
     	d.frame -s at=0,90,65,100 frame=right
