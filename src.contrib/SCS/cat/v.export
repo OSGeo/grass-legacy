@@ -1,0 +1,193 @@
+
+
+
+v.export(1)          GRASS Reference Manual	      v.export(1)
+
+
+
+NAME
+     v.export  -  Converts binary vector files into formatted
+     ascii files for transfer to other computer systems.
+     (Map Development Tool)
+
+SYNOPSIS
+     v.export
+
+DESCRIPTION
+     This program performs all of the processes	that are needed
+     to	convert	binary vector files into formatted ascii files.
+
+     It also creates support files:
+	- an attribute flat file, which contains information for
+          each area in the DLG file, 
+          ie. the DLG area number,
+              the GRASS area label, and
+              the GRASS category code
+              (only created when exporting in DLG format);
+        - an attribute file which contains the information from 
+	  the dig_att file
+              (only created when exporting ascii vector format).
+
+EXPORT FILES
+     After entering the	command	v.export, the user will be
+     asked which type of file to export	:
+
+		   Exports from GRASS Vector(digit) Format
+
+	   1  -	  Ascii	DLG file from GRASS Vector Format
+	   2  -	  Ascii	DIGIT file from GRASS Vector Format
+	   3  -	  Ascii	SCS-GEF file from GRASS Vector Format
+	   4  -	  Ascii	ARC/INFO file from GRASS Vector Format
+	   5  -	  Ascii	DXF file from GRASS Vector Format
+
+     If	numbers	1-4 are	chosen,	v.export will respond with
+     a request for the vector file name. After the user enters
+     the file name the program proceeds to create the respective
+     output format files.
+
+GRASS Vector to DLG File
+     Converts binary vector files (such as those created in digit)
+     to a DLG file and creates the attribute file. Both files
+     are placed in the dlg directory under a user selected name,
+     the attribute file has .att appended.
+
+
+GRASS Vector File into ascii Vector File
+     Converts a binary vector file into a readable ascii file.
+     Both files are placed int the dig_ascii directory under the 
+     same name as the given vector file, the attribute file has 
+     .att appended.
+
+
+
+GRASS 4.0		 U.S.D.A SCS				1
+
+
+
+
+
+
+v.export(1)          GRASS Reference Manual	      v.export(1)
+
+
+
+
+
+GRASS Vector to SCS-GEF File
+     Converts binary vector files to SCS-GEF files. Creates the
+     SCS-GEF header, lines, text, and feature files. All files
+     are created and placed in a $LOCATION/gef directory as a 
+     single UNIX file under a user selected name.
+     
+     The following is the SCS-GEF file structure:
+
+	 header record 1
+	  |      |  
+         header record 6
+	 -head
+	 line record 1
+	  |      |
+         line record n
+	 -line
+	 text record 1
+	  |      |   
+         text record n
+	 -text
+	 feature record 1
+	  |        |
+	 feature record n
+	 -feat
+
+     The user will be required to use standard UNIX commands 
+     to separate this file into individual files as required 
+     by SCS-GEF specifications.
+
+
+GRASS Vector to ARC/INFO(generated) File
+     Converts binary vector files to a "ARC ungenerate" format.
+     A GRASS vector file to be exported to ARC/INFO must be 
+     either a line coverage (must contain only lines) or a 
+     polygon coverage (must contain only area edges). Both 
+     "ungenerate lines and points" files are created and
+     are placed in a $LOCATION/arc directory under a user 
+     selected name.
+
+     The binary vector name will be used to name the various
+     files that will be created for export to ARC/INFO.  In the 
+     case of a labelled polygon coverage, the following three 
+     files will be created: a lines file with the suffix .lin, 
+     a label-points file with the suffix .lab, and a label-text
+     file with the suffix .txt.  
+
+
+
+
+
+GRASS 4.0		 U.S.D.A SCS				2
+
+
+
+
+
+
+v.export(1)          GRASS Reference Manual	      v.export(1)
+
+
+
+
+
+     In the case of a line coverage the following two files will
+     be created: a lines file with the suffix .lin, and a 
+     label-text file with the suffix .txt.  
+     
+     An unlabelled polygon or line coverage will result in a
+     lines file (.lin suffix) only.  See the DATA FILE FORMATS
+     section of v.import for more information on these files.
+
+NOTES
+     Support files must be built using the GRASS program 
+     v.support before exporting any vector file. 
+
+     Other ascii formats are useful when importing/exporting data 
+     into and from GRASS. Such data files should be in ascii 
+     format when transferred.
+
+SEE ALSO
+     v.b.a.vect, v.out.dlg, v.out.arc, v.out.dxf,
+     v.out.gef, v.support, v.import
+
+AUTHORS
+     Michael Higgins, U.S. Army	Construction Engineering Research
+     Laboratory
+     Dave Gerdes, U.S. Army Construction Engineering Research
+     Laboratory
+     Dave Johnson, DBA Systems, Inc., 10560 Arrowhead Drive
+     Fairfax, Virginia 22030
+     R.L.Glenn, U.S.D.A, Soil Conservation Service, CGIS Division
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.0		 U.S.D.A SCS				3
+
+
+
