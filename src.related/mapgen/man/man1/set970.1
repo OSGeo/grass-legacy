@@ -1,0 +1,58 @@
+.\" @(#)set970.1 - 1.1
+.nr LL 5.5i
+.TH SET970 1 2/20/89 "USGS/OEMG Systems"
+.ad b
+.hy 1
+.SH NAME
+set970 - set performance factors for Calcomp 970
+.SH SYNOPSIS
+.LP
+.B set970
+[ n ]
+.SH DESCRIPTION
+.I Set970
+sets the performance factors of the Calcomp 970 plotter.
+These factors consist of pen acceleration, maximum speed and
+approximate creep speed.
+The optional parameter
+.B n
+selects from the following table
+the range of factors selectable.
+If omitted, a value of 34 is used and if n<0 then 0 and if n>47 then 47.
+
+.RS 2
+   n   Acc.  Vm.  Vc. |    n   Acc.  Vm.  Vc. |   n   Acc.  Vm.   Vc.
+ _____________________________________________________________________
+   0   0.6    6   0.5 |   16   1.0    6   0.5 |   32   2.0    6   0.5 
+   1   0.6    6   1.0 |   17   1.0    6   1.0 |   33   2.0    6   1.0 
+   2   0.6    6   2.0 |   18   1.0    6   2.0 |   34   2.0    6   2.0 
+   3   0.6    6   3.0 |   19   1.0    6   3.0 |   35   2.0    6   3.0 
+   4   0.6   10   0.5 |   20   1.0   10   0.5 |   36   2.0   10   0.5 
+   5   0.6   10   1.0 |   21   1.0   10   1.0 |   37   2.0   10   1.0 
+   6   0.6   10   2.0 |   22   1.0   10   2.0 |   38   2.0   10   2.0 
+   7   0.6   10   3.0 |   23   1.0   10   3.0 |   39   2.0   10   3.0 
+   8   0.6   20   0.5 |   24   1.0   20   0.5 |   40   2.0   20   0.5 
+   9   0.6   20   1.0 |   25   1.0   20   1.0 |   41   2.0   20   1.0 
+  10   0.6   20   2.0 |   26   1.0   20   2.0 |   42   2.0   20   2.0 
+  11   0.6   20   3.0 |   27   1.0   20   3.0 |   43   2.0   20   3.0 
+  12   0.6   30   0.5 |   28   1.0   30   0.5 |   44   2.0   30   0.5 
+  13   0.6   30   1.0 |   29   1.0   30   1.0 |   45   2.0   30   1.0 
+  14   0.6   30   2.0 |   30   1.0   30   2.0 |   46   2.0   30   2.0 
+  15   0.6   30   3.0 |   31   1.0   30   3.0 |   47   2.0   30   3.0 
+.RE
+
+Output of the control stream is the standard output.
+.P
+.I NOTE:
+the
+.B AUX
+switch on the 970 must be enabled for this operation to have any effect.
+.SH EXAMPLE
+ 	( set970 10 ; plotter ... ) > /dev/ttyo4
+.P
+sets performance factor to number 10 prior to execution of
+.B plotter.
+.SH DIAGNOSTICS
+None.
+.SH AUTHOR/MAINTENANCE
+Gerald I. Evenden, USGS, Woods Hole, MA 02543
