@@ -1,0 +1,42 @@
+.TH make.sites 1
+.SH NAME
+make.sites \- Convert GRASS vector 
+.CT data map
+to a site 
+.CT file map
+.br
+.SH SYNOPSIS
+.B make.sites
+.SH DESCRIPTION
+The GRASS tool
+.I make.sites
+allows the user to convert GRASS vector 
+.CT files maps
+that contain 
+.I site
+information into GRASS site 
+.CT files maps
+for use with the 
+.I sites[1]
+program.  The user will be prompted for the name
+of a vector 
+.CT file map
+to convert from, and the name of the resultant site 
+.CT "file." "map."
+If any of the sites have been labelled in 
+.I digit[1],
+then the resultant 
+.CT file "site map"
+will contain category information.
+If none of the sites are labelled, it will produce a binary (0/1) site 
+.CT "file." "map."
+
+.SH NOTES
+This program calls 
+.I Vmake.sites[2V]
+to do the work.
+
+.SH "SEE ALSO"
+\fIVmake.site[2V]  sites[1]  digit[1]\fR
+.SH "AUTHOR"
+Dave Gerdes, U.S. Army Construction Engineering Research Lab
