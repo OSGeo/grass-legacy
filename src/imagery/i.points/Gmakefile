@@ -6,7 +6,9 @@ LIST=main.o\
 	cell.o\
 	cellhd.o\
 	conv.o\
+	colors.o\
 	curses.o\
+	debug.o\
 	digit.o\
 	dot.o\
 	drawcell.o\
@@ -29,12 +31,9 @@ LIST=main.o\
 	zoom_pnt.o
 
 LIBES = $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB)
-$(BIN)/i.points: $(LIST) $(LIBES)
+$(BIN_MAIN_INTER)/i.points: $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB)
 
 $(LIST): globals.h defs.h
 
 $(LIBES): #
-
-try: try.o
-	$(CC) try.o $(GISLIB) -o try
