@@ -390,7 +390,9 @@ struct Option                	    /* Structure that stores option info */
     char **answers;                 /* Option answers (for multiple=YES)*/
     struct Option *next_opt;        /* Pointer to next option struct    */
     char *gisprompt;                /* Interactive prompt guidance      */
-    int (*checker)();               /* Routine to check answer or NULL  */
+    int (*checker)(const char *);   /* Routine to check answer or NULL:
+                                     * > 0 --> error, 0 == OK
+                                     */
     int count;
 };
 
