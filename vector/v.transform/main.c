@@ -34,7 +34,6 @@
 
 int main (int argc, char *argv[])
 {
-    int    i, n, tbtype, ret;
     struct file_info  Current, Trans, Coord ;
     struct GModule *module;
     struct Option *old, *new, *pointsfile, *zscale, *zshift;
@@ -42,7 +41,6 @@ int main (int argc, char *argv[])
     char   *mapset, mon[4], date[40], buf[1000];
     struct Map_info Old, New;
     int    day, yr; 
-    struct field_info *Fi, *Fin;
     BOUND_BOX box;
     float ztozero;
 
@@ -161,30 +159,7 @@ int main (int argc, char *argv[])
 
     transform_digit_file( &Old, &New, ztozero, atof(zscale->answer), atof(zshift->answer)) ;
 
-    /* Copy tables */
-    if (!quiet_flag->answer) fprintf (stdout,"Copying tables ...\n") ;
-    n = Vect_get_num_dblinks ( &Old );
-    tbtype = GV_1TABLE;
-    if ( n > 1 ) tbtype = GV_MTABLE;
-    for ( i = 0; i < n; i++ ) {
-	Fi = Vect_get_dblink ( &Old, i );
-	if ( Fi == NULL ) {
-	    G_warning ( "Cannot get db link info -> cannot copy table." );
-	    continue;
-	}
-	Fin = Vect_default_field_info ( New.name, Fi->number, Fi->name, tbtype );
-        G_debug (3, "Copy drv:db:table '%s:%s:%s' to '%s:%s:%s'", 
-	              Fi->driver, Fi->database, Fi->table, Fin->driver, Fin->database, Fin->table );
-	Vect_map_add_dblink ( &New, Fi->number, Fi->name, Fin->table, Fi->key, Fin->database, Fin->driver);
-        
-	ret = db_copy_table ( Fi->driver, Fi->database, Fi->table, 
-		    Fin->driver, Vect_subst_var(Fin->database,New.name,G_mapset()), Fin->table );
-	if ( ret == DB_FAILED ) {
-	    G_warning ( "Cannot copy table" );
-	    continue;
-	}
-    }
-
+    Vect_copy_tables ( &Old, &New, 0 );
     Vect_close (&Old);
 
     if (!quiet_flag->answer) Vect_build (&New, stdout); else Vect_build (&New, NULL);
