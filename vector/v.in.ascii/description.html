@@ -13,7 +13,9 @@ binary format. The module may import two formats:
 <P> 
 The input is read from a file specified by <B>input</B> option or from standard input.
 <P>
-Field separator may be a character, '\t' for tabulator, ' ' for blank.
+Field separator may be a character, the word 'tab' (or '\t') for tab,
+or 'space' (or '&nbsp;') for blank.
+
 
 <h2>NOTES</h2>
 
@@ -41,20 +43,31 @@ a header has to be defined (see example below).<BR>
 The order of coordinates is <BR><BR>
   X Y [Z]
 <P>
-<b>Import of files without ID column</b><br>
+<b>Import of files without category ID column</b><br>
 
-In case that the input files does not contain any vector ID column,
+If the input file does not contain any vector ID column,
 there is the possibility to auto-generate these IDs (categories). 
-For that, to automatically add an additional column 'cat', the 
-<em>catcol</em> parameter has to be set to the virtual column number 0 
-(<em>catcol=0</em>). The name for the auto-generated column is set to 'cat'.
+To automatically add an additional column named 'cat', the 
+<b>cat</b> parameter must be set to the virtual column number 0 
+(<tt>cat=0</tt>). This is the default action if the <b>cat</b> parameter
+is not set.
 
 <P>
 <b>Importing from a spreadsheet</b><br>
 Data may be imported from many spreadsheet programs by saving the 
 spreadsheet as a comma separated variable (.csv) text file, and then 
 using the <b>fs=','</b> option with <em>v.in.ascii</em> in <b>points</b> mode.
+If the input file contains any header lines, such as column headings, the
+<b>skip</b> parameter should be used. These skipped header lines will be
+written to the map's history file for later reference (read with
+<tt>v.info&nbsp;-h</tt>).
+<P>
+Any line starting with the hash character ('<tt>#</tt>') will be treated as
+a comment and skipped completely if located in the main data file. If located
+in the header, as defined by the <b>skip</b> parameter, it will be treated as
+a header line and written to the history file.
 
+<P>
 
 <h2>EXAMPLES</h2>
 
@@ -191,9 +204,10 @@ machines.
 
 <h2>SEE ALSO</h2>
 
-<em><a HREF="db.execute.html">db.execute</a></em>,
-<em><a HREF="v.db.connect.html">v.db.connect</a></em>,
-<em><a HREF="v.out.ascii.html">v.out.ascii</a></em>,
+<em><a HREF="db.execute.html">db.execute</a></em><BR>
+<em><a HREF="v.db.connect.html">v.db.connect</a></em><BR>
+<em><a HREF="v.out.ascii.html">v.out.ascii</a></em><BR>
+<em><a HREF="v.info.html">v.info</a></em><BR>
 <em><a HREF="v.build.html">v.build</a></em><BR>
 <em><a HREF="v.build.polylines.html">v.build.polylines</a></em><BR>
 <a HREF="sql.html">SQL command notes</a> for creating databases<BR>
