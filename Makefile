@@ -8,6 +8,7 @@ SUBDIRS = \
 	db \
 	display \
 	general \
+	imagery \
 	ps \
 	raster \
 	scripts \
@@ -22,6 +23,7 @@ BIN_DIST_FILES = $(FILES) \
 	grass${VERSION_MAJOR}${VERSION_MINOR}.tmp \
 	bin \
 	bwidget \
+	docs \
 	driver \
 	etc \
 	fonts \
