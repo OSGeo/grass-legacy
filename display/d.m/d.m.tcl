@@ -15,11 +15,12 @@ set mapset [exec g.gisenv get=MAPSET]
 
 set dmpath $env(GISBASE)/etc/dm/
 
+source $env(GISBASE)/etc/gtcltk/select.tcl
+
 source $dmpath/cmd.tcl
 source $dmpath/group.tcl
 source $dmpath/print.tcl
 source $dmpath/raster.tcl
-source $dmpath/select.tcl
 source $dmpath/tool.tcl
 source $dmpath/tree.tcl
 source $dmpath/vector.tcl
