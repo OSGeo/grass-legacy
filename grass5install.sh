@@ -16,7 +16,9 @@ BINDIR=/usr/local/bin
 DESTDIR=/usr/local/grass-5.0b
 
 # Get the major release number to append to grass command name
-NAME_VER=`cat src/CMD/VERSION | head -1 | sed 's/\..*//'`
+#NAME_VER=`cat src/CMD/VERSION | head -1 | sed 's/\..*//'`
+# this doesnt work without sources!
+NAME_VER=5
 
 ######################################################
 # check for first parameter:
