@@ -19,8 +19,8 @@
 
 /* current maximums */
 #define MAX_SURFS      12
-#define MAX_VECTS      12
-#define MAX_SITES      12
+#define MAX_VECTS      50 
+#define MAX_SITES      50
 #define MAX_VOLS       12
 #define MAX_DSP        12
 #define MAX_ATTS        7
