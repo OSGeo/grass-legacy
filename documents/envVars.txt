@@ -39,7 +39,11 @@ CMAP_SIZE
 CODECENTER
 DARKEN
 DATABASE
+
 DBMSCAP
+[db.connect]
+  defines DBMI driver
+
 DBPATH
 DB_DATABASE
 DB_DRIVER
@@ -49,7 +53,11 @@ DB_PASSWORD
 DB_USER
 DEB
 DEBUG
+
 DIGITIZER
+[v.digit]
+  name of digitizer board
+
 DPG_LOCK
 DUMP
 ENDPANEL
@@ -74,7 +82,9 @@ G3D_TILE_DIM_X_ENV_VAR
 G3D_TILE_DIM_Y_ENV_VAR
 G3D_TILE_DIM_Z_ENV_VAR
 GDAL_HOME
+
 GISBASE
+  directory where GRASS lives
 
 GISDBASE
   initial database
@@ -83,9 +93,14 @@ GISRC
   name of .grassrc5 file
 
 GIS_LOCK
+  lock ID to prevent parallel GRAS use
+
 GMPEG_SIZE
 GRAPH
 HEIGHT
+
+GRASS_GUI
+  either "text" or "tcltk" to define non-/graphical startup
 
 GRASS_HEIGHT
 [d.mon]
@@ -97,16 +112,21 @@ GRASS_WIDTH
 
 GTUNE_VSUP_RAM
 GTUNE_VTOC_RAM
+
 HOME
+  user's home directory
+
 GRASS_HTMLFILE
 GRASS_HTMLMAXPOINTS
 GRASS_HTMLMINBBOX
 GRASS_HTMLMINDIST
 GRASS_HTMLTYPE
+
 LOCATION
+ full path to location directory
 
 LOCATION_NAME
- initial location
+ initial location name
 
 MAPLP
 [ppm driver]
@@ -115,6 +135,9 @@ MAPSET
   initial mapset
 
 MONITOR
+[d.mon]
+  name of selected GRASS monitor
+
 NODUMP
 NO_DRAW
 NPIXELS
@@ -126,15 +149,32 @@ PAINT_DRIVER
 PAINT_DRIVER_SHELL
 PAINT_HEADER
 PAINT_TRACE
+
 GRASS_PAN_THRESHOLD
+[v.digit]
+  auto-pan moving speed
+  
 PATH
+  current directory
+
 PGSQL - not found in source 20/02/01
+
 PG_HOST
+[g.select.pg]
+  name of PostgreSQL host
+
 PG_DBASE
+[g.select.pg]
+  name of selected PostgreSQL database
+
 GRASS_PNGFILE
 PREVIEW_BACKGROUND
 PROJ_LIB
+
 PSPAINTER
+[ps.select]
+  naem of ps device to print to
+
 PWAIT
 QUALITY
 RASTERFILE
@@ -143,7 +183,11 @@ SG3D_SITE_CACHE
 SG3D_WIDTH
 SHORT
 GRASS_SLEEP - not found in source 20/02/01
+
 SPAG_THRESH
+[v.spag]
+  snap threshold value
+
 SPRINT_COMMAND
 SQLBASE_DIR
 SQLBASE_DRIVER_STDERR
@@ -156,6 +200,8 @@ GRASS_TCLSH
   set tclsh shell name to override 'tclsh'
 
 TERM
+  current terminal type
+
 GRASS_TEXT_BROWSER - not found in source 20/02/01
 TRANSPARENT
 GRASS_TRANSPARENT
