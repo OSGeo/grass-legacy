@@ -1,0 +1,1605 @@
+.\" print using: tbl | troff -ms
+.\"
+.\" the characters =>+- all have extra white space after them
+.\" in troff/imagen output on cerl pyramid. the / does on all machines.
+.\" the troff defines below simply
+.\" follow the character by some backwards motion to remove the
+.\" white space. To get the =, use \*=, to get the >, use \*>, etc.
+.\" The \*S is * lowered a little bit
+.ds / /
+.ds > >
+.ds - -
+.ds + +
+.ds = =
+.\"
+.\" .if t .ds / /\h'-.15m'
+.\" .if t .ds > >\h'-.5m'
+.\" .if t .ds + +\h'-.5m'
+.\" .if t .ds = =\h'-.45m'
+.\" .if t .ds - \-\h'-.45m'
+.if n .ds S *
+.if t .ds S \v'.2'*\v'-.2'
+.\"
+.\"
+.nr VS 14
+.nr PS 12
+.ds LF \s-2GRASS 3.1\s0
+.ds RF \s-2Installation Guide\s0
+.ds CF \s-2October, 1989\s0
+.RP
+.TL
+GRASS 3.1 INSTALLATION GUIDE
+.br
+.AB
+.nh
+This document explains how to install GRASS 3.1 on some MASSCOMP\**
+.FS
+MASSCOMP is a computer line of Concurrent Computers
+.FE
+and SUN\**
+.FS
+SUN Microsystems
+.FE
+machines.  It is supported by your GRASS distribution site. 
+\fBPlease read the instructions completely before beginning.\fR
+There are subtle, but important changes between this document and the
+similar \fIGRASS 3.0 INSTALLATION GUIDE\fR.
+.AE
+.NH 1
+SUPPORT
+.XS \n%
+\n(H1: SUPPORT
+.XE
+.LP
+The Geographical Resource Analysis Support System (GRASS)
+is a public-domain product of the Army Corps of Engineer's
+Construction Engineering Research Laboratory (CERL), Champaign,
+Illinois.  It is an integrated set of many programs designed to provide
+digitizing, image processing, map production and geographical
+information system capabilities to the user.  Authorship of the
+individual programs are noted in the on-line
+.I
+User's Reference Manual.
+.R
+.LP
+CERL maintains the
+.I
+GRASS Information Center
+.R
+at phone number 1-800-USA-CERL, extension 220.  Through this number you
+may find out what firms and agencies currently distribute and support
+GRASS as well as offer class instruction, data development, and related
+services.  Interested parties may register to receive and/or advertise
+in the quarterly newsletter, \fIGRASSCLIPPINGS.\fR
+.NH 1
+TO COMPILE OR TO NOT COMPILE?
+.XS \n%
+\n(H1: TO COMPILE OR TO NOT COMPILE?
+.XE
+.LP
+Your release tape may provide you with binary code compiled for a particular
+machine configuration.  If this configuration (which should be clearly marked
+on the media's label) matches your machine set up you will be able to
+run GRASS almost immediately upon loading the files on to disk.  Simple
+instructions that should come with the distribution media should be followed;
+and this entire document can be safely ignored for now.
+.LP
+Binary distributions are more possible now because GRASS 3.1 can be compiled in
+one directory, but loaded into and run from another directory.  This has not
+previously been possible.
+.LP
+These instructions are for sites that have received source code.  
+Compilation of this software can be moderately to extremely difficult.  You
+may attempt installation yourself, or seek assistance through any of several
+commercial firms who maintain competence in GRASS installation and support.
+Refer to the previous section for finding assistance.
+.LP
+This installation document involves the compilation of computer source
+(human-readable) code into machine language.  To be successful, you must
+be familiar with:
+.DS
+Your computer
+UNIX
+Csh (preferred, sh possible)
+An editor
+The C compiler
+Makefiles
+Tape handling and reading (mt & cpio)
+Superuser
+.DE
+.LP
+.KS
+GRASS 3.1 (as released from CERL in October 1989) should compile and
+run with minimal
+difficulties with the following computer configurations.
+.TS
+center, box;
+l|c s s
+l|c|c|c
+l|l|l|l.
+	COMPUTER
+	SUN-4	SUN-3	MASSCOMP
+_
+Operating System	SunOS 4.0	SunOS 4.0	RTU 4.0
+_
+C compiler version	any	any	3.1
+_
+Graphics software	Sunview	Sunview	GKS (Not X)
+_
+Graphics Hardware	8-plane color	8-plane color	10/12 plane color
+			GA1000
+.TE
+.KE
+If you are using different configurations than those defined here, expect
+more than the usual share of difficulties.  Even a \*Qnew and improved\*U
+compiler can be expected to cause severe problems.  The user who is using
+different graphics monitor devices will experience the most difficult
+problems.  The \fIGRASS 3.0 Programmers Manual\fR is available 
+to help the person responsible for porting GRASS 3.1 to
+different hardware configurations.
+.NH 1
+DATA IMPACTS
+.XS \n%
+\n(H1: DATA IMPACTS
+.XE
+.LP
+GRASS 3.1 will impact your GRASS 3.0 only very slightly.  Support files
+for digit files made under 3.1 will not be useable under 3.0; your 
+entire site/organization should switch to 3.1 at the same time.
+.NH 1
+PREPARATION
+.XS \n%
+\n(H1: PREPARATION
+.XE
+.LP
+You must first decide which user will own the GRASS 3.1 files. In this
+document, we will assume that the user
+.I grass
+will own GRASS 3.1 files.
+
+If you have a MASSCOMP 
+system with dual universes (meaning it can be run in
+either the \fIatt\fR or the \fIucb\fR universe),
+you MUST select the \fIucb\fR universe before compiling GRASS
+by entering the command \fBucb\fR.
+It is recommended that the
+.B ucb
+command be put into the \fI.cshrc\fR file
+for the user 
+.I grass.
+
+This document is written assuming that GRASS 3.1 will be installed in
+new directories.  If you already have a version of GRASS on your system
+and you want to install GRASS 3.1 in the same place, move the older
+version somewhere else.\**
+.FS
+A certain amount of savvy is required here. If the older version
+exists in the home directory for a user, and you rename the home
+directory, not only must you recreate the directory, but you must also
+restore the user's . files as well (e.g. .cshrc, .login, .mailrc).
+.FE
+GRASS 3.1 programs can be installed anywhere in your computer system.
+Traditionally, at CERL it is installed under the \*/usr\*/grass3.1
+directory.  At this time you must determine where you would like to
+load and compile the software.  This document will henceforth refer to
+this location as
+.DS
+	$GIS
+.DE
+Similarly GRASS 3.1 data can be installed anywhere in your computer system.
+For consistency, at CERL it is installed under the \*/usr\*/grass3.1\*/data
+directory.  At this time you must determine where you would like to
+load the sample data.  This document will henceforth refer to
+this location as
+.DS
+	$GISDBASE
+.DE
+
+You can use the UNIX shell variables to store the GRASS directory
+location in the GIS variable and the GRASS data directory in the
+GISDBASE variable.  If you choose to place the software in
+\*/usr\*/grass3.1 you might use one of the following commands:
+.TS
+l l.
+For CSH	setenv\ \ GIS\ \ \*/usr\*/grass3.1
+For SH	GIS=\*/usr\*/grass3.1; export\ \ GIS
+.TE
+Similarly if you choose to place the data in
+\*/usr\*/grass3.1\*/data you might use one of the following commands:
+.TS
+l l.
+For CSH	setenv\ \ GISDBASE\ \ \*/usr\*/grass3.1\*/data
+For SH	GISDBASE=\*/usr\*/grass3.1\*/data; export\ \ GISDBASE
+.TE
+
+Create the software and data directories by issuing the below command
+(you may have to 
+.B su
+to
+.I root
+to create them. If you do, be sure to change the ownership to
+.I grass):
+
+.DS
+mkdir\ \ $GIS
+mkdir\ \ $GISDBASE
+.DE
+Note that the GIS and GISDBASE shell variables must be set as defined above.
+
+Then login as
+.I grass,
+set the GIS and GISDBASE variables as above,
+and change to the directory location $GIS:
+
+.DS
+cd\ \ $GIS
+.DE
+.NH 1
+DISTRIBUTION TAPE CONTENTS
+.XS \n%
+\n(H1: DISTRIBUTION TAPE CONTENTS
+.XE
+.LP
+The distribution tape generally contains 3 files. (Check your tape label
+for verification.)
+The following table shows the contents of these files:
+
+.KS
+.SM
+.TS
+allbox, center;
+c l r s
+c l r r.
+File	Contents	Size 
+Number		Uncompiled	Compiled 
+_
+1.	GRASS Source code	11 Mb	17 Mb
+2.	Spearfish data base	4 Mb	N/A
+3.	Imagery data base	6 Mb	N/A
+.TE
+.LG
+.KE
+
+.NH 1
+EXTRACTING SOURCE CODE AND SAMPLE DATABASE
+.XS \n%
+\n(H1: EXTRACTING SOURCE CODE AND SAMPLE DATABASE
+.XE
+.LP
+Mount the tape and then change to the directory location $GIS.
+Follow the instructions in the table that represents your machine.\**
+.FS
+The files are stored on the tape with
+.I relative
+path names so they will be extracted into the current directory.
+Make sure you are in $GIS or $GISDBASE prior to issuing the commands
+necessary to extract the source code and sample database.
+.FE
+It is recommended that you extract the files as the user
+.I grass,
+not as
+.I root.
+If you do it as
+.I root,
+the files will be owned by a random or unknown user on your system.
+.LP
+Note that the three files can be individually at any time.  For example,
+it may be appropriate to extract the source code one one day for compilation;
+then extract the Spearfish sample data base another day; and then unload the
+sample imagery data another day. 
+.SM
+
+.KS
+.TS
+box, center;
+c s
+l | l.
+SUN \(12" tape
+_
+load tape
+_
+Unload Programs
+_
+go to GRASS directory	cd $GIS
+rewind tape	mt -t \*/dev\*/rmt0 rew 
+extract source	dd if\*=\*/dev\*/rmt0 ibs\*=20480 |\ cpio -idu
+_
+Unload Spearfish
+_
+go to DATA directory	cd $GISDBASE
+rewind tape	mt -t \*/dev\*/rmt0 rew 
+position tape\u\s-4\(dg\s0\d	mt -t \*/dev\*/\fBn\fPrmt0 fsf 1
+extract spearfish data	dd if\*=\*/dev\*/rmt0 ibs\*=20480 |\ cpio -idu
+_
+Unload Imagery
+_
+go to DATA directory	cd $GISDBASE
+rewind tape	mt -t \*/dev\*/rmt0 rew 
+position tape\u\s-4\(dg\s0\d	mt -t \*/dev\*/\fBn\fPrmt0 fsf 2
+extract imagery data	dd if\*=\*/dev\*/rmt0 ibs\*=20480 |\ cpio -idu
+_
+.T&
+l s.
+\u\s-4\(dg\s0\dYou must specify the \fBn\fR in the device name on these commands
+.TE
+.KE
+
+.KS
+.TS
+box, center;
+c s
+l | l.
+SUN \(14" cartridge
+_
+load tape
+_
+Unload Programs
+_
+rewind tape	mt -t \*/dev\*/rst0 rew 
+go to GRASS directory	cd $GIS
+extract source	dd if\*=\*/dev\*/rst0 ibs\*=65536 |\ cpio -idu
+_
+Unload Spearfish
+_
+go to DATA directory	cd $GISDBASE
+rewind tape	mt -t \*/dev\*/rst0 rew 
+position tape\u\s-4\(dg\s0\d	mt -t \*/dev\*/\fBn\fPrst0 fsf 1
+extract spearfish data	dd if\*=\*/dev\*/rst0 ibs\*=65536 |\ cpio -idu
+_
+Unload Imagery
+_
+go to DATA directory	cd $GISDBASE
+rewind tape	mt -t \*/dev\*/rst0 rew 
+position tape\u\s-4\(dg\s0\d	mt -t \*/dev\*/\fBn\fPrst0 fsf 2
+extract imagery data	dd if\*=\*/dev\*/rst0 ibs\*=65536 |\ cpio -idu
+_
+.T&
+l s.
+\u\s-4\(dg\s0\dYou must specify the \fBn\fR in the device name on these commands
+.TE
+.KE
+
+.KS
+.TS
+box, center;
+c s
+l | l.
+MASSCOMP \(12" tape
+_
+load tape
+_
+Unload Programs
+_
+go to GRASS directory	cd $GIS
+Assign the tape device	assign 1600\u\s-4\(dd\s0\d
+rewind tape	mt -t \*/dev\*/rmt0 rew 
+extract source	dd if\*=\*/dev\*/rmt0 ibs\*=20480 |\ cpio -idu
+_
+Unload Spearfish
+_
+go to DATA directory	cd $GISDBASE
+rewind tape	mt -t \*/dev\*/rmt0 rew 
+position tape\u\s-4\(dg\s0\d	mt -t \*/dev\*/\fBn\fPrmt0 fsf 1
+extract spearfish data	dd if\*=\*/dev\*/rmt0 ibs\*=20480 |\ cpio -idu
+_
+Unload Imagery
+_
+go to DATA directory	cd $GISDBASE
+rewind tape	mt -t \*/dev\*/rmt0 rew 
+position tape\u\s-4\(dg\s0\d	mt -t \*/dev\*/\fBn\fPrmt0 fsf 2
+extract imagery data	dd if\*=\*/dev\*/rmt0 ibs\*=20480 |\ cpio -idu
+_
+.T&
+l s.
+T{
+\u\s-4\(dd\s0\dMASSCOMP users may have to specify 1600x instead of 1600
+depending on the tape controller board on your system.
+Your system
+administrator should know which to use.
+T}
+
+\u\s-4\(dg\s0\dYou must specify the \fBn\fR in the device name on these commands
+.TE
+.KE
+
+.LG
+.NH 1
+SYSTEM CONFIGURATION \fR(Gmake)
+.XS \n%
+\n(H1: SYSTEM CONFIGURATION \fR(Gmake)
+.XE
+.LP
+The GRASS system comes with shell scripts which will compile the entire
+system. However, before compilation can begin, certain machine and
+installation-dependent parameters must be specified.  Please do the
+following:
+
+.DS
+cd  $GIS\*/src\*/CMD
+ls
+.DE
+
+.KS
+.LP
+You should find the following files:
+
+.RS
+.SM
+.TS
+box;
+l l.
+GISGEN	Shell script which controls the compilation
+Gmake	Shell script used by GISGEN which generates
+	makefiles and runs the \fImake\fR utility
+list	Complete list of program directories to be compiled
+head.template	GISGEN \fImakehead\fR template
+head.\*S	Sample \fImakehead\fR files used at USA-CERL
+make.\*S	Files used by \fIGmake\fR
+.TE
+.KE
+.LG
+.RE
+.KE
+
+.LP
+Then perform the following:
+
+.IP \(bu
+Edit \fIGISGEN\fR and modify line 4 to read:\ \ GIS\*=\*/usr\*/grass3.1
+.IP \(bu
+Edit \fIGmake\fR and modify line 4 to read:\ \ \ GIS\*=\*/usr\*/grass3.1
+.br
+Note that the string \*/usr\*/grass3.1 must be replaced by the name of the
+directory in which you have chosen to install GRASS 3.1.  
+.IP \(bu
+Copy \fIhead.template\fR to the file \fImakehead:\fR\ \**
+.FS
+Inspect the files \fI head.3b2, head.mass, head.mass1, head.mass2,
+head.mass3, \fRand\fI
+head.sun \fR for a more appropriate starting place than  the more
+generic \fIhead.template\fR.
+.FE
+.DS
+cp\ \ head.template\ \ makehead
+.DE
+
+The file
+.I makehead
+will contain the following parameters:
+
+.KS
+.SM
+.TS
+box;
+l l.
+GIS	Where GRASS has been installed
+GISDBASE	Where GRASS data lives
+UNIX_BIN	Where GRASS entry commands live
+DEFAULT_LOCATION	Database for first-time users
+
+OS	UNIX terminal interface flag
+COMPILE_FLAGS	Compiler flags
+LDFLAGS	Loader flags
+DIGIT_FLAGS	Digitizer compile-time flags
+
+MATHLIB	Math library
+TERMLIB	Terminal independence library
+CURSES	Curses library and $TERMCAP
+CLEAR	Screen clear flag
+AR	Library archive rule
+.TE
+.LG
+.KE
+
+.IP \(bu
+Edit the \fImakehead\fR file and set the following parameters:\**
+.FS
+You can get all the parameters from your 3.0
+.I makehead
+file except for \fICURSES\fR.
+If you copy your 3.0 file, be sure to add an entry for \fICURSES\fR.
+.FE
+
+.KS
+.IP
+.B GIS
+.br
+This specifies where you have installed GRASS.
+If you have installed GRASS under \*/usr\*/grass3.1,
+set it as:
+
+.DS
+GIS\*=\*/usr\*/grass3.1
+.DE
+.br
+Note that the string \*/usr\*/grass3.1 must be replaced by the name of the
+directory in which you have chosen to install GRASS 3.1.  
+.KE
+
+.KS
+.IP
+.B GISDBASE
+.br
+This specifies where the GRASS data lives.
+If you have installed the data under \*/usr\*/grass3.1\*/data,
+set it as:
+.DS
+GISDBASE\*=\*/usr\*/grass3.1\*/data
+.DE
+.br
+Note that the string \*/usr\*/grass3.1 must be replaced by the name of the
+directory in which you have chosen to install the GRASS 3.1 sample data.
+.KE
+
+.KS
+.IP
+.B UNIX_BIN
+.br
+This is the directory where the GRASS entry commands
+.I GRASS3
+and 
+.I grass3
+will be installed.\**
+This should be the name of a directory where other UNIX commands live
+which all users have in their UNIX command PATH.
+The head.template file sets this variable to
+.DS
+UNIX_BIN\*=\*/tmp
+.DE
+If you leave UNIX_BIN as \*/tmp, then you will want to move the
+.I GRASS3
+and
+.I grass3
+commands from \*/tmp to the desired directory after compiling GRASS.
+If you change UNIX_BIN so that
+the commands are placed directly in the desired directory, make sure the
+UNIX_BIN directory exists.
+If this directory doesn't exist, create it, and add it to every GRASS user's
+PATH.
+.KE
+.FS
+These commands were called
+.I GIS
+and 
+.I gis
+in 2.0.
+.FE
+
+.KS
+.IP
+.B DEFAULT_LOCATION
+.br
+When a user uses GRASS, the user is required to select a database
+with which to work. GRASS remembers the database that a user selected
+from the previous run. First-time GRASS users will need
+a default database to work with. This parameter names this database.
+A good default is the tutorial database
+.I spearfish:
+.DS
+DEFAULT_LOCATION\*=spearfish
+.DE
+The GRASS tutorials are written for this database.
+.KE
+
+
+.KS
+.IP
+.B OS
+.br
+This flag indicates which type of terminal interface is supported.
+It should be either SYSV or BERK.
+If your system has the file 
+.I \*/usr\*/include\*/termio.h,
+use SYSV; otherwise use BERK.\**
+
+.TS
+box;
+l l.
+SUN:	OS\*=BERK
+MASSCOMP:	OS\*=SYSV
+3B2:	OS\*=SYSV
+.TE
+.KE
+.FS
+Sun compilations use BERK and Masscomp compilations use SYSV.  Note that
+Masscomp compilations must however be done in the \fBucb\fR universe which
+seems inconsistent.
+.FE
+
+.KS
+.IP
+.B COMPILE_FLAGS
+.br
+These are the flags that will be passed to the C compiler during
+compilation.  Most UNIX C compilers support the \*-O
+optimize option, so it can be specified here.
+
+If your system has a
+floating point processor (fpp), the compilation process can be told about it
+by specifying the appropriate option here as well. Often, it isn't necessary
+to specify fpp compilation. The compiler may
+automatically compile for whatever fpp is
+installed without being told to do so. This is true for
+most MASSCOMP and SUN systems. In this case, for SUN and MASSCOMP
+systems, all you need to specify is:
+.DS
+COMPILE_FLAGS\*=\*-O
+.DE
+However, just to be complete, here are the known fpp flags:
+
+.TS
+box;
+ll.
+MASSCOMP
+  lightning fpp:	COMPILE_FLAGS\*=\*-O \*-flight
+  other fpp:	COMPILE_FLAGS\*=\*-O \*-f
+.TE
+.KE
+
+.KS
+.IP
+.B LDFLAGS
+.br
+These are the flags that will be passed to the loader during program
+loading.  Most UNIX loaders support the \*-s
+strip globals option which cuts down on disk and memory usage. At CERL the
+following are used:
+
+.TS
+box;
+ll.
+MASSCOMP:	LDFLAGS\*=\*-s
+SUN:	LDFLAGS\*=\*-s
+3B2:	LDFLAGS\*=\*-s
+.TE
+
+Note: if your system has a
+floating point processor, the loader may need to be told about it by
+specifying the appropriate option here as well.
+.KE
+
+.KS
+.IP
+.B DIGIT_FLAGS
+.br
+The digitizer program
+.I digit
+needs to run in high priority mode when accessing the digitizer.
+To accomplish this, one normally needs superuser (root) privileges, so
+.I digit
+usually runs as a setuid program. This flag guides the 
+.I digit
+compilation process.
+
+MASSCOMP systems allow any user to set the priority mode. For any MASSCOMP
+system, set this flag as:
+.DS
+DIGIT_FLAGS\*=\*-DMASSCOMP
+.DE
+
+For ATT System 5 UNIX, like what is on the ATT 3B2, set this flag as
+.DS
+DIGIT_FLAGS\*=\*-DATT
+.DE
+
+For all other setups, including SUN UNIX, set this flag as
+.DS
+DIGIT_FLAGS\*=
+.DE
+.KE
+
+
+.KS
+.IP
+.B MATHLIB
+.br
+This is the name of the math library.  It is \*-lm
+on most systems.
+
+.TS
+box;
+ll.
+MASSCOMP:	MATHLIB\*=\*-lm
+SUN:	MATHLIB\*=\*-lm
+3B2:	MATHLIB\*=\*-lm
+.TE
+.KE
+
+.KS
+.IP
+.B TERMLIB
+.br
+This is the name of the library of routines which achieve terminal
+independence.  On most systems it is \*-ltermlib.
+If your system does not have \fItermlib,\fR then set as:
+TERMLIB=
+
+.TS
+box;
+ll.
+MASSCOMP:	TERMLIB\*=\*-ltermlib
+SUN:	TERMLIB\*=\*-ltermlib
+3B2:	TERMLIB=
+.TE
+.KE
+
+.KS
+.IP
+.B CURSES
+.br
+This is the name of the library of routines uses the \fITERMLIB\fR
+option above.  On most systems it is \*-lcurses.  On at least \fBsome\fR
+Masscomp systems it \fBmust\fR be \*-loldcurses.
+
+.TS
+box;
+ll.
+MASSCOMP:	CURSES\*=\*-loldcurses $(TERMLIB)
+ALL OTHERS:	CURSES\*=\*-lcurses $(TERMLIB)
+.TE
+.KE
+
+.KS
+.IP
+.B CLEAR
+.br
+This is used to indicate whether the screen can be cleared with calls
+to TERMLIB routines (see above).  If your system has the TERMLIB
+library set as:
+.DS
+CLEAR\*=ok
+.DE
+otherwise:
+.DS
+CLEAR\*=no
+.DE
+
+.TS
+box;
+ll.
+MASSCOMP:	CLEAR\*=ok
+SUN:	CLEAR\*=ok
+3B2:	CLEAR\*=no
+.TE
+.KE
+
+.KS
+.IP
+.B AR
+.br
+This is a rule for 
+.I make
+which specifies how to build object code libraries.
+If your system has the 
+.I ranlib
+utility, set AR to:
+.DS
+AR= ar ruv $@ $?; ranlib $@
+.DE
+otherwise, set AR to:
+.DS
+AR= ar rc $@ \(galorder $(OBJ) |\ tsort\(ga
+.DE
+
+.TS
+box;
+ll.
+MASSCOMP:	AR= ar ruv $@ $?; ranlib $@
+SUN:	AR= ar ruv $@ $?; ranlib $@
+3B2:	AR= ar rc $@ \(galorder $(OBJ) |\ tsort\(ga
+.TE
+.KE
+.NH 1
+USER SITE-DEPENDENT PROGRAMS \fR(list.local)
+.XS \n%
+\n(H1: USER SITE-DEPENDENT PROGRAMS \fR(list.local)
+.XE
+.LP
+Machine and device-dependent programs must now be specified. These
+include the graphics drivers and hardcopy color printer drivers.
+These programs are to be listed, one per line, in the file
+.I list.local
+under
+.I $GIS\*/src\*/CMD.
+This file is not distributed with the release.
+It must be created, from scratch, by the user.
+The following
+explains what you need to put into this file.
+
+.NH 2
+Graphics drivers\fR\**
+.IP \& 5
+.FS
+The source code for the graphics drivers lives in
+.I $GIS\*/src\*/D\*/devices.
+There are other drivers than are mentioned here,
+but none are as widely tested or supported.
+.FE
+Currently supported graphics drivers are:
+
+.KS
+.RS
+.SM
+.TS
+box;
+l l.
+MASS	MASSCOMP GKS graphics
+SUNVIEW	SUNVIEW graphics
+.TE
+.LG
+.RE
+.KE
+
+MASSCOMP users should select the MASS driver by entering the following
+in 
+.I list.local:
+.DS
+\fBD\*/devices\*/MASS\fR
+.DE
+
+SUN users should select the SUNVIEW driver by entering the following
+in 
+.I list.local
+.DS
+\fBD\*/devices\*/SUNVIEW\fR
+.DE
+.NH 2
+Digitizer drivers\fR\**
+.IP
+.FS
+The source for each digitizer driver lives in a directory under
+.I $GIS\*/src\*/mapdev\*/digitizers.
+Specific
+.I hardware
+configuration
+instructions for each
+.I device
+can be found in a file called
+INSTALL.\fIdevice\fR (where
+.I device
+is the name of the digitizer)
+in the source directory for each device.
+.FE
+Currently supported digitizer drivers are:
+
+.RS
+.SM
+.TS
+box;
+l l.
+altek	Altek Digitizer (AC30 Controller) using 16 button cursor
+altek2	Altek Digitizer (AC30 Controller) using NO cursor buttons
+kurta	Kurta Digitizer (Series THREE) using 16 button cursor
+kurta2	Kurta Digitizer (Series THREE) using NO cursor buttons
+geograph	GeoGraphics Digitizer with NO keypad
+
+none	for running \fIdigit\fP without a digitizer
+.TE
+.LG
+.RE
+
+.IP
+Select the digitizers you have on your system and enter a line
+for each digitizer into 
+.I list.local.
+The
+.I none
+entry should
+.B always
+be selected.
+
+For example, to select the
+.I altek
+digitizer and the 
+.I none
+entry,
+enter these lines into \fIlist.local\fR:
+.DS
+.B mapdev\*/digitizers\*/altek
+.B mapdev\*/digitizers\*/none
+.DE
+
+.NH 2
+Paint drivers\fR\**
+.IP
+.FS
+The source code for the paint drivers lives in
+.I $GIS\*/src\*/paint\*/Drivers.
+.FE
+Currently supported paint drivers are:
+
+.KS
+.RS
+.SM
+.TS
+box;
+l l.
+act2	Advanced Color Technology II inkjet printer
+diablo.c150	Diablo C150 inkjet printer
+epson.lq2500	Epson 2500 letter quality ribbon printer
+genicom33.1	Genicom 33.1 ribbon printer
+shinko635	Shinko 635 thermal printer
+tek4695	Tektronix 4695 (or 4696) inkjet printer
+
+preview	GRASS graphics preview of paint output.
+.TE
+.LG
+.RE
+.KE
+
+.IP
+Select the printers you have on your system and enter a line
+for each printer into 
+.I list.local.
+
+For example, to select the preview driver and the tek4695 driver,
+enter these lines into \fIlist.local\fR:
+.DS
+.B paint\*/Drivers\*/preview
+.B paint\*/Drivers\*/tek4695
+.DE
+.NH 2
+Savescreen utility
+.IP
+MASSCOMP users should also add the following line to
+.I list.local:
+.DS
+.B D\*/prog_cmd\*/savescreen\*/MASS
+.DE
+
+At present, this utility is not available for systems other than MASSCOMP.
+.NH 1
+SOURCE CODE COMPILATION \fR(GISGEN)
+.XS \n%
+\n(H1: SOURCE CODE COMPILATION \fR(GISGEN)
+.XE
+.LP
+The core GRASS requires only the C compiler.
+.LP
+\fIGISGEN\fR reads both the \fIlist\fR and \fIlist.local\fR files
+to obtain the names of source
+directories.  For each directory, it first writes the name of the
+directory into the file \fInext_step,\fR and then runs the \fIGmake\fR
+command for that directory.  \fIGmake\fR copies the \fImakehead\fR file,
+the
+.I make.\*S
+files
+(see
+.B configuration
+section above) and the \fIGmakefile\fR found in the source directory
+into the file \fImakefile,\fR and then runs the \fImake\fR utility.  If
+\fIGmake\fR terminates successfully, \fIGISGEN\fR then proceeds to the
+next directory in the list.  When finished, \fIGISGEN\fR writes
+the word DONE into the \fInext_step\fR file;  at this point GRASS is
+compiled.
+
+.LP
+If there are errors during compilation (which we hope won't happen),
+the \fInext_step\fR file will contain the name of the directory which
+was being compiled when the error occurred.   Either fix the error
+(possibly with help from your distribution site), or change the name in
+\fInext_step\fR to the next name in \fIlist\fR.  Then rerun
+\fIGISGEN\fR.  The compilation will begin with the directory named in
+\fInext_step.\fR
+
+.LP
+If at any time you wish to run \fIGISGEN\fR on the entire source code,
+remove \fInext_step\fR and then run \fIGISGEN\fR.
+
+.LP
+If you want to run
+.I GISGEN
+from where it left off rather than compiling the entire source code,
+do not remove
+.I next_step.
+.LP
+If you are recompiling GRASS you may want to remove all object files
+before starting the compilation:
+
+.RS
+.nf
+find $GIS\*/src -name \\*.o -exec rm -f {} \\;
+.fi
+.RE
+
+On ATT UNIX systems and on some Berkeley UNIX systems the xargs(1) command is
+available making possible this much faster command:
+
+.RS
+.nf
+find $GIS\*/src -name \\*.o -print | xargs rm -f
+.fi
+.RE
+
+.B "Warning to SUN users: "
+Before compiling GRASS, SUN users must make sure that the /bin/cc
+compiler will be used rather than the /usr/5bin/cc compiler.  You must
+ensure that
+.B /bin
+is listed before
+.B /usr/5bin
+in your PATH variable.  Test by entering:
+.br
+echo $PATH
+.br
+
+Compile GRASS 3.1 by issuing the following commands:
+.sp
+For CSH users:
+.DS
+cd\ \ $GIS\*/src\*/CMD
+GISGEN \*>& gisgen.out &
+.DE
+.sp
+For SH users:
+.DS
+cd\ \ $GIS\*/src\*/CMD
+.br
+nohup GISGEN &
+.DE
+
+The output from GISGEN is sent into a file
+because the compilation produces lengthy output.
+For the CSH command above this file is \fIgisgen.out\fR; for SH users
+it is \fInohup.out\fR.
+The GISGEN is also run in the background
+since the compilation takes anywhere from 1 to 5 hours
+depending on the speed of your machine.
+
+.sp 2
+.B
+.ps +4
+.vs +2
+Do NOT proceed to the next section until GISGEN finishes.
+.ps
+.vs
+.R
+.bp
+
+.NH 1
+GRAPHICS DRIVER CONFIGURATION \fR(etc\*/monitorcap)
+.XS \n%
+\n(H1: GRAPHICS DRIVER CONFIGURATION \fR(etc\*/monitorcap)
+.XE
+.LP
+Now you must build the file
+.B $GIS\*/etc\*/monitorcap
+which tells the GRASS graphics application programs and graphics drivers 
+how to communicate with one another.
+This file contains lines which describe each driver on the
+system.  If your system has only one graphics device, then only
+one line should exist in the file.  If you have more than one
+graphics device, then there should be one line for each device.\**
+.FS
+At present, every line in the \fImonitorcap\fR file is assumed to be
+a real monitor description line.  We hope to add a comment
+feature, but right now it doesn't exist, so be careful with this
+file.
+.FE
+
+.KS
+Each line in the \fImonitorcap\fR file contains six fields separated by colons:
+
+.RS
+name : program : description : fifos : tty : msg
+
+.SM
+.TS
+box tab(#);
+l lw(3.5i).
+name#T{
+What the user uses to refer to the driver
+T}
+program#T{
+The actual program name as a unix command. It is specified 
+as a relative path from $GIS (see examples)
+T}
+description#T{
+A short 4 or 5 word description of the driver.
+T}
+fifos#T{
+The names of the 2 fifo files that are assigned to this
+driver.  These files must exist as named pipes,\**
+have read and write
+permission by everybody and not be used by any other driver
+(see notes)
+T}
+tty#T{
+In some cases, it is desirable to force the driver to be
+started from a specific tty. If this is the case, put the
+full path name of the tty in this field. Otherwise leave the
+field empty (see examples and notes below)
+T}
+msg#T{
+If the tty field is specified and an attempt to start the
+driver is made from another tty, then this message is
+printed.
+T}
+.TE
+.LG
+.RE
+.KE
+.FS
+Named pipes are created with the command \fImknod filename p\fR.
+Note that the word fifo is short for \fIfirst-in-first-out\fR.
+.FE
+
+.LP
+Examples:\**
+.FS
+There are some sample monitorcap files in the directory location
+$GIS\*/etc that can be used as templates. To list these
+type:\ ls\ $GIS\*/etc\*/moncap.\*S
+.FE
+
+.KS
+.IP 1. 5
+This first example is for a single device system, in which the monitor can
+be started from any terminal (tty).  The two fifos are
+.I \*/usr\*/grass3.1\*/dev\*/fifo.1a
+and
+.I \*/usr\*/grass3.1\*/dev\*/fifo.1b.
+Here, the name of the driver is
+.I sun.
+Note that the driver program itself
+is specified as
+.I driver\*/SUNVIEW.
+This is a relative path reference which will be
+translated into
+.I $GIS\*/driver\*/SUNVIEW.
+Note that the path names of the fifos must be fully specified.
+
+.LP
+.SM
+.TS
+box;
+l.
+sunview:driver\*/SUNVIEW:Sun driver:\*/usr\*/grass3.1\*/dev\*/fifo.1a\ \ \*/usr\*/grass3.1\*/dev\*/fifo.2b::any terminal
+.TE
+.LG
+.KE
+
+.KS
+.IP 2.
+The below example is for a two monitor system, with the same graphics
+device available on each monitor. Note that the same program is
+used for both devices, but that the name fields and the fifos
+fields are different.  Also note that both must be started from a
+specific tty.
+
+.LP
+.SM
+.TS
+box;
+l.
+mass1:driver\*/MASS:Driver 1:\*/usr\*/grass3.1\*/dev\*/fifo.1a\ \ \*/usr\*/grass3.1\*/dev\*/fifo.1b:\*/dev\*/tty4:tty4
+mass2:driver\*/MASS:Driver 2:\*/usr\*/grass3.1\*/dev\*/fifo.2a\ \ \*/usr\*/grass3.1\*/dev\*/fifo.2b:\*/dev\*/tty5:tty5
+.TE
+.LG
+.KE
+
+.LP
+Notes
+
+.IP 1. 5
+When you are installing a driver, a pair of
+fifos (also known as named pipes) must exist for the driver to use.
+The names you choose are arbitrary. Fifos pairs with the names 
+\fIfifo.1a\fR and \fIfifo.1b\fR,
+\fIfifo.2a\fR and \fIfifo.2b\fR,
+\fIfifo.3a\fR and \fIfifo.3b\fR,
+\fIfifo.4a\fR and \fIfifo.4b\fR, and
+\fIfifo.5a\fR and \fIfifo.5b\fR are created in the directory
+$(GIS)/dev by GISGEN.  It is suggested that you use these in your monitorcap
+file.
+Refer to the UNIX documentation for the mknod(1) command for creating fifo
+files elsewhere.
+.IP 2.
+MASSCOMP users with multiple monitors must fill in the tty
+field for each monitor to force them to be started on the monitor
+they are to control.
+.IP 3
+The tty field is not sufficiently robust to handle all situations.
+SUN users should probably leave this field blank.
+(In particular, SUN users running under suntools must start the
+driver from the bitmap terminal, but the actual tty varies from
+window to window.)
+.NH 1
+DIGITIZER DRIVER CONFIGURATION \fR(etc\*/digitcap)
+.XS \n%
+\n(H1: DIGITIZER DRIVER CONFIGURATION \fR(etc\*/digitcap)
+.XE
+.LP
+Now you must build the file
+.B $GIS\*/etc\*/digitcap
+that identifies the available digitizers
+and which i\*/o port each digitizer uses.
+If your system has only one digitizer, then only
+one line should exist in the file.  If you have more than one
+digitizer, there should be a line for each digitizer.
+
+.KS
+Each line in the file contains four fields separated by colons:
+
+.RS
+name : tty : program : description
+
+.SM
+.TS
+box tab(#);
+l lw(3.5i).
+name#T{
+What the user uses to refer to the digitizer
+T}
+tty#T{
+The tty port to be used by the digitizer
+T}
+program#T{
+The actual program name as a UNIX command. It is specified 
+as \fIdigit\fR.
+T}
+description#T{
+A short 4 or 5 word description of the digitizer.
+T}
+.TE
+.LG
+.RE
+.KE
+
+.LP
+Example:\**
+.FS
+There are some sample digitcap files in $GIS\*/etc
+that can be used as templates. To find these:\ 
+ls\ $GIS\*/etc\*/digitcap\*S
+.FE
+
+.IP
+This example is for a single digitizer system. The digitizer is a
+.I Kurta
+digitizer on \*/dev\*/tty1.
+The
+.I none
+digitizer is also specified.
+.SM
+.TS
+box;
+l.
+kurta:\*/dev\*/tty1:digit: KURTA digitizer 9600 baud
+none:nodig:digit: Run digit without the digitizer
+.TE
+.LG
+
+Note: if the digitizer is later moved to a different tty, the
+tty field must also be modified to reflect the change.
+
+.LP
+These next steps must be done as
+.I root,
+so
+.B su
+to
+.I root.
+For each digitizer (except
+.I none )
+the corresponding 
+.I digit
+program must be owned as root and setuid root. To do this:
+
+.DS
+cd\ \ $GIS\*/etc\*/dig_drivers
+
+chown\ \ root\ \ \*S\*/digit \**
+chmod\ \ u\*+s\ \ \*S\*/digit
+.DE
+.FS
+C-shell users should make sure that noglob is NOT set. Otherwise
+the \*S will not expand properly.
+.FE
+
+For each \*/dev\*/\fItty\fR specified in the
+.I digitcap
+file, type:
+
+.DS
+chmod\ \ 0666\ \ \*/dev\*/\fItty\fR
+.DE
+
+Also be sure that nothing is listening
+on the port for logins (i.e., \*/etc\*/getty or \*/etc\*/init).  This may
+require modification to \*/etc\*/ttys (or \*/etc\*/inittab) to disable getty
+(or init) for the port. See your system manager's guide for details.
+
+Now exit from the
+.B su
+to become the user
+.I grass
+again.
+.NH 1
+PAINT DRIVER CONFIGURATION\fR\**
+.XS \n%
+\n(H1: PAINT DRIVER CONFIGURATION
+.XE
+.LP
+.FS
+There is no
+.I $GIS\*/etc\*/paintcap
+file at present. Hopefully, in a future release, a
+.I paintcap
+file will be used (for consistency with the graphics and digitizer
+driver configurations, and for more flexibility).
+.FE
+With the exception of the
+.I preview
+driver, the paint drivers send their output to tty ports\**
+.FS
+The
+.I tek4695
+and
+.I shinko635
+printers are parallel i\*/o only. If your machine does not have
+a parallel port, you will have to use a serial to parallel converter.
+.FE
+named \*/\fBdev\fR\*/\fIdevice\fR, where \fIdevice\fR is the driver name.
+For example, the
+.I tek4695 
+printer uses
+.B \*/dev\*/tek4695
+for its output.
+
+You will have to link these names to real device ports.
+For example,
+suppose that the 
+.I tek4695
+printer is on
+.I \*/dev\*/tty10. 
+Link the driver to the port by typing the below commands
+(you may have to be 
+.I root
+to create files in \*/dev):
+
+.DS
+ln\ \ \*/dev\*/tty10\ \ \*/dev\*/tek4695
+chmod\ \ 0666\ \ \*/dev\*/tek4695
+.DE
+
+Also be sure that nothing is listening
+on the port for logins (i.e., \*/etc\*/getty or \*/etc\*/init).  This may
+require modification to \*/etc\*/ttys (or \*/etc\*/inittab) to disable getty
+(or init) for the port. See your system manager's guide for details.
+
+The 
+.I paint
+driver configuration design supports multiple printers or different
+types. It is permissible to have both a \fItek4695\fR and a \fIshinko635\fR
+printer on the system.
+The present design does not support more than one printer of the same
+type. It is not possible to have two \fItek4695\fR printers on the system.
+.NH 1
+SUPPLY YOUR GRASS 3.0 DATA
+.XS \n%
+\n(H1: SUPPLY YOUR GRASS 3.0 DATA
+.XE
+.LP
+Do you have GRASS 3.0 data which you wish to provide to GRASS 3.1?  If so, we
+suggest that you \fBcopy\fR your 3.0 data into the 3.1 location.  
+You have already defined this location as $GISDBASE.  To copy use the following
+instructions as a guide.  You will need to modify them to fit the actual
+location of files on your system.  Note that your data is probably the most
+expensive component of your GRASS system; outcosting the hardware, the
+training, the system support, and the extra air conditioning.  It is our policy
+at CERL to always have at least two copies of data.  This can be two copies on
+disk, two on tape, or a combination of tape and disk.  Three or more copies,
+some stored in different buildings, helps relieve sleepless nights.
+.IP Using\ \(12"\ tape\ -
+1. Login as root. This must be done as root otherwise the ownership of the
+database files will change.
+.sp
+2. Change directory to your GRASS 3.0 data directory. For example,
+.DS
+cd \*/usr\*/grass\*/data
+.DE
+.sp
+3. Use tar to copy the contents to tape.  Note that this directory will
+contain the names of all the locations your data covers.  You will \fBnot\fR
+want to back up the \fBspearfish\fR data base.  Assuming your data locations
+are \*Qspearfish\*U, \*Qcounty\*U, \*Qpark\*U, and \*Qbase\*U; you will use
+the tar command:
+.DS
+tar cf \*/dev\*/rmt0 county park base
+.DE
+.sp
+4. If you do not have enough disk for 2 copies of your data, you will want to
+remove the 3.0 data at this point:
+.DS
+rm -rf county park base
+.DE
+However, if you do remove the data, you should rerun step 3 with a second tape
+just in case the first tape is written badly or becomes damaged.
+.sp
+5. Change directory to the GRASS 3.1 data directory:
+.DS
+cd $GISDBASE
+.DE
+You set $GISDBASE early in the installation process.  You may have to do this
+again if you have recently logged in.
+.sp
+6. Copy the data from tape back to the new directory.  If you loaded the GRASS
+3.1 spearfish data base earlier in the installation process, you should find
+the directory spearfish now in this directory.  If all is well, read the data
+from tape:
+.DS
+mt -t \*/dev\*/rmt0 rew  (probably not necessary)
+.br
+tar xvf \*/dev\*/rmt0
+.DE
+.IP "Copying direct disk to disk -"
+You may want to skip the tape step.  If you have enough disk space to hold two
+copies of the data simultaneously you can do the following:
+.sp
+1. Login as root. This must be done as root otherwise the ownership of the
+database files will change.
+.sp
+2. Copy the data from the old to the new location.  Assume the old data
+location is \*/usr\*/grass\*/data and the new is $GISDBASE.  As in the above
+example, assume the same data bases. Issue the following command:
+.DS
+cd \*/usr\*/grass\*/data
+tar cf - county park base | (cd $GISDBASE; tar xvf -)
+.DE
+.NH 1
+DID YOU MISS SOMETHING?
+.XS \n%
+\n(H1: DID YOU MISS SOMETHING?
+.XE
+.LP
+In the process of installation you may have missed something.  Some of the
+more common steps skipped or missed can be completed without going through
+the entire installation. The more common steps are mentioned here.
+.IP "Bad compilation - "
+The results of the compilation may not work for a variety of reasons.  Past
+experience has shown that bad hardware, new compilers, different floating point
+processors, different hardware, and wrong information in the GRASS files
+in the $GIS\*/src\*/CMD directory can cause problems.   If the problem is suspected
+to the be the later, run through the \fISystem Configuration\fR section.
+.IP "Incomplete compilation - "
+The $GIS\*/src\*/CMD directory contains the file \fIlist\fR and \fIlist.local\fR.
+These contain names of the directories which the \fIGISGEN\fR program compiles.
+It is possible that you:
+.DS
+1. Skipped one of the directories in \fIlist\fR
+2. Didn't add a graphics driver to \fIlist.local\fR
+.DE
+You can compile the code in any one directory through the following steps:
+.DS
+1. cd to that directory
+2. run $GIS\*/src\*/CMD\*/Gmake
+.DE
+.IP "Sample Data Missing -"
+The data on the release tape can be loaded at any time.  Use the instructions 
+in the \fIExtracting the Source Code and Sample Database\fR section as a
+guide.
+.NH 1
+GRASS INSTALLATION IS COMPLETE
+.XS \n%
+\n(H1: GRASS INSTALLATION IS COMPLETE
+.XE
+.LP
+At this point, GRASS is now installed on the system and can
+be run using either the
+.B grass3
+menu version, or the
+.B GRASS3
+command level version.
+These will be found in the directory you specified by the variable
+\fIUNIX_BIN\fR in the makehead file before compilation.
+.NH 1
+ALPHA-TEST AND OTHER PROGRAMS
+.XS \n%
+\n(H1: ALPHA-TEST AND OTHER PROGRAMS
+.XE
+.LP
+In addition to the supported code under
+.I $GIS\*/src,
+there are unsupported programs under
+.I $GIS.
+.KS
+.TS
+allbox, center ;
+ll.
+Directory	Contents
+src.alpha	Programs being tested for future releases
+src.contrib	GRASS programs useful to programmers
+src.related	Programs that can work with GRASS
+.TE
+.KE
+
+These programs are not automatically compiled because they are not
+supported.   The intention is to make these 
+unsupported programs available. Compile and use them
+.B "at your own risk."
+Instructions within these directories will assist
+you in making decisions about what and how to compile.
+The development staff at CERL especially encourages you to compile the
+contents of the 
+.B src.alpha
+directory; test the code; and send comments, corrections, fixes to CERL.
+.NH 1
+CLEANING UP
+.XS \n%
+\n(H1: CLEANING UP
+.XE
+.LP
+If you are short of disk space you will want to clean away some of the
+non-essential parts of GRASS.
+.IP "Object files - "
+Unless you will be actively changing all of the code you will save at
+least 4 Megabytes by removing all object (.o) files.
+This can be done with the command:
+
+.RS
+.nf
+find $GIS\*/src* -name '*.[o]' -exec rm -f {} \\;
+.fi
+.RE
+
+.IP "Source files - "
+You can save about 30 Megabytes of additional space by simply removing the
+source directories:
+.DS
+rm  -rf  $GIS\*/src*
+.DE
+This will in no way affect the operation of GRASS.
+.IP "Manual pages - "
+The on-line GRASS manual is very useful unless you need the disk space.
+Removing the manual will result in a savings of about .5 Megabytes.  This 
+will make the GRASS \fImanual\fR command useless, but you should have the
+entire manual in hardcopy form anyhow.  Remove the manual with the command:
+.DS
+rm -rf $GIS\*/man\*/[123]
+.DE
+.NH 1
+MOVING BINARY
+.XS \n%
+\n(H1: MOVING BINARY
+.XE
+.LP
+In the event that you need to move the $GISBASE to another location it is no
+longer necesssary to recompile the system.  Common reasons for doing this
+include disk reorganization and installation on other systems.
+.LP
+Assume you simply wish to move $GISBASE from \*/usr\*/grass3.1 to \*/home\*/grass3.1.
+To aaccomplish this, do the following steps.
+.IP 1.
+Move the base directory.  On most systems root can accomplish this with the
+command:
+.DS
+mv \*/usr\*/grass3.1 \*/home\*/grass3.1
+.DE
+On others a copy will be necessary:
+.DS
+(cd /usr; tar cf - grass3.1) | (cd /home; tar xf -)
+.DE
+This command, if done as root will preserve original file ownerships.
+.IP 2.
+Edit GRASS3 and grass3.  These are the executable files which start off grass
+for the user.  Change all references to the old directory with the new
+directory.  For example, GRASS3 might be changed from:
+.DS
+#!/bin/sh
+GISBASE=/usr/grass3.1
+export GISBASE
+exec /usr/grass3.1/etc/GIS.sh
+.DE
+to:
+.DS
+#!/bin/sh
+GISBASE=/home/grass3.1
+export GISBASE
+exec /home/grass3.1/etc/GIS.sh
+.DE
+.IP 3.
+Edit the monitorcap file.  In this example, the new GISBASE is \*/home\*/grass3.1.
+In this directory edit etc\*/monitorcap and change any references of /usr to
+/home.
+.TC
