@@ -1,0 +1,20 @@
+LIBES = $(GISLIB)
+
+PGM   = coin
+
+LIST  = main.o\
+	check.o\
+	make_coin.o\
+	print_coin.o\
+	print_hdr.o\
+	prnt_entry.o\
+	format.o\
+	totals.o
+
+
+$(BIN)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(TERMLIB) -o $@
+
+$(LIST):  coin.h
+
+$(LIBES): #
