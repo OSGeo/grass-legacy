@@ -222,7 +222,7 @@ else
   else
     if [ ! "$optq" ]
     then
-      man -P $PAGER -M $GISBASE/man 1 $entries
+      man -M $GISBASE/man 1 $entries
     else
       n=`echo $entries | awk '{print NF}'`
       ni=0
