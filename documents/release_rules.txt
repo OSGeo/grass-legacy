@@ -4,6 +4,8 @@ How to release GRASS 5 binaries:
 
    src/CMD/VERSION
 
+   Check if no M/C conflicts are there before tagging.
+
 
 1. Build GRASS:
  
