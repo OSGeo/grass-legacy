@@ -1,6 +1,0 @@
-
-
-image - In GRASS usage, image generally refers to a remotely-sensed
-representation of a geographic area, stated in terms of spectral
-reflectance values.  A series of @glossary("band files",16.glossary/bandfil.def) together constitute
-this image.

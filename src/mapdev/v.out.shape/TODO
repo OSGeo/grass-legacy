@@ -1,0 +1,8 @@
+Mon 10th July 2000
+
+DD Gray <ddgray@armadce.demon.co.uk>
+
+* Add support for more types. DOT vector files(?), z- and m-
+  fields.
+  
+* Postgres support.

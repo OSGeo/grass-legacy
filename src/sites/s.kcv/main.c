@@ -2,26 +2,28 @@
  * s.kcv
  * Copyright (C) 1993-1994. James Darrell McCauley.
  *
- * Author: James Darrell McCauley (mccauley@ecn.purdue.edu)
- *         USDA Fellow
- *         Department of Agricultural Engineering
- *         Purdue University
- *         West Lafayette, Indiana 47907-1146 USA
+ * Author: James Darrell McCauley darrell@mccauley-usa.com
+ * 	                          http://mccauley-usa.com/
  *
- * Permission to use, copy, modify, and distribute this software and its
- * documentation for non-commercial purposes is hereby granted. This 
- * software is provided "as is" without express or implied warranty.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- * JAMES DARRELL MCCAULEY (JDM) MAKES NO EXPRESS OR IMPLIED WARRANTIES
- * (INCLUDING BY WAY OF EXAMPLE, MERCHANTABILITY) WITH RESPECT TO ANY
- * ITEM, AND SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL
- * OR CONSEQUENTAL DAMAGES ARISING OUT OF THE POSSESSION OR USE OF
- * ANY SUCH ITEM. LICENSEE AND/OR USER AGREES TO INDEMNIFY AND HOLD
- * JDM HARMLESS FROM ANY CLAIMS ARISING OUT OF THE USE OR POSSESSION 
- * OF SUCH ITEMS.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ * $Id$
  *
  * Modification History:
  * 4.2B <27 Jan 1994>  fixed RAND_MAX for Solaris 2.3
+ * <13 Sep 2000> released under GPL
  */
 
 #include <stdlib.h>
@@ -34,18 +36,27 @@
 #ifndef RAND_MAX 
 #define RAND_MAX (pow(2.0,31.0)-1) 
 #endif
-
+#ifdef __CYGWIN__
+double drand48()
+{
+	return(rand()/32767.0);
+}
+#define srand48(sv) (srand((unsigned)(sv)))
+#else
+double drand48 ();
+void srand48 ();
+#endif
 int 
 main (int argc, char **argv)
 {
   char siteslist[256], errmsg[256], *mapset;
-  double east, north, (*rng) (), max, drand48 (), myrand ();
+  double east, north, (*rng) (), max, myrand ();
   int i, j, k, m, n, a, b, nsites, verbose, np, *p, dcmp ();
-  void srand48 ();
   FILE *fdsite, *fdtest, *fdtrain;
   D *d;
   Z *z;
   struct Cell_head window;
+  struct GModule *module;
   struct
   {
     struct Option *output, *npartitions;
@@ -57,6 +68,10 @@ main (int argc, char **argv)
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                "Randomly partition sites into test/train sets.";
+                
   parm.npartitions = G_define_option ();
   parm.npartitions->key = "k";
   parm.npartitions->type = TYPE_INTEGER;

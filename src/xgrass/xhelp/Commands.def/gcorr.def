@@ -1,8 +1,0 @@
-
-
-gcorrelate.sh - 
-
-gcorrelate.sh is a Bourne shell script that prints a correlation matrix
-for user-specified @glossary("raster",16.glossary/rastdata.def) map layers.
-
-Manual entry for 

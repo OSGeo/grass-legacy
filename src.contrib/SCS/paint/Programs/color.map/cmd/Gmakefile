@@ -3,9 +3,8 @@ PGM = color.map
 PAINT = $(ETC)/paint
 
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
-LIBES =	$(VECTLIB) $(GISLIB) $(ICONLIB) $(MATHLIB) $(DATETIMELIB)
+LIBES =	$(VECTLIB) $(GISLIB) $(ICONLIB) $(XDRLIB) $(MATHLIB) $(DATETIMELIB)
 
-EXTRA_CFLAGS=$(VECT_INCLUDE)
 
 LIST =	main.o\
 	alloc_pats.o\

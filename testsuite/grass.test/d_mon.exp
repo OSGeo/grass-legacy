@@ -1,0 +1,20 @@
+# testing d.mon -L bug
+# d.mon -L hangs forever on Linux
+
+# set test name
+set test "d.mon -L bug (on Linux)"
+set timeout 5
+set pgm "d.mon"
+
+# test if tested module exists
+if { ![isgrassbin "$pgm"] } {
+    fail "$test: module missing"
+}
+
+# execute module and check responding
+spawn "$pgm" "-L"
+
+expect { 
+    -re {.*GRASS.*$} { pass "$test" }
+    timeout          { fail "$test"; slay "$pgm" }
+}

@@ -1,0 +1,73 @@
+<TITLE>v.area</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.area</b></EM> - Display 
+GRASS area and perimeter information for GRASS vector map. 
+<BR>
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.area</B> 
+<BR>
+<B>v.area help</B> 
+<BR>
+<B>v.area</B> 
+[<B> -f</B>] 
+<B>map=</B><EM>name</EM> 
+[<B>color=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+The GRASS program <EM>v.area</EM> first displays the selected vector file. 
+Then user can select area on map by clicking with mouse within the desired 
+area. Selected area will be highlighted in selected color on graphics 
+display. On regular screen area information will be displayed, 
+in square meters, hectares, acres, and square miles, Perimeter 
+measurements, in meters, feet, and miles, are also displayed. 
+
+<P>
+
+User can repeatedly select areas for analysis, one at a time. 
+
+<H3>Flag:</H3> 
+
+<DL>
+<DT><B>-f</B>
+<DD>Fill selected area with selected color on graphics display, 
+rather than simply outlining it in the <EM>highlight</EM> color. 
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>map=</B><EM>name</EM>
+<DD>Name of the vector map layer to be displayed. 
+<DT><B>color=</B><EM>name</EM>
+<DD>Color in which perimeter will be highlighted. 
+<BR>
+Default: red 
+</DL>
+
+<P>
+
+If the user simply types <B>v.area</B> without specifying
+program arguments on the command line, the program will
+prompt the user for the name of a map. Then the user is
+given the option of specifying a highlight color, and then,
+whether or not the display of selected area(s) is to be
+filled, rather than merely outlined, with the highlight
+color.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.vect.html">d.vect</A></EM>
+
+<H2>AUTHOR</H2>
+
+Bruce Powell, 
+National Park Service, Denver CO. 

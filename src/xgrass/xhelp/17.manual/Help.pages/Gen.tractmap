@@ -1,5 +1,0 @@
-
-@man("Gen.tractmap") - Generates two vector map layers from a RIM/TIGER database.
-
-(GRASS Shell Script)
-

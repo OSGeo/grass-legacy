@@ -1,0 +1,6 @@
+Mmain	main.c	/^main(argc, argv)$/
+buildInfxQry	buildInfxQry.c	/^buildInfxQry(table, xy, where, map, joinargs, plot/
+getAllOpts	getAllOpts.c	/^getAllOpts(argc, argv)$/
+getSelectOpts	getSopts.c	/^getSelectOpts (argc, argv)$/
+plotsite	plotsite.c	/^plotsite (x,y, icon, size )$/
+runInfxFile	runInfxFile.c	/^runInfxFile(sqlin, map,  plotargs )$/

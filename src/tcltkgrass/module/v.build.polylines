@@ -1,0 +1,12 @@
+interface_build {
+    {v.build.polylines} 0
+    {Build polylines from lines.}
+    {entry input {Input vector map:} 0 vector}
+    {entry output {Output vector map:} 0 vector}
+    {entry type {Type (source, line, area, edge):} 0 ""}
+    {separator grey 1}
+    {checkbox -a {Make the output file an ASCII vector map.} "" -a}
+    {checkbox -c {Copy the attribute and category files.} "" -c}
+    {checkbox -o {Overwrite the output file if it already exists.} "" -o}
+    {checkbox -q {Do not provide any warnings about mixed lines, etc.} "" -q}
+}

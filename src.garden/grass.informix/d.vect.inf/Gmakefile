@@ -1,8 +1,7 @@
-PGM       = $(GARDEN_BIN)/d.vect.inf
+PGM       = $(BIN_MAIN_CMD)/d.vect.inf
 LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB) 
 
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)  # -Dunlink=puts
 
 OBJS = \
 	main.o  \
@@ -17,5 +16,5 @@ OBJS = \
 
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(MATH)
 $(LIBES): #

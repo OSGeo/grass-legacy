@@ -203,6 +203,7 @@ struct Menu_item Window_items[] = {
     { "i - Show lines", 		'i', 1 },
     { "l - Show labeled lines", 	'l', 1 },
     { "L - Show line labels", 		'L', 1 },
+    { "U - Show unlabeled lines", 	'U', 1 },
     { "",				 0,  0 },
     { "s - Show sites", 		's', 1 },
     { "S - Show site labels", 		'S', 1 },
@@ -314,3 +315,4 @@ struct Menu_head M_color = {
     1,
     Help_color
 };
+

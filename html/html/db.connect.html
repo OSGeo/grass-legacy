@@ -1,0 +1,127 @@
+<html>
+
+<TITLE>db.connect</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>db.connect</b></EM> - Connect to the database through DBMI.
+
+<BR>
+
+<EM>(GRASS DB Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>db.connect</B>
+
+<BR>
+
+<B>db.connect help</B>
+
+<BR>
+
+<B>db.connect</B> [<B>-p</B>] 
+[<B>driver=</B><EM>name</EM>] [<B>database=</B><EM>name</EM>]
+[<B>location=</B><EM>name</EM>] [<B>user=</B><EM>name</EM>]
+[<B>password=</B><EM>name</EM>] [<B>key=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>db.connect</EM> allows the user to set parameters for
+connection to database. These parameters are then taken by
+modules as default values and user do not need enter 
+parameters each time. Values are stored in user  file.
+
+
+<H2>OPTIONS</H2>
+
+When invoked simply as <B>db.connect</B>, the program prompts
+the user for parameters. The user can run the program
+non-interactively, specifying the (optional) flag setting
+and parameters values on the command line.  Program flag and
+parameters are described below.
+
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-p</B> 
+<DD>Print only current settings.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>driver=</B><EM>name</EM> 
+<DD>The name of a DBMI driver. Drivers are specified in dbmscap file. Each driver
+is specified in dmbscap file on one row in following format: <BR> 
+<PRE>driver_name:full_path_to_the_driver:driver_description</PRE> 
+for example:  <BR>
+<PRE>
+odbc:/usr/local/grass5b5/driver/odbc:odbc driver
+local:/tmp/dbmi/driver/informix:informix
+diego:/usr/ucb/rsh diego /tmp/dbmi/driver/informix:informix    
+</PRE>
+db.connect searches for the dbmscap file in locations in following order:  
+<PRE>
+value of variable DBMSCAP
+/etc/dbmscap
+/lib/dbmscap
+/usr/lib/dbmscap
+/usr/local/lib/dbmscap
+/usr/local/dbmi/lib/dbmscap
+</PRE>
+and uses first one found. You can use <EM><A HREF="db.drivers.html">db.drivers</A></EM>
+to list drivers defined in dbmscap file.
+<BR><BR>
+
+<DT><B>database=</B><EM>name</EM> 
+<DD>The name of a database. You can use <EM><A HREF="db.databases.html">db.databases</A></EM>
+to list available databases.
+<BR><BR>
+
+<DT><B>location=</B><EM>name</EM> 
+<DD>The location of the database.
+<BR><BR>
+
+<DT><B>user=</B><EM>name</EM> 
+<DD>The database user name (login).
+<BR><BR>
+
+<DT><B>password=</B><EM>name</EM> 
+<DD>The database user password. <B>Warning: password is saved in 
+.grassrc in readable form!!!</B>
+<BR><BR>
+
+<DT><B>key=</B><EM>name</EM> 
+<DD>The key column name. Key column is column corresponding to categories.
+<BR><BR>
+
+
+</DL>
+
+<H2>EXAMPLE</H2>
+ 
+<DT>
+<DD><B>db.connect driver=</B><EM>odbc</EM> <B>database=</B><EM>gtest</EM> <B>key=</B><EM>id</EM>
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="db.drivers.html">db.drivers</A></EM>
+<EM><A HREF="db.databases.html">db.databases</A></EM>
+
+<H2>AUTHOR</H2>
+
+
+Radim Blazek
+
+</body>
+</html>

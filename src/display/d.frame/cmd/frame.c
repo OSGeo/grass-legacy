@@ -25,6 +25,7 @@ main (int argc, char *argv[])
     int check_at();
     char buf[1024];
     int create, select, print, debug;
+	struct GModule *module;
     struct
     {
 	struct Option *frame, *at;
@@ -37,6 +38,10 @@ main (int argc, char *argv[])
 	struct Flag *create;
 	struct Flag *erase;
     } flag;
+
+	module = G_define_module();
+	module->description =
+		"Manages display frames on the user's graphics monitor.";
 
     flag.create = G_define_flag();
     flag.create->key = 'c';

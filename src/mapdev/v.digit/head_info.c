@@ -7,7 +7,7 @@
 #include <string.h>
 #include "gis.h"
 #include "vask.h"
-#include "dig_head.h"
+#include "Vect.h"
 #include "local_proto.h"
 
 int get_head_info(int have_old, struct dig_head *dhead)

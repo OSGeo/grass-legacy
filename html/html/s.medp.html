@@ -1,0 +1,217 @@
+<TITLE>s.medp</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.medp</b></EM>  - Median polish for a GRASS sites list.
+
+<BR>
+
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.medp</B>
+
+<BR>
+
+<B>s.medp help</B>
+
+<BR>
+
+<B>s.medp</B> [<B>-aeqs</B>] <B>sites=</B><EM>name</EM> 
+<B>vect=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+[<B>report=</B><EM>name</EM>] [<B>thresh=</B><EM>n</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.medp</EM> performs median polish on an existing sites
+list.  The sites are overlayed onto a grid
+(<B>vect=</B><EM>name</EM>) and each site is associated
+with the closest node.  Therefore, sites do not necessarily
+have to be oriented on a grid.  Each node may be associated
+with zero, one, or more sites and the grid may be rotated.
+Also, the length of each box does not have to be equal to
+width of each box defining the grid.
+
+
+<P>
+
+Once sites are associated with nodes on a <EM>p</EM> by
+<EM>q</EM> grid, <EM>p+q+1</EM> extra storage locations are
+created (initialized to zero) to store <EM>all</EM>,
+<EM>row</EM>, and <EM>column</EM> effects.  The median of
+each row is removed from the data and added to the extra
+<EM>p</EM> cells. Then, medians are removed from the data
+as well as from the <EM>p</EM> cells containing
+<EM>row</EM> effects.  The medians of data  in this pass
+are stored in the extra <EM>q</EM> cells (<EM>column</EM>
+effects) and the median of the row effects is stored in the
+extra (<EM>p+1, q+1</EM>) cell (<EM>all</EM> effect). This
+is repeated until each successive iteration leaves each
+site unchanged (within a tolerance, described by
+[<B>thresh=</B><EM>n</EM>]).
+
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-a</B> 
+
+<DD>Use all sites found in the named <EM>sites</EM> file, rather than
+limiting output to sites falling within the current geographic region.
+
+<DT><B>-e</B> 
+
+<DD>Store row, column, and all effects in output file.
+
+<DT><B>-s</B> 
+
+<DD>Write results to a sites list file (default is to write
+points in a binary vector file).
+
+<DT><B>-q</B> 
+
+<DD>Quiet. Cut out the chatter.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>sites=</B><EM>name</EM> 
+
+<DD>Name of an existing sites file.
+
+<DT><B>vect=</B><EM>name</EM> 
+
+<DD>Name of the grid file (binary vector file).
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Name of the output file (binary vector file or sites list).
+
+<DT><B>report=</B><EM>name</EM> 
+
+<DD>Name of an ASCII file which shows original and residual data in
+tabular form. 
+
+<DT><B>thresh=</B><EM>n</EM> 
+
+<DD>Threshold to determine when convergence of median polish is obtained.
+(default = 1).
+</DL>
+
+<P>
+
+<EM>s.medp</EM> can be run either non-interactively or
+interactively.  The program will be run non-interactively
+if the user specifies the name of an existing
+<EM>sites</EM> list file, name for a <EM>vect</EM> file,
+and name of an <EM>output</EM> file using the form
+
+<DL>
+<DD>
+<B>s.medp</B> [<B>-aeqs</B>] <B>sites=</B><EM>name</EM> 
+<B>vect=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+[<B>report=</B><EM>name</EM>] [<B>thresh=</B><EM>n</EM>]
+</DL>
+
+Alternately, the user can simply type <B>s.medp</B> on the command line,
+without program arguments.  In this case, the user will be prompted for
+parameter values using the standard GRASS 
+
+<EM><A HREF="parser.html">parser</A></EM> interface.
+
+<H2>NOTES</H2>
+
+When using the <B>report</B> option, the tabular report may
+be more than 128 columns wide. Therefore, it may be useful
+to add a <EM>TeX</EM> or <EM>PostScript</EM> wrapper before
+printing (e.g., <B>enscript -h -r -fCourier-Bold5 -p
+report.ps report</B>) so that the page is in landscape
+orientation and a very small font is used.
+
+<P>
+
+The input vector file defining the grid should be large
+enough so that the extreme east-west and north-south nodes
+(for non-rotated grids) can be used to store row and column
+effects. Otherwise, when residuals <EM>and</EM> effects are
+written to the output file, residuals may share the same
+spatial location as effects when written to a vector output
+file.
+
+
+<P>
+
+Currently, nothing is done with the residuals, but I would
+like implement some sort of analysis of these in the future
+(suggestions?).  Kriging using these residuals as new data
+set is being planned.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.mkgrid.contrib.html">v.mkgrid</A></EM><br>
+<EM><A HREF="v.transform.html">v.transform</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM><br>
+
+
+<BR>
+
+Cressie, Noel A. C. (1991).
+<EM>Statistics for Spatial Data</EM>,
+New York, NY: John Wiley &amp; Sons.
+pp. 186-187.
+
+<H2>BUGS</H2>
+
+This should still be consider beta-release software.
+Although I have repeated results shown in Cressie (1991), I
+would greatly appreciate someone testing this further.
+
+<P>
+
+The <B>-s</B> flag is yet to be implemented. 
+
+<P>
+
+This should probably be re-written to use points in a
+vector file as input (thus creating <EM>v.medp</EM>).
+
+
+<P>
+
+Ideally, I would also like to output three data files for
+plotting by a graphing program (e.g., g.gnuplot),
+but I never got around to doing this. The classic plot is
+to show three surfaces:  data = trend + residuals.  The
+trend can be obtained by extrapolation and/or
+interpolation.
+
+
+<P>
+
+Extrapolating and interpolating using the row, column, and
+all effects to create a raster file would be a nice feature
+to include in the future. Instead, I am considering
+retrieving the effects from the output file and creating
+the surface with separate program.
+
+
+<P>
+
+Please send all bug fixes and comments to the author.
+
+<H2>AUTHOR</H2>
+James Darrell McCauley, Agricultural
+Engineering Purdue University
+

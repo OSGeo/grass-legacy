@@ -1,0 +1,6 @@
+# r.binfer bug
+# r.binfer does not accept probability of 1
+set test "r.binfer segementation fault bug"
+unresolved "$test"
+set test "r.binfer probability of 1 not accepted bug"
+unresolved "$test"

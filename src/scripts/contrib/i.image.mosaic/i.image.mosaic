@@ -4,7 +4,7 @@
 # mosaic code from Felix Gershunov (Felix@spsl.nsc.ru)
 
 #--------------------------------------------------
-if [ "$#" -lt 2 ]; then
+if [ "$#" -lt 2  -o "$1" = "-help" -o "$1" = "help" ]; then
       echo ""
       echo "GRASS script to mosaic (aerial) images. A new image will"
       echo "be created with extended colormap."

@@ -1,7 +1,7 @@
 LIBTRANS	= $(SRC)/libes/vect32/libes/libtrans.a
 INCTRANS	= -I$(SRC)/libes/vect32/libes
 
-EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(VECT_INCLUDE) $(INCTRANS)
+EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(INCTRANS) $(DANOTHER_BUTTON) $(DASIAN_CHARS)
 
 OBJ = \
 	add_scale.o \
@@ -9,7 +9,6 @@ OBJ = \
 	ask_driver.o \
 	backdrop.o \
 	bad_areas.o \
-	bin_digit.o\
         break.o \
         build_neat.o \
 	coll_pts.o \
@@ -52,6 +51,7 @@ OBJ = \
         label_mult.o \
         leave.o \
         list.o \
+	main.o \
         map_ask.o\
         map_ask_new.o\
         map_coor_new.o\
@@ -103,7 +103,6 @@ SOURCE = \
 	ask_driver.c \
 	backdrop.c \
 	bad_areas.c \
-	bin_digit.c\
         break.c \
         build_neat.c \
 	coll_pts.c \
@@ -145,6 +144,7 @@ SOURCE = \
         label_mult.c \
         leave.c \
         list.c \
+	main.c \
         map_ask.c\
         map_ask_new.c\
         map_coor_new.c\
@@ -217,14 +217,13 @@ saber_src:
 $(HELP_FILES)/Main:
 	if [ ! -d $(TXT) ]; then mkdir $(TXT); fi
 	if [ ! -d $(TXT)/DIGIT ]; then mkdir $(TXT)/DIGIT; fi
-	cp help/* $(TXT)/DIGIT/.
-
+	(cd help ; tar -cf - * | (cd $(TXT)/DIGIT/; tar -xf - 2>/dev/null ); true )
 
 
 # Copy over digitizer definition files.
 $(DIGITIZERS)/cc95f5_16:
 	if [ ! -d $(DIGITIZERS) ]; then mkdir $(DIGITIZERS); fi
-	cp -R digitizers/* $(DIGITIZERS)
+	(cd digitizers ; tar -cf - * | (cd $(DIGITIZERS); tar -xf - 2>/dev/null ); true )
 
 
 

@@ -5,7 +5,6 @@ LIBSUPP		= $(SRC)/../src.related/mapgen/lib/libsupp.a
 SCSFIPS      = $(LIBDIR)/scsfips.a
 
 
-EXTRA_CFLAGS	=  $(VECT_INCLUDE)
 
 OMAIN = main.o
 

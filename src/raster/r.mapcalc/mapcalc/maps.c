@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include <string.h>
 #include <unistd.h>
 #include "glob.h"
@@ -332,8 +336,10 @@ int translate_from_cats ( CELL *cell, double *xcell,int ncols,int k)
 		    SETNULL_D(values);
 		values++;
 	    }
+	    
+	    values = vbuf;
 	    btree_update (btree, (char *)&key, sizeof(key),
-                (char *)values = vbuf, sizeof(vbuf));
+                (char *)values, sizeof(vbuf));
 	}
 
 /* and finally lookup the translated value */

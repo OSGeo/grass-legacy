@@ -1,0 +1,67 @@
+Main algorithm sources are rewritten from TMOD9502.FOR.
+TMOD9502.FOR is available from http://www.es.lancs.ac.uk/hfdg/topmodel.html.
+
+Thanks to Keith Beven.
+
+
+
+[r.topmodel]
+simulates TOPMODEL which is physically based hydrologic model.
+
+
+Parameters:
+(i)	elevation:	Rectangular elevation map
+
+(i)	basin:		Basin map created by r.water.outlet
+
+(o)	depressionless:	Depressionless elevation map
+
+			This can be omitted if [elevation] map is already
+			depressionless map.  If this is given, [depressionless]
+			map will be used as [elevation] map.
+
+(o)	direction:	This should be given with [depressionless] map.
+
+(i/o)	belevation:	Study basin extracted elevation map
+
+(i/o)	topidx:		Study basin extracted topographic index map
+
+(i)	nidxclass:	Number of topographic index classes
+
+(i/o)	idxstats:	Topographic index statistics file
+
+(i)	parameters:	TOPMODEL parameters file
+
+(i)	input:		Rainfall and potential evapotranspiration data file
+
+(o)	output:		Output file
+
+	Qobs:		Compare Qt with Qobs and calculate model efficiency
+
+	timestep:	OPTIONAL output for given time step
+
+	idxclass:	OPTIONAL output for given topographic index class
+
+
+(i)   means input
+(o)   means output
+(i/o) means input or output
+
+
+Flags:
+	-i:		Without this flag, all input data, (i) or (i/o),
+			should be given and intermediate output can not be
+			input for run.
+			
+			In example, [belevation] map will be created from 
+			[elevation] and [basin] every run.  However, every 
+			[belevation] output map is the same and this is 
+			useless process if [belevation] map is already given.
+
+			With this flag, intermediate output can be input for
+			run.  (i/o) parameters can be affected by this flag.
+
+	-o:		Overwrite outputs
+
+	-w:		No limit for 80 columns output
+

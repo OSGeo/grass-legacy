@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include "dbmi.h"
 #include "gis.h"
 #include "codes.h"
@@ -16,7 +20,8 @@ main(argc, argv) char *argv[];
 
     parse_command_line (argc, argv);
 
-    driver = db_start_driver (argv[1]);
+    /* driver = db_start_driver (argv[1]); */
+    driver = db_start_driver (parms.driver); 
     if (driver == NULL)
     {
 	fprintf (stderr, "Can't run driver %s\n", argv[1]);

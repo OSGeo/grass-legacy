@@ -71,7 +71,7 @@ int *I_ask_bands (int nbands)
     free (x);
     if (!any)
     {
-	fprintf (stdout,"no bands selected\n");
+	fprintf (stderr,"no bands selected\n");
 	exit(0);
     }
 
@@ -86,7 +86,7 @@ static int ask_bandname_prefix(int *num,int nbands)
 	if (!I_ask_group_any ("select a prefix/group for the band cell files to be created",prefix))
 	    exit(0);
 	if (strlen (prefix) > MAX)
-	    fprintf (stdout,"\n** prefix too long. %d chars maximum\n",MAX);
+	    fprintf (stderr,"\n** prefix too long. %d chars maximum\n",MAX);
 	else if (prefix_ok(num,nbands))
 	    break;
     }
@@ -107,14 +107,14 @@ static int prefix_ok(int *num,int nbands)
 	{
 	    if (!any)
 	    {
-		fprintf (stdout,"\n\n** the following cell files already in exist your mapset\n\n");
+		fprintf (stderr,"\n\n** the following cell files already in exist your mapset\n\n");
 		any = 1;
 	    }
-	    fprintf (stdout," %s", name);
+	    fprintf (stderr," %s", name);
 	}
     }
     if (!any) return 1;
 
-    fprintf (stdout,"\n\nIf you proceed, these files will be overwritten. ");
+    fprintf (stderr,"\n\nIf you proceed, these files will be overwritten. ");
     return G_yes("Proceed? ", -1);
 }

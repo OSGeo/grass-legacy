@@ -1,0 +1,21 @@
+# $Id: Gmakefile,v 1.4 2000-09-11 09:47:31 justin Exp $
+
+PGM=v.db.reclass
+
+HOME=$(BIN_ALPHA_CMD)
+DBMILIB = $(LIBDIR)/libdbmi.a
+
+LIBES = $(VECTLIB) $(DIG_ATTLIB)\
+	$(DBMILIB) $(VECTLIB_REAL) $(DIG2LIB)\
+	$(EXTRALIB) $(GISLIB) 
+
+
+LIST = main.o\
+	input.o\
+	key_data.o\
+	reclass.o
+
+$(HOME)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
+
+$(LIBES): #

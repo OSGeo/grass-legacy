@@ -1,10 +1,9 @@
 OFILES	= main.o do_leave.o tty.o menu.o 
-HOME	= $(BIN_MAIN_CMD)
 
 all: pgm  the_help
-pgm: $(BIN_MAIN_CMD)/g.help
+pgm: $(BIN_MAIN_INTER)/g.help
 
-$(BIN_MAIN_CMD)/g.help:	$(OFILES) $(GISLIB)
+$(BIN_MAIN_INTER)/g.help:	$(OFILES) $(GISLIB)
 	$(CC) ${LDFLAGS} -o $@ $(OFILES) $(GISLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 the_help:

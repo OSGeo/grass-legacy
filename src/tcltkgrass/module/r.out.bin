@@ -1,0 +1,8 @@
+interface_build {
+    {r.out.bin} 0
+    {Converts a raster map layer into a binary file.}
+    {entry input {Input raster map:} 0 raster}
+    {entry output {Output binary map (use out=- for stdout):} 0 file}
+    {entry null {Value to write out for null (default: 0):} 0 ""}
+    {checkbox -i {Output integer category values, not cell values.} "" -i}
+}

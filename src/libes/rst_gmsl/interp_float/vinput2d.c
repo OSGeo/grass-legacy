@@ -14,8 +14,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "digit.h"
-#include "dig_head.h"
 #include "Vect.h"
 #include "gis.h"
 #include "bitmap.h"

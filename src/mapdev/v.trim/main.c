@@ -21,9 +21,15 @@ int main ( int argc, char *argv[])
     register int ret, error;
     char vectname[1024], trimname[1024];
     double trim_factor;
+	struct GModule *module;
     struct Option *opt1, *opt2, *opt3;
     struct Map_info In, Out;
     int level;
+
+	module = G_define_module();
+	module->description =
+		"Trims small spurs, and removes excessive nodes "
+		"from a binary GRASS vector (dig) file.";
 
     opt1 = G_define_option() ;
     opt1->key        = "input" ;

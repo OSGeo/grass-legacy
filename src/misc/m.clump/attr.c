@@ -14,7 +14,7 @@ init_attributes (f)
 {
     nfields = 0;
     if (f)
-	field_list = get_field_list (f, &nfields);
+	field_list = (int *) get_field_list (f, &nfields);
 }
 
 attributes_are_the_same (pt1, pt2)

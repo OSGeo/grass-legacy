@@ -22,7 +22,7 @@ int I_ask_group_old (
 	    return 0;
 	if (I_find_group (group))
 	    return 1;
-	fprintf (stdout,"\n** %s - not found **\n\n", group);
+	fprintf (stderr,"\n** %s - not found **\n\n", group);
     }
 }
 
@@ -38,7 +38,7 @@ int I_ask_group_new (
 	    return 0;
 	if (!I_find_group (group))
 	    return 1;
-	fprintf (stdout,"\n** %s - exists, select another name **\n\n", group);
+	fprintf (stderr,"\n** %s - exists, select another name **\n\n", group);
     }
 }
 
@@ -57,15 +57,15 @@ static int ask_group( char *prompt,char *group)
 
     while (1)
     {
-	fprintf (stdout,"\n%s\n", prompt);
-	fprintf (stdout,"Enter 'list' for a list of existing imagery groups\n");
-	fprintf (stdout,"Enter 'list -f' for a verbose listing\n");
-	fprintf (stdout,"Hit RETURN %s\n", G_get_ask_return_msg());
-	fprintf (stdout,"> ");
+	fprintf (stderr,"\n%s\n", prompt);
+	fprintf (stderr,"Enter 'list' for a list of existing imagery groups\n");
+	fprintf (stderr,"Enter 'list -f' for a verbose listing\n");
+	fprintf (stderr,"Hit RETURN %s\n", G_get_ask_return_msg());
+	fprintf (stderr,"> ");
 	if (!G_gets(buf)) continue;
 
 	G_squeeze (buf);
-	fprintf (stdout,"<%s>\n", buf);
+	fprintf (stderr,"<%s>\n", buf);
 	if (*buf == 0) return 0;
 
 	if (strcmp (buf, "list") == 0)
@@ -73,7 +73,7 @@ static int ask_group( char *prompt,char *group)
 	else if (strcmp (buf, "list -f") == 0)
 	    I_list_groups(1);
 	else if (G_legal_filename(buf) < 0)
-	    fprintf (stdout,"\n** <%s> - illegal name **\n\n", buf);
+	    fprintf (stderr,"\n** <%s> - illegal name **\n\n", buf);
 	else
 	    break;
     }

@@ -1,0 +1,239 @@
+<TITLE>v.export</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.export</b></EM>  - Converts binary vector files into formatted ASCII files
+for transfer to other computer systems.
+
+<BR>
+
+<EM>(SCS GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.export</B>
+
+<BR>
+
+<B>v.export help</B>
+
+<H2>DESCRIPTION</H2>
+
+This program performs all of the processes that are needed to convert
+binary vector files into formatted ASCII files.
+
+
+<P>
+
+It also creates support files:
+<DL>
+<DT> 
+
+<DD>- an attribute flat file, which contains information for each area in the
+DLG file -- i.e., the DLG area number, the GRASS area label, and the
+GRASS category code (only created when exporting in DLG format);
+
+<BR>
+
+
+<DT> 
+
+<DD>- an attribute file which contains the information from the <EM>dig_att</EM>
+file (only created when exporting ASCII vector format).
+</DL>
+
+<P>
+
+EXPORT FILES
+
+<BR>
+
+After entering the command <EM>v.export</EM>, the user will be asked
+which type of file to export:
+
+<DT> 
+
+<DD>Exports from GRASS Vector (<EM><A HREF="v.digit.html">v.digit</A></EM>) Format
+
+
+<P>
+
+
+<DT> 
+
+<DD>1  -	  ASCII DLG file from GRASS Vector Format
+
+<BR>
+
+
+<DT> 
+
+<DD>2  -	  ASCII	DIGIT file from GRASS Vector Format
+
+<BR>
+
+
+<DT> 
+
+<DD>3  -	  ASCII	SCS-GEF file from GRASS Vector Format
+
+<BR>
+
+
+<DT> 
+
+<DD>4  -	  ASCII	ARC/INFO file from GRASS Vector Format
+
+<BR>
+
+
+<DT> 
+
+<DD>5  -	  ASCII	DXF file from GRASS Vector Format
+
+<BR>
+
+
+
+<P>
+
+If numbers 1-4 are chosen, <EM>v.export</EM> will respond with a request for the
+vector file name.  After the user enters the file name the program
+proceeds to create the respective output format files.
+
+
+<P>
+
+GRASS Vector to DLG File
+
+<BR>
+
+Converts binary vector files (such as those created by <EM>v.digit</EM>) to a DLG
+file and creates the attribute file.  Both files are placed in the <EM>dlg</EM>
+directory under a user selected name;  the attribute file has .att
+appended.
+
+
+<P>
+
+GRASS Vector File into ASCII Vector File
+
+<BR>
+
+Converts a binary vector file into a readable ASCII file.  Both files
+are placed int the <EM>dig_ascii</EM> directory under the same name as the given
+vector file, the attribute file has .att appended.
+<P>
+GRASS Vector to SCS-GEF File
+<BR>
+
+Converts binary vector files to SCS-GEF files.  Creates the SCS-GEF
+header, lines, text, and feature files.  All files are created and
+placed in a $LOCATION/gef directory as a single UNIX file under a user
+selected name.
+
+<BR>
+
+The following is the SCS-GEF file structure:
+
+<PRE>
+header record 1
+   |      |  
+header record n
+-head
+line record 1
+   |      |    
+line record n
+-line
+text record 1
+   |      |    
+text record n
+-text
+feature record 1
+   |      |    
+feature record n
+-feat
+</PRE>
+
+The user will be required to use standard UNIX commands to separate
+this file into individual files as required by SCS-GEF specifications.
+
+
+<P>
+
+GRASS Vector to ARC/INFO(generated) File
+
+<BR>
+
+Converts binary vector files to a "ARC ungenerate" format.  A GRASS
+vector file to be exported to ARC/INFO must be either a line coverage
+(must contain only lines) or a polygon coverage (must contain only area
+edges).  Both "ungenerate lines and points" files are created and are
+placed in a $LOCATION/arc directory under a user selected name.
+
+
+<P>
+
+The binary vector name will be used to name the various files that will
+be created for export to ARC/INFO.  In the case of a labelled polygon
+coverage, the following three files will be created:  a lines file with
+the suffix .lin, a label-points file with the suffix .lab, and a
+label-text file with the suffix .txt.
+
+
+<P>
+
+In the case of a line coverage the following two files will be created:
+a lines file with the suffix .lin, and a label-text file with the
+suffix .txt.
+
+
+<P>
+
+An unlabelled polygon or line coverage will result in a lines file
+(.lin suffix) only.  See the DATA FILE FORMATS section of v.import for
+more information on these files.
+
+
+<P>
+
+GRASS Vector to DXF file
+
+<BR>
+
+Converts binary vector files to a "DXF" format.
+</DL>
+
+<P>
+
+<H2>NOTES</H2>
+
+Support files must be built using the GRASS program 
+<EM><A HREF="v.support.html">v.support</A></EM> before exporting any vector file. 
+
+
+<P>
+
+Other ASCII formats are useful when importing/exporting data 
+into and from GRASS.  Such data files should be in ASCII 
+format when transferred.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM><BR>
+<EM><A HREF="v.import.html">v.import</A></EM>
+<EM><A HREF="v.out.arc.html">v.out.arc</A></EM><BR>
+<EM><A HREF="v.out.ascii.html">v.out.ascii</A></EM><BR>
+<EM><A HREF="v.out.dlg.html">v.out.dlg</A></EM><BR>
+<EM><A HREF="v.out.dlg.html">v.out.dlg.scs</A></EM><BR>
+<EM><A HREF="v.out.dxf.html">v.out.dxf</A></EM><BR>
+<EM><A HREF="v.out.scsgef.html">v.out.scsgef</A></EM><BR>
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS

@@ -1,6 +1,0 @@
-
-
-centroid - The gravitational center point of a @glossary("polygon",16.glossary/polygon.def) or the
-midpoint of a @glossary("line",16.glossary/line.def).  The centroid's location is described as an
-(x,y) coordinate pair and is used by GRASS to locate category labels
-assigned to polygons (area features) and lines (linear features).

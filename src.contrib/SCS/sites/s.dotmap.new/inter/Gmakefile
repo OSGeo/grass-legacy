@@ -9,5 +9,5 @@ OFILES = \
 all:  $(BIN_CONTRIB_INTER)/$(PGM)
 
 $(BIN_CONTRIB_INTER)/$(PGM): $(OFILES) 
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(XDRLIB) $(MATHLIB)
 

@@ -1,0 +1,74 @@
+<TITLE>s.voronoi</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>s.voronoi</B></EM>  - Program to create a vector Voronoi diagram (Thiessen polygon) from a sites file. <BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>s.voronoi</B> [<b>-a</b>] [<b>-l</b>] [<b>-q</b>] <b>sites=</b><i>name</i> [<b>vect=</b><i>name</i>]
+
+<BR>
+
+<H2>DESCRIPTION</H2>
+<P>
+s.voronoi uses an existing sites list (sites) to create a Voronoi diagram (Thiessen polygons) in a binary vector file (vect).
+<P>
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>sites=</B><EM>name </EM>
+<DD> Name of existing sites file. 
+<DT><B>vect=</B><EM>name</EM>
+<DD> Name of the output file (binary vector file). 
+</DL>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-a</B>
+<DD> Use all sites found in the named sites file, rather than limiting output to sites falling within the current geographic region. 
+<DT><B>-l</B>
+<DD> Attempt to use site descriptions (category labels) as categories and attribututes for the vector file. Sites must be in the (E|N|#n desc) format for this to work.
+<DT><B>-q</B>
+<DD> Quiet. Cut out the chatter. 
+</DL>
+       s.voronoi can be run either non-interactively or	 interactively.	 The program will be run non-interactively if the
+       user specifies the name of an existing site list file  and
+       a name for a vect file, using the form
+
+	      s.voronoi [-alq] sites=name1 vect=name2
+
+       where  name1 is the name of an existing site list file and
+       name2 is the name of vector output file.
+
+       Alternately, the user can simply	 type  s.voronoi  on  the
+       command	line,  without	program arguments.  In this case,
+       the user will be prompted for parameter values  using  the
+       standard	 GRASS	parser	interface described in the manual
+       entry for parser.  In either case,  v.spag  and	v.support
+       should  be  run on the output (running v.spag is necessary
+       so that nodes are created where	the  polygons  cross  the
+boundary of the region).
+
+<H2>EXAMPLES</H2>
+
+<H2>BUGS AND CAVEAT</H2>
+
+<H2>SEE ALSO</H2>
+v.autocorr, v.spag, v.support, parser, and<BR>
+<EM><A HREF="s.delaunay.html">s.delaunay</A></EM>,<BR>
+<EM><A HREF="s.sweep.html">s.sweep</A></EM>,<BR> 
+<EM><A HREF="s.geom.html">s.geom</A></EM>,<BR>
+<EM><A HREF="v.geom.html">v.geom</A></EM></BR>
+<EM>Steve  J.  Fortune,  (1987).   A	 Sweepline  Algorithm for
+       Voronoi Diagrams, Algorithmica 2, 153-174.</EM>
+
+<H2>AUTHOR</H2>
+James Darrell McCauley, Purdue University
+<BR>
+</BODY>
+</HTML>

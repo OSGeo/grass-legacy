@@ -1,0 +1,9 @@
+LIBES  = $(GISLIB)
+
+TARGET = $(BIN_MAIN_CMD)/r.out.gridatb
+SRCS   = main.c check_ready.c adjcellhd.c file_io.c
+OBJS   = main.o check_ready.o adjcellhd.o file_io.o
+
+$(TARGET): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+

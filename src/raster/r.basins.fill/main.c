@@ -23,7 +23,13 @@ int main (int argc, char *argv[])
     struct Cell_head window;
     int row, col, npass, tpass;
     char mg[100]; 
+	struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4 ;
+
+	module = G_define_module();
+	module->description =
+		"Generates a raster map layer showing "
+		"watershed subbasins.";
 
     opt1 = G_define_option() ;
     opt1->key        = "number" ;

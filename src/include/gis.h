@@ -320,6 +320,12 @@ struct Flag                 /* Structure that stores flag info  */
     struct Flag *next_flag ;        /* Pointer to next flag struct      */
 } ;
 
+struct GModule                 /* Structure that stores module info  */
+{
+    char * description ;             /* String describing module */
+	/* further items are possible: author(s), version */
+} ;
+
 /* for G_parser() */
 #define TYPE_INTEGER  1
 #define TYPE_DOUBLE   2

@@ -1,0 +1,141 @@
+<TITLE>v.in.dlg.scs</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.dlg.scs</b></EM>  - Developed to handle DLG-3 ASCII import of data,
+specifically a DLG WITHOUT category/attribute codes.  DLG files with
+this affliction will require a flat ASCII file having a 1 to 1
+correspondence between DLG area number and a text label.
+
+<BR>
+
+<EM>(SCS GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.dlg.scs</B>
+
+<BR>
+
+<B>v.in.dlg.scs help</B>
+
+<BR>
+
+<B>v.in.dlg.scs</B> [<B> -uf</B>] [<B>dlg=</B><EM>name</EM>]
+[<B>bdlg=</B><EM>name</EM>] [<B>att=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+Under normal circumstances the <EM>v.in.dlg</EM> program will handle the
+requirements of reading DLG data and creating vector maps from it.
+However, <EM>v.in.dlg</EM> assumes that the DLG-s file will contain major/minor
+category numbers;  this is NOT always the case.  In some instances, the
+user may want label names with the DLG data; the current DLG-3
+specification does not provide that.  SCS has developed this program to
+meet that need.
+
+
+<P>
+
+Notes:
+
+<DT> 
+
+<DD>This program is normally NOT called from the command line.
+<EM>v.import</EM> will create the command string, then execute it.
+
+<BR>
+
+This program converts an ASCII DLG file to a binary DLG file with
+attribute codes in the major minor fields, and creates a <EM>dig_cats</EM> file
+with the correct code/label correspondence. The program <EM>v.a.b.dlg</EM> must
+be run after this program to create the GRASS vector files.
+
+<BR>
+
+It is assumed that the DLG data file contains only one set of
+geographic information; ie. areas, or lines, or points.  This program
+WILL FAIL if mixed data is encountered.
+
+<BR>
+
+Degenerate lines are accepted in this program as point data.
+
+
+<P>
+
+DLG.att File format
+
+<DT> 
+
+<DD>The DLG.att attribute file format is simple:
+
+
+<P>
+
+field 1 - DLG [area|line|point] number
+
+<BR>
+
+field 2 - Label
+</DT>
+
+<P>
+
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-u</B> 
+
+<DD>DLG file contains universe area.
+
+<DT><B>-f</B> 
+
+<DD>An attribute file is included.
+</DL>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>dlg=</B><EM>name</EM> 
+
+<DD>ASCII DLG (<EM>dlg</EM>) file name.
+
+<DT><B>bdlg=</B><EM>name</EM> 
+
+<DD>Binary DLG (<EM>bdlg</EM>) file name.
+
+<DT><B>att=</B><EM>name</EM> 
+
+<DD>DLG attribute (<EM>dlg.att</EM>) file name.
+</DL>
+
+<H2>SEE ALSO</H2>
+<p>
+<EM><A HREF="v.digit.html">v.digit</A></EM>,
+<EM><A HREF="v.import.html">v.import</A></EM>,
+<EM><A HREF="v.in.dlg.html">v.in.dlg</A></EM>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS P.W.Carlson, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

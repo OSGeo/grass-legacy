@@ -1,4 +1,3 @@
-/* %G% %W% */
 /* Chris Rewerts
    rewerts@ecn.purdue.edu
    Agricultural Engineering, Purdue University
@@ -18,6 +17,8 @@
 #include "raster.h"
 #include "display.h"
 #include "linegraph.h"
+#include <math.h>
+
 #define MAX(x,y)             (( x>y ) ? x : y)
 #define MIN(x,y)             (( x<y ) ? x : y)
 

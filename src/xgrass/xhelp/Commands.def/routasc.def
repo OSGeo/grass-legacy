@@ -1,8 +1,0 @@
-
-
-r.out.ascii - 
-
-r.out.ascii converts a user-specified @glossary("raster",16.glossary/rastdata.def) @glossary("map layer",16.glossary/maplayer.def) into an
-ASCII text file suitable for export to other computer systems.
-
-Manual entry for @man("r.out.ascii")

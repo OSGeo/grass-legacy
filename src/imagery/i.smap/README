@@ -1,0 +1,29 @@
+Charles A. Bouman 
+
+http://dynamo.ecn.purdue.edu/~bouman/software/segmentation/
+http://dynamo.ecn.purdue.edu/~bouman/segment.html
+
+images_94_paper.tar.Z
+        This is a compressed and tarred directory containing
+        the test images used in the paper:
+             C. Bouman, M. Shapiro
+             "A Multiscale Model for Bayesian Image Segmentation"
+             IEEE Trans. on Image Processing
+             vol. 3, no. 2, pp 162-177, March 1994.
+
+        This data is useful because it has been used by a number
+        of authors to compare algorithms.
+
+
+images_91_paper.tar.Z
+        This is a compressed and tarred directory containing
+        the test images used in the paper:
+             C. Bouman, B. Lui, 
+             "Multiresolution Segmentation of Textured Images,"
+             IEEE Trans. PAMI
+             vol. 13, no. 2, pp 99-113, Feb. 1991.
+
+
+
+http://ee.www.ecn.purdue.edu/~bouman/
+

@@ -1,0 +1,124 @@
+<html>
+
+<TITLE>d.title</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.title</b></EM>  - Outputs a TITLE for a raster map layer in a form suitable 
+for display by <EM><A HREF="d.text.html">d.text</A></EM>.
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.title</B> 
+<BR>
+<B>d.title help</B> 
+<BR>
+<B>d.title</B>
+[<B>-f</B>] 
+<B>map=</B><EM>name</EM> 
+[<B>color=</B><EM>name</EM>] 
+[<B>size=</B><EM>value</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.title</EM>
+generates to standard output a string which can be used by 
+<EM><A HREF="d.text.html">d.text</A></EM> 
+to draw a TITLE for the raster map layer <EM>name</EM> in the active 
+display frame on the graphics monitor. 
+Output created by <EM>d.title</EM> can be redirected into a file, or piped 
+directly into <EM><A HREF="d.text.html">d.text</A></EM> 
+to display the map TITLE created by <EM>d.title</EM>. 
+The map TITLE created will include the map layer's name, 
+TITLE, MAPSET, LOCATION_NAME, geographic region 
+boundary coordinates, and cell resolution. 
+
+<P>
+
+The user can state program arguments on the command line, or type 
+simply <B>d.title</B> on the command line. In the latter case, the program 
+will prompt the user for the parameter values and flag setting using the 
+standard GRASS <A HREF="parser.html">parser</A> interface.
+
+<H3>Flag:</H3> 
+
+<DL>
+<DT><B>-f</B>
+<DD>Displays a fancier TITLE. 
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>map=</B><EM>name</EM>
+<DD>Name of an existing raster map layer in the user's mapset search path. 
+<DT><B>color=</B><EM>name</EM>
+<DD>Sets the current color to the <EM>name</EM> stated. 
+<BR>
+Options: red, orange, green, blue, indigo, violet, black, white, gray, 
+yellow, brown, and magenta 
+<BR>
+Default: <EM>white</EM> 
+<DT><B>size=</B><EM>value</EM>
+<DD>Sets the text size as a percentage of the active display frame's height, 
+to <EM>value</EM>. Floating point values can be used. 
+<BR>
+Options: 0 - 100 
+<BR>
+Default: 15.0 
+</DL>
+
+<H2>EXAMPLE</H2>
+
+For example, a user wishing to create a suitable TITLE for the 
+Spearfish, SD <EM>soils</EM> map layer and to display this TITLE in the 
+active display frame on the graphics monitor might type the following: 
+<DL>
+<DD> <B>d.title map=</B><EM>soils</EM> <B>color=</B><EM>red</EM> <B>size=</B><EM>5</EM><B> &gt; TITLE.file </B>
+<DD> <B><A HREF="d.text.html">d.text</A> &lt; TITLE.file</B> 
+</DL>
+Alternately, the user might pipe <EM>d.title</EM> output directly 
+into <EM><A HREF="d.text.html">d.text</A></B>:</EM> 
+<DL>
+<DD>
+<B>d.title map=</B><EM>soils</EM> <B>color=</B><EM>red</EM> <B>size=</B><EM>5</EM> | 
+<A HREF="d.text.html">d.text</A></B>
+</DL>
+
+<P>
+
+A file created by <EM>d.title</EM> can be displayed 
+with <EM><A HREF="d.text.html">d.text</A></EM>.
+Information contained in this file takes precedence over the 
+<EM>color</EM> and <EM>size</EM> parameters for 
+<EM><A HREF="d.text.html">d.text</A></EM>.
+
+<H2>NOTES</H2>
+
+The text created with 
+<EM><A HREF="d.text.html">d.text</A></EM> 
+will not necessarily fit within the 
+active display frame on the graphics monitor; 
+the user should choose a text size appropriate to this frame. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.font.html">d.font</A></EM><br>
+<EM><A HREF="d.text.html">d.text</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+James Westervelt, 
+U.S. Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

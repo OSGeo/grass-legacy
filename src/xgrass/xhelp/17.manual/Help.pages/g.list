@@ -1,5 +1,0 @@
-
-@man("g.list") - Lists available GRASS data base files of the specified
-data type to standard output.
-
-(GRASS File Management Program)

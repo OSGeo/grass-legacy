@@ -29,6 +29,37 @@ int dxf_add_boundaries (void)
     {
 	if (layers[count].type != DXF_ASCII)
 	    continue;
+
+        /* Current opened layers opened using G_fopen_append to find lines
+         * and append info.
+         * However, G_fopen_modify should be used to update header infomation
+         * which is located starting part of a file.
+         */ 
+	sprintf (filename, "%s.%s", base_name, layers[count].name);
+
+	if(!ascii_flag->answer) /* FOR USE IN BINARY FILE */
+	{
+	    fclose(layers[count].Map->dig_fp);
+	    layers[count].Map->dig_fp = G_fopen_modify ("dig", filename);
+
+	    if (layers[count].Map->dig_fp == NULL)
+	    {
+		fprintf(stderr,"error: unable to open dig file\n");
+		exit (-1);
+	    }
+	}
+	else
+	{
+	    fclose(layers[count].fd);
+	    layers[count].fd = G_fopen_modify ("dig_ascii", filename);
+
+	    if (layers[count].fd == NULL)
+	    {
+		fprintf(stderr,"error: unable to open dig file\n");
+		exit (-1);
+	    }
+	}
+
 	if(!ascii_flag->answer) /* FOR USE IN BINARY FILE */
 			 dig_write_head_binary(layers[count].fd,&dxf_head);
 	else
@@ -59,10 +90,10 @@ int dxf_add_boundaries (void)
 		/* temporarily reopen file */
 		sprintf (filename, "%s.%s", base_name, closed_layers[count].name);
 		if(!ascii_flag->answer) /* FOR USE IN BINARY FILE */
-			fp = G_fopen_append ("dig", filename);
+			fp = G_fopen_modify ("dig", filename);
 
 		else
-			fp = G_fopen_append ("dig_ascii", filename);
+			fp = G_fopen_modify ("dig_ascii", filename);
 
 		if (fp == NULL)
 		{

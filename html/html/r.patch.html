@@ -1,0 +1,175 @@
+<HEAD>
+<TITLE>r.patch</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.patch</b></EM>  - Creates a composite raster map layer by using 
+known category values from one (or more) map layer(s) 
+to fill in areas of "no data" in another map layer. 
+<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.patch</B>
+<BR>
+<B>r.patch help</B> 
+<BR>
+<B>r.patch</B> 
+[<B>-qz</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] 
+<B>output=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+The GRASS program 
+<EM>r.patch</EM>
+allows the user to assign known data values from other raster map layers 
+to the <EM>"no data"</EM> areas (those assigned category value NULL/0) 
+in another raster map layer. 
+This program is useful for making a composite raster map layer 
+from two or more adjacent map layers, 
+for filling in "holes" in a raster map layer's data 
+(e.g., in digital elevation data), 
+or for updating an older map layer with more recent data. 
+
+<P>
+
+The program will be run non-interactively if the user specifies 
+program arguments on the command line, using the form:
+<DL>
+<DD>
+<B>r.patch</B> 
+[<B>-qz</B>] <B>input=</B><EM>name</EM>[,<EM>name</EM>,...] 
+<B>output=</B><EM>name</EM> 
+</DL>
+where each input <EM>name</EM> is the name of a raster map layer to be patched, 
+the output <EM>name</EM> is the name assigned to the new composite raster map 
+layer containing the patched result, 
+and the (optional) <B>-q</B> flag directs <EM>r.patch</EM> to run quietly. 
+
+<P>
+
+The first <EM>name</EM> listed in the string 
+<B>input=</B><EM>name</EM>,<EM>name</EM>,<EM>name</EM>, ...
+is the name of the base map whose zero data values will be attempted 
+to be filled by non-zero data values in the second through tenth 
+input <EM>name</EM> maps listed. 
+The second through tenth input <EM>name</EM> maps 
+will be used to supply remaining missing (zero) data values for the 
+first input map <EM>name</EM>,
+based on the order in which they are listed in the string 
+<B>input=</B><EM>name</EM>,<EM>name</EM>,<EM>name</EM>, ...
+
+<P>
+
+Alternately, the user can simply type <B>r.patch</B> on the command line, 
+without program arguments. In this case, the user will be prompted for the 
+flag setting and parameter values using the standard GRASS 
+<EM><A HREF="parser.html">parser</A></EM> interface.
+
+<H3>Flag:</H3> 
+
+<DL>
+<DT><B>-q</B>
+<DD>Directs that <EM>r.patch</EM> run quietly, suppressing output of messages 
+on program progress to standard output. 
+<DT><B>-z</B>
+<DD>Use zero (0) for transparency instead of NULL.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM>,<EM>name</EM>,...
+<DD>The name(s) of between one and ten existing raster map layers to be patched 
+together. The first of the ten maps listed will be used as a base map, 
+and the second through tenth maps listed will be used to supply missing (zero) 
+category values for the first map. 
+
+<DT><B>output=</B><EM>name</EM>
+<DD>The name of the new raster map to contain the resultant patched output. 
+</DL>
+
+<H2>EXAMPLE</H2>
+
+Below, the raster map layer on the far left is <B>patched</B> 
+with the middle (<EM>patching</EM>) raster map layer, 
+to produce the <EM>composite</EM> raster map layer on the right. 
+
+<PRE>
+  1 1 1 0 2 2 0 0    0 0 1 1 0 0 0 0    1 1 1 1 2 2 0 0
+  1 1 0 2 2 2 0 0    0 0 1 1 0 0 0 0    1 1 1 2 2 2 0 0
+  3 3 3 3 2 2 0 0    0 0 0 0 0 0 0 0    3 3 3 3 2 2 0 0
+  3 3 3 3 0 0 0 0    4 4 4 4 4 4 4 4    3 3 3 3 4 4 4 4
+  3 3 3 0 0 0 0 0    4 4 4 4 4 4 4 4    3 3 3 4 4 4 4 4
+  0 0 0 0 0 0 0 0    4 4 4 4 4 4 4 4    4 4 4 4 4 4 4 4
+</PRE>
+
+Switching the <EM>patched</EM> and the <EM>patching</EM> raster map layers 
+produces the following results: 
+
+<PRE>
+  0 0 1 1 0 0 0 0    1 1 1 0 2 2 0 0    1 1 1 1 2 2 0 0
+  0 0 1 1 0 0 0 0    1 1 0 2 2 2 0 0    1 1 1 1 2 2 0 0
+  0 0 0 0 0 0 0 0    3 3 3 3 2 2 0 0    3 3 3 3 2 2 0 0
+  4 4 4 4 4 4 4 4    3 3 3 3 0 0 0 0    4 4 4 4 4 4 4 4
+  4 4 4 4 4 4 4 4    3 3 3 0 0 0 0 0    4 4 4 4 4 4 4 4
+  4 4 4 4 4 4 4 4    0 0 0 0 0 0 0 0    4 4 4 4 4 4 4 4
+</PRE>
+
+<H2>NOTES</H2>
+
+Frequently, this program is used to patch together adjacent map 
+layers which have been digitized separately. 
+The programs 
+<EM><A HREF="v.mkquads.html">v.mkquads</A></EM> 
+and 
+<EM><A HREF="v.mkgrid.html">v.mkgrid</A></EM> 
+can be used to make adjacent maps align neatly. 
+
+<P>
+
+The user should check the current geographic region settings before running 
+<EM>r.patch</EM>, to ensure that the region boundaries encompass all 
+of the data desired to be included in the composite map. 
+
+<P>
+
+Use of <EM>r.patch</EM> is generally followed by use of the GRASS programs 
+<EM><A HREF="g.remove.html">g.remove</A></EM> and 
+<EM><A HREF="g.rename.html">g.rename</A></EM>;
+<EM>g.remove</EM> is used to remove 
+the original (un-patched) raster map layers, 
+while <EM>g.rename</EM>
+is used to then assign to the newly-created 
+composite (patched) raster map layer the name of the original raster 
+map layer. 
+
+<P>
+
+<EM>r.patch</EM> creates support files for the patched, composite output map. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="g.remove.html">g.remove</A></EM><br>
+<EM><A HREF="g.rename.html">g.rename</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><br>
+<EM><A HREF="r.support.html">r.support</A></EM><br>
+<EM><A HREF="v.mkgrid.html">v.mkgrid</A></EM><br>
+<EM><A HREF="v.mkquads.html">v.mkquads</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, 
+U.S. Army Construction Engineering 
+Research Laboratory
+<br>
+-z flag by Huidae Cho

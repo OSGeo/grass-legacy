@@ -1,8 +1,7 @@
 PGM = ps.map
 
-LIBES = $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(DATETIMELIB) $(DIG_ATTLIB) $(IMAGERYLIB)
+LIBES = $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(DIG_ATTLIB) $(IMAGERYLIB) $(LINKMLIB)
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 OBJ =	main.o \
 	read_cfg.o \
@@ -20,6 +19,7 @@ OBJ =	main.o \
 	ctablfile.o \
 	ps_clrtbl.o \
 	ps_vector.o \
+	ps_area.o \
 	box_stuff.o \
 	gprims.o \
 	makeprocs.o \
@@ -57,7 +57,9 @@ OBJ =	main.o \
 	do_masking.o \
 	do_psfiles.o \
 	mtextbox.o \
-	groupfile.o
+	groupfile.o \
+	vect.o \
+	eps.o
 
 $(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) -o $@ $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
@@ -84,3 +86,4 @@ do_sites.o:	sites.h
 groupfile.o:	group.h
 
 $(LIBES):	#
+	  

@@ -5,7 +5,6 @@
  *   to the area.  If not, "0.0" is returned.
  */
 #include <math.h>
-#include "digit.h"
 #include "Vect.h"
 
 #ifndef HUGE_VAL

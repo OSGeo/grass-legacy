@@ -1,0 +1,136 @@
+<TITLE>r.mode</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.mode</b></EM>  - Finds the mode of values in a cover map within
+areas assigned the same category value in a user-specified base map.
+
+<BR>
+
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.mode</B>
+
+<BR>
+
+<B>r.mode help</B>
+
+<BR>
+
+<B>r.mode</B> <B>base=</B><EM>name </EM><B>cover=</B><EM>name </EM><B>output=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.mode</EM>
+calculates the most frequently occurring value (i. e., mode) of data contained in a <EM>cover</EM> raster map layer
+for areas assigned the same category value in the user-specified <EM>base</EM>
+raster map layer.
+These modes are stored in the
+new <EM>output</EM> map layer.
+
+
+<P>
+
+The <EM>output</EM> map is actually a <EM>reclass</EM> of the <EM>base</EM> map.
+
+
+<P>
+
+If the user simply types <B>r.mode</B> on the command line, the
+user is prompted for the parameter values
+through the standard 
+<A HREF="parser.html">parser</A>
+ interface (see <EM>parser</EM> manual entry).
+
+
+<P>
+
+Alternately, the user can supply all needed parameter values
+on the command line.
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>base=</B><EM>name</EM> 
+
+<DD>An existing raster map layer in the user's current mapset search path.
+For each group of cells assigned the same category value in the <EM>base</EM>
+map, the mode of the values assigned these cells in the <EM>cover</EM> map will be computed.
+
+<DT><B>cover=</B><EM>name</EM> 
+
+<DD>An existing raster map layer containing the values
+to be used to compute the mode within each category of the <EM>base</EM> map.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>The name of a new map layer to contain program output
+(a <EM>reclass</EM> of the <EM>base</EM> map).  The mode values will be stored
+in the <EM>output</EM> map.
+</DL>
+
+<H2>NOTES</H2>
+
+The user should use the results of <EM>r.mode</EM> with care.
+Since this utility assigns a value to each
+cell which is based on global information (i.e., information at spatial 
+locations other than just the location of the cell itself), the resultant 
+map layer is only valid if the geographic region and mask settings are
+the same as they were at the time that the result map was created.
+
+
+<P>
+
+Results are affected by the current region settings and mask.
+
+<H2>SEE ALSO</H2>
+
+<table width=300>
+	<tr>
+		<td><em><a href="g.region.html">g.region</a></em></td>
+		<td><em><a href="r.average.html">r.average</a></em></td>
+	</tr>
+
+	<tr>
+		<td><em><a href="r.cats.html">r.cats</a></em></td>
+		<td><em><a href="r.clump.html">r.clump</a></em></td>
+	</tr>
+	<tr>
+		<td><em><a href="r.describe.html">r.describe</a></em></td>
+		<td><em><a href="r.mapcalc.html">r.mapcalc</a></em></td>
+	</tr>
+	<tr>
+		<td><em><a href="r.mask.html">r.mask</a></em></td>
+		<td><em><a href="r.median.html">r.median</a></em></td>
+	</tr>
+	<tr>
+		<td><em><a href="r.mfilter.html">r.mfilter</a></em></td>
+		<td><em><a href="r.neighbors.html">r.neighbors</a></em></td>
+	</tr>
+	<tr>
+		<td><em><a href="r.reclass.html">r.reclass</a></em></td>
+		<td><em><a href="r.stats.html">r.stats</a></em></td>
+	</tr>
+	<tr>
+		<td><em><a href="parser.html">parser</a></em></td>
+	</tr>
+</table>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,
+U.S.Army Construction Engineering  
+Research Laboratory

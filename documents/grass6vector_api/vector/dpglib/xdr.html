@@ -1,0 +1,236 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Xdr Front End
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Xdr Front End
+</h1>
+
+<hr>   <!--------------------------------------------------->
+
+<blockquote><i>
+    Status:  Delta<br>
+    This module has been designed, and coded but is currently under 
+    review.  
+<p>
+
+    I need to review if this module provides any useful function.  I
+    definately deviated from the original design.
+</i></blockquote>
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li> <a href=#>  </a>
+    
+
+<li>dpgXdrP       <a href=#dpgXdrInit> dpgXdrInit </a>
+          (char *buffer, int size);
+
+
+<li>int           <a href=#dpgXdrCleanup> dpgXdrCleanup </a>
+       (dpgXdrP xdrp);
+
+
+<li>void          <a href=#dpgXdrBeginWrite> dpgXdrBeginWrite </a>
+    (dpgXdrP xdrp);
+
+
+<li>void          <a href=#dpgXdrEndWrite> dpgXdrEndWrite </a>
+      (dpgXdrP xdrp);
+
+
+<li>void          <a href=#dpgXdrBeginRead> dpgXdrBeginRead </a>
+     (dpgXdrP xdrp);
+
+
+<li>void          <a href=#dpgXdrEndRead> dpgXdrEndRead </a>
+       (dpgXdrP xdrp);
+
+
+<li>char *        <a href=#dpgXdrBuffer> dpgXdrBuffer </a>
+        (dpgXdrP xdrp);
+
+
+<li>int           <a href=#dpgXdrWrite> dpgXdrWrite </a>
+         (dpgXdrP xdrp, dpgFileP fp);
+
+
+<li>int           <a href=#dpgXdrRead> dpgXdrRead </a>
+          (dpgXdrP xdrp, dpgFileP fp, int size);
+
+
+<li>unsigned int  <a href=#dpgXdrGetSize> dpgXdrGetSize </a>
+       (dpgXdrP xdrp);
+
+
+<li>int           <a href=#dpgXdrDouble> dpgXdrDouble </a>
+        (dpgXdrP xdrp, double *d);
+
+
+<li>int           <a href=#dpgXdrFloat> dpgXdrFloat </a>
+         (dpgXdrP xdrp, float *f);
+
+
+<li>int           <a href=#dpgXdrInt> dpgXdrInt </a>
+           (dpgXdrP xdrp, int *i);
+
+
+<li>int           <a href=#dpgXdrLong> dpgXdrLong </a>
+          (dpgXdrP xdrp, long *l);
+
+
+<li>int           <a href=#dpgXdrShort> dpgXdrShort </a>
+         (dpgXdrP xdrp, short *s);
+
+
+<li>int           <a href=#dpgXdrChar> dpgXdrChar </a>
+          (dpgXdrP xdrp, char *d);
+
+
+<li>int           <a href=#dpgXdrString> dpgXdrString </a>
+        (dpgXdrP xdrp, char **s);
+
+
+<li>int           <a href=#dpgXdrOpaque> dpgXdrOpaque </a>
+        (dpgXdrP xdrp, PTR b, int size);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+<a name="dpgXdrInit">
+<pre>
+dpgXdrP       <strong>dpgXdrInit</strong>       (char *buffer, int size);
+
+</pre>
+
+<a name="dpgXdrCleanup">
+<pre>
+int           <strong>dpgXdrCleanup</strong>    (dpgXdrP xdrp);
+
+</pre>
+
+<a name="dpgXdrBeginWrite">
+<pre>
+void          <strong>dpgXdrBeginWrite</strong> (dpgXdrP xdrp);
+
+</pre>
+
+<a name="dpgXdrEndWrite">
+<pre>
+void          <strong>dpgXdrEndWrite</strong>   (dpgXdrP xdrp);
+
+</pre>
+
+<a name="dpgXdrBeginRead">
+<pre>
+void          <strong>dpgXdrBeginRead</strong>  (dpgXdrP xdrp);
+
+</pre>
+
+<a name="dpgXdrEndRead">
+<pre>
+void          <strong>dpgXdrEndRead</strong>    (dpgXdrP xdrp);
+
+</pre>
+
+<a name="dpgXdrBuffer">
+<pre>
+char *        <strong>dpgXdrBuffer</strong>     (dpgXdrP xdrp);
+
+</pre>
+
+<a name="dpgXdrWrite">
+<pre>
+int           <strong>dpgXdrWrite</strong>      (dpgXdrP xdrp, dpgFileP fp);
+
+</pre>
+
+<a name="dpgXdrRead">
+<pre>
+int           <strong>dpgXdrRead</strong>       (dpgXdrP xdrp, dpgFileP fp, int size);
+
+</pre>
+
+<a name="dpgXdrGetSize">
+<pre>
+unsigned int  <strong>dpgXdrGetSize</strong>    (dpgXdrP xdrp);
+
+</pre>
+
+<a name="dpgXdrDouble">
+<pre>
+int           <strong>dpgXdrDouble</strong>     (dpgXdrP xdrp, double *d);
+
+</pre>
+
+<a name="dpgXdrFloat">
+<pre>
+int           <strong>dpgXdrFloat</strong>      (dpgXdrP xdrp, float *f);
+
+</pre>
+
+<a name="dpgXdrInt">
+<pre>
+int           <strong>dpgXdrInt</strong>        (dpgXdrP xdrp, int *i);
+
+</pre>
+
+<a name="dpgXdrLong">
+<pre>
+int           <strong>dpgXdrLong</strong>       (dpgXdrP xdrp, long *l);
+
+</pre>
+
+<a name="dpgXdrShort">
+<pre>
+int           <strong>dpgXdrShort</strong>      (dpgXdrP xdrp, short *s);
+
+</pre>
+
+<a name="dpgXdrChar">
+<pre>
+int           <strong>dpgXdrChar</strong>       (dpgXdrP xdrp, char *d);
+
+</pre>
+
+<a name="dpgXdrString">
+<pre>
+int           <strong>dpgXdrString</strong>     (dpgXdrP xdrp, char **s);
+
+</pre>
+
+<a name="dpgXdrOpaque">
+<pre>
+int           <strong>dpgXdrOpaque</strong>     (dpgXdrP xdrp, PTR b, int size);
+
+</pre>
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

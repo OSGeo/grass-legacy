@@ -1,0 +1,59 @@
+<TITLE>v.clean</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.clean</b></EM>  - Cleans out <EM>dead</EM> lines in GRASS vector files. 
+<BR>
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.clean</B> 
+<BR>
+<B>v.clean help</B> 
+<BR>
+<B>v.clean map=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+When programs like digit delete lines, they do not really go away, but 
+are simply marked as deleted. This is done primarily for speed. But 
+a side effect is that vector files can end up carrying a lot of dead weight 
+with them. 
+
+<P>
+
+<EM>v.clean</EM> will go through a vector file and remove all dead lines in 
+the file thus potentially reducing the size of the file. 
+
+<P>
+
+You do <EM>not</EM> have to run 
+<EM><A HREF="v.support.html">v.support</A></EM> afterwards.
+
+<H2>OPTIONS</H2>
+
+<H3>Parameter:</H3> 
+
+<DL>
+<DT><B>map</B>
+<DD>Name of the GRASS vector file to be cleaned. 
+</DL>
+
+<H2>BUGS</H2>
+
+None known. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM><br>
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHOR</H2>
+
+David Gerdes, U.S. Army Construction Engineering 
+Research Laboratory
+

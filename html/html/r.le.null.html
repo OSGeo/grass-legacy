@@ -1,0 +1,46 @@
+<TITLE>r.le.null</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+<EM><B>r.le.null</B></EM> - The <EM>r.le.null</EM> program is designed to generate a neutral structure map layer.  This map layer can be used as a "null hypothesis" layer for testing the statistical significance of landscape measures.<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>GRASS VERSION</H2>
+4.x
+
+<H2>SYNOPSIS</H2>
+<B>r.le.null</B><BR>
+<B>r.le.null help</B><BR>
+<B>r.le.null map=</B><EM>name</EM> <B>num=</B><EM>value</EM> <B>att=</B><EM>value[,value,...]</EM> <B>pro=</B><EM>value[,value,...]</EM>
+ 
+<H3>Parameters:</H3>
+<DL>
+<DT><B>map</B>
+<DD>Raster map, with neutral structure, to be created.
+
+<DT><B>num</B>
+<DD>Number of attributes desired in the map (max = 24).
+
+<DT><B>att</B>
+<DD>Attribute i (an integer) of 'num' attributes.
+
+<DT><B>pro</B>
+<DD>Probability (as a % between 0-100) for attribute i of 'num' attributes.
+</DL>
+
+<H2>SEE ALSO</H2>
+The <A HREF="../../terrain/r_le_22.html"><EM>r.le</EM> Programs</A> Users Guide<BR>
+<EM><A HREF="r.le.dist.html">r.le.dist</A>,
+<A HREF="r.le.patch.html">r.le.patch</A>,
+<A HREF="r.le.pixel.html">r.le.pixel</A>,
+<A HREF="r.le.rename.html">r.le.rename</A>,
+<A HREF="r.le.setup.html">r.le.setup</A>, 
+<A HREF="r.le.trace.html">r.le.trace</A></EM>
+
+<H2>AUTHOR</H2>
+William L. Baker, Department of Geography and Recreation, University of Wyoming

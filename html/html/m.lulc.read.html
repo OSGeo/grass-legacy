@@ -1,0 +1,145 @@
+<TITLE>m.lulc.read</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>m.lulc.read</b></EM>  - Extracts Landuse/Landcover data in the ASCII 
+Composite Theme Grid (CTG) data format distributed by the 
+USGS in to a working file for <EM>
+<A HREF="m.lulc.USGS.html">m.lulc.USGS</A>
+</EM>.
+
+<BR>
+
+<EM>(GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>dd </B>[<B>if=</B><EM>tapedev</EM>] <B>ibs=</B><EM>input block_size</EM> <B>cbs=</B><EM>80 </EM><B>conv=</B><EM>unblock</EM><B> | m.lulc.read </B><EM>arg1</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.lulc.read</EM>
+extracts USGS Land Use/Land Cover data distributed in
+the ASCII CTG format.  Extracted data is placed into a file specified
+by <EM>arg1</EM>.  <EM>m.lulc.read</EM> should be used prior to using the GRASS
+program <EM>
+<A HREF="m.lulc.USGS.html">m.lulc.USGS</A>
+</EM>.
+
+
+<P>
+
+<EM>m.lulc.read</EM> reads the data from standard input, allowing the user
+to pipe in the data from a file.
+
+
+<P>
+
+Data can also be read directly from the 1/2-inch magnetic tape
+distributed by USGS, by using the UNIX command <EM>dd</EM>.
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>if=</B><EM>tapedev</EM> 
+
+<DD>The pathname of the input tape drive (usually <B>/dev/rmt0</B>).
+
+<DT><B>ibs=</B><EM>input</EM> 
+
+<DD>The physical blocking value of the data on tape,
+usually written on the tape spool.  If this value is
+unknown, run <EM>
+<A HREF="m.examine.tape.html">m.examine.tape</A>
+</EM> prior to <EM>m.lulc.read</EM>.
+
+<DT><B>cbs</B> 
+
+<DD>This is the conversion blocking factor for ASCII CTG
+file and is by default set to <B>80</B>.
+
+<DT><B>conv</B> 
+
+<DD>Set <EM>conv</EM> to <B>unblock</B> when extracting ASCII CTG data.
+
+<DT><B>arg1</B> 
+
+<DD>The name of the output file where the data will be stored in binary format.
+</DL>
+
+<H2>EXAMPLES</H2>
+
+READING FROM A FILE:
+
+
+<P>
+
+<DL>
+<DD>
+<B>m.lulc.read outfile &lt; infile</B>
+</DL>
+
+
+<P>
+
+The above command will read the data from <EM>infile</EM> and place
+the results into <EM>outfile</EM>.  Note that <EM>infile</EM> must be extracted
+from the USGS CTG 1/2 magnetic tape using the UNIX <EM>dd</EM> command:
+
+
+<P>
+
+<DL>
+<DD>
+<B>dd if=/dev/rmt0 of=infile ibs=32000 cbs=80 conv=unblock</B>
+</DL>
+
+
+<P>
+
+READING DIRECTLY FROM 1/2 INCH MAGNETIC TAPE:
+
+
+<P>
+
+<DL>
+<DD>
+<B>dd if=/dev/rmt0 ibs=32000 cbs=80 conv=unblock | m.lulc.read outfile</B>
+</DL>
+
+
+<P>
+
+The above command will extract data with a blocksize of 32000 from
+<EM>/dev/rmt0</EM>, and put the results in the file <EM>outfile</EM>. 
+
+<H2>SEE ALSO</H2>
+
+UNIX manual entry for <EM>dd</EM>
+
+
+<P>
+
+<EM>
+<A HREF="m.examine.tape.html">m.examine.tape</A>
+</EM><br>
+<EM>
+<A HREF="m.lulc.USGS.html">m.lulc.USGS</A>
+</EM>
+
+<H2>AUTHOR</H2>
+
+Kenneth Shepardson, Spectrum Sciences &amp; Software, Inc. (904) 862-3031

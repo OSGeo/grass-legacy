@@ -1,0 +1,178 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (X11; U; Linux 2.2.16 i686) [Netscape]">
+   <title>v.in.shape</title>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+
+<h2>NAME</h2>
+
+<EM><b>v.in.shape</b></EM> - Read an ArcView Shapefile
+
+<br>
+
+<EM>(GRASS Vector Program)</EM>
+
+<h2>SYNOPSIS</h2>
+
+<BR>
+
+<B>v.in.shape</B>
+<br><br>
+<b>v.in.shape[.pg] [-l][-r][-p] in=</b><EM>name</EM> [<b>mapset=</b><EM>name</EM>]
+<br>[<b>verbose=</b><EM>debug level</EM>] [<b>logfile=</b><EM>name</EM>]
+[<b>snapdist=</b><EM>snap distance</EM>]
+<br>[<b>sliver=</b><EM>min. angle</EM>] [<b>scale=</b><EM>orig.
+scale</EM>] [<b>attribute=</b><EM>attribute category</EM>]
+<br>[<b>label=</b><EM>category label</EM>]
+
+
+<h2>DESCRIPTION</h2>
+
+The <EM>v.in.shape</EM> program is designed to import ArcView Shapefiles.
+<EM>v.in.shape</EM> will be run non-interactively if the user specifies
+program arguments on the command line. Alternately, the user can simply type:
+
+<br><br>
+
+<b>v.in.shape&nbsp;&nbsp;</b><EM> or&nbsp;</EM><b> v.in.shape.pg</b>
+<br><br>on the command line without program arguments. In this
+case, the user will be prompted for parameter values using the standard
+GRASS user interface described in the manual entry for <EM>parser</EM>.
+
+<h2>FEATURES</h2>
+
+Grass files created have the name extracted from the basename
+of the shapefile.
+
+<BR>
+
+
+The import filter attempts to correct some common errors
+that are frequently met with in shapefiles.
+
+<BR>
+
+<h2>OPTIONS</h2>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><b>-l</b>
+<DD>List the fields contained in the DBF file associated with the
+input shapefile, then exit.
+
+<DT><b>-r</b>
+<DD>Create a reject lines file. During import some lines are not
+imported for a variety of reasons.
+
+<DT><b>-p</b>
+<DD>Dump the fields of the shapefile from DBF to a postgres table. 
+<BR><B>*NOTE: </B>This option is only available with <EM>v.in.shape.pg</EM>
+
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input</B>=<EM>filename</EM>
+<DD>Name of input shape file. Provide a full path name or the name
+of a file in the current directory. Any of the full pathname, basename, 
+or prefix only will suffice.
+
+<DT><B>verbose</B>=<EM>integer</EM> 
+<DD>Number between 0 (no trace of what's happening) and 9 (very verbose log).
+Name of file where log info will be written. By default log info are directed to 
+<EM>stderr</EM>.
+
+<DT><B>snapdist</B>=<EM>fp-number</EM> 
+<DD>A grid resolution can be defined within which adjacent vertices will snap.
+<br><b>Note:</b>The vertices do not snap to the grid. All
+the vertices inside a grid cell snap to one of their number (usually the
+first).  This value defaults to 1.0e-10 ground units. In fact, it
+will never allow a value that is less.
+
+<DT><B>sliver</B>=<EM>fp-number</EM>
+<DD>A minimum angle can be defined for one link to subtend others at
+a given node. If the angle between two lines is less than this, they will
+be treated as colinear.  This can be useful as the module now has features
+which attempt to correct some common topological errors that occur in the
+immediate vicinity of nodes. If you can be confident that true angles
+between adjacent arcs radiating from the same node cannot be less than a
+certain value, you can specify that value here, and some errors may be
+automatically corrected. This defaults to .0001 degrees. In fact it will
+never allow a value that is less.
+
+<DT><B>scale</B>=<EM>integer</EM>
+<DD>This sets an original scale that will be specified in the header of the
+vector map file produced.  It can be edited later with <b>v.digit</b>.
+The value defaults to 1:2400
+
+<DT><B>attribute</B>=<EM>name</EM>
+<DD>Name of the input field to use as the category number in dig_att. 
+Defaults to using the record ID number as a category value if no value
+is assigned or a non-numeric field is given. If the field is floating-point 
+the value is rounded to the nearest integer.
+
+<DT><B>label=</B><EM>name</EM>
+<DD>Name of the input field to use as the category label in dig_cats. Only
+writes out results if a meaningful category field is given, otherwise no action
+is taken. If the same attribute is re-assigned a new category, the value is 
+over-written.
+
+</DL>
+
+<h2>BUGS AND CAVEAT</h2>
+
+There is no support for projection.
+<BR><BR>
+Multipatch data is not yet supported. Point data (sites)
+also is not handled by this module. New module <EM>s.in.shape</EM> imports
+site data.
+<BR><BR>
+Resource hog. The filtration process uses a lot of memory
+in large files. The size of files that can be imported sufficiently depends
+on the resources of the local system, but performance degrades rapidly
+when you go into swap. On a system with 128MB physical RAM, files of up
+to 4000 polygons are typically imported easily.
+<BR><BR>
+Area and perimeter fields in input data may no longer
+be quite correct if the lines have been adjusted to correct topology problems.
+<br><BR>
+
+<h2>SEE ALSO</h2>
+
+<EM><a href="m.in.e00.html">m.in.e00</a>,
+<a href="g.mapsets.html">g.mapsets</a>,
+<a href="g.region.html">g.region</a>,
+<a href="v.digit.html">v.digit</a>,
+<a href="v.proj.html">v.proj</a>,
+<a href="s.in.shape.html">s.in.shape</a>,
+<a href="v.support.html">v.support</a>,
+<a href="v.to.rast.html">v.to.rast</a>,
+<a href="v.out.shape.html">v.out.shape</a></EM>
+
+<br>
+
+<h2>AUTHORS</h2>
+
+
+Frank Warmerdam (warmerda@home.com)
+<BR>
+Based on Shapelib (http://gdal.velocet.ca/projects/shapelib/).
+<BR><BR>
+Markus Neteler
+<br>added category support
+<BR><BR>
+David Gray
+<br>preprocessing to provide correct handling of polygon
+edges, labels and correction of some topological errors. Also some new
+options q.v.<BR>
+</body>
+</html>

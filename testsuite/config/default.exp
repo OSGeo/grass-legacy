@@ -1,0 +1,2 @@
+perror "Sorry, no support for this target"
+exit 1

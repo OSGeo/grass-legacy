@@ -1,0 +1,68 @@
+<TITLE>r.stage3</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r.stage3</B></EM> - NEXRAD weather radar input tool.<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>GRASS VERSION</H2>
+4.x
+
+<H2>SYNOPSIS</H2>
+<B>r.stage3</B> [<B>-v</B>] <B>input=</B><EM>name</EM> [<B>output=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+A Stage III precipitation product is a mosaic of all the Stage II precipitation estimates within the RFC (River Forecast Center) area.  The Stage III products are produced by merging radar precipitation estimates (Stage I) with ground truth data provided by rain gages.  In the Arkansas-red River Forecast Center (ABRFC) this includes 15 88-D radars and approximately 500 rain gages.  The 13 RFC's within the United States will eventually produce Stage III products.  As of 4-94 the ABRFC is the only RFC currently producing Stage III products.  As more radars come on line other RFC's will begin producing this product as well.  The 88-D radars have difficulty detecting precipitation when the raindrops are very small or when the precipitation is in the form of snow.  Under these conditions precipitation estimates tend to be under estimated.  Large Hail within a storm causes the radar to over estimate precipitation amounts.  The grid cell size is approximately 4 km by 4 km.  The NetCDF files containing the precipitation values in the units of 1/100 of mm can be obtained from ABRFC's gopher server.  <EM>r.stage3</EM> program generates the GRASS raster map layers only in the Lat/Lon coordinate system.  UTM is not utilized because the area being referenced is too large for a UTM zone.  The region settings for the ABRFC's coverage area is:
+<DL>
+<PRE>
+<DD> __________________________________________
+<DD> projection: 3 (Latitude-Longitude)
+<DD> zone:  0
+<DD> north: 41:16:06N
+<DD> south: 32:48:28N
+<DD> east:  90:53:28W
+<DD> west:  107:08:03W
+<DD> __________________________________________
+</PRE>
+</DL>
+
+You may use the clark66 spheroid and use any resolution that may be suitable as far as your other data requirements are concerned. (start with esres= nsres = 0:00:30).
+<P>
+This version of <EM>r.stage3</EM> will work only on NetCDF files created after the 6th of April 1994.
+<P>
+You will need the NetCDF libraries created by the Unidata Program Center.  The NetCDF libraries can be obtained via anonymous ftp from unidata.ucar.edu under pub/netcdf/netcdf.tar.Z.  You will the need to compile the libraries.  <EM>r.stage3</EM> can be only run within GRASS.   <EM>r.stage3</EM> needs both the NetCDF libraries as well as the GRASS libraries.  If you have all the libraries then <EM>r.stage3</EM> can be compiled simply by running "gmake" (For GRASS 4.2 it is gmake4.2) in this directory.
+<P>
+In the above, if the output parameter is not specified then a mapname with the same name as that of the input parameter is created.  The rainbow colortable is created for the resultant map.  The resulting maps have a resolution of 0:02:59.
+<P>
+A few sample NetCDF files and the corresponding GIF files are provided in the sample directory.  The vector directory contains the vector boundary output from the command <EM>v.out.ascii</EM> of the ABRFC basin.
+<P>
+To run <EM>r.stage3</EM> on the sample files just go into the sample directory and type:
+<P>
+<DD><EM>r.stage3 -v in=04059418.nc</EM>
+<P>
+This will create a raster map by the name 04059418.nc.  Similarly <EM>r.stage3</EM> can be run on other sample files. You can use the corresponding GIF files to compare them.  Since the GIF files are in a different projection system, there is some distortion in between the raster maps and the GIF file.  However the values in the raster are properly georeferenced.
+
+<H3>OPTIONS</H3>
+<H3>Flag:</H3>
+<DL>
+<DT><B>-v</B>
+<DD>Verbose
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input = name</B>
+<DD>Name of the netcdf file to be converted.
+
+<DT><B>output = name</B>
+<DD>Name of the resultant raster map.
+</DL>
+
+<H2>AUTHORS</H2>
+Nalneesh Gaur, Arkansas Red Basin River Forecast Center<BR>
+Norman L. Bingham, Arkansas Red Basin River Forecast Center

@@ -1,0 +1,42 @@
+INTER_CFILES = Build_inter.c\
+	Col.c\
+	CountLines.c\
+	CountCats.c\
+	FindAtt_Cat.c\
+	FindIDColumn.c\
+	A_labs_inter.c\
+	GenToDig.c\
+	L_labs_inter.c\
+	DO_txt_file.c\
+	process_inp.c\
+	main_inter.c \
+	dbfopen.c \
+	pgdump.c
+
+INTER_OBJ = Build_inter.o\
+	Col.o\
+	CountLines.o\
+	CountCats.o\
+	FindAtt_Cat.o\
+	FindIDColumn.o\
+	A_labs_inter.o\
+	GenToDig.o\
+	L_labs_inter.o\
+	DO_txt_file.o\
+	process_inp.o\
+	main_inter.o \
+	dbfopen.o \
+	pgdump.o
+
+PGM = v.in.arc.pg
+HOME = $(BIN_CONTRIB_CMD)
+EXTRA_CFLAGS = $(PQINCPATH)
+
+all:  $(BIN_CONTRIB_CMD)/$(PGM)
+
+$(HOME)/$(PGM): $(INTER_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(XEXTRALIBS)
+	$(CC) -o $@  $(LDFLAGS) $(INTER_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB) $(PQLIB)
+
+$(VECTLIB): #
+$(GISLIB): #
+$(DIG_ATTLIB): #

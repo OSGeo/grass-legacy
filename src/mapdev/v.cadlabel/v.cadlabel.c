@@ -6,14 +6,14 @@
 #include    <math.h>
 #include    "gis.h"
 #include    "Vect.h"
-#include    "digit.h"
-#include    "dig_head.h"
 #include    "local_proto.h"
 
 #ifndef LINE_LABELED
 #define LINE_LABELED(p) (LINE_ALIVE (p) && (p)->att)      
 #endif
-
+#ifdef __CYGWIN__
+#define HUGE HUGE_VAL
+#endif
 
 #define MAIN
 /*#define  USAGE  "v.cadlabel lines=linefile labels=labelfile"

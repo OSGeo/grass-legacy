@@ -1,13 +1,23 @@
 /*-s.probplot
 **
-** Author: James Darrell McCauley 
-**         McCauley Technical Services
-**         PO Box 2485
-**         West Lafayette, Indiana 47906-0485 USA
+** Author: James Darrell McCauley darrell@mccauley-usa.com
+** 	                          http://mccauley-usa.com/
 **
-** Permission to use, copy, modify, and distribute this software and its
-** documentation for any purpose and without fee is hereby granted. This
-** software is provided "as is" without express or implied warranty.
+** This program is free software; you can redistribute it and/or
+** modify it under the terms of the GNU General Public License
+** as published by the Free Software Foundation; either version 2
+** of the License, or (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+**
+** $Id$
 **
 ** Modification History:
 ** 0.1B <14 Oct 1994> first version
@@ -15,6 +25,7 @@
 **      Thanks to E.A. Koster <ekoster@let.rug.nl> for noticing the problem.
 ** 0.3B <02 Jan 1995> added version.h, cleaned man page, added html (jdm)
 ** 0.4B <25 Feb 1995> cleaned 'gcc -Wall' warnings (jdm)
+** <13 Sep 2000> released under GPL
 **/
 
 #pragma ident "s.probplt v 0.4B <25 Feb 1995>; Copyright (c) 1994-1995. James Darrell McCauley"
@@ -37,6 +48,7 @@ int main (argc, argv)
   int all, i, log, verbose, dcmp (), readz(), pltsqq();
 
   struct Cell_head window;
+  struct GModule *module;
   double factor;
   double  *z;
   FILE *fdsite;
@@ -51,6 +63,10 @@ int main (argc, argv)
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "Normal probability plot of a GRASS site list.";
+                  
   parm.input = G_define_option ();
   parm.input->key = "sites";
   parm.input->type = TYPE_STRING;

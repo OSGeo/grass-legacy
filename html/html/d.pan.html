@@ -1,0 +1,82 @@
+<html>
+
+<TITLE>d.pan</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.pan</b></EM>  - Allows the user to change the current geographic 
+region settings interactively, with a mouse. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.pan</B>
+<BR>
+<B>d.pan help</B> 
+<BR>
+<B>d.pan</B> [<B>-j</B>] 
+[<B>rast=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>vector=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>site=</B><EM>name</EM>[,<EM>name</EM>,...]]
+[<B>zoom=</B><EM>value</EM>] 
+<BR>
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.pan</EM> allows the user to interactively adjust the settings 
+(zoom and pan) of the current geographic region using a pointing
+device such as a mouse. 
+Like <EM><A HREF="g.region.html">g.region</A></EM>, 
+<EM>d.pan</EM> re-defines the settings of the geographic
+region.  However, <EM>d.pan</EM> allows the user to change
+the current region settings interactively, by re-centering/zooming
+the current map(s). The graphics display is updated automatically. 
+
+<H2>OPTIONS</H2>
+
+<H3>Flag:</H3> 
+
+<DL>
+<DT><B>-j</B>
+
+<DD>Just redraw given maps using default colors.
+
+</DL>
+
+<H3>Parameter:</H3> 
+
+<DL>
+<DT><B>rast=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name of raster map(s)
+<DT><B>vector=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name of vector map(s)
+<DT><B>site=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name of site map(s)
+<DT><B>zoom=</B><EM>value</EM>
+<DD>magnification: &gt;1.0 zooms in, &lt;1.0 zooms out<br>
+           options: 0.001-1000.0<br>
+           default: 1.0
+</DL>
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.display.html">d.display</A></EM><br>
+<EM><A HREF="d.erase.html">d.erase</A></EM><br>
+<EM><A HREF="d.rast.html">d.rast</A></EM><br>
+<EM><A HREF="d.vect.html">d.vect</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM>
+
+<H2>AUTHOR</H2>
+
+Unkown.<br>
+Improvements to auto-redraw maps displayed in GRASS monitor by Huidae Cho and Markus Neteler
+</body>
+</html>

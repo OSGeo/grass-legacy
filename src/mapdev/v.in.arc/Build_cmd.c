@@ -32,7 +32,6 @@
 
 #include <stdio.h>
 #include "Vect.h"
-#include "dig_head.h"
 #include "AtoG.h"
 #include "v_in_arc.cmd.h"
 

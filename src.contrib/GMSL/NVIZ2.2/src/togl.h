@@ -1,8 +1,9 @@
-/* bugfix line 19  for NVIZ 8/99 MN*/
 /* togl.h */
 
 /*
  * Togl - a Tk OpenGL widget
+ * $Id$
+ *
  * Version:  1.0
  * Copyright (C) 1996  Brian Paul (brianp@ssec.wisc.edu) and
  * Ben Bederson (bederson@cs.unm.edu)  See the LICENSE file for details.
@@ -16,7 +17,11 @@
 
 #include <tcl.h>
 #include <tk.h>
-#include "tkInt.h"
+#if (TK_MINOR_VERSION) >= 3
+#include "tkInt8.3.h"
+#else
+#include "tkInt8.0.h"
+#endif
 #include <GL/glx.h>	   /* This includes the necessary X headers */
 #include <GL/gl.h>
 
@@ -96,6 +101,10 @@ extern void Togl_FreeColor( struct Togl *togl, unsigned long index );
 extern void Togl_SetColor( struct Togl *togl, unsigned long index,
                            float red, float green, float blue );
 
+void create_cb(struct Togl *);
+void reshape_cb(struct Togl *);
+void display_cb(struct Togl *);
+void swap_togl(void);
 
 #ifdef __cplusplus
 }

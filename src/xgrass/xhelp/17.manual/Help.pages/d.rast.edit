@@ -1,5 +1,0 @@
-
-@man("d.rast.edit") - Allows users to interactively edit cell category values
-for a raster map layer displayed on the graphics monitor.
-
-(GRASS Display Program)

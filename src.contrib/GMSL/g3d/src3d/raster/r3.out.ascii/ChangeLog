@@ -1,0 +1,43 @@
+Mon Jun  2 10:21:54 CDT 1997  Bill Brown <brown@gis.uiuc.edu>
+	
+	* main.c: Added option to select number of decimal places to
+	write when writing floats (will be doubled for doubles)
+
+Mon Jun  3 13:47:27 CDT 1996  Bill Brown <brown@gis.uiuc.edu>
+
+	* main.c: Changed open to use G_find_grid3 instead of only
+	looking in G_mapset().
+
+Wed Apr 17 11:07:23 1996  Mark Astley  <astley@gambit.gis.uiuc.edu (Mark Astley)>
+
+	* main.c: Added support for handling null values.  The user may
+	specify a string to be output when null values are detected.  The
+	default is an asterisk (i.e. "*").
+
+Thu Apr 11 12:42:48 1996  Mark Astley  <astley@gambit.gis.uiuc.edu (Mark Astley)>
+
+	* main.c: Added the -h flag which allows the user to suppress the
+	output of header information.
+
+	(main): Modified output so that if no output file is specified
+	then the output goes to stdout instead.
+
+Wed Apr 10 11:05:46 1996  Mark Astley  <astley@gambit.gis.uiuc.edu (Mark Astley)>
+
+	* main.c: Changed the entire source file to be in ansi standard
+	form.  I really hate k&r code.
+
+	(main): Finished version which just outputs header info.  Next I
+	will work on getting the layers read in correctly and outputing
+	them in a format which can be read by r3.in.ascii.
+
+Thu Apr  4 11:45:37 1996  Mark Astley  <astley@gambit.gis.uiuc.edu (Mark Astley)>
+
+	* main.c: Start of r3.out.ascii.  Basically I'm just modifying
+	Roman's r3.in.ascii code with a few additional features.  No big
+	deal.
+
+Sat Apr 29 17:22:15 CEST 2000 Jaro Hofierka hofierka@geomodel.sk
+
+	main.c: r3.out.ascii2 outputs volume data due to actual region settings, 
+	not size of the map.

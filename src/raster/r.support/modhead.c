@@ -71,7 +71,7 @@ int main (int argc, char *argv[])
     }
 
 /* open the cell file */
-    fd = G_open_old ("cell", name, mapset);
+    fd = G_open_cell_old (name, mapset);
     if (fd < 0)
     {
 	sprintf (buffer, "%s - can't open raster file\n", name);
@@ -290,7 +290,8 @@ hitreturn();
 	exit(0);
 
 /* adjust from nbytes to nbytes-1 */
-    if (cellhd.format > 0)
+/* FP map should be back to -1 */
+/* if (cellhd.format > 0) */
 	cellhd.format--;
 
 /* Write new header out */

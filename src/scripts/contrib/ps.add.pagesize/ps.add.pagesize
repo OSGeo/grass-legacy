@@ -73,7 +73,7 @@
 ############################################################################
 # Check for file name argument
 
- if [ $# != 1 ]
+ if [ $# != 1  -o "$1" = "-help" -o "$1" = "help" ]
    then
    echo
    echo -n "Enter name of PostScript file that needs to be edited:  "

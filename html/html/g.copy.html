@@ -1,0 +1,204 @@
+<html>
+
+<TITLE>g.copy</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>g.copy</b></EM>  - Copies available data files in the user's current mapset
+search path and location to the appropriate element directories under
+the user's current mapset.
+
+<BR>
+
+<EM>(GRASS File Management Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>g.copy</B>
+
+<BR>
+
+<B>g.copy help</B>
+
+<BR>
+
+<B>g.copy</B> [<B>rast=</B><EM>from,to</EM>] 
+[<B>vect=</B><EM>from,to</EM>] 
+[<B>icon=</B><EM>from,to</EM>] 
+[<B>labels=</B><EM>from,to</EM>] 
+[<B>sites=</B><EM>from,to</EM>]
+[<B>region=</B><EM>from,to</EM>] [<B>group=</B><EM>from,to</EM>]
+
+<H2>DESCRIPTION</H2>
+
+A user may access data stored under the other mapsets
+listed in his mapset search path.  However, the user may
+only modify data stored under his own current mapset.
+<EM>g.copy</EM> allows the user to copy existing data files
+<EM>from</EM> other mapsets <EM>to</EM> the user's current
+mapset ($MAPSET).  The files to be copied must exist in the
+user's current mapset search path and location; output is
+sent to the relevant data element directory(ies) under the
+user's current mapset.
+
+<H2>OPTIONS</H2>
+
+The user specifies the type(s) of data files he wishes to
+copy (raster, vector, etc.), the name of the existing file
+to be copied (i.e., the <EM>from</EM> file name), and the
+name of the new file copy to be placed in the user's
+current mapset (the <EM>to</EM> file name).  This
+information can be given either (non-interactively) on the
+command line, or entered in response to program prompts
+given via the standard 
+
+<A HREF="parser.html"><EM>parser</EM></A> interface.
+
+
+<P>
+
+Information can be entered on the command line in the following format:
+
+<DL>
+<DD>
+<B>g.copy</B> [<B>rast=</B><EM>from,to</EM>] 
+[<B>vect=</B><EM>from,to</EM>] 
+[<B>icon=</B><EM>from,to</EM>] 
+[<B>labels=</B><EM>from,to</EM>] 
+[<B>sites=</B><EM>from,to</EM>]
+[<B>region=</B><EM>from,to</EM>] [<B>group=</B><EM>from,to</EM>]
+</DL>
+
+
+<P>
+
+For example, if the user wished to copy the existing raster
+file <EM>soils</EM> to a file called <EM>soils.ph</EM> and
+to copy an existing vector file <EM>roads</EM> to a file
+called <EM>rds.old</EM>, the user could type:
+
+<DL>
+<DD>
+<B>g.copy rast=</B><EM>soils,soils.ph</EM> <B>vect=</B><EM>roads,rds.old</EM>
+</DL>
+
+
+Data files can also be specified by their mapsets.  For
+example, the below command copies the raster file named
+<EM>soils</EM> from the mapset <EM>wilson</EM> to a new
+file called <EM>soils</EM> to be placed under the user's
+current mapset:
+
+
+<DL>
+<DD>
+<B>g.copy rast=</B><EM>'soils@wilson',soils</EM>
+</DL>
+
+If no mapset name is specified, <EM>g.copy</EM> searches
+for the named <EM>from</EM> map in each of the mapset
+directories listed in the user's current mapset search path
+in the order in which mapsets are listed there (see 
+
+<EM><A HREF="g.mapsets.html">g.mapsets</A></EM>).
+
+
+<P>
+
+If the user does not enter parameter values but instead
+types only <B>g.copy</B> on the command line the program
+will prompt the user for a data type, the name of a file of
+this data type to copy, and the name of a new file to hold
+the copy.  After both file names have been entered, the
+copy is created and the user is again prompted for a data
+element to be copied, until the user hits RETURN.  When
+prompted for file names, the user may enter 'list' to see a
+list of existing files, or hit RETURN to end the file
+listing.
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>3dview=</B><EM>from,to</EM> 
+
+<DD>where <EM>from</EM> is an existing 3d options file,
+and <EM>to</EM> is the name given to the copy.
+
+<DT><B>rast=</B><EM>from,to</EM> 
+
+<DD>where <EM>from</EM> is an existing raster map layer to
+be copied, and <EM>to</EM> is the name given to the copy.
+
+<DT><B>vect=</B><EM>from,to</EM>
+
+<DD>where <EM>from</EM> is an existing binary vector map
+layer to be copied, and <EM>to</EM> is the name given to
+the copy.
+
+<DT><B>icon=</B><EM>from,to</EM> 
+
+<DD>where <EM>from</EM> is an existing 
+
+<A HREF="paint.html">paint</A> 
+
+icon file to be copied, and <EM>to</EM> is the name given to the copy.
+
+<DT><B>labels=</B><EM>from,to</EM> 
+
+<DD>where <EM>from</EM> is an existing 
+<KBD>/<A HREF="paint.html">paint</A>/labels</KBD> file to be copied,
+and <EM>to</EM> is the name given to the copy.
+
+<DT><B>sites=</B><EM>from,to</EM> 
+
+<DD>where <EM>from</EM> is an existing
+<KBD>site_lists</KBD> file to be copied, and <EM>to</EM> is
+the name given to the copy.
+
+<DT><B>region=</B><EM>from,to</EM> 
+
+<DD>where <EM>from</EM> is an existing region definition
+(<EM>windows</EM>) file to be copied, and <EM>to</EM> is
+the name given to the copy.
+
+<DT><B>group=</B><EM>from,to</EM>
+
+<DD>where <EM>from</EM> is an existing 
+
+<A HREF="i.group.html">imagery</A> group file to be copied,
+and <EM>to</EM> is the name given to the copy.
+
+</DL>
+
+<H2>NOTE</H2>
+
+If a file has support files (e.g., as do raster data
+files), these support files will also be copied.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.access.html">g.access</A></EM><br>
+<EM><A HREF="g.list.html">g.list</A></EM><br>
+<EM><A HREF="g.mapsets.html">g.mapsets</A></EM><br>
+<EM><A HREF="g.remove.html">g.remove</A></EM><br>
+<EM><A HREF="g.rename.html">g.rename</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,
+U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+Wanted Algorithm for GRASS GIS
+
+$Id$
+
+This page contains algorithm we would like to integrate
+into GRASS GIS on GPL license basis.
+
+Please contact us if you can help!
+
+
+Image processing:
+
+ - bundle block adjustment
+ - stereo visualization and measurement
+
+
+Vector analysis:
+
+ - network analysis
+
+
+GRASS Development Team
+
+Markus Neteler
+neteler@geog.uni-hannover.de

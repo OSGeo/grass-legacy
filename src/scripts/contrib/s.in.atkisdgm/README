@@ -1,0 +1,8 @@
+Script to import the German ATKIS-DGM elevation data
+into a GRASS sites list
+
+$Id: README,v 1.1 2000-07-28 16:33:16 markus Exp $
+written by Otto Dassau, 
+           Institute of Physical Geography and Landscape Ecology
+           University of Hannover
+           <Otto.Dassau@stud.uni-hannover.de>

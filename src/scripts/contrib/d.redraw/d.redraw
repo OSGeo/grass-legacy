@@ -1,0 +1,42 @@
+#!/bin/sh
+#
+# $Id$
+#
+############################################################################
+#
+# MODULE:	d.redraw
+# AUTHOR(S):	Huidae Cho - hdcho@geni.knu.ac.kr
+# PURPOSE:	To redraw current displayed maps without saving d.save info
+#		before d.erase.
+# COPYRIGHT:	(C) 2000 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+program=`basename $0`
+
+if [ ! "$GISBASE" ]
+then
+	echo
+	echo "ERROR: must be in GRASS to use $program"
+	echo
+	exit 1
+fi
+
+if [ $# -ne 0 -o "$1" = "-help" -o "$1" = "help" ]
+then
+	echo
+	echo "Usage: $program"
+	echo
+	exit 1
+fi
+
+dsave=`d.save -o`
+d.erase
+eval "$dsave"
+
+exit 0
+

@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include <stdio.h>
 #include <math.h>					
 #include <signal.h>					
@@ -9,7 +13,7 @@ normalization_x1(xhong,nxhong,ndata,x,nx)
 {
         double xtemp;
         int i,k;
-        double *vector();
+	double *vector();
 /*
 fprintf (stdout,"in normalizationx1: ndata=%d,nxhong=%d\n",*ndata,*nxhong);
 for(i=0;i<(*ndata);i++)
@@ -979,6 +983,7 @@ prediction_linear(fdoutp, x,y,ndata,nx,a,na)
 {
 	double eps1,eps2,*value,*y2,p,ssto,ff,sigma1,rr2,rrr,r,t;
 	double ssresid,ym,*epsilon;
+        double *vector();
 	int i,k;
 
 	y2=vector(ndata);
@@ -1273,6 +1278,7 @@ prediction_nonlinear(fdoutp, x,y,ndata,nx,a,na)
 	int ndata,nx,na;
 {
 
+    	double *vector();
 	double eps1,eps2,*value,*y2,p,ssto,ff,sigma1,rr2,rrr,r,t;
 	double ssresid,ym,*epsilon;
 	int i,k;

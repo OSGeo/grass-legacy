@@ -1,0 +1,40 @@
+# ODBCBASE is where odbc C/API header files and libraries are installed
+ODBCBASE=/unixODBC
+
+# these are DBMI definitions
+STUBLIB = ../libstubs.a
+DBMILIB= $(LIBDIR)/libdbmi.a
+
+DBMIDIR=$(GISBASE)
+HOME = $(DBMIDIR)/driver
+
+LIBES = $(DBMILIB) $(STUBLIB) $(GISLIB) 
+#LIBES = $(DBMILIB) $(STUBLIB) $(ODBCBASE)/odbc.a
+EXTRA_CFLAGS = -I$(ODBCBASE) $(ODBCINC) -I$(INCLUDE_DIR)
+
+OBJ 	=  \
+	driver.o \
+	error.c \
+	listdb.o \
+	db.o \
+	listtab.o \
+	connect.o \
+	describe.o \
+	cursor.o \
+	select.o \
+	fetch.o \
+	execute.o \
+	table.o
+
+DRIVER = main.o $(OBJ)
+
+$(HOME)/odbc: $(HOME) $(DRIVER) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(DRIVER) $(LIBES) $(EXTRA_CFLAGS) -lodbc $(MATHLIB) $(XDRLIB)
+
+
+$(HOME):
+	-mkdir -p $(HOME)
+
+#$(DRIVER) :  dbmi.h globals.h proto.h
+#$(DRIVER) :  $(INCLUDE)/dbmi.h globals.h proto.h
+$(LIBES): #

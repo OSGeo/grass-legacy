@@ -1,0 +1,125 @@
+<TITLE>s.sv</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+
+<EM><b>s.sv</b></EM>  - Sample semivariogram of a GRASS sites list.
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.sv</B>
+<BR>
+<B>s.sv help</B>
+<BR>
+<B>s.sv</B> [<B>-alq</B>] 
+[<B>sites=</B><EM>name</EM>]
+<B>lag=</B><EM>value</EM> 
+[<B>lagtol=</B><EM>value</EM>] 
+[<B>direction=</B><EM>value</EM>] 
+[<B>angtol=</B><EM>value</EM>] 
+[<B>graph=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.sv</EM> calculates a sample semivariogram and either plots
+it or writes it to standard output.
+
+
+<P>
+
+For more information, refer to the tutorial or see
+the example below.
+
+<H2>OPTIONS</H2>
+
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-q</B> 
+<DD>Quiet. Cut out the chatter.
+
+<DT><B>-p</B> 
+<DD>Plot the sample semivariogram in the GRASS graphics window
+(requires <EM>g.gnuplot</EM>).
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>sites=</B><EM>name</EM> 
+<DD>Name of an existing sites file. Default is standard input
+with no field separators.
+
+<DT><B>lag=</B><EM>value</EM> 
+<DD>Nominal lag distance.
+
+<DT><B>lagtol=</B><EM>value</EM> 
+<DD>Tolerance on lag distance. Default is half of nominal distance.
+
+<DT><B>direction=</B><EM>value</EM> 
+<DD>Direction of semivariogram. Default is omnidirectional semivariogram.
+
+<DT><B>angtol=</B><EM>value</EM> 
+<DD>Angular tolerance on direction.
+
+<DT><B>graph=</B><EM>name</EM> 
+<DD>Basename to save graphing data/commands files.
+Graphs are saved in the current working directory with
+the extensions <EM>.gp</EM> and <EM>.dat</EM>. Implies
+the <B>-p</B> flag. If unspecified, semivariogram is
+written to standard output.
+</DL>
+
+<H2>NOTES</H2>
+
+Without the <B>-p</B> flag, three columns of
+data are written to standard output: lag distance (<EM>h</EM>),
+semivariogram value (<EM>gamma</EM>), and the number of data pairs
+used to compute it (<EM>N(h)</EM>). When the <B>graph</B> parameter
+is set, these same three columns of data are
+written to <EM>name</EM>.dat. Therefore, to replot
+a sample semivariogram, use:
+
+<DL>
+<DD><B>g.gnuplot </B><EM>name</EM>.gp
+</DL>
+
+To plot a histogram of <EM>N(h)</EM>, simply edit <EM>name</EM>.gp
+and redo the previously given command.
+<P>
+
+For more information, refer to the
+<A HREF="../../sites/s.sv_m.svfit_tutorial.pdf">tutorial</A>.
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="s.univar.html">s.univar</A></EM><br>
+<EM><A HREF="s.surf.krig.html">s.surf.krig</A></EM><br>
+<EM><A HREF="s.normal.html">s.normal</A></EM><br>
+<EM><a HREF="g.gnuplot.html">g.gnuplot</A></EM><br>
+<EM><A HREF="m.svfit.html">m.svfit</A></EM><br>
+<BR>
+
+<EM>Semivariogram Modeling</EM>  - A GRASS Tutorial on
+Exploratory Data Analysis and Semivariogram Modeling.
+
+<H2>BUGS</H2>
+
+Will not work correctly with lat-long data. 
+Should <EM>G_azimuth()</EM> be used to
+calculate the angle between points?
+
+<P>
+
+Only Matheron's classical estimator is available with <EM>s.sv</EM>.
+Others may be added in the future.
+
+<P>
+
+<H2>AUTHOR</H2>
+
+James Darrell McCauley, Agricultural
+Engineering, Purdue University

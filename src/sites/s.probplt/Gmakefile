@@ -1,7 +1,6 @@
 NAME=s.probplt
 
 PGM=$(BIN_CONTRIB_CMD)/$(NAME)
-#PGM=$(NAME)
 
 MSEC=4
 MDIR=$(SRC)/../man/man$(MSEC)
@@ -10,6 +9,8 @@ MUTL=$(SRC)/../man/utilities
 LIST=probplot.o readz.o cdpath.o zstats.o pltsqq.o save.o
 
 LIBES=$(RASTERLIB) $(GISLIB) $(DATETIMELIB) 
+
+all: $(PGM)
 
 $(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -1,6 +1,6 @@
 #ifndef GRASS_VECT_H
 #define GRASS_VECT_H
-#include "Digit.h"
+#include "vect/digit.h"
 
 /*   ANSI prototypes for the libes/vect32/Vlib functions */
 struct dig_head *Vect__get_default_out_head (void);

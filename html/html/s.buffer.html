@@ -1,0 +1,48 @@
+<TITLE>s.buffer</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+
+<EM><b>s.buffer</b></EM>  - generates vector buffer around a site point. 
+The area is labelled with site category.
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.buffer</B>
+<BR>
+<B>s.buffer help</B>
+<BR>
+<B>s.buffer</B> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
+<B>radius=</B><EM>value</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.buffer</EM> generates vector buffer around a site point. 
+The area is labelled with site category. If the value is not given 
+or its 0, then the radius is taken from the 
+attribute of the site point.<p>
+
+
+<H2>PARAMETERS</H2>
+
+<b> input </b> site_list file to read<p>
+<b> output </b> vector (digit) file to create<p>
+<b> radius </b> radius of circle<p>
+
+Values for radius:<p>
+&nbsp;&nbsp; 0=take category for radius, <br>
+&nbsp;&nbsp; -1=the 4th value of site list (category label),<br>
+&nbsp;&nbsp; positive value= use given value for radius. Then the buffer is the same with all points.<p>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.circle.html">v.circle</A></EM><br>
+<BR>
+
+
+<H2>AUTHOR</H2>
+
+Janne Soimasuo, Finland

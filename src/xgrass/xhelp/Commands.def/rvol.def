@@ -1,9 +1,0 @@
-
-
-r.volume - 
-
-r.volume calculates the volume of data "clumps" and (optionally)
-produces a GRASS site lists file containing the calculated centroids of
-these clumps.
-
-Manual entry for @man("r.volume")

@@ -29,7 +29,7 @@ int inverse (MATRIX *a, MATRIX *b)
     if (isnull (a))
     {
         /* fprintf (stderr, " inv: matrix is singular\n"); */
-        return matrix_error ("inv: matrix is singular\n");
+        return matrix_error ("inv: matrix is singular. Check camera definitions!\n");
     } 
     m_copy (&m, a);
     nr = a->nrows;
@@ -60,16 +60,16 @@ int inverse (MATRIX *a, MATRIX *b)
                         }
                         break;
                     case  1:
-                        return matrix_error ("inv: matrix is singular\n");
+                        return matrix_error ("inv: matrix is singular. Check camera definitions!\n");
                         break;
                     default: /* shouldn't get here */
-                        return matrix_error ("inv: matrix is singular\n");
+                        return matrix_error ("inv: matrix is singular. Check camera definitions!\n");
                         break;
                 }
         }
         ipivot[ic] += 1;
         if (ipivot[ic] > 1) /* check for dependency */
-            return matrix_error ("inv: matrix is singular\n");
+            return matrix_error ("inv: matrix is singular. Check camera definitions!\n");
         /* interchange rows to put pivot element on diagonal */
         if (ir != ic)
             for (l = 0; l < nc; l++)
@@ -85,7 +85,7 @@ int inverse (MATRIX *a, MATRIX *b)
 
         /* check for zero pivot */
         if (fabs (pivot[i]) < EPSILON)
-            return matrix_error ("inv: matrix is singular\n");
+            return matrix_error ("inv: matrix is singular. Check camera definitions!\n");
 
         /* divide pivot row by pivot element */
         m.x[ic][ic] = 1.0;

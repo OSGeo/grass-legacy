@@ -4,7 +4,7 @@
 #include "what.h"
 #include "local_proto.h"
 
-int what (int once, int terse, char *fs)
+int what (int once, int terse, int colrow, char *fs)
 {
     int width, mwidth;
     int i;
@@ -43,7 +43,8 @@ int what (int once, int terse, char *fs)
 
     do
     {
-	show_buttons(once);
+        if(!terse)
+	    show_buttons(once);
         R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
 	if (!once)
 	{
@@ -58,7 +59,7 @@ int what (int once, int terse, char *fs)
         if (col < 0 || col >= ncols) continue;
         north = window.north - (row+.5) * window.ns_res ;
         east  = window.west  + (col+.5) * window.ew_res ;
-        show_utm (north, east, &window, terse, button, fs);
+        show_utm (name[0], north, east, &window, terse, colrow, button, fs);
 	G_set_c_null_value(&null_cell,1);
 	G_set_d_null_value(&null_dcell,1);
         for (i = 0; i < nlayers; i++)

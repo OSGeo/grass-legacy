@@ -2,23 +2,22 @@
  * s.sample - GRASS program to sample a raster file at site locations.
  * Copyright (C) 1994. James Darrell McCauley.
  *
- * Author: James Darrell McCauley (mccauley@ecn.purdue.edu)
- *         USDA Fellow
- *         Department of Agricultural Engineering
- *         Purdue University
- *         West Lafayette, Indiana 47907-1146 USA
+ * Author: James Darrell McCauley darrell@mccauley-usa.com
+ * 	                          http://mccauley-usa.com/
  *
- * Permission to use, copy, modify, and distribute this software and its
- * documentation for non-commercial purposes is hereby granted. This 
- * software is provided "as is" without express or implied warranty.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- * JAMES DARRELL MCCAULEY (JDM) MAKES NO EXPRESS OR IMPLIED WARRANTIES
- * (INCLUDING BY WAY OF EXAMPLE, MERCHANTABILITY) WITH RESPECT TO ANY
- * ITEM, AND SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL
- * OR CONSEQUENTAL DAMAGES ARISING OUT OF THE POSSESSION OR USE OF
- * ANY SUCH ITEM. LICENSEE AND/OR USER AGREES TO INDEMNIFY AND HOLD
- * JDM HARMLESS FROM ANY CLAIMS ARISING OUT OF THE USE OR POSSESSION 
- * OF SUCH ITEMS.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  * Modification History:
  * <04 Jan 1994> - began coding (jdm)
@@ -32,11 +31,13 @@
  * <25 Feb 1995> - cleaned 'gcc -Wall' warnings 0.7B (jdm)
  * <15 Jun 1995> - fixed pointer error for G_{col,row}_to_{easting,northing}.
  *                 0.8B (jdm)
+ * <13 Sep 2000> - released under GPL
  *
  */
 
 #pragma ident "s.sample v 0.8B <15 Jun 1995>; Copyright (c) 1994-1995. James Darrell McCauley"
 
+#include <string.h>
 #include <math.h>
 #include "gis.h"
 #include "methods.h"
@@ -49,6 +50,8 @@ static char *methodnames[NMETHODS+1] = {
         "Cubic Convolution Interpolation" };
 #endif
 
+#define MY_XYZ_SIZE 100
+
 int main (argc, argv)
   char **argv;
   int argc;
@@ -56,31 +59,55 @@ int main (argc, argv)
   extern char *methodnames[NMETHODS+1];
   char *isiteslist, *ositeslist, errmsg[256], *raster, *mapset;
   double scale, predicted, actual;
-  int i, b, c, nsites, verbose;
+  int i, j, b, c, nsites, verbose, sfield, sindex;
   int method = 0;		/* one of NEAREST, BILINEAR, or CUBIC */
   int usesitecat, usecelldesc, dodiff; /* indicator variables */
   int fdrast;	/* file descriptor for raster file is int */
   struct Cell_head window;
+  struct GModule *module;
   struct Categories cats;
+  RASTER_MAP_TYPE map_type;
+  int strs, dbls, dims;
   struct
   {
-    struct Option *input, *output, *rast, *z;
+    struct Option *input, *output, *rast, *z, *sfield, *sindex;
   } parm;
   struct
   {
-    struct Flag *B, *C, *c, *d, *l, *q;
+    struct Flag *B, *C, *l, *q;
   } flag;
   FILE *fdisite = NULL, *fdosite = NULL;
-  Site **z;
-
+  SITE_XYZ xyz[MY_XYZ_SIZE];
+  Site *outSite;
+  
   G_gisinit (argv[0]);
-
+  
+  module = G_define_module();
+  module->description =        
+                  "Sample a raster file at site locations.";
+                  
   parm.input = G_define_option ();
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;
   parm.input->required = YES;
   parm.input->description = "sites list defining sample points";
   parm.input->gisprompt = "old,site_lists,sites";
+
+  parm.sfield = G_define_option();
+  parm.sfield->key = "attr";
+  parm.sfield->type = TYPE_STRING;
+  parm.sfield->required = NO;
+  parm.sfield->description = "Calculate difference between site attribute and "
+	  "cell value";
+  parm.sfield->options = "none,cat,dim,decimal";
+  parm.sfield->answer  = "none";
+  
+  parm.sindex = G_define_option();
+  parm.sindex->key = "index";
+  parm.sindex->type = TYPE_INTEGER;
+  parm.sindex->required = NO;
+  parm.sindex->description = "Site attribute index for dim or decimal fields";
+  parm.sindex->answer = "1";
 
   parm.output = G_define_option ();
   parm.output->key = "output";
@@ -115,14 +142,6 @@ int main (argc, argv)
   flag.l->key = 'l';
   flag.l->description = "Use raster category labels (instead of category values)";
 
-  flag.d = G_define_flag ();
-  flag.d->key = 'd';
-  flag.d->description = "Calculate difference between sites and cells";
-
-  flag.c = G_define_flag ();
-  flag.c->key = 'c';
-  flag.c->description = "Use site categories (instead of floating point attributes; implies -d flag)";
-
   flag.q = G_define_flag ();
   flag.q->key = 'q';
   flag.q->description = "Quiet";
@@ -146,7 +165,7 @@ int main (argc, argv)
   {
     if (c)
       method = CUBIC;
-    else
+    if (b)
       method = BILINEAR;
     if (b && c)
       G_warning ("Flags -B & -C mutually exclusive. Bilinear method used.");
@@ -159,14 +178,49 @@ int main (argc, argv)
   method = NEAREST;
 #endif
   
+  dodiff = usesitecat = 0;
+  if (strncmp(parm.sfield->answer, "none", 4) == 0)
+    sfield = SITE_COL_NUL;
+  else if (strncmp(parm.sfield->answer, "dim", 3) == 0) {
+    dodiff = 1;
+    sfield = SITE_COL_DIM;
+  }
+  else if (strncmp(parm.sfield->answer, "cat", 3) == 0) {
+    sfield = SITE_COL_NUL;
+    usesitecat = 1;
+    dodiff = 1;
+  }
+  else if (strncmp(parm.sfield->answer, "decimal", 7) == 0) {
+    sfield = SITE_COL_DBL;
+    dodiff = 1;
+  }
+  else { /* G_parser() shouldn't let this happen */ 
+    G_fatal_error("%s: Unknown attribute type %s", G_program_name(), 
+        parm.sfield->answer);
+  }
+
+  if (sfield == SITE_COL_DBL || sfield == SITE_COL_DIM) {
+    sindex = atoi(parm.sindex->answer);
+    if (sfield == SITE_COL_DIM) {
+      if (sindex < 3)
+        G_fatal_error("%s: Site dimension attribute must be greater than 2",
+            G_program_name());
+      sindex -= 2;
+    }
+    else if (sfield = SITE_COL_DBL) {
+      if (sindex < 1)
+        G_fatal_error("%s: Site decimal attribute must be greater than 0",
+            G_program_name());
+    }
+  }
+  else
+    sindex = -1;
+
   usecelldesc = (flag.l->answer == (char)NULL) ? 0 : 1;
-  usesitecat = (flag.c->answer == (char)NULL) ? 0 : 1;
   verbose = (flag.q->answer == (char)NULL) ? 1 : 0;
-  dodiff = (flag.d->answer == (char)NULL) ? 0 : 1;
-  if (usesitecat) dodiff=1;
 
   G_get_window (&window);
-
+           
   if ((mapset = G_find_file ("site_lists", isiteslist, "")) == NULL)
   {
     sprintf (errmsg, "sites file [%s] not found", isiteslist);
@@ -218,72 +272,95 @@ int main (argc, argv)
                raster, isiteslist, methodnames[method]);
   }
 
-  /* This should probably be changed to read only one site at a time.
-     That way we don't have to load all of the sites into memory at
-      once. */
+  if (G_site_describe(fdisite, &dims, &map_type, &strs, &dbls) != 0)
+    G_fatal_error("Failed to guess site format");
+  
+  outSite = G_site_new_struct(map_type, 2, 0, 1);
+  if (!outSite)
+    G_fatal_error("Unable to allocate memory.");
  
-  z = readsites (fdisite, verbose, &nsites, window);
-
-  if (nsites <= 0)
-    G_fatal_error ("No sites found");
-
   if (verbose)
-    fprintf (stderr, "Checking sites ...                  ");
+    fprintf (stderr, "Checking sites ...                 \n ");
 
-  for (i = 0; i < nsites; ++i)	/* for each partition */
+  j = 0;
+  while ((nsites = G_readsites_xyz(fdisite, sfield, sindex, MY_XYZ_SIZE,
+          &window, xyz)) > 0)
   {
-
-    /* find predicted value */
-    switch (method)
+    for (i = 0; i < nsites; ++i)	/* for each partition */
     {
-    case BILINEAR:
-      predicted=scale*
-	bilinear (fdrast, window, cats, z[i]->north, z[i]->east, usecelldesc);
-      break;
-    case CUBIC:
-      predicted=scale*
-	cubic (fdrast, window, cats, z[i]->north, z[i]->east, usecelldesc);
-      break;
-    case NEAREST:
-      predicted=scale*
-	nearest (fdrast, window, cats, z[i]->north, z[i]->east, usecelldesc);
-      break;
-    default:
-      G_fatal_error ("unknown method");	/* cannot happen */
-      break;
-    }
+      j++;
+      /* Set output Site east & north and cat (if any) */
+      outSite->east = xyz[i].x;
+      outSite->north = xyz[i].y;
+      switch(xyz[i].cattype) {
+        case CELL_TYPE:
+          outSite->cattype = CELL_TYPE;
+          outSite->ccat = xyz[i].cat.c;
+          break;
+        case FCELL_TYPE:
+          outSite->cattype = FCELL_TYPE;
+          outSite->fcat = xyz[i].cat.f;
+          break;
+        case DCELL_TYPE:
+          outSite->cattype = DCELL_TYPE;
+          outSite->dcat   = xyz[i].cat.d;
+          break;
+        default: /* No cattype, use 'j' */
+          outSite->cattype = CELL_TYPE;
+          outSite->ccat = j;
+      }
+      
+      /* find predicted value */
+      switch (method)
+      {
+      case BILINEAR:
+        predicted=scale*
+          bilinear (fdrast, window, cats, xyz[i].y, xyz[i].x, usecelldesc);
+        break;
+      case CUBIC:
+        predicted=scale*
+          cubic (fdrast, window, cats, xyz[i].y, xyz[i].x, usecelldesc);
+        break;
+      case NEAREST:
+        predicted=scale*
+          nearest (fdrast, window, cats, xyz[i].y, xyz[i].x, usecelldesc);
+        break;
+      default:
+        G_fatal_error ("unknown method");	/* cannot happen */
+        break;
+      }
 
-    /* find actual value */
-    if (dodiff)
-    {
-      if (usesitecat){
-	switch(z[i]->cattype){
-	  case CELL_TYPE:
-	    actual = (double) z[i]->ccat;
-	    break;
-	  case FCELL_TYPE:
-	    actual = (double) z[i]->fcat;
-	    break;
-	  case DCELL_TYPE:
-	    actual = (double) z[i]->dcat;
-	    break;
+      /* find actual value */
+      if (dodiff)
+      {
+        if (usesitecat){
+          switch(xyz[i].cattype){
+            case CELL_TYPE:
+              actual = (double) xyz[i].cat.c;
+              break;
+            case FCELL_TYPE:
+              actual = (double) xyz[i].cat.f;
+              break;
+            case DCELL_TYPE:
+              actual = (double) xyz[i].cat.d;
+              break;
+            default:
+              G_fatal_error("Input site has missing category value(s)");
+          }
+        }
+        else if (sfield == SITE_COL_DIM || sfield == SITE_COL_DBL) {
+          actual = xyz[i].z;
 	}
+        outSite->dbl_att[0]=predicted-actual;
       }
       else
-        actual = (double) z[i]->dbl_att[0];
-      z[i]->dbl_att[0]=predicted-actual;
-    }
-    else
-      z[i]->dbl_att[0]=predicted;
-/*    G_site_put (fdosite, *z[i], 0);*/
-      G_site_put (fdosite, z[i]);
-    if (verbose)
-      G_percent (i, nsites, 1);
-  }
+        outSite->dbl_att[0]=predicted;
+      G_site_put (fdosite, outSite);
+    } /* End for(i...) */
+  } /* End while(G_readsites...) */
+
   fclose (fdosite);
   G_close_cell (fdrast);
 
-  if (verbose)
-    G_percent (1, 1, 1);
   exit (0);
 }

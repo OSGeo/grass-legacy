@@ -7,8 +7,8 @@ HOME  = $(BIN_MAIN_CMD)
 all:    $(HOME)/$(PROG)
 
 ####    required - suplimental imagery libary
-IMAGERY_SUBINC  = ../image3
-IMAGERYLIB_SUP  = ../image3/libimage_sup.a
+IMAGERY_SUBINC  = $(SRC)/libes/image3
+IMAGERYLIB_SUP  = $(SRC)/libes/image3/libimage_sup.a
 
 LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB) $(COORCNVLIB)\
          $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \

@@ -1,0 +1,1912 @@
+<title>GRASS 5.0 Tutorial for nviz</title>
+<!-- Changed by: Mark Astley,  1-Aug-1995 -->
+<!-- Things I changed:
+	I redid some of the formatting so that built-in HTML features
+	like menus and lists are used.  Also, I added descriptions for
+	what I call advanced features: namely keyframe animation and
+	scripting. 
+-->
+
+<h1>
+<a href="http://www.geog.uni-hannover.de/grass/"><IMG SRC="grass.smlogo.gif"></a>
+nviz Tutorial 
+</h1><p>
+
+<H3>Contents</H3>  <P>
+
+<MENU>
+<LI> <A HREF="#DescP">Description</A>
+<LI> <A HREF="#GeneralP">General Notes</A>
+<LI> <A HREF="#StartupP">Startup</A>
+<LI> <A HREF="#PanelsP">Panels</A>
+<MENU>
+<LI> <A HREF="#PanelsP">Movement</A>
+<LI> <A HREF="#LightHeadP">Lights</A>
+<LI> <A HREF="#SurfaceHeadP">Surfaces</A>
+<LI> <A HREF="#VectorHeadP">Vectors</A>
+<LI> <A HREF="#SiteHeadP">Sites</A>
+<LI> <A HREF="#ColorHeadP">Background Color</A>
+<LI> <A HREF="#CutHeadP">Cut planes</A>
+<LI> <A HREF="#AnimHeadP">Basic Animation</A>
+<LI> <A HREF="#WhatsHeadP">What's Here</A>
+<LI> <A HREF="#MkdspfHeadP">Mkdspf</A>
+</MENU>
+<LI> <A HREF="#MiscP">Miscellaneous</A>
+<LI> <A HREF="#AdvancedP">Advanced Features</A>
+<MENU>
+<LI> <A HREF="#StateP">Nviz State</A>
+<LI> <A HREF="#KeyAnimHeadP">Key frame Animation</A>
+<LI> <A HREF="#ScriptingP">Scripting</A>
+</MENU>
+<LI> <A HREF="#HintsP">Hints</A>
+<LI> <A HREF="#CreditsP">Credits/Inquiries</A>
+</MENU>
+
+<A NAME="DescP">
+<h3> Description </h3>
+</A> <P>
+
+<em> nviz </em> is meant to be used as a tool for viewing data
+surfaces in three dimensions using <strong>GRASS</em></strong> on
+<em>Silicon Graphics IRIS</em></strong> computers.  It evolved from
+the earlier <strong>GRASS</em><strong> program
+<em>SG3d</em></strong>. Users familiar with <em>SG3d</em></strong>
+will find <em>nviz</em></strong> similar but with a slightly different
+interface and many added features. New features include the ability to
+visualize multiple raster, vector, and site files at one time, and the
+addition of volume data among others.  Hardware requirements are a
+Z-buffer and 24 bit graphics OR a 24 bit graphic emulator, such as
+that on the <em>IRIS Indigo</em></strong>.  <p>
+
+<em>nviz</em></strong> uses raster files as "elevation" and also as
+attributes of the surfaces (such as color, transparency, etc.).  While
+a true elevation data file used as elevation will produce the most
+realistic surfaces, users are encouraged to be creative in selecting
+other types of data to be represented by the vertical dimension.  Most
+continuous (as opposed to discrete) data types will result in a
+visualization that makes sense.  While developing the program, we used
+chemical concentrations as the elevation file with good visual
+results. <p>
+
+Emphasis during development was on ease and speed of viewer
+positioning and flexibility for using a wide range of data values and
+sizes.  Since a wire grid can be drawn very quickly, such a grid is
+used to provide real-time viewer positioning capabilities.  Similarly,
+a lighting "model" provides real-time feedback as the user adjusts
+lighting.  Grid and polygon resolution control allows the user to
+further refine drawing speed and detail as needed.  Continuous scaling
+of elevation values from 1.0ee-7 to 1.0ee+7 provides the ability to
+use various data types for the vertical dimension. <p>
+
+<A NAME="GeneralP">
+<h3> General Notes </h3>
+</A> <P>
+
+All <em>nviz</em></strong> windows may be resized using the window
+manager's normal controls at any time.  Text in the control panels is
+not scalable, however, so the text will disappear if the panel is
+sized too small. <p>
+
+Before starting the program, check your current
+<strong>GRASS</em></strong> region resolution and dimensions.  The
+current resolution will determine the <em>best</em></strong>
+resolution available in <em>nviz</em></strong>.  Large dimensions such
+as 1000 x 1000 rows and columns may cause the program to run slower.
+Try starting out with a smaller (i.e. 300 x 300 or less) region until
+you get more comfortable and experienced using the program.  <p>
+
+<A NAME="StartupP">
+<h3> Startup </h3>
+</A> <P>
+
+The syntax for starting the program is: <p>      
+
+<strong>nviz [-q]
+[elevation=</strong><em>name[,name,...]</em><strong>]
+[vector=</strong><em>name[,name,...]</em><strong>]
+[sites=</strong><em>name[,name,...]</em><strong>]</strong>
+
+<P> <STRONG>-q </STRONG> Quickstart.  Skip over <STRONG>GRASS</STRONG>
+parsing and immediately start nviz.
+
+<p> <strong>elevation</strong> (optional) name of a
+<strong>GRASS</strong> raster file (or files) to use as elevation
+
+<p> <strong>vector</strong> (optional) name of a
+<strong>GRASS</em></strong> vector file (or files).
+
+<p> <strong>sites</strong> (optional) name of a
+<strong>GRASS</em></strong> sites list file (or files).
+ <P>
+
+If the user types <em>nviz</em></strong> on the command line without
+any arguments, the program will prompt the user for the arguments.
+<p>
+
+<A NAME="PanelsP">
+<h3> Panels </h3>
+</A><p>
+
+<em>nviz</em></strong> starts up with one graphics window and one
+control panel window.  The top third of the control panel window
+contains the <a href="#MovementP"> Movement </a> panel.  Other panels
+may be selected from the <em>Panel</em></strong> menu at the top of
+the window. When a panel is selected it appears in the control panel
+window.  If the window is full, and there is no room for the new
+panel, one or more panels that are open on the control panel window
+will be closed to make room for the new panel.  Panels can also be
+closed using the <em>Close</em></strong> button that appears on each
+panel.  The <em>Movement panel</em>, however is always visible. Each
+panel from the <em>Panel</em></strong> menu will be described in more
+detail below.  <p>
+
+<h3>
+<IMG SRC="nvimg/panel/main.gif" ALT = ""> <A name="MovementP">Movement Panel</A>
+</h3><p>
+
+Use the <strong>Movement</em></strong> panel to position the viewer
+over the data and to indicate viewing direction and perspective.  As
+options in this panel are changed, a wire grid of the surface is
+redrawn (<em>fast display mode</em></strong>) to immediately show the
+results of the changes.  This panel also controls the actual drawing.
+ <P>
+
+<DL>
+<DT> <B>Auto Clear</B>
+<DD> This is a toggle button. If it is enabled
+the screen is automatically cleared before surfaces are drawn.  <P>
+
+<DT> <B>Clear</B>
+<DD> Clears the screen with the background color.  <P>
+
+
+<DT> <B>Surface</B>
+<DD> Draws loaded surfaces with current drawing
+and lighting options.  <P>
+
+<DT> <B>Vectors</B>
+<DD> Draws loaded vector files on selected
+surfaces.  <P>
+
+<DT> <B>Sites</B>
+<DD> Draws loaded site files on selected surfaces.
+<P>
+
+<DT> <B>Cancel</B>
+<DD> Cancels drawing in progress.  <p>
+
+<DT> <B>XY position</B>
+<DD> The <em>XY position</em></strong> box contains a star-shaped puck
+which represents the viewer.  Click on the puck and drag to move the
+viewer around.  The data may be thought of as always lying in the
+center of the box, with north at the top. <p>
+
+<DT> <B>Height</B>
+<DD> Adjusts the viewer's height.  <p>
+
+<DT> <B>look here</B>
+<DD> Allows the user to click on a spot on the data surface which will
+remain centered as the viewer position changes.  After clicking on the
+surface, the new center is automatically set and the surface is
+redrawn.  <p>
+
+<DT> <B>look center</B>
+<DD> Automatically fixes new center of view at the <em>center of the
+graphics window</em></strong> (not the center of the data).  <p>
+
+<DT> <B>look cancel</B>
+<DD> Clicking on <em>cancel</em></strong> allows the user to move over
+the surface with no fixed center of view (default).  <p>
+
+<DT> <B>zexag</B>
+<DD> Exaggerates the vertical dimension of the surface.  An
+exaggeration of 1.0 represents the surface with x, y, and z units all
+being equal.  For example, if the easting and northing units are in
+meters and the elevation in feet, a Z exaggeration of .305 would be
+the <em>true</em></strong> exaggeration for the surface.  For most
+geographical applications, greater than true exaggeration produces
+more visually pleasing images.  <p>
+
+<DT> <B>Perspective</B>
+<DD> Adjusts the viewer's angle of view.  <p>
+
+<DT> <B>Reset</B>
+<DD> Sets all settings to their startup values.  <p>
+
+</DL>
+<P>
+
+Occasionally, the bounds of the <B>height</B> slider are too narrow to
+position the camera as desired.  In this case, the type-in entry next
+to the height slider may be used to set camera height directly.
+Typing in a value will also automatically adjust the slider bounds to
+account for the new maximum and minimum height.  In general, most
+sliders with corresponding type-ins provide this functionality where
+it makes sense.  Color sliders, for example, cannot be adjusted since
+color components must always be between 0.0 and 1.0.
+ <P>
+
+<A NAME="LightHeadP">
+<h3> Lights </h3>
+</A> <P>
+
+The <A HREF="#LightP">Lights</A> panel contains adjustments and
+options to control the position, color and brightness of the lights
+and the reflectivity (shininess) of the surface.  There are actually
+two lights: one dim white light remains directly above the surface at
+all times and serves as fill light. The main light, which the user
+controls, is a "local" light which is positioned much like the view
+position.  When lights are being adjusted, a sphere appears on the
+surface and is continuously redrawn to show the effects of lighting
+changes.  The lighting adjustments do not affect the appearance of the
+surface until it is redrawn.  Neither light is directional; light is
+emitted equally in all directions.  <p>
+
+<h3>
+<IMG SRC="nvimg/panel/light.gif"> <A NAME="LightP">Lights Panel</A>
+</h3>  <P>
+
+<DL>
+
+<DT> <B>Follow Viewpoint</B>
+<DD> By default, the light position is near the viewing position and
+the light moves with the viewer.  Toggling this option off will keep
+the light fixed in one position as the viewer position changes.
+Adjusting the <em>Height</em></strong> or <em>XY
+position</em></strong> of the light automatically toggles <em>Follow
+Viewpoint</em></strong> off.  <p>
+
+<DT> <B>Show Model</B>
+<DD> The sphere showing current lighting effects can be removed by
+toggling this option off.  <p>
+
+<DT> <B>Height</B>
+<DD> Adjusts light height.  <p>
+
+<DT> <B>XY position</B>
+<DD> Adjusts light position over surface; north is always at the top.
+<p>
+
+<DT> <B>Light Brightness</B>
+<DD> Adjusts the brightness of the light.  <p>
+
+<DT> <B>R, G, B</B>
+<DD> Adjusts the Red, Green and Blue components of the main light.
+<p>
+
+<DT> <B>Ambient Light</B>
+<DD> Adjusts the ambient light associated with the main light and the
+brightness of the fill light. <p>
+
+</DL>
+ <P>
+
+<A NAME="SurfaceHeadP">
+<h3> Surfaces </h3>
+</A><p>
+
+Use <A HREF="#SurfaceP">Surface</A> panel options to manage surfaces
+to be drawn.  The top half of the panel contains options for drawing
+style. The bottom half is used to add and delete surfaces and change
+attributes on the current surface.  After options are set, click on
+<em>Surface</em></strong> in the <em>Movement</em></strong> panel to
+see the results.  <p>
+
+<h3>
+<IMG SRC="nvimg/panel/surf.gif"> <A NAME="SurfaceP">Surface Panel</A>
+</h3>
+
+<DL>
+
+<DT> <B>Grid Resolution</B>
+<DD> sets number of cells between grid lines when drawing wire grids
+(in both <em>fast display mode</em></strong> and
+<em>Draw</em></strong> mode).  A larger grid resolution number
+produces a more sparse grid.  <p>
+
+<DT> <B>Poly Resolution</B>
+<DD> sets number of cells to be used as dimensions of each polygon
+drawn when drawing polygons.  Each drawn polygon actually represents
+(Poly Res x Poly Res) cells.  <p>
+
+<DT> <B>Current Surface Only</B>
+<DD> Option changes effect currently selected surface only.  <P>
+
+<DT> <B>All Surfaces</B>
+<DD> Option changes effect all surfaces.  <P>
+
+<DT> <B>Surface Style</B>
+<DD> 
+	<DL>
+	<DT> <B>Polygon</B>
+	<DD> draw surface using filled polygons (most realistic). 
+
+	<DT> <B>Wire</B>
+	<DD> draw surface with a wire mesh.  This differs from the
+	mesh drawn in <em>fast display mode</em></strong> in that hidden lines
+	are not drawn.
+
+	<DT> <B>Wire/Poly</B>
+	<DD> draw surface as polygons, but with wire mesh draped over it. 
+</DL> <P>
+
+<DT> <B>Shading</B>
+<DD> 
+<DL>
+	<DT> <B>Gouraud</B>
+	<DD> smooth shade surface to blend individual cell colors together.
+
+	<DT> <B>Flat</B>
+	<DD> Surfaces are drawn with flat shading. One color for each
+	of the two triangles that form a cell. The surface will appear faceted.
+</DL> <P>
+
+<DT> <B>Current</B>
+<DD> displays name of currently selected surface. Pressing the left
+mouse button over the name causes a menu of all available surfaces to
+appear. A new current surface can be selected from this menu.  <P>
+
+<DT> <B>New</B>
+<DD> Load a new surface. This button pops up a <strong>Change
+Attribute </em></strong>window (see below) which allows the selection
+of a new map or constant for a surface.  <P>
+
+<DT> <B>Delete</B>
+<DD> Delete current surface. This merely unloads surface data. <em>
+nviz </em></strong> will not change any files that exist in your
+<strong>GRASS</em></strong> database.  <p>
+
+<DT> <B>No Zeros</B>
+<DD> do not draw surface where elevation data values are zero. The
+second <em>No Zeros </em></strong>toggle causes areas where the color
+values are zero not to be drawn.  <p>
+
+<DT> <B>Wire Color</B>
+<DD> Select a wire color for current surface with a <strong>Select
+Color </em></strong>popup (see below).  <p>
+
+<DT> <B>Position</B>
+<DD> change x, y, and z position of current surface using
+<strong>Position Surface </em></strong>popup window (see below).  <p>
+
+<DT> <B>Draw Current</B>
+<DD> render only the current surface using the given rendering
+parameters.  <P>
+
+</DL> <P>
+
+The rest of the buttons on this panel control attributes of the
+current surface.  The current value of that attribute appears to the
+right of the attribute button. Clicking on an attribute button pops up
+a <em>Change Attribute </em></strong>window (see below) which allows
+the selection of a new map or constant for that attribute.  <p>
+<DL>
+
+<DT> <B>Topography</B>
+<DD> Map or constant which controls elevation (z values) of surface.
+<p>
+
+<DT> <B>Color</B>
+<DD> Map or constant which controls surface color.  <p>
+
+<DT> <B>Mask</B>
+<DD> Map or constant which controls which areas of surface are drawn.
+<p>
+
+<DT> <B>Transparency</B>
+<DD> Map or constant which controls transparency level of surface (all
+opaque is default).  <p>
+
+<DT> <B>Shininess</B>
+<DD> Map or constant which controls shininess (reflectivity) of
+surface material.  <p>
+
+<DT> <B>Emission</B>
+<DD> Map or constant which controls light emitted from surface.  <p>
+
+</DL> <P>
+
+<A NAME="VectorHeadP">
+<h3> Vectors </h3>
+</A> <P>
+
+Use <A HREF="#VectorP">Vector</A> panel options to manage vectors to
+be drawn.  After options are set, click on
+<strong>Vectors</em></strong> in the <em>Movement</em></strong> panel
+to see the results.  <p>
+
+<h3>
+<IMG SRC="nvimg/panel/vect.gif"> <A NAME="VectorP">Vector Panel</A>
+</h3>  <P>
+
+<strong>New: </em></strong> Load a new vector file. This button pops
+up a <strong>File Browser</em></strong> window (see below) which allows
+the selection of a new vector file.  <p>
+
+<strong>Delete: </em></strong>Delete current vector file.  <p>
+
+<strong>Current: </em></strong>displays name of currently selected
+vector file.  Pressing the left mouse button over the name causes a
+menu of all available vector files to appear. A new current vector can
+be selected from this menu.  <p>
+
+<strong>Line Width:</em></strong> Width (in pixels) to draw vector
+lines.  <p>
+
+<strong>Color:</em></strong> Use a <em>Select Color
+</em></strong>popup (see below) select color used to for drawing
+current vector file.  <p>
+
+<strong>Display on surfaces: </em></strong>A list of toggle buttons for each 
+available surface. Current vector will be drawn on each of the surfaces 
+whose button is activated.  <P>
+
+<A NAME="SiteHeadP">
+<h3> Sites </h3>
+</A> <P>
+
+Use <A HREF="#SiteP">Site</A> panel options to manage sites to be
+drawn.  After options are set, click on <strong>Sites</em></strong> in
+the <em>Movement</em></strong> panel to see the results.  <p>
+
+<h3>
+<IMG SRC="nvimg/panel/sites.gif"> <A NAME="SiteP">Site Panel</A> 
+</h3>  <P>
+
+<strong>New: </em></strong> Load a new site file. This button pops up
+a <strong>File Browser</em></strong>window (see below) which allows
+the selection of a new site file.  <p>
+
+<strong>Delete: </em></strong>Delete current site file.  <p>
+
+<strong>Current: </em></strong>displays name of currently selected
+site file.  Pressing the left mouse button over the name causes a menu
+of all available site files to appear. A new current site can be
+selected from this menu.  <p>
+
+<strong>Site Size:</em></strong> Select size of site markers using
+slider or type in a value in text entry box.  <p>
+
+<strong>Line Width:</em></strong> Width (in pixels) to draw site
+lines.  <p>
+
+<strong>use X: </em></strong>Use an X to mark site locations.  <p>
+
+<strong>use sphere: </em></strong>Use an sphere to mark site
+locations.  <p>
+
+<strong>use diamond: </em></strong>Use an diamond to mark site
+locations.  <p>
+
+<strong>3D Sites: </em></strong>Use third field of sites as z value
+for marker position. (When selected file is a 3d site file.)  <p>
+
+<strong>color:</em></strong> Use a <em>Select Color
+</em></strong>popup (see below) select color used to for drawing
+current site file.  <p>
+
+<strong>Display on surfaces: </em></strong>A list of toggle buttons
+for each available surface. Current site will be drawn on each of the
+surfaces whose button is activated.  <P>
+
+<A NAME="ColorHeadP">
+<h3>Background Color</h3>
+</A> <P>
+
+Use the <A HREF="#ColorP">Color</A> panel to set the background color
+on the display screen.  <P>
+
+<h3>
+<IMG SRC="nvimg/panel/color.gif"> <A NAME="ColorP">Color Panel</A>
+</h3>  <P>
+
+<strong>Background:</em></strong> Use a <em>Select Color
+</em></strong>popup (see below) to select color used to for background
+color. Button color is currently selected background color.  <p>
+
+<A NAME="CutHeadP">
+<h3> Cutting Planes </h3>
+</A> <P>
+
+Use the <A HREF="#CutP">Cutting Planes</A> panel to
+manage cutting planes which may be positioned to slice through surfaces.
+
+<h3>
+<IMG SRC="nvimg/panel/cut.gif"> <A NAME="CutP">Cutting Planes Panel</A>
+</h3>  <P>
+
+<strong>Current:</em></strong> Number of currently active cutting
+plane.  <p>
+
+Clicking on name pops up a menu from which a new current plane may be
+selected.  <p>
+
+<strong>X, Y, Z:</em></strong> Position of current cutting plane
+(offset from center). Plane may be moved with position box and height
+slider immediately above.  Height (Z value) is only applicable if tilt
+is non-zero.  <p>
+
+Radio buttons <strong>T, B, BL, GR, N</em></strong> control color of
+visible plane between two or more surfaces.  <p>
+
+<strong> T:</em></strong> Color is the same as the color of top
+surface.  <p>
+
+<strong> B:</em></strong> Color is the same as the color of the bottom
+surface.  <p>
+
+<strong> BL:</em></strong> Color is blended from top &amp; bottom surface
+colors.  <p>
+
+<strong> GR:</em></strong> Color is grey.  <p>
+
+<strong> N:</em></strong> Plane is not visible.  <p>
+
+<strong>Reset:</em></strong> Resets to default values.  <p>
+
+<strong>All Off:</em></strong> Turns off all cutting planes.  <p>
+
+<strong>Rotate:</em></strong> Rotate around center North-South axis.  (side
+to side) <p>
+
+<strong>Tilt:</em></strong> Rotate around axis in plane parallel to xy
+plane (front to back). If tilt is nonzero, plane surface is not
+visible.  <p>
+
+<A NAME="AnimHeadP">
+<h3> Basic Animation </h3>
+</A> <P>
+
+Use the <A HREF="#AnimP">Animation</A> panel to create simple fly-bys
+of surfaces.  <P>
+
+<h3>
+<IMG SRC="nvimg/panel/anim.gif"> <A NAME="AnimP">Animation Panel</A>
+</h3>  <P>
+
+<strong>step, run, Key Frames:</em></strong> The
+<em>Frames</em></strong> slider may be thought of as a time line
+representing the path.  When a path has been loaded, clicking on
+<em>run</em></strong> will move the viewer down the path, redrawing
+the wire frame surface at each path step.  The user may cancel a
+running animation at any time by clicking on the
+<em>stop</em></strong> button.  The <em>Key Frames</em></strong>
+slider shows the progression of the animation.  Use the
+<em>step</em></strong> arrows to step forward or backward one frame at
+a time, or move the <em>Key Frames</em></strong> slider to the desired
+point in the animation.  The number to the right of the
+<em>step</em></strong> arrows is the frame number being displayed. <p>
+
+<strong>total frames:</em></strong> The value in this type-in box is
+the total number of frames in the animation.  When a vector file is
+first loaded, the number of points in the file (up to 1000) will be
+the number of frames.  Typically, to produce smooth animations, the
+user should use a vector file with 10 - 50 points, then change total
+frames to 100 or more, depending on the length of the animation
+desired. Requesting an excessive number of frames (i.e., 500,000) may
+cause memory problems.  <p>
+
+<strong>show path:</em></strong> Toggling this button ON will cause
+the path to be drawn each time a new frame is drawn.  The color and
+thickness of the path line may be changed using adjustments on the
+<strong>Vectors</em></strong> pop up panel.  Showing the path can be
+useful while previewing and adjusting the path.  <p>
+
+<strong>show vect:</em></strong> Toggling this button ON will cause
+vectors to be drawn each time a new frame is drawn, if a vector file
+has been loaded. (see also <em>Vect...</em></strong>).  <p>
+
+<strong>spline, linear, tension:</em></strong> These controls affect
+the interpolation method used when the value of <em>total
+frames</em></strong> is different than the number of points in the
+original vector file used as the path.  The points from the vector
+file are always used as control points from which the positioning
+information for the total number of requested frames is derived.  If
+<em>spline</em></strong> interpolation is selected, the user may
+adjust spline tension (how much slack there is in the path) using the
+<em>tension</em></strong> slider.  Toggling <em>show
+path</em></strong> ON prior to adjusting tension allows the user to
+judge how much tension to use for a smoother path.  <p>
+
+<A NAME="Rsavev"></A> <strong>run and save images:</em></strong>
+Prompts user in the <strong>GRASS</em></strong> window for a prefix to
+be used to name a series of rgb format image files, one for each
+frame.  The animation is then run from the beginning, with each frame
+being fully rendered using the current display type and resolution
+(see <strong><A HREF="#Ctrlp">Control</A></em></strong> panel).  If
+<em>show vect</em></strong> is toggled ON, the vector file is also
+drawn, then the finished frame is written to an rgb file. If files
+already exist with the same name, they are overwritten.  You may
+cancel <em>run and save images</em></strong> at any time by selecting
+<em>stop</em></strong> This entire process may take several hours of
+computer time for a 100 frame animation of a complex surface, but
+requires no further intervention from the user.  The finished rendered
+animation files can be played back using SGI's <em>movie</em></strong>
+program if it is a very short animation or you can capture the images
+on video (Also see <em><A HREF="#Idump">Img Dump</A></em></strong>).
+<p>
+
+<A NAME="WhatsHeadP">
+<H3> What's Here</H3>
+</A> <P>
+
+The <A HREF="#WhatsP">What's Here</A> panel operates like the
+<strong>GRASS</em></strong> program <em>d.what.rast</em></strong>, you
+use the mouse to mark spots on the surface that you would like more
+information about.  After clicking on the surface, data prints to the
+text box in the panel.  First, the name of the surface clicked on is
+printed then the geographical coordinates.  Next, elevation is
+bi-linearly interpolated from the current polygon resolution and this
+is printed (setting the resolution to 1 will produce the most accurate
+elevation). xy distance from previous and xyz distance from previous
+are straight line distances, whereas distance along surface and
+distance along exag surface are computed as the length of a path
+draped across the surface.  Each time you select a point, a marker is
+drawn on the surface at the point selected with a line connecting it
+to the previous point.  To stop selecting points toggle the
+<strong>What's here?</em></strong> button.  <p>
+
+<H3>
+<IMG SRC="nvimg/panel/whats.gif"> <A NAME="WhatsP">What's Here Panel</A>
+</H3> <P>
+
+<strong>Separate</em></strong> places a separating line at current
+text position.  <p>
+
+<strong>Clear</em></strong> clears text window.  <p>
+
+<A NAME="MkdspfHeadP">
+<H3>Mkdspf Panel</H3>
+</A> <P>
+
+The <A HREF="#MkdspfP">Mkdspf</A> panel provides facilities for
+creating display files (dspf) of isosurfaces from volume data (grid3
+files).  <p>
+
+<H3>
+<IMG SRC="nvimg/panel/mkdspf.gif"> <A NAME="MkdspfP">Mkdspf Panel</A>
+</H3> <P>
+
+<strong>Input File:</em></strong> Enter name of grid3 file from which
+to create isosurfaces.  <p>
+
+<strong>Output File:</em></strong> Name of display file
+produced. Should have .dspf extension.  <p>
+
+<strong>Color File:</em></strong> Another grid3 file from which to
+find color values for isosurfaces.  <p>
+
+<strong>Lighting Model:</em></strong> Choose one of <em>flat
+</em></strong> or <em>gradient </em></strong>. Flat shading is
+somewhat faster in computation and display, but gradient allows
+gouraud shading for isosurfaces with nicer display results.  <p>
+
+<strong>Threshold type:</em></strong> Current must be one of
+<em>Complete, Range, or Individual</em></strong>. Click on name of
+current selection to pop up list from which new threshold type can be
+selected. Panel changes depending on Threshold type selected.  <p>
+
+<strong>Individual:</em></strong>Type in individual threshold
+values. List of selected values will appear in <strong> Iso Levels
+</em></strong> box. Use <strong>add </em></strong>and <strong>delete
+</em></strong>buttons to add or delete current value from list.  <p>
+
+<strong>Complete:</em></strong> Type in <strong>Interval Size
+</em></strong>.  Isosurfaces will be computed at Interval-size steps
+from minimum to maximum data values.  <p>
+
+<strong>Range:</em></strong> Type in values for
+<strong>Min</em></strong>, <strong>Max</em></strong> and <strong>Num
+Levels</em></strong> and select one of the <strong>Interpolation
+</em></strong> toggles: <em>linear</em></strong>
+<em>logarithmic</em></strong> <em>Quadratic</em></strong>
+<em>Arbitrary</em></strong>. The number of levels specified will be
+computed within the range Min to Max, with interval computed according
+to Interpolation method chosen.  <p>
+
+<A NAME="MiscP">
+<h3> Miscellaneous </h3>
+</A> <P>
+
+<h4> <strong>File Menu</em></strong> <p>
+
+<A NAME="Idump"></A> <strong>Image Dump:</em></strong> Dialog box
+prompts user for a name to be used for an IRIS rgb format image file,
+then writes the contents of the graphics window to that file.  This is
+basically a screen dump of the portion of the screen defined by the
+boundaries of the graphics window, so if any panel windows or windows
+from other applications are partially covering the graphics window,
+they will appear in the saved image as well.  To view the image files,
+you can use the SGI programs <em>ipaste</em></strong> and
+<em>imgview</em></strong>.  SGI also provides many programs to convert
+rgb image files to other formats: <em>toppm, totarga, tosun,
+tops,</em></strong> etc.  <p>
+
+<strong>Quit:</em></strong>  Quit the program.
+
+<A NAME="AdvancedP">
+<H2>Advanced Features</H2>
+</A>  <P>
+
+<A NAME="StateP">
+<H3>Nviz State</H3>
+</A> <P>
+
+It is often desirable and convenient to save some configuration of
+Nviz for use in other applications.  For example, each session of Nviz
+might require the same set of maps or other attributes.  To allow
+persistence between sessions, Nviz provides tools for saving and
+loading the current "state" of the system.  These tools are accessed
+using the <I>Load State</I> and <I>Save State</I> options under the
+<I>File</I> menu.  <P>
+
+<I>Save State</I> records the current status of Nviz, including all
+current maps, color settings, camera viewpoint, and so on into a user
+designated file.  This state file may then be reloaded at a later time
+and will restore the state of Nviz.  <I>Load State</I> queries the
+user for a state file to load and modifies the state of Nviz according
+to the state file.  Note that <I>Load State</I> does not erase the
+current state of Nviz when loading a new state.  Instead, the current
+state is augmented according to the contents of the state file.  Since
+this can sometimes cause unexpected results, it is best to either
+restart Nviz or manually reset the state of Nviz before loading a
+state file.  <P>
+
+State files are particularly useful when creating scripts for animation
+(see <A HREF="#ScriptingP">scripting</A> below).  In particular, a
+predefined Nviz state can be loaded automatically into a script by
+turning on scripting and performing the activity of loading the new
+state.  <P>
+
+<A NAME="KeyAnimHeadP">
+<H3>Key frame Animation</H3>
+</A> <P>
+
+The <A HREF="#KeyAnimP">Key frame Animation</A> panel is used to create
+more complex animations where careful control of camera motion is
+required.  The key frame animator operates using the notion of
+<I>channels</I>.  A channel describes some aspect of <I>nviz</I> which
+can be changed during an animation.  Channels can be as specific as
+necessary, isolating single attributes of <I>nviz</I>, and can be
+turned on or off allowing segments of an animation to be arbitrarily
+detailed.  <P>
+
+<H3>
+<IMG SRC="nvimg/panel/keyanim.gif"><A NAME="KeyAnimP"> Key frame Animation Panel</A>
+</H3>
+
+<H4>Channels and Key times</H4>  <P>
+
+As mentioned above, <I>what</I> the key frame animator can control is
+determined by channels.  <I>Where</I> the key frame animator creates
+changes is determined by key times.  <I>How</I> the key frame animator
+creates changes is a more advanced topic and will be discussed later.
+For now, we concern ourselves with channels and key times.
+<P>
+
+A simple example of an attribute which is controlled by a channel is
+the camera.  Although the entire camera could be controlled by a
+single channel, doing so would provide too gross a level of control.
+Instead, specific aspects of the camera are controlled by a set of
+eight channels: <I>FromX</I>, <I>FromY</I>, <I>FromZ</I>, <I>DirX</I>,
+<I>DirY</I>, <I>DirZ</I>, <I>FOV</I>, and <I>TWIST</I>.  The
+<I>From*</I> channels control the position from which the camera is
+looking.  The <I>Dir*</I> attributes control the direction in which
+the camera is looking.  Lastly, the <I>FOV</I> and <I>TWIST</I>
+attributes control the "field-of-view" and "twist" of the camera.  We
+will discuss how channel settings can be used to affect playback
+below.
+ <P>
+
+For the most part, the key frame animator and the basic animator are
+very similar.  One crucial difference is that the key frame animator
+uses <I>key times</I> to establish positions of key frames whereas the
+basic animator uses frame numbers.  A key time represents a position
+in an animation in the form of <I>mm:ss:ff</I> where <I>mm</I> is
+minutes, <I>ss</I> is seconds, and <I>ff</I> is frames.  Positioning
+key frames using key times is more precise and allows the user to more
+accurately design a timed animation.  Moreover, key times do not
+depend on the current frame rate (even though you can specify a frame
+number as part of a key time).  Key time frame numbers are automatically
+adjusted if the user modifies the frame rate.  Thus, the user can
+experiment with different frame rates without having to move key frames.
+ <P>
+
+Ultimately, the combination of key times and frame rate determines the
+overall length of the animation.  If the length of the animation in
+key times is <I>m</I> minutes, <I>s</I> seconds and <I>f</I> frames
+with a frame rate of <I>v</I>, then the total length of the animation
+is <I>(m*60 + s)*v + f</I> frames.  <P>
+
+<H4>Manipulating Key frames</H4> <P>
+
+Key frames are added in the key frame animator in the same fashion that
+they are added in the basic animator: move the view to the desired
+position and click the <I>Add</I> button.  The position at which the
+key frame is added is determined by the <I>New Key Time</I> field.
+Normally, all channels are on.  When a key frame is added, the set of
+channels are scanned and each channel which is on has its current
+status recorded.  Channels which are off do not have their status
+recorded.  Key frames are displayed on the white canvas area next to
+the list of channels.  The key time for each key frame is given below
+the channel sliders.  If a channel has an entry for a key frame, a
+light blue rectangle is created in the channel slider.  The list of
+channels may be scrolled with the slider on the left.  The bottom
+slider scrolls over the length of the animation.  The following figure
+shows the key frame area with two key frames.
+ <P>
+
+<IMG SRC="nvimg/panel/keyexample.gif"> <P>
+
+The key time display below the channel area is used to move key frames.
+To move a key frame, "drag" (i.e. hold the mouse button down while
+moving the mouse) the corresponding key time using the first mouse
+button.  While you move the mouse, the key time will change to indicate
+its new value.  When the value of the key time is correct, release the
+first mouse button to place the key frame.  <P>
+
+The second mouse button is used to delete key frames.  To delete a
+key frame, select the corresponding key time using the second mouse
+button, then click the <I>Delete</I> button.  <I>nviz</I> will ask you
+to verify your decision, but once deleted, key frames are not
+recoverable.  Note that you may delete more than one key frame at a
+time by selecting multiple key times with the second mouse button and
+pressing <I>Delete</I>.<P>
+
+<H4>Viewing Animation</H4> <P>
+
+The key frame animator provides facilities for viewing all parts of an
+animation as well as tools for running the animation in full rendering
+mode and saving the frames to disk.  The primary mechanism for
+controlling position within an animation is the current key time
+slider.  This slider is represented by a dark blue vertical bar in
+each channel slider, and a horizontal key time in large dark letters in
+the key time area.  In the figure above, the current key time slider is
+positioned at <B>00:00:00</B>.   <P>
+
+The current key time slider may be controlled using either one of the
+blue bars in the channels area or its representation in the key time
+area.  Within the channel area, simply clicking the first mouse button
+at a specified location moves the current key time slider to that
+position.  Alternatively, you may drag the slider with the first mouse
+button.  Within the key time area, you must drag the current key time
+slider to move it.  This is done by holding down the first mouse
+button over the large dark key time and moving the mouse.  Releasing
+the first mouse button sets the position.  While dragging in either
+area, the key time display updates itself to show the current position.
+<P>
+
+The tape player controls at the top of the panel can be used to view a
+running animation.  The direction of the arrows on four of the buttons
+indicate which direction the animation will play when they a pressed.
+Arrow buttons with a vertical bar will step a single frame whereas
+plain arrow buttons will play the animation until an endpoint is
+reached or the stop button is pressed (the square button).  The
+animation is always played using the current frame rate setting.  You
+can use the <I>Frame rate</I> button to change frame rate and experiment
+a bit.  <P>
+
+The final step in developing an animation is usually saving the frame
+sequence to disk.  In the key frame animator, the <I>Run and Save
+Images</I> button does just that.  Pressing this button creates a
+Popup which queries the user for a base file name and a rendering
+style.  The rendering style may either be wire frame (fastest) or full
+rendering (slowest).  The base file name is used to store frames to
+disk in the form <I>base_nameXXXXX.rgb</I> where <I>XXXXX</I> is the
+frame number.  Pressing <I>Ok</I> on the popup will start the
+rendering.  You may stop the rendering by pressing the stop tape
+button as described above.  <P>
+
+<H4>Advanced Topic: Adding Your Own Channels</H4> <P>
+
+The channels <I>nviz</I> adds by default to the key frame animator are
+rather limited.  However, the key frame animator is sophisticated
+enough to handle more general behavior.  In particular, it is possible
+(with a little minor programming) for the user to add their own
+channels.  The actual mechanism by which channels operate is a bit
+complex but necessary to understand in order to take advantage of all
+the features of the key frame animator.  During playback, each channel
+determines a value for the attribute it controls.  Thus the <I>FOV</I>
+channel is responsible for determining the Camera's "field-of-view"
+setting during animation playback.  They way channels set values for
+attributes is by <I>interpolating</I> between key frame settings.  The
+fact that not all channels may have entries for every key frame means
+that interpolation may be different for each channel.  This is where
+the key frame animator gains its flexibility. <P>
+
+What follows is a brief discussion describing key framing in the
+key frame animator, and an explicit example of adding a channel.  Using
+the example given here as a template, it should be fairly easy for
+users to add their own channels.  <P>
+
+<H5>Introduction</H5>  <P>
+
+The purpose of this section is to provide instructions for adding
+animation capability to the key frame animator in nviz.  The key frame
+animator records the state of various "channels" each time a key frame
+is added.  Frames falling in between key frames are interpolated based
+on the channel entries at bounding key frames.  The interpolation can
+either be static (that is, no interpolation) to handle changes in, for
+example, file names, colors, etc., or interpolation can be dynamic
+meaning a linear interpolation of floating point values.  Key framing
+and channel addition is discussed below.  <P>
+
+<H5>Key framing</H5>  <P>
+
+Key framing is an animation technique where we record the state of nviz
+at crucial moments (called key frames) and interpolate between these
+events to create individual animation frames.  Key framing under nviz
+is based on channels.  A channel specifies one aspect of nviz which
+may be altered at each key frame.  Nviz starts out with a default set
+of channels which govern camera position.  The user is then free to
+add other channels as described below.  <P>
+
+Separating the state of nviz into channels allows different aspects of
+nviz to have different animation characteristics.  Each channel may be
+set either active or inactive at a specific key frame.  If a channel is
+active then it specifies a change at that key frame.  Otherwise, the
+state of the channel is interpolated between the two closest enclosing
+key frames.  As an example, suppose we have six key frames as follows:  <P>
+
+<PRE>
+Camera         X----------X----I-----X-----J----X----------X----K-----X
+                               I           J                    K
+Cutplane0                 X----I-----X-----J---------------X    K
+                               I           J                    K
+Keyframe       1          2    I     3     J    4          5    K     6
+</PRE>  <P>
+
+The X's specify where a channel is active.  Thus, the camera is active
+at every key frame while cutplane0 is only active at key frames 2, 3 and
+5.  The columns of I's, J's and K's indicate the position of animation
+frames.  Now, at frame I, both camera and cutplane0 attributes are
+interpolated from their associated entries in key frames 2 and 3.  At
+frame J, however, camera attributes are interpolated from key frames 3
+and 4, while cutplane0 attributes are interpolated from key frames 3
+and 5.  Finally, at frame K, camera attributes are interpolated from
+key frames 5 and 6, while no changes are made to cutplane0.  Thus by
+changing what channels are active, we may specify different
+interpolation rates for different channels.  <P>
+
+<H5>Adding Channels</H5>  <P>
+
+Channels may be added to the key frame animator by calling the function
+keyanimAddChannel.  keyanimAddChannel requires four arguments:  <P>
+
+<OL>
+<LI> BASE name of kanimator panel
+<UL> 
+<LI> Use the tcl/tk path of the animator panel in your version of nviz
+</UL>
+<LI> Channel Name
+<UL>
+<LI> Specify a single word, unique name for your channel
+</UL>
+<LI> Entry List
+<UL>
+<LI> Specify a list describing entries this channel will control, more on this below
+</UL>
+<LI> Get Function 
+<UL>
+<LI> Specify a function which takes no arguments and returns a list of entries as described in the entry list
+</UL>
+<LI> Set Function
+<UL>
+<LI> Specify a function that, when given a list of entries as
+described in the entry list, will change the state of nviz as specified by the entry list
+</UL>
+</OL>
+ <P>
+
+The BASE name of the key frame animator panel is
+$Nv_(P_AREA).kanimator by default.  Also, be sure to specify a
+<B>one</B> word, <B>unique</B> name for the channel so there is no
+danger of interfering with existing channels.  <P>
+
+<H5>Entry Lists</H5> <P>
+
+An entry list is used to describe to the animator a list of values
+that a channel will govern.  An entry list is a list of pairs where
+each pair specifies an entry name and an interpolation type.
+ <P>
+
+As an example, consider a channel called "cplane-0" (cutplane 0).
+There are six attributes we need to keep track of for the cplane-0
+panel: the x, y, and z components of translation, the blend type, the
+rotation angle, and the tilt angle.  This corresponds to the following
+entry list:
+ <P>
+
+<PRE>
+{{pos_x dynamic} {pos_y dynamic} {pos_z dynamic} 
+ {blend_type static} {rot dynamic} {tilt dynamic}}
+</PRE> <P>
+
+Note that blend type is interpolated statically because blend type is
+not a floating point value, but rather a text string (and it makes no
+sense to linearly interpolate a text string).
+ <P>
+
+<H5>Get Functions</H5> <P>
+
+As mentioned earlier, the get function returns the current state of
+the channel it is associated with.  keyanimAddChannel expects the get
+function to return a list in the same format as the entry list except
+that interpolation types will be replaced with actual values.  Getting
+back to our cutplane example, we need to define a function which
+returns a translation positions, blend type, and rotation and tilt
+positions.  One possible tcl/tk function would be:
+ <P>
+
+<PRE>
+proc cutplane0_get_entries {} {
+  global Nv_
+
+  # Assemble the entry list showing the current state of cutplane 0
+  set ret [list]
+	
+  foreach i [list pos_x pos_y pos_z blend_type rot tilt] {
+    set val [list $i]
+
+    switch $i {
+      "pos_x"      { lappend val [lindex [Ncutplane0 get_trans] 0] }
+      "pos_y"      { lappend val [lindex [Ncutplane0 get_trans] 1] }
+      "pos_z"      { lappend val [lindex [Ncutplane0 get_trans] 2] }
+      "blend_type" { lappend val $Nv_(CutPlaneFence) }
+      "rot"        { lappend val [lindex [Ncutplane0 get_rot] 2] }
+      "tilt"       { lappend val [lindex [Ncutplane0 get_rot] 1] }
+    }
+
+    lappend ret $val
+  }
+
+  return $ret
+}
+</PRE> <P>
+
+Here we run through the list of entries for the cplane-0 channel and
+make the appropriate library calls to get the status of cutplane 0.
+The list returned has exactly the same form as the entry list except
+that interpolation types are replaced by actual values.
+ <P>
+
+<H5>Set Functions</H5> <P>
+
+The set function is required to take as argument a list of the form
+returned by the get function.  That is, an entry list with
+interpolation types replaced by actual values.  Note that the argument
+list may not contain all the entries for a channel.  In particular,
+entries for statically interpolated channel attributes will only be
+included in this list at key frames.  One possible tcl/tk set function
+for cplane-0 would be:
+ <P>
+
+<PRE>
+proc cutplane0_set_entries { elist } {
+  global Nv_
+
+  set cur_trans [Ncutplane0 get_trans]
+  set old_trans $cur_trans
+  set cur_rot   [Ncutplane0 get_rot]
+  set old_rot $cur_rot
+  set cur_blend $Nv_(CutPlaneFence)
+  set old_blend $cur_blend
+
+  foreach i $elist {
+    switch [lindex $i 0] {
+      "pos_x"      { set cur_trans [lreplace $cur_trans 0 0 [lindex $i 1]] }
+      "pos_y"      { set cur_trans [lreplace $cur_trans 1 1 [lindex $i 1]] }
+      "pos_z"      { set cur_trans [lreplace $cur_trans 2 2 [lindex $i 1]] }
+      "blend_type" { set cur_blend [lindex $i 1] }
+      "rot"        { set cur_rot [lreplace $cur_rot 2 2 [lindex $i 1]] }
+      "tilt"       { set cur_rot [lreplace $cur_rot 1 1 [lindex $i 1]] }
+    }
+  }
+
+  if {"$cur_trans" != "$old_trans"} then {
+    Ncutplane0 set_trans [lindex $cur_trans 0] [lindex $cur_trans 1] [lindex $cur_trans 2]
+  }
+
+  if {"$cur_rot" != "$old_rot"} then {
+    Ncutplane0 set_rot [lindex $cur_rot 0] [lindex $cur_rot 1] [lindex $cur_rot 2]
+  }
+
+  if {"$cur_blend" != "$old_blend"} then {
+    set Nv_(CutPlaneFence) $cur_blend
+    Nset_fence_color $cur_blend
+  }
+}
+</PRE> <P>
+
+<H5>Notes</H5> <P>
+
+The last task is to actually make the call which adds the channel.
+For the cut plane example above, we make the following call to
+keyanimAddChannel:  <P>
+
+<PRE>
+set entry_list [list [list pos_x dynamic] [list pos_y dynamic] [list pos_z dynamic]]
+lappend entry_list [list blend_type static]
+lappend entry_list [list rot dynamic] [list tilt dynamic]
+
+keyanimAddChannel $Nv_(P_AREA).kanimator "cplane-0" $entry_list \
+    cutplane0_get_entries cutplane0_set_entries
+</PRE> <P>
+
+The cutplane-0 implementation given above is the same as that used
+for the cplane-0 channel given in <I>nviz</I>.  <P>
+
+<A NAME="ScriptingP">
+<H3>Scripting</H3>
+</A> <P>
+
+<H4>Introduction</H4> <P>
+
+Sometimes it is desirable to automatically generate arbitrarily
+complicated changes to Nviz when creating an animation.  The tools
+presented so far allow the user to create camera movement as well as
+add custom animation channels (e.g. the cut plane channel) to the
+key frame animator.  However, the user would be required to add several
+complex channels to the key frame animator to capture the most general
+behavior.  The purpose of the scripting environment is to allow the
+user to develop a one-time script file which can handle arbitrarily
+complex changes to the Nviz environment.  Script files are extremely
+application dependent and, in general, will not be usable with other
+applications.  However, they are the most convenient mechanism for
+capturing specific behavior quickly.  <P>
+
+Scripting is controlled by the commands provided in the scripting
+pulldown menu (see <A HREF="#ScriptPulldown">figure</A> below).  By
+default, when scripting has been activated every user event in Nviz is
+recorded and output to a script saved as a text file.  This script
+file may be played back in Nviz by using the <I>Play Script</I> option
+in the menu.  Thus, most scripts are simply a carbon copy of the user
+performing certain actions.  Scripting can become more powerful,
+however, by adding loops around a sequence of script events, or by
+using higher-level tools.  The more advanced features of scripting are
+described in the <A HREF="#ScriptTools">Script Tools</A> section below.
+The next section is devoted to describing basic scripting.  Be sure to
+read this section carefully as the discussion of advanced features
+assumes the knowledge of this material.
+<P>
+
+<H3>
+<IMG SRC="nvimg/work/script_pulldown.gif">
+<A NAME="ScriptPulldown"> Script Pulldown Menu</A>
+</H3>
+
+<H4>Basic Scripting</H4> <P>
+
+Basic scripting entails designating a script file, turning scripting
+on and off, and sending commands directly to the script.  Before doing
+anything with scripting it is necessary to designate a script file.
+This is done by selecting the <I>Scriptfile</I> option in the script
+pulldown menu.  The user is queried for a file to use as the new
+script file.  If the designated file already exists then scripting
+will overwrite the old contents of the file.
+<P>
+
+Once a script file has been selected, scripting is turned on and off by
+selecting the <I>On</I> radio button in the scripting menu.  The status
+of this radio button indicates whether or not scripting is active.  As
+soon as scripting becomes active, literally everything the user does
+is recorded in the script file.  Since this can lead to extremely large
+script files, it is suggested that scripting be turned on only when the
+next few user events are critical to the script.  When you are
+finished adding commands to the script, select <I>Close Script</I> to
+close the script file.
+<P>
+
+To make the script files somewhat more legible and useful, two
+additional commands are available in basic scripting: <I>Add Script
+Line</I> and <I>Add Script Cmd</I>.  The difference between these two
+commands is subtle but important.  We will delay a discussion of the
+differences between these two commands for now.  For our purposes, the
+difference between these two commands is as follows: <I>Add Script
+Line</I> adds a command directly to the script being written and will
+not affect the state of Nviz; <I>Add Script Cmd</I> adds a command to
+the script which <B>will</B> affect the state of Nviz.  A script in
+Nviz is really a Tcl script with a slightly specialized format.
+Hence, legal script commands are things like comments marked with the
+<B>#</B> character, expressions like <B>set i [expr $i + 1]</B>, and
+so on.  <I>Add Script Line</I> is intended to add commands which
+directly affect the Tcl code in the script.  Thus comments can be
+added making scripts more readable, variables may be accessed, and
+conditionals may be inserted allowing the script to select different
+execution paths depending on script variables.  Commands added by
+<I>Add Script Cmd</I> may also be Tcl commands.  However, these
+commands are executed directly in the Nviz environment and affect the
+current state of Nviz directly (but <B>do not</B> affect the state of
+the script).  Thus commands like <B>Nsurf10001 set_att topo
+y90o.1</B>, which will set the topology attribute of a particular
+surface to a particular file, are meaningful commands to add.
+ <P>
+
+The combination of <I>Add Script Line</I> and <I>Add Script Cmd</I>
+provide the most general tools for controlling script files short of
+directly editing the text of a script.  It is expected that these
+commands will rarely be used.  However, <I>Add Script Line</I> in
+particular is useful for placing comments to separate distinct
+portions of a script and make the overall script file more readable.
+ <P>
+
+<H4>
+<A NAME="ScriptTools">Script Tools</A>
+</H4>
+ <P>
+
+The <I>Script Tools</I> menu selection pops up the script tools menu
+which provides higher level script manipulation facilities.  It is
+possible to do everything a script tool does by using <I>Add Script
+Line</I> and <I>Add Script Cmd</I> described above.  However, the
+script tools are much more convenient and should be used instead.
+Currently, there are three types of tool covering the five selections
+in the script tool popup.  <I>Open Loop</I> and <I>Close Loop</I>
+allow iteration using a numeric loop variable.  <I>Open File
+Seq. Loop</I> and <I>Close File Seq. Loop</I> allow iteration over a
+series of files.  Finally, the <I>File Sequence Tool</I> allows very
+general iteration over a variety of attributes associated with
+surface, vector and site maps.  Be sure that scripting has been turned
+on (by selecting <I>On</I>) before using a script tool.  The <I>File
+Sequence Tool</I> does not necessarily require scripting to be on, but
+for now we assume scripting has been activated.
+<P>
+
+<H5><I>Open and Close Loop</I></H5> <P>
+
+The simplest tool is the <I>Open/Close Loop</I> pair.  This tool
+defines a loop variable given the name <B>lpX</B> where X is the
+current loop being defined (starting with 1).  The loop variable is
+iterated over a numeric range as specified by the user.  The user may
+add commands (using <I>Add Script Line</I>) which reference the loop
+variable.  The most general functionality provided by this tool is the
+ability to repeat some script activity a specified number of times.
+<P>
+
+A simple <I>Open/Close Loop</I> is created as follows:
+<UL>
+<LI> Select <I>Open Loop</I> from the script tools menu.
+<LI> Fill in numeric values for "Loop Start Value", "Loop End Value"
+and "Loop Increment Value" in the resulting popup (see <A HREF="#SimpLoopP">
+figure</A> below), and press "Accept".
+<LI> Continue scripting as usual adding all activities over which you
+wish to iterate.
+<LI> Close the loop by selecting <I>Close Loop</I> from the script
+tools menu.
+</UL>
+ <P>
+
+<H5>
+<A NAME="SimpLoopP">
+<IMG SRC="nvimg/work/SimpLoop.gif"> Simple Loop Popup
+</A>
+</H5> <P>
+
+Note that simple loops may be nested by repeating the above process
+from within a simple loop.  Each additional loop uses the same naming
+scheme, thus the outer loop will be <B>lp1</B>, the first nested loop
+is <B>lp2</B> and so on.  Internally a stack of loop names is
+maintained so that selecting <I>Close Loop</I> closes the most
+recently opened loop.
+ <P>
+
+<H5><I>Open and Close File Seq. Loop</I></H5> <P>
+
+Simple open/close loops work well when looping behavior is relatively
+simple.  However, simple loops are restricted to iterating over
+numeric values.  A common scenario is for some map object in the scene
+to display a sequence of map files.  That is, we need to be able to
+iterate over lists of files.  The <I>Open/Close File Seq. Loop</I>
+pair provide this functionality.  This tool, when activated, forces
+any mapBrowser activities within the scope of the loop to use the
+current loop iteration value rather than the value entered by the user
+when the script is created.  Creating a file loop is slightly awkward
+but follows these basic steps:
+
+<UL>
+<LI> Select <I>Open File Seq. Loop</I> from the script tools menu.
+<LI> Select a sequence of files using the Map Browser tool (see
+<A HREF="#FBrowseP">figure</A> below), and press "Done".
+<LI> Continue scripting as usual adding all activities over which you
+wish to iterate.
+<LI> If you wish to apply the file sequence to a particular map,
+modify the appropriate map as if you were loading a file from the file
+sequence (see the <A HREF="#FileSeqEx">example</A> below).
+<LI> Close the loop by selecting <I>Close File Seq. Loop</I> from the
+script tools menu.
+</UL>
+ <P>
+
+<H5>
+<A NAME="FBrowseP">
+<IMG SRC="nvimg/work/FBrowse.gif"> File Sequence Loop Popup
+</A>
+</H5>
+ <P>
+
+Like simple loops, file sequence loops may be nested as well as mixed
+with simple loops (make sure that you use the appropriate "Close"
+button however!).  File sequence loops use a naming scheme similar to
+simple loops.  File sequence iteration values can be accessed using
+the variable <B>lseqX</B> where X starts at 1 for the first loop and
+increments by 2 for consecutive loops (thus the next loop is 3, then
+5, and so on).  <P>
+
+To help clarify how the file sequence loop value can automatically be
+used by map browser activities, consider the following explicit
+example:
+ <P>
+
+<A NAME="FileSeqEx"></A>
+Suppose we want the topology of a surface map to sequence over a list
+of files (for example, the four file sequence shown in the map browser
+image above).  We can use the file sequence loop tool to do this as
+follows: 
+<OL>
+<LI> Turn on scripting as usual.
+<LI> Set up the state of Nviz just prior to iterating over the list of
+files.  This includes loading the surface we wish to modify during
+the loop. 
+<LI> Open the file sequence loop with <I>Open File Seq. Loop</I>.
+<LI> Select the list of files we wish to iterate over as above.
+<LI> Load some arbitrary file into the topology attribute of the
+surface we wish to modify in the loop.
+<LI> Close the file sequence loop with <I>Close File Seq. Loop</I>.
+</OL>
+ <P>
+
+When the script event corresponding to changing topology (step 5
+above) is replayed in Nviz, the current value of the file sequence
+loop is used instead of the value supplied during script creation.
+Thus, during each iteration of the loop the topology attribute is set
+to the current value of the file sequence loop.
+ <P>
+
+Be aware that the file sequence loop affects <B>all</B> map browser
+activities within the scope of the loop.  Thus <B>any</B> script
+events added within the scope of a loop which also require a map
+browser will have their value replaced during script playback with the
+current value of the file loop.  
+ <P>
+
+<H5><I>File Sequence Tool</I></H5> <P>
+
+<H5><B>Introduction</B></H5> <P>
+
+The final script tool, the <I>File Sequence Tool</I>, is the most
+complicated but also the most flexible.  This tool is designed to
+allow iteration over several attributes of several maps in Nviz.
+Unlike the two previous tools, the <I>File Sequence Tool</I> is
+capable of automatically producing a stand-alone script file which can
+be played back within Nviz.  <P>
+
+Creating a script using the <I>File Sequence Tool</I> consists of two
+major steps: creating a state file, and creating a file sequence.
+State files were discussed in the appropriate section above.  For the
+purposes of scripting, the <I>File Sequence Tool</I> can use a state
+file as a basis for the script it creates.  Usually, the user sets up
+Nviz in a configuration just prior to the beginning of file iteration
+and saves the state of Nviz.  The script created by the <I>File
+Sequence Tool</I> can then load this state file automatically before
+performing file iteration.  The <A HREF="#FSToolEx">example</A> below
+should help clarify these activities.  For now, let us take a detailed
+look at the <I>File Sequence Tool</I> control window. <P>
+
+The <I>File Sequence Tool</I> control window is activated by selecting
+<I>File Sequence Tool</I> from the script tools popup:
+ <P>
+
+<H5>
+<A NAME="FSToolImg"></A>
+<IMG SRC="nvimg/work/FSTool.gif"> File Sequence Tool Window
+</H5>
+ <P>
+
+The <I>File Sequence Tool</I> operates on the concept of
+<B>fields</B>.  A field identifies some attribute of a surface,
+vector, or site map which will be modified during an animation.  The
+lower area of the <I>File Sequence Tool</I> is used to display all the
+fields currently set.  In the example above, a single field is defined
+which modifies the topography attribute of a surface in Nviz.  The
+buttons under <I>Fields:</I> are used to manipulate the current list
+of fields.  Pressing <I>Add</I> will create a new field.  Pressing
+<I>Delete</I> will allow the user to delete one of the fields.  The
+<I>State:</I> button is used to determine the state file which the
+current fields will use a basis for script creation.
+ <P>
+
+Before we discuss how to add fields, it is important to understand
+what types of fields may be added and how they may be changed.  As
+mentioned before, a field identifies some attribute of a surface,
+vector or site map that we wish to change during each frame of an
+animation.  For surfaces, we can modify the attributes topography,
+color, mask, transparency, shininess, and emission.  For vectors and
+sites, we can only modify the current file.  Furthermore, there are at
+least three simple ways we can change a field inbetween frames: we can
+load a new file in the place of the current file; we can <I>unset</I>
+the field so that it has no value; and we can leave the field
+unchanged.  The <I>File Sequence Tool</I> supports all of the
+attributes we have listed plus the three simplest ways of changing
+these attributes inbetween frames.  
+ <P>
+
+<H5><B>Adding Fields</B></H5> <P>
+
+Adding a field is a two step process: the user must decide which
+attribute of which surface, vector or site to modify; and the user
+must specify the list of changes to the selected attribute.  Pressing
+the <I>Add</I> button creates the following popup:
+ <P>
+
+<H5>
+<IMG SRC="nvimg/work/AddField.gif">
+Add Button Popup</H5> <P>
+
+<I>Field Type:</I> refers to the type of map object this field will
+modify.  Valid selections are <I>Surface</I>, <I>Vector</I> or
+<I>Site</I>.  <I>Field Attribute:</I> refers to what attribute of the
+given type the new field will modify.  For surfaces, valid selections
+are <I>Topography</I>, <I>Color</I>, <I>Mask</I>, <I>Transparency</I>,
+<I>Shininess</I>, and <I>Emission</I>.  For vectors or sites, the only
+valid selections is <I>File</I>.  <I>Set From:</I> refers to a
+surface, vector or site file in the <B>current</B> session of Nviz
+which will be used as the placeholder for changes in the new field.
+When a script is created, the <I>Set From</I> map object has the
+specified attribute changed according to the new field.  Thus, the
+<I>Set From</I> map object should also be stored in the state file
+used by this file sequence.
+ <P>
+
+After selecting an appropriate type, attribute and source map object,
+clicking <I>Accept</I> creates the file browser popup:
+ <P>
+
+<H5>
+<IMG SRC="nvimg/work/FSToolBrowse.gif">
+Field File List Popup</H5> <P>
+
+Normally, the file browser will have no selected files.  However, for
+the sake of illustration we have already selected a few files in the
+image above.  The <B>MAPSETS</B> and <B>FILES</B> lists operate just
+as in the <I>Open/Close File Seq. Loop</I> tool above.  When a file is
+selected, its name is copied to the file list on the far right.  File
+names may be entered explicitly in the type-in field on the top.  The
+list of files on the far right indicates the sequence of changes the
+current field will undergo when a script is created.  Recall that the
+<I>File Sequence Tool</I> supports three mechanisms for changing a
+field between frames: load a new file, unset the field, or leave the
+field alone.  Selecting a file from the <B>FILES</B> list corresponds
+to loading a new file inbetween frames.  By pressing the <I>Blank</I>
+button, the field is directed to unset the field for the next frame.
+This is indicated by storing <I>-- blank --</I> as the next file in
+the file list.  By pressing the <I>Previous</I> button, the field is
+directed to make no changes to the field and use the setting for the
+previous frame.  This is indicated by storing <I>(NO CHANGE) ***</I>
+where <I>***</I> is the previous entry in the file list.
+ <P>
+
+For example, in the image above the file list changes can be described
+as follows:
+<OL>
+<LI> <I>a1.masked@helena</I> is loaded.
+<LI> Nothing is changed for frame 2.
+<LI> The current field is <I>unset</I> and will not be displayed.
+<LI> <I>a3.masked@helena</I> is loaded.
+<LI> <I>as.2m100@helena</I> is loaded.
+</OL>
+ <P>
+
+The <I>Remove</I> button removes the selected file entry from the file
+list.  The <I>Done</I> button is used to indicate that you are
+finished creating the file sequence for the current field.  Clicking
+<I>Cancel</I> will backup to the <I>Add Button Popup</I>.  Clicking
+<I>Cancel</I> on the <I>Add Button Popup</I> will cancel the creation
+of a new field.
+ <P>
+
+The file sequence for a particular field may be changed even after it
+has been added to the field list.  Each field in the <I>File Sequence
+Tool Window</I> contains a button which indicates the type of map
+object this field modifies (see the <A HREF="#FSToolImg">image</A>
+above).  Clicking this button pops up the file browser as above except
+that the list of files is initialized to the current file list for the
+selected field.
+ <P>
+
+<H5><B>Saving Fields</B></H5> <P>
+
+A particular configuration of fields can be saved for later editing by
+using the <I>Load Fields...</I> and <I>Save Fields...</I> options
+under the <I>Options:</I> heading.  <I>Save Fields...</I> will save
+all of the current field configurations plus the name of the
+associated state file for later user.  Conversely, <I>Load
+Fields...</I> will load a configuration of fields.  Note that, in
+order to edit a group of fields in a different Nviz session, it will
+be necessary to re-load the state of Nviz that existed when the
+original fields were created.  This is necessary so that the map
+objects which the original fields referenced will be present in the
+system if these fields are changed.
+ <P>
+
+<H5><B>Building a Script</B></H5> <P>
+
+Once the user has created all the necessary fields for a particular
+script, it is possible to create a playable script file.  There are
+two ways script information can be created: script information can be
+written to a script currently being created, or a separate,
+stand-alone script can be created.  In either case, the script code
+created will only create the changes indicated by the given fields
+over the given number of frames.  Extra code, such as code necessary
+for rendering and saving images after each frame, must be added
+separately.  Since adding image saving code is a frequent activity, a
+comment is added to the code produced by the <I>File Sequence Tool</I>
+to aid the user in determining where to add code.
+ <P>
+
+Clicking <I>Add To Script</I> will add code to the current active
+script which will invoke the changes indicated by the field files.
+Make sure that scripting has been turned on (see above) before using
+this option.
+ <P>
+
+Clicking <I>Build Script...</I> will build a stand-alone script file.
+Stand-alone scripts first load the state file, then the field changes
+are executed as specified by the field descriptions.  As usual, code
+must be added to the script to render images and save them to files.
+ <P>
+
+<H5><B>Example</B></H5> <P>
+
+The following step-by-step example should help clarify the creation of
+a script using the <I>File Sequence Tool</I>.
+ <P>
+
+<!-- Create an example of file tool scripting here -->
+<A NAME="FSToolEx"></A>
+
+For this example, we will specify one surface with a vector and site
+file overlayed on top of it.  At each frame, we will change the
+topography and color attributes of the surface, and the overlay files
+for the sites map.  This animation will be a stand-alone animation.
+Recall that creating an animation with the <I>File Seq. Tool</I>
+requires two major steps: creating a state file and creating the field
+specifications.  Since we will need all the appropriate maps loaded
+into Nviz before we can create the field specifications, we will go
+ahead and create the state file first:
+ <P>
+
+<OL>
+<LI> Start up Nviz with "nviz -q".
+<LI> Add the surface "y90o.1@helena" by pressing <I>New</I> on the
+surface panel.
+<LI> Position the camera so that the surface is in full view.
+<LI> Add the vector map "shore.ascii@helena" by pressing <I>New</I> on
+the vector panel.
+<LI> Set the vector map so that it overlays the surface we added in
+step 2 above.
+<LI> Add the sites map "y90mo.1@helena" by pressing <I>New</I> on the
+sites panel.
+<LI> Set the sites map so that it overlays the surface we added in step
+2 above.
+<LI> Set an appropriate size for the sites map.
+<LI> Save the state of Nviz by selecting <I>Save State...</I> from the
+<I>File</I> menu and choosing an appropriate name.
+</OL>
+ <P>
+
+At this point, we have established the state of Nviz before our
+animation will begin.  State files provide a convenient encapsulation
+of the state of Nviz just prior to beginning animation.  In fact, we
+may alter state files independently of the scripts which require them
+as long as we do not change the map objects required by each script.
+This allows users to modify such features as colors, positioning, line
+sizes, lighting, etc. without having to remake scripts.
+ <P>
+
+The next step is to set up the frame changes for the animation.  We
+will require three fields: one to modify surface topography, one to
+modify surface color, and one to modify the sites source file.  For
+the sake of brevity, our animation will only be five frames long.  We
+can create the field changes as follows:
+ <P>
+
+<OL>
+<LI> Load the script tools by selecting <I>Script Tools</I> under the
+<I>Scripting</I> menu.
+<LI> Press the <I>File Sequence Tool</I> button on the script tools
+popup.
+<LI> Press the <I>Add</I> button under <I>Fields:</I> in the <I>File
+Sequence Tool</I>.
+<LI> Be sure that <I>Field Type:</I> is set to <I>Surface</I>,
+<I>Field Attribute:</I> is set to <I>Topography</I> and <I>Set
+From:</I> is set to "y90o.1@helena", then press <I>Accept</I>.
+<LI> In the file browser popup, select the sequence of files:
+<UL>
+<LI> y90o.1@helena
+<LI> y90o.2@helena
+<LI> y90o.3@helena
+<LI> y90o.4@helena
+<LI> y90o.5@helena
+</UL>
+and click <I>Done</I>.
+<LI> We have just created the five frame changes for the topography
+attribute.  Repeat steps 4 and 5 except set <I>Field Attribute:</I> to
+<I>Color</I>.  This creates the five frame changes for the color attribute.
+<LI> Repeat steps 4 and 5 except set <I>Field Type:</I> to <I>Site</I>.
+In the file browser popup , select the sequence of files:
+<UL>
+<LI> y90mo.1@helena
+<LI> y90mo.2@helena
+<LI> y90mo.3@helena
+<LI> y90mo.4@helena
+<LI> y90mo.5@helena
+</UL>
+<LI> Finally, set the state file to the file you saved in state
+creation above.  State file is set by pressing the <I>State File:</I>
+button under <I>Fields:</I>.
+</OL>
+ <P>
+
+At this point, the <I>File Sequence Tool</I> display should look
+something like the following:
+ <P>
+
+<H5>
+<IMG SRC="nvimg/work/FSToolExample.gif">
+File Sequence Tool Example</H5>
+ <P>
+
+It may be wise to save your progress up to this point by clicking
+<I>Save Fields...</I> and choosing an appropriate file name.  Saving
+the fields configuration is also a convenient way to use the same
+state file with different fields settings.  For example, we could
+later modify our fields settings above by changing the list of files
+used in the frame sequence, adding new fields, etc.
+ <P>
+
+Since we are generating a stand-alone script, press the <I>Build
+Script...</I> button and choose an appropriate file name for the new
+script.  We will now edit the script so that it will render each frame
+after the field changes have been made.  Load the script file into
+your favorite editor and do the following:
+ <P>
+
+<OL>
+<LI> Find the line with the comment "# Put image saving code here".
+It is after this line that we will add commands to render frames.
+<LI> Add the following four lines after the comment <B>exactly</B> as
+they appear here:
+<PRE>
+     SendScriptLine "Nsurf_draw_all"
+     SendScriptLine "Nvect_draw_all"
+     SendScriptLine "Nsite_draw_all"
+     after 1000
+</PRE>
+<LI> Re-save the script file.
+</OL>
+ <P>
+
+The four lines we have added are instructions to Nviz to render the
+all surface, vector and site files, then wait approximately one second
+before going on to the next frame.  The <I>SendScriptLine</I> command
+is described in the next section.  At this point, the script is purely
+stand-alone and can be played from within nviz.  To play the script
+select <I>Play Script</I> from the <I>Scripting</I> menu and choose
+the script file you saved above.  After a brief bit of initialization,
+the script will execute the field changes we specified above.
+
+<A NAME="HintsP">
+<h2> Hints </h2>
+</A> <P>
+
+<H3>General</H3> <P>
+
+One nifty trick for navigating around Nviz is the "paste" feature
+supported in Tcl/Tk menus.  Any pulldown menu may be pasted
+permanently on the screen by selecting the menu using the middle mouse
+button (as opposed to the first mouse button).  The user may then
+click and drag the menu to another location on the screen.  The menu
+will remain in its new position, regardless of the selections made
+from it, until the menu item which created the pulldown is selected
+using the first mouse button.  For example, you can keep the "Panel"
+menu up for the duration of an Nviz session by selecting "Panel" from
+the main menu using the middle mouse button.  Selecting "Panel" with
+the first mouse button moves the pasted menu back to its normal
+position and removes the menu after a selection has been made.
+<P>
+
+<h3> Lighting </h3><p>
+
+Lighting greatly enhances the level of detail that can be seen in the
+surface.  For good lighting effects, position the light so that it
+creates a tilted half-moon on the sphere.  Usually placing the light
+in the N-W corner when viewing from the south works well because of
+the way humans tend to interpret shading.  To reveal very subtle
+gradual elevation changes, experiment with light placement and surface
+reflectivity.  Keep resolution higher (3 or 4) while adjusting viewing
+position and lighting so that drawing time is fast.  Then lower
+polygon resolution to 1 or 2 for the final rendering of the surface.
+<p>
+
+When rendering frames for animation, it is usually better to position
+lights so that they do not move with the viewer position (toggle
+<em>Follow Viewpoint</em></strong> OFF).  <p>
+
+<h3> <A NAME="Hanim">Animation</A> </h3><p>
+
+What follows is an example of creating an animation to help you get
+started.  <p>
+
+<h4> Key frames </h4><p>
+
+Using key frames is one of the easiest methods of animation it just
+takes some getting use to the <em>Key Frame</em></strong> slider.  For
+practice, just try making a circular path while always looking at the
+center of the data: <p>
+
+<OL> 
+
+<LI> use <em>look here</em></strong> to mark a fixed center of view in
+the middle of the surface. <p>
+
+
+<LI> move the puck in the <em>XY position</em></strong> box to the
+southeast corner, adjust <em>Height</em></strong> and
+<em>Perspective</em></strong> until the data surface fills your
+graphics window.  <p>
+
+
+<LI> pop up the <strong>Keyframe</em></strong> panel.  <p>
+
+<LI> Click on <em>add a key frame</em></strong>.  <p>
+
+<LI> position the <em>Key Frame</em></strong> slider bar to the next
+place to add a key frame by clicking a half inch or so farther along
+the slider.  <p>
+
+<LI> move the <em>XY position</em></strong> puck to the northeast
+corner.  <p>
+
+<LI> Click on <em>add a key frame</em></strong> and repeat step 5.  <p>
+
+<LI> move the <em>XY position</em></strong> puck to the northwest
+corner.  <p>
+
+
+<LI> Click on <em>add a key frame</em></strong>.  <p>
+
+You should now have enough key frames marked to define a path, so try
+clicking on <em>show path</em></strong> and then <em>run</em></strong>
+(NOT <em>run and save images</em></strong>).  If nothing happens,
+clear all key frames and go back to step 1.  Now let's complete the
+circular path: <p>
+
+<LI> repeat step 5.  <p>
+
+<LI> move the <em>XY position</em></strong> puck to the southwest
+corner.  <p>
+
+<LI> Click on <em>add a key frame</em></strong>.  <p>
+
+<LI> Now to close the loop, move the <em>Key Frames</em></strong>
+slider down to frame 1, so that the first frame is displayed, release
+the mouse button, then click once on the slider in the empty part,
+past the last key frame, and click on <em>add a key frame</em></strong>.
+This essentially copies the first key frame to the fifth &amp; last
+key frame.  <p>
+
+</OL>
+
+Now click on <em>run</em></strong>.  When the animation stops, adjust
+the spline tension or use linear interpolation, change the number of
+total frames, and run again.  If you wanted to render the animated
+frames to .rgb files, you would now toggle <em>show path</em></strong>
+OFF and click on <em>run and save images</em></strong>, but why not
+wait until you get a little more creative - image files use a lot of
+disk space.  <p>
+
+<strong>Changing key frames:</em></strong> With the above key frames
+loaded, try changing a key frame as follows: <p>
+
+<OL>
+
+<LI> Position the <em>Key Frames</em></strong> slider so that it
+aligns with the arrow marking the second key frame.  <p>
+
+<LI> Using the <em>Height</em></strong> adjustment in the
+<strong>Movement</em></strong> panel, raise your viewing position.
+Notice that if you have <em>show path</em></strong> toggled ON, you
+can see how your viewing position changes relative to the defined path
+by watching the south or east path views.  The small red dot
+represents your current position.  <p>
+
+<LI> Click on <em>add a key frame</em></strong>.  You will be asked in
+dialog box if you want to replace the old key frame:click <em>ok
+</em></strong>.  <p>
+
+<LI> Run the animation again to see how the path has changed.  <p>
+
+<LI> Delete the middle key frame: grab its arrow marker (using your
+left mouse button), drag the marker completely off the slider to the
+garbage can icon at right, and release the mouse button.  A dialog box
+will ask if you really want to delete. Click <em>ok
+</em></strong>. Run again to see how path has changed.  <p>
+
+<LI> Set total frames to about 50, then one at a time, grab the center
+key frame markers and slide them toward the right so that they are
+spaced something like: <p>
+
+<PRE>
+1........2..3..4  
+</PRE><p>
+
+Run again, notice how movement speed was affected. <P>
+
+<LI> Reverse the direction of travel by swapping the positions of the
+two interior key frame markers.  <p>
+
+</OL>
+
+Parameters stored in the key frame path include viewing position and
+looking direction.  The looking direction will be overridden though,
+when the path is running, if <em>look here</em></strong> is active.
+To see this effect with the above path loaded, select <em>look
+here</em></strong> and click on a corner of the data, setting a new
+fixed center of view.  Now run the path again.  Click on <em>look
+cancel</em></strong> and run again. 
+<A HREF="http://www2.gis.uiuc.edu:2280/modviz/viz/movies/flight.mpg">This</A>
+is an example animation created in this way.  <p>
+
+<h4> <strong> Image File Management </em></strong> </h4><p>
+
+Because .rgb image files can end up taking a lot of disk space, users
+should be mindful of disk storage capacity when attempting to create
+an animation.  Keeping animation files and image dumps in directories
+dedicated for such files helps in management.  A single rgb image
+usually takes between 200K to 3M bytes of storage, depending upon size
+and complexity.  If you use the SGI <em>movie</em></strong> program to
+replay animations, each frame of the animation must have been saved to
+files of identical dimensions; so especially if you are creating an
+animation piecewise, at different sessions, it becomes important to
+maintain a consistent size for the graphics window.  With the
+<em>movie</em></strong> program and with other screen dump animating
+programs, there is a zoom option to enlarge the animation images at
+time of playback.  So if you want the animation to fill your screen,
+you could set the width and height of the graphics window to half or a
+third their playback sizes when writing the image files, then use the
+zoom option (this will cause a loss of resolution though, since the
+zoom just replicates pixels).  If you are making an animation to be
+recorded onto video tape, it may be necessary to set the width and
+height to specific dimensions.  <p>
+
+New SGI programs released with IRIX 4.0.5,
+<em>moviemaker</em></strong> and <em>movieplayer</em></strong>, are
+also very useful for animations. <em>Moviemaker</em></strong> allows
+you to create movie files from any number of rgb files at various
+frame rates.  With <em>movieplayer</em></strong>, much longer
+animations may be replayed than with <em>movie</em></strong> since the
+frames are read directly from disk at run time rather than having to
+be loaded into memory.  <p>
+
+<A NAME="CreditsP">
+<h3> Credits </h3>
+</A> <P>
+
+<em>nviz</em></strong> written by Bill Brown, Terry Baker, Mark
+Astley, and David Gerdes, U.S. Army Corps of Engineers Research
+Laboratories, Champaign, Illinois and UI GMS Laboratory, Urbana, IL.  <p>
+
+This document written by Terry Baker, Spring 95, based on a document
+written by Bill Brown.  Updated by Mark Astley 7/11/95.  <P>
+
+
+<A HREF="http://www2.gis.uiuc.edu:2280/modviz/" TARGET="_top">
+<IMG hspace=5 align=left SRC="gmsmodviz.gif" ALT=GMSL_VIZ_ICON>
+GMSL Modeling &amp; Visualization Home Page</A>
+
+
+
+
+
+
+

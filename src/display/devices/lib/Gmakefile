@@ -6,7 +6,7 @@ OBJ =\
 	Cont_abs.o\
 	Cont_rel.o\
 	Erase.o\
-	Font.o\
+	GFont.o\
 	Get_t_box.o\
 	Linemod.o\
 	Move_abs.o\
@@ -30,7 +30,7 @@ OBJ =\
 	connect.o\
 	font.o\
 	RGB.o\
-	text.o
+	Text2.o
 
 all: driverlib.a
 

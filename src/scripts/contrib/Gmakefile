@@ -1,7 +1,12 @@
 all:
 	$(GMAKE) d.rast.leg
+	cp d.monsize/d.monsize $(GISBASE)/scripts
 	cp d.rast.rescale/d.rast.rescale $(GISBASE)/scripts
+	cp d.redraw/d.redraw $(GISBASE)/scripts
 	cp g.html2man/g.html2man $(GISBASE)/scripts
+	cp g.man2html/g.man2html $(GISBASE)/scripts
+	cp g.manual/g.manual $(GISBASE)/scripts
+	cp g.mremove/g.mremove $(GISBASE)/scripts
 	$(GMAKE) i.oif
 	$(GMAKE) i.spectral
 	cp i.image.mosaic/i.image.mosaic $(GISBASE)/scripts
@@ -9,21 +14,25 @@ all:
 	cp i.tasscap/i.tasscap.tm5 $(GISBASE)/scripts
 	cp ps.add.pagesize/ps.add.pagesize $(GISBASE)/scripts
 	cp r.edge.dig/r.edge.dig $(GISBASE)/scripts
-	cp r.in.arctiff/r.in.arctiff $(GISBASE)/scripts
-	cp r.out.arctiff/r.out.arctiff $(GISBASE)/scripts
-	cp r.out.geotiff/r.out.geotiff $(GISBASE)/scripts
+	cp r.in.globedem/r.in.globedem $(GISBASE)/scripts
 	cp r.out.bil/r.out.bil $(GISBASE)/scripts
 	cp r.plane/r.plane $(GISBASE)/scripts
 	cp r.reclass.area/r.reclass.area $(GISBASE)/scripts
 	cp r.regression.line/r.regression.line $(GISBASE)/scripts
 	$(GMAKE) s.in.grid
 	cp r.univar/r.univar $(GISBASE)/scripts
-	cp s.in.gps/s.in.gps $(GISBASE)/scripts
-	cp s.out.gps/s.out.gps $(GISBASE)/scripts
+	cp r.to.pg/r.to.pg $(GISBASE)/scripts
+	cp s.in.atkisdgm/s.in.* $(GISBASE)/scripts
+	# cp s.in.gps/s.in.gps $(GISBASE)/scripts
+	# cp s.out.gps/s.out.gps $(GISBASE)/scripts
 	cp s.reclass/s.reclass $(GISBASE)/scripts
 	cp v.cutter.attr/v.cutter.attr $(GISBASE)/scripts
-	cp v.in.gps/v.in.gps $(GISBASE)/scripts
+	# cp v.in.gps/v.in.gps $(GISBASE)/scripts
 	cp v.line2area/v.line2area $(GISBASE)/scripts
 	cp v.plant/v.plant $(GISBASE)/scripts
-	cp v.xfig/*  $(GISBASE)/scripts
+	cp v.xfig/*fig*  $(GISBASE)/scripts
+	cp s.in.garmin.sh/s.in.garmin.sh $(GISBASE)/scripts
+	cp v.in.garmin.sh/v.in.garmin.sh $(GISBASE)/scripts
+	cp g.mlist/g.mlist $(GISBASE)/scripts
+	cp r.mpatch/r.mpatch $(GISBASE)/scripts
 	chmod 755 $(GISBASE)/scripts/*

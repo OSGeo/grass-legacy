@@ -6,7 +6,6 @@ ATTLIB	= 	$(LIBDIR)/libdig_atts.a
 #	use -DRAM_OFF if you do not want the digit file loaded into memory
 #	for optimization,   this is also toggle-able from the command line if -DRAM_ON is used
 
-EXTRA_CFLAGS	=	$(VECT_INCLUDE)
 
 
 OFILES2 = \

@@ -6,7 +6,7 @@
 *  CHRIS EMMERICH, AUTOMETRIC INC., 10/3/89
 */
 
-#include  "digit.h"
+#include  "Vect.h"
 #include  "gis.h"
 #include  "Vect.h"
 #include  "moss.h"

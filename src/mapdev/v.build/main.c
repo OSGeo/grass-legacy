@@ -6,12 +6,7 @@
 #include <stdlib.h>
 #include    <stdio.h>
 #include    "gis.h"
-/*
-#include    "dig_structs.h"
-*/
-#include    "digit.h"
 #include    "Vect.h"
-#include    "dig_head.h"
 #include "vbuildlib.h"
 
 /*  will install this after fixing  digit code to be able to handle

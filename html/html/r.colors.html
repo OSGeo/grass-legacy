@@ -1,0 +1,186 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (Win98; I) [Netscape]">
+   <TITLE>r.colors</TITLE>
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<b><i>r.colors</i></b> - Creates/Modifies the color table associated with
+a raster map layer.
+<br><i>(GRASS Raster Program)</i>
+<h2>
+SYNOPSIS</h2>
+<b>r.colors</b>
+<br><b>r.colors help</b>
+<br><b>r.colors</b> [<b>-wq</b>] <b>map=</b><i>name</i> [<b>color=</b><i>type</i>]<i>&nbsp;
+</i>[<b>rast</b><i>=name</i>]
+<h2>
+DESCRIPTION</h2>
+<i>r.colors</i> allows the user to create and/or modify the color table
+for a raster map layer. The map layer (specified on the command line by
+<b>map=</b><i>name</i>) must exist in the user's current mapset search
+path. The color table specified by <b>color=</b><i>type</i> must be one
+of the following:
+<pre>color type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; description&nbsp;
+aspect&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (aspect oriented grey colors)&nbsp;
+grey&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (grey scale)&nbsp;
+grey.eq&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (histogram-equalized grey scale)&nbsp;
+gyr&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (green through yellow to red colors)&nbsp;
+rainbow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (rainbow color table)&nbsp;
+ramp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (color ramp)&nbsp;
+random&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (random color table)&nbsp;
+ryg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (red through yellow to green colors)&nbsp;
+wave&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (color wave)&nbsp;
+rules&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (create new color table based on&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; user-specified rules)</pre>
+If the user specifies the <b>-w</b> flag, the current color table file
+for the input map will not be overwritten. This means that the color table
+is created only if the
+<i>map</i> does not already have a color table.
+If this option is not specified, the color table will be created if one
+does not exist, or modified if it does.
+<p>If the user sets the <b>-q</b> flag, <i>r.colors</i> will run quietly,
+Without printing numerous messages on its progress to standard output.
+<p>Color table types <i>aspect, grey, grey.eq</i> (histogram-equalized
+grey scale), <i>gyr</i> (green-yellow-red), <i>rainbow, ramp, ryg</i> (red-yellow-green),
+<i>random</i>, and <i>wave</i> are pre-defined color tables that <i>r.colors</i>
+knows how to create without any further input.
+<p>The <i>rules</i> color table type will cause <i>r.colors</i> to read
+color table specifications from standard input (stdin) and will build the
+color table accordingly.
+<p>Using color table type <i>rules</i>, there are three ways to build a
+color table: by color list, by category values, and by "percent" values.
+<p>Building a customized color table by color list is the simplest of the
+three rules methods: just list the colors you wish to appear in the color
+table in the order that you wish them to appear. Use the standard GRASS
+color names: white, black, red, green, blue, yellow, magenta, cyan, aqua,
+grey, gray, orange, brown, purple, violet, and indigo.
+<p>For example, to create a color table for the raster map layer <i>elevation</i>
+that assigns greens to low map category values, browns to the next larger
+map category values, and yellows to the still larger map category values,
+one would type:
+<p><b>r.colors map=</b><i>elevation</i> <b>color=</b><i>rules</i>
+<br>green
+<br>brown
+<br>yellow
+<br>end
+<p>To build a color table by category values' indices, the user should
+determine the range of category values in the raster map layer with which
+the color table will be used. Specific category values will then be associated
+with specific colors. Note that a color does not have to be assigned for
+every valid category value because
+<i>r.colors</i> will interpolate a color
+ramp to fill in where color specification rules have been left out. The
+format of such a specification is as follows:
+<p><b>category_value color_name</b>
+<br><b>category_value color_name</b>
+<br><b>.. ..</b>
+<br><b>.. ..</b>
+<br><b>category_value color_name</b>
+<br><b>end</b>
+<p>Each category value must be valid for the raster map layer, category
+values must be in ascending order and only use standard GRASS color names
+(see above).
+<p>Colors can also be specified by color numbers each in the range 0-255.
+The format of a category value color table specification using color numbers
+instead of color names is as follows:
+<p><b>category_value red_number green_number blue_number</b>
+<br><b>category_value red_number green_number blue_number</b>
+<br><b>.. .. .. ..</b>
+<br><b>.. .. .. ..</b>
+<br><b>category_value red_number green_number blue_number</b>
+<br><b>end</b>
+<p>Specifying a color table by "percent" values allows one to treat a color
+table as if it were numbered from 0 to 100. The format of a "percent" value
+color table specification is the same as for a category value color specification,
+except that the category values are replaced by "percent" values, each
+from 0-100, in ascending order. The format is as follows:
+<p><b>percent_value% color_name</b>
+<br><b>percent_value% color_name</b>
+<br><b>.. ..</b>
+<br><b>.. ..</b>
+<br><b>percent_value% color_name</b>
+<br><b>end</b>
+<p>Using "percent" value color table specification rules, colors can also
+be specified by color numbers each in the range 0-255. The format of a
+percent value color table specification using color numbers instead of
+color names is as follows:
+<p><b>percent_value% red_number green_number blue_number</b>
+<br><b>percent_value% red_number green_number blue_number</b>
+<br><b>.. .. .. ..</b>
+<br><b>.. .. .. ..</b>
+<br><b>percent_value% red_number green_number blue_number</b>
+<br><b>end</b>
+<p>Note that you can also mix these three methods of color table specification;
+for example:
+<p><b>0 black</b>
+<br><b>10% yellow</b>
+<br><b>78 blue</b>
+<br><b>magenta</b>
+<br><b>purple</b>
+<br><b>brown</b>
+<br><b>100% 0 255 230</b>
+<br><b>end</b>
+<h2>
+EXAMPLES</h2>
+
+<ol>
+<li>
+The below example shows how you can specify colors for a three category
+map, assigning red to category 1, green to category 2, and blue to category
+3. Start by using a text editor, like <i>vi</i>, to create the following
+rules specification file. Save it with the name
+<i>rules.file</i>.</li>
+
+<p><br><b>1 red</b>
+<br><b>2 green</b>
+<br><b>3 blue</b>
+<br><b>end</b>
+<p>The color table can then by assigned to map <i>threecats</i> by typing
+the following command at the GRASS&gt; prompt:
+<dl>
+<dd>
+<b>cat rules.file | r.colors map=</b><i>threecats</i> <b>color=</b><i>rules</i></dd>
+</dl>
+
+<li>
+To create a natural looking LUT for true map layer
+<i>elevation</i>, use
+the following rules specification file. It will assign light green shades
+to the lower elevations (first 20% of the LUT), and then darker greens
+(next 15%, and next 20%) and light browns (next 20%) for middle elevations,
+and darker browns (next 15%) for higher elevations, and finally yellow
+for the highest peaks (last 10% of LUT).</li>
+
+<dl>
+<dd>
+0% 0 230 0</dd>
+
+<br>20% 0 160 0
+<br>35% 50 130 0
+<br>55% 120 100 30
+<br>75% 120 130 40
+<br>90% 170 160 50
+<br>100% 255 255 100</dl>
+</ol>
+Option <b>rast</b> allows user to specify a raster map <i>name</i> from
+which to copy the color map.
+<h2>
+SEE ALSO</h2>
+<i><a href="d.colormode.html">d.colormode</a></i>
+<br><i><a href="d.colors.html">d.colors</a></i>
+<br><i><a href="d.colortable.html">d.colortable</a></i>
+<br><i><a href="d.display.html">d.display</a></i>
+<br><i><a href="d.legend.html">d.legend</a></i>
+<br><i><a href="p.colors.html">p.colors</a></i>
+<br><i><a href="r.support.html">r.support</a></i>
+<h2>
+AUTHORS</h2>
+Michael Shapiro and David Johnson
+</body>
+</html>

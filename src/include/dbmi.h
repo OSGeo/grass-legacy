@@ -1,4 +1,9 @@
+/*
+ * $Id$
+ */
+
 #include <stdio.h>
+#include <gis.h>
 
 #define DB_VERSION "0"
 
@@ -206,5 +211,35 @@ typedef struct _db_driver_state
     int  ncursors;
     dbCursor **cursor_list;
 }dbDriverState;
+
+/* category value */
+typedef struct
+{
+    int  cat;  /* category */
+    int  val;  /* value */
+}dbCatValI;
+
+/* parameters of connection */
+typedef struct _db_connection
+{
+    char *driverName;
+    char *databaseName;
+    char *location;
+    char *user;
+    char *password;
+    char *keycol;        /* name of default key column */
+}dbConnection;
+
+/* reclass rule */
+typedef struct
+{
+    int  count;     /* number of defined rules */
+    int  alloc;     /* size of allocated array */
+    char *table;    /* table name */
+    char *key;      /* key column name */
+    int  *cat;      /* array of new category numbers */
+    char **where;   /* array of SQL WHERE conditions */
+    char **label;   /* array of new category labels */
+}dbRclsRule;
 
 #include "proto_dbmi.h"

@@ -1,5 +1,8 @@
 #define GLOBAL
 #include "P.h"
+#ifdef __CYGWIN__
+#include <errno.h>
+#endif
 
 Popen (port)
     char *port;
@@ -13,6 +16,6 @@ Popen (port)
     {
 	char msg[100];
 	sprintf (msg, "unable to open %s", port);
-	error (msg);
+	perror (msg);
     }
 }

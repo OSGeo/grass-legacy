@@ -1,0 +1,84 @@
+# Creates all manpages in $(GISBASE)/man/man1
+# (Think to add grass programmer's manual pages in $(GISBASE)/man/man3
+# and file format in $(GISBASE)/man/man5 later...)
+# Copy html tree (without the other files) in $(GISBASE)/documents
+# The manual in html format will be in $(GISBASE)/documents/html
+# (default in tcltkgrass ?)
+# The manual in postscript format will be in $(GISBASE)/documents/postscript
+#
+
+# default manual section number is 1
+# SECT should be "1" not "man1". Otherwise $(HTML2MAN) and g.manual won't work.
+# "man1" is used only in GRASS_MANDIR.
+# TAKE CARE !!
+SECT = 1
+GRASS_MANDIR=$(GISBASE)/man/man$(SECT)
+GRASS_HTMLDIR=$(GISBASE)/documents
+GRASS_PSDIR=$(GISBASE)/documents/postscript
+HTML_DIR = html
+HTML2MAN = $(SRC)/scripts/contrib/g.html2man/g.html2man
+HTML2PS = html2ps -n
+
+#all: htmlpages g.help-manpages postscript-docs
+#all: htmlpages manpages postscript-docs
+#all: htmlpages manpages
+all: htmlpages g.help-manpages
+
+
+# copy the HTML pages only and related images
+htmlpages:
+	@test -d $(GRASS_HTMLDIR) || mkdir $(GRASS_HTMLDIR)
+	@test -d $(GRASS_HTMLDIR)/html || mkdir $(GRASS_HTMLDIR)/html
+	@(for i in `find nviz -type d | grep -v /CVS$$`; \
+	  do \
+	  	test -d $(GRASS_HTMLDIR)/$$i || mkdir $(GRASS_HTMLDIR)/$$i; \
+	  done)
+	@echo Copying html pages
+	@(for h in `find $(HTML_DIR) nviz *.html *.gif | grep -v /CVS`; \
+	  do \
+	  	test -d $$h && continue; \
+		f=`echo $$h | sed 's@^@$(GRASS_HTMLDIR)/@;'`; \
+		if [ ! -f $$f -o $$f -ot $$h ]; then echo Generating: $$f; cp -p $$h $$f; fi; \
+	  done)
+
+# generate the g.help compatible man pages
+g.help-manpages:
+	@test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
+	@echo Creating man pages
+	@chown man $(GRASS_MANDIR) 2> /dev/null || echo "You should be root if gmake5 fails. Otherwise it may be OK."
+	@(cd $(HTML_DIR); \
+	  for h in *.html; \
+	  do \
+		m=`echo $$h | sed 's@\.html@@'`; \
+		tmp=`echo $$m | sed 's@^@$(GRASS_MANDIR)/@'`; \
+		tmpf="$${tmp}_.$(SECT)"; \
+		tmpm="$${m}_"; \
+		f="$$tmp.$(SECT)"; \
+		if [ ! -f $$f -o $$f -ot $$h ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "            $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
+	  done)
+
+# generate the man pages
+manpages:
+	@test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
+	@echo Creating man pages
+	@(cd $(HTML_DIR); \
+	  for h in *.html; \
+	  do \
+		f=`echo $$h | sed 's@^@$(GRASS_MANDIR)/@; s@\.html@\.$(SECT)@'`; \
+		if [ ! -f $$f -o $$f -ot $$h ]; then $(HTML2MAN) $$h $$f $(SECT); fi; \
+	  done)
+
+#Postscript-docs:
+#http://www.tdb.uu.se/~jan/html2ps.html
+postscript-docs:
+	if [ ! -d $(GRASS_PSDIR) ]; then mkdir $(GRASS_PSDIR); fi
+	$(HTML2PS) html/d*.html > $(GRASS_PSDIR)/grass5display.ps
+	$(HTML2PS) html/g*.html > $(GRASS_PSDIR)/grass5general.ps
+	$(HTML2PS) html/i*.html > $(GRASS_PSDIR)/grass5imagery.ps
+	$(HTML2PS) html/m*.html > $(GRASS_PSDIR)/grass5misc.ps
+	$(HTML2PS) html/r*.html > $(GRASS_PSDIR)/grass5raster.ps
+	$(HTML2PS) html/s*.html > $(GRASS_PSDIR)/grass5sites.ps
+	$(HTML2PS) html/v*.html > $(GRASS_PSDIR)/grass5vector.ps
+	$(HTML2PS) html/?3*.html html/*.vol.*.html > $(GRASS_PSDIR)/grass5grid3d.ps
+	$(HTML2PS) html/db*.html html/*pg.html > $(GRASS_PSDIR)/grass5database.ps
+	$(HTML2PS) html/*sh.html > $(GRASS_PSDIR)/grass5shells.ps

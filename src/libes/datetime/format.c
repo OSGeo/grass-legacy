@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 1995.  Bill Brown <brown@gis.uiuc.edu> & Michael Shapiro
+ *
+ * This program is free software under the GPL (>=v2)
+ * Read the file GPL.TXT coming with GRASS for details.
+ */
 #include <stdio.h>
 #include <string.h>
 #include "datetime.h"
@@ -7,6 +13,12 @@ static char *months[] = {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 
 int datetime_format ( DateTime *dt, char *buf)
 {
+/* Format the DateTime structure as a human-readable string */
+/*  Returns 0 when successful, and buf is filled with the
+      formatted data.
+    Returns a negative number as an error code if the DateTime
+      structure is not valid.
+*/
     char temp[128];
     int n;
     double sec;

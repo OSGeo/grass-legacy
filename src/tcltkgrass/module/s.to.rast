@@ -1,0 +1,13 @@
+interface_build {
+    {s.to.rast} 0
+    {Converts a GRASS sites map to a GRASS raster map.}
+    {entry input {Name of input sites map:} 0 sites}
+    {entry output {Name of new raster file:} 0 raster}
+    {entry size {Number of cells to surround site cell:} 0 ""}
+    {entry title {Title for the resulting raster map:} 0 ""}
+    {entry field {Attribute field type to use for operation, options: dim,decimal,cat (default: decimal):} 0 ""}
+    {entry findex {Attribute field number to use for operation (default: 1):} 0 ""}
+    {entry string {String attribute number to use for description (default: 1):} 0 ""}
+    {checkbox -q {Run quietly.} "" -q}
+    {checkbox -s {Create a single-valued (0/1) raster map.} "" -s}
+}

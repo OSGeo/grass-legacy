@@ -1,0 +1,149 @@
+<html>
+
+<TITLE>d.text</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.text</b></EM> - Draws text in the active display frame on the graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.text</B> 
+<BR>
+<B>d.text help</B> 
+<BR>
+<B>d.text</B> 
+[<B>size=</B><EM>value</EM>] 
+[<B>color=</B><EM>name</EM>] 
+[<B>line=</B><EM>value</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.text</EM> draws text in the active display frame on
+the graphics monitor.  Text can be provided through
+standard input or redirected from a file (using the UNIX
+redirection mechanism).
+
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>size=</B><EM>value</EM>
+<DD>Height of letters, stated as a percent of the 
+    available display frame height. <BR>
+    Options: 0 - 100 <BR>
+    Default: 5 
+<DT><B>color=</B><EM>name</EM>
+<DD>Sets display text color to <EM>name</EM>.  <BR>
+    Options: red, orange, yellow, green, blue, indigo, 
+    violet, gray, white, and black <BR>
+    Default: <EM>gray</EM> 
+<DT><B>line=</B><EM>value</EM>
+<DD>The screen line number on which the first line of text will be drawn. <BR>
+    (Line 1 is at the top of the active display frame.) <BR>
+    Options: 1 - 1000 <BR>
+    Default: 1 
+</DL>
+
+In addition to the options provided on the command line,
+colors, text size, font type, and boldness, can be adjusted
+with commands in the standard input (i.e., if the user
+invokes <EM>d.text</EM> without options on the command
+line, and then assigns values to these options on lines
+within the standard input).  In this case, the user also
+sees the standard GRASS 
+<A HREF="parser.html">parser</A> interface.
+
+<H3>Commands:</H3> 
+
+<DL>
+
+<DT>.C <EM>color</EM> 
+<DD>
+(where <EM>color</EM> is one of the available colors) causes text appearing on 
+subsequent lines to be drawn in that color. 
+
+<DT><B>.S </B> <EM>size</EM>
+<DD>
+(where <EM>size</EM> is a percentage within the range 0 to
+100) adjusts text size.  Note that a size of 10 would allow
+10 lines to be drawn in the active display frame, 5 would
+allow the drawing of 20 lines, and 50 would allow the
+drawing of 2 lines.
+
+<P>
+<DT><B>.F</B> <EM>font</EM>
+<DD>
+(where <EM>font</EM> is one of the fonts known by the GRASS program 
+<EM><A HREF="d.font.html">d.font</A></EM>) manipulates
+the font type. Available fonts are listed in the GRASS manual entry for 
+<EM><A HREF="d.font.html">d.font</A></EM>. 
+The default font type used (if unspecified by the user) 
+is <EM>romans</EM>.
+Run the GRASS macro 
+<EM><A  HREF="show.fonts.sh.html">show.fonts.sh</A></EM> 
+to see what these fonts look like. 
+
+<DT><B>.B 1</B>
+<DD>stipulates that following text be printed in <B>bold</B>.
+This command means <EM>bold on</EM>.
+
+<DT><B>.B 0</B>
+<DD> turns <EM>bold off</EM> of all text appearing on lines beneath 
+     it. (<EM>Bold off</EM> is used by default, if unspecified by the user.) 
+
+</DL>
+
+<H2>EXAMPLE</H2>
+
+The following command will print the short phrase "This is
+a test of d.text" in the active display frame using the
+color yellow, in bold, and using 4/100'ths (4%) of the
+active frame's vertical space per line:
+<P>
+
+<DL>
+<DT><B>d.text</B>
+<dd>.C yellow 
+<dd>.S 4 
+<dd>.B 1
+<dd>This is a test of d.text</B> 
+</DL>
+
+The user presses <EM>control-d</EM> 
+(the "ctrl" and "d" keys) to end input to <EM>d.text</EM>.
+
+<H2>NOTES</H2>
+
+Note that the GRASS command 
+<EM><A HREF="d.title.html">d.title</A></EM> creates map TITLEs in a format 
+suitable for input to <EM>d.text</EM>.
+
+<P>
+
+<EM>d.text</EM> needs escape sequences that can be used
+within lines to change colors, boldness, and perhaps size.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.font.html">d.font</A></EM><br>
+<EM><A HREF="d.title.html">d.title</A></EM><br>
+<EM><A  HREF="show.fonts.sh.html">show.fonts.sh</A></EM> <br> 
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, 
+U.S. Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

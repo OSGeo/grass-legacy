@@ -50,6 +50,7 @@ int main (int argc, char **argv)
 	int tt,tb,tl,tr;
 	int t,b,l,r;
 	int quiet;
+	struct GModule *module;
 	struct Option *opt1 ;
 	struct Option *opt2 ;
 	struct Option *opt4 ;
@@ -60,6 +61,11 @@ int main (int argc, char **argv)
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Displays a histogram in the form of a pie or bar chart "
+		"for a user-specified raster file.";
 
 	opt1             = G_define_option() ;
 	opt1->key        = "map" ;

@@ -1,9 +1,21 @@
+#!/bin/sh
 # Scripts creates a (inclined) plane.
 # User specifies - inclination
 #                - azimuth
 #                - one definition point within plane with elevation
 # 
 # set nsres and ewres, north, south etc
+
+if [ "$1" = "-help" -o "$1" = "help" ]
+then
+ echo "r.plane:"
+ echo "Please give the value for the dip (inclination) in degrees."
+ echo "The value must be between -90 and 90 from horizontal,"
+ echo "with positive values pointing down. Real numbers are valid."
+ echo "No value results in dip=0 and  horizontal surface."
+ echo ""
+ exit
+fi
 
 eval `g.region -g`
 eval `g.gisenv`

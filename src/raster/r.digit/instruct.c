@@ -2,8 +2,13 @@
 #include "local_proto.h"
 #define MAXLINES 18
 #define LEFT "where am i"
-#define MIDDLE "mark point"
-#define RIGHT "done"
+#ifdef ANOTHER_BUTTON
+#	define MIDDLE "done"
+#	define RIGHT "mark point"
+#else
+#	define MIDDLE "mark point"
+#	define RIGHT "done"
+#endif
 #define TITLE (char *) 0
 
 static char *Title  = TITLE;

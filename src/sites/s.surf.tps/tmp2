@@ -1,8 +1,0 @@
-    parm.which_att = G_define_option();
-    parm.which_att->key = "attribute";
-    parm.which_att->type = TYPE_INTEGER;
-    parm.which_att->answer = "1";
-    parm.which_att->required = NO;
-    parm.which_att->description = "Attribute in sites file to interpolate from";
-    parm.which_att->options = "1-100000";
-    

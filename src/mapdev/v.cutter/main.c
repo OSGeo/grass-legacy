@@ -30,11 +30,13 @@ int output_open = 1;
 int main (int argc, char *argv[])
 {
     struct ARGS Args;
+    struct Categories *Cat1;
     struct table_base *PTable;
     struct table_base *LTable;
     int newpolys = 0;
     int newlines = 0;
     int tmp;
+    char *dmapset;
 
 
     G_gisinit (argv[0]);
@@ -138,6 +140,19 @@ int main (int argc, char *argv[])
 	fclose (Out.att_fp);
 	Vect_close (&Out);	
     }
+
+    /* Category labels copied across */
+
+    Cat1 = (struct Categories *)malloc( sizeof(struct Categories) );
+
+    if( (dmapset = G_find_file( "dig_cats", Args.MapB, G_mapset() ) ) == NULL )
+      G_warning( "Unable to find dig_cats file. No category support available.\n" );
+    else {
+      G_read_vector_cats( Args.MapB, G_mapset(), Cat1 );
+      G_write_vector_cats( Args.Out, Cat1 );
+    }
+
+    
 
 
     exit (0);

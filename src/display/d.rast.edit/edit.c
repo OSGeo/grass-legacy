@@ -166,12 +166,12 @@ int edit(void)
 			select_count = 2;
 		}
 		/* right key means quit edit mode */
-		if (button == 3) {
+		if (button == RIGHTB) {
 			G_close_cell(fd);
 			break;
 		}
 		/* if left or middle key, find out what's there */
-		if (button == 1 || button == 2) {
+		if (button == LEFTB || button == MIDDLEB) {
 			/* convert display coords to UTM coords */
 			east = D_d_to_u_col((double) screen_x);
 			north = D_d_to_u_row((double) screen_y);
@@ -223,13 +223,13 @@ int edit(void)
 			fprintf (stdout,"%s\n", G_get_d_raster_cat(&buf[col], &cats));
 		}
 		/* middle button means we want to edit that cell */
-		if (button == 2) {
+		if (button == MIDDLEB) {
 			int             tmpx, tmpy;
 
 			edit_mouse_info2(c, buf[col]);
 			R_get_location_with_pointer(&tmpx, &tmpy, &button);
 
-			if (button == 3)
+			if (button == RIGHTB)
 				while (1) {
 					/*
 					 * get new value from user, make sure
@@ -270,7 +270,7 @@ int edit(void)
 					}
 					break;
 				}
-			if ((button == 2) || (button == 3)) {
+			if ((button == MIDDLEB) || (button == RIGHTB)) {
 
 				select_count = 2;
 				c = num;
@@ -318,9 +318,14 @@ int edit_mouse_info (void)
 	fprintf(stderr, "\n     +--------EDIT MODE mouse button menu--------+\n");
 	fprintf(stderr, "     |       Use mouse on graphics monitor       |\n");
 	fprintf(stderr, "     |                                           |\n");
-	fprintf(stderr, "     |left button:     what's here?              |\n");
-	fprintf(stderr, "     |middle button:   edit cell value           |\n");
-	fprintf(stderr, "     |right button:    quit edit mode            |\n");
+	fprintf(stderr, "     |left   button:     What's here?            |\n");
+#ifndef ANOTHER_BUTTON
+	fprintf(stderr, "     |middle button:     Edit cell value         |\n");
+	fprintf(stderr, "     |right  button:     Quit edit mode          |\n");
+#else
+	fprintf(stderr, "     |middle button:     Quit edit mode          |\n");
+	fprintf(stderr, "     |right  button:     Edit cell value         |\n");
+#endif
 	fprintf(stderr, "     +-------------------------------------------+\n\n");
 
 	return 0;
@@ -354,8 +359,13 @@ int edit_mouse_info2(DCELL def,DCELL current)
 	fprintf(stderr, "     |       Current value: %5s                |\n", cur_str);
 	fprintf(stderr, "     |                                           |\n");
 	fprintf(stderr, "     |left   button:     Cancel                  |\n");
+#ifndef ANOTHER_BUTTON
 	fprintf(stderr, "     |middle button:     Use value %5s?        |\n", def_str);
 	fprintf(stderr, "     |right  button:     Select new value        |\n");
+#else
+	fprintf(stderr, "     |middle button:     Select new value        |\n");
+	fprintf(stderr, "     |right  button:     Use value %5s?        |\n", def_str);
+#endif
 	fprintf(stderr, "     +-------------------------------------------+\n\n");
 
 	return 0;

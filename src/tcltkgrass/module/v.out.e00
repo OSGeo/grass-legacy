@@ -1,0 +1,6 @@
+interface_build {
+    {v.out.e00} 0
+    {Exports a GRASS vector file into ARC/INFO E00 file.}
+    {entry input {GRASS vector file (input):} 0 vector}
+    {entry output {E00 file (output):} 0 File}
+}

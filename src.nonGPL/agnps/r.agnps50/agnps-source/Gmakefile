@@ -1,0 +1,40 @@
+LIBES  = $(GISLIB) $(VASK) $(MATHLIB)
+
+
+PGM = $(GISBASE)/bin/r.agnps50.run
+LIST = \
+        agrun.o\
+        cellcalc.o\
+        chan_cal.o\
+        chantr55.o\
+        debugflg.o\
+        decay.o\
+        feedlot.o\
+        impound.o\
+        length.o\
+        loop1.o\
+        loop1tr5.o\
+        newsoil.o\
+        ovrld.o\
+        pesticid.o\
+        pntsrc.o\
+        rclmap.o\
+        readinpu.o\
+        recroute.o\
+        rnd.o\
+        ro.o\
+        run_out.o\
+        search.o\
+        sedinit.o\
+        sednut.o\
+        setstruc.o\
+        slnut.o\
+        sub1e.o\
+        terh.o\
+        ters.o\
+        xeros.o
+
+$(PGM): $(LIST) $(LIBES)
+			$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIBES): #

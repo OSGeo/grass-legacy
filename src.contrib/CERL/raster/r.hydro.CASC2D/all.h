@@ -71,8 +71,8 @@ void INF_REDIST( int, int, double, float *, int, int   *, int   *, float *,
 float *, int   , float *, int   , float *, int *, int   *,
 float *,float *,float *,float *,float *,float *, double *);
 void INTERCEPTION(int, double, float *, float *, float *, double, float *);
-void RAIN_SQ_DIS(int **, int, int *, int *, double *, float *);
-void RAIN_THIESSEN(int **, int, int *, int *, double *, float *);
+void RAIN_SQ_DIS(int, int **, int, int *, int *, double *, float *);
+void RAIN_THIESSEN(int, int **, int, int *, int *, double *, float *);
 void READ_GAGE_FILE(double *, int, FILE *);
 void WRITE_FILES(char *, int, int, double, int, int, int *, char **, int,
      int *, char **, int, int *, char **, int, int *, char **, int, int,

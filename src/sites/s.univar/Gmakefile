@@ -1,7 +1,6 @@
 NAME=s.univar
  
 PGM=$(BIN_CONTRIB_CMD)/$(NAME)
-#PGM=$(NAME)
  
 MSEC=4
 MDIR=$(SRC)/../man/man$(MSEC)
@@ -13,6 +12,8 @@ LIST  = \
 	univar.o \
 	main.o \
 	readsite.o 
+
+all: $(PGM)
 
 $(PGM): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

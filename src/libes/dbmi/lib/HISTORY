@@ -1,0 +1,4 @@
+5/2000 by RB:
+new structures: dbConnection, dbCatValI in src/include/dbmi.h
+new functions: db_set_connection, db_get_connection in connect.c
+db_start_driver added db_get_connection 

@@ -26,7 +26,7 @@ init_header (struct Cell_head *window, struct dig_head *d_head)
   d_head->digit_thresh = 0.0;
   d_head->map_thresh = 0.0;
 
-  /* load default window settings into digit header  */
+  /* load default window settings into Vect.header  */
   d_head->W = window->west;
   d_head->E = window->east;
   d_head->S = window->south;

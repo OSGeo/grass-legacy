@@ -1,0 +1,57 @@
+<TITLE>v.out.dxf</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.out.dxf</b></EM> - GRASS vector format to DXF format conversion program. 
+<BR>
+<EM>(GRASS Vector Data Export Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.out.dxf</B>
+<BR>
+<B>v.out.dxf help</B>
+<BR>
+<B>v.out.dxf input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+The GRASS program <EM>v.out.dxf</EM> conversion program
+generates an ASCII DXF (AutoCad) file from a GRASS vector
+ASCII file. The output file is placed in the user's current
+working directory unless the user specifies a full pathname
+for the <EM>output</EM>.
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>The name of an existing GRASS vector ASCII file. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to the DXF output file. 
+<BR>
+NOTE: DXF files output by AutoCad have the suffix <KBD>.dxf</KBD>
+</DL>
+
+<H2>NOTES</H2>
+
+This program does not currently read in binary files. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.cadlabel.html">v.cadlabel</A>,</EM>
+<EM><A HREF="v.digit.html">v.digit</A>,</EM>
+<EM><A HREF="v.in.ascii.html">v.in.ascii</A>,</EM>
+<EM><A HREF="v.in.dxf.html">v.in.dxf</A>,</EM>
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHOR</H2>
+
+Charles Ehlschlaeger, U.S. Army Construction Engineering
+Research Laboratory,<br>
+wrote original <EM>v.out.dxf</EM> program in 4/89. 

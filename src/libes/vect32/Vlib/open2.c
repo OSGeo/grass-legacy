@@ -14,8 +14,6 @@
 
 #include "V_.h"
 #include "Vect.h"
-#include "digit.h"
-#include "dig_head.h"
 #include "gis.h"
 
 static char name_buf[1024];

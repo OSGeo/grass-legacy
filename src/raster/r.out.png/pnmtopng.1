@@ -1,0 +1,229 @@
+** PNMTOPNG / PNGTOPNM
+** version 2.37.4 - 5 December 1999
+
+[This is a semi-official bug-fix and enhancement release; I sort of took over
+ maintenance of this package while Willem was on an extended bike trip, and
+ for now I'm continuing with periodic, small updates.  Version 2.37 (March
+ 1998) was never publicly released, partly because Willem had hoped to quiet
+ gcc's "<var> might be clobbered by `longjmp'" warnings.  Those are fixed in
+ 2.37.2; under Solaris, they resulted in stack corruption even when there was
+ no error in the image files or libraries.  Version 2.37.3 fixes a minor bug
+ w.r.t. error exits and generally does cleaner error exits (close files, etc.)
+ Version 2.37.4 fixes a bug that caused 16-shade grayscale images to be written
+ as 8-bit grayscale instead of (smaller) 4-bit colormapped images (bug report,
+ analysis and fix by Rafal Rzeczkowski), and it supports the new/upcoming
+ pbmplus release.  --Greg Roelofs]
+
+The utilities pnmtopng and pngtopnm are based on other pbm tools and require
+the libraries included in the pbmplus/netpbm package. Also required are the
+png library and the zlib compression library.
+
+These can be found at:
+        ftp://swrinde.nde.swri.edu/pub/png/src/libpng-*
+        ftp://swrinde.nde.swri.edu/pub/png/src/zlib-*
+        ftp://ftp.x.org/contrib/utilities/netpbm-1mar1994*
+or see
+        http://www.cdrom.com/pub/png/pngcode.html
+        http://www.acme.com/software/pbmplus/           [update coming soon!]
+
+To compile and install a makefile is provided. Do check the directories
+where you have put the required libraries. Then either accommodate the 
+makefile or make links from generic names to version specific directories,
+which is the recommended way.
+
+For testing purposes, have a look at the test-set PngSuite.tar.gz, which
+contains a small test-image for every PNG color type and for most PNG chunk
+types. It can be found at:
+        http://www.schaik.com/pngsuite/pngsuite.html
+        ftp://swrinde.nde.swri.edu/pub/png/images/suite/
+
+Other web pages with PNG images are at:
+        http://www.cdrom.com/pub/png/pngpic2.html
+        http://www.cdrom.com/pub/png/pngs-img.html
+
+------
+Alexander Lehmann <lehmann@usa.net>
+Willem van Schaik <willem@schaik.com>
+Greg Roelofs <newt@pobox.com>
+
+.TH pnmtopng 1 "6 January 1997"
+.IX pnmtopng
+.SH NAME
+pnmtopng - convert a portable anymap into a Portable Network Graphics file
+.SH SYNOPSIS
+.B pnmtopng
+.RB [-verbose]
+[-downscale]
+[-interlace]
+[-alpha file]
+.br
+[-transparent color]
+[-background color]
+[-gamma value]
+.br
+[-hist]
+[-chroma wx wy rx ry gx gy bx by]
+[-phys x y unit]
+.br
+[-text file]
+[-ztxt file]
+[-time [yy]yy-mm-dd hh:mm:ss]
+.br
+[-filter type]
+[-compression level]
+[-force]
+.RI [ pnmfile ]
+.SH DESCRIPTION
+Reads a portable pixmap as input.
+Produces a Portable Network Graphics file as output.
+.IX png
+.PP
+Color values in PNG files are either eight or sixteen bits wide, so
+.I pnmtopng
+will automatically scale colors to have a maxval of 255 or 65535.
+Grayscale files will be produced with bit depths 1, 2, 4, 8 or 16.
+An extra
+.I pnmdepth
+step is not necessary.
+.SH OPTIONS
+.TP
+.B -verbose
+Display the format of the output file.
+.TP
+.B -downscale
+Enables scaling of maxvalues of more then 65535 to 16 bit. Since this means
+loss of image data, the step is not performed by default.
+.TP
+.B -interlace
+Creates an interlaced PNG file (Adam7).
+.TP
+.B -alpha file
+The alpha channel of pixel (or image) specifies the transparency of a pixel.
+To create this fourth pixel value a separate
+.I .pbm-
+or
+.I .pgm-file
+is needed. In this file black (0) stands for fully transparant and white (1) 
+will become opaque. The sizes of both pbm/pgm/ppm-files must be the same.
+If the information contained in the alpha mask can also be represented as
+a transparency index, it will be used, since this should result in a smaller
+image file.
+.TP
+.B -transparent color
+Allows to make
+.I one
+particular color fully transparent. The format to specify the color is either
+(when for example orange) "1.0,0.5,0.0", where the values are floats between 
+zero and one, or with the syntax "#RGB", "#RRGGBB" or "#RRRRGGGGBBBB" where 
+R, G and B are hexa-decimal numbers.
+.TP
+.B -background color
+To create a background color chunck in the 
+.I png-file,
+which can be used for subsequent alpha-channel or transparent-color
+conversions. See -transparent for format of color.
+.TP
+.B -gamma value
+Creates an gAMA chunk. By providing the gamma-value of the
+.I pnm-file
+the software that lateron will display the
+.I png-file
+will be able to do the necessary gamma-corrections. A good rule-of-thumb is
+that when the file is created by a software program (like a CAD-program or
+a ray-tracer) the value is probably 1.0. When the
+.I pnm-file
+looks good on a non-gamma corrected PC display (which has itself a gamma-value
+of 2.2 - 2.8), a value of 0.45 should be given.
+.TP
+.B -hist
+Use this parameter to create a chunk that specifies the frequency (or histogram)
+of the colors in the image.
+.TP
+.B -chroma white point X and Y, red X and Y, green X and Y, and blue X and Y
+To specify the white point and rgb values following the CIE-1931 spec.
+.TP
+.B -phys x y unit
+When your image should not be displayed with square but with rectangular
+pixels this option should be used to create a pHYS chunk. When the unit-value
+is 0 the x and y only gives the ratio of pixel width and height. When it is
+1 the x and y specify the number of pixels per meter.
+.TP
+.B -text file
+Allows to include comments in the text-chunk of the
+.I png-file.
+The format of the text-file is as follows: when the first column does not
+contain a blank or a tab, the first word is considered to be the keyword.
+For keywords to contain spaces, enclose them in double-quotes.
+.br
+When the first character on a line is a blank or tab, the rest of the line
+is a new line of the current comment.
+Note that the initial spaces are not considered to be part of the comment
+line.
+.br
+
+.br
+Here is an example:
+.br
+-------------------------------------------
+.br
+Title           PNG-file
+.br
+Author          your name
+.br
+Description     how to include a text-chunk
+                into a PNG file
+.br
+"Creation date" 3-feb-1987
+.br
+Software        pnmtopng
+.br
+-------------------------------------------
+.TP
+.B -ztxt file
+The same as -text, but now the text will be compressed.
+.TP
+.B -time yy-mm-dd hh:mm:ss or -time yyyy-mm-dd hh:mm:ss
+This option allows you to specify the (modification)time. The year parameter 
+can be given as a two- or a four-digit value.
+.TP
+.B -filter type
+When the types of filters must be restricted you can specify here
+which filter you want to use. Allowed values are: 0 (none), 1 (sub), 
+2 (up), 3 (avg) and 4 (paeth).
+.TP
+.B -compression level
+To explicitly set the compression level of zlib use this parameter. Select
+a level between 0 for no compression (max speed) and 9 for maximum compression.
+.TP
+.B -force
+When set, -force limits the optimizations of pnmtopng. A png-file similar
+to the pnm-input is as much as possible enforced. For example no paletted
+files will be created and alpha-channel images will not be converted to
+images with a transparency chunck.
+.PP
+All flags can be abbreviated to their shortest unique prefix.
+.SH "SEE ALSO"
+pngtopnm(1), gif2png(1), pnmgamma(1), pnm(5)
+.SH NOTE
+Instead of xxxtopnm|pnmtopng, a specific converter should be used, if
+available.
+E.g.
+.I gif2png
+(GIF conversion), etc.
+.SH BUGS
+There could be an option to read the comment text from pnm comments instead
+of a separate file.
+.PP
+The program could be much faster, with a bit of code optimizing.
+.SH AUTHORS
+Copyright (C) 1995-1997 by Alexander Lehmann
+.br
+                        and Willem van Schaik.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
+.\"
+.\" This man-page was derived from pnmtorast.1 by Jef Poskanzer

@@ -32,6 +32,14 @@ int init_table(void)
 	TABLE[AEA][LAT2].def_exists = 1;
 	TABLE[AEA][LAT2].deflt = 45.5;
 
+	TABLE[AEA][X0].ask = 1;                                                    
+	TABLE[AEA][X0].def_exists = 1;                                             
+	TABLE[AEA][X0].deflt = 0.0;                                                
+
+	TABLE[AEA][Y0].ask = 1;                                                    
+	TABLE[AEA][Y0].def_exists = 1;                                             
+	TABLE[AEA][Y0].deflt = 0.0;                                                
+
 	TABLE[LCC][LAT0].ask = 1;
 	TABLE[LCC][LAT0].def_exists = 1;
 	TABLE[LCC][LAT0].deflt = 23.0;

@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include "gis.h"
 #include "../XDRIVER.h"
 
 static u_char red[256], grn[256], blu[256];
@@ -74,10 +75,10 @@ register u_char *r,register u_char *g,register u_char *b, int withzeros)
             array_alloc += 512;
         /* Make sure sufficient space is allocated */
         if (array == NULL)
-            array = (unsigned *) malloc(array_alloc * sizeof(unsigned));
+            array = (unsigned *) G_malloc((size_t) (array_alloc * sizeof(unsigned)));
         else
-            array = (unsigned *) realloc((char *) array,
-                    array_alloc * sizeof(unsigned));
+            array = (unsigned *) G_realloc((void *) array,
+                    (size_t) (array_alloc * sizeof(unsigned)));
         if (array == NULL) {
             fprintf(stderr, "ERROR: can't alloc RGB_raster\n");
             exit(-1);

@@ -7,6 +7,12 @@ parse_command_line(argc, argv, parms)
 {
     struct Option *input, *output, *barriers, *fs, *attributes;
     struct Flag *quiet, *region;
+    struct GModule *module;
+
+    module = G_define_module();
+    module->description = 
+      "Aggregate point data into clusters of "
+      "like data using a voronoi tesselation. ";
 
     input              = G_define_option();
     input->key         = "input";

@@ -1,0 +1,55 @@
+/***********************************************************************/
+/*  r.in.dem                                                           */
+/*  version 1.1                                                        */
+/***********************************************************************/
+This is r.in.dem, a program to convert DEM files to GRASS raster format.
+In its current state, it is fully functional, and I consider it more or
+less finished.
+
+This version converts only from lat/lon to UTM, because those were the
+only specs availible from the USGS DEM Web page. I think that it should
+be fairly easy to modify it to support other projections.
+
+I am not an experienced programmer, and would appreciate comments and
+suggestions on the code. I place the code in the public domain. Please
+let me know of any improvements made to it.
+
+-Eric Buddington
+ebuddington@wesleyan.edu
+January 1996
+
+****** Notes ******* 
+
+The program reads the DEM header and uses that as much as possible to
+determine the size, resolution, etc. of the data. It makes some guesses
+as to the resolution for output, outputting at slightly higher resolution
+that the input to avoid data loss in rotation. These numbers can also be
+specified on the command line.
+
+To convert the data, the program breaks up the input grid into triangles
+and for each one finds the output grid points that fall within it. It
+interpolates the data to each point from the three corner points.
+
+The output data is stored in a partially ordered tree, until the tree
+fills up. Its size is #defined as PTREE_SIZE in bintree.h. The data is
+then dumped to a cache, which writes to disk. The purpose of the cache 
+is to consolidate consecutive writes into a few long ones.
+
+All development was done on an SGI Indy, using SGI CC, gcc 2.7.2, and
+the libraries from each compiler. The code is ANSI compliant, checked
+with lint.
+  
+***** History  *******
+
+1.1) Obviously bad data on the diagonal clued me in to some serious
+problems in the interpolation algorithm. It has been redone, and now
+works properly (and faster).
+
+***** Yet to Fix *****
+I found a no-data point in the output where there probably should be
+data. Perhaps the point fell too close to a line. I'm not sure this
+is a real problem, nor do I have a fix.
+
+It might be worth it to add support for compressed input files. I don't
+know how to do this, but it doesn't seem too complicated (pipe through
+gzip, I assume).

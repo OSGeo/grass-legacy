@@ -1,0 +1,222 @@
+$Id: SUBMITTING,v 1.13 2000-12-06 07:13:03 cho Exp $
+
+NOTE: Please improve this list!
+
+Dear (new) GRASS Developer,
+
+When submitting to GRASS CVS repositiory, please take
+care of following rules:
+
+1.  Get the latest GRASS 5 Programmer's Manual here:
+    http://www.geog.uni-hannover.de/grass/grassdevel.html#prog
+
+    or (better) grab it from GRASS CVS server (Latex):
+    	cvs -z3 co progmangrass50
+
+2.  Use the directory structure to place your module appropriately into
+    the source tree
+    	- libes go into src/libes/
+    	- raster goes into src/raster/
+    	- vector goes into src/mapdev/
+    	- sites goes into src/sites
+    	- ...
+
+3.  Add a header section to each file you submit and make sure you include
+    the copyright. The purpose section is meant to contain a general
+    overview of the code in the file to assist other programmers that will
+    need to make changes to your code.
+
+    Example (ficticious header for a file called color.c) :
+
+/*
+* $Id flag - see note 4 below for syntax specification
+*
+****************************************************************************
+*
+* MODULE:       d.rast (or new higher level module name (eg GRASS core) 
+*   	    	for 5.1)
+* AUTHOR(S):    Original author unknown - probably CERL
+*               John Doe - jdoe@some.where.org
+* PURPOSE:      To provide storage and manipulation of colors used for 
+*               rendering the raster. The colors are stored in a doubly linked
+*   	    	list which must be initialized with InitColors() before it can
+*   	    	be used. Note that most linked list functionality (add,
+*   	    	remove, get) is supported, but their is no sorting
+*   	    	functionality.
+* COPYRIGHT:    (C) 2000 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
+    The copyright protects your rights according to GNU General Public
+    License (www.gnu.org).
+
+4. When you add the CVS Id flag (<$>Id<$>) (without angle brackets)
+    to a file for CVS-versioning, note that this is not allowed in the
+    *first* line of a comment. Some compilers will get confused. NOTE when 
+    following the examples below do NOT include the angle brackets <>, they
+    are needed to prevent CVS from interpreting the flag for this example.
+
+    Forbidden:
+
+    /* <$>Id<$> */
+ 
+    Allowed:
+    /*
+     * <$>Id<$>
+     */
+
+5.  To ensure that the software system continues to work, please include
+
+	#include "config.h"
+
+    in your files and make use of the various system dependencies
+    contained therein.  As one example of this, see
+    src/paint/Interface/driverlib/io.c.  Please refrain from declaring
+    system functions within the software; include the proper header files
+    (conditionally dependent on config.h macros if necessary) instead.
+    
+6.  Always specify the return type for ALL functions including those that
+    return type "void", and insert return statements for ALL functions.
+    Also, use ANSI C prototypes to declare your functions. Examples:
+    
+    void G_something(void);
+    int G_somethingElse(int, int);
+    
+    void G_something(void)
+    {
+    	/* Snipped out code */
+	
+	return;
+    }
+    
+    int G_somethingElse(int x, int y)
+    {
+    	/* Snipped out code */
+	
+	return(0);
+    }
+    
+7.  Use fprintf instead of printf
+
+8.  Use the following GRASS library functions instead of the standard C
+    functions. The reason for this is that the following functions ensure
+    good programming practice (eg always checking if memory was allocated)
+    and/or improves portability. PLEASE refer to the programmers manual
+    for the proper use (eg determining if any casts are needed for arguments
+    or return values) of these library functions. They may perform a task
+    slightly different from their corresponding C library function, and thus,
+    their use may not be the same.
+    
+    	G_malloc() instead of malloc()
+	G_calloc() instead of calloc()
+	G_realloc() instead of realloc()
+	G_getenv() instead of getenv()
+	G_setenv() instead of setenv()
+	G_unsetenv() instead of unsetenv()
+	
+	Could somebody please add others (please verify that they are
+	useful and safe first)
+
+9.  Don't use the C++ comment style! This confuses several compilers.
+    Use instead:
+       /* C-comments */
+
+10. PLEASE take the time to add comments throughout your code explaining what
+    the code is doing. It will save a HUGE amount of time and frustration for
+    other programmers that may have to change your code in the future.
+    
+11. Platform dependent code:
+    Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
+    their encapsulated lines from source code (one example was that someone
+    removed drand48 definition.)
+
+12. Make sure a new line is at the end of each file
+
+13. When writing Gmakefiles, use the current standard
+    [insert module example here]
+
+    Someone please take care of this:
+
+    Couple of notes for your Gmakefiles: 
+    	- do not add libraries on a link line after the $(XDRLIB) $(MATHLIB)
+     	- please add them before these
+     	- The XDRLIB and MATHLIB may not go into the $(LIBES) line, but only
+          into the $(CC) line.
+        - don't (!) add:
+          $(MATHLIB): # at end of file, use this only for GRASS libs
+
+14. To add the executable for your module to the GRASS system run the command
+    gmakelinks5 after your module has been compiled successfully. Note that
+    command only needs to be called once.
+    
+15. Add the module's directory name (pointing to the local Gmakefile)
+    to the compile list at src/CMD/lists/GRASS once the developers approve 
+    your module.
+
+16. Place the documentation in HTML format into html/html/ and add it to
+    the module's list in html/...  The easiest way to do this is to copy
+    an existing HTML page or the template page template.ht and modify it for
+    your purposes (to get the page style). The shell script makemanpage.sh
+    make things easier : look at html/README for more details and the
+    rules to be used.
+    
+    The online WWW man pages will be updated over-night by CVS.
+
+17. If you write a shell script and search for a command in $PATH, do NOT
+    use the "which" command or the "type -p" command. Both commands are not
+    supported on all platforms, thus causing problems for some people. As an
+    alternative, please use code similar to the following shell script snippet
+    which will perform the same function. In this case, the path of the grass5
+    command is saved if grass5 is found in $PATH. This won't recognize aliased
+    command name.
+    
+	# Search for grass5 command in user's path
+	for i in `echo $PATH | sed 's/^:/.:/
+    	    	    		    s/::/:.:/g
+				    s/:$/:./
+				    s/:/ /g'`
+	do
+	    if [ -f $i/grass5 ] ; then
+    		
+		# Save the path of the grass5 command
+		GRASS_PATH=$i/grass5
+		# Use the first one in user's path
+		break
+	    fi
+	done
+
+18. Use "GRASS_TCLSH" and "GRASS_WISH" environmental variables instead of
+    "tclsh" and "wish" at the start of Tcl/Tk scripts. This allows users to
+    override the default names, so that developers don't need worry about the
+    shell names.
+
+    Tcl script:
+
+    	#!/bin/sh
+	# the next line restarts using tclsh \
+	exec $GRASS_TCLSH "$0" "$@"
+
+
+    Tk script:
+
+    	#!/bin/sh
+	# the next line restarts using wish \
+	exec $GRASS_WISH "$0" "$@"
+
+19. For consistency, use README rather than README.txt for any README files.
+
+20. Tell the other developers about the new code using the following e-mail:
+    grass5@geog.uni-hannover.de
+ 
+    To subscribe to this mailing list, see
+    http://www.geog.uni-hannover.de/grass/grassdevel.html
+
+21. In case of questions feel free to contact the developers at the above
+    mailing list.
+
+...
+[please add further hints]

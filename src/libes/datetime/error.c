@@ -1,3 +1,9 @@
+/*
+ * Copyright (C) 1995.  Bill Brown <brown@gis.uiuc.edu> & Michael Shapiro
+ *
+ * This program is free software under the GPL (>=v2)
+ * Read the file GPL.TXT coming with GRASS for details.
+ */
 #include <string.h>
 static int err_code = 0;
 static char err_msg[1024];

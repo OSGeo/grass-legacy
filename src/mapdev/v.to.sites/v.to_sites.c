@@ -11,8 +11,6 @@
 */
 #include    <stdio.h>
 #include    "gis.h"
-#include    "digit.h"
-#include    "dig_head.h"
 #include    "Vect.h"
 #include    <math.h>
 
@@ -42,10 +40,17 @@ int main (int argc, char **argv)
   FILE *out;
 
   struct Cell_head cellhd;
+  struct GModule *module;
   struct Option *old, *new, *dmax;
   struct Flag *cat, *Cat, *all, *interp, *dubl;
 
   G_gisinit (argv[0]);
+
+  module = G_define_module();
+  module->description =
+	"Converts point data in a binary GRASS vector map "
+	"layer into a GRASS site_lists file.";
+
   /* get default for min distance */
   if (G_get_window (&cellhd) == -1)
     exit (0);

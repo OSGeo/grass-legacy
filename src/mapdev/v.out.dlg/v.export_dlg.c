@@ -7,7 +7,6 @@
 #include    <stdio.h>
 #include    "gis.h"
 #include    "Vect.h"
-#include    "dig_head.h"
 #include    "local_proto.h"
 
 

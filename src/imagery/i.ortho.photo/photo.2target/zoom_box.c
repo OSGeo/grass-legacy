@@ -96,7 +96,7 @@ static int zoom2 (int x, int y)
     if (!In_view (pick_view,x2,y2)) return 0;
 /*
  * ok, erase menu messages
- *
+ */
     Menu_msg("");
 
 /*

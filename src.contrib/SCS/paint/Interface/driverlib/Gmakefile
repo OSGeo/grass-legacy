@@ -7,5 +7,4 @@ lib.a: $(OBJ)
 $(OBJ): ../interface.h
 
 try: try.o colors.o
-	cc try.o colors.o
-	mv a.out $@
+	$(CC) -o $@ try.o colors.o

@@ -21,7 +21,13 @@ main (int argc, char **argv)
 	int t, b, l, r ;
 	int textcolor ;
 	int tsize ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
+
+	module = G_define_module();
+	module->description =
+		"Creates and displays text labels "
+		"in the active display frame on the graphics monitor.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "size" ;

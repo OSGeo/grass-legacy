@@ -1,0 +1,88 @@
+<html>
+<A NAME="r3.in.ascii">
+<TITLE>r3.in.ascii</TITLE>
+
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r3.in.ascii</b></EM>  - Imports files in 3D ASCII format into G3D.
+
+<BR>
+
+<EM>(GRASS 3D Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>r3.in.ascii [type =</B><EM> default | double | float</EM><B>]
+[precision = </B><EM>default | max | 0 - 52</EM><B>]
+[compression = </B><EM>default | rle | lzw | rle+lzw | none</EM><B>]
+[tiledimension = </B><EM>XxYxZ</EM><B>]
+[nv = </B>none | <EM>double</EM><B>]
+input = </B><EM>ascii-file</EM><B>
+output = </B><EM>g3d-map</EM>
+
+<H2>DESCRIPTION</H2>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>type</B>
+<DD>Data type used in the output file
+<DD>Options: default, double, float
+
+<DT><B>precision</B>
+<DD>Precision used in the output file
+<DD>Options: default, max, 0-52
+
+<DT><B>compression</B>
+<DD>Note that the <EM>none</EM> option only specifies 
+that neither LZW nor RLE is used for compression.  It 
+does not turn off the compression all together.  G3D does
+not support non-compressed files.
+<DD>Options: default, rle, lzw, rle+lzw, none
+
+<DT><B>tiledimension</B>
+<DD>The dimension of the tiles used in the output file.  The format is: XxYxZ
+
+<DT><B>nv</B>
+<DD>Specifies which value to convert to NULL-value.  If the specified value is 
+<em>none</em>, no conversion is performed.  Default is <em>none</em>.
+
+<DT><B>input</B>
+<DD>Path and name of ASCII file to be imported
+
+<DT><B>output</B>
+<DD>Name of the G3D output map
+</DL>
+
+<H2>NOTES</H2>
+The format for the ASCII file:
+<PRE>
+north: <EM>floating point</EM>
+south: <EM>floating point</EM>
+east: <EM>floating point</EM>
+west: <EM>floating point</EM>
+top: <EM>floating point</EM>
+bottom: <EM>floating point</EM>
+rows: <EM>integer</EM>
+cols: <EM>integer</EM>
+levels: <EM>integer</EM>
+</PRE>
+This header is followed by the cell values in <EM>floating point</EM> format 
+organized in rows with constant <EM>col</EM> and <EM>level</EM> coordinate.
+The rows are organized by constant <EM>level</EM> coordinate. Individual cell
+values are separated by <EM>space</EM> or <EM>CR</EM>.
+<P>
+NOTE: Currently, after the file has been imported, the stored values are 
+compared with the original data. This feature is used to find bugs in the
+library at an early stage and will be turned off as soon as confidence has
+built up.
+
+<H2>AUTHORS</H2>
+Roman Waupotitsch, Michael Shapiro, 
+Helena Mitasova, Bill Brown, Lubos Mitas, Jaro Hofierka
+
+</body>
+</html>

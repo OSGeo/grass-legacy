@@ -1,7 +1,6 @@
 #include "externs.h"
 #include "gis.h"
 
-
 opencell (fullname, name, mapset)
 char *fullname;
 char *name;
@@ -189,7 +188,7 @@ show_what (east, north, elevation)
         for (i = 0; i < Nlayers; i++) {
 	    
 	    if(i == 1)
-		fprintf(stderr,"COLOR FILE%c:\n", Nlayers > 2 ? 'S': '' );
+		fprintf(stderr,"COLOR FILE%c:\n", Nlayers > 2 ? 'S': ' ' );
 
             if(map_type[i] == CELL_TYPE){
 		if (G_get_c_raster_row (Fd[i], buf, row) < 0)

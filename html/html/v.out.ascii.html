@@ -1,0 +1,98 @@
+<TITLE>v.out.ascii</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.out.ascii</b></EM>  - Converts a binary GRASS vector map layer into 
+an ASCII GRASS vector map layer. 
+<BR>
+<EM>(GRASS Vector Data Export Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.out.ascii</B>
+<BR>
+<B>v.out.ascii help</B>
+<BR>
+<B>v.out.ascii</B> 
+<B>input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.out.ascii</EM> 
+converts a GRASS vector map in binary format 
+to a GRASS vector map in ASCII format. 
+
+<P>
+The program can be run non-interactively if the user specifies all needed 
+program arguments on the command line, in the form 
+
+<DL>
+<DD>
+<B>v.out.ascii</B> 
+<B>input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of the binary GRASS vector input file to be converted to ASCII format. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name of the ASCII GRASS vector output file. 
+</DL>
+
+<P>
+
+If the user runs <EM>v.out.ascii</EM> without giving the
+names of an input and output file on the command line, the
+program will prompt the user for these names.
+
+<H2>NOTES</H2>
+
+The GRASS program 
+<EM><A HREF="v.in.ascii.html">v.in.ascii</A></EM> 
+performs the
+function of <EM>v.out.ascii</EM> in reverse; i.e., it
+converts vector files in ASCII format to their binary
+format.  These two companion programs are useful both for
+importing and exporting vector files between GRASS and
+other software, and for transferring data between
+machines.
+
+<P>
+
+The output from <EM>v.out.ascii</EM> will be placed in the
+user's current mapset under the
+<EM>$LOCATION/dig_ascii</EM> directory.
+
+<P>
+
+<EM>v.out.ascii</EM> does not copy the <EM>dig_cats</EM>
+file associated with the binary vector <EM>input</EM> map
+to the new <EM>output</EM> file name.  The user must copy
+the <EM>dig_cats</EM> file to the new <EM>output</EM> name
+if this is desired (e.g., using the UNIX <EM>cp</EM>
+command).
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.digit.html">v.digit</A>,</EM>
+<EM><A HREF="v.import.html">v.import</A>,</EM>
+<EM><A HREF="v.in.ascii.html">v.in.ascii</A>,</EM>
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHORS</H2>
+
+Michael Higgins, 
+U.S. Army Construction Engineering 
+Research Laboratory
+<BR>
+James Westervelt, 
+U.S. Army Construction Engineering 
+Research Laboratory
+

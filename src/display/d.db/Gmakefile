@@ -1,0 +1,21 @@
+PGM=d.db
+HOME=$(BIN_CONTRIB_CMD)
+DBMILIB = $(LIBDIR)/libdbmi.a
+
+OFILES = \
+	point.o \
+	main.o
+
+$(HOME)/$(PGM): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(GISLIB) $(DATETIMELIB) $(DBMILIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(DLGLIB) $(GISLIB) \
+		$(DATETIMELIB) $(MATHLIB) $(DBMILIB) $(XDRLIB) 
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+$(DLGLIB): #
+$(DATETIMELIB): #
+$(DBMILIB): #
+
+point.o: global.h
+main.o: global.h

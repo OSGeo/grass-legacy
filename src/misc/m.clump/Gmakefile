@@ -1,5 +1,4 @@
 LIBES = $(VECTLIB) $(GISLIB) $(GEOMLIB)
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 
 OBJ =   \
@@ -30,11 +29,7 @@ HOME = $(BIN_ALPHA_CMD)
 
 
 $(HOME)/$(PROG): $(OBJ) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
 
 $(LIBES): #
 
-$(OBJ): glob.h proto.h
-
-proto:
-	make.proto *.c > proto.h

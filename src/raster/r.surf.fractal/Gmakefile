@@ -48,12 +48,12 @@ OBJ =\
 
 ######### DEPENDENCIES #########
 
-$(PROG): ${OBJ} ${LIBES}
-	 ${CC} $(COMPILER_FLAGS) -o $@ ${OBJ} ${LIBES} ${LIBES} 
+$(PROG): $(OBJ) $(LIBES)
+	 $(CC) $(COMPILER_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(XDRLIB) 
 #
 #-----^ This compiles the whole program bringing all labels together.
 
-$(OBJ): ${INCLUDES}
+$(OBJ): $(INCLUDES)
 
 $(LIBES): #
 #---^ Ignore this line (used for future additions of the library).

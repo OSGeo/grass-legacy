@@ -1,10 +1,13 @@
-LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB)
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB)
+
+EXTRA_CFLAGS	= $(DANOTHER_BUTTON)
 
 LIST   = main.o \
 	 ask.o\
 	 center.o\
 	 returns.o \
-	 pan.o
+	 pan.o \
+	 redraw.o
 
 PROG = $(BIN_CONTRIB_CMD)/d.pan
 #PROG = ./d.pan

@@ -1,33 +1,58 @@
 #define GLOBAL
 #include "what.h"
+#include "local_proto.h"
 
-int main(
-int argc ,
-char **argv )
+int main(int argc, char **argv)
 {
 	struct Cell_head window ;
 	char temp[128] ;
 	int t, b, l, r ;
 	struct Option *opt1;
-	struct Flag *shh;
-
+	struct Flag *shh, *once, *terse;
+	struct GModule *module;
 
 	/* Initialize the GIS calls */
 	G_gisinit (argv[0]) ;
+	R_open_driver();
 
+	if(D_get_site_list (&site, &nsites) < 0)
+		site = NULL;
+	else
+	{
+		site = (char **)G_realloc(site, (nsites+1)*sizeof(char *));
+		site[nsites] = NULL;
+	}
+
+	R_close_driver();
 
 	opt1 = G_define_option() ;
 	opt1->key        = "sites" ;
 	opt1->type       = TYPE_STRING ;
-	opt1->required   = YES ;
-	opt1->multiple   = NO ;
+	opt1->multiple   = YES ;
+	if (site)
+		opt1->answers = site;
+	opt1->required   = NO ;
 	opt1->gisprompt  = "old,site_lists,Sites" ;
 	opt1->description= "Name of existing sites file"; 
 
+	once = G_define_flag();
+	once->key = '1';
+	once->description ="Identify just one site";
+	
+	terse = G_define_flag();
+	terse->key = 't';
+	terse->description = "Terse output. For parsing by programs.";
+	
 	shh = G_define_flag ();
 	shh->key = 'q';
 	shh->description = "Load quietly";
+	
+	module = G_define_module();
+	module->description = 
+	  "Allows the user to interactively query site list descriptions. ";
 
+	if(!site)
+		opt1->required = YES;
 
 	if (G_parser(argc, argv))
 	    exit(-1);
@@ -57,7 +82,7 @@ char **argv )
 	
 	if(open_sites(opt1->answer)){
 	    load_sites(&window, !(shh->answer));
-	    what (0, 0) ;
+	    what (once->answer, terse->answer) ;
 	}
 
 	free_cached_sites();

@@ -1,21 +1,25 @@
+/*
+* $Id$
+*/
 
 /*  gsd.c
     Bill Brown, USACERL  
     October 1993
 */
 	
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "gstypes.h"
 #include "gsget.h"
 #include "math.h"
-#include <stdio.h>
-#include <stdlib.h>
 #include "rowcol.h"
 
 /*
 #define TRACE_DFUNCS
 */
 
-Point3 *gsdrape_get_segments();
+static void init_stuff(void);
 
 /* vertices for octohedron */
 float Octo[6][3] = {
@@ -28,6 +32,7 @@ float Octo[6][3] = {
 };
 
 #define ONORM .57445626
+
 /* normals for flat-shaded octohedron */
 float OctoN[8][3] = {
     { ONORM, ONORM, ONORM},
@@ -54,20 +59,20 @@ float ogvertsplus[8][3];
 
 float Pi;
 
-
-init_stuff()
+static void init_stuff(void)
 {
-float cos45;
-int i;
-static int first=1;
+    float cos45;
+    int i;
+    static int first=1;
 
-    if(first){
-
+    if (first)
+    {
 	first=0;
         
 	cos45 = cos(atan(1.0));
 
-	for(i=0; i<8; i++){
+	for (i=0; i<8; i++)
+	{
 	    ogverts[i][Z] = 0.0;
 	    ogvertsplus[i][Z] = 1.0;
 	}
@@ -90,17 +95,14 @@ static int first=1;
 	ogverts[7][Y] = ogvertsplus[7][Y] = -cos45;
 
 	Pi = 4.0 * atan(1.0);
-
     }
 
+    return;
 }
 
-
-gsd_plus(center, colr, siz)
-float center[3], siz;
-int colr;
+void gsd_plus(float *center, int colr, float siz)
 {
-float v1[3], v2[3];
+    float v1[3], v2[3];
 
     gsd_color_func(colr);
     siz *= .5;
@@ -123,30 +125,28 @@ float v1[3], v2[3];
 	gsd_vert_func(v2);
     gsd_endline();
 
-
+    return;
 }
 
 /* TODO: remove fudge, instead fudge the Z buffer */ 
-gsd_line_onsurf(gs, v1, v2)
-geosurf *gs;
-float *v1, *v2;
+void gsd_line_onsurf(geosurf *gs, float *v1, float *v2)
 {
-int i, np;
-Point3 *pts;
-float fudge;
+    int i, np;
+    Point3 *pts;
+    float fudge;
 
     pts = gsdrape_get_segments(gs, v1, v2, &np);
-    if(pts){
-/*
-fprintf(stderr,"%d points, e.g. %f %f %f... %f %f %f\n",
-np,pts[0][X], pts[0][Y], pts[0][Z], pts[np-1][X], pts[np-1][Y], pts[np-1][Z]);
-*/
+    if (pts)
+    {
 	fudge = FUDGE(gs);
 	gsd_bgnline();
-	for (i=0; i<np; i++){
+	
+	for (i=0; i<np; i++)
+	{
 	    pts[i][Z] += fudge;
 	    gsd_vert_func(pts[i]);
 	}
+	
 	gsd_endline();
 
 	/* fix Z values? */
@@ -154,6 +154,7 @@ np,pts[0][X], pts[0][Y], pts[0][Z], pts[np-1][X], pts[np-1][Y], pts[np-1][Z]);
 	v2[Z] = pts[np-1][Z];
     }
 
+    return;
 }
 
 /* TODO: remove fudge, instead fudge the Z buffer */ 
@@ -161,24 +162,26 @@ np,pts[0][X], pts[0][Y], pts[0][Z], pts[np-1][X], pts[np-1][Y], pts[np-1][Z]);
  * whichever is less.  Returns number of points used. Fills
  * pt with last pt drawn.
 */
-gsd_nline_onsurf(gs, v1, v2, pt, n)
-geosurf *gs;
-float *v1, *v2, *pt;
-int n;
+int gsd_nline_onsurf(geosurf *gs, float *v1, float *v2, float *pt, int n)
 {
-int i, np, pdraw;
-Point3 *pts;
-float fudge;
+    int i, np, pdraw;
+    Point3 *pts;
+    float fudge;
 
     pts = gsdrape_get_segments(gs, v1, v2, &np);
-    if(pts){
+    
+    if (pts)
+    {
 	pdraw = n < np ? n : np;
 	fudge = FUDGE(gs);
 	gsd_bgnline();
-	for (i=0; i<pdraw; i++){
+	
+	for (i=0; i<pdraw; i++)
+	{
 	    pts[i][Z] += fudge;
 	    gsd_vert_func(pts[i]);
 	}
+	
 	gsd_endline();
 
 	pt[X] = pts[i-1][X];
@@ -190,16 +193,14 @@ float fudge;
 
 	return(i);
     }
+    
     return(0);
-
 }
 
-gsd_x(gs, center, colr, siz)
-geosurf *gs;   /* NULL if flat */
-float center[3], siz;
-int colr;
+/* Note gs: NULL if flat */
+void gsd_x(geosurf *gs, float *center, int colr, float siz)
 {
-float v1[3], v2[3];
+    float v1[3], v2[3];
 
     gsd_color_func(colr);
     siz *= .5;
@@ -211,10 +212,12 @@ float v1[3], v2[3];
     v1[Y] = center[Y] - siz;
     v2[Y] = center[Y] + siz;
 
-    if(gs){
+    if (gs)
+    {
 	gsd_line_onsurf(gs, v1, v2);
     }
-    else{
+    else
+    {
 	gsd_bgnline();
 	    gsd_vert_func(v1);
 	    gsd_vert_func(v2);
@@ -226,27 +229,29 @@ float v1[3], v2[3];
     v1[Y] = center[Y] + siz;
     v2[Y] = center[Y] - siz;
 
-    if(gs){
+    if (gs)
+    {
 	gsd_line_onsurf(gs, v1, v2);
     }
-    else{
+    else
+    {
 	gsd_bgnline();
 	    gsd_vert_func(v1);
 	    gsd_vert_func(v2);
 	gsd_endline();
     }
 
+    return;
 }
 
-gsd_diamond(center, colr, siz)
-float center[3], siz;
-int colr;
+void gsd_diamond(float *center, int colr, float siz)
 {
-int preshade;
+    int preshade;
 
-/* seems right, but isn't
-    siz *= .5;
-*/
+    /* seems right, but isn't
+    	siz *= .5;
+    */
+    
     gsd_pushmatrix();
     gsd_translate(center[X], center[Y], center[Z]);
     gsd_scale(siz, siz, siz);
@@ -258,16 +263,19 @@ int preshade;
 	gsd_litvert_func(OctoN[0], colr, Octo[1]);
 	gsd_litvert_func(OctoN[0], colr, Octo[2]);
     gsd_endpolygon();
+    
     gsd_bgnpolygon();
 	gsd_litvert_func(OctoN[1], colr, Octo[2]);
 	gsd_litvert_func(OctoN[1], colr, Octo[1]);
 	gsd_litvert_func(OctoN[1], colr, Octo[3]);
     gsd_endpolygon();
+    
     gsd_bgnpolygon();
 	gsd_litvert_func(OctoN[2], colr, Octo[2]);
 	gsd_litvert_func(OctoN[2], colr, Octo[4]);
 	gsd_litvert_func(OctoN[2], colr, Octo[0]);
     gsd_endpolygon();
+    
     gsd_bgnpolygon();
 	gsd_litvert_func(OctoN[3], colr, Octo[2]);
 	gsd_litvert_func(OctoN[3], colr, Octo[3]);
@@ -279,51 +287,57 @@ int preshade;
 	gsd_litvert_func(OctoN[4], colr, Octo[5]);
 	gsd_litvert_func(OctoN[4], colr, Octo[1]);
     gsd_endpolygon();
+    
     gsd_bgnpolygon();
 	gsd_litvert_func(OctoN[5], colr, Octo[1]);
 	gsd_litvert_func(OctoN[5], colr, Octo[5]);
 	gsd_litvert_func(OctoN[5], colr, Octo[3]);
     gsd_endpolygon();
+    
     gsd_bgnpolygon();
 	gsd_litvert_func(OctoN[6], colr, Octo[5]);
 	gsd_litvert_func(OctoN[6], colr, Octo[0]);
 	gsd_litvert_func(OctoN[6], colr, Octo[4]);
     gsd_endpolygon();
+    
     gsd_bgnpolygon();
 	gsd_litvert_func(OctoN[7], colr, Octo[5]);
 	gsd_litvert_func(OctoN[7], colr, Octo[4]);
 	gsd_litvert_func(OctoN[7], colr, Octo[3]);
     gsd_endpolygon();
 
-#ifdef OCT_SHADED
-    gsd_bgntmesh();
-        gsd_litvert_func(Octo[0], colr, Octo[0]);
-        gsd_litvert_func(Octo[1], colr, Octo[1]);
-    gsd_swaptmesh();
-        gsd_litvert_func(Octo[2], colr, Octo[2]);
-    gsd_swaptmesh();
-        gsd_litvert_func(Octo[4], colr, Octo[4]);
-    gsd_swaptmesh();
-        gsd_litvert_func(Octo[5], colr, Octo[5]);
-    gsd_swaptmesh();
-        gsd_litvert_func(Octo[1], colr, Octo[1]);
-        gsd_litvert_func(Octo[3], colr, Octo[3]);
-        gsd_litvert_func(Octo[2], colr, Octo[2]);
-    gsd_swaptmesh();
-        gsd_litvert_func(Octo[4], colr, Octo[4]);
-    gsd_swaptmesh();
-        gsd_litvert_func(Octo[5], colr, Octo[5]);
-    gsd_swaptmesh();
-        gsd_litvert_func(Octo[1], colr, Octo[1]);
-    gsd_endtmesh();
-#endif
+    #ifdef OCT_SHADED
+    {
+	gsd_bgntmesh();
+            gsd_litvert_func(Octo[0], colr, Octo[0]);
+            gsd_litvert_func(Octo[1], colr, Octo[1]);
+	gsd_swaptmesh();
+            gsd_litvert_func(Octo[2], colr, Octo[2]);
+	gsd_swaptmesh();
+            gsd_litvert_func(Octo[4], colr, Octo[4]);
+	gsd_swaptmesh();
+            gsd_litvert_func(Octo[5], colr, Octo[5]);
+	gsd_swaptmesh();
+            gsd_litvert_func(Octo[1], colr, Octo[1]);
+            gsd_litvert_func(Octo[3], colr, Octo[3]);
+            gsd_litvert_func(Octo[2], colr, Octo[2]);
+	gsd_swaptmesh();
+            gsd_litvert_func(Octo[4], colr, Octo[4]);
+	gsd_swaptmesh();
+            gsd_litvert_func(Octo[5], colr, Octo[5]);
+	gsd_swaptmesh();
+            gsd_litvert_func(Octo[1], colr, Octo[1]);
+	gsd_endtmesh();
+    }
+    #endif
 
     gsd_popmatrix();
     gsd_shademodel(preshade);
 
+    return;
 }
 
-gsd_diamond_lines()
+void gsd_diamond_lines(void)
 {
     gsd_bgnline();
     gsd_vert_func(Octo[0]);
@@ -340,23 +354,21 @@ gsd_diamond_lines()
     gsd_vert_func(Octo[5]);
     gsd_endline();
 
+    return;
 }
 
-gsd_drawsphere(center, colr, siz)
-float center[3], siz;
-unsigned long colr;
+void gsd_drawsphere(float *center, unsigned long colr, float siz)
 {
     siz *= .5;  /* siz is diameter, gsd_sphere uses radius */
     gsd_color_func(colr);
     gsd_sphere(center, siz);
 
+    return;
 }
 
-gsd_draw_asterisk(center, colr, siz)
-float center[3], siz;
-unsigned long colr;
+void gsd_draw_asterisk(float *center, unsigned long colr, float siz)
 {
-float angle;
+    float angle;
 
     angle = 45.;  /* degrees */
 
@@ -399,14 +411,12 @@ float angle;
 
     gsd_popmatrix();
 
+    return;
 }
 
-
-gsd_draw_gyro(center, colr, siz)
-float center[3], siz;
-unsigned long colr;
+void gsd_draw_gyro(float *center, unsigned long colr, float siz)
 {
-int i;
+    int i;
 
     gsd_pushmatrix();
     gsd_translate(center[X], center[Y], center[Z]);
@@ -421,13 +431,16 @@ int i;
    
     /* spokes */
     gsd_pushmatrix();
-    for (i=0; i<6; i++){
+    
+    for (i=0; i<6; i++)
+    {
 	gsd_rot(30., 'z');
 	gsd_bgnline();
 	gsd_vert_func(Octo[0]);
 	gsd_vert_func(Octo[3]);
 	gsd_endline();
     }
+    
     gsd_popmatrix();
 
     gsd_color_func(colr);
@@ -446,12 +459,12 @@ int i;
 
     gsd_popmatrix();
 
+    return;
 }
 
-gsd_3dcursor(pt)
-float pt[3];
+void gsd_3dcursor(float *pt)
 {
-float big, vert[3];
+    float big, vert[3];
 
     big = 10000.;
 
@@ -482,11 +495,10 @@ float big, vert[3];
     gsd_vert_func(vert);
     gsd_endline();
 
+    return;
 }
 
-dir_to_slope_aspect(dir, slope, aspect, degrees)
-float dir[3], *slope, *aspect;
-int degrees;
+void dir_to_slope_aspect(float *dir, float *slope, float *aspect, int degrees)
 {
     float dx, dy, dz;
     float costheta, theta, adjacent;
@@ -495,45 +507,63 @@ int degrees;
     dy = dir[Y];
     dz = dir[Z];
 
-/* project vector <dx,dy,dz> onto plane of constant z containing
- * final value should be 0.0 to 3600.0 */
-    
-    if (dx == 0 && dy == 0) *aspect = 0.;
-    else{ 
+    /* project vector <dx,dy,dz> onto plane of constant z containing
+    * final value should be 0.0 to 3600.0 */
+    if (dx == 0 && dy == 0)
+    {
+    	*aspect = 0.;
+    }
+    else
+    { 
 	if (dx == 0)
+	{
 	    theta = 90.0;
-	else{
+	}
+	else
+	{
 	    costheta = dx / sqrt(dx*dx + dy*dy);
 	    theta = acos(costheta);
 	}
+	
 	if (dy < 0)
+	{
 	    theta = (2*Pi) - theta;
+	}
 
 	*aspect = theta;
     }
 
-/* project vector <dx,dy,dz> onto plane of constant y containing
- * final value should be -900.0 (looking up) to 900.0 (looking down)*/
-    
+    /* project vector <dx,dy,dz> onto plane of constant y containing
+    * final value should be -900.0 (looking up) to 900.0 (looking down)*/
     if (dz == 0)
+    {
 	theta = 0.0;
+    }
     else if ( dx == 0 && dy == 0 )
+    {
 	theta = Pi/2.;
-    else {
+    }
+    else
+    {
 	adjacent = sqrt(dx*dx + dy*dy);
 	costheta = adjacent / sqrt(adjacent*adjacent + dz*dz);
 	theta =  acos(costheta);
     }
+    
     if (dz > 0)
+    {
 	theta =  -theta;
+    }
     
     *slope = theta;
 
-    if(degrees){
+    if (degrees)
+    {
       *aspect = *aspect * (180./Pi);
       *slope = *slope * (180./Pi);
     }
 
+    return;
 }
 
 /**************************************************************/
@@ -542,41 +572,36 @@ int degrees;
  * line-on-suf is used, resulting in length of arrow being proportional
  * to slope 
 */
-gsd_arrow(center, colr, siz, dir, sz, onsurf)
-float center[3], dir[3], siz, sz;
-geosurf *onsurf;
-unsigned long colr;
+int gsd_arrow(float *center, unsigned long colr, float siz, float *dir,
+    float sz, geosurf *onsurf)
 {
-int i;
-float slope,aspect;
-float tmp[3];
-static int first=1;
+    int i;
+    float slope,aspect;
+    float tmp[3];
+    static int first=1;
 
-    if(first){
+    if (first)
+    {
 	init_stuff();
 	first = 0;
     }
 
-
-/*TEST
-dir[Z]/=(sz*50);
-*/
-
-/* CORRECT
-*/
-dir[Z]/=sz;
+    dir[Z]/=sz;
 
     GS_v3norm(dir);
 
-    if(NULL != onsurf){
+    if (NULL != onsurf)
+    {
 	float base[3], tip[3], len;
 
 	base[X] = center[X];
 	base[Y] = center[Y];
+	
 	/* project dir to surface, after zexag */
 	len = GS_P2distance (ORIGIN, dir); /* in case dir isn't normalized */
 	tip[X] = center[X]+dir[X]*len*siz;
 	tip[Y] = center[Y]+dir[Y]*len*siz;
+	
 	return gsd_arrow_onsurf(base, tip, colr, 2, onsurf);
     }
 
@@ -598,6 +623,7 @@ dir[Z]/=sz;
 	gsd_vert_func(ORIGIN);
 	gsd_vert_func(UP_NORM);
     gsd_endline();
+    
     gsd_bgnline();
 	gsd_vert_func(tmp);
 	gsd_vert_func(UP_NORM);
@@ -606,135 +632,135 @@ dir[Z]/=sz;
     gsd_endline();
 
     gsd_popmatrix();
-
+    
+    return(1);
 }
+
 /**************************************************************/
-
-
-gsd_arrow_onsurf(base, tip, colr, wid, gs)
-float base[3], tip[3];
-unsigned long colr;
-int wid;
-geosurf *gs;
+int gsd_arrow_onsurf(float *base, float *tip, unsigned long colr, int wid,
+    geosurf *gs)
 {
-int i;
-float tmp[3], dir2[3], dir1[3], dir0[3], len, dim1, dim2;
-static int first=1;
+    int i;
+    float tmp[3], dir2[3], dir1[3], dir0[3], len, dim1, dim2;
+    static int first=1;
 
-    if(first){
+    if (first)
+    {
 	init_stuff();
 	first = 0;
     }
     
     gsd_linewidth(wid);
     gsd_color_func(colr);
-/* DEBUG
-fprintf(stderr,"%f %f -> ", base[X], base[Y]);
-fprintf(stderr,"%f %f\n", tip[X], tip[Y]);
-*/
+
+    /* DEBUG
+    fprintf(stderr,"%f %f -> ", base[X], base[Y]);
+    fprintf(stderr,"%f %f\n", tip[X], tip[Y]);
+    */
     gsd_line_onsurf(gs, base, tip);
 
-#ifdef DO_SPHERE_BASE
-    GS_v3dir(tip, base, dir0);
-    GS_v3mag(dir0, &len);
-    gsd_disc(base[X], base[Y], len/10.);
-#endif
+    #ifdef DO_SPHERE_BASE
+    {
+	GS_v3dir(tip, base, dir0);
+	GS_v3mag(dir0, &len);
+	gsd_disc(base[X], base[Y], len/10.);
+    }
+    #endif
 
-#ifdef ARROW_READY
+    #ifdef ARROW_READY
+    {
+	base[Z] = tip[Z] = 0.0;
+	GS_v3dir(tip, base, dir0);
 
-    base[Z] = tip[Z] = 0.0;
-    GS_v3dir(tip, base, dir0);
-/* DEBUG
-fprintf(stderr,"dir0: %f %f %f\n", dir0[X], dir0[Y], dir0[Z]);
-*/
-    /* rotate this direction 90 degrees */
-    GS_v3cross(dir0, UP_NORM, dir2);
-    GS_v3mag(dir0, &len);
-    GS_v3eq(dir1, dir0);
-/* DEBUG
-fprintf(stderr,"len: %f\n", len);
-fprintf(stderr,"a-dir1: %f %f %f\n", dir1[X], dir1[Y], dir1[Z]);
-fprintf(stderr,"a-dir2: %f %f %f\n", dir2[X], dir2[Y], dir2[Z]);
-*/
-    dim1=len*.7;
-    dim2=len*.2;
-    GS_v3mult(dir1,dim1);
-    GS_v3mult(dir2,dim2);
-/* DEBUG
-fprintf(stderr,"b-dir1: %f %f %f\n", dir1[X], dir1[Y], dir1[Z]);
-fprintf(stderr,"b-dir2: %f %f %f\n", dir2[X], dir2[Y], dir2[Z]);
-*/
-    GS_v3eq(tmp, base);
-    GS_v3add(tmp, dir1);
-    GS_v3add(tmp, dir2);
-/* DEBUG
-fprintf(stderr,"%f %f -> ", tmp[X], tmp[Y]);
-*/
-    gsd_line_onsurf(gs, tmp, tip);
+	/* DEBUG
+	fprintf(stderr,"dir0: %f %f %f\n", dir0[X], dir0[Y], dir0[Z]);
+	*/
 
-    GS_v3cross(dir0, DOWN_NORM, dir2);
-    GS_v3mult(dir2,dim2);
-    GS_v3eq(tmp, base);
-/* DEBUG
-fprintf(stderr,"dir1: %f %f %f\n", dir1[X], dir1[Y], dir1[Z]);
-fprintf(stderr,"dir2: %f %f %f\n", dir2[X], dir2[Y], dir2[Z]);
-*/
-    GS_v3add(tmp, dir1);
-    GS_v3add(tmp, dir2);
-/* DEBUG
-fprintf(stderr,"%f %f\n", tmp[X], tmp[Y]);
-*/
-    gsd_line_onsurf(gs, tip, tmp);
+	/* rotate this direction 90 degrees */
+	GS_v3cross(dir0, UP_NORM, dir2);
+	GS_v3mag(dir0, &len);
+	GS_v3eq(dir1, dir0);
 
-#endif
+	/* DEBUG
+	fprintf(stderr,"len: %f\n", len);
+	fprintf(stderr,"a-dir1: %f %f %f\n", dir1[X], dir1[Y], dir1[Z]);
+	fprintf(stderr,"a-dir2: %f %f %f\n", dir2[X], dir2[Y], dir2[Z]);
+	*/
+	dim1=len*.7;
+	dim2=len*.2;
+	GS_v3mult(dir1,dim1);
+	GS_v3mult(dir2,dim2);
+
+	/* DEBUG
+	fprintf(stderr,"b-dir1: %f %f %f\n", dir1[X], dir1[Y], dir1[Z]);
+	fprintf(stderr,"b-dir2: %f %f %f\n", dir2[X], dir2[Y], dir2[Z]);
+	*/
+	GS_v3eq(tmp, base);
+	GS_v3add(tmp, dir1);
+	GS_v3add(tmp, dir2);
+
+	/* DEBUG
+	fprintf(stderr,"%f %f -> ", tmp[X], tmp[Y]);
+	*/
+	gsd_line_onsurf(gs, tmp, tip);
+
+	GS_v3cross(dir0, DOWN_NORM, dir2);
+	GS_v3mult(dir2,dim2);
+	GS_v3eq(tmp, base);
+
+	/* DEBUG
+	fprintf(stderr,"dir1: %f %f %f\n", dir1[X], dir1[Y], dir1[Z]);
+	fprintf(stderr,"dir2: %f %f %f\n", dir2[X], dir2[Y], dir2[Z]);
+	*/
+	GS_v3add(tmp, dir1);
+	GS_v3add(tmp, dir2);
+
+	/* DEBUG
+	fprintf(stderr,"%f %f\n", tmp[X], tmp[Y]);
+	*/
+	gsd_line_onsurf(gs, tip, tmp);
+    }
+    #endif
 
     return(0);
-
 }
 
 
 /**************************************************************/
 /* siz1 is height, siz2 is diameter */
-gsd_3darrow(center, colr, siz1, siz2, dir, sz)
-float center[3], dir[3], siz1, siz2, sz;
-unsigned long colr;
+void gsd_3darrow(float *center, unsigned long colr, float siz1, float siz2,
+    float *dir, float sz)
 {
-int i;
-float slope,aspect;
-int preshade;
-static int first=1;
-static int list;
+    int i;
+    float slope,aspect;
+    int preshade;
+    static int first=1;
+    static int list;
 
-
-/*TEST - use to exaggerate normals?
-    dir[Z]/=(sz*50);
-*/
-
-/* CORRECT
-*/
     dir[Z]/=sz;
 
     GS_v3norm(dir);
     dir_to_slope_aspect(dir, &slope, &aspect, 1);
 
-#ifdef DEBUG
-{
-static int debugint=1;
-if(debugint>100){
-fprintf(stderr,"pt: %f,%f,%f dir: %f,%f,%f slope: %f aspect: %f\n", 
-center[X],center[Y],center[Z],dir[X],dir[Y],dir[Z],slope,aspect);
-debugint=1;
-}
-debugint++;
-}
-#endif
+    #ifdef DEBUG
+    {
+	static int debugint=1;
 
+	if (debugint>100)
+	{
+    	    fprintf(stderr,"pt: %f,%f,%f dir: %f,%f,%f slope: %f aspect: %f\n", 
+    	    center[X],center[Y],center[Z],dir[X],dir[Y],dir[Z],slope,aspect);
+    	    debugint=1;
+	}
+	debugint++;
+    }
+    #endif
 
     preshade = gsd_getshademodel();
+
     /* 
     gsd_shademodel(0);  
     want flat shading? */
-
     gsd_pushmatrix();
     gsd_translate(center[X], center[Y], center[Z]);
     gsd_scale(1.0, 1.0, 1.0/sz);
@@ -743,7 +769,9 @@ debugint++;
     gsd_scale(siz2, siz2, siz1);
     gsd_color_func(colr);
 
-    if(first){ /* combine these into an object */
+    if (first)
+    {
+    	/* combine these into an object */
 	first = 0;
 	list = gsd_makelist();
 	gsd_bgnlist(list, 1);
@@ -764,22 +792,25 @@ debugint++;
 	gsd_endlist();
     }
     else
+    {
 	gsd_calllist(list);
+    }
 
     gsd_popmatrix();
     gsd_shademodel(preshade);
 
+    return;
 }
 
 /* primitives only called after transforms */
 /* center is actually center at base of 8 sided cone */
-primitive_cone(col) 
-unsigned long col;
+void primitive_cone(unsigned long col)
 {
-float tip[3];
-static int first=1;
+    float tip[3];
+    static int first=1;
 
-    if(first){
+    if (first)
+    {
 	init_stuff();
 	first = 0;
     }
@@ -800,17 +831,17 @@ static int first=1;
     gsd_litvert_func2(ogverts[0], col, ogverts[0]);
     gsd_endtfan();
     
+    return;
 }
 
 /* primitives only called after transforms */
 /* center is actually center at base of 8 sided cylinder */
-primitive_cylinder(col, caps)
-unsigned long col;
-int caps;
+void primitive_cylinder(unsigned long col, int caps)
 {
-static int first=1;
+    static int first=1;
 
-    if(first){
+    if (first)
+    {
 	init_stuff();
 	first = 0;
     }
@@ -836,8 +867,8 @@ static int first=1;
     gsd_litvert_func2(ogverts[0], col, ogverts[0]);
     gsd_endqstrip();
 
-    if(caps){
-
+    if (caps)
+    {
 	/* draw top */
 	gsd_bgntfan();
 	gsd_litvert_func2(UP_NORM, col, UP_NORM);
@@ -865,6 +896,7 @@ static int first=1;
 	gsd_litvert_func2(DOWN_NORM, col, ogverts[7]);
 	gsd_litvert_func2(DOWN_NORM, col, ogverts[0]);
 	gsd_endtfan();
-
     }
+
+    return;
 }

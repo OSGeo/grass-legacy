@@ -1,7 +1,9 @@
 OFILES = \
-	main.o get_deg.o get_num.o get_stp.o
+	main.o get_deg.o get_num.o get_stp.o get_datum.o
 
-$(BIN_MAIN_CMD)/g.setproj: $(OFILES) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES = $(GISLIB) $(COORCNVLIB) $(MATHLIB) $(XDRLIB)
+
+$(BIN_MAIN_INTER)/g.setproj: $(OFILES) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES)
 
 $(GISLIB): #

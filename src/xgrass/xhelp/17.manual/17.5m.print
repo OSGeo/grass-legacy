@@ -1,9 +1,0 @@
-                 MANUAL ENTRIES FOR PRINT COMMANDS           
-
-Below is a list of GRASS 4.0 print commands.
-
-     @man("p.chart")            @man("p.colors")              @man("p.icons")
-     @man("p.labels")           @man("p.map")                 @man("p.ppm")
-     @man("p.screen")           @man("p.select")
-
-For a discussion of all of these commands, select @man("paint").

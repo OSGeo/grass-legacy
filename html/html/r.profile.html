@@ -1,0 +1,176 @@
+<TITLE>r.profile</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.profile</b></EM>  - Outputs the raster map layer values
+lying on user-defined line(s).
+
+<BR>
+
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.profile</B>
+
+<BR>
+
+<B>r.profile help</B>
+
+<BR>
+
+<B>r.profile</B> <B>map</B>=<EM>name</EM> [<B>result</B>=<EM>type</EM>] 
+[<B>width</B>=<EM>value</EM>]
+<B>line</B>=<EM>east</EM>,<EM>north</EM>,<EM>east</EM>,<EM>north</EM>[,<EM>east</EM>,<EM>north</EM>,<EM>east</EM>,<EM>north</EM>,...]
+
+<H2>DESCRIPTION</H2>
+
+This program outputs, in ASCII, the values assigned to
+those cells in a raster map layer that lie along one or
+more lines ("profiles").  The lines are described by their
+starting and ending coordinates.  The profiles may be
+single-cell wide lines, or multiple-cell wide lines.  The
+output, for each profile, may be the category values
+assigned to each of the cells, or a single aggregate value
+(e.g., average or median value).
+
+<P>
+
+<EM>r.profile</EM> automatically orders the coordinates.
+The user cannot specify the order for a specific profile;
+the direction is always northwest to southeast.
+
+<H2>OPTIONS</H2>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+<DT><B>map=</B><EM>name</EM> 
+<DD>Raster map to be queried.
+
+<DT><B>result=</B><EM>type</EM> 
+<DD>Type of result to be output.
+<BR>
+Options:  raw, median, average
+<BR>
+Default:  raw
+
+<P>
+
+Raw results output each of the category values assigned to
+all cells along the profile.  Median and average output a
+single value per profile:  average outputs the average
+category value of all cells under the profile;  median
+outputs the median cell category value.
+
+<DT><B>line</B>=<EM>east</EM>,<EM>north</EM>,<EM>east</EM>,<EM>north</EM>[,<EM>east</EM>,<EM>north</EM>,<EM>east</EM>,<EM>north</EM>,...]
+
+<DD>The geographic coordinates of the starting and ending
+points that define each profile line, given as easting and
+northing coordinate pairs.  The user must state the
+starting and ending coordinates of at least one line, and
+may optionally include starting and ending coordinates of
+additional lines.
+
+<DT><B>width=</B><EM>value</EM> 
+<DD>Profile width, in cells (odd number).
+<BR>
+Default:  1
+
+<P>
+
+Wider profiles can be specified by setting the width to 3, 5, 7, etc.
+The profiles are then formed as rectangles 3, 5, 7, etc., cells wide.
+</DL>
+
+<H2>OUTPUT FORMAT</H2>
+
+The output from this command is printed to the standard
+output in ASCII.  The format of the output varies slightly
+depending on the type of result.  The first number printed
+is the number of cells associated with the profile.  For
+raw output, this number is followed by the individual cell
+values.  For average and median output, this number is
+followed by a single value (i.e., the average or the median
+value).
+
+<P>
+
+These examples are for the <EM>elevation.dem</EM> raster
+map layer in the <EM>spearfish</EM> sample data set
+distributed with GRASS 4.1:
+
+<P>
+
+Single-cell profile:
+
+<DL>
+<DD>
+<B>r.profile map=</B><EM>elevation.dem</EM> <B>line=</B><EM>593655,4917280,593726,4917351</EM>
+
+<P>
+
+4 1540 1551 1557 1550
+</DL>
+
+<P>
+
+3-cell wide profile:
+<DL>
+<DD>
+<B>r.profile map=</B><EM>elevation.dem</EM><B> line=</B><EM>593655,4917280,593726,4917351</EM><B> width=</B><EM>3</EM>
+
+
+<P>
+
+22 1556 1538 1525 1570 1555 1540 1528 1578 \<BR>
+1565 1551 1536 1523 1569 1557 1546 1533 \<BR>
+1559 1550 1542 1552 1543 1548
+
+
+<P>
+
+(Output appears as multiple lines here, but is really one line)
+</DL>
+
+<P>
+
+3-cell wide profile average:
+
+<DL>
+<DD>
+<B>r.profile map=</B><EM>elevation.dem</EM><B> line=</B><EM>593655,4917280,593726,4917351</EM><B> width=</B><EM>3</EM><B> result=</B><EM>average</EM>
+
+<P>
+
+22 1548.363636
+</DL>
+
+<P>
+
+3-cell wide profile median:
+
+<DL>
+<DD>
+<B>r.profile map=</B><EM>elevation.dem</EM><B> line=</B><EM>593655,4917280,593726,4917351</EM><B> width=</B><EM>3</EM><B> result=</B><EM>median</EM>
+
+<P>
+
+22 1549.000000
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.profile.html">d.profile</A></EM><br>
+<EM><A HREF="r.transect.html">r.transect</A></EM>
+
+<H2>AUTHOR</H2>
+Michael Shapiro,
+U.S.Army Construction Engineering 
+Research Laboratory

@@ -1,17 +1,5 @@
-
 OBJ = \
 	graph_input.o
 
-all: $(DIGITLIB)
-
 $(DIGITLIB): $(OBJ)
 	$(AR)
-
-#$(LIBDIR)/linkm.h: linkm.h
-#	rm -f $@
-#	cp $? $@
-#	chmod +r $@
-
-$(OBJ): #linkm.h
-
-graph_input.c: $(INCLUDES)/ginput.h

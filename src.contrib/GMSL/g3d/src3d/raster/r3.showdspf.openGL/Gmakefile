@@ -1,0 +1,101 @@
+MYLIBDIR = $(SRC)/libes/dspf
+DSPLIB	 = $(SRC)/libes/dspf/libdsp3.a
+OGSF_DIR     = $(SRC)/libes/ogsf
+
+EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OPENGLINC) $(OPENGLwINC) $(XCFLAGS)
+SUNLDFLAGS   = $(XMLIBPATH) $(XLIBPATH) -L/lib
+OGLLIB	     = -lGLU -lGL -lGLw ${LGLWM} -lXm -lX11 -lXt -lXext
+
+PGM	=	$(BIN_CONTRIB_CMD)/r3.showdspf
+
+SOURCES	=	\
+                new_init_graphics.c \
+		cap_data.c \
+		init_caps.c \
+		debugf.c \
+		do_color_ogl.c \
+		get_color_ogl.c \
+		draw_cap_ogl.c \
+		draw_polys_ogl.c \
+		draw_cappolys_ogl.c \
+		thresh_array.c \
+		make_header.c \
+		r3_data.c \
+		r3_find.c \
+                togif.c \
+                Ball.c \
+                BallAux.c \
+                BallMath.c \
+                main_ogl.c
+
+OBJ	=	\
+                new_init_graphics.o \
+		cap_data.o \
+		init_caps.o \
+		debugf.o \
+		do_color_ogl.o \
+		get_color_ogl.o \
+		draw_cap_ogl.o \
+		draw_polys_ogl.o \
+		draw_cappolys_ogl.o \
+		thresh_array.o \
+		make_header.o \
+		r3_data.o \
+		r3_find.o \
+                togif.o \
+                Ball.o \
+                BallAux.o \
+                BallMath.o \
+                main_ogl.o
+
+
+
+
+$(PGM): $(OBJ) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(EXTRA_CFLAGS) $(MATHLIB) $(SUNLDFLAGS) $(DSPLIB) $(G3DLIB) $(DATETIMELIB) $(GISLIB) $(OGLLIB) $(XDRLIB)
+
+
+cap_data.o: $(MYLIBDIR)/viz.h
+axes2_ogl.o: $(MYLIBDIR)/viz.h
+debugf.o: ./debug.h
+togif.o: ./togif.h
+draw_cap_ogl.o: $(MYLIBDIR)/viz.h
+draw_cappolys_ogl.o: $(MYLIBDIR)/viz.h
+thresh_array.o: $(MYLIBDIR)/viz.h
+init_caps.o: $(MYLIBDIR)/viz.h
+do_color_ogl.o: $(MYLIBDIR)/viz.h
+get_color_ogl.o: $(MYLIBDIR)/viz.h
+draw_polys_ogl.o: $(MYLIBDIR)/viz.h
+new_init_graphics.o: $(MYLIBDIR)/viz.h
+new_init_graphics.o: ./kns_defines.h
+new_init_graphics.o: ./kns_globals.h
+new_init_graphics.o: ./Ball.h
+main_ogl.o: ./kns_defines.h
+main_ogl.o: ./kns_globals.h
+main_ogl.o: ./togif.h
+Ball.o: ./Ball.h
+Ball.o: ./BallMath.h
+BallAux.o: ./BallAux.h
+BallMath.o: ./BallMath.h
+BallMath.o: ./BallAux.h
+
+
+
+main_ogl.o:	$(MYLIBDIR)/viz.h
+
+#.c.o:
+#	@echo ""
+#	@echo COMPILING: $<
+#	$(CC) $(CFLAGS) -c $<
+
+
+saber_src:
+	#load $(CFLAGS) $(SOURCES) $(DSPLIB)
+
+saber_obj:
+	#load $(OBJ)
+
+ctags:
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags

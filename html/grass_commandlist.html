@@ -1,0 +1,320 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Markus Neteler">
+   <meta name="GENERATOR" content="Mozilla/4.6 [en] (X11; I; Linux 2.0.36 i586) [Netscape]">
+   <title>GRASS GIS 4  command overview</title>
+</head>
+<body text="#000000" bgcolor="#FFFFCC" link="#0000FF" vlink="#FF0000" alink="#000088">
+
+<h2>
+GRASS 4.0 Command list reference</h2>
+(needs updating...)
+
+<p><br><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+From "Introduction to GRASS 4" by James Westervelt, June 11, 1991</i>
+<br>&nbsp;
+<p><b>GENERAL GRASS DATA MANAGEMENT COMMANDS</b>
+<p>g.access Controls user access to the current GRASS mapset.
+<p>g.ask Prompts the user for the names of GRASS data base files.
+<p>g.copy Copies available data files in the user's current mapset search
+path and location to the appropriate element directories under the user's
+current mapset.
+<p>g.filename Prints GRASS data base file names.
+<p>g.findfile Searches for GRASS data base files and sets variables for
+the shell.
+<p>g.gisenv Outputs the user's current GRASS variable settings.
+<p>g.help GRASS help facility.
+<p>g.list Lists available GRASS data base files of the specified data type
+,to standard output.
+<p>g.manual Accesses GRASS reference manual entries.
+<p>g.mapsets Modifies the user's current mapset search path, affecting
+the user's access to data existing under the other GRASS mapsets in the
+current location.
+<p>g.region Program to manage the boundary definitions for the geographic
+region.
+<p>g.remove Remove data base element files from the user's current mapset.
+<p>g.rename Rename data base element files in the user's current mapset.
+<p>g.version Outputs the GRASS version number and date.
+<br>&nbsp;
+<br>&nbsp;
+<p>HARDCOPY GRAPHICS COMMANDS
+<p>p.chart - Prints a color chart for the printer currently selected.
+<p>p.colors - Allows the user to modify a color table for a raster map
+layer, assigning colors to the categories in the raster map layer based
+on printer color numbers (instead of red, green, blue percentages).
+<p>p.icons - Allows the user to create and maintain icons which are used
+by the
+<p>p.map command to depict sites.
+<p>p.labels - Creates and modifies labels for hardcopy maps.
+<p>p.map - Command language interface to color hardcopy and graphics monitor
+output.
+<p>p.screen - Prints a graphics monitor display image file that has been
+saved by d.savescreen.
+<p>p.select - Selects a device (printer) for GRASS hardcopy output. Outputs
+can also be previewed on the graphics display monitor.
+<br>&nbsp;
+<br>&nbsp;
+<p>DISPLAY GRAPHICS COMMANDS
+<p>d.3d Three-dimensional raster map display program.
+<p>d.ask Prompts the user to select a GRASS data base file from among files
+displayed in a menu on the graphics monitor.
+<p>d.colormode Allows the user to establish whether a map will be displayed
+using its own color table or the fixed color table of the graphics monitor.
+<p>d.colors Allows the user to interactively change the color table of
+a raster map layer displayed on the graphics monitor.
+<p>d.colortable Display the color table associated with a raster map layer.
+<p>d.display Interactive program to display textual, symbolic, raster,
+vector, and site data in the active frame on the user's graphics monitor.
+<p>d.erase Erases the active display frame on the graphics monitor.
+<p>d.font Selects text fonts to be used for text display on the graphics
+monitor.
+<p>d.frame Manages display frames on the graphics monitor.
+<p>d.geodesic Displays a geodesic line, tracing the shortest distance between
+two geographic points along a great circle, in a latitude-longitude data
+set.
+<p>d.graph Program for generating and displaying simple graphics to the
+graphics display monitor.
+<p>d.grid Overlays a user-specified grid in the active display frame on
+the graphics monitor.
+<p>d.his Produces and displays a raster map layer combining hue, intensity,
+and saturation (his) values from user-specified input raster map layers.
+<p>d.histogram Plots a histogram in the form of a pie or bar chart for
+a user-specified raster file.
+<p>d.icons Displays points, as icons, at user-defined locations in the
+active display frame on the graphics monitor.
+<p>d.label Creates and places text labels in the active display frame on
+the graphics monitor.
+<p>d.labels Create/edit GRASS label files for display on the graphics monitor.
+<p>d.legend Displays a legend for a raster map layer in the active frame
+on the graphics monitor.
+<p>d.mapgraph Generates and displays simple graphics on raster map layers
+drawn in the active graphics monitor display frame.
+<p>d.measure Measures the lengths and areas of features drawn by the user
+in the active display frame on the graphics monitor.
+<p>d.menu Creates and displays a menu within the active frame on the graphics
+monitor.
+<p>d.mon Establishes and control use of a graphics display monitor.
+<p>d.paint.labels Displays text labels formatted for use with GRASS paint
+(paint, p.map) output to the active frame on the graphics monitor.
+<p>d.points Displays point graphics in the active frame on the graphics
+display monitor.
+<p>d.profile Displays profiles of a user-specified raster map layer in
+the active frame on the user's graphics monitor.
+<p>d.rast Displays and overlays raster map layers in the active display
+frame on the graphics monitor.
+<p>d.rgb Allows multiple maps to be overlaid in the active display frame
+on the graphics monitor.
+<p>d.rhumbline Displays the rhumbline joining two user-specified points
+in the active frame on the user's graphics monitor.
+<p>d.scale Displays a map scale and north arrow relevant to a user's current
+geographic region setting in the active display frame on the graphics monitor.
+<p>d.sites Displays site markers in the active display frame on the graphics
+monitor.
+<p>d.text Draws text in the active display frame on the graphics monitor.
+<p>d.title Outputs a title for a raster map layer in a form suitable for
+display by d.text.
+<p>d.vect Displays GRASS vector data in the active frame on the
+<p>d.vect.dlg Displays a vector USGS digital line graph (DLG-3) file in
+the active frame on the graphics monitor.
+<p>d.what.rast Allows the user to interactively query the category contents
+of multiple raster map layers at user-specified locations within the current
+geographic region.
+<p>d.what.vect Allows the user to interactively query the category contents
+of multiple (binary) vector map layers at user-selected locations within
+the current geographic region.
+<p>d.where Identifies the geographic coordinates associated with point
+locations in the active frame on the graphics monitor.
+<p>d.zoom Allows the user to change the current geographic region settings
+interactively, using a mouse.
+<br>&nbsp;
+<p>RASTER DATA MANIPULATION COMMANDS
+<p>r.average Finds the average of values in a values map within polygons
+of a user-specified base map.
+<p>r.basins.fill Generates a raster map layer showing watershed sub-basins.
+<p>r.binfer Bayesian expert system development function.
+<p>r.buffer Creates a raster map layer showing buffer zones surrounding
+cells that contain non-zero category values.
+<p>r.cats Prints category values and labels associated with user-specified
+raster map layers.
+<p>r.clump Recategorizes data in a raster map layer by grouping cells that
+form physically discrete areas into unique categories.
+<p>r.coin Tabulates the mutual occurrence (coincidence) of categories for
+two raster map layers.
+<p>r.colors Creates/Modifies the color table associated with a raster map
+layer.
+<p>r.combine Allows category values from several raster map layers to be
+combined.
+<p>r.compress Compresses and decompresses raster files.
+<p>r.cost Outputs a raster map layer showing the cumulative cost of moving
+between different geographic locations on an input raster map layer whose
+cell category values represent cost.
+<p>r.covar Outputs a covariance/correlation matrix for user-specified raster
+map layer(s).
+<p>r.cross Creates a cross product of the category values from multiple
+raster map layers.
+<p>r.describe Prints terse list of category values found in a raster map
+layer.
+<p>r.drain Traces a flow through an elevation model on a raster map layer.
+<p>r.grow Generates an output raster map layer with contiguous areas grown
+by one cell (pixel).
+<p>r.in.ascii Converts an ASCII text file into a raster map layer.
+<p>r.in.ll Creates a raster file from data in latitude-longitude coordinates.
+<p>r.infer Outputs a raster map layer whose category values represent the
+application of user-specified criteria (rules statements) to other raster
+map layers' category values.
+<p>r.info Outputs basic information about a user-specified raster map layer.
+<p>r.line Creates a new GRASS vector (digit) file by extracting linear
+features from a thinned raster file.
+<p>r.los Line-of-sight raster analysis program.
+<p>r.mapcalc Raster map layer data calculator.
+<p>r.mask Establishes/removes the current working mask.
+<p>r.mfilter Raster file matrix filter.
+<p>r.neighbors Makes each cell category value a function of the category
+values assigned to the cells around it, and stores new cell values in an
+output raster map layer.
+<p>r.out.ascii Converts a raster map layer into an ASCII text file.
+<p>r.patch Creates a composite raster map layer by using known category
+values from one (or more) map layer(s) to fill in areas of "no data" in
+another map layer.
+<p>r.poly Extracts area edges from a raster map layer and converts data
+to vector format.
+<p>r.profile Plots profiles of a GRASS raster map layer.
+<p>r.random Creates a raster map layer and sites list containing randomly
+located sites.
+<p>r.reclass Creates a new map layer whose category values are based upon
+the user's reclassification of categories in an existing raster map layer.
+<p>r.report Reports statistics for raster map layers.
+<p>r.resample GRASS raster map layer data resampling capability.
+<p>r.rescale Rescales the range of category values in a raster map layer.
+<p>r.slope.aspect Generates raster map layers of slope and aspect from
+a raster map layer of true elevation values.
+<p>r.stats Generates area statistics for raster map layers.
+<p>r.support Allows the user to create and/or modify raster map layer support
+files.
+<p>r.surf.contour Surface generation program.
+<p>r.surf.idw Surface generation program, from raster data.
+<p>r.thin Thins non-zero cells that denote linear features in a raster
+file.
+<p>r.transect Provides transect information across a raster map.
+<p>r.volume Sums cell values within clumps and calculates volumes and centroids
+of patches or clumps.
+<p>r.watershed Watershed basin analysis program.
+<p>r.weight Raster map overlay function.
+<p>r.what Queries raster map layers on their category values and category
+labels.
+<br>&nbsp;
+<p>VECTOR DATA MANIPULATION COMMANDS
+<p>v.cadlabel Attaches labels to vector contour lines that have been imported
+to GRASS from DXF format.
+<p>v.digit A menu-driven, highly interactive map development program used
+for vector digitizing, editing, labeling, and converting vector data to
+raster format.
+<p>v.import Converts ASCII Digital Line Graph (DLG) files, binary DLG files,
+and ASCII vector files into binary vector files and creates the needed
+vector support files.
+<p>v.in.arc Converts data in ARC/INFO format to GRASS's vector format,
+and stores output in the user's current GRASS mapset.
+<p>v.in.ascii Converts ASCII vector map layers into binary vector map layers.
+<p>v.in.dlg Converts binary DLG (BDLG) file to binary vector (dig) file.
+<p>v.in.dxf DXF format to GRASS vector format conversion program.
+<p>v.mkgrid Creates a (binary) GRASS vector map of a user-defined grid.
+<p>v.mkquads Creates a GRASS vector map layer and/or sites list and/or
+geographic region definition file for a USGS 7.5-minute quadrangle.
+<p>v.out.arc Converts GRASS vector files to ARC/INFO's "Generate" file
+format.
+<p>v.out.ascii Converts binary vector map layers into ASCII vector map
+layers.
+<p>v.out.dlg Converts binary GRASS vector data to binary DLG-3 Optional
+format.
+<p>v.out.dxf GRASS vector format to DXF format conversion program.
+<p>v.out.moss Converts GRASS site, line, or area data into MOSS import
+format. (Data Export Program)
+<p>v.patch Creates a new binary vector map layer by combining other binary
+vector map layers.
+<p>v.prune Prunes points from binary GRASS vector data files.
+<p>v.spag Processes a Spaghetti-digitized vector file.
+<p>v.stats Displays information about a user-specified GRASS vector file.
+<p>v.support Creates GRASS support files for (binary) GRASS vector data.
+<p>v.to.rast Converts a map layer in (binary) GRASS vector format to GRASS
+raster format.
+<p>v.to.sites Converts a GRASS vector file to a GRASS site-lists file.
+<p>v.transform Transforms an ASCII vector map layer from one coordinate
+system into another coordinate system.
+<p>v.trim Trims small spurs and removes excessive nodes from a GRASS vector
+(digit) file.
+<br>&nbsp;
+<p>MULTISPECTRAL DATA MANIPULATION COMMANDS
+<p>i.cca Canonical components analysis (cca) program for image processing.
+<p>i.class An imagery function that generates spectral signatures for an
+image by allowing the user to outline regions of interest. The resulting
+signature file can be used as input for i.maxlik or as a seed signature
+file for i.cluster.
+<p>i.cluster An imagery function that generates spectral signatures for
+land cover types in an image using a clustering algorithm. The resulting
+signature file is used as input for i.maxlik.
+<p>i.colors An imagery function that creates colors for imagery groups.
+<p>i.composite An imagery function that creates a color composite image
+from three band files specified by the user.
+<p>i.fft Fast Fourier Transform (FFT) for image processing.
+<p>i.grey.scale An imagery function that assigns a histogram-contrast-stretched
+grey-scale color table to a raster map layer.
+<p>i.group An imagery function that creates and edits groups and subgroups
+of (raster) imagery files.
+<p>i.his.rgb Hue-intensity-saturation (his) to red-green-blue (rgb) raster
+map color transformation function.
+<p>i.ifft Inverse Fast Fourier Transform (ifft) for image processing.
+<p>i.maxlik An imagery function that classifies the cell spectral reflectances
+in imagery data based on the spectral signature information generated in
+i.cluster.
+<p>i.pca Principal components analysis (pca) program for image processing.
+<p>i.points An imagery function that enables the user to mark coordinate
+system points on an image to be rectified and then to input the coordinates
+of each point for creation of a coordinate transformation matrix. The transformation
+matrix is needed as input for the GRASS program i.rectify.
+<p>i.ortho.photo Interactive ortho-photo rectification program.
+<p>i.rectify An imagery function that rectifies an image by computing a
+coordinate transformation for each cell (pixel) in the image using the
+transformation coefficient matrix created by the GRASS program i.points.
+<p>i.rgb.his Red-green-blue (rgb) to hue-intensity-saturation (his) function
+for image processing.
+<p>i.tape.mss An imagery function that extracts Multispectral Scanner (MSS)
+imagery data from half-inch tape.
+<p>i.tape.mss.h An imagery function that extracts header information from
+Landsat Multispectral Scanner (MSS) imagery data stored on half-inch tape.
+<p>i.tape.other An imagery function that extracts scanned aerial imagery
+(NHAP, etc.) and SPOT imagery from half-inch magnetic tape.
+<p>i.tape.tm An imagery function that extracts LANDSAT Thematic Mapper
+(TM) imagery from half-inch magnetic tape.
+<p>i.target An imagery function that establishes a GRASS target LOCATION
+for an imagery group.
+<p>i.zc Zero-crossing "edge detection" raster function for image processing.
+<br>&nbsp;
+<p>SITE DATA MANIPULATION COMMANDS
+<p>s.db RIM data base management/query interface for GRASS.
+<p>s.in.ascii Converts a GRASS site-lists file in ASCII format to binary
+format.
+<p>s.menu Accesses and manipulates GRASS sites data.
+<p>s.out.ascii Converts a GRASS site-lists file in binary format to ASCII
+format.
+<p>s.surf.idw Surface generation program, from sites data.
+<br>&nbsp;
+<p>EXTERNAL DATA MANIPULATION COMMANDS
+<p>m.dem.extract Extracts USGS Digital Elevation Model (DEM) data from
+1/2-inch magnetic tape.
+<p>m.examine.tape Provides a description of the files on a 1/2-inch magnetic
+tape.
+<p>m.ll2u Converts geographic (latitude-longitude) coordinates to Universal
+Transverse Mercator (UTM) coordinates.
+<p>m.region.ll Converts Universal Transverse Mercator (UTM) coordinates
+falling within the current geographic region from UTM coordinates to geographic
+(latitude/longitude) coordinates.
+<p>m.rot90 Rotates elevation data extracted by either m.dted.extract or
+m.dmaUSGSread.
+<p>m.u2ll Converts Universal Transverse Mercator (UTM) coordinates to geographic
+(latitude-longitude) coordinates.
+<br>&nbsp;
+<br>&nbsp;
+</body>
+</html>

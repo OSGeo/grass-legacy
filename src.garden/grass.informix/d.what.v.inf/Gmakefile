@@ -1,7 +1,5 @@
-PGM       = $(GARDEN_BIN)/d.what.v.inf
+PGM       = $(BIN_MAIN_CMD)/d.what.v.inf
 LIBES     = $(VECTLIB) $(VECTLIB) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
-
-
 
 OBJS = \
 	main.o  \
@@ -12,10 +10,8 @@ OBJS = \
 	getCat.o  \
 	openvect.o 
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
-
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	$(CC) $(INC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(LIBES): #

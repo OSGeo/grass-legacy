@@ -1,6 +1,0 @@
-
-@man("r.infer") - Outputs a raster map layer whose category values represent
-the application of user-specified criteria (rules statements) to other
-raster map layers' category values.
-
-(GRASS Raster Program)

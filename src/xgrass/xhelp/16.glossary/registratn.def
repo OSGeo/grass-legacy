@@ -1,5 +1,0 @@
-
-
-registration - The process of establishing a system of spatial
-reference for mapping using @glossary("control points",16.glossary/controlpts.def).  Control points are
-used to map @glossary("digitized",16.glossary/digitize.def) points onto a @glossary("map coordinate system",16.glossary/mapcoord.def).

@@ -1,0 +1,13 @@
+Missing:
+ * Version for GRASS 5.0 and Java 2
+ * Support for multithreaded applications
+ * Make Vect_set_constraint_region work
+ * Handling of GRASS errors and warnings
+ * Add field indicating origin to the class GRASS.Colors
+ * Implement cloneable interface where it is appropriate
+ * Create matching list between GRASS library functions and grass-jni
+ * Conform to Sun's JDK coding style
+
+--------------------------------------------------
+$Id: TODO,v 2.0 2000-04-22 10:58:18 markus Exp $
+

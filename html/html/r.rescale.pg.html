@@ -1,0 +1,79 @@
+<html>
+<A NAME="r.rescale.pg">
+<TITLE>r.rescale.pg</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r.rescale.pg</B></EM> - Generate a raster map layer in which the categories represent values in a database column which have been divided into equal interval units. (GRASS-RDBMS Raster Interface Program)
+
+<H2>SYNOPSIS</H2>
+<B>r.rescale.pg</B><BR>
+<B>r.rescale.pg help</B><BR>
+<B>r.rescale.pg tab</B><EM>=name</EM> <B>key</B><EM>=name</EM> <B>col</B><EM>=name</EM> <B>cats</B><EM>=name</EM> <B>input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>join</B><EM>=tab,tabkey,pkey</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>r.rescale.pg</EM> creates a reclassed raster map layer by dividing the values in a numeric column in the currently selected database into equal interval units. The number of resulting categories is determined by the user via the command line parameter [cats=]. <EM>r.rescale.pg</EM> evaluates the range of values for the database column and subsets these values into equal interval groups of records returned by the query.  For example, if the database column contains values which range from 1-1000 and the [cats] value is equal to 10 the resulting raster map layer will contain the 10 categories:1=1-100, 2=101-200 etc. In other words, each category in the new raster map layer will represent a range of 100 values from the database column used in the rescale operation.  The database column being evaluated must be numeric in type. To identify the data types of columns in a database table use the <EM>g.column.pg</EM> command with the <EM>[-v]</EM> flag.  <EM>r.rescale.pg</EM> does not take outlying data values into account. Therefore, if the range of val­ues for a database column contains a limited number of extreme values the resulting rescale operation will be skewed in the direction of these values.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>tab=databasetablename</B>
+<DD>Table containing a column linked to category values in an existing raster map.
+<P>
+
+<DT><B>key=databasecolumnname</B>
+<DD>Column corresponding to category values in an existing raster map.
+<P>
+
+<DT><B>col=databasecolumnname</B>
+<DD>Column to base rescale operation on which is numeric in type.
+<P>
+
+<DT><B>cats=value</B>
+<DD>Number of categories to define in the resulting reclass map.
+<P>
+
+<DT><B>input=map</B>
+<DD>Name of an existing raster file with category val­ues linked to a column in the currently selected databae.
+<P>
+
+<DT><B>output=map</B>
+<DD>Name of new raster map
+<P>
+
+<DT><B>join=tab,tabkey,pkey</B>
+<DD>Tab is the table used to develop the current postQUEL query. Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file. Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+</DL>
+<P>
+For instance, assume that stf1main is a table con­taining column values associated with category val­ues in a the GRASS raster file blkgrp.ids. In addi­tion, assume that stf1main is a table containing attribute data on age in the column pop100. In this example stf1main is the table associated with the GRASS raster map and tractblck is the column linking stf1main to the GRASS category file. The column pop100 in stf1main will be the basis for the rescale effort.  To specify the rescale:
+<P>
+<DD><EM>r.rescale.pg tab=stf1main key=tractblck col=pop100 cats=5 input=blkgrp.ids output=pop100.rescale</EM>
+<P>
+
+Specifying these conditions would insure that all rows from table stf1main which satisfy the query criteria would be related to the spatial features in the GRASS data layer via the GRASS category values.
+
+<H2>BUGS</H2>
+None known.
+
+<H2>NOTE</H2>
+This program requires the Postgres database software.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
+
+<H2>AUTHOR</H2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
+<P>
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+<P>
+Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+
+</BODY>
+</HTML>
+

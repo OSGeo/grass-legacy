@@ -17,6 +17,7 @@ int setup_plot(void);
 
 int main (int argc, char *argv[])
 {
+	struct GModule *module;
     struct
     {
 	struct Option *color, *icon, *size, *points;
@@ -31,6 +32,11 @@ int main (int argc, char *argv[])
     char *name, *mapset;
     char *D_color_list();
     ICON icon1, icon2;
+
+	module = G_define_module();
+	module->description =
+		"Displays points, as icons, at user-defined locations "
+		"in the active display frame on the graphics monitor.";
 
     /* Define the different options */
 

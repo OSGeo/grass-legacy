@@ -1,4 +1,7 @@
-
+/*
+ * $Id$
+ */
+ 
 #include <stdlib.h>
 #include <stdio.h>
 #include "G3d_intern.h"
@@ -61,6 +64,7 @@ int g3d_file_type = G3D_NO_DEFAULT;
 int g3d_tile_dimension[3] = {G3D_NO_DEFAULT, G3D_NO_DEFAULT, G3D_NO_DEFAULT};
 void (*g3d_error_fun)() = NULL;
 char *g3d_unit_default = NULL;
+extern char * G3d_getWindowParams(void);                                        
 
 /*---------------------------------------------------------------------------*/
 

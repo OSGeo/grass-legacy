@@ -6,7 +6,7 @@
 *  CHRIS EMMERICH, AUTOMETRIC INC., 10/3/89
 */
 
-#include  "digit.h"
+#include  "Vect.h"
 
 int 
 store_points (double *x, double *y, int ncoord, struct line_pnts *points)

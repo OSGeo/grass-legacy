@@ -3,7 +3,7 @@
 LIBPROJ         = $(SRC)/../src.related/mapgen/lib/libproj.a
 LIBSUPP         = $(SRC)/../src.related/mapgen/lib/libsupp.a
 
-EXTRA_CFLAGS	= $(DIGITFLAGS) $(VECT_INCLUDE)
+EXTRA_CFLAGS	= $(DIGITFLAGS)
 
 
 OFILES = \

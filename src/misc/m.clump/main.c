@@ -1,3 +1,20 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       m.clump
+ * AUTHOR(S):    Michael Shapiro, CERL
+ * PURPOSE:      Aggregate point data into clusters of like data using
+ *               Voronoi tesselation. 
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
 #define global
 #include "glob.h"
 

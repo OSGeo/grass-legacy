@@ -1,0 +1,116 @@
+# unix initialization file for GRASS GIS testsuite
+# c) Andreas Lange, andreas.lange@rhein-main.de
+# $Id$
+#
+
+load_lib grass.exp
+
+
+if { ![info exists prompt] } {
+    set prompt "GRASS GRID >"
+}
+
+
+proc grass_exit { } {
+    global GRASS
+
+    verbose "Exiting $GRASS"
+    if { [file isdirectory [getenv GISDBASE]] } {
+	if { [regexp {test} [getenv GISDBASE]] } { 
+	    verbose "Deleting GISDBASE"
+	    exec rm -fR [getenv GISDBASE]
+	}
+    }
+    # now restore the $HOME/.grassrc5 
+    if { [getenv HOME] == "" } {
+    	note "no \$HOME set, can not restore .grassrc5!"
+    } else {
+    	set old [file join [getenv HOME] ".grassrc5"]
+    	set new [file join [getenv HOME] ".grassrc5-tmp-grasstestsuite"]
+    	if { ![file exists $new] } {
+	    note "can not restore .grassrc5!"
+   	} else { 
+	    if { [catch {file rename -force $new $old} ] } {
+		note "problem restoring .grassrc5!"
+	    } else {
+		note ".grassrc5 restored sucessfully!"
+	    }
+    	}
+    }
+    return
+}
+
+
+proc grass_version { } {
+    global GRASS
+    global prompt
+
+    set temp [exec "g.version"]
+    regexp "GRASS.*$" $temp vers
+    if { [info exists vers] } {
+	clone_output "[lindex [split $vers \n] 0] \n"
+    }
+    return
+}
+
+
+proc grass_start { } {
+    global GRASS
+    global prompt
+
+    if { [getenv GISBASE] == "" } {
+	perror "GRASS GISBASE not found, use export to set GISBASE!"
+	exit 1
+    }
+    if { [getenv SRCDIR] == "" } {
+	perror "SRCDIR not set, use export to set SRCDIR!"
+	exit 1
+    }
+    # now save the $HOME/.grassrc5 so that we can restore it 
+    # later.
+    if { [getenv HOME] == "" } {
+    	note "no \$HOME set, can not restore .grassrc5 later!"
+    } else {
+    	set old [file join [getenv HOME] ".grassrc5"]
+    	set new [file join [getenv HOME] ".grassrc5-tmp-grasstestsuite"]
+    	if { [catch {file rename -force $old $new}] } {
+    	    note "problem saving .grassrc5!"
+    	} else {
+    	    note ".grassrc5 saved to .grassrc5-tmp-grasstestsuite\nIf the testsuite exits abnormally, please restore\nmanually!"
+    	}
+    }
+    # GISBASE is set from Makefile!
+    set path [file join [getenv GISBASE]]
+    setenv ETC [file join $path "etc"]
+    set oldpath [getenv PATH]
+    # bin scripts $PATH /usr/bin etc/bin/main/cmd etc/bin/main/inter 
+    setenv PATH [join [list [file join $path "bin"] [file join $path "scripts"] "$oldpath" "/usr/bin" [file join $path "etc" "bin" "main" "cmd"] [file join $path "etc" "bin" "main" "inter"]] : ]
+    setenv GISDBASE "/tmp/grasstestsuite"
+    setenv LOCATION "/tmp/grasstestsuite/utm"
+    setenv LOCATION_NAME "utm"
+    setenv MAPSET "PERMANENT"
+    setenv GISRC [file join [getenv GISDBASE] ".grassrc5.tmp"]
+    # make location
+    exec mkdir -p [file join [getenv LOCATION] [getenv MAPSET]]
+    exec touch [file join [getenv LOCATION] [getenv MAPSET] "WIND"]
+    set gisrc [getenv GISRC]
+    # write GISRC
+    if [catch {open $gisrc w 0600} fd] {
+	perror "error opening $gisrc"
+	exit -1
+    }
+    puts $fd "GISDBASE: [getenv GISDBASE]"
+    puts $fd "LOCATION_NAME: [getenv LOCATION_NAME]"
+    puts $fd "MAPSET: [getenv MAPSET]"
+    puts $fd "PAINTER: ppm"
+    puts $fd "MAPLP: stuff.ppm"
+    close $fd
+    # create a grass location
+    # UTM projection, zone 12, north, south, east, west, ewres, nsres
+    grass_create_location [getenv GISDBASE] [getenv LOCATION_NAME] 1 13 4928000.00 4914000.00 609000.00 590000.00 50.00 50.00
+    return
+}
+
+
+set GRASS "grass5"
+grass_start

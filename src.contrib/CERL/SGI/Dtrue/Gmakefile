@@ -7,9 +7,7 @@ OFILES = main.o Dcell.o
 Dtrue: $(BIN_CONTRIB_CMD)/Dtrue
 
 $(BIN_CONTRIB_CMD)/Dtrue: $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -lgl_s
-	mv a.out $@
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -lgl_s
 
 $(RASTERLIB): #
 $(DISPLAYLIB): #

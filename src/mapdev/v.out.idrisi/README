@@ -1,0 +1,13 @@
+v.out.idrisi
+
+This is a quick and dirty export routine from GRASS to IDRISI. The
+program exports binary GRASS vector files to ASCII IDRISI format. It
+can be compiled like any other GRASS program under src.alpha by running
+gmake4.1 and MAKELINKS afterwards. I haven't checked all the options
+(especially if the version 3 export is OK and if there are more options
+for the database units) but it should run fine in most situations. Any
+comments or suggestions are welcome.
+
+17/11/1994
+Philip Verhagen
+motte@xs4all.nl

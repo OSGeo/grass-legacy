@@ -23,8 +23,6 @@
 
 /* for dig_globs.h */
 #define CONTROL		/* for Memory_io stuff */
-#include "digit.h"
-
 
 static int Portable_In;
 static int Portable_Out;

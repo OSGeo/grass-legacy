@@ -2,14 +2,14 @@ PGM=polish
 all: remove $(ETC)/$(PGM)
 
 remove:
-	rm -f lex.yy.c y.tab.c
+	rm -f lex.yy.c y.tab.c y.output
 
 $(ETC)/$(PGM): main.o y.tab.o
 	$(CC) $(LDFLAGS) main.o y.tab.o -o $@ $(LEXLIB)
 	rm *.o
 
 y.tab.c: pol.y lex.yy.c
-	$(YACC) pol.y
+	$(YACC) -v pol.y
 
 lex.yy.c: pol.l
 	$(LEX) pol.l

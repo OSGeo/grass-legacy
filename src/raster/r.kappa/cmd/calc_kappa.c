@@ -73,7 +73,7 @@ calc_kappa()
     if ((kpp[i] == -999) && (i != 0))
       fprintf (fd, "%ld\tNA\t\tNA\t\tNA\n", rlst[i]);
     else
-      fprintf(fd,"%ld\t%lf\t%lf\t%lf\n",
+      fprintf(fd,"%ld\t%f\t%f\t%f\n",
 	rlst[i],100*(1-pii[i]/pi[i]),100*(1-pii[i]/pj[i]),kpp[i]);
   fprintf (fd, "\n");
 
@@ -89,10 +89,10 @@ calc_kappa()
   vkp = (inter1+pow((1-p0),2.)*inter2- 
 	pow((p0*pC-2*pC+p0), 2.))/pow((1-pC), 4.)/total;
   fprintf (fd, "Kappa\t\tKappa Variance\n");
-  fprintf (fd, "%lf\t%lf\n", kp, vkp);
+  fprintf (fd, "%f\t%f\n", kp, vkp);
 
   fprintf(fd,"\nObs Correct\tTotal Obs\t%% Observed Correct\n");
-  fprintf(fd, "%ld\t\t%ld\t\t%lf\n", (long) obs, total, (100.*obs/total));
+  fprintf(fd, "%ld\t\t%ld\t\t%f\n", (long) obs, total, (100.*obs/total));
   if (output != NULL)
     fclose (fd);
   free(pi);

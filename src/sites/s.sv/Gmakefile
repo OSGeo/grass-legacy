@@ -8,10 +8,12 @@ MUTL=$(SRC)/../man/utilities
 
 LIST=main.o readsite.o cdpath.o save.o nbins.o angleok.o plthgpt.o
 
-LIBES=$(GISLIB)  $(RASTERLIB) $(XDRLIB) $(DATETIMELIB)
+LIBES=$(GISLIB)  $(RASTERLIB) $(DATETIMELIB)
+
+all: $(PGM)
 
 $(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 man:  
 	-cp $(NAME).man $(MDIR)/$(NAME)

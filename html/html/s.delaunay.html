@@ -1,0 +1,66 @@
+<html>
+<A NAME="s.delaunay">
+<TITLE>s.delaunay</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>s.delaunay</B></EM> - 	Program to create a vector delaunay triangulation from a sites	file.  Delaunay triangualtion is based on the 'hull' software, by Ken Clarkson (<A HREF=MAILTO:clarkson@research.att.com>clarkson@research.att.com</A>).
+
+<H2>SYNOPSIS</H2>
+<B>s.delaunay [-v] in</B><EM>=name</EM> <B>out</B><EM>=name</EM> [<B>zscale</B><EM>=value</EM>]
+
+<H2>OPTIONS</H2>
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-v</B>
+<DD>Create VRML 1.0 output
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>in</B>
+<DD>Sites file to process
+
+<DT><B>out</B>
+<DD>Vector map layer to contain delaunay triangulation.
+
+<DT><B>zscale</B>
+<DD>Vertical scaling of elevation.
+<DD>Default: 1.0
+</DL>
+
+<H3>TO DO</H3>
+Constrain triangulation along channels and ridges.
+
+<H2>AUTHOR</H2>
+<A HREF="MAILTO:jwo@le.ac.uk">Jo Wood</A>, Department of Geography.  19th July, 1995.
+
+<H2>NOTES</H2>
+Modified to use the GRASS 4.2 sites API. Allows x,y,z,attribute format for sites files. This enables a single sites file to carry all necessary information for TIN construction.
+<P>
+Modified to allow VRML 1.0 output as indexed face set.
+<P>
+Jo Wood, 4th September, 1996
+<P>
+----------
+<P>
+Modified to allow vertical scaling of elevation values.
+<P>
+Jo Wood, 23rd July, 1997
+
+
+<ADDRESS>
+	<P ALIGN="RIGHT"> <FONT SIZE=-3>
+	Last modified, 3rd August, 1997 <BR>
+	<A HREF="MAILTO:jwo@le.ac.uk">jwo@le.ac.uk</A>
+	</P>
+</ADDRESS>
+
+
+</BODY>
+</HTML>

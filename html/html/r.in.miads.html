@@ -1,0 +1,158 @@
+<TITLE>r.in.miads</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.in.miads</b></EM>  - Converts a MIADS output ASCII text file
+into an GRASS raster import (<EM>r.in.ascii</EM>) formatted file.
+
+<BR>
+
+<EM>(SCS GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.in.miads</B>
+
+<BR>
+
+<B>r.in.miads help</B>
+
+<BR>
+
+<B>r.in.miads input=</B><EM>name </EM><B>output=</B><EM>name </EM><B>strip=</B><EM>value </EM><B>line=</B><EM>value </EM><B>cell=</B><EM>value</EM> 
+   <B>Northing=</B><EM>value </EM><B>Easting=</B><EM>value </EM><B>size=</B><EM>value</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.in.miads</EM> allows a user to create a <EM>r.in.ascii</EM> formatted
+ASCII file from a MIADS output printer format ASCII file.
+
+<BR>
+
+The program will actively read the MIADS data file, selectively remove
+and process each strip, creating a individual <EM>r.in.ascii</EM> formatted file
+for each strip, and finally create one category file for all strips.
+The program also produces a report file summarizing all pertinent
+information for each strip.
+
+
+<P>
+
+The resulting <EM>r.in.ascii</EM> files for each strip are then used in
+conjunction with the GRASS commands <EM>r.in.ascii</EM> and <EM>r.patch</EM> to
+create a complete raster file.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>MIADS input file name.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>GRASS raster data output file name.
+
+<DT><B>strip=</B><EM>value</EM> 
+
+<DD>MIADSs strip number of reference cell.
+
+<DT><B>line=</B><EM>value</EM> 
+
+<DD>MIADSs line number of reference cell.
+
+<DT><B>cell=</B><EM>value</EM> 
+
+<DD>MIADS cell number of reference cell.
+
+<DT><B>Northing=</B><EM>value</EM> 
+
+<DD>UTM Easting at the cell reference.
+
+<DT><B>Easting=</B><EM>value</EM> 
+
+<DD>UTM Northing at the cell reference.
+
+<DT><B>size=</B><EM>value</EM> 
+
+<DD>Cell size (length one side) in meters.
+
+
+<P>
+
+</DL>
+
+
+<P>
+
+SCS has developed scripts <EM>run.miads</EM>, <EM>getstrip</EM>,
+and <EM>strip.99s</EM>.  These scripts make the MIADS to GRASS
+conversion easier.
+
+
+<P>
+
+<EM>run.miads</EM> -
+
+<DT> 
+
+<DD>SCS macro to perform the complete conversion of a MIADS printer format data
+set to a GRASS raster file.
+
+</DT>
+
+<P>
+
+<EM>getstrip</EM> -
+
+<DT> 
+
+<DD>Reads each MIADS strip file and converts it to a independent GRASS data
+file.  Support may be run on any one of these strip files;  however,
+there is no category information available.  Each strip may be viewed at
+this time with <EM>d.rast</EM> or <EM>d.display</EM>.
+
+<P>
+</DT>
+
+<EM>strip.99s</EM> -
+
+<DT> 
+
+<DD>Special pre-<EM>r.in.miads</EM> macro that removes the 99's from the MIADS data
+file.  This effectively removes border information, replacing it with
+"no data" values.
+
+</DT>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.display.html">d.display</A></EM>,
+<EM><A HREF="d.rast.html">d.rast</A></EM>,
+<EM><A HREF="r.in.ascii.html">r.in.ascii</A></EM>,
+<EM><A HREF="r.patch.html">r.patch</A></EM>,
+<EM><A HREF="r.support.html">r.support</A></EM>
+
+<H2>AUTHOR</H2>
+
+<EM>r.in.miads</EM> - R.L.Glenn, USDA, SCS, NHQ-CGIS
+
+<BR>
+
+<EM>run.miads, strip.99s</EM> - Harold Kane, USDA, SCS, Oklahoma State Office
+
+
+<P>
+

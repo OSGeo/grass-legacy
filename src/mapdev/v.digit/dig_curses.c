@@ -15,8 +15,6 @@
 **  US Army Construction Engineering Research Lab
 */
 
-
-
 WINDOW *BASE_WIN;
 WINDOW *INFO_WIN;
 WINDOW *HELP_WIN;
@@ -428,7 +426,11 @@ int Replot_screen (void)
 
 int Get_curses_char (char *answer)
 {
+#ifdef ASIAN_CHARS
+    *answer = wgetch(INFO_WIN);
+#else
     *answer = wgetch(INFO_WIN) & 0177;
+#endif
 
     return 0;
 }
@@ -445,9 +447,15 @@ int Get_curses_text (char answer[])
     *answer = 0;
     for(;;)
     {
+#ifdef ASIAN_CHARS
+	newchar = wgetch(INFO_WIN);
+
+	if (((newchar > 037) && (newchar < 0177)) || newchar < 0)
+#else
 	newchar = wgetch(INFO_WIN) & 0177;
 
 	if ((newchar > 037) && (newchar < 0177))
+#endif
 	{
 	    *(pointer++) = newchar;
 	    *pointer = 000;
@@ -495,6 +503,20 @@ int _show_mode (int mode, int type, int label)
     }
     else
     {
+#ifndef SCS_MODS
+	if(Cat_name)
+	{
+	    char *p;
+
+	    p = G_store(Cat_name);
+	    if(strlen(p) > 15)
+	        *(p+14) = 0;
+
+	    sprintf (buffer, " Category: %s%c", p,
+			    (strlen(Cat_name) > 15 ? '~' : ' '));
+	    wmove (BASE_WIN, 16, 51); waddstr (BASE_WIN,  buffer);
+	}
+#endif
 	sprintf (buffer, "%4d      ", label);
 	wmove (BASE_WIN, 17, 64); waddstr (BASE_WIN,  buffer);
     }
@@ -598,9 +620,7 @@ int curses_yes_no_default (int n, char *str, int def)
     return 0;
 }
 
-/*
-*/
-int suspend (void)
+int mysuspend (void)
 {
     move (LINES-1, 0);
     refresh ();
@@ -609,7 +629,7 @@ int suspend (void)
     return 0;
 }
 
-int respend (void)
+int myrespend (void)
 {
     crmode ();
     noecho();
@@ -642,7 +662,7 @@ int vask_suspend (void)
 
 int vask_respend (void)
 {
-    respend ();
+    myrespend ();
 
     return 0;
 }
@@ -777,7 +797,11 @@ int curses_getchar (void)
 {
     /* TESTING 1/91  dpg */
     /* return ((getch ()) & 0177); */
+#ifdef ASIAN_CHARS
+    return (wgetch (BASE_WIN));
+#else
     return ((wgetch (BASE_WIN)) & 0177);
+#endif
 }
 
 int _Write_covr (int line, char *message)

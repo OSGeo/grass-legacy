@@ -1,4 +1,4 @@
-/*
+/* -*-c-basic-offset: 4-*-
  * Cell-file line extraction
  *   Line-tracing algorithm
  *
@@ -23,6 +23,10 @@
  * also the write_line() complained that the lines end unexpectedly
  *
  * After modification all these problems are gone
+ *
+ * Modified for the new Grass 5.0 floating point and
+ * null values raster file format.
+ * Pierre de Mouveaux - 20 april 2000.
  */
 #include <stdio.h>
 #include <unistd.h>
@@ -31,8 +35,8 @@
 
 static struct line_hdr *v_list;
 static struct COOR *h_ptr;
-static CELL *top, *middle, *bottom;
-static CELL tl, tc, tr, ml, mc, mr, bl, bc, br;
+static void *top, *middle, *bottom;
+static int tl, tc, tr, ml, mc, mr, bl, bc, br;
 static int row, col, n_cols;
 char buf[80];
 static int read_next(void);
@@ -42,31 +46,96 @@ static struct COOR *end_line(struct COOR *,int);
 static struct COOR *start_line(int);
 struct COOR *get_ptr(void);
 
+extern int data_type;
+extern int data_size;
+
 int extract_lines (void)
 {
-  row = -3;
-  read_next();
-  read_next();
-  while (read_next())
-  {
-    for (col = 1; col < n_cols - 1; col++)
-    {
-      if (mc = middle[col])
-      {
-        tl = top[col - 1];
-        tc = top[col];
-        tr = top[col + 1];
-        ml = middle[col - 1];
-        mr = middle[col + 1];
-        bl = bottom[col - 1];
-        bc = bottom[col];
-        br = bottom[col + 1];
-        update_list(nabors());
-      }
-    }
-  }
+	row = -3;
+	read_next();
+	read_next();
 
-  return 0;
+	switch (data_type) {
+		case CELL_TYPE:
+		{
+			while (read_next()) {
+				CELL* m = &((CELL*)middle)[1];
+				CELL* t = &((CELL*)top)[1];
+				CELL* b = &((CELL*)bottom)[1];
+				for (col = 1; col < n_cols - 1; col++,t++,m++,b++) {
+					m = &((CELL*)middle)[col];
+					t = &((CELL*)top)[col];
+					b = &((CELL*)bottom)[col];
+
+					if (mc = !G_is_c_null_value(m)) {
+						tl = !G_is_c_null_value(t - 1);
+						tc = !G_is_c_null_value(t);
+						tr = !G_is_c_null_value(t + 1);
+						ml = !G_is_c_null_value(m - 1);
+						mr = !G_is_c_null_value(m + 1);
+						bl = !G_is_c_null_value(b-1);
+						bc = !G_is_c_null_value(b);
+						br = !G_is_c_null_value(b+1);
+						update_list(nabors());
+					}
+				}
+			}
+			break;
+		}
+		case FCELL_TYPE:
+		{
+			while (read_next()) {
+				FCELL* m = &((FCELL*)middle)[1];
+				FCELL* t = &((FCELL*)top)[1];
+				FCELL* b = &((FCELL*)bottom)[1];
+
+				for (col = 1; col < n_cols - 1; col++,t++,m++,b++) {
+					m = &((FCELL*)middle)[col];
+					t = &((FCELL*)top)[col];
+					b = &((FCELL*)bottom)[col];
+
+					if (mc = !G_is_f_null_value(m)) {
+						tl = !G_is_f_null_value(t - 1);
+						tc = !G_is_f_null_value(t);
+						tr = !G_is_f_null_value(t + 1);
+						ml = !G_is_f_null_value(m - 1);
+						mr = !G_is_f_null_value(m + 1);
+						bl = !G_is_f_null_value(b-1);
+						bc = !G_is_f_null_value(b);
+						br = !G_is_f_null_value(b+1);
+						update_list(nabors());
+					}
+				}
+			}
+			break;
+		}
+		case DCELL_TYPE:
+		{
+			while (read_next()) {
+				DCELL* m = &((DCELL*)middle)[1];
+				DCELL* t = &((DCELL*)top)[1];
+				DCELL* b = &((DCELL*)bottom)[1];
+				for (col = 1; col < n_cols - 1; col++,t++,m++,b++) {
+					m = &((DCELL*)middle)[col];
+					t = &((DCELL*)top)[col];
+					b = &((DCELL*)bottom)[col];
+					if (mc = !G_is_d_null_value(m)) {
+						tl = !G_is_d_null_value(t - 1);
+						tc = !G_is_d_null_value(t);
+						tr = !G_is_d_null_value(t + 1);
+						ml = !G_is_d_null_value(m - 1);
+						mr = !G_is_d_null_value(m + 1);
+						bl = !G_is_d_null_value(b-1);
+						bc = !G_is_d_null_value(b);
+						br = !G_is_d_null_value(b+1);
+						update_list(nabors());
+					}
+				}
+			}			
+			break;
+		}
+	}
+	return 0;
 }
 
 static int nabors (void)
@@ -301,11 +370,11 @@ static int update_list(int count)
        /* fprintf(stderr,"crowded cell %xH (%d,%d) -continuing\n",count,row,col);*/
        /* I think 5 neighbours is nor crowded, so we shouldn't worry the user
 	   Olga */
-        if (ml)                         /* end horz. and vert lines */
+       if (ml)                         /* end horz. and vert lines */
           h_ptr = end_line(h_ptr,1);
-        if (tc)
+       if (tc)
           v_list[col].center = end_line(v_list[col].center,1);
-                           
+                          
                                        /* end diag lines only if no horz,vert*/
        if ((tl) && (!ml) && (!tc))
           v_list[col].left = end_line(v_list[col].left,1);
@@ -316,7 +385,7 @@ static int update_list(int count)
           h_ptr = start_line(1);
         if (bc)
           v_list[col].center = start_line(1);
-                                      /* start diag if no horz,vert */
+                                     /* start diag if no horz,vert */
         if ((br) && (!mr) && (!bc))
           v_list[col + 1].left = start_line(1);
         if ((bl) && (!ml) && (!bc))
@@ -473,9 +542,9 @@ int alloc_bufs(int size)
 {
   int i;
 
-  top = (CELL *) xmalloc(size * sizeof(CELL),"alloc_bufs, top");
-  middle = (CELL *) xmalloc(size * sizeof(CELL),"alloc_bufs, middle");
-  bottom = (CELL *) xmalloc(size * sizeof(CELL),"alloc_bufs, bottom");
+  top = (void *) xmalloc(size * data_size,"alloc_bufs, top");
+  middle = (void *) xmalloc(size * data_size,"alloc_bufs, middle");
+  bottom = (void *) xmalloc(size * data_size,"alloc_bufs, bottom");
   v_list = (struct line_hdr *) xmalloc(size * sizeof(struct line_hdr),"alloc_bufs, v_list");
   for (i = 0; i < size; i++)
     v_list[i].left = v_list[i].center = v_list[i].right = NULL;
@@ -486,7 +555,7 @@ int alloc_bufs(int size)
 
 static int read_next (void)
 {
-  CELL *p;
+  void *p;
 
   row++;
   p = top;

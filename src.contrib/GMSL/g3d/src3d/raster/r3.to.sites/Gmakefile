@@ -1,0 +1,9 @@
+PGM=r3.to.sites
+HOME=$(BIN_MAIN_CMD)
+
+$(HOME)/$(PGM): main.o $(G3DLIB) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(G3DLIB) $(GISLIB) $(XDRLIB) $(MATHLIB) $(DATETIMELIB)
+
+$(G3DLIB): #
+$(GISLIB): #
+

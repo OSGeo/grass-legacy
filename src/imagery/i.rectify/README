@@ -1,0 +1,22 @@
+This is a diff for i.rectify
+                                                                                
+Could you test it? Works for me...                                              
+                                                                                
+The bug arise only when you get the default region in i.rectify (option '1'). 
+If you get manually the (same) full region (option '2'), you don't have the
+bug.   
+It was due to the structure "target_window" not being initialised.              
+                                                                                
+PS. This is NOT based on a knowlege of the internals of the GRASS API, but      
+rather on a little brain storming. My solution is maybe not so good???          
+                                                                                
+Pierre.                                                                         
+                                                                                
+PS: it's obviously the same for i.rectify2.                                     
+                                                                                
+                                                                                
+Index: get_wind.c
+
+From: Pierre de Mouveaux <pmx@audiovu.com>                                      
+Date: Wed, 5 Apr 2000 18:06:55 +0200                                            
+            

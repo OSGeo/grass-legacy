@@ -1,0 +1,121 @@
+<html>
+<A NAME="d.rast.pg">
+<TITLE>d.rast.pg</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>d.rast.pg</B></EM> - Generate and display a reclass map based on the unique values in a database column. (GRASS-RDBMS Interface Display Program)
+
+<H2>SYNOPSIS</H2>
+<B>d.rast.pg</B><BR>
+<B>d.rast.pg help</B><BR>
+<B>d.rast.pg key</B><EM>=name</EM> <B>tab</B><EM>=name</EM> <B>col</B><EM>=name</EM> <B>input</B><EM>=name</EM> [<B>output</B><EM>=name</EM>] [<B>join</B><EM>=tab,tabkey,pkey</EM>]
+
+<H2>ALTERNATE</H2>
+<B>d.rast.pg -s help</B><BR>
+<B>d.rast.pg -s pql</B><EM>=filename</EM> <B>input</B><EM>=name</EM> [<B>output</B><EM>=name</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>d.rast.pg</EM> displays a raster image in which each category represents a uniques value in a database column.  Values are retrieved from the current database based on a user defined postQUEL retrieve statement. The current database is identified by the GRASS environment variable $PGDBASE which is set using the <EM>g.select.pg</EM> GRASS-RDBMS interface tool.  If no join parameters are specified by the user a column in the database table directly linked to the GRASS raster structure via the category value must be used.  The output from this program is a set of GRASS reclass rules which are used to create and display a reclassed raster surface based on the attributes returned from the database and the raster data layer specified as the input map.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>key=databasecolumnname</B>
+<DD>Column corresponding to category values in raster map [input]
+<P>
+
+<DT><B>tab=databasetablename</B>
+<DD>Table containing [col]
+<P>
+
+<DT><B>col=databasecolumnname</B>
+<DD>Column to base reclass on
+<P>
+
+<DT><B>input=map</B>
+<DD>Name of existing raster file
+<P>
+
+<DT><B>output=map</B>
+<DD>Name of new reclass map
+<P>
+
+<DT><B>join=tab,tabkey,pkey</B>
+<DD>Tab is the table used to develop the current postQUEL query. Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file. Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+</DL>
+<P>
+For instance, assume that secosoilcats is a table containing column values associated with category values in a the GRASS raster file soils.  In addition, assume that compyld is a table containing attribute data on the crop production capacity in the same area  (cropname).  In this example secosoilcats is the table associated with the GRASS raster map and grasscats is the column linking secosoilcats to the GRASS category file, the table compyld contains the attribute information to base the query/reclass on and it is linked to secosoilcats via the common column muid. To specify a query based on attribute values in the table compyld:
+<P>
+
+<DD><EM>d.rast.pg key=grasscat tab=secosoilcats col=cropname input=soils join=compyld,compyld.muid,secosoilcats.muid</EM>
+<P>
+
+Specifying these conditions would insure that all rows from table compyld which satisfy the query criteria would be matched with the corresponding rows in table secosoilcats, which are then related to the spatial features in the GRASS data layer via the GRASS category values.
+<P>
+
+This syntax is adequate to accomplish 2 table joins.  However, if the query demands joins between more than 2 tables it is advisable to use the <EM>-s</EM> option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
+
+<H2>ALTERNATE COMMAND LINE USAGE</H2>
+The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line.  When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed postQUEL retrieve statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
+<P>
+
+The user must also specify the name of the GRASS data layer containing these category values on the command line.  The following example illustrates the syntax which must be used in constructing a retrieve statement for use with the <EM>-s</EM> flag.
+<P>
+
+<DD><EM>retrieve unique (cfccatts.tlid,main.cfcode)
+<DD>where cfcc.majfea="roads" and cfcc.minfea="county roads" and cfcc.cfcode=main.cfcode and main.cfcode NOTNULL sort by main.cfcode using</EM>
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-s</B>
+<DD>PostQUEL retrieve statements are input from a prepared file
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>pql=filename</B>
+<DD>PostQUEL statements specifying well formed selection criteria.
+
+<DT><B>input=map</B>
+<DD>Name of an existing raster map
+
+<DT><B>output=map</B>
+<DD>Name of a new reclass file
+</DL>
+
+<B>EXAMPLE (two table join)</B><P>
+<EM>d.rast.pg -s pql=statsgo.pql input=secosoils</EM>
+<P>
+statsgo.pql:<BR>
+<EM>retrieve unique secosoilcats.grasscat,compyld.cropname)<BR>
+where compyld.muid = secosoilcats.muid and cropname NOTNULL sort by cropname</EM>
+<P>
+
+<B>RESULT:</B><BR>
+This example will display a raster surface with a category for each unique value of the column "cropname" from the table compyld. The raster surface will be a reclassed data layer based on the input raster map secosoils.
+
+<H2>BUGS</H2>
+None known.
+
+<H2>NOTE</H2>
+This program requires the Postgres database software.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
+
+<H2>AUTHOR</H2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
+<P>
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+<P>
+Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+
+</BODY>
+</HTML>
+

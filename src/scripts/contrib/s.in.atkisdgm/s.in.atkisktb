@@ -1,0 +1,124 @@
+#!/bin/sh
+
+#Script to import the German ATKIS-DGM/KTB elevation data
+#into a GRASS sites list
+#
+#ATKIS = Amtliches Topographisch-Kartographisches Informationssystem
+#
+# $Id$
+#
+#        Copyright (C) 2000 by the GRASS Development Team
+#        Authors: Otto Dassau <Otto.Dassau@stud.uni-hannover.de>
+#                 Markus Neteler <neteler@geog.uni-hannover.de>
+#                 Institute of Physical Geography and Landscape Ecology
+#                 University of Hannover
+#
+#        This program is free software under the GPL (>=v2)  
+#        Read the file COPYING coming with GRASS for details.
+#
+#Skript zum Importieren von ATKIS-KTB Koten
+#in eine für GRASS lesbare Site-Datei unter $LOCATION/site_lists/...
+#
+#Coding in GRASS sites list:
+# X    Y     Cat Attr1 
+# East North no. elev  
+#
+
+
+if test "$GISBASE" = ""; then
+echo "You must be in GRASS to run this program"
+exit
+fi
+
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]; then
+ echo "Script to import German ATKIS-DGM/KTB elevation data into sites map"
+ echo "  usage: s.in.atkisktb ktbfile"
+ exit 1
+fi
+
+ERROR=0
+INFILE_RAW=$1
+
+#create lower case file name:
+INFILE=`echo $INFILE_RAW | tr  [:upper:] [:lower:]`
+
+if [ $# = "help" ]; then
+ echo "Script to import German ATKIS-DGM/KTB elevation data into sites map"
+ echo "  usage: s.in.atkisktb ktbfile"
+ ERROR=1
+fi
+
+# file existing? (using raw filename!):
+if test ! -f $INFILE_RAW
+ then
+  echo "ERROR: $INFILE_RAW not found."
+  exit 1
+fi
+
+# is it a .ktb file? Just see if .ktb extension is there:
+#echo $INFILE | sed 's/\.ktb$//' >/dev/null
+echo $INFILE | grep .ktb >/dev/null
+if [ $? != 0 ]; then
+ echo "ERROR: $INFILE_RAW is not a ktbfile (no .ktb extension)"
+ echo "  usage: s.in.atkisktb ktbfile"
+ ERROR=1
+fi
+
+#summary of errors check
+if [ $ERROR -ge 1 ]
+then
+ echo "Stopped."
+ exit 1
+fi
+
+#Note: $INFILE contains file name with lower letter extension (.ktb), 
+#      $INFILE_RAW probably with capital letter extension (.ktb)
+#      Therefore this rather complex filename management.
+
+#check for $LOCATION/site_lists
+if test ! -e $LOCATION/site_lists	
+then
+ #echo "Creating new directory 'site_lists/' in $LOCATION"            
+ mkdir -p $LOCATION/site_lists
+ echo "Importing $INFILE_RAW into GRASS database: $LOCATION/site_lists/$INFILE"
+fi
+
+#check if sites map already exists:
+if test -f $LOCATION/site_lists/$INFILE
+ then
+  echo "ERROR: sites map $INFILE already exists in GRASS. Please rename."
+  exit 1
+fi
+
+# ATKIS.ktb files in /tmp/$INFILE
+echo "Importing $INFILE_RAW..."
+#get map's date and remove WINDOWS ^M CR:
+`cat ./$INFILE_RAW | grep D | sed -e "s/
+//g"> /tmp/$INFILE.date`
+# get data and remove WINDOWS ^M CR:
+`cat ./$INFILE_RAW | grep -v D | sed -e "s/
+//g"> /tmp/$INFILE`
+
+# converting /tmp/$INFILE in $LOCATION/site_lists/xxx.ktb
+
+cut -b'7-28' /tmp/$INFILE | tr -s ' ' '|' > /tmp/mxy1
+cut -b'34-'  /tmp/$INFILE | tr -s ' ' '|' | sed -e "s/|/|%/g" |sed -e "s/|%//2"> /tmp/mxy2
+paste -d' ' /tmp/mxy1 /tmp/mxy2 |sed -e "s/\ //g" > /tmp/mxy3
+
+#add map's date:
+DATESTRING=`cat /tmp/$INFILE.date`
+echo $DATESTRING |sed -e "s/D/#D/1" > $LOCATION/site_lists/$INFILE
+
+#add comments:
+echo "# X    Y     Attr1" >> $LOCATION/site_lists/$INFILE
+echo "# East North elev " >> $LOCATION/site_lists/$INFILE
+echo "#" >> $LOCATION/site_lists/$INFILE
+
+#fill in elevation data:
+cat /tmp/mxy3 | tr "[\t]" "[+]" | tr -d '+' >> $LOCATION/site_lists/$INFILE
+
+rm -f /tmp/mxy?
+rm -f /tmp/$INFILE
+rm -f /tmp/$INFILE.date
+
+echo "Import of ATKIS sites ktb elevation map $INFILE finished."

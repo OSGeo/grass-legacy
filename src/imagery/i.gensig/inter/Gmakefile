@@ -1,6 +1,6 @@
 LIBES = $(IMAGERYLIB) $(GISLIB)
 
 $(BIN_ALPHA_INTER)/i.gensig: main.o $(LIBES) $(VASKLIB)	
-	$(CC) -o $@ main.o $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
 
 $(LIBES) $(VASKLIB): #

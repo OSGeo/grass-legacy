@@ -1,0 +1,37 @@
+<html>
+<TITLE>r.out.rlc</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+<b>r.out.rlc</b> - converts a GRASS raster file to a RLC encoded image file
+<P>
+
+<H2>Usage:</H2>
+ <b>r.out.rlc</b> [-v] <b>input=</b>name <b>output=</b>name
+
+<h2>Flags:</H2>
+  -q   Run verbose<p>
+
+<H2>Parameters:</H2>
+   input   Raster map to export<p>
+  output   export file name<p>
+
+<p>
+This program converts a GRASS raster file to a RLC encoded image file
+at the pixel resolution of the CURRENTLY DEFINED REGION. 
+e.g., to get the resolution of the raster map, do:<p>
+
+&nbsp;&nbsp;	g.region rast=[mapname]<p>
+
+before running r.out.rlc.<p>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.in.bin.html">r.in.bin</A>,
+<A HREF="r.in.ascii.html">r.in.ascii</A>
+<A HREF="r.out.ascii.html">r.out.ascii</A>
+<A HREF="r.in.arc.html">r.in.arc</A>,
+<A HREF="r.out.arc.html">r.out.arc</A></EM>
+
+</BODY>
+</HTML>

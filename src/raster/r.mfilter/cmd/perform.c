@@ -110,7 +110,8 @@ if (!silent) fprintf (stderr,"WRITING [%s]\n", out_name);
     for (row=0; row<nrows; row++)
     {
 	getrow (in, cell, row, buflen);
-	G_put_map_row (out, cell);
+	/* G_put_map_row (out, cell); */
+	G_put_c_raster_row (out, cell);
     }
 
 /* remove the temporary files before closing so that the G_close_cell()

@@ -1,0 +1,90 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Linkm Front End
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Linkm Front End
+</h1>
+
+<blockquote><i>
+    Status:  Gamma<br>
+    This module has been designed, reviewed and coded.
+    It should be considered stable.
+</i></blockquote>
+
+<p>
+This library sits on top of the <a href="linkm.html">linkm</a> library, 
+and provides extra utility.  Here the assumption is 1. that there will be
+several modules of an application making use of the linkm library and 2.
+that several of these will possibly be requesting the same size of objects.
+If you can accept both of those, then this library might be of use to you.
+<p>
+The function <em>dpgLmInit</em>() is simply a plug and play replacement for
+<a href="linkm.html#dpgLinkInit"><em>dpgLinkInit</em>()</a>.  And 
+<em>dpgLmRelease</em>() is a similar replacement for <em>dpgLinkCleanup</em>().
+It manages a list of sizes of objects and their associated dpgLinkmP 
+tokens.  And when
+a request comes in for a size that it already has, it returns the that
+token.  The effect hopefully is some sharing of these chunks of memory
+and thus better memory utilization.
+<p>
+
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li> <a href=#>  </a>
+    
+
+<li>dpgLinkmP    <a href=#dpgLmInit> dpgLmInit </a>
+       (int size);
+
+
+<li>int         <a href=#dpgLmRelease> dpgLmRelease </a>
+    (dpgLinkmP token);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+
+<a name="dpgLmInit">
+<pre>
+dpgLinkmP    <strong>dpgLmInit</strong>    (int size);
+
+</pre>
+
+<a name="dpgLmRelease">
+<pre>
+int         <strong>dpgLmRelease</strong> (dpgLinkmP token);
+
+</pre>
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

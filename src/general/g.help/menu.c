@@ -126,7 +126,6 @@ int Curline ;
 	for(;;)
 	{
 		Usrcmnd = getch() ;
-
 		switch(Usrcmnd)
 		{
 			case REFRESH:
@@ -154,7 +153,7 @@ int Curline ;
 				break ;
 				}
 
-			case 'd':
+			case ARROWDOWN: /* line down */
 				{
 				if (Curline <
 					((Menlength - (MENWINHITE - 3)))) 
@@ -162,7 +161,7 @@ int Curline ;
 				break;
 				}
 
-			case 'D':
+			case PAGEDOWN: /* page down */
 				{
 				Curline += (MENWINHITE - 4);
 				Curline =
@@ -174,14 +173,14 @@ int Curline ;
 				break;
 				}
 
-			case 'u':
+			case ARROWUP: /* line up */
 				{
 				if (Curline > 1)
 					Curline--;
 				break;
 				}
 
-			case 'U':
+			case PAGEUP: /* page up */
 				{
 				Curline -= (MENWINHITE - 4);
 				Curline =
@@ -207,7 +206,7 @@ int Curline ;
 				break ;
 				}
 
-			case ESC:
+			case 'q':
 				{
 				*Respbuf = ESC ; *(Respbuf+1) = '\0' ;
 				goto doreturn ;
@@ -232,7 +231,7 @@ int Curline ;
 
 doreturn:
 	if (Men_strbuf != NULL)
-		free (Men_strbuf);
+		G_free (Men_strbuf);
 
 	return (Menstat);
 }

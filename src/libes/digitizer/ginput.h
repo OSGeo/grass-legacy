@@ -4,7 +4,14 @@
 /*                                                                            */
 /******************************************************************************/
 #include <stdio.h>
+
+#include "config.h"
+#ifdef	HAVE_TERMIO_H
 #include <termio.h>
+#elif	defined(HAVE_TERMIOS_H)
+#include <termios.h>
+#endif
+
 #include <sys/types.h>
 
 #include <fcntl.h> 

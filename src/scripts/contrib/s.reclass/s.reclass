@@ -2,7 +2,7 @@
 
 # reclasses an input sites file based upon a rulesfile
 
-if [ $# = 0 ]
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
 then
 	echo "Usage:"
 	echo "s.reclass input=name output=name rules=name"
@@ -11,6 +11,8 @@ then
 	echo "    input     name of existing raster file to be preferentially displayed" 
 	echo "   output     name of reclass sites file to be created"
 	echo "    rules     name of unixfile containing reclass rules"
+	echo 
+	exit
 fi
 #
 # parse out the input (from gdbase/parser)

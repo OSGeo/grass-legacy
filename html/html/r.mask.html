@@ -1,0 +1,125 @@
+<TITLE>r.mask</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.mask</b></EM>  - Establishes or removes the current working mask. 
+<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.mask</B>
+
+<H2>DESCRIPTION</H2>
+
+The <EM>r.mask</EM> program allows the user to block out
+certain areas of a map from analysis, by "hiding" them from
+sight of other GRASS programs.  This is done by
+establishing a mask.  While a mask exists, most GRASS
+programs will operate only on data falling inside the
+masked area, and ignore any data falling outside of the
+mask.
+
+<P>
+
+Because the mask is actually only a reclass file called
+"MASK" that is created when the user identifies a mask
+using <EM>r.mask</EM>, it can be copied, renamed, removed,
+and used in analyses, just like other GRASS raster map
+layers.  The user should be aware that a mask remains in
+place until a user renames it to something other than
+"MASK", or removes it using <EM>r.mask</EM> or
+
+<EM><A HREF="g.remove.html">g.remove</A></EM>. 
+
+<P>
+
+<EM>r.mask</EM> provides the following options: 
+<PRE>
+	 1 Remove the current mask 
+	 2 Identify a new mask 
+	RETURN Exit from program 
+</PRE>
+
+The user establishes a new mask by choosing option (2).
+The user will be asked to name an existing raster map layer
+from among those available in the current mapset search
+path.  Once done, the user is shown a listing of this map's
+categories, and is asked to assign a value of "1" or "0" to
+each map category.  Areas assigned category value "1" will
+become part of the mask's surface, while areas assigned
+category value "0" will become "no data" areas in the MASK
+file.
+
+<P>
+
+If a category is not assigned category value "1" it will
+automatically be assigned the category value "0" in the
+resulting MASK file.  Any cells falling in category "0"
+will fall outside the newly formed mask, and their presence
+will be ignored by GRASS programs run later on, as long as
+the MASK file remains in place.
+
+<H2>NOTES</H2>
+
+The above method for specifying a "mask" may seem
+counterintuitive.  Areas inside the mask are not hidden;
+areas outside the mask will be ignored until the MASK file
+is removed.
+
+<P>
+
+This program actually creates a raster map layer (reclass
+type) called <EM>MASK</EM>, which can be manipulated
+(renamed, removed, copied, etc.) like any other raster map
+layer.
+
+<P>
+
+Somewhat similar program functions to those performed by
+<EM>r.mask</EM> can be done using
+
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>, 
+
+<EM><A HREF="g.region.html">g.region</A></EM>,
+
+and other programs. 
+
+<P>
+
+This program can only be run interactively. 
+
+<P>
+
+Note that some programs, like 
+
+<EM><A HREF="r.stats.html">r.stats</A></EM>, 
+
+have options that allow the 
+user to see the effects of the current mask without removing the current 
+mask. See, for example, use of the <B>-m</B> option for 
+
+<EM><A HREF="r.stats.html">r.stats</A></EM>. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.copy.html">g.copy</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="g.remove.html">g.remove</A></EM><br>
+<EM><A HREF="g.rename.html">g.rename</A></EM><br>
+<EM><A HREF="r.combine.html">r.combine</A></EM><br>
+<EM><A HREF="r.infer.html">r.infer</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><br>
+<EM><A HREF="r.reclass.html">r.reclass</A></EM><br>
+<EM><A HREF="r.stats.html">r.stats</A></EM><br>
+<EM><A HREF="r.weight.html">r.weight</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering 
+Research Laboratory
+

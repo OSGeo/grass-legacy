@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
     CELL  *mask;
     DCELL *dcell;
     struct Cell_head window;
+    struct GModule *module;
     int row, col;
     double north, east;
     double dx,dy;
@@ -58,6 +59,11 @@ int main(int argc, char *argv[])
 
     G_gisinit(argv[0]);
 
+    module = G_define_module();
+    module->description =        
+                    "Surface interpolation from sites data by Inverse "
+                    "Distance Weighted algorithm.";
+                    
     if (G_parser(argc, argv))
         exit(1);
 

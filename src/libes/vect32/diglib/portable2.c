@@ -1,4 +1,4 @@
-#include "digit.h"
+#include "Vect.h"
 
 struct dig_head *Cur_In_Head;
 struct dig_head *Cur_Out_Head;

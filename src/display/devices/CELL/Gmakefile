@@ -18,10 +18,7 @@ OFILES =  \
 	Reset_clr.o \
 	Returns.o
 
-$(GISBASE)/driver/CELL: CELL
-	mv CELL $@
-
-CELL: $(OFILES) $(DRIVERLIB) $(GISLIB)
+$(GISBASE)/driver/CELL: $(OFILES) $(DRIVERLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DRIVERLIB) $(GRAPH) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(DRIVERLIB): #

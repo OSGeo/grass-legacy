@@ -2,23 +2,24 @@
  * s.qcount - GRASS program to sample a raster file at site locations.
  * Copyright (C) 1993-1995. James Darrell McCauley.
  *
- * Author: James Darrell McCauley (mccauley@ecn.purdue.edu)
- *         USDA Fellow
- *         Department of Agricultural Engineering
- *         Purdue University
- *         West Lafayette, Indiana 47907-1146 USA
+ * Author: James Darrell McCauley darrell@mccauley-usa.com
+ * 	                          http://mccauley-usa.com/
  *
- * Permission to use, copy, modify, and distribute this software and its
- * documentation for non-commercial purposes is hereby granted. This 
- * software is provided "as is" without express or implied warranty.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- * JAMES DARRELL MCCAULEY (JDM) MAKES NO EXPRESS OR IMPLIED WARRANTIES
- * (INCLUDING BY WAY OF EXAMPLE, MERCHANTABILITY) WITH RESPECT TO ANY
- * ITEM, AND SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL
- * OR CONSEQUENTAL DAMAGES ARISING OUT OF THE POSSESSION OR USE OF
- * ANY SUCH ITEM. LICENSEE AND/OR USER AGREES TO INDEMNIFY AND HOLD
- * JDM HARMLESS FROM ANY CLAIMS ARISING OUT OF THE USE OR POSSESSION 
- * OF SUCH ITEMS.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ *  $Id$ 
  *
  * Modification History:
  * <03 Mar 1993> - began coding (jdm)
@@ -27,26 +28,31 @@
  * <02 Jan 1995> - v 0.5B, clean Gmakefile, man page, added html (jdm)
  * <25 Feb 1995> - v 0.6B, cleaned 'gcc -Wall' warnings (jdm)
  * <25 Jun 1995> - v 0.7B, new site API (jdm)
+ * <13 Sep 2000> - released under GPL
  *
  */
 
 #pragma ident "s.qcount v 0.7B <25 Jun 1995>; Copyright (c) 1993-1995. James Darrell McCauley"
 
+#include <stdio.h>
+#include <string.h>
 #include <math.h>
 #include "gis.h"
-#include "s_struct.h"
 #include "quaddefs.h"
 
+#define LOOP_SIZE 100
+ 
 int main (argc, argv)
   char **argv;
   int argc;
 {
-  char *siteslist, errmsg[256], *mapset;
+  char *siteslist, errmsg[256], *mapset, *ctmp;
   double radius;
   double fisher, david, douglas, lloyd, lloydip, morisita;
-  int i, do_indices, do_counts, nsites, nquads, verbose, *counts;
+  int i, sites_read, do_indices, do_counts, nsites, nquads, verbose, *counts;
 
   struct Cell_head window;
+  struct GModule *module;
   struct
   {
     struct Option *input, *n, *r;
@@ -56,10 +62,19 @@ int main (argc, argv)
     struct Flag *c, *i, *q;
   } flag;
   FILE *fdsite = NULL;
-  Z *z, *quads;
+  SITE_XYZ *xyz, *quads;
+  Site     *theSite;
+  Site_head sHead;
+  char *date_str;
+  RASTER_MAP_TYPE map_type;
+  int strs, dims, dbls;
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "indices for quadrat counts of sites lists";
+                  
   parm.input = G_define_option ();
   parm.input->key = "sites";
   parm.input->type = TYPE_STRING;
@@ -98,9 +113,9 @@ int main (argc, argv)
 
   siteslist=parm.input->answer;
   
-  do_counts = (flag.c->answer == (char) NULL) ? 0 : 1;
-  verbose = (flag.q->answer == (char) NULL) ? 1 : 0;
-  do_indices = (flag.i->answer == (char) NULL) ? 1 : 0;
+  do_counts = (flag.c->answer) ? 1 : 0;
+  verbose = (flag.q->answer) ? 0 : 1;
+  do_indices = (flag.i->answer) ? 0 : 1;
   
   do_counts = (do_indices == 0) ? 1 : 0;
 
@@ -120,31 +135,97 @@ int main (argc, argv)
     G_fatal_error (errmsg);
   }
 
+  /* Need to know how many sites for verbose */
+  if (G_site_describe(fdsite, &dims, &map_type, &strs, &dbls) != 0)
+    G_fatal_error("Unable to read sites file format");
+  
+  if (NULL == (theSite = G_site_new_struct(map_type, dims, strs, dbls)))
+    G_fatal_error("Unable to allocate memory for Site struct");
+  
+  i = 0;
+  while (G_site_get(fdsite, theSite) == 0)
+      if (G_site_in_region(theSite, &window))
+        i++;
+  
+  /* Free unused, rewind file */
+  G_site_free_struct(theSite);
+  rewind(fdsite);
 
-  nsites = readsites (fdsite, verbose, &z, window);
-
-  if (nsites <= 0)
-    G_fatal_error ("No sites found");
-
+  /* Get the quadrats */
   quads = find_quadrats (nquads, radius, window,verbose);
+ 
+  /* Do the G_readsites_xyz and counts in a loop of LOOP_SIZE at a time */
+  if (NULL == (xyz = G_alloc_site_xyz(LOOP_SIZE)))
+      G_fatal_error("%s: Out of Memory", G_program_name());
+ 
+  counts = NULL;
+  sites_read = 0;
+  if (verbose)
+    fprintf(stderr, "Counting sites in quadrats ...      ");
+  while ((nsites = 
+        G_readsites_xyz(fdsite, SITE_COL_NUL, 0, LOOP_SIZE, &window, xyz)) > 0) {
+    /* Get the counts per quadrat */
+    counts = count_sites (quads, nquads, counts, radius, xyz, nsites);
+    if (counts == NULL)
+      G_fatal_error("Problem counting sites in quadrats");
+    sites_read += nsites;
+    if (verbose) {
+      if (sites_read < i) {
+        G_percent(sites_read, i, 1);
+      }
+      else {
+        G_percent(1, 1, 1);
+      }
+    }
+  }
+  if (nsites < 0 && nsites != EOF)
+    G_fatal_error ("Error reading sites_list");
+  
+  G_free_site_xyz(xyz); 
 
-  counts = count (quads, nquads, radius, z, nsites, verbose);
-
+  /* Site output if requested */
   if (do_counts)
   {
-    fprintf (stdout, "name|\n");
-    fprintf(stdout,"desc|output of s.qcount -c sites=%s n=%d r=%g)\n",
-	siteslist,nquads,radius);
-    for(i=0;i<nquads;++i)
-      fprintf(stderr,"%g|%g|#%d %d\n",quads[i].x,quads[i].y,i+1,counts[i]);
+    if (NULL == (ctmp = (char *)G_malloc(sizeof(char) * 1)))
+      G_fatal_error("Memory Exhausted");
+    *ctmp = '\0';
+    sHead.name = ctmp;
+    if (NULL == (ctmp = (char *) G_malloc(sizeof(char) * 512)))
+      G_fatal_error("Memory exhausted!");
+    snprintf(ctmp, 512, "output of s.qcount -c sites=%s n=%d r=%g", 
+        siteslist, nquads, radius);
+    sHead.desc = ctmp;
+    if (NULL == (ctmp = (char *) G_malloc(sizeof(char) * 80)))
+      G_fatal_error("Memory exhausted!");
+    strncpy(ctmp, "east|north|#quadrat %count", 80);
+    sHead.labels = ctmp;
+    if (NULL == (ctmp = (char *) G_malloc(sizeof(char) * 80)))
+      G_fatal_error("Memory exhausted!");
+    strncpy(ctmp, "123.456|987.654|#5 %17", 80);
+    sHead.form = ctmp;
+    /* date/time not being output ?? */
+    date_str = G_date();
+    sHead.stime = date_str;
+    G_site_put_head(stdout, &sHead);
+    if (NULL == (theSite = G_site_new_struct(CELL_TYPE, 2, 0, 1)))
+      G_fatal_error("Unable to allocate memory for Site struct");
+    for (i = 0; i < nquads; i++) {
+      theSite->ccat = i + 1;
+      theSite->east = quads[i].x;
+      theSite->north = quads[i].y;
+      theSite->dbl_att[0] = counts[i];
+      G_site_put(stdout, theSite);
+    }
+    G_site_free_struct(theSite);
   }
 
+  /* Indices if requested */
   if (do_indices)
   {
   qindices (counts, nquads, &fisher, &david, &douglas, &lloyd, &lloydip, &morisita);
 
 fprintf(stdout,"-----------------------------------------------------------\n");
-fprintf(stdout,"Index \t\t\t\t\t Realization\n");
+fprintf(stdout,"Index                                           Realization\n");
 fprintf(stdout,"-----------------------------------------------------------\n");
 fprintf(stdout,"Fisher el al (1922) Relative Variance            %g\n",fisher);
 fprintf(stdout,"David & Moore (1954) Index of Cluster Size       %g\n",david);
@@ -153,8 +234,9 @@ fprintf(stdout,"Lloyd (1967) \"mean crowding\"                     %g\n",lloyd);
 fprintf(stdout,"Lloyd (1967) Index of patchiness                 %g\n",lloydip);
 fprintf(stdout,"Morisita's (1959) I (variability b/n patches)    %g\n",morisita);
 fprintf(stdout,"-----------------------------------------------------------\n");
-fprintf(stdout,"sites_list: %s n=%d (%d quadrats of radius %g)\n",siteslist,nsites,nquads,radius);
+fprintf(stdout,"sites_list: %s n=%d (%d quadrats of radius %g)\n",siteslist,sites_read,nquads,radius);
 }
 
   exit (0);
 }
+/* vim: softtabstop=2 shiftwidth=2 expandtab */

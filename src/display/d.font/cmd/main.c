@@ -9,8 +9,14 @@ int main( int argc , char **argv )
         char fonts[2048];
         char buf[1024];
         FILE *fd;
+		struct GModule *module;
         struct Option *opt1;
         int i;
+
+		module = G_define_module();
+		module->description =
+			"Selects the font in which text will be displayed "
+			"on the user's graphics monitor.";
 
         /* find out what fonts we have */
         *fonts = 0;

@@ -11,12 +11,19 @@ int main (int argc, char *argv[])
     int any;
     char *old_name, *old_mapset;
     char *new_name;
+	struct GModule *module;
     struct
     {
 	struct Option *input, *output, *title;
     } parm;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+    module->description =
+		"Creates a new map layer whose category values "
+		"are based upon the user's reclassification of categories in an "
+		"existing raster map layer.";
 
     parm.input = G_define_option();
     parm.input->key = "input";

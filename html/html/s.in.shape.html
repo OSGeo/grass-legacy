@@ -1,0 +1,165 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <TITLE>s.in.shape</TITLE>
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (X11; U; Linux 2.2.16 i686) [Netscape]">
+</head>
+<body bgcolor="white">
+<img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<font size=+0><i>s.in.shape</i> - Read an ArcView Shapefile with points
+or multipoint shapes</font>
+<br><a NAME="SYNOPSIS"></a>
+<h2>
+<font size=+0>SYNOPSIS</font></h2>
+<font size=+0><b>s.in.shape</b> [ <b>-l</b> ] [ <b>-z</b> ] [ <b>-m</b>
+] <b>in=</b><i>name</i> [<b>attribute=</b><i>attribute category</i>] [<b>height=</b><i>constant
+height value</i>]</font>
+<br><a NAME="DESCRIPTION"></a>
+<h2>
+<font size=+0>DESCRIPTION</font></h2>
+
+<table COLS=2 WIDTH="100%" rules="none" frame="none" >
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="87%"><font size=+0>The <i>s.in.shape</i>
+module imports point and multipoint themed ESRI shapefiles into a GRASS
+sites_list.</font>
+<p><font size=+0><i>s.in.shape</i> can be run with command line options
+as follows:</font>
+<p><font size=+0><b>s.in.shape</b> [ <b>-l</b> ] [ <b>-z</b> ] [ <b>-m</b>
+] <b>in=</b><i>name</i> [<b>attribute=</b><i>attribute category</i>] [<b>height=</b><i>constant
+height value</i>]</font>
+<p><font size=+0>Alternatively, an interactive interface can be started:</font></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="12%"></td>
+</tr>
+</table>
+
+<p><b><font size=+0>s.in.shape</font></b>
+<p><font size=+0>In this case, the user will be prompted for parameter
+values using the standard GRASS user interface described in the manual
+entry for <i>parser</i>.</font>
+<br><a NAME="FEATURES"></a>
+<h2>
+<font size=+0>FEATURES</font></h2>
+<font size=+0>Grass files created have the name extracted from the basename
+of the shapefile.</font>
+<p><font size=+0>All the fields in the associated dbf file are imported,
+but those not recognised as INTEGER, DOUBLE OR STRING are simply recorded
+as INTEGER with a common value of zero. This is a place-holder for possibly
+improved type support in the future.</font>
+<p><font size=+0>A field may be chosen as the attribute field, or if not,
+a sequential ID field is created.</font>
+<p><font size=+0>Multipoint themes are imported with individual points
+being each given a separate record, but the original record number is preserved
+in a special field. It is always the first (after the attribute).</font>
+<p><font size=+0>If a measure field is defined in the input theme, this
+is recorded in a special field. It will be the second if present. A module
+or script using these sites lists is expected to know if this field is
+present. This fact is not recorded.</font>
+<p><font size=+0>An optional height record for 3d points can be stored
+if present as a third dimension.</font>
+<br><a NAME="FLAGS"></a>
+<h2>
+<font size=+0>FLAGS</font></h2>
+
+<table COLS=3 WIDTH="100%" rules="none" frame="none" >
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="2%"><b><font size=+0>-l</font></b>
+<p><b><font size=+0>-z</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="17%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>List the fields contained
+in the DBF file associated with the input shapefile, then exit.</font>
+<p><font size=+0>Include a height with each record. The height will only
+be recorded if this flag is set, and then will always be given. If the
+input data does not contain a height field, a constant value is set, which
+defaults to 0. The default can be over-ridden with the <i>height</i> option
+- see below.</font></td>
+</tr>
+
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="2%"><b><font size=+0>-m</font></b></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="17%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>Include a field in
+the sites file with the measure field from the input theme. This is only
+used if the input theme defines this field, <b>and</b> the user specifies
+this flag. Otherwise it is ignored. If present, the measure field will
+be the second field.</font></td>
+</tr>
+
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="2%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="17%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"></td>
+</tr>
+</table>
+
+<p><a NAME="OPTIONS"></a>
+<h2>
+<font size=+0>OPTIONS</font></h2>
+
+<table COLS=3 WIDTH="100%" rules="none" frame="none" >
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="16%"><font size=+0><b>in=</b><i>name</i></font></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="3%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>Name of input shape
+file. Provide a full path name or the name of a file in the current directory.
+Any of the full pathname, basename, or prefix only will suffice.</font></td>
+</tr>
+
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="16%"><font size=+0><b>height=</b><i>z-value</i></font></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="3%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>In the event you select
+the <b>-z</b> option, <b>and</b> there is no in-built height field (zval)
+in the input file, this can provide a constant height value. Otherwise
+it is ignored if given.</font></td>
+</tr>
+
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="16%"><font size=+0><b>attribute=</b><i>a_name</i></font></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="3%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"><font size=+0>Name of the field in
+the dbf file to use as the attribute in the sites list. Defaults to a sequential
+index if no attribute field is given, or the given field is a string field.</font></td>
+</tr>
+
+<tr ALIGN=LEFT VALIGN=TOP>
+<td ALIGN=LEFT VALIGN=TOP WIDTH="16%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="3%"></td>
+
+<td ALIGN=LEFT VALIGN=TOP WIDTH="80%"></td>
+</tr>
+</table>
+
+<p><a NAME="BUGS AND CAVEAT"></a>
+<h2>
+<font size=+0>BUGS AND CAVEAT</font></h2>
+<font size=+0>The projection must be set in the mapset before input.</font>
+<p><font size=+0>Some site maps do not display all markers.</font>
+<p><font size=+0>The time stamp facility does not appear to work at present.</font>
+<br><a NAME="SEE ALSO"></a>
+<h2>
+<font size=+0>SEE ALSO</font></h2>
+<i><font size=+0>g.mapset, g.region, g.proj, v.in.shape.</font></i>
+<br><a NAME="AUTHORS"></a>
+<h2>
+<font size=+0>AUTHORS</font></h2>
+<font size=+0>David D. Gray</font>
+</body>
+</html>

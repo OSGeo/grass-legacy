@@ -1,7 +1,0 @@
-
-\i.gensig\ - An imagery function that generates spectral signatures
-for an image based on a trainging map of already classified areas/pixels.
-The resulting signature file can be used as input for \i.maxlik\ or
-as a seed signature file for \i.cluster\.
-
-(GRASS Imagery Program)

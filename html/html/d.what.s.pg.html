@@ -1,0 +1,123 @@
+<html>
+<A NAME="d.what.s.pg">
+<TITLE>d.what.s.pg</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>d.what.s.pg</B></EM> - Report database attributes associated with a specific point location. (GRASS-RDBMS Attribute Interface Program)
+
+<H2>SYNOPSIS</H2>
+<B>d.what.s.pg</B><BR>
+<B>d.what.s.pg help</B><BR>
+<B>d.what.s.pg tab</B><EM>=name</EM> <B>xcol</B><EM>=name</EM> <B>ycol</B><EM>=name</EM> <B>distance</B><EM>=value</EM>[<B>join</B><EM>=tab,tabkey,pkey</EM>]
+
+<H2>ALTERNATE</H2>
+<B>d.what.s.pg help -s</B><BR>
+<B>d.what.s.pg -s pql</B><EM>=filename</EM> <B>distance</B><EM>=search radius</EM>
+
+<H2>DESCRIPTION</H2>
+<EM>d.what.s.pg</EM> reports database attributes in the currently selected database which are associated with a specific point location. The current database is identified by the GRASS environment variable $PGDBASE which is set using the <EM>g.select.pg</EM> GRASS-RDBMS interface tool. The location to query is selected by the user with the mouse.  The radius around this point to search is specified by the distance argument.  Sites are selected by comparing the values in the database columns containing X and Y coordinate data against the coordinate data at the current mouse location.  If no join arguments are supplied by the user the columns in the table containing the coordinate values are returned in the report.  By specifying a join criteria attribute information from a related table can be returned in the report.  If information from more than one table is required use the <EM>-s</EM> flag and the alternate command line format (see below).
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>tab=databasetablename</B>
+<DD>Table containing X, Y coordinate values
+<P>
+
+<DT><B>xcol=databasecolumnname</B>
+<DD>Column containing the X coordinate (E/W) value.
+<P>
+
+<DT><B>ycol=databasecolumnname</B>
+<DD>Column containing the Y coordinate (N/S) value.
+<P>
+
+<DT><B>distance=value</B>
+<DD>Radius distance from the current mouse location to conduct database search.
+<P>
+
+<DT><B>join=tab,tabkey,pkey</B>
+<DD>Optionally, a series of join parameters can be supplied to retrieve information from related database tables.  The format for these parameters is reviewed in the following discussion.  Tab is the table used to develop the current postQUEL query.  Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file.  Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+</DL>
+
+<DD><EM>d.what.s.pg  tab=well xcol=utmeast ycol=utmnorth distance=500</EM>
+
+<P>
+For instance, assume that well is a table containing X,Y coordinate values and that wellowners is a table containing ownership information associated with well logs.  To base a query on site location which would return attribute data on ownership and locational information in the table well the following join would be needed on the command line:
+<P>
+
+<DD><EM>tab = well join=wellowners,wellowners.wellid,well.wellid</EM>
+
+<P>
+The column wellid is common to both the well and the wellowners table. Because of this attribute data from both tables will be returned if the coordinates registered by the mouse return a record from the table well within a radius specified by the distance parameter on the command line.  Specifying these conditions would insure that all rows from table roads which satisfy the query criteria would be matched with the corresponding rows in table main, which are then related to the spatial features in the GRASS data layer via the GRASS category values.
+
+<P>
+This syntax is adequate to accomplish 2 table joins.  However, if the query demands joins between more than 2 tables it is advisable to use the <EM>-s</EM> option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
+
+<H2>ALTERNATE COMMAND LINE USAGE</H2>
+The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line.  When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed postQUEL SELECT statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
+
+<P>
+The user must also specify the name of the GRASS data layer containing these category values on the command line.  The following example illustrates the syntax which must be used in constructing a SELECT statement for use with the <EM>-s</EM> flag.
+<P>
+
+<B>EXAMPLE (single table)</B><P>
+<EM>d.what.s.pg -s pql=well.pql distance=10</EM>
+<P>
+
+well.pql:<BR>
+<EM>retrieve unique (well.all)<BR>
+where (((well.utmeast-?) * (well.utmeast-?) + (well.utmnorth-?) * (well.utmnorth-?)) &lt; ?) and well.utmeast &gt; 0 and well.utmnorth &gt;0</EM>
+<P>
+
+<B>EXAMPLE (two table join)</B><P>
+<EM>d.what.s.pg -s pql=nri.pql distance</EM>
+<P>
+
+nri.pql:<BR>
+<EM>retrieve unique (well.all,wellowners.all)<BR>
+where (((well.utmeast-?) * (well.utmeast-?) + (well.utmnorth-?) * (well.utmnorth-?)) &lt; ?) and well.utmeast &gt; 0 and well.utmnorth &gt;0 and wellowners.lastname ~ "SM" and wellowners.wellid=well.wellid</EM>
+
+<H2>NOTE</H2>
+The symbol ? in these examples is a meta character used to evaluate coordinate locations returned by the GRASS pointer against records in the database.  The ? symbols must be included in the pql file.
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-s</B>
+<DD>PostQUEL select statements are input from a prepared file.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>pql=filename</B>
+<DD>PostQUEL statements specifying well formed selection criteria.  These criteria must include the database table name, the Xcol and Ycol names as well as the search distance and any "JOINS" needed to retrieve the coordinate values.  Additional criteria may be placed in the "where" clause to further subset information returned from the database.
+<P>
+
+<DT><B>input=map</B>
+<DD>Name of an existing raster map
+</DL>
+
+<H2>BUGS</H2>
+None known.
+
+<H2>NOTE</H2>
+This program requires the Postgres database software.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
+
+<H2>AUTHOR</H2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
+<P>
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+<P>
+Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</BODY>
+</HTML>
+

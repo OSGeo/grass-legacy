@@ -1,0 +1,25 @@
+PGM = v.in.shape.pg
+# SHAPELIB=$(SRC)/libes/vect32_64/shapelib-1.2.8
+
+HOME = $(BIN_CONTRIB_CMD)
+EXTRA_CFLAGS = $(VECT_INCLUDE) $(PQINCPATH)
+# EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG # for debugging
+LIST = 	main.o \
+	shpopen.o \
+	dbfopen.o \
+	dbutils.o \
+	shp2dig.o \
+	writelin.o \
+	gbtree.o \
+	cleanup.o \
+	pgdump.o
+
+# LINK_LIST = ../../libes/vect32_64/shapelib-1.2.8/shpopen.o \
+# 	../../libes/vect32_64/shapelib-1.2.8/dbfopen.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB) $(XEXTRALIBS)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) \
+	$(DATETIMELIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB) $(PQLIB)
+
+$(VECTLIB): #
+$(GISLIB): # 

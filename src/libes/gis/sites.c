@@ -1,4 +1,3 @@
-/* Status: GRASS 5 beta 5 10/99 */
 /*-
  * These functions and definitions support the site format for 5.0
  * (format proposed by Dave Gerdes):
@@ -14,24 +13,38 @@
 
 /*-
  * $Log$
- * Revision 1.1  1999-12-29 15:10:31  markus
- * Initial revision
+ * Revision 1.7  2000-10-15 04:02:59  eric
+ * Undo breakage I introduced.
+ *
+ * Revision 1.6  2000/10/14 01:36:54  eric
+ * Fix bug I introduced to sites.c; Fix the real bug in s.to.rast --
+ * was creating a site struct with the *wrong* cattype.
+ *
+ * Revision 1.5  2000/10/13 00:54:52  eric
+ * Small modifications to G__site_get() to fix missing the first attribute
+ * when no cat exists and returning a spurious error code when everything
+ * was okay.  s.to.rast should now work fine with sites like
+ * east|north|%double
+ *
+ * Revision 1.4  2000/06/30 11:33:12  markus
+ * Bill Brown: fix to parse multiple strings in site_list properly
+ *
+ * Revision 1.3  1999/12/30 10:24:19  markus
+ * G__site_get, G__site_put: added return statements
+ *
+ * Revision 1.2  1999/12/30 10:20:40  markus
+ * added several G_free statements
+ *
+ * Revision 1.1.1.1  1999/12/29 15:10:31  markus
+ * initial CVS import
  *
  * Revision 1.41  1999/10/18  brown
  * Created G__site_put as G_site_put with format option and changed
  * G_site_put into a wrapper (for s.proj).
  *
- * $Log$
- * Revision 1.1  1999-12-29 15:10:31  markus
- * Initial revision
- *
- * Revision 1.40  1997/05/07  brown
+ * Revision 1.40a  1997/05/07  brown
  * changed G_site_get to return 1 on "format mismatch (extra data)" 
  * instead of error
- *
- * $Log$
- * Revision 1.1  1999-12-29 15:10:31  markus
- * Initial revision
  *
  * Revision 1.40  1996/05/23  brown
  * changed DateTime stuff to use TimeStamp instead
@@ -382,16 +395,26 @@ int G__site_get ( FILE *ptr, Site *s, int fmt)
       if ((buf = next_att (buf)) == (char *) NULL)
 	return (FOUND_ALL(s,n,dim,c,d)? err: -2);
       break;
+
     case '%':			/* decimal attribute */
       if (d < s->dbl_alloc) {
-	if (sscanf (buf, "%%%lf", &(s->dbl_att[d++])) < 1)
-	  return -2;
+	p1 = ++buf;
+	s->dbl_att[d++] = strtod(buf, &p1);
+	if (p1 == buf) {
+		/* replace with:
+		 * s->dbl_att[d - 1] = NAN
+		 * when we add NULL attribute support
+		 */
+		return -2;
+	}
+	/* err = 0; Make sure this is zeroed */
       } else {
-	err = 1;  /* extra decimal */
+	 err = 1;  /* extra decimal */
       }
 
-      if ((buf = next_att (buf)) == (char *) NULL)
-	return (FOUND_ALL(s,n,dim,c,d)? err: -2);
+      if ((buf = next_att (buf)) == (char *) NULL) {
+	return (FOUND_ALL(s,n,dim,c,d)) ? err : -2;
+      }
       break;
     case '@':			/* string attribute */
       if (isnull(*buf) || isnull(*(buf + 1)))
@@ -410,8 +433,9 @@ int G__site_get ( FILE *ptr, Site *s, int fmt)
 	else
 	  return (FOUND_ALL(s,n,dim,c,d)? err: -2);
       }
-      if ((buf = next_att (buf)) == (char *) NULL)
+      if ((buf = next_att (buf)) == (char *) NULL) {
 	return (FOUND_ALL(s,n,dim,c,d)? err: -2);
+      }
       break;
     }
   }
@@ -501,6 +525,7 @@ int G__site_put ( FILE *fptr, Site *s, int fmt)
   fprintf (fptr, "%s\n", buf);
   return 0;
 }
+
 
 int G_site_describe ( FILE *ptr,
   int *dims,int *cat,int *strs,int *dbls)
@@ -696,8 +721,12 @@ int G_site_put_head ( FILE *ptr, Site_head *head)
          if ((head->time=(struct TimeStamp *) 
                          G_malloc(sizeof(struct TimeStamp)))==NULL)
 	     G_fatal_error("Memory error in writing timestamp");
-	 else if (G_scan_timestamp (head->time, head->stime) < 0)
+	 else 
+	 if (G_scan_timestamp (head->time, head->stime) < 0)
+	 {         
 	     G_warning("Illegal TimeStamp string");
+	     return -1; /* added to prevent crash 5/2000 MN*/
+	 }
       }
 
       G_format_timestamp (head->time, head->stime);
@@ -825,7 +854,7 @@ int cleanse_string (char *buf)
    */
 
   /* find where this string terminates */
-  if (G_index (buf, DQUOTE) == (char) NULL)	/* if no DQUOTEs, */
+  if ( *buf != DQUOTE)	/* if no DQUOTEs, */
   {
     stop = G_index (buf, SPACE);/* then SPACE separates */
     if (stop == (char *) NULL)

@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     int row,col;
     int nrows, ncols, i, dp;
     int number;
+	struct GModule *module;
     struct
     {
 	struct Option *map ;
@@ -30,6 +31,10 @@ int main(int argc, char *argv[])
     } flag;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+    module->description =
+		"Converts a raster map layer into an ASCII text file.";
 
 /* Define the different options */
 

@@ -1,18 +1,32 @@
 /*-
- * s.surf.rst: main program for interpolation and topographic analysis 
+ * s.surf.rst: main program for interpolation and topographic analysis
  * from scattered point data using regularized spline with tension
  *
  * Original program (1989) and various modifications:
- * Lubos Mitas 
+ * Lubos Mitas
  *
  * GRASS4.1 version of the program and GRASS4.2 modifications:
  * H. Mitasova
- * I. Kosinovsky, D. Gerdes 
- * D. McCauley 
+ * I. Kosinovsky, D. Gerdes
+ * D. McCauley
  *
- * Copyright 1989, 1993, 1995, 1997:
- * L. Mitas,  H. Mitasova,
+ * Copyright (C) 1989, 1993, 1995, 1997 L. Mitas,  H. Mitasova,
  * I. Kosinovsky, D.Gerdes, D. McCauley
+ *
+ *This program is free software; you can redistribute it and/or
+ *modify it under the terms of the GNU General Public License
+ *as published by the Free Software Foundation; either version 2
+ *of the License, or (at your option) any later version.
+ *
+ *This program is distributed in the hope that it will be useful,
+ *but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *GNU General Public License for more details.
+ *
+ *You should have received a copy of the GNU General Public License
+ *along with this program; if not, write to the Free Software
+ *Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+ *
  *
  * Notes on modifications:
  *
@@ -20,7 +34,7 @@
  * modified by Mitasova in August 1995 segmentation, tension
  * modified by Mitasova in November 1996, reference info, no mod. needed
  *                      for variable smoothing
- * modified by Brown in June 1999 to allow site attribute selection 
+ * modified by Brown in June 1999 to allow site attribute selection
  *                      for elev & smoothing
  *
  * Modified by Brown in Oct 1999 to fix writing of TimeStamp info so
@@ -33,25 +47,6 @@
  * Modified by Bill Hughes in Oct. 1999 for compliance with ANSI?
  * Modified by Mitasova in Nov. 1999 added -t flag for dnorm-independent tension
  *
- */
-
-/*
- * The interpolation library and interpolation programs, both binary and
- * source is copyrighted, but available without fee for education,
- * research and non-commercial purposes. Users may distribute the binary
- * and source code to third parties provided that the copyright notice and
- * this statement appears on all copies and that no charge is made for
- * such copies.  Any entity wishing to integrate all or part of the source
- * code into a product for  commercial use or resale, should contact the
- * the authors of the software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY. THE
- * University of Illinois, U.S.Army CERL or authors SHALL NOT BE LIABLE FOR 
- * ANY DAMAGES SUFFERED BY THE USER OF THIS SOFTWARE.
- * 
- * By copying this program, you, the user, agree to abide by the copyright
- * conditions and understandings with respect to any software which is
- * marked with a copyright notice.
  */
 
 
@@ -67,8 +62,6 @@
 #include "Vect.h"
 #include "linkm.h"
 #include "bitmap.h"
-#include "digit.h"
-#include "dig_head.h"
 
 #include "interpf.h"
 #include "surf.h"
@@ -141,6 +134,7 @@ int elattr, smattr;
 
 struct BM *bitmask;
 struct Cell_head cellhd;
+struct GModule *module;
 
 char msg[1024];
 
@@ -171,6 +165,12 @@ int main ( int argc, char *argv[])
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "Interpolation and topographic analysis from given site "
+                  "data to GRASS floating point raster format using "
+                  "regularized spline with tension";
+                  
   if (G_get_set_window (&cellhd) == -1)
     exit (0);
   ew_res = cellhd.ew_res;
@@ -272,7 +272,6 @@ int main ( int argc, char *argv[])
   /*
   parm.rsm->options = "0.00-1000.00";
   */
-  parm.rsm->answer = SMOOTH; /*THIS was MISSING, added by Helena nov 1999*/
   parm.rsm->required = NO;
   parm.rsm->description = "Smoothing parameter";
 

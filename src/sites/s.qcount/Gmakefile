@@ -1,7 +1,6 @@
 NAME=s.qcount
 
 PGM=$(BIN_CONTRIB_CMD)/$(NAME)
-#PGM=$(NAME)
 
 MSEC=4
 MDIR=$(SRC)/../man/man$(MSEC)
@@ -14,18 +13,17 @@ SOURCE = \
 	findquads.c \
 	indices.c \
 	main.c \
-	readsite.c 
 
 LIST = \
 	count.o \
 	findquads.o \
 	indices.o \
 	main.o \
-	readsite.o 
 
 LIBES= $(GISLIB) $(DATETIMELIB) $(MATHLIB) 
 
 #all: $(PGM) man hello
+all: $(PGM)
 
 $(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)
@@ -59,10 +57,7 @@ veryclean: realclean
 dist: veryclean
 	(cd .. ; tar cvf s.qcount.tar s.qcount; gzip s.qcount.tar; mv s.qcount.tar.gz /home/pasture/ftp/pub/mccauley/grass)
 
-count.o: s_struct.h quaddefs.h 
-findquads.o: s_struct.h quaddefs.h 
-indices.o: s_struct.h quaddefs.h 
-main.o: s_struct.h quaddefs.h 
-readsite.o: s_struct.h quaddefs.h 
-
-$(LIBES): #
+count.o:  quaddefs.h 
+findquads.o: quaddefs.h 
+indices.o:  quaddefs.h 
+main.o:  quaddefs.h 

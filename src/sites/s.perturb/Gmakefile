@@ -1,7 +1,6 @@
 NAME=s.perturb
 
 PGM=$(BIN_CONTRIB_CMD)/$(NAME)
-#PGM=$(NAME)
 
 MSEC=4
 MDIR=$(SRC)/../man/man$(MSEC)
@@ -22,9 +21,7 @@ LIST  = \
 	normalsv.o   \
 	fische.o     
  
-#all: $(PGM) man
 all: $(PGM) 
-
 
 $(PGM): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
@@ -59,4 +56,3 @@ normal00.o: 	zufall.h
 normalen.o: 	zufall.h
 normalrs.o: 	zufall.h
 normalsv.o: 	zufall.h
-

@@ -1,0 +1,98 @@
+<TITLE>r.to.gnuplot</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.to.gnuplot</b></EM>  - outputs a raster map in GNUPLOT format
+<BR>
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.to.gnuplot help</B>
+<BR>
+<B>r.to.gnuplot</B> <EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.to.gnuplot</EM>
+is a Bourne shell script that converts a raster map into
+a format suitable for plotting with
+<EM>g.gnuplot.html</EM>
+and writes the results to standard output.
+
+<H2>OPTIONS</H2>
+
+This program runs non-interactively;  the user must state
+all parameter values on the command line.
+
+<H3>Parameter:</H3>
+
+<DL>
+<DT><EM>name</EM> 
+<DD>Name of a raster map layer.
+</DL>
+
+<H2>EXAMPLE</H2>
+
+Typing the following at the command line:
+
+<DL>
+<DD>
+<B>r.to.gnuplot elevation &gt; elev.dat </B>
+</DL>
+
+will write the raster data to <EM>elev.dat</EM>.
+After staring the GRASS graphics monitor, the following
+dialogue:
+
+<DL>
+<DD>
+<B>g.gnuplot</B><BR>
+gnuplot&gt; <B>set parametric</B><BR>
+gnuplot&gt; <B>set contour base</B><BR>
+gnuplot&gt; <B>set nosurface</B><BR>
+gnuplot&gt; <B>set view 180,0</B><BR>
+gnuplot&gt; <B>splot 'elev.dat' noTITLE with lines</B>
+</DL>
+
+will plot a contour map of <EM>elevation</EM>.
+
+<H2>NOTES</H2>
+
+Similar procedures may be used to plot
+wire-mesh surfaces.
+
+
+<P>
+
+<EM>g.gnuplot</EM>
+may be used to simultaneously plot surfaces and contours from
+multiple raster maps.
+
+
+<P>
+
+Output may be saved as 
+PostScript, FrameMaker, TeX, etc (approximately 2 dozen output
+formats).
+
+<H2>FILES</H2>
+
+$GISBASE/scripts/r.to.gnuplot.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.stats.html">r.stats</EM><br>
+<EM><A HREF="v.to.gnuplot.html">v.to.gnuplot</EM><br>
+<EM><A HREF="g.gnuplot.html">g.gnuplot</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Darrell McCauley, Agricultural
+Engineering, Purdue University

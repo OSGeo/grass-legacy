@@ -10,8 +10,14 @@ int main (int argc, char *argv[])
     struct SigSet S;
     int i;
     int junk;
+	struct GModule *module;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Generate statistics for i.smap from raster map layer.";
+
     parse (argc,argv, &parms);
     openfiles (&parms, &files);
     read_training_labels (&parms, &files);

@@ -1,12 +1,13 @@
 HOME=$(BIN)
 DBASEDIR=$(ETC)/gdbase
-SCRIPTS= r.gdbase s.gdbase s.reclass v.gdbase
+SCRIPTS= r.gdbase s.gdbase v.gdbase
 
 all:
-	cd $(HOME) ; rm -f $(SCRIPTS)
-	cd modules; cp $(SCRIPTS) $(HOME); cd ..
-	cd $(HOME) ; chmod +rx $(SCRIPTS)
-	rm -rf $(DBASEDIR)
-	mkdir $(DBASEDIR)
-	cd scripts; tar cvf - . | (cd $(DBASEDIR) ; tar xvf -)
-	cd $(DBASEDIR) ; chmod +rx gdb.*
+	echo $(UNIX_SYS)
+	(cd $(HOME) ; rm -f $(SCRIPTS);)
+	cd modules; cp $(SCRIPTS) $(HOME); cd .. ;
+	(cd $(HOME) ; chmod +rx $(SCRIPTS);)
+	rm -rf $(DBASEDIR) ;
+	mkdir $(DBASEDIR) ;
+	cd scripts; tar cf - . | (cd $(DBASEDIR) ; tar xf -) ;
+	cd $(DBASEDIR) ; chmod +rx gdb.* ;

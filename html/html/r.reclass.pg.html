@@ -1,0 +1,81 @@
+<html>
+<A NAME="r.reclass.pg">
+<TITLE>r.reclass.pg</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r.reclass.pg</B></EM> - Generate a new raster reclass map based on the results of multiple queries to the currently selected database. (GRASS-RDBMS Raster Interface Program)
+
+<H2>SYNOPSIS</H2>
+<B>r.reclass.pg</B><BR>
+<B>r.reclass.pg help</B><BR>
+<B>r.reclass.pg pql</B><EM>=file</EM> <B>input</B><EM>=name</EM> <B>key</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>label</B><EM>=name</EM>]
+
+<H2>DESCRIPTION</H2>
+<EM>r.reclass.pg</EM> generates reclass rules for a new raster map layer based on the results of multiple queries to the currently selected database. The user constructs a series of mutually exclusive postQUEL retrieve statments designed to return groups of records from the database. Each group of records should be interanally consistent in terms of attribute characteristics specified by the user in the retrieve clause.  These groups should also be mutually exclusive, thereby insuring that a row returned by one retrieve clause is not also returned by a subsequent retrieve clause. Each group of records therefore forms the basis for a single category in the resulting GRASS raster reclass map.  <EM>r.reclass.pg</EM> processes each retrieve statement in order generating the GRASS reclass rules needed to create a new raster map. As each retrieve statment is processed the group of records returned receives a common category value. The category value is incremented by one for each subsequent retrieve statment which is processed.  The resulting reclass map will have one category for each of the original retrieve statements and an additional category for no data areas. No data in this case includes actual no data areas and areas for which no rows were returned by the database queries.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>pql=filename</B>
+<DD>Name of file containing postQUEL query statements.
+<P>
+
+<DT><B>input=map</B>
+<DD>Name of an existing raster map layer.
+<P>
+
+<DT><B>key=databasecolumnname</B>
+<DD>Name of the database column linked to GRASS via the categories in the input map layer.
+<P>
+
+<DT><B>output=map</B>
+<DD>Name of new raster (reclass), file.
+<P>
+
+<DT><B>label=name</B>
+<DD>Label for new categories.
+</DL>
+<P>
+
+<B>EXAMPLE:</B><P>
+<EM>r.reclass.pg pql=dbrr.pql key=grasscat input=seco.soils output=tfact.recl label="Tfact="</EM>
+<P>
+
+dbrr.pql:<BR>
+<EM>retrieve (secosoilcats.grasscat)<BR>
+where layer.tfact &gt;0 and layer.tfact &lt;=2 and layer.muid=secosoilcats.muid
+<P>
+
+retrieve (secosoilcats.grasscat)<BR>
+where layer.tfact &gt;0 and layer.tfact &lt;=2 and layer.muid=secosoilcats.muid
+<P>
+
+retrieve (secosoilcats.grasscat)<BR>
+where layer.tfact = 5 and layer.muid=secosoilcats.muid</EM>
+<P>
+
+<H2>BUGS</H2>
+None known.
+
+<H2>NOTE</H2>
+This program requires the Postgres database software.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
+
+<H2>AUTHOR</H2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
+<P>
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+<P>
+Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+
+</BODY>
+</HTML>
+

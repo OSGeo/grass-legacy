@@ -1,0 +1,11 @@
+LIBES  = $(GISLIB) $(DATETIMELIB)
+
+#EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+
+LIST   = main.o die.o get_range.o
+
+$(BIN_MAIN_CMD)/r.sunmask: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)	$(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

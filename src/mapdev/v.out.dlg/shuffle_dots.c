@@ -1,4 +1,4 @@
-#include "digit.h"
+#include "Vect.h"
 #include "local_proto.h"
 
 static int next_dot(struct Map_info *,int);

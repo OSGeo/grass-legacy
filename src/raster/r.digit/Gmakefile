@@ -1,12 +1,14 @@
 BIN=$(BIN_ALPHA_INTER)
+EXTRA_CFLAGS	= $(DANOTHER_BUTTON)
+
 PGM=r.digit
 OBJ =  main.o digitize.o get_type.o setup_graph.o get_map.o \
 	get_point.o get_label.o get_area.o get_line.o get_circle.o \
 	instruct.o bnw_line.o create_map.o get_en.o
 
-LIBS = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASK) $(XDRLIB) $(MATHLIB)
+LIBS = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASK)
 
 $(BIN)/$(PGM): $(OBJ) $(LIBS)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBS) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBS) $(MATHLIB) $(XDRLIB)
 
 $(LIBS): #

@@ -1,0 +1,16 @@
+PGM = r.random.surface
+HOME = $(BIN_MAIN_CMD)
+#HOME = .
+
+#These functions are obtained by specifying -ldl as an option to ld(1).
+
+OBJS =	cpfilter.o gennorm.o makepp.o decay.o init.o save.o \
+	calcsd.o digits.o calcsurf.o gasdev.o main.o random.o \
+	dd.o makebigf.o zero.o
+
+$(HOME)/$(PGM): $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) $(XDRLIB) $(MATHLIB) -o $@
+
+$(OBJS): ransurf.h
+
+$(GISLIB): #

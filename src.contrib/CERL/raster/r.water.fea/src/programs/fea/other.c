@@ -36,13 +36,13 @@ get_cell_values (double *east, double *north, int max, double *value_array, char
 void 
 const_value (char *variable, int maximum, double *array, double uplim, double lowlim)
 {	
-	char line[30];
+	char line[31];
 	int i,ret = FALSE;
 	double const_value;
 
 	do{
 		fprintf (stdout,"\n%s(%g - %g):",variable,lowlim,uplim);
-		if(!gets(line)) exit(2);
+		if(!fgets(line,30,stdin)) exit(2);
 		ret = sscanf(line,"%lf",&const_value);
 		if(const_value < lowlim || const_value > uplim){
 			fprintf(stderr,"**<%g>**Invalid value\n",const_value);

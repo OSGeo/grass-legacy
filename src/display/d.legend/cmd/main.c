@@ -4,7 +4,16 @@
 #include "raster.h"
 #include "gis.h"
 
-/* added "no data" flag 11/99 M. Neteler */
+#define	VAL	0x1
+#define	CAT	0x10
+
+/*********
+  $Id$
+ 
+  bugfix on shifted number 2/2000 M. Neteler
+  
+  added "no data" flag 11/99 M. Neteler 
+**********/
 
 int main(int argc,char **argv)
 {
@@ -27,9 +36,10 @@ int main(int argc,char **argv)
 	int white ;
 	int x_box[5] , px_box[5];
 	int y_box[5] , py_box[5];
+	int show ;
 	struct Categories cats ;
 	struct Colors colors ;
-	struct Option *opt1, *opt2, *opt3, *opt4 ;
+	struct Option *opt1, *opt2, *opt3, *opt4, *opt5 ;
 	struct Range range ;
 	struct Flag *flag1;
 	struct FPRange fp_range ;
@@ -66,9 +76,17 @@ int main(int argc,char **argv)
 	opt4->options    = "0-1000" ;
 	opt4->description= "Number of text lines (useful for truncating long legends)" ;
 
+	opt5 = G_define_option() ;
+	opt5->key        = "show" ;
+	opt5->type       = TYPE_STRING ;
+	opt5->multiple   = YES ;
+	opt5->answer     = "val,cat" ;
+	opt5->options    = "val,cat" ;
+	opt5->description= "Show either values or categories. Or both" ;
+
         flag1 = G_define_flag();
-        flag1->key      = 'f';
-        flag1->description= "Do not display no data values.";
+        flag1->key      = 'n';
+        flag1->description= "Do not display no data (NULL) values.";
                         
 
 	/* Initialize the GIS calls */
@@ -103,6 +121,16 @@ int main(int argc,char **argv)
 	if (opt4->answer != NULL)
 		sscanf(opt4->answer,"%d",&lines);
 	
+	show = 0;
+	for(i=0; opt5->answers[i]; i++)
+	{
+		if(!strncmp(opt5->answers[i],"val",3))
+			show |= VAL;
+		else
+		if(!strncmp(opt5->answers[i],"cat",3))
+			show |= CAT;
+	}
+
 	lines ++ ;
 
 	/* Make sure map is available */
@@ -157,12 +185,17 @@ int main(int argc,char **argv)
 	     G_fatal_error(buff) ;
 	   }
 	   G_get_range_min_max (&range, &min_ind, &max_ind);
+	   if(G_is_c_null_value(&min_ind) && G_is_c_null_value(&max_ind))
+	   {
+	     min_ind = 1;
+	     max_ind = 0;
+	   }
 	   cats_num = max_ind - min_ind + 1 ;
-	   min_ind++;
-	   max_ind++;
+	   /*min_ind++;*/
+	   /*max_ind++;*/
 	   /* to allow for null */
         }
-	else
+	else /* is fp */
 	{
 	   if(!color_ramp)
 		cats_num = G_number_of_raster_cats(&cats) ;
@@ -221,8 +254,9 @@ int main(int argc,char **argv)
 	dot_rows_per_box = y_dots_per_line - 6;
 	for(i=min_ind-1; j<=do_cats && i<=max_ind; j++, i++)
 	{
+#ifdef COLOR_RAMP
 		/* if color ramp, draw one tall box */
-		if(i==1 && color_ramp)
+		if(i==max_ind && color_ramp)
 		{
 		    y_dots_per_line = b - t - 2*x_dots_per_line; 
 	            dot_rows_per_box = y_dots_per_line - 6;
@@ -249,31 +283,53 @@ int main(int argc,char **argv)
             	    py_box[3] = 1                 ;
 	            px_box[4] = (6-y_dots_per_line) ;
                 }
+#endif
 		cur_dot_row += y_dots_per_line;
 
 		/* White box */
-		R_standard_color(white) ;
-		R_move_abs(l+2, (cur_dot_row-1)) ;
-		R_cont_rel(0, (2-y_dots_per_line)) ;
-		R_cont_rel((x_dots_per_line-2), 0) ;
-		R_cont_rel(0, (y_dots_per_line-2)) ;
-		R_cont_rel((2-x_dots_per_line), 0) ;
-
-		/* Black box */
-		R_standard_color(black) ;
-		R_move_abs(l+3, (cur_dot_row-2)) ;
-		R_cont_rel(0, (4-y_dots_per_line)) ;
-		R_cont_rel((x_dots_per_line-4), 0) ;
-		R_cont_rel(0, (y_dots_per_line-4)) ;
-		R_cont_rel((4-x_dots_per_line), 0) ;
+		if (i==min_ind-1) /* check for null cat */
+		{
+		  if (!flag1->answer) /* do not draw when flag*/
+		  {
+		    R_standard_color(white) ;
+		    R_move_abs(l+2, (cur_dot_row-1)) ;
+		    R_cont_rel(0, (2-y_dots_per_line)) ;
+		    R_cont_rel((x_dots_per_line-2), 0) ;
+		    R_cont_rel(0, (y_dots_per_line-2)) ;
+		    R_cont_rel((2-x_dots_per_line), 0) ;
+		  }
+		}
+		else
+		  {
+		    R_standard_color(white) ;
+		    R_move_abs(l+2, (cur_dot_row-1)) ;
+		    R_cont_rel(0, (2-y_dots_per_line)) ;
+		    R_cont_rel((x_dots_per_line-2), 0) ;
+		    R_cont_rel(0, (y_dots_per_line-2)) ;
+		    R_cont_rel((2-x_dots_per_line), 0) ;
+		  }
+		
+		if ((i==min_ind-1 && !flag1->answer) || i!=min_ind-1)
+		  {
+		    /* Black box */
+		    R_standard_color(black) ;
+		    R_move_abs(l+3, (cur_dot_row-2)) ;
+		    R_cont_rel(0, (4-y_dots_per_line)) ;
+		    R_cont_rel((x_dots_per_line-4), 0) ;
+		    R_cont_rel(0, (y_dots_per_line-4)) ;
+		    R_cont_rel((4-x_dots_per_line), 0) ;
+		  }
 
 
 		/* Color solid box */
-		if(i<min_ind) /* no data cell */
+		if(i==min_ind-1) /* no data cell */
 		{
-		   D_color(null_cell,&colors) ;
-		   R_move_abs(l+4, (cur_dot_row-3)) ;
-		   R_polygon_rel(x_box, y_box, 5) ;
+		  if (!flag1->answer)
+		  {
+		    D_color(null_cell,&colors) ;
+		    R_move_abs(l+4, (cur_dot_row-3)) ;
+		    R_polygon_rel(x_box, y_box, 5) ;
+		  }
                 }
                 else if(!fp)
 		{
@@ -320,26 +376,70 @@ int main(int argc,char **argv)
 		   } /*fp map */
                 } /* drawing box */
 
+		buff[0] = 0;
+		tmp_buf1[0] = 0;
+		tmp_buf2[0] = 0;
 		/* Draw text */
 		R_standard_color(color) ;
-		if(!i) /* no data cell */
-		   sprintf(buff, " no data");
+		if(i==min_ind-1) /* no data cell */
+		{
+		 if (!flag1->answer)
+		 {
+		   sprintf(tmp_buf2, " no data");
+		 }
+		}
                 else if(!fp)
-		   sprintf(buff, "%2d) %s", i-1, G_get_cat(i, &cats)) ;
+		{
+		   if(show & VAL)
+		      sprintf(tmp_buf1, " %d)", i);
+		   if(show & CAT)
+		   {
+/*
+		      if(show & VAL)
+		         strcat(tmp_buf1, " ");
+*/
+		      sprintf(tmp_buf2, " %s", G_get_cat(i, &cats));
+		   }
+		}
                 else if(dmin==dmax)
 		{
-		   sprintf(tmp_buf1, "%.10f", dmin);
-		   G_trim_decimal(tmp_buf1);
-		   sprintf(buff, "%s) %s", tmp_buf1, descr);
+		   if(show & VAL)
+		   {
+		      sprintf(buff, "%.10f", dmin);
+		      G_trim_decimal(buff);
+		      sprintf(tmp_buf1, " %s)", buff);
+		   }
+		   if(show & CAT)
+		   {
+/*
+		      if(show & VAL)
+		         strcat(tmp_buf1, " ");
+*/
+		      sprintf(tmp_buf2, " %s", descr);
+		   }
 		}
 		else
 		{  
-		   sprintf(tmp_buf1, "%.10f", dmin);
-		   G_trim_decimal(tmp_buf1);
-		   sprintf(tmp_buf2, "%.10f", dmax);
-		   G_trim_decimal(tmp_buf2);
-		   sprintf(buff, "%s - %s) %s", tmp_buf1, tmp_buf2, descr);
+		   if(show & VAL)
+		   {
+		      sprintf(buff, "%.10f", dmin);
+		      G_trim_decimal(buff);
+		      sprintf(tmp_buf2, "%.10f", dmax);
+		      G_trim_decimal(tmp_buf2);
+		      sprintf(tmp_buf1, " %s - %s)", buff, tmp_buf2);
+		   }
+		   tmp_buf2[0] = 0;
+		   if(show & CAT)
+		   {
+/*
+		      if(show & VAL)
+			 strcat(tmp_buf1, " ");
+*/
+		      sprintf(tmp_buf2, " %s", descr);
+		   }
                 }
+		sprintf(buff, "%s%s", tmp_buf1, tmp_buf2) ;
+
 		R_move_abs((l+3+x_dots_per_line), (cur_dot_row)) ;
 		R_text(buff) ;
 	}

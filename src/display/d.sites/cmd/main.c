@@ -130,6 +130,10 @@ int main (int argc, char **argv)
 	}
 
 	D_add_to_list(G_recreate_command()) ;
+
+	D_set_site_name(G_fully_qualified_name(opt4->answer, mapset));
+	D_add_to_site_list(G_fully_qualified_name(opt4->answer, mapset));
+
 	R_close_driver();
 	exit(0);
 }

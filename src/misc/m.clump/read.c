@@ -61,10 +61,8 @@ read_point_list (filename, fs)
     }
 }
 
-void
-extend_pointlist (list, n)
-    struct pointlist *list;
-    int n;
+int
+extend_pointlist (struct pointlist *list, int n)
 {
     list->x = (double *) G_realloc (list->x, n * sizeof(double));
     list->y = (double *) G_realloc (list->y, n * sizeof(double));

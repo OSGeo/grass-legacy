@@ -1,0 +1,148 @@
+#!/bin/sh
+#
+# $Id$
+#
+############################################################################
+#
+# MODULE:	g.mremove
+# AUTHOR(S):	Huidae Cho - hdcho@geni.knu.ac.kr
+# PURPOSE:	applied wildcard to g.remove
+# COPYRIGHT:	(C) 2000 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+program=`basename $0`
+
+if [ ! "$GISBASE" ]
+then
+	echo
+	echo "ERROR: must be in GRASS to use $program"
+	echo
+	exit 1
+fi
+
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
+then
+        echo
+	g.remove help 2>&1 | sed "s/g.remove/$program [-f]/"
+	echo
+	echo "Note:"
+	echo "  You can use wildcard for name. Use -f flag to force removal."
+	echo "  ? or * wildcards should be enclosed with '...' to avoid being expanded"
+	echo "  by the shell first."
+	echo "          e.g., g.mremove rast='*.dem'"
+	echo
+	echo "Warning:"
+	echo "  Use -f flag only when you know what you're doing."
+	exit 1
+fi
+
+force=
+for i
+do
+	if [ "$i" = "-f" ]
+	then
+		force=1
+		continue
+	fi
+
+	echo $i | grep '=' > /dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		i="rast=$i"
+	fi
+	wildcard=`echo $i | awk -F '=' '{print $2}'`
+	case $i in
+		ra=*|ras=*|rast=*)
+			rast=`g.mlist -w type=rast sep=, "$wildcard"`;;
+		v=*|ve=*|vec=*|vect=*)
+			vect=`g.mlist -w type=vect sep=, "$wildcard"`;;
+		i=*|ic=*|ico=*|icon=*)
+			icon=`g.mlist -w type=icon sep=, "$wildcard"`;;
+		l=*|la=*|lab=*|labe=*|label=*|labels=*)
+			labels=`g.mlist -w type=labels sep=, "$wildcard"`;;
+		s=*|si=*|sit=*|site=*|sites=*)
+			sites=`g.mlist -w type=sites sep=, "$wildcard"`;;
+		re=*|reg=*|regi=*|regio=*|region=*)
+			region=`g.mlist -w type=region sep=, "$wildcard"`;;
+		g=*|gr=*|gro=*|grou=*|group=*)
+			group=`g.mlist -w type=group sep=, "$wildcard"`;;
+		3=*|3d=*|3dv=*|3dvi=*|3dvie=*|3dview=*)
+			dview=`g.mlist -w type=3dview sep=, "$wildcard"`;;
+	esac
+done
+
+found=
+if [ "$rast" ]
+then
+	found=1
+	rast="rast=$rast"
+fi
+
+if [ "$vect" ]
+then
+	found=1
+	vect="vect=$vect"
+fi
+
+if [ "$icon" ]
+then
+	found=1
+	icon="icon=$icon"
+fi
+
+if [ "$labels" ]
+then
+	found=1
+	labels="labels=$labels"
+fi
+
+if [ "$sites" ]
+then
+	found=1
+	sites="sites=$sites"
+fi
+
+if [ "$region" ]
+then
+	found=1
+	region="region=$region"
+fi
+
+if [ "$group" ]
+then
+	found=1
+	group="group=$group"
+fi
+
+if [ "$dview" ]
+then
+	found=1
+	dview="3dview=$dview"
+fi
+
+if [ ! "$found" ]
+then
+	echo "No data found."
+	exit 1
+fi
+
+echo g.remove $rast $vect $icon $labels $sites $region $group $dview
+
+yn=y
+if [ ! "$force" ]
+then
+	echo
+	echo "Did you mean this(y/n)?"
+	read yn
+fi
+
+if [ "$yn" = "y" -o "$yn" = "Y" ]
+then
+	g.remove $rast $vect $icon $labels $sites $region $group $dview
+fi
+

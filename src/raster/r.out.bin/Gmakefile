@@ -1,0 +1,9 @@
+PGM=r.out.bin
+HOME=$(BIN_MAIN_CMD)
+
+LIST   = main.o tif_swab.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB) 
+
+$(GISLIB): #

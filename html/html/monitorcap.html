@@ -1,0 +1,94 @@
+<TITLE>monitorcap</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>monitorcap</b></EM>  - Description of device driver database file format.
+
+<H2>DESCRIPTION</H2>
+
+The 
+<EM><A HREF="d.mon.html">d.mon</A></EM> 
+command and all graphics commands
+access a device driver database stored in the file 
+<KBD>$GISBASE/etc/monitorcap</KBD>.
+This file contains a line for each graphics monitor on the system.
+Each line contains 6 fields separated by colons:
+
+<DL>
+<DT>name
+
+<DD>the name by which the user identifies the driver
+
+<DT>program 
+
+<DD>the full pathname of the executable driver or a
+pathname relative to $GISBASE
+
+<DT>description 
+
+<DD>A short 4 or 5 word description of the driver.
+
+<DT>fifos 
+
+<DD>full pathnames to the input and output fifos over which
+the driver communicates with the libraries
+
+<DT>tty 
+
+<DD>the name of the tty from which the driver must be
+started, or empty if there is no such restriction
+
+<DT>msg 
+
+<DD>a message to print to the user if an attempt is made to
+start the driver from the wrong tty.
+
+</DL>
+
+<H2>EXAMPLE</H2>
+
+The following is an example of a single monitor system.  The driver may
+be started from any terminal and uses 
+<KBD>/dev/fifo.a</KBD> and <KBD>/dev/fifo.b</KBD> for
+communication with application programs:
+
+
+<P>
+
+<KBD>x:driver/X:graphics monitor:/dev/fifo.a \ <BR>
+/dev/fifo.b::any terminal</KBD>
+
+
+<P>
+
+This example has 2 monitors on the system, using the same device driver.
+Note that each has a different
+<EM>name</EM>
+field and uses a different pair of fifos.
+Also, each must be started on a specific terminal:
+
+
+<P>
+
+<KBD>
+1:driver/X:monitor 1:/dev/fifo.1a \
+<BR> /dev/fifo.1b:/dev/tty8:tty8
+<BR>
+2:driver/X:monitor 2:/dev/fifo.2a \
+<BR> /dev/fifo.2b:/dev/tty10:tty10
+</KBD>
+
+<H2>NOTES</H2>
+
+Each line in this file must refer to a valid driver.
+No comment lines are supported.  Also, no blank lines are allowed.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.mon.html">d.mon</A></EM> 
