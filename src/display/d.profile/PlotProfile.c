@@ -92,13 +92,16 @@ for (i=0; i<=profile.count; i++)
    if (xscale > 1)
       {
       R_cont_abs((int)(xoffset+xscale*i),
-                 (int)(yoffset-yscale*(double)(ptr->cat-min)));
+                 (int)(yoffset-yscale*(double)
+		       ((ptr->cat >= min)? ptr->cat-min : 0 )));
       R_cont_abs((int)(xoffset+xscale*(i+1.0)),
-                 (int)(yoffset-yscale*(double)(ptr->cat-min)));
+                 (int)(yoffset-yscale*(double)
+		       ((ptr->cat >= min)? ptr->cat-min : 0 )));
       }
    else
       R_cont_abs((int)(xoffset+xscale*i),
-                 (int)(yoffset-yscale*(double)(ptr->cat-min)));
+                 (int)(yoffset-yscale*(double)
+		       ((ptr->cat >= min) ? ptr->cat-min : 0)));
    ptr = ptr->next;
    } 
 R_standard_color(D_translate_color("red"));
