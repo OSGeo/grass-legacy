@@ -173,16 +173,17 @@ Vect_delete ( char *map )
 	return -1;
     }
 
-    /* Open input */
-    Vect_set_open_level (1); /* Topo not needed */
-    ret = Vect_open_old (&Map, map, G_mapset());
-    if ( ret < 1 ) {
-	G_warning ( "Cannot open vector %s", map );
-	return -1;
-    }
 
-    /* Delete all tables, NOT external like shapefile */
+    /* Delete all tables, NOT external (OGR) */
     if ( Map.format == GV_FORMAT_NATIVE ) {
+	/* Open input */
+	Vect_set_open_level (1); /* Topo not needed */
+	ret = Vect_open_old (&Map, map, G_mapset());
+	if ( ret < 1 ) {
+	    G_warning ( "Cannot open vector %s", map );
+	    return -1;
+	}
+
 	n = Vect_get_num_dblinks ( &Map );
 	for ( i = 0; i < n; i++ ) {
 	    Fi = Vect_get_dblink ( &Map, i );
@@ -211,8 +212,9 @@ Vect_delete ( char *map )
 		G_warning ( "Table '%s' linked to vector did not exist.", Fi->table );
 	    }
 	}
+    
+	Vect_close ( &Map );
     }
-    Vect_close ( &Map );
 
     /* Delete all files from vector/name directory */
     sprintf ( buf, "%s/%s/vector/%s", G_location_path(), G_mapset(), map );
