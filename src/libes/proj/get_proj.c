@@ -355,3 +355,33 @@ const char * set_proj_lib (const char *name)
    
     return buf; 
 }
+
+/* pj_print_proj_params(iproj, oproj)
+ * Print projection parameters as used by PROJ.4 for input and
+ * output projections
+ */
+
+int pj_print_proj_params(struct pj_info *iproj, struct pj_info *oproj)
+{
+    char *str;
+   
+    str = pj_get_def(iproj->pj, 1);
+    if(str != NULL)
+    {
+        fprintf(stderr, "\nInput Projection Parameters:%s\n", str);
+        G_free(str);
+    }
+    else
+        return -1;
+   
+    str = pj_get_def(oproj->pj, 1);
+    if(str != NULL)
+    {
+        fprintf(stderr, "\nOutput Projection Parameters:%s\n", str);
+        G_free(str);
+    }
+    else
+        return -1;
+   
+    return 1;
+}

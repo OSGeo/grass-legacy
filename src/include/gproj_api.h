@@ -28,7 +28,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.1  2003-04-07 15:15:19  paul
+ * Revision 1.2  2003-04-16 12:09:26  paul
+ * New function to report actual projection parameters being used by proj
+ *
+ * Revision 1.1  2003/04/07 15:15:19  paul
  * External PROJ.4 (libproj) support
  *
  * Revision 1.1  2002/04/21 14:14:40  roger
@@ -111,6 +114,7 @@ void pj_free(projPJ);
 void pj_set_finder( const char *(*)(const char *) );
 projPJ pj_init(int, char **);
 projPJ pj_init_plus(const char *);
+char *pj_get_def(projPJ, int);
 projPJ pj_latlong_from_proj( projPJ );
 void *pj_malloc(size_t);
 void pj_dalloc(void *);
