@@ -104,8 +104,8 @@ int main (int argc, char **argv)
 
 	struct Option *imapset,		 /* name of input mapset	 */
 	         *inmap,		 /* name of input layer		 */
-	         *outmap,		 /* name of output layer	 */
-	         *inlocation,		 /* name of input location	 */
+                 *inlocation,            /* name of input location       */
+                 *outmap,		 /* name of output layer	 */
 	         *indbase,		 /* name of input database	 */
 	         *interpol,		 /* interpolation method:	 
  					    nearest neighbor, bilinear, cubic */
@@ -128,6 +128,12 @@ int main (int argc, char **argv)
 	inmap->required = YES;
 	inmap->description = "input raster map";
 
+	inlocation = G_define_option();
+	inlocation->key = "location";
+	inlocation->type = TYPE_STRING;
+	inlocation->required = YES;
+	inlocation->description = "location of input map";
+
 	outmap = G_define_option();
 	outmap->key = "output";
 	outmap->type = TYPE_STRING;
@@ -140,17 +146,12 @@ int main (int argc, char **argv)
 	imapset->required = NO;
 	imapset->description = "mapset of input map";
 
-	inlocation = G_define_option();
-	inlocation->key = "location";
-	inlocation->type = TYPE_STRING;
-	inlocation->required = YES;
-	inlocation->description = "location of input map";
 
 	indbase = G_define_option();
 	indbase->key = "dbase";
 	indbase->type = TYPE_STRING;
 	indbase->required = NO;
-	indbase->description = "database of input map";
+	indbase->description = "path to GRASS database of input map";
 
 	interpol = G_define_option();
 	interpol->key = "method";
