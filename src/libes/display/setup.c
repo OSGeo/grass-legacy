@@ -48,7 +48,7 @@ int D_setup (int clear)
     if (clear)
     {
 	D_clear_window();
-	R_standard_color(D_translate_color("black"));
+	R_standard_color(D_translate_color(DEFAULT_BG_COLOR));
 	R_box_abs (l, t, r, b);
     }
 
