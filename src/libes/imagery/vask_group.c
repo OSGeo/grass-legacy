@@ -48,7 +48,7 @@ static int ask (
     char *cancel_msg)
 {
     int line;
-    char tgroup[NAME_LEN], tsubgroup[NAME_LEN];
+    char tgroup[INAME_LEN], tsubgroup[INAME_LEN];
 
 /* read the current group and save its name */
     if (both)
@@ -86,17 +86,17 @@ static int ask (
     if (both)
     {
 	V_line (line, "GROUP:                                     (list will show available groups)");
-	V_ques (group, 's', line++, 10, NAME_LEN);
+	V_ques (group, 's', line++, 10, INAME_LEN);
     }
     else
     {
 	V_line (line, "GROUP:");
-	V_const (group, 's', line++, 10, NAME_LEN);
+	V_const (group, 's', line++, 10, INAME_LEN);
     }
     if (subgroup != NULL)
     {
 	V_line (line, "SUBGROUP:                                  (list will show available subgroups)");
-	V_ques (subgroup, 's', line++, 10, NAME_LEN);
+	V_ques (subgroup, 's', line++, 10, INAME_LEN);
     }
 
 

@@ -134,7 +134,7 @@ static int get_ref (
 {
     int n;
     char buf[200];
-    char name[NAME_LEN], mapset[NAME_LEN];
+    char name[INAME_LEN], mapset[INAME_LEN];
     char color[20];
     FILE *fd;
     FILE *I_fopen_group_ref_old();
