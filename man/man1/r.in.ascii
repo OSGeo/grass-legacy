@@ -1,0 +1,86 @@
+.TH r.in.ascii
+.SH NAME
+\fIr.in.ascii\fR \- Convert an ASCII raster text file into a (binary) raster map layer.
+.br
+.I "(GRASS Raster Data Import Program)"
+.SH SYNOPSIS
+\fBr.in.ascii\fR
+.br
+\fBr.in.ascii help\fR
+.br
+\fBr.in.ascii input\fR\*=\fIname \fBoutput\fR\*=\fIname\fR [\fBtitle\fR\*=\fI"phrase"\fR]
+.SH DESCRIPTION
+\fIr.in.ascii\fR allows a user to create a (binary) GRASS raster map layer
+from an ASCII raster input file with (optional) title.
+.SH "COMMAND LINE OPTIONS"
+.LP
+\fBParameters:\fR
+.IP \fBinput\*=\fIname\fR 20
+Name of an existing ASCII raster file to be imported.
+.IP \fBoutput\*=\fIname\fR 20
+Name to be assigned to resultant binary raster map layer.
+.IP \fBtitle\*="\fIphrase\fR" 20
+Title to be assigned to resultant raster map layer.
+.LP
+The \fIinput\fR file has a header section which describes the location
+and size of the data, followed by the data itself.
+.LP
+The header has 6 lines:
+.LP
+.in +.5i
+.TS
+l l.
+north:	xxxxxx.xx
+south:	xxxxxx.xx
+east:	xxxxxx.xx
+west:	xxxxxx.xx
+rows:	r
+cols:	c
+.TE
+.in -.5i
+.LP
+The north, south, east, and west field values entered
+are the coordinates of the edges of the geographic region.
+The rows and cols field values entered describe the dimensions
+of the matrix of data to follow.
+The data which follows is \fIr\fR rows of \fIc\fR integers.
+.SH EXAMPLE
+The following is a sample \fIinput\fR file to \fIr.in.ascii\fR:
+.LP
+.ne 20
+.TS
+box;
+l n.
+north:	4299000.00
+south:	4247000.00
+east:	528000.00
+west:	500000.00
+rows:	10
+cols:	15
+
+.T&
+l s.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+.TE
+
+.SH NOTES
+The geographic coordinates north, south, east, and west describe the
+outer edges of the geographic region.
+They run along the edges of the cells
+at the edge of the geographic region
+and NOT through the center of the cells at the edges.
+
+The data (which follows the header section) must contain r x c integers,
+but it is not necessary that all the data for a row be on one line.
+A row may be split over many lines.
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
