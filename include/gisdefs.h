@@ -366,7 +366,7 @@ int G_free_fmatrix(float **);
 char *G_date(void);
 
 /* datum.c */
-int G_ask_datum_name(char *, char *);
+int G_ask_datum_params(char *, char *);
 int G_get_datum_by_name(const char *);
 int G_datum_shift(int, double *, double *, double *);
 int G_datum_parameters(int, char *, double *, double *, double *);
