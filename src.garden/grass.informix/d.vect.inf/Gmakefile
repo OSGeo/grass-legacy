@@ -1,0 +1,21 @@
+PGM       = $(GARDEN_BIN)/d.vect.inf
+LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB) 
+
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)  # -Dunlink=puts
+
+OBJS = \
+	main.o  \
+	bsearch.o\
+	find.o\
+	getAllOpts.o \
+	getSopts.o \
+	buildInfxQry.o \
+	runInfxFile.o \
+	plotCat.o 
+
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+$(LIBES): #
