@@ -51,33 +51,35 @@ typedef struct _gnHeap {
 
 } gnHeap_s;
 
-extern void 			gnHeapInit			(
-											gnHeap_s * 		pheap
-											);
+extern void	gnHeapInit		(
+							gnHeap_s * 		pheap
+							);
 
-extern void 			gnHeapFree			(
-											gnHeap_s * 		pheap
-											);
+extern void	gnHeapFree		(
+							gnHeap_s * 		pheap
+							);
 
-extern int 				gnHeapInsertMax		(
-											gnHeap_s * 		pheap ,
-											long 			key ,
-											gnHeapData_u 	value
-											);
+extern int 	gnHeapInsertMax	(
+							gnHeap_s * 		pheap ,
+							long 			key ,
+							gnHeapData_u 	value
+							);
 
-extern gnHeapNode_s * 	gnHeapExtractMax	(
-											gnHeap_s * 		pheap
-											);
+extern int	gnHeapExtractMax(
+							gnHeap_s * 		pheap,
+							gnHeapNode_s *	pnoderet
+							);
 
-extern int 				gnHeapInsertMin	(
-											gnHeap_s * 		pheap ,
-											long 			key ,
-											gnHeapData_u 	value
-											);
+extern int 	gnHeapInsertMin	(
+							gnHeap_s * 		pheap ,
+							long 			key ,
+							gnHeapData_u 	value
+							);
 
-extern gnHeapNode_s * 	gnHeapExtractMin	(
-											gnHeap_s * 		pheap
-											);
+extern int	gnHeapExtractMin(
+							gnHeap_s * 		pheap,
+							gnHeapNode_s *	pnoderet
+							);
 
 __END_DECLS
 #endif

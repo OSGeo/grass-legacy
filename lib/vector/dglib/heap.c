@@ -68,17 +68,17 @@ int gnHeapInsertMin(
 	return i;
 }
 
-gnHeapNode_s * gnHeapExtractMin(
-		gnHeap_s * pheap
+int gnHeapExtractMin(
+		gnHeap_s * pheap,
+		gnHeapNode_s * pnoderet
 		)
 {
-	static gnHeapNode_s s_node;
 	gnHeapNode_s temp;
 	long iparent , ichild;
 
-	if ( pheap->index == 0 ) return NULL; /* empty heap */
+	if ( pheap->index == 0 ) return 0; /* empty heap */
 
-	s_node = pheap->pnode[ 1 ];
+	*pnoderet = pheap->pnode[ 1 ];
 
 	temp = pheap->pnode[ pheap->index-- ];
 	
@@ -99,7 +99,7 @@ gnHeapNode_s * gnHeapExtractMin(
 	}
 	pheap->pnode[ iparent ] = temp;
 
-	return & s_node;	
+	return 1;	
 }
 
 int gnHeapInsertMax(
@@ -130,17 +130,17 @@ int gnHeapInsertMax(
 	return i;
 }
 
-gnHeapNode_s * gnHeapExtractMax(
-		gnHeap_s * pheap
+int gnHeapExtractMax(
+		gnHeap_s * pheap,
+		gnHeapNode_s * pnoderet
 		)
 {
-	static gnHeapNode_s s_node;
 	gnHeapNode_s temp;
 	long iparent , ichild;
 
-	if ( pheap->index == 0 ) return NULL; /* empty heap */
+	if ( pheap->index == 0 ) return 0; /* empty heap */
 
-	s_node = pheap->pnode[ 1 ];
+	*pnoderet = pheap->pnode[ 1 ];
 
 	temp = pheap->pnode[ pheap->index-- ];
 	
@@ -161,6 +161,6 @@ gnHeapNode_s * gnHeapExtractMax(
 	}
 	pheap->pnode[ iparent ] = temp;
 
-	return & s_node;	
+	return 1;
 }
 
