@@ -296,7 +296,7 @@
 			    {command "Fill NULL areas using regularized spline tension" {} "" {} -command {execute  r.fillnulls }}
 			    {cascad "Interpolate surfaces from contours" {} "" 1 {			
 						{command "Regularized spline tension from raster contours" {} "" {} -command { execute r.surf.contour }}
-						{command "Regularized spline tension from vector contours" {} "" {} -command { execute v.surf.rst }}
+						{command "Regularized spline tension from vector contours" {} "" {} -command { spawn v.surf.rst }}
 			    }}
 			    {separator}
 			    {command "Generate density surface using moving Gausian kernal" {} "" {} -command {execute  v.kernel }}
