@@ -15,7 +15,7 @@ default: \
 	$(ETC)/frame.dumper \
 	$(ETC)/frame.list \
 	$(HOME)/$(PGM) \
-	html
+	htmlcmd
 
 $(ETC)/frame.create: $(OBJDIR)/create.o $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/create.o $(LIBES) $(MATHLIB) $(XDRLIB)
@@ -35,7 +35,7 @@ $(HOME)/$(PGM): $(OBJDIR)/frame.o $(DEPLIBS)
 
 PROGRAMS = d.frame
 
-html:
+htmlcmd:
 	for prog in $(PROGRAMS) ; do \
 		GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(ETC)/bin/cmd/$$prog --html-description | grep -v '</body>' > $$prog.tmp ; true ; \
 		test ! -f $$prog.html || ( cat $$prog.html >> $$prog.tmp ) ; \
