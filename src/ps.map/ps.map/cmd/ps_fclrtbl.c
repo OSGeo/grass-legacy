@@ -86,7 +86,8 @@ int ps_fcolortable (void)
     x2 = x1 + width;
     fprintf(PS.fp, "%.8f W\n", cwidth);
     for ( i = 0; i < ncols; i++ ) {
-	val = dmin + i * step; 
+/*	val = dmin + i * step;  flip */
+	val = dmax - i * step;
 	G_get_d_raster_color(&val, &R, &G, &B, &PS.colors);
 	fprintf(PS.fp, "%.2f %.2f %.2f C\n", (double)R/255., (double)G/255., (double)B/255.);
 	fprintf(PS.fp, "NP\n");
@@ -136,7 +137,7 @@ int ps_fcolortable (void)
     if ( val < dmin ) val += step;
     
     x1 = l + width; 
-    x2 = x1 + 0.5 * width; 
+    x2 = x1 + 0.37 * width; 
     
     /* do nice label: we need so many decimal places to hold all step decimal digits */	
     if ( step > 100 ) { /* nice steps do not have > 2 digits, important separate, otherwise */
@@ -151,7 +152,8 @@ int ps_fcolortable (void)
 	
     fprintf(PS.fp, "%.8f W\n", lwidth);
     while ( val <= dmax ) {
-        y = t - (val - dmin) * height / (dmax - dmin) ;
+/*	y = t - (val - dmin) * height / (dmax - dmin);  flip */
+	y = t - (dmax - val) * height / (dmax - dmin);
 	fprintf(PS.fp, "NP\n");
         fprintf(PS.fp, "%f %f M\n", x1, y); 
         fprintf(PS.fp, "%f %f LN\n", x2, y); 
