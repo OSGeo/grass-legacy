@@ -25,7 +25,7 @@ DEMOSO= demo.o demo2.o demo3.o demo4.o demo5.o \
 #DEMOSO= demo.o demo12.o demo14.o demo2.o demo25.o demo26.o demo17.o \
 	demo27.o demo44.o demo30.o demo31.o demo32.o demo37.o demo29.o
 
-DEMOSO= demo48.o
+#DEMOSO= demo48.o
 
 
 DEMOS= ${DEMOSO:.o=}
