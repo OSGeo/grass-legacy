@@ -10,7 +10,7 @@ $newdir="..";
 $map="./link.conf";
 $copy = 0;
 for $arg (@ARGV) {
-    if ( $arg  =~ /-h|help|-help/ )
+    if ( $arg  =~ /^-h|^help|^-help/ )
     { 
         print "Usage: link [options]\n";
         print "Options\n";	 
