@@ -17,11 +17,12 @@
 #include "cost.h"
 #include "local_proto.h"
 
-static struct cost *start_cell = NULL ;
-static int show(struct cost *);
-static int do_quit(float,int,int);
 
-struct cost *insert(float min_cost,int row,int col)
+static struct cost *start_cell = NULL ;
+/*  static int show(struct cost *); */
+static int do_quit(double,int,int);
+
+struct cost *insert(double min_cost,int row,int col)
 {
 	struct cost *new_cell, *next_cell ;
 
@@ -71,12 +72,13 @@ struct cost *insert(float min_cost,int row,int col)
 		new_cell->lower = next_cell->lower ;
 		new_cell->above = next_cell ;
 		next_cell->lower = new_cell ;
+
 		return(new_cell) ;
 	}
 }
 
 
-struct cost *find(float min_cost,int row,int col)
+struct cost *find(double min_cost,int row,int col)
 {
 	struct cost *next_cell ;
 
@@ -92,6 +94,8 @@ struct cost *find(float min_cost,int row,int col)
 				next_cell = next_cell->lower ;
 				continue ;
 			}
+			fprintf(stderr, "1 ");
+			return NULL;
 			do_quit(min_cost, row, col) ;
 		}
 		else
@@ -101,12 +105,14 @@ struct cost *find(float min_cost,int row,int col)
 				next_cell = next_cell->higher ;
 				continue ;
 			}
+			fprintf(stderr, "2 ");
+			return NULL;
 			do_quit(min_cost, row, col) ;
 		}
 	}
 }
 
-static int do_quit(float min_cost,int row,int col)
+static int do_quit(double min_cost,int row,int col)
 {
 	fprintf(stderr,"Can't find %d,%d:%f\n", row,col,min_cost) ;
 	show_all() ;
@@ -337,7 +343,7 @@ int show_all(void)
 	return 0;
 }
 
-static int show(struct cost *next)
+int show(struct cost *next)
 {
 	if(next == NULL)
 		return 0;
