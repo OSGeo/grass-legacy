@@ -98,8 +98,8 @@ interp_call (root, tree)
     struct octtree *root;
     struct octtree *tree;
 {
-    double          xmn,xmx,ymn,ymx,zmn,zmx,distx,disty,distz,distxp,
-                                        distyp,distzp,temp1,temp2,temp3;
+/*    double          xmn,xmx,ymn,ymx,zmn,zmx; */
+    double distx,disty,distz,distxp,distyp,distzp,temp1,temp2,temp3;
     int             i, npt, nptprev, MAXENC, k,j;
     static struct quadruple *points = NULL;
     if (tree == NULL)
@@ -136,7 +136,6 @@ interp_call (root, tree)
 	zmn = ((struct octdata *) (tree->data))->z_orig;
 	zmx = ((struct octdata *) (tree->data))->z_orig + 
               ((struct octdata *) (tree->data))->n_levs * tb_res;
-/*printf("\n %f", ((struct octdata *)(tree->data))->z_orig);*/
 	i = 0;
 	MAXENC = 0;
 	npt = OT_region_data (root,xmn-distx,xmx+distx,ymn-disty,
@@ -162,8 +161,8 @@ interp_call (root, tree)
 		temp3 = distzp;
 		distzp = distz;
 		distz = distzp - fabs (distz - temp3) * 0.5;
-	        npt = OT_region_data (root,xmn-distx,xmx+distx,ymn-disty,
-                              ymx+disty,zmn-distz,zmx+distz,points, KMAX2);
+/*	        npt = OT_region_data (root,xmn-distx,xmx+distx,ymn-disty,
+                              ymx+disty,zmn-distz,zmx+distz,points, KMAX2);*/
 	    }
 	    else
 	    {
@@ -186,10 +185,15 @@ interp_call (root, tree)
 		    disty += disty;
 		    distz += distz;
 		}
-	        npt = OT_region_data (root,xmn-distx,xmx+distx,ymn-disty,
+
+/*`	        npt = OT_region_data (root,xmn-distx,xmx+distx,ymn-disty,
+                              ymx+disty,zmn-distz,zmx+distz,points, KMAX2);
+*/
+	   } /* end of npt > KMAX2 else */
+
+             npt = OT_region_data (root,xmn-distx,xmx+distx,ymn-disty,
                               ymx+disty,zmn-distz,zmx+distz,points, KMAX2);
 
-	   }
         }	
    /*fprintf(stderr,"got %d points for interpolation\n",npt); */
 	{
@@ -225,7 +229,7 @@ interp_call (root, tree)
 {
   G_percent (cursegm, totsegm, 1);
 }
-  
+
 
 if (!COGRR1 (xmn, ymn, zmn, ((struct octdata *) (tree->data))->n_rows, 
                             ((struct octdata *) (tree->data))->n_cols,
