@@ -9,6 +9,70 @@
 ALINK="#FF0000">
 
 <h2>New feature in GRASS 5.x</h2>
+$Id$
+<p>
+What's new in GRASS 5 beta7/CVS against beta6 (9. Mar. 2000)
+<p>
+<i>Note: these comments are related to the CVS version of GRASS.
+A new official release is to be expected in April 2000.</i>
+
+<b>Modules</b>
+<menu>
+<li> i.shape bugfix on segmentation fault (Markus Neteler)
+<li> i.smap bugfix on segmentation fault (Markus Neteler)
+<li> m.in.e00 updated (Michel Wurtz)
+<li> ps.map.new added (Radim.Blazek)
+<li> r.flowmd added (Jaro Hofierka)
+<li> r.in.png added (Alex Shevlakov)
+<li> s.in.ascii bugfix on string import (Roger Bivand)
+<li> v.distance (Janne Soimasuo)
+<li> v.in.dxf3d (Evaristo Quiroga)
+<li> v.out.idrisi (Philip Verhagen)
+<li> v.out.shape added (derived from v.out.arc, gen2shp by Jan Wagner and
+                    shapelib by Frank Warmerdam, modified by Markus Neteler)
+<li> v.what (Jim Hinthorn, Dennis Finch, James Darrell McCauley)
+<p>
+<li> TclTkGRASS: added r.in.png, removed obsolete s.in.ascii.dem (use
+s.in.ascii now), fixed i.gensigset/i.smap entry (Markus Neteler)
+</menu>
+
+<b>CELL driver</b>
+<menu>
+<li> update on font management (Ludovic Drolez)
+</menu>
+
+<b>NVIZ</b>
+<menu>
+<li> bugfixes on segmentation fault, cleaned out tcl/tk-library stuff
+     (Philip Warner)
+<li> path independent now! (Philip Warner, Markus Neteler)
+</menu>
+
+<b>SQL-support</b>
+<menu>
+<li> large set of GRASS/PostgreSQL modules added (Alex Shevlakov):
+<dl><li>d.site.pg, d.vect.pg, d.what.s.pg, g.column.pg, g.select.pg,
+  g.stats.pg, g.table.pg, d.rast.pg, d.what.v.pg, d.what.r.pg, v.reclass.pg,
+  v.in.shape.pg, v.in.arc.pg, pg.in.dbf
+</dl>
+</menu>
+
+<b>G3D-support</b>
+<menu>
+<li>grid3D modules added: g3.region, r3.in.ascii, r3.mask, r3.out.ascii,
+    r3.in.grid3, r3.mkdspf, r3.showdspf, r3.info, r3.null (Helena Mitasova,
+   Bill Brown, Lubos Mitas, Jaro Hofierka)
+</menu>
+
+<b>SDTS-support</b>
+<menu>
+<li> added from GRASS 4.x: m.sdts.read, v.in.sdts, v.out.sdts, v.sdts.dq.cp,
+     v.sdts.meta, v.sdts.meta.cp
+</menu>
+
+
+<p>
+<hr>
 What's new in GRASS 5 beta6 against beta5?   (16. Feb. 2000)
 
 <pre>
