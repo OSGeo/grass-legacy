@@ -1,0 +1,69 @@
+.TH i.pca
+.SH NAME
+\fIi.pca\fR \- Principal components analysis (pca) program for image processing.
+.br
+.I (GRASS Image Processing Program)
+.SH SYNOPSIS
+\fBi.pca\fR
+.br
+\fBi.pca help\fR
+.br
+.nf
+\fBi.pca input1\*=\fIname \fBinput2\*=\fIname \fR[\fBinput3\*=\fIname\fR] [\fBinput4\*=\fIname\fR] [\fBinput5\*=\fIname\fR]
+	 [\fBinput6\*=\fIname\fR] [\fBinput7\*=\fIname\fR] [\fBinput8\*=\fIname\fR] \fBoutput\*=\fIname\fR
+.fi
+.SH DESCRIPTION
+\fIi.pca\fR is an image processing program based on the algorithm provided by
+Vali (1990), that processes n (2 <\*= n <\*= 8) 
+input raster map layers and produces n output
+raster map layers containing the principal components of the input data
+in decreasing order of variance ("contrast").
+The output raster map layers are assigned names with .1, .2, ... .n suffixes.
+The current geographic region definition and mask settings are respected
+when reading the input raster map layers.
+
+.LP
+\fBParameters:\fR
+.IP \fBinput1\*=\fIname\fR 18
+Name of first input raster map layer.
+.IP \fBinput2\*=\fIname\fR 18
+Name of second input raster map layer.
+.IP \fBinput3\*=\fIname\fR 18
+Name of third input raster map layer.
+.IP \fBinput4\*=\fIname\fR 18
+Name of fourth input raster map layer.
+.IP \fBinput5\*=\fIname\fR 18
+Name of fifth input raster map layer.
+.IP \fBinput6\*=\fIname\fR 18
+Name of sixth input raster map layer.
+.IP \fBinput7\*=\fIname\fR 18
+Name of seventh input raster map layer.
+.IP \fBinput8\*=\fIname\fR 18
+Name of eighth input raster map layer.
+.IP \fBoutput\*=\fIname\fR 18
+The output raster map layer name to which suffixes are added.
+Each output raster map layer is assigned this user-specified \fIname\fR
+with a numerical (.1, .2, ... .n) suffix.
+
+.LP
+Richards (l986) gives a good example of the application of principal
+components analysis (pca) to a time series of LANDSAT images of a burned
+region in Australia.
+.SH SEE ALSO
+Richards, John A.,
+\fBRemote Sensing Digital Image Analysis\fR,
+Springer-Verlag, 1986.
+.LP
+Vali, Ali R.,
+Personal communication,
+Space Research Center, University of Texas, Austin, 1990.
+.LP
+.I i.cca,
+.I i.class,
+.I i.fft,
+.I i.ifft,
+.I m.eigensystem,
+.I r.covar,
+.I r.mapcalc
+.SH AUTHOR
+David Satnik, GIS Laboratory, Central Washington University
