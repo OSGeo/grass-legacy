@@ -1,0 +1,18 @@
+Mmalloc	malloc.c	/^main (argc, argv)$/
+Mspeed	speed.c	/^main (argc, argv)$/
+Mspeed2	speed2.c	/^main (argc, argv)$/
+Mspeed3	speed3.c	/^main (argc, argv)$/
+Mtry	try.c	/^main (argc, argv)$/
+Mtry2	try2.c	/^main (argc, argv)$/
+add_link	try.c	/^add_link (List, link)$/
+add_link_rev	try.c	/^add_link_rev (List, link)$/
+dumplist	try.c	/^dumplist (List)$/
+link__get_next	next.c	/^link__get_next (list)$/
+link__set_next	next.c	/^link__set_next (a, b)$/
+link_cleanup	init.c	/^link_cleanup (Head)$/
+link_dispose	dispose.c	/^link_dispose (Head, ptr)$/
+link_exit_on_error	init.c	/^link_exit_on_error (flag)$/
+link_init	init.c	/^link_init (size)$/
+link_new	new.c	/^link_new (Head)$/
+link_out_of_memory	oom.c	/^link_out_of_memory ()$/
+link_set_chunk_size	init.c	/^link_set_chunk_size (size)$/
