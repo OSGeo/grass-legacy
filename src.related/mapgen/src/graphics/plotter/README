@@ -1,0 +1,29 @@
+:
+# login as root or rootchs to do this script
+# usage of plotter with the gfx ega stuff requires that
+#   setenv GTERM console
+#   setenv GTERM cons1
+#   setenv GTERM cons2
+#   setenv GTERM cons3
+# be used for the appropriate virtual console login
+# The cursor keys ("Num/Lock" light out) may be used as with the
+#	graphon except that 'shift' won't speed things up.
+#	For faster cursor motion use F5-9 keys,
+#	F5 slowest (default speed)
+#	F9 fastest (20 unit jumps)
+#	You  can change them any time the cursor is on the
+#	screen.
+# Change the mode of this file to executable so...
+# We can install new plotter
+#
+mv /usr/local/bin/plotter /usr/local/bin/OLDplotter
+mv plotter /usr/local/bin
+chmod +x /usr/local/bin/plotter
+#
+# and We can install the dev files and run it.
+cd /dev
+for a in 0 1 2 3
+do
+	mknod ega$a c 59 $a
+	chmod +w ega$a
+done
