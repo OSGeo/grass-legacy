@@ -327,7 +327,7 @@ main (int argc, char *argv[])
 	    /* Output one feature for each category */
 	    for ( j = -1; j < Cats->n_cats; j++ ) {
 		if ( j == -1 ) {
-		    if ( cat > 0 ) continue; /* cat(s) exists */
+		    if ( cat >= 0 ) continue; /* cat(s) exists */
 		} else {
 		    if ( Cats->field[j] == field )
 			cat = Cats->cat[j];
@@ -351,7 +351,7 @@ main (int argc, char *argv[])
 	    
 	    G_percent(i,Vect_get_num_areas(&In),2);
 	    centroid = Vect_get_area_centroid ( &In, i );
-	    cat = 0;
+	    cat = -1;
 	    if ( centroid > 0 ) {
 		Vect_read_line (&In, NULL, Cats, centroid );
 		Vect_cat_get (Cats, field, &cat);
@@ -397,12 +397,14 @@ main (int argc, char *argv[])
 
 	    /* Output one feature for each category */
 	    for ( j = -1; j < Cats->n_cats; j++ ) {
-		if ( j == -1 && cat > 0 ) continue; /* cat(s) exists */
-
-		if ( Cats->field[j] == field )
-		    cat = Cats->cat[j];
-		else 
-		    continue;
+		if ( j == -1 ) {
+		    if ( cat >= 0 ) continue; /* cat(s) exists */
+		} else {
+		    if ( Cats->field[j] == field )
+			cat = Cats->cat[j];
+		    else 
+			continue;
+		}
 	        
 		mk_att ( cat, Fi, Driver, ncol, keycol, doatt, Ogr_feature);
 	        OGR_L_CreateFeature( Ogr_layer, Ogr_feature ); 
@@ -462,7 +464,7 @@ mk_att ( int cat, struct field_info *Fi, dbDriver *Driver, int ncol, int keycol,
     }
     
     /* Read & set attributes */
-    if( cat > 0 ) { /* Line with category */
+    if( cat >= 0 ) { /* Line with category */
 	if ( doatt ) {
 	    sprintf ( buf, "SELECT * FROM %s WHERE %s = %d", Fi->table,  Fi->key, cat); 
 	    G_debug (2, "SQL: %s", buf);
