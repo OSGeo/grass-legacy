@@ -87,7 +87,7 @@ db_driver_open_database (handle)
     while ( ( ent = readdir (dir) ) )
       {         
 	len = strlen ( ent->d_name ) - 4;      
-	if ( (len > 0) && (strcmp ( ent->d_name + len, ".dbf") == 0) )
+	if ( (len > 0) && ( G_strcasecmp ( ent->d_name + len, ".dbf") == 0) )
           {
 	    strcpy ( buf, ent->d_name );
 	    buf[len] = '\0';
