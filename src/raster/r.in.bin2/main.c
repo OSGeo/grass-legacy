@@ -56,6 +56,12 @@ int main (int argc, char *argv[])
 	{
 	    struct Flag *s, *f, *b, *gmt_hd;
 	} flag;
+	union {
+		int testWord;
+		char testByte[4];
+	} endianTest;
+	int swapFlag;
+
 	char *G_adjust_Cell_head();
 	int G_scan_northing();
 	int G_scan_easting();
@@ -163,6 +169,17 @@ int main (int argc, char *argv[])
 	fprintf(stderr, "Byte Swapping Turned On!\n");
 	}
 
+/* Check Endian State of Host Computer*/
+    endianTest.testWord = 1;
+    if (endianTest.testByte[0] == 1) {
+        swapFlag = 1; /*true: little endian */
+        if (swap == 1) swapFlag = 0; /* Swapping enabled */
+    } else {
+        swapFlag = 0;
+        if (swap == 1) swapFlag = 1; /* Swapping enabled */
+    }
+
+
 	cellhd.zone = G_zone();
 	cellhd.proj = G_projection();
 
@@ -202,7 +219,30 @@ int main (int argc, char *argv[])
 
 /* Read binary GMT style header */
 	if (flag.gmt_hd->answer) {
-fread(&header, sizeof (struct GRD_HEADER), 1, fd);
+fread(&header.nx, sizeof(int), 1, fd);
+fread(&header.ny, sizeof(int), 1, fd);
+fread(&header.node_offset, sizeof(int), 1, fd);
+if(swapFlag == 0)
+fread(&header.node_offset, sizeof(int), 1, fd);
+
+fread(&header.x_min, sizeof(double), 1, fd);
+fread(&header.x_max, sizeof(double), 1, fd);
+fread(&header.y_min, sizeof(double), 1, fd);
+fread(&header.y_max, sizeof(double), 1, fd);
+fread(&header.z_min, sizeof(double), 1, fd);
+fread(&header.z_max, sizeof(double), 1, fd);
+fread(&header.x_inc, sizeof(double), 1, fd);
+fread(&header.y_inc, sizeof(double), 1, fd);
+fread(&header.z_scale_factor, sizeof(double), 1, fd);
+fread(&header.z_add_offset, sizeof(double), 1, fd);
+
+fread(&header.x_units ,sizeof(char[GRD_UNIT_LEN]), 1, fd);
+fread(&header.y_units ,sizeof(char[GRD_UNIT_LEN]), 1, fd);
+fread(&header.z_units ,sizeof(char[GRD_UNIT_LEN]), 1, fd);
+fread(&header.title ,sizeof(char[GRD_TITLE_LEN]), 1, fd);
+fread(&header.command ,sizeof(char[GRD_COMMAND_LEN]), 1, fd);
+fread(&header.remark ,sizeof(char[GRD_REMARK_LEN]), 1, fd);
+
 cellhd.cols = header.nx;
 cellhd.rows = header.ny;
 cellhd.west = header.x_min;
@@ -223,18 +263,6 @@ TIFFSwabDouble(&cellhd.north);
 TIFFSwabDouble(&cellhd.ew_res);
 TIFFSwabDouble(&cellhd.ns_res);
 }
-
-/* DEBUG */
-fprintf(stderr, "Header Size %d, INT %d Double %d, Char %d\n", sizeof(struct GRD_HEADER), sizeof(int), sizeof(double), sizeof(char[320]) );
-
-fprintf(stderr, "Cols %d\n", cellhd.cols);
-fprintf(stderr, "Rows %d\n", cellhd.rows);
-fprintf(stderr, "West %f\n", cellhd.west);
-fprintf(stderr, "East %f\n", cellhd.east);
-fprintf(stderr, "South %f\n", cellhd.south);
-fprintf(stderr, "North %f\n", cellhd.north);
-fprintf(stderr, "EW_Res %f\n", cellhd.ew_res);
-fprintf(stderr, "NS_Res %f\n", cellhd.ns_res);
 }
 
 	/* Adjust Cell Header to New Values */
@@ -264,11 +292,20 @@ stat(input, &fileinfo);
 FILE_SIZE = fileinfo.st_size;
 
 if (flag.gmt_hd->answer) {
-if (FILE_SIZE != (sizeof(struct GRD_HEADER) + (ncols*nrows*bytes))) {
+if(swapFlag == 0) {
+if (FILE_SIZE != (896 + (ncols*nrows*bytes))) {
 fprintf(stderr, "Bytes do not match File size\n");
-fprintf(stderr, "File Size %d ... Total Bytes %d\n", FILE_SIZE, sizeof(struct GRD_HEADER) + (ncols*nrows*bytes) );
-fprintf(stderr, "Try bytes=%d\n", (FILE_SIZE-sizeof(struct GRD_HEADER)) / (ncols*nrows) );
+fprintf(stderr, "File Size %d ... Total Bytes %d\n", FILE_SIZE, 896 + (ncols*nrows*bytes) );
+fprintf(stderr, "Try bytes=%d\n", (FILE_SIZE-896) / (ncols*nrows) );
 exit(1);
+} 
+} else {
+if (FILE_SIZE != (892 + (ncols*nrows*bytes))) {
+fprintf(stderr, "Bytes do not match File size\n");
+fprintf(stderr, "File Size %d ... Total Bytes %d\n", FILE_SIZE, 892 + (ncols*nrows*bytes) );
+fprintf(stderr, "Try bytes=%d\n", (FILE_SIZE-892) / (ncols*nrows) );
+exit(1);
+}
 }
 } else {
 /* No Header */
