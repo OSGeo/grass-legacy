@@ -1,0 +1,55 @@
+Color	Color.c	/^Color(number)$/
+Color_offset	Color.c	/^Color_offset(n)$/
+D2R	text.c	/^#define D2R(d) (double)(d * RpD)\/* degrees->radian/
+Erase	Erase.c	/^Erase()$/
+Font_get	Font.c	/^Font_get(filename)$/
+Get_current_xy	Move_abs.c	/^Get_current_xy(x, y)$/
+Get_text_box	Get_t_box.c	/^Get_text_box(text, t, b, l, r)$/
+Move_abs	Move_abs.c	/^Move_abs(x, y)$/
+Move_rel	Move_rel.c	/^Move_rel(x, y)$/
+Number_of_colors	Num_colors.c	/^Number_of_colors(n)$/
+Polydots_abs	Plydts_abs.c	/^Polydots_abs(xarray, yarray, number)$/
+Polydots_rel	Plydts_abs.c	/^Polydots_rel(xarray, yarray, number)$/
+RGB_color	Color.c	/^RGB_color(r, g, b)$/
+RGB_raster	RGB.c	/^RGB_raster(n, nrows, r, g, b, withzeros)$/
+Raster_char	Raster_def.c	/^Raster_char(num, nrows, array, withzeros, color_ty/
+Raster_int_def	Raster_def.c	/^Raster_int_def(num, nrows, array, withzeros, color/
+Reset_color	Reset_clrs.c	/^Reset_color(red, grn, blu, num)$/
+Reset_colors	Reset_clrs.c	/^Reset_colors(min, max, red, grn, blu)$/
+Set_RGB_color	RGB.c	/^Set_RGB_color(r, g, b)$/
+Set_window	Set_window.c	/^Set_window(T, B, L, R)$/
+Standard_color	Color.c	/^Standard_color(number)$/
+Text	Text.c	/^Text(text)$/
+Text_rotation	Text_size.c	/^Text_rotation(val)$/
+Text_size	Text_size.c	/^Text_size(x, y)$/
+X_copy	font.c	/^static X_copy(a, b, n)$/
+_fixed_Reset_color	Reset_clrs.c	/^static _fixed_Reset_color(red, grn, blu, number)$/
+_fixed_Reset_colors	Reset_clrs.c	/^static _fixed_Reset_colors(min, max, red, grn, blu/
+_float_Reset_color	Reset_clrs.c	/^static _float_Reset_color(red, grn, blu, incr)$/
+_float_Reset_colors	Reset_clrs.c	/^static _float_Reset_colors(min, max, red, grn, blu/
+_get_color_index	Color.c	/^_get_color_index(number)$/
+_get_color_index_array	Color.c	/^_get_color_index_array(a, num)$/
+assign_fixed_color	color_supp.c	/^assign_fixed_color(user_color, real_color)$/
+assign_standard_color	color_supp.c	/^assign_standard_color(user_color, real_color)$/
+check_alloc_color	color_supp.c	/^static check_alloc_color(n)$/
+check_connection	connect.c	/^check_connection(me, link)$/
+clip	clip.c	/^clip(s, n, w, e, x, y, c_x, c_y)$/
+drawchar	text.c	/^drawchar(_text_size_x, _text_size_y, sinrot, cosro/
+get_char_vects	font.c	/^get_char_vects(achar, n, X, Y)$/
+get_color_offset	Color.c	/^get_color_offset()$/
+get_connection	connect.c	/^get_connection(files, rfd, wfd)$/
+get_fixed_color	color_supp.c	/^get_fixed_color(user_color)$/
+get_fixed_color_array	color_supp.c	/^get_fixed_color_array(a, num)$/
+get_max_std_colors	color_supp.c	/^get_max_std_colors()$/
+get_standard_color	color_supp.c	/^get_standard_color(user_color)$/
+get_text_ext	text.c	/^get_text_ext(top, bot, left, rite)$/
+init_font	font.c	/^init_font(filename)$/
+onechar	text.c	/^onechar(x, y, _text_size_x, _text_size_y, _text_ro/
+prepare_connection	connect.c	/^prepare_connection()$/
+remember	text.c	/^static remember(x, y)$/
+soft_text	text.c	/^soft_text(x, y, _text_size_x, _text_size_y, _text_/
+soft_text_ext	text.c	/^soft_text_ext(x, y, _text_size_x, _text_size_y, _t/
+text_draw	text.c	/^static text_draw(x, y)$/
+text_move	text.c	/^static text_move(x, y)$/
+timeout	connect.c	/^static timeout()$/
+window_clip	Set_window.c	/^window_clip(new_x, new_y, cur_x, cur_y)$/
