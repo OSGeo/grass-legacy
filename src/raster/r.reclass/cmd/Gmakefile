@@ -1,0 +1,15 @@
+PGM=r.reclass
+HOME=$(BIN_MAIN_CMD)
+
+LIST = main.o\
+	add_rule.o\
+	input.o\
+	parse.o\
+	range.o\
+	reclass.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
+
+$(LIST): rule.h
+$(GISLIB): #
