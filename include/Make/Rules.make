@@ -48,6 +48,7 @@ htmlgen:
 htmldesc = \
 	GRASS_FAKE_START=1 \
 	GISBASE=$(GISBASE) \
+	PATH=$(GISBASE)/bin:$$PATH \
 	$(LD_LIBRARY_PATH_VAR)=$($(LD_LIBRARY_PATH_VAR)):$(GISBASE)/lib \
 	$(1) --html-description | grep -v '</body>' > $(PGM).tmp.html ; true
 

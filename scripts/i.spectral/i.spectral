@@ -73,7 +73,7 @@ fi
 PARAM_NUM=$#
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+  exec g.parser "$0" "$@"
 fi
 
 # get y-data for gnuplot-data file
