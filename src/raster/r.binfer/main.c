@@ -35,7 +35,7 @@ int main (int argc, char **argv)
     G_gisinit(argv[0]);
     parse_arglist(argc,argv);
     if(-1 == yyparse()) {
-        ptr = &yyparse_return;
+        ptr = &table;
         fclose(yyin);
         fprintf(stderr,"Creating intermediate maps\n");
         do_reclass(ptr);
