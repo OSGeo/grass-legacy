@@ -1,7 +1,7 @@
 
 
 
-r.in.ascii           GRASS Reference Manual            r.in.ascii
+r.in.ascii <main>    GRASS Reference Manual     <main> r.in.ascii
 
 
 
@@ -14,6 +14,7 @@ SYNOPSIS
      r.in.ascii
      r.in.ascii help
      r.in.ascii input=name output=name [title="phrase"]
+     [mult=multiplier]
 
 DESCRIPTION
      r.in.ascii allows a user to create a (binary) GRASS raster
@@ -31,6 +32,11 @@ COMMAND LINE OPTIONS
 
      title="phrase"      Title to be assigned to resultant raster
                          map layer.
+
+     mult=multiplier     Multiply all raster cell values by
+                         multiplier.  multiplier is a floating
+                         point value, and has a default value of
+                         1.0.
 
      The input file has a header section which describes the
      location and size of the data, followed by the data itself.
@@ -50,26 +56,23 @@ COMMAND LINE OPTIONS
      of the matrix of data to follow.  The data which follows is
      r rows of c integers.
 
+
+
+
+
+GRASS 4.1                U.S. Army CERL                         1
+
+
+
+
+
+
+r.in.ascii <main>    GRASS Reference Manual     <main> r.in.ascii
+
+
+
 EXAMPLE
      The following is a sample input file to r.in.ascii:
-
-
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         1
-
-
-
-
-
-
-r.in.ascii           GRASS Reference Manual            r.in.ascii
-
-
 
      _____________________________________
     | north:                   4299000.00|
@@ -99,8 +102,15 @@ NOTES
      region and NOT through the center of the cells at the edges.
 
      The data (which follows the header section) must contain r x
-     c integers, but it is not necessary that all the data for a
+     c values, but it is not necessary that all the data for a
      row be on one line.  A row may be split over many lines.
+
+     r.in.ascii handles floating point cell values, but truncates
+     them into integer values.  The mult option allows the number
+     of significant figures of a floating point cell to be
+     increased before truncation to an integer.  Multiples of ten
+     are the most functional multipliers.
+
 
 AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
@@ -116,17 +126,7 @@ AUTHOR
 
 
 
-
-
-
-
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
