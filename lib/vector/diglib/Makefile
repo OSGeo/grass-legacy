@@ -42,13 +42,13 @@ default: $(ARCH_INCDIR)/portable.h lib $(OBJDIR)/test
 #  Test the machine size and orientation for the Portable Library
 $(ARCH_INCDIR)/portable.h: $(DEPENDENCIES)
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
-	$(CC) $(LDFLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $(OBJDIR)/port_test port_test.c
+	$(CC) $(LDFLAGS) $(COMPILE_FLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $(OBJDIR)/port_test port_test.c
 	echo "/* Architecture: $(ARCH) */" > $(ARCH_INCDIR)/portable.h
 	$(OBJDIR)/port_test >> $(ARCH_INCDIR)/portable.h
-	
+
 #  Test portable read/write functions
 $(OBJDIR)/test: test.c $(DEPENDENCIES) 
-	$(CC) $(LDFLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $@ test.c $(DIG2LIB) $(RTREELIB) \
+	$(CC) $(LDFLAGS) $(COMPILE_FLAGS) $(VECT_CFLAGS) $(INC) $(VECT_INC) -o $@ test.c $(DIG2LIB) $(RTREELIB) \
 				$(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB) 
 	cd $(OBJDIR); LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib ./test
 
