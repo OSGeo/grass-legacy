@@ -1,0 +1,13 @@
+
+NAME
+
+The NAME operator allows for saving graphic output
+in the file "mapname."
+
+syntax:   (NAME mapname (EXPR))
+
+operation:
+  Mapname is the file into which the combine graphic
+  output will be written. It may already exist, but
+  be careful about losing results by writing over
+  them.
