@@ -43,7 +43,7 @@ main (argc, argv)
     typopt->type             =  TYPE_STRING;
     typopt->required         =  NO;
     typopt->answer           =  "all";
-    typopt->options          =  "point, line or edge";
+    typopt->options          =  "point,line,edge";
     typopt->description      =  "Select type of arc to label.";
 
     value = G_define_option();
