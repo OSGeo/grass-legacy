@@ -65,7 +65,8 @@ if [ "$GRASS_GUI" = "tcltk" ] ; then
     	
 	# Wish was not found - switch to text interface mode
 	echo ""
-    	echo "WARNING: The wish command was not found!"
+    	echo "WARNING: The wish command($GRASS_WISH) was not found!"
+	echo "WARNING: Please check your GRASS_WISH environmental varialble."
 	echo "Switching to text based interface mode"
 	sleep 2
     	
