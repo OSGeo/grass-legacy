@@ -11,7 +11,7 @@
 <BR><EM>(drivers)</EM> 
 <H2>DESCRIPTION</H2>
 
-The PNG driver generates PNG pictures from GRASS display commands.
+The PNG driver generates PNG images from GRASS display commands.
 <H2>USAGE</H2>
 <H3>Environment variables</H3>Several environment variables effect the operation 
 of the PNG driver. 
@@ -24,7 +24,7 @@ of the PNG driver.
   <LI><B>GRASS_BACKGROUNDCOLOR=RRGGBB</B><BR>specifies the background color to use in RGB
   notation (hex values). Default is <b>000000</b> (black).<br><br>
   <LI><B>GRASS_TRANSPARENT=[TRUE|FALSE]</B><BR>sets transparent background on (TRUE) or off (FALSE,
-  default).</LI>
+  default).<BR><BR>
   <LI><B>GRASS_TRUECOLOR=[TRUE|FALSE]</B><BR>sets true-color support
 </UL>
 
@@ -56,15 +56,17 @@ worth it).
 <p>
 The resolution of the <i>PNG</i> raster map is defined by the map
 extents. Use <em>g.region -p</em> to get the number of rows and cols and
-use the environment variables to set the PNG size.<p>
+use the environment variables to set the PNG size. If you would like a
+larger image, multiply both rows and cols by the same whole number to
+preserve the aspect ratio.<p>
 
 <h2>SEE ALSO</h2>
 <EM>
 <a href=htmlmapdriver.html>HTMLMAP driver</a>,
-<A href=celldriver.html>celldriver</A>, 
-<A href=xdriver.html>XDRIVER</A>, 
-<A href=d.area.html>d.area</A>,                                                
-<A href=d.mon.html>d.mon</A>,                                                
+<A href=celldriver.html>celldriver</A>,
+<A href=xdriver.html>XDRIVER</A>,
+<A href=d.area.html>d.area</A>,
+<A href=d.mon.html>d.mon</A>,
 <A href=d.vect.html>d.vect</A>
 </EM>
 
