@@ -35,7 +35,7 @@ original author:
 
 e-mail:  wpp@ips.ethz.ch.
 
-The port to C was done by Darrell McCauley <mccauley@ecn.purdue.edu>
+The port to C was done by Darrell McCauley <darrell@mccauley-usa.com>
 
 The package contains the following routines:
 ------------------------------------------------------
