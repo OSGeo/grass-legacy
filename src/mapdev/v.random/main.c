@@ -1,6 +1,6 @@
 /* %W% %G% */
 /* main.vect    1.0   4/01/91
-/* created from fortran program RLG,
+* created from fortran program RLG,
 * to direct DOT MAP processes                       
 *
 *  ------Rev 3.+ arguements --------------------------------------
