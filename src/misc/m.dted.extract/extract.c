@@ -33,6 +33,8 @@ extract ()
  * 252 records are the data records
  * other records are ignored
  */
+    xnorth = tsouth < south ? tsouth : south ;
+    
     while (readtape())
     {
 	if (*tapebuf == 0252)
