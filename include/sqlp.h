@@ -14,18 +14,24 @@
 #define SQLP_UPDATE 5
 #define SQLP_DELETE 6
 
-/* SQL COMPARISONS */
+/* SQL OPERATORS */
 #define SQLP_EQ 1    /* =  */
 #define SQLP_LT 2    /* <  */
 #define SQLP_LE 3    /* <= */
 #define SQLP_GT 4    /* >  */
 #define SQLP_GE 5    /* >= */
 #define SQLP_NE 6    /* <> */
+#define SQLP_ADD 7    /* + */
+#define SQLP_SUBTR 8    /* - */
+#define SQLP_MLTP 9    /* * */
+#define SQLP_DIV 10    /* / */
 
-/* SQL VALUE TYPES, NOT COLUMN TYPES */
+/* SQL VALUE TYPES, NOT COLUMN TYPES -
+-do not change these! leval/reval =2 or .5 for int/double compat.*/
 #define SQLP_S 0x01 /* string */ 
-#define SQLP_I 0x02 /* integer */
-#define SQLP_D 0x04 /* float */
+#define SQLP_I 0x04 /* integer */
+#define SQLP_D 0x08 /* float */
+#define SQLP_COL 0x0C /* just column */
 
 /* SQL COLUMN TYPES */
 #define SQLP_VARCHAR 1 
@@ -38,7 +44,8 @@
 typedef enum NodeTag
 {
 	T_A_Expr = 700,
-	T_Comparison
+	T_ArithmExpr,
+	T_ArithmValue
 } NodeTag;
 
 typedef struct Node
@@ -55,7 +62,23 @@ typedef struct A_Expr
 	Node	   *rexpr;			/* right argument */
 } A_Expr;
 
+typedef struct ArithmExpr
+{
+	NodeTag		type;
+	int		oper;			/* type of operation (OP,OR,AND,NOT) */
+	int	        opname;			/* name of operator */
+	Node	   *lexpr;			/* left argument */
+	Node	   *rexpr;			/* right argument */
+} ArithmExpr;
 
+typedef struct ArithmValue
+{
+	NodeTag		type;
+	int		vtype;			/* type of operation (OP,OR,AND,NOT) */
+	char 		*s;
+	int		i;
+	double		d;
+} ArithmValue;
 
 #define nodeTag(nodeptr)		(((Node*)(nodeptr))->type)
 
@@ -72,15 +95,6 @@ typedef struct
     int    i;
     double d;
 } SQLPVALUE;
-
-typedef struct Comparison
-{
-	NodeTag		type;
-	int		oper;			/* type of operation (should be OP) */
-	int	        opname;			/* name of operator */
-	SQLPVALUE	 *lexpr;		/* left argument */
-	SQLPVALUE	 *rexpr;		/* right argument */
-} Comparison;
 
 typedef struct
 {
@@ -122,13 +136,13 @@ void sqpColumn( char *column );
 void sqpColumnDef( char *column, int type, int width, int decimals );
 void sqpValue( char *strval, int intval, double dblval, int type );
 void sqpAssignment( char *column, char *strval, int intval, double dblval, int type );
+int translate_Operator( char *oper);
 
-Node *parseComparison( char *column, char *oper, char *strval, int intval, double dblval, int type );
 Node *makeA_Expr(int oper, int opname, Node *lexpr, Node *rexpr);
+Node *makeArithmExpr(int opname, Node *lexpr, Node *rexpr);
+Node *makeArithmValue( char *strval, int intval, double dblval, int type, int factor );
 
 static Node *newNode(int size, NodeTag tag);
-static Node *makeComparison(int oper, int opname, SQLPVALUE *lexpr, SQLPVALUE *rexpr);
-
 
 #ifdef SQLP_MAIN
 SQLPSTMT *sqlpStmt;

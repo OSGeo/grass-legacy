@@ -39,8 +39,7 @@
 }
 
 	/* operators */
-%type <node>	y_comparison, y_condition, y_attr, y_attr2
-
+%type <node>	y_comparison, y_condition, y_attr, y_attr2, y_name, y_cnam
 	/* literal keyword tokens */
 %token <strval> COMPARISON
 %token <strval> NAME
@@ -178,21 +177,38 @@ y_attr:
 				{$$ = $2;}
 	;
 y_attr2:
-		y_comparison	{$$ = (Node*) $1;}
+		y_comparison	{$$ = $1;}
 	|	NOT y_attr {
 			$$ = makeA_Expr(NOT, 0, NULL, $2); 
 			    sqlpStmt->upperNodeptr = $$; 
 		}
 	;
 y_comparison:
-		NAME EQUAL STRING		{ $$ = parseComparison( $1, "=", $3,    0,  0, SQLP_S ); }
-        |	NAME EQUAL INTNUM		{ $$ = parseComparison( $1, "=", NULL, $3,  0, SQLP_I ); }
-        |	NAME EQUAL FLOATNUM		{ $$ = parseComparison( $1, "=", NULL,  0, $3, SQLP_D ); }
-        |	NAME COMPARISON INTNUM		{ $$ = parseComparison( $1, $2,  NULL, $3,  0, SQLP_I ); }
-        |	NAME COMPARISON FLOATNUM	{ $$ = parseComparison( $1, $2,  NULL,  0, $3, SQLP_D ); }
+		y_name EQUAL y_name {
+				$$ = makeA_Expr(OP, SQLP_EQ, $1, $3);
+					sqlpStmt->upperNodeptr = $$; 
+		}
+	|	y_name COMPARISON y_name {
+				$$ = makeA_Expr(OP, translate_Operator($2), $1, $3);
+					sqlpStmt->upperNodeptr = $$; 
+		}
+	;	
+y_name:
+		y_cnam 				{$$ = makeArithmExpr(SQLP_ADD, $1, NULL);}
+	|	y_name '-' y_cnam		{$$ = makeArithmExpr(SQLP_SUBTR, $1, $3);}
+	|	y_name '+' y_cnam		{$$ = makeArithmExpr(SQLP_ADD, $1, $3);}
+	|	y_name '*' y_cnam		{$$ = makeArithmExpr(SQLP_MLTP, $1, $3);}
+	|	y_name '/' y_cnam		{$$ = makeArithmExpr(SQLP_DIV, $1, $3);}
 	;
-
-
+y_cnam:
+		NAME				{$$ = makeArithmValue($1,0,0,SQLP_COL,1);}
+	|	STRING				{$$ = makeArithmValue($1,0,0,SQLP_S,1);}
+	|	INTNUM				{$$ = makeArithmValue(NULL,$1,0,SQLP_I,1);}
+	|	FLOATNUM			{$$ = makeArithmValue(NULL,0,$1,SQLP_D,1);}
+	|	'(' y_name ')'			{$$ = $2;}
+	|	'-' INTNUM 			{$$ = makeArithmValue(NULL,$2,0,SQLP_I,-1);}
+	|	'-' FLOATNUM			{$$ = makeArithmValue(NULL,0,$2,SQLP_D,-1);}
+	;
 %%
 
 
