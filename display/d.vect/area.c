@@ -7,7 +7,7 @@
 
 int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor, 
 	     int chcat, int id_flag ) {
-    int i, ltype, num, area, isle, n_isles, n_points;
+    int    i, j, num, area, isle, n_isles, n_points;
     double xl, yl;
     struct line_pnts *Points, *IPoints;
     struct line_cats *Cats;
@@ -73,8 +73,8 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
         for ( i = 0; i < n_isles; i++) {
 	    isle = Vect_get_area_isle ( Map, area, i );   
 	    Vect_get_isle_points ( Map, isle, Points );
-	    for ( i = 0; i < Points->n_points - 1; i++) { 
-		G_plot_line (Points->x[i], Points->y[i], Points->x[i+1], Points->y[i+1]);
+	    for ( j = 0; j < Points->n_points - 1; j++) { 
+		G_plot_line (Points->x[j], Points->y[j], Points->x[j+1], Points->y[j+1]);
 	    }
 	}
     }
