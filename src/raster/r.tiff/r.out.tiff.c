@@ -1,6 +1,9 @@
 /* 
  * $Id$
  *
+ * Added support for Tiled TIFF output ( -l switch )
+ * Luca Cristelli (luca.cristelli@ies.it) 1/2001
+ * 
  * Added flag to write a TIFF World file like r.out.arctiff
  * Eric G. Miller 4-Nov-2000
  *
@@ -10,7 +13,10 @@
  * to region settings.   - Markus Neteler  (neteler@geog.uni-hannover.de
  * 8/98        
  *
+ * This r.tiff version uses the standard libtiff from your system.
+ *  8. June 98 Marco Valagussa <marco@duffy.crcc.it>
  *
+ * Original version:
  * Portions Copyright (c) 1988, 1990 by Sam Leffler.
  * All rights reserved.
  *
@@ -49,10 +55,10 @@ main (int argc, char *argv[])
 	int in, len;
 	struct rasterfile h;
 	struct Option *inopt, *outopt, *compopt;
-	struct Flag *pflag, *vflag, *tflag;
+	struct Flag *pflag, *vflag, *lflag, *tflag;
 	CELL *cell, *cellptr;
 	struct Cell_head cellhd;
-	int col,verbose;
+	int col,verbose, tfw, palette, tiled;
 	char *mapset, *filename;
 	struct Colors colors;
 	int red, grn, blu, mapsize;
@@ -89,6 +95,10 @@ main (int argc, char *argv[])
 	tflag->key		= 't';
 	tflag->description      = "Output TIFF world file";
 
+	lflag = G_define_flag();
+	lflag->key		= 'l';
+	lflag->description      = "Output Tiled TIFF";
+
 	vflag = G_define_flag();
 	vflag->key		= 'v';
 	vflag->description	= "Verbose mode.";
@@ -105,6 +115,9 @@ main (int argc, char *argv[])
 		compression = COMPRESSION_NONE;
 	
 	verbose = vflag->answer;
+	tiled = lflag->answer;
+	palette = pflag->answer;
+	tfw = tflag->answer;
 
 	mapset = G_find_cell(inopt->answer, "");
 	if (!mapset)
@@ -120,7 +133,7 @@ main (int argc, char *argv[])
 		G_fatal_error("Can't set window");
 	G_read_colors(inopt->answer, mapset, &colors);
 	G_set_null_value_color (255, 255, 255, &colors);
-	if (pflag->answer && (colors.cmax - colors.cmin > 255))
+	if (palette && (colors.cmax - colors.cmin > 255))
 		G_fatal_error ("Color map for palette must have less than 256 "\
 			"colors for the available range of data");
 	cell = G_allocate_cell_buf();
@@ -148,7 +161,7 @@ main (int argc, char *argv[])
 	TIFFSetField(out, TIFFTAG_PLANARCONFIG, config);
 	mapsize = 1<<h.ras_depth;
 
-	if (pflag->answer) {
+	if (palette) {
 		register u_short *redp, *grnp, *blup, *mapptr;
 		register int i;
 
@@ -181,53 +194,146 @@ main (int argc, char *argv[])
 		    PHOTOMETRIC_RGB : PHOTOMETRIC_MINISBLACK);
 		TIFFSetField(out, TIFFTAG_COMPRESSION, compression);
 	}
+	
+	if (tiled) {
+	    int tilewidth = 128;
+	    int tilelength = 128;
+	    int imagewidth, imagelength;
+	    int spp;
+	    char *obuf, *bufp;
+	    char *tptr;
+	    
+	    imagewidth = h.ras_width;
+	    imagelength = h.ras_height;
+	    spp = h.ras_depth;
+	    
+	    TIFFSetField(out, TIFFTAG_TILEWIDTH, tilewidth);
+	    TIFFSetField(out, TIFFTAG_TILELENGTH, tilelength);
+	    obuf = (char*)_TIFFmalloc(TIFFTileSize(out));
+	    if (DEBUG)
+		fprintf (stderr, "Tile buff size: %d \n ",TIFFTileSize(out) );
+	    
+	    /* build tiff tiles from grass buffer */
+	    
+            for (row = 0; row < imagelength; row += tilelength) {
+                    uint32 nrow = (row+tilelength > imagelength) ? imagelength-row : tilelength;
+                    uint32 colb = 0;
+                    uint32 col, oskew, width, i, j;
 
-	linebytes = ((h.ras_depth*h.ras_width+15) >> 3) &~ 1;
-	if (DEBUG)
-		fprintf (stdout,"linebytes = %d, TIFFscanlinesize = %d\n", linebytes,
-		    TIFFScanlineSize(out));
-	if (TIFFScanlineSize(out) > linebytes)
-		buf = (u_char *)malloc(linebytes);
-	else
-		buf = (u_char *)malloc(TIFFScanlineSize(out));
-	if (rowsperstrip != (u_short)-1)
-		rowsperstrip = (u_short)(8*1024/linebytes);
-	if (DEBUG)
-		fprintf (stdout,"rowsperstrip = %d\n",rowsperstrip);
-	TIFFSetField(out, TIFFTAG_ROWSPERSTRIP,
-	    rowsperstrip == 0 ? 1 : rowsperstrip);
+                    for (col = 0; col < imagewidth; col += tilewidth) {
+                            tsample_t s;
+			    
+			    i = nrow;
+			    tptr = obuf;
+			    spp = 1;
+			    s = 0;
+			    oskew = 0;
+			    width = tilewidth;
+			    
+			    if (DEBUG)
+				fprintf (stderr, "Tile #: r %d, c %d, s %d \n ", row, col, s);
+                            
+			    /*
+                             * Tile is clipped horizontally.  Calculate
+	                     * visible portion and skewing factors.
+                             */
+                            if (colb + tilewidth > imagewidth) {
+                                   width = (imagewidth - colb);
+                                   oskew = tilewidth - width;
+                            }
+			    
+			    for (i = 0; i < nrow; i++ ) {
+			        tptr += oskew;
+ 			    	
+				if (G_get_c_raster_row (in, cell, row + i) < 0)
+					exit(1);
+				cellptr = cell;
+				
+				if (palette) {
+				    cellptr += col;
+				    for (j = 0; j < width; j++ ) {
+					*tptr++ = (u_char)*cellptr++;
+    				    }
+				    tptr += oskew;
+				} else {
+				    for (j = 0; j < width; j++ ) {
+					G_get_color( cell[col + j], &red, &grn, &blu, &colors);
+					*tptr++ = (u_char) red;
+					*tptr++ = (u_char) grn;
+					*tptr++ = (u_char) blu;
+		       	    	    }
+				    tptr += oskew*3;
+				}
+				if (DEBUG)
+				    fprintf (stderr, "\r row #: i %d tptr %d \n ", i, tptr);
+					
+			    }
+	    
+ 			    if (DEBUG)
+				fprintf (stderr, "\n Write Tile #: col %d row %d s %d \n ", col, row, s );
+                    	    if (TIFFWriteTile(out, obuf, col, row, 0, s) < 0) {
+                        	_TIFFfree(obuf);
+                                return (-1);
+                            }
+	 		    
+			    if (verbose)
+				G_percent (row, h.ras_height, 2);
+			    }
+			    colb += tilewidth;
+		    }
+		    //bufp += nrow * imagewidth;
+		
 
-	if (verbose)
-		fprintf (stderr, "%s: complete ... ", G_program_name());
-	for (row = 0; row < h.ras_height; row++)
-	{
-		tmpptr = buf;
+	} else {
+
+	
+		linebytes = ((h.ras_depth*h.ras_width+15) >> 3) &~ 1;
+		if (DEBUG)
+			fprintf (stdout,"linebytes = %d, TIFFscanlinesize = %d\n", linebytes,
+			    TIFFScanlineSize(out));
+		if (TIFFScanlineSize(out) > linebytes)
+			buf = (u_char *)malloc(linebytes);
+		else
+			buf = (u_char *)malloc(TIFFScanlineSize(out));
+		if (rowsperstrip != (u_short)-1)
+			rowsperstrip = (u_short)(8*1024/linebytes);
+		if (DEBUG)
+			fprintf (stdout,"rowsperstrip = %d\n",rowsperstrip);
+		TIFFSetField(out, TIFFTAG_ROWSPERSTRIP,
+		    rowsperstrip == 0 ? 1 : rowsperstrip);
+
+		if (verbose)
+			fprintf (stderr, "%s: complete ... ", G_program_name());
+		for (row = 0; row < h.ras_height; row++)
+		{
+			tmpptr = buf;
+			if (verbose)
+				G_percent (row, h.ras_height, 2);
+			if (G_get_c_raster_row (in, cell, row) < 0)
+				exit(1);
+			cellptr = cell;
+			if (palette){
+				for ( col=0; col < h.ras_width; col++){
+					*tmpptr++ = (u_char)(*cellptr++ - colors.cmin);
+				}
+			} else{
+				for ( col=0; col < h.ras_width; col++){
+					G_get_color( cell[col], &red, &grn, &blu, &colors);
+					*tmpptr++ = (u_char) red;
+					*tmpptr++ = (u_char) grn;
+					*tmpptr++ = (u_char) blu;
+				}
+			}
+			if (TIFFWriteScanline(out, buf, row, 0) < 0)
+				break;
+		}
 		if (verbose)
 			G_percent (row, h.ras_height, 2);
-		if (G_get_c_raster_row (in, cell, row) < 0)
-			exit(1);
-		cellptr = cell;
-		if (pflag->answer){
-			for ( col=0; col < h.ras_width; col++){
-				*tmpptr++ = (u_char)(*cellptr++ - colors.cmin);
-			}
-		} else{
-			for ( col=0; col < h.ras_width; col++){
-				G_get_color( cell[col], &red, &grn, &blu, &colors);
-				*tmpptr++ = (u_char) red;
-				*tmpptr++ = (u_char) grn;
-				*tmpptr++ = (u_char) blu;
-			}
-		}
-		if (TIFFWriteScanline(out, buf, row, 0) < 0)
-			break;
 	}
-	if (verbose)
-		G_percent (row, h.ras_height, 2);
-
+	
 	(void) TIFFClose(out);
 	
-	if (tflag->answer)
+	if (tfw)
 	{
 		sprintf (filename, "%s.tfw", outopt->answer);
 		write_tfw(filename, &cellhd, verbose);

@@ -1,13 +1,18 @@
-/* Added TIFF World file support, 
+/*
+ * $Id$
+ *
+ * Added support for Tiled TIFF input
+ * Luca Cristelli (luca.cristelli@ies.it) 2/2001
+ *
+ * Added TIFF World file support, 
  * Fixed one segfault bug (tif_pos = ftell(...)
  * Eric G. Miller 4-Nov-2000
- */
-
-/* removed LZW support 5/2000*/
-
-/* Updated to FP map writing functions 11/99 Markus Neteler */
-
-/* Updated 9/99 to true 24bit support.
+ *
+ * removed LZW support 5/2000
+ *
+ * Updated to FP map writing functions 11/99 Markus Neteler
+ *
+ * Updated 9/99 to true 24bit support.
  * The old version was limited to 256 colors.
  * 
  *  Incorporated color quantization to speed up GRASS.
@@ -16,9 +21,12 @@
  *    
  *    Stefano Merler
  *    merler@irst.itc.it
- */       
-
-/* r.in.tiff - Converts from a Tagged Image File Format image to a Grass Raster.
+ *
+ * This r.tiff version uses the standard libtiff from your system.
+ *  8. June 98 Marco Valagussa <marco@duffy.crcc.it>
+ *
+ * Original version: 
+ * r.in.tiff - Converts from a Tagged Image File Format image to a Grass Raster.
  *
  * tif2ras.c - Converts from a Tagged Image File Format image to a Sun Raster.
  * Portions Copyright (c) 1990 by Sun Microsystems, Inc.
@@ -83,6 +91,11 @@ typedef int boolean;
 #endif
 #define	CVT(x)		((uint16)(((x) * 255) / ((1L<<16)-1)))
 
+#define READ_IMAGE_BY_TILE 1
+#define READ_IMAGE_BY_STRIPE 2
+#define READ_IMAGE_BY_SCANLINE 3
+#define READ_WHOLE_IMAGE 4
+
 boolean     Verbose;
 char       *pname;		/* program name (used for error messages) */
 static	char  *inf = NULL ;
@@ -98,13 +111,15 @@ int main (int argc, char *argv[])
     row,
     i;
   u_char     *Map = NULL;
-  u_char     *buf;
+  u_char     *buf, *tilebuf;
   uint16 *redcmap, *greencmap, *bluecmap;
 
   colormap_t  Colormap;	/* The Pixrect Colormap */
   u_char      red[256],
     green[256],
     blue[256];
+  
+  int readmode;
 
   int cellfp;
   CELL *cell,*cellptr;
@@ -120,6 +135,7 @@ int main (int argc, char *argv[])
     photometric;
   u_long	width,
     height;
+  u_long tilewidth = 0, tilelength = 0, tilesize = 0, tilerowsize = 0;
   int ncolors;
   int nlev;
   int Bands = 0;
@@ -171,6 +187,9 @@ int main (int argc, char *argv[])
   Verbose = vflag->answer;
   Bands = bflag->answer;
 
+  /* default image tipe is SCANLINE */
+  readmode = READ_IMAGE_BY_SCANLINE;
+  
   nlev=atoi(nlevopt->answer);
   maxcolors=nlev*nlev*nlev;
 
@@ -178,15 +197,13 @@ int main (int argc, char *argv[])
   tif = TIFFOpen(inf, "r");
   if (tif == NULL)
     G_fatal_error("Error opening TIFF file.");
-  if (Verbose)
-    fprintf(stderr, "Reading %s...", inf);
 
   TIFFGetField(tif, TIFFTAG_BITSPERSAMPLE, &bitspersample);
   TIFFGetField(tif, TIFFTAG_SAMPLESPERPIXEL, &samplesperpixel);
   if (Verbose)
     TIFFPrintDirectory(tif, stderr, 0l);
   if (bitspersample > 8)
-    G_fatal_error("Can't handle more than 8-bits per sample");
+    G_fatal_error("Can't handle more than 8-bits per sample. Try -f switch.");
 
   switch (samplesperpixel) {
   case 1:
@@ -200,7 +217,7 @@ int main (int argc, char *argv[])
     depth = 24;
     break;
   default:
-    G_fatal_error("Only handle 1-channel gray scale or 3-channel color");
+    G_fatal_error("Only handle 1-channel gray scale or 3-channel color. Try -f switch.");
   }
 
   TIFFGetField(tif, TIFFTAG_IMAGEWIDTH,&width);
@@ -253,7 +270,25 @@ int main (int argc, char *argv[])
   
   G_init_colors(&cellcolor);
 
-  buf = (u_char *) malloc(TIFFScanlineSize(tif));
+  if (TIFFIsTiled(tif)) {
+    
+    if (Verbose) fprintf (stderr, "\ntiff file is TILED ");
+    readmode = READ_IMAGE_BY_TILE;
+    
+    TIFFGetField(tif, TIFFTAG_TILEWIDTH, &tilewidth); 
+    TIFFGetField(tif, TIFFTAG_TILELENGTH, &tilelength);
+    
+    tilesize = TIFFTileSize(tif);
+    tilerowsize = TIFFTileRowSize(tif);
+
+    tilebuf = G_malloc(tilesize * (width / tilewidth + 1));
+    if (tilebuf == NULL)
+      G_fatal_error("Can't allocate memory for tiles buffer...");
+    
+    if (Verbose) fprintf (stderr, " (tiles are %d x %d)\n", tilewidth, tilelength);
+  } 
+  
+  buf = (u_char *) malloc(TIFFScanlineSize(tif)+tilerowsize);
   if (buf == NULL)
     G_fatal_error("Can't allocate memory for scanline buffer...");
 	
@@ -325,12 +360,40 @@ int main (int argc, char *argv[])
     }
   }
 
-
   for (row = 0; row < height; row++) {
-    if (TIFFReadScanline(tif, buf, row, 0) < 0){
-      fprintf(stderr, "Bad data read on line: %d\n", row);
-      exit(-1);
+    
+    /* to support more tiff types (tiled and striped) 
+     * we need to read some more data and then buil a scanline.
+     * This way we don-t need to change the rest of the code.
+     */
+   
+    switch (readmode) {
+      case READ_IMAGE_BY_TILE:
+        if (row % tilelength == 0) {
+        /* read all tiled required to build a pixel row */
+          for(i = 0; (i * tilewidth) < width; i++) {
+            if (TIFFReadTile(tif, tilebuf + tilesize * i, i * tilewidth, row, 0, 0) < 0 ) {
+              fprintf(stderr, "Bad data read on tile: x = %d, y = %d\n", i * tilewidth, row);
+              exit(-1);
+            }
+          }
+        }
+        /* build row */
+        for(i = 0; ( i * tilewidth ) < width; i++) {
+          memcpy(buf + i * tilerowsize, tilebuf + i * tilesize + ( row % tilelength ) * tilerowsize, tilerowsize );
+        }  
+        break;
+      case READ_IMAGE_BY_STRIPE:
+      case READ_IMAGE_BY_SCANLINE:
+        if (TIFFReadScanline(tif, buf, row, 0) < 0){
+          fprintf(stderr, "Bad data read on line: %d\n", row);
+          exit(-1);
+        }
+        break;
+      default:
+        G_fatal_error("Unknown read mode.");
     }
+    
     inp = buf;
     switch (photometric) {
     case PHOTOMETRIC_RGB:
@@ -437,6 +500,7 @@ int main (int argc, char *argv[])
     }
   }
 
+        
   free((char *) buf);
 
   if (Verbose)
@@ -454,7 +518,9 @@ int main (int argc, char *argv[])
 		  colortable[x].blu, &cellcolor);
     }
   }
+ 
   G_write_colors( outf, G_mapset(), &cellcolor);
+        
   if(Bands){
     G_init_colors(pbwcolr);
     for(x=0;x<256;x++){
@@ -479,24 +545,52 @@ int count_colors( TIFF *tif, int height,int width, u_char *buf)
   int i,j,ncolors;
   int *total_color;
   int red, grn, blu;	
-  u_char *inp;
+  u_char *inp, *tilebuf;
+
+  int tilewidth, tilelength, tilesize, x, y;
     
   total_color=(int*)G_calloc(MAXCOLOR,sizeof(int));
 
-  for (i=0; i < height; i++){
-    if (TIFFReadScanline(tif, buf, i, 0) < 0){
-      fprintf(stderr, "Bad data read on line: %d\n", i);
-      exit(-1);
-    }
-    inp = buf;
+  if (TIFFIsTiled(tif)) {
     
-    for (j = 0; j < width; j++) {
-      red = (int) *inp++;	
-      grn = (int) *inp++;	
-      blu = (int) *inp++;
-      total_color[red*256*256+grn*256+blu]=1;
+    TIFFGetField(tif, TIFFTAG_TILEWIDTH, &tilewidth); 
+    TIFFGetField(tif, TIFFTAG_TILELENGTH, &tilelength);
+    
+    tilesize = TIFFTileSize(tif);
+    
+    tilebuf = (int*)G_malloc(TIFFTileSize(tif));
+    
+    for (y = 0; y < height; y += tilelength)
+      for (x = 0; x < width; x += tilewidth) {
+        if (TIFFReadTile(tif, tilebuf, x, y, 0, 0) <0) {
+          fprintf(stderr, "Bad data read on tile: x = %d, y = %d\n", x, y);
+          exit(-1);
+        }
+        inp = tilebuf;
+      
+        for (j = 0; j < ( tilewidth * tilelength ); j++) {
+          red = (int) *inp++;	
+          grn = (int) *inp++;	
+          blu = (int) *inp++;
+          total_color[red*256*256+grn*256+blu]=1;
+        }
+      }
+  } else {
+    for (i=0; i < height; i++){
+      if (TIFFReadScanline(tif, buf, i, 0) < 0){
+        fprintf(stderr, "Bad data read on line: %d\n", i);
+        exit(-1);
+      }
+      inp = buf;
+      
+      for (j = 0; j < width; j++) {
+        red = (int) *inp++;	
+        grn = (int) *inp++;	
+        blu = (int) *inp++;
+        total_color[red*256*256+grn*256+blu]=1;
+      }
+  	
     }
-		
   }
   ncolors = 0;
   for(i=0;i<MAXCOLOR;i++)
@@ -596,38 +690,81 @@ int get_tif_colors( TIFF *tif, u_long height, u_long width, u_char *buf)
   int x,maxcolor,match;
   int red, grn, blu;
   u_long i,j;
-  u_char *inp;
+  u_char *inp, *tilebuf;
 	
+  int tilewidth, tilelength, tilesize, k, y;
   match = maxcolor = 0;
-  for (i=0; i < height; i++){
-    if (TIFFReadScanline(tif, buf, i, 0) < 0){
-      fprintf(stderr, "Bad data read on line: %d\n", i);
-      exit(-1);
-    }
-    inp = buf;
+
+  if (TIFFIsTiled(tif)) {
+    TIFFGetField(tif, TIFFTAG_TILEWIDTH, &tilewidth); 
+    TIFFGetField(tif, TIFFTAG_TILELENGTH, &tilelength);
     
-    for (j = 0; j < width; j++) {
-      red = (int) *inp++;	
-      grn = (int) *inp++;	
-      blu = (int) *inp++;
-      match=0;
-      for (x=0;x<maxcolor;x++){
-	if (colortable[x].red == red && 
-	    colortable[x].grn == grn &&
-	    colortable[x].blu == blu){
-	  match = 1;
-	  break;
-	}
-      }	
-      if (match == 0){
-	colortable[maxcolor].red = red;
-	colortable[maxcolor].grn = grn;
-	colortable[maxcolor].blu = blu;
-	maxcolor++;
-	if (maxcolor == MAXCOLOR)
-	  G_fatal_error("Exceeded maximum colors!!");
+    tilesize = TIFFTileSize(tif);
+    
+    tilebuf = (int*)G_malloc(TIFFTileSize(tif));
+    
+    for (y = 0; y < height; y += tilelength)
+      for (x = 0; x < width; x += tilewidth) {
+        if (TIFFReadTile(tif, tilebuf, x, y, 0, 0) <0) {
+          fprintf(stderr, "Bad data read on tile: x = %d, y = %d\n", x, y);
+          exit(-1);
+        }
+        inp = tilebuf;
+      
+        for (j = 0; j < ( tilewidth * tilelength ); j++) {
+          red = (int) *inp++;	
+          grn = (int) *inp++;	
+          blu = (int) *inp++;
+          match=0;
+          for (k=0;k<maxcolor;k++){
+      	    if (colortable[k].red == red && 
+  	        colortable[k].grn == grn &&
+	        colortable[k].blu == blu){
+    	      match = 1;
+	      break;
+	    }
+          }	
+          if (match == 0){
+	    colortable[maxcolor].red = red;
+    	    colortable[maxcolor].grn = grn;
+	    colortable[maxcolor].blu = blu;
+	    maxcolor++;
+	    if (maxcolor == MAXCOLOR)
+	      G_fatal_error("Exceeded maximum colors!!");
+          }
+        }
       }
+  } else {
+    for (i=0; i < height; i++){
+      if (TIFFReadScanline(tif, buf, i, 0) < 0){
+        fprintf(stderr, "Bad data read on line: %d\n", i);
+        exit(-1);
+      }
+      inp = buf;
+    
+      for (j = 0; j < width; j++) {
+        red = (int) *inp++;	
+        grn = (int) *inp++;	
+        blu = (int) *inp++;
+        match=0;
+        for (x=0;x<maxcolor;x++){
+    	  if (colortable[x].red == red && 
+  	      colortable[x].grn == grn &&
+	      colortable[x].blu == blu){
+  	    match = 1;
+	    break;
+	  }
+        }	
+        if (match == 0){
+	  colortable[maxcolor].red = red;
+  	  colortable[maxcolor].grn = grn;
+	  colortable[maxcolor].blu = blu;
+	  maxcolor++;
+	  if (maxcolor == MAXCOLOR)
+	    G_fatal_error("Exceeded maximum colors!!");
+        }
 		
+      }
     }
   }
   return(maxcolor);
