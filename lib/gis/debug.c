@@ -28,7 +28,7 @@ int G_debug (int level, char *msg,...)
     FILE    *fd;
    
     if (grass_debug_level < 0) {
-        lstr =  getenv("GRASS_DEBUG_LEVEL");
+        lstr = G__getenv( "DEBUG" );
 
         if ( lstr != NULL )
             grass_debug_level = atoi ( lstr );
