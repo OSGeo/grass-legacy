@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.14 2000-12-07 12:37:22 cho Exp $
+$Id: SUBMITTING,v 1.15 2000-12-23 10:22:03 markus Exp $
 
 NOTE: Please improve this list!
 
@@ -20,6 +20,9 @@ care of following rules:
     	- vector goes into src/mapdev/
     	- sites goes into src/sites
     	- ...
+
+    Consider to take a look at "GNU Coding Standards"
+    http://www.gnu.org/prep/standards.html                                          
 
 3.  Add a header section to each file you submit and make sure you include
     the copyright. The purpose section is meant to contain a general
@@ -137,17 +140,35 @@ care of following rules:
 12. Make sure a new line is at the end of each file
 
 13. When writing Gmakefiles, use the current standard
-    [insert module example here]
 
-    Someone please take care of this:
+    Example:
+    --- snip ----
+	PGM = d.linegraph
+	OFILES = linegraph.o
+
+	LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+	$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(LIBES)
+		$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+	$(RASTERLIB): #
+	$(DISPLAYLIB): #
+	$(GISLIB): #
+	linegraph.o:    linegraph.h
+    --- snap ----
 
     Couple of notes for your Gmakefiles: 
-    	- do not add libraries on a link line after the $(XDRLIB) $(MATHLIB)
-     	- please add them before these
+        - put all GRASS related libes into a LIBES line
+        - put all non-GRASS-related libes into CC line
+    	- do not add libraries on a link line after the $(MATHLIB) $(XDRLIB)
+     	  please add them before these!
      	- The XDRLIB and MATHLIB may not go into the $(LIBES) line, but only
-          into the $(CC) line.
-        - don't (!) add:
-          $(MATHLIB): # at end of file, use this only for GRASS libs
+          into the $(CC) line (as being non-GRASS related).
+        - Any module that does raster manipulations (from gislib) needs the
+          $(XDRLIB) entry in CC-line
+        - don't (!) add a line:
+          $(MATHLIB): # 
+          at end of file, such stuff is only related to GRASS libes!
 
 14. To add the executable for your module to the GRASS system run the command
     gmakelinks5 after your module has been compiled successfully. Note that
