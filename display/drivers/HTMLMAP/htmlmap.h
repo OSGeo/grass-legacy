@@ -26,7 +26,7 @@ struct MapPoly {
     int  *x_pts;
     int  *y_pts;
     struct MapPoly *next_poly;
-} MapPoly;
+};
 
 extern struct MapPoly *head;
 extern struct MapPoly **tail;
