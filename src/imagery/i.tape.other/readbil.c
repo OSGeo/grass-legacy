@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "tape.h"
 
 readbil (row,band)
@@ -12,7 +11,7 @@ readbil (row,band)
     {
 	fprintf(stderr,"\n");
 	fprintf(stderr,"ERROR bad tape read (row %d band %d)\n",firstrow+row,band+1);
-	fprintf(stderr,"      cell files will be incomplete\n");
+	fprintf(stderr,"      raster files will be incomplete\n");
 	return 0;
     }
 
@@ -20,7 +19,7 @@ readbil (row,band)
     {
 	fprintf(stderr,"\n");
 	fprintf(stderr,"ERROR only found %d rows on tape\n", firstrow+row);
-	fprintf(stderr,"      cell files will be incomplete\n");
+	fprintf(stderr,"      raster files will be incomplete\n");
 	return 0;
     }
 
