@@ -1,0 +1,27 @@
+Adot	screen_plt.c	?^Adot ( x, y, string) $?
+Blot	screen_plt.c	?^Blot ( x, y) $?
+D_save	save.c	?^D_save (new, old, n_elem, size)$?
+Dot	screen_plt.c	?^Dot (x, y) $?
+First	screen_plt.c	?^First(x, y)$?
+Next	screen_plt.c	?^Next(x, y)$?
+XADJ	screen_plt.c	?^#define XADJ(x)		(int)((x - U_west ) * U_to_D_xcon?
+YADJ	screen_plt.c	?^#define YADJ(y)		(int)((y - U_south) * U_to_D_ycon?
+dig_prune	prune.c	?^dig_prune(xarr, yarr, num, thresh)$?
+dlg_prune	prune.c	?^dlg_prune (coor_array, num, thresh)$?
+do_graphics	graphics.c	?^do_graphics()$?
+falloc	allocation.c	?^falloc(nelem, elsize)$?
+frealloc	allocation.c	?^frealloc(oldptr, nelem, elsize)$?
+get_D_east	wind_conv.c	?^get_D_east()$?
+get_D_north	wind_conv.c	?^get_D_north()$?
+get_D_south	wind_conv.c	?^get_D_south()$?
+get_D_west	wind_conv.c	?^get_D_west()$?
+init_graphics	graphics.c	?^init_graphics()$?
+outline_window	wind_conv.c	?^outline_window()$?
+plot_points	plot.c	?^plot_points(type, n_coors, xarray, yarray, line_co?
+prune	prune.c	?^prune(xarr, yarr, num, thresh)$?
+replot	replot.c	?^replot(digit)$?
+screen_to_utm	wind_conv.c	?^screen_to_utm(Sx, Sy, Ux, Uy)$?
+set_window	set_window.c	?^set_window()$?
+utm_to_screen	wind_conv.c	?^utm_to_screen(Ux, Uy, Sx, Sy)$?
+window_conversions	wind_conv.c	?^window_conversions(N, S, E, W)$?
+yes_no	yes_no.c	?^yes_no(s)$?
