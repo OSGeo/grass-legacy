@@ -61,7 +61,7 @@ void setParams() {
   param.output = G_define_option();
   param.output->key = "output";
   param.output->type = TYPE_STRING;
-  param.output->required = NO;
+  param.output->required = YES;
   param.output->description = "Name for v5d output file";
 
 /*  param.null_val = G_define_option();
