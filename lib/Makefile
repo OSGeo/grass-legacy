@@ -19,6 +19,7 @@ SUBDIRS = \
 	vask \
 	vector \
 	ogsf \
+	rst \
 	init \
 	front.end
 
