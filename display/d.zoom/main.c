@@ -17,25 +17,22 @@ int
 main (int argc, char **argv)
 {
     int stat;
-/* rotate?
-    int rotate;
-*/
 #ifdef QUIET
     struct Flag *quiet;
 #endif
-    struct Flag *just, *full, *hand;
+    struct Flag *just, *full, *hand, *pan;
     struct Option *rmap, *vmap, *zoom;
     struct GModule *module;
     double magnify;
     int i, first=1;
     char *mapset;
     struct Cell_head window;
-    
+
     /* Initialize globals */
     rast = vect = NULL;
     nrasts = nvects = 0;
-    
-/* Initialize the GIS calls */
+
+    /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
     module = G_define_module();
@@ -100,26 +97,35 @@ main (int argc, char **argv)
     quiet->description = "Quiet";
 #endif
 
-    just = G_define_flag();
-    just->key = 'j';
-    just->description = "Just redraw given maps using default colors";
-
     full = G_define_flag();
     full->key = 'f';
     full->description = "Full menu (zoom + pan)";
+
+    pan = G_define_flag();
+    pan->key = 'p';
+    pan->description = "Pan mode";
 
     hand = G_define_flag();
     hand->key = 'h';
     hand->description = "Handheld mode";
 
+    just = G_define_flag();
+    just->key = 'j';
+    just->description = "Just redraw given maps using default colors";
+
+
+
     if(!rast && !vect )
     {
-	  rmap->required = YES;
-	  just->answer = 1;
+	rmap->required = YES;
+	just->answer = 1;
     }
 
     if ((argc > 1 || (!rast && !vect )) && G_parser(argc,argv))
 	exit(1);
+
+    if( (full->answer + pan->answer + hand->answer) > 1)
+	G_fatal_error("Please choose only one mode of operation");
 
     sscanf(zoom->answer,"%lf", &magnify);
 
@@ -309,6 +315,8 @@ main (int argc, char **argv)
     G_get_window(&window);
     if ( full->answer == 1 )
 	stat = zoomwindow(&window, 1, magnify);
+    else if(pan->answer == 1)
+	    do_pan(&window);
     else {
 	if ( hand->answer == 0 )
             make_window_box (&window, magnify, 0, 0);
