@@ -282,6 +282,10 @@ main (int argc, char **argv)
 		unlink (txt_filepath);
 	}
 
+	fclose(lin_file);
+	fclose(lab_file);
+	fclose(txt_file);
+
 /* new v.out.shape stuff MN 3/2000 */
 /* usage: 
  * gen2shp outfile type < infile
@@ -312,8 +316,8 @@ main (int argc, char **argv)
 	G_system(buf);
 
 	fprintf(stdout, "Converting attributes to DBF file...\n");
-	sprintf(buf, "$GISBASE/etc/v.out.shape/txt2dbf -v -I6 -I6 -I6 -C80 -d' ' -U -F'ID CAT ID2 ATT' $LOCATION/arc_tmp/%s.txt %s.dbf > /dev/null; m -rf  $LOCATION/arc_tmp/", shape_prefix, shape_prefix);
-	fprintf(stderr, "$GISBASE/etc/v.out.shape/txt2dbf -v -I6 -I6 -I6 -C80 -d' ' -U -F'ID CAT ID2 ATT' $LOCATION/arc_tmp/%s.txt %s.dbf > /dev/null; m -rf  $LOCATION/arc_tmp/", shape_prefix, shape_prefix);
+	sprintf(buf, "wc $LOCATION/arc_tmp/%s.txt ; $GISBASE/etc/v.out.shape/txt2dbf -v -I6 -I6 -I6 -C80 -d' ' -U -F'ID CAT ID2 ATT' $LOCATION/arc_tmp/%s.txt %s.dbf ; m -rf  $LOCATION/arc_tmp/ ", shape_prefix, shape_prefix, shape_prefix);
+	fprintf(stderr,"%s\n",buf);
 	G_system(buf);
 
 	exit(0);
