@@ -1,0 +1,132 @@
+
+
+
+Gpoints.surf(2G)     GRASS Reference Manual      Gpoints.surf(2G)
+
+
+
+NAME
+     Gpoints.surf - Surface generation tool
+     (G Language Tool)
+
+SYNOPSIS
+     Gpoints.surf input=name output=name [points=n]
+
+DESCRIPTION
+     Gpoints.surf fills a grid cell matrix with interpolated
+     values generated from a set of irregularly spaced data
+     points using numerical approximation (weighted averaging)
+     techniques. The interpolated value of a cell is determined
+     by values of nearby data points and the distance of the cell
+     from those input points.  In comparison with other methods,
+     numerical approximation allows representation of more
+     complex surfaces (particularly those with anomalous
+     features), restricts the spatial influence of any errors,
+     and generates the interpolated surface from the data points.
+     It is the most appropriate method to apply to most spatial
+     data.
+
+     The command line input is as follows:
+
+     input   grid cell map that contains a set of irregularly
+             spaced data values, i.e., some grid cells contain
+             known data values while the rest contain zero (0);
+
+     output  grid cell map to be created that will represent a
+             smooth surface generated from the known data values
+             in the input layer.
+
+     points  the number of points to use for interpolation. The
+             default is to use the 12 nearest points when
+             interpolating the value for a particular grid cell.
+             This options allows the user to specify another
+             value.
+
+NOTES
+     The amount of memory used by this program is related to the
+     number of non-zero data values in the input map.  If the
+     input map is very dense, ie, contains a lot of non-zero data
+     points, the program may not be able to get all the memory it
+     needs from the system.  The time required to execute
+     increases with the number of input data points.
+
+     If the user has a mask set, then interpolation is only done
+     for those cells that fall within the mask. However, all
+     non-zero data points in the input layer are used even if
+     they fall outside the mask.
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Gpoints.surf(2G)     GRASS Reference Manual      Gpoints.surf(2G)
+
+
+
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
