@@ -162,7 +162,10 @@ Create source and binary distributions:
      along with associated NEWS, ChangeLog etc.
 
    o update web site to new version (HTML in /cvsweb )
-     index2.html, grass5/index.html, download.html
+     index2.html, grass5/index.html, download.html,
+     bugtracking/bugreport.html
+
+
 
 BINARIES
 
