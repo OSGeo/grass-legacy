@@ -1,0 +1,17 @@
+
+# %W%  %G%
+
+PGM=Garmsed.input
+
+LIST =	main.o get_geo.o get_rain.o get_soils.o get_sed.o get_surface.o\
+	get_sim.o get_answer.o get_data.o read_stats.o get_intro.o\
+	var_init.o write1.o write2.o write9.o write10.o trans_data.o \
+	newsim.o read9intro.o read9.o usage.o read1.o read2.o \
+	read10.o
+
+$(ETC)/Garmsed.input:  $(LIST)
+	$(CC) $(CFLAGS) $(LIST) $(GISLIB) $(VASK) $(MATHLIB) -o $@
+
+$(LIST):  inter.h
+
+$(GISLIB): #
