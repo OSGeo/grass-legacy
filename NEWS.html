@@ -22,8 +22,8 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <h3><font color="#00FE00">What's new in GRASS 5 betaCVS comparing to beta8</font></h3>
 <b>Modules</b>
 <menu>
-<li> d.legend: -n option fixed (Huidae Cho)
-<li> d.rast.edit: fixed grid color menu, convenient two mouse clicking
+<li> d.legend: -n option fixed for null suppression (Huidae Cho)
+<li> d.rast.edit: fixed grid color menu, now convenient two mouse clicking
  (Huidae Cho)
 <li> d.rast.pg: added labels with reclass (for float reclass through
  r.mapcalc) (Alex Shevlakov)
@@ -40,7 +40,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> r.mapcalc: bugfix for map=-129 results in NULL (Huidae Cho)
 <li> r.out.arctiff: added command line support (Markus Neteler)
 <li> r.out.gridatb: added, exports GRIDATB map file (Huidae Cho/Keith Beven)
-<li> r.patch: -z flag allows to use 0 for transparency
+<li> r.patch: -z flag allows additionally to use 0 for transparency
 	instead of NULL (Markus Neteler/Huidae Cho/Alex Shevlakov)
 <li> r.topidx: added, creates topographic index, ln(a/tan(beta)), map from
   elevation map (Huidae Cho/Keith Beven)
@@ -50,6 +50,9 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <li> s.in.ascii: fixed parsing problem when no category or other attributes
     are specified (just dimensions) (Eric G . Miller)
 <li> s.in.atkisdgm: import bugfix (Otto Dassau/Markus Neteler)
+<li> s.to.rast: bugfix to convert x, y, double lists properly (Eric G. Miller)
+<li> s.to.vect: bugfix to convert x, y, double lists properly (Eric G.
+     Miller)
 <li> s.surf.krig: bugfixed and improved (David D. Gray)
 <li> v.clean: bugfixed (David D. Gray)
 <li> v.digit: panning on-the-fly implemented to ease digitizing of long
