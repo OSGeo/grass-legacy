@@ -104,7 +104,7 @@ src/display/d.rast.num
 src/display/d.rgb
 src/display/d.rhumbline
 src/display/d.save
-src/display/d.scale
+# Deprecated:  src/display/d.scale
 src/display/d.site.labels
 src/display/d.siter
 src/display/d.sites
