@@ -1,0 +1,18 @@
+Mmain	main.c	/^main(argc, argv)$/
+add_neighbor	main.c	/^add_neighbor (Mptr, nptr, distance)$/
+exhaust	main.c	/^exhaust (ewptr, start, head, row, col)$/
+exhaust_search	main.c	/^exhaust_search (ewptr, nbr_head, row, col)$/
+find_neighbors	main.c	/^find_neighbors (Mptr, nbr_head, row, col, goal, ne/
+first_west	main.c	/^first_west (ewptr, col)$/
+free_list	main.c	/^free_list(head)		\/* frees list of neighboring pts	/
+free_row_lists	main.c	/^free_row_lists (rowlist, nrows)		\/* frees indexed /
+interpolate	main.c	/^interpolate(rowlist, nrows, ncols, goal, out_fd, m/
+lookup_tables	main.c	/^lookup_tables (nrows, ncols)$/
+make_neighbors_list	main.c	/^NEIGHBOR *make_neighbors_list(firstrow, lastrow, r/
+next_row	main.c	/^EW *next_row (ewptr, boundary, new, south)$/
+replace_neighbor	main.c	/^int replace_neighbor (Mptr, nbr_head, distance)$/
+row_lists	main.c	/^MELEMENT *row_lists (rows, cols, npts, fd, cell)$/
+search	main.c	/^search (ewptr, head, row, col, goal, neighbors, bo/
+sort_neighbors	main.c	/^sort_neighbors (nbr_head, distance)$/
+stash	stash.c	/^stash(n, s)$/
+triangulate	main.c	/^double triangulate (Mptr, row, col)$/
