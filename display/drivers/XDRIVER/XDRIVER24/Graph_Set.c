@@ -233,7 +233,7 @@ create_window(int argc, char **argv)
     clshints->res_class = WIN_NAME;
 
 #ifndef X11R3
-    sprintf (title, "%s - Monitor: %s", WIN_NAME, monitor_name);
+    sprintf (title, "GRASS %s - Monitor: %s", WIN_NAME, monitor_name);
 
     iconName.encoding = XA_STRING;
     iconName.format = 8;
