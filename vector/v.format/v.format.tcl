@@ -231,3 +231,57 @@ pack $row -side top -fill both -expand yes
 
 conf_butt
 
+# OUTPUT FORMAT
+set ofpage [$nb insert end ofpage -text "Output format (Native or PostGIS)"]
+set off [ frame $ofpage.frm ]
+set ofsw [ScrolledWindow $off.sw -relief sunken -borderwidth 2]
+set offrame [ ScrollableFrame $off.frm -height 5 -width 20 ]
+$ofsw setwidget $offrame
+pack $off $ofsw $offrame -fill both -expand yes
+
+set format [exec g.gisenv store=mapset get=GV_FORMAT] 
+if { $format == "" } { set format "NATIVE" }
+
+set row [ frame $offrame.format ]
+ComboBox $row.a -label "Output format:  " -width 20  -textvariable format \
+                -values {"NATIVE" "POSTGIS"} 
+
+pack $row.a -side left
+pack $row -side top -fill x -anchor w
+
+set pgdb [exec g.gisenv store=mapset get=GV_PGIS_DATABASE] 
+
+set row [ frame $offrame.pgdb ]
+Label $row.a -text "PostGIS database:" -justify left
+set pgdbentry [Entry $row.b -width 80 -textvariable pgdb -command set_pgdb]
+pack $row.a $pgdbentry -side left -anchor w
+pack $row -side top -fill x -anchor w  
+
+set row [ frame $offrame.pgdbhelp ]
+Label $row.a -text "PostGIS database example: host=srv1,dbname=grass1,user=Cimrman" -justify left
+pack $row.a -side left -anchor w
+pack $row -side top -fill x -anchor w  
+
+proc set_format { } {
+    global format pgdb
+
+    set cmd "g.gisenv store=mapset set=GV_FORMAT=$format"
+    puts $cmd
+    eval exec $cmd
+    
+    set cmd "g.gisenv store=mapset set=GV_PGIS_DATABASE=$pgdb"
+    puts $cmd
+    eval exec $cmd
+
+} 
+
+# BUTTONS
+set ofbut [ frame $offrame.buttons] 
+pack $ofbut -side top 
+
+set ofok [Button $ofbut.ok -text "Apply" -command set_format ]
+pack $ofok -side left
+
+set ofclose [button $ofbut.close -text "Close" -command { exit } ]
+pack $ofclose -side right
+
