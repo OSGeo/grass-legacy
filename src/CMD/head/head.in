@@ -34,9 +34,17 @@ XEXTRALIBS          = @X_EXTRA_LIBS@
 COMPATLIB           = @COMPATLIB@
 TERMLIB             = @TERMLIB@
 CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
-MATHLIB             = @MATHLIB@ 
+MATHLIB             = -lm
+##################################
+# TODO: configure.in => configure
+#MATHLIB             = @MATHLIB@ 
+##################################
 XDRLIB              = @XDRLIB@
-ZLIB                = @ZLIB@
+ZLIB                = -lz
+##################################
+# TODO: configure.in => configure
+#ZLIB                = @ZLIB@
+##################################
 
 #PostgreSQL:
 PQINCPATH           = @PQINCPATH@
@@ -50,11 +58,15 @@ ODBCINC             = @ODBCINC@
 PNGINC              = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
 PNGLIB              = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
 
-#JPEGINCPATH         = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
-#JPEGLIBPATH         = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
-JPEGINCPATH         = @JPEGINCPATH@
-JPEGLIBPATH         = @JPEGLIBPATH@
-JPEGLIB             = @JPEGLIB@
+JPEGINCPATH         = -I/usr/X11R6/include/ -I/usr/include/gr -I/usr/local/include -I/usr/include
+JPEGLIBPATH         = -L/usr/local/lib -L/usr/X11R6/lib -L/usr/lib
+JPEGLIB             = -ljpeg
+##################################
+# TODO: configure.in => configure
+#JPEGINCPATH         = @JPEGINCPATH@
+#JPEGLIBPATH         = @JPEGLIBPATH@
+#JPEGLIB             = @JPEGLIB@
+##################################
 
 TIFFINCPATH         = @TIFF_INCLUDE_DIRS@
 TIFFLIBPATH         = @TIFF_LIBRARY_DIRS@
