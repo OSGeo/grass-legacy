@@ -34,11 +34,11 @@ retype_line (map)
 		if (Line->right > 0)
 		    Del_area (map, Line->right);
 		if (Line->right < 0)		/* ISLE */
-		    Del_isle (map, ABS(Line->right));
+		    Del_isle (map, abs(Line->right));
 		if (Line->left > 0)
 		    Del_area (map, Line->left);
 		if (Line->left < 0)		/* ISLE */
-		    Del_isle (map, ABS(Line->left));
+		    Del_isle (map, abs(Line->left));
 
 		Line->type = LINE;
 		map->n_llines++;
@@ -106,7 +106,7 @@ check_next (map, line, direction)
     next_line = dig_angle_next_line (map, line, direction);
     if (line == next_line)
 	return (0);
-    Line = &(map->Line[ABS(next_line)]);
+    Line = &(map->Line[abs(next_line)]);
 
     if (Line->type == AREA)
 	switch (direction) {
