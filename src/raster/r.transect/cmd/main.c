@@ -82,7 +82,7 @@ int main (int argc, char *argv[])
 		G_program_name(), name);
 	exit(1);
     }
-    sprintf (command, "r.profile input='%s' output='-'", parms.map->answer);
+    sprintf (command, "r.profile input='%s' output='-' profile=", parms.map->answer);
     err = 0;
     for (n=0; parms.line->answers[n]; n+=4)
     {
