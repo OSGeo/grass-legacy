@@ -10,6 +10,12 @@ auto-conf:
   (Being worked on by Eric Mitchell <emitchell@altaira.com>)
 
 
+GRASS initialization:
+- GRASS initialization (startup screens, location settings etc)
+- new env var handling
+  (Being worked on by Justin <jhickey@impact1.hpcc.nectec.or.th>)
+
+
 Libraries:
 - projection datum support for maps
   (Being worked on by Andreas Lange <Andreas.Lange@Rhein-Main.de>)
@@ -19,9 +25,11 @@ Libraries:
   (Being worked on by Frank Warmerdam <warmerda@home.com> /
    Bernhard Reiter <bernhard@intevation.de>)
 
+
 XDRIVER
 - remove fifos, use sockets (required for faster XDRIVER and WINDOWS port)
   (Being worked on by Carl Anderson <candrsn@mindspring.com>)
+
 
 Modules:
 - full RGB support to all display modules
