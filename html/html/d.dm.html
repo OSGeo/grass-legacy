@@ -1,0 +1,93 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <TITLE>d.dm</TITLE>
+</head>
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<h2>
+NAME</h2>
+<b><i>d.dm</i></b> - Display manager. GUI tool for easy 
+display/zoom/query of map sets.
+(<i>GRASS Display Program</i>)
+<h2>
+SYNOPSIS</h2>
+<b>d.dm</b>
+<h2>
+<b>DESCRIPTION</b></h2>
+<i>d.dm</i> may be started by typing d.dm& in GRASS shell.
+<B>MOUSE-OVER HELP IS AVAILABLE FOR MOST OF THE WINDOW PARTS!</B> 
+Window of d.dm is devided into more frames:<BR>
+<B>Sets frame</B>: in upper left corner, contains list of map sets<BR>
+<B>Maps frame</B> in upper right corner, contains list of maps in
+            selected set<BR>
+<B>Set/map buttons</B> on the left side below Sets/Maps frames,
+            used for manipulating with sets and maps<BR>
+<B>Save/Close buttons</B> on the right side below Sets/Maps frames<BR>
+<B>Monitors</B> below Set/Map, Save/Close buttons<BR>
+<B>Display/query buttons</B> on the bottom of the d.dm window<BR>
+<P>
+<H3>Manipulating Sets</H3>
+After first start of d.dm in GRASS mapset, empty Set named
+'Set0' is inserted into Sets frame. User can <B>rename</B> set by
+double click on set name and retyping text.
+<B>New set</B> may be added by pressing the button <B>Add set</B>.
+Existin Set may be <B>selected</B> by single click on set name.
+Selected Set may be <B>removed</B> by pressing <B>Del set</B> button.
+
+
+<H3>Manipulating Maps</H3>
+List of maps in selected Set is displayed in Maps frame.
+New map may be added by pressing the button <B>Add map</B>,
+and selecting map type from displayed list of types. 
+Map row appeares in Map frame. Each map row starts by map type
+button. The map may be selected by pressing the map type button.
+Next item is text field <B>map name</B> which is name of map
+as is used in GRASS, for example roads@PERMANENT or rivers.
+Map name may be selected from list of available maps 
+opend by right mouse button click on the map name field.
+Following items in the map row depend on the map type.
+Selected map may be removed by pressing <B>Del map</B> button.
+Selected maps may be moved up and down by pressing buttons
+with up and down arrow symbols.
+
+<H3>Selecting monitors</H3>
+Monitor is selected in Monitors frame by radio button.
+Monitor does not need to be opend and will be opened automaticaly.
+
+<H3>Display, Zoom</H3>
+<B>Display</B> button is used to display all maps in selected
+map Set. <B>All</B> button resets region to full default region.
+<B>Zoom</B> and <B>Pan</B> buttons are used for zooming in monitor.
+
+
+<H3>Query</H3>
+<B>Query</B> button is used to query selected map.
+
+
+<H3>Save, Close</H3>
+d.dm session may be saved by <B>Save</B> button. The session is
+saved in $LOCATION/$MAPSET/.d.dmrc file. This file is
+read in on next session. d.dm is quit by <B>Close</B> button
+(without saving).
+
+
+<h2>
+OPTIONS</h2>
+No options.
+<h2>
+BUGS</h2>
+Error codes returned by GRASS commads are not handled. 
+<h2>
+SEE ALSO</h2>
+<a href="d.mon.html">d.mon</a>
+<h2>
+AUTHOR</h2>
+Radim Blazek</ul>
+
+</body>
+</html>
