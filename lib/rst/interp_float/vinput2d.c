@@ -56,7 +56,7 @@ int IL_vector_input_data_2d (
   int npoint, OUTRANGE;
   int totsegm;
   struct quaddata *data = (struct quaddata *) info->root->data;
-  double xprev, yprev, zprev, x1, y1, z1, d1, xt, yt, z, sm, *vals;
+  double xprev, yprev, zprev, x1, y1, z1, d1, xt, yt, z, sm;
   struct line_pnts *Points;
   struct line_cats *Cats;
   int times, j1, k1, ltype, cat, zctype, sctype;
@@ -65,12 +65,11 @@ int IL_vector_input_data_2d (
   dbHandle  handle;
   dbString  stmt;
   dbValue   value;
-  char      buf[1000];
 
   OUTRANGE = 0;
   npoint = 0;
 
-  G_debug ( 0, "IL_vector_input_data_2d(): field = %d, zcol = %s, scol = %s", field, zcol, scol);
+  G_debug ( 2, "IL_vector_input_data_2d(): field = %d, zcol = %s, scol = %s", field, zcol, scol);
   ns_res = (data->ymax - data->y_orig) / data->n_rows;
   ew_res = (data->xmax - data->x_orig) / data->n_cols;
   dmax2=*dmax * *dmax;
@@ -83,7 +82,7 @@ int IL_vector_input_data_2d (
   if ( field > 0 && zcol != NULL ) { /* open db driver */
     Fi = Vect_get_field( Map, field);
     if ( Fi == NULL ) G_fatal_error ("Cannot get field info");   
-    G_debug ( 0, "  driver = %s database = %s table = %s", Fi->driver, Fi->database, Fi->table);
+    G_debug ( 3, "  driver = %s database = %s table = %s", Fi->driver, Fi->database, Fi->table);
     db_init_handle (&handle);
     db_init_string ( &stmt);
     driver = db_start_driver(Fi->driver);
@@ -92,13 +91,13 @@ int IL_vector_input_data_2d (
 	G_fatal_error("Cannot open database %s", Fi->database);
     
     zctype = db_column_Ctype ( driver, Fi->table, zcol );
-    G_debug ( 0, " zcol C type = %d", zctype );
+    G_debug ( 3, " zcol C type = %d", zctype );
     if ( zctype == -1 ) G_fatal_error ( "Cannot read column type of z column" );
     if ( zctype == DB_C_TYPE_DATETIME ) G_fatal_error ( "Column type of z column (datetime) is not supported" );
 
     if ( scol != NULL ) {
 	sctype = db_column_Ctype ( driver, Fi->table, scol );
-	G_debug ( 0, " scol C type = %d", sctype );
+	G_debug ( 3, " scol C type = %d", sctype );
 	if ( sctype == -1 ) G_fatal_error ( "Cannot read column type of smooth column" );
 	if ( sctype == DB_C_TYPE_DATETIME ) G_fatal_error ( "Column type of smooth column (datetime) is not supported" );
     }
@@ -109,7 +108,7 @@ int IL_vector_input_data_2d (
   Vect_rewind ( Map );
   while (  ( ltype = Vect_read_next_line (Map, Points, Cats) ) > 0 )
   {
-      G_debug ( 0, "  LINE" );
+      G_debug ( 5, "  LINE" );
       if ( ! (ltype & ( GV_LINE | GV_BOUNDARY ) ) ) continue;
       if ( field > 0 ) { /* use cat or attribute */
         Vect_cat_get( Cats, field, &cat);
@@ -130,7 +129,7 @@ int IL_vector_input_data_2d (
 		if ( i == 0 ) sm = 0;
 		else sm = db_get_value_as_double(&value, sctype);
 	    }
-            G_debug ( 0, "  z = %f sm = %f", z, sm );
+            G_debug ( 5, "  z = %f sm = %f", z, sm );
 	}
       }
 
@@ -172,7 +171,7 @@ int IL_vector_input_data_2d (
   /* Process all nodes */
   for (k1 = 1; k1 <= Vect_get_num_nodes ( Map ); k1++)
   {
-    G_debug ( 0, "  NODE" );
+    G_debug ( 5, "  NODE" );
     Vect_get_node_coor ( Map, k1, &x1, &y1, &z );
 
     /* TODO: check more lines ? */
@@ -197,7 +196,7 @@ int IL_vector_input_data_2d (
 		if ( i == 0 ) sm = 0;
 		else sm = db_get_value_as_double(&value, sctype);
 	    }
-            G_debug ( 0, "  z = %f sm = %f", z, sm );
+            G_debug ( 5, "  z = %f sm = %f", z, sm );
 	}
     }
 
