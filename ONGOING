@@ -1,6 +1,6 @@
 This file lists most of ongoing GRASS 5 Projects
 
-$Id: ONGOING,v 1.5 2000-10-14 17:00:32 markus Exp $
+$Id: ONGOING,v 1.6 2000-10-14 17:01:05 markus Exp $
 
 --------------------------------------------------------------------------
 What's currently going on (you are encouraged to assist):
@@ -12,7 +12,7 @@ auto-conf:
   -> will go into GRASS 5.1
 
 GRASS initialization:
-- GRASS initialization (startup screens, location settings etc)
+- GRASS graphical initialization (startup screens, location settings etc)
   -> will go into GRASS 5.1
 - new env var handling
   (Being worked on by Justin <jhickey@impact1.hpcc.nectec.or.th>)
