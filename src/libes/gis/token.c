@@ -5,12 +5,14 @@
    buf must not have a new line
 
    tokens = G_tokenize (string, delimstr);
+   ntokens = G_number_of_tokens (tokens);
    G_free_tokens (tokens);
 
 
    NOTE G_free_tokens() must be called when you are finished with tokens to
    release the memory
 */
+
 /*   Given buf,  turn delimiters in '\0'  and place pointers to tokens
  *      in  tokens.
  */
@@ -46,6 +48,17 @@ char **G_tokenize ( char *buf, char *delim)
 	tokens[i] = NULL;
 
 	return (tokens);
+}
+
+int G_number_of_tokens(char **tokens)
+{
+	int n;
+
+	for (n = 0; tokens[n] != NULL ; n++)
+        {
+         /* nothing */
+        }
+        return n;
 }
 
 int G_free_tokens (char **tokens)
