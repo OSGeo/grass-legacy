@@ -28,10 +28,12 @@ int main( int argc, char **argv )
   char *vect_mapset;
   char *site_mapset;
   struct Option *opt_radius;
+  struct Option *opt_field;
   struct Option *opt_input;
   struct Option *opt_output;
   int scan_int;
   double radius;
+  int dec_field;
   char input[1024], output[1024];
   char fqn_output[1024];
   char *fqn;
@@ -64,7 +66,7 @@ int main( int argc, char **argv )
   opt_output->key = "output";
   opt_output->type = TYPE_STRING;
   opt_output->required = YES;
-  opt_output->gisprompt = "new,dig,vector";
+  opt_output->gisprompt = "any,dig,vector";
   opt_output->description = "Vector file to be created (output).";
   opt_output->answer = "";
 
@@ -75,6 +77,14 @@ int main( int argc, char **argv )
   opt_radius->required = NO;
   opt_radius->description = "Maximum radius corresponding with maximum z value in the sitemap, unit is units of map\n";
   opt_radius->answer = "1.0";
+
+/* Request a pointer to memory for each option. */
+  opt_field = G_define_option();
+  opt_field->key = "field";
+  opt_field->type = TYPE_INTEGER;
+  opt_field->required = NO;
+  opt_field->description = "Attribute field number to use for operation";
+  opt_field->answer = "1";
 
   /* Request a pointer to memory for each flag. */
   flag = G_define_flag();
@@ -100,8 +110,18 @@ vector file.";
     exit(1);
    }
 
-/* Make sure that the current projection is UTM or   */
-/* Unreferenced XY projection.                       */
+  scan_int=sscanf(opt_field->answer,"%d",&dec_field);
+  if ((scan_int <= 0) || dec_field < 1)
+   {
+    char msg[256];      
+    sprintf(msg,"%s: \"%s\" is an incorrect value for attribute field number.\n",
+            G_program_name(),opt_field->answer );
+    G_fatal_error (msg);
+    exit(1);
+   }
+
+/* Make sure that the current projection is UTM or defined-99 or  */
+/* unreferenced XY projection.                       */
   if ((G_projection() != 0)&&(G_projection() != 1) &&(G_projection() != 99))
    {
     char msg[256];      
@@ -188,7 +208,9 @@ Please choose a different vector file name.\n",
   pnts = Vect_new_line_struct();
   
  /* the next 10 lines create the bubble plot*/ 
-   if ((nsites = readsites (fd_site,1,1,1, &bsite))==0) {
+ /* G_readsites (FILE *fdsite, int all, int verbose, int dec_field, site **xyz) */
+ 
+   if ((nsites = G_readsites (fd_site,1,1,dec_field, &bsite))==0) {
        G_fatal_error("No sites found. .");
    } else {
        fprintf(stderr, "%i sites found\n",nsites);
