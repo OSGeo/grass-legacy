@@ -1,0 +1,33 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.db.connect</em> prints or sets database connection for a vector map.
+
+<h2>NOTE</h2>
+
+If parameters for database connection are already set with 
+<a HREF="db.connect.html">db.connect</a>, they are taken as default values and
+do not need to be spcified each time.
+
+<h2>EXAMPLE</h2>
+
+<em>Print database connection</em>
+<br>
+<b>v.db.connect -p map=</b><em>vectormap</em>
+
+<p>
+
+<em>Connect vector map to database</em>
+<br>
+<b>v.db.connect -p map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
+<b>field=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
+<b>database=</b><em>/daten/grassdata/fire/PERMANENT/dbf</em>
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="db.copy.html">db.copy</a></em><br>
+<em><a HREF="http://grass.itc.it/grass51/tutorial/ex_basic.html#convert">GRASS 5.1
+tutorial pages</a></em>
+
+<h2>AUTHOR</h2>
+
+Radim Blazek, ITC-Irst, Trento, Italy

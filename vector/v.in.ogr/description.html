@@ -1,0 +1,36 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.in.ogr</em> converts 
+<a href="http://gdal.velocet.ca/projects/opengis/">OGR</a> vectors to GRASS. 
+OGR (Simple Features Library) is part of the 
+<a href="http://www.remotesensing.org/gdal">GDAL</a> library, so you need to
+install gdal to use <em>v.in.ogr</em>. 
+
+<h3>Supported OGR Vector Formats</h3>
+
+<a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/drv_shapefile.html">ESRI
+Shapefile</a><br>
+<a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/drv_mitab.html">Mapinfo File</a>
+
+<p>
+
+For further available drivers go 
+<a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/ogr_formats.html">here</a>
+
+
+<h2>EXAMPLE</h2>
+
+<b>v.in.ogr dsn=</b><em>/home/user/shape_data</em>
+<b>layer=</b><em>test_shape</em> <b>output=</b><em>grass_map</em> <br>
+<b>v.in.ogr dsn=</b><em>./</em> <b>layer=</b><em>mapinfo_test</em> 
+<b>output=</b><em>grass_map</em> 
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="v.out.ogr.html">v.out.ogr</a></em>
+
+
+
+<h2>AUTHOR</h2>
+
+Radim Blazek, ITC-Irst, Trento, Italy

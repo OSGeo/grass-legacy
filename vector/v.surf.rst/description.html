@@ -1,0 +1,242 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.surf.rst</em>
+<br>This program interpolates the z-values from vector data (e.g., contours,
+isolines) given in a vector file named <em>input</em> to grid cells in the
+output raster file <em>elev</em> representing a surface. As an option, simultaneously
+with interpolation, topographic parameters slope, aspect, profile curvature
+(measured in the direction of steepest slope), tangential curvature (measured
+in the direction of a tangent to contour line) or mean curvature are computed
+and saved as raster files specified by the options <em>slope, aspect, pcurv,
+tcurv, mcurv</em> respectively. If <b><em>-d</em></b> flag is set the program
+outputs partial derivatives f<sub>x</sub>,f<sub>y</sub>,f<sub>xx</sub>,
+f<sub>yy</sub>,f<sub>xy</sub>
+instead of slope, aspect, profile, tangential and mean curvatures respectively.
+If the input data have time stamp, the program creates time stamp for all
+output files.
+
+<p>
+User can define a raster file named <em>maskmap</em>, which will be used
+as a mask. The interpolation is skipped for cells which have zero or NULL
+value in mask. NULL values will be assigned to these cells in all output
+raster files. Data points are checked for identical points and points that
+are closer to each other than the given <em>dmin</em> are removed. Additional
+points are used for interpolation between each 2 points on a line if the
+distance between them is greater than specified <em>dmax</em>. Parameter
+<em>zmult</em>
+allows user to rescale the z-values (useful e.g. for transformation of
+elevations given in feet to meters, so that the proper values of slopes
+and curvatures can be computed).
+
+<p>
+
+Regularized spline with tension is used for the interpolation. The
+<em>tension</em>
+parameter tunes the character of the resulting surface from thin plate
+to membrane. For noisy data, it is possible to define a smoothing parameter
+<em>smooth</em>. With the smoothing parameter set to zero (<em>smooth=0</em>) 
+the resulting surface passes exactly through the data points. When smoothing parameter
+is used, it is possible to output site file <em>devi</em> containing deviations
+of the resulting surface from the given data.
+
+<p>
+
+If the number of given points is greater than <em>segmax</em>, segmented
+processing is used . The region is split into rectangular segments, each
+having less than
+<em>segmax</em> points and interpolation is performed on
+each segment of the region. To ensure the smooth connection of segments
+the interpolation function for each segment is computed using the points
+in given segment and the points in its neighborhood which are in the rectangular
+window surrounding the given segment. The number of points taken for interpolation
+is controlled by <em>npmin</em>, the value of which must be larger than <em>segmax</em>
+. User can choose to output vector files <em>treefile</em> and <em>overfile</em>
+
+which represent the quad tree used for segmentation and overlapping neighborhoods
+from which additional points for interpolation on each segment were taken.
+<font color="#000000">Anisotropic surfaces can be interpolated setting anisotropy angle </font><font color="#000000"><em>theta</em></font><font color="#000000"> and scaling factor </font><font color="#000000"><em>scalex</em></font><font color="#000000">. </font>The program writes several important values to history file of raster map
+<b><em>elev</em></b>.
+
+<p>
+
+<h2>NOTES</h2>
+
+<em>v.surf.rst </em>uses regularized spline with tensionfor interpolation
+from vector data. Additional points are used for interpolation between
+each 2 points on a line if the distance between them is greater than specified
+<em>dmax</em>. If <em>dmax</em> is small (less than cell size) the number of
+added data points can be vary large and slow down interpolation significantly.
+The implementation has a segmentation procedure based on quadtrees which
+enhances the efficiency for large data sets.Special color tables are created
+by the program for output raster files.
+<p>Topographic parameters are computed directly from the interpolation
+function so that the important relationships between these parameters are
+preserved. The equations for computation of these parameters and their
+interpretation is described in
+(<a href="http://skagit.meas.ncsu.edu/~helena/gmslab/papers/hmg.rev1.ps">Mitasova and Hofierka 1993</a>).
+Slopes and aspect are computed in degrees (0-90 and 1-360 respectively).
+The aspect raster file has value 0 assigned to flat areas (with slope less
+than 0.1%) and to singular points with undefined aspect. Aspect points
+downslope and is 90 to the North, 180 to the West, 270 to the South and
+360 to the East, the values increase counterclockwise. Curvatures are positive
+for convex and negative for concave areas. Singular points with undefined
+curvatures have assigned zero values.
+</p><p><em>Tension</em> and <em>smooth</em>ing allow user to tune the surface character.
+For most landscape scale applications the default should work fine.The
+program gives warning when significant overshoots appear in the resulting
+surface and higher tension or smoothing should be used.
+
+<br>While it is possible to automatize the selection of suitable <em>tension</em>
+and <em>smooth</em>ing, it has not been done yet, so here are some hints
+which may help to choose the proper parameters if the results look "weird".
+It is useful to know that the method is scale dependent and the <em>tension</em>
+works as a rescaling parameter (high <em>tension</em> "increases the distances
+between the points" and reduces the range of impact of each point, low<em>
+tension</em> "decreases the distance" and the points influence each other
+over longer range). Surface with&nbsp; <em>tension</em> set too high behaves
+like a membrane (rubber sheet stretched over the data points) with peak
+or pit ("crater") in each given point and everywhere else the surface goes
+rapidly to trend. If digitized contours are used as input data, high tension
+can cause artificial waves along contours. Lower tension and higher smoothing
+is suggested for such a case.
+
+<br>Surface with <em>tension</em> set too low behaves like a stiff steel
+plate and overshoots can appear in areas with rapid change of gradient
+and segmentation can be visible. Increase tension should solve the problems.
+<br>There are two options how <em>tension</em> can be applied in relation
+to <em>dnorm</em> (dnorm rescales the coordinates depending on the average
+data density so that the size of segments with <em>segmax=</em>40 points
+is around 1 - this ensures the numerical stability of the computation):
+</p><p>1. Default (used also in s.surf.rst): the given <em>tension</em>&nbsp;
+is applied to normalized data (x/<em>dnorm</em>..),&nbsp; that means that
+the distances are multiplied (rescaled) by <em>tension/dnorm</em>. If density
+of points is changed, e.g.,&nbsp; by using higher <em>dmin</em>, the <em>dnorm</em>
+
+changes and <em>tension</em> needs to be changed too to get the same result.
+Because the <em>tension</em> is applied to normalized data its suitable value
+is usually within the 10-100 range and does not depend on the actual scale
+(distances) of the original data (which can be km for regional applications
+or cm for field experiments).
+<br>2. Flag<b> -t </b>(experimental for s.surf.rst)<b>: </b>The given <em>tension</em>
+is applied to un-normalized data (rescaled tension = t<em>ension*dnorm</em>/1000
+is applied to normalized data (x/<em>dnorm</em>) and therefore&nbsp; <em>dnorm</em>
+
+cancels out) so here <em>tension</em> truly works as a rescaling parameter.
+For regional applications with distances between points in km. the suitable
+tension can be 500 or higher, for detailed field scale analysis it can
+be 0.1. To help select how much the data need to be rescaled the program
+writes
+<em>dnorm</em> and rescaled tension=<em>tension*dnorm</em>/1000 at the
+beginning of the program run. This rescaled <em>tension</em> should be around
+20-30.&nbsp; If it is lower or higher, the given <em>tension</em> parameter
+should be changed accordingly.
+
+</p><p>The default is a recommended choice, however for the applications where
+the user needs to change density of data and preserve the interpolation
+character the <b>-t</b> flag can be helpful.</p>
+<p><font color="#000000">Anisotropic data (e.g. geologic phenomena)</font><font color="#000000"> can be 
+interpolated using </font><font color="#000000"><em>theta</em></font><font color="#000000"> 
+and </font><font color="#000000"><em>scalex</em></font><font color="#000000"> defining orientation</font><font color="#000000"> 
+and ratio of the perpendicular axes put on the longest/shortest side of the feature, respectively.
+</font><font color="#000000"><em>Theta</em> is measured in degrees from East, 
+counterclockwise</font><font color="#000000">. <em>Scalex</em> is a ratio</font><font color="#000000"> 
+
+of axes</font><font color="#000000"> size</font><font color="#000000">s</font><font color="#000000">. 
+Setting <em>scalex</em> in the range 0-1, you will get pattern prolonged in the
+direction defined by <em>theta</em>. <em>Scalex</em> value 0.5 means that your feature is approximatelly
+2 times longer in the direction of <em>theta</em> than in the perpendicular direction.
+<em>Scalex</em> value 2</font><font color="#000000"> means that axes ratio is reverse and you will get pattern 
+perpendicular to the previous example. </font>Please note that anisotropy
+option has not been extensively tested and may include bugs - if there are
+problems, please report to GRASS bugtracker (accessible from http://grass.itc.it/).<br>
+
+</p>
+<p>The program gives warning when significant overshoots appear and higher
+tension should be used. However, with tension too high the resulting surface
+changes its behavior to membrane (rubber sheet stretched over the data
+points resulting in a peak or pit in each given point and everywhere else
+the surface goes rapidly to trend). Also smoothing can be used to reduce
+the overshoots.
+</p><p>For data with values changing over several magnitudes (sometimes the
+concentration or density data) it is suggested to interpolate the log of
+the values rather than the original ones.
+</p><p>The program checks the numerical stability of the algorithm by computating
+the values in given points, and prints the root mean square deviation (rms)
+found into the history file of raster map <em>elev</em>. For computation
+with smoothing set to 0. rms should be 0. Significant increase in <em>tension</em>
+is suggested if the rms is unexpectedly high for this case. With smoothing
+parameter greater than zero the surface will not pass exactly through the
+data points and the higher the parameter the closer the surface will be
+to the trend. The rms then represents a measure of smoothing effect on
+data. More detailed analysis of smoothing effects can be performed using
+the output deviations option.
+</p><p>The program writes the values of parameters used in computation into
+the comment part of history file <em>elev</em> as well as the following values
+which help to evaluate the results and choose the suitable parameters:
+minimum and maximum z values in the data file (zmin_data, zmax_data) and
+in the interpolated raster map (zmin_int, zmax_int), rescaling parameter
+used for normalization (dnorm), which influences the tension.
+</p><p>If visible connection of segments appears, the program should be rerun
+with higher <em>npmin</em> to get more points from the neighborhood of given
+segment and/or with higher tension.
+
+</p><p>When the number of points in a site file is not too large (less than
+800), the user can skip segmentation by setting <em>segmax </em>to the number
+of data points or <em>segmax=700</em>.
+</p><p>The program gives warning when user wants to interpolate outside the
+rectangle given by minimum and maximum coordinates in the vector file,
+zoom into the area where the given data are is suggested in this case.
+</p><p>When a mask is used, the program takes all points in the given region
+for interpolation, including those in the area which is masked out, to
+ensure proper interpolation along the border of the mask. It therefore
+does not mask out the data points, if this is desirable, it must be done
+outside <em>v.surf.rst.</em>
+</p><p>For examples of applications see
+<a href="http://skagit.meas.ncsu.edu/~helena/gmslab/">http://skagit.meas.ncsu.edu/~helena/gmslab/.</a>
+</p><p>The user must run <a href="g.region.html">g.region</a> before the program
+to set the region and resolution for interpolation.
+<br>&nbsp;
+
+</p><h2>
+SEE ALSO</h2>
+<a href="s.surf.rst.html">s.surf.rst</a>
+<br>&nbsp;
+<h2>
+AUTHORS</h2>
+
+<p><br><em>Original version of program (in FORTRAN) and GRASS enhancements</em>:
+<br>Lubos Mitas, NCSA, University of Illinois at Urbana Champaign, Illinois,
+USA
+<br>Helena Mitasova, Department of Geography, University of Illinois at
+Urbana-Champaign, USA
+</p><p><em>Modified program (translated to C, adapted for GRASS, new segmentation
+procedure):</em>
+<br>Irina Kosinovsky, US Army CERL
+
+<br>Dave Gerdes, US Army CERL
+</p><p><em>Modifications for new sites format and timestamping:</em>
+<br>Darrel McCauley, Purdue University
+<br>&nbsp;
+</p><h2>
+REFERENCES</h2><font color="#000000">
+     Hofierka J., Parajka J.,  Mitasova H., Mitas L., 2002,
+     Multivariate Interpolation of Precipitation Using Regularized Spline with Tension.
+     <em>Transactions in GIS</em>&nbsp; 6(2), pp. 135-150.</font><br>
+<br>
+H. Mitasova, L. Mitas, B.M. Brown, D.P. Gerdes, I. Kosinovsky, 1995, Modeling
+spatially and temporally distributed phenomena: New methods and tools for
+GRASS GIS. International Journal of GIS, 9 (4), special issue on Integrating
+GIS and Environmental modeling, 433-446.
+<p><a href="http://skagit.meas.ncsu.edu/~helena/gmslab/papers/lmg.rev1.ps">Mitasova and Mitas 1993</a>: Interpolation by
+Regularized Spline with Tension: I. Theory and Implementation, Mathematical
+Geology ,25, 641-655.
+
+</p><p><a href="http://skagit.meas.ncsu.edu/~helena/gmslab/papers/hmg.rev1.ps">Mitasova and Hofierka 1993</a>: Interpolation
+by Regularized Spline with Tension: II. Application to Terrain Modeling
+and Surface Geometry Analysis, Mathematical Geology 25, 657-667.
+</p><p>Mitas, L., Mitasova H., 1988 : General variational approach to the interpolation
+problem, Computers and Mathematics with Applications, v.16, p. 983
+</p><p>Talmi, A. and Gilat, G., 1977 : Method for Smooth Approximation of Data,
+Journal of Computational Physics, 23, p.93-123.
+</p><p>Wahba, G., 1990, : Spline Models for Observational Data, CNMS-NSF Regional
+Conference series in applied mathematics, 59, SIAM, Philadelphia, Pennsylvania.

@@ -1,0 +1,62 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.extract</em> allows a user to select vector objects from an existing 
+vector map and creates a new map containing only the selected objects. 
+Database tables can be queried with SQL statements, if a connection is
+established. 
+
+<h2>EXAMPLES</h2>
+
+<dd><b>v.extract list=</b>1,2,3,4 
+<b>input=</b>soils <b>output=</b>soil_groupa <b>type=</b>area <b>new=</b>1
+
+<p>
+Produces a new vector area file <em>soil_groupa</em> containing 'area'
+boundaries from <em>soils</em> with area category numbers of 1 thru 4;  any
+common boundaries are dissolved, and all areas of the new map will be
+assigned category number 1.
+
+<p>
+<dt> 
+<dd><b>v.extract list=</b>Abc,Def1,12A,WWd 
+<b>input=</b>soils <b>output=</b>soil_groupa <b>type=</b>area <b>new=</b>0  </b>
+<p>
+Produces a new vector area file <em>soil_groupa</em> containing 'area'
+boundaries from <em>soils</em> with area category labels of Abc,Def1, 12A,WWd;
+these labels correspond to numbers 1 thru 4 of <em>soils</em>.  Any common
+boundaries are dissolved, all areas of the new map will be retain their
+original category numbers 1 thru 4, in this case, since new was set to
+0.
+
+<p>
+<dt> 
+<dd><b>v.extract input=</b>soils <b>output=</b>soil_groupa 
+<b>type=</b>area <b>new=</b>1 <b>file=</b>sample  
+<p>
+
+Produces a new vector area file <em>soil_groupa</em> containing 'area'
+boundaries from <em>soils</em>.  No common boundaries are dissolved, all areas
+of the new map will be assigned category number 1.  The "labels" (-n option)
+can be found in the file sample of the current directory.
+
+<p>
+<dt> 
+<dd><b>v.extract input=</b>markveggy.shp <b>output</b>=markveggy.1 
+<b>new=</b>1 <b>where=</b>"(VEGTYPE = 'Wi') or (VEGTYPE = 'PS') or (PRIME_TYPE='Wi')"
+
+<p>
+
+Produces a new vector map with category label 1 if the SQL statement is
+fulfilled.
+
+<h2>SEE ALSO</h2>
+
+<em><a href="http://grass.itc.it/grass51/tutorial/ex_basic.html#v.extract">GRASS 5.1
+tutorial pages</a></em>
+
+<h2>AUTHOR</h2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS
+
+
+

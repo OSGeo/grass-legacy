@@ -1,0 +1,41 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.to.rast</em> transforms GRASS vector map
+layers into GRASS raster map layer format.
+
+<h2>NOTES</h2>
+
+<em>v.to.rast</em> will only affect data in areas lying
+inside the boundaries of the current geographic region.
+Before running <em>v.to.rast</em>, the user should
+therefore ensure that the current geographic region is
+correctly set and that the region resolution is at the
+desired level.
+
+<p>
+
+As parameter <em><b>col</b></em> a column from the vector map database table has to be
+specified to be used as categorie value in the raster output map. Existing
+table columns can be seen using <em><a href="db.describe.html">db.describe</a></em>.
+
+<h2>EXAMPLE</h2>
+
+<em>Convert a vector map and use column SPEED from attribute table</em><br>
+<b>db.describe -c table=</b><em>vect_map</em>
+<pre>
+ncols:3
+Column 1: CAT
+Column 2: SPEED
+Column 3: WIDTH 
+</pre>
+
+<b>v.to.rast in=</b><em>vect_map</em> <b>out=</b><em>raster_map</em>
+<b>col=</b><em>SPEED</em>
+
+<h2>AUTHORS</h2>
+
+Michael Shapiro,  
+U.S. Army Construction Engineering 
+Research Laboratory
+<br>
+Radim Blazek, ITC-Irst, Trento, Italy

@@ -1,0 +1,44 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.category</em> attaches, deletes or reports vector categories.
+
+<h2>EXAMPLES</h2>
+
+<em>report vector categories</em><br>
+<b>v.category in=</b><em>testmap</em> <b>option=</b><em>report</em>
+<pre>
+FIELD 1:
+type       count        min        max
+point          0          0          0
+line        1379          1       1379
+boundary       0          0          0
+centroid       0          0          0
+area           0          0          0
+all         1379          1       1379
+</pre>
+
+<em>delete all vector categories in field 1</em><br>
+<b>v.category in=</b><em>testmap</em> out=</b><em>outmap</em>
+<b>option=</b><em>del</em> 
+
+<p>
+
+<em>add vector categories in field 1 with step=2</em><br>
+<b>v.category in=</b><em>outmap</em> out=</b><em>stepmap</em>
+<b>option=</b><em>add</em> <b>step=</b><em>2</em>
+<pre>
+FIELD 1:
+type       count        min        max
+point          0          0          0
+line        1379          1       2757
+boundary       0          0          0
+centroid       0          0          0
+area           0          0          0
+all         1379          1       2757
+</pre>
+
+Results can be tested using <em><a HREF="d.what.vect.html">d.what.vect</a></em>. 
+
+<h2>AUTHOR</h2>
+
+Radim Blazek, ITC-Irst, Trento, Italy
