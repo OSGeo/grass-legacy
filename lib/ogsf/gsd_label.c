@@ -2,20 +2,16 @@
 * $Id$
 *
 ****************************************************************************
-* 	               -- GRASS Development Team --
 *
 * MODULE: 	GRASS ogsf library
 * AUTHOR(S):	Original author - Bill Brown - USA CERL 1991 - 1992
 *   	    	<new author name here>
 * PURPOSE: 	This file needs to be re-written in OpenGL
-* COPYRIGHT:  	Copyright USA CERL 1992. All rights reserved. (can probably
-*   	    	change this once the code is re-written)
+* COPYRIGHT:    (C) 2000 by the GRASS Development Team
 *
-*****************************************************************************
-*
-* $Log$
-* Revision 1.3  2000-11-10 02:56:56  justin
-* New header style
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
 *
 *****************************************************************************/
 
