@@ -1,8 +1,6 @@
 
 PROG = $(BIN_MAIN_CMD)/v.in.dxf2
 
-LDFLAGS = 
-
 SOURCES =	\
 		add_bounds.c \
 		add_extents.c \
