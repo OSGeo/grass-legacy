@@ -3,30 +3,41 @@ $Id$
 
 All GRASS modules should use a standardized scheme.                               
 
-Import/Export: 
-  input=name output=name for all raster, sites and vector modules
+Import:
+*  file=name output=name for all raster, sites and vector modules
 
-  export modules should *all* have an output= parameter, however they
-  should allow to specify "-" to write to stdout (for unix piping)
+Export:
+*  input=name file=name for all raster, sites and vector modules
+*  export modules should *all* have an output= parameter, however they
+   should allow to specify "-" to write to stdout (for unix piping)
+
+-> file is external file. Should be read from current directory, not
+   within mapset!
 
 Display modules: 
   map= for all raster and vector modules, 
   file=name for modules that can read from stdin in the 
        "easting northing label" format.
 
+
 Vector modules:
   map= for map (no analysis modules)
   input= output= for maps (analysis modules)
 
+
 Raster modules:
   input= output= for maps (analysis modules) 
+  sometimes: elev=
+
 
 Imagery modules:
   input= output= for maps (analysis modules)
+
   
 Sites modules:
   map= for map (no analysis modules)
   input= output= for maps (analysis modules) 
+  sometimes: elev=
   field   Attribute field type to use for operation
            options: dim,decimal,cat
            default: decimal
@@ -36,18 +47,23 @@ Sites modules:
            default: 1
   -> important: attribute field selection
 
+
 Misc modules:
   map= for map (no analysis modules)
   input= output= for maps (analysis modules)
+
 
 General modules:
   [rast=old,new] [vect=old,new] [icon=old,new] [labels=old,new]
   [sites=old,new] [region=old,new] [group=old,new] [3dview=old,new]
 
+
 3D raster modules:
  parameters comparing to raster modules
 
+
 3D vector modules (forthcoming)
+
 
 Database modules
  ?
