@@ -1,0 +1,2 @@
+ Automatically creates the PROJECTION_INF and PROJ_UNITS files to
+record the projection information for a specified mapset.
