@@ -1,0 +1,6 @@
+/usr/grass3/src/CMD/Gmake
+make
+cd ..
+/usr/grass3/src/CMD/Gmake
+make
+cd calcomp
