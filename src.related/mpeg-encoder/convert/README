@@ -1,0 +1,56 @@
+If your input files are not in the input formats accepted by our
+encoder, fear not!  Here are some ways to get the pictures into our
+encoder...
+
+1) Converting files to PPM
+
+To convert JPEG files, check out the files in the jpeg directory of the
+encoder.  Compile djpeg for your machine, and you can use it to convert
+them to PPM.
+
+For other input formats, see Jef Poskanzer's PBMPLUS package, which has
+a tool to convert almost every single format to PPM.  One anonymous ftp
+site which carries it is ee.utah.edu, in the directory /pbmplus.
+
+If, by chance, PBMPLUS does not support your format, please drop us a
+note at mpeg-bugs@plateau.cs.berkeley.edu and we'll try to add it to
+this archive for future releases.
+
+
+2) Converting files to Encoder/Berkeley YUV (called YUV in earlier
+releases).
+
+Encoder YUV is merely the concatenation of the Y, U, and V data, in
+order.  It is *not* Abekas YUV, which interlaces the Y, U, and V data.
+
+Since the encoder now supports Abekas YUV and other YUV formats, there
+is not a pressing need to have a special conversion program for our
+format.  However, if you insist, you can convert your video format to
+PPM using PBMPLUS and then run ppmtoeyuv in this directory.
+
+
+3) Converting files to Abekas YUV
+
+Get Jef Poskanzer's PBMPLUS package as mentioned in (1) and convert
+your image to PPM.  Then run ppmtoyuv on it.  Obviously, you will only
+want to do this if you want to keep the source images around, since the
+encoder takes the larger PPM format as well.
+
+4) Converting system layer streams into video and audio streams:
+
+Use mpeg_demux
+
+5) Reading JPEGs:  If you have any problems with our built in JPEG support,
+the new version of the IJPEG Group's efforts is avail from:
+ftp.uu.net:/graphics/jpeg/jpegsrc.v5b.tar.gz
+As well as many other sites.  (Note that the version number may increase
+with time ;-)
+If using BASE_FILE_FORMAT jpeg does not work, try building the djpeg
+utility out of the JPEG distrib and using
+BASE_FILE_FORMAT ppm
+INPUT_CONVERT djpeg *
+
+6) VID files
+You can now read vid files directly from the encoder.
+If you wish to compile vidtoeyuv for efficiency, you must have libXvid
+
