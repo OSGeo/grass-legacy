@@ -27,9 +27,9 @@
 # are here: http://crs.ifag.de/crs_national.php
 
 # World Geodetic System 1984
-wgs84  "World_Geodetic_System_1984"	  wgs84		dx=0.0	    dy=0.0      dz=0.0
+wgs84  "WGS_1984"	  wgs84		dx=0.0	    dy=0.0      dz=0.0
 # World Geodetic System 1972
-wgs72  "World_Geodetic_System_1972"       wgs72         dx=0.0      dy=0.0      dz=5.0
+wgs72  "WGS_1972"       wgs72         dx=0.0      dy=0.0      dz=5.0
 # North American 1927
 nad27  "North_American_Datum_1927"              clark66       dx=-22.0    dy=157.0    dz=176.0
 # North American 1983
