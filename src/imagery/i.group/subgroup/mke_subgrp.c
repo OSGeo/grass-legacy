@@ -1,4 +1,3 @@
-/* %W% %G% */
 
 #include "imagery.h"
 
@@ -23,7 +22,7 @@ make_subgroup (group, subgroup, ref1)
 	    printf ("No files selected! Subgroup [%s] not created\n", subgroup);
 	    exit(1);
 	}
-	printf ("Subgroup [%s] references the following cell file%s\n",
+	printf ("Subgroup [%s] references the following raster file%s\n",
 		subgroup, ref2.nfiles==1?"":"s");
 	printf ("---------------------------\n");
 	for (n = 0; n < ref2.nfiles; n++)
