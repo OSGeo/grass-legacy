@@ -155,11 +155,16 @@ char **argv;
 
 /*      allocate cell buf the map layer */
         map_rbuf.type = G_raster_map_type (map_name, map_mapset);
+        new_rbuf.type = map_rbuf.type;
+        dir_rbuf.type = map_rbuf.type;
+/*
         new_rbuf.type = G_raster_map_type (new_map_name, map_mapset);
         dir_rbuf.type = G_raster_map_type (dir_name, map_mapset);
+*/
 
 	map_rbuf.buf.v = G_allocate_raster_buf (map_rbuf.type);
         new_rbuf.buf.v = G_allocate_raster_buf (new_rbuf.type);   
+        dir_rbuf.type = CELL_TYPE;
         dir_rbuf.buf.v = G_allocate_raster_buf (dir_rbuf.type); /* should be always CELL,needs another update */
 
 /*      open the map and get their file id  */
