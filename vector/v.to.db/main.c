@@ -49,13 +49,13 @@ main (int argc, char *argv[])
     } else { 
         read_lines(&Map); 
     }		
-         
-    Vect_close (&Map);
 
     conv_units();
     
     if ( options.print ) report();
     else update( &Map );
+    
+    Vect_close (&Map);
 
     /* free list */
     G_free ( Values );
