@@ -364,7 +364,7 @@ clear
 echo "Welcome to GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG"
 echo
 echo "Geographic Resources Analysis Support System (GRASS) is Copyright,"
-echo "1999-2000 by the GRASS Development Team, and licensed under terms of the"
+echo "1999-2001 by the GRASS Development Team, and licensed under terms of the"
 echo "GNU General Public License (GPL)."
 echo 
 echo "This GRASS VERSION_NUMBER release is coordinated and produced by the"
