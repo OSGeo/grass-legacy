@@ -60,6 +60,33 @@ Piping commands to a GRASS module:<br>
 <br>&nbsp;&nbsp; EOF
 <p>&nbsp;&nbsp; r.mapcalc &lt; /tmp/textfile.asc<br>
 <BR>
+
+<li>Q: Is is possible to switch  one  LOCATION to another while running
+   GRASS?
+
+<pre>
+A: Partially. With pre4 and later, using any of:
+
+        g.gisenv set=GISDBASE=newdbase
+        g.gisenv set=LOCATION_NAME=newlocation
+        g.gisenv set=MAPSET=newmapset
+
+will mostly work.
+
+Things which won't work correctly include:
+
+1. Monitor state (resizing, d.save, d.redraw etc). You may as well run
+"d.erase" when changing location, as the stored state is no longer
+usable.
+
+2. Existing NVIZ and tcltkgrass sessions won't recognise the change of
+location; they will continue to use the old location.
+
+3. The shell history (.bash_history) will be saved in the original
+mapset directory.
+
+</pre>
+
 <li>
 Data <a href="import.html">Import</a> into
 GRASS</li>
