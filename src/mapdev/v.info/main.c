@@ -117,7 +117,8 @@ char *argv[])
   printline (line);
   sprintf (line, "  Original scale 1:%ld", v_head.orig_scale);
   printline (line);
-  printline ("");
+  sprintf (line, "  Map threshold: %.5f", v_head.map_thresh);
+  printline (line);
   sprintf (line, "  Comments:");
   printline (line);
   sprintf (line, "    %s", v_head.line_3);
