@@ -76,7 +76,7 @@ main (int argc, char *argv[])
 	catcol_opt->type = TYPE_INTEGER;
 	catcol_opt->required = NO;
 	catcol_opt->multiple = NO;
-	catcol_opt->answer = "3";
+	catcol_opt->answer = "0";
 	catcol_opt->description = "Number of column used as category (first column is 1) for points mode. "
 	            "If 0, unique category is assigned to each row and written to new column 'cat'.";
 
