@@ -74,6 +74,7 @@ SUBDIRS1 = \
 	r.surf.idw \
 	r.surf.idw2 \
 	r.surf.random \
+	r.texture \
 	r.thin \
 	r.timestamp \
 	r.topidx \
