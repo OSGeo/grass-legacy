@@ -61,7 +61,7 @@ o_sum (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
 	    catb = basecat;
 	}
 	if (usecats)
-	    sscanf (G_get_cat((CELL)covercat, &cats), "%lf", &x);
+	    sscanf (G_get_cat((CELL)covercat, cats), "%lf", &x);
 	else
 	    x = covercat;
 	sum1 += x * area;
