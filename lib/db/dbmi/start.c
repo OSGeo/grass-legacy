@@ -110,8 +110,6 @@ db_start_driver(name)
         close(p1[WRITE]);
         close(p2[READ]);
 
-if(!getenv("CODECENTER")) {
-#ifndef __CODECENTER__
         close (0);
         close (1);
 
@@ -126,22 +124,9 @@ if(!getenv("CODECENTER")) {
             db_syserror("dup w");
             _exit(127) ;
         }
-#endif
-}
 
-#ifdef __CODECENTER__
-	fprintf (stderr, "Use <%d %d>\n", p1[READ], p2[WRITE]);
-	execlp ("xcodecenter3", "xcodecenter3", "-p", "project.driver", 0);
-	/*execlp ("codecenter", "codecenter", "-no_run_window", 0);*/
-	/*execlp ("codecenter", "codecenter", "-motif", "-p", "project.driver", 0); */
-#else
-	if(getenv("CODECENTER"))
-	{
-	    fprintf (stderr, "Use <%d %d>\n", p1[READ], p2[WRITE]);
-	    execlp (getenv("CODECENTER"), getenv("CODECENTER"), "-p", "project.driver", 0);
-	}
 	execl ("/bin/sh", "sh", "-c", startup, 0);
-#endif
+
         db_syserror ("execl");
 	return NULL; /* to keep lint, et. al. happy */
     }
