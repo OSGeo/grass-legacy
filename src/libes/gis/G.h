@@ -7,7 +7,7 @@
  * use int if you need more columns (but this will take more memory).
  *
 */
-typedef unsigned short COLUMN_MAPPING ;
+typedef int COLUMN_MAPPING ;
 
 struct G__                         /*  Structure of library globals */
 {
