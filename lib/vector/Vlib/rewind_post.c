@@ -19,22 +19,25 @@
 *****************************************************************************/
 #include "Vect.h"
 
+#ifdef HAVE_POSTGRES 
 
-/*
-   ** Simply returns level that Map is opened at
-   **  returns open level or -1 on error
- */
-int
-Vect_level (Map)
-     struct Map_info *Map;
+/* Rewind vector data file to cause reads to start at beginning.
+** returns 0 on success
+**        -1 on error
+*/
+int 
+V1_rewind_post (struct Map_info *Map)
 {
-  if (Map->open != VECT_OPEN_CODE)
-    {
-      if (Map->open != VECT_CLOSED_CODE)
-	fprintf (stderr, "VECT_LEVEL: Map structure was never initialized\n");
-      else
-	fprintf (stderr, "VECT_LEVEL: Map structure has been closed\n");
-      return (-1);
-    }
-  return (Map->level);
+  Map->fInfo.post.nextRow = 0;
+  return 0;
 }
+
+int 
+V2_rewind_post (struct Map_info *Map)
+{
+  Map->next_line = 1;
+  return V1_rewind_post (Map);	/* make sure level 1 reads are reset too */
+}
+
+#endif
+

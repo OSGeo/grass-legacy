@@ -17,24 +17,24 @@
 *   	    	for details.
 *
 *****************************************************************************/
+#include "gis.h"
 #include "Vect.h"
 
-
-/*
-   ** Simply returns level that Map is opened at
-   **  returns open level or -1 on error
- */
-int
-Vect_level (Map)
-     struct Map_info *Map;
+int 
+V__map_overlap (
+		 struct Map_info *Map,
+		 double n, double s,
+		 double e, double w)
 {
-  if (Map->open != VECT_OPEN_CODE)
-    {
-      if (Map->open != VECT_CLOSED_CODE)
-	fprintf (stderr, "VECT_LEVEL: Map structure was never initialized\n");
-      else
-	fprintf (stderr, "VECT_LEVEL: Map structure has been closed\n");
-      return (-1);
-    }
-  return (Map->level);
+  struct Cell_head W;
+
+  /* updated for Lat lon support 21 Jun 91 */
+  W.north = Map->Constraint_N;
+  W.south = Map->Constraint_S;
+  W.east = Map->Constraint_E;
+  W.west = Map->Constraint_W;
+  W.proj = Map->proj;
+
+  return G_window_overlap (&W, n, s, e, w);
 }
+

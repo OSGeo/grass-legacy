@@ -20,32 +20,44 @@
 #include "Vect.h"
 #include <stdlib.h>
 
-static int
-clo_dummy () {
+/* 
+** return 0 on success
+**         non-zero on error
+*/
+int 
+V1_close_shp (struct Map_info *Map)
+{
+  if (!VECT_OPEN (Map))
+    return -1;
+
+  /* TODO something extra for shp opened for writing ? */  
+  if (Map->mode == MODE_WRITE || Map->mode == MODE_RW)
+    Vect__write_head (Map);
+
+  free (Map->name);
+  free (Map->mapset);
+  free (Map->digit_file);
+
+  Map->name = NULL;
+  Map->mapset = NULL;
+  Map->digit_file = NULL;
+  Map->open = VECT_CLOSED_CODE;
+
+  SHPClose( Map->fInfo.shp.hShp );
+  /* TODO close DBF */  
+
+  return 0;
+}
+
+/* 
+** return 0 on success
+**         non-zero on error
+*/
+int 
+V2_close_shp (struct Map_info *Map)
+{
+    G_warning ( "V2_close_shp() is not implemented\n" );
     return -1;
 }
 
-static int (*Close_array[][3]) () =
-{
-     { clo_dummy, V1_close_nat, V2_close_nat }
-   , { clo_dummy, V1_close_shp, V2_close_shp } 
-#ifdef HAVE_POSTGRES
-   , { clo_dummy, V1_close_post }
-#endif
-};
-
-
-/*  Close vector data file.
-**  returns 0 on success
-**          non-zero on error
-*/
-int 
-Vect_close (struct Map_info *Map)
-{
-#ifdef GDEBUG    
-    G_debug (1, "Vect_close(): name = %s, mapset = %s, format = %d, level = %d",
-	         Map->name, Map->mapset, Map->format, Map->level);
-#endif
-    return (*Close_array[Map->format][Map->level]) (Map); 
-}
 

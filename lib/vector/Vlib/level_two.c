@@ -1,10 +1,22 @@
 /*
-   **  Written by: Dave Gerdes 5 1988
-   **  US Army Construction Engineering Research Lab
-   **
-   **  Modified by Dave Gerdes  1/1991  for  dig_head/fileno stuff
- */
-
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       Vector library 
+*   	    	
+* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
+*               Update to GRASS 5.1 Radim Blazek and David D. Gray.
+*
+* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
 /*
    **
    **INTERFACE LEVEL II
