@@ -1,0 +1,7 @@
+FIPS PUB 123 Function Library
+Readme File 
+Subdirectory: <f123dir>/sammsdd/
+
+This subdirectory contains a master data dictionary transfer for
+U.S. Geological Survey Digital Line Graph level 3 (DLG3) data files
+in SDTS format.
