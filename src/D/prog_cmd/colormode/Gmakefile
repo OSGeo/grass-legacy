@@ -1,0 +1,17 @@
+# @(#)Gmakefile	2.1   6/26/87
+
+OFILES = \
+	colormode.o \
+	command.o
+
+Dcolormode: $(BIN)/Dcolormode
+
+$(BIN)/Dcolormode: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
+colormode.o:	options.h
+command.o:	options.h
