@@ -60,10 +60,14 @@ int ps_fcolortable (void)
     else t = 72.0 * ( PS.page_height - ct.y);
     if (ct.x <= 0.0) ct.x = PS.left_marg;
     l = 72.0 * ct.x + 0.5;
-    if (ct.width <= 0.0 || ct.width > PS.page_width  - PS.right_marg - ct.x)
-        ct.width = PS.page_width  - PS.right_marg - ct.x;
-    if (ct.height <= 0.0 || ct.height > PS.page_height  - PS.bot_marg - ct.y)
-        ct.height = PS.page_height  - PS.bot_marg - ct.y;
+    if (ct.width <= 0.0)
+        ct.width = 0.5;
+    if (ct.height <= 0.0)
+	ct.height = 4.0;
+    if (ct.width > PS.page_width - PS.right_marg - ct.x)
+        ct.width = PS.page_width - PS.right_marg - ct.x;
+    if (ct.height > PS.page_height - PS.bot_marg - ct.y)
+        ct.height = PS.page_height - PS.bot_marg - ct.y;
     r  = l + 72.0 * ct.width;
     col_width = ct.width / (double)ct.cols;
     
