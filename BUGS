@@ -66,8 +66,8 @@ i.ortho.photo
 i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
 - Attempting to change the default Title causes a segfault.
 
-g.version
- - outputs GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG
+g.manual
+  bug if $PAGER variable is not set on system
 
 p.map.new:
  - p.map.new now works but only with the grass4.2 raster files
@@ -120,7 +120,17 @@ r.los
  - segmentation fault in mark_pts.c line 37
  -> seems to be fixed 7/2000
 
-src/raster/r.mapcalc/polish: (when compiling)
+r.mapcalc
+ - Values -129 in GRASS raster files are treated as Null
+   This is bug in the new and older version of GRASS5.0beta.
+   For example, I create a map test with r.mapcalc as follows;                                                                        
+   > r.mapcalc test=-129
+   and test with d.what.rast which gives me the result
+   as follows:
+   602310(E) 4922750(N)
+    test in PERMANENT  (Null)no data
+
+ - r.mapcalc/polish: (when compiling)
 make[2]: Entering directory
 /home/neteler/src5/grass5.0beta/src/raster/r.mapcalc/polish'
 rm -f lex.yy.c y.tab.c
@@ -287,7 +297,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.8  2000-07-26 13:10:44  markus
+ Revision 1.9  2000-07-28 08:27:25  markus
+ g.version bug fixed, new reports on r.mapcalc and g.manual
+
+ Revision 1.8  2000/07/26 13:10:44  markus
  r.support bug fixed by Huidae Cho
 
  Revision 1.7  2000/07/26 12:48:56  markus
