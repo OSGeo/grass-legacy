@@ -1,9 +1,12 @@
 
 GRASS Debugging:
- * Print debugging message if environment variable GRASS_DEBUG_LEVEL
- * is set to level equal or greater
- *
- * Levels: (recommended levels)
+ Print debugging message if variable DEBUG
+ is set to level equal or greater
+
+g.gisenv set="DEBUG=3"
+
+Levels: (recommended levels)
+ * 0 - silence
  * 1 - message is printed once or few times per module
  * 3 - each row (raster) or line (vector)
  * 5 - each cell (raster) or point (vector)
