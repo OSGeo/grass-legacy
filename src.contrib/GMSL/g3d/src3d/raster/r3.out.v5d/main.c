@@ -11,6 +11,8 @@
  * - added true coordinates support Markus Neteler 1/2001
  * - Region sensivity by MN 1/2001
  * - Fixed coordinate being reversed MN 1/2001
+ *
+ * BUGS: see BUG file
  */
 
 /* uncomment to get some debug output */
@@ -148,8 +150,10 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
    Nl[0]=depths;
    
 /* ********* */     
-/* add here grass region/window settings from region struct */
-/* BUG: vis5d display one row/col/depth less that volume */
+/* BUG: vis5d display one row/col/depth less that volume
+ *
+ * Note: The coordinate system of Vis5D is really odd!
+ */
 
    strcpy(VarName[0], "S");
    TimeStamp[0] = DateStamp[0] = 0;
@@ -157,13 +161,14 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
    Projection = 0;               /*linear, rectangular, generic units*/
    ProjArgs[0] = region.north;   /*North boundary of 3-D box*/
    ProjArgs[1] = region.west;    /*West boundary of 3-D box */
-   ProjArgs[2] = region.ns_res * (-1);   /*Increment between rows */
-   ProjArgs[3] = region.ew_res * (-1);   /*Increment between columns*/
+   ProjArgs[2] = region.ns_res;  /*Increment between rows */
+   ProjArgs[3] = region.ew_res * (-1);   /*Increment between columns, reverse direction*/
    Vertical    = 0;               /*equally spaced levels in generic units*/
    VertArgs[0] = region.bottom;   /*height of bottom level*/
    VertArgs[1] = region.tb_res;   /*spacing between levels*/
 
 /* put here some g3d functions */
+  /* required ? */
         LatInc = 1.0;
         LonInc = 1.0;
         HgtInc = 1.0;
