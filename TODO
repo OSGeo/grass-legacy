@@ -1,4 +1,4 @@
-$Id: TODO,v 1.21 2000-10-02 17:16:18 markus Exp $
+$Id: TODO,v 1.22 2000-10-09 09:35:50 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -109,6 +109,10 @@ Modules:
   not to "status" of module (which is even confused at time)
   (Being worked on by )
 
+- ps.map:
+  set CC option "-fwritable-strings" on Linux or, better, update ps.map!
+  (Being worked on by )
+
 - r.buffer: should save info about used buffers into map history
   (Being worked on by )
 
@@ -117,7 +121,10 @@ Modules:
 
 - fix s.to.rast and s.to.vect to accept site lists created
   by r.to.sites
-  (Being worked on by )
+  (Being worked on by Eric Mitchell?)
+
+- v.buffer: write it
+  (Being worked on by)
 
 - v.digit:
    Label: M- multiple un-label: it would be a good idea to first select
@@ -137,15 +144,12 @@ Modules:
     - fix legend, scale and box drawings
 
 
-- Change the tcltkgrass code so that lists of choices appear as
+- tcltkgrass:
+  Change the tcltkgrass code so that lists of choices appear as
   a list instead of needing to use a push button to create the
   list. For example when using d.rast we must click a "Raster"
   button to get a list of raster files instead of having the
   raster files appear automatically when we call the d.rast
   module from the menu (edit gui.tcl)
-  (Being worked on by )
-
-- ps.map:
-  set CC option "-fwritable-strings" on Linux or, better, update ps.map!
   (Being worked on by )
 
