@@ -29,18 +29,19 @@ Global char Coor_file[512];	/* argv[2] of digit.  Name of Coord file */
 
 
 /* Menu control structures */
-Global struct Menu_head M_main;
-Global struct Menu_head M_global;
-Global struct Menu_head Global_mask;
-Global struct Menu_head M_digit;
-Global struct Menu_head M_edit;
-Global struct Menu_head M_custom;
-Global struct Menu_head M_tool;
-Global struct Menu_head M_label;
-Global struct Menu_head M_window;
-Global struct Menu_head M_debug;
-Global struct Menu_head M_display;
-Global struct Menu_head M_color;
+/* Defined as extern since their definition is in menus.i */
+extern struct Menu_head M_main;
+extern struct Menu_head M_global;
+extern struct Menu_head Global_mask;
+extern struct Menu_head M_digit;
+extern struct Menu_head M_edit;
+extern struct Menu_head M_custom;
+extern struct Menu_head M_tool;
+extern struct Menu_head M_label;
+extern struct Menu_head M_window;
+extern struct Menu_head M_debug;
+extern struct Menu_head M_display;
+extern struct Menu_head M_color;
 
 Global struct Map_info       *Current_map;
 Global struct Map_info       Map1;

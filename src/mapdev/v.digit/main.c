@@ -1,13 +1,14 @@
 #define MAIN
-#include	<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include	<signal.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include	"gis.h"
-#include	"bin_digit.h"
-#include        "ginput.h"
+
+#include "gis.h"
+#include "bin_digit.h"
+#include "ginput.h"
 #include "local_proto.h"
 #include "digit.h"
 
@@ -107,7 +108,7 @@ fprintf (stderr, "\nThere are NO arguments required.\n\n");
 #ifdef DEBUG
 fprintf( stderr, "\nDEBUG: name: %s, device: %s, prog: %s,  desc: %s \n",
 	Driver.name, Driver.device, Driver.dig_filename, Driver.dig_desc) ;
-#endif DEBUG
+#endif /* DEBUG */
 
 
 /*  get the process id and create lock file   pid = getpid()  */
@@ -350,5 +351,5 @@ int unlock_file (char *file)
 	return 1;
     return -1;
 }
-#undef MAIN
 
+#undef MAIN
