@@ -13,7 +13,10 @@
 #
 #
 # $Log$
-# Revision 1.5  2000-11-23 08:41:12  markus
+# Revision 1.6  2000-11-23 08:46:19  cho
+# indentation
+#
+# Revision 1.5  2000/11/23 08:41:12  markus
 # added help and -help parameter
 #
 # Revision 1.4  2000/11/22 09:11:10  cho
@@ -43,7 +46,7 @@ if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
 then
         echo
         echo "Usage: g.mlist"
-exit 1
+	exit 1
 fi
 
 
