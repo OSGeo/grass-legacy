@@ -1,0 +1,9 @@
+
+
+g.findfile - 
+
+g.findfile is designed for Bourne shell scripts that need to search the
+\raster\ \map layer\ files, \vector\ files, \site\ list files, imagery
+group files, and \geographic region\ files in the GRASS database.
+
+Manual entry for \g.findfile\
