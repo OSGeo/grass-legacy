@@ -143,7 +143,7 @@ main(argc, argv)
 
 /*  create and intialize array of line numbers of area edges  */
     linetypes = (char *) G_calloc (dlg.max_lines+1, sizeof (char));
-    for (n = 1 ; n <= dlg.max_areas ; n++)
+    for (n = 1 ; n <= dlg.max_lines ; n++)
 	linetypes[n] = LINE;
 
 	fprintf (stderr,"STEP %d: Analyze\n", ++step) ;
@@ -201,9 +201,6 @@ main(argc, argv)
     }	/*  for()  */
 
 	fprintf (stderr,"STEP %d: Write digit header\n", ++step) ;
-	/*obsolete with new Vect.lib
-     write_head_bdig (f_digit, &head);
-     */
      /*replaces the above*/
      Vect_copy_head_data (&head, &Map.head);
 
