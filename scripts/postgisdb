@@ -74,9 +74,9 @@ Written by (alphabetic order):
 This is free software; see the source for copying conditions. There is NO 
 warranty."
 
-existfunct="CREATE FUNCTION existTable(name) RETURNS int4 AS
-            'SELECT COUNT (tablename) FROM pg_tables WHERE tablename = \$1;'
-            LANGUAGE 'sql';"
+#existfunct="CREATE FUNCTION existTable(name) RETURNS int4 AS
+#            'SELECT COUNT (tablename) FROM pg_tables WHERE tablename = \$1;'
+#            LANGUAGE 'sql';"
 
 function Error () {
     echo "$program: $*" >&2
@@ -179,18 +179,14 @@ case "$1" in
          
          createdb ${argvect[0]} ${argvect[3]}
            if [ $? = 0 ]; then 
-             echo "$existfunct" | psql ${argvect[4]} ${argvect[3]}
-               if [ $? = 0 ]; then
-                 echo "$postgisfunction" | psql ${argvect[4]} ${argvect[3]}
-                   if [ $? = 0 ]; then 
-		     cmd="cat $postgisfile | tr -d '\015' | sed -e 's#/usr/local/pgsql/lib/contrib/#$libpostgisdir#g' | psql  ${argvect[1]} ${argvect[3]}"
-		     eval "$cmd"
-                       if [ ! $? = 0 ]; then   dropdb  $dbname ${argvect[3]}; Error "Error on adding postgis featuress";
-                       fi
-                   else dropdb  $dbname ${argvect[3]};  Error  "Error on adding postgis function "; 
-                   fi
-               else dropdb  $dbname ${argvect[3]};  Error "Error on adding existtable function"; 
-               fi
+	     echo "$postgisfunction" | psql ${argvect[4]} ${argvect[3]}
+	       if [ $? = 0 ]; then 
+		 cmd="cat $postgisfile | tr -d '\015' | sed -e 's#/usr/local/pgsql/lib/contrib/#$libpostgisdir#g' | psql  ${argvect[1]} ${argvect[3]}"
+		 eval "$cmd"
+		   if [ ! $? = 0 ]; then   dropdb  $dbname ${argvect[3]}; Error "Error on adding postgis featuress";
+		   fi
+	       else dropdb  $dbname ${argvect[3]};  Error  "Error on adding postgis function "; 
+	       fi
            else Error "Error on create database"
            fi
          ;;
