@@ -1,6 +1,10 @@
 #define GRASS_OK    0
 #define GRASS_ERR (-1)
 
+#define GV_FATAL_EXIT    0
+#define GV_FATAL_PRINT   1
+#define GV_FATAL_RETURN  2
+
 #define GRASS_VECT_DIRECTORY    "vector"
 #define GRASS_VECT_FRMT_ELEMENT "frmt"
 #define GRASS_VECT_COOR_ELEMENT "coor"

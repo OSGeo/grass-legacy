@@ -40,18 +40,6 @@ typedef int plus_t;
 #define P_LINE struct P_line
 #define P_ISLE struct P_isle
 
-
-#define DIG_ORGAN_LEN       30
-#define DIG_DATE_LEN        20
-#define DIG_YOUR_NAME_LEN   20
-#define DIG_MAP_NAME_LEN    41
-#define DIG_SOURCE_DATE_LEN 11
-#define DIG_LINE_3_LEN      53	/* see below */
-
-#define OLD_LINE_3_SIZE 73
-#define NEW_LINE_3_SIZE 53
-#define VERS_4_DATA_SIZE 20
-
 struct bound_box        /* Bounding Box */
   {
     double N;	/* north */			
@@ -89,17 +77,17 @@ struct Port_info
 struct dig_head
   {	  
     /*** HEAD_ELEMENT ***/
-    char organization[30];
-    char date[20];
-    char your_name[20];
-    char map_name[41];
-    char source_date[11];
+    char *organization;
+    char *date;
+    char *your_name;
+    char *map_name;
+    char *source_date;
     long orig_scale;
-    char line_3[73];
+    char *line_3;
     int plani_zone;
     //double W, E, S, N;
     double digit_thresh;
-    double map_thresh;
+    /* double map_thresh; */ /* not used in g51 */
 
     /* Programmers should NOT touch any thing below here */
     /* Library takes care of everything for you          */

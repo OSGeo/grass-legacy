@@ -785,6 +785,7 @@ int G_disable_interactive(void);
 struct GModule *G_define_module(void);
 struct Flag *G_define_flag(void);
 struct Option *G_define_option(void);
+struct Option *G_define_standard_option(int);
 int G_parser(int, char **);
 int G_usage(void);
 char *G_recreate_command(void);
