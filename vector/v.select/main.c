@@ -97,10 +97,11 @@ int line_overlap_area ( struct Map_info *LMap, int line, struct Map_info *AMap, 
 int 
 main (int argc, char *argv[])
 {
+    int    i;
     int    input, operator;
     int    aline, nalines;
     int    type[2], field[2];
-    int    *cats, ncats, acats;
+    int    **cats, *ncats, nfields, *fields;
     char   *mapset[2], *pre[2];
     struct GModule *module;
     struct Option *in_opt[2], *out_opt, *type_opt[2], *field_opt[2], *operator_opt;
@@ -376,8 +377,15 @@ main (int argc, char *argv[])
     Vect_close ( &(In[1]) ); 
 
     /* Write lines */
-    ncats = acats = 0;
-    cats = NULL;
+    nfields = Vect_cidx_get_num_fields ( &(In[0]) );
+    cats = (int **) G_malloc ( nfields * sizeof(int *) );
+    ncats = (int *) G_malloc ( nfields * sizeof(int) );
+    fields = (int *) G_malloc ( nfields * sizeof(int) );
+    for ( i = 0; i < nfields; i++ ) {
+	ncats[i] = 0;
+	cats[i] = (int *) G_malloc ( Vect_cidx_get_num_cats_by_index(&(In[0]),i) * sizeof(int) );
+	fields[i] = Vect_cidx_get_field_number ( &(In[0]), i );
+    }
     for ( aline = 1; aline <= nalines; aline++ ) {
 	int atype;
 
@@ -389,47 +397,79 @@ main (int argc, char *argv[])
         Vect_write_line ( &Out, atype, APoints, ACats );
 	
         if ( !(table_flag->answer) && (IFi != NULL) ) {
-	    int i;
 	    for ( i = 0; i < ACats->n_cats; i++ ) {
-		if ( ACats->field[i] == field[0] ) {
-		    if ( ncats == acats ) {
-			acats += 1000; 
-			cats = (int *) G_realloc ( cats, acats * sizeof(int) );
+		int f, j; 
+		for ( j = 0; j < nfields; j++ ) { /* find field */
+	    	    if ( fields[j] == ACats->field[i] ) {
+			f = j;
+			break;
 		    }
-	            cats[ncats] = ACats->cat[i];
-	            ncats++;
+		}
+		cats[f][ncats[f]] = ACats->cat[i];
+		ncats[f]++;
+	    }
+	}
+    }
+
+    /* Copy tables */
+    if ( !(table_flag->answer) && (IFi != NULL) ) {
+	int ttype, ntabs=0;
+	
+	G_message ( "Writing attributes ...\n" );
+
+	/* Number of output tabs */
+	for ( i = 0; i < Vect_get_num_dblinks ( &(In[0]) ); i++ ) {
+	    int f, j;
+	    
+	    IFi = Vect_get_dblink ( &(In[0]), i );
+	    
+	    for ( j = 0; j < nfields; j++ ) { /* find field */
+	    	if ( fields[j] == IFi->number ) {
+		    f = j;
+		    break;
 		}
 	    }
+	    if ( ncats[f] > 0 ) ntabs++;
+	}
+	
+	if ( ntabs > 1 )
+	    ttype = GV_MTABLE;
+	else 
+	    ttype = GV_1TABLE;
+	
+	for ( i = 0; i < nfields; i++ ) {
+	    int ret;
+
+	    if ( fields[i] == 0 ) continue;
+	
+	    G_message ( "Layer %d", fields[i] );
+
+	    /* Make a list of categories */
+	    IFi = Vect_get_field ( &(In[0]), fields[i] );
+	    if ( !IFi ) { /* no table */
+		G_message ( "No table." );
+		continue;
+	    }
+	    
+	    OFi = Vect_default_field_info ( &Out, IFi->number, IFi->name, ttype );
+
+	    ret = db_copy_table_by_ints ( IFi->driver, IFi->database, IFi->table,
+				  OFi->driver, Vect_subst_var(OFi->database,&Out), OFi->table,
+				  IFi->key, cats[i], ncats[i] );
+
+	    if ( ret == DB_FAILED ) {
+		G_warning ( "Cannot copy table" );
+	    } else {
+		Vect_map_add_dblink ( &Out, OFi->number, OFi->name, OFi->table, 
+				      IFi->key, OFi->database, OFi->driver);
+	    }
+	    G_message ( "Done." );
 	}
     }
 
     Vect_close ( &(In[0]) ); 
 
     Vect_build (&Out, stderr); 
-
-    /* Create table */
-    if ( !(table_flag->answer) && (IFi != NULL) ) {
-	int ret; 
-
-	fprintf ( stderr, "Writing attributes ...\n" );
-
-	/* Make a list of categories */
-	
-	
-        OFi = Vect_default_field_info ( &Out, field[0], NULL, GV_1TABLE );
-	
-
-        ret = db_copy_table_by_ints ( IFi->driver, IFi->database, IFi->table,
-                              OFi->driver, Vect_subst_var(OFi->database,&Out), OFi->table,
-	       		      IFi->key, cats, ncats );
-
-	if ( ret == DB_FAILED ) {
-	    G_warning ( "Cannot copy table" );
-	} else {
-	    Vect_map_add_dblink ( &Out, field[0], NULL, OFi->table, IFi->key, OFi->database, OFi->driver);
-	}
-    }
-    
     Vect_close (&Out);
     
     exit (0);
