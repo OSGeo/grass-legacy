@@ -2,10 +2,12 @@ OFILES = main.o extr_lines.o io.o
 
 EXTRA_CFLAGS = $(VECT_INCLUDE)
 
-$(BIN_ALPHA_CMD)/r.line:	$(OFILES)
+$(BIN_ALPHA_CMD)/r.line:	$(OFILES) $(VECTLIB) $(GISLIB)
 	rm -f $@
-	cc $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB)
 	mv a.out $@
+
+$(VECTLIB) $(GISLIB): #
 
 main.o: extr_lines.h
 extr_lines.o: extr_lines.h
