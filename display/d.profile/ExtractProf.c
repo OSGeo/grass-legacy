@@ -149,7 +149,7 @@ if ( (row1 != row2) && (abs(row1-row2) > abs(col1-col2)) )
       }
       else
       {
-      	switch (buf.type)
+       	switch (buf.type)
 	{
 		case CELL_TYPE:
 			theCell.val.c = buf.data.c[col]; break;
@@ -222,7 +222,7 @@ else
       if (G_get_raster_row(fd,buf.data.v,row,buf.type) < 0)
          return(-3);
 
-      /* Test if NULL, if so set to the minimum integer value */
+      /* Test if NULL, if so set to the minimum value */
       if (is_null_value(&buf, col))
       {
         switch (buf.type)
@@ -291,18 +291,24 @@ return(0);
 
 void ucat_max (UCAT *to, UCAT *from)
 {
-	switch (from->type)
+	switch (to->type)
 	{
 		case CELL_TYPE:
-			if (from->val.c > to->val.c)
+			if (to->val.c == INT_MIN)
+				to->val.c = from->val.c;
+			else if (from->val.c > to->val.c)
 				to->val.c = from->val.c;
 			break;
 		case FCELL_TYPE:
-			if (from->val.f > to->val.f)
+			if (to->val.f == FLT_MIN)
+				to->val.f = from->val.f;
+			else if (from->val.f > to->val.f)
 				to->val.f = from->val.f;
 			break;
 		case DCELL_TYPE:
-			if (from->val.d > to->val.d)
+			if (to->val.d == DBL_MIN)
+				to->val.d = from->val.d;
+			else if (from->val.d > to->val.d)
 				to->val.d = from->val.d;
 			break;
 	}
@@ -330,4 +336,4 @@ void ucat_min (UCAT *to, UCAT *from)
 			break;
 	}
 }
-
+/* vim: set softtabstop=4 shiftwidth=4 expandtab: */
