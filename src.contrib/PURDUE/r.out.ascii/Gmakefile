@@ -1,4 +1,4 @@
-PGM=export
+PGM=$(BIN_CONTRIB_CMD)/r.out.ascii
 
 LIST=main.o
 
