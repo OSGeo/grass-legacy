@@ -13,7 +13,10 @@
 #
 #
 # $Log$
-# Revision 1.5  2000-11-26 06:21:20  cho
+# Revision 1.6  2000-11-30 06:42:48  cho
+# cosmetics
+#
+# Revision 1.5  2000/11/26 06:21:20  cho
 # added g.man to browse manual pages using lynx.
 # BSDish man does not work correctly with g.manual.
 #
@@ -43,7 +46,8 @@ fi
 if [ $# -lt 2 -o "$1" = "-help" -o "$1" = "help" ]
 then
 	echo
-	echo "Usage: $program input=name[,name,...] output=name"
+	echo "Usage:"
+	echo " $program input=name[,name,...] output=name"
 	echo
 	exit 1
 fi
