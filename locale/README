@@ -16,18 +16,14 @@ REQUIRED SOURCE CODE CHANGES (programming required)
 Generally, to support i18N multiple languages,
 message strings in GRASS must be modified from
 
- fprintf ( ..., "...");
+ fprintf ( ..., "...", ...);
 to
- fprintf ( ..., _("..."));
+ G_message ( "...", ...);
+
+See for example ./vector/v.what.rast/main.c
 
 These strings will be then extracted automatically into the
 POT file. 
-
-Also needed:
- #include "glocale.h"
- 
-This line has to be added to each C file which contains 
-user messages.
 
 ------------------------------------------------------
 
@@ -134,8 +130,9 @@ DETAILED PROCEDURE:
    Pay attention to keep '%s', '\n' and other stuff also 
    in the translated messages!
    
-   Please use 'ISO-8859-1' for western languages.  
- 
+   Please use 'ISO-8859-1' or 'ISO-8859-15' for western languages.  
+   See http://en.wikipedia.org/wiki/ISO_8859 for details.
+   
    After finishing the translation, save the files.
 
 
@@ -152,7 +149,7 @@ DETAILED PROCEDURE:
    It should work :-)
 
 7. Send the updated .po files to a GRASS Development Team member.
-   If you already updated .c files with _(...) macro as explained
+   If you already updated .c files with G_message("...") as explained
    above, please send diffs against CVS:
    
    cvs diff -u file.c > file.diff
