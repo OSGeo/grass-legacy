@@ -1,0 +1,5 @@
+OBJS = main.o clump1.o
+
+$(BIN_CONTRIB_CMD)/r.clump1: $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) $(MATHLIB) -o $@
+$(GISLIB): #
