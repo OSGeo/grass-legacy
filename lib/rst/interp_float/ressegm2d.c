@@ -348,7 +348,7 @@ int IL_resample_interp_segments_2d (
 	for (l = first_col - 1; l < last_col; l++)
 	{
 	  index = k * inp_cols + l;
-	  if (!G_is_f_null_value (&(in_points[k - 1].z)))
+	  if (!G_is_f_null_value (&(in_points[index].z)))
 	  {
 	    if ((iselev) || (in_points[index].z + zmin != 0.))
 	    {
