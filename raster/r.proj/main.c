@@ -52,6 +52,11 @@
 *		 output map will only cover the overlapping area.
 *                - if the input map is larger than the current region, only the
 *		 needed amount of memory will be allocated for the projection
+*	
+*		 Bugfixes 20050328: added floor() before (int) typecasts to in avoid
+*		 assymetrical rounding errors. Added missing offset outcellhd.ew_res/2 
+*		 to initial xcoord for each row in main projection loop (we want to  project 
+*		 center of cell, not border).
 */
 
 #include <stdio.h>
@@ -195,7 +200,7 @@ int main (int argc, char **argv)
 		exit(1);
 
 	/* get the method */
-	for (method = 0; ipolname = menu[method].name; method++)
+	for (method = 0; (ipolname = menu[method].name); method++)
 		if (strcmp(ipolname, interpol->answer) == 0)
 			break;
 
@@ -427,7 +432,7 @@ int main (int argc, char **argv)
 		if (G_put_raster_row(fdo, obuffer, cell_type) < 0)
 			G_fatal_error("error writing output map");
 
-		xcoord1 = xcoord2 = outcellhd.west;
+		xcoord1 = xcoord2 = outcellhd.west + (outcellhd.ew_res / 2);
 		ycoord2 -= outcellhd.ns_res;
 		ycoord1 = ycoord2;
 		G_percent(row, outcellhd.rows - 1, 2);
