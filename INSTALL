@@ -82,11 +82,11 @@ CVS, you have to perform a couple of steps. In general:
 
 In detail:
 
-make mixclean
-cd /where/your/grass50/lives/
+cd /where/your/grass530/lives/
 cvs update -dP
 
 cd /where/your/grass57/lives/
+make mixclean
 cvs update -dP
 make mix
 configure ...
