@@ -83,7 +83,7 @@ int main (int argc, char *argv[])
     zscale->required	= NO;
     zscale->multiple	= NO;
     zscale->description	= "scaling factor for z coordinates";
-    zscale->answer     = "0.0";
+    zscale->answer     = "1.0";
 
     zshift = G_define_option();
     zshift->key		= "zshift";
