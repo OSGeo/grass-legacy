@@ -1,0 +1,7 @@
+PGM = Xdisp1
+OFILES =  main.o disp_args.o cr_menu.o new_win.o quit.o destroy_win.o choose_win.o draw_map.o draw_vect.o show_3D.o
+
+all: $(BIN)/$(D_PGM) $(BIN)/$(PGM)
+
+$(BIN)/$(PGM): $(OFILES) $(GISLIB) 
+	cc $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(VASK) -lXaw -lXmu -lXt -lX11 $(MATHLIB)
