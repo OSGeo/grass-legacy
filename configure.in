@@ -380,7 +380,7 @@ AC_CHECK_FUNCS(ftime gethostname gettimeofday lseek nice time uname)
 AC_CHECK_FUNCS(seteuid setpriority setreuid setruid)
 AC_CHECK_FUNCS(drand48)
 AC_CHECK_FUNCS(putenv setenv)
-if [ "$cross_compiling" != "yes" ] then
+if test "$cross_compiling" != "yes" ; then
 AC_FUNC_SETPGRP
 fi
 

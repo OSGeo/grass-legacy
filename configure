@@ -4236,7 +4236,7 @@ else
 fi
 done
 
-if  "$cross_compiling" != "yes"  then
+if test "$cross_compiling" != "yes" ; then
 echo $ac_n "checking whether setpgrp takes no argument""... $ac_c" 1>&6
 echo "configure:4242: checking whether setpgrp takes no argument" >&5
 
