@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "icon.h"
 #include "gis.h"
 
