@@ -1,5 +1,8 @@
 # $Log$
-# Revision 1.8  2000-09-05 09:14:20  markus
+# Revision 1.9  2000-09-25 12:02:07  markus
+# added missing lib path
+#
+# Revision 1.8  2000/09/05 09:14:20  markus
 # libpg disabled if PostgreSQL not wanted
 #
 # Revision 1.7  2000/06/12 14:09:32  cho
@@ -43,7 +46,7 @@ PQ_OBJS=sed
 PQLIB=sed
 DLLIB=sed
 
-OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS)
+OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS) $(XLIBPATH)
 
 SURF_INCDIR = $(LIBDIR)/ogsf
 SURFLIB = $(LIBDIR)/ogsf/libgsf.a
