@@ -125,6 +125,9 @@ int main (int argc, char *argv[])
 	
 	transform_digit_file( &Old, &New) ;
 
+	Vect_close (&Old);
+	Vect_close (&New);
+
 	if (!quiet_flag->answer)
 		fprintf (stdout,"\n '%s' has finished the transformation of the vectors.\n", argv[0]) ;
 
@@ -145,8 +148,6 @@ int main (int argc, char *argv[])
 	fclose( Current.fp) ;
 	fclose( Trans.fp) ;
 	
-	Vect_close (&Old);
-	Vect_close (&New);
 
 	exit(0) ;
 
