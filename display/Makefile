@@ -34,7 +34,6 @@ SUBDIRS = \
 	d.rgb \
 	d.rhumbline \
 	d.save \
-	d.scale \
 	d.text \
 	d.title \
 	d.vect \
