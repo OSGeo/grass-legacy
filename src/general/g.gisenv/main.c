@@ -69,8 +69,8 @@ int main(int argc, char *argv[])
 	    value = ptr + 1;
 	}
 	/* Allow unset without '=' sign */
-	if (value != NULL && *value == '\0') /* gcc: this statement is without effect ?! */
-	  value == NULL ;
+	if (value != NULL && *value == '\0')
+	  value = NULL ;
 	  
         G_setenv (name, value) ;
 
