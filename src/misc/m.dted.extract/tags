@@ -1,0 +1,19 @@
+Mmain	main.c	/^main(argc, argv) char *argv[];$/
+abs	dma.h	/^#define abs(x) ( (x) < 0 / -(x) : (x) )$/
+error	error.c	/^error (msg, system_error) char *msg;$/
+extract	extract.c	/^extract ()$/
+getargs	getargs.c	/^getargs (argc, argv)$/
+if	extract.c	/^if (verbose > 1)$/
+mod	round.c	/^mod (x, m)		\/* % fails for long *\/$/
+printgeo	printgeo.c	/^printgeo (fd, x, h)$/
+readtape	readtape.c	/^readtape()$/
+round	round.c	/^round (x, m)$/
+round_down	round.c	/^round_down (x, m)$/
+round_up	round.c	/^round_up (x, m)$/
+scan_geo	scan_geo.c	/^scan_geo(buf, dir, result)$/
+seek_out	io.c	/^seek_out (offset)$/
+uhl	uhl.c	/^uhl(first)$/
+usage	usage.c	/^usage()$/
+write_hd	write_hd.c	/^write_hd()$/
+write_out	io.c	/^write_out (buf, n)$/
+zero_out	zero_out.c	/^zero_out(nbytes)$/
