@@ -301,7 +301,8 @@ main (int argc, char *argv[])
 	fprintf(stderr,"Exporting %i points/lines...\n", Vect_get_num_lines(&In) );
 	for ( i = 1; i <= Vect_get_num_lines(&In) ; i++ ) {
 
-	    G_percent(i,Vect_get_num_lines(&In),2);
+	    G_percent(i,Vect_get_num_lines(&In),1);
+
 	    type = Vect_read_line (&In, Points, Cats, i);
 	    G_debug (2, "line = %d type = %d", i, type );
 	    if ( !(otype & type ) ) {
@@ -346,9 +347,10 @@ main (int argc, char *argv[])
     if ( otype & GV_AREA ) {
 	fprintf(stderr,"Exporting %i areas (may take some time) ...\n", Vect_get_num_areas(&In) );
 	for ( i = 1; i <= Vect_get_num_areas(&In) ; i++ ) {
-	    fprintf(stderr,"\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\bProcessing area %i...", i );
+	    OGRGeometryH    ring;
 	    
-	    G_percent(i,Vect_get_num_areas(&In),2);
+	    G_percent(i,Vect_get_num_areas(&In),1);
+	    
 	    centroid = Vect_get_area_centroid ( &In, i );
 	    cat = -1;
 	    if ( centroid > 0 ) {
@@ -365,33 +367,29 @@ main (int argc, char *argv[])
 
 	    /* Geometry */
 	    /* TODO: Use something better than WKT */
-	    Ogr_geometry = OGR_G_CreateGeometry( wkbtype );
-	    db_set_string ( &dbstring, "POLYGON(("); 
+	    Ogr_geometry = OGR_G_CreateGeometry( wkbtype ); /* wkbPolygon */
+	    
+	
+	    ring = OGR_G_CreateGeometry( wkbLinearRing );
+	    
 	    /* Area */
 	    for ( j = 0; j < Points->n_points; j++ ) {
-		OGR_G_AddPoint( Ogr_geometry, Points->x[j], Points->y[j], Points->z[j] );
-		if ( j > 0 ) db_append_string ( &dbstring, ", "); 
-		sprintf ( buf, " %f %f", Points->x[j], Points->y[j]); 
-		db_append_string (&dbstring, buf);
+		OGR_G_AddPoint( ring, Points->x[j], Points->y[j], Points->z[j] );
 	    }
-	    db_append_string ( &dbstring, " )"); 
+	    
+	    OGR_G_AddGeometryDirectly ( Ogr_geometry, ring );
+
 	    /* Isles */
 	    for ( k = 0; k < Vect_get_area_num_isles (&In, i); k++ ) {
 		Vect_get_isle_points ( &In, Vect_get_area_isle (&In, i, k), Points );
-		db_append_string ( &dbstring, ", ( "); 
+
+		ring = OGR_G_CreateGeometry( wkbLinearRing );
 		for ( j = 0; j < Points->n_points; j++ ) {
-		    OGR_G_AddPoint( Ogr_geometry, Points->x[j], Points->y[j], Points->z[j] );
-		    if ( j > 0 ) db_append_string ( &dbstring, ", "); 
-		    sprintf ( buf, " %f %f", Points->x[j], Points->y[j]); 
-		    db_append_string (&dbstring, buf);
+		    OGR_G_AddPoint( ring, Points->x[j], Points->y[j], Points->z[j] );
 		}
-		db_append_string ( &dbstring, ")"); 
+		OGR_G_AddGeometryDirectly ( Ogr_geometry, ring );
 	    }
-	    db_append_string ( &dbstring, ")"); 
-	    G_debug (2, "WKT: %s\n", db_get_string (&dbstring) );
 	    
-	    pbuf = db_get_string (&dbstring);
-	    OGR_G_CreateFromWkt ( &pbuf, NULL, &Ogr_geometry );
 	    OGR_F_SetGeometry( Ogr_feature, Ogr_geometry ); 
 
 	    /* Output one feature for each category */
