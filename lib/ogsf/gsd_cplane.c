@@ -15,8 +15,6 @@
 
 static void init_cplane(void);
 
-/* BUG HERE - MAX_CPLANES is defined as 6 in gsurf.h but some of these
-* variables are used in trans.c which assumes a 4x4 matrix not 6x3 or 6x4 */
 static float Cp_pt[4], Cp_norm[MAX_CPLANES][4];
 static float Cp_trans[MAX_CPLANES][3], Cp_rot[MAX_CPLANES][3];
 static int Cp_ison[MAX_CPLANES]; /* also need isdef? */
