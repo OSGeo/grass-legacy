@@ -15,13 +15,13 @@ EXTRA_CLEAN_FILES = font.bin
 
 FNT = $(FONTDIR)/cyrilc 
 
-default: $(FNT)
+default: $(OBJDIR)/font.bin $(FNT)
 
 $(FNT): $(OBJDIR)/splitfont font.bin
-	$(OBJDIR)/splitfont $(FONTDIR)
+	$(OBJDIR)/splitfont $(FONTDIR) < $(OBJDIR)/font.bin
 
-font.bin: $(OBJDIR)/font_2_bin $(RAWFONT)
-	cat $(RAWFONT) | $(OBJDIR)/font_2_bin
+$(OBJDIR)/font.bin: $(OBJDIR)/font_2_bin $(RAWFONT)
+	cat $(RAWFONT) | $(OBJDIR)/font_2_bin > $@
 
 $(OBJDIR)/font_2_bin: $(OBJDIR)/font_2_bin.o
 	$(CC) $(LDFLAGS) $(OBJDIR)/font_2_bin.o -o $@
@@ -32,4 +32,3 @@ $(OBJDIR)/splitfont: $(OBJDIR)/splitfont.o $(OBJDIR)/fontmap.o
 try: $(OBJDIR)/try.o $(OBJDIR)/showchar.o $(OBJDIR)/font.o
 	$(CC) $(LDFLAGS) $(OBJDIR)/try.o $(OBJDIR)/showchar.o $(OBJDIR)/font.o \
 	      -o $(OBJDIR)/try $(CURSES)
-
