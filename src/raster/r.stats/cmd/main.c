@@ -17,6 +17,7 @@ main(argc,argv) char *argv[];
     int masking;
     int with_counts;
     int with_areas;
+    int with_labels;
 /* printf format */
     char fmt[20];
     int dp;
@@ -26,7 +27,7 @@ main(argc,argv) char *argv[];
 	struct Flag *a ;   /* area */
 	struct Flag *c ;   /* cell counts */
 	struct Flag *m ;   /* report zero due to mask */
-	struct Flag *s ;   /* short format */
+	struct Flag *l ;   /* with labels */
 	struct Flag *q ;   /* quiet */
 	struct Flag *z ;   /* non-zero */
 	struct Flag *one ; /* one cell per line */
@@ -83,6 +84,10 @@ main(argc,argv) char *argv[];
     flag.c->key         = 'c' ;
     flag.c->description = "Print cell counts" ;
 
+    flag.l = G_define_flag() ;
+    flag.l->key         = 'l' ;
+    flag.l->description = "Print category labels" ;
+
     flag.m = G_define_flag() ;
     flag.m->key         = 'm' ;
     flag.m->description = "Report zero values due to mask" ;
@@ -126,6 +131,7 @@ main(argc,argv) char *argv[];
 
     with_counts = flag.c->answer;
     with_areas = flag.a->answer;
+    with_labels = flag.l->answer;
 
     masking = (! flag.m->answer);
     verbose = (! flag.q->answer);
@@ -165,6 +171,13 @@ main(argc,argv) char *argv[];
 	fd[nfiles] = G_open_cell_old (name, mapset);
 	if (fd[nfiles] < 0)
 	    exit(1);
+	if (with_labels) 
+	{
+	    labels = (struct Categories *)
+		   G_realloc (labels, (nfiles+1) * sizeof(struct Categories));
+	    if (G_read_cats (name, mapset, &labels[i]) < 0)
+		G_init_cats((CELL) 0, "", &labels[i]);
+	}
 	nfiles++;
     }
 
@@ -190,8 +203,8 @@ main(argc,argv) char *argv[];
     }
 
     if (raw_data)
-	raw_stats (fd, verbose, non_zero, with_coordinates, with_xy);
+	raw_stats (fd, verbose, non_zero, with_coordinates, with_xy, with_labels);
     else
-	cell_stats (fd, verbose, non_zero, with_counts, with_areas, fmt);
+	cell_stats (fd, verbose, non_zero, with_counts, with_areas, with_labels, fmt);
     exit(0);
 }
