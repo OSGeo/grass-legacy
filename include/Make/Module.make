@@ -24,5 +24,5 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 cmd: $(BIN_CMD)/$(PGM)
 
 $(BIN_CMD)/$(PGM): $(ARCH_CMD_OBJS) $(LIBES) 
-	$(CC) $(LDFLAGS) -o $@ $(ARCH_CMD_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) -o $@ $(ARCH_CMD_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 	@test -e $(BIN)/$(PGM) || ln $(ETC)/front.end $(BIN)/$(PGM)
