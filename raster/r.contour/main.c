@@ -182,7 +182,7 @@ int main ( int argc, char *argv[])
 
     /* Write levels */
     for ( i = 0; i < nlevels; i++ ) {
-	sprintf ( buf, "insert into %s values ( %d, %e )", Fi->table, i, lev[i] );
+	sprintf ( buf, "insert into %s values ( %d, %e )", Fi->table, i+1, lev[i] );
 	db_set_string ( &sql, buf);
 
         G_debug ( 3, "SQL: %s", db_get_string(&sql) );
