@@ -1,0 +1,5 @@
+
+
+all:
+	grassmke $(LIBARCH) $(GISBASE) $(SRC)
+
