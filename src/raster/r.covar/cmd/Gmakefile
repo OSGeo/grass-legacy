@@ -1,0 +1,7 @@
+PGM=r.covar
+
+$(BIN_MAIN_CMD)/$(PGM): main.o $(GISLIB)
+	$(CC) $(LDFLAGS) main.o $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+$(GISLIB): #
