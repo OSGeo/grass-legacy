@@ -10,9 +10,13 @@ Summary:	GRASS - Geographic Resources Analysis Support System
 Name:		%PACKAGE_NAME
 Version:	%PACKAGE_VERSION
 Release:	1
-Source:		grass-%{PACKAGE_VERSION}.tar.gz
-Copyright:	GPL; Copyright by the GRASS Development Team
-Group:		Sciences/Geosciences
+Copyright:	GPL
+Group:		Applications/GIS
+Vendor:         GRASS Development Team
+URL:		http://grass.itc.it
+Source:		http://grass.itc.it/grass57/source/grass-%{PACKAGE_VERSION}.tar.gz
+Packager:       Markus Neteler <neteler itc it>
+
 Requires:	gdal >= 1.1.9
 Requires:	tcl >= 8
 Requires:	tk >= 8
@@ -30,11 +34,10 @@ BuildRequires:	libpng-devel >= 1.2.2
 BuildRequires:	man
 BuildRequires:	lesstif-devel
 BuildRequires:	ncurses-devel >= 5.2
+BuildRequires:  zlib-devel
 BuildRequires:	mysql-devel
 BuildRequires:	postgresql-devel
 #BuildRequires:	unixODBC-devel
-BuildRequires:	zlib-devel
-Vendor: GRASS Development Team <http://grass.itc.it>
 
 BuildRoot: %{_builddir}/%{name}-root
 Prefix: %{_prefix}
@@ -75,16 +78,17 @@ if test ! -f SRCPKG ; then
 fi
 
 make prefix=%{buildroot}/%{_prefix} BINDIR=%{buildroot}/%{_bindir} \
-PREFIX=%{buildroot}%{_prefix}
+	PREFIX=%{buildroot}%{_prefix}
 
 %install
+make strip
 make prefix=%{buildroot}/%{_prefix} BINDIR=%{buildroot}/%{_bindir} \
-PREFIX=%{buildroot}%{_prefix} install
+	PREFIX=%{buildroot}%{_prefix} install
 
 # changing GISBASE in startup script (deleting %{buildroot} from path)
 mv %{buildroot}%{_prefix}/bin/grass%{shortver} %{buildroot}%{_prefix}/bin/grass%{shortver}.tmp
 cat  %{buildroot}%{_prefix}/bin/grass%{shortver}.tmp |
-	sed -e "1,\$s&^GISBASE.*&GISBASE=%{_prefix}/grass%{shortver}&" |
+	sed -e "1,\$s&^GISBASE.*&GISBASE=%{_prefix}/grass-%{PACKAGE_VERSION}&" |
     cat - > %{buildroot}%{_prefix}/bin/grass%{shortver}
 rm %{buildroot}%{_prefix}/bin/grass%{shortver}.tmp
 chmod +x %{buildroot}%{_prefix}/bin/grass%{shortver}
@@ -94,28 +98,32 @@ rm -rf %{buildroot}
 cd ..
 rm -rf grass-%{version}
 
-%files
-%defattr(-,root,root)
-%doc AUTHORS COPYING GPL.TXT README REQUIREMENTS.html
-
-%attr(0755,root,root) %{_prefix}/bin/grass%{shortver}
-# %attr(1777,root,root) %{_prefix}/grass-%{PACKAGE_VERSION}/locks
-%{_prefix}/bin/grass%{shortver}
-%{_prefix}/grass-%{PACKAGE_VERSION}/
-
-# Not functional yet.
+# Not functional yet (someone please fix this):
 #%post
 # # changing GISBASE (deleting %{buildroot} from path), needed for
 # # relocatable packaging:
 # mv %{_prefix}/bin/grass%{shortver} %{_prefix}/bin/grass%{shortver}.tmp
 # cat  %{_prefix}/bin/grass%{shortver}.tmp |
-#	sed -e "1,\$s&^GISBASE.*&GISBASE=%{_prefix}/grass%{shortver}&" |
+#	sed -e "1,\$s&^GISBASE.*&GISBASE=%{_prefix}/grass-%{PACKAGE_VERSION}&" |
 #	cat - > %{_prefix}/bin/grass%{shortver}
 # rm %{_prefix}/bin/grass%{shortver}.tmp
 # chmod +x %{_prefix}/bin/grass%{shortver}
 
+%files
+%defattr(-,root,root)
+%attr(0755,root,root) %{_prefix}/bin/grass%{shortver}
+%attr(0755,root,root) %{_prefix}/grass-%{PACKAGE_VERSION}/tcltkgrass/script
+%attr(0755,root,root) %{_prefix}/grass-%{PACKAGE_VERSION}/tcltkgrass/main
+%{_prefix}/bin/grass%{shortver}
+%{_prefix}/grass-%{PACKAGE_VERSION}/
+
+%doc AUTHORS COPYING GPL.TXT README REQUIREMENTS.html
+
 %changelog
-* Wed Jun 16 2004 Markus Neteler <neteler itc it> 5.7.0-1
+* Wed Jun 17 2004 Markus Neteler <neteler itc it> 5.7.0-1
 - removed unixODBC, added mysql
-* Tue May 24 2004 Markus Neteler <neteler itc it>
+- specfile cleanup
+
+* Tue May 24 2004 Markus Neteler <neteler itc it> 5.7.0-1beta4
 - rewritten from 5.3 specs
+
