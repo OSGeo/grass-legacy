@@ -406,8 +406,8 @@ src.contrib/CERL/raster/r.hydro.CASC2D
 # src.contrib/GMSL/xganim
 # src.contrib/GMSL/ogl3d_linux
 #
-# compile manually with: configure; gmake5
-# src.contrib/GMSL/NVIZ2.2
+src.contrib/GMSL/NVIZ2.2
+#
 # only on SGI:
 # src.contrib/GMSL/SG3d
 # grid3d support (raster voxel):
