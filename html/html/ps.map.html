@@ -57,49 +57,38 @@ in interactive mode).
 The command line flag is:
 
 <DT><B>-r</B> 
-
 <DD>Rotate plot 90 degrees.
 
-
-<P>
-
-
-
-<P>
+<P><P>
 
 The command-line parameters are:
+<dl>
 
 <DT><B>input=</B><EM>name</EM> 
-
 <DD>File containing mapping instructions.
 (or enter <B>input=-</B> to enter from keyboard).
 These instructions are described in detail below.
+<P>
 
 <DT><B>scale=</B><EM>mapscale</EM> 
-
 <DD>Scale of the output map,  e.g. 1:25000
-
 <BR>
-
-Default:  1 panel
-
-
+Default:  Auto-sized to fit page<BR>
+This parameter is provided as a convenience. It is identical
+to the <EM>scale</EM> mapping instruction described below.
 <P>
 
-This parameter is provided as a convenience.  It is identical to the 
-<EM>scale</EM>
-mapping instruction described below.
+<DT><B>copies=</B><EM>n</EM>
+<DD>Number of copies to print.<BR>
+This parameter is provided as a convenience. It is identical
+to the <EM>copies</EM> mapping instruction described below.
+<P>
 
 <DT><B>output=</B><EM>name</EM> 
-
 <DD>Name of output the file to contain the PostScript program.
+</dl>
 
-
-<P>
-
-
-
-<P>
+<P><P>
 
 Note: the user must select a PostScript output device using
 <EM>
@@ -127,7 +116,7 @@ instructions.
 Instructions that may be included in the subsection under several
 different main instructions are:
 
-<DT><B>where\ </B><EM>x\ y</EM> 
+<DT><B>where </B><EM>x y</EM> 
 
 <DD>The top left corner of the bounding box of the item to be plotted
 is located <EM>x</EM> inches from the left edge of the paper and
@@ -135,11 +124,11 @@ is located <EM>x</EM> inches from the left edge of the paper and
 or equal to zero, the default horizontal location is used.  If <EM>y</EM>
 is less than or equal to zero, the default vertical location is used.
 
-<DT><B>font\ </B><EM>font\ name</EM> 
+<DT><B>font </B><EM>font name</EM> 
 
 <DD>The name of the PostScript font.  The default is <EM>Helvetica</EM>.
 
-<DT><B>fontsize\ </B><EM>font\ size</EM> 
+<DT><B>fontsize </B><EM>font size</EM> 
 
 <DD>The size of the PostScript font in 1/72 inch.  The default is 10.
 
@@ -919,7 +908,7 @@ on the same instruction line.
 More than one line of text can be
 specified by notating the end of a line with
 <B>\n</B>
-(e.g. USA\|\nCERL).
+(e.g. USA<B>\n</B>CERL).
 
 <P>
 
@@ -948,7 +937,8 @@ of the lines used to draw the text to make thicker letters
 <B>size</B>
 as the vertical height of the letters in meters on the
 ground (text size will grow or shrink depending on the scale at which
-the map is painted);
+the map is painted). If no <B>size</B> is given, a default text size
+will be used;
 
 <P>
 
@@ -993,8 +983,7 @@ through the text's background box.  Otherwise, they will end at the box's edge.
 <P>
 <P>
 
-This example would place the text
-<EM>SPEARFISH LAND COVER</EM>
+The following example would place the text <EM>SPEARFISH LAND COVER</EM>
 at the coordinates E650000 N7365000. The text would be a total of
 3 pixels wide (2 pixels of red text and 1 pixel black highlight), have a white
 background enclosed in a red box, and be 500 meters in size.  The lower right
