@@ -1,0 +1,3 @@
+d.frame -e
+d.scale coord=0.0,3600000.0 u=m
+d.scale coord=0.0,4000000.0 u=f
