@@ -482,7 +482,6 @@
         "&Databases" all options 1 {
 			{cascad "Manage database" {} "" 1 {			
 			    {command "Connect to database" {} "" {} -command {execute  db.connect }}
-			    {command "Create empty database" {} "" {} -command {execute  db.createdb }}
 			    {command "PERMANTLY remove table" {} "" {} -command {execute  db.droptable }}
 			    {command "Copy table" {} "" {} -command {execute  db.copy }}
 			}}
