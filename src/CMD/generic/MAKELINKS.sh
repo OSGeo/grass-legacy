@@ -10,6 +10,6 @@ do
 #    then
         echo Creating link for $i
 	rm -f $GISBASE/bin/$i
-        ln -s $GISBASE/etc/front.end $GISBASE/bin/$i
+        ln -s ../etc/front.end $GISBASE/bin/$i
 #    fi
 done
