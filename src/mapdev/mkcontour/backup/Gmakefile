@@ -1,0 +1,37 @@
+#COMPILE_FLAGS       = -g -f68881
+PGM = mkcontour
+EXTRA_CFLAGS = -I$(DIG_INCLUDE)
+SOURCES =	\
+		drawline.c \
+		build_contours.c \
+		read_data.c \
+		init_functions.c \
+		main.c
+
+
+OBJ =	\
+	drawline.o \
+	build_contours.o \
+ 	read_data.o \
+	init_functions.o \
+	main.o
+
+
+all:	$(BIN)/$(PGM)
+
+$(BIN)/$(PGM): $(OBJ) $(GISLIB) $(DIGLIB) 
+	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(DIGLIB) $(TERMLIB) $(MATHLIB)   -o $@
+
+saber_src:
+	#load $(SOURCES)
+
+saber_obj:
+	#load $(OBJ)
+
+$(GISLIB): # in case the library changes
+
+$(DIGLIB): # in case the library changes
+
+try: try.o
+	$(CC) $(LDFLAGS) try.o $(GISLIB) $(MATHLIB)   -o $@
+	
