@@ -1,0 +1,46 @@
+.\" %W% %G%
+.TH Gresample 2G G-language
+.SH NAME
+Gresample \- GRASS 
+.CT data "cell map"
+resampling capability
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+.B Gresample
+[-v] \fIinput_layer output_layer\fR
+.SH DESCRIPTION
+\fIGresample\fR resamples a 
+.CT "data layer." "cell map."
+\fIGresample\fR reads the user-specified 
+.CT "data layer" "cell map"
+into the
+current 
+.CT window "geographic window"
+masked by the current mask, and produces a new
+.CT "data layer" "cell map"
+containing the result of the resampling. The 
+.CT data category
+values in the new cell 
+.CT file map
+will be the same as in the original,
+except that the resolution and extent of the new 
+.CT "data layer" "cell map"
+will match those of the current 
+.CT "window." "geographic window."
+Use of the \fB-v\fR option will reduce
+the amount of chatter that \fIGresample\fR will do while running. 
+.SH NOTES
+The resulting 
+.CT layer "cell map"
+can be the same as the original 
+.CT "layer." "cell map."
+The color table, category file, and history file for the
+original 
+.CT layer "cell map"
+are copied to those for the resulting 
+.CT "layer." "cell map."
+.SH SEE ALSO
+.I resample[1]
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
