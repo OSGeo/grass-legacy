@@ -150,7 +150,7 @@ int GP_load_site(int id, char *filename)
 	return (1);
     }
 
-    return (0);
+    return (-1);
 }
 
 /***********************************************************************/
@@ -409,9 +409,11 @@ void GP_draw_site(int id)
 
 		if (gs) {
 		    gpd_2dsite(gp, gs, 0);
+		#ifdef TRACE_GP_FUNCS
 		    fprintf(stderr, "Drawing site %d on Surf %d\n", id,
 			    gp->drape_surf_id[i]);
 		    print_site_fields(gp);
+		#endif
 		}
 	    }
 	}

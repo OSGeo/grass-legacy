@@ -211,12 +211,16 @@ geoline *Gv_load_vect(char *grassname, int *nlines)
     Vect_close (&map);
 
     fprintf(stderr,"Vector file %s loaded.\n",grassname);
+    if (!nl) {
+	    fprintf(stderr, "Error: No lines from %s fall within current region\n", grassname);
+	    return (NULL);
+    }
     *nlines = nl;
 
     #ifdef TRAK_MEM
     	fprintf(stderr,"Total vect memory = %d Kbytes\n", Tot_mem/1000);
     #endif
-    
+
     return(top);
 }
 

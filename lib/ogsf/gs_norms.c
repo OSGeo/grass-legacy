@@ -73,7 +73,6 @@ void init_vars(geosurf * gs)
 	c_z2_sq = c_z2 * c_z2;
 	x_res_z2 = 2.0 * gs->xres * gs->z_exag * gs->x_mod;
 	y_res_z2 = 2.0 * gs->yres * gs->z_exag * gs->y_mod;
-	fprintf(stderr, "global-exag = %f\n", GS_global_exag());
     }
 #endif
 
@@ -130,10 +129,8 @@ int gs_calc_normals(geosurf * gs)
 
     /* now use four neighboring points for rows 1 - (n-1) */
     for (row = 1; row < ycnt; row++) {
-	if (!(row % 100)) {
-	    sprintf(buf, "%d ", row);
-	    Gs_status(buf);
-	}
+	if (!(row % 100)) 
+		fprintf(stderr, "Row %d\r", row);
 
 	/* turn off left neighbor for first col */
 	calc_norm(gs, row * ymod, 0, ~NLFT);

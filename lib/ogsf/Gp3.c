@@ -152,6 +152,10 @@ geopoint *Gp_load_sites(char *grassname, int *nsites, int *has_z,
     G_sites_close(sfd);
 
     fprintf(stderr, "Sites file %s loaded.\n", grassname);
+    if (!np) {
+	    fprintf(stderr, "Error: No points from %s fall within current region\n", grassname);
+	    return(NULL);
+    }
     *nsites = np;
 
     return (top);
