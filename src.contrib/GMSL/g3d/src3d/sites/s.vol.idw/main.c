@@ -167,6 +167,7 @@ int main(argc, argv)
             }
 /* interpolation begins... */
 
+    fprintf (stderr, "Note: Percentage output is status per level!\n");
     fprintf (stderr, "Interpolating raster map <%s> ... %d levels ... ",
 	parm.output->answer, Nl);
 
@@ -185,7 +186,6 @@ int main(argc, argv)
     {
         /*fprintf (stderr, "%-10d\b\b\b\b\b\b\b\b\b\b", Nl-lev);*/
         G_percent (row, Nr, 2);
-                
 	if (mask)
 	{
 	    if(G_get_map_row(maskfd, mask, row) < 0)
