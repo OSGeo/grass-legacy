@@ -1,0 +1,330 @@
+
+
+
+Gmapcalc(2G)         GRASS Reference Manual          Gmapcalc(2G)
+
+
+
+NAME
+     Gmapcalc - calculator
+     (G Language Tool)
+
+SYNOPSIS
+     Gmapcalc [result=expression]
+
+DESCRIPTION
+     Gmapcalc performs arithmetic on New can be created which are
+     arithmetic expressions involving existing integer or
+     floating point constants, and functions.
+
+HOW TO USE
+     If used without command line arguments, Gmapcalc will read
+     its input, one line at a time, from standard input (which is
+     the keyboard, unless redirected from a file or across a
+     pipe). Otherwise, the expression on the command line is
+     evaluated. Gmapcalc expects its input to have the form
+
+          result=expression
+
+     where result is the name of a to contain the result of the
+     calculation and expression is any legal arithmetic
+     expression involving existing integer or floating point
+     constants, and functions known to the calculator.
+     Parentheses are allowed in the expression and may be nested
+     to any depth.  Result will be created in the current mapset.
+
+OPERATORS AND ORDER OF PRECEDENCE
+     The following operators are supported:
+
+     Operator                Meaning                   Type      Precedence
+     ______________________________________________________________________
+     %          modulus (remainder upon division)   Arithmetic       4
+     /          division                            Arithmetic       4
+     *          multiplication                      Arithmetic       4
+     +          addition                            Arithmetic       3
+     -          subtraction                         Arithmetic       3
+     ==         equal                               Logical          2
+     !=         not equal                           Logical          2
+     >          greater than                        Logical          2
+     >=         greater than or equal               Logical          2
+     <          less than                           Logical          2
+     <=         less than or equal                  Logical          2
+     &&         and                                 Logical          1
+     ||         or                                  Logical          1
+
+     The operators are applied from left to right, with those of
+     higher precedence applied before those with lower
+     precedence.  Division by 0 and modulus by 0 are acceptable
+     and give a 0 result.  The logical operators give a 1 result
+     if the comparison is true, 0 otherwise.
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Gmapcalc(2G)         GRASS Reference Manual          Gmapcalc(2G)
+
+
+
+CELL MAP NAMES
+     Anything in the expression which is not a number, operator,
+     or function name is taken to be a name.  Examples:
+
+          elevation   x3   3d.his
+
+     Most GRASS meet this naming convention.  However, if a has a
+     name which conflicts with the above rule, it should be
+     quoted. For example, the expression
+
+          x = a-b
+
+     would be interpreted as: x equals a minus b, whereas
+
+          x = "a-b"
+
+     would be interpreted as: x equals the named a-b
+
+     Also
+
+          x = 3107
+
+     would create x filled with the number 3107, while
+
+          x = "3107"
+
+     would copy 3107 to x.
+
+     Quotes are not required unless the names look like numbers
+     or contain operators.
+
+     Gmapcalc will look for the according to the current mapset
+     search path.  It is possible to override the search path and
+     specify the mapset from which to select the This is done by
+     specifying the name in the form:
+
+          name in mapset
+
+     For example, the following is a legal expression:
+
+          result = x in PERMANENT / y in SOILS
+
+     The mapset specified does not have to be in the mapset
+     search path.  (This is method of overriding the mapset
+     search path is common to all GRASS commands, not just
+     Gmapcalc.)
+
+CELL MAP VALUES FROM THE CATEGORY FILE
+     Sometimes it is desirable to use a value associated with a
+     category instead of the category itself. If a name is
+     preceeded by the @ operator, then the in category file for
+     the are used in the expression instead of the category
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
+
+
+
+Gmapcalc(2G)         GRASS Reference Manual          Gmapcalc(2G)
+
+
+
+     For example, suppose that the soil.ph (representing PH of
+     soils) has a category file with labels as follows:
+
+          cat   label
+          _____________
+          0     no data
+
+          1     1.4
+          2     2.4
+          3     3.5
+          4     5.8
+          5     7.2
+          6     8.8
+          7     9.4
+
+     Then the expression:
+
+          result = @soils.ph * 10
+
+     would produce a result with 0, 14, 24, 35, 58, 72, 88 and
+     94.
+
+     Note that this operator may only be applied to and produces
+     a floating point value in the expression. Also the category
+     label must start with a valid number. Missing labels, or
+     labels that do not start with a number will (silently)
+     produce a 0 value for that category.
+
+FUNCTIONS
+     The functions currently supported are listed in the table
+     below.  The type of the result is indicated in the last
+     column.  F means that the functions always results in a
+     floating point value, I means that athe function gives an
+     integer result, and * indicates that the result is float if
+     any of the arguments to the function are floating point
+     values and integer if all arguments are integer.
+
+     function                          description                   type
+     ____________________________________________________________________
+     abs(x)            return absolute value of x                     *
+     atan(x)           inverse tangent of x (result is in degrees)    F
+     cos(x)            cosine of x (x is in degrees)                  F
+     exp(x)            exponential function of x                      F
+     exp(x,y)          x to the power y                               F
+     float(x)          convert x to floating point                    F
+     if                decision options:                              *
+       if(x)             1 if x not zero, 0 otherwise
+       if(x,a)           a if x not zero, 0 otherwise
+       if(x,a,b)         a if x not zero, b otherwise
+       if(x,a,b,c)       a if x > 0, b if x is zero, c if x < 0
+     int(x)            convert x to integer [ truncates ]             I
+     log(x)            natural log of x                               F
+
+
+
+GRASS 3.2                U.S. Army CERL                         3
+
+
+
+
+
+
+Gmapcalc(2G)         GRASS Reference Manual          Gmapcalc(2G)
+
+
+
+     log(x,b)          log of x base b                                F
+     max(x,y[,z...])   largest value of those listed                  *
+     min(x,y[,z...])   smallest value of those listed                 *
+     round(x)          round x to nearest integer                     I
+     sin(x)            sine of x (x is in degrees)                    F
+     sqrt(x)           square root of x                               F
+     tan(x)            tangent of x (x is in degrees)                 F
+
+FLOATING POINT VALUES IN THE EXPRESSION
+     Floating point numbers are allowed in the expression. A
+     floating point number is a number which contains a decimal
+     point:
+
+          2.3   12.   .81
+
+     Floating point values in the expression are handled in a
+     special way.  With arithmetic and logical operators, if
+     either operand is float, the other is converted to float and
+     the result of the operation is float. This means, in
+     particular that division of integers results in a
+     (truncated) integer, while division of floats results in an
+     accurate floating point value. With functions of type * (see
+     table above), the result is float if any argument is float,
+     integer otherwise.
+
+     However, GRASS can only store integer values. If the final
+     value of the exression is a floating point value, this value
+     is rounded to the nearest integer before storing it in the
+     result
+
+     Note that in the expression are considered to be integers.
+
+EXAMPLES
+     To compute the average of two a and b:
+
+          ave = (a + b)/2
+
+     To form a weighted average:
+
+          ave = (5*a + 3*b)/8.0
+
+     To produce a binary representation of the a so that category
+     0 remains 0 and all other categories become 1:
+
+          mask = a/a
+
+     This could also be accomplished by:
+
+          mask = if(a)
+
+     To mask b by a:
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         4
+
+
+
+
+
+
+Gmapcalc(2G)         GRASS Reference Manual          Gmapcalc(2G)
+
+
+
+          result = if(a,b)
+
+WINDOW/MASK
+     The user must be aware of the current and current mask when
+     using Gmapcalc.  All are read into the current masked by the
+     current mask.  If it is desired to modify an existing
+     without involving other the should be set to agree with the
+     cell header for the For example, suppose it is determined
+     that the elevation must have each increased by 10 meters.
+     The following expression is legal and will do the job:
+
+          new_elevation = elevation + 10
+
+     Since a category value of 0 is used in GRASS for locations
+     which do not exist in the the new will contain the 10 in the
+     locations that did not exist in the original elevation.
+     Therefore, in this example, it is essential that the be set
+     to agree with the cell header.
+
+     However, if there is a current mask, then the resultant is
+     masked when it is written, i.e., 0 in the mask force zero
+     values in the output.
+
+NOTES
+     Extra care must be taken if the expression is given on the
+     command line.  Some characters have special meaning to the
+     UNIX shell. These include, among others:
+
+          * ( ) > & |
+
+     It is advisable to put single quotes around the expression,
+     e.g.:
+
+          result = 'elevation * 2'
+
+     Without the quotes, the *, which has special meaning to the
+     UNIX shell, would be altered and Gmapcalc would see
+     something other than the *.
+
+     If the input comes directly from the keyboard and the result
+     exists, the user will be asked if it can be overwritten.
+     Otherwise, the result will automatically be overwritten if
+     it exists.
+
+     Quoting result is not allowed.  However, it is never
+     necessary to quote result since it is always taken to be a
+     name.
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         5
+
+
+
