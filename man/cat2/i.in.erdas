@@ -6,61 +6,61 @@ i.in.erdas <alpha>   GRASS Reference Manual    <alpha> i.in.erdas
 
 
 NAME
-     i.in.erdas -Creates raster files from ERDAS files.
+     i.in.erdas	-Creates raster	files from ERDAS files.
      (GRASS Raster Program)
 
 SYNOPSIS
      i.in.erdas
-     i.in.erdas help
-     i.in.erdas [-l] input=name output=name [trailer=name]
-     [bands=value[,value,...]] [srow=value] [scol=value]
+     i.in.erdas	help
+     i.in.erdas	[-l] input=name	output=name [trailer=name]
+     [bands=value[,value,...]]	[srow=value] [scol=value]
      [rows=value] [cols=value]
 
 DESCRIPTION
-     This program creates raster map files from ERDAS files.  It
-     creates one raster file for each selected band, up to a
-     maximum of seven bands.  GRASS color and category support
-     files are created if an ERDAS trailer file is specified.
+     This program creates raster map files from	ERDAS files.  It
+     creates one raster	file for each selected band, up	to a
+     maximum of	seven bands.  GRASS color and category support
+     files are created if an ERDAS trailer file	is specified.
 
-     Only ERDAS version 7.4 or later files in 4-bit, 8-bit, or
-     16-bit formats are supported.
-     GRASS raster files will be named prefix.band
+     Only ERDAS	version	7.4 or later files in 4-bit, 8-bit, or
+     16-bit formats are	supported.
+     GRASS raster files	will be	named prefix.band
 
      Note:
-          Remember that it is necessary to run: r.support to
-          create the histogram or change the color table.
-          i.group to associate the individual raster files as an
-          image group.
+	  Remember that	it is necessary	to run:	 r.support to
+	  create the histogram or change the color table.
+	  i.group to associate the individual raster files as an
+	  image	group.
 
-COMMAND LINE OPTIONS
+COMMAND	LINE OPTIONS
      Flags:
 
-     -l   List the ERDAS header only (no raster files created)
+     -l	  List the ERDAS header	only (no raster	files created)
 
      Parameters:
 
      input
-          ERDAS input file name
+	  ERDAS	input file name
 
      output
-          output prefix of the GRASS raster files to be created.
+	  output prefix	of the GRASS raster files to be	created.
 
      trailer
-          ERDAS trailer input file name
+	  ERDAS	trailer	input file name
 
      bands
-          Selected bands to extract. (defaults to all bands)
+	  Selected bands to extract. (defaults to all bands)
 
-     srow Starting row. (defaults to first row in file)
+     srow Starting row.	(defaults to first row in file)
 
-     scol Starting column. (defaults to first column in file)
+     scol Starting column. (defaults to	first column in	file)
 
      rows Number of rows to extract. (defaults to all rows)
 
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
@@ -71,7 +71,7 @@ i.in.erdas <alpha>   GRASS Reference Manual    <alpha> i.in.erdas
 
 
 
-     cols Number of columns to extract. (defaults to all columns)
+     cols Number of columns to extract.	(defaults to all columns)
 
 
 SEE ALSO
@@ -85,8 +85,8 @@ AUTHOR
 
 NOTICE
      This program is part of the alpha section of the GRASS
-     distribution.  Unlike the code in the main section of GRASS,
-     the alpha code has not yet been fully tested for one release
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
      cycle.
 
 
@@ -126,7 +126,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
