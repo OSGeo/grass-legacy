@@ -1,0 +1,7 @@
+interface_build {
+    {r.in.mat} 0
+    {Input binary MAT-File ver. 4 (Matlab or Octave) to raster map layer.}
+    {entry input {Input MAT-File:} 0 file}
+    {entry output {Output raster map:} 0 raster}
+    {checkbox -v {Verbose mode.} "" -v}
+}
