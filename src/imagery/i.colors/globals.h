@@ -34,16 +34,16 @@ GLOBAL char interrupt_char;
 GLOBAL char *tempfile1;
 GLOBAL char *tempfile2;
 
-GLOBAL int COLORS[10];
-#define BLACK	COLORS[0]
-#define BLUE	COLORS[1]
-#define BROWN	COLORS[2]
-#define GREEN	COLORS[3]
-#define GREY	COLORS[4]
-#define ORANGE	COLORS[5]
-#define PURPLE	COLORS[6]
-#define RED	COLORS[7]
-#define WHITE	COLORS[8]
-#define YELLOW	COLORS[9]
+GLOBAL int XXX_COLORS[10];
+#define BLACK	XXX_COLORS[0]
+#define BLUE	XXX_COLORS[1]
+#define BROWN	XXX_COLORS[2]
+#define GREEN	XXX_COLORS[3]
+#define GREY	XXX_COLORS[4]
+#define ORANGE	XXX_COLORS[5]
+#define PURPLE	XXX_COLORS[6]
+#define RED	XXX_COLORS[7]
+#define WHITE	XXX_COLORS[8]
+#define YELLOW	XXX_COLORS[9]
 
 #undef INIT
