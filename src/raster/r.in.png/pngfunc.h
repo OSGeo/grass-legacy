@@ -9,8 +9,8 @@
  *  compiled with one size in libpng and another size here).  */
 
 #include <math.h>
-#include "pnm.h"
-#include "png.h"	/* includes zlib.h and setjmp.h */
+#include <pnm.h>
+#include <png.h>	/* includes zlib.h and setjmp.h */
 
 #ifndef TRUE
 #  define TRUE 1
