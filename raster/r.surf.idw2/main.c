@@ -68,7 +68,7 @@ main (int argc, char *argv[])
         exit(1);
 
 /* Make sure that the current projection is not lat/long */
-    if ((G_projection() == 3))
+    if ((G_projection() == PROJECTION_LL))
     {
          char msg[256];
          sprintf(msg,"lat/long databases not supported by r.surf.idw2.\nUse r.surf.idw instead!");
