@@ -43,11 +43,42 @@ main (argc, argv)
     char *name, *mapset;
     int flag;
 
+    struct Option *old, *new;
+
+    static  char  *cell_name = NULL ;
+    static  char  *ism_name = NULL ;
+
+
 
     G_gisinit (argv[0]);
 
-    if (argc != 3)
-	fprintf (stderr, "Usage: %s incell out.grd\n", argv[0]), exit (1);
+
+
+/************************** Command Parser ************************************/
+        old = G_define_option();
+        old->key                        = "input";
+        old->type                       =  TYPE_STRING;
+        old->required           =  YES;
+        old->multiple           =  NO;
+        old->gisprompt          = "old,cell,raster";
+        old->description        = "Raster file to be converted to ISM grid file";
+
+        new = G_define_option();
+        new->key                        = "output";
+        new->type                       =  TYPE_STRING;
+        new->required           =  YES;
+        new->multiple           =  NO;
+        new->description        = "Name of resulting grid file";
+
+
+
+        if (G_parser (argc, argv))
+                exit(-1);
+
+        cell_name = old->answer;
+        ism_name = new->answer;
+
+/******************************************************************************/
 
     if(G_get_window (&cellhd) < 0)
         exit(3);
@@ -96,7 +127,7 @@ main (argc, argv)
     nrows = cellhd.rows;
     ncols = cellhd.cols;
 
-    name = G_store (argv[1]);
+    name = G_store (cell_name);
     mapset = G_find_file2 ("cell", name, "");
 
     cell = G_allocate_cell_buf();
@@ -129,15 +160,15 @@ main (argc, argv)
     strcpy (namvfl, "");
     strcpy (namnvf, "");
 
-    gdwrit_ (   argv[2], desc, 
-    		elvarr, 
+    gdwrit_ (   ism_name, desc, 
+    		elvarr,
    		&idmxcl, &idmyrw,
-	        &inmxcl, &xgdmin, &xgdmax, 
-		&inmyrw, &ygdmin, &ygdmax, 
-		&znlval, 
+	        &inmxcl, &xgdmin, &xgdmax,
+		&inmyrw, &ygdmin, &ygdmax,
+		&znlval,
 		namsdf, sdffld, namvfl, namnvf,
-		&prjflg, &iproj, &izone, &iunits, gctpar, 
-		&istat,  strlen(argv[2]),  strlen (desc), strlen (namsdf),
+		&prjflg, &iproj, &izone, &iunits, gctpar,
+		&istat,  strlen(ism_name),  strlen (desc), strlen (namsdf),
 		strlen (sdffld), strlen (namvfl),   strlen (namnvf)
 		);
 
