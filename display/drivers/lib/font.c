@@ -9,7 +9,7 @@
 static long *index, nchars;
 static unsigned char *font;
 static int first = 1;
-static int X_copy(char *,char *,int);
+static int X_copy(unsigned char *,unsigned char *,int);
 
 
 int init_font(char *filename)
@@ -84,7 +84,7 @@ unsigned char **Y)
 
     /* n = *((int *) work_point) ; */
     /* alignment problem, resolve by copying pseudo int to int variable */
-    X_copy((char *)n, work_point, sizeof(int));
+    X_copy((unsigned char *)n, work_point, sizeof(int));
 
     *X = work_point + sizeof(int);
     *Y = *X + *n;
@@ -92,7 +92,7 @@ unsigned char **Y)
     return 0;
 }
 
-static int X_copy( char *a,char *b, int n)
+static int X_copy( unsigned char *a,unsigned char *b, int n)
 {
     char *ca = a;
     while (n-- > 0)
