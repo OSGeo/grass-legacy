@@ -141,7 +141,7 @@ bind $tmp.polyarrows.f2.entry <Return> "+ update_res poly"
     pack $tmp.position -side right -fill y
     
     label $tmp2.l1 -text "Mask Zeros by:" -relief flat
-    checkbutton $tmp2.nozeros1 -text "Elevevation" \
+    checkbutton $tmp2.nozeros1 -text "Elevation" \
 	-variable Nv_(TopNoZeros) -command no_zeros
     checkbutton $tmp2.nozeros2 -text "Color" \
 	-variable Nv_(ColNoZeros) -command no_zeros
