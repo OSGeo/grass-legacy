@@ -1,0 +1,20 @@
+COVER
+
+The COVER operator performs an "opaque" overlay operation.  It 
+overlays the result of the EXPR onto the map "mapname".
+
+syntax:   (COVER mapname EXPR)
+
+operation:
+  Mapname must already exist.  Non-zero values from EXPR are all
+  turned to the next available category.
+
+             110000
+    EXPR --  002200 --
+             000033   \          881447    Note that COVER opaquely
+                      COVER -->  448877    overlays an existing
+             111447   /          755788    mapname using next avail-
+mapname  --  444177 --                     able category number.
+             755777
+
+aliases: cover  paint
