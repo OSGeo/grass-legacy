@@ -369,7 +369,7 @@ int main(int argc, char *argv[])
 	    if(location->answer) {
 	        if( G_make_location( location->answer, &cellhd, 
                                      projinfo, projunits, NULL ) == 0)
-		    fprintf(stderr, "Location %s created!", location->answer);
+		    fprintf(stderr, "Location %s created!\n", location->answer);
 	    }
 	    else {
 	        /* Create flag given but no location specified; overwrite
