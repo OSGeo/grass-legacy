@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.patch/trace.c                               *
 *         Version 5.0                Nov. 1, 2001          *
@@ -325,16 +324,16 @@ i),*(list_head->col + i));
 
   if (choice->patchmap) {
      for(i = 0; i < nrows + 3; i++)
-        free(pat[i]);
-     free(pat);
+        G_free(pat[i]);
+     G_free(pat);
   }
 
 				/* free memory allocated for core map */
 
   if (choice->coremap) {
      for(i = 0; i < nrows + 3; i++)
-        free(cor[i]);
-     free(cor);
+        G_free(cor[i]);
+     G_free(cor);
   }
 
 				/* free memory allocated for patch list */
@@ -342,9 +341,9 @@ i),*(list_head->col + i));
   if (total_patches) {
      list_head = patch_list;
      while(list_head) {
-        free(list_head->col);
-        free(list_head->row);
-        free(list_head);
+        G_free(list_head->col);
+        G_free(list_head->row);
+        G_free(list_head);
         list_head = list_head->next;
      }
   }
@@ -742,13 +741,13 @@ float    radius;
 
   switch (data_type) {
      case CELL_TYPE:
-        free(tmp);
+        G_free(tmp);
         break;
      case FCELL_TYPE:
-        free(ftmp);
+        G_free(ftmp);
         break;
      case DCELL_TYPE:
-        free(dtmp);
+        G_free(dtmp);
         break;
   }
   if (choice->wrum == 'r') {

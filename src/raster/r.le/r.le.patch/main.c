@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.patch/main.c                                *
 *         Version 5.0                Nov. 1, 2001          *
@@ -143,6 +142,6 @@ char **argv ;
      G_system("mkdir r.le.out");
 
   patch_fore();
-  free(choice);
+  G_free(choice);
 }
 
