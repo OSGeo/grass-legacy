@@ -33,7 +33,8 @@ make_done()
       Make_OK = FALSE;
    }
 
-   /* resolve the split field numbers into next_field numbers */
+   /* resolve the split field numbers into next_field numbers and
+      handle number of floating decimal places for f, x, y types */
    if (res_split_f()==FALSE) Make_OK = FALSE;
 
    /* acknowledge form definition is ok */
@@ -60,8 +61,9 @@ make_done()
                         rim_type(field_type, buffer), rim_text_len(count));
             else if (field_type==F_FIELD_CHAR || field_type==X_FIELD_CHAR
                      || field_type==Y_FIELD_CHAR)
-               fprintf(Tempf, "%s\t%s\t\tformat f11.2\n",
-                   Field_info[count].column_name, rim_type(field_type, buffer));
+               fprintf(Tempf, "%s\t%s\t\tformat f%d.%d\n",
+                   Field_info[count].column_name, rim_type(field_type, buffer),
+                   Field_info[count].length, Field_info[count].next_field[1]);
             else
                fprintf(Tempf, "%s\t%s\n", Field_info[count].column_name,
                         rim_type(field_type, buffer));
@@ -116,8 +118,9 @@ make_done()
 
       fprintf(Tempf, "%s\n", buffer);
       fprintf(Tempf, "end\n");
-      fprintf(Tempf, "build key for %s in data\n",
+/*    fprintf(Tempf, "build key for %s in data\n",
                      Field_info[Site_field].column_name);
+*/
       fclose(Tempf);
 
       /* invoke rim in a shell to process the temp file */
