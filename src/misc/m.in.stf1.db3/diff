@@ -1,0 +1,3 @@
+diff m.in.stf1.db.c.orig m.in.stf1.db.c     
+12a13
+> #include <string.h>
