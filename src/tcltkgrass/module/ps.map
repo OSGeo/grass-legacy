@@ -1,0 +1,9 @@
+interface_build {
+    {ps.map} 1
+    {Produce a color PostScript file.}
+    {entry input {Mapping instructions file, or - for keyboard:} 0 file}
+    {entry scale {Scale of the output map, e.g. 1:25000 [1 panel]} 0 ""}
+    {entry copies {Number of copies to print:} 0 ""}
+    {entry output {PostScript output file:} 0 File}
+    {checkbox -r {Rotate plot.} "" -r}
+}
