@@ -84,7 +84,7 @@ fprintf(stderr, "window.west:  %f, window.east : %f\n", window.west, window.east
         longitude >= window.west && longitude <= window.east)
         	inside=1;
     if (! inside)
-       G_warning("Specified point %f, %f outside of current window, is that intended? Anyway, it will be used.\n", longitude, latitude);
+       G_warning("Specified point %f, %f outside of current region, is that intended? Anyway, it will be used.\n", longitude, latitude);
 
     /* if coordinates are not in lat/long format, transform them: */
     if ((G_projection() != PROJECTION_LL) && window.proj != 0)
@@ -92,7 +92,6 @@ fprintf(stderr, "window.west:  %f, window.east : %f\n", window.west, window.east
 #ifdef DEBUG
 fprintf(stderr, "Transforming input coordinates to lat/long (req. for solar position)\n");
 #endif
-     char buf[50];
        
      /* read current projection info */
      if ((in_proj_info = G_get_projinfo()) == NULL)
