@@ -1,2 +1,2 @@
 all:
-	$(MAKEALL)
+	$(GMAKE) cmd
