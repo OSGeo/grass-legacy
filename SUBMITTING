@@ -1,0 +1,258 @@
+$Id$
+
+NOTE: Please improve this list!
+
+Dear (new) GRASS Developer,
+
+When submitting to GRASS CVS repositiory, please take
+care of following rules:
+
+1.  Get and read the GRASS 6 Programmer's Manual here:
+    http://grass.itc.it/devel/index.php#prog
+
+  or generate it from this source code (the programmer's manual
+  is integrated in the source code in doxygen style):
+    make htmldocs
+    make pdfdocs
+
+
+2.  Use the directory structure to place your module appropriately into
+    the source tree
+    	- libes go into lib/
+    	- raster goes into raster/
+    	- vector goes into vector/
+    	- ...
+
+    Consider to take a look at "GNU Coding Standards"
+    http://www.gnu.org/prep/standards.html                                          
+
+3.  Add a header section to each file you submit and make sure you include
+    the copyright. The purpose section is meant to contain a general
+    overview of the code in the file to assist other programmers that will
+    need to make changes to your code.
+
+    Example (ficticious header for a file called color.c) :
+
+/*
+****************************************************************************
+*
+* MODULE:       d.rast (or new higher level module name (eg GRASS core) 
+*   	    	for 6.1)
+* AUTHOR(S):    Original author unknown - probably CERL
+*               John Doe - jdoe@some.where.org
+* PURPOSE:      To provide storage and manipulation of colors used for 
+*               rendering the raster. The colors are stored in a doubly linked
+*   	    	list which must be initialized with InitColors() before it can
+*   	    	be used. Note that most linked list functionality (add,
+*   	    	remove, get) is supported, but their is no sorting
+*   	    	functionality.
+* COPYRIGHT:    (C) 2005 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
+    The copyright protects your rights according to GNU General Public
+    License (www.gnu.org).
+
+4.  - deleted.
+    We don't want the $ ID $ in source code any more as it
+    causes problems for the CVS branches.
+
+5.  To ensure that the software system continues to work, please include
+
+	#include "config.h"
+
+    in your files and make use of the various system dependencies
+    contained therein.  As one example of this, see
+    src/paint/Interface/driverlib/io.c.  Please refrain from declaring
+    system functions within the software; include the proper header files
+    (conditionally dependent on config.h macros if necessary) instead.
+
+6. Order of include headers
+
+    In general, headers should be included in the order:
+ 
+    1. Core system headers (stdio.h, ctype.h, ...)
+    2. Headers for non-core system components (X11, libraries).
+    3. Headers for core systems of the package being compiled (gis.h, glocale.h ...)
+    4. Headers for the specific library/program being compiled (geodesic.h, ...)
+ 
+    Each class of header has an obligation to be compatible with those
+    above it in the list, but not those below it.
+    
+7.  Always specify the return type for ALL functions including those that
+    return type "void", and insert return statements for ALL functions.
+    Also, use ANSI C prototypes to declare your functions. Examples:
+    
+    void G_something(void);
+    int G_somethingElse(int, int);
+    
+    void G_something(void)
+    {
+    	/* Snipped out code */
+	
+	return;
+    }
+    
+    int G_somethingElse(int x, int y)
+    {
+    	/* Snipped out code */
+	
+	return(0);
+    }
+    
+8.  Use fprintf instead of printf.
+    
+    For errors and warnings please use the G_fatal_error() function and
+    G_warning() function. For other output, please use fprintf() and specify
+    the stdout stream as follows:
+
+      fprintf(stdout, ...);
+      fflush(stdout);
+
+      fflush(stdout) always required when using fprintf(stdout, ...).
+
+    i18N: Add gettext macros with _("") (see ./locale/README for details)
+
+    TODO: clarify when to use G_message(_("..."),...); instead
+
+9.  Use the following GRASS library functions instead of the standard C
+    functions. The reason for this is that the following functions ensure
+    good programming practice (eg always checking if memory was allocated)
+    and/or improves portability. PLEASE refer to the programmers manual
+    for the proper use (eg determining if any casts are needed for arguments
+    or return values) of these library functions. They may perform a task
+    slightly different from their corresponding C library function, and thus,
+    their use may not be the same.
+    
+    	G_malloc() instead of malloc()
+	G_calloc() instead of calloc()
+	G_realloc() instead of realloc()
+	G_getenv() instead of getenv()
+	G_setenv() instead of setenv()
+	G_unsetenv() instead of unsetenv()
+	
+	Could somebody please add others (please verify that they are
+	useful and safe first)
+
+10. Don't use the C++ comment style! This confuses several compilers.
+    Use instead:
+       /* C-comments */
+
+    If you want to comment code portions, use
+       #ifdef notdef 
+            portion_to_be_commented;
+       #endif
+    This is safe comparing to nested /* comments */
+
+11. PLEASE take the time to add comments throughout your code explaining what
+    the code is doing. It will save a HUGE amount of time and frustration for
+    other programmers that may have to change your code in the future.
+    
+12. Platform dependent code:
+    Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
+    their encapsulated lines from source code (one example was that someone
+    removed drand48 definition.)
+
+13. Make sure a new line is at the end of each file
+
+14. When writing Makefiles, use the current standard
+
+    Example: see raster/r.info/Makefile or others
+
+15. Have a look at ./INSTALL
+
+16. Have a function included in your module which writes to the history
+    file of the map (e.g. command line, parameters etc.). See eg
+    raster/r.slope.aspect/main.c
+
+    (the same applies to vector modules!)
+
+18. Place the documentation in HTML format into description.html
+    The easiest way to do this is to study an existing HTML page
+    (to get the page style).
+    
+    The online WWW man pages will be updated every Saturday by CVS.
+
+19. Add/update, if required the related d.m menu:
+     display/d.m/menu.tcl
+
+20. If you write a shell script: as a general principle, shell variables
+    should almost always be quoted.
+    Use only secure temp files - see scripts/* for examples.
+
+21. If you write a shell script and search for a command in $PATH, do NOT
+    use the "which" command or the "type -p" command. Both commands are not
+    supported on all platforms, thus causing problems for some people. As an
+    alternative, please use code similar to the following shell script snippet
+    which will perform the same function. In this case, the path of the grass60
+    command is saved if grass60 is found in $PATH. This won't recognize aliased
+    command name.
+    
+	# Search for grass5 command in user's path
+	for i in `echo $PATH | sed 's/^:/.:/
+    	    	    		    s/::/:.:/g
+				    s/:$/:./
+				    s/:/ /g'`
+	do
+	    if [ -f $i/grass5 ] ; then
+    		
+		# Save the path of the grass60 command
+		GRASS_PATH=$i/grass60
+		# Use the first one in user's path
+		break
+	    fi
+	done
+
+22. Use "GRASS_TCLSH" and "GRASS_WISH" environment variables instead of
+    "tclsh" and "wish" at the start of Tcl/Tk scripts. This allows users to
+    override the default names, so that developers don't need worry about the
+    shell names.
+
+    Tcl script:
+
+    	#!/bin/sh
+	# the next line restarts using tclsh \
+	exec $GRASS_TCLSH "$0" "$@"
+
+
+    Tk script:
+
+    	#!/bin/sh
+	# the next line restarts using wish \
+	exec $GRASS_WISH "$0" "$@"
+
+23. For consistency, use README rather than README.txt for any README files.
+
+24. GRASS/Environment variables:
+    If you add a new variable, please follow the naming convention.
+    All variables are described in
+    lib/init/variables.html
+
+25. Be sure to develop on top of the LATEST GRASS code (which is in CVS).
+    You can re-check before submission with 'cvs diff':
+
+    Either unified ("diff -u") or context ("diff -c") format. "Plain"
+    diffs (the default format) are risky, because they will apply without
+    warning to code which has been substantially changed; they are also
+    harder to read than unified or context diffs.
+
+    Such diffs should be made from the top-level directory, e.g.
+    "cvs diff display/d.vect/main.c"; that way, the diff will
+    include the pathname rather than just "main.c".
+
+26. Tell the other developers about the new code using the following e-mail:
+    grass5@grass.itc.it
+ 
+    To subscribe to this mailing list, see
+    http://grass.itc.it/devel/index.php
+
+27. In case of questions feel free to contact the developers at the above
+    mailing list.
+    http://grass.itc.it/devel/index.php#submission
+    
+...
+[please add further hints if required]
