@@ -33,7 +33,7 @@ then
 	echo "Note:"
 	echo "  You can use wildcard for name. Use -f flag to force removal."
 	echo "  ? or * wildcards should be enclosed with '...' to avoid being expanded"
-	echo "  by the shell."
+	echo "  by the shell first."
 	echo "          e.g., g.mremove rast='*.dem'"
 	echo
 	echo "Warning:"
