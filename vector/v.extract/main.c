@@ -75,7 +75,7 @@ int main (int argc, char **argv)
     
     t_flag = G_define_flag();
     t_flag->key              = 't';
-    t_flag->description      = "Do not copy table.";
+    t_flag->description      = "Do not copy table (see also 'new' parameter)";
     
     inopt = G_define_standard_option(G_OPT_V_INPUT);
 
