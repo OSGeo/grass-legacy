@@ -1,0 +1,26 @@
+###########################################################
+
+
+###########################################################
+#  %W%  %G%
+GRAPH=$(GISBASE)/mapgen
+MAPGEN_BIN=$(GRAPH)/interface
+
+
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+
+OFILES = dig_fill.o fill_dig.o get_P_isle.o
+
+
+all:  $(MAPGEN_BIN)/fill_dig  $(MAPGEN_BIN)/make.fill $(MAPGEN_BIN)/redo.fill
+
+$(MAPGEN_BIN)/fill_dig: $(OFILES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) -lm $(GISLIB)
+
+$(MAPGEN_BIN)/make.fill: make.fill
+	cp make.fill $(MAPGEN_BIN)/make.fill
+
+$(MAPGEN_BIN)/redo.fill: redo.fill
+	cp redo.fill $(MAPGEN_BIN)/redo.fill
+
