@@ -8,7 +8,7 @@ fi
 
 HELP="
 Usage:
- `basename $0` [-1] [-a] [-m] [browser=name] [entries=command,command]
+ `basename $0` [-1] [-a] [-m] [-s] [browser=name] [entries=command,command]
    command command ...
 
 Flags:
@@ -32,19 +32,22 @@ then
 fi
 
 forceman=
+shortdesc=
 tentries=
 until [ $# -eq 0 ]
 do
   case $1 in
-    help|-help|-f|-e|-s)
+    help|-help|-f|-e)
       echo "$HELP"
       exit 1 ;;
 
-    -1) /bin/ls $GISBASE/man/man1 | $PAGER ;;
+    -1) /bin/ls $GISBASE/man/man1 | $PAGER; exit 0 ;;
 
-    -a) /bin/ls -C $GISBASE/man/man1 | $PAGER ;;
+    -a) /bin/ls -C $GISBASE/man/man1 | $PAGER; exit 0 ;;
 
     -m) forceman=1 ;;
+
+    -s) shortdesc=1 ;;
 
     b=*|br=*|bro=*|brow=*|brows=*|browse=*|browser=*)
       GRASS_TEXT_BROWSER=`echo $1 | awk -F '=' '{print $2}'` ;;
@@ -57,16 +60,21 @@ do
   shift
 done
 
-which $GRASS_TEXT_BROWSER > /dev/null 2>&1
-if [ $? -ne 0 -o "$forceman" ]
+if [ "$shortdesc" ]
 then
-  if [ "$GRASS_TEXT_BROWSER" -a ! "$forceman" ]
-  then
-    echo
-    echo Warning: $GRASS_TEXT_BROWSER does not exist. Use man.
-    sleep 1
-  fi
   GRASS_TEXT_BROWSER=
+else
+  which $GRASS_TEXT_BROWSER > /dev/null 2>&1
+  if [ $? -ne 0 -o "$forceman" ]
+  then
+    if [ "$GRASS_TEXT_BROWSER" -a ! "$forceman" ]
+    then
+      echo
+      echo Warning: $GRASS_TEXT_BROWSER does not exist. Use man.
+      sleep 1
+    fi
+    GRASS_TEXT_BROWSER=
+  fi
 fi
 
 msg=
@@ -79,7 +87,7 @@ do
   if [ -e $html -a "$GRASS_TEXT_BROWSER" ]
   then
     entries="$entries $html"
-  elif [ -e $man -a ! "$GRASS_TEXT_BROWSER" ]
+  elif [ -e $man -a ! "$GRASS_TEXT_BROWSER" ] || [ -e $man -a "$shortdesc" ]
   then
     entries="$entries $i"
   else
@@ -88,14 +96,31 @@ No entry for $i"
   fi
 done
 
-if [ "$GRASS_TEXT_BROWSER" ]
+if [ "$shortdesc" ]
 then
+  if [ ! "$tentries" ]
+  then
+    entries=`(cd $GISBASE/man/man1; ls *.1 | sed 's!\.1$||g')`
+  fi
+
   for i in $entries
   do
-    $GRASS_TEXT_BROWSER $i
+    awk 'BEGIN{i=0}
+    	{if(i&&$0==".br") exit;
+	 if(i) printf "%s ",$0;
+	 if ($0==".SH NAME") i=1;
+    }' $GISBASE/man/man1/$i.1
   done
 else
-  man -M $GISBASE/man 1 $entries
+  if [ "$GRASS_TEXT_BROWSER" ]
+  then
+    for i in $entries
+    do
+      $GRASS_TEXT_BROWSER $i
+    done
+  else
+    man -M $GISBASE/man 1 $entries
+  fi
 fi
 
 echo
