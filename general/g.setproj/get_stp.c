@@ -8,25 +8,47 @@
 void get_stp_proj(char string[])
 {
 	int code;
+        char answer[50], buff[50];
 
 	while ((code = get_stp_num()) == 0) {
 		if (G_yes("Are you sure you want to exit without making any changes", 0))
 			leave(SP_NOCHANGE);
 	}
-	if (get_stp_code(code, string) == 0)
+	for (;;) {
+
+		do {
+			fprintf(stderr, "\nSpecify State Plane 1927 or 1983\n");
+			fprintf(stderr, "Enter '27' or '83'\n");
+			fprintf(stderr, "Hit RETURN to cancel request\n");
+			fprintf(stderr, ">");
+		} while (!G_gets(answer));
+
+		G_strip(answer);
+		if (strlen(answer) == 0) {
+			leave(SP_NOCHANGE);
+		} else if (strcmp(answer, "27") == 0) {
+		        sprintf(buff, STP1927PARAMS);
+		        break;
+		} else if (strcmp(answer, "83") == 0) {
+		        sprintf(buff, STP1983PARAMS);
+		        break;
+		} else
+			fprintf(stderr, "\nInvalid Co-ordinate System Specification\n");
+	}
+	if (get_stp_code(code, string, buff) == 0)
 		G_fatal_error("This should not happen see your system admin");
 
 	return;
 }
 
-int get_stp_code(int code, char string[])
+int get_stp_code(int code, char *string, char *paramfile)
 {
 	char nad27[256], buff[256], *p;
 	int gotit = 0, stp;
 	FILE *fp;
 
 
-	sprintf(nad27, "%s/etc/state27", G_gisbase());
+	sprintf(nad27, "%s%s", G_gisbase(), paramfile);
 	fp = fopen(nad27, "r");
 	if (fp == NULL) {
 		sprintf(buff, "Can not open NAD27 file %s", nad27);
@@ -170,7 +192,7 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 				sprintf(buff, "$GRASS_PAGER %s", Tmp_file1);
 			else
 				sprintf(buff, "cat %s", Tmp_file1);
-			system(buff);
+			G_system(buff);
 		} else {
 			a = G_find_key_value(answer, sf_keys);
 			sprintf(buff, "You have chosen state %s, Correct", a);
@@ -282,7 +304,7 @@ int ask_fips(FILE * fp, int *s, int *c, int *sc)
 				sprintf(buff, "$GRASS_PAGER %s", Tmp_file1);
 			else
 				sprintf(buff, "cat %s", Tmp_file1);
-			system(buff);
+			G_system(buff);
 		} else {
 			b = G_find_key_value(answer, cf_keys);
 			sprintf(buff, "You have chosen %s county, correct", b);
