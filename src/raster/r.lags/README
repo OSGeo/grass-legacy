@@ -1,0 +1,40 @@
+r.lags
+
+GRASS function to calculate various spatial dependence measures for all
+possible lags within a given image. Each measure is made by comparing two
+cells only for each lag azimuth and distance. The whole image is read
+once for each cell in the image, therefore is very computationally
+expensive. A Sparc 2 would typically take 1 hour to calculate a 150x150
+image.
+
+V1.0 written 17.6.92 to calculate Moran autocorrelation statistic.
+
+V2.0 written 18.7.92 to also calulate Haralick's grey-tone spatial 
+dependence textural measures.
+
+V2.1 modified 18.9.95 to conform to standard GRASS program structure.
+
+
+Future improvements could include (i) Option of faster, memory intensive
+option; (ii) Further lag dependent measures; (iii) Cumulative lags under
+some distance weighting function. (iv) Option of ignoring/including zero
+values in the calculation.
+
+Jo Wood, November, 1995
+
+-------
+
+Usage:
+ r.lags [-nv] in=name out=name [measure=name]
+
+Flags:
+  -n   Calculate non-zero values only
+  -v   Calculate semi-variogram instead
+
+Parameters:
+       in   Raster surface layer to measure
+      out   Output raster containing lag map
+  measure   Spatial dependence measure (Moran's I or texture)
+            options: moran,texture
+            default: moran
+
