@@ -403,7 +403,7 @@ Vect_cidx_open ( struct Map_info *Map, int head_only )
     Plus = &(Map->plus);
     
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
-    G__file_name ( file_path, buf, GV_CIDX_ELEMENT, G_mapset ());
+    G__file_name ( file_path, buf, GV_CIDX_ELEMENT, Map->mapset);
 
     if (stat (file_path, &info) != 0) /* does not exist */
 	return 1;
