@@ -1,7 +1,7 @@
 OBJ = main.o header.o
 
-$(MAN2)/Mlulc.read: $(BIN_CONTRIB_CMD)/Mlulc.read
-	cp manual $@
+#$(MAN2)/Mlulc.read: $(BIN_CONTRIB_CMD)/Mlulc.read
+#	cp manual $@
 
 $(BIN_CONTRIB_CMD)/m.lulc.read: $(OBJ) 
 	$(CC) $(LDFLAGS) -o $@ $(OBJ)
