@@ -843,7 +843,9 @@ proc reader {stream path cmd see} {
                 button $name.buttons.quit -text Quit -command "destroy $name"
                 button $name.buttons.save -text Save \
                     -command "savelist $name.frame.text"
-                pack $name.buttons.quit $name.buttons.save \
+		# MARK
+		button $name.buttons.clear -text Clear -command "$name.frame.text delete 1.0 end"
+                pack $name.buttons.quit $name.buttons.save $name.buttons.clear \
                     -side left -expand yes
                 scrollxy_widget text $name.frame -setgrid yes -wrap none \
                                                  -width 40 -height 10
@@ -906,6 +908,8 @@ proc reader {stream path cmd see} {
 # changed by Andreas Lange (andreas.lange@rhein-main.de)
 
 proc help {title textopts tagopts message} {
+    global help_font
+
     toplevel .help
     wm title .help $title
 
@@ -916,12 +920,13 @@ proc help {title textopts tagopts message} {
 
     eval scrollxy_widget text .help.frame -setgrid yes -wrap none $textopts
     pack .help.frame -side top -fill both -expand yes
+    setfont .help.frame $help_font
     .help.frame.text insert end $message texttag
     eval .help.frame.text tag configure texttag $tagopts
 
     .help.frame.text configure -state disabled
     focus .help.frame.text
-
+    
     grab .help
     tkwait window .help
 }
@@ -1078,7 +1083,7 @@ proc lfirst {list element} {
 # modified by Andreas Lange (andreas.lange@rhein-main.de) for netscape/html-manpage
 
 proc tcltkgrass_save {path} {
-    global env module_list module_font result_font dialog_font main_menu
+    global env module_list module_font result_font dialog_font help_font main_menu 
     global xdriver_defaults quit_window
     global xdriver active_xdrivers window_management
     global group subgroup html
@@ -1109,7 +1114,7 @@ proc tcltkgrass_save {path} {
         writeparam $stream xdriver($element)
     }
 
-    writeparam $stream module_font result_font dialog_font main_menu(font)
+    writeparam $stream module_font result_font dialog_font help_font main_menu(font)
 
     puts $stream "main_menu(window_geometry) [wm geometry $path]"
     puts $stream "main_menu(window_state) [wm state $path]"
@@ -1605,6 +1610,55 @@ proc config_netscape {} {
 }
 
 ###############################################################################
+# added by Andreas Lange (andreas.lange@rhein-main.de)
+
+proc set_list {path file elemn sep} {
+    global env
+
+    set list ""
+    set gispath [file join $env(GISBASE) $path]
+
+    # this is ugly, but portable to win
+    if { [regexp -- {filelist} $file] } {
+	set oldpath [pwd]
+	cd $gispath
+	set name [glob *]
+	cd $oldpath
+	return
+    }
+
+    set filename [file join $gispath $file]
+    if { ! [file exists $filename] } {
+	return
+    }
+    if { [catch {set fd [open $filename r]}] } {
+	return
+    }
+
+    foreach line [lsort -dictionary [split [read $fd] \n]] {
+	if { [regexp -- {^\#} $line] || [regexp -- {^\ } $line] || [regexp -- {^;} $line]} {
+	    continue
+	}
+	set i 0
+	foreach element [split $line $sep] {
+	    incr i
+	    if { $i == $elemn } {
+		lappend list $element
+	    }
+	}
+    }
+    close $fd
+    return $list
+}
+
+###############################################################################
+# added by Andreas Lange (andreas.lange@rhein-main.de)
+#
+# proc set_array {arrayname path file arrayn elemn sep} {
+#  return 1
+# }
+
+###############################################################################
 
 source $env(TCLTKGRASSBASE)/main/balloon.tcl
 
@@ -1618,6 +1672,7 @@ array set Featuredir {
 	paint		{$env(GISBASE)/etc/paint/driver			.	"Device:"}
 }
 
+# this is in some form included in etc/element_list. 
 array set featuredir {
 	arc		arc
 	raster		cell
@@ -1638,6 +1693,8 @@ array set featuredir {
 	region		windows
 }
 
+# colors defined in src/libes/gis/named_colr.c
+# and in src/include/colors.h: D_COLOR_LIST
 set colors {
 	red
 	magenta
@@ -1658,27 +1715,9 @@ set Colors "$colors none"
 
 set 3Dcolors "color $colors"
 
-set fonts {
-	cyrilc
-	gothgbt
-	gothgrt
-	gothitt
-	greekc
-	greekcs
-	greekp
-	greeks
-	italicc
-	italiccs
-	italict
-	romanc
-	romancs
-	romand
-	romans
-	romant
-	scriptc
-	scripts
-}
+set fonts [set_list fonts filelist 1 " "]
 
+# distance_units: where gets g.setproj these values from?
 set distance_units {
 	{mi (miles)}
 	{f  (feet)}
@@ -1689,6 +1728,7 @@ set distance_units {
 	{c  (counts)}
 }
 
+# area_units: these values are hard-wired into g.setproj!
 set area_units {
 	{mi (cover measured in square miles)}
 	{me (cover measured in square meters)}
@@ -1699,44 +1739,13 @@ set area_units {
 	{p  (the percent cover, excluding no data areas)}
 }
 
-set spheroids {
-	GRS67
-	IAU76
-	MERIT
-	SEasia
-	airy
-	australian
-	bessel
-	clark66
-	clark80
-	everest
-	grs80
-	hayford
-	hough
-	international
-	krassovsky
-	mercury
-	modif_airy
-	modif_everest
-	modif_merc
-	new_internatnl
-	walbeck
-	wgs66
-	wgs72
-	wgs84
-}
+set spheroids [set_list etc ellipse.table 1 "\ \t"]
 
-set monitors {
-	x0
-	x1
-	x2
-	x3
-	x4
-	x5
-	x6
-	CELL
-}
+set datums [set_list etc datum.table 1 "\ \t"]
 
+set monitors [set_list etc monitorcap 1 ":"]
+
+# methods: where is this used? where is it from?
 set methods {
 	average
 	avedev
@@ -1751,6 +1760,10 @@ set methods {
 	sum
 	variance
 }
+
+set projections [set_list etc projections 1 ":"]
+
+set digizizers [set_list etc digcap 1 ":"]
 
 set env(GRASS_WIDTH)    801
 set env(GRASS_HEIGHT)   601
@@ -1768,6 +1781,7 @@ set main_menu(font) ""
 set module_font ""
 set result_font courier
 set dialog_font ""
+set help_font courier
 
 set module_list ""
 set active_xdrivers ""
