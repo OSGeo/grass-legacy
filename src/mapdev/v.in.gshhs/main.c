@@ -31,37 +31,31 @@
 int main (int argc, char **argv)
 {
         double w, e, s, n, area, lon, lat;
-	double *X, *Y, UX, UY;
+	double *X, *Y;
         double minx = -180., maxx = 180., miny = -90., maxy = 90.;
 	double minx_u, maxx_u, miny_u, maxy_u;
 	char *dataname, *outname, *progname ;
 	char errmsg[200] ;
-        char buf[64], source, dig_name[24], att_name[24], cats_name[24];
+        char buf[64], source;
         static char *slevel[] = { "null" , "land" , "lake" , "island_in_lake" , "pond_in_island_in_lake" };
-        FILE    *fp, *dig_ascii, *dig_att;
-        int     k, i, m, max = 270000000;
+        FILE    *fp, *dig_att;
+        int     k, i, max = 270000000;
 	int cnt=1 ;
         struct  POINT_1 p;
         struct GSHHS h;
 	struct pj_info info_in;
 	struct pj_info info_out;
 	char parms_in[256];
-	char *parms;
-	struct Key_Value *in_proj_keys, *in_unit_keys;
 	struct Key_Value *out_proj_keys, *out_unit_keys;
-        int c, meridian = 0 ;
-	char dummy[2];
-        time_t tloc;
 	int    day, yr;
 	char  date[25], mon[4];
-	int type, project=0, zone;
+	int type, zone;
 	double *xarray, *yarray ;
 	struct line_pnts *Points;
 	struct Map_info VectMap;
 	struct Cell_head region;
 	struct Categories cats;
 	char AttText[512] ;
-        double a, e2 ;
 	double lat_nw, lon_nw, lat_ne, lon_ne ;
 	double lat_sw, lon_sw, lat_se, lon_se ;
 	union {
@@ -86,7 +80,7 @@ int main (int argc, char **argv)
 	/* Set description */
 	module              = G_define_module();
 	module->description = ""\
-	"Imports Global Self-consistant Hierarchical High-resolution Shoreline (GSHHS) vector data";
+	"Imports Global Self-consistent Hierarchical High-resolution Shoreline (GSHHS) vector data";
 
     parm.input = G_define_option() ;
     parm.input->key        = "input";
