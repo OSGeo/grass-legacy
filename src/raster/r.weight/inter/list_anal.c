@@ -99,7 +99,7 @@ print_range (fd, cur, count, len, indent)
     char buf[40];
 
     if(count-- <= 0)
-	return;
+	return 0;
     if (count)
 	sprintf (buf, " %ld%s%ld", cur, cur < 0 ? " thru " : "-", cur+count);
     else
