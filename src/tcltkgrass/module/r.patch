@@ -1,0 +1,7 @@
+interface_build {
+    {r.patch} 0
+    {Creates a composite raster map layer by using known category values from one (or more) map layer(s) to fill in areas of "no data" in another map layer.}
+    {entry input {Input raster map(s) (name[,name,...]):} 0 +raster}
+    {entry output {Output raster map:} 0 raster}
+    {checkbox -q {Run quietly.} "" -q}
+}
