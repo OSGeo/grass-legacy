@@ -1,0 +1,132 @@
+
+
+
+Glos(2G)	     GRASS Reference Manual		 Glos(2G)
+
+
+
+NAME
+     Glos - Line of sight analysis tool
+     (G	Language Tool)
+
+SYNOPSIS
+     Glos elev_layer=name [patt_layer=name] east=value
+	  north=value [obs_elev=value] [max_dist=value]
+	  out_layer=name
+
+DESCRIPTION
+     Glos generates an output map on which the cells that are
+     visible from a user-specified observer location are marked
+     with integer values that represent	the vertical angle (in
+     degrees) required to see those cells. The input to	the
+     program is	as follows:
+
+     elev_layer
+	  File name of a grid cell layer containing elevation
+	  data.
+
+     patt_layer
+	  File name of a 1/0 grid cell map layer which has cells
+	  within the areas of interest coded with 1 while the
+	  rest are coded with '0'. If omitted, the analysis will
+	  be performed for the whole area within a certain
+	  distance of the viewing point	inside the database
+	  window.
+
+     east, north
+	  Coordinates identifying the desired location of the
+	  viewing point.
+
+     obs_elev
+	  Height of the	observer (in meters) above the viewing
+	  point's elevation.  If omitted, a default value of
+	  1.75m	is assumed.
+
+     max_dist
+	  Maximum distance (in meters) from the	viewing	point
+	  inside of which the line of sight analysis will be
+	  performed. The grid cells outside this distance range
+	  are considered not visible. If omitted, a default maximum
+	  distance of 100 grid cells is	assumed.
+
+     out_layer
+	  File name of the data	layer in which the results will
+	  be stored.  The viewpoint will have a value of 180. 
+	  Non-visible points will have value of zero (0). Visible
+	  points will have the value of the angle which they are seen.
+
+NOTES
+     For accurate results, the program must be run with	the
+     window resolution equal to	the resolution of the data.
+
+
+GRASS 3.0		 U.S. Army CERL				1
+
+
+
+
+
+
+Glos(2G)	     GRASS Reference Manual		 Glos(2G)
+
+
+
+     It	is advisable to	use a 'pattern layer' which identifies
+     the areas of interest in which the	line of	sight analysis is
+     required.	Such a measure will reduce the time taken by the
+     program to	run.
+
+AUTHOR
+     Kewan Q. Khawaja, Intelligent Engineering Systems
+     Laboratory, M.I.T.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.0		 U.S. Army CERL				2
+
+
+
