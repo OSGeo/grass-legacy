@@ -53,6 +53,10 @@ mixclean:
 binmix:
 	GRASS_PERL=${PERL} sh ./tools/cpbin -old=$(GRASS50)/dist.$(ARCH) -new=dist.$(ARCH) -conf=./tools/cpbin.conf
 
+# Any target that has a dependency on this target will be forced to be made.
+# If we switch to GNU Make then this feature can be replaced with .PHONY
+FORCE:
+
 clean: 
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
@@ -88,6 +92,19 @@ bindist:
 	    -e "s/# executable shell.*//" -e "s/# make bindist.*//" \
 	    binaryInstall.src > grass${VERSION_MAJOR}${VERSION_MINOR}-$$date-${ARCH}-install.sh ; \
 	    chmod a+x grass${VERSION_MAJOR}${VERSION_MINOR}-$$date-${ARCH}-install.sh 2>/dev/null ; true
+
+# make a source package for distribution (we include the 5.3.0 stuff):
+srcdist: FORCE distclean
+	${SHELL} -c "mkdir ./grass-${VERSION_MAJOR}${VERSION_MINOR}" ; true
+	@ # needed to store code in package with grass-version path:
+	${SHELL} -c "mv * ./grass-${VERSION_MAJOR}${VERSION_MINOR} " ; true
+	@ #we use -h to get the linked files into as real files:
+	tar cvfzh grass-${VERSION_MAJOR}${VERSION_MINOR}_src.tar.gz ./grass-${VERSION_MAJOR}${VERSION_MINOR}/* --exclude=CVS
+	@ # restore src code location:
+	${SHELL} -c "mv ./grass-${VERSION_MAJOR}${VERSION_MINOR}/* ." ; true
+	${SHELL} -c "rmdir ./grass-${VERSION_MAJOR}${VERSION_MINOR}" ; true
+	@ echo "Distribution source package: grass-${VERSION_MAJOR}${VERSION_MINOR}_src.tar.gz ready."
+
 
 htmldocs:
 	(cd lib/db/ ; make htmldocs)
