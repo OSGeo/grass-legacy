@@ -6,7 +6,7 @@
 #include <Xm/Xm.h>
 #include <Xm/Form.h>
 #include "GL/GLwMDrawA.h"    /* include file for GL drawing widget */
-#include "viz.h"
+#include "vizual.h"
 
 #include "kns_defines.h"
 #include "kns_globals.h"

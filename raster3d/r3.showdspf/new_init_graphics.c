@@ -11,7 +11,7 @@
   --------------------------------------------------------------------
  */
 #include <stdio.h>
-#include "viz.h"
+#include "vizual.h"
 
 #include <Xm/Xm.h>
 #include <Xm/Form.h>

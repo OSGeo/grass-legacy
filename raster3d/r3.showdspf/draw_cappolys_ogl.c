@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "viz.h"
+#include "vizual.h"
 #include "debug.h"
 
 
