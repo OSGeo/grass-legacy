@@ -172,7 +172,7 @@ LOC_ARG_WITH(readline, Readline, no)
 # With includes and libs options
 
 AC_ARG_WITH(gdal,
-[  --with-gdal[=path]      build directly against GDAL (path is gdal-config)])
+[  --with-gdal[=path/gdal-config] GDAL/OGR support (gdal-config with path)])
 
 AC_ARG_WITH(includes,
 [  --with-includes=DIRS    site include files are in DIRS])

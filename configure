@@ -61,7 +61,7 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-readline         support Readline functionality (default: no)"
 ac_help="$ac_help
-  --with-gdal[=path]      build directly against GDAL (path is gdal-config)"
+  --with-gdal[=path/gdal-config] GDAL/OGR support (gdal-config with path)"
 ac_help="$ac_help
   --with-includes=DIRS    site include files are in DIRS"
 ac_help="$ac_help
