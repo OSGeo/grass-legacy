@@ -357,7 +357,7 @@ XTLIB=
 
 if test "$enable_w11" = "yes" ; then
     X_CFLAGS=-I${SRCDIR}/src/display/devices/windows/libW11
-    X_LIBS=-L${SRCDIR}/src/display/devices/windows/libW11/lib
+    X_LIBS='-L$(LIBDIR)'
     AC_SUBST(X_CFLAGS)
     AC_SUBST(X_LIBS)
 
