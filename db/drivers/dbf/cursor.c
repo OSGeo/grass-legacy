@@ -13,7 +13,7 @@
 *   	    	for details.
 *
 *****************************************************************************/
-
+#include <stdlib.h>
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h"
@@ -39,8 +39,6 @@ db_driver_close_cursor(dbc)
 cursor * alloc_cursor()
 {
     cursor     *c;
-    SQLPSTMT   stmt;    
-    char       emsg[DBF_MSG];
 
     /* allocate the cursor */
     c = (cursor *) db_malloc(sizeof(cursor));

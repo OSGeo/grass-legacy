@@ -18,6 +18,7 @@
 #include "globals.h"
 #include "proto.h"
 
+int
 db_driver_list_tables (tlist, tcount, system)
     dbString **tlist;
     int *tcount;
@@ -25,7 +26,6 @@ db_driver_list_tables (tlist, tcount, system)
 {
     dbString 	*list;
     int 	i;
-     char  emsg[DBF_MSG];
     
     *tlist = NULL;
     *tcount = 0;

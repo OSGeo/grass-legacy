@@ -13,13 +13,15 @@
 *   	    	for details.
 *
 *****************************************************************************/
-
+#include <stdlib.h> 
+#include <string.h>
 #include <dirent.h>
 #include <gis.h>
 #include <dbmi.h>
 #include "globals.h"
 #include "proto.h" 
 
+int
 db_driver_open_database (handle)
     dbHandle *handle;
 {
@@ -56,7 +58,7 @@ db_driver_open_database (handle)
 	return DB_FAILED;
       }
     
-    while ( ent = readdir (dir) )
+    while ( ( ent = readdir (dir) ) )
       {         
 	len = strlen ( ent->d_name ) - 4;      
 	if ( (len > 0) && (strcmp ( ent->d_name + len, ".dbf") == 0) )
@@ -74,7 +76,7 @@ db_driver_open_database (handle)
 int
 db_driver_close_database()
 {
-    int i, j;
+    int i;
 
     for ( i = 0; i < db.ntables; i++)
       {

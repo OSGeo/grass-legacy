@@ -15,6 +15,7 @@
 *****************************************************************************/
 
 #define MAIN
+#include <stdlib.h>
 #include <dbmi.h>
 #include "globals.h"
 

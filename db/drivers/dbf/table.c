@@ -13,7 +13,7 @@
 *   	    	for details.
 *
 *****************************************************************************/
-
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
@@ -26,8 +26,6 @@
 /* add table to database */
 int add_table (char *table)
 {
-    int i;
-		
     if ( db.atables == db.ntables )
       {
         db.atables += 15; 
@@ -142,7 +140,7 @@ load_table ( int t)
 {
     int  i, j, ncols, nrows;
     DBFHandle   dbf;
-    char fname[20], *buf;
+    char *buf;
     ROW  *rows;
     VALUE *val;
 
@@ -198,7 +196,6 @@ save_table ( int t)
 {
     int  i, j, ncols, nrows, ret;
     DBFHandle   dbf;
-    char fname[20], *buf;
     ROW  *rows;
     VALUE *val;
     int  dbftype, width, decimals;

@@ -13,14 +13,16 @@
 *   	    	for details.
 *
 *****************************************************************************/
-
+#include <stdlib.h> 
 #include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 #include <dbmi.h>
 #include <shapefil.h>
 #include "globals.h"
 #include "proto.h"
 
-int select ( SQLPSTMT *st, int tab, int **set); 
+int sel ( SQLPSTMT *st, int tab, int **set); 
 int set_val ( int tab, int row, int col, SQLPVALUE *val); 
 
 int
@@ -48,7 +50,6 @@ execute ( char *sql, cursor *c)
       }
     
     /* sqpPrintStmt(st); */ /* debug output only */
-
 
     /* find table */
     tab = find_table ( st->table );
@@ -173,7 +174,7 @@ execute ( char *sql, cursor *c)
 	    c->table = tab;
 	    c->cols = cols;
 	    c->ncols = ncols; 
-            c->nrows = select ( st, tab, &(c->set) );
+            c->nrows = sel ( st, tab, &(c->set) );
 	    if ( c->nrows < 0 )
 	      {
                 sprintf( errMsg, "%sError in selecting rows\n", errMsg );
@@ -183,7 +184,7 @@ execute ( char *sql, cursor *c)
             break; 
 	    
         case ( SQLP_UPDATE ):
-            nrows = select ( st, tab, &selset );
+            nrows = sel ( st, tab, &selset );
 	    if ( nrows < 0 )
 	      {
                 sprintf( errMsg, "%sError in selecting rows\n", errMsg );
@@ -205,7 +206,7 @@ execute ( char *sql, cursor *c)
             break; 
 	    
         case ( SQLP_DELETE ):
-            nrows = select ( st, tab, &selset );
+            nrows = sel ( st, tab, &selset );
 	    if ( nrows < 0 )
 	      {
                 sprintf( errMsg, "%sError in selecting rows\n", errMsg );
@@ -251,7 +252,7 @@ int set_val ( int tab, int row, int col, SQLPVALUE *val)
     return (1);
 }
 
-int select ( SQLPSTMT *st, int tab, int **selset ) 
+int sel ( SQLPSTMT *st, int tab, int **selset ) 
 {
     int    i, j, ccol, condition;
     int    *comcol;   /* array of indexes of comparison cols */
@@ -314,7 +315,7 @@ int select ( SQLPSTMT *st, int tab, int **selset )
                             sprintf( errMsg, "Operator not supported for strings\n" );
 	                    return (-1);
 			  }
-			if ( strcmp ( val->c, st->ComVal[j].s ) != 0 )
+			if ( strcmp ( val->c, st->ComVal[j].s ) != 0 ) 
 		            condition = FALSE; 
 			break;
 		    case ( SQLP_I ):

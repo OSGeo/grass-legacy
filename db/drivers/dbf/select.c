@@ -27,9 +27,8 @@ db_driver_open_select_cursor(sel, dbc, mode)
 {
     int ret;	
     cursor      *c;
-    char        *sql, emsg[DBF_MSG];      
+    char        *sql;      
     dbTable     *table;   
-    SQLPSTMT    *st;
     
     /* allocate cursor */
     c = alloc_cursor();
