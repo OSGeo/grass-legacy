@@ -30,7 +30,8 @@ src/libes/vect32/libes
 src/libes/vect32/diglib
 src/libes/vect32/Vlib
 src/libes/vect32/georef
-src/libes/image3
+#needed for i.points3/i.rectify3:
+#src/libes/image3
 src/libes/bwidget
 src/libes/gmath
 src/general/init
@@ -152,9 +153,11 @@ src/imagery/i.ortho.photo
 src/imagery/i.out.erdas
 src/imagery/i.pca
 src/imagery/i.points
-src/imagery/i.points3
+# requires image3 lib
+#src/imagery/i.points3
 src/imagery/i.quantize
 src/imagery/i.rectify2
+# requires image3 lib
 #src/imagery/i.rectify3
 src/imagery/i.rgb.his
 src/imagery/i.smap
