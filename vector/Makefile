@@ -32,6 +32,7 @@ SUBDIRS = \
 	v.overlay \
 	v.patch \
 	v.random \
+	v.reclass \
 	v.segment \
 	v.select \
 	v.surf.idw \
