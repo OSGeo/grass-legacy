@@ -44,6 +44,11 @@
  *	If unable to allocate the required space, NULL is returned.
  *
  * Author: Amit Parghi (USACERL), 1993 02 23
+ *
+ * G_strchg(char* bug, char character, char new) {
+ *      replace all occurencies of character in string(inplace) with new
+ *
+ * Author: Bernhard Reiter (Intevation GmbH, Germany)
  */
 
 static char *G_strend (register char *S)
@@ -194,4 +199,18 @@ char *G_strdup(char *string)
     }
 
     return p;
+}
+
+
+char * G_strchg(char* bug, char character, char new) {
+ /* replace all occurencies of character in string(inplace) with
+  * new */
+
+ char *help = bug;
+ while(*help) {
+	if (*help==character)
+		*help=new;
+	help++;
+	}
+ return bug;
 }
