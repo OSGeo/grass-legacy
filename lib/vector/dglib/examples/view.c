@@ -51,12 +51,12 @@ static int _print_node( gnGrpGraph_s * pgraph , gnInt32_t * pnode , void * pvarg
 
 	role = 0;
 
-	if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NF_FROM )
+	if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NS_FROM )
 	{
 		role |= 1;
 	}
 
-	if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NF_TO )
+	if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NS_TO )
 	{
 		role |= 2;
 	}
@@ -73,7 +73,7 @@ static int _print_node( gnGrpGraph_s * pgraph , gnInt32_t * pnode , void * pvarg
 		plinkarea = gnGrpGetLinkArea( pgraph, pnode );
 
 		i = 0;
-		GNGRP_LA_FOREACH_LINK(pgraph,plinkarea,plink) {
+		GNGRP_LB_FOREACH_LINK(pgraph,plinkarea,plink) {
 			if ( pgraph->Flags & 0x1 ) 	ptonode = GNGRP_NB_NODE_OFF(pgraph, GNGRP_LINK_TONODE_OFFSET(plink));
 			else						ptonode = gnGrpGetNode(pgraph, GNGRP_LINK_TONODE_OFFSET(plink));
 
