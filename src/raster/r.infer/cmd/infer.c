@@ -71,7 +71,7 @@ char **argv;
 	if ((fp = fopen (opt1->answer, "r")) == NULL)
 	{
 		fprintf (stderr, "%s: can't open %s (%s)\n", progname, opt1->answer,
-		    sys_errlist[errno]);
+		    strerror(errno));
 		exit (1);
 	}
 
