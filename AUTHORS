@@ -20,16 +20,6 @@ Institutions:
  National Center for Supercomputing Applications
    Lubos Mitas (G3D)
 
- Center for Applied Geographic and Spatial Research
-   Bruce Byars <Bruce_Byars@baylor.edu> (GRASS 4 coordination)
-   (others see below)
-
- GRASS 4 development (up to 1995):
-   U.S. Army Construction Engineering Research Laboratories  (CERL)
-   Jim Westervelt, Michael Shapiro, Chris Rewerts, Robert Lozar, ...
-   See: http://www.geog.uni-hannover.de/grass/grasscredits.html
-
-
 GRASS 5 Core Team (most have CVS access):
  Carl Anderson   <candrsn@mindspring.com>     (XDRIVER support)
  Roger Bivand    <Roger.Bivand@nhh.no>        ("R" statistical language support)
@@ -70,7 +60,18 @@ User support:
  Lisa Zygo       <Lisa_Zygo@baylor.edu>      (user support, GRASS manuals)
 
 
-Former programmers:
+GRASS 4.x development:
+ Center for Applied Geographic and Spatial Research
+   Bruce Byars <Bruce_Byars@baylor.edu> (GRASS 4 coordination)
+   (others see below)
+
+ GRASS 4 development (up to 1995):
+   U.S. Army Construction Engineering Research Laboratories  (CERL)
+   Jim Westervelt, Michael Shapiro, Chris Rewerts, Robert Lozar, ...
+   See: http://www.geog.uni-hannover.de/grass/grasscredits.html
+
+
+Former programmers (GRASS 5):
  Jacques Bouchard    <bouchard@onera.fr>     (tcltkgrass, bugfixes)
  Brook Milligan      <brook@trillium.NMSU.Edu>  
 					     (initial autoconf implementation)
