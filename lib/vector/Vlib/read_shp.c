@@ -233,6 +233,9 @@ Vect__Read_line_shp (
   int cat;
   
   G_debug (3, "Vect__Read_line_shp() offset = %d", offset);
+  
+  Map->head.last_offset = offset;
+  
   shape = ( offset >> 11 ) & 0x1FFFFF ;
   part = offset & 0x7FF;
   G_debug (3, "shape = %d part = %d (nShapes = %d)", shape, part,  Map->fInfo.shp.nShapes);
@@ -337,8 +340,29 @@ long
 Vect_next_line_offset_shp ( struct Map_info *Map )
 {
     long offset;
+
+    G_debug ( 3, "Vect_next_line_offset_shp()" );
     
     offset = ( ( Map->fInfo.shp.shape << 11 ) | ( Map->fInfo.shp.part & 0x7FF) );
     
+    G_debug ( 3, "    offset = %d", offset );
+
     return offset;
+}
+
+/*!
+ \fn long Vect_last_line_offset_shp (struct Map_info *Map)
+ \brief get last line offset for SHAPE format
+ \return last line offset
+ \param Map_info structure
+*/
+long
+Vect_last_line_offset_shp ( struct Map_info *Map )
+{
+    long offset;
+
+    G_debug ( 3, "Vect_last_line_offset_shp()" );
+    G_debug ( 3, "  offset = %d", Map->head.last_offset );
+    
+    return (Map->head.last_offset);
 }
