@@ -7,5 +7,6 @@ LIST=main.o ask_layers.o ask_units.o run_report.o
 $(HOME)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASK)
 
+$(GISLIB) $(VASKLIB): #
 
 $(LIST): global.h
