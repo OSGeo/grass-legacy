@@ -48,7 +48,7 @@ saber_src:
 
 saber_obj:
 	#load $(OBJ)
-ctags:
-	ctags *.[ch]
-	sed 's/\?/\//g' tags > tags.tmp
-	mv tags.tmp tags
+#ctags:
+#	ctags *.[ch]
+#	sed 's/\?/\//g' tags > tags.tmp
+#	mv tags.tmp tags
