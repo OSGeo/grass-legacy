@@ -1,0 +1,71 @@
+/*  %W% %G% */
+/*  @(#)slid_window.c    1.0  12/18/89  */
+/*
+**-->  Written by Ron Glenn  12/1989
+**  US Dept. Agri., Soil COnservation Service
+**   based upon mk_window.c,  by Dave Gerdes, CERL
+*/
+
+#include "digit.h"
+#include "wind.h"
+
+slid_window_w_mouse ()
+{
+    char buffer[64] ;
+    int screen_x, screen_y ;
+    double ux1, uy1 ;
+    double ux2, uy2 ;
+    int button ;
+    double N, S, E, W;
+    int yn;
+
+    Clear_info ();
+    _Clear_base ();
+    _Write_base (12, "Buttons:") ;
+    _Write_base (13, "Left:   Establish position from") ;
+    _Write_base (14, "Middle: Abort/Quit");
+    Write_base (15, "Right:  Establish position to") ;
+
+top:
+
+    while (1)
+    {
+	R_get_location_with_pointer(&screen_x, &screen_y, &button);
+	flush_keyboard (); /*ADDED*/
+	Clear_info ();
+
+	switch (button)
+	    {
+	    case 1:
+		screen_to_utm ( screen_x, screen_y, &ux1, &uy1) ;
+		break;
+
+	    case 2:
+		return (0);
+		break;
+
+	    case 3:
+		screen_to_utm ( screen_x, screen_y, &ux2, &uy2) ;
+                W = U_west + ux2 - ux1;
+                E = U_east + ux2 - ux1;
+	        S =  U_south + uy2 - uy1;
+	        N =  U_north + uy2 - uy1;
+	        if (E < CM->head.W || W > CM->head.E || N < CM->head.S || S > CM->head.N)
+	            {
+		    yn = curses_yes_no_default (2,"Window is outside of default. Proceed? ", 1);
+		    Clear_info ();
+		    if (!yn)
+		        goto top;
+	            }
+                clear_window ();
+	        window_rout (N, S, E, W);
+		Clear_base ();
+	        replot(CM);
+		break;
+
+	default:
+	        return(1) ;
+	        break ;
+	} /* end of switch */
+    } /* end of while */
+}
