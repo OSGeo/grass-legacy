@@ -34,8 +34,12 @@ them according to commands given at the prompt.<BR>
 <H2>DESCRIPTION</H2>
 
 Visualization program which loads the isosurfaces previously calculated
-using r3.mkdspf and displays them according to commands given at the
-prompt.  Upon initialization of the program, two graphics windows are
+using r3.mkdspf and displays them according to commands given at the prompt.
+r3.mkdspf creates a dspf file from the 3D raster and r3.showdspf uses this
+dspf file to draw isosurfaces and g3d file to draw planes and everything
+related (boxes, etc).<br>
+
+Upon initialization of the program, two graphics windows are
 opened, one for the color table and the other for data display.  The
 display window initially contains a red bounding box.  Command options
 are then printed to the terminal and user is prompted for drawing 
@@ -128,6 +132,46 @@ To select and display a single threshold (here: 2), use:<br>
 To select and display a range of thresholds (here: 3-5), use:<br>
 <tt>T 3 5<br>
 D</tt> <p>
+
+To draw a box, enter<br>
+<tt>p</tt><br>
+the p# to plot a selected wall (here top wall):<br>
+<tt>p1</tt><p>
+
+Tp draw a cut-off box, define it's position<br>
+<tt>Ex20</tt><br>
+<tt>p</tt><br>
+Here Ex20 defines the x coordinate of the end of the box.<p>
+
+In general - p draws a side of a box, E, B, define where that box starts or
+ends, so to make a fence diagram, the user draws sides of a series of boxes
+which have their starting (or ending) side shifting by a given interval.
+(this way the user can draw even more complex fence diagrams which have
+perpendicular fences, by using Ey or By). It is sufficient to use only E or
+B depending whether fence are drawn by using the end side or front side of a
+box).<br>
+
+To draw a fence, a sequence like this would be needed<br>
+<tt>Ex10<br>
+p5<br>
+Ex15<br>
+p5<br>
+Ex20<br>
+p5<br>
+Ex25<br>
+p5<br>
+</tt>
+                                                                                
+or the same would be<br>
+<tt>Bx10<br>
+p6<br>
+Bx15<br>
+p6<br>
+Bx20<br>
+p6</tt> 
+<p>
+
+The <em>p</em> is needed for the fence diagram, solids and boxes.
 
 <H2>SEE ALSO</H2>
 <EM><A HREF="r3.mkdspf.html">r3.mkdspf</A></EM>
