@@ -9,6 +9,7 @@ at EC, CERL
 
 #include "gis.h"
 #include "globals.h"
+#include <stdio.h>
 #include <math.h>
 
 
@@ -27,7 +28,6 @@ char *argv[];
 	float Width;
 	void polint(),ratint();
 
-	FILE *fdout, *fopen();
         long max_pow2(); 
         long min_pow2(); 
 		/* Used to find the smallest power of 2 >= to a number */
@@ -98,8 +98,7 @@ char *argv[];
         orientations->answer    = "1";
 
 
-	fdout=fopen(fileout, "w");
-	fprintf(fdout, "output of shape finding software\n\n");
+	fprintf(stderr, "output of shape finding software\n\n");
         /* call parser */
         if(G_parser(argc, argv))
                 exit(-1);
