@@ -64,6 +64,7 @@ for i in "$@" ; do
             echo "Environment variables:"
             echo "  GRASS_TCLSH                    set tclsh shell name to override 'tclsh'"
             echo "  GRASS_WISH                     set wish shell name to override 'wish'"
+            echo "  GRASS_HTML_BROWSER             set html browser for help pages"
             echo "  GRASS_ADDON_PATH               set additional path(s) to local GRASS modules"
 	    exit
 	    ;;
@@ -172,6 +173,34 @@ fi
 if [ ! "$GRASS_WISH" ] ; then
     GRASS_WISH=wish
     export GRASS_WISH
+fi
+
+if [ ! "$GRASS_HTML_BROWSER" ] ; then
+    type -p konqueror > /dev/null
+    if [ $? -eq 1 ] ; then
+       type -p mozilla > /dev/null
+       if [ $? -eq 1 ] ; then
+          type -p opera > /dev/null
+          if [ $? -eq 1 ] ; then
+             type -p netscape > /dev/null
+             if [ $? -eq 1 ] ; then
+                echo "Searching for web browser, but neither konqueror, nor mozilla, opera, netscape found."
+                # so we set konqueror, though, to make lib/gis/parser.c happy:
+                GRASS_HTML_BROWSER=konqueror
+             else 
+                GRASS_HTML_BROWSER=netscape
+             fi
+          else
+             GRASS_HTML_BROWSER=opera
+          fi
+       else
+          GRASS_HTML_BROWSER=mozilla
+       fi
+    else
+       GRASS_HTML_BROWSER=konqueror
+    fi
+
+    export GRASS_HTML_BROWSER
 fi
 
 if [ ! "$GRASS_GNUPLOT" ] ; then
