@@ -14,7 +14,7 @@ LIST  = main.o\
 
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) -o $@
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(MATHLIB) $(TERMLIB) -o $@
 
 $(LIST):  coin.h
 
