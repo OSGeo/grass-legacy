@@ -14,9 +14,10 @@ SUBDIRS1 = \
 	v.extract \
 	v.format \
 	v.info \
-	v.patch \
 	v.in.sites \
-	v.surf.rst
+	v.patch \
+	v.surf.rst \
+	v.to.rast
 
 OGRBASED = v.out.ogr
 
