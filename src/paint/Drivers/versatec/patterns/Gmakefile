@@ -1,0 +1,3 @@
+P=$(ETC)/paint
+all:
+	cp *.dat *.pat $P
