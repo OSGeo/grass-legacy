@@ -1,51 +1,49 @@
 
 
 
-gg..sseettpprroojj <main>      GRASS Reference Manual     <main> gg..sseettpprroojj
+g.setproj <main>     GRASS Reference Manual	 <main>	g.setproj
 
 
 
-NNAAMMEE
-     _g_._s_e_t_p_r_o_j - Allows the user to create the PROJ_INFO and the
-     PROJ_UNITS files to record the projection information
-     associated with a current location.
+NAME
+     g.setproj - Allows	the user to create the PROJ_INFO and the
+     PROJ_UNITS	files to record	the projection information
+     associated	with a current location.
 
-SSYYNNOOPPSSIISS
-     gg..sseettpprroojj
+SYNOPSIS
+     g.setproj
 
-DDEESSCCRRIIPPTTIIOONN
+DESCRIPTION
      Allows a user to create a PROJ_INFO file in the PERMANENT
      mapset of the current location. PROJ_INFO file is used to
-     record the projection information associated with the
+     record the	projection information associated with the
      specified mapset.
 
-     NNootteess::
+     Notes:
 
-          User running _g_._s_e_t_p_r_o_j must own PERMANENT mapset.  It
-          is highly recommended to run _g_._s_e_t_p_r_o_j after creating a
-          new location so that conversion programs (such as
-          _v_._p_r_o_j) can be run.
-          The current location must not contain a PROJ_INFO or
-          PROJ_UNITS file.
-          The user will be prompted for the projection name.
-          The specification of any projection other than ll and
-          stp will generate a request to the user for a name of a
-          standard ellipse.
-          The projections of aea, lcc, merc, and tmerc will
-          generate a request to the user for the prime meridian
-          and standard parallel for the output map.
-          The projection of stp will generate a request to the
-          user for the choice of zone for the output map.
-          The user will be prompted for the spheroid and zone of
-          the UTM projection.
+	  User running g.setproj must own PERMANENT mapset.  It
+	  is highly recommended	to run g.setproj after creating	a
+	  new location so that conversion programs (such as
+	  v.proj) can be run.
+	  The current location must not	contain	a PROJ_INFO or
+	  PROJ_UNITS file.
+	  The user will	be prompted for	the projection name.
+	  The specification of any projection other than ll and
+	  stp will generate a request to the user for a	name of	a
+	  standard ellipse.
+	  The projections of aea, lcc, merc, and tmerc will
+	  generate a request to	the user for the prime meridian
+	  and standard parallel	for the	output map.
+	  The projection of stp	will generate a	request	to the
+	  user for the choice of zone for the output map.
+	  The user will	be prompted for	the spheroid and zone of
+	  the UTM projection.
 
-SSEEEE AALLSSOO
-     _v_._p_r_o_j _m_._p_r_o_j
+SEE ALSO
+     v.proj m.proj
 
-AAUUTTHHOORR
-     Irina Kosinovsky, US Army CERL, Champaign, Il
-
-
+AUTHOR
+     Irina Kosinovsky, US Army CERL, Champaign,	Il
 
 
 
@@ -60,7 +58,9 @@ AAUUTTHHOORR
 
 
 
-GRASS 4.1                 U.S. Army CERL                        1
+
+
+GRASS 4.2		Baylor University			1
 
 
 
