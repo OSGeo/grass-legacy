@@ -74,9 +74,9 @@ read_inputs(void)
 		sscanf(buffer, "%*[ \t]%[^\0]", buf);
 
 		i=strlen(buf)-1;
-		for(;i>=0;i--){
+		for(; i>=0; i--){
 			if(buf[i]!=' ' && buf[i]!='\t'){
-				buf[i+1]=0;
+				buf[i + 1]=0;
 				break;
 			}
 		}
@@ -165,6 +165,27 @@ read_inputs(void)
 	input.ntimestep = i;
 	fclose(fp);
 
+
+	/* Read Qobs file */
+	if(file.Qobs){
+		fp = fopen(file.Qobs, "r");
+
+		misc.Qobs_ =
+			(double *) malloc(input.ntimestep * sizeof(double));
+
+		for(i=0; i<input.ntimestep && !feof(fp); ){
+			get_line(fp, buf);
+
+			if(sscanf(buf, "%lf",
+					&(misc.Qobs_[i])) == 1)
+				i++;
+		}
+
+		input.ntimestep = (input.ntimestep < i ? input.ntimestep : i);
+		fclose(fp);
+	}
+
+
 	if(!(misc.timestep > 0 && misc.timestep < input.ntimestep + 1))
 		misc.timestep = 0;
 	if(!(misc.idxclass > 0 && misc.idxclass < misc.nidxclass  + 1))
@@ -207,72 +228,136 @@ write_outputs(void)
 			ltime->tm_hour, ltime->tm_min, ltime->tm_sec);
 #endif
 	fprintf(fp, "#\n");
-	fprintf(fp, "# '_' suffix means time units in time step\n");
+	fprintf(fp, "# '_' suffix means time units in timestep\n");
 	fprintf(fp, "#\n");
-	fprintf(fp, "# %-15s the number of non-null cells\n",
+	if(file.Qobs){
+		fprintf(fp, "# %-15s Model efficiency\n",
+			"Em:");
+		fprintf(fp, "# %-15s Peak observed Q\n"
+			    "# %77s\n",
+			"Qobs_peak_:",	"[m^3/timestep]");
+		fprintf(fp, "# %-15s Peak time for observed Q\n"
+			    "# %77s\n",
+			"tobs_peak_:",	"[timestep]");
+		fprintf(fp, "# %-15s Mean observed Q\n"
+			    "# %77s\n",
+			"Qobs_bar_:",	"[m^3/timestep]");
+	}
+	fprintf(fp, "# %-15s Peak simulated Q\n"
+		    "# %77s\n",
+			"Qt_peak_:",	"[m^3/timestep]");
+	fprintf(fp, "# %-15s Peak time for sumulated Q\n"
+		    "# %77s\n",
+			"tt_peak_:",	"[timestep]");
+	fprintf(fp, "# %-15s Mean simulated Q\n"
+		    "# %77s\n",
+			"Qt_bar_:",	"[m^3/timestep]");
+	fprintf(fp, "# %-15s Number of non-null cells\n",
 			"ncell:");
-	fprintf(fp, "# %-15s the number of topographic index classes\n",
+	fprintf(fp, "# %-15s Number of topographic index classes\n",
 			"nidxclass:");
-	fprintf(fp, "# %-15s the number of delay time step\n",
+	fprintf(fp, "# %-15s Number of delay timestep\n",
 			"ndelay_:");
-	fprintf(fp, "# %-15s the number of reach time step\n",
+	fprintf(fp, "# %-15s Number of reach timestep\n",
 			"nreach_:");
-	fprintf(fp, "# %-15s the areal average of ln(T0) = ln(Te)\n",
-			"lnTe_:");
-	fprintf(fp, "# %-15s the main channel routing velocity\n",
-			"vch_:");
-	fprintf(fp, "# %-15s the internal subcatchment routing velocity\n",
-			"vr_:");
-	fprintf(fp, "# %-15s the areal average of topographic index\n",
-			"lambda:");
-	fprintf(fp, "# %-15s the subsurface flow per unit area "
-		    "at a soil surface\n",
-			"_qs_:");
-	fprintf(fp, "# %-15s the initial subsurface flow per unit area\n",
-			"qs0_:");
+	fprintf(fp, "# %-15s Areal average of ln(T0) = ln(Te)\n"
+		    "# %77s\n",
+			"lnTe_:",	"[ln(m^2/timestep)]");
+	fprintf(fp, "# %-15s Main channel routing velocity\n"
+		    "# %77s\n",
+			"vch_:",	"[m/timestep]");
+	fprintf(fp, "# %-15s Internal subcatchment routing velocity\n"
+		    "# %77s\n",
+			"vr_:",		"[m/timestep]");
+	fprintf(fp, "# %-15s Areal average of topographic index\n"
+		    "# %77s\n",
+			"lambda:",	"[ln(m^2)]");
+	fprintf(fp, "# %-15s Subsurface flow per unit area "
+		    "at a soil surface\n"
+		    "# %77s\n",
+			"_qs_:",	"[m/timestep]");
+	fprintf(fp, "# %-15s Initial subsurface flow per unit area\n"
+		    "# %77s\n",
+			"qs0_:",	"[m/timestep]");
 	fprintf(fp, "#\n");
-	fprintf(fp, "# %-15s the routing time step\n",
-			"tch_::");
-	fprintf(fp, "# %-15s the difference of area for each reach time step\n",
-			"Add::");
-	fprintf(fp, "# %-15s the total flow\n",
-			"Qt_::");
-	fprintf(fp, "# %-15s the total flow per unit area\n",
-			"qt_::");
-	fprintf(fp, "# %-15s the saturation overland flow per unit area\n",
-			"qo_::");
-	fprintf(fp, "# %-15s the subsurface flow per unit area\n",
-			"qs_::");
-	fprintf(fp, "# %-15s the vertical flux (or the drainage flux)\n",
-			"qv_::");
-	fprintf(fp, "# %-15s the mean saturation deficit in a watershed\n",
-			"Sbar_::");
+	fprintf(fp, "# %-15s Routing timestep\n"
+		    "# %77s\n",
+			"tch_::",	"[timestep]");
+	fprintf(fp, "# %-15s Difference of area for each reach timestep\n"
+		    "# %77s\n",
+			"Add::",	"[m^2]");
+	fprintf(fp, "# %-15s Total flow\n"
+		    "# %77s\n",
+			"Qt_::",	"[m^3/timestep]");
+	fprintf(fp, "# %-15s Total flow per unit area\n"
+		    "# %77s\n",
+			"qt_::",	"[m/timestep]");
+	fprintf(fp, "# %-15s Saturation overland flow per unit area\n"
+		    "# %77s\n",
+			"qo_::",	"[m/timestep]");
+	fprintf(fp, "# %-15s Subsurface flow per unit area\n"
+		    "# %77s\n",
+			"qs_::",	"[m/timestep]");
+	fprintf(fp, "# %-15s Vertical flux (or drainage flux)\n"
+		    "# %77s\n",
+			"qv_::",	"[m/timestep]");
+	fprintf(fp, "# %-15s Mean saturation deficit in a watershed\n"
+		    "# %77s\n",
+			"Sbar_::",	"[m]");
 	if(params.infex){
-		fprintf(fp, "# %-15s the infiltration rate\n",
-			"f_::");
-		fprintf(fp, "# %-15s the infiltration excess runoff\n",
-			"fex_::");
+		fprintf(fp, "# %-15s Infiltration rate\n"
+			    "# %30s\n",
+			"f_::",		"[m/timestep]");
+		fprintf(fp, "# %-15s Infiltration excess runoff\n"
+			    "# %77s\n",
+			"fex_::",	"[m/timestep]");
 	}
 
 	if(misc.timestep || misc.idxclass){
 		fprintf(fp, "#\n");
-		fprintf(fp, "# %-15s the root zone storage deficit\n",
-			"Srz_:::");
-		fprintf(fp, "# %-15s the unsaturated (gravity drainage) zone "
-			    "storage\n",
-			"Suz_:::");
-		fprintf(fp, "# %-15s the local saturated zone deficit due to "
-			    "gravity drainage\n",
-			"S_:::");
-		fprintf(fp, "# %-15s the actual evapotranspiration\n",
-			"Ea_:::");
-		fprintf(fp, "# %-15s the excess flow from a fully saturated "
-			    "area per unit area\n",
-			"ex_:::");
+		fprintf(fp, "# %-15s Root zone storage deficit\n"
+			    "# %77s\n",
+			"Srz_:::",	"[m]");
+		fprintf(fp, "# %-15s Unsaturated (gravity drainage) zone "
+			    "storage\n"
+			    "# %77s\n",
+			"Suz_:::",	"[m]");
+		fprintf(fp, "# %-15s Local saturated zone deficit due to "
+			    "gravity drainage\n"
+			    "# %77s\n",
+			"S_:::",	"[m]");
+		fprintf(fp, "# %-15s Actual evapotranspiration\n"
+			    "# %77s\n",
+			"Ea_:::",	"[m/timestep]");
+		fprintf(fp, "# %-15s Excess flow from a fully saturated "
+			    "area per unit area\n"
+			    "# %77s\n",
+			"ex_:::",	"[m/timestep]");
 	}
 
 	fprintf(fp, "\n");
 
+	if(file.Qobs){
+		fprintf(fp, "%-15s ", "Em:");
+		if(misc.Em >= 0.0)
+			fprintf(fp,
+				"%15.5lf\n", misc.Em);
+		else
+			fprintf(fp,
+				"Not resolved due to constant observed Q\n");
+		fprintf(fp, "%-15s %15.5le\n",
+					"Qobs_peak_:",	misc.Qobs_peak_	);
+		fprintf(fp, "%-15s %15d\n",
+					"tobs_peak_:",	misc.tobs_peak_	);
+		fprintf(fp, "%-15s %15.5le\n",
+					"Qobs_bar_:",	misc.Qobs_bar_	);
+	}
+	fprintf(fp, "%-15s %15.5le\n",
+					"Qt_peak_:",	misc.Qt_peak_	);
+	fprintf(fp, "%-15s %15d\n",
+					"tt_peak_:",	misc.tt_peak_	);
+	fprintf(fp, "%-15s %15.5le\n",
+					"Qt_bar_:",	misc.Qt_bar_	);
 	fprintf(fp, "%-15s %15d\n",	"ncell:",	misc.ncell	);
 	fprintf(fp, "%-15s %15d\n",	"nidxclass:",	misc.nidxclass	);
 	fprintf(fp, "%-15s %15d\n",	"ndelay_:",	misc.ndelay_	);
@@ -350,16 +435,17 @@ write_outputs(void)
 	}
 
 	if(flg.wide){
-		fprintf(fp, "%-15s %-15s %-15s %-15s %-15s %-15s",
-				"Qt_::", "qt_::", "qo_::", "qs_::", "qv_::",
-				"Sbar_::");
+		fprintf(fp, "%-15s %-15s %-15s %-15s %-15s %-15s %-15s",
+				"timestep", "Qt_::",
+				"qt_::", "qo_::", "qs_::", "qv_::", "Sbar_::");
 		if(params.infex)
 			fprintf(fp, " %-15s %-15s", "f_::", "fex_::");
 		fprintf(fp, "\n");
 
 		for(i=0; i<input.ntimestep; i++){
-			fprintf(fp, "%15.5le %15.5le %15.5le %15.5le "
+			fprintf(fp, "%15d %15.5le %15.5le %15.5le %15.5le "
 				    "%15.5le %15.5le",
+				    	i + 1,
 					misc.Qt_[i],
 					misc.qt_[i][misc.nidxclass],
 					misc.qo_[i][misc.nidxclass],
@@ -382,6 +468,13 @@ write_outputs(void)
 				fprintf(fp, "idxclass: %5d", misc.idxclass);
 			fprintf(fp, "\n");
 
+			if(misc.timestep && !misc.idxclass){
+				fprintf(fp, "%-15s ", "idxclass");
+			}else
+			if(misc.idxclass && !misc.timestep){
+				fprintf(fp, "%-15s ", "timestep");
+			}
+
 			fprintf(fp, "%-15s %-15s %-15s %-15s %-15s "
 				    "%-15s %-15s %-15s %-15s\n", 
 					"qt_:::", "qo_:::", "qs_:::", "qv_:::",
@@ -389,7 +482,14 @@ write_outputs(void)
 					"Ea_:::", "ex_:::");
 
 			for(i=st; i<et; i++)
-				for(j=si; j<ei; j++)
+				for(j=si; j<ei; j++){
+					if(misc.timestep && !misc.idxclass){
+						fprintf(fp, "%15d ", i + 1);
+					}else
+					if(misc.idxclass && !misc.timestep){
+						fprintf(fp, "%15d ", j + 1);
+					}
+
 					fprintf(fp, "%15.5le %15.5le %15.5le "
 						    "%15.5le %15.5le %15.5le "
 						    "%15.5le %15.5le %15.5le\n",
@@ -398,25 +498,29 @@ write_outputs(void)
 						misc.Srz_[i][j],misc.Suz_[i][j],
 						misc.S_[i][j],	misc.Ea_[i][j],
 						misc.ex_[i][j]);
+				}
 		}
 	}else{
 		fprintf(fp, "%-15s %-15s %-15s %-15s %-15s\n",
-				"Qt_::", "qt_::", "qo_::", "qs_::", "qv_::");
+				"timestep", "Qt_::", "qt_::", "qo_::", "qs_::");
 		for(i=0; i<input.ntimestep; i++)
-			fprintf(fp, "%15.5le %15.5le %15.5le %15.5le %15.5le\n",
+			fprintf(fp, "%15d %15.5le %15.5le %15.5le %15.5le\n",
+					i + 1,
 					misc.Qt_[i],
 					misc.qt_[i][misc.nidxclass],
 					misc.qo_[i][misc.nidxclass],
-					misc.qs_[i],
-					misc.qv_[i][misc.nidxclass]);
+					misc.qs_[i]);
 
-		fprintf(fp, "%-15s", "Sbar_::");
+		fprintf(fp, "%-15s %-15s %-15s",
+				"timestep", "qv_::", "Sbar_::");
 		if(params.infex)
 			fprintf(fp, " %-15s %-15s", "f_::", "fex_::");
 		fprintf(fp, "\n");
 
 		for(i=0; i<input.ntimestep; i++){
-			fprintf(fp, "%15.5le",
+			fprintf(fp, "%15d %15.5le %15.5le",
+					i + 1,
+					misc.qv_[i][misc.nidxclass],
 					misc.Sbar_[i]);
 			if(params.infex)
 				fprintf(fp, " %15.5le %15.5le",
@@ -434,29 +538,74 @@ write_outputs(void)
 				fprintf(fp, "idxclass: %5d", misc.idxclass);
 			fprintf(fp, "\n");
 
+			if(misc.timestep && !misc.idxclass){
+				fprintf(fp, "%-15s ", "idxclass");
+			}else
+			if(misc.idxclass && !misc.timestep){
+				fprintf(fp, "%-15s ", "timestep");
+			}
+
 			fprintf(fp, "%-15s %-15s %-15s %-15s\n",
 					"qt_:::", "qo_:::", "qs_:::", "qv_:::");
 			for(i=st; i<et; i++)
-				for(j=si; j<ei; j++)
+				for(j=si; j<ei; j++){
+					if(misc.timestep && !misc.idxclass){
+						fprintf(fp, "%15d ", i + 1);
+					}else
+					if(misc.idxclass && !misc.timestep){
+						fprintf(fp, "%15d ", j + 1);
+					}
+
 					fprintf(fp, "%15.5le %15.5le %15.5le "
 						    "%15.5le\n",
 						misc.qt_[i][j], misc.qo_[i][j],
 						misc.qs_[i],	misc.qv_[i][j]);
+				}
+
+			if(misc.timestep && !misc.idxclass){
+				fprintf(fp, "%-15s ", "idxclass");
+			}else
+			if(misc.idxclass && !misc.timestep){
+				fprintf(fp, "%-15s ", "timestep");
+			}
 
 			fprintf(fp, "%-15s %-15s %-15s\n",
 					"Srz_:::", "Suz_:::", "S_:::");
 			for(i=st; i<et; i++)
-				for(j=si; j<ei; j++)
+				for(j=si; j<ei; j++){
+					if(misc.timestep && !misc.idxclass){
+						fprintf(fp, "%15d ", i + 1);
+					}else
+					if(misc.idxclass && !misc.timestep){
+						fprintf(fp, "%15d ", j + 1);
+					}
+
 					fprintf(fp, "%15.5le %15.5le %15.5le\n",
 						misc.Srz_[i][j],misc.Suz_[i][j],
 						misc.S_[i][j]);
+				}
+
+			if(misc.timestep && !misc.idxclass){
+				fprintf(fp, "%-15s ", "idxclass");
+			}else
+			if(misc.idxclass && !misc.timestep){
+				fprintf(fp, "%-15s ", "timestep");
+			}
 
 			fprintf(fp, "%-15s %-15s\n",
 					"Ea_:::", "ex_:::");
 			for(i=st; i<et; i++)
-				for(j=si; j<ei; j++)
+				for(j=si; j<ei; j++){
+					if(misc.timestep && !misc.idxclass){
+						fprintf(fp, "%15d ", i + 1);
+					}else
+					if(misc.idxclass && !misc.timestep){
+						fprintf(fp, "%15d ", j + 1);
+					}
+
 					fprintf(fp, "%15.5le %15.5le\n",
 						misc.Ea_[i][j], misc.ex_[i][j]);
+				}
 		}
 	}
 
