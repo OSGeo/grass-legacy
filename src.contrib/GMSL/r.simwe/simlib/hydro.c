@@ -63,6 +63,7 @@ printf("\n barea,sarea,rwalk,sisum: %f %f %f %f",barea,sarea,rwalk,sisum);
 
 	for (k = 0; k < my; k++) {
 	    for (l = 0; l < mx; l++) { /* run thru the whole area */
+	    if (zz[k][l] != UNDEF){
 
 		x = xp0 + stepx * (double) (l);
 		y = yp0 + stepy * (double) (k);
@@ -119,6 +120,7 @@ printf("\n barea,sarea,rwalk,sisum: %f %f %f %f",barea,sarea,rwalk,sisum);
 
 		    }
 		}
+	    } /*DEFined area */
 	    }
 	}
 	nwalk = lw;
@@ -144,6 +146,7 @@ printf("\n deldif,factor %f %e",deldif,factor);
 printf("\n ");
 
 	for (i = 1; i <= miter; i++) { /* iteration loop depending on simulation time and deltap */
+		G_percent(i,miter,2);
 	    iter1 = i / iterout;
 	    iter1 *= iterout;
 	    if (iter1 == i) {
@@ -182,6 +185,8 @@ printf("\n ");
         printf("\n  ");
 		    }
 
+		    if (zz[k][l] != UNDEF) {
+
         if(infil!=NULL) { /* infiltration part */
 
                 if (inf[k][l] - si[k][l] > 0.) {
@@ -197,7 +202,7 @@ printf("\n ");
 
                         }
 
-                }
+                    }
 
           }
 
@@ -253,6 +258,10 @@ printf("\n ");
 			}
 
 		   } /* else*/
+		    } /*DEFined area */
+		    else {
+			    w[lw][3] = 1e-10; /* eliminate walker if it is out of area */
+		    }
 		}
 
 /*        write the walkers which reach the box */
@@ -311,6 +320,8 @@ printf("\n ");
            l = (int) ((points[p].east - mixx + stxm) / stepx) - mx -1;
            k = (int) ((points[p].north - miyy + stym) / stepy) - my -1;	
 
+	   if (zz[k][l] != UNDEF) {
+
 	if(wdepth == NULL) {
 	   points[p].z1 = step * gama[k][l] * cchez[k][l]; /* cchez incl. sqrt(sinsl) */
 		 } else
@@ -319,6 +330,7 @@ printf("\n ");
 /*	printf("\n k,l,z1 %d %d %f",k,l,points[p].z1);*/
 
 	fprintf(fw,"%f %f %f\n",points[p].east/conv,points[p].north/conv,points[p].z1);
+	} /*defined area*/
 
 	}
 
@@ -344,8 +356,10 @@ if (err != NULL)
       {
         for (k = 0; k < my; k++) {
             for (l = 0; l < mx; l++) {
+		    if (zz[k][l] != UNDEF) {
                 d1 = gama[k][l] * (double) conn;
                 gammas[k][l] += pow(d1, 3./5.);
+		    } /* DEFined area */
             }
         }
       }   
