@@ -1,3 +1,29 @@
 Tom Poindexter <tpoindex@nyx.net>: 
 
 script to generate GRASS mirrors sites web map
+
+How to update the current map:
+
+1. Start GRASS with "global" dataset
+   -> you need the map "wdbtemp4" which contains the country
+      information
+
+2. Check the name of the country to be included within
+   wdbtemp4 map:
+     v.report wdbtemp4 type=area
+   or simply run
+     cd src/scripts/contrib/grassmirrorsmap
+     list_countries.sh
+
+3. edit
+    grass.sites.mirror
+   -> add new mirror site
+
+4. Build the map:
+    mkgrassmap.sh
+
+   Put the map stuff onto web site:
+
+gif file is:     grass_sites.gif
+htmlmap file is: grass_sites.htmlmap
+sample html file: grassmap.html -> index.html
