@@ -12,6 +12,10 @@ SERVERNAME=		`uname -n`
 SYSTEM=			`uname -s`
 VERSION=		`cat src/CMD/VERSION | head -1`
 
+# Get the major release number from the version for appending to gmake,
+# gmakelinks, and grass command names eg VERSION = 5.0beta8 NAME_VER = 5
+NAME_VER=   	    	`cat src/CMD/VERSION | head -1 | sed 's/\..*//'`
+
 INSTALL=		@INSTALL@
 INSTALL_DATA=		@INSTALL_DATA@ -m 644
 INSTALL_PROGRAM=	@INSTALL_PROGRAM@
@@ -26,7 +30,7 @@ MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0 MAKE=${MAKE}
 
 IS64BIT=		${SRCDIR}/src/CMD/generic/is64bit.sh
 
-MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR} MAKE=${MAKE}
+MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR} MAKE=${MAKE} NAME_VER=${NAME_VER}
 
 MAKE_POST_ENV=		GISBASE=${PREFIX} MACHINENAME=${SERVERNAME}
 
@@ -68,30 +72,36 @@ do-install:
 # yacc, and any other file that is not listed in the options above.
 clean:
 	echo "Performing simple clean..."
-	find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true
-	rm -f src/CMD/next_step/*              2>/dev/null ; true
+	find . -name 'OBJ*' -exec rm -rf {} \;	2>/dev/null ; true
+	rm -f src/CMD/next_step/*   	    	2>/dev/null ; true
 	# Simple clean finished
 
 distclean: clean
 	echo "Performing compilation clean..."
-	find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true
+	find . -name 'LIB*' -exec rm -rf {} \;	2>/dev/null ; true
 	rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true
-	rm -rf ${PREFIX}/bwidget/    2>/dev/null ; true
-	rm -rf ${PREFIX}/dev/        2>/dev/null ; true
-	rm -rf ${PREFIX}/driver/     2>/dev/null ; true
-	rm -rf ${PREFIX}/etc/        2>/dev/null ; true
-	rm -rf ${PREFIX}/fonts/      2>/dev/null ; true
-	rm -rf ${PREFIX}/man/help/   2>/dev/null ; true
-	rm -rf ${PREFIX}/man/1/      2>/dev/null ; true
-	rm -rf ${PREFIX}/man/2/      2>/dev/null ; true
-	rm -rf ${PREFIX}/man/3/      2>/dev/null ; true
-	rm -rf ${PREFIX}/man/4/      2>/dev/null ; true
-	rm -rf ${PREFIX}/man/5/      2>/dev/null ; true
-	rm -rf ${PREFIX}/locks/      2>/dev/null ; true
-	rm -rf ${PREFIX}/scripts/    2>/dev/null ; true
-	rm -rf ${PREFIX}/tcltkgrass/ 2>/dev/null ; true
-	rm -rf ${PREFIX}/txt/        2>/dev/null ; true
-	rm -f error.log    2>/dev/null ; true
+	rm -f ${BINDIR}/gmake${NAME_VER}     	2>/dev/null ; true
+	rm -f ${BINDIR}/gmakelinks${NAME_VER}	2>/dev/null ; true
+	rm -f ${BINDIR}/grass${NAME_VER}     	2>/dev/null ; true
+	rm -rf ${PREFIX}/bin/*	    	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/bwidget/    	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/dev/        	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/driver/     	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/etc/        	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/fonts/      	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/include/      	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/lib/      	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/man/help/   	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/man/1/      	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/man/2/      	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/man/3/      	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/man/4/      	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/man/5/      	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/locks/      	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/scripts/    	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/tcltkgrass/ 	    	2>/dev/null ; true
+	rm -rf ${PREFIX}/txt/        	    	2>/dev/null ; true
+	rm -f error.log     	    	    	2>/dev/null ; true
 	# Compilation clean finished
 
 veryclean: distclean
@@ -105,12 +115,6 @@ veryclean: distclean
 
 # make a source package for distribution:
 srcdist: veryclean
-	echo "Performing complete installation clean..."
-	rm -f src/CMD/head/head                     2>/dev/null ; true
-	rm -f config.cache config.log config.status 2>/dev/null ; true
-	rm -f src/scripts/shells/create_fifos.sh    2>/dev/null ; true
-	rm -f src/include/config.h                  2>/dev/null ; true
-	rm -f Makefile                              2>/dev/null ; true
 	echo "create Changelog file without initial messages..."
 # cvs2cl.pl creates a GNU style ChangeLog file:
 # http://www.red-bean.com/~kfogel/cvs2cl.shtml
