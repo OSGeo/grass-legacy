@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "gis.h"
 #include "display.h"
@@ -20,7 +21,7 @@ int main (int argc, char **argv)
 	int t, b, l, r ;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
-	struct Flag *mouse, *feet ;
+	struct Flag *mouse, *feet, *top ;
 	struct Cell_head W ;
 
 	/* Initialize the GIS calls */
@@ -37,6 +38,10 @@ int main (int argc, char **argv)
 	feet = G_define_flag() ;
 	feet->key        = 'f';
 	feet->description= "Use feet/miles instead of meters" ;
+
+	top = G_define_flag() ;
+	top->key        = 't';
+	top->description= "Write text on top of the scale, not to the right" ;
 
 	opt1 = G_define_option() ;
 	opt1->key        = "bcolor" ;
@@ -107,23 +112,35 @@ int main (int argc, char **argv)
 	if (!mouse->answer)
 	{
 		/* Draw the scale */
-		draw_scale(NULL) ;
+		draw_scale(NULL, top->answer) ;
 
 		/* Add this command to list */
 		D_add_to_list(G_recreate_command()) ;
 	}
-	else if (mouse_query())
+	else if (mouse_query(top->answer))
 	{
-		char at[100];
-		int i;
+		char cmdbuf[255];
+		char buffer[255];
+		
+		sprintf(cmdbuf, "%s at=%f,%f", argv[0],east, north);
+		
+		if(opt1->answer)
+		{
+			sprintf(buffer, " bcolor=%s",opt1->answer);
+			strcat(cmdbuf, buffer);
+		}
+		if(opt2->answer)
+		{
+			sprintf(buffer, " tcolor=%s",opt2->answer);
+			strcat(cmdbuf, buffer);
+		}
+		if(top->answer)
+			strcat(cmdbuf, " -t");
+		if(feet->answer)
+			strcat(cmdbuf, " -f");
 
-		R_close_driver();
-		sprintf(at, "at=%f,%f", east, north);
-		for (i = 0; i < argc; i++)
-			if (argv[i][0] == '-' && argv[i][1] == 'm')
-				argv[i] = at;
-		execvp(argv[0], argv);
-		perror("Failed to execute command");
+		/* Add this command to list */
+		D_add_to_list(cmdbuf) ;
 		return 1;
 	}
 
@@ -131,4 +148,3 @@ int main (int argc, char **argv)
 
 	return 0;
 }
-

@@ -51,7 +51,7 @@ static const struct scale {
 	}
 };
 
-int draw_scale(char *save)
+int draw_scale(char *save, int toptext)
 {
 	double meters ;
 	double line_len ;
@@ -92,8 +92,16 @@ int draw_scale(char *save)
 	seg_len = line_len / scales[incr].seg;
 
 	/* Blank out area with background color */
-	pr = x_pos + 35 + (int) line_len + size * strlen(scales[incr].name) ;
-	pt = y_pos + 0; if (pt < t) pt = t;
+	if(toptext)
+	{
+		pr = x_pos + 35 + (int) line_len ;
+		pt = y_pos - 15; if (pt < t) pt = t;
+	}
+	else
+	{
+		pr = x_pos + 35 + (int) line_len + size * strlen(scales[incr].name) ;
+		pt = y_pos + 0; if (pt < t) pt = t;
+	}
 	pb = y_pos + 30;if (pb > b) pb = b;
 	pl = x_pos + 0; if (pl < l) pl = l;
 	pr = pr;        if (pr > r) pr = r;
@@ -129,11 +137,20 @@ int draw_scale(char *save)
 	for (i = 1; i <= scales[incr].seg; i+=2)
 	{
 		R_polygon_rel(xarr, yarr ,4);
-		/* bugfix 1/2002 MN: added +1 to have bar completely filled */
 		R_move_rel((int) (seg_len * 2 + 1), 0);
 	}
-	R_move_abs (x_pos + 35 + (int) line_len, y_pos + 20) ;
-	R_text(scales[incr].name) ;
+
+	if(toptext)
+	{
+		R_move_abs (x_pos + (int) line_len/2., y_pos) ;
+		R_text(scales[incr].name) ;
+	}
+	else
+	{
+		R_move_abs (x_pos + 35 + (int) line_len, y_pos + 20) ;
+		R_text(scales[incr].name) ;
+	}	
+	
 	R_stabilize();
 
 	return(0) ;
