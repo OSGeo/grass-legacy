@@ -1,4 +1,15 @@
 #!/bin/sh
+
+# 6/2003 fixes for Lat/Long Gordon Keith <gordon.keith@csiro.au>
+#   If n is a number then the ewres and nsres are mulitplied by that scale
+#    to calculate the shading.
+#   If n is the letter M (either case) the number of metres is degree of
+#    latitude is used as the scale.
+#   If n is the letter f then the number of feet in a degree is used.
+#   It scales latitude and longitude equally, so it's only approximately
+#   right, but for shading its close enough. It makes the difference
+#   between an unusable and usable shade.
+#
 # 10/2001 fix for testing for dashes in raster file name
 #        by Andreas Lange <andreas.lange@rhein-main.de>
 # 10/2001 added parser support - Markus Neteler
@@ -24,7 +35,7 @@ then
         echo 'north (N:0 E:90 S:180 W:270)'
         echo
         echo Usage:
-        echo      shade.rel.sh [altitude=value] [azimuth=value] [elevation=name]
+        echo "     shade.rel.sh [altitude=value] [azimuth=value] [elevation=name] [scale=value|m|f]"
 	echo
 	exit 1
 fi
@@ -32,6 +43,7 @@ fi
 gotitALT=0
 gotitAZ=0
 gotitELEV=0
+scale=1
 
 for i
 do
@@ -50,6 +62,14 @@ do
                                        echo "ERROR: raster map [`echo $i | awk -F '=' '{print $2}'`] does not exist."
                                        exit 1
                                     fi ;;
+		scale=*)
+			scale=`echo $i | awk -F '=' '{print $2}'` ;
+			case $scale in
+			        "m"|"M")
+			                scale=111120;;
+        			"f"|"F")
+                			scale=370400;;
+			esac;;
 	esac
 done
 
@@ -140,9 +160,9 @@ echo ""
 r.mapcalc << EOF
 $ELEV.shade = eval( \\
  x=($elev[-1,-1] + 2*$elev[0,-1] + $elev[1,-1] \\
-   -$elev[-1,1] - 2*$elev[0,1] - $elev[1,1])/(8.*ewres()) , \\
+   -$elev[-1,1] - 2*$elev[0,1] - $elev[1,1])/(8.*ewres()*$scale) , \\
  y=($elev[-1,-1] + 2*$elev[-1,0] + $elev[-1,1] \\
-   -$elev[1,-1] - 2*$elev[1,0] - $elev[1,1])/(8.*nsres()) , \\
+   -$elev[1,-1] - 2*$elev[1,0] - $elev[1,1])/(8.*nsres()*$scale) , \\
  slope=90.-atan(sqrt(x*x + y*y)), \\
  a=round(atan(x,y)), \\
  a=if(isnull(a),1,a), \\
