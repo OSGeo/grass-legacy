@@ -486,6 +486,51 @@ curses_yes_no(n, s)
 	}
     }
 }
+/***********************************************************************/
+/*
+** Interpro computers barfed when going to text mode w/out an endwin()
+**  and also barfed when calling V_call() w/out first calling Old_tty()
+**  Thus the old method of setting up for both those cases [suspend() and respend()]
+**  was not sufficient, so we had to modify suspend(), and make a new vask_suspend()
+**  for resetting everything before calling  V_call().
+*/
+#ifdef INTERPRO
+suspend ()
+{
+    move (LINES-1, 0);
+    refresh ();
+	endwin ();
+}
+
+respend ()
+{
+    move (0, 0);
+    clear ();
+    touchwin (curscr);
+    touchwin (BASE_WIN);
+    touchwin (INFO_WIN);
+    wnoutrefresh (BASE_WIN);
+    wnoutrefresh (INFO_WIN);
+    doupdate ();
+
+}
+
+vask_suspend ()
+{
+    move (LINES-1, 0);
+    refresh ();
+    Old_tty ();
+}
+
+vask_respend ()
+{
+    New_tty();
+	respend ();
+}
+#else
+
+vask_suspend () { return suspend (); }
+vask_respend () { return respend (); }
 
 suspend ()
 {
@@ -500,20 +545,16 @@ respend ()
     move (0, 0);
     clear ();
     touchwin (curscr);
-    /*
-    refresh ();
-    */
     touchwin (BASE_WIN);
     touchwin (INFO_WIN);
     wnoutrefresh (BASE_WIN);
     wnoutrefresh (INFO_WIN);
-    /*
-    wrefresh (BASE_WIN);
-    wrefresh (INFO_WIN);
-    */
     doupdate ();
 
 }
+#endif
+/***********************************************************************/
+
 
 get_type_cnt (type)
     char type;
