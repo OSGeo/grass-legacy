@@ -13,12 +13,13 @@
 #endif
 #include <sys/stat.h>
 
-static int _fifo_ino;
+#define BUFFERSIZ   2048
 
 extern int errno;
 
-#define BUFFERSIZ   2048
-
+static int _rfd;
+static int _wfd;
+static int _fifo_ino;
 /*
 static unsigned char outbuf[BUFFERSIZ] ;
 */
@@ -27,11 +28,6 @@ static int cursiz = 0 ;
 static int n_read = 0 ;
 static int atbuf = 0 ;
 static int no_mon ;
-
-static int _rfd;
-static int _wfd;
-
-char *getenv();
 
 static int unlock_driver (int);
 static int find_process (int);
