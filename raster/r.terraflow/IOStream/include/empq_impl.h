@@ -40,7 +40,8 @@
 #ifndef __EMPQ_IMPL_H
 #define __EMPQ_IMPL_H
 
-#include <ostream.h>
+#include <stdio.h>
+#include <ostream>
 using namespace std;
 
 #include "empq.h"
@@ -150,9 +151,9 @@ template<class T, class Key>
   //ESTIMATE AVAILABLE MEMORY BEFORE ALLOCATION
   AMI_err ae;
   size_t mm_avail = getAvailableMemory();
-  cout << form("EM_PQUEUE:available memory before allocation: %.2fMB\n", 
+  printf("EM_PQUEUE:available memory before allocation: %.2fMB\n", 
 	       mm_avail/(float)(1<<20));
-  cout << form("EM_PQUEUE:available memory before allocation: %ldB\n", 
+  printf("EM_PQUEUE:available memory before allocation: %ldB\n", 
 	       mm_avail);
   //____________________________________________________________
   //ALLOCATE STRUCTURE
@@ -187,7 +188,7 @@ template<class T, class Key>
 
   //estimate available memory after allocation 
   mm_avail = getAvailableMemory();
-  cout << form("EM_PQUEUE: available memory after allocation: %.2fMB\n", 
+  printf("EM_PQUEUE: available memory after allocation: %.2fMB\n", 
 	       mm_avail/(float)(1<<20));
   
   //estimate AMI_STREAM memory usage
@@ -242,7 +243,7 @@ em_pqueue<T,Key>::em_pqueue() {
   AMI_err ae;
   //available memory
   size_t mm_avail = getAvailableMemory();
-  cout << form("EM_PQUEUE:available memory before allocation: %.2fMB\n", 
+  printf("EM_PQUEUE:available memory before allocation: %.2fMB\n", 
 	       mm_avail/(float)(1<<20));
   cout.flush();
 
@@ -349,7 +350,7 @@ em_pqueue<T,Key>::em_pqueue() {
   //  assert(N < buf_arity * (buf_arity + 1) * bufsize);
   //assert(N < maxlen());  
   mm_avail = getAvailableMemory();
-  cout << form("EM_PQUEUE: available memory after allocation: %.2fMB\n", 
+  printf("EM_PQUEUE: available memory after allocation: %.2fMB\n", 
 	       mm_avail/(float)(1<<20));
 }
 
@@ -596,7 +597,9 @@ bool em_pqueue<T,Key>::fillpq() {
   }
   //merge pqsize smallest elements from each buffer into a new stream
   ExtendedMergeStream** outstreams;
-  outstreams = new (ExtendedMergeStream*) [crt_buf];
+  //gcc-3.4 doesn't allows (TYPE*)[SIZE] declarations
+  //use TYPE*[SIZE]
+  outstreams = new ExtendedMergeStream*[crt_buf];
 
   for (unsigned short i=0; i< crt_buf; i++) {
     MY_LOG_DEBUG_ID(crt_buf);

@@ -41,7 +41,7 @@
 #include <sys/types.h>
 #include <sys/mman.h>
 #include <ctype.h>
-#include <ostream.h>
+#include <ostream>
 #include <iostream>
 using namespace std;
 #include <stdio.h>

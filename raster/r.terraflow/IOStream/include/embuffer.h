@@ -45,6 +45,7 @@
 
 
 #include <stdio.h>
+#include <math.h>
 #include <assert.h>
 #include <stdlib.h>
 
@@ -462,7 +463,9 @@ em_buffer<T,Key>::em_buffer(const unsigned short i, const unsigned long bs,
 	  arity, (long)(arity*sizeof(AMI_STREAM<T>*)));
   MEMORY_LOG(str);
   //allocate STREAM* array
-  data = new (AMI_STREAM<T>*)[arity];
+  //GCC-3.4 does not allow (TYPE)[array] 
+  //use TYPE[array]
+  data = new AMI_STREAM<T>*[arity];
    
   //allocate deleted array
   sprintf(str, "em_buffer: allocate deleted array: %ld\n",
@@ -481,7 +484,10 @@ em_buffer<T,Key>::em_buffer(const unsigned short i, const unsigned long bs,
   sprintf(str, "em_buffer: allocate name array: %ld\n",
 		  (long)(arity*sizeof(char*)));
   MEMORY_LOG(str);
-  name = new (char*)[arity];
+  //GCC-3.4 does not allow (TYPE)[array] 
+  //use TYPE[array]
+  //name = new (char*)[arity];
+  name = new char*[arity];
   assert(name);
 #endif
 
