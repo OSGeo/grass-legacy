@@ -1,0 +1,94 @@
+This file is man/README.
+
+		The following files are under $(SRC)/../man
+
+Gmakefile	* Processes the GRASS manual entries that are under man/man*
+		  by running the man/utilities/Nroff script, and puts the
+		  formatted man entries under man/cat*
+		* Copies these formatted man entries from man/cat* to
+		  the directories $MAN1 through $MAN5 under $(GISBASE)/man,
+		  and the help entries from help.src to $(HELP).
+
+README		* This file.
+
+
+
+		The following directories are under $(SRC)/../man
+
+--DIRECTORY--			---CONTENTS---
+
+OBJ, OBJ.*	*  "make.rules" files, used by gmake
+
+man1/		*  man entries for basic, tested commands
+man2/		*  man entries for alpha programs
+man3/		*  man entries for shell scripts
+man4/		*  man entries for contributed, untested code
+man5/		*  man entries -- file format descriptions
+help.src/	*  brief help entries for all commands listed under man*
+
+cat1/		*  formatted man entries for basic, tested commands
+cat2/		*  formatted man entries for alpha programs
+cat3/		*  formatted man entries for shell scripts
+cat4/		*  formatted man entries for contributed, untested code
+cat5/		*  formatted man entries -- file format descriptions
+
+utilities/	* Directory of scripts and tools for making the manual:
+    Nroff		* Formats files in ../man[1-5] --see Gmakefile, above.
+    README		* A readme file; outdated (not really 4.0).
+    find_cmd		* Looks for a user-specified file in user's path.
+    getNAME.sed		* Editor script used by make-permuted-index.
+    imagen		* Prints manual entries on an Imagen printer.
+    make-permuted-index	* Prints a permuted index of the man entries.
+    man.header		* nroff macro definitions used for manual entries.
+    man.pgnum		* Forces starting page number for printing man entries.
+    man.version		* GRASS version # footer used to print man entries.
+    missing		* Lists programs that do not have man entries.
+    printed-manual	* Script to produce/print the GRASS reference manual.
+    ptx.to.ms		* Script used by make-permuted-index.
+    tbl.nroff		* Runs man entries through nroff.  (old)
+    z.mkindex		* Lists man entries requiring indexing.  (junk)
+
+    ************************************************************************
+	NOTE:
+    Follow these steps to print a single manual entry (assuming that you
+    have loaded the GRASS source under the directory /grass5.0, so that
+    the manual entries are under /grass5.0/man):
+	% cd /grass5.0/man
+	% tbl utilities/man.version manN/.class-header utilities/man.header \
+	    manN/file manN/.class-notice | troff -t | lpr -t
+    where "manN" is one of man1, man2, man3, man4, or man5, "file" is the
+    file to be printed, and "oscar" is the printer on which to print it.
+
+    You can also use the "tbl.nroff" and "imagen" scripts in the utilities
+    directory, to create screen and laser-printer output respectively.
+    To use them, type:
+	% cd /grass5.0/man
+	% sh utilities/tbl.nroff file
+    or
+	% cd /grass5.0/man
+	% sh utilities/imagen file
+
+    To print the entire reference manual, run the printed-manual script:
+	% cd /grass5.0/man
+	% sh utilities/printed-manual
+
+    Note that by default, the script will attempt to print the entire
+    manual: this is a large document, several megabytes in size and several
+    hundred pages in length.  Only do this if you really mean it!
+    
+    Note also that the printed-manual script has options to produce other
+    forms of output (troff source, troff final output, PostScript, etc.).
+    See the script's comments for further information.
+
+    The printed form of the reference manual, as produced by the
+    printed-manual script, contains only three sections:
+	- chapter 1 (main) and chapter 2 (alpha) entries, mixed together;
+	- chapter 3 (scripts); and
+	- chapter 5 (file formats).
+    Finally, also be advised that the reference manual as produced by the
+    printed-manual script has gaps in the page numbering to allow for the
+    insertion of additional pages at the beginning of each chapter.  The
+    documents that are inserted in these pages are *NOT* currently kept in
+    these directories (but are available from the FTP site).
+
+    ************************************************************************

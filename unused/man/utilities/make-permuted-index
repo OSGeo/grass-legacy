@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+#	make-permuted-index
+#
+#	shell script to create a printed permuted index.
+#	Run this script from the appropriate 'man' directory.
+#
+#	Amit Parghi
+#	1992 12 07
+#
+/usr/lib/getNAME man?/* \
+	| sed -f utilities/getNAME.sed \
+	| sh utilities/ptx.to.ms \
+	| tbl \
+	| troff -ms -t \
+	| lpr -th
+exit 0

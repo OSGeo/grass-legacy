@@ -1,0 +1,53 @@
+#!/bin/csh -f
+
+setenv OUTPUT /tmp/junkolet
+rm -f $OUTPUT
+cat >! $OUTPUT << EOF
+.ce 2
+GRASS 4.1 Commands -- Syntax Statements
+Current 6 July 94
+
+
+Man 1
+EOF
+foreach f (\
+`/bin/ls man1` \
+)
+$f help |& awk '$0 ~ /'$f'/ {print $0}' >>& $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+
+Man 2
+
+EOF
+foreach f (\
+`/bin/ls man2` \
+)
+$f help |& awk '$0 ~ /'$f'/ {print $0}' >>& $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+
+Man 3
+
+EOF
+foreach f (\
+`/bin/ls man3` \
+)
+$f help |& awk '$0 ~ /'$f'/ {print $0}' >>& $OUTPUT
+end
+cat >> $OUTPUT << EOF
+
+
+Man 4
+
+EOF
+foreach f (\
+`/bin/ls man4` \
+)
+$f help |& awk '$0 ~ /'$f'/ {print $0}' >>& $OUTPUT
+end
+cat >> $OUTPUT << EOF
+EOF
+
