@@ -95,7 +95,7 @@ $(DIGLIB): $(OBJ)
 
 
 read_head: read_head.o
-	cc -o $@ read_head.o $(DIGLIB) $(GISLIB)
+	$(CC) -o $@ read_head.o $(DIGLIB) $(GISLIB)
 	-rm read_head.c
 
 read_head.c: read_head.C
