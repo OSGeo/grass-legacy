@@ -1,0 +1,14 @@
+EXTRA_CFLAGS	=$(VECT_INCLUDE)
+
+
+PROG =   $(BIN_CONTRIB_INTER)/v.import
+all:  $(PROG)
+	
+
+#  interactive version
+
+$(PROG): imp_vect.o $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) imp_vect.o $(GISLIB) $(MATHLIB) $(EXTRALIB)
+	mv a.out $@
+
