@@ -1,0 +1,65 @@
+@@ -3,6 +3,7 @@
+ ** This PostScript version is just slightly modified p.map code.
+ **
+ ** Modified by: Paul W. Carlson		March 1992
++** Modified by: Janne Soimasuo August 1994 line_cat added
+ */
+ #include "vector.h"
+ #include "Vect.h"
+@@ -12,12 +13,13 @@
+ 
+ static char *help[]=
+ {
+-    "color   color",
+-    "width   #",
+-    "hcolor  color",
+-    "hwidth  #",
+-    "masked  [y|n]",
+-    "style   solid|[0-9]...",
++    "color    color",
++    "width    #",
++    "hcolor   color",
++    "hwidth   #",
++    "masked   [y|n]",
++    "style    solid|[0-9]...",
++    "line_cat #",
+     ""
+ };
+ 
+@@ -30,6 +32,7 @@
+     char temp[100];
+     char *key, *data, *dp;
+     double  width;
++    int line_cat;
+     int color;
+     int r, g, b;
+     int i;
+@@ -62,7 +65,9 @@
+     vector.linestyle[vector.count] = NULL;
+     vector.hwidth[vector.count] = 0. ;
+     vector.hcolor[vector.count] = WHITE;
++    vector.line_cat[vector.count] = -1 ;
+ 
++
+     got_color = 0;
+     while (input(2, buf, help))
+     {
+@@ -166,6 +171,18 @@
+ 	/*  if (!vector.hwidth[vector.count]) vector.hwidth[vector.count] = 1;*/
+ 	    continue;
+ 	}
++        if (KEY("line_cat"))
++        {
++            if (sscanf(data, "%d", &line_cat) < 1 )
++            {
++                line_cat = -1;
++                error(key, data, "illegal line_cat(egory)");
++                continue;
++            }
++            vector.line_cat[vector.count] = line_cat;
++	    continue;
++         }
++
+ 
+ 	error(key, "", "illegal request");
+     }
