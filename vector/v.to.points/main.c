@@ -20,6 +20,7 @@
 #include "gis.h"
 #include "Vect.h"
 #include "dbmi.h"
+#include "glocale.h"
 
 static int point_cat;
 static struct line_cats *PCats; 
@@ -50,7 +51,7 @@ void write_point ( struct Map_info *Out, double x, double y, double z, int line_
 	db_append_string ( &stmt, buf);
 
 	if (db_execute_immediate (driver, &stmt) != DB_OK ) {
-	    G_warning ( "Cannot inser new row: %s", db_get_string ( &stmt ) );
+	    G_warning ( _("Cannot insert new row: %s"), db_get_string ( &stmt ) );
 	}
     }
     point_cat++;
@@ -148,16 +149,16 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
-    module->description = "Create points along input lines.";
+    module->description = _("Create points along input lines.");
 
     in_opt = G_define_standard_option(G_OPT_V_INPUT);
-    in_opt->description = "Input map containing lines";
+    in_opt->description = _("Input map containing lines");
 
     type_opt = G_define_standard_option(G_OPT_V_TYPE) ;
     type_opt->answer = "point,line,boundary,centroid";
     
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT); 
-    out_opt->description = "Output map where points will be written";
+    out_opt->description = _("Output map where points will be written");
 
     lfield_opt = G_define_standard_option(G_OPT_V_FIELD);
     lfield_opt->key = "llayer";
@@ -166,22 +167,22 @@ int main(int argc, char **argv)
 
     vertex_flag = G_define_flag ();
     vertex_flag->key = 'v';
-    vertex_flag->description = "Write line vertices.";
+    vertex_flag->description = _("Write line vertices.");
 
     inter_flag = G_define_flag ();
     inter_flag->key = 'i';
-    inter_flag->description = "Interpolate points between line vertices.";
+    inter_flag->description = _("Interpolate points between line vertices.");
 
     dmax_opt = G_define_option ();
     dmax_opt->key = "dmax";
     dmax_opt->type = TYPE_DOUBLE;
     dmax_opt->required = NO;
     dmax_opt->answer = "100";
-    dmax_opt->description = "Maximum distance between points.";
+    dmax_opt->description = _("Maximum distance between points in map units.");
     
     table_flag = G_define_flag ();
     table_flag->key = 't';
-    table_flag->description = "Do not create attribute table.";
+    table_flag->description = _("Do not create attribute table.");
     
     if(G_parser(argc,argv)) exit(1);
 
@@ -199,7 +200,7 @@ int main(int argc, char **argv)
 
     /* Open input lines */
     mapset = G_find_vector2 (in_opt->answer, NULL); 
-    if(mapset == NULL) G_fatal_error ("Could not find input %s\n", in_opt->answer);
+    if(mapset == NULL) G_fatal_error ( _("Could not find input %s\n"), in_opt->answer);
     Vect_set_open_level ( 2 );
     Vect_open_old (&In, in_opt->answer, mapset); 
     
@@ -225,7 +226,7 @@ int main(int argc, char **argv)
 	                          Fi->driver, Vect_subst_var(Fi->database,&Out), Fi->table );
 
             if ( ret == DB_FAILED ) {
-	        G_fatal_error ( "Cannot copy table" );
+	        G_fatal_error ( _("Cannot copy table") );
 	    }
 	}
 
@@ -235,21 +236,21 @@ int main(int argc, char **argv)
 	/* Open driver */
 	driver = db_start_driver_open_database ( Fi->driver, Fi->database );
 	if ( driver == NULL )
-	      G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+	      G_fatal_error ( _("Cannot open database %s by driver %s"), Fi->database, Fi->driver );
 
 	sprintf ( buf, "create table %s ( cat int, lcat int, along double precision )", Fi->table );
 	db_append_string ( &stmt, buf);
 
 	if (db_execute_immediate (driver, &stmt) != DB_OK ) {
 	    db_close_database_shutdown_driver ( driver );
-	    G_fatal_error ( "Cannot create table: %s", db_get_string ( &stmt ) );
+	    G_fatal_error ( _("Cannot create table: %s"), db_get_string ( &stmt ) );
 	}
 
 	if ( db_create_index2(driver, Fi->table, "cat" ) != DB_OK )
-	    G_warning ( "Cannot create index" );
+	    G_warning ( _("Cannot create index") );
 
 	if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
-	    G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+	    G_fatal_error ( _("Cannot grant privileges on table %s"), Fi->table );
     }
     
     point_cat = 1;
@@ -317,7 +318,7 @@ int main(int argc, char **argv)
     Vect_close(&In);
     Vect_close(&Out);
 
-    fprintf ( stdout, "%d points written to output map\n", point_cat - 1);
+    G_message ( _("%d points written to output map\n"), point_cat - 1);
 
     exit(0);
 }
