@@ -1,5 +1,10 @@
+/*
+* $Id$
+*/
+
 #ifndef	__GL_IMAGE_H__
 #define	__GL_IMAGE_H__
+
 /*
  *	Defines for image files . . . .
  *

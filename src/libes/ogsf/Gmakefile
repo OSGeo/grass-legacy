@@ -1,11 +1,11 @@
 # gsf release for Grass5.0
-# $Id: Gmakefile,v 1.7 2000-10-20 15:32:45 cho Exp $
+# $Id: Gmakefile,v 1.8 2000-11-08 09:17:03 justin Exp $
 # changed file names to fix name conflicts on WINDOWS 5/2000
 # changed gsd_img.c 10/99 to uncompressed IRIS RGB
 # History:
 #   2/26/96 - some minor cleanup (mca)
 
-EXTRA_CFLAGS= -DUSE_OGL $(XCFLAGS) $(TIFFINCPATH)
+EXTRA_CFLAGS= $(XCFLAGS) $(TIFFINCPATH)
 
 LDFLAGS=
 

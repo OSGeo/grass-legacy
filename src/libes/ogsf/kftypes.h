@@ -1,3 +1,13 @@
+/*
+* $Id$
+*/
+
+#ifndef _KFTYPES_H
+#define _KFTYPES_H
+
+#ifndef _KEYFRAME_H
+#include "keyframe.h"
+#endif
 
 #define KF_FROMX 0
 #define KF_FROMY 1
@@ -23,3 +33,4 @@ typedef struct key_node{
     struct key_node *next, *prior;
 } Keylist;
 
+#endif /* _KFTYPES_H */
