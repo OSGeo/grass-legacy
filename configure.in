@@ -1012,16 +1012,37 @@ AC_ARG_WITH(fifo,
 	  ;;
 	esac
     ])
+AC_ARG_WITH(socks,
+    [  --with-socks            use socket XDriver instead of ipc or fifo],
+    [
+       case "$withval" in
+       "" | y | ye | yes)
+           XDRIVER=socks
+	   AC_DEFINE(USE_G_SOCKS)
+	 ;;
+       esac
+    ])
 
 AC_MSG_CHECKING(for XDriver)
 AC_MSG_RESULT($XDRIVER)
 AC_SUBST(XDRIVER)
 
-if test "$XDRIVER" = "ipc"; then
-    xdriver=new
-else
-    xdriver=orig
-fi
+# if test "$XDRIVER" = "ipc"; then
+#    xdriver=new
+# else
+#    xdriver=orig
+# fi
+case "$XDRIVER" in
+    ipc)
+       xdriver=new
+    ;;
+    socks)
+       xdriver=socks
+    ;;
+    *)
+       xdriver=old
+    ;;
+esac
 
 echo GRASS_IN_CONFIGURE=yes ./README.ipc $xdriver
 GRASS_IN_CONFIGURE=yes ./README.ipc $xdriver

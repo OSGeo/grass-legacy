@@ -109,6 +109,9 @@
 /* define if jpeglib.h exists */
 #undef HAVE_JPEGLIB_H
 
+/* Whether or not we are using G_socks for display communications */
+#undef USE_G_SOCKS
+
 /*
  * configuration information solely dependent on the above
  * nothing below this point should need changing

@@ -38,6 +38,9 @@
 #
 #	./README.ipc orig
 #
+#  Or, you can try the sockets XDRIVER 
+#                       (make sure to run configure --with-socks).
+#       ./README.ipc socks
 #############################################################################
 
 SOURCES="
@@ -109,7 +112,7 @@ then
 	echo "Please read README.ipc first."
 	echo
 	echo "Usage:"
-	echo " ./README.ipc [-n] [-f] [-m] [new|orig]"
+	echo " ./README.ipc [-n] [-f] [-m] [new|orig|socks]"
 	echo
 	echo "   -n: Do not compile"
 	echo "   -f: Force to compile"
@@ -141,7 +144,7 @@ do
 			fi
 			sources=""
 			;;
-		new|orig)
+		new|orig|socks)
 			cmd=$i
 			;;
 		*)
@@ -198,6 +201,22 @@ then
 		echo cp $org $src
 		cp $org $src
 	done
+elif [ "$cmd" = "socks" ]
+then
+	for i in $SOURCES
+	do
+		src=`echo $i | sed 's|IPC_NEW/||'`
+		org=`echo $i | sed 's|IPC_NEW/|socket.new/|'`
+		diff $org $src > /dev/null 2>&1
+		if [ $? -eq 0 ]
+		then
+			continue
+		fi
+		changed=1
+		echo cp $org $src
+		cp $org $src
+	done
+
 fi
 
 if [ "$GRASS_IN_CONFIGURE" ]
@@ -234,6 +253,9 @@ then
 	elif [ "$cmd" = "orig" ]
 	then
 		echo "It's already original driver$sources."
+	elif [ "$cmd" = "socks" ]
+	then
+		echo "It's already new driver$sources."
 	fi
 	echo
 	exit
