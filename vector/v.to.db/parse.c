@@ -46,16 +46,17 @@ parse_command_line (int argc, char *argv[])
     parms.option->required     = YES;
     parms.option->multiple     = NO;
     parms.option->options      = "cat,area,length,count,coor,sides,query";
-    parms.option->description  = "Uploaded value:\n"
-				 "\tcat - insert new row for each category if doesn't exist yet\n"
-	                         "\tarea - area size\n"
-				 "\tlength - line length\n"
-				 "\tcount - number of features for each category\n"
-				 "\tcoor - point coordinates, X,Y or X,Y,Z\n"
-				 "\tsides - categories of areas on the left and right side of the boundary,\n"
-    					   "\t\t'qlayer' is used for area category.\n"
-				 "\tquery - result of a database query for all records of the geometry\n"
-				           "\t\t(or geometries) from table specified by 'qlayer' option";	
+    parms.option->description  = "Value to upload";
+    parms.option->descriptions  = 
+		 "cat;insert new row for each category if doesn't exist yet;"
+		 "area;area size;"
+		 "length;line length;"
+		 "count;number of features for each category;"
+		 "coor;point coordinates, X,Y or X,Y,Z;"
+		 "sides;categories of areas on the left and right side of the boundary, "
+		       "'qlayer' is used for area category;"
+		 "query;result of a database query for all records of the geometry"
+		       "(or geometries) from table specified by 'qlayer' option";	
 
     parms.units = G_define_option();
     parms.units->key   = "units";
