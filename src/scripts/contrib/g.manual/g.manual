@@ -53,26 +53,29 @@ optd=
 optm=
 opts=
 optq=
-while getopts "1admsq" option
+tentries=
+
+for i
 do
-  case $option in
-    1) opt1=1
+  case $i in
+    -1) opt1=1
        opta=
        optd= ;;
 
-    a) opta=1
+    -a) opta=1
        opt1=
        optd= ;;
 
-    d) optd=1
+    -d) optd=1
        opt1=
        opta= ;;
 
-    m) optm=1 ;;
+    -m) optm=1 ;;
 
-    s) opts=1 ;;
+    -s) opts=1 ;;
 
-    q) optq=1
+    -q) optq=1
+
 ## old:
 #       which rman > /dev/null 2>&1
 #       if [ $? -ne 0 ]
@@ -97,8 +100,14 @@ do
          exit 1
        fi ;;
 
-    *) echo "$HELP"
-       exit 1 ;;
+    b=*|br=*|bro=*|brow=*|brows=*|browse=*|browser=*)
+      GRASS_TEXT_BROWSER=`echo $i | awk -F'=' '{print $2}'` ;;
+
+    e=*|en=*|ent=*|entr=*|entri=*|entrie=*|entries=*)
+      tentries="$tentries `echo $i | awk -F'=' '{print $2}' | sed 's|, *| |g'`" ;;
+
+    *) tentries="$tentries `echo $i | sed 's|, *| |g'`" ;;
+
   esac
 done
 
@@ -111,22 +120,6 @@ then
   /bin/ls -C $GISBASE/man/man1 | $GRASS_PAGER
   exit 0
 fi
-
-shift `expr $OPTIND - 1`
-
-tentries=
-for i
-do
-  case $i in
-    b=*|br=*|bro=*|brow=*|brows=*|browse=*|browser=*)
-      GRASS_TEXT_BROWSER=`echo $1 | awk -F'=' '{print $2}'` ;;
-
-    e=*|en=*|ent=*|entr=*|entri=*|entrie=*|entries=*)
-      tentries="$tentries `echo $1 | awk -F'=' '{print $2}' | sed 's|, *| |g'`" ;;
-
-    *) tentries="$tentries $1" ;;
-  esac
-done
 
 if [ "$optd" -o "$optq" ]
 then
