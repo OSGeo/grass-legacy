@@ -7,4 +7,7 @@ DEPENDENCIES= $(DISPLAYDEP) $(RASTERDEP) $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: cmd
+default: etc
+
+htmletc:
+	@echo no docs needed for $(PGM)
