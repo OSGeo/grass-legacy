@@ -1,5 +1,8 @@
 # $Log$
-# Revision 1.7  2000-06-12 14:09:32  cho
+# Revision 1.8  2000-09-05 09:14:20  markus
+# libpg disabled if PostgreSQL not wanted
+#
+# Revision 1.7  2000/06/12 14:09:32  cho
 # Huidae Cho <hdcho@geni.knu.ac.kr>: added FreeBSD sensivity: -ldl
 #
 # Revision 1.6  2000/03/06 17:17:22  markus
@@ -37,6 +40,7 @@ TK_LIB_PATH=sed
 TK_INCLUDE_PATH=sed
 NVWISH_VER=sed
 PQ_OBJS=sed
+PQLIB=sed
 DLLIB=sed
 
 OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) $(DLLIB) $(XDRLIB) $(XEXTRALIBS)
