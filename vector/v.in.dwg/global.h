@@ -41,6 +41,8 @@ typedef struct {
 } TRANS;
 
 Global int cat;
+Global int n_elements; /* number of processed elements (only low level elements) */
+Global int n_skipped; /* number of skipped low level elements (different layer name) */
 Global struct Map_info Map;
 Global dbDriver *driver;
 Global dbString sql;
@@ -54,5 +56,7 @@ Global struct field_info *Fi;
 Global AD_DB_HANDLE dwghandle;
 Global TRANS *Trans;   /* transformation */
 Global int atrans; /* number of allocated levels */
+Global struct Option *layers_opt;
+Global struct Flag *invert_flag;
 
-void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist);
+void wrentity (PAD_ENT_HDR adenhd,PAD_ENT aden, int level, AD_VMADDR entlist, int circle_as_point);
