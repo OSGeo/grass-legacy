@@ -181,8 +181,6 @@ main(int argc, char **argv)
 		opt4->key        = "path";
 		opt4->type       = TYPE_STRING;
 		opt4->required   = NO;
-		if(cf >= 0)
-			opt4->answer     = cpath[cf];
 		opt4->description= "FontPath";
 	}
 
@@ -190,9 +188,7 @@ main(int argc, char **argv)
 	opt5->key        = "charset";
 	opt5->type       = TYPE_STRING;
 	opt5->required   = NO;
-	if(cf >= 0)
-		opt5->answer     = ccharset[cf];
-	else
+	if(!opt3)
 		opt5->answer     = DEFAULT_CHARSET;
 	opt5->description= "CharSet";
 
@@ -200,9 +196,7 @@ main(int argc, char **argv)
 	opt6->key        = "color";
 	opt6->type       = TYPE_STRING;
 	opt6->required   = NO;
-	if(cf >= 0)
-		opt6->answer     = ccolor[cf];
-	else
+	if(!opt3)
 		opt6->answer     = DEFAULT_COLOR;
 	/*
 	opt6->options    = D_color_list();
@@ -213,9 +207,7 @@ main(int argc, char **argv)
 	opt7->key        = "size";
 	opt7->type       = TYPE_INTEGER;
 	opt7->required   = NO;
-	if(cf >= 0)
-		opt7->answer     = csize[cf];
-	else
+	if(!opt3)
 		opt7->answer     = DEFAULT_SIZE;
 	opt7->description= "Size";
 
@@ -248,9 +240,7 @@ main(int argc, char **argv)
 			}
 			error("No selected font");
 		}
-		if(opt4->answer)
-			path = opt4->answer;
-		else{
+		if(opt3->answer){
 			for(cf=0; cf<cn; cf++){
 				ptr = cfont[cf] + (cfont[cf][0]=='*' ? 1 : 0);
 				if(!strcmp(opt3->answer, ptr)){
@@ -266,6 +256,8 @@ main(int argc, char **argv)
 				}
 			}
 		}
+		if(opt4->answer)
+			path = opt4->answer;
 	}else
 	if(!opt4->answer)
 		error("No font selected");
@@ -284,6 +276,10 @@ main(int argc, char **argv)
 
 	if(opt7->answer)
 		size = atoi(opt7->answer);
+
+	/*
+	fprintf(stdout, "%s:%s:%s:%d\n", path, charset, tcolor, size);
+	*/
 
 	if(R_open_driver() != 0)
 		error("No graphics device selected");
