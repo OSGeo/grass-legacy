@@ -46,12 +46,12 @@ msgstr "ncols:%d\n"
 #: ../db/base/describe.c:57
 #, c-format
 msgid "Column %d: %s\n"
-msgstr "Zeile %d:%s\n"
+msgstr "Zeile %d: %s\n"
 
 #: ../db/base/drivers.c:24
 #, c-format
 msgid "Error trying to read dbmscap file\n"
-msgstr "Fehler beim Lesen der Datei dbmscap \n"
+msgstr "Fehler beim Lesen der Datei dbmscap\n"
 
 #: ../db/base/drivers.c:30
 #, c-format
@@ -96,7 +96,7 @@ msgstr "Präzision: %d\n"
 #: ../db/base/printtab.c:40
 #, c-format
 msgid "default:"
-msgstr "Standard"
+msgstr "Standard:"
 
 #: ../db/base/printtab.c:48
 #, c-format
@@ -131,7 +131,7 @@ msgstr "Type%s%s\n"
 #: ../db/base/select.c:313
 #, c-format
 msgid "len%s%d\n"
-msgstr "LÃ¤nge%s%d\n"
+msgstr "Länge%s%d\n"
 
 #: ../db/base/select.c:314
 #, c-format
@@ -146,19 +146,17 @@ msgstr "Präzision%s%d\n"
 #: ../display/d.paint.labels/do_labels.c:143
 #, c-format
 msgid "Error: %s\n"
-msgstr "Fehler:   %s\n"
+msgstr "Fehler: %s\n"
 
 #: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:211
 #, c-format
 msgid "Region size is lower than minreg, nothing displayed.\n"
-msgstr ""
-"Region-Größe ist kleiner als die Minimal-Region; es wird nichts angzeigt.\n"
+msgstr "Region-Größe ist kleiner als die Minimal-Region; es wird nichts angzeigt.\n"
 
 #: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:220
 #, c-format
 msgid "Region size is greater than maxreg, nothing displayed.\n"
-msgstr ""
-"Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
+msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
 
 #: ../display/d.path/select.c:32
 #, c-format
@@ -206,7 +204,7 @@ msgstr "Zeichne..."
 msgid ""
 "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr ""
-"Die karte liegt auÃŸerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
+"Die Karte liegt außerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
 
 #: ../display/d.vect/main.c:480
 #, c-format
@@ -221,17 +219,17 @@ msgstr "Fertig\n"
 #: ../display/d.what.vect/openvect.c:12
 #, c-format
 msgid "warning: %s - vector file not found\n"
-msgstr "Warnung: Vektordate '%s' wurde nicht gefunden.\n"
+msgstr "Warnung: Vektorkarte '%s' wurde nicht gefunden.\n"
 
 #: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
 #, c-format
 msgid "Nothing Found.\n"
-msgstr "Nichts gefunden\n"
+msgstr "Nichts gefunden.\n"
 
 #: ../display/d.what.vect/what.c:203
 #, c-format
 msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
-msgstr "Linie: %d  Typ: %s  Links: %d  Right %d"
+msgstr "Linie: %d  Typ: %s  Links: %d  Right %d  "
 
 #: ../display/d.what.vect/what.c:206
 #, c-format
@@ -338,7 +336,7 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Bitte klicken Sie mit der Maus an die gewünschte Stelle.\n"
+"Bitte klicken Sie mit der Maus an die gewünschte Stelle\n"
 "\n"
 
 #: ../display/d.what.vect/what.c:426
@@ -349,19 +347,19 @@ msgstr "Mausknopfbelegung:\n"
 #: ../display/d.what.vect/what.c:427
 #, c-format
 msgid " Left:  what's here\n"
-msgstr "Links:  Was ist hier?\n"
+msgstr " Links:  Was ist hier?\n"
 
 #: ../display/d.what.vect/what.c:429
 #, c-format
 msgid " Middle: toggle flash color\n"
 msgstr ""
-"Mitte:  wechselt zwischen den Farbe, die auf dem Bildschirm aufleuchten "
+" Mitte: wechselt zwischen den Farben, die auf dem Bildschirm aufleuchten "
 "sollen.\n"
 
 #: ../display/d.what.vect/what.c:434
 #, c-format
 msgid " Right: quit\n"
-msgstr "Rechts:  Beenden\n"
+msgstr " Rechts:  Beenden\n"
 
 #: ../display/d.zoom/zoom.c:15 ../display/d.zoom/pan.c:20
 #, c-format
@@ -418,7 +416,7 @@ msgstr "Benutzung des -j Flags erzwungen.\n"
 #: ../display/d.zoom/main.c:196
 #, c-format
 msgid "ERROR: No map is displayed in GRASS monitor\n"
-msgstr "FEHLER: Keine Karte ist im GRASS-Monitor sichtbar\n"
+msgstr "FEHLER: Keine Karte ist im GRASS-Monitor angezeigt\n"
 
 #: ../display/d.zoom/main.c:320
 #, c-format
@@ -428,14 +426,14 @@ msgstr "%d Raster%sm %d Vektor%s\n"
 #: ../display/d.zoom/main.c:346
 #, c-format
 msgid "Zooming finished.\n"
-msgstr "Zoomfunktion beendet!\n"
+msgstr "Zoomfunktion beendet.\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
 #, c-format
 msgid "Monitor: interactive command in redraw\n"
-msgstr "Monitor: Interactives Kommando zum erneuten Zeichnen\n"
+msgstr "Monitor: Interaktives Kommando zum erneuten Zeichnen\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:116
 #, c-format
@@ -494,11 +492,11 @@ msgstr "Pfad zu den TrueType-Schriften (inklusive Dateiname)"
 
 #: ../display/d.font.freetype/main.c:71
 msgid "Character encoding"
-msgstr "Zeichenkodierung:"
+msgstr "Zeichenkodierung"
 
 #: ../display/d.font.freetype/main.c:102
 msgid "No graphics device selected"
-msgstr "Keine Graphik-Augabe ausgewÃ¤hlt."
+msgstr "Keine Graphik-Augabe ausgewählt."
 
 #: ../display/d.font.freetype/main.c:170
 #, c-format
@@ -560,7 +558,7 @@ msgstr "Standard-Farbe\n"
 #: ../raster/r.colors/rules.c:194
 #, c-format
 msgid "color can be one of:\n"
-msgstr "Farben können sich wiefolgt zusammensetzen:\n"
+msgstr "Farben können sich wie folgt zusammensetzen:\n"
 
 #: ../raster/r.colors/rules.c:196
 #, c-format

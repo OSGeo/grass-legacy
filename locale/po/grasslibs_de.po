@@ -191,7 +191,7 @@ msgstr "Anzahl von Knoten     :   %d\n"
 #: ../lib/vector/Vlib/build.c:152
 #, c-format
 msgid "Number of primitives:   %d\n"
-msgstr "Anzahl von Primitives:   %d\n"
+msgstr "Anzahl von Primitives :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:153
 #, c-format
@@ -206,7 +206,7 @@ msgstr "Anzahl von Linien     :   %d\n"
 #: ../lib/vector/Vlib/build.c:155
 #, c-format
 msgid "Number of boundaries:   %d\n"
-msgstr "Anzahl von Boundaries:   %d\n"
+msgstr "Anzahl von Boundaries :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:156
 #, c-format
@@ -226,7 +226,7 @@ msgstr "Anzahl von Kerneln   :   %d\n"
 #: ../lib/vector/Vlib/build.c:197
 #, c-format
 msgid "Number of areas     :   %d\n"
-msgstr "Anzahl von Flächen     :   %d\n"
+msgstr "Anzahl von Flächen    :   %d\n"
 
 #: ../lib/vector/Vlib/build.c:198
 #, c-format
