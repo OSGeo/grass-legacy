@@ -21,7 +21,7 @@ default: nvwish nviz install
 #
 
 nvwish:
-	cd src ; make
+	cd src ; $(MAKE)
 
 nviz:
 	'rm' -rf $(INSTALL_DIR)
@@ -38,7 +38,7 @@ install:
 	$(INSTALL) scripts/*Index $(INSTALL_DIR)/scripts
 	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
 	$(INSTALL) scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
-	(cd html ; make )
+	(cd html ; $(MAKE) )
 
 clean: 
 	(cd src && $(MAKE) clean) || exit 1;
