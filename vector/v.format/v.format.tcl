@@ -167,8 +167,8 @@ pack $row.a $row.b -side left
 pack $row -side top -fill both -expand yes
 
 set row [ frame $efframe.ms ]
-Label $row.a -text "Map scale:" -justify left -width $labwidth 
-Entry $row.b -width 20 -text "" -textvariable header(map_scale)
+Label $row.a -text "Map scale: 1:" -justify left -width $labwidth 
+Entry $row.b -width 20 -text "10000" -textvariable header(map_scale)
 pack $row.a $row.b -side left
 pack $row -side top -fill both -expand yes
 
