@@ -1,0 +1,22 @@
+This directory contains twelve files.  These files are described 
+as follows:
+
+
+README -- This file
+
+tut.0.ps -- Part of r.water.fea tutorial, contains pages 1,2.
+tut.1.ps -- Part of r.water.fea tutorial, contains pages 3,4,5,6,7,8,9.
+tut.2.ps -- Part of r.water.fea tutorial, contains page  10.  
+tut.3.ps -- Part of r.water.fea tutorial, contains pages 11,12.
+tut.4.ps -- Part of r.water.fea tutorial, contains pages 13,14,15.
+tut.5.ps -- Part of r.water.fea tutorial, contains page  16.
+tut.6.ps -- Part of r.water.fea tutorial, contains page  17.
+tut.7.ps -- Part of r.water.fea tutorial, contains page  18.
+tut.8.ps -- Part of r.water.fea tutorial, contains page  19.
+tut.9.ps -- Part of r.water.fea tutorial, contains pages 20,21,22.
+
+rfea.man -- troff text pages file for r.water.fea manual.
+
+  This manual can be printed with:
+
+  tbl /GRASS.src/4.1/man/utilities/man.header rfea.man | troff -t -man | lpr -t
