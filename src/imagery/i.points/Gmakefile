@@ -1,0 +1,40 @@
+LIST=main.o\
+	ask.o\
+	ask_mag.o\
+	analyze.o\
+	call.o\
+	cell.o\
+	cellhd.o\
+	conv.o\
+	curses.o\
+	digit.o\
+	dot.o\
+	drawcell.o\
+	driver.o\
+	equ.o\
+	find.o\
+	graphics.o\
+	group.o\
+	input.o\
+	mark.o\
+	mouse.o\
+	points.o\
+	target.o\
+	title.o\
+	tty.o\
+	view.o\
+	where.o\
+	zoom.o\
+	zoom_box.o\
+	zoom_pnt.o
+
+LIBES = $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB)
+$(BIN)/i.points: $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB)
+
+$(LIST): globals.h defs.h
+
+$(LIBES): #
+
+try: try.o
+	$(CC) try.o $(GISLIB) -o try
