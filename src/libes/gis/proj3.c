@@ -1,5 +1,6 @@
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 static int lookup(char *, char *, char *, int);
 static int equal(char *, char *);
@@ -40,7 +41,7 @@ char *G_database_projection_name()
 	return G__projection_name(n);
     }
     if(!lookup (PROJECTION_FILE, "name", name, sizeof(name)))
-	strcpy (name, "Unknown projection");
+	strcpy (name, _("Unknown projection"));
     return name;
 }
 

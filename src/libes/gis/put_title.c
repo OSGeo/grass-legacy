@@ -10,6 +10,7 @@
 
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 int G_put_cell_title (char *name, char *title)
 {
@@ -24,7 +25,7 @@ int G_put_cell_title (char *name, char *title)
     in = G_fopen_old ("cats", name, mapset);
     if (!in)
     {
-	sprintf (buf, "category information for [%s] in [%s] missing or invalid", name, mapset);
+	sprintf (buf, _("category information for [%s] in [%s] missing or invalid"), name, mapset);
 	G_warning (buf);
 	return -1;
     }
@@ -34,7 +35,7 @@ int G_put_cell_title (char *name, char *title)
     if (!out)
     {
 	fclose (in);
-        sprintf (buf, "G_put_title - can't create a temp file");
+        sprintf (buf, _("G_put_title - can't create a temp file"));
         G_warning (buf);
 	return -1;
     }
@@ -54,7 +55,7 @@ int G_put_cell_title (char *name, char *title)
 /* must be #cats line, title line, and label for cat 0 */
     if (line < 3)
     {
-	sprintf (buf, "category information for [%s] in [%s] invalid", name, mapset);
+	sprintf (buf, _("category information for [%s] in [%s] invalid"), name, mapset);
 	G_warning (buf);
 	return -1;
     }
@@ -62,7 +63,7 @@ int G_put_cell_title (char *name, char *title)
     in = fopen (tempfile, "r");
     if (!in)
     {
-	sprintf (buf, "G_put_title - can't reopen temp file");
+	sprintf (buf, _("G_put_title - can't reopen temp file"));
 	G_warning (buf);
 	return -1;
     }
@@ -71,7 +72,7 @@ int G_put_cell_title (char *name, char *title)
     if (!out)
     {
 	fclose (in);
-        sprintf (buf, "can't write category information for [%s] in [%s]", name, mapset);
+        sprintf (buf, _("can't write category information for [%s] in [%s]"), name, mapset);
         G_warning (buf);
 	return -1;
     }
