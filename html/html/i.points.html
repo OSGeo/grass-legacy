@@ -11,7 +11,7 @@
 <H2>NAME</H2>
 
 <EM><b>i.points</b></EM>  - An
-<A HREF="imagery.html">imagery</A> function that enables
+<A HREF="../imagery.html">imagery</A> function that enables
 the user to mark coordinate system points on an image to be
 rectified and then input the coordinates of each point for
 creation of a coordinate transformation matrix.  The
@@ -29,7 +29,7 @@ program <EM><A HREF="i.rectify.html">i.rectify</A></EM>.
 <H2>DESCRIPTION</H2>
 
 <EM>i.points</EM> is an <A
-HREF="imagery.html">imagery</A> function that enables
+HREF="../imagery.html">imagery</A> function that enables
 the user to mark points on a (raster) image to be rectified
 and then input the geographic coordinates of each point for
 calculation of a coordinate transformation matrix.
@@ -95,7 +95,7 @@ calculating RMS error is described below.
 <P>
 
 The first prompt in the program asks the user for the 
-<A HREF="imagery.html">imagery</A> group to be
+<A HREF="i.group.html">imagery</A> group to be
 registered.  Note that if 
 <EM><A HREF="i.target.html">i.target</A></EM> is not run
 before <EM>i.points</EM>, the <EM>i.points</EM> program
@@ -163,15 +163,15 @@ left half of the screen:
 
 Any single raster map layer in the 
 
-<A HREF="imagery.html">imagery</A> group may be used on
+<A HREF="i.group.html">imagery</A> group may be used on
 
 which to mark points, and the user can mark points on more
 than one raster map layer in the 
 
-<A HREF="imagery.html">imagery</A> group to accumulate the
+<A HREF="i.group.html">imagery</A> group to accumulate the
 
 suggested minimum number of 12 points.  Any raster map
-layer in the <A HREF="imagery.html">imagery</A> group
+layer in the <A HREF="i.group.html">imagery</A> group
 can be rectified (using 
 
 <EM><A HREF="i.rectify.html">i.rectify</A></EM>) based on the
@@ -180,7 +180,7 @@ transformation matrix computed from these points.
 
 <P>
 
-The <A HREF="imagery.html">imagery</A> file chosen by
+The imagery file chosen by
 the user is displayed in the upper left quadrant of the
 screen.
 
@@ -392,7 +392,7 @@ in italics).
 <P>
 
 The location of the point marked on the 
-<A HREF="imagery.html">imagery</A> group file is given
+<A HREF="i.group.html">imagery</A> group file is given
 under the heading "image" and the subheadings "east" and
 "north".  The location of the point in the target data base
 is given under the heading "target" and the subheadings
@@ -417,7 +417,7 @@ coordinates) will be saved.
 
 A good rule of thumb is to mark at least 12 to 15 points
 which are evenly distributed over the entire 
-<A HREF="imagery.html">imagery</A> group file in order to
+<A HREF="i.group.html">imagery</A> group file in order to
 obtain an accurate transformation equation for the
 rectification process.  The RMS error may increase with
 more points added, but the transformation equation will be
