@@ -4,7 +4,7 @@ DOCS = $(ETC)/census.docs
 
 $(BIN_CMD)/$(PGM): v.apply.cen.o $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ v.apply.cen.o $(LIBES) $(MATHLIB) $(XDRLIB)
-	-mkdir $(DOCS)
+	if [ ! -d $(DOCS) ]; then mkdir $(DOCS); fi
 	cp stf1_matrix $(DOCS)
 	cp pl94_matrix $(DOCS)
 	cp stf1_id $(DOCS)
