@@ -11,15 +11,21 @@ parameters each time. Values are stored in user file.
 Typing <em>db.connect -p</em> displays current connection parameters. 
 
 <h2>EXAMPLE</h2>
- 
+
+ODBC:<br> 
 <b>db.connect driver=</b><em>odbc</em> <b>database=</b><em>gtest</em> <br>
 <b>db.connect -p</b>  
+<p>
+PostgreSQL:<br>
+<b>db.connect driver=</b><em>pg</em> <b>database=</b><em>"host=myserver.itc.it,dbname=mydb,user=name"</em> <br>
+<b>db.tables -p</b>
 
 <h2>SEE ALSO</h2>
 
 <em><a HREF="db.columns.html">db.columns</a></em><br>
 <em><a HREF="db.drivers.html">db.drivers</a></em><br>
-<em><a HREF="db.databases.html">db.databases</a></em>
+<em><a HREF="db.databases.html">db.databases</a></em><br>
+<em><a HREF="db.tables.html">db.tables</a></em>
 
 <h2>AUTHOR</h2>
 
