@@ -1,0 +1,62 @@
+#!/bin/sh
+tput clear
+CHECK.MAP
+if test $? = 1
+	then
+	exit
+fi
+
+####################### Get map definition file #####################
+mdef=`date +%H%M%S`
+while test ! -f $mdef
+do
+	echo -n "Enter the name of the map definition file [map.def]: "
+	read mdef
+	if test "$mdef" = ""
+		then
+		mdef=map.def
+	fi
+done
+echo
+echo "Berfore runing trim.map you must have run Dvect on a base 
+vector file."
+echo -n "Do you want to continue [y]es (n)o: "
+read answ
+echo
+answ=${answ:-y}
+
+if test $answ = y; then
+	PARMS=`cat .PARMS`
+	echo "Use the cursor and locate the WESTERN most point:"
+	echo -n "Push any button: "
+	WEST=`Dwhere m=quiet`
+	WEST=`echo $WEST | awk '{print $1 " " $2}' | proj $PARMS +inv`
+	echo
+	echo "Use the cursor and locate the SOUTHERN most point:"
+	echo -n "Push any button: "
+	SOUTH=`Dwhere m=quiet`
+	SOUTH=`echo $SOUTH | awk '{print $1 " " $2}' | proj $PARMS +inv`
+	echo
+	echo "Use the cursor and locate the EASTERN most point:"
+	echo -n "Push any button: "
+	EAST=`Dwhere m=quiet`
+	EAST=`echo $EAST | awk '{print $1 " " $2}' | proj $PARMS +inv`
+	echo
+	echo "Use the cursor and locate the NORTHERN most point:"
+	echo -n "Push any button: "
+	NORTH=`Dwhere m=quiet`
+	NORTH=`echo $NORTH | awk '{print $1 " " $2}' | proj $PARMS +inv`
+	echo
+
+	head -4 < $mdef.par > tmp.par
+	TST=`tail -2 $mdef.par | head -1`
+	echo "$TST $WEST $SOUTH $EAST $NORTH" >> tmp.par
+	tail -1 $mdef.par >> tmp.par
+	mv tmp.par $mdef.par
+	echo
+	echo "Warning!!
+You must run redo selecting the all option to make these
+changes effective."
+	echo
+fi
+
