@@ -11,7 +11,7 @@
 int 
 pie ( double cx, double cy, int size, double *val, int ncols, COLOR *ocolor, COLOR *colors ) 
 {
-    int i, j;
+    int i, j, n;
     double a, end_ang, ang, tot_sum, sum, step, r;
     double x, y;
     struct line_pnts *Points;
@@ -36,20 +36,15 @@ pie ( double cx, double cy, int size, double *val, int ncols, COLOR *ocolor, COL
 	if (val[0] != tot_sum) /* all in one slice, don't draw line to center */
 	    Vect_append_point ( Points, cx, cy, 0);
 
-	a = ang;
-	while ( 1 ) {
+	n = (int)ceil((end_ang - ang) / step);
+	for (j = 0, a = ang; j <= n; j++, a += step)
+	{
 	   if ( a > end_ang ) a = end_ang;
 	   x = cx + r * cos ( a );
 	   y = cy + r * sin ( a );
 	   Vect_append_point ( Points, x, y, 0);
-
-	   if ( a == end_ang ) {
-	       ang = end_ang;
-	       break;
-	   } else {
-	       a += step;
-	   }
 	}
+	ang = end_ang;
 
 	if (val[0] != tot_sum)
 	    Vect_append_point ( Points, cx, cy, 0);
