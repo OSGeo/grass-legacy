@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.89 2000-11-27 08:08:10 markus Exp $
+$Id: BUGS,v 1.90 2000-12-01 13:21:49 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -188,13 +188,6 @@ p.map.new:
    I think it is to do with the new format of GRASS5.0 raster files.
  -> 5/2000: still a problem??
   (being worked on by ?)  
-
-[RC]r.binfer
- - bug in table.c causing segfault
- - example scripts say, that value of predefined probabilities does not
-   sum up to 1 although they do
-  (reported by DIETER LEHMANN <lehmann@fh-nuertingen.de>)
-  (being worked on by David D Gray)  
 
 [RC]r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
   Though it is not a stability problem, I've found that if this module is
