@@ -1,0 +1,66 @@
+
+
+
+Gdumpcell(2G)        GRASS Reference Manual         Gdumpcell(2G)
+
+
+
+NAME
+     Gdumpcell - Converts a cell file into an ascii text file
+     (G Language Tool)
+
+SYNOPSIS
+     Gdumpcell [-#] layer
+
+DESCRIPTION
+     Gdumpcell allows the user to convert a map layer into an
+     ascii text file suitable for export into other computer
+     systems.  The -# option (where # is a number of the user's
+     choice) can be used to request that numbers in the ouput be
+     equally-spaced (i.e., columnar output).  Each category
+     number in the ascii map layer will then take up # number of
+     spaces.  However, to use this, the user should know the
+     maximum number of digits that will occur in the output file,
+     and add one to this number (to leave a space between each
+     column).  The user can find the maximum number of digits
+     occuring in the output file by running Gdumpcell without the
+     -# option.
+
+NOTES
+     The output from Gdumpcell may be placed into a file by using
+     the UNIX redirection mechanism.  For example:
+
+                     Gdumpcell layer > file
+
+     The output file can then be printed or copied onto a
+     magnetic tape or floppy disk for export purposes.
+
+SEE ALSO
+     Mimportcell[2M]
+
+AUTHOR
+     Michael Shapiro, U.S. Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
