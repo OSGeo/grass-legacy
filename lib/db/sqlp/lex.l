@@ -61,6 +61,7 @@
 [Ii][Nn][Tt]			{ return INT; }
 [Ii][Nn][Tt][Ee][Gg][Ee][Rr]	{ return INTEGER; }
 [Dd][Oo][Uu][Bb][Ll][Ee]	{ return DOUBLE; }
+[Pp][Rr][Ee][Cc][Ii][Ss][Ii][Oo][Nn]	{ return PRECISION; }
 [Oo][Rr]			{ return OR; }
 [Nn][Oo][Tt]			{ return NOT; }
  /***************************************
