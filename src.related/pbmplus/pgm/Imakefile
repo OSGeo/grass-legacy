@@ -1,0 +1,61 @@
+# Imakefile for pgm tools.
+#
+# Copyright (C) 1989, 1991 by Jef Poskanzer.
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted, provided
+# that the above copyright notice appear in all copies and that both that
+# copyright notice and this permission notice appear in supporting
+# documentation.  This software is provided "as is" without express or
+# implied warranty.
+
+PBMDIR =	../pbm
+INCLUDEPBM =	-I$(PBMDIR)
+LIBPBM =	$(PBMDIR)/libpbm.a
+DEFPBM =	$(PBMDIR)/pbm.h ../pbmplus.h
+DEFLIBPBM =	$(PBMDIR)/libpbm.h
+
+INCLUDE =	$(INCLUDEPBM)
+ALLCFLAGS =	$(CFLAGS) $(INCLUDE)
+LIBPGM =	libpgm.a
+
+PORTBINARIES =	fitstopgm fstopgm hipstopgm lispmtopgm pgmbentley \
+		pgmenhance pgmhist pgmnorm pgmoil pgmramp \
+		pgmtopbm pgmtofits pgmtofs pgmtolispm pgmtops \
+		psidtopgm rawtopgm
+MATHBINARIES =	pgmedge
+BINARIES =	$(PORTBINARIES) $(MATHBINARIES)
+
+MANUALS1 =	fitstopgm.1 fstopgm.1 hipstopgm.1 lispmtopgm.1 pgmbentley.1 \
+		pgmenhance.1 pgmhist.1 pgmnorm.1 pgmoil.1 pgmramp.1 \
+		pgmtopbm.1 pgmtofits.1 pgmtofs.1 pgmtolispm.1 pgmtops.1 \
+		psidtopgm.1 rawtopgm.1 pgmedge.1
+MANUALS3 =	libpgm.3
+MANUALS5 =	pgm.5
+
+all:		$(BINARIES)
+
+install::	all
+	cp $(BINARIES) $(BINDIR)
+
+install.man::
+	cp $(MANUALS1) $(MANUALS3) $(MANUALS5) $(MANDIR)
+
+# Rule for plain programs.
+$(PORTBINARIES):	pgm.h $(DEFPBM) $(LIBPGM) $(LIBPBM)
+	$(CC) $(ALLCFLAGS) $(LDFLAGS) -o $@ $@.c $(LIBPGM) $(LIBPBM)
+
+# Rule for math-dependent programs.
+$(MATHBINARIES):	pgm.h $(DEFPBM) $(LIBPGM) $(LIBPBM)
+	$(CC) $(ALLCFLAGS) $(LDFLAGS) -o $@ $@.c -lm $(LIBPGM) $(LIBPBM)
+
+# And library.
+$(LIBPGM):	libpgm1.o libpgm2.o
+	-rm $(LIBPGM)
+	$(AR) $(LIBPGM) libpgm1.o libpgm2.o
+	-$(RANLIB) $(LIBPGM)
+
+libpgm1.o:	pgm.h $(DEFPBM) libpgm.h libpgm1.c
+	$(CC) $(ALLCFLAGS) -c libpgm1.c
+libpgm2.o:	pgm.h $(DEFPBM) libpgm.h libpgm2.c $(DEFLIBPBM)
+	$(CC) $(ALLCFLAGS) -c libpgm2.c
