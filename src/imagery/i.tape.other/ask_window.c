@@ -68,8 +68,9 @@ ask_window ()
 
     if(I_set_window (firstrow, lastrow, firstcol, lastcol) < 0)
     {
-	printf ("OOPS region is invalid\n");
+	fprintf (stderr, "\nWARNING: region is invalid\n");
 	exit(1);
     }
     nrows = G_window_rows();
+    ncols = G_window_cols();
 }
