@@ -3,12 +3,12 @@
 #
 # $Id$
 #
-# MODULE:   	Grass Initialization
+# MODULE:   	GRASS Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
 #               Andreas Lange - Germany - andreas.lange@rhein-main.de
 #   	    	Huidae Cho - Korea - hdcho@geni.knu.ac.kr
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
-#   	    	Markus Neteler - Germany - neteler@geog.uni-hannover.de
+#   	    	Markus Neteler - Germany/Italy - neteler@itc.it
 # PURPOSE:  	The source file for this shell script is in
 #   	    	src/general/init/init.sh. It sets up some environment
 #   	    	variables and the lock file. It also parses any remaining
@@ -23,7 +23,106 @@
 #
 #############################################################################
 
-: ${GISBASE?}
+trap "echo 'User break!' ; exit" 2 3 9 15
+
+# Set the GRASS_PERL variable
+GRASS_PERL=PERL_COMMAND
+export GRASS_PERL
+
+# Clear the variable that will hold the command line options
+CMD_LINE_ARGS=""
+
+# Get the command name
+CMD_NAME=`basename $0`
+
+# Go through the command line options
+for i in "$@" ; do
+    
+    # Use a case to check the command line options
+    case $i in
+    
+    	# Check if the user asked for the version
+	-v|--version)
+	    cat $GISBASE/etc/license
+	    exit
+	    ;;
+
+    	# Check if the user asked for help
+	help|-h|-help|--help)
+	    echo "Usage:"
+	    echo "  $CMD_NAME [-h | -help | --help] [-text | -tcltk] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]"
+	    echo
+            echo "Flags:"
+            echo "  -h or -help or --help          print this help message"
+            echo "  -text                          use text based interface"
+            echo "  -tcltk                         use Tcl/Tk based graphical interface"
+            echo
+            echo "Parameters:"
+            echo "  GISDBASE                       initial database"
+            echo "  LOCATION_NAME                  initial location"
+            echo "  MAPSET                         initial mapset"
+            echo
+            echo "  GISDBASE/LOCATION_NAME/MAPSET  fully qualified initial LOCATION directory"
+            echo
+            echo "Environment variables:"
+            echo "  GRASS_TCLSH                    set tclsh shell name to override 'tclsh'"
+            echo "  GRASS_WISH                     set wish shell name to override 'wish'"
+            echo "  GRASS_ADDON_PATH               set additional path(s) to local GRASS modules"
+	    exit
+	    ;;
+	
+	# Check if the -text flag was given
+	-text)
+	    GRASS_GUI="text"
+	    ;;
+	
+	# Check if the -tcltk flag was given
+	-tcltk)
+	    GRASS_GUI="tcltk"
+	    ;;
+	    
+	# Check for command line options with spaces
+	*' '*)
+	    i="'$i'"
+	    CMD_LINE_ARGS="$CMD_LINE_ARGS $i "
+	    ;;
+	    
+	# Keep any other command line options
+	*)
+	    CMD_LINE_ARGS="$CMD_LINE_ARGS $i "
+	    ;;
+    esac
+done
+
+# Set the GRASSRC file
+GISRC="$HOME/.grassrc5"
+export GISRC
+
+# At this point the grass user interface variable has been set from the
+# command line, been set from an external environment variable, or is 
+# not set. So we check if it is not set
+if [ ! "$GRASS_GUI" ] ; then
+    
+    # Check for a reference to the grass user interface in the grassrc file
+    if [ -f "$GISRC" ] ; then
+    	GRASS_GUI=`awk '/GRASS_GUI/ {print $2}' "$GISRC"`
+    fi
+    
+    # Set the grass user interface to the default if needed - currently tcltk
+    if [ ! "$GRASS_GUI" ] ; then
+    	GRASS_GUI="tcltk"
+    fi
+fi
+
+# Export the user interface variable
+export GRASS_GUI
+
+#replace multiple white spaces with single white space if present:
+CMD_LINE_ARGS=`echo $CMD_LINE_ARGS | tr -s ' ' ' '`
+
+#remove leading and trailing white space
+CMD_LINE_ARGS=`echo $CMD_LINE_ARGS | sed 's/^[ ]*//'`
+CMD_LINE_ARGS=`echo $CMD_LINE_ARGS | sed 's/$[ ]*//'`
 
 # Set the GIS_LOCK variable to current process id
 lockfile="$HOME/.gislock5"
@@ -44,12 +143,6 @@ fi
 
 PATH=$GISBASE/bin:$GISBASE/scripts:$PATH:$GRASS_ADDON_PATH
 export PATH
-
-#read all parameters:
-ARGS="$1 $2 $3 $4 $5"
-#remove leading and trailing white space
-ARGS=`echo $ARGS | sed 's/^[ ]*//'`
-ARGS=`echo $ARGS | sed 's/$[ ]*//'`
 
 # Set LD_LIBRARY_PATH.  For GRASS 5.0 we don't depend on this much, though
 # r.in.gdal may use it to find some things.  Over time we intend to put
@@ -118,14 +211,19 @@ if [ ! -f "$GISRC" ] ; then
     echo
     echo "Hit RETURN to continue"
     read ans
+
+    #for convenience, define pwd as GISDBASE:
+    echo "GISDBASE: `pwd`" > "$GISRC"
     
     # This is a hack for not having a good initial gui - should be removed
     # with next version of initialization gui
     GRASS_GUI="text"
+    
 else
     echo "Cleaning up temporary files....."
     ($ETC/clean_temp > /dev/null &)
 fi
+
 
 echo "Starting GRASS ..."
 
@@ -190,13 +288,13 @@ fi
 # Save the user interface variable in the grassrc file - choose a temporary
 # file name that should not match another file
 if [ -f "$GISRC" ] ; then
-    awk '$1 !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
+    awk '$CMD_LINE_ARGS !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
     echo "GRASS_GUI: $GRASS_GUI" >> "$GISRC.$$"
     mv -f "$GISRC.$$" "$GISRC"
 fi
 
 # Parsing argument to get LOCATION
-if [ ! "$ARGS" ] ; then
+if [ ! "$CMD_LINE_ARGS" ] ; then
 
     # Try interactive startup
     LOCATION=
@@ -205,13 +303,13 @@ else
     # Try non-interactive startup
     L=
     
-    if [ "$ARGS" = "-" ] ; then
+    if [ "$1" = "-" ] ; then
     
     	if [ "$LOCATION" ] ; then
     	    L="$LOCATION"
     	fi
     else
-    	L="$ARGS"
+    	L="$1"
     
     	if [ `echo "$L" | cut -c 1` != "/" ] ; then
     	    L="`pwd`/$L"
@@ -240,7 +338,7 @@ else
     	LOCATION="$GISDBASE/$LOCATION_NAME/$MAPSET"
     
     	if [ ! -r "$LOCATION/WIND" ] ; then
-    	    echo "$LOCATION: No such location"
+    	    echo "$LOCATION: Not a valid GRASS location"
     	    exit
     	fi
     
