@@ -1,7 +1,7 @@
 .TH v.out.dlg
 .SH NAME
 \fIv.out.dlg\fR \- Converts binary GRASS vector data to
-binary DLG-3 Optional vector data format.
+DLG-3 Optional vector data format.
 .br
 .I "(GRASS Vector Data Export Program)"
 .SH SYNOPSIS
