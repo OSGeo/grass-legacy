@@ -1,11 +1,22 @@
-# Doxyfile 1.2.6
-
+# GRASS 5.1 programmer's documentation
+#
+# Master Doxyfile
+#
 # needs doxygen  (http://www.doxygen.org)
 # needs Graphviz (http://www.research.att.com/sw/tools/graphviz/)
-
-# Just run "doxygen" here. This takes quite some time. The result is
-# in doxygenhtml/index.html
-
+#
+# To build the GRASS 5.1 programmer's documentation, run
+#   make htmldocs
+# here. This takes quite some time. The result is in doxygenhtml/index.html
+# which refers to further document repositories in
+#   lib/vector/html/index.html
+#   lib/db/html/index.html
+#
+# The master file is: ./grass51refman.dox where all sub-documents have to
+# be linked into.
+# 
+#---------------------------------------------------------------------------
+#
 # This file describes the settings to be used by doxygen for a project
 #
 # All text after a hash (#) is considered a comment and will be ignored
@@ -303,7 +314,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces. 
 
-INPUT                  = .
+INPUT                  = grass51refman.dox
 
 # If the value of the INPUT tag contains directories, you can use the 
 # FILE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 
