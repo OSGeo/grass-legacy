@@ -2,12 +2,14 @@ PGM =	v.out.shape
 
 OBJ =	extract.o\
 	database.o\
+	dbmi.o\
 	private.o\
 	shpopen.o\
 	dbfopen.o\
 	main.o
 
-LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+DBMILIB = $(LIBDIR)/libdbmi.a
+LIBES=$(VECTLIB) $(DBMILIB) $(GISLIB) $(DIG_ATTLIB)
 
 $(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
