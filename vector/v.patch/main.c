@@ -32,7 +32,6 @@ main (int argc, char *argv[])
 	struct Map_info InMap, OutMap;
 	int  n_files;
 
-	setbuf (stdout, NULL);
 	G_gisinit (argv[0]);
 
 	module = G_define_module();
@@ -44,7 +43,7 @@ main (int argc, char *argv[])
 	old->type		= TYPE_STRING;
 	old->required		= YES;
 	old->multiple		= YES;
-	old->gisprompt		= "old,dig,vector";
+	old->gisprompt		= "old,vector,vector";
 	old->description	= "vector map(s)--source for composite";
 
 	new = G_define_option();
@@ -52,7 +51,7 @@ main (int argc, char *argv[])
 	new->type		= TYPE_STRING;
 	new->required		= YES;
 	new->multiple		= NO;
-	new->gisprompt		= "any,dig,vector";
+	new->gisprompt		= "any,vector,vector";
 	new->description	= "new vector composite";
 
         append = G_define_flag();
