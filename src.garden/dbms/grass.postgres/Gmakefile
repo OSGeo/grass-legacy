@@ -1,0 +1,15 @@
+all:
+	$(GMAKE) d.rast.pg
+	$(GMAKE) d.site.pg
+	$(GMAKE) d.vect.pg
+	$(GMAKE) d.what.r.pg
+	$(GMAKE) d.what.s.pg
+	$(GMAKE) d.what.v.pg
+	$(GMAKE) g.column.pg
+	$(GMAKE) g.select.pg
+	$(GMAKE) g.stats.pg
+	$(GMAKE) g.table.pg
+	$(GMAKE) r.reclass.pg
+	$(GMAKE) r.rescale.pg
+	$(GMAKE) v.reclass.pg
+	echo "Ready. Now use grass42/src421/src/CMD/MAKELINKS.sh"
