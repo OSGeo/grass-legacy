@@ -1,0 +1,7 @@
+interface_build {
+    {v.spag} 0
+    {Process spaghetti-digitized binary GRASS vector map.}
+    {entry map {Input vector map:} 0 vector}
+    {entry threshold {Threshold value:} 0 ""}
+    {checkbox -i {Only run identical line tests.} "" -i}
+}
