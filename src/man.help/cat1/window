@@ -1,0 +1,264 @@
+
+
+
+window(1)            GRASS Reference Manual             window(1)
+
+
+
+NAME
+     window - management program
+     (Available through grass3 menu)
+
+SYNOPSIS
+     window
+
+DESCRIPTION
+     The window program is a management tool for setting the
+     current window.  It enables the user to set the current
+     window both directly and from a of windows. Each mapset has
+     a single current window.  The user can create and modify as
+     many windows as desired.
+
+MAIN MENU
+     The main menu consists of an information section with the
+     "data base" LOCATION, MAPSET, and CURRENT WINDOW, followed
+     by user options:
+
+     ------------------------------------------------------------
+     |                    WINDOW FACILITY                       |
+     | LOCATION: sample                         MAPSET: grass   |
+     |                                                          |
+     | CURRENT     5167600(N)  5156755(S)  50(RES)  216(ROWS)   |
+     | WINDOW:      729314(E)   705924(W)  50(RES)  467(COLS)   |
+     |                                                          |
+     |                                                          |
+     | Please select one of the following options               |
+     |                                                          |
+     |     Current Window              Window Database          |
+     |                                                          |
+     | 1 Modify current window     5 Save current window in     |
+     |   directly                    the database               |
+     |                                                          |
+     | 2 Set from default window   6 Create a new window        |
+     |                                                          |
+     | 3 Set from a database       7 Modify an existing window  |
+     |   window                                                 |
+     |                                                          |
+     | 4 Set from a map layer                                   |
+     |                                                          |
+     | RETURN to quit WINDOW program                            |
+     ------------------------------------------------------------
+
+DEFINITIONS
+     Window
+          A window is a grid of rectangles (or cells) with
+          boundaries (north, south, east, west) which define the
+          extent of the window, and resolutions (north-south,
+          east-west) which determine the length (in meters) of
+          the edges of the window cells.  The north and south
+          boundaries are called the northings and increase from
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+window(1)            GRASS Reference Manual             window(1)
+
+
+
+          south to north.  The east and west boundaries are
+          called the eastings and increase from west to east.
+          The north-south and east-west resolutions need not be
+          the same, thus allowing non-square cells.
+
+     Default Window:
+          Each location has a fixed window, called the default
+          window, which defines the extent of the While this
+          provides a starting point for defining new windows,
+          user-defined windows need not fall within this window.
+
+     Current Window:
+          Each mapset has a current window.  This window defines
+          the area of the in which all viewing and analyses will
+          be done.  Data will be resampled, if necessary, to the
+          resolutions of the current window.
+
+     Window Data Base
+          Each mapset may have any number of predefined named
+          windows.  The user may create as many of these windows
+          as they desire. Any of the predefined windows may be
+          selected, by name, to become the current window.
+
+WINDOW EDIT PROMPT
+     Most of the options will require the user to edit a window,
+     be it the current window or a window.  A standard prompt is
+     used to perform this edit.  An example is shown below:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
+
+
+
+window(1)            GRASS Reference Manual             window(1)
+
+
+
+     ---------------------------------------------------------------
+     |                         IDENTIFY WINDOW                     |
+     |                                                             |
+     |           ===========  DEFAULT WINDOW  ==========           |
+     |           |    Default North: 3402025.00        |           |
+     |           |                                     |           |
+     |           |          ===YOUR WINDOW===          |           |
+     |           |          |  NORTH EDGE   |          |           |
+     |           |          |  3402025.00_  |          |           |
+     |           |          |               |          |           |
+     | Def West: |WEST EDGE |               |EAST EDGE | Def.East: |
+     | 233975.00 |233975.00_|               |236025.00_| 236025.00 |
+     |           |          |  SOUTH EDGE   |          |           |
+     |           |          |  3399975.00_  |          |           |
+     |           |          =================          |           |
+     |           |                                     |           |
+     |           |    Default South: 3399975.00        |           |
+     |           =======================================           |
+     |                                                             |
+     |              Default   GRID RESOLUTION   Window             |
+     |               50.00   --- East-West ---  50.00__            |
+     |               50.00   -- North-South --  50.00__            |
+     |                                                             |
+     |                                                             |
+     |     AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE     |
+     ---------------------------------------------------------------
+
+     The fields NORTH EDGE, SOUTH EDGE, WEST EDGE and EAST EDGE
+     are the boundaries of the window which the user can change.
+     The fields Default North, Default South, Def West and Def
+     East are the boundaries of the default window which are
+     displayed for reference and cannot be changed. The GRID
+     RESOLUTION Window fields are the window resolutions which
+     the user can change.  The GRID RESOLUTION Default fields are
+     the resolutions of the default window which are displayed
+     for reference and can not be changed.
+
+WINDOW MANAGEMENT OPTIONS
+     1 Modify the current geographic window directly
+          Allows the user to edit the current window.
+
+     2 Set current geographic window from default window
+          Copies the default window to the current window, and
+          then lets the user edit the current window.
+
+     3 Set current geographic window from a
+          window Allows the user to select a window by name from
+          the of windows to become the current window, and then
+          lets the user edit the current window.
+
+          Note: windows may be selected from other mapsets as
+          well, depending on the user's mapset search path.
+
+
+
+GRASS 3.2                U.S. Army CERL                         3
+
+
+
+
+
+
+window(1)            GRASS Reference Manual             window(1)
+
+
+
+     4 Set current geographic window from a cell map
+          Allows the user to select a copies the cell header for
+          this to the current window, and then lets the user edit
+          the current window.  This option is useful when
+          subsequent GRASS operations will be used to produce a
+          from one input and it is necessary that the result
+          coincide with the input
+
+     5 Save the current geographic window in the data base
+          Allows the user to save the current window in the
+          window of the current mapset.  This option is useful
+          when the current window is set directly using option 2,
+          or even by another program (e.g., display[1]).  This
+          option installs an otherwise temporary window into the
+          window for recall when needed.
+
+     6 Create a new data base window.
+          Creates a new window in the window of the current
+          mapset using the window edit prompt described above.
+          After the window is created, the user is asked if this
+          window should also be used as the current window.
+
+     7 Modify a data base window
+          Modifies a window in the window of the current mapset
+          using the window edit prompt.  After the changes have
+          been made, the user is asked if this window should also
+          be used as the current window.
+
+SEE ALSO
+     display[1], d.window[1], Gwindow[2G]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         4
+
+
+
