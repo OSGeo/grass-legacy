@@ -20,7 +20,7 @@
  *    map_name             name for new map (max 64 chars, normal rules apply)
  *    map_title            contains map title (max 40 chars)
  *
- *  THESE MUST BE PRESENT UNLESS USING THE XY" PROJECTION :
+ *  THESE MUST BE PRESENT UNLESS USING THE "XY" PROJECTION :
  *    map_northern_edge
  *    map_southern_edge    in decimal form (ie not DDD:MM:SS)
  *    map_eastern_edge
