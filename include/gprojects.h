@@ -1,33 +1,31 @@
-/******************************************************************************
+/*
  * $Id$
  *
- * Project:  GRASS
- * Purpose:  Include file for GRASS modules that use the PROJ.4
- *           wrapper functions
- *
  ******************************************************************************
- * Copyright (c) 2000, GRASS Development Team
  *
- * Permission is hereby granted, free of charge, to any person obtaining a
- * copy of this software and associated documentation files (the "Software"),
- * to deal in the Software without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense,
- * and/or sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following conditions:
+ * MODULE:       gproj library
+ * AUTHOR(S):    Original Author unknown, probably Soil Conservation Service
+ *               Paul Kelly
+ * PURPOSE:      Include file for GRASS modules that use the PROJ.4
+ *               wrapper functions
+ * COPYRIGHT:    (C) 2003 by the GRASS Development Team
  *
- * The above copyright notice and this permission notice shall be included
- * in all copies or substantial portions of the Software.
+ *               This program is free software under the GNU General Public
+ *               License (>=v2). Read the file COPYING that comes with GRASS
+ *               for details.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
- * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
  *****************************************************************************/
 
-#include "proj_api.h"
+#include "config.h"
+#include <proj_api.h>
+#ifdef HAVE_OGR
+#    include <ogr_srs_api.h>
+#endif
+
+/* Data Files */
+#define ELLIPSOIDTABLE "/etc/ellipse.table"
+#define DATUMTABLE "/etc/datum.table"
+#define DATUMTRANSFORMTABLE "/etc/datumtransform.table"
 
 struct pj_info {
       projPJ     *pj;
@@ -36,23 +34,48 @@ struct pj_info {
       char   proj[100];
 };
 
-#ifndef PROTO
+struct gpj_datum
+{
+    char *name, *longname, *ellps;
+    double dx, dy, dz;
+};
 
-#ifdef __STDC__
-# define	PROTO(s) s
-#else
-# define PROTO(s) ()
-#endif
-
-#endif	/* PROTO */
+struct gpj_ellps
+{
+    char *name, *longname;
+    double a, es, rf;
+};
 
 /* do_proj.c */
-int pj_do_proj PROTO((double *, double *, struct pj_info *, struct pj_info *));
-int pj_do_transform PROTO((int, double *, double *, double *, 
-                           struct pj_info *, struct pj_info *));
+int pj_do_proj (double *, double *, struct pj_info *, struct pj_info *);
+int pj_do_transform (int, double *, double *, double *, 
+                           struct pj_info *, struct pj_info *);
+
 /* get_proj.c */
-int pj_get_kv PROTO((struct pj_info *, struct Key_Value *, struct Key_Value *));
-int pj_get_string PROTO((struct pj_info *, char *));
-int pj_zero_proj PROTO((struct pj_info *));
-const char * set_proj_lib PROTO((const char *));
-int pj_print_proj_params(struct pj_info *iproj, struct pj_info *oproj);
+int pj_get_kv (struct pj_info *, struct Key_Value *, struct Key_Value *);
+int pj_get_string (struct pj_info *, char *);
+int GPJ_get_equivalent_latlong (struct pj_info *, struct pj_info *);
+const char * set_proj_lib (const char *);
+int pj_print_proj_params (struct pj_info *, struct pj_info *);
+
+/* convert.c */
+#ifdef HAVE_OGR
+char * GPJ_grass_to_wkt (struct Key_Value *, 
+			       struct Key_Value *, int, int );
+OGRSpatialReferenceH * GPJ_grass_to_osr (struct Key_Value *, 
+                                               struct Key_Value * );
+#endif
+
+/* datum.c */
+int GPJ_get_datum_by_name (const char *, struct gpj_datum *);
+int GPJ_get_datum_params (char **, char **);
+int GPJ__get_datum_params (struct Key_Value *, char **, char **);
+void GPJ_free_datum (struct gpj_datum *);
+  
+/* ellipse.c */
+int GPJ_get_ellipsoid_by_name (const char *, struct gpj_ellps *);
+int GPJ_get_ellipsoid_params (double *, double *, double *);
+int GPJ__get_ellipsoid_params (struct Key_Value *, 
+				    double *, double *, double *);
+void GPJ_free_ellps (struct gpj_ellps *);
+
