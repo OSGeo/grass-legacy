@@ -1,0 +1,45 @@
+.\" %W% %G%
+.TH clump 1
+.SH NAME
+clump \- Groups physically discrete areas into unique categories
+.br
+(Available through \fBgrass3\fR menu)
+.SH SYNOPSIS
+.B clump
+.SH DESCRIPTION
+\fIClump\fR finds all areas of contiguous cells in an input
+.CT layer "cell map"
+and assigns 
+them unique category values. The user is prompted for the input and
+output 
+.CT layer "cell map"
+names.
+
+Category distinctions in the input
+.CT layer "cell map"
+are preserved. This means that
+if distinct categories are adjacent, they will NOT be clumped together.
+(If this is not desired, use the GRASS tool \fIreclass[1]\fR to combine
+the categories into one category.)
+.SH ALGORITHM
+\fIClump\fR moves a 2x2 matrix over the input 
+.CT "layer." "cell map."
+The lower right-hand
+corner of the matrix is grouped with the cells above it, or to the
+left of it.
+(The cell diagonal from it is not considered.)
+.SH NOTES
+\fIClump\fR works properly with 
+.CT maps "cell maps"
+that contain only "fat" areas
+(more than a single cell in width). Linear elements (lines that are a single 
+cell wide) may or may not be clumped together depending on the direction of the
+line \- horizontal and vertical are contiguous, but diagonal lines are not
+considered contiguous and are broken up into separate clumps.
+
+A random color table is generated for the output 
+.CT "layer." "cell map."
+.SH SEE ALSO
+\fIGclump[2], reclass[1]\fR
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
