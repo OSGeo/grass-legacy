@@ -55,6 +55,10 @@ make clean         - delete all files created by 'make'
 make distclean     - 'make clean' + delete all files created by './configure'
 make libsclean     - clean libraries compiled by 'make libs'
 
+make htmldocs      - generate programmer's documentation in HTML
+make packagehtmldocs - package programmer's documentation in HTML
+make pdfdocs       - generate programmer's documentation as PDF files
+
 
 Next step is the compilation itself:
 
@@ -80,7 +84,7 @@ or run
 RUNNING GRASS
 
 Download a sample data package from the GRASS web site, for example
-the Spearfish5.7 data set. Extract the data set and point GRASS in the
+the Spearfish57 data set. Extract the data set and point GRASS in the
 startup menu to the directory.
 
 Enjoy.
@@ -96,7 +100,7 @@ CVS, you have to perform a few steps. In general:
 
 In detail:
 
-cd /where/your/grass57/lives/
+cd /where/your/grass57sourcecode/lives/
 cvs update -dP
 configure ...
 make
