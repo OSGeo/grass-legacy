@@ -130,21 +130,21 @@ echo "Performing Brovey transformation..."
 # r.mapcalc "brov.blue= 1. * spot.ms.1 / (spot.ms.1 + spot.ms.2 + spot.ms.3) * spot.p"
 # note: for RGB composite then revert brov.red and brov.green!
 
-echo -n "  Calculating $GIS_OPT_outputprefix.red:..."
+echo -n "  Calculating $GIS_OPT_outputprefix.red: ...(step 1/4)"
 r.mapcalc   $GIS_OPT_outputprefix.red="1. * $GIS_OPT_ms3 / ($GIS_OPT_ms1 + $GIS_OPT_ms2 + $GIS_OPT_ms3) * $GIS_OPT_pan"
 if [ $? -ne 0 ] ; then
  echo "An error occurred."
  exit 1
 fi
 
-echo -n "  Calculating $GIS_OPT_outputprefix.green:..."
+echo -n "  Calculating $GIS_OPT_outputprefix.green: ...(step 2/4)"
 r.mapcalc   $GIS_OPT_outputprefix.green="1. * $GIS_OPT_ms2 / ($GIS_OPT_ms1 + $GIS_OPT_ms2 + $GIS_OPT_ms3) * $GIS_OPT_pan"
 if [ $? -ne 0 ] ; then
  echo "An error occurred."
  exit 1
 fi
 
-echo -n "  Calculating $GIS_OPT_outputprefix.blue:..."
+echo -n "  Calculating $GIS_OPT_outputprefix.blue: ...(step 3/4)"
 r.mapcalc   $GIS_OPT_outputprefix.blue="1. * $GIS_OPT_ms1 / ($GIS_OPT_ms1 + $GIS_OPT_ms2 + $GIS_OPT_ms3) * $GIS_OPT_pan"
 if [ $? -ne 0 ] ; then
  echo "An error occurred."
@@ -165,7 +165,7 @@ fi
 
 if [ $GIS_FLAG_s -eq 1 ] ; then
  #apect table is nice for SPOT:
- echo "Assigning color tables for SPOT..."
+ echo "Assigning color tables for SPOT ...(step 4/4)"
  r.colors $GIS_OPT_outputprefix.blue col=aspect
  r.colors $GIS_OPT_outputprefix.green col=aspect
  r.colors $GIS_OPT_outputprefix.red col=aspect
@@ -175,7 +175,7 @@ if [ $GIS_FLAG_s -eq 1 ] ; then
  g.rename $GIS_OPT_outputprefix.$TMP,$GIS_OPT_outputprefix.red > /dev/null
 else
  #aspect table is nice for LANDSAT and QuickBird:
- echo "Assigning color tables for LANDSAT or QuickBird..."
+ echo "Assigning color tables for LANDSAT or QuickBird ...(step 4/4)"
  r.colors $GIS_OPT_outputprefix.blue col=aspect
  r.colors $GIS_OPT_outputprefix.green col=aspect
  r.colors $GIS_OPT_outputprefix.red col=aspect
