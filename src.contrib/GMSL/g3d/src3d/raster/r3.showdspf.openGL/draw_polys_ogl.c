@@ -1,4 +1,4 @@
-#include "viz.h"
+#include "vizual.h"
 /*
 ** the corner of the cube 
 **

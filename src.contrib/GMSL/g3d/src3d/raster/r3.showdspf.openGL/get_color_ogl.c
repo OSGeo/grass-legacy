@@ -1,5 +1,5 @@
 #define HUGE_VAL 10000000.0
-#include "viz.h"
+#include "vizual.h"
 
 extern GLuint Material_1_Dlist;
 /******************************************************************************
