@@ -46,7 +46,7 @@ text:
 	rm -rf $(TXT)/COMBINE
 	mkdir $(TXT)/COMBINE
 #	cp HELP_TEXT/* $(TXT)/COMBINE
-	tar --exclude=CVS -cvf - HELP_TEXT/*  | tar -C $(TXT)/COMBINE -xvf - 2>/dev/null ; true
+	(cd HELP_TEXT/ ; tar -cvf - * | (cd $(TXT)/COMBINE ; tar -xvf - 2>/dev/null ) ; true )
 
 #
 
