@@ -1,0 +1,40 @@
+****************************************
+d.vect.db - Modifications for INGRES
+
+Katarina Johnsson, 930421
+****************************************
+
+INGRES version: 6
+
+INGRES version specific subroutines:
+	ingresUnTable
+	buildSQL
+
+Modified and/or renamed subroutines:
+	getAllOpts
+	getSelectOpts
+	buildSQL <=> buildInfxQry
+	runSQL <=> runInfxFile
+
+New subroutines:
+	ingresUnTable
+
+Modified and/or renamed include files:
+	None
+
+New include files:
+	ingresUtils.h
+
+INGRES modifications:
+	SQL query syntax (buildSQL)        
+	'\g' added at end of SQL query (buildSQL, runSQL)
+	Syntax of execution of SQL command (buildSQL, runSQL)
+	Reading SQL output (buildSQL, runSQL):
+		ingresUnTable added (INGRES v6 specific)
+		Control structure for reading output modified  
+
+Improvements:
+	Explanatory messages added
+
+Bug Fixes:
+	None
