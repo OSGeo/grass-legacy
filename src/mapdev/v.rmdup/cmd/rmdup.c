@@ -190,7 +190,7 @@ killdups (Closet, Suitcase)
  */
 #if defined(sgi) || defined(CRAY) || defined(sparc)
     while (match == 0 && Closet->dig_fp->_cnt) 
-#elif defined(__CYGWIN__) || defined(__FreeBSD__)
+#elif defined(__CYGWIN__) || defined(__FreeBSD__) || defined(__MAC_OS_X__)
     while (match == 0 && Closet->dig_fp->_bf._size)
 #else
     while (match == 0 && Closet->dig_fp->_shortbuf[1])  /* try to upgrade in 5/2000 */
