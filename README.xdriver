@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Alternative XDriver: replacement of XDriver fifos
+# Alternative XDrivers: replacement of fifo XDriver
 #	(needed to improve speed and to run GRASS Monitors on all platforms)
 #
 # Contact: Huidae Cho  <grass@geni.cemtlo.com>

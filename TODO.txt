@@ -129,7 +129,7 @@ Libraries:
 XDriver
 - replace fifos by IPC
   (Being worked on by Malcolm Blue <mblue@nb.sympatico.ca>)
-  -> there is a new concept based on IPC available (see README.ipc)
+  -> there is a new concept based on IPC available (see README.xdriver)
 
 - Auto-redraw after resizing the monitor:
   Andreas Lange wrote:
