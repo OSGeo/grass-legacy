@@ -32,8 +32,8 @@ all: pre-install
 install: pre-install do-install
 
 pre-install:
-	if [ ! -d ${PREFIX} ]; then mkdir ${PREFIX} ; fi
-	if [ ! -d src/CMD/next_step ]; then mkdir src/CMD/next_step ; fi
+	if [ ! -d ${PREFIX} ]; then mkdir -p ${PREFIX} ; fi
+	if [ ! -d src/CMD/next_step ]; then mkdir -p src/CMD/next_step ; fi
 	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh
 	${INSTALL_DATA_DIR} ${PREFIX}
 	${SHELL} ${IS64BIT}
