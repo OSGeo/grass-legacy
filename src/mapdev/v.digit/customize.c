@@ -90,6 +90,10 @@ Customize ()
 		    TOGGLE (Digtiz_Device);
 		    Changes = 1;
 		    break;
+		case MCC_REMOVE_DRAW:
+		    TOGGLE (Remove_Draw);
+		    Changes = 1;
+		    break;
 		case MCC_BACKDROP:
 		    {
 			register int ret;
@@ -208,11 +212,12 @@ Custom_settings (map)
     _Base_string (8, 36, ON_OFF (Compress_File));
     */
     _Base_string (8, 36, ON_OFF (Auto_Window));
-    _Base_string (9, 36,  Window_Device ? "     MOUSE" : " DIGITIZER");
-    _Base_string (10, 36,  Point_Device ? "     MOUSE" : " DIGITIZER");
+    _Base_string (9, 36,  Window_Device ?  "     MOUSE" : " DIGITIZER");
+    _Base_string (10, 36,  Point_Device ?  "     MOUSE" : " DIGITIZER");
     _Base_string (11, 36,  Digtiz_Device ? "     MOUSE" : " DIGITIZER");
     sprintf (tmpstr, "%-10s", N_overlay);
     _Base_string (12, 36, tmpstr);
     sprintf (tmpstr, "%-10s", N_backdrop);
     _Base_string (13, 36, tmpstr);
+    _Base_string (14, 36,  Remove_Draw ?   "    REMOVE" : "    REDRAW");
 }
