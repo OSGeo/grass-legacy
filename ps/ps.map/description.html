@@ -1325,58 +1325,54 @@ two columns.  This script file can be entered at the command line:
 <PRE>
 
 <B>raster</B> soils
-<B>vector</B> roads
+<B>outline</B>
+   <B>color</B> black
+   <B>width</B> 1
+   <B>end</B>
+<B>colortable</B> y
+   <B>end</B>
+<B>comments</B> soil.cmt
+   <B>font</B> Helvetica
+   <B>end</B>
+<B>setcolor</B> 6,8,9 white
+<B>setcolor</B> 10 green
+<B>vlines</B> roads
    <B>width</B> 2
    <B>style</B> 0011
-   <B>color</B> 1 black  
-   <B>color</B> 2 red  
+   <B>color</B> grey
    <B>masked</B> n
-   <B>end</B>   
-<B>labels</B> town.names
-<B>region</B> subregion	  
-   <B>color</B> white	
-   <B>width</B> 2	
-   <B>end</B>	        
-<B>grid</B> 10000	
-   <B>color</B> green	
-   <B>numbers</B> 2 red	
-   <B>end</B>	  	
-<B>outline</B>	   	
-   <B>color</B> black	
-   <B>end</B>		
-<B>colortable</B> y	
-<B>comments</B> soil.cmt
-   <B>font</B> Helvetica	
-   <B>end</B>	   	
-<B>scale</B> 1:25000    	
-<B>setcolor</B> 6,8,9 white	
-<B>setcolor</B> 10 green
+   <B>end</B>
 <B>vlegend</B>
-    <B>where</B> 4.5 0
+    <B>where</B> 5 1
     <B>end</B>
+<B>scale</B> 1:125000
+<B>geogrid</B> 10000 m
+   <B>color</B> blue
+   <B>numbers</B> 2 yellow
+   <B>end</B>
 <B>text</B> 608000.00 3476004.73 SPEARFISH SOILS MAP
-    <B>color</B> red  
-    <B>width</B> 2  
+    <B>color</B> red
+    <B>width</B> 2
     <B>hcolor</B> black
-    <B>hwidth</B> 1  
+    <B>hwidth</B> 1
     <B>background</B> white
-    <B>border</B> red  
+    <B>border</B> red
     <B>size</B> 500
     <B>ref</B> lower left
-    <B>opaque</B> y
     <B>end</B>
 <B>line</B> 606969.73 3423092.91 616969.73 3423092.91
     <B>color</B> yellow
     <B>width</B> 2
-    <B>opaque</B> yes
     <B>end</B>
 <B>point</B> 40% 60%
     <B>color</B> purple
-    <B>icon</B> diamond
-    <B>size</B> 2	
+    <B>symbol</B> basic/diamond
+    <B>size</B> 2
     <B>masked</B> n
-    <B>end</B>	
-<B>end</B>	
+    <B>end</B>
+<B>paper</B> a4
+    <B>end</B>
+<B>end</B>
 
 </PRE>
 
