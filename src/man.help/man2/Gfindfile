@@ -1,0 +1,75 @@
+.\" %W% %G%
+.TH Gfindfile 2G G-Language
+.SH NAME
+Gfindfile  \- Search for database files
+.br
+.I (G Language Tool)
+.SH SYNOPSIS
+.B Gfindfile
+.I element
+.I name
+[\fImapset\fR]
+.SH DESCRIPTION
+.I Gfindfile
+is designed for Bourne shell scripts that need to search for cell files,
+vector files, site list files, window files, and imagery group files in
+the database.
+
+.IP \fIelement\fR
+The database element (i.e., directory within the GRASS mapset location)
+to be searched.
+.IP \fIname\fR
+The name of the data file for which to search.
+.IP \fImapset\fR
+Where to search. If not specified, all mapsets in the user's search path
+are searched. Otherwise, the specified mapset is searched.  As a convenience,
+if specified as a single dot (.) only the current mapset is searched.
+.SH OUTPUT
+.I Gfindfile
+writes three lines to standard output:
+
+.nf
+.RS
+\fIname\fR=[somename]
+\fImapset\fR=[somemapset]
+\fIfile\fR=[filename]
+.RE
+.fi
+
+The output is /bin/sh commands to set the variable
+.I name
+to the database file name, 
+.I mapset
+to the mapset where the file
+resides, and 
+.I file
+to the full UNIX name
+for the database file. These variables may be set in the /bin/sh as follows:
+
+.RS
+eval \(gaGfindfile \fIelement name\fR\(ga
+.RE
+.SH NOTES
+If the specified file does not exist the variables will be set as follows:
+
+.nf
+.RS
+\fIname\fR=
+\fImapset\fR=
+\fIfile\fR=
+.RE
+.fi
+
+The following is a way to test for this case:
+
+.nf
+.RS
+if [ ! \*(lq$file\*(rq ]
+then
+.RS
+exit
+.RE
+fi
+.RE
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
