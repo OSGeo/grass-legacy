@@ -1,5 +1,3 @@
-/*  %W%  %G%  */
-
 #define BLOCKS_PER_COL	32
 #define TEXT1_X		.61
 #define TEXT1_Y		.03
