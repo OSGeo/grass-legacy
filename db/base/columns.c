@@ -61,6 +61,12 @@ parse_command_line(int argc, char *argv[])
     /* Initialize the GIS calls */
         G_gisinit(argv[0]) ;
 
+    table 		= G_define_option();
+    table->key 		= "table";
+    table->type 	= TYPE_STRING;
+    table->required 	= YES;
+    table->description 	= "table name";
+
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
@@ -80,11 +86,6 @@ parse_command_line(int argc, char *argv[])
     location->required 	= NO;
     location->description = "database location";
 
-    table 		= G_define_option();
-    table->key 		= "table";
-    table->type 	= TYPE_STRING;
-    table->required 	= YES;
-    table->description 	= "table name";
 
     /* Set description */
     module              = G_define_module();
