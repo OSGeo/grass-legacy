@@ -30,35 +30,52 @@
 int 
 Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
 {
-    int    i, type, nlines;
+    int    i, type, nlines, ret;
     struct line_pnts *Points;
     struct line_cats *Cats;
 
     Points = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
+   
+    if ( Vect_level ( In ) < 1 )
+	G_fatal_error ("Vect_copy_map_lines(): input vector is not open");
     
-    /* Note: it is important to copy on level 2 (pseudotopo centroids) */
-    if ( Vect_level ( In ) < 2 )
-	G_fatal_error ("Input is not opened on level 2" );
-    
-    nlines = Vect_get_num_lines ( In );
-    for ( i = 1; i <= nlines; i++ ) {
-	type =  Vect_read_line (In, Points, Cats, i);
-	switch ( type ) {
-            case -1:
+    ret = 0;
+    /* Note: sometimes is important to copy on level 2 (pseudotopo centroids) 
+     *       and sometimes on level 1 if build take too long time */
+    if ( Vect_level ( In ) >= 2 ) { 
+	nlines = Vect_get_num_lines ( In );
+	for ( i = 1; i <= nlines; i++ ) {
+	    type =  Vect_read_line (In, Points, Cats, i);
+	    if ( type == -1 ) {
 		G_warning ("Cannot read vector file\n" );
-                return 1;
-            case -2: /* EOF */
- 	        Vect_destroy_line_struct (Points);
-	        Vect_destroy_cats_struct (Cats);
-                return  0;
-	    case  0: /* dead line */
-		continue;
-	}
-       	Vect_write_line ( Out, type, Points, Cats );
-    }
+		ret = 1;
+		break;
+	    } 
+	    if ( type == 0 ) continue; /* dead line */
 
-    return 0;
+	    Vect_write_line ( Out, type, Points, Cats );
+	}
+    } else {  /* Level 1 */
+	Vect_rewind ( In );
+	while ( 1 ) {
+	    type =  Vect_read_next_line (In, Points, Cats);
+	    if ( type == -1 ) {
+		G_warning ("Cannot read vector file\n" );
+		ret = 1;
+		break;
+	    } else if ( type == -2 ) { /* EOF */ 
+		break;
+	    } else if ( type == 0 ) { /* dead line */
+		continue;
+	    }
+	    Vect_write_line ( Out, type, Points, Cats );
+	}
+    }
+    Vect_destroy_line_struct (Points);
+    Vect_destroy_cats_struct (Cats);
+
+    return ret;
 }
 
 /*!

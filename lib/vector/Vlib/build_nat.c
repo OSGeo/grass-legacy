@@ -120,14 +120,16 @@ Vect_isle_find_area ( struct Map_info *Map, int isle )
     P_LINE *Line, *BLine;
     P_NODE *Node;
     P_ISLE *Isle;
+    P_AREA *Area;
     double  dist, cur_dist;
-    BOUND_BOX box;
+    BOUND_BOX box, abox;
     static struct ilist *List;
     static struct line_pnts *APoints;
 
     /* Note: We should check all isle points (at least) because if topology is not clean
-    *  and two areas overlap, isle which is not completely within area may be attached,
-    *  but it would take long time */
+     * and two areas overlap, isle which is not completely within area may be attached,
+     * but it would take long time */
+
     G_debug ( 3, "Vect_isle_find_area () island = %d", isle );
     plus = &(Map->plus);
 
@@ -159,6 +161,22 @@ Vect_isle_find_area ( struct Map_info *Map, int isle )
 	area = List->value[j];
 	G_debug ( 3, "area = %d", area );
 
+	Area = plus->Area[area];
+	
+        /* Check for areas imported from nontopo formats (one boundary forms both area and isle) */
+	if ( Isle->n_lines == 1 && Area->n_lines == 1 && abs(Isle->lines[0]) == abs(Area->lines[0]) )
+	   continue; 
+	
+	/* Check box */
+	/* Note: If build is run on large files of areas imported from nontopo format (shapefile)
+	 * attaching of isles takes very  long time because each area is also isle and select by
+	 * box all overlaping areas selects all areas with box overlaping first node. 
+	 * Then reading coordinates for all those areas would take a long time -> check first 
+	 * if isle's box is completely within area box */
+	Vect_get_isle_box ( Map, isle, &box);
+	Vect_get_area_box ( Map, area, &abox);
+	if ( box.E > abox.E || box.W < abox.W || box.N > abox.N || box.S < abox.S ) continue;
+	
 	/* This (reading area points, takes most of time in this function ! */
 	Vect_get_area_points (Map, area, APoints);
 
@@ -330,16 +348,17 @@ int
 Vect_build_nat ( struct Map_info *Map, FILE *msgout )
 {
     struct Plus_head *plus ;
-    int    i, j, s, type, lineid, offset, ret;
+    int    i, j, s, type, lineid, offset, ret, aisles, nisles, isle;
     int    side, line, area, found;
     int     progress, last_progress;
-    struct line_pnts *Points, *APoints;
+    struct line_pnts *Points, *APoints, **IPoints;
     struct line_cats *Cats;
     P_LINE *Line;
     P_NODE *Node;
     P_AREA *Area;
     BOUND_BOX box;
     struct ilist *List;
+    double poly;
 
     G_debug (1, "Vect_build_nat()");
     
@@ -415,12 +434,12 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout )
 	}
     }
     prnmsg ("\n%d areas built\n%d isles built\n", plus->n_areas, plus->n_isles );
-
+    
     /* Attach isles to areas */
     prnmsg ("Attaching islands: ");
     last_progress = -1; 
     for (i = 1; i <= plus->n_isles; i++) {
-        Vect_attach_isle ( Map, i ) ;
+    Vect_attach_isle ( Map, i ) ;
 
 	/* print progress */
         progress = ( int ) 100 *  i / plus->n_isles;  
@@ -433,6 +452,7 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout )
     /* Attach centroids to areas */
     prnmsg ("\nAttaching centroids: ");
     last_progress = -1; 
+    IPoints = NULL; aisles = 0;
     for (area = 1; area <= plus->n_areas; area++) {
 	/* print progress */
         progress = ( int ) 100 *  area / plus->n_areas;  
@@ -449,15 +469,48 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout )
 	Vect_select_lines_by_box (Map, &box, GV_CENTROID, List);
         G_debug ( 3, "%d centroids in area box", List->n_values );
 
+	if ( List->n_values == 0 ) continue;
+
+	/* Read Area/isles */
+	nisles = Area->n_isles;
+        if ( nisles > aisles ) {
+	    IPoints = (struct line_pnts **) G_realloc ( IPoints, nisles * sizeof(struct line_pnts *));
+	    for (i = aisles; i < nisles; i++ )
+		IPoints[i] = Vect_new_line_struct ();
+		
+	    aisles = nisles;
+	}
+	Vect_get_area_points (Map, area, APoints);
+        G_debug ( 3, "    Area->n_points = %d", APoints->n_points );
+	for (i = 0; i < nisles; i++) {
+	    isle = Area->isles[i];
+	    Vect_get_isle_points (Map, isle, IPoints[i]);
+	}
+
 	found = 0;
         for (i = 0; i < List->n_values; i++) {
 	    line = List->value[i];
-            G_debug ( 3, "line  = %d", line );
 	    
 	    Line = plus->Line[line];
 	    Node = plus->Node[Line->N1];
+	   
+	    /* First was used : */ 
+	      /* ret = Vect_point_in_area (Map, area, Node->x, Node->y); */
+	    /* but for more areas it reads area points for each centroid - slow =>
+	     * area and isles read once and check is done here */
+            
+	    poly = dig_point_in_poly ( Node->x, Node->y, APoints);
+	    if ( poly <=  0 ) continue; /* is not in area */
+
+	    ret = 1;
+	    for ( j = 0; j < nisles; j++ ) {
+		poly = dig_point_in_poly ( Node->x, Node->y, IPoints[j]);
+		if ( poly > 0 ) { /* in isle */
+		    ret = 0;
+		    break; 
+		}
+	    }
 	    
-	    ret = Vect_point_in_area (Map, area, Node->x, Node->y);
 	    if ( ret ) {
                 G_debug ( 3, "Centroid (line=%d) in area %d", i, area );
 	        if ( found == 0  ) {
@@ -478,6 +531,10 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout )
 	    prnmsg ("Attaching centroids: ");
     }
     prnmsg ("\n");
+    
+    /* Free isles */
+    for (i = 0; i < aisles; i++ ) Vect_destroy_line_struct ( IPoints[i] );
+    G_free ( IPoints );
 
     return 1;
 }
