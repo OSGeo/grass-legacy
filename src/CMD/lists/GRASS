@@ -8,6 +8,7 @@ src/libes/segment
 src/libes/rowio
 src/libes/raster
 src/libes/lock
+src/libes/gmath
 src/libes/imagery
 src/libes/icon
 src/libes/dlg
@@ -33,7 +34,6 @@ src/libes/vect32/georef
 #needed for i.points3/i.rectify3:
 #src/libes/image3
 src/libes/bwidget
-src/libes/gmath
 src/general/init
 src/display/devices/lib
 src/display/devices/monitorcap
