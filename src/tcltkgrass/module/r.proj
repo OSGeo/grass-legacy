@@ -9,5 +9,5 @@ interface_build {
     {entry method {Interpolation method to use (nearest,bilinear,cubic):} 0 ""}
     {entry resolution {Resolution of output map:} 0 ""}
     {checkbox -l {List raster files in input location} "" -l}
-    {checkbox -n {Do not preform region cropping optimization} "" -n}
+    {checkbox -n {Do not perform region cropping optimization} "" -n}
 }
