@@ -52,9 +52,8 @@ int mouse_yes_no_zoom (char *header,
 
 	screen_x = screen_y = 1;
 
-	sprintf(buf, "       Middle: Zoom%s", type == LINE ||
-						      type == AREA ? "/Continue"
-						      : "") ;
+	sprintf(buf, "       Middle: Zoom%s", (type == LINE || type == AREA ?
+						"/Continue" : "")) ;
 	_Clear_base () ;
 	Write_base(10, header) ;
 	Write_base(12, "    Buttons:") ;
