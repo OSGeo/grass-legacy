@@ -75,7 +75,7 @@ write_point (fd, buf, indent)
     fprintf (fd, "%s%s\n", indent, b);
 }
 
-void
+int
 read_and_print (outfd, infd, offset, indent)
     FILE *outfd, *infd;
     long offset;
