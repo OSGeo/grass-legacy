@@ -1,0 +1,23 @@
+# @(#)Gmakefile	2.1   6/26/87
+
+OFILES = \
+	coloroff.o \
+	command.o
+
+Dcoloroff: $(BIN)/Dcoloroff $(MAN2)/Dcoloroff.2 $(HELP)/Dcoloroff
+
+$(BIN)/Dcoloroff: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(MAN2)/Dcoloroff.2: MAN
+	rm -f $@ ; cp $? $@ ; chmod +r $@
+
+$(HELP)/Dcoloroff: HELP
+	rm -f $@ ; cp $? $@ ; chmod +r $@
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
+coloroff.o:	options.h
+command.o:	options.h
