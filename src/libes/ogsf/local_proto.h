@@ -154,6 +154,8 @@ int GS_get_focus(float *);
 void GS_set_focus_center_map(int);
 void GS_moveto(float *);
 void GS_moveto_real(float *);
+void GS_set_focus_real(float *);
+void GS_get_to_real(float *);
 int GS_get_zextents(int, float *, float *, float *);
 int GS_get_zrange(float *, float *, int);
 void GS_get_from(float *);
@@ -528,6 +530,7 @@ void gsd_real2surf(geosurf *, Point3);
 /* From gsd_wire.c */
 int gsd_wire_surf(geosurf *);
 int gsd_wire_surf_map(geosurf *);
+int gsd_coarse_surf_map(geosurf *);
 int gsd_wire_surf_const(geosurf *, float);
 int gsd_wire_surf_func(geosurf *, int (*)());
 int gsd_wire_arrows(geosurf *);
