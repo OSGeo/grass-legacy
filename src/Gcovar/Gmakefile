@@ -1,0 +1,9 @@
+all:: $(BIN)/Gcovar $(BIN)/Gcorr
+
+$(BIN)/Gcovar: covar.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ covar.o $(GISLIB)
+
+$(BIN)/Gcorr: corr.sh
+	rm -f $@; cp $? $@; chmod +x $@
+
+$(GISLIB): #
