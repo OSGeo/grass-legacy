@@ -1,0 +1,4 @@
+Mmain	main.c	/^main(argc, argv)$/
+delcr	delcr.c	/^delcr(str)   \/* char *str   *\/$/
+infxColumn	infxColumn.c	/^infxColumn(tabname,flag, sqlFile)$/
+parseType	infxColumn.c	/^parseType(cname, ctype, clength)$/
