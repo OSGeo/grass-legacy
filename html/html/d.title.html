@@ -1,6 +1,6 @@
 <html>
 
-<TITLE>d.TITLE</TITLE>
+<TITLE>d.title</TITLE>
 
 <body bgcolor="white">
 
@@ -10,18 +10,18 @@
 
 <H2>NAME</H2>
 
-<EM><b>d.TITLE</b></EM>  - Outputs a TITLE for a raster map layer in a form suitable 
+<EM><b>d.title</b></EM>  - Outputs a TITLE for a raster map layer in a form suitable 
 for display by <EM><A HREF="d.text.html">d.text</A></EM>.
 <BR>
 <EM>(GRASS Display Program)</EM>
 
 <H2>SYNOPSIS</H2>
 
-<B>d.TITLE</B> 
+<B>d.title</B> 
 <BR>
-<B>d.TITLE help</B> 
+<B>d.title help</B> 
 <BR>
-<B>d.TITLE</B>
+<B>d.title</B>
 [<B>-f</B>] 
 <B>map=</B><EM>name</EM> 
 [<B>color=</B><EM>name</EM>] 
@@ -29,14 +29,14 @@ for display by <EM><A HREF="d.text.html">d.text</A></EM>.
 
 <H2>DESCRIPTION</H2>
 
-<EM>d.TITLE</EM>
+<EM>d.title</EM>
 generates to standard output a string which can be used by 
 <EM><A HREF="d.text.html">d.text</A></EM> 
 to draw a TITLE for the raster map layer <EM>name</EM> in the active 
 display frame on the graphics monitor. 
-Output created by <EM>d.TITLE</EM> can be redirected into a file, or piped 
+Output created by <EM>d.title</EM> can be redirected into a file, or piped 
 directly into <EM><A HREF="d.text.html">d.text</A></EM> 
-to display the map TITLE created by <EM>d.TITLE</EM>. 
+to display the map TITLE created by <EM>d.title</EM>. 
 The map TITLE created will include the map layer's name, 
 TITLE, MAPSET, LOCATION_NAME, geographic region 
 boundary coordinates, and cell resolution. 
@@ -44,7 +44,7 @@ boundary coordinates, and cell resolution.
 <P>
 
 The user can state program arguments on the command line, or type 
-simply <B>d.TITLE</B> on the command line. In the latter case, the program 
+simply <B>d.title</B> on the command line. In the latter case, the program 
 will prompt the user for the parameter values and flag setting using the 
 standard GRASS <A HREF="parser.html">parser</A> interface.
 
@@ -82,20 +82,20 @@ For example, a user wishing to create a suitable TITLE for the
 Spearfish, SD <EM>soils</EM> map layer and to display this TITLE in the 
 active display frame on the graphics monitor might type the following: 
 <DL>
-<DD> <B>d.TITLE map=</B><EM>soils</EM> <B>color=</B><EM>red</EM> <B>size=</B><EM>5</EM><B> &gt; TITLE.file </B>
+<DD> <B>d.title map=</B><EM>soils</EM> <B>color=</B><EM>red</EM> <B>size=</B><EM>5</EM><B> &gt; TITLE.file </B>
 <DD> <B><A HREF="d.text.html">d.text</A> &lt; TITLE.file</B> 
 </DL>
-Alternately, the user might pipe <EM>d.TITLE</EM> output directly 
+Alternately, the user might pipe <EM>d.title</EM> output directly 
 into <EM><A HREF="d.text.html">d.text</A></B>:</EM> 
 <DL>
 <DD>
-<B>d.TITLE map=</B><EM>soils</EM> <B>color=</B><EM>red</EM> <B>size=</B><EM>5</EM> | 
+<B>d.title map=</B><EM>soils</EM> <B>color=</B><EM>red</EM> <B>size=</B><EM>5</EM> | 
 <A HREF="d.text.html">d.text</A></B>
 </DL>
 
 <P>
 
-A file created by <EM>d.TITLE</EM> can be displayed 
+A file created by <EM>d.title</EM> can be displayed 
 with <EM><A HREF="d.text.html">d.text</A></EM>.
 Information contained in this file takes precedence over the 
 <EM>color</EM> and <EM>size</EM> parameters for 
