@@ -1,4 +1,6 @@
-
+SHELL=/bin/sh
+export SHELL
+umask 002
 ##################################################################
 # This file is sourced (with the . command) by the real gmake
 me=$0
@@ -25,6 +27,26 @@ do
     case "$1" in
 	-sh) parseonly=sh;shift;;
 	-csh) parseonly=csh;shift;;
+	-hasx) 
+            if test "$HASX" = "yes"
+            then
+		echo yes
+                exit 0
+            else
+		echo no
+                exit 1
+            fi
+            ;;
+	-hasmotif) 
+            if test "$HASMotif" = "yes"
+            then
+		echo yes
+                exit 0
+            else
+		echo no
+                exit 1
+            fi
+            ;;
 	-v) GMAKE_VERBOSE=no;export GMAKE_VERBOSE;shift;;
 	-all) all=yes;shift;;
 	-makeparentdir)
@@ -64,12 +86,14 @@ fi
 GISBASE="`sed 's/=/ /' $HEAD | awk '$1 ~ /^GISBASE$/ {if(NF>1)print $2}'`"
 VERSION_NUMBER=
 VERSION_DATE=
+VERSION_UPDATE_PKG=
 VERSION_FILE=.
 if test -r $CMD/VERSION
 then
     VERSION_FILE=$CMD/VERSION
     VERSION_NUMBER="`awk '{print;exit}' $VERSION_FILE`"
     VERSION_DATE="`awk '{if(hit){print;exit}{hit=1}}' $VERSION_FILE`"
+    VERSION_UPDATE_PKG="`awk '{if(hit==2){print;exit}{hit++}}' $VERSION_FILE`"
 fi
 
 if test "$GISBASE" = ""
@@ -128,7 +152,7 @@ then
     echo "  HEADER  = $HEADER"
     echo "  ARCH    = $ARCH"
     echo "  GISBASE = $GISBASE"
-    echo "  VERSION = $VERSION_NUMBER $VERSION_DATE"
+    echo "  VERSION = $VERSION_NUMBER $VERSION_DATE $VERSION_UPDATE_PKG"
 fi
 
 if test $all = yes
@@ -201,6 +225,7 @@ fi
 # define VERSION, SRC, OBJARCH for .o files, LIBARCH for .a files
 echo VERSION_NUMBER="$VERSION_NUMBER"
 echo VERSION_DATE="$VERSION_DATE"
+echo VERSION_UPDATE_PKG="$VERSION_UPDATE_PKG"
 echo VERSION_FILE="$VERSION_FILE"
 echo SRC=$SRC
 echo OBJARCH=$OBJARCH
@@ -208,19 +233,20 @@ echo LIBARCH=$LIBARCH
 echo ""
 
 # remove ARCH from $HEAD
-awk '$1 !~ /^ARCH$/ {print}' $HEAD
+# awk '$1 !~ /^ARCH$/ {print}' $HEAD
+cat $HEAD
 
 # define gmake
 echo GMAKE = $me
 
 # prepend all .o with $(OBJARCH) and .a files with $(LIBARCH)
 sed \
-    -e 's#[\*0-9a-zA-Z_\.\-]*\.o[ \	]#$(OBJARCH)/&#g' \
-    -e 's#[\*0-9a-zA-Z_\.\-]*\.o:[ \	]#$(OBJARCH)/&#g' \
-    -e 's#[\*0-9a-zA-Z_\.\-]*\.o$#$(OBJARCH)/&#g' \
-    -e 's#[\*0-9a-zA-Z_\.\-]*\.a[ \	]#$(LIBARCH)/&#g' \
-    -e 's#[\*0-9a-zA-Z_\.\-]*\.a:[ \	]#$(LIBARCH)/&#g' \
-    -e 's#[\*0-9a-zA-Z_\.\-]*\.a$#$(LIBARCH)/&#g' \
+    -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.o[ \	]#$(OBJARCH)/&#g' \
+    -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.o:[ \	]#$(OBJARCH)/&#g' \
+    -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.o$#$(OBJARCH)/&#g' \
+    -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.a[ \	]#$(LIBARCH)/&#g' \
+    -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.a:[ \	]#$(LIBARCH)/&#g' \
+    -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.a$#$(LIBARCH)/&#g' \
     -e '/\.\\a[ \	]/s/\\//' \
     -e '/\.\\a:[ \	]/s/\\//' \
     -e '/\.\\a$/s/\\//' \
@@ -233,7 +259,7 @@ echo ""
 
 sed -e 's/=/ /' -e 's/\\//' Gmakefile |\
  awk '{for(i=1;i<=NF;i++) \
-    if ($i ~ /^[a-zA-Z0-9_\.\-]*\.o$/) print substr($i,1,length($i)-2)} ' |\
+    if ($i ~ /^[a-zA-Z0-9_\.\-\$\(\)]*\.o$/) print substr($i,1,length($i)-2)} ' |\
  sort -u |\
  (
     while read file
