@@ -32,7 +32,7 @@ Usage:        sh grass5install.sh grass_binpackage.tar.gz [dest_dir]
       with:
         grass_binpackage : name of GRASS $NAME_VER binary package   
         [dest_dir] - optional: FULL path name to the installation directory
-                     (default: /usr/local/grass-5.0b/)
+                     (default: /usr/local/grass$NAME_VER/)
 
 You may need login as root for installation.
 "
