@@ -100,8 +100,12 @@ AC_SUBST(LEX)
 
 AC_PROG_YACC
 if test "$YACC" != "bison -y"; then
-  if test "$YACC" != "yacc"; then
+  if test "$YACC" != "byacc" && test "$YACC" != "yacc"; then
     AC_MSG_WARN(You will need bison/yacc as required for various GRASS modules.)
+  else
+    if test "$YACC" != "byacc"; then
+      echo "checking for yacc... yacc"
+    fi
   fi
 else
     AC_MSG_CHECKING(bison version)
