@@ -1,7 +1,7 @@
 
 
 
-p.icons <main>       GRASS Reference Manual        <main> p.icons
+p.icons	<main>	     GRASS Reference Manual	   <main> p.icons
 
 
 
@@ -14,19 +14,19 @@ SYNOPSIS
      p.icons
 
 DESCRIPTION
-     This program allows the user to create and maintain icons
+     This program allows the user to create and	maintain icons
      which are used by the p.map and d.icons commands to depict
      sites.
 
 FILES
-     Icon files created by the user are stored under
+     Icon files	created	by the user are	stored under
      $LOCATION/icons.
 
 SEE ALSO
-     d.icons, d.points, d.sites, p.map, s.menu
+     d.icons, d.points,	d.sites, p.map,	s.menu
 
 AUTHOR
-     Michael Shapiro, U.S. Army Construction Engineering Research
+     Michael Shapiro, U.S. Army	Construction Engineering Research
      Laboratory
 
 
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
