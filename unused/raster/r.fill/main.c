@@ -207,9 +207,10 @@ main(int argc, char **argv)
 				}
 			}
 		}
-		if(verbose)
+		if(verbose){
 			G_percent(row, rows, 2);
-		fprintf(stderr, "Number of sinks: %d\n", nsinks);
+			fprintf(stderr, "Number of sinks: %d\n", nsinks);
+		}
 	}while(nsinks);
 
 	if(overwr == 2)
