@@ -18,13 +18,13 @@
 #include "gis.h"
 #include "Vect.h"
 
-int path ( struct Map_info *, struct Map_info *, int, double );
+int path ( struct Map_info *, struct Map_info *, int, double, int );
 
 int main(int argc, char **argv)
 {
     struct Option *input_opt, *output_opt, *afield_opt, *nfield_opt, *afcol, *abcol, *ncol, *type_opt;
     struct Option *max_dist;
-    struct Flag   *geo_f;
+    struct Flag   *geo_f, *segments_f;
     struct GModule *module;
     char   *mapset;
     struct Map_info In, Out;
@@ -91,6 +91,10 @@ int main(int argc, char **argv)
     geo_f->key             = 'g';
     geo_f->description     = "Use geodesic calculation for longitude-latitude locations";
     
+    segments_f = G_define_flag ();
+    segments_f->key             = 's';
+    segments_f->description     = "Write output as original input segments, not each path as one line.";
+    
     if(G_parser(argc,argv))
         exit(-1);
 
@@ -123,7 +127,7 @@ int main(int argc, char **argv)
     Vect_net_build_graph ( &In, type, afield, nfield, afcol->answer, abcol->answer, 
 	                   ncol->answer, geo, 0 );
 
-    path ( &In, &Out, nfield, maxdist ); 
+    path ( &In, &Out, nfield, maxdist, segments_f->answer ); 
 
     Vect_close(&In);
 
