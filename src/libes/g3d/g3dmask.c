@@ -5,7 +5,7 @@
 
 /*--------------------------------------------------------------------------*/
 
-/* the standart g3d file format is used to store the mask values. a NULL-value
+/* the standard g3d file format is used to store the mask values. a NULL-value
    is stored for values which are masked out and a "0." is stored for values 
    which are not masked out. to improve compression, the precision is set to 
    0 and RLE encoding is used.

@@ -376,8 +376,8 @@ void *G3d_openCellOldNoHeader(char *, char *);
 void * G3d_openCellOld (char *, char * , G3D_Region *, int, int);
 void * G3d_openCellNew (char *, int, int, G3D_Region * );
 /* grass/src/libes/g3d/g3dparam.c */
-void G3d_setStandart3dInputParams(void);
-int G3d_getStandart3dParams(int *, int *, int *, int *, int *, int *, int *, int *, int *, int *, int *, int *);
+void G3d_setStandard3dInputParams(void);
+int G3d_getStandard3dParams(int *, int *, int *, int *, int *, int *, int *, int *, int *, int *, int *, int *);
 void G3d_setWindowParams(void);
 char *G3d_getWindowParams(void);
 /* grass/src/libes/g3d/g3drange.c */
