@@ -1,0 +1,468 @@
+<html><head>
+<!-- This document was created from RTF source by rtftohtml version 2.7.5,
+     extended by rtftoweb version 1.2. -->
+<title>Arbeitsbericht Regionalisierung in der Hydrologie '94 - Bearbeitung gro&szlig;er Datens&auml;tze </title></head><body>
+<a href="arb94-Geomorph.html">&lt;&lt;</a>
+, <a href="arb94-Zusammen.html">&gt;&gt;</a>
+, <a href="arb94.html">Titelseite</a>
+, <a href="arb94-Contents.html">Inhaltsverzeichnis</a>
+<hr>
+<h1>
+Bearbeitung gro&szlig;er Datens&auml;tze </h1>
+<ul>
+<li><a href="#Heading15"> Import von MilGeo-Datens&auml;tze in GRASS </a>
+<li><a href="#Heading16"> Rechenzeiten bei der Ableitung prim&auml;rer Objekte </a>
+<li><a href="#Heading17"> Rasterausd&uuml;nnung </a>
+</ul>
+<hr>
+<p>
+Die Bereitstellung der MilGeo-Datens&auml;tze im Rahmen des SPP
+lenkt die Arbeit aller Arbeitsgruppen in Einzugsgebiete gr&ouml;&szlig;erer
+Dimensionen (Neckar- bzw. Weser-Einzugsgebiet). Die bisherige Modellierung
+unserer Arbeitsgruppe wurde auf Einzugsgebietsgr&ouml;&szlig;en bis maximal ca.
+500 km<sup>2</sup> durchgef&uuml;hrt (siehe <a href="#Heading5">Kapitel
+1.4</a>). Die mit der
+Lieferung des MilGeo-Datensatzes auftretenden gro&szlig;en Datenmengen
+f&uuml;hren zu Problemen bzgl. des Datenhandling, aber auch der Modellierung.
+Wir haben uns deshalb entschlossen die Bearbeitung dieser gro&szlig;en
+Datens&auml;tze in einem gesonderten Kapitel aufzuf&uuml;hren, um auf die
+erweiterte Qualit&auml;t der Arbeit hinzuweisen, die die hinzukommende Aspekte
+(wie z.B. Rechenzeiten, Datenmanagement und Rasterausd&uuml;nnung) betont.<p>
+<b>
+<a name="Heading15">
+<h2> Import von MilGeo-Datens&auml;tze in GRASS </h2></a>
+</b><p>
+Das uns zur Verf&uuml;gung stehende H&ouml;henmodell der Einzugsgebiete
+von Weser und Neckar besteht zur Zeit aus 180 MilGeo-Datens&auml;tzen. Jeder
+dieser Datens&auml;tze deckt eine Fl&auml;che von 20' x 12' ab und hat eine
+r&auml;umliche Aufl&ouml;sung von 1', was im betrachteten Gebiet einer
+Entfernung von etwa 30m entspricht. <p>
+<p>
+Um die Daten f&uuml;r eine Analyse verf&uuml;gbar zu machen, wurden
+s&auml;mtliche Datens&auml;tze in einer Datei zusammengef&uuml;hrt und
+anschlie&szlig;end in ein metrisches Koordinatensystem (Gau&szlig;-Kr&uuml;ger)
+projiziert. Das Zusammenf&uuml;hren der Datens&auml;tze wurde durch das
+UNIX-Shellscript <i>mil2grass</i> weitgehend automatisch durchgef&uuml;hrt. Da
+aber einige der MilGeo-Datens&auml;tze, wie beispielsweise l2926.dhm
+fehlerhafte Koordinaten im Header haben (hier 52:66:79N), ist im Einzelfall
+eine manuelle Korrektur der Koordinaten notwendig. Zentraler Bestandteil des
+Scripts ist das Programm <i>r.read</i>, das eine modifizierte Version des
+Programms <i>read</i> von T. H&uuml;gel, Neubiberg (Arbeitsgruppe Prof.
+Kleeberg) ist. Das Programm <i>r.read</i> erzeugt direkt bin&auml;re
+GRASS-Layer. Wie im Originalprogramm werden beim Import auch jeweils zwei
+Dateien erzeugt, die Informationen aus dem <i>Data Set Identification (DSI)
+Record</i> und dem <i>Accuracy Description (ACC) Record</i> des
+MilGeo-Datensatzes enthalten. Aus beiden Dateien, wurde mit Hilfe eines
+Perl-Scripts ein GRASS-Vektorlayer generiert, der den absoluten vertikalen
+Fehler des Kartenschnitts darstellt. Dieser Fehler ist in der
+Formatbeschreibung f&uuml;r die MilGeo-Datens&auml;tze definiert und beschreibt
+die Unsicherheit der H&ouml;he in einem Punkt in Bezug auf NN, hervorgerufen
+durch systematische und zuf&auml;llige Fehler. Die einzelnen Werte stellen den
+linearen Fehler dar, der mit einer Genauigkeit von 90% bestimmt wurde (siehe
+Graphik 55).<p>
+<p>
+Der Import der Datens&auml;tze in GRASS wird in 9 Einzelschritten vollzogen:
+<ol>
+<li>Einrichten einer Latitute/Longitude Location in GRASS
+<li><a href="#schritt2">Konvertierung der MilGeo-Datens&auml;tze in GRASS-Layer.</a>
+<li><a href="#schritt2">Verkn&uuml;pfen der Einzellayer zu einem gro&szlig;en Layer.</a>
+<li><a href="#schritt4">Export des Layers im ARC/INFO ASCII-Format.</a>
+<li><a href="#schritt5">Import des Layers in ARC/INFO.</a>
+<li><a href="#schritt6">Projektion der Daten.</a>
+<li><a href="#schritt7">Export der projizieren Daten im ARC/INFO ASCII-Format.</a>
+<li><a href="#schritt8">Einrichten einer geeigneten Location in GRASS.</a>
+<li><a href="#schritt9">Import der Daten.</a>
+</ol>
+<p>
+Ben&ouml;tigte Programme: <p>
+<dl>
+<dt><b>ARC/INFO:</b>
+<dd>	asciigrid	<br>
+<dd>	gridascii<br>
+<dd>	project<br><br>
+<dt><b>GRASS:</b>		
+<dd>	r.out.arc	(nicht Standard)<br>
+<dd>	r.in.arc	(nicht Standard)<br>
+<dd>	r.read   	(nicht Standard)<br>
+<dt><b>Sonstiges:</b>
+<dd>	mil2grass (Shellscript)
+<p>
+</dl>
+<p>
+<b>Anmerkung:</b> Die von uns entwickelten Programme und Scripts stehen
+&uuml;ber unseren FTP-Gastzugang zur Verf&uuml;gung. <p>
+<p>
+
+<a name="schritt2">
+<dl>
+<dt><b><u>zu Schritt 2 + 3: </u></b><p>
+</dl>
+</a>
+<dl>
+<dd> <IMG  src="Warning.gif"> Das Ausf&uuml;hren dieser Schritte mu&szlig; von der GRASS-Ebene
+aus in einer geeigneten	LL-Location stattfinden.<p>
+Die Schritte werden &uuml;ber das UNIX-Shellscript <i>mil2grass</i> weitgehend
+automatisiert ausgef&uuml;hrt. Vor der ersten Ausf&uuml;hrung mu&szlig; in
+dieses Script der Name des Layers eingetragen werden, der erzeugt werden soll.
+(<b>Bsp.: DATA=weser_neckar.dem</b>) <p>
+Der Systemvariablen <i>DEMS</i> werden anfangs die MilGeo Datens&auml;tze
+zugewiesen, die importiert werden sollen. Im Beispielscript wird hierzu die
+Datei FLIST eingelesen. In <i>FLIST</i> stehen Dateinamen in einer Form, wie
+sie beispielsweise ein 'ls' liefert.<p>
+Den INIT_? Variablen werden Startkoordinaten zugewiesen. Dabei ist auf eine
+exakte Angabe der n&ouml;rdlichen und westlichen Begrenzung zu achten. Die
+s&uuml;dliche soll etwas kleiner sein wie die n&ouml;rdliche, die &ouml;stliche
+etwas gr&ouml;&szlig;er wie die westliche. Hier genaue Werte einzugeben ist
+nicht sinnvoll, da sie im Script mit den passenden Werten &uuml;berschrieben
+werden.<p>
+Die Einzeldatens&auml;tze werden dann jeweils, durch das Programm
+<i>r.read</i>, in einen tempor&auml;ren GRASS-Layer (<i>tmp.dem</i>)
+konvertiert. <p>
+(Bei uns hatten einige MilGeo Datens&auml;tze falsche und sinnlose Koordinaten
+im Header. <i>r.read</i> meldet in diesem Fall einen Fehler und die
+Ausf&uuml;hrung des Shellscripts wird abgebrochen. Wir haben in dann die
+falschen Koordinaten beim Einlesen des Datensatzes abgefangen und durch die
+richtigen Werte ersetzt.) <p>
+<p>
+Der tempor&auml;re Layer wird mit r.mapcalc mit dem oder den schon bestehenden
+Layern zusammengef&uuml;hrt.<p>
+<p>
+</dl>
+<a name="schritt4">
+<dl>
+<dt><b><u>zu Schritt 4:</u></b><p>
+</dl>
+</a>
+<dl>
+<dd>Der Export des erzeugten Layers wird mit dem Programm r.out.arc
+vorgenommen.<p>
+<pre>
+	r.out.arc -1 NEU.DAT &gt;NEU.ASC
+
+</pre>
+<p>
+</dl>
+<a name="schritt5">
+<dl>
+<dt><b><u>zu Schritt 5:</u></b><p>
+</dl>
+</a>
+<dl>
+<dd>Der Import in ARC/INFO wird mit dem Befehl asciigrid vorgenommen.
+<p>
+<pre>
+	asciigrid NEU.ASC NEU_ARC
+
+</pre>
+<p>
+</dl>
+<a name="schritt6">
+<dl>
+<dt><b><u>zu Schritt 6:</u></b><p>
+</dl>
+</a>
+<dl>
+<dd>Projektion der Daten nach Gauss-Kr&uuml;ger<p>
+<pre>
+	project GRID NEU_ARC NEU_GK_ARC <i>projection_file</i> CUBIC
+
+</pre>
+Der <i>projection_file</i> ist folgenderma&szlig;en aufgebaut
+(Kommentare sind kursiv geschrieben. Sie d&uuml;rfen <b>nicht</b> im File
+erscheinen): <p>
+<pre>
+INPUT<br>
+PROJECTION geographic<br>
+UNITS dd<br>
+PARAMETERS <br>
+OUTPUT<br>
+PROJECTION transverse<br>
+UNITS METERS<br>
+SPHEROID bessel<br>
+PARAMETERS<br>
+1.0 <br>
+9 00 00	<i>Mittelmeridian</i><br>
+0 00 00
+3500000 <i>Die erste Zahl gibt den Mittelmeridian/3 wieder</i>
+0<br>
+END
+</pre>
+Siehe auch Handbuch zu ARC-Command-References.<p>
+<p>
+</dl>
+<a name="schritt7">
+<dl>
+<dt><b><u>zu Schritt 7: </u></b><p>
+</dl>
+</a>
+<dl>
+<dd>Export mit gridascii<p>
+<pre>
+	gridascii GAUSSK_ARC GAUSSK_ASC
+
+</pre>
+<p>
+</dl>
+<a name="schritt8">
+<dl>
+<dt><b><u>zu Schritt 8:</u></b><p>
+</dl>
+</a>
+<dl>
+<dd>Wird mit Gau&szlig;-Kr&uuml;ger Koordinaten gearbeitet, ist in
+GRASS bei der Erstellung der Location die Transverse Mercator Projektion
+(<i>tmerc</i>) zu w&auml;hlen. Der Ellipsoid f&uuml;r das Weser- bzw.
+Neckareinzugsgebiet ist <i>bessel</i>. Der Wert f&uuml;r den Nullmeridian ist
+gebietsabh&auml;ngig. Die Standardparallele ist <i>0.0</i>.  
+<a href="#schritt6"> (Siehe auch
+Schritt 6).<p>
+</a>
+<p>
+</dl>
+<a name="schritt9">
+<dl>
+<dt><b><u>zu Schritt 9:</u></b><p>
+</dl>
+</a>
+<dl>
+<dd>Import mit r.in.arc<p>
+<pre>
+	r.in.arc i=GAUSSK_ASC o=GESCHAFFT.DEM
+
+</pre>
+</dl>
+<a name="Heading16">
+<h2> Rechenzeiten bei der Ableitung prim&auml;rer Objekte </h2></a>
+<p>
+Die Ableitung prim&auml;rer Parameter im Sinne des GPM f&uuml;hrte bei
+der Bearbeitung der MilGeo-Datens&auml;tze zu enormen Rechenzeiten. F&uuml;r
+den hydrologischen Proze&szlig; relevante Parameter, z.B. die
+Einzugsgebietsgr&ouml;&szlig;e oberhalb eines Pixels, sind f&uuml;r die
+Datens&auml;tze bei Orginalaufl&ouml;sung (30 m) in absehbaren Zeitr&auml;umen
+nicht mehr berechenbar (siehe unten). Um eine Absch&auml;tzung f&uuml;r die
+notwendigen Rechenzeiten bei der Ableitung einfacher Parameter zu erhalten
+wurde der Neckar-Datensatz in Teilgebiete zerlegt und f&uuml;r diese jeweils
+die Subeinzugsgebiete bestimmt. Nach einer &Uuml;berlagerung der
+Ergebnisdateien erh&auml;lt man die Subeinzugsgebiete f&uuml;r den gesamten
+Neckar in der Orginalaufl&ouml;sung (diese Ergebnisse bildeten au&szlig;erdem
+die Basis f&uuml;r eine Fehlerabsch&auml;tzung bei Rasterausd&uuml;nnung). Im
+folgenden werden Arbeitschritte und Ergebnisse dargestellt.<p>
+<p>
+<b><i>Zerlegung des Neckar-Datensatzes</i></b><p>
+<p>
+Um realisierbare Rechenzeiten bei der Berechnung von Subeinzugsgebieten zu
+erreichen mu&szlig;ten<p>
+<p>
+<ul>
+<li>	die Rechner des Universit&auml;tsrechenzentrum mit wesentlich h&ouml;herer
+Leistungsf&auml;higkeit (schnellere CPU's, gr&ouml;&szlig;ere
+Speicherkapazit&auml;ten) benutzt werden,<p>
+<li>	zus&auml;tzlich der Datensatz in 17 Teilgebiete aufgeteilt und f&uuml;r
+jedes Teilgebiet die Subeinzugsgebiete gesondert berechnet werden.<p>
+</ul>
+<p>
+Wegen der an den Teilgebietsr&auml;ndern auftretenden Differenzen bei der
+Berechnung von Subeinzugsgebieten wurden gro&szlig;e &Uuml;berlappungsbereiche
+festgelegt.<p>
+<p>
+<b><i>Subeinzugsgebiets-Berechnung</i></b><p>
+<p>
+F&uuml;r jedes der festgelegten Gebiete wurde die GRASS-Routine r.watershed mit
+einem Schwellenwert von 10000 Pixeln und der Option 'basin' aufgerufen. Die
+entsprechenden Datens&auml;tze mu&szlig;ten hierzu zwischen den Rechnern des
+Geographischen Institutes und den Anlagen des Rechenzentrums transferiert
+werden. Au&szlig;erdem mu&szlig;ten die Prozesse bzw. Daten st&auml;ndig
+kontrolliert werden, da am Rechenzentrum eine Zeitbeschr&auml;nkung
+bez&uuml;glich der Lagerung von Daten auf den leistungsf&auml;higen Rechnern (5
+Tage) besteht. Die Erfahrungen mit dem entstehenden hohen Arbeitsaufwand
+motivierte uns zur Einrichtung des AFS auf unseren Rechnern, mit dem das
+beschriebene Datenhandling vollst&auml;ndig entf&auml;llt (siehe <a href="#Heading38">
+Kapitel 5.6</a>).
+Da im Rechenzentrum ebenfalls eine Beschr&auml;nkung bez&uuml;glich der
+Laufzeiten der Prozesse besteht (4 Wochen) mu&szlig;ten unsere
+Ausgangsdaten&auml;tze entsprechend limitiert werden (dies f&uuml;hrte nach
+einigen Vorversuchen auf die genannten 17 Teilgebiete).<p>
+<p>
+<b><i>Ergebnisse</i></b><p>
+<p>
+Die Ergebnisse der 17 Teilberechnungen wurden zusammengef&uuml;gt, soda&szlig;
+schlie&szlig;lich eine Subeinzugsgebietsmodellierung des Neckar mit einem
+Schwellenwert von 10000 Pixeln (9 km<sup>2</sup>) in der
+Orginalaufl&ouml;sung (30m) vorlag (siehe Graphik 56).<p>
+Die Rechenzeiten wurden ausgewertet um eine Absch&auml;tzung f&uuml;r die
+Gesamtmodellierung des Neckar bzw. der Weser zu erhalten. Insgesamt ergab sich
+eine reale Rechenzeit von &uuml;ber 100 Tagen bzw. eine effektive CPU-Zeit von
+ca. 15 Tagen. In Graphik 57 ist die Abh&auml;ngigkeit der CPU-Zeit von der
+Datenmenge dargestellt. Interpoliert man die Ergebnisse auf die
+Gesamtdatenmengen des Neckar bzw. der Weser (siehe Graphik 58) werden folgende
+CPU-Zeiten erreicht:<p>
+<p>
+Gesamtmodellierung Neckar:  200-300 CPU-Stunden<p>
+Gesamtmodellierung Weser: 800-900 CPU-Stunden<p>
+<p>
+Diese grobe Absch&auml;tzung zeigt, da&szlig; eine Modellierung der
+Gesamtgebiete in der gegebenen Aufl&ouml;sung f&uuml;r wichtige Parameter nicht
+realistisch ist. Eine Rastervergr&ouml;berung erscheint uns deshalb als
+unumg&auml;nglich, um Rechenzeiten in akzeptablen Rahmen zu halten.<p>
+
+<a name="Heading17">
+<h2> Rasterausd&uuml;nnung </h2></a>
+<p>
+Wie im vorigen Kapitel ausgef&uuml;hrt, wird bei gro&szlig;en
+Datens&auml;tzen wegen der enormen Datenmengen eine Rasterausd&uuml;nnung und
+eine damit verbundene Datenreduzierung notwendig. Damit geht allerdings ein
+Informationsverlust einher, der einen Einflu&szlig; auf die folgende
+Modellierung hat. Diesen Einflu&szlig; abzuzsch&auml;tzen war entsprechend der
+n&auml;chste Arbeitsschritt. Hierzu wurden auf Teilgebieten der Weser und des
+Neckars Rastervergr&ouml;berungen vorgenommen und der Einflu&szlig; auf die
+Bestimmung prim&auml;rer Parameter unter dem GRASS-Modul r.watershed
+untersucht.<p>
+<p>
+<i>Vorgehensweise: </i><p>
+<p>
+Es wurde ein Teilgebiet der Weser mit einer Fl&auml;che von 30x30
+km<sup>2</sup> n&ouml;rdlich des Harzes ausgew&auml;hlt (Koordinaten: Nord
+5766200, S&uuml;d 5736200, Ost 3601300, West 3572500). Dies entspricht etwa
+1000x1000 Datenpunkten, so da&szlig; keine der folgenden Berechnungen
+l&auml;nger als 5 Stunden dauert.<p>
+<p>
+Aus der Konvertierung des Datensatzes in die metrischen Gauss Kr&uuml;ger
+Koordinaten folgte, da&szlig; die Daten in einem Gitter mit "unrunden"
+Koordinaten (31.15535812m) vorliegen. Um Folgefehler auszuschliessen, wurde
+deshalb der zu bearbeitende Ausschnitt mit r.resample.tps auf ein Gitter mit
+30m Abstand umgerechnet ("Interpolation durch Spline"). Dieser neue Datensatz
+lag den folgenden Berechnungen zugrunde. Dabei wurden  f&uuml;r 5 verschiedene
+Vielfache dieser Aufl&ouml;sung (60, 150, 300, 600 und 1200m) mittels
+r.watershed Einzugsgebiete (basins), Tiefenlinien (streams) sowie Gef&auml;lle
+(slope) und acc -Wert berechnet. <p>
+<p>
+Die Berechnung der Einzugsgebiete und Tiefenlinien unterliegt einem weiteren
+Parameter, 'threshold', der dem Modul r.watershed angegeben werden mu&szlig;.
+Er beschreibt die Gr&ouml;&szlig;e des von r.watershed berechneten acc-Wertes,
+ab der Tiefenlinien ausgewiesen werden. Entsprechend variiert mit dem
+'threshold' auch die mittlere Gr&ouml;&szlig;e der Einzugsgebiete. Der
+Parameter 'threshold' l&auml;&szlig;t sich in km<sup>2</sup> umrechnen,
+generisch mu&szlig; er dem Modul r.watershed allerdings als Pixelanzahl
+angegeben werden. Wenn sich also die Aufl&ouml;sung halbiert z.B. von 30m auf
+60m, so mu&szlig; f&uuml;r den 'threshold' Parameter ein Viertel der bisherigen
+Anzahl Pixel angegeben werden, um den in km<sup>2</sup> &auml;quivalenten
+Schwellenwert  zu erhalten, also 400 Pixel anstatt 1600. Da die Verwertbarkeit
+der Modellierungen stark von diesem Parameter abh&auml;ngt, wurde der
+'threshold' ebenfalls um 4 Werte variiert. Die entsprechenden
+Fl&auml;chenma&szlig;e sind 46.08, 23.04, 5.76 und 1.44 km<sup>2</sup>. Ein
+Teil dieser Ergebnisse ist in Graphiken 62, 63 visualisiert. An der Treppenform
+der Umrisslinien l&auml;sst sich die durch die Rasterausd&uuml;nnung wachsende
+Pixelgr&ouml;&szlig;e erkennen. Die Rasterausd&uuml;nnung erfolgte
+zun&auml;chst nach der nearest-neighbor-Methode, wie sie in GRASS Standard ist.
+In einem weiteren Schritt wurden die oben beschriebenen Berechnungen
+wiederholt, wobei die Rasterausd&uuml;nnung mittels r.resample.tps, also durch
+Interpolation mit splines und tension, vorgenommen wurde. Bei der Interpolation
+mu&szlig;te leider beobachtet werden, da&szlig; die Rechenzeit mit
+Vergr&ouml;berung des Ergebnisgitters anstieg! Ein resampling auf ein 10 mal
+gr&ouml;beres Gitter war nicht mehr m&ouml;glich, weil die tempor&auml;ren
+Dateien zu gro&szlig; wurden. <p>
+<p>
+Als n&auml;chstes ging es darum, die - wie beschrieben erzeugten - Dateien
+sinnvoll zu vergleichen. Als besonders geeignet erschienen zu diesem Zweck die
+von r.watershed erzeugten Subeinzugsgebiete ('basins'). Ein Grund daf&uuml;r
+ist, da&szlig; die Einzugsgebiete f&uuml;r viele hydrologische Fragestellungen
+eine wichtige Rolle spielen, ein anderer, da&szlig; es sich im Vergleich zu
+etwa 1 Million acc-Werten um eine &uuml;berschaubare Anzahl klassifizierter
+Objekte handelt. Ein visueller Vergleich der errechneten basin Rasterlayers ist
+bereits sehr informativ. Zur "Quantifizierung der &Auml;hnlichkeit" wurde
+folgendes Verfahren angewendet: Separat f&uuml;r jeden 'threshold' wurden als
+bestes Ergebnis die jeweils in der 30m Aufl&ouml;sung gerechneten basin-Daten
+gesetzt. Mit dem bei uns entwickelten GRASS-Tool r.statistics (option:
+distribution) wurde die Kreuzkorrelation zwischen dem besten Ergebnis und den
+in gr&ouml;beren Aufl&ouml;sungen gerechneten Layern berechnet. Als Ergebnis
+liegt eine Tabelle vor, aus der hervorgeht, wie gro&szlig; der Anteil
+verschiedener Kategorien der zweiten Karte ist, die im  Bereich einer
+bestimmten Kategorie, der als besten gesetzten ersten Karte liegen. F&uuml;r
+jedes Einzugsgebiet auf dem 30m Layer erh&auml;lt man also auch eine Kategorie
+aus dem zu vergleichenden Layer, die am meisten &uuml;berlappt - typisch 50
+-99%. Der Mittelwert des &Uuml;berlappungsgrades dieser jeweils am
+st&auml;rksten &uuml;berlappenden Kategorien wurde als Ma&szlig; f&uuml;r die
+&Auml;hnlichkeit zweier Layer verwendet. F&uuml;r jeden 'threshold' wurde
+dieser &Auml;hnlichkeitswert in Abh&auml;ngigkeit von der region aufgetragen
+(Graphiken 60, 61).   <p>
+<p>
+<i>Ergebnisse:</i><p>
+<p>
+Die Ergebnisse zeigen die erwarteten Tendenzen: 1) Die &Uuml;bereinstimmung
+nimmt mit Zunahme der Gitterausd&uuml;nnung ab. 2) Die &Uuml;bereinstimmung
+nimmt mit Zunahme des 'thresholds' zu (Graphik 59).  Augenf&auml;llig ist
+zun&auml;chst der einem exponentiellen Zerfallsgesetz folgende Abfall der
+&Auml;hnlichkeit mit wachsender Rasterbreite. Die Abweichung nimmt also
+proportional zur bereits bestehenden Abweichung ab. Da das Modul r.watershed
+zun&auml;chst den acc-Wert f&uuml;r jedes Pixel, also die Anzahl Pixel, die
+durch ein gegebenes Pixel drainieren, berechnet, liegt folgende Vorstellung
+nahe: Eine relevante Abweichung des acc-Wertes entsteht nur, falls durch die
+Ausd&uuml;nnung ein Pixel, das auf einer lokalen Wasserscheide liegt
+(="kritischer Punkt"), entfernt wird. Dann n&auml;mlich &auml;ndert sich der
+acc-Wert f&uuml;r alle folgenden Pixel. F&uuml;r ein Layer existiert also immer
+nur eine relativ kleine  Zahl "kritischer Punkte", deren Entfernung zu
+kaskadenf&ouml;rmigen weiteren Ver&auml;nderungen des acc-Wertes f&uuml;hren
+kann. Der Wegfall eines Gitterpunktes in der Talsohle &auml;ndert den
+Str&ouml;mungsverlauf nicht. Der Wegfall bestimmter Kammpunkte oder von Kuppen
+auf konvexen H&auml;ngen f&uuml;hrt zu frappanten &Auml;nderungen des
+Str&ouml;mungsverlaufs. <p>
+<p>
+F&uuml;r die Erkl&auml;rung des reziprok exponentiellen Kurvenverlaufs kommen
+verschiedene &Uuml;berlegungen in Frage. Vorausgesetzt wird dabei, da&szlig;
+signifikante Abweichungen im Str&ouml;mungsverlauf nur durch den Wegfall von
+kritischen Punkten entstehen. Die einfachste Annahme w&auml;re, da&szlig; beim
+Wegfall von kritischen Punkten keine weiteren kritischen Punkte entstehen. Dann
+h&auml;tte man ein dem radioaktiven Kernzerfall analoges Modell. Da es aber
+plausibel ist, da&szlig; beim Wegfall exponierter Pixel andere Pixel die
+Funktion von Wasserscheiden &uuml;bernehmen, mu&szlig; diese Idee wohl
+erg&auml;nzt werden mit der &Uuml;berlegung, da&szlig; die " Kritizit&auml;t "
+dieser neuen kritischen Punkte geringer ist, ihr Wegfall bei weiterer
+Rasterausd&uuml;nnung also weniger folgenreich ist. Daf&uuml;r spricht,
+da&szlig; erstens die neuen Wasserscheiden tiefer liegen und zweitens eine Zahl
+Pixel beim Wegfall eines kritischen Punktes auch die Wasserscheidenfunktion
+verliert, so da&szlig; die Gesamtzahl kritischer Punkte nicht zwangsweise
+zunehmen mu&szlig;. <p>
+<p>
+&Uuml;ber den folgenden steilen Abfall der Kurven wird angenommen, da&szlig;
+statistische Gr&uuml;nde eine Rolle spielen. Die Anzahl der Pixel in den Layern
+weicht dann schon um den Faktor 20 bis 40 voneinander ab. Sicher ist, da&szlig;
+statistisch ein Mindestwert existiert, da ja auch ein Zufallslayer mit der
+gleichen Fl&auml;chenstreuung eine gewisse kleinste &Uuml;berdeckung zeigen
+w&uuml;rde, die wohl kaum weit von 50% entfernt sein d&uuml;rfte. Diese
+erwartete Sigmoidal Form der Kurve trat bereits auf, wenn die Kreuzkorrelation
+zwischen den Layern entlang dem jeweils gr&ouml;beren Raster und nicht, wie
+hier vorgestellt, entlang dem genauesten Raster gebildet wurde. <p>
+ <p>
+Die Abh&auml;ngigkeit der Kurven vom Parameter 'threshold' l&auml;sst sich
+weniger einfach auf den Ansatz mit kritischen Punkten zur&uuml;ckf&uuml;hren.
+Das r.watershed Modul weist Pixel mit einem acc-Wert oberhalb des thresholds
+als "streams" aus. Die  Einzugsgebiete ('basins') werden dann f&uuml;r die
+einzelnen stream-Abschnitte zurr&uuml;ckgerechnet. Wenn nun ein kritischer
+Punkt entf&auml;llt, &auml;ndert sich der acc-Wert bei einer Zahl
+abh&auml;ngiger anderer Pixel. Die streams werden also erst dann vom Wegfall
+eines kritischen Punktes ber&uuml;hrt, wenn die Auswirkungen so gro&szlig;
+sind, da&szlig; Pixel mit dem acc-Wert &uuml;ber dem 'threshold' diesen
+unterschreiten, oder andere Pixel den 'threshold' &uuml;berschreiten. Es ist
+aber klar, da&szlig; sich die Einzugsgebiete - also die Menge Pixel die in ein
+bestimmtes stream segment drainieren - schon lange verschoben haben
+k&ouml;nnen, wenn bei den streams selbst noch keine &Auml;nderung eingetreten
+ist. Die &Uuml;berlegung zeigt, da&szlig; die Berechnung von streams
+unempfindlicher gegen Rasterausd&uuml;nnung ist, als die Berechnung von basins,
+was durch den visuellen Vergleich der Ergebnisse best&auml;tigt wird (Graphik
+63). Die Rolle des 'threshold' Parameters in den Plots ist nicht
+quantifizierbar. In einer ersten ersten naiven N&auml;herung w&uuml;rde man den
+'threshold' im Nenner des Arguments der Exponentialfunktion erwarten, sozusagen
+als Ma&szlig; f&uuml;r die Konzentration relevanter kritischer Punkte. F&uuml;r
+den gr&ouml;&szlig;ten 'threshold' wird die Statistik schlecht, weil nur noch
+wenige basins in dem ausgew&auml;hlten Teilgebiet entstehen. &Uuml;ber die
+Gr&ouml;&szlig;e der zu w&auml;hlenden thresholds ist zu sagen, da&szlig; erst
+ein threshold der acht mal kleiner ist, als der hier vorliegende kleinste Wert
+( 1.44 qkm ) f&uuml;r streams Ergebnisse liefert, die den
+Gew&auml;sserl&auml;ufen von topographischen Karten im Ma&szlig;stab 1:25.000
+entsprechen.<p>
+<p><hr>
+<a href="arb94-Geomorph.html">&lt;&lt;</a>
+, <a href="arb94-Zusammen.html">&gt;&gt;</a>
+, <a href="arb94.html">Titelseite</a>
+, <a href="arb94-Contents.html">Inhaltsverzeichnis</a>
+</body></html>
