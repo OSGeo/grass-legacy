@@ -2,6 +2,34 @@
 
 <EM>g.mlist</EM> is an extended version of <EM>g.list</EM> which
 extends <EM>g.list</EM> with regular expressions and wildcards.
+<EM>g.mlist</EM> prints out only mapnames with separator, if any,
+without garbage outputs. In addition, map search is also available.
+
+<H2>EXAMPLES</H2>
+
+<H3>Wildcards:</H3>
+
+List all vector maps starting with letter "r":
+<BR>
+<TT>g.mlist type=vect "r*"</TT>
+
+<H3>Regular expressions:</H3>
+<BR>
+Print out all soils map with "soils" in their name:<BR>
+<TT>g.mlist -r type=rast '^soils'</TT>
+<P>
+
+Print out "tmp" if "tmp" raster map exists:<BR>
+<TT>g.mlist -r map='^tmp$'</TT>
+<P>
+
+Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name linewise):<BR>
+<TT>g.mlist -r map='^tmp[0-9]$' type=vect</TT>
+<P>
+
+Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name comma separated):<BR>
+<TT>g.mlist -r map='^tmp[0-9]$' type=vect sep=,</TT>
+This may be useful for other programs' parameter input.
 
 <H2>SEE ALSO</H2>
 
