@@ -39,34 +39,63 @@
 extern int errno;
 
 
+/*
 #define NROWS 600
 #define NCOLS 100
 #define FACTOR 10000
 #define BIDIRECTIONAL 1
+*/
+
+#define NROWS 600
+#define NCOLS 400
+#define FACTOR 10000
+#define BIDIRECTIONAL 1
 
 
-static int _add_link( gnGrpGraph_s * pgraph , gnInt32_t from , gnInt32_t to , gnInt32_t cost , gnInt32_t arc )
+static int _add_link( 	gnGrpGraph_s * pgraph ,
+						gnInt32_t from , gnInt32_t to , gnInt32_t cost , gnInt32_t arc ,
+						char chDirection ,
+						int fLast )
 {
 	int nret;
 
-	nret = gnGrpAddLink	( pgraph , from , to , cost , arc , NULL , NULL , NULL );
-	if ( nret < 0 ) {
-		fprintf( stderr, "gnGrpAddLink error: %s\n", gnGrpStrerror( pgraph ) );
-		return 1;
+	gnInt32_t xyz_from[3] , xyz_to[3] , direction[2];
+
+	if ( ! fLast ) {
+		/* setup node attributes with the x y coords in the grid by
+	   	   reversing the calculation done the main loop */
+		xyz_from[0] = from % NCOLS;
+		xyz_from[1] = from / NCOLS;
+		xyz_from[2] = 0;
+
+		xyz_to[0] = to % NCOLS;
+		xyz_to[1] = to / NCOLS;
+		xyz_to[2] = 0;
+
+		/* chDirection says if the link direction is 'u'=toward the top 'b'=the bot. 'l'=the left 'r'=the right
+	   	   'o'=toward right-bottom 'O'=toward top-left * Account for this in the link attributes */
+		direction[0] = (gnInt32_t)chDirection;
+		direction[1] = 0;
+
+
+		nret = gnGrpAddLink	( pgraph , from , to , cost , arc , xyz_from , xyz_to , direction );
+		if ( nret < 0 ) {
+			fprintf( stderr, "gnGrpAddLink error: %s\n", gnGrpStrerror( pgraph ) );
+			return 1;
+		}
 	}
 
-	if ( (arc % 1024) == 0 ) {
+	if ( (arc % 1024) == 0 || fLast ) {
 #ifndef GNGRP_STATS
 		printf( "add arc %07d - from %07d - to %07d - cost %07d\r",
 			   	arc , from , to , cost );
 #else
-		printf( "add arc %07ld - from %07ld - to %07ld - cost %07ld . Clock: tot %09ld nt %09ld lt %09ld nh %09ld o %09ld\r" ,
+		printf( "add arc %07ld - from %07ld - to %07ld - cost %07ld . Clock: tot %09ld nt %09ld nh %09ld o %09ld\r" ,
 			   	arc , from , to , cost ,
 			 	pgraph->clkAddLink / pgraph->cAddLink,
 			 	pgraph->clkNodeTree / pgraph->cAddLink,
-			 	pgraph->clkLinkTree / pgraph->cAddLink,
 			 	pgraph->clkNodeHeap / pgraph->cAddLink,
-			 	(pgraph->clkAddLink - (pgraph->clkNodeTree + pgraph->clkLinkTree + pgraph->clkNodeHeap)) / pgraph->cAddLink
+			 	(pgraph->clkAddLink - (pgraph->clkNodeTree + pgraph->clkNodeHeap)) / pgraph->cAddLink
 			   	);
 #endif
 		fflush( stdout );
@@ -82,8 +111,13 @@ int main( int argc , char ** argv )
 	int				irow , icol , itrow , itcol;
 	int				irowsave , icolsave;
 
-	gnInt32_t	 	from , to , arc , cost , xyz[3];
+	gnInt32_t	 	from, to, arc, cost;
 
+	/* node attributes */
+	gnInt32_t		xyz[3];
+
+	/* link attributes */
+	gnInt32_t		direction[2];
 
 	gnInt32_t	 	opaqueset[ 16 ] = {
 		FACTOR, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -111,27 +145,28 @@ int main( int argc , char ** argv )
 	/*
 	 * new API call
 	 */
+	printf( "graph initialize..." ); fflush(stdout);
 	gnGrpInitialize (
-					& graph , 		/* graph context to initialize */
-					1 ,				/* version (so far is always 1) */
-					sizeof(xyz) ,	/* node attributes size */
-					0 ,				/* link attributes size */
-					opaqueset		/* opaque graph parameters */
+					& graph , 			/* graph context to initialize */
+					1 ,					/* version (so far is always 1) */
+					sizeof(xyz) ,		/* node attributes size */
+					sizeof(direction) ,	/* link attributes size */
+					opaqueset			/* opaque graph parameters */
 					);
+	printf( "done.\n" );
 
 	from = 0;
 	to = 0;
 	arc = 0;
 
-	printf( "Graph generate:\n" );
 
-	printf( "Add horizontal and vertical links:\n" );
+	printf( "add horizontal and vertical links...\n" );
 	for ( irow = 0 ; irow < NROWS ; irow ++ ) {
 
-	if ( fInterlaced == True ) {
-		irowsave = irow;
-		if ( irow % 2 ) irow = NROWS - irow;
-	}
+		if ( fInterlaced == True ) {
+			irowsave = irow;
+			if ( irow % 2 ) irow = NROWS - irow;
+		}
 
 		for ( icol = 0 ; icol < NCOLS ; icol ++ ) {
 
@@ -148,12 +183,12 @@ int main( int argc , char ** argv )
 				to = irow * NCOLS + itcol;
 				cost = FACTOR;
 				arc ++;
-				if ( _add_link( &graph, from , to , cost , arc ) ) {
+				if ( _add_link( &graph, from , to , cost , arc , 'r' , 0 ) ) {
 					return 1;
 				}
 #ifdef BIDIRECTIONAL
 				arc ++;
-				if ( _add_link( &graph, to , from , cost , arc ) ) {
+				if ( _add_link( &graph, to , from , cost , arc , 'l' , 0 ) ) {
 					return 1;
 				}
 #endif
@@ -164,12 +199,12 @@ int main( int argc , char ** argv )
 				to = itrow * NCOLS + icol;
 				cost = FACTOR;
 				arc ++;
-				if ( _add_link( &graph, from , to , cost , arc ) ) {
+				if ( _add_link( &graph, from , to , cost , arc , 'b' , 0 ) ) {
 					return 1;
 				}
 #ifdef BIDIRECTIONAL
 				arc ++;
-				if ( _add_link( &graph, to , from , cost , arc ) ) {
+				if ( _add_link( &graph, to , from , cost , arc , 't' , 0 ) ) {
 					return 1;
 				}
 #endif
@@ -180,8 +215,10 @@ int main( int argc , char ** argv )
 
 		if ( fInterlaced == True ) irow = irowsave;
 	}
+	_add_link( &graph, to  , from , cost , arc , 'x' , 1 );
 
-	printf( "\nAdd oblique links:\n" );
+
+	printf( "\nadd oblique links...\n" );
 	for ( irow = 0 ; irow < NROWS ; irow ++ ) {
 		for ( icol = 0 ; icol < NCOLS ; icol ++ ) {
 			itcol = icol + 1;
@@ -192,32 +229,33 @@ int main( int argc , char ** argv )
 				to = itrow * NCOLS + itcol;
 				cost = (gnInt32_t)(sqrt(2.0) * (double)FACTOR);
 				arc ++;
-				if ( _add_link( &graph, from , to , cost , arc ) ) {
+				if ( _add_link( &graph, from , to , cost , arc , 'o' , 0 ) ) {
 					return 1;
 				}
 #ifdef BIDIRECTIONAL
 				arc ++;
-				if ( _add_link( &graph, to  , from , cost , arc ) ) {
+				if ( _add_link( &graph, to  , from , cost , arc , 'O' , 0 ) ) {
 					return 1;
 				}
 #endif
 			}
 		}
 	}
-	printf( "\nDone.\n\n" );
+	_add_link( &graph, to  , from , cost , arc , 'x' , 1 );
+	printf( "\ndone.\n" );
 
 
-	printf( "Graph flattening:\n" );
+	printf( "graph flattening..." ); fflush(stdout);
 	nret = gnGrpFlatten( & graph );
 	if ( nret < 0 )
 	{
-		fprintf( stderr , "gnGrpFlatten error: %s\n" , gnGrpStrerror( & graph ) );
+		fprintf( stderr , "\ngnGrpFlatten error: %s\n" , gnGrpStrerror( & graph ) );
 		return 1;
 	}
-	printf( "Done.\n\n" );
+	printf( "done.\n" );
 
 
-	printf( "Graph write:\n" );
+	printf( "graph write..." ); fflush(stdout);
 	if ( (fd = open( pszFileout , O_WRONLY | O_CREAT | O_TRUNC, 0666 )) < 0 )
 	{
 		perror( "open" ); return 1;
@@ -225,12 +263,14 @@ int main( int argc , char ** argv )
 	nret = gnGrpWrite( & graph , fd );
 	if ( nret < 0 )
 	{
-		fprintf( stderr , "gnGrpWrite error: %s\n" , gnGrpStrerror( & graph ) );
+		fprintf( stderr , "\ngnGrpWrite error: %s\n" , gnGrpStrerror( & graph ) );
 		return 1;
 	}
-	printf( "Done.\n" );
+	printf( "done.\n" );
 
 
+	printf( "graph release..." ); fflush(stdout);
 	gnGrpRelease( & graph );
+	printf( "program finished.\n" );
 	return 0;
 }
