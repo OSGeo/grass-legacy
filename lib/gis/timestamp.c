@@ -1,5 +1,4 @@
 /*
- * $Id$
  *
  * provides DateTime functions for timestamp management:
  *
@@ -78,6 +77,31 @@ int G__write_timestamp ( FILE *fd, struct TimeStamp *ts)
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Returns: 1 on success
+ * -1 error
+ *
+ *  \param ts
+ *  \param buf
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Returns:
+ *  1 on success
+ * -1 error 
+ *
+ *  \param ts
+ *  \param buf
+ *  \return int
+ */
+
 int G_format_timestamp (
     struct TimeStamp *ts,
     char *buf)
@@ -101,6 +125,31 @@ int G_format_timestamp (
 
     return 1;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Returns: 1 on success 
+ * -1 error
+ *
+ *  \param ts
+ *  \param buf
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Returns:
+ * 1 on success
+ * -1 error 
+ *
+ *  \param ts
+ *  \param buf
+ *  \return int
+ */
 
 int G_scan_timestamp (
     struct TimeStamp *ts,
@@ -134,6 +183,41 @@ int G_scan_timestamp (
     return 1;
 }
 	
+
+/*!
+ * \brief 
+ *
+ * Use to copy the TimeStamp information into Datetimes, so
+ * the members of struct TimeStamp shouldn't be accessed directly.  
+ * count=0 means no datetimes were copied 
+ * count=1 means 1 datetime was copied into dt1 
+ * count=2 means 2 datetimes were copied
+ *
+ *  \param ts
+ *  \param dt1
+ *  \param dt2
+ *  \param count
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief copy TimeStamp into Datetimes
+ *
+ * Use to copy the TimeStamp
+ * information into Datetimes, so the members of struct TimeStamp shouldn't be
+ * accessed directly.
+ * count=0  means no datetimes were copied
+ * count=1  means 1 datetime was copied into dt1
+ * count=2  means 2 datetimes were copied
+ *
+ *  \param ts
+ *  \param dt1
+ *  \param dt2
+ *  \param count
+ *  \return int
+ */
+
 int G_get_timestamps (
     struct TimeStamp *ts,
     DateTime *dt1,DateTime *dt2,
@@ -224,6 +308,30 @@ static int read_timestamp (
 #define VECT_MISC "dig_misc"
 #define GRID3	  "grid3"
 
+
+/*!
+ * \brief 
+ *
+ * Returns 1 on success.  0 or negative on error.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param ts
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief Read raster timestamp
+ *
+ * Returns 1 on success.  0 or negative on error.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param ts
+ *  \return int
+ */
+
 int G_read_raster_timestamp (
     char *name,char *mapset,
     struct TimeStamp *ts)
@@ -234,6 +342,33 @@ int G_read_raster_timestamp (
     return read_timestamp ("raster", name, mapset, element, "timestamp", ts);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Only files in current
+ * mapset can be removed Returns: 0 if no file 
+ * 1 if successful
+ * -1 on fail
+ *
+ *  \param name
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Only timestamp files in current mapset can be removed
+ * Returns:
+ * 0  if no file
+ * 1  if successful
+ * -1  on fail
+ *
+ *  \param name
+ *  \return int
+ */
+
 int G_remove_raster_timestamp (char *name)
 {
     char element[128];
@@ -241,6 +376,30 @@ int G_remove_raster_timestamp (char *name)
     sprintf (element, "%s/%s", RAST_MISC, name);
     return G_remove(element, "timestamp");
 }
+
+
+/*!
+ * \brief 
+ *
+ * Returns 1 on success. 0 or negative on error.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param ts
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief Read vector timestamp
+ *
+ * Returns 1 on success.  0 or negative on error.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param ts
+ *  \return int
+ */
 
 int G_read_vector_timestamp (
     char *name,char *mapset,
@@ -252,6 +411,33 @@ int G_read_vector_timestamp (
     return read_timestamp ("vector", name, mapset, element, "timestamp", ts);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Only files in current
+ * mapset can be removed Returns: 0 if no file 
+ * 1 if successful
+ * -1 on fail
+ *
+ *  \param name
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Only timestamp files in current mapset can be removed
+ * Returns:
+ * 0  if no file
+ * 1  if successful
+ * -1  on fail
+ *
+ *  \param name
+ *  \return int
+ */
+
 int G_remove_vector_timestamp (char *name)
 {
     char element[128];
@@ -259,6 +445,19 @@ int G_remove_vector_timestamp (char *name)
     sprintf (element, "%s/%s", VECT_MISC, name);
     return G_remove(element, "timestamp");
 }
+
+
+/*!
+ * \brief read grid3 timestamp
+ *
+ * Returns 1 on success. 0 or
+ * negative on error.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param ts
+ *  \return int
+ */
 
 int G_read_grid3_timestamp (
     char *name,char *mapset,
@@ -270,6 +469,20 @@ int G_read_grid3_timestamp (
     return read_timestamp ("grid3", name, mapset, element, "timestamp", ts);
 }
 
+
+/*!
+ * \brief remove grid3 timestamp
+ *
+ * Only timestamp files in current mapset can be removed
+ * Returns:
+ * 0  if no file
+ * 1  if successful
+ * -1  on fail
+ *
+ *  \param name
+ *  \return int
+ */
+
 int G_remove_grid3_timestamp (char *name)
 {
     char element[128];
@@ -277,6 +490,33 @@ int G_remove_grid3_timestamp (char *name)
     sprintf (element, "%s/%s", GRID3, name);
     return G_remove(element, "timestamp");
 }
+
+
+/*!
+ * \brief 
+ *
+ * Returns: 1 on success
+ * -1 error - can't create timestamp file
+ * -2 error - invalid datetime in ts
+ *
+ *  \param name
+ *  \param ts
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Returns:
+ * 1 on success.  
+ * -1 error - can't create timestamp file
+ * -2 error - invalid datetime in ts
+ *
+ *  \param name
+ *  \param ts
+ *  \return int
+ */
 
 int G_write_raster_timestamp (
     char *name,
@@ -288,6 +528,33 @@ int G_write_raster_timestamp (
     return write_timestamp ("raster", name, element, "timestamp", ts);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Returns: 1 on success
+ * -1 error - can't create timestamp file
+ * -2 error - invalid datetime in ts
+ *
+ *  \param name
+ *  \param ts
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Returns:
+ * 1 on success.  
+ * -1 error - can't create timestamp file
+ * -2 error - invalid datetime in ts
+ *
+ *  \param name
+ *  \param ts
+ *  \return int
+ */
+
 int G_write_vector_timestamp (
     char *name,
     struct TimeStamp *ts)
@@ -297,6 +564,20 @@ int G_write_vector_timestamp (
     sprintf (element, "%s/%s", VECT_MISC, name);
     return write_timestamp ("vector", name, element, "timestamp", ts);
 }
+
+
+/*!
+ * \brief write grid3 timestamp
+ *
+ * Returns:
+ * 1 on success.
+ * -1 error - can't create timestamp file
+ * -2 error - invalid datetime in ts
+ *
+ *  \param name
+ *  \param ts
+ *  \return int
+ */
 
 int G_write_grid3_timestamp (
     char *name,

@@ -18,6 +18,23 @@
 #include <stdlib.h>
 #include "gis.h"
 
+
+/*!
+ * \brief rename a database file
+ *
+ * The file or directory <b>old</b> under the database <b>element</b>
+ * directory in the current mapset is renamed to <b>new.</b>
+ * Returns 1 if successful, 0 if <b>old</b> does not exist, and -1 if there was
+ * an error.
+ * <b>Bug.</b> This routine does not check to see if the <b>new</b> name is a
+ * valid database file name.
+ *
+ *  \param element
+ *  \param old
+ *  \param new
+ *  \return int
+ */
+
 int G_rename ( char *element,
     char *oldname, char *newname)
 {

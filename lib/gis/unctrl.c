@@ -1,4 +1,18 @@
 #include "gis.h"
+
+/*!
+ * \brief printable version of control character
+ *
+ * This routine returns a pointer to a string which contains an
+ * English-like representation for the character <b>c.</b> This is useful for
+ * nonprinting characters, such as control characters. Control characters are
+ * represented by ctrl-C, e.g., control A is represented by ctrl-A. 0177 is
+ * represented by DEL/RUB. Normal characters remain unchanged.
+ *
+ *  \param c
+ *  \return char * 
+ */
+
 char *
 G_unctrl(c)
     unsigned char c;

@@ -26,6 +26,26 @@
 #include <sys/stat.h>
 #include "gis.h"
 
+/*!
+ * \brief returns a temporary file name
+ *
+ * This routine
+ * returns a pointer to a string containing a unique file name that can be used
+ * as a temporary file within the module. Successive calls to G_tempfile() will
+ * generate new names.
+ * Only the file name is generated. The file itself is not created. To create the
+ * file, the module must use standard UNIX functions which create and open files,
+ * e.g., creat() or fopen().
+ * The programmer should take reasonable care to remove (unlink) the file before
+ * the module exits. However, GRASS database management will eventually remove
+ * all temporary files created by G_tempfile() that have been left behind by
+ * the modules which created them.
+ *
+ *  \return char:  pointer to a character string containing the name.
+ *   the name is copied to allocated memory and may be
+ *   released by the unix free() routine.
+ */
+
 char *G_tempfile(void)
 {
     return G__tempfile(getpid());

@@ -93,6 +93,21 @@ int G_round_fp_map(char *name,char *mapset)
     return 1;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Writes
+ * the <tt>f_quant</tt> file for the raster map <em>name</em> with one rule. The rule
+ * is generated using the floating-point range in <tt>f_range</tt> producing the
+ * integer range [<em>cmin,cmax</em>].
+ *
+ *  \param name
+ *  \param cmin
+ *  \param cmax
+ *  \return int
+ */
+
 int G_quantize_fp_map(
     char *name,char *mapset,
     CELL min,CELL max)
@@ -119,6 +134,28 @@ int G_quantize_fp_map(
 
 /*-------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Writes the <tt>f_quant</tt> file for the raster map
+ * <em>name</em> with one rule. The rule is generated using the floating-point
+ * range [<em>dmin,dmax</em>] and the integer range
+ * [<em>min,max</em>].
+ * This routine differs from the one above in that the application controls the
+ * floating-point range. For example, r.slope.aspect will use this routine to
+ * quantize the slope map from [0.0, 90.0] to [0,
+ * 90] even if the range of slopes is not 0-90. The aspect map would be
+ * quantized from [0.0, 360.0] to [0, 360].
+ *
+ *  \param name
+ *  \param dmin
+ *  \param dmax
+ *  \param cmin
+ *  \param cmax
+ *  \return int
+ */
+
 int G_quantize_fp_map_range(
     char *name,char *mapset,
     DCELL d_min,DCELL d_max,
@@ -140,6 +177,23 @@ int G_quantize_fp_map_range(
 
 /*-------------------------------------------------------------------------*/
 
+
+
+/*!
+ * \brief 
+ *
+ * Writes the <tt>f_quant</tt> file for the raster map <em>name</em> from <em>q</em>.
+ * if mapset==G_mapset() i.e. the map is in current mapset, then the original
+ * quant file in cell_misc/map/f_quant is written. Otherwise <em>q</em> is
+ * written into quant2/mapset/name (much like colr2 element). This results in
+ * map@mapset being read using quant rules stored in <em>q</em> from
+ * G_mapset().  See G_read_quant() for detailes.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param q
+ *  \return int
+ */
 
 int G_write_quant(
      char *name,char *mapset,
@@ -170,6 +224,26 @@ int G_write_quant(
 }
 
 /*-------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * reads quantization rules for <tt>"name"</tt> in <tt>"mapset"</tt> and stores them
+ * in the quantization structure <tt>"quant"</tt>. If the map is in another
+ * mapset, first checks for quant2 table for this map in current mapset.
+ * Return codes:
+ * -2 if raster map is of type integer
+ * -1 if (! G__name_is_fully_qualified ())
+ * 0 if quantization file does not exist, or the file is empty or has wrong
+ * format.
+ * 1 if non-empty quantization file exists.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param q
+ *  \return int
+ */
 
 int G_read_quant(
      char *name,char *mapset,

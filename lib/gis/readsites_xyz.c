@@ -20,9 +20,6 @@
  * -------------------------------------------------------------------------- *
  */
 
-/* 
- * $Id$ */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,6 +27,16 @@
 #include "gis.h"
 #include "glocale.h"
 #include "site.h"
+
+
+/*!
+ * \brief 
+ *
+ * Allocate an array of <tt>SITE_XYZ</tt> with size <tt>num</tt>.
+ *
+ *  \param num
+ *  \return SITE_XYZ * 
+ */
 
 SITE_XYZ *G_alloc_site_xyz(size_t num)
 {
@@ -42,10 +49,46 @@ SITE_XYZ *G_alloc_site_xyz(size_t num)
 	return xyz;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Free a previously allocated array of <tt>SITE_XYZ</tt>.
+ *
+ *  \param xyz
+ *  \return void
+ */
+
 void G_free_site_xyz(SITE_XYZ *theSites)
 {
 	G_free(theSites);
 }
+
+
+/*!
+ * \brief 
+ *
+ * Read a chunk of a site file into a 
+ * <tt>SITE_XYZ</tt> array setting the <b>series Z </b> dimension
+ * from the specified attribute. The <tt>fdsite</tt> parameter is
+ * the <tt>FILE *</tt> for the sites file; <tt>type</tt> is the
+ * attribute type to use for the <tt>z</tt> variable value; the
+ * index is the 1--based index value for the attribute; the
+ * <tt>size</tt> is the size of the <tt>SITE_XYZ</tt> array passed
+ * to the function; the <tt>region</tt> is a pointer to a 
+ * <tt>struct Cell_head</tt> for the current region or <tt>NULL</tt>;
+ * and, finally, <tt>xyz</tt> is a pointer to an array of 
+ * <tt>SITE_XYZ</tt> which will be populated. The return value is
+ * the number of records read or <tt>EOF</tt>.
+ *
+ *  \param fdsite
+ *  \param type
+ *  \param index
+ *  \param size
+ *  \param region
+ *  \param xyz
+ *  \return int
+ */
 
 int G_readsites_xyz( 
 	FILE * fdsite,   /* The FILE stream to the sites file               */

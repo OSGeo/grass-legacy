@@ -119,11 +119,38 @@ fprintf (stderr, "create window mapping (%d cols)", WINDOW_NCOLS);
     return 0;
 }
 
+
+/*!
+ * \brief northing to row
+ *
+ * Converts a <b>north</b>ing relative to a
+ * <b>region</b> to a row.
+ * <b>Note.</b> the result is a double. Casting it to an integer will give the
+ * row number.
+ *
+ *  \param north
+ *  \param region
+ *  \return double
+ */
+
 double G_northing_to_row (double north,
     struct Cell_head *window)
 {
     return (window->north - north) / window->ns_res;
 }
+
+
+/*!
+ * \brief adjust east longitude
+ *
+ * This routine returns an equivalent <b>east</b> that is
+ * larger, but no more than 360 larger than the <b>west</b> coordinate.
+ * This routine should be used only with latitude-longitude coordinates.
+ *
+ *  \param east
+ *  \param west
+ *  \return double
+ */
 
 double G_adjust_east_longitude (
     double east,double west)
@@ -134,6 +161,21 @@ double G_adjust_east_longitude (
 	east += 360.0;
     return east;
 }
+
+
+/*!
+ * \brief returns east larger than west
+ *
+ * If the region projection is
+ * PROJECTION_LL, then this routine returns an equivalent <b>east</b> that is
+ * larger, but no more than 360 degrees larger, than the coordinate for the
+ * western edge of the region. Otherwise no adjustment is made and the original
+ * <b>east</b> is returned.
+ *
+ *  \param east
+ *  \param region
+ *  \return double
+ */
 
 double G_adjust_easting ( double east,
     struct Cell_head *window)
@@ -159,11 +201,47 @@ double G_easting_to_col ( double east,
  *       row+0.0 will give northern edge of row
  *       row+1.0 will give southern edge of row
  */
+
+/*!
+ * \brief row to northing
+ *
+ * Converts a <b>row</b> relative to a <b>region</b> to a
+ * northing;
+ * <b>Note.</b> row is a double: row+0.5 will return the northing for the
+ * center of the row; row+0.0 will return the northing for the northern edge of
+ * the row; and row+1.0 will return the northing for the southern edge of the
+ * row. double <b>G_easting_to_col</b> (east, region) <i>easting to
+ * column</i> double east; struct Cell_head *region;
+ * Converts an <b>east</b>ing relative to a <b>region</b> to a column.
+ * <b>Note.</b> The result is a double. Casting it to an integer will give the
+ * column number.
+ *
+ *  \param row
+ *  \param region
+ *  \return double
+ */
+
 double G_row_to_northing ( double row,
     struct Cell_head *window)
 {
     return window->north - row * window->ns_res;
 }
+
+
+/*!
+ * \brief column to easting
+ *
+ * Converts a <b>col</b>umn relative to a
+ * <b>region</b> to an easting;
+ * <b>Note.</b> col is a double: col+0.5 will return the easting for the center
+ * of the column; col+0.0 will return the easting for the western edge of the
+ * column; and col+1.0 will return the easting for the eastern edge of the
+ * column.
+ *
+ *  \param col
+ *  \param region
+ *  \return double
+ */
 
 double G_col_to_easting (double col,
     struct Cell_head *window)
@@ -171,11 +249,47 @@ double G_col_to_easting (double col,
     return window->west + col * window->ew_res;
 }
 
+
+/*!
+ * \brief number of rows in active region
+ *
+ *
+ *  \param void
+ *  \return int
+ */
+
 int G_window_rows ()
 {
     G__init_window () ;
     return WINDOW_NROWS;
 }
+
+
+/*!
+ * \brief number of columns in active region
+ *
+ * These
+ * routines return the number of rows and columns (respectively) in the active
+ * module region. Before raster files can be read or written, it is necessary to
+ * known how many rows and columns are in the active region. For example:
+ \code  
+  int nrows, cols;
+  int row, col; 
+  nrows = G_window_rows( ); 
+  ncols = G_window_cols( ); 
+  for (row = 0; row < nrows; row++)
+  {
+  <i>read</i> row ...
+  for (col = 0; col < ncols; col++)
+  {
+  process col ...
+  }
+  }
+ \endcode 
+ *
+ *  \param void
+ *  \return int
+ */
 
 int G_window_cols ()
 {
