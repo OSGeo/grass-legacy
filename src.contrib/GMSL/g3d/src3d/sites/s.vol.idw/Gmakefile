@@ -1,5 +1,5 @@
 PGM=s.vol.idw
-HOME=.
+HOME=$(BIN_MAIN_CMD)
 
 LIST=main.o read_sites.o
 
