@@ -1,8 +1,9 @@
-/**********************************************************************/
+/**********************************************************************/ 
 /*                                                                    */
 /*      This is the main program for tracing out the path that a      */
 /*      drop of water would take if released at a certain location    */
-/*      on an input elevation map.                                    */
+/*      on an input elevation map.  The program was written by        */
+/*	Kewan Q. Khawaja                                              */
 /*                                                                    */
 /**********************************************************************/
 
@@ -62,7 +63,7 @@ char *argv[];
 	opt1->key        = "output" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES ;
-	opt1->gisprompt  = "new,cell,raster" ;
+	opt1->gisprompt  = "any,cell,raster" ;
 	opt1->description= "Name of output raster map" ;
 
 	opt3 = G_define_option() ;
@@ -90,13 +91,15 @@ char *argv[];
 
 	if (G_parser(argc, argv))
 		exit(-1);
-
-	for(n=0; opt3->answers[n] != NULL; n+=2)
-	{
+	
+	if (opt3->answer) 
+	{  
+	    for(n=0; opt3->answers[n] != NULL; n+=2)
+	    {
 		G_scan_easting  (opt3->answers[n  ], &east, G_projection()) ;
 		G_scan_northing (opt3->answers[n+1], &north, G_projection()) ;
-		row = (window.north - north) / window.ns_res;
-		col = (east - window.west) / window.ew_res;
+		col = (int)G_easting_to_col(east, &window);
+		row = (int)G_northing_to_row(north, &window );
 
 		NEW_START_PT = (POINT *) (malloc (sizeof (POINT)));
 
@@ -109,16 +112,17 @@ char *argv[];
 			head_start_pt = NEW_START_PT;
 			PRESENT_PT = head_start_pt;
 		}
-		else 
+	    	else 
 		{
 			NEXT_START_PT = NEW_START_PT;
 			PRESENT_PT = NEXT_START_PT ;
-			return(0);
-		}
+			/*return(0); quote this out to accept multi-starters,
+			 -modified by Jianping Xu*/
+	    	}
+	    }
 	}
 
-
-	/*  Check if elevation layer exists in data base  */
+/*  Check if elevation layer exists in data base  */
 	search_mapset = "";
 
 	strcpy(elevation_layer, opt2->answer);
@@ -211,7 +215,7 @@ char *argv[];
 			exit(1);
 		segment_put_row(&in_seg, cell, row);
 	}
-
+	
 	/* If the output layer containing the marked starting positions*/
 	/* already exists, create a linked list of starting locations  */
 	if (flag == 1) {
@@ -228,7 +232,9 @@ char *argv[];
 		/*  Search for the marked starting pts and make list	*/
 		for(row = 0; row < nrows; row++)
 		{
-			if(G_get_map_row(drain_path_layer,cell,row) < 0)
+			if(G_get_map_row(drain_path_fd,cell,row) < 0)
+		/* Originally: if(G_get_map_row(drain_path_layer,cell,row) < 0).
+		 * Fixed by Jianping Xu*/
 				exit(1);
 
 			for(col = 0; col < ncols; col++)
@@ -249,7 +255,6 @@ char *argv[];
 		G_close_cell(drain_path_fd);
 	}
 
-
 	/*  check if all the starting pts are inside database window */
 	if(flag != 1)
 	{
@@ -265,7 +270,6 @@ char *argv[];
 			PRES_PT = NEXT_PT;
 		}
 	}
-
 
 	/* loop over the starting points to find the drainage paths  */
 	PRES_PT = head_start_pt;
@@ -491,4 +495,5 @@ POINT *head;
 	}
 }
 
-/*************** END OF FUNCTION "FREE_LIST" ********************/
+
+
