@@ -1,0 +1,6 @@
+#!/bin/sh
+for name in $(/bin/ls $(echo $PATH | sed 's/:/ /g') 2> /dev/null | egrep '^(tclsh[0-9]+\.[0-9]+)$')
+do
+	sed "s/^exec tclsh/exec $name/" scripts/$2 > $1/bin/$2
+	break
+done
