@@ -32,6 +32,7 @@
 #include "Vect.h"
 
 #include "gis.h"
+#include "site.h"
 #include "linkm.h"
 #include "bitmap.h"
 #include "interpf.h"

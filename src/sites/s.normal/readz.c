@@ -7,6 +7,7 @@
  */
 
 #include "gis.h"
+#include "site.h"
 
 int readz (
   FILE *fdsite,

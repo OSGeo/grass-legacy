@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "gis.h"
+#include "site.h"
 #include "proto.h"
 
 /* update 12/99 */

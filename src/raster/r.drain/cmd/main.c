@@ -26,6 +26,7 @@
 #include <string.h>
 #include "segment.h"
 #include "gis.h"
+#include "site.h"
 #define MAIN
 #include "stash.h"
 

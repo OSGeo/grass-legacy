@@ -32,6 +32,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "gis.h"
+#include "site.h"
 #include "segment.h"
 #include "cost.h"
 #include "stash.h"

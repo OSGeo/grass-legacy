@@ -25,6 +25,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
 #include "V_.h"
 #include "local_proto.h"

@@ -4,6 +4,7 @@
 #include <string.h>
 #include <math.h>
 #include "gis.h"
+#include "site.h"
 
 /*---------------------typedefs*/
 

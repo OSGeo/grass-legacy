@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "site.h"
 
 int main (argc, argv)
   char **argv;

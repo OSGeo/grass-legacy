@@ -40,6 +40,7 @@
 #include <string.h>
 #include <math.h>
 #include "gis.h"
+#include "site.h"
 #include "methods.h"
 
 #ifndef lint

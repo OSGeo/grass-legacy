@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "site.h"
 #include "univar.h"
 
 int readsites (fdsite, all, verbose, field, xyz)

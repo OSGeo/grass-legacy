@@ -31,6 +31,7 @@
 #include <math.h>
 #include <string.h>
 #include "gis.h"
+#include "site.h"
 
 #define XYZ_SIZE 10000
 

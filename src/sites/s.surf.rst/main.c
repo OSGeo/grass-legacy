@@ -59,6 +59,7 @@
 #include <unistd.h>
 #endif
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
 #include "linkm.h"
 #include "bitmap.h"

@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "site.h"
 #include "local_proto.h"
 
 void cpvalue (struct RASTER_MAP_PTR *from, int fcol, 

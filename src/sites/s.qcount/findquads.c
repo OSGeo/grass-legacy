@@ -11,6 +11,7 @@
 #include <stdlib.h> 
 #include <math.h>
 #include "gis.h"
+#include "site.h"
 #include "quaddefs.h"
 
 #ifndef RAND_MAX 

@@ -9,6 +9,7 @@
 #include <math.h>
 #include <signal.h>
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
 
 /******************************************************************/

@@ -10,6 +10,7 @@
 
 #include <stdlib.h>
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
 
 #include "gstypes.h"

@@ -38,6 +38,7 @@
 #include <string.h>
 #include <math.h>
 #include "gis.h"
+#include "site.h"
 #include "quaddefs.h"
 
 #define LOOP_SIZE 100

@@ -12,7 +12,10 @@
  *	Read the file COPYING coming with GRASS for details.
  *
  * $Log$
- * Revision 1.2  2000-12-01 14:18:48  jan
+ * Revision 1.3  2001-01-12 08:16:06  justin
+ * Added site.h since it was removed from gis.h
+ *
+ * Revision 1.2  2000/12/01 14:18:48  jan
  * added module description
  *
  * Revision 1.1  2000/11/07 05:15:19  cho
@@ -32,6 +35,7 @@
 
 
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
 
 int 

@@ -13,7 +13,10 @@
 
 /*-
  * $Log$
- * Revision 1.7  2000-10-15 04:02:59  eric
+ * Revision 1.8  2001-01-12 08:16:22  justin
+ * Added site.h since it was removed from gis.h
+ *
+ * Revision 1.7  2000/10/15 04:02:59  eric
  * Undo breakage I introduced.
  *
  * Revision 1.6  2000/10/14 01:36:54  eric
@@ -187,11 +190,12 @@
  * Revision 1.1  1995/02/07  21:01:12  mccauley Initial revision
  */
 
-#include "gis.h"
 #include <ctype.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "gis.h"
+#include "site.h"
 
 #define DQUOTE '"'
 #define SPACE ' '

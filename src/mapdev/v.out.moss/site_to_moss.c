@@ -7,6 +7,7 @@
 */
 #include <string.h>
 #include "gis.h"
+#include "site.h"
 #include "moss.h"
 
 int site_to_moss (

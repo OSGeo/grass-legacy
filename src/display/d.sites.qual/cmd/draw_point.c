@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "site.h"
 #include "display.h"
 #include "raster.h"
 #include "options.h"

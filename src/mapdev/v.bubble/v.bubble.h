@@ -7,6 +7,7 @@
 #include <math.h>
 #include "Vect.h"
 #include "gis.h"
+#include "site.h"
 
 /* #define DEBUG */
 
