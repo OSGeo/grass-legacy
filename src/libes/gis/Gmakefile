@@ -243,5 +243,5 @@ set_window.o: G.h
 window_map.o: G.h
 
 version.h: $(VERSION_FILE)
-	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $@
+	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $(SRC)/include/$@
 ...: #
