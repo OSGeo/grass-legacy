@@ -131,11 +131,13 @@ int main (int argc, char *argv[])
   }
 
   G_get_window (&window);
+  s->cattype=CELL_TYPE;
+  
   for(i=0; i<n; ++i)
   {
     s->east=rng()/max*(window.west-window.east)+window.east;
     s->north=rng()/max*(window.north-window.south)+window.south;
-    s->ccat=(CELL)i+1;
+    s->ccat=i+1;
     s->dbl_att[0]=i+1;
     G_site_put (fd, s);
   }
