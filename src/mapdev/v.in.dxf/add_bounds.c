@@ -1,3 +1,4 @@
+/* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
 /* revised by J Moorman 7/23/90
 ** original by Chuck Ehschlaeger
 */
@@ -56,7 +57,7 @@ dxf_add_boundaries ()
 			continue;
 
 		/* temporarily reopen file */
-		sprintf (filename, "%s.%s", basename, closed_layers[count].name);
+		sprintf (filename, "%s.%s", base_name, closed_layers[count].name);
 		if(!ascii_flag->answer) /* FOR USE IN BINARY FILE */
 			fp = G_fopen_append ("dig", filename);
 
