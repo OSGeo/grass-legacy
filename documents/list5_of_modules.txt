@@ -28,6 +28,7 @@
 #        inter  only interactive usage
 #        cmd    commandline, uses GRASS parser
 #        script shell script (bourne, c, tcl/tk, wish)
+#	 xml    module has xml interface description
 #        other  other interface
 #        n/a    not applicable, not known
 #
@@ -378,8 +379,6 @@ o  s.univar
 +  v.timestamp
 +  v.transform
 +  v.trim
-# 
-# Grid3D
 +  r3.in.ascii
 ?  r3.in.grid3
 ?  r3.in.v5d
