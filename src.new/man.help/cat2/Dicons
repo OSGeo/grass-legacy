@@ -1,0 +1,66 @@
+
+
+
+Dicons(2D)           GRASS Reference Manual            Dicons(2D)
+
+
+
+NAME
+     Dicons - Tool for graphically displaying points, as icons,
+     in the current window
+     (D Language Tool)
+
+SYNOPSIS
+     Dicons [color [size [type [file]]]]
+     Dicons [option=value] [option=value] ...
+
+DESCRIPTION
+     Dicons graphically displaying point locations as icons in
+     the current map window.  Coordinates are read either from
+     standard input or from a file stated by the file option.
+     Options can be stated either positionally or explicitly on
+     the command line (see DINTRO[2D]).  Dashes (-) can also be
+     inserted positionally on the command line to indicate use of
+     default values for specific options.  Options are:
+
+     color=color
+          Sets the current color to that stated.  Options are
+          red, orange, green, blue, indigo, violet, black, white,
+          gray, yellow, brown, and magenta.  The default used
+          when no color is specified is white.
+     This program resulted from a quick hack on the Dpoints
+     program and it could probably use some testing.  It was not
+     developed under under contract to CERL, its just a little
+     give-away.
+
+     Diconss will locate a point at the location specified, even
+     if it is outside the current window.
+
+     A size option should be added to this so that the user can
+     control the sizes of the icon.
+     Note that output from the GRASS Gsites command can be
+     redirected directly into Dicons.
+
+SEE ALSO
+     DINTRO[2D]     Introduction to the GRASS D tools
+     Dstatus[2D]    Prints the status of the monitor windows
+     Gsites[2G]     To list the coordinates of a GRASS sites file
+     d.sites[1]     Displays point sites
+
+AUTHOR
+     Dave Johnson
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
