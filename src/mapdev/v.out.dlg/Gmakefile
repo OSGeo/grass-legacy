@@ -1,0 +1,47 @@
+EXTRA_CFLAGS	= $(VECT_INCLUDE)
+
+
+OFILES = \
+	v.export_dlg.o \
+	area_one.o\
+	shuffle_dots.o\
+	struct_swap.o\
+	write_lines.o\
+	write_areas.o\
+	write_nodes.o\
+	write_head.o\
+	write.o
+
+CFILES = \
+	area_one.c\
+	shuffle_dots.c\
+	struct_swap.c\
+	write_lines.c\
+	write_areas.c\
+	write_nodes.c\
+	write_head.c\
+	write.c
+
+
+
+PROG = $(BIN_MAIN_CMD)/v.out.dlg
+
+all:  $(PROG)
+
+
+$(PROG): $(OFILES) $(GISLIB) $(VECTLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+
+
+saber_src:
+	#load $(CFLAGS) v.export_dlg.c $(CFILES) $(LIBFILES) $(LIBTRANS) $(LIBATTS) $(GISLIB) $(MATHLIB)
+
+
+write_lines.o: export_dlg.h
+write_areas.o: export_dlg.h
+write_nodes.o: export_dlg.h
+write_head.o:  export_dlg.h
+write.o:       export_dlg.h
