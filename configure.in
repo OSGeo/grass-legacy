@@ -417,15 +417,6 @@ AC_CHECK_LIB(bsd, gtty, COMPATLIB=-lbsd, [
 ])])])
 AC_SUBST(COMPATLIB)
 
-AC_CHECK_LIB(termlib, tgetent, TERMLIB=-ltermlib, [
-AC_CHECK_LIB(termcap, tgetent, TERMLIB=-ltermcap, [
-AC_CHECK_LIB(ncurses, tgetent, TERMLIB=-lncurses, [
-AC_CHECK_LIB(curses, tgetent, TERMLIB=-lcurses, [
-    AC_MSG_WARN([*** Unable to locate tgetent() function.])
-    TERMLIB=
-])])])])
-AC_SUBST(TERMLIB)
-
 AC_CHECK_FUNC(xdrmem_create, XDRLIB=, [
 AC_CHECK_LIB(sun, xdrmem_create, XDRLIB=-lsun, [
 AC_CHECK_LIB(nsl, xdrmem_create, XDRLIB=-lnsl, [
