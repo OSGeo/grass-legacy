@@ -219,7 +219,7 @@ int main (int argc, char *argv[])
 	cellhd.top = 1.;
 	cellhd.bottom = 0.;
 	cellhd.tb_res = 1.;
-	cellhd.depths = 1.5;
+	cellhd.depths = 1;
     }
     else
     {
@@ -242,7 +242,7 @@ int main (int argc, char *argv[])
 	  cellhd.top = 1.;
 	  cellhd.bottom = 0.;
 	  cellhd.tb_res = 1.;
-	  cellhd.depths = 1.5;
+	  cellhd.depths = 1;
         }
         else
         {
@@ -259,7 +259,7 @@ int main (int argc, char *argv[])
 	  cellhd.top = 1.;
 	  cellhd.bottom = 0.;
 	  cellhd.tb_res = 1.;
-	  cellhd.depths = 1.5;
+	  cellhd.depths = 1;
         }
     }
 
