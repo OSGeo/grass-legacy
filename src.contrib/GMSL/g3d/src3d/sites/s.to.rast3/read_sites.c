@@ -1,8 +1,7 @@
 #include "gis.h"
 #include "site.h"
 
-read_sites (name)
-    char *name;
+int read_sites (char *name, int field)
 {
     char *mapset=NULL;
     FILE *fd;
@@ -14,8 +13,8 @@ read_sites (name)
     int n, c, i, d,ret;
     int count, errors, k=0;
 	char    buf[500];
-  Site            *site_mgt;
-  Site_head       site_info;
+    Site            *site_mgt;
+    Site_head       site_info;
     int dims, cat, strs, dbls;
 
     mapset = G_find_file2 ("site_lists", name, "");
@@ -31,6 +30,9 @@ read_sites (name)
             }
     }
 */
+
+    field -= 1;  /* field number -> array index */
+
     fd = G_sites_open_old (name, site_map);
     if (fd == NULL){
         fprintf (stderr, "can't open sites file [%s]", Sname);
@@ -42,16 +44,26 @@ read_sites (name)
       fprintf(stderr, "failed to guess format");
     }
 
+   if(field >= dbls){
+      G_fatal_error("\n decimal field %i not present in sites file", field + 1 );
+   }
+
+   if (dbls==0)
+   {
+    fprintf(stderr,"\n");
+    G_warning("I'm finding records that do not have a floating point attributes (fields prefixed with '%').");
+   }
+
     /* Allocate space for site structure */
     site_mgt = G_site_new_struct (cat, dims, strs, dbls);
 
     fprintf (stderr, "Reading sites map (%s) ...", name);
   while((ret=G_site_get(fd, site_mgt)) != -1) {
-	if( -2 == ret) fprintf(stderr, "Bad format");
+    if( -2 == ret) fprintf(stderr, "Bad format");
     xx=(double)site_mgt->east;
     yy=(double)site_mgt->north;
     zz=(double)site_mgt->dim[0];
-    ww=(double)site_mgt->dbl_att[0];
+    ww=(double)site_mgt->dbl_att[field];
 
     count = errors = 0;
         newpoint(ww,zz,xx,yy);
