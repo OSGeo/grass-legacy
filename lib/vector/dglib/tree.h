@@ -38,8 +38,6 @@ typedef struct _gnTreeNode
 {
 	long 					key;
 	gnTreeData_u 			data;
-	struct _gnTreeNode * pparent , * pleft , * pright , * plmost , * prmost;
-
 } gnTreeNode_s;
 
 extern void 			gnTreeInitNode			(
