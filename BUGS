@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.68 2000-11-09 11:50:17 markus Exp $
+$Id: BUGS,v 1.69 2000-11-09 16:55:38 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -263,6 +263,14 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
   (reported by Stephan Holl <Stephan.Holl@stud.uni-hannover.de>)
   (being worked on by David D Gray)
 
+r.line 
+ bugreport: r.line properly extracts geometry, but it doesn't attach
+ any label to the vector file generated. I've read the manual page, but
+ it doesn't speaks about attributes. In my application I also need
+ attributes.  
+ (reported by: Andrea Aime <aaime@comune.modena.it>)
+
+
 [RC]r.los:
   r.los seems to work perfectly if the elevation data is UTM.  But if the         
   elevation data is latitude-longitude, like most of my elevation data, the       
@@ -327,12 +335,23 @@ r.null:
    r.null do this for them.  With the second, a new raster has to be made     
    and what do you name it?  If you name it the same as the reclass and      
    blow away the reclass, is that okay? 
-
  (being worked on by ?)
 
-[RC]r.random:
- needs to be updated to GRASS 5 FP/NULL
- (being worked on by ?)
+
+[RC]r.poly
+bugreport 1: I've noticed that r.poly doesn't extract polygons for 0
+category areas. This was correct in GRASS 4, but not in GRASS 5. 
+I don't know if it works correctly with null values.
+
+bugreport 2: I've noticed that v.support complains about labels when
+r.poly exports polygons with islands. In fact, I've seen that in
+dig_att's file there is one label for each island (that's correct),
+but the container +polygon is associated with n+1 labels, where n is
+the number of contained islands. Everithing seems to work fine anyway,
+but I may be related with another bug on v.trim that I'm going to
+point out in a separate bug report
+(reported by: Andrea Aime <aaime@comune.modena.it>)
+
 
 r.random.surface
  needs to be updated to GRASS 5 FP/NULL
@@ -470,6 +489,14 @@ v.cutter:
   My pc conf:pentium3 600 & 128 RAM       
   (reported by marco  <scurra@infinito.it>)
   (being worked on by ?)
+
+[RC]v.trim 
+ bugreport: If a polygon has island, v.trim removes such islands
+ from the vector file... urgh! I've obtained such a behaviour with a
+ map obtained with r.poly, v.support (see my other bug report about
+ r.poly), I don't know if there is a relation (my map was a
+ reclassified DEM).
+ (reported by: Andrea Aime <aaime@comune.modena.it>)
 
 -----------------------------------------------------------------------
 Modules with interface problems (parser etc): 
