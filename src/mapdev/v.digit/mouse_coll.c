@@ -211,11 +211,9 @@ int mouse_collect_points (int mode, int type, struct line_pnts *Points)
 static int mouse_get_point (int *screen_x, int *screen_y, int cnt)
 {
     int  button;
-    double    ux1, uy1;
-    double    ux2, uy2;
-    char    buffer[64];
     char header[50];
-    int prev;
+    /* double    ux1, uy1;
+    double    ux2, uy2; */
 
 
     sprintf  (header, "Point number %d\n", cnt);

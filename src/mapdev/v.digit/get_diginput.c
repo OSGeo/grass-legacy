@@ -16,7 +16,7 @@ int get_diginput (int *x, int *y)
     {
 	set_keyboard();
 	
-	if (hit = key_hit (buf))
+	if ((hit = key_hit (buf)))
 	{
 	    buf[1] = 0;
 

@@ -52,7 +52,7 @@ int move_line (struct Map_info *map)
 	}
 
     /*  find which point in line to move  */
-	if (is_site = (map->Line[line].type == DOT))
+	if ((is_site = (map->Line[line].type == DOT)))
 	    point_num = 0;
 	else
 	{
