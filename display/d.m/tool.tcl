@@ -29,6 +29,12 @@ proc DmToolBar::create { tb  } {
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
         -helptext "Zoom"
 
+    # display region
+    $bbox1 add -image [image create photo -file "$dmpath/display.region.gif"] \
+        -command "Dm::display_region" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1 -padx 1 -pady 1 \
+        -helptext "Display region"
+
     # query
     $bbox1 add -image [image create photo -file "$dmpath/query.gif"] \
         -command "Dm::query" \

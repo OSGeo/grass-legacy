@@ -245,6 +245,18 @@ proc Dm::displayall { } {
     Dm::display
 }
 
+# display region
+proc Dm::display_region { } {
+   
+    set reg [GSelect windows]
+    if { $reg != "" } {
+	set cmd "g.region region=$reg"
+	Dm::execute $cmd 
+
+	Dm::display
+    }
+}
+
 # zoom
 proc Dm::zoom { } {
     

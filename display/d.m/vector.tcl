@@ -101,6 +101,9 @@ proc DmVector::create { tree parent } {
 
     set opt($count,attribute) "" 
 
+    set opt($count,minreg) "" 
+    set opt($count,maxreg) "" 
+
     set opt($count,_query_text) 0 
 
     DmVector::legend $count
@@ -233,6 +236,12 @@ proc DmVector::options { id frm } {
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
+    # region
+    set row [ frame $frm.region ]
+    LabelEntry $row.a -label "Minimum region" -textvariable DmVector::opt($id,minreg) -width 8
+    LabelEntry $row.b -label "Maximum region" -textvariable DmVector::opt($id,maxreg) -width 8
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
 }
 
 proc DmVector::save { tree depth node } {
@@ -244,7 +253,7 @@ proc DmVector::save { tree depth node } {
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area type_face
                   color fcolor lcolor icon size field lfield attribute cat where 
-                  _query_text } {
+                  _query_text minreg maxreg } {
         Dm::rc_write $depth "$key $opt($id,$key)"
 
     } 
@@ -321,6 +330,12 @@ proc DmVector::display { node } {
     } 
     if { $opt($id,where) != "" } { 
         append cmd " where=\"$opt($id,where)\"" 
+    } 
+    if { $opt($id,minreg) != "" } { 
+        append cmd " minreg=$opt($id,minreg)" 
+    } 
+    if { $opt($id,maxreg) != "" } { 
+        append cmd " maxreg=$opt($id,maxreg)" 
     } 
 
     Dm::execute $cmd
