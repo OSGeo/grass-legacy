@@ -1,0 +1,58 @@
+ *(unload of SAMPLE at 08/15/88  14:17:43)
+ *(set con=+)
+ *(set end=null)
+ Define sample
+ Owner
+ Attributes
+  id int  1 format 'i5'
+  name text  var format 'a12'
+  position text 8
+  status text 1
+  symbol text 8
+  at_no int  1 format 'i4'
+  resistivity doub 1 format 'f10.6'
+  M_date date 1 format 'yy-mm-dd'
+  M_time time 1 format 'hh:mm'
+  notes text  var format 'a25'
+ Relations
+  techs with id name position status
+  conductors with symbol at_no resistivity name
+  measures with symbol id M_date M_time resistivity
+  notes with symbol id M_date M_time notes
+ Links
+  M_C from symbol in measures to symbol in conductors
+  M_T from id in measures to id in techs
+  C_notes from symbol in conductors to symbol in notes
+ Passwords
+ End
+ Set integer format 'i8'
+ Set real format 'f8.2'
+ Set date format 'mm/dd/yy'
+ Load techs
+     5  'John Jones'  'Tech 1'  'A'
+    22  'Jim Smith'  'Tech 2'  'A'
+    35  'Joe Jackson'  'Tech 1'  'A'
+ End
+ Load conductors
+ 'Cu'    29     .120000  'Copper'
+ 'Al'    13     .180000  'Aluminum'
+ 'Fe'    26     .240000  'Iron'
+ 'LB'  '-MV-' '-MV-' 'Bernstein'
+ 'U'    92     .440000  'Uranium'
+ End
+ Load measures
+ 'Cu'      5  '88-01-21' '08:10'  11.900000
+ 'Cu'      5  '88-01-21' '10:32'  12.400000
+ 'Al'     35  '88-02-10' '13:45'  13.000000
+ 'Al'     35  '88-02-10' '09:34'  14.300000
+ 'Cu'     22  '88-02-22' '08:48'  12.500000
+ 'Fe'      5  '88-03-04' '15:33'  19.400000
+ End
+ Load notes
+ 'Cu'  5  '88-01-21' '09:03' 'Spilled coffee on sample.  Expect higher read+
+ings due to poor electrical contact.'
+ 'Cu'  22  '88-02-22' '09:20' 'Sample seems contaminated with bitter deposit+
+. Recommend addition of cream and sugar.'
+ End
+ *(set end=;)
+ Exit
