@@ -1,4 +1,5 @@
 /* $Id$ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -180,17 +181,32 @@ static int read_rule(
 	if (strncmp(buf, "help", 4) == 0)
 	{
 	    fprintf (stdout, "Enter a rule in one of these formats:\n");
-	    fprintf (stdout, " color\n");
+/*	    fprintf (stdout, " color\n"); */ /* does this actually do anything?? */
 	    fprintf (stdout, " val color\n");
 	    fprintf (stdout, " n%% color\n");
 	    fprintf (stdout, " nv color\n");
 	    fprintf (stdout, " default color\n");
 	    fprintf (stdout, "color can be one of:\n");
 	    show_colors (stdout);
-	    fprintf (stdout, "or an r,g,b triplet, e.g.: 0 127 255\n");
+	    fprintf (stdout, "or an R:G:B triplet, e.g.: 0:127:255\n");
 
 	    continue;
 	}
+
+	if (sscanf (buf, "%lf%% %d:%d:%d", &n, r, g, b) == 4)
+	{
+	    if (n<0 || n>100 || *r<0 || *r>255 || *g<0 || *g>255 ||
+		*b<0 || *b>255)
+	    {
+		badrule(tty,buf,line);
+		continue;
+	    }
+	    *val = min + ((double)max-(double)min)*n/100.0;
+	    *set = 1;
+	    return 1;
+	}
+#define BACKWARDS_COMPAT
+#ifdef BACKWARDS_COMPAT
 	if (sscanf (buf, "%lf%% %d %d %d", &n, r, g, b) == 4)
 	{
 	    if (n<0 || n>100 || *r<0 || *r>255 || *g<0 || *g>255 ||
@@ -203,6 +219,24 @@ static int read_rule(
 	    *set = 1;
 	    return 1;
 	}
+#endif
+
+	if (sscanf (buf, "%lf %d:%d:%d", val, r, g, b) == 4)
+	{
+            if (
+               /*(*val < (double) min) || (*val > (double) max) || 
+		commented out by Olga */
+		*r<0 || *r>255
+		|| *g<0 || *g>255 || *b<0 || *b>255)
+            {
+                fprintf(stderr, "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n", *r, *g, *b);
+                fprintf(stderr, "** rule is not added **\n");
+                continue;
+            }
+	    *set = 1;
+	    return 1;
+	}
+#ifdef BACKWARDS_COMPAT
 	if (sscanf (buf, "%lf %d %d %d", val, r, g, b) == 4)
 	{
             if (
@@ -218,6 +252,30 @@ static int read_rule(
 	    *set = 1;
 	    return 1;
 	}
+#endif
+
+	if (sscanf (buf, "%s %d:%d:%d", tmpstr, r, g, b) == 4)
+	{
+	    if (*r<0 || *r>255 || *g<0 || *g>255 || *b<0 || *b>255)
+	    {
+		fprintf(stderr, "** warning: no such value **\n");
+                fprintf(stderr, "** rule is not added **\n");
+                continue;
+            }
+	    if (!strcmp("nv", tmpstr)) {
+	        *nvalue = 1;
+            	return 1;
+	    }
+	    else if (!strcmp("default", tmpstr)) {
+		*others = 1;
+		return 1;
+	    }
+	    else {
+	    	fprintf(stderr, "** rule is not added **\n");
+	    	continue;
+	    }
+        }
+#ifdef BACKWARDS_COMPAT
 	if (sscanf (buf, "%s %d %d %d", tmpstr, r, g, b) == 4)
 	{
 	    if (*r<0 || *r>255 || *g<0 || *g>255 || *b<0 || *b>255)
@@ -239,6 +297,20 @@ static int read_rule(
 	    	continue;
 	    }
         }
+#endif
+
+	/* does this actually do anything?? */
+/*	if (sscanf (buf, "%d:%d:%d", r, g, b) == 3)
+	{
+	    if (*r<0 || *r>255 || *g<0 || *g>255 || *b<0 || *b>255) {
+		badrule(tty,buf,line);
+		continue;
+	    }
+	    *val = 0;
+	    *set = 0;
+	    return 1;
+	}
+#ifdef BACKWARDS_COMPAT
 	if (sscanf (buf, "%d %d %d", r, g, b) == 3)
 	{
 	    if (*r<0 || *r>255 || *g<0 || *g>255 || *b<0 || *b>255) {
@@ -249,6 +321,8 @@ static int read_rule(
 	    *set = 0;
 	    return 1;
 	}
+#endif
+*/
 	if (sscanf (buf, "%lf%% %s", &n, color) == 2)
 	{
 	    if (!lookup_color(tty, color, r,g,b) || n < 0 || n > 100)
@@ -298,7 +372,9 @@ static int read_rule(
 	    	continue;
 	    }
         }
-	if (sscanf (buf, "%s", color) == 1)
+
+	/* does this actually do anything?? */
+/*	if (sscanf (buf, "%s", color) == 1)
 	{
 	    if (!lookup_color(tty, color, r,g,b))
 	    {
@@ -308,7 +384,8 @@ static int read_rule(
 	    *val = 0;
 	    *set = 0;
 	    return 1;
-	}
+	} */
+
 	badrule(tty,buf,line);
     }
     return 0;
