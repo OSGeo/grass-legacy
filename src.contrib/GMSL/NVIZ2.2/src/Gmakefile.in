@@ -44,4 +44,3 @@ nvwish: $(OBJS) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB)
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \
 	$(LIBDIR)/libdatetime.a $(XTRA_LDFLAGS) -ltiff
-	mv nvwish $(BIN_CONTRIB_CMD)/$(NVWISH_VER)
