@@ -209,7 +209,6 @@ VECTDEP     =  $(GRASS_INCDIR)/Vect.h $(GRASS_INCDIR)/V_.h \
 
 GISDEP      =  $(GRASS_INCDIR)/gis.h $(GRASS_INCDIR)/gisdefs.h \
                $(GRASS_INCDIR)/colors.h $(GRASS_INCDIR)/glocale.h \
-               $(GRASS_INCDIR)/Rast.h \
                $(GRASS_INCDIR)/version.h $(GISLIB)
 
 FORMDEP     =  $(GRASS_INCDIR)/form.h $(FORMLIB)
