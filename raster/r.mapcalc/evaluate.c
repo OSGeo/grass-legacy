@@ -149,6 +149,9 @@ static void evaluate_function(expression *e)
 	case E_INV_TYPE:
 		G_fatal_error("unknown type for function '%s'", e->data.func.name);
 		break;
+	case E_ARG_NUM:
+		G_fatal_error("number of arguments for function '%s'", e->data.func.name);
+		break;
 	case E_WTF:
 		G_fatal_error("unknown error for function '%s'", e->data.func.name);
 		break;
