@@ -1,0 +1,20 @@
+The interface will start GRASS itself!
+
+
+This interface was developed by Bill Jackson of the 
+Land Inventory and Monitoring Team and Keith Mitchell 
+of the Threatened and Endangered Species Team in the 
+Natural Resources Division. This interface is a base upon which more
+specific applications can be built.
+
+Installation:
+ 1. The script "usle.start" should be modified to reflect 
+    the path to access the tcl libraries.
+
+ 2 Also, it will be necessary to change the environmental
+   variables at the top of the tcl script "usle.tcl" to 
+   reflect the location of your grass programs etc.
+
+Start:
+
+  usle.start
