@@ -43,7 +43,15 @@ struct dblinks *Vect_new_dblinks_struct ( void );
 void Vect_reset_dblinks ( struct dblinks *p );
 int Vect_add_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, 
 	              char *db, char *driver );
+int Vect_check_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, 
+	              char *db, char *driver );
+int Vect_replace_dblink ( struct dblinks *p, int number, char *name, char *table, char *key, 
+	              char *db, char *driver );
 int Vect_map_add_dblink ( struct Map_info *, int number, char *name, char *table, char *key, 
+	              char *db, char *driver );
+int Vect_map_check_dblink ( struct Map_info *, int number, char *name, char *table, char *key, 
+	              char *db, char *driver );
+int Vect_map_replace_dblink ( struct Map_info *, int number, char *name, char *table, char *key, 
 	              char *db, char *driver );
 int Vect_read_dblinks ( char *, char *,  struct dblinks *p );
 int Vect_write_dblinks ( char *, char *,  struct dblinks *p );
