@@ -11,14 +11,15 @@ diagram<BR>
 <EM>(GRASS Sites Program)</EM>
 
 <H2>SYNOPSIS</H2>
-<B>s.voronoi</B> [<b>-aq</b>] <b>sites=</b><i>name</i> <b>vect=</b><i>name</i>
-[<b>labels=</b><i>name</i>]
+<B>s.voronoi</B> [<b>-aq</b>] <b>sites=</b><EM>name</EM> <b>vect=</b><EM>name</EM>
+[<b>catnum=</b><EM>no|keep|gen</EM>]
+[<b>labels=</b><EM>no|cat|str,#|dec,#</EM>]
 
 <BR>
 
 <H2>DESCRIPTION</H2>
-s.voronoi uses an existing sites list (sites) to
-create a Voronoi diagram (Thiessen polygons) in a binary vector file (vect).
+<EM>s.voronoi</EM> uses an existing sites list (<B>sites</B>) to create a Voronoi 
+diagram (Thiessen polygons) in a binary vector file (<B>vect</B>).
 <P>
 
 <H2>OPTIONS</H2>
@@ -29,15 +30,17 @@ create a Voronoi diagram (Thiessen polygons) in a binary vector file (vect).
 <DD> Name of existing sites file.
 <DT><B>vect=</B><EM>name</EM>
 <DD> Name of the output file (binary vector file).
-<DT><B>catnum=</B><EM>name</EM>
-<DD> no category numbers, keep from input file, generate as serial number <BR>
-           options: no,keep,gen <BR>
-           default: keep
-</DL>
-
-<DT><B>labels=</B><EM>name</EM>
-<DD>  Field to use to generate the label. (no; cat; str,#; dec,#) <BR>
-      default: no
+<DT><B>catnum=</B><EM>no|keep|gen</EM>
+<DD> What to use as category numbers for the vector output: <EM>no</EM> 
+      category numbers, <EM>keep</EM> from input file, or 
+      <EM>gen</EM>erate as serial number.<BR>
+           options: <EM>no</EM>, <EM>keep</EM>, or <EM>gen</EM> <BR>
+           default: <EM>keep</EM>
+<DT><B>labels=</B><EM>no|cat|str,#|dec,#</EM>
+<DD>  Site file field to use for generating the label. "<EM>#</EM>" is the <EM>n</EM>-th
+        string or decimal field associated with the site record.<BR>
+<DD>  options: <EM>no</EM>; <EM>cat</EM>; <EM>str,#</EM>; or <EM>dec,#</EM><BR>
+<DD>  default: <EM>no</EM>
 </DL>
 
 <H3>Flags:</H3>
@@ -49,21 +52,21 @@ create a Voronoi diagram (Thiessen polygons) in a binary vector file (vect).
 </DL>
 
 <H2>NOTES</H2>
-       <p> s.voronoi can be run either non-interactively or interactively.
+       <p> <EM>s.voronoi</EM> can be run either non-interactively or interactively.
        The program will be run non-interactively if the user specifies the name of
        an existing site list file  and a name for a vect file, using the form </p>
 
-	      <p> s.voronoi [-aq] sites=name1 vect=name2 catnum=optCatnum labels=optLabel </p>
+<p>s.voronoi [-aq] sites=name1 vect=name2 catnum=optCatnum labels=optLabel </p>
 
        <p>where  name1 is the name of an existing site list file and
        name2 is the name of vector output file. optCatnum can be "keep" only
        if the site file category number is integer. optLabel can
-       be "no", no labels, "cat", use site file category number as
-       label, str,num, use the num string type field of the site file as
-       label, dec,num, use the num decimal type field of the site file as
+       be "no", no labels; "cat", use site file category number as
+       label; str,<EM>num</EM>, use the <EM>num</EM> string type field of the site file as
+       label; or dec,<EM>num</EM>, use the <EM>num</EM> decimal type field of the site file as
        label.</p>
 
-       <p> Alternately, the user can simply	 type  s.voronoi  on  the
+       <p> Alternately, the user can simply type  <B>s.voronoi</B>  on  the
        command	line,  without	program arguments.  In this case,
        the user will be prompted for parameter values  using  the
        standard	 GRASS	parser	interface described in the manual
@@ -72,7 +75,7 @@ create a Voronoi diagram (Thiessen polygons) in a binary vector file (vect).
 <H2>EXAMPLES</H2>
 	To create a Voronoi diagram keeping the original category number and using the
         first decimal field as the output label use:
-	<DD> s.voronoi sites=inputSite vect=voro catnum=keep labels=dec,1 </DL>
+	<DD> <B>s.voronoi sites=<EM>inputSite</EM> vect=<EM>voro</EM> catnum=<EM>keep</EM> labels=<EM>dec,1</EM> </B></DL>
 
 <H2>REFERENCES</H2>
 <EM>Steve J. Fortune,  (1987).  A Sweepline Algorithm for
