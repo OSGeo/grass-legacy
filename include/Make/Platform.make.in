@@ -107,6 +107,10 @@ TKINCDIR            = @TKINCDIR@
 TCLTKLIBPATH        = @TCLTKLIBPATH@
 TCLTKLIBS           = @TCLTKLIBS@
 
+#GDAL
+GDALLIBS            = @GDAL_LIBS@
+GDALCFLAGS          = @GDAL_CFLAGS@
+
 #LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
 RANLIB              = @RANLIB@
 USE_TERMIO          = @USE_TERMIO@
