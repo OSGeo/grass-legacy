@@ -230,6 +230,10 @@ Vect_open_new (
     }
 
     Open_level = 0;
+
+    Map->Constraint_region_flag = 0;
+    Map->Constraint_type_flag = 0;
+    
     return 1;
 }
 

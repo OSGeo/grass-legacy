@@ -30,7 +30,7 @@ static int (*Close_array[][3]) () =
      { clo_dummy, V1_close_nat, V2_close_nat }
    , { clo_dummy, V1_close_shp, V2_close_shp } 
 #ifdef HAVE_POSTGRES
-   , { clo_dummy, V1_close_post }
+   , { clo_dummy, V1_close_post, V2_close_post }
 #endif
 };
 

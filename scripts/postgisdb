@@ -1,0 +1,239 @@
+#! /bin/sh
+#***************************************************************************
+#
+# MODULE:       Postgrass database higher level handler      
+#               
+# AUTHOR(S):    
+#               Written by (in alphabetic order):
+#                     Di Simone Alessio                a.disimone@inwind.it
+#                     Di Sorbo  Alessandro             a.disorbo@inwind.it
+#                     Ragni Domenico                   domrag@inwind.it
+#                     Romano Enrico                    enr.omano@genie.it
+#                     Serino Antonio                   antoseri@libero.it
+#
+# PURPOSE:      Create and destroy local and remote PostgreSql databases.
+#
+# COPYRIGHT:    (C) 2002 by the Authors
+#
+#            This program is distributed in the hope that it will be useful,
+#            but WITHOUT ANY WARRANTY; without even the implied warranty of
+#            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#            This program is free software under the GNU General Public
+#            License (>=v2). Read the file COPYING that comes with GRASS
+#            for details.
+#
+#****************************************************************************
+
+program=`echo "$0"| sed -e 's/[^\/]*\///g'`
+current_version='1.0'
+
+postgis="/usr/local/pgsql/"
+
+usage="Usage: $program [OPTION] [ARGUMENTS] ....
+Create and Destroy PostGrass database 
+
+[Primary Options]
+ -h, --help                           display this help and exit
+ -v, --version                        display version information and exit 
+ -c, --create  DATABASE_NAME          Create a new database 
+
+     [Create Option]  
+        -D, --location PATH           Alternative place to store the database
+        -E, --encoding ENCODING       Multibyte encoding for the database
+        -P, --postgis  PATH           Specifies path to postgis
+                                      [default: $postgis]
+
+ -d, --drop    DATABASE_NAME                    Destroy an exist database
+ 
+     [Drop Option]
+        -i, --interactive             Prompt before deleting anything
+
+
+[Common Option]
+ -s  --sheep                     Enable sheep mode
+ -h, --host     HOSTNAME         Database server host
+ -p, --port     PORT             Database server port
+ -U, --username USERNAME         Username to connect as
+ -W, --password                  Prompt for password
+ -e, --echo                      Show the query being sent to the backend
+ -q, --quiet                     Don't write any messages
+
+
+All options that are not available in primary options scope will be ignoreted.
+Only Postmaster can run this script to create a new database (use -U to define database owner)
+
+Report bugs to <enr.omano@genie.it> "
+
+version="$program [$current_version]
+Written by (alphabetic order): 
+           Di Simone Alessio,  
+           Di Sorbo Alessandro,
+           Ragni Domenico
+           Romano Enrico,
+           Serino Antonio.
+This is free software; see the source for copying conditions. There is NO 
+warranty."
+
+existfunct="CREATE FUNCTION existTable(name) RETURNS int4 AS
+            'SELECT COUNT (tablename) FROM pg_tables WHERE tablename = \$1;'
+            LANGUAGE 'sql';"
+
+function Error () {
+    echo "$program: $*" >&2
+    echo "$program: Try --help for more information." >&2
+   exit 1 
+}
+
+dbname=
+argvect[0]=
+argvect[1]=
+argvect[2]=
+argvect[3]=  
+fsql=1
+
+function ArgSplit(){
+    tmp=
+    shift               # Dbname
+    argvect[0]="$1 "    # Create arg
+    dbname=$1           # Database name
+    argvect[1]="-d $1 " # Psql arg
+    argvect[2]="$1 "    # Drop arg
+    argvect[3]=" "      # Common arg
+    argvect[4]="-d $1 " # Dbname
+    shift
+    while [ $# != 0 ] 
+    do
+      case "$1" in
+         
+          -W | --password | -e | --echo | -q | --quiet )
+             tmp="${argvect[3]} $1"
+             argvect[3]=$tmp
+          ;;
+
+          -h | --host | -p | --port | -U | --username)
+             tmp="${argvect[3]} $1"
+             argvect[3]=$tmp 
+             shift
+             if [ $# != 0 ]; then
+                tmp="${argvect[3]} $1" 
+                argvect[3]=$tmp 
+             else  Error "Error in parsing option '${argvect[3]}'"
+             fi
+          ;;
+
+          -D | --location | -E | --encoding ) 
+             tmp="${argvect[0]} $1" 
+             argvect[0]=$tmp 
+             shift
+             if [ $# != 0 ]; then
+                tmp="${argvect[0]} $1"
+                argvect[0]=$tmp 
+             else  Error "Error in parsing option '${argvect[0]}'"
+             fi
+          ;;
+          
+          -P | --postgis) 
+             tmp=$1
+             shift
+             if [ $# != 0 ]; then
+                postgis=$1
+             else  Error "Error in parsing option '$tmp'"
+             fi
+          ;;
+
+          -i | --interactive )
+             tmp="${argvect[2]} $1" 
+             argvect[2]=$tmp 
+          ;; 
+      esac    
+    shift    
+    done
+return 0
+}
+
+
+case "$1" in  
+         
+     -c | --create)
+         ArgSplit $* # Aggiustare parametri di existtable 
+
+         # check files existence
+         libpostgisdir="$postgis/lib/contrib/"
+         plpgsql="$postgis/lib/plpgsql.so"
+         postgisfile="$postgis/share/contrib/postgis.sql"
+         echo "Create database:"
+         echo "libpostgis.so.x.x dir: '$libpostgisdir'"
+         echo "plpgsql.so file      : '$plpgsql'"
+         echo -e "postgis.sql file     : '$postgisfile'\n"
+
+         if ! test -d $libpostgisdir; then Error "Directory does not exist: '$libpostgisdir'"; fi
+         if ! test -e $plpgsql; then Error "File does not exist: '$plpgsql'"; fi
+         if ! test -e $postgisfile; then Error "File does not exist: '$postgisfile'"; fi
+         
+         postgisfunction="
+             CREATE FUNCTION plpgsql_call_handler () RETURNS OPAQUE AS
+             '$plpgsql' LANGUAGE 'C';
+             CREATE TRUSTED PROCEDURAL LANGUAGE 'plpgsql'
+             HANDLER plpgsql_call_handler
+             LANCOMPILER 'PL/pgSQL';"
+         
+         createdb ${argvect[0]} ${argvect[3]}
+           if [ $? = 0 ]; then 
+             echo "$existfunct" | psql ${argvect[4]} ${argvect[3]}
+               if [ $? = 0 ]; then
+                 echo "$postgisfunction" | psql ${argvect[4]} ${argvect[3]}
+                   if [ $? = 0 ]; then 
+		     cmd="cat $postgisfile | tr -d '\015' | sed -e 's#/usr/local/pgsql/lib/contrib/#$libpostgisdir#g' | psql  ${argvect[1]} ${argvect[3]}"
+		     eval "$cmd"
+                       if [ ! $? = 0 ]; then   dropdb  $dbname ${argvect[3]}; Error "Error on adding postgis featuress";
+                       fi
+                   else dropdb  $dbname ${argvect[3]};  Error  "Error on adding postgis function "; 
+                   fi
+               else dropdb  $dbname ${argvect[3]};  Error "Error on adding existtable function"; 
+               fi
+           else Error "Error on create database"
+           fi
+         ;;
+
+      -d | --drop)
+         ArgSplit $*
+         dropdb  ${argvect[2]} ${argvect[3]} 
+         if [ $?  != 0 ]; then Error "Error on drop database"; fi
+         ;;
+      
+      -h | --help)
+        echo "$usage"
+         ;;
+
+      -v | --version)
+        echo "$version"
+         ;;
+       -s | --sheep)
+         echo -n "Please wait while enabling.."
+         for i  in 1 2 3 4 5; do 
+                   echo -n "."; 
+                   sleep 1s;
+         done
+          echo -e -n "\n"
+        
+echo -e "  \n \
+                      /\\___     /--------\\   \n \
+           @@@@@@@@@@@  O  \\   /  Beeee   |     \n \
+        @@@@@@@@@@@@@@@____/    \\________/     \n \
+       @@@@@@@@@@@@@@@@                          \n \
+       @ @@@@@@@@@@@@                            \n \
+          ||      ||                             \n \
+          ~~      ~~                             \n \
+"
+         echo "Sorry but it seems that it isn't implemented..yet!!! ;-)" 
+         ;;
+       -*)
+         Error "Undefined option '$1'"
+        ;;
+
+        *)
+        echo "$program: Try --help for information"
+        ;;
+esac
+exit 0
+

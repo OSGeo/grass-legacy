@@ -219,6 +219,7 @@ int V2_read_next_line_shp (struct Map_info *, struct line_pnts *, struct line_ca
 int V2_read_next_line_post (struct Map_info *, struct line_pnts *, struct line_cats *);
 int V1_delete_line (struct Map_info *, long);
 int V1_delete_line_nat (struct Map_info *, long);
+int V1_delete_line_post (struct Map_info *, long);
 long V1_write_line_nat (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
 long V1_write_line_shp (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
 long V1_write_line_post (struct Map_info *, int type, struct line_pnts *, struct line_cats *);
