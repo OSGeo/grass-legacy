@@ -73,6 +73,10 @@ else
 		fi
 	else
 		L=$1
+		if [ `echo $L | cut -c 1` != "/" ]
+		then
+			L=`pwd`/$L
+		fi
 	fi
 
 	if [ "$L" ]
@@ -99,7 +103,7 @@ else
 			exit
 		fi
 		export GISDBASE LOCATION_NAME MAPSET
-		if [ -f $GISRC ]
+		if [ -s $GISRC ]
 		then
 			sed -e "s|^GISDBASE:.*$|GISDBASE: $GISDBASE|; \
 				s|^LOCATION_NAME:.*$|LOCATION_NAME: $LOCATION_NAME|; \
