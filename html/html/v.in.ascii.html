@@ -24,7 +24,7 @@ into binary vector map layers.
 <BR>
 <B>v.in.ascii help</B>
 <BR>
-<B>v.in.ascii</B> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+<B>v.in.ascii</B> [<B>-s</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
 
 <H2>DESCRIPTION</H2>
 
@@ -39,7 +39,12 @@ on the command line, in the form:
 
 <DL>
 <DD>
-<B>v.in.ascii</B> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+<B>v.in.ascii</B> [<B>-s</B>] <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM>
+</DL>
+
+<H3>Flags:</H3>
+<DL><DT><B>-s</B>
+<DD>Automatically run 'v.support -r' after import
 </DL>
 
 <H3>Parameters:</H3>
@@ -61,16 +66,12 @@ user for <EM>input</EM> and <EM>output</EM> file names.
 
 <H2>NOTES</H2>
 
-After running this program, GRASS support files must be built for
-the binary <EM>output</EM> file before the user can use the file in 
-
+After running this program, GRASS support files must be built for the binary 
+<EM>output</EM> file before the user can use the file in 
 <EM><A HREF="v.digit.html">v.digit</A></EM>.
-The user should run 
-
-<EM><A HREF="v.support.html">v.support -r</A></EM> 
-
-to create GRASS support files for the <EM>output</EM> file and set the
-map's region data.
+If the <B>-s</B> flag was used, this is done automatically. If not, the user 
+should run <EM><A HREF="v.support.html">v.support -r</A></EM> to create GRASS 
+support files for the <EM>output</EM> file and set the map's region data.
 <P>
 
 Note, that the coordinates order is NORTH EAST.
