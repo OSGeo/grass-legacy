@@ -181,7 +181,7 @@ extern int errno;
  * Declarations for various library procedures that may not be declared
  * in any other header file.
  */
-#ifdef (TCL_MINOR_VERSION) < 2
+#if (TCL_MINOR_VERSION) < 2
 extern void		panic _ANSI_ARGS_(TCL_VARARGS(char *, string));
 #endif
 /*
