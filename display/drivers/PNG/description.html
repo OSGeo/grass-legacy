@@ -63,8 +63,9 @@ file named <i>map.png</i> to be created in your current directory:
 
 <H2>NOTES</H2> 
 
-The PNG driver uses the libpng (see the <a href="http://www.libpng.org/pub/png/">libpng</a> home page) and zlib (see
-the <a href="http://www.info-zip.org/pub/infozip/zlib/">info-zip</a> home
+The PNG driver uses the libpng (see the <a href="http://www.libpng.org/pub/png/">libpng</a>
+home page) and zlib (see the 
+<a href="http://www.info-zip.org/pub/infozip/zlib/">info-zip</a> home
 page), all which needs to be installed for the PNG driver to work (it's
 worth it).
 <p>
@@ -72,12 +73,16 @@ The resolution of the <i>PNG</i> raster map is defined by the map
 extents. Use <em>g.region -p</em> to get the number of rows and cols and
 use the environment variables to set the PNG size. If you would like a
 larger image, multiply both rows and cols by the same whole number to
-preserve the aspect ratio.<p>
+preserve the aspect ratio.
+<p>
+Further PNG file processing (e.g. quantization to 1 bit for monochrome images)
+can be done with 'pnmquant' of the <a href=http://netpbm.sourceforge.net/>netpbm</a> tools.
 
 <h2>SEE ALSO</h2>
 <EM>
 <A href=xdriver.html>XDRIVER</A>,
 <A href=d.mon.html>d.mon</A>,
+<A href=d.rast.html>d.rast</A>,
 <A href=d.vect.html>d.vect</A>
 </EM>
 
