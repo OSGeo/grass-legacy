@@ -1,0 +1,7 @@
+PGM=s.surf.idw
+HOME=$(BIN_MAIN_CMD)
+
+LIST=main.o read_sites.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
