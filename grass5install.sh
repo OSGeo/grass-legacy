@@ -15,17 +15,20 @@ BINDIR=/usr/local/bin
 #setting: standard path of GRASS installation
 DESTDIR=/usr/local/grass-5.0b
 
+# Get the major release number to append to grass command name
+NAME_VER=`cat src/CMD/VERSION | head -1 | sed 's/\..*//'`
+
 ######################################################
 # check for first parameter:
 if [ ! "$1" ]
 then	echo "
 
-GRASS GIS 5 binary package installation tool
+GRASS GIS $NAME_VER binary package installation tool
 
 Usage:        sh grass5install.sh grass_binpackage.tar.gz [dest_dir]
 
       with:
-        grass_binpackage : name of GRASS 5 binary package   
+        grass_binpackage : name of GRASS $NAME_VER binary package   
         [dest_dir] - optional: FULL path name to the installation directory
                      (default: /usr/local/grass-5.0b/)
 
@@ -57,7 +60,7 @@ if [ $? -eq 1 ] ; then
 fi
 
 # Start the installation job...
-echo "GRASS GIS 5 binary package installation tool"
+echo "GRASS GIS $NAME_VER binary package installation tool"
 echo ""
 echo "The package $1 seems to be o.k."
 echo " Proceeding..."
@@ -118,17 +121,17 @@ if [ ! -d "$BINDIR" ] ;
 then
  BINDIR=/usr/bin
 fi
-echo "Creating start script: $BINDIR/grass5.0beta"
-echo ":"                          >$BINDIR/grass5.0beta
+echo "Creating start script: $BINDIR/grass$NAME_VER"
+echo ":"                          >$BINDIR/grass$NAME_VER
 if [ $? -eq 1 ] ; then
           echo "An error occured! Exiting."
           echo "You must be 'root' to install into $BINDIR"
           exit
 fi
-echo "GISBASE=$DESTDIR"           >>$BINDIR/grass5.0beta
-echo "export GISBASE"             >>$BINDIR/grass5.0beta
-echo "exec \$GISBASE/etc/Init.sh" >>$BINDIR/grass5.0beta
-chmod ugo+x $BINDIR/grass5.0beta
+echo "GISBASE=$DESTDIR"           >>$BINDIR/grass$NAME_VER
+echo "export GISBASE"             >>$BINDIR/grass$NAME_VER
+echo "exec \$GISBASE/etc/Init.sh" >>$BINDIR/grass$NAME_VER
+chmod ugo+x $BINDIR/grass$NAME_VER
 
 
 echo "Creating the locks directory for monitors..."
@@ -153,8 +156,8 @@ chmod ugo+x $DESTDIR/dev/create_fifos_new.sh
 sh $DESTDIR/dev/create_fifos_new.sh
 
 
-echo "Installation finished. Start GRASS 5 with"
-echo "    grass5.0beta"
+echo "Installation finished. Start GRASS $NAME_VER with"
+echo "    grass$NAME_VER"
 echo ""
 echo "The graphical user interface can be started within GRASS GIS."
 echo ""
