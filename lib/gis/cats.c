@@ -321,6 +321,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 static int get_cond ( char **, char *, DCELL);
 static int get_fmt ( char **, char *, int *);
@@ -353,7 +354,7 @@ int G_read_raster_cats (
 	    return 0;
     }
 
-    G_warning ("category support for [%s] in mapset [%s] %s",
+    G_warning (_("category support for [%s] in mapset [%s] %s"),
 		    name, mapset, type);
     return -1;
 }
@@ -377,7 +378,7 @@ int G_read_vector_cats (
 	    return 0;
     }
 
-    G_warning ("category support for vector file [%s] in mapset [%s] %s",
+    G_warning (_("category support for vector file [%s] in mapset [%s] %s"),
 		    name, mapset, type);
     return -1;
 }
