@@ -79,25 +79,11 @@ main (int argc, char *argv[])
     layer_opt->key = "layer";
     layer_opt->type = TYPE_STRING;
     layer_opt->required = NO;
-    layer_opt->description = "OGR layer name. In not given, print available layers.\n"
+    layer_opt->description = "OGR layer name. If not given, available layers are printed + exit.\n"
 			   "\t\tESRI Shapefile: shapefile name\n"
 			   "\t\tMapInfo File: mapinfo file name";
     
     if (G_parser (argc, argv)) exit(-1); 
-
-    G_warning ("Area boundaries are not cleaned by this module. Run v.clean on imported vector"
-	       " if it contains areas.");
-    
-    db_init_string (&sql);
-    db_init_string (&strval);
-    
-    /* open output vector */
-    Vect_open_new (&Map, out_opt->answer, 0 ); 
-    Vect_hist_command ( &Map );
-
-    /* Add DB link */
-    Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
-    Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
 
     /* Open OGR DSN */
     Ogr_ds = OGROpen( dsn_opt->answer, FALSE, NULL );
@@ -118,11 +104,23 @@ main (int argc, char *argv[])
 	    }
 	}
     }
+
     if ( !layer_opt->answer ) {
         fprintf ( stdout, "\nPlease specify a layer to be imported.\n" );
 	exit (0);
     }
     if ( layer == -1 ) G_fatal_error ("Layer not found");
+
+    db_init_string (&sql);
+    db_init_string (&strval);
+
+    /* open output vector */
+    Vect_open_new (&Map, out_opt->answer, 0 ); 
+    Vect_hist_command ( &Map );
+
+    /* Add DB link */
+    Fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
+    Vect_map_add_dblink ( &Map, 1, NULL, Fi->table, "cat", Fi->database, Fi->driver);
 
     Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layer );
     Ogr_featuredefn = OGR_L_GetLayerDefn( Ogr_layer );
@@ -224,6 +222,9 @@ main (int argc, char *argv[])
     db_shutdown_driver(driver);
     
     Vect_build ( &Map, stdout );
+    if (Vect_get_num_areas(&Map) > 0)
+        G_warning ("Area boundaries are not cleaned by this module. Run v.clean on imported vector on new map <%s>.", out_opt->answer);
+
     Vect_close ( &Map );
 
     exit(0) ;
