@@ -7,7 +7,7 @@ main (argc, argv)
 {
     struct Map_info Map;
 	struct GModule *module;
-    struct Option *vectfile, *value;
+    struct Option *vectfile, *value, *typopt;
     struct Flag *incr, *Nosup;
     char *mapset;
     char errmsg[1000];
@@ -17,7 +17,8 @@ main (argc, argv)
     double X, Y;
     int i, ret;
     int cnt = 0;
-    int label;
+    int label, type, otype;
+    char tp;
 
     G_gisinit(argv[0]);
 
@@ -32,6 +33,14 @@ main (argc, argv)
     vectfile->multiple		= NO;
     vectfile->gisprompt		= "old,dig,Vector";
     vectfile->description	= "vector file";
+
+    typopt = G_define_option();
+    typopt->key              = "type";
+    typopt->type             =  TYPE_STRING;
+    typopt->required         =  NO;
+    typopt->answer           =  "line";
+    typopt->options          =  "point,line,both";
+    typopt->description      =  "Select point or line";
 
     value = G_define_option();
     value->key 		= "value";
@@ -53,6 +62,15 @@ main (argc, argv)
 
     if (G_parser (argc, argv))
 	exit(-1);
+
+    otype = 0;
+    if (typopt->answer[0] == 'p')
+        otype = DOT;
+    else if (typopt->answer[0] == 'l')
+        otype = LINE;
+    else if (typopt->answer[0] == 'b')
+        otype = DOT | LINE;	
+
 
     if (!*(vectfile->answer))
     {
@@ -106,20 +124,31 @@ main (argc, argv)
     {
 	if (0 != Map.Line[i].att)
 	    continue;
-	/* ret = Vect_get_point_in_area (&Map, i, &X, &Y); */
-        if ( 0 < Vect_read_next_line(&Map,Points) )
+
+        if ( 0 >= (type = V2_read_line(&Map, Points,i)))
         {
-          X = Points->x[1] + 0.5*(Points->x[0] - Points->x[1]);
-          Y = Points->y[1] + 0.5*(Points->y[0] - Points->y[1]);
-        }
-	else
-	{
             sprintf(errmsg,"Could not label line %d\n",i);
 	    G_warning (errmsg);
 	    continue;
 	}
+	
+	if ( !(type & otype) )
+	    continue;
+        
+	if (type == DOT)
+	{ 
+	    X = Points->x[0];
+            Y = Points->y[0];
+	    tp = 'P';    
+        }
+	else if (type == LINE)
+	{ 
+	    X = Points->x[1] + 0.5*(Points->x[0] - Points->x[1]);
+            Y = Points->y[1] + 0.5*(Points->y[0] - Points->y[1]);
+	    tp = 'L';
+        }
 
-	write_att (afp, 'L', X, Y, label);
+	write_att (afp, tp, X, Y, label);
 	if (incr->answer)
 	    label++;
 	cnt++;
