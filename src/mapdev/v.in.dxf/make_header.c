@@ -41,7 +41,7 @@ dxf_make_header (DXF_DIG *Layer)
 		  sprintf(dxf_head.organization, "%s", organization);
 		}
 		else
-		  strcpy(dxf_head.organization, "GRASS Development Team\n") ;
+		  strcpy(dxf_head.organization, "GRASS Development Team") ;
 		strcpy(dxf_head.date,date);
 		strcpy(dxf_head.your_name,name);
 		strcpy(dxf_head.map_name,dxf_file);
