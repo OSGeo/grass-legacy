@@ -1,4 +1,4 @@
-EXTRA_CFLAGS=$(CAN_CLEAR) $(GETHOSTNAME)
+EXTRA_CFLAGS=$(GETHOSTNAME)
 OBJ = \
     adj_cellhd.o\
     align_window.o\
@@ -17,6 +17,7 @@ OBJ = \
     bres_line.o\
     cats.o\
     cell_stats.o\
+    cellstats_eq.o\
     cell_title.o\
     clear_scrn.o\
     closecell.o\
@@ -44,6 +45,7 @@ OBJ = \
     color_write.o \
     commas.o\
     copy.o\
+    dalloc.o\
     date.o\
     def_window.o\
     distance.o\
@@ -51,6 +53,7 @@ OBJ = \
     edit_cats.o\
     edit_cellhd.o\
     edit_hist.o\
+    eigen_tools.o\
     env.o\
     error.o\
     file_name.o\
@@ -63,6 +66,9 @@ OBJ = \
     geodist.o\
     get_cellhd.o\
     get_ellipse.o\
+    get_ell_name.o\
+    get_projname.o\
+    get_projinfo.o\
     get_row.o\
     get_window.o\
     getl.o\
@@ -75,6 +81,7 @@ OBJ = \
     histogram.o\
     history.o\
     home.o\
+    ialloc.o\
     index.o\
     intr_char.o\
     key_value1.o\
@@ -87,6 +94,7 @@ OBJ = \
     ll_format.o\
     ll_scan.o\
     location.o\
+    lu.o\
     mach_name.o\
     make_colr.o\
     mapcase.o\
@@ -98,6 +106,7 @@ OBJ = \
     myname.o\
     named_colr.o\
     nme_in_mps.o\
+    nl_to_spaces.o\
     open.o\
     opencell.o\
     parser.o\
@@ -129,11 +138,13 @@ OBJ = \
     store.o\
     strings.o\
     strip.o\
+    svd.o\
     system.o\
     tempfile.o\
     token.o\
     trim_dec.o\
     unctrl.o\
+    view.o\
     whoami.o\
     wind_2_box.o\
     wind_format.o\
@@ -148,17 +159,13 @@ OBJ = \
     zero_cell.o\
     zone.o
 
-all: $(LIBDIR)/gis.h $(LIBDIR)/gisdefs.h $(GISLIB) $(ETC)/ellipse.table
-
-$(LIBDIR)/gis.h: gis.h
-	rm -f $@
-	cp $? $@
-	chmod 0644 $@
-
-$(LIBDIR)/gisdefs.h: gisdefs.h
-	rm -f $@
-	cp $? $@
-	chmod 0644 $@
+all: version.h \
+     $(GISLIB) \
+     $(ETC)/ellipse.table \
+     $(ETC)/projections \
+     $(ETC)/FIPS.code \
+     $(ETC)/state27 \
+     $(ETC)/state83
 
 $(GISLIB): $(OBJ)
 	$(AR)
@@ -168,191 +175,45 @@ $(ETC)/ellipse.table: ellipse.table
 	cp $? $@
 	chmod +r $@
 
-adj_cellhd.o: gis.h
-adj_cellhd.o: gisdefs.h
-align_window.o: gis.h
-align_window.o: gisdefs.h
-alloc_cell.o: gis.h
-alloc_cell.o: gisdefs.h
-area.o: gis.h
-area.o: gisdefs.h
+$(ETC)/FIPS.code: FIPS.code 
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+$(ETC)/state27: state27 
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+$(ETC)/state83: state83 
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+$(ETC)/projections: projections 
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
 area_ellipse.o: pi.h
 area_sphere.o: pi.h
-ask.o: gis.h
-ask.o: gisdefs.h
 auto_mask.o: G.h
-auto_mask.o: gis.h
-auto_mask.o: gisdefs.h
-cats.o: gis.h
-cats.o: gisdefs.h
-cell_stats.o: gis.h
-cell_stats.o: gisdefs.h
-cell_title.o: gis.h
-cell_title.o: gisdefs.h
 closecell.o: G.h
-closecell.o: gis.h
-closecell.o: gisdefs.h
-color_asp.o: gis.h
-color_asp.o: gisdefs.h
-color_grey.o: gis.h
-color_grey.o: gisdefs.h
-color_hist.o: gis.h
-color_hist.o: gisdefs.h
-color_rain.o: gis.h
-color_rain.o: gisdefs.h
-color_ramp.o: gis.h
-color_ramp.o: gisdefs.h
-color_rand.o: gis.h
-color_rand.o: gisdefs.h
-color_ryg.o: gis.h
-color_ryg.o: gisdefs.h
-color_wave.o: gis.h
-color_wave.o: gisdefs.h
-colors.o: gis.h
-colors.o: gisdefs.h
-def_window.o: gis.h
-def_window.o: gisdefs.h
-distance.o: gis.h
-distance.o: gisdefs.h
-edit_cats.o: gis.h
-edit_cats.o: gisdefs.h
-edit_cellhd.o: gis.h
-edit_cellhd.o: gisdefs.h
-edit_hist.o: gis.h
-edit_hist.o: gisdefs.h
-env.o: gis.h
-env.o: gisdefs.h
-error.o: gis.h
-error.o: gisdefs.h
-file_name.o: gis.h
-file_name.o: gisdefs.h
-find_cell.o: gis.h
-find_cell.o: gisdefs.h
-find_file.o: gis.h
-find_file.o: gisdefs.h
-find_vect.o: gis.h
-find_vect.o: gisdefs.h
 format.o: G.h
-format.o: gis.h
-format.o: gisdefs.h
 geodesic.o: pi.h
 geodist.o: pi.h
-get_cellhd.o: gis.h
-get_cellhd.o: gisdefs.h
-get_ellipse.o: gis.h
-get_ellipse.o: gisdefs.h
 get_row.o: G.h
-get_row.o: gis.h
-get_row.o: gisdefs.h
 get_window.o: G.h
-get_window.o: gis.h
-get_window.o: gisdefs.h
-gisbase.o: gis.h
-gisbase.o: gisdefs.h
-gisdbase.o: gis.h
-gisdbase.o: gisdefs.h
-gishelp.o: gis.h
-gishelp.o: gisdefs.h
 gisinit.o: G.h
-gisinit.o: gis.h
-gisinit.o: gisdefs.h
 gisinit.o: version.h
-histo_eq.o: gis.h
-histo_eq.o: gisdefs.h
-histogram.o: gis.h
-histogram.o: gisdefs.h
-history.o: gis.h
-history.o: gisdefs.h
-home.o: gis.h
-home.o: gisdefs.h
-index.o: gis.h
-index.o: gisdefs.h
-list.o: gis.h
-list.o: gisdefs.h
-location.o: gis.h
-location.o: gisdefs.h
-make_colr.o: gis.h
-make_colr.o: gisdefs.h
-mapset.o: gis.h
-mapset.o: gisdefs.h
-mapset_msc.o: gis.h
-mapset_msc.o: gisdefs.h
-mapset_nme.o: gis.h
-mapset_nme.o: gisdefs.h
-mask_info.o: gis.h
-mask_info.o: gisdefs.h
 maskfd.o: G.h
-maskfd.o: gis.h
-maskfd.o: gisdefs.h
-myname.o: gis.h
-myname.o: gisdefs.h
-open.o: gis.h
-open.o: gisdefs.h
 opencell.o: G.h
-opencell.o: gis.h
-opencell.o: gisdefs.h
 openvect.o: G.h
-openvect.o: gis.h
-openvect.o: gisdefs.h
-plot.o: gis.h
-plot.o: gisdefs.h
-put_cellhd.o: gis.h
-put_cellhd.o: gisdefs.h
 put_row.o: G.h
-put_row.o: gis.h
-put_row.o: gisdefs.h
-put_title.o: gis.h
-put_title.o: gisdefs.h
-put_window.o: gis.h
-put_window.o: gisdefs.h
 radii.o: pi.h
-range.o: gis.h
-range.o: gisdefs.h
-rd_cellhd.o: gis.h
-rd_cellhd.o: gisdefs.h
-reclass.o: gis.h
-reclass.o: gisdefs.h
-remove.o: gis.h
-remove.o: gisdefs.h
-rename.o: gis.h
-rename.o: gisdefs.h
 rhumbline.o: pi.h
-rm_colr.o: gis.h
-rm_colr.o: gisdefs.h
 set_window.o: G.h
-set_window.o: gis.h
-set_window.o: gisdefs.h
-short_way.o: gis.h
-short_way.o: gisdefs.h
-sites.o: gis.h
-sites.o: gisdefs.h
-support.o: gis.h
-support.o: gisdefs.h
-tempfile.o: gis.h
-tempfile.o: gisdefs.h
-token.o: gis.h
-token.o: gisdefs.h
-whoami.o: gis.h
-whoami.o: gisdefs.h
-wind_2_box.o: gis.h
-wind_2_box.o: gisdefs.h
-wind_format.o: gis.h
-wind_format.o: gisdefs.h
-wind_limits.o: gis.h
-wind_limits.o: gisdefs.h
-wind_overlap.o: gis.h
-wind_overlap.o: gisdefs.h
-wind_scan.o: gis.h
-wind_scan.o: gisdefs.h
 window_map.o: G.h
-window_map.o: gis.h
-window_map.o: gisdefs.h
-wr_cellhd.o: gis.h
-wr_cellhd.o: gisdefs.h
-zero_cell.o: gis.h
-zero_cell.o: gisdefs.h
-zone.o: gis.h
-zone.o: gisdefs.h
 
 version.h: $(VERSION_FILE)
 	echo 'static char *VERSION_STRING = "@(#) GRASS $(VERSION_NUMBER) ($(VERSION_DATE))";' > $@
