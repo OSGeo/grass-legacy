@@ -14,7 +14,24 @@ int G_is_zero_value(
 {
  
  /* insert 0 check here */
- 
+
+  DCELL dval;
+
+
+  switch (data_type)
+  {
+    case CELL_TYPE:
+	    dval = (DCELL) *((CELL *)rast);
+	    break;
+    case FCELL_TYPE:
+	    dval = (DCELL) *((FCELL *)rast);
+	    break;
+    case DCELL_TYPE:
+	    dval = *((DCELL *)rast);
+	    break;
+  }
+
+  return dval == 0.0;
 }
 
 
