@@ -23,10 +23,7 @@ according to results of SQL queries.
 
 <BR>
 
-<B>v.db.reclass</B> [<B> -d</B>] <B>type=</B><EM>name </EM><B>input=</B><EM>name </EM><B>output=</B><EM>name  </EM><B>table=</B><EM>name</EM> [</EM><B>key=</B><EM>name</EM>]
- </EM><B>rules=</B><EM>name</EM>
- [</EM><B>TITLE=</B><EM>name</EM>
-]
+<B>v.db.reclass</B> [<B> -d</B>] <B>type=</B><EM>name </EM><B>input=</B><EM>name </EM><B>output=</B><EM>name  </EM><B>table=</B><EM>name</EM> [</EM><B>key=</B><EM>name</EM>] </EM><B>rules=</B><EM>name</EM> [</EM><B>TITLE=</B><EM>name</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -79,8 +76,7 @@ to the resultant map.
 
 <BR>
 
-Options:  area, line, site
- (multiple allowed)
+Options:  area, line, site (multiple allowed)
 
 <DT><B>input=</B><EM>name</EM> 
 
@@ -95,7 +91,6 @@ Options:  area, line, site
 <DD>Database table.
 
 
-
 <DT><B>key=</B><EM>name</EM> 
 
 <DD> Column corresponding to cats in vector map.
@@ -103,8 +98,7 @@ Options:  area, line, site
 
 <DT><B>rules=</B><EM>name</EM> 
 
-<DD>Name of text file containing reclassification rules.
- Rules file may contain
+<DD>Name of text file containing reclassification rules. Rules file may contain
 on each row either pair: <BR>
 <I>keyword&nbsp;value</I> <BR>
 (separated by space) or comment beginning by #(hash). 
@@ -116,7 +110,6 @@ specifies category label.
 <DT><B>TITLE=</B><EM>name</EM> 
 
 <DD>Title for the resulting vector map.
-
 
 </DL>
 
@@ -140,11 +133,9 @@ label Use type E14
 Produces a new vector area file <EM>land_u</EM> containing 'area'
 boundaries from <EM>land</EM> with area category values selected 
 from database by SQL select statement: <I>select id from tland where
-use = 'E13' and owner = 'Jara Cimrman' </I> changed
- to category 1;  
+use = 'E13' and owner = 'Jara Cimrman' </I> changed to category 1;  
 values selected from database by SQL select statement: <I>select id from tland where
-use = 'E14' </I> changed
- to category 2.
+use = 'E14' </I> changed to category 2.
 
 Any common boundaries are dissolved.
 
@@ -157,7 +148,6 @@ Any common boundaries are dissolved.
 
 <H2>AUTHOR</H2>
 
-R.L. Glenn, USDA, SCS, NHQ-CGIS
-<BR>
+R.L. Glenn, USDA, SCS, NHQ-CGIS<BR>
 from v.reclass to v.db.reclass rewritten by Radim Blazek
 
