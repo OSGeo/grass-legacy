@@ -37,7 +37,7 @@ typedef	struct {
 void fatalError(char *errorMsg);
 void setParams();
 void getParams(char **input, char **output, int *decim);
-void convert(char *fileout, int, int, int);
+void convert(char *fileout, int, int, int, int);
 
 /* globals */
 void *map = NULL;
@@ -96,7 +96,7 @@ void getParams(char **input, char **output, int *decim) {
  * Returns the file handle for the output file.
  */
 
-void convert(char *fileout, int rows, int cols, int depths) {
+void convert(char *fileout, int rows, int cols, int depths, int trueCoords) {
 
    int NumTimes=1;                        /* number of time steps */
    int NumVars=1;                         /* number of variables */
@@ -158,6 +158,9 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
    strcpy(VarName[0], "S");
    TimeStamp[0] = DateStamp[0] = 0;
    CompressMode = 4;
+
+  if(trueCoords)
+  { /* use map coordinates */
    Projection = 0;               /*linear, rectangular, generic units*/
    ProjArgs[0] = region.north;   /*North boundary of 3-D box*/
    ProjArgs[1] = region.west;    /*West boundary of 3-D box */
@@ -166,7 +169,20 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
    Vertical    = 0;               /*equally spaced levels in generic units*/
    VertArgs[0] = region.bottom;   /*height of bottom level*/
    VertArgs[1] = region.tb_res;   /*spacing between levels*/
-
+  }
+  else
+  { /* xyz coordinates */
+    Projection = 0;      /*linear, rectangular, generic units*/
+    ProjArgs[0] = 0.0;   /*North boundary of 3-D box*/
+    ProjArgs[1] = 0.0;   /*West boundary of 3-D box */
+    ProjArgs[2] = 1.0;   /*Increment between rows */
+    ProjArgs[3] = 1.0;   /*Increment between columns*/
+    Vertical    = 0;     /*equally spaced levels in generic units*/
+    VertArgs[0] = 0.0;   /*height of bottom level*/
+    VertArgs[1] = 1.0;   /*spacing between levels*/
+  }
+  
+  
 /* put here some g3d functions */
   /* required ? */
         LatInc = 1.0;
@@ -259,6 +275,8 @@ int main(int argc, char *argv[]) {
   int usePrecisionDefault, precision, useDimensionDefault, tileX, tileY, tileZ;
   FILE *fp;
   int cacheSize;
+  struct Flag *coords;
+  int trueCoords;
 
   /* Initialize GRASS */
   G_gisinit(argv[0]);
@@ -266,12 +284,18 @@ int main(int argc, char *argv[]) {
   /* Get parameters from user */
   setParams();
 
+  coords = G_define_flag ();   
+  coords->key = 'm';
+  coords->description = "Use map coordinates instead of xyz coordinates";
+      
   /* Have GRASS get inputs */
   if (G_parser(argc, argv))
     exit(-1);
 
   /* Parse input parameters */
   getParams(&input, &output, &decim);
+
+  trueCoords=coords->answer;
 
   if(NULL == G_find_grid3(input, "")){
     G3d_fatalError("g3d file not found");
@@ -293,7 +317,7 @@ int main(int argc, char *argv[]) {
 fprintf(stderr, "cols: %i rows: %i layers: %i\n", region.cols, region.rows, region.depths);
 #endif
 
-  convert(output, region.rows, region.cols, region.depths);
+  convert(output, region.rows, region.cols, region.depths, trueCoords);
 
   /* Close files and exit */
   if (!G3d_closeCell (map)) 
