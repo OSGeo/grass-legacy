@@ -995,7 +995,7 @@ static char *store (char *s)
 {
     char *buf;
 
-    buf = malloc (strlen(s) + 1);
+    buf = (char *)malloc ((size_t) (strlen(s) + 1));
     if (buf != NULL)
         strcpy (buf, s);
     return buf;
@@ -1019,7 +1019,7 @@ static int create_pad ( char *name)
 {
     PAD *pad;
 
-    pad = (PAD *) malloc (sizeof(PAD));
+    pad = (PAD *) malloc ((size_t)sizeof(PAD));
     if (pad == NULL)
         return 0;
 
@@ -1120,7 +1120,7 @@ static int append_item ( PAD *pad , char *name, char *value)
         return 0;
 
     /* allocate a list struct and put value into it */
-    list = (LIST *) malloc (sizeof(LIST));
+    list = (LIST *) malloc ((size_t)sizeof(LIST));
     if (list == NULL)
         return 0;
     list->next = NULL;
@@ -1203,7 +1203,7 @@ static ITEM *new_item ( PAD *pad, char *name)
 {
     ITEM *item;
 
-    item = (ITEM *) malloc (sizeof(ITEM));
+    item = (ITEM *) malloc ((size_t)sizeof(ITEM));
     if (item == NULL) return (ITEM *) NULL;
 
     item->name = store (name);
@@ -1233,9 +1233,9 @@ static char *xalloc ( void *buf,int *cur,int new,int len)
     if (*cur >= new)
         return buf;
     if (*cur)
-        buf = realloc (buf,new*len);
+        buf = (char *)realloc ((void *)buf, (size_t) (new * len));
     else
-        buf = malloc (new*len);
+        buf = (char *)malloc ((size_t) (new*len));
     *cur = new;
     if (buf != NULL)
         return buf;
