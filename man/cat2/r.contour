@@ -1,91 +1,91 @@
 
 
 
-r.contour <alpha>    GRASS Reference Manual     <alpha> r.contour
+r.contour <alpha>    GRASS Reference Manual	<alpha>	r.contour
 
 
 
 NAME
-     r.contour - Produces a GRASS binary vector map of specified
-     contours from GRASS raster map layer.
+     r.contour - Produces a GRASS binary vector	map of specified
+     contours from GRASS raster	map layer.
 
 SYNOPSIS
      r.contour
      r.contour help
-          r.contour input=name output=name
-          [levels=value,value,...,value] [minlevel=value]
-          [maxlevel=value] [step=value]
+	  r.contour input=name output=name
+	  [levels=value,value,...,value] [minlevel=value]
+	  [maxlevel=value] [step=value]
 
 DESCRIPTION
-     r.contour produces a contour map of user-specified levels
+     r.contour produces	a contour map of user-specified	levels
      from a raster map layer. This program works two ways:
 
-     1.   Contours are produced from a user-specified list of
-          levels.
+     1.	  Contours are produced	from a user-specified list of
+	  levels.
 
-     2.   Contours are produced at some regular increment from
-          user-specified minimum level to maximum level. If no
-          minimum or maximum level is specified, minimum or
-          maximum data value will be used.
+     2.	  Contours are produced	at some	regular	increment from
+	  user-specified minimum level to maximum level. If no
+	  minimum or maximum level is specified, minimum or
+	  maximum data value will be used.
 
      Parameters:
 
-     input=name        Name of input raster map layer.
+     input=name	       Name of input raster map	layer.
 
      output=name       Name of the binary vector file created.
 
      levels=value,value,...,value
-                       Comma separated list of desired levels.
+		       Comma separated list of desired levels.
 
-     minlevel=value    Beginning (lowest) value to be used when
-                       stepping through contours. Default is
-                       minimum data value.
+     minlevel=value    Beginning (lowest) value	to be used when
+		       stepping	through	contours. Default is
+		       minimum data value.
 
-     maxlevel=value    Ending (highest) value to be used when
-                       stepping through contours. Default is
-                       maximum data value.
+     maxlevel=value    Ending (highest)	value to be used when
+		       stepping	through	contours. Default is
+		       maximum data value.
 
-     step=value        Increment between contour levels.
+     step=value	       Increment between contour levels.
 
-     r.contour may be run interactively or non-interactively. To
-     run the program non-interactively, the user must specify the
-     input and output file names, either a list of levels or a
-     step value and, optionally, minimum and maximum levels:
+     r.contour may be run interactively	or non-interactively. To
+     run the program non-interactively,	the user must specify the
+     input and output file names, either a list	of levels or a
+     step value	and, optionally, minimum and maximum levels:
 
-          r.contour input=name output=name
-          [levels=value,value,...,value] [minlevel=value]
-                      [maxlevel=value] [step=value]
-
-
-
-
-
-GRASS 4.1                U.S. Army CERL                         1
+	  r.contour input=name output=name
+	  [levels=value,value,...,value] [minlevel=value]
+		      [maxlevel=value] [step=value]
 
 
 
 
 
-
-r.contour <alpha>    GRASS Reference Manual     <alpha> r.contour
-
+GRASS 4.2		Baylor University			1
 
 
-     To run the program interactively, the user may simply type
-     r.contour at the command line and will be prompted for
+
+
+
+
+r.contour <alpha>    GRASS Reference Manual	<alpha>	r.contour
+
+
+
+     To	run the	program	interactively, the user	may simply type
+     r.contour at the command line and will be prompted	for
      parameter values.
 
 NOTES
-     r.contour will either step through incremental contours or
+     r.contour will either step	through	incremental contours or
      produce contours from a list of levels, not both. If both a
-     list of levels and a step are specified, the list will be
-     produced and the step will be ignored.
+     list of levels and	a step are specified, the list will be
+     produced and the step will	be ignored.
 
-     Currently, 0 is treated as a valid data value by r.contour.
+     Currently,	0 is treated as	a valid	data value by r.contour.
 
-     If a contour level exactly matches a category value in the
+     If	a contour level	exactly	matches	a category value in the
      raster file, the contour line may backtrack on itself,
-     causing illegal arcs to be produced in the output GRASS
+     causing illegal arcs to be	produced in the	output GRASS
      vector file.
 
 AUTHOR
@@ -96,8 +96,8 @@ AUTHOR
 
 NOTICE
      This program is part of the alpha section of the GRASS
-     distribution.  Unlike the code in the main section of GRASS,
-     the alpha code has not yet been fully tested for one release
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
      cycle.
 
 
@@ -126,7 +126,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
