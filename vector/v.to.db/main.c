@@ -26,7 +26,7 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->description = "Load values from vector to database. In uploaded/printed category values "
-			"'-1' is used for 'no category' and 'null'/'-' if category is cannot be found or "
+			"'-1' is used for 'no category' and 'null'/'-' if category cannot be found or "
                         "multiple categories were found.";
 
     parse_command_line (argc, argv);

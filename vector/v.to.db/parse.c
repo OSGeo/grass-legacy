@@ -9,14 +9,15 @@ int match();
 int 
 parse_command_line (int argc, char *argv[])
 {
+    int ncols;
+
     struct {
 	    struct Option *vect;
 	    struct Option *option;
 	    struct Option *type;
 	    struct Option *field;
 	    struct Option *qfield;
-	    struct Option *col1;
-	    struct Option *col2;
+	    struct Option *col;
 	    struct Option *units;		
 	    struct Option *qcol;		
     } parms;
@@ -50,7 +51,7 @@ parse_command_line (int argc, char *argv[])
 	                         "\tarea - area size\n"
 				 "\tlength - line length\n"
 				 "\tcount - number of features for each category\n"
-				 "\tcoor - point coordinates\n"
+				 "\tcoor - point coordinates, X,Y or X,Y,Z\n"
 				 "\tsides - categories of areas on the left and right side of the boundary,\n"
     					   "\t\t'qfield' is used for area category.\n"
 				 "\tquery - result of a database query for all records of the geometry\n"
@@ -64,21 +65,13 @@ parse_command_line (int argc, char *argv[])
     parms.units->options      = "mi,miles,f,feet,me,meters,k,kilometers,a,acres,h,hectares";
     parms.units->description = "mi(les),f(eet),me(ters),k(ilometers),a(cres),h(ectares)";
 
-    parms.col1 = G_define_option();
-    parms.col1->key    = "col1";
-    parms.col1->type   = TYPE_STRING ;
-    parms.col1->required = NO ;
-    parms.col1->multiple = NO ;
-    parms.col1->gisprompt  = "column 1" ;
-    parms.col1->description = "column 1";
-
-    parms.col2 = G_define_option();
-    parms.col2->key    = "col2";
-    parms.col2->type   = TYPE_STRING ;
-    parms.col2->required = NO ;
-    parms.col2->multiple = NO ;
-    parms.col2->gisprompt  = "column 2" ;
-    parms.col2->description = "column 2";
+    parms.col = G_define_option();
+    parms.col->key    = "col";
+    parms.col->type   = TYPE_STRING ;
+    parms.col->required = NO ;
+    parms.col->multiple = YES ;
+    parms.col->gisprompt  = "column(s)" ;
+    parms.col->description = "column(s)";
 
     parms.qcol = G_define_option();
     parms.qcol->key    = "qcol";
@@ -113,8 +106,33 @@ parse_command_line (int argc, char *argv[])
 
     options.option = parse_option (parms.option->answer);
     options.units = parse_units (parms.units->answer);
-    options.col1 = parms.col1->answer;
-    options.col2 = parms.col2->answer;
+
+    /* Check number of columns */
+    ncols = 0;
+    options.col[0] = NULL;
+    options.col[1] = NULL;
+    options.col[2] = NULL;
+    while (  parms.col->answers && parms.col->answers[ncols] ) {
+	options.col[ncols] = G_store ( parms.col->answers[ncols] );
+	ncols++;
+    }
+    
+    if ( options.option == O_AREA || options.option == O_LENGTH || options.option == O_COUNT 
+	 || options.option == O_QUERY ) /* one column required */
+    {
+	if ( ncols != 1 ) {
+	    G_fatal_error ( "This option requires one column" );
+	}
+    }  else if ( options.option == O_SIDES ) {
+	if ( ncols != 2 ) {
+	    G_fatal_error ( "This option requires 2 columns" );
+	}
+    }  else if ( options.option == O_COOR ) {
+	if ( ncols < 2 ) {
+	    G_fatal_error ( "This option requires at least 2 columns" );
+	}
+    }
+
     options.qcol = parms.qcol->answer;
 
     if ( options.option == O_SIDES && !(options.type | GV_BOUNDARY) )
