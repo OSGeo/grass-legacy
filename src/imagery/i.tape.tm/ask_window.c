@@ -18,7 +18,7 @@ ask_window ()
 	V_clear ();
 	V_line (1,"THEMATIC MAPPER EXTRACT");
 
-	V_line (3, "please select desired tape window to extract");
+	V_line (3, "please select region of the image to extract");
 	V_line (6, "start row:         (1 -     )");
 	V_line (7, "end row:           (1 -     )");
 	V_line (9, "start col:         (1 -     )");
