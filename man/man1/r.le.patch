@@ -100,6 +100,7 @@ p5 = mean perim. by gp
 p6 = st. dev. perim. by gp
 .LI "\*Lout\*O
 Name of output file for individual patch measures, when sam=w, u, r; if out=head, then column headings will be printed
+.LE
 .SH SEE ALSO
 The r.le
 \*Lr.le.trace\*O
