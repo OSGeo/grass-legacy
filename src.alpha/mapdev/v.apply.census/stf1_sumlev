@@ -1,0 +1,160 @@
+                        SUMMARY LEVEL SEQUENCE CHARTS
+
+STF 1A
+                                                      Summary    Geographic
+                                                        level     component
+Summary level area                                       code          code
+State                                                    040       00 40 42
+                                                                   43 44
+  State--County                                          050       00
+    State--County--County Subdivision                    060       00
+      State--County--County Subdivision--
+       Place/Remainder                                   070       00
+        State--County--County Subdivision--Place/
+         Remainder--Census Tract/Block Numbering Area    080       00
+          State--County--County Subdivision--Place/
+           Remainder--Census Tract/Block Numbering 
+           Area--American Indian/Alaska Native Area/
+           Remainder--Reservation/Trust Lands/
+           Remainder--Alaska Native Regional 
+           Corporation/Remainder--Congressional
+           District--Block Group                         091       00
+State--County--Census Tract/Block Numbering Area         140       00
+State--County--Census Tract/Block Numbering Area--
+ Block Group                                             150       00
+State--Place--County                                     155       00
+State--Place                                             160       00
+State--Consolidated City                                 170       00
+State--American Indian Reservation with Trust Lands      210       00
+  State--American Indian Reservation with Trust Lands;
+   reservation only                                      211       00
+    American Indian Reservation [reservation with or
+     without trust lands; reservation only]/Tribal
+     Jurisdiction Statistical Area/Tribal Designated
+     Statistical Area/Alaska Native Village
+     Statistical Area--State--County                     220       00
+  State--American Indian Reservation with Trust
+   Lands; trust lands only                               212       00
+    American Indian Trust Lands [trust lands with or
+     without reservation; trust lands only]--State--
+     County                                              221       00
+State--American Indian Reservation with no Trust 
+ Lands/Tribal Jurisdiction Statistical Area/Tribal
+ Designated Statistical Area/Alaska Native Village
+ Statistical Area                                        215       00
+  American Indian Reservation [reservation with or
+   without trust lands; reservation only]/Tribal
+   Jurisdiction Statistical Area/Tribal Designated
+   Statistical Area/Alaska Native Village
+   Statistical Area--State--County                       220       00
+State--American Indian Trust Lands [trust lands
+ with no reservation]                                    216       00
+  American Indian Trust Lands [trust lands with or
+   without reservation; trust lands only]--State--
+   County                                                221       00
+State--Alaska Native Regional Corporation                230       00
+State--Congressional District (101st)                    500       00
+
+STF 1B
+STF 1B records are not available on this CD-ROM.  An extract of STF 1B
+will be available as a separate CD-ROM product.
+
+STF 1C
+                                                   Summary       Geographic
+                                                     level        component
+Summary level area                                    code             code
+United States                                         010          00 01-11
+                                                                   20-28
+                                                                   30-36 40
+                                                                   42 43 44
+Region                                                020          00 01-11
+                                                                   20-28
+                                                                   30-36 40
+                                                                   42 43 44
+Division                                              030          00 01-11
+                                                                   20-28
+                                                                   30-36 40
+                                                                   42 43 44
+State                                                 040          00 01-11
+                                                                   20-28
+                                                                   30-36 40
+                                                                   42 43 44
+  State--County                                       050          00
+  State [12 States only--CT, ME, MA, MI, MN, NH,
+   NJ, NY, PA, RI, VT, WI]--County Subdivision
+   [10,000 or more persons]                           061          00
+  State [6 States only--CT, ME, MA, NH, RI, VT]--
+   County Subdivision [under 10,000 persons and
+   in an MSA/CMSA]                                    062          00
+  State--Place [10,000 or more persons]               161          00
+  State--Consolidated City                            170          00
+American Indian Reservation with Trust Lands          200          00
+  American Indian Reservation with Trust Lands;
+   reservation only                                   201          00
+    American Indian Reservation with Trust Lands;
+     reservation only--State                          205          00
+      American Indian Reservation [reservation
+       with or without trust lands; reservation
+       only]/Tribal Jurisdiction Statistical
+       Area/Tribal Designated Statistical Area/
+       Alaska Native Village Statistical Area--
+       State--County                                  220          00
+  American Indian Reservation with Trust Lands;
+   trust lands only                                    202         00
+    American Indian Reservation with Trust Lands;
+     trust lands only--State                           206         00
+      American Indian Trust Lands [trust lands
+       with or without reservation; trust lands
+       only]--State--County                            221         00
+American Indian Reservation with no Trust Lands/
+ Tribal Jurisdiction Statistical Area/Tribal
+ Designated Statistical Area/Alaska Native 
+ Village Statistical Area                              203         00
+  
+  American Indian Reservation with no Trust Lands/
+   Tribal Jurisdiction Statistical Area/Tribal
+   Designated Statistical Area/Alaska Native
+   Village Statistical Area--State                     207         00
+    American Indian Reservation [reservation with
+     or without trust lands; reservation only]/
+     Tribal Jurisdiction Statistical Area/Tribal
+     Designated Statistical Area/Alaska Native
+     Village Statistical Area--State--County           220         00
+American Indian Trust Lands [trust lands with
+ no reservation]                                       204         00
+  American Indian Trust Lands [trust lands
+   with no reservation]--State                         208         00
+    American Indian Trust Lands [trust lands with
+     or without reservation; trust lands only]--
+     State--County                                     221         00
+State--Alaska Native Regional Corporation              230         00
+Metropolitan Statistical Area/Consolidated 
+ Metropolitan Statistical Area                         300         00 23 24
+  Metropolitan Statistical Area [no CMSAs]--
+   State--Central City                                 340         00
+  Metropolitan Statistical Area/Consolidated
+   Metropolitan Statistical Area--State                310         00
+    Metropolitan Statistical Area [no CMSAs]--
+     State--County                                     329         00
+Consolidated Metropolitan Statistical Area--
+ Primary Metropolitan Statistical Area                 301         00 23 24
+  Consolidated Metropolitan Statistical Area--
+   Primary Metropolitan Statistical Area--
+   State--Central City                                 341         00
+  Consolidated Metropolitan Statistical Area--
+   Primary Metropolitan Statistical Area--
+   State                                               311         00
+    Consolidated Metropolitan Statistical 
+     Area--Primary Metropolitan Statistical
+     Area--State--County                               331         00
+Urbanized Area                                         400         00 03 04
+  Urbanized Area--State--Central Place                 460         00
+  Urbanized Area--State                                410         00 03 04
+    Urbanized Area--State--County                      430         00
+      Urbanized Area--State--County--
+       County Subdivision                              440         00
+        Urbanized Area--State--County--
+         County Subdivision--Place                     450         00
+
+STF 1D
+STF 1D data are not available on CD-ROM.
