@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.19 2002-01-22 04:51:37 glynn Exp $
+# $Id: Gmakefile,v 1.20 2002-02-20 02:23:28 glynn Exp $
 #
 # Toplevel makefile for building everything
 
@@ -20,9 +20,9 @@ configure:
 	@GRASS_IN_GMAKEFILE=yes ./doconfigure $(VER) "$(PQLIB)"
 
 nvwish:
-	$(GMAKE) $(LIBDIR)/libimage
-	$(GMAKE) $(LIBDIR)/ogsf
-	cd src ; $(GMAKE)
+	$(GMAKE) $(SRC)/libes/libimage
+	$(GMAKE) $(SRC)/libes/ogsf
+	$(GMAKE) $(SRC).contrib/GMSL/NVIZ2.2/src
 
 nviz:
 	'rm' -rf $(INSTALL_DIR)

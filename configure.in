@@ -45,6 +45,8 @@ LOC_CHECK_FP_INF_NAN([],
 [ LOC_CHECK_CC_MIEEE ])
 CFLAGS="$CFLAGS $IEEEFLAG"
 
+# Set BINDIR
+
 if test -n "${bindir}"; then
 BINDIR="${bindir}"
 else
@@ -52,9 +54,15 @@ BINDIR=/usr/local/bin
 fi
 AC_SUBST(BINDIR)
 
-# Make sure this is set correctly
+# Set SRCDIR and DSTDIR
+
 SRCDIR=`pwd`
+DSTDIR=`pwd`
+
 AC_SUBST(SRCDIR)
+AC_SUBST(DSTDIR)
+
+# Set ARCH
 
 ARCH=
 if test -z "${host}"; then
@@ -62,18 +70,30 @@ ARCH="unknown"
 else
 ARCH="${host}"
 fi
+
 AC_SUBST(ARCH)
 
-# Add VERSION, GISBASE, and GRASS_BIN
-VERSION=`cat ${SRCDIR}/src/CMD/VERSION | head -1`
-NAME_VER=`echo ${VERSION} | sed 's/\..*//'`
+# Set GISBASE and GRASS_BIN
+
 GISBASE=${SRCDIR}/dist.${ARCH}
 GRASS_BIN=${SRCDIR}/bin.${ARCH}
 
-AC_SUBST(VERSION)
-AC_SUBST(NAME_VER)
 AC_SUBST(GISBASE)
 AC_SUBST(GRASS_BIN)
+
+# Set VERSION_*
+
+VERSION_FILE=${SRCDIR}/src/CMD/VERSION
+VERSION_NUMBER=`sed -n 1p ${VERSION_FILE}`
+VERSION_DATE=`sed -n 2p ${VERSION_FILE}`
+VERSION_UPDATE_PKG=`sed -n 3p ${VERSION_FILE}`
+NAME_VER=`echo ${VERSION_NUMBER} | sed 's/\..*//'`
+
+AC_SUBST(VERSION_FILE)
+AC_SUBST(VERSION_NUMBER)
+AC_SUBST(VERSION_DATE)
+AC_SUBST(VERSION_UPDATE_PKG)
+AC_SUBST(NAME_VER)
 
 # Enable options
 

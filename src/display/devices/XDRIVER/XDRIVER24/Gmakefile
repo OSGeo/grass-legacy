@@ -1,6 +1,6 @@
 PGM=XDRIVER
 
-LIBES = ../../lib/driverlib.a $(D_LIB) $(GISLIB)
+LIBES = $(DRIVERLIB) $(D_LIB) $(GISLIB)
 
 # if you are compiling under X11R3 add this define
 #R3DEFINE=-DX11R3
