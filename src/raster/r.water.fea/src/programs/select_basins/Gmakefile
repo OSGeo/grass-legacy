@@ -1,0 +1,14 @@
+PGM=select_basins
+RFEA=$(GISBASE)/etc/r.fea
+LIBES= $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+LDFLAGS= -s -O
+LIST= main.o selectbasin.o basinlink.o unique.o 
+
+$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+	mv $(PGM) $(RFEA)
+
+saber:
+	$(CC) -o $@ *.c 
+$LIBES: #
+
