@@ -1,0 +1,9 @@
+This fascinating code uses the GRASS 3.0 graphics programming utilities in
+a clever way.  The user interfaces with screen menus.   The contents and
+behavior of the menus is driven largely by the instructions in range.rc .
+
+The data operations are not up to date, but the method for generating 
+the menus is interesting and could be applied to other applications.
+
+It is hoped however that X based interfaces will be used for this purpose 
+in the future.
