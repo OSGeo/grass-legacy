@@ -25,7 +25,9 @@ CALLS:
 #include "vask.h"
 int V_exit()
 {
+#ifdef HAVE_KEYPAD
 	keypad(stdscr, 0);
+#endif
 	clear() ;
 	refresh() ;
     /* added for Mips' braindead implementation of curses 
