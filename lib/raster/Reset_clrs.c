@@ -1,6 +1,22 @@
 #include "raster.h"
 #include "graph.h"
 
+
+/*!
+ * \brief define multiple colors
+ *
+ * Sets color numbers
+ * <b>min</b> through <b>max</b> to the intensities represented in the arrays
+ * <b>red, grn, and blue.</b>
+ *
+ *  \param min
+ *  \param max
+ *  \param red
+ *  \param grn
+ *  \param blue
+ *  \return int
+ */
+
 int R_reset_colors( int min,int max ,
     unsigned char *red,unsigned char *grn,unsigned char *blu )
 {

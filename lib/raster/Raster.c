@@ -2,6 +2,24 @@
 #include "graph.h"
 #include <stdio.h>
 
+
+/*!
+ * \brief draw a raster
+ *
+ * Starting at the current position, the <b>num</b> colors represented
+ * in the <b>raster</b> array are drawn for <b>nrows</b> consecutive pixel
+ * rows.  The <b>withzero</b> flag is used to indicate whether 0 values are to
+ * be treated as a color (1) or should be ignored (0). If ignored, those screen
+ * pixels in these locations are not modified. This option is useful for graphic
+ * overlays.
+ *
+ *  \param num
+ *  \param nrows
+ *  \param withzero
+ *  \param ras raster
+ *  \return int
+ */
+
 int R_raster(
 	int num ,
 	int nrows ,
