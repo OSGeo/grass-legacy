@@ -20,16 +20,19 @@
 <BR>
 <B>s.to.rast help</B>
 <BR>
-<B>s.to.rast</B> [<B>-qs</B>] <B>input=</B><EM>name</EM> 
-<B>output=</B><EM>name</EM> <B>size=</B><EM>value</EM>
-<B>TITLE=</B><EM>"phrase"</EM> <B>field=</B><EM>value</EM>
+<B>s.to.rast</B> [<B>-qs</B>] 
+<B>input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+<B>size=</B><EM>value</EM>
+<B>title=</B><EM>"phrase"</EM> 
+<B>field=</B><EM>value</EM>
+<B>findex=</B><EM>value</EM>
+<B>string=</B><EM>value</EM>
 
 <H2>DESCRIPTION</H2>
 
-<EM>s.to.rast</EM> converts a GRASS site file to a GRASS cell
-file. The program uses a subset of the functions in
-<EM><A HREF="s.menu.html">s.menu</A></EM>.
-
+<EM>s.to.rast</EM> converts a GRASS site file to a GRASS raster
+file.
 <P>
 
 The quad size (ie the number of cells used to represent one
@@ -44,7 +47,7 @@ already exists, the program exits gracefully.
 <DT><B>-q</B>
 <DD>Run the module quietly.
 <DT><B>-s</B>
-<DD>Create a single-valued (0/1) raster map
+<DD>Create a single-valued (0/1, binary) raster map
 </DL>
 
 <H3>Parameters:</H3>
@@ -60,11 +63,19 @@ already exists, the program exits gracefully.
 <DT><B>size=</B><EM>value</EM> 
 <DD>Number of cells to surround site cell
 
-<DT><B>TITLE=</B><EM>"phrase"</EM> 
+<DT><B>title=</B><EM>"phrase"</EM> 
 <DD>Title for the resulting raster map
 
 <DT><B>field=</B><EM>value</EM> 
+<DD>Attribute field type to use for operation<br>
+           options: dim,decimal,cat<br>
+           default: decimal
+<DT><B>findex=</B><EM>value</EM>
 <DD>Attribute field number to use for operation<br>
+           default: 1
+
+<DT><B>string=</B><EM>value</EM>
+<DD>String attribute number to use for description<br>
            default: 1
 
 </DL>
@@ -80,6 +91,11 @@ layer.
 <P>
 Alternaticely the user can convert the sites to vector format
 and use v.bubble or v.circle to represent the location.
+<P>
+As site files can consist of several attribute fields (decimals or string
+categories), the user can select the column of interest for conversion
+using the filed selection parameters (findex, string). The attribute field
+type to use for operation is selected by parameter <EM>field</EM>.
 
 <H2>SEE ALSO</H2>
 
@@ -90,7 +106,8 @@ and use v.bubble or v.circle to represent the location.
 <EM><A HREF="v.circle.html">v.circle</A></EM>,
 
 
-<H2>AUTHOR</H2>
+<H2>AUTHORS</H2>
 
-Katarina Johnsson, CCRS
+Katarina Johnsson, CCRS<br>
+GRASS 5 improvements: Eric G. Miller
 </HTML>
