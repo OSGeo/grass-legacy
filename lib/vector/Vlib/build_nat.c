@@ -527,6 +527,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	    }
 
 	    Line = plus->Line[line];
+	    if ( !Line ) continue; /* Dead */
 
 	    if ( Line->type != GV_CENTROID ) continue;
 

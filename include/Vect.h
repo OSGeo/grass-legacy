@@ -13,6 +13,7 @@ int Vect_append_points (struct line_pnts *, struct line_pnts *, int);
 int Vect_line_insert_point (struct line_pnts *, int, double, double, double);
 int Vect_line_delete_point (struct line_pnts *, int);
 int Vect_line_prune (struct line_pnts *);
+void Vect_line_reverse (struct line_pnts *);
 int Vect_copy_xyz_to_pnts (struct line_pnts *, double *, double *, double *, int);
 int Vect_copy_pnts_to_xyz (struct line_pnts *, double *, double *, double *, int *);
 int Vect_reset_line (struct line_pnts *);
@@ -24,6 +25,8 @@ double Vect_line_geodesic_length ( struct line_pnts *);
 int Vect_line_distance ( struct line_pnts *, double, double, double, int, 
 	                 double *, double *, double *, double *, double *, double *);
 int Vect_line_box ( struct line_pnts *, BOUND_BOX * );
+void Vect_line_parallel ( struct line_pnts *, double, double, int, struct line_pnts *);
+void Vect_line_buffer ( struct line_pnts *, double, double, struct line_pnts * );
 
       /* Categories */
 struct line_cats *Vect_new_cats_struct (void);
