@@ -1,3 +1,5 @@
+#  @(#)Gmakefile	2.2  6/26/87
+
 IMP_OFILES = \
 	imp_main.o \
 	imp_dlg.o \
