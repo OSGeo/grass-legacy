@@ -1,0 +1,5 @@
+This is a clone of Michael Shapiro's  btree library.  The generic pointers
+and many malloc()'s have been replaced.  Both the keys and data are
+integers only.  The result is a much more limited but much faster btree library.
+
+ -dave gerdes
