@@ -1,5 +1,6 @@
 #include "segment.h"
 
+/*bugfix: buf: char* vs int* -> wrong pointer arithmetics!!!. Pierre de Mouveaux - 09 april 2000 */
 /*  int segment_get (SEGMENT *SEG, register int *buf,int row,int col) */
 int segment_get (SEGMENT *SEG,void *buf,int row,int col)
 {
