@@ -32,7 +32,7 @@
 
 /*=========================== Constants/Defines ============================*/
 
-static const char *GRASS_copyright = "GRASS (TM) GNU GPL licensed Software" ;
+static const char *GRASS_copyright = "GRASS GNU GPL licensed Software" ;
 
 /* Define TRUE and FALSE for boolean comparisons */
 #ifndef TRUE
@@ -419,9 +419,5 @@ struct TimeStamp
 /* Since there are so many prototypes for the gis library they are stored in */
 /* in the file gisdefs.h */
 #include "gisdefs.h"
-
-/* Stuff in site.h depends on structures defined in here and on stuff in */
-/* datetime.h but why is it here???? */
-#include "site.h"
 
 #endif /*GRASS_GIS_H*/
