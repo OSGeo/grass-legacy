@@ -1,0 +1,50 @@
+GRAPH.TXT : text description of a graph
+
+$ cr_from_a --file=GRAPH.TXT --graph=graph.dgl
+
+	read GRAPH.TXT and create graph.dgl
+
+
+
+
+$ view --graph=graph.dgl
+
+	View the graph.dgl content (node attributes are not printed)
+
+
+
+
+$ shortest_path --graph=graph.dgl --from=1 --to=80
+
+	Figure out shortest path from node 1 to node 5
+
+
+
+How to store X/Y/Z node coordinates:
+
+Node coordinates can be assigned as node attributes. In the GRAPH.TXT file
+lines beginning with 'A' are arcs, lines beginning with 'N' are node attributes.
+Each coordinate is stored as 32 bit integer. Thus when creating the graph
+(cr_from_a.c) I reserved 12 bytes for xyz values.
+See the GngSetNodeAttr() usage in cr_from_a.c
+The node attributes are passed back to the clip_node() callback during Dijkstra
+so that the user can check if the node is still into an arbitrary bounding box
+(see shortest_path.c).
+
+
+
+Clipping demo:
+
+Try to go from node 1 to node 80:
+
+$ ./shortest_path --graph=graph.dgl --from=1 --to=80
+
+See the result and then try to clip out node 3:
+
+$ ./shortest_path --graph=graph.dgl --from=1 --to=80 --discard=3
+
+The path will now use intermediate 2 instead of 3, resulting in a
+longer path.
+
+
+

@@ -1,0 +1,22 @@
+CFLAGS = -I../include -g
+LNFLAGS = -L.. -ldgl
+PROGRAMS = cr_from_a view shortest_path
+OBJECTS = opt.o cr_from_a.o view.o shortest_path.o
+
+
+all: $(PROGRAMS)
+
+cr_from_a: cr_from_a.o opt.o
+	cc -o $@ cr_from_a.o opt.o $(LNFLAGS)
+
+view: view.o opt.o
+	cc -o $@ view.o opt.o $(LNFLAGS)
+
+shortest_path: shortest_path.o opt.o
+	cc -o $@ shortest_path.o opt.o $(LNFLAGS)
+
+.c.o:
+	cc -c $(CFLAGS) $< -o $@
+
+clean:
+	rm -f $(PROGRAMS) $(OBJECTS)
