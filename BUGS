@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.90 2000-12-01 13:21:49 markus Exp $
+$Id: BUGS,v 1.91 2000-12-01 14:20:57 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -53,16 +53,6 @@ G3D libraries bug:
    (being worked on by Jaro)
 
 ----------- modules ---------------------------------------------
-
-d.mon: hangs with "-L" option
-   (would be nice to fix to improve "d.monsize" script
-  Andreas Lange wrote:
-  The d.mon -L bug only occurs on Linux, on IRIX
-  everything is ok. I read the code and experimented with it, but i
-  couldn't find the problem. This is something for the signal
-  specialists/system programmers from BSD and SYSV.
-    (being worked on by Andreas Lange, help wanted!)
-  -> note: with IPC it's o.k.
 
 d.param.scale
  - lower axis description not readable
