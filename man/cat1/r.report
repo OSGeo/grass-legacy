@@ -1,7 +1,7 @@
 
 
 
-r.report             GRASS Reference Manual              r.report
+r.report <main>      GRASS Reference Manual       <main> r.report
 
 
 
@@ -12,8 +12,8 @@ NAME
 SYNOPSIS
      r.report
      r.report help
-     r.report [-hmfq] map=name[,name,...] [units=name[,name,...]]
-     [pl=value] [pw=value] [output=name]
+     r.report [-hmfqe] map=name[,name,...]
+     [units=name[,name,...]] [pl=value] [pw=value] [output=name]
 
 DESCRIPTION
      r.report allows the user to set up a series of report
@@ -29,15 +29,15 @@ DESCRIPTION
      specifies the names of raster map layers and any desired
      options on the command line, using the form
 
-          r.report [-hmfq] map=name[,name,...]
+          r.report [-hmfqe] map=name[,name,...]
           [units=name[,name,...]] [pl=value] [pw=value]
 
      where each map name is the name of a raster map layer on
      which to report, each unit name is a unit of measure in
      which results are to be reported, the pl value gives the
      page length, the pw value gives the page width, and the
-     (optional) flags -h, -m, -f, and -q have the meanings stated
-     below.
+     (optional) flags -h, -e, -m, -f, and -q have the meanings
+     stated below.
 
 
      Flags:
@@ -53,23 +53,38 @@ DESCRIPTION
      -q                  Run quietly, without printing program
                          messages to standard output.
 
+     -e                  Use scientific format for the numbers
+                         that are too long to fit in the tab
+                         table field if their decimal form is
+                         used.
+
+
+
+GRASS 4.1                U.S. Army CERL                         1
+
+
+
+
+
+
+r.report <main>      GRASS Reference Manual       <main> r.report
+
+
+
+     -z                  Report only non-zero data values.  Zero
+                         data will not be reported.  However, for
+                         multiple map layers this means that if
+                         zero values occur in every map layer,
+                         they will not be reported; if non-zero
+                         category values occur in any map layer
+                         (along with zeros in others), the non-
+                         zero values along with the zero values
+                         will be reported.
+
      Parameters:
 
      map=name,name,...   Names of raster map(s) on which to
                          report.
-
-
-
-GRASS 4.0                U.S. Army CERL                         1
-
-
-
-
-
-
-r.report             GRASS Reference Manual              r.report
-
-
 
      units=name          Units of measure in which results are to
                          be reported.  These units are based on
@@ -108,6 +123,20 @@ r.report             GRASS Reference Manual              r.report
      Alternately, the user can simply type r.report on the
      command line, without program arguments.  In this case, the
      user will be prompted for program flag settings and
+
+
+
+GRASS 4.1                U.S. Army CERL                         2
+
+
+
+
+
+
+r.report <main>      GRASS Reference Manual       <main> r.report
+
+
+
      parameter values.
 
      The report itself consists of two parts, a header section
@@ -124,19 +153,6 @@ r.report             GRASS Reference Manual              r.report
      tables which present the statistics for each category and
      the totals for each unit column.
 
-
-
-GRASS 4.0                U.S. Army CERL                         2
-
-
-
-
-
-
-r.report             GRASS Reference Manual              r.report
-
-
-
      Note that, unlike r.stats, r.report allows the user to
      select the specific units of measure in which statistics
      will be reported.
@@ -147,8 +163,45 @@ r.report             GRASS Reference Manual              r.report
      Here, r.report output is directed into the file report.file.
 
 EXAMPLE:
-          r.report  map=geology  units=miles,acres  >
-          report.file
+          r.report  map=geology  units=miles,acres  >  report.file
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.1                U.S. Army CERL                         3
+
+
+
+
+
+
+r.report <main>      GRASS Reference Manual       <main> r.report
+
+
 
        ________________________________________________________________________
       |                       RASTER MAP CATEGORY REPORT                      |
@@ -162,21 +215,21 @@ EXAMPLE:
       |_______________________________________________________________________|
       | MAP:      geology in PERMANENT                                        |
       |_______________________________________________________________________|
-      |         Category Information         |                                |
-      | #         description                |                                |
+      |         Category Information         |    Acres           Square      |
+      |    #      description                |                    Miles       |
       |________|_____________________________|________________________________|
-      |    0   |  no data                    |     415.13|         0.65       |
-      |    1   |  metamorphic                |    2597.02|         4.06       |
-      |    2   |  transition                 |      32.12|         0.05       |
-      |    3   |  igneous                    |    8117.24|        12.68       |
-      |    4   |  sandstone                  |   16691.60|        26.08       |
-      |    5   |  limestone                  |   13681.93|        21.38       |
-      |    6   |  shale                      |   10304.07|        16.10       |
-      |    7   |  sandy shale                |    2517.95|         3.93       |
-      |    8   |  claysand                   |    3229.60|         5.05       |
-      |    9   |  sand                       |    8141.95|        12.72       |
+      |    0   |  no data                    |     415.13|          0.65      |
+      |    1   |  metamorphic                |    2597.02|          4.06      |
+      |    2   |  transition                 |      32.12|          0.05      |
+      |    3   |  igneous                    |    8117.24|         12.68      |
+      |    4   |  sandstone                  |   16691.60|         26.08      |
+      |    5   |  limestone                  |   13681.93|         21.38      |
+      |    6   |  shale                      |   10304.07|         16.10      |
+      |    7   |  sandy shale                |    2517.95|          3.93      |
+      |    8   |  claysand                   |    3229.60|          5.05      |
+      |    9   |  sand                       |    8141.95|         12.72      |
       |______________________________________|___________|____________________|
-      |                 TOTAL                |           |                    |
+      |                 TOTAL                |   65728.60|        102.70      |
       |______________________________________|___________|____________________|
 
 NOTES
@@ -187,21 +240,6 @@ NOTES
      If the user runs r.report non-interactively, report output
      can be saved by redirecting it to a file or a printer using
      the UNIX redirection mechanism.
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         3
-
-
-
-
-
-
-r.report             GRASS Reference Manual              r.report
-
-
 
 SEE ALSO
      g.region, r.coin, r.describe, r.info, r.mask, r.stats
@@ -220,45 +258,7 @@ AUTHOR
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
