@@ -1,0 +1,12 @@
+Mmask	mask.c	/^main(argc, argv) char *argv[];$/
+Mreclass	reclass.c	/^main(argc, argv)$/
+do_reclass	do_reclass.c	/^do_reclass (old_name, old_mapset, new_name, cats, /
+do_text	maskinfo.c	/^do_text (text, first, last)$/
+dots	dots.c	/^dots (old, new, n)$/
+hitreturn	makemask.c	/^hitreturn()$/
+makemask	makemask.c	/^makemask()$/
+maketable	maketable.c	/^maketable (cats, table, MASK)$/
+maskinfo	maskinfo.c	/^maskinfo()$/
+reclass_text	maskinfo.c	/^reclass_text (text, reclass, next)$/
+set_new_cats	set_cats.c	/^set_new_cats(cats, new_cats, table) $/
+title	mask.c	/^title()$/
