@@ -1,5 +1,5 @@
 LIST = main.o popup.o
-LIBES = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
 $(ETC)/i.ask: $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
