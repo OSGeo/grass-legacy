@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.55 2000-10-27 09:45:23 markus Exp $
+$Id: BUGS,v 1.56 2000-10-29 16:44:07 andreas Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -440,6 +440,48 @@ v.cutter:
   My pc conf:pentium3 600 & 128 RAM       
   (reported by marco  <scurra@infinito.it>)
   (being worked on by ?)
+
+-----------------------------------------------------------------------
+Modules with interface problems (parser etc): 
+-----------------------------------------------------------------------
+(collected by Andreas Lange, not release critical, bu should be fixed
+ sometimes for consistency)
+
+r.water.outlet: 
+  ERROR on help parameter, not exiting. 
+
+g.gisenv:
+  g.gisenv help says nothing (not a bug, just to remind that it is
+  always listed in grass.sum as FAILED).
+
+i.tape.tm.fast:
+  ERROR (only for xy-locations), no "Usage: " Info
+
+v.in.dlg: 
+  ERROR ??
+
+m.in.stf1.tape:
+ must be run in command mode only (USAGE:) ... no parser interface
+
+m.lulc.USGS:
+ "Can not open USGS CTG file"
+
+r.out.rlc:
+  no parser interface
+
+r.in.utm:
+  segfaults on invocation -> fixed 
+
+i.grey.scale:
+  only interactive, no parser interface
+
+v.in.atlas:
+  creates file log with help cmd line, echos ERROR - see log
+  
+m.lulc.USGS:
+Mlulc.read:
+  ? non-reproducable behaviour with command line parameters ?
+
 
 -----------------------------------------------------------------------
 Further discussion/hints:
