@@ -76,44 +76,59 @@ do
 	esac
 done
 
+found=
 if [ "$rast" ]
 then
+	found=1
 	rast="rast=$rast"
 fi
 
 if [ "$vect" ]
 then
+	found=1
 	vect="vect=$vect"
 fi
 
 if [ "$icon" ]
 then
+	found=1
 	icon="icon=$icon"
 fi
 
 if [ "$labels" ]
 then
+	found=1
 	labels="labels=$labels"
 fi
 
 if [ "$sites" ]
 then
+	found=1
 	sites="sites=$sites"
 fi
 
 if [ "$region" ]
 then
+	found=1
 	region="region=$region"
 fi
 
 if [ "$group" ]
 then
+	found=1
 	group="group=$group"
 fi
 
 if [ "$dview" ]
 then
+	found=1
 	dview="3dview=$dview"
+fi
+
+if [ ! "$found" ]
+then
+	echo "No data found."
+	exit 1
 fi
 
 echo g.remove $rast $vect $icon $labels $sites $region $group $dview
