@@ -10,9 +10,9 @@ typedef struct _cursor {
 } cursor;  
 
 #ifndef MAIN
-    SQLHENV	ODenvi;  // Handle ODBC environment
-    SQLHDBC    	ODconn;      // Handle connection   
+    SQLHENV	ODenvi;  /* Handle ODBC environment */
+    SQLHDBC    	ODconn;  /* Handle connection */
 #else
-    extern  SQLHENV  ODenvi;  // Handle ODBC environment
-    extern  SQLHDBC  ODconn;      // Handle connection   
+    extern  SQLHENV  ODenvi;  /* Handle ODBC environment */
+    extern  SQLHDBC  ODconn;  /* Handle connection */
 #endif 
