@@ -12,6 +12,7 @@ RETURN key, then press ESC.
   \g.filename help\      \g.findfile help\       \g.gisenv help\
   \g.help help\          \g.list help\           \g.manual help\
   \g.mapsets help\       \g.region help\         \g.remove help\
-  \g.rename help\        \g.tempfile help\       \g.version help\
+  \g.rename help\        \g.setproj help\        \g.tempfile help\
+  \g.version help\
 
   \bug.report.sh help\   \old.cmd.sh help\       \start.man.sh help\
