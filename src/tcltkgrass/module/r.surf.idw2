@@ -1,0 +1,8 @@
+interface_build {
+    {r.surf.idw2} 0
+    {Surface interpolation utility for raster map layers.}
+    {entry input {Raster map containing an incomplete set of data values:} 0 raster}
+    {entry output {Output raster map:} 0 raster}
+    {entry npoints {Number of interpolation points [12]:} 0 ""}
+    {checkbox -e {Output is the interpolation error.} "" -e}
+}
