@@ -83,6 +83,8 @@ static unsigned char shrt_cnvrt[SHRT_SIZ];
 
 static int dbl_quick, flt_quick, lng_quick, shrt_quick;
 
+static int Checkout ();
+static int find_offset ();
 
 main ()
 {
