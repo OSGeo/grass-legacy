@@ -7,4 +7,3 @@ all:	$(PGM2)
 
 $(GISLIB): #
 $(VECTLIB): #
-$(MATHLIB): #
