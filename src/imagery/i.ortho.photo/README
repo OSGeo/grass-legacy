@@ -1,3 +1,12 @@
+Main algorithm reference (basically libes/orthoref.c):
+
+Elements of Photogrammetry, With Air Photo Interpretation and Remote Sensing
+by Paul R. Wolf, 562 pages
+Publisher: McGraw Hill Text; 2nd edition (January 1983)
+
+
+######################################################################
+
 The main program is i.ortho.photo which is just a menu driver for the 
 following programs:
 
