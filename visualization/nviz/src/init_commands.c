@@ -66,6 +66,7 @@ Ndraw_all_cmd(),
 Nsurf_draw_all_cmd(),
 Nvect_draw_all_cmd(),
 Nsite_draw_all_cmd(),
+Nvol_draw_all_cmd(),
 Ndraw_line_on_surf_cmd(),
 Ndraw_model_cmd(),
 Ndraw_wire_cmd(),
@@ -92,6 +93,7 @@ Ndo_framestep_cmd(),
 Nshow_path_cmd(),
 Nshow_site_cmd(),
 Nshow_vect_cmd(),
+Nshow_vol_cmd(),
 Ndelete_key_cmd(),
 Nmove_key_cmd(),
 Nprint_keys_cmd(),
@@ -115,6 +117,7 @@ Nset_SDscale_cmd(),
 Nget_surf_list_cmd(),
 Nget_vect_list_cmd(),
 Nget_site_list_cmd(),
+Nget_vol_list_cmd(),
 Nsave_3dview_cmd(), Nload_3dview_cmd(), Nset_cancel_func_cmd(),
 /*  Tk_Tkspecial_waitCmd(), */
     SetScriptFile_Cmd(),
@@ -126,6 +129,7 @@ Tk_SendCmd(),
 Nsurf_draw_one_cmd(),
 Nvect_draw_one_cmd(),
 Nsite_draw_one_cmd(),
+Nvol_draw_one_cmd(),
 Nliteral_from_logical_cmd(), Nlogical_from_literal_cmd(), Nplace_label_cmd();
 
 extern Tk_Window mainWindow;
@@ -173,6 +177,8 @@ int init_commands(Tcl_Interp * interp, Nv_data * data)
     Tcl_CreateCommand(interp, "Nget_vect_list", Nget_vect_list_cmd,
 		      data, NULL);
     Tcl_CreateCommand(interp, "Nget_site_list", Nget_site_list_cmd,
+		      data, NULL);
+    Tcl_CreateCommand(interp, "Nget_vol_list", Nget_vol_list_cmd,
 		      data, NULL);
 
     Tcl_CreateCommand(interp, "Nbackground", Nset_background_cmd, data, NULL);
@@ -234,7 +240,7 @@ int init_commands(Tcl_Interp * interp, Nv_data * data)
     Tcl_CreateCommand(interp, "Nget_region", Nget_region_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nget_point_on_surf", Nget_point_on_surf_cmd,
 		      data, NULL);
-    Tcl_CreateCommand(interp, "Nget_point_on_surf_vect",
+    Tcl_CreateCommand(interp, "Nget_point_on_vect",
 		      Nget_point_on_surf_vect, data, NULL);
     Tcl_CreateCommand(interp, "Nget_longdim", Nget_longdim_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nget_zrange", Nget_zrange_cmd, data, NULL);
@@ -255,6 +261,10 @@ int init_commands(Tcl_Interp * interp, Nv_data * data)
     Tcl_CreateCommand(interp, "Nsite_draw_all", Nsite_draw_all_cmd, data,
 		      NULL);
     Tcl_CreateCommand(interp, "Nsite_draw_one", Nsite_draw_one_cmd, data,
+		      NULL);
+	Tcl_CreateCommand(interp, "Nvol_draw_all", Nvol_draw_all_cmd, data,
+		      NULL);
+    Tcl_CreateCommand(interp, "Nvol_draw_one", Nvol_draw_one_cmd, data,
 		      NULL);
     Tcl_CreateCommand(interp, "Ndraw_line_on_surf", Ndraw_line_on_surf_cmd,
 		      data, NULL);
@@ -297,6 +307,7 @@ int init_commands(Tcl_Interp * interp, Nv_data * data)
     Tcl_CreateCommand(interp, "Nshow_path", Nshow_path_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nshow_site", Nshow_site_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nshow_vect", Nshow_vect_cmd, data, NULL);
+	Tcl_CreateCommand(interp, "Nshow_vol", Nshow_vol_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Ndelete_key", Ndelete_key_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nmove_key", Nmove_key_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nprint_keys", Nprint_keys_cmd, data, NULL);

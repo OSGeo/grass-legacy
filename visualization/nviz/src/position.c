@@ -195,20 +195,20 @@ char *list[3], east[32], north[32], elev[32];
     if (argc != 2)
 	return (TCL_ERROR);
     pos_flag = atoi(argv[1]);
-    
+
     if (pos_flag == 1) {
     /* Get from position in real coords */
 	GS_get_from_real(realto);
-	
+
 	sprintf(east, "%f", realto[0]);
 	list[0] = east;
 	sprintf(north, "%f", realto[1]);
 	list[1] = north;
 	sprintf(elev, "%f", realto[2]);
 	list[2] = elev;
-		
+
 	Tcl_SetResult(interp, Tcl_Merge(3, list), TCL_VOLATILE);
-	
+
       } else {
       /* Get to position in real coords */
       GS_get_to_real(realto);
@@ -221,9 +221,9 @@ char *list[3], east[32], north[32], elev[32];
 
       Tcl_SetResult(interp, Tcl_Merge(3, list), TCL_VOLATILE);
       }
-	
+
 	return (TCL_OK);
-	
+
 }
 
 /***********************************/
@@ -326,23 +326,48 @@ int Nset_focus_map_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
 {
     int id;
 
-    if (!GS_num_surfs()) {
-	GS_set_nofocus();
-	return (TCL_OK);
+    if (!GS_num_surfs() && !(GVL_num_vols())) {
+		GS_set_nofocus();
+		return (TCL_OK);
     }
 
     if (argc == 1) {
-	int *surf_list, num_surfs;
+		int *surf_list, num_surfs, *vol_list, num_vols;
 
-	surf_list = GS_get_surf_list(&num_surfs);
-	id = surf_list[0];
-	free(surf_list);
+		if (GS_num_surfs() > 0) {
+			surf_list = GS_get_surf_list(&num_surfs);
+			id = surf_list[0];
+			free(surf_list);
+
+			GS_set_focus_center_map(id);
+			return (TCL_OK);
+		}
+
+		if (GVL_num_vols() > 0) {
+			vol_list = GVL_get_vol_list(&num_surfs);
+			id = vol_list[0];
+			free(vol_list);
+
+			GVL_set_focus_center_map(id);
+			return (TCL_OK);
+		}
     }
-    else
-	id = atoi(argv[1]);
 
-    GS_set_focus_center_map(id);
-    return (TCL_OK);
+	if (!strcmp(argv[1], "surf")) {
+		id = atoi(argv[2]);
+
+		GS_set_focus_center_map(id);
+		return (TCL_OK);
+	}
+
+	if (!strcmp(argv[1], "vol")) {
+		id = atoi(argv[2]);
+
+		GVL_set_focus_center_map(id);
+		return (TCL_OK);
+	}
+
+    return (TCL_ERROR);
 }
 
 
