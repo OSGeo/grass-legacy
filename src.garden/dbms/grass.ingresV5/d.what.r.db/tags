@@ -1,0 +1,9 @@
+Mmain	main.c	/^main(argc, argv)$/
+buildSQL	buildSQL.c	/^buildSQL(ktab,keycat, joinargs, curcat)$/
+getAllOpts	getAllOpts.c	/^getAllOpts(argc, argv)$/
+getCat	getCat.c	/^getCat (mapname)$/
+getSelectOpts	getSopts.c	/^getSelectOpts (argc, argv)$/
+ingres_add_key	ingres_add_key.c	/^ingres_add_key(key, cur, sqlFile)$/
+ingres_del_key	ingres_del_key.c	/^ingres_del_key(sqlFile)$/
+opencell	opencell.c	/^opencell (fullname, name, mapset)$/
+runSQL	runSQL.c	/^runSQL(sqlin, keycat, curcat)$/
