@@ -37,7 +37,9 @@ f_exp(int argc, const int *argt, void **args)
 	for (i = 0; i < columns; i++)
 		if (IS_NULL_D(&arg1[i]))
 			SET_NULL_D(&res[i]);
-		else if (argc > 1 && (IS_NULL_D(&arg2[i])))
+		else if (argc > 1 && IS_NULL_D(&arg2[i]))
+			SET_NULL_D(&res[i]);
+		else if (argc > 1 && arg1[i] < 0 && arg2[i] != ceil(arg2[i]))
 			SET_NULL_D(&res[i]);
 		else
 		{
