@@ -6,11 +6,11 @@
 #include <string.h>
 #include <locale.h>
 
-static char localedir[4096];
-
 static char *
 locale_dir(void)
 {
+	static char localedir[4096];
+
 	const char *gisbase;
 
 	if (*localedir)
@@ -26,18 +26,18 @@ locale_dir(void)
 	return localedir;
 }
 
-void
-G_init_locale(void)
-{
-#ifdef HAVE_LIBINTL_H
-	setlocale(LC_MESSAGES, "");
-#endif
-}
-
 char *
 G_gettext(const char *package, const char *msgid)
 {
+#ifdef HAVE_LIBINTL_H
 	static char now_bound[4096];
+	static int initialized;
+
+	if (!initialized)
+	{
+		setlocale(LC_MESSAGES, "");
+		initialized = 1;
+	}
 
 	if (strcmp(now_bound, package) != 0)
 	{
@@ -46,5 +46,6 @@ G_gettext(const char *package, const char *msgid)
 	}
 
 	return dgettext(package, msgid);
+#endif
 }
 
