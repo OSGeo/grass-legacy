@@ -26,7 +26,7 @@ then
  echo ""
  echo "g3.createwind creates a WIND3 from current 2D region file"
  echo ""
- echo "Usage: g3.createwind bottom_height  top_height  resolution_of_3Dlayers"
+ echo "Usage: g3.createwind  bottom_height  top_height  resolution_of_3Dlayers"
  echo ""
  exit
 fi
@@ -36,7 +36,7 @@ then
  echo ""
  echo "g3.createwind creates a WIND3 from current 2D region"
  echo ""
- echo "Usage: g3.createwind bottom_height  top_height  resolution_of_3Dlayers"
+ echo "Usage: g3.createwind  bottom_height  top_height  resolution_of_3Dlayers"
  echo ""
  exit
 fi
@@ -57,8 +57,12 @@ echo "Bottom: $1"  >> $LOCATION/WIND3
 echo "Top: $2"
 echo "Bottom: $1"
 
-cat $LOCATION/WIND | awk ' /rows:/ { print "nofRows: "$2 }'  >> $LOCATION/WIND3
-cat $LOCATION/WIND | awk ' /cols:/ { print "nofCols: "$2 }'  >> $LOCATION/WIND3
+# we need this later
+number_rows=`cat $LOCATION/WIND | awk ' /rows:/ { print $2 }'`
+echo "nofRows: $number_rows"  >> $LOCATION/WIND3
+
+number_cols=`cat $LOCATION/WIND | awk ' /cols:/ { print $2 }'`
+echo "nofCols: $number_cols"  >> $LOCATION/WIND3
 
 echo "nofDepths: $layer_number" >> $LOCATION/WIND3
 echo "nofDepths: $layer_number"
@@ -69,9 +73,13 @@ cat $LOCATION/WIND | awk ' /n-s/ { print "n-s resol: "$3 }' >> $LOCATION/WIND3
 echo "t-b resol: $3" >> $LOCATION/WIND3
 echo "t-b resol: $3"
 
+number=`echo $number_rows $number_cols $layer_number | awk '{print ($1 * $2 * $3)}'`
 echo "WIND3 file created."
+echo "You have defined a volume of $number tiles (cubes)."
 
+# this needs to be better!!:
 cp $LOCATION/WIND3 $LOCATION/../PERMANENT/DEFAULT_WIND3
 
+echo ""
 echo "Please check the file: $LOCATION/WIND3"
 echo "Also check: $LOCATION/../PERMANENT/DEFAULT_WIND3"
