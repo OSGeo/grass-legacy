@@ -1,4 +1,4 @@
-NAME=s.qcount.new
+NAME=s.qcount
 
 PGM=$(BIN_CONTRIB_CMD)/$(NAME)
 
