@@ -12,6 +12,8 @@ static char rcsid[] = "@(#)XGRASS $Id: history.c,v 0.0.0.1 1992/05/05 14:58:33 k
  *
  *
  */
+#include <string.h>
+#include <errno.h>
 #include "xgrass.h"
 
 extern char *version;
@@ -506,8 +508,6 @@ XtPointer cld, cad;
     char *ptr;
     char *initfile, *file, *directory;
     struct stat sbuf;
-    extern int errno;
-    extern char *sys_errlist[];
 
     if ( _XG_Global.history == NULL ) {
         XgWarningDialog(_XG_Global.historyWidget,
@@ -538,7 +538,7 @@ XtPointer cld, cad;
 
     /* is the directory path writeable? */
     if ( access(directory, W_OK) == -1 ) {
-        sprintf(errorbuf,"\"%s\": %s", directory, sys_errlist[errno]);
+        sprintf(errorbuf,"\"%s\": %s", directory, strerror(errno));
         XgWarningDialog(_XG_Global.historyWidget,errorbuf);
         return;
     }
@@ -551,7 +551,7 @@ XtPointer cld, cad;
                 __XgHistorySaveToFile(file);
             }
         } else {
-            sprintf(errorbuf,"\"%s\": %s",file, sys_errlist[errno]);
+            sprintf(errorbuf,"\"%s\": %s",file, strerror(errno));
             XgWarningDialog(_XG_Global.historyWidget,errorbuf);
         }
     } else {
