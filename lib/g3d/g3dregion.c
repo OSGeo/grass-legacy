@@ -5,6 +5,17 @@
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Returns in <em>region2d</em> the <em>2d</em> portion of <em>region3d</em>.
+ *
+ *  \param region3d
+ *  \param region2d
+ *  \return void
+ */
+
 void
 G3d_extract2dRegion (region3d, region2d)
 
@@ -28,6 +39,18 @@ G3d_extract2dRegion (region3d, region2d)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Replaces the <em>2d</em> portion of <em>region3d</em> with the
+ * values stored in <em>region2d</em>.
+ *
+ *  \param region2d
+ *  \param region3d
+ *  \return void
+ */
 
 void
 G3d_incorporate2dRegion (region2d, region3d)
@@ -53,6 +76,17 @@ G3d_incorporate2dRegion (region2d, region3d)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Computes an adjusts the resolutions in the region structure from the region
+ * boundaries and number of cells per dimension.
+ *
+ *  \param region
+ *  \return void
+ */
+
 void
 G3d_adjustRegion (region)
 
@@ -71,6 +105,17 @@ G3d_adjustRegion (region)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Computes an adjusts the number of cells per dimension in the region
+ * structure from the region boundaries and resolutions.
+ *
+ *  \param region
+ *  \return void
+ */
 
 void
 G3d_adjustRegionRes (region)
@@ -94,6 +139,19 @@ G3d_adjustRegionRes (region)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Copies the values of <em>regionSrc</em> into <em>regionDst</em>.
+ * (The unfortunate order of parameters was chosen in order to conform to the
+ * order used in <em>G_copy ()</em>).
+ *
+ *  \param regionDest
+ *  \param regionSrc
+ *  \return void
+ */
+
 void
 G3d_regionCopy (regionDest, regionSrc)
 
@@ -104,6 +162,24 @@ G3d_regionCopy (regionDest, regionSrc)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Returns in <em>value</em> the value of the <em>map</em> which corresponds to 
+ * region coordinates <em>(north, east, top)</em>.  The
+ * value is resampled using the resampling function specified for <em>map</em>. The
+ * <em>value</em> is of <em>type</em>.
+ *
+ *  \param map
+ *  \param north
+ *  \param east
+ *  \param top
+ *  \param value
+ *  \param type
+ *  \return void
+ */
 
 void
 G3d_getRegionValue (map, north, east, top, value, type)
@@ -156,7 +232,3 @@ G3d_readRegionMap (name, mapset, region)
     G3d_filename (fullName, G3D_HEADER_ELEMENT, name, mapset);
   return G3d_readWindow (region, fullName);
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

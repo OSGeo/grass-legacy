@@ -236,6 +236,32 @@ G3d_writeHeader (map,
   
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Returns a number
+ * which encodes multiplicity <em>n</em> of <em>cacheCode</em>. This value can be used
+ * to specify the size of the cache.
+ * If <em>cacheCode</em> is the size (in tiles) of the cache the function returns
+ * <em>cacheCode * n</em>.
+ * If <em>cacheCode</em> is G3D_USE_CACHE_DEFAULT the function returns
+ * G3D_USE_CACHE_DEFAULT.
+ * If <em>cacheCode</em> is G3D_USE_CACHE_??? the function returns a value
+ * encoding G3D_USE_CACHE_??? and <em>n</em>. Here G3D_USE_CACHE_??? is one
+ * of G3D_USE_CACHE_X, G3D_USE_CACHE_Y, G3D_USE_CACHE_Z,
+ * G3D_USE_CACHE_XY, G3D_USE_CACHE_XZ, G3D_USE_CACHE_YZ, or
+ * G3D_USE_CACHE_XYZ, where e.g.  G3D_USE_CACHE_X specifies that the cache
+ * should store as many tiles as there exist in one row along the x-axis of the
+ * tile cube, and G3D_USE_CACHE_XY specifies that the cache should store as
+ * many tiles as there exist in one slice of the tile cube with constant Z
+ * coordinate.
+ *
+ *  \param cacheCode
+ *  \param n
+ *  \return int
+ */
+
 int
 G3d_cacheSizeEncode (cacheCode, n)
 
@@ -445,6 +471,3 @@ G3d_fillHeader (map, operation, compression, useRle, useLzw, type, precision,
 
   return 1;
 }
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

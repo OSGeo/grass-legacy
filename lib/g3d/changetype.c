@@ -7,6 +7,20 @@
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Makes a copy of <em>map</em> with name <em>nameOut</em> in which the
+ * cells are of type G3D_FLOAT if they are G3D_DOUBLE in <em>map</em>,
+ * and in G3D_DOUBLE otherwise.
+ * The source code can be found in <em>changetype.c</em>.
+ *
+ *  \param map
+ *  \param nameOut
+ *  \return void
+ */
+
 void
 G3d_changeType (map, nameOut)
 
@@ -70,7 +84,3 @@ G3d_changeType (map, nameOut)
   if (! G3d_closeCell (map2))
     G3d_fatalError ("G3d_changeType: error in G3d_closeCell");
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

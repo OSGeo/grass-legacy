@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -114,6 +113,27 @@ G3d_writeTileCompressed (map, nofNum)
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
 
+ 
+/*!
+ * \brief 
+ *
+ * 
+ * Writes tile with index <em>tileIndex</em> to the file corresponding to <em>map</em>. 
+ * It is assumed that the cells in <em>tile</em> are of <em>type</em> which
+ * must be one of G3D_FLOAT and G3D_DOUBLE.  The actual type used to write the
+ * tile depends on the type specified at the time when <em>map</em> is initialized.
+ * A tile can only be written once. Subsequent attempts to write the same tile
+ * are ignored.
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \param tile
+ *  \param type
+ *  \return 1 ... if successful,
+ *          2 ... if write request was ignored,
+ *          0 ... otherwise.
+ */
+
 int
 G3d_writeTile (map, tileIndex, tile, type)
 
@@ -173,6 +193,18 @@ G3d_writeTile (map, tileIndex, tile, type)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Is equivalent to <tt>G3d_writeTile (map, tileIndex, tile, G3D_FLOAT).</tt>
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \param tile
+ *  \return int
+ */
+
 int
 G3d_writeTileFloat (map, tileIndex, tile)
 
@@ -190,6 +222,18 @@ G3d_writeTileFloat (map, tileIndex, tile)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Is equivalent to <tt>G3d_writeTile (map, tileIndex, tile, G3D_DOUBLE).</tt>
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \param tile
+ *  \return int
+ */
 
 int
 G3d_writeTileDouble (map, tileIndex, tile)
@@ -212,6 +256,24 @@ G3d_writeTileDouble (map, tileIndex, tile)
                       /* CACHE-MODE-ONLY FUNCTIONS */
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Writes the tile with
+ * <em>tileIndex</em> to the file corresponding to <em>map</em> and removes the tile
+ * from the cache (in non-cache mode the buffer provided by the map-structure is
+ * written).
+ * If this tile has already been written before the write request is ignored.
+ * If the tile was never referred to before the invokation of G3d_flushTile, a
+ * tile filled with NULL-values is written.
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \return 1 ... if successful,
+ *          0 ... otherwise.
+ */
 
 int
 G3d_flushTile (map, tileIndex)
@@ -248,6 +310,27 @@ G3d_flushTile (map, tileIndex)
 #define MAX(a,b) (a > b ? a : b)
 #endif
 
+
+/*!
+ * \brief 
+ *
+ *  Writes the tiles with tile-coordinates
+ * contained in the axis-parallel cube with vertices <em>(xMin, yMin, zMin)</em>
+ * and <em>(xMax, yMax, zMax</em>).  Tiles which are not stored in the cache are
+ * written as NULL-tiles.  Write attempts for tiles which have already been
+ * written earlier are ignored.
+ *
+ *  \param map
+ *  \param xMin
+ *  \param yMin
+ *  \param zMin
+ *  \param xMax
+ *  \param yMax
+ *  \param zMax
+ *  \return 1 ... if successful,
+ *          0 ... otherwise.
+ */
+
 int
 G3d_flushTileCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
 
@@ -273,6 +356,29 @@ G3d_flushTileCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Writes those tiles for which
+ * <em>every</em> cell has coordinate contained in the axis-parallel cube
+ * defined by the vertices with cell-coordinates <em>(xMin, yMin, zMin)</em>
+ * and <em>(xMax, yMax, zMax)</em>.
+ * Tiles which are not stored in the cache are written as NULL-tiles.
+ * Write attempts for tiles which have already been written earlier are
+ * ignored.
+ *
+ *  \param map
+ *  \param xMin
+ *  \param yMin
+ *  \param zMin
+ *  \param xMax
+ *  \param yMax
+ *  \param zMax
+ *  \return 1 ... if successful,
+ *          0 ... otherwise.
+ */
+
 int
 G3d_flushTilesInCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
 
@@ -289,7 +395,7 @@ G3d_flushTilesInCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
 /*AV*/
 /*BEGIN OF ORIGINAL CODE */
 /*
-//  G3d_getCoordsMap (map, &regionMaxX, &regionMaxY, &regionMaxZ);
+ *  G3d_getCoordsMap (map, &regionMaxX, &regionMaxY, &regionMaxZ);
 */
 
 /*AV*/
@@ -348,7 +454,36 @@ G3d_flushTilesInCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
 
 /*---------------------------------------------------------------------------*/
 
-int G3d_putDouble ();
+
+/*!
+ * \brief 
+ *
+ *  Is equivalent to G3d_putValue (map, x, y, z, &value, G3D_DOUBLE).
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \param value
+ *  \return int
+ */
+
+int 
+G3d_putDouble ();
+
+
+/*!
+ * \brief 
+ *
+ * Is equivalent to G3d_putValue (map, x, y, z, &value, G3D_FLOAT).
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \param value
+ *  \return int
+ */
 
 int
 G3d_putFloat (G3D_Map *map, int x, int y, int z, float value)
@@ -377,6 +512,20 @@ G3d_putFloat (G3D_Map *map, int x, int y, int z, float value)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Is equivalent to G3d_putValue (map, x, y, z, &value, G3D_DOUBLE).
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \param value
+ *  \return int
+ */
 
 int
 G3d_putDouble (map, x, y, z, value)
@@ -409,6 +558,23 @@ G3d_putDouble (map, x, y, z, value)
 }
 
 /*---------------------------------------------------------------------------*/
+ 
+/*!
+ * \brief 
+ *
+ * After converting <em>*value</em> of <em>type</em> into the type specified
+ * at the initialization time (i.e. <em>typeIntern</em>) this function writes the
+ * value into the tile buffer corresponding to cell-coordinate <em>(x, y, z)</em>.
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \param value
+ *  \param type
+ *  \return 1 ... if successful,  
+ *          0 ... otherwise.
+ */
 
 int
 G3d_putValue (map, x, y, z, value, type)
@@ -433,7 +599,3 @@ G3d_putValue (map, x, y, z, value, type)
   }
   return 1;
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

@@ -9,6 +9,18 @@ G3D_Region g3d_window;
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Sets the window for <em>map</em> to <em>window</em>.
+ * Can be used multiple times for the same map.
+ *
+ *  \param map
+ *  \param window
+ *  \return void
+ */
+
 void
 G3d_setWindowMap (map, window)
 
@@ -22,6 +34,17 @@ G3d_setWindowMap (map, window)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Sets the default window used for every map opened later in the program.
+ * Can be used multiple times in the same program.
+ *
+ *  \param window
+ *  \return void
+ */
+
 void
 G3d_setWindow (window)
 
@@ -33,6 +56,16 @@ G3d_setWindow (window)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Stores the current default window in <em>window</em>.
+ *
+ *  \param window
+ *  \return void
+ */
 
 void
 G3d_getWindow (window)
@@ -53,6 +86,23 @@ G3d_windowPtr ()
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Returns in <em>*value</em> the cell-value of the cell with
+ * window-coordinate <em>(x, y, z)</em>.  The value returned is of <em>type</em>.
+ * This function invokes a fatal error if an error occurs.
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \param value
+ *  \param type
+ *  \return void
+ */
 
 void
 G3d_getValue (map, x, y, z, value, type)
@@ -135,6 +185,20 @@ G3d_getValue (map, x, y, z, value, type)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Is equivalent to
+ * <tt>G3d_getValue (map, x, y, z, &value, G3D_FLOAT);</tt> return value.
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \return float
+ */
+
 float
 G3d_getFloat (map, x, y, z)
 
@@ -150,6 +214,20 @@ G3d_getFloat (map, x, y, z)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Is equivalent
+ * to <tt>G3d_getValue (map, x, y, z, &value, G3D_DOUBLE);</tt> return value.
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \return double
+ */
+
 double
 G3d_getDouble (map, x, y, z)
 
@@ -162,7 +240,3 @@ G3d_getDouble (map, x, y, z)
   G3d_getValue (map, x, y, z, (char *)&value, G3D_DOUBLE);
   return value;
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
