@@ -1,0 +1,72 @@
+
+
+
+Dselect.mon(2D)      GRASS Reference Manual       Dselect.mon(2D)
+
+
+
+NAME
+     Dselect.mon - Select a graphics device (monitor) for output,
+     initialize the screen, and lock the device for use by the
+     user
+     (D Language Tool)
+
+SYNOPSIS
+     Dselect.mon monitor_name
+
+DESCRIPTION
+     Dselect.mon selects the named graphics device for output,
+     and locks it for use by the user.  Dselect.mon also runs the
+     GRASS Dscreen command, which clears the screen, creates a
+     window covering the full screen, and chooses that full
+     screen window as the current window.  It sets the default
+     font to roman.  After a monitor is selected, programs which
+     produces graphic output will use that device.  If the user
+     reselects a monitor he has already selected (by running
+     Dselect.mon repeatedly), Dselect.mon will reselect that
+     monitor (and the screen will be cleared of all previously
+     created windows).  Dselect.mon checks to see whether or not
+     the named monitor is running or is locked by another user.
+
+DIAGNOSTICS
+     Dselect.mon complains if the named controller program (i.e.,
+     the monitor) is not running.
+
+SEE ALSO
+     DINTRO[2D]         Introduction to the GRASS D tools
+     Dlist.mon[2D]      Lists all GRASS device driver programs (monitors)
+     Drelease.mon[2D]   Relinquishes control of a graphics output device
+
+     Dstart.mon[2D]
+
+                        Loads graphics device driver program (i.e.,
+                        starts the monitor)
+     Dstatus.mon[2D]
+
+                        Lists the status of all GRASS device driver
+                        programs
+     Dstop.mon[2D]      Terminates graphics device driver program
+     Dwhich.mon[2D]
+
+                        States which output device is currently selected
+                        for output
+     monitor[1]         Highly interactive, menu-driven monitor program
+     monitorcap[5]      Device driver database file format
+
+AUTHORS
+     Jean Ezell, U.S. Army Construction Engineering Research
+     Laboratory
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
