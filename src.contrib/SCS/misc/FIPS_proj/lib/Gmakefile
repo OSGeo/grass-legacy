@@ -2,25 +2,16 @@
 SCSFIPS      = $(LIBDIR)/scsfips.a
 
 
-AR1                 = ar ruv $@ `lorder $(SLIB) | tsort`; $(RANLIB) $@
-
 SLIB = \
     get_stp_code.o \
     get_prj_ellp.o \
     get_deg.o
 
 
-#all: $(SCSFIPS) NAD27 FIPS
-all: $(SCSFIPS) FIPS
+all: $(SCSFIPS)
 
 $(SCSFIPS): $(SLIB)
-	$(AR1)
-
-NAD27: 
-	cp $(SRC)/../src.related/mapgen/proj/state?? $(ETC)
-
-FIPS: 
-	cp FIPS.code $(ETC)
+	$(LIBRULE)
 
 
 # these refer to
