@@ -1,0 +1,21 @@
+PGM = char_rpt
+I = ../Include
+EXTRA_CFLAGS  = -I$I
+SITELIB = ../lib.a
+SITE = $(ETC)/sites
+
+LIST =  main.o\
+	divider.o\
+	process.o\
+	do_layer.o\
+	do_cat.o\
+	title.o
+
+$(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
+		$(CC) ${LDFLAGS} -o $(PGM) $(LIST) $(SITELIB) $(GISLIB)
+		mv $(PGM) $(SITE)/$(PGM)
+
+$(LIST):	$I/report.h
+
+$(SITELIB):	#
+$(GISLIB):	#
