@@ -35,6 +35,7 @@ echo "HEADER=head.$ARCH"                   >> $GRASS_BIN/gmake$NAME_VER
 echo "HASX=yes"                            >> $GRASS_BIN/gmake$NAME_VER
 echo "HASMotif=no"                         >> $GRASS_BIN/gmake$NAME_VER
 echo "MAKE=$MAKE"                          >> $GRASS_BIN/gmake$NAME_VER
+echo "INST_DIR=$INST_DIR"                  >> $GRASS_BIN/gmake$NAME_VER
 echo ". $SRC/src/CMD/generic/gmake.sh"     >> $GRASS_BIN/gmake$NAME_VER
 
 if [ $? != 0 ]; then
