@@ -14,8 +14,6 @@
 #  - allow for .SHP extension (currently only .shp)
 #  - add stuff for multilayer SHAPE (ID field identification with ogrinfo,
 #    currently only first layer supported)
-#  - the -k flag is dangerous! Remove?
-#
 #  - maybe! add .prj/.PRJ support (not sure)
 #
 #############################################################################
@@ -80,6 +78,9 @@ fi
 if [ $GIS_FLAG_k -ne 1 ] ; then
    if test ! -d $SHPTARGET ; then
      mkdir -p $SHPTARGET
+     if [ $? -ne 0 ]; then
+        exit 1
+     fi
    fi
    cp $DIRNAME/$SHAPE.shp $DIRNAME/$SHAPE.shx $DIRNAME/$SHAPE.dbf $SHPTARGET
 else
@@ -90,11 +91,19 @@ fi
 #analyse the file for later (check first layer):
 LAYER1=`ogrinfo $DIRNAME/$SHAPE.shp |grep 1 | cut -d' ' -f2`
 
+echo "Registering SHAPE file into GRASS..."
 # now build FRMT file
 if test ! -d $VECTTARGET/$SHAPE.shp
 then
   mkdir -p $VECTTARGET/$SHAPE.shp
+  if [ $? -ne 0 ]; then
+     exit 1
+  fi
+else
+  echo "ERROR: Map $SHAPE.shp already exists in GRASS"
+  exit 1
 fi
+
 cd $VECTTARGET/$SHAPE.shp
 
 #FRMT file:
@@ -116,18 +125,17 @@ MAP THRESH:   0.500000" > head
 #the DB file is no longer used for SHAPE, an internal ID is generated
 
 #build topology
-echo "Building topology...:"
 v.build map=$SHAPE.shp opt=build
 
 ### that's it
-echo "$SHAPE.shp is registered now."
+echo "$SHAPE.shp is registered now (first layer only)."
 
 if [ $GIS_FLAG_k -ne 1 ] ; then
   echo "The SHAPE files (.shp, shx and .dbf) were copied to:"
   echo "   $GISDBASE/$LOCATION_NAME/shp"
 else
-  echo "The SHAPE files (.shp, shx and .dbf) are at:"
+  echo "The SHAPE files (.shp, shx and .dbf) are used from:"
   echo "   $DIRNAMEFULL"
-  echo "Be careful with g.remove, it will remove these original files"
-  echo "(consider to use -k flag)"
 fi
+
+echo ""
