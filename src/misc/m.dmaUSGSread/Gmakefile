@@ -2,7 +2,7 @@ LIST = main.o
 
 PGM      = m.dmaUSGSread
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 		$(CC) $(LDFLAGS) $(LIST) $(GISLIB) -o $@
 
 $(GISLIB):      # in case library changes
