@@ -8,6 +8,7 @@
 #include <string.h>
 #include "gis.h"
 #include "AtoG.h"
+#include "glocale.h"
 
 int FindAttAndCat (
     FILE *fp,      /* text file */
@@ -29,7 +30,7 @@ while (1)
    {
    if (fgets(colbuf,512,fp)==NULL)
    {
-		sprintf (errmsg, "Premature Text-Label EOF. ID #%d not found.\n", IDNum);
+		sprintf (errmsg, _("Premature Text-Label EOF. ID #%d not found.\n"), IDNum);
 		G_fatal_error (errmsg);
    }
    if (GetColumn(colbuf,IDCol,txtbuf) < 0) return(-2);

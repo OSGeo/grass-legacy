@@ -46,6 +46,7 @@
 #include  "Vect.h"
 #include "v_in_arc.inter.h"
 #include "shapefil.h"
+#include "glocale.h"
 
 int PgDumpFromDBF (char *, int);
 
@@ -83,11 +84,17 @@ int main (int argc, char **argv)
     	} parm;
 
 
-	G_gisinit("ARC/INFO -  import from UNGENERATE");
+#ifdef HAVE_LIBINTL_H
+  setlocale (LC_MESSAGES, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+#endif
+
+	G_gisinit(_("ARC/INFO -  import from UNGENERATE"));
 
 	if (argc != 2)
 	{                 /* get name for grass vector file from user */
-		mapset = G_ask_new( "GRASS vector file:",dig_filename,"dig",
+		mapset = G_ask_new( _("GRASS vector file:"),dig_filename,"dig",
 		    "binary vector") ;
 		if ( ! mapset) exit(0) ;
 	}
@@ -100,9 +107,9 @@ int main (int argc, char **argv)
 
 		/* GET COVERAGE TYPE */
 
-		fprintf (stdout,"\n Coverage type:\n");
-		fprintf (stdout,"Enter \"polygon(area)\" or \"line\"\n");
-		fprintf (stdout,"Hit RETURN to cancel.\n");
+		fprintf (stdout,_("\n Coverage type:\n"));
+		fprintf (stdout,_("Enter \"polygon(area)\" or \"line\"\n"));
+		fprintf (stdout,_("Hit RETURN to cancel.\n"));
 		fprintf (stdout,"> ");
 		fgets(tmpbuf,80,stdin);
 /*************************************************************************/
@@ -126,9 +133,9 @@ int main (int argc, char **argv)
 		else if (strcmp(cov_type,"polygon")==0)
 		{
 			do {
-				fprintf (stdout,"\n Neatline:\n");
-				fprintf (stdout,"Add neatline?\n");
-				fprintf (stdout,"Enter \"yes\" or \"no\"\n");
+				fprintf (stdout,_("\n Neatline:\n"));
+				fprintf (stdout,_("Add neatline?\n"));
+				fprintf (stdout,_("Enter \"yes\" or \"no\"\n"));
 				fprintf (stdout,"> ");
 				fgets(tmpbuf,80,stdin);
                                 tmpbuf[strlen(tmpbuf)-1]='\0';
@@ -139,10 +146,10 @@ int main (int argc, char **argv)
 			/* LINES FILENAME */
 			done = 0;
 			do {
-				fprintf (stdout,"\n Lines file ARC/INFO:\n");
-				fprintf (stdout,"Enter name of LINES file\n");
-				fprintf (stdout,"from ARC/INFO Ungenerate\n");
-				fprintf (stdout,"Hit RETURN to cancel.\n");
+				fprintf (stdout,_("\n Lines file ARC/INFO:\n"));
+				fprintf (stdout,_("Enter name of LINES file\n"));
+				fprintf (stdout,_("from ARC/INFO Ungenerate\n"));
+				fprintf (stdout,_("Hit RETURN to cancel.\n"));
 				fprintf (stdout,"> ");
 				fgets(tmpbuf,80,stdin);
                                 tmpbuf[strlen(tmpbuf)-1]='\0';
@@ -153,7 +160,7 @@ int main (int argc, char **argv)
 
 					strncpy(lines_filename,tmpbuf,strlen(tmpbuf));
 					if ((lines_file=fopen(lines_filename,"r")) == NULL)
-						G_warning("Can't open lines from ARC/INFO");
+						G_warning(_("Can't open lines from ARC/INFO"));
 					else
 						done = 1;
 				}
@@ -162,10 +169,10 @@ int main (int argc, char **argv)
 			/* LABEL-POINTS FILENAME */
 			done = 0;
 			do {
-				fprintf (stdout,"\n Labels file ARCINFO:\n");
-				fprintf (stdout,"Enter file POINTS\n");
-				fprintf (stdout,"from ARC/INFO Ungenerate \n");
-				fprintf (stdout,"Hit RETURN, if none.\n");
+				fprintf (stdout,_("\n Labels file ARCINFO:\n"));
+				fprintf (stdout,_("Enter file POINTS\n"));
+				fprintf (stdout,_("from ARC/INFO Ungenerate \n"));
+				fprintf (stdout,_("Hit RETURN, if none.\n"));
 				fprintf (stdout,"> ");
 				fgets(tmpbuf,80,stdin);
                                 tmpbuf[strlen(tmpbuf)-1]='\0';
@@ -180,7 +187,7 @@ int main (int argc, char **argv)
 
 					strncpy(pts_filename,tmpbuf,strlen(tmpbuf));
 					if ((pts_file=fopen(pts_filename,"r")) == NULL)
-						G_warning("Can't open labels from ARC/INFO");
+						G_warning(_("Can't open labels from ARC/INFO"));
 					else
 						done = 1;
 				}
@@ -195,10 +202,10 @@ int main (int argc, char **argv)
 			/* LINES FILE */
 			done = 0;
 			do {
-				fprintf (stdout,"\n Lines file:\n");
-				fprintf (stdout,"Enter name of LINES file\n");
-				fprintf (stdout,"from ARC/INFO Ungenerate\n");
-				fprintf (stdout,"Hit RETURN to cancel.\n");
+				fprintf (stdout,_("\n Lines file:\n"));
+				fprintf (stdout,_("Enter name of LINES file\n"));
+				fprintf (stdout,_("from ARC/INFO Ungenerate\n"));
+				fprintf (stdout,_("Hit RETURN to cancel.\n"));
 				fprintf (stdout,"> ");
 				fgets(tmpbuf,80,stdin);
                                 tmpbuf[strlen(tmpbuf)-1]='\0';
@@ -209,7 +216,7 @@ int main (int argc, char **argv)
 
 					strncpy(lines_filename,tmpbuf,strlen(tmpbuf));
 					if ((lines_file=fopen(lines_filename,"r")) == NULL)
-						G_warning("Can't open lines from ARC/INFO");
+						G_warning(_("Can't open lines from ARC/INFO"));
 					else
 						done = 1;
 				}
@@ -223,7 +230,7 @@ int main (int argc, char **argv)
 
 	if (0 > Vect_open_new (&VectMap, dig_filename))
 	{
-		sprintf(errmsg, "Can't open <%s>\n", dig_filename) ;
+		sprintf(errmsg, _("Can't open <%s>\n"), dig_filename) ;
 		G_fatal_error (errmsg);
 	}
 
@@ -232,7 +239,7 @@ int main (int argc, char **argv)
 	G__file_name(atts_filepath,"dig_att",dig_filename,G_mapset()) ;
 	if ((atts_file=fopen(atts_filepath,"w"))==NULL)
 	{
-		fprintf (stdout,"Can't open dig_atts <%s>\n",atts_filepath);
+		fprintf (stdout,_("Can't open dig_atts <%s>\n"),atts_filepath);
 		exit(-1);
 	}
 
@@ -247,19 +254,19 @@ here we hack -A.Sh.*/
 		switch (errflag)
 		{
 		case -1:
-			G_fatal_error("Error reading LINES"); 
+			G_fatal_error(_("Error reading LINES")); 
 			exit(-1);
 		case -2:
-			G_fatal_error("Error reading"); 
+			G_fatal_error(_("Error reading")); 
 			exit(-1);
 		case -3:
-			G_fatal_error("Error reading LABEL-POINTS"); 
+			G_fatal_error(_("Error reading LABEL-POINTS")); 
 			exit(-1);
 		case -4:
-			G_fatal_error("Error reading LINES"); 
+			G_fatal_error(_("Error reading LINES")); 
 			exit(-1);
 		case -5:
-			G_fatal_error("Bad coverage type"); 
+			G_fatal_error(_("Bad coverage type")); 
 			exit(-1);
 		default: 
 			break;
@@ -273,13 +280,13 @@ here we hack -A.Sh.*/
     	parm.input->key        = "input";
     	parm.input->type       = TYPE_STRING;
     	parm.input->required   = NO;
-    	parm.input->description= "Name of .dbf file to be imported (or hit ENTER for none)";
+    	parm.input->description= _("Name of .dbf file to be imported (or hit ENTER for none)");
 
 	parm.dumpmode = G_define_option() ;
     	parm.dumpmode->key        = "dumpmode";
    	parm.dumpmode->type       = TYPE_STRING;
     	parm.dumpmode->required   = NO;
-    	parm.dumpmode->description= "Admin/normal user dump mode (Default = Postgres super-user)";
+    	parm.dumpmode->description= _("Admin/normal user dump mode (Default = Postgres super-user)");
     
 
     /* get options and test their validity */
@@ -295,8 +302,8 @@ here we hack -A.Sh.*/
 		PgDumpFromDBF(infile, no_rattle);
 	
 	Vect_close (&VectMap);
-	fprintf (stderr, "\n\nv.in.arc.pg finished.\n");
-	fprintf(stderr, "\n\nBefore using <%s> in 'v.digit' :\nrun v.support to build topology.\n",
+	fprintf (stderr, _("\n\nv.in.arc.pg finished.\n"));
+	fprintf(stderr, _("\n\nBefore using <%s> in 'v.digit' :\nrun v.support to build topology.\n"),
 	    dig_filename) ;
 
 	exit(0) ;

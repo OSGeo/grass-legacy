@@ -2,8 +2,10 @@ PGM = v.in.shape.pg
 # SHAPELIB=$(SRC)/libes/vect32_64/shapelib-1.2.8
 
 HOME = $(BIN_CMD)
-EXTRA_CFLAGS = $(VECT_INCLUDE) $(PQINCPATH)
-# EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG # for debugging
+PACKAGE = "v.in.shape.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(VECT_INCLUDE) $(PQINCPATH) $(DEFS)
+
 LIST = 	main.o \
 	shpopen.o \
 	dbfopen.o \

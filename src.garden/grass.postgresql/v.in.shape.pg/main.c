@@ -47,6 +47,7 @@
 #include "dbutils.h"
 #include "writelin.h"
 #include "cleanup.h"
+#include "glocale.h"
 
 
 #define	round(x)	(int)((x) + 0.5)
@@ -122,6 +123,12 @@ int main( int   argc, char *argv[])
 
     struct Flag *listflag, *rejflag, *pgflag;
 
+#ifdef HAVE_LIBINTL_H
+  setlocale (LC_MESSAGES, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+#endif
+
     /* Are we running in Grass environment ? */
 
     G_gisinit (argv[0]);
@@ -132,61 +139,61 @@ int main( int   argc, char *argv[])
     parm.input->key        = "in";
     parm.input->type       = TYPE_STRING;
     parm.input->required   = YES;
-    parm.input->description= "Name of .shp (or just .dbf) file to be imported";
+    parm.input->description= _("Name of .shp (or just .dbf) file to be imported");
 
     parm.verbose = G_define_option() ;
     parm.verbose->key        = "verbose";
     parm.verbose->type       = TYPE_INTEGER;
     parm.verbose->required   = NO;
-    parm.verbose->description= "Debugging level : 0 (silent) - 9 (verbose)" ;
+    parm.verbose->description= _("Debugging level : 0 (silent) - 9 (verbose)") ;
     parm.verbose->answer     = "0" ;
 
     parm.logfile = G_define_option() ;
     parm.logfile->key        = "logfile";
     parm.logfile->type       = TYPE_STRING;
     parm.logfile->required   = NO;
-    parm.logfile->description= "Name of file where log operations";
+    parm.logfile->description= _("Name of file where log operations");
 
     parm.snapd = G_define_option() ;
     parm.snapd->key        = "snapdist";
     parm.snapd->type       = TYPE_STRING;
     parm.snapd->required   = NO;
-    parm.snapd->description= "Snap distance in ground units (Default = 0.1)";
+    parm.snapd->description= _("Snap distance in ground units (Default = 0.1)");
     parm.snapd->answer     = "0.1";
 
     parm.minangle = G_define_option() ;
     parm.minangle->key        = "sliver";
     parm.minangle->type       = TYPE_STRING;
     parm.minangle->required   = NO;
-    parm.minangle->description= "Min. angle subtended by a wedge at node (radians)";
+    parm.minangle->description= _("Min. angle subtended by a wedge at node (radians)");
     parm.minangle->answer     = "1.745e-4";
 
     parm.scale = G_define_option() ;
     parm.scale->key        = "scale";
     parm.scale->type       = TYPE_INTEGER;
     parm.scale->required   = NO;
-    parm.scale->description= "Set initial scale [1:2400]";
+    parm.scale->description= _("Set initial scale [1:2400]");
     parm.scale->answer     = "2400";
 
     parm.attribute = G_define_option() ;
     parm.attribute->key        = "attribute";
     parm.attribute->type       = TYPE_STRING;
     parm.attribute->required   = NO;
-    parm.attribute->description= "Name of attribute column to use as category number";
+    parm.attribute->description= _("Name of attribute column to use as category number");
     parm.attribute->answer     = "";
     
     parm.catlabel = G_define_option() ;
     parm.catlabel->key        = "label";
     parm.catlabel->type       = TYPE_STRING;
     parm.catlabel->required   = NO;
-    parm.catlabel->description= "Name of attribute column to use as category label";
+    parm.catlabel->description= _("Name of attribute column to use as category label");
     parm.catlabel->answer     = "";
     
     parm.special = G_define_option();
     parm.special->key = "special";
     parm.special->type = TYPE_STRING;
     parm.special->required = NO;
-    parm.special->description = "Special fields to be included in table";
+    parm.special->description = _("Special fields to be included in table");
     parm.special->multiple = YES;
     parm.special->options = "none,id,orig,coords";
     parm.special->answer = "none";
@@ -195,19 +202,19 @@ int main( int   argc, char *argv[])
 
     listflag = G_define_flag();
     listflag->key     = 'l';
-    listflag->description = "List fields of DBF file";
+    listflag->description = _("List fields of DBF file");
 
     /* Set flag for creating reject lines */
 
     rejflag = G_define_flag();
     rejflag->key     = 'r';
-    rejflag->description = "Create reject lines file";
+    rejflag->description = _("Create reject lines file");
 
     /* Set flag for dumping to postgres */
 
     pgflag = G_define_flag();
     pgflag->key     = 'p';
-    pgflag->description = "Create postgres table";
+    pgflag->description = _("Create postgres table");
 
     /* get options and test their validity */
 
@@ -252,11 +259,11 @@ int main( int   argc, char *argv[])
       hDBF = DBFOpen( infile, "r" );
       if( hDBF == NULL )
         {
-	  sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
+	  sprintf (buf, _("%s - DBF not found, or wrong format.\n"), infile);
 	  G_fatal_error (buf);
         }
 
-      fprintf (stdout, "Attributes available in %s\n", infile );
+      fprintf (stdout, _("Attributes available in %s\n"), infile );
       for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
         {
 	  char	field_name[15];
@@ -275,7 +282,7 @@ int main( int   argc, char *argv[])
 	fdlog = stderr;
     else
 	if ((fdlog = fopen( parm.logfile->answer, "w")) == NULL) {    
-	    sprintf (buf, "Cannot open log file \"%s\"", parm.logfile->answer);
+	    sprintf (buf, _("Cannot open log file \"%s\""), parm.logfile->answer);
 	    G_fatal_error( buf);
 	}
 
@@ -288,7 +295,7 @@ int main( int   argc, char *argv[])
     free(sdc);
 
     if( procSnapDistance( SET_VAL, &sd0 ) != 0 ) {
-      G_fatal_error( "Error setting snap distance" );
+      G_fatal_error( _("Error setting snap distance") );
     }
 
     cpsi = (char *)malloc(20);
@@ -300,7 +307,7 @@ int main( int   argc, char *argv[])
     free(cpsi);
 
     if( procMinSubtend( SET_VAL, &psi ) != 0 ) {
-      G_fatal_error( "Error setting minimum angle" );
+      G_fatal_error( _("Error setting minimum angle") );
     }
 
     init_scale = atoi(parm.scale->answer);
@@ -310,12 +317,12 @@ int main( int   argc, char *argv[])
     hShapeDB = SHPOpen( infile, "r" );
     if (hShapeDB == NULL)
     {
-	sprintf (buf, "%s - shapefile not found, or wrong format.\n", infile);
+	sprintf (buf, _("%s - shapefile not found, or wrong format.\n"), infile);
 	G_fatal_error (buf);
     }
 
     if (debug)
-	fprintf( fdlog, "\"%s\" successfully opened\n", infile);
+	fprintf( fdlog, _("\"%s\" successfully opened\n"), infile);
 
     	
     /* Establish the shape types and corresponding GRASS type */
@@ -323,7 +330,7 @@ int main( int   argc, char *argv[])
     SHPGetInfo( hShapeDB, &nShapes, &nShapeType, adfMinBound, adfMaxBound );
 
     if( nShapeType == SHPT_MULTIPATCH ) {
-      sprintf( buf, "Multipatch type not yet supported" );
+      sprintf( buf, _("Multipatch type not yet supported") );
       SHPClose( hShapeDB );
       G_fatal_error( buf );
     }
@@ -331,7 +338,7 @@ int main( int   argc, char *argv[])
     if( nShapeType == SHPT_POINT || nShapeType == SHPT_MULTIPOINT || nShapeType == SHPT_POINTZ ||
 	nShapeType == SHPT_MULTIPOINTZ || nShapeType == SHPT_POINTM || 
 	nShapeType == SHPT_MULTIPOINTM ) {
-      sprintf( buf, "Point map import not now supported by this module: use s.in.shape" );
+      sprintf( buf, _("Point map import not now supported by this module: use s.in.shape") );
       SHPClose( hShapeDB );
       G_fatal_error( buf );
     }
@@ -351,7 +358,7 @@ int main( int   argc, char *argv[])
     }
 
     if( procMapType( SET_VAL, &cover_type ) != 0 ) 
-      G_fatal_error( "Could not set map type. Aborting\n"  );
+      G_fatal_error( _("Could not set map type. Aborting\n")  );
     
 
 /* -------------------------------------------------------------------- */
@@ -378,7 +385,7 @@ int main( int   argc, char *argv[])
       hDBF = DBFOpen( infile, "r" );
       if( hDBF == NULL )
         {
-	  sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
+	  sprintf (buf, _("%s - DBF not found, or wrong format.\n"), infile);
 	  G_fatal_error (buf);
         }
 
@@ -394,7 +401,7 @@ int main( int   argc, char *argv[])
 
       if( cat_field == -1 ) {
 	sprintf( buf,
-		 "No attribute `%s' found on %s.\nUse attribute=list to get a list of attributes.\n",
+		 _("No attribute `%s' found on %s.\nUse attribute=list to get a list of attributes.\n"),
 		 parm.attribute->answer, strcat(name, ".shp") );
             
 	DBFClose( hDBF );
@@ -404,7 +411,7 @@ int main( int   argc, char *argv[])
       }
 
       if (debug > 4)
-	fprintf( fdlog, "Selected attribute field %d.\n", cat_field);
+	fprintf( fdlog, _("Selected attribute field %d.\n"), cat_field);
 
 
       if(hDBF != NULL) DBFClose( hDBF );
@@ -417,15 +424,15 @@ int main( int   argc, char *argv[])
     if (G_find_file( "dig_att", name, G_mapset()) == NULL) {
       f_att = G_fopen_new( "dig_att", name);
       if (debug)
-	fprintf( fdlog, "Creating dig_att(L) file \"%s\"\n", name);
+	fprintf( fdlog, _("Creating dig_att(L) file \"%s\"\n"), name);
     } else {
       f_att = G_fopen_append( "dig_att", name);
       if (debug)
-	fprintf( fdlog, "Updating dig_att(L) file \"%s\"\n", name);
+	fprintf( fdlog, _("Updating dig_att(L) file \"%s\"\n"), name);
     }
     if (f_att == NULL)
       {
-	sprintf( buf, "Unable to create attribute file `%s'.", name );
+	sprintf( buf, _("Unable to create attribute file `%s'."), name );
 	G_fatal_error( buf );
       }
 
@@ -443,7 +450,7 @@ int main( int   argc, char *argv[])
       hDBF = DBFOpen( infile, "r" );
       if( hDBF == NULL )
         {
-	  sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
+	  sprintf (buf, _("%s - DBF not found, or wrong format.\n"), infile);
 	  G_fatal_error (buf);
         }
 
@@ -466,7 +473,7 @@ int main( int   argc, char *argv[])
       }
 
       if( lab_field == -2 ) {
-	sprintf( buf, "No attribute `%s' found on %s. \nNot writing category labels.\n",
+	sprintf( buf, _("No attribute `%s' found on %s. \nNot writing category labels.\n"),
 		 parm.catlabel->answer, strcat(name, ".shp") );
 	G_warning( buf );
       }
@@ -485,7 +492,7 @@ int main( int   argc, char *argv[])
     hDBF = DBFOpen( infile, "r" );
     if( hDBF == NULL )
       {
-	sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
+	sprintf (buf, _("%s - DBF not found, or wrong format.\n"), infile);
 	G_fatal_error (buf);
       }
 
@@ -500,7 +507,7 @@ int main( int   argc, char *argv[])
     /* Create V-base */
     btrkeycmp = btree_compare;
     if( !btree_create( hVB, btrkeycmp, 200 )) {
-      sprintf( errbuf, "Cannot create database. Aborting" );
+      sprintf( errbuf, _("Cannot create database. Aborting") );
       G_fatal_error( errbuf );;
     }
 
@@ -527,7 +534,7 @@ int main( int   argc, char *argv[])
       G_init_cats( (CELL)0,"",&cats);
       G_write_vector_cats(name, &cats);
     }
-    else fprintf( stderr, "Not assigning category labels\n" );
+    else fprintf( stderr, _("Not assigning category labels\n") );
     /* if (G_write_vector_cats(name, &cats) != 1)
        G_fatal_error("Writing dig_cats file"); */
                         
@@ -582,9 +589,9 @@ int main( int   argc, char *argv[])
 	
     if( f_att != NULL ) {
       if(cat_field == -1)
-	G_warning( "No attribute value field assigned. Using record ID.\n" );	
+	G_warning( _("No attribute value field assigned. Using record ID.\n") );	
       else if(fd0[cat_field+4].fldType != 1 && fd0[cat_field+4].fldType != 2)
-	G_warning( "Named attribute field is not numeric value. Using record ID.\n" );	
+	G_warning( _("Named attribute field is not numeric value. Using record ID.\n") );	
       for( iRec = 0; iRec < fd0[0].nRec; ++iRec ) {
 	if( cover_type == LINE ) {
 	  if(fd0[cat_field+4].fldType == 1)
@@ -624,18 +631,18 @@ int main( int   argc, char *argv[])
 	    AttText[strlen(AttText)] = '\0';
 	    break;
 	  default:
-	    G_warning("Error in category type assignment, not assigning category text.\n");
+	    G_warning(_("Error in category type assignment, not assigning category text.\n"));
 	    strcpy(AttText, "");
 	    break;
 	  }
 
 	  if( strcmp( G_get_cat( attval, &cats ), "" ) != 0 ) {
-	    sprintf( errbuf, "Label `%s' already assigned to category value %d. Overwriting.\n",
+	    sprintf( errbuf, _("Label `%s' already assigned to category value %d. Overwriting.\n"),
 		     G_get_cat( attval, &cats ), attval );
 	  }
 
 	  if (G_set_cat(attval, AttText, &cats) != 1)
-	    G_fatal_error("Error setting category in dig_cats");
+	    G_fatal_error(_("Error setting category in dig_cats"));
 	}
 	    
       }
