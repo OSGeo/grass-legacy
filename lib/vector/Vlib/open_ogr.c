@@ -1,10 +1,8 @@
-/*
-****************************************************************************
+/****************************************************************************
 *
 * MODULE:       Vector library 
 *   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
+* AUTHOR(S):    Radim Blazek, Piero Cavalieri 
 *
 * PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
 *
@@ -17,14 +15,13 @@
 *****************************************************************************/
 #include <unistd.h>
 #include <string.h>
-#include "Vect.h"
-#include "gis.h"
-#include "shapefil.h"
-
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "Vect.h"
+#include "gis.h"
 
 #ifdef HAVE_OGR
+#include "ogr_api.h"
 
 /* Open old file.
 *  Map->name and Map->mapset must be set before
@@ -32,42 +29,143 @@
 *  Return: 0 success
 *         -1 error
 */
-int 
-V1_open_old_ogr ( struct Map_info *Map, int update )
+int
+V1_open_old_ogr (struct Map_info *Map, int update)
 {
-    G_debug ( 1, "V1_open_old_ogr(): dsn = %s layer = %s", Map->fInfo.ogr.dsn, Map->fInfo.ogr.layer_name );
+    int      i, layer, nLayers, OGR_err;
+    long    *feature;		/* the index is iFeature */
+    OGRDataSourceH Ogr_ds;
+    OGRLayerH Ogr_layer;
+    OGRFeatureDefnH Ogr_featuredefn;
+    OGRFeatureH hFeature;
+    OGREnvelope OGR_envelope;
 
-    if ( update ) {
-        G_warning ( "OGR format cannot be updated.");
-        return -1;
+    if (update) {
+	G_warning ("OGR format cannot be updated.");
+	return -1;
     }
 
-    if ( Map->fInfo.ogr.dsn == NULL || Map->fInfo.ogr.layer_name == NULL ) {
-	G_warning ("OGR DSN or layer name not defined\n");
-	return (-1);
-    }
+    G_debug (2, "V1_open_old_ogr(): dsn = %s layer = %s", Map->fInfo.ogr.dsn,
+	     Map->fInfo.ogr.layer_name);
 
-    G_warning ("V1_open_old_ogr() not yet implemented" );
-    return (-1);
-    
-    Map->head.with_z = WITHOUT_Z;
+    OGRRegisterAll ();
+
+    /*Data source handle */
+    Ogr_ds = OGROpen (Map->fInfo.ogr.dsn, FALSE, NULL);
+    if (Ogr_ds == NULL)
+	G_fatal_error ("Cannot open OGR data source '%s'", Map->fInfo.ogr.dsn);
+    Map->fInfo.ogr.ds = Ogr_ds;
+
+    /* Layer number */
+    layer = -1;
+    nLayers = OGR_DS_GetLayerCount (Ogr_ds);
+    G_debug (2, "%d layers found in data source", nLayers);
+
+    for (i = 0; i < nLayers; i++) {
+	Ogr_layer = OGR_DS_GetLayer (Ogr_ds, i);
+	Ogr_featuredefn = OGR_L_GetLayerDefn (Ogr_layer);
+	if ( strcmp( OGR_FD_GetName (Ogr_featuredefn), Map->fInfo.ogr.layer_name) == 0) {
+	    layer = i;
+	    break;
+	}
+    }
+    if (layer == -1) {
+	OGR_DS_Destroy (Ogr_ds);
+	G_fatal_error ("Cannot open layer '%s'", Map->fInfo.ogr.layer_name);
+    }
+    G_debug (2, "OGR layer %d opened", layer);
+
+    Map->fInfo.ogr.layer = Ogr_layer;
+
+    Map->fInfo.ogr.lines = NULL;
+    Map->fInfo.ogr.lines_types = NULL;
+    Map->fInfo.ogr.lines_alloc = 0;
+    Map->fInfo.ogr.lines_num = 0;
+    Map->fInfo.ogr.lines_next = 0;
+
+    Map->head.with_z = WITHOUT_Z; /* TODO: 3D */
+
+    Map->fInfo.ogr.feature_cache = NULL;
+    Map->fInfo.ogr.feature_cache_id = -1; /* FID >= 0 */
 
     return (0);
 }
 
-/* Open new file.
+/* Open OGR specific level 2 files (feature index).
 *
 *  Return: 0 success
 *         -1 error
 */
 int
-V1_open_new_ogr (
-    struct Map_info *Map,
-    char *name,
-    int with_z)
+V2_open_old_ogr (struct Map_info *Map )
 {
-    G_warning ( "OGR format cannot be created." );
-    return (-1);
+    char elem[1000];
+    unsigned char buf[5];
+    long length; 
+    GVFILE fp;
+    struct Port_info port;
+    int Version_Major, Version_Minor, Back_Major, Back_Minor, byte_order;
+	
+    G_debug (3, "V2_open_old_ogr()" );
+    
+    sprintf (elem, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+    dig_file_init ( &fp );
+    fp.file = G_fopen_old ( elem, "fidx", Map->mapset);
+    if ( fp.file ==  NULL) {
+	G_warning("Can't open fidx file for vector '%s@%s'.", Map->name, Map->mapset);
+	return -1;
+    }
+    
+    /* Header */
+    if (0 >= dig__fread_port_C (buf, 5, &fp))  return (-1);
+    Version_Major = buf[0];
+    Version_Minor = buf[1];
+    Back_Major    = buf[2];
+    Back_Minor    = buf[3];
+    byte_order    = buf[4];
+
+
+    /* check version numbers */
+    if ( Version_Major > 5 || Version_Minor > 0 ) {
+        if ( Back_Major > 5 || Back_Minor > 0 ) {
+            G_fatal_error ( "Feature index format version %d.%d is not supported by this release."
+                            " Try to rebuild topology or upgrade GRASS.", Version_Major, Version_Minor);
+            return (-1);
+        }
+        G_warning ( "Your GRASS version does not fully support feature index format %d.%d of the vector."
+	            " Consider to rebuild topology or upgrade GRASS.",
+                    Version_Major, Version_Minor );
+    }
+
+    dig_init_portable ( &port, byte_order );
+    dig_set_cur_port ( &port );
+
+    /* Body */
+    /* bytes 6 - 9 : header size */
+    if (0 >= dig__fread_port_L (&length, 1, &fp)) return (-1);
+    G_debug (3, "  header size %d", length );
+    
+    fseek ( fp.file, length, SEEK_SET);
+    
+    /* number of records  */
+    if (0 >= dig__fread_port_I (&(Map->fInfo.ogr.offset_num), 1, &fp)) return (-1);
+
+    /* alloc space */
+    Map->fInfo.ogr.offset = (int *) G_malloc ( Map->fInfo.ogr.offset_num * sizeof(int) );
+    Map->fInfo.ogr.offset_alloc = Map->fInfo.ogr.offset_num;
+
+    /* offsets */
+    if (0 >= dig__fread_port_I ( Map->fInfo.ogr.offset, 
+				 Map->fInfo.ogr.offset_num, &fp)) return (-1);
+
+    fclose( fp.file );
+
+    G_debug (3, "%d records read from fidx", Map->fInfo.ogr.offset_num );
+
+
+    Map->fInfo.ogr.next_line = 1;
+
+    return 0;
 }
 
 #endif

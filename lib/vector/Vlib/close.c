@@ -66,6 +66,9 @@ Vect_close (struct Map_info *Map)
 	Vect_save_topo ( Map );
 	Vect_save_spatial_index ( Map );
 	Vect_cidx_save ( Map );
+
+	if ( Map->format == GV_FORMAT_OGR ) 
+	    V2_close_ogr ( Map );
     }
     
     if ( Map->level == 2 ) {
@@ -79,6 +82,7 @@ Vect_close (struct Map_info *Map)
 
         G_debug (1, "free category index" );
 	dig_cidx_free ( &(Map->plus) );
+
     }
 
     if ( Map->format == GV_FORMAT_NATIVE || Map->format == GV_FORMAT_POSTGIS ) {

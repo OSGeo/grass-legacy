@@ -1,10 +1,8 @@
-/*
-****************************************************************************
+/****************************************************************************
 *
 * MODULE:       Vector library 
 *   	    	
-* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
-*               Update to GRASS 5.7 Radim Blazek and David D. Gray.
+* AUTHOR(S):    Radim Blazek, Piero Cavalieri 
 *
 * PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
 *
@@ -15,9 +13,11 @@
 *   	    	for details.
 *
 *****************************************************************************/
+#include "gis.h"
 #include "Vect.h"
 
 #ifdef HAVE_OGR
+#include "ogr_api.h"
 
 /* Rewind vector data file to cause reads to start at beginning. 
 ** returns 0 on success
@@ -27,9 +27,11 @@ int
 V1_rewind_ogr (struct Map_info *Map)
 {
     G_debug (2, "V1_rewind_ogr(): name = %s", Map->name);
-    
-    G_warning ("V1_rewind_ogr() not yet implemented" );
-    return (-1);
+
+    Map->fInfo.ogr.lines_num = 0;
+    Map->fInfo.ogr.lines_next = 0;
+
+    OGR_L_ResetReading ( Map->fInfo.ogr.layer );
     
     return 0;
 }
@@ -41,7 +43,7 @@ V2_rewind_ogr (struct Map_info *Map)
 
     Map->next_line = 1;
     
-    return V1_rewind_ogr (Map);	
+    return 0; 
 }
 
 #endif 

@@ -199,9 +199,35 @@ struct Format_info_ogr {
     char           *layer_name;
     OGRDataSourceH ds;
     OGRLayerH      layer;
-    int            nFeatures;
-    int            feature;
-    int            part;
+    
+    /* Level 1 (used by V*_read_next_line_ogr) */
+    struct line_pnts **lines;  /* points cache */
+    int *lines_types; 
+    int lines_alloc;
+    int lines_num;             /* number of lines in cache */
+    int lines_next; /* next line to be read from cache */
+
+    /* Level 2 */
+    OGRFeatureH    feature_cache; /* cache to avoid repeated reading,  NULL if no feature is in cache */
+    int            feature_cache_id; /* id of feature read in feature_cache */
+
+    /* Array where OGR feature/part info is stored for each line in GRASS.
+     * This is not used for GV_CENTROID.
+     * Because one feature may contain more elements (geometry collection also recursively),
+     * offset for one line may be stored in more records. 
+     * First record is FID, next records are part indexes if necessary.
+     * Example:
+     * 5. ring in 3. polygon in 7. feature (multipolygon) of geometry collection which has FID = 123
+     * 123 (feature 123: geometry colletion)
+     *   6 (7. feature in geometry collection: multiPolygon)
+     *   2 (3. polygon)
+     *   4 (5. ring in the polygon)
+     */  
+    int *offset; 
+    int offset_num; /* number of items in offset */
+    int offset_alloc; /* space allocated for offset */
+
+    int next_line; /* used by V2_read_next_line_ogr */
 } ;
 #endif
 struct Format_info {

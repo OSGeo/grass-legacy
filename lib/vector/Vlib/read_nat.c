@@ -320,26 +320,3 @@ Vect__Read_line_nat (
   return (type);
 }
 
-/*!
- \fn long Vect_next_line_offset_nat ( struct Map_info *Map )
- \brief get next line offset for native format
- \return next line offset
- \param Map_info structure
-*/
-long 
-Vect_next_line_offset_nat ( struct Map_info *Map )
-{
-  return dig_ftell ( &(Map->dig_fp) );
-}
-
-/*!
- \fn long Vect_last_line_offset_nat ( struct Map_info *Map )
- \brief get last line offset for native format
- \return last line offset
- \param Map_info structure
-*/
-long 
-Vect_last_line_offset_nat ( struct Map_info *Map )
-{
-  return (Map->head.last_offset);
-}
