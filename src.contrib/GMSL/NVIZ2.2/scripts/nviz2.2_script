@@ -320,7 +320,7 @@ proc dump_ppm { } {
     appBusy
 
     if {$fname != -1} then {
-       Nwrite_ppm $fname 1
+       Nwrite_ppm $fname
     }
     # show user can proceed
     appNotBusy
