@@ -42,7 +42,7 @@ int main (int argc, char *argv[])
 	} parm;
 	struct
 	    {
-		struct Flag *quiet, *align, *null;
+		struct Flag *quiet, *align, *zero;
 	} flag;
 
 	DCELL *values;   /* list of neighborhood values */
@@ -107,9 +107,9 @@ int main (int argc, char *argv[])
 	flag.quiet->key = 'q';
 	flag.quiet->description = "Run quietly";
 
-        flag.null= G_define_flag();
-        flag.null->key = 'n';
-        flag.null->description = "Do NOT set zeroes to null";
+        flag.zero= G_define_flag();
+        flag.zero->key = 'z';
+        flag.zero->description = "Preserve zero values in output [default: set to null]";
 
 	if (G_parser(argc,argv))
 		exit(1);
@@ -228,7 +228,7 @@ int main (int argc, char *argv[])
 /* Catch zeros and convert to null if set */
 /* Probably a better way to do this */
 	out_val = newvalue (values, n, map_type);
-	if (!flag.null->answer){ /* Set zero to null */
+	if (!flag.zero->answer){ /* Set zero to null */
 	if (out_val == 0) {
 	G_set_null_value(&out_val, 1, map_type);
 	} }
