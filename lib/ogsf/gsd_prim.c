@@ -86,12 +86,11 @@ fprintf(stderr, "GLX -- off screen\n");
     r=tmp[0]+tmp[2];
     b=tmp[1];
     t=tmp[1]+tmp[3];
+    
     /* For some reason getpadding around image because
      * width and height not right???
-     * add 5 to width seems to help?
      */
-
-    width = r - l + 5;
+    width = r - l;
     height = t - b;
 
 dpy = glXGetCurrentDisplay();
@@ -119,9 +118,9 @@ vi = glXGetVisualFromFBConfig(dpy, fbc[0]);
 
 pbuf_cnt = 0;
 pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_WIDTH;
-pbuf_attrib[pbuf_cnt++] = width;
+pbuf_attrib[pbuf_cnt++] = width+1;
 pbuf_attrib[pbuf_cnt++] = GLX_PBUFFER_HEIGHT;
-pbuf_attrib[pbuf_cnt++] = height;
+pbuf_attrib[pbuf_cnt++] = height+1;
 
 /* Create off screen pbuffer to draw to */
 fprintf(stderr, "GLX -- glXCreatePbuffer %d\n", elements);
@@ -129,6 +128,12 @@ pbuffer = glXCreatePbuffer (dpy, fbc[0], pbuf_attrib);
 
 /* make the created context current */
 glXMakeContextCurrent(dpy, pbuffer, pbuffer, ctx);
+
+/* Added to correct for image buffer?? */
+glViewport(l, b+1, r, t);
+gsd_pushmatrix();
+gsd_popmatrix();
+gsd_flush();
 
 return ;
 
