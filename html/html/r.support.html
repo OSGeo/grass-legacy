@@ -15,7 +15,14 @@ support files.
 
 <H2>SYNOPSIS</H2>
 
-<B>r.support</B>
+<B>r.support</B> [<B>-r</B>] <B>map=</B><EM>name</EM>
+
+<H2>OPTIONS</H2>
+<H3>Flag:</H3>
+<DL>
+<DT><B>-r</B> Update the stats (histogram, range)
+<DD>
+</DL>
 
 <H2>DESCRIPTION</H2>
 
@@ -23,10 +30,8 @@ The GRASS program <EM>r.support</EM>
 allows the user to create and/or modify raster map layer support files. 
 It may be run only on raster map layers in the user's current mapset. 
 
-<P>
-No non-interactive version of this program currently exists; 
-the user runs the program by typing <B>r.support</B>, and will be 
-queried for inputs. 
+<P> Most options have to be used interactively, so the user runs the program
+by typing <B>r.support</B>, and will be queried for inputs.
 
 <P>
 Various GRASS programs depend on one or more of the following 
@@ -51,7 +56,8 @@ the user's current mapset.
 <DD>Raster map layer statistics are saved in the form of a histogram and 
 range of the category values which occur in the map layer. 
 Statistics files are stored in subdirectories of the 
-<EM>cell_misc</EM> directory under the user's current mapset. 
+<EM>cell_misc</EM> directory under the user's current mapset.  This option
+is (currently) the only option which can be used on command line (-r flag).
 
 <DT><B>cats</B>
 <DD>A category file associates each category value in the raster map layer 
