@@ -18,5 +18,6 @@ $(LIBRARY): $(LIBSRCPATH)/$(LIBRARY)
 
 clean:
 	-rm $(LIBRARY)
+	-rm $(LIBSRCPATH)/$(LIBRARY)
 #	$(MAKE) -C $(LIBSRCPATH) $@
 	-rm $(LIBSRCPATH)/*.d $(LIBSRCPATH)/*.o
