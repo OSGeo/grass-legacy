@@ -197,6 +197,9 @@ Vect__open_old (
   }
 
   Map->plus.do_uplist = 0;
+
+  Map->dblnk = Vect_new_dblinks_struct ( );
+  Vect_read_dblinks ( Map->name, Map->mapset, Map->dblnk );
       
   return (level);
 }
@@ -314,6 +317,8 @@ Vect_open_new (
     Map->head.with_z = with_z;
     Map->plus.do_uplist = 0;
     
+    Map->dblnk = Vect_new_dblinks_struct ( );
+  
     return 1;
 }
 

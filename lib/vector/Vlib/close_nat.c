@@ -39,6 +39,7 @@ V1_close_nat (struct Map_info *Map)
     dig__write_head (Map);
 
     Vect__write_head (Map);
+    Vect_write_dblinks ( Map->name, Map->mapset, Map->dblnk );
   }
 
   free (Map->name);
@@ -88,6 +89,8 @@ V2_close_nat (struct Map_info *Map)
       Vect_save_topo ( Map );
       Vect_save_spatial_index ( Map );
       dig_free_plus ( Plus );
+
+      Vect_write_dblinks ( Map->name, Map->mapset, Map->dblnk );
   }
 
   free (Map->name);
