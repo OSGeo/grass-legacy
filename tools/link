@@ -1,7 +1,10 @@
 #!/usr/bin/perl
 
+print "Linking\n";
+
 $newdir="..";
 $map="./link.conf";
+$copy = 0;
 for $arg (@ARGV) {
     if ( $arg  =~ /-h|help|-help/ )
     { 
@@ -9,13 +12,15 @@ for $arg (@ARGV) {
         print "Options\n";	 
         print "-old=DIR   grass 5.0 source directory (required)\n"; 
         print "-new=DIR   grass 5.1 source directory (default is ..)\n";
-        print "-map=FILE  file mapping old directory structure to new\n";
+        print "-conf=FILE  file mapping old directory structure to new\n";
+        print "-copy      copy files instead of create symbolic links\n";
         print "           (default is ./link.conf)\n";		 
 	exit;
     }
     if ( $arg  =~ s/-old=// ){ $olddir=$arg; }    
     if ( $arg  =~ s/-new=// ){ $newdir=$arg; }
-    if ( $arg  =~ s/-map=// ){ $map=$arg; }
+    if ( $arg  =~ s/-conf=// ){ $map=$arg; }
+    if ( $arg  =~ /-copy/ ){ $copy=1; }
 }
 
 #Test if dirs exist
@@ -37,6 +42,7 @@ while ($r=<MAP>)
 	if ( length ($old) == 0 or length ($new) == 0 ) { next; }
 	if ( -d "$olddir/$old" or -f "$olddir/$old" ) 
 	{ 
+	    # link dirs and files directly
 	    lnk ( "$olddir/$old", "$newdir/$new" );
 	    next;
 	}
@@ -46,6 +52,13 @@ while ($r=<MAP>)
 	    $oldlist =~ s/\s+/ /g;
 	    foreach $o ( split / /, $oldlist )
 	    {
+		# ignore subdirs
+		if ( -d "$o" ) { 
+		    print "Subdir ignored: $o\n";  
+		    next; 
+		}
+
+		# link files
 		$n = $o;
 		$n =~ s/.+\///; 
 		lnk ( "$o", "$newdir/$new/$n" );
@@ -56,15 +69,21 @@ while ($r=<MAP>)
 close MAP;  
 
 sub lnk {
-    $oldbase = $oldpath = @_[0];
+    $oldpath = @_[0];
     $newpath = @_[1];     
     $oldbase = ~ s/.+\///;
     
-    if ( $oldbase =~ /OBJ/  ) { return; }    
+    # ignore Gmakefiles 
+    if ( $oldpath =~ /Gmakefile/  ) { return; }    
+
     if ( -e $newpath ) { return; } 
-    
-    $cmd = "ln -s $oldpath $newpath";
-    print "$cmd\n";
+  
+    if ( $copy == 1 ) {
+        $cmd = "cp -R $oldpath $newpath";
+    } else {
+        $cmd = "ln -s $oldpath $newpath";
+    }
+    #print "$cmd\n";
     system $cmd;
     return;
 }

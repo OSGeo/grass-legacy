@@ -1,0 +1,132 @@
+
+/*
+ * config.h.in
+ */
+
+#ifndef _config_h
+#define _config_h
+
+#define GDEBUG 1
+
+/* define if standard C headers exist:  headers are
+ * stdlib.h, stdarg.h, string.h, and float.h */
+
+/* define if curses.h exists */
+#undef HAVE_CURSES_H
+
+/* define if limits.h exists */
+#undef HAVE_LIMITS_H
+
+/* define if termio.h exists */
+#undef HAVE_TERMIO_H
+
+/* define if termios.h exists */
+#undef HAVE_TERMIOS_H
+
+/* define if unistd.h exists */
+#undef HAVE_UNISTD_H
+
+/* define if values.h exists */
+#undef HAVE_VALUES_H
+
+/* define if zlib.h exists */
+#undef HAVE_ZLIB_H
+
+/* define if sys/ioctl.h exists */
+#undef HAVE_SYS_IOCTL_H
+
+/* define if sys/mtio.h exists */
+#undef HAVE_SYS_MTIO_H
+
+/* define if sys/resource.h exists */
+#undef HAVE_SYS_RESOURCE_H
+
+/* define if sys/time.h exists */
+#undef HAVE_SYS_TIME_H
+
+/* define if time.h and sys/time.h can be included together */
+#undef TIME_WITH_SYS_TIME
+
+/* define if sys/timeb.h exists */
+#undef HAVE_SYS_TIMEB_H
+
+/* define if sys/types.h exists */
+#undef HAVE_SYS_TYPES_H
+
+/* define if sys/utsname.h exists */
+#undef HAVE_SYS_UTSNAME_H
+
+/* define gid_t type */
+#undef gid_t
+
+/* define off_t type */
+#undef off_t
+
+/* define uid_t type */
+#undef uid_t
+
+/* Define the return type of signal handlers */
+#define RETSIGTYPE int
+
+/* define curses.h WINDOW structure component */
+#define CURSES_MAXY @CURSES_MAXY@
+
+/* define if ftime() exists */
+#undef HAVE_FTIME
+
+/* define if gethostname() exists */
+#undef HAVE_GETHOSTNAME
+
+/* define if gettimeofday() exists */
+#undef HAVE_GETTIMEOFDAY
+
+/* define if lseek() exists */
+#undef HAVE_LSEEK
+
+
+/* define if time() exists */
+#undef HAVE_TIME
+
+/* define if uname() exists */
+#undef HAVE_UNAME
+
+/* define if seteuid() exists */
+#undef HAVE_SETEUID
+
+/* define if setpriority() exists */
+#undef HAVE_SETPRIORITY
+
+/* define if setreuid() exists */
+#undef HAVE_SETREUID
+
+/* define if setruid() exists */
+#undef HAVE_SETRUID
+
+/* define if setpgrp() takes no argument */
+#undef SETPGRP_VOID
+
+/* define if PNG support exists */
+#undef HAVE_PNG
+
+/* define if PQcmdTuples in lpq */
+#undef HAVE_PQCMDTUPLES
+
+/* define if jpeglib.h exists */
+#undef HAVE_JPEGLIB_H
+
+/* define if postgres exists */
+#undef HAVE_POSTGRES
+
+/* Whether or not we are using G_socks for display communications */
+#undef USE_G_SOCKS
+
+/*
+ * configuration information solely dependent on the above
+ * nothing below this point should need changing
+ */
+
+#if defined(HAVE_VALUES_H) && !defined(HAVE_LIMITS_H)
+#define INT_MIN -MAXINT
+#endif
+
+#endif /* _config_h */
