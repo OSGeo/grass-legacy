@@ -1,0 +1,41 @@
+             WELCOME TO THE GRASS ON-LINE HELP SYSTEM  
+
+The GRASS On-Line Help System provides information about GRASS and
+its many capabilities.  Information is organized under "topic areas"
+which categorize GRASS commands by their specific application within
+GRASS.  Each area provides you general information about a topic
+(i.e., map development).  You then have the option to explore the
+topic further by accessing more specific information on the GRASS
+commands which correspond to that topic. 
+
+The Help System also provides users with an on-line glossary of the
+most commonly used GIS and GRASS terms and an on-line version of the
+GRASS User's Reference Manual.
+
+             *   Press 'D' to see the next screen  *
+
+Information is linked throughout the Help System, by the use of
+\highlighted keywords\ or \text strings\ within the text.  By using 
+the RETURN KEY, you can move from highlighted word to highlighted
+word.  An asterisk (*) indicates the currently highlighted word. To
+make a selection, simply press the ESC (Escape) Key.     
+
+The RETURN key and the ESCAPE key in the Help System perform the
+same functions as within GRASS programs, thus reinforcing their
+functionality.
+
+To receive additional instructions on how to use this Help System,
+use the RETURN KEY to move through the above highlighted words, then
+press the ESCAPE key to select the word.
+
+
+
+
+
+
+
+
+
+
+
+
