@@ -3,6 +3,7 @@ MDIR=$(SRC)/../man/man$(MSEC)
 MUTL=$(SRC)/../man/utilities
 
 LIBES = $(GISLIB) $(DATETIMELIB)
+PROG=$(BIN_CONTRIB_CMD)/s.kcv
 
 LIST  = \
 	main.o \
@@ -11,11 +12,9 @@ LIST  = \
 	histo.o \
 	utils.o
 
-all: s.kcv man
+#all: $(PROG) man
 
-s.kcv: $(BIN_CONTRIB_CMD)/s.kcv 
-
-$(BIN_CONTRIB_CMD)/s.kcv: $(LIST) $(LIBES) 
+$(PROG): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 man:  
