@@ -1,0 +1,42 @@
+.TH r.1Dcorrelogram 1 "" "" "" ""
+
+.SH MAN PAGE
+.PP
+r.1Dcorrelogram - generates one dimensional correlograms and variograms from surfaces. 
+.PP
+(GRASS Raster Program) 
+.SH SYNOPSIS
+
+.VL 4m
+
+.LI "\*Lr.1Dcorrelogram \*O
+
+.LI "\*Lr.1Dcorrelogram help \*O
+.LI "\*Lr.1Dcorrelogram [-q] input\*O
+
+.SH DESCRIPTION
+.PP
+r.1Dcorrelogram value is 100. 
+.SH OPTIONS
+.PP
+-q This flag prevents the program from informing user of program's progress. 
+.PP
+input. 
+.PP
+lags. 
+.PP
+lagnames value. 
+.PP
+max_distance will calculate correlations out to the extent of the current region. 
+.SH NOTES
+.PP
+r.1Dcorrelogram uses the correlogram function and the variogram function to determine the spatial correlation of a map. The correlogram function is sensitive to data outliers making it unsuitable for some applications. The correlogram function was chosen by the author for error modeling applications. 
+.SH SEE ALSO
+.PP
+Isaaks, E. and Srivastava, R., 1989, An Introduction to Applied Geostistics, Oxford University Press, New York. 
+.PP
+r.random.surface, r.random.model, r.2Dcorrelogram, r.2Dto1D, r.mapcalc, r.mask, r.random 
+.SH AUTHOR
+.PP
+Charles Ehlschlaeger, Department of Geography, University of Cincinnati. 
+
