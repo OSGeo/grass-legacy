@@ -1,0 +1,19 @@
+# setup src for DGUX-INTEL
+cp LINUX-DGUX/*.[cdf] src
+rm -f Makefile
+cat <<endmake >Makefile
+# definitions for DGUX rim
+RANLIB=true
+#F2CLIB=/usr/local/lib/f2cmain.a -lf2c
+EXTRA=time_date.o
+LIBEXTRA=time_date.o
+PILE = CC_f2c=\$(CC) f77
+LIBRIM=librim.a
+AR = ar rv
+RAN = ranlib
+endmake
+
+cp Makefile src
+cat MAKEFILE >>Makefile
+
+cat src/MAKEFILE >>src/Makefile
