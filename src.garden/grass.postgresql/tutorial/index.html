@@ -3,13 +3,16 @@
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
    <meta name="GENERATOR" content="Mozilla/4.61 [en] (X11; I; Linux 2.2.10 i586) [Netscape]">
+   <meta name="Author" content="Alex Shevlakov/Markus Neteler">
+   <title>GRASS GIS and PostgreSQL</title>
 </head>
 <body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
 
 <h2>
 <b><font face="Arial,Helvetica"><font size=+1>GRASS and PostgreSQL - First
 Steps</font></font></b></h2>
-<font face="Arial,Helvetica"><font size=+1>[$Id$]</font></font>
+<font face="Arial,Helvetica"><font size=+1>[$Id: index.html,v 1.1 2000/03/10
+10:57:57 markus Exp $]</font></font>
 <p><font face="Arial,Helvetica"><font size=+1>Recommended reading:</font></font>
 <br><font face="Arial,Helvetica"><font size=+1>&nbsp; <a href="http://www.postgresql.org/docs/tutorial/index.html">http://www.postgresql.org/docs/tutorial/index.html</a></font></font>
 <p>
@@ -437,22 +440,41 @@ limited to interactive mode.</font></font>
 <p><font face="Arial,Helvetica"><font size=+1>In this example we have a
 landuse map in ungen format (one file containing lines, one file containing
 label points and one file containing label text = attributes).</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>We have to store them in
-$LOCATION/arc (create directory if not existing):</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>ls $LOCATION/arc</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>il_nutz.pnt&nbsp; il_nutz.pol&nbsp;
-il_nutz.txt</font></font></blockquote>
+<br><font face="Arial,Helvetica"><font size=+1>The files will be found
+in your current directory (opposite to v.in.arc which expects them in $LOCATION/arc/
+!).</font></font>
+<br><font face="Arial,Helvetica"><font size=+1>Copy PAT.dbf&nbsp; (or AAT.dbf)
+there, too, and rename to a reasonable name comparing to your other ungen
+files.</font></font>
+<br><i><font face="Arial,Helvetica"><font size=+1>Note: PostgreSQL does
+not allow field names containing "-" (ilde-id is forbidden, ilde_id is
+accepted)!</font></font></i><font face="Arial,Helvetica"><font size=+1></font></font>
+<p><font face="Arial,Helvetica"><font size=+1>Our files are:</font></font>
+<blockquote><font face="Arial,Helvetica"><font size=+1>il_nutz.pnt&nbsp;
+il_nutz.pol&nbsp; il_nutz.dbf</font></font></blockquote>
 <font face="Arial,Helvetica"><font size=+1>Now we start to import:</font></font>
-<blockquote><font face="Arial,Helvetica"><font size=+1>v.in.arc.pg</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>GRASS vector file: landuse
+<blockquote><font face="Arial,Helvetica"><font size=+1>createdb il_nutz</font></font><font face="Arial,Helvetica"><font size=+1></font></font>
+<p><font face="Arial,Helvetica"><font size=+1>v.in.arc.pg</font></font>
+<br><font face="Arial,Helvetica"><font size=+1>GRASS vector file: landuse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 (the new name of map in GRASS)</font></font>
 <br><font face="Arial,Helvetica"><font size=+1>Coverage type: polygon</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>Neatline: no (a neatline
-is a line surrounding the map)</font></font>
+<br><font face="Arial,Helvetica"><font size=+1>Neatline: no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(a neatline is a line surrounding the map)</font></font>
 <br><font face="Arial,Helvetica"><font size=+1>Lines file ARC/INFO: il_nutz.pol</font></font>
-<br><font face="Arial,Helvetica"><font size=+1>[...]</font></font></blockquote>
-
-<p><br><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
+<br><font face="Arial,Helvetica"><font size=+1>Labels file ARCINFO: il_nutz.pnt</font></font>
+<br><font face="Arial,Helvetica"><font size=+1>Name of .dbf file to be
+imported: il_nutz.dbf</font></font>
+<br><font face="Arial,Helvetica"><font size=+1>Admin/normal user dump mode:
+&lt;return></font></font>
+<br><font face="Arial,Helvetica"><font size=+1>Additionally dump to ASCII
+file: &lt;return></font></font><i><font face="Arial,Helvetica"><font size=+1></font></font></i>
+<p><i><font face="Arial,Helvetica"><font size=+1>Table il_nutz successfully
+copied into Postgres. Congratulations!</font></font></i>
+<br><font face="Arial,Helvetica"><font size=+1></font></font>&nbsp;</blockquote>
+<font face="Arial,Helvetica"><font size=+1>Now run v.support on the imported
+vector map.</font></font>
+<br><i><font face="Arial,Helvetica"><font size=+1></font></font></i>&nbsp;
+<p><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
 <br><b><font face="Arial,Helvetica"><font size=+1>I) Reclass of vector
 map</font></font></b>
 <br><font face="Arial,Helvetica"><font size=+1>------------------------------------------------------------------------</font></font>
