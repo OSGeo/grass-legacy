@@ -172,7 +172,6 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
     lfp = stdout;
   }
 
-  Area = (P_AREA *)malloc( sizeof(P_AREA) );
   Points = Vect_new_line_struct();
   Points->alloc_points = 0;
   Points->n_points = 0;
@@ -213,9 +212,6 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
     listY[i] = Points->y[i];
   }
 
-  free(Points->x);
-  free(Points->y);
-
   totalvertices = numvertices;
 
   /* Determine the rings of the isles */
@@ -246,14 +242,9 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
       listX[k] = Points->x[k1];
       listY[k] = Points->y[k1++];      
     }
-
-    free(Points->x);
-    free(Points->y);
   }
 
-  /*free(Area);
   Vect_destroy_line_struct(Points);
-  */
 
   /* Log vertex lists */
   /*
