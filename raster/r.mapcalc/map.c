@@ -543,7 +543,7 @@ void get_map_row(int idx, int mod, int row, int col, void *buf, int res_type)
 	case '@':
 		if (!ibuf)
 			ibuf = G_malloc(columns * sizeof(CELL));
-		read_map(m, ibuf, 0, row, col);
+		read_map(m, ibuf, CELL_TYPE, row, col);
 		translate_from_cats(m, ibuf, buf, columns);
 		break;
 	case 'r':
@@ -553,8 +553,8 @@ void get_map_row(int idx, int mod, int row, int col, void *buf, int res_type)
 	case 'y':
 	case 'i':
 		if (!fbuf)
-			fbuf = G_malloc(columns * sizeof(CELL));
-		read_map(m, fbuf, 0, row, col);
+			fbuf = G_malloc(columns * sizeof(DCELL));
+		read_map(m, fbuf, DCELL_TYPE, row, col);
 		translate_from_colors(m, fbuf, buf, columns, mod);
 		break;
 	default:
