@@ -37,6 +37,8 @@ main (int argc, char *argv[])
 	int    *tools, ntools, atools;
 	double *threshs;
 	int    level;
+	int    count;
+	double size;
 
 	G_gisinit(argv[0]);
 
@@ -57,7 +59,7 @@ main (int argc, char *argv[])
 	tool_opt->type =  TYPE_STRING;
 	tool_opt->required = YES;
 	tool_opt->multiple = YES;
-	tool_opt->options = "break,rmdupl,rmdangle,chdangle,rmbridge,chbridge,snap,rmdac,bpol,prune";
+	tool_opt->options = "break,rmdupl,rmdangle,chdangle,rmbridge,chbridge,snap,rmdac,bpol,prune,rmarea";
         tool_opt->description = "Action to be done:\n"
 	                        "\t\tbreak - break lines at each intersection\n"
 			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)\n"
@@ -73,7 +75,9 @@ main (int argc, char *argv[])
 				"non topological format (like shapefile). Boundaries are broken on each "
 				"point shared between 2 and more polygons where angles of segments "
 			        "are different\n"
-			        "\t\tprune - remove vertices in threshold from lines and boundaries";
+			        "\t\tprune - remove vertices in threshold from lines and boundaries\n"
+			        "\t\trmarea - remove small areas, the longest boundary with adjacent area "
+			        "is removed";
 	
 	thresh_opt = G_define_option();
 	thresh_opt ->key = "thresh";
@@ -125,6 +129,8 @@ main (int argc, char *argv[])
 		tools[ntools] = TOOL_BPOL;
 	    else if ( strcmp ( tool_opt->answers[i], "prune" ) == 0 )
 		tools[ntools] = TOOL_PRUNE;
+	    else if ( strcmp ( tool_opt->answers[i], "rmarea" ) == 0 )
+		tools[ntools] = TOOL_RMAREA;
 	    else 
 		G_fatal_error ( "Tool doesn't exist" );
 
@@ -142,7 +148,7 @@ main (int argc, char *argv[])
 	    G_debug ( 1, "thresh : %s -> %f ", tool_opt->answers[i], threshs[i] );
 	    
 	    if (  tools[i] != TOOL_SNAP && tools[i] != TOOL_RMDANGLE && tools[i] != TOOL_CHDANGLE
-	          && tools[i] != TOOL_PRUNE ) {
+	          && tools[i] != TOOL_PRUNE && tools[i] != TOOL_RMAREA ) {
 		G_warning ("Threshold for tool %d may not be > 0, set to 0", i + 1);
 		threshs[i] = 0.0;
 	    }
@@ -184,6 +190,9 @@ main (int argc, char *argv[])
 		    break;
 		case ( TOOL_PRUNE ) :
 	            fprintf (stderr, "| Prune                            |" );	    
+		    break;
+		case ( TOOL_RMAREA ) :
+	            fprintf (stderr, "| Remove small areas               |" );	    
 		    break;
 	    }
 	    fprintf (stderr, " %e |\n", threshs[i] );	    
@@ -236,7 +245,7 @@ main (int argc, char *argv[])
 	/* Start with GV_BUILD_NONE and for each tool use unly the necessary level! */
 	fprintf (stderr,         "--------------------------------------------------\n" );
 	for ( i = 0; i < ntools ; i++ ) { 
-	    if (  tools[i] == TOOL_RMDAC ) {
+	    if (  tools[i] == TOOL_RMDAC || tools[i] == TOOL_RMAREA ) {
 	        if ( Vect_get_built ( &Out ) >= GV_BUILD_CENTROIDS ) {
 		    Vect_build_partial ( &Out, GV_BUILD_CENTROIDS, NULL );
 		} else {
@@ -304,6 +313,12 @@ main (int argc, char *argv[])
 		    fprintf (stderr, "Tool: Prune lines/boundaries\n" );
 		    fflush ( stderr );
                     prune ( &Out, otype, threshs[i] );
+		    break;
+		case TOOL_RMAREA:
+		    fprintf (stderr, "Tool: Remove small areas\n" );
+		    fflush ( stderr );
+                    count = Vect_remove_small_areas ( &Out, threshs[i], pErr, stderr, &size );
+		    fprintf (stderr, "%d areas of total size %g removed\n", count, size );
 		    break;
 	    }
 	    fprintf (stderr,         "--------------------------------------------------\n" );

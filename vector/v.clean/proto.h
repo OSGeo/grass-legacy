@@ -8,3 +8,4 @@
 #define TOOL_RMBRIDGE 8 /* remove bridges connecting area and island or 2 islands */
 #define TOOL_CHBRIDGE 9 /* change the type of bridges connecting area and island or 2 islands from boundary to line */
 #define TOOL_PRUNE   10 /* remove vertices in threshold from lines and boundaries */
+#define TOOL_RMAREA  11 /* remove small areas */
