@@ -13,7 +13,10 @@
 
 /*-
  * $Log$
- * Revision 1.6  2000-10-14 01:36:54  eric
+ * Revision 1.7  2000-10-15 04:02:59  eric
+ * Undo breakage I introduced.
+ *
+ * Revision 1.6  2000/10/14 01:36:54  eric
  * Fix bug I introduced to sites.c; Fix the real bug in s.to.rast --
  * was creating a site struct with the *wrong* cattype.
  *
@@ -389,11 +392,10 @@ int G__site_get ( FILE *ptr, Site *s, int fmt)
       }
 
       /* move to beginning of next attribute */
-      /* unneccessary and causes first attribute to be missed...
       if ((buf = next_att (buf)) == (char *) NULL)
 	return (FOUND_ALL(s,n,dim,c,d)? err: -2);
       break;
-      */
+
     case '%':			/* decimal attribute */
       if (d < s->dbl_alloc) {
 	p1 = ++buf;
