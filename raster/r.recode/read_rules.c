@@ -29,7 +29,7 @@ int report_range (void)
          sprintf(buff2, "%.10f",old_dmax);
          G_trim_decimal(buff);
          G_trim_decimal(buff2);
-         fprintf (stdout,"Data range of %s is %s to %s\n", name, buff, buff2);
+         fprintf (stdout,"Data range of %s is %s to %s (entire map)\n", name, buff, buff2);
       }
   }
   if(G_read_range(name, mapset, &range)<=0)
