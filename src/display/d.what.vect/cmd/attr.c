@@ -1,6 +1,8 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "dbmi.h"
-#include <stdio.h>
 
 int disp_attr(char *tabname, char *key, int *keyval )
 {
