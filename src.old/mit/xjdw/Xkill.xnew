@@ -1,0 +1,2 @@
+#!/bin/sh
+kill -HUP `ps -c | grep Xnew | sed -e 's/\( *[0-9]*\).*/\1/'`
