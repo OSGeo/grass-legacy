@@ -34,9 +34,9 @@ directory misc/
 	    for statistical mapping, works BUT results are
 	    subjective.
 
-  m.bsplit - program to split large binary files, such a raster files,
+  m.bsplit - program to split large binary files, such a cell files,
              into 500,000 byte or less size files.  Primarily to 
-             allow uucp (1 meg limit) movement of such files between unix machines.
+             allow uucp movement of such files between unix machines.
 
   m.geo - interactive coordinate conversion program. 
         A. Given a Lat/Long will provide a selected projection's coordinates
@@ -45,7 +45,7 @@ directory misc/
         C. Reads from a file; to the screen or a file.
         D. Write from keyboard; to the screen or a file.
 
-  m.qcalc: tool for determining raster resolution.
+  m.qcalc: tool for determining cell resolution.
 
          -s <initial size> [up to size] [size increment]
             creates a table : 
@@ -69,20 +69,20 @@ directory misc/
          Desk calculator
          -m <arithmetic>
 
-  m.setproj - Automatically creates the PROJ_INFO and PROJ_UNITS 
+  m.setproj - Automatically creates the PROJECTION_INF and PROJ_UNITS 
 	    files to record the projection information for a 
 	    specified mapset. Support for projection transformation.
 
 directory raster:
-  r.in.erdas - This program is used to create a grass raster file for 
+  r.in.erdas - This program is used to create a grass cell file for 
 	       each band of data in the ERDAS file. The user can then 
 	       execute the support and group commands in GRASS to 
-	       associate these raster files together as a GRASS image group.
+	       associate these cell files together as a GRASS image group.
 
   r.in.miads - A program for reading MIADS output files and converting 
 	       them to a r.in.ascii format. The program requires
                certain information before it can execute :
-                1. the strip, line, and cell for a MIADS file,
+                1. the strip, line, and cell for a,
                 2. UTM reference northing and easting.
                This program stands alone, however, conversion to GRASS 
 	       use requires using the two scripts "getstrip" and "joinstrip".
@@ -96,7 +96,7 @@ directory sites:
 
 directory imp_exp:
  gef_dig:
- v.in.scsgef - A program for reading SCS Geographic Export Format(SCS-GEF) 
+ v.in.scsgef - An program for reading SCS Geographic Export Format(SCS-GEF) 
 	       digitial data files and converting them to GRASS digit 
 	       files. The program will require some additional
 	       information as it executes :
@@ -111,18 +111,18 @@ directory imp_exp:
                make_1_gef - combines the normal 3 file SCS-GEF data into 1
                data file.
  dig_gef:
- v.out.scsgef - A program for writting SCS Geographic Export Format
+ v.out.scsgef - An program for writting SCS Geographic Export Format
 	       (SCS-GEF)  from GRASS vector data.
  dlg_dig:
- v.in.dlg.scs - A program for reading DLG data which contains NO
+ v.in.dlg.scs - An program for reading DLG data which contains NO
 		attributes, but has a flat file containing name 
 		attributes for the DLG data.
  dig_dlg:
- v.out.dlg.scs - A program for writting DLG output, developed for
+ v.out.dlg.scs - An program for writting DLG output, developed for
 		the specific SCS equipment used, also creates
 		a flat file of name attributes for the DLG data.
  tig_dig:
- v.in.tiger.scs - A program for reading CENSUS tiger files, does
+ v.in.tiger.scs - An program for reading CENSUS tiger files, does
 		NOT use a DBMS, creates vector maps directly.
 
  import:
@@ -188,8 +188,10 @@ directory  mapdev:
 directory man:
   Manual entries for SCS contributed programs
 
+directory help:
+  Help entries for SCS contributed programs
+
 directory over_write:
   SCS programs which replace CERL programs of the same name, most
-  operate the same, but have been enhanced. These should go away in
-the next release.
+  operate the same, but have been enhanced.
 
