@@ -99,7 +99,8 @@ int G_site_put ( FILE *fptr, Site *s)
     Vect_reset_line (Points);
     Vect_reset_cats (Cats);
 
-    Vect_append_point (Points, s->east, s->north, s->dim[0]);
+    /* no 3D support so far: s->dim[0] */
+    Vect_append_point (Points, s->east, s->north, 0.0);
 
     G_debug (4, "cattype = %d", s->cattype);
 
