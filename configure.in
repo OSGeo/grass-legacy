@@ -636,13 +636,16 @@ fi
 if test "$GDAL_CONFIG" != "" ; then
   GDAL_LIBS="`$GDAL_CONFIG --libs`"
   GDAL_CFLAGS="`$GDAL_CONFIG --cflags` -DUSE_GDAL_H"
-  
+  USE_GDAL=yes
   if test `$GDAL_CONFIG --ogr-enabled` = "yes" ; then
     AC_DEFINE(HAVE_OGR)
+    USE_OGR=yes
   fi
 else
   GDAL_LIBS=$DLLIB
   GDAL_CFLAGS=
+  USE_GDAL=
+  USE_OGR=
 fi
 
 AC_SUBST(GDAL_LIBS)
@@ -1290,5 +1293,6 @@ LOC_MSG_USE(Readline support,USE_READLINE)
 LOC_MSG_USE(C++ support,USE_CXX)
 LOC_MSG_USE(PROJ.4 support,USE_PROJ)
 LOC_MSG_USE(openDWG support,USE_OPENDWG)
-LOC_MSG_USE(GDAL/OGR support,GDAL_CONFIG)
+LOC_MSG_USE(GDAL support,USE_GDAL)
+LOC_MSG_USE(OGR support,USE_OGR)
 LOC_MSG()
