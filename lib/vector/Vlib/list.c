@@ -81,9 +81,9 @@ Vect_list_append ( struct ilist *list, int val )
     }
     
     if ( list->n_values == list->alloc_values ) {
-	size = list->n_values + 1000;
+		size = (list->n_values + 1000) * sizeof(int);
         list->value = (int *) G_realloc ( (void *) list->value, size );
-        list->alloc_values = size;
+        list->alloc_values = list->n_values + 1000;
     }
     
     list->value[list->n_values] = val;
