@@ -2,6 +2,7 @@
 ** 7/23/90
 */
 
+#include <math.h>
 #include "dig_defines.h"
 #include "dig_head.h"
 #include "dxf2vect.h"
@@ -9,6 +10,7 @@
 /* DECLARING SUBROUTINES */
 double 	atof();
 
+#define DEG_TO_RAD (3.141592654/180.0)
 
 dxf_add_polyline (dxf_file)
 FILE	*dxf_file;
@@ -23,6 +25,13 @@ FILE	*dxf_file;
     int  fprintf_flag1 = 1; /* INDICATES IF ERROR MESSAGE PRINTED ONCE */
     int  fprintf_flag2 = 1; /* INDICATES IF ERROR MESSAGE PRINTED ONCE */
     int arr_size = 0;
+    int arc_arr_size = 0;
+    double x1, x2, y1, y2, cent_y, cent_x, rad, beta, half_alpha;
+    float ang1, ang2;
+    /* variables to create arcs */
+    double bulge = 0.0;           /* for arc curves */
+    double prev_bulge = 0.0;           /* for arc curves */
+    double arc_tan = 0.0;           /* for arc curves */
     char *nolayername = "UNIDENTIFIED"; 
     char layername[80];
     DXF_DIG *layer_fd;         /* POINTER TO LAYER NAME */
@@ -62,7 +71,12 @@ FILE	*dxf_file;
 		break;
 	    case  70: /* POLYLINE FLAGS */
 		polyline_flag = atoi(dxf_line);
-		/* NOTE: CODE ONLY EXISTS FOR FLAG = 1 or 0 (CLOSED POLYLINE) */
+
+		/* polyline flag is 1 for closed polyline
+				    2 curve fit vertices have been added
+				    4 spline fit vertices have been added
+                */
+		/* NOTE: CODE ONLY EXISTS FOR FLAG = 1 (CLOSED POLYLINE) or 0 */
 		if (polyline_flag&8 || polyline_flag & 16 || polyline_flag & 32)
 		    if (fprintf_flag2)
 		    {
@@ -85,7 +99,8 @@ FILE	*dxf_file;
 	    case  71: /* POLYGON MESH */
 	    case  72: /* POLYGON MESH */
 	    case  75: /* SMOOTH SURFACE TYPE -OPTIONAL */ 
-	    default:
+		      /* not used */
+	    default:  
 		break;
 	}
     }
@@ -136,7 +151,19 @@ FILE	*dxf_file;
 			yinfo[arr_size] = atof(dxf_line);	
 			yflag = 1;
 			break;
-		    case 30: /* Z COORDINATE NOT BEING USED */
+		    case 30: break;/* Z COORDINATE NOT BEING USED */
+		    case 42: /* bulge */
+			     bulge = atof(dxf_line);
+			     break;
+		    case 50: /* curve fit tangent */
+		    case 70: /* vertex flags */
+			     if( atoi(dxf_line) == 16)
+			     {
+				/* spline frame control point: don't draw it! */
+				xflag = 0;
+				yflag = 0;
+                             }
+			     break;
 		    /* NOTE: THERE ARE MORE CASES POSSIBLE */
 		    default:
 			break;
@@ -145,18 +172,105 @@ FILE	*dxf_file;
 	}
 	if(xflag == 1  && yflag ==1)
 	{
-	    /* if (BOUNDARIES != 4) dpg *//*if map extents not read in from dxf file */
-	    dxf_check_ext (xinfo[arr_size],yinfo[arr_size]);
-	    if ((arr_size) >= ARR_MAX-1)
+	    /* if prev segment is an arc  (prev_bulge != 0) prepare to make arc */
+	    if(prev_bulge > 0.0)
+	          arc_tan = prev_bulge;
+            else if(prev_bulge < 0.0)
+		  arc_tan = (-1.0) * prev_bulge;
+
+	    if(arc_tan == 0.0) /* straight line segment */
 	    {
-		ARR_MAX += ARR_INCR;
-		xinfo = (double *) G_realloc(xinfo, ARR_MAX * sizeof (double));
-		yinfo = (double *) G_realloc(yinfo, ARR_MAX * sizeof (double));
-	    }
-	    arr_size ++;
-	}
+	         dxf_check_ext (xinfo[arr_size],yinfo[arr_size]);
+	         if ((arr_size) >= ARR_MAX-1)
+	         {
+		     ARR_MAX += ARR_INCR;
+		     xinfo = (double *) G_realloc(xinfo, ARR_MAX * sizeof (double));
+		     yinfo = (double *) G_realloc(yinfo, ARR_MAX * sizeof (double));
+	         }
+	         arr_size ++;
+            }
+	    else if(!(xinfo[arr_size-1] == xinfo[arr_size] && yinfo[arr_size-1] == yinfo[arr_size]))
+	    /* make an arc */
+	    {
+		/* compute cent_x, cent_y, ang1, ang2 */
+                if(prev_bulge > 0.0)
+		{
+		   x1 = xinfo[arr_size-1];
+		   x2 = xinfo[arr_size];
+		   y1 = yinfo[arr_size-1];
+		   y2 = yinfo[arr_size];
+		}
+		else
+		{
+		/* figure out how to compute the opposite center */
+		   x2 = xinfo[arr_size-1];
+		   x1 = xinfo[arr_size];
+		   y2 = yinfo[arr_size-1];
+		   y1 = yinfo[arr_size];
+		}
+		half_alpha = (double) atan(arc_tan) * 2.;
+		rad = hypot(x1 - x2, y1 - y2) * .5 / sin(half_alpha);
+	        beta = atan2(x1 - x2, y1 - y2);
+		/* now bring it into range 0 to 360 */
+		beta = 90.0 * DEG_TO_RAD - beta;
+		if(beta <= 0.0 ) beta = 360.0 * DEG_TO_RAD + beta;
+		/* now beta is counter clock wise from 0 (direction of (1,0)) to 360 */
+                if(beta >= 0.0 && beta < 90.0)
+		{
+		   cent_x = x2 + rad *  sin(half_alpha + beta);
+		   cent_y = y2 - rad *  cos(half_alpha + beta);
+		   ang2 = (half_alpha + beta) /  DEG_TO_RAD + 90.0;
+		   ang1 = (beta - half_alpha) /  DEG_TO_RAD + 90.0;
+                }
+		else if(beta >= 90.0 && beta < 180.0)
+		{
+		   beta -= 90.0;
+		   cent_y = y2 + rad *  sin(half_alpha + beta);
+		   cent_x = x2 + rad *  cos(half_alpha + beta);
+		   ang2 = (half_alpha + beta) / DEG_TO_RAD + 180.0;
+		   ang1 = (beta - half_alpha) / DEG_TO_RAD + 180.0;
+                }
+		else if(beta >= 180.0 && beta < 270.0)
+		{
+		   beta -= 180.0;
+		   cent_x = x2 - rad *  sin(half_alpha + beta);
+		   cent_y = y2 + rad *  cos(half_alpha + beta);
+		   ang2 = (half_alpha + beta) / DEG_TO_RAD + 270.0;
+		   ang1 = (beta - half_alpha) / DEG_TO_RAD + 270.0;
+                }
+		else /* 270 <= beta < 360 */
+		{
+		   beta -= 270.0;
+		   cent_y = y2 - rad * sin(half_alpha + beta);
+		   cent_x = x2 - rad *  cos(half_alpha + beta);
+		   ang2 = (half_alpha + beta) / DEG_TO_RAD;
+		   ang1 = (beta - half_alpha) / DEG_TO_RAD;
+                }
+
+	        arr_size --; /* disregard last 2 points */
+		if(prev_bulge < 0.0) 
+		       arc_arr_size = make_arc(arr_size,cent_x,cent_y,
+				 -rad, ang2, ang1,1);
+                       /* arc is going in clockwise direction from x2 to x1 */
+                else
+
+		       arc_arr_size = make_arc(arr_size,cent_x,cent_y,
+				 rad,ang1,ang2,1);
+	        arr_size += arc_arr_size;
+	        while ((arr_size) >= ARR_MAX)
+	        {
+	    	   ARR_MAX += ARR_INCR;
+	    	   xinfo = (double *) G_realloc(xinfo, ARR_MAX * sizeof (double));
+		   yinfo = (double *) G_realloc(yinfo, ARR_MAX * sizeof (double));
+	        }
+	    } /* arc */
+  	    prev_bulge = bulge;
+	    arc_tan = 0.0;
+	    bulge = 0.0;
+	} /* processing polyline vertex */
 	dxf_fgets (dxf_line,80,dxf_file);  
-    }
+    } /* vertex loop */
+    /* done reading vertices */
     if (polyline_flag & POLYFLAG1) /* ONLY DEALING WITH polyline_flag = 1 */
     {
 	/* CHECK TO MAKE SURE VERTEX POINTS DESCRIBE A CLOSED POLYLINE */
