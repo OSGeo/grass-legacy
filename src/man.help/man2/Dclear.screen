@@ -1,0 +1,36 @@
+.\" %W% %G%
+.TH Dclear.screen 2D D-language
+.SH NAME
+Dclear.screen \- Tool for clearing the graphics screen
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B "Dclear.screen"
+.SH DESCRIPTION
+.I Dclear.screen 
+clears the entire screen and removes all recorded traces of any windows
+previously drawn there from memory.  Unlike
+.I Dscreen,
+.I Dclear.screen
+clears the entire screen without creating any new windows.
+Also contrast
+.I Dclear.screen
+with
+.I Derase,
+which erases only the
+.I contents
+of the current window while leaving the window itself there.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+\fIDerase[2D]\fR	Erase only the contents of the current window
+.br
+\fIDscreen[2D]\fR	T{
+Clear the screen, create a new display window covering the full
+screen, and choose this full screen as the current window
+T}
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
