@@ -1,5 +1,9 @@
 
-typedef union 
+typedef union
+#ifdef __cplusplus
+	YYSTYPE
+#endif
+
 {
         long            long_val;
         int              int_val;
