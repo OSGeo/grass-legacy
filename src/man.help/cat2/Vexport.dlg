@@ -1,0 +1,66 @@
+
+
+
+Vexport.dlg(1)       GRASS Reference Manual        Vexport.dlg(1)
+
+
+
+NAME
+     Vexport.dlg - Convert GRASS vector to DLG-3 format (V
+     Language Tool)
+
+SYNOPSIS
+     Vexport.dlg input=dig_in output=dlg_out
+
+DESCRIPTION
+     The GRASS tool Vexport.dlg allows the user to convert GRASS
+     vector to DLG-3 format for exporting to other systems.  The
+     program requires two arguments on the command line: the to
+     export and the name of the resultant DLG file.  The
+     Vexport.dlg program requires that the vector have full
+     topological information.  This means that the program
+     support.vect should have been the last program to have
+     effected any changes upon the vector If this is not the
+     case, Vexport.dlg will terminate with a message that
+     support.vect needs to be run.
+
+
+NOTES
+     This program is also called by export.dlg.
+
+
+SEE ALSO
+     export.dlg[1]
+
+AUTHOR
+     Dave Gerdes, U.S. Army Construction Engineering Research Lab
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
