@@ -2,6 +2,10 @@
 #
 /***********************************************************************
 
+Modified by Jacques Bouchard and Markus Neteler 6/99 to make cursor
+keys working. Exit now with ESC-CR.
+
+
 NAME:       V_call()
 
 FUNCTION:   Interactively allow the user to enter answers into all
@@ -50,7 +54,7 @@ ALGORITHM:
         |                       printf target to curses window
         |                   default:
         |                       do nothing
-        |               if ESC return from V_call()
+        |               if ESC+CR return from V_call()
         |               if UP  shift to previous question
         |               if CR or NL  shift to next question
         |           case BS:   Move cursor back one column in current question
@@ -120,6 +124,7 @@ V_call()
     int at_constant ;
     int ans_col     ;
     char newchar    ;
+    char lastchar = 0;
     int c;
     struct { char position[80]; } scr_answ[MAX_ANSW] ;
     long atol() ;
@@ -223,7 +228,7 @@ V_call()
 	    move(22,0) ;
     else
 	    move(23,0) ;
-    centered("AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE") ;
+    centered("AFTER COMPLETING ALL ANSWERS, HIT <ESC><ENTER> TO CONTINUE") ;
     if (interrupts_ok)
     {
 	sprintf(temp,"(OR <Ctrl-C> TO %s)", V__.interrupt_msg);
@@ -317,12 +322,17 @@ V_call()
 		default:
 			break ;
 		}
-		if (newchar == ESC || newchar == CTRLC) 
-		{ 
+		if ((newchar == CR && lastchar == ESC)|| newchar == CTRLC) 
+		{
 		    interrupts_ok = 0;
 		    V_exit() ;
-		    return(c == ESC) ;
+		    return(c == CR) ;
 		}
+                if (newchar == ESC) 
+		{
+                    lastchar = ESC;
+                    break;
+                }
 		if (newchar == UP)
 		    at_answer = (at_answer+num_answers-1) % num_answers ;
 		else
@@ -361,6 +371,34 @@ V_call()
 		break ;
 
 	default:
+                if (newchar == 91 && lastchar == ESC) {
+                    lastchar = -91;
+                    break;
+                }
+                if (lastchar == -91) {
+                    lastchar = 0;
+                    if (newchar == 49) {        /* HOME */
+		        ans_col = 0 ;
+                    } else if (newchar == 52) { /* END */
+                        for (c = 0; c < LENGTH && ANSWER[c]; c++) {}
+		        ans_col = --c ;
+                    } else if (newchar == 65) { /* UP */
+		        at_answer = (at_answer+num_answers-1) % num_answers ;
+		        ans_col  = 0 ;
+                    } else if (newchar == 66) { /* DOWN */
+		        at_answer = (at_answer+1) % num_answers ;
+		        ans_col  = 0 ;
+                    } else if (newchar == 67) { /* LEFT */
+		        if (ans_col+1 < LENGTH && ANSWER[ans_col+1]) ++ans_col;
+                    } else if (newchar == 68) { /* RIGHT */
+		        ans_col = (ans_col-1 >= 0) ? ans_col-1 : 0 ;
+                    } else if (newchar == 50) { /* DELETE */
+                        break;
+                    }
+		    move(ROW, COL + ans_col) ;
+		    refresh() ;
+                    break;
+                }
 		if (ans_col >= LENGTH) 
 		    break ;
 		if ((newchar >= '\040') && (newchar < '\176')) 
