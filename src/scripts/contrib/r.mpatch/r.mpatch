@@ -5,7 +5,7 @@
 ############################################################################
 #
 # MODULE:	r.mpatch
-# AUTHOR(S):	Huidae Cho - hdcho@geni.knu.ac.kr
+# AUTHOR(S):	Huidae Cho - grass@geni.cemtlo.com
 # PURPOSE:	unlimited number of raster maps to be patched
 # COPYRIGHT:	(C) 2000 by the GRASS Development Team
 #
