@@ -1,0 +1,13 @@
+PGM=r.in.utm
+HOME=$(BIN_CONTRIB_CMD)
+
+LIST = main.o isnumber.o sph.o row_col.o utm_value.o value.o
+
+$(HOME)/$(PGM): $(LIST) $(COORCNVLIB) $(GISLIB) $(ROWIOLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(LIST) $(COORCNVLIB) $(GISLIB) $(MATHLIB) $(ROWIOLIB)  # /usr/lib/libm.il
+	mv a.out $@
+
+$(ROWIOLIB): # in case LIB changes
+$(COORCNVLIB): # in case LIB changes
+$(GISLIB): # in case LIB changes
