@@ -14,6 +14,7 @@
 *               for details.
 *****************************************************************************/
 
+#define SPLIT_QC
 #include <stdio.h>
 #include "assert.h"
 #include "index.h"

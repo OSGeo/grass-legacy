@@ -20,13 +20,19 @@
 
 #define METHODS 1
 
-struct Branch BranchBuf[MAXCARD+1];
-int BranchCount;
-struct Rect CoverSplit;
-RectReal CoverSplitArea;
+#ifdef SPLIT_QC
+#define GLOBAL
+#else
+#define GLOBAL extern
+#endif
+
+GLOBAL struct Branch BranchBuf[MAXCARD+1];
+GLOBAL int BranchCount;
+GLOBAL struct Rect CoverSplit;
+GLOBAL RectReal CoverSplitArea;
 
 /* variables for finding a partition */
-struct PartitionVars
+GLOBAL struct PartitionVars
 {
 	int partition[MAXCARD+1];
 	int total, minfill;
