@@ -2,7 +2,7 @@
 #
 # MODULE:   	Grass Compilation
 # AUTHOR(S):	Original author unknown - probably CERL
-#		Markus Neteler - Germany - neteler@geog.uni-hannover.de
+#		Markus Neteler - Germany/Italy - neteler@itc.it
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
 #   	    	Huidae Cho - Korea - grass4u@gmail.com
 #   	    	Eric G. Miller - egm2@jps.net
@@ -38,7 +38,7 @@ prefix              = @prefix@
 exec_prefix         = @exec_prefix@
 UNIX_BIN            = @BINDIR@
 INST_DIR            = @prefix@/grass-@GRASS_VERSION_MAJOR@.@GRASS_VERSION_MINOR@.@GRASS_VERSION_RELEASE@
-
+GRASSMANDIR         = @mandir@
 
 DL_LIBS             = @DL_LIBS@
 DL_OBJS             = @DL_OBJS@
