@@ -410,13 +410,26 @@ Vect_open_new (
 
     /* Check if map already exists */
     if ( G_find_file(GRASS_VECT_DIRECTORY, name, G_mapset()) != NULL ) {
-       G_warning ("Vector '%s' already exists and will be overwritten.", name);
-       ret = Vect_delete ( name );
-       if ( ret == -1 ) {
-          sprintf ( errmsg, "Cannot delete existing vector %s", name ); 
-	  fatal_error (ferror , errmsg );
-	  return (-1);
-       }
+	char *overstr;
+	int over;
+
+	over = 1;
+	if ( overstr = G_getenv ( "OVERWRITE" ) ) {
+	    over = atoi ( overstr );
+	} 
+
+	if ( over != 1 ) { 
+	    G_fatal_error ("The vector '%s' already exists.", name);
+	}
+		
+        G_warning ("The vector '%s' already exists and will be overwritten.", name); 
+	
+        ret = Vect_delete ( name );
+        if ( ret == -1 ) {
+            sprintf ( errmsg, "Cannot delete existing vector %s", name ); 
+	    fatal_error (ferror , errmsg );
+	    return (-1);
+        }
     }
     
     Map->name = G_store (name);
