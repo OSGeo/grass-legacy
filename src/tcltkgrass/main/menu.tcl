@@ -1,6 +1,9 @@
 frame .main_menu
 pack .main_menu -expand yes -fill both
 
+# $Id$
+#
+
 # menus used several times in the main menu
 
 set monitors_menu {
@@ -642,6 +645,9 @@ menu_build 1 .main_menu {
             "TIFF 8bit" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.in.tiff"
             }
+            "PNG (24bit)" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.in.png"
+            }
             "PPM (24bit)" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.in.ppm"
             }
@@ -671,11 +677,8 @@ menu_build 1 .main_menu {
             }
         }
         "Site data" "" {
-            "ASCII file" "" {
+            "ASCII file/spot heights" "" {
                 "source $env(TCLTKGRASSBASE)/module/s.in.ascii"
-            }
-            "ASCII SPOT heights file" "" {
-                "source $env(TCLTKGRASSBASE)/module/s.in.ascii.dem"
             }
         }
     }
