@@ -212,12 +212,12 @@ main (argc, argv)
   G_gisinit(argv[0]);
 
   setParams ();
-  G3d_setStandart3dInputParams ();
+  G3d_setStandard3dInputParams ();
 
   if (G_parser (argc, argv)) exit(1);
 
   getParams (&input, &output, &convertNull, &nullValue);
-  if (! G3d_getStandart3dParams (&useTypeDefault, &type, 
+  if (! G3d_getStandard3dParams (&useTypeDefault, &type, 
 				 &useLzwDefault, &doLzw, 
 				 &useRleDefault, &doRle, 
 				 &usePrecisionDefault, &precision, 
