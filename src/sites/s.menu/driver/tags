@@ -1,7 +1,65 @@
-Mmain	main.c	/^main()$/
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+add_site	../Lib/site.c	/^add_site (site_list, north, east, desc)$/
+announce	../Lib/announce.c	/^announce (msg)$/
+ascending	../Lib/sort_int.c	/^static ascending (a ,b)$/
+ask_quad	../Lib/ask_quad.c	/^ask_quad (quadsize)$/
 catch	duplicates.c	/^static catch(n)$/
+center	../Lib/center.c	/^center (msg,len)	char *msg;$/
+chain	../Lib/chain.c	/^chain (s)$/
+cmp_sites	../Lib/eq_sites.c	/^cmp_sites (a, b)$/
+copy_sites	../Lib/copy_sites.c	/^copy_sites (a, b, clipped)$/
+copyfile	../Lib/copyfile.c	/^copyfile (filea, fileb)$/
+count_sites	../Lib/count_site.c	/^count_sites (site_list, clipped)$/
+counter	../Lib/counter.c	/^counter(n)$/
+counter_reset	../Lib/counter.c	/^counter_reset (msg, before)$/
+ctof	../Lib/report.c	/^static double ctof (buf)$/
+descending	../Lib/sort_int.c	/^static descending (a ,b)$/
+die	../Lib/die.c	/^die (msg)	char *msg;$/
 duplicates	duplicates.c	/^duplicates (s1)$/
+easting_to_col	../Lib/ut_to_cell.c	/^easting_to_col (east, window)$/
+equal_sites	../Lib/eq_sites.c	/^equal_sites (a, b)$/
+execute	../Lib/execute.c	/^execute (s)$/
+free_site_list	../Lib/site.c	/^free_site_list(site_list)$/
 get_site	get_site.c	/^get_site(site_list)$/
-run	run.c	/^run (site_list, pgm, action, clipped, with_comment/
+get_site_list	../Lib/read_sites.c	/^get_site_list (site_list, file)$/
+hitreturn	../Lib/hitreturn.c	/^hitreturn()$/
+index	../Lib/index.c	/^index (string, c)$/
+initialize_site_list	../Lib/site.c	/^initialize_site_list (site_list)$/
+maximum	../Lib/maximum.c	/^maximum (array, size)$/
+memcopy	../Lib/memcopy.c	/^memcopy (des, src, n)$/
+menu_handler	../Lib/menu_hndlr.c	/^menu_handler (menu, buf)$/
+meta_report	../Lib/meta_reprt.c	/^meta_report (report_file, site_file, layer_file, q/
+new_report_screen	../Lib/rpt_screen.c	/^new_report_screen()$/
+next_site	../Lib/site.c	/^next_site (site_list, north, east, desc)$/
+northing_to_row	../Lib/ut_to_cell.c	/^northing_to_row (north, window)$/
+parse	../Lib/parse.c	/^parse (buf, items, n, delim)$/
+put_site_list	../Lib/write_site.c	/^put_site_list (site_list, file, clipped, with_wind/
+read_site_list	../Lib/read_sites.c	/^read_site_list (site_list, fd)$/
+report_close	../Lib/report.c	/^report_close (report)$/
+report_find_cat	../Lib/rprt_finds.c	/^report_find_cat (report, layer_num, cat)$/
+report_find_data	../Lib/rprt_finds.c	/^report_find_data (report, layer_num, point_num)$/
+report_find_layer	../Lib/rprt_finds.c	/^report_find_layer (report, layer_num)$/
+report_find_point	../Lib/rprt_finds.c	/^report_find_point (report, point_num)$/
+report_matrix	../Lib/report.c	/^report_matrix (report)$/
+report_open	../Lib/report.c	/^report_open (report_file)$/
+report_open_ref	../Lib/report.c	/^report_open_ref (report_file, ref)$/
+report_read	../Lib/report.c	/^report_read (report)$/
+report_read_record	../Lib/report.c	/^report_read_record (report, type)$/
+report_record	../Lib/report.c	/^report_record (report, type)$/
+report_scan	../Lib/report.c	/^report_scan (report)$/
+report_seek_cats	../Lib/rprt_seeks.c	/^report_seek_cats (report)$/
+report_seek_data	../Lib/rprt_seeks.c	/^report_seek_data (report)$/
+report_seek_layers	../Lib/rprt_seeks.c	/^report_seek_layers (report)$/
+report_seek_points	../Lib/rprt_seeks.c	/^report_seek_points (report)$/
+rewind_site_list	../Lib/site.c	/^rewind_site_list(site_list)$/
+run	run.c	/^run (site_list, pgm, action, clipped, with_window)/
+scan_double	../Lib/scn_double.c	/^scan_double(buf,n)$/
+scan_int	../Lib/scan_int.c	/^scan_int(buf,n)$/
+scopy	../Lib/scopy.c	/^scopy (a, b ,n)$/
 site_edit	site_edit.c	/^site_edit (site_list)$/
+sort_int	../Lib/sort_int.c	/^sort_int (array, n, order)$/
+trace	../Lib/trace.c	/^trace (msg)$/
 unix_cmd	unix_cmd.c	/^unix_cmd (pgm, site_list)$/
+within_window	../Lib/within_wnd.c	/^within_window (north, east, window)$/
+write_site_list	../Lib/write_site.c	/^write_site_list (site_list, fd, clipped, with_wind/
+yes	../Lib/yes.c	/^yes (question)$/
