@@ -1,0 +1,20 @@
+Mmain	main.c	/^main(argc, argv)$/
+buildSQL	buildSQL.c	/^buildSQL(ktab,ycol, xcol, dist, pts, joinargs)$/
+getAllOpts	getAllOpts.c	/^getAllOpts(argc, argv)$/
+getArea	getArea.c	/^int getArea(tp)$/
+getSelectOpts	getSopts.c	/^getSelectOpts (argc, argv)$/
+getVal	runSQL.c	/^getVal(curval, pts)$/
+get_map_bot	returns.c	/^get_map_bot() $/
+get_map_left	returns.c	/^get_map_left()$/
+get_map_rite	returns.c	/^get_map_rite() $/
+get_map_top	returns.c	/^get_map_top() $/
+get_wind_bot	returns.c	/^get_wind_bot() $/
+get_wind_left	returns.c	/^get_wind_left() $/
+get_wind_rite	returns.c	/^get_wind_rite() $/
+get_wind_top	returns.c	/^get_wind_top() $/
+get_wind_x_pos	returns.c	/^get_wind_x_pos(position)$/
+get_wind_y_pos	returns.c	/^get_wind_y_pos(position)$/
+getem	returns.c	/^getem()$/
+infxsites	ingsites.c	/^infxsites(ktab,ycol, xcol, dist, pts, joinargs, fl/
+runSQL	runSQL.c	/^runSQL(sqlin, pts )$/
+show	getArea.c	/^show (buf) char *buf;$/
