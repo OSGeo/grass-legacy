@@ -63,6 +63,7 @@ void        db_debug_off              P((void ));
 void        db_debug_on               P((void ));
 int         db_delete                 P((dbCursor *cursor ));
 int         db_delete_database        P((dbDriver *driver , dbHandle *handle ));
+int         db_delete_table           ( char *, char *, char *);
 int         db_describe_table         P((dbDriver *driver , dbString *name , dbTable **table ));
 int         db_d_execute_immediate    P((void ));
 int         db_d_fetch                P((void ));
