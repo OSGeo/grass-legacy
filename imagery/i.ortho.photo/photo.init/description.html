@@ -13,10 +13,10 @@ tilted or oblique aerial photo.</b>
 <P>
 <EM>photo.init</EM> creates or modifies entries in a camera initial exposure
 station file for imagery group referenced by a sub-block.  These entries
-include: the (XC,YC,ZC) UTM approximate coordinates of the camera exposure
+include: the (XC,YC,ZC) standard (e.g. UTM) approximate coordinates of the camera exposure
 station; initial roll, pitch, and yaw angles (in degrees) of the cameras
 attitude; and the <EM>a priori</EM> standard deviations for these
-parameters. During the imagery program, hoto.rectify, the initial camera
+parameters. During the imagery program, photo.rectify, the initial camera
 exposure station file is used for computation of the ortho-rectification
 parameters.  If no initial camera exposure station file exist, the default
 values are computed from the control points file created in <EM><A
@@ -50,7 +50,7 @@ The following menu is displayed:
 </PRE>
 
 <P>
-The INITIAL values for (XC,YC,ZC) are expressed in UTM coordinates, and
+The INITIAL values for (XC,YC,ZC) are expressed in standard (e.g. UTM) coordinates, and
 represent an approximation for the location of the camera at the time of 
 exposure.
 

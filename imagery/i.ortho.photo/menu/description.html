@@ -142,25 +142,24 @@ entry
 
 <EM><A HREF="photo.2image.html">photo.2image</A></EM>. 
 
-<DT><EM>6. Compute photo-to-target transformation parameters</EM>
+<DT><EM>6. Initialize exposure station parameters</EM>
 
-<DD>The photo to target transformation parameters are
-compute using option(6).  Here control points are marked on
-one or more imagery group files and associated with there
-known UTM and elevation coordinates.  Complete
-documentation for this option is available under the manual
-entry
-
-<EM><A HREF="photo.2target.html">photo.2target</A></EM>.
-
-<DT><EM>7. Select initial exposure station parameters</EM>
-
-<DD>If option (7) is selected, initial camera exposure
+<DD>If option (6) is selected, initial camera exposure
 station parameters and initial variances may be selected or
 modified.  Complete documentation for this option is
 available under the manual entry
-
 <EM><A HREF="photo.init.html">photo.init</A></EM>.
+
+<DT><EM>7. Compute photo-to-target transformation parameters</EM>
+
+<DD>The photo to target transformation parameters are
+compute using option (7).  Here control points are marked on
+one or more imagery group files and associated with there
+known standard (e.g. UTM) and elevation coordinates.  Complete
+documentation for this option is available under the manual
+entry
+<EM><A HREF="photo.2target.html">photo.2target</A></EM>.
+
 
 
 <DT><EM>8. Ortho-photo imagery group files</EM>
@@ -182,7 +181,7 @@ entry
 <H2>NOTES</H2>
 
 <EM>i.ortho.photo</EM> currently requires the elevation
-model to be in meters, and the target location to be a UTM
+model to be in meters, and the target location to be a standard (e.g. UTM)
 coordinate system.
 
 <H2>SEE ALSO</H2>
