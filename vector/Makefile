@@ -9,6 +9,7 @@ SUBDIRS = \
 	v.clean \
 	v.convert \
 	v.db.connect \
+	v.db.select \
 	v.digit \
 	v.distance \
 	v.extract \
