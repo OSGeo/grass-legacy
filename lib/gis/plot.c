@@ -440,6 +440,143 @@ pole = 0;
     return OK;
 }
 
+/*
+ * G_plot_area (xs, ys, rpnts, rings)
+ *      double **xs;  -- pointer to pointer for X's
+ *      double **ys;  -- pointer to pointer for Y's
+ *      int *rpnts;   -- array of ints w/ num points per ring
+ *      int rings;    -- number of rings
+ *
+ * Essentially a copy of G_plot_polygon, with minor mods to
+ * handle a set of polygons.  return values are the same.
+ */
+int G_plot_area (double **xs, double **ys, int *rpnts, int rings)
+{
+    int i, j, n;
+    int pole;
+    double x0,x1, *x;
+    double y0,y1, *y;
+    double shift,E,W=0L;
+    double e0,e1;
+    int *shift1 = NULL, shift2;
+
+/* traverse the perimeter */
+
+    np = 0;
+    shift1 = (int *) G_calloc (sizeof(int), rings);
+    
+    for (j = 0; j < rings; j++) 
+    {
+        n = rpnts[j];
+        
+        if (n < 3)
+            return TOO_FEW_EDGES;
+        
+        x = xs[j];
+        y = ys[j];
+        
+    /* global wrap-around for lat-lon, part1 */
+        if (window.proj == PROJECTION_LL)
+        {
+            /*
+            pole = G_pole_in_polygon(x,y,n);
+            */
+    pole = 0;
+
+            e0 = x[n-1];
+            E = W = e0;
+
+            x0 = X(e0);
+            y0 = Y(y[n-1]);
+
+            if (pole &&!edge (x0, y0, x0, Y(90.0*pole)))
+                    return NO_MEMORY;
+
+            for (i = 0; i < n; i++)
+            {
+                e1 = nearest (e0, x[i]);
+                if (e1 > E) E = e1;
+                if (e1 < W) W = e1;
+
+                x1 = X(e1);
+                y1 = Y(y[i]);
+
+                if(!edge (x0, y0, x1, y1))
+                    return NO_MEMORY;
+
+                x0 = x1;
+                y0 = y1;
+                e0 = e1;
+            }
+            if (pole &&!edge (x0, y0, x0, Y(90.0*pole)))
+                    return NO_MEMORY;
+
+            shift = 0;        /* shift into window */
+            while (E+shift > window.east)
+                shift -= 360.0;
+            while (E+shift < window.west)
+                shift += 360.0;
+            shift1[j] = X(x[n-1]+shift) - X(x[n-1]);
+        }
+        else
+        {
+            x0 = X(x[n-1]);
+            y0 = Y(y[n-1]);
+
+            for (i = 0; i < n; i++)
+            {
+                x1 = X(x[i]);
+                y1 = Y(y[i]);
+                if(!edge (x0, y0, x1, y1))
+                    return NO_MEMORY;
+                x0 = x1;
+                y0 = y1;
+            }
+        }
+    } /* for() */
+    
+/* check if perimeter has odd number of points */
+    if (np%2)
+        return OUT_OF_SYNC;
+
+/* sort the edge points by col(x) and then by row(y) */
+    qsort (P, np, sizeof(POINT), &edge_order);
+
+/* plot */
+    for (j = 0; j < rings; j++)
+    {
+        for (i = 1; i < np; i += 2)
+        {
+            if (P[i].y != P[i-1].y)
+                return OUT_OF_SYNC;
+            row_fill (P[i].y, P[i-1].x+shift1[j], P[i].x+shift1[j]);
+        }
+        if (window.proj == PROJECTION_LL)	/* now do wrap-around, part 2 */
+        {
+                n = rpnts[j];
+                x = xs[j];
+                y = ys[j];
+
+                shift = 0;
+                while (W+shift < window.west)
+                    shift += 360.0;
+                while (W+shift > window.east)
+                    shift -= 360.0;
+                shift2 = X(x[n-1]+shift) - X(x[n-1]);
+                if (shift2 != shift1[j])
+                {
+                    for (i = 1; i < np; i += 2)
+                    {
+                        row_fill (P[i].y, P[i-1].x+shift2, P[i].x+shift2);
+                    }
+                }
+        }
+    }
+    free (shift1);
+    return OK;
+
+}
+			  
 static int edge (double x0,double y0,double x1,double y1)
 {
     register double m;
