@@ -14,8 +14,8 @@ main (int argc, char *argv[])
 	FILE *ascii;
 	struct GModule *module;
 	struct Option *old, *new, *delim_opt, *columns_opt, *xcol_opt, 
-		*ycol_opt, *zcol_opt, *catcol_opt, *format_opt;
-	int    xcol, ycol, zcol, catcol, format;
+		*ycol_opt, *zcol_opt, *catcol_opt, *format_opt, *skip_opt;
+	int    xcol, ycol, zcol, catcol, format, skip_lines;
 	struct Flag *zcoorf, *t_flag, *e_flag, *noheader_flag;
 	char   *table;
 	char   *fs;
@@ -55,6 +55,14 @@ main (int argc, char *argv[])
 	delim_opt->required = NO;
 	delim_opt->description = "field separator";
 	delim_opt->answer = "|";
+
+	skip_opt = G_define_option();
+	skip_opt->key = "skip";
+	skip_opt->type = TYPE_INTEGER;
+	skip_opt->required = NO;
+	skip_opt->multiple = NO;
+	skip_opt->answer = "0";
+	skip_opt->description = "Number of header lines to skip at top of input file (written to map history)";
 
 	columns_opt = G_define_option();
 	columns_opt->key = "columns";
@@ -117,10 +125,15 @@ main (int argc, char *argv[])
 	if (G_parser (argc, argv))
 		exit(-1);
 
+
 	if ( format_opt->answer[0] == 'p' )
 	    format = FORMAT_POINT;
 	else
             format = FORMAT_ALL;
+
+	skip_lines = atoi(skip_opt->answer);
+	if(skip_lines < 0)
+	    G_fatal_error("Please specify reasonable number of lines to skip.");
 
 	if (zcoorf->answer && format == FORMAT_POINT && zcol_opt->answer == "0")
 		G_fatal_error("Please specify z column.");
@@ -179,7 +192,9 @@ main (int argc, char *argv[])
 	    }
 	    unlink(tmp);
 
-	    points_analyse ( ascii, tmpascii, fs, PNT_HEAD_NO, &rowlen, &ncols, &minncols, &coltype, &collen);
+	    points_analyse ( ascii, tmpascii, fs, &rowlen,
+		&ncols, &minncols, &coltype, &collen, skip_lines );
+
 	    fprintf ( stderr, "Maximum input row length: %d\n", rowlen);
 	    fprintf ( stderr, "Maximum number of columns: %d\n", ncols);
 	    fprintf ( stderr, "Minimum number of columns: %d\n", minncols);
@@ -363,9 +378,8 @@ main (int argc, char *argv[])
 		table = NULL;
 	    }
 
-	    points_to_bin ( tmpascii, rowlen, &Map, driver, table, fs, PNT_HEAD_NO, 
-		            ncols, coltype,  
-		            xcol, ycol, zcol, catcol );
+	    points_to_bin ( tmpascii, rowlen, &Map, driver, table, fs, ncols,
+			    coltype, xcol, ycol, zcol, catcol, skip_lines );
 
 	    if ( driver ) {
 	        db_commit_transaction ( driver );
