@@ -1099,7 +1099,7 @@ int G_gui (void)
 	pgm_name = G_program_name ();
     if (!pgm_name)
 	pgm_name = "??";
-    
+
     strcpy (wish, getenv("GRASS_WISH"));
     
     cmd[0] = '\0';
@@ -1267,7 +1267,7 @@ int G_gui (void)
     /* Command construction */
     append(cmd, "proc mkcmd { } {\n"
 	         "    global optname optval opttype nmulti optvalname\n"
-	         "    set cmd \"%s\"\n"
+	         "    set cmd {%s}\n"
 		 "    for {set i 1} {$i <= %d } {incr i} {\n"
 		 "        if { $opttype($i) == \"multi\" } {\n"
 		 "            set domulti 0\n"
@@ -1277,7 +1277,7 @@ int G_gui (void)
 		 "                }\n"
 		 "            }\n"
 		 "            if { $domulti == 1 } {\n"
-		 "                append cmd \" $optname($i)=\"\n"
+		 "                lappend cmd \"$optname($i)=\"\n"
 		 "                set first 1\n"
 		 "                for {set j 1} {$j <= $nmulti($i) } {incr j} {\n"
 		 "                    if { $optval($i,$j) == 1 } {\n"
@@ -1293,12 +1293,12 @@ int G_gui (void)
 		 "        }\n"
 		 "        if { $opttype($i) == \"opt\" } {\n"
 		 "           if {[string length $optval($i)] > 0} {\n"
-		 "               append cmd \" $optname($i)=$optval($i)\"\n"
+		 "               lappend cmd \"$optname($i)=$optval($i)\"\n"
 		 "           }\n"
 		 "        }\n"
 		 "        if { $opttype($i) == \"flag\" } {\n"
 		 "            if { $optval($i) == 1 } {\n"
-		 "                append cmd \" -$optname($i)\"\n"
+		 "                lappend cmd \"-$optname($i)\"\n"
 		 "            }\n"
 		 "        }\n"
 		 "    }\n"
@@ -1330,7 +1330,7 @@ int G_gui (void)
 	   "    set cmd [ mkcmd ]\n"
 	   "    $outtext insert end  \"\\n$cmd\\n\"\n"
 	   "    $outtext yview end\n"
-	   "    set cmd \"| $cmd 2>@ stdout\"\n"
+	   "    set cmd [concat | $cmd 2>@ stdout]\n"
  	   "    catch {open $cmd r} msg\n"
 	   "    fconfigure $msg -blocking 0\n"
 	   "    fileevent $msg readable [ list prnout $msg  ]\n"
