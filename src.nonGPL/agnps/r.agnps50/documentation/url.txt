@@ -1,0 +1,19 @@
+http://h2osparc.wq.ncsu.edu/
+
+
+
+           Water, Soil, and Hydro-Environmental Decision Support System
+
+
+
+                             NCSU Water Quality Group
+                           North Carolina State University
+                          North Carolina Cooperative Extension
+                   Department of Biological and Agricultural Enginering
+
+                                      Cooperator
+                     Center for AI Applications in Water Quality
+                           The Pennsylvania State University
+                   Agricultural and Biological Engineering Department
+
+-> http://h2osparc.wq.ncsu.edu/GIS_AGNPS.html
