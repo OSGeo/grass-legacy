@@ -19,6 +19,12 @@
  * D_get_cell_name(name)
  *     returns the name of the cell file currently displayed
  *
+ * D_set_dig_name(name)
+ *     sets the name of the dig file currently displayed
+ *
+ * D_get_dig_name(name)
+ *     returns the name of the dig file currently displayed
+ *
  * D_set_erase_color(color)
  *     sets the color name of the current erase color for the window
  *
@@ -54,20 +60,20 @@ int D_get_cell_name(char *name )
 	return(0) ;
 }
 
-int D_set_digit_name( char *name )
+int D_set_dig_name( char *name )
 {
-	R_pad_delete_item("digit") ;
+	R_pad_delete_item("dig") ;
 
-	return(R_pad_set_item ("digit", name)) ;
+	return(R_pad_set_item ("dig", name)) ;
 }
 
-int D_get_digit_name(char *name )
+int D_get_dig_name(char *name )
 {
 	int stat ;
 	char **list ;
 	int count ;
 
-	if(stat = R_pad_get_item ("digit", &list, &count))
+	if(stat = R_pad_get_item ("dig", &list, &count))
 		return(-1) ;
 
 	strcpy(name, list[0]) ;
@@ -85,7 +91,7 @@ int D_clear_window()
 {
 	R_pad_delete_item("list") ;
 	R_pad_delete_item("cell") ;
-	R_pad_delete_item("digit") ;
+	R_pad_delete_item("dig") ;
 	R_pad_delete_item("off") ;
 	R_pad_delete_item("m_win") ;
 	R_pad_delete_item("erase");

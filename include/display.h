@@ -53,8 +53,8 @@ int ident_win(char *);
 /* list.c */
 int D_set_cell_name(char *);
 int D_get_cell_name(char *);
-int D_set_digit_name(char *);
-int D_get_digit_name(char *);
+int D_set_dig_name(char *);
+int D_get_dig_name(char *);
 int D_add_to_list(char *);
 int D_clear_window(void);
 int D_claim_offset_is(int);
