@@ -68,6 +68,10 @@ static const char *GRASS_copyright = "GRASS GNU GPL licensed Software" ;
 #define PROJECTION_FILE "PROJ_INFO"
 #define UNIT_FILE "PROJ_UNITS"
 
+/* Location of envariment variables */
+#define G_VAR_GISRC    0
+#define G_VAR_MAPSET   1
+
 /* for G_parser() */
 #define TYPE_INTEGER  1
 #define TYPE_DOUBLE   2
