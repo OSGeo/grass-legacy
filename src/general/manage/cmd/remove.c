@@ -48,7 +48,7 @@ main (int argc, char *argv[])
 		{
 		    fprintf(stderr, "[%s in %s] is reclassed by(remove these first):\n",
 					name, mapset);
-		    fprintf(stderr, "   %s", *rmaps);
+		    fprintf(stderr, " %s", *rmaps);
 		    for(rmaps++; *rmaps; rmaps++)
 		        fprintf(stderr, ",%s", *rmaps);
 		    fprintf(stderr, "\n");
