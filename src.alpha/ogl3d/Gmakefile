@@ -1,0 +1,3 @@
+all:
+	$(GMAKE) gsf
+	$(GMAKE) cmd
