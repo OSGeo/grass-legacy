@@ -160,10 +160,10 @@ G_plot_line (east1, north1, east2, north2)
  *       This was to allow polygons which outlined the north or south pole
  *       to look like closed polygons and be filled accordingly (a hack!).
  *       This works fine for graphics output which is random access, but
- *       will have to be modified to fill east_west if it is to be used
+ *       will have to be modified to fill east-west if it is to be used
  *       for vect.to.cell which does file i/o. Also, vect.to.cell has a need
  *       to control edge pixels. The x coordinate in the POINTS structure
- *       must be a double.  See polyfill.c under mapdev/vect_to_cell.
+ *       must be changed to a double.  See polyfill.c under mapdev/vect_to_cell
  */
 
 #define POINT struct point
