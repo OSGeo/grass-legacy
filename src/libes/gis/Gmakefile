@@ -1,4 +1,4 @@
-EXTRA_CFLAGS=$(GETHOSTNAME) -DUSE_LZE_COMPRESSION
+EXTRA_CFLAGS=$(GETHOSTNAME)
 OBJ = \
     adj_cellhd.o\
     align_window.o\
