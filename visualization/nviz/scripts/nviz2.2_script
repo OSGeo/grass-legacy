@@ -550,7 +550,7 @@ proc load_state { dummy  } {
 proc nviz_browse { URL dummy } {
 global env
 
-exec  $env(GISBASE)/documents/nviz/help_frame.tcl $env(GISBASE)/documents/nviz/$URL &
+exec  $env(GISBASE)/docs/nviz/help_frame.tcl $env(GISBASE)/docs/nviz/$URL &
 
 }
 

@@ -8,7 +8,7 @@ global URL
 set URL $argv
 puts "Using $URL"
 
-source $env(GISBASE)/documents/nviz/help.tcl
+source $env(GISBASE)/docs/nviz/help.tcl
 
 proc make_help_window { w } {
 
