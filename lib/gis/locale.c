@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 void G_init_locale(const char *package)
 {
 #ifdef HAVE_LIBINTL_H
@@ -23,22 +24,26 @@ void G_init_locale(const char *package)
 #endif
 }
 
-
-#ifdef HAVE_LIBINTL_H
 char *
-libgrass_gettext(const char *msgid)
+libgrass_gettext(const char *package, const char *msgid)
 {
 
-
+#ifdef HAVE_LIBINTL_H
         static int      already_bound = 0;
 
         if (!already_bound)
         {
                 already_bound = 1;
-		G_init_locale(PACKAGE);
+
+		bindtextdomain(package, LOCALEDIR);
+
+
         }
 
-return gettext(msgid);        
-
-}
+return dgettext(package,msgid);
+#else
+return msgid;       
 #endif
+}
+
+
