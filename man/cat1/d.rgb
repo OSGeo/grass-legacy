@@ -1,7 +1,7 @@
 
 
 
-d.rgb <main>         GRASS Reference Manual          <main> d.rgb
+d.rgb <main>	     GRASS Reference Manual	     <main> d.rgb
 
 
 
@@ -16,77 +16,77 @@ SYNOPSIS
      d.rgb [red=name] [green=name] [blue=name] [out=name]
 
 DESCRIPTION
-     RGB stands for red, green, and blue.  This program visually
+     RGB stands	for red, green,	and blue.  This	program	visually
      overlays up to three raster map layers, each displayed in
-     either red, green, or blue.  As each overlay is displayed in
-     a single band, the intensity at each point is the average
+     either red, green,	or blue.  As each overlay is displayed in
+     a single band, the	intensity at each point	is the average
      intensity of the red, green, and blue components of the
-     currently active color table.  For example, any cell that
-     carries 100% intensity for either red, green, or blue and 0%
-     intensity for the other two colors will be represented at
+     currently active color table.  For	example, any cell that
+     carries 100% intensity for	either red, green, or blue and 0%
+     intensity for the other two colors	will be	represented at
      33% intensity.
 
      WARNING:  Maps that are using the "color wave" color table
-     appear to be solid grey when using d.rgb.  The average
-     intensity of the colors being used is always 33%.
+     appear to be solid	grey when using	d.rgb.	The average
+     intensity of the colors being used	is always 33%.
 
-     This program sacrifices spatial resolution to provide full
-     color information.  Any color that cannot be fully
-     represented at a particular pixel passes the extra color to
+     This program sacrifices spatial resolution	to provide full
+     color information.	 Any color that	cannot be fully
+     represented at a particular pixel passes the extra	color to
      the next cell right and down.   For example, if a cell is to
      show 50% red, but the closest color available (without
-     showing more than 50%) is 40%, the pixle to the right and
+     showing more than 50%) is 40%, the	pixle to the right and
      the pixle below will be given an extra 5% red each.  In this
-     way all the color is provided at the small cost of a slight
+     way all the color is provided at the small	cost of	a slight
      amount of blurring.   The result is very pleasing,
-     especially on high resolution screens.
+     especially	on high	resolution screens.
 
-COMMAND LINE OPTIONS
+COMMAND	LINE OPTIONS
      Parameters:
 
-     red=name          Name of raster map layer to be used for
-                       RED component.
+     red=name	       Name of raster map layer	to be used for
+		       RED component.
 
-     green=name        Name of raster map layer to be used for
-                       GREEN component.
+     green=name	       Name of raster map layer	to be used for
+		       GREEN component.
 
-     blue=name         Name of raster map layer to be used for
-                       BLUE component.
+     blue=name	       Name of raster map layer	to be used for
+		       BLUE component.
 
-     out=name          Name of raster map layer to contain
-                       results.
-
-
-
-
-
-GRASS 4.1                U.S. Army CERL                         1
+     out=name	       Name of raster map layer	to contain
+		       results.
 
 
 
 
 
+GRASS 4.2		Baylor University			1
 
-d.rgb <main>         GRASS Reference Manual          <main> d.rgb
+
+
+
+
+
+d.rgb <main>	     GRASS Reference Manual	     <main> d.rgb
 
 
 
 NOTES
-     It produces an image and (optionally) a raster map layer
+     It	produces an image and (optionally) a raster map	layer
      with 1000 colors (10 intensities each of red, green and
-     blue). The image and raster map layers will not display
+     blue). The	image and raster map layers will not display
      properly if the graphics device does not have at least 1000
      colors while the user is running in float colormode.  Thus,
-     unless the display device has 1000 colors, it is necessary
-     to run the GRASS program
+     unless the	display	device has 1000	colors,	it is necessary
+     to	run the	GRASS program
 
-          d.colormode mode=fixed
+	  d.colormode mode=fixed
 
      before running d.rgb.  Otherwise, the colors will be
      incorrect.
 
-     The intensity or the saturation layers may be left out.
-     This means that it is possible to have his, hi, or hs
+     The intensity or the saturation layers may	be left	out.
+     This means	that it	is possible to have his, hi, or	hs
      images.
 
 SEE ALSO
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
