@@ -6,6 +6,20 @@
 #include "raster.h"
 #include "display.h"
 
+/* Define ANOTHER_BUTTON to click conveniently for two button mouse */
+#define	ANOTHER_BUTTON
+
+#define LEFT	1
+
+#ifndef	ANOTHER_BUTTON
+#	define MIDDLE	2
+#	define RIGHT	3
+#else
+#	define MIDDLE	3
+#	define RIGHT	2
+#endif
+
+
 #ifndef GLOBAL
 #define GLOBAL extern
 #endif
