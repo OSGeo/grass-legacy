@@ -9,11 +9,11 @@
  *
  *   $Id$
  */
-                                
-#include <string.h>
-#include "gis.h"
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include "gis.h"
 
 #include "./gmt_grd.h"
 #include "./swab.h"
@@ -57,16 +57,16 @@ int main(int argc, char *argv[])
     } flag;
     union {
         int testWord;
-        char testByte[4];
+        char testByte[sizeof(int)];
     } endianTest;
     int swapFlag;
 
 
     G_gisinit(argv[0]);
 
-	module = G_define_module();
+    module = G_define_module();
     module->description =
-		"Exports a GRASS raster to a binary array.";
+	"Exports a GRASS raster to a binary array.";
 
 /* Define the different options */
 
@@ -81,8 +81,7 @@ int main(int argc, char *argv[])
     parm.output->key        = "output";
     parm.output->type       = TYPE_STRING;
     parm.output->required   = YES;
-    parm.output->gisprompt  = "old,cell,raster" ;
-    parm.output->description= "Name of an output binary map (use out=- for stdout)" ;
+    parm.output->description= "Name for output binary map (use out=- for stdout)" ;
 
     parm.null = G_define_option() ;
     parm.null->key        = "null";
