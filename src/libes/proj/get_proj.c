@@ -83,6 +83,7 @@ struct Key_Value *in_proj_keys, *in_units_keys;
 		} else if (strncmp(in_proj_keys->key[i], "zone", 4) == 0) {
 			if (info->zone < 0) {
 				info->zone = -info->zone;
+
 				if (!south)
 					sprintf(buffa, "south");
 			}

@@ -14,7 +14,7 @@ static const char SCCSID[]="@(#)PJ_aeqd.c	4.3	94/11/03	GIE	REL";
 	double	G; \
 	int		mode;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(aeqd, "Azimuthal Equidistant") "\n\tAzi, Sph&Ell\n\tlat_0 guam";
 #define N_POLE	0
 #define S_POLE 1

@@ -18,7 +18,7 @@ int pj_do_proj(x,y,info_in,info_out)
   struct pj_info *info_in,*info_out;
 {
         int inverse; 
-        UV  data;
+        projUV  data;
 
         METERS_in = info_in->meters;
         METERS_out = info_out->meters;

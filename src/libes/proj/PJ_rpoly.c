@@ -8,7 +8,7 @@ static const char SCCSID[]="@(#)PJ_rpoly.c	4.1	94/02/15	GIE	REL";
 	int		mode;
 #define EPS	1e-9
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(rpoly, "Rectangular Polyconic")
 	"\n\tConic, Sph., no inv.\n\tlat_ts=";
 FORWARD(s_forward); /* spheroid */
