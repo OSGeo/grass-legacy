@@ -1,9 +1,0 @@
-#!/bin/sh
-# test for d.w.r.inf 
-# all required command line args are provided
-# DB=tiger, GISdb=spearfish
-# Output: Attribute report from table stf1_main.
-#
-#
-$INF/d.what.r.inf map=tractids tab=stf1_main col=tractbna 
-

@@ -1,9 +1,0 @@
-#!/bin/sh
-# test for d.w.s.inf 
-# all required command line args are provided
-# DB=tiger, GISdb=spearfish
-# Output: Attribute report from table type7.
-#
-#
-$INF/d.what.s.inf tab=type7 xcol=utm_e ycol=utm_n distance=100 
-

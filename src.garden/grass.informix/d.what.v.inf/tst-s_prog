@@ -1,6 +1,0 @@
-:
-# test for d.vect.inf using prebuilt SQL command file
-# DB=tiger, GISdb=SECO
-#
-
-d.what.v.inf -s sql=tst_dwv.sql map=$1 
