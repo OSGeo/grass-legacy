@@ -6,7 +6,7 @@
  *               
  * PURPOSE:      Change current mapset
  *               
- * COPYRIGHT:    (C) 2001 by the GRASS Development Team
+ * COPYRIGHT:    (C) 2004 by the GRASS Development Team
  *
  *               This program is free software under the 
  *               GNU General Public License (>=v2). 
@@ -42,12 +42,12 @@ main (int argc, char *argv[])
     module = G_define_module();
     module->description = "Change current mapset";
 
-    gisdbase_opt = G_define_option() ;
-    gisdbase_opt->key         = "gisdbase" ;
-    gisdbase_opt->type        = TYPE_STRING ;
-    gisdbase_opt->required    = NO ;
-    gisdbase_opt->multiple    = NO ;
-    gisdbase_opt->description = "New GISDBASE (full path to the directory where the new location is)" ;
+    mapset_opt = G_define_option() ;
+    mapset_opt->key         = "mapset" ;
+    mapset_opt->type        = TYPE_STRING ;
+    mapset_opt->required    = YES ;
+    mapset_opt->multiple    = NO ;
+    mapset_opt->description = "New MAPSET name" ;
 
     location_opt = G_define_option() ;
     location_opt->key         = "location" ;
@@ -56,12 +56,12 @@ main (int argc, char *argv[])
     location_opt->multiple    = NO ;
     location_opt->description = "New LOCATION name (not location path)" ;
 
-    mapset_opt = G_define_option() ;
-    mapset_opt->key         = "mapset" ;
-    mapset_opt->type        = TYPE_STRING ;
-    mapset_opt->required    = YES ;
-    mapset_opt->multiple    = NO ;
-    mapset_opt->description = "New MAPSET name" ;
+    gisdbase_opt = G_define_option() ;
+    gisdbase_opt->key         = "gisdbase" ;
+    gisdbase_opt->type        = TYPE_STRING ;
+    gisdbase_opt->required    = NO ;
+    gisdbase_opt->multiple    = NO ;
+    gisdbase_opt->description = "New GISDBASE (full path to the directory where the new location is)" ;
 
     if (G_parser(argc, argv))
     	exit(1);
