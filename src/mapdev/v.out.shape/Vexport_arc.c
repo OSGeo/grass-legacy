@@ -1,12 +1,15 @@
 /*
  * $Id$
- * v.out.shape by Markus Neteler
+ * v.out.shape by Markus Neteler (no, most of the work was done by others,
+ *                                see below:)
+ * neteler@geog.uni-hannover.de 
  *
- * based on v.out.arc by
- *          gen2shp  by Jan-Oliver Wagner
- *          shapelib by Frank Warmerdam
+ * based on - v.out.arc by Dave Johnson, R.L.Glenn, David Stigberg
+ *          - gen2shp  by Jan-Oliver Wagner <jan@intevation.de>
+ *          - shapelib by Frank Warmerdam <warmerda@home.com>
  *
- *
+ * http://www.usf.uos.de/~jwagner/gen2shp/gen2shp.html
+ * http://gdal.velocet.ca/projects/shapelib/index.html
  */
 
 /* Vexport_arc.c	1.0   04/90 */
@@ -32,7 +35,7 @@
 /*#include "dig_head.h" */
 #include "gtoa.h"
 
-#define  USAGE  "v.out.shape type=line/area dig=input arc=output\n"
+#define  USAGE  "v.out.shape type=name vect=name shape_prefix=name\n"
 
 
 #define POLY_TYPE        1
@@ -41,7 +44,7 @@
 /*  command line args */
 static	char  *cov_type = NULL ;
 static	char  *dig_name = NULL ;
-static	char  *arc_prefix = NULL ;
+static	char  *shape_prefix = NULL ;
 static  char  *shape_type= NULL ;
 static  char  *extension= NULL ;
 
@@ -101,7 +104,7 @@ main (int argc, char **argv)
 	opt2->gisprompt  ="old,dig,vector";
 
 	opt3 = G_define_option() ;
-	opt3->key        = "arc_prefix";
+	opt3->key        = "shape_prefix";
 	opt3->type       = TYPE_STRING;
 	opt3->required   = YES;
 	opt3->description= "prefix for SHAPE filenames";
@@ -145,10 +148,10 @@ main (int argc, char **argv)
 	fprintf(stderr, "%s: Coverage type = %s\n", progname, coverage ? "polygon":"line");
 
 	dig_name = opt2->answer;
-	arc_prefix = opt3->answer;
+	shape_prefix = opt3->answer;
 
 	/*verify that required filenames are there*/
-	if (!*dig_name  || !*arc_prefix)
+	if (!*dig_name  || !*shape_prefix)
 	{
 		fprintf (stderr, "\n\n%s: Command line error: missing vector input name or ARC/INFO prefix.\n\n", progname);
 		G_usage();
@@ -193,10 +196,10 @@ main (int argc, char **argv)
 #endif /*OLD_LIB*/
 
 	G__make_mapset_element("arc") ;
-	G__file_name(full_prefix, "arc", arc_prefix, G_mapset()) ;
+	G__file_name(full_prefix, "arc", shape_prefix, G_mapset()) ;
 
 
-	strcpy(lin_filename,arc_prefix);
+	strcpy(lin_filename,shape_prefix);
 	strcpy(lin_filepath,full_prefix);
 	if (coverage == POLY_TYPE) /*if POLY, line file is prefix.pol--dks*/
 	{
@@ -209,12 +212,12 @@ main (int argc, char **argv)
 	    strcat(lin_filepath,".lin");
 	}
 
-	strcpy(lab_filename,arc_prefix);
+	strcpy(lab_filename,shape_prefix);
 	strcat(lab_filename,".lab");
 	strcpy(lab_filepath,full_prefix);
 	strcat(lab_filepath,".lab");
 
-	strcpy(txt_filename,arc_prefix);
+	strcpy(txt_filename,shape_prefix);
 	strcat(txt_filename,".txt");
 	strcpy(txt_filepath,full_prefix);
 	strcat(txt_filepath,".txt");
@@ -293,8 +296,8 @@ main (int argc, char **argv)
 	}
 	/* do we need points ?? */
 
-	fprintf(stdout, "Converting $LOCATION/arc/%s.%s to SHAPE file...\n", arc_prefix, extension);
-	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/%s.%s", arc_prefix, shape_type, arc_prefix, extension);
+	fprintf(stdout, "Converting $LOCATION/arc/%s.%s to SHAPE file...\n", shape_prefix, extension);
+	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/%s.%s", shape_prefix, shape_type, shape_prefix, extension);
 	G_system(buf);
 
 	exit(0);
