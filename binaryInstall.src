@@ -205,7 +205,7 @@ echo "Checking and creating installation directory..."
 if [ ! -d "$DESTDIR" ] ; then
 
     # Check if a word "grass" is in string $DESTDIR
-    echo $DESTDIR |grep "grass" > /dev/null
+    echo $DESTDIR | grep "grass" > /dev/null
     
     if [ $? -eq 1 ] ; then
     	echo "WARNING: Your destination path $DESTDIR does not contain the word 'grass'"
@@ -296,7 +296,7 @@ if [ $? -eq 1 ] ; then
   exit
 fi
 
-ln -s $BINDIR/grass-$NAME_VER $BINDIR/$GRASSPRG
+ln -sf $BINDIR/grass-$NAME_VER $BINDIR/$GRASSPRG
 chmod ugo+x $BINDIR/grass-$NAME_VER
 
 if [ $? -eq 1 ] ; then
