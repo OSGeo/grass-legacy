@@ -1,4 +1,4 @@
-eval `gmake -sh`
+eval `gmake4.2 -sh`
 bin=$GISBASE/bin
 
 list=
