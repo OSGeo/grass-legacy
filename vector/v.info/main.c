@@ -67,7 +67,7 @@ main (int argc, char *argv[])
   }
     
   Vect_set_open_level (2);
-  Vect_open_old (&Map, in_opt->answer, mapset);
+  Vect_open_old_head (&Map, in_opt->answer, mapset);
   with_z = Vect_is_3d (&Map);
   v_head = Map.head;
 
