@@ -12,8 +12,8 @@ OBJS = \
 	find.o\
 	getAllOpts.o \
 	getSopts.o \
-	buildInfxQry.o \
-	runInfxFile.o \
+	buildPg.o \
+	runPg.o \
 	plotCat.o 
 
 $(PGM): $(OBJS) $(DEPLIBS)

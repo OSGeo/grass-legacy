@@ -13,89 +13,89 @@
 #include "glocale.h"
 
 int getAllOpts(argc, argv)
-        int argc;
-        char **argv;
+     int argc;
+     char **argv;
 
 {
 
-    int retval ;
+    int retval;
 
-    struct Option  *tab, *coordx, *coordy, *cats, *where, *plot, *map ;
+    struct Option *tab, *coordx, *coordy, *cats, *where, *plot, *map;
 
-	retval = 0; 
+    retval = 0;
 
-	tab = G_define_option() ;
-	tab->key        = "tab" ;
-	tab->type       = TYPE_STRING ;
-	tab->required   = YES  ;
-	tab->multiple   = NO ;
-	tab->description= _("Table with X,Y coors:") ;
+    tab = G_define_option();
+    tab->key = "tab";
+    tab->type = TYPE_STRING;
+    tab->required = YES;
+    tab->multiple = NO;
+    tab->description = _("Table with X,Y coors:");
 
 
-	coordx = G_define_option() ;
-	coordx->key        = "coordx" ;
-	coordx->type       = TYPE_STRING ;
-	coordx->required   = YES  ;
-	coordx->multiple   = NO ;
-	coordx->key_desc   = "column of X coordinates" ;
-	coordx->answer	   = "X";
-	coordx->description= _("Column with X-coor:") ;
+    coordx = G_define_option();
+    coordx->key = "coordx";
+    coordx->type = TYPE_STRING;
+    coordx->required = YES;
+    coordx->multiple = NO;
+    coordx->key_desc = "column of X coordinates";
+    coordx->answer = "X";
+    coordx->description = _("Column with X-coor:");
 
-	coordy = G_define_option() ;
-	coordy->key        = "coordy" ;
-	coordy->type       = TYPE_STRING ;
-	coordy->required   = YES  ;
-	coordy->multiple   = NO ;
-	coordy->key_desc   = "column of Y coordinates" ;
-	coordy->answer	   = "Y";
-	coordy->description= _("Column with Y-coor:") ;
+    coordy = G_define_option();
+    coordy->key = "coordy";
+    coordy->type = TYPE_STRING;
+    coordy->required = YES;
+    coordy->multiple = NO;
+    coordy->key_desc = "column of Y coordinates";
+    coordy->answer = "Y";
+    coordy->description = _("Column with Y-coor:");
 
-	cats = G_define_option() ;
-	cats->key        = "cats" ;
-	cats->type       = TYPE_STRING ;
-	cats->required   = NO  ;
-	cats->multiple   = NO ;
-	cats->key_desc   = "category-column" ;
+    cats = G_define_option();
+    cats->key = "cats";
+    cats->type = TYPE_STRING;
+    cats->required = NO;
+    cats->multiple = NO;
+    cats->key_desc = "category-column";
 /*	cats->answer	  = "cat"; -a.sh.*/
-	cats->description= _("Column with categories:") ;
+    cats->description = _("Column with categories:");
 
-	where = G_define_option() ;
-	where->key        = "where" ;
-	where->type       = TYPE_STRING ;
-	where->required   = NO  ;
-	where->multiple   = NO ;
-	where->description= _("Clause for SQL query (e.g. obj='huts', num > 56, etc.):") ;
+    where = G_define_option();
+    where->key = "where";
+    where->type = TYPE_STRING;
+    where->required = NO;
+    where->multiple = NO;
+    where->description =
+	_("Clause for SQL query (e.g. obj='huts', num > 56, etc.):");
 
-	map = G_define_option() ;
-	map->key        = "map" ;
-	map->type       = TYPE_STRING ;
-	map->required   = NO  ;
-	map->multiple   = NO ;
-	map->description= _("New site map name:");
-
-
-	plot = G_define_option() ;
-	plot->key        = "plot" ;
-	plot->type       = TYPE_STRING ;
-	plot->required   = NO  ;
-	plot->multiple   = NO ;
-	plot->key_desc	  ="Color,icon,size" ;
-	plot->answer	  ="gray,x,3" ;
-
-plot->description=_("Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black;Icon:diamond, box, plus, x; Size: 1-9. ");
+    map = G_define_option();
+    map->key = "map";
+    map->type = TYPE_STRING;
+    map->required = NO;
+    map->multiple = NO;
+    map->description = _("New site map name:");
 
 
+    plot = G_define_option();
+    plot->key = "plot";
+    plot->type = TYPE_STRING;
+    plot->required = NO;
+    plot->multiple = NO;
+    plot->key_desc = "Color,icon,size";
+    plot->answer = "gray,x,3";
 
-        /* Invoke parser */
-        if (G_parser(argc, argv)) {
-	    system("d.site.pg -s help");
-            exit(-1);
-	}
+    plot->description =
+	_
+	("Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black;Icon:diamond, box, plus, x; Size: 1-9. ");
 
-        retval = buildInfxQry(tab->answer,coordx->answer,coordy->answer,
-                cats->answer,where->answer,
-                map->answer, plot->answers);
+    /* Invoke parser */
+    if (G_parser(argc, argv)) {
+	system("d.site.pg -s help");
+	exit(-1);
+    }
+
+    retval = buildPg(tab->answer, coordx->answer, coordy->answer,
+		     cats->answer, where->answer, map->answer, plot->answers);
 
 
-	return(retval) ;
+    return (retval);
 }

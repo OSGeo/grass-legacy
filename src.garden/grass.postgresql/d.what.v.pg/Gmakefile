@@ -10,8 +10,8 @@ OBJS = \
 	main.o  \
         getAllOpts.o \
         getSopts.o \
-        buildInfxQry.o \
-        runInfxQry.o \
+        buildPg.o \
+        runPg.o \
 	getCat.o  \
 	openvect.o
 

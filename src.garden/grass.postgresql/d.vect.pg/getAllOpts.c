@@ -6,8 +6,6 @@
 
 		  jaf 2/19/92
 */
-/*		 alex shevlakov -Jan 00 Coloring functions added
-*/
 
 #include <stdlib.h>
 #include "gis.h"
@@ -16,88 +14,87 @@
 #include "glocale.h"
 
 int getAllOpts(argc, argv)
-	int argc;
-	char **argv;
-	
+     int argc;
+     char **argv;
+
 {
 
-	struct Option *key, *where, *tab, *map, *color;
-	struct Flag *flag1, *flag2;
-	char *mapset;
-	int colr, fillcolr, retval;
+    struct Option *key, *where, *tab, *map, *color;
+    struct Flag *flag1, *flag2;
+    char *mapset;
+    int colr, fillcolr, retval;
 
 
-	map = G_define_option() ;
-        map->key        = "map" ;
-	map->gisprompt	= "old,dig,vector";
-        map->type       = TYPE_STRING ;
-        map->required   = YES  ;
-        map->multiple   = NO ;
-        map->description= _("Vector map:");
+    map = G_define_option();
+    map->key = "map";
+    map->gisprompt = "old,dig,vector";
+    map->type = TYPE_STRING;
+    map->required = YES;
+    map->multiple = NO;
+    map->description = _("Vector map:");
 
-	key = G_define_option() ;
-        key->key        = "key" ;
-        key->type       = TYPE_STRING ;
-        key->required   = YES  ;
-        key->multiple   = NO ;
-        key->description= _("Column with category IDs from the table:") ;
+    key = G_define_option();
+    key->key = "key";
+    key->type = TYPE_STRING;
+    key->required = YES;
+    key->multiple = NO;
+    key->description = _("Column with category IDs from the table:");
 
 
-        tab = G_define_option() ;
-        tab->key        = "tab" ;
-        tab->type       = TYPE_STRING ;
-        tab->required   = YES  ;
-        tab->multiple   = NO ;
-        tab->description= _("Table containing this column:") ;
+    tab = G_define_option();
+    tab->key = "tab";
+    tab->type = TYPE_STRING;
+    tab->required = YES;
+    tab->multiple = NO;
+    tab->description = _("Table containing this column:");
 
-        where = G_define_option() ;
-        where->key        = "where" ;
-        where->type       = TYPE_STRING ;
-        where->required   = NO  ;
-        where->multiple   = NO ;
-        where->description= _("Query clause (e.g. obj='paved'):") ;
+    where = G_define_option();
+    where->key = "where";
+    where->type = TYPE_STRING;
+    where->required = NO;
+    where->multiple = NO;
+    where->description = _("Query clause (e.g. obj='paved'):");
 
-        color = G_define_option() ;
-        color->key        = "color" ;
-        color->type       = TYPE_STRING ;
-        color->required   = NO  ;
-        color->multiple   = NO ;
-	color->description= _("Color to draw selected vectors:") ;
-	
-	flag1 = G_define_flag() ;
-	flag1->key         = 'f' ;
-	flag1->description = _("Fill polygons") ;
+    color = G_define_option();
+    color->key = "color";
+    color->type = TYPE_STRING;
+    color->required = NO;
+    color->multiple = NO;
+    color->description = _("Color to draw selected vectors:");
 
-	flag2 = G_define_flag() ;
-	flag2->key         = 'e' ;
-	flag2->description = _("Extract vector objects to new map") ;
+    flag1 = G_define_flag();
+    flag1->key = 'f';
+    flag1->description = _("Fill polygons");
 
-	/* Invoke parser */
-	if (G_parser(argc, argv)) {
-		system("d.vect.pg -s help");
-	    	exit(-1);
-	}
+    flag2 = G_define_flag();
+    flag2->key = 'e';
+    flag2->description = _("Extract vector objects to new map");
 
-	if (color->answer == NULL) 
-		colr = D_translate_color("white");
-	  else
-		colr = D_translate_color(color->answer);
-	
-	
-	fillcolr = flag1->answer;
-	extract_yes = flag2->answer;
-	
-	
-	if ((mapset=G_find_file2("dig",map->answer,""))==NULL)  {
-	     fprintf(stderr,_("Vector map %s not found.\n"),map->answer);
-             exit(-1);
-	}
+    /* Invoke parser */
+    if (G_parser(argc, argv)) {
+	system("d.vect.pg -s help");
+	exit(-1);
+    }
 
-	retval = buildInfxQry(key->answer,where->answer,tab->answer,
-		map->answer, mapset, colr, fillcolr);
-		
-	exit(retval) ;
+    if (color->answer == NULL)
+	colr = D_translate_color("white");
+    else
+	colr = D_translate_color(color->answer);
+
+
+    fillcolr = flag1->answer;
+    extract_yes = flag2->answer;
+
+
+    if ((mapset = G_find_file2("dig", map->answer, "")) == NULL) {
+	fprintf(stderr, _("Vector map %s not found.\n"), map->answer);
+	exit(-1);
+    }
+
+    retval = buildPg(key->answer, where->answer, tab->answer,
+		     map->answer, mapset, colr, fillcolr);
+
+    exit(retval);
 
 
 }
-
