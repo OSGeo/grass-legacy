@@ -135,6 +135,11 @@ Vect_copy ( char *in, char *mapset, char *out, FILE *msgout )
     /* Open input */
     Vect_set_open_level (1);
     Vect_open_old_head (&In, in, mapset);
+
+    if ( In.format != GV_FORMAT_NATIVE ) { /* Done */
+	Vect_close ( &In );
+	return 0;
+    }
     
     /* Open output */
     Vect_open_update_head ( &Out, out, G_mapset() );
