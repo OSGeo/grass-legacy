@@ -279,14 +279,10 @@ static struct datum_transform_list *
     char file[1024];
     char buf[1024];
     int line;
-    struct datum_transform_list *current, *outputlist;
+    struct datum_transform_list *current=NULL, *outputlist=NULL;
     double dx, dy, dz;
     int count = 0;
    
-    outputlist = G_malloc( sizeof(struct datum_transform_list) );
-   
-    current = outputlist;
-
     sprintf(file, "%s%s", G_gisbase(), DATUMTRANSFORMTABLE);
 
     fd = fopen(file, "r");
@@ -315,13 +311,16 @@ static struct datum_transform_list *
         {
 	    /* If the datum name in this line matches the one we are 
 	     * looking for, add an entry to the linked list */
-            count++;
-            current->count = count;
+	    if(current == NULL)
+	        current = outputlist = G_malloc( sizeof(struct datum_transform_list) );
+	    else
+	        current = current->next = G_malloc( sizeof(struct datum_transform_list) );
             current->params = G_store(params);
             current->where_used = G_store(where_used);
             current->comment = G_store(comment);           
-            current->next = G_malloc( sizeof(struct datum_transform_list) );
-            current = current->next;
+            count++;
+            current->count = count;
+            current->next = NULL;
         }           
     } 
    
@@ -331,6 +330,10 @@ static struct datum_transform_list *
         /* Include the old-style dx dy dz parameters from datum.table at the 
 	 * end of the list, unless these have been set to all 99999 to 
 	 * indicate only entries in datumtransform.table should be used */
+        if(current == NULL)
+            current = outputlist = G_malloc( sizeof(struct datum_transform_list) );
+        else
+            current = current->next = G_malloc( sizeof(struct datum_transform_list) );
         sprintf(buf, "towgs84=%.3f,%.3f,%.3f", dx, dy, dz);
         current->params = G_store(buf);
         sprintf(buf, "Default %s region", inputname);
@@ -339,17 +342,12 @@ static struct datum_transform_list *
         current->comment = G_store(buf);
         count++;
         current->count = count;
+        current->next = NULL;
     }   
    
-    current->next = NULL;
     
-    if( count == 0 ) /* No valid parameter sets were added to list */
-    {
-        G_free( outputlist );
-        return NULL;
-    }
-    else
-        return outputlist;
+    return outputlist;
+
 }
 
 static void
