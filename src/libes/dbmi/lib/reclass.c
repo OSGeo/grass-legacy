@@ -2,7 +2,8 @@
 #include <gis.h>
 #include <dbmi.h>
 
-int cmp();
+static int cmp();
+static int srch();
 
 int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
 {
@@ -11,7 +12,8 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
     int i, j, nalloc=0, nused=0, nmax=0;
     char sel[1024];
     int more;
-    int oldcat;
+    int oldcat, found;
+    int *fcat;  //array for index of first structure written to *lrcl for each rule
     dbConnection connection;    
     dbString stmt;
     dbDriver *driver;
@@ -20,7 +22,10 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
     dbColumn *column;
     dbValue *value;
     dbTable *table;
-    dbCatValI *lrcl;
+    dbCatValI *lrcl, *cval;
+
+    /* allocate fcat */
+    fcat = (int *) G_calloc ( rule->count+1, sizeof(int));
 
     /* get connection parameters */
     db_get_connection( &connection );
@@ -93,6 +98,7 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
     /* SQL */
     for(i=0;i<rule->count;i++)
     {
+	fcat[i+1] = fcat[i];  //index for first structere used for next rule
 	snprintf(sel,1024,
 	    "SELECT DISTINCT %s FROM %s WHERE %s > 0 and ( %s ) ORDER BY %s",key,rule->table,key,rule->where[i], key);
 #ifdef DEBUG
@@ -120,20 +126,24 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
 	    value  = db_get_column_value(column);
 	    oldcat = db_get_value_int(value);
 
-	    /* following code should be optimized by bsearch() for each rule section sorted by ORDER BY */
-	    for(j=0; j< nused; j++)   
+	    found=0;
+	    for(j=0; j<= i; j++) // go through processed rules  
 	    {
-		if( lrcl[j].cat == oldcat )      // oldcat already exist, 
-		{                                // usually should not happen - results of rules overlap ,
-		    lrcl[j].val = rule->cat[i];  // replace by new one 
+		cval = (dbCatValI *) bsearch((void *) &oldcat, &lrcl[fcat[j]], fcat[j+1]-fcat[j], sizeof(dbCatValI), srch);
+	        if ( cval != NULL)            // oldcat already exist, 
+		{                             // usually should not happen - results of rules overlap ,
+	            cval->val = rule->cat[i]; // replace by new one 
+		    found = 1;
 		    break;
-		}
-	    }
-	    if ( j >= nused && j < nmax) // usually j should be < nmax if no changes happend in DB since we found nmax 
+	        }
+	    }	    
+	    
+	    if ( found == 0 && nused < nmax) // usually nused should be < nmax if no changes happend in DB since we found nmax 
 	    {
-		lrcl[j].cat = oldcat;
-		lrcl[j].val = rule->cat[i];
-		nused++;    
+		lrcl[nused].cat = oldcat;
+		lrcl[nused].val = rule->cat[i];
+		nused++;
+		fcat[i+1] = nused;  //first index for next rule
 	    }
 	}
 	db_close_cursor(&cursor);
@@ -158,6 +168,18 @@ int cmp ( const void *pa, const void *pb)
     if( p1->cat < p2->cat)
         return -1;
     if( p1->cat > p2->cat)
+        return 1;
+    return 0;
+}
+
+int srch ( const void *pa, const void *pb)
+{
+    int       *p1 = (int *) pa;    
+    dbCatValI *p2 = (dbCatValI *) pb;
+
+    if( *p1 < p2->cat)
+        return -1;
+    if( *p1 > p2->cat)
         return 1;
     return 0;
 }
