@@ -38,7 +38,7 @@ void read_sites ( char *name, int field, char *col)
 	G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
 
     nrec = db_select_CatValArray ( Driver, Fi->table, Fi->key, col, NULL, &cvarr );
-    G_debug (0, "nrec = %d", nrec );
+    G_debug (3, "nrec = %d", nrec );
 
     ctype = cvarr.ctype;
     if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )

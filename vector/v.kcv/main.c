@@ -168,7 +168,7 @@ main (int argc, char *argv[])
 
     db_set_string ( &sql, buf);
 
-    G_debug ( 0, "SQL: %s", db_get_string ( &sql) );
+    G_debug ( 3, "SQL: %s", db_get_string ( &sql) );
     
     if (db_execute_immediate (Driver, &sql) != DB_OK ) {
       G_fatal_error ( "Cannot alter table: %s", db_get_string ( &sql ) );
