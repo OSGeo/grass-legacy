@@ -1,7 +1,7 @@
 /*	 		VERSION    4.0   		*/
-#define VERSION "4.0"
+#define VERSION "4.10"
 #define VERSION_MAJOR	4
-#define VERSION_MINOR	0
+#define VERSION_MINOR	10
 
 /* 
 **  the earliest version that can read this current format
