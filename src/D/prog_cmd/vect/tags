@@ -1,0 +1,9 @@
+Mmain	main.c	/^main(argc, argv)$/
+close_vect	open.c	/^close_vect(fd)$/
+debugf	main.c	/^debugf() { }$/
+open_vect	open.c	/^open_vect(name, mapset)$/
+plot1	plot1.c	/^plot1 (name, mapset)$/
+plot2	plot2.c	/^plot2 (name, mapset)$/
+set_default_options	command.c	/^set_default_options()$/
+stash_away	command.c	/^stash_away(pos, option)$/
+use_plot1	use_plot1.c	/^use_plot1(name, mapset)$/
