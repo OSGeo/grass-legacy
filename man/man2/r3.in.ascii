@@ -31,9 +31,11 @@ output = \*Og3d-map
 .VL 4m
 
 .LI "\*Ltype\*O
+Data type used in the output file
 Options: default, double, float
 
 .LI "\*Lprecision\*O
+Precision used in the output file
 Options: default, max, 0-52
 
 .LI "\*Lcompression\*O
@@ -44,7 +46,7 @@ not support non-compressed files.
 Options: default, rle, lzw, rle+lzw, none
 
 .LI "\*Ltiledimension\*O
-Format: XxYxZ
+The dimension of the tiles used in the output file.  The format is: XxYxZ
 
 .LI "\*Lnv\*O
 Specifies which value to convert to NULL-value.  If the specified value is 
