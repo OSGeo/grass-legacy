@@ -49,15 +49,15 @@ do
   v.convert in=$INPUT out=$OUTPUT
   if [ $? -ne 0 ] ; then
     echo "ERROR converting map $INPUT to $OUTPUT"
-    #exit 1 # ??
+  else
+    CONVERTEDMAPS=`expr $CONVERTEDMAPS + 1`
   fi
-  CONVERTEDMAPS=`expr $CONVERTEDMAPS + 1`
 done
 
 if [ $CONVERTEDMAPS -lt 1 ] ; then
   echo "No vector maps converted as no old vector maps present in current mapset <$MAPSET>."
 else
-  echo "Vector maps in current mapset converted. Please verify new vector map(s) before deleting old vector map(s)."
+  echo "Total $CONVERTEDMAPS number of vector maps in current mapset converted. Please verify new vector map(s) before deleting old vector map(s)."
 fi
 
 exit 0
