@@ -9,7 +9,7 @@ creates new vector (points) map from database table containing coordinates.
 
 <pre>
  v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb,user=name" \
-         table=pat_stazioni x=east y=north z=quota  cat=id output=pat_stazioni
+         table=pat_stazioni x=east y=north z=quota key=id output=pat_stazioni
 </pre>
 <P>
 If an ID column is not not present in the PostgreSQL table,
@@ -25,7 +25,7 @@ the 'object ID' of PostgreSQL can be used. In this case set:<br>
 To extract coordinate values from PostGIS, functions have to be used:
 <pre>
  v.in.db driver=pg database="host=myserver.itc.it,dbname=mydb,user=name" \
-         table=station x="x(geom)" y="y(geom)" z="z(geom)" cat=id out=meteostations
+         table=station x="x(geom)" y="y(geom)" z="z(geom)" key=id out=meteostations
 </pre>
 <P>
 If an ID column is not not present in the PostgreSQL table,
@@ -49,7 +49,7 @@ this directory:
  db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
 
  #create vector map from DBF table ('idcol' is containing unique row IDs):
- v.in.db table=pointsfile x=x y=y z=z cat=idcol out=dtmpoints
+ v.in.db table=pointsfile x=x y=y z=z key=idcol out=dtmpoints
 
  #check result:
  v.info dtmpoints
