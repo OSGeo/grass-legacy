@@ -1,4 +1,9 @@
 %token NAME STRING INTEGER FLOAT FUNCTION GT GE EQ LT LE AND OR
+%{
+static int nstored = 0;
+static char **storage = 0;
+%}
+
 %token COLOR_GRAY COLOR_RED COLOR_BLUE COLOR_GREEN
 
 %left AND OR
@@ -77,10 +82,6 @@ yyerror(s) char *s;
 {
     printf ("??\n");
 }
-
-static int nstored = 0;
-static char **storage = 0;
-char *malloc(), *realloc();
 
 store (s) char *s;
 {
