@@ -29,10 +29,7 @@
 *             (but which may exist in other mapsets).
 *
 * G_ask_old() requires the user to enter the name of a file
-*             which already exists. If the user enters a simple
-*             name, the mapset search list is searched. If the
-*             users enter the name followed by "in xxx" mapset
-*             xxx is searched.
+*             which already exists.
 *
 * G_ask_in_mapset() requires the user to enter the name of a file
 *                   which exists in the current mapset
@@ -216,12 +213,12 @@ ask (prompt, name, element, desc, option, lister, type)
     char *option;
     int (*lister)();
 {
-    char tmap[256];
-    char tname[256];
-    int  name_in_mapset;
+    char tmapset[256];
+    char xname[512], xmapset[512];
+    int  name_is_qualified;
     int  ok;
-    char tprompt[100];
-    char input[100];
+    char tprompt[256];
+    char input[256];
     char *mapset;
     char *cur_mapset;
 
@@ -320,7 +317,7 @@ ask (prompt, name, element, desc, option, lister, type)
  * 4  list -f mapset
  */
   
-	switch (parselist (input, lister?1:0, tmap))
+	switch (parselist (input, lister?1:0, tmapset))
 	{
 	case 0:
 	    break;
@@ -331,18 +328,18 @@ ask (prompt, name, element, desc, option, lister, type)
 	    G_list_element (element, desc, type==OLD?"":cur_mapset, lister);
 	    continue;
 	case 3:
-	    G_list_element (element, desc, tmap, no_lister);
+	    G_list_element (element, desc, tmapset, no_lister);
 	    continue;
 	case 4:
-	    G_list_element (element, desc, tmap, lister);
+	    G_list_element (element, desc, tmapset, lister);
 	    continue;
 	default:
 	    fprintf (stderr,"** illegal request **\n");
 	    continue;
 	}
 
-	if(name_in_mapset = G__name_in_mapset (input, tname, tmap))
-	    ok = G_legal_filename (tname) >= 0;
+	if(name_is_qualified = G__name_is_fully_qualified (input, xname, xmapset))
+	    ok = G_legal_filename (xname) >= 0;
 	else
 	    ok = G_legal_filename (input) >= 0;
 	if (!ok)
@@ -353,19 +350,19 @@ ask (prompt, name, element, desc, option, lister, type)
 /*
  * now look for the file.
  *
- * new files must be simple name (ie, not name in mapset)
+ * new files must be simple names
  * and must not exist in the current mapset
  */
 	if (type != OLD)
 	{
-	    if (name_in_mapset)
+	    if (name_is_qualified)
 	    {
-		if(strcmp (cur_mapset, tmap) != 0)
+		if(strcmp (cur_mapset, xmapset) != 0)
 		{
 		    fprintf (stderr,"\n** %s - illegal request **\n", input);
 		    continue;
 		}
-		strcpy (input, tname);
+		strcpy (input, xname);
 	    }
 	    mapset = G_find_file (element, input, cur_mapset);
 	    switch (type)
@@ -409,16 +406,16 @@ ask (prompt, name, element, desc, option, lister, type)
 	    }
 	}
 /*
- * old names can be simple or name-in-mapset format and must
- * exist
+ * old names can be simple or qualified
+ * and must exist
  */
 	else
 	{
 	    mapset = G_find_file (element, input, "");
 	    if (mapset)
 	    {
-		if (name_in_mapset)
-		    strcpy (name,tname);
+		if (name_is_qualified)
+		    strcpy (name,xname);
 		else
 		    strcpy (name,input);
 		return mapset;
