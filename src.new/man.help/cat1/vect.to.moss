@@ -1,0 +1,79 @@
+
+
+
+vect.to.moss(1)    GRASS Reference Manual       vect.to.moss(1)
+
+
+
+NAME
+     vect.to.moss  -    Converts GRASS site, line, or area data
+     into MOSS import format.
+     (Data Export Tool)
+
+SYNOPSIS
+     vect.to.moss
+
+DESCRIPTION
+     This program produces a MOSS import file containing GRASS
+     site, line, or area items that have been converted into MOSS
+     point, line, or polygon features,  respectively.   Only  one
+type
+     of data can be converted  at  a  time.   Site  data  can  be
+extracted
+     from  site_lists  files  or  digit  files,  at  the   user's
+discretion.
+     The resultant  MOSS  files  will  be  created  in  the  moss
+subdirectory
+     of the current mapset.
+
+     The user will be prompted for the GRASS data type, the name
+     of the site or digit file to be converted, and the  name  of
+the
+     the MOSS import file to be created.  If line data is being
+     converted, the user will be asked whether area edges should
+     be processed as lines.  If so, the  line  features  produced
+from
+     the area edges will have no attributes.
+
+     Upon successful completion of the data export, the number of
+     items converted will be printed, and the user will be  given
+the
+     option of processing another GRASS file.
+
+NOTES
+     Vector data can not be exported until the necessary support
+     files have been built.
+
+SEE ALSO
+     sites.format[3], support.vect[1]
+
+AUTHOR
+     Chris Emmerich, Autometric Inc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         3
+
+
+
