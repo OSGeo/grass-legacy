@@ -62,12 +62,13 @@ int cmp_exist ( const void *, const void *);
 int main (int argc, char *argv[])
 {
     int    i, j;
+    int    all = 0; /* calculate from each to each within the threshold */
     char   *mapset;
     struct GModule *module;
     struct Option *from_opt, *to_opt, *from_type_opt, *to_type_opt, *from_field_opt, *to_field_opt;
-    struct Option *out_opt, *max_opt;
+    struct Option *out_opt, *max_opt, *table_opt;
     struct Option *upload_opt, *column_opt;
-    struct Flag *print_flag;
+    struct Flag *print_flag, *all_flag;
     struct Map_info From, To, Out, *Outp;
     int    from_type, to_type, from_field, to_field;
     double max;
@@ -75,9 +76,9 @@ int main (int argc, char *argv[])
     struct line_cats *FCats, *TCats;
     NEAR   *Near, *near;
     UPLOAD *Upload; /* zero terminated */
-    int ftype, fcat, tcat;
-    int nfrom, nfcats, fline, tline, tseg, tarea, tcentroid, area, isle, nisles;
-    double tx, ty, dist, talong, tmp_tx, tmp_ty, tmp_dist ;
+    int ftype, fcat, tcat, count;
+    int nfrom, nto, nfcats, fline, tline, tseg, tarea, area, isle, nisles;
+    double tx, ty, dist, talong, tmp_tx, tmp_ty, tmp_dist, tmp_talong;
     struct field_info *Fi;
     dbString stmt;
     dbDriver *driver;
@@ -157,10 +158,23 @@ int main (int argc, char *argv[])
     column_opt->multiple = YES;
     column_opt->description = "Column name(s) where values specified by 'upload' option will be uploaded";
 
+    table_opt = G_define_option();
+    table_opt->key = "table";
+    table_opt->type = TYPE_STRING;
+    table_opt->required = NO;
+    table_opt->multiple = NO;
+    table_opt->description = "The name of the table created for output when -a flag is used";
+
     print_flag = G_define_flag();
     print_flag->key = 'p';
     print_flag->description = "Print output to stdout, don't update attribute table. "
 	    "First column is always category of 'from' feature called from_cat.";
+    
+    all_flag = G_define_flag();
+    all_flag->key = 'a';
+    all_flag->description = "Calculate distances to all features within the threshold. "
+      "The output is written to stdout but may be uploaded to a new table created by this module. "
+      "From categories are may be multiple.";
     
     if (G_parser(argc, argv)) exit(-1);
    
@@ -214,6 +228,7 @@ int main (int argc, char *argv[])
     if ( Upload[i].upload != END ) 
 	G_fatal_error ("Not enough column names");
     
+    if ( all_flag->answer ) all = 1;
 
     /* Open 'from' vector */
     mapset = G_find_vector2 (from_opt->answer, "");
@@ -240,75 +255,130 @@ int main (int argc, char *argv[])
     /* Open database driver */
     if ( !print_flag->answer ) { 
         db_init_string (&stmt);
-	Fi = Vect_get_field ( &From, from_field);
-	if ( Fi == NULL ) G_fatal_error ( "Cannot get field info" );
-	
-	driver = db_start_driver_open_database ( Fi->driver, Fi->database );
-	if ( driver == NULL ) 
-	    G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+
+	if (!all) {
+	    Fi = Vect_get_field ( &From, from_field);
+	    if ( Fi == NULL ) G_fatal_error ( "Cannot get field info" );
+	    
+	    driver = db_start_driver_open_database ( Fi->driver, Fi->database );
+	    if ( driver == NULL ) 
+		G_fatal_error ( "Cannot open database %s by driver %s", Fi->database, Fi->driver );
+	} else {
+	    driver = db_start_driver_open_database ( NULL, NULL );
+	    if ( driver == NULL ) 
+		G_fatal_error ( "Cannot open default database");
+	}
     }
 
     FPoints=Vect_new_line_struct();
     TPoints=Vect_new_line_struct();
     FCats = Vect_new_cats_struct ();
     TCats = Vect_new_cats_struct ();
+    List = Vect_new_list ();
     
     /* Allocate space ( may be more than needed (duplicate cats and elements without cats) ) */
     nfrom = Vect_get_num_lines ( &From );
-    Near = (NEAR *) G_calloc ( nfrom, sizeof (NEAR) );
+    nto = Vect_get_num_lines ( &To );
+    if ( all ) {
+        Near = (NEAR *) G_calloc ( nfrom * nto , sizeof (NEAR) );
+    } else {
+        Near = (NEAR *) G_calloc ( nfrom, sizeof (NEAR) );
+    }
 
     /* Read all cats from 'from' */
-    nfcats = 0;
-    for ( i = 1; i <= nfrom; i++ ) {
-        ftype = Vect_read_line ( &From, NULL, FCats, i );
+    if ( !all ) {
+	nfcats = 0;
+	for ( i = 1; i <= nfrom; i++ ) {
+	    ftype = Vect_read_line ( &From, NULL, FCats, i );
 
-	/* This keeps also categories of areas for future (if area s in from_type) */
-	if ( !(ftype & from_type) && (ftype != GV_CENTROID || !(from_type & GV_AREA)) ) continue;
-	
-	Vect_cat_get ( FCats, from_field, &fcat );
-	if ( fcat == 0 ) continue;
-        Near[nfcats].from_cat = fcat; 
-        nfcats++;
-    }
-    G_debug (1, "%d cats loaded from vector (including duplicates)", nfcats);
-    /* Sort by cats and remove duplicates */
-    qsort( (void *)Near, nfcats, sizeof(NEAR), cmp_near);
-
-    /* remove duplicates */
-    for ( i = 1; i < nfcats; i++ ) {
-	if ( Near[i].from_cat == Near[i-1].from_cat ) {
-	    for ( j = i; j < nfcats - 1; j++ ) {
-		Near[j].from_cat = Near[j+1].from_cat;
-	    }
-	    nfcats--;
+	    /* This keeps also categories of areas for future (if area s in from_type) */
+	    if ( !(ftype & from_type) && (ftype != GV_CENTROID || !(from_type & GV_AREA)) ) continue;
+	    
+	    Vect_cat_get ( FCats, from_field, &fcat );
+	    if ( fcat == 0 ) continue;
+	    Near[nfcats].from_cat = fcat; 
+	    nfcats++;
 	}
+	G_debug (1, "%d cats loaded from vector (including duplicates)", nfcats);
+	/* Sort by cats and remove duplicates */
+	qsort( (void *)Near, nfcats, sizeof(NEAR), cmp_near);
+
+	/* remove duplicates */
+	for ( i = 1; i < nfcats; i++ ) {
+	    if ( Near[i].from_cat == Near[i-1].from_cat ) {
+		for ( j = i; j < nfcats - 1; j++ ) {
+		    Near[j].from_cat = Near[j+1].from_cat;
+		}
+		nfcats--;
+	    }
+	}
+	
+	G_debug (1, "%d cats loaded from vector (unique)", nfcats);
     }
-    
-    G_debug (1, "%d cats loaded from vector (unique)", nfcats);
 
     /* Go through all lines in 'from' and find nearest in 'to' for each */
     /* Note: as from_type is restricted to GV_POINTS (for now) everything is simple */
     
+    count = 0; /* count of distances in 'all' mode */
     /* Find nearest lines */
     if ( to_type & (GV_POINTS | GV_LINES) ) {
 	for ( fline = 1; fline <= nfrom ; fline++ ) {
+	    int tmp_tcat;
+
 	    G_debug (3, "fline = %d", fline);
 	    ftype = Vect_read_line ( &From, FPoints, FCats, fline );
 	    if ( !(ftype & from_type) ) continue;
 
 	    Vect_cat_get ( FCats, from_field, &fcat );
-	    if ( fcat == 0 ) continue;
+	    if ( fcat == 0 && !all ) continue;
 	    
-	    tline = Vect_find_line (&To, FPoints->x[0], FPoints->y[0], 0, to_type, max, 0, 0);
+	    box.E = FPoints->x[0] + max ; box.W = FPoints->x[0] - max ; 
+	    box.N = FPoints->y[0] + max ; box.S = FPoints->y[0] - max;
+	    box.T = PORT_DOUBLE_MAX;      box.B = -PORT_DOUBLE_MAX;
 
-	    if ( tline > 0 ) {
-		Vect_read_line ( &To, TPoints, TCats, tline );
+	    Vect_select_lines_by_box ( &To, &box, to_type, List);
+	    G_debug (3, "  %d lines in box", List->n_values);
+
+	    tline = 0;
+	    for (i = 0; i < List->n_values; i++) {
+		Vect_read_line ( &To, TPoints, TCats, List->value[i] );
 
 		tseg = Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], 0, 0, 
-				   &tx, &ty, NULL, &dist, NULL, &talong);
-		
-		Vect_cat_get(TCats, to_field, &tcat);
+				   &tmp_tx, &tmp_ty, NULL, &tmp_dist, NULL, &tmp_talong);
 
+		if ( dist > max ) continue; /* not in threshold */
+		Vect_cat_get(TCats, to_field, &tmp_tcat);
+	        G_debug (4, "  tmp_dist = %f tmp_tcat = %d", tmp_dist, tmp_tcat);
+
+		if ( all ) {
+		    /* find near by cat */ 
+		    near = &(Near[count]); 
+
+		    G_debug (4, "from_cat = %d near.count = %d", near->from_cat, near->count);
+		    /* store info about relation */
+		    near->from_cat = fcat;
+		    near->to_cat = tmp_tcat;  /* 0 is OK */
+		    near->dist = tmp_dist;
+		    near->from_x = FPoints->x[0];
+		    near->from_y = FPoints->y[0];
+		    near->to_x = tmp_tx;
+		    near->to_y = tmp_ty;    
+		    near->to_along = tmp_talong; /* 0 for points */
+		    near->count++;
+		    count++;
+		} else { 
+		    if ( tline == 0 || (tmp_dist <= dist)) {
+			tline =  List->value[i];
+			tcat = tmp_tcat;
+			dist = tmp_dist;
+			tx = tmp_tx;
+			ty = tmp_ty;
+			talong = tmp_talong;
+		    }
+		}
+	    }
+
+	    if ( !all && tline > 0 ) {
 		/* find near by cat */ 
 		near = (NEAR *) bsearch((void *) &fcat, Near, nfcats, sizeof(NEAR), cmp_near); 
 
@@ -330,95 +400,96 @@ int main (int argc, char *argv[])
 
     /* Find nearest areas */
     if ( to_type & GV_AREA ) {
-	List = Vect_new_list ();
-	
 	for ( fline = 1; fline <= nfrom ; fline++ ) {
 	    G_debug (3, "fline = %d", fline);
 	    ftype = Vect_read_line ( &From, FPoints, FCats, fline );
 	    if ( !(ftype & from_type) ) continue;
 
 	    Vect_cat_get ( FCats, from_field, &fcat );
-	    if ( fcat == 0 ) continue;
+	    if ( fcat == 0 && !all ) continue;
 	    
+
+	    /* select areas by box */
+	    box.E = FPoints->x[0] + max ; box.W = FPoints->x[0] - max ; 
+	    box.N = FPoints->y[0] + max ; box.S = FPoints->y[0] - max;
+	    box.T = PORT_DOUBLE_MAX;      box.B = -PORT_DOUBLE_MAX;
+
+	    Vect_select_areas_by_box ( &To, &box, List);
+	    G_debug ( 4, "%d areas selected by box", List->n_values );
+
+	    /* For each area in box check the distance */
 	    tarea = 0;
-	    /* first check if point is within the area - easier case */
-	    tarea = Vect_find_area(&To, FPoints->x[0], FPoints->y[0]);
+	    dist = PORT_DOUBLE_MAX;
+	    for (i = 0; i < List->n_values; i++) {
+		int tmp_tcat;
 
-	    if ( tarea > 0 ) { /* point inside */
-	        G_debug (4, "point in area %d", tarea);
-		dist = 0;
-		tx = FPoints->x[0];
-		ty = FPoints->y[0];
-	    } else { /* check distance */
-		/* select areas by box */
-		box.E = FPoints->x[0] + max ; 
-		box.W = FPoints->x[0] - max ; 
-		box.N = FPoints->y[0] + max ; 
-		box.S = FPoints->y[0] - max;
-		box.T = PORT_DOUBLE_MAX; 
-		box.B = -PORT_DOUBLE_MAX;
+		area = List->value[i];
+		G_debug ( 4, "%d: area %d", i, area );
+		Vect_get_area_points ( &To, area, TPoints);
 
-		Vect_select_areas_by_box ( &To, &box, List);
-		G_debug ( 4, "%d areas selected by box", List->n_values );
+		/* Find the distance to this area */
+		if ( Vect_point_in_area ( &To, area, FPoints->x[0], FPoints->y[0] ) ) { /* in area */
+		    tmp_dist = 0;
+		    tmp_tx = FPoints->x[0];
+		    tmp_ty = FPoints->y[0];
+		} else if (  Vect_point_in_poly (FPoints->x[0], FPoints->y[0], TPoints) > 0) { /* in isle */
+		    nisles = Vect_get_area_num_isles ( &To, area );
+		    for ( j = 0; j < nisles; j++ ) {
+			double tmp2_dist, tmp2_tx, tmp2_ty; 
 
-		/* For each area in box check the distance */
-		dist = PORT_DOUBLE_MAX;
-		for (i = 0; i < List->n_values; i++) {
-		    area = List->value[i];
-		    G_debug ( 4, "%d: area %d", i, area );
-		    Vect_get_area_points ( &To, area, TPoints);
+			isle = Vect_get_area_isle ( &To, area, isle );
+			Vect_get_isle_points ( &To, isle, TPoints);
+			Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], 0, 0, 
+				   &tmp2_tx, &tmp2_ty, NULL, &tmp2_dist, NULL, NULL);
 
-		    if (  Vect_point_in_poly (FPoints->x[0], FPoints->y[0], TPoints) > 0) { 
-		        /* point in polugon ( => must be in isle ) */
-
-			/* Note: this is never used in fact, because isle is always area,
-			 * it is left here for future possible optional search for labeled areas only */
-			nisles = Vect_get_area_num_isles ( &To, area );
-			for ( j = 0; j < nisles; j++ ) {
-			    isle = Vect_get_area_isle ( &To, area, isle );
-			    Vect_get_isle_points ( &To, isle, TPoints);
-			    Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], 0, 0, 
-				       &tmp_tx, &tmp_ty, NULL, &tmp_dist, NULL, NULL);
-
-			    if ( tmp_dist < dist ) {
-				tarea = area;
-				dist = tmp_dist;
-				tx = tmp_tx;
-				ty = tmp_ty;
-			    }
+			if ( j == 0 || tmp2_dist < tmp_dist ) {
+			    tmp_dist = tmp2_dist;
+			    tmp_tx = tmp2_tx;
+			    tmp_ty = tmp2_ty;
 			}
-		    } else { /* outside area */
-		        Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], 0, 0, 
-				   &tmp_tx, &tmp_ty, NULL, &tmp_dist, NULL, NULL);
-
-			if ( tmp_dist < dist ) {
-			    tarea = area;
-			    dist = tmp_dist;
-			    tx = tmp_tx;
-			    ty = tmp_ty;
-			}
-		        G_debug ( 3, "      tarea = %d dist = %f", tarea, dist );
 		    }
+		} else { /* outside area */
+		    Vect_line_distance ( TPoints, FPoints->x[0], FPoints->y[0], 0, 0, 
+			       &tmp_tx, &tmp_ty, NULL, &tmp_dist, NULL, NULL);
+
 		}
-		if ( dist > max ) tarea = 0; /* not in threshold */
+	        if ( tmp_dist > max ) continue; /* not in threshold */
+		tmp_tcat = Vect_get_area_cat ( &To, area, to_field ) ;
+		if ( tmp_tcat < 0 ) tmp_tcat = 0;
+
+	        G_debug (4, "  tmp_dist = %f tmp_tcat = %d", tmp_dist, tmp_tcat);
+
+		if ( all ) {
+		    /* find near by cat */ 
+		    near = &(Near[count]); 
+
+		    /* store info about relation */
+		    near->from_cat = fcat;
+		    near->to_cat = tmp_tcat;  /* 0 is OK */
+		    near->dist = tmp_dist;
+		    near->from_x = FPoints->x[0];
+		    near->from_y = FPoints->y[0];
+		    near->to_x = tmp_tx;
+		    near->to_y = tmp_ty;    
+		    near->to_along = 0; /* nonsense for areas */
+		    near->count++;
+		    count++;
+		} else if ( tarea == 0 || tmp_dist < dist ) {
+		    tarea = area;
+		    tcat = tmp_tcat;
+		    dist = tmp_dist;
+		    tx = tmp_tx;
+		    ty = tmp_ty;
+		}
 	    }
-	
-	    G_debug ( 3, "  dist = %f tarea = %d", dist, tarea );
 
-	    if ( tarea > 0 ) {
-		tcat = 0;
-		tcentroid = Vect_get_area_centroid(&To, tarea);
-		if (tcentroid > 0) { 
-		    Vect_read_line(&To, NULL, TCats, tcentroid);
-		    Vect_cat_get ( TCats, to_field, &tcat);
-		}
-
+	    if ( !all && tarea > 0 ) {
 		/* find near by cat */ 
 		near = (NEAR *) bsearch((void *) &fcat, Near, nfcats, sizeof(NEAR), cmp_near); 
-		G_debug (4, "near.from_cat = %d near.count = %d", near->from_cat, near->count);
+		G_debug (4, "near.from_cat = %d near.count = %d dist = %f", 
+			                   near->from_cat, near->count, near->dist);
 
 		/* store info about relation */
-		
 		if ( near->count == 0 || near->dist > dist ) {
 		    near->to_cat = tcat;  /* 0 is OK */
 		    near->dist = dist;
@@ -433,6 +504,8 @@ int main (int argc, char *argv[])
 	}
     }
 
+    G_debug (3, "count = %d", count);
+
     /* Update database / print to stdout / create output map */
     if ( print_flag->answer ) { /* print header */
 	fprintf(stdout, "from_cat" );
@@ -442,13 +515,46 @@ int main (int argc, char *argv[])
 	    i++;
 	}
 	fprintf(stdout, "\n" );
+    } else if ( all && table_opt->answer ) { /* create new table */
+	db_set_string (&stmt, "create table ");
+	db_append_string (&stmt, table_opt->answer);
+	db_append_string (&stmt, " (from_cat integer");
+	
+	j = 0;
+	while ( Upload[j].upload != END ) {
+	    db_append_string (&stmt, ", ");
+		
+	    switch ( Upload[j].upload ) {
+		case CAT:
+		    sprintf (buf2, "%s integer", Upload[j].column );
+		    break;
+		case DIST:
+		case FROM_X:
+		case FROM_Y:
+		case TO_X:
+		case TO_Y:
+		case FROM_ALONG:
+		case TO_ALONG:
+		    sprintf (buf2, "%s double precision", Upload[j].column );
+	    }
+	    db_append_string (&stmt, buf2);
+	    j++;
+	}
+	db_append_string (&stmt, " )");
+	G_debug (3, "SQL: %s", db_get_string ( &stmt ));
+	
+        if ( db_execute_immediate (driver, &stmt) != DB_OK )
+	    G_fatal_error ("Cannot create table: '%s'", db_get_string ( &stmt ) );
+		
     } else { /* read existing cats from table */
 	ncatexist = db_select_int( driver, Fi->table, Fi->key, NULL, &catexist);
         G_debug (1, "%d cats selected from the table", ncatexist );	
-	sprintf (buf1, "update %s set", Fi->table);
     }
     update_ok = update_err = update_exist = update_notexist = update_dupl = update_notfound;
-    for ( i = 0; i < nfcats; i++ ) {
+
+    if ( !all ) count = nfcats;
+    
+    for ( i = 0; i < count; i++ ) {
 	/* Write line connecting nearest points */
 	if ( Outp != NULL ) {
 	    Vect_reset_line ( FPoints );
@@ -468,7 +574,7 @@ int main (int argc, char *argv[])
 	if ( Near[i].count > 1 ) update_dupl++;
 	if ( Near[i].count == 0 ) update_notfound++;
 	
-	if ( print_flag->answer ) { /* print only */
+	if ( print_flag->answer || (all && !table_opt->answer) ) { /* print only */
 	    fprintf(stdout, "%d", Near[i].from_cat );
 	    j = 0;
 	    while ( Upload[j].upload != END ) {
@@ -509,6 +615,50 @@ int main (int argc, char *argv[])
 		j++;
 	    }
 	    fprintf(stdout, "\n" );
+	} else if ( all )  { /* insert new record */
+	    sprintf (buf1, "insert into %s values ( %d ", table_opt->answer, Near[i].from_cat);
+	    db_set_string (&stmt, buf1);
+
+	    j = 0;
+	    while ( Upload[j].upload != END ) {
+		db_append_string (&stmt, ",");
+		    
+		switch ( Upload[j].upload ) {
+		    case CAT:
+			sprintf (buf2, " %d", Near[i].to_cat );
+			break;
+		    case DIST:
+			sprintf (buf2, " %f", Near[i].dist );
+			break;
+		    case FROM_X:
+			sprintf (buf2, " %f", Near[i].from_x );
+			break;
+		    case FROM_Y:
+			sprintf (buf2, " %f", Near[i].from_y );
+			break;
+		    case TO_X:
+			sprintf (buf2, " %f", Near[i].to_x );
+			break;
+		    case TO_Y:
+			sprintf (buf2, " %f", Near[i].to_y );
+			break;
+		    case FROM_ALONG:
+			sprintf (buf2, " %f", Near[i].from_along );
+			break;
+		    case TO_ALONG:
+			sprintf (buf2, " %f", Near[i].to_along );
+			break;
+		}
+		db_append_string (&stmt, buf2);
+		j++;
+	    }
+	    db_append_string (&stmt, " )");
+	    G_debug ( 3, "SQL: %s", db_get_string ( &stmt ));
+	    if ( db_execute_immediate (driver, &stmt) == DB_OK ){
+		update_ok++;
+	    } else {
+		update_err++;
+	    }
 	} else { /* update table */
             /* check if exists in table */
 	    cex = (int *) bsearch((void *) &(Near[i].from_cat), catexist, ncatexist, sizeof(int), cmp_exist);
@@ -518,6 +668,7 @@ int main (int argc, char *argv[])
 	    } 
 	    update_exist++;
 	    
+	    sprintf (buf1, "update %s set", Fi->table);
 	    db_set_string (&stmt, buf1);
 
 	    j = 0;
@@ -587,12 +738,18 @@ int main (int argc, char *argv[])
 	G_free ( catexist );
 
 	/* print stats */
-	fprintf (stderr,"%d categories read from the map\n", nfcats);
-	fprintf (stderr,"%d categories exist in the table\n", ncatexist);
-	fprintf (stderr,"%d categories read from the map exist in the table\n", update_exist );
-	fprintf (stderr,"%d categories read from the map don't exist in the table\n", update_notexist);
-	fprintf (stderr,"%d records updated\n", update_ok);
-	fprintf (stderr,"%d update errors\n", update_err);
+	if ( all ) {
+	    fprintf (stderr,"%d distances calculated\n", count);
+	    fprintf (stderr,"%d records inserted\n", update_ok);
+	    fprintf (stderr,"%d insert errors\n", update_err);
+	} else {
+	    fprintf (stderr,"%d categories read from the map\n", nfcats);
+	    fprintf (stderr,"%d categories exist in the table\n", ncatexist);
+	    fprintf (stderr,"%d categories read from the map exist in the table\n", update_exist );
+	    fprintf (stderr,"%d categories read from the map don't exist in the table\n", update_notexist);
+	    fprintf (stderr,"%d records updated\n", update_ok);
+	    fprintf (stderr,"%d update errors\n", update_err);
+	}
     }
     
     Vect_close (&From);
