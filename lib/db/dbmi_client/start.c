@@ -25,7 +25,6 @@ db_start_driver(name)
     int pid;
     int stat;
     dbConnection connection;
-    char buf[2000];
 
     /* Set some enviroment variables which are later read by driver.
      * This is necessary when application is running without GISRC file and all
@@ -33,23 +32,20 @@ db_start_driver(name)
      * Even if GISRC is set, application may change some variables during runtime,
      * if for example reads data from different gdatabase, location or mapset*/
     
-    /* setenv() is not portable, putenv() is POSIX */
+    /* setenv() is not portable, putenv() is POSIX, putenv() in glibc 2.0-2.1.1 doesn't conform to SUSv2,
+     * G_putenv() as well, but that is what we want, makes a copy of string */
     if (  G_get_gisrc_mode() == G_GISRC_MODE_MEMORY ) {
-	putenv("GISRC_MODE_MEMORY=1"); /* to tell driver that it must read variables */
+	G_putenv("GISRC_MODE_MEMORY", "1"); /* to tell driver that it must read variables */
 	
 	if ( G__getenv ( "DEBUG" ) ) {
-	    sprintf (buf, "DEBUG=%s", G__getenv ( "DEBUG" ) );
-	    putenv(buf);
+	    G_putenv( "DEBUG", G__getenv ( "DEBUG" ) );
 	} else {
-	    putenv("DEBUG=0");
+	    G_putenv("DEBUG", "0");
 	}
 
-	sprintf (buf, "GISDBASE=%s", G__getenv("GISDBASE") );
-	putenv(buf);
-	sprintf (buf, "LOCATION_NAME=%s", G__getenv("LOCATION_NAME") );
-	putenv(buf);
-	sprintf (buf, "MAPSET=%s", G__getenv("MAPSET") );
-	putenv(buf);
+	G_putenv( "GISDBASE", G__getenv("GISDBASE") );
+	G_putenv( "LOCATION_NAME", G__getenv("LOCATION_NAME") );
+	G_putenv( "MAPSET", G__getenv("MAPSET") );
     }
     
 /* read the dbmscap file */
