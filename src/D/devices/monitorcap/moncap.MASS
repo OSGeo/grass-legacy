@@ -1,0 +1,3 @@
+mass:driver/MASS:Masscomp graphics display:/usr/grass3.1/dev/fifo.1a /usr/grass3.1/dev/fifo.1b::any terminal
+mass1:driver/MASS:Masscomp graphics display:/usr/grass3.1/dev/fifo.2a /usr/grass3.1/dev/fifo.2b:/dev/tty4:tty4
+mass2:driver/MASS:Masscomp graphics display:/usr/grass3.1/dev/fifo.3a /usr/grass3.1/dev/fifo.3b:/dev/tty5:tty5
