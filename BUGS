@@ -18,6 +18,8 @@ CELL-Driver: colors are not correct
   look at D_set_colors ().
 
 ----------- modules ---------------------------------------------
+
+
 d.his: 
  - color wrong if input value=0
  - added NULL randomly when using "out" for saving
@@ -76,6 +78,10 @@ p.map.new:
    desi in PERMANENT : can't open raster file
    I think it is to do with the new format of GRASS5.0 raster files.
  -> 5/2000: still a problem??
+
+r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
+ - the dependency to OpenGL and Mesa should be checked.
+   it looks like it only works with Mesa-3.1 rpms, because of the libMesaGLw
 
 r.binfer
   bug in table.c causing segfault
@@ -290,7 +296,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.10  2000-08-20 15:44:40  markus
+ Revision 1.11  2000-08-21 17:14:54  bernhard
+ Added item to be checked: r3.showdspf.openGL dependency
+
+ Revision 1.10  2000/08/20 15:44:40  markus
  g.manual bug fixed, r.mapcalc bug fixed on FreeBSD and Linux
 
  Revision 1.9  2000/07/28 08:27:25  markus
