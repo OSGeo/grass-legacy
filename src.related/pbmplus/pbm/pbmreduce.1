@@ -1,0 +1,62 @@
+.TH pbmreduce 1 "02 August 1989"
+.SH NAME
+pbmreduce - read a portable bitmap and reduce it N times
+.SH SYNOPSIS
+.B pbmreduce
+.RB [ -floyd | -fs | -threshold ]
+.RB [ -value
+.IR val ]
+.I N
+.RI [ pbmfile ]
+.SH DESCRIPTION
+Reads a portable bitmap as input.
+Reduces it by a factor of
+.IR N ,
+and produces a portable bitmap as output.
+.PP
+.I pbmreduce
+duplicates a lot of the functionality of
+.I pgmtopbm;
+you could do something like
+.B pnmscale | pgmtopbm,
+but
+.I pbmreduce
+is a lot faster.
+.PP
+.I pbmreduce
+can be used to "re-halftone" an image.
+Let's say you have a scanner that only produces black&white, not
+grayscale, and it does a terrible job of halftoning (most b&w scanners
+fit this description).
+One way to fix the halftoning is to scan at the highest possible
+resolution, say 300 dpi, and then reduce by a factor of three or
+so using
+.IR pbmreduce .
+You can even correct the brightness of an image, by using the
+.B -value
+flag.
+.SH OPTIONS
+.PP
+By default, the halftoning after the reduction is done via
+boustrophedonic Floyd-Steinberg error diffusion; however, the
+.B -threshold
+flag can be used to specify simple thresholding.  This gives better
+results when reducing line drawings.
+.PP
+The
+.B -value
+flag alters the thresholding value for all quantizations.
+It should be a real number between 0 and 1.
+Above 0.5 means darker images; below 0.5 means lighter.
+.PP
+All flags can be abbreviated to their shortest unique prefix.
+.SH "SEE ALSO"
+pnmenlarge(1), pnmscale(1), pgmtopbm(1), pbm(5)
+.SH AUTHOR
+Copyright (C) 1988 by Jef Poskanzer.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
