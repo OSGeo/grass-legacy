@@ -179,7 +179,7 @@ fi
 echo g.remove $rast $vect $icon $labels $region $group $dview
 
 yn=y
-if [ "$force" == "0" ]
+if [ $force -eq 0 ]
 then
 	echo
 	echo "Did you mean this(y/n)?"
