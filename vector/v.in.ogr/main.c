@@ -85,8 +85,11 @@ main (int argc, char *argv[])
     /* Module options */
     sprintf ( buf, "Convert OGR vectors to GRASS. Available drivers:\n" );
     for ( i = 0; i < OGRGetDriverCount(); i++ ) {
-	Ogr_driver = OGRGetDriver( i );  
-	sprintf (buf, "%s      %s\n", buf, OGR_Dr_GetName ( Ogr_driver) ); 
+	Ogr_driver = OGRGetDriver( i );
+	if ( i== 0) 
+	  sprintf (buf, "%s%s", buf, OGR_Dr_GetName ( Ogr_driver) ); 
+	else
+	  sprintf (buf, "%s,%s", buf, OGR_Dr_GetName ( Ogr_driver) ); 
     }
     module = G_define_module();
     module->description = G_store(buf);
@@ -95,6 +98,7 @@ main (int argc, char *argv[])
     dsn_opt->key = "dsn";
     dsn_opt->type =  TYPE_STRING;
     dsn_opt->required = YES;
+    dsn_opt->gisprompt = "file,file,file";
     dsn_opt->description = "OGR datasource name.\n"
 			   "\t\tESRI Shapefile: directory containing shapefiles\n"
 			   "\t\tMapInfo File: directory containing mapinfo files";
