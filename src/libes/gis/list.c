@@ -30,6 +30,12 @@
 
 #include <signal.h>
 static int broken_pipe;
+static int hit_return = 0;
+
+G_set_list_hit_return(flag)
+{
+    hit_return = flag;
+}
 
 G_list_element (element, desc, mapset, lister)
     char *element;
@@ -46,7 +52,7 @@ G_list_element (element, desc, mapset, lister)
 
 /* must catch broken pipe in case "more" quits */
     broken_pipe = 0;
-    sigpipe = signal (SIGPIPE, sigpipe_catch);
+    sigpipe = (int (*)()) signal (SIGPIPE, sigpipe_catch);
 
     count = 0;
     if (desc == 0 || *desc == 0)
@@ -86,7 +92,7 @@ G_list_element (element, desc, mapset, lister)
  */
     if (more != stdout) pclose (more);
     signal (SIGPIPE, sigpipe);
-    if (isatty(1))
+    if (hit_return && isatty(1))
     {
 	printf ("hit RETURN to continue -->");
 	while (getchar() != '\n')
