@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdlib.h>
 #include "gis.h"
 
 #define MAIN
@@ -85,8 +86,16 @@ main (int argc, char **argv)
 	exit(1);
 
     usecats = flag_c->answer;
+
+    if( (mapset = G_find_cell2 (basemap->answer, "")) == 0)
+    	G_fatal_error("base map <%s> not found", basemap->answer);
     
-    mapset = G_find_cell2 (covermap->answer, "");
+    if( (mapset = G_find_cell2 (covermap->answer, "")) == 0)
+    	G_fatal_error("cover map <%s> not found", covermap->answer);
+    
+    if( G_raster_map_is_fp(covermap->answer, mapset) != 0 )
+    	G_fatal_error("This module currently only works for integer (CELL) maps");
+    	
     if (G_read_cats (covermap->answer, mapset, &cats) < 0)
     {
        fprintf (stderr, "%s: ERROR reading category file for %s\n",
