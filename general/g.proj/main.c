@@ -412,7 +412,7 @@ int main(int argc, char *argv[])
                             if( out_stat != 0 )
                                 G_fatal_error("Error writing PROJ_UNITS");
 			}
-		        fprintf(stderr, "Projection information updated!");
+		        fprintf(stderr, "Projection information updated!\n");
 		    }
 		    else
 		        fprintf(stderr, "The projection information will not be updated.\n");
