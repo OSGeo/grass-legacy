@@ -14,7 +14,7 @@ init_comb(argc,argv)
     s->description = "Use symbols (instead of graphics)";
     s->answer = 0;
 
-    if (argc > 1 && G_parser(argc,argv)) exit(1);
+    if (G_parser(argc,argv)) exit(1);
 
     use_graphics = !s->answer;
 
