@@ -6,7 +6,7 @@
 # MODULE:   	GRASS Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
 #               Andreas Lange - Germany - andreas.lange@rhein-main.de
-#   	    	Huidae Cho - Korea - hdcho@geni.knu.ac.kr
+#   	    	Huidae Cho - Korea - hdcho@water.knu.ac.kr
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
 #   	    	Markus Neteler - Germany/Italy - neteler@itc.it
 # PURPOSE:  	The source file for this shell script is in
@@ -23,7 +23,7 @@
 #
 #############################################################################
 
-trap "echo 'User break!' ; exit" 2 3 9 15
+trap "echo 'User break!' ; exit" 2 3
 
 # Set the GRASS_PERL variable
 GRASS_PERL=PERL_COMMAND
@@ -140,7 +140,7 @@ fi
 case $? in
     0) ;;
     1)
-    	echo `whoami` is currently running GRASS. Concurrent use not allowed.
+    	echo `whoami` is currently running GRASS VERSION_NUMBER. Concurrent use not allowed.
     	exit ;;
     *)
     	echo Unable to properly access "$lockfile"
@@ -194,7 +194,9 @@ if [ ! -f "$GISRC" ] ; then
 
     #for convenience, define pwd as GISDBASE:
     echo "GISDBASE: `pwd`" > "$GISRC"
-    
+    echo 'LOCATION_NAME: <UNKNOWN>' >> "$GISRC"
+    echo 'MAPSET: <UNKNOWN>' >> "$GISRC"
+
     # This is a hack for not having a good initial gui - should be removed
     # with next version of initialization gui
     GRASS_GUI="text"
@@ -559,7 +561,7 @@ bash)
     bashrc="$HOME/.bashrc"
     rm -f "$bashrc"
     echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
-    echo "test -e ~/.alias && . ~/.alias" >> "$bashrc"
+    echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
     echo "umask 022" >> "$bashrc"
     echo "PS1='GRASS:\w > '" >> "$bashrc"
 
@@ -584,7 +586,7 @@ cygwin)
     rm -f "$bashrc"
     # this does not work on cygwin for unknown reasons
     # echo "test -z $PROFILEREAD && . /etc/profile" > "$bashrc"
-    echo "test -e ~/.alias && . ~/.alias" >> "$bashrc"
+    echo "test -r ~/.alias && . ~/.alias" >> "$bashrc"
     echo "umask 022" >> "$bashrc"
     echo "PS1='GRASS:\w > '" >> "$bashrc"
 

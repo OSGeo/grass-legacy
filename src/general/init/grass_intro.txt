@@ -9,6 +9,5 @@ WELCOME TO GRASS              Version VERSION_NUMBER         VERSION_DATE
       - Current catalog of available computer maps
 
    3) Check the GRASS webpages for feedback mailinglists and more:
-      http://grass.itc.it
-      http://www.baylor.edu/grass/
-
+      http://grass.itc.it/
+      http://grass.ibiblio.edu/

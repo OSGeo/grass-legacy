@@ -12,7 +12,8 @@ int main(int argc, char *argv[])
     struct Option *get, *set;
     struct GModule *module;
     
-    G_gisinit (argv[0]);
+    G_set_program_name(argv[0]);
+    G_no_gisinit();
 
     module = G_define_module();
     module->description =
@@ -22,12 +23,14 @@ int main(int argc, char *argv[])
     get->key          = "get" ;
     get->type         = TYPE_STRING ;
     get->description  = "GRASS variable to get" ;
+    get->key_desc     = "VARIABLE" ;
     get->required     = NO;
 
     set               = G_define_option() ;
     set->key          = "set" ;
     set->type         = TYPE_STRING ;
     set->description  = "GRASS variable to set" ;
+    set->key_desc     = "\"VARIABLE=value\"" ;
     set->required     = NO;
     
     /* Print or optionally set environment variables */
