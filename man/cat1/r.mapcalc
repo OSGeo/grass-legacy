@@ -1,76 +1,77 @@
 
 
 
-r.mapcalc            GRASS Reference Manual             r.mapcalc
+rr..mmaappccaallcc <main>      GRASS Reference Manual     <main> rr..mmaappccaallcc
 
 
 
-NAME
-     r.mapcalc - Raster map layer data calculator.
-     (GRASS Raster Program)
+NNAAMMEE
+     _r_._m_a_p_c_a_l_c - Raster map layer data calculator.
+     _(_G_R_A_S_S _R_a_s_t_e_r _P_r_o_g_r_a_m_)
 
-SYNOPSIS
-     r.mapcalc
-     r.mapcalc [result=expression]
+SSYYNNOOPPSSIISS
+     rr..mmaappccaallcc
+     rr..mmaappccaallcc [rreessuulltt==_e_x_p_r_e_s_s_i_o_n]
 
-DESCRIPTION
-     r.mapcalc performs arithmetic on raster map layers.  New
+DDEESSCCRRIIPPTTIIOONN
+     _r_._m_a_p_c_a_l_c performs arithmetic on raster map layers.  New
      raster map layers can be created which are arithmetic
      expressions involving existing raster map layers, integer or
      floating point constants, and functions.
 
-PROGRAM USE
-     If used without command line arguments, r.mapcalc will read
+PPRROOGGRRAAMM UUSSEE
+     If used without command line arguments, _r_._m_a_p_c_a_l_c will read
      its input, one line at a time, from standard input (which is
      the keyboard, unless redirected from a file or across a
      pipe).  Otherwise, the expression on the command line is
-     evaluated.  r.mapcalc expects its input to have the form:
+     evaluated.  _r_._m_a_p_c_a_l_c expects its input to have the form:
 
-          result=expression
+          rreessuulltt==_e_x_p_r_e_s_s_i_o_n
 
-     where result is the name of a raster map layer to contain
-     the result of the calculation and expression is any legal
+     where _r_e_s_u_l_t is the name of a raster map layer to contain
+     the result of the calculation and _e_x_p_r_e_s_s_i_o_n is any legal
      arithmetic expression involving existing raster map layers,
      integer or floating point constants, and functions known to
      the calculator.  Parentheses are allowed in the expression
-     and may be nested to any depth.  result will be created in
+     and may be nested to any depth.  _r_e_s_u_l_t will be created in
      the user's current mapset.
 
-     The formula entered to r.mapcalc by the user is recorded
-     both in the result map title (which appears in the category
-     file for result) and in the history file for result.
+     The formula entered to _r_._m_a_p_c_a_l_c by the user is recorded
+     both in the _r_e_s_u_l_t map title (which appears in the category
+     file for _r_e_s_u_l_t) and in the history file for _r_e_s_u_l_t.
 
      Some characters have special meaning to the command shell.
-     If the user is entering input to r.mapcalc on the command
+     If the user is entering input to _r_._m_a_p_c_a_l_c on the command
      line, expressions should be enclosed within single quotes.
      See NOTES, below.
 
 
-OPERATORS AND ORDER OF PRECEDENCE
+OOPPEERRAATTOORRSS AANNDD OORRDDEERR OOFF PPRREECCEEDDEENNCCEE
      The following operators are supported:
 
      Operator                Meaning                   Type      Precedence
-     ______________________________________________________________________
+     -----------------------------------------------------------------------
      %          modulus (remainder upon division)   Arithmetic       4
      /          division                            Arithmetic       4
      *          multiplication                      Arithmetic       4
      +          addition                            Arithmetic       3
      -          subtraction                         Arithmetic       3
+
+
+
+
+GRASS 4.1                 U.S. Army CERL                        1
+
+
+
+
+
+
+rr..mmaappccaallcc <main>      GRASS Reference Manual     <main> rr..mmaappccaallcc
+
+
+
      ==         equal                               Logical          2
-
-
-
-GRASS 4.0                U.S. Army CERL                         1
-
-
-
-
-
-
-r.mapcalc            GRASS Reference Manual             r.mapcalc
-
-
-
      !=         not equal                           Logical          2
      >          greater than                        Logical          2
      >=         greater than or equal               Logical          2
@@ -90,7 +91,7 @@ r.mapcalc            GRASS Reference Manual             r.mapcalc
 
 
 
-RASTER MAP LAYER NAMES
+RRAASSTTEERR MMAAPP LLAAYYEERR NNAAMMEESS
      Anything in the expression which is not a number, operator,
      or function name is taken to be a raster map layer name.
      Examples:
@@ -109,39 +110,39 @@ RASTER MAP LAYER NAMES
           x = "a-b"
 
      would be interpreted as:  x equals the raster map layer
-     named a-b
+     named _a_-_b
 
      Also
 
           x = 3107
 
-     would create x filled with the number 3107, while
+     would create _x filled with the number 3107, while
 
           x = "3107"
 
-     would copy the raster map layer 3107 to the raster map layer
-     x.
+     would copy the raster map layer _3_1_0_7 to the raster map layer
+     _x.
+
+
+
+
+GRASS 4.1                 U.S. Army CERL                        2
+
+
+
+
+
+
+rr..mmaappccaallcc <main>      GRASS Reference Manual     <main> rr..mmaappccaallcc
+
+
 
      Quotes are not required unless the raster map layer names
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
-
-
-
-
-
-
-r.mapcalc            GRASS Reference Manual             r.mapcalc
-
-
-
      look like numbers or contain operators, OR unless the
      program is run non-interactively.  Examples given here
      assume the program is run interactively.  See NOTES, below.
 
-     r.mapcalc will look for the raster map layers according to
+     _r_._m_a_p_c_a_l_c will look for the raster map layers according to
      the user's current mapset search path.  It is possible to
      override the search path and specify the mapset from which
      to select the raster map layer.  This is done by specifying
@@ -155,20 +156,20 @@ r.mapcalc            GRASS Reference Manual             r.mapcalc
 
      The mapset specified does not have to be in the mapset
      search path.  (This method of overriding the mapset search
-     path is common to all GRASS commands, not just r.mapcalc.)
+     path is common to all GRASS commands, not just _r_._m_a_p_c_a_l_c.)
 
 
-THE NEIGHBORHOOD MODIFIER
+TTHHEE NNEEIIGGHHBBOORRHHOOOODD MMOODDIIFFIIEERR
      Maps and images are data base files stored in raster format,
      i.e., two-dimensional matrices of integer values.  In
-     r.mapcalc, maps may be followed by a neighborhood modifier
+     _r_._m_a_p_c_a_l_c, maps may be followed by a _n_e_i_g_h_b_o_r_h_o_o_d modifier
      that specifies a relative offset from the current cell being
-     evaluated.  The format is map[r,c], where r is the row
-     offset and c is the column offset.  For example, map[1,2]
+     evaluated.  The format is _m_a_p_[_r_,_c_], where _r is the row
+     offset and _c is the column offset.  For example, _m_a_p_[_1_,_2_]
      refers to the cell one row below and two columns to the
-     right of the current cell, map[-2,-1] refers to the cell two
+     right of the current cell, _m_a_p_[_-_2_,_-_1_] refers to the cell two
      rows above and one column to the left of the current cell,
-     and map[0,1] refers to the cell one column to the right of
+     and _m_a_p_[_0_,_1_] refers to the cell one column to the right of
      the current cell.  This syntax permits the development of
      neighborhood-type filters within a single map or across
      multiple maps.
@@ -178,33 +179,34 @@ THE NEIGHBORHOOD MODIFIER
 
 
 
-RASTER MAP LAYER VALUES FROM THE CATEGORY FILE
+RRAASSTTEERR MMAAPP LLAAYYEERR VVAALLUUEESS FFRROOMM TTHHEE CCAATTEEGGOORRYY FFIILLEE
      Sometimes it is desirable to use a value associated with a
-     category's contents instead of the category value itself.
-     If a raster map layer name is preceded by the @ operator,
+     category's _c_o_n_t_e_n_t_s instead of the category value itself.
+     If a raster map layer name is preceded by the @@ operator,
      then the labels in the category file for the raster map
      layer are used in the expression instead of the category
      value.
 
-     For example, suppose that the raster map layer soil.ph
+     For example, suppose that the raster map layer _s_o_i_l_._p_h
      (representing soil pH values) has a category file with
+
+
+
+GRASS 4.1                 U.S. Army CERL                        3
+
+
+
+
+
+
+rr..mmaappccaallcc <main>      GRASS Reference Manual     <main> rr..mmaappccaallcc
+
+
+
      labels as follows:
 
-
-
-GRASS 4.0                U.S. Army CERL                         3
-
-
-
-
-
-
-r.mapcalc            GRASS Reference Manual             r.mapcalc
-
-
-
           cat   label
-          _____________
+          --------------
           0     no data
 
           1     1.4
@@ -228,7 +230,7 @@ r.mapcalc            GRASS Reference Manual             r.mapcalc
      number.  Missing labels, or labels that do not start with a
      number will (silently) produce a 0 value for that category.
 
-GREY SCALE EQUIVALENTS AND COLOR SEPARATES
+GGRREEYY SSCCAALLEE EEQQUUIIVVAALLEENNTTSS AANNDD CCOOLLOORR SSEEPPAARRAATTEESS
      It is often helpful to manipulate the colors assigned to map
      categories.  This is particularly useful when the spectral
      properties of cells have meaning (as with imagery data), or
@@ -244,7 +246,7 @@ GREY SCALE EQUIVALENTS AND COLOR SEPARATES
 
           result = #map
 
-     converts each category value in map to a value in the range
+     converts each category value in _m_a_p to a value in the range
      0-255 which represents the grey scale level implied by the
      color for the category.  If the map has a grey scale color
      table, then the grey level is what #map evaluates to.
@@ -252,28 +254,29 @@ GREY SCALE EQUIVALENTS AND COLOR SEPARATES
 
            .18 * red + .81 * green + .01 * blue
 
+
+
+
+
+GRASS 4.1                 U.S. Army CERL                        4
+
+
+
+
+
+
+rr..mmaappccaallcc <main>      GRASS Reference Manual     <main> rr..mmaappccaallcc
+
+
+
      The # operator has three other forms:  r#map, g#map, b#map.
      These extract the red, green, or blue components in the
      named raster map, respectively.  The GRASS shell script
-
-
-
-GRASS 4.0                U.S. Army CERL                         4
-
-
-
-
-
-
-r.mapcalc            GRASS Reference Manual             r.mapcalc
-
-
-
-     blend.sh extracts each of these components from two raster
+     _b_l_e_n_d_._s_h extracts each of these components from two raster
      map layers, and combines them by a user-specified
      percentage.  These forms allow color separates to be made.
-     For example, to extract the red component from map and store
-     it in the new 0-255 map layer red, the user could type:
+     For example, to extract the red component from _m_a_p and store
+     it in the new 0-255 map layer _r_e_d, the user could type:
 
           red = r#map
 
@@ -289,53 +292,56 @@ r.mapcalc            GRASS Reference Manual             r.mapcalc
           black
           red
 
-FUNCTIONS
+FFUUNNCCTTIIOONNSS
      The functions currently supported are listed in the table
      below.  The type of the result is indicated in the last
-     column.  F means that the functions always results in a
-     floating point value, I means that the function gives an
-     integer result, and * indicates that the result is float if
+     column.  _F means that the functions always results in a
+     floating point value, _I means that the function gives an
+     integer result, and _* indicates that the result is float if
      any of the arguments to the function are floating point
      values and integer if all arguments are integer.
 
-     function                          description                   type
-     ____________________________________________________________________
-     abs(x)            return absolute value of x                     *
-     atan(x)           inverse tangent of x (result is in degrees)    F
-     cos(x)            cosine of x (x is in degrees)                  F
-     exp(x)            exponential function of x                      F
-     exp(x,y)          x to the power y                               F
-     float(x)          convert x to floating point                    F
-     if                decision options:                              *
-       if(x)             1 if x not zero, 0 otherwise
-       if(x,a)           a if x not zero, 0 otherwise
-       if(x,a,b)         a if x not zero, b otherwise
-       if(x,a,b,c)       a if x > 0, b if x is zero, c if x < 0
-     int(x)            convert x to integer [ truncates ]             I
-     log(x)            natural log of x                               F
-     log(x,b)          log of x base b                                F
-     max(x,y[,z...])   largest value of those listed                  *
-     min(x,y[,z...])   smallest value of those listed                 *
-     round(x)          round x to nearest integer                     I
-     sin(x)            sine of x (x is in degrees)                    F
-     sqrt(x)           square root of x                               F
-     tan(x)            tangent of x (x is in degrees)                 F
+     function                                description                      type
+     ------------------------------------------------------------------------------
+     abs(x)               return absolute value of x                           *
+     atan(x)              inverse tangent of x (result is in degrees)          F
+     cos(x)               cosine of x (x is in degrees)                        F
+     eval([x,y,...,]z)    evaluate values of listed expr, pass results to z
+     exp(x)               exponential function of x                            F
+     exp(x,y)             x to the power y                                     F
+     float(x)             convert x to floating point                          F
+     if                   decision options:                                    *
+       if(x)                1 if x not zero, 0 otherwise
+     if(x,a)              a if x not zero, 0 otherwise
+     if(x,a,b)            a if x not zero, b otherwise
+     if(x,a,b,c)          a if x > 0, b if x is zero, c if x < 0
+          int(x)               convert x to integer [ truncates ]                   I
+     log(x)               natural log of x                                     F
+     log(x,b)             log of x base b                                      F
+     max(x,y[,z...])      largest value of those listed                        *
+     median(x,y[,z...])   median value of those listed                         *
 
 
 
 
-GRASS 4.0                U.S. Army CERL                         5
+GRASS 4.1                 U.S. Army CERL                        5
 
 
 
 
 
 
-r.mapcalc            GRASS Reference Manual             r.mapcalc
+rr..mmaappccaallcc <main>      GRASS Reference Manual     <main> rr..mmaappccaallcc
 
 
 
-FLOATING POINT VALUES IN THE EXPRESSION
+     min(x,y[,z...])      smallest value of those listed                       *
+     round(x)             round x to nearest integer                           I
+     sin(x)               sine of x (x is in degrees)                          F
+     sqrt(x)              square root of x                                     F
+     tan(x)               tangent of x (x is in degrees)                       F
+
+FFLLOOAATTIINNGG PPOOIINNTT VVAALLUUEESS IINN TTHHEE EEXXPPRREESSSSIIOONN
      Floating point numbers are allowed in the expression. A
      floating point number is a number which contains a decimal
      point:
@@ -360,8 +366,8 @@ FLOATING POINT VALUES IN THE EXPRESSION
      Note that raster map layers in the expression are considered
      to be integers.
 
-EXAMPLES
-     To compute the average of two raster map layers a and b:
+EEXXAAMMPPLLEESS
+     To compute the average of two raster map layers _a and _b:
 
           ave = (a + b)/2
 
@@ -369,7 +375,7 @@ EXAMPLES
 
           ave = (5*a + 3*b)/8.0
 
-     To produce a binary representation of the raster map layer a
+     To produce a binary representation of the raster map layer _a
      so that category 0 remains 0 and all other categories become
      1:
 
@@ -379,33 +385,33 @@ EXAMPLES
 
           mask = if(a)
 
-     To mask raster map layer b by raster map layer a:
+     To mask raster map layer _b by raster map layer _a:
+
+
+
+
+GRASS 4.1                 U.S. Army CERL                        6
+
+
+
+
+
+
+rr..mmaappccaallcc <main>      GRASS Reference Manual     <main> rr..mmaappccaallcc
+
+
 
           result = if(a,b)
 
-REGION/MASK
+RREEGGIIOONN//MMAASSKK
      The user must be aware of the current geographic region and
-     current mask settings when using r.mapcalc.  All raster map
+     current mask settings when using _r_._m_a_p_c_a_l_c.  All raster map
      layers are read into the current geographic region masked by
-
-
-
-GRASS 4.0                U.S. Army CERL                         6
-
-
-
-
-
-
-r.mapcalc            GRASS Reference Manual             r.mapcalc
-
-
-
      the current mask.  If it is desired to modify an existing
      raster map layer without involving other raster map layers,
      the geographic region should be set to agree with the cell
      header for the raster map layer.  For example, suppose it is
-     determined that the elevation raster map layer must have
+     determined that the _e_l_e_v_a_t_i_o_n raster map layer must have
      each category value increased by 10 meters.  The following
      expression is legal and will do the job:
 
@@ -423,7 +429,7 @@ r.mapcalc            GRASS Reference Manual             r.mapcalc
      raster map layer is masked when it is written; i.e., 0
      category values in the mask force zero values in the output.
 
-NOTES
+NNOOTTEESS
      Extra care must be taken if the expression is given on the
      command line.  Some characters have special meaning to the
      UNIX shell.  These include, among others:
@@ -436,68 +442,106 @@ NOTES
           result = 'elevation * 2'
 
      Without the quotes, the *, which has special meaning to the
-     UNIX shell, would be altered and r.mapcalc would see
+     UNIX shell, would be altered and _r_._m_a_p_c_a_l_c would see
      something other than the *.
 
-     If the input comes directly from the keyboard and the result
+     If the input comes directly from the keyboard and the _r_e_s_u_l_t
      raster map layer exists, the user will be asked if it can be
-     overwritten.  Otherwise, the result raster map layer will
+     overwritten.  Otherwise, the _r_e_s_u_l_t raster map layer will
      automatically be overwritten if it exists.
 
-     Quoting result is not allowed.  However, it is never
-     necessary to quote result since it is always taken to be a
+     Quoting _r_e_s_u_l_t is not allowed.  However, it is never
+     necessary to quote _r_e_s_u_l_t since it is always taken to be a
      raster map layer name.
+
+
+
+GRASS 4.1                 U.S. Army CERL                        7
+
+
+
+
+
+
+rr..mmaappccaallcc <main>      GRASS Reference Manual     <main> rr..mmaappccaallcc
+
+
 
      For formulas that the user enters from standard input
      (rather than from the command line), a line continuation
      feature now exists.  If the user adds \ to the end of an
-     input line, r.mapcalc assumes that the formula being entered
+     input line, _r_._m_a_p_c_a_l_c assumes that the formula being entered
      by the user continues on to the next input line.  There is
-
-
-
-GRASS 4.0                U.S. Army CERL                         7
-
-
-
-
-
-
-r.mapcalc            GRASS Reference Manual             r.mapcalc
-
-
-
      no limit to the possible number of input lines or to the
      length of a formula.
 
-     If the r.mapcalc formula entered by the user is very long,
+     If the _r_._m_a_p_c_a_l_c formula entered by the user is very long,
      the map title will contain only some of it, but most (if not
      all) of the formula will be placed into the history file for
-     the result map.
+     the _r_e_s_u_l_t map.
 
-     When the user enters input to r.mapcalc non-interactively on
+     When the user enters input to _r_._m_a_p_c_a_l_c non-interactively on
      the command line, the program will not warn the user not to
      overwrite existing map layers.  Users should therefore take
      care to assign program outputs raster file names that do not
      yet exist in their current mapsets.
 
-SEE ALSO
-     "r.mapcalc:  An Algebra for GIS and Image Processing," by
+BBUUGGSS
+     Continuation lines must end with a  and have NO trailing
+     white space (blanks or tabs).  If the user does leave white
+     space at the end of continuation lines, the error messages
+     produced by _r_._m_a_p_c_a_l_c will be meaningless and the equation
+     will not work as the user intended.
+
+     Error messages produced by _r_._m_a_p_c_a_l_c are almost useless.  In
+     future, _r_._m_a_p_c_a_l_c should make some attempt to point the user
+     to the offending section of the equation, e.g.:
+
+          x = a * b ++ c
+
+     ERROR: somewhere in line 1: ...  b ++ c ...
+
+
+     Currently, there is no comment mechanism in _r_._m_a_p_c_a_l_c.
+     Perhaps adding a capability that would cause the entire line
+     to be ignored when the user inserted a # at the start of a
+     line as if it were not present, would do the trick.
+
+     The function should require the user to type "end" or "exit"
+     instead of simply a blank line.  This would make separation
+     of multiple scripts separable by white space.
+
+SSEEEE AALLSSOO
+     "_r_._m_a_p_c_a_l_c:  An Algebra for GIS and Image Processing," by
      Michael Shapiro and Jim Westervelt, U.S. Army Construction
      Engineering Research Laboratory (March/1991).
 
-     "GRASS Tutorial:  r.mapcalc," by Marji Larson, U.S. Army
+     "GRASS Tutorial:  _r_._m_a_p_c_a_l_c," by Marji Larson, U.S. Army
      Construction Engineering Research Laboratory.
+
+
+
+
+GRASS 4.1                 U.S. Army CERL                        8
+
+
+
+
+
+
+rr..mmaappccaallcc <main>      GRASS Reference Manual     <main> rr..mmaappccaallcc
+
+
 
      Grey scale conversion is based on the C.I.E. x,y,z system
      where y represents luminance.  See "Fundamentals of Digital
      Image Processing," by Anil K. Jain (Prentice Hall, NJ, 1989;
      p 67).
 
-     blend.sh, g.region, r.colors, r.combine, r.infer, r.mask,
-     r.weight
+     _b_l_e_n_d_._s_h_, _g_._r_e_g_i_o_n_, _r_._c_o_l_o_r_s_, _r_._c_o_m_b_i_n_e_, _r_._i_n_f_e_r_, _r_._m_a_s_k_,
+     _r_._w_e_i_g_h_t
 
-AUTHOR
+AAUUTTHHOORR
      Michael Shapiro, U.S. Army Construction Engineering Research
      Laboratory
 
@@ -522,7 +566,29 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.1                 U.S. Army CERL                        9
 
 
 
