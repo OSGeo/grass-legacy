@@ -1,0 +1,31 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.in.sites</em> converts GRASS site_lists file into vector format. 
+<em>Site_lists</em> file values are used as <em>dig_cats</em> category values.
+
+<h2>NOTE</h2>
+
+The requirements of the site_lists file are standard 
+(i.e., a regular site_lists file format is required)
+
+<pre>
+name|test
+desc|Imported from points shapefile test.shp.
+time|3 Feb 2003 15:09:11 +0000
+3571629.904|5943214.399|#1
+3571323.64|5944517.464|#2 
+</pre>
+
+<b>Format example</b><br>
+<pre>
+easting|northing|[z|[d4|]...][#category_int] [ [@attr_text OR %flt] ... ]
+</pre>
+
+<h2>EXAMPLE</h2>
+
+<b>v.in.sites in=</b><em>sites_file</em> <b>out=</b><em>vector_map</em>
+
+<h2>AUTHOR</h2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS <br>
+Radim Blazek, ITC-Irst, Trento, Italy

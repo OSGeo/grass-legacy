@@ -1,0 +1,48 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.clean</em> allows the user to automatically change (repair) vector files. Possible
+tools are:
+
+<p>
+
+<b>break</b>
+<br>
+breaks lines and sets a node at each intersection
+
+<p>
+
+<b>rmdupl</b>
+<br>
+removes duplicate lines (pay attention to categories!)
+
+<p>
+
+<b>svtlx</b>
+<br>
+snaps vertex to a line and create new vertex at that line
+
+<p>
+
+<b>rmdac</b>
+<br>
+removes duplicate area centroids ('type' option ignored)
+
+</pre>
+
+<p>
+
+You do <em>not</em> have to run 
+<em><a HREF="v.build.html">v.build</a></em> afterwards.
+
+<h2>EXAMPLE</h2>
+
+<pre>
+v.clean input=testmap output=cleanmap tool=svtlx,breakthresh=1
+</pre>
+
+<h2>AUTHOR</h2>
+
+David Gerdes, U.S. Army Construction Engineering 
+Research Laboratory
+<br>
+Radim Blazek, ITC-Irst, Trento, Italy
