@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 # Statistical analysis of GRASS raster maps
 # written by Markus Neteler 1998-2001
-#            neteler@geog.uni-hannover.de
+#            neteler@itc.it
 #
 # $Id$
 
