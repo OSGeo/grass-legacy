@@ -22,7 +22,7 @@ all:
 	$(GMAKE) s.in.grid
 	cp r.univar/r.univar $(GISBASE)/scripts
 	cp r.to.pg/r.to.pg $(GISBASE)/scripts
-	cp s.in.atkisdgm/s.in.atkisdgm $(GISBASE)/scripts
+	cp s.in.atkisdgm/s.in.* $(GISBASE)/scripts
 	cp s.in.gps/s.in.gps $(GISBASE)/scripts
 	cp s.out.gps/s.out.gps $(GISBASE)/scripts
 	cp s.reclass/s.reclass $(GISBASE)/scripts
