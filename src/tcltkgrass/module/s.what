@@ -1,0 +1,8 @@
+interface_build {
+    {s.what} 1
+    {Queries sites list(s) by coordinate(s) or with the mouse.}
+    {entry map {Name of sites list(s) to query:} 0 +sites}
+    {entry east_north {Coordinates for query (east,north[,east,north,...]):} 0 +xy}
+    {entry < {Input file of locations to query (east north [label]):} 0 file}
+    {checkbox -q {Run quietyl.} "" -q}
+}

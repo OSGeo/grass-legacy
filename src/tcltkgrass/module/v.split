@@ -1,0 +1,8 @@
+interface_build {
+    {v.split} 0
+    {Splits multi-segment polylines (arcs) into individual line segments.}
+    {entry input {Input vector map to split:} 0 vector}
+    {entry output {Output vector map of  segments:} 0 vector}
+    {checkbox type {Line map [default].} "" line}
+    {checkbox type {Boundary (area edge) map.} "" boundary}
+}

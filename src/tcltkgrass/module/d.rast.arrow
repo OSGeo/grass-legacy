@@ -1,0 +1,12 @@
+interface_build {
+    {d.rast.arrow} 0
+    {Draws arrows in raster cells indicating downslope direction for aspect map}
+    {entry map {Aspect raster map} 0 raster}
+    {checkbox type {GRASS type aspect map} 0 grass}
+    {checkbox type {AGNPS type aspect map} 0 agnps}
+    {checkbox type {ANSWERS type aspect map} 0 answers}
+    {entry arrow_color {Color of downslope arrow [white]:} 0 color}
+    {entry grid_color {Color of cell grid lines} 0 color}
+    {entry x_color {Color for no data 'X' in cells} 0 color}
+    {entry unknown_color) {Color for unknown slope '?' in cells} 0 color}
+}

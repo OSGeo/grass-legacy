@@ -1,0 +1,18 @@
+interface_build {
+    {v.out.shape} 0
+    {Export GRASS vector map to ESRI Shapefile.}
+    {entry map {Input GRASS vector file} 0 vector}
+    {entry output {Output Shapefile:} 0 file}
+    {entry mapset {Mapset for Shapefile output [current mapet]:} 0 ""}
+    {entry prefix {Prefix for Shapefile output:} 0 ""}
+    {entry log {Log file name:} 0 file}
+    {entry table {Name of database table used as attribute source:} 0 file}
+    {entry key {Name of key column in table used for linking rows to shapes:} 0 file}
+    {checkbox type {Output areas.} 0 area}
+    {checkbox type {Output lines} 0 line}
+    {checkbox type {Output points} 0 point}
+    {checkbox -v {Verbose mode} 0 -v}
+    {checkbox -a {Restrict lines exported to arcs of type area-edge} 0 -a}
+    {checkbox -l {Restrict lines exported to arcs of type line} 0 -l}
+    {checkbox -A {Output all area rings (inlcude unlabelled area)} 0 -A}
+}

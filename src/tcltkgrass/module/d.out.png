@@ -1,0 +1,8 @@
+interface_build {
+    {d.out.png} 0
+    {Saves active display to 24 bit PNG file (*.png) in home directory.}
+    {entry output {PNG file name (*.png extension automatically added):} 0 file}
+    {checkbox res {Save at current resolution.} "" 1}
+    {checkbox res {Save at double resolution [default].} "" 2}
+    {checkbox res {Save at quadruple resolution.} "" 4}
+}

@@ -1,0 +1,6 @@
+interface_build {
+    {r.timestamp} 0
+    {Print, add, or remove timestamp for a raster file (see documentation for timestamp formats).}
+    {entry map {Input raster file for which timestamp will be modified:} 0 raster}
+    {entry date {String (in quotes) specifying timestamp, timestamp range, or none (to remove timestamp):} 0 ""}
+}

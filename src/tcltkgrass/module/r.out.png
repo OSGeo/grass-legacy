@@ -1,0 +1,7 @@
+interface_build {
+    {r.out.png} 0
+    {Exports a GRASS raster file to a PNG file.}
+    {entry input {Input GRASS raster file:} 0 raster}
+    {entry output {Output PNG file:} 0 File}
+    {checkbox -q {Run quietly.} 0 -q}
+}

@@ -1,0 +1,9 @@
+interface_build {
+    {s.in.dbf} 0
+    {Converts a DBF file of easting, northing, and (optionally) a category label to a GRASS sites file.}
+    {entry input {Input DBF file:} 0 file}
+    {entry sites {Output GRASS sites file:} 0 sites}
+    {entry date {timestamp or timestamp range:} 0 ""}
+    {checkbox l {List fields of DBF file and exit} 0 -l}
+    {checkbox z {Treat third column in DBF as z dimension.} 0 -z}
+}

@@ -1,0 +1,9 @@
+interface_build {
+    {r3.out.ascii} 0
+    {Outputs grid3D file in ASCII format}
+    {entry grid3 {Input grid3D file:} 0 ""}
+    {entry output {Output ASCII file:} 0 file}
+    {scale dp {Decimal places for floating-point values [default=8].} 0 20 1}
+    {entry null {Character string to represent no data [default=*].} 0 ""}
+    {checkbox -h {Surpress printing of header information.} "" -h}
+}

@@ -1,0 +1,9 @@
+interface_build {
+    {r.colors} 0
+    {Copies color table of one raster map to another}
+    {entry map {Raster map to copy color table to:} 0 raster}
+    {entry rast {Raster map to copy color table from:} 0 raster}
+    {separator grey 1}
+    {checkbox -w {Don't overwrite existing color table.} "" -w}
+    {checkbox -q {Run quietly.} "" -q}
+}

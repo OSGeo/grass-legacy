@@ -1,0 +1,23 @@
+interface_build {
+    	{r.spread} 0
+    	{Wildfire simulation of anisotropic spread that calculates raster map of cumulative spreadtime (*=required inputs).}
+	{entry max {*Raster map of maximum rate of spread (ROS) in cm/min.:} 0 raster}
+	{entry dir {*Raster map of directions of maximum ROS in degrees clockwise from north:} 0 raster}
+	{entry base {*Raster map start location(s) of spread phenomena:} 0 raster}
+	{entry start {*Raster map of max. potential spotting distances in meters:} 0 raster}
+	{entry spot_dist {Raster map of the 100-hour (1-3") fuel moisture:} 0 raster}
+	{entry w_speed {*Raster map of wind velocities at half of the average flame height (feet/minute):} 0 raster}
+	{entry f_mois {Raster map of the 1-hour (<.25") fuel moisture (% content*100):} 0 raster}  
+	{entry least_size {Size of moving sampling window (odd integer) [default=3]:} 0 ""} 
+	{entry comp_dens {Index of geographic range of cells considered for spread from any cell (0.0-1.0) [default=0.5].} 0 ""} 
+	{entry init_time {Initial time of current spread simulation in minutes (positive number) [default=0].} 0 ""}  
+	{entry lag {Simulation duration lag time in minutes (positive integer) [default=infinite].} 0 ""}
+	{entry backdrop {Raster map to serve as backdrop for spread simulation.):} 0 raster}
+	{entry output {*Output raster map of cumulative spread times in minutes:} 0 raster}
+	{entry x_output {Output raster map of UTM easting for backlink information:} 0 raster}
+	{entry y_output {Output raster map of UTM northing for backlink information:} 0 raster}
+    	{checkbox -s {For wildfires, also consider spotting.} "" -s}
+    	{checkbox -d {Display 'live' simulation in active monitor window.} "" -d}
+    	{checkbox -v {Run verbosely.} "" -v}
+}
+

@@ -1,0 +1,45 @@
+interface_build {
+    	{r.le.pixel} 0
+    	{Analyze landscape maps.}
+    	{entry map {Input raster map to be analyzed:} 0 raster}
+	{separator blue 1}
+	{checkbox sam {Sampling method=whole map [default]} "" w}
+	{checkbox sam {Sampling method=units} "" u}
+	{checkbox sam {Sampling method=moving window} "" m}
+	{checkbox sam {Sampling method=regions} "" r}
+	{separator blue 1}
+	{entry reg {Name of regions map (only used with regions sampling):} 0 raster}
+	{separator blue 1}
+	{checkbox att {Measure mean pixel attribute} "" b1}
+	{checkbox att {Measure st. dev. pixel attribute} "" b2}
+	{checkbox att {Measure minimum pixel attribute} "" b3}
+	{checkbox att {Measure maxium pixel attribute} "" b4}
+	{separator blue 1}
+	{checkbox div {Diversity measure: richness} "" d1}
+	{checkbox div {Diversity measure: Shannon} "" d2}
+	{checkbox div {Diversity measure: dominance} "" d3}
+	{checkbox div {Diversity measure: inverse Simpson} "" d4}
+	{separator blue 1}
+	{checkbox te1 {Texture method=2N-H **OR**} "" m1}
+	{checkbox te1 {Texture method=2N-45 **OR**} "" m2}
+	{checkbox te1 {Texture method=2N-V **OR**} "" m3}
+	{checkbox te1 {Texture method=2N-135 **OR**} "" m4}
+	{checkbox te1 {Texture method=4N-HV **OR**} "" m5}
+	{checkbox te1 {Texture method=4N-DIAG **OR**} "" m6}
+	{checkbox te1 {Texture method=8N} "" m7}
+	{checkbox te2 {Texture measure=contagion} "" t1} 
+	{checkbox te2 {Texture measure=ang. sec. mom} "" t2} 
+	{checkbox te2 {Texture measure=inv. diff. mom} "" t3} 
+	{checkbox te2 {Texture measure=entropy} "" t4} 
+	{checkbox te2 {Texture measure=contrast} "" t5} 
+	{separator blue 1}
+	{checkbox bnd {Measure mean juxtaposition (wt. file in r.le.para needed)} "" j1}
+	{checkbox bnd {Measure standard deviation of juxtaposition (wt. file in r.le.para needed)} "" j2}
+	{separator blue 1}
+	{checkbox edg {Measure sum of edges} "" e1}
+	{checkbox edg {Measure sum of edges by type (edge file in r.le.para needed)} "" e2}
+	{separator blue 1}
+    	{checkbox -e {Output map 'edge' of edges given a '1' in r.le.para/edge file} "" -e} 
+    	{checkbox -u {Output maps 'units_x' with sampling units for each scale x} "" -u} 
+    	{checkbox -z {Output map 'zscores' with standardized scores} "" -z}  
+}

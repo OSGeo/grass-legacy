@@ -1,0 +1,10 @@
+interface_build {
+    {s.territory} 0
+    {Calculate territory consumption for animal based on distributed positions.}
+    {entry rast {Input raster resource incidence or density map:} 0 raster}
+    {entry sites {Input sites list with thresholds (resources needed) for each location:} 0 sites}
+    {entry thresh {Number of attribute field in sites list to use as threshold:} 0 ""}
+    {entry incr {Number of attribute field in sites list to use as radius increment value for each iteration:} 0 ""}
+    {entry output {Output sites list with radii of consumption area:} 0 sites}
+    {entry claim {Output raster simultaneous growth map (ignored it site output given):} 0 raster}
+}

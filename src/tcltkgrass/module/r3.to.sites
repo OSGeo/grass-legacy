@@ -1,0 +1,6 @@
+interface_build {
+    {r3.to.sites} 0
+    {Converts 3D cell values in grid3D volume to GRASS sites list}
+    {entry grid3 {Input grid3D file:} 0 ""}
+    {entry sites {Output sites list:} 0 file}
+}

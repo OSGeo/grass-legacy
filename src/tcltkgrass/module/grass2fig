@@ -1,0 +1,6 @@
+interface_build {
+    {grass2fig.tcl} 0
+    {Exports GRASS ASCII vector file to XFig FIG 3.2 format file.}
+    {entry vectascii {Input GRASS ASCII vector file to export:} 0 file}
+    {entry figout {Output XFig FIG 3.2 file (add *.fig extension):} 0 file}
+}

@@ -1,10 +1,10 @@
 interface_build {
     {r.rescale} 0
     {Rescales the range of category values in a raster map layer.}
-    {entry input {Raster map whose category values are to be rescaled:} 0 raster}
-    {entry from {Input map range to be rescaled (min,max) [full range]:} 0 ""}
-    {entry output {Rescaled map:} 0 raster}
-    {entry to {Output map range (min,max) [1,255]:} 0 ""}
-    {entry title {Title of the output raster map:} 0 ""}
+    {entry input {Input raster map whose category values are to be rescaled:} 0 raster}
+    {entry from {Category value range to be rescaled (min,max) [full range]:} 0 ""}
+    {entry output {Output rescaled map:} 0 raster}
+    {entry to {Rescaled category value range (min,max) [1,255]:} 0 ""}
+    {entry title {Title of the output raster map ("title" in quotes):} 0 ""}
     {checkbox -q {Run quietly.} "" -q}
 }

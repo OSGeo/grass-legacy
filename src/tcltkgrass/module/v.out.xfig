@@ -1,0 +1,5 @@
+interface_build {
+    {v.out.xfig.tcl} 0
+    {Exports GRASS vector map to XFig FIG 3.2 format file.}
+    {entry vect {Input GRASS vector map to export:} 0 vector}
+}

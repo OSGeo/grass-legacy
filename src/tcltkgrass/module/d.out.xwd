@@ -1,0 +1,6 @@
+interface_build {
+    {d.out.xwd.tcl} 1
+    {Select display with mouse to save to XWindows xwd graphics file.}
+    {entry output {Name of xwd file to create:} 0 file}
+    {checkbox -nobdrs {Do not include display border.} "" -nobdrs}
+}

@@ -1,0 +1,7 @@
+interface_build {
+    {r.out.rlc} 0
+    {Exports a GRASS raster file to an RLC encoded image at the pixel resolution of current region.}
+    {entry input {Input GRASS raster file:} 0 raster}
+    {entry output {Output RLC image file:} 0 File}
+    {checkbox -v {Run verbosely} 0 -v}
+}

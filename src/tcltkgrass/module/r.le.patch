@@ -1,0 +1,66 @@
+interface_build {
+    	{r.le.patch} 0
+    	{Analyze landscape patches.}
+    	{entry map {Input raster map to be analyzed:} 0 raster}
+	{separator blue 1}
+	{entry sam {Sampling method (w=whole map [default], u=units, m=moving window, r=region)} 0 ""}
+	{separator blue 1}
+	{entry reg {Name of regions map (only used with regions sampling):} 0 raster}
+	{separator blue 1}
+	{checkbox att {Measure mean pixel attribute} "" a1}
+	{checkbox att {Measure st. dev. pixel attribute} "" a2}
+	{checkbox att {Measure mean patch attribute} "" a3}
+	{checkbox att {Measure st. dev. patch attribute} "" a4}
+	{checkbox att {Measure cover by gp} "" a5}
+	{checkbox att {Measure density by gp} "" a6}
+	{checkbox att {Measure total density} "" a7}
+	{checkbox att {Measure effective mesh number} "" a8}
+	{separator blue 1}
+	{checkbox siz {Measure mean patch size} "" s1}
+	{checkbox siz {Measure st. dev. patch size} "" s2}
+	{checkbox siz {Measure mean patch size by gp} "" s3}
+	{checkbox siz {Measure st. dev. patch size by gp} "" s4}
+	{checkbox siz {Measure no. by size class} "" s5}
+	{checkbox siz {Measure no. by size class by gp} "" s6}
+	{checkbox siz {Measure effective mesh size} "" s7}
+	{separator blue 1}
+	{entry co1 {Edge width in pixels (integer) for use with core size measures} 0 ""}  
+	{checkbox co2 {Measure mean core size} "" c1}
+	{checkbox co2 {Measure st. dev. core size} "" c2}
+	{checkbox co2 {Measure mean edge size} "" c3}
+	{checkbox co2 {Measure st. dev. edge size} "" c4}
+	{checkbox co2 {Measure mean core size by gp} "" c5}
+	{checkbox co2 {Measure st. dev. core size by gp} "" c6}
+	{checkbox co2 {Measure mean edge size by gp} "" c7}
+	{checkbox co2 {Measure st. dev. edge size by gp} "" c8}
+	{checkbox co2 {Measure no. by size class} "" c9}
+	{checkbox co2 {Measure no. by size class by gp} "" c10}
+	{separator blue 1}
+	{entry sh1 {Method for shape measures (m1=perim./area, m2=core perim./area, m3=rel. circum.circle)} 0 ""} 
+	{checkbox sh2 {Measure mean patch shape} "" h1}
+	{checkbox sh2 {Measure st. dev. patch shape} "" h2}
+	{checkbox sh2 {Measure mean patch shape by gp} "" h3}
+	{checkbox sh2 {Measure st. dev. patch shape by gp} "" h4}
+	{checkbox sh2 {Measure no. by shape class} "" h5}
+	{checkbox sh2 {Measure no. by shape class by gp} "" h6}
+	{separator blue 1}
+	{checkbox bnd {Measure mean twist number} "" n1}
+	{checkbox bnd {Measure st. dev twist number} "" n2}
+	{checkbox bnd {Measure mean omega index} "" n3}
+	{checkbox bnd {Measure st. dev. omega index} "" n4}
+	{separator blue 1}
+	{checkbox per {Measure sum of perimeters} "" p1}
+	{checkbox per {Measure mean perimeters.} "" p2}
+	{checkbox per {Measure st. dev. perimeters} "" p3}
+	{checkbox per {Measure sum of perimeters by gp} "" p4}
+	{checkbox per {Measure mean perimeters by gp} "" p5}
+	{checkbox per {Measure st. dev. perimeters by gp} "" p6}
+	{separator blue 1}
+	{entry out {Name of output file for patch measures} 0 file}
+	{separator blue 1}
+    	{checkbox -c {Output map 'interior' with patch cores for core measures} "" -c} 
+    	{checkbox -n {Output map 'num' with patch numbers} "" -n} 
+    	{checkbox -p {Include sampling area boundary as perimeter} "" -p}  
+    	{checkbox -t {Use 4 neighbor tracing instead of 8 neighbor} "" -t}  
+    	{checkbox -u {Output maps 'units_x' with sampling units for each scale x} "" -u}
+}

@@ -1,0 +1,7 @@
+interface_build {
+    {g3.createwind} 0
+    {Creates DEFAULTWIND3/WIND3 based on current 2D region}
+    {entry t {Upper extent for region (integer only):} 0 ""}
+    {entry b {Lower extent for region(integer only):} 0 ""}
+    {entry dres {Vertical resolution (3D; integer only):} 0 ""}
+}

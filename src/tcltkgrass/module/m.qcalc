@@ -1,0 +1,13 @@
+interface_build {
+    {m.qcalc} 0
+    {Creates tables of cell sizes, acreage, and hectares; performs unit conversions}
+    {entry init {Initial value:} 0 ""}
+    {entry end {End value (for table creation):} 0 ""}
+    {entry incr {Increment value (for table creation):} 0 file}
+    {entry unit {Units (for unit conversions):} 0 area}
+    {checkbox -s {Create table of cell sizes} s}
+    {checkbox -a {Create acreage table} -a}
+    {checkbox -h {Create hectares table} -h}
+    {checkbox -c {Convert value to specified units} -c}
+    {checkbox -m {Perform simple math calculation} -m}
+}

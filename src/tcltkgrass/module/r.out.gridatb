@@ -1,0 +1,8 @@
+interface_build {
+    {r.out.gridatb} 0
+    {Convert GRASS raster file to GRIDATB.FOR map file (TOPMODEL).}
+    {entry input {Input GRASS raster map:} 0 raster}
+    {entry output {Output GRIDATB.FOR file:} 0 file}
+    {checkbox -o {Overwrite existing map:} 0 -o}
+    
+}

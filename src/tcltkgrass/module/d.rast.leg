@@ -1,0 +1,5 @@
+interface_build {
+    {3d.view.sh} 0
+    {Displays raster map, legend, and map name in a single display monitor.}
+    {option "" {Raster map to display:} 0 ""}
+}

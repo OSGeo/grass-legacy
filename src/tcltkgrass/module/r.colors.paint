@@ -1,0 +1,10 @@
+interface_build {
+    {r.colors.paint} 0
+    {Creates a color table for PAINT driver.}
+    {entry input {Map for which colors will be selected:} 0 raster}
+    {entry output {Map that will contain the results:} 0 raster}
+    {checkbox device {Output for preview} "" preview}
+    {checkbox device {Output for Shinko635} "" shinko635}
+    {checkbox device {Output for Tek4695} "" tec4695}
+    {checkbox -r {Rescale categories for optimal new map.} "" -r}
+}

@@ -2,7 +2,7 @@ interface_build {
     {r.what} 0
     {Query raster map layers' values and labels by coordinate(s).}
     {entry input {Raster maps to be queried, required (name[,name,...]):} 0 +raster}
-    {entry east_north {Coordinates for query (east,north[,east,north,...]):} 0 ""}
+    {entry east_north {Coordinates for query (east,north[,east,north,...]):} 0 +xy}
     {entry < {Locations file (east north [label]):} 0 file}
     {entry cache {Size of point cache [500]:} 0 ""}
     {entry null {Char string to represent no data cell [*]:} 0 ""}

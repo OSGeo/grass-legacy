@@ -1,0 +1,9 @@
+interface_build {
+    {r.reclass.area.tcl} 0
+    {Reclassify raster categories for areas greater or less than specified value.}
+    {checkbox gtlt {Reclassify categories for areas less than value:} 0 l}
+    {checkbox gtlt {Reclassify categories for areas greater than value:} 0 g}
+    {entry area {Reclassify areas greater or less than this value:} 0 ""}
+    {entry map {Input raster map reclassify:} 0 raster}
+    {entry output {Output reclassified raster map:} 0 raster}
+}

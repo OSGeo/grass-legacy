@@ -1,0 +1,9 @@
+interface_build {
+    {d.what.db} 0
+    {View/edit attributes of selected DB table}
+    {entry table {DB table:} 0 ""}
+    {entry key {Column that update will be based on:} 0 ""}
+    {entry x {Column for X-coordinates:} 0 ""}
+    {entry y  {Column for Y-coordinates:} 0 ""}
+    {entry where {SQL where clause:} 0 ""}
+}

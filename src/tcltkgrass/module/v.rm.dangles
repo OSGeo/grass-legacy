@@ -1,0 +1,7 @@
+interface_build {
+    {v.rm.dangles} 0
+    {Removes dangles (lines attached at only one end) of specified length from binary vector map.}
+    {entry input {Input vector map:} 0 vector}
+    {entry output {Output vector map:} 0 vector}
+    {entry maxlength {Remove dangles of this length or shorter [default=-1=remove all dangles]:} 0 ""}
+}

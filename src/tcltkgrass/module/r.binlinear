@@ -1,0 +1,11 @@
+interface_build {
+    {r.bilinear} 0
+    {Surface interpolation utility for raster map layers.}
+    {entry input {Raster map containing data values for interpolation:} 0 raster}
+    {entry output {Output raster map:} 0 raster}
+	{separator blue 2}
+    {Valid for lat/long maps only}
+    {entry north {raster value for north pole (90N)} ""}
+    {entry south {raster value for south pole (90S)} ""}
+    {checkbox -q {Run 'quietly'.} "" -q}
+}

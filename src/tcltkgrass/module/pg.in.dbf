@@ -1,0 +1,9 @@
+interface_build {
+    {pg.in.dbf} 0
+    {Imports DBF file to PostgreSQL DBMS}
+    {entry input {DBF file to import:} 0 file}
+    {entry delimiter {Record delimiter [default= \t]:} 0 ""}
+    {entry null {String to use as null:} 0 ""}
+    {checkbox dumpmode {Admin import privileges [default]:} 0 admin}
+    {checkbox dumpmode {Normal user import privileges:} 0 normal}
+}

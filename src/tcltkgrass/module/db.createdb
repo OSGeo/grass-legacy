@@ -1,0 +1,7 @@
+interface_build {
+    {db.createdb} 0
+    {Create empty database (does not work with ODBC)}
+    {entry driver {Driver name:} 0 ""}
+    {entry database {New database name:} 0 ""}
+    {entry location {Database location:} 0 ""}
+}

@@ -1,0 +1,6 @@
+interface_build {
+    {r.fillnulls} 0
+    {Fills null data areas from cells with data bounding null cells, using r.surf.rst}
+    {entry input {Input raster map with nulls to fill:} 0 raster}
+    {entry output {Output raster map with filled nulls:} 0 raster}
+}

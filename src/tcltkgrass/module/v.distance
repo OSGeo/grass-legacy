@@ -1,0 +1,7 @@
+interface_build {
+    {v.distance} 0
+    {Calculates distance between points and nearest line or point in a vector map.}
+    {entry map {Input vector file:} 0 vector}
+    {entry < {Input ASCII points file (x y format):} 0 file}
+    {entry east_north {Input x,y coordinate pairs manually or with mouse from active display(east,north,east,north,..):} 0 +xy}
+}

@@ -1,0 +1,8 @@
+interface_build {
+    {r.in.pgm} 0
+    {Convert an PGM image file to a raster map layer.}
+    {entry input {Input PGM file:} 0 file}
+    {entry output {Output raster map:} 0 raster}
+    {checkbox -f {Create floating-point map (range 0.0-1.0):} 0 -f}
+    {checkbox -v {Verbose mode:} 0 -v}
+}

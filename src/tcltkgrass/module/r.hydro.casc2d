@@ -1,0 +1,69 @@
+interface_build {
+    {r.hydro.CASC2D} 0
+    {Fully integrated distributed cascaded 2D hydrologic modeling (* = required parameters).}
+    {entry elevation {*Input DEM elevation map:} 0 raster}
+    {entry outlet_eastNnorthNslope {*Easting, northing, & bed slope at outlet (value,value,value):} 0 ""}
+	{separator blue 1}
+    {scale time_step {*Computational time step duration (seconds).} 2 30 2}
+    {entry tot_time {*Total simulation time (seconds).} 0 ""}
+	{separator blue 1}
+    {entry roughness {Map of Manning's N roughness coefficient (values in 1000*Manning's N):} 0 raster}
+    {entry Manning_n {Spatially uniform Manning's N roughness value for overland flow:} 0 ""}
+    {entry watershed_mask {Raster mask of watershed (greatly speeds computation):} 0 raster}
+    {entry d_thresh {Threshold overland depth (meters) below which overland routing will not be performed:} 0 ""}
+    {entry initial_depth {Map of initial overland (not lakes) depth in mm:} 0 raster}
+	{separator blue 1}
+    {entry rain_duration {*Total rainfall duration (seconds):} 0 ""}
+    {entry unif_rain_int {Spatially uniform rainfall intensity in mm/hr:} 0 ""}
+    {entry r_gage_file {Raingage rainfall input file name (ASCII):} 0 file}
+    {entry num_of_raingages {Number of recording raingages:} 0 ""}
+    {entry gage_time_step {Time step (temporal resolution) of recorded raingage data (seconds):} 0 ""}
+    {entry radar_intensity {Prefix of time series of maps of radar- (or otherwise-) generated rainfall intensities in mm/hr.:} 0 raster}
+    {entry radar_time {Time increment between radar- (or otherwise-) generated rainfall maps in sec:} 0 ""}
+	{separator blue 1}
+    {entry storage_capacity {Map of vegetation storage capacity (values in 0.1 mm):} 0 raster}
+    {entry interception_coefficient {Map of interception coefficient (values in 1000*actual coefficient):} 0 raster}
+	{separator blue 1}
+    {entry conductivity {Map of soil saturated hydraulic conductivity in tenths of mm/hr (Req'd for G&A and Redist):} 0 raster}
+    {entry capillary {Map of soil capillary pressure head at the wetting front in tenths of mm (Req'd for G&A and Redist):} 0 raster}
+    {entry porosity {Map of soil effective porosity (values in 1000*porosity) (Req'd for G&A and Redist):} 0 raster}
+    {entry moisture {Map of initial soil moisture (values in 1000*moisture) (Req'd for G&A and Redist):} 0 raster}
+    {entry pore_index {Map of soil pore-size distribution index (Brooks & Corey lambda) in 1000*index (Req'd for Redist):} 0 raster}
+    {entry residual_sat {Map of soil residual saturation (values in 1000*residual saturation) (Req'd for Redist):} 0 raster}
+	{separator blue 1}
+    {entry lake_map {Map of lakes categories:} 0 raster}
+    {entry lake_elev {Map of lakes initial water surface elevation (also see unit_lake):} 0 raster}
+	{separator blue 1}
+    {entry channel_input {Channel input data file name (ASCII), required for explicit (EX) and implicit (IM) channel routing methods):} 0 file}
+    {entry links_map {Map of channel network link numbers. (EX & IM):} 0 raster}
+    {entry nodes_map {Map of channel network node numbers. (EX & IM):} 0 raster}
+    {entry table_input {Look-up table file for links with breakpoint cross section, link type 8, (ASCII) (IM):} 0 file}
+    {entry dis_profile {Channel initial discharge profile file name (ASCII). (IM):} 0 file}
+    {entry wat_surf_profile {Channel initial water surface profile file name (ASCII). (IM):} 0 file}
+    {entry hyd_location {File name containing link and node numbers of internal locations where discharge hydrographs are to be saved (ASCII):} 0 file}
+	{separator blue 1}
+    {entry unit_el_conv {Unit conversion factor by which the values in elevation must be DIVIDED to convert them into meters:} 0 ""}
+    {entry unit_lake {Unit conversion factor by which the values in lake surface elevation map must be DIVIDED to convert them into meters:} 0 ""}
+    {entry unit_space {Unit conversion factor by which all region easting and northing values must be DIVIDED to convert them into meters:} 0 ""}
+	{separator blue 1}
+    {entry discharge {*Outlet hydrograph file name (ASCII):} 0 file}
+    {entry dis_hyd_location {Output file name for discharge hydrograph at internal locations (ASCII):} 0 file}
+    {entry write_time {Time increment for writing output raster maps (in seconds)} 0 ""}
+    {entry depth_map {Output maps of surface depth (in mm):} 0 raster}
+    {entry inf_depth_map {Output maps of cumulative infiltration depth (in tenths of mm):} 0 raster}
+    {entry surf_moist_map {Output maps of surface soil moisture (in number of fractions of a thousand):} 0 raster}
+    {entry rate_of_infil_map {Output maps of infiltration rate (in mm/hr):} 0 raster}
+    {entry dis_rain_map {output maps of distributed rainfall intensity (in mm):} 0 raster}
+	{separator blue 1}
+    {checkbox -s {Do not check square tolerance of a grid cell} "" -s}
+    {checkbox -m {r_gage_file units in mm/hr. [default is in in/hr]} "" -m} 
+    {checkbox -t {Spatially interpolate raingage rainfall intensities using Thiessen polygons. [default is inverse-distance-squared]} "" -t}
+    {checkbox -o {Routes edge-accumulated overland flow out of active region (ONLY when no mask is specified).} "" -o}
+    {checkbox -e {Performs one-dimensional explicit finite difference channel routing.} "" -e}
+    {checkbox -p {Assumes uniform channel geometry in each link (requires -e option).} "" -p}
+    {checkbox -i {Performs Preissmann double sweep implicit channel routing.} "" -i}
+    {checkbox -b {Initializes the channel depth and discharge files (similar to -d, requires -i option) using the standard step backwater method.} "" -b}
+    {checkbox -d {Performs channel initialization for implicit routing (similar to -b, requires -i option) by flooding and draining entire channel network} "" -d}
+    {checkbox -u {Writes discharges cfs and volumes in cubic ft in "discharge" file} "" -u}
+    {checkbox -q {Run quietly: skips printing iteration, time, and discharge values to the screen. No status report is printed.} "" -q}
+}

@@ -1,0 +1,12 @@
+interface_build {
+    {r.null} 0
+    {Sets values to null or sets null to values.}
+    {entry map {Input raster map for managing nulls:} 0 raster}
+    {entry setnull {Values to set to null (value, value, minvalue-maxvalue,...):} 0 ""}
+    {entry null {Replace null with this value:} 0 ""}
+    {checkbox -f {Only change nulls if map is floating-point} "" -f}
+    {checkbox -i {Only change nulls if map is integer} "" -i}
+    {checkbox -n {Only change nulls if map does not already have null file} "" -n}
+    {checkbox -c {Create null file for all data cells} "" -c}
+    {checkbox -r {Remove existing null file} "" -r}
+}

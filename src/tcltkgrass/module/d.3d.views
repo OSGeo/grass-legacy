@@ -1,0 +1,11 @@
+interface_build {
+    {d.3d.views} 0
+    {Displays raster map and shaded relief from 6 different viewing angles.}
+    {entry file {Raster map used to generate color:} 0 raster}
+    {entry ef {Raster elevation map used to generate 3D texture:} 0 raster}
+    {entry vh {Viewing height [default=30000]:} 0 ""}
+    {entry sv {Vertical placement of each image [default=0]:} 0 ""}
+    {entry exag {Vertical exaggeration factor for shaded relief [default=3]:} 0 ""}
+    {entry lf {Distance between wireframe lines in display [default=20]:} 0 ""}
+    {entry back {Background color [default=black]:} 0 color}
+}

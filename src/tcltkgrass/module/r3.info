@@ -1,0 +1,5 @@
+interface_build {
+    {r3.info} 0
+    {Displays information about grid3D file}
+    {entry grid3 {Input grid3D file:} 0 ""}
+}

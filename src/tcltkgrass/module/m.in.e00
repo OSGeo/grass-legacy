@@ -1,0 +1,16 @@
+interface_build {
+    {m.in.e00} 0
+    {Converts an ESRI ArcInfo e00 file to a GRASS vector or raster file.}
+    {entry input {Input e00 file:} 0 file}
+    {checkbox action {Analyze e00 file and exit.} "" analyze}
+    {checkbox action {Import all coverage types [default]} "" all}
+    {checkbox action {Import only raster grid coverages.} "" raster}
+    {checkbox action {Import point/line/polygon coverages without attributes.} "" lines}
+    {checkbox action {Import point/line/polygon coverages with attributes.} "" vector}
+    {entry list {List attributes to import (mult. attr. written to separate dig_cat files:} 0 ""}
+    {entry mapset {New mapset to use for output files} 0 ""}
+    {scale verbose {Level for tracking import process (0=no info to 9=very verbose).} 0 9 1}
+    {entry logfile {Save log file of import process:} 0 file}
+    {checkbox -i {Use e00 feature_ID field instead of feature_# field to link features and attributes.} "" -i}
+    {checkbox -s {Automatically run v.support for vectors.} "" -s}
+}

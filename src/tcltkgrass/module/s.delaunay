@@ -1,0 +1,9 @@
+interface_build {
+    {s.delaunay} 0
+    {Creates a GRASS vector map of Delaunay triangulation from sites.}
+    {entry sites {Input sites file:} 0 sites}
+    {entry vect {Output vector map of Delaunay triangles:} 0 vector}
+    {checkbox -a {Use all sites in file (do NOT limit to current region).} "" -a}
+    {checkbox -l {Output triangulation as a graph, not areas.} "" -l}
+    {checkbox -q {Run quietly.} "" -q}
+}

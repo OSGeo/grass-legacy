@@ -1,0 +1,8 @@
+interface_build {
+    {s.vol.idw} 0
+    {IWD interpolation of point data in GRASS sites list to generate a grid3D volume}
+    {entry input {Input sites list:} 0 sites}
+    {entry output {Output grid3D file:} 0 ""}
+    {entry npoints {Number of points to use for interpolation [default=12]:} 0 ""}
+    {entry field {Number of sites attribute field to use for Z value [default=1]:} 0 ""}
+}

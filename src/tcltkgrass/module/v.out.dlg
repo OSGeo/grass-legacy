@@ -1,0 +1,6 @@
+interface_build {
+    {v.out.dlg} 0
+    {Export GRASS vector map to USGS ASCII DLG-3 file optional format.}
+    {entry input {Input GRASS vector file} 0 vector}
+    {entry output {Output DLG file:} 0 file}
+}

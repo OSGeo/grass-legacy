@@ -1,0 +1,7 @@
+interface_build {
+    {r.in.tang} 0
+    {Convert Tangent raster data to a raster map layer.}
+    {entry cmd {Input Tangent CMD file:} 0 file}
+    {entry out {Input Tangent DATA file:} 0 file}
+    {checkbox -v {Verbose mode.} 0 -v}
+}

@@ -1,6 +1,6 @@
 interface_build {
     {d.graph} 0
     {Program for generating and displaying simple graphics to the graphics display monitor.}
-    {entry input {Name of file containing graphics commands:} 0 ""}
+    {entry input {Name of file containing graphics commands:} 0 file}
     {entry color {Starting color desired for graphics [white]:} 0 color}
 }

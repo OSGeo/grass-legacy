@@ -1,0 +1,8 @@
+interface_build {
+    {s.hull} 0
+    {Creates a convex hull vector map around a set of sites.}
+    {entry sites {Input sites file:} 0 sites}
+    {entry vect {Output convex hull vector map:} 0 vector}
+    {checkbox -a {Use all sites in file (do NOT limit to current region).} "" -a}
+    {checkbox -s {Automatically run v.support.} "" -s}
+}

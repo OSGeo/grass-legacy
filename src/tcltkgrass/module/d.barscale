@@ -5,7 +5,7 @@ interface_build {
     {entry tcolor {Color used for the text [white]:} 0 color}
     {entry at {Screen coordinates for top-left corner of label (options: 0-100 [0.0,0.0]):} 0 ""}
     {checkbox -m {Use mouse to interactively place scale.} "" -m}
+    {checkbox -l {Draw line-style scale instead of bar.} "" -l}
     {checkbox -f {Use feet/miles instead of meters.} "" -f}
-    {checkbox -l {Draw a line scale instead of a bar scale.} "" -l}
     {checkbox -t {Write text on top of the scale, not to the right.} "" -t}
 }

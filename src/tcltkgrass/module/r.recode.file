@@ -1,0 +1,10 @@
+interface_build {
+    	r.recode 0
+    	{Creates a new raster map using rules file to recode categories in an existing raster map.}
+    	{entry input  {Input raster map to be recoded:} 0 raster}
+    	{entry output {Name for the resulting raster map:} 0 raster}
+    	{entry < {Rules file for recoding raster map:} 0 file}    
+    	{entry title  {Title for the resulting raster map ("title" in quotes):} 0 ""}
+	{checkbox -a {Align the current region to the input map} "" -a}
+	{checkbox -d {Force output to double map type (DCELL)} "" -d}
+}

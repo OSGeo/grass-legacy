@@ -1,0 +1,20 @@
+interface_build {
+    v.to.pg 0
+    {Export vector map data to PostgreSQL database.}
+    {entry map  {Vector map:} 0 vector}
+    {checkbox type  {Area map} 0 area}
+    {checkbox type  {Line map} 0 line}
+    {entry color {Color for vector draw:} 0 color}
+    {separator blue 1}
+    {entry key {Column cat_ID:} 0 ""}
+    {entry tab {DB table:} 0 ""}
+    {entry where  {Where clause:} 0 ""}
+    {entry rmap {Raster map for Z-coordinate (may be used with PostGIS):} 0 raster}
+    {checkbox -f {Fill polygons.} "" -f}
+    {checkbox -t {Select without reference table (i.e., all vectors)} "" -t}
+    {checkbox -p {Create and populate PostGIS table instead of PostgreSQL table} "" -p}
+    {checkbox -v {Verbose mode.} "" -v}
+    {separator blue 1}
+    {checkbox -s {SQL file input} "" -s}
+    {entry sql  {Name of SQL file:} 0 file}
+}

@@ -1,0 +1,21 @@
+interface_build {
+	{r.rational.regression} 0
+	{Calculates linear and nonlinear regression from image data stored in ASCII file.}
+	{entry input {Input ASCII file of image to be analyzed:} 0 file}
+	{entry output {Output file to store regression results:} 0 file}
+	{separator blue 1}
+	{checkbox check {Check for multi-collinearity when channel x1 is replaced by coverage y} "" multx1}
+	{checkbox check {Check for multi-collinearity when channel x2 is replaced by coverage y (2 channel data)} "" multx2}
+	{checkbox check {Check for multi-collinearity when channel x3 is replaced by coverage y (>2 channel data)} "" multx3}
+	{separator blue 1}
+	{checkbox predict {Use different parts of same imagery set for data and prediction:} "" same}
+	{checkbox predict {Use one set of imagery for data and another for prediction:} "" other}
+	{separator blue 1}
+	{checkbox plot {Output ASCII files of radiance-coverage for plotting.} "" radiance-coverage}
+	{checkbox plot {Output ASCII files of vegetation-soil for plotting.} "" vegetation-soil}
+	{checkbox plot {Output ASCII files of residuals for plotting adequacy.} "" adequacy}
+	{checkbox plot {Output ASCII files of all types for plotting.} "" all}
+	{separator blue 1}
+   	{checkbox calculat {Use linearization method for calculating nonlinear relaxation index regression:} "" rvi_linear}
+   	{checkbox calculat {Use generalized nonlinear regression method:} "" rvi_nonlinear}
+}

@@ -1,0 +1,13 @@
+interface_build {
+    {g3.setregion} 0
+    {Manage current 3D region window}
+    {entry n {Northern extent for region:} 0 ""}
+    {entry s {Southern extent for region:} 0 ""}
+    {entry w {Western extent for region:} 0 ""}
+    {entry e {Eastern extent for region:} 0 ""}
+    {entry top_height {Upper extent for region (integer only):} 0 ""}
+    {entry bottom_height {Lower extent for region(integer only):} 0 ""}
+    {entry res {Horizontal resolution (2D):} 0 ""}
+    {entry dres {Vertical resolution (3D; integer only):} 0 ""}
+    {checkbox -u {Update WIND3 file from WIND/DEFAULT_WIND3:} 0 ""}
+}

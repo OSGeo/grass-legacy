@@ -1,0 +1,6 @@
+interface_build {
+    {r.out.xyz} 0
+    {Converts a raster map to xyz values.}
+    {entry input {Input raster map:} 0 raster}
+    {entry > {Output ASCII file of xyz values:} 0 file}
+}

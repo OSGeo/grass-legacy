@@ -3,5 +3,8 @@ interface_build {
     {Imports a PPM (24bit) file as a GRASS raster file.}
     {entry input {PPM file (input):} 0 file}
     {entry output {GRASS raster file (output):} 0 raster}
+    {checkbox -f {Create floating-point map (range 0.0-1.0). Not applicable to composite maps created with -c option:} 0 -f}
+    {checkbox -b {Create 3 separate raster maps of the red, green, & blue levels.} "" -b}
+    {checkbox -c {Create 1 composite color raster map.} "" -c}
     {checkbox -v {Verbose mode on.} "" -v}
 }

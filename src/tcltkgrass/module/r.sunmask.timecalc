@@ -1,0 +1,18 @@
+interface_build {
+    	{r.sunmask} 0
+    	{Computes a raster map of cast shadow areas from sun position and DEM map, calculating sun position from date and time.}
+ 	{entry elev {Elevation raster (DEM) map to be used for shadow calculation:} 0 raster}  
+ 	{entry output {Output binary raster map of cast shadows (1=shadow):} 0 raster}  
+ 	{entry year {Set year (1950..2050) for sun position calculation:} 0 ""}  
+ 	{scale month {Set month (1..12) for sun position calculation:} 1 12 1}  
+ 	{entry day {Set day (1..31) for sun position calculation:} 0 ""}  
+ 	{scale hour {Set hour (0..12) for sun position calculation:} 0 12 1}  
+ 	{entry minute {Set minutes (0..60) for sun position calculation:} 0 ""}  
+ 	{entry second {Set seconds (0..60) for sun position calculation:} 0 ""}  
+ 	{scale timezone {Set timezone (east positive, offset from GMT, also use to adjust daylight savings):} -12 12 1}  
+ 	{entry east {east coordinate for point of interest[default=map center]:} 0 ""}  
+ 	{entry north {north coordinate for point of interest [default=map center]:} 0 ""}  
+	{checkbox -z {Zero is a real elevation (i.e., not null)} "" -z}	
+	{checkbox -v {Verbose output} "" -v}	
+	{checkbox -s {Calculate sun position only and exit} "" -s}	
+}

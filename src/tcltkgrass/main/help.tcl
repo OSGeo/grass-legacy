@@ -4,7 +4,7 @@
 
 help {Help} {-width 80} {-justify left} \
 {
-                                TclTkGRASS 3.1
+                                TclTkGRASS 4.0
                An open graphical user interface for GRASS GIS
 
 --------------------------------------------------------------------------------
@@ -45,13 +45,10 @@ HOW TO USE TclTkGRASS?
   find at:
 
   "GRASS GIS Documentation Project":
-        http://www.geog.uni-hannover.de/grass/gdp/
-
-  "GRASS GIS Europe pages":
-        http://www.geog.uni-hannover.de/grass/
+        http://grass.itc.it/gdp/index.html
 
   "GRASS GIS official site" from GRASS Development Team:
-        http://www.baylor.edu/~grass/
+        http://grass.itc.it/
 
   Beside the module windows you can also enter commands directly into 
   the shell window (as usual).
@@ -86,7 +83,7 @@ SPECIAL FEATURES
            "?"
             -> "Manual pages"
 
-      Using the select button, you can choose the specific module´s manpage.
+      Using the select button, you can choose the specific module's manpage.
 
    3) If you click on a separator line (-----) at the top of each main menu,
       the menu will become a separated window. That is useful, if you frequently
@@ -94,7 +91,7 @@ SPECIAL FEATURES
       Generally you can leave all module windows on the screen (useful for 
       frequently used windows like "d.erase" etc.).
 
-   4) The window´s positions and the windows, which shall be open also in the 
+   4) The window's positions and the windows, which shall be open also in the 
       next session, can be stored when leaving TclTkGRASS:
            "Quit"
               -> "Save config before quitting?" (Yes/No/Cancel)

@@ -1,0 +1,13 @@
+interface_build {
+    	{r.sunmask} 0
+    	{Computes a raster map of cast shadow areas from sun position and DEM map, using sun position as input.}
+ 	{entry elev {Elevation raster (DEM) map to be used for shadow calculation:} 0 raster}  
+ 	{entry output {Output binary raster map of cast shadows (1=shadow):} 0 raster}  
+ 	{entry altitude {Set altitude of the sun above horizon in decimal degrees (0-89.999):} 0 ""}  
+ 	{entry azimuth {Set azimuth of the sun from the north in degrees (0-360):} 0 ""}  
+ 	{entry east {east coordinate for point of interest[default=map center]:} 0 ""}  
+ 	{entry north {north coordinate for point of interest [default=map center]:} 0 ""}  
+	{checkbox -z {Zero is a real elevation (i.e., not null)} "" -z}	
+	{checkbox -v {Verbose output} "" -v}	
+	{checkbox -s {Calculate sun position only and exit} "" -s}	
+}

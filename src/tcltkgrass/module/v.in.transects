@@ -1,0 +1,13 @@
+interface_build {
+    {v.in.transects} 0
+    {Creates transects lines or areas.}
+    {entry input {Input transect information file (see v.in.transect documentation):} 0 file}
+    {entry fs {Field separator in transect information file [space]:} 0 file}
+    {entry length {Length of all transects created:} 0 file}
+    {checkbox units {Transect length in meters [default]:} 0 meter}
+    {checkbox units {Transect length in feet:} 0 foot}
+    {entry decl {Declination to be added to transect azimuth [0]:} 0 ""}
+    {entry vect {Output vector file:} 0 vector}
+    {entry TITLE {"Title" of vector map:} 0 ""}
+    {checkbox -a {Create area transects instead of line transects.} "" -a}
+}

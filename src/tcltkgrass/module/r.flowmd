@@ -1,0 +1,14 @@
+interface_build {
+    {r.flowmd} 0
+    {Construction of slope lines (flowlines), flowpath lengths and flowline densities from DEM using multiple modified direction algorithm.}
+    {entry elevin {Input elevation raster map:} 0 raster}
+    {entry aspin {Input aspect raster map (optional):} 0 raster}
+    {entry barrierin {Input binary barrier raster map (optional):} 0 raster}
+    {entry skip {Set number of cells between flowlines in flowline output map (optional, def.=max):} 0 ""}
+    {entry bound {Set maximum number of segments of each flowline (optional):} 0 ""}
+    {entry flout {Output vector flowline map:} 0 vector}
+    {entry lgout {Flowpath length map (optional):} 0 raster}
+    {entry dsout {Output flowline density map (optional):} 0 raster}
+    {checkbox -d {Generate flowlines downhill (default: uphill).} "" -d}
+
+}

@@ -1,0 +1,7 @@
+interface_build {
+    {db.dropdb} 0
+    {PERMANENTLY remove database (does not work with ODBC)}
+    {entry driver {Driver name:} 0 ""}
+    {entry database {Database to remove:} 0 ""}
+    {entry location {Database location:} 0 ""}
+}

@@ -1,0 +1,12 @@
+interface_build {
+    {r.random.surface} 0
+    {Creates raster map(s) of random surface(s) with spatial dependence.}
+    {entry output {Output raster surface map(s) (name,name,...):} 0 raster}
+    {entry distance {Value(s) of spatial dependence between output map(s) [default=0.0]:} 0 ""}
+    {entry exponent {Distance-decay exponent (determines "texture" of output maps) [default=1.0]:} 0 ""}
+    {entry flat {Distance filter remains flat before beginning exponent [default=0.0]:} 0 ""}
+    {entry high {Maximum cell value in output map(s) [default=255]:} 0 ""}
+    {entry seed {Seed value for random cell generator [default=random]:} 0 ""}
+    {checkbox -u {Uniform (rather than normal) distribution for cells of output map(s).} "" -u}
+    {checkbox -q {Run quietly.} "" -q}
+}

@@ -1,0 +1,12 @@
+interface_build {
+    {r.in.miads} 0
+    {Convert an MIADS output ASCII file to an GRASS ASCII raster map file.}
+    {entry input {Input MIADS file:} 0 file}
+    {entry output {Output ASCII raster map:} 0 raster}
+    {entry strip {MIADS strip number of reference cell:} 0 ""}
+    {entry line {MIADS line number of reference cell:} 0 ""}
+    {entry cell {MIADS cell reference cell:} 0 ""}
+    {entry Easting {UTM Easting at the cell reference:} 0 ""}
+    {entry Northing {UTM Northing at the cell reference:} 0 ""}
+    {entry size {Cell size (length of one side:} 0 ""}
+}

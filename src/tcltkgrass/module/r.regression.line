@@ -1,0 +1,7 @@
+interface_build {
+    {r.regression.line.tcl} 0
+    {Compute linear regression from 2 raster maps: raster(y)=a+b*raster(x).}
+    {entry rasterx {Independent variable (x) raster map:} 0 raster}
+    {entry rastery {Dependent variable (y) raster map:} 0 raster}
+    {entry output {Output regression results:} 0 file}
+}

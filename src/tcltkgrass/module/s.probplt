@@ -1,0 +1,10 @@
+interface_build {
+    {s.probplt} 0
+    {Generate GNUPlot files for normal or lognormal probability plot of site values (3rd column only).}
+    {entry sites {Input sites file:} 0 sites}
+    {entry width {Input bin width for histogram plot:} 0 ""}
+    {entry graph {Output GNUPlot data (*.dat) and commands (*.gp) files:} 0 file}
+    {checkbox -a {Use all sites in file (do NOT limit to current region).} "" -a}
+    {checkbox -l {Create lognormal (rather than normal) probability plot files.} "" -l}
+    {checkbox -q {Run quietly.} "" -q}
+}

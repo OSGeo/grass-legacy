@@ -1,0 +1,8 @@
+interface_build {
+    {r.in.poly} 0
+    {Convert an ASCII polygon/line file to a raster map layer.}
+    {entry input {Input ASCII polygon/line file:} 0 file}
+    {entry output {Output raster map:} 0 raster}
+    {entry TITLE {Enter title for map ("title" in quotes):} 0 ""}
+    {entry rows {Number of rows to hold in memory [512]:} 0 ""}
+}

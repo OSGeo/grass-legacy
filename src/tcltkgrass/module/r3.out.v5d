@@ -1,0 +1,7 @@
+interface_build {
+    {r3.out.v5d} 0
+    {Exports grid3D file to v5d format (VIS5D)}
+    {entry grid3 {Input grid3D file:} 0 ""}
+    {entry output {Output v5d file:} 0 file}
+    {checkbox -m {Use map coordinates instead of xyz coordinates.} "" -m}
+}

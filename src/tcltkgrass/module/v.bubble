@@ -1,0 +1,9 @@
+interface_build {
+    {v.bubble} 0
+    {Generates vector map of circles around each point in sites file of radius proportionate to z value of point.}
+    {entry sitefile {Input sites file:} 0 sites}
+    {entry output {Output vector file of circles:} 0 vector}
+    {entry field {Number of attribute field in sites file to use for circle dimension:} 0 ""}
+    {entry radius {Scaling factor: circle radius equivalent maximum z value in sites file [default=1.0]:} 0 ""}
+    {checkbox -s {Automatically run v.support.} "" -s}
+}

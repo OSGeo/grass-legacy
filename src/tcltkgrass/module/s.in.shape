@@ -1,0 +1,10 @@
+interface_build {
+    {s.in.shape} 0
+    {Converts an ESRI shapefile of points or multipoints to a GRASS sites file.}
+    {entry in {Input shapefile file:} 0 file}
+    {entry attribute {Attribute to use as category field:} 0 ""}
+    {entry height {Specify a height constant:} 0 ""}
+    {checkbox l {List fields of Shapefile DBF and exit} 0 -l}
+    {checkbox z {Include a height with each record ('height' attribute or constant).} 0 -z}
+    {checkbox m {Treat second attribute as a 'measure' field.} 0 -m}
+}

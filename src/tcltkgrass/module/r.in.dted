@@ -1,0 +1,7 @@
+interface_build {
+    {r.in.dted} 0
+    {Convert a DTED file to a raster map layer.}
+    {entry dted {Input DTED file:} 0 file}
+    {entry rast {Output raster map:} 0 raster}
+    {checkbox -q {Quite mode:} 0 -q}    
+}

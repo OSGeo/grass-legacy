@@ -1,0 +1,8 @@
+interface_build {
+    {r.topidx} 0
+    {Creates raster map of topographic index value=ln(a/tan(beta)).}
+    {entry input {Input raster elevation map (DEM):} 0 raster}
+    {entry output {Output raster map of topographic index:} 0 raster}
+    {checkbox -o {Overwrite existing map} "" -o}
+    {checkbox -v {Verbose output} "" -v}
+}

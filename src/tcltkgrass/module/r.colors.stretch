@@ -1,0 +1,10 @@
+interface_build {
+    {r.colors} 0
+    {Assigns contrast stretch grey scale to raster}
+    {entry map {Raster map:} 0 raster}
+    {checkbox color {histogram-equalize} "" grey.eq}
+    {checkbox color {histogram log transformed} "" grey.log}
+    {separator grey 1}
+    {checkbox -w {Don't overwrite existing color table.} "" -w}
+    {checkbox -q {Run quietly.} "" -q}
+}

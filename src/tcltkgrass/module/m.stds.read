@@ -1,0 +1,7 @@
+interface_build {
+    {m.stds.read} 0
+    {Read contents of STDS & other ISO 8211 (FIPS 123) format data files.}
+    {entry input {Input STDS or ISO 8211 file} 0 file}
+    {entry output {Save output to ASCII file:} 0 file}
+    {checkbox s {Surpress screen display of STDS data} 0 -s}
+}

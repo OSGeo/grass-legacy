@@ -1,0 +1,7 @@
+interface_build {
+    {r.surf.area} 0
+    {Calculates area of a surface taking topography into account.}
+    {entry input {Input raster map for surface area calculation:} 0 file}
+    {entry vscale {Vertical scaling factor to multiply by elevation:} 0 ""}
+    {entry > {Output results to ASCII file:} 0 file}
+}

@@ -1,0 +1,9 @@
+interface_build {
+    {v.out.idrisi} 0
+    {Export GRASS vector map to Idrisi GIS file.}
+    {entry input {Input GRASS vector file} 0 vector}
+    {entry output {Output Idrisi file:} 0 file}
+    {checkbox type {Output polygons [default]} 0 polygon}
+    {checkbox type {Output lines} 0 line}
+    {checkbox type {Output points} 0 point}
+}

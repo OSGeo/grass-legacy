@@ -1,0 +1,9 @@
+interface_build {
+    {i.shape} 0
+    {Spatial shape ID and classification using Fourier transform on raster map.}
+    {entry input {Input raster map for analysis:} 0 raster}
+    {entry output {Output classified raster map:} 0 raster}
+    {entry width {XY size of Gaussian edge-detection filter [default=9]:} 0 ""}
+    {entry threshold {Sensitivity of Gaussian edge-detection filter [default=10]:} 0 ""}
+    {entry orientation {Categories of edge directional azimuths recognized [default=1]:} 0 ""}
+}

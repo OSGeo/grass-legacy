@@ -1,0 +1,7 @@
+interface_build {
+    {r.surf.gauss} 0
+    {Generate a raster surface map of gaussian deviates for specified mean and standard deviation.}
+    {entry out {Output gaussian surface raster map:} 0 raster}
+    {entry d {Set gaussian distribution mean [default=0.0]:} 0 ""}
+    {entry n {Set gaussian distribution standard deviation [default=1.0]:} 0 ""}
+}

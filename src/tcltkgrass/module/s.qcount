@@ -1,0 +1,11 @@
+interface_build {
+    {s.qcount} 0
+    {Compute counts of sites within quadrats, and indexes to test for randomness.}
+    {entry sites {Input sites file:} 0 sites}
+    {entry n {Input number of non-overlapping circular quadrats within region to use:} 0 ""}
+    {entry r {Input radius of quadrats:} 0 ""}
+    {entry > {Output results to ASCII file or sites list:} 0 file}
+    {checkbox -c {Print count data in sites list format.} "" -c}
+    {checkbox -l {Surpress output of table of indexes [default=print indexes and not count data].} "" -l}
+    {checkbox -q {Run quietly.} "" -q}
+}

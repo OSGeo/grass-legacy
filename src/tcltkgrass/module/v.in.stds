@@ -1,0 +1,13 @@
+interface_build {
+    {v.in.stds} 0
+    {Converts data in ARC/INFO format to GRASS's vector format, and stores output in the user's current GRASS mapset.}
+    {entry catd {STDS CATD file to import (####CATD.DDF):} 0 file}
+    {entry output {Output vector map:} 0 vector}
+    {entry dbpath {Location to save database-ready attribute table (optional; give full path):} 0 ""}
+    {entry domain {Resultant GRASS vector output file:} 0 vector}
+    {entry map {Name of STDS map layer to import:} 0 ""}
+    {entry theme {Name of STDS map theme to import:} 0 ""}
+    {entry manifold {Name of STDS manifold layer ("aggregate object") to import:}  0 ""}
+    {checkbox -i {Only display information about STDS file and exit.} "" -i}
+    {checkbox -l {Import vectors and link tables only.} "" -l}
+}

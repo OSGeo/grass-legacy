@@ -3,6 +3,4 @@ interface_build {
     {Generates and displays simple graphics on map layers.}
     {entry input {File containing graphics instructions:} 0 file}
     {entry color {Starting color desired for graphics [white]:} 0 color}
-    {entry vsize {???} 0 ""}
-    {entry hsize {???} 0 ""}
 }

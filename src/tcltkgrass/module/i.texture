@@ -1,0 +1,6 @@
+interface_build {
+    {i.texture} 0
+    {Calculates textural statistics for image file (can be slow for large files).}
+    {entry rast {Input raster image or map for analysis:} 0 raster}
+    {entry > {Output results to ASCII file:} 0 file}
+}

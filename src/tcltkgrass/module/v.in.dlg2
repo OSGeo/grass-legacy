@@ -1,0 +1,8 @@
+interface_build {
+    {v.in.dlg} 0
+    {USGS ASCII or binary DLG-3 file to GRASS vector format (run v.support before using).}
+    {entry input {DLG file:} 0 file}
+    {entry output {Output GRASS vector file} 0 vector}
+    {checkbox -b {DLG file is binary (default is ASCII).} "" -l}
+    {checkbox -l {Give precedence to line information over [default] area.} "" -l}
+}

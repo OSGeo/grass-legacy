@@ -1,0 +1,10 @@
+interface_build {
+    	{v.random} 0
+	{Creates sites file of randomly placed points within vector areas}
+	{entry map {Input vector area map} 0 vector}
+	{entry dot {Input ASCII file with category labels (or values) and count of sites to place in each area} 0 file}
+	{entry site {Output sites map of points within vector areas} 0 sites}
+	{checkbox -n {Use category values NOT labels} "" -n} 
+	{checkbox -s {Determine optimum sites point size} "" -s}
+	{checkbox -v {Verbose mode} "" -v}
+}

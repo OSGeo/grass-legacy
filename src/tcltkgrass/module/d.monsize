@@ -1,0 +1,7 @@
+interface_build {
+    {d.monsize.tcl} 0
+    {Start or restarts specified display monitor at specified size.}
+    {entry width {Set display monitor width:} 0 ""}
+    {entry height {Set display monitor height:} 0 ""}
+    {entry monitor {Display monitor to start or restart:} 0 monitor}
+}

@@ -1,0 +1,9 @@
+interface_build {
+    {v.in.poly} 0
+    {Creates polygons of specified radius and number of sides around a set of points.}
+    {entry input {ASCII file of centerpoints (leave blank for keyboard entry):} 0 file}
+    {entry vect {Output vector file:} 0 vector}
+    {entry radius {Radius of polygons:} 0 ""}
+    {entry segments {Number of sides for each polygon [6]:} 0 ""}
+    {checkbox -t {Do NOT automatically build topology for polygons.} "" -t}
+}

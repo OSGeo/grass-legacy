@@ -1,0 +1,6 @@
+interface_build {
+    	{r.sum} 0
+    	{Sums cell values from an incidence or density raster map.}
+	{entry rast {Input raster map:} 0 raster}
+}
+

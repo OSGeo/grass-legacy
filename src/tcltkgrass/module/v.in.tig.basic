@@ -1,0 +1,13 @@
+interface_build {
+    {v.in.tig.basic} 0
+    {Creates GRASS vector file from TIGER files.}
+    {entry t1 {TIGER Type 1 file to import:} 0 file}
+    {entry t2 {TIGER Type 2 file to import:} 0 file}
+    {entry out {Output vector file:} 0 vector}
+    {entry zone {UTM zone [current zone]:} 0 ""}
+    {entry spheroid {Spheroid [clark66]:} 0 spheroid}
+    {entry tlid {File with list of TLID numbers to process from TIGER 1 file:} 0 file}
+    {checkbox -q {Run quietly.} "" -q}
+    {checkbox -l {Build topology (can be run quietly).} "" -l}
+    {checkbox -p {Create new disk file for Type 2 pointers every time (usually not needed).} "" -p}
+}

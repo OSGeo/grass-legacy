@@ -1,0 +1,12 @@
+interface_build {
+    g.mremove 0
+    {Use regular expressions and wildcards to remove data files in the user's current mapset search path and location.}
+    {entry rast {Raster maps (name[,name,...]):} 0 +raster}
+    {entry vect {Vector maps (name[,name,...]):} 0 +vector}
+    {entry sites {Site files (name[,name,...]):} 0 +sites}
+    {entry icon {Icon files (name[,name,...]):} 0 +icon}
+    {entry labels {Label files (name[,name,...]):} 0 +label}
+    {entry region {Region definition files (name[,name,...]):} 0 +region}
+    {entry group {Imagery group files (name[,name,...]):} 0 +group}
+    {entry dview {3dview files (name[,name,...]):} 0 +3dview}
+}

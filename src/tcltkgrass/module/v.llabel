@@ -1,0 +1,13 @@
+interface_build {
+    {v.llabel} 0
+    {Automatically labels unlabeled point or line features in a binary vector map.}
+    {entry map {Vector map to label:} 0 vector}
+    {entry value {Category value for unlabeled areas or starting value for incremental labeling:} 0 ""}
+    {entry label {Catgegory label for unlabeled areas:} 0 ""}
+    {checkbox type {Label points:} 0 point}
+    {checkbox type {Label lines:} 0 line}
+    {checkbox type {Label area edges:} 0 edge}
+    {checkbox type {Label all feature types except areas:} 0 all}
+    {checkbox -i {Assign category values incrementally, starting from specified initial value.} "" -i}
+    {checkbox -n {Do not run v.support.} "" -n}
+}
