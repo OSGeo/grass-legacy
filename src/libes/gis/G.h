@@ -43,7 +43,6 @@ struct G__                         /*  Structure of library globals */
 	struct Cell_stats statf ;  /* Cell stats                   */
 	struct Range range ;       /* Range structure              */
 	struct FPRange fp_range ;  /* float Range structure        */
-        int compression_bits;      /* max # bits used in lzw compression */
 	int want_histogram ;
         int reclass_flag ;         /* Automatic reclass flag       */
         off_t *row_ptr ;           /* File row addresses           */
