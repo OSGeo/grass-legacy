@@ -17,54 +17,30 @@
 *   	    	for details.
 *
 *****************************************************************************/
-/*
-   **
-   **INTERFACE LEVEL II
-   **==================
-   **
- */
-
 #include "gis.h"
 #include "Vect.h"
 #include <stdlib.h>
 
+/* INTERFACE LEVEL II  */
 
 static int Writable = 0;	/* Open Plus file for WRITE/READONLY */
 static char *RW_str = "r";
 
-
 int 
-Vect_P_init (
-	      char *name,
-	      char *mapset,
-	      struct Map_info *map)
-{
-  char *error;
-/*
-  if (NULL != (error = Vect__P_init (map, name, mapset)))
-    {
-      fprintf (stderr, "%s\n", error);
-      exit (-1);
-    }
-*/
-  return (0);
-}
-
-int 
-V2_num_nodes (struct Map_info *map)
+Vect_get_num_nodes (struct Map_info *map)
 {
   return (map->plus.n_nodes);
 }
 
 
 int 
-V2_num_lines (struct Map_info *map)
+Vect_get_num_lines (struct Map_info *map)
 {
   return (map->plus.n_lines);
 }
 
 int 
-V2_num_areas (struct Map_info *map)
+Vect_get_num_areas (struct Map_info *map)
 {
   return (map->plus.n_areas);
 }
@@ -85,7 +61,7 @@ Vect_get_node_point (struct Map_info *map, int num, double *x, double *y)
 
 /* get Area bounding box info in NSEW */
 int 
-V2_get_area_bbox (struct Map_info *map, int area,
+Vect_get_area_bbox (struct Map_info *map, int area,
 		  double *N, double *S, double *E, double *W)
 {
   P_AREA *Area;
@@ -105,7 +81,7 @@ V2_get_area_bbox (struct Map_info *map, int area,
 
 /* get Line bounding box info in NSEW */
 int 
-V2_get_line_bbox (
+Vect_get_line_bbox (
 		   struct Map_info *map, int line,
 		   double *N, double *S, double *E, double *W)
 {
@@ -123,3 +99,46 @@ V2_get_line_bbox (
 */
   return (0);
 }
+
+
+/* get Line starting and ending node */
+int 
+Vect_get_line_nodes ( struct Map_info *Map, int line, int *n1, int *n2)
+{
+
+    if ( Map->level < 2 )
+	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+    
+    if ( n1 != NULL ) 
+	*n1 = Map->plus.Line[line]->N1;
+
+    if ( n2 != NULL ) 
+	*n2 = Map->plus.Line[line]->N2;
+
+    return 1;
+}
+
+/* returns number of lines for node */
+int 
+Vect_get_node_n_lines ( struct Map_info *Map, int node )
+{
+
+    if ( Map->level < 2 )
+	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+    
+    return ( Map->plus.Node[node]->n_lines );
+
+}
+
+/* returns number of lines for node */
+int 
+Vect_get_node_line ( struct Map_info *Map, int node, int line )
+{
+
+    if ( Map->level < 2 )
+	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+    
+    return ( Map->plus.Node[node]->lines[line] );
+
+}
+

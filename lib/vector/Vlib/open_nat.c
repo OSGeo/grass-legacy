@@ -96,7 +96,6 @@ V1_open_new_nat (
   Map->Constraint_region_flag = 0;	/* these do not apply to to write, but */
   Map->Constraint_type_flag = 0;	/* init them anyway                   */
 
-  Vect__init_head (&(Map->head));
   Map->head.with_z = with_z;
   Map->head.size = 0;
   Vect__write_head (Map);
