@@ -63,10 +63,10 @@ int parse_conn ( char *str, MYCONN *myconn )
 	   else if ( strncmp(tokens[i], "dbname", 6 ) == 0 )
 	       myconn->dbname = G_store ( tokens[i] + 7 );
 	   else if ( strncmp(tokens[i], "user", 4 ) == 0 )
-	       G_warning ( "'user' in database definition is not supported, use db.connect" );
+	       G_warning ( "'user' in database definition is not supported, use db.login" );
 	      /* myconn->user = G_store ( tokens[i] + 5 ); */
 	   else if ( strncmp(tokens[i], "password", 8 ) == 0 )
-	       G_warning ( "'password' in database definition is not supported, use db.connect" );
+	       G_warning ( "'password' in database definition is not supported, use db.login" );
 	      /* myconn->password = G_store ( tokens[i] + 9 ); */
 	   else 
                G_warning ( "Unknown option in database definition for mysql: '%s'", tokens[i] );
