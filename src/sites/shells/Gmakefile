@@ -1,0 +1,4 @@
+# %W% %G%
+$(BIN)/sites:	sites.sh
+		cp $? $@
+		chmod 0755 $@
