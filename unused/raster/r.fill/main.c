@@ -138,6 +138,9 @@ main(int argc, char **argv)
 
 	rbytes = cols * G_raster_size(ibuf.type);
 
+	if(verbose)
+		fprintf(stderr, "Reading map...\n");
+
 	for(row=0; row<rows; row++){
 		ibuf.row[row].v = G_allocate_raster_buf(ibuf.type);
 		if(G_get_raster_row(fd, ibuf.row[row].v, row, ibuf.type) < 0){
