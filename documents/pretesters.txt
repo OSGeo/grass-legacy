@@ -25,6 +25,9 @@ Linux:
   Private Bag 3105
   Hamilton,  New Zealand
 
+* Moritz Lennert
+  mlennert@club.worldonline.be
+
 --------------------
 Solaris 2.7:
 * Richard Christofferson 
