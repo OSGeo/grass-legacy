@@ -453,7 +453,6 @@ void G_sites_close ( FILE * ptr)
 	Vect_build (Map, stderr);
     
     Vect_close ( Map );
-    G_free ( Map );
 
     for ( i = 0; i < Map->n_site_att; i++ ) {
 	free ( Map->site_att[i].dbl );
@@ -464,6 +463,8 @@ void G_sites_close ( FILE * ptr)
 	free ( Map->site_att[i].str );
     }
     free (Map->site_att);
+
+    G_free ( Map );
 }
 
 /*********************************************/
