@@ -20,7 +20,6 @@ I_new_signature (S)
     i = S->nsigs++;
     S->sig = (SIG *) G_realloc (S->sig, S->nsigs * sizeof (SIG));
 
-    S->sig[i].desc[0] = 0;
     S->sig[i].mean = (double *) G_calloc (S->nbands, sizeof(double));
     S->sig[i].var = (double **) G_calloc (S->nbands, sizeof(double *));
 
@@ -29,6 +28,7 @@ I_new_signature (S)
 
     S->sig[i].status = 0;
     S->sig[i].have_color = 0;
+    sprintf(S->sig[i].desc, "Class %d", i+1);;
     return S->nsigs;
 }
 
@@ -81,6 +81,7 @@ I_read_one_signature (fd, S)
 	{
 	    if (fscanf (fd, "%lf", &s->var[i][n]) != 1)
 		return -1;
+	    s->var[n][i] = s->var[i][n];	/* added 28 aug 91 */
 	}
     }
     if (fscanf (fd,"%f%f%f",&s->r, &s->g, &s->b) == 3 &&
