@@ -1,0 +1,63 @@
+<h2>DESCRIPTION</h2>
+
+<em>v.external</em> creates new vector as a link to external  
+<a href="http://gdal.velocet.ca/projects/opengis/">OGR</a> layer. 
+OGR (Simple Features Library) is part of the 
+<a href="http://www.remotesensing.org/gdal">GDAL</a> library, so you need to
+install GDAL to use <em>v.external</em> and external OGR layers.
+<P>
+
+<h3>Supported OGR Vector Formats</h3>
+
+<a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/drv_shapefile.html">ESRI
+Shapefile</a><br>
+<a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/drv_mitab.html">Mapinfo File</a>
+
+<p>
+Further available drivers such as UK .NTF, SDTS, TIGER, IHO S-57 (ENC),
+DGN, GML, AVCBin, REC, Memory, OGDI, and PostgreSQL depend on the local
+installation (OGR library), for details see
+<a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/ogr_formats.html">OGR web site</a>.
+
+<h2>EXAMPLES</h2>
+
+<B>SHAPE files</B><BR>
+<b>v.externalr dsn=</b><em>/home/user/shape_data</em>
+<b>layer=</b><em>test_shape</em> <b>output=</b><em>grass_map</em> <br>
+<P>
+<B>MapInfo files</B><BR>
+<b>v.external dsn=</b><em>./</em> <b>layer=</b><em>mapinfo_test</em> 
+<b>output=</b><em>grass_map</em> 
+<P>
+<B>SDTS files</B> (you have to select the CATD file)<BR>
+<b>v.external dsn=</b><em>CITXCATD.DDF</em> <b>output=</b><em>cities</em> 
+<P>
+<B>TIGER files</B><BR>
+<b>v.external dsn=</b><em>input/2000/56015/</em>
+    <b>layer=</b><em>CompleteChain,PIP</em> <b>output=</b><em>t56015_all</em>
+<P>
+<B>PostGIS maps (area example)</B><BR>
+<b>v.external dsn=</b><em>"PG:dbname=postgis"</em>
+    <b>layer=</b><em>polymap</em> <b>output=</b><em>polygons</em>
+
+<P>
+
+<H2>REFERENCES</H2>
+
+<a href="http://www.remotesensing.org/gdal/ogr/">OGR vector library</a>
+<br>
+<a href="http://www.remotesensing.org/gdal/ogr/ogr__api_8h.html">OGR vector library C API</a>
+documentation
+
+
+<h2>SEE ALSO</h2>
+
+<em><a HREF="v.clean.html">v.clean</a></em>,
+<em><a HREF="v.in.ogr.html">v.in.ogr</a></em>
+<em><a HREF="v.out.ogr.html">v.out.ogr</a></em>
+
+<h2>AUTHOR</h2>
+
+Radim Blazek, ITC-Irst, Trento, Italy
+
+<p><i>Last changed: $Date$</i>
