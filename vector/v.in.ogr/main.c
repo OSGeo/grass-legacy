@@ -252,20 +252,10 @@ main (int argc, char *argv[])
 
     with_z = 0;
     for ( layer = 0; layer < nlayers; layer++ ) {
-	char *drvname;
-	
 	fprintf (stderr, "Layer: %s\n", layer_names[layer]);
 	layer_id = layers[layer];
 
 	Ogr_layer = OGR_DS_GetLayer( Ogr_ds, layer_id );
-	drvname = (char *) OGR_Dr_GetName(Ogr_layer);
-	G_debug ( 1, "Driver: %s", drvname );
-
-	/* OGR_Dr_GetName() seems to return NULL */
-	if ( drvname && strcmp( drvname, "ESRI Shapefile") == 0 )
-	    G_warning ("There is a bug in OGR for polygons in Shapefile. Multiple outer rings in polygons "
-		       "are created without centroids");
-	
 	Ogr_featuredefn = OGR_L_GetLayerDefn( Ogr_layer );
 	
 	/* Add DB link */
