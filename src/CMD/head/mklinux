@@ -1,0 +1,38 @@
+#Tom Gewecke <tom@bluesky.org>
+CC  = gcc
+FC  = g77
+LEX = lex -l
+ARCH= linux
+
+GISBASE = /usr/local/grass43
+UNIX_BIN = /usr/local/bin
+
+DEFAULT_DATABASE =
+DEFAULT_LOCATION =
+
+COMPILE_FLAGS = -O2 -mcpu=powerpc -fsigned-char
+LDFLAGS = -Wl,-s
+XCFLAGS = -D_NO_PROTO
+XLDFLAGS =
+XINCPATH = -I/usr/X11R6/include
+XMINCPATH = -I/usr/X11R6/include
+XLIBPATH = -L/usr/X11R6/lib
+XTLIBPATH = -L/usr/lib
+XMLIBPATH = -L/usr/lib
+XLIB = -lX11
+XTLIB = -lXt
+XMLIB = -lXm
+XEXTRALIBS =
+LEXLIB = -lfl
+
+TERMLIB = -ltermcap
+CURSES = -lcurses $(TERMLIB)
+MATHLIB = -lm
+LIBRULE = ar ruv $@ $?
+
+USE_TERMIO = -DUSE_TERMIO
+USE_MTIO = -DUSE_MTIO
+USE_FTIME = -DUSE_FTIME
+DIGITFLAGS = -DUSE_SETREUID -DUSE_SETPRIORITY
+VECTLIBFLAGS =
+GETHOSTNAME = -DGETHOSTNAME_OK
