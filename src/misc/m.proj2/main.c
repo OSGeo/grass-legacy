@@ -296,6 +296,8 @@ int main(int argc, char *argv[])
 
     if (isatty(0)) {
 	fprintf(stderr, "\nEnter one input coordinate pair per line (E N)\n");
+	if (proj_index_in == PROJECTION_LL)
+	    fprintf(stderr, "Format:  ddd.ddddddd  or  ddd:mm:ssE dd:mm:ssN\n");
 	fprintf(stderr, "Enter the word <end> when done\n");
     }
 
@@ -306,16 +308,28 @@ int main(int argc, char *argv[])
 	}
 	rec_cnt++;
 
-	if (proj_index_in == LL) {
-	    G_scan_easting(ebuf, &LON, PROJECTION_LL);
-	    G_scan_northing(nbuf, &LAT, PROJECTION_LL);
+	if (proj_index_in == PROJECTION_LL) {
+	    if(G_scan_easting(ebuf, &LON, PROJECTION_LL) != 1) {
+		fprintf(stderr, "Error reading coordinate pair\n");
+	        continue;
+	    }
+	    if(G_scan_northing(nbuf, &LAT, PROJECTION_LL) != 1) {
+		fprintf(stderr, "Error reading latitude\n");
+	        continue;
+	    }
 	}
 	else {
-	    sscanf(ebuf, "%lf", &EAS);
-	    sscanf(nbuf, "%lf", &NOR);
+	    if( sscanf(ebuf, "%lf", &EAS) != 1 ) {
+		fprintf(stderr, "Error reading coordinate pair\n");
+	        continue;
+	    }
+	    if( sscanf(nbuf, "%lf", &NOR) != 1 ) {
+		fprintf(stderr, "Error reading northing\n");
+	        continue;
+	    }
 	}
 
-	if (proj_index_in == LL) {
+	if (proj_index_in == PROJECTION_LL) {
 	    X = LON;
 	    Y = LAT;
 	}
@@ -327,7 +341,7 @@ int main(int argc, char *argv[])
 	/* Convert Coordinates */
 
 	/* need to remove the following to allow LL->LL datum transforms */
-	if ((proj_index_in == proj_index_out) && (proj_index_out == LL)) {
+	if ((proj_index_in == proj_index_out) && (proj_index_out == PROJECTION_LL)) {
 	    LON_res = LON;
 	    LAT_res = LAT;
 	    cur_LAT = LAT;
@@ -336,7 +350,7 @@ int main(int argc, char *argv[])
 	else if (pj_do_proj(&X, &Y, &info_in, &info_out) < 0)
 	    G_fatal_error("Error in pj_do_proj()");
 
-	if (proj_index_out != LL) {
+	if (proj_index_out != PROJECTION_LL) {
 	    EAS_res = X;
 	    NOR_res = Y;
 	    cur_LAT = LAT;
