@@ -1,4 +1,3 @@
-
 /*
  * Start up graphics processing.  Anything that needs to be assigned, set up,
  * started-up, or otherwise initialized happens here.  This is called only at
@@ -12,21 +11,22 @@
  *
  */
 
+#include <string.h>
+#include <stdlib.h>
 #include "gis.h"
+#include "driverlib.h"
 
 
 #define MAIN
 #include "htmlmap.h"
 
-char *getenv ();
 int SCREEN_LEFT	  = 1;
 int SCREEN_TOP    = 1;
 
 int SCREEN_RIGHT;
 int SCREEN_BOTTOM;
 
-
-Graph_Set() 
+int Graph_Set (void) 
 {
     char *p;
 
@@ -116,4 +116,5 @@ Graph_Set()
     head = NULL;
     tail = &head;
 
+    return 0;
 }
