@@ -2,7 +2,6 @@ all:
 	$(GMAKE) D
 	$(GMAKE) bitmap
 	$(GMAKE) btree
-	$(GMAKE) coorcnv
 	$(GMAKE) datetime
 	$(GMAKE) dbmi
 	$(GMAKE) dig_atts
@@ -13,6 +12,7 @@ all:
 #	$(GMAKE) g3d
 	$(GMAKE) geom
 	$(GMAKE) gis
+	$(GMAKE) coorcnv
 	$(GMAKE) ibtree
 #	$(GMAKE) gmath
 	$(GMAKE) icon
