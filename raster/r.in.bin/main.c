@@ -259,6 +259,8 @@ int main (int argc, char *argv[])
 		} 
 /* CASE 1 - All parameters supplied */
         if (no_coord == 0 && no_dim == 0) { /* Get all parmameters */
+	if (!parm.north->answer || !parm.south->answer || !parm.west->answer || !parm.east->answer)
+		G_fatal_error("You have to provide all limits of geographic region (n,s,e,w)");
         if (! G_scan_northing(parm.north->answer, &cellhd.north, cellhd.proj)) return 1;
         if (! G_scan_northing(parm.south->answer, &cellhd.south, cellhd.proj)) return 1;
         if (! G_scan_easting (parm.east->answer,  &cellhd.east,  cellhd.proj)) return 1;
@@ -286,6 +288,8 @@ int main (int argc, char *argv[])
 /* No rows and columns supplied - calculate from parameters */
 /* Assumes 1x1 resolution */
 		if (no_coord == 0 && no_dim == 1) { /* Get n, s, e, w */
+			if (!parm.north->answer || !parm.south->answer || !parm.west->answer || !parm.east->answer)
+			  G_fatal_error("You have to provide all limits of geographic region (n,s,e,w)");
 			if (! G_scan_northing(parm.north->answer, &cellhd.north, cellhd.proj)) return 1;
 			if (! G_scan_northing(parm.south->answer, &cellhd.south, cellhd.proj)) return 1;
 			if (! G_scan_easting (parm.east->answer,  &cellhd.east,	 cellhd.proj)) return 1;
