@@ -5,4 +5,4 @@ CFLAGS+= -DR_SHOW
 LIBES  = $(GISLIB)
 
 $(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
-	$(CC) -o $@ $(OBJS) $(CFLAGS) $(LDFLAGS) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) -o $@ $(OBJS) $(LDFLAGS) $(LIBES) $(MATHLIB) $(XDRLIB)
