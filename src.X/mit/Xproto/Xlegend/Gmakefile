@@ -1,0 +1,6 @@
+OFILES = \
+	command.o\
+	main.o
+
+$(BIN)/Xlegend: $(OFILES) $(XDISPLAYLIB) $(GISLIB) $X
+	cc $(LDFLAGS) -o $@ $(OFILES) $(XDISPLAYLIB) $(GISLIB) -lX11
