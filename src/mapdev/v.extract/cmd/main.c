@@ -102,6 +102,7 @@ int main (int argc, char **argv)
     listopt->key             = "list";
     listopt->type            =  TYPE_STRING;
     listopt->required        =  NO;
+    listopt->multiple        =  YES;
     listopt->key_desc        = "range";
     listopt->description     = "Category ranges: e.g. 1,3-8,13\n           Category list: e.g. Abc,Def2,XyZ " ;
 
@@ -120,7 +121,12 @@ int main (int argc, char **argv)
         exit (-1);
 
        /* start checking options and flags */
-    
+
+    if (listopt->answers == NULL && fileopt->answer == NULL)
+	{
+        	fprintf(stderr,"\nEither [list] or [file] should be given.\n");
+		exit(1);
+	}
 
        /* set input vector file name and mapset */
     input = inopt->answer;
