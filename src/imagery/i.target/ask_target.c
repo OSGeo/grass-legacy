@@ -8,7 +8,7 @@ ask_target (group, location, mapset)
     char t1[80], t2[80], t3[80];
     char cur_location[30], cur_mapset[30];
 
-    strcpy (cur_location, location, cur_location);
+    strcpy (cur_location, location);
     strcpy (cur_mapset, mapset);
 
     sprintf (t1, "Please select the target LOCATION and MAPSET for group <%s>", group);
