@@ -1,7 +1,3 @@
-#!/bin/sh
-# the next line restarts using wish \
-exec $GRASS_WISH "$0" "$@"
-
 ############################################################################
 # routines to create structures in tcl, and get & set fields.
 ############################################################################

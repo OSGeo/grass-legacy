@@ -1,4 +1,3 @@
-#!../glnviz.new/nvwish -f
 # 4/4/95
 # M. Astley
 # USACERL, blah blah blah
