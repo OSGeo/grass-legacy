@@ -1,7 +1,12 @@
 #include <math.h>
 #include "internoptri.h"
 #include "persquadedge.h"
-#ifdef __CYGWIN__
+
+#ifdef  __CYGWIN__
+#define MAX(a,b) (a > b ? a : b)
+#endif
+
+#ifdef  sparc
 #define MAX(a,b) (a > b ? a : b)
 #endif
 
