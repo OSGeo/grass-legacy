@@ -1,0 +1,18 @@
+EXTRA_CFLAGS = -I../../lib.ortho
+IMAGERYLIB2  = ../../lib.ortho/libI.a
+
+
+LIST = main.o ask_files1.o mod_info.o
+
+LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(VASK)
+
+$(ETC)/imagery/i.block.init: $(LIST) $(LIBES)
+	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB)
+
+$(LIST): initial.h  defs.h globals.h
+
+
+$(LIBES): #
+   
+
+
