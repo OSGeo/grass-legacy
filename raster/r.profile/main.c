@@ -91,18 +91,24 @@ G_gisinit (argv[0]);
     if (G_parser(argc, argv))
         exit(-1);
 
+if ((!parm.i->answer) && (!parm.profile->answer))
+{
+ sprintf(msg, "Either -i flag and/or profile parameter must be used.");
+ G_fatal_error (msg);
+}
+
 G_get_window(&window);
 projection = G_projection();
 if (parm.res->answer) {
-res = atof(parm.res->answer);
-/* Catch bad resolution ? */
-if (res == 0) {
-sprintf(msg, "ILLEGAL Resolution!\n");
-G_fatal_error (msg);
-}
+ res = atof(parm.res->answer);
+ /* Catch bad resolution ? */
+ if (res == 0) {
+  sprintf(msg, "ILLEGAL Resolution!\n");
+  G_fatal_error (msg);
+ }
 } else {
-/* Do average of EW and NS res */
-res = (window.ew_res + window.ns_res) / 2;
+ /* Do average of EW and NS res */
+ res = (window.ew_res + window.ns_res) / 2;
 }
 screen_x = ((int)D_get_d_west() + (int)D_get_d_east()) / 2 ;
 screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2 ;
