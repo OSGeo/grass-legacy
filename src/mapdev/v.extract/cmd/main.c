@@ -189,7 +189,7 @@ int main (int argc, char **argv)
          while (1)
            {
            if (!fgets (buffr, 39, in)) break;
-           sscanf (buffr, "%[a-zA-Z. #0-9]", text); 
+           sscanf (buffr, "%[a-zA-Z., -_/$%@!#0-9]", text); 
 	   	/*sscanf (buffr, "%s", text); */
 		/*scan %s stops at whitespace?*/
            scan_names (&cats, text, &x);
@@ -238,7 +238,7 @@ int main (int argc, char **argv)
          while (1)
            {
            if (!fgets (buffr, 39, in)) break;
-           sscanf (buffr, "%[a-zA-Z. #0-9]", text); 
+           sscanf (buffr, "%[a-zA-Z., -_/$%@!#0-9]", text); 
 	   	/*sscanf (buffr, "%s", text); */
 		/*scan %s stops at whitespace?*/
            scan_cats (text, &x, &y);
@@ -408,7 +408,7 @@ int scan_names (struct Categories *pcats, char *s, int *x)
            pntr1++; cptr++;
            }
         
-	cptr = buff;
+	*cptr = '\0'; cptr = buff;
 	
 /*fprintf(stderr,"i= %d, compare nam|%s| :cat|%s|, num= %d\n",i,nptr,cptr,pcats->list[i].num);
   fprintf(stderr,"       compare value= %d\n",strcmp(cptr,nptr));
