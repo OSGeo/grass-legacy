@@ -250,6 +250,7 @@ a_b_dlg(dlg, bin)
 			printf("    areas: %d\n", num_areas) ;
 			printf("    lines: %d\n", num_lines) ;
 			printf("  unknown: %d\n", num_undef) ;
+			printf("\n") ;
 			fflush(bin) ;
 			return(0) ;
 
