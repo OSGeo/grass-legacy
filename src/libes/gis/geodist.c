@@ -1,5 +1,10 @@
 #include "pi.h"
 
+/* WARNING: this code is preliminary and may be changed,
+ * including calling sequences to any of the functions
+ * defined here
+ */
+
 /* distance from point to point along a geodesic 
  * code from
  *   Paul D. Thomas
@@ -76,14 +81,19 @@ G_geodesic_distance_lon_to_lon (lon1, lon2)
     if (sdlmr == 0.0 && t1r == t2r) return 0.0;
 
     q = t3+sdlmr*sdlmr*t4;
+
+    /* special case - shapiro */
+    if (q == 1.0) return PI *al;
+
 /* Mod: shapiro
- * this next stuff is very ill-conditioned if q is small O(10^-23)
- * which can happen for high lats? with lon1-lon2 < .25 degrees
- * the computation of cd = 1-2*q will give cd==1.0
- * However, note that t=dl/sd is dl/sin(dl) which approaches 1 as dl->0
- * So the first step is to compute a good value for sd without using sin
- * and then check cd && q to see if we got when when we shouldn't
- * note that dl isn't used except to get t, but both cd and sd are used later
+ * cd=1-2q is ill-conditioned if q is small O(10**-23)
+ *   (for high lats? with lon1-lon2 < .25 degrees?)
+ *   the computation of cd = 1-2*q will give cd==1.0.
+ * However, note that t=dl/sd is dl/sin(dl) which approaches 1 as dl->0.
+ * So the first step is to compute a good value for sd without using sin()
+ *   and then check cd && q to see if we got cd==1.0 when we shouldn't.
+ * Note that dl isn't used except to get t,
+ *   but both cd and sd are used later
  */
 
 /* original code
@@ -93,8 +103,8 @@ G_geodesic_distance_lon_to_lon (lon1, lon2)
     t=dl/sd;
 */
 
+    cd = 1-2*q;                 /* ill-conditioned subtraction for small q */
 /* mod starts here */
-    cd = 1-2*q;                   /* ill-conditioned subtraction here for small q */
     sd = 2* sqrt (q - q * q);	/* sd^2 = 1 - cd^2 */
     if (q != 0.0 && cd == 1.0)  /* test for small q */
 	t = 1.0;
