@@ -16,6 +16,7 @@ int argc ;
 char **argv ;
 {
 	char window_name[64] ;
+	char *D_color_list();
 	extern int stash_away() ;
 	struct Option *opt1, *opt2 ;
 	FILE *G_fopen_old() ;
@@ -30,7 +31,7 @@ char **argv ;
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = "white" ;
-	opt2->options="red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black";
+	opt2->options    = D_color_list();
 	opt2->description= "Color selection graphics" ;
 
 	/* Initialize the GIS calls */
