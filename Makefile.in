@@ -11,6 +11,7 @@ SRCDIR=			`pwd`
 SERVERNAME=		`uname -n`
 SYSTEM=			`uname -s`
 VERSION=		`cat src/CMD/VERSION | head -1`
+ARCH=			`grep ARCH src/CMD/head/head | cut -d'=' -f2 | sed -e 's/\ //g'`
 
 # Get the major release number from the version for appending to gmake,
 # gmakelinks, and grass command names eg VERSION = 5.0beta8 NAME_VER = 5
@@ -87,7 +88,7 @@ pre-install:
 
 
 do-install:
-	@ find src/CMD/next_step/ -name '*' -print -type f -exec rm -f {} \;
+	@ rm -f src/CMD/next_step/${ARCH}
 	${MAKE_ENV} ${SHELL} src/CMD/generic/GISGEN.sh
 	${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
 	${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh
