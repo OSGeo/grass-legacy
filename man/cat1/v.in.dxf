@@ -60,7 +60,7 @@ labels=in_name:out_name[,in_name:out_name,...]
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 
@@ -126,7 +126,7 @@ EXAMPLES
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -192,7 +192,7 @@ NOTES
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			3
+GRASS 5.0beta6	      GRASS Development Team			3
 
 
 
@@ -258,7 +258,7 @@ AUTHORS
 
 
 
-4		      GRASS Development Team	   GRASS 5.0beta2
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 

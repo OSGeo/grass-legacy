@@ -60,7 +60,7 @@ r.in.arc <main>	      GRASS Reference Manual	  <main> r.in.arc
 
 
 
-GRASS 5.0beta5	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 

@@ -60,7 +60,7 @@ Parameters:
 
 
 
-GRASS 5.0beta5	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 
@@ -126,7 +126,7 @@ r.tribs <main>	      GRASS Reference Manual	   <main> r.tribs
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta5
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -192,7 +192,7 @@ r.tribs <main>	      GRASS Reference Manual	   <main> r.tribs
 
 
 
-GRASS 5.0beta5	      GRASS Development Team			3
+GRASS 5.0beta6	      GRASS Development Team			3
 
 
 
@@ -258,7 +258,7 @@ r.tribs <main>	      GRASS Reference Manual	   <main> r.tribs
 
 
 
-4		      GRASS Development Team	   GRASS 5.0beta5
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -324,7 +324,7 @@ REFERENCES
 
 
 
-GRASS 5.0beta5	      GRASS Development Team			5
+GRASS 5.0beta6	      GRASS Development Team			5
 
 
 
@@ -390,7 +390,7 @@ Appendix I: main.c code for r.tribs
 
 
 
-6		      GRASS Development Team	   GRASS 5.0beta5
+6		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -456,7 +456,7 @@ AUTHOR
 
 
 
-GRASS 5.0beta5	      GRASS Development Team			7
+GRASS 5.0beta6	      GRASS Development Team			7
 
 
 

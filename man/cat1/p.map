@@ -60,7 +60,7 @@ MAPPING INSTRUCTIONS
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 
@@ -126,7 +126,7 @@ comments
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -192,7 +192,7 @@ defpat
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			3
+GRASS 5.0beta6	      GRASS Development Team			3
 
 
 
@@ -258,7 +258,7 @@ endpanel
 
 
 
-4		      GRASS Development Team	   GRASS 5.0beta2
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -324,7 +324,7 @@ line
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			5
+GRASS 5.0beta6	      GRASS Development Team			5
 
 
 
@@ -390,7 +390,7 @@ point
 
 
 
-6		      GRASS Development Team	   GRASS 5.0beta2
+6		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -456,7 +456,7 @@ raster
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			7
+GRASS 5.0beta6	      GRASS Development Team			7
 
 
 
@@ -522,7 +522,7 @@ region
 
 
 
-8		      GRASS Development Team	   GRASS 5.0beta2
+8		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -588,7 +588,7 @@ setpat
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			9
+GRASS 5.0beta6	      GRASS Development Team			9
 
 
 
@@ -654,7 +654,7 @@ sites
 
 
 
-10		      GRASS Development Team	   GRASS 5.0beta2
+10		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -720,7 +720,7 @@ text
 
 
 
-GRASS 5.0beta2	      GRASS Development Team		       11
+GRASS 5.0beta6	      GRASS Development Team		       11
 
 
 
@@ -786,7 +786,7 @@ p.map <main>	      GRASS Reference Manual	     <main> p.map
 
 
 
-12		      GRASS Development Team	   GRASS 5.0beta2
+12		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -852,7 +852,7 @@ vector
 
 
 
-GRASS 5.0beta2	      GRASS Development Team		       13
+GRASS 5.0beta6	      GRASS Development Team		       13
 
 
 
@@ -918,7 +918,7 @@ ICONS VS. PATTERNS
 
 
 
-14		      GRASS Development Team	   GRASS 5.0beta2
+14		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -984,7 +984,7 @@ SEE ALSO
 
 
 
-GRASS 5.0beta2	      GRASS Development Team		       15
+GRASS 5.0beta6	      GRASS Development Team		       15
 
 
 
@@ -1050,7 +1050,7 @@ AUTHOR
 
 
 
-16		      GRASS Development Team	   GRASS 5.0beta2
+16		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
