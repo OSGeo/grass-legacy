@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# $Id$
-#
 ############################################################################
 #
 # MODULE:	g.mlist
@@ -25,7 +23,7 @@
 #%option
 #% key: type
 #% type: string
-#% description: data type (rast, vect, or sites)
+#% description: data type (rast, rast3d, vect, or sites)
 #% answer: rast
 #% required : no
 #%end
