@@ -1,0 +1,13 @@
+# setup src for MASSCOMP RTU systems
+cp MASS/*.f src
+cp MASS/*.d src
+cat <<EOF >Makefile
+# definitions for MASSCOMP RTU rim
+RANLIB=ranlib
+PILE = f77
+EXTRA = 
+LIBEXTRA = 
+EOF
+cp Makefile src
+cat MAKEFILE >>Makefile
+cat src/MAKEFILE >>src/Makefile
