@@ -48,6 +48,8 @@ G__projection_name(n)
 	return "State Plane";
     case PROJECTION_LL:
 	return "Latitude-Longitude";
+    case PROJECTION_OTHER:
+	return "Other";
     default:
 	return NULL;
     }
