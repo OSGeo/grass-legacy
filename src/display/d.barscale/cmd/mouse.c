@@ -4,7 +4,7 @@
 #include "display.h"
 #include "options.h"
 
-int mouse_query(void)
+int mouse_query(int toptext)
 {
 	int t, b, l, r ;
 	char *panel = G_tempfile();
@@ -26,7 +26,7 @@ int mouse_query(void)
 		east  = (x_pos * 100.0) / (r - l);
 		north = (y_pos * 100.0) / (b - t);
 
-		draw_scale(panel);
+		draw_scale(panel, toptext);
 
 		fprintf(stderr,
 			"\n"

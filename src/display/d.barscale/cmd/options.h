@@ -6,8 +6,8 @@ extern double north;
 extern int use_feet;
 
 /* draw_scale.c */
-int draw_scale(char *save);
+int draw_scale(char *save, int toptext);
 
 /* mouse.c */
-int mouse_query(void);
+int mouse_query(int toptext);
 
