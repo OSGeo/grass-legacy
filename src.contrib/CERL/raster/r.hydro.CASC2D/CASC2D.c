@@ -288,7 +288,7 @@ int main (int argc, char *argv[])
 
      struct
      {
-	  struct Flag  *o,*t,*e,*i,*p,*u,*q,*d,*b;
+	  struct Flag  *o,*t,*e,*i,*p,*u,*q,*d,*b,*s;
        }  flag;
 
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -615,6 +615,10 @@ int main (int argc, char *argv[])
      flag.q=G_define_flag();
      flag.q->key         = 'q';
      flag.q->description ="skips printing iteration, time, and discharge values to the screen";
+
+     flag.s=G_define_flag();
+     flag.s->key         = 's';
+     flag.s->description ="do not check square tolerance";
 
      G_gisinit (argv[0]);
      if(G_parser(argc,argv)) exit(1);
@@ -1293,7 +1297,7 @@ int main (int argc, char *argv[])
      fprintf(stderr, "   north: %f\n   south: %f\n   east: %f\n   west: %f\n   n_s resolution in meters: %f\n   e_w resolution in meters: %f\n   number of rows: %d\n   number of columns: %d \n\n", window.north,window.south,window.east,window.west, window.ns_res/wunit,window.ew_res/wunit,nrows,ncols);
 
 
-     if(abs(1.-window.ew_res/window.ns_res) > 1e-3) 
+     if(abs(1.-window.ew_res/window.ns_res) > 1e-3 && !flag.s->answer) 
      {
        fprintf(stderr, "The cells are not square within a tolerance of 0.1 percent\n ew_res=%f ns_res=%f\n",window.ew_res,window.ns_res);
        exit(1);
