@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# unregisters a registered SHAPE file from GRASS 5.1
+# Markus Neteler 3/2002
+#
+
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS to run this program."
+ exit
+fi
+
+if [ $# -eq 0  -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help" ]
+then
+ echo "Unregisters a registered SHAPE file from GRASS 5.1 DATABASE"
+ echo " "
+ echo "v.shape.unregister map.shp"
+ exit
+fi
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+CWD=`pwd`
+INPUT=$1
+
+SHPTARGET=$GISDBASE/$LOCATION_NAME/shp
+VECTTARGET=$GISDBASE/$LOCATION_NAME/$MAPSET/vector
+
+#eventually strip of file extension:
+SHAPE=`basename $INPUT .shp`
+
+if test ! -f $SHPTARGET/$SHAPE.shp
+then
+  echo "Oops: $SHPTARGET not found inside GRASS. Was that SHAPE really registered?"
+  exit
+fi
+
+rm -f $SHPTARGET/$SHAPE.shp $SHPTARGET/$SHAPE.shx $SHPTARGET/$SHAPE.dbf
+
+# now delete FRMT files:
+if test ! -d $VECTTARGET/$SHAPE.shp
+then
+  echo "Oops: $VECTTARGET/$SHAPE.shp not found (v.build was never run)"
+else
+ rm -fr $VECTTARGET/$SHAPE.shp
+fi
+
+echo "$SHAPE.shp was deleted inside GRASS 5.1 database."

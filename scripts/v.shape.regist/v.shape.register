@@ -1,0 +1,105 @@
+#!/bin/sh
+
+# registers a SHAPE file into GRASS 5.1
+# Markus Neteler 2/2002
+#
+# TODOs:
+#  - allow for .SHP extension (currently only .shp)
+#  - add stuff for multilayer SHAPE (ID field identification with ogrinfo,
+#    currently only first layer supported)
+#
+#  - maybe! add .prj/.PRJ support (not sure)
+
+
+if test "$GISBASE" = ""; then
+echo "You must be in GRASS to run this program."
+exit
+fi
+
+if [ $# -eq 0 -o "$1" = "-h" -o "$1" = "-help" -o "$1" = "--help" ]
+then
+ echo "Registers a SHAPE file into GRASS 5.1 DATABASE"
+ echo " "
+ echo "v.shape.register map.shp"
+ exit
+fi
+
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+
+which ogrinfo > /dev/null
+if [ $? -eq 1 ]
+then
+ echo "ERROR: ogrinfo not found, please install (from GDAL/OGR library)"
+ exit
+fi
+
+CWD=`pwd`
+INPUT=$1
+
+SHPTARGET=$GISDBASE/$LOCATION_NAME/shp
+VECTTARGET=$GISDBASE/$LOCATION_NAME/$MAPSET/vector
+
+#eventually strip of file extension:
+SHAPE=`basename $INPUT .shp`
+DIRNAME=`dirname $INPUT`
+
+if test ! -f $DIRNAME/$SHAPE.shp
+then
+ echo "ERROR: $DIRNAME/$SHAPE.shp not found (or not a shp file)"
+ exit
+fi
+
+#due to SQLP limitation:
+echo $SHAPE.shp | cut -b1 | grep '[0123456789]' > /dev/null
+if [ "$?" -eq "0" ]; then
+ echo "ERROR: GRASS 5.1 vector map names must start with a letter."
+ echo "       Your map name starts with with a number, please rename."
+ echo "       Cannot import $DIRNAME/$SHAPE.shp"
+ exit 
+fi
+
+if test ! -d $SHPTARGET
+then
+  mkdir -p $SHPTARGET
+fi
+
+cp $DIRNAME/$SHAPE.shp $DIRNAME/$SHAPE.shx $DIRNAME/$SHAPE.dbf $SHPTARGET
+
+#analyse the file for later (check first layer):
+LAYER1=`ogrinfo $DIRNAME/$SHAPE.shp |grep 1 | cut -d' ' -f2`
+
+# now build FRMT file
+if test ! -d $VECTTARGET/$SHAPE.shp
+then
+  mkdir -p $VECTTARGET/$SHAPE.shp
+fi
+cd $VECTTARGET/$SHAPE.shp
+
+#FRMT file:
+echo "FORMAT: shape
+SHAPE: $SHPTARGET/$SHAPE" > frmt
+
+TODAY=`LC_ALL=C date -R | cut -d' ' -f2,3,4 | tr -s ' ' '/'`
+
+echo "ORGANIZATION: GRASS Development Team
+DIGIT DATE:   $TODAY
+DIGIT NAME:   $USER
+MAP NAME:     $SHAPE
+MAP DATE:     2002
+MAP SCALE:    50000
+OTHER INFO:   -
+ZONE:         0
+MAP THRESH:   0.500000" > head
+
+#the DB file is no longer used for SHAPE, an internal ID is generated
+
+#build topology
+echo "Building topology...:"
+v.build map=$SHAPE.shp opt=build
+
+### that's it
+echo "$SHAPE.shp is registered now."
+echo "The SHAPE files (.shp, shx and .dbf) were copied to:"
+echo "   $GISDBASE/$LOCATION_NAME/shp"
