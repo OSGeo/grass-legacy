@@ -1,122 +1,141 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
-<A NAME="v.reclass.pg">
-<TITLE>v.reclass.pg</TITLE>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <title>v.reclass.pg</title>
+</head>
 <body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
-
-<img src="grass.smlogo.gif">
-
+<a NAME="v.reclass.pg"></a><img SRC="grass.smlogo.gif" >
 <hr width=100% align=center size=6 no shade>
-
-<H2>NAME</H2> 
-<EM><B>v.reclass.pg</B></EM> - Generate new vector map layer derived from
+<h2>
+NAME</h2>
+<b><i>v.reclass.pg</i></b> - Generate new vector map layer derived from
 attribute data in the currently selected database. (GRASS-RDBMS Vector
 Interface Program)
+<h2>
+SYNOPSIS</h2>
+<b>v.reclass.pg</b>
+<br><b>v.reclass.pg help</b>
+<br><b>v.reclass.pg</b> [<b>-d]</b> <b>key</b>=name <b>tab</b>=name <b>col</b>=name
+[<b>where</b>=name] <b>input</b>=name [<b>output</b>=name] <b>type</b>=name
+<br><b>v.reclass.pg</b> <b>[-sd]</b> <b>sql</b>=file <b>input</b>=name
+[<b>output</b>=name] <b>type</b>=name
+<h2>
+DESCRIPTION</h2>
+<b><i>v.reclass.pg</i></b> reclasses vector maps according to the SELECT
+query. The input map may be of vector area, line or vector site type, resulting
+in the reclass map of the same type.
+<br>The sql file if chosen to input contains a single line like: 'select
+key_col, reclass_col from info_tab [where <i>clause</i>]'.<b><i></i></b>
+<br>The users needs to either input two names of the columns interactively
+or feed them from the input sql file. The first name is the old map key
+column, the second one is the key for the new map. Additionally, a clause
+to choose only some vectors to be reclassed from the input map may be imposed,
+either interactively or from the input file. Both columns used for creating
+the reclass rules must be of numeric (integer) type.
+<br>If the user omitted the output map name, the reclass map would only
+be displayed on monitor without being actually created.
+<h2>
+COMMAND LINE OPTIONS</h2>
 
-<H2>SYNOPSIS</H2>
-<B>v.reclass.pg</B><BR>
-<B>v.reclass.pg help</B><BR>
-<B>v.reclass.pg [-d] sql</B><EM>=name</EM> <B>key</B><EM>=name</EM> <B>type</B><EM>=name</EM> <B>input</B><EM>=name</EM>[<B>output</B><EM>=name</EM>]
+<h3>
+Flag:</h3>
 
-<H2>DESCRIPTION</H2>
+<dl>
+<dt>
+<b>-d</b></dt>
 
-<EM>v.reclass.pg</EM> generates a new vector map layer based on the results
-of one or more queries to the currently selected database.  The user
-constructs a series of mutually exclusive SQL retrieve statments
-designed to return groups of records from the database. Each group of
-records should be internally consistent in terms of attribute
-character╜istics specified by the user in the retrieve clause. These groups
-should also be mutually exclusive, thereby insuring that a row returned by
-one retrieve clause is not also returned by a subsequent retrieve clause. 
-Each group of records therefore forms the basis for a single category in the
-resulting GRASS vector map.  <EM>v.reclass.pg</EM> processes each retrieve
-statement in order returning groups of records which will form a single
-category in the resulting map.  As each retrieve statement is processed the
-group of records returned receives a common category value.  The category
-value is incremented by one for each subsequent retrieve statment which is
-processed.  The resulting reclass map will have one category for each of the
-original retrieve statements. 
-<P>
+<dd>
+Dissolve common boundaries between reclassed areas</dd>
+</dl>
 
-For example, the rows associated with the first retrieve statement will be
-assigned to category 1, those associated with the second retrieve statement
-will be assigned to category 2 and so on. The output map will contain only
-those line segments associated with database rows returned by the retrieve
-statement(s).
+<h3>
+Parameters:</h3>
 
-<H2>COMMAND LINE OPTIONS</H2>
-<H3>Flag:</H3>
-<DL>
-<DT><B>-d</B>
-<DD>Disolve common boundaries between reclassed areas
-</DL>
+<dl>
+<dt>
+<b>sql=filename</b></dt>
 
-<H3>Parameters:</H3>
-<DL>
-<DT><B>sql=filename</B>
-<DD>Name of file containing SQL query statements
-<P>
+<dd>
+Name of file containing SQL query statements</dd>
 
-<DT><B>key=databasecolumnname</B>
-<DD>Key column in db
-<P>
+<dt>
+<b>key=databasecolumnname</b></dt>
 
-<DT><B>tab=name</B>
-<DD>Table containing [col]
-<P>
+<dd>
+Key column in db</dd>
 
-<DT><B>col=name</B>
-<DD>Column to base reclass on
-<P>
+<dt>
+<b>tab=name</b></dt>
 
-<DT><B>where=name</B>
-<DD>Where clause for query (ie. where col='paved')
-<P>
+<dd>
+Table containing [col]</dd>
 
-<DT><B>type=area/line/site</B>
-<DD>Key column in db
-<P>
+<dt>
+<b>col=name</b></dt>
 
-<DT><B>input=map</B>
-<DD>Name of existing vector file to be reclassed using query output.
-<P>
+<dd>
+Column to base reclass on</dd>
 
-<DT><B>output=map</B>
-<DD>Name of new raster (reclass) file
-</DL>
-<P>
+<dt>
+<b>where=name</b></dt>
 
-<B>EXAMPLE:</B> produces vector map of primary and secondary roads.<P>
-<EM>v.reclass.pg sql=vect.sql key=tlid input=t.roads.pg out╜put=t.roads.12</EM>
-<P>
-vect.sql:
-<EM>retrieve unique (t.tlid,t.cfcc) from t in type1</EM><BR>
-where cfcc ~ "A1"<BR>
-sort by tlid
-<P>
-<EM>retrieve unique (t.tlid,t.cfcc) from t in type1</EM><BR>
-where cfcc ~ "A2"<BR>
-sort by tlid
+<dd>
+Where clause for query (ie. where col='paved')</dd>
 
-<H2>BUGS</H2>
+<dt>
+<b>type=area/line/site</b></dt>
+
+<dd>
+Select area, line or site as type of the input/output vector map</dd>
+
+<dt>
+<b>input=map</b></dt>
+
+<dd>
+Name of existing vector file to be reclassed using query output.</dd>
+
+<dt>
+<b>output=map</b></dt>
+
+<dd>
+Name of new raster (reclass) file</dd>
+</dl>
+<b>EXAMPLE:</b>
+<p>1. Reclass to vector map of quartiles from map of parcels.
+<p><b><i>v.reclass.pg sql=reclass.sql input=kuruma_id output=kuruma_quart
+type=area</i></b><b><i></i></b>
+<p>and reclass.sql is:
+<p><b><i>select rec_id, quartnum from info_kuruma</i></b><b></b>
+<p>2. Reclass to vector map of forest types from map of forest plots taking
+only oak (types 32-37).
+<p><b><i>v.reclass.pg -d key=rec_id col=type_id tab=info_kuruma where='type_id
+> 31 and type_id &lt; 38' input=kuruma_id output=kuruma_oak type=area</i></b>
+<br><b><i></i></b>&nbsp;
+<br>&nbsp;
+<h2>
+BUGS</h2>
 None known.
-
-<H2>NOTE</H2> 
-This program requires the <a
-href=www.postgresql.org>PostgreSQL</a> database software.
-
-<H2>SEE ALSO</H2>
-<EM><A HREF="g.column.pg.html">g.column.pg</A>, <A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A></EM>
-
-<H2>AUTHOR</H2>
+<h2>
+NOTE</h2>
+This program requires the <a href="www.postgresql.org">PostgreSQL</a> database
+software.&nbsp; It uses other GRASS modules <b><i>v.reclass</i></b> and
+<b><i>d.vect</i></b> launched from inside.
+<h2>
+SEE ALSO</h2>
+<i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
+<a href="g.stats.pg.html">g.stats.pg</a>, <a href="g.table.pg.html">g.table.pg</a>,
+<a href="d.rast.pg.html">d.rast.pg</a>, <a href="d.site.pg.html">d.site.pg</a>,
+<a href="d.vect.pg.html">d.vect.pg</a>, <a href="d.what.r.pg.html">d.what.r.pg</a>,
+<a href="d.what.s.pg.html">d.what.s.pg</a>, <a href="d.what.v.pg.html">d.what.v.pg</a>,
+<a href="r.reclass.pg.html">r.reclass.pg</a>, <a href="r.rescale.pg.html">r.rescale.pg</a></i>
+<h2>
+AUTHOR</h2>
 Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick
 Limp University of Arkansas, CAST
-<P>
-
-Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of
-Joensuu, Finland.
-
-<P>
-Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
-
-</BODY>
-</HTML>
+<p>Postgres modifications: Janne Soimasuo, Faculty of Forestry, University
+of Joensuu, Finland.
+<p>Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</body>
+</html>
