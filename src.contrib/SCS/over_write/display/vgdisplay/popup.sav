@@ -1,0 +1,27 @@
+#define  TOP	10
+#define  LEFT	10
+#define  SIZE	3
+
+#define BC_EXIT	"red"
+#define TC_EXIT	"white"
+#define DC_EXIT	"white"
+
+#define BC_LEG	"blue"
+#define TC_LEG	"white"
+#define DC_LEG	"white"
+
+#define BC_DISP	"blue"
+#define TC_DISP	"white"
+#define DC_DISP	"white"
+
+#define BC_INFO	"blue"
+#define TC_INFO	"white"
+#define DC_INFO	"white"
+
+#define BC_MAIN	"blue"
+#define TC_MAIN	"white"
+#define DC_MAIN	"white"
+
+#define BC_WIND	"blue"
+#define TC_WIND	"white"
+#define DC_WIND	"white"
