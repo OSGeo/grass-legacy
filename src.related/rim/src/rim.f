@@ -30,7 +30,7 @@ C
 C     VERSION INFORMATION
 C
       DATA VER/'1.24'/
-      DATA VDATE/'02/09/90'/
+      DATA VDATE/'08/03/90'/
       KDBVER = 1240
 C
 C     ASCII DATA AND OTHER 'CONSTANTS'
@@ -49,15 +49,15 @@ C  PRINT THE RIM EXECUTION HEADER
 C
       CALL RMDATE(TDAY)
       CALL RMTIME(TTIM)
-      CALL MSG(' ',' ',' ')
-      CALL MSG(' F','UNIVERSITY OF ' ,'+')
-      CALL MSG(' F','WASHINGTON',' ')
-      CALL MSG(' F','RELATIONAL ','+')
-      CALL MSG(' F','INFORMATION ','+')
-      CALL MSG(' F','MANAGEMENT',' ')
-      CALL MSG(' ','(VERSION ' // VER //
-     +  '  ' // VDATE // ')',' ')
-      CALL MSG(' ',' ',' ')
+C     CALL MSG(' ',' ',' ')
+C     CALL MSG(' F','UNIVERSITY OF ' ,'+')
+C     CALL MSG(' F','WASHINGTON',' ')
+C     CALL MSG(' F','RELATIONAL ','+')
+C     CALL MSG(' F','INFORMATION ','+')
+C     CALL MSG(' F','MANAGEMENT',' ')
+      CALL MSG(' U','UW RIM ','+')
+      CALL MSG(' U','(V.' // VER // '  ' // VDATE // ')',' ')
+C     CALL MSG(' ',' ',' ')
 C
 C
 C  SET THE TRAPS FOR RECOVERING ERRORS.
