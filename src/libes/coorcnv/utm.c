@@ -20,7 +20,9 @@
  *
  * CC_u2ll_zone (zone)
  *   must be called before CC_u2ll_north()
- *   set utm 'zone' mus be non-zero. negative mean southern hemisphere
+ *   set utm 'zone' must be non-zero.
+ *   positive means northern hemisphere
+ *   negative means southern hemisphere
  *   used to set the longitude of the central merdian
  *   (only used for utm to lat/lon conversions)
  *
