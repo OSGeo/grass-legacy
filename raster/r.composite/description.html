@@ -1,0 +1,32 @@
+<H2>DESCRIPTION</H2>
+
+This program combines three raster map layers to form a
+composite RGB layer. For each layer, the corresponding
+component from the layer's color table is used (e.g. for
+the red layer, the red component is used, and so on). In
+general, the layers should use a gray-scale color table.
+
+<H2>NOTES</H2>
+
+The default number of intensity levels for each component is 32,
+resulting in a total of 32768 possible colors (equivalent to 15 bits
+per pixel). If significantly more levels than this are used, not only
+will <EM>r.composite</EM> take longer to run, but displaying the
+resulting layer with <EM><A HREF="d.rast.html">d.rast</A></EM> will
+also be significantly slower.
+
+<P>
+Floyd-Steinberg dithering is optionally used.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.rast.html">d.rast</A></EM><BR>
+<EM><A HREF="d.rgb.html">d.rgb</A></EM><BR>
+<EM><A HREF="r.colors.html">r.colors</A></EM><BR>
+<EM><A HREF="i.composite.html">i.composite</A></EM>
+
+<H2>AUTHOR</H2>
+
+Glynn Clements
+
+<p><i>Last changed: $Date$</i>
