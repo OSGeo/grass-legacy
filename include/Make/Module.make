@@ -23,7 +23,7 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 #optional i18N support
 ifdef HAVE_NLS
-PACKAGE ="grass"
+PACKAGE ="grassmods"
 DEFS=-DPACKAGE=\"$(PACKAGE)\"
 EXTRA_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
 endif
