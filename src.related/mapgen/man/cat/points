@@ -1,0 +1,132 @@
+
+
+
+
+
+
+_p_o_i_n_t_s - _c_r_e_a_t_e _p_o_i_n_t _d_a_t_a _o_v_e_r_l_a_y
+
+
+_p_o_i_n_t_s [ -oci [args]] [ -m ] def_file [ files ]
+
+_P_o_i_n_t_s is a graphic  function  in  the  MAPGEN  graphic
+series which provides for creating point and/or posting
+map overlays from geographic coordinate  data  file[s].
+Most  of the following options can appear in any order:
+This option specifies the required map definition file.
+If  the  -_m is omitted, _d_e_f__f_i_l_e must be the first file
+listed.  This option specifies the  map  overlay  meta-
+graphic  file.   If this option is specified, a plot of
+the graphic file is output to the controlling terminal.
+It  the -_o option is omitted, then -_i is implied.  This
+options provides  for  run-line  inclusion  of  graphic
+options listed below.  If there is more than one option
+or imbedded blanks,  the  field  must  be  enclosed  in
+quotes  or  apostrophies.   One or more data _f_i_l_e_s that
+contain geographic, posting, and control data.   If  no
+files are specified, or if a - argument is encountered,
+_p_o_i_n_t_s reads from the standard input.  Files  are  pro-
+cessed  in  left to right order.  The following options
+provide for graphic control and may only appear in  the
+-_c run-line field or the data file(s).  Control data in
+the data files must be on lines with a #  character  in
+column one.  A second # character on these lines causes
+the remainder of the line  to  be  ignore  and,  conse-
+quently, may be used for comments.  There are two basic
+modes of _p_o_i_n_t_s operation: _p_o_i_n_t plotting, where a sym-
+bol  is  displayed  at  each geographic coordinate; and
+_p_o_s_t_i_n_g, where one or more fields of data from the data
+record  are  printed  at  the geographic point.  Conse-
+quently, several options require either an s or c  pre-
+fix to denote whether the option applies to the respec-
+tive  point  or  posting  control.   For  example,  -_s_f
+selects  point  font  and -_s_c selects the posting font.
+When -_c occurs as a  solitary  option,  the  subsequent
+data  posting  fields  are  to be plotted.  This option
+selects the point symbol to be employed.  If _a_r_g  is  a
+numeric  value,  then  the  symbol  is  selected by the
+numeric value of the symbol, otherwise the ascii  char-
+acter.   _F_l_o_n and _f_l_a_t are the respective field control
+words of the longitude and latitude data  fields  (data
+must  be  in DMS format).  Both field control words are
+of the form [_f][.[_o][._l]] where _f is the field  number,
+_o  is  the number of characters to skip from the begin-
+ning of the field, and _l is the length  of  the  field.
+If  _l  is not specified or 0, then the remainder of the
+field is employed.  If _f or _o are omitted, then 1 and 0
+are respective assumptions.  If this option is omitted,
+then a default of "-d 2,1" is  assumed.   The  list  of
+field  control  words following this option defines the
+data fields to be posted.  The format of _f_f is the same
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 2 -
+
+
+as  for  the  -_d option.  _N_a_m_e is the name of a graphic
+system font to be employed for the point (s) or posting
+(c)  operations.   _C_h_r  selects  justification mode for
+posting data: c for centered, l  for  left  and  r  for
+right.   Default justification is left.  Set the inter-
+line spacing (leading) to _n /  8  times  the  character
+size.   If not specified for multiple fields, the post-
+ing data will overplot.  A typical  value  of  12  (1.5
+times) usually works well.
+_N is the mechanical pen to  be  employed.   Discontinue
+point  (s)  or  posting (c) mode.  _A_n_g is the number of
+counter clockwise degrees the posted data (c) or  point
+symbol (s) is to be rotated about the geographic point.
+When -_s occurs as a solitary option, point plotting  is
+to  commence  at  subsequent  data values.  _S_i_z_e is the
+nominal size of the point (s) or posting (c) characters
+in centimeters.  The character _c, immediately following
+-_t delimits data fields on data records (default: -_t_\^_I
+(tab)).   _C_m  is the number of centimeters along the x-
+axis the beginning of  the  posting  string  is  to  be
+offset  from the geographic coordinate location.  Note:
+offset is made prior to rotation.   Option  similar  to
+-_c_x except that it is used for offset along the y-axis.
+The character _c immediately following -_z  will  replace
+the  normal # character for indicating control line and
+comment.
+
+ _M_a_p _d_e_f_i_n_i_t_i_o_n _f_i_l_e.
+
+ _M_A_P_G_E_N _s_y_s_t_e_m _d_o_c_u_m_e_n_t_a_t_i_o_n.
+
+ _E_r_r_o_r _m_o_n_i_t_o_r_i_n_g _o_n_l_y.
+
+_T_o_o _e_a_r_l_y _t_o _t_e_l_l (_p_r_o_b_a_b_l_y).
+
+_G_e_r_a_l_d _I. _E_v_e_n_d_e_n, _U_S_G_S, _W_o_o_d_s _H_o_l_e, _M_A.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     June 4, 1991
+
+
