@@ -326,8 +326,10 @@ main (int argc, char *argv[])
 	  }
 	
 	Vect_close (&In);
-	if (option == O_ADD || option == O_DEL)
+	if (option == O_ADD || option == O_DEL) {
+	    Vect_build (&Out, stdout);
 	    Vect_close (&Out);
+	}
 
 	exit(0) ;
 }
