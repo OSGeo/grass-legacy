@@ -19,6 +19,8 @@
 #include "infx.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "glocale.h"
+
 #define MAIN
 
 int main(argc, argv)
@@ -30,6 +32,12 @@ char **argv ;
     struct Option  *tbl ;
     int   stat;   
     static char SQL[1024] ;
+
+#ifdef HAVE_LIBINTL_H
+  setlocale (LC_MESSAGES, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+#endif
     
 	   
 	tbl = G_define_option() ;
@@ -37,11 +45,11 @@ char **argv ;
 	tbl->type       = TYPE_STRING ;
 	tbl->required   = YES  ;
 	tbl->multiple   = NO ;
-	tbl->description= "The table name in the selected database:" ;
+	tbl->description= _("The table name in the selected database:") ;
 
 	flag = G_define_flag();
 	flag->key		= 'v';
-	flag->description	= "Use flag -v for full output.";
+	flag->description	= _("Use flag -v for full output.");
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -49,7 +57,7 @@ char **argv ;
 	/* Check DATABASE env variable */
         if ((dbname=G__getenv("PG_DBASE")) == NULL) {
             fprintf(stderr,
-                   "Please run g.select.pg to identify a current database.\n");
+                   _("Please run g.select.pg to identify a current database.\n"));
 	    exit(-1);
            }
 

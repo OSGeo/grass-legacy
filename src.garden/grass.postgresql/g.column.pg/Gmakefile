@@ -1,6 +1,8 @@
 PGM       = $(BIN_CMD)/g.column.pg
 LIBES     = $(GISLIB) 
-EXTRA_CFLAGS = $(PQINCPATH)
+PACKAGE = "g.column.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
 
 OBJS = \
 	main.o \

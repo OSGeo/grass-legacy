@@ -2,6 +2,7 @@
 #include "gis.h"
 #include "column.h"
 #include <libpq-fe.h>
+#include "glocale.h"
 
 #ifdef HAVE_POSTGRES_H
 #include <postgres.h>
@@ -37,14 +38,14 @@ int infxColumn(SQL_stmt)
         
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
     if (PQstatus (pg_conn) == CONNECTION_BAD) {
-      fprintf (stderr,"Error: connect Postgres:%s\n",PQerrorMessage(pg_conn));
+      fprintf (stderr,_("Error: connect Postgres:%s\n"),PQerrorMessage(pg_conn));
       PQfinish(pg_conn);
       exit (-1); 
     }
   	   
     res = PQexec (pg_conn, SQL_stmt);
     if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
-      fprintf (stderr,"Error: select Postgres:%s\n",PQerrorMessage(pg_conn)); 
+      fprintf (stderr,_("Error: select Postgres:%s\n"),PQerrorMessage(pg_conn)); 
       PQfinish(pg_conn);
       exit (-1);      
     }

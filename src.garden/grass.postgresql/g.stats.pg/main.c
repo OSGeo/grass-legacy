@@ -28,6 +28,8 @@
 #include "infx.h"
 #include "stats.h"
 #include <stdlib.h>
+#include "glocale.h"
+
 #define MAIN
 
 int main(argc, argv)
@@ -40,6 +42,12 @@ char **argv ;
     struct Option *opt1, *opt2, *cond;
     struct Flag *flag, *verb;
 
+#ifdef HAVE_LIBINTL_H
+  setlocale (LC_MESSAGES, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+#endif
+
 
 	stat = 0;
 
@@ -51,34 +59,34 @@ char **argv ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES  ;
 	opt1->multiple   = NO ;
-	opt1->description= "Name of the table in the selected database:" ;
+	opt1->description= _("Name of the table in the selected database:");
 
 	opt2 = G_define_option() ;
 	opt2->key        = "column" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = YES  ;
 	opt2->multiple   = NO ;
-	opt2->description= "Column in [table]." ;
+	opt2->description= _("Column in [table].") ;
 
 	cond = G_define_option() ;
 	cond->key        = "where" ;
 	cond->type       = TYPE_STRING ;
 	cond->required   = NO ;
 	cond->multiple   = NO ;
-	cond->description= "Clause (where) for the query, without WHERE" ;
+	cond->description= _("Clause (where) for the query, without WHERE") ;
 
         flag = G_define_flag();
         flag->key               = 'f';
-        flag->description       = "Use -f for frequencies \n\tinstead of min, max, mean.";
+        flag->description       = _("Use -f for frequencies \n\tinstead of min, max, mean.");
 
         verb = G_define_flag();
         verb->key               = 'v';
-        verb->description       = "Use -v for full output.";
+        verb->description       = _("Use -v for full output.");
 
 	/* Check DATABASE env variable */
         if ((dbname=G__getenv("PG_DBASE")) == NULL) {
             fprintf(stderr,
-                   "Please run g.select.pg to identify a current database..\n");
+                   _("Please run g.select.pg to identify a current database..\n"));
 	    exit(-1);
            }
 
