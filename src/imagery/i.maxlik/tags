@@ -1,0 +1,12 @@
+Mdump_sigs	dump_sigs.c	/^main(argc,argv) char *argv[];$/
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+ask_files	ask_files.c	/^ask_files (me) char *me;$/
+classify	classify.c	/^classify (class, reject, ncols)$/
+done	main.c	/^done()$/
+get_histo	ask_files.c	/^get_histo(n, histo)$/
+get_name	ask_files.c	/^get_name (n, dname)$/
+invert	dump_sigs.c	/^invert (s, nbands, ik, jk, det)$/
+invert_signatures	invert.c	/^invert_signatures()$/
+print_sig	dump_sigs.c	/^print_sig(s,nbands)$/
+test_signatures	dump_sigs.c	/^test_signatures(S)$/
+usage	dump_sigs.c	/^usage(me) char *me;$/
