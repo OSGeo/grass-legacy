@@ -30,8 +30,15 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec "$GISBASE"/etc/bin/cmd/g.parser "$0" "$@"
 fi
 
+#hack for MacOSX:
+if [ "$HOSTTYPE" = "macintosh" ] ; then
+    BROWSERNAME="default Macintosh web browser"
+else
+    BROWSERNAME="$GRASS_HTML_BROWSER"
+fi
+
 if [ $GIS_FLAG_i -eq 1 ] ; then
-   echo "Starting browser <$GRASS_HTML_BROWSER> for manual page index..."
+   echo "Starting browser <$BROWSERNAME> for manual page index..."
    $GRASS_HTML_BROWSER "$GISBASE"/docs/html/index.html
   exit 0
 fi
@@ -45,7 +52,7 @@ if test ! -f "$GISBASE"/docs/html/"$GIS_OPT_entry".html -a "$GIS_OPT_entry" != "
     echo "ERROR: no man page entry for <$GIS_OPT_entry>."
     exit 1
 else
-    echo "Starting browser <$GRASS_HTML_BROWSER> for module $GIS_OPT_entry..."
+    echo "Starting browser <$BROWSERNAME> for module $GIS_OPT_entry..."
     $GRASS_HTML_BROWSER "$GISBASE"/docs/html/"$GIS_OPT_entry".html
 fi
 
