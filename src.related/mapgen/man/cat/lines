@@ -1,0 +1,264 @@
+
+
+
+
+
+
+_l_i_n_e_s - _c_r_e_a_t_e _l_i_n_e/_p_o_i_n_t _d_a_t_a _o_v_e_r_l_a_y
+
+
+_l_i_n_e_s [ -oci [args]] [ -m ] def_file [ files ]
+
+_L_i_n_e_s is a  graphic  function  in  the  MAPGEN  graphic
+series  which  provides for creating line, point and/or
+posting map overlays from  geographic  coordinate  data
+file[s].   Although  _l_i_n_e_s  performs  many  of the same
+operations as _p_o_i_n_t_s, it is recomended that  _p_o_i_n_t_s  be
+employed  when dealing with purely posting/point opera-
+tions as it suffers  considerably  less  overhead  than
+_l_i_n_e_s.  Most of the following options can appear in any
+order: This option specifies the required  map  defini-
+tion  file.  If the -_m is omitted, _d_e_f__f_i_l_e must be the
+first file listed.  This option specifies the map over-
+lay  metagraphic  file.  If this option is specified, a
+plot of the graphic file is output to  the  controlling
+terminal.   If  the  -_o  option  is omitted, then -_i is
+implied.  This options provides for run-line  inclusion
+of graphic options listed below.  If there is more than
+one option  or  imbedded  blanks,  the  field  must  be
+enclosed  in  quotes or apostrophies.  One or more data
+_f_i_l_e_s that contain  geographic,  posting,  and  control
+data.  If no files are specified, or if a - argument is
+encountered,  _l_i_n_e_s  reads  from  the  standard  input.
+Files  are  processed in left to right order.  The fol-
+lowing options provide for graphic control and may only
+appear  in  the  -_c run-line field or the data file[s].
+Control data in the data files must be on lines with  a
+#  character  in  column  one.  A second # character on
+these lines causes the remainder  of  the  line  to  be
+ignored  and,  consequently,  may be used for comments.
+There are three basic modes of _l_i_n_e_s  operation:  _p_o_i_n_t
+plotting where a symbol is displayed at each geographic
+coordinate, _p_o_s_t_i_n_g where one or more  fields  of  data
+from  the  data  record  are  printed at the geographic
+point and _l_i_n_e drafting between  data  points.   Conse-
+quently,  several  options  require either an s, c or l
+prefix to denote whether  the  option  applies  to  the
+respective  point, posting, or line control.  For exam-
+ple, -_s_f selects point font while -_s_c selects the post-
+ing  font.  Line drafting has three methods of display:
+solid lines, dashed lines  and  symbol  lines.   Symbol
+lines  are  similar  to  dashed  lines  except that the
+graphic employed in lieu of the dash segment may be any
+character(s)  from the symbol character font.  The sym-
+bol line form may be combined with either the solid  or
+dashed  line  option.   The  font  selected  by the -_s_f
+(select symbol font) determines the character set  used
+by  the  the  symbol line generator.  _S_t_r is any set of
+one to 8 symbols selected  from  the  character  symbol
+font  to be employed in a repeated manner when drafting
+symbol lines.  A special symbol (\177) may be  employed
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 2 -
+
+
+to  denote  an empty point in the symbol sequence.  Any
+symbol (including the empty point symbol) with the most
+significant  bit  (sign) set will cause 180 rotation of
+the current and following _s_t_r (if any) symbols.  At the
+start  of  each cycle through _s_t_r the rotation rotation
+is set to 0 so that if a line is progressing from  left
+to  right  the symbol would appear right side up.  If a
+single symbol is to appear in  a  reverse  manner  then
+\200  should be added (i.e. a reverse rotation letter A
+would be \301).  To create a sequence of  symbols  with
+alternating  rotation  then two or more symbols must be
+used with the sign set on some symbol  other  than  the
+first.   For  example, -a A\301 will cause the letter A
+to be  plotted  with  alternating  rotation.   -_B  This
+starts  line  drafting  in  a  manner similar to the -_l
+option except that the following data coordinates  con-
+tain  intermediate Bezier points that will cause smooth
+line interpolation.  Bezier option must be  respecified
+whenever  line  drafting  is suspended by a -_l_q option.
+This option provides for the generation of rhumb  lines
+(lines of constant azimuth) when _n is a positive value.
+The larger the value of _n the  coarser  the  rhumb  fit
+will  be  and the greater likelyhood of visible straigh
+line segments.  Generally a selection of  -_R3  is  con-
+sidered and optimal value for publication work.  When _n
+zero or absent normal lines directly connecting coordi-
+nates are employed.  When employed with non-rhumb lines
+in a single control-data file a -_b should separate line
+segments.   This  option specifies a break in the line.
+Line drafting will be discontinued at  the  last  point
+and  restarted  at the next data point.  When -_c occurs
+as a  solitary  option,  the  subsequent  data  posting
+fields  are  to  be  plotted.   This option selects the
+point symbol to be employed.  If _a_r_g is a numeric value
+then  it  is the numeric selection of the symbol other-
+wise the ascii value.  _F_l_o_n and _f_l_a_t are the respective
+field  control words of the longitude and latitude data
+fields (data must be in DMS format).  Both  field  con-
+trol words are of the form [_f][.[_o][._l]] where _f is the
+field number, _o is the number  of  characters  to  skip
+from the beginning of the field, and _l is the length of
+the field.  If _l  is  not  specified  or  0,  then  the
+remainder  of  the  field  is  employed.  If _f or _o are
+omitted then 1 and 0 are  respective  assumptions.   If
+this option is omitted then a default value of "-d 2,1"
+is assumed.  The list of field control words  following
+this  option defines the data fields to be posted.  The
+format of _f_f is the same as for the  -_d  option.   This
+option  selects dashed mode for line drafting.  _N_a_m_e is
+the name of a graphic system font to  be  employed  for
+the  point  (s) or posting (c) operations.  _C_h_r selects
+justification mode for posting data: c for centered,  l
+for  left  and  r  for right.  Default justification is
+left.  Note that _c is currently required.  _D_i_s_t is  the
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 3 -
+
+
+interval  (in  cm.)  between symbols during symbol line
+mode.  This option will select  drafting  of  a  symbol
+line.   If the character (immediately following -_k is a
+k then the line will be  drafted  without  a  solid  or
+dashed  connection  otherwise  the letter l will select
+line drafting.  Note that the -_l or  -_l_q  parameter  is
+still  required  to control beginning and ending of the
+line drafting operation regardless of mode.  The -_a,  -
+_k_d  and  -_k_s options should be appropriately set before
+this option.  To deselect this option use either the  -
+_l_s  or  -_l_d  line mode parameters.  When -_l occurs as a
+solitary option, then line plotting is to  commence  at
+subsequent  data  values.   Set  the  interline spacing
+(leading) to _n / 8 times the character  size.   If  not
+specified  for  multiple  fields, the posting data will
+overplot.  A typical value of 12  (1.5  times)  usually
+works  well.   Turn  perform line drafting with a solid
+line (default option).  _A_r_g is the value for  the  dash
+line  mask.   It  is treated as a 16-bit quantity where
+each on bit is a solid  segment  of  the  dashed  line.
+Note  that  it  must be entered as a decimal, octal, or
+hexadecimal value (e.g., 123,  0123  or  0x123  respec-
+tively).  _N is the mechanical pen to be employed.  Dis-
+continue point (s), posting (c) or  line  (l)  plotting
+mode.   If  _a_n_g is a numeric value, it is is the number
+of counterclockwise degrees  the  posted  data  (c)  or
+point  symbol (s) is to be rotated about the geographic
+point.  If _a_n_g is the letter o or  p,  then  the  point
+symbol or posting is to be made respectively orthogonal
+or parallel to the  track  of  data  points.   When  -_s
+occurs  as a solitary option, then point plotting is to
+commence at subsequent data values.  _S_i_z_e is the  nomi-
+nal  size of the characters for point (s), posting (c),
+or symbol line characters (k) or the dash line interval
+(l)  in centimeters.  The character _c, immediately fol-
+lowing  -_t,  delimits  data  fields  on  data   records
+(default:  "t\t" (tab)).  Use of special characters may
+require quote mark enclosure.  _C_m is the number of cen-
+timeters  along the x-axis the beginning of the posting
+string is to be offset from the  geographic  coordinate
+location.   Note:  offset  is  made  prior to rotation.
+Option similar to -_c_x except that it is used for offset
+along  the y-axis.  The character _c immediately follow-
+ing -_z will replace the normal # character  that  indi-
+cate control line and comment.
+
+ _M_a_p _d_e_f_i_n_i_t_i_o_n _f_i_l_e.
+
+ _M_A_P_G_E_N _s_y_s_t_e_m _d_o_c_u_m_e_n_t_a_t_i_o_n.
+
+ _E_r_r_o_r _m_o_n_i_t_o_r_i_n_g _o_n_l_y.
+
+
+
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 4 -
+
+
+_T_o_o _e_a_r_l_y _t_o _t_e_l_l (_p_r_o_b_a_b_l_y).
+
+_G_e_r_a_l_d _I. _E_v_e_n_d_e_n, _U_S_G_S, _W_o_o_d_s _H_o_l_e, _M_A.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     June 4, 1991
+
+
