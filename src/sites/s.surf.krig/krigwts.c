@@ -100,7 +100,7 @@ void krig_weights (void) {
    * cell.
    */
 
-  G_LU_solve(C, x, w, NONSYM);
+  G_matrix_LU_solve(C, x, w, NONSYM);
 
 
   G_matrix_free(C);
