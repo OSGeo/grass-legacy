@@ -19,7 +19,8 @@
 #include <dbmi.h>
 #include "globals.h"
 
-main(argc, argv) char *argv[];
+int
+main(int argc, char *argv[])
 {
     exit (db_driver (argc, argv));
 }
