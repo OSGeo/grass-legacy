@@ -103,6 +103,7 @@ if [ ! -f $GISRC ] ; then
     echo ""
     echo "Hit RETURN to continue"
     read ans
+    GRASS_GUI="text"
 fi
 
 # Parsing argument to get LOCATION
