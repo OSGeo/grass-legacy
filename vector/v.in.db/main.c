@@ -54,12 +54,14 @@ int main (int argc, char *argv[])
     driver_opt->options     = db_list_drivers();
     driver_opt->required    = YES;
     driver_opt->description = "Input driver name";
+    driver_opt->answer      = db_get_default_driver_name();
 
     database_opt 	      = G_define_option();
-    database_opt->key 	      = "database";
+    database_opt->key 	      = "Database name";
     database_opt->type        = TYPE_STRING;
     database_opt->required    = YES;
     database_opt->description = "Input database name";
+    database_opt->answer      = db_get_default_database_name();
 
     table_opt 		   = G_define_option();
     table_opt->key 	   = "table";
