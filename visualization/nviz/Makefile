@@ -38,10 +38,7 @@ install:
 	$(INSTALL) scripts/*Index $(INSTALL_DIR)/scripts
 	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
 	$(INSTALL) scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
-	$(INSTALL) scripts/$(PROG) $(GISBASE)/bin
-# test required for winGRASS, check for cygwin first:
-	if test -f "src/nvwish.exe" ; then mv src/nvwish.exe $(INSTALL_DIR)/$(NVWISH_VER) ; fi
-	if test -f "src/nvwish" ; then mv src/nvwish $(INSTALL_DIR)/$(NVWISH_VER) ; fi
+	$(INSTALL) src/$(PROG) $(GISBASE)/bin
 #	$(GMAKE) html
 
 clean: 
