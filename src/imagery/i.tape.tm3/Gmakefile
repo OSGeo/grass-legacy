@@ -9,7 +9,7 @@ IMAGERYLIB_SUP  = $(SRC)/libes/image3/libimage_sup.a
 LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB) $(COORCNVLIB)\
          $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
          $(GPROJLIB) $(LIBTRANS) $(PROJLIB) \
-         $(GISLIB) $(VASK)
+         $(GISLIB) $(VASKLIB)
 
 LIST  = landsat.o \
 	fileseq.o \
@@ -26,7 +26,7 @@ $(LIST): landsat.h fileseq.h
 
 
 $(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES) 
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): # in case of changes
 

@@ -17,15 +17,15 @@ all: $(ETC)/s.sweep $(BIN_MAIN_CMD)/s.voronoi $(BIN_MAIN_CMD)/s.delaunay
 
 $(BIN_MAIN_CMD)/s.delaunay: $(DTRI) $(LIBES)
 #s.delaunay: $(DTRI) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(DTRI) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(DTRI) $(LIBES) $(CURSES)
  
 $(BIN_MAIN_CMD)/s.voronoi: $(VORO) $(LIBES)
 #s.voronoi: $(VORO) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(VORO) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(VORO) $(LIBES) $(CURSES)
  
 $(ETC)/s.sweep: $(XSWO) sw_defs.h
 #s.sweep: $(XSWO) sw_defs.h
-	$(CC) $(LDFLAGS) -o $@ $(XSWO) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(XSWO) $(LIBES) $(CURSES)
 
 $(LIBES): #
 

@@ -2,9 +2,9 @@ PGM=g.access
 
 LIST = main.o ask_perms.o exp_perms.o get_perms.o set_perms.o verify_perms.o
 
-LIBES=$(GISLIB) $(VASK)
+LIBES=$(GISLIB) $(VASKLIB)
 $(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 get_perms.o: access.h
 set_perms.o: access.h

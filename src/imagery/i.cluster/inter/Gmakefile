@@ -3,7 +3,7 @@ PGM=i.cluster
 LIST=main.o ask_files.o ask_parms.o run_cluster.o
 
 $(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB) 
-	$(CC) -o $@ $(LDFLAGS) $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+	$(CC) -o $@ $(LDFLAGS) $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 
 main.o: global.h
@@ -13,4 +13,4 @@ run_cluster.o: global.h
 
 $(LIST): global.h
 
-$(IMAGEERYLIB) $(GISLIB) $(VASKLIB): #
+$(IMAGERYLIB) $(GISLIB) $(VASKLIB): #

@@ -20,10 +20,10 @@ LIST     = main.o\
 	   from_view.o\
 	   yes.o
 
-LIBES=$(G3DLIB) $(VECTLIB) $(GISLIB) $(VASK)
+LIBES=$(G3DLIB) $(VECTLIB) $(GISLIB) $(VASKLIB)
 
 $(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): glob.h
 

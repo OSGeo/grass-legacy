@@ -39,7 +39,7 @@ $(LIST): global.h rowcol.h
 LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
 	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
 	 $(GPROJLIB) $(LIBTRANS) $(COORCNVLIB) \
-	 $(GISLIB) $(VASK)
+	 $(GISLIB) $(VASKLIB)
 
 
 ###	libarary dependencies
@@ -54,7 +54,7 @@ EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 
 ###	the rules
 $(BIN_MAIN_INTER)/$(PGM): $(LIST) $(LIBES) 
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 ###	tags
 ###	the end.

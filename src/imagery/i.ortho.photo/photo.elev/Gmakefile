@@ -6,10 +6,10 @@ IMAGERYLIB2  = ../libes/libortho.a
 
 LIST = main.o ask_elev.o mod_elev.o
 
-LIBES=$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASK)
+LIBES=$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 
 $(HOME)/$(PROGRAM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(IMAGERYLIB2) $(LIBES): #
 

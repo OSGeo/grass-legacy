@@ -1,4 +1,4 @@
-LIBES  = $(GISLIB) $(VASK)
+LIBES  = $(GISLIB) $(VASKLIB)
 
 
 #PGM = $(GISBASE)/bin/r.agnps50.view
@@ -13,6 +13,6 @@ LIST = \
 
 
 $(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

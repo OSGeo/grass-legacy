@@ -4,9 +4,9 @@ LIST = 	lex.yy.o \
 	main.o \
 	writesite.o
 
-LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(VASK)
+LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(VASKLIB)
 $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 lex.yy.c : mif.l
 	$(LEX) mif.l

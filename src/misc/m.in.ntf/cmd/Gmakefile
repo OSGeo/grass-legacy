@@ -15,7 +15,7 @@ PGM = m.in.ntf
 #	   directory that can be passed to dbx(tool).
 
 
-LIBES = $(VECTLIB) $(GISLIB) $(VASK) $(DIG_ATTLIB) $(DATETIMELIB)
+LIBES = $(VECTLIB) $(GISLIB) $(VASKLIB) $(DIG_ATTLIB) $(DATETIMELIB)
 #-----------^ Library necessary for all GRASS programs.
 #---------------------^ Parses keyboard input.
 #------------------------------^ For non arithmetic maths.
@@ -74,7 +74,7 @@ OBJ =\
 ######### DEPENDENCIES #########
 
 $(BIN_CONTRIB_CMD)/$(PGM): ${OBJ} ${LIBES}
-	 ${CC} $(COMPILER_FLAGS) -o $@ ${OBJ} ${LIBES} $(MATHLIB) ${XDRLIB}
+	 ${CC} $(COMPILER_FLAGS) -o $@ ${OBJ} ${LIBES} $(CURSES) $(MATHLIB) ${XDRLIB}
 #
 #-----^ This compiles the whole program bringing all labels together.
 

@@ -17,9 +17,9 @@ LIST = main.o\
 	target.o\
 	write.o
 
-LIBES=$(IMAGERYLIB) $(VASK) $(GISLIB)
+LIBES=$(IMAGERYLIB) $(VASKLIB) $(GISLIB)
 $(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 $(LIST): global.h rowcol.h crs.h
 
 $(LIBES): # in case libraries change

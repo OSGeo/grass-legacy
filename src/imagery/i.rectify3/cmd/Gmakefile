@@ -34,7 +34,7 @@ $(LIST): global.h rowcol.h parse.h
 LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
 	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
 	 $(GPROJLIB) $(LIBTRANS) $(COORCNVLIB) \
-	 $(GISLIB) $(VASK)
+	 $(GISLIB) $(VASKLIB)
 
 
 ####	library dependencies
@@ -49,5 +49,5 @@ EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 
 ####	the rules
 $(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES) 
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 

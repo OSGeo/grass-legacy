@@ -1,9 +1,9 @@
 PGM= querydata
 RFEA= $(GISBASE)/etc/r.fea
-LIBES = $(GISLIB) $(VASK)
+LIBES = $(GISLIB) $(VASKLIB)
 LIST =  querydata.o confirm_map.o count.o vask.o
 
 $(RFEA)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

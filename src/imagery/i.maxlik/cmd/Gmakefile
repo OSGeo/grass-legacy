@@ -5,9 +5,9 @@ LIST = main.o\
 	hist.o\
 	invert.o
 
-LIBES=$(IMAGERYLIB) $(GISLIB) $(VASK)
+LIBES=$(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 $(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h
 

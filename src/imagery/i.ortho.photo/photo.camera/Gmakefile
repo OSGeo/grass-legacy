@@ -5,10 +5,10 @@ IMAGERYLIB2  = ../libes/libortho.a
 EXTRA_CFLAGS = -I../libes
 
 LIST = main.o mod_cam_info.o
-LIBES=$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASK)
+LIBES=$(IMAGERYLIB2) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 
 $(HOME)/$(PROGRAM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(IMAGERYLIB2) $(LIBES): #
 

@@ -1,6 +1,6 @@
 PGM=r.kappa
 
-LIBES= $(GISLIB) $(VASK)
+LIBES= $(GISLIB) $(VASKLIB)
 
 OBJS = main.o\
 	calc_kappa.o\
@@ -12,6 +12,6 @@ OBJS = main.o\
 	sum.o
 
 $(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB) $(EXTRA_FLAGS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB) $(EXTRA_FLAGS)
 
 $(LIBES): #

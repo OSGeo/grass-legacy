@@ -16,10 +16,10 @@ LIST = 	main.o \
 # LINK_LIST = ../../libes/vect32_64/shapelib-1.2.8/shpopen.o \
 # 	../../libes/vect32_64/shapelib-1.2.8/dbfopen.o
 
-LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(VASK)
+LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(VASKLIB)
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB): #
 $(GISLIB): # 

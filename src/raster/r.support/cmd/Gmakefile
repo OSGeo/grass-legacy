@@ -6,4 +6,3 @@ $(BIN_MAIN_CMD)/$(PGM): $(SUPPORT) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(SUPPORT) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
-$(VASKLIB): #

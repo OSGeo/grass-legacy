@@ -14,7 +14,7 @@ PROG = $(BIN_CONTRIB_CMD)/r.param.scale
 #	   directory that can be passed to dbx(tool).
 
 
-LIBES = $(GISLIB) $(VASK) $(MATHLIB) $(RASTERLIB) $(DISPLAYLIB)
+LIBES = $(GISLIB) $(VASKLIB) $(RASTERLIB) $(DISPLAYLIB)
 #-----------^ Library necessary for all GRASS programs.
 #---------------------^ Parses keyboard input.
 #------------------------------^ For non arithmetic maths.
@@ -55,7 +55,7 @@ OBJ =\
 ######### DEPENDENCIES #########
 
 $(PROG): $(OBJ) $(LIBES)
-	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(XDRLIB)
+	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 #
 #-----^ This compiles the whole program bringing all labels together.
 

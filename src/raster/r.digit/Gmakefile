@@ -5,9 +5,9 @@ OBJ =  main.o digitize.o get_type.o setup_graph.o get_map.o \
 	get_point.o get_label.o get_area.o get_line.o get_circle.o \
 	instruct.o bnw_line.o create_map.o get_en.o
 
-LIBS = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASK)
+LIBS = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASKLIB)
 
 $(BIN_ALPHA_INTER)/$(PGM): $(OBJ) $(LIBS)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBS) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBS) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBS): #

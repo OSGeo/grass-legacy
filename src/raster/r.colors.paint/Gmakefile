@@ -18,7 +18,6 @@ $(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES)
 	(cd Gcolortab/preview ; tar -cf - * | (cd $(ETC)/Gcolortab/preview; tar -xf - 2>/dev/null ); true )
 
 $(GISLIB): #
-$(VASKLIB): #
 $(DISPLAYLIB): #
 $(RASTERLIB): #
 $(INTERFACE): #
