@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <unistd.h>
 #include "gis.h"
 #include "nfiles.h"
@@ -82,11 +83,8 @@ int main (int argc, char *argv[])
     for (; *ptr != NULL; ptr++)
     {
         if (nfiles >= MAXFILES)
-        {
-            fprintf (stderr, "%s - too many patch files. only %d allowed\n",
-            G_program_name(), MAXFILES);
-            exit(1);
-        }
+            G_fatal_error ("%s - too many patch files. only %d allowed",
+                            G_program_name(), MAXFILES);
 
         name = *ptr;
         mapset = G_find_cell2 (name, "");
@@ -120,15 +118,12 @@ int main (int argc, char *argv[])
         exit(1);
 
     if (nfiles <= 1)
-    {
-        fprintf(stderr, "Error:The min specified input map is two\n");
-        exit (-1);
-    }
+        G_fatal_error("The min specified input map is two");
 
     rname = opt2->answer;
     outfd = G_open_raster_new (new_name = rname, out_type);
     if (outfd < 0)
-	exit(1);
+	G_fatal_error("Cannot open output map.");
     
     presult = G_allocate_raster_buf(out_type);
     patch  = G_allocate_raster_buf(out_type);
@@ -141,13 +136,14 @@ int main (int argc, char *argv[])
     {
 	if (verbose) G_percent (row, nrows, 2);
 	if(G_get_raster_row (infd[0], presult, row, out_type) < 0)
-	    exit(1);
+	    G_fatal_error("Cannot get raster raster of input map");
+
         if(out_type == CELL_TYPE)
             G_update_cell_stats ((CELL *) presult, ncols, &statf[0]);
 	for (i = 1; i < nfiles; i++)
 	{
 	    if(G_get_raster_row (infd[i], patch, row, out_type) < 0)
-		exit(1);
+		G_fatal_error("Cannot raster raster of input map");
 	    if(!do_patch (presult, patch, &statf[i], ncols, out_type, ZEROFLAG))
 		break;
 	}
@@ -175,5 +171,3 @@ int main (int argc, char *argv[])
 	G_write_colors (new_name, G_mapset(), &colr);
     exit(0);
 }
-
-
