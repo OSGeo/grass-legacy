@@ -11,7 +11,10 @@
 
 /*
  * $Log$
- * Revision 1.2.2.1  2002-05-10 07:00:02  glynn
+ * Revision 1.2.2.2  2002-05-13 08:55:04  glynn
+ * Sync removal of (Debian-specific) tk8.0.5.h with HEAD
+ *
+ * Revision 1.2.2.1  2002/05/10 07:00:02  glynn
  * Sync recent fixes
  *
  * Revision 1.3  2002/05/09 20:58:46  glynn
@@ -147,7 +150,7 @@
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==2
 #  include "tkInt8.0.2.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==0 && TK_RELEASE_SERIAL==5
-#  include "tkInt8.0.5.h"
+#  include "tkInt8.0.2.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==1
 #  include "tkInt8.1.1.h"
 #elif TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==2
