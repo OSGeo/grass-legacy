@@ -1,0 +1,29 @@
+HEADER = $(LIBDIR)/segment.h
+
+OBJ = \
+	address.o\
+	flush.o\
+	format.o\
+	get.o\
+	get_row.o\
+	init.o\
+	pagein.o\
+	pageout.o\
+	put.o\
+	put_row.o\
+	release.o\
+	seek.o\
+	setup.o
+
+
+all: $(SEGMENTLIB) $(HEADER) debug.o
+
+$(SEGMENTLIB): $(OBJ)
+	$(AR)
+
+$(OBJ): segment.h
+
+$(HEADER): segment.h
+	rm -f $@
+	cp $? $@
+	chmod 0644 $@
