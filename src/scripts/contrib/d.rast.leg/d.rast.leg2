@@ -12,7 +12,7 @@
 # This command allows the user to display a rast file and its
 # legend in a properly sized box.
 
-if [ $# != 1 ]
+if [ $# != 1  -o "$1" = "-help" -o "$1" = "help" ]
 	then
           tput clear
 	  echo "Usage: d.rastwl rast_file

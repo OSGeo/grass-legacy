@@ -5,7 +5,7 @@
 # $Id$
 # Version 1: Tue, 25 Jan 2000 10:31:37
 
-if [ "$#" -lt 3 ]
+if [ "$#" -lt 3 -o "$1" = "-help" -o "$1" = "help" ]
 then 
   echo
   echo "USAGE: d.monsize <monitor_width> <monitor_height> <monitor_name>"
