@@ -12,7 +12,8 @@ PINCLUDEDIR = ../../panel/9.6/include
 PLIBDIR = ../../panel/9.6/lib
 PANELLIB= ${PLIBDIR}/libpanel.\a
 
-GLLIBS = -lgl_s -lc_s -lm
+#GLLIBS = -lgl_s -lc_s -lm
+GLLIBS = -lgl
 LDFLAGS = 
 #LDFLAGS = -s
 
