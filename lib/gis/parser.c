@@ -270,6 +270,10 @@ G_define_option (void)
 	opt->options   = NULL ;
 	opt->key_desc  = NULL ;
 	opt->gisprompt = NULL ;
+	opt->label     = NULL ;
+	opt->opts      = NULL ;
+	opt->description  = NULL ;
+	opt->descriptions = NULL ;
 
 	current_option = opt ;
 	n_opts++ ;
@@ -358,7 +362,7 @@ G_define_standard_option (int opt)
 	    Opt->multiple     = YES;
 	    Opt->answer       = "point,line,boundary,centroid,area";
 	    Opt->options      = "point,line,boundary,centroid,area";
-	    Opt->description  = _("Select type: point, line, boundary, centroid or area");
+	    Opt->description  = _("Type");
 	    break;
 	case G_OPT_V_FIELD:
 	    Opt->key          = "layer";
@@ -377,7 +381,8 @@ G_define_standard_option (int opt)
 	    Opt->key          = "cats";
 	    Opt->type         = TYPE_STRING;
 	    Opt->required     = NO;
-	    Opt->description  = _("Category values (example: 1,3,7-9,13)");
+	    Opt->label        = _("Category values.");
+	    Opt->description  = _("Example: 1,3,7-9,13");
 	    break;
     }
 
@@ -447,6 +452,64 @@ int G_parser (int argc, char **argv)
 	opt= &first_option;
 	while(opt != NULL)
 	{
+	    	/* Parse options */
+		if(opt->multiple && opt->options)
+		{
+		    int  cnt = 0;
+		    char **tokens, delm[2];
+		    
+		    delm[0] = ','; delm[1] = '\0';
+		    tokens = G_tokenize ( opt->options, delm );
+		    
+		    i = 0;
+		    while ( tokens[i] ) {
+			cnt++;
+			i++;
+		    }
+
+		    opt->opts = (char **)G_calloc( cnt+1, sizeof(char*) );
+		    
+		    i = 0;
+		    while ( tokens[i] ) {
+			opt->opts[i] = G_store ( tokens[i] );
+			i++;
+		    }
+		    G_free_tokens ( tokens );
+
+		    if(opt->descriptions ) {
+		        delm[0] = ';';
+
+			opt->descs = (char **)G_calloc( cnt+1, sizeof(char*) );
+			tokens = G_tokenize ( opt->descriptions, delm );
+			
+			i = 0;
+			while ( tokens[i] ) {
+			    int j, found;
+
+			    if ( !tokens[i+1] ) break;
+
+			    j = 0; found = 0;
+			    while ( opt->opts[j] ) {
+				if ( strcmp(opt->opts[j],tokens[i]) == 0 ) {
+				    found = 1;
+				    break;
+				}
+				j++;
+			    }
+			    if ( !found ) {
+				G_warning ( "BUG in descriptions, option %s in %s does not exist",
+				             tokens[i], opt->key );
+			    } else {
+				opt->descs[j] = G_store ( tokens[i+1] );
+			    }
+
+			    i += 2;
+			}
+			G_free_tokens ( tokens );
+		    }
+		}
+		    
+		/* Copy answer */
 		if(opt->multiple && opt->answers && opt->answers[0])
 		{
 			opt->answer = (char *)G_malloc(strlen(opt->answers[0])+1);
@@ -698,8 +761,20 @@ int G_usage (void)
 		flag= &first_flag;
 		while(flag != NULL)
 		{
+			fprintf(stderr,"  -%c   \n", flag->key) ;
+
 			fprintf(stderr,"  -%c   %s\n",
 			    flag->key, flag->description) ;
+
+		        if ( flag->label ) {
+			    fprintf (stderr, "%s\n", flag->label );
+			    if ( flag->description )
+			        fprintf (stderr, "      %s\n", flag->description);
+
+			} else if ( flag->description ) {
+			    fprintf (stderr, "%s\n", flag->description);
+			}
+
 			flag = flag->next_flag ;
 		}
 	}
@@ -712,8 +787,17 @@ int G_usage (void)
 		opt= &first_option;
 		while(opt != NULL)
 		{
-			fprintf (stderr, "  %*s   %s\n", maxlen, opt->key,
-			    opt->description);
+			fprintf (stderr, "  %*s   ", maxlen, opt->key );
+
+		        if ( opt->label ) {
+			    fprintf (stderr, "%s\n", opt->label );
+			    if ( opt->description )
+			        fprintf (stderr, "           %*s\n", maxlen, opt->description);
+
+			} else if ( opt->description ) {
+			    fprintf (stderr, "%s\n", opt->description);
+			}
+
 			if(opt->options)
 				show_options(maxlen, opt->options) ;
 				/*
@@ -723,6 +807,20 @@ int G_usage (void)
 			if(opt->def)
 				fprintf (stderr, _("  %*s   default: %s\n"), maxlen, " ",
 					opt->def) ;
+			
+			if(opt->descs) {
+			    int i = 0;
+
+			    while ( opt->opts[i] ) {
+				fprintf (stderr, "  %*s   %s: ", maxlen, " ", opt->opts[i] );
+
+				if (  opt->descs[i] )
+				    fprintf (stderr, "%s\n", opt->descs[i] );
+				
+				i++;
+			    }
+			}
+
 			opt = opt->next_opt ;
 		}
 	}
@@ -765,6 +863,12 @@ static void G_usage_xml (void)
 	fprintf(stdout, "<!DOCTYPE task SYSTEM \"grass-interface.dtd\">\n");
 
 	fprintf(stdout, "<task name=\"%s\">\n", pgm_name);  
+
+	if (module_info.label) {
+		fprintf(stdout, "\t<label>\n\t\t");
+		print_escaped_for_xml (stdout, module_info.label);
+		fprintf(stdout, "\n\t</label>\n");
+	}
 
 	if (module_info.description) {
 		fprintf(stdout, "\t<description>\n\t\t");
@@ -811,6 +915,12 @@ static void G_usage_xml (void)
 				opt->required == YES ? "yes" : "no",
 				opt->multiple == YES ? "yes" : "no");
 
+			if (opt->label) {
+				fprintf(stdout, "\t\t<label>\n\t\t\t");
+				print_escaped_for_xml(stdout, opt->label);
+				fprintf(stdout, "\n\t\t</label>\n");
+			}
+
 			if (opt->description) {
 				fprintf(stdout, "\t\t<description>\n\t\t\t");
 				print_escaped_for_xml(stdout, opt->description);
@@ -855,20 +965,38 @@ static void G_usage_xml (void)
 				print_escaped_for_xml(stdout, opt->def);
 				fprintf(stdout, "\n\t\t\t</default>\n");
 			}
+			if(opt->descs) {
+			    int i = 0;
+
+			    while ( opt->opts[i] ) {
+				fprintf(stdout, "<DD><b>%s</b>: ", opt->opts[i]);
+
+				if (  opt->descs[i] )
+				    fprintf (stdout, "%s", opt->descs[i] );
+				
+				fprintf(stdout, "</DD>\n");
+				
+				i++;
+			    }
+			}
 
 			if(opt->options) {
+			        i = 0;
 				fprintf(stdout, "\t\t<values>\n");
-				top = G_calloc(strlen(opt->options) + 1,1);
-				strcpy(top, opt->options);
-				s = strtok(top, ",");
-				while (s) {
-					fprintf(stdout, "\t\t\t<value>");
-					print_escaped_for_xml(stdout, s);
-					fprintf(stdout, "</value>\n");
-					s = strtok(NULL, ",");
+			        while ( opt->opts[i] ) {
+					fprintf(stdout, "\t\t\t<value>\n");
+					fprintf(stdout, "\t\t\t\t<name>");
+					print_escaped_for_xml(stdout, opt->opts[i]);
+					fprintf(stdout, "</name>\n");
+					if(opt->descs && opt->opts[i]) {
+					    fprintf(stdout, "\t\t\t\t<description>");
+					    print_escaped_for_xml(stdout, opt->descs[i]);
+					    fprintf(stdout, "</description>");
+					}
+					fprintf(stdout, "\t\t\t</value>\n");
+					i++;
 				}
 				fprintf(stdout, "\t\t</values>\n");
-				G_free (top);
 			}
 
 			/* TODO:
@@ -891,6 +1019,12 @@ static void G_usage_xml (void)
 		while(flag != NULL)
 		{
 			fprintf (stdout, "\t<flag name=\"%c\">\n", flag->key);
+
+			if (flag->label) {
+				fprintf(stdout, "\t\t<label>\n\t\t\t");
+				print_escaped_for_xml(stdout, flag->label);
+				fprintf(stdout, "\n\t\t</label>\n");
+			}
 
 			if (flag->description) {
 				fprintf(stdout, "\t\t<description>\n\t\t\t");
@@ -1012,11 +1146,18 @@ static void G_usage_html (void)
 		{
 			fprintf (stdout, "<DT><b>-%c</b>\n", flag->key);
 
+		        if ( flag->label ) {
+				fprintf(stdout, "<DD>");
+				fprintf(stdout, "%s", flag->label);
+				fprintf(stdout, "</DD>\n");
+			}
+
 			if (flag->description) {
 				fprintf(stdout, "<DD>");
 				fprintf(stdout, "%s", flag->description);
 				fprintf(stdout, "</DD>\n");
 			}
+
 			flag = flag->next_flag ;
 			fprintf (stdout, "\n");
 		}
@@ -1049,6 +1190,12 @@ static void G_usage_html (void)
 			}
 			fprintf(stdout,
 				"<DT><b>%s</b>=<em>%s</em>\n", opt->key, type);
+
+		        if ( opt->label ) {
+				fprintf(stdout, "<DD>");
+				fprintf(stdout, "%s", opt->label);
+				fprintf(stdout, "</DD>\n");
+			}
 			if (opt->description) {
 				fprintf(stdout, "<DD>");
 				newbuf = G_str_replace(opt->description, "\n","<br>");
@@ -1072,6 +1219,22 @@ static void G_usage_html (void)
 				fprintf(stdout, "%s", opt->def);
 				fprintf(stdout, "</em></DD>\n");
 			}
+
+			if(opt->descs) {
+			    int i = 0;
+
+			    while ( opt->opts[i] ) {
+				fprintf(stdout, "<DD><b>%s</b>: ", opt->opts[i]);
+
+				if (  opt->descs[i] )
+				    fprintf (stdout, "%s", opt->descs[i] );
+				
+				fprintf(stdout, "</DD>\n");
+				
+				i++;
+			    }
+			}
+
 			opt = opt->next_opt ;
 			fprintf (stdout, "\n");
 		}
@@ -1083,10 +1246,11 @@ static void G_usage_html (void)
 
 static void generate_tcl(FILE *fp)
 {
-	char *type;
+	char *type, *desc;
 	int optn;
 
 	fprintf(fp, "begin_dialog {%s} {%s}\n", pgm_name,
+		module_info.label ? module_info.label : 
 		module_info.description ? module_info.description : "");
 
 	optn = 1;
@@ -1113,11 +1277,13 @@ static void generate_tcl(FILE *fp)
 				break;
 			}
 
+			desc = opt->label ? opt->label : opt->description;
+
 			fprintf(fp, "add_option %d {\n", optn);
 			fprintf(fp, " name {%s}\n", opt->key);
 			fprintf(fp, " type %s\n", type);
 			fprintf(fp, " multi %d\n", opt->multiple);
-			fprintf(fp, " desc {%s}\n", opt->description);
+			fprintf(fp, " desc {%s}\n", desc);
 			fprintf(fp, " required %d\n", opt->required);
 			fprintf(fp, " options {%s}\n", opt->options ? opt->options : "");
 			fprintf(fp, " answer {%s}\n", opt->answer ? opt->answer : "");
@@ -1130,8 +1296,10 @@ static void generate_tcl(FILE *fp)
 	{
 		struct Flag *flag;
 
-		for (flag = &first_flag; flag; flag = flag->next_flag, optn++)
-			fprintf(fp, "add_flag %d {%c} {%s}\n", optn, flag->key, flag->description);
+		for (flag = &first_flag; flag; flag = flag->next_flag, optn++) {
+			desc = flag->label ? flag->label : flag->description;
+			fprintf(fp, "add_flag %d {%c} {%s}\n", optn, flag->key, desc);
+		}
 	}
    
 	fprintf(fp, "end_dialog %d\n", optn - 1);

@@ -435,8 +435,17 @@ struct Option                	    /* Structure that stores option info */
     int required;                   /* REQUIRED or OPTIONAL             */
     int multiple;                   /* Multiple entries OK              */
     char *options;                  /* Approved values or range or NULL */
+    char **opts;                    /* NULL or NULL terminated array of parsed options */
     char *key_desc;                 /* one word describing the key      */
+    char *label;                    /* Optional short label, used in GUI as item label */
     char *description;              /* String describing option         */
+    char *descriptions;             /* Pairs of ';' separated pairs of option and description for multi = YES */
+    				    /* For example: 
+				     * "break;break lines on intersections;"
+				     * "rmdupl;remove duplicates"
+				     */
+    char **descs;                   /* parsed descriptions, array of either NULL or string */
+                                    /* in the same order as options */
     char *answer;                   /* Option answer                    */
     char *def;                      /* Where original answer gets saved */
     char **answers;                 /* Option answers (for multiple=YES)*/
@@ -450,12 +459,14 @@ struct Flag                 	    /* Structure that stores flag info  */
 {
     char key;                       /* Key char used on command line    */
     char answer;                    /* Stores flag state: 0/1           */
+    char *label;                    /* Optional short label, used in GUI as item label */
     char *description;              /* String describing flag meaning   */
     struct Flag *next_flag;         /* Pointer to next flag struct      */
 };
 
 struct GModule                      /* Structure that stores module info  */
 {
+    char *label;                    /* Optional short description for GUI */
     char *description;              /* String describing module */
 	/* further items are possible: author(s), version */
     int overwrite; /* overwrite old files */

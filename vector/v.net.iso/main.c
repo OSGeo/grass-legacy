@@ -63,6 +63,7 @@ int main(int argc, char **argv)
     G_gisinit (argv[0]) ;
 
     module = G_define_module();
+    module->label = "Split net by cost isolines";
     module->description = "Split net to bands between cost isolines (direction from centre). "
            "Centre node must be opened (costs >= 0). Costs of centre node are used in calculation";
 

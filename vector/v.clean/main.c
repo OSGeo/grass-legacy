@@ -61,34 +61,33 @@ main (int argc, char *argv[])
 	tool_opt->multiple = YES;
 	tool_opt->options = "break,rmdupl,rmdangle,chdangle,rmbridge,chbridge,snap,rmdac,bpol,prune,"
 	                    "rmarea,rmsa";
-        tool_opt->description = "Action to be done:\n"
-	                        "\t\tbreak - break lines at each intersection\n"
-			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)\n"
-			        "\t\trmdangle - remove dangles, threshold ignored if < 0 \n"
-			        "\t\tchdangle - change the type of boundary dangle to line, "
-				"threshold ignored if < 0, input line type is ignored\n"
-			        "\t\trmbridge - remove bridges connecting area and island or 2 islands\n"
-			        "\t\tchbridge - change the type of bridges connecting area and island "
-			        "or 2 islands from boundary to line\n"
-			        "\t\tsnap - snap lines to vertex in threshold\n"
-			        "\t\trmdac - remove duplicate area centroids ('type' option ignored)\n"
-			        "\t\tbpol - break (topologicaly clean) polygons (imported from "
-				"non topological format (like shapefile). Boundaries are broken on each "
-				"point shared between 2 and more polygons where angles of segments "
-			        "are different\n"
-			        "\t\tprune - remove vertices in threshold from lines and boundaries, "
-				"boundary is pruned only if topology is not damaged (new intersection, "
-       				"changed attachement of centroid), first and last segment of the boundary "
-				"is never changed\n"
-			        "\t\trmarea - remove small areas, the longest boundary with adjacent area "
-			        "is removed\n"
-			        "\t\trmsa - remove small angles between lines at nodes";
-	
+        tool_opt->description = "Cleaning tool";
+        tool_opt->descriptions = 
+	    	"break;break lines at each intersection;"
+	    	"rmdupl;remove duplicate lines (pay attention to categories!);"
+	    	"rmdangle;remove dangles, threshold ignored if < 0;"
+		"chdangle;change the type of boundary dangle to line, "
+	              	"threshold ignored if < 0, input line type is ignored;"
+        	"rmbridge;remove bridges connecting area and island or 2 islands;"
+		"chbridge;change the type of bridges connecting area and island "
+		    	"or 2 islands from boundary to line;"
+		"snap;snap lines to vertex in threshold;"
+		"rmdac;remove duplicate area centroids ('type' option ignored);"
+		"bpol;break (topologicaly clean) polygons (imported from "
+		      	"non topological format (like shapefile). Boundaries are broken on each "
+		      	"point shared between 2 and more polygons where angles of segments are different;"
+		"prune;remove vertices in threshold from lines and boundaries, "
+			"boundary is pruned only if topology is not damaged (new intersection, "
+       			"changed attachement of centroid), first and last segment of the boundary "
+			"is never changed;"
+		"rmarea;remove small areas, the longest boundary with adjacent area is removed;"
+		"rmsa;remove small angles between lines at nodes";
 	thresh_opt = G_define_option();
 	thresh_opt ->key = "thresh";
 	thresh_opt ->type =  TYPE_DOUBLE;
 	thresh_opt ->required = NO;
 	thresh_opt ->multiple = YES;
+        thresh_opt ->label       = "Threshold";
         thresh_opt ->description = "Threshold in map units for each tool (default: 0.0).";
 
         no_build_flag = G_define_flag ();
