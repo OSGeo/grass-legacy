@@ -18,31 +18,601 @@ are updated.  This will fail if the user doesn't have write access to the
 PERMANENT mapset.
 </DL>
 
-<H2>GDAL Supported Formats</H2>
+<H2>GDAL supported raster formats</H2>
 
 Full details on GDAL supported formats are available at:<p>
 
-<a href="http://www.remotesensing.org/gdal/formats_list.html">http://www.remotesensing.org/gdal/formats_list.html</a><P>
+<a href="http://gdal.org/formats_list.html">http://gdal.org/formats_list.html</a><P>
 
-Selected formats of more than 20 supported formats:
-<pre>
-Format Name					Georeferencing
+Selected formats of more than 40 supported formats:
 
-Arc/Info Binary Grid                                 Yes
-CEOS (Spot for instance)                             No
-First Generation USGS DOQ                            Yes
-New Labelled USGS DOQ                                Yes
-Military Elevation Data (DTED)                       Yes
-Eosat Fast Format                                    No
-ESRI .hdr Labelled                                   Yes
-TIFF / GeoTIFF                                       Yes
-Erdas Imagine .hfa                                   No
-JPEG JFIF                                            No
-PCI .aux Labelled                                    Yes
-Portable Network Graphics (PNG)                      No
-USGS SDTS DEM                                        Yes
-SAR CEOS                                             No
-</pre>
+<table border="1">
+  <tbody>
+    <tr>
+      <th>Long Format Name</th>
+      <th>Code</th>
+      <th>Creation</th>
+      <th>Georeferencing</th>
+      <th>Maximum file size</th>
+    </tr>
+    <tr>
+      <td> Arc/Info ASCII Grid
+      </td>
+      <td> AAIGrid
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> No limits
+      </td>
+    </tr>
+    <tr>
+      <td> Arc/Info Binary Grid (.adf)
+      </td>
+      <td> AIG
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> AIRSAR Polarimetric
+      </td>
+      <td> AIRSAR
+      </td>
+      <td> No
+      </td>
+      <td> No
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> Microsoft Windows Device Independent Bitmap (.bmp)
+      </td>
+      <td> BMP
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> 4GiB
+      </td>
+    </tr>
+    <tr>
+      <td> BSB Nautical Chart Format (.kap)
+      </td>
+      <td> BSB
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> VTP Binary Terrain Format (.bt)
+      </td>
+      <td> BT
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> CEOS (Spot for instance)
+      </td>
+      <td> CEOS
+      </td>
+      <td> No
+      </td>
+      <td> No
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> First Generation USGS DOQ (.doq)
+      </td>
+      <td> DOQ1
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> New Labelled USGS DOQ (.doq)
+      </td>
+      <td> DOQ2
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> Military Elevation Data (.dt0, .dt1)
+      </td>
+      <td> DTED
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> ERMapper Compressed Wavelets (.ecw)
+      </td>
+      <td> ECW
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td><br>
+      </td>
+    </tr>
+    <tr>
+      <td> ESRI .hdr Labelled
+      </td>
+      <td> EHdr
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> ENVI .hdr Labelled Raster
+      </td>
+      <td> ENVI
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> No limits
+      </td>
+    </tr>
+    <tr>
+      <td> Envisat Image Product (.n1)
+      </td>
+      <td> Envisat
+      </td>
+      <td> No
+      </td>
+      <td> No
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> EOSAT FAST Format
+      </td>
+      <td> FAST
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> FITS (.fits)
+      </td>
+      <td> FITS
+      </td>
+      <td> Yes
+      </td>
+      <td> No
+      </td>
+      <td><br>
+      </td>
+    </tr>
+    <tr>
+      <td> Graphics Interchange Format (.gif)
+      </td>
+      <td> GIF
+      </td>
+      <td> Yes
+      </td>
+      <td> No
+      </td>
+      <td> 2GB
+      </td>
+    </tr>
+    <tr>
+      <td> Arc/Info Binary Grid (.adf)
+      </td>
+      <td> GIO
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td><br>
+      </td>
+    </tr>
+    <tr>
+      <td> GRASS Rasters
+      </td>
+      <td> GRASS
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> TIFF / GeoTIFF (.tif)
+      </td>
+      <td> GTiff
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> 4GiB
+      </td>
+    </tr>
+    <tr>
+      <td> Hierarchical Data Format Release 4 (HDF4)
+      </td>
+      <td> HDF4
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> 2GiB
+      </td>
+    </tr>
+    <tr>
+      <td> Erdas Imagine (.img)
+      </td>
+      <td> HFA
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> No limits
+      </td>
+    </tr>
+    <tr>
+      <td> Atlantis MFF2e
+      </td>
+      <td> HKV
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> No limits
+      </td>
+    </tr>
+    <tr>
+      <td> Image Display and Analysis (WinDisp)
+      </td>
+      <td> IDA
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> 2GB
+      </td>
+    </tr>
+    <tr>
+      <td> ILWIS Raster Map (.mpr,.mpl)
+      </td>
+      <td> ILWIS
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> Japanese DEM (.mem)
+      </td>
+      <td> JDEM
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> JPEG JFIF (.jpg)
+      </td>
+      <td> JPEG
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> 4GiB (max dimentions 65500x65500)
+      </td>
+    </tr>
+    <tr>
+      <td> JPEG2000 (.jp2, .j2k)
+      </td>
+      <td> JPEG2000
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> 2GiB
+      </td>
+    </tr>
+    <tr>
+      <td> JPEG2000 (.jp2, .j2k)
+      </td>
+      <td> JP2KAK
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> No limits
+      </td>
+    </tr>
+    <tr>
+      <td> NOAA Polar Orbiter Level 1b Data Set (AVHRR)
+      </td>
+      <td> L1B
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> Erdas 7.x .LAN and .GIS
+      </td>
+      <td> LAN
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> 2GB
+      </td>
+    </tr>
+    <tr>
+      <td> In Memory Raster
+      </td>
+      <td> MEM
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> 2GiB
+      </td>
+    </tr>
+    <tr>
+      <td> Atlantis MFF
+      </td>
+      <td> MFF
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> No limits
+      </td>
+    </tr>
+    <tr>
+      <td> Multi-resolution Seamless Image Database
+      </td>
+      <td> MrSID
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> NDF
+      </td>
+      <td> NLAPS Data Format
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> No limits
+      </td>
+    </tr>
+    <tr>
+      <td> NITF
+      </td>
+      <td> NITF
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td><br>
+      </td>
+    </tr>
+    <tr>
+      <td> NetCDF
+      </td>
+      <td> netCDF
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> 2GB
+      </td>
+    </tr>
+    <tr>
+      <td> OGDI Bridge
+      </td>
+      <td> OGDI
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> PCI .aux Labelled
+      </td>
+      <td> PAux
+      </td>
+      <td> Yes
+      </td>
+      <td> No
+      </td>
+      <td> No limits
+      </td>
+    </tr>
+    <tr>
+      <td> PCI Geomatics Database File
+      </td>
+      <td> PCIDSK
+      </td>
+      <td> Yes
+      </td>
+      <td> Yes
+      </td>
+      <td> No limits
+      </td>
+    </tr>
+    <tr>
+      <td> Portable Network Graphics (.png)
+      </td>
+      <td> PNG
+      </td>
+      <td> Yes
+      </td>
+      <td> No
+      </td>
+      <td><br>
+      </td>
+    </tr>
+    <tr>
+      <td> PCRaster (.map)
+      </td>
+      <td> PCRaster
+      </td>
+      <td> Yes
+      </td>
+      <td> No
+      </td>
+      <td><br>
+      </td>
+    </tr>
+    <tr>
+      <td> Netpbm (.ppm,.pgm)
+      </td>
+      <td> PNM
+      </td>
+      <td> Yes
+      </td>
+      <td> No
+      </td>
+      <td> No limits
+      </td>
+    </tr>
+    <tr>
+      <td> RadarSat2 XML (product.xml)
+      </td>
+      <td> RS2
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> 4GB
+      </td>
+    </tr>
+    <tr>
+      <td> USGS SDTS DEM (*CATD.DDF)
+      </td>
+      <td> SDTS
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> SAR CEOS
+      </td>
+      <td> SAR_CEOS
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> USGS ASCII DEM (.dem)
+      </td>
+      <td> USGSDEM
+      </td>
+      <td> No
+      </td>
+      <td> Yes
+      </td>
+      <td> --
+      </td>
+    </tr>
+    <tr>
+      <td> X11 Pixmap (.xpm)
+      </td>
+      <td> XPM
+      </td>
+      <td> Yes
+      </td>
+      <td> No
+      </td>
+      <td><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 <H2>Location Creation</H2>
 
@@ -130,8 +700,16 @@ the points with i.rectify.<BR>
 
 </DL>
 
+<H2>EXAMPLES</H2>
+
+To import <A HREF="http://www.ngdc.noaa.gov/seg/topo/gltiles.shtml">GLOBE DEM tiles</a>
+(approx 1km resolution, better than GTOPO30 DEM data), the user has to download
+additionally the related <A HREF="ftp://ftp.ngdc.noaa.gov/GLOBE_DEM/data/elev/esri/hdr/">HDR file(s)</a>.
+Finally, e.g. the 'terrain' color table can be assigned to the imported map with <em>r.colors</em>.
+
 <H2>SEE ALSO</H2>
 <EM>
+<A HREF="r.colors.html">r.colors</A>,
 <A HREF="r.in.ascii.html">r.in.ascii</A>,
 <A HREF="r.in.arc.html">r.in.arc</A>,
 <A HREF="r.in.bin.html">r.in.bin</A>,
@@ -140,8 +718,7 @@ the points with i.rectify.<BR>
 
 <H2>REFERENCES</H2>
 
-GDAL Pages: <a href="http://www.remotesensing.org/gdal">http://www.remotesensing.org/gdal/</a>,<br>
-Precompiled libgdal for GRASS: <a href="http://gdal.velocet.ca/projects/grass/">http://gdal.velocet.ca/projects/grass</a>
+GDAL Pages: <a href="http://gdal.org">http://gdal.org/</a>
 
 <H2>AUTHOR</H2>
 
