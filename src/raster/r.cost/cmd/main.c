@@ -139,14 +139,14 @@ int main (int argc, char *argv[])
 	opt3->type       = TYPE_STRING ;
 	opt3->key_desc   = "x,y" ;
 	opt3->multiple   = YES;
-	opt3->description= "The map E and N grid coordinates of a starting point,coor=E,N" ;
+	opt3->description= "The map E and N grid coordinates of a starting point (E,N)" ;
 
 	opt4 = G_define_option() ;
 	opt4->key        = "stop_coordinate" ;
 	opt4->type       = TYPE_STRING ;
 	opt4->key_desc   = "x,y" ;
 	opt4->multiple   = YES;
-	opt4->description= "The map E and N grid coordinates of a stoping point,coor=E,N" ;
+	opt4->description= "The map E and N grid coordinates of a stopping point (E,N)" ;
 
 	opt5 = G_define_option() ;
 	opt5->key        = "max_cost" ;
@@ -164,11 +164,11 @@ int main (int argc, char *argv[])
 	opt6->required   = NO;
 	opt6->multiple   = NO;
 /*  	opt6->answer     = ""; */
-	opt6->description= "Cost assigned to null cells. By defaults, null cells are excluded";
+	opt6->description= "Cost assigned to null cells. By default, null cells are excluded";
 
 	flag1 = G_define_flag();
 	flag1->key = 'v';
-	flag1->description = "Run verbosly";
+	flag1->description = "Run verbosely";
 
 	flag2 = G_define_flag();
 	flag2->key = 'k';
