@@ -1,4 +1,3 @@
-# %W%  %G%
 
 all: dev mk.dig_to_dlg mk.dlglabel mk.dlgtocell
 
