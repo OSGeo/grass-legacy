@@ -53,16 +53,39 @@ GRASS user interface described in the manual entry for <EM>parser</EM>.
 
 <h2>FEATURES</h2>
 
-Grass files created have the name extracted from the basename
-of the shapefile.
+By default Grass files created have the name extracted from the basename
+of the shapefile. This can be over-ridden by supplying a value to the
+<EM>output</EM> option, which must be a legal name.
 
 <BR>
 
 
 The import filter attempts to correct some common errors
-that are frequently met with in shapefiles.
+that are frequently met with in shapefiles:
 
 <BR>
+
+The snap distance, which always has a small default value if not supplied,
+creates a microgrid of cells in the import map region. Only one vertex
+is ever assigned to a particular cell. If a later vertex is added that is
+in the same cell, it is considered co-incident with the first. When a link
+is added between two vertices, it is recorded and the same link is not added
+twice. The snap distance is also used to define the co-incidence of other 
+spatial entities, for example edges of bounding boxes. This snap distance
+has no relation to the snap distance defined for the dig_plus map. (This
+needs some improvement).
+
+<BR>
+
+The sliver tolerance defines a minimum angle between two lines, where the
+lines would be considered distinct. Lines closer than this are considered
+colinear, and under some circumstances, the import attempts to filter out
+extra, overlapping lines. This often helps where the boundaries of two
+adjacent polygons are not alligned properly in some way.
+
+<BR>
+
+Duplicate rings are removed.
 
 <h2>OPTIONS</h2>
 
@@ -155,6 +178,11 @@ Example: <br>
 imports only shape vectors with value "118" in dbf-table field "FOLIE".<br>
 This feature may be used for selective data import.
 </DL>
+
+<DT><B>maxshapes</B>=<EM>value</EM>
+<DD>Useful mainly for debug purposes, or to check that a map is good, imports only
+the first `value' shapes. The shapes counted include those filtered out by the
+`select' option, therefore this is the maximum number imported.
 
 <h2>BUGS AND CAVEAT</h2>
 
