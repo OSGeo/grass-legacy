@@ -1,0 +1,35 @@
+
+#!/bin/sh
+CHECK.MAP
+if test $? = 1
+	then
+	exit
+fi
+prgm=`basename $0`
+if test "$prgm" = "redo.label"
+	then
+	dir=labels
+else
+	dir=symbols
+fi
+for out in $*
+do
+echo $out
+if test -f $dir/$out
+	then
+	. $dir/$out
+else
+	echo "Command for $out not found"
+fi
+if test "$prgm" = "redo.label"
+	then
+	cat ../sites_geo/$name | points -m $mdef -c "-d 1,2 -f 3 -p $pen -cs $size -cf -$font -cj $just -cr $rot -cx $x -cy $y -c"  -o ovm/$out
+else
+	cat ../sites_geo/$name | points -m $mdef -c "-d 1,2 -sc $sym -p $pen -ss $size -sf -$font -s" -o ovm/$out
+fi
+done
+
+
+sleep 2
+tput clear
+
