@@ -38,7 +38,7 @@ main (int argc, char *argv[])
     input->multiple = YES ;
     input->type = TYPE_STRING;
     input->gisprompt  = "old,cell,raster" ;
-    input->description =  "Raster map[s] to be quantized";
+    input->description =  "Raster map(s) to be quantized";
 
     fprange = G_define_option();
     fprange->key = "fprange";
