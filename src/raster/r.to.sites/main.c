@@ -169,7 +169,7 @@ int main(int argc, char *argv[])
 
 	for (row = 0; row < w.rows; row++) {
 
-	    G_percent(row, w.rows - 1, 10);
+	    G_percent(row, w.rows - 1, 2);
 
 	    if(attr->answer){
 		sa->north = G_row_to_northing((double)(row +.5), &w); 
