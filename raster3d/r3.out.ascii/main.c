@@ -52,7 +52,7 @@ void fatalError(char *errorMsg) {
  */
 void setParams() {
   param.input = G_define_option();
-  param.input->key = "grid3";
+  param.input->key = "input";
   param.input->type = TYPE_STRING;
   param.input->required = YES;
   param.input->gisprompt = "old,grid3,3d-raster";
