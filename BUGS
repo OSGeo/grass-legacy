@@ -61,6 +61,7 @@ i.ortho.photo
  - GIS WARNING: Can't write embedded null values for map open for random
    access: i.ortho.photo/photo.rectify/write.c needs to be updated.
  - photo2target/mark.c needs to be updated to support FP elevations
+    function: static int get_z_from_cell ()
 
 i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
 - Attempting to change the default Title causes a segfault.
@@ -289,7 +290,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.5  2000-07-26 09:38:21  markus
+ Revision 1.6  2000-07-26 12:35:52  markus
+ added i.ortho.photo bug comment
+
+ Revision 1.5  2000/07/26 09:38:21  markus
  added d.mon -L comment
 
  Revision 1.4  2000/07/25 11:43:58  markus
