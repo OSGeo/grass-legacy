@@ -85,12 +85,19 @@ temp_bands="`g.tempfile $$`"
 
 # save the Stddev for TM bands
 echo "Calculating Standard deviations for all bands:"
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image1 |tail -1 >"$temp_stddev"
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image2 |tail -1 >>"$temp_stddev"
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image3 |tail -1 >>"$temp_stddev"
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image4 |tail -1 >>"$temp_stddev"
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image5 |tail -1 >>"$temp_stddev"
-$GISBASE/etc/i.oif/r.stddev $GIS_OPT_image7 |tail -1 >>"$temp_stddev"
+echo band 1
+r.univar -g "$GIS_OPT_image1" | grep stddev | cut -f2 -d= > "$temp_stddev"
+echo band 2
+r.univar -g "$GIS_OPT_image2" | grep stddev | cut -f2 -d= >> "$temp_stddev"
+echo band 3
+r.univar -g "$GIS_OPT_image3" | grep stddev | cut -f2 -d= >> "$temp_stddev"
+echo band 4
+r.univar -g "$GIS_OPT_image4" | grep stddev | cut -f2 -d= >> "$temp_stddev"
+echo band 5
+r.univar -g "$GIS_OPT_image5" | grep stddev | cut -f2 -d= >> "$temp_stddev"
+echo band 7
+r.univar -g "$GIS_OPT_image7" | grep stddev | cut -f2 -d= >> "$temp_stddev"
+
 echo "Calculating Correlation Matrix"
 r.covar -r map=$GIS_OPT_image1,$GIS_OPT_image2,$GIS_OPT_image3,$GIS_OPT_image4,$GIS_OPT_image5,$GIS_OPT_image7 |tail -6 > "$temp_correlation"
 
