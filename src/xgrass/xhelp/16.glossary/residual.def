@@ -1,8 +1,0 @@
-
-
-residual - In map @glossary("registration",16.glossary/registratn.def), a residual is the amount of error
-that a registered @glossary("control point",16.glossary/controlpts.def) contributes to the overall map
-registration error.  "Error" is defined as the difference between
-the value assigned by the user to a control point and its expected
-value based on a user-specified map coordinate system and the values
-of the other registration control points.

@@ -1,9 +1,0 @@
-
-
-raster data (raster format) - A data format whose basic unit is the
-grid cell.  Data are stored on a grid containing rectangular @glossary("cells",16.glossary/cell.def)
-of uniform size.  Cell dimensions denote data resolution.  Each cell
-within the grid can be assigned a data value.  Smaller grid cell size
-therefore allows more data to be stored for a given geographic @glossary("area",16.glossary/area.def)
-(i.e., can present data at a larger @glossary("scale",16.glossary/scale.def)).  See @glossary("vector data",16.glossary/vecdata.def) for
-comparison.

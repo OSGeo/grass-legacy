@@ -1,5 +1,0 @@
-
-
-site - A @glossary("point",16.glossary/point.def) whose spatial location is specified as a coordinate
-pair.  @glossary("Category",16.glossary/cat.def) values, labels, and graphic icons may also be
-associated with sites.

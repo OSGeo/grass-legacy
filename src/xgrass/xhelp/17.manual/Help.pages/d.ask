@@ -1,5 +1,0 @@
-
-@man("d.ask") - Prompts the user to select a GRASS data base file from among
-files displayed in a menu on the graphics monitor.
-
-(GRASS Display Program)

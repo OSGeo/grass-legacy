@@ -1,8 +1,0 @@
-If this toggle button is set when the OK button
-is pressed, then the selected raster map will be 
-opened an loaded according to the current region. 
-
-The raster map will be re-sampled according to the
-boundaries and cell-size defined by the current
-GRASS region.  
-

@@ -1,5 +1,0 @@
-
-@man("i.his.rgb") - Hue-intensity-saturation (his) to red-green-blue (rgb)
-raster map color transformation function.
-
-(GRASS Imagery Program)

@@ -1,5 +1,0 @@
-
-@man("v.in.ascii") - Converts ASCII vector map layers into binary vector map
-layers.
-
-(GRASS Vector Program)

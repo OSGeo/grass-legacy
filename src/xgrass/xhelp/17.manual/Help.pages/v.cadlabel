@@ -1,5 +1,0 @@
-
-@man("v.cadlabel") - Attaches labels to vector contour lines that have been
-imported to GRASS from DXF format.
-
-(GRASS Vector Program)

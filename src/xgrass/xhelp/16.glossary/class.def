@@ -1,5 +1,0 @@
-
-
-class - An @glossary("image processing",16.glossary/imgpro.def) term, used to denote the @glossary("category",16.glossary/cat.def)
-(i.e., classification) into which image data in a remotely-sensed
-@glossary("image",16.glossary/img.def) can be placed.

@@ -1,7 +1,0 @@
-
-
-map feature - A @glossary("category",16.glossary/cat.def) designation. Map features can be either
-area features (@glossary("polygons",16.glossary/polygon.def)), linear features (lines), or point features
-(@glossary("sites",16.glossary/site.def)).
-
-See also @glossary("attribute",16.glossary/attribu.def).

@@ -1,8 +1,0 @@
-The Brush-Color Menu Option
-
-This menu option allows you to change the @ref("brush highlight color.",xgre/brushclr.def)
-You will be presented with a dialog-box with three slider bars,
-one for adjusting the red component of the highlight color, one
-for the green component and one for the blue component.  Once
-you have set the color that you want, press the OK button.
- 

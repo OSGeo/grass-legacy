@@ -1,6 +1,0 @@
-
-@man("d.geodesic") - Displays a geodesic line, tracing the shortest distance
-between two geographic points along a great circle, in a longitude/latitude
-data set.
-
-(GRASS Display Program)
