@@ -64,7 +64,7 @@ main (int argc, char *argv[])
 	int col,verbose, tfw, palette, tiled;
 	char *mapset, *filename;
 	struct Colors colors;
-	int red, grn, blu, mapsize;
+	int red, grn, blu, mapsize, isfp;
 
 	G_gisinit(argv[0]);
 	
@@ -141,6 +141,9 @@ main (int argc, char *argv[])
 	if ((G_get_window(&cellhd) < 0))
 		G_fatal_error("Can't set window");
 	G_read_colors(inopt->answer, mapset, &colors);
+	isfp = G_raster_map_is_fp(inopt->answer, mapset);
+	if (isfp)
+	  G_warning("The map <%s> in mapset <%s> is a floating point map. Decimal values will be rounded to integer!",inopt->answer, mapset);
 	G_set_null_value_color (255, 255, 255, &colors);
 	if (palette && (colors.cmax - colors.cmin > 255))
 		G_fatal_error ("Color map for palette must have less than 256 "\
