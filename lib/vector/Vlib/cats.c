@@ -173,7 +173,7 @@ Vect_cat_get (struct line_cats *Cats, int field, int *cat)
 int 
 Vect_cat_del (struct line_cats *Cats, int field)
 {
-  register int n, found = 0;
+  int n, m, found = 0;
 
   /* check input value */
   /*
@@ -184,12 +184,14 @@ Vect_cat_del (struct line_cats *Cats, int field)
   /* go through cats and find if field exist */
   for (n = 0; n < Cats->n_cats; n++) {
       if (Cats->field[n] == field) {
-	  for (n = n; n < Cats->n_cats - 1; n++) {
-	      Cats->field[n] = Cats->field[n + 1];
-	      Cats->cat[n] = Cats->cat[n + 1];
+	  for (m = n; m < Cats->n_cats - 1; m++) {
+	      G_debug(0,"<<");
+	      Cats->field[m] = Cats->field[m + 1];
+	      Cats->cat[m] = Cats->cat[m + 1];
 	  }
 	  Cats->n_cats--;
 	  found = 1;
+	  n--; /* check again this position */
       }
   }
 
