@@ -1,0 +1,5 @@
+g.ask type=old element=dig unixfile=tmp
+. tmp
+rm tmp
+if test "$name" = ""; then
+	exit
