@@ -18,6 +18,7 @@
 #include <string.h>
 #include "gis.h"
 #include "dbsite.h"
+#include "glocale.h"
 
 int getSelectOpts (argc, argv)
     int argc;
@@ -34,7 +35,7 @@ int getSelectOpts (argc, argv)
 
 	select = G_define_flag();
 	select->key	= 's';
-	select->description	= "Use [s] flag to select db records using an input file." ;
+	select->description	= _("Use [s] flag to select db records using an input file.") ;
 
         sql = G_define_option() ;
         sql->key        = "sql" ;
@@ -42,14 +43,14 @@ int getSelectOpts (argc, argv)
         sql->type       = TYPE_STRING ;
         sql->required   = YES  ;
         sql->multiple   = NO ;
-        sql->description= "SQL statements specifying selection criteria. ";
+        sql->description= _("SQL statements specifying selection criteria. ");
 
         map = G_define_option() ;
         map->key        = "map" ;
         map->type       = TYPE_STRING ;
         map->required   = NO  ;
         map->multiple   = NO ;
-        map->description= "Name of sites list to output.";
+        map->description= _("Name of sites list to output.");
 
 
         plot = G_define_option() ;
@@ -59,7 +60,7 @@ int getSelectOpts (argc, argv)
         plot->multiple   = NO ;
         plot->key_desc    ="Color,icon,size" ;
         plot->answer      ="gray,x,3" ;
-        plot->description= "Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black; Icon: diamond, box, plus, x; Size: 1-9. ";
+        plot->description= _("Colors:red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black; Icon: diamond, box, plus, x; Size: 1-9. ");
 
 
 
@@ -80,7 +81,7 @@ int getSelectOpts (argc, argv)
 
            
         if((fp = fopen(sql->answer,"r")) == NULL) {
-            fprintf(stderr, "File read error on %s\n",sql->answer);
+            fprintf(stderr, _("File read error on %s\n"),sql->answer);
             exit(-1);
            }
  
