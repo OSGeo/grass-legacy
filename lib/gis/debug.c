@@ -49,7 +49,7 @@ int G_debug (int level, char *msg,...)
 	    fd = stderr;
 	}
         
-	fprintf (fd, "D%d/%d: %s\n", level, grass_debug_level, buffer);
+	fprintf (fd, "D%d/%d: ", level, grass_debug_level);
 	vfprintf (fd, msg, ap);
 	fprintf (fd, "\n");
 	
