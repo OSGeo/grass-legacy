@@ -96,6 +96,7 @@ static int add_to_list(int,int);
 static int assign_area(CELL,int);
 static int more_areas();
 static int update_width(struct area_table *,int);
+static int nabors (void);
 
 /* extract_areas - trace boundaries of polygons in file */
 
@@ -398,7 +399,7 @@ static struct COOR *get_ptr (void)
 /*							*/
 /*       8            9            10           11      */
 
-int nabors (void)
+static int nabors (void)
 {
   if (tl != tr)				/* 0, 4, 5, 6, 8, 9, 10 */
   {
