@@ -1,0 +1,3 @@
+Mmain	main.c	/^main(argc, argv)$/
+delcr	delcr.c	/^delcr(str)   \/* char *str   *\/$/
+infxTables	infxTable.c	/^infxTables(sqlFile)$/
