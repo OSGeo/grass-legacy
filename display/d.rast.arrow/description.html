@@ -1,0 +1,50 @@
+<H2>DESCRIPTION</H2>
+
+<EM>d.rast.arrow</EM>
+is designed to help users better visualize surface water flow direction,
+as indicated in an aspect raster map layer.  There are two ways to specify
+the aspect layer the program is to use.  The first is to display the aspect
+map layer on the graphics monitor before running <EM>d.rast.arrow</EM>.
+The second method involves setting the <EM>map</EM> parameter
+to the name of the desired aspect map.
+This allows the arrows to be drawn over any other maps already displayed
+on the graphics monitor.
+
+
+<P>
+
+<EM>d.rast.arrow</EM> will draw an arrow over each displayed cell
+to indicate in which direction the cell slopes.
+An arrow can point in one of eight directions.  If the aspect
+layer has a category value denoting locations of "unknown" aspect,
+<EM>d.rast.arrow</EM> draws a question mark over the displayed cells
+of that category.
+Cells of category 0 (no data) will be marked with an "X".
+
+
+<P>
+
+<B> Note:</B>  Arrows are cell size and cannot be seen if the raster map is
+relatively close in scale.  From a command line mode, the user cannot run
+<EM>d.rast.arrow</EM> and then run <EM><A HREF="d.zoom.html">d.zoom</A></EM>
+and still see the arrows.  The zooming action erases the arrows and the user
+must run <EM>d.rast.arrow</EM> again.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.frame.html">d.frame</A></EM><BR>
+<EM><A HREF="d.rast.html">d.rast</A></EM><BR>
+<EM><A HREF="d.rast.edit.html">d.rast.edit</A></EM><BR>
+<EM><A HREF="d.rast.num.html">d.rast.num</A></EM><BR>
+<EM><A HREF="d.zoom.html">d.zoom</A></EM><BR>
+<EM><A HREF="g.region.html">g.region</A></EM><BR>
+<EM><A HREF="r.mask.html">r.mask</A></EM><BR>
+<EM><A HREF="r.slope.aspect.html">r.slope.aspect</A></EM><BR>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Chris Rewerts, 
+Agricultural Engineering, 
+Purdue University
+<p><i>Last changed: $Date$</i>

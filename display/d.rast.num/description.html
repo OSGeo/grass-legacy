@@ -1,0 +1,62 @@
+<H2>DESCRIPTION</H2>
+
+<EM>d.rast.num</EM>
+overlays cell category values onto a raster map layer displayed
+to the user's graphics monitor.
+Category values will be displayed in white and/or black,
+based on the colors in which underlying cells are displayed.
+A grid outlining each map cell will also be overlain in a user-specified
+color.
+
+<P>
+
+The user should run <EM> <A HREF="d.rast.html">d.rast</A> </EM> to display the desired map layer
+on the graphics monitor before running this program.
+
+<P>
+
+<EM>d.rast.num</EM> can be run non-interactively or interactively.
+If the user specifies the map whose category values are to be displayed
+and/or the grid color on the command line, the program
+will run non-interactively.
+Alternately, the user may simply type <B>d.rast.num</B> on the command line;
+in this case, the program will prompt the user for parameter values
+using the standard GRASS user interface described in the manual entry
+for <EM>
+<A HREF="parser.html">parser</A>
+</EM>.
+If no grid color is given the default will be used.  If no map layer
+is specified, the program will use whatever raster map layer is
+currently displayed in the active frame on the graphics monitor.
+
+
+<H2>NOTES</H2>
+
+The user is advised to set the current region to a relatively
+small area (i.e., less than 100 rows by 100 columns);
+otherwise, the individual cells being displayed will be small
+and the category value associated with each will be difficult to see.
+
+<H2>SEE ALSO</H2>
+
+<em><a href="d.erase.html">d.erase</a></em>,
+<em><a href="d.frame.html">d.frame</a></em>,
+<em><a href="d.grid.html">d.grid</a></em>,
+<em><a href="d.mon.html">d.mon</a></em>,
+<em><a href="d.rast.html">d.rast</a></em>,
+<em><a href="d.rast.arrow.html">d.rast.arrow</a></em>,
+<em><a href="d.rast.edit.html">d.rast.edit</a></em>,
+<em><a href="d.rast.zoom.html">d.rast.zoom</a></em>,
+<em><a href="d.zoom.html">d.zoom</a></em>,
+<em><a href="g.region.html">g.region</a></em>,
+<em><a href="r.mask.html">r.mask</a></em>,
+<em><a href="r.slope.aspect.html">r.slope.aspect</a></em>
+
+
+<H2>AUTHORS</H2>
+
+Raghavan Srinivasan,
+and Chris Rewerts,
+Agricultural Engineering, Purdue University
+
+<p><i>Last changed: $Date$</i>
