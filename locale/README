@@ -25,6 +25,12 @@ See for example ./vector/v.what.rast/main.c
 These strings will be then extracted automatically into the
 POT file. 
 
+Also needed to be added:
+#include "glocale.h"
+
+This line has to be added to each C file which contains
+user messages, preferably as last #include statement.
+
 ------------------------------------------------------
 
 GENERAL TRANSLATION PROCEDURE (no programming required)
