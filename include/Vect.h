@@ -209,6 +209,7 @@ double Vect_points_distance ( double, double, double, double, double, double, in
 int Vect_option_to_types (struct Option *);
 int Vect_copy_map_lines ( struct Map_info *, struct Map_info * );
 int Vect_copy ( char *in, char *mapset, char *out );
+int Vect_copy_table ( struct Map_info *, struct Map_info *, int, int, char *, int );
 int Vect_copy_tables ( struct Map_info *, struct Map_info *, int );
 int Vect_delete ( char *map );
 int Vect_delete_post_tables (  struct Map_info *Map );
