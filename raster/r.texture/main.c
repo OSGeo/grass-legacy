@@ -91,7 +91,7 @@ main(int argc, char *argv[])
 	size_O->key_desc   = "value";
 	size_O->type       = TYPE_INTEGER;
 	size_O->required   = YES;
-	size_O->description= "The size of the sliding window [odd and >= 3]";
+	size_O->description= "The size of the sliding window (odd and >= 3)";
 
 	/* Textural character is in direct relation of the spatial size of the texture primitives. */
 
@@ -100,7 +100,7 @@ main(int argc, char *argv[])
 	dist_O->key_desc   = "value";
 	dist_O->type       = TYPE_INTEGER;
 	dist_O->required   = YES;
-	dist_O->description= "The distance between two samples [>= 1]\n";
+	dist_O->description= "The distance between two samples (>= 1)\n";
 
 	/* Define the different flags */
 
