@@ -156,6 +156,9 @@ Vect__open_old (
       Map->name = G_store (name);
       Map->mapset = G_store (mapset);
   }
+
+  Map->location = G_store ( G_location() );
+  Map->gisdbase = G_store ( G_gisdbase() );
   
   if ( update && (0 != strcmp(Map->mapset, G_mapset()) ) ) {
       G_warning ( "A map which is not in the current mapset cannot be opened for update.");
@@ -222,7 +225,7 @@ Vect__open_old (
   Map->plus.do_uplist = 0;
 
   Map->dblnk = Vect_new_dblinks_struct ( );
-  Vect_read_dblinks ( Map->name, Map->mapset, Map->dblnk );
+  Vect_read_dblinks ( Map );
   
   /* Open history file */  
   sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
@@ -244,6 +247,8 @@ Vect__open_old (
 	  Map->hist_fp = NULL;
       }
   }
+
+  Vect_rewind ( Map );
   
   return (level);
 }
@@ -335,6 +340,8 @@ Vect_open_new (
     
     Map->name = G_store (name);
     Map->mapset = G_store ( G_mapset() );
+    Map->location = G_store ( G_location() );
+    Map->gisdbase = G_store ( G_gisdbase() );
     
     /* Which format */
     format = GV_FORMAT_NATIVE;

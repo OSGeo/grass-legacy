@@ -113,7 +113,7 @@ int main (int argc, char *argv[])
     Vect_open_new (&Map, outvect->answer, withz);
     Vect_hist_command ( &Map );
 
-    fi = Vect_default_field_info ( Map.name, 1, NULL, GV_1TABLE );
+    fi = Vect_default_field_info ( &Map, 1, NULL, GV_1TABLE );
     Vect_map_add_dblink ( &Map, 1, NULL, fi->table, "cat", fi->database, fi->driver);
 
     /* Create new table */
@@ -148,7 +148,7 @@ int main (int argc, char *argv[])
     driver = db_start_driver( fi->driver );
     if (driver == NULL) G_fatal_error ( "Cannot open driver %s", fi->driver );
     db_init_handle (&handle);
-    db_set_handle (&handle, Vect_subst_var(fi->database,Map.name,G_mapset()), NULL);
+    db_set_handle (&handle, Vect_subst_var(fi->database,&Map), NULL);
     if (db_open_database(driver, &handle) != DB_OK) {
 	db_shutdown_driver(driver);
 	G_fatal_error ( "Cannot open database %s", fi->database );

@@ -59,9 +59,10 @@ int Vect_map_check_dblink ( struct Map_info *, int number, char *name, char *tab
 	              char *db, char *driver );
 int Vect_map_replace_dblink ( struct Map_info *, int number, char *name, char *table, char *key, 
 	              char *db, char *driver );
-int Vect_read_dblinks ( char *, char *,  struct dblinks *p );
-int Vect_write_dblinks ( char *, char *,  struct dblinks *p );
-struct field_info *Vect_default_field_info ( char *map, int  field, char *field_name, int  type );
+int Vect_read_dblinks ( struct Map_info * );
+int Vect_write_dblinks ( struct Map_info * );
+struct field_info *Vect_default_field_info ( struct Map_info *Map, int  field, 
+	                char *field_name, int  type );
 struct field_info *Vect_get_dblink (  struct Map_info *Map, int link );
 struct field_info *Vect_get_field (  struct Map_info *Map, int field );
 
@@ -233,7 +234,7 @@ int Vect_segment_intersection ( double, double, double, double, double, double,
 int Vect_line_intersection ( struct line_pnts *, struct line_pnts *,
                              struct line_pnts ***, struct line_pnts ***,
                              int *, int *, int );
-char *Vect_subst_var ( char *str, char *map, char *mapset );
+char *Vect_subst_var ( char *str, struct Map_info *Map);
 
 /* Internal functions, MUST NOT be used in modules */
 int Vect_init (void);

@@ -82,7 +82,7 @@ Vect_map_add_dblink ( struct Map_info *Map, int number, char *name, char *table,
 	return -1;
     }
     /* write it immediately otherwise it is lost if module crashes */
-    ret = Vect_write_dblinks ( Map->name, Map->mapset, Map->dblnk );
+    ret = Vect_write_dblinks ( Map );
     if ( ret == -1 ) {
         G_warning ("Cannot write database links.");
 	return -1;
@@ -242,14 +242,14 @@ Vect_replace_dblink ( struct dblinks *p, int number, char *name, char *table, ch
 }
 
 /*!
- \fn struct field_info *Vect_default_field_info ( char *map, int  field, char *field_name, int  type)
+ \fn struct field_info *Vect_default_field_info ( struct Map_info *Map, int  field, char *field_name, int  type)
  \brief get default information about link to database for new dblink
  \return pointer to new field_info structure
- \param pointer to map name, category field
+ \param pointer to map structure, category field
 */
 struct field_info
 *Vect_default_field_info (
-    char *map,       /* pointer to map name */		
+    struct Map_info *Map,  /* pointer to map structure */		
     int  field,    /* category field */
     char *field_name, /* field name or NULL */
     int  type ) /* how many tables are linked to map: GV_1TABLE / GV_MTABLE */
@@ -258,7 +258,7 @@ struct field_info
     char buf[1000];
     char *drv, *db;
     
-    G_debug (1, "Vect_default_field_info(): map = %s field = %d", map, field);
+    G_debug (1, "Vect_default_field_info(): map = %s field = %d", Map->name, field);
     
     drv = G__getenv2 ( "GV_DRIVER", G_VAR_MAPSET );
     db = G__getenv2 ( "GV_DATABASE", G_VAR_MAPSET );
@@ -270,7 +270,7 @@ struct field_info
 		    "driver: dbf\ndatabase: $GISDBASE/$LOCATION_NAME/$MAPSET/dbf/" );
 	G_setenv2 ( "GV_DRIVER", "dbf", G_VAR_MAPSET );
 	G_setenv2 ( "GV_DATABASE", "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/", G_VAR_MAPSET );
-	sprintf ( buf, "%s/%s/dbf", G_location_path(), G_mapset() );
+	sprintf ( buf, "%s/%s/%s/dbf", Map->gisdbase, Map->location, Map->mapset );
 	G__make_mapset_element ( "dbf" );
 	drv = G_store ( "dbf" );
 	db = G_store ( "$GISDBASE/$LOCATION_NAME/$MAPSET/dbf" );
@@ -287,12 +287,12 @@ struct field_info
     else fi->name = NULL;
     
     if ( type == GV_1TABLE ) {
-        fi->table = G_store ( map );
+        fi->table = G_store ( Map->name );
     } else {
 	if ( field_name != NULL && strlen ( field_name ) > 0 )
-	    sprintf ( buf, "%s_%s", map, field_name );
+	    sprintf ( buf, "%s_%s", Map->name, field_name );
 	else
-	    sprintf ( buf, "%s_%d", map, field );
+	    sprintf ( buf, "%s_%d", Map->name, field );
 
 	fi->table = G_store ( buf );
     }
@@ -333,7 +333,7 @@ struct field_info
     
     fi->table = G_store ( Map->dblnk->field[link].table );
     fi->key = G_store ( Map->dblnk->field[link].key );
-    fi->database = Vect_subst_var ( Map->dblnk->field[link].database, Map->name, Map->mapset );
+    fi->database = Vect_subst_var ( Map->dblnk->field[link].database, Map );
     fi->driver = G_store ( Map->dblnk->field[link].driver );
 
     return fi;
@@ -365,16 +365,13 @@ struct field_info
 }
 
 /*!
- \fn int *Vect_read_dblinks ( char *m, char *ms, struct dblinks *p)
+ \fn int *Vect_read_dblinks ( struct Map_info *Map)
  \brief read dblinks to existing structure, variables are not substituted by values
  \return number of links read or -1 on error
- \param pointer to map name, pointer to mapset name, pointer to dblinks structure
+ \param pointer to map structure
 */
 int
-Vect_read_dblinks (
-    char *m,       /* pointer to map name */		
-    char *ms,      /* pointer to mapset name */		
-    struct dblinks *dbl)    
+Vect_read_dblinks ( struct Map_info *Map )    
 {
     int  ndef;	
     FILE *fd;
@@ -383,35 +380,24 @@ Vect_read_dblinks (
     int  fld;
     char *c;
     int  row, rule;
-    FILE *fp;
-    int  format = GV_FORMAT_NATIVE;
-    struct Format_info Forminfo;
+    struct dblinks *dbl;
     
-    G_debug (1, "Vect_read_dblinks(): map = %s, mapset = %s", m, ms);
+    G_debug (1, "Vect_read_dblinks(): map = %s, mapset = %s", Map->name, Map->mapset);
     
+    dbl = Map->dblnk;
     Vect_reset_dblinks ( dbl );
     
-    if ( ms == NULL || strlen(ms) == 0 ) ms = G_mapset();	    
-
-    /* Find format first */
-    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, m);
-    G_debug (3, "open format file: '%s/%s/%s'", ms, buf, GRASS_VECT_FRMT_ELEMENT);
-    fp = G_fopen_old (buf, GRASS_VECT_FRMT_ELEMENT, ms);
-    if ( fp == NULL) {
-        G_debug ( 3, "Vector format: %d (native)", format);
-        format = GV_FORMAT_NATIVE;
-    } else {
-        format = dig_read_frmt_ascii ( fp, &Forminfo );
-        fclose (fp);
-        G_debug ( 3, "Vector format: %d (non-native)", format);
-	if ( format == GV_FORMAT_SHAPE ) {
-            Vect_add_dblink ( dbl, 1, NULL, Forminfo.shp.baseName, "shp_fid", Forminfo.shp.dirName, "shp" );
-	    return ( 1 );
-	}
+    if ( Map->format == GV_FORMAT_SHAPE ) {
+        G_debug ( 3, "Vector format shape");
+	Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.shp.baseName, "shp_fid", Map->fInfo.shp.dirName, "shp" );
+	return ( 1 );
+    } else if ( Map->format != GV_FORMAT_NATIVE &&  Map->format != GV_FORMAT_POSTGIS ) {
+	/* Here will be OGR once */
+	G_fatal_error ("Don't know how to read links for format %d", Map->format );
     }
     
-    sprintf ( file, "%s/%s/%s/%s/%s", G_location_path(), ms, GRASS_VECT_DIRECTORY, m, 
-	                              GRASS_VECT_DBLN_ELEMENT );
+    sprintf ( file, "%s/%s/%s/%s/%s/%s", Map->gisdbase, Map->location, Map->mapset, GRASS_VECT_DIRECTORY, 
+	                                 Map->name, GRASS_VECT_DBLN_ELEMENT );
     G_debug (1, "dbln file: %s", file);
 
     fd = fopen ( file, "r" );
@@ -467,21 +453,19 @@ Vect_read_dblinks (
  \param pointer to map name, pointer to mapset name, pointer to dblinks structure
 */
 int
-Vect_write_dblinks (
-    char *m,       /* pointer to map name */		
-    char *ms,      /* pointer to mapset name */		
-    struct dblinks *dbl)    
+Vect_write_dblinks ( struct Map_info *Map )
 {
     int    i;	
     FILE *fd;
     char file[1024], buf[1024];
+    struct dblinks *dbl;    
     
-    G_debug (1, "Vect_write_dblinks(): map = %s, mapset = %s, n_fields = %d", m, ms, dbl->n_fields);
+    G_debug (1, "Vect_write_dblinks(): map = %s, mapset = %s", Map->name, Map->mapset );
     
-    if ( ms == NULL || strlen(ms) == 0 ) ms = G_mapset();	    
+    dbl = Map->dblnk;
 
-    sprintf ( file, "%s/%s/%s/%s/%s", G_location_path(), ms, GRASS_VECT_DIRECTORY, m, 
-	                              GRASS_VECT_DBLN_ELEMENT );
+    sprintf ( file, "%s/%s/%s/%s/%s/%s", Map->gisdbase, Map->location, Map->mapset, GRASS_VECT_DIRECTORY, 
+	                                 Map->name, GRASS_VECT_DBLN_ELEMENT );
     G_debug (1, "dbln file: %s", file);
 
     fd = fopen ( file, "w" );
@@ -508,18 +492,18 @@ Vect_write_dblinks (
 }
 
 /*!
- \fn chart *Vect_subst_var ( char *in, char *map, char *mapset ) 
+ \fn chart *Vect_subst_var ( char *in, struct Map_info *Map ) 
  \brief substitute variable in string
  \return pointer to new string
- \param pointer to map name, pointer to mapset name, pointer to dblinks structure
+ \param pointer to map
 */
 char *
-Vect_subst_var ( char *in, char *map, char *mapset )
+Vect_subst_var ( char *in, struct Map_info *Map )
 {
     char *c;
     char buf[1000], str[1000];
     
-    G_debug (3, "Vect_subst_var(): in = %s, map = %s, mapset = %s", in, map, mapset);
+    G_debug (3, "Vect_subst_var(): in = %s, map = %s, mapset = %s", in, Map->name, Map->mapset);
     
     strcpy ( str, in );
     
@@ -527,28 +511,28 @@ Vect_subst_var ( char *in, char *map, char *mapset )
     c = (char *) strstr ( buf, "$GISDBASE" );
     if ( c != NULL ) {
         *c = '\0';	      
-        sprintf (str, "%s%s%s", buf, G_gisdbase(), c+9);
+        sprintf (str, "%s%s%s", buf, Map->gisdbase, c+9);
     }
 
     strcpy ( buf, str );
     c = (char *) strstr ( buf, "$LOCATION_NAME" );
     if ( c != NULL ) {
         *c = '\0';	      
-        sprintf (str, "%s%s%s", buf, G_location(), c+14);
+        sprintf (str, "%s%s%s", buf, Map->location, c+14);
     }
 
     strcpy ( buf, str );
     c = (char *) strstr ( buf, "$MAPSET" );
     if ( c != NULL ) {
         *c = '\0';	      
-        sprintf (str, "%s%s%s", buf, mapset, c+7);
+        sprintf (str, "%s%s%s", buf, Map->mapset, c+7);
     }
     
     strcpy ( buf, str );
     c = (char *) strstr ( buf, "$MAP" );
     if ( c != NULL ) {
         *c = '\0';	      
-        sprintf (str, "%s%s%s", buf, map, c+4 );
+        sprintf (str, "%s%s%s", buf, Map->name, c+4 );
     }
     
     G_debug (3, "  -> %s", str);
