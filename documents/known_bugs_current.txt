@@ -65,6 +65,9 @@ r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
 r.in.hdf/r.out.hdf (src.garden/grass.hdf)
  - needs updating to HDF4.x lib (already there)
 
+r.in.png:
+  seg. faults on Pentium CPU (compare r.binfer)
+
 r.in.ppm
   seg. fault on Pentium CPU (compare r.binfer)
   Memory bug fixed by Alex Shevlakov
@@ -123,9 +126,6 @@ r.stats: some inconsistent results comparing to r.average
  *While d.what.rast was giving 110.794075. Is this a bug?
      Dr. Agustin Lobo, alobo@ija.csic.es
 
-r.timestamp
- - does not write time field properly
-
 s.in.ascii: 
      - errors with more than 2 dimensions (some numbers are read as
             attribute)
@@ -136,9 +136,6 @@ s.to.rast, s.to.vect:
 
 s.rand
  should write #cats rather than %cats (site numbering)
-
-v.extract:
-does not copy the category support for vector file
 
 v.reclass:
 The problem with v.reclass seems to stem from an input field for old=new        
@@ -247,7 +244,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.10  2000-04-17 19:35:13  markus
+ Revision 1.11  2000-05-04 13:45:45  markus
+  fixed r.timestamp bug and v.extract bug
+
+ Revision 1.10  2000/04/17 19:35:13  markus
  added i.rectify and i.rectify2 fix (Pierre de Mouveaux <pmx@audiovu.com>), i.tape.tm.fast fixed (Markus Neteler)
 
  Revision 1.9  2000/04/17 13:51:37  markus
