@@ -1,6 +1,8 @@
 
 #include <stdlib.h>
 
+#include "gis.h"
+#include "globals.h"
 #include "expression.h"
 #include "func_proto.h"
 

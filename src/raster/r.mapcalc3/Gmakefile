@@ -1,20 +1,20 @@
-PGM = r.mapcalc
+PGM2 = r.mapcalc
+PGM3 = r3.mapcalc
 
-LIST =	y.tab.o \
+COMMON = \
+	y.tab.o \
 	lex.yy.o \
 	\
+	evaluate.o \
 	expression.o \
 	function.o \
 	check.o \
 	main.o \
-	evaluate.o \
-	map.o \
 	\
 	xabs.o \
 	xadd.o \
 	xand.o \
 	xatan.o \
-	xcoor.o \
 	xcos.o \
 	xdiv.o \
 	xdouble.o \
@@ -44,7 +44,6 @@ LIST =	y.tab.o \
 	xor.o \
 	xpow.o \
 	xrand.o \
-	xres.o \
 	xround.o \
 	xrowcol.o \
 	xsin.o \
@@ -52,13 +51,31 @@ LIST =	y.tab.o \
 	xsub.o \
 	xtan.o
 
+LIST2 =	$(COMMON) \
+	map.o \
+	xcoor.o \
+	xres.o
+
+LIST3 =	$(COMMON) \
+	map3.o \
+	xcoor3.o \
+	xres3.o
+
 EXTRA_CFLAGS = $(READLINEINCPATH)
 
-LIBES = $(GISLIB) $(BTREELIB) $(ROWIOLIB) $(READLINELIBPATH) $(READLINELIB) $(HISTORYLIB)
-DEPLIBS= $(DEPGISLIB) $(DEPBTREELIB) $(DEPROWIOLIB)
+LIBES2 = $(GISLIB) $(BTREELIB) $(ROWIOLIB) $(READLINELIBPATH) $(READLINELIB) $(HISTORYLIB)
+DEPLIBS2= $(DEPGISLIB) $(DEPBTREELIB) $(DEPROWIOLIB)
 
-$(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+LIBES3 = $(GISLIB) $(BTREELIB) $(G3DLIB) $(READLINELIBPATH) $(READLINELIB) $(HISTORYLIB)
+DEPLIBS3= $(DEPGISLIB) $(DEPBTREELIB) $(DEPG3DLIB)
+
+all:	$(BIN_CMD)/$(PGM2) $(BIN_CMD)/$(PGM3)
+
+$(BIN_CMD)/$(PGM2): $(LIST2) $(DEPLIBS2)
+	$(CC) $(LDFLAGS) -o $@ $(LIST2) $(LIBES2) $(MATHLIB) $(XDRLIB)
+
+$(BIN_CMD)/$(PGM3): $(LIST3) $(DEPLIBS3)
+	$(CC) $(LDFLAGS) -o $@ $(LIST3) $(LIBES3) $(MATHLIB) $(XDRLIB)
 
 $(DEPLIBS): #
 

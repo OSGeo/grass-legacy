@@ -2,8 +2,6 @@
 #ifndef __EXPRESSION_H_
 #define __EXPRESSION_H_
 
-#include "globals.h"
-
 struct expr_list;
 
 typedef int func_t(int argc, const int *argt, void **args);
@@ -38,7 +36,7 @@ typedef struct expr_data_var {
 typedef struct expr_data_map {
 	const char *name;
 	int mod;
-	int row, col;
+	int row, col, depth;
 	int idx;
 } expr_data_map;
 
@@ -94,7 +92,7 @@ extern expression *constant_int(int x);
 extern expression *constant_float(float x);
 extern expression *constant_double(double x);
 extern expression *variable(const char *name);
-extern expression *mapname(const char *name, int mod, int row, int col);
+extern expression *mapname(const char *name, int mod, int row, int col, int depth);
 extern expression *operator(const char *name, const char *oper, int prec,
 			    expr_list *args);
 extern expression *function(const char *name, expr_list *args);

@@ -1,7 +1,8 @@
 
 #include "gis.h"
+#include "G3d.h"
 #include "globals.h"
-#include "globals2.h"
+#include "globals3.h"
 #include "expression.h"
 #include "func_proto.h"
 
@@ -14,6 +15,7 @@ z() height at center of depth
 int
 f_x(int argc, const int *argt, void **args)
 {
+	G3D_Region *window = &current_region3;
 	DCELL *res = args[0];
 	DCELL x;
 	int i;
@@ -24,12 +26,12 @@ f_x(int argc, const int *argt, void **args)
 	if (argt[0] != DCELL_TYPE)
 		return E_RES_TYPE;
 
-	x = G_col_to_easting(0.5, &current_region2);
+	x = window->west + 0.5 * window->ew_res;
 
 	for (i = 0; i < columns; i++)
 	{
 		res[i] = x;
-		x += current_region2.ew_res;
+		x += window->ew_res;
 	}
 
 	return 0;
@@ -38,6 +40,7 @@ f_x(int argc, const int *argt, void **args)
 int
 f_y(int argc, const int *argt, void **args)
 {
+	G3D_Region *window = &current_region3;
 	DCELL *res = args[0];
 	DCELL y;
 	int i;
@@ -48,7 +51,7 @@ f_y(int argc, const int *argt, void **args)
 	if (argt[0] != DCELL_TYPE)
 		return E_RES_TYPE;
 
-	y = G_row_to_northing(current_row + 0.5, &current_region2);
+	y = window->north - (current_row + 0.5) * window->ns_res;
 
 	for (i = 0; i < columns; i++)
 		res[i] = y;
@@ -59,7 +62,9 @@ f_y(int argc, const int *argt, void **args)
 int
 f_z(int argc, const int *argt, void **args)
 {
+	G3D_Region *window = &current_region3;
 	DCELL *res = args[0];
+	DCELL z;
 	int i;
 
 	if (argc > 0)
@@ -68,8 +73,10 @@ f_z(int argc, const int *argt, void **args)
 	if (argt[0] != DCELL_TYPE)
 		return E_RES_TYPE;
 
+	z = window->top - (current_depth + 0.5) * window->tb_res;
+
 	for (i = 0; i < columns; i++)
-		SET_NULL_D(&res[i]);
+		res[i] = z;
 
 	return 0;
 }

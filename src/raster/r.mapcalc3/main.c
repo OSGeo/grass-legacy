@@ -11,11 +11,6 @@
 
 int overflow_occurred;
 
-struct Cell_head current_region;
-int current_row;
-
-int rows, columns;
-
 volatile int floating_point_exception;
 volatile int floating_point_exception_occurred;
 
@@ -110,8 +105,6 @@ main(int argc, char **argv)
 	int all_ok;
 
 	G_gisinit(argv[0]);
-
-	G_get_window(&current_region);
 
 	if (argc > 1 && strcmp(argv[1], "help") == 0)
 	{
