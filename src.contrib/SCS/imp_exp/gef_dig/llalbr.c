@@ -65,7 +65,8 @@ llalbr(lat,lon,NOR,EAS)
       DLAT = *lat;                                                 
 
 /*     obtain trig function of projection angle (positive angle to east) */
-      ANG = LONCEN - DLON;
+      if (DLON > 0) ANG = LONCEN - DLON;
+      else ANG = LONCEN + DLON;
       if (ANG != PREANG)
         {
         PREANG = ANG;
