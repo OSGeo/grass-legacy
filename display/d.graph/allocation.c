@@ -1,3 +1,4 @@
+#include "gis.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -8,10 +9,7 @@ char *falloc(int nelem,int elsize)
 	ptr = calloc(nelem, elsize) ;
 
 	if (!ptr)
-	{
-		fprintf (stdout,"ERROR: no more memory available\n") ;
-		exit(-1) ;
-	}
+	   G_fatal_error ("ERROR: no more memory available") ;
 
 	return(ptr) ;
 }
@@ -22,10 +20,7 @@ char *frealloc(char *oldptr, int nelem,int elsize, int oldnelem)
 
 	ptr = calloc(nelem, elsize) ;
 	if (!ptr)
-	{
-		fprintf (stdout,"ERROR: no more memory available\n") ;
-		exit(-1) ;
-	}
+	    G_fatal_error ("ERROR: no more memory available") ;
 
 	{
 		register char *a ;

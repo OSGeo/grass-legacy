@@ -185,11 +185,7 @@ main (int argc, char **argv)
 	mapset = G_find_vector2 (map_name, "") ; 
 	
 	if (mapset == NULL)
-	{
-		sprintf(buf,"Vector file [%s] not available", map_name);
-		G_fatal_error(buf) ;
-		exit(-1);
-	}
+		G_fatal_error("Vector file [%s] not available", map_name) ;
 
 	/* if where_opt was specified select categories from db 
 	 * otherwise parse cat_opt */
@@ -204,20 +200,12 @@ main (int argc, char **argv)
 	      {
                 driver = db_start_driver(fi->driver);
 		if (driver == NULL)
-		  {
-		    sprintf(buf,"Cannot open driver %s", fi->driver);
-		    G_fatal_error(buf) ;
-		    exit(-1);
-		  }
+		    G_fatal_error("Cannot open driver %s", fi->driver) ;
 		
  	        db_init_handle (&handle);
 	        db_set_handle (&handle, fi->database, NULL);
 	        if (db_open_database(driver, &handle) != DB_OK)
-		  {
-		    sprintf(buf,"Cannot open database %s", fi->database);
-		    G_fatal_error(buf) ;
-		    exit(-1);
-		  }
+		    G_fatal_error("Cannot open database %s", fi->database) ;
 		
 		ncat = db_select_int( driver, fi->table, fi->key, where_opt->answer, &cats);
 

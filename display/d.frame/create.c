@@ -6,6 +6,7 @@
  *   0,0 is lower left; 100,100 is upper right
  */
 
+#include <stdlib.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"

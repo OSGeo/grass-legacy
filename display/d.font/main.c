@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 #include "display.h"
 #include "D.h"
@@ -34,10 +35,7 @@ int main( int argc , char **argv )
                 pclose(fd);
         }
         if (*fonts == 0)
-        {
-                fprintf (stderr, "ERROR: no fonts available\n");
-                exit(1);
-        }
+                G_fatal_error("ERROR: no fonts available");
 
         opt1 = G_define_option() ;
         opt1->key        = "font" ;

@@ -19,21 +19,13 @@ int display(
     int r,g,b;
 
     if (G_read_colors(name, mapset, &colors) == -1)
-    {
-	fprintf(stderr,"Color file for [%s] not available", name) ;
-	exit(1);
-    }
+        G_fatal_error("Color file for [%s] not available", name);
+
     /***DEBUG ***
     if (G_write_colors(name, mapset, &colors) == -1)
-    {
-	fprintf(stderr,"can't write colors ");
-	exit(1);
-    }
+        G_fatal_error("can't write colors");
     if (G_read_colors(name, mapset, &colors) == -1)
-    {
-	fprintf(stderr,"Color file for [%s] not available", name) ;
-	exit(1);
-    }
+        G_fatal_error("Color file for [%s] not available", name) ;
     *********/
 
     if (bg)

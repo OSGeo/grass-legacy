@@ -62,11 +62,8 @@ int main (int argc, char **argv)
 		spheroid->key, spheroid->answer);    
 	}
 	else if (CC_get_spheroid (name, &a, &e) == 0)
-	{
-	    fprintf (stderr,"ERROR: %s=%s: unknown spheroid\n",
+	    G_fatal_error("ERROR: %s=%s: unknown spheroid",
 		spheroid->key, spheroid->answer);    
-	    exit(-1);
-	}
 	else
 	{
 	    CC_u2ll_spheroid_parameters (a,e);
