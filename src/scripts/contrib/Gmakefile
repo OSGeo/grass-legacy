@@ -4,7 +4,6 @@ all:
 	cp d.rast.rescale/d.rast.rescale $(GISBASE)/scripts
 	cp g.html2man/g.html2man $(GISBASE)/scripts
 	cp g.man2html/g.man2html $(GISBASE)/scripts
-	cp g.mlist/g.mlist $(GISBASE)/scripts
 	$(GMAKE) i.oif
 	$(GMAKE) i.spectral
 	cp i.image.mosaic/i.image.mosaic $(GISBASE)/scripts
@@ -14,7 +13,6 @@ all:
 	cp r.edge.dig/r.edge.dig $(GISBASE)/scripts
 	cp r.in.arctiff/r.in.arctiff $(GISBASE)/scripts
 	cp r.in.globedem/r.in.globedem $(GISBASE)/scripts
-	cp r.mpatch/r.mpatch $(GISBASE)/scripts
 	cp r.out.arctiff/r.out.arctiff $(GISBASE)/scripts
 	cp r.out.geotiff/r.out.geotiff $(GISBASE)/scripts
 	cp r.out.bil/r.out.bil $(GISBASE)/scripts
