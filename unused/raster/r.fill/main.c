@@ -153,9 +153,9 @@ main(int argc, char **argv)
 		obuf.row[row].v = G_allocate_raster_buf(ibuf.type);
 		G_copy(obuf.row[row].v, ibuf.row[row].v, rbytes);
 		for(col=0; col<cols; col++){
-			if(rm_is_null2(ibuf, row, col))
+			if(G_is_null_r2(ibuf, row, col))
 				continue;
-			val = rm_get2(ibuf, row, col);
+			val = G_get_r2(ibuf, row, col);
 			if(!i || min > val)
 				min = val;
 			if(!i || max < val)
@@ -183,24 +183,24 @@ main(int argc, char **argv)
 						    row+i > rows-1 ||
 						    col+j < 0 ||
 						    col+j > cols-1 ||
-						    rm_is_null2(obuf, row+i,
+						    G_is_null_r2(obuf, row+i,
 									col+j))
 							continue;
 						k++;
-						val = rm_get2(obuf, row+i,
+						val = G_get_r2(obuf, row+i,
 									col+j);
 						if(lmin > val)
 							lmin = val;
 					}
 				}
-				if(rm_is_null2(obuf, row, col)){
+				if(G_is_null_r2(obuf, row, col)){
 					if(k == 8)
-						rm_set2(obuf, row, col, lmin);
+						G_set_r2(obuf, row, col, lmin);
 					continue;
 				}
-				val = rm_get2(obuf, row, col);
+				val = G_get_r2(obuf, row, col);
 				if(lmin > val){
-					val2 = rm_get2(ibuf, row, col);
+					val2 = G_get_r2(ibuf, row, col);
 					if(maxdh == 0.0)
 						val = lmin;
 					else{
@@ -217,7 +217,7 @@ main(int argc, char **argv)
 						if(!j)
 							nsinks++;
 					}
-					rm_set2(obuf, row, col, val);
+					G_set_r2(obuf, row, col, val);
 				}
 			}
 		}

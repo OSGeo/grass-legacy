@@ -1,4 +1,4 @@
-PGM    = r.fill
+PGM    = r.fill1
 OBJS   = main.o
 LIB    = $(UNUSED)/libes
 LIBTIR = $(LIB)/libtir
