@@ -70,12 +70,14 @@ file is <EM>category red green blue</EM>,
 with one entry per line.
 If a category for a map is not included
 in this file, it will not be drawn unless there is a special "default"
-entry with a category of -1.
+entry with a category of * (i.e. the asterisk character).  Note that this
+is a change from GRASS 5.0.x which used -1 as the default code.  This allows
+the use of negative numbers.
 
 <DL>
 <DT><B>Example Legend File</B>
 <DD>
--1 255 255 255<BR>
+* 255 255 255<BR>
 1  210 198 168<BR>
 5  168 198 220<BR>
 </DL>
