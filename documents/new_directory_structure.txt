@@ -203,13 +203,6 @@ Note: Useful modules from src.contrib section shall be merged into
 Questions:
   - core-package: shall we move the "/lib/plugins" to "/plugins" ?
   - shall we keep the unused directory?
-  - shall we keep:
-    BIN_MAIN_CMD/INTER
-    BIN_ALPHA_CMD/INTER
-    BIN_CONTRIB_CMD/INTER
-    ....
-    I think is doesn't make too much sense to distinguish between ALPHA,
-    BETA and stable (we organize that by version numbering)
 
 Proposal:
  - the number of import/export modules scripts needs to be heavily reduced.
