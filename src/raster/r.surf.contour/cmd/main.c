@@ -125,6 +125,7 @@ main (int argc, char *argv[])
 		}
 		G_put_map_row(file_fd, alt_row);
 	}
+	G_percent (r, nrows, 1);
 	cseg_close (&con);
 	if (s_f) {
 		flag_destroy (seen);
