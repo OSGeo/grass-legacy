@@ -24,13 +24,8 @@ typedef struct {
 
 /*support.c*/
 int Date(char *);
-int readsites(FILE *,int,int,int, bubblesite**);
 
 /*bubbling.c*/
 int  bubbling (bubblesite *  , int, struct Map_info*,double units );
-
-
-
-
 
 #endif /*V_BUBBLE_H*/
