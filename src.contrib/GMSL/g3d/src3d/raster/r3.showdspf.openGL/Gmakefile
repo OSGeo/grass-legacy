@@ -2,9 +2,9 @@ MYLIBDIR = $(SRC)/libes/dspf
 DSPLIB	 = $(SRC)/libes/dspf/libdsp3.a
 OGSF_DIR     = $(SRC)/libes/ogsf
 
-EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OPENGLINC) $(OPENGLwINC) $(XCFLAGS)
+EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OPENGLINC) $(OPENGLwINC) $(XCFLAGS) $(XMINC)
 SUNLDFLAGS   = $(XMLIBPATH) $(XLIBPATH) -L/lib
-OGLLIB	     = $(OPENGLULIB) -lGL $(LGLWM) -lXm -lX11 -lXt -lXext
+OGLLIB	     = $(OPENGLULIB) $(OPENGLLIB) $(LGLWM) $(XMLIB) -lX11 -lXt -lXext
 LIBES        = $(DSPLIB) $(G3DLIB) $(DATETIMELIB) $(GISLIB)
 DEPLIBS= $(DSPLIB) $(DEPG3DLIB) $(DEPDATETIMELIB) $(DEPGISLIB)
 
@@ -50,6 +50,7 @@ OBJ	=	\
                 BallMath.o \
                 main_ogl.o
 
+all: $(SRC)/libes/dspf $(BIN_CMD)/$(PGM)
 
 $(BIN_CMD)/$(PGM): $(OBJ) $(DEPG3DLIB) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(EXTRA_CFLAGS) $(LIBES) $(OGLLIB) $(SUNLDFLAGS) $(MATHLIB) $(XDRLIB)
