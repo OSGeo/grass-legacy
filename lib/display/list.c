@@ -25,6 +25,18 @@
  * D_get_dig_name(name)
  *     returns the name of the dig file currently displayed
  *
+ * D_add_to_cell_list(name)
+ *     adds the name of the cell file currently displayed to cell_list
+ *
+ * D_get_cell_list(list,count)
+ *     returns the list of the cell_list currently displayed
+ *
+ * D_add_to_dig_list(name)
+ *     adds the name of the dig file currently displayed to dig_list
+ *
+ * D_get_dig_list(list,count)
+ *     returns the list of the dig_list currently displayed
+ *
  * D_set_erase_color(color)
  *     sets the color name of the current erase color for the window
  *
@@ -82,6 +94,36 @@ int D_get_dig_name(char *name )
 	return(0) ;
 }
 
+int D_add_to_cell_list( char *name )
+{
+	return(R_pad_append_item ("cell_list", name)) ;
+}
+
+int D_get_cell_list(char ***list, int *count )
+{
+	int stat ;
+
+	if(stat = R_pad_get_item ("cell_list", list, count))
+		return(-1) ;
+
+	return(0) ;
+}
+
+int D_add_to_dig_list( char *name )
+{
+	return(R_pad_append_item ("dig_list", name)) ;
+}
+
+int D_get_dig_list(char ***list, int *count )
+{
+	int stat ;
+
+	if(stat = R_pad_get_item ("dig_list", list, count))
+		return(-1) ;
+
+	return(0) ;
+}
+
 int D_add_to_list( char *string)
 {
 	return(R_pad_append_item("list", string)) ;
@@ -92,6 +134,8 @@ int D_clear_window()
 	R_pad_delete_item("list") ;
 	R_pad_delete_item("cell") ;
 	R_pad_delete_item("dig") ;
+	R_pad_delete_item("cell_list") ;
+	R_pad_delete_item("dig_list") ;
 	R_pad_delete_item("off") ;
 	R_pad_delete_item("m_win") ;
 	R_pad_delete_item("erase");
