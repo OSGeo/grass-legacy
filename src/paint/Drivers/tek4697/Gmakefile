@@ -1,5 +1,5 @@
 NAME=tek4697
-LIB = $(SRC)/paint/Interface/driverlib/lib.a $(LOCKLIB)
+LIBS = $(SRC)/paint/Interface/driverlib/lib.a $(LOCKLIB)
 PAINT = $(ETC)/paint
 LIST =\
     main.o \
