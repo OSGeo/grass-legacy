@@ -48,6 +48,10 @@ headers:
 	if [ ! -d $(GISBASE)/include/vect ]; then $(MKDIR) $(GISBASE)/include/vect; fi
 	$(INSTALL) -m 644 ../include/*.h $(GISBASE)/include/
 	$(INSTALL) -m 644 ../include/vect/*.h $(GISBASE)/include/vect/
+	if [ ! -d $(GISBASE)/include/grass ]; then $(MKDIR) $(GISBASE)/include/grass; fi
+	if [ ! -d $(GISBASE)/include/grass/vect ]; then $(MKDIR) $(GISBASE)/include/grass/vect; fi
+	$(INSTALL) -m 644 ../include/*.h $(GISBASE)/include/grass/
+	$(INSTALL) -m 644 ../include/vect/*.h $(GISBASE)/include/grass/vect/
 
 clean: cleansubdirs
 
