@@ -260,12 +260,12 @@ int b3,b4,bs,qa=0;
 
 			if((east==(east/2)*2) && east > 0)
 			{
-			/*	fprintf(jog,"AREA LABEL FOR %s MOVED FROM %18.8f ",b1,Cx);/**/
+			/*	fprintf(jog,"AREA LABEL FOR %s MOVED FROM %18.8f ",b1,Cx); */
 				if(Eclose!=0.0 && E2!=0.0)
 					Cx = (Eclose + E2) / 2;
 			/*	fprintf(jog,"TO %18.8f\n",Cx);
 				fprintf(jog,"Eclose=%18.8f\n",Eclose);
-				fprintf(jog,"E2=%18.8f\n",E2);/**/
+				fprintf(jog,"E2=%18.8f\n",E2); */
 			}
 /* When polygon only lies to the west move the centroid west to get it inside.*/
 
