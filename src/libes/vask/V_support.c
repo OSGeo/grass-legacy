@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "stdio.h"
 #include "vask.h"
 #include <pwd.h>
