@@ -263,11 +263,11 @@ void execute(expr_list *ee)
 		{
 			if (val->data.map.mod == 'M')
 			{
-				copy_cats(var, val->data.map.name);
-				copy_colors(var, val->data.map.name);
+				copy_cats(var, val->data.map.idx);
+				copy_colors(var, val->data.map.idx);
 			}
 
-			copy_history(var, val->data.map.name);
+			copy_history(var, val->data.map.idx);
 		}
 	}
 
