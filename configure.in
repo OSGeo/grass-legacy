@@ -16,6 +16,7 @@
 #   	    	License (>=v2). Read the file COPYING that comes with GRASS
 #   	    	for details.
 #
+# MANUAL:       http://www.gnu.org/manual/autoconf/html_mono/autoconf.html
 #############################################################################
 
 AC_INIT(README)
@@ -99,7 +100,9 @@ AC_SUBST(LEX)
 
 AC_PROG_YACC
 if test "$YACC" != "bison -y"; then
+  if test "$YACC" != "yacc"; then
     AC_MSG_WARN(You will need bison/yacc as required for various GRASS modules.)
+  fi
 else
     AC_MSG_CHECKING(bison version)
     oldIFS=$IFS; IFS=.
