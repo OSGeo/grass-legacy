@@ -5,6 +5,7 @@
 
 #define MYSQL_COL_NAME 64		/* maximum column name length. NB: see mysql what*/
 
+#define MYSQL_UNKNOWN 0
 #define MYSQL_CHAR   1
 #define MYSQL_INT    2
 #define MYSQL_DOUBLE 3
@@ -17,6 +18,7 @@ typedef struct
     char name[MYSQL_COL_NAME];
     int type;
     int width;
+    int decimals; 
 }
 COLUMN;
 
