@@ -1,0 +1,11 @@
+FIPS PUB 123 Function Library
+Readme File 
+Subdirectory: <f123dir>/f123src/
+
+This subdirectory contains the entire FIPS PUB 123 Function Library 
+source code written in the ANSI C programming language.
+
+The batch file <f123dir>/f123bat/f123comp.m can be invoked to compile 
+the entire function library producing object code files in the subdirectory 
+<f123dir>/f123obj/ and source listing files in the subdirectory 
+<f123dir>/f123lst/.
