@@ -74,7 +74,7 @@ register u_char *r,register u_char *g,register u_char *b, int withzeros)
             array_alloc += 512;
         /* Make sure sufficient space is allocated */
         if (array == NULL)
-            array = (unsigned *) malloc((size_t) (array_alloc * sizeof(unsigned)));
+            array = (unsigned *) G_malloc((size_t) (array_alloc * sizeof(unsigned)));
         else
             array = (unsigned *) realloc((void *) array,
                     (size_t) (array_alloc * sizeof(unsigned)));

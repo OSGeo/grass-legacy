@@ -1127,7 +1127,7 @@ char *s;
 {
     char *buf;
 
-    buf = (char *)malloc((size_t) strlen(s) + 1);
+    buf = (char *)G_malloc((size_t) strlen(s) + 1);
     if (buf != NULL)
         strcpy(buf, s);
     return buf;
@@ -1149,7 +1149,7 @@ char *name;
 {
     PAD *pad;
 
-    pad = (PAD *) malloc((size_t) sizeof(PAD));
+    pad = (PAD *) G_malloc((size_t) sizeof(PAD));
     if (pad == NULL)
         return 0;
     pad->name = store(name);
@@ -1238,7 +1238,7 @@ char *name, *value;
         return 0;
 
     /* allocate a list struct and put value into it */
-    list = (LIST *) malloc((size_t) sizeof(LIST));
+    list = (LIST *) G_malloc((size_t) sizeof(LIST));
     if (list == NULL)
         return 0;
     list->next = NULL;
@@ -1335,7 +1335,7 @@ PAD *pad;
 {
     ITEM *item;
 
-    item = (ITEM *) malloc((size_t) sizeof(ITEM));
+    item = (ITEM *) G_malloc((size_t) sizeof(ITEM));
     if (item == NULL)
         return (ITEM *) NULL;
 
@@ -1366,14 +1366,14 @@ static char *xalloc(buf, cur, new, len)
 char *buf;
 int *cur, new, len;
 {
-  /* char *malloc(), *realloc(); */
+  /* char *G_malloc(), *realloc(); */
 
     if (*cur >= new)
         return buf;
     if (*cur)
         buf = (char *)realloc((void *) buf, (size_t) (new * len));
     else
-        buf = (char *)malloc((size_t) (new * len));
+        buf = (char *)G_malloc((size_t) (new * len));
     *cur = new;
     if (buf == NULL) {
         fprintf(stderr, "%s: Out of Memory\n", me);

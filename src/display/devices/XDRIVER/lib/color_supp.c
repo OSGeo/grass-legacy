@@ -98,7 +98,7 @@ static int check_alloc_color(int n)
             pos_lookup = (int *) realloc((void *) pos_lookup,
                     (size_t) (to_alloc * sizeof(int)));
         else
-            pos_lookup = (int *) malloc((size_t) (to_alloc * sizeof(int)));
+            pos_lookup = (int *) G_malloc((size_t) (to_alloc * sizeof(int)));
         if (!pos_lookup) {
             perror("ERROR: can't alloc in check_alloc_color.");
             exit(-1);
@@ -117,7 +117,7 @@ static int check_alloc_color(int n)
             neg_lookup = (int *) realloc((void *) neg_lookup,
                     (size_t) (to_alloc * sizeof(int)));
         else
-            neg_lookup = (int *) malloc((size_t) (to_alloc * sizeof(int)));
+            neg_lookup = (int *) G_malloc((size_t) (to_alloc * sizeof(int)));
         if (!neg_lookup) {
             perror("ERROR: can't alloc in check_alloc_color.");
             exit(-1);

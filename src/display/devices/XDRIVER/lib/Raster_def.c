@@ -14,7 +14,7 @@ int Raster_char (int num, int nrows,
 	if(! array_alloc)
 	{
 		array_alloc = num ;
-		int_array = (int *)malloc((size_t) (array_alloc * sizeof(int))) ;
+		int_array = (int *)G_malloc((size_t) (array_alloc * sizeof(int))) ;
 	}
 	else
 	{
