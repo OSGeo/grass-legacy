@@ -1,0 +1,309 @@
+<HTML>
+<HEAD>
+<TITLE>GRASS GIS  and Simulation Models </TITLE>
+<!-- Created by: Markus Neteler -->
+ 
+<!-- email: neteler@geog.uni-hannover.de -->
+</head>
+<body bgcolor=#FFFFE0>
+ 
+
+<H1>
+<IMG SRC="picts/grass.gif" ALT="grasslogo" HEIGHT=205 WIDTH=181 ALIGN=CENTER>&nbsp;&nbsp;&nbsp;
+GRASS GIS - Simulation Models</H1>
+
+<P><BR>
+<HR WIDTH="100%">
+<I><FONT FACE="Arial,Helvetica"><A HREF="welcome.html">GRASS Home</A>
+- <A HREF="COPYRIGHT.html">Copyright</A> - <A HREF="grass_faq.html">FAQ</A>
+- <A HREF="grass_info.html">Introduction</A> - <A HREF="main_docu.html">Documents</A>
+- <A HREF="applications.html">Image Gallery</A> - <A HREF="mirrors.html">Mirror Sites</A> - <A HREF="credits.html">Credits</A></FONT></I>
+<HR WIDTH="100%">
+<I><FONT FACE="Arial,Helvetica"><A HREF="main_source.html">GRASS Sources</A>
+- <A HREF="main_binaries.html">GRASS&nbsp;Binaries</A> - <A HREF="main_tclgrass.html">Graphical
+User Interface</A> - <A HREF="main_data.html">Sample Data</A> - <A HREF="program.html">Programmer's
+page</A> - <A HREF="cdrom.html">CDROM</A></FONT></I>
+<HR WIDTH="100%">
+
+<p>
+<i>Current Topics: erosion modelling, hydrological modelling, floodplain analysis,
+wildfire spread</i>
+<p>
+<h3>Erosion modelling: ANSWERS - r.answers</h3>
+<menu>
+ <li> The acronym for Areal Non-point Source Watershed Environmental Response
+     Simulation model. This event-oriented, distributed parameter model is 
+     designed for erosion, sediment and water quality control planning on 
+     complex, agricultural watersheds.
+ <li> It should normally be distributed in your GRASS-package. Note: ANSWERS is 
+      written in C and FORTRAN, and will require a C compiler and a FORTRAN 
+      compiler such as f77. 
+ <li><a href="http://soils.ecn.purdue.edu/~aggrass/models/answers/">ANSWERS
+page at Purdue</A>
+ <li><a href="gdp/html_421/html/r.answers.html">GRASS man page r.answers</A>
+ 
+ </menu>
+
+<h3>Erosion modelling: AGNPS 5.0 - r.agnps_input/r.agnps_run50/r.agnps_view</h3>
+<menu>
+ <li> AGricultural Non-Point Source (AGNPS) is a distributed parameter model
+developed by Agricultural Research Service (ARS) scientists and engineers. It
+predicts soil erosion and nutrient transport/loadings from agricultural
+watersheds for real or hypothetical storms i.e., it's an event-based model.
+Erosion modeling is built upon the USLE applied on a storm basis; thus, it uses
+the EI-index for single storm events. Its hydrology is based on the Soil
+Conservation Service Curve Number technique. AGNPS uses another ARS developed
+model named CREAMS to predict nutrient/pesticide and soil particle size
+generation and interaction. Here is a <A HREF=http://www.geog.uni-hannover.de/phygeo/grass/agnps.html>  AGNPS Page</A>. 
+Some help about using AGNPS can be found <A HREF=http://pasture.ecn.purdue.edu:80/~engelb/agen526/>here</A>.
+Note: AGNPS 5.0 is written in C.
+<p>
+ References:
+<menu>
+ <li> Bragadin, G.L., Franchini, M., Morgagni, A., Todini, E. (1993): Agricultural 
+    non-point source nutrient loadings estimated by means of an extended version 
+    of AGNPS. The Bidente-Ronco case study - Part I. INGEGNERIA AMBIIENTALE,
+    Vol.22, Nr.9, S. 455       
+ 
+ <li> Mitchell, J.K., Engel, B.A., Srinivasan,R., Wang, S.S.Y. (1993): Validation of AGNPS 
+    for Small Watersheds Using an Integrated AGNPS/GIS System. WATER RESOURCES   
+    BULLETIN- AMERICAN WATER RESOURCES ASSOCIATION, Vol.29, Nr.5, S. 833                         
+ <li>  Robert Alton Young, C.A. Onstad, D.D. Bosch, W.P. Anderson. (1989) 
+       AGNPS: A nonpoint-source pollution model for evaluating agricultural 
+       watersheds. Jour. of Soil and Water Conservation. v44, n2. ISSN 0022-4561
+ 
+ <li>  Srinivasan, R. and B.A. Engel, (1991), A Knowledge Based Approach
+       to Extract Input Data From Gis, ASAE Paper No. 91-7045, American
+       Society of Agriculatural Engineers, St. Joseph, Michigan.
+
+ <li>   Srinivasan, R. and B.A. Engel, (1991), GIS: A Tool For Visualization
+       and Analyzation, ASAE Paper No. 91-7574, ASAE, St. Joseph, Michigan.
+ 
+ <li> Srinivasan, R., Engel, B.A., Wright, J.R., Lee, J.G.(1994):
+      The Impact of GIS-derived Topographic Attributes on the Simulation of   
+      Erosion Using AGNPS. APPLIED ENGINEERING IN AGRICULTURE , Vol.10, 
+      Nr.4, S. 561 
+   
+</menu>
+</menu>  
+
+<h3> Erosion modelling: KINEROS - r.kineros</h3>
+<menu>
+ <li> KINEROS represents a watershed as a set of related elements.  
+      Elements may be hillslopes, channels or ponds.  A computational order 
+      must be specified so that boundary conditions for an element, such as 
+      the amount of water contributed by lateral hillslopes and upstream 
+      tributaries, are available.
+<p>(Smith  et al., in press; Woolhiser et al., 1990). 
+ <li><a href="gdp/html_421/html/r.kineros.html">GRASS man page r.kineros</A>
+
+</menu>
+
+
+<h3> Erosion modelling: WEPP</h3>
+<menu>
+<li><a href="http://soils.ecn.purdue.edu/~aggrass/models/wepp/">WEPP info</A>
+</menu>
+
+<hr>
+<h3>Storm water runoff: r.water.fea</h3>
+<menu>
+<li> r.water.fea is an interactive program that allows the user to simulate 
+ storm water runoff analysis using the finite element numerical technique.
+Infiltration is calculated using the Green and Ampt formulation. r.water.fea
+computes and draws hydrographs for every basin as well as at stream junctions
+in an analysis area. It also draws animation maps at the basin level. The 
+software is stored in GRASS 4.2.1 
+<li><a href="http://chief.ecn.uo.edu/software.html">r.water.fea</A>
+developed at University of Oklahoma by Dr. B.E. Vieux
+ <li><a href="gdp/html_421/html/r.water.fea.html">GRASS man page r.water.fea</A>
+</menu>
+
+<h3>Runoff Calculation - Water Resource Assessment Tool: r.wrat</h3>
+<menu>
+<li>     The Water Resource Assessment Tool is a collection of
+programs run within the GRASS GIS. These programs are an aid
+in understanding the nature of runoff in a study area based
+on information typically available for a GIS. The programs
+analyze the terrain to define drainage direction and areas,
+simulate runoff and peak runoff and model nonpoint source
+pollution and map contaminant source areas and contaminant
+pathways. 
+</menu>
+
+
+<h3>Hydrologic modelling: r.hydro.CASC2D</h3>
+<menu>
+<li>r.hydro.CASC2D is a physically-based, distributed, raster
+hydrologic model which simulates the hydrologic response of a watershed
+subject to a given rainfall field. Input rainfall is allowed to vary in 
+space and time. Major components of the model include interception, 
+infiltration, and surface runoff routing.  Interception is a process whereby 
+rainfall is retained by vegetation.  Interception is estimated using an 
+empirical three parameter model.  Infiltration is the process whereby 
+rainfall or surface water is pulled into the soil by capillary and 
+gravity forces. The Green and Ampt equation with four parameters is applied 
+to model the event-based infiltration. For continuous soil moisture 
+accounting, redistribution of soil moisture can also be simulated whenever 
+the non-intercepted  rainfall intensity falls below the saturated hydraulic 
+conductivity of the soil.  The redistribution option requires two more soil 
+hydraulic parameters.  Excess rainfall becomes surface runoff and is routed 
+as overland flow and subsequently as channel flow. The overland flow routing 
+formulation is based on a two-dimensional explicit finite difference (FD)  
+technique, while two different FD techniques, one explicit and
+one implicit, provide options for routing one-dimensional channel flow.
+Through a step function, a depression depth may be specified, below which no
+overland flow will be routed.
+ <li><a href="gdp/html_421/html/r.hydro.CASC2D.html">GRASS man page
+r.hydro.CASC2D</A>
+</menu>
+
+<h3>SWAT hydrologic model</h3>
+The Soil and Water Assessment Tool (SWAT) is the hydrologic model
+used in the SWAT/GRASS linkage (USDA/Arnold and others, 1995). SWAT
+is a continuous-time, basin-scale hydrologic model capable of
+complex long-term simulations including hydrology, pesticide and
+nutrient cycling, and erosion and sediment transport. It is a river basin scale model 
+developed to quantify the impact of land management practices in
+large, complex watersheds. SWAT is a public domain model actively 
+supported by the USDA Agricultural Research Service at the
+Grassland, Soil and Water Research Laboratory in Temple, TX.
+
+<menu>
+<li><a href="http://www.brc.tamus.edu/swat/">SWAT main page</a>
+<li><a href="http://www.brc.tamus.edu/swat/swat/swatgis.html">SWAT-GRASS page</a>
+<li><a href="http://www.baylor.edu/~Bruce_Byars/swatgrassman.html">Short SWAT-GRASS man page</a>
+<li><a href="http://www.brc.tamus.edu/swat/swatgrass/index.html">Full SWAT-GRASS man page with references</a>
+</menu>
+<hr>
+
+<h3>Watershed Calculation: r.watershed</h3>
+<menu>
+<li> The series of programs provided within the watershed menu is
+effective for the delineation and segmenting of channel net-
+works, and for identifying a watershed  boundary.   Work  is
+continuing to increase the effectiveness of delineating sub-
+basin boundaries as well.
+<pre>
+1.  Filtering of elevation data
+2.  Locating pits
+3.  Calculating drainage accumulation/outlining watershed
+4.  Creating stream network
+5.  Coding stream segments/finding segment lengths
+6.  Finding subwatershed basins
+</pre>
+ <li><a href="gdp/html_421/html/r.watershed.html">GRASS man page
+r.watershed</A>
+
+</menu>
+
+
+
+<h3>Floodplain Analysis: f.input etc.</h3>
+<menu>
+<li>f.input reads the results of the HEC-2 Water Surface Profile model
+and generates a vector map of water surface elevations at hydraulic
+sections.  The user supplies to f.input a vector map of the hydraulic
+cross sections used in the HEC-2 model along with the HEC-2 model
+results.
+<li>f.econ takes as input the results of f.wsurf along with a
+user-supplied vector map of building sites and two ASCII files of
+economic data.  As output f.econ generates a vector map of total
+damage to each building in the floodplain along with a summary ASCII
+report of flood damages categorized by building types (residential,
+public, ...) and damage type (structure or content).  f.econ also
+reports areal extent of flooding.
+<li> f.reach provides floodwater statistics, including areal extent of
+flooding, average flood depth, and volume of water, calculated on a
+reach-by-reach basis.
+</menu>
+
+<hr>
+
+<h3>Landscape Analysis: r.le</h3>
+<menu>
+<li> Since the 1970s, with the availability of satellite data, there has
+     been an increasing interest in the structure of the earth on the scale of kilometers 
+     or hundreds of kilometers.
+    Landscape ecology is a multi-disciplinary pursuit, involving geographers,
+     biologists, sociologists, remote sensors, and many others.  The focus 
+     of landscape ecology is on the dynamics and structure of the biosphere, 
+     including human activities, on the scale of hundreds of meters to
+    kilometers (Risser et al. 1984; Forman and Godron 1986; Urban et al. 1987). 
+      The science of landscape ecology expanded rapidly in the 1980s, and 
+     methods for the quantitative analysis of landscape structure also were 
+    developed (e.g. Mead et al. 1981; Gardner et al. 1987; Milne 1988; 
+    Griffiths and Wooding 1988), yet there is no generally for the 
+    quantitative analysis of landscape structure that will work within a
+    geographical information system (GIS).
+    The r.le programs have been designed to provide software for calculating
+    a variety of common quantitative measures of landscape structure.  The 
+    programs can be used to analyze the structure of nearly any landscape. 
+    <p>
+    The r.le programs are designed for analyzing landscapes
+composed of a mosaic of patches, but, more generally, these programs are 
+capable of analyzing any two-dimensional raster or array whose entries are
+integer values.  The r.le programs have options for controlling the shape, 
+size, number, and distribution of sampling areas used to
+collect information about the landscape.  Sampling area shapes can be
+square, or rectangular with any length/width ratio or can be circular with 
+any radius.  The size of sampling areas can be changed, so that the landscape 
+can be analyzed at a variety of spatial scales simultaneously.
+Sampling areas may be distributed across the landscape in a random,
+systematic, or stratified-random manner, or as a moving window. The r.le 
+programs can calculate a number of measures that produce single values as
+output (e.g. mean patch size in the sampling area), as well as measures that
+produce a distribution of values as output (e.g. frequency distribution of 
+patch sizes in the sampling area) (Table 1), and it is also possible to output tables of data about selected
+attributes (e.g., size, shape, amount of perimeter) of individual patches, as 
+well as to make new maps of patch attributes.  The programs include no 
+options for graphing or statistically analyzing the results of
+the analyses.  External software must be used. - <a href=http://www.uwyo.edu/a&s/geog/faculty/links/rle.html>r.le web page</a>
+</menu>
+ <li><a href="gdp/landscape/">Postscript documentation</A>
+
+<hr>
+
+<h3>Wildfire spread simulation: r.ros/r.spread/r.spreadpath</h3>
+<menu>
+<li> This WIldfire SPread Simulation, WiSpS, package contains three GRASS
+programs r.ros, r.spread and r.spreadpath
+<li> r.ros (for wildfire spread simulation) - Generates three, or
+     four raster map layers showing 1) the base (perpendicular)
+     rate of spread (ROS), 2) the maximum (forward) ROS, 3) the
+     direction of the maximum ROS, and optionally 4) the maximum
+     potential spotting distance. 
+<li> r.spread - Simulates elliptically anisotropic spread on a
+     graphics window and generates a raster map of the cumulative
+     time of spread, given raster maps containing the rates of
+     spread (ROS), the ROS directions and the spread origins. It
+     optionally produces raster maps to contain backlink UTM
+     coordinates for tracing spread paths. 
+<li> r.spreadpath - Recursively traces the least cost path
+     backwards to cells from which the cumulative cost was
+     determined. 
+ <li><a href="gdp/html_421/html/r.ros.html">GRASS man page
+r.ros</A>
+ <li><a href="gdp/html_421/html/r.spread.html">GRASS man page
+r.spread</A>
+ <li><a href="gdp/html_421/html/r.spreadpath.html">GRASS man page
+r.spreadpath</A>
+</menu>
+
+<hr>
+<menu>
+ <li><A HREF=http://pasture.ecn.purdue.edu/~aggrass/models/>  Model integration in GRASS</A> - Collection of Bernie Engel.
+</menu>
+ 
+<p>
+
+<A HREF=welcome.html>Back to GRASS GIS pages</A> 
+<address>
+neteler@geog.uni-hannover.de - 23. Jan. 1999  
+</address>
+</body>
+</HTML>
+ 
+
+
+
