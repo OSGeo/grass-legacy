@@ -11,7 +11,8 @@ Traces a flow through an elevation model on a raster map layer.
 .br
 \*Lr.drain\*O
 \*Linput=\*Oname
-\*Loutput=\*Oname 
+\*Lsite=\*Oname
+\*Loutput=\*Oname
 [\*Lcoordinate=\*Ox,y,...]]
 \*Lnull_value=\*Ovalue
 .SH DESCRIPTION
@@ -30,6 +31,7 @@ command line, using the form
 .VL 4m
 \*Lr.drain\*O
 \*Linput=\*Oname
+\*Lsite=\*Oname
 \*Loutput=\*Oname
 [\*Lcoordinate=\*Ox,y,...]]
 \*Lnull_value=\*Ovalue
@@ -38,7 +40,8 @@ where the input name is the name of a raster map layer to
 be used in calculating drainage, 
 the output name is the name of the raster map layer to contain output, 
 and each x,y coordinate pair is the geographic location of a point 
-from which drainage is to be calculated. By default, null cells in the input map
+from which drainage is to be calculated. If site is given, this site file
+will be read for starting points coordinates. By default, null cells in the input map
 are excluded from the path evaluation. Alternately, a floating point value
 can be assigned to null cells with null_value.
 .PP
@@ -51,7 +54,9 @@ Program parameters are as follows.
 .SH Parameters:
 .VL 4m
 .LI "\*Linput=\*Oname
-Name of raster map layer containing cell cost information. 
+Name of raster map layer containing cell cost information.
+.LI "\*Lsite=\*Oname
+Name of site file containing starting points coordinates.
 .LI "\*Loutput=\*Oname
 Name of raster map layer to contain program output. 
 .LI "\*Lcoordinate=\*Ox,y,...]
