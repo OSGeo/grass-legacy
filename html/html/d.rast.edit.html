@@ -112,7 +112,7 @@ during edit mode, they will be saved upon exit.
 3. Zoom
 
 <BR>
-calls the <EM><A HREF="d.rast.zoom.html">d.rast.zoom</A>
+calls the <EM><A HREF="d.zoom.html">d.zoom</A>
 </EM> program, to allow changing the view of the
 raster layer.
 <B>Zoom's</B> instructions will appear on the text command window.
@@ -182,14 +182,14 @@ since the program must read and write raster map layers row by row for the full
 size of the map layer as dictated by its region size and resolution.
 (The current region settings of north, south, east, and west
 will not limit the size of the edited copy of the map layer,
-since by use of the <EM><A HREF="d.rast.zoom.html">d.rast.zoom</A></EM> program, these values
+since by use of the <EM><A HREF="d.zoom.html">d.zoom</A></EM> program, these values
 may change several times during the editing session). 
 Their effects could be lessened if the program
 were to create a table of changes that it could incorporate into
 the new raster file on a forked process started when the user exits, or 
 otherwise allow the user to issue a "save" command when he has
 made all desired edits to the raster file.  Currently, for instance, if
-the user needs to use <EM> <A HREF="d.rast.zoom.html">d.rast.zoom</A></EM> to access a different area of the 
+the user needs to use <EM> <A HREF="d.zoom.html">d.zoom</A></EM> to access a different area of the 
 map, he must wait for a read and write for each entrance
 and egress of the edit mode.
 
@@ -258,7 +258,6 @@ categories, but additional programming could make it so.
 <tr>
 	<td><em><a href="d.rast.arrow.html">d.rast.arrow</a></em></td>
 	<td><em><a href="d.rast.num.html">d.rast.num</a></em></td>
-	<td><em><a href="d.rast.zoom.html">d.rast.zoom</a></em></td>
 	<td><em><a href="d.zoom.html">d.zoom</a></em></td>
 
 </tr>
