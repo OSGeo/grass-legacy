@@ -1,0 +1,68 @@
+AllocXPoints	alloc.c	/^XPoint *AllocXPoints(count)$/
+Box_abs	Box_abs.c	/^Box_abs(x1, y1, x2, y2)$/
+Box_abs2	Box_abs.c	/^Box_abs2(x1, y1, width, height)$/
+Box_rel	Box_abs.c	/^Box_rel(width, height)$/
+Color_table_fixed	Clr_table.c	/^Color_table_fixed()$/
+Color_table_float	Clr_table.c	/^Color_table_float()$/
+Cont_abs	Cont_abs.c	/^Cont_abs(x, y)$/
+Cont_rel	Cont_abs.c	/^Cont_rel(x, y)$/
+EraseRubberBox	Get_w_box.c	/^static EraseRubberBox(x1, y1, x2, y2)$/
+EraseRubberLine	Get_w_line.c	/^static EraseRubberLine(x1, y1, x2, y2)$/
+GRFont	GRFont.c	/^GRFont(text)$/
+Get_location_with_box	Get_w_box.c	/^Get_location_with_box(cx, cy, nx, ny, button)$/
+Get_location_with_line	Get_w_line.c	/^Get_location_with_line(cx, cy, nx, ny, button)$/
+Get_location_with_pointer	Get_w_pnt.c	/^Get_location_with_pointer(wx, wy, button)$/
+Get_num_colors	Returns.c	/^Get_num_colors(ncolors)$/
+Graph_Close	Graph_Clse.c	/^Graph_Close()$/
+Graph_Set	Graph_Set.c	/^int Graph_Set(argc, argv)$/
+InitColorTableFixed	Clr_table.c	/^Colormap InitColorTableFixed()$/
+MSWITCHER	SWITCHER.c	/^main(argc, argv)$/
+Panel_delete	Panel.c	/^Panel_delete(name)$/
+Panel_restore	Panel.c	/^Panel_restore(name)$/
+Panel_save	Panel.c	/^Panel_save(name, top, bottom, left, right)$/
+Polygon_abs	Polygn_abs.c	/^Polygon_abs(xarray, yarray, number)$/
+Polygon_rel	Polygn_abs.c	/^Polygon_rel(xarray, yarray, number)$/
+Polyline_abs	Plylne_abs.c	/^Polyline_abs(xarray, yarray, number)$/
+Polyline_rel	Plylne_abs.c	/^Polyline_rel(xarray, yarray, number)$/
+REC	SWITCHER.c	/^#define REC(a,b)    if (eof=rec((char*)(a),(int)(b/
+RECTEXT	SWITCHER.c	/^#define RECTEXT(x)  if (eof=rectext(x)) break$/
+RESULT	SWITCHER.c	/^static RESULT(n)$/
+Raster	Raster.c	/^Raster(num, nrows, array, withzeros, color_type)$/
+SEND	SWITCHER.c	/^#define SEND(a,b)   send((char*)(a),(int)(b))$/
+Screen_bot	Returns.c	/^Screen_bot(index)$/
+Screen_left	Returns.c	/^Screen_left(index)$/
+Screen_rite	Returns.c	/^Screen_rite(index)$/
+Screen_top	Returns.c	/^Screen_top(index)$/
+Service_Xevent	Serve_Xevent.c	/^int Service_Xevent(wait)$/
+SetXColor	Color.c	/^SetXColor(number)$/
+_get_lookup_for_color	Clr_table.c	/^_get_lookup_for_color(red, grn, blu)$/
+_rectext	SWITCHER.c	/^static _rectext(s)$/
+append_item	SWITCHER.c	/^static append_item(pad, name, value)$/
+can_do_float	Can_do.c	/^can_do_float()$/
+catch	SWITCHER.c	/^static catch(n)$/
+close_mon	SWITCHER.c	/^static int close_mon()$/
+command_pending	command_pend.c	/^int command_pending(_rfd)$/
+create_pad	SWITCHER.c	/^static create_pad(name)$/
+delete_item	SWITCHER.c	/^static delete_item(pad, name)$/
+delete_pad	SWITCHER.c	/^static delete_pad(pad)$/
+delink_pad	SWITCHER.c	/^static delink_pad(pad)$/
+do_nothing	Raster.c	/^static do_nothing(n)$/
+draw_line	Draw_line.c	/^draw_line(cur_x, cur_y, x, y)$/
+find_item	SWITCHER.c	/^ find_item(pad, name)$/
+find_pad	SWITCHER.c	/^static PAD *find_pad(name)$/
+free_item	SWITCHER.c	/^static free_item(item)$/
+get1	SWITCHER.c	/^static get1(c)$/
+get_command	SWITCHER.c	/^static get_command(c)$/
+get_table_type	Clr_table.c	/^get_table_type()$/
+invent_pad	SWITCHER.c	/^static invent_pad(name)$/
+new_item	SWITCHER.c	/^ new_item(pad, name)$/
+read1	SWITCHER.c	/^static read1(c)$/
+rec	SWITCHER.c	/^static rec(buf, n)$/
+rectext	SWITCHER.c	/^static rectext(s)$/
+reset_color	Clr_table.c	/^reset_color(number, red, grn, blu)$/
+send	SWITCHER.c	/^static send(buf, n)$/
+sendtext	SWITCHER.c	/^static sendtext(s)$/
+sigint	Graph_Set.c	/^static sigint()$/
+store	SWITCHER.c	/^static char *store(s)$/
+timeout	SWITCHER.c	/^static timeout()$/
+xalloc	SWITCHER.c	/^static char *xalloc(buf, cur, new, len)$/
