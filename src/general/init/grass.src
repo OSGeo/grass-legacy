@@ -24,6 +24,10 @@
 GISBASE=GISBASE_VALUE
 export GISBASE
 
+# Set the GRASS_PERL variable
+GRASS_PERL=PERL_COMMAND
+export GRASS_PERL
+
 # Clear the variable that will hold the command line options
 CMD_LINE_ARGS=""
 
