@@ -183,7 +183,7 @@ G3d_writeTileFloat (map, tileIndex, tile)
 {
   int status;
   
-  if (status = G3d_writeTile (map, tileIndex, tile, G3D_FLOAT)) return status;
+  if ((status = G3d_writeTile (map, tileIndex, tile, G3D_FLOAT))) return status;
 
   G3d_error ("G3d_writeTileFloat: error in G3d_writeTile");
   return 0;
@@ -201,7 +201,7 @@ G3d_writeTileDouble (map, tileIndex, tile)
 {
   int status;
 
-  if (status = G3d_writeTile (map, tileIndex, tile, G3D_DOUBLE)) return status;
+  if ((status = G3d_writeTile (map, tileIndex, tile, G3D_DOUBLE))) return status;
 
   G3d_error ("G3d_writeTileDouble: error in G3d_writeTile");
   return 0;
