@@ -31,9 +31,8 @@
 <H2>DESCRIPTION</H2>
 <P>
 This program reads a previously selected subset of STF1 or
-PL94-171 U.S. Census Bureau demographic records (see <EM>m.in.stf1.tpe</EM>
-and <EM> <A HREF="m.in.stf1.db3.html">m.in.stf1.db3</A>
-</EM>), and writes one of the following:
+PL94-171 U.S. Census Bureau demographic records (see <EM>m.in.stf1.tape</EM>),
+and writes one of the following:
 <DL>
 <DD>GRASS site list (coordinates and a value).
 <DD>GRASS vector polygon attribute labels file (coordinates and a label value).
@@ -177,11 +176,9 @@ The operands in the <EM>expression</EM> may consist of any mixture of:
 Numeric fields from both the IDENTIFICATION and MATRIX SECTIONS of the 
 demographic records may be used.  Review the User and Technical Documentation
 for these demographic files; or use the <EM>-p</EM> option of this program
-to print the MATRIX SECTION document (the demographic data fields), or
-<EM>
-<A HREF="m.in.stf1.db3.html">m.in.stf1.db3</A>
-</EM> to print a simplified list of IDENTIFICATION SECTION
-field names.  When substituting values from the numeric fields into
+to print the MATRIX SECTION document (the demographic data fields).
+
+When substituting values from the numeric fields into
 the expression, &lt;SPACE&gt; characters are replaced by zero.  (Spaces, which
 are rare in the demographic data, are usually the result of missing
 values or restricted information).
@@ -266,9 +263,7 @@ Unix tools <EM>cut, paste</EM>, and <EM>colrm</EM> to combine the resulting file
 
 [These examples assume that STF1 records for the census tracts
 (SUMLEV=140) in a particular county (CNTY=037) have been extracted from
-the distribution source (with <EM>
-<A HREF="m.in.stf1.db3.html">m.in.stf1.db3</A>
-</EM> or <EM>m.in.stf1.tpe</EM>
+the distribution source (with <EM>m.in.stf1.tpe</EM>)
 and saved in a file named 037.140 in the current directory.]
 <P>
 <OL>
@@ -382,9 +377,7 @@ contain only one formula.
 <EM><a href="m.in.stf1.tape.html">m.in.stf1.tape</a></EM> is used as a preprocessor to select subsets of
 STF1 or PL-171 tape format records for input to this program.<p>
 <EM>
-<A HREF="m.in.stf1.db3.html">m.in.stf1.db3</A>
-</EM> is used as a preprocessor to select subsets of STF1
-records from the CD-ROM in "dBase 3" format.  Unix utility programs
+Unix utility programs
 such at <EM>grep</EM> or <EM>awk</EM> can also be used to select subsets of
 lines from the PL94-171 files, but not from the STF1 tape files due to
 their very long record lengths.
