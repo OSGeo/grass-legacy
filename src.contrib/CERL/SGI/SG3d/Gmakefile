@@ -1,0 +1,26 @@
+#INCLUDEDIR = /usr/people/grass/panel/9.6/include
+#PANEL_LIBDIR = /usr/people/grass/panel/9.6/lib
+PANEL_INCDIR = ../panel/9.6/include
+PANEL_LIBDIR = ../panel/9.6/lib
+DIG_LIB = $(SRC)/mapdev/lib/libdig.a
+
+EXTRA_CFLAGS= -I${PANEL_INCDIR} $(VECT_INCLUDE)
+PANELLIB= ${PANEL_LIBDIR}/libpanel.\a
+
+OFILES = main.o \
+	Dcell.o \
+	trans.o \
+	panel.o \
+	display.o \
+	fringe.o \
+	vector.o \
+	newcell.o \
+	script.o 
+
+$(BIN_CONTRIB_CMD)/SG3d: $(OFILES) $(VECTLIB)
+	$(CC) -o $@ $(OFILES) $(PANELLIB) $(MATHLIB) $(VECTLIB) $(GISLIB) -lgl_s -lc_s
+	@rm -f a.out
+
+main.o: externs.h 
+
+$(VECTLIB) :
