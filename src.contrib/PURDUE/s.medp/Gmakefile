@@ -1,0 +1,18 @@
+EXTRA_CFLAGS    = $(VECT_INCLUDE) 
+
+PGM=s.medp
+LIST =handle.o readsites.o main.o medpolish.o examine.o cats_att.o \
+	init_head.o  points.o myprint.o length.o longest.o \
+	wind_overlap.o georesid.o report.o iteration.o
+
+LIBES= $(GISLIB) $(VECTLIB) $(MATHLIB) $(VASKLIB) $(DIG_ATTLIB) 
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+#$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) 
+$(LIST): polish.h 
+ 
+$(LIBES): #
+
+
+
