@@ -1,0 +1,8 @@
+interface_build {
+    {i.gensig} 0
+    {Создает неинтерактивную статистику для  i.maxlik с исходной растровой карты.}
+    {entry group {Группа снимков:} 0 group}
+    {entry subgroup {Подгруппа снимков:} 0 subgroup}
+    {entry signaturefile {Файл подписей (рез.):} 0 signature}
+    {entry trainingmap {Растровая карта для тренировки классов:} 0 raster}
+}

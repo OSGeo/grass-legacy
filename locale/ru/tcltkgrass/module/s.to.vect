@@ -1,0 +1,7 @@
+interface_build {
+    {s.to.vect -p} 0
+    {Преобразовать карту объектов GRASS в векторную карту GRASS.}
+    {entry input {Карта объектов:} 0 sites}
+    {entry output {Векторная карта:} 0 vector}
+    {entry cat {Поле атр. объектов для вект.карты (default=1):} 0 ""}
+}

@@ -1,0 +1,8 @@
+interface_build {
+    {v.support option=build} 0
+    {Строит (перестраивает) топологию векторной карты.}
+    {entry map {Имя векторной карты GRASS:} 0 vector}
+    {entry threshold {Пороговое значение (только с  -s флагом):} 0 ""}
+    {checkbox -s {Смыкать узлы.} "" -s}
+    {checkbox -r {Установить границы региона по данным.} "" -r}
+}

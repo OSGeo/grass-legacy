@@ -1,0 +1,20 @@
+interface_build {
+    {r.neighbors} 0
+    {Присваивает значение категории клетке как функцию значений соседних клеток, и сохраняет новые величины как новую растровую карту.}
+    {entry input {Растровая карта (ввод):} 0 raster}
+    {entry output {Растровая карта (рез.):} 0 raster}
+    {scale size {Радиус охвата:} 1 25 2}
+    {entry title {Заголовок рез. карты:} 0 ""}
+    {checkbox method {Среднее по окружению.} "" average}
+    {checkbox method {Медиана.} "" median}
+    {checkbox method {Мода.} "" mode}
+    {checkbox method {Минимум.} "" minimum}
+    {checkbox method {Максимум.} "" maximum}
+    {checkbox method {Ст.отклонение.} "" stddev}
+    {checkbox method {Вариация.} "" variance}
+    {checkbox method {Разнообразие.} "" diversity}
+    {checkbox method {Рассеяние.} "" interspersion}
+    {separator grey 1}
+    {checkbox -a {Не выравнивать вывод по вводу.} "" -a}
+    {checkbox -q {без комм.} "" -q}
+}

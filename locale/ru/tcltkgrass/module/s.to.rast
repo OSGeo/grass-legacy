@@ -1,0 +1,13 @@
+interface_build {
+    {s.to.rast} 0
+    {Преобразует карту объектов GRASS в растровую карту GRASS.}
+    {entry input {Карта объектов:} 0 sites}
+    {entry output {Растровая карта:} 0 raster}
+    {entry size {Число соседних клеток вокруг объекта:} 0 ""}
+    {entry title {Титул карты рез-та:} 0 ""}
+    {entry field {Тип поля атрибутов, выб.: dim,decimal,cat (default: decimal):} 0 ""}
+    {entry findex {Номер поля атрибутов (default: 1):} 0 ""}
+    {entry string {Номер поля описания (default: 1):} 0 ""}
+    {checkbox -q {без комм.} "" -q}
+    {checkbox -s {Созд. карту величин типа (0/1).} "" -s}
+}

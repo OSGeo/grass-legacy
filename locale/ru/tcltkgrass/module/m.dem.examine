@@ -1,0 +1,8 @@
+interface_build {
+    m.dem.examine 0
+    {Выводит краткое описание  USGS Digital Elevation Model (DEM) с 1/2-дюймовой магнитной ленты.}
+    {entry input {Ленточное устройство ввода:} 0 input}
+    {entry blocksize {Размер блока [10240]:} 0 ""}
+    {entry first {Первый файл [1]:} 0 ""}
+    {entry last {Посл. файл [999999]:} 0 ""}
+}

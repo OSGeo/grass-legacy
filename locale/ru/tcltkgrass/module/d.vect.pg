@@ -1,0 +1,12 @@
+interface_build {
+    d.vect.pg 0
+    {Показать выбранные векторы как результат запроса БД.}
+    {entry key {Столбец cat_ID:} 0 ""}
+    {entry tab  {Таблица:} 0 ""}
+    {entry where  {Условие where:} 0 ""}
+    {entry map  {Векторная карта:} 0 vector}
+    {entry color  {Цвет:} 0 color}
+    {checkbox -f {Залить площади} "" -f}
+    {checkbox -s {Исп. файл SQL} "" -s}
+    {entry sql  {Файл команд SQL:} 0 file}
+}

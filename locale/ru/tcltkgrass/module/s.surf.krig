@@ -1,0 +1,18 @@
+interface_build {
+    {s.surf.krig} 0
+    {Вычисляет растровую поверхность из карты объектов с использованием Kriging интерполяции.}
+    {entry input {Карта объектов (ввод):} 0 sites}
+    {entry outz {Растровая карта z-вел. (рез.):} 0 raster}
+    {entry outvarz {Растровая карта z-вар. (рез.):} 0 raster}
+    {checkbox model {Степень.} "" power}
+    {checkbox model {Сфера.} "" spherical}
+    {checkbox model {Экспонента.} "" exp}
+    {checkbox model {Логарифм.} "" log}
+    {checkbox model {Гаусс.} "" gaussian}
+    {entry npoints {Число точек интерполяции [12]:} 0 ""}
+    {entry range {Диапазон (не исп. в лог. и степ. мод.) [1.0]:} 0 ""}
+    {entry power {Степень (только со степ. мод.) [1.0]:} 0 ""}
+    {entry nugget {Вариация Variogram nugget [0.0]:} 0 ""}
+    {entry sill {Variogram sill scaled to the sample variance [1.0]:} 0 ""}
+    {entry max_lag {Max.lag (только со степ. мод.) [1000.0]:} 0 ""}
+}

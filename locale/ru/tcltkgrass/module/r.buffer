@@ -1,0 +1,13 @@
+interface_build {
+    {r.buffer} 0
+    {Создает растровую карту с буфферными зонами вокруг клеток с ненулевым значением категорий.}
+    {entry input {Растровая карта:} 0 raster}
+    {entry output {Растровая карта-результат:} 0 raster}
+    {entry distances {Граница зоны (знач.[,знач.,...]):} 0 ""}
+    {checkbox units {Метры (по умол.).} "" meters}
+    {checkbox units {Километры.} "" kilometers}
+    {checkbox units {Футы.} "" feet}
+    {checkbox units {Мили.} "" miles}
+    {separator grey 1}
+    {checkbox -q {без комм.} "" -q}
+}

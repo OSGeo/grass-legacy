@@ -1,0 +1,5 @@
+interface_build {
+    {db.execute} 0
+    {Выполнить.}
+    {entry input {Файл с командой SQL:} 0 file}
+}

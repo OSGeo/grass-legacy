@@ -1,0 +1,8 @@
+interface_build {
+    {d.zoom} 0
+    {Позволяет интерактивно изменять координаты текущего региона с помощью мыши.}
+    {checkbox action {Увеличить/уменьшить (default)} "" zoom}
+    {checkbox action {Повернуть (только для шир/дол).} "" rotate}
+    {separator grey 1}
+    {checkbox -q {без комм.} "" -q}
+}

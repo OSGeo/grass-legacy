@@ -1,0 +1,9 @@
+interface_build {
+    {v.surf.spline} 0
+    {Программа построения поверхностей.}
+    {entry in {Контурная векторная карта:} 0 vector}
+    {entry out {Результат-DEM:} 0 raster}
+    {entry interval {Интервал контуров (0 для безусл.):} 0 ""}
+    {checkbox -r {Метод RCA (rook case adjecency.} "" -r}
+    {checkbox -s {Упростить интерп. округлением.} "" -s}
+}

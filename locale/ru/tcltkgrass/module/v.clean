@@ -1,0 +1,5 @@
+interface_build {
+    {v.clean} 0
+    {Удаляет мертвые линии из векторных карт GRASS.}
+    {entry map {Векторная карта GRASS:} 0 vector}
+}

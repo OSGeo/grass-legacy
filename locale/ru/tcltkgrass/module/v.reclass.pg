@@ -1,0 +1,14 @@
+interface_build {
+    v.reclass.pg 0
+    {Реклассификация векторной карты с использованием запроса к БД.}
+    {entry key {Столбец cat_ID:} 0 ""}
+    {entry tab {Таблица БД:} 0 ""}
+    {entry col {Столбец кат. рекласса:} 0 ""}
+    {entry where  {условие where:} 0 ""}
+    {entry input  {Векторная карта:} 0 vector}
+    {entry output {Карта рекласса:} 0 vector}
+    {entry type  {Тип:line,area,site} 0 ""}
+    {checkbox -d {Убирать гран. для общ. классов} "" -d}
+    {checkbox -s {Использ. файл SQL} "" -s}
+    {entry sql  {Файл команд SQL:} 0 file}
+}

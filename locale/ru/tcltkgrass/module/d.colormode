@@ -1,0 +1,6 @@
+interface_build {
+    {d.colormode} 0
+    {Устанавливает тип цветовой таблицы.}
+    {checkbox mode {Фиксированаая цветовая таблица.} "" fixed}
+    {checkbox mode {Переменная цветовая таблица.} "" float}
+}

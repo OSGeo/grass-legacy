@@ -1,0 +1,6 @@
+interface_build {
+    {v.in.ascii} 0
+    {Преобразует ASCII GRASS векторы в бинарные GRASS векторы.}
+    {entry input {ASCII векторный файл (ввод):} 0 vector_ascii}
+    {entry output {Векторная карта - результат:} 0 vector}
+}

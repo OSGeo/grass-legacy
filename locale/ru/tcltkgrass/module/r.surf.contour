@@ -1,0 +1,7 @@
+interface_build {
+    {r.surf.contour} 0
+    {Программа вычисления поверхностей.}
+    {entry input {Растровая карта контуров (знач. != 0):} 0 raster}
+    {entry output {Растровая карта (рез.):} 0 raster}
+    {checkbox -f {Быстрый алгоритм.} "" -f}
+}

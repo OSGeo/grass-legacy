@@ -1,0 +1,12 @@
+interface_build {
+    {v.build.polylines} 0
+    {Построить полилинии из линий.}
+    {entry input {Исходная векторная карта:} 0 vector}
+    {entry output {Результ. векторная карта:} 0 vector}
+    {entry type {Тип (source, line, area, edge):} 0 ""}
+    {separator grey 1}
+    {checkbox -a {Вывод в формате векторной ASCII карты.} "" -a}
+    {checkbox -c {Копировать категории и атрибуты.} "" -c}
+    {checkbox -o {Переписывать сущ. файл при выводе.} "" -o}
+    {checkbox -q {Без комментариев и предупреждений.} "" -q}
+}

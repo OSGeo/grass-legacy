@@ -1,0 +1,24 @@
+interface_build {
+    {cell.out.tiff} 0
+    {Экспорт карты, созданной с помощью драйвера CELL.}
+    {entry erasecolor {Выбрать цвет фона [white]:} 0 color }
+    {entry baseraster {Исходная карта:} 0 raster }
+    {entry addraster {Дополн. исходные карты:} 0 +raster }
+    {checkbox -o {Наложение (только ненулевые вел.)} "" -o }
+    {entry vecpols {Векторные карты полигонов:} 0 +vector}
+    {entry linecolor {Цвет границ полигонов [none]:} 0 +color }
+    {entry fillcolor {Цвет заливки [white]:} 0 +color }
+    {entry vectormaps {Векторные карты:} 0 +vector }
+    {entry veccols {Цвет линий [white]:} 0 +color }
+    {entry sites {Карты объектов:} 0 +sites }
+    {entry sitecols {Цвет объектов [gray]:} 0 +color }
+    {entry siteicons {Тип иконки:} 0 +type }
+    {entry sizes {Размер иконки, в пикс. (0-1000) [5], разд. запятой:} 0 ""}
+    {entry legendmap {Растровая карта для легенды:} 0 raster}
+    {entry leg_text_color {Цвет текста легенды [black]:} 0 color}
+    {entry leg_lines {Число строк в легенде (0-1000) [0]:} 0 "" }
+    {entry cellxy {Размер клетки в пикс. [x,y](необх.):} 0 "" }
+    {entry outfile {Результ. tiff-файл (необх.):} 0 File }
+    {checkbox -p {с паузой для доп. команд} "" -p }
+    {checkbox -t {только просмотр} "" -t }
+    }

@@ -1,0 +1,5 @@
+interface_build {
+    {d.paint.labels} 0
+    {Показывает текстовые метки в формате GRASS paint (p.labels, p.map).}
+    {entry file {Файл с текстовыми метками:} 0 label}
+}

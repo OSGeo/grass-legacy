@@ -1,0 +1,10 @@
+interface_build {
+    {v.in.dxf} 0
+    {Преобразует данные из формата AUTOCAD в векторный формат GRASS, и записывает результат в текущий набор данных пользователя GRASS.}
+    {entry dxf {AUTOCAD DXF файл:} 0 file}
+    {entry lines {AUTOCAD DXF слои с линиями:} 0 file}   
+    {entry labels {AUTOCAD DXF слои с метками:} 0 file}
+    {entry prefix {Префикс для результ. вект. карты GRASS:} 0 vector}
+    {checkbox -a {Вывод в формате ascii (default: binary).} "" -a}
+    {checkbox -n {Не переносить контуры текста.} "" -n}
+}

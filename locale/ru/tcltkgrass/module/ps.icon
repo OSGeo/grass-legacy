@@ -1,0 +1,5 @@
+interface_build {
+    {ps.icon} 1
+    {Создает и редактирует иконки для вывода на PostScript.}
+    {entry -icon {Файл иконки (необх.):} 0 Icon}
+}

@@ -1,0 +1,5 @@
+interface_build {
+    {db.select.all} 0
+    {Выбрать все.}
+    {entry table {Таблица} 0 ""}
+}

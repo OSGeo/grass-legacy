@@ -1,0 +1,10 @@
+interface_build {
+    {r.rescale} 0
+    {Масштабирует диапазон категорий растровой карты.}
+    {entry input {Растровая карта (ввод):} 0 raster}
+    {entry from {Диапазон (min,max) [весь]:} 0 ""}
+    {entry output {Растровая карта (рез.):} 0 raster}
+    {entry to {Диапазон рез. (min,max) [1,255]:} 0 ""}
+    {entry title {Заголовок результата:} 0 ""}
+    {checkbox -q {без комм.} "" -q}
+}

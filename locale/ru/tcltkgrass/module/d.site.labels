@@ -1,0 +1,14 @@
+interface_build {
+    {d.site.labels} 0
+    {Показывает метки объектов.}
+    {entry file {Файл объектов:} 0 sites}
+    {entry ref {Относительное положение текста [center]:} 0 ""}
+    {entry color {Цвет текста [white]:} 0 color}
+    {entry size {Размер текста, пикс. (0-1000) [10]:} 0 ""}
+    {entry width {Ширина текста, пикс. (0-1000) [1]:} 0 ""}
+    {entry backgr {Цвет фона текста [none]:} 0 Color}
+    {entry border {Цвет границ текста [none]:} 0 Color}
+    {entry opaque {Непрозрачный (yes / [no]):} 0 ""}
+    {entry font {Фонт [romans]:} 0 font}
+    {checkbox -m {Использовать мышь для простановки меток} "" -m}
+}

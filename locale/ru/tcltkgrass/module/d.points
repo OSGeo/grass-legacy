@@ -1,0 +1,11 @@
+interface_build {
+    {d.points} 0
+    {Показывает точечную графику.}
+    {entry color {Текущий цвет [gray]:} 0 color}
+    {entry size {Размер иконки, пикс. (0-1000) [5]:} 0 ""}
+    {entry file {Файл данных [стандартный ввод]:} 0 file}
+    {checkbox type {икон. x.} "" x}
+    {checkbox type {икон. алмаз.} "" diamond}
+    {checkbox type {икон. квадрат.} "" box}
+    {checkbox type {икон + [по умол.].} "" +}
+}

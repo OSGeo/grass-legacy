@@ -1,0 +1,6 @@
+interface_build {
+    {v.to.rast} 0
+    {Преобразует векторную карту GRASS в растровую карту GRASS.}
+    {entry input {Векторная карта:} 0 vector}
+    {entry output {Растровая карта-результат:} 0 raster}
+}

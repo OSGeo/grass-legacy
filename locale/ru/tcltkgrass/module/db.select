@@ -1,0 +1,10 @@
+interface_build {
+    {db.select} 0
+    {Выбрать.}
+    {entry input {Файл с командой SQL:} 0 file}
+    {entry fs {Разделитель вывода [|]:} 0 ""}
+    {entry vs {Вертикальный разделитель вывода:} 0 ""}
+    {entry nv {Индикатор null-value:} 0 ""}
+    {checkbox -c {Включая назв. столбцов.} "" -c}
+    {checkbox -h {Горизонтальный вывод.} "" -h}         
+}

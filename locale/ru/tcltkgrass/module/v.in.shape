@@ -1,0 +1,15 @@
+interface_build {
+    {v.in.shape} 0
+    {Преобразует данные из ESRI shapefile format в вект. формат GRASS, и записывает результат в текущий набор данных пользователя GRASS.}
+    {entry input {Shapefile:} 0 file}
+    {entry verbose {Уровень debug (0-9):} 0 ""}
+    {entry logfile {Запись логов в файл:} 0 File }
+    {entry snapdist {Snap distance для узлов при импорте:} 0 ""}
+    {entry sliver {Колин. допуск на узлах. Default 0.01 градуса:} 0 ""}
+    {entry scale {Нач. масштаб векторной карты [1:2400]:} 0 ""}
+    {entry attribute {Столбец с номером категории:} 0 ""}
+    {entry label {Столбец с меткой категории:} 0 ""}
+    {checkbox -l {Просмотр столбцов БД (dbf).} "" -l}
+    {checkbox -r {Создать карту отброшенных линий.} "" -r}
+}
+

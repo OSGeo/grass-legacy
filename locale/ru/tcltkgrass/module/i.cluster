@@ -1,0 +1,16 @@
+interface_build {
+    {i.cluster} 0
+    {Создает спектральные подписи классов с помощью алгоритма минимального расстояния при при автоматической классификации}
+    {entry group {Группа снимков:} 0 group}
+    {entry subgroup {Подгруппа снимков:} 0 subgroup}
+    {entry sigfile {Файл подписей (рез.):} 0 signature}
+    {entry seed {Файл начальных подписей:} 0 signature}
+    {entry classes {Начальное число классов [1-255]:} 0 ""}
+    {entry sample {Интервалы выборки (строк и столб.) [default]:} 0 ""}
+    {entry iterations {Макс. число итераций [default: 30]:} 0 ""}
+    {entry convergence {Процент конвергенции [0-100, default: 98.0]:} 0 ""}
+    {entry separation {Разделение кластеров [default: 0.0]:} 0 ""}
+    {entry min_size {Мин. число пикселов на класс [default: 17]:} 0 ""}
+    {entry reportfile {Файл окончательных результатов:} 0 file}
+    {checkbox -q {без комм.} "" -q}
+}

@@ -1,0 +1,12 @@
+interface_build {
+    {v.db.reclass} 0
+    {Реклассификация векторной карты.}
+    {entry input  {Исходная векторная карта:} 0 vector}
+    {entry output {Рекласс. векторная карта:} 0 vector} 
+    {entry table {Таблица:} 0 ""}
+    {entry key {Ключ. столбец:} 0 ""}
+    {entry rules {Файл правил реклассификации:} 0 file}
+    {entry type  {Тип карты: line,area,site} 0 ""}
+    {entry title  {Титул для карты рекласса} 0 ""}
+    {checkbox -d {Убирать гран. для общ.классов} "" -d}
+}

@@ -1,0 +1,8 @@
+interface_build {
+    {r.line} 0
+    {Создает новую векторную карту GRASS из утоньченного растра GRASS.}
+    {entry input {Растровая карта (ввод):} 0 raster}
+    {entry output {Векторная карта (рез.):} 0 vector}
+    {checkbox type {Линии (умол).} "" line}
+    {checkbox type {Полигоны} "" area}
+}

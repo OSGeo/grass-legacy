@@ -1,0 +1,11 @@
+interface_build {
+    {i.smap} 0
+    {Классификатор последовательных максимумов (SMAP), основанный на спектральных подписях классов, полученных из i.gensigset}
+    {entry group {Группа снимков:} 0 group}
+    {entry subgroup {Подгуппа снимков:} 0 subgroup}
+    {entry sigfile {Файл подписей:} 0 signature}
+    {entry blocksize {Размер окна для одного прохождения [default: 128]:} 0 ""}
+    {entry output {Растровая карта классов (рез.):} 0 raster}
+    {checkbox -m {Использовать MLC (вместо SMAP).} "" -m}
+    {checkbox -q {без комм.} "" -q}
+}

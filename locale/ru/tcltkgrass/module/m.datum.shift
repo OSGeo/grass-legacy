@@ -1,0 +1,11 @@
+interface_build {
+    m.datum.shift 0
+    {Программа для коррекции сфероида.}
+    {entry lat {Широта (гг:мм:сс{N|S}):} 0 ""}
+    {entry lon {Долгота (ггг:мм:сс{E|W}):} 0 ""}
+    {entry is {Сфероид (ввод):} 0 spheroid}
+    {entry os {Сфероид (вывод):} 0 spheroid}
+    {entry xshift {Сдвиг по X:} 0 ""}
+    {entry yshift {Сдвиг по Y:} 0 ""}
+    {entry zshift {Сдвиг по Z:} 0 ""}
+}

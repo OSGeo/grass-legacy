@@ -1,0 +1,16 @@
+interface_build {
+	{mapcalculator.sh} 0
+	{Вычислить новый растр из растровых карт.}
+	{checkbox help {Краткая помощь} "" help }
+	{checkbox help {Help: man r.mapcalc} "" man }
+	{checkbox expert {Эксперт} "" expert }
+	{entry A_MAP {A:} 0 raster }
+	{entry B_MAP {B:} 0 raster }
+	{entry C_MAP {C:} 0 raster }
+	{entry D_MAP {D:} 0 raster }
+	{entry E_MAP {E:} 0 raster }
+	{entry F_MAP {F:} 0 raster }
+	{entry formula {Формула: outfile = (напр.: A-B or A*C+B)} 0 "" }
+	{entry outfile {Карта рез-та (необх.): } 0 raster }
+	{checkbox not_over {Не переписывать сущ. карту} "" true }
+	}

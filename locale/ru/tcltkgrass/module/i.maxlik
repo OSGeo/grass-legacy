@@ -1,0 +1,10 @@
+interface_build {
+    {i.maxlik} 0
+    {Классификатор максимального правдоподобия для снимков, основанный на спектральной подписи, полученной с i.cluster, i.class, или i.gensig.}
+    {entry group {Группа снимков:} 0 group}
+    {entry subgroup {Подгруппа снимков:} 0 subgroup}
+    {entry sigfile {Файл подписей:} 0 signature}
+    {entry class {Растровая карта классов (рез.):} 0 raster}
+    {entry reject {Растровая карта превыш. пороговых величин:} 0 raster}
+    {checkbox -q {без комм.} "" -q}
+}

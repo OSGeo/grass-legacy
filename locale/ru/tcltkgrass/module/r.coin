@@ -1,0 +1,17 @@
+interface_build {
+    {r.coin} 0
+    {Вычисляет взаимное совпадение категорий двух растровых карт.}
+    {entry map1 {Растровая карта(1):} 0 raster}
+    {entry map2 {Растровая карта(2):} 0 raster}
+    {checkbox units {Клетки.} "" c}
+    {checkbox units {Процент перекрытия региона.} "" p}
+    {checkbox units {Процент кат. <карта> (столб).} "" x}
+    {checkbox units {Процент кат. <карта> (ряд).} "" y}
+    {checkbox units {Акров.} "" a}
+    {checkbox units {Гектар.} "" h}
+    {checkbox units {Кв.км.} "" k}
+    {checkbox units {Кв.миль.} "" m}
+    {separator grey 1}
+    {checkbox -q {без комм.} "" -q}
+    {checkbox -w {Шир.вывод, 132 столб. (по умол.: 80).} "" -w}
+}

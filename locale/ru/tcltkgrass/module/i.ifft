@@ -1,0 +1,7 @@
+interface_build {
+    {i.ifft} 0
+    {Обратное быстрое преобразование Фурье (IFFT) для обработки снимков.}
+    {entry real_image {Растровая карта для IFFT, действ. часть:} 0 raster}
+    {entry imaginary_image {Растровая карта для IFFT, мним. часть:} 0 raster}
+    {entry output_image {Растровая карта после IFFT (рез.):} 0 raster}
+}

@@ -1,0 +1,9 @@
+interface_build {
+    {i.out.erdas} 0
+    {Экспорт снимков GRASS в файл ERDAS/LAN.}
+    {entry input {Снимки GRASS (имя[,имя,...]):} 0 +raster}
+    {entry output {Файл ERDAS:} 0 File}
+    {checkbox -l {Только заголовки ERDAS.} "" -l}
+    {checkbox -b {Вывод 16-bit изображения (default 8).} "" -b}
+    {checkbox -s {Перевернуть порядок байтов.} "" -s}
+}

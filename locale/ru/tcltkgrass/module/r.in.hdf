@@ -1,0 +1,11 @@
+interface_build {
+    {r.in.hdf} 0
+    {Импортирует HDF файл в растровую карту GRASS.}
+    {entry input {HDF файл (ввод):} 0 file}
+    {entry output {Растровая карта GRASS (рез.):} 0 raster}
+    {entry mult {Множитель с плав. точкой для клеток:} 0 ""}
+    {entry dsets {Список номеров ссылок наборов данных для импорта:} 0 ""}
+    {checkbox -l {Просмотр HDF файла (без импорта).} "" -l}
+    {checkbox -a {Импорт всех наборов данных HDF файла.} "" -a}
+    {checkbox -q {без комм.} "" -q}
+}

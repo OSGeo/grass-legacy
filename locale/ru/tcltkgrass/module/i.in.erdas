@@ -1,0 +1,13 @@
+interface_build {
+    {i.in.erdas} 0
+    {Импортирует ERDAS (4, 8, 16bit) LAN файл в растровый формат GRASS.}
+    {entry input {ERDAS LAN файл (ввод):} 0 file}
+    {entry output {Растровая карта GRASS (рез.):} 0 raster}
+    {entry trailer {ERDAS сопров. файл (ввод):} 0 file}
+    {entry bands {Выбрать полосы (1,2,...):} 0 ""}
+    {entry srow {Нач. со строки. (по умол. первая):} 0 ""}  
+    {entry scol {Нач. со столб.. (по умол. первого):} 0 ""}  
+    {entry rows {Число строк. (по умол. все):} 0 ""}  
+    {entry cols {Число столбцов. (по умол. все):} 0 ""}  
+    {checkbox -l {Только заголовок ERDAS.} "" -l}
+}

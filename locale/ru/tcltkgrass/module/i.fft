@@ -1,0 +1,8 @@
+interface_build {
+    {i.fft} 0
+    {Быстрое преобразование Фурье (FFT) при обработке снимков.}
+    {entry input_image {Растровая карта (ввод):} 0 raster}
+    {entry real_image {Действит. матрицы в виде растра (рез):} 0 raster}
+    {entry imaginary_image {Мним. матрицы в виде растра (рез.):} 0 raster}
+    {entry range {Диапазон величин преобр. FFT:} 0 ""}
+}

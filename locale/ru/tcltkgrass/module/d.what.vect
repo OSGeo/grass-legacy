@@ -1,0 +1,6 @@
+interface_build {
+    {d.what.vect} 0
+    {Определить значение категории вектора GRASS.}
+    {entry map {Векторная карта GRASS:} 0 vector}
+    {checkbox -1 {Определить только одно значение.} "" -1}
+}

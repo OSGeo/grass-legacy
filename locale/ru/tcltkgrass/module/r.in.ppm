@@ -1,0 +1,7 @@
+interface_build {
+    {r.in.ppm} 0
+    {Импортирует PPM (24bit) файл в растровую карту GRASS.}
+    {entry input {PPM файл (ввод):} 0 file}
+    {entry output {Растровая карта GRASS (рез.):} 0 raster}
+    {checkbox -v {Доп. информация.} "" -v}
+}

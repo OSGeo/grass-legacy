@@ -1,0 +1,16 @@
+interface_build {
+    {d.3d} 0
+    {Показать 3D-изображение, полученное из растра.}
+    {entry map {Растровый файл поверх модели:} 0 raster}
+    {entry elevation {Растровый файл для 3D-текстуры:} 0 raster}
+    {entry from_coordinate {Координаты точки наблюдения [571000,4900000,20000]:} 0 xyz.elevation}
+    {entry to_coordinate {Координаты центра изображения [599500,4921000,0]:} 0 xyz.elevation}
+    {entry exaggeration {Вертикальный множитель [2]:} 0 ""}
+    {entry lines {Частота векторных линий на модели [1]:} 0 ""}
+    {entry field {Угол обзора [30]:} 0 ""}
+    {entry color {Цвет векторных линий [gray]:} 0 3Dcolor}
+    {entry box   {Цвет границ модели [none]:} 0 Color}
+    {checkbox -l {Показать только линии} "" -l}
+    {checkbox -0 {Показать нулевые высоты} "" -0}
+    {checkbox -a {Вычислить каждый угол как среднее} "" -a}
+}

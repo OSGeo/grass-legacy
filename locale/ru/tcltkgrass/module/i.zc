@@ -1,0 +1,9 @@
+interface_build {
+    {i.zc} 0
+    {Растровая функция нахождения границ при прохождении через ноль "Zero-crossing edge detection" для обработки снимков.}
+    {entry input {Растровая карта (ввод):} 0 raster}
+    {entry output {Растровая карта (рез.):} 0 raster}
+    {entry width {x-y размер Гауссова фильтра [9]:} 0 ""}
+    {entry threshold {Чувствительность Гауссова фильтра [10]:} 0 ""}
+    {entry orientations {Число направлений азимутов [1]:} 0 ""}
+}

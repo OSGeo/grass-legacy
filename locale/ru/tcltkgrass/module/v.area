@@ -1,0 +1,7 @@
+interface_build {
+    {v.area} 0
+    {Показывает информацию о площадях и периметрах векторных карт GRASS.}
+    {entry map {Векторная карта:} 0 vector}
+    {entry color {Цвет [red]:} 0 color}
+    {checkbox -f {Залить цветом (кроме обводки).} "" -f}
+}

@@ -1,0 +1,11 @@
+interface_build {
+    {r.mfilter} 0
+    {Растровый матричный фильтр.}
+    {entry input {Растровая карта (ввод):} 0 raster}
+    {entry output {Растровая карта (рез.):} 0 raster}
+    {entry filter {ASCII фильтр:} 0 file}
+    {entry repeat {Число применений фильтра [1]:} 0 ""}
+    {entry title {Заголовок рез. карты:} 0 ""}
+    {checkbox -q {без комм.} "" -q}
+    {checkbox -z {Прим. фильтр только к нулям.} "" -z}
+}

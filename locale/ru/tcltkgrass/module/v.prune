@@ -1,0 +1,8 @@
+interface_build {
+    {v.prune} 0
+    {Удаляет лишние точки из векторной карты GRASS.}
+    {entry input {Векторная карта (ввод):} 0 vector}
+    {entry output {Векторная карта-результат:} 0 vector}
+    {entry thresh {Пороговое значение длины:} 0 ""}
+    {checkbox -i {Порог в дюймах.} "" -i}
+}

@@ -1,0 +1,8 @@
+interface_build {
+    {r.out.ppm} 0
+    {Экспортирует растровую карту GRASS в формат PPM (24bit).}
+    {entry input {Растровая карта GRASS (ввод):} 0 raster}
+    {entry output {Файл PPM (рез.):} 0 File}
+    {checkbox -G {В град. серого.} "" -G}
+    {checkbox -q {без комм.} "" -q}
+}

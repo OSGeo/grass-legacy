@@ -1,0 +1,6 @@
+interface_build {
+    {v.cadlabel} 0
+    {Присоединяет метки к бинарным контурам, импортированным в GRASS из формата DXF.}
+    {entry lines {векторный файл с контурами:} 0 vector}
+    {entry labels {векторный файл с метками.} 0 vector_att}
+}

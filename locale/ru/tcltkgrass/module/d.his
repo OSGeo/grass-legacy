@@ -1,0 +1,8 @@
+interface_build {
+    {d.his} 0
+    {Показывает три растровых слоя как наложение HIS.}
+    {entry h_map {Растровый слой как HUE:} 0 raster}
+    {entry i_map {Растровый слой как INTENSITY:} 0 raster}
+    {entry s_map {Растровый слой как SATURATION:} 0 raster}
+    {entry out   {Растровая карта-результат (выбор.):} 0 raster}
+}

@@ -1,0 +1,8 @@
+interface_build {
+    {r.out.bin} 0
+    {Преобразовать растровую карту в бинарный файл.}
+    {entry input {Растровая карта:} 0 raster}
+    {entry output {Бинарный файл (out=- для stdout):} 0 file}
+    {entry null {Величина для записи null (default: 0):} 0 ""}
+    {checkbox -i {Вывод целочисл. категорий вместот пикселов.} "" -i}
+}

@@ -1,0 +1,21 @@
+interface_build {
+    {v.to.db} 0
+    {Загрузить векторы.}
+    {entry map  {Исходная векторная карта:} 0 vector}
+    {checkbox type {Полигоны.} "" area}
+    {checkbox type {Линии.} "" line}
+    {checkbox type {Объекты.} "" site}     
+    {entry table {Таблица:} 0 ""}
+    {entry key {Ключ.столбец:} 0 ""}
+    {entry col1 {Столбец 1 загрузить:} 0 ""}
+    {entry col2 {Столбец 2 загрузить:} 0 ""}
+    {checkbox option {Ввести нов.категорию.} "" cat}
+    {checkbox option {Загрузить метки.} "" label}
+    {checkbox option {Загрузить номер.} "" count}        
+    {checkbox option {Загрузить длину.} "" length}
+    {checkbox option {Загрузить площадь.} "" area}
+    {checkbox option {Загрузить x,y.} "" coor}
+    {entry units {Единицы измерений:} 0 distance}
+    {checkbox -p {Только печать} "" -p}
+    {checkbox -s {Только печать SQL} "" -s}    
+}

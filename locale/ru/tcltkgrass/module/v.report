@@ -1,0 +1,15 @@
+interface_build {
+    {v.report} 0
+    {Выводит статистику для векторной карты.}
+    {entry map {Векторная карта:} 0 vector}
+    {entry units {Единицы измерений (имя[,имя,...]):} 0 +distance}
+    {entry pl {Длина страницы (по умол.: 0 строк):} 0 ""}
+    {entry pw {Ширина страницы (по умол.: 79 симв.):} 0 ""}
+    {checkbox type {Полигоны.} "" area}
+    {checkbox type {Линии.} "" line}
+    {checkbox type {Объекты.} "" site}
+    {separator grey 1}
+    {checkbox -h {Без заголовков.} "" -h}
+    {checkbox -f {Прогон между страниц.} "" -f}
+    {checkbox -q {без комм.} "" -q}
+}

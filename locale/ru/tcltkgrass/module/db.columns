@@ -1,0 +1,5 @@
+interface_build {
+    {db.columns} 0
+    {Список столбцов таблицы.}
+    {entry table {Table:} 0 ""}
+}

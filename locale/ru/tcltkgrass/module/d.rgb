@@ -1,0 +1,8 @@
+interface_build {
+    {d.rgb} 0
+    {Показывает три растровых слоя как наложение красного, зеленого,синего.}
+    {entry red   {Растровый слой RED:} 0 raster}
+    {entry green {Растровый слой GREEN:} 0 raster}
+    {entry blue  {Растровый слой BLUE:} 0 raster}
+    {entry out   {Растровая карта-результат:} 0 raster}
+}

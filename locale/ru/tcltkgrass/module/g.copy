@@ -1,0 +1,12 @@
+interface_build {
+    g.copy 0
+    {Копирует файлы данных в директорию набора данных пользователя.}
+    {entry rast {Растровые карты (из,в):} 0 +raster}
+    {entry vect {Векторные карты (из,в):} 0 +vector}
+    {entry icon {Иконки (из,в):} 0 +icon}
+    {entry labels {Метки (из,в):} 0 +label}
+    {entry sites {Объекты (из,в):} 0 +sites}
+    {entry region {Файлы границ региона (из,в):} 0 +region}
+    {entry group {Группы снимков (из,в):} 0 +group}
+    {entry 3dview {3d файлы (из,в):} 0 +3dview}
+}

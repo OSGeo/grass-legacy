@@ -1,0 +1,21 @@
+interface_build {
+    {r.watershed} 0
+    {Программа анализа водоразделов.}
+    {entry elevation {DEM (ввод):} 0 raster}
+    {entry depression {Понижения ландшафта (ввод):} 0 raster}
+    {entry flow {Величина стока на клетку (ввод):} 0 raster}
+    {entry disturbed.land {Процент нарушенной почвы (карта или знач.):} 0 raster}
+    {entry blocking {Препятствия стоку (ввод):} 0 raster}
+    {entry threshold {Мин. размер внешнего водораздела, в клет.:} 0 ""}
+    {entry max.slope.length {Макс. длина стока, в м:} 0 ""}
+    {entry accumulation {Число клеток, стекающих через кажд. клет. (рез.):} 0 raster}
+    {entry drainage {Направление стока (рез.):} 0 raster}
+    {entry basin {Уникальное описание кажд. водоразд. (рез.):} 0 raster}
+    {entry stream {Сегменты потоков (рез.):} 0 raster}
+    {entry half.basin {Уникальное описание кажд. полубассейна (рез.):} 0 raster}
+    {entry visual {Визуальная карта (рез.):} 0 raster}
+    {entry length.slope {Фактор длины и крутизны склона (LS) (рез.):} 0 raster}
+    {entry slope.steepness {Фактор крутизны склона (S) RUSLE (рез.):} 0 raster}
+    {checkbox -m {Исп. дисковой памяти (медл.!).} "" -m}
+    {checkbox -4 {Только гориз. и верт. потоки.} "" -4}
+}
