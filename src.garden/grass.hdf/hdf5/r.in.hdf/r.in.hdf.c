@@ -16,6 +16,9 @@
 **************************************************************************
 * select_vNsds.c (public domain from NASA)
 *
+* select_vNsds was developed at NASA's Goddard Space Flight Center (GSFC)
+*                                Distributed Active Archive Center (DAAC)
+*
 * http://daac.gsfc.nasa.gov/CAMPAIGN_DOCS/MODIS/software.shtml
 * http://hdf.ncsa.uiuc.edu/tools.html
 * -> ftp://acdisx.gsfc.nasa.gov/data/modis/tools/hdf/select_vNsds
