@@ -1,3 +1,5 @@
+# $Id$
+
 SHELL=/bin/sh
 export SHELL
 umask 002
@@ -267,14 +269,18 @@ sed -e 's/=/ /' -e 's/\\//' Gmakefile |\
 	if test -f $file.f
 	then
 	    echo '$(OBJARCH)/'${file}.o: ${file}.f
-	    echo '	rm -f $@'
-	    echo '	$(FC) $(FFLAGS) -c' ${file}.f
-	    echo '	mv' ${file}.o '$@'
+#	    echo '	rm -f $@'
+#	    echo '	$(FC) $(FFLAGS) -c' ${file}.f
+#	    echo '	mv' ${file}.o '$@'
+# new version MN:
+	    echo '	$(FC) $(FFLAGS) -c' ${file}.f -o '$@'
 	else
 	    echo '$(OBJARCH)/'${file}.o: ${file}.c
-	    echo '	rm -f $@'
-	    echo '	$(CC) $(CFLAGS) -c' ${file}.c
-	    echo '	mv' ${file}.o '$@'
+#	    echo '	rm -f $@'
+#	    echo '	$(CC) $(CFLAGS) -c' ${file}.c
+#	    echo '	mv' ${file}.o '$@'
+# new version MN:
+	    echo '	$(CC) $(CFLAGS) -c' ${file}.c -o '$@'
 	fi
     done
  )
