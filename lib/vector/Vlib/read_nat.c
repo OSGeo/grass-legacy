@@ -272,20 +272,29 @@ Vect__Read_line_nat (
   G_debug (3, "    n_points = %d", n_points);
 #endif
 
-  if (0 > dig_alloc_points (p, n_points + 1))
-      return (-1);
+  if ( p != NULL ) {	  
+      if (0 > dig_alloc_points (p, n_points + 1))
+	  return (-1);
 
-  p->n_points = n_points;
-  if (0 >= dig__fread_port_D (p->x, n_points, Map->dig_fp))
-      return (-2);
-  if (0 >= dig__fread_port_D (p->y, n_points, Map->dig_fp))
-      return (-2);
+      p->n_points = n_points;
+      if (0 >= dig__fread_port_D (p->x, n_points, Map->dig_fp))
+	  return (-2);
+      if (0 >= dig__fread_port_D (p->y, n_points, Map->dig_fp))
+	  return (-2);
 
-  if (Map->head.with_z)
-    {
-      if (0 >= dig__fread_port_D (p->z, n_points, Map->dig_fp))
-          return (-2);
-    }
+      if (Map->head.with_z)
+	{
+	  if (0 >= dig__fread_port_D (p->z, n_points, Map->dig_fp))
+	      return (-2);
+	}
+  } else {
+      if (Map->head.with_z) 
+	  size = n_points * 3 * PORT_DOUBLE;
+      else 
+	  size = n_points * 2 * PORT_DOUBLE;
+      
+      fseek (Map->dig_fp, size, SEEK_CUR);
+  }
   
   return (type);
 }

@@ -53,11 +53,37 @@ Vect_destroy_list (struct ilist *list)
     {
       if (list->alloc_values)
 	{
-	  free ((void *) list->value);
+	  G_free ((void *) list->value);
 	}
-      free ((void *) list);
+      G_free ((void *) list);
     }
+  list = NULL;
 
   return 0;
+}
+
+/* Append new item to the end of list 
+*
+*  returns: 0 - OK
+*           1 - error
+*/
+int
+Vect_list_append ( struct ilist *list, int val )
+{
+    int size;
+    
+    if ( list == NULL ) 
+        return 1;
+	
+    if ( list->n_values == list->alloc_values ) {
+	size = list->n_values + 1000;
+        list->value = (int *) G_realloc ( (void *) list->value, size );
+        list->alloc_values = size;
+    }
+    
+    list->value[list->n_values] = val;
+    list->n_values++;
+  
+    return 0;
 }
 

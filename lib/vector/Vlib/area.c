@@ -57,7 +57,7 @@ Vect_get_area_points (
       aline = abs (line);
       G_debug ( 3, "  append line(%d) = %d", i, line );	
 
-      if (0 > V2_read_line (Map, Points, NULL, aline)) {
+      if (0 > Vect_read_line (Map, Points, NULL, aline)) {
           G_fatal_error ( "Cannot read line %d",  aline );
       }
       
@@ -107,7 +107,7 @@ Vect_get_isle_points (
       aline = abs (line);
       G_debug ( 3, "  append line(%d) = %d", i, line );	
 
-      if (0 > V2_read_line (Map, Points, NULL, aline)) {
+      if (0 > Vect_read_line (Map, Points, NULL, aline)) {
           G_fatal_error ( "Cannot read line %d",  aline );
       }
       

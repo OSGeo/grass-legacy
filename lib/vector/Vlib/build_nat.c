@@ -35,7 +35,7 @@ extern int prnmsg ( char *msg, ...) ;
 int
 Vect_build_nat ( struct Map_info *Map, FILE *msgout ) {
     struct Plus_head *plus ;
-    int    i, j, k, l, s, n, type, n_points, node, lineid, offset, ret;
+    int    i, j, k, s, n, type, node, lineid, offset, ret;
     int    n_lines, side, line, bline;
     int    area, isle, direction, sel_area;
     int    found, part, first;
@@ -46,7 +46,7 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout ) {
     P_NODE *Node;
     P_AREA *Area;
     P_ISLE *Isle;
-    double  area_size, poly, dist, cur_dist;
+    double  area_size, dist, cur_dist;
     int     progress, last_progress;
     BOUND_BOX box;
     struct ilist *List;
@@ -138,7 +138,7 @@ Vect_build_nat ( struct Map_info *Map, FILE *msgout ) {
 		BLine = plus->Line[line];
 		offset = BLine->offset;
 		G_debug ( 3, "  line[%d] = %d, offset = %d", j, line, offset );
-                type = V2_read_line (Map, Points, Cats, line );
+                type = Vect_read_line (Map, Points, Cats, line );
 		if ( lines[j] > 0 ) direction = GV_FORWARD; 
 		else direction = GV_BACKWORD;
 	        Vect_append_points ( APoints, Points, direction);

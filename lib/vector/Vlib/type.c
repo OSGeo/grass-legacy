@@ -63,3 +63,39 @@ Vect_type_from_store (int stype)
     }
 }
 
+/*
+*  Get types from options.
+*
+*  Returns: types 
+*           -1 error
+*/
+int
+Vect_option_to_types (struct Option *type_opt )
+{
+    int i = 0;
+    int type = 0; 
+
+    while (type_opt->answers[i]) {
+        switch ( type_opt->answers[i][0] ) {
+	    case 'p':
+	        type |= GV_POINT;
+	        break;
+            case 'l':
+                type |= GV_LINE;
+                break;
+            case 'b':
+	        type |= GV_BOUNDARY;
+                break;
+            case 'c':
+                type |= GV_CENTROID;
+                break;
+            case 'a':
+                type |= GV_AREA;
+                break;
+        }
+        i++;
+    }
+
+    return type;
+}
+

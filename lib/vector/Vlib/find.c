@@ -7,21 +7,81 @@
 #define HUGE_VAL 9999999999999.0
 #endif
 
+/* Find nearest node.  
+* 
+* maxdist = max distance from the line
+* with_z  - use z coordinate (3D search) 
+*
+* returns : nearest node
+*           0 not found
+*/
+int 
+Vect_find_node ( struct Map_info *Map,
+		 double ux, double uy, double uz,
+		 double maxdist, int with_z )
+{
+    int i, nnodes, node;
+    BOUND_BOX box;
+    struct ilist *NList;
+    double x, y, z;
+    double cur_dist, dist;
+
+    G_debug ( 3, "Vect_find_node() for %f %f %f maxdist = %f", ux, uy, uz, maxdist);
+    NList = Vect_new_list ();
+ 
+    /* Select all nodes in box */
+    box.N = uy + maxdist;
+    box.S = uy - maxdist;
+    box.E = ux + maxdist;
+    box.W = ux - maxdist;
+    if (with_z) {
+        box.T = uz + maxdist;
+        box.B = uz - maxdist;
+    } else {
+        box.T = HUGE_VAL;
+        box.B = -HUGE_VAL;
+    }
+	
+    nnodes = Vect_select_nodes_by_box (Map, &box, NList);
+    G_debug ( 3, " %d nodes in box", nnodes );
+
+    if ( nnodes == 0 ) return 0;
+
+    /* find nearest */
+    cur_dist = PORT_DOUBLE_MAX;
+    node = 0;
+    for ( i = 0; i < nnodes; i++ ) {
+        Vect_get_node_coor ( Map, NList->value[i], &x, &y, &z);
+        dist = Vect_points_distance (  ux, uy, uz, x, y, z, with_z ); 
+        if ( dist < cur_dist ) {
+	    cur_dist = dist;
+	    node = i;
+	}
+    }
+    G_debug ( 3, "  nearest node %d in distance %f", NList->value[node], cur_dist );
+
+    /* Check if in max distance */
+    if ( cur_dist <= maxdist )
+	return ( NList->value[node] );
+    else
+	return 0;
+}
+
 /* original dig_point_to_line() in grass50
 * 
 * 
-* type = LINE AREA or POINT  if only want to search certain types of lines
+* type = GV_LINE, GV_POIN, GV_BOUNDARY or GV_CENTROID  if only want to search certain types of lines
 *         or -1 if search all lines
 * maxdist = max distance from the line
+* with_z  - use z coordinate (3D search) 
 *
 * returns : nearest line
 *           0 not found
 */
 int 
-Vect_find_line (
-		    struct Map_info *map,
-		    double ux, double uy, double uz,
-		    int type, double maxdist )
+Vect_find_line ( struct Map_info *map,
+		 double ux, double uy, double uz,
+		 int type, double maxdist, int with_z )
 {
   int choice;
   double new_dist;
@@ -33,6 +93,8 @@ Vect_find_line (
   struct Plus_head *Plus;
   P_LINE *Line;
   
+  G_debug ( 3, "Vect_find_line() for %f %f %f type = %d maxdist = %f", ux, uy, uz, type, maxdist);
+    
   if (first_time) {
       Points = Vect_new_line_struct ();
       first_time = 0;
@@ -52,9 +114,9 @@ Vect_find_line (
 
       /* TODO use bbox */
   
-      V2_read_line (map, Points, NULL, i);
-
-      Vect_line_distance ( Points, ux, uy, uz, NULL, NULL, NULL, &new_dist, NULL, NULL);
+      Vect_read_line (map, Points, NULL, i);
+      
+      Vect_line_distance ( Points, ux, uy, uz, with_z, NULL, NULL, NULL, &new_dist, NULL, NULL);
       G_debug( 3, " line = %d distance = %f", i,  new_dist);
       if ((++gotone == 1) || (new_dist <= cur_dist)) {
 	  if (new_dist == cur_dist)
@@ -69,7 +131,7 @@ Vect_find_line (
        }
   }
   
-  G_debug( 3, "min distance found = %f, maxdist = %f", cur_dist, maxdist);
+  G_debug( 3, "min distance found = %f", cur_dist);
   if (cur_dist > maxdist)
       choice = 0;
 

@@ -46,60 +46,19 @@ Vect_get_num_areas (struct Map_info *map)
 }
 
 int 
-Vect_get_node_point (struct Map_info *map, int num, double *x, double *y)
+Vect_get_node_coor (struct Map_info *map, int num, double *x, double *y, double *z)
 {
     P_NODE *Node;
 
     Node = map->plus.Node[num];
     *x = Node->x;
     *y = Node->y;
+
+    if ( z != NULL )
+        *z = Node->z;
   
     return (0);
 }
-
-
-
-/* get Area bounding box info in NSEW */
-int 
-Vect_get_area_bbox (struct Map_info *map, int area,
-		  double *N, double *S, double *E, double *W)
-{
-  P_AREA *Area;
-/*
-  if (area <= 0 || area > map->plus.n_areas)
-    return (-1);
-  if (!AREA_ALIVE (&(map->plus.Area[area])))
-    return (-1);
-  Area = &(map->plus.Area[area]);
-  *N = Area->N;
-  *E = Area->E;
-  *W = Area->W;
-  *S = Area->S;
-  */
-  return (0);
-}
-
-/* get Line bounding box info in NSEW */
-int 
-Vect_get_line_bbox (
-		   struct Map_info *map, int line,
-		   double *N, double *S, double *E, double *W)
-{
-  P_LINE *Line;
-/*
-  if (line <= 0 || line > map->plus.n_lines)
-    return (-1);
-  if (!LINE_ALIVE (&(map->plus.Line[line])))
-    return (-1);
-  Line = &(map->plus.Line[line]);
-  *N = Line->N;
-  *E = Line->E;
-  *W = Line->W;
-  *S = Line->S;
-*/
-  return (0);
-}
-
 
 /* get Line starting and ending node */
 int 

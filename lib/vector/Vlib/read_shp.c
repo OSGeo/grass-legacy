@@ -245,9 +245,8 @@ Vect__Read_line_shp (
   G_debug (3, "Vect__Read_line_shp() offset = %d", offset);
   shape = ( offset >> 11 ) & 0x1FFFFF ;
   part = offset & 0x7FF;
-  G_debug (3, "shape = %d part = %d", shape, part);
+  G_debug (3, "shape = %d part = %d (nShapes = %d)", shape, part,  Map->fInfo.shp.nShapes);
   
-  G_debug (3, "nShapes = %d", Map->fInfo.shp.nShapes);
   if ( shape >= Map->fInfo.shp.nShapes ) {
       return (-2); /* EOF reached */ 
   }
@@ -280,7 +279,6 @@ Vect__Read_line_shp (
 	break;
   }
   
-
   if ( c != NULL ) {
       Vect_reset_cats ( c );
       if ( Map->fInfo.shp.cat_col_num >= 0 &&
@@ -291,7 +289,6 @@ Vect__Read_line_shp (
       }
   }
  
-  
   if ( p != NULL ) {
       pShape = SHPReadObject( Map->fInfo.shp.hShp, shape ); 
       Vect_reset_line ( p ); 
@@ -300,12 +297,18 @@ Vect__Read_line_shp (
 	    || Map->fInfo.shp.type == SHPT_MULTIPOINTM ) {
 	  first = 0; last = 0;
       } else {
-	  first = pShape->panPartStart[part];
-	  if( part == pShape->nParts - 1 ) {
+	  if ( pShape->nParts <= 1 ) {
+	      first = 0;
 	      last = pShape->nVertices - 1;
 	  } else {
-	      last = pShape->panPartStart[part+1] - 1;
+	      first = pShape->panPartStart[part];
+	      if( part == pShape->nParts - 1 ) {
+		  last = pShape->nVertices - 1;
+	      } else {
+		  last = pShape->panPartStart[part+1] - 1;
+	      }
 	  }
+          G_debug (3, "part = %d first = %d last = %d", part, first, last);
       }
 
       for ( i = first; i <= last; i++ ) {
@@ -319,7 +322,7 @@ Vect__Read_line_shp (
 	  Map->fInfo.shp.part = 0;
 	  
       } else {
-	  if ( part == pShape->nParts - 1 ) {  
+	  if ( part == pShape->nParts - 1 || pShape->nParts == 0 ) {  
 	      Map->fInfo.shp.shape = shape + 1 ;
 	      Map->fInfo.shp.part = 0;
 	  } else {
