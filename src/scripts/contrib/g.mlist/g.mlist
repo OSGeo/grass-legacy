@@ -13,7 +13,10 @@
 #
 #
 # $Log$
-# Revision 1.7  2000-11-26 16:47:17  cho
+# Revision 1.8  2000-11-26 16:50:29  cho
+# updated
+#
+# Revision 1.7  2000/11/26 16:47:17  cho
 # added help
 #
 # Revision 1.6  2000/11/23 08:46:19  cho
@@ -50,7 +53,10 @@ then
         echo
         echo "Usage: g.mlist [type=name] [mapset=name] [sep=name] map_pattern"
 	echo
-	g.list help 2>&1 | awk 'BEGIN{i=0}{if($1=="Parameters:") i=1; if(i) print $0}'
+	g.list help 2>&1 | awk 'BEGIN{i=0}{if($1=="Parameters:") {print; i=1;} else if(i) print "     "$0}'
+	echo
+	echo "          sep   output separator"
+	echo "  map_pattern   mapname pattern"
 	exit 1
 fi
 
