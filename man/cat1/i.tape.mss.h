@@ -1,7 +1,7 @@
 
 
 
-i.tape.mss.h         GRASS Reference Manual          i.tape.mss.h
+i.tape.mss.h <main>  GRASS Reference Manual   <main> i.tape.mss.h
 
 
 
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
