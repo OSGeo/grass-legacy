@@ -16,21 +16,21 @@ map to Postgres/PostGIS table. (GRASS-RDBMS Interface Display Program)
 SYNOPSIS</h2>
 <b>v.to.pg</b>
 <br><b>v.to.pg help</b>
-<br><b>v.to.pg [-tfvp]</b> <b>key</b>=<i>name</i> <b>tab</b>=<i>name</i>
+<br><b>v.to.pg [-tfvp]</b> [<b>key</b>=<i>name</i>] [<b>tab</b>=<i>name</i>]
 <b>map</b>=<i>name</i> <b>type</b>=<i>name</i> 
-[<b>where</b>=<i>name</i>] [<b>color</b>=<i>name</i>]
+[<b>where</b>=<i>name</i>] [<b>color</b>=<i>name</i>] [<b>rmap</b>=<i>name</i>]
 <h2>
 ALTERNATE</h2>
 <b>v.to.pg -s help</b>
 <br><b>v.to.pg [-sfvp] sql</b><i>=filename</i> <b>map</b><i>=name</i> 
-<b>type</b>=<i>name </i>[<b>color</b><i>=name</i>]
+<b>type</b>=<i>name </i>[<b>color</b><i>=name</i>] [<b>rmap</b>=<i>name</i>]
 <h2>
 DESCRIPTION</h2>
 <i>v.to.pg</i> exports vectors from an existing vector map based on the
 unique values in a database column (or optionally all vectors without referencing
 to any existing table, see -t option). Each row returned by a user constructed
 database query will be associated with a vector feature which may be drawn
-on the graphics display if X-windows are there. The user can control the
+on the graphics display in X-windows. The user can control the
 color of the vector draw by specifying a color on the command line.
 <p>As result, a new Postgres table <i>table_bnd</i> or <i>table_arc</i>
 (or <i>table_mpoly</i> and <i>table_mstring</i> for PostGIS) is created
@@ -45,7 +45,9 @@ only.
 POLYGON (i.e., with "holes" all in one POLYGON) and LINESTRING, respectively.
 The fields are called <i>grass_poly</i> and <i>grass_line</i>. There is
 no need to define whether a polygon is internal ("hole") or external, in
-this case, therefore there is no field 'ex'.
+this case, therefore there is no field 'ex'. Optionally, the user can specify
+a raster map as <b>rmap</b> (usually DEM) to extract z-coordinate for vectors 
+to be exported.
 <h2>
 COMMAND LINE OPTIONS</h2>
 
@@ -127,6 +129,13 @@ Name of an existing vector map with category values which correspond to
 values in a specified column in the currently selected database.</dd>
 
 <dt>
+<b>rmap=rastermap</b></dt>
+
+<dd>
+Name of an existing raster map where pixel values correspond to
+the Z-coordinate in PostGIS vector geometry formats.</dd>
+
+<dt>
 <b>color=name</b></dt>
 
 <dd>
@@ -203,6 +212,13 @@ SQL statements specifying well formed selection criteria.</dd>
 Name of an existing vector map</dd>
 
 <dt>
+<b>rmap=rastermap</b></dt>
+
+<dd>
+Name of an existing raster map where pixel values correspond to
+the Z-coordinate in PostGIS vector geometry formats.</dd>
+
+<dt>
 <b>color=name</b></dt>
 
 <dd>
@@ -237,9 +253,9 @@ none
 <h2>
 NOTE</h2>
 This program requires the Postgres database software.
-<p>The 'total' mode of import (i.e., without referencing to existing table
-<i>and</i> to categories count in map) leads to that field 'num' in result
-tables would be incoherent (simply counts vectors from beginning to end).
+<p>The 'total' mode of import (i.e., bypassing reference DB table
+<i>and</i> categories count in map) results in that the field 'num' in output
+table would only count vectors from beginning to end.
 <h2>
 SEE ALSO</h2>
 <i><a href="g.column.pg.html">g.column.pg</a>, <a href="g.select.pg.html">g.select.pg</a>,
