@@ -3,7 +3,8 @@
  * MODULE:       v.in.ogr
  * 
  * AUTHOR(S):    Radim Blazek
- *               Markus Neteler (spatial parm)
+ *               Markus Neteler (spatial parm, projection support)
+ *               Paul Kelly (projection support)
  *               
  * PURPOSE:      Import OGR vectors
  *               
@@ -66,8 +67,7 @@ main (int argc, char *argv[])
     OGRFieldType Ogr_ftype;
     OGRFeatureH Ogr_feature;  
     OGRFeatureDefnH Ogr_featuredefn;
-    OGRGeometryH Ogr_geometry;
-    OGRGeometryH Ogr_oRing=NULL, poSpatialFilter=NULL;
+    OGRGeometryH Ogr_geometry, Ogr_oRing=NULL, poSpatialFilter=NULL;
     OGRSpatialReferenceH Ogr_projection;
     OGREnvelope oExt;
     char **layer_names; /* names of layers to be imported */
@@ -119,7 +119,7 @@ main (int argc, char *argv[])
     spat_opt->type = TYPE_DOUBLE;
     spat_opt->multiple = YES;
     spat_opt->required = NO;
-    spat_opt->description = "Import subregion only (xmin,ymin,xmax,ymax)";
+    spat_opt->description = "Import subregion only (xmin,ymin,xmax,ymax  - usually W,S,E,N)";
 
     min_area_opt = G_define_option();
     min_area_opt->key = "min_area";
@@ -239,6 +239,8 @@ main (int argc, char *argv[])
     }
 
     if ( spat_opt->answer ) {
+        /* See as reference: gdal/ogr/ogr_capi_test.c */
+	
         /* cut out a piece of the map */
         /* order: xmin,ymin,xmax,ymax */
         arg_s_num = 0; i = 0;
@@ -250,16 +252,16 @@ main (int argc, char *argv[])
            arg_s_num++; i++;
         }
         if ( arg_s_num != 4 ) G_fatal_error (" 4 parameters required for 'spatial' parameter.");
-	G_debug( 2, "cut out with boundaries: %f %f %f %f",xmin,ymin,xmax,ymax);
+	G_debug( 2, "cut out with boundaries: xmin:%f ymin:%f xmax:%f ymax:%f",xmin,ymin,xmax,ymax);
 
-	/* in theory this could be a irregular polygon */
+	/* in theory this could be an irregular polygon */
 	poSpatialFilter = OGR_G_CreateGeometry( wkbPolygon );
-	Ogr_oRing = OGR_G_CreateGeometry( wkbLineString );
-        OGR_G_AddPoint(Ogr_oRing, xmin, ymin, 0);
-        OGR_G_AddPoint(Ogr_oRing, xmin, ymax, 0);
-        OGR_G_AddPoint(Ogr_oRing, xmax, ymax, 0);
-        OGR_G_AddPoint(Ogr_oRing, xmax, ymin, 0);
-        OGR_G_AddPoint(Ogr_oRing, xmin, ymin, 0);
+        Ogr_oRing = OGR_G_CreateGeometry( wkbLinearRing );
+        OGR_G_AddPoint(Ogr_oRing, xmin, ymin, 0.0);
+        OGR_G_AddPoint(Ogr_oRing, xmin, ymax, 0.0);
+        OGR_G_AddPoint(Ogr_oRing, xmax, ymax, 0.0);
+        OGR_G_AddPoint(Ogr_oRing, xmax, ymin, 0.0);
+        OGR_G_AddPoint(Ogr_oRing, xmin, ymin, 0.0);
         OGR_G_AddGeometryDirectly(poSpatialFilter, Ogr_oRing);
 	
         OGR_L_SetSpatialFilter(Ogr_layer, poSpatialFilter );
