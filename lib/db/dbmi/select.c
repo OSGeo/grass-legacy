@@ -28,15 +28,19 @@ int db_select_int (dbDriver *driver, char *tab, char *col, char *where, int **pv
     dbValue *value;
     dbTable *table;
     
+    G_debug (3, "db_select_int()" );
+    
     /* allocate */
     alloc = 1000;
     val = (int *) G_malloc ( alloc * sizeof(int));
 
     if ( where == NULL || strlen(where) == 0 )
-        snprintf(buf,1023, "SELECT %s FROM %s\n", col, tab);
+        snprintf(buf,1023, "SELECT %s FROM %s", col, tab);
     else
-        snprintf(buf,1023, "SELECT %s FROM %s WHERE %s\n", col, tab, where);
+        snprintf(buf,1023, "SELECT %s FROM %s WHERE %s", col, tab, where);
 
+    G_debug (3, "  SQL: %s", buf );
+    
     db_init_string ( &stmt);
     db_append_string ( &stmt, buf);
 
