@@ -1,6 +1,9 @@
 /*-
  * $Log$
- * Revision 1.7  2000-10-09 01:57:03  eric
+ * Revision 2.0  2004-11-09 13:06:32  bernhard
+ * copied within CVS repository from grass/src/include/site.h
+ *
+ * Revision 1.7  2000/10/09 01:57:03  eric
  * Added ability to ignore z-value completely using field=SITE_COL_NUL
  *
  * Revision 1.6  2000/10/07 21:23:24  eric
