@@ -335,7 +335,7 @@ int main(int argc, char *argv[])
     flag.shade = G_define_flag();
     flag.shade->key = 's';
     flag.shade->description =
-	"Do you want to incorporate the shadowing effect of terrain (y/n)";
+	"Incorporate the shadowing effect of terrain";
 
     if (G_parser(argc, argv))
 	exit(1);
