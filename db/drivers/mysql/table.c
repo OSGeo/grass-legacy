@@ -79,6 +79,7 @@ int load_table(int t, char *stmt)
     enum enum_field_types dtype;
     char *fname;
     int fsize;
+    int fdecimals;
     int type;
     int nflds = 0;
     int nrws = 0;
@@ -89,7 +90,7 @@ int load_table(int t, char *stmt)
     int i, j;
     int header_only = 0;
 
-    if (db.tables[t].loaded == TRUE)	/*already loaded*/
+    if (db.tables[t].loaded == TRUE)	/*already loaded */
 	return DB_OK;
     if (stmt == NULL) {
 	memset(stmtbuf, '\0', sizeof(stmtbuf));
@@ -120,6 +121,7 @@ int load_table(int t, char *stmt)
 	dtype = field->type;
 	fname = field->name;
 	fsize = field->length;
+	fdecimals = field->decimals;
 
 
 	switch (dtype) {
@@ -139,15 +141,19 @@ int load_table(int t, char *stmt)
 	    type = MYSQL_DOUBLE;
 	    break;
 	default:
-	    snprintf(errMsg, sizeof(errMsg),
-		     "Field %s can not be selected for query output: type %d not supported yet\n",
-		     fname, dtype);
-	    return DB_FAILED;
+	    if (!header_only) {
+		snprintf(errMsg, sizeof(errMsg),
+			 "Field %s can not be selected for query output: type %d not supported yet\n",
+			 fname, dtype);
+		return DB_FAILED;
+	    }
+
+	    type = MYSQL_UNKNOWN;
 	    break;
 
 	}
 
-	add_column(t, type, fname, fsize);
+	add_column(t, type, fname, fsize, fdecimals);
     }
 
     if (!header_only) {

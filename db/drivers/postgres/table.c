@@ -98,10 +98,12 @@ int load_table(int t, char *stmt)
 
     res = PQexec(pg_conn, stmt);
 
-    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
+    if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
         
-	snprintf(errMsg, sizeof(errMsg), "Error:select Postgres:%s\n",
+	snprintf(errMsg, sizeof(errMsg), "Error: select Postgres:%s\n",
 		 PQerrorMessage(pg_conn));
+	PQclear(res);
+	PQfinish(pg_conn);
 	return DB_FAILED;
     }
     nflds = PQnfields(res);
@@ -130,10 +132,14 @@ int load_table(int t, char *stmt)
 	    type = PG_DOUBLE;
 	    break;
 	default:
+	    if(!header_only) {
 	    snprintf(errMsg, sizeof(errMsg),
 		     "Field %s can not be selected for query output: type %d not supported yet\n",
 		     fname, dtype);
 	    return DB_FAILED;
+	    }
+	    
+	    type = PG_UNKNOWN;
 	    break;
 
 	}

@@ -39,7 +39,7 @@ int db_driver_describe_table(table_name, table)
 int describe_table(int tab, int *scols, int nscols, dbTable ** table)
 {
     int i, col, ncols, dbtype;
-/*    int precision, scale;*/
+/*     int precision, scale; */
     dbColumn *column;
     COLUMN *dcol;
 
@@ -73,22 +73,22 @@ int describe_table(int tab, int *scols, int nscols, dbTable ** table)
 	case MYSQL_INT:
 	    dbtype = DB_SQL_TYPE_INTEGER;
 /*
- *                 precision = dcol->width - 1; 
- *                 scale = 0;  
+ *             precision = dcol->width - 1; 
+ *             scale = 0;  
  */
 	    break;
 	case MYSQL_DOUBLE:
 	    dbtype = DB_SQL_TYPE_DOUBLE_PRECISION;
 /*
- *                 precision = dcol->width - 1;  
- * 
+ *             precision = dcol->width - 2;  
+ *             scale = dcol->decimals;  
  */
 	    break;
 	case MYSQL_CHAR:
 	    dbtype = DB_SQL_TYPE_CHARACTER;
 /*
- *                 precision = 0;
- *                 scale = 0; 
+ *             precision = 0;
+ *             scale = 0; 
  */
 	    break;
 
@@ -100,7 +100,7 @@ int describe_table(int tab, int *scols, int nscols, dbTable ** table)
 	db_set_column_sqltype(column, dbtype);
 
 /*
- *      db_set_column_precision (column, precision);
+ *         db_set_column_precision (column, precision);
  * 	db_set_column_scale (column, scale);
  */
 

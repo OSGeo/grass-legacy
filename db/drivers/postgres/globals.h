@@ -5,6 +5,7 @@
 
 #define PG_COL_NAME 32		/* maximum column name length. NB: see pg what */
 
+#define PG_UNKNOWN   0
 #define PG_CHAR   1
 #define PG_INT    2
 #define PG_DOUBLE 3

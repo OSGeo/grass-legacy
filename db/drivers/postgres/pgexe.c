@@ -125,10 +125,12 @@ int fire_pg_cmd(char *stmt)
 
     res = PQexec(pg_conn, stmt);
 
-    if (PQresultStatus(res) != PGRES_COMMAND_OK) {
+    if (!res || PQresultStatus(res) != PGRES_COMMAND_OK) {
 	snprintf(errMsg, sizeof(errMsg),
 		 "Error while executing Postgres command: %s",
 		 PQerrorMessage(pg_conn));
+	PQclear(res);
+	PQfinish(pg_conn);	
 	return DB_FAILED;
     }
 

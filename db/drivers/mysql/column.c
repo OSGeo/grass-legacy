@@ -21,7 +21,7 @@
 #include "proto.h"
 
 /* add column to table */
-int add_column(int tab, int type, char *name, int width)
+int add_column(int tab, int type, char *name, int width, int decimals)
 {
     int c;
 
@@ -38,7 +38,7 @@ int add_column(int tab, int type, char *name, int width)
 
     db.tables[tab].cols[c].type = type;
     db.tables[tab].cols[c].width = width;
-/*    db.tables[tab].cols[c].decimals = decimals; */
+    db.tables[tab].cols[c].decimals = decimals;
 
     db.tables[tab].ncols++;
 

@@ -42,15 +42,18 @@ int db_driver_list_databases(dbpath, npaths, dblist, dbcount)
 	snprintf(emsg, sizeof(emsg), "Error: connect Postgres: %s\n",
 		 PQerrorMessage(pg_conn));
 	report_error(emsg);
+	PQfinish(pg_conn);
 	return DB_FAILED;
     }
 
     res = PQexec(pg_conn, "select datname from pg_database");
 
-    if (PQresultStatus(res) != PGRES_TUPLES_OK) {
+    if (!res || PQresultStatus(res) != PGRES_TUPLES_OK) {
 	snprintf(emsg, sizeof(emsg), "Error: select Postgres: %s\n",
 		 PQerrorMessage(pg_conn));
 	report_error(emsg);
+	PQclear(res);
+	PQfinish(pg_conn);
 	return DB_FAILED;
     }
 

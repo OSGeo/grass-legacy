@@ -7,7 +7,7 @@ int find_table(char *);
 int load_table(int, char *);
 
 int describe_table(int, int *, int, dbTable **);
-int add_column(int table, int type, char *name, int width);
+int add_column(int table, int type, char *name, int width, int decimals);
 int find_column(int, char *);
 int save_string(VALUE *, char *);
 
