@@ -1,99 +1,99 @@
 
 
 
-rr..iinn..ppoollyy <alpha>     GRASS Reference Manual    <alpha> rr..iinn..ppoollyy
+r.in.poly <alpha>    GRASS Reference Manual	<alpha>	r.in.poly
 
 
 
-NNAAMMEE
-     _r_._i_n_._p_o_l_y - Create raster maps from ascii polygon/line data
+NAME
+     r.in.poly - Create	raster maps from ascii polygon/line data
      files in the current directory.
-     _(_G_R_A_S_S _R_a_s_t_e_r _P_r_o_g_r_a_m_)
+     (GRASS Raster Program)
 
-SSYYNNOOPPSSIISS
-     rr..iinn..ppoollyy
-     rr..iinn..ppoollyy hheellpp
-     rr..iinn..ppoollyy iinnppuutt==_n_a_m_e oouuttppuutt==_n_a_m_e [[ttiittllee==_"_p_h_r_a_s_e_"_]
-     [[rroowwss==_v_a_l_u_e_]
+SYNOPSIS
+     r.in.poly
+     r.in.poly help
+     r.in.poly input=name output=name [title="phrase"]
+     [rows=value]
 
-DDEESSCCRRIIPPTTIIOONN
-     _r_._i_n_._p_o_l_y _a_l_l_o_w_s _t_h_e _c_r_e_a_t_i_o_n _o_f _G_R_A_S_S ASCII files in the
+DESCRIPTION
+     r.in.poly allows the creation of GRASS ASCII files	in the
      current directory containing polygon and linear features.
 
-CCOOMMMMAANNDD LLIINNEE OOPPTTIIOONNSS
+COMMAND	LINE OPTIONS
      Parameters
 
-     iinnppuutt==_n_a_m_e          Unix input file, in ascii format,
-                         containing the polygon and linear
-                         features.  The format of this file is
-                         described in the section IINNPPUUTT FFOORRMMAATT
-                         below.
+     input=name		 Unix input file, in ascii format,
+			 containing the	polygon	and linear
+			 features.  The	format of this file is
+			 described in the section INPUT	FORMAT
+			 below.
 
-     oouuttppuutt==_n_a_m_e         Raster output file
+     output=name	 Raster	output file
 
-     _t_i_t_l_e_=_"_p_h_r_a_s_e_"      Title for resultant raster map
-                         (optional)
+     title="phrase"	 Title for resultant raster map
+			 (optional)
 
-     _r_o_w_s                Number of rows to hold in memory
-                         (default: 512).  This parameter allows
-                         users with less memory (or more) on
-                         their system to control how much memory
-                         _r_._i_n_._p_o_l_y uses.
+     rows		 Number	of rows	to hold	in memory
+			 (default: 512).  This parameter allows
+			 users with less memory	(or more) on
+			 their system to control how much memory
+			 r.in.poly uses.
 
-IINNPPUUTT FFOORRMMAATT
-     The input format for the iinnppuutt file consists of sections
-     describing either polygonal areas or linear features.  The
+INPUT FORMAT
+     The input format for the input file consists of sections
+     describing	either polygonal areas or linear features.  The
      basic format is:
-     A                      <for polygonal areas>
-         easting northing
-         .
-         .
-         .
-     =   cat# label
-     L                      <for linear features>
-         easting northing
-         .
-         .
-         .
-     =   cat# label
-     The _A signals the beginning of a polygon. It must appear in
+     A			    <for polygonal areas>
+	 easting northing
+	 .
+	 .
+	 .
+     =	 cat# label
+     L			    <for linear	features>
+	 easting northing
+	 .
+	 .
+	 .
+     =	 cat# label
+     The A signals the beginning of a polygon. It must appear in
 
 
 
-GRASS 4.1                 U.S. Army CERL                        1
+GRASS 4.2		Baylor University			1
 
 
 
 
 
 
-rr..iinn..ppoollyy <alpha>     GRASS Reference Manual    <alpha> rr..iinn..ppoollyy
+r.in.poly <alpha>    GRASS Reference Manual	<alpha>	r.in.poly
 
 
 
-     the first column.  The _L signal the beginning of a linear
+     the first column. The L signal the	beginning of a linear
      feature. It also must appear in the first column. The
-     coordinates of the vertices of the polygon, or the
-     coordinates defining the linear feature follow and must have
-     a space in the first column and at least one space between
-     the _e_a_s_t_i_n_g and the _n_o_r_t_h_i_n_g_.  To give meaning to the
-     features, the _= indicates that the feature currently being
-     processed has category value _c_a_t_# (which must be an integer)
-     and a _l_a_b_e_l (which may be more than one word, or which may
-     be omitted).
+     coordinates of the	vertices of the	polygon, or the
+     coordinates defining the linear feature follow and	must have
+     a space in	the first column and at	least one space	between
+     the easting and the northing. To give meaning to the
+     features, the = indicates that the	feature	currently being
+     processed has category value cat# (which must be an integer)
+     and a label (which	may be more than one word, or which may
+     be	omitted).
 
-SSEEEE AALLSSOO
-     r.digit    interactive on-screen polygon/line digitizing for raster maps
-     r.colors   creates color tables for raster maps
+SEE ALSO
+     r.digit	interactive on-screen polygon/line digitizing for raster maps
+     r.colors	creates	color tables for raster	maps
 
-AAUUTTHHOORR
-     Michael Shapiro, U.S. Army Construction Engineering Research
+AUTHOR
+     Michael Shapiro, U.S. Army	Construction Engineering Research
      Laboratory
 
-NNOOTTIICCEE
-     This program is part of the _a_l_p_h_a section of the GRASS
-     distribution.  Unlike the code in the _m_a_i_n section of GRASS,
-     the _a_l_p_h_a code has not yet been fully tested for one release
+NOTICE
+     This program is part of the alpha section of the GRASS
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
      cycle.
 
 
@@ -126,7 +126,7 @@ NNOOTTIICCEE
 
 
 
-GRASS 4.1                 U.S. Army CERL                        2
+GRASS 4.2		Baylor University			2
 
 
 
