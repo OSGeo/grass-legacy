@@ -30,6 +30,8 @@ d.profile: the min/max printed at profile are wrong
 
 d.rast.num: some numbers are displayed in wrong (unreadable) color
 
+d.rgb: Is there a difference between d.rgb and i.composite?
+
 d.site.label: needs to be updated to new sites API
 
 d.sites.label needs modified for the new Sites API
@@ -269,7 +271,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.1  2000-07-12 12:48:26  markus
+ Revision 1.2  2000-07-12 13:29:51  markus
+ added d.rgb
+
+ Revision 1.1  2000/07/12 12:48:26  markus
  was documents/known_bugs_current.txt
 
  Revision 1.16  2000/07/10 13:52:37  markus
