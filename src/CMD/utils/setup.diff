@@ -1,0 +1,188 @@
+*** setup.Orig	Fri Mar 20 14:17:19 1998
+--- setup	Tue Apr  7 18:05:58 1998
+***************
+*** 58,65 ****
+  
+  
+! HASX=True
+! HASMotfi=TRUE
+! ansi=False
+  
+  
+  
+--- 58,130 ----
+  
++ ###################################################################### yacc
++ YACC=yacc
++ sh utils/printf %s Yacc - yet another compiler-compiler to use [$YACC]: 
++ read x
++ if test "$x" != ""
++ then
++   YACC=$x
++ fi
++ rm -f y.tab.c
++ if $YACC utils/testyacc.y && $CC -o /tmp/$$ y.tab.c && /tmp/$$ >/dev/null <<EOF
++ 10+20
++ EOF
++ then
++ sh utils/printf "%s\n" Yacc compiler looks good.
++ rm -f /tmp/$$ y.tab.c
++ else
++ sh utils/printf "%s\n" There were errors. Go find your compiler and come back...
++ rm y.tab.c
++ exit 1
++ fi
+  
+! ##################################################################### lex
+! LEX=lex
+! sh utils/printf %s Lex - lexical analyzer generator to use [$LEX]: 
+! read x
+! if test "$x" != ""
+! then
+!   LEX=$x
+! fi
+! 
+! LEXLIB=
+! cat << 'EOF'
+! 
+! Specify the lex library (if any).
+  
++ EOF
++ 
++ while true
++ do
++     sh $udir/printf %s "LEXLIB [$LEXLIB] : "
++     read x
++     if test "$x" = ""
++     then
++ 	break
++     else
++ 	LEXLIB=`echo "$x" | sed 's/-l *//'`
++ 	if sh $udir/findlib $LEXLIB
++ 	then
++ 		LEXLIB=-l$LEXLIB
++ 		break
++ 	else
++ 		echo "No such library: $LEXLIB"
++ 	fi
++     fi
++ done
++ rm -f lex.yy.c
++ if $LEX utils/testlex.l && $CC -o /tmp/$$ lex.yy.c $LEXLIB && /tmp/$$ >/dev/null <<EOF
++ uno due tre ...
++ EOF
++ then
++ sh utils/printf "%s\n" Lex compiler looks good.
++ rm -f /tmp/$$ lex.yy.c
++ else
++ sh utils/printf "%s\n" There were errors. Go find your compiler and come back...
++ rm lex.yy.c
++ exit 1
++ fi
+  
++ HASX=True
++ HASMotif=TRUE
++ ansi=False
+  
+***************
+*** 88,89 ****
+--- 153,155 ----
+  CURSES=-lcurses  ;     check_curses=yes
++ INCLUDE_CURSES=  ;     check_curses=yes
+  
+***************
+*** 185,187 ****
+  
+- 
+  ###intergraph/Apogee-Clipper-specific COMPILE_FLAG setting
+--- 251,252 ----
+***************
+*** 1200,1202 ****
+  
+! Specify the curses library.
+  EOF
+--- 1265,1267 ----
+  
+! Specify the curses library and directory with files to be included.
+  EOF
+***************
+*** 1234,1235 ****
+--- 1299,1325 ----
+  
++     echo ""
++     echo "Specify the include directory for curses (if any)"
++     echo "Enter - if you don't need a special include directory"
++     echo ""
++     sh $udir/printf %s "INCLUDE_CURSES [$INCLUDE_CURSES] : "
++     read x
++     if test "$x" != ""
++     then
++ 	if test "$x" != "-"
++ 	then
++ 		echo INCLUDE_CURSES $INCLUDE_CURSES
++ 		INCLUDE_CURSES=`echo "$x" | sed 's/-I *//'`
++ 		echo INCLUDE_CURSES $INCLUDE_CURSES
++ 		if test ! -f $INCLUDE_CURSES/curses.h
++ 		then
++ 			echo "No such file: $INCLUDE_CURSES/curses.h"
++ 			continue
++ 		fi
++ 		INCLUDE_CURSES=-I$INCLUDE_CURSES
++ 		check_curses=yes
++ 	else
++ 		INCLUDE_CURSES=
++ 	fi
++     fi
++ 
+      if test "$check_curses" = yes
+***************
+*** 1239,1241 ****
+  	rm -f /tmp/$$ curses.o
+! 	$CC utils/curses.c $CURSES $TERMLIB -o /tmp/$$
+  	rm -f /tmp/$$ curses.o
+--- 1329,1331 ----
+  	rm -f /tmp/$$ curses.o
+! 	$CC $INCLUDE_CURSES utils/curses.c $CURSES $TERMLIB -o /tmp/$$
+  	rm -f /tmp/$$ curses.o
+***************
+*** 1252,1257 ****
+  echo CURSES = "$CURSES"
+  check_curses=no
+  
+- 
+- 
+  ########## GISBASE ###############################################
+--- 1342,1346 ----
+  echo CURSES = "$CURSES"
++ echo INCLUDE_CURSES = "$INCLUDE_CURSES"
+  check_curses=no
+  
+  ########## GISBASE ###############################################
+***************
+*** 1486,1488 ****
+--- 1575,1580 ----
+  CC = $CC
++ YACC = $YACC
++ LEX = $LEX
+  COMPILE_FLAGS = $COMPILE_FLAGS
++ INCLUDE_CURSES = $INCLUDE_CURSES
+  LDFLAGS = $LDFLAGS
+***************
+*** 1491,1493 ****
+  CURSES = $CURSES
+! 
+  XLIB = $XLIB
+--- 1583,1585 ----
+  CURSES = $CURSES
+! LEXLIB = $LEXLIB
+  XLIB = $XLIB
+***************
+*** 1582,1583 ****
+--- 1674,1680 ----
+  echo CC = $CC
++ echo YACC = $YACC
++ echo LEX = $LEX
++ echo LEXLIB = $LEXLIB
++ echo INCLUDE_CURSES = $INCLUDE_CURSES
++ echo ""
+  echo ARCH = $ARCH
