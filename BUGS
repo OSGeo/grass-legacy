@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.63 2000-11-04 17:59:36 markus Exp $
+$Id: BUGS,v 1.64 2000-11-06 12:33:39 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -451,19 +451,6 @@ v.cutter:
   (reported by Stephan.Holl@stud.uni-hannover.de
    and David Finlayson <david_finlayson@yahoo.com>)
   (being worked on by David D Gray)
-
-v.reclass:
-  The problem with v.reclass seems to stem from an input field for old=new        
-  reclass rule that cannot be more than 7 characters long (i.e. 11250=16 is       
-  eight characters long and will cause v.reclass to return an error). Someone     
-  needs to look at correcting this perhaps.
-  (reported by Richard Gagne <rghydro@waterwatch.com>)
-  Andreas Lange: As an remark: this affects only the interactive version
-  of v.reclass (bin/inter/v.reclass), not the command-line version. 
-  The interactive version does not behave consistently, but it works, even
-  for the value above. Could someone proove this or give me details on
-  what's not working correctly?
-  (being worked on by ?)
 
 [RC]v.to.rast:
   Working with a vector file and a region of(11242 rows*13301 cols) the
