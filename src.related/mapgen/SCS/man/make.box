@@ -1,0 +1,102 @@
+
+
+                                   APPENDIX I                    1
+                              GRASS-MAPGEN User's Guide
+            make.box                                        make.box 
+            
+            
+            NAME 
+            make.box - Draws a box on the map.
+            
+            SYNOPSIS 
+            make.box [filename] 
+            
+            DESCRIPTION
+            make.box constructs a box, much the same as the 
+            make.neatline command, at a defined location on the map
+            composition.  The location for the box may be identified on
+            the screen or through centimeter coordinates.  If given,
+            [filename] is used for the name of the overlay file
+            generated.  Multiple files may be generated for the map
+            composition by using unique overlay file names.
+            
+            The user is required to provide the following:
+            
+                 - map definition file name
+                 - an overlay file name (if not specified on the command
+                      line)
+                 - relationship of the box to a window
+                      within the map composition
+                 - plotter pen number
+                 - location (see getting map location) of the box
+            
+            Completing the response sequence generates the required
+            files to construct the map element.  Definition parameters
+            are stored in the misc directory; graphic elements to draw 
+            the map on the screen or plotter are stored in the ovm
+            directory.  The default file name for both directories is
+            box. 
+            
+            Changing the appearance of the box (e.g. position, size,
+            etc.) can be done by regenerating the make.box command and
+            overwriting the initial file, or by editing the text
+            definition file, then executing it directly, or by using the
+            redo.misc command.
+            
+                 (edit) example:          vi misc/[filename]
+                                          vi misc/box 
+            Information entered through the interactive make.box command 
+            has been reformatted to meet the requirements of the MAPGEN
+            command legend, prefacing the element characteristics with 
+            options for the legend command.  All options available in 
+            the legend command are available for use in the GRASS-MAPGEN
+            Interface.  Commonly used legend options associated with
+
+                                   APPENDIX I                    2
+                              GRASS-MAPGEN User's Guide
+            make.box                                        make.box
+
+
+
+
+            making a box(s) are:
+                 
+                 -w (window/region) [data=d][map plot=p]
+                 -L (pen) [plotter pen location=value] 
+            
+            EXAMPLE 
+            The file misc/box draws a box in pen 6, 3 cm. away from the 
+            bottom, right, top and left sides of the plotting window.
+            
+                 legend -m map.def -o ovm/box << EOF
+                 -w p
+                 -L 6
+                  3.000  3.000       # origin point
+                 >-3.000  3.000      # end bottom side
+                 >-3.000 >-3.000     # end right side
+                  3.000 >-3.000      # end top side
+                  3.000  3.000       # end left side/end
+                 .
+                 EOF
+            
+            NOTE
+            If only one map element will be drawn on the map
+            composition, the default selection for the file name is
+            recommended for use.  The make.box file may be modified
+            through the text definition file to draw irregular shapes
+            with straight sides.
+            
+            The delete key will abort the make.box command. 
+            
+            SEE ALSO   
+                 legend         User Manual for MAPGEN (UNIX Version), 
+                                USGS, p. 29.
+                 redo           GRASS-MAPGEN User's Guide, APPENDIX I,
+                                USDA-SCS.
+                 redo.misc      (Same)
+                 getting loca-  USDA-MAPGEN User's Guide, APPENDIX I-A,
+                   tions        USDA-SCS.
+            
+            AUTHOR 
+            Marty Holko, Computer Systems Analyst, Cartography and
+            Geographic Information Systems Division, USDA, Soil
