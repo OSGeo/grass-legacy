@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     char *mapset;
     struct Cell_head window;
     union RASTER_PTR elevbuf, tmpbuf, outbuf;
-    CELL value,value2, min, max;
+    CELL min, max;
     DCELL dvalue, dvalue2, dmin, dmax;
     RASTER_MAP_TYPE data_type;
     struct Range range;
