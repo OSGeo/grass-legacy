@@ -21,6 +21,7 @@ struct Key_Value *out_proj_keys, *out_unit_keys;
 
 int setup_ll_to_utm (struct quads_description *quads_info)
 {
+        char *ellps = G_malloc (256 * sizeof (char));
            /* get input projection parameters */
         in_proj_keys = G_get_projinfo();
         if ( in_proj_keys == NULL ){
@@ -41,7 +42,10 @@ int setup_ll_to_utm (struct quads_description *quads_info)
         G_set_key_value("name", "Latitude-Longitude", out_proj_keys);
         G_set_key_value("proj", "ll", out_proj_keys);
 	/* keep ellps same as input */
-/*        G_set_key_value("ellps", in_proj_keys->value[2], out_proj_keys);*/
+        ellps = G_find_key_value("ellps", in_proj_keys);
+        if( ellps == NULL )
+            sprintf(ellps, "wgs84");
+        G_set_key_value("ellps", ellps, out_proj_keys);
         G_set_key_value("unit", "degree", out_unit_keys);
         G_set_key_value("units", "degrees", out_unit_keys);
         G_set_key_value("meters", "1.0", out_unit_keys);
@@ -50,6 +54,7 @@ int setup_ll_to_utm (struct quads_description *quads_info)
                 exit (0);
         }
 	quads_info->spheroid_name = out_proj_keys->value[2];
+	G_free(ellps);   
 
 	return(0) ;
 

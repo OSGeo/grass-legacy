@@ -1302,6 +1302,7 @@ void calculate(void)
 			int i, j, l;
 /*			double energy;*/
 			double lum, q1;
+			char parms_out[512];
 
 			fprintf(stderr,"\n\n");
 
@@ -1431,8 +1432,13 @@ void calculate(void)
                 if(pj_get_kv(&iproj,in_proj_info,in_unit_info) < 0)
                 G_fatal_error("Can't get projection key values of current location");
 
-                /* Set output projection to latlong */
-                pj_get_string(&oproj, NULL);
+                /* Set output projection to latlong w/ same ellipsoid */
+                if( G_find_key_value("ellps", in_proj_info) != NULL )
+                    sprintf(parms_out, "proj=ll ellps=%s", 
+			    G_find_key_value("ellps", in_proj_info) );
+                else
+                    sprintf(parms_out, "proj=ll ellps=wgs84");
+                pj_get_string(&oproj, parms_out);
 
 		longitude = xp;
 		latitude = yp;

@@ -56,7 +56,7 @@ int main (int argc, char *argv[])
     char buf[1024];
     struct pj_info info_in;
     struct pj_info info_out;
-    char parms_in[256];
+    char parms_in[512];
     struct Key_Value *out_proj_keys, *out_unit_keys;
 
     G_gisinit(argv[0]);
@@ -148,11 +148,6 @@ projection\nUse m.proj\n");
 exit(1);
 }
 
-/* In Info */
-parms_in[0] = '\0';
-pj_get_string(&info_in, parms_in);
-
-
 /* Out Info */
 out_proj_keys = G_get_projinfo();
 out_unit_keys = G_get_projunits();
@@ -160,6 +155,13 @@ if (pj_get_kv(&info_out,out_proj_keys,out_unit_keys) < 0) {
 exit (0);
 }
 
+/* In Info */
+if( G_find_key_value("ellps", out_proj_keys) != NULL )
+    sprintf(parms_in, "proj=ll ellps=%s", 
+	    G_find_key_value("ellps", out_proj_keys) );
+else
+    sprintf(parms_in, "proj=ll ellps=wgs84");
+pj_get_string(&info_in, parms_in);
 
     if (isatty(0))
     {
