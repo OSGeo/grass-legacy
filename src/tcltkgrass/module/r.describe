@@ -1,0 +1,9 @@
+interface_build {
+    {r.describe} 0
+    {Prints terse list of category values found in a raster map layer.}
+    {entry map {Raster map:} 0 raster}
+    {checkbox -1 {Print the output one value per line.} "" -1}
+    {checkbox -r {Only print the range of the data.} "" -r}
+    {checkbox -q {Run quietly.} "" -q}
+    {checkbox -d {Use the current geographic region settings.} "" -d}
+}
