@@ -38,7 +38,7 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     /* Version 3 dig files were not portable and some version 4 
      * files may be also non portable */
 
-    G_message ( _("Reading dig file..."));
+    G_message ( _("Reading dig file...\n"));
 
     /* read and copy head */
     dig_fseek (&gvf, 0L, SEEK_SET) ;   /* set to beginning */
@@ -72,10 +72,10 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     if (buf[0] != '%' || buf[1] != '%') { /* Version3.0 */
 	In_head.Version_Major = 3;
 	portable = 0;  /* input vector is not portable format*/
-        G_message ( _("Input file is version 3.")) ;	
+        G_message ( _("Input file is version 3.\n")) ;	
     } else {
 	In_head.Version_Major = 4;
-	G_message ( _("Input file is version 4.")) ;	
+	G_message ( _("Input file is version 4.\n")) ;	
 	/* determine if in portable format or not */
 	if (buf[6] == 1 && (~buf[6]&0xff) == (buf[7]&0xff)) {   /* portable ? */
 	    portable = 1;  /* input vector is portable format*/
@@ -84,7 +84,7 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 	}
     }
     if ( portable == 1) {
-	G_message ( _("Input file is portable.")) ;
+	G_message ( _("Input file is portable.\n")) ;
     } else {
 	G_warning ( _("WARNING: Input file is not portable."
 		       "We will attempt to convert anyway but conversion may fail."
@@ -158,19 +158,19 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 	}
     }
     if (att) {
-        G_message ( _("%-5d points read to memory"), npoints);
-        G_message ( _("%-5d lines read to memory"), nlines);
+        G_message ( _("%-5d points read to memory\n"), npoints);
+        G_message ( _("%-5d lines read to memory\n"), nlines);
     } else {
-        G_message ( _("%-5d points read and written to output"), npoints);
-        G_message ( _("%-5d lines read and written to output"), nlines);
+        G_message ( _("%-5d points read and written to output\n"), npoints);
+        G_message ( _("%-5d lines read and written to output\n"), nlines);
     }
-    G_message ( _("%-5d area boundaries read and written to output"), nbounds);    
-    G_message ( _("%-5d dead points skipped"), ndpoints);
-    G_message ( _("%-5d dead lines skipped"), ndlines);    
-    G_message ( _("%-5d dead area boundaries skipped"), ndbounds);        
-    G_message ( _("%-5d elements of unknown type skipped"), nunknown);
+    G_message ( _("%-5d area boundaries read and written to output\n"), nbounds);    
+    G_message ( _("%-5d dead points skipped\n"), ndpoints);
+    G_message ( _("%-5d dead lines skipped\n"), ndlines);    
+    G_message ( _("%-5d dead area boundaries skipped\n"), ndbounds);        
+    G_message ( _("%-5d elements of unknown type skipped\n"), nunknown);
 
-    G_message ( _("%-5d elements read to memory."), line);
+    G_message ( _("%-5d elements read to memory.\n"), line);
 
     *plines = lines;
     return (line);
@@ -209,7 +209,7 @@ int read_att (FILE *Attin, struct Categ **pcats )
     double x, y;
     struct Categ *cats;
     
-    G_message ( _("Reading dig_att file..."));
+    G_message ( _("Reading dig_att file...\n"));
     
     ctalloc = 0;
     cats = NULL;
@@ -257,15 +257,15 @@ int read_att (FILE *Attin, struct Categ **pcats )
 	
     }
     
-    G_message ( _("%-5d point categories read"), npoints);
-    G_message ( _("%-5d line categories read"), nlines);    
-    G_message ( _("%-5d centroids read"), ncentroids);    
-    G_message ( _("%-5d dead point categories skipped"), ndpoints);
-    G_message ( _("%-5d dead line categories skipped"), ndlines);    
-    G_message ( _("%-5d dead centroids skipped"), ndcentroids);        
-    G_message ( _("%-5d categories of unknown type skipped"), nunknown);
+    G_message ( _("%-5d point categories read\n"), npoints);
+    G_message ( _("%-5d line categories read\n"), nlines);    
+    G_message ( _("%-5d centroids read\n"), ncentroids);    
+    G_message ( _("%-5d dead point categories skipped\n"), ndpoints);
+    G_message ( _("%-5d dead line categories skipped\n"), ndlines);    
+    G_message ( _("%-5d dead centroids skipped\n"), ndcentroids);        
+    G_message ( _("%-5d categories of unknown type skipped\n"), nunknown);
     
-    G_message ( _("%-5d categories read into memory."), cat);
+    G_message ( _("%-5d categories read into memory.\n"), cat);
     
     *pcats = cats; 
     return (cat);    
