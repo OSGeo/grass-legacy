@@ -3,18 +3,19 @@
  */
 
 /* -*-c-basic-offset: 4;-*- */
-/********************************************************************** 
-*                                                                     *
-*      This is the main program for tracing out the path that a       *
-*      drop of water would take if released at a certain location     *
-*      on an input elevation map.  The program was written by         *
-*      Kewan Q. Khawaja                                               *
-*      kewan@techlogix.com                                            *
-*                                                                     *
+/************************************************************************ 
+*                                                                       *
+*      This is the main program for tracing out the path that a         *
+*      drop of water would take if released at a certain location       *
+*      on an input elevation map.  The program was written by           *
+*      Kewan Q. Khawaja                                                 *
+*      kewan@techlogix.com                                              *
+*                                                                       *
 * update to FP (2000): Pierre de Mouveaux <pmx@audiovu.com><pmx@free.fr>*
-* bugfix in FCELL, DCELL: Markus Neteler 12/2000                      *
-**********************************************************************/
+* bugfix in FCELL, DCELL: Markus Neteler 12/2000                        *
+*************************************************************************/
 
+/* uncomment this to get debug messages */
 /*
 #define DEBUG
 */
@@ -49,7 +50,6 @@ struct metrics {
 
 
 struct Cell_head window;
-CELL *value;
 int nrows, ncols;
 SEGMENT in_seg, out_seg;
 int data_type, data_type2;
@@ -226,7 +226,7 @@ main (int argc, char *argv[])
 				PRESENT_PT = NEXT_START_PT ;
 				/*return(0); quote this out to accept multi-starters,
 				  -modified by Jianping Xu*/
-	    	}
+		    	}
 		}
 		G_site_free_struct(site);	
 		fclose(fp);
@@ -386,7 +386,7 @@ fprintf(stderr,"Mode type: %i\n", mode);
 
 /*	G_close_cell(elevation_fd); */
 
-	G_free(cell); /* activated 12/2000 MN */
+/*	G_free(cell); */
 
 	cell = G_allocate_raster_buf(data_type2); 
 	G_set_null_value(cell,ncols,data_type2);
@@ -421,13 +421,10 @@ fprintf(stderr,"Mode type: %i\n", mode);
 		for(row = 0; row < nrows; row++)
 		{
 			if(G_get_raster_row(drain_path_fd,cell,row, data_type3) < 0)
-		/* Originally: if(G_get_map_row(drain_path_layer,cell,row) < 0).
-		 * Fixed by Jianping Xu*/
 				exit(1);
 
 			for(col = 0; col < ncols; col++)
 			{
-                          /*	if(((int*)cell3)[col] > 0) { */
 				if(!G_is_null_value(cell3,data_type3)) {
 					POINT *new;
 					G_incr_void_ptr(cell3,data_size3);
@@ -524,21 +521,10 @@ int drain_path_finder ( POINT *PRES_PT)
 	POINT *head = NULL, *make_neighbors_list();
 
 	{ /* start a new block to minimize variable use in recursion */
-		int data,row,col, val,val2;
+		int row, col, val, val2;
 		double p_elev, dval, fdata, ddummy;
 		float f, fval, f_elev, fdummy;
-/*		value = &data; */
 
-		/* if the pt has already been traversed, return			*/
-/*  		segment_get(&out_seg, value, PRES_PT_ROW, PRES_PT_COL); */
-/*  		if(data  > 0 ) return 0;	 */	/* already traversed	*/
-
-		/* otherwise, mark on output					*/
-/*		data = 1; */
-
-/*		segment_put(&out_seg, value, PRES_PT_ROW, PRES_PT_COL); */ /* (pmx - for Markus 20 april 2000 */
-
-/*  		value = &p_elev; */
 
 		switch (data_type) {
 			case (CELL_TYPE):
@@ -605,12 +591,16 @@ fprintf(stderr, "p_elev: %g\n", p_elev);
 				break;
 			case (FCELL_TYPE):
 				segment_get(&out_seg, &fval, PRES_PT_ROW, PRES_PT_COL);
+#ifdef DEBUG
+fprintf(stderr, "fval: %g\n", fval);
+#endif
 				if(!G_is_f_null_value(&fval) ) 
 					return 0;		/* already traversed	*/
 				segment_get(&in_seg, &f, PRES_PT_ROW, PRES_PT_COL);
 				f_elev = f;
 #ifdef DEBUG
-fprintf(stderr, "fdata: %g\n", f);
+fprintf(stderr, "PRES_PT_ROW: %i - PRES_PT_COL: %i - ", PRES_PT_ROW, PRES_PT_COL);
+fprintf(stderr, "f: %g\n", f);
 #endif
 				
 				/* check the elevations of neighbouring pts to determine the	*/
@@ -649,6 +639,11 @@ fprintf(stderr, "fdata: %g\n", f);
 						}  else {
 							 fdummy = f;
 						}
+
+#ifdef DEBUG
+fprintf(stderr, "PRES_PT_ROW: %i - PRES_PT_COL: %i - ", PRES_PT_ROW, PRES_PT_COL);
+fprintf(stderr, "fdummy: %g - f_elev: %g\n", fdummy, f_elev);
+#endif
 							/* elev of neighbor is higher. i.e. no chance of flow	*/
 							if(fdummy > f_elev) continue;
 
@@ -662,6 +657,9 @@ fprintf(stderr, "fdata: %g\n", f);
 				break;
 			case (DCELL_TYPE):
 				segment_get(&out_seg, &dval, PRES_PT_ROW, PRES_PT_COL);
+#ifdef DEBUG
+fprintf(stderr, "dval: %g\n", dval);
+#endif
 				if(!G_is_d_null_value(&dval) ) 
 					return 0;		/* already traversed	*/
 				segment_get(&in_seg, &fdata, PRES_PT_ROW, PRES_PT_COL);
@@ -706,7 +704,11 @@ fprintf(stderr, "fdata: %g\n", fdata);
 						}  else {
 							 ddummy = fdata;
 						}
-							/* elev of neighbor is higher. i.e. no chance of flow	*/
+
+#ifdef DEBUG
+fprintf(stderr, "PRES_PT_ROW: %i - PRES_PT_COL: %i - ", PRES_PT_ROW, PRES_PT_COL); 
+fprintf(stderr, "ddummy: %g - p_elev: %g\n", ddummy, p_elev);
+#endif							/* elev of neighbor is higher. i.e. no chance of flow	*/
 							if(ddummy > p_elev) continue;
 
 						/* if elev of neighbor is equal or lower consider for	*/
