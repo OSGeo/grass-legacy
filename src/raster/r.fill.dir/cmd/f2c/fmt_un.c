@@ -27,9 +27,9 @@ main(int argc, char **argv)
 		exit(1);
 	}
 
-	fscanf(fp, "%[^\n]\n", t1);
-	fscanf(fp, "%[^\n]\n", t2);
-	fscanf(fp, "%[^\n]\n", t3);
+	fscanf(fp, "%s", t1);
+	fscanf(fp, "%s", t2);
+	fscanf(fp, "%s", t3);
 	fclose(fp);
 
 	if(!(fp = fopen(t1, "r"))){
