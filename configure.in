@@ -614,8 +614,6 @@ USE_OGR=
 
 if test "$GDAL_CONFIG" != "" ; then
   GDAL_LIBS=`"$GDAL_CONFIG" --libs`
-  GDAL_DEP_LIBS=`"$GDAL_CONFIG" --dep-libs 2>/dev/null`
-  GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"
   GDAL_CFLAGS=`"$GDAL_CONFIG" --cflags`
   USE_GDAL=1
   if test `"$GDAL_CONFIG" --ogr-enabled` = "yes" ; then
