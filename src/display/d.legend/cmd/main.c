@@ -73,8 +73,8 @@ int main(int argc,char **argv)
 	opt4->description= "Number of text lines (useful for truncating long legends)" ;
 
         flag1 = G_define_flag();
-        flag1->key      = 'f';
-        flag1->description= "Do not display no data values.";
+        flag1->key      = 'n';
+        flag1->description= "Do not display no data (NULL) values.";
                         
 
 	/* Initialize the GIS calls */
