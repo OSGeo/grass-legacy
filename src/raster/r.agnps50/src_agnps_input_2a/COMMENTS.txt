@@ -1,0 +1,92 @@
+                    History
+
+2/21/92
+
+Greclass names are changed in the following files to convert to grass4.0 version
+
+cell_num_id.c
+misc_routines.c
+
+removed G_system calls from the following routines
+slope_aspect.c
+get_input_names.c
+
+
+1995: 
+Comments on Zhian's wonderful work!
+
+1.  Many new parameters were added to agnps_input.h to 
+    represent point source data
+
+2.  The agnps_input.c source is now 3 times as large as previously to 
+    enable inputting and handling of point source data.
+
+3.  Two new functions have been added for input:
+
+get_pts_dat.c
+
+  Displays the  watershed map and enables the user to enter the 
+  point source data at any site in the watershed.  Up to 9 point 
+  sources are allowed per site.  
+
+ptsrc_input.c
+
+  Called by get_pts_dat.c for detailed description of point source data. 
+
+4.  The original get_wshd_input.c function has been modified to 
+    accomodate the new features.
+
+2,4,6/1996: 
+  Several changes made by NCSU
+
+12.12.1996:       
+         Corrections were necessary in
+                  agnps_input.c
+         to use the agnps_input_2 with LinuX. 
+         The import of K-factor and C-factor was not done in
+         the correct way: The conversion of the category
+         (string), containing the K-factor resp. the C-factor, into
+         the float-format was incorrect (error-message: "K-factor not
+         between 0-1"). So I made a correction of these conversion 
+         commands.
+         Other Changes: The K-factor was tested twice of it's correct
+         value, the second test is changed now to the test of the 
+         C-factor value (makes more sense...).
+
+         
+         Changed the number of Maximum cells from 10000 to 50000.
+         This change was made in agnps_input.h
+
+         Other changes were made in 
+               src_agnps_input_1/agnps_input.h
+         See COMMENTS.txt there.
+
+19.12.96
+ - Renamed agnps_input2 to agnps_input2a in Gmakefile
+
+ - Changed misc_routines.c for using r.cn2 instead of r.cn
+
+
+15. March 1998 - Markus Neteler
+
+    New names for the modules
+
+       renamed
+         agnps_input -> r.agnps50.input
+         run_agnps50 -> r.agnps50.run
+         agnps_view  -> r.agnps50.view
+
+
+
+  
+
+----------------------------------------------------------
+      
+
+                  December 1996
+                  Markus Neteler
+                  Department of Geography
+                  Institute of Physical Geography and Landscape-ecology
+                  30167 Hannover, Germany
+                  email: neteler@geog.uni-hannover.de
+ 
