@@ -3,7 +3,7 @@ LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
 PGM    = d.what.sites
 
 LIST   = main.o \
-	 opensite.o\
+	 loadsites.o\
 	 show.o\
 	 what.o
 
@@ -11,6 +11,6 @@ LIST   = main.o \
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIST): what.h
+$(LIST): #
 
 $(LIBES): #
