@@ -1,0 +1,4 @@
+$(BIN)/Xoverlay: overlay.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
