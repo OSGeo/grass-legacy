@@ -2,6 +2,7 @@ PGM = r.series
 
 METHODS = \
 	c_ave.o \
+	c_count.o \
 	c_max.o \
 	c_min.o \
 	c_mode.o \
