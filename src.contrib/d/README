@@ -1,0 +1,24 @@
+This is a "pilot" version of a new display program.
+It is interactive, of sorts, but with a terse command set.
+Plots cell files, vector files, site files, and label files.
+
+It has some nice features, such as:
+    prompting for cell file names, vector files names and colors, etc.
+    graphic window management
+	creating new windows
+        copying window contents to another window
+	saving the window contents in the database for later use
+
+    command scripts - what is displayed in a window is
+	remembered and used to redraw the window when it is
+	    moved, resized, etc.
+
+	Also, when the cell file is changed, all the vectors are
+	automatically redrawn. Same idea for vectors, or sites, or labels.
+
+    it provides an interface to both the "window" and "d.window"
+    program.
+    
+    etc.
+
+It can also be used as a command line program as well.
