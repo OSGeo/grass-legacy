@@ -29,7 +29,7 @@ make mix           - create symbolic links to grass50 for not yet uploaded files
 make copymix       - copy files from grass50
 make clean         - delete all files created by 'make' 
 make distclean     - 'make clean' + delete all files created by './configure'
-
+make mixclean      - delete all symbolic links created by make mix
 
 INSTALLATION
 
