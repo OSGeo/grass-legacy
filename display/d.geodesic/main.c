@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <string.h>
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
@@ -47,7 +49,7 @@ int main (int argc, char *argv[])
     parm.tcolor->description= "Text color" ;
     parm.tcolor->options    = D_color_list();
 
-    if (argc > 1 && G_parser(argc, argv))
+    if (G_parser(argc, argv))
         exit(-1);
 
     if (G_projection() != PROJECTION_LL)
