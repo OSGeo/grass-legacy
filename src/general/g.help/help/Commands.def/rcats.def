@@ -1,0 +1,8 @@
+
+
+r.cats - 
+
+r.cats prints the \category values\ and \labels\ for the raster map
+layer, specified by the user, to standard output.
+
+Manual entry for \r.cats\
