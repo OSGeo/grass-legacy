@@ -1,6 +1,9 @@
-/* updated GRASS 5 Bill Hughes 9/99 */
-/* main.c    1.0   10/01/89
-/* main.c    1.1   1/30/91
+/*
+ * $Id$
+ * updated by David D Gray <ddgray@armadce.demon.co.uk> 4/2000 
+ * updated GRASS 5 Bill Hughes 9/99
+ * main.c    1.0   10/01/89
+ * main.c    1.1   1/30/91
 *    Created by : R.L.Glenn , Soil Conservation Service, USDA
 *    Purpose: Productivity tool
 *	      Provides a means of generating vector (digit) files
@@ -325,7 +328,7 @@ int main (int argc, char **argv)
 	    }
 	 }
      if( G_write_vector_cats( output, &temp_cats ))
-       fprintf( stderr, "Could not write category file" );
+       fprintf( stderr, "Could not write category file, see error above." );
 
      sprintf( buffr, "%s/etc/v.build  map=%s  thresh=no",G_gisbase(),output);
      system(buffr);
