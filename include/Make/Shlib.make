@@ -1,6 +1,4 @@
 # common dependencies and rules for building shared libraries
-include $(MODULE_TOPDIR)/include/Make/Platform.make
-include $(MODULE_TOPDIR)/include/Make/Grass.make
 
 SHLIB = $(ARCH_LIBDIR)/$(SHLIB_PREFIX)$(SHLIB_NAME).$(VERSION_NUMBER)$(SHLIB_SUFFIX)
 
