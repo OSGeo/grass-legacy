@@ -91,6 +91,7 @@ if (max < 0) max = 0;
 	Dnew(MOU.name, MOU.bot, MOU.top, MOU.left, MOU.right) ;
 	Dnew(STA.name, STA.bot, STA.top, STA.left, STA.right) ;
 	Dnew(MAP.name, MAP.bot, MAP.top, MAP.left, MAP.right) ;
+	Dnew(ORIG.name, ORIG.bot, ORIG.top, ORIG.left, ORIG.right) ;
 	for (i=0; i<=3; i++)
 		Dnew(profiles[i].name,profiles[i].bot,profiles[i].top,
 		    profiles[i].left,profiles[i].right);
@@ -131,7 +132,10 @@ if (max < 0) max = 0;
 
 			/* exit if user hit left mouse button */
 			if(button == 3)
+			{
+				Dchoose(ORIG.name);
 				return(0) ;
+                        }
 
 			/* convert to (easting,northing) coordinates */
 			cur_uy = D_d_to_u_row((double)screen_y);
@@ -335,7 +339,10 @@ if (max < 0) max = 0;
 
 		R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
 		if (button == 3)
+		{
+			Dchoose(ORIG.name);
 			return(0);
+                }
 		else if (button == 2)
 		{
 			Dchoose(MAP.name);
@@ -349,6 +356,9 @@ if (max < 0) max = 0;
 			CurrentWin=0;
 		}
 		else
-			cfree(profile.ptr);
+		{
+			free(profile.ptr);
+                }
 	}
+
 }
