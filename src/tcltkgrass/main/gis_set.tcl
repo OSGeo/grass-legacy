@@ -201,7 +201,7 @@ proc SetDatabase {widget top entryWidget locList mapList} \
 	}
     }
     
-    .frame0.frame4.ok configure -state disable
+    .frame0.frame4.ok configure -state disabled
     destroy $top
 }
 
@@ -542,7 +542,7 @@ proc gisSetWindow {} {
            .frame0.frame3.listbox delete 0 end
            set database [exec pwd]
         }
-	.frame0.frame4.ok configure -state disable
+	.frame0.frame4.ok configure -state disabled
   }
 
   bind .frame0.frame2.listbox <Double-ButtonPress-1> {
@@ -559,7 +559,7 @@ proc gisSetWindow {} {
            }
         }
         set mapset ""
-	.frame0.frame4.ok configure -state disable
+	.frame0.frame4.ok configure -state disabled
   }
 
   bind .frame0.frame2.listbox <ButtonPress-1> {
@@ -576,7 +576,7 @@ proc gisSetWindow {} {
            }
         }
         set mapset ""
-	.frame0.frame4.ok configure -state disable
+	.frame0.frame4.ok configure -state disabled
   }
 
   bind .frame0.frame3.listbox <Double-ButtonPress-1> {
@@ -703,7 +703,7 @@ global gisrc_name
 
 set ver [info tclversion]
 
-if { [string compare -nocase $ver "8.0"] < 0} \
+if { [string compare $ver "8.0"] < 0} \
 {
     puts stderr "Sorry your version of Tcl/Tk is $ver and is too old for GRASS."
     puts stderr "GRASS requires a TCL/TK version of 8.0 or more."
