@@ -251,6 +251,7 @@ Vect_build_shp ( struct Map_info *Map, int build, FILE *msgout )
 	    prnmsg ("%4d%%\b\b\b\b\b", progress);
 	}
     }
+    plus->built = GV_BUILD_ALL;
     
     return 1;
 }
