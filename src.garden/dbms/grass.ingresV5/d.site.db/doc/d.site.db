@@ -1,0 +1,264 @@
+
+
+
+d.site.db            GRASS Reference Manual             d.site.db
+
+
+
+NAME
+     d.site.db - Display select sites from a database query.
+     (GRASS-RDBMS Interface Display Program)
+
+SYNOPSIS
+     d.site.db
+     d.site.db help
+     d.site.db tab=name coords=X-column,Y-column where=name
+     [map=name] [plot=color,icon,size] [join=tab,tabkey,pkey]
+
+ALTERNATE
+     d.site.db -s help
+     d.site.db -s sql=filename [map=name][plot=color,icon,size]
+
+DESCRIPTION
+     d.site.db displays select point location information
+     returned from a database query.  The site locations returned
+     from the database query are displayed as icons in the active
+     frame. The user controls the color, size and icon used in
+     the graphic output. At the users option a site list of the
+     database output is generated and placed in the current
+     mapset/location.
+
+COMMAND LINE OPTIONS
+     Parameters
+
+     tab=database_table_name
+          Table containing X, Y coordinate values.
+
+     coords=database_column_names
+          Columns containing x,y coordinate values.
+
+     where=SQL_where_clause
+          SQL "WHERE" clause which specifies the query criteria
+          to be used in subsetting the database. The information
+          specified in the WHERE option must indicate the
+          column(s) to be used, the operators to be used in the
+          evaluation and the values which the data in the column
+          will be evaluated against.
+
+          For example, if you want to select only those records
+          where the value for road is either 1 or 5 the following
+          could be entered:
+
+               road = 1 or road = 5
+
+          To select all roads in an area where the value for road
+          is between 2 and 4:
+
+               road > 1 and road < 5
+
+          To select all roads of type 1 in an area where the
+
+
+
+GRASS                    U.S. Army CERL                         1
+
+
+
+
+
+
+d.site.db            GRASS Reference Manual             d.site.db
+
+
+
+          value for surface is not equal to dirt:
+
+               road = 1 and surface != "dirt"
+
+          If the database column used as the selection criteria
+          is a character field then the associated value must be
+          placed in double quotes. To determine the data types
+          associated with columns in the currently selected
+          database use the g.column.db command with the -v flag.
+
+          In addition to the operators presented in the examples
+          above a range of relational operators including OR and
+          BETWEEN etc. are supported. There may be some
+          differences in the relational operators which are
+          supprted with different database drivers.
+
+          The examples presented above were created using the
+          command line parser.  If d.site.db is being called from
+          a shell script remember to escape quoted strings. The
+          follwing example presents a component of a shell script
+          used to join two tables and display vector features
+          where the database column addinfo is set to "NONE".
+
+               d.site.db tab=main coords=utm_e,utm_y
+                      where=addinfo=\"NONE\"
+                      map=$1 plot=green,plus,2 join=rds2,cat2,cat
+
+          Queries which are more complex than these are best
+          implemented using the -s flag and a prepared SQL file.
+
+     map=list
+          Name of sites list to output.
+
+     plot=color,icon,size
+          Colors:red, orange, yellow, green, blue, indigo,
+          violet, magenta, brown, gray, white, black.
+          Icon: diamond, box, plus, x.
+          Size: 1-9.
+          default: gray, x, 3
+
+     join=tab,tabkey,pkey
+          Tab is the table used to develop the current SQL query.
+          Tabkey is the database column used to relate
+          information in this table with data in the table linked
+          to the GRASS category file. Pkey is the associated
+          column in the table linked to the GRASS category file
+          which is related to tabkey in the current table.
+
+          For instance, assume that main is a table containing
+          column values associated with category values in a
+          GRASS raster or vector file.  In addition, assume that
+          roads is a table containing attribute data on the
+
+
+
+GRASS                    U.S. Army CERL                         2
+
+
+
+
+
+
+d.site.db            GRASS Reference Manual             d.site.db
+
+
+
+          transportation network in the same area. In this
+          example main_key is the column linking main to the
+          GRASS category file and road_key is the column linking
+          roads with the table main. To specify a query based on
+          attribute values in the table roads the join statement
+          would be:
+
+               join=roads,road_key,main_key.
+
+          Specifying these conditions would insure that all rows
+          from table roads which satisfy the query criteria would
+          be matched with the corresponding rows in table main,
+          which are then related to the spatial features in the
+          GRASS data layer via the GRASS category values.
+
+          This syntax is adequate to accomplish 2 table joins.
+          However, if the query demands joins between more than 2
+          tables it is advisable to use the -s option [see
+          Alternate Command Line Usage] to read a user prepared
+          query, complete with join requirements, from a file.
+
+ALTERNATE COMMAND LINE USAGE
+     The alternate command line usage is provided to simplify the
+     process of retrieving information from more than one table
+     in the query criteria. The alternate command line structure
+     is selected using the the [-s] flag on the command line.
+     When using this flag the user must include the name of a
+     text file on the command line as well. This file must
+     include a complete, well formed SQL SELECT statement
+     specifying the query criteria and all relevant JOINS needed
+     to retrieve values which correspond to category values in a
+     GRASS data layer.
+
+     The user must also specify the name of the GRASS data layer
+     containing these category values on the command line. The
+     following example illustrates the syntax which must be used
+     in constructing a SELECT statement for use with the -s flag.
+
+          SELECT UNIQUE utm_e, utm_n FROM utm
+          WHERE mlra="116A"
+                AND hydunit=11110103
+                AND utm_e > 0 AND utm_n > 0
+          ORDER BY utm_e, utm_n
+
+
+
+
+     Flags
+
+     -s   SQL select statements are input from a prepared file.
+
+
+
+
+
+GRASS                    U.S. Army CERL                         3
+
+
+
+
+
+
+d.site.db            GRASS Reference Manual             d.site.db
+
+
+
+     Parameters
+
+     sql=filename
+          SQL statements specifying well formed selection
+          criteria.
+
+     map=list
+          Name of sites list to output.
+
+     plot=color,icon,size
+          Colors:red, orange, yellow, green, blue, indigo,
+          violet, magenta, brown, gray, white, black;
+          Icon: diamond, box, plus, x;
+          Size: 1-9.
+          default: gray, x, 3
+
+BUGS
+     None known.
+
+
+SEE ALSO
+     g.column.db, g.select.db, g.stats.db, g.table.db, d.rast.db,
+     d.vect.db, d.what.r.db, d.what.s.db, d.what.v.db,
+     r.reclass.db, r.rescale.db, v.reclass.db
+
+
+AUTHOR
+     James A. Farley, Wang Song and W. Fredrick Limp University
+     of Arkansas, CAST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS                    U.S. Army CERL                         4
+
+
+
