@@ -40,7 +40,7 @@ int main (int argc, char *argv[])
     parm.lcolor->required   = NO ;
     parm.lcolor->description= "Line color" ;
     parm.lcolor->options    = D_color_list();
-    parm.lcolor->answer     = "white";
+    parm.lcolor->answer     = DEFAULT_FG_COLOR;
 
     parm.tcolor = G_define_option() ;
     parm.tcolor->key        = "tcolor" ;
@@ -91,12 +91,12 @@ int main (int argc, char *argv[])
 
     line_color = D_translate_color (parm.lcolor->answer);
     if (!line_color)
-	line_color = D_translate_color (parm.lcolor->answer = "white");
+	line_color = D_translate_color (parm.lcolor->answer = DEFAULT_FG_COLOR);
 
-    if(strcmp (parm.lcolor->answer, "white") == 0)
+    if(strcmp (parm.lcolor->answer, DEFAULT_FG_COLOR) == 0)
 	deftcolor = "red";
     else
-	deftcolor = "white";
+	deftcolor = DEFAULT_FG_COLOR;
 
     if (parm.tcolor->answer == NULL)
 	text_color = D_translate_color (deftcolor);
