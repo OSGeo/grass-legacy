@@ -16,3 +16,4 @@ GLOBAL CELL *mask;
 GLOBAL int (*get_row)();
 
 GLOBAL char fs[2];
+GLOBAL struct Categories *labels INIT(NULL) ;
