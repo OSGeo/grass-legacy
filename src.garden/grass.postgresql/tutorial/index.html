@@ -483,6 +483,29 @@ map</b>
 <br>v.reclass.pg
 <br>[...]
 <p>
+<br><i></i>&nbsp;
+<p>------------------------------------------------------------------------
+<br><b>J) Problems importing DBF-tables into PostgreSQL?</b>
+<br>------------------------------------------------------------------------
+<br>The most common problem ( as i run into it too often) while
+converting *.dbf files to Postgres with pg.in.dbf, v.in.arc.pg and
+v.in.shape.pg is format dismatch - pg_atoi() ERROR - saying there's something
+in the field declared as int (or  float) that does not seem like number,
+such as "***", "NO", "infrared spectrum", etc. 
+<p>Alas, postgres is very
+restrictive (unlike we people who type in this stuff). My approach to this
+(as i still want to import the .shp from Arcview that my collegue sent me
+from ArcviewLand) - exit the program  - it would already have done so-, and
+rerun the module saying "no" to dbf-to-postgres dump.okay, after we have
+imported the coverage , let's use pg.in.dbf and say "yes" to question
+"Do you want additionally DUMP to ASCII?". <p>
+Now, find the line(s) that spoils
+your breakfast (hopethere are not many), kill'em all and then -  use psql
+and COPY TABLE from '/home/user/user.stuff'. That's it. Besides, dumping to
+ascii file and doing things about it before importing to postgres is a must
+when there are some weird encoding chars in text fields.
+<p>Alex
+<p>
 <hr WIDTH="100%">
 <br><i>Please send tutorial
 improvements to</i>
