@@ -1,10 +1,8 @@
-$Id: TODO,v 1.11 2000-08-19 14:30:39 markus Exp $
+$Id: TODO,v 1.12 2000-08-19 16:35:08 markus Exp $
 
 TODO for GRASS GIS:
 
-- Fix the bugs in BUGS
-  (Being worked on by )
-
+- Fix the bugs described in BUGS
 
 ---------------------------------------------------------------------
 Wishlist for GRASS 5
@@ -21,12 +19,15 @@ Configure:
      - search for "yacc" and "(f)lex"
   (Being worked on by )
 
-- extended "autoconf" for entire package
-  (Being worked on by )
+- extended "autoconf" for entire package (new Makefiles)
+  (Being worked on by Eric Mitchell <emitchell@altaira.com>)
 
-- ps.map:
-  set CC option "-fwritable-strings" on Linux or, better, update ps.map!
-  (Being worked on by )
+--------------------------------------------------------------------
+Regression test suite:
+ There are already some testing programs in the source code (e. g.               
+ src/libes/gis/TESTS, src/libes/datetime/tests). Not a real regression           
+ testing suite, but may be good as a starting point.   
+ (Being worked on by )
 
 --------------------------------------------------------------------
 Font selection:
@@ -101,4 +102,8 @@ Modules:
   button to get a list of raster files instead of having the
   raster files appear automatically when we call the d.rast
   module from the menu (edit gui.tcl)
+  (Being worked on by )
+
+- ps.map:
+  set CC option "-fwritable-strings" on Linux or, better, update ps.map!
   (Being worked on by )
