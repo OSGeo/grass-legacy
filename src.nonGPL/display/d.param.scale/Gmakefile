@@ -40,8 +40,6 @@ OBJ =\
 	init_graphics.o	\
 	process.o	\
 	find_normal.o	\
-	ludcomp.o	\
-	lubksub.o	\
 	disp_graph.o	\
 	nrutil.o	\
 	param.o		\
