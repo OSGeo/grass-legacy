@@ -2,11 +2,6 @@
 #include <stdlib.h>
 #include "dbmi.h"
 
-/*can be deleted?:*/
-/* extern char *malloc(); */
-/* extern char *calloc(); */
-/* extern char *realloc(); */
-
 /*!
  \fn char *db_store(char *s)
  \brief 
