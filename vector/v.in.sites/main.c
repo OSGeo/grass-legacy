@@ -82,10 +82,10 @@ int main (int argc, char *argv[])
     mapset = G_find_file2 ("site_lists", sname, "");
     if (mapset == NULL) G_fatal_error("Site file file [%s] not available\n",sname);
 
-    if ((site = G_sites_open_old ( sname, mapset)) == NULL)
+    if ((site = G_oldsites_open_old ( sname, mapset)) == NULL)
         G_fatal_error ("Not able to open site file <%s@%s>\n", sname, mapset);
 
-    if (G_site_describe(site, &dims, &map_type, &strs, &dbls) != 0) 
+    if (G_oldsite_describe(site, &dims, &map_type, &strs, &dbls) != 0) 
         G_fatal_error("Unable to guess site_list format!\n");
 
     if ((s = G_site_new_struct(map_type, dims, strs, dbls)) == NULL)
@@ -100,7 +100,7 @@ int main (int argc, char *argv[])
     }
 
     clen = (int *) G_calloc ( strs, sizeof ( int ) );
-    while ( G_site_get(site,s) >= 0) {
+    while ( G_oldsite_get(site,s) >= 0) {
 	for ( i = 0; i < strs; i++ ) {
 	    len = strlen ( s->str_att[i] );
 	    if ( len > clen[i] ) clen[i] = len;
@@ -166,7 +166,7 @@ int main (int argc, char *argv[])
 
     count = 0;
     rewind ( site );
-    while ( G_site_get(site,s) >= 0) {
+    while ( G_oldsite_get(site,s) >= 0) {
 	/* Geometry */
 	Vect_reset_line ( Points );
 	Vect_reset_cats ( Cats );

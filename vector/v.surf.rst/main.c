@@ -644,7 +644,12 @@ int main ( int argc, char *argv[])
 		     rsm, elev, slope, aspect, pcurv, tcurv, mcurv, dmin, x_orig, y_orig, deriv,theta, scalex,
 		     Tmp_fd_z, Tmp_fd_dx, Tmp_fd_dy, Tmp_fd_xx, Tmp_fd_yy, Tmp_fd_xy, fddevi, inhead.time);
 
+  /*
   IL_init_func_2d (&params, IL_grid_calc_2d, IL_matrix_create, IL_check_at_points_2d,
+		 IL_secpar_loop_2d, IL_crst, IL_crstg, IL_write_temp_2d);
+  */
+
+  IL_init_func_2d (&params, IL_grid_calc_2d, IL_matrix_create, NULL,
 		 IL_secpar_loop_2d, IL_crst, IL_crstg, IL_write_temp_2d);
 
   totsegm = IL_vector_input_data_2d (&params, &Map, field, zcol, scol, flag.iselev->answer, 
@@ -781,7 +786,7 @@ int main ( int argc, char *argv[])
     unlink (Tmp_file_xy);
 
   if (fddevi != NULL)
-    fclose (fddevi);
+    G_sites_close (fddevi);
 
   exit (0);
 }

@@ -12,6 +12,7 @@ SUBDIRS = \
 	ps \
 	raster \
 	scripts \
+	sites \
 	tools \
 	vector \
 	visualization

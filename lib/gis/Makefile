@@ -152,8 +152,6 @@ LIB_OBJS = \
 	range.o\
 	raster.o\
 	rd_cellhd.o\
-	readsites.o\
-	readsites_xyz.o\
 	reclass.o\
 	remove.o\
 	rename.o\

@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
-#include "site.h"
 #include "display.h"
 #include "raster.h"
 #include "Vect.h"
@@ -33,8 +32,8 @@ main (int argc, char **argv)
     struct Cell_head window;
     
     /* Initialize globals */
-    rast = vect = site = NULL;
-    nrasts = nvects = nsites = 0;
+    rast = vect = NULL;
+    nrasts = nvects = 0;
     
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
@@ -64,14 +63,6 @@ main (int argc, char **argv)
             vect[nvects] = NULL;
         }
 
-        if(D_get_site_list (&site, &nsites) < 0)
-            site = NULL;
-        else
-        {
-            site = (char **)G_realloc(site, (nsites+1)*sizeof(char *));
-            site[nsites] = NULL;
-        }
-
         R_close_driver();
     }
                     
@@ -95,16 +86,6 @@ main (int argc, char **argv)
     vmap->gisprompt = "old,dig,vector" ;
     vmap->description = "Name of vector map";
                                                         
-    smap = G_define_option();
-    smap->key = "site";
-    smap->type = TYPE_STRING;
-    smap->multiple = YES;
-    if (site)
-          smap->answers = site;
-    smap->required = NO;
-    smap->gisprompt = "old,site_lists,sites" ;
-    smap->description = "Name of site file";
-
     zoom = G_define_option() ;
     zoom->key        = "zoom" ;
     zoom->type       = TYPE_DOUBLE ;
@@ -131,20 +112,20 @@ main (int argc, char **argv)
     hand->key = 'h';
     hand->description = "Handheld mode";
 
-    if(!rast && !vect && !site)
+    if(!rast && !vect )
     {
 	  rmap->required = YES;
 	  just->answer = 1;
     }
 
-    if ((argc > 1 || (!rast && !vect && !site)) && G_parser(argc,argv))
+    if ((argc > 1 || (!rast && !vect )) && G_parser(argc,argv))
 	exit(1);
 
     sscanf(zoom->answer,"%lf", &magnify);
 
 #ifdef QUIET
     /* if map was found in monitor: */
-    if (rast || vect || site) 
+    if (rast || vect ) 
        quiet->answer=1;
 #endif
 
@@ -189,13 +170,6 @@ main (int argc, char **argv)
 	{
 	    vect = NULL;
 	    nvects = 0;
-	}
-    	if (smap->answers && smap->answers[0])
-	    site = smap->answers;
-	else
-	{
-	    site = NULL;
-	    nsites = 0;
 	}
     }
 
@@ -300,74 +274,6 @@ main (int argc, char **argv)
     if (smap->required == YES && smap->answers == NULL)
 	exit(0);
 
-    if (site)
-    {
-	FILE *fp;
-	Site *s;
-	int rtype, ndim, nstr, ndec;
-
-	for(i=0; site[i]; i++);
-	nsites = i;
-
-	for(i=0; i<nsites; i++){
-    		mapset = G_find_sites2 (site[i], "");
-    		if (mapset == NULL)
-    		{
-			char msg[256];
-			sprintf(msg,"Site file [%s] not available", site[i]);
-			G_fatal_error(msg) ;
-		}
-		else
-		{
-			if(NULL != (fp = G_fopen_sites_old(site[i], mapset)))
-			{
-				rtype = -1;
-				G_site_describe(fp, &ndim, &rtype, &nstr, &ndec);
-				s = G_site_new_struct(rtype, ndim, nstr, ndec);
-				/*
-				while(G_site_get(fp, s) == 0)
-				{
-				*/
-				while(!feof(fp))
-				{
-					if(G_site_get(fp, s))
-						continue;
-					if(first)
-					{
-						first = 0;
-						U_east = s->east;
-						U_west = s->east;
-						U_south = s->north;
-						U_north = s->north;
-					}
-					else
-					{
-						if(s->east > U_east)
-							U_east = s->east;
-						if(s->east < U_west)
-							U_west = s->east;
-						if(s->north < U_south)
-							U_south = s->north;
-						if(s->north > U_north)
-							U_north = s->north;
-					}
-				}
-
-				/* is 100 enough to contain one point from
-				 * boundary?
-				 */
-				U_east += 100;
-				U_west -= 100;
-				U_south -= 100;
-				U_north += 100;
-
-				G_free(s);
-				fclose(fp);
-			}
-		}
-	}
-    }
-
 #ifdef BOUNDARY
     if(!first)
     {
@@ -397,10 +303,9 @@ main (int argc, char **argv)
     D_setup(0);
 
     if ( !hand->answer ) { 
-        fprintf(stderr, "%d raster%s, %d vector%s, %d site file%s\n",
+        fprintf(stderr, "%d raster%s, %d vector%s\n",
 		    nrasts, (nrasts > 1 ? "s":""),
-		    nvects, (nvects > 1 ? "s":""),
-		    nsites, (nsites > 1 ? "s":""));
+		    nvects, (nvects > 1 ? "s":""));
     }
 
     /* Do the zoom */
@@ -421,9 +326,6 @@ main (int argc, char **argv)
 
     if (vect)
       R_pad_freelist(vect, nvects);
-
-    if (site)
-      R_pad_freelist(site, nsites);
 
     exit(stat);
 }
