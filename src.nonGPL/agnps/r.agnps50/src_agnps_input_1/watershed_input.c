@@ -102,6 +102,7 @@ watershd_input()
         V_ques(wshd_des, 's', 12, 55, 15);
         V_ques(&grid_res,'i', 14, 55, 4);
 
+        V_intrpt_ok();
         if(!V_call()) exit(1);
 
         temp = fopen("temp_file","w");
