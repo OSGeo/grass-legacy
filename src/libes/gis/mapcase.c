@@ -6,6 +6,18 @@
 static int toupper(char);
 static int tolower(char);
 
+
+/*!
+ * \brief convert string to lower case
+ *
+ * Upper case
+ * letters in the string <b>s</b> are converted to their lower case equivalent.
+ * Returns <b>s.</b>
+ *
+ *  \param s
+ *  \return char * 
+ */
+
 char *
 G_tolcase (string)
     char *string;
@@ -28,6 +40,17 @@ static int tolower(char c)
 /*
  * Map lowercase a-z to uppercase A-Z
  *
+ */
+
+
+/*!
+ * \brief convert string to upper case
+ *
+ * Lower case letters in the string <b>s</b> are converted to their upper case equivalent.
+ * Returns <b>s.</b>
+ *
+ *  \param s
+ *  \return char * 
  */
 
 char *

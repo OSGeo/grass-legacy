@@ -15,6 +15,19 @@
 #include "gis.h"
 #include "glocale.h"
 
+
+/*!
+ * \brief location title
+ *
+ * Returns a one line title for
+ * the database location. This title is read from the file MYNAME in the
+ * PERMANENT mapset. See also Permanent_Mapset for a discussion of the
+ * PERMANENT mapset.
+ *
+ *  \param void
+ *  \return char * 
+ */
+
 char *
 G_myname()
 {
