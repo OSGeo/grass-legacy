@@ -27,7 +27,7 @@ void getParams(char **input, char **output, int *decim);
 void writeHeaderString(FILE *fp, char *valueString, double value);
 void writeHeaderString2(FILE *fp, char *valueString, int value);
 FILE *openAscii(char *asciiFile, G3D_Region region);
-void G3dToascii(FILE *fp, G3D_Region *region, int decim);
+void G3dToascii(FILE *fp, G3D_Region region, int decim);
 
 /* globals */
 void *map = NULL;
@@ -41,7 +41,7 @@ void fatalError(char *errorMsg) {
   if (map != NULL) {
     /* should unopen map here! */
   }
-  
+
   G3d_fatalError (errorMsg);
 }
 
@@ -56,7 +56,7 @@ void setParams() {
   param.input->gisprompt = "old,grid3,3d-raster";
   param.input->multiple = NO;
   param.input->description = "3dcell map to be converted to ASCII";
-  
+
   param.output = G_define_option();
   param.output->key = "output";
   param.output->type = TYPE_STRING;
@@ -89,14 +89,14 @@ void setParams() {
  */
 void getParams(char **input, char **output, int *decim) {
   *input = param.input->answer;
-  *output = param.output->answer; 
+  *output = param.output->answer;
   sscanf(param.decimals->answer, "%d", decim);
 }
 
 /*---------------------------------------------------------------------------*/
 /* This function is used to write parts of the header for the output
  * ASCII file.
- */ 
+ */
 void writeHeaderString(FILE *fp, char *valueString, double value) {
   static char format[100];
 
@@ -137,31 +137,44 @@ FILE *openAscii(char *asciiFile, G3D_Region region) {
     writeHeaderString(fp, "west:", region.west);
     writeHeaderString(fp, "top:", region.top);
     writeHeaderString(fp, "bottom:", region.bottom);
-    writeHeaderString2(fp, "rows:", region.rows); 
-    writeHeaderString2(fp, "cols:", region.cols); 
-    writeHeaderString2(fp, "levels:", region.depths); 
+    writeHeaderString2(fp, "rows:", region.rows);
+    writeHeaderString2(fp, "cols:", region.cols);
+    writeHeaderString2(fp, "levels:", region.depths);
   }
-  
+
   return fp;
 }
 
 /*---------------------------------------------------------------------------*/
 /* This function does all the work.  Basically, we just output the
  * source G3d file one layer at a time.
- */
-void G3dToascii(FILE *fp, G3D_Region *region, int decim) {
+ */                              /* * */
+void G3dToascii(FILE *fp, G3D_Region region, int decim) {
   double d1 = 0;
   double *d1p;
   float *f1p;
   int x, y, z;
   int rows, cols, depths, typeIntern;
 
+/*AV*/
+/* BEGIN OF ORIGINAL CODE */
+/*
   G3d_getCoordsMap (map, &rows, &cols, &depths);
-  typeIntern = G3d_tileTypeMap (map);
+*/
+/* END OF ORIGINAL CODE */
 
-  d1p = &d1; f1p = (float *) &d1;
+/*AV*/
+/* BEGIN OF MY CODE */
+	rows = region.rows;
+	cols =region.cols;
+	depths = region.depths;
+/* END OF MY CODE */
 
-  for (z = 0; z < depths; z++) 
+	typeIntern = G3d_tileTypeMap (map);
+
+	d1p = &d1; f1p = (float *) &d1;
+
+	for (z = 0; z < depths; z++)
     for (y = rows-1; y >= 0; y--) {    /* north to south */
       for (x = 0; x < cols; x++) {
 	G3d_getValue (map, x, y, z, d1p, typeIntern);
@@ -216,10 +229,10 @@ int main(int argc, char *argv[]) {
 /*  map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
 			G3D_TILE_SAME_AS_FILE,
 			G3D_NO_CACHE);*/
-  /* using cache mode due to bug */			
+  /* using cache mode due to bug */
   map = G3d_openCellOld(input, G_find_grid3(input, ""), G3D_DEFAULT_WINDOW,
 			G3D_TILE_SAME_AS_FILE,
-			G3D_USE_CACHE_DEFAULT);			
+			G3D_USE_CACHE_DEFAULT);
   if (map == NULL)
     G3d_fatalError("main: error opening g3d file");
 
@@ -231,10 +244,10 @@ int main(int argc, char *argv[]) {
   fp = openAscii(output, region);
 
   /* Now barf out the contents of the map in ascii form */
-  G3dToascii(fp, &region, decim);
+  G3dToascii(fp, region, decim);
 
   /* Close files and exit */
-  if (!G3d_closeCell (map)) 
+  if (!G3d_closeCell (map))
     fatalError ("main: error closing new g3d file");
 
   map = NULL;

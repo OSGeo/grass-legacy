@@ -435,7 +435,7 @@ SHOW:
     fprintf(stderr, "  total cells:   %15s\n",    buf);
     fprintf(stderr, "\n");
 
-    if (cellhd->north > def_wind.north) {
+		if (cellhd->north > def_wind.north) {
       fprintf(stderr, "warning - north falls outside the default region\n");
       ok = 0;
     }
@@ -445,19 +445,34 @@ SHOW:
     }
     if (cellhd->proj != PROJECTION_LL) {
       if (cellhd->east > def_wind.east) {
-	  fprintf(stderr, "warning - east falls outside the default region\n");
-	  ok = 0;
-	}
-      if (cellhd->west < def_wind.west) {
-	fprintf(stderr, "warning - west falls outside the default region\n");
-	ok = 0;
+	  	fprintf(stderr, "warning - east falls outside the default region\n");
+	  	ok = 0;
+			}
+    	if (cellhd->west < def_wind.west) {
+				fprintf(stderr, "warning - west falls outside the default region\n");
+				ok = 0;
       }
     }
-    if (cellhd->top < def_wind.top) {
+
+/*AV*/
+/* BEGIN OF ORIGINAL CODE */
+/*
+		if (cellhd->top < def_wind.top) {
       fprintf(stderr, "warning - top falls outside the default region\n");
       ok = 0;
     }
-    if (cellhd->bottom < def_wind.bottom) {
+*/
+/* END OF ORIGINAL CODE */
+
+/*AV*/
+/* BEGIN OF MY CODE */
+		if (cellhd->top > def_wind.top) {
+      fprintf(stderr, "warning - top falls outside the default region\n");
+      ok = 0;
+    }
+/* END OF MY CODE */
+
+		if (cellhd->bottom < def_wind.bottom) {
       fprintf(stderr, "warning - bottom falls outside the default region\n");
       ok = 0;
     }
