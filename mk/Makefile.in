@@ -30,8 +30,15 @@ gmake:
 	@echo "making gmake${NAME_VER} ..."
 	@(	echo '#!/bin/sh'	; \
 		echo 'dir=$$1'		; \
-		echo 'shift'		; \
-		echo 'make dir -I${DSTDIR}/mk -I${SRCDIR}/mk -C ${SRCDIR}/$$dir "$$@"'	\
+		echo 'if [ ! $$1 ]'	;\
+		echo 'then'		;\
+		echo '  dir=`pwd`'	;\
+		echo '  shift'            ; \
+		echo '  make dir -I${DSTDIR}/mk -I${SRCDIR}/mk -C $$dir "$$@"' ; \
+		echo 'else'		;\
+		echo '  shift'		;\
+		echo '  make dir -I${DSTDIR}/mk -I${SRCDIR}/mk -C ${SRCDIR}/$$dir "$$@"' ;\
+		echo 'fi' \
 	) > gmake${NAME_VER}
 	@chmod a+x gmake${NAME_VER}
 
