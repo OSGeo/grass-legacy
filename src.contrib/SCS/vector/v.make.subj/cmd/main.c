@@ -106,7 +106,7 @@ int main (int argc, char *argv[])
 
 	              /* Open dig_cats file */
             sprintf(path,"%s/%s/%s/dig_cats/%s",
-		getenv("GISDBASE"),getenv("LOCATION_NAME"),mapset,in_name);
+		G_gisdbase(),G_location(),mapset,in_name);
 	    fprintf (stdout, "\n    Reading category file %s\n", in_name);
             if ( (In = fopen(path, "r") ) == NULL )
 		G_fatal_error("Reading input file.") ;
@@ -206,7 +206,7 @@ sleep(1);*/
                  /* make a final mapset master category file
                  put in first three records  */
         sprintf(path,"%s/%s/%s/SUBJ/%s",
-		getenv("GISDBASE"),getenv("LOCATION_NAME"),G_mapset(),out_name);
+		G_gisdbase(),G_location(),G_mapset(),out_name);
         Out = fopen (path,"w");
 /*      rewind (Out); */
         sprintf (Obuffer,"#%5d categories\n",cat_cnt);
