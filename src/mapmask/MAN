@@ -1,0 +1,112 @@
+.\" %W% %G%
+.TH mapmask 1
+.SH NAME
+.nf
+mapmask - create cellfile masks based on user specified
+          polygons (geometric shapes, not polygonal data) 
+          from map layers
+.br
+.I (Available through gis menu)
+.fi
+.SH SYNOPSIS
+.B mapmask
+.SH DESCRIPTION
+.na
+.I Mapmask
+provides the user with the capability to define specific
+.I areas\ of\ interest
+within a map layer.  These can
+.br
+be specified using
+regular\ geometric\ shapes, circles, or strings of corner coordinates.
+The user has the choice of creating a 'generic' 1/0 map layer and/or
+a 'cookie cutter' map layer.  A 'generic' map layer has cell values
+of 1 within the areas of interest.  A 'cookie cutter' map layer retains
+original category values from a 'source' map layer
+within the areas of interest.
+.PP
+The effectiveness of an analysis is often dependent on the ability to clearly 
+define the exact data to be studied, and to limit the data to this definition.
+In geographic analysis, a common problem is found in trying to look at 
+specific areas, which seldom correspond to mapped areas, or even to rectangles.
+It is important for the user both to be able to define exact areas of interest
+for specific analyses and to be able to quickly define general areas for an
+overview.
+.PP
+.I Mapmask
+gives the user the tools to meet these needs quickly and easily.
+.PP
+The user can create two types of map layers:
+.PP
+.ad
+.ll -.5
+.in +.75i
+.ti -.25i
+1)
+A 'generic' 1/0 map layer can be created. Cells within the areas
+of interest are coded with 1; cells outside the 
+area, with 0.  This type of mask can be used to 
+mask sections of different map layers for use in 
+complicated analyses.  
+
+.ti -.25i
+2)
+A 'cookie-cutter' map layer can also be created.  This
+type of mask is one that retains the data from a
+source map layer in the areas specified by the user.
+It
+.I cannot
+always be masked with other map layers.
+
+.ti -.25i
+3)
+The user also has the option of creating both types
+of map layers.
+.PP
+The user of
+.I mapmask
+has several options available when defining areas of interest.
+.PP
+.ad
+.ll -.5
+.in +.75i
+.ti -.25i
+1)
+The user may choose to define a circle as an 
+area of interest, specifying the center (easting/northing) 
+and radius of the circle.
+
+.ti -.25i
+2)
+The user may choose to define a regular polygon
+as an area of interest, specifying the center 
+(easting/northing) and radius of a circle which
+circumscribes the polygon and the number of
+sides the polygon will have.
+
+.ti -.30i
+3a)
+The user may choose to define a specific polygonal
+area, specifying the number of edges the area 
+is to have (up to 50) and the coordinates 
+for each corner of the area.  In this case, the 
+corners of the area must be entered in a clockwise
+order, though any corner can be first.
+
+.ti -.30i
+3b)
+The user may choose to define a specific polygonal
+area, specifying a file in which the coordinates
+for the corner points have previously been entered.
+In this case, the coordinates must be
+arranged such that there is one coordinate pair per
+line, with the Northing in the first column, Easting
+in the second.
+.na
+.PP
+.I note:
+These four options apply to each area of interest that is designated, so a user
+could have one circle, one regular hexagon, and a specific polygonal area
+of interest all within one map layer.
+.SH "AUTHOR"
+Michael O'Shea, U.S. Army Construction Engineering Research Laboratory
