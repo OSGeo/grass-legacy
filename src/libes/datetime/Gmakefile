@@ -20,7 +20,7 @@ OBJ =  \
 
 all: $(DATETIMELIB)
 	#Required for gstats interface:
-	cp $(LIBDIR)/libdatetime.a $(GISBASE)/lib
+	cp $(DATETIMELIB) $(GISBASE)/lib
 
 $(DATETIMELIB): $(OBJ)
 	$(AR)
