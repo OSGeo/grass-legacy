@@ -202,7 +202,8 @@ int main(int argc, char *argv[])
         for(row = 0; row < window.rows; row++)
             for(col = 0; col < window.cols; col++)
             {
-                radius = (int)sqrt(row*row + col*col);
+                radius = (int)sqrt(col*col +
+          (row*window.ns_res/window.ew_res)*(row*window.ns_res/window.ew_res));
                 if (search_list[radius] == NULL)
                     search_list[radius] = 
                       search_list_start[radius] = G_malloc(sizeof(struct cell_list));
