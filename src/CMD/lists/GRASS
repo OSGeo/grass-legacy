@@ -324,7 +324,7 @@ src/raster/r.kappa
 src/raster/r.le
 src/raster/r.line
 src/raster/r.los
-src/raster/r.mapcalc
+#src/raster/r.mapcalc # superseded by r.mapcalc3
 src/raster/r.mapcalc3
 src/raster/r.mask.points
 src/raster/r.median
