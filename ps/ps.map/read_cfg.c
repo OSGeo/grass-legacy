@@ -31,8 +31,8 @@ set_paper ( char *pname )
 
     /* Set default (a4) */
     PS.level = 2;
-    PS.page_width = 8.27;
-    PS.page_height = 11.69;
+    PS.page_width = (rotate_plot) ? 11.69 : 8.27;
+    PS.page_height = (rotate_plot) ? 8.27 : 11.69;
     PS.left_marg = 0.5;
     PS.right_marg = 0.5;
     PS.top_marg = 1.0;
@@ -42,14 +42,15 @@ set_paper ( char *pname )
     i = 0;
     while ( papers[i].name != NULL ) {
 	if ( G_strcasecmp(papers[i].name, pname) == 0 ) {
-	    PS.page_width = papers[i].page_width;
-	    PS.page_height = papers[i].page_height;
-	    PS.left_marg = papers[i].left_marg;
-	    PS.right_marg = papers[i].right_marg;
-	    PS.top_marg = papers[i].top_marg;
-	    PS.bot_marg = papers[i].bot_marg;
+            PS.page_width = (rotate_plot) ? papers[i].page_height : papers[i].page_width;
+	    PS.page_height = (rotate_plot) ? papers[i].page_width : papers[i].page_height;
+	    PS.left_marg = (rotate_plot) ? papers[i].right_marg: papers[i].left_marg;
+	    PS.right_marg = (rotate_plot) ? papers[i].left_marg : papers[i].right_marg;
+	    PS.top_marg = (rotate_plot) ? papers[i].bot_marg : papers[i].top_marg;
+	    PS.bot_marg = (rotate_plot) ? papers[i].top_marg : papers[i].bot_marg;
 	    PS.res = 75;
-            G_debug ( 4, "  paper w = %f h = %f", PS.page_width, PS.page_height);
+
+	    G_debug ( 4, "  paper w = %f h = %f", PS.page_width, PS.page_height);
 	    return 0;
 	}
 	i++;
