@@ -1,0 +1,35 @@
+OBJ = fill-dir.o cell_open.o cell_open_new.o
+OBJ1 = fmt_un.o
+OBJ2 = un_fmt_fill.o
+OBJ3 = dopolys.o
+OBJ4 = fillsngl.o
+OBJ5 = wtrshed.o
+OBJ6 = ppupdate.o
+
+LIST = fill-dir.c cell_open.c cell_open_new.c
+
+all: $(BIN_ALPHA_CMD)/r.fill.dir $(BIN_ALPHA_CMD)/fmt_un $(BIN_ALPHA_CMD)/un_fmt_fill $(BIN_ALPHA_CMD)/dopolys_for $(BIN_ALPHA_CMD)/fillsngl_for $(BIN_ALPHA_CMD)/wtrshed_for $(BIN_ALPHA_CMD)/ppupdate_for
+
+$(BIN_ALPHA_CMD)/r.fill.dir: $(OBJ) $(GISLIB)
+	$(CC) -o $(BIN_ALPHA_CMD)/r.fill.dir $(LDFLAGS) $(OBJ) $(GISLIB) -lm
+
+$(BIN_ALPHA_CMD)/fmt_un: $(OBJ1) 
+	f77 -o $(BIN_ALPHA_CMD)/fmt_un $(LDFLAGS) $(OBJ1) 
+
+$(BIN_ALPHA_CMD)/un_fmt_fill: $(OBJ2) 
+	f77 -o $(BIN_ALPHA_CMD)/un_fmt_fill $(LDFLAGS) $(OBJ2) 
+
+$(BIN_ALPHA_CMD)/dopolys_for: $(OBJ3) 
+	f77 -o $(BIN_ALPHA_CMD)/dopolys_for $(LDFLAGS) $(OBJ3) 
+
+$(BIN_ALPHA_CMD)/fillsngl_for: $(OBJ4) 
+	f77 -o $(BIN_ALPHA_CMD)/fillsngl_for $(LDFLAGS) $(OBJ4) 
+
+$(BIN_ALPHA_CMD)/wtrshed_for: $(OBJ5) 
+	f77 -o $(BIN_ALPHA_CMD)/wtrshed_for $(LDFLAGS) $(OBJ5) 
+
+$(BIN_ALPHA_CMD)/ppupdate_for: $(OBJ6) 
+	f77 -o $(BIN_ALPHA_CMD)/ppupdate_for $(LDFLAGS) $(OBJ6) 
+
+$(GISLIB): #
+
