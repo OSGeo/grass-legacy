@@ -1,0 +1,3 @@
+:
+GMAKE=/data/softail/loechl/grass_up4/grass.bin/gmake4.1
+. /data/softail/loechl/grass_up4/grass.src/src/CMD/generic/GISGEN.sh
