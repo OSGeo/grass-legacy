@@ -19,10 +19,11 @@ char **argv ;
         char **ptr;
 	char buf[1024] ;
 	int i, stat ;
-	int color;
+	int color,fill;
         int line_cat;
 	char map_name[128] ;
 	struct Option *opt1, *opt2, *opt3;
+	struct Flag *flag1;
 	struct line_pnts *Points;
 
 
@@ -48,6 +49,9 @@ char **argv ;
 	opt3->multiple	= YES ;
 	opt3->description= "Vector category type to be displayed" ;
 
+	flag1 = G_define_flag();
+	flag1->key 	= 'f';
+	flag1->description= "Fill areas";
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -56,6 +60,9 @@ char **argv ;
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(-1);
+
+	fill=0;
+	fill=flag1->answer;
 
 	strcpy(map_name, opt1->answer);
 
@@ -76,8 +83,8 @@ char **argv ;
 
 	R_standard_color(color) ;
 
-	Points = Vect_new_line_struct ();
 
+        Points = Vect_new_line_struct ();
         
 /********** Force use of level 2 vector read ***********/
 
@@ -86,11 +93,14 @@ char **argv ;
             {
                line_cat = atoi(*ptr);
                printf("\nCategory = %d\n",line_cat);
+	       stat = plotCat (map_name, mapset, Points, line_cat, fill);
+/*
 	       stat = plotCat (map_name, mapset, Points, line_cat);
+*/
 	       D_add_to_list(G_recreate_command()) ;
              }
 
-	Vect_destroy_line_struct (Points);
+    Vect_destroy_line_struct (Points);
 
 	R_close_driver();
 	exit(stat);
