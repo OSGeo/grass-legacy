@@ -8,27 +8,34 @@ int plot_border (double grid_size, double east, double north)
 	double x,y;
 	struct Cell_head window ;
 	double i, steps, loop, longmark, middlemark, shortmark;
+	double row_dist, colm_dist;
 
 	G_get_set_window (&window);
+
+	/* pull right and bottom edges back one pixel; display lib bug? */
+	row_dist = D_d_to_u_row(0) - D_d_to_u_row(1);
+	colm_dist = D_d_to_u_col(1) - D_d_to_u_col(0);
+	window.south = window.south + row_dist;
+	window.east  = window.east  - colm_dist;
 
 	G_setup_plot (
 	    D_get_d_north(), D_get_d_south(), D_get_d_west(), D_get_d_east(),
 	    D_move_abs, D_cont_abs);
-	
+
 	steps=grid_size/10.; /* tick marks number */
 	shortmark=180.; /* tick marks length */
 	middlemark=90.;
 	longmark=45.;
 
 	/* plot boundary lines: */
-	/* HB 2/2004: Note the +1-1 stuff is meters/degrees not pixels! mistake? */
+
 	/* horizontal : */
-	G_plot_line (window.west,window.south+1,window.east,window.south+1);
-	G_plot_line (window.west,window.north-1,window.east,window.north-1);
+	G_plot_line (window.west,window.south,window.east,window.south);
+	G_plot_line (window.west,window.north,window.east,window.north);
 	
 	/* vertical : */
-	G_plot_line (window.west+1,window.south,window.west+1,window.north);
-	G_plot_line (window.east-1,window.south,window.east-1,window.north);
+	G_plot_line (window.west,window.south,window.west,window.north);
+	G_plot_line (window.east,window.south,window.east,window.north);
 
 	/* Draw vertical border marks */
 	if (window.west < east)
