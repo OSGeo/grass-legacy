@@ -68,13 +68,13 @@ int main (int argc, char **argv)
 	opt3->required   = NO;
 	opt3->description= "the screen coordinates for top-left corner of label" ;
 
+	if (G_parser(argc, argv) < 0)
+		exit(-1);
+
 	G_get_window(&W) ;
 	if (W.proj == PROJECTION_LL)
 		G_fatal_error("%s does now work with a latitude-longitude location",
 			      argv[0]) ;
-
-	if (G_parser(argc, argv) < 0)
-		exit(-1);
 
 	use_feet = feet->answer ? 1 : 0;
 
