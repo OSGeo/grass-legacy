@@ -55,6 +55,7 @@ LIB_OBJS = \
     copy.o\
     dalloc.o\
     date.o\
+    datum.o\
     debug.o\
     distance.o\
     eigen_tools.o\
