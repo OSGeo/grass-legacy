@@ -60,23 +60,34 @@ main(int argc, char **argv)
 			"(UNIX,VMS,PRIME)\n");
 #endif
 	scanf("%s", infile);
+	if(!(tmpfp = fopen(infile, "r"))){
+		fprintf(stderr, "%s: No such file or open failed\n", infile);
+		exit(1);
+	}
 
-	tmpfp = fopen(infile, "r");
 	fscanf(tmpfp, "%hd %hd %hd", &nl, &ns, &code);
 	fscanf(tmpfp, "%s", elfile);
 	fscanf(tmpfp, "%s", difile);
 	fscanf(tmpfp, "%s", system);
 	fclose(tmpfp);
 
-	dir = (short *)malloc((ns+2)*sizeof(short)) - 1;
-	level = (double **)malloc((ns+2)*sizeof(double *)) - 1;
-	for(i=1; i<=ns+2; i++)
-		level[i] = (double *)malloc(3*sizeof(double)) - 1;
+	if(!(lfile = fopen(elfile, "r"))){
+		fprintf(stderr, "%s: No such file or open failed\n", elfile);
+		exit(1);
+	}
 
-	lfile = fopen(elfile, "r");
-	if(code == 1){
-		sfile = fopen(difile, "r+");
-	}else{
+	if(code == 1 && !(sfile = fopen(difile, "r+"))){
+		fprintf("%s: No such file or open failed\n", difile);
+		exit(1);
+	}
+
+	dir = (short *)malloc((ns+2)*sizeof(short)) - 1;
+
+	if(code != 1){
+		level = (double **)malloc((ns+2)*sizeof(double *)) - 1;
+		for(i=1; i<=ns+2; i++)
+			level[i] = (double *)malloc(3*sizeof(double)) - 1;
+
 		sfile = fopen(difile, "w+");
 		for(i=1; i<=ns+2; i++){
 			dir[i] = 0;
@@ -126,11 +137,11 @@ main(int argc, char **argv)
 			for(j=1; j<=ns; j++)
 				fwrite(&dir[j], SBYTES, 1, sfile);
 		}
-	}
 
-	for(i=1; i<=ns+2; i++)
-		free(level[i] + 1);
-	free(level + 1);
+		for(i=1; i<=ns+2; i++)
+			free(level[i] + 1);
+		free(level + 1);
+	}
 
 	active = (char *)malloc(nl*sizeof(char)) - 1;
 
