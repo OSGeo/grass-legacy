@@ -271,14 +271,14 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
         elif [ "$HOSTTYPE" = "arm" ] ; then
             GRASS_HTML_BROWSER=dillo2
             break
-		elif [ "$CYGWIN" ] ; then
-		    iexplore="$SYSTEMDRIVE/Program Files/Internet Explorer/iexplore.exe"
-		    if [ -f "$iexplore" ] ; then
-			GRASS_HTML_BROWSER=$iexplore
-		    else
-			GRASS_HTML_BROWSER="iexplore"
-		    fi
-		    break
+	elif [ "$CYGWIN" ] ; then
+	    iexplore="$SYSTEMDRIVE/Program Files/Internet Explorer/iexplore.exe"
+	    if [ -f "$iexplore" ] ; then
+		GRASS_HTML_BROWSER=$iexplore
+	    else
+		GRASS_HTML_BROWSER="iexplore"
+	    fi
+	    break
         fi
     done
 fi
