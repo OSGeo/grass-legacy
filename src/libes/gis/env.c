@@ -233,9 +233,12 @@ static FILE *open_env ( char *mode)
 
     if (!gisrc)
     {
-	fprintf (stderr, "\7ERROR: GISRC - variable not set\n");
+	/* fprintf (stderr, "\7ERROR: GISRC - variable not set\n");
 	sleep(3);
-	exit(-1);
+	exit(-1); */
+	/* Roger Bivand 17 June 2000 */
+	G_fatal_error("GISRC - variable not set");
+	return(NULL);
     }
 
     return fopen (gisrc, mode);
@@ -244,13 +247,18 @@ static FILE *open_env ( char *mode)
 char *G_getenv( char *name)
 {
     char *value;
+    char rsbbuf[40]; /* RSB 17 June 2000 */
 
     if (value = G__getenv(name))
 	return value;
 
-    fprintf(stderr,"ERROR: %s not set\n", name);
+    /* fprintf(stderr,"ERROR: %s not set\n", name);
     sleep(3);
-    exit(-1);
+    exit(-1); */
+    /* Roger Bivand 17 June 2000 */
+    sprintf(rsbbuf, "%s not set", name);
+    G_fatal_error(rsbbuf);
+    return;
 }
 
 char *G__getenv ( char *name)
