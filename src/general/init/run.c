@@ -33,38 +33,9 @@ int main (int argc, char *argv[])
     argv++;
     if (argc <= 0) exit(1);
 
-/* if argv[0] contains a /, run directly */
-    for (a = argv[0]; *a; a++)
-	if (*a == '/')
-	{
-	    execv (argv[0],argv);
-	    fprintf (stderr, "%s: Command not found\n",argv[0]);
-	    exit(127);
-	}
-
-/* else search PATH */
-    a = PATH = getenv("PATH");
-    more = 1;
-    while (more)
-    {
-	for (b = a; *b && (*b != ':'); b++)
-		;
-	if (*b == 0) more=0;
-	if (*a)
-	{
-	    c = path;
-	    while (a != b)
-		*c++ = *a++;
-	    *c++ = '/';
-	    a = argv[0];
-	    while (*a)
-		*c++ = *a++;
-	    *c = 0;
-	    execv (path, argv);
-	}
-	a = b + 1;
-    }
+    execvp (argv[0],argv);
     fprintf (stderr, "%s: Command not found\n",argv[0]);
+    exit(127);
 
     exit(0);
 }
