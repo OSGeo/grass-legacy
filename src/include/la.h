@@ -6,7 +6,7 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
  * 26th. Sep. 2000
- * Last updated 27th. Sep. 2000
+ * Last updated 28th. Sep. 2000
  *
 
  * This file is part of GRASS GIS. It is free software. You can 
@@ -45,18 +45,29 @@
 #include "lapack.h"
 
 
+
+/* Useful defines */
+
+#define MAX_POS          1   /* Indicates maximum value         */
+#define MAX_NEG         -1   /* Indicates minimum value         */
+#define MAX_ABS          0   /* Indicates absolute value        */
+
+
 /* define macros for fortran symbols (called directly). Needed because 
    of platform invariance on fortran->C symbol translations
 */
 
 #define f77_dgesv                   dgesv_
 #define f77_dgemm                   dgemm_
+#define f77_dnrm2                   dnrm2_
 
 /* Operations should know type of coefficient matrix, so that
    they can call the right driver
 */
 
 typedef enum { NONSYM, SYM, HERMITIAN } mat_type;
+typedef enum { MATRIX_, ROWVEC_, COLVEC_ } mat_spec;
+typedef enum { RVEC, CVEC }             vtype;
 
 
 
@@ -69,6 +80,15 @@ typedef enum { NONSYM, SYM, HERMITIAN } mat_type;
 
 typedef struct matrix_ {
 
+  mat_spec type;      /* Is it doing duty as a matrix, row vector or
+			 column vector?
+		      */
+
+  int v_indx;         /* In the event this is serving as a vector, which
+			 row(column) is active?  If a matrix this is ignored.
+			 If the value is <0, the first row(column) is
+			 assumed, ie. index 0.
+		      */
 
   int rows, cols;    /* Rows and columns of matrix */
   int ldim;          /* Lead dimension of matrix.
@@ -83,18 +103,37 @@ typedef struct matrix_ {
 		     */
 }  mat_struct;
 
+typedef mat_struct vec_struct;
+
+
 
 /* Prototypes */
+
+/* Matrix routines corresponding to BLAS Level III */
 
 mat_struct *G_matrix_init(int, int, int);
 int G_matrix_set(mat_struct *, int, int, int);
 mat_struct *G_matrix_add(mat_struct *, mat_struct *);
 mat_struct *G_matrix_product(mat_struct *, mat_struct *);
-int G_LU_solve(mat_struct *, mat_struct *, mat_struct *, mat_type);
+int G_matrix_LU_solve(mat_struct *, mat_struct *, mat_struct *, mat_type);
 mat_struct *G_matrix_inverse(mat_struct *);
 void G_matrix_free(mat_struct *);
-int G_set_matrix_element(mat_struct *, int, int, double);
-double G_get_matrix_element(mat_struct *, int, int);
+int G_matrix_set_element(mat_struct *, int, int, double);
+double G_matrix_get_element(mat_struct *, int, int);
+
+
+/* Matrix-vector routines corresponding to BLAS Level II */
+
+vec_struct *G_matvect_get_column(mat_struct *, int);
+
+
+/* Vector routines corresponding to BLAS Level I */
+
+vec_struct *G_vector_init(int, int, vtype);
+int G_vector_set(vec_struct *, int, int, vtype);
+double G_vector_norm_euclid(vec_struct *);
+double G_vector_norm_maxval(vec_struct *);
 
 #endif /* LA_H_ */
+
 
