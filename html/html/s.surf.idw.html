@@ -105,6 +105,11 @@ If the user has a mask set, then interpolation is only done
 for those cells that fall within the mask. However, all
 non-zero data points in the <B>input</B> map are used even
 if they fall outside the mask.
+<p>
+
+If two or more sites fall into one voxel, the last site value will determine
+the 3dcell value (no warning yet).
+
 
 <H2>SEE ALSO</H2>
 
