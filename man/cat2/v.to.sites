@@ -6,61 +6,61 @@ v.to.sites <alpha>   GRASS Reference Manual    <alpha> v.to.sites
 
 
 NAME
-     v.to.sites - Converts point data in a binary GRASS vector
+     v.to.sites	- Converts point data in a binary GRASS	vector
      map layer into a GRASS site_lists file.
      (GRASS Vector Program)
 
 SYNOPSIS
      v.to.sites
-     v.to.sites help
-     v.to.sites input=name output=name [dmax=value -a -c -i ]
+     v.to.sites	help
+     v.to.sites	input=name output=name [dmax=value -a -c -i ]
 
 DESCRIPTION
      The v.to.sites program extracts data from a GRASS vector map
-     layer and stores output in a new GRASS site_lists file.  If
-     -a flag is selected, v.to.sites extracts all vertices from a
+     layer and stores output in	a new GRASS site_lists file.  If
+     -a	flag is	selected, v.to.sites extracts all vertices from	a
      vector file, if not selected, it extracts site (point)
      features only, ignoring lines and areas. If   -i flag is
-     selected then, for each line, if the distance between any
-     two vertices on this line is greater that  dmax, additional
-     points are added to keep the distance withing  dmax range.
+     selected then, for	each line, if the distance between any
+     two vertices on this line is greater that	dmax, additional
+     points are	added to keep the distance withing  dmax range.
      The resulting sites map layer can be used with such programs
-     as d.sites.  The user can run the program non-interactively
-     by specifying the names of an existing vector input map
-     layer and a new site list file to be output on the command
-     line.  The program will be run interactively if the user
-     types v.to.sites without arguments on the command line.  In
-     this case, the user will be prompted to enter parameter
-     values through the standard user interface described in the
+     as	d.sites.  The user can run the program non-interactively
+     by	specifying the names of	an existing vector input map
+     layer and a new site list file to be output on the	command
+     line.  The	program	will be	run interactively if the user
+     types v.to.sites without arguments	on the command line.  In
+     this case,	the user will be prompted to enter parameter
+     values through the	standard user interface	described in the
      manual entry for parser.
 
 
      Parameters:
 
-     input=name        Name of an existing binary vector map
-                       layer from which site data are to be
-                       extracted.
+     input=name	       Name of an existing binary vector map
+		       layer from which	site data are to be
+		       extracted.
 
      output=name       Name to be assigned to the resultant
-                       site_lists file.
+		       site_lists file.
 
-     dmax=value        Maximum distance between points (valid
-                       only when -a and -i are used)
+     dmax=value	       Maximum distance	between	points (valid
+		       only when -a and	-i are used)
 
      Flags:
 
-     -a                Outputs all vertices (instead of site data
-                       only) from vector file to site file
+     -a		       Outputs all vertices (instead of	site data
+		       only) from vector file to site file
 
-     -c                The Category data is used instead of
-                       attribute as a site description (valid
-                       only when -a is used)
+     -c		       The Category data is used instead of
+		       attribute as a site description (valid
+		       only when -a is used)
 
-     -i                Additional sites are added between each 2
+     -i		       Additional sites	are added between each 2
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
@@ -71,18 +71,18 @@ v.to.sites <alpha>   GRASS Reference Manual    <alpha> v.to.sites
 
 
 
-                       points on a line if the distance between
-                       them is greater than specified  dmax.
-                       (valid only when -a is used)
+		       points on a line	if the distance	between
+		       them is greater than specified  dmax.
+		       (valid only when	-a is used)
 
-     If any of the sites have been labeled in v.digit, then the
+     If	any of the sites have been labeled in v.digit, then the
      resultant site list will contain category information (or
-     attribute in case -a was used but -c was not).  If none of
-     the sites are labeled, a binary (0/1) site list file will be
+     attribute in case -a was used but -c was not).  If	none of
+     the sites are labeled, a binary (0/1) site	list file will be
      produced.
 
 SEE ALSO
-     d.sites, s.db.rim, s.menu, v.db.rim, v.digit and parser
+     d.sites, s.db.rim,	s.menu,	v.db.rim, v.digit and parser
 
 AUTHOR
      Dave Gerdes, U.S. Army Construction Engineering Research
@@ -96,8 +96,8 @@ AUTHOR
 
 NOTICE
      This program is part of the alpha section of the GRASS
-     distribution.  Unlike the code in the main section of GRASS,
-     the alpha code has not yet been fully tested for one release
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
      cycle.
 
 
@@ -126,7 +126,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
