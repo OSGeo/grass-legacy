@@ -1,0 +1,25 @@
+HALLOC	median.c	/^#define	HALLOC(n,s)	calloc((long)(n),s)$/
+Mmain	main.c	/^main(argc,argv) $/
+ask_levels	ask_levels.c	/^ask_levels()$/
+close_output_file	compose.c	/^close_output_file ()$/
+compose	compose.c	/^compose ()$/
+create_colorcell	median.c	/^create_colorcell(red, green, blue)$/
+gen_colors	gen_colors.c	/^gen_colors ()$/
+get_histogram	median.c	/^get_histogram(box)$/
+imageheight	compose.c	/^imageheight ()$/
+imagewidth	compose.c	/^imagewidth ()$/
+largest_box	median.c	/^largest_box()$/
+map_colortable	median.c	/^map_colortable()$/
+median	median.c	/^median (chtty)$/
+open_output_file	compose.c	/^open_output_file ()$/
+quant	median.c	/^quant()$/
+quant_fsdither	median.c	/^quant_fsdither()$/
+readrgbline	compose.c	/^readrgbline (red, green, blue)$/
+rewind_input	compose.c	/^rewind_input ()$/
+salloc	median.c	/^salloc(i)$/
+setcmap	compose.c	/^setcmap (num_colors, red, green, blue)$/
+shrinkbox	median.c	/^shrinkbox(box)$/
+splitbox	median.c	/^splitbox(ptr)$/
+streq	median.c	/^#define	streq(a,b)	(strcmp(a,b) == 0)$/
+usage	median.c	/^usage()$/
+writemappedline	compose.c	/^writemappedline (scanline)$/
