@@ -434,6 +434,7 @@ int G__write_env(void);
 char *G__env_name(int);
 int G__read_env(void);
 void G_set_gisrc_mode ( int );
+int G_get_gisrc_mode ( void );
 int G__set_gisrc_file(char *);
 char *G__get_gisrc_file(void);
 int G__create_alt_env(void);
