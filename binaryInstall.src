@@ -310,21 +310,22 @@ sed 's#'$ORIG_BASE_DIR'#'$NEWPATH'#g' $DESTDIR/etc/monitorcap.orig > $DESTDIR/et
 
 echo""
 
-CYGWIN=$(uname|grep CYGWIN)
+# no need to create the fifos for sockets setup
+#echo "Creating the monitor fifos..."
+#rm -f $DESTDIR/dev/fifo.*
+#
+# Create the fifos
+#sh $DESTDIR/dev/create_fifos.sh $DESTDIR
+#
+#if [ $? -eq 1 ] ; then
+#  echo "An error occured or user break while installing binaries! Exiting."
+#  exit
+#fi
 
-if [ ! "$CYGWIN" ] ; then
-   # no need to create the fifos for sockets setup
-   echo "Creating the monitor fifos..."
-   rm -f $DESTDIR/dev/fifo.*
+CYGWIN=`uname|grep CYGWIN`
 
-   # Create the fifos
-   sh $DESTDIR/dev/create_fifos.sh $DESTDIR
-
-   if [ $? -eq 1 ] ; then
-      echo "An error occured or user break while installing binaries! Exiting."
-      exit
-   fi
-else 
+# Need to link more to less for CYGWIN
+if [ "$CYGWIN" ] ; then
    if [ ! -x /bin/less ] ; then
       ln -s /bin/less /bin/more
    fi
