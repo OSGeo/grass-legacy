@@ -47,7 +47,8 @@ main(int argc, char **argv)
 		  in_datum[64], 	 /* input datum name */
 		  in_ellipse[64], 	 /* input ellipse name */
 		  out_datum[64], 	 /* output datum name */
-		  out_ellipse[64]; 	 /* output datum name */
+		  out_ellipse[64], 	 /* output datum name */
+		  *hold;
 
 	int       permissions,		 /* mapset permissions		 */
 		  oldproj, newproj;
@@ -150,8 +151,12 @@ main(int argc, char **argv)
 		G_fatal_error("Can't get projection key values of output map");
 
    /* for datum conversion, get output datum and ellipse */
-	strncpy(out_datum,G_database_datum_name(),sizeof(out_datum));
-	strncpy(out_ellipse,G_database_ellipse_name(),sizeof(out_ellipse));
+	*out_datum='\0';
+	if((hold=G_database_datum_name()))
+	   strncpy(out_datum,hold,sizeof(out_datum));
+	*out_ellipse='\0';
+	if((hold=G_database_ellipse_name()))
+	   strncpy(out_ellipse,hold,sizeof(out_ellipse));
 
    /* Change the location 		 */
 	G__create_alt_env();
@@ -162,8 +167,12 @@ main(int argc, char **argv)
 	permissions = G__mapset_permissions(setname);
 
 	/* for datum conversion, get output datum and ellipse */
-	strncpy(in_datum,G_database_datum_name(),sizeof(in_datum));
-	strncpy(in_ellipse,G_database_ellipse_name(),sizeof(in_ellipse));
+	*in_datum='\0';
+	if((hold=G_database_datum_name()))
+	   strncpy(in_datum,hold,sizeof(in_datum));
+	*in_ellipse='\0';
+	if((hold=G_database_ellipse_name()))
+	   strncpy(in_ellipse,hold,sizeof(in_ellipse));
 
 	if (permissions >= 0) {
 
