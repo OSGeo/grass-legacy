@@ -1,3 +1,4 @@
+
 /*  @(#)r_dlg_head.c	2.2  8/26/87  */
 /*
  * This routine reads the dlg header in "optional" format 
@@ -8,8 +9,8 @@
 
 #include <stdio.h>
 #include "dlghead.h"
+#include "gis.h"
 
-char *index ();
  
 read_dlg_head(dlg)
 	FILE *dlg ;
@@ -132,8 +133,8 @@ read_dlg_head(dlg)
 		strncpy(coors[i].corner, buffer, 2) ;
 		sscanf(buffer+6 , "%lf", &coors[i].lat) ;
 		sscanf(buffer+18, "%lf", &coors[i].lon) ;
-		sscanf(buffer+36, "%lf", &coors[i].utm_n) ;
-		sscanf(buffer+48, "%lf", &coors[i].utm_e) ;
+		sscanf(buffer+36, "%lf", &coors[i].utm_e) ;
+		sscanf(buffer+48, "%lf", &coors[i].utm_n) ;
 	}
 
     /*  our dlg files cannot store anymore control points then the four
@@ -198,11 +199,11 @@ _get_dtype(buf, doub)
 	{
 	    /* sscanf(strchr(buf,'D')+1,"%d", &pwr) ; */
 	    char *p;
-	    if ((p = index (buf, 'D')) != NULL)
+	    if ((p = G_index (buf, 'D')) != NULL)
 		sscanf(p+1, "%d", &pwr);
 	    /*
 	    else
-		if ((p = index (buf, 'E')) != NULL)
+		if ((p = G_index (buf, 'E')) != NULL)
 		    sscanf(p+1, "%d", &pwr);
 		else
 		    fprintf (stderr, "Double Format Error buf = '%s'\n", buf);
