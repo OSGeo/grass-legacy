@@ -8,13 +8,13 @@ OBJ = \
 
 PGM =   v.make.subj
 
-PROG =   $(BIN_MAIN_CMD)/$(PGM)
+PROG =   $(BIN_CONTRIB_CMD)/$(PGM)
 
 all:  $(PROG)
 
 
 $(PROG): $(OBJ) $(GISLIB) $(VECTLIB)
 	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(VECTLIB) $(MATHLIB)
 	mv a.out $@
 
