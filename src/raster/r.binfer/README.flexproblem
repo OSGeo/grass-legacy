@@ -1,0 +1,30 @@
+The r.binfer-lex problem is solved in the following way:
+
+The Gmakefile was changed to a LEX-variable, which has to be defined
+in src421/src/CMD/head/<headfile>
+
+Variants:
+A. For Linux you will define the option "-l" for lex:
+
+   src421/src/CMD/head/linux
+      CC                  = gcc
+      FC                  = g77
+      LEX                 = lex -l
+      YACC                = yacc
+      ARCH                = linux
+      [...]
+
+B. For SUN/Solaris, SUNOs, HP UX, other unix derivates you will 
+   define "plain" lex:
+
+   src421/src/CMD/head/solaris (and other head files)
+      CC                  = cc
+      FC                  = f77
+      LEX                 = lex
+      YACC                = yacc
+      ARCH                = linux
+      [...]
+
+
+Markus Neteler
+June 1998
