@@ -400,8 +400,10 @@ int main(int argc, char *argv[])
 			if (TABLE[proj_index][i].ask == 1) {
 				if (i == SOUTH) {
 					sprintf(buff, "\nIs this %s ", DESC[i]);
-					if (G_yes(buff, 0))
+					if (G_yes(buff, 0)) {
 						G_set_key_value("south", "defined", out_proj_keys);
+					        cellhd.zone = -abs(cellhd.zone);
+					}
 				} else if (i == GUAM) {
 					sprintf(buff, "\nDo You Want to set %s ", DESC[i]);
 					if (G_yes(buff, 1))
