@@ -356,7 +356,8 @@ main (int argc, char **argv)
 	if (where_opt->answer)
 	  {
             chcat = 1;  
-            fi = Vect_get_field ( &Map, Clist->field);
+            if ( (fi = Vect_get_field ( &Map, Clist->field)) == NULL)
+                G_fatal_error("Database connection not defined");
             if ( fi != NULL )
 	      {
                 driver = db_start_driver(fi->driver);
