@@ -12,12 +12,10 @@
 *      kewan@techlogix.com                                            *
 *                                                                     *
 * update to FP (2000): Pierre de Mouveaux <pmx@audiovu.com><pmx@free.fr>*
-* bugfix in DCELL: Markus Neteler 12/2000                             *
+* bugfix in FCELL, DCELL: Markus Neteler 12/2000                      *
 **********************************************************************/
 
-/*
 #define DEBUG
-*/
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -328,15 +326,14 @@ main (int argc, char *argv[])
 	
 	data_type = G_raster_map_type(elevation_layer, elevation_mapset);
 	cell = G_allocate_raster_buf(data_type); 
-	len = G_raster_size(data_type) ;
+	len = G_raster_size(data_type);
 
-	if (mode) {
-		len2 = len;
-		data_type2 = data_type;
-	} else {
-		data_type2 = DCELL_TYPE; /* always DCELL: fixed 12/2000 MN */
-		len2 =G_raster_size(data_type2);
-	}
+#ifdef DEBUG
+fprintf(stderr,"Mode type: %i\n", mode);
+#endif
+
+	data_type2 = data_type;
+	len2 = G_raster_size(data_type2);
 
 /*   Parameters for map submatrices   */
 #ifdef DEBUG
@@ -526,8 +523,8 @@ int drain_path_finder ( POINT *PRES_PT)
 
 	{ /* start a new block to minimize variable use in recursion */
 		int data,row,col, val,val2;
-		double p_elev, dval, fdata, fdummy;
-		float f, fval;
+		double p_elev, dval, fdata, ddummy;
+		float f, fval, f_elev, fdummy;
 /*		value = &data; */
 
 		/* if the pt has already been traversed, return			*/
@@ -551,6 +548,7 @@ int drain_path_finder ( POINT *PRES_PT)
 #ifdef DEBUG
 fprintf(stderr, "p_elev: %g\n", p_elev);
 #endif
+				/* mode: flag */
 				switch (mode){
 					case 0: {
 						val2 = 1;
@@ -608,28 +606,26 @@ fprintf(stderr, "p_elev: %g\n", p_elev);
 				if(!G_is_f_null_value(&fval) ) 
 					return 0;		/* already traversed	*/
 				segment_get(&in_seg, &f, PRES_PT_ROW, PRES_PT_COL);
-				p_elev = f;
+				f_elev = f;
 #ifdef DEBUG
-fprintf(stderr, "p_elev: %g\n", p_elev);
+fprintf(stderr, "fdata: %g\n", f);
 #endif
-
+				
+				/* check the elevations of neighbouring pts to determine the	*/
+				/* next pt(s) for the drop to flow				*/
 				switch (mode){
 					case 0:
-						fval = 1;
+						dval = 1;
 						segment_put(&out_seg, &fval, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
 						break;
 					case 1:
 						segment_put(&out_seg, &f, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
 						break;
 					case 2:
-						fcum +=f;
+						dcum+=f;
 						segment_put(&out_seg, &fcum, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
 						break;
 				}						
-
-				/* check the elevations of neighbouring pts to determine the	*/
-				/* next pt(s) for the drop to flow				*/
-
 				for (row = PRES_PT_ROW -1;
 					 row <= (PRES_PT_ROW +1) && row < nrows; row++)
 				{
@@ -646,17 +642,17 @@ fprintf(stderr, "p_elev: %g\n", p_elev);
 							if (exclude_nulls) {
 								continue;
 							} else {
-								fdata = null_value;
+								fdummy = null_value;
 							} 
-						} else {
-							fdata = f;
+						}  else {
+							 fdummy = f;
 						}
-						/* elev of neighbor is higher. i.e. no chance of flow	*/
-							if(fdata > p_elev) continue;
+							/* elev of neighbor is higher. i.e. no chance of flow	*/
+							if(fdummy > f_elev) continue;
 
 						/* if elev of neighbor is equal or lower consider for	*/
 						/* addition to the list of pts where water will flow	*/
-						head = make_neighbors_list(head, row, col, fdata,
+						head = make_neighbors_list(head, row, col, fdummy,
 												   PRES_PT_ROW, PRES_PT_COL, p_elev);
 
 					}	/* end of "col" loop */
@@ -703,17 +699,17 @@ fprintf(stderr, "fdata: %g\n", fdata);
 							if (exclude_nulls) {
 								continue;
 							} else {
-								fdummy = null_value;
+								ddummy = null_value;
 							} 
 						}  else {
-							 fdummy = fdata;
+							 ddummy = fdata;
 						}
 							/* elev of neighbor is higher. i.e. no chance of flow	*/
-							if(fdummy > p_elev) continue;
+							if(ddummy > p_elev) continue;
 
 						/* if elev of neighbor is equal or lower consider for	*/
 						/* addition to the list of pts where water will flow	*/
-						head = make_neighbors_list(head, row, col, fdummy,
+						head = make_neighbors_list(head, row, col, ddummy,
 												   PRES_PT_ROW, PRES_PT_COL, p_elev);
 
 					}	/* end of "col" loop */
