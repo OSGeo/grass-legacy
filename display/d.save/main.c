@@ -190,6 +190,8 @@ int main (int argc, char **argv)
 	if(!only_object->answer)
 		fprintf (stdout,":\n# Shell Script created by d.save %s\n\n", G_date());
 
+	G_get_window ( Mwind );
+
 	redraw = 0;
 	/* now start at the end (the earliest made window) and process them */
 	for (p = npads-1; p >= 0; p--) {
@@ -431,7 +433,8 @@ int
 set_item (char *item, char **list)
 {
 	char tempbuf[100];
-
+	char *err;
+		
 	if (!strcmp(item, "list")) process_list(item, list, 1);
 	else {
 		switch (which_item(item)) {
@@ -451,7 +454,9 @@ set_item (char *item, char **list)
 			G_scan_easting(Wstr, &(Mwind->west), proj);
 			G_scan_northing(Nstr, &(Mwind->north), proj);
 			G_scan_northing(Sstr, &(Mwind->south), proj);
-			G_adjust_Cell_head (Mwind, 1, 1);
+			if ( (err = G_adjust_Cell_head (Mwind, 1, 1)) ) {
+			    G_fatal_error ( err );
+			}
 			G_format_resolution (Mwind->ew_res,  EWRESstr,  proj);
 			G_format_resolution (Mwind->ns_res,  NSRESstr,  proj);
 			break;
