@@ -1,0 +1,135 @@
+.TH Gaverage 2G G-language
+.SH NAME
+Gaverage \- Finds average of values in a covermap within polygons of
+a basemap.
+.br	
+.I (G Language Tool)
+.SH SYNOPSIS
+\fBGaverage\fP\ \ \fIbasemap\fP\ \ [@]\fIcovermap\fP\ \ [\fIresultmap\fP]
+.SH DESCRIPTION
+.I Gaverage 
+finds the average value of data in
+.I covermap
+for each polygon in
+.I basemap
+and
+(optionally) stores the results in a new map
+.I resultmap.
+
+The
+.I resultmap
+is a reclass of the
+.I basemap.
+It will have exactly the
+same category values as the
+.I basemap
+and the category labels for
+.I resultmap
+will contain the average values.
+
+If the @ is specified before the
+.I covermap
+then values to be averaged will be obtained from the category file for
+.I covermap
+(see example below).
+Otherwise, the category values which occur in
+the
+.I covermap
+themselves will be averaged.
+
+If
+.I resultmap
+is not specified, the reclass rules that would have been used to
+generate the result map are printed.
+.SH EXAMPLE
+Assume that
+.I farms
+is a map with 7 farms, and that
+.I soils.Kfactor
+is a map of soil K factor values with the following category file:
+
+.TS
+center tab(|);
+ll
+nl.
+cat|label
+0|no soil data
+1|.10
+2|.15
+3|.17
+4|.20
+5|.24
+6|.28
+7|.32
+8|.37
+9|.43
+.TE
+
+Then
+
+.ce 1
+Gaverage\ \ farms\ \ @soils.Kfactor\ \ K.by.farm
+
+will compute the average soil K factor for each farm, and store the result
+in the resultant map
+.I K.by.farm,
+which will be a reclass of
+.I farms
+with category labels as follows (example only):
+
+.TS
+center tab(|);
+ll
+nl.
+cat|label
+1|.1023
+2|.1532
+3|.172
+4|.3872
+5|.003
+6|.28
+7|.2345
+.TE
+
+.SH NOTES
+.IP (1)
+The @ operator requires that the category label for each
+category in the 
+.I covermap
+be a valid number, integer or decimal.
+To be exact, if the first item in the label is numeric, then
+that value is used. Otherwise zero is used. The following table
+covers all possible cases:
+
+.TS
+center tab(|);
+ll.
+category label|value used by @
+_
+   .12|   .12
+   .80 KF|   .8
+   no data|   0
+.TE
+
+(This operator is very similar to the @ operator in 
+.I Gmapcalc[2],
+and the user is encouraged to read the manual entry for 
+.I Gmapcalc[2]
+to see how it works there.)
+
+.IP (2)
+The user should use the results of 
+.I Gaverage
+with care. Since this utility assigns a value to each
+cell which is based on global information (i.e., information at spatial 
+locations other than just the location of the cell itself), the resultant 
+map is only valid if the window and mask are the same as they
+were at the time that the result map was created.
+
+.SH SEE ALSO
+.I Greclass[2],
+.I Gmapcalc[2],
+.I Gstats[2].
+
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
