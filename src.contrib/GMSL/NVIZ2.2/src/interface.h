@@ -254,7 +254,11 @@ int Tcl_AppInit(Tcl_Interp *);
 /* tkBind.c */
 int TkCopyAndGlobalEval(Tcl_Interp *, char *);
 /* tkSend.c */
-char *Tk_SetAppName(Tk_Window, char *);
+#if TK_MAJOR_VERSION==8 && TK_MINOR_VERSION==4
+    CONST char *Tk_SetAppName(Tk_Window, CONST char *);
+#else
+    char *Tk_SetAppName(Tk_Window, char *);
+#endif
 int Tk_SendCmd(ClientData, Tcl_Interp *, int, char **);
 int TkGetInterpNames(Tcl_Interp *, Tk_Window);
 /* tkSend_old.c */
