@@ -1,0 +1,51 @@
+agnps_input.c:	G_get_set_window (&orig_window);
+agnps_input.c:	nrows = orig_window.rows;
+agnps_input.c:	ncols = orig_window.cols;
+agnps_input.c.bak:	G_get_set_window (&orig_window);
+agnps_input.c.bak:	nrows = orig_window.rows;
+agnps_input.c.bak:	ncols = orig_window.cols;
+agnps_input.c.baknew:	G_get_set_window (&orig_window);
+agnps_input.c.baknew:	nrows = orig_window.rows;
+agnps_input.c.baknew:	ncols = orig_window.cols;
+agnps_input.h:struct   Cell_head	orig_window;
+cell_num_id.c:	G_get_cellhd(wshd->p,wshd->mapset,&orig_window);
+cell_num_id.c:	   orig_window.ns_res = (double) grid_res;
+cell_num_id.c:	   orig_window.ew_res = (double) grid_res;
+cell_num_id.c:	   orig_window.rows = (int) ((orig_window.north - orig_window.south)/ orig_window.ns_res);
+cell_num_id.c:	   orig_window.cols = (int) ((orig_window.east - orig_window.west)/ orig_window.ew_res);
+cell_num_id.c:	   orig_window.south = orig_window.north - (orig_window.rows* orig_window.ns_res);
+cell_num_id.c:	   orig_window.west = orig_window.east - (orig_window.cols* orig_window.ew_res);
+cell_num_id.c:	G_set_window(&orig_window);
+cell_num_id.c:        G_put_window(&orig_window);
+cell_num_id.c:	nrow = orig_window.rows;
+cell_num_id.c:	ncol = orig_window.cols;
+cell_num_id.c:	cell_area = (float) orig_window.ns_res * orig_window.ew_res/4000.0; /* converts cell area from m**2 to acre */
+create_grid_map.c:	G_get_cellhd(wshd->p,wshd->mapset,&orig_window);
+create_grid_map.c:	   orig_window.ns_res = (double) grid_res;
+create_grid_map.c:	   orig_window.ew_res = (double) grid_res;
+create_grid_map.c:	   orig_window.rows = 
+create_grid_map.c:             (int)((orig_window.north - orig_window.south)/ orig_window.ns_res);
+create_grid_map.c:	   orig_window.cols= 
+create_grid_map.c:             (int)((orig_window.east - orig_window.west)/ orig_window.ew_res);
+create_grid_map.c:	   orig_window.south = 
+create_grid_map.c:             orig_window.north - (orig_window.rows* orig_window.ns_res);
+create_grid_map.c:	   orig_window.west = 
+create_grid_map.c:             orig_window.east - (orig_window.cols* orig_window.ew_res);
+create_grid_map.c:	G_set_window(&orig_window);
+create_grid_map.c:	G_put_window(&orig_window);
+create_grid_map.c:	nrow = orig_window.rows;
+create_grid_map.c:	ncol = orig_window.cols;
+drain_num.c:	G_set_window(&orig_window);
+drain_num.c:	nrow = orig_window.rows;
+drain_num.c:	ncol = orig_window.cols;
+drain_num.c.bak:	G_set_window(&orig_window);
+drain_num.c.bak:	nrow = orig_window.rows;
+drain_num.c.bak:	ncol = orig_window.cols;
+drain_num.c.bak1:	G_set_window(&orig_window);
+drain_num.c.bak1:	nrow = orig_window.rows;
+drain_num.c.bak1:	ncol = orig_window.cols;
+slope_aspect.c:	G_set_window(&orig_window);
+slope_aspect.c:	nrow = orig_window.rows;
+slope_aspect.c:	ncol = orig_window.cols;
+slope_aspect.c:	H = orig_window.ew_res * 4 * 2;  /* horizontal (east-west) run times 4 for weighted difference */
+slope_aspect.c:	V = orig_window.ns_res * 4 * 2;
