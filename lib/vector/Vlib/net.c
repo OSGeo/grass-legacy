@@ -278,7 +278,10 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
     pclip = NULL;
     if ( (pSPReport =  gnGrpShortestPath ( &(Map->graph), from, to, clipper, pclip )) == NULL ) {
         if (  gnGrpErrno( &(Map->graph) ) == 0  ) {
-            printf( "Destination node %d is unreachable from node %d\n\n" , to , from );
+            /* printf( "Destination node %d is unreachable from node %d\n" , to , from ); */
+	    if ( cost != NULL )
+		*cost = PORT_DOUBLE_MAX;
+	    
 	    return -1;
 	}
         else
@@ -296,10 +299,11 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
     }
 
     cArc = pSPReport->cArc;
-    gnGrpFreeSPReport( &(Map->graph), pSPReport );
 	
     if ( cost != NULL )
 	*cost = (double) pSPReport->distance;
+
+    gnGrpFreeSPReport( &(Map->graph), pSPReport );
 
     return (cArc);
 }
