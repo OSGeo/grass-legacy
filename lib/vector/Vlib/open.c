@@ -1,3 +1,24 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       Vector library 
+*   	    	
+* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
+*               Update to GRASS 5.1 Radim Blazek and David D. Gray.
+*
+* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+#include "stdio.h"
+#include "gis.h"
 #include "Vect.h"
 /*
 
@@ -7,52 +28,47 @@
    Vect_rewind (Map)
    Vect_close (Map)
 
-
    These routines all just call the V# equivalents to pass the function
    off to more level-specific code.
  */
 
-
 #define MAX_OPEN_LEVEL 2
 
-
-static int 
-dummy ()
-{
-  return 0;
-}
+static int open_old_dummy () { return 0; }
+static int open_new_dummy () { return 0; }
 
 static int Open_level = 0;
 
-/* The line below is here so I can be sure that code that requires version 
-   **  4.1 of the library won't compile for 4.0
- */
-int Vect__four_point_one;
-
-static int (*Open_array[]) () =
+static int (*Open_old_array[][3]) () =
 {
-  dummy, V1_open_old, V2_open_old
-};
-static int (*Open_update_array[]) () =
-{
-  dummy, V1__open_update_1, V2__open_update_1
+    { open_old_dummy, V1_open_old_nat, V2_open_old_nat }
+   ,{ open_old_dummy, V1_open_old_shp }
+#ifdef HAVE_POSTGRES
+   ,{ open_old_dummy, V1_open_old_post }
+#endif
 };
 
+static int (*Open_new_array[][2]) () =
+{
+    { open_new_dummy, V1_open_new_nat }
+   ,{ open_new_dummy, V1_open_new_shp }
+#ifdef HAVE_POSTGRES
+   ,{ open_new_dummy, V1_open_new_post }
+#endif
+};
 
 /*
    **  Predetermine level you want to open for read at.  If it can't open
-   **   that level, the open will fail.  The specified level must be
-   **   set before any call to open.  The default is to try to open
-   **   the highest level possible, and keep stepping down until success.
-   **
-   **  This could potentially be used in the future to modify open_new() also
+   **  that level, the open will fail.  The specified level must be
+   **  set before any call to open.  The default is to try to open
+   **  the highest level possible, and keep stepping down until success.
    **
    **  NOTE!!  This should only be used to set when you wish to force
-   **    a lower level open.  If you require a higher level, then just
-   **    check the return to verify the level instead of forcing it.
-   **    This is because future releases will have higher levels which
-   **    will be downward compatible and which your programs should 
-   **    support by default.
+   **  a lower level open.  If you require a higher level, then just
+   **  check the return to verify the level instead of forcing it.
+   **  This is because future releases will have higher levels which
+   **  will be downward compatible and which your programs should 
+   **  support by default.
  */
 int 
 Vect_set_open_level (int level)
@@ -69,7 +85,7 @@ Vect_set_open_level (int level)
 
 /*
    ** returns Level of openness.   [ 1, 2, (3) ]
-   **   and -1 on error
+   ** and -1 on error
  */
 int
 Vect_open_old (
@@ -77,85 +93,118 @@ Vect_open_old (
 		char *name,
 		char *mapset)
 {
-  int level;
+  char buf[200], buf2[200], xname[512], xmapset[512], name_buf[1024];
+  FILE *fp;
+  int level, level_request;
+  int format;
 
-  if (Open_level)
-    {
-      level = Open_level;
-      if (0 != (*Open_array[Open_level]) (Map, name, mapset))
-	level = -1;
-    }
-  else
-    {
-      for (level = MAX_OPEN_LEVEL; level; level--)
-	if (0 == (*Open_array[level]) (Map, name, mapset))
-	  {
-	    goto success;
-	  }
-
-      level = -1;
-    }
-
-success:
-
+#ifdef GDEBUG
+      G_debug (1, "Vect_open_old(): name = %s mapset= %s", name, mapset);
+#endif
+      
+  level_request = Open_level;
   Open_level = 0;
-  return level;
+  
+  if (G__name_is_fully_qualified (name, xname, xmapset)) {
+      sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, xname);
+      sprintf (buf2, "%s@%s", GRASS_VECT_COOR_ELEMENT, xmapset); /* ==coor@mapset */
+       
+      Map->name = G_store (xname);
+      Map->mapset = G_store (xmapset);
+  } else {
+      sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
+      sprintf (buf2, "%s", GRASS_VECT_COOR_ELEMENT);
+      Map->name = G_store (name);
+      Map->mapset = G_store (mapset);
+  }
+
+  G__file_name (name_buf, buf, buf2, mapset);
+  Map->digit_file = G_store (name_buf);  
+  
+  /* Read vector format information */
+  format = 0;
+  sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
+  fp = G_fopen_old (buf, GRASS_VECT_FRMT_ELEMENT, mapset);
+  if ( fp == NULL) {
+#ifdef GDEBUG
+      G_debug ( 1, "Vector format: %d (native)", format);
+#endif
+      format = GV_FORMAT_NATIVE;
+  } else {
+      format = dig_read_frmt_ascii ( fp, &(Map->fInfo) );
+      fclose (fp); 
+      
+#ifdef GDEBUG
+      G_debug ( 1, "Vector format: %d (non-native)", format);
+#endif
+  }
+  Map->format = format;
+    
+#ifndef HAVE_POSTGRES
+  if ( Map->format == GV_FORMAT_POSTGIS )
+      G_fatal_error ("PostGIS support is not compiled in GRASS vector library.\n");
+#endif
+  
+  if (level_request) {
+      level = level_request;
+      if (0 != (*Open_old_array[format][level_request]) (Map))
+	level = -1;
+  } else {
+      for (level = MAX_OPEN_LEVEL; level; level--)
+	  if (0 == (*Open_old_array[format][level]) (Map)) {
+	      break;
+	  }
+  }
+
+  if ( level >= 1 ) {
+      if ( (Vect__read_head (Map)) != GRASS_OK ) return (-1);
+      Map->open = VECT_OPEN_CODE;
+      Map->level = level;
+      Map->mode = MODE_READ;
+      Map->Constraint_region_flag = 0;
+      Map->Constraint_type_flag = 0;
+  }
+      
+#ifdef GDEBUG
+      G_debug (1, "Vect_open_old(): vector opened on level %d", level);
+#endif
+  return (level);
 }
 
 /*
-   **  Returns level  [ 1 ]  or -1 on error 
- */
+**  Returns level  [ 1 ]  or -1 on error 
+*/
 int 
 Vect_open_new (
 		struct Map_info *Map,
 		char *name,
 		int with_z)
 {
-  if (Open_level == 2)		/* Unsupported */
-    {
-      Open_level = 0;
-      return V2__open_new_1 (Map, name, with_z);
+    int format;
+    char buf[200];
+    FILE *fp;
+    
+    format = 0;
+    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
+    fp = G_fopen_old (buf, GRASS_VECT_FRMT_ELEMENT, G_mapset());
+    if ( fp == NULL) {
+#ifdef GDEBUG
+        G_debug ( 1, "Vector format: %d (non-native)", format);
+#endif
+        format = GV_FORMAT_NATIVE;
+    } else {
+        format = dig_read_frmt_ascii ( fp, &(Map->fInfo) );
+        fclose (fp); 
+#ifdef GDEBUG
+        G_debug ( 1, "Vector format: %d (non-native)", format);
+#endif
     }
+    Map->format = format;
+    
+    if (0 > (*Open_new_array[format][1]) (Map, name, with_z))
+        return -1;
 
-  if (0 > V1_open_new (Map, name, with_z))
-    return -1;
-
-  Open_level = 0;
-  return 1;
+    Open_level = 0;
+    return 1;
 }
 
-/*
-   ** returns Level of openness.   [ 1, 2, (3) ]
-   **   and -1 on error
-   **
-   **  This also causes level 3.x files to be updated to 4.0 on the fly
-   **
-   **  NOT supported!  Do not use.
- */
-int 
-Vect__open_update_1 (struct Map_info *Map, char *name)
-{
-  int level;
-
-  if (Open_level)
-    {
-      level = Open_level;
-      if (0 != (*Open_update_array[Open_level]) (Map, name))
-	level = -1;
-    }
-  else
-    {
-      for (level = MAX_OPEN_LEVEL; level; level--)
-	if (0 == (*Open_update_array[level]) (Map, name))
-	  {
-	    goto success;
-	  }
-
-      level = -1;
-    }
-
-success:
-
-  Open_level = 0;
-  return level;
-}

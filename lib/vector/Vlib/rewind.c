@@ -1,43 +1,55 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       Vector library 
+*   	    	
+* AUTHOR(S):    Original author CERL, probably Dave Gerdes or Mike Higgins.
+*               Update to GRASS 5.1 Radim Blazek and David D. Gray.
+*
+* PURPOSE:      Higher level functions for reading/writing/manipulating vectors.
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
 #include "Vect.h"
 
 /*  Rewind vector data file to cause reads to start at beginning */
 /* returns 0 on success, -1 on error */
+
+static int
+rew_dummy ()
+{
+      return -1;
+}
+
+static int (*Rewind_array[][3]) () =
+{
+    { rew_dummy, V1_rewind_nat, V2_rewind_nat }
+   ,{ rew_dummy, V1_rewind_shp, V2_rewind_shp }
+#ifdef HAVE_POSTGRES
+   ,{ rew_dummy, V1_rewind_post, V2_rewind_post }
+#endif
+};
+
+/*  Rewind vector data file to cause reads to start at beginning.
+**  returns 0 on success
+**         -1 on error 
+*/
 int 
 Vect_rewind (struct Map_info *Map)
 {
-  if (!VECT_OPEN (Map))
-    return -1;
+    if (!VECT_OPEN (Map))
+        return -1;
 
-  switch (Map->level)
-    {
-    case 1:
-      return V1_rewind (Map);
-      /* NOTREACHED */
-      break;
-    case 2:
-      return V2_rewind (Map);
-      /* NOTREACHED */
-      break;
-    case 3:
-    default:
-      return -1;
-    }
-  /* NOTREACHED */
+#ifdef GDEBUG
+    G_debug (1, "Vect_Rewind(): name = %s", Map->name);
+#endif
+    return (*Rewind_array[Map->format][Map->level]) (Map);
 }
 
-
-/* returns 0 on success,  -1 on error  */
-int 
-V1_rewind (struct Map_info *Map)
-{
-  struct dig_head dhead;
-
-  return (fseek (Map->dig_fp, GRASS_V_DIG_HEAD_LENGTH, 0));
-}
-
-int 
-V2_rewind (struct Map_info *Map)
-{
-  Map->next_line = 1;
-  return V1_rewind (Map);	/* make sure level 1 reads are reset too */
-}

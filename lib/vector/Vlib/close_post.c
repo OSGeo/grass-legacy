@@ -18,23 +18,34 @@
 *
 *****************************************************************************/
 #include "Vect.h"
+#include <stdlib.h>
 
+#ifdef HAVE_POSTGRES
 
-/*
-   ** Simply returns level that Map is opened at
-   **  returns open level or -1 on error
- */
-int
-Vect_level (Map)
-     struct Map_info *Map;
+/* return 0 on success
+**        non-zero on error
+*/
+int 
+V1_close_post (struct Map_info *Map)
 {
-  if (Map->open != VECT_OPEN_CODE)
-    {
-      if (Map->open != VECT_CLOSED_CODE)
-	fprintf (stderr, "VECT_LEVEL: Map structure was never initialized\n");
-      else
-	fprintf (stderr, "VECT_LEVEL: Map structure has been closed\n");
-      return (-1);
-    }
-  return (Map->level);
+  if (!VECT_OPEN (Map))
+    return -1;
+
+  /* TODO something extra for post opened for writing ? */  
+  /* if (Map->mode == MODE_WRITE || Map->mode == MODE_RW) */
+
+  free (Map->name);
+  free (Map->mapset);
+
+  Map->name = NULL;
+  Map->mapset = NULL;
+  Map->digit_file = NULL;
+  Map->open = VECT_CLOSED_CODE;
+
+  PQclear(Map->fInfo.post.geomRes);
+  PQfinish(Map->fInfo.post.conn);
+  
+  return 0;
 }
+
+#endif
