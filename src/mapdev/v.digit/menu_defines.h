@@ -133,6 +133,7 @@
 #define MCC_LABEL	'L'
 #define MCC_DISPLAY	'D'
 #define MCC_COLOR	'C'
+#define MCC_REMOVE_DRAW 'r'
 /*
 #define MCC_DEVICE	'l'
 */
