@@ -1,11 +1,24 @@
 #include <stdio.h>
 
-#define QUOTE(x) #x
+#ifndef VERSION_NUMBER
+#define VERSION_NUMBER "5.0"
+#endif
+#ifndef VERSION_DATE 
+#define VERSION_DATE "2000"
+#endif
+#ifndef VERSION_UPDATE_PKG
+#define VERSION_UPDATE_PKG "0.1"
+#endif
+
+/* did'nt work in practice, though it should,
+ * andreas lange 07/2000 
+ * #define QUOTE(x) #x
+ */
 
 int main(int argc, char *argv[])
 {
-    fprintf (stdout, "GRASS %s (%s) %s\n", 
-       QUOTE(VERSION_NUMBER), QUOTE(VERSION_DATE), QUOTE(VERSION_UPDATE_PKG) );
+    fprintf (stdout, "GRASS %s (%s) %s\n",
+	     VERSION_NUMBER, VERSION_DATE, VERSION_UPDATE_PKG );
     fprintf (stdout, "\n");
     fprintf (stdout, "Copyright and License Statement\n");
     fprintf (stdout, "\n");
