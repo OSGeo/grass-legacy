@@ -38,7 +38,6 @@ install:
 	$(INSTALL) scripts/*Index $(INSTALL_DIR)/scripts
 	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
 	$(INSTALL) scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
-	$(INSTALL) src/$(PROG) $(GISBASE)/bin
 	(cd html ; make )
 
 clean: 
