@@ -37,10 +37,10 @@ fi
 for i
 do
 	case $i in
-		input=*)
-			input=`echo $i | sed s/^input=//` ;;
-		output=*)
-			output=`echo $i | sed s/^output=//` ;;
+		i=*|in=*|inp=*|inpu=*|input=*)
+			input=`echo $i | awk -F '=' '{print $2}'` ;;
+		o=*|ou=*|out=*|outp=*|outpu=*|output=*)
+			output=`echo $i | awk -F '=' '{print $2}'` ;;
 		*)
 			echo
 			echo "Unrecognized option: $i"

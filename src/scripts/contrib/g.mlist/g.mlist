@@ -38,6 +38,10 @@ then
 	echo
 	echo "          sep   output separator"
 	echo "  map_pattern   mapname pattern"
+	echo
+	echo "Note:"
+	echo "  Do not forget to enclose expression with '...' to avoid being expanded"
+	echo "  by the shell first."
 	exit 1
 fi
 
@@ -50,7 +54,7 @@ do
 		-w)
 			w=1;;
 		t=*|ty=*|typ=*|type=*)
-			itype=`echo "$i" | sed 's/^type=//'`
+			itype=`echo "$i" | awk -F '=' '{print $2}'`
 			case $itype in
 				rast*)
 					type=rast;;
@@ -70,11 +74,10 @@ do
 					type=3dview;;
 			esac;;
 		m=*|ma=*|map=*|maps=*|mapse=*|mapset=*)
-			mapset="mapset=$i";;
+			mapset=`echo "$i" | awk -F '=' '{print "mapset="$2}'`;;
 		s=*|se=*|sep=*)
-			sep=`echo "$i" | sed 's/^sep=//'`;;
+			sep=`echo "$i" | awk -F '=' '{print $2}'`;;
 		*)
-			i=`echo "$i" | sed 's/^map=//'`
 			if [ ! "$search" ]
 			then
 				search=$i
