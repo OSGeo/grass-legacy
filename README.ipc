@@ -1,17 +1,17 @@
 #!/bin/sh
 #
-# XDriver sockets: replacement of XDriver fifos (needed to improve speed and
-#                  to run GRASS Monitors on Windows)
+# XDriver System V IPC: replacement of XDriver fifos
+#		(needed to improve speed and to run GRASS Monitors on Windows?)
 # 
 # Contact: Huidae Cho  <hdcho@geni.knu.ac.kr>
 # 
 # The source code from Ronald Wiemer (MessQ.tar.Z) is merged into
 # the current driver code by Huidae Cho.
 # 
-# The updated files including the sockets are here:
-#  src/display/devices/XDRIVER/XDRIVER24/socket.new/
-#  src/display/devices/XDRIVER/lib/socket.new/
-#  src/libes/raster/socket.new/
+# The updated files including the IPC are here:
+#  src/display/devices/XDRIVER/XDRIVER24/ipc.new/
+#  src/display/devices/XDRIVER/lib/ipc.new/
+#  src/libes/raster/ipc.new/
 #
 # TODO: 
 #  The updated driver has to be tested and finally made to be standard
@@ -20,7 +20,7 @@
 # NOTE:
 #  The $GISBASE/dev/fifo* files are still required. However, these files 
 #  need not to be FIFO files. It's ok if these files are just zero size
-#  file, not FIFO nor other special file. Socket drivers communicate through
+#  file, not FIFO nor other special file. IPC drivers communicate through
 #  these files.
 #
 # KNOWN BUGS:
@@ -32,24 +32,24 @@
 #
 # Please test new XDRIVER and report bugs to developers list.
 #
-#	./README.sockets new
+#	./README.ipc new
 #	
 # Then you can revert to original XDRIVER.
 #
-#	./README.sockets orig
+#	./README.ipc orig
 #
 #############################################################################
 
 SOURCES="
-	src/display/devices/XDRIVER/XDRIVER24/SOCKET_NEW/SWITCHER.c
-	src/display/devices/XDRIVER/lib/SOCKET_NEW/connect.c
-	src/libes/raster/SOCKET_NEW/io.c
+	src/display/devices/XDRIVER/XDRIVER24/IPC_NEW/SWITCHER.c
+	src/display/devices/XDRIVER/lib/IPC_NEW/connect.c
+	src/libes/raster/IPC_NEW/io.c
 "
 
 #############################################################################
 
 
-if [ ! -f INSTALL -o ! -f NEWS.html -o "$0" != "./README.sockets" ]
+if [ ! -f INSTALL -o ! -f NEWS.html -o "$0" != "./README.ipc" ]
 then
 	echo
 	echo "This should be run under grass root directory."
@@ -89,10 +89,10 @@ fi
 if [ $# -eq 0 -o "$1" = "help" ]
 then
 	echo
-	echo "Please read README.sockets first."
+	echo "Please read README.ipc first."
 	echo
 	echo "Usage:"
-	echo " ./README.sockets [-n] [-f] [-m] [new|orig]"
+	echo " ./README.ipc [-n] [-f] [-m] [new|orig]"
 	echo
 	echo "   -n: Do not compile"
 	echo "   -f: Force to compile"
@@ -149,8 +149,8 @@ if [ "$cmd" = "new" ]
 then
 	for i in $SOURCES
 	do
-		src=`echo $i | sed 's|SOCKET_NEW/||'`
-		new=`echo $i | sed 's|SOCKET_NEW/|socket.new/|'`
+		src=`echo $i | sed 's|IPC_NEW/||'`
+		new=`echo $i | sed 's|IPC_NEW/|ipc.new/|'`
 		diff $new $src > /dev/null 2>&1
 		if [ $? -eq 0 ]
 		then
@@ -164,8 +164,8 @@ elif [ "$cmd" = "orig" ]
 then
 	for i in $SOURCES
 	do
-		src=`echo $i | sed 's|SOCKET_NEW/||'`
-		org=`echo $i | sed 's|SOCKET_NEW/|fifo.orig/|'`
+		src=`echo $i | sed 's|IPC_NEW/||'`
+		org=`echo $i | sed 's|IPC_NEW/|fifo.orig/|'`
 		diff $org $src > /dev/null 2>&1
 		if [ $? -eq 0 ]
 		then
