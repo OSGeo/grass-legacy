@@ -1067,7 +1067,7 @@ static char *store(char *s)
 {
     char *buf;
 
-    buf = malloc((unsigned) strlen(s) + 1);
+    buf = (char *)malloc((size_t) (strlen(s) + 1));
     if (buf != NULL)
         strcpy(buf, s);
     return buf;
@@ -1087,7 +1087,7 @@ int create_pad (char *name)
 {
     PAD *pad;
 
-    pad = (PAD *) malloc((unsigned) sizeof(PAD));
+    pad = (PAD *) malloc((size_t) sizeof(PAD));
     if (pad == NULL)
         return 0;
     pad->name = store(name);
@@ -1172,7 +1172,7 @@ int append_item (PAD *pad, char *name, char *value)
         return 0;
 
     /* allocate a list struct and put value into it */
-    list = (LIST *) malloc((unsigned) sizeof(LIST));
+    list = (LIST *) malloc((size_t) sizeof(LIST));
     if (list == NULL)
         return 0;
     list->next = NULL;
@@ -1257,7 +1257,7 @@ static ITEM *new_item(PAD *pad, char *name)
 {
     ITEM *item;
 
-    item = (ITEM *) malloc((unsigned) sizeof(ITEM));
+    item = (ITEM *) malloc((size_t) sizeof(ITEM));
     if (item == NULL)
         return (ITEM *) NULL;
 
@@ -1287,9 +1287,9 @@ static char *xalloc(char *buf,int *cur,int new,int len)
     if (*cur >= new)
         return buf;
     if (*cur)
-        buf = realloc(buf, (unsigned) new * len);
+        buf = (char *)realloc((void *) buf, (size_t) (new * len));
     else
-        buf = malloc((unsigned) new * len);
+        buf = (char *)malloc((size_t) (new * len));
     *cur = new;
     if (buf == NULL) {
         fprintf(stderr, "%s: Out of Memory\n", me);
