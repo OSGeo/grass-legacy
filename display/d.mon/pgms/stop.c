@@ -52,7 +52,7 @@ usage (char *me)
 int 
 stop_mon (char *name, int forced)
 {
-    char *cur, *G__getenv();
+    char *cur;
     int unset;
 
     unset = 0;
