@@ -1,0 +1,17 @@
+
+to_cell - from_cell differences
+
+GRASS employs two different methods for generating proximity (distance-from)
+maps.  You choose the method based on its complexity and your growing
+experience.  The two methods should give equivalent results.
+
+Complex "salt and pepper" maps are processed very fast with the to_cell method.
+
+Maps with only a few points (likes wells or archeology sites) run very quickly
+with the from_cell algorithm.
+
+Maps of intermediate complexity like a few roads or streams, a border, or
+a couple of areas may run equally well with either method.
+
+Note:  These two methods create slightly different results
+
