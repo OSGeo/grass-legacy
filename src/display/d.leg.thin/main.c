@@ -1,25 +1,4 @@
-/*
- *
- * 12/2002: added range= option, -f for more explicit flipping. HB
- * 11/2002: added 'at' option, prettier fp labels, vertical flipping, 
- *            more robust mouse selection, fixed lines=x to actually
- *            display x lines, fixed mouse placement bug for non-fp,
- *            cleaned out some useless code (non-fp), re-centered color
- *            box in frame, fixed smoothed color display limits,
- *            reimplemented n (nee o) flag, reduced labelnum when few cats,
- *            auto-scale text when position not explicitly set, and
- *            other cleanups.  Hamish Bowman
- *  8/2002: added o flag MN
- * 11/2001: added c,v flags, fixed mouse for CELL maps MN
- * 10/2001: added labelnum MN
- *
- * This file is a first attempt to merge the 5.0 version of d.leg.thin
- * and the 4.3 code which supports the flags.
- *
- * The old 4.x code is here:
- *  src421/untested/display/d.leg.thin/
- *
- */
+/* d.legend a.k.a d.leg.thin */
 
 #include <stdlib.h>
 #include <string.h>
