@@ -1,0 +1,48 @@
+.\" %W% %G%
+.TH V.mkgrid 2
+.SH NAME
+V.mkgrid \- Creates a vector (digit) map of a user-defined grid
+.br
+.I (Map Development Tool)
+.SH SYNOPSIS
+.B V.mkgrid
+.br
+.SH DESCRIPTION
+.LP
+\fIV.mkgrid\fR will create a vector map of a grid.  The information the user
+will be prompted for are:
+.sp
+.RS
+.TS
+l	l.
+1)  the NAME of the vector map
+2)  the number of ROWS of the grid
+3)  the number of COLUMNS of the grid
+4)  the lower left EASTING of the grid
+5)  the lower left NORTHING of the grid
+6)  the LENGTH (east-west) of the boxes in the grid
+7)  the WIDTH (north-south) of the boxes in the grid
+.TE
+.RE
+.sp
+The program works with the projection (UTM, State Plane) of the user's
+current LOCATION.  It doesn't depend on the current GRASS window at all.
+It will create the complete grid even if part of the grid falls outside the
+current window.
+.SH GENERAL INFORMATION
+.LP
+The vector map is placed
+in the \fIdig\fR directory and can be used like any vector map.
+Run \fIsupport.vect\fR  to build the topology of the vector map before using
+it in the \fIdigit\fR  program.
+Since the grid is computer-generated, the corner coordinates will be exact
+and can be used to patch with other grids.  There is no command-line driven
+version of this program, because of the large amount of information needed to
+drive it.
+.SH NOTE
+This is NOT to be used to generate a QUADS map, because quads are not exact
+rectangles.  To generate a quads map use the program \fIV.mkquads\fR.
+.SH SEE ALSO
+\fIsupport.vect[1], digit[1], V.patch[1],  V.mkquads[2]\fR
+.SH AUTHOR
+Michael Higgins, U.S. Army Construction Engineering Research Laboratory
