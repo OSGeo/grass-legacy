@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<TITLE>r.in.png</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><B>r.in.png</B></EM> - Converts a PNG image file to a GRASS raster file.
+
+<BR>
+
+<EM>(GRASS Raster Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.in.png </B>[<B>-hv</B>]
+ <B>input=</B><EM>name</EM>
+ <B>output=</B><EM>name</EM>
+[<B>title=</B><EM>string</EM>]
+[<B>gamma=</B><EM>value</EM>]
+[<B>alpha=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+This program converts a PNG raster file to a GRASS raster file.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-h</B>
+<DD>Output image file header only; don't create map(s).
+
+<DT><B>-v</B>
+<DD>Verbose mode.
+
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing PNG raster file to be imported.</DD>
+
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to resultant raster map layer(s).</DD>
+
+<DT><B>title=</B><EM>string</EM>
+<DD>Title to be assigned to resultant raster map layer(s).</DD>
+
+<DT><B>gamma=</B><EM>value</EM>
+<DD>Perform gamma correction using this value for the display gamma.</DD>
+
+<DT><B>alpha=</B><EM>value</EM>
+<DD>Pixels with an alpha (transparency) value less than or equal to
+this value are imported as no-data cells.</DD>
+
+</DL>
+
+<H2>NOTES</H2> 
+<P>
+The output depends upon the format of the PNG image. Gray-scale and
+paletted (indexed, color-mapped) images will result in a single output
+map, with the name specified by the <B>output</B> option.
+<P>
+True-color (RGB) images will result in three output maps, whose names
+are formed by appending ".r", ".g" and ".b" to the name specified by
+the <B>output</B> option.
+<P>
+For both gray-scale and true-color images, if transparency information
+is present, an additional map will be created whose name is formed by
+appending ".a" to the name specified by the <B>output</B> option.
+<P>
+For paletted images, the resulting cell values will be the color
+indices from the image, with the map's color table generated from the
+image's palette. For gray-scale and true-color images, the cell values
+will be the (unscaled) intensity values from the image. The map's
+color table will map these values to the corresponding intensity
+levels.
+<P>
+The user should adjust boundary coordinates stored in the cell header
+after import using <EM>r.support</EM> or <EM>r.region</EM>.
+<P>
+The <B>gamma</B> option is only used if the image contains a gamma
+specification.
+<P>
+The <B>alpha</B> option is only relevant if the image contains
+transparency information.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.composite.html">r.composite</A></EM><BR>
+<EM><A HREF="r.support.html">r.support</A></EM><BR>
+<EM><A HREF="r.region.html">r.region</A></EM><BR>
+<EM><A HREF="parser.html">parser</A></EM>
+
+
+<H2>AUTHOR</H2>
+
+Glynn Clements
+<p><i>Last changed: $Date$</i>
+</body>
+</html>
