@@ -33,6 +33,7 @@ struct line_cats *Vect_new_cats_struct (void);
 int Vect_cat_set (struct line_cats *, int, int);
 int Vect_cat_get (struct line_cats *, int, int *);
 int Vect_cat_del (struct line_cats *, int);
+int Vect_field_cat_del (struct line_cats *, int, int);
 int Vect_cat_in_array (int, int *, int);
 int Vect_reset_cats (struct line_cats *);
 int Vect_destroy_cats_struct (struct line_cats *);
@@ -85,6 +86,13 @@ int Vect_box_overlap (BOUND_BOX *, BOUND_BOX *);
 int Vect_box_copy (BOUND_BOX *, BOUND_BOX *);
 int Vect_box_extend (BOUND_BOX *, BOUND_BOX *);
 int Vect_region_box ( struct Cell_head *, BOUND_BOX * );
+
+    /* Spatial index */
+void Vect_spatial_index_init ( SPATIAL_INDEX * );
+void Vect_spatial_index_destroy ( SPATIAL_INDEX * );
+void Vect_spatial_index_add_item ( SPATIAL_INDEX *, int, BOUND_BOX * );
+void Vect_spatial_index_del_item ( SPATIAL_INDEX *, int );
+int Vect_spatial_index_select ( SPATIAL_INDEX *, BOUND_BOX *, struct ilist * );
 
     /* Set/get Map header info */
 char *Vect_get_name (struct Map_info *);
