@@ -64,17 +64,20 @@ int G_site_get ( FILE *fptr, Site *s)
 	s->ccat = cat;
     
 	/* find att */
-    	sa = (SITE_ATT *) bsearch ( (void *) &cat, (void *)Map->site_att, Map->n_site_att, 
-		                     sizeof(SITE_ATT), site_att_cmp );
-	
-	if ( sa == NULL ) {
-	    G_warning ( "Attributes for category %d not found", cat );
-	    for ( i = 0; i < Map->n_site_dbl; i++ ) s->dbl_att[i] = 0;
-	    for ( i = 0; i < Map->n_site_str; i++ ) G_strncpy (s->str_att[i], "", MAX_SITE_STRING);
-	} else { 
-	    for ( i = 0; i < Map->n_site_dbl; i++ ) s->dbl_att[i] = sa->dbl[i];
-	    for ( i = 0; i < Map->n_site_str; i++ ) 
-		G_strncpy (s->str_att[i], sa->str[i], MAX_SITE_STRING);
+
+	if ( Map->n_site_att > 0 ) {
+	    sa = (SITE_ATT *) bsearch ( (void *) &cat, (void *)Map->site_att, Map->n_site_att, 
+					 sizeof(SITE_ATT), site_att_cmp );
+	    
+	    if ( sa == NULL ) {
+		G_warning ( "Attributes for category %d not found", cat );
+		for ( i = 0; i < Map->n_site_dbl; i++ ) s->dbl_att[i] = 0;
+		for ( i = 0; i < Map->n_site_str; i++ ) G_strncpy (s->str_att[i], "", MAX_SITE_STRING);
+	    } else { 
+		for ( i = 0; i < Map->n_site_dbl; i++ ) s->dbl_att[i] = sa->dbl[i];
+		for ( i = 0; i < Map->n_site_str; i++ ) 
+		    G_strncpy (s->str_att[i], sa->str[i], MAX_SITE_STRING);
+	    }
 	}
     
 	return 0;
@@ -416,6 +419,8 @@ FILE * G_sites_open_old (char *name,char *mapset)
 	}
 	row++;
     }
+    db_close_database_shutdown_driver ( driver );
+    
     /* sort attributes */
     qsort ( (void *)Map->site_att, Map->n_site_att, sizeof(SITE_ATT), site_att_cmp );
     
