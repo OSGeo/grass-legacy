@@ -1,0 +1,9 @@
+OBJ = main.o
+
+panel: $(OBJ)
+	rm -f a.out
+	$(CC) $(OBJ) $(RASTERLIB) $(GISLIB)
+	mv a.out $@
+
+$(GISLIB): #
+$(RASTERLIB): #
