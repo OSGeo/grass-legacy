@@ -1,16 +1,17 @@
 # FreeType2 definition file for d.text.freetype
 #
 # FORMAT:
-#	*default_font:fontpath:charset:color:size:description
 #	font:fontpath:charset:color:size:description
+#	*default_font:fontpath:charset:color:size:description
 #
 # NOTE:
-#	Does not allow spaces, tabs, and multiple lines in one font.
+#	It does not allow spaces, tabs, and multiple lines in one font.
 #	description is never used.
+#	DO NOT ADD A DEFAULT FONT IN THE CVS VERSION. :-)
 #
 luximr:/usr/X11R6/lib/X11/fonts/TTF/luximr.ttf:iso-8859-1:white:30:
 luxirr:/usr/X11R6/lib/X11/fonts/TTF/luxirr.ttf:iso-8859-1:white:30:
-*luxisr:/usr/X11R6/lib/X11/fonts/TTF/luxisr.ttf:iso-8859-1:white:30:
+luxisr:/usr/X11R6/lib/X11/fonts/TTF/luxisr.ttf:iso-8859-1:white:30:
 luximb:/usr/X11R6/lib/X11/fonts/TTF/luximb.ttf:iso-8859-1:white:30:
 luxirb:/usr/X11R6/lib/X11/fonts/TTF/luxirb.ttf:iso-8859-1:white:30:
 luxisb:/usr/X11R6/lib/X11/fonts/TTF/luxisb.ttf:iso-8859-1:white:30:
