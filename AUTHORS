@@ -92,6 +92,7 @@ WEB SITE
  - Scott Mitchell <smitch mac com>: contributions
  - M. Hamish Bowman <hbowman albers otago ac nz>: contributions
 
+
 GRASS 6.0 major project contributers
 ------------------------------------
 
@@ -126,8 +127,11 @@ INTERNATIONALIZATION
     - German: Stephan Holl 
     - French: Emmanuel Saracco, Daniel Calvelo
     - Italian: Maurizio Napolitano
+    - Japanese: Susumu Nonogaki
+    - Russian: Alexander Shevlakov
     - Slovenia: Miha Staut
-    - Spanish: el bueno
+    - Spanish: el bueno (manzano_jm)
+    - Vietnamese: Tran Van Anh 
 
 NVIZ
  - Radim Blazek <blazek itc it>: updated vector and 3D vector support
@@ -151,8 +155,6 @@ Linux (Debian):  DebianGIS Project <pkg-grass-devel lists.alioth.debian.org>
 Linux (SuSE):    GDF Hannover bR, see http://www.gdf-hannover.de
 Mac OS/X:        Lorenzo Moretti <lorenzo.moretti bologna enea it>
 MS-Windows/Cygwin:  Huidae Cho <grass4u gmail com>
-
-
 
 
 GRASS GIS 5.4 Author List
@@ -273,7 +275,7 @@ The Official home of GRASS is:
  38050 Trento (Povo)
  email: neteler itc.it
 
-Internet:  http://grass.itc.it/
+Internet:  http://grass.itc.it/      (main site)
            http://grass.baylor.edu/  (user mailing list and mirror)
            http://grass.ibiblio.org/ (mirror)
 
