@@ -44,7 +44,9 @@ LIST = main.o\
 LIBES = $(G3DLIB) $(GISLIB) 
 
 $(HOME)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+	mv a.out $@
 
 $(LIST): glob.h
 evaluate.o: function.h

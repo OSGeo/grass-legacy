@@ -1,16 +1,21 @@
 %token NAME STRING INTEGER FLOAT FUNCTION GT GE EQ LT LE AND OR
-%{
-static int nstored = 0;
-static char **storage = 0;
-%}
-
 %token COLOR_GRAY COLOR_RED COLOR_BLUE COLOR_GREEN
 
 %left AND OR
 %left GT GE EQ NE LT LE
 %left '+' '-'
 %left '*' '/' '%'
+%right '^'
 %left UMINUS
+%{
+#include <stdlib.h>
+#include <string.h>
+#include "local_proto.h"
+
+static int nstored = 0;
+static char **storage = 0;
+%}
+
 
 %%
 
@@ -27,6 +32,7 @@ exp        : '(' exp ')'
 	   | exp LE exp                { compare ("<="); }
 	   | exp EQ exp                { compare ("="); }
 	   | exp NE exp                { compare ("!"); }
+	   | exp '^' exp               { binary_opcode ("^"); }
 	   | exp '*' exp               { binary_opcode ("*"); }
 	   | exp '/' exp               { binary_opcode ("/"); }
 	   | exp '%' exp               { binary_opcode ("%"); }
@@ -40,15 +46,14 @@ exp        : '(' exp ')'
 	   | map '[' index ',' index ']'
 				       { mapname ($1,'M',$3,$5,0); }
 	   | map '[' index ',' index ',' index ']'
-				       { mapname ($1,'M',$3,$5,$7); }                                       
+	                               { mapname ($1,'M',$3,$5,$7); } 
 	   | map                       { mapname ($1,'M',0,0,0); }
 	   | mapmod map                { mapname ($2,$1,0,0,0); }
 	   | mapmod map '[' index ']'  { mapname ($2,$1,$4,0,0); }
 	   | mapmod map '[' index ',' index ']'
 				       { mapname ($2,$1,$4,$6,0); }
-  	   | mapmod map '[' index ',' index ',' index ']'
-				       { mapname ($2,$1,$4,$6,$8); }                                       
-
+           | mapmod map '[' index ',' index ',' index ']'
+	                               { mapname ($2,$1,$4,$6,$8); }
 	   | FUNCTION '(' ')'          { function ($1); }
 	   | FUNCTION '(' exp_list ')' { function ($1); }
 	   | INTEGER                   { integer ($1); }
@@ -78,17 +83,20 @@ index      : INTEGER       { $$ = $1; }
            | '-' INTEGER   { $$ = -$2; }
 	   ;
 %%
+#include "lex.yy.c"
 
-yywrap()
+int yywrap()
 {
     return 1;
 }
-yyerror(s) char *s;
+
+int yyerror(char *s)
 {
     printf ("??\n");
+    return 0;
 }
 
-store (s) char *s;
+int store (char *s)
 {
     int i;
     for (i = 0; i < nstored; i++)
@@ -109,7 +117,7 @@ static int function_level = 0;
 static int nfuncs = 0;
 static int *nargs = 0;
 
-begin_function()
+int begin_function(void)
 {
     function_level++;
     if (function_level > nfuncs)
@@ -121,18 +129,21 @@ begin_function()
 	nfuncs = function_level;
     }
     nargs[function_level-1] = 0;
+    return 0;
 }
-another_arg ()
+int another_arg (void)
 {
     nargs[function_level-1]++;
+    return 0;
 }
-function (n)
+int function (int n)
 {
     function_level--;
     printf ("F%s %d\n", storage[n], nargs[function_level]);
+    return 0;
 }
 
-name(n)
+int name(int n)
 {
     int i;
 
@@ -140,47 +151,56 @@ name(n)
 	printf ("v%d\n", i-1);
     else
 	mapname (n,'M',0,0,0);
+    return 0;
 }
 
-mapname (n, code, row, col, depth)
-    char code;
+int mapname (int n,char code, int row,int col, int depth)
 {
-    printf ("M%c %d %d %d %s\n", code, row, col, depth, storage[n]);
+    printf ("M%c %d %d %d %s\n", code, row, col, depth,  storage[n]);
+    return 0;
 }
-integer (n)
+
+int integer (int n)
 {
     printf ("I%d\n",n);
+    return 0;
 }
-floating_point (n)
+int floating_point (int n)
 {
     printf ("D%s\n",storage[n]);
+    return 0;
 }
-unary_opcode (s) char *s;
+int unary_opcode (char *s)
 {
     printf ("1%s\n",s);
+    return 0;
 }
-binary_opcode (s) char *s;
+int binary_opcode (char *s)
 {
     printf ("2%s\n",s);
+    return 0;
 }
-compare (s) char *s;
+int compare (char *s)
 {
     printf ("C%s\n",s);
+    return 0;
 }
-logical (s) char *s;
+int logical (char *s)
 {
     printf ("L%s\n",s);
+    return 0;
 }
 
-assign (n)
+int assign (int n)
 {
     printf ("=%s\n", storage[n]);
+    return 0;
 }
 
 static int *vars ;
 static int nvars = 0;
 
-find_variable (n)
+int find_variable (int n)
 {
     int i;
 
@@ -190,7 +210,7 @@ find_variable (n)
     return 0;
 }
 
-define_variable (n)
+int define_variable (int n)
 {
     int i;
 
@@ -210,4 +230,3 @@ define_variable (n)
 }
 
 
-#include "lex.yy.c"

@@ -13,7 +13,7 @@ main(argc,argv) char *argv[];
     int i;
     char *tempfile;
     FILE *exp_fd;
-
+	
     G_gisinit (argv[0]);
 
     G3d_getWindow (&current_region);
