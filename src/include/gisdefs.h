@@ -275,7 +275,11 @@ char *G__get_gisrc_file(void);
 int G__create_alt_env(void);
 int G__switch_env(void);
 /* error.c */
+#ifdef __GNUC_MINOR__
 int G_fatal_error(char *,...) __attribute__ ((__noreturn__));
+#else
+int G_fatal_error(char *,...);
+#endif
 int G_warning(char *,...);
 int G_suppress_warnings(int);
 int G_sleep_on_error(int);
