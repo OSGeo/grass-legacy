@@ -23,7 +23,7 @@ int mouse_yes_no (char *header)
 
 	R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;
 
-	return (button == LEFTB) ;
+	return (button == leftb) ;
 }
 
 /* this is for node_lines () */
@@ -36,13 +36,13 @@ int mouse_next_prev (char *header)
 	Write_base(10, header) ;
 	Write_base(12, _("    Buttons:")) ;
 	Write_base(13, _("       Left:   Previous line")) ;
-#ifdef ANOTHER_BUTTON
-	Write_base(14, _("       Middle: Quit")) ;
-	Write_base(15, _("       Right:  Next line")) ;
-#else
-	Write_base(14, _("       Middle: Next line")) ;
-	Write_base(15, _("       Right:  Quit")) ;
-#endif
+	if(another_button){
+		Write_base(14, _("       Middle: Quit")) ;
+		Write_base(15, _("       Right:  Next line")) ;
+	}else{
+		Write_base(14, _("       Middle: Next line")) ;
+		Write_base(15, _("       Right:  Quit")) ;
+	}
 
 	R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;
 

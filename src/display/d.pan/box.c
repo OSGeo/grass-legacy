@@ -22,9 +22,9 @@ int make_window_box (struct Cell_head *window)
 
     fprintf(stderr, "\n\n");
     fprintf(stderr, "Buttons:\n") ;
-    fprintf(stderr, "%s Establish a corner\n", LEFTS);
-    fprintf(stderr, "%s Check coordinates\n", MIDDLES);
-    fprintf(stderr, "%s Accept region\n\n", RIGHTS);
+    fprintf(stderr, "%s Establish a corner\n", lefts);
+    fprintf(stderr, "%s Check coordinates\n", middles);
+    fprintf(stderr, "%s Accept region\n\n", rights);
 
     ux1 = D_get_u_west() ;
     uy1 = D_get_u_south() ;
@@ -58,18 +58,12 @@ int make_window_box (struct Cell_head *window)
 	screen_y = (int) D_u_to_d_row (uy2);
 	screen_x = (int) D_u_to_d_col (ux2);
 
-	switch(button)
-	{
-	case LEFTB:
+	if(button == leftb){
 		cur_screen_x = screen_x ;
 		cur_screen_y = screen_y ;
 		ux1 = ux2 ;
 		uy1 = uy2 ;
-		break ;
-	case MIDDLEB:
-	case RIGHTB: break;
 	}
-
 
 	north = uy1>uy2?uy1:uy2 ;
 	south = uy1<uy2?uy1:uy2 ;
@@ -116,7 +110,7 @@ int make_window_box (struct Cell_head *window)
 	fprintf (stderr,"\r");
 	fflush (stderr);
 
-    } while (button != RIGHTB) ;
+    } while (button != rightb) ;
 
     fprintf (stderr, "\n\n");
 

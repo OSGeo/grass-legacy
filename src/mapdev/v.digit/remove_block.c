@@ -36,13 +36,13 @@ remove_block (struct Map_info *Map)
     _Clear_base ();
     _Write_base (12, _("Buttons:")) ;
     _Write_base (13, _("   Left:   Establish a corner")) ;
-#ifdef ANOTHER_BUTTON
-    _Write_base (14, _("   Middle: Abort")) ;
-    Write_base  (15, _("   Right:  Accept window")) ;
-#else
-    _Write_base (14, _("   Middle: Accept window")) ;
-    Write_base  (15, _("   Right:  Abort")) ;
-#endif
+    if(another_button){
+	    _Write_base (14, _("   Middle: Abort")) ;
+	    Write_base  (15, _("   Right:  Accept window")) ;
+    }else{
+	    _Write_base (14, _("   Middle: Accept window")) ;
+	    Write_base  (15, _("   Right:  Abort")) ;
+    }
 
     cur_screen_x = (int)D_west ;
     cur_screen_y = (int)D_south ;
@@ -64,8 +64,7 @@ top:
 	R_get_location_with_box(cur_screen_x, cur_screen_y, &screen_x, &screen_y, &button) ;
 	Clear_info ();
 
-	switch (button) {
-	    case LEFTB:
+	if(button == leftb){
 		if ( cur_screen_x == screen_x  &&  cur_screen_y == screen_y)
 		{
 		    Write_info(2, _("Block is too small to use")) ;
@@ -74,16 +73,13 @@ top:
 		cur_screen_x = screen_x ;
 		cur_screen_y = screen_y ;
 		screen_to_utm ( cur_screen_x, cur_screen_y, &ux1, &uy1) ;
-		break;
-
-	    case MIDDLEB:
+	}else
+	if(button == middleb){
 		screen_to_utm ( screen_x, screen_y, &ux2, &uy2) ;
 		    goto foo;
-		break;
-
-	    case RIGHTB:
+	}else
+	if(button == rightb){
 		return (0);
-		break;
 	}
 
     }

@@ -34,13 +34,11 @@ int where_am_i (struct Map_info *map)
 	R_get_location_with_pointer(&screen_x, &screen_y, &button);
 	screen_to_utm (screen_x, screen_y, &ux, &uy);
 
-	switch(button)
-	{
-	    case LEFTB:
+	if(button == leftb){
 		sprintf(buffer,_("EAST: %12.2f   NORTH: %12.2f"), ux, uy);
 		Write_info(1, buffer);
-		break;
-	    case MIDDLEB:
+	}else
+	if(button == middleb){
 #ifdef FOO
 		/* Check to see if we are pointing to an area */
 		Write_info(2, "Checking areas");
@@ -83,14 +81,10 @@ int where_am_i (struct Map_info *map)
 		 }
 		else
 		    Write_info(4, _("No Lines found"));
-		break;
-
 #endif
-	    case RIGHTB:
+	}else
+	if(button == rightb){
 		return(0);
-		break;
-	    default:
-		break;
 	}
     }
 }

@@ -124,6 +124,16 @@ int main (int argc, char **argv)
     if (argc > 1 && G_parser(argc,argv))
 	exit(1);
 
+    if(getenv("GRASS_ANOTHER_BUTTON")){
+	    leftb   = 1; lefts   = "Left:  ";
+	    middleb = 3; middles = "Right: ";
+	    rightb  = 2; rights  = "Middle:";
+    }else{
+	    leftb   = 1; lefts   = "Left:  ";
+	    middleb = 2; middles = "Middle:";
+	    rightb  = 3; rights  = "Right: ";
+    }
+
     sscanf(zoom->answer,"%lf", &magnify); 
 
 #ifdef QUIET

@@ -21,21 +21,22 @@ int zoomwindow ( struct Cell_head *window, int quiet, double magnify)
     while( !end ) {
 	if (printmenu){
 	    fprintf(stderr, "\n\nButtons:\n") ;
-	    fprintf(stderr, "%s Zoom menu\n", LEFTS);
-	    fprintf(stderr, "%s Pan\n", MIDDLES);
-	    fprintf(stderr, "%s Quit\n", RIGHTS);
+	    fprintf(stderr, "%s Zoom menu\n", lefts);
+	    fprintf(stderr, "%s Pan\n", middles);
+	    fprintf(stderr, "%s Quit\n", rights);
 	    printmenu = 0;
 	}
 
 	R_get_location_with_pointer(&screen_x, &screen_y, &button);
 
 	
-	switch(button) {
-	    case LEFTB: /* enter zoom menu */
+	if(button == leftb){
+		/* enter zoom menu */
 	        make_window_box (window, magnify, 1, 0);
 	        printmenu = 1;
-		break ;
-	    case MIDDLEB: /* pan */
+	}else
+	if(button == middleb){
+		/* pan */
 		/* For print only */
 		px = D_d_to_u_col((double)screen_x)  ;
 		py = D_d_to_u_row((double)screen_y)  ;
@@ -75,10 +76,8 @@ int zoomwindow ( struct Cell_head *window, int quiet, double magnify)
 		
 
 		set_win ( window, east, north, west, south, 0);
-		break ;
-            case RIGHTB:
+	}else{
 	      	end = 1;
-		break ;
         }		
     }
 

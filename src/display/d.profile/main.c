@@ -72,6 +72,18 @@ int main (int argc, char **argv)
     if (G_parser(argc, argv))
         exit(1);
 
+    if(getenv("GRASS_ANOTHER_BUTTON")){
+            another_button = 1;
+	    leftb   = 1;
+	    middleb = 3;
+	    rightb  = 2;
+    }else{
+            another_button = 0;
+	    leftb   = 1;
+	    middleb = 2;
+	    rightb  = 3;
+    }
+
     old_mapname = map->answer;
 
     old_mapset = G_find_cell2 (old_mapname, "") ;
@@ -165,13 +177,13 @@ if (max < 0) max = 0;
         DrawText(25,1,1,"GRASS PROGRAM: profile");
         R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
         DrawText(15,3,1,"MOUSE   | Left:   Where am I?");
-#ifdef ANOTHER_BUTTON
-        DrawText(15,4,1,"BUTTON  | Right:  Set FIRST point\n");
-        DrawText(15,5,1,"MENU    | Middle: Quit this");
-#else
-        DrawText(15,4,1,"BUTTON  | Middle: Set FIRST point");
-        DrawText(15,5,1,"MENU    | Right:  Quit this\n");
-#endif
+        if(another_button){
+            DrawText(15,4,1,"BUTTON  | Right:  Set FIRST point\n");
+            DrawText(15,5,1,"MENU    | Middle: Quit this");
+        }else{
+            DrawText(15,4,1,"BUTTON  | Middle: Set FIRST point");
+            DrawText(15,5,1,"MENU    | Right:  Quit this\n");
+        }
 	R_stabilize();
 
         /* LOOP to get first point of line */
@@ -190,7 +202,7 @@ if (max < 0) max = 0;
             R_get_location_with_pointer(&screen_x, &screen_y, &button);
 
             /* exit if user hit left mouse button */
-            if(button == RIGHTB)
+            if(button == rightb)
             {
                 D_set_cur_wind (ORIG.name);
                 fprintf (stdout,"Use 'd.frame -e' to remove left over frames\n");
@@ -210,7 +222,7 @@ if (max < 0) max = 0;
                 R_standard_color(D_translate_color("red"));
                 DrawText(25,1,1,"OUTSIDE CURRENT WINDOW");
                 R_stabilize();
-                button = LEFTB;
+                button = leftb;
             }
             else
             {
@@ -219,7 +231,7 @@ if (max < 0) max = 0;
                 What(old_mapname,old_mapset,window,cur_ux,cur_uy);
             }
 
-    }   while (button != MIDDLEB);
+    }   while (button != middleb);
 
         /* display mouse-menu in mouse-menu window */
         D_set_cur_wind (MOU.name);
@@ -229,13 +241,13 @@ if (max < 0) max = 0;
         DrawText(25,1,1,"GRASS PROGRAM: profile");
         R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
         DrawText(15,3,1,"MOUSE   | Left:   Where am I?");
-#ifdef ANOTHER_BUTTON
-        DrawText(15,4,1,"BUTTON  | Right:  Set SECOND point\n");
-        DrawText(15,5,1,"MENU    | Middle: Quit this");
-#else
-        DrawText(15,4,1,"BUTTON  | Middle: Set SECOND point");
-        DrawText(15,5,1,"MENU    | Right:  Quit this\n");
-#endif
+        if(another_button){
+            DrawText(15,4,1,"BUTTON  | Right:  Set SECOND point\n");
+            DrawText(15,5,1,"MENU    | Middle: Quit this");
+        }else{
+            DrawText(15,4,1,"BUTTON  | Middle: Set SECOND point");
+            DrawText(15,5,1,"MENU    | Right:  Quit this\n");
+        }
 	R_stabilize();
 
         /* move graphics position to first point chosen */
@@ -264,18 +276,16 @@ if (max < 0) max = 0;
                 D_erase_window();
                 R_standard_color(D_translate_color("red"));
                 DrawText(25,1,1,"OUTSIDE CURRENT WINDOW");
-                button = LEFTB;
+                button = leftb;
             }
             else
             {
-                switch (button)
-                {
-                case LEFTB:
+                if(button == leftb){
                     /* print "earth" coords. and category info. in status window */
                     D_set_cur_wind (STA.name);
                     What(old_mapname,old_mapset,window,ux,uy);
-                    break;
-                case MIDDLEB:
+                }else
+                if(button == middleb){
                     /* get profile data */
                     InitProfile(&profile,window,cur_uy,cur_ux,uy,ux);
                     if ( (err=ExtractProfile(&profile,old_mapname,old_mapset) )== -1 )
@@ -363,14 +373,11 @@ if (max < 0) max = 0;
                         cur_screen_y = screen_y;
                         cur_ux = ux ;
                         cur_uy = uy ;
-                        break;
                     }
-                default:
-                        break;
                 }
             }
 	    R_stabilize();
-        }   while (button != RIGHTB && button != MIDDLEB);
+        }   while (button != rightb && button != middleb);
 
         /* display mouse-menu in mouse-menu window */
         D_set_cur_wind (MOU.name);
@@ -380,23 +387,23 @@ if (max < 0) max = 0;
         DrawText(25,1,1,"GRASS PROGRAM: profile");
         R_standard_color(D_translate_color(DEFAULT_FG_COLOR));
         DrawText(15,3,1,"MOUSE   | Left:   DO ANOTHER");
-#ifdef ANOTHER_BUTTON
-        DrawText(15,4,1,"BUTTON  | Right:  CLEAR DISPLAY");
-        DrawText(15,5,1,"MENU    | Middle: QUIT");
-#else
-        DrawText(15,4,1,"BUTTON  | Middle: CLEAR DISPLAY");
-        DrawText(15,5,1,"MENU    | Right:  QUIT");
-#endif
+        if(another_button){
+            DrawText(15,4,1,"BUTTON  | Right:  CLEAR DISPLAY");
+            DrawText(15,5,1,"MENU    | Middle: QUIT");
+        }else{
+            DrawText(15,4,1,"BUTTON  | Middle: CLEAR DISPLAY");
+            DrawText(15,5,1,"MENU    | Right:  QUIT");
+        }
 	R_stabilize();
 
         R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
-        if (button == RIGHTB)
+        if (button == rightb)
         {
             D_set_cur_wind (ORIG.name);
             fprintf (stdout, "Use 'd.frame -e' to remove left over frames\n");
             return(0);
         }
-        else if (button == MIDDLEB)
+        else if (button == middleb)
         {
             D_set_cur_wind (MAP.name);
             Derase(DEFAULT_BG_COLOR) ;

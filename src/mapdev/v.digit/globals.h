@@ -123,6 +123,8 @@ Global double Point_X, Point_Y;
 
 Global int In_Debug;
 
+Global int another_button, leftb, middleb, rightb;
+
 #ifdef SCS_MODS
 Global char *N_subj_file;
 Global double last_prune_thresh;

@@ -21,9 +21,9 @@ int make_window_center (struct Cell_head *window, double mag)
 
     fprintf(stderr, "\n\n");
     fprintf(stderr, "Buttons:\n") ;
-    fprintf(stderr, "%s Mark point to be at the center of the new region\n", LEFTS);
-    fprintf(stderr, "%s Where am I?\n", MIDDLES);
-    fprintf(stderr, "%s Quit\n\n", RIGHTS);
+    fprintf(stderr, "%s Mark point to be at the center of the new region\n", lefts);
+    fprintf(stderr, "%s Where am I?\n", middles);
+    fprintf(stderr, "%s Quit\n\n", rights);
 
     len_n = len_e = 0;
     do
@@ -61,11 +61,11 @@ int make_window_center (struct Cell_head *window, double mag)
 	fprintf (stderr,"\r");
 	fflush (stderr);
 
-    } while (button == MIDDLEB) ;
+    } while (button == middleb) ;
 
     fprintf (stderr, "\n\n");
 
-    if (button == RIGHTB)
+    if (button == rightb)
 	return 1;
 
 /* added for panning */

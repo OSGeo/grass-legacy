@@ -8,17 +8,6 @@
 #include "config.h"
 #include "digit.h"
 
-
-#define	LEFTB	1
-
-#ifndef ANOTHER_BUTTON
-#	define MIDDLEB	2
-#	define RIGHTB	3
-#else
-#	define MIDDLEB	3
-#	define RIGHTB	2
-#endif
-
 int print_binary_int(int);
 int print_binary_char(int);
 int change_mode(int);

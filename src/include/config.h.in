@@ -175,13 +175,6 @@
 /* define if glXCreateGLXPixmap exists */
 #undef HAVE_PIXMAPS
 
-/*
- * It's hard to click two buttons simultaneously with two button mouse.
- * Situation is worse, if it requires continuous clicking.
- * In this case uncomment below.
- */
-#undef ANOTHER_BUTTON
-
 /* define if using external PROJ.4 */
 #undef USE_PROJ
 

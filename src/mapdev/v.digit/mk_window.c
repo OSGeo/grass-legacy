@@ -66,15 +66,13 @@ top:
 	else
 	    R_get_location_with_box(cur_screen_x, cur_screen_y, &screen_x, &screen_y, &button) ;
 
-	switch (button) {
-	    case LEFTB:
+	if(button == leftb){
 		cur_screen_x = screen_x ;
 		cur_screen_y = screen_y ;
 		screen_to_utm ( cur_screen_x, cur_screen_y, &ux1, &uy1) ;
 		mode = 2;
-		break;
-
-	    case MIDDLEB:
+	}else
+	if(button == middleb){
 		screen_to_utm ( screen_x, screen_y, &ux2, &uy2) ;
 		clear_window ();
 		switch ( mode ) {
@@ -111,10 +109,9 @@ top:
 			break;
 		}
 		replot(CMap);
-		break;
-	    case RIGHTB:
+	}else
+	if(button == rightb){
 	        return(0) ;
-		break;
 	}
     }
 

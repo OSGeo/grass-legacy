@@ -7,25 +7,6 @@
 #include "raster.h"
 #include "display.h"
 
-
-/* left button */
-#define	LEFTB	1
-/* left button string */
-#define	LEFTS	"Left:  "
-
-#ifndef	ANOTHER_BUTTON
-#	define	MIDDLEB	2
-#	define	RIGHTB	3
-#	define	MIDDLES	"Middle:"
-#	define	RIGHTS	"Right: "
-#else
-#	define	MIDDLEB	3
-#	define	RIGHTB	2
-#	define	MIDDLES	"Right: "
-#	define	RIGHTS	"Middle:"
-#endif
-
-
 #ifndef GLOBAL
 #define GLOBAL extern
 #endif
@@ -44,6 +25,7 @@ GLOBAL int real_nrows, real_ncols;
 GLOBAL int colr_ok, cats_ok, quant_ok;
 GLOBAL int change_made;
 GLOBAL RASTER_MAP_TYPE map_type;
+GLOBAL int another_button, leftb, middleb, rightb;
 
 
 /* keeping names straight:

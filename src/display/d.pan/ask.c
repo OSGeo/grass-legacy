@@ -11,9 +11,9 @@ yes (char *prompt)
     int x, y, b;
 
     fprintf(stderr, "%s\n", prompt);
-    fprintf(stderr, "%s Yes\n", LEFTS);
-    fprintf(stderr, "%s No\n", MIDDLES);
-    fprintf(stderr, "%s No\n\n", RIGHTS);
+    fprintf(stderr, "%s Yes\n", lefts);
+    fprintf(stderr, "%s No\n", middles);
+    fprintf(stderr, "%s No\n\n", rights);
 
     R_get_location_with_pointer(&x, &y, &b);
 

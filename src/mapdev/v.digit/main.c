@@ -70,6 +70,18 @@ fprintf (stderr, _("\nThere are NO arguments required.\n\n"));
 
 	system("clear") ;
 
+    if(getenv("GRASS_ANOTHER_BUTTON")){
+	    another_button = 1;
+	    leftb   = 1;
+	    middleb = 3;
+	    rightb  = 2;
+    }else{
+	    another_button = 0;
+	    leftb   = 1;
+	    middleb = 2;
+	    rightb  = 3;
+    }
+
 /*  set the monitor up for digit and give them something to look at  */
 
 	sprintf( command, "d.frame -e") ;

@@ -31,13 +31,13 @@ int find_node_with_mouse (double *x, double *y, double thresh, char *header)
     _Write_base(10, header);
     _Write_base(12, _("    Buttons:"));
     _Write_base(13, _("       Left:   Choose node"));
-#ifdef ANOTHER_BUTTON
-    _Write_base(14, _("       Middle: Abort/Quit"));
-     Write_base(15, _("       Right:  Accept chosen node"));
-#else
-    _Write_base(14, _("       Middle: Accept chosen node"));
-     Write_base(15, _("       Right:  Abort/Quit"));
-#endif
+    if(another_button){
+    	_Write_base(14, _("       Middle: Abort/Quit"));
+     	Write_base(15, _("       Right:  Accept chosen node"));
+    }else{
+    	_Write_base(14, _("       Middle: Accept chosen node"));
+     	Write_base(15, _("       Right:  Abort/Quit"));
+    }
 
     node_num = 0;
     while (1)
@@ -45,9 +45,8 @@ int find_node_with_mouse (double *x, double *y, double thresh, char *header)
 	R_get_location_with_pointer ( &screen_x, &screen_y, &button);
 	flush_keyboard ();
 
-	switch (button)
-	 {
-	    case LEFTB:			/*  choose this  */
+	if(button == leftb){
+		/*  choose this  */
 		if (node_num > 0)
 		{
 		    R_standard_color (dcolors[dig_node_color (CMap->Node[node_num].n_lines)]);
@@ -66,24 +65,21 @@ int find_node_with_mouse (double *x, double *y, double thresh, char *header)
 		    Blot (&(CMap->Node[node_num].x), &(CMap->Node[node_num].y));
 		}
 		Write_info(1, buffer);
-		break;
-
-	    case MIDDLEB:			/*  quit this */
+	}else
+	if(button == middleb){
+	    	/*  quit this */
 		Clear_info ();
 		_Clear_base ();
-		
 		
 		return (node_num);
-		break;
-
-	    case RIGHTB:			/*  coordinates  */
+	}else
+	if(button == rightb){
+	    	/*  coordinates  */
 		Clear_info ();
 		_Clear_base ();
 		
-		
 		return (-1);
-		break;
-	 }
+	}
 
 	screen_to_utm(screen_x, screen_y, &ux2, &uy2);
 
@@ -110,13 +106,13 @@ int find_point_with_mouse (double *x, double *y, int n_points, double thresh)
     _Write_base(10, buffer);
     _Write_base(12, _("    Buttons:"));
     _Write_base(13, _("       Left:   Choose point on line"));
-#ifdef ANOTHER_BUTTON
-    _Write_base(14, _("       Middle: Abort/Quit"));
-     Write_base(15, _("       Right:  Accept chosen point"));
-#else
-    _Write_base(14, _("       Middle: Accept chosen point"));
-     Write_base(15, _("       Right:  Abort/Quit"));
-#endif
+    if(another_button){
+    	_Write_base(14, _("       Middle: Abort/Quit"));
+     	Write_base(15, _("       Right:  Accept chosen point"));
+    }else{
+    	_Write_base(14, _("       Middle: Accept chosen point"));
+     	Write_base(15, _("       Right:  Abort/Quit"));
+    }
 
     point_num = -1;
 
@@ -125,9 +121,8 @@ int find_point_with_mouse (double *x, double *y, int n_points, double thresh)
 	R_get_location_with_pointer ( &screen_x, &screen_y, &button);
 	flush_keyboard ();
 
-	switch (button)
-	 {
-	    case LEFTB:			/*  choose this  */
+	if(button == leftb){
+	    	/*  choose this  */
 		if (point_num > 0)
 		{
 		    R_standard_color (dcolors[CLR_ERASE]);
@@ -163,24 +158,21 @@ int find_point_with_mouse (double *x, double *y, int n_points, double thresh)
 		}
 
 		Write_info(1, buffer);
-		break;
-
-	    case MIDDLEB:			/*  quit this  */
+	}else
+	if(button == middleb){
+	    	/*  quit this  */
 		Clear_info ();
 		_Clear_base ();
-		
 		
 		return (point_num);
-		break;
-
-	    case RIGHTB:			/*  coordinates  */
+	}else
+	if(button == rightb){
+	    	/*  coordinates  */
 		Clear_info ();
 		_Clear_base ();
-		
 
 		return (-1);
-		break;
-	 }
+	}
 
 	screen_to_utm(screen_x, screen_y, &ux2, &uy2);
 
@@ -209,13 +201,13 @@ int new_point_with_mouse (double *x, double *y, char *header)
     _Write_base(10, header);
     _Write_base(12, _("    Buttons:"));
     _Write_base(13, _("       Left:   Choose this position"));
-#ifdef ANOTHER_BUTTON
-    _Write_base(14, _("       Middle: Abort/Quit"));
-     Write_base(15, _("       Right:  Accept chosen point position"));
-#else
-    _Write_base(14, _("       Middle: Accept chosen point position"));
-     Write_base(15, _("       Right:  Abort/Quit"));
-#endif
+    if(another_button){
+    	_Write_base(14, _("       Middle: Abort/Quit"));
+     	Write_base(15, _("       Right:  Accept chosen point position"));
+    }else{
+    	_Write_base(14, _("       Middle: Accept chosen point position"));
+     	Write_base(15, _("       Right:  Abort/Quit"));
+    }
 
 
     prev = 0;
@@ -224,9 +216,8 @@ int new_point_with_mouse (double *x, double *y, char *header)
 	R_get_location_with_pointer ( &screen_x, &screen_y, &button);
 	flush_keyboard ();
 
-	switch (button)
-	 {
-	    case LEFTB:			/*  choose this  */
+	if(button == leftb){
+	    	/*  choose this  */
 		if (prev)
 		{
 		    R_standard_color (dcolors[CLR_ERASE]);
@@ -239,16 +230,16 @@ int new_point_with_mouse (double *x, double *y, char *header)
 		R_standard_color (dcolors[CLR_HIGHLIGHT]);
 		Blot (x, y);
 		Write_info (1, _(" Point location:"));
-		break;
-
-	    case MIDDLEB:			/*  quit this  */
+	}else
+	if(button == middleb){
+	    	/*  quit this  */
 		Clear_info ();
 		_Clear_base ();
 				
 		return (0);
-		break;
-
-	    case RIGHTB:			/*  abort  */
+	}else
+	if(button == rightb){
+	    	/*  abort  */
 		if (prev)
 		{
 		    R_standard_color (dcolors[CLR_ERASE]);
@@ -260,8 +251,7 @@ int new_point_with_mouse (double *x, double *y, char *header)
 		_Clear_base ();
 		
 		return (0);
-		break;
-	 }
+	}
 
 	screen_to_utm(screen_x, screen_y, &ux2, &uy2);
 
@@ -318,25 +308,25 @@ int _find_line_with_mouse (int type_mask, char *header, int (*call)(), int type_
     {
 	_Write_base(12, _("    Buttons:"));
 	_Write_base(13, _("       Left:   Choose site"));
-#ifdef ANOTHER_BUTTON
-	_Write_base(14, _("       Middle: Abort/Quit"));
-	 Write_base(15, _("       Right:  Accept chosen site"));
-#else
-	_Write_base(14, _("       Middle: Accept chosen site"));
-	 Write_base(15, _("       Right:  Abort/Quit"));
-#endif
+	if(another_button){
+		_Write_base(14, _("       Middle: Abort/Quit"));
+		Write_base(15, _("       Right:  Accept chosen site"));
+	}else{
+		_Write_base(14, _("       Middle: Accept chosen site"));
+		Write_base(15, _("       Right:  Abort/Quit"));
+	}
     }
     else
     {
 	_Write_base(12, _("    Buttons:"));
 	_Write_base(13, _("       Left:   Choose line"));
-#ifdef ANOTHER_BUTTON
-	_Write_base(14, _("       Middle: Abort/Quit"));
-	 Write_base(15, _("       Right:  Accept chosen line"));
-#else
-	_Write_base(14, _("       Middle: Accept chosen line"));
-	 Write_base(15, _("       Right:  Abort/Quit"));
-#endif
+	if(another_button){
+		_Write_base(14, _("       Middle: Abort/Quit"));
+		Write_base(15, _("       Right:  Accept chosen line"));
+	}else{
+		_Write_base(14, _("       Middle: Accept chosen line"));
+		Write_base(15, _("       Right:  Abort/Quit"));
+	}
     }
 
     if (type_ptr != USE_PTR)
@@ -368,9 +358,8 @@ int _find_line_with_mouse (int type_mask, char *header, int (*call)(), int type_
 	screen_to_utm (screen_x+FIND_WIDTH, screen_y+FIND_WIDTH, &ux2, &uy2); /* bottom right */
 
 
-	switch (button)
-	 {
-	    case LEFTB:			/*  choose this  */
+	if(button == leftb){
+	    	/*  choose this  */
 
 		/* Hack   dpg  12/6/89 */
 		screen_to_utm (screen_x, screen_y, &Point_X, &Point_Y);
@@ -412,16 +401,16 @@ int _find_line_with_mouse (int type_mask, char *header, int (*call)(), int type_
 			if (0 > ((*call) (CMap, line)))
 			    ret = 0;
 		}
-		break;
-
-	    case MIDDLEB:				/* return line */
+	}else
+	if(button == middleb){
+	    	/* return line */
 		Clear_info ();
 		_Clear_base ();
 		
 		return (ret);
-		break;
-
-	    case RIGHTB:				/*  Abort this  */
+	}else
+	if(button == rightb){
+	    	/*  Abort this  */
 		if (line)	/* replace last chosen line */
 		{
 		    display_line (type, &Gpoints, line, CMap);
@@ -430,7 +419,6 @@ int _find_line_with_mouse (int type_mask, char *header, int (*call)(), int type_
 
 		return (0);
 		}
-		break;
-	 }
+	}
     }
 }

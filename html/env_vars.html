@@ -44,7 +44,7 @@ Use: &nbsp;&nbsp;&nbsp; <tt>g.gisenv set=VARIABLE=VALUE</tt>
 <p>
 
 It looks unusual with two equals signs, but g.gisenv does dual duty for
-getting and setting GRASS environment variables.  If the user just specifies
+getting and setting GRASS variables.  If the user just specifies
 a variable name, it defaults to "get" mode. Example:
 <p>
 <tt>
@@ -53,7 +53,7 @@ a variable name, it defaults to "get" mode. Example:
 </tt>
 
 <p>
-To <b>permanently</b> predefine GRASS environment variables the user may specify
+To <b>permanently</b> predefine GRASS variables the user may specify
 the variable(s) in the <a href=html/grass5.html>.grassrc5</a> file.
 
 <hr WIDTH="100%">
@@ -97,6 +97,10 @@ the variable(s) in the <a href=html/grass5.html>.grassrc5</a> file.
 <p>GRASS_ADDON_PATH
 <br>[grass5] startup script
 <br>&nbsp; allows to specify additional paths to local GRASS modules extra to standard distribution
+<p>GRASS_ANOTHER_BUTTON
+<br>[various modules]
+<br>&nbsp; If the environment variable GRASS_ANOTHER_BUTTON exists,
+ the mouse button setting will be changed for two-button mice.
 <p>GRASS_BACKGROUNDCOLOR
 <br>[PNGdriver]
 <br>&nbsp; defines the background color of the image created by the PNG driver
@@ -222,17 +226,6 @@ is "GRASS Development Team"
 
 <H2>List of GRASS variables</H2>
 
-<p>ANOTHER_BUTTON
-<br>[v.digit]
-<br>&nbsp; define to click conveniently for two button mouse.
-<br>&nbsp; It's hard to click two buttons simultaneously with two button mouse,
-<br>&nbsp; #ifndef ANOTHER_BUTTON
-<br>&nbsp; #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; define MIDDLEB&nbsp; 2
-<br>&nbsp; #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; define RIGHTB&nbsp;&nbsp; 3
-<br>&nbsp; #else
-<br>&nbsp; #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; define MIDDLEB&nbsp; 3
-<br>&nbsp; #&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; define RIGHTB&nbsp;&nbsp; 2
-<br>&nbsp; #endif
 <p>G3D_CACHE_SIZE_ENV_VAR -?
 <p>G3D_CACHE_SIZE_MAX_ENV_VAR -?
 <p>G3D_COMPRESSION_ENV_VAR_NO -?

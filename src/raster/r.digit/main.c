@@ -2,6 +2,7 @@
  *   Digitize a raster map on the screen image
  */
 
+#define MAIN
 #include <unistd.h>
 #include "gis.h"
 #include "raster.h"
@@ -23,6 +24,16 @@ int main (int argc, char **argv)
 		"Interactive tool used to draw and save "
 		"vector features on a graphics monitor using a pointing "
 		"device (mouse).";
+
+    if(getenv("GRASS_ANOTHER_BUTTON")){
+	    leftb   = 1; lefts   = "Left:  ";
+	    middleb = 3; middles = "Right: ";
+	    rightb  = 2; rights  = "Middle:";
+    }else{
+	    leftb   = 1; lefts   = "Left:  ";
+	    middleb = 2; middles = "Middle:";
+	    rightb  = 3; rights  = "Right: ";
+    }
 
 #ifdef DEBUG
     polyfile = "/tmp/r.digit.out";

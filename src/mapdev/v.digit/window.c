@@ -660,28 +660,26 @@ zoom_window (unsigned char type, struct line_pnts *Xpoints)
 		_Clear_base ();
 		_Write_base (12, _("Buttons:")) ;
 		_Write_base (13, _("   Left:   Zoom menu ")) ; /* Select new window */
-#ifdef ANOTHER_BUTTON
-		_Write_base (14, _("   Middle: Abort/Quit ")) ;
-		 Write_base (15, _("   Right:  Zoom/Pan MENU")) ;
-#else
-		_Write_base (14, _("   Middle: Pan")) ; /* was Zoom/Pan MENU */
-		 Write_base (15, _("   Right:  Quit ")) ;
-#endif
+		if(another_button){
+			_Write_base (14, _("   Middle: Abort/Quit ")) ;
+			Write_base (15, _("   Right:  Zoom/Pan MENU")) ;
+		}else{
+			_Write_base (14, _("   Middle: Pan")) ; /* was Zoom/Pan MENU */
+			Write_base (15, _("   Right:  Quit ")) ;
+		}
 
 		R_get_location_with_pointer ( &screen_x, &screen_y, &button) ;
 		flush_keyboard (); /*ADDED*/
 		Clear_info ();
 
-		switch (button)
-		{
-		    case LEFTB:
+		if(button == leftb){
 			set_window_w_mouse ();
 			clear_window ();
 			replot(CMap); 
 			if(Xpoints)
 				highlight_line (type, Xpoints, 0, NULL);
-			break ;
-		    case MIDDLEB:
+		}else
+		if(button == middleb){
 			screen_to_utm ( screen_x, screen_y, &ux1, &uy1) ;
 			tmp1 =  (ux1 - ((U_east  + U_west)  / 2));
 			tmp2 =  (uy1 - ((U_north + U_south) / 2));
@@ -697,14 +695,12 @@ zoom_window (unsigned char type, struct line_pnts *Xpoints)
 			if(Xpoints)
 				highlight_line (type, Xpoints, 0, NULL);
 			Clear_info();
-			break;
-		    case RIGHTB:
+		}else
+		if(button == rightb){
 			return(0);
-			break;
-		    default:
+		}else{
 			return(1) ;
-			break ;
-		} /* end switch */
+		} /* end if */
 		
 	    } /* end while */
 	} 

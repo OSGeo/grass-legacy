@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.27 2004-02-09 14:52:37 markus Exp $)
+($Id: INSTALL,v 1.28 2004-11-03 20:33:18 cho Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -197,7 +197,6 @@ In general the configure options are organized as:
   So, the following are controlled by --{en,dis}able:
  
 	--enable-sysv           define the compiler macro SYSV
-	--enable-another-button use two-button mouse conveniently
 	--enable-socket         use socket XDriver (default)
 	--enable-fifo           use FIFO XDriver instead of sockets
 	--enable-w11            use W11 library for Windows X11 emulation
@@ -391,4 +390,4 @@ http://grass.itc.it/announces/announce_lzw_removal.html
 
 
 GRASS Development Team
-$Date: 2004-02-09 14:52:37 $
+$Date: 2004-11-03 20:33:18 $
