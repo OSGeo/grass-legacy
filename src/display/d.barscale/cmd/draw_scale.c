@@ -68,7 +68,7 @@ int draw_scale(char *save)
 	/* Establish text size */
 	D_get_screen_window(&t, &b, &l, &r) ;
 	R_set_window(t, b, l, r) ;
-	size = (int)(.025 * (float)(b - t)) ;
+	size = 14 ;
 	R_text_size(size, size) ;
 
 	meters  = D_get_u_east() - D_get_u_west() ;
