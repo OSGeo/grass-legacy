@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.71 2000-11-10 18:38:23 markus Exp $
+$Id: BUGS,v 1.72 2000-11-10 18:40:05 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -87,19 +87,6 @@ d.rast.num: some numbers are displayed in wrong (unreadable) color
 [RC]d.rgb: Is there a difference between d.rgb and i.composite?
   (being worked on by ?)  
 
-[RC]d.sites/d.what.sites:
- I'm working with grass5 v7 and I'm triyng to display a site file with      
- 119000 points. The file is well formatted but the package d.sites stop the  
- display after about 9000 points.                                            
- Also d.what.sites stop reading of files after about 24000 points, it says   
- to me that the memory used is 1860 Kb. 
- If I display the same set of points but with grass4.1.2 it arrives til the
- end.
- (reported by marino vetuschi zuccolini <zucco@ugo.dipteris.unige.it>)
- -> probably not a bug?
-  (being worked on by ?)   
-
-
 [RC]d.sites.qual: not all the sites are used/displayed
   d.sites.qual doesn't work properly: not all the sites 
   are used/displayed if the number of fields of the input site file is 
@@ -110,11 +97,6 @@ d.rast.num: some numbers are displayed in wrong (unreadable) color
     site_list is broken if it doesn't have a constant number and type of   
     fields (We're looking at allowing null fields for 5.1...). 
   (being worked on by ?)  
-
-[RC]: d.what.sites
-  -> double attributes in sites list are display as INT only
-  (being worked on by ?)
-
 
 i.in.gtc/i.in.pri
   i.in.gtc, putting in input leadername voldirname and dataname        
