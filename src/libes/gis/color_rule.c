@@ -19,10 +19,16 @@ G_add_modular_color_rule (cat1, r1,g1,b1, cat2, r2,g2,b2, colors)
     int r2,g2,b2;
     struct Colors *colors;
 {
+    CELL min, max;
     if (colors->version < 0)
 	return -1; /* can;t use this on 3.0 colors */
+    min = colors->cmin;
+    max = colors->cmax;
     add_color_rule (cat1, r1,g1,b1, cat2, r2,g2,b2, &colors->modular, 0,
 	&colors->cmin, &colors->cmax);
+    colors->cmin = min; /* don't reset these */
+    colors->cmax = max;
+	
     return 1;
 }
 
@@ -151,6 +157,8 @@ add_color_rule (cat1, r1,g1,b1, cat2, r2,g2,b2, cp, version, cmin, cmax)
     /* prune the rules:
      * remove all rules that are contained by this rule 
      */
+	min = rule->low.cat;  /* mod 4.1 */
+	max = rule->high.cat; /* mod 4.1 */
 	for (rule = rule->next; rule; rule = next)
 	{
 	    next = rule->next; /* has to be done here, not in for stmt */
