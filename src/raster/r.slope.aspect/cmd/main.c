@@ -11,66 +11,10 @@
  * -q quiet
  **************************************************************/
 
-static float aspect_colors[] =
-{
-    0.325,
-    0.4,
-    0.475,
-    0.55,
-    0.625,
-    0.7,
-    0.775,
-    0.85,
-    0.925,
-    1.0,
-    0.925,
-    0.85,
-    0.775,
-    0.7,
-    0.625,
-    0.55,
-    0.475,
-    0.4,
-    0.325,
-    0.25,
-    0.175,
-    0.1,
-    0.175,
-    0.25,
-    0.0,
-    -1.0    /* marks end of color list */
-};
+/*  some changes made to code to retrieve correct distances when using
+    lat/lon projection.  changes involve recalculating H and V. see
+    comments within code.                                           */
 
-static char *aspect_cats[] =
-{
-    "no data",
-    "east facing",
-    "15 degrees north of east",
-    "30 degrees north of east",
-    "northeast facing",
-    "30 degrees east of north",
-    "15 degrees east of north",
-    "north facing",
-    "15 degrees west of north",
-    "30 degrees west of north",
-    "northwest facing",
-    "30 degrees north of west",
-    "15 degrees north of west",
-    "west facing",
-    "15 degrees south of west",
-    "30 degrees south of west",
-    "southwest facing",
-    "30 degrees west of south",
-    "15 degrees west of south",
-    "south facing",
-    "15 degrees east of south",
-    "30 degrees east of south",
-    "southeast facing",
-    "30 degrees south of east",
-    "15 degrees south of east",
-    "no aspect",
-    (char *) NULL
-};
 
 main (argc, argv) char *argv[];
 {
@@ -87,6 +31,7 @@ main (argc, argv) char *argv[];
     CELL *aspect_cell, *ac ;
     CELL *slope_cell, *sc ;
     int i;
+    int Wrap;  /* global wraparound */
     struct Cell_head window, cellhd;
 
     char *elev_name;
@@ -97,31 +42,39 @@ main (argc, argv) char *argv[];
     int nrows, row;
     int ncols, col;
 
+    double G_distance();
+    double G_row_to_northing();
+    double G_col_to_easting();
+    double north, east, south, west, ns_med;
 
     double radians_to_degrees;
     double degrees_to_radians;
-    double sqrt(), tan();
+    double sqrt(), tan(), atan2();
     double H,V;
-    double p;              /* slope in ew direction */
-    double q;              /* slope in ns direction */
-    double quotient;
-    double pos_quot;
-    double ratio1, ratio2, ratio3, ratio4, ratio5, ratio6;
-    int aspect;
+    double dx;              /* slope in ew direction */
+    double dy;              /* slope in ns direction */
+    double zfactor;
+    double aspect;
 
     double answer[92];
     double degrees;
     double tan_ans;
     double key;
+    double slp_in_perc;
+    double min_slp;
     int low, hi, test;
+    int deg=0;
+    int perc=0;
+    char *slope_fmt;
     struct
     {
-	struct Option *elevation, *slope, *aspect;
+	struct Option *elevation, *slope_fmt, *slope, *aspect, *zfactor, *min_slp;
     } parm;
     struct
     {
 	struct Flag *a,*q,*z;
     } flag;
+
 
     parm.elevation = G_define_option() ;
     parm.elevation->key        = "elevation" ;
@@ -138,6 +91,14 @@ main (argc, argv) char *argv[];
     parm.slope->gisprompt  = "any,cell,raster" ;
     parm.slope->description= "Output slope filename" ;
 
+    parm.slope_fmt = G_define_option() ;
+    parm.slope_fmt->key        = "format" ;
+    parm.slope_fmt->type       = TYPE_STRING ;
+    parm.slope_fmt->required   = NO ;
+    parm.slope_fmt->answer     = "degrees";
+    parm.slope_fmt->options  = "degrees,percent";
+    parm.slope_fmt->description= "format for reporting the slope" ;
+
     parm.aspect = G_define_option() ;
     parm.aspect->key        = "aspect" ;
     parm.aspect->type       = TYPE_STRING ;
@@ -145,6 +106,20 @@ main (argc, argv) char *argv[];
     parm.aspect->answer     = NULL ;
     parm.aspect->gisprompt  = "any,cell,raster" ;
     parm.aspect->description= "Output aspect filename" ;
+
+    parm.zfactor = G_define_option();
+    parm.zfactor->key         = "zfactor";
+    parm.zfactor->description = "Multiplicative factor to convert elevation units to meters";
+    parm.zfactor->type        = TYPE_DOUBLE;
+    parm.zfactor->required    = NO;
+    parm.zfactor->answer      = "1.0";
+
+    parm.min_slp = G_define_option();
+    parm.min_slp->key         = "min_slp";
+    parm.min_slp->description = "Minimum slope value (in percent) for which aspect is computed.";
+    parm.min_slp->type        = TYPE_DOUBLE;
+    parm.min_slp->required    = NO;
+    parm.min_slp->answer      = "0.0";
 
     flag.a = G_define_flag() ;
     flag.a->key         = 'a' ;
@@ -173,23 +148,6 @@ main (argc, argv) char *argv[];
         answer[i] = tan_ans * tan_ans;
     }
 
-/* aspect is given one of 24 values, based on directions of
-   E,15 degrees north of east, 30 degrees north of east, NE,
-   30 degrees east of north, 15 degrees east of north, N,
-   and so on.  each direction is given 15 degrees of the
-   360 degree circle, with intervals centered on the E, NE,
-   N, NW, W, SW, S, and SE directions.  aspect value is then
-   determined by the interval in which the raio of q to p
-   falls.
-*/
-
-    ratio1 = tan( 7.5 * degrees_to_radians );
-    ratio2 = tan( 22.5 * degrees_to_radians );
-    ratio3 = tan( 37.5 * degrees_to_radians );
-    ratio4 = tan( 52.5 * degrees_to_radians );
-    ratio5 = tan( 67.5 * degrees_to_radians );
-    ratio6 = tan( 82.5 * degrees_to_radians );
-
 
     if (G_parser(argc, argv))
         exit(-1);
@@ -201,6 +159,25 @@ main (argc, argv) char *argv[];
     elev_name = parm.elevation->answer;
     slope_name = parm.slope->answer;
     aspect_name = parm.aspect->answer;
+    if (sscanf (parm.zfactor->answer, "%lf", &zfactor) != 1 || zfactor <= 0.0)
+    {
+        fprintf (stderr, "ERROR: %s=%s - must be a postive number\n",
+                       parm.zfactor->key, parm.zfactor->answer);
+        G_usage();
+        exit(1);
+    }
+
+    if (sscanf (parm.min_slp->answer, "%lf", &min_slp) != 1 || min_slp < 0.0)
+    {
+        fprintf (stderr, "ERROR: %s=%s - must be a non_negative number\n",
+                       parm.min_slp->key, parm.min_slp->answer);
+        G_usage();
+        exit(1);
+    }
+
+    slope_fmt = parm.slope_fmt->answer;
+    if(strcmp(slope_fmt,"percent")==0)perc=1;
+    else if(strcmp(slope_fmt,"degrees")==0)deg=1;
 
     if (slope_name == NULL && aspect_name == NULL)
     {
@@ -233,22 +210,58 @@ main (argc, argv) char *argv[];
     nrows = G_window_rows();
     ncols = G_window_cols();
 
-    H = window.ew_res * 4 * 2;  /* horizontal (east-west) run 
+    if (((window.west==(window.east-360.)) 
+          ||(window.east==(window.west-360.)))&&
+	  (G_projection()==PROJECTION_LL))
+    {
+       Wrap = 1;
+       ncols+=2; 
+    }
+    else Wrap = 0;
+
+    /* H = window.ew_res * 4 * 2/ zfactor;  /* horizontal (east-west) run 
                                    times 4 for weighted difference */
-    V = window.ns_res * 4 * 2;  /* vertical (north-south) run 
+    /* V = window.ns_res * 4 * 2/ zfactor;  /* vertical (north-south) run 
                                    times 4 for weighted difference */
+
+    G_begin_distance_calculations();
+    north = G_row_to_northing(0.5, &window);
+    ns_med = G_row_to_northing(1.5, &window);
+    south = G_row_to_northing(2.5, &window);
+    east =  G_col_to_easting(2.5, &window);
+    west =  G_col_to_easting(0.5, &window);
+    V = G_distance(east, north, east, south) * 4 / zfactor;
+    H = G_distance(east, ns_med, west, ns_med) * 4 / zfactor;
+    /*    ____________________________
+	  |c1      |c2      |c3      |
+	  |        |        |        |
+	  |        |  north |        |        
+	  |        |        |        |
+	  |________|________|________|          
+	  |c4      |c5      |c6      |
+	  |        |        |        |
+	  |  east  | ns_med |  west  |
+	  |        |        |        |
+	  |________|________|________|
+	  |c7      |c8      |c9      |
+	  |        |        |        |
+	  |        |  south |        |
+	  |        |        |        |
+	  |________|________|________|
+    */
+
     /* open the elevation file for reading */
     elevation_fd = G_open_cell_old (elev_name, mapset);
     if (elevation_fd < 0) exit(1);
-    elev_cell[0] = G_allocate_cell_buf();
-    elev_cell[1] = G_allocate_cell_buf();
-    elev_cell[2] = G_allocate_cell_buf();
+    elev_cell[0] = (CELL *) G_calloc (ncols + 1, sizeof(CELL));
+    elev_cell[1] = (CELL *) G_calloc (ncols + 1, sizeof(CELL));
+    elev_cell[2] = (CELL *) G_calloc (ncols + 1, sizeof(CELL));
 
     if (slope_name != NULL)
     {
         slope_fd = opennew (slope_name);
         slope_cell = G_allocate_cell_buf();
-        G_zero_cell_buf (slope_cell);
+        G_zero_cell_buf(slope_cell);
         G_put_map_row (slope_fd, slope_cell);
     }
     else
@@ -273,18 +286,67 @@ main (argc, argv) char *argv[];
     if (aspect_fd < 0 && slope_fd < 0)
         exit(1);
 
+    if(Wrap)
+    {
+       G_get_map_row_nomask (elevation_fd, elev_cell[1]+1,0);
+       elev_cell[1][0] = elev_cell[1][G_window_cols()-1];
+       elev_cell[1][G_window_cols()+1]=elev_cell[1][2];
+    }
+    else G_get_map_row_nomask (elevation_fd, elev_cell[1],0);
 
-    G_get_map_row_nomask (elevation_fd, elev_cell[1], 0);
-    G_get_map_row_nomask (elevation_fd, elev_cell[2], 1);
+    if(Wrap)
+    {
+       G_get_map_row_nomask (elevation_fd, elev_cell[2]+1,1);
+       elev_cell[2][0] = elev_cell[2][G_window_cols()-1];
+       elev_cell[2][G_window_cols()+1]=elev_cell[2][2];
+    }
+    else G_get_map_row_nomask (elevation_fd, elev_cell[2],1);
 
     if (verbose) fprintf (stderr, "percent complete: ");
     for (row = 2; row < nrows; row++)
     {
+
+/*  if projection is Lat/Lon, recalculate  V and H   */
+
+	if (G_projection()==PROJECTION_LL)
+	{
+          north = G_row_to_northing((row-2 + 0.5), &window);
+          ns_med = G_row_to_northing((row-1 + 0.5), &window);
+          south = G_row_to_northing((row + 0.5), &window);
+          east =  G_col_to_easting(2.5, &window);
+          west =  G_col_to_easting(0.5, &window);
+          V = G_distance(east, north, east, south) * 4 / zfactor;
+          H = G_distance(east, ns_med, west, ns_med) * 4 / zfactor;
+/*        ____________________________
+	  |c1      |c2      |c3      |
+	  |        |        |        |
+	  |        |  north |        |        
+	  |        |        |        |
+	  |________|________|________|          
+	  |c4      |c5      |c6      |
+	  |        |        |        |
+	  |  east  | ns_med |  west  |
+	  |        |        |        |
+	  |________|________|________|
+	  |c7      |c8      |c9      |
+	  |        |        |        |
+	  |        |  south |        |
+	  |        |        |        |
+	  |________|________|________|
+*/
+	}
+
         if (verbose) G_percent (row, nrows, 2);
         temp = elev_cell[0];
         elev_cell[0] = elev_cell[1];
         elev_cell[1] = elev_cell[2];
-        G_get_map_row_nomask (elevation_fd, elev_cell[2] = temp, row);
+        if(Wrap)
+        {
+           G_get_map_row_nomask (elevation_fd, (elev_cell[2]= temp) +1, row);
+           elev_cell[2][0] = elev_cell[2][G_window_cols()-1];
+           elev_cell[2][G_window_cols()+1]=elev_cell[2][2];
+        }
+        else G_get_map_row_nomask (elevation_fd, elev_cell[2] = temp, row);
 
         c1 = elev_cell[0];
         c2 = c1+1;
@@ -297,12 +359,28 @@ main (argc, argv) char *argv[];
         c9 = c7+2;
 
 	if (aspect_fd >= 0)
-	    ac = aspect_cell + 1;
+	{
+	    if(Wrap)
+	       ac = aspect_cell;
+            else 
+	       ac = aspect_cell + 1;
+        }
 	if (slope_fd >= 0)
-	    sc = slope_cell + 1;
+	{
+	    if(Wrap)
+	       sc = slope_cell;
+            else
+	       sc = slope_cell + 1;
+        }
+        /*skip first cell of the row*/
 
         for (col = ncols-2; col-- > 0; c1++,c2++,c3++,c4++,c5++,c6++,c7++,c8++,c9++)
         {
+            /*  DEBUG:
+            fprintf(stdout,"%d   %d   %d\n%d   %d   %d\n%d   %d   %d\n\n",
+	         *c1,*c2,*c3,*c4,*c5,*c6,*c7,*c8,*c9);
+            */
+
 	    if(zero_is_nodata && (*c1==0 || *c2==0 || *c3==0 ||
 		                  *c4==0 || *c5==0 || *c6==0 ||
 		                  *c7==0 || *c8==0 || *c9==0))
@@ -314,78 +392,57 @@ main (argc, argv) char *argv[];
 		continue;
 	    }
 
-	    p = ((*c1 + *c4 + *c4 + *c7) - (*c3 + *c6 + *c6 + *c9)) / H;
-	    q = ((*c7 + *c8 + *c8 + *c9) - (*c1 + *c2 + *c2 + *c3)) / V;
+	    dx = ((*c1 + *c4 + *c4 + *c7) - (*c3 + *c6 + *c6 + *c9)) / H;
+	    dy = ((*c7 + *c8 + *c8 + *c9) - (*c1 + *c2 + *c2 + *c3)) / V;
 
-            key = p*p + q*q;
-            low = 1;
-            hi = 91;
-            test = 20;
+            key = dx*dx + dy*dy;
+	    slp_in_perc = 100*sqrt(key);  
+	    if(slp_in_perc < min_slp) slp_in_perc = 0.;
+	    if(deg)
+	    {
+               low = 1;
+               hi = 91;
+               test = 20;
 
-            while (hi >= low)
-            {
-                if ( key >= answer[test] )
-                    low = test + 1;
-                else if ( key < answer[test-1] )
-                    hi = test - 1;
-                else
-                    break;
-                test = (low + hi) / 2;
+               while (hi >= low)
+               {
+                   if ( key >= answer[test] )
+                       low = test + 1;
+                   else if ( key < answer[test-1] )
+                       hi = test - 1;
+                   else
+                       break;
+                   test = (low + hi) / 2;
+               }
             }
-            if (slope_fd > 0)
-                *sc++ = test;
+	    else if(perc) test = slp_in_perc + 1.5;  /* All the categories are
+						        incremented by 1 */
 
+               if (slope_fd > 0)
+                   *sc++ = (CELL) test;
 
             if (aspect_fd > 0)
             {
-                if (key == 0) aspect = 25;  /* no slope, no aspect */
-                else if (p == 0)
+                if (key == 0) aspect = 0.;  
+                else if (dx == 0)
                 {
-                    if (q > 0) aspect = 7;  /* north */
-                    else aspect = 19;   /* or south */
+                    if (dy > 0) aspect = 90.;  
+                    else aspect = 270.;   
                 }
+                else 
+		{
+		   aspect = (atan2(dy,dx)/degrees_to_radians);
+		   if((aspect<=0.5)&&(aspect>0)) aspect=360.;
+		   if(aspect<=0.)aspect=360.+aspect;
+                }
+
+                if(!((slope_fd > 0)&&(slp_in_perc < min_slp)))
+		/* if it's not the case that the slope for this cell 
+		is below specified minimum */
+                    *ac++ = (CELL) (aspect + .5);
                 else
-                {
-                    quotient = q / p;
-                    pos_quot = abs(quotient);
-                    if (pos_quot <= ratio1)
-                    {
-                        if (p > 0) aspect = 1;  /* east */
-                        else aspect = 13;   /* or west */
-                    }
-                    else if (pos_quot <= ratio2)
-                    {
-                        /* check for first or second quadrant */
-                        if (quotient > 0) aspect = 2;
-                        else aspect = 12;
-                    }
-                    else if (pos_quot <= ratio3)
-                    {
-                        if (quotient > 0) aspect = 3;
-                        else aspect = 11;
-                    }
-                    else if (pos_quot <= ratio4)
-                    {
-                        if (quotient > 0) aspect = 4;
-                        else aspect = 10;
-                    }
-                    else if (pos_quot <= ratio5)
-                    {
-                        if (quotient > 0) aspect = 5;
-                        else aspect = 9;
-                    }
-                    else if (pos_quot <= ratio6)
-                    {
-                        if (quotient > 0) aspect = 6;
-                        else aspect = 8;
-                    }
-                    else
-                        aspect = 7;
-                    /* check for third or fourth quadrant */
-                    if (( pos_quot > ratio1 ) && ( q < 0 )) aspect += 12;
-                }
-                *ac++ = aspect;
-            }
+		    *ac++ = 0;
+             }
         }
         if (aspect_fd > 0)
             G_put_map_row (aspect_fd, aspect_cell);
@@ -405,29 +462,33 @@ main (argc, argv) char *argv[];
     {
         G_zero_cell_buf (aspect_cell);
         G_put_map_row (aspect_fd, aspect_cell);
-
         G_close_cell (aspect_fd);
-        G_init_colors (&colr);
-        G_set_color (0, 255, 0, 0, &colr);
-
-        for (i = 0; aspect_colors[i] >= 0.0; i++)
-        {
-            int grey;
-            grey = aspect_colors[i] * 256;
-            G_set_color (i+1, grey, grey, grey, &colr);
-        }
-
-        G_write_colors (aspect_name, G_mapset(), &colr);
-        G_free_colors (&colr);
 
         G_read_cats (aspect_name, G_mapset(), &cats);
-        G_set_cats_title ("aspect", &cats);
+        G_set_cats_title ("aspect in degrees from east", &cats);
 
-        for (i = 0; aspect_cats[i] != NULL; i++)
-            G_set_cat (i, aspect_cats[i], &cats);
-
+	printf("%d categor%s of aspect\n", cats.num, cats.num==1?"y":"ies");
+        G_set_cat ((CELL)0, "no aspect", &cats);
+	    for(i=1;i<=cats.num;i++)
+	    {
+	       if(i==360)sprintf(buf,"east");
+	       else if(i==360)sprintf(buf,"east");
+	       else if(i==45)sprintf(buf,"north of east");
+	       else if(i==90)sprintf(buf,"north");
+	       else if(i==135)sprintf(buf,"north of west");
+	       else if(i==180)sprintf(buf,"west");
+	       else if(i==225)sprintf(buf,"south of west");
+	       else if(i==270)sprintf(buf,"south");
+	       else if(i==315)sprintf(buf,"south of east");
+               else sprintf (buf, "%d degree%s from east", i, i==1?"":"s");
+               G_set_cat ((CELL)(i), buf, &cats);
+	    }
         G_write_cats (aspect_name, &cats);
         G_free_cats (&cats);
+
+        sprintf(buf, "r.colors map='%s' c=aspect",
+		G_fully_qualified_name (aspect_name, G_mapset()));
+	system(buf);
 
         printf ("ASPECT [%s] COMPLETE\n", aspect_name);
     }
@@ -439,11 +500,14 @@ main (argc, argv) char *argv[];
         G_close_cell (slope_fd);
 
         G_read_cats (slope_name, G_mapset(), &cats);
-        G_set_cats_title ("slope (in degrees)", &cats);
+        if(deg) G_set_cats_title ("slope in degrees", &cats);
+        else if(perc) G_set_cats_title ("percent slope", &cats);
         G_set_cat ((CELL)0, "no data", &cats);
-        for (i = 0; i < cats.num; i++)
+	printf("%d categor%s of slope\n", cats.num, cats.num==1?"y":"ies");
+        for (i = 0; i <cats.num; i++)
         {
-            sprintf (buf, "%d degree%s", i, i==1?"":"s");
+            if(deg)sprintf (buf, "%d degree%s", i, i==1?"":"s");
+            else if(perc)sprintf (buf, "%d percent", i);
             G_set_cat ((CELL)(i+1), buf, &cats);
         }
         G_write_cats (slope_name, &cats);
@@ -452,3 +516,5 @@ main (argc, argv) char *argv[];
 
     exit(0);
 }
+
+
