@@ -138,10 +138,10 @@ CELL *dbuf;
 	vrml_putline(0,vout,"value PER_VERTEX_INDEXED");
 	vrml_putline(-1, vout,CCB);    /* end MaterialBinding */
 
-	free(red);
-	free(green);
-	free(blue);
-	free(set);
+	G_free(red);
+	G_free(green);
+	G_free(blue);
+	G_free(set);
     }
 
     /* write face set indices */
@@ -176,8 +176,8 @@ CELL *dbuf;
 
 
 /*
-    free(ibuf);
+    G_free(ibuf);
 */
-    free(dbuf);
+    G_free(dbuf);
 
 }
