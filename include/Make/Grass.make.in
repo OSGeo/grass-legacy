@@ -136,7 +136,11 @@ SHAPE_LIBNAME    = shape
 GRAPH_LIBNAME    = dgl
 RTREE_LIBNAME    = rtree
 
+# database forms
 FORM_LIBNAME     = form
+
+# Symbols (icons, patterns)
+SYMB_LIBNAME     = symb
 
 ##################### library options ###################################
 VASKLIB     = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(VASK_LIBNAME).$(LIB_SUFFIX)
@@ -200,6 +204,7 @@ RTREELIB    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(RTREE_LIBNAME).$(LIB_SUFFIX)
 
 FORMLIB    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(FORM_LIBNAME).$(LIB_SUFFIX)
 
+SYMBLIB    = $(ARCH_LIBDIR)/$(LIB_PREFIX)$(SYMB_LIBNAME).$(LIB_SUFFIX)
 ##################### dependencies ######################################
 VECTDEP     =  $(GRASS_INCDIR)/Vect.h $(GRASS_INCDIR)/V_.h \
 	       $(GRASS_INCDIR)/vect/dig_defines.h \
@@ -212,6 +217,8 @@ GISDEP      =  $(GRASS_INCDIR)/gis.h $(GRASS_INCDIR)/gisdefs.h \
                $(GRASS_INCDIR)/version.h $(GISLIB)
 
 FORMDEP     =  $(GRASS_INCDIR)/form.h $(FORMLIB)
+
+SYMBDEP     =  $(SYMBLIB)
 ##################### driver names #####################################
 
 DBF_DRIVERNAME=dbf
