@@ -230,9 +230,16 @@ double *getlevels(
     else if(step->answer)
     {
 	dstep = atof (step->answer);
-	dmax = (max->answer) ? atof (max->answer) : zmax - (int)zmax%(int)dstep;
-	dmin = (min->answer) ? atof (min->answer) : (int)zmin%(int)dstep?
-			      zmin - (int)zmin%(int)dstep +dstep: zmin;
+/*	dmax = (max->answer) ? atof (max->answer) : zmax - (int)zmax%(int)dstep;*/
+/*	dmin = (min->answer) ? atof (min->answer) : (int)zmin%(int)dstep?
+			      zmin - (int)zmin%(int)dstep +dstep: zmin;*/
+	
+	/* fix if step < 1, Roger Bivand 1/2001 */
+	dmax = (max->answer) ? atof (max->answer) : dstep == 0 ?
+	                       G_fatal_error("This step value is not allowed.") : zmax - fmod(zmax, dstep);
+	dmin = (min->answer) ? atof (min->answer) : dstep == 0 ?
+	                       G_fatal_error("This step value is not allowed.") :
+	                       fmod(zmin,dstep) ? zmin - fmod(zmin,dstep) +dstep: zmin;
 
 	while (dmin < zmin)
 	{
