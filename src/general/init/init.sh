@@ -30,7 +30,7 @@ if [ $GRASS_GUI = "tcltk" ] ; then
     
     # Search for a wish program
     SEARCHCOMMAND=wish
-    WISH=""
+    WISH=
     found=0
     
     for i in `echo $PATH | sed 's/^:/.:/
