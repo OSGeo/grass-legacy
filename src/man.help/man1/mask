@@ -1,0 +1,65 @@
+.\" %W% %G%
+.TH mask 1
+.SH NAME
+mask \- Choose/delete the working mask
+.br
+.I (Available through 
+.B grass3
+.I menu)
+.SH SYNOPSIS
+.B mask
+.SH DESCRIPTION
+The tool \fImask\fR manages the current working 
+.I mask
+.CT "file." "cell map."
+At the user's option, one of the available GRASS 
+.CT "map layers" "cell maps"
+can be
+used as a mask to indicate an area (or set of areas) of interest.  If a mask
+has been identified, access to all 
+.CT "map" "cell map"
+data will be restricted to areas
+\fIwithin\fR the current mask.
+.PP
+.I Mask
+provides the following options:
+
+.NF
+  1     Remove the current mask
+  2     Identify a new mask
+RETURN  Exit from program
+.FI
+
+Upon choosing to "identify a new mask" and selecting a 
+.CT "map layer," "cell map,"
+the user is presented with
+a listing of the categories for the selected 
+.CT "map layer." "cell map."
+Those
+categories which the user specifies by typing a "1" in the blank
+will designate the areas for which data will remain (and will be \fIinside\fR
+the mask). All other
+areas will have a 
+.CT "" category
+value of "0" in all 
+.CT "map layers" "cell maps"
+in the
+mapset as long as the mask is in place.
+.SH NOTES
+The above method for specifying a "mask" may seem counter
+to what is intuitive.  Areas inside the \fImask\fR are not hidden.
+Rather, those areas which are left as zero 
+.CT "" category
+values are those which
+cannot be seen.  Zeroed areas will be outside the \fImask\fR.
+
+This program actually creates a cell 
+.CT file map
+(reclass type) called
+\fIMASK\fR. It can be manipulated (renamed, removed, copied, etc.) like
+any other cell 
+.CT "file." "map."
+.SH SEE ALSO
+\fImapmask[1]\fR
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
