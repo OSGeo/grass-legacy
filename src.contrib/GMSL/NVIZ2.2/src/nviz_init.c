@@ -9,6 +9,8 @@
 #include "gis.h"
 #include "coldefs.h"
 #include "bitmap.h"
+/* get from gislib: */
+#include "../../../../src/libes/gis/version.h"
 
 char startup_script[] =
 "toplevel .wait_ok\n\
@@ -123,8 +125,7 @@ parse_command (
 
     fprintf (stderr, "\n");
     fprintf (stderr, "\n");
-    fprintf (stderr, "Version: GRASS5.0 beta, last update: July 1999\n");
-    fprintf (stderr, "updated to OPENGL, LINUX, Tcl/Tk 8.0\n");
+    fprintf (stderr, "Version: %s\n", VERSION_STRING);
     fprintf (stderr, "\n");
     fprintf (stderr, "Authors: Bill Brown, Terry Baker, Mark Astley, David Gerdes\n");
     fprintf (stderr, "\tmodifications: Jaro Hofierka\n");
