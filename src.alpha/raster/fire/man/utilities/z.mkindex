@@ -1,0 +1,3 @@
+run
+
+ls -l man1 man2 man4 man5 | sort +7 | awk '{print $8}' > z.list
