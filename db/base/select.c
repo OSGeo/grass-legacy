@@ -152,6 +152,9 @@ parse_command_line(argc, argv) char *argv[];
     struct Flag *c,*d,*h;
     struct GModule *module;
 
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
@@ -214,8 +217,6 @@ parse_command_line(argc, argv) char *argv[];
     module->description = ""\
     "Select data from database.";
 
-    /* Initialize the GIS calls */
-    G_gisinit(argv[0]) ;
 
     if(G_parser(argc, argv))
 	exit(ERROR);

@@ -75,6 +75,9 @@ parse_command_line(argc, argv) char *argv[];
     struct Option *driver, *database, *location, *input;
     struct GModule *module;
 
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
@@ -106,8 +109,6 @@ parse_command_line(argc, argv) char *argv[];
     module->description = ""\
     "Execute any SQL statement.";
 
-    /* Initialize the GIS calls */
-    G_gisinit(argv[0]) ;
     
     if(G_parser(argc, argv))
 	exit(ERROR);

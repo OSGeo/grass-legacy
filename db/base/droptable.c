@@ -44,6 +44,9 @@ parse_command_line(int argc, char *argv[])
     struct Option *driver, *database, *location, *table;
     struct GModule *module;
 
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
@@ -74,8 +77,6 @@ parse_command_line(int argc, char *argv[])
     module->description = ""\
     "Remove a table from database.";
 
-    /* Initialize the GIS calls */
-    G_gisinit(argv[0]) ;
 
     if(G_parser(argc, argv))
 	exit(ERROR);
