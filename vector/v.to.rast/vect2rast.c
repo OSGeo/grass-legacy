@@ -37,6 +37,9 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
     Vect_set_open_level (2);
     Vect_open_old (&Map, vector_map, vector_mapset);
 
+    if ( (use == USE_Z) && !(Vect_is_3d(&Map)) )
+	G_fatal_error ("Vector map is not 3D");
+
     if ( use == USE_ATTR ) {
 	db_CatValArray_init ( &cvarr );
 	Fi = Vect_get_field( &Map, field);
@@ -76,24 +79,27 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	else G_fatal_error ("Column type not supported" );
     } else if ( use == USE_CAT ) {
 	format = USE_CELL;
-    } else {
+    } else if ( use == USE_VAL ) {
 	format = value_type;
+    } else if ( use == USE_Z ) {
+	format = USE_DCELL;
     }
 
     Points = Vect_new_line_struct();
     inform(NULL);
     stop_clock(NULL);
 
-    start_clock(NULL);
-    inform ("Sorting areas by size ...");
-    if((nareas = sort_areas (&Map, Points, field)) < 0) {
-	G_fatal_error ( "ERROR processing areas from vector map <%s>\n", vector_map);
+    if ( use != USE_Z ) { 
+	start_clock(NULL);
+	inform ("Sorting areas by size ...");
+	if((nareas = sort_areas (&Map, Points, field)) < 0) {
+	    G_fatal_error ( "ERROR processing areas from vector map <%s>\n", vector_map);
+	}
+	sprintf (msg, " %d areas", nareas);
+	inform (msg);
+	inform (NULL);
+	stop_clock(NULL);
     }
-    sprintf (msg, " %d areas", nareas);
-    inform (msg);
-    inform (NULL);
-    stop_clock(NULL);
-
 
     if ( format == USE_CELL ) { 
         fd = G_open_cell_new (raster_map); 
@@ -113,7 +119,7 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	if (npasses > 1) fprintf (stdout,"Pass #%d (of %d)\n", pass, npasses);
 	stat = 0;
 
-	if (nareas) {
+	if ( (use != USE_Z) && nareas ) {
 	    start_clock(NULL);
 	    if (npasses > 1) inform ("  ");
 	    inform ("Processing areas ...");

@@ -41,12 +41,13 @@ int main (int argc, char *argv[])
     use_opt->type           = TYPE_STRING;
     use_opt->required       = NO;
     use_opt->multiple       = NO;
-    use_opt->options        = "attr,cat,val";
+    use_opt->options        = "attr,cat,val,z";
     use_opt->answer         = "attr";
     use_opt->description    = "Source of raster values:\n"
 			"\t\tattr - read values from attribute table\n"
 			"\t\tcat  - use category values\n"
-			"\t\tval  - use value specified by value option";
+			"\t\tval  - use value specified by value option\n"
+			"\t\tz    - use z coordinate (points or contours only)";
 
     col = G_define_option();
     col->key            = "col";
@@ -84,6 +85,8 @@ int main (int argc, char *argv[])
 	use = USE_CAT;
     } else if ( use_opt->answer[0] == 'v' ) {
 	use = USE_VAL;
+    } else if ( use_opt->answer[0] == 'z' ) {
+	use = USE_Z;
     }
 
     value = atof ( val_opt->answer );

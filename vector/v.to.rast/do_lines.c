@@ -9,7 +9,7 @@ static int plot_points (double *,double *,int);
 int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cvarr, int ctype, int field,
 	       int use, double value, int value_type)
 {
-    int nlines, type, ret, cat;
+    int nlines, type, ret, cat, no_contour = 0;
     int index;
     int count;
     struct line_cats *Cats;
@@ -45,11 +45,30 @@ int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cv
 	    }
 	} else if  ( use == USE_CAT ) {
 	    set_cat (cat);
-	} else {
+	} else if ( use == USE_VAL ) {
 	    if ( value_type == USE_CELL )
 		set_cat ( (int) value);
 	    else
 		set_dcat ( value );
+	} else if ( use == USE_Z ) {
+	    int j;
+	    double min, max;
+
+	    if ( type & GV_POINTS ) { 
+	        min = Points->z[0];	
+	    } else if ( type & GV_LINES ) {
+		min = max = Points->z[0];
+		for ( j = 1; j < Points->n_points; j++) {
+		    if ( Points->z[j] < min ) min = Points->z[j];
+		    if ( Points->z[j] > max ) max = Points->z[j];
+		}
+		if ( min != max ) {
+		    no_contour++;
+		    continue;
+		}
+	    }
+		
+	    set_dcat ( min );
 	}
 
 	if ( (type & GV_LINES ) ) {
@@ -61,6 +80,9 @@ int do_lines ( struct Map_info *Map, struct line_pnts *Points, dbCatValArray *Cv
 	}
 	count++;
     }
+    
+    if ( no_contour > 0 )
+	G_warning ("%d lines with varying height were not written to raster", no_contour );
 
     Vect_destroy_cats_struct ( Cats ); 
     return nlines;
