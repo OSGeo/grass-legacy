@@ -1,0 +1,12 @@
+# @(#)Gmakefile	2.1   6/26/87
+
+all: $(BIN)/Dmove $(MAN2)/Dmove.2 $(HELP)/Dmove
+
+$(BIN)/Dmove: Dmove
+	rm -f $@ ; cp $? $@ ; chmod 0755 $@
+
+$(MAN2)/Dmove.2: MAN
+	rm -f $@ ; cp $? $@ ; chmod +r $@
+
+$(HELP)/Dmove: HELP
+	rm -f $@ ; cp $? $@ ; chmod +r $@
