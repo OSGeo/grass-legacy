@@ -64,7 +64,6 @@ main (int argc, char *argv[])
     module = G_define_module();
     module->description = G_store(buf);
 
-    out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
     dsn_opt = G_define_option();
     dsn_opt->key = "dsn";
@@ -73,6 +72,8 @@ main (int argc, char *argv[])
     dsn_opt->description = "OGR datasource name.\n"
 			   "\t\tESRI Shapefile: directory containing shapefiles\n"
 			   "\t\tMapInfo File: directory containing mapinfo files";
+
+    out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
     layer_opt = G_define_option();
     layer_opt->key = "layer";
@@ -117,7 +118,7 @@ main (int argc, char *argv[])
 	}
     }
     if ( !layer_opt->answer ) {
-        fprintf ( stdout, "\n" );
+        fprintf ( stdout, "\nPlease specify a layer to be imported.\n" );
 	exit (0);
     }
     if ( layer == -1 ) G_fatal_error ("Layer not found");
