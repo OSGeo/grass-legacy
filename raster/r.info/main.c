@@ -28,6 +28,7 @@ main (int argc, char *argv[])
     int cats_ok;
     int hist_ok;
     int is_reclass;
+    RASTER_MAP_TYPE data_type;
     struct Reclass reclass;
     char *G_program_name();
     struct Option *opt1;
@@ -57,6 +58,7 @@ main (int argc, char *argv[])
     cats_ok = G_read_cats (name, mapset, &cats) >= 0;
     hist_ok = G_read_history (name, mapset, &hist) >= 0;
     is_reclass = G_get_reclass (name, mapset, &reclass);
+    data_type = G_raster_map_type(name, mapset);
 
     out = stdout;
 
@@ -90,6 +92,12 @@ main (int argc, char *argv[])
     }
     else
         strcat (line, "??");
+    printline (line);
+
+    sprintf (line, "  Data Type:    %s",
+			(data_type ==  CELL_TYPE ?  "CELL" :
+			(data_type == DCELL_TYPE ? "DCELL" :
+			(data_type == FCELL_TYPE ? "FCELL" : "??"))));
     printline (line);
 
     if (head_ok)
