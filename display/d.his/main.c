@@ -188,6 +188,8 @@ main (int argc, char **argv)
 	make_gray_scale(&gray_colors) ;
 	D_set_colors_RGB();
 
+	D_set_overlay_mode(nulldraw->answer ? 1 : 0);
+
 	/* Now do the work */
 	intensity =  255 ;  /* default is to not change intensity */
 	saturation = 255 ;  /* default is to not change saturation */
