@@ -89,3 +89,40 @@ int print_win ( struct Cell_head *window, double north, double south, double eas
     return 1;
 }
 
+int print_limit ( struct Cell_head *window, struct Cell_head *defwin )
+{
+    char buffer[1000] ;
+    int limit = 0;
+
+	    if ( window->north > defwin->north ) {
+	       sprintf( buffer, "North") ;
+               limit = 1;
+	    } 
+	    if ( window->south < defwin->south ) {
+	       if ( limit )
+	           sprintf(buffer, "%s, south", buffer) ;
+	       else 
+	           sprintf(buffer, "South") ;
+               limit = 1;
+	    } 
+	    if ( window->east > defwin->east ) {
+	       if ( limit )
+	           sprintf(buffer, "%s, east", buffer) ;
+	       else 
+	           sprintf(buffer, "East") ;
+               limit = 1;
+	    } 
+	    if ( window->west < defwin->west ) {
+	       if ( limit )
+	           sprintf(buffer, "%s, west", buffer) ;
+	       else 
+	           sprintf(buffer, "West") ;
+               limit = 1;
+	    } 
+	    if ( limit ) {
+	        fprintf( stderr, "%s limit of default region reached.\n", buffer) ;
+	    }
+
+    return (limit);
+}
+

@@ -9,6 +9,7 @@ LIST   = main.o \
 	 returns.o \
 	 zoom.o \
 	 redraw.o \
+	 set.o \
 	 print.o
 
 $(BIN_CMD)/$(PGM): $(LIST) $(DEPLIBS)
