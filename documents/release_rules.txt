@@ -6,6 +6,10 @@ How to release GRASS 5 binaries:
 
    Check if no M/C conflicts are there before tagging.
 
+   Update the PDF-docs on server. Run html/Gmakefile (activate postscipt-
+   target, convert to PDF in dist.$ARCH/documents/postscript, upload to
+   server)
+
 
 1. Build GRASS:
  
