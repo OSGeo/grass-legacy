@@ -1,0 +1,107 @@
+<html>
+
+<title>d.sites.label</title>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width="100%" align=center size=6 noshade>
+
+<h2>NAME</h2>
+
+<em><b>d.sites.label</b></em> - Labels sites using a string or double 
+attribute value or the category value on the current graphics monitor.
+<br>
+<em>(GRASS Display Program)</em>
+
+<h2>SYNOPSIS</h2>
+
+<b>d.sites.label</b><br>
+<b>d.sites.label sitefile=</b><em>name</em>
+	[<b>attr=</b>string|cat|double]
+	[<b>index=</b><em>number</em>]
+	[<b>anchor=</b>c|n|s|e|w|ne|nw|se|sw]
+	[<b>color=</b><em>colorname</em>]
+	[<b>font=</b><em>fontname</em>]
+	[<b>width=</b><em>number</em>]
+	[<b>height=</b><em>number</em>]
+
+<h2>DESCRIPTION</h2>
+
+<p>
+<em>d.sites.label</em> displays labels for a GRASS <em>sites_list</em>
+on the current graphics monitor.  Labels can be chosen from the category
+value, a double attribute or a string attribute.  The default uses the first
+string attribute. The <em>index</em> is a number greater than zero for the
+attribute to use as a label.  The user may select the position, color and
+sizing of the labels.  Labels are only drawn within the current region.
+
+</p>
+<p>
+This program can be run non-interactively or interactively.  If the user
+gives the name of a GRASS <em>sites_list</em> and (optionally) any other
+parameters, the command will be run non-interactively.  Any parameter
+left unspecified will be set to its default value (see below). Alternatively,
+the user can type <em>d.sites.label</em> at the command line and be prompted
+for the parameter values using the standard GRASS 
+<em><a href="parser.html">parser</a></em> interface.
+</p>
+
+<h3>Parameters:</h3>
+
+<dl>
+<dt><b>sitefile=</b><em>name</em>
+<dd>Name of a GRASS <em>sites_list</em> map in the user's current mapset
+	search path.
+<dt><b>attr=</b>string|cat|double
+<dd>Type of attribute to use for the label.<br>
+Default: <em>string</em>
+<dt><b>index=</b><em>number</em>
+<dd>Index number to the attribute. For instance, <em>3</em> would request
+values from the third attribute column. This option is ignored if the
+<em>attr</em> option is set to <em>cat</em>.<br>
+Default: <em>1</em>
+<dt><b>anchor=</b>c|n|s|e|w|ne|nw|se|sw
+<dd>Where to place the label in relation to the site point.<br>
+Default: <em>c</em> (Center)
+<dt><b>color=</b><em>colorname</em>
+<dd>The GRASS <em>colorname</em> to use for the label text.<br>
+Options: red, orange, yellow, green, blue, indigo, violet, magenta, brown,
+	gray, white or black<br>
+Default: <em>green</em>
+<dt><b>font=</b><em>fontname</em>
+<dd>The GRASS <em>fontname</em> to use for the label.<br>
+Options: cyrilc, gothgbt, gothgrt, gothitt, greekc, greekcs, greekp,
+	greeks, italicc, italiccs, italict, romanc, romancs, romand, 
+	romans, romant, scriptc or scripts<br>
+Default: <em>romanp</em>
+<dt><b>width=</b><em>number</em>
+<dd>The width of letters in pixels.<br>
+Default: <em>10</em>
+<dt><b>height=</b><em>number</em>
+<dd>The height of letters in pixels.<br>
+Default: <em>10</em>
+</dl>
+
+<h2>SEE ALSO</h2>
+
+<em><a href="d.display.html">d.display</a></em><br>
+<em><a href="d.icons.html">d.icons</a></em><br>
+<em><a href="d.points.html">d.points</a></em><br>
+<em><a href="d.rast.html">d.rast</a></em><br>
+<em><a href="d.vect.html">d.vect</a></em><br>
+<em><a href="g.region.html">g.region</a></em><br>
+<em><a href="parser.html">parser</a></em>
+
+
+<h2>AUTHOR</h2>
+<p>
+Eric G. Miller
+</p><p>
+<em>$Id$</em>
+</p>
+</body>
+</html>
+
+
