@@ -491,9 +491,4 @@ void calc_sediment(int column)
 			      runoff->total_eroded_sediment / 2000.0;
    }
  
- 
- 
- 
- 
- 
 }
