@@ -1,0 +1,118 @@
+Dec. 5, 1992
+
+Code changes after HDF3.2r2 was released on Nov.3, 1992:
+
+1. DFSDpre32() of dfsd.c is replaced by DFSDpre32sdg() 
+of dfsd.c; and dsp32sd() in dfsdf.c is replaced by 
+dsp32sd() in dfsdff.f and dsip32s() in dfsdf.c.
+
+For more details see the MigrationNotes. 
+
+2. A bug is fixed in the  dump function of the utility hdfed.
+It dumps all the number types on CRAY correctly. 
+
+3. Two formats, -ushort for unsigned int16 and -udecimal for 
+unsigned int32, are added to hdfed dump. The command:
+
+	dump -help 
+
+in hdfed lists all the formats available.
+See ./util/README.TST  for test information. 
+
+************************************************************** 
+Nov. 3, 1992
+
+
+Code changes after HDF3.2r1 was released on Sept.1,1992 
+
+1. A bug was fixed in dsipdat() of dfsdf.c. It did not 
+handle multidimentional data correctly.
+
+2. A mistake in util/Makefile was corrected. 
+
+.c.o: he.h he_proto.h
+        $(CC) -c $(CFLAGS) -I(HDFINC) -I(HDFLIB)/libdf.a $(GLLIB) $< 
+
+3. In subdirectory test/, tr8.c, t24.c and tp.c were replaced by 
+a new program trig.c.
+
+4. In hdfi.h, the following code fragment was added for HP9000 and 
+MIPSEL: 
+
+#ifdef _STDC_
+#define const
+#endif /* _STDC_ */
+
+5. Added support for NeXT machines.
+
+6. A BinHexed version of the Makefile for Macintoch Mac-Makefile.hqx is 
+added.
+
+7. Mac-Makefile.test.hqx is added for the Mac to make the tests and some 
+of the utilities. The utilities and tests should be built in the same 
+folder when on the Mac.
+
+8. A bug is fixed in vio.c solving the problem happened when the HDF3.2 
+library read old Vdatas containing integer data. The following code 
+fragment in the function map_from_old_types() in vio.c 
+
+
+case LOCAL_SHORTTYPE:
+return DFNT_INT16;
+case LOCAL_INTTYPE:
+case LOCAL_LONGTYPE:
+return DFNT_INT32;
+
+
+was changed to:
+
+
+case LOCAL_SHORTTYPE:
+case LOCAL_INTTYPE:
+return DFNT_INT16;
+case LOCAL_LONGTYPE:
+return DFNT_INT32;
+
+9. Added machine type CONVEXNATIVE to support CONVEX native format. 
+The code is a contribution from Jan-Willem De Bruijn, University of 
+Delft, Netherland.
+
+10. Cosmetic fixes to hfile.c to compile clean on the Mac. 
+
+11. Assorted fixes to hdfed to get it to work on the Mac. 
+
+12. Added the function DF24lastref().
+
+13. DFACC_ALL is changed back to have the same meaning that it had in 
+pre-HDF 3.2 versions. Here is a list of all "DFACC" codes and their 
+meanings. It is important to note that these constants are NOT bit-flags 
+and should NOT be or'd together to combine access modes. Doing so may 
+cause odd behavior and, in some cases, loss of data.
+
+Recommended:
+DFACC_READ:    Open for read only. If file does not exist, error.
+DFACC_RDWR:    Open for read/write. If file does not exist, create it.
+DFACC_CREATE:  Force creation. If file exists, delete it, then 
+               open a new file for read/write. (in the spirit of 
+               UNIX "clobber")
+
+Others:
+DFACC_ALL:     Same as DFACC_RDWR.
+DFACC_WRITE:   Same as DFACC_RDWR.
+
+14. Tests added in dfriginfo() and DFR8Iriginfo() to prevent endless 
+loop when there is no more RIG in the file. 
+
+15. The definition of DFdi is moved to hdf.h from df.h, dfsd.h, dfgr.h 
+and dfrig.h.
+
+16. Added the function DFSDpre32(). 
+
+17. Typos fixed in constant.f.
+
+18. Minor tweaks and twiddles for reduced warnings on various platforms. 
+
+
+
+
+
