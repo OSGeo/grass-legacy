@@ -171,7 +171,7 @@ neteler@geog.uni-hannover.de
 + r.clump
 ? r.cn2
 + r.coin
-? r.colors
++ r.colors
 ? r.colors.paint
 ? r.combine
 + r.compress
