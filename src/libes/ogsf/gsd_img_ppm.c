@@ -1,4 +1,8 @@
-/* modified to PPM by Bob Covill <bcovill@tekmap.ns.ca>
+
+
+/* - added little/big endian test Markus Neteler
+ * -modified to PPM by Bob Covill <bcovill@tekmap.ns.ca>
+ *
  * $Id$ 
  */
 /* changed 10/99 Jaro*/
@@ -20,6 +24,23 @@ int GS_write_ppm(char *name)
     unsigned long *pixbuf;
     char all_buf[3];
 
+ /* endian test added from ./src.contrib/GMSL/NVIZ2.2/TOGL/apps/image.c
+  * Markus Neteler
+  */
+    union {
+        int testWord;
+        char testByte[4];
+    } endianTest;
+    int swapFlag;
+
+    endianTest.testWord = 1;
+    if (endianTest.testByte[0] == 1) {
+        swapFlag = 1; /*true: little endian */
+    } else {
+        swapFlag = 0;
+    }
+
+
     gsd_getimage(&pixbuf, &xsize, &ysize);
 
     if (NULL == (fp = fopen (name, "w")))
@@ -31,21 +52,22 @@ int GS_write_ppm(char *name)
 	for(y=ysize-1; y>=0; y--) {
 
 		for(x=0; x<xsize; x++){
-#ifdef SUN
- */ big endian: SUN et al. */
-		rbuf[x] = (pixbuf[y*xsize + x] & 0xFF000000)>>24;
-		gbuf[x] = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
-		bbuf[x] = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
-#else
- /* little endian: Linux et al. */
-                rbuf[x] = (pixbuf[y*xsize + x] & 0x000000FF);
-                gbuf[x] = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
-                bbuf[x] = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
-#endif
+		if (!swapFlag) {
+			/* big endian: SUN et al. */
+			rbuf[x] = (pixbuf[y*xsize + x] & 0xFF000000)>>24;
+			gbuf[x] = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
+			bbuf[x] = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
+		}
+		else {
+			/* little endian: Linux et al. */
+	                rbuf[x] = (pixbuf[y*xsize + x] & 0x000000FF);
+        	        gbuf[x] = (pixbuf[y*xsize + x] & 0x0000FF00)>>8;
+                	bbuf[x] = (pixbuf[y*xsize + x] & 0x00FF0000)>>16;
+		}
 
-	fputc((int)rbuf[x], fp);
-	fputc((int)gbuf[x], fp);
-	fputc((int)bbuf[x], fp);	
+		fputc((int)rbuf[x], fp);
+		fputc((int)gbuf[x], fp);
+		fputc((int)bbuf[x], fp);	
 
 	    }
 	}
