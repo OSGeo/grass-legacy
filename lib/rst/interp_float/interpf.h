@@ -107,14 +107,14 @@ int IL_check_at_points_2d(struct interp_params *, struct quaddata *, double *, d
 /* resout2dmod.c */
 int IL_resample_output_2d(struct interp_params *, double, double, double, double, double, double, double, double, double, double, double, char *, double *, struct Cell_head *, struct Cell_head *, char *, int);
 /* ressegm2d.c */
-int IL_resample_interp_segments_2d(struct interp_params *, struct BM *, double, double, double *, double *, double *, double *, double *, double *, double *, double *, double *, int, double *, int, int, int, int, int, int, double, double, double, double, int);
+int IL_resample_interp_segments_2d(struct interp_params *, struct BM *, double, double, double *, double *, double *, double *, double *, double *, double *, double *, double *, int, double *, int, int, int, int, int, double, double, double, double, int);
 /* secpar2d.c */
 int IL_secpar_loop_2d(struct interp_params *, int, int, int, struct BM *, double *, double *, double *, double *, double *, double *, int, int);
 /* segmen2d.c */
 int IL_interp_segments_2d(struct interp_params *, struct tree_info *, struct multtree *, struct BM *, double, double, double *, double *, double *, double *, double *, double *, double *, double *, double *, int, int, double);
 /* vinput2d.c */
-int IL_vector_input_data_2d(struct interp_params *, struct Map_info *, int, char *, char *, int, struct tree_info *, double *, double *, double *, double *, double *, double *, int *, double *);
-int process_point(double, double, double, double, struct tree_info *, double, double *, double *, double *, double *, double *, double *, int *, int *, int, int *);
+int IL_vector_input_data_2d(struct interp_params *, struct Map_info *, int, char *, char *, struct tree_info *, double *, double *, double *, double *, double *, double *, int *, double *);
+int process_point(double, double, double, double, struct tree_info *, double, double *, double *, double *, double *, double *, double *, int *, int *, int *);
 /* write2d.c */
 int IL_write_temp_2d(struct interp_params *, int, int, int);
 
