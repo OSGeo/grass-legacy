@@ -56,13 +56,19 @@ DEBUG
 
 DIGITIZER
 [v.digit]
-  name of digitizer board
+  name of currently selected digitizer board
 
 DPG_LOCK
 DUMP
 ENDPANEL
-FORCE_GRASS3_COLORS
+
+FORCE_GRASS3_COLORS 
+  define to force color table output format in 3.0, even if the structure
+  contains 4.0 rules
+
 GRASS_FP_DOUBLE
+  define GRASS floating point type (DCELL_TYPE, FCELL_TYPE)
+
 G3D_CACHE_SIZE_ENV_VAR
 G3D_CACHE_SIZE_MAX_ENV_VAR
 G3D_COMPRESSION_ENV_VAR_NO
@@ -93,7 +99,8 @@ GISRC
   name of .grassrc5 file
 
 GIS_LOCK
-  lock ID to prevent parallel GRAS use
+  lock ID to prevent parallel GRAS use,
+  process id of the start-up shell script
 
 GMPEG_SIZE
 GRAPH
@@ -144,7 +151,10 @@ NPIXELS
 Nviz_AutoSurfColors
 ORACLE_HOME
 PAINT
+
 PAINTER
+  currently selected paint output device
+
 PAINT_DRIVER
 PAINT_DRIVER_SHELL
 PAINT_HEADER
@@ -193,7 +203,9 @@ SQLBASE_DIR
 SQLBASE_DRIVER_STDERR
 SQLBASE_SERVER
 STARTPANEL
+
 GRASS_STDERR
+  set to prevent user mail on error
 
 GRASS_TCLSH
 [tcltkgrass, nviz]
