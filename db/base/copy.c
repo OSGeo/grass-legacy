@@ -17,12 +17,14 @@ main(int argc, char *argv[])
     int    ret;
     struct Option *from_driver, *from_database, *from_table;
     struct Option *to_driver, *to_database, *to_table;
+    struct Option *where, *select;
     struct GModule *module;
     char   *drv, *db;
 
     /* Set description */
     module              = G_define_module();
-    module->description = "Copy a table.";
+    module->description = "Copy a table. Either 'from_table' (optionaly with 'where') can be used "
+			"or 'select' option, but not 'from_table' and 'select' at the same time.";
 
     drv=db_get_default_driver_name();
     db=db_get_default_database_name();
@@ -47,8 +49,8 @@ main(int argc, char *argv[])
     from_table 		    = G_define_option();
     from_table->key 	    = "from_table";
     from_table->type 	    = TYPE_STRING;
-    from_table->required    = YES;
-    from_table->description = "Input table name";
+    from_table->required    = NO;
+    from_table->description = "Input table name (only if select is not specified)";
 
     to_driver		   = G_define_option();
     to_driver->key 	   = "to_driver";
@@ -73,10 +75,46 @@ main(int argc, char *argv[])
     to_table->required    = YES;
     to_table->description = "Output table name";
 
+    where 		= G_define_option();
+    where->key 	    	= "where";
+    where->type 	= TYPE_STRING;
+    where->required	= NO;
+    where->description	= "Optional where condition (without WHERE key word), e.g.:\n"
+			  "\t\tobec = 'Liptakov'";
+
+    select 		= G_define_option();
+    select->key 	= "select";
+    select->type 	= TYPE_STRING;
+    select->required	= NO;
+    select->description	= "Full select statement (only if from_table and where is not used), e.g.:\n"
+			  "\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'";
+
     if(G_parser(argc, argv)) exit(ERROR);
 
-    ret = db_copy_table ( from_driver->answer, from_database->answer, from_table->answer,
-	                  to_driver->answer, to_database->answer, to_table->answer );
+    /* Check options and copy tables */
+    if ( from_table->answer ) {
+	if ( select->answer )
+	    G_fatal_error ( "Cannot combine 'from_table' and 'select' options" );
+
+	if ( where->answer ) {
+	    ret = db_copy_table_where ( from_driver->answer, from_database->answer, from_table->answer,
+				        to_driver->answer, to_database->answer, to_table->answer,
+		   			where->answer );
+	} else { 
+	    ret = db_copy_table ( from_driver->answer, from_database->answer, from_table->answer,
+				  to_driver->answer, to_database->answer, to_table->answer );
+	}
+    } else {
+       	if ( !select->answer )	
+	    G_fatal_error ( "Either 'from_table' or 'select' option must be given." );
+
+       	if ( where->answer )
+	    G_fatal_error ( "Cannot combine 'select' and 'where' options" );
+
+	ret = db_copy_table_select ( from_driver->answer, from_database->answer, from_table->answer,
+			             to_driver->answer, to_database->answer, to_table->answer,
+	       			     select->answer );
+    }
 
     if ( ret == DB_FAILED ) {
 	G_warning ( "Copy table failed" );
@@ -85,3 +123,4 @@ main(int argc, char *argv[])
 
     exit(0);
 }
+
