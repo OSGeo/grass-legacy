@@ -28,7 +28,7 @@ agnps_input_1
 # changes                       19.12.96 Markus Neteler
 # check error status:
 
-if [ $? -eq 1 ]
+if [ $? -eq 0 ]
 then 
   agnps_input_2a
 fi
