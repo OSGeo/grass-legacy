@@ -61,7 +61,6 @@ int PS_vlines_plot (struct Map_info *P_map, int vec, int type)
         if ( Varray != NULL && Varray->c[line] == 0 ) continue; /* is not in array */
 	
 	pPoints = Points;
-	cat = 0;
 	Vect_cat_get( Cats, 1, &cat);
 
 	if(vector.layer[vec].cwidth) {

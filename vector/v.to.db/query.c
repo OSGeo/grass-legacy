@@ -29,7 +29,7 @@ query (struct Map_info *Map )
 	if ( !(type & options.type ) ) continue;
 		
 	Vect_cat_get ( Cats, options.field, &cat_no );
-	/* Go on even if cat is 0, values for cat 0 are reported at the end */
+	/* Go on even if cat is -1, values for cat -1 are reported at the end */
 
 	idx = find_cat( cat_no);
 	

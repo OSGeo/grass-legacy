@@ -174,7 +174,7 @@ int main(int argc,char *argv[])
 	}
 
 	Vect_cat_get (Cats, field, &cat);
-	if ( cat == 0 ) {  /* no category of given field */
+	if ( cat < 0 ) {  /* no category of given field */
 	    nocat_cnt++;
 	    continue;
 	}

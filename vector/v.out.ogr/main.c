@@ -311,7 +311,7 @@ main (int argc, char *argv[])
 	    }
 
 	    Vect_cat_get (Cats, field, &cat);
-	    if ( cat == 0 && !donocat ) { /* Do not export not labeled */ 
+	    if ( cat < 0 && !donocat ) { /* Do not export not labeled */ 
 		nocatskip++;
 		continue; 
 	    }
@@ -357,7 +357,7 @@ main (int argc, char *argv[])
 		Vect_cat_get (Cats, field, &cat);
 	    }
 	    G_debug (3, "area = %d centroid = %d ncats = %d", i, centroid, Cats->n_cats );
-	    if ( cat == 0 && !donocat ) { /* Do not export not labeled */ 
+	    if ( cat < 0 && !donocat ) { /* Do not export not labeled */ 
 		nocatskip++;
 		continue; 
 	    }

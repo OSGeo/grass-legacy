@@ -7,7 +7,7 @@
 int 
 read_areas(struct Map_info *Map)
 {
-	int i, idx, cat_no, found;
+	int i, idx, found;
 	int area_num, nareas, centr;
 	double area;
 	struct line_cats *Cats;
@@ -24,7 +24,6 @@ read_areas(struct Map_info *Map)
 	    centr = Vect_get_area_centroid ( Map, area_num );
 	    if ( centr > 0 ) {
 		Vect_read_line ( Map, NULL, Cats, centr);
-		Vect_cat_get ( Cats, options.field, &cat_no );
 
 		for ( i = 0; i < Cats->n_cats; i++ ) {
 		    if ( Cats->field[i] == options.field ) {
