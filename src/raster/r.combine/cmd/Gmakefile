@@ -41,7 +41,7 @@ $(BIN_MAIN_CMD)/r.combine:
 
 $(ETC)/r.combine:      $(OFILES) $(LIBES)
 	rm -f a.out
-	$(CC) $(LDFLAGS) $(OFILES) $(LIBES) $(MATHLIB)
+	$(CC) $(LDFLAGS) $(OFILES) $(LIBES) $(LEXLIB) $(MATHLIB)
 	mv a.out $@
 
 text:
@@ -80,7 +80,7 @@ sigint.o: externs.h
 #
 # PARSER
 gis_pars.c:     lvw.h tree.h gis_pars.y
-	yacc -v -d gis_pars.y
+	$(YACC) -v -d gis_pars.y
 	rm -f gis_pars.c gis_pars.h gis_pars.out
 	mv y.tab.c gis_pars.c
 	mv y.tab.h gis_pars.h
@@ -89,7 +89,7 @@ gis_pars.c:     lvw.h tree.h gis_pars.y
 
 gis_lxcl.c:     gis_lxcl.l gis_pars.h
 	rm -f gis_lxcl.c
-	lex -t gis_lxcl.l > gis_lxcl.c
+	$(LEX) -t gis_lxcl.l > gis_lxcl.c
 
 gis_pars.h:      gis_pars.c
 
