@@ -2,21 +2,15 @@
 * $Id$
 *
 ****************************************************************************
-* 	               -- GRASS Development Team --
 *
 * MODULE: 	GRASS ogsf library
 * AUTHOR(S):	none
 * PURPOSE: 	This file needs to be re-written in OpenGL
-* COPYRIGHT:  	(C) 2000 by the GRASS Development Team
+* COPYRIGHT:    (C) 2000 by the GRASS Development Team
 *
-*   	    	This program is free software under the GPL (>=v2)
-*   	    	Read the file COPYING that comes with GRASS for details.
-*
-*****************************************************************************
-*
-* $Log$
-* Revision 1.4  2000-11-10 02:56:56  justin
-* New header style
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
 *
 *****************************************************************************/
 
