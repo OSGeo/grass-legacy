@@ -16,6 +16,8 @@ static int lock_file (char *,int);
 static int find_process (int);
 static int get_pid (char *,int *);
 
+double pan_threshold;
+
 int main (int argc, char *argv[])
 {
 	FILE	*fp;
@@ -34,6 +36,7 @@ int main (int argc, char *argv[])
 	char  command[500] ;
 	char  buf[1024];
 	char  tmpbuf[200];
+	char  *p;
 
 	struct  driver_desc  Driver ;
 
@@ -187,6 +190,12 @@ askagain:
             }
         }
 
+/* Panning threshold from window boundary */
+	pan_threshold = ((p = getenv("GRASS_PAN_THRESHOLD")) ?
+				atof(p) / 100 : 0.05);
+
+	pan_threshold = (pan_threshold >= 0.0 && pan_threshold <= 0.25 ?
+				pan_threshold : 0.05);
 
 	
 /*  NOW execute the digit program  */
