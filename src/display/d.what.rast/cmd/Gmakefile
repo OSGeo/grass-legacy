@@ -1,0 +1,16 @@
+LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+PGM    = d.what.rast
+
+LIST   = main.o \
+	 opencell.o\
+	 show.o\
+	 what.o
+
+
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIST): what.h
+
+$(LIBES): #
