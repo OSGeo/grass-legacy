@@ -2,7 +2,7 @@
 *		shape disassemble routines
 *		Alex Shevlakov, sixote@yahoo.com, 03/2000
  * Revision 1.1.1.1  2000/03/14 12:35:59  zapoved
- * Imported str
+ * 
 */
 static char rcsid[] = 
   "$Id$";

@@ -1,5 +1,3 @@
-PGM = v.in.shape.pg
-
 INTER_CFILES = Build_inter.c\
       Col.c\
       CountLines.c\
@@ -36,6 +34,7 @@ INTER_OBJ = Build_inter.o\
       shp2dig.o \
       dasm_rings.o
 
+PGM = v.in.shape.pg
 HOME = $(BIN_CONTRIB_CMD)
 EXTRA_CFLAGS = $(VECT_INCLUDE) $(PQINCPATH)
 
