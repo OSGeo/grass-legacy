@@ -20,21 +20,20 @@ Print out all soils map with "soils" in their name:<BR>
 <P>
 
 Print out "tmp" if "tmp" raster map exists:<BR>
-<TT>g.mlist -r map='^tmp$'</TT>
+<TT>g.mlist -r pattern='^tmp$'</TT>
 <P>
 
 Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name linewise):<BR>
-<TT>g.mlist -r map='^tmp[0-9]$' type=vect</TT>
+<TT>g.mlist -r type=vect pattern='^tmp[0-9]$'</TT>
 <P>
 
 Print out "tmp0" ..."tmp9" if corresponding vector map exists (each map name comma separated):<BR>
-<TT>g.mlist -r map='^tmp[0-9]$' type=vect sep=,</TT>
-This may be useful for other programs' parameter input.
+<TT>g.mlist -r type=vect sep=, pattern='^tmp[0-9]$'</TT><BR>
+This may be useful for other programs' parameter input (e.g. <EM>r.series</EM>).
 
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="g.list.html">g.list</A></EM>
-
 
 
 <H2>AUTHOR</H2>
