@@ -131,7 +131,7 @@ extern VAR Variable[];
 #define CAT_MODE_NEXT 2 /* Next not yet used category of given field */
 #define CAT_MODE_COUNT 3 /* Count of modes */ 
 #ifdef MAIN
-  char *CatModeLab[] = { "No category", "Manual enry", "Next not used" };
+  char *CatModeLab[] = { "No category", "Manual entry", "Next not used" };
 #else
   extern char *CatModeLab[];
 #endif
