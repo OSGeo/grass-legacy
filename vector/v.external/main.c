@@ -4,7 +4,7 @@
  * 
  * AUTHOR(S):    Radim Blazek
  *               
- * PURPOSE:      Create a new vector as a link to OGR layer
+ * PURPOSE:      Create a new vector as a link to OGR layer (read-only)
  *               
  * COPYRIGHT:    (C) 2003 by the GRASS Development Team
  *
@@ -45,7 +45,7 @@ main (int argc, char *argv[])
     OGRRegisterAll();
 
     /* Module options */
-    sprintf ( buf, "Create a new vector as a link to OGR layer. Available drivers:\n" );
+    sprintf ( buf, "Create a new vector as a read-only link to OGR layer. Available drivers:\n" );
     for ( i = 0; i < OGRGetDriverCount(); i++ ) {
 	Ogr_driver = OGRGetDriver( i );
 	if ( i == 0) 
