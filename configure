@@ -929,7 +929,7 @@ fi
 
 # For SGI's add /usr/lib32 and /usr/freeware/lib32
 if test "$host_vendor" = "sgi" ; then
-    LIB_DIRS="$LIB_DIRS /usr/lib32 /usr/freeware/lib32"
+    LIB_DIRS="$LIB_DIRS /usr/freeware/lib32 /usr/lib32"
 fi
 
 if test "$LIB_DIRS"; then
