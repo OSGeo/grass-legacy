@@ -5,7 +5,6 @@ run_report (pgm, raw_report, report)
     char *report;
 {
     char command[300];
-    char answer[100];
 
     new_report_screen();
     printf("report format phase\n");
