@@ -1,4 +1,4 @@
-$Id: TODO,v 1.25 2000-10-13 17:13:21 markus Exp $
+$Id: TODO,v 1.26 2000-10-15 16:09:11 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -103,6 +103,11 @@ So two ways from there to improve the situation:
 - this might be related to a daemnon serving a session key (see there).
 
 ---------------------------------------------------------------------
+
+- etc/monitorcap: use relative paths based on $GISBASE
+  (Being worked on by Justin)
+
+---------------------------------------------------------------------
 Modules:
 
 -IMPORT/EXPORT modules:
@@ -140,13 +145,13 @@ Modules:
    quartile, median, 3rd quartile and sum)
    (merge function of r.univar into r.info)
 
-- etc/monitorcap: use relative paths based on $GISBASE
-  (Being worked on by Justin)
-
-- fix s.to.rast and s.to.vect to accept site lists created
-  by r.to.sites
-  (Being worked on by Eric Mitchell?)
-
+- r.surf.distance: write it
+  this module would generate a distance surface (improved version of
+  r.buffer) containing continuously distances from a raster line/area
+  Meanwhile r.buffer generates defined buffers, we need continuous
+  distance values, too.
+  (Being worked on by)
+ 
 - v.buffer: write it
   (Being worked on by)
 
