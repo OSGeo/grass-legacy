@@ -1,4 +1,3 @@
-.\" %M% %B%
 .TH Gline 2G G-language
 .SH NAME
 Gline \- Create a new vector (digit) file by
