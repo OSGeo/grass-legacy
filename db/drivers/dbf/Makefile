@@ -6,7 +6,6 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 DRIVER=$(DBDRIVERDIR)/dbf
-SHPDRIVER=$(DBDRIVERDIR)/shp
 DEPENDENCIES = $(GISDEP)
 EXTRA_INC = -I$(GRASS_LIBDIR)/db/dbmi_driver
 
@@ -54,5 +53,4 @@ default: $(DRIVER)
 
 $(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
-	$(INSTALL) $(DRIVER) $(SHPDRIVER)
 

@@ -6,13 +6,6 @@
 #define DBF_INT    2
 #define DBF_DOUBLE 3
 
-/* Driver mode */
-#define DBF_MODE_DBF 0
-#define DBF_MODE_SHP 1
-
-/* Virtual column name for shp driver */
-#define DBF_FID_NAME "shp_fid"
-
 typedef struct {
     char name[DBF_COL_NAME]; 
     int  type; 
@@ -73,10 +66,8 @@ typedef struct {
 #ifdef MAIN
     DATABASE db;
     dbString *errMsg = NULL;
-    int    drv_mode;
 #else
     extern DATABASE db;
     extern dbString *errMsg;
-    extern int drv_mode;
 #endif 
 

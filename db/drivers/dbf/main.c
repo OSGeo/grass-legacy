@@ -44,11 +44,5 @@ main(int argc, char *argv[])
 	name--;
     }
     
-    if ( strcmp ( name, "shp" ) == 0 ) {
-	drv_mode = DBF_MODE_SHP;
-    } else {
-	drv_mode = DBF_MODE_DBF;
-    }
-	
     exit (db_driver (argc, argv));
 }
