@@ -1,0 +1,34 @@
+NAME =   v.die.unlabelled
+
+EXTRA_CFLAGS	= $(VECT_INCLUDE) $(VECTLIBFLAGS)
+# include VECTLIBFLAGS for the PORTABLE_3 flag
+
+LIBES=$(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB)
+LIBESL=$(VECTLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB) $(DIG_ATTLIB)
+
+PROG =   $(NAME)
+#PROG =   $(BIN_CONTRIB_CMD)/$(NAME)
+
+#all:  $(PROG) man
+
+$(PROG): main.o  $(LIBES)
+	$(CC) $(LDFLAGS) -o$@ main.o $(LIBESL)
+
+man:  
+	-cp $(NAME).man $(MDIR)/$(NAME)
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	   $(MUTL)/man.header $(NAME).man $(MDIR)/.class-notice \
+	   > $(GISBASE)/man/$(MSEC)/$(NAME)
+
+clean: 
+	-rm -f *.BAK core *~ $(NAME) tags $(NAME).cat
+
+realclean: clean
+	-rm -rf OBJ* 
+
+veryclean: realclean
+
+dist: veryclean
+	(cd .. ; tar cvf $(NAME).tar $(NAME); gzip $(NAME).tar; mv $(NAME).tar.gz /home/pasture/ftp/pub/mccauley/grass)
+
+main.o:       	version.h
