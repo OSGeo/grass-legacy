@@ -21,7 +21,7 @@ list descriptions
 <BR>
 <B>d.what.sites help</B>
 <BR>
-<B>d.what.sites</B> [<B>-1</B>] 
+<B>d.what.sites</B> [<B>-1tq</B>] 
 [<B>sitefile=</B><EM>name</EM>] 
 [<B>dcolor=</B><EM>color</EM>] [<B>recolor=</B><EM>color</EM>] 
 
@@ -52,8 +52,15 @@ monitor.
 
 
 <DL>
-<DT><B>-1</B>             
-<DD>allow only one query.
+<DT><B>-1</B>
+<DD>Identify and query just one point location. Only one mouse click is 
+executed. This option is provided for shell scripts and programs that 
+want to obtain only one point from the user. 
+<DT><B>-t</B>
+<DD>Provide only terse output. This option is provided to simplify the 
+parsing of output by other programs. 
+<DT><B>-q</B>
+<DD>Load quietly. Do not show progress in loading the sites file into memory.
 </DL>
 
 <H3>Parameters:</H3>
