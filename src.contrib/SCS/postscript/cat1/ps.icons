@@ -1,0 +1,66 @@
+
+
+
+ps.icons             GRASS Reference Manual              ps.icons
+
+
+
+NAME
+     ps.icons - Creates and modifies icons for use with ps.map.
+     (GRASS Hardcopy PostScript Output Program)
+
+SYNOPSIS
+     ps.icons
+
+DESCRIPTION
+     This program allows the user to create and maintain icons
+     which are used by ps.map to depict sites.
+
+FILES
+     Icon files created by the user are stored under
+     $LOCATION/ps_icons.
+
+SEE ALSO
+     ps.map
+
+AUTHOR
+     Paul Carlson, USDA, SCS, NHQ-CGIS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.1                U.S. Army CERL                         1
+
+
+
