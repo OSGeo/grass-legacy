@@ -3,13 +3,13 @@ shell=grass$(VERSION_NUMBER)
 EXTRA_CFLAGS = -DD_LOCATION_NAME=\"$(DEFAULT_LOCATION)\" -DD_GISDBASE=\"$(DEFAULT_DATABASE)\" -DVERSION_NUMBER=\"'$(VERSION_NUMBER)'\" -DVERSION_UPDATE_PKG=\"'$(VERSION_UPDATE_PKG)'\"
 
 all: unix \
-     $(ETC)/GIS.sh \
-     $(ETC)/gis_set \
+     $(ETC)/Init.sh \
+     $(ETC)/set_data \
      $(ETC)/clean_temp \
      $(ETC)/lock \
      $(ETC)/run \
      $(ETC)/echo \
-     $(ETC)/gis_intro
+     $(ETC)/grass_intro
 
 unix:
 	@test -d $(UNIX_BIN) || (echo 'UNIX_BIN($(UNIX_BIN))' not found; exit 1)
@@ -18,19 +18,19 @@ unix:
 	echo ':' > $(UNIX_BIN)/$(shell)
 	echo GISBASE=$(GISBASE) >> $(UNIX_BIN)/$(shell)
 	echo export GISBASE >> $(UNIX_BIN)/$(shell)
-	echo exec '$$'GISBASE/etc/GIS.sh >> $(UNIX_BIN)/$(shell)
+	echo exec '$$'GISBASE/etc/Init.sh >> $(UNIX_BIN)/$(shell)
 	chmod +x $(UNIX_BIN)/$(shell)
 
-$(ETC)/GIS.sh: gis.head gis.shell gis.tail version.sed $(SRC)/CMD/VERSION
+$(ETC)/Init.sh: init.head init.shell init.tail version.sed $(SRC)/CMD/VERSION
 	rm -f $@
-	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" gis.head > $@
-	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" gis.shell >> $@
-	cat gis.tail >> $@
+	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" init.head > $@
+	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" init.shell >> $@
+	cat init.tail >> $@
 	chmod +x $@
 
-GIS_SET = gis_set.o mke_mapset.o mke_loc.o chk_dbase.o other.o
-$(ETC)/gis_set: $(GIS_SET) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(GIS_SET) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+SET_DATA = set_data.o mke_mapset.o mke_loc.o chk_dbase.o other.o
+$(ETC)/set_data: $(SET_DATA) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(SET_DATA) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
 
 $(ETC)/echo: echo.o
 	$(CC) $(LDFLAGS) echo.o -o $@
@@ -48,9 +48,9 @@ $(BIN)/exit:
 	touch $@
 	chmod 600 $@
 
-$(ETC)/gis_intro: gis_intro.tx
+$(ETC)/grass_intro: grass_intro.txt
 	rm -f $@
-	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" gis_intro.tx >$@
+	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" grass_intro.txt >$@
 	chmod +r $@
 
 $(GISLIB): # in case library changes
