@@ -244,6 +244,10 @@ Modules:
   of just printing an error (x0 busy -> open x1 etc.). This would be nice in
   network usage of GRASS.
   (Being worked on by ?)
+
+- d.what.sites:
+  needs multiple sites file support
+  (Being worked on by Huidae Cho)
   
 - g.list, g.remove should accept wildcards (*, ?) for convenience
   (Being worked on by ?)
