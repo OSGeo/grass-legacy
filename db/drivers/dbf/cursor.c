@@ -63,7 +63,7 @@ cursor * alloc_cursor()
 void free_cursor( cursor *c)
 {
     db_drop_token(c->token);
-    sqpFreeStmt( c->st );  
+/* sqpFreeStmt( c->st ); */  
     free(c);  
 }
 

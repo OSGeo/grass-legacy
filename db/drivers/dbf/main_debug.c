@@ -53,7 +53,7 @@ main(int argc, char *argv[])
     db_init_string (select);
 
     db_set_string(select,
-"select id, quality, flow from river where (flow = 10) or (flow = 20) or (flow = 30) or (flow = 5)");
+"select id, quality, flow from river where (flow = 10) or (flow = 20) or (flow = 30) or (flow = 5) or (flow = 7)");
 
 /* create a cursor */
     cursor = (dbCursor *) db_malloc (sizeof(dbCursor));
@@ -77,6 +77,33 @@ G_debug(3, "driver is %s", cursor->driver);
 
 /* add this cursor to the cursors managed by the driver state */
     db__add_cursor_to_driver_state(cursor);
+G_debug(3, "db_d_close_database()");
+
+/* see if a database is open */
+    if (!db__test_database_open())
+    {
+	db_error ("no database is open");
+G_debug(3, "db_d_close_database(): would sent DB_FAILURE");
+	return DB_OK;
+    };
+/* make sure all cursors are closed */
+    db__close_all_cursors();
+
+/* call the procedure */
+    stat = db_driver_close_database();
+G_debug(3, "db_d_close_database(): would have stat = %d", stat);
+
+/* send the return code */
+    if (stat != DB_OK)
+    {
+G_debug(3, "db_d_close_database(): would sent DB_FAILURE");
+	return DB_OK;
+    }
+G_debug(3, "db_d_close_database(): would sent DB_OK");
+
+/* clear the driver state */
+    db__mark_database_closed ();
+    db__init_driver_state();
 
 
 G_debug(3, "main(): ok");
