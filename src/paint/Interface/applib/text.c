@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "interface.h"
 Ptext(s)
     char *s;
