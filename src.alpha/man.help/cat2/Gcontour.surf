@@ -1,0 +1,132 @@
+
+
+
+Gcontour.surf(2G)    GRASS Reference Manual     Gcontour.surf(2G)
+
+
+
+NAME
+     Gcontour.surf - Program to generate a surface from contour
+     lines
+     (G Language Tool)
+
+SYNOPSIS
+     Gcontour.surf [-
+          f] input=contour_cell_map output=elevation_map
+
+DESCRIPTION
+     Gcontour.surf generates an elevation map from a cell map
+     showing rasterized contour lines.  The input to the program
+     is as follows:
+
+     -f   Single-user, "fast" version
+
+     input
+          Grid cell map of contour lines
+
+     output
+          Output cell map of elevation values
+
+NOTES
+     Gcontour.surf expects a cell map of contour lines as input.
+     Before using Gcontour.surf, run vect.to.cell on a vector map
+     of contour lines, where the value of each contour line is
+     its elevation.  Make sure the resolution of the contour line
+     cell map is the same as the desired resolution of the output
+     elevation map.
+
+     Any zero (0) values in the input contour cell map (i.e.,
+     cells in which contour lines do not appear in the input)
+     will be treated as NO DATA, and indicate the locations for
+     which Gcontour.surf will determine new elevation values in
+     the output map.  Therefore, the user should make sure that
+     no real zero-elevation contour lines exist in the input map;
+     if they do, the user should adjust input contour values
+     before running Gcontour.surf, to allow the data's real
+     meaning to be retained in the output.
+
+     Gcontour.surf will give poor results if there are any breaks
+     in the contour lines.  Make sure that contour lines are
+     continous (i.e., they continue until they meet themselves or
+     go off the edge of the map).  Do not include partial contour
+     lines.
+
+     Gcontour.surf determines elevation values by performing a
+     linear interpolation between the two closest, unique,
+     bounding lines to the cell.  It uses a flood-fill style
+     algorithm to determine which contour lines will be used for
+     interpolating the elevation value of a given cell.  The time
+     it takes to run Gcontour.surf is dependent on the amount of
+
+
+
+Printed 4/6/90             G-language                           1
+
+
+
+
+
+
+Gcontour.surf(2G)    GRASS Reference Manual     Gcontour.surf(2G)
+
+
+
+     open space in the contour cell map.  A contour map with
+     lines about five cells apart will run in roughly one fourth
+     the time as a contour map with lines about ten cells apart.
+
+     The single-user "fast" version of Gcontour.surf (invoked
+     with the -f option) will run about three times faster than
+     the multi-user, friendly version.  The single-user version
+     is a memory hog, and will probably not allow any other
+     programs to run well or at all.  The single-user version
+     will also start "disk-thrashing," slowing down the program,
+     if the total number of rows times the total number of
+     columns, divided by eight, is greater than the total RAM of
+     the computer.  If the size of the map window will cause disk
+     thrashing, or multiple users are on the system, the multi-
+     user (default) version of Gcontour.surf should be used.
+
+SEE ALSO
+     vect.to.cell
+
+AUTHOR
+     Charles Ehlschlaeger, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Printed 4/6/90             G-language                           2
+
+
+
