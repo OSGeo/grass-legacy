@@ -176,6 +176,7 @@ OBJ = \
     unix_socks.o\
     view.o\
     whoami.o\
+    win32_pipes.o\
     wind_format.o\
     wind_limits.o\
     wind_overlap.o\
