@@ -57,9 +57,9 @@ int Vect_check_input_output_name ( char * input, char * output, int error )
 
     if ( Vect_legal_filename(output) == -1 ) {
 	if ( error == GV_FATAL_EXIT ) {
-	    G_fatal_error ( "Output name '%s' is not valid vector name.", output );  
+	    G_fatal_error ( _("Output name '%s' is not valid vector name."), output );  
 	} else if ( error == GV_FATAL_PRINT ) {
-	    G_warning ( "Output name '%s' is not valid vector name.", output );
+	    G_warning ( _("Output name '%s' is not valid vector name."), output );
 	    return 1;
 	} else { /* GV_FATAL_RETURN */
 	    return 1;
@@ -70,9 +70,9 @@ int Vect_check_input_output_name ( char * input, char * output, int error )
     
     if ( mapset == NULL ) {
 	if ( error == GV_FATAL_EXIT ) {
-	    G_fatal_error ( "Cannot find input map '%s'", input );  
+	    G_fatal_error ( _("Cannot find input map '%s'"), input );  
 	} else if ( error == GV_FATAL_PRINT ) {
-	    G_warning ( "Cannot find input map '%s'", input );
+	    G_warning ( _("Cannot find input map '%s'"), input );
 	    return 1;
 	} else { /* GV_FATAL_RETURN */
 	    return 1;
@@ -90,9 +90,9 @@ int Vect_check_input_output_name ( char * input, char * output, int error )
 	
      	if ( strcmp(in,output) == 0 ) {
 	    if ( error == GV_FATAL_EXIT ) {
-		G_fatal_error ( "Output map '%s' is used as input", output );  
+		G_fatal_error ( _("Output map '%s' is used as input"), output );  
 	    } else if ( error == GV_FATAL_PRINT ) {
-		G_warning ( "Output map '%s' is used as input", output );
+		G_warning ( _("Output map '%s' is used as input"), output );
 		return 1;
 	    } else { /* GV_FATAL_RETURN */
 		return 1;

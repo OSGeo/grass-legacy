@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include "glocale.h"
 #include "gis.h"
 #include "Vect.h"
 
@@ -123,7 +124,7 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
     Map->support_updated = 1;
     
     plus = &(Map->plus);
-    prnmsg ("Building topology ...\n") ;
+    prnmsg ( _("Building topology ...\n") );
     plus->with_z = Map->head.with_z;
     plus->spidx_with_z = Map->head.with_z;
 
@@ -135,7 +136,7 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
 
     if ( ret == 0 ) { return 0; } 
 
-    prnmsg ("Topology was built.\n");
+    prnmsg (_("Topology was built.\n"));
     
     Map->level = LEVEL_2;
     plus->mode = GV_MODE_WRITE;
@@ -147,18 +148,18 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
     
     /* prnmsg ("Topology was built.\n") ; */
    
-    prnmsg ("Number of nodes     :   %d\n", plus->n_nodes);
-    prnmsg ("Number of primitives:   %d\n", plus->n_lines);
-    prnmsg ("Number of points    :   %d\n", plus->n_plines);
-    prnmsg ("Number of lines     :   %d\n", plus->n_llines);
-    prnmsg ("Number of boundaries:   %d\n", plus->n_blines);
-    prnmsg ("Number of centroids :   %d\n", plus->n_clines);
+    prnmsg (_("Number of nodes     :   %d\n"), plus->n_nodes);
+    prnmsg (_("Number of primitives:   %d\n"), plus->n_lines);
+    prnmsg (_("Number of points    :   %d\n"), plus->n_plines);
+    prnmsg (_("Number of lines     :   %d\n"), plus->n_llines);
+    prnmsg (_("Number of boundaries:   %d\n"), plus->n_blines);
+    prnmsg (_("Number of centroids :   %d\n"), plus->n_clines);
 
     if ( plus->n_flines > 0 )
-        prnmsg ("Number of faces     :   %d\n", plus->n_flines);
+        prnmsg (_("Number of faces     :   %d\n"), plus->n_flines);
 
     if ( plus->n_klines > 0 )
-        prnmsg ("Number of kernels   :   %d\n", plus->n_klines);
+        prnmsg (_("Number of kernels   :   %d\n"), plus->n_klines);
 
     if ( plus->built >= GV_BUILD_AREAS ) {
 	int line, nlines, area, nareas, err_boundaries, err_centr_out, err_centr_dupl, err_nocentr;
@@ -193,24 +194,24 @@ Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout )
 		err_nocentr++;
 	}
 	    
-	prnmsg ("Number of areas     :   %d\n", plus->n_areas);
-	prnmsg ("Number of isles     :   %d\n", plus->n_isles);
+	prnmsg (_("Number of areas     :   %d\n"), plus->n_areas);
+	prnmsg (_("Number of isles     :   %d\n"), plus->n_isles);
 
 	if ( err_boundaries )
-	    prnmsg ("Number of incorrect boundaries   :   %d\n", err_boundaries);
+	    prnmsg (_("Number of incorrect boundaries   :   %d\n"), err_boundaries);
 
 	if ( err_centr_out )
-	    prnmsg ("Number of centroids outside area :   %d\n", err_centr_out);
+	    prnmsg (_("Number of centroids outside area :   %d\n"), err_centr_out);
 	
 	if ( err_centr_dupl )
-	    prnmsg ("Number of duplicate centroids    :   %d\n", err_centr_dupl);
+	    prnmsg (_("Number of duplicate centroids    :   %d\n"), err_centr_dupl);
 
 	if ( err_nocentr )
-	    prnmsg ("Number of areas without centroid :   %d\n", err_nocentr);
+	    prnmsg (_("Number of areas without centroid :   %d\n"), err_nocentr);
 	    
     } else {
-	prnmsg ("Number of areas     :   -\n");
-	prnmsg ("Number of isles     :   -\n");
+	prnmsg (_("Number of areas     :   -\n"));
+	prnmsg (_("Number of isles     :   -\n"));
     }
     return 1;
 }
@@ -239,7 +240,7 @@ Vect_save_topo ( struct Map_info *Map )
     dig_file_init ( &fp );
     fp.file = fopen( fname, "w");
     if ( fp.file ==  NULL) {
-        G_warning("Can't open topo file for write: %s\n", fname);
+        G_warning(_("Can't open topo file for write: %s\n"), fname);
 	    return 0;
     }
 
@@ -247,7 +248,7 @@ Vect_save_topo ( struct Map_info *Map )
     dig_init_portable ( &(plus->port), dig__byte_order_out ());
     
     if ( 0 > dig_write_plus_file (&fp, plus) ) {
-        G_warning ("Error writing out topo file.\n");
+        G_warning (_("Error writing out topo file.\n"));
 	return 0;
     }
     
@@ -375,7 +376,7 @@ Vect_save_spatial_index ( struct Map_info *Map )
     dig_file_init ( &fp );
     fp.file = fopen( fname, "w");
     if ( fp.file ==  NULL) {
-        G_warning("Can't open spatial index file for write: %s\n", fname);
+        G_warning(_("Can't open spatial index file for write: %s\n"), fname);
 	    return 0;
     }
 
@@ -383,7 +384,7 @@ Vect_save_spatial_index ( struct Map_info *Map )
     dig_init_portable ( &(plus->spidx_port), dig__byte_order_out ());
     
     if ( 0 > dig_write_spidx (&fp, plus) ) {
-        G_warning ("Error writing out spatial index file.\n");
+        G_warning (_("Error writing out spatial index file.\n"));
 	return 0;
     }
     
