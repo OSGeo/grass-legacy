@@ -565,6 +565,9 @@ menu_build 1 .main_menu {
                 "source $env(TCLTKGRASSBASE)/module/r.random"
             }
             -separator
+            "Reproject raster from other location" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.proj"
+            }
             "Resample (change resolution)" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.resample"
             }
@@ -740,6 +743,12 @@ menu_build 1 .main_menu {
             }
             "To vector format" "" {
                 "source $env(TCLTKGRASSBASE)/module/s.to.vect"
+            }
+        }
+        "Develop map" "" {
+            -separator
+            "Reproject sites list from other location" "" {
+                "source $env(TCLTKGRASSBASE)/module/s.proj"
             }
         }
         "Report map" "" {
