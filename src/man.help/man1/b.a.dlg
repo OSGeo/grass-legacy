@@ -1,0 +1,32 @@
+.\" %W% %G%
+.TH b.a.dlg 1
+.SH NAME
+b.a.dlg \- Convert binary dlg-3 file  to  ascii dlg-3 file.
+.br
+.I (Map Development Tool)
+.SH SYNOPSIS
+.B b.a.dlg
+.SH DESCRIPTION
+The GRASS program \fIb.a.dlg\fR converts a binary
+.I dlg-3
+file into a readable ascii file.
+
+The GRASS tool \fIa.b.dlg[1]\fR converts an ascii 
+.I dlg-3 
+file into a binary
+.I dlg-3
+file.
+
+.I b.a.dlg
+and
+.I a.b.dlg[1]
+are 
+.CT "non-interactive" interactive
+programs, and are useful when a map must be in
+ascii format in order to be sent to another computer.
+.SH "SEE ALSO"
+\fIa.b.dlg[1], import.to.vect[1]\fR
+.SH "AUTHOR"
+Michael Higgins, U.S. Army Construction Engineering Research Laboratory
+.br
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
