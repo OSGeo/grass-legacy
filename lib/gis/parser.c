@@ -1331,9 +1331,12 @@ int G_gui (void)
 	   "    $outtext insert end  \"\\n$cmd\\n\"\n"
 	   "    $outtext yview end\n"
 	   "    set cmd [concat | $cmd 2>@ stdout]\n"
- 	   "    catch {open $cmd r} msg\n"
-	   "    fconfigure $msg -blocking 0\n"
-	   "    fileevent $msg readable [ list prnout $msg  ]\n"
+ 	   "    if {[catch {open $cmd r} msg]} {\n"
+ 	   "        error $msg\n"
+ 	   "    } {\n"
+ 	   "        fconfigure $msg -blocking 0\n"
+ 	   "        fileevent $msg readable [ list prnout $msg ]\n"
+ 	   "    }\n"
 	   "    update idletasks\n"
 	   "}\n");
 
