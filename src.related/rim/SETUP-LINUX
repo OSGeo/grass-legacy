@@ -7,7 +7,7 @@ RANLIB=ranlib
 F2CLIB=/usr/lib/f2cmain.a -lf2c
 EXTRA=time_date.o
 LIBEXTRA=time_date.o
-PILE = CC_f2c=\$(CC)  f77
+PILE = CC_f2c=\$(CC)  \$(F77)
 LIBRIM=librim.a
 AR = ar rv
 RAN = ranlib
