@@ -15,6 +15,10 @@
  *
  *************************************************************/
 
+/*
+**  4.0, must go through Vectlib to open vector files
+*/
+#ifdef OLDCODE
 #include "G.h"
 FILE *
 G_fopen_vector_old (name, mapset)
@@ -30,3 +34,4 @@ G_fopen_vector_new (name)
 {
     return G_fopen_new ("dig", name);
 }
+#endif
