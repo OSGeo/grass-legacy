@@ -1,0 +1,72 @@
+
+#include "stdio.h"
+#include "graphics.h"
+
+static unsigned char scanline[1024];
+static unsigned char sscanline[1024];
+
+Raster_int(num, nrows, array, withzeros, color_type)
+	int num ;
+	int nrows ;
+	unsigned int *array ;
+	int withzeros ;
+	int color_type ;
+{
+	unsigned char *pscan ;
+	unsigned char *psscan ;
+	unsigned int *parray;
+	unsigned int *poarray;
+	unsigned int oarray[1024];
+	int x;
+	int i ;
+	Rect r;
+	int cur_x, cur_y ;
+	Pixrect *pr = mem_point(1024, 1, 8, scanline);  /* hard wired - YCBM */
+	Pixrect *spr = mem_point(1024, 1, 8, sscanline);
+
+/* save original array */
+	if (! withzeros)
+	{
+		parray = array;
+		poarray = oarray;
+		for(x=0; x < num; x++)
+			*poarray++ = *parray++ ;
+	}
+/* get system color numbers if necessary */
+	if (color_type)
+		_get_color_index_array(array, num) ;
+
+/* copy integer array to character array */
+	parray = array;
+	pscan = scanline;
+	for(x=0; x < num; x++)
+		*pscan++ = *parray++ ;
+
+/* Place array on screen */
+	Get_current_xy(&cur_x, &cur_y) ;
+
+	r.r_top = r.r_left = 0;
+	r.r_height = r.r_width = 2000;
+
+	pw_batch_on(pixwin);
+	pw_lock(pixwin, &r);
+	if (! withzeros)
+		for(x = 0; x < nrows; x++)
+		{
+			pw_read(pixwin, cur_x, cur_y + x, num, 1, PIX_DEST,
+				spr, 0, 0);
+			poarray = oarray ;
+			psscan = sscanline;
+			pscan = scanline;
+			for(x=0; x < num; x++, pscan++, psscan++, poarray++)
+				if (*poarray)
+					*psscan = *pscan ;
+			pw_rop(pixwin, cur_x, cur_y + x, num, 1, PIX_SRC,
+				spr, 0, 0);
+		}
+	else
+		for(x = 0; x < nrows; x++)
+			pw_rop(pixwin, cur_x, cur_y + x, num, 1, PIX_SRC, pr, 0, 0);
+	pw_unlock(pixwin);
+	pw_batch_off(pixwin);
+}
