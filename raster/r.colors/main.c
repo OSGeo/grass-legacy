@@ -57,10 +57,21 @@ static char *rules_files(void)
 	return list;
 }
 
+static int cmp_names(const void *aa, const void *bb)
+{
+	char * const *a = aa;
+	char * const *b = bb;
+	return strcmp(*a, *b);
+}
+
 static void list_rules_files(void)
 {
+	static char **names;
+	static int names_size;
 	char path[4096];
 	DIR *dir;
+	int names_len = 0;
+	int i;
 
 	sprintf(path, "%s/etc/colors", G_gisbase());
 
@@ -79,10 +90,25 @@ static void list_rules_files(void)
 		if (d->d_name[0] == '.')
 			continue;
 
-		printf("%s\n", d->d_name);
+		if (names_len >= names_size)
+		{
+			names_size = names_len + 20;
+			names = G_realloc(names, names_size * sizeof(char *));
+		}
+
+		names[names_len++] = G_store(d->d_name);
 	}
 
 	closedir(dir);
+
+	qsort(names, names_len, sizeof(char *), cmp_names);
+
+	for (i = 0; i < names_len; i++)
+	{
+		printf("%s\n", names[i]);
+		G_free(names[i]);
+		names[i] = NULL;
+	}
 }
 
 int main (int argc, char *argv[])
