@@ -2,6 +2,7 @@
 #include "infx.h"
 #include "display.h"
 #include "raster.h"
+#include "glocale.h"
 
 int getArea(tp)
   struct Sql *tp;
@@ -22,9 +23,9 @@ int getArea(tp)
 
 
 
-	fprintf(stderr, "\n\nButtons:\n") ;
-	fprintf(stderr, "Left:  Select site for DB query.\n") ;
-	fprintf(stderr, "Right: Finish. \n\n\n") ;
+	fprintf(stderr, _("\n\nButtons:\n")) ;
+	fprintf(stderr, _("Left:  Select site for DB query.\n")) ;
+	fprintf(stderr, _("Right: Finish. \n\n\n")) ;
 	R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
 	east = D_d_to_u_col((double)screen_x) ;
 	north = D_d_to_u_row((double)screen_y) ;

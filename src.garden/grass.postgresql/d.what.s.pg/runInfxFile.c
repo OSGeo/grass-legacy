@@ -11,6 +11,7 @@
 #include <libpq-fe.h>
 #include <string.h>
 #include <stdlib.h>
+#include "glocale.h"
 
 int runqry(SQL_stmt, pts, print_out)
 	char *SQL_stmt;
@@ -37,14 +38,14 @@ int runqry(SQL_stmt, pts, print_out)
         
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
     if (PQstatus (pg_conn) == CONNECTION_BAD) {
-      printf ("Error: select Postgres:%s\n",PQerrorMessage(pg_conn));
+      printf (_("Error: select Postgres:%s\n"),PQerrorMessage(pg_conn));
       PQfinish(pg_conn);
       exit (-1); 
     }
   	   
     res = PQexec (pg_conn, sqlcmd);
     if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
-      printf ("Error: Connecting to Postgres:%s\n",PQerrorMessage(pg_conn)); 
+      printf (_("Error: Connecting to Postgres:%s\n"),PQerrorMessage(pg_conn)); 
       PQfinish(pg_conn);
       exit (-1);      
     }
@@ -71,7 +72,7 @@ int runqry(SQL_stmt, pts, print_out)
 		}
     	} 
  
-    fprintf (stderr,"\n%d rows selected\n",nrows);
+    fprintf (stderr,_("\n%d rows selected\n"),nrows);
     	
     PQclear(res);
     /* explicitly close select result to avoid memory leaks  */ 
@@ -123,7 +124,7 @@ int runInfxFile(SQL_stmt, str_dist, print_out)
         
         searchdist =  atof (str_dist);
         if ( !searchdist ) { 
-          printf ("Error converting %s, have %f \n"
+          printf (_("Error converting %s, have %f \n")
           ,str_dist, searchdist); 
           exit (-1); 
         }

@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include "gis.h"
 #include "infx.h"
+#include "glocale.h"
 
 int
 getSelectOpts (argc, argv)
@@ -42,7 +43,7 @@ getSelectOpts (argc, argv)
 
         select = G_define_flag();
         select->key     = 's';
-        select->description     = "Use [s] for query with a command file." ;
+        select->description     = _("Use [s] for query with a command file.") ;
 
 
         sql = G_define_option() ;
@@ -51,7 +52,7 @@ getSelectOpts (argc, argv)
         sql->type       = TYPE_STRING ;
         sql->required   = NO  ;
         sql->multiple   = NO ;
-        sql->description= "SQL query. ";
+        sql->description= _("SQL query. ");
 
 
         distance = G_define_option() ;
@@ -59,7 +60,7 @@ getSelectOpts (argc, argv)
         distance->type       = TYPE_STRING ;
         distance->required   = YES  ;
         distance->multiple   = NO ;
-        distance->description= "Cursor radius." ;
+        distance->description= _("Cursor radius.") ;
 
 /* add interactive distance g.select.dist
    and mouse choosing  into this routine
@@ -69,7 +70,7 @@ getSelectOpts (argc, argv)
 	hv->key        = "hv" ;
 	hv->type       = TYPE_STRING ;
 	hv->answer     = "v" ;
-	hv->description= "DB output type - [v(ert)/h(oriz)]:";
+	hv->description= _("DB output type - [v(ert)/h(oriz)]:");
 
 
         /* Check for help flag */
@@ -92,7 +93,7 @@ getSelectOpts (argc, argv)
         /* Initialize screen graphics and get mouse input */
 
         if((fp = fopen(sql->answer,"r")) == NULL) {
-            fprintf(stderr, "File read error on %s\n",sql->answer);
+            fprintf(stderr, _("File read error on %s\n"),sql->answer);
             exit(-1);
            }
  
