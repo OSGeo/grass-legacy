@@ -1,0 +1,25 @@
+
+FILES = gram.c lex.c makefile symtab.h symtab.c table.c main.c \
+		flags.c engine.c misc.c reclass.c
+OBJS = gram.o lex.o symtab.o table.o main.o \
+		flags.o engine.o misc.o reclass.o
+
+$(BIN_MAIN_CMD)/r.binfer: $(OBJS) $(GISLIB)
+	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(GISLIB) -ll $(MATHLIB)
+	
+
+count:
+	@echo "Current number of lines:"
+	@wc -l $(FILES)
+
+$(OBJS): symtab.h
+$(GISLIB): #
+
+lex:
+	lex binfer.l
+	mv lex.yy.c lex.c
+
+yacc:
+	yacc binfer.y
+	mv y.tab.c gram.c
+
