@@ -54,14 +54,16 @@ int main (int argc, char **argv)
 	int nitems;
 	int p;
 	int stat;
-	int i;
+	int i, j;
 	int total_rno, *rno;
+	int total_mno, **mno;
 	struct list_struct *temp_list;
 	struct Flag *all_flag;
 	struct Flag *cur_frame;
 	struct Flag *only_object;
 	struct Option *opt1;
 	struct Option *opt2;
+	struct Option *opt3;
 	struct GModule *module;
 	char buff[1024];
 	char current_frame[64];
@@ -105,6 +107,14 @@ int main (int argc, char **argv)
 	opt2->required = NO;
 	opt2->multiple = YES;
 
+	opt3 = G_define_option();
+	opt3->key = "move";
+	opt3->description = "List no's to be moved, \"from\" to \"to\".\n\t\tNote: remove option will be done first, if any.";
+	opt3->type = TYPE_INTEGER;
+	opt3->required = NO;
+	opt3->key_desc = "from,to";
+	opt3->multiple = YES;
+
 	cur_frame = G_define_flag();
 	cur_frame->key = 'c';
 	cur_frame->description = "Save current frame";
@@ -128,6 +138,7 @@ int main (int argc, char **argv)
 	if (G_parser(argc, argv))
 		exit(1);
 
+	total_rno = 0;
 	if (opt2->answers)
 	{
 		for (total_rno=0; opt2->answers[total_rno]; total_rno++);
@@ -136,6 +147,23 @@ int main (int argc, char **argv)
 			rno = (int *) G_malloc(total_rno*sizeof(int));
 			for (i=0; i<total_rno; i++)
 				rno[i] = atoi(opt2->answers[i]);
+		}
+	}
+
+	total_mno = 0;
+	if (opt3->answers)
+	{
+		for (total_mno=0; opt3->answers[total_mno]; total_mno++);
+		total_mno /= 2;
+		if (total_mno)
+		{
+			mno = (int **) G_malloc(total_mno*sizeof(int *));
+			for (i=0,j=0; i<total_mno; i++,j+=2)
+			{
+				mno[i] = (int *) G_malloc(2*sizeof(int));
+				mno[i][0] = atoi(opt3->answers[j]);
+				mno[i][1] = atoi(opt3->answers[j+1]);
+			}
 		}
 	}
 
@@ -161,29 +189,80 @@ int main (int argc, char **argv)
 				continue;
 			}
 
-			if (total_rno)
+			if (total_rno || total_mno)
 			{
 				char **list;
-				int nlists;
-				int j;
+				int nlists, *live;
 
 				stat = R_pad_get_item("list", &list, &nlists);
-				if (stat) {
+				if (stat || !nlists) {
 					R_pad_perror ("echo     ERROR", stat);
 					fprintf (stdout,"exit -1\n\n");
 				}
 				else
 					R_pad_delete_item("list");
 
+				live = (int *) G_malloc(nlists*sizeof(int));
 				for (i=0; i<nlists; i++)
+					live[i] = i;
+
+				if (total_rno)
 				{
-					for (j=0; j<total_rno; j++)
+					for (i=0; i<total_rno; i++)
 					{
-						if (rno[j]==nlists-i)
-						break;
+						if (rno[i]<=nlists)
+							live[nlists-rno[i]] = -1;
 					}
-					if(j==total_rno)
-						D_add_to_list(list[i]);
+					G_free(rno);
+				}
+
+				if (total_mno)
+				{
+					int from, to, tmp;
+
+					for (i=0; i<total_mno; i++)
+					{
+						from = mno[i][0];
+						to = mno[i][1];
+						if (live[nlists-from]<0 ||
+						    from<1 ||
+						    from>nlists)
+						{
+							G_free(mno[i]);
+							continue;
+						}
+						j = to;
+						to = (j<1 ? 1:(j>nlists ? nlists:j));
+
+						if (from==to)
+						{
+							G_free(mno[i]);
+							continue;
+						}
+
+						tmp = live[nlists-to];
+						live[nlists-to] = live[nlists-from];
+						if (from<to)
+						{
+							for (j=nlists-from; j>=nlists-to+2; j--)
+								live[j] = live[j-1];
+							live[nlists-to+1] = tmp;
+						}
+						else
+						{
+							for (j=nlists-from; j<=nlists-to-2; j++)
+								live[j] = live[j+1];
+							live[nlists-to-1] = tmp;
+						}
+						G_free(mno[i]);
+					}
+					G_free(mno);
+				}
+
+				for (i=0;i<nlists;i++)
+				{
+					if (live[i]>=0)
+						D_add_to_list(list[live[i]]);
 				}
 				R_pad_freelist (list, nlists);
 			}
