@@ -30,7 +30,7 @@ agnps_input_1
 
 if [ $? -ne 0 ]
 then
-  echo "Check for More than one outlet cell! If present, use d.rast.edit"
+  echo "Check for more than one outlet cell! If present, use d.rast.edit"
   echo "on aspect map to fix this."
 else
   agnps_input_2a
@@ -47,5 +47,3 @@ fi
 # 
 
 $GISBASE/etc/agnps50/copy_cell_num.sh
-echo "If all o.k., then proceed and run"
-echo "    r.agnps50.run"
