@@ -299,6 +299,12 @@ intensity in mm.
 There are several flags whose utility is driven by data availability
 and/or user's choice.
 <P>
+<I>-s</I> do not check square tolerance of a grid cell. With this option
+non-square grid cell can be simulated using width of east-west resolution.
+<P>
+<I>-m</I> r_gage_file units in mm/hr. Without this option r_gage_file units in
+in/hr.
+<P>
 <I>-t</I> spatially interpolates raingage rainfall intensities
 using Thiessen polygon technique. The default technique uses inverse-distance-squared
 proportionality for interpolation of rainfall intensity over space.
@@ -358,9 +364,6 @@ default SI unit prints the discharges in cubic meters per second
 <P>
 <I>-q</I> quietly skips printing iteration, time, and discharge
 values to the screen. No status report is printed.
-<P>
-<I>-s</I> do not check square tolerance of a grid cell. With this option
-non-square grid cell can be simulated using width of east-west resolution.
 <P>
 <H2>IMPORTANT NOTES</H2> 
 <P>

@@ -97,6 +97,7 @@ int main (int argc, char *argv[])
      int    row,col,rowout,colout;
      int    itime,niter,nitrn,jj,kk,l;
      int    rindex;
+     int    yes_rg_mmhr;
      int    yes_mask;
      int    yes_dist_rough;
      int    yes_flow_out,set_flow_out_basin;
@@ -288,7 +289,7 @@ int main (int argc, char *argv[])
 
      struct
      {
-	  struct Flag  *o,*t,*e,*i,*p,*u,*q,*d,*b,*s;
+	  struct Flag  *s,*m,*o,*t,*e,*i,*p,*u,*q,*d,*b;
        }  flag;
 
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -580,6 +581,14 @@ int main (int argc, char *argv[])
   DEFINING FLAGS 
 !!!!!!!!!!!!!!!!!!!*/
 
+     flag.s=G_define_flag();
+     flag.s->key         = 's';
+     flag.s->description ="do not check square tolerance";
+
+     flag.m=G_define_flag();
+     flag.m->key         = 'm';
+     flag.m->description ="r_gage_file units in mm/hr";
+
      flag.t=G_define_flag();
      flag.t->key         = 't';
      flag.t->description ="interpolates raingage rainfall intensities using Thiessen polygon technique (default: inverse square distance)";
@@ -615,10 +624,6 @@ int main (int argc, char *argv[])
      flag.q=G_define_flag();
      flag.q->key         = 'q';
      flag.q->description ="skips printing iteration, time, and discharge values to the screen";
-
-     flag.s=G_define_flag();
-     flag.s->key         = 's';
-     flag.s->description ="do not check square tolerance";
 
      G_gisinit (argv[0]);
      if(G_parser(argc,argv)) exit(1);
@@ -750,6 +755,8 @@ int main (int argc, char *argv[])
 	yes_write=TRUE;
 	sscanf(parm.num_write->answer,"%i", &writime);
      }
+
+     yes_rg_mmhr=flag.m->answer;
 
      yes_flow_out=flag.o->answer;
 
@@ -2339,8 +2346,10 @@ for ( itime=1; itime<=niter+1; itime++ )
 	{
            icall=1;
            READ_GAGE_FILE(rgint,nrg,rain_fd);
-           if(!yes_thiessen) RAIN_SQ_DIS(space,nrg,grow,gcol,rgint,rint);
-           if(yes_thiessen) RAIN_THIESSEN(space,nrg,grow,gcol,rgint,rint);
+           if(!yes_thiessen) RAIN_SQ_DIS(yes_rg_mmhr,
+			   			space,nrg,grow,gcol,rgint,rint);
+           if(yes_thiessen) RAIN_THIESSEN(yes_rg_mmhr,
+			   			space,nrg,grow,gcol,rgint,rint);
 	}
      }
 
