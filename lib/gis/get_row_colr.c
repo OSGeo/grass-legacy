@@ -10,7 +10,7 @@ G_get_raster_row_colors(
 {
 	static void *array;
 	static int array_size;
-	static char *set;
+	static unsigned char *set;
 	static int set_size;
 
 	int cols = G__.window.cols;
@@ -28,7 +28,7 @@ G_get_raster_row_colors(
 	if (set_size < cols)
 	{
 		set_size = cols;
-		set = (unsigned char *) G_realloc(set, set_size);
+		set = G_realloc(set, set_size);
 	}
 
 	if (G_get_raster_row(fd, array, row, type) < 0)

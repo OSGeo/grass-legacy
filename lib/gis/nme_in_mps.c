@@ -54,7 +54,8 @@ int G__name_is_fully_qualified (
 /* copy the mapset part */
     p++;	/* skip the @ */
     q = mapset;
-    while (*q++ = *p++);
+    while ((*q++ = *p++))
+        ;
 
     return (*name && *mapset);
 }
