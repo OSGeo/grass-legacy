@@ -8,7 +8,7 @@ fi
 
 HELP="
 Usage:
- `basename $0` [-1] [-a] [-d] [-m] [-s] [browser=name] [entries=command,command]
+ `basename $0` [-1] [-a] [-d] [-m] [-s] [-q] [browser=name] [entries=command,command]
    command command ...
 
 Flags:
@@ -18,6 +18,11 @@ Flags:
   -m   Force to use man program rather than GRASS_TEXT_BROWSER, if any.
   -s   Run silently to set exit status if entry exists.
        Requires only one command.
+  -q   Print man pages and quit.
+       Requires rman:
+          Please install RosettaMan (rman) version to 3.0.2 or later!
+          Get it at:
+          ftp://ftp.cs.berkeley.edu/ucb/people/phelps/tcltk/rman.tar.Z
 
 Parameters:
   browser   Override GRASS_TEXT_BROWSER env variable to browser html pages.
@@ -37,6 +42,7 @@ fi
 desc=
 forceman=
 silent=
+quit=
 tentries=
 until [ $# -eq 0 ]
 do
@@ -55,18 +61,26 @@ do
 
     -s) silent=1 ;;
 
+    -q) quit=1
+      which rman > /dev/null 2>&1
+      if [ $? -ne 0 ]
+      then
+        echo ERROR: rman not installed.
+        exit 1
+      fi ;;
+
     b=*|br=*|bro=*|brow=*|brows=*|browse=*|browser=*)
       GRASS_TEXT_BROWSER=`echo $1 | awk -F '=' '{print $2}'` ;;
 
     e=*|en=*|ent=*|entr=*|entri=*|entrie=*|entries=*)
-      tentries=`echo $1 | awk -F '=' '{print $2}' | sed 's|, *| |g'` ;;
+      tentries="$tentries `echo $1 | awk -F '=' '{print $2}' | sed 's|, *| |g'`" ;;
 
     *) tentries="$tentries $1" ;;
   esac
   shift
 done
 
-if [ "$desc" ]
+if [ "$desc" -o "$quit" ]
 then
   GRASS_TEXT_BROWSER=
 else
@@ -142,7 +156,27 @@ else
       $GRASS_TEXT_BROWSER $i
     done
   else
-    man -P $PAGER -M $GISBASE/man 1 $entries
+    if [ ! "$quit" ]
+    then
+      man -P $PAGER -M $GISBASE/man 1 $entries
+    else
+      n=`echo $entries | awk '{print NF}'`
+      ni=0
+      for i in $entries
+      do
+        ni=`expr $ni + 1`
+	echo "man: $i
+"
+        rman $GISBASE/man/man1/$i.1
+	if [ $n -gt 1 -a $ni -lt $n ]
+	then
+	  echo "
+================================================================================
+"
+	fi
+	echo
+      done
+    fi
   fi
 fi
 
