@@ -12,26 +12,26 @@ Here a *draft* how to code that (MN):
 below doesn't take care of precision yet (limitation due to scientific
 notation of NULL value!
 
-For example, you have in many e00 files :                                                    
-                                                                                             
-GRD  2                                                                                       
-        18         4 1-0.21474836470000E+10                                                  
+For example, you have in many e00 files :
 
-It's not -9999 (which is a "human understandable" value) but                                 
--2147483647 (which is -2^31 - 1, one of those "computer magic number")                       
-                                                                                             
--0.34028234663853E+39 looks like some rounding (lost of LSB) from                            
--2^128 (which is exactly 340282366920938463463374607431768211456,                            
-thanks to bc, the unix infinity precision calculator :-)                                     
-                                                                                             
-GRD 2 meaning single precision float values, you have only 7 significant                     
-digits, so -0.3402823E+39 is a good value to use.                                            
+GRD  2
+        18         4 1-0.21474836470000E+10
+
+It's not -9999 (which is a "human understandable" value) but
+-2147483647 (which is -2^31 - 1, one of those "computer magic number")
+
+-0.34028234663853E+39 looks like some rounding (lost of LSB) from
+-2^128 (which is exactly 340282366920938463463374607431768211456,
+thanks to bc, the unix infinity precision calculator :-)
+
+GRD 2 meaning single precision float values, you have only 7 significant
+digits, so -0.3402823E+39 is a good value to use.
 
 
 Index: raster.c
 17a18,19
 > static double nul_val ;
-> 
+>
 40c42,44
 <     sscanf( line, "%ld%ld%ld", &cols, &rows, &depth);
 ---
@@ -45,7 +45,7 @@ Index: raster.c
 > 		    if (dbuf[j] == (double)nul_val)
 > 			G_set_d_null_value(&dbuf[j], 1);
 143a152,153
->                     if (fbuf[j] == (float)nul_val) 
+>                     if (fbuf[j] == (float)nul_val)
 > 			G_set_f_null_value(&fbuf[j], 1);
 
 
@@ -57,7 +57,7 @@ get the attributes from some A/I vector e00 files).
 
 ----------------------------------------------------------------------
 
-Bug: The "-s" flag should be silently ignored if 
+Bug: The "-s" flag should be silently ignored if
  - raster or
  - sites
 are imported (less user confusion then)

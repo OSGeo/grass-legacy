@@ -50,7 +50,7 @@ void getlabels( char *name, int cover_type, int prec)
         sscanf( line, "%d%d%lf%lf", &id, &num, &x, &y);
         if (id == -1)
             break;
-        fprintf( f, "%c  %-12f  %-12f  %-8d \n", type,
+        fprintf( f, "%c  %-12.10lf  %-12.10lf  %-8d \n", type,
 		x*scale, y*scale, num);
 	read_e00_line( line);		/* 4 values to skip */
 	if (prec)
@@ -62,8 +62,8 @@ void getlabels( char *name, int cover_type, int prec)
 
 /**********************************************************************/
 /*                                                                    */
-/* getsites - create a site file from e00 - M. Wurtz (1998-10-10)     */
-/* must be changed, and use PAT info to fill the site structure       */
+/* getsites - create a site file from e00 - M. Wurtz (1998+2001)      */
+/* modified to use PAT info for filling the site structure            */
 /*                                                                    */
 /**********************************************************************/
 

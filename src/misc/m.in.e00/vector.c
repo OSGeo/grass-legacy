@@ -119,9 +119,16 @@ int getarcs( char *name, int cover_type, int prec)
 	points = Vect_new_line_struct();
 	Vect_copy_xy_to_pnts( points, x, y, npts);
 	offset = Vect_write_line( &map, cover_type, points);
-	xc = x[(npts+1)/2]; yc = y[(npts+1)/2];
+	if (npts > 1) {
+	    i = (npts)/2;
+	    xc = (x[i]+x[i+1])/2;
+	    yc = (y[i]+y[i+1])/2;
+	} else {		/* should never occur... */
+	    xc = x[0];
+	    yc = y[0];
+	}
 	if (cover_type == LINE)
-            fprintf( f, "L  %-12f  %-12f  %-8d \n", xc, yc, covnum);
+            fprintf( f, "L  %-12.10lf  %-12.10lf  %-8d \n", xc, yc, covnum);
 	Vect_destroy_line_struct( points);
 	G_free( x); G_free( y);
     }
