@@ -115,11 +115,12 @@ paste /tmp/mxy3 /tmp/mxy5 > /tmp/mxy6
 
 #add map's date:
 DATESTRING=`cat /tmp/$INFILE.date`
-echo $DATESTRING |sed -e "s/FILE/#FILE/g" > $LOCATION/site_lists/$INFILE
+DATESTRING2=`echo $DATESTRING |sed -e "s/FILE/#FILE/g"`
+echo "#$DATESTRING2" > $LOCATION/site_lists/$INFILE
 
 #add comments:
 echo "#X    Y     Cat Attr1 Attr2 Attr3 Attr4 Attr5"   >> $LOCATION/site_lists/$INFILE
-echo "# East North no. elev  RR    HH    slope aspect" >> $LOCATION/site_lists/$INFILE
+echo "# East North no. elev  RR   HH   slope (gon)  aspect (gon)" >> $LOCATION/site_lists/$INFILE
 echo "#" >> $LOCATION/site_lists/$INFILE
 echo "# RR: Rechtswertkomponente des Gradientenvektors (in gon)"  >> $LOCATION/site_lists/$INFILE
 echo "# HH: Hochwertkomponente des Gradientenvektors (in gon)" >> $LOCATION/site_lists/$INFILE
