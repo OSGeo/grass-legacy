@@ -123,8 +123,8 @@ int show_utm (char *name, double north, double east,
         G_get_cellhd(name, mapset, &cellhd);
     }
 
-    n_row = (int) ((cellhd.north - north) / cellhd.ns_res);
-    e_col = (int) ((east - cellhd.west) / cellhd.ew_res);
+    n_row = (int) ((cellhd.north - north) / window->ns_res);
+    e_col = (int) ((east - cellhd.west) / window->ew_res);
 
     if (terse)
     {
