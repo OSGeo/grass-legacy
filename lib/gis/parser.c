@@ -453,7 +453,7 @@ int G_parser (int argc, char **argv)
 	while(opt != NULL)
 	{
 	    	/* Parse options */
-		if(opt->multiple && opt->options)
+		if(opt->options)
 		{
 		    int  cnt = 0;
 		    char **tokens, delm[2];
@@ -761,10 +761,7 @@ int G_usage (void)
 		flag= &first_flag;
 		while(flag != NULL)
 		{
-			fprintf(stderr,"  -%c   \n", flag->key) ;
-
-			fprintf(stderr,"  -%c   %s\n",
-			    flag->key, flag->description) ;
+			fprintf(stderr,"  -%c   ", flag->key) ;
 
 		        if ( flag->label ) {
 			    fprintf (stderr, "%s\n", flag->label );
