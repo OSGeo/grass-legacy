@@ -13,7 +13,6 @@
             		{command "GRASS ASCII vector map" {} "r.in.poly" {} -command { execute r.in.poly }}
             		{separator}
             		{command "Binary file (includes GTOPO30 format)" {} "r.in.bin" {} -command { execute r.in.bin }}
-            		{command "ERDAS LAN" {} "i.in.erdas" {} -command { execute i.in.erdas }}
             		{command "ESRI Arc/Info ASCII grid" {} "r.in.arc" {} -command { execute r.in.arc }}
             		{command "GRIDATB.FOR map file (TOPMODEL)" {} "r.in.gridatb" {} -command { execute r.in.gridatb }}
             		{command "MAT-File (v.4) map file (Matlab or Octave)" {} "r.in.gridatb" {} -command { execute r.in.mat }}
@@ -23,13 +22,12 @@
             		{command "Various formats using OGR" {} "v.in.ogr" {} -command { execute v.in.ogr }}
             		{separator}
             		{command "ASCII points file or GRASS ASCII vector file" {} "v.in.ascii" {} -command { execute v.in.ascii }}
-            		{command "Import/export old GRASS vector format" {} "v.convert" {} -command { execute v.convert }}
+            		{command "Import old GRASS vector format" {} "v.convert" {} -command { execute v.convert }}
         		    {separator}
         	    	{command "ESRI e00 format" {} "v.in.e00" {} -command { execute v.in.e00 }}
         	    	{command "Garmin GPS Waypoints/Routes/Tracks" {} "v.in.garmin" {} -command { execute v.in.garmin }}
             		{command "MATLAB MapGen files" {} "v.in.mapgen.sh" {} -command { execute v.in.mapgen.sh }}
             		{separator}
-            		{command "ASCII points file to GRASS sites format" {} "s.in.ascii" {} -command { execute s.in.ascii }}
         	    }}
         	    {cascad "Grid 3D" {} "" 1 {			
             		{command "ASCII 3D file" {} "r3.in.ascii" {} -command { execute r3.in.ascii }}
@@ -58,11 +56,9 @@
             		{command "Various formats using OGR (SHAPE, MapInfo etc)" {} "v.out.ogr" {} -command { execute v.out.ogr }}
             		{separator}
             		{command "DXF file (ASCII)" {} "v.out.dxf" {} -command { execute v.out.dxf }}
-            		{command "GRASS vector file" {} "v.out.ascii" {} -command { execute v.out.ascii }}
-            		{command "Import/export old GRASS vector format" {} "v.convert" {} -command { execute v.convert }}
+            		{command "ASCII vector or point file/old GRASS ASCII vector file" {} "v.out.ascii" {} -command { execute v.out.ascii }}
             		{command "POV-Ray format" {} "v.out.pov" {} -command { execute v.out.pov }}
             		{separator}
-            		{command "ASCII points file from GRASS sites file" {} "s.out.ascii" {} -command { execute s.out.ascii }}
         	    }}
         	    {cascad "Grid 3D" {} "" 1 {			
             		{command "ASCII 3D file" {} "r3.out.ascii" {} -command { execute r3.out.ascii }}
@@ -313,7 +309,7 @@
 						{command "Interpolation from raster contours" {} "" {} -command { execute r.surf.contour }}
 			            {separator}
 						{command "Inverse distance weighted interpolation from vector points" {} "" {} -command { execute v.surf.idw }}
-						{command "Regularized spline tension interpolation from vector points or contours" {} "" {} -command { run v.surf.rst}}
+						{command "Regularized spline tension interpolation from vector points or contours" {} "" {} -command { execute v.surf.rst}}
 			            {separator}
 			            {command "Fill NULL cells by interpolation using regularized spline tension" {} "" {} -command {execute  r.fillnulls }}
 			}}
