@@ -5,14 +5,16 @@ interface_build {
     {checkbox color {Aspect oriented grey color.} "" aspect}
     {checkbox color {Linear grey scale.} "" grey}
     {checkbox color {Histogram equalized grey scale.} "" grey.eq}
+    {checkbox color {Histogram logarithmic transformed grey scale.} "" grey.log}
+    {checkbox color {Blue through yellow to green colors.} "" byg}
+    {checkbox color {Blue through yellow to red colors.} "" byr}
     {checkbox color {Green through yellow to red colors.} "" gyr}
     {checkbox color {Rainbow color table.} "" rainbow}
     {checkbox color {Color ramp.} "" ramp}
     {checkbox color {Red through yellow to green colors.} "" ryg}
     {checkbox color {Random color table.} "" random}
     {checkbox color {Color wave.} "" wave}
-    {checkbox color {Create new color table by rules.} "" rules}
-    {separator grey 1}
+    {separator grey 5}
     {checkbox -w {Don't overwrite existing color table.} "" -w}
     {checkbox -q {Run quietly.} "" -q}
 }
