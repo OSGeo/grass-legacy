@@ -7,7 +7,7 @@
 EXTRA_CFLAGS	= -I../lib   -I../libes
 
 
-PROG = $(BIN_MAIN_INTER)/v.digit2
+PROG = $(BIN_INTER)/v.digit2
 
 #  filename bin_digit.c retained for consistency with 3.2
 
@@ -24,8 +24,7 @@ all:  $(PROG)  $(ETC)/digitcap
 
 $(PROG): $(OFILES) $(GISLIB)
 	rm -f a.out
-	$(CC) $(LDFLAGS) $(OFILES) $(GISLIB) $(MATHLIB) $(XDRLIB)
-	mv a.out $(PROG)
+	$(CC) $(LDFLAGS) -o $(PROG) $(OFILES) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 #  update the digitcap file
 

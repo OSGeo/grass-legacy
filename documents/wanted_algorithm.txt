@@ -1,0 +1,44 @@
+Wanted Algorithm for GRASS GIS
+
+$Id$
+
+This page contains algorithm we would like to integrate
+into GRASS GIS under GNU GPL license.
+
+
+Please contact us if you can help!
+ neteler@geog.uni-hannover.de or, better:
+ http://www.geog.uni-hannover.de/grass/grassdevel.html
+
+
+Image processing:
+
+ - bundle block adjustment for aerial photographs
+
+ - stereo visualization and measurement
+   (Perhaps started by Buciu Claudiu <claudiub@rol.ro> 1/2001?
+
+
+Vector analysis:
+
+ - network analysis
+   Started 10/2000 by Roberto Micarelli <mi.ro@iol.it>, help needed
+
+ - help needed for new 3D vector format implementation
+   contacts:   David D Gray, Radim Blazek
+    <ddgray@armadce.demon.co.uk>
+    <Radim.Blazek@dhv.cz>
+
+JAVA:
+
+ - update/improve the java lib in src.garden/grass.java/
+ - add servlets?
+
+   -> this should be coordinated on grass5-list as some
+      projects are already ongoing (see GRASS web site/"Links and
+      Screenshots"
+
+GRASS Development Team
+
+Markus Neteler
+neteler@geog.uni-hannover.de

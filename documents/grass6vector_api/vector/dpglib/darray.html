@@ -1,0 +1,129 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Darray Library 
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Darray Library 
+</h1>
+
+<blockquote><i>
+    Status:  Gamma<br>
+    This module has been designed, reviewed and coded.
+    It should be considered stable.
+</i></blockquote>
+
+<p>
+This library came about because I constantly found myself managing
+the size of allocated arrays.  My header structures always had to have
+extra elements for num_allocated, chuck_size, num_used, etc.  This 
+library is an attempt to simplify my life.  It handles all that for
+the client.  The only thing the client is now responsible for is maintaining
+a pointer to the allocated array and remembering how much stuff is in it.
+Now whenever the client wants to grow the array, he simply needs to call
+<em>dpgDarrayResize</em>().  Note that this library only supports growing
+the array, and not shrinking. bummer.
+<p>
+The control information is stored in a little buffer before the pointer
+to the array.  Note the array is guaranteed to be word aligned.
+<p>
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li> <a href=#>  </a>
+    
+
+<li>PTR   <a href=#dpgDarrayCreate> dpgDarrayCreate </a>
+    (int elem_size, int init_size, int chunk_size);
+
+
+<li>void  <a href=#dpgDarrayDestroy> dpgDarrayDestroy </a>
+    (PTR tp);
+
+
+<li>PTR   <a href=#dpgDarrayResize> dpgDarrayResize </a>
+     (PTR tp, int size);
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+<ul>
+<a name="dpgDarrayCreate">
+<li>PTR   <strong>dpgDarrayCreate</strong> (int elem_size, int init_size, int chunk_size);
+
+<p>
+Create a new array and set up parameters.  Chunk_size is the size by which
+to grow it each time.  Note that while this is specified, the underlying
+function <em>dpg_allocSpace</em>() actually doubles the size of the array
+each time it is resized.  The reason for this?  Well I found that typically
+the memory that is left behind rarely gets re-used and given that we
+have a starting allocation A, and a destination allocation B, the 
+approach which used the least amount of memory was to use exponential 
+growth rather than linear.  Linear in effect uses B<sup>2</sup>/2 memory
+while exponential uses what B*ln(B)?
+<p>
+
+<blockquote>
+    *<br>
+    **<br>
+    ***<br>
+    ****<br>
+    *****<br>
+    ******<br>
+    *******<br>
+    ********<br>
+</blockquote>
+
+vs.
+
+<blockquote>
+    *<br>
+    **<br>
+    ****<br>
+    ********<br>
+</blockquote>
+
+
+<p>
+
+<a name="dpgDarrayDestroy">
+<li>void  <strong>dpgDarrayDestroy</strong> (PTR tp);
+
+<p>
+Destroy a dynamic array
+<p>
+
+<a name="dpgDarrayResize">
+<li>PTR   <strong>dpgDarrayResize</strong>  (PTR tp, int size);
+<p>
+Resize a dynamic array
+<p>
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

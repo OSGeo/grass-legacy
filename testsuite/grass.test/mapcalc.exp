@@ -1,0 +1,45 @@
+# re-implementation of testgrass.sh from Markus Neteler as a tcl/expect script
+# c) Andreas Lange, andreas.lange@rhein-main.de
+
+set test "r.mapcalc test"
+set timeout 5
+
+# check if grass is running
+if { [getenv GISBASE] == "" } \
+{
+    perror "$GRASS not running"
+}
+
+# check if we find the r.mapcalc executable
+set test "r.mapcalc existing"
+
+if { ![isgrassbin r.mapcalc] } \
+{
+    fail "$test"
+} else {
+    pass "$test"
+}
+
+# invoke mapcalc for creating raster map
+set test "r.mapcalc bug for value = -129"
+
+spawn "g.region" "-d" "-p"
+expect {
+    -re {.*projection:.*$}  { verbose "projection set to default" }
+    timeout                 { perror "g.region timeout"; slay "g.region" }
+}
+
+
+spawn "r.mapcalc" "testmap=-129"
+expect {
+    -re {.*GRASS.*$} { verbose "map testmap created\n" }
+    timeout          { perror "r.mapcalc timeout"; slay "r.mapcalc" }
+}
+
+
+spawn "r.stats" "-q" "testmap"
+expect {
+    -re {-129.*$}      { pass "$test" }
+    -re {.*[^-129].*$} { fail "$test" }
+    timeout            { fail "$test"; slay "r.stats" }
+}

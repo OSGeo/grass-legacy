@@ -1,0 +1,47 @@
+6/2000 MN 
+ updated to GRASS 5, cleaned code a bit
+
+----------------
+
+12/96
+
+ Changes:  added landuse "water" (data.c)
+           corrected import of landuse "fallow" ("good condition") (rules.c)
+
+Markus Neteler
+email: neteler@geog.uni-hannover.de
+
+  
+***************
+*** 24,30 r.cn/rules.c****
+  	hy_cond_label = G_get_cat(hy_cond, &hy_cond_cats);
+  
+  	if ((strcmp("fallow",land_use_label) == 0) && 
+! 	    (strcmp("straight row",veg_cover_label) == 0))
+  			return(0);
+  
+  	else if ((strcmp("row crops",land_use_label) == 0) && 
+
+--- 27,34 r.cn2/rules.c ----
+  	hy_cond_label = G_get_cat(hy_cond, &hy_cond_cats);
+  
+  	if ((strcmp("fallow",land_use_label) == 0) && 
+! 	    (strcmp("straight row",veg_cover_label) == 0) &&
+! 		  (strcmp("good",hy_cond_label) == 0))  /* added 12/96 MN*/
+  			return(0);
+  
+  	else if ((strcmp("row crops",land_use_label) == 0) && 
+***************
+
+*** 183,188 *r.cn/data.c***
+
+--- 187,195 -r.cn2/data.c---
+  
+  	else if (strcmp("hard surface",land_use_label) == 0)
+  			return(31);
++ 
++ 	else if (strcmp("water",land_use_label) == 0) 
++ 			return(32);
+  
+  	else
+  	{

@@ -1,7 +1,0 @@
-
-
-screen coordinates - An x,y coordinate location on the graphics
-display monitor, stated in terms relevant to the monitor.  Frequently,
-x values are stated as a percentage of the monitor's width, while
-y values are stated as a percentage of the monitor's height.
-Same as display coordinate system coordinates.

@@ -3,6 +3,7 @@
  * GRASS site_list or vector file.
  */
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
 #include "globals.h"
 

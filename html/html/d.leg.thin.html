@@ -1,0 +1,62 @@
+<TITLE>d.leg.thin</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.leg.thin</b></EM> - improved version of d.legend that allows:
+- Thinning the categories to be represented in the legend
+- Displaying a continuous gradient of all categories in the legend
+- Interactive mouse placement of the smooth gradient box
+
+<H2>GRASS VERSION</H2>
+4.x, 5.x
+
+<H2>SYNOPSIS</H2>
+<B>d.leg.thin</B> [<B>-nsm</B>] <B>map=</B><EM>name</EM> [<B>color=</B><EM>name</EM>] [<B>lines=</B><EM>value</EM>] [<B>thin=</B><EM>value</EM>] 
+
+<H2>OPTIONS</H2>
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-n</B>
+<DD>Do not show category values
+<DT><B>-s</B>
+<DD>Draw smooth gradient
+<DT><B>-m</B>
+<DD>Use mouse to size &amp; place legend (only when <B>-s</B> is specified)
+</DL>
+<P>
+<H3>Parameters:</H3>
+<DT><B>map</B>
+<DD>Name of raster map.
+<DT><B>color</B>
+<DD>Sets the legend's text color.
+<BR>
+<DD>Options: red, orange, yellow, green, blue, indigo, white, black, brown, magenta, aqua, gray, grey
+<BR>
+<DD>Default: white
+<DT><B>lines</B>
+<DD>Number of text lines (useful for truncating long legends)
+<BR>
+<DD>Options: 0-1000
+<BR>
+<DD>Default: 0
+<DT><B>thin</B>
+<DD>Thinning factor (thin=10 gives cats 0,10,20...)
+<BR>
+<DD>Options: 0-1000
+<BR>
+<DD>Default: 1
+</DL>
+
+<H2>NOTE</H2>
+
+Note that when using the mouse to size &amp; place the smooth legend, if you make a horizontal box the values run from left to right and no category values are printed (you may want to use <EM>d.label</EM> for that). 
+
+<H2>AUTHOR</H2>
+Bill Brown, U.S. Army Construction Engineering Research Laboratories

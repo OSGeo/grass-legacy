@@ -1,5 +1,4 @@
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
-
+PGM=v.mkquads
 
 OFILES = \
 	mkquads_cmd.o \
@@ -14,10 +13,7 @@ OFILES = \
 	wind_quads.o \
 	write_quads.o
 
-PROG =   $(BIN_CONTRIB_CMD)/v.mkquads
+LIBES=$(GISLIB) $(VECTLIB) $(GPROJLIB) $(COORCNVLIB) $(EXTRALIB) $(DATETIMELIB)
 
-all:  $(PROG)
-
-
-$(PROG): $(OFILES) $(GISLIB) $(VECTLIB) $(GPROJLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(VECTLIB) $(GPROJLIB) $(COORCNVLIB) $(MATHLIB) $(EXTRALIB) $(DATETIMELIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)

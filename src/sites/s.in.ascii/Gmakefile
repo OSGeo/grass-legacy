@@ -1,11 +1,10 @@
 PGM=s.in.ascii
-HOME=$(BIN_MAIN_CMD)
 
 LIST=main.o get_site.o
 
 LIBES=$(GISLIB) $(DATETIMELIB)
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -1,0 +1,119 @@
+<TITLE>v.random</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.random</b></EM>  - Creates a GRASS site_lists file of randomly placed
+symbols (sites) within a GRASS vector area.
+
+<BR>
+
+<EM>(SCS GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.random</B>
+
+<BR>
+
+<B>v.random help</B>
+
+<BR>
+
+<B>v.random</B> [<B> -nsv</B>] <B>map=</B><EM>name</EM> [<B>site=</B><EM>name</EM>] <B>dot=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+allows a user to create a GRASS site_lists file containing sites
+randomly placed within an area.  This program is designed for demographic
+map areas, and may NOT perform well for resource maps (very irregularly
+shaped polygons).  The user provides the program with:  a file (dot=)
+containing area category names [default] (the -n option allows the use
+of the area category number) and a count of dots for that name;  input
+vector file name (map=), and a site_lists file name (site=).  All
+sites in the site_lists file will have the same category code (1).
+<EM>v.random</EM> is made to work with the <EM>mapgen</EM> mapping package
+to create special symbols at the site locations.
+
+
+<P>
+
+
+
+<P>
+
+
+<H3>Flags:</H3>
+
+<DL>
+
+
+<DT><B>-n</B> 
+
+<DD>Use category numbers NOT names.
+
+<DT><B>-s</B> 
+
+<DD>Determine optimum dot size.
+
+<DT><B>-v</B> 
+
+<DD>Verbose mode.
+
+
+<P>
+
+</DL>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>map=</B><EM>name</EM> 
+
+<DD>Input vector file name.
+
+<DT><B>site=</B><EM>name</EM> 
+
+<DD>Output site_lists file name.
+
+<DT><B>dot=</B><EM>name</EM> 
+
+<DD>File name containing labels and dot counts.
+</DL>
+
+<H2>FORMATS</H2>
+
+The dotfile file format is:
+<PRE>
+               -Using Names-    -Using Numbers-
+               area name_1:3    category_num_1:3
+               area name_2:15   category_num_1:15
+               area name_3:5    category_num_1:5
+               area name_n:54   category_num_1:54
+</PRE>
+
+<H2>SEE ALSO</H2>
+
+<EM>mapgen</EM>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS
+
+<BR>
+
+M.L. Holko, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

@@ -1,4 +1,3 @@
-EXTRA_CFLAGS	=   $(VECT_INCLUDE) 
 
 SOURCES = \
 	main.c
@@ -8,13 +7,11 @@ OBJ = \
 
 PGM =   v.make.subj
 
-PROG =   $(BIN_CONTRIB_CMD)/$(PGM)
+PROG =   $(BIN_CMD)/$(PGM)
 
 all:  $(PROG)
 
 
 $(PROG): $(OBJ) $(GISLIB) $(VECTLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB)
-	mv a.out $@
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB)
 

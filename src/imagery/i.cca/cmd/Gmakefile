@@ -1,11 +1,10 @@
+PGM=i.cca
 OBJS = main.o allocate.o jacobi.o matrix.o \
 	stats.o transform.o
 
 LIBES= $(IMAGERYLIB) $(GISLIB)
 
-all: $(BIN_MAIN_CMD)/i.cca
-
-$(BIN_MAIN_CMD)/i.cca: $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): globals.h

@@ -2,31 +2,32 @@
  * s.normal - GRASS program for distributional testing.
  * Copyright (C) 1994-1995. James Darrell McCauley.
  *
- * Author: James Darrell McCauley (mccauley@ecn.purdue.edu)
- *         USDA Fellow
- *         Department of Agricultural Engineering
- *         Purdue University
- *         West Lafayette, Indiana 47907-1146 USA
+ * Author: James Darrell McCauley darrell@mccauley-usa.com
+ * 	                          http://mccauley-usa.com/
  *
- * Permission to use, copy, modify, and distribute this software and its
- * documentation for non-commercial purposes is hereby granted. This
- * software is provided "as is" without express or implied warranty.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
  *
- * JAMES DARRELL MCCAULEY (JDM) MAKES NO EXPRESS OR IMPLIED WARRANTIES
- * (INCLUDING BY WAY OF EXAMPLE, MERCHANTABILITY) WITH RESPECT TO ANY
- * ITEM, AND SHALL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL
- * OR CONSEQUENTAL DAMAGES ARISING OUT OF THE POSSESSION OR USE OF
- * ANY SUCH ITEM. LICENSEE AND/OR USER AGREES TO INDEMNIFY AND HOLD
- * JDM HARMLESS FROM ANY CLAIMS ARISING OUT OF THE USE OR POSSESSION
- * OF SUCH ITEMS.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  * Modification History:
+ * <23 Jan 2001> - added field parameter, fixed reading of sites (MN)
  * <27 Aug 1994> - began coding. Adapted cdh.f from statlib (jdm)
  * <30 Sep 1994> - finished alpha version of cdh-c (jdm)
  * <10 Oct 1994> - announced version 0.1B on pasture.ecn.purdue.edu (jdm)
  * <02 Jan 1995> - cleaned man page, added html page (jdm)
  * <25 Feb 1995> - cleaned 'gcc -Wall' warnings (jdm)
  * <21 Jun 1995> - adapted to use new sites API (jdm)
+ * <13 Sep 2000> - released under GPL
  *
  */
 
@@ -42,12 +43,13 @@ int main (argc, argv)
 {
   char *isiteslist, errmsg[256], *mapset;
   int i, nsites, verbose, warn_once = 0, readz (), scan_cats ();
-
+  int field;
   long x, y;
   struct Cell_head window;
+  struct GModule *module;
   struct
   {
-    struct Option *input, *tests;
+    struct Option *input, *tests, *dfield;
   } parm;
   struct
   {
@@ -58,6 +60,9 @@ int main (argc, argv)
 
   G_gisinit (argv[0]);
 
+  module = G_define_module();
+  module->description =        
+                  "tests for normality for sites.";
   parm.input = G_define_option ();
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;
@@ -72,6 +77,14 @@ int main (argc, argv)
   parm.tests->multiple = YES;
   parm.tests->required = YES;
   parm.tests->description = "Lists of tests: e.g. 1,3-8,13";
+
+  parm.dfield = G_define_option ();
+  parm.dfield->key = "field";
+  parm.dfield->type = TYPE_INTEGER;
+  parm.dfield->answer = "1";
+  parm.dfield->multiple = NO;
+  parm.dfield->required = NO;
+  parm.dfield->description = "which decimal attribute (if multiple)";
 
   flag.q = G_define_flag ();
   flag.q->key = 'q';
@@ -92,6 +105,7 @@ int main (argc, argv)
 
   isiteslist = parm.input->answer;
   verbose = (flag.q->answer == (char) NULL) ? 1 : 0;
+  sscanf(parm.dfield->answer,"%d", &field);
 
   G_get_window (&window);
 
@@ -106,7 +120,14 @@ int main (argc, argv)
     G_fatal_error (errmsg);
   }
 
-  nsites = readz (fdisite, verbose, &z, window);
+  if (field < 1)
+  {
+    sprintf (errmsg, "Decimal attribute field 0 doesn't exist.");
+    G_fatal_error (errmsg);
+  }
+  
+
+  nsites = readz (fdisite, verbose, field, &z, window);
 
   /* fprintf (stdout,"%g %g ... %g %g\n",z[0],z[1],z[nsites-2],z[nsites-1]); */
 

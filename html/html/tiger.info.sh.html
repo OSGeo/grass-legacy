@@ -1,0 +1,74 @@
+<TITLE>tiger.info.sh</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>tiger.info.sh</b></EM>  - Provides tract number(s) and
+classification codes found within a given U.S. Census
+Bureau TIGER type1 data file.
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>tiger.info.sh help</B>
+
+<BR>
+
+<B>tiger.info.sh </B><EM>infile</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>tiger.info.sh</EM> is a shell script which outputs tract number(s) and
+classification codes found within the TIGER type1 data file <EM>infile</EM>.
+Output is written to standard out, and can be captured in a file by 
+redirecting output.  This information is useful when querying (using
+
+<EM><A HREF="v.db.rim.html">v.db.rim</A></EM>) 
+
+from the master binary vector file created by 
+
+<EM><A HREF="v.db.rim.html">v.in.tig.rim</A></EM>.  
+
+It also provides tract number(s) which can
+be used as input to the command 
+<EM>Gen.Maps</EM>. 
+
+
+<H2>OPTIONS</H2>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><EM>infile</EM> 
+
+<DD>Name of a TIGER type1 data file.
+</DL>
+
+<H2>NOTES</H2>
+
+This command must be installed separately as part of the package of routines
+dealing with the import of Census (TIGER) data. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="m.tiger.region.html">m.tiger.region</A></EM><BR> 
+<EM><A HREF="v.in.tig.rim.html">v.in.tig.rim</A></EM><BR> 
+<EM><A HREF="v.db.rim.html">v.db.rim</A></EM><br>
+<EM>Gen.Maps</EM><BR> 
+<EM>Gen.tractmap</EM>
+
+<H2>AUTHOR</H2>
+
+Marjorie Larson, 
+U.S. Army Construction Engineering 
+Research Laboratory
+

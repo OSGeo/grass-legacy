@@ -11,12 +11,19 @@ int main (int argc, char *argv[])
     double lon1,lat1,lon2,lat2;
     char msg[100];
     char *deftcolor;
+	struct GModule *module;
     struct
     {
 	struct Option *lcolor, *tcolor, *coor;
     } parm;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Displays a geodesic line, tracing the shortest distance "
+		"between two geographic points along a great circle, in "
+		"a longitude/latitude data set.";
 
     parm.coor = G_define_option() ;
     parm.coor->key        = "coor" ;

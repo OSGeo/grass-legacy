@@ -1,0 +1,163 @@
+<HTML>
+<HEAD>
+<TITLE>r.in.gdal</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.in.gdal</b></EM>  - Import GDAL supported raster file into a binary raster map layer.
+<BR>
+<EM>(GRASS Raster Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.in.gdal</B> 
+<BR>
+<B>r.in.gdal help</B> 
+<BR>
+<B>r.in.gdal [-o] input=</B><EM>name</EM>
+[<B>band=</B><EM>number</EM>]
+<B>output=</B><EM>name</EM> 
+[<B>TITLE=</B>"<EM>phrase</EM>"] 
+[<B>location=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.in.gdal</EM> allows a user to create a (binary) GRASS raster map layer,
+or imagery group,
+from any GDAL supported raster file format, with an optional title.  The
+imported file may also be optionally used to create a new location.
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-o</B>
+<DD>Override projection (use locations projection)
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing GDAL supported raster file to be imported.<BR>
+<DT><B>band=</B><EM>number</EM>
+<DD>Number of input band to extract (default is all bands). Number between 1 
+and number of bands.<BR>
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to resultant binary raster map layer or imagery group.
+An imagery group is generated if more than one band is imported.<BR>
+<DT><B>TITLE=</B>"<EM>phrase</EM>"
+<DD>Title to be assigned to resultant raster map layer(s). <BR>
+<DT><B>location=</B><EM>name</B>
+<DD>Name of new location to create based on the file, if so desired.<BR>
+</DL>
+
+<H2>GDAL Supported Formats</H2>
+
+Full details on GDAL supported formats are available at:<p>
+
+<a href="http://www.remotesensing.org/gdal/formats_list.html">http://www.remotesensing.org/gdal/formats_list.html</a><P>
+
+<pre>
+Format Name					Georeferencing<BR>
+<BR>
+Arc/Info Binary Grid                                 Yes<BR>
+CEOS (Spot for instance)                             No
+First Generation USGS DOQ                            Yes
+New Labelled USGS DOQ                                Yes
+Military Elevation Data (DTED)                       Yes
+Eosat Fast Format                                    No
+ESRI .hdr Labelled                                   Yes
+TIFF / GeoTIFF                                       Yes
+Erdas Imagine .hfa                                   No
+JPEG JFIF                                            No
+PCI .aux Labelled                                    Yes
+Portable Network Graphics (PNG)                      No
+USGS SDTS DEM                                        Yes
+SAR CEOS                                             No
+</pre>
+
+If GDAL doesn't support the indicated file it will report it with a
+message like <tt>ERROR 4: `abc.e00' not recognised as a supported file format
+</tt>.  This means either that the file doesn't exist, that it isn't supported
+by GDAL, or that the format wasn't built into the version of libgdal.1.1.so
+being used.<P>
+
+<B>r.in.gdal</B> will only operate correctly if the GDAL shared library
+is installed on the system and accessable (normally via LD_LIBRARY_PATH).  
+If not, r.in.gdal will report <TT>Unable to initialize GDAL bridge</TT>. 
+If this occurs it means that you either don't have GDAL installed (ie.
+libgdal.1.1.so), it isn't in the LD_LIBRARY_PATH, or it is the wrong version.
+<P>
+
+<H2>Location Creation</H2>
+
+<B>r.in.gdal</B> attempts to preserve projection information when importing
+datasets if the source format includes projection information, and if
+the GDAL driver supports it.  If the projection of the source dataset does
+not match the projection of the current location <b>r.in.gdal</b> will 
+report an error message (<tt>Projection of dataset does not appear to 
+match current location</tt>) and then report the PROJ_INFO parameters of
+the source dataset.<P>
+
+If the user wishes to ignore the difference between the apparent coordinate
+system of the source data and the current location, they may pass the 
+<b>-o</b> flag to override the projection check. <P>
+
+If the user wishes to import the data with the full projection definition,
+it is possible to have r.in.gdal automatically create a new location based
+on the projection and extents of the file being read.  This is accomplished
+by passing the name to be used for the new location via the <b>location</b>
+parameter.  Upon completion of the command, a new location will have been
+created (with only a PERMANENT mapset), and the raster will have been
+imported with the indicated <b>output</b> name into the PERMANENT mapset.<P>
+
+<H2>NOTES</H2>
+
+I plan to make a variety of improvements to <b>r.in.gdal</b> in the future
+including support for reporting everything known about a dataset if the 
+<b>output</b> parameter is not set and support for GCPs.<P>
+
+The <B>r.in.gdal</B> comand does support the following features, as long as 
+the underlying format driver supports it:<p>
+
+<DL>
+
+<DT> Color Table
+<DD> Bands with associated colortables will have the color tables transferred.
+<BR>
+
+<DT> Data Types
+<DD> Most GDAL data types are supported.  Float32 and Float64 type bands
+are translated as GRASS floating point cells (but not double precision ...
+this could be added if needed), and most other types are translated as 
+GRASS integer cells.  This includes 16bit integer data sources.  Complex
+(some SAR signal data formats) data bands are translated to two floating
+point cell layers (*.real and *.imaginary).<BR>
+
+<DT> Georeferencing
+<DD> If the dataset has affine georeferencing information, this will be used
+to set the north, south, east and west edges.  Rotational coefficients will
+be ignored, resulting in incorrect positioning for rotated datasets.  <BR>
+
+<DT> Projection
+<DD> The datasets projection will be used to compare to the current location
+or to define a new location.  Internally GDAL represents projections in 
+OpenGIS Well Known Text format.  A large subset of the total set of GRASS
+projections are supported.<BR>
+
+</DL>
+
+<H2>AUTHOR</H2>
+
+Frank Warmerdam (<a href="mailto:warmerda@home.com">warmerda@home.com</a>).
+
+</HTML>

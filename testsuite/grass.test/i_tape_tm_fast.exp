@@ -1,0 +1,6 @@
+# i.tape.tm.fast core dumps if default title is changed
+
+set test "i.tape.tm.fast core dumps if default title is changed"
+
+unresolved "$test"
+

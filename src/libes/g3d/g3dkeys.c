@@ -150,7 +150,7 @@ G3d_keySetDouble (keys, key, d)
 {
   char keyValStr[200];
 
-  sprintf (keyValStr, "%.50lf", *d); 
+  sprintf (keyValStr, "%.50f", *d); 
   return (G_set_key_value (key, keyValStr, keys) != 0);
 }
 

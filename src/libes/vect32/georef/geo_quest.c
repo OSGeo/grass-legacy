@@ -1,9 +1,9 @@
 
-#include	<stdio.h>
-#include	<signal.h>
-#include	"gis.h"
-#include	"bin_digit.h"
-#include    "georef.h"
+#include <stdio.h>
+#include <signal.h>
+#include "gis.h"
+#include "bin_digit.h"
+#include "georef.h"
 
 
 int 

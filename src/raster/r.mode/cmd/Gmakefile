@@ -1,7 +1,7 @@
 PGM = r.mode
 OBJS = main.o read_stats.o write_rec.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(XDRLIB) $(MATHLIB)
+$(BIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -49,7 +49,12 @@ main (int argc, char *argv[])
 	CELL *cell, data, viewpt_elev;
 	SEGMENT seg_in, seg_out, seg_patt;
 	struct point *heads[16],*SEARCH_PT;
+	struct GModule *module;
 	struct Option *opt1,*opt2,*opt3,*opt5,*opt6,*opt7;
+
+	module = G_define_module();
+	module->description =
+		"Line-of-sight raster analysis program.";
 
 	/* Define the different options */
 

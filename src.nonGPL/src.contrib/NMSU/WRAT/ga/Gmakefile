@@ -1,7 +1,7 @@
 OBJ = ga.o 
 
-$(BIN_CONTRIB_CMD)/ga: $(OBJ) $(GISLIB) $(SEGMENTLIB)
-	$(CC) -o $@ $(LDFLAGS) $(OBJ) $(GISLIB) $(SEGMENTLIB) $(MATHLIB)
+$(BIN_CMD)/ga: $(OBJ) $(GISLIB) $(SEGMENTLIB)
+	$(CC) -o $@ $(LDFLAGS) $(OBJ) $(GISLIB) $(SEGMENTLIB) $(XDRLIB) $(MATHLIB)
 
 
 $(GISLIB): #

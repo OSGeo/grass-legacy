@@ -1,32 +1,29 @@
 
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
-
-
 INTERFILES = \
 	mkgrid_inter.o \
 	ask_for.o \
 	init_head.o \
 	write_grid.o \
-	rotate.o
+	rotate.o \
+	grid_atts.o
 
 CMDFILES = \
 	mkgrid_cmd.o \
 	init_head.o \
 	write_grid.o \
-	rotate.o
+	rotate.o \
+	grid_atts.o
 
-PROG_CMD = $(BIN_MAIN_CMD)/v.mkgrid 
-PROG_INT = $(BIN_MAIN_INTER)/v.mkgrid 
-
-#all:  $(PROG_CMD)
+PROG_CMD = $(BIN_CMD)/v.mkgrid 
+PROG_INT = $(BIN_INTER)/v.mkgrid 
 
 all:  $(PROG_CMD) $(PROG_INT)
 
 
-$(PROG_CMD):  $(CMDFILES) $(GISLIB) $(VECTLIB)
-	$(CC) $(LDFLAGS) -o $@ $(CMDFILES) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB)
+$(PROG_CMD):  $(CMDFILES) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(CMDFILES) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB) $(DIG_ATTLIB)
 
 $(PROG_INT):  $(INTERFILES) $(GISLIB) $(VECTLIB)
-	$(CC) $(LDFLAGS) -o $@ $(INTERFILES) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(INTERFILES) $(GISLIB) $(VECTLIB) $(MATHLIB) $(XDRLIB) $(DIG_ATTLIB)
 
 $(GISLIB) $(VECTLIB): #

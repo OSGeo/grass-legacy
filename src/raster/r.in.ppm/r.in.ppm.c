@@ -1,3 +1,5 @@
+/* Memory allocation check added -Alex Shevlakov sixote@yahoo.com 23/03/00*/
+/*									*/
 /* Updated 8/99 to true 24bit support.
  * The old version was limited to 32767 colors.
  * 
@@ -14,14 +16,28 @@
 #include <ctype.h>
 #include "gis.h"
 
+#include <math.h>
+
+/*#define MAXCOLOR 16777216  - such big -it kills the prog. A.Sh.*/
+/*#define MAXCOLOR 65536*/
 #define MAXCOLOR 16777216
 
-struct mycolor {
+/*struct mycolor {
 	int red;
 	int grn;
 	int blu;
 } ppm_color[MAXCOLOR];
+*/
+typedef struct {
+	int red;
+	int grn;
+	int blu;
+	} mycolor;
+	
+mycolor * ppm_color;
 
+int knum = 0;
+	
 int get_ppm_colors(FILE *, int, int, struct Colors *);
 int get_ppm_colors2(struct Colors *, int, int *);
 CELL lookup_color(int, int, int, int);
@@ -42,6 +58,7 @@ main (int argc, char *argv[])
 	struct Colors colors, *pcolr;
 	struct Colors bwcolors, *pbwcolr;
 	int red,grn,blu,num_colors;
+	struct GModule *module;
 	struct Option *inopt, *outopt, *nlevopt;
 	int *levels;
 	struct Flag *vflag, *bflag;
@@ -57,10 +74,18 @@ main (int argc, char *argv[])
 	char mapred[300], mapgrn[300], mapblu[300];
 	CELL *cellr, *cellg, *cellb;
 	
+	
+	
+	
 	pcolr = &colors;
 	pbwcolr=&bwcolors;
 	
 	G_gisinit (argv[0]);
+	module = G_define_module();
+	module->description =
+		"Converts an ASCII/BINARY PPM image file to "
+		"a GRASS raster file.";
+
 	inopt = G_define_option();
 	outopt = G_define_option();
 	nlevopt = G_define_option();
@@ -158,25 +183,40 @@ main (int argc, char *argv[])
 			break;
 		}
 	}
+	
+	knum = (int) floor(ppm_height*ppm_width/10);
+	
+
+	ppm_color = (mycolor*) malloc(knum * sizeof(mycolor));
+  
+  	if (ppm_color == NULL) {
+    		fprintf(stderr,"\nCouldn't allocate space for image.\n Try increase your comp's RAM (256 Mb should do)\n");
+    		exit(-1);
+  	}
 
 	ppm_pos = ftell(infp);
-	ncolors=count_colors(infp,ppm_height*ppm_width, ppm_magic);
-	if (Verbose)fprintf(stderr, "Total colors = %d\n",ncolors);
+/*	ncolors=count_colors(infp,ppm_height*ppm_width, ppm_magic); we are not able to alloc */
+
+
+	ncolors=num_colors=get_ppm_colors(infp, ppm_height*ppm_width, 
+				    ppm_magic, pcolr);
+	  if (Verbose)fprintf(stderr, "Total used colors = %d\n", num_colors);
+	
+
 	fseek(infp, ppm_pos, 0); /* get back where we were */
 	
 	ppm_pos = ftell(infp);
 	if(ncolors > maxcolors){
 	  G_warning("Color levels quantization...\n");
-	  levels=(int*)G_calloc(nlev,sizeof(int));
+	  
+	  if ( (levels=(int*)G_calloc(nlev,sizeof(int))) == NULL)
+	  	G_fatal_error("Cannot allocate memory");
+		
 	  quantize(nlev,levels);
 	  num_colors=get_ppm_colors2(pcolr,nlev,levels);
 	  if (Verbose)fprintf(stderr, "Total used colors = %d\n", num_colors);
 	}
-	else{
-	  num_colors=get_ppm_colors(infp, ppm_height*ppm_width, 
-				    ppm_magic, pcolr);
-	  if (Verbose)fprintf(stderr, "Total used colors = %d\n", num_colors);
-	}
+
 	fseek(infp, ppm_pos, 0); /* get back where we were */
 	
 	nrows = cellhd.rows = ppm_height;
@@ -298,6 +338,16 @@ int get_ppm_colors (FILE *infp, int pixels,
 			G_fatal_error("Unknown ppm magic number!!");
 			break;
 		}
+		if ( knum < maxcolor + 1) {
+			knum *= 2;
+			ppm_color = (mycolor*) realloc((void*) ppm_color,knum * sizeof(mycolor));
+  
+  			if (ppm_color == NULL) {
+    				fprintf(stderr,"\nCouldn't allocate space for image.\n Try increase your comp's RAM (256 Mb should do)\n");
+    				exit(-1);
+  			}
+		}
+		
 		for (x=0;x<maxcolor;x++){
 			if (ppm_color[x].red == red && 
 			    ppm_color[x].grn == grn &&
@@ -329,6 +379,15 @@ get_ppm_colors2 (struct Colors *pcolr, int colors_for_chanell, int *levels)
   for(i=0;i<colors_for_chanell;i++)
     for(j=0;j<colors_for_chanell;j++)
       for(k=0;k<colors_for_chanell;k++){
+      	if ( knum < actual +1) {
+		knum *= 2;
+		ppm_color = (mycolor*) realloc((void*) ppm_color,knum * sizeof(mycolor));
+  
+  		if (ppm_color == NULL) {
+    			fprintf(stderr,"\nCouldn't allocate space for image.\n Try increase your comp's RAM (256 Mb should do)\n");
+    			exit(-1);
+  		}
+	}
 	ppm_color[actual].red = levels[i];
 	ppm_color[actual].grn = levels[j];
 	ppm_color[actual].blu = levels[k];
@@ -421,7 +480,8 @@ count_colors (FILE *infp, int pixels, int ppm_magic)
   int red, grn, blu;
   int *total_color;
   
-  total_color=(int*)G_calloc(MAXCOLOR,sizeof(int));
+  if ( (total_color=(int*)G_calloc(MAXCOLOR,sizeof(int))) == NULL)
+  	G_fatal_error("Cannot allocate memory");
 
   for (i=0; i < pixels; i++){
     switch (ppm_magic){

@@ -1,12 +1,6 @@
-# %W%  %G%
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
-
-PGM      = v.export
+PGM      = v.export.scs
 
 LIST =  exp_vect.o
 
-all: $(BIN_CONTRIB_INTER)/$(PGM)
-
-
-$(BIN_CONTRIB_INTER)/$(PGM): $(LIST) $(GISLIB) 
+$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)

@@ -1,0 +1,86 @@
+<TITLE>slide.show.sh</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>slide.show.sh</b> </EM> - Displays a series of raster map
+layers existing in the user's current mapset search path on
+the graphics monitor.
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>slide.show.sh</B> 
+[<B>across=</B><EM>value</EM>] 
+[<B>down=</B><EM>value</EM>] 
+[<B>mapsets=</B><EM>list</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>slide.show.sh</EM> is a UNIX Bourne shell macro which
+clears the entire screen, creates a series of display
+frames on the graphics monitor, and displays in slideshow
+format each of the raster map layers listed in the
+user-specified <EM>mapsets</EM>.  This is a shell script
+example which makes extensive use of GRASS and UNIX
+commands.  Users are encouraged to examine this macro and
+develop similar on-line demos using their own data files.
+
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>across=</B><EM>value</EM>
+
+<DD>The number of display frames across the graphics monitor screen
+to be used for map display.
+
+<BR>
+
+Default:  4
+
+<DT><B>down=</B><EM>value</EM>
+
+<DD>The number of display frames down the graphics monitor screen
+to be used for map display.
+
+<BR>
+
+Default:  3
+
+<DT><B>mapsets=</B><EM>list</EM>
+
+<DD>The names of the mapsets under the user's current location
+whose raster map layers are to be displayed, separated by commas.
+
+<BR>
+
+Default:  All mapsets listed in the user's current mapset search path.
+</DL>
+
+<H2>FILES</H2>
+
+See the file <KBD>$GISBASE/scripts/slide.show.sh</KBD>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.display.html">d.display</A></EM><BR>
+<EM><A HREF="d.erase.html">d.erase</A></EM><BR>
+<EM><A HREF="d.text.html">d.text</A></EM><BR>
+<EM><A HREF="g.mapsets.html">g.mapsets</A></EM><BR>
+<EM><A HREF="3d.view.sh.html">3d.view.sh</A></EM><BR>
+<EM><A HREF="grass.logo.sh.html">grass.logo.sh</A></EM><BR>
+<EM><A HREF="show.fonts.sh.html">show.fonts.sh</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S.Army Construction Engineering 
+Research Laboratory

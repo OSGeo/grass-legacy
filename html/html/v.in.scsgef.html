@@ -1,0 +1,147 @@
+<TITLE>v.in.scsgef</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.scsgef</b></EM>  - Converts SCS Geographic Exchange Format (SCS-GEF)
+ASCII data into a GRASS vector file.
+
+<BR>
+
+<EM>(SCS GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.scsgef</B>
+
+<BR>
+
+<B>v.in.scsgef help</B>
+
+<BR>
+
+<B>v.in.scsgef</B> [<B> -o</B>] [<B>gef=</B><EM>name</EM>]
+[<B>output=</B><EM>name</EM>] [<B>cat=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.in.scsgef</EM> allows a user to create a GRASS vector
+file from a SCS-GEF format ASCII file.
+<P>
+<DT> 
+
+<DD>1.  The program will first request the name of the SCS-GEF file to be
+read in, it expects to find the data in the current directory. It is
+suggested to create a <EM>gef</EM> directory and put all SCS-GEF data there.
+<P>
+<DD>2.  The program will then request the name of a GRASS vector file.
+<P>
+<DD>3.  The program will then request the name of a SUBJECT file.  A subject
+file will be used to assign GRASS category codes to the SCS-GEF data.
+It is structured the same as a <EM>dig_cats</EM> category file.  It is suggested
+that a SUBJ directory be created in the GRASS location and a file
+containing all SCS-GEF text labels by category be created.  This will be
+required to provide consistancy across several maps (quads) within one
+location.  The user may use the <EM>vi</EM> text editor or the SCS macro
+<EM>make_subject</EM> to create it.
+<P>
+<DD>4.  The program will then read the SCSGEF header information,
+interactively present information that was available, and request
+additional data of the user.  These questions are :
+<P>
+Name of their organization. (from SCS-GEF)
+
+<BR>
+
+Digitized Date.             (from SCS-GEF)
+
+<BR>
+
+Map Name.                   (from SCS-GEF)
+
+<BR>
+
+Map Location.               (from SCS-GEF)
+
+<BR>
+
+Other Information.          (from SCS-GEF)
+
+<BR>
+
+State FIPS code.
+
+<BR>
+
+County FIPS code.
+
+<BR>
+
+Present GEF Coord. System (table, stplane, ll, utm).
+
+<BR>
+
+Coordinate System Desired (utm, stplane, ll, albers).
+
+<BR>
+
+
+
+<P>
+
+The program will then actively read the SCS-GEF data file and process
+it,
+
+
+<P>
+
+scripts contains SCS macro <EM>make_1_gef</EM>.  This macro makes one file out of
+the three (3) files found in SCS-GEF (see SCS-GEF technical
+specifications for more information).  The macro must be run on each
+data set BEFORE <EM>v.in.scs.gef</EM>.
+</DT>
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Flags:</H3>
+
+<DT><B>-o</B> 
+
+<DD>The SCS-GEF is in the OLD format (24 char).
+</DT>
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DT><B>gef=</B><EM>name</EM> 
+
+<DD>ASCII SCS-GEF file name.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Vector file name.
+
+<DT><B>cat=</B><EM>name</EM> 
+
+<DD>Category file name.
+</DT>
+
+<H2>SEE ALSO</H2>
+
+<EM>make_1_gef</EM>,
+<EM>make_subject</EM>,
+<A HREF="v.import.html">v.import</A>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

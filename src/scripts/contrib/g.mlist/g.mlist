@@ -1,0 +1,127 @@
+#!/bin/sh
+#
+# $Id$
+#
+############################################################################
+#
+# MODULE:	g.mlist
+# AUTHOR(S):	Huidae Cho - hdcho@geni.knu.ac.kr
+# PURPOSE:	applied regular expression and wildcard to g.list
+# COPYRIGHT:	(C) 2000 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+#############################################################################
+
+program=`basename $0`
+
+if [ ! "$GISBASE" ]
+then
+	echo
+	echo "ERROR: must be in GRASS to use $program"
+	echo
+	exit 1
+fi
+
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
+then
+        echo
+        echo "Usage:"
+	echo " $program [-w] [type=name] [mapset=name] [sep=name] map_pattern"
+	echo
+	echo "Flags:"
+	echo "  -w   use wildcard instead of regular expression"
+	echo
+	g.list help 2>&1 | awk 'BEGIN{i=0}{if($1=="Parameters:") {print; i=1;} else if(i) print "     "$0}'
+	echo
+	echo "          sep   output separator"
+	echo "  map_pattern   mapname pattern"
+	echo
+	echo "Note:"
+	echo "  Do not forget to enclose expression with '...' to avoid being expanded"
+	echo "  by the shell first."
+	exit 1
+fi
+
+
+type=rast
+w=
+for i
+do
+	case $i in
+		-w)
+			w=1;;
+		t=*|ty=*|typ=*|type=*)
+			itype=`echo "$i" | awk -F '=' '{print $2}'`
+			case $itype in
+				ra|ras|rast*)
+					type=rast;;
+				v|ve|vec|vect*)
+					type=vect;;
+				i|ic|ico|icon*)
+					type=icon;;
+				l|la|lab|labe|label*)
+					type=labels;;
+				s|si|sit|site*)
+					type=sites;;
+				re|reg|regi|regio|region*)
+					type=region;;
+				g|gr|gro|grou|group*)
+					type=group;;
+				3|3d|3dv|3dvi|3dvie|3dview*)
+					type=3dview;;
+			esac;;
+		m=*|ma=*|map=*|maps=*|mapse=*|mapset=*)
+			mapset=`echo "$i" | awk -F '=' '{print "mapset="$2}'`;;
+		s=*|se=*|sep=*)
+			sep=`echo "$i" | awk -F '=' '{print $2}'`;;
+		*)
+			if [ ! "$search" ]
+			then
+				search="$i"
+			else
+				search="$search\|$i"
+			fi;;
+	esac
+done
+
+if [ "$w" -a "$search" ]
+then
+	search="^`echo \"$search\" | sed 's/\./\\\\./g; s/?/./g; s/*/.*/g; s/|/$|^/g'`$"
+fi
+
+for i in `g.list type=$type $mapset | grep -v '^-\+$' | grep -v "files available" | grep -v "available in mapset"`
+do
+	if [ ! "$search" ]
+	then
+		list="$list $i"
+	else
+		list="$list `echo $i | grep \"$search\"`"
+	fi
+done
+
+if [ ! "$list" ]
+then
+	exit 1
+fi
+
+start=
+for i in $list
+do
+	if [ "$start" ]
+	then
+		if [ ! "$sep" ]
+		then
+			printf "\n"
+		else
+			printf "%s" "$sep"
+		fi
+	fi
+	start=1
+	printf "%s" "$i"
+done
+
+exit 0
+

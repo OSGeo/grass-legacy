@@ -10,7 +10,6 @@
 #include "gis.h"
 #include "display.h"
 #include "Vect.h"
-#include "dig_structs.h"
 #include "vo_defs.h"
 
 extern struct Cell_head window;

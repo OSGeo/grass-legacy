@@ -1,0 +1,156 @@
+Listing of libraries that could be useful for GRASS development
+
+collected 11/2000 by Andreas Lange <andreas.lange@rhein-main.de>
+For the libraries already in use by GRASS see the file REQUIREMENTS.
+
+
+font libraries:
+===============
+
+freetype library (libttf)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+http://www.freetype.org 
+FreeType engine 1.1, Version 2.0 beta8 
+TrueType font rendering engine, some problems for U.S. am. users because of
+Apple's patents.
+
+pango:
+~~~~~~
+http://www.pango.org 
+Library to render fonts in many different languages, very promising
+approach, but currently only a prototype.
+
+fnlib:
+~~~~~~
+http://www.tux.org/pub/X-Windows/enlightenment/fnlib
+Color X font rendering library 
+Version 0.5 (fnlib-0.5.tar.gz)
+used in the Enlightenment Window Manager
+
+
+graphic libraries:
+==================
+
+g2 graphical library:
+~~~~~~~~~~~~~~~~~~~~~
+http://g2.sourceforge.net
+easy to use, portable and powerful 2D graphics library. Following devices
+are currently supported: PostScript, X11, GIF and Win32.
+Written in C with additional fortran and perl interface.
+
+gd graphical library:
+~~~~~~~~~~~~~~~~~~~~~
+http://www.boutell.com/gd/
+A graphics library for fast image creation (PNG, JPEG, WBMP, Xpm)
+(no true-color support now, planned for v. 2.0)
+8bit only
+
+llib Image Library:
+~~~~~~~~~~~~~~~~~~~
+http://www.radix.net/~cknudsen/Ilib/
+can read, create, manipulate and save images in PPM, XPM, GIF, PNG and JPG
+format.
+
+Open GUI (Fast GL):
+~~~~~~~~~~~~~~~~~~
+http://www.tutok.sk/fastgl
+FastGL is a fast, multi-platform 32-bit graphics library ...
+(obviously only for x86-processors, uses assembler!)
+
+imlib and imlib2:
+~~~~~~~~~~~~~~~~~
+http://www.us.rasterman.com/imlib.html
+Image loading, rendering and saving library, uses existing libraries for
+different image formats. Could be used for a multi-format import module in
+GRASS.
+
+gdk-pixbuf:
+~~~~~~~~~~~
+http://developer.gnome.org/doc/API/gdk-pixbuf/
+Image handling libray (something concurrent to imlib)
+Version 0.8.0
+GDK with GdkRGB (layer of abstraction between GTK+ and windowing system)
+
+libungif:
+~~~~~~~~~
+http://prtr-13.ucsc.edu/~badger/software/libungif
+http://www.rge.com/pub/multimedia/libungif/
+Allows the reading and writing of GIF images avoiding the infamous Unisys
+LZW patent Could be used to make a r.in.gif/r.out.gif without copyright
+infringement of the Unisys patent (and of course without compression/the
+ability to read compressed gifs!). Version 4.1.0
+
+libart:
+~~~~~~~
+http://www.levien.com/libart/
+http://www.artofcode.com/libart.html
+A general image library that allows to render high quality maps, fonts etc.
+Could be used to implement a multi-layered map generator.
+
+
+computational geometry, geometry libraries:
+===========================================
+
+detri:
+~~~~~~
+http://www.geocities.com/mucke/GeomDir/detri.html
+
+gts:
+~~~~
+http://gts.sourceforge.net
+
+dewall:
+~~~~~~~
+http://vcg.iei.pi.cnr.it/DVRunstruct.html
+
+
+vector libraries:
+=================
+
+sorry, i am no expert here. See also Computational Geometry.
+
+
+other useful libraries:
+=======================
+
+JEEPS:
+~~~~~~
+Library and development system for Garmin GPS devices.
+ftp://ftp.hgmp.mrc.ac.uk/pub/ajb/jeeps/
+
+HDF5:
+~~~~~
+http://hdf.ncsa.uiuc.edu/HDF5/
+ftp://hdf.ncsa.uiuc.edu/HDF5/current
+
+NetCDF:
+~~~~~~~
+http://www.unidata.ucar.edu/packages/netcdf/index.html
+
+
+below only keywords:
+
+libxml ?
+
+GNOME interface builder
+
+libglade
+
+GTK+, GTK
+
+WxWindows, Python bindings etc.
+
+OpenEV
+
+libunicode
+
+MICO .. is CORBA
+
+SWIG
+
+see also at http://freegis.org !
+see also at http://sal.kachinatech.com/ !
+
+-- 
+Andreas Lange, andreas.lange@rhein-main.de 
+11/2000

@@ -1,9 +1,8 @@
 PGM=d.erase
-HOME=$(BIN_MAIN_CMD)
 
 LIBES = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
-$(HOME)/$(PGM): main.o $(LIBES)
+$(BIN_CMD)/$(PGM): main.o $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

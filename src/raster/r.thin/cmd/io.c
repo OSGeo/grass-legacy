@@ -1,3 +1,6 @@
+/* 
+ * $Id$ */
+
 /* Line thinning program */
 /*   Input/output and file support functions */
 
@@ -26,11 +29,10 @@
 
 #include <string.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <unistd.h>
 #include <math.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <errno.h>
 #include <fcntl.h>
 #include "gis.h"
 #include "rowio.h"
@@ -38,7 +40,7 @@
 #define PAD 2
 #define MAX_ROW 7
 
-extern int errno;
+/*extern int errno; */ /* included #include <errno.h> instead 1/2000*/
 extern char *error_prefix;
 static int n_rows, n_cols;
 static int work_file;

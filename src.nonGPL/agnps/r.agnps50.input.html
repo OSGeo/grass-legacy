@@ -1,0 +1,364 @@
+<TITLE>r.agnps_input</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<h2>Guidelines for AGNPS-GRASS Input Interface</h2>
+<p>
+
+The major objective of the AGNPS-GRASS input interface is to minimize the
+user interaction in preparing the input data for the AGNPS
+model and to
+minimize the number of user supplied/developed GIS database layers. Of the 22
+different data required by the model for each cell (appendix 2), the interface 
+will prepare the input data with only 8 (appendix 2) basic GIS database layers
+supplied by the user and with minimal user interaction. There are 5 (appendix 2)
+parameters needed for the whole watershed which will be obtained from the user.
+<p>
+<B>Name of the AGNPS-GRASS Input Interface Program</B>:
+<EM>r.agnps50.input</EM>
+<p>
+<B>Procedures to follow while executing the Input Interface</B>:
+<p>
+First start GRASS 5.x from a shelltool window with proper mapset where
+the data resides
+<p>
+Execute <EM>r.agnps50.input</EM> program from the shelltool window
+where GRASS is running
+<p>
+A <EM>Watershed Input</EM> menu will appear on the shelltool window
+requesting the following data/information from the user:
+<p>
+Watershed Description: Enter a description about the watershed. This
+information optional and will appear in both input and output of the
+AGNPS model run.
+<p>
+Rainfall Amount in inches: Enter the total amount of rainfall in inches.
+<p>
+Erosivity Index Value: Enter the erosivity index value for that
+particular storm/rainfall event.
+<p>
+Enter the cell size in meters: The length of the side of a cell in
+meters is entered. The square of the cell size will be the area of
+each cell.
+<p>
+Enter a file name to save in AGNPS format: Enter a file name with
+<EM>.dat</EM> as the extension to save the AGNPS model input file
+created by the AGNPS-GRASS input interface tool. This will be stored
+in the current working directory.
+<p>
+Enter the watershed name: The name of the watershed should be entered
+here.  All the input layers should have the same watershed name with
+the proper extension (as <EM>X</EM> in appendix 1). Please refer to
+appendix 1 for the valid extensions and valid category labels/values
+that are allowed for each layer.
+<p>
+Then hit the <EM>Esc</EM> key to continue.
+
+
+<P>
+
+<p>
+Error Messages: If any of the category labels/values for the input layers is not valid, an
+error message is printed and the program quits. Run <EM>support</EM> on the layer
+where the category label is wrong to correct it. The program <EM>support</EM>
+helps to modify the supporting files of a map, which include header, category,
+color, and history. The wrong/misspelled category labels can be corrected by 
+running <EM>support</EM> on the layer to be corrected and choosing the category 
+option. If there is any problem
+with the flow direction layer, error messages are printed for
+those cell numbers that had problems and the nature of those problems (like
+circularity, sinks or holes, or flow directions pointing at each other).
+Use <EM>Dedit</EM> on the aspect map to correct the problems. The <EM>Dedit</EM>
+program helps to display and edit the aspect map with arrows on it, which should enable one
+to correct the flow direction on a cell by cell basis.
+<p>
+For each run of this input interface tool, a new <EM>temp_cell_num</EM> layer is
+created and stored in the current mapset. In this map, the cells are 
+numbered from top to bottom and left to right. This is a useful 
+layer for editing and interpreting the error messages due to conflicting flow 
+direction for any particular cell. While using the <EM>Dedit</EM> program to
+correct the errors, this map allows one to locate the cell number where 
+conflicts occur.
+<p>
+Once the input interface completes its run without errors, it saves
+the data in the AGNPS format. The AGNPS model can be executed with
+this data. The name of the executable file program to run the AGNPS
+model is <EM>agrun</EM>.  Type <EM>agrun</EM> from the shelltool
+window where GRASS is running. The program will ask for the input file
+name. Enter the name of the file that was saved by running the
+AGNPS-GRASS input interface, with the <EM>.dat</EM> extension.  The
+model will output the results of the run with a <EM>.nps</EM>
+extension. Both input and output ASCII files are needed to execute the
+AGNPS-GRASS output interface tool (the Visualization tool).
+<p>
+<b>Appendix 1</b>
+<p>
+
+<DL>
+<DT>Watershed boundary	
+<BR>(<B>X</B>.wshd)
+
+<DD> Should have category values greater than 0 within  the
+watershed and 0's outside of the watershed boundary.
+
+<DT>Elevation	
+<BR>(<B>X</B>.elev)
+
+<DD>Elevation data in meters should be the category values
+for each cell. Also make sure at least 1 row and column of
+data around the watershed boundary exists to estimate slope
+and aspect at the boundary of the watershed.
+
+<DT>Aspect	
+<BR>(<B>X</B>.asp.cell_size)
+
+<DD>The aspect map should have values between <EM>1-8</EM>
+as category values  and should not have any sinks,
+circularity or more than one outlet. Cell_size is the
+number that the user entered for question 4 in the
+interface input menu.  For example, if the watershed is
+modeled for a 100 meter cell size, then the aspect map name
+should be <B>X</B>.asp.100
+
+<DT>Soils	
+<BR>(<B>X</B>.soils)
+
+<DD>If any of the soil attribute (K factor, clay, sand or
+hydrological soil group) maps do not exist, then the
+program looks for <B>X</B>.soils map to extract information
+from the Soils-5 data base. (currently this is not working
+fully).
+<DT>USLE K factor	
+<BR>(<B>X</B>.K)
+
+<DD>The USLE K factor map should contain the value of the K
+factor as the category label for each cell. This is
+obtained from the soil type map.
+
+<DT>Hydrological soil group	
+<BR>(<B>X</B>.hyg)
+
+<DD>The category labels allowed are either <EM>A</EM>,
+<EM>B</EM>, <EM>C</EM>, or <EM>D</EM> and should appear as
+category labels for each cell. This is obtained from the
+soil type map.
+
+<DT>Sand	
+<BR>(<B>X</B>.sand)
+
+<DD>The percentage of sand content should be the category
+label for each cell.  This is obtained from the soil type
+map.
+
+<DT>Clay	
+<BR>(<B>X</B>.clay)
+
+<DD>The percentage of clay content should be there as a
+category label for each cell. This is obtained from the
+soil type map.
+
+<DT>Land use	
+<BR>(<B>X</B>.luse)
+
+<DD>The land use map category labels allowed are
+<EM>fallow</EM>, <EM>row crops</EM>, <EM>small grain</EM>,
+<EM>legumes</EM>, <EM>rotation meadow</EM>,
+<EM>close-seeded legumes</EM>, <EM>pasture</EM>,
+<EM>range</EM>, <EM>meadow</EM>, <EM>woods</EM>,
+<EM>woodland</EM>, <EM>grass waterway</EM>, <EM>hard
+surface</EM>, <EM>farmsteads</EM>, <EM>roads (dirt)</EM>,
+<EM>water</EM>, or <EM>marsh</EM>.
+
+<DT>Management Practice	
+<BR>(<B>X</B>.mgpr)
+
+<DD>The management practice map category labels allowed are
+<EM>straight row</EM>, <EM>contoured</EM>, or <EM>contoured
+and terraced</EM>.
+
+<DT>Nutrient	
+<BR>(<B>X</B>.nut)
+
+<DD>The cell value should correspond to the level of
+fertilizer application, i.e <EM>1</EM>, <EM>2</EM>,
+<EM>3</EM> or <EM>0</EM>. Where 1-low, 2-medium, 3-high and
+0-urban, water or marsh.  (refer 
+<A HREF="#fert">fertilizer level table</A>).
+
+<DT>Machinery	
+<BR>(<B>X</B>.mach)
+
+<DD>This map is used to find the fertilizer availability
+factor for the top 1 cm depth of soil. The category labels
+allowed are <EM>large offset disk</EM>, <EM>moldboard
+plow</EM>, <EM>lister</EM>, <EM>chisel plow</EM>,
+<EM>disk</EM>, <EM>field cultivator</EM>, <EM>row
+cultivator</EM>, <EM>anhydrous applicator</EM>, <EM>rod
+weeder</EM>, <EM>planter</EM>, <EM>smooth</EM></EM>, or
+<EM>no till</EM>. The category label for urban, water,
+marsh or farmsteads can be no till or smooth (refer
+<A HREF="#ferta">fertilizer availability factor table</A>).
+
+<DT>Channel slope	
+<BR>(<B>X</B>.chsl)
+
+<DD>A channel slope length map has to be prepared by the
+user.  Percentage of channel slope should be the value of
+the category in that cell. If this layer is missing, the
+user has the choice to either enter the name of layer which
+has the channel slope values or can accept the default
+value of 50% of the overland slope value as the channel
+slope value (recommended by the AGNPS manual).
+
+<DT>Slope length factor	
+<BR>(<B>X</B>.slen)
+
+<DD>A slope length factor layer in feet has to be prepared
+by the user for each cell. The value should be the value of
+the category in that cell.
+
+<DT>USLE C factor	
+<BR>(<B>X</B>.C)
+
+<DD>The USLE C factor map should contain the value of the C
+factor as the category label for each cell.
+
+</OL>
+
+<A NAME="fert"><H2>Fertilization level</H2></A>
+
+<PRE>
+----------------------------------------------------------
+|Level of      | Assumed fertilization (lb/acre) |       |
+|fertilization |          N         P            | Input |
+|--------------------------------------------------------|
+|None                     0         0            |  0    |
+|Low                     50         20           |  1    |
+|Medium                 100         40           |  2    |
+|High                   200         80           |  3    |
+----------------------------------------------------------
+</PRE>
+
+<A NAME="ferta"><H2>Fertilizer availability factors according
+to tillage practice </H2></A>
+
+<PRE>
+--------------------------------------------------------------
+Tillage practice          Fertilizer availability factor (%)
+--------------------------------------------------------------
+Large offset disk                      40
+Moldboard plow                         10
+Lister                                 20
+Chisel plow                            67
+Disk                                   50
+Field cultivator                       70
+Row cultivator                         50
+Anhydrous applicator                   85
+Rod weeder                             95
+Planter                                85
+Smooth or no till                     100
+--------------------------------------------------------------
+</PRE>
+
+<b>Appendix 2: AGNPS cell input parameters</b>
+
+<PRE>
+box;
+l.
+1. Cell number
+2. Number of cell into which it drains
+3. SCS curve number
+4. Average slope %
+5. Slope shape factor
+6. Average field slope length
+7. Average channel slope
+8. Slope length factor
+9. Mannings roughness coefficient for channel
+10. Soil erodibility factor (K) from USLE
+11. Cropping factor (C) from USLE
+12. Practice factor (P) from USLE
+13. Surface condition constant (based on land use)
+14. Aspect (one of 8 directions indicating drainage from cell)
+15. Soil texture (sand, silt, clay, peat)
+16. Fertilization level (zero, low, medium, high)
+17. Incorporation factor (% fertilizer left in top 1 cm of soil)
+18. Point source indicator (indicates existence of a point source input within a cell)
+19. Gully source level (estimate of amount, tons, or gully erosion in a cell)
+20. Chemical oxygen demand factor
+21. Impoundment factor (indicating presence of an impoundment terrace system within the cell)
+22. Channel indicator (indicating existence of a defined channel within a cell)
+
+</PRE>
+The 8 basic input GIS layers required for extracting the
+data by the AGNPS-GRASS input interface tool are:
+
+<OL>
+<LI>Soils
+<LI>Elevation
+<LI>Land use
+<LI>Management practice
+<LI>Fertilizer or nutrient inputs
+<LI>Type of machinery used for land preparation
+<LI>Channel slope 
+<LI>Slope length factor
+</OL>
+
+Five pieces of data are required for the total watershed:
+<OL>
+<LI> Watershed identification/description
+<LI> Precipitation (inches)
+<LI> Erosion Index (EI-value) for that storm/rainfall event
+<LI> Area of each cell (acres)
+<LI> Outlet cell number
+</OL>
+
+An important implication of this set is that AGNPS does
+<STRONG>not</STRONG> accommodate non-uniform storms,
+<EM>i.e.</EM> it uses a lumped modeling approach for its
+rainfall.
+
+<P>
+
+For each watershed element, AGNPS requires the following 22
+input data values (its distributed parameter information):
+
+<OL>
+<LI> Cell number
+<LI> Number of the cell into which it drains
+<LI> SCS curve number
+<LI> Average land slope (%)
+<LI> Slope shape factor (uniform, convex or concave)
+<LI> Average field slope length (feet)
+<LI> Average channel slope (%)
+<LI> Average channel side slope (%)
+<LI> Mannings roughness coefficient for the channel
+<LI> Soil erodibility factor (K) for USLE
+<LI> Cropping factor (C) for USLE
+<LI> Practice factor (P) for USLE
+<LI> Surface condition constant (factor based on land use)
+<LI> Aspect (one of 8 possible directions indicating the principal 
+     drainage direction from the cell)
+<LI> Soil texture (sand, silt, clay, peat)
+<LI> Fertilization level (zero, low, medium, high)
+<LI> Incorporation factor (% fertilizer left in top 1 cm of soil)
+<LI> Point source indicator (indicates existence of a
+     point source input within a cell)
+<LI> Gully source level (estimate of amount, tons, of gulley 
+     erosion in a cell)
+<LI> Chemical oxygen demand factor
+<LI> Impoundment factor (indicating the presence of an
+     impoundment terrace system within the cell)
+<LI> Channel indicator (indicating existence of a defined 
+     channel within a cell)
+</OL>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.agnps50.run.html">r.agnps50.run</A></EM><BR>
+<EM><A HREF="r.agnps50.view.html">r.agnps50.view</A></EM><BR>
+<p>
+<a href=http://www.geog.uni-hannover.de/phygeo/grass/agnps.html>AGNPS Page</a>
+</BODY>
+</html>

@@ -1,5 +1,4 @@
-EXTRA_CFLAGS= -g $(VECT_INCLUDE)
-
+PGM= v.autocorr
 OFILES = \
 	main.o \
 	c_matrix.o\
@@ -28,15 +27,9 @@ CFILES = \
         mean.c \
         att2cat.c
 
-PROG = $(BIN_CONTRIB_CMD)/v.autocorr 
-#PROG = v.autocorr 
+LIBES= $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(PROG): $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(COORCNVLIB) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-
-$(RASTERLIB): #
-$(DISPLAYLIB): #
-$(COORCNVLIB): #
-$(GISLIB): #
-$(VECTLIB): #
+$(LIBES): #
 

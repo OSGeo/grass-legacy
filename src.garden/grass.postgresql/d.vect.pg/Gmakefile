@@ -1,0 +1,20 @@
+PGM       = $(BIN_CMD)/d.vect.pg
+LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB) \
+		$(PQLIBPATH) $(PQLIB) $(XEXTRALIBS)
+EXTRA_CFLAGS = $(PQINCPATH) 
+# -Dunlink=puts
+
+OBJS = \
+	main.o\
+	bsearch.o\
+	find.o\
+	getAllOpts.o \
+	getSopts.o \
+	buildInfxQry.o \
+	runInfxFile.o \
+	plotCat.o 
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

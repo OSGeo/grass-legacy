@@ -1,6 +1,6 @@
 /*  @(#)p_to_line.c    2.1  6/26/87  */
 #include <math.h>
-#include "digit.h"
+#include "Vect.h"
 
 /*
 *  functions: point_to_area(),

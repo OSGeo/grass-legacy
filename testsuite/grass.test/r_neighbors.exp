@@ -1,0 +1,39 @@
+#
+
+set test "r.neighbors negative floating point values test"
+set timeout 15
+
+# check if we find the executable
+if { ![isgrassbin "r.neighbors"] } \
+{
+    fail "$test: module missing"
+}
+
+# invoke mapcalc for creating raster map
+spawn "g.region" "-d" "-p"
+
+expect {
+    -re {.*projection:.*$} { verbose "projection set to default" }
+    timeout                { perror "g.region timeout" ; slay "g.region" }
+}
+
+spawn "r.mapcalc" "testmap=-0.001"
+expect {
+    -re {.*GRASS.*$} { verbose "map testmap created" }
+    timeout          { perror "r.mapcalc timeout" ; slay "r.mapcalc" }
+}
+
+spawn "r.neighbors" "input=testmap" "output=testmap2" "method=median" "size=3"
+expect {
+    -re {.*GRASS.*$} { verbose "neighbors map calculated" }
+    timeout          { perror "r.neighbors timeout" ; slay "r.neighbors" }
+}
+
+spawn "r.stats" "-q" "testmap2"
+expect {
+    -re {^-0\.001.*$} { pass "$test" }
+    -re {\*.*$}       { fail "$test" }
+    -re {.*GRASS.*$}  { fail "$test" }
+    timeout           { fail "$test" ; slay "r.stats" }
+}
+slay "r.stats"

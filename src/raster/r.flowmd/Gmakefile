@@ -1,0 +1,12 @@
+OBJ=rflow5f_1.o
+SOURCES=rflow5f_1.c
+
+PGM=r.flowmd
+
+LIBES=$(VECTLIB) $(GISLIB) $(BITMAPLIB) $(LINKMLIB) $(DIG_ATTLIB)
+
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$GISLIB:#
+$VECTLIB:#

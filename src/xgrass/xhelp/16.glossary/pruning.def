@@ -1,6 +1,0 @@
-
-
-pruning - The process of selectively deleting information.  Used
-most often in GRASS to describe the process of deleting unnecessary
-points from lines in @glossary("digit files",16.glossary/digfile.def).  This process reselects points
-based on a current @glossary("threshold",16.glossary/threshold.def) value specified by the user.

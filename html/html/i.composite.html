@@ -1,0 +1,147 @@
+<html>
+
+<TITLE>i.composite</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>i.composite</b></EM>  -
+An 
+<A HREF="../imagery.html">imagery</A> 
+function that creates a color composite image
+from three imagery band files specified by the user.
+
+<BR>
+
+<EM>(GRASS Image Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>i.composite</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>i.composite</EM>
+
+creates a color composite image from three band files
+specified by the user.  The user specifies the bands to be
+used by assigning a red, blue, and/or green color to each
+band.  The resulting image is a raster map layer of raw
+spectral data composed of the three bands chosen by the
+user.  The color composite can then be displayed, painted,
+or manipulated as would any raster map layer in GRASS.
+
+<P>
+
+The first prompt asks the user for the
+<A HREF="i.group.html">imagery</A> group whose files are
+to be used.
+
+
+<P>
+
+The following menu is then displayed:
+
+
+<PRE>
+Please indicate which files to use for red, green, and blue
+colors.  You may leave any color out.  You may specify more
+than one color per file.  However, each color may only be
+specified once.  For example, to get a full color image,
+specify r,g,b for 3 different files.  To get a grey scale
+image, specify rgb for a single file.
+
+                     b__    spot.1
+                     g__    spot.2
+                     r__    spot.3
+                     ___    spotclass
+                     ___    spotreject
+
+    AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE
+                  (OR &lt;Ctrl-C&gt; TO CANCEL)
+</PRE>
+
+
+The user is then allowed to check the choice of bands:
+
+
+<PRE>
+               Colors assigned as follows:
+
+                 RED:     spot.3@mapsetname
+                 GREEN:   spot.2@mapsetname
+                 BLUE:    spot.1@mapsetname
+
+                     Look ok? (y/n) [y]
+</PRE>
+
+
+The color table that is created has 1000 colors (10 saturation
+levels (or shades) per primary color (blue, green, red)).  The
+number of colors that can be displayed at one time on a color graphics
+monitor will depend on the graphics monitor being used.  For example,
+if the graphics monitor can only display 512 colors at
+one time, then the user must run the GRASS command
+<B><A HREF="d.colormode.html">d.colormode</A> mode=fixed</B> before displaying the raster map layer.
+The colors that cannot be displayed will be assigned to the nearest
+displayable color, and the raster map layer
+will retain its relative color accuracy.  If the user is in
+<EM>float</EM> colormode, however, the raster map layer displayed on the
+graphics monitor will not accurately reflect the map's real color assignments.
+
+
+<P>
+
+The user is then asked to name the composite image raster map layer.
+The percentage completed is echoed to the screen and <EM><A HREF="r.support.html">r.support</A></EM> files
+are created automatically.
+
+<H2>NOTES</H2>
+
+The user should always check the geographic region settings
+before running most 
+<A HREF="../imagery.html">imagery</A> commands.  
+
+It is very easy for the boundaries of the geographic region
+to be completely off the image.  Before running
+<EM>i.composite</EM>, or other
+
+<A HREF="../imagery.html">imagery</A> commands,
+the user should probably set the geographic region
+to match that of the raster map layers to be read.
+This can be accomplished using option 4 of the
+<EM><A HREF="g.region.html">g.region</A></EM>
+command.
+
+
+<P>
+
+This program is interactive and requires no command line arguments.
+
+<H2>SEE ALSO</H2>
+
+<EM>GRASS Tutorial: <A HREF="../Postscript/imagery.ps">Image Processing</A></EM>
+
+<P>
+
+<EM><A HREF="d.colormode.html">d.colormode</A></EM><br>
+<EM><A HREF="d.his.html">d.his</A></EM><br>
+<EM><A HREF="d.rast.html">d.rast</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="i.colors.html">i.colors</A></EM><br>
+<EM><A HREF="i.grey.scale.html">i.grey.scale</A></EM><br>
+<EM><A HREF="i.group.html">i.group</A></EM><br>
+<EM><A HREF="r.support.html">r.support</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,
+U.S.Army Construction Engineering 
+Research Laboratory
+</body>
+</html>

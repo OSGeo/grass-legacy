@@ -1,0 +1,14 @@
+PGM=s.proj
+
+OFILES = \
+	main.o
+
+LIBES=$(GPROJLIB) $(GISLIB) $(LIBPROJSUPP) $(LIBPROJ) $(DATETIMELIB)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(GPROJLIB): #
+$(GISLIB): #
+$(DATETIMELIB): #
+

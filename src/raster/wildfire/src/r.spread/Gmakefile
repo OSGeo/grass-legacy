@@ -1,0 +1,27 @@
+PGM = r.spread 
+LIST =  main.o \
+	collect_ori.o \
+	display.o \
+	insertHa.o \
+	spread.o \
+        deleteHa.o \
+	insert2Ha.o \
+	replaceHa.o \
+	get_minHa.o \
+	fixHa.o \
+	ram2out.o \
+        select_linksB.o \
+	spot.o \
+	pick_dist.o \
+	pick_ignite.o
+#       select_linksC.o \
+#       select_linksD.o
+        
+LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #
+
+$(LIST): costHa.h cell_ptrHa.h

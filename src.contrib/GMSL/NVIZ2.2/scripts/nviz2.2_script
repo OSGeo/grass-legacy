@@ -1,0 +1,700 @@
+#!$(GISBASE)/etc/bin/contrib/cmd/NVWISH2.2 -f
+# Please log changes in the ChangeLog file in this directory
+# (Use "C-x 4 a" from emacs to add an entry)
+
+# These two lines necessary to allow auto-loading
+# If you move nviz then be sure to change these two lines
+# to reflect the location of the libraries
+# Also, don't forget to change the invocation of nvwish above.
+# auto_mkindex /data/stimpy/terry/tcl/nviz *.tcl
+# exec chmod ugo+rw tclIndex
+
+global src_boot
+
+source $src_boot/etc/nviz2.2/scripts/config.tcl
+
+global Nv_ ScriptState ScriptFile ScriptPlaying
+
+set ScriptPlaying 0
+
+##########################################################################
+#  Constants
+##########################################################################
+
+set Nv_(TOP)  	".top"
+set Nv_(APP)    ".top2"
+set Nv_(P_AREA) ".top2.panelarea.panels"
+set Nv_(AREA) 	".top2.panelarea"
+set Nv_(CALLED_SET_FOCUS) no
+set Nv_(CurrSurf) 0
+set Nv_(CurrVect) 0
+set Nv_(CurrSite) 0
+set Nv_(CurrSdiff) 0
+
+# Some quick code to initialize the CurrSurf, CurrVect and CurrSite variables
+set temp [Nget_surf_list]
+if {[llength $temp] == 0} then {
+    set Nv_(CurrSurf) 0
+} else {
+    set Nv_(CurrSurf) [lindex $temp 0]
+}
+
+set temp [Nget_vect_list]
+if {[llength $temp] == 0} then {
+    set Nv_(CurrVect) 0
+} else {
+    set Nv_(CurrVect) [lindex $temp 0]
+}
+
+set temp [Nget_site_list]
+if {[llength $temp] == 0} then {
+    set Nv_(CurrSite) 0
+} else {
+    set Nv_(CurrSite) [lindex $temp 0]
+}
+
+##########################################################################
+#*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+##########################################################################
+
+# Load this array with the names of the panels that are to be used
+#
+# 11/1/95 - This array loaded by searching through all the directories
+#   in $user_path.  For each directory in this path, the contents of
+#   the file panelIndex is added to this array
+
+# note we need a TRACE proc for whenever this list is changed dynamically
+
+puts "Adding panels from $user_path"
+
+set Nv_(panels) [list]
+foreach i $user_path {
+    set index $i/panelIndex
+    if {[file exists $index]} then {
+	set panels [exec cat $index]
+	set panels [split $panels]
+	foreach j $panels {
+	    if {[lsearch -exact $Nv_(panels) $j] == -1} then {
+		lappend Nv_(panels) $j
+	    }
+	}
+    }
+}
+
+# DEBUG
+puts Nv_(panels)
+
+##########################################################################
+#*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+##########################################################################
+
+
+
+#########################################################################
+# Make sure panel has been loaded
+#########################################################################
+proc Nv_force_panel { name } {
+    global Nv_
+    
+    set P $Nv_(P_AREA)
+    
+    # create panel if it doesn't already exist
+    set path $P.$name
+    if [catch {set Nv_($path)}] {
+	set file panel_$name.tcl
+	set Nv_($path) [mk$name\Panel $path]
+    }
+}
+
+###########################################################################
+# add key bindings so that menu shortcut keys can be used
+###########################################################################
+
+###########################################################################
+# make toplevel
+###########################################################################
+
+proc Nv_makeGUI {{BASE .top}} {
+    global Nv_ ScriptState src_boot
+    
+    set Nv_(First) 1
+    wm geometry . 585x720
+    wm minsize . 300 200
+    pack [frame $BASE] -side top -fill both -expand y
+    toplevel .top2
+    wm geometry .top2 "+400+300"
+    wm resizable .top2 false false
+    set Nv_(height) 720
+
+# DEBUG
+puts "toplevel made"
+
+    ###########################################################################
+    # make informational text widget
+    ###########################################################################
+    
+    set Nv_(text) "Start"
+    entry $BASE.entry -relief sunken -borderwidth 3 -state disabled \
+	-textvariable Nv_(text)
+    place $BASE.entry -relx 0 -relwidth .70 -rely 0
+##  glxwin $BASE.canvas -rgb true -db true -zbuffersize -1
+    togl $BASE.canvas -rgba true -double true -depth true 
+    place $BASE.canvas -relx .01 -rely .03 -relwidth .98 -relheight .97
+    
+    bind $BASE.canvas <Expose> {Nv_expose %W}
+    bind $BASE.canvas <Configure> {set Nv_(height) %h}
+##  bind $BASE.canvas <Configure> {if [%W islinked] {glx_viewport %w %h; \
+							 set Nv_(height) %h}}
+    update
+    
+# DEBUG
+puts "info widget made"
+    ###########################################################################
+    # make  panel area
+    ###########################################################################
+    frame $Nv_(AREA) -relief raised -borderwidth 3 
+    pack $Nv_(AREA) -side top -fill both -expand yes
+    frame $Nv_(P_AREA) -relief raised -borderwidth 3
+
+
+# DEBUG
+puts "panel area made"
+
+    ###########################################################################
+    # make  menubar
+    ###########################################################################
+    frame $Nv_(AREA).menu  -relief raised -borderwidth 1 
+    pack $Nv_(AREA).menu -side top -fill x -anchor nw
+
+    # Make label with invisible text to hold "Please wait..." message
+    label $Nv_(AREA).menu.wait_pls -text "Please Wait..." \
+        -fg gray90
+
+    pack $Nv_(P_AREA) -side top -fill both -expand yes
+
+    pack [Nv_mkMenu $Nv_(AREA).menu.file File \
+	      {"Load State..." "Save State..." "Load 3d Settings..." \
+		  "Save 3d Settings..." "Image Dump..." "Reset" "Quit" } \
+	      {0 0 1 1 0 0 0} \
+	      { "load_state" "save_state" "load_3dview" "save_3dview" \
+		  "Cascade img menu2" "reset_Nviz" "Nv_close_scripting ; exit ; puts"}]\
+	-side left
+
+# DEBUG
+puts "file menu made"
+
+
+    # Take these out later when these features are more reliable
+    $Nv_(AREA).menu.file.m entryconfigure 3 -state disabled
+    $Nv_(AREA).menu.file.m entryconfigure 4 -state disabled
+
+# DEBUG
+puts "disabled made"
+
+
+    pack [Nv_mkPanelMenu $Nv_(AREA).menu.panel] -side left
+# DEBUG
+puts "scripting menu 0 made"
+
+    
+    # Make a menu entry for scripting
+    menubutton $Nv_(AREA).menu.scripting -text Scripting \
+	-menu $Nv_(AREA).menu.scripting.m -underline 0
+    menu $Nv_(AREA).menu.scripting.m
+# DEBUG
+puts "scripting menu 1 made"
+
+    $Nv_(AREA).menu.scripting.m add checkbutton -label "On" \
+	-onvalue 1 -offvalue 0 -variable ScriptState \
+	-command "script_handle_on"
+# DEBUG
+puts "scripting menu 2 made"
+
+    $Nv_(AREA).menu.scripting.m add command -label "Scriptfile" \
+	-underline 0 -command SetScriptFile
+# DEBUG
+puts "scripting menu 3 made"
+
+    $Nv_(AREA).menu.scripting.m add command -label "Script Tools" \
+	-underline 1 -command {exec NVWISH2.2 -f script_tools -q &}
+# DEBUG
+puts "scripting menu 4 made"
+
+    $Nv_(AREA).menu.scripting.m add command -label "Add Script Line" \
+	-underline 0 -command AddScriptLine
+# DEBUG
+puts "scripting menu 5 made"
+
+    $Nv_(AREA).menu.scripting.m add command -label "Add Script Cmd" \
+	-underline 1 -command AddScriptCmd
+# DEBUG
+puts "scripting menu 6 made"
+
+    $Nv_(AREA).menu.scripting.m add command -label "Play Script" \
+	-underline 0 -command {set ScriptPlaying 1 ; exec NVWISH2.2 -f script_play -q &}
+# DEBUG
+puts "scripting menu 7 made"
+
+    $Nv_(AREA).menu.scripting.m add command -label "Close Script" \
+	-underline 1 -command Nv_close_scripting
+    
+    pack $Nv_(AREA).menu.scripting -side left
+    
+
+# DEBUG
+puts "scripting menu made"
+
+    tk_menuBar $Nv_(AREA).menu $Nv_(AREA).menu.file $Nv_(AREA).menu.panel \
+	$Nv_(AREA).menu.scripting
+    
+    set Nv_(Q) [Q_init 2]
+    
+    pack $Nv_(AREA).menu.wait_pls -side left -fill x -expand yes
+
+    # initialize Main panel
+    Nv_force_panel main
+    Nv_openPanel  main 0
+    update
+
+# DEBUG
+puts "menubar made"
+
+    focus $Nv_(AREA).menu
+
+    return $BASE
+}
+
+proc menu2 { menu } {
+
+	menu $menu \
+	-tearoff 0
+
+	$menu add command \
+	-command dump_rgb -underline 0 -label "IRIS RGB Image" 
+	$menu add command \
+	-command dump_ppm -underline 0 -label "PPM Image"
+	$menu add command \
+	-command dump_tif -underline 0 -label "TIFF Image"
+    }
+
+proc dump_rgb { } {
+    # This routine should use: Nwrite_rgb $fname
+    set fname [create_file_browser .file_browser 1]
+    # show we are busy
+    appBusy
+
+    if {$fname != -1} then {
+	Nwrite_rgb $fname
+    }
+    # show user can proceed
+    appNotBusy
+}
+
+proc dump_ppm { } {
+    # This routine should use: Nwrite_ppm $fname
+    set fname [create_file_browser .file_browser 1]
+    # show we are busy
+    appBusy
+
+    if {$fname != -1} then {
+       Nwrite_ppm $fname
+    }
+    # show user can proceed
+    appNotBusy
+}
+
+proc dump_tif { } {
+    # This routine should use: Nwrite_tif $fname
+    set fname [create_file_browser .file_browser 1]
+    # show we are busy
+    appBusy
+
+    if {$fname != -1} then {
+       Nwrite_tif $fname
+    }
+    # show user can proceed
+    appNotBusy
+}
+
+###########################################################################
+# null proc
+###########################################################################
+proc null {args} {}
+
+#########################################################################
+# open panel P.name  with routine mkP and place in appropriate spot
+#########################################################################
+proc Nv_openPanel { name {pos -1}} {
+    global Nv_
+    
+    set P $Nv_(P_AREA)
+    
+    # create panel if it doesn't already exist
+    set path $P.$name
+    
+    # if panel has not yet been created ...
+    # or panel is one that needs updating ...
+    if {[catch {set panel $Nv_($path)}]} then {
+	set panel [mk$name\Panel $path]
+	set Nv_($path) $panel
+    } elseif {"site" == "$name"} then {
+	set panel [mk$name\Panel $path]
+	set Nv_($path) $panel
+    } elseif {"vect" == "$name"} then {
+	set panel [mk$name\Panel $path]
+	set Nv_($path) $panel
+    } elseif {"sdiff" == "$name"} then {
+	set panel [mk$name\Panel $path]
+	set Nv_($path) $panel
+    }
+    
+    # if panel is not already mapped ...
+    if { [lsearch [place slaves $P] $P.$name] < 0 } {
+	if {$pos < 0} { 
+	    Q_add $Nv_(Q) $panel 
+	} else { 
+	    Nv_mapPanel $path $panel $pos
+	}
+    }
+}
+
+proc Nv_mapPanel {name panel pos } {
+    set size [St_get $panel  size]
+    
+    if [catch {set height [expr $size * .33]}] { set height 1}
+    if [catch {set y [expr $pos * .33]}] { set y 0}
+    
+    pack $name -side top -fill x -expand no -anchor n
+}
+
+proc Nv_closePanel { name } { 
+    pack forget $name 
+}
+
+# Simple routine to uniformly close any opened panels
+proc Nv_closeAllPanels { } {
+    global Nv_
+
+    set children [pack slaves $Nv_(P_AREA)]
+
+    foreach i $children {
+	if {[regexp main "$i"] != 1} then {
+	    pack forget $i
+	}
+    }
+}
+
+############################################################################
+# procedure to make  PANEL pulldown menu
+###########################################################################
+proc Nv_mkPanelMenu { P { name Panel } } {
+    global Nv_
+    
+    menubutton $P -text $name -menu $P.m -underline 0
+    menu $P.m
+    
+# DEBUG
+puts "Nv_mkPanelMenu 1"
+
+    set j 0
+    foreach i $Nv_(panels) {
+	Nv_force_panel $i
+	
+	set panel $Nv_($Nv_(P_AREA).$i)
+	
+	$P.m add command -label [St_get $panel name] \
+	    -command "Nv_openPanel $i"
+# DEBUG
+puts "Nv_mkPanelMenu 2 $j"
+
+
+	incr j
+    }
+    
+    return $P
+}
+
+proc inform {args} {
+    global Nv_
+    
+    set Nv_(text) ""
+    foreach S $args {
+	set Nv_(text) [concat $Nv_(text) $S]
+    }
+}
+
+proc Nv_expose { W } {
+    global Nv_
+
+#    if [$W islinked] then {
+	if {$Nv_(First)} then {
+	    init_graphics
+	    set Nv_(First) 0
+	} else {
+	    Nquick_draw
+	}
+#    }
+}
+
+proc save_3dview { dummy } {
+    # Ask the user for a file name to save in
+    set file_name [create_map_browser .browse_3dview_file "3d.view" 1]
+    
+    if {$file_name == -1} then return
+
+    Nsave_3dview $file_name
+}
+
+proc load_3dview { dummy } {
+    # Ask the user for a file name to load from
+    set file_name [create_map_browser .browse_3dview_file "3d.view" 1]
+    
+    if {$file_name == -1} then return
+
+    Nload_3dview $file_name
+
+}
+
+# Procedure to load the state of the system, calls a special
+# load procedure for each panel in the system.
+proc load_state { dummy  } {
+    global Nv_
+
+    # First open a file for reading in the state
+    set new_file [create_file_browser .state_file 1 0]
+    if {$new_file == -1} then return
+    
+    # show that we are busy
+    appBusy
+
+    load_state_aux $new_file
+    
+    # show that we aren't busy anymore
+    appNotBusy
+}
+
+proc load_state_aux { new_file} {
+    global Nv_
+
+    if {[catch {set file_hook [open $new_file r]} error_code] != 0} then {
+	display_error "While opening file: $error_code"
+	return
+    }
+
+    # Close all panels fist
+    Nv_closeAllPanels
+
+    # First line before panel data contains the name of the panel which
+    # saved the data.  Use this name to build the command which will 
+    # read in the data and call the appropriate routine.
+    while {[gets $file_hook i] != -1} {
+	set cmd_name "Nviz_$i"
+	append cmd_name "_load"
+	if {[catch {$cmd_name $file_hook} error_code] != 0} then {
+	    puts "Diagnostic: $error_code --  Load procedure for panel $i may not be defined"
+	}
+    }
+
+    # Finally, close the file and exit
+    close $file_hook
+
+    # Go through each of the panels one at a time and force them to open
+    # This should update them all so they display correctly
+    foreach i $Nv_(panels) {
+	Nv_openPanel $i
+	update
+    }
+
+    Nv_closeAllPanels
+
+    return 1
+}
+
+# Procedure to completely reset nviz, calls a special reset procedure
+# in each panel in the system
+proc reset_Nviz { dummy } {
+    global Nv_
+
+    # Query user to verify this choice
+    if {[tk_dialog .reset_all "Reset" \
+	     "Really reset Nviz?" {} 1 "Ok" "Cancel"] == 1} then return
+
+    # Show that we are busy
+    appBusy
+
+    # Now call each of the panels one at a time and pass the
+    # file hook so that each panel can write out its state
+    set tmp_list $Nv_(panels)
+    lappend tmp_list main
+    foreach i $tmp_list {
+	set cmd_name "Nviz_$i"
+	append cmd_name "_reset"
+	if {[catch {$cmd_name} error_code] != 0} then {
+	    puts "Diagnostic: $error_code --  Reset procedure for panel $i may not be defined"
+	}
+    }
+
+    # Go through each of the panels one at a time and force them to open
+    # This should update them all so they display correctly
+    foreach i $Nv_(panels) {
+	Nv_openPanel $i
+	update
+    }
+
+    Nv_closeAllPanels
+
+    # Show that user may proceed
+    appNotBusy
+
+}
+
+# This routine is equivalent to the one above except it skips alot of
+# the user interface BS
+proc reset_nviz_aux { } {
+    global Nv_
+
+    # Now call each of the panels one at a time and pass the
+    # file hook so that each panel can write out its state
+    set tmp_list $Nv_(panels)
+    lappend tmp_list main
+    foreach i $tmp_list {
+	set cmd_name "Nviz_$i"
+	append cmd_name "_reset"
+	if {[catch {$cmd_name} error_code] != 0} then {
+	    puts "Diagnostic: $error_code --  Reset procedure for panel $i may not be defined"
+	}
+    }
+
+    # Go through each of the panels one at a time and force them to open
+    # This should update them all so they display correctly
+    foreach i $Nv_(panels) {
+	Nv_openPanel $i
+	update
+    }
+
+    Nv_closeAllPanels
+
+}
+
+# Procedure to save the state of the system, calls a special
+# save procedure for each panel in the system. 
+proc save_state { dummy } {
+    global Nv_
+
+    # First open a file for writing out the state
+    set new_file [create_file_browser .state_file 1 0]
+    if {$new_file == -1} then return
+
+    if {[catch {set file_hook [open $new_file w]} error_code] != 0} then {
+	display_error "While opening file: $error_code"
+	return
+    }
+
+    # Show that we are busy
+    appBusy
+
+    # Now call each of the panels one at a time and pass the
+    # file hook so that each panel can write out its state
+    set tmp_list $Nv_(panels)
+    lappend tmp_list main
+    foreach i $tmp_list {
+	puts $file_hook "$i"
+	set cmd_name "Nviz_$i"
+	append cmd_name "_save"
+	if {[catch {$cmd_name $file_hook} error_code] != 0} then {
+	    puts "Diagnostic: $error_code --  Save procedure for panel $i may not be defined"
+	}
+    }
+
+    # Finally, close the file and exit
+    close $file_hook
+
+    # Show that user may proceed
+    appNotBusy
+}
+
+###################################################
+# Routine to display error 
+###################################################
+proc display_error { err_string } {
+    tk_dialog .file_error "File Error" "$err_string" \
+	@/usr/local/lib/tk/bitmaps/error \
+	0 "Dismiss"
+}
+
+# Set the cancel function for drawing
+Nset_cancel_func update
+
+# and start the ball rolling...
+Nv_makeGUI .top
+
+# Center the view on initialization
+look_center
+
+# *********************************************************************
+# ************* Additional Keyframe Animator Channels *****************
+# *********************************************************************
+
+# Add cutplane 0 to the keyframe animator
+# Create the cutplane entry list
+global Nv_
+set Nv_(CutPlaneFence) OFF
+set entry_list [list [list pos_x dynamic] [list pos_y dynamic] [list pos_z dynamic]]
+lappend entry_list [list blend_type static]
+lappend entry_list [list rot dynamic] [list tilt dynamic]
+
+keyanimAddChannel $Nv_(P_AREA).kanimator "cplane-0" $entry_list \
+    cutplane0_get_entries cutplane0_set_entries
+
+# Undo the "Please wait..." message
+update
+catch {destroy .wait_ok}
+
+# *********************************************************************
+# Automatics command line script playing functions
+# *********************************************************************
+
+# If the -script option was used then we need to immediately start a script
+# We kill Nviz after the script has finished playing
+if {[catch {set NvizPlayScript}] == 0} then {
+    global NvizPlayScript NvizPlayScriptProcess ScriptPlaying
+    global NvizScriptKill
+
+    set ScriptPlaying 1
+    set NvizPlayScriptProcess [exec NVWISH2.2 -f script_play -q script="$NvizPlayScript" &]
+
+    if {[catch {set NvizScriptKill}] == 0} then {
+	after 5000 CheckScriptDone
+    }
+}
+
+proc CheckScriptDone {} {
+    global NvizPlayScriptProcess
+
+    set answer [catch {exec ps -p $NvizPlayScriptProcess | grep $NvizPlayScriptProcess}]
+    puts "Done check = $answer"
+    if {$answer == 1} then {
+	exit 
+    }
+
+    after 5000 CheckScriptDone
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -11,14 +11,11 @@
 #define MAXBND 7
 #define MAXNUMBER 9999999999.0
 
-
-
-
+/*
+ * $Id$
+ */
 
 int ERDFTYP;   /* ERDAS file type ( 4 or other) */
-
-
-
 
 
 /******** Routine that does byte swapping for 2 or 4 byte word in place *******/
@@ -100,6 +97,7 @@ int main (int argc, char *argv[])
 {
 /*Define some variables*/
 	struct erdheader erdashd;
+	struct GModule *module;
 	struct Option *erdasopt, *inopt ;
 	struct Flag *headflag,*swapflag,*bit16flag;
 	struct Cell_head reg ;
@@ -115,6 +113,10 @@ int main (int argc, char *argv[])
 	
 	G_gisinit(argv[0]);
 
+    module = G_define_module();
+    module->description =
+		"Creates ERDAS files from raster files.";
+					        
 	headflag = G_define_flag();
 	headflag->key = 'l';
 	headflag->description = "List the ERDAS header only";
@@ -136,7 +138,7 @@ int main (int argc, char *argv[])
 	inopt->description     = "Input raster layers.";
 
 	erdasopt = G_define_option();
-	erdasopt->key             = "ouput";
+	erdasopt->key             = "output";
 	erdasopt->type            =  TYPE_STRING;
 	erdasopt->required        =  YES;
 	erdasopt->description     = "Erdas output file name";

@@ -1,0 +1,11 @@
+v.in.garmin.sh -- import gps data from garmin receiver 
+                  into binary vector file in GRASS
+ 
+ c) Andreas Lange, andreas.lange@rhein-main.de
+ 
+ requirements: GRASS 4.x or GRASS 5.0 with v.in.ascii
+               gpstrans from Carsten Tschach et al. 
+                 get gpstrans from: ftp://www.mayko.com/pub/gpstrans or from
+                 http://www.metalab.unc.edu/pub/Linux/science/cartography/
+               GNU bourne again shell
+   unix tools: grep, cat, tac, cut, paste, awk/nawk/gawk, sed

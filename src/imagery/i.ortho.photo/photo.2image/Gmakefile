@@ -1,5 +1,4 @@
 PROGRAM      = photo.2image
-#HOME         = ../bin
 HOME        = $(ETC)/imagery
 
 EXTRA_CFLAGS = -I../libes
@@ -38,7 +37,7 @@ LIST=main.o\
 	zoom_pnt.o\
 	use_camera.o
 
-LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(GISLIB) $(RASTERLIB) $(VASK)
+LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(GISLIB) $(RASTERLIB) $(VASKLIB)
 
 $(HOME)/$(PROGRAM): $(LIST) $(LIBES)
 	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)

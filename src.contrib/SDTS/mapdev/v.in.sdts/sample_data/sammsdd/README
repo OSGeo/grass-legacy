@@ -1,0 +1,8 @@
+This transfer is a Spatial Data Transfer Standard (SDTS) master data 
+dictionary transfer for U.S. Geological Survey Digital Line Graph 3 (DLG-3) 
+data.  It meets the requirements for separate data dictionary transfers in 
+Annex A of the SDTS Topological Vector Profile.
+
+NOTE:  The sample SDTS transfer in directory wmhy does not use this data
+dictionary, since it is an older sample transfer.
+

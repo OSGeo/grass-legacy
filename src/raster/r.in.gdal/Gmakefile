@@ -1,0 +1,9 @@
+PGM    = r.in.gdal
+
+LIST   = main.o gbgetsymbol.o gdalbridge.o make_loc.o
+
+LIBES= $(GISLIB) $(IMAGERYLIB) 
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(DLLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

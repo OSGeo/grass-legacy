@@ -6,6 +6,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "site.h"
 #include "local_proto.h"
 
 #define SITE_BLOCK 512
@@ -104,7 +105,8 @@ int s_alloc=0, snum=0, outside=0, tot_mem=0;
     while((ret = G_site_get (sfd, CurSites[snum])) != -1){
 
 	if(-2 == ret){
-	    badformat++; 
+	    badformat++;
+	    fprintf(stderr, "Bad format found for site: #%i (ignored)\n", snum + 1);
 	    continue;
 	}
 	
@@ -218,6 +220,7 @@ int badformat=0, ret;
 	
 	if(-2 == ret){
 	    badformat++; 
+            fprintf(stderr, "Bad format found for site: #%i (ignored)\n", snum + 1);
 	    continue;
 	}
 	

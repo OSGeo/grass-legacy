@@ -310,7 +310,7 @@ int build_polys (		/* ==ISLE== */
 		write_cur_line (Maps, MapC, LPoints, AB_MODE, abs(Polys[AB_MODE]->spoly[Vert->subpoly].Area->lines[Vert->line]));
 
 		/* make next node new cur point */
-		swap_pointers (&Vert, &Vert2);
+		swap_pointers ((void **)&Vert, (void **)&Vert2);
 		node_to_poly_vert (Polys[AB_MODE], Vert2, Vert);/*ISLE*/
 
 		goto next_line;

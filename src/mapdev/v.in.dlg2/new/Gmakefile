@@ -1,4 +1,5 @@
-EXTRA_CFLAGS = $(VECT_INCLUDE)
+PGM=v.in.dlg2
+
 OFILES = \
 	v.in.dlg.o \
 	a_b_main.o \
@@ -8,11 +9,8 @@ OFILES = \
 	pad.o
 
 
-all:	$(BIN_MAIN_CMD)/v.in.dlg2
-
 #  there will be no frontends to dlg code, but code is still there
 #          $(BIN)/b.a.dlg $(BIN)/a.b.dlg
 
-$(BIN_MAIN_CMD)/v.in.dlg2:	$(OFILES)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
-
+$(BIN_CMD)/$(PGM): $(OFILES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)

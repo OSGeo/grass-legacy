@@ -1,5 +1,4 @@
 PGM = r.neighbors
-HOME = $(BIN_MAIN_INTER)
 
 LIST =  main.o\
 	ask_method.o\
@@ -9,7 +8,7 @@ LIST =  main.o\
 	new_screen.o\
 	scan_int.o
 
-$(HOME)/$(PGM):  $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB) $(TERMLIB) -o $@
+$(BIN_INTER)/$(PGM):  $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB):      # incase this changes
+$(GISLIB):      # in case this changes

@@ -1,0 +1,15 @@
+PGM = s.in.mif
+
+LIST = 	lex.yy.o \
+	main.o \
+	writesite.o
+
+LIBES=$(VECTLIB) $(GISLIB) $(DATETIMELIB) $(VASKLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+lex.yy.c : mif.l
+	$(LEX) mif.l
+
+$(VECTLIB): #
+$(GISLIB): # 

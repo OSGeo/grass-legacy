@@ -5,7 +5,7 @@
 */
 
 #include <stdio.h>
-#include "digit.h"
+#include "Vect.h"
 #include "Vect.h"
 #include "gis.h"
 

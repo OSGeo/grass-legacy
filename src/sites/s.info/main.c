@@ -2,6 +2,7 @@
  */
 
 #include "gis.h"
+#include "site.h"
 #include "local_proto.h"
 
 struct Cell_head    Wind;
@@ -14,9 +15,14 @@ main (int argc, char *argv[])
     struct Flag 	*shh, *inreg, *quar;
     char 		errbuf[100];
     char                *sitesmap;
-
+    struct GModule      *module;
 
     G_gisinit (argv[0]);
+   
+    module = G_define_module();
+    module->description =      
+                    "reports attribute, label, and other information about a "
+                    "sites file";
 
     in = G_define_option();
     in->key                    = "sites";

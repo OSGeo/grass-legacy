@@ -1,37 +1,11 @@
-NAME=s.probplt
-
-PGM=$(BIN_CONTRIB_CMD)/$(NAME)
-#PGM=$(NAME)
-
-MSEC=4
-MDIR=$(SRC)/../man/man$(MSEC)
-MUTL=$(SRC)/../man/utilities
+PGM=s.probplt
 
 LIST=probplot.o readz.o cdpath.o zstats.o pltsqq.o save.o
 
 LIBES=$(RASTERLIB) $(GISLIB) $(DATETIMELIB) 
 
-$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(MATHLIB) $(XDRLIB)
-
-man:  
-	-cp $(NAME).man $(MDIR)/$(NAME)
-	nroff $(MUTL)/man.version $(MDIR)/.class-header \
-	   $(MUTL)/man.header $(NAME).man $(MDIR)/.class-notice \
-	   > $(GISBASE)/man/$(MSEC)/$(NAME)
-
-clean: 
-	-rm -f *.BAK core *~ $(NAME) tags plt.dat plt.gp 
-	-rm -f *.bbl *.blg *.dvi *.aux *.log *.toc
-
-realclean: clean
-	-rm -rf OBJ* LIB*
-
-veryclean: realclean
-
-dist: veryclean
-	(cd .. ; tar cvf $(PGM).tar $(PGM); gzip $(PGM).tar; mv $(PGM).tar.gz /home/pasture/a/ftp/pub/mccauley/grass)
-
 
 pltsqq.o	: probplot.h 
 probplot.o	: probplot.h 

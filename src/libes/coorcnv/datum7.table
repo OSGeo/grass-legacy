@@ -1,0 +1,34 @@
+# this file contains datum shift parameters for the 
+# 7 parameter Bursa-Wolf datum shift transformation,
+# it supplies a datum database table for GRASS 5.0
+# format:
+# shortname "description" ellipsoid dx= dy= dz= Rx= Ry= Rz= M=
+#
+# where short name is a single word datum specifier,
+# description is a long name (enclosed in double qoutes), 
+# ellipsoid is the acronym of the ellipsoid used with this map datum, 
+# dx, dy, dz, Rx, Ry, Rz (in radians) and M (in ppm) are the 
+# datum shift parameters.
+# no spaces allowed before or after the =.
+#
+# Please comment and cite the source if you add new parameters 
+# to this list. 
+# from NIMA document TR8350.2
+
+# different sources:
+# Potsdam Rauenberg, unknown source
+#potsdam		"Potsdam Rauenberg" 	  bessel        dx=-597.539 dy=-37.068 dz=-402.808 Rx=-1.37   Ry=0.37    Rz=-2.65  M=-8.92
+# Potsdam Rauenberg 1950
+potsdam		"Potsdam Rauenberg 1950"  bessel	dx=586.0    dy=87.0    dz=409.0    Rx=-0.52   Ry=-0.15   Rz=2.82   M=9
+#potsdam 	"Potsdam Rauenberg 1950"  bessel	dy=582.0    dy=105.0   dz=414.0    Rx=-1.04   Ry=-0.35   Rz=3.08   M=9
+# System 42 1983 Pulkow ?
+#S-42	"System 42 1983"		  krassovsky	dx=24.0     dy=-123.0  dz=-94.0    Rx=-0.02   Ry=0.25    Rz=0.13   M=1.1
+pulko	"Pulkovo 1942"			  krassovsky 	dx=24.0     dy=-123.0  dz=-94.0    Rx=-0.02   Ry=0.25    Rz=0.13   M=1.1
+# OSGB36 from document 50000026.pdf from Ordnance Survey at http://www.o-s.co.uk/services/geo6.htm
+# these parameters transform from ERTS89 (WGS84) to OSGB36/ODN datum, accuracy about 5 meters. 
+# M = Scale, Scale Factor = 1:20.4894 => Scale (1-SF) = 0.9511942 ??? don't know what this is here, so don't use it. 
+# OSGB36	"Ordnance Survey GB 1938"	airy	dx=-446.448 dy=125.157 dy=-542.060 Rx=-0.1502 Ry=-0.2470 Rz=-0.8421 M=0.9511942
+# from the NIMA geotrans package from the file 7_param.dat (with the us-american sign convention?)
+#eur50	"European 1950 mean"	          international	dx=-102.0   dy=-102.0  dz=-129.0   Rx=0.413   Ry=-0.184  Rz=0.385  M=-0.0000024644
+#osgb36	"Ordnance GB 1936 mean"		  airy	        dx=446.0    dy=-99.0   dz=544      Rx=-0.945  Ry=-0.261  Rz=-0.435 M=-0.0000208927
+# acronym "Descriptive Name" ellipsoid    dx= dy= dz= Rx= Ry= Rz= M=

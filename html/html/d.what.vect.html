@@ -1,0 +1,149 @@
+<html>
+
+<TITLE>d.what.vect</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.what.vect</b></EM> - Allows the user to interactively query the category 
+contents of a (binary) vector map layer at user-selected locations 
+within the current geographic region. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.what.vect</B> 
+<BR>
+<B>d.what.vect help</B> 
+<BR>
+<B>d.what.vect</B> [<B>-1t</B>] <B>map=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.what.vect</EM>
+outputs the category value(s) associated with user-specified location(s) 
+in a user-specified vector map layer. This program currently returns 
+only category values for line types in the user-specified vector file. 
+
+<P>
+
+The program will query the contents of the vector map layer named by the 
+user on the command line. This map layer must exist in the user's current 
+mapset search path. 
+
+<P>
+
+The program activates the mouse, and expects the user to indicate the 
+location(s) to be queried by depressing a mouse button over desired location(s) 
+within the current geographic region in the 
+active display frame on the graphic monitor. 
+
+<H3>Flag:</H3> 
+
+<DL>
+<DT><B>-1</B>
+<DD>Identify and query just one point location. Only one mouse click 
+is executed. This option is provided for shell scripts and programs 
+that want to obtain only one point from the user. 
+<DT><B>-t</B>
+<DD>Provide only terse output. This option is provided to simplify the 
+parsing of output by other programs. 
+</DL>
+
+
+<H3>Parameter:</H3> 
+
+<DL>
+<DT><B>map=</B><EM>name</EM>
+<DD>Name of an existing binary vector map in the user's mapset search path. 
+</DL>
+
+<H2>EXAMPLE</H2>
+
+A sample <EM>d.what.vect</EM> session is given below. Although it is not 
+necessary that the user first display a vector map to be queried in the 
+active display frame, it is helpful to have a map displayed there for 
+reference. 
+<P>
+<DT>
+<DD><B><A HREF="d.vect.html">d.vect</A> map=</B><EM>roads.24000</EM>
+<DD> Displays the 1:24,000 scale <EM>roads</EM> vector 
+map layer on the graphics monitor. 
+<P>
+<DD><B>d.what.vect map=</B><EM>roads.24000</EM>
+<DD>
+After typing this, the user moves the mouse to a desired location 
+on the displayed <EM>roads</EM> map layer, 
+and presses the left mouse button to query the category value of the 
+<EM>roads</EM> vector map at this location. The program then 
+outputs the category value of a line type corresponding to this 
+user-selected map location, for the vector map queried by the user. 
+
+</DT>
+<P>
+The query may be repeated as often as desired using the left mouse button. 
+The right button on the mouse is used to quit the <EM>d.what.vect</EM> session. 
+
+<P>
+
+Users can also use this program inside of shell scripts
+that require as input a map category value and a mouse
+button depressed.  Users can set the -1 flag to run
+<EM>d.what.vect</EM> only once, and return only the map
+category value found and the number of the mouse button
+depressed. (Mouse button return values are as follows: 0
+indicates no button was pressed, 1 indicates that the left
+mouse button was pressed, 2 indicates the middle button was
+pressed, and 3 indicates that the right mouse button was
+pressed.)
+
+<H2>NOTES</H2>
+
+Currently, <EM>d.what.vect</EM> only outputs category values for lines. 
+It does not output category labels for lines, nor output 
+category values or category labels for areas in a vector file. 
+
+<P>
+
+<EM>d.what.vect</EM>
+will always print its output to the user's terminal screen. 
+<EM>d.what.vect</EM> output can be redirected into a file; 
+however, if it is, the output will go both to the screen and to the file. 
+For example: 
+<DL>
+<DD>
+<B>d.what.vect map=</B><EM>roads</EM><B> &gt; what.out</B> 
+</DL>
+
+will both send <EM>d.what.vect</EM> output to the screen
+and capture its output in the file named <EM>what.out</EM>.
+
+<P>
+
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM> 
+can be used to interactively query the map category contents 
+of multiple raster map layers at user-selected locations. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.rast.html">d.rast</A></EM><br>
+<EM><A HREF="d.vect.html">d.vect</A></EM><br>
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Jim Hinthorne,
+Central Washington University
+<BR>
+Upgrades: Dennis Finch, National Park Service 
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<TITLE>v.out.scsgef</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.out.scsgef</b></EM>  - Converts binary GRASS vector data to
+ASCII SCS-GEF vector data format.
+
+<BR>
+
+<EM>"(SCS GRASS Vector Data Export Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.out.scsgef</B>
+
+<BR>
+
+<B>v.out.scsgef help</B>
+
+<BR>
+
+<B>v.out.scsgef input=</B><EM>name </EM><B>output=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+The GRASS program <EM>v.out.scsgef</EM> allows the user to convert GRASS vector 
+data to SCS-GEF format, for export to other systems. 
+<P>
+<EM>v.out.scsgef</EM> creates the SCS-GEF header, lines, text, and feature
+files. All files are created and placed in a <EM>$LOCATION/gef</EM> directory
+as a single UNIX file under the output name.
+
+<P>
+
+The following is the SCS-GEF file structure:
+<PRE>
+          header record 1
+             |     |
+          header record n
+          -head
+          line record 1
+             |     |
+          line record n
+          -line
+          text record 1
+             |     |
+          text record n
+          -text
+          feature record 1
+             |     |
+          feature record n
+          -feat
+</PRE>
+The user will be required to use standard UNIX commands to separate
+this file into individual files as required by SCS-GEF specifications.
+<P>
+<P>
+The user can run the program non-interactively by specifying all
+program arguments on the command line, in the form:
+<P>
+<DL>
+<DD>
+<B>v.out.scsgef input=</B><EM>name </EM><B>output=</B><EM>name</EM>
+</DL>
+<P>
+<P>
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>Name of the binary GRASS vector data file to be converted to SCS-GEF format.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Name to be assigned to the SCS-GEF output file created.
+</DL>
+
+
+<P>
+
+If the user does not give the names of an input and output file on the
+command line, the program will prompt the user to enter these names.
+
+<H2>NOTES</H2>
+
+The <EM>v.out.scsgef</EM> program requires that the <EM>input</EM> vector map layer
+have full topological information associated with it.
+This means that the GRASS program
+<EM>v.support</EM>
+should have been the last program to have effected any changes upon the
+vector map layer before it is run through <EM>v.out.scsgef</EM>.
+If this is not the case, <EM>v.out.scsgef</EM> will terminate
+with a message that <EM>v.support</EM> needs to be run.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.export.html">v.export</A>,</EM>
+<EM><A HREF="v.import.html">v.import</A>,</EM>
+<EM><A HREF="v.out.ascii.html">v.out.ascii</A>,</EM>
+<EM><A HREF="v.out.dlg.html">v.out.dlg</A>,</EM>
+<EM><A HREF="v.out.dlg.scs.html">v.out.dlg.scs</A>,</EM>
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHOR</H2>
+
+R.L.Glenn, USDA, SCS, NHQ-CGIS
+
+
+<P>
+

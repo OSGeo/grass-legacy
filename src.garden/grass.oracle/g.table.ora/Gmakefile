@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/g.table.ora
+PGM       = $(BIN_CMD)/g.table.ora
 LIBES     = $(GISLIB)
 
 
@@ -9,7 +9,7 @@ OBJS = \
 	delcr.o
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(LIBES): #
 

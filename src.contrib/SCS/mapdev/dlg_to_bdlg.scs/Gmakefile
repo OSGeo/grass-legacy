@@ -28,7 +28,7 @@ all:	$(ETC)/v.a.b.dlg.scs
 $(ETC)/v.a.b.dlg.scs:	$(A_B_OFILES)
 	$(CC) $(LDFLAGS) -o $@ $(A_B_OFILES) $(GISLIB) $(MATHLIB) $(EXTRALIB)
 
-$(BIN_CONTRIB_CMD)/a.b.dlg: $(A_B_F)
+$(BIN_CMD)/a.b.dlg: $(A_B_F)
 	$(CC) $(LDFLAGS) -o $@ $(A_B_F) $(GISLIB) $(MATHLIB) $(EXTRALIB)
 
 a_b_dlg.o:	dlghead.h  format.h

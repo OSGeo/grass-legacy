@@ -5,7 +5,7 @@
 # FC = /usr/lang/f77
 
 FILL = $(ETC)/fill
-PGM = $(BIN_ALPHA_CMD)/r.fill.dir
+PGM = $(BIN_CMD)/r.fill.dir
 
 # this program uses a number of sub-programs.
 # these we will put in $GIS/etc/fill
@@ -28,25 +28,25 @@ OBJ6 = ppupdate.o
 all: $(PGM) $(PGM1) $(PGM2) $(PGM3) $(PGM4) $(PGM5) $(PGM6) 
 
 $(PGM): $(OBJ) $(GISLIB)
-	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(MATHLIB) -o $@
+	$(CC) $(LDFLAGS) $(OBJ) -o $@ $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(PGM1): $(OBJ1) $(FILL)
-	$(FC) $(LDFLAGS) $(OBJ1) -o $@
+	$(FC) $(LDFLAGS) $(OBJ1) -o $@ $(XDRLIB)
 
 $(PGM2): $(OBJ2) $(FILL)
-	$(FC) $(LDFLAGS) $(OBJ2) -o $@
+	$(FC) $(LDFLAGS) $(OBJ2) -o $@ $(XDRLIB)
 
 $(PGM3): $(OBJ3) $(FILL)
-	$(FC) $(LDFLAGS) $(OBJ3) -o $@
+	$(FC) $(LDFLAGS) $(OBJ3) -o $@ $(XDRLIB)
 
 $(PGM4): $(OBJ4) $(FILL)
-	$(FC) $(LDFLAGS) $(OBJ4) -o $@
+	$(FC) $(LDFLAGS) $(OBJ4) -o $@ $(XDRLIB)
 
 $(PGM5): $(OBJ5) $(FILL)
-	$(FC) $(LDFLAGS) $(OBJ5) -o $@
+	$(FC) $(LDFLAGS) $(OBJ5) -o $@ $(XDRLIB)
 
 $(PGM6): $(OBJ6) $(FILL)
-	$(FC) $(LDFLAGS) $(OBJ6) -o $@
+	$(FC) $(LDFLAGS) $(OBJ6) -o $@ $(XDRLIB)
 
 $(FILL):
 	mkdir $(FILL)

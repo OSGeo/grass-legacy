@@ -1,3 +1,4 @@
+PGM = v.spag
 
 BUILD_LIB = $(SRC)/mapdev/v.build/libbuild.a
 
@@ -6,7 +7,6 @@ ATTLIB	= 	$(LIBDIR)/libdig_atts.a
 #	use -DRAM_OFF if you do not want the digit file loaded into memory
 #	for optimization,   this is also toggle-able from the command line if -DRAM_ON is used
 
-EXTRA_CFLAGS	=	$(VECT_INCLUDE)
 
 
 OFILES2 = \
@@ -53,23 +53,9 @@ B_A_OFILES = \
 	b_a_plus.o \
 	write_ascii.o 
 
+LIBES=$(VECTLIB) $(VECTLIB_REAL) $(DIG2LIB) $(GISLIB) $(DIG_ATTLIB)
 
-PROG =    $(BIN_MAIN_CMD)/v.spag
-all:    $(PROG)
-
-
-
-$(PROG): $(OFILES) $(BUILD_LIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(BUILD_LIB) $(VECTLIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(BUILD_LIB) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(BUILD_LIB) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(BUILD_LIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB): #
-
-#$(BIN)/spag2: $(OFILES2) $(VECTLIB)
-#	$(CC) $(LDFLAGS) -o $@ $(OFILES2) $(BUILD_LIB) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
-#
-
-saber_src:
-	#load $(CFLAGS) $(CFILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
-
-saber_src2:
-	#load $(CFLAGS) $(CFILES2) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)

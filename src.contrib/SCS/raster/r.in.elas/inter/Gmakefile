@@ -7,9 +7,9 @@ OFILES = \
 	eltran.o \
 	genproc.o
 
-all:	$(BIN_CONTRIB_INTER)/$(PGM)
+all:	$(BIN_INTER)/$(PGM)
 
-$(BIN_CONTRIB_INTER)/$(PGM):	$(OFILES)
+$(BIN_INTER)/$(PGM):	$(OFILES)
 	cc $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(MATHLIB) -ltermcap $(SHAREDLIB)
 
 

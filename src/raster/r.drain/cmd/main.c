@@ -1,11 +1,24 @@
-/**********************************************************************/ 
-/*                                                                    */
-/*      This is the main program for tracing out the path that a      */
-/*      drop of water would take if released at a certain location    */
-/*      on an input elevation map.  The program was written by        */
-/*	Kewan Q. Khawaja                                              */
-/*                                                                    */
-/**********************************************************************/
+/*
+ * $Id$
+ */
+
+/* -*-c-basic-offset: 4;-*- */
+/************************************************************************ 
+*                                                                       *
+*      This is the main program for tracing out the path that a         *
+*      drop of water would take if released at a certain location       *
+*      on an input elevation map.  The program was written by           *
+*      Kewan Q. Khawaja                                                 *
+*      kewan@techlogix.com                                              *
+*                                                                       *
+* update to FP (2000): Pierre de Mouveaux <pmx@audiovu.com><pmx@free.fr>*
+* bugfix in FCELL, DCELL: Markus Neteler 12/2000                        *
+*************************************************************************/
+
+/* uncomment this to get debug messages */
+/*
+#define DEBUG
+*/
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -13,6 +26,7 @@
 #include <string.h>
 #include "segment.h"
 #include "gis.h"
+#include "site.h"
 #define MAIN
 #include "stash.h"
 
@@ -30,17 +44,33 @@
 
 #include "drain_cmd.h"
 
+struct metrics {
+	double ew_res, ns_res, diag_res;
+};
+
+
+
 struct Cell_head window;
-CELL *value;
 int nrows, ncols;
 SEGMENT in_seg, out_seg;
+int data_type, data_type2;
+int exclude_nulls = 1;
+double null_value = 0.0;
+int mode=0;
+int cum = 0;
+float fcum =0.0;
+double dcum = 0.0;
+double count = 0.0 ;
+int count2 = 0;
+
+struct metrics* m = NULL;
 
 int 
 main (int argc, char *argv[])
 {
 	int n ;
 	int col, row, 
-	len, flag,
+	len, len2, flag,
 	srows, scols,
 	elevation_fd, drain_path_fd,
 	in_fd, out_fd;
@@ -50,10 +80,16 @@ main (int argc, char *argv[])
 	*elevation_mapset,
 	*in_file, *out_file,
 	buf[400];
-	CELL *cell;
+	void *cell;
 	POINT *PRES_PT=NULL, *NEW_START_PT, *PRESENT_PT=NULL;
 	double east, north;
-	struct Option *opt1, *opt2, *opt3;
+	struct GModule *module;
+	struct Option *opt1, *opt2, *opt3, *opt4, *opt5;
+	struct Flag *flag1, *flag2, *flag3;
+
+	module = G_define_module();
+	module->description =
+		"Traces a flow through an elevation model on a raster map layer.";
 
 	opt2 = G_define_option() ;
 	opt2->key        = "input" ;
@@ -76,6 +112,34 @@ main (int argc, char *argv[])
 	opt3->key_desc   = "x,y" ;
 	opt3->description= "The map E and N grid coordinates of a starting point";
 
+	opt4 = G_define_option() ;
+	opt4->key        = "sites" ;
+	opt4->type       = TYPE_STRING;
+	opt4->gisprompt       = "old,site_list,sites";
+	opt4->required   = NO;
+	opt4->description= "Starting points site file";
+
+	opt5 = G_define_option() ;
+	opt5->key        = "null_value" ;
+	opt5->type       = TYPE_DOUBLE;
+	opt5->key_desc   = "null cells value" ;
+	opt5->required   = NO;
+	opt5->multiple   = NO;
+/*  	opt5->answer     = ""; */
+	opt5->description= "Value assigned to null cells. Null cells are excluded by default";
+
+	flag1 = G_define_flag();
+	flag1->key = 'c';
+	flag1->description = "Copy input cell values on output";
+
+	flag2 = G_define_flag();
+	flag2->key = 'a';
+	flag2->description = "Accumulate input values along the path";
+
+	flag3 = G_define_flag();
+	flag3->key = 'n';
+	flag3->description = "Count cell numbers along the path";
+
 	G_gisinit (argv[0]);
 
 	current_mapset = G_mapset();
@@ -95,6 +159,11 @@ main (int argc, char *argv[])
 	if (G_parser(argc, argv))
 		exit(-1);
 	
+	if ((opt5->answer != NULL) && (sscanf(opt5->answer, "%lf", &null_value) == 1))	{
+		exclude_nulls = 0;
+		printf("\nnull %f\n",null_value);
+	} 
+
 	if (opt3->answer) 
 	{  
 	    for(n=0; opt3->answers[n] != NULL; n+=2)
@@ -124,6 +193,72 @@ main (int argc, char *argv[])
 	    	}
 	    }
 	}
+
+	if (opt4->answer) 
+	{  
+#if 1
+		FILE* fp;
+		Site *site = NULL;               /* pointer to Site */
+		search_mapset = "";
+ 
+		search_mapset = G_find_file ("site_lists", opt4->answer, "");
+
+		fp = G_fopen_sites_old ( opt4->answer, search_mapset);
+
+		site = G_site_new_struct (-1, 2, 0, 0);
+
+	    for (; (G_site_get(fp,site) != EOF);) {
+			if (!G_site_in_region (site, &window))
+				continue;
+			
+/*  		G_scan_easting  (opt3->answers[n  ], &east, G_projection()) ; */
+/*  		G_scan_northing (opt3->answers[n+1], &north, G_projection()) ; */
+			col = (int)G_easting_to_col(site->east, &window);
+			row = (int)G_northing_to_row(site->north, &window );
+
+			NEW_START_PT = (POINT *) (malloc (sizeof (POINT)));
+
+			NEW_ROW = row;
+			NEW_COL = col;
+			NEW_NEXT= NULL;
+
+			if (head_start_pt == NULL)
+			{
+				head_start_pt = NEW_START_PT;
+				PRESENT_PT = head_start_pt;
+			}
+			else 
+			{
+				NEXT_START_PT = NEW_START_PT;
+				PRESENT_PT = NEXT_START_PT ;
+				/*return(0); quote this out to accept multi-starters,
+				  -modified by Jianping Xu*/
+		    	}
+		}
+		G_site_free_struct(site);	
+		fclose(fp);
+#endif
+	}
+
+	if (flag1->answer)
+		mode = 1;
+	if (flag2->answer) {
+		if (mode)
+			G_warning("Both -c and -a flags specified! r.drain will use the -a flag");
+		mode = 2;
+	}
+	if (flag3->answer && flag2->answer && flag1->answer) {
+		sprintf(buf, "Don't specify -n with other flags!");
+		G_fatal_error (buf);
+	}
+	if (flag3->answer && (flag2->answer || flag1->answer)) {
+		sprintf(buf, "Don't specify -n with other flags!");
+		G_fatal_error (buf);
+	}
+	if (flag3->answer) {
+		mode = 3;
+	}
+
 
 /*  Check if elevation layer exists in data base  */
 	search_mapset = "";
@@ -176,7 +311,26 @@ main (int argc, char *argv[])
 	nrows = G_window_rows();
 	ncols = G_window_cols();
 
-	cell = G_allocate_cell_buf();
+	m = (struct metrics*) malloc(nrows*sizeof(struct metrics));
+	
+	if (m==NULL)
+		G_fatal_error("Metrics allocation");
+
+	G_begin_distance_calculations();
+	{
+		double e1,n1,e2,n2;
+		e1=window.east;
+		n1=window.north;
+		e2=e1+window.ew_res;
+		n2=n1-window.ns_res;
+		for (n=0;n<nrows;n++) {
+			m[n].ew_res = G_distance(e1,n1,e2,n1);
+			m[n].ns_res = G_distance(e1,n1,e1,n2);
+			m[n].diag_res = G_distance(e1,n1,e2,n2);
+			e2=e1+window.ew_res;
+			n2=n1-window.ns_res;
+		}
+	}
 
 	/*  Open elevation cell layer for reading  */
 	elevation_fd = G_open_cell_old
@@ -189,8 +343,36 @@ main (int argc, char *argv[])
 		exit(1);
 	}
 
+	/* input */
+	data_type = G_raster_map_type(elevation_layer, elevation_mapset);
+	cell = G_allocate_raster_buf(data_type); 
+	len = G_raster_size(data_type);
+
+#ifdef DEBUG
+fprintf(stderr,"Mode type: %i\n", mode);
+#endif
+	/* output */
+        data_type2 = data_type;  /* would be better to store CELL_TYPE when mode == 3 */
+	len2 = G_raster_size(data_type2);
+
+/*   Parameters for map submatrices   */
+#ifdef DEBUG
+	if (1) {
+		switch (data_type) {
+			case (CELL_TYPE):
+				fprintf(stderr,"Source map is: Integer cell type,");
+			break;
+			case (FCELL_TYPE):
+				fprintf(stderr,"Source map is: Floating point (float) cell type,");
+			break;
+			case (DCELL_TYPE):
+				fprintf(stderr,"Source map is: Floating point (double) cell type,");
+			break;
+		}
+			fprintf(stderr," %d rows, %d cols.\n", nrows, ncols);
+	}
+#endif
 	/*   Parameters for map submatrices   */
-	len = sizeof(CELL);
 
 	srows = nrows/4 + 1;
 	scols = ncols/4 + 1;
@@ -201,7 +383,7 @@ main (int argc, char *argv[])
 	close(in_fd);
 
 	out_fd = creat(out_file,0666);
-	segment_format(out_fd, nrows, ncols, srows, scols, len);
+	segment_format(out_fd, nrows, ncols, srows, scols, len2);
 	close(out_fd);
 
 	/*   Open initialize and segment all files  */
@@ -214,16 +396,35 @@ main (int argc, char *argv[])
 	/*   Write the elevation layer in the segmented file  */
 	for( row=0 ; row<nrows ; row++ )
 	{
-		if( G_get_map_row(elevation_fd, cell, row)<0)
+		if(G_get_raster_row(elevation_fd, cell, row,data_type)<0)
 			exit(1);
 		segment_put_row(&in_seg, cell, row);
 	}
-	
+	segment_flush(&in_seg);
+
+/*	G_close_cell(elevation_fd); */
+
+	G_free(cell);
+
+	cell = G_allocate_raster_buf(data_type2); 
+	G_set_null_value(cell,ncols,data_type2);
+	for( row=0 ; row<nrows ; row++ )
+	{
+		segment_put_row(&out_seg, cell, row);
+	}
+	segment_flush(&out_seg);
+
 	/* If the output layer containing the marked starting positions*/
 	/* already exists, create a linked list of starting locations  */
 	if (flag == 1) {
+		int data_type3;
+		int data_size3;
+		void* cell3;
+
 		drain_path_fd = G_open_cell_old (drain_path_layer,
 		    drain_path_mapset);
+		data_type3 = G_raster_map_type(drain_path_layer,drain_path_mapset);
+		data_size3 = G_raster_size(data_type3);
 
 		if (drain_path_fd < 0)
 		{
@@ -232,19 +433,19 @@ main (int argc, char *argv[])
 			exit(1);
 		}
 
+		cell3 = G_allocate_raster_buf(data_type3); 
+
 		/*  Search for the marked starting pts and make list	*/
 		for(row = 0; row < nrows; row++)
 		{
-			if(G_get_map_row(drain_path_fd,cell,row) < 0)
-		/* Originally: if(G_get_map_row(drain_path_layer,cell,row) < 0).
-		 * Fixed by Jianping Xu*/
+			if(G_get_raster_row(drain_path_fd,cell,row, data_type3) < 0)
 				exit(1);
 
 			for(col = 0; col < ncols; col++)
 			{
-				if(cell[col] > 0)
-				{
+				if(!G_is_null_value(cell3,data_type3)) {
 					POINT *new;
+					G_incr_void_ptr(cell3,data_size3);
 					new = make_point((POINT *)NULL,row,col,0.0);
 					if(head_start_pt == NULL)
 						head_start_pt = new;
@@ -255,6 +456,9 @@ main (int argc, char *argv[])
 			}	/* loop over cols */
 		}	/* loop over rows */
 
+		printf("free--------------\n");
+		G_free(cell3);
+		printf("free--------------\n");
 		G_close_cell(drain_path_fd);
 	}
 
@@ -278,21 +482,28 @@ main (int argc, char *argv[])
 	PRES_PT = head_start_pt;
 	while(PRES_PT != NULL)
 	{
+		if (mode == 2 || mode == 3) {
+			cum = 0;
+			fcum= 0.0;
+			dcum = 0.0;
+		}
 		drain_path_finder (PRES_PT);
 		PRES_PT = NEXT_PT;
 	}
 
 
 	/*  Open output layer for writing   */
-	drain_path_fd = G_open_cell_new(drain_path_layer);
+	drain_path_fd = G_open_raster_new(drain_path_layer,data_type2);
 
 	/*  Write pending updates by segment_put() to outputmap   */
+	segment_flush(&in_seg);
 	segment_flush(&out_seg);
 
 	for ( row=0 ; row<nrows; row++ )
 	{
 		segment_get_row(&out_seg,cell,row);
-		if (G_put_map_row(drain_path_fd,cell)<0)
+
+		if (G_put_raster_row(drain_path_fd,cell,data_type2)<0)
 			exit(1);
 	}
 
@@ -302,7 +513,7 @@ main (int argc, char *argv[])
 	close(in_fd);               /* close all files */
 	close(out_fd);
 
-	G_close_cell(drain_path_fd);
+  	G_close_cell(drain_path_fd); 
 	G_close_cell(elevation_fd);
 
 	unlink(in_file);       /* remove submatrix files  */
@@ -328,48 +539,224 @@ int drain_path_finder ( POINT *PRES_PT)
 	POINT *head = NULL, *make_neighbors_list();
 
 	{ /* start a new block to minimize variable use in recursion */
-		int data,row,col,p_elev;
-		value = &data;
+		int row, col, val, val2;
+		double p_elev, dval, fdata, ddummy;
+		float f, fval, f_elev, fdummy;
 
-		/* if the pt has already been traversed, return			*/
-		segment_get(&out_seg, value, PRES_PT_ROW, PRES_PT_COL);
-		if(data == 1) return 0;		/* already traversed	*/
 
-		/* otherwise, mark on output					*/
-		data = 1;
-		segment_put(&out_seg, value, PRES_PT_ROW, PRES_PT_COL);
+		switch (data_type) {
+			case (CELL_TYPE):
+				segment_get(&out_seg, &val2, PRES_PT_ROW, PRES_PT_COL);
+				if(!G_is_c_null_value(&val2)) 
+					return 0;		/* already traversed	*/
+				segment_get(&in_seg, &val, PRES_PT_ROW, PRES_PT_COL);
+				p_elev = val;
+#ifdef DEBUG
+fprintf(stderr, "p_elev: %g\n", p_elev);
+#endif
+				/* mode: flag */
+				switch (mode){
+					case 0: {
+						val2 = 1;
+						segment_put(&out_seg, &val2, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					}
+					case 1: {
+						segment_put(&out_seg, &val, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					}
+					case 2: {
+						cum+=val;
+						segment_put(&out_seg, &cum, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					}
+					case 3: {                  /* added MN 12/2000 */
+						count2+=1;
+						segment_put(&out_seg, &count2, PRES_PT_ROW, PRES_PT_COL);
+						break;
+					}
+				}						
+					
+				/* check the elevations of neighbouring pts to determine the	*/
+				/* next pt(s) for the drop to flow				*/
+				for (row = PRES_PT_ROW -1;
+					 row <= (PRES_PT_ROW +1) && row < nrows; row++)
+				{
+					if (row < 0) continue;
 
-		value = &p_elev;
-		segment_get(&in_seg, value, PRES_PT_ROW, PRES_PT_COL);
+					for (col = PRES_PT_COL -1;
+						 col <= (PRES_PT_COL +1)  && col < ncols; col++)
+					{
+						if (col < 0) continue;
+						if (row == PRES_PT_ROW && col == PRES_PT_COL) continue;
 
-		value = &data;
-
-		/* check the elevations of neighbouring pts to determine the	*/
-		/* next pt(s) for the drop to flow				*/
-
-		for (row = PRES_PT_ROW -1;
-		    row <= (PRES_PT_ROW +1) && row < nrows; row++)
-		{
-			if (row < 0) continue;
-
-			for (col = PRES_PT_COL -1;
-			    col <= (PRES_PT_COL +1)  && col < ncols; col++)
-			{
-				if (col < 0) continue;
-				if (row == PRES_PT_ROW && col == PRES_PT_COL) continue;
-
-				segment_get(&in_seg, value, row, col);
-
+						segment_get(&in_seg, &val, row, col);
+						if (G_is_c_null_value(&val)) {
+							if (exclude_nulls) {
+								continue;
+							} else {
+								fdata = null_value;
+							} 
+						} else {
+							fdata = val;
+						}
 				/* elev of neighbor is higher. i.e. no chance of flow	*/
-				if(data > p_elev) continue;
+						if (fdata > p_elev)
+								continue;
 
-				/* if elev of neighbor is equal or lower consider for	*/
-				/* addition to the list of pts where water will flow	*/
-				head = make_neighbors_list(head, row, col, data,
-				    PRES_PT_ROW, PRES_PT_COL, p_elev);
+						/* if elev of neighbor is equal or lower consider for	*/
+						/* addition to the list of pts where water will flow	*/
+						head = make_neighbors_list(head, row, col, fdata,
+												   PRES_PT_ROW, PRES_PT_COL, p_elev);
 
-			}	/* end of "col" loop */
-		}	/* end of "row" loop */
+					}	/* end of "col" loop */
+				}	/* end of "row" loop */
+				break;
+			case (FCELL_TYPE):
+				segment_get(&out_seg, &fval, PRES_PT_ROW, PRES_PT_COL);
+#ifdef DEBUG
+fprintf(stderr, "fval: %g\n", fval);
+#endif
+				if(!G_is_f_null_value(&fval) ) 
+					return 0;		/* already traversed	*/
+				segment_get(&in_seg, &f, PRES_PT_ROW, PRES_PT_COL);
+				f_elev = f;
+#ifdef DEBUG
+fprintf(stderr, "PRES_PT_ROW: %i - PRES_PT_COL: %i - ", PRES_PT_ROW, PRES_PT_COL);
+fprintf(stderr, "f: %g\n", f);
+#endif
+				
+				/* check the elevations of neighbouring pts to determine the	*/
+				/* next pt(s) for the drop to flow				*/
+				switch (mode){
+					case 0:
+						dval = 1;
+						segment_put(&out_seg, &fval, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					case 1:
+						segment_put(&out_seg, &f, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					case 2:
+						dcum+=f;
+						segment_put(&out_seg, &fcum, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					case 3: {                  /* added MN 12/2000 */
+						count+=1;
+						segment_put(&out_seg, &count, PRES_PT_ROW, PRES_PT_COL);
+						break;
+					}
+
+				}						
+				for (row = PRES_PT_ROW -1;
+					 row <= (PRES_PT_ROW +1) && row < nrows; row++)
+				{
+					if (row < 0) continue;
+
+					for (col = PRES_PT_COL -1;
+						 col <= (PRES_PT_COL +1)  && col < ncols; col++)
+					{
+						if (col < 0) continue;
+						if (row == PRES_PT_ROW && col == PRES_PT_COL) continue;
+
+						segment_get(&in_seg, &f, row, col);
+						if (G_is_f_null_value(&f)) {
+							if (exclude_nulls) {
+								continue;
+							} else {
+								fdummy = null_value;
+							} 
+						}  else {
+							 fdummy = f;
+						}
+
+#ifdef DEBUG
+fprintf(stderr, "PRES_PT_ROW: %i - PRES_PT_COL: %i - ", PRES_PT_ROW, PRES_PT_COL);
+fprintf(stderr, "fdummy: %g - f_elev: %g\n", fdummy, f_elev);
+#endif
+							/* elev of neighbor is higher. i.e. no chance of flow	*/
+							if(fdummy > f_elev) continue;
+
+						/* if elev of neighbor is equal or lower consider for	*/
+						/* addition to the list of pts where water will flow	*/
+						head = make_neighbors_list(head, row, col, fdummy,
+												   PRES_PT_ROW, PRES_PT_COL, p_elev);
+
+					}	/* end of "col" loop */
+				}	/* end of "row" loop */
+				break;
+			case (DCELL_TYPE):
+				segment_get(&out_seg, &dval, PRES_PT_ROW, PRES_PT_COL);
+#ifdef DEBUG
+fprintf(stderr, "dval: %g\n", dval);
+#endif
+				if(!G_is_d_null_value(&dval) ) 
+					return 0;		/* already traversed	*/
+				segment_get(&in_seg, &fdata, PRES_PT_ROW, PRES_PT_COL);
+				p_elev = fdata;
+#ifdef DEBUG
+fprintf(stderr, "fdata: %g\n", fdata);
+#endif
+				
+				/* check the elevations of neighbouring pts to determine the	*/
+				/* next pt(s) for the drop to flow				*/
+				switch (mode){
+					case 0:
+						dval = 1;
+						segment_put(&out_seg, &dval, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					case 1:
+						segment_put(&out_seg, &fdata, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					case 2:
+						dcum+=fdata;
+						segment_put(&out_seg, &dcum, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
+						break;
+					case 3: {                  /* added MN 12/2000 */
+						count+=1;
+						segment_put(&out_seg, &count, PRES_PT_ROW, PRES_PT_COL);
+						break;
+					}
+
+				}						
+				for (row = PRES_PT_ROW -1;
+					 row <= (PRES_PT_ROW +1) && row < nrows; row++)
+				{
+					if (row < 0) continue;
+
+					for (col = PRES_PT_COL -1;
+						 col <= (PRES_PT_COL +1)  && col < ncols; col++)
+					{
+						if (col < 0) continue;
+						if (row == PRES_PT_ROW && col == PRES_PT_COL) continue;
+
+						segment_get(&in_seg, &fdata, row, col);
+						if (G_is_d_null_value(&fdata)) {
+							if (exclude_nulls) {
+								continue;
+							} else {
+								ddummy = null_value;
+							} 
+						}  else {
+							 ddummy = fdata;
+						}
+
+#ifdef DEBUG
+fprintf(stderr, "PRES_PT_ROW: %i - PRES_PT_COL: %i - ", PRES_PT_ROW, PRES_PT_COL); 
+fprintf(stderr, "ddummy: %g - p_elev: %g\n", ddummy, p_elev);
+#endif							/* elev of neighbor is higher. i.e. no chance of flow	*/
+							if(ddummy > p_elev) continue;
+
+						/* if elev of neighbor is equal or lower consider for	*/
+						/* addition to the list of pts where water will flow	*/
+						head = make_neighbors_list(head, row, col, ddummy,
+												   PRES_PT_ROW, PRES_PT_COL, p_elev);
+
+					}	/* end of "col" loop */
+				}	/* end of "row" loop */
+				break;
+		}
+
+
 
 		if(head == NULL) return 0;	/* lowest pt reached */
 	}
@@ -401,15 +788,24 @@ int drain_path_finder ( POINT *PRES_PT)
 ****************************************************************/
 
 POINT *
-make_neighbors_list (POINT *head, int row, int col, int data, int p_row, int p_col, int p_elev)
+make_neighbors_list (POINT *head, int row, int col, double data, int p_row, int p_col, double p_elev)
 {
 	POINT *make_point();
 	double dist, slope, sqrt(), atan();
+#if 0	
 
 	dist = sqrt((((row - p_row) * window.ns_res) *
 	    ((row - p_row) * window.ns_res))
 	    + (((col - p_col) * window.ew_res) *
 	    ((col - p_col) * window.ew_res)));
+#else								/* (pmx) true distance , relevant whith lat-lon projections and large maps */
+	if ((p_row!=row)&&(p_col!=col))
+		dist = m[row].diag_res;
+	else if (p_row==row)
+		dist = m[row].ew_res;
+	else
+		dist = m[row].ns_res;
+#endif
 
 	slope = atan((data - p_elev)/dist);
 
@@ -492,6 +888,4 @@ free_list (POINT *head)
 
 	return 0;
 }
-
-
 

@@ -1,0 +1,828 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <TITLE>GRASS GIS 5.x - new features</TITLE>
+<!-- Created by: (c) 1999-2000 Markus Neteler, Hannover, Germany -->
+<!-- email: neteler@geog.uni-hannover.de -->
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B"
+ALINK="#FF0000">
+
+<h2>New features in GRASS 5.x - Developers notes</h2>
+[$Id$]
+<p>
+On this page you find latest development news concerning GRASS GIS 5.<br>
+You can find descriptions about new features from version upgrades.<br>
+Many thanks to all contributors!
+<p>
+[Notes:<br>
+<ul>
+<li> The current development version is available at: <a href=http://www.geog.uni-hannover.de/grass/grasscvs.html>GRASS CVS server</a>
+<li> The bug report form is at: <a href=http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html>bug report form</a>
+<li> The bug-tracking system (known bugs list) find at: <a href=http://intevation.de/rt/webrt>GRASS bug-tracking system</a>
+<li> and here is the <a href=http://intevation.de/rt/webrt?q_status=resolved&q_queue=grass&q_subject=&q_owner=&q_user=&q_user_other=&refresh=0&display=Queue>list of fixed bugs</a>]
+</ul>
+
+<hr>
+<h3><font color="#00FE00">What's new in GRASS 5 betaCVS comparing to beta11</font></h3>
+
+<hr>
+<h3><font color="#00FE00">What's new in GRASS 5 beta11 comparing to beta10</font></h3>
+
+<font color="#FF0000">Floating point raster maps and G3D raster volume maps<br>
+in zlib/FLATE compression now due to patent restrictions</font><br>
+(all floating point raster maps and G3D volumes have to be converted - <br>
+see <a href=http://www.geog.uni-hannover.de/grass/announces/announce_lzw_removal.html>announcement</a>)
+<p>
+<b>Modules fixed/updated</b> (major changes only)
+<menu>
+<li>grass5 startup: fixes on tcl/tk problems (Justin Hickey)
+<li>d.colors: fixed "u" jump bug (Markus Neteler)
+<li>i.points3: compiles now (Markus Neteler)
+<li>i.tape.tm.fast: segfault fixed (Eric G. Miller)
+<li>pg.in.dbf: fixed for inserting fields longer than 128 bytes (Federico Ponchio)
+<li>ps.map: Add some standard US paper configs (Eric G. Miller)
+<li>r.contour: fix for step<1. (Roger Bivand)
+<li>r.drain: fixed for floating-point elevations (Markus Neteler)
+<li>r.in.gdal: update to accept GDAL lib in GISBASE/lib/
+<li>r.line: region sensivity added (Markus Neteler)
+<li>r.out.tiff: file extensions fix (tif, tfw), NULL data color bugfix (Eric
+    G. Miller)
+<li>r3.out.v5d: bugfix on flipped output, region sensivity added (Markus Neteler)
+<li>r3.showdspf: re-sized colortable window, fixed window redraw (Eric G. Miller)
+<li>r.profile: rewritten, updated to FP (Bob Covill)
+<li>r.support: added cmd line parser support (Markus Neteler)
+<li>s.in.dbf: added to import dBase tables (Markus Neteler)
+<li>s.normal: bugfix on reading sites, added field selection parameter
+   (Markus Neteler)
+<li>s.to.vect: several new flags, fixed "find mapset" problem, fixed 'dim'
+  index error, fix for FP cats, category selection parameter (Eric G. Miller)
+<li>s.sv: bugfix on reading sites, added field selection parameter (Markus
+   Neteler)
+<li>s.univar: bugfix on reading sites, added field selection parameter
+   (Markus Neteler)
+<li>shade.rel.sh: fix for NULL and flat areas (David Finlayson)
+<li>tcltkgrass: fix to have flags will always be at the beginning of the
+   parameter list - needed for scripts (Justin Hickey)
+<li>v.digit: fixed core dump on SGI (Justin Hickey, Roger S. Miller)
+<li>v.in.gshhs: added to import GSHHS shoreline vectors (Bob Covill)
+<li>v.in.mif: region sensivity added (David D. Gray)
+<li>v.in.shape: bunch of bugfixes, selective import supported now (David D.
+   Gray)
+<p>
+<li> Added one line description for "-help" parameter to describe purpose of
+each module (Jan Wagner, not yet finished)
+</menu>
+
+<b>Source Code</b>
+<menu>
+<li>Makefile: bug fixed which removed /usr/local/bin when invoking "make
+    clean" (Justin Hickey)
+<li>configure: tcl/tk libs detection fixed (John Huddleston, Eric G. Miller,
+    Justin Hickey)
+<li>configure: added options to specify zlib paths (Markus Neteler)
+<li>configure: convenient switch to use XDRIVER/IPC instead of fifos (Huidae
+    Cho)
+<li>Gmakefiles/front.end: major cleanup (Markus Neteler, Justin Hickey)
+<li>LZW removal switched on:  GRASS is using DEFLATE/zlib now (Eric G. Miller)
+<li>src/libes/g3d/: major cleanup, prototypes (Eric G. Miller)
+<li>getModTime tool added, updated html/ build process (Justin Hickey)
+<li>testsuite: updated, added more modules to test (Andreas Lange)
+<li>XDRIVER/IPC: updated to run on Windows/Cygnus (Malcolm Blue)
+<li>XDRIVER/sockets: added new sockets functions G_sock_* (Eric G. Miller)
+</menu>
+
+<hr>
+<h3><font color="#00FE00">What's new in GRASS 5 beta10 comparing to beta9</font></h3>
+
+[GRASS 5.0 beta10 released 7 December 2000]
+<p>
+Fixed severe installation bug: The binaries are build within the sources
+now using "make", later "make install" copies them to their final
+destination (Justin Hickey).
+
+<hr>
+<h3><font color="#00FE00">What's new in GRASS 5 beta9 comparing to beta8</font></h3>
+
+[GRASS 5.0 beta9 released 6 December 2000]
+<p>
+<b>User's convenience</b>
+<menu>
+<li> New graphical startup for <b>existing</b> locations (the full graphical
+startup is scheduled for GRASS 5.1) with error checks (Justin Hickey)<br>
+grass5 -text<br>
+starts in common text behaviour (this preference is kept unless grass5
+-tcltk is started).
+<li> Added one line description for "-help" parameter to describe purpose of
+each module (Jan Wagner and others, not yet finished)
+</menu>
+
+<b>Modules fixed/updated</b> (major changes only)
+<menu>
+<li> d.dm: added raster legend, paint labels, monitor auto start (Radim
+     Blazek)
+<li> d.extend: added to set window region from currently displayed raster,
+     vector and sites maps with largest map region (Huidae Cho)
+<li> d.his: mask sensitive now (Huidae Cho)
+<li> d.mon: fixed -L parameter (Eric G. Miller)
+<li> d.legend: -n option fixed for null suppression (Huidae Cho)
+<li> d.pan: auto-redraw for raster, vector, sites maps (Huidae Cho)
+<li> d.rast.edit: fixed grid color menu, now convenient two mouse clicking
+ (Huidae Cho)
+<li> d.rast.pg: added labels with reclass (for float reclass through
+ r.mapcalc) (Alex Shevlakov)
+<li> d.profile: fixed for FP maps, added optional file output (Huidae Cho/Eric G. Miller)
+<li> d.save: fixed (Huidae Cho)
+<li> d.site.labels: updated, includes d.sites.label now (Eric G . Miller)
+<li> d.what.rast: added support for multiple raster maps on current window
+     (Huidae Cho)
+<li> d.what.sites: -1 flag and -t flag for terse output added (Andreas Lange)
+<li> d.what.vect: fixed output to stdout and stderr on redirection (Andreas Lange)
+<li> d.zoom: auto-redraw for raster, vector, sites maps (Huidae Cho, Markus
+     Neteler)
+<li> g.html2man: prepared to build MAN pages from HTML (Michel Wurtz)
+<li> g.manual: bug fixed, optionally supports HTML browsers now (Huidae Cho)
+<li> g.region sites= bugfixed (Huidae Cho), added output of ellipsoid and
+ map datum in interactive and comandline version (Andreas Lange)
+<li> g.select.pg: hostname problem fixed (Eric G. Miller)
+<li> g.setproj: preliminary map datum support added (Andreas Lange)
+<li> i.grey.scale: new parser command line version instead of interactive
+ version (Andreas Lange)
+<li> i.ortho.photo: updated to support FP elevation maps (Huidae Cho)
+<li> i.smap: fixed to write correct file and on NULL (Roger Miller)
+<li> m.datum.shift: adapted to new datum library support (Andreas Lange)
+<li> ps.map: bugfix due to wrong module call (Markus Neteler)
+<li> r.binfer: bugfixed (David D. Gray)
+<li> r.random: bugfix and improved (Eric G. Miller)
+<li> r.flow: fixed floating point exception (Huidae Cho)
+<li> r.in.bin: many new features and formats supports (Bob Covill)
+<li> r.in.gdal: added - might become general raster import module, see
+  supported formats at <a
+  href=http://www.remotesensing.org/gdal/formats_list.html>GDAL</a> (Frank
+     Warmerdam), support for complex SAR images (Stefano Merler)
+<li> r.in.gridatb: added, imports GRIDATB map file (Huidae Cho/Keith Beven)
+<li> r.in.tiff/r.out.tiff: bugfix, added .tfw support (Eric G. Miller)
+<li> r.in.utm: bugfix (Andreas Lange)
+<li> r.hydro.CASC2D: added new flags (Huidae Cho)
+<li> r.mapcalc: bugfix for map=-129 results in NULL (Huidae Cho), changed
+ return value in case of wrong statement (Andreas Lange)
+<li> r3.mapcalc: bugfix on region error (Jaro Hofierka)
+<li> r.null: Bug fixed: skip null values (Huidae Cho)
+<li> r.out.bin: added to export <a href=http://www.soest.hawaii.edu/gmt/>GMT</a>/BIL/...
+     formats (Bob Covill)
+<li> r.out.gridatb: added, exports GRIDATB map file (Huidae Cho/Keith Beven)
+<li> r.out.png: fixed for compression of png images created (Andreas Lange)
+<li> r.patch: -z flag allows additionally to use 0 for transparency
+	instead of NULL (Markus Neteler/Huidae Cho/Alex Shevlakov)
+<li> r.proj: heavily improved, transforms map portions now (Morten Hulden)
+<li> r.surf.area: updated to work with FP rasters, skipping NULL cells (Eric
+     G. Miller)
+<li> r.topidx: added, creates topographic index, ln(a/tan(beta)), map from
+     elevation map (Huidae Cho/Keith Beven)
+<li> r.topmodel: added, physically based hydrologic model (Huidae Cho/Keith
+     Beven)
+<li> r3.showdspf(.opengl): bugfix on dsp files/mapsets (Beverly Wallace)
+<li> s.datum.shift: datum shift software (Andreas Lange)
+<li> s.in.ascii: fixed parsing problem when no category or other attributes
+     are specified (just dimensions) (Eric G. Miller)
+<li> s.in.atkisdgm: import bugfix (Otto Dassau/Markus Neteler)
+<li> s.in.atkisktb: added (for German DEM data) (Otto Dassau/Markus Neteler)
+<li> s.in.mif: added to import MapInfo MIF/MID pair (David D. Gray)
+<li> s.to.rast: bugfix to convert x, y, double lists properly (Eric G. Miller)
+<li> s.to.vect: bugfix to convert x, y, double lists properly (Eric G.
+     Miller)
+<li> s.sample: fixed and updated (Eric G. Miller) 
+<li> s.surf.krig: bugfixed and improved (David D. Gray)
+<li> s.vol.idw: added attribute field selection (Markus Neteler)
+<li> s.windavg: added, averages an attribute of for all the sites
+     within each cell (J. D. McCauley/ Eric G. Miller)
+<li> v.clean: bugfixed (David D. Gray)
+<li> v.digit: panning on-the-fly implemented to ease digitizing of long
+     vectors, added "Show unlabeled lines" into Window menu,  added text
+     labelling, modified "Label/UnLabel Multiple Lines" menu to click once 
+     only to perform (Huidae Cho)
+<li> v.in.mif: added to read MapInfo vector files (David D. Gray)
+<li> v.in.shape: bugfix for DBF data types and snap distances (David D. Gray)
+<li> v.mkgrid: cat labels added (Radim Blazek)
+<li> v.surf.rst: fixed incorrect elevations calculation (Helena Mitasova)
+<p>
+<li> tcltkgrass: independent of installed tcl/tk version (Markus Neteler)
+<li> tcltkgrass: reads configuration for fonts, projections, ellipsoids,
+ datums, digitizers etc. on startup from GRASS etc directory, new GRASS about
+ window in tcl/tk (Andreas Lange)
+<li> Graphical startup of GRASS for existing locations (Justin Hickey)
+<li> XDRIVER: new icon with GRASS logo (Andreas Lange)
+<p>
+<li> NVIZ:
+<menu>
+<li> writes image dumps in PPM/SGI/TIFF format now (Bob Covill)
+<li> auto-redraw (Bob Covill)
+<li> color bug fixed for surface in lat/long projection (Bob Covill)
+<li> local configure replaced by global configure (Huidae Cho)
+<li> updated to tcl/tk8.3 libs (Huidae Cho, Justin Hickey, Eric G Miller)
+</menu>
+</menu>
+
+<b>Source Code</b>
+<menu>
+<li>libraries:
+<menu>
+ <li> new library "gmath": wrapper to support LAPACK/BLAS routines and to
+      provide stable numerical algorithm for GRASS modules (David D. Gray)
+ <li> datum shift support: new CoordConv library (Andreas Lange)
+ <li> "<a href=http://gdal.velocet.ca/projects/grass/index.html>libgrass</a>": a new GRASS I/O library is under development (Frank
+     Warmerdam)
+ <li> new G_readsites_xyz() function to read sites (Eric G. Miller)
+ <li> <a href=http://www.w3.org/XML/>XML</a> output with "--interface-description" parameter (Jan-Oliver Wagner)
+ <li> Simple automatic GUI builder based on GRASS and python (Jan-Oliver
+      Wagner)
+</menu>
+
+<li>other:
+<menu>
+<li> rewritten "configure.in" for autoconf, updated configure (Eric G. Miller)
+<li> GRASS testsuite added: to run on source code with "make check" (Andreas Lange)
+<li> grass5install.sh: heavily updated (Justin Hickey)
+<li> projections: added false easting/false northing to aea:Albers Equal
+      Area projection (Eric G. Miller/Morten Hulden)
+<li> man pages are generated from HTML pages now (Michel Wurtz)
+<li> added GRASS_environment variables to control settings (Huidae Cho)
+</menu>
+
+<li> Portability:
+<menu>
+<li> running on Mac OS X now (developers)
+<li> updated to compile on CRAY T3E (Justin Hickey, Markus
+     Neteler, Bill Brown, David D. Gray )
+<li> improved WINDOWS/NT portability (John Huddleston)
+<li> compilable on CRAY now (Justin Hickey, Bill Brown, Markus Neteler)
+<li> multiple architectures supported during compilation from same source
+     code (Beverly Wallace, Markus Neteler)
+</menu>
+<p>
+<li> Removed code (functionality merged into other modules):
+<menu>
+<li> d.rast.zoom, d.vect.zoom: replaced by d.zoom
+<li> r.in.arctiff, r.out.arctiff, r.out.geotiff: replaced by r.in.tiff/r.out.tiff
+<li> m.in.pl94.db3,  m.in.stf1.db3
+</menu>
+</menu>
+
+<hr>
+<p>
+<h3><font color="#00FE00">What's new in GRASS 5 beta8 comparing to beta7</font></h3>
+
+[GRASS 5 beta8 released 26 July 2000]
+<p>
+<b>Modules</b>
+<menu>
+<li> d.dm: added, new display manager (replaces d.display) (Radim Blazek)
+<li> d.what.db added: view/edit DB sites attributes (Radim Blazek)
+<li> g.version: fixed (Andreas Lange)
+<li> i.colors: automated refresh added (Markus Neteler)
+<li> i.points3: small fix, better than i.points
+<li> ps.map: old version replaced by ps.map.new (Radim Blazek)
+<li> r.agnps.*: updated to make it work within GRASS 5 (Markus Neteler)
+<li> r.cn, r.cn2: updated (Markus Neteler, John Huddleston)
+<li> r.cost: accepts sites files as start and stop points (Pierre de Mouveaux)
+<li> r.drain: corrected lat-lon projection issues, 3 selectable output modes (Pierre de Mouveaux)
+<li> r.in.globedem added for importing GLOBE DEM data (Markus Neteler)
+<li> r.in.dem added to read USGS DEMs (Eric Buddington)
+<li> r.in.globedem: added, script to import GLOBE DEM from NOAA (Markus Neteler)
+<li> r.in.tiff: bugfix for seg. fault (Carl Anderson)
+<li> r.in.shape: added (Radim Blazek)
+<li> r.flowmd: bugfix on Floating exception error (Huidae Cho)
+<li> r.line working now with Grass5 (Pierre de Mouveaux)
+<li> r.null: bugfix (Huidae Cho)
+<li> r.out.pov: added for POVRAY export (Klaus D. Meyer)
+<li> r.support: fixed to work with FP maps (Huidae Cho)
+<li> r.timestamp: fixed library function (Bill Hughes, Bill Brown)
+<li> r.to.pg: script to store raster maps in PostgreSQL (Markus Neteler)
+<li> r.to.sites: bugfix on seg. fault (Bill Brown)
+<li> s.in.garmin.sh: added (Andreas Lange)
+<li> s.in.shape: added, reads an ArcView Shapefile with points or
+     multipoint SHAPES (David D. Gray)
+<li> s.to.rast: bugfix (Markus Neteler)
+<li> v.area: added -i to take island areas into account (David D. Gray)
+<li> v.autocorr: bugfix (David D. Gray)
+<li> v.bubble: added parameter to select sites attribute (Markus Neteler)
+<li> v.circle: bugfix (Markus Neteler)
+<li> v.clean: bugfix (David D. Gray)
+<li> v.cutter: added category support (David D. Gray)
+<li> v.extract: writes cats now, accept comma-separated fields (David D. Gray)
+<li> v.in.shape: Splitting of shapefile rings to arc-node segments,
+      Correction (through options) of some common topological problems with imported
+     data, Removal of duplicate rings and line segments, label bug
+     fix  (David D. Gray)
+<li> v.in.shape.pg: updated, in sync with v.in.shape (David D. Gray)
+<li> v.in.ascii: fixed to read DIGIT DATE properly (Huidae Cho)
+<li> v.in.dxf: fixed to read DXF header correctly (Huidae Cho)
+<li> v.in.dxf2: fixed to read DXF header correctly (Huidae Cho)
+<li> v.in.dxf3d: fixed to handle file names correctly (Huidae Cho)
+<li> v.in.garmin.sh: added (Andreas Lange)
+<li> v.out.arc: small fix for importing into ARC/INFO (Markus Neteler)
+<li> v.out.e00: added, write ESRI E00 (Michel Wurtz)
+<li> v.out.shape: added, write ESRI SHAPE (David D. Gray)
+<li> v.spag: fixed loop error, new flags (Radim Blazek)
+<li> v.timestamp: added (Markus Neteler, based on r.timestamp)
+<li> v.to.db: added to load values from vector to database (Radim Blazek)
+<p>
+<li> NVIZ: fixed image dump bug on FreeBSD and Linux (Huidae Cho)
+<p>
+<li> CELL driver: CELL resolution fixed to
+        get GRASS_WIDTH and GRASS_HEIGHT work correctly (Huidae Cho)
+</menu>
+
+<b>Database Management System support (DBMS)</b>
+<menu>
+<li> new general DBMS driver (can be used e.g. with <a href=http://www.unixodbc.org>unixODBC</a>
+     to link GRASS to PostgreSQL, Oracle, MySQL, ... (Radim Blazek)
+<li> new DBMS-modules: db.attr, db.columns, db.connect, d.db, db.describe, 
+     db.execute, 
+     db.select, db.tables, d.what.db, v.db.reclass, v.to.db (Radim Blazek)
+</menu>
+
+<b>G3D-support</b> (new 3D raster format "voxels")
+<menu>
+<li> new grid3D modules added: r3.in.v5d, r3.out.v5d to exchange
+     data with VIS5D, s.to.rast3 to convert 3D sites to grid3D (Jaro Hofierka)
+<li> g3.createwind added to create 3D region from 2D region (Markus Neteler)
+<li> r3.mapcalc: bugfix on NULL values at edges (Jaro Hofierka)
+<li> g3.list, g3.remove, g3.rename scripts added (Markus Neteler)
+</menu>
+
+<b>Simulation models</b>
+<menu>
+<li> WIldfire SPread Simulation, WiSpS, package contains three GRASS
+      modules r.ros, r.spread and r.spreadpath (Jianping Xu 1995)
+</menu>
+
+<b>Source Code</b>
+<menu>
+<li> updated all vector modules on include headers (Vect.h only now) (Bill
+     Hughes)
+<li> changed compilation process script to ignore errors and
+     missing modules and write this into file error.log (Markus Neteler)
+<li> removed src.related section for code cleanup (Markus Neteler)
+<li> removed XGRASS for code cleanup (Markus Neteler)
+<dd> you can still access the code using an old tag:<br>
+ cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src.related<br>
+ cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src/xgrass<br>
+ cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src/include
+<li> WINDOWS/NT: improved portability (John Huddleston)
+<li> libes: fixes for src/libes/ogsf and src/libes/ and src/libes/libimage
+<li> Vect_get_area_points() and Vect_get_isle_points() updated (David D
+     Gray)
+<li> SGI-fixes (John Edgecombe)
+<li> $GISBASE/garden eliminated as unused (Markus Neteler)
+<li> libgis.a and gis.h are stored in binaries now (needed for R statistics
+     package) (Roger Bivand/Markus Neteler)
+<li> src/general/init: internal improvement (Justin Hickey)
+</menu>
+
+<b>Font support</b>
+<menu>
+<li> added cyrillic encoding (Alex Shevlakov)
+</menu>
+
+<hr>
+<p>
+<h3><font color="#00FE00">What's new in GRASS 5 beta7/CVS comparing to beta6</font></h3>
+
+[GRASS 5 beta7 released 20 Apr 2000]
+<p>
+<b>Modules</b>
+<menu>
+<li> d.vect: runs quitely by default (flag -v added) (Pierre de Mouveaux)
+<li> i.rectify, i.rectify2 fixed (Pierre de Mouveaux)
+<li> i.shape bugfix on segmentation fault (Markus Neteler)
+<li> i.smap bugfix on segmentation fault (Markus Neteler)
+<li> i.tape.tm.fast fixed blank screen problem (Markus Neteler)
+<li> m.in.e00 updated (Michel Wurtz)
+<li> ps.map.new added (Radim.Blazek)
+<li> r.cost fixed, sites files accepted as start and stop points (Pierre de Mouveaux)
+<li> r.drain fixed, new feature: read site list for starting points (Pierre de Mouveaux)
+<li> r.flowmd added (Jaro Hofierka)
+<li> r.in.dted bugfix to read NIMA DTED level 0 properly (Roberto Currlin)
+<li> r.in.png added (Alex Shevlakov)
+<li> r.in.ppm memory bugfix (Alex Shevlakov)
+<li> r.out.png added (Alex Shevlakov)
+<li> r.surf.contour fixed, but no FP yet (Pierre de Mouveaux)
+<li> s.in.ascii bugfix on string import (Roger Bivand)
+<li> v.area added cat label output (Markus Neteler)
+<li> v.build.polylines added (Mark Lake)
+<li> v.distance added from 4.x (Janne Soimasuo)
+<li> v.extract fixed (David D Gray)
+<li> v.in.dxf3d added from 4.x (Evaristo Quiroga)
+<li> v.in.shape updated/rewritten (David D Gray)
+<li> v.out.idrisi (Philip Verhagen)
+<li> v.out.shape added (derived from v.out.arc, gen2shp by Jan Wagner and
+                    shapelib by Frank Warmerdam, modified by Markus Neteler)
+<li> v.what (Jim Hinthorn, Dennis Finch, James Darrell McCauley)
+<p>
+<li> TclTkGRASS: added r.in.png, v.build.polylines, removed obsolete 
+     s.in.ascii.dem (use s.in.ascii now), fixed i.gensigset/i.smap 
+     entry (Markus Neteler)
+</menu>
+
+<b>Libraries</b>
+<menu>
+<li> segment/-library fixed (Pierre de Mouveaux)
+</menu>
+
+<b>Drivers</b>
+<menu>
+<li> CELL driver: update on font management (Ludovic Drolez)
+<li> HTMLMAP: new driver to produce HTML image maps, usage like CELL 
+     driver (Tom Poindexter)
+<li> XDRIVER: updated to support various video cards in various environments
+     (color table management) (Carl Anderson)
+<li> PPM-Driver: fixed (Alex Shevlakov)
+</menu>
+
+<b>NVIZ</b>
+<menu>
+<li> bugfixes on segmentation fault, cleaned out tcl/tk-library stuff
+     (Philip Warner)
+<li> path independent now! (Philip Warner, Markus Neteler)
+</menu>
+
+<b>SQL-support</b>
+<menu>
+<li> large set of GRASS/PostgreSQL modules added (Alex Shevlakov):
+<dl>d.site.pg, d.vect.pg, d.what.s.pg, g.column.pg, g.select.pg,
+  g.stats.pg, g.table.pg, d.rast.pg, d.what.v.pg, d.what.r.pg, v.reclass.pg,
+  v.in.shape.pg, v.in.arc.pg, pg.in.dbf
+</dl>
+</menu>
+
+<b>G3D-support</b> (new 3D raster format "voxels")
+<menu>
+<li>grid3D modules added: g3.region, r3.in.ascii, r3.mask, r3.out.ascii,
+    r3.in.grid3, r3.mapcalc, r3.mkdspf, r3.showdspf.sgi, r3.info, r3.null
+    s.surf.vol (Roman Waupotitsch, Michael Shapiro, Helena Mitasova,
+    Bill Brown, Lubos Mitas, Jaro Hofierka, funding by GeoModel s.r.o.)
+<li>r3.showdspf.openGL port (Steve Hall, LMCO)
+</menu>
+
+<b>SDTS-support</b>
+<menu>
+<li> added from GRASS 4.x: m.sdts.read, v.in.sdts, v.out.sdts, v.sdts.dq.cp,
+     v.sdts.meta, v.sdts.meta.cp
+<li> v.in.sdts bugfix (Scott I. McFarlane)
+</menu>
+
+<b>JAVA/JNI-support</b>
+<menu>
+<li>  the GRASS 4 JAVA interface from Alexandre Sorokine is part of the
+     package now: src.garden/grass.java/ (Alexandre Sorokine)
+</menu>
+
+<b>Portability of source code</b>
+<menu>
+<li> Improved for SGI/Irix (Andreas Lange, Eric Mitchell, Rado Bonk and
+     others)
+<li> Improved to compile on Windows/Cygnus (John Huddleston)
+</menu>
+
+<p>
+<hr>
+<h3><font color="#00FE00">What's new in GRASS 5 beta6 comparing to beta5?</font></h3>
+
+[GRASS 5 beta6 released 16. Feb. 2000]
+<pre>
+- added missing MAN pages (Markus Neteler)
+
+- d.area: fixed. Now dynamic allocation to remove the 4096 vector
+    line limit (Bill Hughes)
+- d.legend: fixed bug on shifted numbers. Optional flag to suppress
+            display of "no data" now (Markus Neteler)
+
+- i.in.erdas: "-m" reads in map coordinate info (reference) now (Angus Carr)
+- i.out.erdas added (Angus Carr)
+
+- m.in.e00: manages correctly the info table with aliases now,
+            added a flag for choosing to link geometry and attributes 
+            on feature-# or feature-ID, e000b2a integrated (Michel Wurtz)
+
+- nviz code: update prototyping and 'return' fixing (Bill Hughes)
+
+- r.coin fixed (hopefully) (Markus Neteler)
+
+- again general sites import bug (in beta6a-d) fixed
+- s.in.ascii fixed for x y z datasets (like DEM) (Markus Neteler)
+- s.out.e00 added (Michel Wurtz)
+- s.surf.idw import routine updated (Job Spijker, Markus Neteler)
+- s.probplt: bugfix on sites read (Job Spijker)
+- s.sample fix (Markus Neteler)
+
+- v.bubble: added (Job Spijker)
+- v.db.rim, s.db.rim: should compile now
+- v.in.arc should be fixed (Werner Droege, Alex Shevlakov)
+- v.in.dxf2 added (Ben Johnson)
+- v.report: fixed km conversion factor (Markus Neteler)
+
+Shells:
+- d.monsize: script to (re-)set GRASS monitor size (Anantha Prasad)
+- d.rast.leg2 added (display raster map with legend)
+- i.tasscap.tm5: updated for GRASS 5 (Markus Neteler)
+- r.reclass.area: updated for GRASS 5 (Markus Neteler)
+- slide.show.sh: addec parameter "prefix" to display only selected
+                 files (Markus Neteler)
+
+Source code structure:
+- New source code tree: src.nonGPL/ (modules not shipped with GPL)
+- all libraries under src/libes/ now (Markus Neteler)
+- final upates for prototypes, along with several 'return 0;'
+   (Bill Hughes)
+- updated/checked all Gmakefiles on "mv" command for WIN/Cygnus
+   (John Huddleston)
+- added HUGE, drand48, srand48 for WIN/Cygnus (John Huddleston)
+
+- configure:
+  automatically choosing the diglib64 library at compile-time for 
+  64-bit machines (Bill Hughes)
+
+src.related
+- rim: should compile now
+</pre>
+<p>
+Many thanks to all contributors!
+<hr>
+
+<p>
+<h3><font color="#00FE00">What's new in GRASS 5 beta5 against former beta4?</font></h3>
+[GRASS 5 beta5 released 8. Dec. 1999]
+
+<pre>
+added modules
+- i.tape.slc (Olaf Hellwich)
+- i.in.gtc (Olaf Hellwich)
+- i.in.pri (Olaf Hellwich)
+- r.out.arc (Markus Neteler)
+- r.meta, g.meta, v.meta (Sue Huse?)
+- r.sun (Jaro Hofierka)
+- r.surf.fractal (Jo Wood)
+- r.surf.gauss (Jo Wood)
+- r.univar (Markus Neteler)
+- s.reclass (Sue Huse) 
+- v.plant (S. Cox)
+
+source code:
+- 64bit platform detection routine which changes (Luca Palmeri)
+   LNG_SIZ from 4 to 8 in case of 64bit architecture
+   (file src/mapdev/diglib/portable.h)
+- improved prototyping etc. (Bill Hughes)
+
+bugfixes:
+- g.region (Luca Palmeri)
+- d.colors (cursor movement) (Markus Neteler)
+- d.sites (Markus Neteler)
+- i.in.erdas (Angus Carr)
+- i.oif (Markus Neteler)
+- i.rectify (Luca Palmeri)
+- i.rectify2 (Luca Palmeri)
+- i.maxlik (Angus Carr)
+- r.cats (Luca Palmeri)
+- r.in.tiff (color table, warning on NULL) (Markus Neteler)
+- r.in.gif (color table, warning on NULL)(Markus Neteler)
+- r.in.hdf (3.x lib only)
+- r.out.hdf (3.x lib only)
+- r.answers (Markus Neteler)
+- r.mapcalc (Luca Palmeri)
+- r.mask (Luca Palmeri)
+- r.statistics (Markus Neteler)
+- s.surf.rst (Helena Mitasova)
+- s.in.ascii (Markus Neteler)
+- s.surf.idw (Job Spijker)
+- r.resamp.rst (Helena Mitasova)
+- v.surf.rst (Helena Mitasova)
+- v.digit (Luca Palmeri)
+- NVIZ2.2 (Pierre de Mouveaux)
+- several code patches from Berhard Reiter for DUAlpha
+
+- shade.clr.sh (Markus Neteler)
+- shade.rel.sh (Markus Neteler)
+
+- src/libes/gis/sites.c (Bill Brown): fixes memory problem
+- src/libes/imagery/c_point.c (Angus Carr)
+- src/libes/geom/optri (Markus Neteler)
+- src/libes/g3d/*  (Jaro Hofierka)
+- updated around 20 Gmakefiles for SUN/Solaris $(XDRLIB)
+- all rst-libs under src/libes/rst/ now
+- libimage (NVIZ) under src/libes/libimage/ now
+
+updated man-pages for: (HTML-pages as well) Lisa Zygo 
+d.3d                   r.le.dist              r.proj
+d.histogram            r.le.null              r.rational.regression
+d.leg.thin             r.le.patch             r.report
+d.rast                 r.le.pixel             r.spreadpath
+g.setproj              r.le.rename            r.stage3
+m.in.stf1.db3          r.le.setup             r.stats
+p.vrml                 r.le.trace             r.surf.fractal
+r.cats                 r.null                 r.surf.gauss
+r.circle               r.out.agnps            r.surf.random
+r.cost                 r.out.arc              r.surf.xy
+r.describe             r.out.ascii            r.tribs
+r.in.ascii             r.out.mpeg             r.what
+r.in.hdf               r.out.tiff
+r.in.pbm               r.plane
+</pre>
+<p>
+Many thanks to all contributors!
+<p>
+From now onwards a bug report formula is provided. If you
+find a bug in this GRASS 5 release (beta5), please let us
+know. We try to fix the bugs quickly. Go here for bug report:
+<p>
+<a href=http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html>
+http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html</a>
+
+<hr>
+
+<p>
+<h3><font color="#00FE00">What's new in GRASS 5.0 beta4 comparing to beta3?</font></h3>
+
+[GRASS 5 beta4 released Oct. 1999]
+
+<ul>   
+<li> Lots of bugfixes over 5.0beta3: e.g. fixed "empty text screen" problem,   
+     futher improved source code structure, new debug routine G_dump, added
+     missing return statements...
+<li> <a href=projections_supported.html>121 projections</a> supported now! 
+<li> Use m.proj as your "projection calculator" for all 121 projections
+<br>
+<li> DISPLAY: fixed: d.area, d.sites.qual, d.vect.cats
+<li> updated/fixed: g.setproj, m.proj, both support the 121 projections
+<li> RASTER: fixed: r.colors, r.digit, r.flow, r.resamp.rst, r.to.sites,
+            r.slope.aspect, r.contour r.in.poly, r.statistics
+<li> IMAGERY: fixed: i.rectify
+<li> SITES: fixed instable sites format (concerns all site modules)
+<li> fixed: s.surf.rst
+<li> added several sites modules: s.normal, s.perturb, s.qcount, s.probplt,
+     s.rand, s.sample, s.sv, s.univar, s.kcv
+<li> VECTOR: fixed: general bug for all vector modules
+<li> fixed: v.to.rast
+<li> updated: v.in.shape: category text labels support now
+<li> v.digspline renamed to v.digit, removed old v.digit stuff
+<li> added several vector modules from GRASS 4.2.1: v.random,
+     v.extract, v.merge, v.autocorr, v.info, v.export, v.geom
+<li> NVIZ2.2: fixed map selection problem<br>
+     - "image dump" writes "xv" readable files now
+<p>
+<li> Still to do: update r.in.hdf to 4.1.3HDFlib, correct r.surf.contour
+<li> detect further bugs (please report them! or fix them...)
+<li> get vector format 64bit compliant (needs further input)
+</ul>
+
+(Comparing to GRASS 4.x, further implementations up to GRASS 5 beta4)
+<p>
+GRASS 5.x represents the first major change in GRASS GIS functionality in
+several years.
+<p>
+Please read <a
+href=http://www.geog.uni-hannover.de/grass/grass5/source/ChangeLog>ChangeLog</a> and <a
+href=http://www.geog.uni-hannover.de/grass/grasscredits.html>CREDITS</a> for authorship.
+<p>
+1. New formats:
+<menu>
+<li> new sites API with multiple attributes and time attribute
+<li> floating point support in raster format
+<li> distinguish between Null and Zero in raster format
+<li> new 3D raster format "grid3" (g3d, voxel representation)
+<li> datetime library for temporal analysis
+</menu>
+<p>
+
+2. new applications
+<menu>
+<li> latest TclTkGRASS graphical user interface
+<li> nviz2.2 (ported to tcl/tk 8.x)
+<li> ogl3d   (predecessor of NVIZ, ported to Linux)
+<menu>
+  <li> d.siter, d.siter.qual, 
+  <li> i.points3, i.rectify3, i.tape.tm3 
+  <li> r.null, r.recode, r.quant, r.in.arc, r.sum, r.timestamp, r.proj,
+     r.resamp.rst, r.surf.area, 
+  <li> s.resamp.rst (modules mainly contribution from GMSLabs/University of Illinois
+</menu>
+</menu>
+<p>
+
+3. Improved functionality:
+<menu>
+  <li>updated standard GRASS modules to raster floating point support
+  <li>d.mon (24bit)
+  <li>g.setproj, m.proj (121 (yes!) projection added)
+  <li>r.in.ppm (24bit), r.slope.aspect (calc. of curvature)
+  <li>s.in.ascii (import elevation data properly)
+</menu>
+<p>
+
+4. New projections: 
+<menu>
+<li> projection software updated to PROJ4.3.3 (latest code available from USGS/1995)
+<li> 121 projections supported now: (m.proj and g.setproj support them as well)<br>
+Lat/Lon, Universe Transverse Mercator, State Plane, Albers Equal Area, 
+Lambert Conformal Conic, Mercator, Transverse Mercator, Lambert Equal Area
+Conic,, Lambert Azimuthal Equal Area, Azimuthal Equidistant, Airy, Aitoff,
+Mod. Stererographics of Alaska, Apian Globular I, August Epicycloidal, Bacon Globular, Bipolar conic
+of western hemisphere, Boggs Eumorphic, Bonne (Werner lat_1=90), Cassini, Central
+Cylindrical,, Equal Area Cylindrical, Chamberlin Trimetric, Collignon,
+Craster Parabolic (Putnins P4), Denoyer Semi-Elliptical, Eckert I, Eckert II, Eckert III, Eckert IV,
+Eckert V, Eckert VI, Equidistant Cylindrical (Plate Caree), Equidistant Conic,
+Euler, Fahey, Foucaut, Foucaut Sinusoidal, Gall (Gall Stereographic),
+Ginsburg VIII (TsNIIGAiK), General Sinusoidal Series, Gnomonic, Goode Homolosine, Mod.
+Stererographics of 48 U.S., Mod. Stererographics of 50 U.S., Hammer &amp; Eckert-Greifendorff, Hatano
+Asymmetrical Equal Area, International Map of the World Polyconic, Kavraisky V, Kavraisky VII,
+Laborde, Lagrange, Larrivee, Laskowski, Lee Oblated Stereographic,
+Loximuthal, Space oblique for LANDSAT, McBryde-Thomas Flat-Polar Sine (No.
+1), McBryde-Thomas Flat-Pole Sine (No. 2), McBride-Thomas Flat-Polar
+Parabolic, McBryde-Thomas Flat-Polar Quartic, McBryde-Thomas Flat-Polar
+Sinusoidal, Miller Oblated Stereographic, Miller Cylindrical, Modified
+Polyconic, Mollweide, Murdoch I, Murdoch II, Murdoch III, Nell, Nell-Hammer,
+Nicolosi Globular, Near-sided perspective, New Zealand Map Grid, General Oblique
+Transformation, Oblique Cylindrical Equal Area, Oblated Equal Area, Oblique
+Mercator, Ortelius Oval, Orthographic, Perspective Conic, Polyconic
+(American), Putnins P1, Putnins P2, Putnins P3, Putnins P3', Putnins P4',
+Putnins P5, Putnins P5', Putnins P6, Putnins P6', Quartic Authalic, Robinson,
+Rectangular Polyconic, Sinusoidal (Sanson-Flamsteed), Swiss. Obl. Mercator,
+Stereographic, Transverse Central Cylindrical, Transverse Cylindrical Equal
+Area, Tissot, Two Point Equidistant, Tilted perspective, Universal Polar
+Stereographic, Urmaev V, Urmaev Flat-Polar Sinusoidal, van der Grinten (I),
+van der Grinten II, van der Grinten III, van der Grinten IV, Vitkovsky I, Wagner I
+(Kavraisky VI), Wagner II, Wagner III, Wagner IV, Wagner V, Wagner VI, Wagner VII,
+Werenskiold I, Winkel I, Winkel II, Winkel Tripel
+</menu>
+<p>
+
+5. Misc:
+<menu>
+<li> support for cursor key movement in coordinate windows (these 
+   screens will be left with &lt;ESC&gt;&lt;ENTER&gt; now
+<li> lots of bugfixes
+<li> new XDRIVER with true 8..24bit support (choose color depth with d.mon)
+<li> "configure" tool to create "head" files (compiler instructions)
+   automatically
+<li> general source code improvement:
+<menu>
+
+   <li> Better Code:<pre>
+      - gets() is an Achilles' heel for GRASS when used on the Web, or where
+        through ignorance or malice someone can overrun an input buffer. I 
+        have replaced gets() calls with the slightly safer fgets(). 
+      - G_warning() and G_fatal_error() are called throughout the GRASS code
+        tree as though they accepted variable arguments, i.e. 
+
+           G_warning("Oops: error in %s, i = %d\n",string,integer);
+
+        which is not how they were written. They were written to accept one
+        char*, which they write to the screen and/or log. I have re-written 
+        these functions so that they accept varargs. This change has not
+        been approved by anyone, nor passed any peer review. It just seems 
+        right. 
+      - G_free() as as companion to G_malloc() and friends. It is annoying
+        to have to replace all of the #include &lt;malloc.h&gt; with 
+        #include &lt;stdlib.h&gt; so instead I just created a function to be 
+        included in the gis.h header. This is portable, which is an 
+        improvement. 
+    </pre>
+   <li> Prototyping:<pre>
+      - It's much easier to track down the mismatched arguments and implicit
+        casts with prototypes. These patches provide prototypes for all of
+        the src/libes, and as many other libes and modules as I have gotten
+        into. 
+      - In the module code, the 4.2.1v21 patch has automatically-created
+        header files to provide function prototypes within each module. Some 
+        of this is overkill. As I work through each module, these headers
+        are fixed to be a little less intrusive. Right now, though, there 
+        are still compile warnings that are the fault of this prototyping.
+      - The 5.0 code has not had as much work as the 4.2-series, so there
+        are still a number of bad calls lurking in the modules. With the 
+        proper prototypes, maybe somebody can fix them. 
+    </pre>
+   <li> Bugfixes:<pre>
+     -  Functions with the wrong number of arguments. 
+     -  Functions with the wrong type of arguments. 
+     -  Functions with the wrong return type. Usually, this is because a
+        function is allowed to default to an 'int' return, even though it 
+        returns a char*, or struct*. This may work on 32-bit machines, but 
+        whenever sizeof(char*) != sizeof(int) (64-bit machines, for example) 
+        these functions overwrite memory, dump cores, and generally fail 
+        to work. 
+     -  Built-in functions without the proper headers. This leads to bad
+        return types. 
+  </pre>
+</menu>
+</menu>
+<a
+href=http://www.geog.uni-hannover.de/grass/grass5/source/snapshot/oldhistory/HISTORY_beta2to4.txt>HISTORY
+GRASS 5 beta 2..4</a>
+<hr>
+GRASS Development Team
+<p>
+PhyGeo at University of Hannover, Germany, CAGSR at Baylor University, GMSlabs at University of Illinois
+and worldwide contributors.<br>
+&copy; 1999-2000
+</body>
+</html>

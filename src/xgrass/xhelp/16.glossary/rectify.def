@@ -1,5 +1,0 @@
-
-
-rectification - The process by which the geometry of an image is
-made planimetric.  This is accomplished by mapping (@glossary("transforming",16.glossary/transform.def)) an
-image from one coordinate system to another.

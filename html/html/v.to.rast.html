@@ -1,0 +1,98 @@
+<TITLE>v.to.rast</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.to.rast</b></EM>  - Converts a binary GRASS vector map layer 
+into a GRASS raster map layer. 
+<BR>
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.to.rast</B>
+<BR>
+<B>v.to.rast help</B>
+<BR>
+<B>v.to.rast input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.to.rast</EM> transforms (binary) GRASS vector map
+layers into GRASS raster map layer format.  Most GRASS
+analysis programs operate on raster data.
+
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of the binary vector map layer to be converted. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to the raster map layer output. 
+</DL>
+
+<P>
+The user can run the program non-interactively by specifying the names of 
+a vector input file and raster output file on the command line, 
+using the form: 
+
+<DL>
+<DD>
+<B>v.to.rast input=</B><EM>name</EM> <B>output=</B><EM>name</EM> 
+</DL>
+
+If the user instead types simply <B>v.to.rast</B> on the
+command line, the program will prompt the user to enter
+these names.
+
+<H2>NOTES</H2>
+
+<EM>v.to.rast</EM> will only affect data in areas lying
+inside the boundaries of the current geographic region.
+Before running <EM>v.to.rast</EM>, the user should
+therefore ensure that the current geographic region is
+correctly set and that the region resolution is at the
+desired level; the program may otherwise create an empty
+raster map layer.  An empty raster map layer will also be
+created if the vector map layer has not been assigned
+category/attribute labels (e.g., through use of the
+
+<EM><A HREF="v.digit.html">v.digit</A></EM> program). 
+
+<P>
+
+The <EM>v.to.rast</EM> program creates two files: a raster map layer, 
+and a history file. The GRASS program 
+
+<EM><A HREF="r.support.html">r.support</A></EM> 
+
+must be run to 
+create additional support files for the raster map. 
+
+<P>
+
+Additional problems sometimes lead to the creation of empty raster 
+map layers. Unfortunately, error messages explaining these phenomena 
+do not yet exist. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.region.html">g.region</A></EM>,
+<EM><A HREF="r.poly.html">r.poly</A></EM>,
+<EM><A HREF="r.line.html">r.line</A></EM>,
+<EM><A HREF="r.support.html">r.support</A></EM>,
+<EM><A HREF="v.digit.html">v.digit</A></EM>,
+<EM><A HREF="v.import.html">v.import</A></EM>,
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHORS</H2>
+
+Michael Shapiro,  
+U.S. Army Construction Engineering 
+Research Laboratory
+

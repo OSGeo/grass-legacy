@@ -1,8 +1,8 @@
 PGM = r.drain
 LIST =  main.o
  
-LIBES = $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB)
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
+LIBES = $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
  
 $(LIST): stash.h point.h

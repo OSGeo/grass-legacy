@@ -1,0 +1,66 @@
+<TITLE>parser</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>GRASS parser interface</b></EM>  - A set of GRASS routines that 
+standardizes GRASS commands. 
+<BR>
+
+<H2>DESCRIPTION</H2>
+
+A set of routines in GRASS provides a mechanism for
+command-line parsing. The routines standardize commands
+that expect command-line arguments.  When a user is
+familiar with the general form of command-line input as
+defined by the parser, it simplifies the necessity of
+remembering (or at least guessing) required command-line
+arguments for any GRASS command.
+
+<P>
+
+The parser behaves in one of three ways: 
+<OL>
+
+<LI>If no command-line arguments are entered by the user,
+the parser searches for an interactive version of the
+command. If it is found, control is passed over to this
+interactive version. If it is not found, the parser prompts
+the user for programmer-defined options and flags. This
+prompting conforms to the same standard for every GRASS
+command that uses the parser routines.
+
+<P>
+
+<LI>If command-line arguments are entered but do not
+include all the options and flags that the programmer has
+defined as required arguments, three things happen: 
+<OL>
+<LI>the parser passes an error message to the user indicating which
+required options and/or flags were missing from the
+command-line, 
+<LI>then the parser displays a complete usage message for that command, 
+and finally 
+<LI> the parser cancels
+execution of the command.
+</OL>
+
+<P>
+
+<LI>If all necessary options and flags are entered on the
+command line by the user, the parser executes the command
+with the given options and flags.
+
+</OL>
+
+<P>
+
+<EM>This page was derived from the</EM>
+GRASS 4.1 Programmer's Manual, Command-Line Parsing, 
+<EM>which offers detailed information about the GRASS parsing routines.</EM>
+

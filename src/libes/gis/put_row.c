@@ -1,4 +1,26 @@
+/*
+ * $Id$
+ */
 /**********************************************************************
+ *
+ *   G_zeros_r_nulls (zeros_r_nulls)
+ *      int zeros_r_nulls	the last argument of put_data()
+ *
+ *   zeros_r_nulls > 0		zero values of buf to be written into files
+ *   				are null values by default.
+ *
+ *   zeros_r_nulls == 0		zero values are just zero itself.
+ *
+ *   zeros_r_nulls < 0		do not set. return current setting.
+ *   				1: set
+ *   				0: not set
+ *
+ *   Return setting values in all cases.
+ *
+ *   *** NOTE *** 
+ *   Use only to change a default behavior for zero of G_put_map_row[_random].
+ *
+ ********************************************************************** 
  *
  *   G_put_[f/d_]raster_row (fd, buf)
  *      int fd           file descriptor of the opened map
@@ -120,6 +142,11 @@
 #define WORK_BUF     FCB.data
 #define WINDOW       G__.window
 
+/* Needed until zlib stuff gets worked out, comment out if you
+ * want to try G_zlib_*() funcs, also do the same in get_row.c
+ */
+/* #define USE_LZW_COMPRESSION */
+ 
 /* convert type "RASTER_MAP_TYPE" into index */
 #define F2I(map_type) \
         (map_type == CELL_TYPE ? 0 : (map_type == FCELL_TYPE ? 1 : 2))
@@ -127,6 +154,7 @@
 static int ERROR;
 static char *me;
 static RASTER_MAP_TYPE write_type;
+static int _zeros_r_nulls = 1;
 
 static int put_raster_data (int,void *,int,int,int,int,RASTER_MAP_TYPE);
 static int put_data (int,CELL *,int, int,int,int);
@@ -155,6 +183,14 @@ static void (*convert_and_write_FtypeOtype [3][3])() =
 #define CONVERT_AND_WRITE \
      (convert_and_write_FtypeOtype [F2I (write_type)] [F2I (FCB.map_type)])
 
+int G_zeros_r_nulls (int zeros_r_nulls)
+{
+    if (zeros_r_nulls >= 0)
+	_zeros_r_nulls = zeros_r_nulls > 0;
+
+    return _zeros_r_nulls;
+}
+
 int G_put_map_row (int fd, CELL *buf)
 {
     me = "G_put_map_row";
@@ -173,7 +209,7 @@ int G_put_map_row (int fd, CELL *buf)
 
     G_zero (NULL_BUF, FCB.cellhd.cols * sizeof(char));
 
-    switch(put_data (fd, buf, FCB.cur_row, 0, FCB.cellhd.cols, 1))
+    switch(put_data (fd, buf, FCB.cur_row, 0, FCB.cellhd.cols, _zeros_r_nulls))
     {
         case -1: return -1;
         case  0: return  1;
@@ -198,7 +234,7 @@ int G_put_map_row_random (int fd, CELL *buf, int row, int col, int n)
         return -1;
 
     buf += adjust (fd, &col, &n);
-    switch(put_data (fd, buf, row, col, n, 1))
+    switch(put_data (fd, buf, row, col, n, _zeros_r_nulls))
     {
         case -1: return -1;
         case  0: return  1;
@@ -619,11 +655,12 @@ int G__write_data_compressed (int fd, int row, int n)
 
 {
   int nwrite;
+#ifdef USE_LZW_COMPRESSION
   int l;
 
   nwrite = FCB.nbytes * n;
 
-  l = log ((double) nwrite) / log ((double) 2);  
+  l = log((double) nwrite) / log((double) 2);  
   
   if ((1 << l) > (nwrite * 3.0 / 4.0)) l--;     /* just a guess */
 
@@ -636,7 +673,15 @@ int G__write_data_compressed (int fd, int row, int n)
     write_error (fd, row);
     return -1;
   }
+#else
+  nwrite = FCB.nbytes * n;
 
+  if ((nwrite = G_zlib_write (fd, G__.work_buf, nwrite)) < 0) {
+    write_error (fd, row);
+    return -1;
+  }
+#endif
+  
   return 0;
 }
 
@@ -669,8 +714,13 @@ static void set_file_pointer (int fd, int row)
 static void update_compressed_bits (int fd, int row)
 
 {
+#ifdef USE_LZW_COMPRESSION
   if ((row == 0) || (FCB.compression_bits < G_lzw_max_used_bits ()))
     FCB.compression_bits = G_lzw_max_used_bits ();
+#else
+  /* Not relevant to zlib */
+  FCB.compression_bits = -1;
+#endif
 }
 
 /*--------------------------------------------------------------------------*/

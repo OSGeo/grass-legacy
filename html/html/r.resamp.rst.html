@@ -1,0 +1,187 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (Win98; I) [Netscape]">
+   <TITLE>r.resamp.rst</TITLE>
+</head>
+<body bgcolor="#FFFFFF">
+
+<img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+
+
+<h2>
+NAME</h2>
+<b><i>r.resamp.rst </i></b>- reinterpolates and computes topographic
+analysis from input raster file to a new raster file (possibly with different
+resolution) using regularized spline with tension and smoothing.
+<br>(<i>GRASS Raster Program</i>)
+<br>&nbsp;
+<h2>
+SYNOPSIS</h2>
+<b>r.resamp.rst</b>
+<br><b>r.resamp.rst help</b>
+<br><b>r.resamp.rst [-r] [-d] [-t] input</b> = name <b>ew_res </b>= val
+<b>ns_res</b> = val <b>elev</b> = name [<b>slope</b> = name] [<b>aspect</b>
+= name] [<b>pcurv</b> = name] [<b>tcurv</b> = name] [<b>mcurv</b> = name]
+[<b>smooth</b> = name] [<b>maskmap</b> = name] [<b>overlap</b> = val] [<b>zmult</b>
+= val] [<b>tension</b> = val]
+<br>&nbsp;
+<h2>
+DESCRIPTION</h2>
+<i>r.resamp.tps</i>
+<br>This program reinterpolates the values a from given raster file named
+<i>input</i> to a new raster file named <i>elev</i>. If <i>-r</i> flag
+is specified, all zero elevations in <i>input</i> file are treated as elevations,
+otherwise they are ignored. Reinterpolation (resampling) is done to higher,
+same or lower resolution which is specified by parameters <i>ew_res</i>
+and <i>ns_res</i>. All resulting raster files are created for the given
+region (which might be different from the header of the input raster file).
+As an option, simultaneously with interpolation, topographic parameters
+slope, aspect, profile curvature (measured in the direction of steepest
+slope), tangential curvature (measured in the direction of a tangent to
+contour line) or mean curvature are computed and saved as raster files
+as specified by the options <i>slope, aspect, pcurv, tcurv, mcurv</i> respectively.
+If <i>-d</i> flag is set the program outputs partial derivatives fx,fy,fxx,
+fxy,fyy instead of slope, aspect and curvatures.
+<p>For noisy data, it is possible to define spatially variable smoothing
+by prividing a raster file <i>smooth</i> containing smoothing parameters.
+With the smoothing parameter set to zero (<i>smooth</i> is not given or
+contains zero data), the resulting surface passes exactly through the data
+points. User can define a raster file named <i>maskmap</i>, which will
+be used as a mask. The interpolation is skipped for cells which have zero
+value in mask. Zero values will be assigned to these cells in all output
+raster files. Parameter <i>zmult</i> allows the user to rescale the z-values
+(useful, e.g., for transformation of elevations given in feet to meters,
+so that the proper values of slopes and curvatures can be computed).
+<p>Regularized spline with tension is used for the interpolation. The <i>tension</i>
+parameter tunes the character of the resulting surface from thin plate
+to membrane. Higher values of tension parameter reduce the overshoots that
+can appear in surfaces with rapid change of gradient. The flag <i>-t</i>
+can be set to use "dnorm independent tension". The interpolation is performed
+for overlaping rectangular segments. The user can define the width of overlap
+(in number of cells) by option <i>overlap</i>.
+<br>&nbsp;
+<h2>
+OPTIONS</h2>
+The user can run this program either interactively or non-interactively.
+The program will be run non-interactively if the user specifies program
+arguments and flag settings on the command line using the form:
+<p><b>r.resamp.rst [-r] [-d] [-t] input</b> = name <b>ew_res</b> = val
+<b>ns_res</b> = val <b>elev</b> = name [<b>slope</b> = name] [<b>aspect</b>
+= name] [<b>pcurv</b> = name] [<b>tcurv</b> = name] [<b>mcurv</b> = name]
+[<b>smooth</b> = name] [<b>maskmap</b> = name] [<b>overlap</b> = val] [
+<b>zmult </b>= val ] [<b>tension</b> = val]
+<p>Alternatively, the user can simply type&nbsp; <b>r.resamp.rst</b>
+on the command line without program arguments. In this case, the user will
+be prompted for parameter values and flag settings using the standard GRASS
+parser interface described in the manual entry for <i>parser </i>.
+<p><b>Flags</b>
+<p>&nbsp;<b>-r</b> Indicates that zeroes in input map represent elevation.
+<p><b>-d</b> Output partial derivatives instead of aspect, slope and curvatures
+<p><b>Parameters</b>:
+<p>&nbsp;<b>input</b> =<i>name</i>
+<br>Use the existing site file <i>name</i> as input.
+<p>&nbsp;<b>ew_res </b>= <i>val</i>
+<br>Set desired east-west resolution to <i>val</i> .
+<p>&nbsp;<b>ns_res </b>= <i>val</i>
+<br>Set desired north-south resolution to <i>val</i> .
+<p><b>elev </b>= <i>name</i>
+<br>Output elevation values to raster file named <i>name</i> .
+<p><b>slope </b>= <i>name</i>
+<br>Output slope or fx values to raster file named <i>name</i> .
+<p><b>aspect </b>= <i>name</i>
+<br>Output aspect or fy values to raster file named <i>name</i> .
+<p><b>pcurv </b>= <i>name</i>
+<br>Output profile curvature or fxx values to raster file named <i>name</i>
+.
+<p><b>tcurv</b>=<i>name</i>
+<br>Output tangential curvature values or fyy to raster file named <i>name</i>
+.
+<p><b>mcurv</b>=<i>name</i>
+<br>Output mean curvature values or fxy to raster file named <i>name</i>
+<br>.
+<br><b>smooth</b>=<i>name</i>
+<br>18 Set smoothing parameter from file <i>name</i> .
+<p><b>maskmap</b>=<i>name</i>
+<br>Use the existing raster file <i>name</i> as a mask.
+<p><b>overlap </b>=<i>val</i>
+<br>Use overlap <i>val</i> cells to get additional points for interpolation
+for a given segment. Default value is 3.
+<p>&nbsp;<b>zmult </b>=<i>val</i>
+<br>Convert z-values using conversion factor <i>val</i> . Default value
+is 1.
+<p>&nbsp;<b>tension </b>= <i>val</i>
+<br>Set tension to <i>val</i> .
+<br>&nbsp;
+<h2>
+NOTES&nbsp;</h2>
+<i>r.resamp.rst</i> uses regularized spline with tension for interpolation
+(as described in Mitasova and Mitas, 1993). Region is temporarily changed
+while writing output files with desired resolution. Topographic parameters
+are computed the same way as in s.surf.rst. (See also Mitasova and Hofierka,
+1993) Raster file <i>smooth</i> should contain variable smoothing parameters
+that can be derived from errors, slope, etc. using&nbsp; <i>r.mapcalc</i>.
+The program gives warning when significant overshoots appear and higher
+tension should be used. However, with tension too high the resulting surface
+changes its behavior to membrane (rubber sheet stretched over the data
+points resulting in a peak or pit in each given point and everywhere else
+the surface goes rapidly to trend). Smoothing can also be used to reduce
+the overshoots. When overshoots occure the resulting <i>elev</i> file will
+have white color in the locations of overshoots since the color table for
+the output file is the same as colortable for raster input file.The program
+checks the numerical stability of the algorithm by computation of values
+in given points, and prints the maximum difference found into the history
+file of raster map <i>elev</i> . Increase in tension is suggested if the
+difference is unacceptable. For computation with smoothing set to 0 this
+difference should be 0. With smoothing parameter greater than zero the
+surface will not pass through the data points and the higher the parameter
+the closer the surface will be to the trend.
+<p>The program writes the values of parameters used in computation into
+the comment part of the history file <i>elev</i> as well as the following
+values which help to evaluate the results and choose the suitable parameters:
+minimum and maximum z values in the data file (zmin_data, zmax_data) and
+in the interpolated raster map (zmin_int, zmax_int), maximum difference
+between the given and interpolated z value in a given point (errtotal),
+rescaling parameter used for normalization (dnorm), which influences the
+tension. The program gives warning when the user wants to interpolate outside
+the region given by the header of the input raster file, zooming into the
+area where the points are is suggested in this case. When a mask is used,
+the program takes all points in the given region for interpolation, including
+those in the area which is masked out, to ensure proper interpolation along
+the border of the mask. It therefore does not mask out the data points;
+if this is desirable, it must be done outside <i>r.resamp.rst</i> .
+<br>&nbsp;
+<h2>
+SEE ALSO</h2>
+<a href="g.region.html">g.region</a>, <a href="r.resample.html">r.resample</a>,
+<a href="r.surf.contour.html">r.surf.contour</a>, <a href="s.surf.rst.html"> s.surf.rst</a>
+<br>&nbsp;
+<h2>
+AUTHORS</h2>
+<i>Original version of program (in FORTRAN):</i>
+<br>Lubos Mitas, NCSA, University of Illinois at Urbana Champaign, Il
+<br>Helena Mitasova, US Army CERL, Champaign, Illinois&nbsp;
+<p><i>Modified program (translated to C, adapted for GRASS , segmentation
+procedure):</i>
+<br>Irina Kosinovsky, US Army CERL .
+<br>Dave Gerdes, US Army CERL .
+<br>&nbsp;
+<h2>
+REFERENCES</h2>
+Mitas, L., Mitasova, H., 1999, Spatial Interpolation. In: P.Longley, M.F.
+Goodchild, D.J. Maguire, D.W.Rhind (Eds.), Geographical Information Systems:
+Principles, Techniques, Management and Applications, Wiley, 481-492.
+<p>Mitasova, H. and Mitas, L., 1993. Interpolation by regularized spline
+with tension: I. Theory and implementation, Mathematical Geology No.25
+p.641-656.
+<p>Mitasova, H. and Hofierka, L., 1993. Interpolation by regularized spline
+with tension: II. Application to terrain modeling and surface geometry
+analysis, Mathematical Geology No.25 p.657-667.
+<p>&nbsp;Talmi, A. and Gilat, G., 1977. Method for smooth approximation
+of data, Journal of Computational Physics , 23, pp 93-123.
+<p>Wahba, G., 1990. Spline models for observational data, CNMS-NSF Regional
+Conference series in applied mathematics, 59, SIAM, Philadelphia, Pennsylvania.
+</body>
+</html>

@@ -1,7 +1,0 @@
-
-
-resolution - The smallest spacing between display elements; the
-smallest size of a feature that can be mapped or sampled.  In GRASS,
-because grid cells can be rectangular, resolution in the x direction
-may differ from that in the y direction.  Fine resolution implies
-large map @glossary("scale",16.glossary/scale.def). 

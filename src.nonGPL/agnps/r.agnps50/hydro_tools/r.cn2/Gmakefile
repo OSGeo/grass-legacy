@@ -1,0 +1,19 @@
+PGM = r.cn2
+
+LIBES  = $(GISLIB) $(DATETIMELIB)
+
+OBJ = \
+	Gcn.o\
+	usage.o\
+	cell_open.o\
+	hy_soil_group.o\
+	cell_open_new.o\
+	rules.o\
+	data.o\
+	amc_conversion.o
+
+
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

@@ -1,0 +1,148 @@
+<TITLE>v.what</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.what</b></EM>  - Query the category contents of a (binary) vector map layer 
+at user-selected locations.
+<BR>
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.what</B>
+<BR>
+<B>v.what help</B>
+<BR>
+<B>v.what </B>[<B>-1i</B>] <B>map=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>v.what</EM> outputs the category value(s) associated
+with user-specified location(s) in a vector map layer.
+
+<H2>OPTIONS</H2>
+
+If the <B>-i</B> flag is specified, the program activates
+the mouse, and expects the user to indicate the location(s)
+to be queried by depressing a mouse button over desired
+location(s) within the current geographic region in the
+active display frame on the graphic monitor.
+
+<P>
+
+If the <B>-i</B> flag is not used, the program expects
+eastings and northings to be entered from standard input.
+In this case, input is terminated by typing Control-D.
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-1</B> 
+<DD>Identify and query just one point location.  
+
+<DT><B>-i</B> 
+<DD>Query interactively using mouse. 
+</DL>
+
+<H3>Parameter:</H3>
+
+<DL>
+<DT><B>map=</B><EM>name</EM> 
+<DD>Name of an existing binary vector map in the user's mapset search path.
+</DL>
+
+<H2>EXAMPLE</H2>
+
+Two sample <EM>v.what</EM> sessions are given below.  
+
+<P>
+
+Although it is not necessary that the user first display a
+vector map to be queried in the active display frame, it is
+helpful to have a map displayed there for reference for
+interactive queries.
+
+<DL>
+<DT><B>v.what -i map=</B><EM>roads.24000</EM>
+</DL>
+
+After typing this, the user moves the mouse to a desired location
+on the displayed <EM>roads</EM> map layer,
+and presses the left mouse button to query the category value of the
+<EM>roads</EM> vector map at this location.  The program then
+outputs the category value of a line type corresponding to this
+user-selected map location, for the vector map queried by the user.
+
+
+<P>
+
+The query may be repeated as often as desired using the left mouse button.
+The right button on the mouse is used to quit the <EM>v.what</EM> session.
+
+
+<P>
+
+Users can also use this program inside of shell scripts. For example,
+if the file <EM>coords</EM> contains three UTM coordinates:
+
+<PRE>
+599817.37 4922332.96
+593512.25 4917170.38
+604979.96 4921655.90
+</PRE>
+
+<DL>
+<DT><B>cat coords | v.what map=</B><EM>landcover</EM>
+</DL>
+
+will return information about these three locations and
+then exit.
+
+<H2>NOTES</H2>
+
+<EM>v.what</EM> output can be redirected into a file.
+
+<P>
+
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM> 
+can be used to interactively query the map category
+contents of multiple raster map layers at user-selected
+locations.
+
+<P>
+
+<EM>v.what</EM> was created from 
+<EM><A HREF="d.what.vect.html">d.what.vect</A></EM> 
+so that non-interactively
+queries could be made. Specifying the <B>-i</B> flag makes <EM>v.what</EM> 
+behave just as <EM>d.what.vect</EM> does.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.vect.html">d.vect</A></EM>,
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM>,
+<EM><A HREF="d.what.vect.html">d.what.vect</A></EM>,
+<EM><A HREF="g.region.html">g.region</A></EM>,
+and
+<EM><A HREF="parser.html">parser</A></EM>,
+
+<H2>AUTHORS</H2>
+
+Jim Hinthorn, Central Washington University,
+was the original author.
+
+<BR>
+
+Dennis Finch, National Park Service
+
+
+<BR>
+
+James Darrell McCauley,
+Agricultural
+Engineering,
+Purdue University<br>
+added the non-interactive part and renamed to <EM>v.what</EM>

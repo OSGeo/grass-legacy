@@ -1,0 +1,208 @@
+
+
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Head
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Head Data Access
+</h1>
+
+<blockquote><i>
+    Status:  Delta<br>
+    This module has been designed, and coded but is currently under review.
+    It is fairly stable but its interface could change.<br>
+    The area of change is with respect to supporting user data.
+</i></blockquote>
+
+
+In 5.0, the vector file formats and names will completely change.  The
+header information is being moved out from within the arcs file and into
+its own file.  It will be of a similar format as the Raster header file.
+The format will be an unordered list of key/field entries.  The <em>key</em>
+will be a string separated from the <em>field</em> by a colon and optional 
+whitespace.<p>
+
+
+All key names beginning with underscore are reserved for use by the
+API and are not to be modified or created by the client programmer.
+The intent was for this API to ensure that this does not happen.
+But no special code has been written yet to provide that.<p>
+
+Currently new entries can be created by the client programmer.
+To avoid cluttering up this file, other methods should be considered 
+before doing so.  If the programmer does choose to add new fields, they
+should come up with a key prefix to aid in reducing the potential of 
+namespace collisions. [e.g. SCS_XYZ: data]<p>
+
+The original idea was for this file to be extendable by the client to 
+provide application specific information, but I think a better way 
+is to modify this api somewhat to allow the programmer to specify
+another file for application specific metadata.  This 
+extention is not yet documented here.<p>
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li>gvStatus  <a href="#gvHeadGet"> gvHeadGet </a>
+    (gvMapP map, char *key, char **data);
+
+
+<li>gvStatus  <a href="#gvHeadSet"> gvHeadSet </a>
+    (gvMapP map, char *key, char *string);
+
+
+<li>gvStatus  <a href="#gvHeadRewind"> gvHeadRewind </a>
+    (gvMapP map);
+
+
+<li>gvStatus  <a href="#gvHeadGetNext"> gvHeadGetNext </a>
+    (gvMapP map, char **key, char **string);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+
+<a name="gvHeadGet">
+gvStatus <strong>gvHeadGet</strong> (gvMapP <em>map</em>, 
+    char *<em>key</em>, char **<em>data</em>)
+<p>
+Given a key name, the data field is returned.  The returned pointer 
+will point to allocated memory which the caller is responsible to free().<p>
+
+<pre>
+INPUT
+    gvMapP map
+    char *key		Key name being queried
+
+OUTPUT
+    char **data		The user provides the address of a char pointer
+			and the function assigns the pointer to allocated
+			space.
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	No match or error
+	GV_MEMORY_ERR	Out of memory
+
+NOTE
+    The caller is responsible to free the allocated data memory
+
+
+</pre>
+<a href="#index">index</a>
+<hr>
+<a name="gvHeadSet">
+
+gvStatus <strong>gvHeadSet</strong> (gvMapP <em>map</em>, char *<em>key</em>, 
+    char *<em>string</em>)
+<p>
+<pre>
+
+INPUT
+    gvMapP map
+    char *key		Key
+    char *data		Data string
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Success
+        GV_EXISTS	Key already existed, data overwritten
+	GV_FAILED	Error
+	GV_MEMORY_ERR	Out of memory
+
+
+</pre>
+<a href="#index">index</a>
+<hr>
+<a name="gvHeadRewind">
+
+gvStatus <strong>gvHeadRewind</strong> (gvMapP <em>map</em>)
+<p>
+The internal Head iterator is rewind to the begining of the list.  This
+done by default when a map is opened.  This can be used in conjunction
+with gvHeadGetNext() when looping through all of the head data.  
+<pre>
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    None 
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error (unknown)
+
+SEE ALSO
+    gvHeadGetNext()
+
+</pre>
+<a href="#index">index</a>
+<hr>
+<a name="gvHeadGetNext">
+
+gvStatus <strong>gvHeadGetNext</strong> (gvMapP <em>map</em>, 
+    char **<em>key</em>, char **<em>string</em>)
+<p>
+The next key and string in the header are returned.  Order is not
+necessarily guarateed to be in the same order as the file.  Also
+the iterator is not (currently) guaranteed to be valid after a
+call to gvHeadSet().
+<p>
+<pre>
+INPUT
+    gvMapP map
+
+OUTPUT
+    char **key		The user provides the address of a char pointer
+    char **data		for both the key and data fields, and the function 
+			assigns the pointer to allocated space.
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	End of list/No more data
+	GV_MEMORY_ERR	Out of memory
+
+NOTE
+    The caller is responsible to free the allocated key and data memory
+
+
+</pre>
+<a href="#index">index</a>
+
+
+<!--hr------------------------------------------------>
+<p>
+
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>
+
+
+

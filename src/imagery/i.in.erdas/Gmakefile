@@ -1,15 +1,10 @@
 PGM=i.in.erdas
 
-#EXTRA_CFLAGS = -DATT_386   defined in head/386
-
 OFILES = \
 	do_color.o\
 	main.o 
 
-#all:  $(BIN_CONTRIB_CMD)/$(PGM)
-all:  $(BIN_ALPHA_CMD)/$(PGM)
-
-$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

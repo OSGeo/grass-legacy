@@ -1,7 +1,6 @@
 /*  @(#)p_to_line.c    2.1  6/26/87  */
 #include <math.h>
 #include "Vect.h"
-#include "digit.h"
 #include "debugf.h"
 
 /*

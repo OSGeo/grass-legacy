@@ -21,6 +21,7 @@
 **/
 
 #include <math.h>
+#include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "Vect.h"
@@ -42,19 +43,25 @@ int main (int argc, char **argv)
   double gr, mc;		/* Geary Ratio and Moran Coefficient */
   double siggrr, sigmcr, siggrn, sigmcn;	/* Standard Errors */
   double mgrr, mmcr, mgrn, mmcn;/* Means Errors */
-  double *catarray, att2cat ();
+  double *catarray;
   FILE *fp_plus, *out;
-  struct Map_info Map;
-  struct Plus_head Plus;
+  FILE *fp_att;
+  struct Map_info *Map;
+
+  struct GModule *module;
   struct
   {
     struct Flag *wmatrix, *cmatrix, *stats, *q, *h;
   } flag;
   struct
   {
-    struct Option *input, *output;
+    struct Option *input, *mapset, *output;
   } parm;
 
+
+  module = G_define_module();
+  module->description =
+	"Calculate spatial autocorrelation statistics for GRASS vector file.";
 
   /* Define the different options */
 
@@ -63,6 +70,13 @@ int main (int argc, char **argv)
   parm.input->type = TYPE_STRING;
   parm.input->required = YES;
   parm.input->description = "input vector filename";
+
+  parm.mapset = G_define_option ();
+  parm.mapset->key = "mapset";
+  parm.mapset->type = TYPE_STRING;
+  parm.mapset->required = NO;
+  parm.mapset->description = "input mapset containing vector map[current]";
+  parm.mapset->answer = "";
 
   parm.output = G_define_option ();
   parm.output->key = "output";
@@ -108,22 +122,38 @@ int main (int argc, char **argv)
   else
     out = stdout;
 
+  if( strcmp(parm.mapset->answer, "") == 0)
+    mapset = G_mapset();
+  else
+    mapset = parm.mapset->answer;
+
   quiet=(flag.q->answer);
-  init_plus_struct (&Plus);
+  /* init_plus_struct (&Plus);
   init_map_struct (&Map);
+  */
+
+  Map = (struct Map_info *)malloc( sizeof(struct Map_info));
+  memset( Map, 0, sizeof(struct Map_info));
 
   if (!quiet)
     fprintf(stdout, "Opening files...\n");
   /* Determine the "mapset" based on your order of mapsets */
-  if (!(mapset = G_find_vector2 (name, "")))
+   if (!(mapset = G_find_vector2 (name, mapset)))
   {
-    sprintf (err_msg, "\nVector file name:  '%s' NOT found.\n\n", name);
+    sprintf (err_msg, "\nVector file name:  '%s' NOT found in mapset '%s'.\n\n", name, mapset);
     G_fatal_error (err_msg);
   }
 
+   /* Open vector file */
+   if( Vect_open_old( Map, name, mapset) < 2 ) {
+     strcpy( err_msg, "Could not open map '%s' with appropriate access level.\n" );
+     G_fatal_error( err_msg );
+   }
+
   /* open dig att and dig plus file  */
-  if (open_dig_files (parm.input->answer, &fp_plus, &Map, &Plus))
+   /*if (open_dig_files (parm.input->answer, &fp_plus, &Map, &Plus))
     exit (-1);
+   */
 
   /* if (fp_plus==NULL) G_fatal_error("null pointer"); */
   /*
@@ -139,21 +169,21 @@ int main (int argc, char **argv)
     G_fatal_error (err_msg);
   }
 
-  dig_load_plus (&Map, fp_plus, 0);
-  if (Map.n_atts <= 0)
+  /* dig_load_plus (&Map, fp_plus, 0); */
+  if (Map->n_atts <= 0)
     G_fatal_error ("Map not labeled");
 
   /* Read category values into an ordinary array */
-  catarray = (double *) G_malloc ((Map.n_atts + 1) * sizeof (double));
+  catarray = (double *) G_malloc ((Map->n_atts + 1) * sizeof (double));
   if (catarray == NULL)
     G_fatal_error ("Memory allocation error for temporary array (main)");
-  for (i = 1; i <= Map.n_atts; ++i)
-    catarray[i] = att2cat (&Map, i);
+  for (i = 1; i <= Map->n_atts; ++i)
+    catarray[i] = att2cat (Map, i);
 
   /* Compute connectivity matrix */
   if (!quiet)
     fprintf(stdout, "Computing connectivity matrix...\n");
-  n = c_matrix (&Map, &Plus);
+  n = c_matrix (Map);
 
   if (!flag.stats->answer)
   {
@@ -178,7 +208,7 @@ int main (int argc, char **argv)
   /* Print Results */
   fprintf (out, "SPATIAL AUTOCORRELATION REPORT\n");
   fprintf (out, "\tLocation: [%s]\n\tMapset: [%s]\n", G_location (), mapset);
-  fprintf (out, "\tn=%d labeled polygons in [%s]\n\n", Map.n_atts, name);
+  fprintf (out, "\tn=%d labeled polygons in [%s]\n\n", Map->n_atts, name);
   if (!flag.stats->answer)
   {
     fprintf (out, "\tGeary Ratio=%-10g\t\tMoran Coefficient=%-10g\n\n",
@@ -199,22 +229,22 @@ int main (int argc, char **argv)
       fprintf (out, "\tHo: Mean(MC) = -1(n-1)\t\tHo: Mean(GR) = 1\n");
       fprintf (out, "\tHa: Mean(MC) != -1(n-1)\t\tHa: Mean(GR) != 1\n\n");
       fprintf (out, "\tRandomization: Z(MC)=(%g+%g)/%g\n",
-	       mc, 1. / (Map.n_atts - 1), sqrt (sigmcr));
+	       mc, 1. / (Map->n_atts - 1), sqrt (sigmcr));
       fprintf (out, "\t               Z(MC)=%g\n",
-	       (mc + 1. / (Map.n_atts - 1)) / sqrt (sigmcr));
+	       (mc + 1. / (Map->n_atts - 1)) / sqrt (sigmcr));
       fprintf (out, "\tRandomization: Z(GR)=(%g-1)/%g\n", gr, sqrt (siggrr));
       fprintf (out, "\t               Z(GR)=%g\n", (gr - 1) / sqrt (siggrr));
       fprintf (out, "\tNormalization: Z(MC)=(%g+%g)/%g\n",
-	       mc, 1. / (Map.n_atts - 1), sqrt (sigmcn));
+	       mc, 1. / (Map->n_atts - 1), sqrt (sigmcn));
       fprintf (out, "\t               Z(MC)=%g\n",
-	       (mc + 1. / (Map.n_atts - 1)) / sqrt (sigmcn));
+	       (mc + 1. / (Map->n_atts - 1)) / sqrt (sigmcn));
       fprintf (out, "\tNormalization: Z(GR)=(%g-1)/%g\n", gr, sqrt (siggrn));
       fprintf (out, "\t               Z(GR)=%g\n", (gr - 1) / sqrt (siggrn));
     }
   }
   if (flag.cmatrix->answer)
   {
-    printmatrix (out, Map.n_atts);
+    printmatrix (out, Map->n_atts);
   }
   exit (1);
 }

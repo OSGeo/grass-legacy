@@ -1,4 +1,3 @@
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
 
 
 A_B_OFILES = \
@@ -19,10 +18,10 @@ B_A_CFILES = \
 
 
 
-CMD_IN  = $(BIN_MAIN_CMD)/v.in.ascii 
-CMD_OUT = $(BIN_MAIN_CMD)/v.out.ascii 
-INT_IN  = $(BIN_MAIN_INTER)/v.in.ascii 
-INT_OUT = $(BIN_MAIN_INTER)/v.out.ascii
+CMD_IN  = $(BIN_CMD)/v.in.ascii 
+CMD_OUT = $(BIN_CMD)/v.out.ascii 
+INT_IN  = $(BIN_INTER)/v.in.ascii 
+INT_OUT = $(BIN_INTER)/v.out.ascii
 
 
 #all: $(CMD_IN) $(CMD_OUT) $(INT_IN) $(INT_OUT)

@@ -2,7 +2,6 @@
 #include <string.h>
 #include	"Vect.h"
 #include	"gis.h"
-#include	"dig_structs.h"
 #include "vbuildlib.h"
 
 #define		DIG_DIR		"dig"

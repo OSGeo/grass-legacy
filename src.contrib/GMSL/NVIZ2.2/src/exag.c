@@ -14,11 +14,8 @@ double rint();
 
 /* use own system of getting vals from sliders to make it easier to
    change the slider's range dynamically */
-init_default_slider_vals1(dc, min, max, val)
-     Nv_data *dc;
-     float *min;
-     float *max;
-     float *val;
+int 
+init_default_slider_vals1 (Nv_data *dc, float *min, float *max, float *val)
 {
   float longdim;
   
@@ -58,12 +55,13 @@ init_default_slider_vals1(dc, min, max, val)
 }
 #endif
 
-int
-Nget_first_exag_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;
-     char **argv;
+int 
+Nget_first_exag_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,
+    char **argv
+)
 {
   float exag, texag;
   int nsurfs, i, *surf_list;
@@ -90,12 +88,13 @@ Nget_first_exag_cmd (data, interp, argc, argv)
 }
 
 /* after initial data has been loaded, & maybe again later */
-int
-Nget_height_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;
-     char **argv;
+int 
+Nget_height_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,
+    char **argv
+)
 {
   float longdim, exag, texag, hmin, hmax;
   int nsurfs, i, *surf_list;

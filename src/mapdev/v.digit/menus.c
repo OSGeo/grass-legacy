@@ -76,7 +76,7 @@ global_menu (int chr, struct Menu_head *from)
 	    Replot_screen ();
 	    break;
 	 case MGC_ZOOM:
-	    zoom_window ();
+	    zoom_window (0, NULL);
 	    break;
 	 case MGC_DEBUG:
 	    Debug ();

@@ -1,0 +1,532 @@
+<html>
+
+<TITLE>g.region</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>g.region</b></EM>  - Program to manage the boundary definitions for the
+geographic region.
+
+<BR>
+
+<EM>(GRASS Region Management Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>g.region</B>
+<BR>
+<B>g.region help</B>
+<BR>
+<B>g.region</B> [<B>-dgpu</B>] 
+[<B>region=</B><EM>name</EM>] [<B>raster=</B><EM>name</EM>]
+[<B>vector=</B><EM>name</EM>] [<B>sites=</B><EM>name</EM>] 
+[<B>3dview=</B><EM>name</EM>]
+[<B>n=</B><EM>value</EM>] [<B>s=</B><EM>value</EM>]
+[<B>e=</B><EM>value</EM>] [<B>w=</B><EM>value</EM>] 
+[<B>res=</B><EM>value</EM>] 
+[<B>nsres=</B><EM>value</EM>] [<B>ewres=</B><EM>value</EM>] 
+[<B>zoom=</B><EM>name</EM>]
+[<B>align=</B><EM>name</EM>] [<B>save=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+The <EM>g.region</EM> program allows the user to manage the
+settings of the current geographic region.  These regional
+boundaries can be set by the user directly and/or set from
+a region definition file (stored under the
+<KBD>windows</KBD> directory in the user's current
+mapset).  The user can create, modify, and store as many
+geographic region definitions as desired for any given
+mapset.  However, only one of these geographic region
+definitions will be current at any given moment, for a
+specified mapset;  i.e., GRASS programs that respect the
+geographic region settings will use the current geographic
+region settings.
+
+<H2>INTERACTIVE PROGRAM USE: MAIN MENU</H2>
+
+The main menu consists of an information section listing
+the current GRASS data base <KBD>LOCATION</KBD>, <KBD>MAPSET</KBD>, 
+and CURRENT REGION, followed by user options:
+
+<PRE>
+------------------------------------------------------------
+|                    REGION FACILITY                       |
+| LOCATION: sample                         MAPSET: grass   |
+|                                                          |
+| CURRENT REGION: N=5167600  S=5156755  RES=50  ROWS=216   |
+|                 E=729314   W=705924   RES=50  COLS=467   |
+| PROJECTION: 1 (UTM)                                      |
+| ZONE: 13                                                 |
+| DATUM: WGS84                                             |
+|                                                          |
+| Please select one of the following options               |
+|                                                          |
+|     Current Region              Region Database          |
+|                                                          |
+| 1 Modify current region     6 Save current region in     |
+|   directly                    the database               |
+|                                                          |
+| 2 Set from default region   7 Create a new region        |
+|                                                          |
+| 3 Set from a database       8 Modify an existing region  |
+|   region                                                 |
+|                                                          |
+| 4 Set from a raster map                                  |
+|                                                          |
+| 5 Set from a vector map                                  |
+|                                                          |
+| RETURN to quit                                           |
+------------------------------------------------------------
+</PRE>
+
+<H2>DEFINITIONS</H2>
+
+<DL>
+<DT><B>Region:</B>
+
+<DD>Here, a <EM>region</EM> refers to a geographic area
+with some defined boundaries, based on a specific map
+coordinate system and map projection.  Each region also has
+associated with it the specific east-west and north-south
+resolutions of its smallest units (rectangular units called
+"cells").
+
+<P>
+
+The region's boundaries are given as the northernmost,
+southernmost, easternmost, and westernmost points that
+define its extent.  The north and south boundaries are
+commonly called <EM>northings</EM>, while the east and west
+boundaries are called <EM>eastings</EM>.
+
+<P>
+
+The region's cell resolution defines the size of the
+smallest piece of data recognized (imported, analyzed,
+displayed, stored, etc.) by GRASS programs affected by the
+current region settings.  The north-south and east-west
+cell resolutions need not be the same, thus allowing
+non-square data cells to exist.
+
+<DT><B>Default Region:</B>
+
+<DD>Each GRASS <KBD>LOCATION_NAME</KBD> has a fixed
+geographic region, called the default geographic region
+(stored in the region file <KBD>DEFAULT_WIND</KBD> under
+the special mapset <KBD>PERMANENT</KBD>), that defines the
+extent of the data base.  While this provides a starting
+point for defining new geographic regions, user-defined
+geographic regions need not fall within this geographic
+region.
+
+<DT><B>Current Region:</B>
+
+<DD>Each mapset has a current geographic region.  This
+region defines the geographic area in which all GRASS
+displays and analyses will be done.  Data will be
+resampled, if necessary, to meet the cell resolutions of
+the current geographic region setting.
+
+<DT><B>Region Data Base:</B>
+
+<DD>Each GRASS MAPSET may contain any number of
+pre-defined, and named, geographic regions.  These region
+definitions are stored in the user's current mapset
+location under the <KBD>windows</KBD> directory (also
+referred to as the user's data base of region
+definitions).  Any of these pre-defined geographic regions
+may be selected, by name, to become the current geographic
+region.  Users may also access saved region definitions
+stored under other mapsets in the current location, if
+these mapsets are included in the user's mapset search
+path.
+
+</DL>
+
+<H2>REGION EDIT PROMPT</H2>
+
+Most of the options will require the user to edit a
+geographic region, be it the current geographic region or
+one stored in the user's data base of region definitions
+(the <KBD>windows</KBD> directory).  A standard prompt is
+used to perform this edit.  An example is shown below:
+
+
+<PRE>
+---------------------------------------------------------------
+|                         IDENTIFY REGION                     |
+|                                                             |
+|           ===========  DEFAULT REGION  ==========           |
+|           |    Default North: 3402025.00        |           |
+|           |                                     |           |
+|           |          ===YOUR REGION===          |           |
+|           |          |  NORTH EDGE   |          |           |
+|           |          |  3402025.00_  |          |           |
+|           |          |               |          |           |
+| Def West: |WEST EDGE |               |EAST EDGE | Def.East: |
+| 233975.00 |233975.00_|               |236025.00_| 236025.00 |
+|           |          |  SOUTH EDGE   |          |           |
+|           |          |  3399975.00_  |          |           |
+|           |          =================          |           |
+|           |                                     |           |
+|           |    Default South: 3399975.00        |           |
+|           =======================================           |
+|                                                             |
+|              Default   GRID RESOLUTION   Region             |
+|               50.00   --- East-West ---  50.00__            |
+|               50.00   -- North-South --  50.00__            |
+|                                                             |
+|                                                             |
+|     AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE     |
+---------------------------------------------------------------
+</PRE>
+
+The fields NORTH EDGE, SOUTH EDGE, WEST EDGE and EAST EDGE,
+are the boundaries of the geographic region that the user
+can change.  The fields Default North, Default South, Def
+West and Def East are the boundaries of the default
+geographic region that are displayed for reference and
+<EM>cannot</EM> be changed.  The two GRID RESOLUTION Region
+fields (east-west, and north-south) are the geographic
+region's cell resolutions that the user can change.  The
+two GRID RESOLUTION Default fields list the resolutions of
+the default geographic region;  these are displayed for
+reference and cannot be changed here by the user.
+
+<H2>REGION MANAGEMENT MENU OPTIONS</H2>
+
+<OL>
+
+<LI>Modify the current geographic region directly Allows
+the user to edit the current region.
+
+<LI>Set current geographic region from default region
+Copies the default region to the current geographic region,
+and then lets the user edit the current geographic region.
+
+<LI>Set current geographic region from a data base
+geographic region Allows the user to select a geographic
+region by name from the data base of geographic regions to
+become the current geographic region, and then lets the
+user edit the current geographic region.
+
+<P>
+
+Note:  geographic region definition files may be selected
+from other mapsets as well, if accessible and in the user's
+mapset search path.
+
+<LI>Set current geographic region from a raster (cell) map
+layer Allows the user to select a raster map layer, copies
+the cell header for this map layer to the current
+geographic region, and then lets the user edit the current
+geographic region.  This option is useful when subsequent
+GRASS operations will be used to produce a raster map layer
+from one input raster map layer and it is necessary that
+the result coincide with the input raster map layer.
+
+<LI>Save the current geographic region (window) in the data
+base Allows the user to save the current geographic region
+settings in the user's data base of such settings.  These
+files are stored in the <KBD>windows</KBD> directory under
+the user's current mapset.  This option is useful when the
+current geographic region is set directly using option 2,
+or even by another GRASS program
+
+(e.g., <EM><A HREF="d.display.html">d.display</A></EM>).
+
+This option installs an otherwise temporary geographic
+region setting into the geographic region definition data
+base for recall when needed.
+
+<LI>Create a new data base geographic region setting
+Creates a new geographic region definition in the user's
+data base of such settings in the <KBD>windows</KBD>
+directory under the current mapset, using the geographic
+region edit prompt described above.  After the geographic
+region definition is created, the user is asked if this
+geographic region setting should also be used as the
+current geographic region.
+
+<LI>Modify a data base geographic region setting Modifies a
+geographic region setting (in the data base of such
+settings in the <KBD>windows</KBD> directory of the current
+mapset), using the geographic region edit prompt.  After
+the changes have been made, the user is asked if this
+geographic region setting should also be used as the
+current geographic region.
+
+</OL>
+
+<H2>NON-INTERACTIVE PROGRAM USE</H2>
+
+Alternately, the user can modify the settings of the current geographic region
+by specifying all needed parameters on the command line.
+The user enters the command  <B>g.region</B> <EM>parms</EM>, where
+<EM>parms</EM> are the following parameters and/or flags:
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-d</B> 
+<DD>Set current region settings equal to default region settings.
+
+<DT><B>-g</B> 
+<DD>Print the current region settings (shell script style) in a
+format that can be given back to <EM>g.region</EM> on its command line.
+
+<DT><B>-p</B> 
+<DD>Print the current region settings.
+
+<DT><B>-u</B> 
+<DD>Do not update the current region file settings.  Allows the user to
+temporarily use a different region setting, without saving this setting.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>region=</B><EM>name</EM> 
+<DD>Make current region settings same as the named region
+file settings
+
+<DT><B>raster=</B><EM>name</EM> 
+<DD>Make current region settings same as those in the named
+raster map's cell header.  But see
+<A HREF="#parm-zoom"><B>zoom=</B><EM>name</EM> option</A>, below.
+
+<DT><B>vector=</B><EM>name</EM> 
+<DD>Make the current region settings the same as those of
+the named vector map.
+
+<DT><B>sites=</B><EM>name</EM> 
+
+<DD>Set the current region to the smallest region
+encompassing all coordinates in the named
+<KBD>site_lists</KBD> file, aligned with the current
+region.
+
+<DT><B>3dview=</B><EM>name</EM> 
+<DD>Make current region settings same as those in the named
+3dview file, which holds the region that was current when
+the 3dview was saved.
+
+<DT><B>n=</B><EM>value</EM> 
+<DD>Set map coordinate value for the region's northern edge
+to <EM>value</EM>
+
+<DT><B>s=</B><EM>value</EM> 
+<DD>Set map coordinate value for the region's southern edge
+to <EM>value</EM>
+
+<DT><B>e=</B><EM>value</EM> 
+<DD>Set map coordinate value for the region's eastern edge
+to <EM>value</EM>
+
+<DT><B>w=</B><EM>value</EM> 
+<DD>Set map coordinate value for the region's western edge
+to <EM>value</EM>
+
+<DT><B>res=</B><EM>value</EM> 
+<DD>Set grid resolution (both north-south and east-west) to
+<EM>value</EM>
+
+<DT><B>nsres=</B><EM>value</EM> 
+<DD>Set north-south grid resolution value to <EM>value</EM>
+
+<DT><B>ewres=</B><EM>value</EM> 
+<DD>Set east-west grid resolution value to <EM>value</EM>
+
+<A NAME="parm-zoom"><DT><B>zoom=</B><EM>name</EM></A>
+<DD>Set current region settings to the smallest region
+encompassing all non-zero data in the named raster map
+layer that fall inside the user's current region.
+
+<P>
+
+If the user also includes the <B>raster=</B><EM>name</EM>
+option on the command line, <B>zoom=</B><EM>name</EM> will
+set the current region settings to the smallest region
+encompassing all non-zero data in the named <B>zoom</B> map
+that fall inside the region stated in the cell header for
+the named <B>raster</B> map.
+
+<DT><B>align=</B><EM>name</EM> 
+
+<DD>Set the current resolution equal to that of the named
+raster map, and align the current region to a row and
+column edge in the named map.  Alignment only moves the
+existing region edges outward to the edges of the next
+nearest cell in the named raster map -- not to the named
+map's edges.  To perform the latter function, use the
+<B>raster=</B><EM>name</EM> option.
+
+<DT><B>save=</B><EM>name</EM> 
+<DD>Save current region settings in the named region file
+</DL>
+
+<H2>EXAMPLES</H2>
+
+<DL>
+<DT><B>g.region n=</B><EM>7360100</EM> <B>e=</B>699000</EM>
+<DD> will reset the northing and easting for the current
+region, but leave the south edge, west edge, and the region
+cell resolutions unchanged.
+
+<P>
+
+<DT><B>g.region  -dp s=</B><EM>698000</EM>
+
+<DD> will set the current region from the default region
+for the GRASS data base location, reset the south edge to
+698000, and then print the result.
+
+<P>
+
+<DT><B>g.region n=</B><EM>n+1000</EM> <B>w=</B><EM>w-500</EM>
+
+<DD> The n=<EM>value</EM> may also be specified as a
+function of its current value:  n=n+<EM>value</EM>
+increases the current northing, while n=n-<EM>value</EM>
+decreases it.  This is also true for s=<EM>value</EM>,
+e=<EM>value</EM>, and w=<EM>value</EM>.  In this example
+the current region's northern boundary is extended by 1000
+units and the current region's western boundary is
+decreased by 500 units.
+
+<P>
+
+<DT><B>g.region n=</B><EM>s+1000</EM> <B>e=</B><EM>w+1000</EM>
+
+<DD> This form allows the user to set the region boundary
+values relative to one another.  Here, the northern
+boundary coordinate is set equal to 1000 units larger than
+the southern boundary's coordinate value, and the eastern
+boundary's coordinate value is set equal to 1000 units
+larger than the western boundary's coordinate value.  The
+corresponding forms s=n-<EM>value</EM> and
+
+<P>
+
+w=e-<EM>value</EM> may be used to set the values of the
+region's southern and western boundaries, relative to the
+northern and eastern boundary values.
+
+<DT><B>g.region raster=</B><EM>soils</EM>
+
+<DD> This form will make the current region settings
+exactly the same as those given in the cell header file for
+the raster map layer <EM>soils</EM>.
+
+<P>
+
+<DT><B>g.region raster=</B><EM>soils</EM> <B>zoom=</B><EM>soils</EM>
+
+<DD> This form will first look up the cell header file for
+the raster map layer <EM>soils</EM>, use this as the
+current region setting, and then shrink the region down to
+the smallest region which still encompasses all non-zero
+data in the map layer <EM>soils</EM>.  Note that if the
+parameter <EM>raster=soils</EM> were not specified, the
+zoom would move to encompass all non-zero data values in
+the soils map that were located within the current region
+setting.
+
+<P>
+
+<DT><B>g.region -up raster=</B><EM>soils</EM>
+
+<DD> The <B>-u</B> option suppresses the re-setting of the
+current region definition.  This can be useful when it is
+desired to only extract region information.  In this case,
+the cell header file for the soils map layer is printed
+without changing the current region settings.
+
+<P>
+
+<DT><B>g.region -u raster=</B><EM>soils</EM> <B>zoom=</B><EM>soils</EM> <B>save=</B><EM>soils</EM>
+
+<DD> This will zoom into the smallest region which
+encompasses all non-zero soils data values, and save the
+new region settings in a file to be called <EM>soils</EM>
+and stored under the <KBD>windows</KBD> directory in the
+user's current mapset.  The current region settings are not
+changed.
+
+<P>
+
+<DT><B>g.region  -p</B>
+
+<DD> This will print the current region in the format:
+
+<PRE>
+projection:	1 (UTM)
+zone:	15
+datum:  WGS84
+north:	4294050.00
+south:	4249950.00
+east:	526050.00
+west:	500950.00
+nsres:	100.00
+ewres:	100.00
+rows:	441
+cols:	251
+</PRE>
+
+<P>
+
+<DT><B>g.region  -g</B>
+
+<DD> The <B>-g</B> option prints the region in the
+following format:
+
+
+<PRE>
+n=4294050.00
+s=4249950.00
+e=526050.00
+w=500950.00
+nsres=100.00
+ewres=100.00
+</PRE>
+
+This format does not have the rows and columns, but can be
+fed back into <EM>g.region</EM> on its command line.
+
+</DL>
+
+The <B>-p</B> (or <B>-g</B>) option is recognized
+last.  This means that all changes are applied to the
+region settings before printing occurs.
+
+
+<H2>NOTE</H2>
+
+After all updates have been applied, the current region's
+southern and western boundaries are (silently) adjusted so
+that the north/south distance is a multiple of the
+north/south resolution and that the east/west distance is a
+multiple of the east/west resolution.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.display.html">d.display</A></EM><br>
+<EM><A HREF="d.zoom.html">d.zoom</A></EM><br>
+<EM><A HREF="g.access.html">g.access</A></EM><br>
+<EM><A HREF="g.mapsets.html">g.mapsets</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro,
+U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

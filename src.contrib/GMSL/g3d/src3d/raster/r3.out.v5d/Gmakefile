@@ -1,0 +1,12 @@
+OBJ=main.o binio.o v5d.o
+SOURCES=main.c binio.c v5d.c
+
+#for Linux et al.
+EXTRA_CFLAGS = -DLITTLE
+
+PGM=r3.out.v5d
+
+$(BIN_CMD)/$(PGM): $(OBJ) $(G3DLIB) $(GISLIB) $(LINKMLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(G3DLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB) $(XDRLIB)
+
+$(GISLIB): #

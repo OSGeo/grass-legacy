@@ -4,7 +4,7 @@ PGM=r.in.gif
 
 LIST=r.in.gif.o gethead.o readgif.o gifreade.o expander.o gifbase.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

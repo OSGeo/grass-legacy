@@ -1,0 +1,190 @@
+<TITLE>v.in.dlg</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.in.dlg</b></EM>  - Converts an ASCII USGS DLG-3 Optional
+file to a binary GRASS vector (<KBD>dig</KBD>) file.
+
+<BR>
+
+<EM>(GRASS Vector Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.in.dlg</B>
+
+<BR>
+
+<B>v.in.dlg help</B>
+
+<BR>
+
+<B>v.in.dlg</B> [<B>-l</B>] <B>input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> [<B>matt=</B><EM>name</EM>] 
+[<B>base=</B><EM>val</EM>]
+
+<H2>DESCRIPTION</H2>
+
+This program converts an ASCII USGS DLG-3
+(<EM>dlg</EM>) file
+into a binary GRASS vector (<KBD>dig</KBD>) file. Store
+the DLG-file into $LOCATION/dlg/ (create this directory, if
+not there) before importing.
+
+<p>
+
+<B>Warning</B>:  The program reads DLG-3 Optional format
+only.
+
+
+<P>
+
+<EM>v.in.dlg</EM> also creates a <KBD>dig_att</KBD> file
+containing the label information 'stripped' from the DLG-3
+file (the first minor attribute for each record unless
+<B>matt</B> is specified).
+
+<P>
+
+If the <B>matt</B> is specified, <EM>v.in.dlg</EM> creates an additional
+attribute file containing identifiers for every record with correspon
+ding
+multiple attributes.  In this case <B>matt</B> file contains identifiers
+starting with base <B>base</B> for the attributes stored in <B>matt</B>
+file (as opposed to the first minor attributes with no <B>matt</B> file).                             
+The example of <B>matt</B> with <B>base</B> = 34 would be:
+
+<PRE>
+	34	0	0
+	35	180	201
+	36	180	208
+		170	240
+		190	201
+	37	160	220
+</PRE>
+
+With the corresponding <EM>dig_att</EM> looking like this:
+
+<PRE>
+	A 648467.190000 4456367.320000     34
+	L 667989.290000 4458393.520000     35
+	L 651002.470000 4473793.390000     36
+	L 663816.680000 4471412.080000     37
+</PRE>
+
+However, the user must run 
+
+<EM><A HREF="v.support.html">v.support</A></EM>
+(or <EM><A HREF="v.import.html">v.import</A></EM>
+option 4) on the <EM>output</EM> file created by
+<EM>v.in.dlg</EM> to create a <KBD>dig_plus</KBD> file
+containing the file topology, before using the
+<EM>output</EM> file in <EM>
+<A HREF="v.digit.html">v.digit</A></EM>.
+
+
+<P>
+
+The user can avoid this two-step process by converting
+the ASCII DLG-3 file to binary GRASS vector format
+using option 1 of the GRASS program 
+<EM><A HREF="v.import.html">v.import</A></EM>.
+
+
+<H2>OPTIONS</H2>
+
+<H3>Flag:</H3>
+
+<DL>
+<DT><B> -l</B> 
+<DD>Give precedence to line information (default is area).
+</DL>
+
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>Name of USGS DLG-3 Optional format input file.
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>Name to be assigned to the binary GRASS vector files created.
+
+<DT><B>matt=</B><EM>name</EM> 
+
+<DD>Name of file with multiple attributes (optional). 
+
+<DT><B>base=</B><EM>val</EM> 
+
+<DD>Identifier base for multiple attributes (default is 1). 
+</DL>
+
+
+<P>
+
+If the user simply types <B>v.in.dlg</B> without specifying
+parameter values on the command line, the program will
+prompt the user to enter these.
+
+<H2>NOTES</H2>
+
+<H3>Area vs Line Precedence: </H3>
+
+Some machine-processed DLG-3 files do not make the
+distinction between line edges and area edges.  For
+example, in a roads map, where the desired information is
+line edge data, a downtown block surrounded by roads may be
+processed as an area.  Because of this, the user is asked
+to choose whether to give precedence to areas or lines.  If
+precedence is given to lines, the user should be aware that
+any lines that bound unlabeled areas in the DLG-3 file will
+be stored as line data.  Any unlabeled areas would
+therefore be lost (this is only a concern when areas are
+unlabeled;  labeled area information will be retained).  If
+precedence is given to areas, lines will be stored as
+boundaries to areas that are unlabeled.
+
+
+<H3>Building support files with
+<EM><A HREF="v.support.html">v.support</A></EM>: </H3>
+
+
+When you run 
+
+<EM><A HREF="v.support.html">v.support</A></EM> 
+
+you will have the option of snapping the nodes in your
+vector file that fall within a certain threshold of one
+another.  WARNING:  the default threshold is calculated
+using the scale of the original DLG-3 file.  If the
+threshold is too high, excessive snapping may occur,
+destroying the file!!  With
+<EM><A HREF="v.support.html">v.support</A></EM>, 
+the user has the option of snapping or not snapping nodes,
+and further, of setting a particular snapping threshold.
+
+<H2>SEE ALSO</H2>
+
+<P>
+
+<EM><A HREF="v.digit.html">v.digit</A></EM>,
+<EM><A HREF="v.import.html">v.import</A></EM>,
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHOR</H2>
+
+Dave Gerdes,
+U.S.Army Construction Engineering 
+Research Laboratory
+
+<BR>
+
+Irina Kosinovsky, U.S.Army Construction Engineering 
+Research Laboratory

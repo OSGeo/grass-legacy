@@ -7,7 +7,7 @@
 # ANSWERS on GRASS Project
 ###############################################################
 
-BIN = $(BIN_ALPHA_INTER)
+BIN = $(BIN_INTER)
 PGM = r.answers
 
 # object files
@@ -61,7 +61,7 @@ user_file.o
 all:    $(BIN)/$(PGM)
 
 $(BIN)/$(PGM): $(OBJ) $(GISLIB) $(VASKLIB)
-	$(CC) -o $(BIN)/$(PGM) $(OBJ) $(VASK) $(LDFLAGS) $(GISLIB) $(MATHLIB) 
+	$(CC) -o $(BIN)/$(PGM) $(OBJ) $(LDFLAGS) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) 
  
 
 $(GISLIB): #

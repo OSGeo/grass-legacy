@@ -52,13 +52,13 @@ retype_line (struct Map_info *map)
 		/* check any posible connecting lines to see */
 		/* we area disturbing an existing area */
 
-		if (area = check_next (map, line, RIGHT))
+		if ((area = check_next (map, line, RIGHT)))
 		    Del_area (map, area);
-		if (area = check_next (map, line, LEFT))
+		if ((area = check_next (map, line, LEFT)))
 		    Del_area (map, area);
-		if (area = check_next (map, -line, RIGHT))
+		if ((area = check_next (map, -line, RIGHT)))
 		    Del_area (map, area);
-		if (area = check_next (map, -line, LEFT))
+		if ((area = check_next (map, -line, LEFT)))
 		    Del_area (map, area);
 
 		Line->type = AREA;

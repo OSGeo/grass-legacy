@@ -1,0 +1,84 @@
+##############################################################
+## A Gmakefile - This is necessary for all GRASS programs   ##
+##  		 and links all necessary functions and      ##
+##		 libraries.				    ##
+##############################################################
+
+
+PGM = m.in.ntf 
+#--------^ Name of the GRASS module here.
+
+
+#PGM = debug
+#--------^ Swap this line with the PROG line above for debugging.
+#	   This will create an executable in the current
+#	   directory that can be passed to dbx(tool).
+
+
+LIBES = $(VECTLIB) $(GISLIB) $(VASKLIB) $(DIG_ATTLIB) $(DATETIMELIB)
+#-----------^ Library necessary for all GRASS programs.
+#---------------------^ Parses keyboard input.
+#------------------------------^ For non arithmetic maths.
+
+
+INCLUDES =\
+		ntf_in.h
+#-----------------^  Any include files go here.
+
+#COMPILER_FLAGS = -O
+#-----------------^ For optimising the code.
+
+
+
+#-----------COMPILER_FLAGS = -g
+#------------------^ For use with dbx(tool) - must replace the -O option.
+
+OBJ =\
+	main.o		\
+	interface.o	\
+	open_files.o	\
+	old2new.o	\
+	open_raster.o	\
+	open_vector.o	\
+	read_ntf.o	\
+	read_lines.o	\
+	01vol_head.o	\
+	02db_head.o	\
+	03data_desc.o	\
+	04data_fmt.o	\
+	05feat_class.o	\
+	07sect_head.o	\
+	11name_rec.o	\
+	12name_postn.o	\
+	14att_rec.o	\
+	15point_rec.o	\
+	16node_rec.o	\
+	21geom_rec.o	\
+	22geom_rec2.o	\
+	23line_rec.o	\
+	40att_desc.o	\
+	43text_rec.o	\
+	44text_postn.o	\
+	45text_rep.o	\
+	50grid_head.o	\
+	51grid_rec.o	\
+	99vol_term.o	\
+	write_raster.o	\
+	write_vector.o	\
+	write_supp.o	\
+	close_vect.o
+#----------^ These are the names of all seperate files that
+#	     the programmer creates. Must have ONE tab in
+#	     front of each line.
+
+######### DEPENDENCIES #########
+
+$(BIN_CMD)/$(PGM): ${OBJ} ${LIBES}
+	 ${CC} $(COMPILER_FLAGS) -o $@ ${OBJ} ${LIBES} $(CURSES) $(MATHLIB) ${XDRLIB}
+#
+#-----^ This compiles the whole program bringing all labels together.
+
+$(OBJ): ${INCLUDES}
+
+$(LIBES): #
+#---^ Ignore this line (used for future additions of the library).

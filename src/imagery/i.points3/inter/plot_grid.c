@@ -2,10 +2,8 @@
 #include "globals.h"
 #include "raster.h"
 #include "display.h"
-/**
-#include "dig_structs.h"
-#include "dig_externs.h"
-**/
+#include "Vect.h"
+
 static int choose_gridcolor (char *,char *);
 
 

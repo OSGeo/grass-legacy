@@ -65,7 +65,7 @@ int I_list_groups (int full)
 	fprintf (temp, "no group files available\n");
     fprintf (temp, "---------------------------------\n");
     fclose (temp);
-    sprintf (buf, "more -d %s", tempfile);
+    sprintf (buf, "$PAGER %s", tempfile);
     system(buf);
     unlink (tempfile);
     fprintf (stdout,"hit RETURN to continue -->");
@@ -123,7 +123,7 @@ int I_list_subgroups (char *group,int full)
 	fprintf (temp, "no subgroup files available\n");
     fprintf (temp, "---------------------------------\n");
     fclose (temp);
-    sprintf (buf, "more -d %s", tempfile);
+    sprintf (buf, "$PAGER %s", tempfile);
     system(buf);
     unlink (tempfile);
     fprintf (stdout,"hit RETURN to continue -->");

@@ -1,0 +1,54 @@
+OFILES = \
+	main.o \
+	idc.o
+
+PGSQLLIB = /home/cristian/pgsql/lib/libpq.so
+TIMELIB = /usr/lib/librt.so
+INCLUDES = /home/cristian/pgsql/include
+
+INC1=/u/app/oracle/product/8.0.5/rdbms/demo
+INC2=/u/app/oracle/product/8.0.5/rdbms/public
+INC3=/u/app/oracle/product/8.0.5/plsql/public
+INC4=/u/app/oracle/product/8.0.5/network/public
+
+LB1=/u/app/oracle/product/8.0.5/lib/
+LB2=/u/app/oracle/product/8.0.5/rdbms/lib
+
+OL1=/u/app/oracle/product/8.0.5/rdbms/lib/defopt.o
+OL2=/u/app/oracle/product/8.0.5/lib/sscoreed.o
+OL3=/u/app/oracle/product/8.0.5/lib/libclntsh.so
+OL4=/u/app/oracle/product/8.0.5/lib/nautab.o
+OL5=/u/app/oracle/product/8.0.5/lib/naeet.o
+OL6=/u/app/oracle/product/8.0.5/lib/naect.o
+OL7=/u/app/oracle/product/8.0.5/lib/naedhs.o
+
+CAT1=`cat /u/app/oracle/product/8.0.5/lib/naldflgs`
+
+AL1=-lnetv2 -lnttcp -lnetwork -lncr
+AL2=-lnetv2 -lnttcp -lnetwork -lclient -lvsn -lcommon -lgeneric -lmm -lnlsrtl3
+AL3=-lcore4 -lnlsrtl3 -lcore4 -lnlsrtl3 -lnetv2 -lnttcp -lnetwork -lncr -lnetv2 
+AL4=-lnttcp -lnetwork -lclient -lvsn -lcommon -lgeneric  -lepc -lnlsrtl3  -lcore4
+AL5=-lnlsrtl3 -lcore4 -lnlsrtl3 -lclient -lvsn -lcommon -lgeneric -lnlsrtl3  -lcore4
+AL6=-lnlsrtl3 -lcore4 -lnlsrtl3
+AL7=-lnsl -lgen -lmw -ldl -lelf -laio -lposix4 -lc -lm
+
+CAT2=`cat /u/app/oracle/product/8.0.5/lib/sysliblist`
+
+OB1=/u/app/oracle/product/8.0.5/rdbms/lib/defopt.o
+OB2=/u/app/oracle/product/8.0.5/lib/sscoreed.o
+OB3=/u/app/oracle/product/8.0.5/lib/nautab.o
+OB4=/u/app/oracle/product/8.0.5/lib/naeet.o
+OB5=/u/app/oracle/product/8.0.5/lib/naect.o
+OB6=/u/app/oracle/product/8.0.5/lib/mcrt1.o
+
+
+$(BIN_CMD)/d.ora.rast: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(GISLIB)
+	$(CC) $(OFILES) $(OB1) $(OB2) $(OB3) $(OB4) $(OB5) -I$(INC1) -I$(INC2) -I$(INC3) -I$(INC4) $(LDFLAGS) -o $@ -L$(LB1) -L$(LB2) $(OL1) $(OL2) $(OL3) $(OL4) $(OL5) $(OL6) $(OL7) $(CAT1) $(AL1) $(AL2) $(AL3) $(AL4) $(AL5) $(AL6) $(AL7) $(CAT2) $(TIMELIB) $(DISPLAYLIB) $(RASTERLIB) $(DLGLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+$(DLGLIB): #
+
+main.o: options.h
+idc.o: options.h

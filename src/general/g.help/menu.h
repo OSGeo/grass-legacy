@@ -48,7 +48,11 @@ static int HELPWINHITE ;
 #define REFRESH  'r'
 #define PRINTOUT '\001' 		/* Ctrl a */ 
 #define HELP   	 '?'  
- 
+#define PAGEUP       '\065'
+#define PAGEDOWN     '\066'
+#define ARROWUP       'u' /*u bug: what's correct number? */
+#define ARROWDOWN     'd' /* bug: what's correct number? */
+
 #define MICRORESP	1
 #define MICROMESG	"Immediate response"
 #define MINIRESP	2

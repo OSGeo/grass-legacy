@@ -1,0 +1,14 @@
+PGM       = $(BIN_CMD)/g.select.pg
+LIBES     = $(GISLIB) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS)
+EXTRA_CFLAGS    = $(PQINCPATH)
+
+OBJS = \
+	main.o \
+	getdbname.o \
+	listdb.o
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include "gis.h"
 #include "../XDRIVER.h"
 #include "driver.h"
 
@@ -14,14 +15,14 @@ int Raster_char (int num, int nrows,
 	if(! array_alloc)
 	{
 		array_alloc = num ;
-		int_array = (int *)malloc(array_alloc * sizeof(int)) ;
+		int_array = (int *)G_malloc((size_t) (array_alloc * sizeof(int))) ;
 	}
 	else
 	{
 		if (num > array_alloc)
 		{
 			array_alloc = num ;
-			int_array = (int *)realloc((char *)int_array, num * sizeof(int)) ;
+			int_array = (int *)G_realloc((void *)int_array, (size_t)(num * sizeof(int))) ;
 		}
 	}
 
@@ -50,9 +51,9 @@ int Raster_char (int num, int nrows,
 }
 
 int Raster_int_def (int num, int nrows,
-    unsigned int *array, int withzeros, int color_type)
+    int *array, int withzeros, int color_type)
 {
-    register unsigned cur_color, *arr;
+    register int cur_color, *arr;
     register int npixles;
     int our_x, our_y;
     int (*ColorFunc) ();

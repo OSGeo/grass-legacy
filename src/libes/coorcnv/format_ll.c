@@ -1,51 +1,82 @@
-/***************************************************************
-CC_lat_format (lat, buf)
-    double lat;
-    char *buf;
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:  	 coorcnv library      
+ * AUTHOR(S):    Original author unknown - probably CERL
+ *               Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE:      formatting of lat lon values. This partly the same as from
+ *               the gis library within GRASS.
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
 
-CC_lon_format (lon, buf)
-    double lon;
-    char *buf;
+/***********************************************************************
+ * CC_lat_format (lat, buf)
+ *   double lat;
+ *   char *buf;
+ *
+ * formats lat (latitude in seconds), or lon (longitude in seconds)
+ * into buf as dd.mm.ssH, where H (hemishpere) is
+ * N for nothern hemishpere, S for southern,
+ * W for western hemishpere, E for eastern
+ * (lat > 0 is northern, lat < 0 is southern)
+ * (lon > 0 is western, lon < 0 is eastern)
+ ***********************************************************************/
 
-  formats lat (latitude in seconds), or lon (longitude in seconds)
-  into buf as dd.mm.ssH, where H (hemishpere) is
-  N for nothern hemishpere, S for southern,
-  W for western hemishpere, E for eastern
-  (lat > 0 is northern, lat < 0 is southern)
-  (lon > 0 is western, lon < 0 is eastern)
-***************************************************************/
+/***********************************************************************
+ * CC_lon_format (lon, buf)
+ *   double lon;
+ *   char *buf;
+ *
+ * formats lat (latitude in seconds), or lon (longitude in seconds)
+ * into buf as dd.mm.ssH, where H (hemishpere) is
+ * N for nothern hemishpere, S for southern,
+ * W for western hemishpere, E for eastern
+ * (lat > 0 is northern, lat < 0 is southern)
+ * (lon > 0 is western, lon < 0 is eastern)
+ ***********************************************************************/
+
 #include <stdio.h>
 #include <string.h>
 #include "CC.h"
 
-static int format(char *,int,int,double,char);
-static int ll_parts(double,int *,int *,double *);
+static int format(char *, int, int, double, char);
+static int ll_parts(double, int *, int *, double *);
 
-int CC_lat_format (double lat, char *buf)
+int 
+CC_lat_format (double lat, char *buf)
 {
-    int d,m;
+    int d, m;
     char h;
     double s;
 
-    CC_lat_parts (lat, &d, &m, &s, &h);
-    format (buf, d,m,s,h);
+    (void) CC_lat_parts (lat, &d, &m, &s, &h);
+    (void) format (buf, d, m, s, h);
 
     return 0;
 }
 
-int CC_lon_format (double lon, char *buf)
+int 
+CC_lon_format (double lon, char *buf)
 {
-    int d,m;
+    int d, m;
     char h;
     double s;
 
-    CC_lon_parts (lon, &d, &m, &s, &h);
-    format (buf, d,m,s,h);
+    (void) CC_lon_parts (lon, &d, &m, &s, &h);
+    (void) format (buf, d, m, s, h);
 
     return 0;
 }
 
-static int format(char *buf,int d,int m,double s,char h)
+static int 
+format(char *buf, int d, int m, double s, char h)
 {
     char temp[50];
     double ss;
@@ -64,10 +95,10 @@ static int format(char *buf,int d,int m,double s,char h)
     }
 
     sprintf (temp, "%f", ss);
-    x = strlen (temp);
+    x = (int) strlen (temp);
     while (x-- > 0)
 	if (temp[x] == '0' || temp[x] == '.')
-	    temp[x] = 0;
+	    temp[x] = '0';
 	else
 	    break;
 
@@ -88,12 +119,13 @@ static int format(char *buf,int d,int m,double s,char h)
     return 0;
 }
 
-int CC_lat_parts (
+int 
+CC_lat_parts (
     double lat,     /* lat to be split into parts */
-    int *d,
-    int *m,     /* degrees, minutes */
+    int *d,         /* degrees */ 
+    int *m,         /* minutes */
     double *s,      /* seconds */
-    char *h        /* hemisphere */
+    char *h         /* hemisphere */
 )
 {
     if (lat < 0)
@@ -104,17 +136,18 @@ int CC_lat_parts (
     else
 	*h = 'N' ;
     
-    ll_parts (lat, d, m, s);
+    (void) ll_parts (lat, d, m, s);
 
     return 0;
 }
 
-int CC_lon_parts (
+int 
+CC_lon_parts (
     double lon,	    /* lon to be split into parts */
-    int *d,
-    int *m,     /* degrees, minutes */
+    int *d,         /* degrees */
+    int *m,         /* minutes */
     double *s,      /* seconds */
-    char *h        /* hemisphere */
+    char *h         /* hemisphere */
 )
 {
     if (lon < 0)
@@ -125,24 +158,24 @@ int CC_lon_parts (
     else
 	*h = 'W' ;
     
-    ll_parts (lon, d, m, s);
+    (void) ll_parts (lon, d, m, s);
 
     return 0;
 }
 
-static int ll_parts (
-    double ll,	/* ll to be split into parts */
-    int *d,int *m, /* degrees, minutes */
-    double *s)  /* seconds */
+static int 
+ll_parts (
+    double ll,     /* ll to be split into parts */
+    int *d,        /* degrees */
+    int *m,        /* minutes */
+    double *s)     /* seconds */
 {
-    long x;
+  
+    *d = (int)((long)ll / 3600) ;
+    *m = (int)(((long)ll % 3600) / 60);
 
-    x = ll;
-
-    *d = x / 3600 ;
-    *m = (x % 3600) / 60;
-
-    *s = ll - *d * 3600 - *m * 60 ;
+    *s = ll - (double)*d * 3600.0 - (double)*m * 60.0 ;
 
     return 0;
 }
+

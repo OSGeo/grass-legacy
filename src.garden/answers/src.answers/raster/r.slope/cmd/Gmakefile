@@ -1,5 +1,5 @@
 PGM=r.slope
-HOME=$(BIN_ALPHA_CMD)
+HOME=$(BIN_CMD)
 
 LIST = main.o opennew.o
 

@@ -15,6 +15,7 @@ int main (int argc, char *argv[])
 	char *mapset;
 	char msg[100];
 	char *no_data_str;
+	struct GModule *module;
 	struct
 	{
 	  struct Flag *one;
@@ -29,6 +30,10 @@ int main (int argc, char *argv[])
 	  struct Option *nv;
 	  struct Option *nsteps;
 	} option;
+
+	module = G_define_module();
+	module->description =
+		"Prints terse list of category values found in a raster map layer.";
 
 	/* define different options */
 	option.map = G_define_option() ;

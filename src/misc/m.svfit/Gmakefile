@@ -1,0 +1,30 @@
+PGM=m.svfit
+
+LIST=main.o premodel.o cdpath.o dparam.o updparam.o solve.o hgnio.o save.o\
+	pltmodl.o pltline.o pltsph.o pltexp.o pltgaus.o pltquad.o plthole.o
+
+LIBES=$(RASTERLIB) $(GISLIB)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(MATHLIB) $(XDRLIB)
+
+#
+cdpath.c	: 
+solve.c		:
+#
+main.c		: svfit.h
+hgnio.c		: svfit.h
+dparam.c	: svfit.h
+readsites.c	: svfit.h
+premodel.c	: svfit.h
+updparam.c	: svfit.h
+save.c		: svfit.h
+#
+pltcrst.c	: svfit.h
+pltexp.c	: svfit.h
+pltgaus.c	: svfit.h
+plthole.c	: svfit.h
+pltline.c	: svfit.h
+pltmodl.c	: svfit.h
+pltquad.c	: svfit.h
+pltsph.c	: svfit.h

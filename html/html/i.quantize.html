@@ -1,0 +1,93 @@
+<html>
+
+<TITLE>i.quantize</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>i.quantize</b></EM>  - An interactive imagery function that
+creates a raster map layer whose color table is based on
+the red, green, and blue color values present in existing,
+user-specified imagery group files.
+
+<BR>
+
+<EM>(GRASS Image Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>i.quantize</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>i.quantize</EM> is an interactive imagery function that
+allows the user to create a new raster map layer whose
+color table values are based on the red, green, and blue
+color values present in (as many as) three raster map
+layers in an imagery group.
+
+
+<P>
+
+The user is first asked to enter the name of the imagery
+group from whose map layers red, green, and blue color
+values are to be extracted.  The user is then shown a
+listing of imagery files in the specified group, and is
+asked to indicate which files in the group are to be used
+for red, green, and blue colors in the new map layer.  Each
+color (red, green, and blue) must be specified once and
+only once.
+
+
+<P>
+
+The user is also asked to assign a name to the new raster map layer output.
+
+<H2>NOTES</H2>
+
+This program is interactive and requires no command line arguments.
+
+<BR>
+
+The input files must ALL be within the range of 0-255.  
+
+<H2>SEE ALSO</H2>
+
+<EM>GRASS Tutorial: <A HREF="../Postscript/imagery.ps">Image Pro
+cessing</A></EM>
+
+<P>
+
+<EM><A HREF="d.colormode.html">d.colormode</A></EM><br>
+<EM><A HREF="d.colors.html">d.colors</A></EM><br>
+<EM><A HREF="d.colortable.html">d.colortable</A></EM><br>
+<EM><A HREF="hsv.rgb.sh.html">hsv.rgb.sh</A></EM><br>
+<EM><A HREF="i.colors.html">i.colors</A></EM><br>
+<EM><A HREF="i.composite.html">i.composite</A></EM><br>
+<EM><A HREF="i.grey.scale.html">i.grey.scale</A></EM><br>
+<EM><A HREF="i.group.html">i.group</A></EM><br>
+<EM><A HREF="i.his.rgb.html">i.his.rgb</A></EM><br>
+<EM><A HREF="i.rgb.his.html">i.rgb.his</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><br>
+<EM><A HREF="rgb.hsv.sh.html">rgb.hsv.sh</A></EM><br>
+<EM><A HREF="r.colors.html">r.colors</A></EM>
+
+<H2>REFERENCES</H2>
+
+Paul Heckbert, 1982.     
+<EM>Color Image Quantization for Frame Buffer Display</EM>,
+SIGGRAPH '82 Proceedings, page 297.
+
+<H2>AUTHOR</H2>
+
+David Gerdes, 
+U.S. Army Construction Engineering 
+Research Laboratory
+</body>
+</html>
+

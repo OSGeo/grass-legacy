@@ -25,8 +25,11 @@
 $Header$
 
 $Log$
-Revision 1.1  1999-12-29 15:12:33  markus
-Initial revision
+Revision 1.2  2000-02-04 08:23:05  markus
+updated
+
+Revision 1.1.1.1  1999/12/29 15:12:36  markus
+initial CVS import
 
  * Revision 1.1  1992/08/25  21:40:44  koziol
  * Initial revision

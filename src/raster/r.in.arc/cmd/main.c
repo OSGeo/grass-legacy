@@ -26,6 +26,7 @@ int main (int argc, char *argv[])
 	int rtype;
 	double mult_fact ;
 	double x;
+	struct GModule *module;
 	struct
 	{
 		struct Option *input, *output, *type, *title, *mult ;
@@ -33,6 +34,11 @@ int main (int argc, char *argv[])
 
 
 	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Convert an ESRI ARC/INFO ascii raster file (GRID) "
+		"into a (binary) raster map layer.";
 
 	parm.input = G_define_option();
 	parm.input->key = "input";

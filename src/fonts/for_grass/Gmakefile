@@ -12,13 +12,12 @@ all: ...clean ...fonts
 	./splitfont $(FONT)
 	rm -f splitfont font_2_bin font.bin
 
-
 ...dir:
 	rm -rf $(FONT)
 	mkdir $(FONT)
 
 ...clean:
-	rm -f splitfont font_2_bin font.bin
+	rm -f splitfont font_2_bin font.bin splitfont.exe font_2_bin.exe
 
 
 font.bin: font_2_bin $(RAWFONT)

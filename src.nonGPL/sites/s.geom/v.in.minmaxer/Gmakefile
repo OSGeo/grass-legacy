@@ -1,0 +1,23 @@
+EXTRA_CFLAGS   =  -I$(SRC)/include/geom
+
+TRIANGLIB = $(SRC)/libes/liboptri.a $(SRC)/libes/libsos.a $(SRC)/libes/liblia.a $(SRC)/libes/libbasic.a \
+	$(LIB_MALLOC)
+
+LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(TRIANGLIB) $(XDRLIB)
+
+SOURCES = \
+	main.c
+
+OBJ = \
+	main.o
+
+
+
+PROG =   $(BIN_CMD)/v.in.minmaxer
+
+all:  $(PROG)
+
+$(PROG): $(OBJ) $(LIBES)
+	$(CC) $(EXTRA_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB)
+
+$(LIBES): #

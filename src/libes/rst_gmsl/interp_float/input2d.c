@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
+#include "site.h"
 #include "bitmap.h"
 #include "linkm.h"
 

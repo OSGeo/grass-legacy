@@ -1,0 +1,31 @@
+HOME=$(BIN_INTER)
+all: $(ETC)/modcolr \
+     $(ETC)/modcats \
+     $(ETC)/modhist \
+     $(ETC)/modhead \
+     $(HOME)/r.support
+
+SUPPORT = support.o check.o histo.o hitreturn.o
+MODCOLR = modcolr.o
+MODCATS = modcats.o
+MODHIST = modhist.o
+MODHEAD = modhead.o ask_format.o hitreturn.o row_addr.o\
+	  check_un.o check_new.o check_old.o factors.o
+
+$(ETC)/modcolr: $(MODCOLR) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(MODCOLR) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+
+$(ETC)/modhead: $(MODHEAD) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(MODHEAD) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+$(ETC)/modcats: $(MODCATS) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(MODCATS) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+$(ETC)/modhist: $(MODHIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(MODHIST) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+$(HOME)/r.support: $(SUPPORT) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(SUPPORT) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #
+$(VASKLIB): #

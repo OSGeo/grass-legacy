@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# removes selected G3D files
+# written by Markus Neteler 23.June 2000
+#            neteler@geog.uni-hannover.de
+
+if test "$GISBASE" = ""; then
+echo "You must be in GRASS to run this program."
+exit
+fi
+
+if [ "$1" = "" ] ; then
+ echo "Specify G3D volume raster file name to remove."
+ exit
+fi
+
+if [ "$1" = "help" ] ; then
+ echo "Specify G3D volume raster file name to remove."
+ exit
+fi
+
+if test ! -d $LOCATION/grid3/$1; then
+    echo "ERROR: G3D file $1 not found."
+    exit
+fi
+
+echo "Really remove G3D file $1?"
+read ans
+if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+  echo "Removing..."
+  rm -rf $LOCATION/grid3/$1
+  if [ $? != 0 ]; then
+    echo "ERROR: file $1 not found."
+    exit
+  fi
+fi
+
+if [ "$ans" = "y" -o "$ans" = "Y" ] ; then
+ echo "Removed $1."
+fi

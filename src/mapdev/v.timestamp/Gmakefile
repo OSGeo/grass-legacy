@@ -1,0 +1,11 @@
+PGM = v.timestamp
+EXTRA_CFLAGS    = $(VECTLIBFLAGS)
+
+LIST = main.o
+
+LIBES = $(GISLIB) $(DATETIMELIB) $(VECTLIB)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

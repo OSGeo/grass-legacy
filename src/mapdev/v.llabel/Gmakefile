@@ -1,0 +1,8 @@
+EXTRA_CFLAGS	= $(VECTLIBFLAGS)
+
+PGM = v.llabel
+
+LIBES=$(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB)
+
+$(BIN_CMD)/$(PGM): main.o  $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(MATHLIB) $(XDRLIB)

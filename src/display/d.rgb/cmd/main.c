@@ -30,7 +30,13 @@ int main (int argc, char **argv)
 	struct Colors b2_colors ;
 	struct Colors b3_colors ;
 	struct Colors out_colors ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
+
+	module = G_define_module();
+	module->description =
+		"Displays three user-specified raster map layers "
+		"as red, green, and blue overlays in the active graphics frame.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "red" ;

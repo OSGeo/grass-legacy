@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# renames selected G3D files
+# written by Markus Neteler 23.June 2000
+#            neteler@geog.uni-hannover.de
+
+if test "$GISBASE" = ""; then
+echo "You must be in GRASS to run this program."
+exit
+fi
+
+if [ "$1" = "" ] ; then
+ echo "Specify G3D volume raster file name to rename."
+ exit
+fi
+
+if test ! -d $LOCATION/grid3/$1; then
+    echo "ERROR: G3D file $1 not found."
+    exit
+fi
+
+if [ "$2" = "" ] ; then
+ echo "Enter new filename for $1:"
+ read ans
+else
+ ans=$2
+fi
+
+if [ "$ans" != "" ] ; then
+  mv $LOCATION/grid3/$1 $LOCATION/grid3/$ans
+fi
+
+echo "Renamed $1 to $ans."

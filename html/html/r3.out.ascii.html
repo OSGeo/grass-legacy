@@ -1,0 +1,90 @@
+<html>
+<head>
+<TITLE>r3.out.ascii</TITLE>
+</head>
+
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r3.out.ascii</B></EM> - Outputs G3D maps in ASCII format.<BR>
+<EM>(GRASS 3D Program)</EM>
+
+<H2>SYNOPSIS</H2><BR>
+<B> r3.out.ascii [-h] grid3=</B><EM>name</EM><B> [output=</B><EM>name</EM><B>]
+[dp=</B><EM>value</EM><B>] [null=</B><EM>name</EM><B>]</B>
+
+<H2>DESCRIPTION</H2>
+Outputs <I>G3D</I> maps in <I>ascii</I> format.  <I>map</I> is
+a valid G3D map in the current mapset.  <I>output</I> is the name of
+an ascii file which will be written in the current working directory.
+If <I>output</I> is not specified then <B>stdout</B> is used.  The
+<I>-h</I> flag may be used to suppress header information. The module is
+sensitive to region settings (set with g3.region).
+
+<H3>Flag:</H3>
+<DL>
+<DT><B>-h</B>
+<DD>Suppress printing of header information
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>grid3</B>
+<DD>G3d raster map to be converted to ascii
+
+<DT><B>output</B>
+<DD>Name for ascii output file
+
+<DT><B>dp</B>
+<DD>Number of decimal places for floats (options: 0-20)
+<DD>Default: 8
+
+<DT><B>null</B>
+<DD>Char string to represent no data cell
+<DD>Default: *
+</DL>
+
+<H2>NOTES</H2>
+The default format for the ascii file is equivalent to that required
+by <EM>r3.in.ascii</EM>.  In particular, files output by
+<EM>r3.out.ascii</EM> with header information may be converted back to
+G3D maps with <EM>r3.in.ascii</EM>.
+
+<P>
+The format for the ascii file is:
+<TABLE>
+<TD align=left> 
+<TT>north:</TT> <TD align=left> <EM>floating point</EM> <TR>
+<TD> <TT>south:</TT>    <TD> <EM>floating point</EM> <TR>
+<TD> <TT>east:</TT>     <TD> <EM>floating point</EM> <TR>
+<TD> <TT>west:</TT>     <TD> <EM>floating point</EM> <TR>
+<TD> <TT>top:</TT>      <TD> <EM>floating point</EM> <TR>
+<TD> <TT>bottom:</TT>   <TD> <EM>floating point</EM> <TR>
+<TD> <TT>rows:</TT>     <TD> <EM>integer</EM> <TR>
+<TD> <TT>cols:</TT>     <TD> <EM>integer</EM> <TR>
+<TD> <TT>levels:</TT>   <TD> <EM>integer</EM> <TR>
+</TABLE>
+The header is followed by cell values in <EM>floating point</EM> format.
+Cell values are output as a series of horizontal slices in row-major
+order.  That is, 
+<TABLE>
+<TD align=center> (x, y, z) <TD align=center> (x + 1, y, z) <TD align=center> ... <TD align=center> (x + cols, y, z) <TR>
+<TD> (x, y + 1, z) <TD> (x + 1, y + 1, z) <TD> ... <TD> and so on <TR>
+</TABLE>
+
+<P>
+One level maps can be imported with r.in.ascii (Raster 2D) after removing
+the header lines "top", "bottom" and "levels".
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r3.in.ascii.html">r3.in.ascii</A></EM><br>
+<EM><A HREF="g3.region.html">g3.region</A></EM><br>
+
+<H2>AUTHORS</H2>
+Roman Waupotitsch, Michael Shapiro, 
+Helena Mitasova, Bill Brown, Lubos Mitas, Jaro Hofierka
+
+</body>
+</html>

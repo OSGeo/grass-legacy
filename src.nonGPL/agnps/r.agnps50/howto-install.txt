@@ -1,0 +1,70 @@
+This text is an update from documentation/agnps2.html  
+
+  $Log$
+  Revision 1.1  2000-01-14 17:15:05  markus
+  needs updating to GRASS 5
+
+
+3. March 1998 Markus Neteler
+              neteler@geog.uni-hannover.de
+
+Update for WATERSHEDDS-NCSU-GRASS-AGNPS.
+------------------------------------------------------
+
+ Compiling and installing GRASS-AGNPS:   
+
+1. Check the first line of the  
+     scripts/make_display_rules.pl 
+  script to make sure
+  that the path of the PERL utility on your UNIX workstation is 
+  correct, for example /usr/bin/perl. Type [which perl] to  
+  determine the correct path for your PERL utility if you are not sure. 
+
+
+2. Start the process with:
+
+  gmake5
+  
+This  
+ - compiles and installs the executable agnps_input_2a
+ - compiles and installs the executable agnps_views
+ - compiles and installs the GRASS hydrologic functions      
+      r.cn2, r.weighted.cn
+ - copies scripts into grass5/etc/agnsp/ and grass5/scripts subdirectory 
+
+4. You must have a .cshrc in your directory with the following statement
+   in the PATH-command: $GISBASE
+
+   for example:
+    path = ( . /usr/local/bin $GISBASE/bin $GISBASE/scripts $GISBASE/garden/bin /usr/bin )
+   
+   (optimize this for your machine)
+
+   Otherwise the csh-scripts of AGNPS won't work.
+ 
+  
+That's all...
+
+
+5. The test GRASS dataset,
+     ansi  (in example/) 
+   can be conveniently located as a subdirectory of your
+   home directory; however it may reside anywhere 
+   as long as the directory path is  defined when running GRASS.   
+   
+
+For the usage please read documentation/agnps2.html
+
+For short:
+
+ start with
+   grass5
+   d.mon x0
+
+ and then
+
+  1. r.agnps50.input
+  2. r.agnps50.run
+  3. r.agnps50.view
+   
+Good luck!

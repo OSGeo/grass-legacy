@@ -263,7 +263,7 @@ int R_open_driver()
                     unlock_driver(1);
                     return(NO_RUN);
                 default:
-                    return(OKOK);
+                    return(OK);
                 }
             }
         }

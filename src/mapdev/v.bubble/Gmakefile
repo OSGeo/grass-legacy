@@ -1,0 +1,11 @@
+PGM=v.bubble
+OBJS=v.bubble.o support.o bubbling.o
+
+LIBES=$(GISLIB) $(VECTLIB) $(DATETIMELIB)
+
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #
+$(VECTLIB): #
+$(DATETIMELIB) : #

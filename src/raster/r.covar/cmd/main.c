@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     int with_masking;
     int verbose;
     int correlation;
+	struct GModule *module;
     struct Option *maps;
     struct
     {
@@ -25,6 +26,11 @@ int main(int argc, char *argv[])
     } flag;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Outputs a covariance/correlation matrix "
+		"for user-specified raster map layer(s).";
 
     maps = G_define_option();
     maps->key = "map";

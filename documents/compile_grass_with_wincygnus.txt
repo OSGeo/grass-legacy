@@ -1,0 +1,136 @@
+<html><body><pre>
+$Id$
+
+This directory contains the experimental binary
+version of GRASS under WINDOWS/Cygnus.
+
+NOTE: The graphical output is not ported yet.
+      -> no graphics yet, friends!!
+
+---------------------------------------------------------
+
+1. Get latest GRASS source code
+http://www.geog.uni-hannover.de/grass/grass5/source/experimental/
+
+2. To compile and link under the Windows NT/2000 go to
+http://sourceware.cygnus.com/cygwin/download.html
+and get the setup.exe.   Download it and run it.
+It will prompt you for one of three choices, if you
+have never loaded Cygwin software select download
+from the internet.   If you have a previous version,
+you should know what to do.  If you have never done this,
+it will prompt you for a directory (partition) to
+install the files.  I selected C: since I have space 
+on my C: drive.  You can install it where you like.
+
+Now, I fine tuned my mounts, here is my list:
+Device              Directory           Type         Flags
+c:\cygwin\bin       /bin                user         binmode
+c:\cygwin\usr       /usr                user         binmode
+C:\cygwin\bin       /usr/bin            user         binmode
+C:\cygwin\lib       /usr/lib            user         binmode
+c:                  /                   user         binmode
+
+For instance, if yu installed it under C:\Cygwin
+it will come mounted differently. Your / will 
+start from the C:\Cygwin and not C:\   Umount it
+and mount it (from CMD window) as you prefer.  e.g.
+
+umount /bin
+umount /usr/bin
+umount /
+mkdir c:\bin
+mkdir c:\usr
+mkdir c:\usr\bin
+mkdir c:\usr\lib
+mkdir c:\usr\local
+mount -b C: /
+mount -b c:\Cygwin\bin /bin
+mount -b c:\Cygwin\usr /usr
+
+The setup changes its configuration, so depending
+upon your version 1.1, 1.1.1, 1.1.2, 1.1.3 your mileage
+may vary.   If in doubt, try compiling a small program.
+
+First though,
+
+set MAKE_MODE=unix from the CMD (COMMAND for 98) window
+before entering the sh or set it from the shell (sh,bash) 
+line before starting to compile using Cygwin.
+
+or
+
+set it permanenetly in the start-settings-control panel
+system-environmental tab.
+
+Put C:\Cygwin\bin in your PATH.   I also have the
+/usr/local/bin in my PATH.
+
+
+3. Download the sunrpc tar.gz file from Corinna Vinschen
+  site and install the binary files:
+ ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Vinschen_Corinna/B20
+
+Yes, the cygwin 1.1 of rpc is available under her B20 directory.  Get
+the binary (not the src), go to the root (/) and use tar to unbundle
+it.  e.g.
+
+cd /
+tar xzf /your/path/to/the/sunrpc-4.0.cygwin1.bin.tar.gz
+
+4. Download the ncurses tar.gz file from Michael Hirmke's page:
+ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Hirmke_Michael/
+
+Install it, too.
+
+5. Read about Unix running under Windows here:
+    http://cygutils.netpedia.net/V1.1/index.html
+    http://sourceware.cygnus.com/cygwin/docs.html
+
+6. Get the unixODBC source, build and install it.
+   Current version is 1.8.8 as of August, 2000
+
+7. Add the values.h file to the /grass/src/include
+   directory.  Put values in it for the following:
+
+#define MININT      (1 << (INTBITS - 1))
+#define MAXINT      (~MININT)
+#define MAXDOUBLE   1.79769313486231470e+308
+#define MINDOUBLE   4.94065645841246544e-324
+#define BITSPERBYTE 8
+#define BITS(type)  (BITSPERBYTE * (int)sizeof(type))
+#define INTBITS     BITS(int)
+
+8  Check the src/include/config.h file, if the #define CURSORS_MAXY
+   is NONE, change this to _maxy and define
+   #define HAVE_CURSORS in one of the lines
+   previous to this line.   
+ 
+9. You'll need to read the REQUIREMENTS files, download
+   the public domain libraries, such as png, and build
+   and install them.  You will need the pnm include and
+   lib files.  
+
+
+-----------------------------------------------------------------------------
+
+10. To start GRASS compilation proceed like this:
+
+    ./configure
+    make
+    make install
+
+   If you have problems, go into the src/libes directory
+   and build that first.  e.g.
+
+   cd /grass/src/libes
+   gmake5
+
+11.  The current build was made using Cygwin 1.1.3
+
+</pre>
+
+For questions, send a message to the grass list 
+<a href=grass5@geog.uni-hannover.de> grass5@geog.uni-hannover.de</a>
+
+</pre></body></html>

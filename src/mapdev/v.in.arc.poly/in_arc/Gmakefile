@@ -1,0 +1,6 @@
+PGM=$(GISBASE)/etc/in_arc
+
+all:    $(PGM)
+
+$(PGM): in_arc.o
+	$(CC) $(LDFLAGS) -o $@ in_arc.o

@@ -1,7 +1,8 @@
+PGM = v.digit
 LIBTRANS	= $(SRC)/libes/vect32/libes/libtrans.a
 INCTRANS	= -I$(SRC)/libes/vect32/libes
 
-EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(VECT_INCLUDE) $(INCTRANS)
+EXTRA_CFLAGS	=  $(DIGITFLAGS)  $(USE_FTIME) $(INCTRANS) $(DANOTHER_BUTTON) $(DASIAN_CHARS)
 
 OBJ = \
 	add_scale.o \
@@ -9,7 +10,6 @@ OBJ = \
 	ask_driver.o \
 	backdrop.o \
 	bad_areas.o \
-	bin_digit.o\
         break.o \
         build_neat.o \
 	coll_pts.o \
@@ -52,6 +52,7 @@ OBJ = \
         label_mult.o \
         leave.o \
         list.o \
+	main.o \
         map_ask.o\
         map_ask_new.o\
         map_coor_new.o\
@@ -103,7 +104,6 @@ SOURCE = \
 	ask_driver.c \
 	backdrop.c \
 	bad_areas.c \
-	bin_digit.c\
         break.c \
         build_neat.c \
 	coll_pts.c \
@@ -145,6 +145,7 @@ SOURCE = \
         label_mult.c \
         leave.c \
         list.c \
+	main.c \
         map_ask.c\
         map_ask_new.c\
         map_coor_new.c\
@@ -193,40 +194,29 @@ SOURCE = \
 
 COMPILE_DIGIT 	= $(LDFLAGS) $(OBJ) $(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(GISLIB)
 
-LIBES = $(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(GISLIB) $(XDRLIB)
+LIBES = $(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(GISLIB)
 
 DIGITIZERS = $(ETC)/digitizers
 HELP_FILES = $(TXT)/DIGIT
 
+all:  $(BIN_INTER)/$(PGM) $(HELP_FILES)/Main $(DIGITIZERS)/cc95f5_16 $(ETC)/digcap.sample
 
-PROG = $(BIN_MAIN_INTER)/v.digit
-
-all:  $(PROG) $(HELP_FILES)/Main $(DIGITIZERS)/cc95f5_16 $(ETC)/digcap.sample
-
-$(PROG):  $(OBJ) $(LIBES)
-#  compile driver into the program
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB)
+$(BIN_INTER)/$(PGM):  $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #
-
-saber_src:  
-	#load $(CFLAGS) $(SOURCE) $(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(GISLIB) $(CURSES) $(MATHLIB)
-
 
 # Copy over v.digit help files
 $(HELP_FILES)/Main:
 	if [ ! -d $(TXT) ]; then mkdir $(TXT); fi
 	if [ ! -d $(TXT)/DIGIT ]; then mkdir $(TXT)/DIGIT; fi
-	cp help/* $(TXT)/DIGIT/.
-
+	(cd help ; tar -cf - * | (cd $(TXT)/DIGIT/; tar -xf - 2>/dev/null ); true )
 
 
 # Copy over digitizer definition files.
 $(DIGITIZERS)/cc95f5_16:
 	if [ ! -d $(DIGITIZERS) ]; then mkdir $(DIGITIZERS); fi
-	cp -R digitizers/* $(DIGITIZERS)
-
-
+	(cd digitizers ; tar -cf - * | (cd $(DIGITIZERS); tar -xf - 2>/dev/null ); true )
 
 #  update the digitcap file
 
@@ -234,7 +224,6 @@ $(ETC)/digcap.sample:  digcap
 	rm -f $(ETC)/digcap.sample
 	cp  digcap  $(ETC)/digcap.sample
 	chmod  644  $(ETC)/digcap.sample
-
 
 
 coll_pts.o: 

@@ -1,0 +1,109 @@
+<html>
+<A NAME="r.cn2">
+<TITLE>r.cn2</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>r.cn2</B></EM> - Generates a curve number map layer.
+<BR><EM>(GRASS Raster Program)</EM> 
+
+<H2>SYNOPSIS</H2>
+<B>r.cn2 sg</B><EM>=hysoilgroup</EM> <B>lu</B><EM>=landusemap</EM> <B>pr</B><EM>=practicemap</EM> <B>hc</B><EM>=hyconditionmap</EM> <B>cn</B><EM>=cnmap</EM> <B>amc</B><EM>=AMCnumber</EM>
+
+<H2>DESCRIPTION</H2>
+<EM>r.cn2</EM> is a command-line interface for generating an NRCS (SCS) CN map.  The command format is:
+<P>
+
+<DD><EM>r.cn2 sg=hysoilgroup  lu=landusemap  pr=practicemap hc=hyconditionmap cn=cnmap amc=AMCnumber</EM>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>sg=map</B>
+<DD>Hydrologic soil group map name
+
+<DT><B>lu=map</B>
+<DD>Landuse map name
+
+<DT><B>pr=map</B>
+<DD>Practice or management map name
+
+<DT><B>hc=map</B>
+<DD>Hydrologic condition map name
+
+<DT><B>cn=map</B>
+<DD>Output CN map name
+
+<DT><B>amc=number</B>
+<DD>Equivalent AMC condition number for the CN output
+</DL>
+
+The command-line ordering can be in any form but all key words must be there to run the program.
+<P>
+
+<H2>EXAMPLE</H2>
+<EM>r.cn2 sg=hy.soil.group lu=landuse hc=hy.cond pr=veg.cover cn=cnname amc=2</EM>
+
+will create a CN map cnname for equivalent AMC condition II
+
+
+<H2>ATTENTION</H2>
+<EM>r.cn2</EM> uses information from the four map layers by reading the cell layer and its category files. So it is important to update the category files for all four layers and it expects the categories of the map layer exactly as shown below:
+<P>
+
+For the hydrologic soil group map the categories may be either A, B, C, or D.
+<P>
+
+For the landuse map layer the categories may be either fallow, row crops, small grain, close-seeded legumes, rotation meadow, pasture, range, meadow, woods, farm¡steads, roads (dirt), hard surface, or water.
+<P>
+
+For the practice or management map layer the categories may be either straight row, contoured, or contoured and terraced.
+<P>
+
+For the hydrological condition map the categories may be poor, fair, or
+good. The rating (good, fair, poor) is based on a combination of factors
+that affect infiltration and runoff, which includes:
+
+<ul>
+<li>density and canopy of vegetated areas 
+<li>amount of year-round ground cover
+<li>amount of grass or close-seeded legumes in rotations 
+<li>percent of residue cover on the land surface (good is more than 20%)
+<li>degree of surface roughness 
+</ul>
+
+<P>
+
+AMC is the antecedent moisture condition. AMC I: dry, AMC II: normal, AMC III
+(wet).
+<p>
+
+If the combination of the four layers categories does not exist in the NRCS (SCS) CN table, an error message is printed and the program quits.
+
+<H2>NOTE</H2>
+The <EM>r.cn2</EM> program is sensitive to the current window setting.  Thus the program can be used to generate a CN map of any sub-area within the full map layer. Also, <EM>r.cn2</EM> is sensitive to any mask in effect.
+<p>
+Changes made in r.cn2 (comparing to r.cn):  
+<menu>
+<li>added landuse "water"
+<li>corrected import of landuse "fallow" ("good condition")
+</menu>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.cn.html">r.cn</A></EM>,
+<EM><A HREF="r.weighted.cn.html">r.weighted.cn</A></EM>
+
+<H2>REFERENCE</H2>
+SCS Curve number method: <a
+href=http://www.wcc.nrcs.usda.gov/water/quality/common/tr55/tr55.html>TR-55, Urban Hydrology for Small Watersheds</a>
+
+<H2>AUTHORS</H2>
+Raghavan Srinivasan and Dr. Bernie A. Engel, Agricultural Engineering Department, Purdue University 
+<P>
+Extensions by Markus Neteler, University of Hannover, Germany
+
+</BODY>
+</HTML>

@@ -1,0 +1,50 @@
+PGM = v.in.dxf2
+
+SOURCES =	\
+		add_bounds.c \
+		add_extents.c \
+		add_line.c \
+		add_point.c \
+		add_polyline.c \
+		add_circle.c \
+		add_arc.c \
+		check_ext.c \
+		debug.c \
+		entities.c \
+		header.c \
+		find_lines.c \
+		init_chars.c \
+		make_header.c \
+		close_layer.c \
+		open_layer.c \
+		reopen_layer.c \
+		which_layer.c \
+		label_box.c \
+		main.c
+
+OBJ =	\
+	add_bounds.o \
+	add_extents.o \
+	add_line.o \
+	add_point.o \
+	add_polyline.o \
+	add_circle.o \
+	add_arc.o \
+	debug.o \
+	check_ext.o \
+	entities.o \
+	header.o \
+	find_lines.o \
+	init_chars.o \
+	make_header.o \
+	close_layer.o \
+	open_layer.o \
+	reopen_layer.o \
+	which_layer.o \
+	label_box.o \
+	main.o
+
+$(BIN_CMD)/$(PGM): $(OBJ) $(GISLIB) $(VECTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+
+$(VECTLIB) $(GISLIB): #

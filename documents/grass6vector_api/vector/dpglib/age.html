@@ -1,0 +1,189 @@
+<http>
+
+<head>
+    <title>  
+	DPG Library: Age
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Aging Manager
+</h1>
+
+<blockquote><i>
+    Status:  Gamma<br>
+    This module has been designed, reviewed and coded.
+    It should be considered stable.
+</i></blockquote>
+
+
+<h2> Overview </h2>
+
+The Age library provides a generic aging mechanism.   Assuming
+you have a limited number of slots available for use, then as 
+an object requires a slot, another object needs to be expired or 
+to give up its slot. <p>
+
+The caller specifies how many slots are available and then adds and 
+removes objects as it pleases.  When a slot needs to be made available
+this library determines which object to expire and calls a client callback
+to cause that to happen.  The aging algorithm is simply the last 
+<em> touched </em> object is the first to be expired.  Somewhat like a
+fifo, except that objects can be moved back to the top of the list. <p>
+
+<em>dpgAgeCreate()</em> returns a dpgAgeP token which is used to 
+uniquely reference that instance of the Age object.<p>
+
+<em>dpgAgeAdd()</em> returns a dpgAgeEntryP token which is used to 
+<em>touch</em> objects and to remove objects.<p>
+
+This library references the <a href="linkmm.html">Linkmm</a> library.<p>
+
+
+<hr>	<!--------------------------------------------------->
+
+<h2> Data Types </h2>
+
+<pre>
+
+    typedef struct _dpgAgeEntry *dpgAgeEntryP;
+    typedef struct _dpgAge *dpgAgeP;
+
+</pre>
+
+
+
+
+<!-- /* add object at top or bottom of queue */
+    #define DPG_AGE_TOP 	0
+    #define DPG_AGE_BOTTOM 	1 >
+
+<hr>	<!--------------------------------------------------->
+
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li>dpgAgeP <a href="#dpgAgeCreate> dpgAgeCreate </a>
+( int max_size, int (*access_callback)(PTR ID, PTR udata), 
+     int (*expire_callback)(PTR ID, PTR udata),
+     PTR user_data, int alloc_links );
+
+<li>void <a href=#dpgAgeResize> dpgAgeResize     </a>
+    (dpgAgeP head, int size);
+<li>int  <a href=#dpgAgeDestroy>     dpgAgeDestroy</a>
+    (dpgAgeP head);
+<li>void <a href=#dpgAgeTouch>       dpgAgeTouch</a>
+    (dpgAgeP head, dpgAgeEntryP tag);
+<li>int  <a href=#dpgAgeRemove>      dpgAgeRemove</a>
+    (dpgAgeP head, dpgAgeEntryP tag);
+<li>int  <a href=#dpgAgePrepare>     dpgAgePrepare</a>
+    (dpgAgeP head);
+<li>int  <a href=#dpgAgePrepareNum>  dpgAgePrepareNum</a>
+    (dpgAgeP head, int num);
+
+<li>dpgAgeEntryP  <a href=#dpgAgeAdd>         dpgAgeAdd</a>
+    (dpgAgeP head, PTR id);
+<li>dpgAgeEntryP  <a href=#dpgAgeAddStruct>   dpgAgeAddStruct</a>
+    (dpgAgeP head, PTR id, dpgAgeEntryP tp);
+
+<li>dpgAgeEntryP  <a href=#dpgAgeAddAt>       dpgAgeAddAt</a>
+    (dpgAgeP head, PTR id, int at);
+<li>dpgAgeEntryP  <a href=#dpgAgeAddStructAt> dpgAgeAddStructAt</a>
+    (dpgAgeP head, PTR id, dpgAgeEntryP tp, int at);
+</ul>
+
+
+<hr>	<!--------------------------------------------------->
+
+
+<h2> Function Detail </h2>
+
+
+<pre>
+<a name="dpgAgeCreate">
+dpgAgeP <strong>dpgAgeCreate</strong> ( int max_size, int (*access_callback)(PTR ID, PTR udata), 
+     int (*expire_callback)(PTR ID, PTR udata),
+     PTR user_data, int alloc_links )
+</pre>
+<hr>	<!--------------------------------------------------->
+
+<pre>
+<a name="dpgAgeResize">
+void <strong>dpgAgeResize</strong>     (dpgAgeP head, int size)
+</pre>
+<hr>	<!--------------------------------------------------->
+
+<pre>
+<a name="dpgAgeDestroy">
+int  <strong>dpgAgeDestroy</strong> (dpgAgeP head)
+</pre>
+<hr>	<!--------------------------------------------------->
+
+<pre>
+<a name="dpgAgeTouch">
+void <strong>dpgAgeTouch</strong> (dpgAgeP head, dpgAgeEntryP tag)
+</pre>
+<hr>	<!--------------------------------------------------->
+
+<pre>
+<a name="dpgAgeRemove">
+int  <strong>dpgAgeRemove</strong> (dpgAgeP head, dpgAgeEntryP tag)
+</pre>
+<hr>	<!--------------------------------------------------->
+
+<pre>
+<a name="dpgAgePrepare">
+int  <strong>dpgAgePrepare</strong> (dpgAgeP head)
+</pre>
+<hr>	<!--------------------------------------------------->
+
+<pre>
+<a name="dpgAgePrepareNum">
+int  <strong>dpgAgePrepareNum</strong> (dpgAgeP head, int num)
+</pre>
+<hr>	<!--------------------------------------------------->
+
+<pre>
+<a name="dpgAgeAdd">
+dpgAgeEntryP  <strong>dpgAgeAdd</strong> (dpgAgeP head, PTR id)
+</pre>
+<hr>	<!--------------------------------------------------->
+
+<pre>
+<a name="dpgAgeAddStruct">
+dpgAgeEntryP  <strong>dpgAgeAddStruct</strong> (dpgAgeP head, PTR id, dpgAgeEntryP tp)
+</pre>
+<hr>	<!--------------------------------------------------->
+
+<pre>
+<a name="dpgAgeAddAt">
+dpgAgeEntryP  <strong>dpgAgeAddAt</strong> (dpgAgeP head, PTR id, int at)
+</pre>
+<hr>	<!--------------------------------------------------->
+
+<pre>
+<a name="dpgAgeAddStructAt">
+dpgAgeEntryP  <strong>dpgAgeAddStructAt</strong> (dpgAgeP head, PTR id, dpgAgeEntryP tp, int at)
+</pre>
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

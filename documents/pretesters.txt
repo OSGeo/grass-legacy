@@ -1,0 +1,49 @@
+Pretester for pre-candidates:
+To be contacted before releasing a new GRASS 5 version.
+
+Linux:
+*Juhana Nieminen
+ jussi <juhana.nieminen@helsinki.fi>
+ Division of Environmental Biology,GIS Laboratory
+ P.O.Box 44 (Jyrangontie 2)                  tel: +358-9-191 50050
+ FIN-00014 University of Helsinki        fax: +358-9-191 50048  
+ Finland                               http://ginkgo.pc.helsinki.fi
+ "Here in Helsinki there's interest at our GIS lab in pre-testing grass
+  versions (if you still need people). We mainly have different versions of
+  RH available ranging from 5.2 to RH beta versions. The systems are running
+  from 486 to Athlon platforms."
+
+* Richard Christofferson
+  <richc@eng.utah.edu>
+
+* Bill Kristan <wbkiii@citrus.ucr.edu>
+  UC Riverside
+
+* Arne Pallentin <arne@waikato.ac.nz>
+  Department of Earth Sciences
+  University of Waikato
+  Private Bag 3105
+  Hamilton,  New Zealand
+
+--------------------
+Solaris 2.7:
+* Richard Christofferson 
+  <richc@eng.utah.edu>
+
+--------------------
+SGI:
+?
+
+--------------------
+FreeBSD:
+?
+
+--------------------
+LinuxPPC:
+* Bill Kristan <wbkiii@citrus.ucr.edu>
+  UC Riverside
+
+--------------------
+Mac OS X:
+* Bill Kristan <wbkiii@citrus.ucr.edu>
+  UC Riverside

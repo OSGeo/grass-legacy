@@ -1,0 +1,68 @@
+##############################################################
+## A Gmakefile - This is necessary for all GRASS programs   ##
+##  		 and links all necessary functions and      ##
+##		 libraries.				    ##
+##############################################################
+
+PROG = $(BIN_CMD)/r.param.scale
+#--------------------------^ Name of the GRASS module here.
+
+
+#PROG = debug
+#--------^ Swap this line with the PROG line above for debugging.
+#	   This will create an executable in the current
+#	   directory that can be passed to dbx(tool).
+
+
+LIBES = $(GISLIB) $(VASKLIB) $(RASTERLIB) $(DISPLAYLIB)
+#-----------^ Library necessary for all GRASS programs.
+#---------------------^ Parses keyboard input.
+#------------------------------^ For non arithmetic maths.
+#-----------------------------------------^ For raster manipulation.
+#----------------------------------------------------^ Display control.
+
+
+INCLUDES =\
+		param.h
+#-----------------^  Any include files go here.
+
+#COMPILE_FLAGS = -O
+#-----------------^ For optimising the code.
+
+
+#-----------COMPILE_FLAGS = -g
+#------------------^ For use with dbx(tool) - must replace the -O option.
+
+OBJ =\
+	main.o		\
+	interface.o	\
+	open_files.o	\
+	process.o	\
+	write_cats.o	\
+	write_cols.o	\
+	find_normal.o	\
+	ludcomp.o	\
+	lubksub.o	\
+	disp_matrix.o	\
+	nrutil.o	\
+	param.o		\
+	feature.o	\
+	close_down.o	
+#----------^ These are the names of all seperate files that
+#	     the programmer creates. Must have ONE tab in
+#	     front of each line.
+
+######### DEPENDENCIES #########
+
+$(PROG): $(OBJ) $(LIBES)
+	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+#
+#-----^ This compiles the whole program bringing all labels together.
+
+$(OBJ): $(INCLUDES)
+
+
+$(LIBES): #
+#---^ Ignore this line (used for future additions of the library).
+
+

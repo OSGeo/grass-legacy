@@ -1,9 +1,8 @@
 PGM    = r.in.ascii
-HOME   = $(BIN_MAIN_CMD)
 
 LIST   = main.o gethead.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

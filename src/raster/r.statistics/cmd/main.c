@@ -28,6 +28,7 @@ main (int argc, char **argv)
  char *mapset,*me;
  int usecats;
  int o_method;
+ struct GModule *module;
  struct Option *method, *basemap, *covermap, *outputmap;
  struct Flag *flag_c;
  struct Categories cats;
@@ -35,6 +36,10 @@ main (int argc, char **argv)
   
     G_gisinit(me=argv[0]);
 
+    module = G_define_module();
+    module->description =
+		"Category or object oriented statistics.";
+					        
     basemap = G_define_option();
     basemap->key        = "base";
     basemap->type       = TYPE_STRING ;

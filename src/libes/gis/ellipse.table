@@ -1,110 +1,143 @@
-#include "gis.h"
 # this file contains ellipsoid parameters
 # format of the file is
-#  name  a=value   x=value     comments
+#  name  "description"	a=value   x=value
 #
-# where name is a single word elliposid name, a is the equatorial radius
+# where name is a single word elliposid name, 
+# description is a text enclosed in double quotes, 
+# a is the equatorial radius
 # and x is one of
 #   b polar radius, f flattening, or e eccentricity squared
 #
 # x should be a defining parameter (as opposed to a derived parameter)
+# note: accuracy should be sufficient with a derived parameter.
+# All newer sources state only f as a parameter, even if it is derived.  
+# b / a = 1 - f = sqrt( 1 - e2 ) = 1 / sqrt ( 1 + e'2 ) 
+# 
 # no spaces before or after the =
-#
-# IS THERE A STANDARD FOR THESE ACRONYMS? /MHuOct99 
-#
 
-# these are from [Snyder, Table 1, p.12]
-australian	a=6378160	f=1/298.25
-clark66		a=6378206.4	b=6356583.8
-grs80   	a=6378137	f=1/298.257
-hayford		a=6378388	f=1/297
-international	a=6378388	f=1/297
-krassovsky	a=6378245	f=1/298.3
-wgs72		a=6378135	f=1/298.26
-
-# this is from naval oceanographic lab
-wgs84		a=6378137	f=1/298.257223563
-
-# these are from [Seppelin, Table 9, p.35]
-bessel		a=6377397.155	e=.006674372
-airy		a=6377563.396	e=.006670540
-everest		a=6377276.345	e=.0066378466
-wgs66		a=6378145	f=1/298.25
-
-# Snyder.
-#      John P. Snyder, "Map Projections - A  Working  Manual,"
-#      U.S.  Government  Printing Office, Washington DC, 1989.
-#      U.S. Geological Survey Professional Paper 1395
-
-# Seppelin.
-#      Thomas O. Seppelin, "The  Department  of Defense World
-#      Geodetic System 1972," presented at the International
-#      Symposium  on Problems Related to the Redefinition if
-#      North American Geodetic Networks, Fredericton, New 
-#      Brunswick,Canada in May, 1974.
-
-
-#these were added for g.setproj capabilities
-MERIT		a=6378137	f=1/298.257
-IAU76		a=6378140.0	f=1/298.257
-GRS67		a=6378160.0	f=1/247.247167
-clark80		a=6378249.145	f=1/293.4663
-hough		a=6378270.0	b=6356794.343479
-mercury		a=6378166.0	b=6356784.283666
-modif_airy	a=6377341.89	b=6356036.143
-modif_everest	a=6377304.063	b=6356103.039
-modif_merc	a=6378150.0	b=6356768.337303
-new_internatnl	a=6378157.5	b=6356772.2
-SEasia		a=6378155.0	b=6356773.3205
-walbeck		a=6376896.0	b=6355834.8467
-
-# From PROJ4.3.3, things to check here
-# Soviet Geodetic System 85
-SGS85		a=6378136.0	f=1/298.257
-# This has higher precision than above "grs80"
-# "GRS80",	"a=6378137.0",		"rf=298.257222101",	"GRS 1980(IUGG, 1980)",
-# Appl. Physics. 1965
-APL4.9		a=6378137.0	f=1/298.25
-# This has same values as as WGS66
-# "NWL9D",	"a=6378145.0.",		"rf=298.25",		"Naval Weapons Lab., 1965",
-# Note discrepancy with above "modif_airy"
-# "mod_airy",	"a=6377340.189",	"b=6356034.446",	"Modified Airy",
-# Andrae 1876 (Den., Iclnd.)
-andrae		a=6377104.43	f=1/300.0
-# Bessel 1841 (Namibia)
-bess_nam	a=6377483.865	f=1/299.1528128
-# Comm. des Poids et Mesures 1799
-CPM		a=6375738.7	f=1/334.29
-# Delambre 1810 (Belgium)
-delmbr		a=6376428.0	f=1/311.5
-# Engelis 1985
-engelis		a=6378136.05	f=1/298.2566
-# Synonym of "everest"?
-# "evrst30",  	"a=6377276.345",	"rf=300.8017",		"Everest 1830",
-# Synonym of "modif_everest"?
-# "evrst48",  	"a=6377304.063",	"rf=300.8017",		"Everest 1948",
-# Everest 1956
-evrst56		a=6377301.243	f=1/300.8017
-# Everest 1969
-evrst69		a=6377295.664	f=1/300.8017
-# Everest (Sabah & Sarawak)
-evrstSS		a=6377298.556	f=1/300.8017
-# Synonym of "mercury"?
-# "fschr60",  	"a=6378166.",		"rf=298.3",		"Fischer (Mercury Datum) 1960",
-# "fschr60m", 	"a=6378155.",		"rf=298.3",		"Modified Fischer 1960",
-# Can the _real (^ or v) "modif_merc please stand up"?	
-# "fschr68",  	"a=6378150.",		"rf=298.3",		"Fischer 1968",
+# the following parameters are from NIMA document TR8350.2:
+# old values commented
+# Airy 1830 
+# airy						a=6377563.396	e=.006670540
+airy		"Airy 1830"			a=6377563.396	f=1/299.3249646
+# Australian National
+australian	"Australian National"		a=6378160.000	f=1/298.25
+# Bessel 1841, Ethiopia, Indonesia, Japan and Korea
+# bessel					a=6377397.155	e=.006674372
+bessel		"Bessel 1841"			a=6377397.155	f=1/299.1528128
+# Bessel 1841, Namibia
+bess_nam	"Bessel 1841, Namibia"		a=6377483.865	f=1/299.1528128
+# Clarke 1866
+# clark66					a=6378206.4	b=6356583.8
+clark66		"Clarke 1866"			a=6378206.400	f=1/294.9786982
+# Clarke 1880
+clark80		"Clarke 1880"			a=6378249.145	f=1/293.465
+# Everest 1830, India
+# everest					a=6377276.345	e=.0066378466
+everest		"Everest 1830, India"		a=6377276.345	f=1/300.8017
+evrst30  	"Everest 1830, India"		a=6377276.345	f=1/300.8017
+# Everest 1948, W. Malaysia and Singapore 
+evrst48  	"Everest 1948"			a=6377304.063	f=1/300.8017
+# Everest 1956, India
+evrst56		"Everest 1956, India"		a=6377301.243	f=1/300.8017
+# Everest 1969, W. Malaysia
+evrst69		"Everest 1969, W. Malaysia"	a=6377295.664	f=1/300.8017
+# Everest (Sabah & Sarawak), Brunei and E. Malaysia
+evrstss		"Everest Sabah and Sarawak"	a=6377298.556	f=1/300.8017
+# Geodetic Reference System 1980 (IUGG, 1980)
+grs80		"Geodetic Reference System 1980" a=6378137.000	f=1/298.257222101
 # Helmert 1906
-helmert		a=6378200.0	f=1/298.3
-# Kaula 1961
-kaula		a=6378163.0	f=1/298.24
-# Lerch 1976
-lerch		a=6378139.0	f=1/298.257
-# Maupertius 1738
-mprts		a=6397300.0	f=1/191.0
-# Plessis 1817 (France)
-plessis		a=6376523.0	b=6355863.0
-wgs60    	a=6378165.0	f=1/298.3
+helmert		"Helmert 1906"			a=6378200.000	f=1/298.3
+# Hough 1960
+# hough						a=6378270.0	b=6356794.343479
+hough		"Hough 1960"			a=6378270.000	f=1/297.0
+# Indonesian 1974
+indonesian	"Indonesian 1974"		a=6378160.000	f=1/298.247
+# International 1924
+international	"International 1924"		a=6378388.000	f=1/297.0
+# Krassovsky 1940
+krassovsky	"Krassovsky 1940"		a=6378245.000	f=1/298.3
+# Airy 1830 Modified
+# modif_airy					a=6377340.189	b=6356036.143
+modif_airy	"Airy 1830 Modified"		a=6377340.189	f=1/299.3249646
+# South American 1969
+sam69		"South American 1969"		a=6378160.000	f=1/298.25
+# WGS 1972
+wgs72		"World Geodetic System 1972"	a=6378135.000	f=1/298.26
+# WGS84 as defined by NIMA document TR8350.2
+wgs84		"World Geodetic System 1984"	a=6378137.000	f=1/298.257223563
 
-# sphere  	a=6370997.0     e=0.0
+# from original file:
+# GRS75
+grs75		"GRS75"				a=6378140.000	b=6356755.288
+# Hayford (same as International 1909)
+hayford		"Hayford"			a=6378388.000	f=1/297.000
+
+# additional ellipsoids from PROJ4.4.1, file pj_ellps.c
+# Appl. Physics. 1965
+apl4.9		"Appl. Phys. 1965"		a=6378137.0	f=1/298.25
+# Australian Natl & S. Amer. 1969
+aust_sa		"Australian Natl & S. Amer. 1969" a=6378160.000	f=1/298.25
+# Andrae 1876 (Den., Iclnd.)
+andrae		"Andrae 1876"			a=6377104.43	f=1/300.0
+# Comm. des Poids et Mesures 1799
+cpm		"Comm. des Poids et Mesures 1799" a=6375738.7	f=1/334.29
+# Delambre 1810 (Belgium)
+delmbr		"Delambre 1810"			a=6376428.0	f=1/311.5
+# Engelis 1985
+engelis		"Engelis 1985"			a=6378136.05	f=1/298.2566
+# Fischer (Mercury Datum) 1960
+fschr60		"Fischer (Mercury Datum) 1960"	a=6378166.000 	f=1/298.3
+# Mercury (same as Fischer 1960). Included only for reference. 
+# mercury		"Mercury"		a=6378166.0	b=6356784.283666
+# modif_merc is a synonym to Modified Fischer 1960 (fschr60m). Included only for reference.  
+# modif_merc	"Modified Mercury"		a=6378150.0	b=6356768.337303
+# Modified Fischer 1960
+fschr60m	"Modified Fischer 1960"		a=6378155.000 	f=1/298.30
+# Fischer 1968
+fschr68		"Fischer 1968"			a=6378150.000 	f=1/298.3
+# GRS 67 (IUGG 1967)
+# GRS67 					a=6378160.000	b=6356774.516
+grs67		"GRS67"				a=6378160.000	f=1/298.2471674270
+# IAU 1976
+iau76		"IAU 1976"			a=6378140.000	f=1/298.257
+# International 1909 (Hayford)
+intl		"International 1909 (Hayford)"	a=6378388.000 	f=1/297.000
+# Kaula 1961
+kaula		"Kaula 1961"			a=6378163.0	f=1/298.24
+# Lerch 1976
+lerch		"Lerch 1976"			a=6378139.0	f=1/298.257
+# Maupertius 1738
+mprts		"Maupertius 1738"		a=6397300.0	f=1/191.0
+# MERIT 1983
+merit		"MERIT 1983"			a=6378137.000	f=1/298.257
+# New International 1967
+new_intl	"New International 1967" 	a=6378157.500	b=6356772.2
+# This has same values as as WGS66
+# Naval Weapons Lab., 1965
+nwl9d		"Naval Weapons Lab., 1965" 	a=6378145.000	f=1/298.25
+# Plessis 1817 (France)
+plessis		"Plessis 1817"			a=6376523.0	b=6355863.0
+# Southeast Asia
+seasia		"South East Asia"		a=6378155.000	b=6356773.3205
+# Soviet Geodetic System 85
+sgs85		"Soviet Geodetic System 1985"	a=6378136.000	f=1/298.257
+# Walbeck
+walbeck		"Walbeck"			a=6376896.000	b=6355834.8467
+# WGS60
+wgs60    	"WGS60"				a=6378165.000	f=1/298.3
+# WGS66
+wgs66		"WGS66"				a=6378145.000	f=1/298.25
+
+# Modified Everest (from elist.html from Peter H. Dana, cited from DMA 1987
+# everest_m	"Modified Everest"		a=6377304.063	b=6356103.039
+everest_m	"Modified Everest"		a=6377304.063	f=1/300.8017
+
+# new from ?
+# Everest (Pakistan)
+everest_p	"Everest (Pakistan)"		a=6377309.613	f=1/300.8017
+# earth as a sphere:
+# There is a bug in libes/gis/get_ellipse.c, where a function can not
+# return e=0.0 in any case. So do not use sphere!
+# sphere  	"Spherical Earth"		a=6370997.000   e=0.0
 

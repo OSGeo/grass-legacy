@@ -1,74 +1,48 @@
-# updated 2. Nov. 1999 
-# updated to build libimage.a 
-#    31 octobre 1999 - Pierre de Mouveaux.(p_de_mouveaux@hotmail.com)
+# $Id: Gmakefile,v 1.16 2000-12-06 06:29:39 cho Exp $
 #
-# tcltkNVIZ2.2 - 8/1999 Jaro Hofierka
-#
-# 10/99: move libimage to src/libes and
-#          updated libimage path to src/libes/libimage
-#        updated ogsf path to src/libes/ogsf/
-#
-# olgnviz v1.0 - 5/1/96
-#
-# Toplevel makefile for building everything - used by configure script to 
-# build Gmakefile
+# Toplevel makefile for building everything
 
-NV_VER=nviz2.2
-NVWISH_VER=NVWISH2.2
-INSTALL_DIR=etc/nviz2.2
+VER=2.2
+NV_VER=nviz$(VER)
+NVWISH_VER=NVWISH$(VER)
+INSTALL_DIR=$(GISBASE)/etc/$(NV_VER)
 
 SCRIPTDIR=$(NV_VER)/scripts
 
+all: configure nvwish nviz install
 
-all: nvwish nviz install
+#
+# DO NOT CHANGE configure: TARGET TO preconfigure:
+# SOME make WON'T WORK IF TARGET AND SHELL NAME ARE EQUAL.
+#
+configure:
+	@PRECONFIGURE=YES ./preconfigure $(VER) "$(PQLIB)"
 
 nvwish:
 	$(GMAKE) $(LIBDIR)/libimage
 	$(GMAKE) $(LIBDIR)/ogsf
-	cd src ; $(GMAKE) 
+	cd src ; $(GMAKE)
 
 nviz:
-	'rm' -rf $(NV_VER)
-	mkdir $(NV_VER)
-	mkdir $(SCRIPTDIR)
-	'rm' -f $(SCRIPTDIR)/$(NV_VER)
-	'rm' -f $(SCRIPTDIR)/script_file_tools
-	'rm' -f $(SCRIPTDIR)/script_get_line
-	'rm' -f $(SCRIPTDIR)/script_play
-	'rm' -f $(SCRIPTDIR)/script_tools
-	echo "#!$(BIN_CONTRIB_CMD)/$(NVWISH_VER) -f" > \
-		$(SCRIPTDIR)/$(NV_VER)
-	echo "#!$(BIN_CONTRIB_CMD)/$(NVWISH_VER) -f" > \
-		$(SCRIPTDIR)/script_file_tools
-	echo "#!$(BIN_CONTRIB_CMD)/$(NVWISH_VER) -f" > \
-		$(SCRIPTDIR)/script_get_line
-	echo "#!$(BIN_CONTRIB_CMD)/$(NVWISH_VER) -f" > \
-		$(SCRIPTDIR)/script_play
-	echo "#!$(BIN_CONTRIB_CMD)/$(NVWISH_VER) -f" > \
-		$(SCRIPTDIR)/script_tools
-	cat scripts/nviz.in >> $(SCRIPTDIR)/$(NV_VER)
-	cat scripts/script_file_tools.in | sed s/ProcessName/$(NV_VER)/g >> \
-	    $(SCRIPTDIR)/script_file_tools
-	cat scripts/script_get_line.in >> $(SCRIPTDIR)/script_get_line
-	cat scripts/script_play.in >> $(SCRIPTDIR)/script_play
-	cat scripts/script_tools.in | sed s/ProcessName/$(NV_VER)/g >> \
-	    $(SCRIPTDIR)/script_tools
-
-	chmod ugo+x $(SCRIPTDIR)/$(NV_VER) \
-		$(SCRIPTDIR)/script_file_tools \
-		$(SCRIPTDIR)/script_get_line \
-		$(SCRIPTDIR)/script_play $(SCRIPTDIR)/script_tools
-	cp $(SCRIPTDIR)/$(NV_VER) $(BIN_CONTRIB_CMD)/$(NV_VER)
+	'rm' -rf $(INSTALL_DIR)
+	mkdir $(INSTALL_DIR)
 
 # Install the scripts in the appropriate directory
 install:
-	'rm' -rf $(INSTALL_DIR)
+	'rm' -rf $(INSTALL_DIR)/
 	mkdir $(INSTALL_DIR)
 	mkdir $(INSTALL_DIR)/scripts
 	mkdir $(INSTALL_DIR)/bitmaps
-	'cp' $(SCRIPTDIR)/* $(INSTALL_DIR)/scripts
+	(cd scripts; cp script_get_line script_play script_tools script_file_tools $(INSTALL_DIR)/scripts)
 	'cp' scripts/*.tcl $(INSTALL_DIR)/scripts
 	'cp' scripts/*Index $(INSTALL_DIR)/scripts
-	'cp' bitmaps/* $(INSTALL_DIR)/bitmaps
-	'cp' nviz.man.1 $(GISBASE)/man/1/$(NV_VER).man.1
-	gmakelinks5
+	(cd bitmaps; tar -cf - *  | (cd $(INSTALL_DIR)/bitmaps; tar  -xf - 2>/dev/null ); true)
+	cp scripts/$(NV_VER)_script $(INSTALL_DIR)/scripts
+	cp scripts/$(NV_VER) $(GISBASE)/bin
+	chmod ugo+x $(INSTALL_DIR)/scripts/$(NV_VER)_script \
+		$(INSTALL_DIR)/scripts/script_file_tools \
+		$(INSTALL_DIR)/scripts/script_get_line \
+		$(INSTALL_DIR)/scripts/script_play \
+		$(INSTALL_DIR)/scripts/script_tools \
+		$(GISBASE)/bin/$(NV_VER)
+	mv src/nvwish $(INSTALL_DIR)/$(NVWISH_VER)

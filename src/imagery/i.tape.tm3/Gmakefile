@@ -1,19 +1,15 @@
 ### Gmakefile for i.tape.tm3
 
-PROG  = i.tape.tm3
-
-HOME  = $(BIN_MAIN_CMD)
-
-all:    $(HOME)/$(PROG)
+PGM  = i.tape.tm3
 
 ####    required - suplimental imagery libary
-IMAGERY_SUBINC  = ../image3
-IMAGERYLIB_SUP  = ../image3/libimage_sup.a
+IMAGERY_SUBINC  = $(SRC)/libes/image3
+IMAGERYLIB_SUP  = $(SRC)/libes/image3/libimage_sup.a
 
 LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB) $(COORCNVLIB)\
          $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
          $(GPROJLIB) $(LIBTRANS) $(PROJLIB) \
-         $(GISLIB) $(VASK) $(XDRLIB)
+         $(GISLIB) $(VASKLIB)
 
 LIST  = landsat.o \
 	fileseq.o \
@@ -29,8 +25,8 @@ EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 $(LIST): landsat.h fileseq.h
 
 
-$(HOME)/$(PROG): $(LIST) $(LIBES) 
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): # in case of changes
 

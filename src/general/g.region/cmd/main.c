@@ -1,6 +1,36 @@
+/***************************************************************************
+ * $Id$
+ *
+ * MODULE: 	g.region (commandline)
+ * AUTHOR(S):	Michael Shapiro, CERL
+ *              datum added by Andreas Lange <andreas.lange@rhein-main.de>
+ * PURPOSE: 	Program to manage and print the boundary definitions for the
+ *              geographic region.
+ * 
+ * COPYRIGHT:  	(C) 2000 by the GRASS Development Team
+ *
+ *   	    	This program is free software under the GPL (>=v2)
+ *   	    	Read the file COPYING that comes with GRASS for details.
+ ****************************************************************************
+ * $Log$
+ * Revision 1.6  2001-01-12 08:16:18  justin
+ * Added site.h since it was removed from gis.h
+ *
+ * Revision 1.5  2000/12/20 14:42:42  jan
+ * Added module description.
+ *
+ * Revision 1.4  2000/11/26 16:33:14  andreas
+ * added module description, file header, output of ellipsoid with cmdline and inter
+ *
+ * Revision 1.3  2000/11/08 20:30:36  andreas
+ * added datum output with -p option
+ *
+ */
+
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
 #include "local_proto.h"
 
@@ -24,6 +54,7 @@ int main (int argc, char *argv[])
 	char *G_align_window();
 	int projection;
 
+	struct GModule *module;
 	struct
 	    {
 		struct Flag
@@ -43,10 +74,15 @@ int main (int argc, char *argv[])
 
 	G_gisinit (argv[0]);
 
+	module = G_define_module();
+	module->description =
+		"Program to manage the boundary definitions for the "
+		"geographic region.";
+
 	/* get current region.
- * if current region not valid, set it from default
- * note: G_get_default_window() dies upon error
- */
+	 * if current region not valid, set it from default
+	 * note: G_get_default_window() dies upon error
+	 */
 	if (G__get_window (&window, "", "WIND", G_mapset()) != NULL)
 	{
 		G_get_default_window (&window);
@@ -333,9 +369,8 @@ int main (int argc, char *argv[])
 	if (name = parm.sites->answer)
 	{
 		FILE *fp;
-		int i;
-                Site mysite;
-                mysite.dim_alloc=mysite.dbl_alloc=mysite.str_alloc=0;
+		int i, rtype, ndim, nstr, ndec;
+                Site *mysite;
 
 		mapset = G_find_sites2 (name, "");
 		if (!mapset)
@@ -349,29 +384,39 @@ int main (int argc, char *argv[])
 			G_fatal_error (msg);
 		}
 
-		for (i = 0; G_site_get (fp, &mysite) == 0; i++)
+		rtype = -1;
+		G_site_describe(fp, &ndim, &rtype, &nstr, &ndec);
+		mysite = G_site_new_struct(rtype, ndim, nstr, ndec);
+
+		for (i = 0; G_site_get (fp, mysite) == 0; i++)
 		{
 			if (i==0)
 			{
 				G_copy (&temp_window, &window, sizeof(window));
-				window.east = window.west = mysite.east;
-				window.north = window.south = mysite.north;
+				window.east = window.west = mysite->east;
+				window.north = window.south = mysite->north;
 			}
 			else
 			{
-				if (mysite.east > window.east) 
-					window.east = mysite.east;
-				if (mysite.east < window.west) 
-					window.west = mysite.east;
-				if (mysite.north > window.north) 
-					window.north = mysite.north;
-				if (mysite.north < window.south) 
-					window.south = mysite.north;
+				if (mysite->east > window.east) 
+					window.east = mysite->east;
+				if (mysite->east < window.west) 
+					window.west = mysite->east;
+				if (mysite->north > window.north) 
+					window.north = mysite->north;
+				if (mysite->north < window.south) 
+					window.south = mysite->north;
 			}
 		}
+		G_free(mysite);
 		fclose (fp);
 		if (i)
 		{
+		     window.east += 100;
+		     window.west -= 100;
+		     window.south -= 100;
+		     window.north += 100;
+
        	             if(window.north == window.south)
        	             {
        	                   window.north = window.north + 0.5 * temp_window.ns_res;
@@ -586,7 +631,7 @@ int main (int argc, char *argv[])
 static int print_window(struct Cell_head *window,int print_flag)
 {
 	char *G_database_projection_name();
-	char *prj;
+	char *prj, *datum, *ellps;
 	int x;
 	char north[30], south[30], east[30], west[30], nsres[30], ewres[30];
 
@@ -605,9 +650,15 @@ static int print_window(struct Cell_head *window,int print_flag)
 	{
 		prj = G_database_projection_name();
 		if (!prj) prj = "** unknown **";
+		datum = G_database_datum_name();
+		if (!datum) datum = "** unknown (default: WGS84) **";
+		ellps = G_database_ellipse_name();
+		if (!ellps) ellps = "** unknown (default: WGS84) **";
 		fprintf (stdout, "%-11s %d (%s)\n","projection:", window->proj, prj);
 		fprintf (stdout, "%-11s %d\n","zone:",  window->zone);
 
+		fprintf (stdout, "%-11s %s\n","datum:", datum);
+		fprintf (stdout, "%-11s %s\n","ellipsoid:", ellps);
 		fprintf (stdout, "%-11s %s\n","north:", north);
 		fprintf (stdout, "%-11s %s\n","south:", south);
 		fprintf (stdout, "%-11s %s\n","west:",  west);

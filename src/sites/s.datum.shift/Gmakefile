@@ -1,0 +1,15 @@
+PGM=s.datum.shift
+
+OFILES = \
+	main.o \
+	dat.o
+
+LIBES = $(GPROJLIB) $(COORCNVLIB) $(GISLIB) $(DATETIMELIB)
+
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(COORCNVLIB): #
+$(GISLIB): #
+$(DATETIMELIB): #
+$(GPROJLIB): #

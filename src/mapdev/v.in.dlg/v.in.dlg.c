@@ -32,6 +32,7 @@ main (int argc, char *argv[])
     char *dig_name;
     char *mapset;
     char *add_att=NULL;
+	struct GModule *module;
     struct Option *old, *new, *add_attr, *offset;
     struct Flag *l_flag;
     int force_lines;
@@ -40,6 +41,11 @@ main (int argc, char *argv[])
     char command[256];
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Converts an ASCII USGS DLG-3 Optional "
+		"file to a binary GRASS vector (dig) file.";
 
     l_flag = G_define_flag();
     l_flag->key             = 'l';

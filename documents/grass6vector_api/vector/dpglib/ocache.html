@@ -1,0 +1,429 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Object Cache
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Object Cache
+</h1>
+
+<hr>   <!--------------------------------------------------->
+
+<blockquote><i>
+    Status:  Delta<br>
+    This module has been designed, and coded but is currently under review.
+    It is fairly stable but its interface could change.<p>
+
+    Michael suggested moving the optional callbacks to a separate
+    initialization function thus simplifying the dpgOCacheInit() call.
+    Also I want to create a write_size() callback and remove
+    that capability from pre_swap().
+
+</i></blockquote>
+
+    This module is the pinacle of the work on the DPG library.  The idea
+    is to provide a caching mechanism for objects.  So for example
+    a program can create an object and then completely hand it over to the
+    caching library to manage it.  The caching library will ensure that
+    it is available when necessary, and will take care of managing
+    it on disk as well.  This library is unique in that it completely
+    manages the disk storage of the object.  No file management need be
+    done by the application program except to open and close the file.
+    The decision to require that was based on the flexibility of the 
+    use of my stdio library design (which isn't yet completed).  I wanted
+    the client to have control over how the file was set up.
+<p>
+    It is built on top of the object store library.  It's main contribution
+    is an algorithm which manages a fixed number of objects in memory
+    as a cache.  The cache algorithm does its best to maintain optimal
+    cache usage.  And works quite well in both the worst and best cases.
+    The algorithm depends on the DomainSize being specified so that it
+    can calculate optimal performance.  The DomainSize is the size of the
+    subset of all object that the application is currently intending to 
+    access.  For example, if a user were zoomed into a small region of a
+    map, the domainsize would be the number of objects in that region.
+<p>
+    Since this library was written to be reused, it knows nothing about the
+    objects it is managing.  Thus it depends on the client to handle
+    operations such as reading and writing to a disk buffer (using XDR
+    if required), informing it of the required size of the buffer, and
+    freeing the object when it is swapped out.  In other words, the
+    client still ends up doing most of the work, but the end result,
+    once the callbacks are set up, is that the client no longer has to
+    worry about managing the object, and can simply use it for its intended
+    purpose.  Most of the data structures in the Vector library are
+    stored using this module.
+<p>
+
+    The cache library is fairly efficient in accessing the data.  It uses
+    an AVL tree to store the ID's of the objects which are in memory. It
+    also calls the <a href="age.html">AGE</a> library to manage the
+    aging of objects.  Each time an object is referenced, it moves back to 
+    the top of the aging list, thust keeping the more active objects
+    in memory longer.
+<p>
+    
+
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li>dpgOCacheP   <a href=#dpgOCacheInit> dpgOCacheInit </a>
+    (dpgFileP <em>fp</em>, char *<em>mode</em>, int <em>cnt</em>, <br>
+	int <em>id_size</em>,<br>
+	int <em>id_by_value</em>,<br>
+	int <em>keep_tags</em>,<br>
+	PTR <em>user_data</em>,<br>
+	char *<em>id_string</em>,<br>
+	long     (*<em>pre_swap</em>)  (PTR udata, long *id, PTR obj),<br>
+	int      (*<em>post_swap</em>) (PTR udata, long *id, dpgOStag tag),<br>
+	int      (*<em>pre_load</em>)  (PTR udata, long *id),<br>
+	int      (*<em>post_load</em>) (PTR udata, long *id),<br>
+	dpgOStag (*<em>get_tag</em>)   (PTR udata, long *id),<br>
+	PTR      (*<em>read</em>)      (PTR udata, long *id, int size, char *buf),<br>
+	int      (*<em>write</em>)     (PTR udata, long *id, PTR obj, char *buf),<br>
+	int      (*<em>release</em>)   (PTR udata, long *id, PTR obj) );
+
+
+
+<li>PTR     <a href=#dpgOCacheAccess> dpgOCacheAccess </a>
+           (dpgOCacheP cp, long *id, int dirty);
+
+
+<li>PTR     <a href=#dpgOCacheAccessVal> dpgOCacheAccessVal </a>
+        (dpgOCacheP cp, long id, int dirty);
+
+
+<li>int     <a href=#dpgOCacheAdd> dpgOCacheAdd </a>
+              (dpgOCacheP cp, long * id, PTR p);
+
+
+<li>int     <a href=#dpgOCacheDelete> dpgOCacheDelete </a>
+           (dpgOCacheP cp, long * id);
+
+
+<li>int     <a href=#dpgOCacheClose> dpgOCacheClose </a>
+            (dpgOCacheP cp);
+
+
+<li>int     <a href=#dpgOCacheSwapout> dpgOCacheSwapout </a>
+          (dpgOCacheP cp, long * id);
+
+
+<li>int     <a href=#dpgOCacheDirty> dpgOCacheDirty </a>
+            (dpgOCacheP cp, long * id);
+
+
+<li>int     <a href=#dpgOCacheSetLimits> dpgOCacheSetLimits </a>
+        (dpgOCacheP cp, int which, long limit);
+
+
+<li>long    <a href=#dpgOCacheGetLimits> dpgOCacheGetLimits </a>
+        (dpgOCacheP cp, int which);
+
+
+<li>int     <a href=#dpgOCacheSetDomainSize> dpgOCacheSetDomainSize </a>
+    (dpgOCacheP cp, long size);
+
+
+<li>int     <a href=#dpgOCacheResetStats> dpgOCacheResetStats </a>
+       (dpgOCacheP cp);
+
+
+<li>int     <a href=#dpgOCacheDestroy> dpgOCacheDestroy </a>
+          (dpgFileP fp);
+
+
+<li>int     <a href=#dpgOCacheFlush> dpgOCacheFlush </a>
+             (dpgOCacheP cp);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+
+<ul>
+
+
+<a name="dpgOCacheInit">
+<li>dpgOCacheP  <a href=#dpgOCacheInit> dpgOCacheInit </a>
+    (dpgFileP <em>fp</em>, char *<em>mode</em>, int <em>cnt</em>, <br>
+	int <em>id_size</em>,<br>
+	int <em>id_by_value</em>,<br>
+	int <em>keep_tags</em>,<br>
+	PTR <em>user_data</em>,<br>
+	char *<em>id_string</em>,<br>
+	long     (*<em>pre_swap</em>)  (PTR udata, long *id, PTR obj),<br>
+	int      (*<em>post_swap</em>) (PTR udata, long *id, dpgOStag tag),<br>
+	int      (*<em>pre_load</em>)  (PTR udata, long *id),<br>
+	int      (*<em>post_load</em>) (PTR udata, long *id),<br>
+	dpgOStag (*<em>get_tag</em>)   (PTR udata, long *id),<br>
+	PTR      (*<em>read</em>)      (PTR udata, long *id, int size, char *buf),<br>
+	int      (*<em>write</em>)     (PTR udata, long *id, PTR obj, char *buf),<br>
+	int      (*<em>release</em>)   (PTR udata, long *id, PTR obj) );
+
+<blockquote>
+Hopefully this long argument list will be shortened in the near future.
+This function simply opens up a cache and sets up flags and callbacks.
+</blockquote>
+
+<dl>
+<dl>
+    <dt> fp		<dd> Opened file pointer (NOT a FILE *). 
+    <dt> mode		<dd> Open mode. Must match that of fp. ["r" | "w" | "u"]
+    <dt> cnt		<dd> Number of objects to keep in memory
+    <dt> id_size	<dd> [1 | 2]  Size of IDs in number of long words  
+				(typically 1)
+    <dt> id_by_value	<dd> This is already obsolete.  Specify 0.
+    <dt> keep_tags	<dd> This is a convenience function.  Normally
+			     this library will ask the user to store dpgOStags
+			     for each of the objects, and then produce them on
+			     request.  If keep_tags is TRUE, then the cache
+			     library will store the tags for the client.  BUT
+			     it uses the ID as a lookup into a file, so the
+			     IDs must be small sequential integers or else
+			     the index file will get huge.  Note this may
+			     not be the case if the filesystem supports 
+			     sparce data files.
+    <dt> user_data	<dd> This is a pointer that will be passed to all
+			     callback routines.
+    <dt> id_string	<dd> This string will be stored in the file.  This
+			     can be used to store version information.
+    <dt> pre_swap	<dd> This function currently is required.  The client
+			     must return the size of the buffer that is 
+			     required to store the object on disk.  This 
+			     number is the actual size it will take on disk
+			     after going through XDR or whatever.
+    <dt> post_swap	<dd> If keep_tags is FALSE this is required.
+			     The library passes back the dpgOStag for the
+			     given object and the client is required to 
+			     store it. 
+    <dt> release	<dd> This function is required and is called right 
+			     after the object has been written out to free
+			     any memory associated with the object.
+    <dt> pre_load	<dd> This function is optional
+    <dt> post_load	<dd> This function is optional
+    <dt> get_tag	<dd> If keep_tags is FALSE, this function is required.
+			     The client returns the dpgOStag associated with
+			     the given ID.
+    <dt> write		<dd> This function is required.  The library passes
+			     a buffer to the client and the client fills it
+			     in with an image of the object which is to be
+			     written to disk.  Note the size of the passed
+			     in buffer is that returned by pre_swap.
+    <dt> read		<dd> This function is required.  The library passes
+			     to the client a buffer which contains a disk
+			     image of the object.  The client then must 
+			     create a new object structure from that data
+			     and return it to the library.
+</dl>
+</dl>
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="dpgOCacheAccess">
+<li>PTR    <a href=#dpgOCacheAccess> dpgOCacheAccess </a>
+           (dpgOCacheP cp, long *id, int dirty);
+<blockquote>
+This function is the way to access an object once it is stored in the
+cache library.  It ensures that the object is loaded into memory and
+then returns a pointer to the object.  Note that there is NO guarantee
+as to how long the object will remain in memory.  Typically you can 
+trust that it will be there until the next call to any function in the
+<em>dpgOCache</em> library.  But there may be other memory management 
+operations going on which will cause it to be swapped out earilier.
+Basically you should always call <em>dpgOCacheAccess</em> each time you access
+the object. 
+<p>
+If <em>dirty</em> is TRUE, then the object is marked as dirty which means that it
+will need to be updated on disk.  When a <em>clean</em> object gets
+swapped out, it is simply freed and the image on disk does not change.
+So this means that it is vitally important that objects that are modified 
+are marked as dirty.  If <em>dirty</em> if FALSE, then it is not initially
+marked as dirty, but can later be set dirty via <em>dpgOCacheDirty</em>().
+</blockquote>
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheAccessVal">
+
+<li>PTR    <a href=#dpgOCacheAccessVal> dpgOCacheAccessVal </a>
+        (dpgOCacheP cp, long id, int dirty);
+<blockquote>
+This function is the same as <em>dpgOCacheAccess</em>() except that the
+id is passed as a single long value instead of by reference.
+</blockquote>
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheAdd">
+
+<li>int    <a href=#dpgOCacheAdd> dpgOCacheAdd </a>
+              (dpgOCacheP cp, long * id, PTR p);
+
+<blockquote>
+Use this function to add new objects to the cache.
+</blockquote>
+
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheDelete">
+<li>int    <a href=#dpgOCacheDelete> dpgOCacheDelete </a>
+           (dpgOCacheP cp, long * id);
+<blockquote>
+Use the function to delete and existing object.
+</blockquote>
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheClose">
+
+<li>int    <a href=#dpgOCacheClose> dpgOCacheClose </a>
+
+<blockquote>
+This function must be called to close down the cache.  <strong>Don't</strong> 
+close the file before calling this function.  This causes all objects in 
+memory to be flushed.
+</blockquote>
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheSwapout">
+<li>int    <a href=#dpgOCacheSwapout> dpgOCacheSwapout </a>
+          (dpgOCacheP cp, long * id);
+<blockquote>
+This causes the object referenced by <em>id</em> to be swapped out to disk.
+</blockquote>
+
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheDirty">
+<li>int    <a href=#dpgOCacheDirty> dpgOCacheDirty </a>
+            (dpgOCacheP cp, long * id);
+
+<blockquote>
+This marks the object specified by <em>id</em> as dirty.  Note you should 
+call this immediately after changing an object so as not to let it be
+swapped first.   Preferably the dirty flag on <em>dpgOCacheAccess</em>() 
+should be used.
+</blockquote>
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheSetLimits">
+
+<li>int    <a href=#dpgOCacheSetLimits> dpgOCacheSetLimits </a>
+        (dpgOCacheP cp, int which, long limit);
+<blockquote>
+This function can be used to change the characteristics of the cache.
+The following items may be changed:
+<ul>
+    <li>DPG_CACHE_MIN	(minumum size of the cache when it is being flushed)
+    <li>DPG_CACHE_SIZE	(max number of objects in memory)
+    <li>DPG_CACHE_HARD_MIN (absolute min.  min can't be set below this)
+</ul>
+
+</blockquote>
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheGetLimits">
+
+<li>long   <a href=#dpgOCacheGetLimits> dpgOCacheGetLimits </a> 
+	(dpgOCacheP cp, int which);
+<blockquote>
+This function can be used to read the characteristics of the cache.
+The following items may be accessed:
+<ul>
+    <li>DPG_CACHE_MIN	(minumum size of the cache when it is being flushed)
+    <li>DPG_CACHE_SIZE	(max number of objects in memory)
+    <li>DPG_CACHE_HARD_MIN (absolute min.  min can't be set below this)
+    <li>DPG_CACHE_TOTAL   (Total number of objects managed by cache)
+    <li>DPG_CACHE_CNT     (number of objects currently in memory)
+    <li>DPG_CACHE_DOMAIN (Current DomainSize)
+    <li>DPG_CACHE_FAULTS  (Current number of faults - for cache algorithm)
+    <li>DPG_CACHE_HITS   (Current number of hits - for cache algorithm)
+    <li>DPG_CACHE_LAST_HIT   (number of accesses since last hit)
+
+</ul>
+
+</blockquote>
+
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheSetDomainSize">
+
+<li>int    <a href=#dpgOCacheSetDomainSize> dpgOCacheSetDomainSize </a>
+    (dpgOCacheP cp, long size);
+<blockquote>
+Set the approximate size of the Domain. If this is not set, cache
+performance will suffer.
+</blockquote>
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheResetStats">
+
+<li>int    <a href=#dpgOCacheResetStats> dpgOCacheResetStats </a>
+       (dpgOCacheP cp);
+<blockquote>
+Reset all caching statistics.  
+</blockquote>
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheDestroy">
+
+<li>int    <a href=#dpgOCacheDestroy> dpgOCacheDestroy </a>
+          (dpgFileP fp);
+<blockquote>
+To delete the cache, call this with an open file descriptor, but after
+calling <em>dpgOCacheClose</em>(). It is needed because the cache library
+may have created supporting files which need to be removed.  The client
+is responsible for actually deleting the cache file.
+</blockquote>
+
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+<a name="dpgOCacheFlush">
+
+<li>int    <a href=#dpgOCacheFlush> dpgOCacheFlush </a>
+             (dpgOCacheP cp);
+<blockquote>
+Flush the cache.  This is useful when changing domains.
+</blockquote>
+
+<a href="#index">index</a>
+
+</ul>
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

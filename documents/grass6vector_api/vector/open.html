@@ -1,0 +1,369 @@
+
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Open/Close Maps
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Opening and Closing Maps
+</h1>
+
+<blockquote><i>
+    Status:  Gamma<br>
+    This module has been designed, reviewed and coded.
+    It should be considered stable.
+</i></blockquote>
+
+
+The design of GRASS vector maps has changed considerably since 4.X.
+There is no longer a distinction between Level I and Level II access.
+The API only provides access to what previously was level II.  All
+file I/O is managed by the API.  The client only deals with higher level
+functions such as maps and adding and deleting features.<p>
+
+Maps can be opened as read only, new write/read, and update write/read.
+Also there is an option to work with a temporary copy of the data instead
+of the real file.  This is useful for interactive editing situations
+in that the user can be working with a copy and only update the real version
+as desired.<p>
+
+While the API functions appear to mimic those of typical <em>File</em> 
+pull down menu options, in fact, they will be used somewhat differently 
+in an application.  Under the current design the application developer 
+is responsible for using these calls to provide a fault tollerant 
+system.  For example, typically an <em>Open</em> menu option should open 
+a temporary map [<i>gvOpenTemp()</i>] and then load from [<i>gvLoadFrom()</i>] 
+an existing map.  Thus requiring
+the user to choose a <em>Save</em> option to force the permanent copy 
+of the map to be modified.<p>
+
+In the future I hope to have the low level file functions provide a
+transaction/commital capability by default and then this extra work 
+will simply be redundant and obsolete. <p>
+
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li>gvMapP    <a href="#gvOpen"> gvOpen </a>
+           (char *name, char *mapset, gvOpenMode mode);
+
+
+<li>gvMapP    <a href="#gvOpenTemp"> gvOpenTemp </a>
+       (void);
+
+
+<li>gvStatus  <a href="#gvSetTopoMode"> gvSetTopoMode </a>
+    (gvMapP map, int mode);
+
+
+<li>gvStatus  <a href="#gvLoadFrom"> gvLoadFrom </a>
+       (gvMapP map, char *name, char *mapset);
+
+
+<li>gvStatus  <a href="#gvSave"> gvSave </a>
+           (gvMapP map);
+
+
+<li>gvStatus  <a href="#gvSaveAs"> gvSaveAs </a>
+         (gvMapP map, char *name);
+
+
+<li>gvStatus  <a href="#gvClose"> gvClose </a>
+          (gvMapP map);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+
+<h2> Function Specifications </h2> 
+
+<a name="gvOpen">
+
+gvMapP <strong>gvOpen</strong> (char *<em>name</em>, char *<em>mapset</em>, gvOpenMode <em>mode</em>)<p>
+
+Open a vector map.  Mapset is not used for WRITE, and UPDATE modes. Just
+supply any valid char * [e.g. NULL] in that case.  This is because
+under the GRASS database design, programs are only allowed to modify
+maps in the currently active mapset, while there are permitted
+to read data from any mapset in the current location assuming that
+the UNIX permissions allow it.<p>
+
+The following table describes the affects of the various mode options:<p>
+
+
+<pre>
+	     
+		Mode:
+	          |    R     |      W    |       U    |
+	          |          |           |            |
+        -----------------------------------------------
+	          |          |  Map      |            |
+	  Map     |  Opened  |  Created  |  Opened    |
+	   Exists |   RO     |    RW     |    RW      |
+	          |          |           |            |
+        -----------------------------------------------
+	          |          |           |            |
+	Map  does |  ERROR   |  Created  |  Created   |
+	 not exist|          |    RW     |    RW      |
+	          |          |           |            |
+        -----------------------------------------------
+</pre>
+
+<a href="#index">index</a>
+
+<pre>
+INPUT
+    char *name		Map name
+    char *mapset		Map mapset
+    gvOpenMode mode		One of:
+					GV_OPEN_READ 
+					GV_OPEN_WRITE
+					GV_OPEN_UPDATE
+
+OUTPUT
+    None
+    
+RETURN
+    gvMapP 
+	    Success:    Opened map pointer
+	    Failure:	NULL
+    Check gvGetErrorCode() on failure.
+
+NOTE
+    Mode WRITE Always causes a new map creation.  It is to be used if 
+    you intend to replace the old map with new information.
+    Use mode UPDATE if you want to modify an existing map.
+
+</pre>
+
+<a href="#index">index</a>
+
+<hr>
+
+<a name="gvOpenTemp">
+gvMapP <strong>gvOpenTemp</strong> (void)<p>
+
+This is the same as gvOpenNew() except that a temporory file is opened.
+This file will be deleted on close.<p>
+
+<pre>
+INPUT
+    None
+
+OUTPUT
+    None
+    
+RETURN
+    gvMapP 
+	    Success:    Opened map pointer
+	    Failure	NULL
+    Check gvGetErrorCode() on failure.
+
+CALLS
+    getpid()
+    gvOpen()
+</pre>
+
+<a href="#index">index</a>
+
+<hr>
+
+<a name="gvSetTopoMode">
+gvStatus <strong>gvSetTopoMode</strong> (gvMapP <em>map</em>, int <em>mode</em>)<p>
+
+Set map topology mode, either Old or New.  This can only be used
+to affect newly created maps.  The default is NEW.  This should be called
+immediately after creating a map with a call to gvOpen() or gvOpenTemp(), 
+before adding any features to the map.<p>
+
+<pre>
+INPUT
+    gvMapP map			Map pointer
+    gvTopoMode mode		One of:     GV_TOPO_OLD
+					    GV_TOPO_NEW  (DEFAULT)
+
+OUTPUT
+    None
+    
+RETURN
+    gvStatus
+		GV_OK		Sucsess
+		GV_FAILED	Failure
+</pre>
+
+<a href="#index">index</a>
+
+<hr>
+
+
+<a name="gvLoadFrom">
+gvStatus <strong>gvLoadFrom</strong> (gvMapP <em>map</em>, char *<em>name</em>, char *<em>mapset</em>)<p>
+
+This will load data from the specified map into the currently open
+map structure.  This typically will be called on a newly created map or
+temporary map.  If data already exists in the specified map, it will
+be purged without mercy before the new map is loaded.  Caller beware.<p>
+
+<pre>
+INPUT
+    gvMapP map			Map Pointer
+    char *name			Map name to load
+    char *mapset		Map mapset to load
+
+OUTPUT
+    None
+    
+RETURN
+    gvStatus
+		GV_OK		Map open successful. 
+		GV_FAILED	Load failed.  
+		GV_NOTFOUND	Load failed.  File not found
+		GV_MEMORY_ERR	Out of memory.  
+
+NOTE
+    This will overide any settings of gvSetTopoMode() to those
+    of the loaded map.
+
+    It is NOT an error to call this on a map opened for read only,
+    but you cannot change the read/modify status of an opened map.
+    I.e. if the map was opened read only, the newly loaded map will 
+    also be read only.
+  
+    But if map was originally opened as Write, the new data will
+     be loaded as Update.
+
+    If the load fails, any old data will still be purged.
+    
+    The map name and mapset stay the same as when opened.
+</pre>
+
+<a href="#index">index</a>
+
+<hr>
+
+<a name="gvSave">
+gvStatus <strong>gvSave</strong> (gvMapP <em>map</em>)<p>
+
+This will save the current map information to the currently defined
+map in the current mapset.  This call will fail if the file is opened 
+as a temporary file [e.g. opened with gvOpenTemp()].<p>
+
+<pre>
+
+INPUT
+    gvMapP map			Current map pointer
+
+OUTPUT
+    None
+    
+RETURN
+    gvStatus
+		GV_OK		Map save successful.  
+		GV_FAILED	Save failed. Status of file is undetermined
+		GV_MEMORY_ERR	Out of memory.  Status undetermined
+
+NOTE
+    Some of the map data is in fact stored on disk at all times.  Thus
+    a modified map will be in a modified state at just about any time.
+    Store simply updates ALL data to the files associated with the map.
+    If you want to avoid modifying the map at all until a save is done,
+    look at gvOpenTemp() and gvSaveAs().
+
+    It is an error to call this on a map opened for read only.
+
+    gvSave () on a temporary map is fairly useless as the file is 
+    deleted on gvClose().
+
+</pre>
+
+<a href="#index">index</a>
+
+<hr>
+
+<a name="gvSaveAs">
+
+gvStatus <strong>gvSaveAs</strong> (gvMapP <em>map</em>, char *<em>name</em>)<p>
+
+This will save the current map information to the vector map 'name'
+in the current mapset.  If this file previously existed it will be 
+overwritten with the new information.<p>
+
+<pre>
+INPUT
+    gvMapP map			Current map Pointer
+    char *name			Map name
+
+OUTPUT
+    None
+    
+RETURN
+    gvStatus
+		GV_OK		Map save successful.  
+		GV_FAILED	Save failed. Status of file is undetermined
+		GV_MEMORY_ERR	Out of memory.  Status undetermined
+
+NOTE
+    It is NOT an error to call this on a map opened for read only.
+
+</pre>
+
+<a href="#index">index</a>
+
+<hr>
+
+<a name="gvClose">
+gvStatus <strong>gvClose</strong> (gvMapP <em>map</em>)<p>
+
+Close a vector map.  This has any of a number of side effects.  If a map
+was opened for write or update, it will be saved before closing.  If 
+a map was opened as a temporary map, it will be deleted and nothing
+will be saved by this call.  In that case be very sure you have previously
+called gvSaveAs() if you want to save the data.<p>
+
+<pre>
+
+INPUT
+    gvMapP map			Open map Pointer
+
+OUTPUT
+    None
+    
+RETURN
+    gvStatus
+		GV_OK		Map close successful.  
+		GV_FAILED	Close failed.  Status of file is undetermined
+		GV_MEMORY_ERR	Out of memory.  Status undetermined
+
+</pre>
+
+<a href="#index">index</a>
+
+
+<!--hr------------------------------------------------>
+<p>
+
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>
+

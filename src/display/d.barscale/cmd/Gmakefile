@@ -1,9 +1,12 @@
+PGM=d.barscale
+
 OFILES = \
 	draw_scale.o \
 	main.o
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
-$(BIN_CONTRIB_CMD)/d.barscale: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(RASTERLIB): #
 $(DISPLAYLIB): #

@@ -1,0 +1,57 @@
+#!/bin/sh
+if [ "$PRECONFIGURE" != "YES" ]
+then
+	echo "./preconfigure should be executed in Gmakefile." >&2
+	exit 1
+fi
+
+NVWISH_VER="NVWISH$1"
+
+if [ -n "$2" -a "$PGSQL" != "no" -a "$PGSQL" != "NO" ]
+then
+####### POSTGRESQL SUPPORTED #####################
+	echo "*** PostgreSQL supported ***" >&2
+
+	diff src/query_postgr_orig.c src/query_postgr.c > /dev/null
+	if [ $? -ne 0 ]
+	then
+		cp src/query_postgr_orig.c src/query_postgr.c
+	fi
+
+	diff scripts/panel_query_pg.tcl scripts/panel_query.tcl > /dev/null
+	if [ $? -ne 0 ]
+	then
+		cp scripts/panel_query_pg.tcl scripts/panel_query.tcl
+	fi
+
+	PQ_OBJS="openvect.o getCat.o buildInfxQry.o runInfxQry.o"
+##################################################
+else
+####### POSTGRESQL UNSUPPORTED ###################
+	if [ -n "$PGSQL" -a "$PGSQL" != "no" -a "$PGSQL" != "NO" ]
+	then
+		echo "*** PostgreSQL library not found by global configure ***" >&2
+	fi
+	echo "*** PostgreSQL unsupported ***" >&2
+
+	diff src/query_postgr_dummy.c src/query_postgr.c > /dev/null
+	if [ $? -ne 0 ]
+	then
+		cp src/query_postgr_dummy.c src/query_postgr.c
+	fi
+
+	diff scripts/panel_query_orig.tcl scripts/panel_query.tcl > /dev/null
+	if [ $? -ne 0 ]
+	then
+		cp scripts/panel_query_orig.tcl scripts/panel_query.tcl
+	fi
+
+	PQ_OBJS=
+##################################################
+fi
+
+
+sed -e "\
+	s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g;\
+	s/PQ_OBJS=sed/PQ_OBJS=${PQ_OBJS}/g;\
+" src/Gmakefile.in > src/Gmakefile

@@ -1,8 +1,9 @@
+PGM=r.describe
 LIBES  = $(GISLIB)
 
 LIST   = main.o describe.o dumplist.o
 
-$(BIN_MAIN_CMD)/r.describe: $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

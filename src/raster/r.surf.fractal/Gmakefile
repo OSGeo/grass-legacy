@@ -5,7 +5,7 @@
 ##############################################################
 
 
-PROG = $(BIN_CONTRIB_CMD)/r.surf.fractal
+PGM = r.surf.fractal
 #------------^ Name of the GRASS module here.
 
 
@@ -15,22 +15,14 @@ PROG = $(BIN_CONTRIB_CMD)/r.surf.fractal
 #	   directory that can be passed to dbx(tool).
 
 
-LIBES = $(GISLIB) $(VASK) $(MATHLIB) 
+LIBES = $(GISLIB) $(VASKLIB)
 #-----------^ Library necessary for all GRASS programs.
 #---------------------^ Parses keyboard input.
-#------------------------------^ For non arithmetic maths.
 
 
 INCLUDES =\
 		frac.h
 #-----------------^  Any include files go here.
-
-#COMPILER_FLAGS = -O
-#-----------------^ For optimising the code.
-
-
-#-----------COMPILER_FLAGS = -g
-#------------------^ For use with dbx(tool) - must replace the -O option.
 
 OBJ =\
 	main.o		\
@@ -48,12 +40,12 @@ OBJ =\
 
 ######### DEPENDENCIES #########
 
-$(PROG): ${OBJ} ${LIBES}
-	 ${CC} $(COMPILER_FLAGS) -o $@ ${OBJ} ${LIBES} ${LIBES} 
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 #
 #-----^ This compiles the whole program bringing all labels together.
 
-$(OBJ): ${INCLUDES}
+$(OBJ): $(INCLUDES)
 
 $(LIBES): #
 #---^ Ignore this line (used for future additions of the library).

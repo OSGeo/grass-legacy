@@ -1,3 +1,6 @@
+/*	Alex Shevlakov sixote@yahoo.com 02/2000
+*	function added to handle postgres queries
+*/
 #include "interface.h"
 
 extern int
@@ -39,12 +42,16 @@ extern int
   Nset_fov_cmd(),
   Nget_region_cmd(),
   Nget_point_on_surf_cmd(),
+  Nget_point_on_surf_pg_grass(),
+  Nget_point_on_surf_pg_site(),
   Nget_longdim_cmd(),
   Nget_zrange_cmd(),
   Nget_zextents_cmd(),
   Nget_exag_cmd(),
   Nset_exag_cmd(),
   Nquick_draw_cmd(),
+  Nauto_draw_cmd(),
+  Ndraw_all_cmd(),
   Nsurf_draw_all_cmd(),
   Nvect_draw_all_cmd(),
   Nsite_draw_all_cmd(),
@@ -74,6 +81,8 @@ extern int
   Ndelete_key_cmd(),
   Nmove_key_cmd(),
   Nwrite_rgb_cmd(),
+  Nwrite_ppm_cmd(),
+  Nwrite_tif_cmd(),
   Ncutplane_obj_cmd(),
   Nnew_cutplane_obj_cmd(),
   Nnum_cutplane_obj_cmd(),
@@ -93,7 +102,7 @@ extern int
   Nload_3dview_cmd(),
   Nset_cancel_func_cmd(),
   Nunset_cancel_func_cmd(),
-  Tk_Tkspecial_waitCmd(),
+/*  Tk_Tkspecial_waitCmd(), */
   SetScriptFile_Cmd(),
   SetState_Cmd(),
   CloseScripting_Cmd(),
@@ -109,14 +118,13 @@ extern int
 
 extern Tk_Window mainWindow;
 
-init_commands(interp, data)
-     Tcl_Interp *interp;
-     Nv_data *data;
+int 
+init_commands (Tcl_Interp *interp, Nv_data *data)
 {
   /* Disabled security version of send */
 /*  Tcl_CreateCommand(interp, "send", Tk_SendCmd,
 		    (ClientData) mainWindow, (void (*)()) NULL); */
-  
+ 
   /* Scripting commands */
   Tcl_CreateCommand(interp, "Nv_set_script_file", SetScriptFile_Cmd,
 		    (ClientData) mainWindow, (void (*)()) NULL);
@@ -138,8 +146,11 @@ init_commands(interp, data)
 		    (ClientData) mainWindow, (void (*)()) NULL);
   
   /* Add the special tkwait command */
-  Tcl_CreateCommand(interp, "tkspecial_wait", Tk_Tkspecial_waitCmd,
-		    (ClientData) mainWindow, (void (*)()) NULL);
+  /* REMOVED 26-Feb-2000 by Philip Warner. Replaced with an Idle handler */
+/*
+ *  Tcl_CreateCommand(interp, "tkspecial_wait", Tk_Tkspecial_waitCmd,
+ *		    (ClientData) mainWindow, (void (*)()) NULL);
+ */
 
   /* Commands for handling logical names */
   Tcl_CreateCommand(interp, "Nliteral_from_logical", Nliteral_from_logical_cmd,
@@ -197,12 +208,18 @@ init_commands(interp, data)
   Tcl_CreateCommand(interp, "Nget_region", Nget_region_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_point_on_surf", Nget_point_on_surf_cmd, 
 		    data, NULL);
+  Tcl_CreateCommand(interp, "Nget_point_on_pg_grass", Nget_point_on_surf_pg_grass, 
+		    data, NULL);
+  Tcl_CreateCommand(interp, "Nget_point_on_pg_site", Nget_point_on_surf_pg_site, 
+		    data, NULL);
   Tcl_CreateCommand(interp, "Nget_longdim", Nget_longdim_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_zrange", Nget_zrange_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_zextents", Nget_zextents_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_exag", Nget_exag_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nset_exag", Nset_exag_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nquick_draw", Nquick_draw_cmd, data, NULL);
+  Tcl_CreateCommand(interp, "Nauto_draw", Nauto_draw_cmd, data, NULL);
+  Tcl_CreateCommand(interp, "Ndraw_all", Ndraw_all_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nsurf_draw_all", Nsurf_draw_all_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nsurf_draw_one", Nsurf_draw_one_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nvect_draw_all", Nvect_draw_all_cmd, data, NULL);
@@ -259,6 +276,10 @@ init_commands(interp, data)
 		    data, NULL);
   Tcl_CreateCommand(interp, "Nwrite_rgb", Nwrite_rgb_cmd,
 		    data, NULL);
+  Tcl_CreateCommand(interp, "Nwrite_ppm", Nwrite_ppm_cmd,
+			data, NULL);
+  Tcl_CreateCommand(interp, "Nwrite_tif", Nwrite_tif_cmd,
+                        data, NULL);
 
   /* Cutplane Junk */
   Tcl_CreateCommand(interp, "Ncutplane_obj", Ncutplane_obj_cmd,

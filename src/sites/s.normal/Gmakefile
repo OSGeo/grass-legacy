@@ -1,18 +1,10 @@
-PROG=s.normal
-
-PROGRAM = $(BIN_CONTRIB_CMD)/$(PROG)
-#PROGRAM = $(PROG)
-
+PGM=s.normal
 
 CDHCDIR = ../cdhc
 CDHCINC = ../cdhc
 CDHCLIB = $(CDHCDIR)/libcdhc.a
  
 EXTRA_CFLAGS =  -I$(CDHCINC)
-
-MSEC=4
-MDIR=$(SRC)/../man/man$(MSEC)
-MUTL=$(SRC)/../man/utilities
 
 LIBES = $(GISLIB) $(DATETIMELIB) $(CDHCLIB)
 
@@ -26,31 +18,8 @@ LIST  = \
 	readz.o \
 	scancats.o
 
-$(PROGRAM): $(LIST) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
-
-man:  
-	-cp $(PROG).man $(MDIR)/$(PROG)
-	nroff $(MUTL)/man.version $(MDIR)/.class-header \
-	   $(MUTL)/man.header $(PROG).man $(MDIR)/.class-notice \
-	   > $(GISBASE)/man/$(MSEC)/$(PROG)
-
-hello:
-	cat README
-
-lint:
-	lint $(CFLAGS) $(SOURCE)
-
-clean: 
-	-rm -f *.BAK core *~ $(PROG) tags $(PROG).cat *.dvi *.aux *.log
-
-realclean: clean
-	-rm -rf OBJ* 
-
-veryclean: realclean
-
-dist: veryclean
-	(cd .. ; tar cvf $(PROG).tar $(PROG); gzip $(PROG).tar; mv $(PROG).tar.gz /home/pasture/a/ftp/pub/mccauley/grass)
 
 main.o:       	$(CDHCINC)/cdhc.h 
 

@@ -28,7 +28,8 @@
 
 #include <math.h>
 #include "pnm.h"
-#include "png.h"	/* includes zlib.h and setjmp.h */
+#include "zlib.h"
+#include "setjmp.h"
 
 typedef struct _jmpbuf_wrapper {
   jmp_buf jmpbuf;

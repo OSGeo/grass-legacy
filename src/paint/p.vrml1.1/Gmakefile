@@ -1,15 +1,14 @@
+PGM =p.vrml
 
 LIBRARIES = $(GISLIB) $(XDRLIB)
-
-PGM = $(BIN_CONTRIB_CMD)/p.vrml
 
 OFILES = main.o \
 	 vrml.o \
 	 put_view.o \
 	 put_grid.o
 
-$(PGM): $(OFILES) $(LIBRARIES) 
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(MATHLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBRARIES) 
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB)
 
 main.o: pv.h
 vrml.o: pv.h

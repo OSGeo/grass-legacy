@@ -1,8 +1,9 @@
+PGM=i.group
 LIST = main.o\
 	menu.o\
 	run.o
+LIBES=$(GISLIB) $(IMAGERYLIB) $(VASKLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(BIN_MAIN_INTER)/i.group: $(LIST) $(GISLIB) $(IMAGERYLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
-
-$(GISLIB) $(IMAGERYLIB) $(VASKLIB): #
+$(LIBES): #

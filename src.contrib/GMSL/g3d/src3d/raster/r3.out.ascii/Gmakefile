@@ -1,0 +1,7 @@
+PGM=r3.out.ascii
+
+$(BIN_CMD)/$(PGM): main.o $(G3DLIB) $(GISLIB) 
+	$(CC) $(LDFLAGS) -o $@ main.o $(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(G3DLIB): #
+$(GISLIB): #

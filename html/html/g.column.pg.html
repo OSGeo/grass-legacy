@@ -1,0 +1,82 @@
+<html>
+<A NAME="g.column.pg">
+<TITLE>g.column.pg</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<EM><B>g.column.pg</B></EM> - Generate a list of database columns for a specified table in the currently selected database. (GRASS-RDBMS General Interface Program)
+
+<H2>SYNOPSIS</H2>
+<B>g.column.pg</B><BR>
+<B>g.column.pg help</B><BR>
+<B>g.column.pg [-v] table</B><EM>=name</EM>
+
+<H2>DESCRIPTION</H2>
+<EM>g.column.pg</EM> is used to generate a list of the columns in the specified table [table] of the currenty selected database.  If the <EM>[-v]</EM> option is used the data type and length of the column are reported as well.  The currently selected database is identified by the GRASS environment variable $PGDBASE which is set using the <EM>g.select.pg</EM> GRASS-RDBMS interface tool.  If this environment variable is not set the program terminates with a message to the user. To generate a list of the available tables in the currently selected database use the command <EM>g.table.pg</EM>.  The information provided by <EM>g.column.pg</EM> will be used in subsequent GRASS-RDBMS applications to formulate and construct well formed database queries.
+
+<H2>COMMAND LINE OPTIONS</H2>
+<H3>Flag:</H3>
+
+<DL>
+<DT><B>-v</B>
+<DD>Use v for a verbose listing of columns
+</DL>
+
+<H3>Parameter:</H3>
+<DL>
+<DT><B>table=databasetablename</B>
+<DD>Name of table in the currently selected database.
+</DL>
+
+<B>EXAMPLE OUTPUT (terse)</B><P>
+<EM>g.column.pg table=nri</EM>
+<P>
+
+The following columns are defined in table: utm
+<PRE>
+       fips             flood             hydunit
+       landcl82         landcl87          mlra
+       nriptr           other             point
+       psu              refname           slope
+       soil5            textmod           texture
+       tfact            ukfact            utme
+       utmn           	xfact
+</PRE>
+
+<B>EXAMPLE OUTPUT (verbose)</B><P>
+<EM>g.column.pg table=nri -v</EM>
+
+<P>
+The following columns are defined in table: utm
+<PRE>
+                      flood  char16
+                    hydunit  char16
+                   landcl82  char
+                   landcl87  char
+                       mlra  char16
+                     nriptr  int4
+                      other  text
+</PRE>
+
+<H2>BUGS</H2>
+None known.
+
+<H2>NOTE</H2>
+This program requires the Informix database software.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.select.pg.html">g.select.pg</A>, <A HREF="g.stats.pg.html">g.stats.pg</A>, <A HREF="g.table.pg.html">g.table.pg</A>, <A HREF="d.rast.pg.html">d.rast.pg</A>, <A HREF="d.site.pg.html">d.site.pg</A>, <A HREF="d.vect.pg.html">d.vect.pg</A>, <A HREF="d.what.r.pg.html">d.what.r.pg</A>, <A HREF="d.what.s.pg.html">d.what.s.pg</A>, <A HREF="d.what.v.pg.html">d.what.v.pg</A>, <A HREF="r.reclass.pg.html">r.reclass.pg</A>, <A HREF="r.rescale.pg.html">r.rescale.pg</A>, <A HREF="v.reclass.pg.html">v.reclass.pg</A></EM>
+
+<H2>AUTHOR</H2>
+Original Informix SQL-tools: James A. Farley, Wang Song, and W. Fredrick Limp University of Arkansas, CAST
+<P>
+Postgres modifications: Janne Soimasuo, Faculty of Forestry, University of Joensuu, Finland.
+<P>
+Updated to GRASS 5 by Alex Shevlakov (sixote@yahoo.com)
+</BODY>
+</HTML>
+

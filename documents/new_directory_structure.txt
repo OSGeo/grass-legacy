@@ -1,0 +1,216 @@
+Proposal for a new source code structure
+
+Please modify and improve:
+  - add missing modules
+  - re-organize
+
+----------------------------------------------------------------------
+$Id$
+
+
+General ideas
+
+New concepts:
+ - the I/O routines (GRASS data import/export library routines) should be
+   removed from src/libes/gis and replaced by Frank Warmerdams libgrass[io]
+   These "extracted" routines should be treated as plugin and released 
+   under LGPL to allow optional commerical use in commercial packages
+   which want to read/write into GRASS database directly
+ - The raster data storage structure should be changed to the G3D
+   structure: all files related to a raster map should go into one
+   directory. Currently many files are spreaded in many directories.
+   An example for the G3D data structure can be found here:
+   http://www.geog.uni-hannover.de/grass/grid3d/index.html (sample dataset)
+
+
+As grass5.1 shall take off as soon as possible, we should start the
+directory structure debate. My draft proposal is looking like this:
+
+
+grass51/
+
+# core includes libs, docs, import/export and basic modules:
+    /core                 (the GRASS basic package)
+	/include	: global include files
+
+	/lib		  (read src/libes/README for further design comments)
+	    /bitmap     : bitmap library for X Window Bitmaps
+	    /btree      : binary tree library
+	    /coorcnv    : coordinate conversion and datum support library
+	    /datetime   : DateTime library
+	    /dbmi       : database management interface database drivers
+	    /display    : display lib (was: D/ )
+	    /drivers
+		/cell   : CELL driver (was: display/)
+		/digitizer: raw library for general digitizer support
+		/htmlmap: HTMLMAP driver
+		/paint  : paint library (from paint/ )
+		/xdriver: XDRIVER
+	    /dspf       : G3D display files library
+	    /formats
+		/dlg    : library to manage DLG files
+		/sdts   : library to manage SDTS files (was: src.contrib/..)
+		/sgirgb : library to manage SGIs RGB-format (was: libimage)
+	    /fonts      : hershey fonts
+	    /front.end  : cmd/inter frontend
+	    /g3d        : G3D raster volume library
+	    /geom	: geometrical calculations... (will be detri)
+	    /gis        : main GRASS library (remove import/export routines)
+	    /gmath      : generic mathematical functions (to BLAS/LAPACK libs)
+	    /ibtree     : integer clone of btree lib (needed?)
+	    /icon       : icon library (required for PS/Paint)
+	    /imagery    : imagery library including image3 extra library
+	    /init       : GRASS startup (was: src/general/init/ )
+	    /java       : GRASS JAVA support (was src.garden/grass.java/ )
+	    /linkm      : linked list memory manager
+	    /lock       : locking mechanism for GRASS monitors and files
+	    /ogsf       : ported gsurf library (required for NVIZ)
+                               -> perhaps store under NVIZ only?
+	    /plugins      (keeps external libs)
+		/bwidget : tcl/tk extra library
+		/gdal    : GDAL raster lib
+		/gdbm    : database support for GRASS (or Berkeley DB)
+		/libgrassio: GRASS import/export lib from Frank Warmerdam
+		/proj    : PROJ 4.x library from Frank Warmerdam et al.
+		/shapelib: SHAPE support lib from Frank Warmerdam
+	    /raster     : GRASS raster library
+	    /rowio      : row in/out library  
+	    /rst_gmsl   : library for interpolation with reg. splines w.t.
+	    /segment    : segment library
+	    /sites      : GRASS sites library (extract from gis/ )
+	    /testsuite  : testsuite
+	    /vask       : Curses management library
+	    /vector     : GRASS vector library
+		/Vlib     : portable GRASS vector functions
+		/dig_atts : library to read and write from attribute files
+		/diglib   : more GRASS vector functions
+		/georef   : Imagery Georeferencing Programs
+		/transform: transformations from one coord. system to another (was libes/)
+
+	/docs
+	    /docs
+	    /html
+		/html_docs_go_here
+
+	/exchange    (import/export modules)
+	    /misc
+		/m.e00
+	    /raster
+		/r.arc  (contains r.in.arc/r.out.arc)
+		/r.ascii
+		/r.tif
+		...
+	    /scripts    (move import/export scripts here from global scripts)
+	    /sites
+		/s.ascii
+	    /vector
+		/v.ascii
+		/v.shape
+		...
+
+#now a set of basic modules follows:
+	/display
+	   /basic_modules_go_here
+
+	/general
+	   /basic_modules_go_here
+
+	/gui
+	    /python
+	    /tcltkgrass
+
+	/misc
+	   /basic_modules_go_here
+
+	/paint
+	    /paint_modules_go_here
+
+	/postscript
+	    /ps_modules_go_here
+
+	/raster
+	    /basic_modules_go_here
+
+	/sites
+	    /basic_modules_go_here
+
+	/vector
+	    /basic_modules_go_here
+
+
+#now topic-oriented packages follow:
+
+# vis-package:
+    /visualization
+	/nviz
+	/sg3d
+	/xganim
+
+    
+#hydro-dem-erosion-package:
+    /hydrology_dem
+	/raster
+	    /raster_hydro_dem_modules
+
+
+#image-processing-package:
+    /imageprocessing
+	/imagery
+	    /image_proc_modules
+
+
+#database-package:
+    /database
+	/generic (db.* driver improved by Radim)
+	/oracle
+	/postgresql
+	    
+
+#G3D-package:
+    /g3d  (was: src.contrib/GMSL/g3d)
+	/general3
+	/raster3
+	/scripts3
+	/sites3
+	    
+
+#extended-raster-package:
+    /raster_extended
+	/fuzzy_logic
+	/...
+
+
+#interpolation-package:
+    /raster
+	/r.bilinear
+	/...
+    /sites
+    /vector (was: mapdev)
+
+#simulation-models-package:
+    /raster
+	/casc2d
+	/topmodel
+	/erosion
+
+
+#more?
+
+-----------------------------------------
+Note: Useful modules from src.contrib section shall be merged into
+      directory structure.
+
+Questions:
+  - core-package: shall we move the "/lib/plugins" to "/plugins" ?
+  - shall we keep the unused directory?
+
+Proposal:
+ - the number of import/export modules scripts needs to be heavily reduced.
+   At time there are 92 tools for import/export/tape analysis...
+
+ - Idea: The raster database structure should be changed to the G3D
+   structure: all files related to a raster map should go into one
+   directory. Currently many files are spreaded in many directories.
+   An example for the G3D data structure can be found here:
+   http://www.geog.uni-hannover.de/grass/grid3d/index.html (sample dataset)
+   

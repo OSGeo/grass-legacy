@@ -1,8 +1,0 @@
-
-
-g.remove - 
-
-g.remove allows the user to remove specified database element files
-from the current @glossary("mapset",16.glossary/mapset.def). 
-
-Manual entry for @man("g.remove")

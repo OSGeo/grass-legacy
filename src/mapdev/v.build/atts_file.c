@@ -1,4 +1,3 @@
-
 /*
 **  clean_atts_file:  the Dig_atts library uses ascii files. and to allow
 **     random access, we have to guarantee that all records are exactly
@@ -8,8 +7,7 @@
 
 #include <unistd.h>
 #include "gis.h"
-#include "digit.h"
-#include "dig_atts.h"
+#include "Vect.h"
 #include "vbuildlib.h"
 
 int clean_atts_file (char *file)

@@ -18,8 +18,15 @@ int main(
 int argc,
 char **argv)
 {
+	struct GModule *module;
 	struct Option *option;
 	int mode, stat ;
+
+	module = G_define_module();
+	module->description =
+		"Allows the user to establish whether a map will be "
+		"displayed using its own color table or the fixed color table "
+		"of the graphics monitor.";
 
 	option = G_define_option() ;
 	option->key        = "mode" ;

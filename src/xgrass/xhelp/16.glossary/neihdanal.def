@@ -1,7 +1,0 @@
-
-
-neighborhood anaylsis - In GRASS, an analytic procedure run on a 
-map in its raster format in which a new value is assigned to each @glossary("cell",16.glossary/cell.def)
-as a (user-specified) function of the values in the surrounding
-("neighborhood") cells.  Currently, in GRASS, neighborhoods must be
-square; their size is specified by the user.

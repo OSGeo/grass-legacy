@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<TITLE>s.to.rast</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.to.rast</b></EM>  - Converts a site file to a raster map
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.to.rast</B>
+<BR>
+<B>s.to.rast help</B>
+<BR>
+<B>s.to.rast</B> [<B>-qs</B>] 
+<B>input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+<B>size=</B><EM>value</EM>
+<B>title=</B><EM>"phrase"</EM> 
+<B>field=</B><EM>value</EM>
+<B>findex=</B><EM>value</EM>
+<B>string=</B><EM>value</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.to.rast</EM> converts a GRASS site file to a GRASS raster
+file.
+<P>
+
+The quad size (ie the number of cells used to represent one
+site) is fixed to 0 (ie one cell/site). If the output file
+already exists, the program exits gracefully.
+
+<H2>OPTIONS</H2>
+
+<H3>Flag:</H3>
+
+<DL>
+<DT><B>-q</B>
+<DD>Run the module quietly.
+<DT><B>-s</B>
+<DD>Create a single-valued (0/1, binary) raster map
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>input=</B><EM>name</EM> 
+<DD>Name of input site list
+
+<DT><B>output=</B><EM>name</EM> 
+<DD>Name of output cell file
+
+<DT><B>size=</B><EM>value</EM> 
+<DD>Number of cells to surround site cell
+
+<DT><B>title=</B><EM>"phrase"</EM> 
+<DD>Title for the resulting raster map
+
+<DT><B>field=</B><EM>value</EM> 
+<DD>Attribute field type to use for operation<br>
+           options: dim,decimal,cat<br>
+           default: decimal
+<DT><B>findex=</B><EM>value</EM>
+<DD>Attribute field number to use for operation<br>
+           default: 1
+
+<DT><B>string=</B><EM>value</EM>
+<DD>String attribute number to use for description<br>
+           default: 1
+
+</DL>
+
+<H2>NOTES</H2>
+
+When converting from a sites layer to a raster layer
+with size=0, the site is converted into a single cell
+representing the location of the site, which can be hard 
+to see (depending on the raster resolution).<BR>
+size=2 (or higher) makes the sites show up as fatter in the raster
+layer. 
+<P>
+Alternaticely the user can convert the sites to vector format
+and use v.bubble or v.circle to represent the location.
+<P>
+As site files can consist of several attribute fields (decimals or string
+categories), the user can select the column of interest for conversion
+using the filed selection parameters (findex, string). The attribute field
+type to use for operation is selected by parameter <EM>field</EM>.
+<P>
+The user will be warned if two or more sites fall into one raster cell.
+However, the module will continue to import (the last site value will
+determine the cell value). If such overwriting is not wanted, the cell
+resolution has to be changed using g.region.
+<P>
+The user will be warned if sites fall out of the current region.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.region.html">g.region</A></EM>,
+<EM><A HREF="s.menu.html">s.menu</A></EM>,
+<EM><A HREF="s.to.vect.html">s.to.vect</A></EM>,
+<EM><A HREF="v.bubble.html">v.bubble</A></EM>,
+<EM><A HREF="v.circle.html">v.circle</A></EM>,
+
+
+<H2>AUTHORS</H2>
+
+Katarina Johnsson, CCRS<br>
+GRASS 5 improvements: Eric G. Miller
+</HTML>

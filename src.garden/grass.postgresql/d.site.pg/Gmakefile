@@ -1,0 +1,19 @@
+PGM       = $(BIN_CMD)/d.site.pg
+LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(PQLIBPATH) $(PQLIB) \
+		$(DATETIMELIB) $(XEXTRALIBS)
+EXTRA_CFLAGS    = $(PQINCPATH)
+# EXTRA_CFLAGS = -Dunlink=puts
+
+OBJS = \
+	main.o   \
+        getAllOpts.o \
+        getSopts.o \
+        buildInfxQry.o \
+        runInfxFile.o \
+	plotsite.o
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+
+$(LIBES): #

@@ -1,5 +1,5 @@
 PGM = i.tape.spot
-LIBES = $(IMAGERYLIB) $(GISLIB)
+LIBES = $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 
 LIST = main.o\
 	ask_window.o\
@@ -20,11 +20,9 @@ LIST = main.o\
 	find_row.o\
 	mnt_vol.o
 
-$(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK) $(MATHLIB) $(XDRLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): tape.h
 
 $(LIBES): 	# in case library changes
-$(VASKLIB): 	# in case library changes
-

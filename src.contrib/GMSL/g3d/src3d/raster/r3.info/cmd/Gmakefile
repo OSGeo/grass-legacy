@@ -1,0 +1,9 @@
+PGM      = r3.info
+
+LIST = main.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(G3DLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB):      # in case library changes
+$(G3DLIB):      # in case library changes

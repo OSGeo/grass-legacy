@@ -1,0 +1,8 @@
+PGM      = r3.info
+
+LIST = main.o more_print.o
+
+$(BIN_INTER)/$(PGM): $(LIST) $(G3DLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB):      # in case library changes

@@ -1,0 +1,499 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.61 [en] (X11; I; Linux 2.2.10 i586) [Netscape]">
+   <meta name="Author" content="Alex Shevlakov/Markus Neteler">
+   <title>GRASS GIS and PostgreSQL</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+<font face="Arial, Helvetica"><font size=+1>
+
+<h2>
+<b>GRASS and PostgreSQL - First
+Steps</b></h2>
+[$Id: index.html,v 1.1 2000/03/10
+10:57:57 markus Exp $]
+<p>Recommended reading:
+<br>&nbsp; <a href="http://www.postgresql.org/docs/tutorial/index.html">http://www.postgresql.org/docs/tutorial/index.html</a>
+<p>
+<hr WIDTH="100%">
+<h2>
+General Module Overview:</h2>
+&nbsp;&nbsp;&nbsp;<b>&nbsp;&nbsp;&nbsp;&nbsp;
+By <a href="mailto:sixote@yahoo.com">Alex Shevlakov</a></b>
+<p>Modules in this pack, in
+general, provide the following functions:
+<ul>
+<li>
+g.select.pg - select a database
+to use with GRASS.</li>
+
+<li>
+g.table.pg - list tables in
+currently selected DB.</li>
+
+<li>
+g.columns.pg - list columns
+information in a table of the selected DB.</li>
+
+<li>
+g.stats.pg - calculate means,
+min,max, frequencies for a specified numeric column.</li>
+
+<li>
+d.site.pg - display and optionally
+copy/reclass sites selected with a DB query.</li>
+
+<li>
+d.vect.pg - display lines/areas
+selected with a DB query.</li>
+
+<li>
+d.rast.pg - display(optionally)
+and reclass raster maps with a DB query.</li>
+
+<li>
+d.what.s.pg - query sites on
+graphics monitor with mouse. Like d.what.sites, it gives coordinates, but
+lists all attributes. Gives option to geometry filter sites and dump the
+fields in comma-separated lists for other statistics programs (like R or
+Gnumeric).</li>
+
+<li>
+d.what.v.pg - query lines/areas
+with mouse. Like d.what.vect, lists attributes. Optionally fills queried
+areas (like v.area). May be used for the UPDATE command in Postgres through
+the input SQL file. The idea is to prepare an arbitrary algorithm, code
+it in SQL, and then update DB with clicking on chosen polys/lines. You
+may consider this as piping anything you grabbed on screen through various
+filters.</li>
+
+<li>
+d.what.r.pg - does the same
+as above on the raster maps.</li>
+
+<li>
+v.reclass.pg - reclasses vector
+maps according to the SELECT filter.</li>
+
+<li>
+v.in.shape.pg - does the same
+as the v.in.shape module plus dumping the relevant dbf information directly
+to postgres table. Although, using the module v.in.shape versus v.in.arc
+seems not quite an idea, since as Frank Warmerdam who wrote v.in.shape
+points out:</li>
+
+<br><i>"Label for polygons are
+located on the edge, rather than interior to the polygon.&nbsp; This is
+ambiguous in cases of polygons that share boundaries with other polygons
+and will cause conflicts when running v.support."</i>
+<br>So if you imported a coverage
+with polygons whose attributes were stored in dbf-file by means of ArcView
+shapefile (and v.in.shape.pg), the table data would be relevant to polys,
+while labels would now belong to lines (after v.support really gets confused).
+If you are not bothered with this fact (say importing lines),&nbsp; then
+try use v.in.shape.pg.
+<br>Admin/normal_user dump modes
+differ in the way the new records inserted. Admin takes&nbsp; less time,
+while "normal user" dump is accompanied with HDD rattles.&nbsp; This s
+is due to safety limitation of Postgres which allows direct copying of
+large files to its super-users only.
+<li>
+v.in.arc.pg - works in interactive
+mode. A lot more straightforward than the original "v.in.arc". Just UNGEN
+lines and points in arc/info, then copy the lines and labels files to your
+work directory (yes, no need to dig them into /db/your_database/your_name/arc),
+and also copy PAT.dbf&nbsp; (or AAT.dbf) there too, possibly renaming them
+to more reasonable names, as these would be taken by Postgres tables when
+they are created. Then run v.in.arc.pg and it would create area/line coverages
+(with categories set to line/areas id's) plus dump the dbf to postgres.
+Then you would probably want to run v.reclass.pg to set proper cats.</li>
+
+<li>
+pg.in.dbf - just the hatcheted
+dumper from the two above modules. Takes DBF file name from user and dumps
+all columns to postgres.</li>
+
+<li>
+NVIZ2.2 - Postgres interface.
+I have added new entries field in the "What's here" panel; Postgres queries
+may be disabled in "Attributes" checkbox.</li>
+</ul>
+
+<p><br>Bugs and other possible
+caveats reports are welcome.
+<p>Alex Shevlakov,
+<br><a href="mailto:sixote@yahoo.com">sixote@yahoo.com</a>
+<p>==================================================================
+<h2>
+Short introduction to GRASS/PostgreSQL
+interface</h2>
+
+<blockquote><b>by</b>
+<br><b>&nbsp; Markus Neteler and
+Alex Shevlakov</b></blockquote>
+
+<p><br>The following text shall
+introduce you to interface usage. This text is subject to change...
+<p>Let's start.
+<p>Enter GRASS 5. Of course
+you need to have a location defined and some data you want to import here.
+<p>------------------------------------------------------------------------
+<br><b>A) First see, if PostgreSQL
+is working - check for errors</b>
+<br>------------------------------------------------------------------------
+<p>We begin with looking at
+the list of existing databases:
+<blockquote>g.select.pg -l</blockquote>
+
+<p><br><i>Error: select Postgres:connectDB()
+failed: Is the postmaster running and</i>
+<br><i>accepting TCP/IP(with
+-i) connections at '130.77.22.66' on port '5432'?</i>
+<p>See for the log file:
+<blockquote>cat /var/log/postgresql.log</blockquote>
+
+<p><br>It tells us:
+<blockquote><i>-> No data directory
+-- can't proceed.</i>
+<br><i>/usr/lib/pgsql/bin/postmaster
+does not find the database system.&nbsp; Expected</i>
+<br><i>to find it in the PGDATA
+directory "/var/lib/pgsql/data", but unable to open</i>
+<br><i>file with pathname "/var/lib/pgsql/data/base/template1/pg_class".</i></blockquote>
+In this case we have to install
+further packages (here: SuSe Linux, names may be different in your installation):
+<br>&nbsp;&nbsp; - pg_datab.rpm
+needs to be installed
+<br>&nbsp;&nbsp; - ps_ifa.rpm,
+maybe pg_iface.rpm
+<p>Restart the "postmaster"
+(the daemon listening for db-queries):
+<blockquote>cd /sbin/init.d/rc2.d/
+<br>./S25postgres start
+<p>ps -ax |grep postmaster</blockquote>
+Is postmaster there? You should
+see it in the process list.
+<br>Check again, if it working
+now:
+<br>&nbsp;
+<blockquote>g.select.pg -l</blockquote>
+
+<p><br>If you get the error:
+<blockquote><i>Error: select
+Postgres: User authentication failed</i></blockquote>
+you need to setup the PostgreSQL
+user's list. Otherwise jump to letter B in the text.
+<br>In case of error, enter:
+<blockquote>su</blockquote>
+Set a password for user "postgres"
+(this is needed first time only!):
+<blockquote>passwd postgres
+<br>[set the password]
+<br>exit</blockquote>
+Now login as user "postgres":
+<blockquote>su - postgres</blockquote>
+
+<p><br>and add yourself as PostgreSQL-user:
+<blockquote>createuser neteler
+<p>Enter user's postgres ID
+or RETURN to use unix user ID: 601 -> &lt;return>
+<br>Is user "neteler" allowed
+to create databases (y/n) y
+<br>Is user "neteler" allowed
+to add users? (y/n) n
+<br>createuser: neteler was
+successfully added
+<p>exit</blockquote>
+Now you are again back in GRASS
+environment: Again we try:
+<br>&nbsp;
+<blockquote>g.select.pg -l
+<br>&nbsp;&nbsp; The following
+databases are in the Unix catalogue:
+<br>&nbsp;&nbsp;&nbsp; template1</blockquote>
+This indicates that you PostgreSQL
+environment is o.k.
+<br>Fine. Now we can proceed
+and start using the interface.
+<p>------------------------------------------------------------------------
+<br><b>B) Using GRASS/PostgreSQL:
+creating a database table</b>
+<br>------------------------------------------------------------------------
+<p>Say, you have a SHAPE-file
+set: humus.shp, humus.shx and humus.dbf.
+<br>The file *.shp will be imported
+into GRASS, the file *.dbf into PostgreSQL.
+<p>Now you have to use "createdb"
+do create database tables.
+<br>First we create an empty
+table:
+<blockquote>createdb humus</blockquote>
+This new table we select in
+GRASS:
+<blockquote>g.select.pg database=humus</blockquote>
+[BTW: To destroy a database
+use: destroydb humus]
+<p>In this first step we import
+the plain attribute table only without importing geographical features.
+<br>To import the Dbase-table
+into PostgreSQL enter:
+<blockquote>pg.in.dbf in=humus.dbf
+<br>&nbsp; Executing create
+table humus (AREA float4,PERIMETER float4,G2_UEB09_
+<br>&nbsp; int8,G2_UEB09_I int8,STONR
+int4,BOTYP text,HORIZ text,BODART text,HUMUS
+<br>&nbsp; float4,SKELETT text)</blockquote>
+You will be asked: Additionally
+dump to ASCII file (enter full Unix name or hit&nbsp; &lt;return> for none):
+<br>Enter "ENTER" if you don't
+need an additional ASCII file in your local directory.
+<p>The table is imported into
+PostgreSQL now. Note: The vectors are not yetr imported!
+<p>------------------------------------------------------------------------
+<br><b>C) Getting simple table
+statistics</b>
+<br>------------------------------------------------------------------------
+<br>Now we want to get some
+information:
+<br>For teaching real life we
+start with an error...
+<blockquote>g.stats.pg table=humus
+col=BOTYP
+<br>&nbsp;Error: connect Postgres:ERROR:&nbsp;
+No such function 'min' with the specified attributes</blockquote>
+The reason is that BOTYP is
+a text field (yes, see above in the output of pg.in.dbf!). Of course we
+cannot calculate statistics from letters.
+<br>So we try another field:
+<br>&nbsp;
+<blockquote>g.stats.pg table=humus
+col=HUMUS
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Min,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Max,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Mean
+<br>-------------------------------------
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.81,&nbsp;&nbsp;&nbsp; 1.72372</blockquote>
+Aha, quite nice. It tells us
+about humus contents of soil patches in percent.
+<br>To proceed we remove this
+table:
+<blockquote>destroydb humus</blockquote>
+------------------------------------------------------------------------
+<br><b>D) Importing a SHAPE
+file with DBASE table (*.dbf)</b>
+<br>------------------------------------------------------------------------
+<p>Now it is becoming more amazing!
+We will import our SHAPE file:
+<br>Using "verbose=9" we get
+information about import progress. First step is to create an empty Postgres
+table:
+<blockquote>createdb humus
+<br>v.in.shape.pg input=humus.shp
+verbose=9 pgdump=humus</blockquote>
+NOTE: You don't have to import
+the .dbf table manually. It is done by v.in.shape.pg automatically (many
+thanks to Alex Shevlakov)!
+<p>See if the GRASS map there:
+<blockquote>g.list vect
+<br>----------------------------------------------
+<br>vector files available in
+mapset geosum:
+<br>humus
+<br>----------------------------------------------</blockquote>
+First we have to build the map
+topology:
+<blockquote>v.support m=humus
+o=build</blockquote>
+Start a GRASS monitor:
+<blockquote>d.mon x0</blockquote>
+...and display the map:
+<blockquote>d.vect humus</blockquote>
+Query it using PostgreSQL:
+<blockquote>d.what.v.pg -f m=humus
+tab=humus col=HUMUS
+<p>-> Now we see that v.in.shape[.pg]
+only supports lines
+<br>but not areas yet. We hope
+for an upgrade...</blockquote>
+Interim solution:
+<ul>
+<li>
+import vector maps as E00 or
+ARC ungenerate files instead of SHAPE using v.in.arc.pg</li>
+
+<li>
+rename to table name then to
+assign the PG-table to your map "virtually"</li>
+</ul>
+------------------------------------------------------------------------
+<br><b>E) Getting table information</b>
+<br>------------------------------------------------------------------------
+<p>Here we can use
+<blockquote>g.column.pg -v table=humus</blockquote>
+<pre><code><font face="Courier"><font size=-1>
+  | columnname              | type      | length    | 
+  ---------------------------------------------------- 
+  | area                    | float4    |         4 | 
+  | perimeter               | float4    |         4 | 
+  | g2_ueb09_               | int8      |         8 | 
+  | g2_ueb09_i              | int8      |         8 | 
+  | stonr                   | int4      |         4 | 
+  | botyp                   | text      |       var | 
+  | horiz                   | text      |       var | 
+  | bodart                  | text      |       var | 
+  | humus                   | float4    |         4 | 
+  | skelett                 | text      |       var | 
+</font></font></code></pre>
+<p>As you can see you get information
+about the field types within the PostgreSQL table.
+<p>------------------------------------------------------------------------
+<br><b>F) Selecting table entries
+and displaying on the map</b>
+<br>------------------------------------------------------------------------
+<p>To select map features and
+display the the selected areas/lines in GRASS Monitor, you can use
+<blockquote>d.vect.pg</blockquote>
+A SQL-statement is required
+to select the features of interest.
+<br>Create an ASCII file "sql.query"&nbsp;
+(using an text editor) with contents:
+<blockquote>select stonr from
+humus where HUMUS > 1.2</blockquote>
+
+<p><br>[change "humus" to your
+table name and "HUMUS" to a column existing
+<br>&nbsp;in your table]
+<p>Now query:
+<blockquote>d.vect.pg -f&nbsp;
+-s sql.query map=humus color=red</blockquote>
+Alternate method: Write query
+into command line:
+<blockquote>d.vect.pg -f key=HUMUS
+tab=humus where='HUMUS>1.2' map=humus col=red</blockquote>
+&nbsp;&nbsp; Executing
+<br>&nbsp;&nbsp; SELECT Distinct
+HUMUS from humus&nbsp; where&nbsp; HUMUS>1.2 and HUMUS is not null;
+<br>&nbsp;&nbsp; 16 Rows
+<p>&nbsp;key is the column name,
+tab the table, and where the statement.
+<br>&nbsp;"-f" fills the selected
+areas, col defines their colors.
+<p>&nbsp;Now you see the selected
+areas in the GRASS Monitor.
+<p>------------------------------------------------------------------------
+<br><b>G) Query example 1</b>
+<br>------------------------------------------------------------------------
+<p>There's a map of digitized
+forest stands called "terney_id" (say three hundred in the region); each
+plot has unique rec_id in database table info_terney.
+<br>Now we'd like to calculate
+correlations between hights and diameters of trees in plots with main species
+Pinus koraensis (type_id &lt;21), with age more than 100 years, growing
+in southern slopes and lying along specific routes. (Remember: If you forgot
+the column names of your table, use g.column.pg - see above)
+<p>First thing we highlight
+red all plots that satisfy these conditions. We write a sql-statement ASCII
+file "query1.sql":
+<blockquote>select rec_id from
+info_terney where type_id &lt;21 and age > 100 and expo ~ 's'</blockquote>
+Then we use the query command:
+<blockquote>d.vect.pg -f -s
+query1.sql map=terney_id color=red</blockquote>
+Then, we pick these plots in
+d.what.v.pg, following along our routes:
+<blockquote>d.what.v.pg -f map=terney_id
+tab=info_terney col=rec_id color=green fillcolor=gray hv=h</blockquote>
+Recommendation: Use the TclTkGRASS
+with PostgreSQL support. Then you can easily copy-paste results.
+<br>After this module is done,
+we Control-C the results from tcltkgrass output window and paste them to
+spreadsheet.
+<br>Now we can calculate correlations
+(and other stats).
+<p>------------------------------------------------------------------------
+<br><b>H) Import of ARC ungenerate
+files</b>
+<br>------------------------------------------------------------------------
+<br>Note: Currently import is
+limited to interactive mode.
+<p>In this example we have a
+landuse map in ungen format (one file containing lines, one file containing
+label points and one file containing label text = attributes).
+<br>The files will be found
+in your current directory (opposite to v.in.arc which expects them in $LOCATION/arc/
+!).
+<br>Copy PAT.dbf&nbsp; (or AAT.dbf)
+there, too, and rename to a reasonable name comparing to your other ungen
+files.
+<br><i>Note: PostgreSQL does
+not allow field names containing "-" (ilde-id is forbidden, ilde_id is
+accepted)!</i>
+<p>Our files are:
+<blockquote>il_nutz.pnt&nbsp;
+il_nutz.pol&nbsp; il_nutz.dbf</blockquote>
+Now we start to import:
+<blockquote>createdb il_nutz &nbsp;&nbsp;(only if you do not have a database created)
+<p>v.in.arc.pg
+<br>GRASS vector file: landuse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(the new name of map in GRASS)
+<br>Coverage type: polygon
+<br>Neatline: no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(a neatline is a line surrounding the map)
+<br>Lines file ARC/INFO: il_nutz.pol
+<br>Labels file ARCINFO: il_nutz.pnt
+<br>Name of .dbf file to be
+imported: il_nutz.dbf
+<br>Admin/normal user dump mode:
+&lt;return>
+<br>Additionally dump to ASCII
+file: &lt;return><i></i>
+<p><i>Table il_nutz successfully
+copied into Postgres. Congratulations!</i>
+<br>&nbsp;</blockquote>
+Now run v.support on the imported
+vector map.
+<br><i></i>&nbsp;
+<p>------------------------------------------------------------------------
+<br><b>I) Reclass of vector
+map</b>
+<br>------------------------------------------------------------------------
+<br>v.reclass.pg
+<br>[...]
+<p>
+<br><i></i>&nbsp;
+<p>------------------------------------------------------------------------
+<br><b>J) Problems importing DBF-tables into PostgreSQL?</b>
+<br>------------------------------------------------------------------------
+<br>The most common problem ( as i run into it too often) while
+converting *.dbf files to Postgres with pg.in.dbf, v.in.arc.pg and
+v.in.shape.pg is format dismatch - pg_atoi() ERROR - saying there's something
+in the field declared as int (or  float) that does not seem like number,
+such as "***", "NO", "infrared spectrum", etc. 
+<p>Alas, postgres is very
+restrictive (unlike we people who type in this stuff). My approach to this
+(as i still want to import the .shp from Arcview that my collegue sent me
+from ArcviewLand) - exit the program  - it would already have done so-, and
+rerun the module saying "no" to dbf-to-postgres dump.okay, after we have
+imported the coverage , let's use pg.in.dbf and say "yes" to question
+"Do you want additionally DUMP to ASCII?". <p>
+Now, find the line(s) that spoils
+your breakfast (hopethere are not many), kill'em all and then -  use psql
+and COPY TABLE from '/home/user/user.stuff'. That's it. Besides, dumping to
+ascii file and doing things about it before importing to postgres is a must
+when there are some weird encoding chars in text fields.
+<p>Alex
+<p>
+<hr WIDTH="100%">
+<br><i>Please send tutorial
+improvements to</i>
+<br><i><a href="mailto:neteler@geog.uni-hannover.de">Markus
+Neteler</a></i>
+<br>&nbsp;
+</font>
+</font>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 PGM=r.average
 
-$(BIN_MAIN_CMD)/$(PGM): main.o $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(XDRLIB) $(MATHLIB) 
+$(BIN_CMD)/$(PGM): main.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

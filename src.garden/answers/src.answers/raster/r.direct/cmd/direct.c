@@ -39,7 +39,7 @@ char **argv;
 	char    *tempfile4, *tempfile5, *tempfile6;
 	char    *tempfile7, *tempfile8, *tempfile9;
 	char    *tempfile10, *tempfile11, *tempfile12;
-	char    *map_name[40], *map_mapset, *label, *new_map_name[40];
+	char    map_name[40], *map_mapset, *label, new_map_name[40];
 
 	struct Option *opt1, *opt2, *opt3;
 

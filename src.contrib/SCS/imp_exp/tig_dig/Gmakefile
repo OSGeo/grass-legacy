@@ -1,6 +1,5 @@
 #  @(#)Gmakefile	2.2  6/26/87
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 COORLIB = $(LIBDIR)/libcoorcnv.a
 
@@ -16,11 +15,11 @@ CON_OFILES = \
 # will compress the header of a Tiger file, only knowlegable souls
 # would want to do that !!!
 #
-#all:	$(BIN_CONTRIB_CMD)/v.in.tiger.scs $(ETC)/CFCC.code $(ETC)/scstig 
-all:	$(BIN_CONTRIB_CMD)/v.in.tiger.scs $(ETC)/CFCC.code 
+#all:	$(BIN_CMD)/v.in.tiger.scs $(ETC)/CFCC.code $(ETC)/scstig 
+all:	$(BIN_CMD)/v.in.tiger.scs $(ETC)/CFCC.code 
 
-$(BIN_CONTRIB_CMD)/v.in.tiger.scs:		$(IMP_OFILES)
-	$(CC) -g  -o $@ $(IMP_OFILES) $(GISLIB) $(VASK) $(COORLIB) $(VECTLIB) $(MATHLIB) $(SHAREDLIB)
+$(BIN_CMD)/v.in.tiger.scs:		$(IMP_OFILES)
+	$(CC) -g  -o $@ $(IMP_OFILES) $(GISLIB) $(VASKLIB) $(COORLIB) $(VECTLIB) $(CURSES) $(MATHLIB) $(SHAREDLIB)
 
 $(ETC)/CFCC.code: CFCC.code
 	cp CFCC.code $(GISBASE)/etc

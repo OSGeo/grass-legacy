@@ -1,16 +1,17 @@
 PGM = m.in.e00
-HOME = $(BIN_CONTRIB_CMD)
-EXTRA_CFLAGS = $(VECT_INCLUDE)
-# EXTRA_CFLAGS = $(VECT_INCLUDE) -DDEBUG # for info.c debugging
 LIST = 	main.o \
+	e00read.o \
 	info.o \
 	raster.o \
 	projection.o \
 	label.o \
 	vector.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
-	$(GMAKE) e00b2a
+LIBES=$(VECTLIB) $(GISLIB) $(VASKLIB) $(DATETIMELIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+tstinfo: info.o
+	$(CC) $(LDFLAGS) -o $@ info.o $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): # 

@@ -2,10 +2,9 @@
 #include "gis.h"
 #include "display.h"
 #include "raster.h"
-#include "dig_structs.h"
-#include "dig_defines.h"
 #include "Vect.h"
 #include "local_proto.h"
+
 
 int where_am_i (char *name, char *mapset, char *color,
     int fill, char *Dvect_color)
@@ -14,6 +13,7 @@ int where_am_i (char *name, char *mapset, char *color,
     double east, north ;
     int button ;
     struct Map_info map;
+    struct Categories cats;
     struct line_pnts *Points;
     int line_count;
     int number;
@@ -41,6 +41,9 @@ int where_am_i (char *name, char *mapset, char *color,
     screen_x = ((int)D_get_d_west()  + (int)D_get_d_east() ) / 2 ;
     screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2 ;
 
+    if (G_read_vector_cats (name, mapset, &cats) < 0)
+                cats.num = -1;
+                
     fprintf(stderr, "\n\n\nButtons:\n") ;
     fprintf(stderr, "Left:   get area/perimeter\n") ;
     fprintf(stderr, "Middle: quit this\n");
@@ -61,10 +64,10 @@ int where_am_i (char *name, char *mapset, char *color,
             fprintf(stderr, "Middle: quit this\n");
             fprintf(stderr, "Right:  get area/perimeter\n\n") ;
             fprintf(stderr, "\n\n\n\n\n");
-            fprintf(stderr,"POINT AT CROSS HAIRS:  %13.2f (N) %13.2f (E)\n",
+            fprintf(stderr,"Point at cross hairs:  %13.2f (N) %13.2f (E)\n",
             north,east);
             line_count = 13;
-            number = area_perim(north,east,&map,Points,mapset,name,color,fill,Dvect_color);
+            number = area_perim(north,east,&map,Points,mapset,name,color,fill,Dvect_color,&cats);
             if (number == -1)
              {
               Vect_close(&map); 
@@ -79,9 +82,9 @@ int where_am_i (char *name, char *mapset, char *color,
            }
           else
            {
-            fprintf(stderr,"POINT AT CROSS HAIRS:  %13.2f (N) %13.2f (E)\n",
+            fprintf(stderr,"Point at cross hairs:  %13.2f (N) %13.2f (E)\n",
             north,east);
-            number = area_perim(north,east,&map,Points,mapset,name,color,fill,Dvect_color);
+            number = area_perim(north,east,&map,Points,mapset,name,color,fill,Dvect_color,&cats);
             if (number == -1)
              {
               Vect_close(&map); 

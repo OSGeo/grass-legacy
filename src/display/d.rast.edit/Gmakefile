@@ -1,4 +1,6 @@
 PGM = d.rast.edit
+EXTRA_CFLAGS	= $(DANOTHER_BUTTON)
+
 OFILES = \
 	main.o \
         menu.o \
@@ -7,10 +9,9 @@ OFILES = \
 	draw_grid.o\
 	edit.o
 
-all: $(BIN_ALPHA_CMD)/$(PGM)
-
-$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
+LIBES=$(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(BIN_INTER)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(OFILES): edit.h
 

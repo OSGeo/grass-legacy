@@ -1,5 +1,6 @@
+#include <stdio.h>
 #include <math.h>
-#include "digit.h"
+#include "Vect.h"
 
 /*
 ** this should be replaced after 3.1 by library routine

@@ -1,0 +1,95 @@
+<TITLE>s.in.dbf</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.in.dbf</b></EM>  - Converts a dBase (.dbf) table of site locations and 
+their descriptions into a GRASS site list file. 
+<BR>
+<EM>(GRASS Sites Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.in.dbf</B> 
+<BR>
+<B>s.in.dbf help</B> 
+<BR>
+<B>s.in.dbf</B> [-lz]
+<B>input=</B><EM>name</EM>
+[<B>sites=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.in.dbf</EM> converts a dBase (.dbf) table of site
+locations and category labels into a file in GRASS site
+list file format.
+
+<P>
+
+Input can be entered from the file
+<B>input=</B><EM>name</EM>. Each line of input should
+contain the easting, northing, and (optionally) the
+category label associated with a site. Output is
+stored in the file <B>sites=</B><EM>name</EM> and placed in
+the site_lists directory under the user's current mapset.
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-l</B>
+<DD> List fields of DBF file, then exit.
+<DT><B>-z</B>
+<DD>treat third column as third dimension (z)
+</DL>
+
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing ASCII file containing site locations and labels.
+<DT><B>sites=</B><EM>name</EM>
+<DD>Name of the new GRASS site list file to be output. 
+</DL>
+
+<P>
+
+<EM>s.in.dbf</EM> can be run either non-interactively or
+interactively.  The program will be run non-interactively
+if the user specifies a name to be assigned to the
+<EM>sites</EM> file output, the name of an existing ASCII
+file containing <EM>input</EM>.
+<P>
+
+Alternately, the user can simply type <B>s.in.dbf</B> on
+the command line, without program arguments. In this case,
+the user will be prompted for parameter values using the
+standard GRASS parser interface described in the manual
+entry for <EM>parser</EM>. 
+
+<H2>GRASS 5.0 internal sites format in "sites_list/"</H2>
+
+See <a href=s.in.ascii.html>s.in.ascii</a>
+
+<H2>TODO</H2>
+
+A field selection/reordering parameter is not yet provided.
+So the EAST/NORTH columns have to be the first and second column
+in the table.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="s.in.ascii.html">s.in.ascii</A></EM><br>
+<EM><A HREF="s.in.shape.html">s.out.shape</A></EM><br>
+<EM><A HREF="s.out.ascii.html">s.out.ascii</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHORS</H2>
+
+Markus Neteler, University of Hannover<br>
+Alex Shevlakov (pg.in.dbf)<br>
+Frank Warmerdam (DBF Routines in pg.in.dbf)<br>
+David D. Gray (-l flag in v.in.shape)

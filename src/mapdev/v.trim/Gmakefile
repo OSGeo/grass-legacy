@@ -1,12 +1,8 @@
 OFILES = main.o 
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
+PGM = v.trim
 
-PROG = $(BIN_MAIN_CMD)/v.trim
-
-all: $(PROG)
-
-$(PROG): $(OFILES) $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB): #in case of library changes

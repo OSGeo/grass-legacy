@@ -1,0 +1,92 @@
+#!/bin/sh
+# the next line restarts using tclsh \
+exec $GRASS_TCLSH "$0" "$@"
+
+global env
+global argv
+
+proc usage {} {
+# Print out simple Usage statement
+puts "Usage:"
+puts "nviz2.2 -q -help path=dir elevation=name,name,... vector=name,name,... sites=name,name,... "
+}
+
+proc help {} {
+#Print Detailed help info
+puts "nviz - Visualization and animation tool for GRASS data"
+puts ""
+puts "Usage:"
+puts "nviz2.2 -q -help path=dir elevation=name vector=name sites=name path=dir"
+puts ""
+puts "Where:"
+puts "-q Quickstart. Skip the GRASS parser and other arguments and open nviz."
+puts "-h or -help Displays this message and exits"
+puts "path=dir Search for additional panels in the specified directory (dir)."
+puts "elevation=name,name... Use the given comma separated list of raster files."
+puts "vector=name,name... Use the given comma separated list of vector files."
+puts "sites=name,name... Use the given comma separated list of sites files."
+puts ""
+puts "For more information see the GRASS manual page for nviz2.2"
+}
+
+
+#CASE too many ARGS
+if {$argc > 7} {
+puts "Too many arguments ..."
+usage
+exit 
+}
+
+#CASE Help Arguments
+if {($argv == "-h") || ($argv == "-help")} {
+help
+exit
+}
+
+#Set Real Argument List
+set ARGS {"-q" "-h" "-help" "elevation" "vector" "sites" "path"}
+
+#initilaize string 
+set CMD ""
+
+#CASE unknown ARGS
+foreach a $argv {
+#strip out args with "="
+if {[string first = $a] > 0} {
+set A [lindex [split $a =] 0]
+set b [lindex [split $a =] 1]
+set a $A 
+#Check args to see if short version used
+if {[string match elevation $a] ||[string match elev $a] || [string match el $a]} {
+set a "elevation=$b"
+} elseif {
+[string match vector $a] || [string match vect $a] || [string match ve $a] } {
+set a "vector=$b"
+} elseif {
+[string match sites $a] || [string match si $a] } {
+set a "sites=$b"
+} elseif {
+[string match path $a] || [string match pa $a] } {
+set a "path=$b"
+}
+}
+#Look for unknown commands
+if {[string first = $a] > 0} {
+set str [lindex [split $a =] 0]
+} else {
+set str $a
+}
+if {[lsearch -exact $ARGS $str] < 0} {
+puts "Unknown Argument $str"
+usage
+exit
+}
+lappend CMD $a
+}
+
+#set ENV for script
+set NVIZ_SCRIPTS $env(GISBASE)/etc/nviz2.2/scripts
+
+
+#Execute Command
+eval exec $env(GISBASE)/etc/nviz2.2/NVWISH2.2 -f $env(GISBASE)/etc/nviz2.2/scripts/nviz2.2_script $CMD -name NVIZ >&@stdout

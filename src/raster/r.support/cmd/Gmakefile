@@ -1,0 +1,8 @@
+PGM = r.support
+
+SUPPORT = support.o check.o histo.o
+
+$(BIN_CMD)/$(PGM): $(SUPPORT) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(SUPPORT) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

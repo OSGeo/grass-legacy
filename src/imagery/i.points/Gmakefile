@@ -1,3 +1,4 @@
+PGM=i.points
 LIST=main.o\
 	ask.o\
 	ask_mag.o\
@@ -33,7 +34,7 @@ LIST=main.o\
 EXTRA_CFLAGS = -D_NO_PROTO
 
 LIBES = $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) 
-$(BIN_MAIN_INTER)/i.points: $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): globals.h defs.h

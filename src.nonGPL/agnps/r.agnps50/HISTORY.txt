@@ -1,0 +1,79 @@
+                    History of Changes - AGNPS 5.0
+
+                                               Markus Neteler
+                                               neteler@geog.uni-hannover.de
+
+
+
+  $Log$
+  Revision 1.2  2000-06-13 16:07:50  markus
+  updated
+
+  needs updating to GRASS 5
+
+ - updated printf to fprintf
+
+-----------------------------------------------------------
+
+   Revision 1.1  2000/01/14 17:15:05  markus
+
+ - all scripts (except r.agnps50.input) go to $GISBASE/etc/agnps50/ now
+   r.agnps50.input goes to $GISBASE/scripts
+
+ 
+-----------------------------------------------------------
+
+
+15. April 1998
+ Sorry, once again (for the naming convention)
+ renamed:        to:
+  r.agnps_input -> r.agnps50.input
+  r.run_agnps50 -> r.agnps50.run
+  r.agnps_view  -> r.agnps50.view
+  
+-----------------------------------------------------------
+4. March 98
+
+ renamed:       to:
+  agnps_input -> r.agnps_input
+  agnps_view  -> r.agnps_view
+  run_agnps50 -> r.run_agnps50
+
+-----------------------------------------------------------
+3. March 1998
+
+ This package was optimized in installation
+ procedure.
+
+ Just follow the simple instructions in
+
+     howto-install.txt
+
+ It will be compiled through src/CMD/lists/GRASS also. 
+------------------------------------------------------------------
+19.12.96 
+
+ Correction in scripts/copy_cell_num.sh and psu_agnps_max_cat.sh: 
+                eliminated space-character in awk-command.
+
+ Written r.cn2: added the landuse "water" (CN=100) and corrected the 
+                analysis-routine for the landuse "fallow" which could 
+                not be converted
+
+ Build up src_input_2a:
+              - agnps_input_2a uses the new r.cn2-tool (see COMMENTS.txt
+                for details)
+
+------------------------------------------------------------------
+
+12. December 1996
+
+ This package was restructured.
+ Several changes in 
+ ./src_agnps_input_1 and 
+ ./src_agnps_input_2a
+
+ The COMMENTS.txt there for details.
+
+
+ The tree ./src_agnps_input_2_old is obsolete.

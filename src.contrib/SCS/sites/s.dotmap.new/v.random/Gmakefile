@@ -1,7 +1,4 @@
-#  %W%  %G%
-
-PGM=v.random
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
+PGM=v.random.scs
 
 OFILES = \
 	main.o \
@@ -9,9 +6,7 @@ OFILES = \
 	put_dots.o \
 	find_area.o
 
-all:  $(BIN_CONTRIB_CMD)/$(PGM)
-
-$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) 
+$(BIN_CMD)/$(PGM): $(OFILES) 
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
 
 do_dots.o: dots.h

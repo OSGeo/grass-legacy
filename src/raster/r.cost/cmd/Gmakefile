@@ -1,11 +1,12 @@
 PGM = r.cost
 LIST =  main.o \
-	btree.o
-#EXTRA_CFLAGS = -p
-#LDFLAGS = -p
+	btree.o \
+	memory.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB) $(DATETIMELIB)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 $(DISPLAYLIB): #

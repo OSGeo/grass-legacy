@@ -1,9 +1,0 @@
-
-
-r.coin - 
-
-r.coin tabulates the mutual occurrence of two @glossary("raster",16.glossary/rastdata.def) map layers'
-@glossary("categories",16.glossary/cat.def) with respect to one another.  This analysis program
-respects the current @glossary("geographic region",16.glossary/georeg.def) and @glossary("mask",16.glossary/mask.def) settings.
-
-Manual entry for @man("r.coin")

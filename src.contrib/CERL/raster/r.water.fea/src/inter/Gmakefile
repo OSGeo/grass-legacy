@@ -1,10 +1,8 @@
 PGM=r.water.fea
-HOME=$(BIN_CONTRIB_INTER)
-LIBES = $(GISLIB) $(RASTERLIB) $(XDRLIB)
-LDFLAGS = $(MATHLIB)
+LIBES = $(GISLIB) $(RASTERLIB)
 LIST = main.o menu.o choicehand.o shell.o
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $LIBES: #

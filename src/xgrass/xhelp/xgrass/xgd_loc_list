@@ -1,7 +1,0 @@
-This is a scrolled list containing the names of the locations in the
-current database, which is indicated by the selection in the database
-list just to the left.  If there is no database selected in that list,
-then this list is empty.  Click on a location here to select it as
-your current location.  When a location is selected here, the
-available mapsets within that location will appear in the list to the
-right.

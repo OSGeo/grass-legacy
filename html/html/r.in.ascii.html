@@ -1,0 +1,147 @@
+<HTML>
+<HEAD>
+<TITLE>r.in.ascii</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.in.ascii</b></EM>  - Convert an ASCII raster text file into a (binary) raster map layer. 
+<BR>
+<EM>(GRASS Raster Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.in.ascii</B> 
+<BR>
+<B>r.in.ascii help</B> 
+<BR>
+<B>r.in.ascii input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+[<B>TITLE=</B>"<EM>phrase</EM>"] 
+[<B>mult=</B><EM>multiplier</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.in.ascii</EM> allows a user to create a (binary) GRASS raster map layer 
+from an ASCII raster input file with (optional) TITLE. 
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing ASCII raster file to be imported. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to resultant binary raster map layer. 
+<DT><B>TITLE=</B>"<EM>phrase</EM>"
+<DD>Title to be assigned to resultant raster map layer. 
+<DT><B>mult=</B><EM>multiplier</B>
+<DD>Multiply all raster cell values by <EM>multiplier</EM>. 
+<EM>multiplier</EM> is a floating point value, and has a default value of 1.0. 
+</DL>
+
+The <B>input</B> file has a header section which describes the location 
+and size of the data, followed by the data itself. 
+
+<P>
+The header has 6 lines: 
+
+<BR>
+
+<BR>
+north:   xxxxxx.xx<BR>
+south:   xxxxxx.xx <BR>
+east:    xxxxxx.xx <BR>
+west:    xxxxxx.xx <BR>
+rows:    r <BR>
+cols:    c <BR>
+<BR>
+
+The north, south, east, and west field values entered 
+are the coordinates of the edges of the geographic region. 
+The rows and cols field values entered describe the dimensions 
+of the matrix of data to follow. 
+The data which follows is <EM>r</EM> rows of <EM>c</EM> integers. 
+<p>
+Optionally the following parameters can be defined in the header section:
+<p>
+null: nn<BR>
+type: float<BR>
+multiplier: 2.<BR>
+<p>
+"null" defines a string or number to be converted to NULL value (no
+data).<br>
+"type" defines the data type (int, float double) as is not required.<br>
+"multiplier" is an optional parameter to multiply each cell value.
+
+<H2>EXAMPLE</H2>
+
+The following is a sample <EM>input</EM> file to <EM>r.in.ascii</B>:</EM> 
+
+<BR><BR>
+north:                   4299000.00<BR>
+south:                   4247000.00<BR>
+east:                     528000.00<BR>
+west:                     500000.00<BR>
+rows:                         10   <BR>
+cols:                         15   <BR>
+<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15<BR>
+
+<H2>NOTES</H2>
+
+The geographic coordinates north, south, east, and west
+describe the outer edges of the geographic region.  They
+run along the edges of the cells at the edge of the
+geographic region and <EM>not</EM> through the center of the cells
+at the edges.
+
+<P>
+
+The data (which follows the header section) must contain r x c values, 
+but it is not necessary that all the data for a row be on one line. 
+A row may be split over many lines. 
+
+<P>
+
+<EM>r.in.ascii</EM> handles floating point cell values.
+
+<P>
+The header information in ESRI Raster ASCII files differs from GRASS.  
+To convert an Arc/Info (ArcView) ASCII grid file into GRASS, click 
+<A HREF="../../../faq/arcgrid.header.html">here</A>.  
+Also, see <EM><A HREF="r.in.arc.html">r.in.arc</A></EM> to import 
+ESRI Raster ASCII files.
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="m.flip.html">m.flip</A>,
+<A HREF="r.out.ascii.html">r.out.ascii</A>,
+<A HREF="r.in.arc.html">r.in.arc</A>, 
+<A HREF="r.out.arc.html">r.out.arc</A>,
+<A HREF="r.in.bin.html">r.in.bin</A>
+</EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering 
+Research Laboratory
+
+</HTML>

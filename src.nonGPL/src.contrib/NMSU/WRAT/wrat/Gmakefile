@@ -2,8 +2,8 @@ PGM=wrat
 
 LIST = ta.o runoff.o qual.o remove.o intro.o assump.o cn.o cs.o ideal.o upall.o da.o qp.o rout.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB) $(SEGMENTLIB) $(VASKLIB) 
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(SEGMENTLIB) $(MATHLIB) $(VASK) -o $@
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(SEGMENTLIB) $(VASKLIB) 
+	$(CC) $(LDFLAGS)  -o $@ $(LIST) $(GISLIB) $(SEGMENTLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST):  wrat.h
 

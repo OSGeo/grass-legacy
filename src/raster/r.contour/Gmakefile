@@ -1,14 +1,9 @@
+PGM=r.contour
 OBJ=main.o cont.o line_cent.o
 SOURCES=main.c cont.c line_cent.c
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
-
-PGM=$(BIN_ALPHA_CMD)/r.contour
-
-$(PGM): $(OBJ) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(DIG_ATTLIB) $(GISLIB) $(VECTLIB): #
-
-saber_src:
-	#load $(CFLAGS) $(SOURCES) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)

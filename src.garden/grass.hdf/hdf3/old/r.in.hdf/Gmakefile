@@ -24,14 +24,14 @@ MACH_TYPE = SUN
 #MACH_TYPE = PC
 #MACH_TYPE = HP9000
 
-EXTRA_CFLAGS	=  -I$(HDFINCL) $(VECT_INCLUDE) -D$(MACH_TYPE)
+EXTRA_CFLAGS	=  -I$(HDFINCL) -D$(MACH_TYPE)
 
-PGM = $(BIN_ALPHA_CMD)/r.in.hdf
+PGM = $(BIN_CMD)/r.in.hdf
 
 OFILES = r.in.hdf.o calibrate.o list.o history.o
 
 $(PGM):	$(OFILES) $(LIBRARIES) 
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) $(CURSES)
 	@rm -f a.out
 	cp doc/catman $(MAN4)/r.in.hdf
 

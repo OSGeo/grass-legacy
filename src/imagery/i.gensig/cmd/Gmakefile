@@ -1,9 +1,10 @@
+PGM=i.gensig
 LIST = main.o get_train.o lookup_class.o opencell.o openfiles.o parse.o \
 	means.o covariance.o read_train.o closefiles.o labels.o \
 	write_sig.o check.o can_invert.o copy.o eigen.o alloc.o
 LIBES = $(IMAGERYLIB) $(GISLIB)
 
-$(BIN_ALPHA_CMD)/i.gensig: $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

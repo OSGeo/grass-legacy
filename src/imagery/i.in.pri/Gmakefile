@@ -1,11 +1,11 @@
+PGM=i.in.pri
 LIST	= main.o
 
-LIBES= $(IMAGERYLIB) $(GISLIB)
+LIBES= $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 
-$(BIN_MAIN_INTER)/i.in.pri: $(LIST) $(LIBES) $(VASKLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(VASK) -o $@ $(MATHLIB) $(XDRLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES):	# in case library changes
-$(VASKLIB):	# in case library changes
 
 $(LIST):	pri.h

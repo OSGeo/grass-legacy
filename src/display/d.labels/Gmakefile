@@ -1,4 +1,3 @@
-HOME = $(BIN_ALPHA_INTER)
 PGM  = d.labels
 
 LIST =	main.o \
@@ -19,10 +18,10 @@ LIST =	main.o \
         do_label.o\
         update.o
 
-all: $(HOME)/$(PGM)
+LIBES=$(GISLIB) $(VASKLIB) $(DISPLAYLIB) $(RASTERLIB)
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB) $(DISPLAYLIB) $(RASTERLIB) 
-	$(CC) $(LDFLAGS) $(LIST) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): config.h
 check_resp.o : check_resp.c helptext.h

@@ -30,7 +30,7 @@ dseg_read_cell (DSEG *dseg, char *map_name, char *mapset)
 	dbuffer = (double *) G_malloc (ncols * sizeof(double));
 	for (row=0; row < nrows; row++)
 	{
-		if (G_get_map_row (map_fd, buffer, row) < 0)
+		if (G_get_c_raster_row (map_fd, buffer, row) < 0)
 		{
 			G_free (buffer);
 			G_free (dbuffer);

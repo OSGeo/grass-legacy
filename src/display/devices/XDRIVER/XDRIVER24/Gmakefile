@@ -1,8 +1,7 @@
-# corrected line 78 $(XLIB) instead of -lX11  (Michel Wurtz, 22.1.98)
 PGM=XDRIVER
 SWITCHER = SWITCHER.o
 
-LIB = ../lib/driverlib.a $(D_LIB)
+LIBES = ../lib/driverlib.a $(D_LIB) $(GISLIB)
 
 # if you are compiling under X11R3 add this define
 #R3DEFINE=-DX11R3
@@ -55,8 +54,8 @@ OFILES =  \
 
 all: version.h $(GISBASE)/driver/$(PGM)
 
-$(GISBASE)/driver/$(PGM): $(OFILES) $(LIB)
-	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(OFILES) $(LIB) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
+$(GISBASE)/driver/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(OFILES) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
 
 Graph_Set.o: version.h
 
@@ -65,4 +64,4 @@ version.h: $(VERSION_FILE)
 	echo '#define WIN_NAME "GRASS $(VERSION_NUMBER)"' > $@
 
 
-$(LIB): #
+$(LIBES): #

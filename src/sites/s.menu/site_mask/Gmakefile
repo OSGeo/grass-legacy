@@ -11,8 +11,7 @@ LIST =  main.o\
 	new_screen.o
 
 $(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
-		$(CC) ${LDFLAGS} -o $(PGM) $(LIST) $(SITELIB) $(GISLIB) $(MATHLIB) $(XDRLIB) $(VASK)
-		mv $(PGM) $(SITE)/$(PGM)
+		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST):	$I/site.h
 

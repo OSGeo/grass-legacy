@@ -1,0 +1,21 @@
+LIBTRANS	= $(SRC)/libes/vect32/libes/libtrans.a
+
+PGM = v.build.polylines
+LIST =  main.o \
+	line_coords.o \
+	local_dig.o \
+	walk.o
+
+LIBES=$(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(RASTERLIB) $(DIG_ATTLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST)  $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB) $(VECTLIB): #
+
+main.o:	global_vars.h
+main.o:	global_includes.h
+main.o:	line_coords.h
+line_coords.o:	line_coords.h
+local_dig.o:	local_dig.h
+walk.o:	walk.h
+walk.o:	line_coords.h

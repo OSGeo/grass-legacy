@@ -1,11 +1,10 @@
-EXTRA_CFLAGS    = $(VECT_INCLUDE)
 
 VORO =vo_main.o init_head.o vo_polygons.o vo_cats_att.o vo_inregion.o \
       vo_extend.o
 
 DTRI =dt_main.o init_head.o dt_triangles.o 
 
-LIBES= $(GISLIB) $(VECTLIB) $(MATHLIB) $(VASKLIB) $(DIG_ATTLIB) $(DISPLAYLIB) $(DATETIMELIB) $(XDRLIB)
+LIBES= $(GISLIB) $(VECTLIB) $(MATHLIB) $(VASKLIB) $(DIG_ATTLIB) $(DISPLAYLIB) $(DATETIMELIB)
 
 XSWC=sw_edgelist.c sw_geometry.c sw_heap.c sw_main.c sw_memory.c sw_output.c \
       sw_voronoi.c 
@@ -13,20 +12,17 @@ XSWC=sw_edgelist.c sw_geometry.c sw_heap.c sw_main.c sw_memory.c sw_output.c \
 XSWO=sw_edgelist.o sw_geometry.o sw_heap.o sw_main.o sw_memory.o sw_output.o \
      sw_voronoi.o
 
-all: $(ETC)/s.sweep $(BIN_MAIN_CMD)/s.voronoi $(BIN_MAIN_CMD)/s.delaunay
+all: $(ETC)/s.sweep $(BIN_CMD)/s.voronoi $(BIN_CMD)/s.delaunay
 #all: s.sweep s.voronoi s.delaunay
 
-$(BIN_MAIN_CMD)/s.delaunay: $(DTRI) $(LIBES)
-#s.delaunay: $(DTRI) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(DTRI) $(LIBES) 
+$(BIN_CMD)/s.delaunay: $(DTRI) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(DTRI) $(LIBES) $(CURSES) $(XDRLIB)
  
-$(BIN_MAIN_CMD)/s.voronoi: $(VORO) $(LIBES)
-#s.voronoi: $(VORO) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(VORO) $(LIBES) 
+$(BIN_CMD)/s.voronoi: $(VORO) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(VORO) $(LIBES) $(CURSES) $(XDRLIB)
  
 $(ETC)/s.sweep: $(XSWO) sw_defs.h
-#s.sweep: $(XSWO) sw_defs.h
-	$(CC) -o $@ $(XSWO) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(XSWO) $(LIBES) $(CURSES) $(XDRLIB)
 
 $(LIBES): #
 

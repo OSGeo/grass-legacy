@@ -18,10 +18,8 @@
 #include <string.h>
 #include <stdio.h>
 #include "gis.h"
-#include "digit.h"
 #include "Vect.h"
 #include "dig_atts.h"
-#include "dig_head.h"
 
 int patch(struct Map_info *, struct Map_info *, struct line_pnts *);
 
@@ -34,6 +32,7 @@ main (int argc, char *argv[])
 	char errmsg[200];
 	FILE *Out, *In;
 	struct dig_head d_head;
+	struct GModule *module;
 	struct Option *old, *new, *title;
 	struct Cell_stats stats;
 
@@ -51,6 +50,11 @@ main (int argc, char *argv[])
 
 	setbuf (stdout, NULL);
 	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Creates a new binary vector map layer "
+		"by combining other binary vector map layers.";
 
 	old = G_define_option();
 	old->key		= "input";

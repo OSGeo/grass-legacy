@@ -6,7 +6,9 @@
 # this script needs gnuplot (copy to grass42/bin/g.gnuplot)
 
 #--------------------------------------------------
-if test "$1" = ""; then
+
+if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
+then
       echo ""
       echo "GRASS script to display spectral response at user specific "
       echo "locations in satellite images."

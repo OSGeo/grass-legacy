@@ -10,11 +10,11 @@
 #include <ctype.h>
 #include "gis.h"
 #include "Vect.h"
-#include "dig_head.h"
 #include "local_proto.h"
 
 int main ( int argc, char *argv[])
 {
+	struct GModule *module;
     struct Option *map;
     struct Option *levels;
     struct Option *vect;
@@ -38,6 +38,11 @@ int main ( int argc, char *argv[])
     int nlevels;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Produces a GRASS binary vector map of specified "
+		"contours from GRASS raster map layer.";
 
     map=G_define_option () ;
     map->key        = "input";
@@ -143,11 +148,14 @@ int main ( int argc, char *argv[])
 
 	lev = getlevels(levels, max, min, step, &range, &nlevels, quiet->answer);
 	contour(lev, nlevels,  Map, z_array, Wind, Att, quiet->answer, noerr->answer);
-	
+
 	Vect_close (&Map);
 	fclose(Att);
 
-  	exit (0);
+	if (!quiet->answer)
+		fprintf(stderr, "\nFinished.\n");
+
+	exit (0);
 }
 
 /*********************************************************************/
@@ -222,9 +230,16 @@ double *getlevels(
     else if(step->answer)
     {
 	dstep = atof (step->answer);
-	dmax = (max->answer) ? atof (max->answer) : zmax - (int)zmax%(int)dstep;
-	dmin = (min->answer) ? atof (min->answer) : (int)zmin%(int)dstep?
-			      zmin - (int)zmin%(int)dstep +dstep: zmin;
+/*	dmax = (max->answer) ? atof (max->answer) : zmax - (int)zmax%(int)dstep;*/
+/*	dmin = (min->answer) ? atof (min->answer) : (int)zmin%(int)dstep?
+			      zmin - (int)zmin%(int)dstep +dstep: zmin;*/
+	
+	/* fix if step < 1, Roger Bivand 1/2001 */
+	dmax = (max->answer) ? atof (max->answer) : dstep == 0 ?
+	                       G_fatal_error("This step value is not allowed.") : zmax - fmod(zmax, dstep);
+	dmin = (min->answer) ? atof (min->answer) : dstep == 0 ?
+	                       G_fatal_error("This step value is not allowed.") :
+	                       fmod(zmin,dstep) ? zmin - fmod(zmin,dstep) +dstep: zmin;
 
 	while (dmin < zmin)
 	{

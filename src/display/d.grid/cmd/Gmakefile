@@ -1,9 +1,10 @@
+PGM=d.grid
 LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 OFILES = \
 	plot.o \
 	main.o
 
-$(BIN_MAIN_CMD)/d.grid: $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

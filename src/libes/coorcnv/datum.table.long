@@ -1,0 +1,99 @@
+Adindan	"Adindan"	clark80		 dx=-166 dy=-15 dz=204
+Afgooye	"AFG"	krassovsky		 dx=-43 dy=-163 dz=45
+AIN_EL_ABD_'70	"Ain-El-Abd"	international		 dx=-150 dy=-251 dz=-2
+NAD27_Alaska	"Alaska-NAD27"	clark66		 dx=-5 dy=135 dz=172
+Anna_1_Ast_'65	"Anna-1-Astro"	australian		 dx=-491 dy=-22 dz=435
+ARC_1950	"ARC 1950 Mean"	clark80		 dx=-143 dy=-90 dz=-294
+ARC_1960	"ARC 1960 Mean"	clark80		 dx=-160 dy=-8 dz=-300
+Ascnsn_Isld_'58	"Asc Island 58"	international		 dx=-207 dy=107 dz=52
+Astro_B4_Sorol	"Astro B4"	international		 dx=114 dy=-116 dz=-333
+Astro_Bcn__E_	"Astro Beacon E"	international		 dx=145 dy=75 dz=-272
+Astr_Dos_71/4	"Astro dos 71/4"	international		 dx=-320 dy=550 dz=-494
+Astro_Stn_'52	"Astro stn 52"	international		 dx=124 dy=-234 dz=-25
+Astrln_Geod_'84	"Australia Geo 1984"	australian		 dx=-134 dy=-48 dz=149
+NAD27_Bahamas	"Bahamas NAD27"	clark80		 dx=-4 dy=154 dz=178
+Bellevue_(IGN)	"Bellevue IGN"	international		 dx=-127 dy=-769 dz=472
+Bermuda_1957	"Bermuda 1957"	clark80		 dx=-73 dy=213 dz=296
+Campo_Inchspe	"Campo_Inchauspe"	international		 dx=-148 dy=136 dz=90
+NAD27_Canada	"Canada_Mean(NAD27)"	clark66		 dx=-10 dy=158 dz=187
+NAD27_Canal_Zn	"Canal_Zone_(NAD27)"	clark66		 dx=0 dy=125 dz=201
+Canton_Ast_'66	"Canton_Island_1966"	international		 dx=298 dy=-304 dz=-375
+Cape	"Cape"	clark80		 dx=-136 dy=-108 dz=-292
+Cape_Canavrl	"Cape_Canaveral_mean"	clark66		 dx=-2 dy=150 dz=181
+NAD27_Caribbn	"Carribean NAD27"	clark66		 dx=-7 dy=152 dz=178
+Catharge	"Carthage"	clark80		 dx=-263 dy=6 dz=431
+NAD27_Central	"Cent America NAD27"	clark66		 dx=0 dy=125 dz=194
+Chatham_1971	"Chatham 1971"	international		 dx=175 dy=-38 dz=113
+Chua_Astro	"Chua Astro"	international		 dx=-134 dy=229 dz=-29
+Corrego_Alegr	"Corrego Alegre"	international		 dx=-206 dy=172 dz=-6
+NAD27_Cuba	"Cuba NAD27"	clark66		 dx=-9 dy=152 dz=178
+Djakarta	"Djakarta(Batavia)"	bessel		 dx=-377 dy=681 dz=-50
+Dos_1968	"DOS 1968"	international		 dx=230 dy=-199 dz=-752
+Easter_Isld_67	"Easter lsland 1967"	international		 dx=211 dy=147 dz=111
+European_1950	"European 1950 mean"	international		 dx=-87 dy=-98 dz=-121
+European_1970	"European 1979 mean"	international		 dx=-86 dy=-98 dz=-119
+Gandajika_Base	"Gandajika Base"	international		 dx=-133 dy=-321 dz=50
+Geod_Datm_'49	"Geodetic Datum 49"	international		 dx=84 dy=-22 dz=209
+NAD27_Grnland	"Greenland NAD27"	clark66		 dx=11 dy=114 dz=195
+Guam_1963	"Guam 1963"	clark66		 dx=-100 dy=-248 dz=259
+Gux_1_Astro	"GUX1 Astro"	international		 dx=252 dy=-209 dz=-751
+Hjorsey_1955	"Hjorsey 1955"	international		 dx=-73 dy=46 dz=86
+Hong_Kong_1963	"Hong Kong 1963"	international		 dx=-156 dy=-271 dz=-189
+Hu-Tzu-Shan	"Hu-Tzu-Shan"	international		 dx=-634 dy=-549 dz=-201
+Indian_Bngldsh	"Indian"	evrst56		 dx=289 dy=734 dz=257
+Ireland_1965	"Ireland 1965"	modif_airy		 dx=506 dy=-122 dz=611
+ISTS_073_Astro	"ISTS 073 Astro 69"	international		 dx=208 dy=-435 dz=-229
+Johnston_Island	"Johnston Island 61"	international		 dx=191 dy=-77 dz=-204
+Kandawala	"Kandawala"	everest		 dx=-97 dy=787 dz=86
+Kergueln_Islnd	"Kerguelen Island"	international		 dx=145 dy=-187 dz=103
+Kertau_1948	"Kertau 48"	evrst48		 dx=-11 dy=851 dz=5
+L._C._5_Astro	"L.C. 5 Astro"	clark66		 dx=42 dy=124 dz=147
+Reunion	"La Reunion"	international		 dx=94 dy=-948 dz=-1262
+Liberia_1964	"Liberia 1964"	clark80		 dx=-90 dy=40 dz=88
+Luzon_Philippine	"Luzon"	clark66		 dx=-133 dy=-77 dz=-51
+Mahe_1971	"Mahe 1971"	clark80		 dx=41 dy=-220 dz=-134
+Marco_Astro	"Marco Astro"	international		 dx=-289 dy=-124 dz=60
+Nhrwn_Masirah	"Masirah Is. Nahrwan"	clark80		 dx=-247 dy=-148 dz=369
+Massawa	"Massawa"	bessel		 dx=639 dy=405 dz=60
+Merchich	"Merchich"	clark80		 dx=31 dy=146 dz=47
+NAD27_Mexico	"Mexico NAD27"	clark66		 dx=-12 dy=130 dz=190
+Midway_Ast_'61	"Midway Astro 61"	international		 dx=912 dy=-58 dz=1227
+Luzon_Mindanao	"Mindanao"	clark66		 dx=-133 dy=-79 dz=-72
+Minna	"Minna"	clark80		 dx=-92 dy=-93 dz=122
+Nhrwn_Saudi_A	"Nahrwan"	clark80		 dx=-231 dy=-196 dz=482
+Naparima_BWI	"Naparima BWI"	international		 dx=-2 dy=374 dz=172
+NAD83	"North America 83"	GRS80		 dx=0 dy=0 dz=0
+NAD27_CONUS	"N. America 1927 mean"	clark66		 dx=-8 dy=160 dz=176
+Obsrvtorio_'66	"Observatorio 1966"	international		 dx=-425 dy=-169 dz=81
+Old_Egyptian	"Old Egyptian"	helmert		 dx=-130 dy=110 dz=-13
+Old_Hawaiian	"Old Hawaiian_mean"	clark66		 dx=89 dy=-279 dz=-183
+Oman	"Oman"	clark80		 dx=-346 dy=-1 dz=224
+Ord_Srvy_GB	"OSGB36"	airy		 dx=375 dy=-111 dz=431
+Pico_De_Las_Nv	"Pico De Las Nieves"	international		 dx=-307 dy=-92 dz=127
+Ptcairn_Ast_'67	"Pitcairn Astro 67"	international		 dx=185 dy=165 dz=42
+Prov_S_Am_'56	"S. Am. 1956 mean(P)"	international		 dx=-288 dy=175 dz=-376
+Prov_S_Chln_'63	"S. Chilean 1963 (P)"	international		 dx=16 dy=196 dz=93
+Puerto_Rico	"Puerto Rico"	clark66		 dx=11 dy=72 dz=-101
+Qornoq	"Qornoq"	international		 dx=164 dy=138 dz=-189
+Qatar_National	"Quatar National"	international		 dx=-128 dy=-283 dz=22
+Rome_1940	"Rome 1940"	international		 dx=-225 dy=-65 dz=9
+Sao_Braz	"Santa Braz"	international		 dx=-203 dy=141 dz=53
+Santo_(Dos)	"Santo (DOS)"	international		 dx=170 dy=42 dz=84
+Sapper_Hill_'43	"Sapper Hill 43"	international		 dx=-355 dy=16 dz=74
+Schwarzeck	"Schwarzeck"	bess_nam		 dx=616 dy=97 dz=-251
+Sth_Amrcn_'69	"S. Am. 1969 mean"	SAm69		 dx=-57 dy=1 dz=-41
+South_Asia	"South Asia"	modif_fischer		 dx=7 dy=-10 dz=-26
+SE_Base	"Southeast Base"	international		 dx=-499 dy=-249 dz=314
+SW_Base	"Southwest Base"	international		 dx=-104 dy=167 dz=-38
+Indian_Thailand	"Thai/Viet (Indian)"	everest		 dx=214 dy=836 dz=303
+Timbalai_1948	"Timbalai 1948"	everest		 dx=-689 dy=691 dz=-45
+Tokyo	"Tokyo mean"	bessel		 dx=-128 dy=481 dz=664
+Tristan_Ast_'68	"Tristan Astro 1968"	international		 dx=-632 dy=438 dz=-609
+Nhrwn_United_A	"Unites Arab Emirates"	clark80		 dx=-249 dy=-156 dz=381
+Viti_Levu_1916	"Viti Levu 1916"	clark80		 dx=51 dy=391 dz=-36
+Wake-Eniwetok	"Wake Eniwetok 60"	hough		 dx=101 dy=52 dz=-39
+WGS_72	"WGS 72"	wgs72		 dx=0 dy=0 dz=5
+WGS_84	"WGS 84"	wgs84		 dx=0 dy=0 dz=0
+Zanderij	"Zanderij"	international		 dx=-265 dy=120 dz=-358
+RT_90	"Sweden"	bessel		 dx=424.3 dy=-80.5 dz=613.1
+Potsdam	"Potsdam"	bessel		 dx=587 dy=16 dz=393

@@ -1,0 +1,108 @@
+<TITLE>r.cn</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.cn</b></EM> - Generates a curve number map layer
+<BR><EM>(GRASS Raster Program)</EM> 
+<P>
+<H2>SYNOPSIS</H2>
+<B>r.cn</B><BR>
+<B>r.cn sg=</B>hy_soil_group <B>lu</B>=landuse_map <B>pr=</B>practice_map
+          <B>hc=</B>hy_condition_map <B>cn=</B>cn_map <B>amc=</B>AMC_number
+
+<H2>DESCRIPTION</H2>
+<EM>r.cn</EM> is a command-line interface for generating an SCS CN
+     map.  The command format is:
+<PRE>
+
+     sg=map         hydrologic soil group map name
+     lu=map         landuse map name
+     pr=map         practice or management map name
+     hc=map         hydrologic condition map name
+     cn=map         output CN map name
+     amc=number     equivalent AMC condition number for the CN output
+</PRE>
+
+     The command-line ordering can be in any form but all key
+     words must be there to run the program.
+<PRE>
+EXAMPLE
+
+     <B>r.cn sg=</B><EM>hy.soil.group</EM> <B>lu=</B><EM>land_use</EM> <B>hc=</B><EM>hy.cond</EM> <B>pr=</B><EM>veg.cover</EM>
+     <B>cn=</B><EM>cn_name amc=2</EM>
+</PRE>
+will create a CN map cn_name for equivalent AMC
+condition II
+<P>
+<H2>ATTENTION</H2>
+     <EM>r.cn</EM> uses information from the four map layers by reading
+     the cell layer and its category files. So it is important to
+     update the category files for all four layers and it expects
+     the categories of the map layer exactly as shown below:
+<P>
+     For the hydrologic soil group map the categories may be
+     either A, B, C or D.
+
+
+<P>
+
+     For the landuse map layer the categories may be either
+     fallow, row crops, small grain, close-seeded legumes,
+     rotation meadow, pasture, range, meadow, woods, farmsteads,
+     roads (dirt) or hard surface.
+
+<P>
+     For the practice or management map layer the categories may
+     be either straight row, contoured or contoured and terraced.
+
+
+<P> For the hydrological condition map the categories may be poor, fair or
+     good. The rating (good, fair, poor) is based on a combination of
+     factors that affect infiltration and runoff, which includes:
+
+<ul>
+<li>density and canopy of vegetated areas 
+<li>amount of year-round ground cover
+<li>amount of grass or close-seeded legumes in rotations 
+<li>percent of residue cover on the land surface (good is more than 20%)
+<li>degree of surface roughness 
+</ul>
+
+<P>
+
+AMC is the antecedent moisture condition. AMC I: dry, AMC II: normal, AMC III
+(wet).
+<p>
+
+
+
+     If the combination of the four layers categories does not
+     exist in the SCS CN table, an error message is printed and
+     the program quits.
+<P>
+<H2>NOTE</H2>
+     The <EM>r.cn</EM> program is sensitive to the current window setting.
+     Thus the program can be used to generate a CN map of any
+     sub-area within the full map layer. Also, <EM>r.cn</EM> is sensitive
+     to any mask in effect.
+<P>
+
+<H2>REFERENCE</H2>
+SCS Curve number method: <a
+href=http://www.wcc.nrcs.usda.gov/water/quality/common/tr55/tr55.html>TR-55, Urban Hydrology for Small Watersheds</a>
+
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.cn.html">r.cn</A></EM>,
+<EM><A HREF="r.weighted.cn.html">r.weighted.cn</A></EM>
+
+<P>
+<H2>AUTHORS</H2>
+     Raghavan Srinivasan and Dr. Bernie A. Engel, Agricultural
+     Engineering Department, Purdue University

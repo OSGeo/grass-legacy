@@ -1,0 +1,3 @@
+all:
+	$(GMAKE) $(SRC)/libes/g3d
+	$(MAKEALL)

@@ -1,0 +1,110 @@
+<HTML>
+<TITLE>m.proj</TITLE>
+
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>m.proj</b></EM>  - Calculates conversion coordinates for geographic positions.
+
+<BR>
+
+<EM>(GRASS Map Development Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.proj</B>
+
+<BR>
+
+<B>m.proj help</B>
+
+<H2>DESCRIPTION</H2>
+
+This program allows a user to interactively:
+convert coordinates from one projection to  
+another  
+
+<P>
+<DL>
+<DT>It allows a user to do all of the above:
+<DD>reading from a file, writing to the screen,  or
+<DD>reading from the keyboard, writing to a file, or
+<DD>reading from a file, writing to a file,      
+</DL>
+
+<P>
+
+Note:  The program does not transform GRASS files, it is 
+designed to determine coordinate values on an 
+individual position.
+
+<P>
+
+The map projections currently supported are listed in etc/projections file
+<BR>
+
+<P>
+
+Each of the above projections (with the exception of
+State Plane) can be computed with the spheroids listed in etc/ellipse.table
+file
+
+<P>
+
+<H2>INPUT FILE FORMAT</H2>
+<DL>
+<DT>When reading from a file of LATITUDE/LONGITUDE data the
+file will contain three (2) columns of information:
+
+<DD>the first column - latitude   - in degrees minutes seconds,
+<DD>the second column - longitude - in degrees minutes seconds,
+</DL>
+
+<P>
+
+For example:
+<PRE>
+	+40 36 31.4563	-87 2 7.8193	
+	40n 36 31.4563	87w 2 7.8193
+</PRE>
+
+<P>
+<DL>
+<DT>When reading from a file of PROJECTION COORDINATES data the
+file will contain three (2) columns of information:
+<DD>the first column - easting - ground coordinates
+<DD>the second column - northing - ground coordinates
+</DL>
+<P>
+For example:
+<PRE>
+ 	 500000.00	4496918.64	
+	-424489.11	1908736.13
+
+</PRE>
+<P>
+
+<B>Note:</B> NO column headings are required, just the numbers.
+<P>
+<H2>SEE ALSO</H2>
+<EM>
+<A HREF="r.proj.html">r.proj</A>,
+<A HREF="s.proj.html">s.proj</A>,
+<A HREF="v.proj.html">v.proj</A>
+</EM>
+
+<H2>AUTHORS</H2>
+Irina Kosinovsky, US Army CERL
+
+<BR>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS
+
+<BR>
+Updated to PROJ 4 by Morten Hulden <a href=mailto:morten@ngb.se>morten@ngb.se</a>
+
+</body>
+</HTML>

@@ -32,9 +32,15 @@ int main (int argc, char *argv[])
     FILE *dxf_fp;
     char *p;
     int i;
+	struct GModule *module;
     struct Option *old_opt, *line_opt, *labl_opt, *prefix_opt;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Converts files in DXF format to ASCII or binary GRASS "
+		"vector file format.";
 
     ascii_flag = G_define_flag(); 
     ascii_flag->key = 	'a';

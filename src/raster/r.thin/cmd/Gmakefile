@@ -1,7 +1,7 @@
+PGM = r.thin
 OFILES = main.o thin_lines.o io.o
 
-$(BIN_ALPHA_CMD)/r.thin:	$(OFILES) $(GISLIB) $(ROWIOLIB)
-	rm -f $@
-	$(CC) $(LDFLAGS) $(OFILES) $(GISLIB) $(ROWIOLIB) $(MATHLIB) $(XDRLIB) -o $@
+$(BIN_CMD)/$(PGM): $(OFILES) $(GISLIB) $(ROWIOLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(ROWIOLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB) $(ROWIOLIB): #

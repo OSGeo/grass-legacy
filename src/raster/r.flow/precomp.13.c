@@ -5,27 +5,24 @@
 **  US Army Construction Engineering Research Lab, University of Illinois 
 **
 **  Copyright  M. Ruesink, J. Caplan, H. Mitasova, L. Mitas, J. Hofierka, 
-	M. Zlocha  1995
+**	M. Zlocha  1995
+**
+**This program is free software; you can redistribute it and/or
+**modify it under the terms of the GNU General Public License
+**as published by the Free Software Foundation; either version 2
+**of the License, or (at your option) any later version.
+**
+**This program is distributed in the hope that it will be useful,
+**but WITHOUT ANY WARRANTY; without even the implied warranty of
+**MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**GNU General Public License for more details.
+**
+**You should have received a copy of the GNU General Public License
+**along with this program; if not, write to the Free Software
+**Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+**
 */
 
-/*
-The flowtracing program, both binary and source is copyrighted, but available 
-without fee for education, research and non-commercial purposes. Users may 
-distribute the binary and source code to third parties provided that the
-copyright notice and this statement appears on all copies and that no
-charge is made for such copies.  Any entity wishing to integrate all or
-part of the source code into a product for  commercial use or resale,
-should contact authors of the software, U.S.Army CERL and University
-of Illinois.
-
-THE SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY. THE
-U.S.Army CERL, UNIVERSITY OF ILLINOIS OR AUTHORS SHALL NOT BE LIABLE FOR 
-ANY DAMAGES SUFFERED BY THE USER OF THIS SOFTWARE.
-
-By copying this program, you, the user, agree to abide by the copyright
-conditions and understandings with respect to any software which is marked
-with a copyright notice.
-*/
 
 #include "r.flow.13.h"
 #include "io.13.h"

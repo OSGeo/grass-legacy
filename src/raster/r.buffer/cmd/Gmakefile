@@ -1,5 +1,4 @@
 PGM = r.buffer
-HOME=$(BIN_MAIN_CMD)
 
 LIST = main.o		\
        execute.o	\
@@ -14,8 +13,7 @@ LIST = main.o		\
        support.o	\
        write_map.o  
 
-
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST): distance.h

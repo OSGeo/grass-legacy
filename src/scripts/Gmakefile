@@ -3,6 +3,6 @@ all:
 	if [ ! -d $(GISBASE)/scripts ]; then mkdir $(GISBASE)/scripts; fi
 	cp shells/*.sh $(GISBASE)/scripts
 	mkdir $(GISBASE)/scripts/demo.scripts
-	cp shells/demo.scripts/* $(GISBASE)/scripts/demo.scripts
+	(cd shells/demo.scripts/ ; tar -cf - * | (cd $(GISBASE)/scripts/demo.scripts ; tar -xf - 2>/dev/null ); true )
 	$(GMAKE) contrib
 	chmod -R 0755 $(GISBASE)/scripts/*

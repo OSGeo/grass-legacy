@@ -1,0 +1,8 @@
+PGM=s.vol.idw
+
+LIST=main.o read_sites.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(G3DLIB) $(GISLIB) $(LINKMLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(LINKMLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

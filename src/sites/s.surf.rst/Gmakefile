@@ -1,6 +1,4 @@
-PBIN = /usr/tmp 
 PGM    = s.surf.rst
-HOME   = $(BIN_CONTRIB_CMD)
 
 TREEDIR = $(SRC)/libes/rst_gmsl/tree
 TREELIB = $(TREEDIR)/libtree.a
@@ -9,9 +7,7 @@ DATALIB = $(DATADIR)/libdata.a
 INTERPFDIR = $(SRC)/libes/rst_gmsl/interp_float
 INTERPFLIB = $(INTERPFDIR)/libinterpfl.a
 
-EXTRA_CFLAGS =  -g -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR) $(VECT_INCLUDE)
-EXTRALDFLAGS=-g
-#EXTRA_CFLAGS =  $(VECT_INCLUDE)
+EXTRA_CFLAGS = -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR)
 
 LIST   =  main.o 
 SRCS   =  main.c 
@@ -19,11 +15,8 @@ SRCS   =  main.c
 LIBES=$(INTERPFLIB) $(DATALIB) $(TREELIB) \
 	$(GISLIB) $(DATETIMELIB) $(BITMAPLIB) $(LINKMLIB) $(VECTLIB)
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(EXTRALDFLAGS) $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
-
-saber_src:
-	load $(CFLAGS) $(LDFLAGS) $(EXTRALDFLAGS) $(SRCS)  $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(SRCS) : surf.h 
 

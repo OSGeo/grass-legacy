@@ -1,0 +1,79 @@
+MYLIBDIR= $(SRC)/libes/dspf
+DSPLIB	=	$(MYLIBDIR)/libdsp3.a
+SGILIB	=	-lgl_s
+
+EXTRA_CFLAGS	=	-I$(MYLIBDIR)
+
+PGM	=	r3.showdspf
+
+SOURCES	=	\
+		cap_data.c \
+		init_caps.c \
+		axes2.c \
+		debugf.c \
+		do_color.c \
+		get_color.c \
+		draw_cap.c \
+		draw_polys.c \
+		draw_cappolys.c \
+		init_graphics.c \
+		thresh_array.c \
+		dumprect.c \
+		make_header.c \
+		r3_data.c \
+		r3_find.c \
+		main.c
+
+OBJ	=	\
+		cap_data.o \
+		init_caps.o \
+		axes2.o \
+		debugf.o \
+		do_color.o \
+		get_color.o \
+		draw_cap.o \
+		draw_polys.o \
+		draw_cappolys.o \
+		init_graphics.o \
+		thresh_array.o \
+		dumprect.o \
+		make_header.o \
+		r3_data.o \
+		r3_find.o \
+		main.o
+
+$(BIN_CMD)/$(PGM): $(OBJ) $(G3DLIB) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(OBJ) $(LDFLAGS) -o $@ $(SGILIB) $(DSPLIB) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
+
+
+#cap_data.o: $(MYLIBDIR)/viz.h
+#axes2.o: $(MYLIBDIR)/viz.h
+#debugf.o: ./debug.h
+#draw_cap.o: $(MYLIBDIR)/viz.h
+#draw_cappolys.o: $(MYLIBDIR)/viz.h
+#draw_plane.o: $(MYLIBDIR)/viz.h
+#thresh_array.o: $(MYLIBDIR)/viz.h
+#dumprect.o: $(MYLIBDIR)/viz.h
+#init_caps.o: $(MYLIBDIR)/viz.h
+#do_color.o: $(MYLIBDIR)/viz.h
+#get_color.o: $(MYLIBDIR)/viz.h
+#draw_polys.o: $(MYLIBDIR)/viz.h
+#init_graphics.o: $(MYLIBDIR)/viz.h
+#main.o:	$(MYLIBDIR)/viz.h
+
+#.c.o:
+#	@echo ""
+#	@echo COMPILING: $<
+#	$(CC) $(CFLAGS) -c $<
+
+
+saber_src:
+	#load $(CFLAGS) $(SOURCES) $(DSPLIB)
+
+saber_obj:
+	#load $(OBJ)
+
+ctags:
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags

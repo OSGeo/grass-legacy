@@ -1,0 +1,19 @@
+PGM    = r.in.dem
+
+EXTRA_CFLAGS = 
+OBJ	= \
+	main.o \
+	dem_read.o \
+	trans_ll2u.o \
+	bintree.o
+
+INCLUDE = -I$(INCLUDE_DIR)
+LIBES	= $(COORCNVLIB) $(GISLIB) $(VECTLIB) $(DATETIMELIB)
+
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(COORCNVLIB): #
+$(GISLIB): #
+$(VECTLIB): #
+$(DATETIMELIB): #

@@ -1,0 +1,158 @@
+<HTML>
+<HEAD>
+<TITLE>r.in.bin</TITLE>
+</HEAD>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.in.bin</b></EM>  - Import a binary raster file into a GRASS raster map layer.
+<BR>
+<EM>(GRASS Raster Data Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.in.bin</B> 
+<BR>
+<B>r.in.bin help</B> 
+<BR>
+<B>r.in.bin [-s] [-f] [-b] [-h] input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM>
+<B>bytes=</B><EM>value</EM>
+[<B>title=</B>"<EM>phrase</EM>"] 
+[<B>north=</B><EM>value </EM>]
+[<B>south=</B><EM>value </EM>]
+[<B>east=</B><EM>value </EM>]
+[<B>west=</B><EM>value </EM>]
+[<B>r=</B><EM>value</EM>]
+[<B>c=</B><EM>value </EM>]
+[<B>subst=</B><EM>old,new</EM>]
+
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.in.bin</EM> allows a user to create a (binary) GRASS raster map layer 
+from a variety of binary raster data formats. 
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B> -s</B>
+<DD>   Signed data (high bit means negative value)
+<DT><B> -f</B>
+<DD>   Import the data to a Float type GRASS raster map layer (default is Integer)
+<DT><B> -b</B>
+<DD>   Byte swap the binary data during import. This includes the header if -h specified.
+<DT><B> -h</B>
+<DD>   Read region information from a Generic Mapping Tools (GMT) type binary header.
+<DD>   Is compatible with GMT binary grid types 1 and 2.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+<DD>Name of an existing binary raster file to be imported. 
+<DT><B>output=</B><EM>name</EM>
+<DD>Name to be assigned to resultant GRASS raster map layer. 
+<DT><B>bytes=</B><EM>value</EM>
+<DD>Number of bytes per cell (2, 4, 8)
+<DT><B>title=</B>"<EM>phrase</EM>"
+<DD>Title to be assigned to resultant raster map layer. 
+<DT><B>north=</B><EM>value </EM> 
+<DD>Northern limit of geographic region
+<DT><B>south=</B><EM>value </EM> 
+<DD>Southern limit of geographic region
+<DT><B>east=</B><EM>value </EM> 
+<DD> Eastern limit of geographic region
+<DT><B>west=</B><EM>value </EM> 
+<DD>Western limit of geographic region
+<DT><B>r=</B><EM>value</EM> 
+<DD>Number of rows
+<DT><B>c=</B><EM>value </EM> 
+<DD>Number of columns
+<DT><B>subst=</B><EM>val</EM> 
+<DD>Substitute val with NULL 
+
+</DL>
+
+The north, south, east, and west field values entered 
+are the coordinates of the edges of the geographic region. 
+The rows and cols field values entered describe the dimensions 
+of the matrix of data to follow. These six fields are not required 
+if input is a GMT binary array, with flag -h. If the bytes field is
+entered incorrectly an error will be generated suggesting a closer bytes
+value. 
+<p>
+<EM>r.in.bin</EM> can be used to import numerous binary arrays including:
+etopo30, etopo-5, Globe DEM, BIL, and GMT binary arrays (ID 1 &amp; 2)
+<p>
+
+<H2>EXAMPLE</H2>
+
+The following is a sample call of <EM>r.in.bin</B> to import GTOPO30 DEM
+data:</EM> 
+<P>
+<TT>
+r.in.bin -s input=E020N90.DEM output=gtopo30 bytes=2 north=90 south=40
+east=60 west=20 r=6000 c=4800
+</TT>
+<P>
+(you can add "subst=-9999" if you want sea level to have a NULL value)
+
+<P>
+The following is a sample call of <EM>r.in.bin</B> to import a GMT 
+type 1 (float) binary array:</EM>
+<P>
+<TT>
+r.in.bin -hf input=sample.grd output=sample.grass bytes=4
+</TT>
+<P>
+(-b could be used to swap bytes if required)
+
+
+<H2>NOTES</H2>
+
+The geographic coordinates north, south, east, and west
+describe the outer edges of the geographic region.  They
+run along the edges of the cells at the edge of the
+geographic region and <EM>not</EM> through the center of the cells
+at the edges.
+<P>
+Notes on (non)signed data:<P>
+If you use the -s flag the highest bit is the sign bit. If this is 1 the
+data is negative, and the data interval is half of the unsigned (not
+exactly). For example:
+<p>
+Data: 2 byte<BR>
+Unsigned interval: 0x0000 -&gt; 0xFFFF = 0 -&gt; 65535 decimal = 00000000 00000000
+-&gt;11111111 11111111 binary.<BR>
+Signed interval: 0x8000 -&gt; 0xFFFF; 0x0000 -&gt; 0x7FFF = -32768 -&gt; -1;  0 -&gt;
+32767 = 10000000 00000000 -&gt; 11111111 11111111; 00000000 00000000 -&gt;
+01111111 11111111 binary.<P>
+This is the 2's complement representation.<BR>
+So if the data 1 byte the integer range is -128 -&gt; 127, if 2 byte (16 bit,
+word) -32768 -&gt; 32767, if 4 byte (32 bit, doubleword, Dword) -2^31 -&gt; 2^31-1.
+And of course the value zero has a positive sign.
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="r.out.bin.html">r.out.bin</A>,
+<A HREF="r.in.ascii.html">r.in.ascii</A>, 
+<A HREF="r.out.ascii.html">r.out.ascii</A>, 
+<A HREF="r.in.arc.html">r.in.arc</A>, 
+<A HREF="r.out.arc.html">r.out.arc</A></EM>
+
+<H2>AUTHORS</H2>
+
+Jacques Bouchard, France (bouchard@onera.fr)<BR>
+Bob Covill, Canada (bcovill@tekmap.ns.ca)<BR>
+Man page: Zsolt Felker (felker@c160.pki.matav.hu)
+</HTML>

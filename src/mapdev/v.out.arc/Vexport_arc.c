@@ -15,9 +15,7 @@
 #include <string.h>
 #include "gis.h"
 #include "Vect.h"
-#include "digit.h"
 #include "v_out_arc.h"
-/*#include "dig_head.h" */
 #include "gtoa.h"
 
 #define  USAGE  "Vexport.arc cover=line/edge dig=input arc=output\n"
@@ -64,10 +62,15 @@ main (int argc, char **argv)
 			*lab_file,
 			*txt_file;
 
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4;
 
 	G_gisinit(argv[0]);
 	progname = G_program_name();
+
+	module = G_define_module();
+	module->description =
+		"Converts GRASS vector files to ARC/INFO's \"Generate\" file format.";
 
 	/* Define the different options */
 

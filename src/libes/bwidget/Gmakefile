@@ -1,0 +1,11 @@
+# This file is required for src/CMD/lists/GRASS. Please do not delete.
+#
+# This Gmakefile may only be used when building the entire
+# GRASS from source code. Store this directory tree in src/libes/bwidget/
+#
+# Note that the file list in the tar command should include everything but
+# the Gmakefile
+#
+all:
+	if [ ! -d $(GISBASE)/bwidget ]; then mkdir $(GISBASE)/bwidget; fi
+	tar cf - BWman/* demo/* images/* lang/* *.txt *.tcl README.grass | (cd $(GISBASE)/bwidget; tar xf -)

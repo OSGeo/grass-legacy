@@ -1,3 +1,23 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       g.setproj 
+ * AUTHOR(S):    M. L. Holko - Soil Conservation Service, USDA
+ *               Morten Hulden - morten@ngb.se
+ *               Andreas Lange - andreas.lange@rhein-main.de
+ * PURPOSE:      Provides a means of creating a new projection information
+ *               file (productivity tool).
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
+/* old log retained for information */
 /* main.c    
    *    1.1   05/16/91  GRASS4.0
    *    Created by : M.L.Holko , Soil Conservation Service, USDA
@@ -12,14 +32,18 @@
    *
    *   1.2 Changed by Morten Hulden 10/10/99 to add support for more projections        
    *                  morten@ngb.se
+   *
+   *   1.3 Changed by Andreas Lange 07/25/00 to add datum support
+   *                  Andreas.Lange@Rhein-Main.de
  */
 
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include  "geo.h"
-#include  "gis.h"
+#include "geo.h"
+#include "gis.h"
+#include "CC.h" /* for datum support */
 #include "local_proto.h"
 #define MAIN
 
@@ -31,6 +55,7 @@ int main(int argc, char *argv[])
 	int old_zone;
 	int i;
 	int stat;
+	int set_datum = 0;
 	char cmnd2[500], out_lon0[20], out_lat0[20];
 	char proj_out[20], proj_name[50], set_name[20], file[1024],
 	*value1, *a;
@@ -38,13 +63,15 @@ int main(int argc, char *argv[])
 	 answer1[200];
 	char answer2[200], buff[1024];
 	char tmp_buff[20], *buf;
+	char datum[50], dat_ellps[50];
 
 	struct Option *projopt;
 	struct Key_Value *old_proj_keys, *out_proj_keys, *in_unit_keys;
 	double aa, e2;
+	double f, dx, dy, dz;
 	FILE *ls, *out1, *FPROJ, *pj;
 	int exist = 0;
-	char *new_data, *key, *value, spheriod[50], *sph;
+	char *new_data, *key, *value, spheroid[50], *sph;
 	int j, k, in_stat, ii, npr, sph_check;
 	struct Cell_head cellhd;
 
@@ -57,7 +84,7 @@ int main(int argc, char *argv[])
 	G__file_name(path, "", PROJECTION_FILE, set_name);
 
 	/* get the output projection parameters, if existing */
-	/*Check for ownership here */
+	/* Check for ownership here */
 	stat = G__mapset_permissions(set_name);
 	if (stat == 0) {
 		G_fatal_error("PERMANENT: permission denied.");
@@ -78,7 +105,7 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "\nThis file contains all the parameters for the location's projection: %s\n", G__projection_name(Out_proj));
 		fprintf(stderr, "\nOverriding this information implies that the old projection parameters\n");
 		fprintf(stderr, "    were incorrect.  If you change the parameters, all existing data will be\n");
-		fprintf(stderr, "    interpretted differently by the projection software.\n%c%c%c", 7, 7, 7);
+		fprintf(stderr, "    interpreted differently by the projection software.\n%c%c%c", 7, 7, 7);
 		fprintf(stderr, "    GRASS will not re-project your data automatically\n\n");
 
 		if (!G_yes("Would you still like to change some of the parameters ", 0)) {
@@ -103,6 +130,7 @@ int main(int argc, char *argv[])
 	switch (Out_proj) {
 	case 0:		/* No projection/units */
 		/* leap frog over code, and just make sure we remove the file */
+		fprintf(stderr, "XY-location cannot be projected.\n");
 		goto write_file;
 		break;
 
@@ -142,19 +170,20 @@ int main(int argc, char *argv[])
 	}
 	G_set_key_value("name", proj_name, out_proj_keys);
 
-/*****************   GET spheriod  **************************/
+/*****************   GET spheroid  **************************/
+
 	if (Out_proj != PROJECTION_SP) {	/* some projections have fixed spheroids */
 		if ((proj_index == ALSK) || (proj_index == GS48) || (proj_index == GS50)) {
-			sprintf(spheriod, "%s", "clark66");
-			G_set_key_value("ellps", spheriod, out_proj_keys);
+			sprintf(spheroid, "%s", "clark66");
+			G_set_key_value("ellps", spheroid, out_proj_keys);
 			sph_check = 1;
 		} else if ((proj_index == LABRD) || (proj_index == NZMG)) {
-			sprintf(spheriod, "%s", "international");
-			G_set_key_value("ellps", spheriod, out_proj_keys);
+			sprintf(spheroid, "%s", "international");
+			G_set_key_value("ellps", spheroid, out_proj_keys);
 			sph_check = 1;
 		} else if (proj_index == SOMERC) {
-			sprintf(spheriod, "%s", "bessel");
-			G_set_key_value("ellps", spheriod, out_proj_keys);
+			sprintf(spheroid, "%s", "bessel");
+			G_set_key_value("ellps", spheroid, out_proj_keys);
 			sph_check = 1;
 		} else if (proj_index == OB_TRAN) {
 			/* Hard coded to use "Equidistant Cylincrical"
@@ -167,24 +196,24 @@ int main(int argc, char *argv[])
 			if (exist) {
 				buf = G_find_key_value("ellps", old_proj_keys);
 				if (buf != NULL)
-					strcpy(spheriod, buf);
+					strcpy(spheroid, buf);
 				else
-					sprintf(spheriod, "%s", "sphere");
-				G_strip(spheriod);
-				if ((G_get_ellipsoid_by_name(spheriod, &aa, &e2)) || (strcmp(spheriod, "sphere") == 0)) {	/* if legal ellips. exist, ask wether or not to change it */
-					fprintf(stderr, "The current ellipsoid is %s\n", spheriod);
+					sprintf(spheroid, "%s", "sphere");
+				G_strip(spheroid);
+				if ((G_get_spheroid_by_name(spheroid, &aa, &e2, &f)) || (strcmp(spheroid, "sphere") == 0)) {	/* if legal ellips. exist, ask wether or not to change it */
+					fprintf(stderr, "The current ellipsoid is %s\n", spheroid);
 					if (G_yes("Would you want to change ellipsoid parameter ", 0))
-						sph_check = G_ask_ellipse_name(spheriod);
+						sph_check = G_ask_ellipse_name(spheroid);
 					else {
 						fprintf(stderr, "The ellipse information is not changed\n");
-						if (strcmp(spheriod, "sphere") == 0)
+						if (strcmp(spheroid, "sphere") == 0)
 							sph_check = 2;
 						else
 							sph_check = 1;
 					}
 				}	/* the val is legal */
 			} else
-				sph_check = G_ask_ellipse_name(spheriod);
+				sph_check = G_ask_ellipse_name(spheroid);
 		}		/* if proj_index = ALSK ... OB_TRANS */
 
 		if (sph_check < 0)
@@ -202,7 +231,12 @@ int main(int argc, char *argv[])
 				radius = prompt_num_double("Enter radius for the sphere in meters", RADIUS_DEF, 1);
 		}		/* end ask radius */
 	}
-/*** END get spheriod  ***/
+/*** END get spheroid  ***/
+
+	/* ask for map datum, Andreas Lange, 7/2000 */
+	if (ask_datum(datum))
+	   set_datum = 1;
+
 	/* create the PROJ_INFO & PROJ_UNITS files, if required */
 	switch (proj_index) {
 	case LL:
@@ -221,11 +255,36 @@ int main(int argc, char *argv[])
 
 	default:
 		if (sph_check != 2) {
-			G_strip(spheriod);
-			if (G_get_ellipsoid_by_name(spheriod, &aa, &e2) == 0)
+			G_strip(spheroid);
+			if (G_get_spheroid_by_name(spheroid, &aa, &e2, &f) == 0)
 				G_fatal_error("invalid input ellipsoid");
 		}
 		break;
+	}
+
+	/* datum support added by Andreas Lange 07/2000 */
+	if (set_datum) {
+	  if (!CC_get_datum_parameters(datum, dat_ellps, &dx, &dy, &dz)) {
+	    sprintf(buff, "Error reading datum paramters!");
+	    G_fatal_error(buff);
+	  }
+
+	  if(strcmp(dat_ellps, spheroid)!=0) {
+	    sprintf(buff, "WARNING: ellipsoid defined by datum (%s) is not the same as choosen by user (%s)!\n", dat_ellps, spheroid);
+	    G_warning(buff);
+	    if (!G_yes("Continue anyway?", 0))
+	      sprintf(buff, "Exiting, no update done!");
+	      G_fatal_error(buff);
+	  }
+	  /* write out key/value pairs to out_proj_keys */
+	  sprintf(tmp_buff, "%s", datum);
+	  G_set_key_value("datum", tmp_buff, out_proj_keys);
+	  sprintf(tmp_buff, "%lf", dx);
+	  G_set_key_value("dx", tmp_buff, out_proj_keys);
+	  sprintf(tmp_buff, "%lf", dy);
+	  G_set_key_value("dy", tmp_buff, out_proj_keys);
+	  sprintf(tmp_buff, "%lf", dz);
+	  G_set_key_value("dz", tmp_buff, out_proj_keys);    
 	}
 
       write_file:
@@ -265,23 +324,26 @@ int main(int argc, char *argv[])
 		break;
 	case LL:
 		G_set_key_value("proj", "ll", out_proj_keys);
-		G_set_key_value("ellps", spheriod, out_proj_keys);
+		G_set_key_value("ellps", spheroid, out_proj_keys);
 		break;
 
 	default:
 		if (sph_check != 2) {
 			G_set_key_value("proj", proj_out, out_proj_keys);
-			G_set_key_value("ellps", spheriod, out_proj_keys);
+			G_set_key_value("ellps", spheroid, out_proj_keys);
 			sprintf(tmp_buff, "%.10f", aa);
 			G_set_key_value("a", tmp_buff, out_proj_keys);
 			sprintf(tmp_buff, "%.10f", e2);
 			G_set_key_value("es", tmp_buff, out_proj_keys);
+			sprintf(tmp_buff, "%.10f", f);
+			G_set_key_value("f", tmp_buff, out_proj_keys);
 		} else {
 			G_set_key_value("proj", proj_out, out_proj_keys);
-/*                              G_set_key_value ("ellps", "sphere", out_proj_keys); */
+			/* G_set_key_value ("ellps", "sphere", out_proj_keys); */
 			sprintf(tmp_buff, "%.10f", radius);
 			G_set_key_value("a", tmp_buff, out_proj_keys);
 			G_set_key_value("es", "0.0", out_proj_keys);
+			G_set_key_value("f", "0.0", out_proj_keys);
 		}
 
 		for (i = 0; i < NOPTIONS; i++) {
@@ -559,7 +621,7 @@ int main(int argc, char *argv[])
 
 	G_write_key_value_file(path, out_proj_keys, &out_stat);
 	if (out_stat != 0) {
-		sprintf(buffb, "Error writting PROJ_INFO file: %s\n", path);
+		sprintf(buffb, "Error writing PROJ_INFO file: %s\n", path);
 		G_fatal_error(buffb);
 	}
 	G_free_key_value(out_proj_keys);

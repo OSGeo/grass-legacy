@@ -1,5 +1,5 @@
 COORCNVLIB=$(LIBDIR)/libcoorcnv.a
-EXTRA_CFLAGS= -I$(SRC)/mapdev/diglib -L$(SRC)/mapdev/diglib $(VECT_INCLUDE)
+EXTRA_CFLAGS= -I$(SRC)/mapdev/diglib -L$(SRC)/mapdev/diglib
 
 OFILES = \
 	main.o\
@@ -71,9 +71,9 @@ OFILES = \
 	erase4over.o\
 	error_msg.o
 
-d.distance: $(BIN_CONTRIB_CMD)/d.distance
+d.distance: $(BIN_CMD)/d.distance
 
-$(BIN_CONTRIB_CMD)/d.distance: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB) $(DIG2LIB) $(MATHLIB) $(VASKLIB) $(CURSES) $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/d.distance: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB) $(DIG2LIB) $(MATHLIB) $(VASKLIB) $(CURSES) $(VECTLIB) $(GISLIB)
 	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(COORCNVLIB) $(GISLIB) $(DIG2LIB) $(MATHLIB) $(VASKLIB) $(CURSES) $(VECTLIB) $(GISLIB) $(XDRLIB)
 
 $(DISPLAYLIB): #

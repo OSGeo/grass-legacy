@@ -1,6 +1,4 @@
-PBIN = /usr/tmp 
 PGM    = r.resamp.rst
-HOME   = $(BIN_CONTRIB_CMD)
 
 TREEDIR = $(SRC)/libes/rst_gmsl/tree
 TREELIB = $(TREEDIR)/libtree.a
@@ -9,8 +7,7 @@ DATALIB = $(DATADIR)/libdata.a
 INTERPFDIR = $(SRC)/libes/rst_gmsl/interp_float
 INTERPFLIB = $(INTERPFDIR)/libinterpfl.a
 
-EXTRA_CFLAGS =  -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR) $(VECT_INCLUDE)
-#EXTRA_CFLAGS =  $(VECT_INCLUDE)
+EXTRA_CFLAGS =  -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR)
 
 LIST   =  main.o 
 SRCS   =  main.c 
@@ -18,11 +15,7 @@ SRCS   =  main.c
 LIBES=$(INTERPFLIB) $(DATALIB) $(TREELIB) \
 	$(GISLIB) $(DATETIMELIB) $(BITMAPLIB) $(LINKMLIB) $(VECTLIB)
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
-
-
-saber_src:
-	load $(CFLAGS) $(LDFLAGS) $(SRCS) $(LIBES) $(MATHLIB) $(XDRLIB) 
 
 $(LIBES): #

@@ -1,87 +1,85 @@
 #include "gis.h"
+#include "site.h"
 #include "sv.h"
 
-int 
-readsites (FILE *fdsite, int all, int label, int verbose, Z **xyz)
+int readsites (FILE *fdsite, int all, int verbose, int field, Z **xyz)
 
 /* Reads a sites list into {\tt xyz}, returning the number of sites found.  */
 {
   char *dum;
-  int i, n, c, d, alloc = 1024;
-  double ndesc, atof ();
+  int i, strs, dims,map_type,dbls,allocated=1000;
+  double east, north, ndesc, atof ();
   char desc[80];
-  struct Cell_head window;
   Site *s;
+  extern struct Cell_head window;
 
-  G_get_window (&window);
+  G_sleep_on_error (0);
+
+  field -= 1;  /* field number -> array index */
 
   if (verbose)
-    fprintf (stderr, "Reading sites list ...              ");
+    fprintf (stderr, "Reading sites list ...                  ");
 
-  s = G_site_new_struct (c, 2, 0, 1);
 
-  if (fdsite != stdin) {
-    if (G_site_describe (fdsite, &n, &c, &i, &d) != 0)
-      G_fatal_error ("failed to guess format");
-    else
-      d = 1;
+  if (G_site_describe (fdsite, &dims, &map_type, &strs, &dbls)!=0)
+    G_fatal_error("failed to guess format");
+  s = G_site_new_struct (map_type, dims, strs, dbls);
+
+  if(field >= dbls){
+      G_fatal_error("decimal field not present in sites file");
   }
 
-  if (d == 0)
+  if (dbls==0)
   {
-    fprintf (stderr, "\n");
-    G_warning ("I'm finding records that do not have a floating point attributes (fields prefixed with '%').");
+    fprintf(stderr,"\n");
+    G_warning("I'm finding records that do not have a floating point attributes (fields prefixed with '%').");
   }
 
   /* allocate chunk of memory */
-  (*xyz) = (Z *) G_malloc (alloc * sizeof (Z));
-  if ((*xyz) == NULL)
-    G_fatal_error ("cannot allocate memory");
+  (*xyz) = (Z *) G_malloc (allocated * sizeof (Z));
+  if ((*xyz)==NULL) G_fatal_error("cannot allocate memory");
+
   i = 0;
-  /* while (G_get_site (fdsite, &east, &north, &dum) > 0 ) */
-  if (fdsite == stdin)
+  /* while (G_get_site (fdsite, &east, &north, &dum) > 0) */
+  while (G_site_get (fdsite, s) == 0) 
   {
-    while (fscanf (fdsite, "%lf %lf %lf", &(s->east), &(s->north),
-		   &(s->dbl_att[0])) == 3)
+    if (i == allocated)
     {
-      if (all || (s->east >= window.west && s->east <= window.east &&
-		  s->north <= window.north && s->north >= window.south))
-      {
-	(*xyz)[i].z = s->dbl_att[0];
-	(*xyz)[i].x = s->east;
-	(*xyz)[i++].y = s->north;
-      }
-      if (i == alloc - 1)
-      {
-	alloc += 1024;
-	(*xyz) = (Z *) G_realloc (*xyz, alloc * sizeof (Z));
-	if ((*xyz) == NULL)
-	  G_fatal_error ("cannot add memory");
-      }
+      allocated+=1000;
+      (*xyz) = (Z *) G_realloc ((*xyz), allocated * sizeof (Z));
+      if ((*xyz)==NULL) G_fatal_error("cannot allocate memory");
     }
-  }
-  else
-  {
-    while (G_site_get (fdsite, s) == 0)
+    if (all || (s->east >= window.west && s->east <= window.east &&
+		s->north <= window.north && s->north >= window.south))
     {
-      if (all || (s->east >= window.west && s->east <= window.east &&
-		  s->north <= window.north && s->north >= window.south))
+#ifdef OLD_API
+      if (label)
       {
-	/* sscanf (dum, "%lf ", &(*xyz)[i].z); */
-	(*xyz)[i].z = s->dbl_att[0];
-	(*xyz)[i].x = s->east;
-	(*xyz)[i++].y = s->north;
+	sscanf (dum, "#%*d %s", desc);
+	ndesc = atof (G_strip (desc));
+	if (ndesc == 0.0)
+	{
+	  G_warning ("possible non-numeric description field; setting to zero");
+	  ndesc = 0;
+	}
+        (*xyz)[i].z = ndesc;
       }
-      if (i == alloc - 1)
+      else
       {
-	alloc += 1024;
-	(*xyz) = (Z *) G_realloc (*xyz, alloc * sizeof (Z));
-	if ((*xyz) == NULL)
-	  G_fatal_error ("cannot add memory");
+        while (dum[0] == '#' || dum[0] == ' ' ) dum++;
+	/* sscanf (dum, "%[^#]", desc);
+	G_strip (desc);
+fprintf(stderr,"DIAG: dum = |%s| desc=|%s|\n",dum,desc); */
+	sscanf (dum, "%lf ", &(*xyz)[i].z);
       }
+#endif /* OLD_API */
+      (*xyz)[i].z=s->dbl_att[field];
+      (*xyz)[i].x=s->east;
+      (*xyz)[i++].y=s->north;
     }
   }
   fclose (fdsite);
+  G_sleep_on_error (1);
   if (verbose)
     G_percent (1, 1, 1);
   return i;

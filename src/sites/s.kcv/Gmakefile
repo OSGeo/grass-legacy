@@ -1,8 +1,5 @@
-MSEC=4
-MDIR=$(SRC)/../man/man$(MSEC)
-MUTL=$(SRC)/../man/utilities
-
 LIBES = $(GISLIB) $(DATETIMELIB)
+PGM=s.kcv
 
 LIST  = \
 	main.o \
@@ -11,31 +8,8 @@ LIST  = \
 	histo.o \
 	utils.o
 
-all: s.kcv man
-
-s.kcv: $(BIN_CONTRIB_CMD)/s.kcv 
-
-$(BIN_CONTRIB_CMD)/s.kcv: $(LIST) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
-
-man:  
-	-cp s.kcv.man $(MDIR)/s.kcv
-	nroff $(MUTL)/man.version $(MDIR)/.class-header \
-	   $(MUTL)/man.header s.kcv.man $(MDIR)/.class-notice \
-	   > $(GISBASE)/man/$(MSEC)/s.kcv
-lint:
-	lint $(CFLAGS) main.c
-
-clean: 
-	-rm -f *.BAK core *~ s.kcv tags s.kcv.cat
-
-realclean: clean
-	-rm -rf OBJ.* 
-
-veryclean: realclean
-
-dist: veryclean
-	(cd .. ; tar cvf s.kcv.tar s.kcv; gzip s.kcv.tar; mv s.kcv.tar.gz /home/pasture/ftp/pub/mccauley/grass)
 
 main.o:       	kcv.h version.h
 readsite.o:	kcv.h version.h

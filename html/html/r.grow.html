@@ -1,0 +1,146 @@
+<TITLE>r.grow</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.grow</b></EM>  - Generates an output raster map layer 
+with contiguous areas grown by one cell (pixel). 
+<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.grow</B> 
+<BR>
+<B>r.grow help</B> 
+<BR>
+<B>r.grow</B> [<B>-bq</B>] <B>input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.grow</EM>
+adds one cell around the perimeters of all areas in a user-specified raster 
+map layer and stores the output in a new raster map layer. 
+
+<P>
+
+An area consists of any contiguous clump of cells with
+non-zero category values. No distinction is made between
+differing category values within an area. Rather, a border
+is grown around the outside of each entire contiguous set
+of non-zero cells.
+
+<P>
+
+The <B>output</B> raster map layer will not go outside
+the boundaries set in the current geographic region.  Thus,
+if a contiguous area in the <B>input</B> raster map layer
+extends to the geographic edge of the current map layer, no
+new border cells can be added to that side of the area.
+
+<P>
+Growth around a rectangular area in the <B>input</B> raster map layer will 
+occur straight out from each edge, but not diagonally 
+from the corners of the rectangle. Thus, the "grown" 
+border area will contain lines along the edge of the 
+original rectangle, but the corners of the border will not be squared off. 
+Instead, the lines 
+of the border which go along each side of the original rectangle 
+will touch only at the corners of the cells at the end of each line. 
+
+<H2>OPTIONS</H2>
+
+The user can run <EM>r.grow</EM> either interactively or non-interactively. 
+The program is run interactively if the user types <B>r.grow</B> without 
+specifying flag settings and parameter values on the command line. 
+In this case, the user will be prompted for input. 
+
+<P>
+Alternately, the user can run <EM>r.grow</EM> non-interactively, by 
+specifying the names of an <B>input</B> and <B>output</B> map layer, 
+and including any desired flags, on the command line. 
+
+
+<P>
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-b</B>
+<DD>Output a binary raster map layer having only zero-one category values, 
+regardless of the category values in the <B>input</B> map layer. 
+In this case, all cells with a non-zero category value in the <B>input</B> map 
+layer are assigned to category 1 in the <B>output</B> map layer. 
+If the -b flag is not used, these cells will retain their original 
+non-zero category values. In either case, all cells 
+whose category value is changed from 0 during the growing 
+process are assigned a category value of 1 in the <B>output</B> map. 
+<DT><B>-q</B>
+<DD>Run quietly, supressing printing of information about program progress 
+to standard output. 
+</DL>
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>input=</B><EM>name</EM>
+
+<DD>Name of an existing raster map layer in the user's
+current mapset search path containing areas to be "grown".
+
+<DT><B>output=</B><EM>name</EM>
+
+<DD>Name of the new raster map layer to contain program
+output.  This map will be binary if the user sets the -b
+flag. Otherwise, <B>input</B> map cells having non-zero
+category values will retain their original values.  In
+either case, all cells whose values changed during growth
+will be assigned category value 1 in the <B>output</B>
+map.
+
+</DL>
+
+<H2>NOTES</H2>
+
+The <EM>r.grow</EM> command can be used to represent the
+boundary of one or more areas. In this case, the zero-one
+(binary) output option should NOT be used. Then the
+<B>input</B> map layer can be subtracted from the
+<B>output</B> map layer using the
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM> command. 
+All original non-zero category values will be subtracted
+out, leaving the boundary areas only. This resulting
+zero-one boundary depiction can be displayed over other
+related raster map layers using the overlay option of
+<EM><A HREF="d.rast.html">d.rast</A></EM>.
+
+<P>
+
+If the resolution of the current geographic region does not
+agree with the resolution of the input raster map layer,
+unintended resampling of the original raster map layer may
+occur.  The user should be sure that the current geographic
+region is set properly.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.rast.html">d.rast</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM><br>
+<EM><A HREF="r.poly.html">r.poly</A></EM>
+
+<H2>AUTHOR</H2>
+
+Marjorie Larson, 
+U.S. Army Construction Engineering 
+Research Laboratory
+ 
+

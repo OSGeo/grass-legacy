@@ -1,8 +1,0 @@
-
-
-d.what.vect - 
-
-d.what.vect outputs the @glossary("category values",16.glossary/catval.def) and @glossary("labels",16.glossary/label.def) asssociated with
-user-specified location(s) in user-named vector map layer(s).
-
-Manual entry for @man("d.what.vect")

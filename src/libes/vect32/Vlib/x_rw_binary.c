@@ -4,12 +4,10 @@
 **
 **  Modified by Dave Gerdes 1/91   more portable
 */
-#include "digit.h"
-#include "Vect.h"
-#include <string.h>
-#include "gis.h"
-#include "dig_head.h"
 #include <stdio.h>
+#include <string.h>
+#include "Vect.h"
+#include "gis.h"
 
 
 /* routines to read and write DIGIT header */

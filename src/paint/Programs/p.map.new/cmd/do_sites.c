@@ -1,6 +1,7 @@
 #include <math.h>
 #include "sites.h"
 #include "gis.h"
+#include "site.h"
 #include "text.h"
 #include "misc.h"
 #include "fullwindow.h"

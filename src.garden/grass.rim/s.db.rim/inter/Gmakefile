@@ -1,8 +1,5 @@
-
 MYINCLUDE = ../cmd
-#EXTRA_CFLAGS = -g -DDEBUGIO
 EXTRA_CFLAGS =  -I$(MYINCLUDE) -DDBSITES
-#FFLAGS =
 
 #Uncomment the next line to use the static Fortran Libraries on the SUNs
 #LDFLAGS = -Bstatic
@@ -19,11 +16,12 @@ OBJFILES = s.db.rim.o layout.o main_menu.o mgmt_menu.o fnd_qry.o add_chng_del.o 
 	rim_type.o save_finfo.o res_split_f.o field_offset.o delete.o \
 	print.o my_G_yes.o val_to_str.o site_list.o read_sites.o strip_fields.o
 
-all: $(BIN_MAIN_INTER)/s.db.rim
+all: $(BIN_INTER)/s.db.rim
 
-$(BIN_MAIN_INTER)/s.db.rim: $(OBJFILES)
-	f77 $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) \
-	$(MYLIBS) $(GISLIB) $(VASK)
+$(BIN_INTER)/s.db.rim: $(OBJFILES)
+	$(F77) $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) \
+	$(MYLIBS) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB) \
+	$(DATETIMELIB)
 
 clear_value.c: ../cmd/clear_value.c
 	ln $? $@
@@ -91,10 +89,4 @@ read_sites.c: ../cmd/read_sites.c
 	ln $? $@
 strip_fields.c: ../cmd/strip_fields.c
 	ln $? $@
-
-
-
-
-
-
 

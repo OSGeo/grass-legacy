@@ -1,4 +1,4 @@
-This is a beta6 distribution of "GRASS 5.0".
+This is a beta distribution of "GRASS 5.0".
 
 GRASS Development Team
 Institute of Physical Geography and Landscape Ecology at
@@ -17,12 +17,33 @@ Baylor University
 P.O. Box 97351
 Waco, Texas  76798-7351
 
+General Email:            grass@baylor.edu
 
-
-Email:     grass@baylor.edu
+Contributions to GRASS 5: neteler@geog.uni-hannover.de
 
 Internet:  http://grass.baylor.edu/
            http://www.geog.uni-hannover.de/grass/
            http://www2.gis.uiuc.edu:2280/modviz/
 
-GRASS Development Team 1999
+GRASS Development Team 2000    
+
+-------------------------------------------------------
+GRASS Installation:
+
+Please see the INSTALL file for installation
+instructions.
+
+-------------------------------------------------------
+GRASS 5 Programmer's Manual:
+
+http://www.geog.uni-hannover.de/grass/contrib.html
+
+Or Latex sources from CVS server
+(http://www.geog.uni-hannover.de/grass/grasscvs.html)
+
+cvs -z3 co progmangrass50
+
+Please see the SUBMITTING file for instructions on
+submitting code to the GRASS code base
+
+-------------------------------------------------------

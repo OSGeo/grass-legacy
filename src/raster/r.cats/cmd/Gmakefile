@@ -2,7 +2,7 @@ PGM=r.cats
 
 LIST=main.o cats.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -1,0 +1,21 @@
+PGM1=r.in.tiff
+PGM2=r.out.tiff
+
+LIBTIFF = $(TIFFLIBPATH) $(JPEGLIBPATH) -ltiff $(ZLIB)
+EXTRA_CFLAGS = $(TIFFINCPATH) $(XINCPATH) $(XMINCPATH)
+
+PGM1OFILES = \
+	r.in.tiff.o
+
+PGM2OFILES = \
+	r.out.tiff.o
+
+all:  $(BIN_CMD)/$(PGM1) $(BIN_CMD)/$(PGM2)
+
+$(BIN_CMD)/$(PGM1): $(PGM1OFILES) 
+	$(CC) $(LDFLAGS) -o $@ $(PGM1OFILES) $(GISLIB) $(LIBTIFF) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
+
+$(BIN_CMD)/$(PGM2): $(PGM2OFILES) 
+	$(CC) $(LDFLAGS) -o $@ $(PGM2OFILES) $(GISLIB) $(LIBTIFF) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

@@ -1,0 +1,81 @@
+<html>
+<A NAME="v.in.gshhs">
+<TITLE>v.in.gshhs</TITLE>
+<body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<B><EM>v.in.gshhs</EM></B> - import Global Self-consistant Hierarchical High-resolution Shoreline (GSHHS) data<BR>
+<EM>(GRASS Vector Import Program)</EM>
+
+<H2>SYNOPSIS</H2>
+<B>v.in.gshhs [-g] [-s] [-a] input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>n</B><EM>=value</EM>] [<B>s</B><EM>=value</EM>] [<B>e</B><EM>=value</EM>] [<B>w</B><EM>=value</EM>]
+
+<H2>DESCRIPTION</H2> The <EM>v.in.gshhs</EM> program imports Global
+Self-consistant Hierarchical High-resolution Shoreline (GSHHS) data
+available from <A
+HREF="http://www.soest.hawaii.edu/wessel/gshhs/gshhs.html">http://www.soest.hawaii.edu/wessel/gshhs/gshhs.html</A>. 
+Coordinates are originally lat/long and, if required, reprojected during
+import to the current GRASS projection. The user may supply bounding
+coordinates by manually entering north, south, east, and west values, or
+optionally using the "-g" flag to use the current GRASS region as the
+bounding coordinates.
+
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-g</B>
+<DD>Obtain north, south, east, and west bounding coordinates from the current GRASS region
+<DT><B>-s</B>
+<DD>Automatically run <EM>v.support</EM> after import
+<DT><B>-a</B>
+<DD>Import vector data as area-line type (default is line)
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input</B>
+<DD>The name of the GSHHS shoreline file
+<DD>There are five files (resolutions) available: crude, low, intermediate, high, and full
+
+<DT><B>output</B>
+<DD>The name of the GRASS vector file to be created
+
+<DT><B>n</B>
+<DD>North limit for imported vector
+
+<DT><B>n</B>
+<DD>North limit for imported vector
+
+<DT><B>s</B>
+<DD>South limit for imported vector
+
+<DT><B>e</B>
+<DD>East limit for imported vector
+
+<DT><B>w</B>
+<DD>West limit for imported vector
+</DL>
+
+<H2>NOTES</H2>
+Imported vector data is assigned labels (eg.land, lake, etc) derived from GSHHS data. Solid lines that exit and re-enter the import area are broken at the point of exit.
+
+<H2>EXAMPLE</H2>
+The following example imports an intermediate resolution shoreline into GRASS using the current GRASS region and automatically runs <EM>v.support</EM> after import:
+<pre>
+v.in.gshhs -gs input=gshhs_i.b output=shoreline.int
+</pre>
+
+
+<H2>AUTHORS</H2>
+This program is based on <EM>gshhstograss</EM><BR>
+Author: <A HREF=mailto:simon@ned.dem.csiro.au>Simon Cox</A><BR>
+Author: <A HREF=mailto:wessel@soest.hawaii.edu>Paul Wessel</A><BR>
+Author: <A HREF=mailto:bcovill@tekmap.ns.ca>Bob Covill</A>
+<P>
+
+</BODY>
+</HTML>

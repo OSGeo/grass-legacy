@@ -1,4 +1,3 @@
-EXTRA_CFLAGS    = $(VECT_INCLUDE) 
 
 PGM=s.medp
 LIST =handle.o readsites.o main.o medpolish.o examine.o cats_att.o \
@@ -7,8 +6,8 @@ LIST =handle.o readsites.o main.o medpolish.o examine.o cats_att.o \
 
 LIBES= $(GISLIB) $(VECTLIB) $(MATHLIB) $(VASKLIB) $(DIG_ATTLIB) $(DATETIMELIB)
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(XDRLIB)
 $(LIST): polish.h 
  
 $(LIBES): #

@@ -1,0 +1,95 @@
+<!--	grass-interface.dtd
+
+	Copyright (C) 2000 by the GRASS Development Team
+	Author: Jan-Oliver Wagner <jan@intevation.de>
+
+	This program is free software under the GPL (>=v2)
+	Read the file COPYING coming with GRASS for details.
+-->
+
+
+<!--	a grass-interface collect several tasks to
+	customize a grass application.
+-->
+<!ELEMENT grass-interface (task+, description?)>
+<!ATTLIST grass-interface	name	CDATA #REQUIRED>
+
+
+<!--	a task describes the interface of a single
+	GRASS command. It may consist of several
+	groups of parameters. Grouping is only for
+	semantic purposes in the (G)UI.
+	The task may optionally have a description.
+	The name of the task is the identifier
+	for the GRASS command and is used
+	to execute the task.
+-->
+<!ELEMENT task	(parameter-group+, description?)>
+<!ATTLIST task	name	CDATA #REQUIRED>
+
+
+
+<!--	a parameter-group may be associated with a name,
+	but the name is not necessary for running a
+	GRASS command.
+	The group consists of a number of parameters
+	and may optionally have a description.
+-->
+<!ELEMENT parameter-group	(parameter+, description?)>
+<!ATTLIST parameter-group	name	CDATA	#IMPLIED>
+
+
+<!--	a parameter must have a name and a description.
+	the name is the parameter identifier when calling
+	the command.
+	A default may be provided. values can be given
+	as parameter options.
+	Parameters can be optional and in that case can be
+	ignored executing the task when not entered in the (G)UI.
+	Any parameter has one of these (default is string):
+	string		: a string parameter.
+	integer		: a numeric integer parameter.
+	float		: a numeric float parameter.
+	flag		: a simple true/false parameter.
+	If multiple is "yes", then many values for the
+	parameter may be given in a comma-seperated list
+-->
+<!ELEMENT parameter	(description, default, values?)>
+<!ATTLIST parameter	name		CDATA #REQUIRED
+			type		(flag | string | integer | float) "string"
+			required	(yes | no) "no"
+			multiple	(yes | no) "no">
+
+
+
+<!--	a default of a parameter. Hopefully it does correspond
+	with the parameter type. How to set up rules for that
+	(same problem for <value>)?
+-->
+<!ELEMENT default	(#PCDATA)>
+
+
+
+<!--	contains a number of single values.
+-->
+<!ELEMENT values	(value+)>
+
+
+
+<!--	a potential value for a parameter. Hopefully
+	it does correposnd to the parameter type.
+	How to set up rules for that (same problem for
+	<default>)?
+-->
+<!ELEMENT value	(#PCDATA)>
+
+
+
+<!-- common elements -->
+
+
+
+<!--	text that describes a grass-interface, task,
+	parameter-group or parameter.
+-->
+<!ELEMENT description	(#PCDATA)>

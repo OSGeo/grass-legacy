@@ -1,0 +1,13 @@
+OBJ = \
+	la.o
+
+all: $(GMATHLIB)
+
+$(GMATHLIB): $(OBJ)
+	$(AR) 
+
+$(OBJ): $(INCLUDE_DIR)/la.h
+
+LIBES = $(GISLIB)
+
+

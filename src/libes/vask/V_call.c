@@ -2,6 +2,8 @@
 #
 /***********************************************************************
 
+$Id$
+
 Modified by Jacques Bouchard and Markus Neteler 6/99 to make cursor
 keys working. Exit now with ESC-CR.
 

@@ -1,3 +1,4 @@
+PGM=i.rectify
 LIST = main.o\
 	ask_files.o\
 	ask_files2.o\
@@ -15,9 +16,10 @@ LIST = main.o\
 	target.o\
 	write.o
 
-$(BIN_MAIN_INTER)/i.rectify: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB) $(XDRLIB)
+LIBES=$(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
 $(LIST): global.h rowcol.h
 
-
-$(IMAGERYLIB) $(GISLIB) $(VASKLIB): # in case libraries change
+$(LIBES): # in case libraries change

@@ -26,10 +26,18 @@ int main( int argc, char **argv )
 	int y_box[5] , py_box[5];
 	struct Categories cats ;
 	struct Colors colors ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
 	struct Range range ;
 	CELL min_ind, max_ind, null_cell;
 	DCELL dmin, dmax, val;
+
+	module = G_define_module();
+	module->description =
+		"improved version of d.legend that allows:\n"
+		"- Thinning the categories to be represented in the legend\n"
+		"- Displaying a continuous gradient of all categories in the legend\n"
+		"- Interactive mouse placement of the smooth gradient box.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;

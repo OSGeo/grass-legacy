@@ -1,6 +1,0 @@
-
-
-interactive - Refers to a system allowing two-way communication between
-user and the software.  In GRASS, some programs are interactive and 
-"prompt" the user for input, while others rely on the user's knowledge
-of a command's specific syntax and usage statement structure.

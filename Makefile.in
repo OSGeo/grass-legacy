@@ -1,59 +1,480 @@
-# Makefile.in
+#############################################################################
+#
+# $Id$
+#
+# MODULE:   	Grass Compilation
+# AUTHOR(S):	Original author unknown - probably CERL
+#   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
+#		Markus Neteler - Germany - neteler@geog.uni-hannover.de
+#		Andreas Lange - Germany - Andreas.Lange@Rhein-Main.de
+# PURPOSE:  	The source file for this Makefile is in Makefile.in. It 
+#		provides the commands necessary to compile, install, clean,
+#		and uninstall GRASS
+# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
+############################## Make Variables ###############################
 
 SHELL=			/bin/sh
 
+# Install directories
 PREFIX=			@prefix@
-
+prefix=                 @prefix@
+exec_prefix=            @exec_prefix@
 BINDIR=			@BINDIR@
+INST_DIR=		${prefix}/grass@NAME_VER@
 
-SRCDIR=			`pwd`
+# Compile directories
+SRCDIR=			@SRCDIR@
+GISBASE=                @GISBASE@
+GRASS_BIN=		@GRASS_BIN@
+
+# Machine type variables
 SERVERNAME=		`uname -n`
+SYSTEM=			`uname -s`
+ARCH=			@ARCH@
 
-INSTALL=		@INSTALL@
-INSTALL_DATA=		@INSTALL_DATA@ -m 644
-INSTALL_PROGRAM=	@INSTALL_PROGRAM@
-INSTALL_SCRIPT=		@INSTALL@ -m 755
-####INSTALL_DATA_DIR=	install -d -m 755
-INSTALL_DATA_DIR=	mkdir -p -m 755
+# Version - NAME_VER is the major number - eg VERSION = 5.0beta8 NAME_VER = 5
+VERSION=		@VERSION@
+NAME_VER=   	    	@NAME_VER@
 
+# Shell commands
+MAKE_DIR_CMD=		mkdir -p -m 755
+MAKE=			make
+INSTALL=    	    	cp
+
+# Miscellaneous variables
 ENV=			@ENV@
+USE_OPENGL=             @USE_OPENGL@
+# The cutline command is needed to shorten the ChangeLog:
+CUTLINE=		`grep -n '1999-12-29 16:13' ChangeLog |cut -d':' -f1 | head -1`
 
-MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0
-
+# These variables will be passed to the scripts below:
+MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0 HEADER=head.${ARCH} MAKE=${MAKE}
+MAKE_GMAKE_ENV=		GRASS_BIN=${GRASS_BIN} SRC=${SRCDIR} MAKE=${MAKE} NAME_VER=${NAME_VER}
+MAKE_POST_ENV=		GISBASE=${GISBASE}  MACHINENAME=${SERVERNAME}
 IS64BIT=		${SRCDIR}/src/CMD/generic/is64bit.sh
 
-MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR}
+XDRIVER=		@XDRIVER@
 
-MAKE_POST_ENV=		GISBASE=${PREFIX} MACHINENAME=${SERVERNAME}
 
-all: pre-install
+# Variables for the DejaGNU testing suite:
+EXPECT=`which expect`
+RUNTEST=`which runtest`
+RUNTESTFLAGS=-v
 
-install: pre-install do-install
+# Files to include in a binary distribution
+BIN_DIST_FILES =    	AUTHORS \
+    	    	    	BUGS \
+    	    	    	COPYING \
+			NEWS.html \
+			README \
+			REQUIREMENTS \
+			TODO \
+			grass${NAME_VER} \
+    	    	    	bin/ \
+			bwidget/ \
+			dev/ \
+			driver/ \
+			etc/ \
+			fonts/ \
+			documents/ \
+			include/ \
+			lib/ \
+			man/ \
+			scripts/ \
+			tcltkgrass/ \
+			txt/
 
-pre-install:
-	${ENV} ${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh
-	${INSTALL_DATA_DIR} ${PREFIX}
-	${SHELL} ${IS64BIT}
+############################## Make Targets #################################
 
-do-install:
-	${ENV} ${MAKE_ENV} ${SHELL} src/CMD/generic/GISGEN.sh
-	${ENV} ${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
-	${ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh
+# DO NOT CHANGE ANYTHING BELOW THIS LINE
 
-clean:
-	echo "Removing object files..."
-	find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true
-	rm -f src/CMD/next_step/*              2>/dev/null ; true
-	# Cleaning finished.
+all: binaries
 
-veryclean:
-	echo "Removing object files..."
-	find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true
-	#delete all LIB.<arch>/* files:
-	find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true
-	rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true
-	# remove system dependent files:
-	rm -f src/CMD/next_step/* src/CMD/head/head 2>/dev/null ; true
-	rm -f config.cache config.log config.status 2>/dev/null ; true
-	rm -f Makefile                              2>/dev/null ; true
-	# Cleaning finished.
+binaries: FORCE
+	@ # The following action MUST be a single action. That is, all lines
+	@ # except the last line must have a backslash (\) at the end to
+	@ # continue the statement. The reason for this is that Make does not
+	@ # have an exit command thus, exit terminates the shell. However, 
+	@ # Make creates a new shell for each action listed for a target.
+	@ # Therefore, the only way exit will quit Make is if there is only
+	@ # a single action for the target.
+	@ # Warn the user if they are trying to compile as root
+	@ if [ `whoami` = "root" ] ; then \
+		echo "WARNING: You are attempting to compile GRASS as user root."; \
+		echo "  This is potentially a dangerous operation and is NOT recommended."; \
+		echo "  Do you want to continue? [y/n]"; \
+		read ans; \
+		ans=`echo "$$ans" | tr A-Z a-z`; \
+		if [ "$$ans" != "y" ] ; then \
+			echo "Compilation aborted, exiting Make."; \
+			exit; \
+		fi; \
+	fi; \
+	${MAKE} real-binaries
+
+real-binaries: FORCE pre-compile do-compile
+
+pre-compile: FORCE
+	test -d ${GISBASE} || ${MAKE_DIR_CMD} ${GISBASE}
+	test -d ${GRASS_BIN} || ${MAKE_DIR_CMD} ${GRASS_BIN}
+	test -d src/CMD/next_step || ${MAKE_DIR_CMD} src/CMD/next_step
+	test ! -f src/CMD/head/head || mv src/CMD/head/head src/CMD/head/head.${ARCH}
+	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh ${ARCH} ${GRASS_BIN}
+	${SHELL} ${IS64BIT} ${ARCH}
+
+do-compile: FORCE
+	@ rm -f src/CMD/next_step/${ARCH}
+	${MAKE_ENV} ${SHELL} src/CMD/generic/GISGEN.sh
+	${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
+	${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh ${ARCH}
+
+# Any target that has a dependency on this target will be forced to be made.
+# If we switch to GNU Make then this feature can be replaced with .PHONY
+FORCE:
+
+install: FORCE
+	@ # The following action MUST be a single action. That is, all lines
+	@ # except the last line must have a backslash (\) at the end to
+	@ # continue the statement. The reason for this is that Make does not
+	@ # have an exit command thus, exit terminates the shell. However, 
+	@ # Make creates a new shell for each action listed for a target.
+	@ # Therefore, the only way exit will quit Make is if there is only
+	@ # a single action for the target.
+	@ # Check if grass has been compiled, if INST_DIR is writable, and if
+	@ # grass is part of INST_DIR
+	@ if [ ! -f ${GRASS_BIN}/grass${NAME_VER} ] ; then \
+		echo "ERROR: Grass has not been compiled. Try \"make\" first."; \
+		echo "  Installation aborted, exiting Make."; \
+		exit; \
+	fi; \
+	INST_PATH=`dirname ${INST_DIR}`; \
+	while [ ! -d $$INST_PATH ]; do \
+		INST_PATH=`dirname $$INST_PATH`; \
+	done; \
+	if [ ! -d "${INST_DIR}" -a ! -w "$$INST_PATH" ] ; then \
+		echo "ERROR: Directory $$INST_PATH is a parent directory of your"; \
+		echo "  install directory ${INST_DIR} and is not writable."; \
+		echo "  Perhaps you need root access."; \
+		echo "  Installation aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ -d ${INST_DIR} -a ! -w "${INST_DIR}" ] ; then \
+		echo "ERROR: Your install directory ${INST_DIR} is not writable."; \
+		echo "  Perhaps you need root access."; \
+		echo "  Installation aborted, exiting Make."; \
+		exit; \
+	fi; \
+	result=`echo "${INST_DIR}" | awk '{ if ($$1 ~ /grass/) print $$1 }'`; \
+    	if [ "$$result" = "" ] ; then \
+    		echo "WARNING: Your install directory ${INST_DIR}"; \
+		echo "  does not contain the word 'grass'."; \
+		echo "  It is highly recommended that the word 'grass' be part"; \
+		echo "  of your install directory to avoid conflicts."; \
+        	echo "  Do you want to continue? [y/n]"; \
+        	read ans; \
+		ans=`echo "$$ans" | tr A-Z a-z`; \
+		if [ "$$ans" != "y" ] ; then \
+            		echo "Installation aborted, exiting Make."; \
+			exit; \
+        	fi; \
+	fi; \
+	${MAKE} real-install
+	
+real-install: FORCE
+	test -d ${INST_DIR} || ${MAKE_DIR_CMD} ${INST_DIR}
+	test -d ${BINDIR} || ${MAKE_DIR_CMD} ${BINDIR}
+	${SHELL} -c "sed -e \"s#^GISBASE.*#GISBASE=${INST_DIR}#\" ${GRASS_BIN}/grass${NAME_VER} > ${BINDIR}/grass${NAME_VER} ; true"
+	${SHELL} -c "chmod a+x ${BINDIR}/grass${NAME_VER} ; true"
+	${SHELL} -c "$(INSTALL) ${GRASS_BIN}/gmake${NAME_VER} ${BINDIR} ; true"
+	${SHELL} -c "$(INSTALL) ${GRASS_BIN}/gmakelinks${NAME_VER} ${BINDIR} ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - bin/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - bwidget/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - documents/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - driver/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - etc/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - fonts/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - locks/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - scripts/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - tcltkgrass/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - txt/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	@ # The man, include, and lib could go to ${PREFIX}/ BUT if this is
+	@ # done, then the corresponding uninstall instructions must delete
+	@ # the grass files BY FILENAME NOT DIRECTORY!! Otherwise there is a
+	@ # high risk of deleteing system files since PREFIX is defined by
+	@ # default to be /usr/local
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - man/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - include/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - lib/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "$(INSTALL) ${GISBASE}/dev/create_fifos.sh ${INST_DIR}/dev ; true"
+	${SHELL} -c "$(INSTALL) ${GISBASE}/dev/create_ipcs.sh ${INST_DIR}/dev ; true"
+	${SHELL} -c "${SHELL} ${SRCDIR}/src/scripts/shells/create_${XDRIVER}s.sh ${INST_DIR} 2>/dev/null ; true"
+	${SHELL} -c "sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap ; true"
+	${SHELL} -c "chmod -R 1777 ${INST_DIR}/locks 2>/dev/null ; true"
+
+uninstall: FORCE
+	@ # The following action MUST be a single action. That is, all lines
+	@ # except the last line must have a backslash (\) at the end to
+	@ # continue the statement. The reason for this is that Make does not
+	@ # have an exit command thus, exit terminates the shell. However, 
+	@ # Make creates a new shell for each action listed for a target.
+	@ # Therefore, the only way exit will quit Make is if there is only
+	@ # a single action for the target.
+	@ # Check if grass is part of INST_DIR
+	@ result=`echo "${INST_DIR}" | awk '{ if ($$1 ~ /grass/) print $$1 }'`; \
+    	if [ "$$result" = "" ] ; then \
+    		echo "WARNING: Your install directory ${INST_DIR}"; \
+		echo "  does not contain the word 'grass'."; \
+		echo "  There is a possibility that this directory conflicts"; \
+		echo "  with a system directory. If you proceed the following"; \
+		echo "  directories will be deleted:"; \
+		echo "  ${INST_DIR}/bin, ${INST_DIR}/bwidget, ${INST_DIR}/dev,"; \
+		echo "  ${INST_DIR}/documents, ${INST_DIR}/driver, ${INST_DIR}/etc,"; \
+		echo "  ${INST_DIR}/fonts, ${INST_DIR}/include, ${INST_DIR}/lib,"; \
+		echo "  ${INST_DIR}/locks, ${INST_DIR}/man, ${INST_DIR}/scripts,"; \
+		echo "  ${INST_DIR}/tcltkgrass, ${INST_DIR}/txt"; \
+		echo "  as well as the files ${BINDIR}/grass${NAME_VER},"; \
+		echo "  ${BINDIR}/gmake${NAME_VER}, and ${BINDIR}/gmakelinks${NAME_VER}."; \
+        	echo "  Do you want to continue? [y/n]"; \
+        	read ans; \
+		ans=`echo "$$ans" | tr A-Z a-z`; \
+		if [ "$$ans" != "y" ] ; then \
+            		echo "Uninstall aborted, exiting Make."; \
+			exit; \
+        	fi; \
+	else \
+		echo "WARNING: You are about to delete all files in ${INST_DIR}"; \
+		echo "  as well as the files ${BINDIR}/grass${NAME_VER},"; \
+		echo "  ${BINDIR}/gmake${NAME_VER}, and ${BINDIR}/gmakelinks${NAME_VER}."; \
+        	echo "  Do you want to continue? [y/n]"; \
+        	read ans; \
+		ans=`echo "$$ans" | tr A-Z a-z`; \
+		if [ "$$ans" != "y" ] ; then \
+            		echo "Uninstall aborted, exiting Make."; \
+			exit; \
+        	fi; \
+	fi; \
+	${MAKE} real-uninstall
+	
+real-uninstall: FORCE
+	@ # Only recursively remove directories under INST_DIR any other
+	@ # directory needs to have the grass files removed individually
+	${SHELL} -c "rm -f ${BINDIR}/grass${NAME_VER} ; true"
+	${SHELL} -c "rm -f ${BINDIR}/gmake${NAME_VER} ; true"
+	${SHELL} -c "rm -f ${BINDIR}/gmakelinks${NAME_VER} ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/bin ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/bwidget ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/dev ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/documents ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/driver ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/etc ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/fonts ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/locks ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/scripts ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/tcltkgrass ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/txt ; true"
+	@ # If man, include, and lib are changed to ${PREFIX}/ in the install
+	@ # target then the grass files MUST BE REMOVED BY FILENAME NOT BY
+	@ # DIRECTORY!! Otherwise there is a high risk of deleteing system
+	@ # files since PREFIX is defined by default to be /usr/local
+	${SHELL} -c "rm -rf ${INST_DIR}/man ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/include ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/lib ; true"
+	${SHELL} -c "rmdir ${INST_DIR} ; true"
+
+# make a source package for distribution:
+srcdist: FORCE distclean
+	@ echo "create Changelog file without initial messages..."
+	@ # cvs2cl.pl creates a GNU style ChangeLog file:
+	@ # http://www.red-bean.com/~kfogel/cvs2cl.shtml
+	cvs2cl.pl
+	@ echo "reduce Changelog file... Dont want the initial upload included."
+	head -${CUTLINE} ChangeLog    > ChangeLog.cut
+	echo "   initial CVS import" >> ChangeLog.cut
+	${SHELL} -c "mv ChangeLog.cut ChangeLog"
+	${SHELL} -c "rm -f ChangeLog.bak"
+	tar cvfz grass${VERSION}_src.tar.gz * --exclude=CVS
+	@ echo "Distribution source package: grass${VERSION}_src.tar.gz ready."
+
+# make a binary package for distribution:
+#  Bug: VER is not expanded properly (wrong directory):
+bindist: FORCE
+	@ # The following action MUST be a single action. That is, all lines
+	@ # except the last line must have a backslash (\) at the end to
+	@ # continue the statement. The reason for this is that Make does not
+	@ # have an exit command thus, exit terminates the shell. However, 
+	@ # Make creates a new shell for each action listed for a target.
+	@ # Therefore, the only way exit will quit Make is if there is only
+	@ # a single action for the target.
+	@ # Check if the user needs root permission and check if grass has
+	@ # been installed
+	@ if [ ! -d ${INST_DIR} ] ; then \
+		echo "ERROR: It seems your install directory ${INST_DIR} does not exist."; \
+		echo "  Grass has not been installed yet. Try \"make install\" first."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ ! -w ${INST_DIR} ] ; then \
+		echo "ERROR: It seems you do not have the correct permissions to create"; \
+		echo "  a binary distribution. Perhaps you need root access."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ ! -f ${BINDIR}/grass${NAME_VER} ] ; then \
+		echo "ERROR: Grass has not been installed yet. Try \"make install\" first."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	INST_MOD_TIME=`${INST_DIR}/etc/getModTime ${BINDIR}/grass${NAME_VER}`; \
+	if [ "$$INST_MOD_TIME" = "-1" ]; then \
+		echo "ERROR: Invalid file: ${BINDIR}/grass${NAME_VER}"; \
+		echo "  Please advise the GRASS developers of this error."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	COMP_MOD_TIME=`${INST_DIR}/etc/getModTime ${GRASS_BIN}/grass${NAME_VER}`; \
+	if [ "$$COMP_MOD_TIME" = "-1" ]; then \
+		echo "ERROR: Invalid file: ${GRASS_BIN}/grass${NAME_VER}"; \
+		echo "  Please advise the GRASS developers of this error."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ "$$COMP_MOD_TIME" -gt "$$INST_MOD_TIME" ] ; then \
+		echo "WARNING: The GRASS installation is not up to date."; \
+		echo "  Do you want to exit and run 'make install'? [y/n]"; \
+        	read ans; \
+		ans=`echo "$$ans" | tr A-Z a-z`; \
+		if [ "$$ans" != "n" ] ; then \
+            		echo "Creation of binary distribution aborted, exiting Make."; \
+			exit; \
+        	fi; \
+	fi; \
+	${MAKE} real-bindist
+
+real-bindist: FORCE
+	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ${INST_DIR}/  ; true"
+	${SHELL} -c "cp -f ${BINDIR}/grass${NAME_VER} ${INST_DIR}/  ; true"
+	${SHELL} -c "sed -e \"s/BIN_DIST_VERSION/${NAME_VER}/\" -e \"s#BIN_DIST_DIR#'${INST_DIR}'#\" -e \"s/TEST_STR=/TEST_STR=executable/\" -e \"s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#\" -e \"s/# executable shell.*//\" -e \"s/# make bindist.*//\"  binaryInstall.src > grass${NAME_VER}install.sh 2>/dev/null ; true"
+	${SHELL} -c "chmod a+x grass${NAME_VER}install.sh  2>/dev/null ; true"
+	(cd ${INST_DIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ${SRCDIR}/grass${VERSION}_${SYSTEM}_bin.tar.gz )
+	${SHELL} -c "rm -f ${INST_DIR}/AUTHORS ${INST_DIR}/BUGS ${INST_DIR}/COPYING ${INST_DIR}/NEWS.html ${INST_DIR}/README ${INST_DIR}/REQUIREMENTS ${INST_DIR}/TODO ; true"
+	${SHELL} -c "rm -f ${INST_DIR}/grass${NAME_VER} ; true"
+	@ echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
+	@ echo "DO NOT FORGET!! Upload grass${VERSION}_${SYSTEM}_bin.tar.gz and grass${NAME_VER}install.sh to the GRASS ftp server."
+	@ echo "The binary package is stored at ${SRCDIR}."
+
+# automatically run DejaGNU tests:
+# added 10/2000 by Andreas Lange
+check: FORCE binaries
+	@ echo "running tests on GRASS ${VERSION}"
+	@ echo "logfile for all tests is in ./testsuite/grass.log,"
+	@ echo "a summary of all test results is in ./testsuite/grass.sum"
+	@ echo "please report all bugs and problems to neteler@geog.uni-hannover.de "
+	EXPECT=${EXPECT} ; export EXPECT; \
+	if [ -f $${SRCDIR}/../../expect/expect ] ; then \
+	  TCL_LIBRARY=$${SRCDIR}/../../tcl/library ; \
+	  export TCL_LIBRARY; fi; export GISBASE=${GISBASE} ; export SRCDIR=${SRCDIR} ; \
+	(cd ${SRCDIR}/testsuite && ${RUNTEST} ${RUNTESTFLAGS} --tool grass --srcdir .  || exit 0)
+
+# GRASS source code cleaning options:
+#
+# There are five options for cleaning the GRASS source code. The first four
+# options are based on the GNU guidelines at:
+#
+# http://www.gnu.org/manual/make-3.77/html_node/make_118.html
+#
+# A fifth option is specific to the GRASS development project and does not
+# conform to the GNU standard. Each option performs the following operations:
+#
+# make mostlyclean  	- delete all object files, the next step file, and the
+#   	    	    	  binary install script if it exists, keep the compiled
+#   	    	    	  GRASS libraries - good for saving disk space
+# make clean        	- delete object files, next step file, libraries, and
+# 		      	  generated directories like etc/ and dev/ - good for
+#                     	  recompiling on the same system (keep configure files)
+# make distclean    	- delete object files, next step file, libraries,
+#   	    	    	  generated directories, head.${ARCH} file, configure files,
+#   	    	    	  and Makefile - good for starting the whole
+#   	    	    	  installation from scratch
+# make maintainer-clean - delete object files, next step file, libraries,
+#   	    	    	  generated directories, and generated lex/flex and
+#   	    	     	  yacc/bison files - good for recompiling on the same
+#   	    	    	  system and also generating the lex/flex and
+#   	    	    	  yacc/bison files again
+# make savebinclean    	- delete object files, next step file, the binary
+#   	    	    	  install script if it exists, libraries, head.${ARCH} file,
+#   	    	    	  configure files, and Makefile - good for deleting
+#   	    	    	  everything but the binary files
+mostlyclean: FORCE
+	@ echo "Performing mostlyclean step..."
+	${SHELL} -c "find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/CMD/next_step/${ARCH}   	    2>/dev/null ; true"
+	${SHELL} -c "rm -f grass*install.sh   	    	    2>/dev/null ; true"
+	${SHELL} -c "rm -f error.log                        2>/dev/null ; true"
+	${SHELL} -c "rm -f testsuite/*log                   2>/dev/null ; true"
+	${SHELL} -c "rm -f testsuite/*.sum                  2>/dev/null ; true"
+	${SHELL} -c "rm -f testsuite/core                   2>/dev/null ; true"
+
+clean: FORCE mostlyclean
+	@ echo "Performing clean step..."
+	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
+	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
+	${SHELL} -c "rm -f ${GRASS_BIN}/gmake${NAME_VER}       2>/dev/null ; true"
+	${SHELL} -c "rm -f ${GRASS_BIN}/gmakelinks${NAME_VER}  2>/dev/null ; true"
+	${SHELL} -c "rm -f ${GRASS_BIN}/grass${NAME_VER}       2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/bin/	    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/bwidget/    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/dev/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/driver/     	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/documents/	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/etc/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/fonts/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/include/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/lib/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/man/	   	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/locks/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/scripts/    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/tcltkgrass/ 	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/txt/        	    2>/dev/null ; true"
+	${SHELL} -c "rmdir ${GISBASE} ; true"
+	${SHELL} -c "rmdir ${GRASS_BIN} ; true"
+
+distclean: FORCE clean
+	@ echo "Performing distclean step..."
+	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head 2>/dev/null ; true"
+	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
+	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
+
+maintainer-clean: FORCE distclean
+	@ echo "Performing maintainer-clean step..."
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.binfer/gram.c    	    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.binfer/lex.c     	    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.combine/cmd/gis_lxcl.c    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.combine/cmd/gis_pars.c    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.combine/cmd/gis_pars.h    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.combine/cmd/gis_pars.out  2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.mapcalc/polish/lex.yy.c   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.mapcalc/polish/y.tab.c    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.weight/inter/gis_lxcl.c   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.weight/inter/gis_pars.c   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.weight/inter/gis_pars.h   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.weight/inter/gis_pars.out 2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src.contrib/GMSL/g3d/src3d/raster/r3.mapcalc/polish/lex.yy.c 2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src.contrib/GMSL/g3d/src3d/raster/r3.mapcalc/polish/y.tab.c 2>/dev/null ; true"
+
+savebinclean: FORCE mostlyclean
+	@ echo "Performing savebinclean step..."
+	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
+	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head  2>/dev/null ; true"
+	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
+	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
+	${SHELL} -c "rm -f Makefile                              2>/dev/null ; true"
+

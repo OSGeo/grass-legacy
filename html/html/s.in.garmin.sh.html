@@ -1,0 +1,70 @@
+<HTML>
+<TITLE>s.in.garmin.sh</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>s.in.garmin.sh</b></EM>  - Import gps data from garmin receiver into GRASS sites file
+<BR>
+<EM>(GRASS Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>s.in.garmin.sh</B>
+<BR>
+<B>s.in.garmin.sh</B> <EM>-h</EM>
+<BR>
+<B>s.in.garmin.sh </B> <EM><B>name=</B>sitesfile <B>port=</B>/dev/gps -v -w -r -t </EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>s.in.garmin.sh</EM> allows to import waypoint, route and track data 
+from a locally connected garmin gps receiver via the <EM>gpstrans</EM> 
+program of Carsten Tschach. 
+<P>Use at your own risk. This software comes with absolutely no warranty.
+<P>
+No checks are performed for datum, projection and format of data.
+You must check by yourself that your receiver, gpstrans and GRASS
+use the same map datum and projection (this means as it is now that
+you can only use a GRASS database in lat/lon projection and in wgs84
+datum).
+<BR>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>name=</B><EM>sitesfile</EM> 
+<DD>name for new sites file
+<DT><B>port=</B><EM>/dev/gps </EM> 
+<DD>port garmin receiver is connected to
+<DT><EM>-v </EM> 
+<DD>verbose output
+<DT><EM>-w </EM> 
+<DD>upload Waypoints
+<DT><EM>-r </EM> 
+<DD>upload Routes
+<DT><EM>-t </EM> 
+<DD>upload Track
+<DT><EM>-h </EM> 
+<DD>print this message
+<DD>
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.in.garmin.sh.html">v.in.garmin.sh</A></EM><BR>
+<EM><A HREF="s.track.gps.html">s.track.gps</A></EM><BR>
+gpstrans manual
+<P>
+
+<H2>AUTHOR</H2>
+
+Andreas Lange, 
+Andreas.Lange@Rhein-Main.de<BR>
+gpstrans was written by Carsten Tschach<BR>
+gpstrans is found at http://www.metalab.unc.edu/pub/Linux/science/cartography/ <BR>
+
+</BODY>
+</HTML>

@@ -1,29 +1,9 @@
-EXTRA_CFLAGS	= $(VECT_INCLUDE) $(VECTLIBFLAGS)
+PGM=v.stats
 
 # include VECTLIBFLAGS for the PORTABLE_3 flag
+EXTRA_CFLAGS	= $(VECTLIBFLAGS)
 
-
-
-#all:  $(BIN_MAIN_CMD)/v.stats $(BIN_MAIN_INTER)/v.stats
-
-PROG =   $(BIN_MAIN_CMD)/v.stats
-
-all:  $(PROG)
-
-
-#   interactive version
-
-
-#$(BIN_MAIN_INTER)/v.stats: stats.o
-#	$(CC) $(LDFLAGS) -o $@  stats.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-
-
-#   command line programs
-
-$(PROG): v.stats.o  $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): v.stats.o  $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ v.stats.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #
-
-saber_src:
-	#load $(EXTRA_CFLAGS) $(CFLAGS) ../Vlib/*.c ../diglib/*.c v.stats.c  $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)

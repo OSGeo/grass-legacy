@@ -4,8 +4,8 @@ LIBES = $(GISLIB)
 
 LIST  = main.o raw_stats.o cell_stats.o stats.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h
 

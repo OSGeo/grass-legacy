@@ -1,6 +1,10 @@
-
+/*
+ * $Id$
+ */
+ 
 #include <stdlib.h>
 #include <stdio.h>
+#include "G3d.h"
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
@@ -61,6 +65,7 @@ int g3d_file_type = G3D_NO_DEFAULT;
 int g3d_tile_dimension[3] = {G3D_NO_DEFAULT, G3D_NO_DEFAULT, G3D_NO_DEFAULT};
 void (*g3d_error_fun)() = NULL;
 char *g3d_unit_default = NULL;
+extern char * G3d_getWindowParams(void);                                        
 
 /*---------------------------------------------------------------------------*/
 
@@ -241,155 +246,250 @@ G3d_initDefaults ()
   firstTime = 0;
 
   if (g3d_do_compression == G3D_NO_DEFAULT)
+  {
     if (NULL != getenv (G3D_COMPRESSION_ENV_VAR_YES))
+    {
       g3d_do_compression = G3D_COMPRESSION;
+    }
     else
+    {
       if (NULL != getenv (G3D_COMPRESSION_ENV_VAR_NO))
+      {
 	g3d_do_compression = G3D_NO_COMPRESSION;
+      }
       else
+      {
 	g3d_do_compression = G3D_COMPRESSION_DEFAULT;
-
+      }
+    }
+  }
+  
   if (g3d_do_lzw_compression == G3D_NO_DEFAULT)
+  {
     if (NULL != getenv (G3D_LZW_ENV_VAR_YES))
+    {
       g3d_do_lzw_compression = G3D_USE_LZW;
+    }
     else
+    {
       if (NULL != getenv (G3D_LZW_ENV_VAR_NO))
+      {
 	g3d_do_lzw_compression = G3D_NO_LZW;
+      }
       else
+      {
 	g3d_do_lzw_compression = G3D_USE_LZW_DEFAULT;
-
+      }
+    }
+  }
+  
   if (g3d_do_rle_compression == G3D_NO_DEFAULT)
+  {
     if (NULL != getenv (G3D_RLE_ENV_VAR_YES))
+    {
       g3d_do_rle_compression = G3D_USE_RLE;
+    }
     else
+    {
       if (NULL != getenv (G3D_RLE_ENV_VAR_NO))
+      {
 	g3d_do_rle_compression = G3D_NO_RLE;
+      }
       else
+      {
 	g3d_do_rle_compression = G3D_USE_RLE_DEFAULT;
+      }
+    }
+  }
 
   if (g3d_precision == G3D_NO_DEFAULT)
+  {
     if (NULL != getenv (G3D_PRECISION_ENV_VAR_MAX))
+    {
       g3d_precision = G3D_MAX_PRECISION;
-    else {
+    }
+    else 
+    {
       value = getenv (G3D_PRECISION_ENV_VAR);
       if (value == NULL) 
+      {
 	g3d_precision = G3D_PRECISION_DEFAULT;
-      else {
+      }
+      else 
+      {
 	if (sscanf (value, "%d", &g3d_precision) != 1)
+        {
 	  G3d_fatalError (
 	   "G3d_initDefaults: precision environment variable has invalid value"
 		     );
+        }
 	else
+        {
 	  if (g3d_precision < -1)
+          {
 	    G3d_fatalError (
 	  "G3d_initDefaults: value for cache environment variable out of range"
 		       );
+          }
+        }
       }
-    }
-
-  if (g3d_file_type == G3D_NO_DEFAULT) 
-    if (NULL != getenv (G3D_FILE_FLOAT_ENV_VAR)) 
-      g3d_file_type = G3D_FLOAT;
-    else
-      if (NULL != getenv (G3D_FILE_DOUBLE_ENV_VAR))
-	g3d_file_type = G3D_DOUBLE;
-      else
-	g3d_file_type = G3D_FILE_TYPE_DEFAULT;
-
-  if (g3d_cache_default == G3D_NO_DEFAULT) {
-
-    value = getenv (G3D_CACHE_SIZE_ENV_VAR);
-
-    if (value == NULL) 
-      g3d_cache_default = G3D_CACHE_SIZE_DEFAULT;
-    else {
-      if (sscanf (value, "%d", &g3d_cache_default) != 1)
-	G3d_fatalError (
-         "G3d_initDefaults: cache environment variable has invalid value");
-    
-      if (g3d_cache_default < 0)
-	G3d_fatalError (
-       "G3d_initDefaults: value for cache environment variable out of range");
     }
   }
 
-  if (g3d_cache_max == G3D_NO_DEFAULT) {
+  if (g3d_file_type == G3D_NO_DEFAULT) 
+  {
+    if (NULL != getenv (G3D_FILE_FLOAT_ENV_VAR)) 
+    {
+      g3d_file_type = G3D_FLOAT;
+    }
+    else
+    {
+      if (NULL != getenv (G3D_FILE_DOUBLE_ENV_VAR))
+      {
+	g3d_file_type = G3D_DOUBLE;
+      }
+      else
+      {
+	g3d_file_type = G3D_FILE_TYPE_DEFAULT;
+      }
+    }
+  }
 
+  if (g3d_cache_default == G3D_NO_DEFAULT) 
+  {
+    value = getenv (G3D_CACHE_SIZE_ENV_VAR);
+
+    if (value == NULL)
+    {
+      g3d_cache_default = G3D_CACHE_SIZE_DEFAULT;
+    }
+    else 
+    {
+      if (sscanf (value, "%d", &g3d_cache_default) != 1)
+      {
+	G3d_fatalError (
+         "G3d_initDefaults: cache environment variable has invalid value");
+      }
+      if (g3d_cache_default < 0)
+      {
+	G3d_fatalError (
+       "G3d_initDefaults: value for cache environment variable out of range");
+      }
+    }
+  }
+
+  if (g3d_cache_max == G3D_NO_DEFAULT) 
+  {
     value = getenv (G3D_CACHE_SIZE_MAX_ENV_VAR);
 
     if (value == NULL) 
+    {
       g3d_cache_max = G3D_CACHE_SIZE_MAX_DEFAULT;
-    else {
+    }
+    else 
+    {
       if (sscanf (value, "%d", &g3d_cache_max) != 1)
+      {
 	G3d_fatalError (
          "G3d_initDefaults: cache environment variable has invalid value");
-    
+      }
       if (g3d_cache_max < 0)
+      {
 	G3d_fatalError (
        "G3d_initDefaults: value for cache environment variable out of range");
+      }
     }
   }
 
-  if (g3d_tile_dimension[0] == G3D_NO_DEFAULT) {
+  if (g3d_tile_dimension[0] == G3D_NO_DEFAULT) 
+  {
     value = getenv (G3D_TILE_DIM_X_ENV_VAR);
 
     if (value == NULL) 
+    {
       g3d_tile_dimension[0] = G3D_TILE_X_DEFAULT;
-    else {
+    }
+    else 
+    {
       if (sscanf (value, "%d", g3d_tile_dimension) != 1)
+      {
 	G3d_fatalError (
   "G3d_initDefaults: tile dimension x environment variable has invalid value");
-      
+      }
       if (g3d_tile_dimension[0] <= 0)
+      {
 	G3d_fatalError ("G3d_initDefaults: value for tile x environment variable out of range");
+      }
     }
   
     value = getenv (G3D_TILE_DIM_Y_ENV_VAR);
 
     if (value == NULL) 
+    {
       g3d_tile_dimension[1] = G3D_TILE_Y_DEFAULT;
-    else {
+    }
+    else 
+    {
       if (sscanf (value, "%d", g3d_tile_dimension + 1) != 1)
+      {
 	G3d_fatalError (
   "G3d_initDefaults: tile dimension y environment variable has invalid value");
-      
+      }
       if (g3d_tile_dimension[1] <= 0)
+      {
 	G3d_fatalError ("G3d_initDefaults: value for tile y environment variable out of range");
+      }
     }
 
     value = getenv (G3D_TILE_DIM_Z_ENV_VAR);
 
     if (value == NULL) 
+    {
       g3d_tile_dimension[2] = G3D_TILE_Z_DEFAULT;
-    else {
+    }
+    else 
+    {
       if (sscanf (value, "%d", g3d_tile_dimension + 2) != 1)
+      {
 	G3d_fatalError (
   "G3d_initDefaults: tile dimension z environment variable has invalid value");
-      
+      }
       if (g3d_tile_dimension[2] <= 0)
+      {
 	G3d_fatalError ("G3d_initDefaults: value for tile z environment variable out of range");
+      }
     }
   }
-
-  if (g3d_error_fun == NULL) {
+  
+  if (g3d_error_fun == NULL) 
+  {
     value = getenv (G3D_FATAL_ERROR_ENV_VAR);
 
     if (value != NULL) 
+    {
       g3d_error_fun = G3d_fatalError;
-    else {
+    }
+    else 
+    {
       value = getenv (G3D_PRINT_ERROR_ENV_VAR);
 
       if (value != NULL)
+      {
 	g3d_error_fun = G3d_printError;
+      }
       else
+      {
 	g3d_error_fun = G3D_ERROR_FUN_DEFAULT;
+      }
     }
   }
 
-  if (g3d_unit_default == NULL) g3d_unit_default = G_store (G3D_UNIT_DEFAULT);
+  if (g3d_unit_default == NULL) 
+    g3d_unit_default = G_store (G3D_UNIT_DEFAULT);
 
   windowName = G3d_getWindowParams ();
-  if (windowName == NULL) {
+  if (windowName == NULL) 
+  {
     value = getenv (G3D_DEFAULT_WINDOW3D);
     if (value != NULL) 
       if (*value != 0) windowName = G_store (value);

@@ -1,0 +1,97 @@
+<TITLE>r.profile</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.profile</b></EM>  - Outputs the raster map layer values
+lying on user-defined line(s).
+
+<BR>
+
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.profile</B>
+
+<BR>
+
+<B>r.profile help</B>
+
+<BR>
+
+<B>r.profile [-g] [-i] </B> <B>input</B>=<EM>name</EM> <B>output</B>=<EM>name</EM> 
+<B>profile</B>=<EM>east</EM>,<EM>north</EM>[,<EM>east</EM>,<EM>north</EM>,<EM>east</EM>,<EM>north</EM>,...]
+<B>res</B>=<EM>resolution</EM>
+
+<H2>DESCRIPTION</H2>
+This program outputs a two or four column (with -g) ASCII file (or stdout). The default
+two column output consists of cumulative profile length in meters and raster value. The optional four 
+column output consists of an easting, northing, cumlative profile length (m), and raster value. 
+Profile end or "turning" points can be set manually with the <EM>profile</EM> argument or selected interactively 
+from the GRASS monitor by setting the <EM>-i</EM> flag. The profile resolution, or distance between profile points, 
+is obatined from the current region resolution, or can be manually set with the <EM>res</EM> argument.  
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-g</B>
+<DD>Output easting and northing in first two columns of four column output
+<DT><B>-i</B>
+<DD>Intercative mode
+<DD>The user selects the profile from the GRASS monitor by clicking the left mouse button along the profile, clicking the right mouse button ends the profile
+</DL>
+
+
+<H3>Parameters:</H3>
+<DL>
+<DT><B>input</B>
+<DD>The name of the GRASS raster file from which to generate the profile info
+
+<DT><B>output</B>
+<DD>The name of the 2 or 4 column ASCII file to send profile results to
+<DD>Use "<EM>-</EM>" to send output to standard output (stdout)
+
+<DT><B>profile</B>
+<DD>The comma seperated geographic coordinates for profile line endpoints
+<DD>The interactive flag (<EM>-i</EM>) overrides this option
+
+<DT><B>res</B>
+<DD>This sets the distance between each profile point (resolution)
+<DD>The resolution must be provided in GRASS database units (i.e. decimal degrees for Lat Long database and meters for UTM)
+<DD>By default <EM>r.profile</EM> uses the resolution of the current GRASS region
+
+</DL>
+
+
+<H2>OUTPUT FORMAT</H2>
+
+The 2 or 4 column output from <EM>r.profile</EM> is intened for easy use in other programs. 
+The output can be piped (|) directly into other programs or saved to file for later use.
+The 4 column output is compatible with <EM>s.in.ascii</EM> and can be piped direcly into this program
+for later plotting.
+
+<PRE>
+r.profile -ig input=elev.rast output=- | s.in.ascii sites=elev.profile
+</PRE>
+
+The 2 column output is compatible with most plotting programs.
+
+<H2>NOTES</H2>
+The profile resolution is measured exactly from the supplied end or "turning" point along the profile.
+The end of a profile segment will be an exact multiple of the profile resolution and will therefore 
+not always match the end point coordinates entered for the segmanet.
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.profile.html">d.profile</A></EM><br>
+<EM><A HREF="r.what.html">r.what</A></EM><br>
+<EM><A HREF="r.transect.html">r.transect</A></EM>
+
+<H2>AUTHOR</H2>
+<A HREF=mailto:bcovill@tekmap.ns.ca>Bob Covill</A>

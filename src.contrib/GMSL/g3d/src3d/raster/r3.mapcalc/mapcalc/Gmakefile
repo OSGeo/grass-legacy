@@ -1,0 +1,52 @@
+PGM = r3.mapcalc
+
+LIST = main.o\
+       input.o\
+       polish.o\
+       expression.o\
+       execute.o\
+       maps.o\
+       evaluate.o\
+       pool.o\
+       round.o\
+       compare.o\
+       math.o\
+       logical.o\
+       variables.o\
+       function.o\
+       readrow.o\
+       range.o\
+       xexp.o\
+       xabs.o\
+       xcoor.o\
+       xcos.o\
+       xeval.o\
+       xatan.o\
+       xif.o\
+       xlog.o\
+       xmax.o\
+       xmedian.o\
+       xmin.o\
+       xmode.o\
+       xnull.o \
+       xisnull.o\
+       xrand.o\
+       xres.o\
+       xround.o\
+       xrowcol.o\
+       xsin.o\
+       xsqrt.o\
+       xtan.o
+
+LIBES = $(G3DLIB) $(GISLIB) 
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIST): glob.h
+evaluate.o: function.h
+function.o: function.h
+main.o: function.h
+polish.o: function.h
+
+$(LIBES): #

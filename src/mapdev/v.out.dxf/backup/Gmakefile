@@ -1,21 +1,8 @@
-PGM=cell.to.dat
+PGM=v.out.dxf
 
 LIST = cell.to.dat.o
 
-#all:  $(BIN)/cell.to.dat $(BIN)/dig2dxf
-
-all:   $(BIN_ALPHA_CMD)/v.out.dxf
-
-$(BIN_ALPHA_CMD)/v.out.dxf: v.out.dxf.o $(GISLIB)
-	$(CC) $(LDFLAGS) v.out.dxf.o $(GISLIB) $(TERMLIB) $(MATHLIB) -o $@
-
-$(BIN)/cell.to.dat: $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) $(MATHLIB) -o $@
+$(BIN_CMD)/$(PGM): v.out.dxf.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ v.out.dxf.o $(GISLIB) $(TERMLIB) $(MATHLIB)
 
 $(GISLIB): #
-
-saber_src:
-	#load v.out.dxf.c $(GISLIB) $(TERMLIB) $(MATHLIB)
-
-saber_obj:
-	#load v.out.dxf.o 

@@ -1,0 +1,108 @@
+<TITLE>r.info</TITLE>
+
+<H2>NAME</H2>
+
+<EM>r.info</EM>  - Outputs basic information about a 
+user-specified raster map layer. 
+<BR>
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.info</B> 
+<BR>
+<B>r.info help</B> 
+<BR>
+<B>r.info map=</B><EM>name</EM> 
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.info</EM> reports some basic information about a
+user-specified raster map layer.  This map layer must exist
+in the user's current mapset search path.  Information
+about the map's boundaries, resolution, projection, data
+type, category number, data base location and mapset, and
+history are put into a table and written to standard
+output.  The types of information listed can also be found
+in the <EM>cats</EM>, <EM>cellhd</EM>, and <EM>hist</EM>
+directories under the mapset in which the named map is
+stored.
+
+<P>
+
+The program will be run non-interactively if the user specifies 
+the name of a raster map layer on the command line, using the form: 
+<DL>
+<DD>
+<B>r.info map=</B><EM>name</EM> 
+</DL>
+where <EM>name</EM> is the name of a raster map layer on which the user 
+seeks information. The user can save the tabular output to a file 
+by using the UNIX redirection mechanism (&gt;); for example, the user 
+might save a report on the <EM>soils</EM> map layer in a file called 
+<EM>soil.rpt</EM> by typing: 
+<DL>
+<DD>
+<B>r.info map=</B><EM>soils</EM> &gt; <EM>soil.rpt</EM> 
+</DL>
+
+Alternately, the user can simply type <B>r.info</B> on the
+command line, without program arguments. In this case, the
+user will be prompted for the name of a raster map layer
+using the standard GRASS <EM>
+<A HREF="../html/parser.html">parser</A></EM> interface.
+The user is asked whether he wishes to print the report and/or save
+it in a file.  If saved, the report is stored in a
+user-named file in the user's home directory.
+
+<P>
+
+Below is the report produced by <EM>r.info</EM> for the raster map 
+<EM>geology</EM> in the Spearfish sample data base. 
+
+<PRE>
+|------------------------------------------------------------|
+| Layer:    geology        Date: Mon May  4 10:00:14 1987 :  |
+| Location: spearfish      Login of Creator: grass           |
+| Mapset:   PERMANENT                                        |
+| Title:    Geology                                          |
+|------------------------------------------------------------|
+|                                                            |
+|   Type of Map:  raster          Number of Categories: 9    |
+|   Rows:         140                                        |
+|   Columns:      190                                        |
+|   Total Cells:  26600                                      |
+|                                                            |
+|   Projection: UTM (zone 13)                                |
+|      N: 4928000.00    S: 4914000.00   Res: 100.00          |
+|      E:  609000.00    W:  590000.00   Res: 100.00          |
+|                                                            |
+|   Data Source:                                             |
+|   Raster file produced by EROS Data Center                 |
+|                                                            |
+|                                                            |
+|   Data Description:                                        |
+|   Shows the geology for the map area                       |
+|                                                            |
+|   Comments:                                                |
+|                                                            |
+|------------------------------------------------------------|
+</PRE>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="../html/g.mapsets.html">g.mapsets</A>,</EM>
+<EM><A HREF="../html/r.coin.html">r.coin</A>,</EM>
+<EM><A HREF="../html/r.describe.html">r.describe</A>,</EM>
+<EM><A HREF="../html/r.report.html">r.report</A>,</EM>
+<EM><A HREF="../html/r.stats.html">r.stats</A>,</EM>
+<EM><A HREF="../html/r.support.html">r.support</A>,</EM>
+<EM><A HREF="../html/r.what.html">r.what</A>,</EM>
+and 
+<EM><A HREF="../html/parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael O'Shea, 
+<A HREF="http://www.cecer.army.mil/">U.S. Army Construction Engineering 
+Research Laboratory</A>

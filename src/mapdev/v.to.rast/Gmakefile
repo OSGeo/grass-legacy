@@ -1,12 +1,11 @@
 PGM=v.to.rast
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 LIST = main.o vect2rast.o raster.o \
 	do_areas.o do_lines.o do_sites.o \
 	support.o inform.o getformat.o\
 	clock.o label.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(VECTLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 getformat.o: format.h
@@ -18,9 +17,3 @@ label.o: null.h
 
 $(GISLIB): #
 $(VECTLIB): #
-
-saber:
-	#unload -lgis
-	#load *.c $(VECTLIB)
-	#load $(LIBDIR)/gis/area_poly1.c
-	#load -lgis

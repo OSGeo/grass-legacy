@@ -1,24 +1,40 @@
+/*
+ * Copyright (C) 1994-1995. James Darrell McCauley. (darrell@mccauley-usa.com)
+ * 	                          http://mccauley-usa.com/
+ *
+ * This program is free software under the GPL (>=v2)
+ * Read the file GPL.TXT coming with GRASS for details.
+ */
+
 #include "gis.h"
+#include "site.h"
 
 int readz (
   FILE *fdsite,
   int verbose,
+  int field,
   double **z,
   struct Cell_head window)
 {
   char *dum;
-  int i, alloced = 1000,dims,cat,strs,dbls;
+  int i, alloced = 1000,dims,map_type,strs,dbls;
   Site *mysite;               /* pointer to Site */
 
   G_sleep_on_error (0);
 
+  field -= 1;  /* field number -> array index */
+  
   if (verbose)
     fprintf (stderr, "Reading sites list ...              ");
 
-  mysite = G_site_new_struct (-1, 2, 0, 1);
-
-  if (G_site_describe (fdsite, &dims, &cat, &strs, &dbls)!=0)
+  if (G_site_describe (fdsite, &dims, &map_type, &strs, &dbls)!=0)
     G_fatal_error("failed to guess format");
+  
+  mysite = G_site_new_struct (map_type, dims, strs, dbls);
+G_warning("ss:%i",field);
+  if(field >= dbls){
+      G_fatal_error("\n decimal field %i not present in sites file", field + 1);
+  }
 
   if (dbls==0)
   {
@@ -40,7 +56,7 @@ int readz (
 	if (*z == NULL)
 	  G_fatal_error ("cannot allocate memory");
       }
-      (*z)[i++]=mysite->dbl_att[0];
+      (*z)[i++]=mysite->dbl_att[field];
     }
   }
   fclose (fdsite);

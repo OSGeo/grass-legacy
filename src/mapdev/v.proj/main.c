@@ -6,11 +6,12 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <string.h>
-#include  "gis.h"
+#include "gis.h"
 #include "Vect.h"
 #include "V_.h"
 #include "projects.h"
 #include "local_proto.h"
+
 #define	B_DIR  "dig"
 #define	ATT_DIR  "dig_att"
 #define	CAT_DIR  "dig_cats"
@@ -19,11 +20,7 @@
 #define UNIT_FILE "PROJ_UNITS"
 */
 
- 
- 
-int 
-main (int argc, char *argv[])
-
+int main (int argc, char *argv[])
 {
 	int i, type, cat, vect_read, stat, cnt;
 	int day, yr, Out_proj;
@@ -31,7 +28,7 @@ main (int argc, char *argv[])
 	char ctype[3];
 	char out_lon0[5], out_lat0[5];
         char answer[50], buffa[1024], buffb[1024], *value1;
-        char *mapset, *omapset, *new_data, *G_tempfile(), *gets(), *tmpfile;
+        char *mapset, *omapset, *new_data, *tmpfile;
 	char *omap_name, *map_name, *iset_name, *oset_name, *iloc_name;
         struct pj_info info_in;
         struct pj_info info_out;
@@ -41,6 +38,7 @@ main (int argc, char *argv[])
 	char opath[1024];
 	char att_file[100], cat_file[100], date[40], mon[4];
 	FILE *wnd;
+		struct GModule *module;
         struct Option *omapopt, *mapopt, *isetopt, *ilocopt, *ibaseopt;
         struct Key_Value *in_proj_keys, *in_unit_keys;
         struct Key_Value *out_proj_keys, *out_unit_keys;
@@ -49,40 +47,49 @@ main (int argc, char *argv[])
         struct line_pnts *Points;
         struct Map_info Map;
         struct Map_info Out_Map;
+        struct {
+        struct Flag *support;
+            } flag;
+        char buf[1024];
 
         G_gisinit (argv[0]);
      
+		module = G_define_module();
+		module->description =
+			"Allows projection conversion of vector files.";
+
 		 /* set up the options and flags for the command line parser */
 
         mapopt = G_define_option();
-        mapopt->key             = "map";
+        mapopt->key             = "input";
         mapopt->type            =  TYPE_STRING;
         mapopt->required        =  YES;
-        mapopt->description     = "input vector file name";
-
-        omapopt = G_define_option();
-        omapopt->key             = "out";
-        omapopt->type            =  TYPE_STRING;
-        omapopt->required        =  NO;
-        omapopt->description     = "output vector file name";
+        mapopt->description     = "input vector map";
 
         ilocopt = G_define_option();
-        ilocopt->key             =  "inloc";
+        ilocopt->key             =  "location";
         ilocopt->type            =  TYPE_STRING;
         ilocopt->required        =  YES;
-        ilocopt->description     =  "Location containing INput vector map";
+        ilocopt->description     =  "location containing input vector map";
+
+        isetopt = G_define_option();
+        isetopt->key             =  "mapset";
+        isetopt->type            =  TYPE_STRING;
+        isetopt->required        =  NO;
+        isetopt->description     =  "mapset containing input vector map";
 
         ibaseopt = G_define_option();
         ibaseopt->key             =  "dbase";
         ibaseopt->type            =  TYPE_STRING;
         ibaseopt->required        =  NO;
-        ibaseopt->description     =  "Database containing INput location";
+        ibaseopt->description     =  "path to GRASS database of input location";
 
-        isetopt = G_define_option();
-        isetopt->key             =  "set";
-        isetopt->type            =  TYPE_STRING;
-        isetopt->required        =  NO;
-        isetopt->description     =  "mapset containing INput vector map";
+        omapopt = G_define_option();
+        omapopt->key             = "output";
+        omapopt->type            =  TYPE_STRING;
+        omapopt->required        =  NO;
+        omapopt->description     = "output vector map";
+
 /*
         osetopt = G_define_option();
         osetopt->key             =  "outset";
@@ -90,6 +97,11 @@ main (int argc, char *argv[])
         osetopt->required        =  NO;
         osetopt->description     =  "mapset to contain OUTput vector map";
 */
+
+        flag.support = G_define_flag();
+        flag.support->key = 's';
+        flag.support->description = "Automatically run \"v.support\" on newly created vector file."; 
+
  
 	   /* heeeerrrrrre's the   PARSER */
         if (G_parser (argc, argv))
@@ -482,13 +494,23 @@ main (int argc, char *argv[])
 	      }
 	   }
 
+   /* If "-s" flag is passed as argument then run "v.support" on */
+   /* newly created vector file (output).                        */
+   if (flag.support->answer)
+    {
+     sprintf(buf,"%s/bin/v.support map=%s", G_gisbase(), omap_name);
+     G_system(buf);
+     fprintf(stderr, "Done.\n");
+    }
+    else
+    {
+     fprintf(stderr, "\n\n%s of vector file <%s> has completed\n",
+                      argv[0],map_name);
+     fprintf(stderr, "vector file <%s> in mapset <%s> will require\n",omap_name,oset_name);
+     fprintf(stderr, "  v.support be run, before the data is usable\n");
+    }
 
-fprintf(stderr, "\n\n%s of vector file <%s> has completed\n",
-argv[0],map_name);
-fprintf(stderr, "vector file <%s> in mapset <%s> will require\n",omap_name,oset_name);
-fprintf(stderr, "  v.support be run, before the data is usable\n");
-
-	return 0;
+    return 0;
 }
 
 

@@ -1,8 +1,10 @@
 PGM=r.in.png
+EXTRA_CFLAGS= $(PNGINC)
 
-LIST=r.in.png.o
+LIST= r.in.png.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(EXTRALIB) $(MATHLIB) $(XDRLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(EXTRA_CFLAGS) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(EXTRALIB) \
+        $(PNGLIB) -lpng $(ZLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -13,7 +13,13 @@ int main (int argc, char **argv)
 	char window_name[64] ;
 	int t, b, l, r ;
 	struct Cell_head window ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4;
+
+	module = G_define_module();
+	module->description =
+		"Displays site markers in the active display frame "
+		"on the graphics monitor.";
 
 	opt4 = G_define_option() ;
 	opt4->key        = "sitefile";
@@ -130,6 +136,10 @@ int main (int argc, char **argv)
 	}
 
 	D_add_to_list(G_recreate_command()) ;
+
+	D_set_site_name(G_fully_qualified_name(opt4->answer, mapset));
+	D_add_to_site_list(G_fully_qualified_name(opt4->answer, mapset));
+
 	R_close_driver();
 	exit(0);
 }

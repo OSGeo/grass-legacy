@@ -97,10 +97,13 @@ int show_dval (int width, int mwidth,
     return 0;
 }
 
-int show_utm (double north, double east,
-	struct Cell_head *window, int terse, int button, char *fs)
+int show_utm (char *name, double north, double east,
+	struct Cell_head *window, int terse, int colrow, int button, char *fs)
 {
     char e[50], n[50];
+    int e_col, n_row;
+    static struct Cell_head cellhd;
+    static char *mapset = NULL;
 
     if (window->proj == PROJECTION_LL && !isatty (fileno (stdout)))
     {
@@ -114,11 +117,28 @@ int show_utm (double north, double east,
 	G_format_easting  (east,  e, window->proj);
     }
 
+    if(!mapset)
+    {
+        mapset = G_mapset();
+        G_get_cellhd(name, mapset, &cellhd);
+    }
+
+    n_row = (int) ((cellhd.north - north) / window->ns_res);
+    e_col = (int) ((east - cellhd.west) / window->ew_res);
+
     if (terse)
     {
 	if (!isatty(fileno(stdout)))
-	    fprintf (stdout, "\n%s%s%s%s%d\n", e, fs, n, fs, button);
-	fprintf (stderr, "\n%s%s%s%s%d\n", e, fs, n, fs, button);
+	{
+	    fprintf (stdout, "\n%s%s%s%s", e, fs, n, fs);
+	    if (colrow)
+	        fprintf (stdout, "%d%s%d%s", e_col, fs, n_row, fs);
+	    fprintf (stdout, "%d\n", button);
+	}
+	fprintf (stderr, "\n%s%s%s%s", e, fs, n, fs);
+	if (colrow)
+	    fprintf (stderr, "%d%s%d%s", e_col, fs, n_row, fs);
+	fprintf (stderr, "%d\n", button);
     }
     else
     {
@@ -129,8 +149,16 @@ int show_utm (double north, double east,
 	}
 
 	if (!isatty(fileno(stdout)))
-	    fprintf (stdout, "\n%s %s\n", e, n);
-	fprintf (stderr, "\n%s %s\n", e, n);
+	{
+	    fprintf (stdout, "\n%s %s", e, n);
+	    if (colrow)
+	        fprintf (stdout, ", %d(col) %d(row)", e_col, n_row);
+	    fprintf (stdout, "\n");
+	}
+	fprintf (stderr, "\n%s %s", e, n);
+	if (colrow)
+	    fprintf (stderr, ", %d(col) %d(row)", e_col, n_row);
+	fprintf (stderr, "\n");
     }
     nlines += 2;
 

@@ -1,8 +1,0 @@
-
-
-layer - A separation of mapped information according to theme.
-Many @glossary("geographic information systems",16.glossary/gis.def) allow the user to manipulate
-the contents of a single map layer or any combination of layers
-at a time.
-
-See also @glossary("map layer",16.glossary/maplayer.def).

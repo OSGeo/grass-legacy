@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #define SWITCHER
+#include "gis.h"
 #include "graph.h"
 #include "driverlib.h"
 #include "driver.h"
@@ -518,6 +519,7 @@ main (int argc, char *argv[])
             case GET_LOCATION_WITH_POINTER:
                 REC (&x, sizeof x);
                 REC (&y, sizeof y);
+                REC (&button, sizeof button);
                 Get_location_with_pointer(&x,&y,&button) ;
                 send(&x,sizeof x) ;
                 send(&y,sizeof y) ;
@@ -555,8 +557,8 @@ main (int argc, char *argv[])
                 REC (&index, sizeof index) ;
                 xarray = (int *) xalloc (xarray, &n_xarray, x, sizeof (*xarray));
                 REC (xarray, x * sizeof (*xarray)) ;
-		if (index !=0) index = 1 ;
-		Raster_int(x, y, xarray, index, 1) ;
+                if (index !=0) index = 1 ;
+                Raster_int(x, y, (unsigned int *) xarray, index, 1) ;
                 break ;
             case RGB_RASTER:
                 REC (&x, sizeof x) ;
@@ -683,6 +685,7 @@ main (int argc, char *argv[])
                 send (&l, sizeof l) ;
                 send (&r, sizeof r) ;
                 break ;
+#ifndef __CYGWIN__
             case FONT:
                 RECTEXT (text) ;
                 x = GFont(text) ;
@@ -692,6 +695,7 @@ main (int argc, char *argv[])
                 RECTEXT (text) ;
                 Text(text) ;
                 break ;
+#endif
             case TEXT_SIZE:
                 REC (&x, sizeof x) ;
                 REC (&y, sizeof y) ;
@@ -894,10 +898,12 @@ fprintf (stderr, "Got command esc(%d)\n", *c);
 
 static int rec(void *buf,int n)
 {
+    char *cbuf = buf;
     int stat;
-    while (n-- > 0)
-        if ((stat=get1(((char* )buf)++)) != 0)
-	    return stat; /* EOF or COMMAND_ESC */
+    while (n-- > 0) {
+    	if ((stat=get1(cbuf++)) != 0)
+    	return stat; /* EOF or COMMAND_ESC */
+    }
     return 0;
 }
 
@@ -990,7 +996,7 @@ static char *store (char *s)
 {
     char *buf;
 
-    buf = malloc (strlen(s) + 1);
+    buf = (char *)G_malloc ((size_t) (strlen(s) + 1));
     if (buf != NULL)
         strcpy (buf, s);
     return buf;
@@ -1014,7 +1020,7 @@ static int create_pad ( char *name)
 {
     PAD *pad;
 
-    pad = (PAD *) malloc (sizeof(PAD));
+    pad = (PAD *) G_malloc ((size_t)sizeof(PAD));
     if (pad == NULL)
         return 0;
 
@@ -1115,7 +1121,7 @@ static int append_item ( PAD *pad , char *name, char *value)
         return 0;
 
     /* allocate a list struct and put value into it */
-    list = (LIST *) malloc (sizeof(LIST));
+    list = (LIST *) G_malloc ((size_t)sizeof(LIST));
     if (list == NULL)
         return 0;
     list->next = NULL;
@@ -1198,7 +1204,7 @@ static ITEM *new_item ( PAD *pad, char *name)
 {
     ITEM *item;
 
-    item = (ITEM *) malloc (sizeof(ITEM));
+    item = (ITEM *) G_malloc ((size_t)sizeof(ITEM));
     if (item == NULL) return (ITEM *) NULL;
 
     item->name = store (name);
@@ -1228,9 +1234,9 @@ static char *xalloc ( void *buf,int *cur,int new,int len)
     if (*cur >= new)
         return buf;
     if (*cur)
-        buf = realloc (buf,new*len);
+        buf = (char *)G_realloc ((void *)buf, (size_t) (new * len));
     else
-        buf = malloc (new*len);
+        buf = (char *)G_malloc ((size_t) (new*len));
     *cur = new;
     if (buf != NULL)
         return buf;

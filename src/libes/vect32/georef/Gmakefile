@@ -1,4 +1,4 @@
-EXTRA_CFLAGS	= $(DIGITFLAGS)  $(VECT_INCLUDE) -I../digitizers -I../libes
+EXTRA_CFLAGS	= $(DIGITFLAGS) -I../digitizers -I../libes
 
 #  Note that this rd_cap.c is a little different then ../dig_front/read_cap.c
 
@@ -54,15 +54,13 @@ libgeo.a: $(OBJ)
 #  notice that bin_reg becomes geo.reg in the etc directory
 
 $(ETC)/geo.reg: bin_reg.o $(GISLIB) $(LOCKLIB)
-	$(CC) $(LDFLAGS)  -o bin_reg  bin_reg.o  libgeo.a  $(GISLIB) $(LOCKLIB) $(MATHLIB) $(XDRLIB) 
-	mv  bin_reg  $(ETC)/geo.reg
+	$(CC) $(LDFLAGS)  -o $(ETC)/bin_reg  bin_reg.o  libgeo.a  $(GISLIB) $(LOCKLIB) $(MATHLIB) $(XDRLIB) 
 
 
 #  notice that bin_point becomes geo.point in the etc directory
 
 $(ETC)/geo.point: bin_point.o $(GISLIB) $(LOCKLIB)
-	$(CC) $(LDFLAGS)  -o bin_point  bin_point.o  libgeo.a $(GISLIB) $(LOCKLIB) $(MATHLIB) $(XDRLIB)
-	mv  bin_point  $(ETC)/geo.point
+	$(CC) $(LDFLAGS)  -o $(ETC)/bin_point  bin_point.o  libgeo.a $(GISLIB) $(LOCKLIB) $(MATHLIB) $(XDRLIB)
 
 
 $(ETC)/geo.quest: geo_quest.o $(GISLIB) 

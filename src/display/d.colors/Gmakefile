@@ -1,5 +1,4 @@
 PGM=d.colors
-HOME=$(BIN_MAIN_CMD)
 LIST =  \
     curses.o \
     sigint.o set_sigs.o\
@@ -11,7 +10,7 @@ LIST =  \
 
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
-$(HOME)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

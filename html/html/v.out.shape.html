@@ -1,0 +1,93 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <TITLE>v.out.shape</TITLE>	
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Content-Style" content="text/css">
+   <meta name="GENERATOR" content="Mozilla/4.72 [en] (X11; U; Linux 2.2.16 i686) [Netscape]">
+</head>
+<body bgcolor="#FFFFFF">
+<img SRC="grass.smlogo.gif" >
+<hr width=100% align=center size=6 no shade>
+<h2>
+NAME</h2>
+<font size=+0><b><i>v.out.shape</i></b> - export GRASS vector files to
+SHAPE</font>
+<br>&nbsp;
+<h2>
+SYNOPSIS</h2>
+<font size=+0><b>v.out.shape</b>&nbsp;&nbsp; map=<i>name</i>&nbsp;&nbsp;
+type=<i>area,line,[both]</i>&nbsp;&nbsp; mapset=<i>name&nbsp;&nbsp; </i>cats=<i>[string],integer,float</i>&nbsp;&nbsp;
+prefix=<i>name&nbsp;&nbsp; </i>log=<i>filename</i></font>
+<br>&nbsp;
+<h2>
+DESCRIPTION</h2>
+<font size=+0><b>v.out.shape</b> will export GRASS vectors files to ESRI
+Shapefile format.</font>
+<br>&nbsp;
+<br>&nbsp;
+<h2>
+OPTIONS</h2>
+&nbsp;
+<h3>
+Parameters:</h3>
+<DL>
+<DT><b><font size=+0>map=</font></b><EM>name</EM>
+<DD>name of input vector map. Must be level 2.(Run v.support option=build)
+<BR>
+
+<DT><b><font size=+0>type=</font></b><EM>option</EM>
+<DD>coverage type.
+<BR>
+<b>Options</b>: area, line, both(default)
+
+<DT><b><font size=+0>mapset=</font></b><EM>name</EM>
+<DD>name of mapset containing vector file (default current).
+<BR>
+
+<DT><b><font size=+0>cats=</font></b><EM>option</EM>
+<DD>If category support is available, a third field is generated
+containing data of the selected type. Note `float' uses a double precision
+number. Otherwise ignored.
+<BR>
+<b>Options</b>: none(default),string,integer,float.
+
+<DT><b><font size=+0>prefix=</font></b><EM>name</EM>
+<DD>prefix for SHAPE output filenames. Default is name of vector map.
+<BR>
+
+<DT><b><font size=+0>log=</font></b><EM>filename</EM>
+<DD>choose a logfile. If the file cannot be opened, standard error stream is used.
+<BR>
+</DL>
+
+
+<br>&nbsp;
+<br>&nbsp;
+<h2>
+NOTES</h2>
+<font size=+0>The vector file export program, v.out.shape, will prompt
+you to enter the name of a GRASS vector file to be exported to SHAPE and
+for various options, see above.</font>
+<p><font size=+0>A GRASS vector file to be exported to SHAPE may contain
+both LINE and POLYGON coverage. If you select type <i>both</i> for conversion,
+two layers will be produced with the appended suffixes <b>_line</b> and
+<b>_area</b>
+respectively for lines and polygons. Lines used as area edges however are
+not duplicated in the lines layer. If one layer is empty the unused files
+are deleted.</font>
+<br>&nbsp;
+<br>&nbsp;
+<h2>
+SEE ALSO</h2>
+<i><a href="v.in.shape.html">v.in.shape</a>, <a href="m.in.e00.html">m.in.e00</a>,
+v.out.e00, <a href="v.in.arc.html">v.in.arc</a>, <a href="v.out.arc.html">v.out.arc</a>,
+<a href="v.out.dlg.html">v.out.dlg</a></i>
+<br>&nbsp;
+<h2>
+AUTHOR</h2>
+<font size=+0>David D. Gray</font>
+<br><i><font size=+0>&lt;ddgray@armadce.demon.co.uk&gt;</font></i>
+<p><font size=+0>Depends on shapelib-1.2.8 or later by Frank Warmerdam.</font>
+</body>
+</html>

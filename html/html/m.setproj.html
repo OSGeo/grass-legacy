@@ -1,0 +1,118 @@
+<TITLE>m.setproj</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>m.setproj</b></EM>  - Allows the user to create the PROJ_INFO and the
+PROJ_UNITS files to record the projection information associated with a
+specified mapset.
+
+<BR>
+
+<EM>"(SCS GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.setproj</B>
+
+<BR>
+
+<B>m.setproj help</B>
+
+<BR>
+
+<B>m.setproj</B> [<B>set=</B><EM>name</EM>] <B>proj=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+allows a user to create a new PROJ_INFO file in the specified mapset.
+The file is used to record the projection information associated with
+the specified mapset.
+
+
+<P>
+
+Note:
+<DL>
+<DT> 
+
+<DD>The "set" mapset must exist and must not contain a PROJ_INFO or
+PROJ_UNITS file.
+
+<BR>
+
+The specification of any projection other than ll and xxx will generate
+a request to the user for a name of a standard ellipse.
+
+<BR>
+
+The projections of aea, lcc, merc, and tmerc will generate a request
+to the user for the prime meridian and standard parallel for the output
+map.
+
+<BR>
+
+The projection of stp will generate a request to the user for the state
+abbreviation and choice of zone for the output map.
+
+<BR>
+
+The projection of xxx will request mapgen <EM>proj</EM> parameters.  See the
+mapgen <EM>proj</EM> documentation for the uses of this software.
+
+</DL>
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>set=</B><EM>name</EM> 
+
+<DD>Mapset in which the projection information file is to be stored.
+
+<DT><B>proj=</B><EM>name</EM> 
+
+<DD>Map projection name.
+
+<BR>
+
+Options:  utm, aea, stp, ll, lcc, merc, tmerc, xxx
+</DL>
+
+
+<H2>EXAMPLE</H2>
+
+To create a PROJ_INFO file recording mapset SAMPLE as being a UTM
+projection in zone 13:
+
+<DL> 
+<P>
+<DD><B>m.setproj set=</B><EM>SAMPLE</EM> <B>proj=</B><EM>utm </EM>
+
+<BR>
+
+</DL>
+
+<P>
+
+The user will be prompted for the spheroid and zone of the UTM
+projection.
+
+<H2>SEE ALSO</H2>
+
+<EM>Mapgen</EM>
+<EM>proj</EM>
+
+<H2>AUTHOR</H2>
+
+M.L. Holko, USDA, SCS, NHQ-CGIS

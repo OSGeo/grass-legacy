@@ -1,30 +1,12 @@
 PGM=xganim
 
-MSEC=4
-MDIR=$(SRC)/../man/man$(MSEC)
-MUTL=$(SRC)/../man/utilities
-
-PHOME=$(BIN_CONTRIB_CMD)
-
 EXTRA_CFLAGS=$(XCFLAGS)
 
 OFILES = \
 	gui.o \
 	main.o
 
-all: $(PHOME)/$(PGM) man
-
-$(PHOME)/$(PGM):  $(OFILES) $(GISLIB)
-	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(XDRLIB) $(XLIBPATH) $(MATHLIB) $(XMLIB) $(XTLIB) $(XLIB)
-	mv a.out $@
-
-man: 
-	-cp doc/xganim.man $(MDIR)/xganim
-#  some systems still ship without nroff!
-	-cp doc/xganim.catman $(GISBASE)/man/$(MSEC)/xganim
-#	nroff $(MUTL)/man.version $(MDIR)/.class-header \
-#		$(MUTL)/man.header doc/xganim.man $(MDIR)/.class-notice \
-#		> $(GISBASE)/man/$(MSEC)/xganim
-
+$(BIN_CMD)/$(PGM):  $(OFILES) $(GISLIB)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(XLIBPATH) $(XMLIB) $(XTLIB) $(XLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

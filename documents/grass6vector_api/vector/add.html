@@ -1,0 +1,511 @@
+
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Adding Features
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Adding Features
+</h1>
+
+<blockquote><i>
+    Status:  Alpha<br>
+    This module has been designed but not thoroughly reviewed.
+</i></blockquote>
+
+
+
+The routines below are the primary way to add new data to a vector map.
+The library will do the work of attaching the arcs to any existing
+nodes or creating new nodes as needed.  Note that they are considerably
+higher level than what was available in the 4.0 library.  <em>Arc-Node</em>
+topology is automatically generated.  There have been discussions about
+also automatically generating <em>area</em> topology, but I see that as at 
+least a phase two problem.  In the current design, one must call
+<a href="topo_write.html#gvBuildTopology>gvBuildTopology()</a> to 
+build area topology.
+<p>
+
+I am defining <em>Arc-Node topology</em> as the complete set of relationships
+between arcs and nodes.  E.g. Arc reference both nodes that they connect
+to and nodes reference all nodes that connect to them as well as some
+type of rotational ordering information.
+<p>
+
+I define <em>Area topology</em> to first assume that Arc-Node topology
+is available and second, the complete set of relationships with
+areas to arcs and areas to islands.  E.g. arcs reference up to two areas,
+one on either side.  Areas reference all of the arcs that border them, as
+well as clockwise ordering and whether individual arcs are digitized 
+forward or backwards with respect to the area polygon.
+<p>
+
+
+In 5.0 there is currently no intent to provide lower level write capabilities.
+<p>
+
+Note while I use the word <em>write</em> the use does not imply file
+I/O at all.  The API worries about when and how to write to the files.
+<p>
+
+
+
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li>gvStatus  <a href="#gvEnableAutoLineBreaking"> gvEnableAutoLineBreaking </a>
+    (gvMapP map, int flag)
+
+
+<li>gvStatus  <a href="#gvSetSnap"> gvSetSnap </a>
+    (gvMapP map, gvBoolean flag)
+
+
+<li>gvStatus  <a href="#gvAddLine"> gvAddLine </a>
+    (gvMapP map, gvPid *line, gvPointsP points, gvLineType type)
+
+<li>int  <a href="#gvQueryNewNodes"> gvQueryNewNodes </a>
+    (gvMapP map, gvGroupP nodes)
+
+
+<li>int  <a href="#gvQueryNewLines"> gvQueryNewLines </a>
+    (gvMapP map, gvGroupP lines)
+
+
+<li>int  <a href="#gvQueryDeletedLines"> gvQueryDeletedLines </a>
+    (gvMapP map, gvGroupP lines)
+
+
+<li>int  <a href="#gvQueryDeletedAreas"> gvQueryDeletedAreas </a>
+    (gvMapP map, gvGroupP areas)
+
+
+<li>gvStatus  <a href="#gvAddAreaMarker"> gvAddAreaMarker </a>
+    (gvMapP map, gvPid *area, gvCoordP coord)
+
+
+<li>gvStatus  <a href="#gvAddAreaMarkerRaw"> gvAddAreaMarkerRaw </a>
+     (gvMapP map, gvPid *area, double x, double y)
+
+
+<li>gvStatus  <a href="#gvAddNode"> gvAddNode </a>
+    (gvMapP map, gvPid *node, gvCoordP coord, gvNodeType type)
+
+
+<li>gvStatus  <a href="#gvAddNodeRaw"> gvAddNodeRaw </a>
+     (gvMapP map, gvPid *node, double x, 
+
+
+<li>gvStatus  <a href="#gvAddNodeRawZ"> gvAddNodeRawZ </a>
+    (gvMapP map, gvPid *node, double x, double y, 
+
+
+<li>gvStatus  <a href="#gvAddIsland"> gvAddIsland </a>
+    (gvMapP map, gvPid *isle)
+
+
+<li>gvStatus  <a href="#gvCopyData"> gvCopyData </a>
+    (gvMapP mapA, gvGroupP group, int mask)
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+<h3> Adding Features to the Map </h3>
+
+
+<a name="gvEnableAutoLineBreaking">
+<pre>
+gvStatus  <strong>gvEnableAutoLineBreaking</strong> (gvMapP map, int flag)
+
+IFF supported, this will turn on or off, the option to automatically
+break lines when added to map.  This comes from Franklin Whitehurst's
+approach to the SCS Fasttrack digitizing interface, and it is not
+yet know if it will be supported in the first release of the API.
+
+
+INPUT
+    gvMapP map
+    int flag		1 enable, 0 disable (default)
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error (unkown)
+
+NOTE
+    This option implies many side effects.  One new line can cause
+    many old lines to be broken and replaced by new lines, and it 
+    can destroy many polygons, all the while creating many new Cnodes.
+
+    The question is also raised as to what to do with line edits which
+    cause existing lines to now cross.
+
+    This option also could tend to get very slow because of the number
+    of spatial searches and crossing tests that need to be performed. 
+    Note that this definately will benefit by the addition of improved
+    spatial indexing.
+
+SEE ALSO
+    gvQueryNewNodes () etc 
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+
+<a name="gvSetSnap">
+<pre>
+gvStatus  <strong>gvSetSnap</strong> (gvMapP map, gvBoolean flag)
+
+
+This routine allows the client to turn the capability for automatic
+snapning of lines on or off.  The default is on.  Once changed it
+will stay in effect for that map until the map is close, it is changed
+by another call to gvSetSnap() or the program terminates.
+
+
+INPUT
+    gvMapP map
+    gvBoolean flag	GV_TRUE turns snapping on.  GV_FALSE turns it off.
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Option set successfully
+	GV_FAILURE	Bad inputs
+NOTE
+    It has also been proposed to allow a function to be called to 
+    determine if two points are within a threshold.  This allows
+    the threshold to be dynamically modified based on, for example,
+    current scale duringt on-screen digitizing.
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+
+<a name="gvAddLine">
+<pre>
+gvStatus  <strong>gvAddLine</strong> (gvMapP map, gvPid *line, gvPointsP points,
+			gvLineType type)
+
+
+This is the main function call to add new line data to a map.  Inputs
+are a populated gvPointsP structure and a line type.   The line will be
+snapped to any nodes within the snapping threshold and LINE-NODE
+topology will automatically be generated.  AREA topology will NOT be
+generated at this point.
+
+
+INPUT
+    gvMapP map
+    gvPointsP points	Points representing the line.
+    gvLineType type	Type of the new line  (AREA/LINE/NEAT)
+
+OUTPUT
+    gvPid *line		Pointer to gvPid struct which is filled in 
+			with the PID of the added line. Note if line 
+			breaking is enabled, this is useless.  so see 
+			below.
+
+RETURN
+    gvStatus
+	GV_0NEW_NODE	Line added, 0 new nodes created
+	GV_1NEW_NODE	Line added, 1 new node  created
+	GV_2NEW_NODE	Line added, 2 new nodes created
+	GV_FAILED	Line not added
+	GV_MEMORY_ERR	Out of memory
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvQueryNewNodes">
+<pre>
+int  <strong>gvQueryNewNodes</strong> (gvMapP map, gvGroupP nodes)
+
+</pre>
+
+<a name="gvQueryNewLines">
+<pre>
+int  <strong>gvQueryNewLines</strong> (gvMapP map, gvGroupP lines)
+
+</pre>
+
+<a name="gvQueryDeletedLines">
+<pre>
+int  <strong>gvQueryDeletedLines</strong> (gvMapP map, gvGroupP lines)
+
+</pre>
+
+<a name="gvQueryDeletedAreas">
+<pre>
+int  <strong>gvQueryDeletedAreas</strong> (gvMapP map, gvGroupP areas)
+
+
+
+Since gvAddLine could potentially create many new lines and nodes and
+also delete many lines and polygons, the above routines are
+provided to give access to the list of those features which were
+deleted or created.
+
+These calls are good immediately after a gvAddLine()[gvAddCnode] call
+and until the next gvAddline()[gvAddCnode] call.
+
+INPUT
+    gvMapP map
+
+OUTPUT
+    gvGroupP lines,etc	Initialized group structure.  Will be 
+			populated with PIDs that statisfy the query.
+
+RETURN
+    int		Number of PIDs returned in the group.
+
+NOTE
+    Note that the PID's returned from Deleted calls are no longer valid
+    and provided only for informational use.
+
+    gvAddCnode() could conceivably cause the breaking of at least one 
+    line.  Thus gvQueryNewLines() could apply to Cnodes. The other 
+    routines would not.
+
+    This part of the interface could use a little more study.
+
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvAddAreaMarker">
+<pre>
+gvStatus  <strong>gvAddAreaMarker</strong> (gvMapP map, gvPid *area, gvCoordP coord)
+
+
+This is the main function call to add new area data to a map.  Input
+is a populated gvCoord structure.  AREA topology will NOT be generated
+at this point.  
+
+INPUT
+    gvMapP map
+    gvCoordP coord	Coord structure which hold the X, Y of marker
+
+OUTPUT
+    gvPid *area		PID of created Area (not necessarily populated) is				returned in this structure.
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error (unkown)
+	GV_MEMORY_ERR	Out of memory
+
+NOTE
+    Placing an area marker does not an area make.  But making this call
+    reserves a space for an area.  This allows the user interface to
+    allow for quickly placing area markers, and later going through,
+    building the areas and attaching existing area markers or creating
+    new ones if none exist.
+
+COMMENTS
+    Was thinking it could check to see if it is in a previously labeled
+    area, but that doesnt work cuz there could be other unbuilt areas
+    in the vicinity that are not yet taken into account.  Best to just
+    place it and deal with it in topo build.
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvAddAreaMarkerRaw">
+<pre>
+gvStatus  <strong>gvAddAreaMarkerRaw</strong>  (gvMapP map, gvPid *area, double x, 
+				double y)
+
+Same as gvAddAreaMarker() except x, y are passed in separately
+
+
+COMMENTS
+    It would be nice to blow off all these variations on a subroutine.
+    C++ would be nice, or just use gvCoord.
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+
+<a name="gvAddNode">
+<pre>
+gvStatus  <strong>gvAddNode</strong> (gvMapP map, gvPid *node, gvCoordP coord, 
+				gvNodeType type)
+
+
+This is a primary function to add a new Node to a map.  Note that
+gvAddLine() will create connecting nodes as necessary, but one may
+prefer to place a connecting node before the lines are added.  If so,
+this is the routine to use.    If a node of the same type already
+exists there, it returns GV_EXISTS and fills 'node' with PID of
+existing node.  This routine is also used to place Entity nodes.
+
+INPUT
+    gvMapP map
+    gvCoordP coord	Coord structure which hold the X, Y of node
+    gvNodeType type	One of:   GV_NT_CNODE   Connecting Node
+				  GV_NT_ENODE   Entity Node
+
+OUTPUT
+    gvPid *node		PID of created Node (not necessarily populated) is				returned in this structure.
+
+RETURN
+    gvStatus
+	GV_OK		Success
+        GV_EXISTS 	Node already existed there
+	GV_FAILED	Error 
+	GV_MEMORY_ERR	Out of memory
+
+NOTES
+    probably should have special handling for trying to place an Enode
+    on top of a Cnode or a Line, or placing a Cnode on an Enode.
+
+COMMENTS
+    TODO Maybe AddNode(CNODE) should automatically break any 
+    lines it interesects?
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+<a name="gvAddNodeRaw">
+<pre>
+gvStatus  <strong>gvAddNodeRaw</strong>  (gvMapP map, gvPid *node, double x, 
+				double y, gvNodeType type)
+
+
+Same as gvAddNode() except x, y are passed in separately
+
+
+</pre>
+<hr>   <!--------------------------------------------------->
+
+
+gvStatus gvAddNodeRawZ (gvMapP map, gvPid *node, double x, double y, 
+
+<a name="gvAddNodeRawZ">
+<pre>
+gvStatus  <strong>gvAddNodeRawZ</strong> (gvMapP map, gvPid *node, double x, 
+				double y, double z, gvNodeType type)
+
+Same as gvAddNodeRaw() except z is also provided for node.
+
+
+</pre>
+<hr>   <!--------------------------------------------------->
+
+
+<a name="gvAddIsland">
+<pre>
+gvStatus  <strong>gvAddIsland</strong> (gvMapP map, gvPid *isle)
+
+
+This function is here simply for consistance with the other feature adds.
+An islands is not a proper feature.  This function should probably never
+be called by most if not all programs.
+A new PID is of type ISLE is created.
+
+
+INPUT
+    gvMapP map
+    gvPid *node		PID of new island
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+
+NOTE
+    This island is not populated with ANY information.
+    
+SEE ALSO
+    gvGetNodeCoord()
+
+</pre>
+<a href="#index">index</a>
+<hr>   <!--------------------------------------------------->
+
+
+
+
+<H3>Copying features from one map to another</H3>
+
+
+<a name="gvCopyData">
+<pre>
+gvStatus  <strong>gvCopyData</strong> (gvMapP mapA, gvGroupP group, int mask)
+
+
+Copies features from group in mapB to mapA. [mapB  is implicitely
+defined by the group.  The only primitive feature types which are
+allowed to be copied currently are line types and entity node types.
+These are GV_PT_ALINE, GV_PT_LLINE, GV_PT_NLINE, GV_PT_ENODE.
+
+INPUT
+    gvMapP mapA			Map to receive new data
+    gvGroupP group		Group of enties
+    int	mask			Bit mask of which PID types to copy
+			        Any union of:
+					GV_MASK_LINES   GV_MASK_LLINES
+					GV_MASK_ALINES  GV_MASK_NLINES
+ 					GV_MASK_ENODES
+ 
+OUTPUT
+    None
+
+RETURN
+    gvStatus
+	GV_OK		Success
+	GV_FAILED	Error
+	GV_MEMORY_ERR	Out of memory
+	
+
+NOTE
+    This routine is useful for interactive editing software to move
+    data across maps. It can also be used to move deleted data to 
+    a garbage can map, so that it can be undeleted or referenced later.
+
+</pre>
+<a href="#index">index</a>
+
+<!--hr------------------------------------------------>
+<p>
+
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>
+

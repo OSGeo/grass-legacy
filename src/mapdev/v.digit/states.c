@@ -46,6 +46,7 @@ set_default_display (void)
     Disp_markers = 1;	/* area ID markers (dot) */
     Disp_llines =  1;	/* labelled lines */
     Disp_llabels = 0;	/* line labels (category #s)*/
+    Disp_ulines =  0;	/* unlabelled lines */
     Disp_thresh  = 0;	/* all snapping thresholds */
     Disp_sites =   1;   /* Sites */
     Disp_slabels = 0;   /* site labels*/
@@ -70,6 +71,7 @@ set_default_display (void)
            Disp_markers = 1; /* area ID markers (dot) */
            Disp_llines =  1; /* labelled lines */
            Disp_llabels = 0; /* line labels (category #s)*/
+           Disp_ulines =  0; /* unlabelled lines */
            Disp_thresh  = 0; /* all snapping thresholds */
            Disp_sites =   1; /* Sites */
            Disp_slabels = 0; /* site labels*/
@@ -109,7 +111,7 @@ set_default_display (void)
 
 int get_mem (int r_w)
 {
-         int D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13;
+         int D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,D11,D12,D13,D14;
          int C1,C2,C3,C4,C5,C6,C7,C8,C9,C10,C11,C12,C13,C14,C15,C16;
          int E1,E2,E3,E4,E5,E6,E7,E8,E9,E10,E11;
          double prune, snap;
@@ -126,9 +128,9 @@ int get_mem (int r_w)
                if (fgets(buff,sizeof(buff),Mem_file) == NULL) return(0);
                sscanf(buff,"%lf %lf",&prune,&snap);
                if (fgets(buff,sizeof(buff),Mem_file) == NULL) return(0);
-               sscanf(buff,"%d %d %d %d %d %d %d %d %d %d %d %d %d",
+               sscanf(buff,"%d %d %d %d %d %d %d %d %d %d %d %d %d %d",
                               &D1,&D2,&D3,&D4,&D5,&D6,&D7,
-                              &D8,&D9,&D10,&D11,&D12,&D13);
+                              &D8,&D9,&D10,&D11,&D12,&D13,&D14);
                if (fgets(buff,sizeof(buff),Mem_file) == NULL) return(0);
                sscanf(buff,"%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
                               &C1,&C2,&C3,&C4,&C5,&C6,&C7,&C8,&C9,
@@ -147,9 +149,10 @@ int get_mem (int r_w)
                Disp_markers = D8;
                Disp_llines =  D9;
                Disp_llabels = D10;
-               Disp_thresh  = D11;
-               Disp_sites =   D12;
-               Disp_slabels = D13;
+               Disp_ulines =  D11;
+               Disp_thresh  = D12;
+               Disp_sites =   D13;
+               Disp_slabels = D14;
 
                CLR_LINE = C1;
                CLR_AREA = C2;
@@ -207,11 +210,11 @@ int get_mem (int r_w)
                Disp_overlay = 0;
 	       Disp_backdrop = 0;
 
-               sprintf(buff,"%d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+               sprintf(buff,"%d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
 		      Disp_overlay, Disp_backdrop, Disp_lines, Disp_points,
 		      Disp_nodes, Disp_labels, Disp_outline, Disp_markers,
-                      Disp_llines, Disp_llabels, Disp_thresh, Disp_sites,
-                      Disp_slabels);
+                      Disp_llines, Disp_llabels, Disp_ulines, Disp_thresh,
+		      Disp_sites, Disp_slabels);
 	       fputs(buff,Mem_file);
 
                sprintf(buff,"%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",

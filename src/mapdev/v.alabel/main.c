@@ -8,6 +8,7 @@
 int main (int argc, char *argv[])
 {
     struct Map_info Map;
+	struct GModule *module;
     struct Option *vectfile, *value;
     struct Flag *incr, *Nosup;
     char *mapset;
@@ -20,6 +21,11 @@ int main (int argc, char *argv[])
     int label;
 
     G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Bulk-labels unlabeled area features in "
+		"a binary GRASS vector file.";
 
     vectfile = G_define_option();
     vectfile->key 		= "map";

@@ -1,0 +1,18 @@
+LIBES  = $(GISLIB) $(VASKLIB)
+
+
+#PGM = $(GISBASE)/bin/r.agnps50.view
+PGM=$(BIN_INTER)/r.agnps50.view
+LIST = \
+        psu_agnps_view.o\
+        critical_area.o\
+        show_maps.o\
+        find_old_map.o\
+	show_pest.o\
+        get_pest_name.o
+
+
+$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

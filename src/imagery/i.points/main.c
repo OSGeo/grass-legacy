@@ -6,7 +6,11 @@
 #include "local_proto.h"
 #include "raster.h"
 
+#ifdef __GNUC_MINOR__
 int quit (int) __attribute__ ((__noreturn__));
+#else
+int quit (int);
+#endif
 int error (char *, int);
 
 int main (int argc, char *argv[])

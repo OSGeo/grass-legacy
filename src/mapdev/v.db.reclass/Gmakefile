@@ -1,0 +1,18 @@
+PGM=v.db.reclass
+
+DBMILIB = $(LIBDIR)/libdbmi.a
+
+LIBES = $(VECTLIB) $(DIG_ATTLIB)\
+	$(DBMILIB) $(VECTLIB_REAL) $(DIG2LIB)\
+	$(EXTRALIB) $(GISLIB) 
+
+
+LIST = main.o\
+	input.o\
+	key_data.o\
+	reclass.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

@@ -1,0 +1,159 @@
+
+#######################################################
+#
+# shell name : tcltkgrass
+#
+# description : This shell is a modified copy of 
+#               $GISBASE/$ETC/GIS.sh
+#
+# copyright :
+# 
+# Geographical Resources Analysis Support Systems (GRASS) 
+# is a Trademark of U.S. Army Construction Engineering
+# Research Laboratories (USACERL)
+#
+# New releases of GRASS are coordinated and produced by
+# the Office of GRASS Integration (OGI) located at 
+# USACERL, and incorporate software contributions from
+# numerous sources
+#
+#######################################################
+
+GISBASE=/mnt/las/aux
+export GISBASE
+
+
+TCLTKGRASSBASE=/mnt/develop/grass
+export TCLTKGRASSBASE
+
+#
+# get home directory, name of lockfile and gisrc file
+#
+home=`cd;pwd`
+lockfile=$home/.gislock
+GISRC=$home/.grassrc
+export GISRC
+
+#
+# set the GIS_LOCK variable to current process id
+#
+GIS_LOCK=$$
+export GIS_LOCK
+
+#
+# set PATH to GRASS bin, ETC to GRASS etc
+#
+ETC=$GISBASE/etc
+PATH=$GISBASE/bin:$GISBASE/scripts:$GISBASE/garden/bin:$PATH
+export PATH
+
+#
+# check for concurrent use
+#
+$ETC/lock $lockfile $$
+case $? in
+ 0) ;;
+ 1)
+    echo `whoami` is currently running GRASS. Concurrent use not allowed.
+    exit;;
+ *)
+    echo Unable to properly access $lockfile
+    echo Please notify system personel.
+    exit;;
+esac
+
+# run tset to set terminal and TERM variable
+# must tell it to output sh
+eval `SHELL=/bin/sh tset -s -Q`
+stty -tabs
+
+
+#
+# show GRASS copyright
+#
+wish -file $TCLTKGRASSBASE/script/gis_intro.tcl
+
+#
+# user selects LOCATION and MAPSET  
+#
+
+
+eval `wish -file $TCLTKGRASSBASE/script/gis_set.tcl`
+
+
+# unset the MONITOR variable to force user to select one if they are going
+# to do graphics.
+
+g.gisenv MONITOR=
+
+#
+# get gisrc into the environment
+#
+#eval `g.gisenv`
+
+LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
+export LOCATION
+
+# echo $LOCATION
+
+if [ -x $home/.grassrc.4.1 ]
+then
+	$home/.grassrc.4.1
+elif [ -x $GISBASE/grassrc ]
+then
+	$GISBASE/grassrc
+fi
+
+trap "" 2 3
+
+
+sh="`basename $SHELL`"
+case "$sh" in
+    ksh)  shellname="Korn Shell";;
+    csh)  shellname="C Shell" ;;
+    tcsh) shellname="TC Shell" ;;
+    sh)   shellname="Bourne Shell";;
+    *)    shellname=shell;;
+esac
+
+
+SHELLNAME=$shellname
+export SHELLNAME
+
+clear 
+echo "Geographical Resources Analysis Support Systems (GRASS)" 
+echo "is a Trademark of U.S. Army Construction Engineering"
+echo "Research Laboratories (USACERL)"
+echo ""
+echo "New releases of GRASS are coordinated and produced by"
+echo "the Office of GRASS Integration (OGI) located at" 
+echo "USACERL, and incorporate software contributions from"
+echo "numerous sources"
+echo ""
+
+exec $TCLTKGRASSBASE/bin/tcltkgrass
+
+
+#######################################################
+#
+# exit shell
+#
+#######################################################
+
+#
+# unset the MONITOR variable
+#
+monitor=`g.gisenv MONITOR`
+if [ "$monitor" ]
+then
+	$ETC/mon.release -v $monitor
+fi
+
+g.gisenv MONITOR=
+
+#
+# Remove lock file
+#
+rm -f $lockfile
+clear
+

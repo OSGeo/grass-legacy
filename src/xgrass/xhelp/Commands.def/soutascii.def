@@ -1,9 +1,0 @@
-
-
-s.out.ascii - 
-
-s.out.ascii converts an existing site list file into an ASCII listing of
-site locations and (optionally) their @glossary("category labels",16.glossary/catlab.def), in a format
-suitable for input to other programs (e.g., @man("d.points"), @man("m.u2ll"), etc.)
-
-Manual entry for @man("s.out.ascii")

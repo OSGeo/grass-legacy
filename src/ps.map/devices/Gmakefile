@@ -1,0 +1,4 @@
+all:
+	if [ ! -d $(GISBASE)/etc/paint ]; then mkdir $(GISBASE)/etc/paint; fi
+	if [ ! -d $(GISBASE)/etc/paint/ps.devices ]; then mkdir $(GISBASE)/etc/paint/ps.devices; fi
+	(cd ps.devices ; tar -cvf - * | (cd $(GISBASE)/etc/paint/ps.devices ; tar xvf - 2>/dev/null ); true )

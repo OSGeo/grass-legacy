@@ -1,0 +1,560 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Arcs
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Arcs
+</h1>
+
+<blockquote><i>
+    Status:  Gamma<br>
+    This module has been designed, reviewed and coded.
+    It should be considered stable.
+</i></blockquote>
+
+The fundamental data type manipulated by the Vector API is lines (also
+known as arcs or chains).  To aid in managing these, a data structure
+called  gvArcP is provided for the caller.  This structure and
+all the memory management associated with it are managed by the API
+by the following routines.<p>
+
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li>gvArcP     <a href="#gvArcCreate"> gvArcCreate </a>
+          (gvBoolean hasZ);
+
+
+<li>gvStatus   <a href="#gvArcDestroy"> gvArcDestroy </a>
+         (gvArcP arc);
+
+
+<li>gvStatus   <a href="#gvArcGetPoint"> gvArcGetPoint </a>
+        (gvArcP arc, gvCoord *coord, int n);
+
+
+<li>gvStatus   <a href="#gvArcGetPointRaw"> gvArcGetPointRaw </a>
+     (gvArcP arc, double *x, double *y, int n);
+
+
+<li>gvStatus   <a href="#gvArcSetPoint"> gvArcSetPoint </a>
+        (gvArcP points, gvCoord coord, int n);
+
+
+<li>gvStatus   <a href="#gvArcSetPointRaw"> gvArcSetPointRaw </a>
+     (gvArcP points, double x, double y, int n);
+
+
+<li>gvStatus   <a href="#gvArcCopyFromXy"> gvArcCopyFromXy </a>
+      (gvArcP arc, double *x, double *y, int n);
+
+
+<li>gvStatus   <a href="#gvArcCopyFromXyz"> gvArcCopyFromXyz </a>
+     (gvArcP arc, double *x, double *y, double *z, int n);
+
+
+<li>gvStatus   <a href="#gvArcCopyToXy"> gvArcCopyToXy </a>
+        (gvArcP arc, double *x, double *y, int *n);
+
+
+<li>gvStatus   <a href="#gvArcCopyToXyz"> gvArcCopyToXyz </a>
+       (gvArcP arc, double *x, double *y, double *z, int *n);
+
+
+<li>gvStatus   <a href="#gvArcEmpty"> gvArcEmpty </a>
+           (gvArcP arc);
+
+
+<li>gvStatus   <a href="#gvArcAppend"> gvArcAppend </a>
+          (gvArcP arc, gvCoord coord);
+
+
+<li>gvStatus   <a href="#gvArcAppendRaw"> gvArcAppendRaw </a>
+       (gvArcP arc, double x, double y);
+
+
+<li>gvStatus   <a href="#gvArcAppendArc"> gvArcAppendArc </a>
+       (gvArcP pntA, gvArcP pntB, int dir);
+
+
+<li>int        <a href="#gvArcGetNumPoints"> gvArcGetNumPoints </a>
+    (gvArcP arc);
+
+
+<li>gvBoolean  <a href="#gvArcHasZ"> gvArcHasZ </a>
+            (gvArcP arc);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+<a name="gvArcCreate">
+<pre>
+gvArcP     <strong>gvArcCreate</strong>       (gvBoolean hasZ);
+
+Create a new initialized gvArcP.
+
+INPUT
+    gvBoolean hasZ	Specify GV_TRUE to work with Z data values.
+                     Once set it can NEVER be changed!
+
+OUTPUT
+    None
+
+RETURN
+    gvArcP		Success		New gvArcP pointer
+             		Failure		NULL
+ CALLS
+    dpg_malloc()
+    gv_setErrorCode()
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcDestroy">
+<pre>
+gvStatus   <strong>gvArcDestroy</strong>      (gvArcP arc);
+
+Destroy a gvArcP structure that is no longer needed.
+This will free up any memory allocated for the structure.
+
+INPUT
+    gvArcP points	Existing gvArcP pointer.
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus		
+	    GV_OK		Success
+	    GV_FAILED		Failed
+	    GV_MEMORY_ERR	Heap error
+
+ CALLS
+    dpg_free()
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcGetPoint">
+<pre>
+gvStatus   <strong>gvArcGetPoint</strong>     (gvArcP arc, gvCoord *coord, int n);
+
+Return the nth X and Y of the array of points.  Given n (0-(n-1))
+return the nth coordinate pair.
+
+INPUT
+    gvArcP points		Points pointer
+    int n			Index of coord pair of interest
+
+OUTPUT
+    gvCoord *coord		Caller passes pointer to gvCoord struct
+
+RETURN
+    gvStatus		GV_OK		Success
+             		GV_FAILED	Failed. Bad n or bad points
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcGetPointRaw">
+<pre>
+gvStatus   <strong>gvArcGetPointRaw</strong>  (gvArcP arc, double *x, 
+				double *y, int n);
+
+Same as gvArcGetPoint except that X and Y are passed directly instead
+of using the gvCoord structure.
+
+INPUT
+    gvArcP points		Points pointer
+    int n			Index of coord pair of interest
+
+OUTPUT
+    double *x			X value.  Caller provides pointer to double
+    double *y			Y value
+
+RETURN
+    gvStatus		GV_OK		Success
+             		GV_FAILED	Failed. Bad n or bad points
+
+CALLS 
+    gvArcGetPoint()
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcSetPoint">
+<pre>
+gvStatus   <strong>gvArcSetPoint</strong>     (gvArcP points, gvCoord coord, int n);
+
+Set the nth X and Y of the array of points.  Given n (0-(n-1)),
+set the nth coordinate pair.   Cannot be used to append to an arc.
+
+INPUT
+    gvArcP points		Points pointer
+    int n			Index of coord pair of interest
+    gvCoord coord		Call passes pointer to gvCoord struct
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus		GV_OK		Success
+             		GV_ERROR	Failed. Bad n or bad points
+
+NOTE
+    This routine is useful for snapping lines to nodes, where the
+    endpoints of the line need to be changed.
+
+SEE ALSO
+	gvArcAppend ()
+
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcSetPointRaw">
+<pre>
+gvStatus   <strong>gvArcSetPointRaw</strong>  (gvArcP points, double x, 
+				double y, int n);
+
+Set the nth X and Y of the array of points.  Given n (0-(n-1)),
+set the nth coordinate pair.
+
+INPUT
+    gvArcP points		Points pointer
+    int n			Index of coord pair of interest
+    double x, y 		X and Y values 
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus		GV_OK		Success
+             		GV_ERROR	Failed. Bad n or bad points
+
+NOTE
+    This routine is useful for snapping lines to nodes, where the
+    endpoints of the line need to be changed.
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcCopyFromXy">
+<pre>
+gvStatus   <strong>gvArcCopyFromXy</strong>   (gvArcP arc, double *x, 
+				double *y, int n);
+
+Points are copied from arrays of x and y values into the gvArcP structure.
+If gvArcP previously had any points in it, they are thrown away.
+
+INPUT
+    gvArcP points		Points pointer
+    double *x			Array of X values
+    double *y			Array of Y values
+    int n			Length of x and y arrays
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus		GV_OK		Success
+             		GV_FAILED	Failure
+			GV_MEMORY_ERR	Out of memory
+
+SEE ALSO 
+    gvCopyXyzToPoints()
+
+CALLS
+    gv_allocArc()
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcCopyFromXyz">
+<pre>
+gvStatus   <strong>gvArcCopyFromXyz</strong>  (gvArcP arc, double *x, 
+				double *y, double *z, int n);
+
+Same as gvCopyFromXy() except that Z values are also copied. 
+The gvArcP structure must have been created to accept Z values.
+
+INPUT
+    gvArcP points		Points pointer
+    double *x			Array of X values
+    double *y			Array of Y values
+    double *z			Array of Z values
+    int n			Length of x and y arrays
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus		GV_OK		Success
+             		GV_FAILED	Failure
+			GV_MEMORY_ERR	Out of memory
+
+SEE ALSO 
+    gvCreatePoints(), gvCopyXyToPoints()
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcCopyToXy">
+<pre>
+gvStatus   <strong>gvArcCopyToXy</strong>     (gvArcP arc, double *x, 
+				double *y, int *n);
+
+
+Copy point values from gvArcP structure to caller provided X and Y
+arrays.  These arrays MUST be large enough to hold the incoming points.
+
+INPUT
+    gvArcP points		Points pointer
+
+OUTPUT
+    double *x			Array of X values
+    double *y			Array of Y values
+    int *n			Number of points copied
+
+RETURN
+    gvStatus		GV_OK		Success
+             		GV_FAILED	Failure
+
+SEE ALSO 
+    gvCopyPointsToXyz(), gvArcNumPoints()
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcCopyToXyz">
+<pre>
+gvStatus   <strong>gvArcCopyToXyz</strong>    (gvArcP arc, double *x, 
+				double *y, double *z, int *n);
+
+Same as gvCopyPointstoXy except that Z values are also copied.
+
+INPUT
+    gvArcP points		Points pointer
+
+OUTPUT
+    double *x			Array of X values
+    double *y			Array of Y values
+    double *z			Array of Y values
+    int *n			Number of points copied
+
+RETURN
+    gvStatus		GV_OK		Success
+             		GV_FAILED	Failure
+
+SEE ALSO 
+    gvCopyPointsToXy(), gvArcNumPoints()
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcEmpty">
+<pre>
+gvStatus   <strong>gvArcEmpty</strong>        (gvArcP arc);
+
+Delete all points from the gvArcP structure.  This is useful if you
+want to create a new line by appending points one at a time.
+
+INPUT
+    gvArcP points		Points pointer
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus		GV_OK		Success
+             	GV_FAILED	Failure
+
+SEE ALSO 
+    gvArcAppend()
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcAppend">
+<pre>
+gvStatus   <strong>gvArcAppend</strong>       (gvArcP arc, gvCoord coord);
+
+The point provided is appended to the end of the list of coordinated
+in the gvArcP structure.  This is useful for building up arcs one 
+point at a time.
+
+INPUT
+    gvArcP points		Points pointer
+    gvCoord coord		Coordinate to be appended
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus		GV_OK		Success
+             	GV_FAILED	Failure
+			GV_MEMORY_ERR	Out of memory
+
+SEE ALSO
+    gvArcAppend()
+
+CALLS
+   gv_allocArc()
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcAppendRaw">
+<pre>
+gvStatus   <strong>gvArcAppendRaw</strong>    (gvArcP arc, double x, double y);
+
+Same as gvArcAppend() except that x and y are provided on the argument
+list instead of the gvCoord structure.
+
+INPUT
+    gvArcP points		Points pointer
+    gvCoord coord		Coordinate to be appended
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus		GV_OK		Success
+             		GV_FAILED	Failure
+			GV_MEMORY_ERR	Out of memory
+
+SEE ALSO
+    gvArcAppend()
+
+CALLS
+   gvArcAppend ()
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcAppendArc">
+<pre>
+gvStatus   <strong>gvArcAppendArc</strong>    (gvArcP pntA, gvArcP pntB, int dir);
+
+Append all of the points from pntB onto the end of pntA.  If dir == -1
+ the points are appended in the reverse order as they are found in pntB.
+ If dir == 1, they are just copied as is.
+
+INPUT
+    gvArcP pointsA	Points to append to 
+    gvArcP pointsB	Points to be appended
+    int dir			Direction of points  1: Forward,  -1: Reverse
+
+OUTPUT
+    None
+
+RETURN
+    gvStatus		GV_OK		Success
+             	GV_FAILED	Failure
+			GV_MEMORY_ERR	Out of memory
+
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcGetNumPoints">
+<pre>
+int        <strong>gvArcGetNumPoints</strong> (gvArcP arc);
+
+Returns the number of points in the arc specified.
+
+INPUT
+    gvArcP points		Points pointer
+
+OUTPUT
+    None
+
+RETURN
+    int		Success		Number of points in gvArcP
+		Failure		-1
+
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+<a name="gvArcHasZ">
+<pre>
+gvBoolean  <strong>gvArcHasZ</strong>         (gvArcP arc);
+
+
+Return whether or not points support Z data values.
+
+INPUT
+    gvArcP points		Points pointer
+
+OUTPUT
+    None
+
+RETURN
+    gvBoolean		GV_TRUE		Has Z
+             		GV_FALSE	Does not have Z
+			GV_ERROR	Error
+
+SEE ALSO 
+    gvCreatePoints()
+
+
+</pre>
+<a href="#index">index</a>
+
+
+<!--hr------------------------------------------------>
+<p>
+
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

@@ -1,0 +1,83 @@
+<TITLE>old.cmd.sh</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>old.cmd.sh</b></EM>  - Provides the new GRASS version 4.1 program name for any
+program name in GRASS version 3.2.
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>old.cmd.sh </B><EM>3.2_program.name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>old.cmd.sh</EM>
+is a Bourne shell (sh(1)) script which, when given a GRASS 3.2 program name,
+returns the name of the new GRASS version 4.1 program performing its functions.
+This program is useful as a quick on -line cross-reference between
+GRASS versions 3 and 4.
+This program is not interactive;  the user must specify the name of a
+3.2 program on the command line.
+
+
+<H2>OPTIONS</H2>
+
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DD><EM>3.2_program.name</EM> 
+
+<DD>The name of an old GRASS version 3.2 program.
+ 
+</DL>
+
+
+Output will be in the form:
+
+
+<DL>
+<DD>
+<EM>old 3.2 program name</EM>  replaced with:  <EM>new 4.1 program name</EM>
+</DL>
+
+<H2>EXAMPLE</H2>
+
+For example, to learn which GRASS 4.1 command performs the 
+function of the GRASS 3.2 <EM>list</EM> command, the user might type:
+
+<DL>
+<DD>
+<B>old.cmd.sh  list </B>
+</DL>
+
+The user would then see the following message displayed to standard output:
+
+<DL>
+<DD>
+<EM>list</EM>  replaced with:  
+<EM><A HREF="g.list.html">g.list</A></EM> 
+</DL>
+
+<H2>FILES</H2>
+
+This shell script is stored under the <KBD>$GISBASE/scripts</KBD>
+directory on the user's system.  The user is encouraged to
+examine the shell script commands stored in this directory
+and to produce similar scripts for their own use.
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S.Army Construction Engineering 
+Research Laboratory

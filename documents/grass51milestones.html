@@ -1,0 +1,258 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <title>GRASS 5.1 Development in 2001 - Milestones</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EF" vlink="#59188E" alink="#FF0000">
+
+<h1>
+GRASS 5.1 Development in 2001:</h1>
+[$Date$]
+<p>
+This page describes the draft proposal for developing GRASS 5.1.
+<p>
+
+<b>New version number scheme:</b><p>
+The new GRASS version number scheme is adopted from the Linux kernel 
+(even minor number is stable, odd minor number is development):
+
+<ul>
+<li>GRASS 5.even.x: stable versions
+<li>GRASS 5.odd.x: development versions
+</ul>
+
+After fully implementing the new vector environment, the next
+stable release based on GRASS 5.1.x may become version GRASS 6.0.0.
+<hr>
+
+<br>Two "phases" are planned with individual "milestones". This proposal
+is not going into details, but tries to describe the general route to follow.
+<p>Please send your opinion/suggestions to the <a href="http://www.geog.uni-hannover.de/grass/grassdevel.html">GRASS
+5 developers list</a>.
+<p>Note:
+<br>PHASE 1 differs from PHASE 2 as the new directory layout and other
+core definitions have to be set up first. Therefore no other changes
+should be done to avoid conflicts during PHASE 1. All developers are invited
+to contribute.
+
+<ul>
+<li><i><b>Status restricted:</b> only proposed actions allowed
+to avoid conflicts and to achieve stable 5.1 environment quickly</i>
+<li><i><b>Status open: </b>Proposal is "minimum" to be done, open to other
+improvements</i>
+</ul>
+<p>
+
+
+<center><table BORDER COLS=1 WIDTH="100%" BGCOLOR="#66FFFF" NOSAVE >
+<tr>
+<td><b>GRASS 5.1 - PHASE 1</b></td>
+</tr>
+</table></center>
+
+<p><b><font color="#FF0000">Milestone 1 - Status: restricted</font></b>
+<ul>
+<li>
+new directory layout as discussed</li>
+
+<li>
+implement common <a href=http://www.gnu.org/directory/automake.html>Makefile
+system</a> (replacement for GRASS Gmakefiles)</li>
+
+<li>
+build shared libraries</li>
+
+<li>
+implement new environment variables management</li>
+
+<li>
+separate GRASS database I/O routines from GISLIB and add Frank Warmerdam's&nbsp;<br>
+<a href=http://gdal.velocet.ca/projects/grass/>libgrassio</a> into separate
+directory, release libgrassio under <a href=http://www.gnu.org/copyleft/lesser.html>LGPL</a> 
+to allow implementation of I/O routines (but nothing else) into proprietary software 
+</li>
+</ul>
+
+<br><b><font color="#FF0000">Milestone 2 - Status: restricted</font></b>
+<ul>
+<li>
+implement <a href=http://www.raz-dva.cz/krakonos/grass/vector5.html>new GRASS vector library</a>: 2.5D (3D optionally), DBMS
+support, 64bit compliance</li>
+
+<li>
+implement GRASS-builtin DBMS for multiple vector attributes management (which DBMS?)</li>
+
+<li>
+implement vector segmentation to speed up topology build&nbsp;<br>
+processes on large vector files</li>
+</ul>
+
+<b><font color="#FF0000">Milestone 3 - Status: restricted</font></b>
+<ul>
+<li>
+update all vector modules</li>
+
+<li>
+implement <b>basic</b> raster/sites/... modules</li>
+
+<ul>
+<li>
+restrictions: polish code before adding to 5.1</li>
+
+<li>
+check algorithms for copyright violations</li>
+
+<li>
+check for numerical optimization, especially with gmath library,</li>
+
+<li>
+merge modules if possible to reduce number,</li>
+
+<li>
+merge back html documentation to individual module [?]</li>
+</ul>
+
+<li>
+implement new (auto-)help system based on XML-descriptions/HTML</li>
+
+<li> implement XML-based packaging scheme (module classifications) to allow
+GRASS packaging into components (core-GRASS, hydro-GRASS, image-GRASS etc),
+while GRASS source code remains unsplitted</li>
+</ul>
+
+<b><font color="#3366FF">At this time GRASS 5.1 should become usable.</font></b>
+<br>&nbsp;
+<br>&nbsp;
+<br>&nbsp;
+<table BORDER COLS=1 WIDTH="100%" BGCOLOR="#66FFFF" NOSAVE >
+<tr>
+<td><b>GRASS 5.1 - PHASE 2</b></td>
+</tr>
+</table>
+
+<p><b><font color="#FF0000">Milestone 1 - Status: open</font></b>
+<ul>
+<li>
+implement full graphical startup with session manager,</li>
+
+<li>
+allow to build locations on the fly from imported maps,</li>
+
+<li>
+allow location enlargement on the fly</li>
+
+<li>
+continue with module addition (those missing from PHASE 1, Milestone 3)</li>
+
+<li>
+implement sites management through DBMS (update sites API)</li>
+
+<li>
+update all site modules accordingly</li>
+
+<li>
+implement NULL support in multiple attribute sites lists</li>
+</ul>
+
+<b><font color="#FF0000">Milestone 2 - Status: open</font></b>
+<ul>
+<li>
+implement 3D vector support into vector library</li>
+
+<li>
+update relevant vector modules</li>
+</ul>
+
+<br><b><font color="#FF0000">Milestone 3 - Status: open</font></b>
+<ul>
+<li>
+improve XDRIVER to multiple layers, implement better color support</li>
+
+<li>
+Auto-redraw after resizing the monitor</li>
+
+<li>
+improve locking system for monitor lock files</li>
+
+<li>
+improve legend support</li>
+
+<li>
+implement <a href=http://www.freetype.org/>FreeType font engine</a> 
+to support any font</li>
+</ul>
+
+<br><b><font color="#FF0000">Milestone 4 - Status: open</font></b>
+<ul>
+<li>
+improve DBMS management: GUI support</li>
+
+<li>
+implement better chart support (histograms etc)</li>
+</ul>
+
+<br><b><font color="#FF0000">Milestone 5 - Status: open</font></b>
+<ul>
+<li>
+implement internationalization (multiple languages) using <a
+href=http://www.gnu.org/software/gettext/gettext.html>gettext</a></li>
+</ul>
+
+
+<p>
+<p><b><font color="#FF0000">Future/add to "open" Milestones (unsorted):</font></b>
+<ul>
+<li>
+fix further bugs, improve NVIZ (G3D etc.)</li>
+
+<li>
+improve the G3D format: timestamps, dynamic capabilities etc.</li>
+
+<li>
+implement <a href=http://www.python.org>Python</a> interface/wrapper (ongoing with OSSIM bridge)</li>
+
+<li>
+write a nice auto-generated GUI (see <a
+href=http://www.geog.uni-hannover.de/grass/demos/mac_grass_mockup_1.jpg>Mac OSX example</a>)</li>
+
+<li>
+add v.[in|out].ogr module supporting <a
+href=http://gdal.velocet.ca/projects/opengis/>OGR Simple Features
+Library</a> (vector data)</li>
+
+<li>
+support <a href=http://gdal.velocet.ca/projects/osvecdb/>OpenSource Vector
+Database</a> (OSVecDB)</li>
+
+<li>
+implement vector network analysis (ongoing)</li>
+
+<li>
+implement TIN support</li>
+
+<li>
+implement better Metadata support</li>
+
+<li>
+eventually distribute simulation models etc. in extra package</li>
+
+<li>
+implement more intuitive high-res driver (replace CELL driver), add to
+NVIZ</li>
+
+<li>
+implement spatial web engine for "webGRASS" (JAVA ?)</li>
+</ul>
+
+This proposal is open to ideas/corrections/suggestions.
+<address>
+<p><a href="mailto:neteler@geog.uni-hannover.de">Markus Neteler</a>
+<br>GRASS Development Team
+<hr>
+$Id$
+</address>
+
+</body>
+</html>

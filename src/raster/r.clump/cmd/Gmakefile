@@ -1,5 +1,7 @@
+PGM=r.clump
 OBJS = main.o clump.o
 
-$(BIN_MAIN_CMD)/r.clump: $(OBJS) $(GISLIB)
-	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) $(XDRLIB) $(MATHLIB) -o $@
+$(BIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
 $(GISLIB): #

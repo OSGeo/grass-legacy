@@ -1,0 +1,32 @@
+PGM      = g3.region
+
+LIST     = main.o\
+	   cur_frm_3ddb.o\
+	   cur_frm_3ddf.o\
+	   cur_frm_db.o\
+	   cur_frm_df.o\
+	   cur_to_db.o\
+	   edit.o\
+	   editcellhd3d.o\
+	   lister.o\
+	   from_cell.o\
+	   from_3dcell.o\
+	   from_vect.o\
+	   modify_cur.o\
+	   modify_db.o\
+	   new_db.o\
+	   set.o\
+	   from_view.o\
+	   yes.o
+
+LIBES=$(G3DLIB) $(VECTLIB) $(GISLIB) $(VASKLIB) $(DATETIMELIB)
+
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+$(LIST): glob.h
+
+$(G3DLIB):   #
+$(GISLIB):   #
+$(VASKLIB): #
+$(VECTLIB): #

@@ -1,0 +1,32 @@
+# example expect script for GRASS testsuite
+# expect/DejaGNU
+
+# create new test location if needed
+# grass_create_location
+
+# switch to new test location
+# grass_switch_location
+
+# set test name
+set test "GRASS example test"
+set pgm "g.list"
+
+# test if tested module exists
+if { ![isgrassbin "$pgm"] } \
+{
+    fail "$test: module missing"
+}
+
+# execute module and check responding
+spawn "$pgm" "help"
+
+expect { 
+    -re {.*Usage.*}             { pass "$test" }
+    -re {.*egmentation fault.*} { fail "$test: module segfaults" }
+    -re {.*core dump.*}         { fail "$test: module dumps core" }
+    timeout                     { fail "$test: module timed out"; slay "$pgm" }
+}
+wait
+close
+
+# do clean up 

@@ -1,0 +1,16 @@
+PGM1   = $(BIN_CMD)/r.topidx
+LIBES  = $(GISLIB)
+SRCS   = main.c check_ready.c adjcellhd.c file_io.c topidx.c
+OBJS   = main.o check_ready.o adjcellhd.o file_io.o topidx.o
+
+PGM2   = $(GISBASE)/scripts/r.avgstats
+
+
+all:	 $(PGM1) $(PGM2)
+
+$(PGM1): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(PGM2): r.avgstats
+	cp r.avgstats $@
+

@@ -1,5 +1,3 @@
-#  %W%  %G%
-
 # Note, before this will compile, you need to create the file
 #   ../../panel/9.6/lib/libpanel.a
 #   go to the src directory there and run make to do this
@@ -13,16 +11,14 @@ PLIBDIR = ../../panel/9.6/lib
 PANELLIB= ${PLIBDIR}/libpanel.\a
 
 GLLIBS = -lgl_s -lc_s $(MATHLIB) $(XDRLIB)
-LDFLAGS = 
-#LDFLAGS = -s
 
-EXTRA_CFLAGS	= $(VECT_INCLUDE) -I${PINCLUDEDIR}
+EXTRA_CFLAGS	= -I${PINCLUDEDIR}
 
 BTREELIB = $(LIBDIR)/libbtree.a
 
 
 
-PROG =   $(BIN_CONTRIB_CMD)/ISMdig2ann 
+PROG =   $(BIN_CMD)/ISMdig2ann 
 all:  $(PROG) 
 
 PANELOBJ = yesno.o \

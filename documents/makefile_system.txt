@@ -1,0 +1,56 @@
+$Id$
+
+Notes to keep in mind for the new Makefile system
+
+==============================================================================
+
+The general methodology for the new Makefile system is
+
+configure
+make
+make install
+
+The important thing is that the first make must compile the entire program and
+grass must be runnable for a local user (say in /home/jdoe). That is, a user
+should be able to compile and run grass all within their $HOME directory
+without having to need root access. Then for other users to be able to run it,
+you need root access and do a "make install". The only thing "make install"
+does is copy the required files from the compilation to the installation
+directory (/usr/local/). Thus GISBASE cannot be ${prefix}/grass (which it is
+currently defined as) in this case, but instead it should be ${srcdir}. That
+way, the code is compiled under the user's home directory and he/she will be
+able to run grass without installing it for system wide use.
+
+The main problem that this will cause is that the grass5 script that will be
+copied to the installation bin directory in "make install", will have GISBASE
+pointing to the wrong place, inside the user's home directory, instead of
+${prefix}/grass. However, this should be solved simply by substitution during
+the make install.
+
+==============================================================================
+
+There should also be a "make uninstall" that basically reverses what "make
+install" does. That is, it would delete all the files that were stored under
+/usr/local (or ${prefix}) but leave everything in ${srcdir} alone. Removing the
+compilation files in ${srcdir} would be the job of the make clean targets that
+are already defined in Makefile.in.
+
+We should probably also write an uninstall script for those that use the
+binaries.
+
+==============================================================================
+
+The directory structure of the installation should be determined by configure
+with the following defaults, which come from the "GNU Coding Standard" located
+at
+
+http://www.gnu.org/prep/standards.html
+
+prefix	    	/usr/local
+exec_prefix 	${prefix}
+bindir      	${exec_prefix}/bin
+libdir	    	${exec_prefix}/lib -- replaces GISBASE/lib
+includedir  	${prefix}/include -- replaces GISBASE/include
+mandir	    	${prefix}/man -- replaces GISBASE/man
+
+==============================================================================

@@ -1,18 +1,10 @@
-#  %W%  %G%
-#@(#) 
-
-
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
-
 OFILES = \
 	main.o \
 	rclas_area.o \
 	rclas_lines.o
 
 
-all:  $(BIN_CONTRIB_CMD)/v.reclass
-
-$(BIN_CONTRIB_CMD)/v.reclass: $(OFILES) 
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(MATHLIB)
+$(BIN_CMD)/v.reclass.scs: $(OFILES) 
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(XDRLIB) $(MATHLIB)
 
 $(GISLIB): #

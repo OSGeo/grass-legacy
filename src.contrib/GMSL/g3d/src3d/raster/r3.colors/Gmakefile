@@ -1,0 +1,10 @@
+PGM=r3.colors
+
+LIST=main.o\
+     eq.o\
+     rules.o
+
+$(BIN_CMD)/$(PGM): $(LIST) $(G3DLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

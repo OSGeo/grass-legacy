@@ -1,3 +1,4 @@
+PGM=i.tape.mss.h
 LIST = main.o\
 	annotation.o\
 	header.o\
@@ -6,7 +7,7 @@ LIST = main.o\
 	tape_dir.o\
 	tape_vol.o
 
-$(BIN_MAIN_CMD)/i.tape.mss.h: $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST) : tape.h

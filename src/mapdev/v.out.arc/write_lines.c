@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include "Vect.h"
 #include "gis.h"
-#include "digit.h"
+#include "Vect.h"
 #include "v_out_arc.h"
 #include "gtoa.h"
 
@@ -60,14 +60,14 @@ write_lines (char *name, char *mapset, struct Map_info *map, FILE *lines_file, F
         }
 
 	
-		fprintf (lines_file,"%d\n",line);
-        start_coords ();
-		write_coords (lines_file, GPoints->n_points, GPoints->x, GPoints->y);
+	fprintf (lines_file,"           %d\n",line);
+	start_coords ();
+	write_coords (lines_file, GPoints->n_points, GPoints->x, GPoints->y);
 
-		/*WHAT DOES THIS DO??? end_coords (lines_file); */
-        lin_flg=1;
+	/*WHAT DOES THIS DO??? end_coords (lines_file); */
+	lin_flg=1;
 
-		fprintf (lines_file,"END\n");
+	fprintf (lines_file,"END\n");
         
         /* write category number and attribute text to text_file */
         if (attflag==1 && catflag!=-1)

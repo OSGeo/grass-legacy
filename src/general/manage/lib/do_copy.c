@@ -25,6 +25,7 @@ int do_copy (int n, char *old, char *mapset, char *new)
 	G__file_name (path, list[n].element[i], old, mapset);
 	if (access (path, 0) != 0)
 	{
+	    G_remove (list[n].element[i], new);
 	    fprintf (stdout,"MISSING\n");
 	    continue;
 	}

@@ -5,14 +5,8 @@ SHELL           = /bin/sh
 # or files used by GRASS programs
 BIN             = $(GISBASE)/bin
 ETC             = $(GISBASE)/etc
-GARDEN_BIN      = $(GISBASE)/garden/bin
-GARDEN_ETC      = $(GISBASE)/garden/etc
-BIN_MAIN_INTER  = $(ETC)/bin/main/inter
-BIN_MAIN_CMD    = $(ETC)/bin/main/cmd
-BIN_ALPHA_INTER = $(ETC)/bin/main/inter
-BIN_ALPHA_CMD   = $(ETC)/bin/main/cmd
-BIN_CONTRIB_INTER = $(ETC)/bin/contrib/inter
-BIN_CONTRIB_CMD   = $(ETC)/bin/contrib/cmd
+BIN_INTER       = $(ETC)/bin/inter
+BIN_CMD         = $(ETC)/bin/cmd
 TXT             = $(GISBASE)/txt
 MAN1            = $(GISBASE)/man/1
 MAN2            = $(GISBASE)/man/2
@@ -21,11 +15,11 @@ MAN4            = $(GISBASE)/man/4
 MAN5            = $(GISBASE)/man/5
 MAN6            = $(GISBASE)/man/6
 HELP            = $(GISBASE)/man/help
+HTML            = $(GISBASE)/documents
 
 # other
 CFLAGS      =  $(COMPILE_FLAGS) $(EXTRA_CFLAGS) -I$(INCLUDE_DIR) $(USE_TERMIO)
 AR          = $(GMAKE) -makeparentdir $@; $(LIBRULE)
-#MANROFF     = tbl -TX $(SRC)/man.help/man.version $(SRC)/man.help/man.header $? | nroff -Tlp | col -b > $@
 MANROFF     = # 
 MAKEALL     = $(GMAKE) -all
 
@@ -34,12 +28,8 @@ SRC_X       = $(SRC)/xgrass
 LIBDIR      = $(SRC)/libes
 X_LIBDIR     = $(SRC_X)/libes
 INCLUDE_DIR = $(SRC)/include
-DIG_LIBDIR  = $(SRC)/libes/vect32/libes
-DIG_INCLUDE  = $(SRC)/libes/vect32/lib
-VECT_INCLUDE = -I$(SRC)/libes/vect32/Vlib -I$(SRC)/libes/vect32/diglib
 
 VASKLIB     = $(LIBDIR)/libvask.a
-VASK        = $(VASKLIB) $(CURSES)
 
 GISLIB      = $(LIBDIR)/libgis.a
 G3DLIB      = $(LIBDIR)/libg3d.a
@@ -52,6 +42,7 @@ SEGMENTLIB  = $(LIBDIR)/libsegment.a
 GPROJLIB    = $(LIBDIR)/libproj.a
 BTREELIB    = $(LIBDIR)/libbtree.a
 IBTREELIB   = $(LIBDIR)/libibtree.a
+GMATHLIB    = $(LIBDIR)/libgmath.a
 DLGLIB      = $(LIBDIR)/libdlg.a
 RASTERLIB   = $(LIBDIR)/libraster.a
 DISPLAYLIB  = $(LIBDIR)/libdisplay.a

@@ -1,0 +1,115 @@
+
+<TITLE>v.spag</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>v.spag</b></EM>  - Process spaghetti-digitized binary vector file.
+
+<BR>
+
+<EM>(GRASS Vector Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>v.spag</B>
+
+<BR>
+
+<B>v.spag help</B>
+
+<BR>
+
+<B>v.spag [-i] map=</B><EM>name</EM> [<B>threshold=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+This program will fix vector data that were not digitized
+in correct GRASS vector format.  It will create a node at
+every line crossing, and will delete all hanging lines of
+length less than the specified threshold.
+
+<H2>OPTIONS</H2>
+
+
+<H3>Flag:</H3>
+
+<DL>
+<DT><B>-i</B> 
+<DD>Only do identical line removal pass.
+
+<DT><B>-s</B>
+<DD>Snap nodes.
+
+<DT><B>-p</B>
+<DD>Prompt user for threshold value. 
+
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>map=</B><EM>name</EM> 
+
+<DD>Name of the binary vector file to be fixed.
+
+<DT><B>threshold=</B><EM>value</EM> 
+
+<DD>Node-snapping threshold value.
+</DL>
+
+<H2>NOTES</H2>
+
+The user must run 
+
+<EM><A HREF="v.support.html">v.support</A></EM> 
+
+after running <EM>v.spag</EM> to correct
+the topology (<EM>dig_plus</EM>) file.
+
+
+<P>
+
+<EM>v.spag</EM> generally deletes many lines from the input
+vector map layer.  Because deleted lines are not eliminated
+from a vector data (<EM>dig</EM>) file, but are only marked
+as deleted, the user will probably wish to run
+
+<EM><A HREF="v.clean.html">v.clean</A></EM>
+
+
+on the vector file after running <EM>v.spag</EM> to
+eliminate any deleted lines from the <EM>dig</EM> file and
+decrease its size.
+
+<H2>BUGS</H2>
+
+This program contains several known bugs.  It will
+sometimes get stuck in a loop in which it creates the same
+line over and over again.  It will occasionally create an
+incorrect line.  Users are strongly urged to back-up their
+vector data files before running this alpha version of
+<EM>v.spag</EM>.
+
+
+<P>
+
+Update Note:<BR>
+1/93:  For GRASS Release 4.1, the
+<B>-i</B> flag has been added and bugs fixed.  It works better than the 
+4.0 release.<BR>
+6/00:  The <B>-s</B> and <B>-p</B> flags has been added. 
+One reason for loop fixed, please report if you get into the loop after this date.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="v.clean.html">v.clean</A></EM>,
+<EM><A HREF="v.digit.html">v.digit</A></EM>,
+<EM><A HREF="v.support.html">v.support</A></EM>
+
+<H2>AUTHOR</H2>
+
+Dave Gerdes, U.S.Army Construction Engineering 
+Research Laboratory

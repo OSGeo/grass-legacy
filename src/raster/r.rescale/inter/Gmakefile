@@ -1,10 +1,10 @@
 PGM = r.rescale
-HOME = $(BIN_MAIN_INTER)
+HOME = $(BIN_INTER)
 
 LIST = main.o ask.o get_range.o
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB) $(VASK) -o $@
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 $(VASKLIB): #

@@ -1,0 +1,130 @@
+<TITLE>shade.rel.sh</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>shade.rel.sh</b></EM>  - Creates a shaded relief map based
+on current resolution settings and sun altitude and azimuth
+values entered by the user.
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>shade.rel.sh</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>shade.rel.sh</EM> is a Bourne shell (sh(1)) script that
+creates a raster shaded relief map based on current
+resolution settings and on sun altitude and azimuth values
+entered by the user.  The new shaded relief map map is
+named <EM>shade</EM> and stored in the user's current
+mapset.  The map is assigned a grey-scale color table.
+
+
+<P>
+
+This program is interactive;  the user enters the command:
+
+<DL>
+<DD>
+<B>shade.rel.sh</B>
+</DL>
+
+The program then prompts the user to enter values for:
+<OL>
+<LI>the altitude of the sun in degrees above the horizon
+(a value between 0 and 90 degrees), and
+
+<LI>the azimuth of the sun in degrees to the east of north
+(a value between -1 and 360 degrees).
+
+<LI>the name of a raster map layer whose cell category values are to
+provide elevation values for the shaded relief map.  Typically, this
+would be a map layer of elevation;  however, any raster map layer
+can be named.
+
+</OL>
+
+Specifically, <EM>shade.rel.sh</EM> executes the following 
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+statement:
+
+
+<B>
+<DL>
+<DT><A HREF="r.mapcalc.html">r.mapcalc</A> &lt;&lt; EOF <BR>
+<DD>
+shade = eval( \\ <BR>
+ x=($elev[-1,-1] + 2*$elev[0,-1] + $elev[1,-1] \\ <BR>
+   -$elev[-1,1] - 2*$elev[0,1] - $elev[1,1])/(8.*$ewres) , \\ <BR>
+ y=($elev[-1,-1] + 2*$elev[-1,0] + $elev[-1,1] \\<BR>
+   -$elev[1,-1] - 2*$elev[1,0] - $elev[1,1])/(8.*$nsres) , \\ <BR>
+ slope=90.-atan(sqrt(x*x + y*y)), \\ <BR>
+ a=round(atan(x,y)), \\ <BR>
+ aspect=if(x||y,if(a,a,360)), \\ <BR>
+ cang = sin($alt)*sin(slope) + cos($alt)*cos(slope) \\ <BR>
+ * cos($az-aspect), \\ <BR>
+ if(cang &lt; 0,0,100*cang)) <BR>
+<DT>EOF
+</DL>
+</B>
+
+
+<P>
+
+Refer to the manual entry for 
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM> for an explanation
+of the filtering syntax shown in the above expression.
+See, for example, the section on "The Neighborhood Modifier".
+
+
+<P>
+
+<EM>shade.rel.sh</EM> then runs 
+<EM><A HREF="r.colors.html">r.colors</A></EM> 
+to assign a grey-scale color
+table to the new shaded relief map <EM>shade</EM>, by executing the command:
+
+
+<P>
+
+<DL>
+<DD>
+<B><A HREF="r.colors.html">r.colors</A> shade color=</B>grey 
+</DL>
+
+<H2>FILES</H2>
+
+This program is simply a shell script.  Users are encouraged to make their own
+shell scripts using similar techniques.  See 
+<KBD>$GISBASE/scripts/shade.rel.sh</KBD>.
+
+<H2>SEE ALSO</H2>
+
+<i>An Algebra for GIS and Image Processing</i>,
+by 
+Michael Shapiro
+and 
+Jim Westervelt, U.S. Army Construction Engineering 
+Research Laboratory
+(March/1991).
+
+<P>
+
+<EM><A HREF="blend.sh.html">blend.sh</A></EM><br>
+<EM><A HREF="g.ask.html">g.ask</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="r.colors.html">r.colors</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+
+<H2>AUTHOR</H2>
+
+Jim Westervelt, U.S. Army Construction Engineering 
+Research Laboratory
+

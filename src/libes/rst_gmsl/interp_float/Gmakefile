@@ -5,12 +5,11 @@ TREEDIR = ../tree
 TREELIB = $(TREEDIR)/libtree.a
 DATADIR = ../data
 DATALIB = $(DATADIR)/libdata.a
-EXTRA_CFLAGS =  -g -I$(TREEDIR) -I$(DATADIR) $(VECT_INCLUDE) 
-#EXTRA_CFLAGS =  $(VECT_INCLUDE) 
+EXTRA_CFLAGS =  -g -I$(TREEDIR) -I$(DATADIR)
 
-LIST   =  func2d.o input2d.o vinput2d.o interp2d.o output2d.o point2d.o secpar2d.o segmen2d.o write2d.o matrix.o minmax.o newsegm2d.o init2d.o ressegm2d.o resout2d.o
+LIST   =  func2d.o input2d.o vinput2d.o interp2d.o output2d.o point2d.o secpar2d.o segmen2d.o write2d.o matrix.o minmax.o init2d.o ressegm2d.o resout2d.o
 
-SRCS   =  func2d.c input2d.c vinput2d.c interp2d.c output2d.c point2d.c secpar2d.c segmen2d.c write2d.c matrix.c minmax.c newsegm2d.c init2d.c ressegm2d.c resout2d.c
+SRCS   =  func2d.c input2d.c vinput2d.c interp2d.c output2d.c point2d.c secpar2d.c segmen2d.c write2d.c matrix.c minmax.c init2d.c ressegm2d.c resout2d.c
 
 $(LIB): $(LIST)  
 	$(AR)

@@ -1,6 +1,24 @@
+  - Z axis scalable when displaying 3D sites
+    (Being worked on by ?)
+
+  - eventually color problem in lat/long locations
+    (Being worked on by ?)
+
+  - high resolution output (definable extent like CELL driver)
+    (Being worked on by 
+     probably Bob Covill <bcovill@tekmap.ns.ca>)
+
+  - fix legend, scale and box drawings
+    (Being worked on by Bill Brown, Helena Mitasova)
+
+  - have immediate refresh of surface/vectors etc. instead of manual
+    redrawing
+----
 
 Check out Nv_force_panel in nviz.in
 
-Change to relative paths with $(GISBASE):
-  - configure
-  -> for scripts/config.tcl
+----
+08/16/99 J. Hofierka
+- disappearing polygon picture when moving mouse over zexag and height
+  scrollbars (probably tcl/tk problem)
+- mkdspf stuff 

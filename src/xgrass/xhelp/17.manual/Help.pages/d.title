@@ -1,5 +1,0 @@
-
-@man("d.title") - Outputs a title for a raster map layer in a form suitable
-for display by @man("d.text").
-
-(GRASS Display Program)

@@ -1,36 +1,11 @@
-NAME=s.sv
-
-PGM=$(BIN_CONTRIB_CMD)/$(NAME) 
-
-MSEC=4
-MDIR=$(SRC)/../man/man$(MSEC)
-MUTL=$(SRC)/../man/utilities
+PGM=s.sv
 
 LIST=main.o readsite.o cdpath.o save.o nbins.o angleok.o plthgpt.o
 
-LIBES=$(GISLIB)  $(RASTERLIB) $(XDRLIB) $(DATETIMELIB)
+LIBES=$(GISLIB) $(RASTERLIB) $(DATETIMELIB)
 
-$(PGM): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) 
-
-man:  
-	-cp $(NAME).man $(MDIR)/$(NAME)
-	nroff $(MUTL)/man.version $(MDIR)/.class-header \
-	   $(MUTL)/man.header $(NAME).man $(MDIR)/.class-notice \
-	   > $(GISBASE)/man/$(MSEC)/$(NAME)
-
-clean: 
-	-rm -f *.BAK core *~ $(NAME) tags plt.dat plt.gp 
-	-rm -f *.bbl *.blg *.dvi *.aux *.log *.toc
-
-realclean: clean
-	-rm -rf OBJ* LIB*
-
-veryclean: realclean
-
-dist: veryclean
-	(cd .. ; tar cvf $(PGM).tar $(PGM); gzip $(PGM).tar; mv $(PGM).tar.gz /home/pasture/a/ftp/pub/mccauley/grass)
-
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 main.o		: sv.h 
 readsites.o	: sv.h 

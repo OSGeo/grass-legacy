@@ -5,27 +5,24 @@
 **  US Army Construction Engineering Research Lab, University of Illinois 
 **
 **  Copyright  J. Caplan, H. Mitasova, L. Mitas, J. Hofierka, 
-        M. Zlocha, M. Ruesink  1995
+**      M. Zlocha, M. Ruesink  1995
+**
+**This program is free software; you can redistribute it and/or
+**modify it under the terms of the GNU General Public License
+**as published by the Free Software Foundation; either version 2
+**of the License, or (at your option) any later version.
+**
+**This program is distributed in the hope that it will be useful,
+**but WITHOUT ANY WARRANTY; without even the implied warranty of
+**MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**GNU General Public License for more details.
+**
+**You should have received a copy of the GNU General Public License
+**along with this program; if not, write to the Free Software
+**Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
+**
 */
 
-/*
-The flowtracing program, both binary and source is copyrighted, but available 
-without fee for education, research and non-commercial purposes. Users may 
-distribute the binary and source code to third parties provided that the
-copyright notice and this statement appears on all copies and that no
-charge is made for such copies.  Any entity wishing to integrate all or
-part of the source code into a product for  commercial use or resale,
-should contact authors of the software, U.S.Army CERL and University
-of Illinois.
-
-THE SOFTWARE IS PROVIDED "AS IS" WITHOUT EXPRESS OR IMPLIED WARRANTY. THE
-U.S.Army CERL, UNIVERSITY OF ILLINOIS OR AUTHORS SHALL NOT BE LIABLE FOR 
-ANY DAMAGES SUFFERED BY THE USER OF THIS SOFTWARE.
-
-By copying this program, you, the user, agree to abide by the copyright
-conditions and understandings with respect to any software which is marked
-with a copyright notice.
-*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -91,14 +88,24 @@ parse_command_line(argc, argv)
     int     argc;
     char   *argv[];
 {
+	struct GModule *module;
     struct Option *pelevin, *paspin, *pbarin, *pskip, *pbound, *poffset,
               *pflout, *plgout, *pdsout;
-    struct Flag *fup, *flg, *fmem, *fseg, *fquiet, *fcprght;
+
+/* Helena: fseg commented due to problems: */
+/*    struct Flag *fup, *flg, *fmem, *fseg, *fquiet, *fcprght;*/
+    struct Flag *fup, *flg, *fmem, *fquiet, *fcprght;
     int default_skip, larger, default_bound;
     double default_offset;
     char *default_skip_ans, *default_bound_ans, *skip_opt;
     char *default_offset_ans, *offset_opt;
     
+	module = G_define_module();
+	module->description =
+		"Construction of slope curves (flowlines), flowpath "
+		"lengths, and flowline densities (upslope areas) from "
+		"a raster digital elevation model(DEM).";
+
     larger = ((region.cols < region.rows) ? region.rows : region.cols);
     if (larger < 50)
 	default_skip = 1;
@@ -140,16 +147,16 @@ parse_command_line(argc, argv)
 			"Maximum magnitude of random grid point offset", 
 			default_offset_ans); 
     pflout  = parameter("flout", TYPE_STRING, NO, NULL, "any,dig,vector",
-			"Output flowline file", NULL);
+			"Output flowline vector file", NULL);
     plgout  = parameter("lgout", TYPE_STRING, NO, NULL, "any,cell,raster",
-			"Output slope length file", NULL);
+			"Output slope length raster file", NULL);
     pdsout  = parameter("dsout", TYPE_STRING, NO, NULL, "any,cell,raster",
-			"Output flowline density file", NULL);
+			"Output flowline density raster file", NULL);
 
     fup	  = flag('u', "Compute upslope flowlines");
     flg	  = flag('3', "3-D lengths instead of 2-D");
     fmem  = flag('m', "Use less memory, at a performance penalty");
-    fseg  = flag('M', "Use much less memory, at a severe performance penalty");
+/*    fseg  = flag('M', "Use much less memory, at a severe performance penalty");*/
     fquiet= flag('q', "Quiet operation");
     fcprght = flag('h', "Display Reference Information");
 
@@ -168,7 +175,7 @@ parse_command_line(argc, argv)
     parm.up	= fup->answer;
     parm.l3d	= flg->answer;
     parm.mem	= fmem->answer;
-    parm.seg	= fseg->answer;
+/*    parm.seg	= fseg->answer;*/
     parm.quiet	= fquiet->answer;
 
 /*    if (fcprght->answer) { */
@@ -249,7 +256,7 @@ read_input_files()
     int     fd, row, col;
     struct  Cell_head hd;
 
-    diag("Reading input files: elevation");
+    diag("Reading input files: elevation...\n");
 
     fd = open_existing_cell_file(parm.elevin, &hd);
     if (!((region.ew_res == hd.ew_res)

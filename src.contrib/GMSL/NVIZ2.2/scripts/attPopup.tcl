@@ -204,7 +204,7 @@ proc get_curr_status {att} {
     }
     
     if {"$att" == "color"} then {
-	if {![regexp {[a-z]} $txt]} then {
+	if {![regexp {[a-z,A-Z]} $txt]} then {
 	    set txt [expr int($txt)]
 	    set red   [expr int($txt & 0x0000ff)]
 	    set green [expr int(($txt & 0x00ff00)>>8)]

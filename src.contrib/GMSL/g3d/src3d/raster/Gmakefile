@@ -1,0 +1,15 @@
+all:
+	$(GMAKE) r3.in.ascii
+	$(GMAKE) r3.info
+	$(GMAKE) r3.mapcalc
+	$(GMAKE) r3.mask
+	$(GMAKE) r3.mkdspf
+	$(GMAKE) r3.null
+	$(GMAKE) r3.out.ascii
+	$(GMAKE) r3.in.v5d
+	$(GMAKE) r3.out.v5d
+# Linux/Solaris version (using MESA 3D or openGL):
+	$(GMAKE) r3.showdspf.openGL
+# SGI-version:
+#	$(GMAKE) r3.showdspf.sgi
+	$(GMAKE) r3.to.sites

@@ -1,0 +1,36 @@
+PGM=s.surf.krig
+
+LIST= \
+	dbtnsamp.o \
+	main.o \
+	krigvar.o \
+	read_sites.o \
+	krigwts.o \
+	newpoint.o \
+	d2nsamp.o \
+	krigzest.o \
+	sphdist.o \
+	variogrm.o \
+
+SOURCE= \
+	dbtnsamp.c \
+	main.c \
+	krigvar.c \
+	read_sites.c \
+	krigwts.c \
+	newpoint.c \
+	d2nsamp.c \
+	krigzest.c \
+	sphdist.c \
+	variogrm.c \
+
+
+G2C = -lg2c
+
+#LAPACK/BLAS:
+LA = -lblas -llapack
+
+LIBES=$(GISLIB) $(GMATHLIB) $(DATETIMELIB) $(LA) $(G2C)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -1,0 +1,23 @@
+PGM = v.in.mif
+
+LIST = 	lex.yy.o \
+	main.o \
+	attval.o \
+	parse.o \
+	write_lines.o \
+	fields.o \
+	cpoly.o \
+	gbtree.o \
+	store.o
+
+LIBES=$(VECTLIB) $(GISLIB) $(LINKMLIB) $(DIG_ATTLIB) $(DATETIMELIB) $(VASKLIB)
+
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
+
+lex.yy.c : mif.l
+	$(LEX) mif.l
+
+$(VECTLIB): #
+$(GISLIB): # 
+$(DIG_ATTLIB): #

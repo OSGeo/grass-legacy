@@ -1,0 +1,121 @@
+<TITLE>d.rast</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.rast</b></EM> - Displays and overlays raster map layers 
+in the active display frame on the graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.rast</B> 
+<BR>
+<B>d.rast help</B> 
+<BR>
+<B>d.rast</B> [<B>-oi</B>] <B>map=</B><EM>name</EM> [<B>catlist=</B><EM>list</EM>] [<B>vallist=</B><EM>list</EM>] [<B>bg=</B><EM>color</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.rast</EM>
+displays the raster map layer <EM>name</EM> 
+in the active display frame on the graphics monitor. 
+
+<P>
+
+The program can be run either non-interactively or
+interactively.  If the user specifies the name of a raster
+map layer (<B>map=</B><EM>name</EM>) and (optionally) the
+<B>-o</B> option on the command line, the program will run
+non-interactively.  Alternately, the user can type simply
+<B>d.rast</B> on the command line; in this case, the
+program will prompt the user for the flag setting and
+parameter value using the standard GRASS 
+<A HREF="parser.html">parser</A> interface.
+
+<H3>Flags:</H3> 
+
+<DL>
+
+<DT><B>-o</B>
+
+<DD>Overlay the named raster map layer onto whatever is
+already displayed in the active graphics frame. Any zero
+category value data areas in the named raster map will seem
+transparent, and reveal the underlying image previously
+displayed in the graphics frame.  If the <B>-o</B> flag is set,
+only cells containing non-zero category values will be
+displayed from the <EM>overlaid</EM> raster map.  All other
+areas (i.e., the portions of the overlaid map that contain
+category value 0) will leave the underlying display
+untouched.  If the <B>-o</B> flag is not set by the user,
+<EM>d.rast</EM> will (by default) completely overwrite
+whatever appears in the active graphics display frame.
+
+<DT><B>-i</B>
+
+<DD>Invert catlist.
+</DL>
+
+<H3>Parameters:</H3> 
+
+<DL>
+
+<DT><B>map=</B><EM>name</B>
+
+<DD>Name of the raster map to be displayed.  If the active
+graphics frame already contains text or graphics, and the
+user does not wish to use the <B>-o</B> option, it is wise
+to first invoke <EM>
+<A HREF="d.erase.html">d.erase</A></EM> to clear the
+active graphics frame before running <EM>d.rast</B>.</EM>
+After running <EM>d.rast</B></EM> other <EM>d.</EM>
+programs like <EM><A HREF="d.vect.html">d.vect</A></EM>
+and <EM><A HREF="d.grid.html">d.grid</A></EM> can be
+used to enhance the plot.
+
+<DT><B>catlist=</B><EM>list</EM>
+
+<DD>List of categories to be displayed.
+
+<DT><B>vallist=</B><EM>list</B>
+
+<DD>List of values to be displayed.
+
+<DT><B>bg=</B><EM>color</B>
+
+<DD>Background color for null.
+</DL>
+
+<H2>NOTES</H2>
+
+The <EM>d.rast</EM> raster map overlay option (<B>-o</B>) 
+only works when the color look-up table for the graphics monitor 
+is set to <B><A HREF="d.colormode.html">d.colormode</A> fixed</B>. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.colormode.html">d.colormode</A></EM><br>
+<EM><A HREF="d.colors.html">d.colors</A></EM><br>
+<EM><A HREF="d.colortable.html">d.colortable</A></EM><BR>
+<EM><A HREF="d.display.html">d.display</A></EM><br>
+<EM><A HREF="d.erase.html">d.erase</A></EM><br>
+<EM><A HREF="d.grid.html">d.grid</A></EM><br>
+<EM><A HREF="d.vect.html">d.vect</A></EM><br>
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM><br>
+<EM><A HREF="r.reclass.html">r.reclass</A></EM>
+<BR>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, 
+U.S. Army Construction Engineering 
+Research Laboratory
+

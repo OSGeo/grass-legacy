@@ -1,0 +1,27 @@
+Notes:
+
+From: Helena Mitasova - staff <helena@gis.uiuc.edu>                             
+Date: Wed, 24 Jan 2001 11:01:36 -0600                                           
+To: neteler@geog.uni-hannover.de                                                
+Subject: sg4d                                                                   
+
+sg4d runs only on SGI,                       
+it is a GRASS4.1 (no FP) and for 3D is uses the old grid3                       
+format which stored the data outside GRASS database.                            
+It was a messy way how to do things, however we just tried                      
+to prove a concept. The source code may be useful to see                        
+how the interaction between the 2D and volume data was handled,                 
+especially the issues of vertical rescaling, light, etc. 
+
+-------------------------------------------
+
+Also see the README in 3Ddata.  
+
+I compiled sg4d & the needed libes in showd and showd/libe under IRIX 5.2 
+& left the libes for you.  The executables are in bin.  
+(Only sg4d is IRIX5.2, others are IRIX4.0.5 but seem to run OK).
+
+good luck -
+
+Bill B.
+Jan 24 2001

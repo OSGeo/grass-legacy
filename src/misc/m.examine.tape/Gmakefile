@@ -1,8 +1,9 @@
+PGM=m.examine.tape
 LIST =\
 	main.o\
 	ask.o\
 	yes.o\
 	counter.o
 
-$(BIN_MAIN_CMD)/m.examine.tape: $(LIST)
+$(BIN_INTER)/$(PGM): $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(LIST)

@@ -1,0 +1,6 @@
+PGM      = $(BIN_INTER)/v.sdts.meta
+
+
+$(PGM):	v.sdts.meta 
+	cp v.sdts.meta $(PGM)
+

@@ -1,4 +1,0 @@
-
-@man("r.out.ascii") - Converts a raster map layer into an ASCII text file.
-
-(GRASS Raster Program)

@@ -1,3 +1,0 @@
-*   When moving an object - if the object(s) are moved onto other objects,
-		those objects that are now covered must be added to the
-		redraw list so they get redrawn.

@@ -1,5 +1,4 @@
 PROGRAM	     = photo.2target
-#HOME         = ../bin
 HOME        = $(ETC)/imagery
 
 
@@ -38,7 +37,7 @@ LIST=main.o\
 	zoom_box.o\
 	zoom_pnt.o
 
-LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(GISLIB) $(RASTERLIB) $(SEGMENTLIB) $(VASK)
+LIBES = $(IMAGERYLIB2) $(IMAGERYLIB) $(D_LIB) $(DISPLAYLIB) $(GISLIB) $(RASTERLIB) $(SEGMENTLIB) $(VASKLIB)
 
 
 $(HOME)/$(PROGRAM): $(LIST) $(LIBES)

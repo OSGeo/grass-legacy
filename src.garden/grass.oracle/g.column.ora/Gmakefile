@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/g.column.ora
+PGM       = $(BIN_CMD)/g.column.ora
 LIBES     = $(GISLIB)
 
 
@@ -10,5 +10,5 @@ OBJS = \
 
 
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(MATHLIB)
 $(LIBES): #

@@ -39,7 +39,13 @@ int main(int argc, char **argv)
 	int fp, new_colr;
 	int x_box[5] ;
 	int y_box[5] ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
+
+	module = G_define_module();
+	module->description =
+		"To display the color table associated with a raster "
+		"map layer.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;

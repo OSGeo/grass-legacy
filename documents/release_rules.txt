@@ -1,0 +1,76 @@
+How to release GRASS 5 binaries:
+
+0. Check version string:
+
+   src/CMD/VERSION
+
+   Check if no M/C conflicts are there before tagging.
+
+   Update the PDF-docs on server. Run html/Gmakefile (activate postscipt-
+   target, convert to PDF in dist.$ARCH/documents/postscript, upload to
+   server)
+
+
+1. Build GRASS:
+ 
+ o wipe out binaries, (re-)compile everything, incl NVIZ without PG:
+     make distclean
+     rm -rf /usr/local/grass5/*
+     configure --enable-postgres=no
+     make
+     
+ o compile G3D tools
+     gmake5 src.contrib/GMSL/g3d
+
+ o compile PostgreSQL modules:
+     configure --enable-postgres=yes
+     make pre-compile
+     gmake5 src.garden/grass.postgresql
+
+ o compile s.vol.rst from extra directory (if you have..., it is not 
+   distributed with sources)
+
+ o check, if libgdal is in place in $GISBASE/lib/
+   Get Linux version here:
+     ftp://gdal.velocet.ca/pub/outgoing/libgdal-linux-grass.tar.gz
+    (Note: check ldd libgdal.1.1.so:
+     ftp://gdal.velocet.ca/pub/outgoing/libstdc++-libc6.2-2.so.3)
+   Get GDAL sources at:
+    http://www.remotesensing.org/gdal/
+
+   Run again
+    gmakelinks5
+   or 
+    gmakelinks5 |wc -l
+   
+   Should be > 400 modules.
+
+
+2. Package GRASS bins with
+
+   make bindist
+
+
+3. Publish it on web site:
+ - grass5x_y_bin.tar.gz
+ - grass5install.sh
+
+4. Tell others about it:
+ - related announcement press release at:
+
+ Our GRASS web site: /announces/
+
+ news:comp.infosystems.gis
+ http://spatialnews.geocomm.com/dailynews/
+ http://spatialnews.geocomm.com/submitnews.html (Free News Posting Service)
+ http://freshmeat.net/projects/grass/?highlight=GRASS
+ http://www.remotesensing.org/submit/submit.php3
+ http://www.newsforge.com/submit.pl
+ http://osx.macnn.com/
+ http://www.gis-news.de/
+
+ ... where else?
+
+Cheers
+
+ Markus

@@ -8,6 +8,7 @@ typedef int FILEDESC;
 
 int main( int argc, char *argv[])
 {
+	struct GModule *module;
     struct Option 	*rastin, *rastout;
     struct Option 	*eastoff, *northoff;
     char                *inmap;
@@ -21,6 +22,10 @@ int main( int argc, char *argv[])
 
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Bilinear interpolation utility for raster map layers.";
 
     rastin = G_define_option();
     rastin->key            	   = "input";
@@ -104,7 +109,7 @@ int main( int argc, char *argv[])
 	bufrow1 = bufrow2 = -1;
 	for (row = 0; row < w.rows; row++) {
 
-	    G_percent(row, w.rows - 1, 10);
+	    G_percent(row, w.rows - 1, 2);
 
 	    north = G_row_to_northing((double)(row +.5), &w); 
 	    north += o_north;

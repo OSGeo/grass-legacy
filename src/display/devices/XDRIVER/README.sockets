@@ -1,0 +1,35 @@
+2000:
+
+XDriver sockets: replacement of XDriver fifos (needed to improve speed and
+                 to run GRASS Monitors on Windows)
+
+The source code from Ronald Wiemer (MessQ.tar.Z) is merged into
+the current driver code by Huidae Cho.
+
+The updated files including the sockets are here:
+ src/display/devices/XDRIVER/XDRIVER24/socket.new/
+ src/display/devices/XDRIVER/lib/socket.new/
+ src/libes/raster/socket.new/
+
+TODO: 
+ The updated driver has to be tested and finally made to be standard
+ driver.
+
+---------------------------------
+1994:
+MessQ.tar.Z is source code for a new link between grass-display programs and
+the Xdriver. This code uses message queues instead of fifo's for communication
+with the Xdriver. On our system (a Sun sparc10 workstation) this construction
+is much faster. Installing is very easy, just follow the instructions in the
+file README, which is part of the tar file.
+
+If you use other drivers as well, like the CELL-driver, you cannot use it
+anymore, since I didn't modify the code for other drivers.
+
+I have no idea of the platforms this modification will work. I only tried
+solaris2.3 and sunos4.1.2. Both worked, but on sunos, the performance didn't
+increase very much.
+
+Ronald Wiemer
+ARCHIS, the Netherlands
+

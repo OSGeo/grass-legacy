@@ -1,0 +1,20 @@
+PGM       = $(BIN_CMD)/d.what.v.pg
+LIBES     = $(VECTLIB) $(VECTLIB) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) \
+		$(PQLIBPATH) $(PQLIB) $(XEXTRALIBS)
+
+OBJS = \
+	main.o  \
+        getAllOpts.o \
+        getSopts.o \
+        buildInfxQry.o \
+        runInfxQry.o \
+	getCat.o  \
+	openvect.o
+
+EXTRA_CFLAGS =  $(PQINCPATH)
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #

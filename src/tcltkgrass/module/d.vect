@@ -4,4 +4,5 @@ interface_build {
     {entry map {Vector map, required:} 0 vector}
     {entry color {Vector display color [white]:} 0 color}
     {checkbox -m {Use less memory.} "" -m}
+    {checkbox -v {Run verbosely.} "" -v}
 }

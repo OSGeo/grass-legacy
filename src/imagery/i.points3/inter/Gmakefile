@@ -2,18 +2,14 @@
 #### 	i.points3 (inter) 	
 ####
 
-PGR  	= i.points3
-
-HOME 	= $(BIN_MAIN_INTER)
-
-all:	$(HOME)/$(PGR)
+PGM  	= i.points3
 
 ####	required - suplimental imagery libary 
-IMAGERY_SUBINC = ../../image3
-IMAGERYLIB_SUP  = ../../image3/libimage_sup.a
+IMAGERY_SUBINC = $(SRC)/libes/image3
+IMAGERYLIB_SUP = $(SRC)/libes/image3/libimage_sup.a
 
 ####	object files
-LIST	= \
+LIST	=\
 	anal_fid.o\
 	anal_control.o\
 	camera.o\
@@ -58,29 +54,25 @@ LIST	= \
 	zoom_pnt.o
 
 
-####	object dependencies
-$(LIST): globals.h defs.h camera_ref.h
-
 
 ####	libaries to link
 LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
-	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
-	 $(GPROJLIB) $(LIBTRANS) $(PROJLIB) \
-	 $(GISLIB) $(VASK) $(XDRLIB)
+	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB)\
+	 $(GPROJLIB) $(LIBTRANS) $(PROJLIB)\
+	 $(GISLIB) $(VASKLIB)
 
-####	libarary dependencies
-$(LIBES): 			# in case of lib changes
 
 ####   required compile flags
 ####   NOTE: probably needs -D_NO_PROTO for now
-EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
-
-####	any required link flags
-#EXTRA_LDFLAGS =  
+EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 
 
 ####	the rules
-$(HOME)/$(PGR): $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
+####	object dependencies
+$(LIST): globals.h defs.h camera_ref.h
 
+####	libarary dependencies
+$(LIBES): 			# in case of lib changes

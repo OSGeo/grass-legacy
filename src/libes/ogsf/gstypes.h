@@ -1,8 +1,15 @@
+/*
+* $Id$
+*/
+
 /*  gstypes.h
     Bill Brown, USACERL  
     January 1993
 */
 	
+#ifndef _GSTYPES_H
+#define _GSTYPES_H
+
 #include "gsurf.h"
 #include "bitmap.h"
 #include <GL/gl.h>
@@ -75,13 +82,10 @@ typedef struct{
     float *fb;
     int *ib;
     short *sb;
-    char *cb;
+    unsigned char *cb;
     struct BM *bm;
     struct BM *nm;     /* null mask: set = null */
-    float  (*tfunc)();
-/*
-    int n_tf;
-*/
+    float  (*tfunc)(float, int);
     float k;
 } typbuff;
 
@@ -241,53 +245,10 @@ typedef struct{        /* need to add elements here for off_screen drawing */
     int bgcol;
 } geodisplay;
 
-const GLfloat ID_matrix[4][4]; 
-
 void (*Cxl_func)();
 void (*Swap_func)();
 
+/* Bring all the function prototypes */
+#include "local_proto.h"
 
-/* function prototypes */
-extern int GS_surf_exists();
-extern int GS_new_surface();
-extern int GS_delete_surface();
-extern double GS_geodistance();
-extern float GS_distance();
-extern float GS_P2distance();
-extern float GS_global_exag(); 
-extern double GS_get_aspect();
-
-extern int Gs_loadmap_as_int();
-extern int Gs_loadmap_as_short();
-
-extern geoline *Gv_load_vect();
-
-extern geosurf *gs_get_surf();
-extern geosurf *gs_get_prev_surface();
-extern geosurf *gs_get_last_surf();
-extern geosurf *gs_get_new_surf();
-extern int gs_num_surfaces();
-extern int gs_init_surf();
-extern int gs_delete_surf();
-extern int gs_free_surf();
-extern int gs_free_unshared_buffs();
-extern int gs_get_att_type();
-extern int gs_get_att_src();
-extern float gs_distance();
-extern typbuff *gs_get_att_typbuff();
-extern int gs_num_datah_reused();
-
-extern int gsds_alloc_typbuff();
-extern typbuff *gsds_get_typbuff();	
-extern char *gsds_get_name();	
-extern int gsds_geth();	
-extern int gsds_findh();
-extern int gsds_newh();
-extern int gsds_free_datah();
-extern int gsds_set_changed();
-extern int gsds_get_changed();
-extern int gsds_get_type();
-
-extern geosurf *gsdiff_get_SDref();
-Point3 *gsdrape_get_allsegments();
-
+#endif /* _GSTYPES_H */

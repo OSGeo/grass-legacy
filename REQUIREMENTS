@@ -1,24 +1,81 @@
 REQUIREMENTS to compile GRASS GIS
 
 A workstation running some flavor of unix like Solaris,
-Irix, or Linux.  Ideally, you should have at least 500
+Irix, Linux, BSD or Mac OS X.  Ideally, you should have at least 500
 Mb for data and 32 Mb RAM. The source code package needs
-around 100MB uncompressed.
+around 100MB uncompressed. The resulting binaries may need
+between 60MB and 160MB depending on your platform.
 
 General requirements:
+(most tools are standard tools on Linux, for other platforms you
+ may have to install some of them.)
 
- - C-compiler (cc, gcc, ...)
+ - C-compiler (cc, gcc, egcs, ...)
+    gcc: http://www.gnu.org/software/gcc/gcc.html
+
  - Fortran compiler (f77, g77, ...) for a few modules
- - lexical analyzer generator (lex, flex)
- - parser generator (yacc)
+    g77: coming along with gcc
 
-Special requirements
+ - lexical analyzer generator (flex), 
+   (lex is no longer supported, please use flex instead)
+    flex: http://www.gnu.org/software/flex/flex.html
+
+ - parser generator (yacc, bison)
+    bison: http://www.gnu.org/software/bison/bison.html
+
+ - libncurses4.x/5.x
+     http://www.gnu.org/software/ncurses/ncurses.html
+     ftp://ftp.gnu.org/pub/gnu/ncurses/
+
+ - X11 window system for graphical output, development libraries
+   (X development libraries, in some linux distributions 
+    they are separate packages)
+     http://www.xfree.org
+ 
+Optional requirements:
 
  - Tcl/Tk 8.x libraries to use TclTkGRASS Interface
       and to compile src.contrib/GMSL/NVIZ2.2/
- - Mesa-3.0 (openGL clone) required for NVIZ2.2
- - Mesa-3.0 and lesstif required for 
-          src.contrib/GMSL/ogl3d
+      see [http://www.geog.uni-hannover.de/grass/main_tclgrass.html]
+ - Mesa-3.x (openGL clone) required for NVIZ2.2
+     [http://mesa3d.sourceforge.net/]
+     Compile instructions:
+     [http://www.geog.uni-hannover.de/grass/grass5/related/README.mesa3d]
+ - libpng (for r.in.png, r.out.png), usually already installed.
+     [ftp://ftp.cdrom.com/pub/png/]
+ - libz (compression library, for some modules), usually already installed.
+     [ftp://ftp.freesoftware.com/pub/infozip/zlib/]
+ - libjpeg (for r.in.tiff, r.out.tiff, for HDF library), 
+   usually already installed.
+     [ftp://ftp.uu.net/graphics/jpeg/]
+ - libtiff (for r.in.tiff, r.out.tiff), usually already installed. 
+     [http://www.libtiff.org]
+ - netpbm-tools/libraries (for r.in.png/r.out.png), usually already installed.
+     [please look at any decent software mirror near you!]
+     [http://wuarchive.wustl.edu/graphics/graphics/packages/NetPBM]
+     [http://www.sourceforge.net/projects/netpbm/]
+     
+ - libg2c (for r.fill.dir, or use g77)
+     [http://?]
+     
+ - postgreSQL libraries (for the postgres database interface)
+     [http://www.postgresql.org]
 
-GRASS Development Team 1999
+ - Unix ODBC (for the ODBC database interface)
+     [http://www.unixodbc.org]
+
+ - R language (for the R language interface)
+     [http://cran.r-project.org]
+     
+ - usually not required (as you will use NVIZ)
+     Motif or Lesstif libraries required for 
+          src.contrib/GMSL/ogl3d
+     [http://www.lesstif.org]
+
+ - r.in.gdal requires GDAL - Geospatial Data Abstraction Library
+     [http://www.remotesensing.org/gdal/]
+
+GRASS Development Team 2000
 grass@baylor.edu
+
+$Id: REQUIREMENTS,v 1.8 2001-01-19 14:28:06 markus Exp $

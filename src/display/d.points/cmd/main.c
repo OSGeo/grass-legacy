@@ -8,7 +8,13 @@ int
 main (int argc, char **argv)
 {
     char *D_color_list();
+	struct GModule *module;
     struct Option *opt1, *opt2, *opt3, *opt4;
+
+	module = G_define_module();
+	module->description =
+		"Displays point graphics in the "
+		"active frame on the graphics display monitor.";
 
     opt1 = G_define_option() ;
     opt1->key        = "color" ;

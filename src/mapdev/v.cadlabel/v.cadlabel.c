@@ -6,14 +6,14 @@
 #include    <math.h>
 #include    "gis.h"
 #include    "Vect.h"
-#include    "digit.h"
-#include    "dig_head.h"
 #include    "local_proto.h"
 
 #ifndef LINE_LABELED
 #define LINE_LABELED(p) (LINE_ALIVE (p) && (p)->att)      
 #endif
-
+#ifdef __CYGWIN__
+#define HUGE HUGE_VAL
+#endif
 
 #define MAIN
 /*#define  USAGE  "v.cadlabel lines=linefile labels=labelfile"
@@ -31,11 +31,17 @@ static struct line_pnts Points;
 
 int main (int argc, char **argv)
 {
+	struct GModule *module;
     int  ret ;
     char *line_mapset, *label_mapset;
     struct Option *file1, *file2;
 
     G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Attaches labels to (binary) vector contour lines "
+		"that have been imported to GRASS from DXF format.";
 
     file1 = G_define_option();
     file1->key			= "lines";

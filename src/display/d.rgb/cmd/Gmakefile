@@ -1,9 +1,9 @@
+PGM=d.rgb
 OFILES =  main.o rgb.o init_rgb.o
 
-all: $(BIN_MAIN_CMD)/d.rgb
-
-$(BIN_MAIN_CMD)/d.rgb: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) ${GISLIB} $(TERMLIB) $(MATHLIB) $(XDRLIB)
+LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
 $(DISPLAYLIB): #
