@@ -1821,6 +1821,15 @@ int bitmap_pad, bytes_per_line;
     XImage *img = (XImage *) allocateMemory ( sizeof ( XImage ) );
     NT_debug ("XCreateImage\n");
     if (img) {
+#define ROUNDUP(nbytes, pad) ((((nbytes) + ((pad)-1)) / (pad)) * ((pad)>>3))
+        if (bytes_per_line == 0)
+        {
+            if (format == ZPixmap)
+                bytes_per_line = ROUNDUP(depth * width, bitmap_pad);
+            else
+                bytes_per_line = ROUNDUP(width + offset, bitmap_pad);
+        }
+
         img->depth = depth;
         img->format = format;
         img->xoffset = offset;
