@@ -14,6 +14,7 @@ SUBDIRS = \
 	v.distance \
 	v.extract \
 	v.format \
+	v.hull \
 	v.info \
 	v.in.ascii \
 	v.in.db \
