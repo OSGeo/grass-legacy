@@ -132,7 +132,13 @@ expression *variable(const char *name)
 
 expression *mapname(const char *name, int mod, int row, int col)
 {
-	expression *e = allocate(expr_type_map, map_type(name, mod));
+	int res_type = map_type(name, mod);
+	expression *e = allocate(expr_type_map,
+				 res_type >= 0 ? res_type : CELL_TYPE);
+
+	if (res_type < 0)
+		syntax_error("invalid map: %s", name);
+
 	e->data.map.name = name;
 	e->data.map.mod = mod;
 	e->data.map.row = row;
