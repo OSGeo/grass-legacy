@@ -80,7 +80,7 @@ mkdir -p $GISDBASE/$TEMPDIR/PERMANENT
 
 #save existing .$GRASSRC
 if test -e $HOME/.$GRASSRC ; then
-   mv $HOME/.$GRASSRC /tmp/$TEMPDIR.$GRASSRC
+   mv "$HOME"/.$GRASSRC "$GISDBASE"/"$TEMPDIR"/$GRASSRC
 fi
 echo "LOCATION_NAME: $TEMPDIR" >  $HOME/.$GRASSRC
 echo "MAPSET: PERMANENT"       >> $HOME/.$GRASSRC
@@ -122,8 +122,8 @@ if [ $? -eq 1 ] ; then
 fi
 
 #restore previous .$GRASSRC
-if test -f /tmp/$TEMPDIR.$GRASSRC ; then
-   mv /tmp/$TEMPDIR.$GRASSRC $HOME/.$GRASSRC
+if test -f "$GISDBASE"/"$TEMPDIR"/$GRASSRC ; then
+   mv "$GISDBASE"/"$TEMPDIR"/$GRASSRC "$HOME"/.$GRASSRC
 fi
 
 #cleanup:
