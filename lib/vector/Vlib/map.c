@@ -16,9 +16,11 @@
 *****************************************************************************/
 #include "Vect.h"
 
-/* Copy all alive elements of opened vector map to another opened vector map.
-*  returns 0 on success
-*         1 on error
+/*!
+ \fn int Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )
+ \brief copy all alive elements of opened vector map to another opened vector map
+ \return 0 on success, 1 on error
+ \param  in Map_info structure, out Map_info structure
 */
 int 
 Vect_copy_map_lines ( struct Map_info *In, struct Map_info *Out )

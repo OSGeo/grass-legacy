@@ -17,14 +17,14 @@
 *****************************************************************************/
 #include "Vect.h"
 
-
-/*
-   ** Simply returns level that Map is opened at
-   **  returns open level or -1 on error
- */
+/*!
+ \fn int Vect_level (struct Map_info *Map)
+ \brief returns level that Map is opened at
+ \return open level (1: no topology, or 2: topology support) or -1 on error
+ \param Map_info structure
+*/
 int
-Vect_level (Map)
-     struct Map_info *Map;
+Vect_level (struct Map_info *Map)
 {
   if (Map->open != VECT_OPEN_CODE)
     {

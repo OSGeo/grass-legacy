@@ -35,12 +35,27 @@ static int clipper ( dglGraph_s    *pgraph ,
 		           dglNodeGet_Id(pgraph, pargIn->pnNodeFrom), pargOut->nEdgeCost, cost );
 	pargOut->nEdgeCost += (dglInt32_t) cost;
     }
+
     return 0;   
-}																															
-/* Build network graph 
-*
-*  Returns: 0 - success
-*           1 - error
+}
+
+/*!
+ \fn Vect_net_build_graph (  struct Map_info *Map,
+			int ltype, 
+       			int afield,
+			int nfield,
+			char *afcol,
+			char *abcol,
+			char *ncol, 
+			int geo, 
+		        int algorithm ) 
+ \brief build network graph
+ \return 0 on success, 1 on error
+ \param Map_info structure, line type for arcs, arc costs field (if 0,
+   use length), node costs field (if 0, do not use node costs), column
+   with forward costs for arc, column with backward costs for arc (if
+   NULL, back = forward), column with costs for nodes, use geodesic
+   calculation for length (LL), not used (in future code for algorithm)
 */
 int
 Vect_net_build_graph (  struct Map_info *Map,
@@ -260,13 +275,13 @@ Vect_net_build_graph (  struct Map_info *Map,
 }
 
 
-/* Find shortest path.
-*
-*  List (must be initialised before) is filled with arcs (lines) or NULL.
-*
-*  Returns: number of segments : ( 0 is correct for from = to, or List == NULL )
-*              ? sum of costs is better return value
-*           -1 : destination unreachable
+/*!
+ \fn int Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *List, double *cost ) 
+ \brief find shortest path
+ \return number of segments : ( 0 is correct for from = to, or List == NULL ),
+              ? sum of costs is better return value,
+           -1 : destination unreachable
+ \param Map_info structure, from?, to?, ilist? cost
 */
 #include<fcntl.h>
 int

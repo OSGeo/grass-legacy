@@ -157,14 +157,24 @@ Vect_get_full_name (struct Map_info *Map)
     return (ptr);
 }
 
-/* Is 3D (with z ) ? */
+/*!
+ \fn int Vect_is_3d (struct Map_info *Map)
+ \brief check if vector map is 3D (with z)
+ \return 1 on success, 0 of not 3D
+ \param Map_info structure
+*/
 int
 Vect_is_3d (struct Map_info *Map )
 {
     return ( Map->head.with_z );
 }
 
-/* organization */
+/*!
+ \fn int Vect_set_organization (struct Map_info *Map, char *str )
+ \brief set organization string in map header
+ \return 0 on success
+ \param Map_info structure, organization string
+*/
 int
 Vect_set_organization (struct Map_info *Map, char *str )
 {
@@ -173,13 +183,25 @@ Vect_set_organization (struct Map_info *Map, char *str )
     return (0);
 }
 
+/*!
+ \fn char *Vect_get_organization (struct Map_info *Map)
+ \brief get organization string from map header
+ \return organization string
+ \param Map_info structure
+*/
 char *
 Vect_get_organization (struct Map_info *Map)
 {
     return (Map->head.organization);
 }
 
-/* date of digitization */
+/*!
+ \fn int Vect_set_date (struct Map_info *Map, char *str )
+ \brief set date of digitization string in map header
+ \return 0 on success
+ \param Map_info structure,  date of digitization string
+*/
+/* SUGGESTION: this should be coupled to DateTime functions to support time series*/
 int
 Vect_set_date (struct Map_info *Map, char *str )
 {
@@ -188,13 +210,25 @@ Vect_set_date (struct Map_info *Map, char *str )
     return (0);
 }
 
+/*!
+ \fn char *Vect_get_date (struct Map_info *Map)
+ \brief get date of digitization string from map header
+ \return date of digitization string
+ \param Map_info structure
+*/
+/* SUGGESTION: this should be coupled to DateTime functions to support time series*/
 char *
 Vect_get_date (struct Map_info *Map)
 {
     return (Map->head.date);
 }
 
-/* user who digitized the map */
+/*!
+ \fn int Vect_set_person (struct Map_info *Map, char *str )
+ \brief set  user name string who digitized the map in map header
+ \return 0 on success
+ \param Map_info structure,   user name string
+*/
 int
 Vect_set_person (struct Map_info *Map, char *str )
 {
@@ -203,13 +237,24 @@ Vect_set_person (struct Map_info *Map, char *str )
     return (0);
 }
 
+/*!
+ \fn char *Vect_get_person (struct Map_info *Map)
+ \brief get user name string who digitized the map from map header
+ \return user name string
+ \param Map_info structure
+*/
 char *
 Vect_get_person (struct Map_info *Map)
 {
     return (Map->head.your_name);
 }
 
-/* map name */
+/*!
+ \fn int Vect_set_map_name (struct Map_info *Map, char *str )
+ \brief set  map name string in map header
+ \return 0 on success
+ \param Map_info structure, map name string
+*/
 int
 Vect_set_map_name (struct Map_info *Map, char *str )
 {
@@ -218,13 +263,24 @@ Vect_set_map_name (struct Map_info *Map, char *str )
     return (0);
 }
 
+/*!
+ \fn char *Vect_get_map_name (struct Map_info *Map)
+ \brief get map name string in map header
+ \return map name string
+ \param Map_info structure
+*/
 char *
 Vect_get_map_name (struct Map_info *Map)
 {
     return (Map->head.map_name);
 }
 
-/* date when the source map was originally produced */
+/*!
+ \fn int Vect_set_map_date (struct Map_info *Map, char *str )
+ \brief set date string when the source map was originally produced in map header
+ \return 0 on success
+ \param Map_info structure,  date when the source map was originally produced string
+*/
 int
 Vect_set_map_date (struct Map_info *Map, char *str )
 {
@@ -233,13 +289,24 @@ Vect_set_map_date (struct Map_info *Map, char *str )
     return (0);
 }
 
+/*!
+ \fn char *Vect_get_map_date (struct Map_info *Map)
+ \brief get date string when the source map was originally produced in map header
+ \return date when the source map was originally produced string
+ \param Map_info structure
+*/
 char *
 Vect_get_map_date (struct Map_info *Map)
 {
     return (Map->head.source_date);
 }
 
-/* scale */
+/*!
+ \fn int Vect_set_scale (struct Map_info *Map,  int scale)
+ \brief set  map scale in map header
+ \return 0 on success
+ \param Map_info structure, map scale
+*/
 int
 Vect_set_scale (struct Map_info *Map, int scale )
 {
@@ -247,13 +314,24 @@ Vect_set_scale (struct Map_info *Map, int scale )
     return (0);
 }
 
+/*!
+ \fn int Vect_get_scale (struct Map_info *Map)
+ \brief get  map scale from map header
+ \return map scale
+ \param Map_info structure
+*/
 int
 Vect_get_scale (struct Map_info *Map)
 {
     return ((int) Map->head.orig_scale);
 }
 
-/* Comment, other info */
+/*!
+ \fn int Vect_set_comment (struct Map_info *Map, char *str )
+ \brief set comment or other info string in map header
+ \return 0 on success
+ \param Map_info structure, comment or other info string
+*/
 int
 Vect_set_comment (struct Map_info *Map, char *str )
 {
@@ -262,13 +340,24 @@ Vect_set_comment (struct Map_info *Map, char *str )
     return (0);
 }
 
+/*!
+ \fn  char *Vect_get_comment (struct Map_info *Map )
+ \brief get comment or other info string from map header
+ \return comment or other info string
+ \param Map_info structure
+*/
 char *
 Vect_get_comment (struct Map_info *Map)
 {
     return (Map->head.line_3);
 }
 
-/* Zone */
+/*!
+ \fn int Vect_set_zone (struct Map_info *Map, int zone )
+ \brief set projection zone in map header
+ \return 0 on success
+ \param Map_info structure, projection zone
+*/
 int
 Vect_set_zone (struct Map_info *Map, int zone )
 {
@@ -276,13 +365,24 @@ Vect_set_zone (struct Map_info *Map, int zone )
     return (0);
 }
 
+/*!
+ \fn  int Vect_get_zone (struct Map_info *Map )
+ \brief get projection zone from map header
+ \return projection zone
+ \param Map_info structure
+*/
 int
 Vect_get_zone (struct Map_info *Map)
 {
     return (Map->head.plani_zone);
 }
 
-/* Threshold used for digitization */
+/*!
+ \fn int Vect_set_thresh (struct Map_info *Map, double thresh )
+ \brief set threshold used for digitization in map header
+ \return 0 on success
+ \param Map_info structure, threshold used for digitization
+*/
 int
 Vect_set_thresh (struct Map_info *Map, double thresh )
 {
@@ -291,6 +391,12 @@ Vect_set_thresh (struct Map_info *Map, double thresh )
     return (0);
 }
 
+/*!
+ \fn double Vect_get_zone (struct Map_info *Map )
+ \brief get threshold used for digitization from map header
+ \return threshold used for digitization
+ \param Map_info structure
+*/
 double
 Vect_get_thresh (struct Map_info *Map)
 {
