@@ -821,8 +821,6 @@ int G_usage_html (void)
 	struct Option *opt ;
 	struct Flag *flag ;
 	char *type;
-	char *s, *top;
-	int i;
 	
 	if (!pgm_name)		/* v.dave && r.michael */
 	    pgm_name = G_program_name ();
@@ -863,6 +861,7 @@ int G_usage_html (void)
 		fprintf(stdout, "</b>] ");
 	}
 
+	/* print short version first */
 	if(n_opts)
 	{
 		opt= &first_option;
@@ -887,6 +886,10 @@ int G_usage_html (void)
 			     fprintf(stdout," [");
 			fprintf(stdout,
 				"<b>%s</b>=<em>%s</em>", opt->key, type);
+			if (opt->multiple)
+			{
+				fprintf(stdout,"[,<i>%s</i>,...]", type);
+			}
 			if( !opt->required )
 			     fprintf(stdout,"] ");
 
