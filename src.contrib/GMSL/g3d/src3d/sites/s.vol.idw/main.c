@@ -95,7 +95,7 @@ int main(argc, argv)
     parm.field ->key        = "field" ;
     parm.field ->type       = TYPE_INTEGER ;
     parm.field ->required   = NO ;
-    parm.field ->description="Number of z-field attribute";
+    parm.field ->description="Number of z-field attribute to use for calculation";
     parm.field ->answer = "1";
 
     G_gisinit(argv[0]);
