@@ -200,8 +200,8 @@ src/mapdev/v.to.sites
 src/mapdev/v.transform
 src/mapdev/v.trim
 src/mapdev/v.what
-# src/misc/m.datum.shift
-src/misc/m.clump
+src/misc/m.datum.shift
+#src/misc/m.clump # does not compile
 src/misc/m.dem.examine
 src/misc/m.dem.extract
 src/misc/m.dmaUSGSread
