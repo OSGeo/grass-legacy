@@ -13,7 +13,7 @@ int do_copy (int n, char *old, char *mapset, char *new)
     char path[1024];
 
     G_debug (3, "Copy %s", list[n].alias );
-    fprintf (stdout,"COPY [%s] to [%s]\n", G_fully_qualified_name(old, mapset), new);
+    fprintf (stdout,"COPY [%s] to current mapset as [%s]\n", G_fully_qualified_name(old, mapset), new);
 
     len = get_description_len(n);
 
@@ -21,7 +21,7 @@ int do_copy (int n, char *old, char *mapset, char *new)
     if ( strcmp(list[n].alias, "vect") == 0 ) {
 	ret = Vect_copy ( old, mapset, new, stderr );
 	if ( ret == -1 ) {
-	    G_warning ("Cannot copy %s to %s", G_fully_qualified_name(old, mapset), new );
+	    G_warning ("Cannot copy %s to current mapset as %s", G_fully_qualified_name(old, mapset), new );
 	}
     } else {
 	for (i = 0; i < list[n].nelem; i++)
