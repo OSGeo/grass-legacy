@@ -39,9 +39,12 @@ Many thanks to all contributors!
 <li>nviz: fixed rotated TIFF output (Glynn Clements)
 <li>p.vrml: re-added to release branch
 <li>r.bilinear: fixed 0/NULL problem (Glynn Clements)
+<li>r.composite/r.his: fix to output null cells where any input cells are null
+    (Glynn Clements)
 <li>r.in.gdal: fixed 3 channel import for true color images (Frank Warmerdam)
+<li>r.info: fix handling of null values in reclass table (Glynn Clements)
 <li>r.mapcalc: fix bug where an invalid expression could subsequently become
-   valid (Glynn Clements)
+   valid, generates a warning if integer division occurs (Glynn Clements)
 <li>r.mapcalc3: added, reimplementation of r.mapcalc, will replace it soon
   (Glynn Clements)
 <li>r.neighbors: fixed null handling, removed -z flag (Glynn Clements)
@@ -49,6 +52,7 @@ Many thanks to all contributors!
   CELL type (Lorenzo Potrich & Markus Neteler), fixed curvature bugs
   (Stefano Menegon)
 <li>r.patch: max files now 200
+<li>r.reclass/r.rescale: catch-all rule in called r.reclass (Glynn Clements)
 <li>r.statistics: bugfix on '-z' problem (Glynn Clements)
 <li>r.slope.aspect: fixed crash if only pc= or tc= was selected (Glynn
   Clements)
