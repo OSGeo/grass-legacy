@@ -284,9 +284,12 @@ main (int argc, char **argv)
 /* new v.out.shape stuff MN 3/2000 */
 /* usage: 
  * gen2shp outfile type < infile
- *  reads stdin and creates outfile.shp, outfile.shx and outfile.dbf
+ *  reads stdin and creates outfile.shp, outfile.shx
  *  type must be one of these: points lines polygons
  *  infile must be in 'generate' format
+ *
+ *  txt2dbf creates output.dbf with attributes
+ *
  */
 	if (strcmp (opt1->answer, "polygon") == 0)
 	{
@@ -304,15 +307,13 @@ main (int argc, char **argv)
 	/* do we need points ??: see v.out.idrisi for implementation */
 
 	fprintf(stdout, "Converting $LOCATION/arc_tmp/%s.%s to SHAPE file...\n", shape_prefix, extension);
-	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc_tmp/%s.%s ; rm -rf  $LOCATION/arc_tmp/", shape_prefix, shape_type, shape_prefix, extension);
+	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc_tmp/%s.%s", shape_prefix, shape_type, shape_prefix, extension);
+	G_system(buf);
+
+	fprintf(stdout, "Converting attributes to DBF file...\n");
+	sprintf(buf, "$GISBASE/etc/v.out.shape/txt2dbf -d' ' -I6 -I6 -I6 -C80 $LOCATION/arc_tmp/%s.txt %s.dbf > /dev/null; rm -rf  $LOCATION/arc_tmp/", shape_prefix, shape_prefix);
 	G_system(buf);
 	
-	/* remove the temporal ungenerate files */
-	/* 5/2000 MN: commented as being dangeous! Added rm -f above.*/
-/*	G_remove("arc_tmp", lin_filename);
-	G_remove("arc_tmp", lab_filename);
-	G_remove("arc_tmp", txt_filename); */
-
 	exit(0);
 }
 
