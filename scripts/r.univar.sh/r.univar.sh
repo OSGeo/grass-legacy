@@ -35,6 +35,11 @@ fi
 COVER="$GIS_OPT_map"
 
 TMP="`g.tempfile pid=$$`"
+if [ $? -ne 0 ] || [ -z "$TMP" ] ; then
+    echo "ERROR: unable to create temporary files" 1>&2
+    exit 1
+fi
+
 cleanup()
 {
  \rm -f $TMP $TMP.sort
@@ -52,12 +57,11 @@ trap "exitprocedure" 2 3 15
 
 echo "Calculation for map $COVER (ignoring NULL cells)..."
 echo "Reading raster map..."
-r.stats -1n input=$COVER > $TMP
+r.stats -1n input=$COVER > "$TMP"
 
 #check if map contains only NULL's in current region
-LINES=`wc -l $TMP | awk '{print $1}'`
-if [ "$LINES" = 0 ]
-then
+LINES=`wc -l "$TMP" | awk '{print $1}'`
+if [ "$LINES" -eq 0 ] ; then
  echo ""
  echo "ERROR: Map $COVER contains only NULL data in current region."
  cleanup
