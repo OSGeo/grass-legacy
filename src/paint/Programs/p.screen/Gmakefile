@@ -1,0 +1,14 @@
+PGM = p.screen
+
+LIST =	main.o\
+	idx.o\
+	scale.o
+
+INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+
+$(BIN_MAIN_CMD)/$(PGM):	$(LIST) $(INTERFACE) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(INTERFACE) $(GISLIB) -o $@
+
+#############################################################
+$(GISLIB):	#
+$(INTERFACE):	#
