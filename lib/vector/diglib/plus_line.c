@@ -13,7 +13,7 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
     int  lineid, node, lp;
     char *p;
     P_LINE *line;
-    
+   
     /* First look if we have space in array of pointers to lines
     *  and reallocate if necessary */
     if ( plus->n_lines >= plus->alloc_lines ) { /* array is full */
@@ -28,25 +28,24 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
     
     /* Add nodes */
     G_debug ( 3, "Register node: type = %d,  %f,%f", type, Points->x[0], Points->y[0]);
-    node = dig_which_node ( plus, Points->x[0], Points->y[0], 0);
+
+    node = dig_find_node ( plus, Points->x[0], Points->y[0], Points->z[0]);
     G_debug ( 3, "node = %d", node);
-    if ( node == -1 ) {
+    if ( node == 0 ) {
 	node = dig_add_node ( plus, Points->x[0], Points->y[0] );
 	G_debug ( 3, "Add new node: %d", node);
     } else {
 	G_debug ( 3, "Old node found: %d", node);
     }	
     line->N1 = node;
-    G_debug ( 3, ">");
     dig_node_add_line (plus, node, lineid, Points, type );
      
-    G_debug ( 3, ">");
     if ( type & GV_LINES ) {
 	lp = Points->n_points - 1;
 	G_debug ( 3, "Register node %f,%f", Points->x[lp], Points->y[lp]);
-	node = dig_which_node ( plus, Points->x[lp], Points->y[lp], 0);
+	node = dig_find_node ( plus, Points->x[lp], Points->y[lp], Points->z[lp]);
 	G_debug ( 3, "node = %d", node);
-	if ( node == -1 ) {
+	if ( node == 0 ) {
 	    node = dig_add_node ( plus, Points->x[lp], Points->y[lp] );
 	    G_debug ( 3, "Add new node: %d", node);
 	} else {
@@ -124,6 +123,26 @@ dig_line_set_area (struct Plus_head *plus, plus_t line, int side, plus_t area ) 
     Line = plus->Line[line];
     if ( side == GV_LEFT  ) { Line->left = area; }
     else if ( side == GV_RIGHT ) { Line->right = area; }
+
+    return (1);
+}
+
+/* dig_line_set_box ()
+** Set line bound box
+** 
+*/
+int
+dig_line_set_box (struct Plus_head *plus, plus_t line, BOUND_BOX *Box ) {
+    P_LINE *Line;
+    
+    Line = plus->Line[line];
+    
+    Line->N = Box->N;
+    Line->S = Box->S;
+    Line->E = Box->E;
+    Line->W = Box->W;
+    Line->T = Box->T;
+    Line->B = Box->B;
 
     return (1);
 }

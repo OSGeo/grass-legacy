@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <math.h>
 #include "Vect.h"
 
 static double dist_squared (double, double, double, double);
@@ -105,7 +106,9 @@ dig_add_node ( struct Plus_head *plus, double x, double y) {
     node = plus->Node[nnum];
     node->x = x;
     node->y = y;
-  
+ 
+    dig_spidx_add_node (plus, nnum, x, y, 0); 
+    
     plus->n_nodes++;
     
     G_debug(3, "new node = %d, n_nodes = %d, alloc_nodes = %d", nnum, plus->n_nodes, plus->alloc_nodes );

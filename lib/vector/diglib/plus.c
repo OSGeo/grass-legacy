@@ -38,6 +38,8 @@ dig_init_plus (struct Plus_head *Plus)
     Plus->Area_offset = 0L ;
     Plus->Isle_offset = 0L ;
 
+    dig_spidx_init ( Plus );
+    
     /*
     Plus->future3 = 0L ;
     Plus->future4 = 0L ;
