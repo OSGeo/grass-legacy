@@ -137,6 +137,6 @@ srcdist: veryclean
 # make a binary package for distribution:
 #  Bug: VER is not expanded properly (wrong directory):
 bindist:
-	cp GPL.TXT ${PREFIX}/COPYRIGHT
+	cp BUGS COPYRIGHT NEWS.html README REQUIREMENTS TODO ${PREFIX}/
 	(cd ${PREFIX};  tar cvfz grass${VERSION}_${SYSTEM}_bin.tar.gz * )
 	echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
