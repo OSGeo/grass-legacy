@@ -1,5 +1,6 @@
 /*
  * $Id$
+ * updated by Roger Miller <rgrmill@rt66.com> 4/2002
  * updated by David D Gray <ddgray@armadce.demon.co.uk> 4/2000 
  * updated GRASS 5 Bill Hughes 9/99
  * main.c    1.0   10/01/89
@@ -49,7 +50,7 @@ struct dig_head Head;
 
 int main (int argc, char **argv)
 {
-	int i, cat_index, new_cat, max_att;
+	int i, cat_index, new_cat, max_att, line_type;
 	int cat_count;
 	int result;
 	int dissolve=0, x, y;
@@ -66,8 +67,8 @@ int main (int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Selects vectors from an existing vector map and "
-		"creates a new map containing only the selected vectors.";
+		"Selects vector objects from an existing vector map and "
+		"creates a new map containing only the selected objects.";
 
     d_flag = G_define_flag();
     d_flag->key              = 'd';
@@ -95,8 +96,8 @@ int main (int argc, char **argv)
     typopt->key              = "type";
     typopt->type             =  TYPE_STRING;
     typopt->required         =  YES;
-    typopt->options          =  "area,line,site";
-    typopt->description      =  "Select area, line, or site "; 
+    typopt->options          =  "area,edge,line,site";
+    typopt->description      =  "Select area, edge, line, or site "; 
 
     newopt = G_define_option();
     newopt->key              = "new";
@@ -127,7 +128,6 @@ int main (int argc, char **argv)
         exit (-1);
 
        /* start checking options and flags */
-
     if (listopt->answers == NULL && fileopt->answer == NULL)
 	{
         	fprintf(stderr,"\nEither [list] or [file] should be given.\n");
@@ -265,7 +265,11 @@ int main (int argc, char **argv)
        }
     else
        {
-       max_att = xtract_line(cat_index,cat_array,input,output,new_cat);
+       line_type=AREA;
+       if(*typopt->answer == 'l')line_type=LINE;
+       else if(*typopt->answer == 's')line_type=DOT;
+
+       max_att = xtract_line(cat_index,cat_array,input,output,new_cat,line_type);
        if ( 0 > max_att)
           {
           fprintf(stderr," Error in line/site extraction processing\n");

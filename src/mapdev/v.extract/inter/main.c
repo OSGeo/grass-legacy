@@ -1,3 +1,4 @@
+/* updated by Roger Miller <rgrmill@rt66.com> 4/02 */
 /* updated for GRASS 5 9/99 */
 /*  @(#)do_select.c     1.1  2/26/90    RLG */
 /*  @(#)main.c          1.0  2/26/91    RLG , for 4.0*/
@@ -43,7 +44,7 @@ main (int argc, char *argv[])
     strcat (command, "/bin/v.extract"); 
 
 
-    fprintf (stderr,"\n\n This program allows you to extract, then create a new vector file from \n an existing one; by providing category names or category codes.\n\n");
+    fprintf (stderr,"\n\n This program allows you to create a new vector file from vector objects in an existing file by selecting either category names or category numbers.\n\n");
 
     gbase = G_gisbase() ;
     current_mapset = G_mapset() ;
@@ -51,7 +52,7 @@ main (int argc, char *argv[])
     opt_t = 0;
     while(opt_t == 0)
       {
-      fprintf(stderr,"\n Enter the type of map (area, line, or site) [area] : ");
+      fprintf(stderr,"\n Enter the type of object (area, edge, line, or site) [area] : ");
       fgets(prompt,60,stdin);
       prompt[strlen(prompt)-1] = '\0'; /* Trim the linefeed */
       if (strlen(prompt) == 0)  
@@ -70,6 +71,9 @@ main (int argc, char *argv[])
 	              break;
            case 's' :
 	   case 'S' : opt_t = 3;
+                      break;
+           case 'e' :
+           case 'E' : opt_t = 4;
                       break;
            default  : fprintf(stderr,"\n **** INVALID type, re-enter\n");
                       sleep(2);
@@ -118,6 +122,7 @@ main (int argc, char *argv[])
 
     if (opt_t == 1) strcat (command, " type=area");
     else if (opt_t == 2) strcat (command, " type=line");
+    else if (opt_t == 4) strcat (command, " type=edge");
     else strcat (command, " type=site");
 
     G_clear_screen ();

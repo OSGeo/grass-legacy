@@ -24,7 +24,7 @@ struct line_pnts *Points;
 char  buf[1024] ;
 
 int 
-xtract_line (int num_index, int num_array[], char *in_name, char *out_name, int cat_new)
+xtract_line (int num_index, int num_array[], char *in_name, char *out_name, int cat_new, int select)
 {
 	FILE *outa;
 	int cat, cat1;
@@ -94,8 +94,8 @@ xtract_line (int num_index, int num_array[], char *in_name, char *out_name, int 
         for (ii=1; ii <= Map.n_lines; ii++)
 	     {
 	     Lines = &(Map.Line[ii]);
-	            /* skip anything other than area lines */
-	     if (Lines->type == AREA)   continue;
+	            /* skip anything other than the selected line type */
+	     if (Lines->type != select)   continue;
 
 	            /* get the category */
 	     cat = Map.Att[Lines->att].cat;
