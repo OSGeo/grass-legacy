@@ -24,10 +24,9 @@ easy to add as required.
 David
 -----------------------------------
 
-Getting BLAS/LAPACK:
+Getting BLAS/LAPACK (one package):
 
 http://netlib.bell-labs.com/netlib/master/readme.html
 http://www.netlib.org
 
-http://netlib.bell-labs.com/netlib/blas/index.html
-http://netlib.bell-labs.com/netlib/lapack/index.html
+http://www.netlib.org/lapack/
