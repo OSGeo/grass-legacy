@@ -195,6 +195,7 @@ src/mapdev/v.spag
 src/mapdev/v.stats
 src/mapdev/v.support
 src/mapdev/v.surf.rst
+src/mapdev/v.timestamp
 src/mapdev/v.to.rast
 src/mapdev/v.to.sites
 src/mapdev/v.transform
