@@ -1,0 +1,65 @@
+###
+### 	i.rectify Gmakefile 
+###
+
+PGR  	= i.rectify3
+HOME 	= $(BIN_ALPHA_INTER)
+#HOME 	= ../bin/$(ARCH)
+#HOME    = .
+
+### 	what to make
+all:	$(HOME)/$(PGR)
+
+
+###	object files
+LIST = main.o\
+	ask_files.o\
+	ask_files2.o\
+	ask_wind.o\
+	cp.o\
+	compress.o\
+	env.o\
+	exec.o\
+        get_wind.o\
+	mail.o\
+	matrix.o\
+	perform.o\
+	read_elev.o\
+	rectify.o\
+	report.o\
+	target.o\
+	write.o
+
+###   HOLD
+###	env.o\
+###	equ.o\
+
+
+###	object dependencies
+$(LIST): global.h rowcol.h
+
+###	required libary to link
+IMAGERYLIB_SUP  = ../../libe/libimage_sup.a
+
+LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
+	 $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) \
+	 $(GPROJLIB) $(LIBTRANS) $(COORCNVLIB) \
+	 $(GISLIB) $(VASK) 
+
+
+###	libarary dependencies
+$(LIBES): # in case of lib changes
+
+###	any program required compile flags
+EXTRA_CFLAGS = -D_NO_PROTO  $(VECT_INCLUDE) -I../../libe
+
+###	any program required link flags
+#EXTRA_LDFLAGS 
+
+
+###	the rules
+$(HOME)/$(PGR): $(LIST) $(LIBES) 
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+
+###	tags
+###	the end.
