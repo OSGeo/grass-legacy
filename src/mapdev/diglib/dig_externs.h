@@ -54,3 +54,4 @@ char * Vect__P_init_new_plus ();
 char * Vect__P_init();
 long Vect_write_line ();
 long Vect_x__Write_line ();
+char *Vect_support_name ();
