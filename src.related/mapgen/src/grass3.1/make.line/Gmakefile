@@ -1,0 +1,23 @@
+###########################################################
+#  %W%  %G%
+UNIX_BIN = $(GRAPH)/macros
+
+LIBDIG		= $(SRC)/mapdev/lib/libdig.a
+
+EXTRA_CFLAGS	= -I$(SRC)/mapdev/lib   -I$(SRC)/mapdev/libes
+
+
+
+
+all:  $(UNIX_BIN)/make.line \
+	$(UNIX_BIN)/redo.line
+
+
+$(UNIX_BIN)/make.line: make.line
+	cp make.line $(UNIX_BIN)/make.line
+
+$(UNIX_BIN)/redo.line: redo.line
+	cp redo.line $(UNIX_BIN)/redo.line
+
+make.line:#
+redo.line:#
