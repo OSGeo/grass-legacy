@@ -24,6 +24,7 @@
 %token <sval> STRING
 %token <ival> INTEGER
 %token <fval> FLOAT
+%token <fval> DOUBLE
 
 %token GT GE LT LE EQ NE AND OR
 
@@ -49,13 +50,13 @@
 
 %type <list> expr_list
 
-%type <exp> stmt
+%type <list> stmts
+%type <list> program
 
 %{
 
-static expression *result;
+static expr_list *result;
 
-extern void initialize_scanner(const char *s);
 extern int yylex(void);
 
 int yyparse(void);
@@ -65,7 +66,11 @@ void yyerror(char *s);
 
 %%
 
-stmt		: exp_let		{ result = $1;			}
+program		: stmts			{ $$ = result = $1;		}
+
+stmts		: exp_let		{ $$ = list($1,NULL);		}
+		| exp_let ';'		{ $$ = list($1,NULL);		}
+		| exp_let ';' stmts	{ $$ = list($1,$3);		}
 		;
 
 map		: STRING
@@ -74,18 +79,20 @@ map		: STRING
 		;
 
 mapmod		: '@'			{ $$ = '@';			}
-		| '#'			{ $$ = '#';			}
 		| 'r'			{ $$ = 'r';			}
 		| 'g'			{ $$ = 'g';			}
 		| 'b'			{ $$ = 'b';			}
+		| '#'			{ $$ = '#';			}
+		| 'y'			{ $$ = 'y';			}
+		| 'i'			{ $$ = 'i';			}
 		;
 
 index		: INTEGER
 		| '-' INTEGER		{ $$ = -$2;			}
 		;
 
-expr_list	: exp			{ single($1);			}
-		| exp ',' expr_list	{ list($1,$3);			}
+expr_list	: exp			{ $$ = single($1);		}
+		| exp ',' expr_list	{ $$ = list($1, $3);		}
 		;
 
 atom_var	: VARNAME		{ $$ = variable($1);		}
@@ -113,6 +120,7 @@ exp_atom	: '(' exp ')'		{ $$ = $2;			}
 		| atom_func
 		| INTEGER		{ $$ = constant_int($1);	}
 		| FLOAT			{ $$ = constant_float($1);	}
+		| DOUBLE		{ $$ = constant_double($1);	}
 		;
 
 exp_neg		: exp_atom
@@ -168,9 +176,8 @@ void yyerror(char *s)
 	fprintf(stderr, "%s\n", s);
 }
 
-expression *parse(const char *s)
+static expr_list *parse(void)
 {
-	initialize_scanner(s);
 #if 0
 	yydebug = 1;
 #endif
@@ -180,5 +187,17 @@ expression *parse(const char *s)
 		return NULL;
 	}
 	return result;
+}
+
+expr_list *parse_string(const char *s)
+{
+	initialize_scanner_string(s);
+	return parse();
+}
+
+expr_list *parse_stream(FILE *fp)
+{
+	initialize_scanner_stream(fp);
+	return parse();
 }
 
