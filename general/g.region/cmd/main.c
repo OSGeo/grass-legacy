@@ -40,6 +40,7 @@ int main (int argc, char *argv[])
 	char *err;
 	char *G_align_window();
 	int projection;
+	char **rast_ptr;
 
 	struct GModule *module;
 	struct
@@ -124,7 +125,7 @@ int main (int argc, char *argv[])
 	parm.raster->key         = "raster";
 	parm.raster->key_desc    = "name";
 	parm.raster->required    = NO;
-	parm.raster->multiple    = NO;
+	parm.raster->multiple    = YES;
 	parm.raster->type        = TYPE_STRING;
 	parm.raster->description = "Set region to match this raster map";
 	parm.raster->gisprompt   = "old,cell,raster";
@@ -318,21 +319,43 @@ int main (int argc, char *argv[])
 	}
 
 	/* raster= */
-	if (name = parm.raster->answer)
+	if (parm.raster->answer)
 	{
-		mapset = G_find_cell2 (name, "");
-		if (!mapset)
+		int first = 0;
+		rast_ptr = parm.raster->answers;
+		for (; *rast_ptr != NULL; rast_ptr++)
 		{
-			sprintf (msg, "raster map <%s> not found", name);
-			G_fatal_error (msg);
+			char rast_name[100];
+			strcpy (rast_name, *rast_ptr);
+			mapset = G_find_cell2 (rast_name, "");
+			if (!mapset)
+			{
+				sprintf (msg, "raster map <%s> not found", rast_name);
+				G_fatal_error (msg);
+			}
+			if (G_get_cellhd (rast_name, mapset, &temp_window) < 0)
+			{
+				sprintf (msg, "can't read header for <%s> in <%s>",
+						rast_name, mapset);
+				G_fatal_error (msg);
+			}
+			if (!first) {
+				G_copy (&window, &temp_window, sizeof(window));
+				first = 1;
+			} else {
+				window.north = (window.north > temp_window.north) ?
+					window.north : temp_window.north;
+				window.south = (window.south < temp_window.south) ?
+					window.south : temp_window.south;
+				window.east = (window.east > temp_window.east) ?
+					window.east : temp_window.east;
+				window.west = (window.west < temp_window.west) ?
+					window.west : temp_window.west;
+			}
 		}
-		if (G_get_cellhd (name, mapset, &window) < 0)
-		{
-			sprintf (msg, "can't read header for <%s> in <%s>",
-			    name, mapset);
-			G_fatal_error (msg);
-		}
+		G_adjust_Cell_head(&window,0,0);
 	}
+				
 
 	/* vect= */
 	if (name = parm.vect->answer)
