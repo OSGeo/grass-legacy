@@ -1,0 +1,28 @@
+BEGIN {
+      sign = 1
+      printit = 0
+}
+
+{ 
+   
+      if ($1 == "ARC")
+      {
+	    print "   0"
+	    printit = 1
+      }
+
+
+	if (sign == 1)
+	    if ($1 == "0")
+		if (printit == 1)
+		    printit = 0
+
+	if (printit == 1)
+	    print $0
+
+	if (sign == 1)
+	    sign = 0
+	else
+	    sign = 1
+
+}
