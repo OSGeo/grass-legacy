@@ -70,7 +70,7 @@ links:
 		while read file ; do \
 			echo Creating link for $$file ; \
 			rm -f ${GISBASE}/bin/$$file ; \
-			ln ${GISBASE}/etc/front.end ${GISBASE}/bin/$$file ; \
+			ln -s ${GISBASE}/etc/front.end ${GISBASE}/bin/$$file ; \
 		done
 
 post-compile:
