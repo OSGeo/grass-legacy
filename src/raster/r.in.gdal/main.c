@@ -68,7 +68,7 @@ int main (int argc, char *argv[])
     {
         struct Option *input, *output, *target, *title, *outloc, *band;
     } parm;
-    struct Flag *flag_o, *flag_e;
+    struct Flag *flag_o, *flag_e, *flag_k;
 
 /* -------------------------------------------------------------------- */
 /*      Initialize.                                                     */
@@ -127,7 +127,11 @@ int main (int argc, char *argv[])
 
     flag_e = G_define_flag();
     flag_e->key = 'e';
-    flag_e->description = "Extend location extents based on new dataset.";
+    flag_e->description = "Extend location extents based on new dataset";
+
+    flag_k = G_define_flag();
+    flag_k->key = 'k';
+    flag_k->description = "Keep band numbers instead of using band color names";
 
     if (G_parser(argc,argv))
         exit(1);
@@ -371,25 +375,29 @@ int main (int argc, char *argv[])
 
         for( nBand = 1; nBand <= GDALGetRasterCount(hDS); nBand++ )
         {
-            /* use channel color names if present: */
             hBand = GDALGetRasterBand( hDS, nBand );
-            strcpy(colornamebuf,GDALGetColorInterpretationName(
+            hBand = GDALGetRasterBand( hDS, nBand );
+            if( !flag_k->answer ){
+              /* use channel color names if present: */
+              strcpy(colornamebuf,GDALGetColorInterpretationName(
                              GDALGetRasterColorInterpretation(hBand)));
 
-            /* check: two channels with identical name ? */
-            if ( strcmp(colornamebuf,colornamebuf2) == 0 )
-                 sprintf(colornamebuf,"%d",nBand);
-            else
-                 strcpy(colornamebuf2,colornamebuf);
+              /* check: two channels with identical name ? */
+              if ( strcmp(colornamebuf,colornamebuf2) == 0 )
+                   sprintf(colornamebuf,"%d",nBand);
+              else
+                   strcpy(colornamebuf2,colornamebuf);
 
-            /* avoid bad color names; in case of 'Gray' often all channels are named 'Gray' */
-            if ( strcmp(colornamebuf,"Undefined") == 0 || strcmp(colornamebuf,"Gray") == 0 )
-                 sprintf( szBandName, "%s.%d", output, nBand);
-            else
-            {
-                 G_tolcase(colornamebuf);
-                 sprintf( szBandName, "%s.%s", output, colornamebuf);
-            }
+              /* avoid bad color names; in case of 'Gray' often all channels are named 'Gray' */
+              if ( strcmp(colornamebuf,"Undefined") == 0 || strcmp(colornamebuf,"Gray") == 0 )
+                   sprintf( szBandName, "%s.%d", output, nBand);
+              else
+              {
+                   G_tolcase(colornamebuf);
+                   sprintf( szBandName, "%s.%s", output, colornamebuf);
+              }
+            } else
+	        sprintf( szBandName, "%s.%d", output, nBand);
 
             ImportBand( hBand, szBandName, &ref );
             if (title)
