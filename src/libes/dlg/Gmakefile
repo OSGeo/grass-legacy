@@ -1,4 +1,3 @@
-# %W% %G%
 OBJ = \
 	dlg_init.o \
 	dlg_w_hdr.o\
