@@ -1,0 +1,7 @@
+ALL:
+	$(MAKEALL)
+#	mv SECO.tar $(DEFAULT_DATABASE)
+#	cd $(DEFAULT_DATABASE)
+#	cat SECO.tar | tar xvf - 
+	cd  beta_RDBMS
+	mk_DBS.sh
