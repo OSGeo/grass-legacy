@@ -13,6 +13,7 @@
 #define SQLP_SELECT 4
 #define SQLP_UPDATE 5
 #define SQLP_DELETE 6
+#define SQLP_ADD_COLUMN 7
 
 /* SQL OPERATORS */
 #define SQLP_EQ 1    /* =  */

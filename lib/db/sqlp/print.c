@@ -30,6 +30,9 @@ int sqpPrintStmt(SQLPSTMT *st)
     fprintf( stderr, "COMMAND: ");
     switch ( sqlpStmt->command )
       {
+	case (SQLP_ADD_COLUMN):
+            fprintf( stderr, "ADD COLUMN\n");
+	    break;			
 	case (SQLP_CREATE):
             fprintf( stderr, "CREATE\n");
 	    break;			

@@ -44,6 +44,9 @@
   /* following case insensitives are ugly
      but I do not know better at this time */
 
+[Aa][Dd][Dd]			{ return ADD; }
+[Aa][Ll][Tt][Ee][Rr]		{ return ALTER; }
+[Cc][Oo][Ll][Uu][Mm][Nn]	{ return COLUMN; }
 [Dd][Ee][Ll][Ee][Tt][Ee]	{ return DELETE; }
 [Ff][Rr][Oo][Mm]		{ return FROM; }
 [Ii][Nn][Ss][Ee][Rr][Tt]	{ return INSERT; }

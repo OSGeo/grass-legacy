@@ -53,6 +53,8 @@
 %token <intval> INTNUM 
 %token <floatval> FLOATNUM
 
+%token ADD
+%token COLUMN
 %token EQUAL
 %token SELECT FROM WHERE
 /* %token SELECT DISTINCT FROM WHERE */
@@ -62,6 +64,7 @@
 %token AND
 %token OR
 %token NOT
+%token ALTER TABLE
 %token CREATE TABLE
 %token DROP TABLE
 %token VARCHAR
@@ -81,13 +84,18 @@ extern int yylex(void);
 %%
 
 y_sql:	
-		y_create
+		y_alter
+	|	y_create
 	|	y_drop
 	|	y_insert
 	|	y_select
 	|	y_update
 	|	y_delete
 	;
+	
+y_alter:
+		ALTER TABLE y_table ADD COLUMN y_columndef	{ sqpCommand(SQLP_ADD_COLUMN); }
+	|	ALTER TABLE y_table ADD y_columndef		{ sqpCommand(SQLP_ADD_COLUMN); }
 	
 y_create:
 		CREATE TABLE y_table '(' y_columndefs ')'	{ sqpCommand(SQLP_CREATE); }
