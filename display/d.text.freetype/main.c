@@ -68,7 +68,7 @@ static int	read_capfile(char *capfile, capinfo **fonts, char **font_names,
 static int	find_font(capinfo *fonts, int fonts_count, char *name);
 static char	*transform_string(char *str, int (*func)(int));
 static int	convert_text(char *charset, char *text, unsigned char **out);
-static int	get_coordinates(rectinfo win, char **ans, char p,
+static int	get_coordinates(rectinfo win, char **ans, char pixel, char percent,
 			double *east, double *north, int *x, int *y);
 static void	get_color(char *tcolor, int *color);
 
@@ -105,6 +105,7 @@ main(int argc, char **argv)
 	{
 		struct	Flag	*r;
 		struct	Flag	*p;
+		struct	Flag	*n;
 		struct	Flag	*s;
 		struct	Flag	*c;
 	} flag;
@@ -227,7 +228,11 @@ main(int argc, char **argv)
 
 	flag.p = G_define_flag();
 	flag.p->key         = 'p';
-	flag.p->description = "Use pixel coordinates ([0,0] is top left)";
+	flag.p->description = "Coordinates are in pixels ([0,0] is top left)";
+
+	flag.n = G_define_flag();
+	flag.n->key         = 'n';
+	flag.n->description = "Coordinates are percentage of frame ([0,0] is bottom left)";
 
 	flag.s = G_define_flag();
 	flag.s->key         = 's';
@@ -245,6 +250,9 @@ main(int argc, char **argv)
 		G_fatal_error("text or -c should be given");
 
 	text = param.text->answer;
+
+	if(flag.p->answer && flag.n->answer)
+		G_fatal_error("Choose only one coordinate system for placement");
 
 	if(!flag.c->answer &&
 	   ((param.font && !param.font->answer && !param.path->answer) ||
@@ -332,7 +340,8 @@ main(int argc, char **argv)
 	if(!flag.c->answer)
 	{
 		if(get_coordinates(win, param.east_north->answers,
-					flag.p->answer, &east, &north, &x, &y))
+					flag.p->answer, flag.n->answer,
+					&east, &north, &x, &y))
 		{
 			deinit();
 			exit(0);
@@ -371,7 +380,8 @@ main(int argc, char **argv)
 		if(param.east_north->answer)
 		{
 			if(get_coordinates(win, param.east_north->answers,
-					flag.p->answer, &east, &north, &x, &y))
+					flag.p->answer, flag.n->answer,
+					&east, &north, &x, &y))
 			{
 				deinit();
 				exit(0);
@@ -745,8 +755,8 @@ convert_text(char *charset, char *text, unsigned char **out)
 }
 
 static int
-get_coordinates(rectinfo win, char **ans, char p, double *east, double *north,
-		int *x, int *y)
+get_coordinates(rectinfo win, char **ans, char pixel, char percent, 
+		double *east, double *north, int *x, int *y)
 {
 	int	i;
 	double	e, n;
@@ -755,18 +765,26 @@ get_coordinates(rectinfo win, char **ans, char p, double *east, double *north,
 	{
 		e = atof(ans[0]);
 		n = atof(ans[1]);
-		if(!p)
-		{
-			*x = (int)D_u_to_d_col(e);
-			*y = (int)D_u_to_d_row(n);
-		}
-		else
+		if(pixel)
 		{
 			*x = e + win.l;
 			*y = n + win.t;
 			e = D_d_to_u_col((double)*x);
 			n = D_d_to_u_row((double)*y);
 		}
+		else if(percent)
+		{
+			*x = win.l+(int)((win.r-win.l)*e/100.);
+			*y = win.t+(int)((win.b-win.t)*(100.-n)/100.);
+			e = D_d_to_u_col((double)*x);
+			n = D_d_to_u_row((double)*y);
+		}
+		else
+		{
+			*x = (int)D_u_to_d_col(e);
+			*y = (int)D_u_to_d_row(n);
+		}
+		
 	}
 	else
 	{
