@@ -1,5 +1,6 @@
-/* ****************************************************************************
- *
+/*  $Id$
+ *  ****************************************************************************
+ *  
  *  MODULE: v.overlay 
  *
  *  AUTHOR(S): Radim Blazek
@@ -79,7 +80,7 @@ int area_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     }
 
     fprintf (stderr, SEP );
-    fprintf ( stderr, "Writing centroids ..." );
+    fprintf (stderr, "Writing centroids ...\n" );
     
     for ( area = 1; area <= nareas; area++ ) {
 	/* check the condition */
