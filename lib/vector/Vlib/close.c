@@ -33,9 +33,11 @@ static int (*Close_array[][3]) () =
 };
 
 
-/*  Close vector data file.
-**  returns 0 on success
-**          non-zero on error
+/*!
+ \fn int Vect_close (struct Map_info *Map)
+ \brief close vector data file
+ \return 0 on success, non-zero on error
+ \param Map_info structure
 */
 int 
 Vect_close (struct Map_info *Map)

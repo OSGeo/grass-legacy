@@ -22,11 +22,14 @@
 #include "Vect.h"
 #include "gis.h"
 
-/*
-   **  Get information about link to database  
- */
 int replace (char *, char *, char *, int);
 
+/*!
+ \fn struct field_info *Vect_get_field_info (    char *m,     char *ms,     int  field)
+ \brief get information about link to database
+ \return ADD
+ \param pointer to map name, pointer to mapset name, category field
+*/
 struct field_info
 *Vect_get_field_info (
     char *m,       /* pointer to map name */		

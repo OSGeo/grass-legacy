@@ -1,6 +1,4 @@
 /*
-* $Id$
-*
 ****************************************************************************
 *
 * MODULE:       Vector library 
@@ -20,14 +18,15 @@
 #include "gis.h"
 #include "Vect.h"
 
-/* Build topology 
-*  msgout - message output (stdout/stderr for example) or NULL
-*
-*  Returns: 1 - success
-*           0 - error
+/*!
+ \fn int Vect_build_post ( struct Map_info *Map, FILE *msgout )
+ \brief build topology PostGRASS
+ \return 1 on success, 0 on error
+ \param Map_info structure, msgout - message output (stdout/stderr for example) or NULL
 */
 int
-Vect_build_post ( struct Map_info *Map, FILE *msgout ) {
+Vect_build_post ( struct Map_info *Map, FILE *msgout )
+{
 
     G_debug (1, "Vect_build_post()"); 
 

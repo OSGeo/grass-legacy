@@ -2,18 +2,18 @@
 #include "gis.h"
 #include "Vect.h"
 
-
 #ifndef HUGE_VAL
 #define HUGE_VAL 9999999999999.0
 #endif
 
-/* Find nearest node.  
-* 
-* maxdist = max distance from the line
-* with_z  - use z coordinate (3D search) 
-*
-* returns : nearest node
-*           0 not found
+/*!
+ \fn int Vect_find_node ( struct Map_info *Map,
+		 double ux, double uy, double uz,
+		 double maxdist, int with_z )
+ \brief find nearest node
+ \return number of nearest node, 0 if not found
+ \param Map_info structure, ux, uy, uz, maxdist = max distance from the line,
+   with_z  - use z coordinate (3D search) 
 */
 int 
 Vect_find_node ( struct Map_info *Map,
@@ -67,17 +67,21 @@ Vect_find_node ( struct Map_info *Map,
 	return 0;
 }
 
-/* original dig_point_to_line() in grass50
-* 
-* 
-* type = GV_LINE, GV_POIN, GV_BOUNDARY or GV_CENTROID  if only want to search certain types of lines
-*         or -1 if search all lines
-* maxdist = max distance from the line
-* with_z  - use z coordinate (3D search) 
-*
-* returns : nearest line
-*           0 not found
+/*!
+ \fn int Vect_find_line ( struct Map_info *map,
+		 double ux, double uy, double uz,
+		 int type, double maxdist, int with_z, int exclude )
+ \brief find nearest line
+ \return number of nearest line, 0 if not found
+ \param Map_info structure, ux, uy, uz, 
+    type = GV_LINE, GV_POIN, GV_BOUNDARY or GV_CENTROID if only want to
+    search certain types of lines
+    or -1 if search all lines,
+   maxdist = max distance from the line,
+   with_z - use z coordinate (3D search)
 */
+
+/* original dig_point_to_line() in grass50 */
 int 
 Vect_find_line ( struct Map_info *map,
 		 double ux, double uy, double uz,
@@ -93,7 +97,6 @@ Vect_find_line ( struct Map_info *map,
   static struct line_pnts *Points;
   static int first_time = 1;
   struct Plus_head *Plus;
-  P_LINE *Line;
   struct ilist *List;
   BOUND_BOX box;
   
@@ -157,13 +160,16 @@ Vect_find_line ( struct Map_info *map,
   return (choice);
 }
 
-/* original dig_point_to_area() in grass50
-* 
-* maxdist = max distance from the line
-*
-* returns : area number
-*           0 not found
+/*!
+ \fn int Vect_find_area (
+		    struct Map_info *map,
+		    double x, double y)
+ \brief find nearest area
+ \return area number, 0 if not found
+ \param Map_info structure, ux, uy
 */
+
+/* original dig_point_to_area() in grass50 */
 int 
 Vect_find_area (
 		    struct Map_info *map,

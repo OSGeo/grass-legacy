@@ -21,11 +21,13 @@
 
 static int fatal_err = GV_FATAL_EXIT;
 
-/* Set behaviour if fatal error occurs in some functions. 
-*  Parameter: 
-*   GV_FATAL_EXIT(default): print error message and exit
-*   GV_FATAL_PRINT: print error message and return error 
-*   GV_FATAL_RETURN: return error
+/*!
+ \fn int Vect_set_fatal_error (int err)
+ \brief set behaviour if fatal error occurs in some functions
+ \return 0 on success
+ \param    GV_FATAL_EXIT(default): print error message and exit,
+   GV_FATAL_PRINT: print error message and return error,
+   GV_FATAL_RETURN: return error
 */
 int 
 Vect_set_fatal_error (int err)
@@ -33,6 +35,15 @@ Vect_set_fatal_error (int err)
     fatal_err = err;
     return 0;
 }
+
+/*!
+ \fn int Vect_get_fatal_error (void)
+ \brief get behaviour for fatal error
+ \return   GV_FATAL_EXIT(default): print error message and exit,
+   GV_FATAL_PRINT: print error message and return error,
+   GV_FATAL_RETURN: return error
+ \param void
+*/
 int 
 Vect_get_fatal_error ()
 {
