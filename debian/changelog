@@ -1,12 +1,16 @@
 grass (5.7.0-1) unstable; urgency=low
 
-  * fixes for Debian built (with Paolo Brunetti and Donato Minati).
+  * fixes for rules file by Giuseppe Dia <giusedia@libero.it>
 
- -- Markus Neteler (devel) <neteler@itc.it>  Thu, 13 Nov 2003 11:30:11 +0100 
+  * fixes for Debian built. Joint work with Paolo Brunetti <brunetti@itc.it> 
+    and Donato Minati <minati@itc.it>
+
+ -- Markus Neteler (devel) <neteler@itc.it>  Thu, 26 Nov 2003 11:30:11 +0100 
 
 grass (57-1) unstable; urgency=low
 
-  * Initial Release.
+  * Initial Release. Control file based on GRASS 5.0.2 deb from 
+    Giuseppe Dia <giusedia@libero.it>
 
  -- Markus Neteler <neteler@itc.it>  Mon, 10 Nov 2003 17:59:04 +0100
 
