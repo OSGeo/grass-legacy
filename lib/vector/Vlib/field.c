@@ -384,7 +384,34 @@ Vect_read_dblinks ( struct Map_info *Map )
     Vect_reset_dblinks ( dbl );
     
     if ( Map->format == GV_FORMAT_OGR ) {
+	dbDriver *driver;
+	dbCursor cursor;
+	dbString sql;
+
+	/* FID is not available for all OGR drivers */
+	db_init_string (&sql);
+
+	driver = db_start_driver_open_database ( "ogr", Map->fInfo.ogr.dsn );
+
+	if ( driver == NULL ) {
+	    G_warning ("Cannot open OGR DBMI driver.");
+	    return -1;
+	}
+
+	sprintf ( buf, "select FID from %s where FID = -1", Map->fInfo.ogr.layer_name );
+	db_set_string ( &sql, buf );
+
+	if (db_open_select_cursor(driver, &sql, &cursor, DB_SEQUENTIAL) != DB_OK) {
+	    /* FID not available */
+	    db_close_database_shutdown_driver ( driver );
+	    return 0;
+	}
+	
+	db_close_cursor(&cursor);
+	db_close_database_shutdown_driver ( driver );
+	
 	Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, "FID", Map->fInfo.ogr.dsn, "ogr" ) ; 
+	
 	return ( 1 );
     } else if ( Map->format != GV_FORMAT_NATIVE ) {
 	G_fatal_error ("Don't know how to read links for format %d", Map->format );
