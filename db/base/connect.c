@@ -16,17 +16,12 @@ main(int argc, char *argv[])
     dbConnection conn;
     struct Flag *print;
 /*    struct Option *driver, *database, *user, *password, *keycol;*/
-    struct Option *driver, *database;
+    struct Option *driver, *database, *schema;
     struct GModule *module;
-    char *drv, *db;
-    char *fakestart;
 
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
     
-    /* fake session for HTML generation with parser */
-    fakestart = getenv( "GRASS_FAKE_START" );
-
     print = G_define_flag();
     print->key               = 'p';
     print->description       = "print current connection parameters and exit";
@@ -38,8 +33,7 @@ main(int argc, char *argv[])
     driver->required   = NO  ;
     driver->multiple   = NO ;
     driver->description= "driver name:" ;
-    if ( fakestart == NULL && (drv=db_get_default_driver_name()) )
-        driver->answer = drv;
+    driver->answer = db_get_default_driver_name();
 
     database = G_define_option() ;
     database->key        = "database" ;
@@ -47,9 +41,17 @@ main(int argc, char *argv[])
     database->required   = NO  ;
     database->multiple   = NO ;
     database->description= "Database name:" ;
-    if ( fakestart == NULL && (db=db_get_default_database_name()) )
-        database->answer = db;
+    database->answer = db_get_default_database_name();
 
+    schema = G_define_option() ;
+    schema->key        = "schema" ;
+    schema->type       = TYPE_STRING ;
+    schema->required   = NO  ;
+    schema->multiple   = NO ;
+    schema->answer     = db_get_default_schema_name();
+    schema->description = "Database schema. Don't use this option if schemas are not supported "
+                          "by driver/database server.";
+    
 /* commented due to new mechanism:
     user = G_define_option() ;
     user->key        = "user" ;
@@ -86,6 +88,9 @@ main(int argc, char *argv[])
 	if ( database->answer )
 	    conn.databaseName = database->answer;
 
+	if ( schema->answer )
+	    conn.schemaName = schema->answer;
+
 /* commented due to new mechanism:
 	if ( user->answer )
 	    conn.user = user->answer;
@@ -106,6 +111,7 @@ main(int argc, char *argv[])
     
     fprintf(stdout, _("driver:%s\n"), conn.driverName);
     fprintf(stdout, _("database:%s\n"), conn.databaseName);    
+    fprintf(stdout, _("schema:%s\n"), conn.schemaName);    
 /* commented due to new mechanism:
     fprintf(stdout, "user:%s\n", conn.user);
     fprintf(stdout, "password:%s\n", conn.password);    
