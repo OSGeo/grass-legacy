@@ -221,7 +221,7 @@ real-install: FORCE
 
 uninstall: FORCE
 	@ # NOTE: if anything is changed for uninstall then the same change
-	@ # needs to be made in the file binarayInstall.src
+	@ # needs to be made in the file binaryInstall.src
 	@ # The following action MUST be a single action. That is, all lines
 	@ # except the last line must have a backslash (\) at the end to
 	@ # continue the statement. The reason for this is that Make does not
@@ -267,7 +267,7 @@ uninstall: FORCE
 	
 real-uninstall: FORCE
 	@ # NOTE: if anything is changed for real-uninstall then the same change
-	@ # needs to be made in the file binarayInstall.src
+	@ # needs to be made in the file binaryInstall.src
 	@ # Only recursively remove directories under INST_DIR any other
 	@ # directory needs to have the grass files removed individually
 	${SHELL} -c "rm -f ${BINDIR}/grass${NAME_VER} ; true"
