@@ -6,7 +6,10 @@
 # TODOs:
 #  - allow for .SHP extension (currently only .shp)
 #  - add stuff if _ID not found from ogrinfo (different name)
+#      ... probably, if not found, list the fields and ask user?
 #  - add stuff for multilayer SHAPE (ID field identification with ogrinfo)
+#
+#  - eventully add .prj/.PRJ support (not sure)
 
 
 if test "$GISBASE" = ""; then
