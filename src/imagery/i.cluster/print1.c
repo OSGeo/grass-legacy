@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 print_band_means(fd,C)
     FILE *fd;
