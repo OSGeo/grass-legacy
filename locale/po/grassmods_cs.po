@@ -1740,8 +1740,7 @@ msgid ""
 "the cells around it, and stores new cell values in an output raster map "
 "layer."
 msgstr ""
-"Ka¾dá hodnota buòky bude funkcí hodnot bunìk, které ji obklopují. Nová hodnota   (Hodnota buòky v novém rastru bude funkcí hodnot ze sousedních bunìk)
-bude ulo¾ena do nové rastrové mapy."
+"Hodnota buòky v novém rastru bude funkcí hodnot ze sousedních bunìk."
 
 #: ../raster/r.neighbors/main.c:66
 msgid "Name of existing raster file"
@@ -1994,8 +1993,7 @@ msgstr "Nejni¾¹í sklon svahu, do kterého je povrch pova¾ován za plochý "
 
 #: ../raster/r.param.scale/interface.c:81
 msgid "Curvature tolerance that defines 'planar' surface"
-msgstr "Limitní hodnota køivosti, pod kterou je povrch pova¾ován za
-plochý"
+msgstr "Limitní hodnota køivosti, pod kterou je povrch pova¾ován za plochý"
 
 #: ../raster/r.param.scale/interface.c:86
 #, c-format
@@ -2037,8 +2035,8 @@ msgstr "Pou¾ij nulu (0) jako transparentní hodnotu, namísto NULLy"
 
 #: ../raster/r.profile/main.c:56
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
-msgstr "Vytvoøí rastrovou mapu hodnot, le¾ících na u¾ivatelem definovaných
-liniích."
+msgstr "Vytvoøí rastrovou mapu hodnot, le¾ících na u¾ivatelem definovaných "
+"liniích."
 
 #: ../raster/r.profile/main.c:72
 msgid "Name of file for output (use output=- for stdout)"
@@ -3288,8 +3286,7 @@ msgstr "(i)   Soubor s parametry pro TOPMODEL"
 
 #: ../raster/r.topmodel/main.c:139
 msgid "(i)   Rainfall and potential evapotranspiration data file"
-msgstr "(i)   Soubor srá¾ek a potenciální evapotranspirací(i) ;  
-parametry pro TOPMODEL"
+msgstr "(i)   Soubor srá¾ek a potenciální evapotranspirací(i)"  
 
 #: ../raster/r.topmodel/main.c:146
 msgid "(o)   Output file"
