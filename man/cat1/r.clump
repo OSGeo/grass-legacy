@@ -1,7 +1,7 @@
 
 
 
-r.clump              GRASS Reference Manual               r.clump
+r.clump <main>       GRASS Reference Manual        <main> r.clump
 
 
 
@@ -60,14 +60,14 @@ ALGORITHM
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-r.clump              GRASS Reference Manual               r.clump
+r.clump <main>       GRASS Reference Manual        <main> r.clump
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
