@@ -1,0 +1,107 @@
+
+
+
+g.setproj               GRASS Reference Manual	           g.setproj
+
+
+
+NAME
+     g.setproj - allows the user to create the PROJECTION_INF and the
+                 PROJ_UNITS files to record the projection information
+                 associated with a specified mapset.
+           (SCS map Development Tool)
+
+SYNOPSIS
+     g.setproj set=mapset_name_for_projection file proj=map_projection
+
+DESCRIPTION
+     g.setproj:
+       - allows a user to create a new PROJECTION_INF file in the
+         specified mapset. The file is used to record the projection
+         information associated with the specified mapset.
+
+     g.setproj arguements are:
+
+       set=mapset                 mapset in which the files will be
+				  placed.
+      Note:
+       The "set" mapset must exist and must not contain a PROJECTIO_INF or
+       PROJ_UNITS file.
+
+
+       proj=projection of the specified mapset
+	    options are : utm, 
+			  stp (St.Plane),
+			  ll (Lat/Long),
+			  aea (Albers Equal Area),
+                          lcc (Lambert Conformal Conic),
+			  merc (Mercator),
+			  tmerc (Transverse Mercator), and
+			  xxx (capability to use mapgen "proj"
+			       parameters).
+
+     Note:
+       The specification of any projection other than ll and xxx will
+       generate a request to the user for a name of a standard ellipse.
+       
+       The projections of aea, lcc, merc, and tmerc  will 
+       generate a request to the user for the prime meridian 
+       and standard parallel for the output map. 
+
+       The projection of stp will generate a request to the
+       user for the state abbreviation and choice of zone
+       for the output map.
+       
+
+
+AUTHOR
+     M.L.Holko, USDA, SCS, Cart. / Geo. Information Systems Division
+
+GRASS 4.0		 U.S.D.A. SCS  				1
+
+
+
+
+
+g.setproj               GRASS Reference Manual	           g.setproj
+
+
+
+       The projection of xxx will request mapgen "proj" parameters,
+       see the mapgen "proj" documentation for the uses of this
+       software.
+
+
+EXAMPLE
+       To create a PROJECTION_INF file recording mapset SAMPLE as
+       being a UTM projection in zone 13.
+
+       g.setproj set=SAMPLE proj=utm
+
+       The user will be prompted for the spheroid and zone of the
+       UTM projection.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+AUTHOR
+     M.L.Holko, USDA, SCS, Cart. / Geo. Information Systems Division
+
+GRASS 4.0		 U.S.D.A. SCS  				2
+
+
