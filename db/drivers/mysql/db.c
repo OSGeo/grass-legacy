@@ -15,6 +15,7 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
+#include <glocale.h>
 #include <gis.h>
 #include <dbmi.h>
 #include "globals.h"
