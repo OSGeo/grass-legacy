@@ -63,7 +63,7 @@ echo "From Red ($R), Green ($G), and Blue ($B)"
 
 r.mapcalc << EOF
 $V  =  max ($R, $G, $B)                   
-$S  =  255.0 * ($V - min($R,$G,$B)) / V    
+$S  =  255.0 * ($V - min($R,$G,$B)) / $V    
 $H  =  if ($S, eval (                   \
          m = float(min ($R,$G,$B))  ,    \
          r = ($V - $R) / ($V - m)  ,     \
