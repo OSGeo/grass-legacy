@@ -6,23 +6,22 @@
 
 static int max (int a, int b) {return a>b?a:b;}
 
-int make_window_center (struct Cell_head *window, double mag)
+int make_window_center (struct Cell_head *window, double mag, double east, double north)
 {
     char buffer[64] ;
-    int screen_x, screen_y ;
-    double north,east;
     double east_west, north_south;
     int len_n, len_e;
     int t;
     int button ;
 
-    screen_y = (get_map_top() + get_map_bot()) / 2;
-    screen_x = (get_map_left() + get_map_rite()) / 2;
 
     len_n = len_e = 0;
 
-    east = (window->east + window->west)/2.;
-    north = (window->north + window->south)/2.;
+    if (east < 0.0 && north < 0.0)
+    {
+      east = (window->east + window->west)/2.;
+      north = (window->north + window->south)/2.;
+    }
 
     east_west = (window->east - window->west)/mag;
     window->east =  east + east_west/2;

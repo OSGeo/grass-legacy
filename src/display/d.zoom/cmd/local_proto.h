@@ -8,7 +8,7 @@ int ask_rotate(void);
 /* box.c */
 int make_window_box(struct Cell_head *, double);
 /* center.c */
-int make_window_center(struct Cell_head *, double);
+int make_window_center(struct Cell_head *, double, double, double);
 /* returns.c */
 int get_wind_bot(void);
 int get_wind_top(void);
