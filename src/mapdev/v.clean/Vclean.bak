@@ -1,0 +1,291 @@
+/* %W% %G% */
+/*
+**  Written by Dave Gerdes  11/90
+**  US Army Construction Engineering Research Lab
+**
+**  Last modified by Dave Gerdes  12/90 to add dig_plus support
+*/
+#include    <stdio.h>
+#include    "gis.h"
+#include    "digit.h"
+#include    "dig_head.h"
+
+
+#define MAIN
+#define  USAGE  "Vprune dig=input\n"
+
+long ftell ();
+double atof ();
+
+/*
+#define DEBUG
+*/
+/*  command line args */
+static	char  *dig_name = NULL ;
+
+static  int  load_args() ;
+
+struct Command_keys vars[] = {
+ { "dig", 1 },
+ { "vect", 1 },
+ { "input", 1 },
+ { NULL,     0 }
+};
+
+double dig_unit_conversion ();
+static	int   snapped = 0 ;
+
+main (argc, argv)
+    int argc;
+    char **argv;
+{
+    int   ret ;
+    char *mapset;
+
+
+/*  check args and set flags  */
+	
+    ret = G_parse_command (argc, argv, vars, load_args) ;
+    if (ret > 0)	/* Help was requested */
+         exit (1);
+
+    if (ret < 0  ||  dig_name == NULL)
+    {
+        fprintf (stderr, "%s: Command line error.\n\n Usage: %s\n",
+		argv[0], USAGE);
+        exit (-1);
+    }
+
+/* Show advertising */
+    G_gisinit(argv[0]);
+    printf("\n\n   Vclean:\n\n");
+
+    if ((mapset = G_find_file2 ("dig", dig_name, "")) == NULL)
+	G_fatal_error ("Could not find DIG file %s\n", dig_name);
+    
+    if (strcmp (mapset, G_mapset()))
+	G_fatal_error ("Can only clean files in your mapset");
+	
+
+    
+    export (dig_name, mapset); 
+    exit (0);
+}
+
+static
+load_args (position, str)
+    int position;
+    char *str;
+{
+    switch(position)
+    {
+	case 1:
+		dig_name = G_store(str) ;
+		break ;
+	default:
+		break;
+    }	/*  switch  */
+
+    return (0);
+}
+
+#ifdef DEBUG
+debugf (format, a, b, c, d, e, f, g, h, i, j, k, l)
+    char *format;
+    int a, b, c, d, e, f, g, h, i, j, k, l;
+{
+    fprintf (stderr, format, a, b, c, d, e, f, g, h, i, j, k, l);
+}
+#endif
+
+
+struct Map_info Map;
+struct dig_head Head;
+
+
+/*  Can't copy in place, cuz I'm not sure if I can depend on the
+**   ftruncate() call being available.  So will copy dig file
+**   to a temp file, then clean from it into original, truncating
+**   it as I do so.
+**`
+**  TODO:  this needs to be improved to support Plus files so do not
+**         have to re-run support.vect
+*/
+
+/* coming in, mapset is guaranteed to be the users own mapset */
+export(dig_name, mapset)
+    char *dig_name, *mapset;
+{
+	FILE *Out;
+	FILE *In;
+	char buf[1024];
+	char *tmpfile;
+	int Plus;		/* flag if have Plus file or not */
+	struct Map_info Map;
+	struct Plus_head Plus_head;
+	FILE *plus_fp;
+	char *err;
+
+	if ( ! mapset)
+	{
+	    G_fatal_error ("No mapset specified.");
+	}
+
+/***************************************************************************/
+	/* Temp use In/Out to Copy file to tempfile */
+	if (NULL == (In = G_fopen_old ("dig", dig_name, mapset)))
+	{
+	    fprintf (stderr, "Cannot open input file.\n");
+	    exit (-1);
+	}
+
+	tmpfile = G_tempfile ();
+	Out = fopen (tmpfile, "w");
+
+	if (0 > cp_filep (In, Out))
+	    G_fatal_error ("File copy failed");
+
+	fclose (In);
+	fclose (Out);
+
+/***************************************************************************/
+
+	dig__P_writeable (1);
+	if (NULL != (err = dig__P_init (dig_name, mapset, &Map)))
+	{
+	    fprintf (stderr, "Note: %s\n", err);
+	    Plus = 0;
+	}
+	else
+	{
+	    Plus = 1;
+
+	    /* close pointer to old digit file */
+	    fclose (Map.digit);
+	}
+
+
+
+	if (NULL == (In  = fopen (tmpfile, "r")))
+	{
+	    cleanup (tmpfile);
+	    G_fatal_error ("Failed openning temp file");
+	}
+	if (NULL == (Out = G_fopen_new ("dig", dig_name)))
+	{
+	    cleanup (tmpfile);
+	    G_fatal_error ("Failed openning dig file, may be corrupted.");
+	}
+
+	dig_read_head_binary (In, &Head);
+	dig_write_head_binary (Out, &Head);
+
+	doit (In, Out, Plus, &Map);
+
+	/**********************************/
+
+        if (NULL == (plus_fp = fopen (Map.plus_file, "w")))
+        {
+            fprintf (stderr, "Can't open Plus file for final write!\n");
+            exit (-1);
+        }
+        dig_map_to_head (&Map, &Plus_head);
+
+        if (0 > dig_write_plus_file (plus_fp, &Map, &Plus_head))
+        {
+            fprintf (stderr, "Error writing final plus file\n");
+            exit (-1);
+        }
+
+        /*fclose (Map.att);*/
+	/*  Dont bother calling dig_P_fini() cuz I dont have a digit
+	**  file open for it 
+	*/
+        /*dig_P_fini (&Map);*/
+
+	/**********************************/
+
+	fclose (Out);
+	fclose (In);
+
+	cleanup (tmpfile);
+
+	fprintf (stderr, "Done.\n");
+
+	return(0) ;
+}
+
+cleanup (file)
+    char *file;
+{
+    unlink (file);
+}
+
+doit (in, out, Plus, Map)
+    FILE *in;
+    FILE *out;
+    int Plus;
+    struct Map_info *Map;
+{
+    struct line_pnts Points;
+    register int line, type;
+    int binary;
+    long old_offset;
+    long new_offset;
+    int diff;
+    int left;
+    int old, new; 
+    int i;
+    
+    Points.alloc_points = 0;
+
+    left = diff = 0;
+    line = 0;
+    while (1)
+    {
+	line++;
+
+	old_offset = ftell (in);
+	if (0 > (type = dig__Read_line (&Points, in, old_offset)))
+	{
+	    if (type == -1)
+	    {
+		fprintf (stderr, "Out of memory on line %d\n", line);
+		return (-1);
+	    }
+	    else 	/* EOF */
+		return (0);
+	}
+	if (type < 16)	/* if line ALIVE */
+	{
+	    if (Plus)
+	    {
+		new_offset = ftell (out);
+		for (i = 1 ; i < Map->n_lines ; i++)
+		    if (Map->Line[i].offset == old_offset)
+		    {
+		        Map->Line[i].offset = new_offset;
+			break;
+		    }
+	    }
+	    dig__Write_line (out, type, &Points);
+	}
+    }
+}
+
+cp_filep  (in, out)
+    FILE *in, *out;
+{
+    char buf[BUFSIZ];
+    int red;
+    int no_file = 0;
+
+    {
+        while (red = fread (buf, 1, BUFSIZ, in))
+            fwrite (buf, 1, red, out);
+        fclose (in);
+    }
+    fclose (out);
+
+    return (0);
+}
