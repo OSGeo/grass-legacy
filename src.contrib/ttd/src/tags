@@ -1,0 +1,35 @@
+Mmake_digit	make_digit.c	/^main()$/
+Mread	read.c	/^main()$/
+Mread_dai	read_dai.c	/^main()$/
+change	change_to_blank.c	/^change(record, length, from, to)$/
+check_alloc	check_alloc.c	/^check_alloc(num_have, num_want, size, array)$/
+convert_EDGE	digit_edge.c	/^convert_EDGE()$/
+digit_EDGE	digit_edge.c	/^digit_EDGE()$/
+digit_header	dig_head.c	/^digit_header()$/
+getrecord	getrecord.c	/^getrecord(record)$/
+read_DSCG	r_head_rec.c	/^read_DSCG(record)$/
+read_DSIG	r_head_rec.c	/^read_DSIG(record)$/
+read_DSPG	r_head_rec.c	/^read_DSPG(record)$/
+read_DSSG	r_head_rec.c	/^read_DSSG(record)$/
+read_DSTG	r_head_rec.c	/^read_DSTG(record)$/
+read_EDGE	digit_edge.c	/^read_EDGE(record, length)$/
+read_FACI	read_face.c	/^read_FACI(record, length)$/
+read_FCIN	read_fcin.c	/^read_FCIN(record, length)$/
+read_NODI	read_node.c	/^read_NODI(record, length)$/
+read_area_record	r_area_rec.c	/^read_area_record()$/
+read_edge_record	r_edge_rec.c	/^read_edge_record()$/
+read_face_record	r_face_rec.c	/^read_face_record()$/
+read_feature_record	r_feat_rec.c	/^read_feature_record()$/
+read_header_record	r_head_rec.c	/^read_header_record(rec)$/
+read_line_record	r_line_rec.c	/^read_line_record()$/
+read_node_record	r_node_rec.c	/^read_node_record()$/
+read_point_record	r_point_rec.c	/^read_point_record()$/
+write_DSCG	r_head_rec.c	/^write_DSCG()$/
+write_DSIG	r_head_rec.c	/^write_DSIG()$/
+write_DSPG	r_head_rec.c	/^write_DSPG()$/
+write_DSSG	r_head_rec.c	/^write_DSSG(record)$/
+write_DSTG	r_head_rec.c	/^write_DSTG()$/
+write_EDGI	read_edge.c	/^write_EDGI()$/
+write_FACI	read_face.c	/^write_FACI()$/
+write_FCIN	read_fcin.c	/^write_FCIN()$/
+write_NODI	read_node.c	/^write_NODI()$/
