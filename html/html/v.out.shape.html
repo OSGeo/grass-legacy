@@ -1,6 +1,7 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
+   <TITLE>v.out.shape</TITLE>	
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
    <meta name="Content-Style" content="text/css">
    <meta name="GENERATOR" content="Mozilla/4.72 [en] (X11; U; Linux 2.2.16 i686) [Netscape]">
@@ -28,43 +29,38 @@ Shapefile format.</font>
 <h2>
 OPTIONS</h2>
 &nbsp;
-<table COLS=2 WIDTH="100%" NOSAVE rules="none" frame="none" >
-<tr ALIGN=LEFT VALIGN=TOP>
-<td ALIGN=LEFT VALIGN=TOP WIDTH="10%">
 <h3>
 Parameters:</h3>
-</td>
+<DL>
+<DT><b><font size=+0>map=</font></b><EM>name</EM>
+<DD>name of input vector map. Must be level 2.(Run v.support option=build)
+<BR>
 
-<td ALIGN=LEFT VALIGN=TOP WIDTH="88%"></td>
-</tr>
+<DT><b><font size=+0>type=</font></b><EM>option</EM>
+<DD>coverage type.
+<BR>
+<b>Options</b>: area, line, both(default)
 
-<tr ALIGN=LEFT VALIGN=TOP NOSAVE>
-<td ALIGN=LEFT VALIGN=TOP WIDTH="10%"><b><font size=+0>&nbsp;&nbsp;&nbsp;
-map&nbsp;</font></b>
-<p><b><font size=+0>&nbsp;&nbsp;&nbsp; type</font></b>
-<br>&nbsp;
-<p><b><font size=+0>&nbsp;&nbsp;&nbsp; mapset</font></b>
-<p><b><font size=+0>&nbsp;&nbsp;&nbsp; cats</font></b>
-<br>&nbsp;
-<br>&nbsp;
-<p><b><font size=+0>&nbsp;&nbsp;&nbsp; prefix</font></b>
-<p><b><font size=+0>&nbsp;&nbsp;&nbsp; log</font></b></td>
+<DT><b><font size=+0>mapset=</font></b><EM>name</EM>
+<DD>name of mapset containing vector file (default current).
+<BR>
 
-<td ALIGN=LEFT VALIGN=TOP WIDTH="88%" NOSAVE><font size=+0>name of input
-vector map. Must be level 2.(Run v.support option=build)</font>
-<p><font size=+0>coverage type.&nbsp;</font>
-<br><font size=+0><b>Options</b>: area, line, both(default)</font>
-<p><font size=+0>name of mapset containing vector file (default current).&nbsp;</font>
-<p><font size=+0>If category support is available, a third field is generated
+<DT><b><font size=+0>cats=</font></b><EM>option</EM>
+<DD>If category support is available, a third field is generated
 containing data of the selected type. Note `float' uses a double precision
-number. Otherwise ignored.&nbsp;</font>
-<br><font size=+0><b>Options</b>: none(default),string,integer,float.</font>
-<p><font size=+0>prefix for SHAPE output filenames. Default is name of
-vector map.</font>
-<p><font size=+0>choose a logfile. If the file cannot be opened, standard
-error stream is used.</font></td>
-</tr>
-</table>
+number. Otherwise ignored.
+<BR>
+<b>Options</b>: none(default),string,integer,float.
+
+<DT><b><font size=+0>prefix=</font></b><EM>name</EM>
+<DD>prefix for SHAPE output filenames. Default is name of vector map.
+<BR>
+
+<DT><b><font size=+0>log=</font></b><EM>filename</EM>
+<DD>choose a logfile. If the file cannot be opened, standard error stream is used.
+<BR>
+</DL>
+
 
 <br>&nbsp;
 <br>&nbsp;
