@@ -274,13 +274,17 @@ Vect__Read_line_shp (
       }
   }
  
+  /* Note: panPartStart and nParts is not filled by shapelib for MULTIPOINTs ! */
   if ( p != NULL ) {
       pShape = SHPReadObject( Map->fInfo.shp.hShp, shape ); 
       Vect_reset_line ( p ); 
      
       if (  Map->fInfo.shp.type == SHPT_POINT || Map->fInfo.shp.type == SHPT_POINTZ
-	    || Map->fInfo.shp.type == SHPT_MULTIPOINTM ) {
+	    || Map->fInfo.shp.type == SHPT_POINTM ) {
 	  first = 0; last = 0;
+      } else if (  Map->fInfo.shp.type == SHPT_MULTIPOINT || Map->fInfo.shp.type == SHPT_MULTIPOINTZ
+	    || Map->fInfo.shp.type == SHPT_MULTIPOINTM ) {
+	  first = part; last = part;
       } else {
 	  if ( pShape->nParts <= 1 ) {
 	      first = 0;
@@ -302,10 +306,18 @@ Vect__Read_line_shp (
       }
       
       if (  Map->fInfo.shp.type == SHPT_POINT || Map->fInfo.shp.type == SHPT_POINTZ
-	    || Map->fInfo.shp.type == SHPT_MULTIPOINTM ) {
+	    || Map->fInfo.shp.type == SHPT_POINTM ) {
 	  Map->fInfo.shp.shape = shape + 1 ;
 	  Map->fInfo.shp.part = 0;
-	  
+      } else if (  Map->fInfo.shp.type == SHPT_MULTIPOINT || Map->fInfo.shp.type == SHPT_MULTIPOINTZ
+	    || Map->fInfo.shp.type == SHPT_MULTIPOINTM ) {
+	  if ( part == pShape->nVertices - 1 ) {  
+	      Map->fInfo.shp.shape = shape + 1;
+	      Map->fInfo.shp.part = 0;
+	  } else {
+	      Map->fInfo.shp.shape = shape ;
+	      Map->fInfo.shp.part = part + 1;
+	  }
       } else {
 	  if ( part == pShape->nParts - 1 || pShape->nParts == 0 ) {  
 	      Map->fInfo.shp.shape = shape + 1 ;
