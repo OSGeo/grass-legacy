@@ -21,33 +21,34 @@ Institutions:
    Lubos Mitas (multivariate spline interpolation (RST) and erosion modeling)
 
 GRASS 5 Core Team (most have CVS access):
- Roger Bivand    <Roger.Bivand@nhh.no>        ("R" statistical language support)
- Radim Blazek    <Radim.Blazek@dhv.cz>        (DBMS support, ps.map, d.dm)
- Malcolm Blue    <mblue@nb.sympatico.ca>      (Windows NT/Cygnus port)
- Bill Brown      <brown@gomez.gis.uiuc.edu>   (NVIZ, SG3D, grid3D and related)
- Huidae Cho      <grass@water.knu.ac.kr>      (FreeBSD,r.topmodel,r.topidx,...)
- Bob Covill      <bcovill@tekmap.ns.ca>       (NVIZ export formats, r.in|out.bin)
- David D. Gray   <ddgray@armadce.demon.co.uk> (Vector, SQL support)
- Jaro Hofierka   <hofierka@geomodel.sk>       (NVIZ port, grid3D and related)
+ Roger Bivand    <Roger.Bivand@nhh.no>         ("R" statistical language support)
+ Radim Blazek    <Radim.Blazek@dhv.cz>         (DBMS support, ps.map, d.dm)
+ Malcolm Blue    <mblue@nb.sympatico.ca>       (Windows NT/Cygnus port)
+ Bill Brown      <brown@gomez.gis.uiuc.edu>    (NVIZ, SG3D, grid3D and related)
+ Huidae Cho      <grass@water.knu.ac.kr>       (FreeBSD,r.topmodel,r.topidx,...)
+ Bob Covill      <bcovill@tekmap.ns.ca>        (NVIZ export formats, r.in|out.bin)
+ David D. Gray   <ddgray@armadce.demon.co.uk>  (Vector, SQL support)
+ Jaro Hofierka   <hofierka@geomodel.sk>        (NVIZ port, grid3D and related)
  Justin Hickey   <jhickey@impact1.hpcc.nectec.or.th>   (GRASS initialization, 
 						new env var handling, SGI)
- John Huddleston <jhudd@lamar.colostate.edu>  (Windows NT/Cygnus port)
- Bill Hughes     <bhughes@grasshoppernet.com> (64bit compliance)
+ John Huddleston <jhudd@lamar.colostate.edu>   (Windows NT/Cygnus port)
+ Bill Hughes     <bhughes@grasshoppernet.com>  (64bit compliance)
  Andreas Lange   <Andreas.Lange@Rhein-Main.de> (SGI/Irix compliance, 
 						Proj/Datum support)
  Pierre de Mouveaux <pmx@audiovu.com><pmx@free.fr>  (NVIZ)
- Lubos Mitas     <lmitas@ncsa.uiuc.edu>       (multivariate spline
-                                               interpolation (RST) and erosion modeling)
- Helena Mitasova <helena@gomez.gis.uiuc.edu>  (interpolation modules, NVIZ,
-                                               G3D, erosion modelling)
- Eric G. Miller  <egm2@jps.net>               (sites format, new autoconf system, bugfixes etc.)
- Eric Mitchell   <emitchell@altaira.com>      (new Makefile system)
+ Lubos Mitas     <lmitas@ncsa.uiuc.edu>        (multivariate spline
+                                                interpolation (RST) and erosion modeling)
+ Helena Mitasova <helena@gomez.gis.uiuc.edu>   (interpolation modules, NVIZ,
+                                                G3D, erosion modelling)
+ Eric G. Miller  <egm2@jps.net>                (sites format, new autoconf system, bugfixes etc.)
+ Eric Mitchell   <emitchell@altaira.com>       (new Makefile system)
  Markus Neteler  <neteler@geog.uni-hannover.de> (GRASS 5 coordination, ...)
- Bernhard Reiter <bernhard@intevation.de>     (License, CVS, Bugfixes)
- Alexander Shevlakov <sixote@yahoo.com>       (PostgreSQL/GRASS interface)
- Frank Warmerdam <warmerda@home.com>          (GDAL, SHAPE implementation, 
-						new GRASS I/O library)
- Michel Wurtz    <mw@teledetection.fr>        (ESRI E00 support)
+ Bernhard Reiter <bernhard@intevation.de>      (License, CVS, Bugfixes)
+ Alexander Shevlakov <sixote@yahoo.com>        (PostgreSQL/GRASS interface)
+ Jan-Oliver Wagner <jan@intevation.de>         (Module descriptions)
+ Frank Warmerdam <warmerda@home.com>           (GDAL, SHAPE implementation, 
+                                                new GRASS I/O library)
+ Michel Wurtz    <mw@teledetection.fr>         (ESRI E00 support)
 
 
 Significant contributions (very incomplete, please add):
