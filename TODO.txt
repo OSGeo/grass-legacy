@@ -123,12 +123,12 @@ Libraries:
     grass/src/libes/gis/put_row.c:    
 	    FCB.compression_bits = G_lzw_max_used_bits ();
 
-   (Being worked on by Eric G. Miller)
+    -> Finished.
 
 ---------------------------------------------------------------------
 XDriver
-- replace fifos by IPC
-  (Being worked on by Malcolm Blue <mblue@nb.sympatico.ca>)
+- replace fifos by sockets
+  (Being worked on by Eric G. Miller)
   -> there is a new concept based on IPC available (see README.xdriver)
 
 - Auto-redraw after resizing the monitor:
@@ -164,7 +164,7 @@ So two ways from there to improve the situation:
       Localise all global lockable resources.
       (Unlikely to work.)
  Bernhard
-  (Being worked on by ?)
+  (Being worked on by Eric Miller, related to sockets)
 
  -> perhaps the lock files could go into
     /var/grass5/locks
@@ -190,7 +190,7 @@ Code merge:
 Monitor:
  - Display current map scale in monitor window top line (set by 
    xwindows name?)
- - allow to close by click
+ - allow to close by click: done for sockets
  - auto-redraw when resizing
 
 ---------------------------------------------------------------------
@@ -251,11 +251,15 @@ Modules:
   
 - g.list, g.remove should accept wildcards (*, ?) for convenience
   (Being worked on by ?)
+  -> g.mremove is there
 
 - g.manual: change list of manual pages in g.manual
   organized according to objects (vector files, raster files, ...)
   not to "status" of module (which is even confused at time)
   (Being worked on by ?)
+
+- i.points3:
+   update to FP
 
 - i.rectify/2
    - option 1 to transform the data should be extended: GRASS should
@@ -294,6 +298,7 @@ Modules:
   - update to HDF 5
   (Being worked on by ?)
 
+
 - r.info 
   should also report statistics (min, max, mean, stddev, 1st            
   quartile, median, 3rd quartile and sum)
@@ -321,16 +326,6 @@ Modules:
   different usages here mean that we would need different 'Methods' as      
   options for data extraction I think.
 
-- r.profile
-   r.profile only give the values of the cell between the two 
-   coordinates, but does not give any information of the distance between
-   those cell values. 
-   An (optional) table would be fine:
-     1 Km        200m                                                                
-     2 Km        210m                                                                
-     3 Km        150m  
-  (Being worked on by Bob Covill) 
-
 - r.proj
  Idea: r.proj could be used for easy map copying between locations:
    Morten Hulden <morten@ngb.se> wrote:
@@ -353,8 +348,8 @@ Modules:
  spheroid and datum are the same on the input and output side should a
  straight copy be done, I think.
 
-r.proj/v.proj/s.proj:
- - add -l flag to list relevant files in source location (source of
+- r.proj/v.proj/s.proj:
+   add -l flag to list relevant files in source location (source of
    projection)
 
 - r.reclass.pg
@@ -410,13 +405,13 @@ r.proj/v.proj/s.proj:
    module from the menu (edit gui.tcl)
    (Being worked on by ?)
  - added nice icons for mostly used commands
- - generate module windows by parser.c
+ - generate module windows by parser.c/XML
  - integrate src/tcltkgrass/todo/r_mapcalc.tcl (map calculator)
 
 ---------------------------------------------------------------------
 PostgreSQL/ODBC support:
 
- - store host/database not in .grassrc5, but in location itself
+ - don't store host/database in .grassrc5, but in location itself
    Then you can keep the settings along with your database for
    convenience
  - store a username/password pair in a "secured" file (that is, a file
