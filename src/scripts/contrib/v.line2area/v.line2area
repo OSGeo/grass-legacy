@@ -10,6 +10,12 @@
 #
 ################################################################################
 
+if [ "$1" = "-help" -o "$1" = "help" ]
+then
+ echo v.line2area vectormap
+ exit
+fi
+
 if [ `uname -m` = mips ] ; then
   ECHON="/usr/bsd43/bin/echo -n"
 elif [ `uname -s` = SunOS -a `uname -r | sed 's/\...*$//'` = 5 ] ; then
@@ -18,10 +24,6 @@ else
   ECHON="echo -n"
 fi
 
-if [ "$1" = "-help" -o "$1" = "help" ]
-then
- v.line2area vectormap
-fi
 
 clear
 echo ''
