@@ -41,6 +41,7 @@ int main (int argc, char **argv)
     struct field_info *fi;
     int field, ret, num_dblinks, i, ncols, col;
     struct Map_info Map;
+    char *drv, *db;
 
     /* set up the options and flags for the command line parser */
 
@@ -57,6 +58,8 @@ int main (int argc, char **argv)
     dbdriver->required   = NO  ;
     dbdriver->multiple   = NO ;
     dbdriver->description= "driver name:" ;
+    if ( (drv=G__getenv2("GV_DRIVER",G_VAR_MAPSET)) )
+	dbdriver->answer = G_store ( drv );
 
     dbdatabase = G_define_option() ;
     dbdatabase->key        = "database" ;
@@ -64,6 +67,8 @@ int main (int argc, char **argv)
     dbdatabase->required   = NO  ;
     dbdatabase->multiple   = NO ;
     dbdatabase->description= "database name:" ;
+    if ( (db=G__getenv2("GV_DATABASE",G_VAR_MAPSET)) )
+	dbdatabase->answer = G_store ( db );
 
     dbtable = G_define_option();
     dbtable->key         = "table";
