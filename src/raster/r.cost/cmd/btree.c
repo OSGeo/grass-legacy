@@ -13,10 +13,10 @@
  *   retrieves the entry with the smallest distance value
  */
 
-#include "gis.h"
-#include "cost.h"
-#include "local_proto.h"
 
+#include "gis.h"
+#include "local_proto.h"
+#include "memory.h"
 
 static struct cost *start_cell = NULL ;
 /*  static int show(struct cost *); */
@@ -26,8 +26,11 @@ struct cost *insert(double min_cost,int row,int col)
 {
 	struct cost *new_cell, *next_cell ;
 
-	new_cell = (struct cost *)(G_malloc(sizeof(struct cost)));
-
+/*  	new_cell = (struct cost *)(G_malloc(sizeof(struct cost))); */
+	new_cell = get();
+	if (new_cell == NULL) {
+			fprintf(stderr,"new_cell is NULL\n");
+}
 	new_cell->min_cost = min_cost;
 	new_cell->row = row;
 	new_cell->col = col;

@@ -16,13 +16,15 @@
  *********************************************************************/
 
 /* 08 april 2000 - Pierre de Mouveaux. pmx@audiovu.com
-   Updated to use the Grass 5.0 floatbing point raster cell format.
+   Updated to use the Grass 5.0 floating point raster cell format.
    TODO: convert floats to double. Done ;)
 */
 
 #define MAIN
 
 #define _GNU_SOURCE
+#define SEGCOLSIZE 	256
+
 
 #include <unistd.h>
 #include <string.h>
@@ -35,6 +37,7 @@
 #include "cost.h"
 #include "stash.h"
 #include "local_proto.h"
+
 
 struct Cell_head window;
 
@@ -68,11 +71,12 @@ int main (int argc, char *argv[])
 	int srows, scols ;
 	int total_reviewed ;
 	int verbose = 1 ;
+	int keep_nulls = 1 ;
 	int neighbor ;
 	int segments_in_memory ;
 	long n_processed = 0;
 	long total_cells ;
-	struct Flag *flag1, *flag2;
+	struct Flag *flag1, *flag2, *flag3;
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6 ;
 	struct cost *pres_cell, *new_cell;
 	struct start_pt *pres_start_pt ;
@@ -128,24 +132,6 @@ int main (int argc, char *argv[])
 /*  	opt6->answer     = ""; */
 	opt6->description= "Cost assigned to null cells. By defaults, null cells are excluded";
 
-	opt6 = G_define_option() ;
-	opt6->key        = "null_cost" ;
-	opt6->type       = TYPE_DOUBLE;
-	opt6->key_desc   = "null cost" ;
-	opt6->required   = NO;
-	opt6->multiple   = NO;
-/*  	opt6->answer     = ""; */
-	opt6->description= "Cost assigned to null cells. By defaults, null cells are excluded";
-
-	opt6 = G_define_option() ;
-	opt6->key        = "null_cost" ;
-	opt6->type       = TYPE_DOUBLE;
-	opt6->key_desc   = "null cost" ;
-	opt6->required   = NO;
-	opt6->multiple   = NO;
-/*  	opt6->answer     = ""; */
-	opt6->description= "Cost assigned to null cells. By defaults, null cells are excluded";
-
 	flag1 = G_define_flag();
 	flag1->key = 'v';
 	flag1->description = "Run verbosly";
@@ -153,10 +139,6 @@ int main (int argc, char *argv[])
 	flag2 = G_define_flag();
 	flag2->key = 'k';
 	flag2->description = "Use the 'Knight's move'; slower, but more accurate";
-
-	flag3 = G_define_flag();
-	flag3->key = 'n';
-	flag3->description = "Keep null values in output map";
 
 	flag3 = G_define_flag();
 	flag3->key = 'n';
@@ -205,9 +187,6 @@ int main (int argc, char *argv[])
 	keep_nulls = flag3->answer;
 
 
-	keep_nulls = flag3->answer;
-
-
 	have_start_points = process_answers(opt3->answers, &head_start_pt) ;
 
 	have_stop_points  = process_answers(opt4->answers, &head_end_pt) ;
@@ -223,14 +202,6 @@ int main (int argc, char *argv[])
 	if ((opt6->answer == NULL) ||(sscanf(opt6->answer, "%lf", &null_cost) != 1))
 	{
 		if (verbose)
-			fprintf(stderr,"Null cells excluded.\n");
-		null_cost = INFINITY;
-	}
-	
- 
-	if ((opt6->answer == NULL) ||(sscanf(opt6->answer, "%lf", &null_cost) != 1))
-	{
-		if (verbose)
 			fprintf(stderr,"Null cells excluded from cost evaluation.\n");
 		null_cost = INFINITY;
 	} 
@@ -246,32 +217,6 @@ int main (int argc, char *argv[])
 	} else {
 		keep_nulls = 0; /* handled automagically... */
 	}
-	
- 
-	if ((opt6->answer == NULL) ||(sscanf(opt6->answer, "%lf", &null_cost) != 1))
-	{
-		if (verbose)
-			fprintf(stderr,"Null cells excluded from cost evaluation.\n");
-		null_cost = INFINITY;
-	} 
-	else if (verbose && keep_nulls)
-			fprintf(stderr,"Input null cell will be retained into output map\n");
-
-
-	if(isfinite(null_cost)) {
-		if (null_cost <0.0) {
-			printf("Warning: assigning negative cost to null cell. Null cells excluded.\n"); 
-			null_cost = INFINITY;
-		}
-	} else {
-		keep_nulls = 0; /* handled automagically... */
-	}
-
-	if(isfinite(null_cost))
-		if (null_cost <0.0) {
-			printf("Warning: null cell costs not supported. Reseted to 0.0\n"); 
-			null_cost = 0.0;
-		}
 
 	strcpy (cum_cost_layer, opt1->answer);
 	current_mapset = G_mapset();
@@ -308,7 +253,6 @@ int main (int argc, char *argv[])
 	nrows = G_window_rows();
 	ncols = G_window_cols();
 
-	printf("Source, rows: %d; cols: %d\n", nrows, ncols);
 
 	/*  Open cost cell layer for reading  */
 
@@ -322,17 +266,32 @@ int main (int argc, char *argv[])
 	}
 
 	data_type = G_raster_map_type(cost_layer,cost_mapset);
-	printf("Map type: %d\n",data_type);
+/*  	printf("Map type: %d\n",data_type); */
 /*    	cell = G_malloc(ncols* G_raster_size(data_type));  */
 	cell = G_allocate_raster_buf(data_type); 
 	/*   Parameters for map submatrices   */
+
+	if (verbose) {
+		switch (data_type) {
+			case (CELL_TYPE):
+				fprintf(stderr,"Source map is: Integer cell type,");
+			break;
+			case (FCELL_TYPE):
+				fprintf(stderr,"Source map is: Floating point (float) cell type,");
+			break;
+			case (DCELL_TYPE):
+				fprintf(stderr,"Source map is: Floating point (double) cell type,");
+			break;
+		}
+			fprintf(stderr," %d rows, %d cols.\n", nrows, ncols);
+	}
 
 /*
   srows =  nrows/12 + 1;
   scols =  ncols/12 + 1;
 */
-	srows = scols = 10 ;
-	segments_in_memory = 4 * (nrows/10 + ncols/10 + 2) ;
+	srows = scols = SEGCOLSIZE ;
+	segments_in_memory = 4 * (nrows/SEGCOLSIZE + ncols/SEGCOLSIZE + 2) ;
 
 	/*   Create segmented format files for cost layer and output layer  */
 
@@ -486,16 +445,16 @@ int main (int argc, char *argv[])
 		}
 
 		data_type2 = G_raster_map_type(cum_cost_layer,cum_cost_mapset);
-		printf("Existing output map type: %d\n",data_type2);
 
 		dsize2 = G_raster_size(data_type2);
 
 		cell2 = G_allocate_raster_buf(data_type2);
 /*  		cell2 = G_malloc(ncols*dsize); */
 
-		if (cell2 == NULL)
-			printf("cell2 == NULL\n");
-		
+		if (cell2 == NULL) {
+			fprintf(stderr,"Memory error\n");
+			exit(1);
+		} 
 		if (verbose)
 			fprintf (stderr, "Reading %s ... ", cum_cost_layer);
 		for ( row=0 ; row<nrows ; row++ )
@@ -507,6 +466,7 @@ int main (int argc, char *argv[])
 			ptr2 = cell2;
 			for ( col=0 ; col<ncols ; col++ )
 			{
+/* Did I understand that concept of cummulative cost map? - (pmx) 12 april 2000 */
 				if (!G_is_null_value(ptr2,data_type2))
 				{
 					value= &zero;
@@ -518,6 +478,7 @@ int main (int argc, char *argv[])
 		}
 		if (verbose)
 			G_percent (row, nrows, 2);
+
 		G_close_cell(cum_fd);
 		G_free(cell2);
 	}
@@ -571,8 +532,8 @@ int main (int argc, char *argv[])
 		double NNE, ENE, ESE, SSE, SSW, WSW, WNW, NNW ;
 
 /* If we have surpassed the user specified maximum cost, then quit */
-/*  		if(maxcost && ((double)maxcost < pres_cell->min_cost)) */
-/*  			break ; */
+		if(maxcost && ((double)maxcost < pres_cell->min_cost))
+			break ;
 
 /*  fprintf(stderr,"P: %d,%d:%f\n",pres_cell->row,pres_cell->col,pres_cell->min_cost) ; */
 
@@ -752,8 +713,6 @@ int main (int argc, char *argv[])
 					min_cost = pres_cell->min_cost+fcost*H_DIAG_fac ;
 					break ;
 			}
-/*  			if (fcost < 0.0)  */
-/*  				printf("Neg val %.3lf\n",fcost); */
 
 			if (!isfinite(min_cost))
 				continue;
@@ -811,11 +770,12 @@ int main (int argc, char *argv[])
 
 		pres_cell = get_lowest() ;
 		if (pres_cell == NULL) {
-			printf("Whole map reviewed (or error...).\n");
+			if (verbose)
+					fprintf(stderr,"End of map!\n");
 			goto OUT;
 		}
 		if (ct == pres_cell)
-			printf("//////////////////////////////////////\n");
+			printf("Error, ct == pres_cell\n");
 	}
 OUT:
 	/*  Open cumulative cost layer for writing   */
@@ -827,19 +787,45 @@ OUT:
 	segment_flush(&out_seg);
 
 	/*  Copy segmented map to output map  */
-	if (verbose)
+	if (verbose) {
+		system("date");
 		fprintf (stderr, "Writing %s ... ", cum_cost_layer);
+	}
+
+	if (keep_nulls) {
+		if(verbose)
+				fprintf(stderr,"Will copy input map null values into output map\n");
+		cell2 =  G_allocate_raster_buf(data_type); 
+	}
 
 	if (data_type == CELL_TYPE) {
 		int* p;
-		printf("Integer cell type.\n");
+		int* p2;
+		if(verbose) {
+				fprintf(stderr,"Integer cell type.\n");
+				fprintf(stderr,"Writing...");
+		}
 		for ( row=0 ; row<nrows; row++ )
 		{
 			if (verbose)
 				G_percent (row, nrows, 2);
+
+			if (keep_nulls) {
+				if(G_get_raster_row(cost_fd, cell2, row, data_type)<0) {
+					fprintf(stderr,"Error getting input null cells\n");
+					exit(1);
+				}
+			}
 			p = cell;
+			p2 = cell2;
 			for ( col=0 ; col<ncols; col++ )
 			{
+				if (keep_nulls) {
+					if (G_is_null_value(p2++, data_type)) {
+						G_set_null_value((p+col),1,data_type);
+						continue;
+					}
+				}
 				segment_get(&out_seg, &min_cost ,row,col);
 				if (G_is_d_null_value(&min_cost)) {
 					G_set_null_value((p+col),1,data_type);
@@ -852,16 +838,32 @@ OUT:
 		}
 	} else if (data_type == FCELL_TYPE) {
 		float* p;
-		printf("Float cell type.\n");
+		float* p2;
+		if(verbose) {
+				fprintf(stderr,"Float cell type.\n");
+				fprintf(stderr,"Writing...");
+		}
 		for ( row=0 ; row<nrows; row++ )
 		{
 			if (verbose)
 				G_percent (row, nrows, 2);
+			if (keep_nulls) {
+				if(G_get_raster_row(cost_fd, cell2, row, data_type)<0) {
+					fprintf(stderr,"Error getting input null cells\n");
+					exit(1);
+				}
+			}
 			p = cell;
+			p2 = cell2;
 			for ( col=0 ; col<ncols; col++ )
 			{
-				value = &min_cost;
-				segment_get(&out_seg,value ,row,col);
+				if (keep_nulls) {
+					if (G_is_null_value(p2++, data_type)) {
+						G_set_null_value((p+col),1,data_type);
+						continue;
+					}
+				}
+				segment_get(&out_seg,&min_cost ,row,col);
 				if (G_is_d_null_value(&min_cost) || !isfinite(min_cost)) {
 					G_set_null_value((p+col),1,data_type);
 				} else {
@@ -872,22 +874,38 @@ OUT:
 			G_put_raster_row(cum_fd,cell, data_type);
 		}
 	} else if (data_type == DCELL_TYPE) {
-		double* p;
-		printf("Double cell type.\n");
+		double* p;	
+		double* p2;	
+		if(verbose) {
+				fprintf(stderr,"Double cell type.\n");
+				fprintf(stderr,"Writing...");
+		}
 		for ( row=0 ; row<nrows; row++ )
 		{
 			if (verbose)
 				G_percent (row, nrows, 2);
+			if (keep_nulls) {
+				if(G_get_raster_row(cost_fd, cell2, row, data_type)<0) {
+					fprintf(stderr,"Error getting input null cells\n");
+					exit(1);
+				}
+			}
 			p = cell;
+			p2 = cell2;
 			for ( col=0 ; col<ncols; col++ )
 			{
-				value = &min_cost;
-				segment_get(&out_seg,value ,row,col);
+				if (keep_nulls) {
+					if (G_is_null_value(p2++, data_type)) {
+						G_set_null_value((p+col),1,data_type);
+						continue;
+					}
+				}
+				segment_get(&out_seg,&min_cost ,row,col);
 				if (G_is_d_null_value(&min_cost)) {
 					G_set_null_value((p+col),1,data_type);
 				} else {
 					if (min_cost > peak) peak = min_cost;
-					*(p+col) =min_cost;
+					*(p+col) = min_cost;
 				}
 			}
 			G_put_raster_row(cum_fd,cell,data_type);
@@ -897,7 +915,8 @@ OUT:
 	if (verbose)
 		G_percent (row, nrows, 2);
 
-	printf("PEAK: %lf\n",peak);
+	printf("Peak cost value: %lf\n",peak);
+
 	segment_release(&in_seg);   /* release memory  */
 	segment_release(&out_seg);
 	G_close_cell(cost_fd);
