@@ -130,7 +130,7 @@ if [ "$GIS_OPT_map" = "$GIS_OPT_shadedmap" ]; then
 	exit 1
 fi
 
-if [ "$GIS_OPT_shadedmap" = "(null)" ]; then
+if [ -z "$GIS_OPT_shadedmap" ]; then
     ELEVSHADE=$elev"_shade"
 else
 	ELEVSHADE=$GIS_OPT_shadedmap

@@ -95,7 +95,7 @@ fi
 #### trap ctrl-c so that we can clean up tmp
 trap 'rm -f ${TMP}*' 2 3 15
 
-if [ "$GIS_OPT_file" != "(null)" ] ; then
+if [ -n "$GIS_OPT_file" ] ; then
     E00NAME=`basename $GIS_OPT_file .e00`
     # to avoid CAPs problem:
     E00NAME=`basename $E00NAME .E00`
@@ -115,12 +115,12 @@ if test -f $E00NAME.E01 ; then
 fi
 
 
-if [ "$GIS_OPT_type" == "(null)" ] ; then
+if [ -z "$GIS_OPT_type" ] ; then
     echo "Input type is missing - choose point, line or area"
     exit 1
 fi
 
-if [ "$GIS_OPT_vect" != "(null)" ] ; then
+if [ -n "$GIS_OPT_vect" ] ; then
     NAME="$GIS_OPT_vect"
 else
     NAME=$E00NAME
