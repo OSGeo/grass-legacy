@@ -1,0 +1,11 @@
+all:
+	$(GMAKE) agnps-source
+	$(GMAKE) agview
+	$(GMAKE) hydro_tools
+	$(GMAKE) src_agnps_input_1
+	$(GMAKE) src_agnps_input_2a
+	for i in scripts/*;\
+	do \
+		rm -f $(GISBASE)/$$i;\
+		cp $$i $(GISBASE)/$$i;\
+	done
