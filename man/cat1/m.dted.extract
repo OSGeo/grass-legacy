@@ -1,7 +1,7 @@
 
 
 
-m.dted.extract       GRASS Reference Manual        m.dted.extract
+m.dted.extract <main> GRASS Reference Manual<main> m.dted.extract
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-m.dted.extract       GRASS Reference Manual        m.dted.extract
+m.dted.extract <main> GRASS Reference Manual<main> m.dted.extract
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
