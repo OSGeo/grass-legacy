@@ -17,14 +17,13 @@
  * 5 - each cell (raster) or point (vector) 
 */
 
-#define BUFFER_SIZE 2000
-
-static grass_debug_level = -1;
+static int grass_debug_level = -1;
 
 int G_debug (int level, char *msg,...)
 {
 #ifdef GDEBUG
-    char    buffer[BUFFER_SIZE + 1], *lstr, *filen;
+    int     n, size = 100;
+    char    *buffer, *lstr, *filen;
     va_list ap;
     FILE    *fd;
    
@@ -38,9 +37,21 @@ int G_debug (int level, char *msg,...)
     }
 	
     if ( grass_debug_level >= level ) {
-        va_start(ap,msg);
-        vsnprintf(buffer, BUFFER_SIZE, msg,ap);
-        va_end(ap);
+	buffer = (char *) G_malloc (size);
+
+	while (1) {
+	    /* Try to print in the allocated space. */
+	    va_start(ap, msg);
+	    n = vsnprintf (buffer, size, msg, ap);
+	    va_end(ap);
+
+	    /* If that worked, continue. */
+            if (n > -1 && n < size) break;
+
+	    /* Else try again with more space. */
+	    size *= 2;  /* twice the old size */
+	    buffer = (char *) G_realloc (buffer, size);
+	}
 
 	filen =  getenv("GRASS_DEBUG_FILE"); 
         if ( filen != NULL ) {
