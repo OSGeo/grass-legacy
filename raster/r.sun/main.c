@@ -43,7 +43,6 @@ email: hofierka@geomodel.sk,marcel.suri@jrc.it,suri@geomodel.sk
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <malloc.h>
 #include "gis.h"
 #include "Vect.h"
 #include "projects.h"
@@ -73,7 +72,7 @@ char mapname[1024];
 struct Cell_head cellhd;
 struct Map_info Map;
 struct dig_head Head;
-struct Key_value *in_proj_info, *in_unit_info;
+struct Key_Value *in_proj_info, *in_unit_info;
 struct pj_info iproj;
 struct pj_info oproj;
 
