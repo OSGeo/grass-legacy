@@ -11,6 +11,7 @@ SUBDIRS = \
 	v.digit \
 	v.extract \
 	v.info \
+	v.patch \
 	v.surf.rst
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
