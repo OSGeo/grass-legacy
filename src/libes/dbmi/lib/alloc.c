@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdlib.h>
+#include "dbmi.h"
 
 char *
 db_store(s)

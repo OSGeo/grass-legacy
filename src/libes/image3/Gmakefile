@@ -1,7 +1,7 @@
 ###   libimage_sup.a
 ###   Supplemental imagery library for i.points and i.rectify programs.
 ###
-
+SLIBDEPS = $(GISLIB) $(VASKLIB) $(GPROJLIB)
 
 ###   extra program required compile flags
 #EXTRA_CFLAGS = -D_NO_PROTO
@@ -50,7 +50,7 @@ OBJ =\
 all: $(DEPIMAGESUPLIB) 
 
 $(DEPIMAGESUPLIB): $(OBJ)
-	$(SLIBRULE)
+	$(LIBRULE)
 
 $(OBJ): ortho_image.h matrix_ops.h
 
