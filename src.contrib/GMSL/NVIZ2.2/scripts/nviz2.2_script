@@ -182,7 +182,7 @@ puts "panel area made"
     pack [Nv_mkMenu $Nv_(AREA).menu.file File \
 	      {"Load State..." "Save State..." "Load 3d Settings..." \
 		  "Save 3d Settings..." "Image Dump..." "Reset" "Quit" } \
-	      {0 0 1 1 0 0 0} \
+	      {0 0 0 0 0 0 0} \
 	      { "load_state" "save_state" "load_3dview" "save_3dview" \
 		  "Cascade img menu2" "reset_Nviz" "Nv_close_scripting ; exit ; puts"}]\
 	-side left
@@ -191,17 +191,17 @@ puts "panel area made"
 puts "file menu made"
 
 pack [Nv_mkMenu $Nv_(AREA).menu.help Help \
-	{"NVIZ Help" "About NVIZ" } \
+	{"NVIZ Help" "About NVIZ" "NVIZ - Bugs / ToDo"} \
 	{0 0 0} \
-	{"nviz_browse nviz_toc.html" "nviz_browse nviz_desc.html"} ] \
+	{"nviz_browse nviz_toc.html" "nviz_browse nviz_desc.html" "nviz_browse bugs_todo.html"} ] \
 	-side right
 
 # DEBUG
 puts "Help menu made"
 
     # Take these out later when these features are more reliable
-    $Nv_(AREA).menu.file.m entryconfigure 3 -state disabled
-    $Nv_(AREA).menu.file.m entryconfigure 4 -state disabled
+#    $Nv_(AREA).menu.file.m entryconfigure 3 -state disabled
+#    $Nv_(AREA).menu.file.m entryconfigure 4 -state disabled
 
 # DEBUG
 puts "disabled made"
@@ -454,6 +454,7 @@ proc Nv_expose { W } {
 	    init_graphics
 	    set Nv_(First) 0
 	} else {
+            Nbackground #FFFFFF
 	    Nquick_draw
 	}
 #    }
@@ -473,6 +474,9 @@ proc load_3dview { dummy } {
     set file_name [create_map_browser .browse_3dview_file "3d.view" 1]
     
     if {$file_name == -1} then return
+
+    #do a quick draw to make sure display initialized
+    Nquick_draw
 
     Nload_3dview $file_name
 

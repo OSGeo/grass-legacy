@@ -12,8 +12,7 @@
 
 global BGColor
 
-set BGColor #000000
-
+set BGColor #FFFFFF
 proc mkcolorPanel { BASE } {
     global Nv_
 
@@ -29,7 +28,7 @@ proc mkcolorPanel { BASE } {
     frame $BASE  -relief groove -borderwidth 2
     Nv_mkPanelname $BASE "Color Panel"
     
-    button $BASE.background -text Background -bg black -fg white\
+    button $BASE.background -text Background -bg white -fg grey \
 	-activebackground gray20 -activebackground white\
 	-command "set_background_color $BASE.background"\
 	-height 3 -width 12
@@ -56,7 +55,7 @@ proc set_background_color {W} {
 
 # Reset procedure for color panel
 proc Nviz_color_reset {} {
-    Nbackground "#000000"
+    Nbackground "#FFFFFF"
     Nquick_draw
 }
 

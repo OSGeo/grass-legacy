@@ -139,11 +139,15 @@ proc mkmainPanel { BASE } {
     pack $BASE.midf -side top -fill x -expand 1
     
     frame $BASE.bframe
-    set P [Nv_mkScale $BASE.bframe.pers h perspective 120 3 40 Nchange_persp 0]
+    frame $BASE.bframe.cframe
+    set P [Nv_mkScale $BASE.bframe.cframe.pers h perspective 120 3 40 Nchange_persp 0]
+    set T [Nv_mkScale $BASE.bframe.cframe.tw h twist 180 -180 0 Nchange_twist 0]
     button $BASE.bframe.reset -text RESET -command "do_reset $XY $H $E $P"
-    pack $BASE.bframe.pers -side left
+    pack $BASE.bframe.cframe.pers -side top
+    pack $BASE.bframe.cframe.tw -side top
     pack $BASE.bframe.reset  -side right -expand 1
     pack $BASE.bframe -side top -fill x -expand 1
+    pack $BASE.bframe.cframe -side top -fill x -expand 1
 
 # According to the documentation, the Main panel can never be closed
 #	button $BASE.close -text Close -command "Nv_closePanel $BASE" -anchor s
@@ -175,7 +179,7 @@ proc Nviz_main_save { file_hook } {
     # Also need to save "look here" information
     # TODO prob. need focus indication AND realto (if focused)
     puts $file_hook "$t_list"
-    puts $file_hook "[$BASE.bframe.pers.f.entry get]"
+    puts $file_hook "[$BASE.bframe.cframe.pers.f.entry get]"
     puts $file_hook "[$BASE.midf.zexag.f.entry get]"
     puts $file_hook "[$BASE.midf.height.f.entry get]"
     puts $file_hook "[Nv_getXYPos  XY_POS]"
@@ -198,8 +202,8 @@ proc Nviz_main_load { file_hook } {
 
     # perspective
     gets $file_hook data
-    Nv_setEntry $Nv_(main_BASE).bframe.pers.f.entry [expr int($data)]
-    Nv_scaleCallback $Nv_(main_BASE).bframe.pers e 0 null [expr int($data)]
+    Nv_setEntry $Nv_(main_BASE).bframe.cframe.pers.f.entry [expr int($data)]
+    Nv_scaleCallback $Nv_(main_BASE).bframe.cframe.pers e 0 null [expr int($data)]
     update
 
     # zexag
