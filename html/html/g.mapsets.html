@@ -29,7 +29,9 @@ under the other GRASS mapsets in the current location.
 
 <BR>
 
-<B>g.mapsets</B> [<B>-lp</B>] [<B>mapset=</B><EM>name</EM>[,<EM>name</EM>,...]]
+<B>g.mapsets</B> [<B>-lp</B>]
+[<B>mapset=</B><EM>name</EM>[,<EM>name</EM>,...]]
+[<B>addmapset=</B><EM>name</EM>[,<EM>name</EM>,...]]
 
 <H2>DESCRIPTION</H2>
 
@@ -131,6 +133,8 @@ until it is modified by the user with <EM>g.mapsets</EM>).
 <DL>
 <DT><B>mapset=</B><EM>name</EM>[,<EM>name</EM>,...]
 <DD>Name(s) of existing GRASS mapset(s) under the current location.
+<DT><B>addmapset=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name(s) of existing mapset(s) to add to search list
 </DL>
 
 <EM>g.mapsets</EM> sets the current <EM>mapset search
@@ -140,6 +144,10 @@ names are specified by the user on the command line, the
 program will print the user's current mapset search path,
 list available mapsets, and prompt the user for a new
 mapset search path listing.
+<P>
+
+The <EM>addmapset</EM> parameter allows for extending an existing
+<EM>mapset search path</EM>.
 
 <H2>NOTES</H2>
 
