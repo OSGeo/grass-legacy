@@ -1,18 +1,18 @@
     Structure of TCLTKGRASS
 
   Makefile   -> Installation makefile: just type "make"
-  bin        -> CURRENTLY UNUSED
-  bitmap     -> CURRENTLY UNUSED
   docs       -> please read instructions there
   main       -> main scripts of TCLTKGRASS, including the menu definition
   module     -> definition of module windows
   README     -> you are reading this
   script     -> some modules have to be started with scripts
-  src        -> CURRENTLY UNUSED
 
   The Gmakefile is used when compiling the entire GRASS source code.
 
  Please read the instructions in docs/ directory.
+ The initial code of the tcltkgrass superview of L.A.S was
+ moved to unused/tcltkgrass. Please read the README there for
+ details. 
 
 -------------------------------------------------------------------
 Main site of TCLTKGRASS
