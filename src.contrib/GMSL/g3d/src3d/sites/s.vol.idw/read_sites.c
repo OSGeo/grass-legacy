@@ -1,7 +1,6 @@
 #include "gis.h"
 
-read_sites (name)
-    char *name;
+read_sites (char *name, int field)
 {
     char *mapset=NULL;
     FILE *fd;
@@ -50,7 +49,7 @@ read_sites (name)
     xx=(double)site_mgt->east;
     yy=(double)site_mgt->north;
     zz=(double)site_mgt->dim[0];
-    ww=(double)site_mgt->dbl_att[0];
+    ww=(double)site_mgt->dbl_att[field-1]; /* first z field is no. 0 */
 
     count = errors = 0;
         newpoint(ww,zz,xx,yy);
