@@ -451,7 +451,7 @@ static
 askfile()
 {
     char file[100];
-    char *index();
+    char *G_index();
     char *G_home();
 
     while (1)
@@ -459,7 +459,7 @@ askfile()
 	Curses_prompt_gets ("Enter file to hold report: ", file);
 	G_strip (file);
 	if (*file == 0) return -1;
-	if (index (file, '/'))
+	if (G_index (file, '/'))
 	    strcpy (buf, file);
 	else
 	    sprintf (buf, "%s/%s", G_home(), file);
