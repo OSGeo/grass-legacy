@@ -52,7 +52,7 @@
 'sp .5i
 .ft 1
 .ps 10
-.tl @\\*(]H@\\*(]D@\\*(]H@
+.tl @\\*(]H@\\*(]D@\\*(]J@
 'sp .5i
 .ev
 .ns
@@ -94,7 +94,8 @@
 .if n .nr IN .5i
 .if t .nr IN .5i
 .nr LL \\n(.l
-.ds ]H \\$1\|\|\\$2\|
+.ds ]H \fB\\$1\fR\|\|\\*(zz\|
+.ds ]J \\*(zz\|\|\fB\\$1\fR\|
 .ds ]D GRASS Reference Manual
 .wh 0 }H
 .if t .wh -1i }F
