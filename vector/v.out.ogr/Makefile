@@ -2,7 +2,7 @@
 MODULE_TOPDIR = ../..
 
 PGM=v.out.ogr
-#EXTRA_CFLAGS = $(GDALCFLAGS)
+EXTRA_CFLAGS = $(GDALCFLAGS)
 
 OBJS = main.o
 
