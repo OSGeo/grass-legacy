@@ -12,6 +12,7 @@ btree_create (B, cmp, incr)
 	incr = 1;
 
     B->N = 0;
+    B->cur = 0;
     B->tlen = B->incr = incr;
 
 /* must have at least 2 nodes, since node[0] is never used */
