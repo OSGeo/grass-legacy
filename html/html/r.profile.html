@@ -23,154 +23,75 @@ lying on user-defined line(s).
 
 <BR>
 
-<B>r.profile</B> <B>map</B>=<EM>name</EM> [<B>result</B>=<EM>type</EM>] 
-[<B>width</B>=<EM>value</EM>]
-<B>line</B>=<EM>east</EM>,<EM>north</EM>,<EM>east</EM>,<EM>north</EM>[,<EM>east</EM>,<EM>north</EM>,<EM>east</EM>,<EM>north</EM>,...]
+<B>r.profile [-g] [-i] </B> <B>input</B>=<EM>name</EM> <B>output</B>=<EM>name</EM> 
+<B>profile</B>=<EM>east</EM>,<EM>north</EM>[,<EM>east</EM>,<EM>north</EM>,<EM>east</EM>,<EM>north</EM>,...]
+<B>res</B>=<EM>resolution</EM>
 
 <H2>DESCRIPTION</H2>
-
-This program outputs, in ASCII, the values assigned to
-those cells in a raster map layer that lie along one or
-more lines ("profiles").  The lines are described by their
-starting and ending coordinates.  The profiles may be
-single-cell wide lines, or multiple-cell wide lines.  The
-output, for each profile, may be the category values
-assigned to each of the cells, or a single aggregate value
-(e.g., average or median value).
-
-<P>
-
-<EM>r.profile</EM> automatically orders the coordinates.
-The user cannot specify the order for a specific profile;
-the direction is always northwest to southeast.
+This program outputs a two or four column (with -g) ASCII file (or stdout). The default
+two column output consists of cumulative profile length in meters and raster value. The optional four 
+column output consists of an easting, northing, cumlative profile length (m), and raster value. 
+Profile end or "turning" points can be set manually with the <EM>profile</EM> argument or selected interactively 
+from the GRASS monitor by setting the <EM>-i</EM> flag. The profile resolution, or distance between profile points, 
+is obatined from the current region resolution, or can be manually set with the <EM>res</EM> argument.  
 
 <H2>OPTIONS</H2>
 
+<H3>Flags:</H3>
+<DL>
+<DT><B>-g</B>
+<DD>Output easting and northing in first two columns of four column output
+<DT><B>-i</B>
+<DD>Intercative mode
+<DD>The user selects the profile from the GRASS monitor by clicking the left mouse button along the profile, clicking the right mouse button ends the profile
+</DL>
+
 
 <H3>Parameters:</H3>
-
-
 <DL>
-<DT><B>map=</B><EM>name</EM> 
-<DD>Raster map to be queried.
+<DT><B>input</B>
+<DD>The name of the GRASS raster file from which to generate the profile info
 
-<DT><B>result=</B><EM>type</EM> 
-<DD>Type of result to be output.
-<BR>
-Options:  raw, median, average
-<BR>
-Default:  raw
+<DT><B>output</B>
+<DD>The name of the 2 or 4 column ASCII file to send profile results to
+<DD>Use "<EM>-</EM>" to send output to standard output (stdout)
 
-<P>
+<DT><B>profile</B>
+<DD>The comma seperated geographic coordinates for profile line endpoints
+<DD>The interactive flag (<EM>-i</EM>) overrides this option
 
-Raw results output each of the category values assigned to
-all cells along the profile.  Median and average output a
-single value per profile:  average outputs the average
-category value of all cells under the profile;  median
-outputs the median cell category value.
+<DT><B>res</B>
+<DD>This sets the distance between each profile point (resolution)
+<DD>The resolution must be provided in GRASS database units (i.e. decimal degrees for Lat Long database and meters for UTM)
+<DD>By default <EM>r.profile</EM> uses the resolution of the current GRASS region
 
-<DT><B>line</B>=<EM>east</EM>,<EM>north</EM>,<EM>east</EM>,<EM>north</EM>[,<EM>east</EM>,<EM>north</EM>,<EM>east</EM>,<EM>north</EM>,...]
-
-<DD>The geographic coordinates of the starting and ending
-points that define each profile line, given as easting and
-northing coordinate pairs.  The user must state the
-starting and ending coordinates of at least one line, and
-may optionally include starting and ending coordinates of
-additional lines.
-
-<DT><B>width=</B><EM>value</EM> 
-<DD>Profile width, in cells (odd number).
-<BR>
-Default:  1
-
-<P>
-
-Wider profiles can be specified by setting the width to 3, 5, 7, etc.
-The profiles are then formed as rectangles 3, 5, 7, etc., cells wide.
 </DL>
+
 
 <H2>OUTPUT FORMAT</H2>
 
-The output from this command is printed to the standard
-output in ASCII.  The format of the output varies slightly
-depending on the type of result.  The first number printed
-is the number of cells associated with the profile.  For
-raw output, this number is followed by the individual cell
-values.  For average and median output, this number is
-followed by a single value (i.e., the average or the median
-value).
+The 2 or 4 column output from <EM>r.profile</EM> is intened for easy use in other programs. 
+The output can be piped (|) directly into other programs or saved to file for later use.
+The 4 column output is compatible with <EM>s.in.ascii</EM> and can be piped direcly into this program
+for later plotting.
 
-<P>
+<PRE>
+r.profile -ig input=elev.rast output=- | s.in.ascii sites=elev.profile
+</PRE>
 
-These examples are for the <EM>elevation.dem</EM> raster
-map layer in the <EM>spearfish</EM> sample data set
-distributed with GRASS 4.1:
+The 2 column output is compatible with most plotting programs.
 
-<P>
+<H2>NOTES</H2>
+The profile resolution is measured exactly from the supplied end or "turning" point along the profile.
+The end of a profile segment will be an exact multiple of the profile resolution and will therefore 
+not always match the end point coordinates entered for the segmanet.
 
-Single-cell profile:
-
-<DL>
-<DD>
-<B>r.profile map=</B><EM>elevation.dem</EM> <B>line=</B><EM>593655,4917280,593726,4917351</EM>
-
-<P>
-
-4 1540 1551 1557 1550
-</DL>
-
-<P>
-
-3-cell wide profile:
-<DL>
-<DD>
-<B>r.profile map=</B><EM>elevation.dem</EM><B> line=</B><EM>593655,4917280,593726,4917351</EM><B> width=</B><EM>3</EM>
-
-
-<P>
-
-22 1556 1538 1525 1570 1555 1540 1528 1578 \<BR>
-1565 1551 1536 1523 1569 1557 1546 1533 \<BR>
-1559 1550 1542 1552 1543 1548
-
-
-<P>
-
-(Output appears as multiple lines here, but is really one line)
-</DL>
-
-<P>
-
-3-cell wide profile average:
-
-<DL>
-<DD>
-<B>r.profile map=</B><EM>elevation.dem</EM><B> line=</B><EM>593655,4917280,593726,4917351</EM><B> width=</B><EM>3</EM><B> result=</B><EM>average</EM>
-
-<P>
-
-22 1548.363636
-</DL>
-
-<P>
-
-3-cell wide profile median:
-
-<DL>
-<DD>
-<B>r.profile map=</B><EM>elevation.dem</EM><B> line=</B><EM>593655,4917280,593726,4917351</EM><B> width=</B><EM>3</EM><B> result=</B><EM>median</EM>
-
-<P>
-
-22 1549.000000
-</DL>
 
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="d.profile.html">d.profile</A></EM><br>
+<EM><A HREF="r.what.html">r.what</A></EM><br>
 <EM><A HREF="r.transect.html">r.transect</A></EM>
 
 <H2>AUTHOR</H2>
-Michael Shapiro,
-U.S.Army Construction Engineering 
-Research Laboratory
+<A HREF=mailto:bcovill@tekmap.ns.ca>Bob Covill</A>
