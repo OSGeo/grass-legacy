@@ -30,6 +30,9 @@ PERL                = @PERL@
 MAKE                = make
 AR                  = @AR@
 RANLIB              = @RANLIB@
+MKDIR               = mkdir -p
+CHMOD               = chmod
+INSTALL             = install
 
 ARCH                = @host@
 prefix              = @prefix@
