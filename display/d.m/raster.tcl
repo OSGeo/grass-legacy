@@ -143,3 +143,36 @@ proc DmRaster::query { node } {
     term $cmd
 
 }
+
+proc DmRaster::duplicate { tree parent node id } {
+    variable opt
+    variable count 
+    global dmpath
+
+    set node "raster:$count"
+
+    set frm [ frame .rastericon$count]
+    set fon [font create -size 10] 
+    set check [checkbutton $frm.check -font $fon \
+                           -variable DmRaster::opt($count,_check) \
+                           -height 1 -padx 0 -width 0]
+
+    image create photo rico -file "$dmpath/raster.gif"
+    set ico [label $frm.ico -image rico -bd 1 -relief raised]
+    
+    pack $check $ico -side left
+
+    $tree insert end $parent $node \
+	-text      "raster $count" \
+	-window    $frm \
+	-drawcross auto 
+
+    set opt($count,_check) $opt($id,_check)
+
+    set opt($count,map) "$opt($id,map)" 
+    set opt($count,overlay) $opt($id,overlay)
+    set opt($count,legend)  $opt($id,legend)
+
+    incr count
+    return $node
+}

@@ -593,3 +593,84 @@ proc DmVector::WorkOnVector { node } {
     Dm::monitor
     spawn $cmd
 }
+
+proc DmVector::duplicate { tree parent node id } {
+    global form_mode
+    variable opt
+    variable count
+
+    set node "vector:$count"
+
+    set frm [ frame .vectoricon$count]
+    set fon [font create -size 10] 
+    set check [checkbutton $frm.check -font $fon \
+                           -variable DmVector::opt($count,_check) \
+                           -height 1 -padx 0 -width 0]
+    set can [ canvas $frm.c -width $DmTree::legend_width \
+                     -height $DmTree::legend_height -borderwidth 0 \
+                     -highlightbackground gray ]
+    set opt($count,_legend) $can
+    pack $check $can -side left
+
+    $tree insert end $parent $node \
+	-text      "vector $count" \
+	-window    $frm \
+	-drawcross auto 
+
+    set opt($count,_check) $opt($id,_check)
+
+    set opt($count,map) "$opt($id,map)" 
+    set opt($count,display_shape) $opt($id,display_shape)
+    set opt($count,display_cat) $opt($id,display_cat)
+    set opt($count,display_topo) $opt($id,display_topo)
+    set opt($count,display_dir) $opt($id,display_dir)
+    set opt($count,display_attr) $opt($id,display_attr)
+    set opt($count,type_point) $opt($id,type_point)
+    set opt($count,type_line) $opt($id,type_line)
+    set opt($count,type_boundary) $opt($id,type_boundary)
+    set opt($count,type_centroid) $opt($id,type_centroid)
+    set opt($count,type_area) $opt($id,type_area)
+    set opt($count,type_face)  $opt($id,type_face)
+
+    set opt($count,color) $opt($id,color)
+    set opt($count,sqlcolor) $opt($id,sqlcolor)
+    set opt($count,rdmcolor) $opt($id,rdmcolor)
+    set opt($count,fcolor) $opt($id,fcolor)
+    set opt($count,lcolor) $opt($id,lcolor)
+    set opt($count,_use_color) $opt($id,_use_color)
+    set opt($count,_use_fcolor) $opt($id,_use_fcolor)
+
+    set opt($count,symdir) "$opt($id,symdir)"
+    set opt($count,icon) "$opt($id,icon)"
+    set opt($count,size)  $opt($id,size)
+
+    set opt($count,field) $opt($id,field)
+    set opt($count,lfield) $opt($id,lfield)
+    set opt($count,cat) "$opt($id,cat)"
+    set opt($count,where)  "$opt($id,where)"
+    set opt($count,_use_where) $opt($id,_use_where)
+
+    set opt($count,attribute) "$opt($id,attribute)"
+    set opt($count,xref) "$opt($id,xref)"
+    set opt($count,yref) "$opt($id,yref)"
+    set opt($count,lsize) $opt($id,lsize)
+
+    set opt($count,minreg) "$opt($id,minreg)" 
+    set opt($count,maxreg)  "$opt($id,maxreg)"
+
+    # Default form mode used for vectors, it can be 'gui' (default) or 'txt'
+    set form_mode [exec g.gisenv get=DM_FORM_MODE]
+    if { $form_mode == "txt" } {
+        set opt($count,_query_text) $opt($id,_query_text)
+    } else {
+        set opt($count,_query_text) $opt($id,_query_text)
+    }
+    set opt($count,_query_edit) $opt($id,_query_edit)
+
+    set opt($count,_width) $opt($id,_width)
+
+    DmVector::legend $count
+
+    incr count
+    return $node
+}

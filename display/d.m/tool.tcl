@@ -93,6 +93,11 @@ proc DmToolBar::create { tb  } {
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
         -helptext [G_msg "Create new command"]
 
+    $bbox2 add -image [image create photo -file "$dmpath/add.duplicate.gif"] \
+        -command "Dm::duplicate" \
+        -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \
+        -helptext [G_msg "Duplicate Layer"]    
+
     $bbox2 add -image [image create photo -file "$dmpath/dig.gif"] \
         -command "Dm::edit" \
         -highlightthickness 0 -takefocus 0 -relief link -borderwidth 1  \

@@ -84,3 +84,34 @@ proc DmCmd::display { node } {
 proc DmCmd::query { node } {
     puts "Query not supported for Command type layer"
 }
+
+proc DmCmd::duplicate { tree parent node id} {
+    variable opt
+    variable count 
+    global dmpath
+
+    set node "cmd:$count"
+
+    set frm [ frame .cmdicon$count]
+    set fon [font create -size 10] 
+    set check [checkbutton $frm.check -font $fon \
+                           -variable DmCmd::opt($count,_check) \
+                           -height 1 -padx 0 -width 0]
+
+    image create photo cico -file "$dmpath/cmd.gif"
+    set ico [label $frm.ico -image cico -bd 1 -relief raised]
+    
+    pack $check $ico -side left
+
+    $tree insert end $parent $node \
+	-text      "cmd $count" \
+	-window    $frm \
+	-drawcross auto 
+
+    set opt($count,_check) 1 
+
+    set opt($count,cmd) "$opt($id,cmd)" 
+
+    incr count
+    return $node
+}

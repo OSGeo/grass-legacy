@@ -126,3 +126,36 @@ proc DmLabels::print { file node } {
 proc DmLabels::query { node } {
     puts "Query not supported for Paint labels layer"
 }
+
+proc DmLabels::dublicate { tree parent node id } {
+    variable opt
+    variable count 
+    global dmpath
+
+    set node "labels:$count"
+
+    set frm [ frame .labelsicon$count]
+    set fon [font create -size 10] 
+    set check [checkbutton $frm.check -font $fon \
+                           -variable DmLabels::opt($count,_check) \
+                           -height 1 -padx 0 -width 0]
+
+    image create photo labels_ico -file "$dmpath/labels.gif"
+    set ico [label $frm.ico -image labels_ico -bd 1 -relief raised]
+    
+    pack $check $ico -side left
+
+    $tree insert end $parent $node \
+	-text      "labels $count" \
+	-window    $frm \
+	-drawcross auto 
+
+    set opt($count,_check)  $opt($id,_check)
+
+    set opt($count,map) "$opt($id,map)" 
+    set opt($count,minreg) "$opt($id,minreg)" 
+    set opt($count,maxreg) "$opt($id,maxreg)" 
+
+    incr count
+    return $node
+}
