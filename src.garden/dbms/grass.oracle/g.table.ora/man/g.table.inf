@@ -1,0 +1,61 @@
+.TH g.table.inf
+.SH NAME
+\fIg.table.inf\fR \- Generate a list of database tables in the currently
+selected database.
+.br
+.I "(GRASS-RDBMS General Interface Program)"
+.SH SYNOPSIS
+\fBg.table.inf\fR
+.br
+\fBg.table.inf help\fR
+.SH DESCRIPTION
+g.table.inf is used to generate a list of the tables in the currently selected SQL database. The currently selected database is identified by the GRASS environment
+variable $DATABASE which is set using the g.select.inf GRASS-RDBMS interface
+tool. If this environment variable is not set the program terminates with a
+message to the user. Otherwise, the names of the tables in the currently
+selected database are displayed on the screen in three
+columns. The names of the tables in the current database are needed to
+construct query criteria for use in many of the other dbSQL tools. This command
+can be run at any time and is provided for reference purposes, to be used while
+performing GRASS-RDBMS applications.
+
+.SH "COMMAND LINE OPTIONS"
+None 
+
+.SH "EXAMPLE"
+
+g.table.inf
+.br
+The following tables are available in database: nri
+
+.br
+county            cover             geoaggs
+.br
+hydros            landclass         locks
+.br
+mlra              nri_fld_vals      point
+.br
+practices         priors            psu
+.br
+psu_trends        recorders         state
+.br
+std_rpts          streams           treatments
+.br
+trends82          trends87          ud_rpt
+.br
+ud_subj           utm               value_list
+.br
+water             windbreaks        
+.SH BUGS
+None known.
+
+.SH "NOTE"
+This program requires the Informix database software.
+
+.SH "SEE ALSO"
+g.column.inf, g.select.inf, g.stats.inf, d.rast.inf, d.site.inf, d.vect.inf, d.what.r.inf, d.what.s.inf, d.what.v.inf, r.reclass.inf, r.rescale.inf, v.reclass.inf
+
+.SH AUTHOR
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+
