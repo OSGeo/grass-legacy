@@ -197,11 +197,9 @@ main (int argc, char **argv)
     {
         struct Cell_head window;
 
-	if (!nrasts)
-	{
-		for(i=0; rast[i]; i++);
-		nrasts = i;
-	}
+	for(i=0; rast[i]; i++);
+	nrasts = i;
+
 	for(i=0; i<nrasts; i++){
     		mapset = G_find_cell2 (rast[i], "");
     		if (mapset == NULL)
@@ -245,11 +243,9 @@ main (int argc, char **argv)
     {
         struct Map_info Map;
 
-	if (!nvects)
-	{
-		for(i=0; vect[i]; i++);
-		nvects = i;
-	}
+	for(i=0; vect[i]; i++);
+	nvects = i;
+
         Vect_set_open_level(1);
 	for(i=0; i<nvects; i++){
     		mapset = G_find_vector2 (vect[i], "");
@@ -296,11 +292,9 @@ main (int argc, char **argv)
 	Site *s;
 	int rtype, ndim, nstr, ndec;
 
-	if (!nsites)
-	{
-		for(i=0; site[i]; i++);
-		nsites = i;
-	}
+	for(i=0; site[i]; i++);
+	nsites = i;
+
 	for(i=0; i<nsites; i++){
     		mapset = G_find_sites2 (site[i], "");
     		if (mapset == NULL)
