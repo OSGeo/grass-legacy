@@ -4,8 +4,13 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
+# $Id: configure,v 1.9 2000-10-02 16:43:52 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
+#
+#Ideas taken from
+# http://hpdrc.cs.fiu.edu/~sdbtools/ip_tools/PIPT-2.1/configure
+
 
 # Defaults:
 ac_help=
@@ -29,6 +34,10 @@ ac_help="$ac_help
   --with-SYSV             define the compiler macro SYSV"
 ac_help="$ac_help
   --with-USE_TERMIO       define the compiler macro USE_TERMIO"
+ac_help="$ac_help
+  --with-tkdir            Change default top-level TK directory"
+ac_help="$ac_help
+  --with-tcldir           Change default top-level TCL directory"
 
 # Initialize some variables set by options.
 # The variables have the same names as the options, with
@@ -63,6 +72,15 @@ includedir='${prefix}/include'
 oldincludedir='/usr/include'
 infodir='${prefix}/info'
 mandir='${prefix}/man'
+
+WANT_TKTCL=yes
+TKDIR=/usr
+TKLIBDIR=
+TKINCDIR=
+TCLDIR=/usr
+TCLLIBDIR=
+TCLINCDIR=
+TCLTKLIBS=
 
 # Initialize some other variables.
 subdirs=
@@ -3152,7 +3170,7 @@ if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   DLLIB="-ldl"
 else
   echo "$ac_t""no" 1>&6
-DLLIB=""
+  DLLIB=""
 fi
 
 
@@ -3202,6 +3220,155 @@ echo "configure:3146: checking for USE_TERMIO" >&5
     
 fi
 
+#
+# Tk/Tcl
+#
+
+# Check whether --with-tkdir or --without-tkdir was given.
+if test "${with_tkdir+set}" = set; then
+  withval="$with_tkdir"
+  TKDIR=$withval
+fi
+
+# Check whether --with-tcldir or --without-tcldir was given.
+if test "${with_tcldir+set}" = set; then
+  withval="$with_tcldir"
+  TCLDIR=$withval
+fi
+
+# Check whether --with-tktcl or --without-tktcl was given.
+if test "${with_tktcl+set}" = set; then
+  withval="$with_tktcl"
+  WANT_TKTCL=$withval
+fi
+
+
+#TCLTKLIBS=
+if test "$WANT_TKTCL" = "yes"; then
+    cat >> confdefs.h <<\EOF
+#define WANT_TKTCL 1
+EOF
+
+    WANT_TKTCL="1"
+    echo $ac_n "checking for matching Tk/Tcl libraries""... $ac_c" 1>&6
+echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
+
+    #
+    # Check for matching libtk*.a and libtcl*.a
+    # Just to be doubly sure, check the prefix directory as well
+    #
+
+    FOUND=1
+    if test -r "$TKDIR/lib/libtk.so" -a -r "$TCLDIR/lib/libtcl.so" -a \
+	-d "$TKDIR/lib/tk" -a -d "$TCLDIR/lib/tcl"; then
+	TKINCDIR=$TKDIR/include
+	TKLIBDIR=$TKDIR/lib/tk
+	TCLINCDIR=$TCLDIR/include
+	TCLLIBDIR=$TCLDIR/lib/tcl
+
+	TCLTKLIBS="$TCLTKLIBS -L$TKDIR/lib -L$TCLDIR/lib -ltk -ltcl"
+
+    elif test -r "$PREFIX/lib/libtk.so" -a -r "$PREFIX/lib/libtcl.so" -a \
+	-d "$PREFIX/lib/tk" -a -d "$PREFIX/lib/tcl"; then
+	TKINCDIR=$PREFIX/include
+	TKLIBDIR=$PREFIX/lib/tk
+	TCLINCDIR=$PREFIX/include
+	TCLLIBDIR=$PREFIX/lib/tcl
+
+	TCLTKLIBS="$TCLTKLIBS -L$PREFIX/lib -L$PREFIX/lib -ltk -ltcl"
+
+    elif test -r "$TKDIR/lib/libtk8.0.so" -a -r "$TCLDIR/lib/libtcl8.0.so" -a \
+	-d "$TKDIR/lib/tk8.0" -a -d "$TCLDIR/lib/tcl8.0"; then
+	TKINCDIR=$TKDIR/include
+	TKLIBDIR=$TKDIR/lib/tk8.0
+	TCLINCDIR=$TCLDIR/include
+	TCLLIBDIR=$TCLDIR/lib/tcl8.0
+
+	TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk8.0.so $TCLDIR/lib/libtcl8.0.so"
+
+    elif test -r "$PREFIX/lib/libtk8.0.so" -a -r "$PREFIX/lib/libtcl8.0.so" -a \
+	-d "$PREFIX/lib/tk8.0" -a -d "$PREFIX/lib/tcl8.0"; then
+	TKINCDIR=$PREFIX/include
+	TKLIBDIR=$PREFIX/lib/tk8.0
+	TCLINCDIR=$PREFIX/include
+	TCLLIBDIR=$PREFIX/lib/tcl8.0
+
+	TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk8.0.so $PREFIX/lib/libtcl8.0.so"
+
+    elif test -r "$PREFIX/lib/libtk.so" -a -r "$PREFIX/lib/libtcl.so" -a \
+	-d "$PREFIX/lib/tk" -a -d "$PREFIX/lib/tcl"; then
+	TKINCDIR=$PREFIX/include
+	TKLIBDIR=$PREFIX/lib/tk
+	TCLINCDIR=$PREFIX/include
+	TCLLIBDIR=$PREFIX/lib/tcl
+
+	TCLTKLIBS="$TCLTKLIBS -L$PREFIX/lib -L$PREFIX/lib -ltk -ltcl"
+
+    elif test -r "$TKDIR/lib/libtk8.1.so" -a -r "$TCLDIR/lib/libtcl8.1.so" -a \
+	-d "$TKDIR/lib/tk8.1" -a -d "$TCLDIR/lib/tcl8.1"; then
+	TKINCDIR=$TKDIR/include
+	TKLIBDIR=$TKDIR/lib/tk8.1
+	TCLINCDIR=$TCLDIR/include
+	TCLLIBDIR=$TCLDIR/lib/tcl8.1
+
+	TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk8.1.so $TCLDIR/lib/libtcl8.1.so"
+
+    elif test -r "$PREFIX/lib/libtk8.1.so" -a -r "$PREFIX/lib/libtcl8.1.so" -a \
+	-d "$PREFIX/lib/tk8.1" -a -d "$PREFIX/lib/tcl8.1"; then
+	TKINCDIR=$PREFIX/include
+	TKLIBDIR=$PREFIX/lib/tk8.1
+	TCLINCDIR=$PREFIX/include
+	TCLLIBDIR=$PREFIX/lib/tcl8.1
+
+	TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk8.1.so $PREFIX/lib/libtcl8.1.so"
+
+    elif test -r "$TKDIR/lib/libtk8.2.so" -a -r "$TCLDIR/lib/libtcl8.2.so" -a \
+	-d "$TKDIR/lib/tk8.2" -a -d "$TCLDIR/lib/tcl8.2"; then
+	TKINCDIR=$TKDIR/include
+	TKLIBDIR=$TKDIR/lib/tk8.2
+	TCLINCDIR=$TCLDIR/include
+	TCLLIBDIR=$TCLDIR/lib/tcl8.2
+
+	TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk8.2.so $TCLDIR/lib/libtcl8.2.so"
+
+    elif test -r "$PREFIX/lib/libtk8.2.so" -a -r "$PREFIX/lib/libtcl8.2.so" -a \
+	-d "$PREFIX/lib/tk8.2" -a -d "$PREFIX/lib/tcl8.2"; then
+	TKINCDIR=$PREFIX/include
+	TKLIBDIR=$PREFIX/lib/tk8.2
+	TCLINCDIR=$PREFIX/include
+	TCLLIBDIR=$PREFIX/lib/tcl8.2
+
+	TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk8.2.so $PREFIX/lib/libtcl8.2.so"
+
+    elif test -r "$TKDIR/lib/libtk8.3.so" -a -r "$TCLDIR/lib/libtcl8.3.so" -a \
+	-d "$TKDIR/lib/tk8.3" -a -d "$TCLDIR/lib/tcl8.3"; then
+	TKINCDIR=$TKDIR/include
+	TKLIBDIR=$TKDIR/lib/tk8.3
+	TCLINCDIR=$TCLDIR/include
+	TCLLIBDIR=$TCLDIR/lib/tcl8.3
+
+	TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk8.3.so $TCLDIR/lib/libtcl8.3.so"
+
+    elif test -r "$PREFIX/lib/libtk8.3.a" -a -r "$PREFIX/lib/libtcl8.3.a" -a \
+	-d "$PREFIX/lib/tk8.2" -a -d "$PREFIX/lib/tcl8.3"; then
+	TKINCDIR=$PREFIX/include
+	TKLIBDIR=$PREFIX/lib/tk8.3
+	TCLINCDIR=$PREFIX/include
+	TCLLIBDIR=$PREFIX/lib/tcl8.3
+
+	TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk8.3.so $PREFIX/lib/libtcl8.3.so"
+
+    else
+	FOUND=0
+    fi
+
+    if test "$FOUND" = "0"; then
+	echo "$ac_t""not found" 1>&6
+	{ echo "configure: error: cannot continue" 1>&2; exit 1; }
+    fi
+
+    echo "$ac_t""$TCLTKLIBS" 1>&6
+fi
 
 
 trap '' 1 2 15
@@ -3368,6 +3535,9 @@ s%@INCLUDE_DIRS@%$INCLUDE_DIRS%g
 s%@LIBRARY_DIRS@%$LIBRARY_DIRS%g
 s%@TIFF_INCLUDE_DIRS@%$TIFF_INCLUDE_DIRS%g
 s%@TIFF_LIBRARY_DIRS@%$TIFF_LIBRARY_DIRS%g
+s%@TCLDIR@%$TCLDIR%g
+s%@TKDIR@%$TKDIR%g
+s%@TCLTKLIBS@%$TCLTKLIBS%g
 s%@SYSV@%$SYSV%g
 s%@USE_TERMIO@%$USE_TERMIO%g
 
