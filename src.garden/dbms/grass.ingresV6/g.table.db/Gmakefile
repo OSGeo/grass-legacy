@@ -1,0 +1,17 @@
+MAN	  = doc/g.table.db
+#PGM       = $(BIN_CONTRIB_CMD)/g.table.db
+PGM       = g.table.db
+LIBES     = $(GISLIB) $(VASKLIB) -ltermcap
+
+
+
+OBJS = \
+	main.o \
+	ingresTable.o 
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	#cp $(MAN)  $(GISBASE)/man/4
+
+$(LIBES): #
+
