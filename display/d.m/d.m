@@ -10,7 +10,7 @@
 #%End
 
 if [ $# -eq 0 ] ; then
-   sh $GISBASE/etc/dm/d.m.tcl
+   exec "$GRASS_WISH" $GISBASE/etc/dm/d.m.tcl
    exit 0
 fi
 
@@ -18,4 +18,4 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
   exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
 fi
 
-sh $GISBASE/etc/dm/d.m.tcl "$GIS_OPT_dmrc"
+exec "$GRASS_WISH" "$GISBASE/etc/dm/d.m.tcl" "$GIS_OPT_dmrc"
