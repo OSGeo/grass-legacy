@@ -2,7 +2,8 @@
 #include "internoptri.h"
 #include "geom/lia.h"
 #include "geom/sos.h"
-/* #define MAX(a,b) (a > b ? a : b) */
+
+#define MYMAX(a,b) (a > b ? a : b)
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -187,7 +188,7 @@ static int hsTestIfAnchor (
   lia_mul (tmp3, tmp1, A);
   lia_sub (tmp1, tmp3, tmp2);
 
-  if (ISZERO (tmp1)) return (candidate >= MAX (v1, v2));
+  if (ISZERO (tmp1)) return (candidate >= MYMAX (v1, v2));
 
   if (v2 == candidate) return (candidate >= v1);
 
@@ -197,7 +198,7 @@ static int hsTestIfAnchor (
   lia_mul (tmp3, tmp4, A);
   lia_sub (tmp4, tmp3, tmp2);
 
-  if (ISZERO (tmp4)) return (candidate >= MAX (v1, v2));
+  if (ISZERO (tmp4)) return (candidate >= MYMAX (v1, v2));
 
   return (ISPOSITIVE (tmp4) != ISPOSITIVE (tmp1));
 }

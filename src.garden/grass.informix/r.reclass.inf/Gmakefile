@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/r.reclass.inf
+PGM       = $(BIN_MAIN_CMD)/r.reclass.inf
 LIBES     = $(GISLIB) 
 
 

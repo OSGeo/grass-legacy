@@ -1,0 +1,37 @@
+$Id: README,v 1.2 2000-07-12 11:47:55 markus Exp $
+
+Contents of this directory:
+
+D          : display library
+bitmap     : bitmap library
+btree      : binary trees library
+bwidget    : tcl/tk extra library
+coorcnv    : coordinate transform library
+datetime   : DateTime library
+dbmi       : database drivers
+dig_atts   : library to read and write from attribute files
+digitizer  : raw library for general digitizer support
+display    : library for CELL driver
+dlg        : library to manage DGL files
+dspf       : G3D display files library
+g3d        : G3D raster volume library
+geom       : geometrical calculations
+gis        : main GRASS library
+ibtree     : integer clone of binary trees library (btree)
+icon       : icon library (required for PS/Paint icons?)
+image3     : extra imagery library
+imagery    : imagery library
+libimage   : required for SG3d/Iris
+linkm      : linked list memory manager
+lock       : locking mechanism for GRASS monitors
+ogsf       : ported gsurf library (required for NVIZ)
+proj       : PROJ4.x projections library
+raster     : GRASS raster library
+rowio      : row in/out library
+rst_gmsl   : regularized splines with tension interpolation library
+segment    : segment library
+unused     : maybe treasure here
+vask       : Curses management library
+vect32     : GRASS vector library
+vect32_64  : new approach for a 32/64bit GRASS vector library
+

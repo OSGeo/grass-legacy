@@ -1,0 +1,125 @@
+<html>
+
+<TITLE>m.gc2ll</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>m.gc2ll</b></EM>  - Converts geocentric to geographic
+coordinates.
+
+<BR>
+
+<EM>(GRASS Data Import/Processing Program) </EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.gc2ll</B>
+<B>x=</B><EM>#</EM> <B>y=</B><EM>#</EM> <B>z=</B><EM>#</EM> 
+<B>s=</B><EM>spheroid</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.gc2ll</EM> returns geographic coordinates for
+geocentric ones supplied by the user.  It performs the
+reverse operation of the GRASS program 
+<EM><A HREF="m.ll2gc.html">m.ll2gc</A></EM>.  The
+<B>x</B>, <B>y</B> and <B>z</B> values are the three
+dimensions needed to locate a point in three-dimensional
+space.  The values that are printed include the latitude,
+the longitude and the height above (or distance below) the
+spheroid.
+
+
+<P>
+
+The list of spheroids available is somewhat dynamic.  It
+may not contain exactly the ones listed below.  To
+determine the current list of possible spheroids, simply
+type in:
+
+<DL>
+<DD>
+<B>m.gc2ll x=</B><EM>0</EM> <B>y=</B><EM>0</EM> <B>z=</B><EM>0</EM> <B>s=</B><EM>help</EM>
+</DL>
+
+A list of available spheroids will be printed on the
+screen.  If the spheroid desired is not on the list, the
+values for the semi-major axis and the eccentricity squared
+for the spheroid may be entered in place of a spheroid name
+in the following format:
+
+
+<DL>
+<DD>
+<B>s=a=</B><EM>semi-major_axis</EM>,<B>e=</B><EM>eccentricity_squared</EM>
+</DL>
+
+<P>
+
+<H3>SOME POSSIBLE SPHEROIDS</H3>
+
+(<EM>The on-line listing includes only the spheroid names</EM>)
+
+<PRE>
+Spheroid	Commonly used for:	Semi-major axis	Eccentricity sqrd
+australian	Australia		6378160.0	0.0066945419
+bessel		Japan			6377739.155	0.0066743722
+clark66		N. America		6378206.4	0.006768658
+clark80		France, Africa		6378249.145	0.0068035113
+everest		India, Burma		6377276.345	0.0066378466
+international	Europe			6378388.0	0.00672267
+wgs72		worldwide coverage	6378135.0	0.006694317778
+</PRE>
+
+<H2>EXAMPLE</H2>
+
+<DL>
+<DT>The command:
+<DD><B>m.gc2ll x=</B><EM>0.0</EM> <B>y=</B><EM>0.0</EM> <B>z=</B><EM>6356750.520017</EM> <B>s=</B><EM>wgs72</EM>
+
+<DT>Results: 
+<DD>
+lat=90N <BR>
+lon=90W <BR>
+h=0.0000
+</DL>
+
+<H2>NOTES</H2>
+
+For a brief discussion of spheroids see 
+
+<EM><A HREF="m.ll2u.html">m.ll2u</A></EM>.
+
+
+<P>
+
+For a brief discussion of geocentric coordinates see 
+
+<EM><A HREF="m.ll2gc.html">m.ll2gc</A></EM>.
+
+
+<P>
+
+This is an experimental program.  It is part of an initial
+effort to incorporate geographic coordinates into GRASS.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="m.datum.shift.html">m.datum.shift</A></EM><br>
+<EM><A HREF="m.ll2gc.html">m.ll2gc</A></EM><br>
+<EM><A HREF="m.ll2u.html">m.ll2u</A></EM><br>
+<EM><A HREF="m.u2ll.html">m.u2ll</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

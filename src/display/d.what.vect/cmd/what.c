@@ -2,7 +2,6 @@
 #include "raster.h"
 #include "display.h"
 #include "Vect.h"
-#include "digit.h"
 #include "whatvect.h"
 
 static int nlines = 50;

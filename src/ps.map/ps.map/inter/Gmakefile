@@ -1,4 +1,5 @@
 PGM=ps.map
+
 OBJ =	main.o\
 	PSmap.o\
 	ask_bg.o \

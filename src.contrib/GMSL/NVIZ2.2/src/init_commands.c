@@ -1,3 +1,6 @@
+/*	Alex Shevlakov sixote@yahoo.com 02/2000
+*	function added to handle postgres queries
+*/
 #include "interface.h"
 
 extern int
@@ -39,6 +42,8 @@ extern int
   Nset_fov_cmd(),
   Nget_region_cmd(),
   Nget_point_on_surf_cmd(),
+  Nget_point_on_surf_pg_grass(),
+  Nget_point_on_surf_pg_site(),
   Nget_longdim_cmd(),
   Nget_zrange_cmd(),
   Nget_zextents_cmd(),
@@ -93,7 +98,7 @@ extern int
   Nload_3dview_cmd(),
   Nset_cancel_func_cmd(),
   Nunset_cancel_func_cmd(),
-  Tk_Tkspecial_waitCmd(),
+/*  Tk_Tkspecial_waitCmd(), */
   SetScriptFile_Cmd(),
   SetState_Cmd(),
   CloseScripting_Cmd(),
@@ -109,14 +114,13 @@ extern int
 
 extern Tk_Window mainWindow;
 
-init_commands(interp, data)
-     Tcl_Interp *interp;
-     Nv_data *data;
+int 
+init_commands (Tcl_Interp *interp, Nv_data *data)
 {
   /* Disabled security version of send */
 /*  Tcl_CreateCommand(interp, "send", Tk_SendCmd,
 		    (ClientData) mainWindow, (void (*)()) NULL); */
-  
+ 
   /* Scripting commands */
   Tcl_CreateCommand(interp, "Nv_set_script_file", SetScriptFile_Cmd,
 		    (ClientData) mainWindow, (void (*)()) NULL);
@@ -138,8 +142,11 @@ init_commands(interp, data)
 		    (ClientData) mainWindow, (void (*)()) NULL);
   
   /* Add the special tkwait command */
-  Tcl_CreateCommand(interp, "tkspecial_wait", Tk_Tkspecial_waitCmd,
-		    (ClientData) mainWindow, (void (*)()) NULL);
+  /* REMOVED 26-Feb-2000 by Philip Warner. Replaced with an Idle handler */
+/*
+ *  Tcl_CreateCommand(interp, "tkspecial_wait", Tk_Tkspecial_waitCmd,
+ *		    (ClientData) mainWindow, (void (*)()) NULL);
+ */
 
   /* Commands for handling logical names */
   Tcl_CreateCommand(interp, "Nliteral_from_logical", Nliteral_from_logical_cmd,
@@ -196,6 +203,10 @@ init_commands(interp, data)
   Tcl_CreateCommand(interp, "Nset_fov", Nset_fov_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_region", Nget_region_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_point_on_surf", Nget_point_on_surf_cmd, 
+		    data, NULL);
+  Tcl_CreateCommand(interp, "Nget_point_on_pg_grass", Nget_point_on_surf_pg_grass, 
+		    data, NULL);
+  Tcl_CreateCommand(interp, "Nget_point_on_pg_site", Nget_point_on_surf_pg_site, 
 		    data, NULL);
   Tcl_CreateCommand(interp, "Nget_longdim", Nget_longdim_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_zrange", Nget_zrange_cmd, data, NULL);

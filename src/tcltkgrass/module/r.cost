@@ -3,8 +3,15 @@ interface_build {
     {Outputs a raster map layer showing the cumulative cost of moving between different geographic locations on an input raster map layer whose cell category values represent cost.}
     {entry input {Input raster map containing cost information:} 0 raster}
     {entry output {Output raster map:} 0 raster}
+    {entry start_sites {Site file holding starting points:} 0 sites}
     {entry coordinate {Starting point coordinates (east,north[,east,north,...]):} 0 +xy}
+    {entry stop_sites {Site file holding stopping points:} 0 sites}
     {entry stop_coordinate {Stoping point coordinates (east,north[,east,north,...]):} 0 +xy}
+    {entry stop_coordinate {Stoping point coordinates (east,north[,east,north,...]):} 0 +xy}
+    {entry max_cost {Maximum cumulative cost:} 0 ""}
+    {entry null_value {Positive floating point value assigned to null cells:} 0 ""}
     {checkbox -v {Run verbosely.} "" -v}
     {checkbox -k {Improved accuracy.} "" -k}
+    {checkbox -n {Retain null cells in output.} "" -n}
 }
+

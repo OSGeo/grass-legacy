@@ -35,8 +35,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
-#include "digit.h"
-#include "dig_head.h"
 #include "Vect.h"
 
 #include "gis.h"

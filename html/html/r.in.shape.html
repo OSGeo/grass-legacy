@@ -1,0 +1,68 @@
+<html>
+
+<head>
+  <TITLE>r.in.shape</TITLE>
+</head>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<h2>NAME</h2>
+
+<EM><B>r.in.shape</B></EM> - Read an ArcView Shapefile (polygons and lines)
+<br>
+
+<h2>SYNOPSIS</h2>
+
+<B>r.in.shape in=</B><EM>name</EM>
+<B>out=</B><EM>name</EM>
+[<B>cat=</B><EM>category column</EM>] [<B>lab=</B><EM>category label column</EM>]
+
+<h2>DESCRIPTION</h2>
+
+The <EM>r.in.shape</EM> program is designed to import ArcView
+Shapefiles (polygons and lines) into GRASS binary raster maps.
+
+
+<h2>OPTIONS</h2>
+
+<H3>Parameters:</H3> 
+
+<DL> 
+
+<DT><B>in=</B><EM>name</EM>
+<DD>Name of input shape file. Provide a full path name or the name 
+of a file in the current directory. The <EM>.shp</EM> extension is 
+required.
+
+<DT><B>out=</B><EM>name</EM>
+<DD>Raster output file. 
+
+<DT><B>cat=</B><EM>category_column</EM>
+<DD>Name of the attribute to use as the category number in dig_att. 
+Category column must be <B>integer</B>.
+
+<DT><B>lab=</B><EM>label_column</EM>
+<DD>Name of the attribute to use as the category label in dig_cats. 
+
+</DL> 
+
+<h2>NOTE</h2>
+
+r.in.shape creates ASCII file first and then run r.in.poly.
+
+
+<h2>SEE ALSO</h2>
+
+<a href=v.in.shape.html>v.in.shape</a>,
+<a href=v.to.rast.html>v.to.rast</a>.
+
+<h2>AUTHORS</h2>
+Radim Blazek (Radim.Blazek@dhv.cz)<br>
+Based on Shapelib (http://gdal.velocet.ca/projects/shapelib/)
+
+</body>
+</html>

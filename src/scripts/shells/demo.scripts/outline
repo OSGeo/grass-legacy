@@ -1,4 +1,4 @@
-Executive Overview
+Executive Overview (GRASS 4.x)
 	GRASS
 		GIS
 	Hardware
@@ -58,7 +58,7 @@ GRASS Data
 		used to produce cell maps
 		provides vector overlays
 
-GRASS Future (GARDEN)
+GRASS Future
 	Mix GRASS tools with
 		RDBMS
 		IFS

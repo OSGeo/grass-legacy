@@ -1,5 +1,5 @@
-PGM       = $(GARDEN_BIN)/v.reclass.inf
-#PGM       = $(GARDEN_BIN)/v.r.inf.new
+PGM       = $(BIN_MAIN_CMD)/v.reclass.inf
+#PGM       = $(BIN_MAIN_CMD)/v.r.inf.new
 LIBES     = $(GISLIB) 
 
 
@@ -10,7 +10,6 @@ OBJS = \
 	row_or_col.o \
 	readSQLout.o
 
-#EXTRA_CFLAGS = $(VECT_INCLUDE) # -Dunlink=puts
 #EXTRA_CFLAGS =  -Dunlink=puts
 
 

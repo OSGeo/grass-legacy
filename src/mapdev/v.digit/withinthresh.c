@@ -2,7 +2,6 @@
 #include <math.h>
 #include "digit.h"
 #include "raster.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "keyboard.h"
 #include "Map_proto.h"

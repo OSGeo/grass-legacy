@@ -1,0 +1,49 @@
+<TITLE>r.feat.thin</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<BODY BGCOLOR="#FFFFFF">
+<H2>NAME</H2>
+<b>r.feat.thin</b> - GRASS module that takes the feature output of 
+        r.param.scale and creates either a sites file or raster containing 
+        VIPs (pits, peaks and passes).
+<P>
+<H2>Usage:</H2>
+ r.feat.thin [-sc] <em>feat=</em>name <em>dem=</em>name [<em>out=</em>name]<p>
+
+<H2>Flags:</H2>
+  -s   Create sites file output<br>
+  -c   Create corner values
+
+<H2>Parameters:</H2>
+  feat=name   Raster surface feature layer from r.param.scale<p>
+   dem=name   DEM that matches feature classification<p>
+   out=name   Output raster layer containing thinned surface features<p>
+
+<H2>HISTORY</H2>
+<pre>
+Jo Wood, Dept. of Geography
+19th July, 1995
+-------
+Modified to include elevation in sites output (conforms with GRASS 4.2 sites 
+API). This allows production of TIN from sites file alone.
+
+See also:
+	r.param.scale
+	s.delaunay
+
+Jo Wood,
+4th September, 1996
+-------
+Modified to force output of corner cells if required.
+</pre>
+
+<hr>
+<ADDRESS>
+	Last modified, 3rd August, 1997 <BR>
+	<A HREF="MAILTO:jwo@le.ac.uk">jwo@le.ac.uk</A><br>
+<a href="http://www.geog.le.ac.uk/assist/index.html"> ASSIST's home</A>
+</ADDRESS>
+
+</BODY>
+</HTML>

@@ -6,10 +6,16 @@
 /***                                                                       ***/
 /*****************************************************************************/
 
+#include <stdlib.h>
+#include "raster.h"
+#include "display.h"
+#include "D.h"
 #include "param.h"
 
-
-init_graphics()
+extern char* driver;
+  
+int 
+init_graphics (void)
 {
 
     /*------------------------------------------------------------------*/
@@ -37,4 +43,6 @@ init_graphics()
     D_new_window(dem_frame, top+1, bot/2, (rit-lef)/4, 3*(rit-lef)/4);
     D_set_cur_wind(dem_frame);
     Dcell(rast_in_name,mapset_in,0);
+
+    return 0;
 }

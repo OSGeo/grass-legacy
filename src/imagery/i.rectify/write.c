@@ -11,6 +11,10 @@
                  lpalmeri@ux1.unipd.it
                            13 Aug 1999  
 *********************************************/
+/* Corrected   write_map(char *name) to correctly use
+   the target window settings, needed by G_put_raster_row(...)  
+   Pierre de Mouveaux (pmx@audiovu.com) 05 april 2000       
+ */
 
 int write_matrix (int row, int col)
 {
@@ -22,6 +26,8 @@ int write_matrix (int row, int col)
     {
         temp_name = G_tempfile();
         temp_fd = creat(temp_name,0660);
+		if (temp_fd < 0)
+				perror("temp_fd");
     }
     for (n=0; n < matrix_rows; n++)
     {
@@ -45,20 +51,37 @@ int write_matrix (int row, int col)
     return 0;
 }
 
+void show_window(struct Cell_head* w) {
+		fprintf(stderr,"-----------------------------------------------\n");
+		fprintf(stderr,"format: %d,cpmr: %d,rows: %d,cols: %d,proj: %d,zone %d\n",
+			   w->format,w->compressed,w->rows,w->cols,
+			   w->proj,w->zone);
+		fprintf(stderr,"ew %.2f,ns %.2f, N:%.2f, S:%.2f,E:%.2f,W:%.2f\n",
+			   w->ew_res, w->ns_res,w->north,w->south, w->east, w->west);
+} 
+
+
 int write_map(char *name)
 {
    int fd, row;
    char buf[100];
    void *rast;
-   
-fprintf(stderr,"write_map(%s)\n",name);
+   struct Cell_head win;
+
+
+   select_target_env();
+   if (G_set_window(&target_window)<0)
+		   fprintf(stderr,"Error setting window.\n"); 
+
+   fprintf(stderr,"write_map(%s)\n",name);
    rast = G_allocate_raster_buf(map_type);
+   
+   fd = G_open_raster_new(name,map_type);
+
    close(temp_fd);
    if((temp_fd = open(temp_name,0)) <= 0)
         G_fatal_error("tempfile '%s' does not exist\n",temp_name);
-
-   fd = G_open_raster_new(name,map_type);
-
+ 
    if(fd <=0)
    {
        sprintf(buf, "Can't open map %s\n", name);
@@ -86,6 +109,5 @@ fprintf(stderr,"write_map(%s)\n",name);
    close(temp_fd);
    unlink(temp_name);
    G_close_cell(fd);
-
    return 0;
 }

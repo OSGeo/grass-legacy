@@ -3,7 +3,6 @@
 #include "display.h"
 #include "Vect.h"
 #include "raster.h"
-#include "digit.h"
 #include "whatvect.h"
 
 
@@ -45,7 +44,7 @@ int main(int argc, char **argv)
 	}
 
 
-	R_open_driver();
+  	R_open_driver();
 	D_setup(0);
 
 	level = Vect_open_old (&Map, name, mapset);

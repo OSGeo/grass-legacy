@@ -1,0 +1,253 @@
+<html>
+
+<TITLE>m.dem.extract</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>m.dem.extract</b></EM>  - Extracts USGS Digital Elevation Model (DEM) data from
+1/2-inch magnetic tape.
+
+<BR>
+
+<EM>(GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.dem.extract</B>
+
+<BR>
+
+<B>m.dem.extract help</B>
+
+<BR>
+
+<B>m.dem.extract input=</B><EM>name </EM><B>output=</B><EM>name </EM><B>blocksize=</B><EM>value</EM> <B>start=</B><EM>value</EM> <B>end=</B><EM>value</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.dem.extract</EM>
+extracts USGS Digital Elevation Model (DEM) elevation data
+that fits into the user's current geographic region
+from the input file <EM>input</EM>,
+in blocks of <EM>blocksize</EM> bytes.
+If no <EM>input</EM> file is specified by the user, input is taken
+from /dev/rmt0, by default.  Results are placed in the named <EM>output</EM> file,
+and stored beneath the <EM>cell</EM> directory of the user's current mapset.
+<EM>m.dem.extract</EM>
+will only extract data that fall within the boundaries of the
+user's current geographic region.  Data falling outside this region
+will be ignored.  <EM>m.dem.extract</EM> will not complain if the input file
+does not cover the entire geographic region.
+The user should run <EM>m.dem.extract</EM> without specifying output file 
+(which only examines the input file) prior to extracting the data 
+to determine the size of the geographic region needed.
+If the block size is unknown, run the command <EM>
+<A HREF="m.examine.tape.html">m.examine.tape</A>
+</EM>.
+
+
+<P>
+
+The user can run this program either non-interactively or interactively.
+The program will be run non-interactively if the user specifies
+program arguments on the command line, using the form:
+
+
+<P>
+
+<DL>
+<DD>
+<B>m.dem.extract input=</B><EM>name </EM><B>[output=</B><EM>name</EM>] 
+<B>[blocksize=</B><EM>value</EM>] <B>[start=</B><EM>value</EM>] <B>[end=</B><EM>value</EM>]
+</DL>
+
+
+<P>
+
+Alternately, the user can simply type <B>m.dem.extract</B> on the command line,
+without program arguments.  In this case, the user will be prompted for
+needed parameter values using the standard GRASS interface
+described in the manual entry for <EM>
+<A HREF="parser.html">parser</A>
+</EM>.
+
+
+<P>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>The full path name of tape device or file from which DEM data are to
+be extracted.
+
+<BR>
+
+Default:  /dev/rmt0
+
+<DT><B>output=</B><EM>name</EM> 
+
+<DD>The name to be assigned to the output file containing raster DEM data
+extracted from 1/2-inch tape.
+
+<DT><B>blocksize=</B><EM>value</EM> 
+
+<DD>The physical block size (record length) of each each record, in bytes.
+<EM>
+<A HREF="m.examine.tape.html">m.examine.tape</A>
+</EM> can be used to determine block size.
+
+<DT><B>start=</B><EM>value</EM> 
+
+<DD>First DEM quad to look at (default 1).
+
+<DT><B>end=</B><EM>value</EM> 
+
+<DD>Last DEM quad to look at (default 9999999).
+</DL>
+
+<H2>NOTES</H2>
+
+The user should check the boundaries and resolution of the current region
+setting (see <EM>
+<A HREF="g.region.html">g.region</A>
+</EM>) <B>BEFORE</B> extracting data, since
+<EM>m.dem.extract</EM> will only extract the data that falls within these
+boundaries and only use the set resolution during extraction.
+
+
+<P>
+
+<B>Warning</B>:  This program assumes that the tape has <B>ONLY</B> DEM data. 
+If the tape contains 
+other files (DLG, for example) the program will not skip over them.
+In this case, forward the tape to
+the first DEM file.  
+Use the appropriate
+UNIX commands (<B>mt</B> to forward the tapes past the non-DEM files,
+and <B>dd</B> to extract and copy the correct files)
+on the tape on another machine first to extract the
+non-DEM data from the tape.
+
+
+<P>
+
+<B>USGS Tapes</B>:  This version of <EM>m.dem.extract</EM> is sensitive to
+formatting errors.  If the format on a tape is wrong, the program exits
+with the error message: "The file with incorrect data format 
+encountered ..."   Nevertheless, the program continues.
+In this case, run the program without specifying
+input files.  If the program exits again with the same error message, there
+is an inconsistency in the data format. 
+
+
+<P>
+
+The format error:  Each USGS Dem file consists of A and B, and sometimes
+C, records--
+
+<BR>
+
+	type A record	header
+
+<BR>
+
+	type B record	collection of profiles with various numbers of 
+elevations
+
+<BR>
+
+	type C record	accuracy
+
+
+<P>
+
+This new version of <EM>m.dem.extract</EM> cannot skip over any records to the 
+end of a DEM file. It first determines how many records there are in
+a file, reads those records, and then proceeds to the header (record A)
+of the next file.  Thus it is very important for the program to know 
+whether or not there is a C record 
+to be read at the end of each file.
+This information 
+is given in the  file's header record (type A) which has 
+a field set to 1 when a C-record exits, and to 0 when a C-record does
+not exist.
+
+
+<P>
+
+In some DEM files, the accuracy field is set to 0, even though a C-record
+does exist.  
+Because of this error, 
+when the program tries to read the data, it will not try 
+to read the C-record, but instead attempts to go on to the next file and
+read its header--a type A record.  This results in the format error
+because type A records and type C records have different formats, and
+the program is trying to read a type A record  when  the tape is presenting
+a type C record.
+
+
+<P>
+
+When this format error in a file is encountered, forward the tape to
+the next file.
+
+
+<P>
+
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="g.region.html">g.region</A>
+</EM><br>
+<EM>
+<A HREF="m.examine.tape.html">m.examine.tape</A>
+</EM><br>
+<EM>
+<A HREF="r.rescale.html">r.rescale</A>
+</EM><br>
+<EM>
+<A HREF="r.support.html">r.support</A>
+</EM><br>
+<EM>
+<A HREF="parser.html">parser</A>
+</EM>
+
+<H2>AUTHOR</H2>
+
+Andrew Heekin, U.S. Army Construction Engineering Research Laboratory
+
+
+<P>
+
+Improvements to program code were made for GRASS 4.0 by
+
+<BR>
+
+David Satnik, Central Washington University
+
+
+<P>
+
+Major enhancements for GRASS 4.1
+to allow the input to be a file or tape were made by
+
+<BR>
+
+Olga Waupotitsch, U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-#!/usr/local/grass-5.0b/etc/bin/contrib/cmd/NVWISH2.2 -f
+#!$(GISBASE)/etc/bin/contrib/cmd/NVWISH2.2 -f
 # This file contains the following script tools:
 #
 #    1. Vanilla looping construct - Allows the user to specify a bracket of
@@ -11,7 +11,9 @@
 
 destroy .wait_ok
 
-source $src_boot/config.tcl
+global src_boot
+
+source $src_boot/etc/nviz2.2/scripts/config.tcl
 
 # Create a simple list of script tools which are invoked by pressing
 # the specified buttons
@@ -47,8 +49,10 @@ pack .quit -side top -fill both -expand 1
 
 # File Sequence Tools open function
 proc fopen_tools {} {
+    global src_boot
+
     # Just start the external tools process
-    exec script_file_tools -q &
+    exec NVWISH2.2 -f script_file_tools -q &
     exit
 }
 

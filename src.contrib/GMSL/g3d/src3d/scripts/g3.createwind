@@ -1,0 +1,96 @@
+#!/bin/sh
+
+# g3.createwind creates a WIND3 from WIND file
+
+# written by Markus Neteler
+#            neteler@geog.uni-hannover.de
+# $Id$
+
+if test "$GISBASE" = ""; then
+echo "You must be in GRASS to run this program."
+exit
+fi
+
+if [ "$1" = "help" ]
+then
+ echo ""
+ echo "g3.createwind creates a WIND3 from current 2D region settings"
+ echo ""
+ echo "Usage: g3.createwind  bottom_height  top_height  resolution_of_3Dlayers"
+ echo ""
+ exit
+fi
+
+if [ "$2" = "" ]
+then
+ echo ""
+ echo "g3.createwind creates a WIND3 from current 2D region file"
+ echo ""
+ echo "Usage: g3.createwind  bottom_height  top_height  resolution_of_3Dlayers"
+ echo ""
+ exit
+fi
+
+if [ "$3" = "" ]
+then
+ echo ""
+ echo "g3.createwind creates a WIND3 from current 2D region"
+ echo ""
+ echo "Usage: g3.createwind  bottom_height  top_height  resolution_of_3Dlayers"
+ echo ""
+ exit
+fi
+
+echo "Creating g3-region with following parameters:"
+cat $LOCATION/WIND | awk ' /proj:/  { print "Proj: "$2 }'   > $LOCATION/WIND3
+cat $LOCATION/WIND | awk ' /zone:/  { print "Zone: "$2 }'  >> $LOCATION/WIND3
+cat $LOCATION/WIND | awk ' /north:/ { print "North: "$2 }' >> $LOCATION/WIND3
+cat $LOCATION/WIND | awk ' /south:/ { print "South: "$2 }' >> $LOCATION/WIND3
+cat $LOCATION/WIND | awk ' /east:/  { print "East: "$2 }'  >> $LOCATION/WIND3
+cat $LOCATION/WIND | awk ' /west:/  { print "West: "$2 }'  >> $LOCATION/WIND3
+
+layer_number=`echo $1 $2 $3 | awk '{print ($2-$1)/$3}'`
+
+echo "Top: $2"     >> $LOCATION/WIND3
+echo "Bottom: $1"  >> $LOCATION/WIND3
+
+echo "Top: $2"
+echo "Bottom: $1"
+
+# we need this later
+number_rows=`cat $LOCATION/WIND | awk ' /rows:/ { print $2 }'`
+echo "nofRows: $number_rows"  >> $LOCATION/WIND3
+
+number_cols=`cat $LOCATION/WIND | awk ' /cols:/ { print $2 }'`
+echo "nofCols: $number_cols"  >> $LOCATION/WIND3
+
+echo "nofDepths: $layer_number" >> $LOCATION/WIND3
+echo "nofDepths: $layer_number"
+
+cat $LOCATION/WIND | awk ' /e-w/ { print "e-w resol: "$3 }' >> $LOCATION/WIND3
+cat $LOCATION/WIND | awk ' /n-s/ { print "n-s resol: "$3 }' >> $LOCATION/WIND3
+
+echo "t-b resol: $3" >> $LOCATION/WIND3
+echo "t-b resol: $3"
+
+# check bottom_height > top_height:
+if [ $1 -ge $2 ]
+then
+ echo "----- ERROR: bottom_height must be less than top_height."
+ rm -f $LOCATION/WIND3
+ exit
+fi
+
+number=`echo $number_rows $number_cols $layer_number | awk '{print ($1 * $2 * $3)}'`
+echo "WIND3 file created."
+echo "You have defined a volume of $number tiles (cubes)."
+
+# this needs to be improved!!:
+cp $LOCATION/WIND3 $LOCATION/../PERMANENT/DEFAULT_WIND3
+
+echo ""
+echo "Please check the file:"
+echo "$LOCATION/WIND3"
+echo "Additionally check:"
+echo "$LOCATION/../PERMANENT/DEFAULT_WIND3"
+echo "Now try g3.region."

@@ -2,10 +2,12 @@
 #include "gis.h"
 #include "local_proto.h"
 
+/* $Id$ */
+
 /* 12/99 removed elev data flag. MN. not required any more */
 
 static int loop; /* added #cat support for site_list 11/99 M. Neteler
-                  * required for s.to.vect */
+                  * required for s.to.vect and s.to.rast */
 
 int 
 main (int argc, char *argv[])
@@ -139,44 +141,40 @@ G_site_put_new (FILE *fptr, Site *s, int has_cat)
     G_strcat (buf, xbuf);
   }
 
-/* this was oldish: commented 11/99 MN*/
-/*  if (has_cat)  
- *{
- *  sprintf (xbuf, "#%d ", s->cat);
- *  G_strcat (buf, xbuf);
- *} */ 
-
  if (has_cat)  
   {
     switch(s->cattype)
     {
-     case CELL_TYPE:  /* I thought #cat must be int??? 11/99 */
-      sprintf (xbuf, "#%d|", s->ccat);
+     case CELL_TYPE:
+      sprintf (xbuf, "#%d ", s->ccat);
       G_strcat (buf, xbuf);
       break;
      case FCELL_TYPE:
-      sprintf (xbuf, "#%g|", s->fcat);
+      sprintf (xbuf, "#%g ", s->fcat);
       G_strcat (buf, xbuf);
       break;
      case DCELL_TYPE:
-      sprintf (xbuf, "#%g|", s->dcat);
+      sprintf (xbuf, "#%g ", s->dcat);
       G_strcat (buf, xbuf);
       break;
     }
   }                                                    
-  else /* no cat there, so data in x,y,%z will be imported   12/99 MN */
+  else /* no cat there, so data in plain x,y,z format will be imported   12/99 MN */
   {
-     sprintf (xbuf, "#%d ", loop); /* we create a #cat from the currentsite number 11/99 */
+     /* we create a #cat entry in site_list from the current site number 11/99 */
+     sprintf (xbuf, "#%d ", loop);
      loop++;
      G_strcat (buf, xbuf);
   }
-  
+
+ /* now import attributes */
   for (i = 0; i < s->dbl_alloc; ++i)
   {
     format_double (s->dbl_att[i], nbuf);
     sprintf (xbuf, "%%%s ", nbuf);
     G_strcat (buf, xbuf);
   }
+  
   for (i = 0; i < s->str_alloc; ++i)
   {
     if (strlen (s->str_att[i]) != 0)

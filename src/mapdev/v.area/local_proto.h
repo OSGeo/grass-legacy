@@ -13,6 +13,10 @@ int where_am_i(char *, char *, char *, int, char *);
 
 #ifdef GRASS_VECT_H
 /* area_perim.c */
+#define GET_VAL 0
+#define SET_VAL 1
 int area_perim(double, double, struct Map_info *,
-    struct line_pnts *, char *, char *, char *, int, char *);
+    struct line_pnts *, char *, char *, char *, int, char *, struct Categories *cats);
+double get_total_area_of_islands(struct Map_info *map1, plus_t a_indx);
+int proc_i_flag(int opflag, int *if_val);
 #endif

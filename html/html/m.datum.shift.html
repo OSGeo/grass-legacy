@@ -1,0 +1,139 @@
+<html>
+
+<TITLE>m.datum.shift</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>m.datum.shift</b></EM>  - Datum shift program.
+
+<BR>
+
+<EM>(GRASS Data Import/Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.datum.shift</B> 
+<B>lat=</B><EM>dd.mm.ss</EM>{<EM>n</EM>|<EM>s</EM>}
+<B>lon=</B><EM>dd.mm.ss</EM>{<EM>e</EM>|<EM>w</EM>}
+<B>is=</B><EM>input_spheroid</EM> 
+<B>os=</B><EM>output_spheroid</EM> 
+<B>dx=</B><EM>xshift</EM> <B>dy=</B><EM>yshift</EM> <B>dz=</B><EM>zshift</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.datum.shift</EM> returns geographic coordinates based
+on a different spheroid (and datum) than the one used to
+obtain the original coordinates.
+
+<P>
+
+The input and output spheroids, <EM>is</EM> and
+<EM>os</EM>, are the spheroids for two different datums.
+The input spheroid is the one on which the original
+coordinates are based.  The output spheroid is that on
+which the resultant coordinates will be based.  The
+"shifting" occurs between the two datums.  The shift
+values, <EM>dx</EM>, <EM>dy</EM>, and <EM>dz</EM>, are
+constants.  They indicate the mean differences between
+points in the second datum versus the first as measured in
+meters.
+
+<P>
+
+The list of spheroids available is somewhat dynamic.  It
+may not contain exactly the ones listed below.  To
+determine the current list of possible spheroids, type in
+the command:
+
+<DL>
+<DD>
+<B>m.datum.shift lat=</B><EM>0n</EM> <B>lon=</B><EM>0w</EM> <B>dx=</B><EM>0</EM> <B>dy=</B><EM>0</EM> <B>dz=</B><EM>0</EM> <B>is=</B><EM>help</EM> <B>os=</B><EM>help</EM>
+</DL>
+
+A list of available spheroids will be printed on the
+screen.  If the spheroid desired is not on the list, the
+values for the semi-major axis and the eccentricity squared
+for the spheroid may be entered in place of a spheroid name
+in the following format:
+
+
+<DL>
+<DD>
+<B>s=a=</B><EM>semi-major_axis</EM>,<B>e</B>=<EM>eccentricity_squared</EM>
+</DL>
+
+
+<P>
+
+<H3>SOME POSSIBLE SPHEROIDS</H3>
+
+(<EM>The on-line listing includes only the spheroid names</EM>)
+
+<PRE>
+Spheroid     |  Commonly used for:|  Semi-major axis|  Eccentricity sqrd
+_____________|____________________|_________________|___________________
+australian   |  Australia         |  6378160.0      |  0.0066945419
+bessel       |  Japan             |  6377739.155    |  0.0066743722
+clark66      |  N. America        |  6378206.4      |  0.006768658
+clark80      |  France, Africa    |  6378249.145    |  0.0068035113
+everest      |  India, Burma      |  6377276.345    |  0.0066378466
+international|  Europe            |  6378388.0      |  0.00672267
+wgs72        |  worldwide coverage|  6378135.0      |  0.006694317778
+</PRE>
+
+<H2>EXAMPLE</H2>
+
+<DL>
+<DD>
+<B>m.datum.shift lat=</B><EM>0n</EM> <B>lon=</B><EM>175w</EM> <B>is=</B><EM>clark66</EM> <B>os=</B><EM>wgs72</EM> <B>dx=</B><EM>-22</EM> <B>dy=</B><EM>157</EM> <B>dz=</B><EM>176</EM>
+<DT>Results: 4
+<DD>
+lat=0.00.05.72999N <BR>
+lon=174.59.55.004133W
+</DL>
+
+<H2>NOTES</H2>
+
+Essentially, the program follows these steps.  The original
+point, as defined by a latitude and a longitude, is
+converted to geocentric coordinates.  The shift values are
+added to the geocentric coordinates.  The summed values are
+then converted to latitude and longitude based on the
+output spheroid.
+
+
+<P>
+
+For a brief discussion of spheroids and datums 
+see <EM><A HREF="m.ll2u.html">m.ll2u</A></EM>.
+For a brief discussion of geocentric coordinates 
+see <EM><A HREF="m.ll2gc.html">m.ll2gc</A></EM>.
+
+
+<P>
+
+This remains under testing is still an experimental
+program.  It is part of an initial effort to incorporate
+geographic coordinates into GRASS.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="m.gc2ll.html">m.gc2ll</A></EM><br>
+<EM><A HREF="m.ll2gc.html">m.ll2gc</A></EM><br>
+<EM><A HREF="m.ll2u.html">m.ll2u</A></EM><br>
+<EM><A HREF="m.u2ll.html">m.u2ll</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering 
+Research Laboratory
+
+</body>
+
+</html>

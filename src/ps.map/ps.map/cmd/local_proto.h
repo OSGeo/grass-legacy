@@ -77,7 +77,7 @@ int map_info(void);
 /* map_setup.c */
 int map_setup(void);
 /* mtextbox.c */
-int multi_text_box_path(int, int, int, int, char *, int);
+int multi_text_box_path(double, double, int, int, char *, int, float);
 int multi_lines(char *);
 /* outl_io.c */
 int o_io_init(void);
@@ -121,7 +121,14 @@ int draw_left(void);
 int draw_bot(void);
 #ifdef GRASS_VECT_H
 /* ps_vector.c */
-int PS_vector_plot(struct Map_info *, int);
+int PS_vector_plot(struct Map_info *, int, int);
+/* ps_area.c */
+int PS_area_plot(struct Map_info *, int);
+/* vect.c */
+struct line_pnts *parallel_line(struct line_pnts *, double, double);
+int adjust_line(struct line_pnts *);
+void reverse_line(struct line_pnts *);
+int construct_path(struct line_pnts *, double, int);
 #endif
 /* rast_plot.c */
 int PS_make_mask(void);
@@ -154,7 +161,7 @@ int show_scale(void);
 /* sitefile.c */
 int sitefile(char *, char *);
 /* textbox.c */
-int text_box_path(int, int, int, int, char *, int);
+int text_box_path(double, double, int, int, char *, int, float);
 /* vectfile.c */
 int vectfile(char *, char *);
 /* vlegend.c */

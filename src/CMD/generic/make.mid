@@ -5,8 +5,9 @@ SHELL           = /bin/sh
 # or files used by GRASS programs
 BIN             = $(GISBASE)/bin
 ETC             = $(GISBASE)/etc
-GARDEN_BIN      = $(GISBASE)/garden/bin
-GARDEN_ETC      = $(GISBASE)/garden/etc
+# unused, stored in BIN_MAIN_CMD now:
+##GARDEN_BIN      = $(GISBASE)/garden/bin
+##GARDEN_ETC      = $(GISBASE)/garden/etc
 BIN_MAIN_INTER  = $(ETC)/bin/main/inter
 BIN_MAIN_CMD    = $(ETC)/bin/main/cmd
 BIN_ALPHA_INTER = $(ETC)/bin/main/inter
@@ -34,9 +35,17 @@ SRC_X       = $(SRC)/xgrass
 LIBDIR      = $(SRC)/libes
 X_LIBDIR     = $(SRC_X)/libes
 INCLUDE_DIR = $(SRC)/include
-DIG_LIBDIR  = $(SRC)/libes/vect32/libes
-DIG_INCLUDE  = $(SRC)/libes/vect32/lib
-VECT_INCLUDE = -I$(SRC)/libes/vect32/Vlib -I$(SRC)/libes/vect32/diglib
+
+#not required any more 7/2000:
+#DIG_LIBDIR  = $(SRC)/libes/vect32/libes
+#DIG_INCLUDE  = $(SRC)/libes/vect32/lib
+#VECT_INCLUDE = -I$(SRC)/include/vect
+
+#VECT_INCLUDE = -I$(SRC)/include/vect32
+
+#not required any more 7/2000:
+#DIG_LIBDIR  = $(SRC)/libes/vect32/libes
+#DIG_INCLUDE  = $(SRC)/libes/vect32/lib
 
 VASKLIB     = $(LIBDIR)/libvask.a
 VASK        = $(VASKLIB) $(CURSES)

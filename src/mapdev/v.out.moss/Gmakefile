@@ -1,7 +1,6 @@
 #LIBDIG = $(SRC)/mapdev/lib
 #  DIGLIB = $(LIBDIG)/libdig.a
 
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 OFILES = \
 	v.out.moss.o \

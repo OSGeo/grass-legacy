@@ -2,9 +2,6 @@ PBIN = /usr/tmp
 PGM    = v.surf.rst
 HOME = $(BIN_CONTRIB_CMD)
 
-#required for Windows/Cygnus (12/99)
-#XDRLIB = /usr/local/lib/librpclib.a
-
 TREEDIR = $(SRC)/libes/rst_gmsl/tree
 TREELIB = $(TREEDIR)/libtree.a
 DATADIR = $(SRC)/libes/rst_gmsl/data
@@ -12,8 +9,7 @@ DATALIB = $(DATADIR)/libdata.a
 INTERPFDIR = $(SRC)/libes/rst_gmsl/interp_float
 INTERPFLIB = $(INTERPFDIR)/libinterpfl.a
 
-EXTRA_CFLAGS =  -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR) $(VECT_INCLUDE)
-#EXTRA_CFLAGS =  $(VECT_INCLUDE)
+EXTRA_CFLAGS =  -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR)
 
 LIST   =  main.o 
 SRCS   =  main.c 

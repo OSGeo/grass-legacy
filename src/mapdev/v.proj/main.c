@@ -6,11 +6,12 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <string.h>
-#include  "gis.h"
+#include "gis.h"
 #include "Vect.h"
 #include "V_.h"
 #include "projects.h"
 #include "local_proto.h"
+
 #define	B_DIR  "dig"
 #define	ATT_DIR  "dig_att"
 #define	CAT_DIR  "dig_cats"
@@ -19,11 +20,7 @@
 #define UNIT_FILE "PROJ_UNITS"
 */
 
- 
- 
-int 
-main (int argc, char *argv[])
-
+int main (int argc, char *argv[])
 {
 	int i, type, cat, vect_read, stat, cnt;
 	int day, yr, Out_proj;
@@ -31,7 +28,7 @@ main (int argc, char *argv[])
 	char ctype[3];
 	char out_lon0[5], out_lat0[5];
         char answer[50], buffa[1024], buffb[1024], *value1;
-        char *mapset, *omapset, *new_data, *G_tempfile(), *gets(), *tmpfile;
+        char *mapset, *omapset, *new_data, *tmpfile;
 	char *omap_name, *map_name, *iset_name, *oset_name, *iloc_name;
         struct pj_info info_in;
         struct pj_info info_out;

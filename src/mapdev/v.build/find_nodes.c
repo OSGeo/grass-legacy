@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include <math.h>
-#include "dig_structs.h"
+#include "Vect.h"
 
 int find_nodes (double x, double y, int n_nodes, struct P_node *NODES, double s_thresh)
 {

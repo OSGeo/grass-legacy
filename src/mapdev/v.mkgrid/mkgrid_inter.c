@@ -5,6 +5,7 @@
 #include	<stdio.h>
 #include	"gis.h"
 #include        "Vect.h"
+#include        "dig_atts.h"
 #include	"grid_structs.h"
 #include	"local_proto.h"
 
@@ -16,12 +17,30 @@ static char  *PROG ;
 int main (int argc, char *argv[])
 {
 
+        /* loop */
+        int i,j;
+
+
 	/*  store filename and path  */
 	char  dig_file[128] ;
 	char  buffer[128] ;
 	char errmsg[1024];
 	char buf[256];
 	int quiet = 0;
+
+	/* array to store central points */
+	double *grid_point_x, *grid_point_y;
+	int *grid_val;
+
+	/* Other local variables */
+	AttributeType  att_type;
+	struct attribute *Att1;
+	struct atts_index *attindx;
+	int cval, attCount;
+	int nr, nc;
+
+	FILE *fatt;
+
 
         struct Map_info Map;
 	struct  grid_description  grid_info ;
@@ -115,13 +134,62 @@ int main (int argc, char *argv[])
 	ask_for_double ( &grid_info.angle, "\n Enter the angle of rotation about the origin: " ) ;
 	grid_info.angle = 3.1415927 / 180 * grid_info.angle;
 
+	fprintf (stdout,"\n\n Enter the type of Attribute [const, rows, cols], enter if none: " ) ;
+        while(1)
+	{
+	    if (fgets (buf,256,stdin) == NULL)
+ 	    {
+		clearerr (stdin) ;
+		exit (1) ;
+	    }
+	    if(strncmp( buf, "const", 5 ) == 0) {
+	      att_type = ATT_CONSTANT;
+	      break;
+	    }
+	    else if(strncmp( buf, "rows", 4 ) == 0 ) {
+	      att_type = ATT_ROWS;
+	      break;
+	    }
+	    else if( strncmp( buf, "cols", 4 ) == 0 ) {
+	      att_type = ATT_COLS;
+	      break;
+	    }
+	    else {
+	      att_type = ATT_NONE;
+	      break;
+	    }
+
+        }
+	if(att_type == ATT_CONSTANT) {
+	  fprintf (stdout,"\n\n Enter constant value of attribute: " ) ;
+	  while(1)
+	    {
+	      if (fgets (buf,256,stdin) == NULL)
+		{
+		  clearerr (stdin) ;
+		  exit (1) ;
+		}
+
+	      cval = atoi(buf);
+	      fprintf(stderr, "\nValue of att is %d.\n\n", cval );
+	      if(cval <= 0) continue;
+	      else break;
+
+	    }
+
+	  proc_const_attribute_value( SET_VAL, &cval );
+	}
+
+	
+	/* Initialise vector map */
+
         if (0 > Vect_open_new (&Map, dig_file))
         {
            sprintf (errmsg, " %s: Cannot open vector output file <%s>\n", PROG, dig_file);
 	   G_fatal_error (errmsg);
 	 }
 
-	if (G_yes("Run quet?",0) ) quiet =1;
+	if (G_yes("Run quiet?",0) ) quiet =1;
 
     /*  vector rows are the actual number of rows of vectors to make up the
     *   entire grid.   ditto for cols.
@@ -139,6 +207,53 @@ int main (int argc, char *argv[])
 	if(!quiet) fprintf (stdout,"\n Finished\n\n") ;
 
         Vect_close(&Map);
+
+	/* Create a grid of label points at the centres of the grid cells */
+
+
+	if( att_type == ATT_NONE ) exit (0);
+
+	nr = grid_info.num_rows;
+	nc = grid_info.num_cols;
+
+	grid_point_x = (double *)malloc( nr * nc * sizeof(double) );
+	grid_point_y = (double *)malloc( nr * nc * sizeof(double) );
+	grid_val = (int *)malloc( nr * nc * sizeof(int) );
+
+
+	set_grid_area_points( grid_point_x, grid_point_y, &grid_info );
+
+	set_grid_attributes( grid_val, &grid_info, att_type );
+
+
+	/* Allocate space for attribute structures */
+
+	Att1 = (struct attribute *)malloc( sizeof(struct attribute) );
+	attindx = (struct atts_index *)malloc( sizeof(struct atts_index) );
+
+
+	/* Initialise attribute index structure and attribute file */
+
+	if( (fatt = G_fopen_new( "dig_att", dig_file )) == NULL ) {
+	  G_warning("Unable to open attributes file. Not writing attributes.\n");
+	  exit(0);
+	}
+
+	/* Write out the attributes */
+	attCount = 0;
+	for( i = 0; i < grid_info.num_rows; ++i ) {
+	  for( j = 0; j < grid_info.num_cols; ++j ) {
+	    Att1->type='A';
+	    Att1->x = grid_point_x[i*grid_info.num_cols+j];
+	    Att1->y = grid_point_y[i*grid_info.num_cols+j];
+	    Att1->cat = grid_val[i*grid_info.num_cols+j];
+	    Att1->offset = ++attCount;
+	    write_att_struct( fatt, Att1 );
+	  }
+	}
+  
+	if(fatt) fclose(fatt);
+
 
 	exit(0);
 }		/*  main()  */

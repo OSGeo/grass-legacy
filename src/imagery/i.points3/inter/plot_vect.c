@@ -35,8 +35,6 @@
 #include "raster.h"
 #include "display.h"
 #include "Vect.h"
-#include "dig_structs.h"
-#include "dig_externs.h"
 
          /* internal function prototypes */
 #ifdef _NO_PROTO

@@ -1,0 +1,55 @@
+<html>
+<body>
+<pre>
+                                              Tue Jul 25 11:20:54  2000
+
+This directory contains the experimental binary
+version of GRASS under WINDOWS/Cygnus.
+
+NOTE: The graphical output is not ported yet.
+      -> no graphics yet, friends!!
+
+---------------------------------------------------------
+
+1. Get latest GRASS source code
+http://www.geog.uni-hannover.de/grass/grass5/source/experimental/
+
+2. To compile and link under the Windows NT/2000 go to
+http://sourceware.cygnus.com/cygwin/download.html
+and get the setup.exe.   Download it and run it.
+It will prompt you for one of three choices, if you
+have never loaded Cygwin software select download
+from the internet.   If you have a previous version,
+you should know what to do.   Install in C:\Cygwin
+
+Put C:\Cygwin\bin in your PATH.
+
+set MAKE_MODE=unix while you are in the environmental area
+
+3. Download the sunrpc tar.gz file from Corinna Vinschen
+  site and install the binary files:
+ ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Vinschen_Corinna/
+
+4. Download the ncurses tar.gz file from Michael Hirmke's page:
+ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Hirmke_Michael/
+
+5 Read obout Unix running under Windows here:
+    http://cygutils.netpedia.net/V1.1/index.html
+    http://sourceware.cygnus.com/cygwin/docs.html
+
+-----------------------------------------------------------------------------
+
+6. To start GRASS compilation proceed like this:
+
+    ./configure
+    make
+    make install
+
+7.  The current build was made using Cygwin 1.1.2
+
+</pre>
+
+For questions, send a message to the grass list 
+<a href=grass5@geog.uni-hannover.de> grass5@geog.uni-hannover.de</a>
+
+</body></html>

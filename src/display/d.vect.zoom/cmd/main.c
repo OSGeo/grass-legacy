@@ -3,12 +3,9 @@
 #include "raster.h"
 #include "display.h"
 #include "Vect.h"
-#include "digit.h"
 #include "local_proto.h"
 
-
-int 
-main (int argc, char **argv)
+int main (int argc, char **argv)
 {
 	struct Option *opt1;
 	char *name, *mapset;
@@ -41,7 +38,7 @@ main (int argc, char **argv)
 	}
 
 
-	R_open_driver();
+  	R_open_driver();
 	D_setup(0);
 
 	level = Vect_open_old (&Map, name, mapset);

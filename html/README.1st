@@ -1,0 +1,14 @@
+This directory contains the GRASS 5 MAN pages
+in HTML format. Please use the style you find
+in existing module descriptions.
+
+To create MAN-formatted files, you
+g.html2man script within GRASS. Move the
+MAN-page to ../man/man[12345] then.
+The ../cats/.. files are created during GRASS
+compilation.
+
+Upload all files HTML, MAN and CAT to CVS
+finally.
+
+Please take care for HTML links within the files.

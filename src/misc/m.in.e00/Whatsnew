@@ -1,0 +1,31 @@
+m.in.e00 now understands uncompressed _and_ compressed e00 files
+(thanks to Daniel Morisette), so e00b2a can be thrown away (A far
+better alternative is to use the e00compr package from Daniel
+Morisette (http://pages.infinit.net/danmo/e00/index-e00compr.html).
+
+Site file management is done accordingly the new site API
+
+m.in.e00 can now import float grid (not only integer ones)
+
+Usualy, each object (site, line or area) in Arc-Info has two identifiers :
+COVER-# is an internal number that should NEVER be used to link a
+feature to an external database (those number may change if you
+modify (add, delete, etc.) the coverage.
+COVER-ID is a user defined number that is used to differentiate
+each object in a coverage.
+Some peoples using A/I doesn't take care of this and rely only on
+COVER-#, giving the same cover-ID to differents objects.
+This is the reason why I choose to use by default COVER-# for the
+attribute in Grass, although this is not a recommended practice.
+The flag -i allows you to use cover-ID, which is better is the A/I
+database follows the ESRI rules and you will keep consistency between
+A/I and Grass objects identifiers.
+When the attributes seems to be misplaced, even without using the
+-i flag, it may shown that the original A/I file is corrupted (or
+that m.in.e00 is even worse that I think :-)
+
+TODO : the flag -d means that you want a database output. It has
+yet absolutely no action... We wait all for a good interface to
+postgreSQL, so be patient :-) 
+It would also be great to import all attributes in the site file,
+...

@@ -122,7 +122,9 @@
  *  or don't have ecvt(), fcvt(), and gcvt().
  */
 
+#ifndef __FreeBSD__
 #define FLOATING
+#endif
 
 /*
  *  A few other miscellaneous #definitions are possible:
@@ -397,12 +399,12 @@ while(*fmt != '\0')
 #endif
                 case 'c':
 #ifndef pdp11
-                        Putc(va_arg(argp, char), fd);
+                        Putc(va_arg(argp, int), fd);
 #else
                         /* poor little compiler got an "expression */
                         /* overflow" on the above */
 
-                        n = va_arg(argp, char);
+                        n = va_arg(argp, int);
                         Putc(n, fd);
 #endif
                         break;

@@ -6,9 +6,7 @@
 #include <math.h>
 #include "gis.h"
 #include "Vect.h"
-#include "digit.h"
 #include "dig_atts.h"
-#include "dig_head.h"
 #include "optri.h"
 
 /*--------------------------------------------------------------------------*/

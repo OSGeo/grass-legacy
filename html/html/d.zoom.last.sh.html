@@ -1,0 +1,65 @@
+<html>
+
+<TITLE>d.zoom.last.sh</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.zoom.last.sh </b></EM> - Allows the user to change the current geographic
+region settings interactively and tracks the last region settings.
+(An addition to the GRASS display program 
+<EM><A HREF="d.zoom.html">d.zoom</A></EM>).
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.zoom.last.sh</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.zoom.last.sh</EM> is a UNIX Bourne shell macro which
+allows the user to interactively adjust the settings of the
+current geographic region using a pointing device such as a
+mouse, and automatically saves the last region settings.
+The last region can be restored by a GRASS command:
+
+<DL>
+<DD><B><A HREF="g.region.html">g.region</A> region=</B>last
+<DT>or 
+<DD><B><A HREF="g.region.html">g.region</A></B> last
+</DL>
+
+This script and the above restoring command function as an 'undo' in
+editing.  
+
+<H2>NOTES</H2>
+
+Only the last region is saved. When zooming multiple times,
+regions before the last are NOT available. Region-file
+'last' is reserved for <EM>d.zoom.last.sh</EM>.
+
+<H2>FILES</H2>
+
+See the file <KBD>$GISBASE/scripts/d.zoom.last.sh</KBD>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.zoom.html">d.zoom</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A>.</EM>
+
+<H2>AUTHOR</H2>
+
+Jianping Xu, <br>
+John Bognar,<br>
+Rutgers University
+
+</body>
+</html>

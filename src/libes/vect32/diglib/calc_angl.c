@@ -6,8 +6,8 @@
 */
 
 #include <stdio.h>
-#include "dig_structs.h"
 #include    <math.h>
+#include "Vect.h"
 
 static double d_atan2(double,double);
 

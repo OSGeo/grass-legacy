@@ -1,0 +1,59 @@
+PGM = 	v.out.sdts
+HOME = $(BIN_CONTRIB_CMD)
+FIPSLIB	=	$(LIBDIR)/libf123.a
+
+EXTRA_CFLAGS	=  -I../../libes/fips123/f123inc
+
+OFILES = \
+	v.out.sdts.o\
+	spatial_ref.o\
+	errors.o\
+	shuffle_dots.o\
+	struct_swap.o\
+	utm_ll.o\
+	wr_fips123.o\
+	write_areas.o\
+	write_lines.o\
+	write_nodes.o\
+	write_atts.o\
+	wr_globals.o\
+	wr_dict_mods.o\
+	write_coords.o\
+	polygon.o\
+	control.o\
+	chk_inside.o\
+	legal_names.o\
+	data_quality.o
+
+CFILES = \
+	v.out.sdts.c\
+	spatial_ref.c\
+	errors.c\
+	shuffle_dots.c\
+	struct_swap.c\
+	utm_ll.c\
+	wr_fips123.c\
+	write_areas.c\
+	write_lines.c\
+	write_nodes.c\
+	write_atts.c\
+	wr_globals.c\
+	wr_dict_mods.c\
+	write_coords.c\
+	polygon.c\
+	control.c\
+	chk_inside.c\
+	legal_names.c\
+	data_quality.c
+
+
+LIBES = $(FIPSLIB) $(COORCNVLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
+
+$(HOME)/$(PGM):	$(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB) $(XDRLIB)
+
+$(LIBES):	#
+
+saber_src:
+	#load $(CFLAGS) $(CFILES) $(LIBDIR)/libf123.a  $(COORCNVLIB) $(VECTLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB)
+

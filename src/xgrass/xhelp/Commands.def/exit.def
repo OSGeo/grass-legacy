@@ -1,8 +1,0 @@
-
-
-exit - 
-
-The exit command ends the user's current GRASS session and returns the
-user to the directory in which he was working prior to entering GRASS.
-
-Manual entry for @man("exit")

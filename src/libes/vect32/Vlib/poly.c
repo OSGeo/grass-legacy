@@ -1,6 +1,5 @@
 #include <math.h>
 #include <stdlib.h>
-#include "digit.h"
 #include "Vect.h"
 #include "gis.h"
 #include "linkm.h"

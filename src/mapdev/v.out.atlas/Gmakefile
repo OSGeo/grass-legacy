@@ -1,0 +1,9 @@
+
+VFILES = write.o main.o
+
+all:	$(BIN_CONTRIB_CMD)/v.out.atlas
+
+$(BIN_CONTRIB_CMD)/v.out.atlas: $(VFILES)
+	$(CC) $(LDFLAGS) -o $@ $(VFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

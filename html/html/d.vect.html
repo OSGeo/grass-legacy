@@ -1,0 +1,96 @@
+<html>
+
+<TITLE>d.vect</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>d.vect</b></EM> - Displays GRASS vector data in the active frame on the 
+graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.vect</B> 
+<BR>
+<B>d.vect help</B> 
+<BR>
+<B>d.vect [-v] map=</B><EM>name</EM> [<B>color=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.vect</EM> displays the user-named binary vector file
+in the active display frame on the graphics monitor, in the
+user-named color.  The vector file must already exist under
+a mapset listed in the user's current mapset search path.
+
+<P>
+
+This program can be run either non-interactively or
+interactively.  If the user gives the name of a binary
+vector map to be displayed and (optionally) specifies a
+color for vector display, the program will run
+non-interactively. (If the user gives a vector map name but
+no vector color on the command line, the named vector map
+layer will be displayed in the default color
+<EM>white</EM>.) Alternately, the user can simply type
+<B>d.vect</B> on the command line; in this case, the
+program will prompt the user for parameter values using the
+standard GRASS <A HREF="parser.html">parser</A>
+interface.
+
+<H3>Flags:</H3>
+<DL>
+<DT><B>-m</B>
+<DD>Makes <B>d.vect</B> use less memory.
+
+<DT><B>-v</B>
+<DD>Sets verbose mode.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>map=</B><EM>name</EM>
+<DD>Vector map layer to be displayed in the active display frame. 
+<BR>
+Must be binary vector file in the user's current mapset search path. 
+
+<DT><B>color=</B><EM>name</EM>
+<DD>Sets vector display color to <EM>name</EM>.
+<BR>
+Options: white, red, orange, yellow, green, blue, indigo, violet, magenta, 
+brown, gray, and black 
+<BR>
+Default: <EM>white</EM> 
+</DL>
+
+<H2>NOTES</H2>
+
+This program needs to be upgraded with features that would: 
+<OL>
+<LI> Allow different line colors, weights, and textures to be assigned 
+     to vectors with different category values. 
+<LI> Allow different fill patterns and colors to be assigned to areas. 
+<LI> Be linked with an associated program identifying these options. 
+</OL>
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.rast.html">d.rast</A>, <A HREF="d.sites.html">d.sites</A>, <A HREF="d.what.vect.html">d.what.vect</A>, <A HREF="g.mapsets.html">g.mapsets</A>, <A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, 
+U.S. Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>
+

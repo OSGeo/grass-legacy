@@ -1,7 +1,6 @@
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
-#include "digit.h"
 #include "Vect.h"
 #include "local_proto.h"
 

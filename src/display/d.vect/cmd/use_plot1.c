@@ -3,6 +3,7 @@
 
 #define OVERLAP .75
 
+extern int quiet;
 int 
 use_plot1 (char *name, char *mapset)
 {
@@ -12,8 +13,9 @@ use_plot1 (char *name, char *mapset)
     struct Cell_head window;
     double x;
     struct Map_info Map;
-
-    fprintf (stdout,"Vector file [%s]\n", name);
+	
+	if (!quiet)
+		fprintf (stdout,"Vector file [%s]\n", name);
 
     /*fd = open_vect (name, mapset);*/
 
@@ -25,24 +27,27 @@ use_plot1 (char *name, char *mapset)
     }
 
     Vect__get_window (&Map, &N, &S, &E, &W);
-    Vect_print_header(&Map);
+	if (!quiet)
+		Vect_print_header(&Map);
     Vect_close (&Map);
 
     G_get_set_window (&window);
 
-    fprintf (stdout,"\n");
-    G_format_northing (N, buf, window.proj);
-    fprintf (stdout," North: %s\n", buf);
+	if (!quiet) {
+		fprintf (stdout,"\n");
+		G_format_northing (N, buf, window.proj);
+		fprintf (stdout," North: %s\n", buf);
 
-    G_format_northing (S, buf, window.proj);
-    fprintf (stdout," South: %s\n", buf);
+		G_format_northing (S, buf, window.proj);
+		fprintf (stdout," South: %s\n", buf);
 
-    G_format_easting (E, buf, window.proj);
-    fprintf (stdout," East:  %s\n", buf);
+		G_format_easting (E, buf, window.proj);
+		fprintf (stdout," East:  %s\n", buf);
 
-    G_format_easting (W, buf, window.proj);
-    fprintf (stdout," West:  %s\n", buf);
-    fprintf (stdout,"\n");
+		G_format_easting (W, buf, window.proj);
+		fprintf (stdout," West:  %s\n", buf);
+		fprintf (stdout,"\n");
+	}
 
     x =  G_window_percentage_overlap(&window, N, S, E, W);
     /*

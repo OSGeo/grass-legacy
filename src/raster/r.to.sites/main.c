@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
 	else 
 	    shead.time = (struct TimeStamp*)NULL;
 
-	shead.form = shead.labels = (char *)NULL;
+	shead.form = shead.labels = shead.stime = (char *)NULL;
 
 	if(attr->answer){
 	    shead.form = G_store("||%");

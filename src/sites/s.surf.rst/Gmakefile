@@ -9,9 +9,8 @@ DATALIB = $(DATADIR)/libdata.a
 INTERPFDIR = $(SRC)/libes/rst_gmsl/interp_float
 INTERPFLIB = $(INTERPFDIR)/libinterpfl.a
 
-EXTRA_CFLAGS =  -g -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR) $(VECT_INCLUDE)
+EXTRA_CFLAGS =  -g -I$(TREEDIR) -I$(DATADIR) -I$(INTERPFDIR)
 EXTRALDFLAGS=-g
-#EXTRA_CFLAGS =  $(VECT_INCLUDE)
 
 LIST   =  main.o 
 SRCS   =  main.c 

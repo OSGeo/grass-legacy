@@ -1,7 +1,7 @@
 PGM=grey.map
 INTERFACE = $(SRC)/paint/Interface/applib/lib.a
 ICONLIB = $(LIBDIR)/libicon.a
-LIBES = $(ICONLIB) $(GISLIB) $(TERMLIB) $(INTERFACE) $(DATETIMELIB) $(MATHLIB)
+LIBES = $(ICONLIB) $(GISLIB) $(TERMLIB) $(INTERFACE) $(DATETIMELIB) $(XDRLIB) $(MATHLIB)
 
 LIST = main.o\
 	Pmap.o\

@@ -1,0 +1,225 @@
+<TITLE>d.icons</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.icons</b></EM>  - Displays points, as icons, at user-defined locations 
+in the active display frame on the graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.icons</B>
+<BR>
+<B>d.icons help</B> 
+<BR>
+<B>d.icons</B> 
+[<B>-r</B>] 
+<B>icon=</B><EM>name</EM> 
+[<B>color=</B><EM>name</EM>] 
+[<B>size=</B><EM>value</EM>] 
+[<B>points=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.icons</EM> graphically displays point (site)
+locations as icons in the active frame on the graphics
+monitor.  Geographic coordinates are read either from
+standard input or from an input file whose name is stated
+by the user.  At each site location, a user-defined icon is
+displayed.
+
+<H2>OPTIONS</H2>
+
+The user must enter at least the name of an <EM>icon</EM>
+file storing a graphic representation of the icon to be
+displayed, and the geographic coordinates of the points at
+which they will appear.
+
+<P>
+
+The user can run this program either non-interactively or
+interactively.  The program will be run non-interactively
+if the user specifies the name of an <EM>icon</EM> file and
+(optionally) any other desired parameters on the command
+line, using the form:
+<DL>
+<DD>
+<B>d.icons</B> 
+[<B>-r</B>] 
+<B>icon=</B><EM>name</EM> 
+[<B>color=</B><EM>name</EM>] 
+[<B>size=</B><EM>value</EM>] 
+[<B>points=</B><EM>name</EM>] 
+</DL>
+If the user fails to specify the name of a <EM>points</EM>
+file on the command line, the program will prompt the user
+to enter geographic coordinates from standard input.  If
+the user specifies at least the name of an <EM>icon</EM>
+file on the command line, any other parameter values left
+unspecified by the user will be set to their default values
+(see below).
+
+<P>
+
+Alternately, the user can simply type: 
+<DL>
+<DD>
+<B>d.icons</B> 
+</DL>
+on the command line, without program arguments. 
+In this case, the user will be prompted for 
+needed parameter values using the standard 
+GRASS user interface described in the manual entry 
+for <EM><A HREF="parser.html">parser</A></EM>.
+The geographic coordinates at which icons are to be displayed 
+can still be input from an input file (<EM>points</EM>) in interactive use. 
+
+
+<H3>Flag:</H3> 
+
+<DL>
+<DT><B>-r</B>
+<DD>Coordinates are input in reverse 
+order (i.e., as <EM>northing easting</EM>). 
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>icon=</B><EM>name</EM>
+<DD>The name of an existing file containing a graphic representation 
+    of the icon to be drawn. 
+    <EM>icon</EM> files can be created by the user 
+    using the <EM><A HREF="p.icons.html">p.icons</A></EM> command 
+    and are stored under the <EM>icons</EM> directory under the user's 
+    current mapset. 
+<DT><B>color=</B><EM>name</EM>
+<DD>Sets the current icon color to the <EM>name</EM> stated. 
+<BR>
+    Options: red, orange, yellow, green, blue, indigo, violet, 
+    gray, white, and black 
+<BR>
+    Default: white
+<DT><B>size=</B><EM>value</EM>
+<DD>The icon scaling factor. 
+<BR>
+    Options: 1-1000 
+<BR>
+    Default: 1
+<DT><B>points=</B><EM>name</EM>
+<DD>The name of a UNIX file containing the geographic
+    coordinates of sites at which icons are to be drawn.  Since
+    this is a UNIX file, the user should specify the name using
+    standard UNIX file naming conventions.  If this file is not
+    in the user's current working directory, its pathname
+    should be specified.  The file contents should consist of a
+    series of geographic coordinates that fall within the
+    boundaries of the current geographic region.  Each site
+    location should be stated on a separate line as an easting
+    and northing (in that order) separated by a single blank
+    space.  If no <EM>points</EM> file is specified by the
+    user, input is taken from standard input and should be
+    given in the same form; to end standard input, type
+    <EM>end</EM> (or press control-d).
+</DL>
+
+<H2>EXAMPLE</H2>
+
+An <EM>icons</EM> file contains a graphic representation of the icon 
+to be displayed. Here, spaces represent areas of no color, 
+and x's represent areas of color. For example, the user might 
+construct an icon resembling a cross in the following way: 
+<DL>
+<DD>
+<PRE>
+  x 
+  x 
+xxxxx 
+  x 
+  x 
+  x 
+</PRE>
+</DL>
+This icon might be stored in a file called <EM>cross</EM>
+(under the user's $LOCATION/icons directory). If the user
+specified that this be the <EM>icon</EM> file used while
+running <EM>d.icons</EM>, this cross would then appear in
+the <EM>color</EM> and <EM>size</EM> specified by the user,
+at each site location named in the <EM>points</EM> file.
+
+<P>
+
+Note: icons are created with the 
+<EM><A HREF="p.icons.html">p.icons</A></EM>
+command. 
+
+<P>
+
+The <EM>points</EM> file lists the geographic coordinates
+of site locations (at which icons will be displayed). This
+file should take the form:
+<DL>
+<DD>
+<PRE>
+easting northing 
+easting northing 
+easting northing 
+... 
+</PRE>
+</DL>
+If the user sets the <B>-r</B> flag, the order of these
+coordinates should be reversed (i.e., coordinates should be
+given as <EM>northing easting</EM>).
+
+<P>
+
+If the points file is not specified, then the corrdinates
+are read from the keyboard or across a pipe. This feature
+allows users to enter the coordinates by hand, or, more
+usefully, to get then from another program. For example, to
+display icons at locations specified in a sites list:
+<DL>
+<DD>
+<B><A HREF="s.out.ascii.html">s.out.ascii</A></B> 
+<EM>name</EM> | <B>d.icons icon=</B><EM>cross</EM>
+</DL>
+where <EM>name</EM> is the name of a site list, and 
+<EM>cross</EM> is the name of an icon. 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.points.html">d.points</A></EM><br>
+<EM><A HREF="d.sites.html">d.sites</A></EM><br>
+<EM><A HREF="d.where.html">d.where</A></EM><br>
+<EM><A HREF="p.icons.html">p.icons</A></EM><br>
+<EM><A HREF="s.db.rim.html">s.db.rim</A></EM><br>
+<EM><A HREF="s.out.ascii.html">s.out.ascii</A></EM><br>
+<EM><A HREF="v.db.rim.html">v.db.rim</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+Contributed by: 
+<BR>
+<P>
+Dave Johnson
+<BR> DBA Systems, Inc. 
+<BR> 10560 Arrowhead Drive 
+<BR> Fairfax, Virginia 22030 
+
+<P>
+
+Modified by: 
+<BR>
+<P>
+Michael Shapiro, 
+U.S. Army Construction Engineering 
+Research Laboratory
+

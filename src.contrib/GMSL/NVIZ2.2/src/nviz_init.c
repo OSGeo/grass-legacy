@@ -1,4 +1,9 @@
+/* 
+ * $Id$ 
+ */
+
 #include <stdio.h>
+#include <stdlib.h>
 #include "tk.h"
 #include "interface.h"
 #include "gis.h"
@@ -14,46 +19,13 @@ wm geometry . \"+100+100\"\n\
 update\n\
 grab .wait_ok.wait";
 
-Ninit(interp, w)
-     Tcl_Interp *interp;
-     Tk_Window w;
-{
-  static Nv_data data;
-
-  
-  init_commands(interp, &data);
-  Ninitdata(interp, &data);
-
-  /* compile in the home directory */
-  Tcl_SetVar(interp, "src_boot", SRC_BOOT, TCL_GLOBAL_ONLY);
-}  
-
-void swap_togl();
-
-Ninitdata(interp, data)
-     Tcl_Interp *interp;			/* Current interpreter. */
-     Nv_data *data;
-{
-  char rescmd[120], *string, **argv;
-  int argc;
-  int i;
-  
-  argc = Ngetargs(interp, &argv);
-  
-  G_gisinit (argv[0]);
-  GS_libinit();
-  GS_set_swap_func(swap_togl);
-  data->NumCplanes = 0;
-  data->CurCplane = 0;
-  parse_command(data, interp, argc, argv);
-
-}
-
-parse_command(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;			/* Current interpreter. */
-     int argc;
-     char **argv;
+int 
+parse_command (
+    Nv_data *data,
+    Tcl_Interp *interp,			/* Current interpreter. */
+    int argc,
+    char **argv
+)
 {
   struct Option *elev, *colr, *tricolr, *vct, *site, *view;
   struct Option *panel_path, *script;
@@ -278,9 +250,11 @@ parse_command(data, interp, argc, argv)
    so that G_parser can deal with them without getting sick. 
    */
 
-Ngetargs(interp, args)
-     Tcl_Interp *interp;			/* Current interpreter. */
-     char ***args;
+int 
+Ngetargs (
+    Tcl_Interp *interp,			/* Current interpreter. */
+    char ***args
+)
 {
   int i, n;
   char *tmp, *tmp2, *argv0;
@@ -297,38 +271,17 @@ Ngetargs(interp, args)
   return (argc);
 }
 
-set_default_wirecolors(dc, surfs)
-     Nv_data *dc;
-     int surfs;
+int make_red_yellow_ramp (int *ramp, int num, int minval, int maxval)
 {
-
-#ifdef DO_GREYSCALE
-  int *surf_list;
-  int i, color, greyincr, greyval;
+  int g, i, incr;
   
-  greyincr = 200/(surfs+1); /* just use upper values */
-  
-  surf_list=GS_get_surf_list(&i);
-  for(i = 0; i < surfs; i++){
-    greyval = 55 + greyincr*(i +1);
-    RGB_TO_INT(greyval,greyval,greyval,color);
-    GS_set_wire_color(surf_list[i], color);
+  incr = (maxval - minval)/(num-1);
+  for(i=0; i<num; i++){
+    g = minval + incr * i;
+    RGB_TO_INT(maxval,g,0,ramp[i]);
   }
-  free(surf_list);
-
-#else
   
-  int i, ramp[MAX_SURFS];
-  int sortSurfs[MAX_SURFS], sorti[MAX_SURFS];
-  make_red_yellow_ramp(ramp, surfs, 30, 255);
-  sort_surfs_mid(sortSurfs, sorti, surfs);
-  
-  for(i = 0; i < surfs; i++) {
-    GS_set_wire_color(sortSurfs[i], ramp[i]);
-  }
-
-#endif
-  
+  return 0;
 }
 
 
@@ -336,8 +289,7 @@ set_default_wirecolors(dc, surfs)
    Puts ordered id numbers in id_sort, leaving surfs unchanged.
    Puts ordered indices of surfaces from id_orig in indices.
    */
-sort_surfs_mid(id_sort, indices, num)
-     int num, *id_sort, *indices;
+int sort_surfs_mid (int *id_sort, int *indices, int num)
 {
   int i, j;
   float midvals[MAX_SURFS];
@@ -367,31 +319,67 @@ sort_surfs_mid(id_sort, indices, num)
   
 }
 
-make_red_yellow_ramp(ramp, num, minval, maxval)
-     int *ramp;
-     int num, minval, maxval;
+int set_default_wirecolors (Nv_data *dc, int surfs)
 {
-  int g, i, incr;
+
+#ifdef DO_GREYSCALE
+  int *surf_list;
+  int i, color, greyincr, greyval;
   
-  incr = (maxval - minval)/(num-1);
-  for(i=0; i<num; i++){
-    g = minval + incr * i;
-    RGB_TO_INT(maxval,g,0,ramp[i]);
+  greyincr = 200/(surfs+1); /* just use upper values */
+  
+  surf_list=GS_get_surf_list(&i);
+  for(i = 0; i < surfs; i++){
+    greyval = 55 + greyincr*(i +1);
+    RGB_TO_INT(greyval,greyval,greyval,color);
+    GS_set_wire_color(surf_list[i], color);
   }
+  free(surf_list);
+
+#else
   
+  int i, ramp[MAX_SURFS];
+  int sortSurfs[MAX_SURFS], sorti[MAX_SURFS];
+  make_red_yellow_ramp(ramp, surfs, 30, 255);
+  sort_surfs_mid(sortSurfs, sorti, surfs);
+  
+  for(i = 0; i < surfs; i++) {
+    GS_set_wire_color(sortSurfs[i], ramp[i]);
+  }
+
+#endif
+  return 0;
 }
 
+int Ninit(Tcl_Interp *interp, Tk_Window w)
+{
+  static Nv_data data;
 
+  
+  init_commands(interp, &data);
+  Ninitdata(interp, &data);
 
+  /* compile in the home directory */
+  Tcl_SetVar(interp, "src_boot", getenv("GISBASE"), TCL_GLOBAL_ONLY);
+}  
 
+void swap_togl();
 
+int Ninitdata(
+     Tcl_Interp *interp,			/* Current interpreter. */
+     Nv_data *data)
+{
+  char rescmd[120], *string, **argv;
+  int argc;
+  int i;
+  
+  argc = Ngetargs(interp, &argv);
+  
+  G_gisinit (argv[0]);
+  GS_libinit();
+  GS_set_swap_func(swap_togl);
+  data->NumCplanes = 0;
+  data->CurCplane = 0;
+  parse_command(data, interp, argc, argv);
 
-
-
-
-
-
-
-
-
-
+}

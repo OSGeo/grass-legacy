@@ -67,7 +67,7 @@ driver( )
       MENU("MARK",      mark_control, &use), 
       MENU("ANALYZE",   anal_control,&use), 
       MENU("OVERLAY",   Overlay,&use), 
-      MENU("AUXIL",     transform,&use), 
+/*      MENU("AUXIL",     transform,&use), */
       INFO("Select Function.", &use),
       {0}
     };

@@ -1,0 +1,120 @@
+ <TITLE> SG3d</TITLE>
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>SG3d</b></EM> - 3 Dimensional Surface Renderer for use on Silicon Graphics sorkstations
+
+<H2>SYNOPSIS</H2>
+
+<b>SG3d</b>
+<br>
+<b>SG3d help</b>
+<br>
+<b>SG3d</b>  [<b>-w</b>] [<b>-z</b>] <b>elev=</b><EM>name</EM>
+<b>color=</b>name[<EM>,name,name</EM>]
+[<b>vector=</b><EM>name</EM>] [<b>sites=</b><EM>name</EM>]
+[<b>3dview=</b><EM>name</EM>] [<b>script=</b><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+SG3d is a tool for viewing a data surface  in  three  dimensions
+using  GRASS  on Silicon Graphics IRIS computers.  At
+startup, one graphics window and several  interface  windows
+are  visible.   Other  interface  windows  pop up when their
+appropriate toggle button is clicked in the Menus panel.  To
+hide  the pop up windows, click again on their toggle button
+in the Menus panel - using the Quit or  Close  options  from
+the  window  manager's  menu  bar  will cause the program to
+exit.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+<b>Flags</b>
+<p>
+<PRE>
+     <em>-w</em>   Enable writing to script files
+
+     <em>-z</em>   Use site category as Z value (height)  when  displaying
+          sites
+</PRE>
+<p>
+<b>Parameters</b>
+<p>
+<PRE>
+     <em>elev </em>
+          Raster file for Elevation
+
+     <em>color</em>
+          Raster file(s) for Color (1 or 3 files). If three files
+          are  given,  the  first  will  be used for the red com-
+          ponent, the second for  the  green  component  and  the
+          third  for  the blue component. When using three files,
+          each file must contain values in the range 0 - 255.
+
+     <em>vector</em>
+          Vector overlay file
+
+     <em>sites</em>
+          Sites overlay file
+
+     <em>3dview</em>
+          3d viewing parameters file
+
+     <em>script</em>
+          Automatically run script file
+
+</PRE>
+<p>
+If the user simply types SG3d without  specifying  parameter
+values on the command line, the program will prompt the user
+to enter these.
+
+<h2>NOTES</h2>
+Environment variables SG3D_WIDTH and SG3D_HEIGHT  may be set
+to  define  the width and height (in pixels) of the graphics
+window at startup.  All SG3d windows may  be  resized  using
+the  window  manager's normal controls at any time.  Text in
+the control panels is not scalable,  however,  so  the  text
+will disappear if the panel is sized too small.
+<p>
+Before starting the program, check the resolution and dimen-
+sions  of the current GRASS region.  The  current resolution
+will determine the best resolution available in  SG3d.   For
+speed,  the  entire raster file is loaded into memory, along
+with vertex color and other surface information  needed  for
+lighting  calculations.  Thus, large dimensions such as 1000
+rows x 1000 columns may cause memory problems.  SG3d uses 12
+bytes  of  memory  for  each vertex, therefore a 1000 x 1000
+image would require 12 megabytes for data alone.
+<p>
+The GRASS text window is used by SG3d to issue  prompts  and
+warnings  and to input filenames.  Therefore, after starting
+the program, place the GRASS text window  where  it  can  be
+seen and typed into.
+<p>
+Any sliders and dials used in the control panels have a FINE
+ADJUSTMENT:  Hold  down  the Ctrl key while manipulating the
+dial or slider for fine control.
+<p>
+Full documentation detailing the action associated with each
+control is available in the <a href="SG3d.ref">tutorial</a>.
+
+<h2>BUGS</h2>
+Sometimes very small holes will appear in the  surface.   If
+they  appear as points when drawing polygons with grid over-
+laid, the bug is in the Graphics Library and  it  should  be
+fixed in future versions of IRIX.  If the holes appear along
+an edge of a polygon, it is apparently due to the  way  non-
+planar  polygons  are  interpreted.   In  this case, drawing
+using the triangulate option should make  the  holes  disap-
+pear.
+<p>
+
+<h2>AUTHORS</h2>
+David Gerdes and Bill Brown, U.S. Army Construction Engineering Research Laboratory
+
+</body>
+</html>

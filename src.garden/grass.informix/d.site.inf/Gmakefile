@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/d.site.inf
+PGM       = $(BIN_MAIN_CMD)/d.site.inf
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
 
 # EXTRA_CFLAGS = -Dunlink=puts

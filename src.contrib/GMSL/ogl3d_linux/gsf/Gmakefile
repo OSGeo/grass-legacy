@@ -1,15 +1,15 @@
 
-EXTRA_CFLAGS= -O $(VECT_INCLUDE) -DUSE_OGL $(XCFLAGS)
+EXTRA_CFLAGS= -O -DUSE_OGL $(XCFLAGS)
 LDFLAGS=
 #if don't want to strip symbol info - Bill B.
 #LDFLAGS=
 
 
 OBJ = \
-	GS.o \
+	GS3.o \
 	GSX.o \
 	GS_util.o \
-	Gs.o \
+	Gs2.o \
 	gs.o \
 	gsd_wire.o \
 	gsd_surf.o \
@@ -21,18 +21,18 @@ OBJ = \
 	gsd_objs.o \
 	gsd_cplane.o \
 	trans.o \
-	GV.o \
-	Gv.o \
+	GV3.o \
+	Gv2.o \
 	gv.o \
 	gvd.o \
 	gv_quick.o \
 	gsdrape.o \
-	GP.o \
-	Gp.o \
+	GP2.o \
+	Gp3.o \
 	gp.o \
 	gpd.o \
 	gsds.o \
-	GK.o \
+	GK2.o \
 	gk.o
 
 all: libgsf.a

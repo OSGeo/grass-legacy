@@ -7,8 +7,7 @@ SITE = $(ETC)/sites
 LIST =  main.o
 
 $(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
-		$(CC) ${LDFLAGS} -o $(PGM) $(LIST) $(SITELIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
-		mv $(PGM) $(SITE)/$(PGM)
+		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 main.o: $I/site_dir.h
 
 $(SITELIB):	#

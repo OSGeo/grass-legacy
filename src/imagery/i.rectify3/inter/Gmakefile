@@ -7,8 +7,8 @@ PGR  	= i.rectify3
 HOME 	= $(BIN_MAIN_INTER)
 
 ####    required - suplimental imagery libary
-IMAGERY_SUBINC = ../../image3
-IMAGERYLIB_SUP  = ../../image3/libimage_sup.a
+IMAGERY_SUBINC = $(SRC)/libes/image3
+IMAGERYLIB_SUP = $(SRC)/libes/image3/libimage_sup.a
 
 ### 	what to make
 all:	$(HOME)/$(PGR)
@@ -51,7 +51,7 @@ LIBES =  $(IMAGERYLIB) $(IMAGERYLIB_SUP) $(D_LIB)\
 $(LIBES): # in case of lib changes
 
 ###	any program required compile flags
-EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
+EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 
 ###	any program required link flags
 #EXTRA_LDFLAGS 

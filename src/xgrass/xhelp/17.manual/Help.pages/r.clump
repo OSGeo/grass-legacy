@@ -1,5 +1,0 @@
-
-@man("r.clump") - Recategorizes data in a raster map layer by grouping cells
-that form physically discrete areas into unique categories.
-
-(GRASS Raster Program)

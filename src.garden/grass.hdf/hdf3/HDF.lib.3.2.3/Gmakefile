@@ -3,9 +3,10 @@ HDFLIB = lib/libdf.a
 
 
 all: $(HDF_LIBDIR)
-	make libnofortran
+	$(MAKE) libnofortran
 	mv lib/libdf.\a $(HDFLIB)
-	make clean
+	$(MAKE) clean
 
 $(HDF_LIBDIR):
+	if [ ! -d lib ]; then mkdir lib ; fi
 	mkdir $(HDF_LIBDIR)

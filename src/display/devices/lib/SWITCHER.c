@@ -555,8 +555,8 @@ main (int argc, char *argv[])
                 REC (&index, sizeof index) ;
                 xarray = (int *) xalloc (xarray, &n_xarray, x, sizeof (*xarray));
                 REC (xarray, x * sizeof (*xarray)) ;
-		if (index !=0) index = 1 ;
-		Raster_int(x, y, xarray, index, 1) ;
+                if (index !=0) index = 1 ;
+                Raster_int(x, y, (unsigned int *) xarray, index, 1) ;
                 break ;
             case RGB_RASTER:
                 REC (&x, sizeof x) ;
@@ -683,6 +683,7 @@ main (int argc, char *argv[])
                 send (&l, sizeof l) ;
                 send (&r, sizeof r) ;
                 break ;
+#ifndef __CYGWIN__
             case FONT:
                 RECTEXT (text) ;
                 x = GFont(text) ;
@@ -692,6 +693,7 @@ main (int argc, char *argv[])
                 RECTEXT (text) ;
                 Text(text) ;
                 break ;
+#endif
             case TEXT_SIZE:
                 REC (&x, sizeof x) ;
                 REC (&y, sizeof y) ;
@@ -894,10 +896,12 @@ fprintf (stderr, "Got command esc(%d)\n", *c);
 
 static int rec(void *buf,int n)
 {
+    char *cbuf = buf;
     int stat;
-    while (n-- > 0)
-        if ((stat=get1(((char* )buf)++)) != 0)
-	    return stat; /* EOF or COMMAND_ESC */
+    while (n-- > 0) {
+    	if ((stat=get1(cbuf++)) != 0)
+    	return stat; /* EOF or COMMAND_ESC */
+    }
     return 0;
 }
 

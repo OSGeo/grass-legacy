@@ -1,0 +1,10 @@
+FIPS PUB 123 Function Library
+Readme File 
+Subdirectory: <f123dir>/f123lib/
+
+This subdirectory contains the entire FIPS PUB 123 Function Library 
+in a UNIX archive library named <f123dir>/f123lib/fips123.a.
+
+The script file <f123dir>/f123bat/f123lib.m can be invoked to create and
+maintain this UNIX archive library using object code files created
+by the ANSI C Compiler in subdirectory <f123dir>/f123obj/.

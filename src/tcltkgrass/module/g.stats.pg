@@ -1,0 +1,8 @@
+interface_build {
+    g.stats.pg 0
+    {Calculates mean, min,max, frequencies for a specified numeric column}
+    {entry table {DB table:} 0 ""}
+    {entry column {Column name:} 0 ""}
+    {checkbox -f {Frequencies (instead of min,max)} "" -f}
+    {checkbox -v {Full info} "" -v}
+}

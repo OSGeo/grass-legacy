@@ -5,7 +5,7 @@
 #FFLAGS =
 MYLIBS = $(SRC).related/rim/librim.a
 
-EXTRA_CFLAGS = -I$(SRC)/mapdev/lib $(VECT_INCLUDE)
+EXTRA_CFLAGS = -I$(SRC)/mapdev/lib
 
 OBJFILES = v.db.rim.o dbio.o parser.o toplevel.o misc.o make_init.o \
 	make_add.o make_done.o use_table.o fill_buf.o f_table.o \
@@ -33,10 +33,10 @@ all: $(BIN_MAIN_CMD)/v.db.rim $(ETC)/rim/v.db.rim.cmd
 
 $(ETC)/rim/v.db.rim.cmd: $(OBJFILES)
 	-mkdir $(ETC)/rim
-	f77 $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) $(MYLIBS) $(DIG_ATTLIB) $(VECTLIB) $(GISLIB)
+	$(F77) $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) $(MYLIBS) $(DIG_ATTLIB) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
 
 $(BIN_MAIN_CMD)/v.db.rim: highlevel.o
-	$(CC) $(LDFLAGS) -o $@ highlevel.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ highlevel.o $(GISLIB) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
 
 saber_src: $(OBJFILES)
 	#load $(EXTRA_CFLAGS) $(CFLAGS) $(SRCFILES) v.db.rim.o $(MYLIBS) $(SRC)/libes/dig_atts/read_att.c $(SRC)/libes/dig_atts/write_att.c $(VECTLIB) $(GISLIB) $(SRC)/libes/gis/wind_overlap.c /usr/lang/SC0.0/libF77.a /usr/lang/SC0.0/cg89/libm.a

@@ -15,21 +15,16 @@ int exec_rectify (void)
     int colr_ok, hist_ok, cats_ok;
     long start_time, rectify_time, compress_time;
     char *mailfile;
-
-/* allocate the output cell matrix */
-    cell_buf = (void **) G_calloc (NROWS, sizeof(void *));
-    n = NCOLS * G_raster_size(map_type);
-    for (i=0; i < NROWS; i++)
-    {
-	cell_buf[i] = (void *) G_malloc (n);
-	G_set_null_value(cell_buf[i], NCOLS, map_type);
-    }
+	int data_size;
 
 
 /* go into background */
     fprintf (stderr, "\nYou will receive mail when %s is complete\n",
 	G_program_name());
-    if (G_fork()) exit(0);
+   if (G_fork()) exit(0);
+
+/* allocate the output cell matrix */
+    cell_buf = (void **) G_calloc (NROWS, sizeof(void *));
 
 /* note: all calls to G_tempfile() should happen after the fork */
 
@@ -45,6 +40,9 @@ int exec_rectify (void)
     freopen ("/dev/null","w",stdout);
 
 /* rectify each file */
+
+   G_set_window (&target_window);
+
     for (n = 0; n < ref.nfiles; n++)
     {
 	if ((i = ref_list[n]) < 0)
@@ -61,11 +59,23 @@ int exec_rectify (void)
 	hist_ok = G_read_history (name, mapset, &hist) >= 0;
 	G_suppress_warnings(0);
 
+	map_type = G_raster_map_type(name, mapset);
+	data_size =  G_raster_size(map_type);
+
+    for (i=0; i < NROWS; i++)
+    {
+		if (cell_buf[i] != NULL) {
+			G_free(cell_buf[i]);
+		}
+		cell_buf[i] = (void *) G_malloc (NCOLS*data_size);
+		G_set_null_value(cell_buf[i], NCOLS, map_type);
+    }
+
 	time (&start_time);
 	if (rectify (name, mapset, result))
 	{
 	    select_target_env();
-	    G_put_cellhd (result,&target_window);
+	    G_put_cellhd(result,&target_window);
 	    if(cats_ok)
 	    {
 		G_write_cats (result, &cats);
@@ -92,6 +102,5 @@ int exec_rectify (void)
     mail (mailfile);
     unlink (mailfile);
     G_done_msg ("Check your mail");
-
     return 0;
 }

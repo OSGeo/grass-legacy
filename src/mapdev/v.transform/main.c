@@ -1,4 +1,3 @@
-
 /*
 *  This takes an ascii digit file in one coordinate system and converts
 *  the map to another coordinate system.
@@ -24,8 +23,7 @@
 #include <string.h>
 #include  "trans.h"
 #include "gis.h"
-#include "dig_head.h"
-#include "digit.h"
+#include "Vect.h"
 #include "local_proto.h"
 
 static  char  *Prog_name ;

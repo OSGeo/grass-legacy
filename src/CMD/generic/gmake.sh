@@ -2,7 +2,7 @@ SHELL=/bin/sh
 export SHELL
 umask 002
 ##################################################################
-# This file is sourced (with the . command) by the real gmake
+# This file is sourced (with the . command) by the real gmake5
 me=$0
 if test "$SRC" = ""
 then
@@ -284,7 +284,7 @@ cat $TAIL
 
 echo "  make -f $makefile $*"
 echo ""
-make -f $makefile $*
+${MAKE} -f $makefile $*
 status=$?
 if test $status != 0 
 then

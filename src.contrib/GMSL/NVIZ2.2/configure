@@ -2,6 +2,25 @@
 # configure script for nviz
 
 # Revisions:
+#  $Log: configure,v $
+#  Revision 1.8  2000-06-12 14:06:53  cho
+#  Huidae Cho <hdcho@geni.knu.ac.kr>: added FreeBSD sensivity: -ldl
+#
+#  Revision 1.7  2000/05/26 14:04:36  markus
+#  Huidae Cho <hdcho@geni.knu.ac.kr>: added FreeBSD sensivity
+#
+#  Revision 1.6  2000/05/05 14:22:03  markus
+#  Andreas Lange: /usr/freeware/include /usr/freeware/lib32 added (SGI)
+#
+#  Revision 1.5  2000/04/03 16:09:51  markus
+#  Alex Shevlakov: patch to manage PostgreSQL support in menus
+#
+#  Revision 1.4  2000/03/06 17:16:18  markus
+#  Alex Shevlakov: added new fields in WHATS HERE menu for GRASS/PostgreSQL interface
+#
+#  Revision 1.3  2000/03/06 09:02:53  markus
+#  Philip Warner/Markus Neteler: updated to relative paths
+#
 #  11/11/99 - updated GL path
 #  11/26/97 - Modified to work by changing two following variables
 #  08/29/99 - small bugfixes
@@ -34,10 +53,19 @@ set TOP=$cwd
 #  exit
 #endif
 
+set OS=`uname -s`
+
 # Look for tcl, tk libraries
-set spath=(/lib /usr/lib /usr/local/lib /usr/X11R6/lib)
-set libs_reqd=(libtcl8.0 libtk8.0 libX11 libGL )
-set def_dirs=(/usr/local/lib /usr/local/lib /usr/local/lib /usr/lib /usr/lib )
+if ("$OS" == "FreeBSD") then
+	set DLLIB=""
+	set spath=(/usr/lib /usr/local/lib /usr/X11R6/lib)
+	set libs_reqd=(libtcl80 libtk80 libX11 libGL )
+else
+	set DLLIB="-ldl"
+	set spath=(/lib /usr/lib /usr/local/lib /usr/X11R6/lib)
+	set libs_reqd=(libtcl8.0 libtk8.0 libX11 libGL )
+endif
+set def_dirs=(/usr/local/lib /usr/local/lib /usr/local/lib /usr/lib /usr/freeware/lib32)
 set TK_LIB_PATH=''
 set index=1
 foreach k ($libs_reqd)
@@ -73,12 +101,20 @@ end
 # Remove duplicates and set the path
 set TK_LIB_PATH=`echo $TK_LIB_PATH | sed -e 's/ /\\n/g'`
 set TK_LIB_PATH=`echo $TK_LIB_PATH | sort -u | sed -e 's/\\n/ /g'`
-set TK_LIB_PATH="$TK_LIB_PATH -ltk8.0 -ltcl8.0"
+if ("$OS" == "FreeBSD") then
+	set TK_LIB_PATH="$TK_LIB_PATH -ltk80 -ltcl80"
+else
+	set TK_LIB_PATH="$TK_LIB_PATH -ltk8.0 -ltcl8.0"
+endif
 
 # Look for tcl, tk includes
-set spath=(/usr/local/include /usr/local/lib/tk8.0/include /usr/local/lib/tcl8.0/include /usr/include /usr/include/X11 /usr/include/gl /usr/X11R6/include /usr/include/GL)
+if ("$OS" == "FreeBSD") then
+	set spath=(/usr/local/include /usr/local/include/tk8.0 /usr/local/include/tcl8.0 /usr/include /usr/X11R6/include/GL /usr/X11R6/include/X11)
+else
+	set spath=(/usr/local/include /usr/local/lib/tk8.0/include /usr/local/lib/tcl8.0/include /usr/include /usr/include/X11 /usr/include/gl /usr/X11R6/include /usr/include/GL /usr/freeware/include)
+endif
 set includes_reqd=(tk.h tcl.h gl.h X.h)
-set def_dirs=(/usr/local/include /usr/include /usr/include/X11 /usr/include/GL /usr/include/gl)
+set def_dirs=(/usr/local/include /usr/include /usr/include/X11 /usr/include/GL /usr/include/gl /usr/freeware/include)
 set TK_INCLUDE_PATH=''
 set index=1
 foreach k ($includes_reqd)
@@ -111,6 +147,10 @@ foreach k ($includes_reqd)
   @ index++
 end
 
+if ("$OS" == "FreeBSD") then
+  set TK_INCLUDE_PATH="$TK_INCLUDE_PATH -I/usr/X11R6/include"
+endif
+
 # Remove duplicates and set the path
 set TK_INCLUDE_PATH=`echo $TK_INCLUDE_PATH | sed -e 's/ /\\n/g'`
 set TK_INCLUDE_PATH=`echo $TK_INCLUDE_PATH | sort -u | sed -e 's/\\n/ /g'`
@@ -131,40 +171,41 @@ if ("$found" != "") then
   set install_dir=$found
 endif
 
+# Check for PostgreSQL
+set PQ_OBJS=(openvect.o getCat.o buildInfxQry.o runInfxQry.o)
+'cp' src/query_postgr_orig.c src/query_postgr.c
+'cp' scripts/panel_query_pg.tcl scripts/panel_query.tcl
+echo -n Do you want Postgres support \[y\/n\]:
+set found=$<
+if ("$found" != "y") then
+  echo -n Postgres support disabled.
+  set PQ_OBJS=''
+  'rm' -rf src/query_postgr.c
+  'rm' -rf src/scripts/panel_query.tcl
+  'cp' src/query_postgr_dummy.c src/query_postgr.c
+  'cp' scripts/panel_query_orig.tcl scripts/panel_query.tcl
+endif
+
 # Now create the makefile
-echo Creating src makefile...
-set SCRIPTS=${install_dir}/scripts
-set SCRIPTS=`echo "$SCRIPTS" | sed 's/\//\\\//g'`
+echo ""
+echo Creating src/Gmakefile...
 set TK_LIB_PATH=`echo "$TK_LIB_PATH" | sed 's/\//\\\//g'`
 set TK_INCLUDE_PATH=`echo "$TK_INCLUDE_PATH" | sed 's/\//\\\//g'`
+set PQ_OBJS=`echo "$PQ_OBJS" | sed 's/\//\\\//g'`
 'rm' -rf src/Gmakefile
 sed -e "\
 s/TK_LIB_PATH=sed/TK_LIB_PATH=${TK_LIB_PATH}/g;\
 s/TK_INCLUDE_PATH=sed/TK_INCLUDE_PATH=${TK_INCLUDE_PATH}/g;\
-s/SCRIPTS=sed/SCRIPTS=${SCRIPTS}/g\
-s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g\
+s/PQ_OBJS=sed/PQ_OBJS=${PQ_OBJS}/g;\
+s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g;\
+s/DLLIB=sed/DLLIB=${DLLIB}/g\
 " src/Gmakefile.in > src/Gmakefile
-
-# Now figure out how we need to configure the tcl scripts
-set panel_path=${install_dir}/scripts
-set bit_maps=${install_dir}/bitmaps
-
-# Looks good, now lets make the config file in the scripts directory
-echo Configuring nviz scripts...
-set panel_path=`echo "$panel_path" | sed 's/\//\\\//g'`
-set bit_maps=`echo "$bit_maps" | sed 's/\//\\\//g'`
-'rm' -rf scripts/config.tcl
-sed -e "\
-s/default_panel_path=sed/default_panel_path ${panel_path}/g;\
-s/bit_map_path=sed/bit_map_path ${bit_maps}/g\
-" scripts/config.tcl.in > scripts/config.tcl
 
 # Finally create the toplevel makefile
 echo Creating top-level makefile
 set ID=`echo "$install_dir" | sed 's/\//\\\//g'`
 'rm' -rf Gmakefile
 sed -e "\
-s/INSTALL_DIR=sed/INSTALL_DIR=${ID}/g\
 s/NV_VER=sed/NV_VER=${NV_VER}/g\
 s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g\
 " Gmakefile.in > Gmakefile

@@ -1,0 +1,14 @@
+Subject: d.size (Set monitor size script)
+From: Anantha Prasad <aprasad/ne_de@fs.fed.us>
+Date: Tue, 25 Jan 2000 10:31:37 -0500
+
+Hi:
+Just wanted to pass along a convenient script that can be in the main
+/grass/bin directory...
+Usage is: d.monsize <monitor_width> <monitor_height>
+
+Thought that it is something most people would want to do and since 
+how to do it is hidden from the general user, the most intuitive name
+would be d.monsize.
+
+It tested OK s...

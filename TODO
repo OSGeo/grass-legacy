@@ -1,0 +1,98 @@
+$Id: TODO,v 1.9 2000-07-25 11:43:58 markus Exp $
+
+TODO for GRASS GIS:
+
+- Fix the bugs in BUGS
+  (Being worked on by )
+
+
+Wishlist for GRASS 5
+
+Configure:
+- update missing features in "configure" (see src/CMD/head/head.in)
+     - search for PQLIB, PQINCPATH: PostgreSQL stuff
+     - search for PNGINC, PNGLIB: PNG graphics library
+     - search for TIFFINCPATH, TIFFLIBPATH
+     - search for JPEGINCPATH, JPEGLIBPATH
+     - search for MESA (usr/include or usr/include/GL ?)
+  (Being worked on by )
+
+- extended "autoconf" for entire package
+  (Being worked on by )
+
+- is "-fwritable-strings" o.k. for all platforms?
+
+--------------------------------------------------------------------
+Font selection:
+- add truetype support (replace old font system). This is urgently required
+  for internationalization. Suggestion: Use "FreeType"
+  http://freetype.sourceforge.net
+  (Being worked on by )
+
+---------------------------------------------------------------------
+
+Libraries:
+- src/libes/gis/readsites.c: Required is a new function which allows
+  to read an attribute/dimension selectable by user. Useful 
+  in order to select which attribute to be converted 
+  (assuming multi-attribute sites lists).
+  (Being worked on by Markus, assistance wanted)
+
+- projection datum support for maps
+  (Being worked on by Andreas Lange)
+
+- new 3D vector format: evetually http://gts.sourceforge.net/ ??
+  (Being worked on by )
+
+
+---------------------------------------------------------------------
+Package:
+- split into packages: GRASS-CORE, GRASS-Raster, ...
+  (Being worked on by )
+- release import/export routines separately under LGPL
+
+
+---------------------------------------------------------------------
+Modules:
+- r.buffer: should save info about used buffers into map history
+  (Being worked on by )
+
+- etc/monitorcap: use relative paths based on $GISBASE
+  (Being worked on by )
+
+- fix s.to.rast and s.to.vect to accept site lists created
+  by r.to.sites
+  (Being worked on by Markus)
+
+- NVIZ:
+    - Z axis scalable when displaying 3D sites
+      (Being worked on by )
+
+    - eventually color problem in lat/long locations
+      (Being worked on by )
+
+    - high resolution output (definable extent like CELL driver)
+      (Being worked on by )
+
+    - fix legend, scale and box drawings
+
+- v.out.e00: make it working
+  (Being worked on by Michel Wurtz)
+
+- r.out.e00: write it
+  (Being worked on by Michel Wurtz)
+
+- Reorganize initialization routines and write a Tcl/Tk interface
+  for initialization
+  (Being worked on by Justin)
+
+- Create a Tcl/Tk interface for v.digit
+  (Being worked on by Justin)
+
+- Change the tcltkgrass code so that lists of choices appear as
+  a list instead of needing to use a push button to create the
+  list. For example when using d.rast we must click a "Raster"
+  button to get a list of raster files instead of having the
+  raster files appear automatically when we call the d.rast
+  module from the menu (edit gui.tcl)
+  (Being worked on by )

@@ -1,8 +1,6 @@
 PROG=s.normal
 
 PROGRAM = $(BIN_CONTRIB_CMD)/$(PROG)
-#PROGRAM = $(PROG)
-
 
 CDHCDIR = ../cdhc
 CDHCINC = ../cdhc
@@ -25,6 +23,8 @@ LIST  = \
 	main.o \
 	readz.o \
 	scancats.o
+
+all: $(PROGRAM)
 
 $(PROGRAM): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)

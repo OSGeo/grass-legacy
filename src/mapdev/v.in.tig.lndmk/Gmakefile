@@ -2,15 +2,14 @@ PGM=v.in.tig.lndmk
 HOME=$(BIN_ALPHA_CMD)
 
 LIBES = $(GISLIB) $(VASKLIB) $(COORCNVLIB)
-EXTRA_CFLAGS = $(DIGITFLAGS) $(VECT_INCLUDE) 
+EXTRA_CFLAGS = $(DIGITFLAGS)
 OFILES = main.o parse_input.o cats_stuff.o tig_control.o tig_record.o \
 	info_type.o points.o areas.o lines.o coords.o cmd_parse.o \
 	match_text.o
 
 $(HOME)/$(PGM): $(OFILES) $(GISLIB) $(DATETIMELIB) $(VASKLIB) $(COORCNVLIB) $(DIG_ATTLIB) $(VECTLIB)
 	$(CC) $(LDFLAGS) $(OFILES) $(COORCNVLIB) $(DIG_ATTLIB) $(VECTLIB) \
-		$(GISLIB) $(DATETIMELIB) $(VASK) $(MATHLIB) $(XDRLIB) -o $(PGM)
-	mv $(PGM) $@
+		$(GISLIB) $(DATETIMELIB) $(VASK) $(MATHLIB) $(XDRLIB) -o $@
 
 $(OFILES): globals.h
 cats_stuff.o: cats.h

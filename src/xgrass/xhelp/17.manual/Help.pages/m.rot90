@@ -1,5 +1,0 @@
-
-@man("m.rot90") - Rotates elevation data extracted by either @man("m.dted.extract")
-or @man("m.dmaUSGSread").
-
-(GRASS Data Import/Processing Program)

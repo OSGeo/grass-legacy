@@ -1,0 +1,10 @@
+2/21/92
+
+Greclass names are changed in the following files to convert to grass4.0 version
+
+cell_num_id.c
+misc_routines.c
+
+removed G_system calls from the following routines
+slope_aspect.c
+get_input_names.c

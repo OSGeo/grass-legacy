@@ -1,5 +1,5 @@
 TRANSLIB        = $(SRC)/libes/vect32/libes/libtrans.a
-EXTRA_CFLAGS	= $(VECT_INCLUDE) -I../libes -I$(SRC)/libes/vect32/libes
+EXTRA_CFLAGS	= -I../libes -I$(SRC)/libes/vect32/libes
 
 PROG	= $(BIN_MAIN_CMD)/v.transform
 

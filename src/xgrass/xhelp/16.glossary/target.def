@@ -1,5 +1,0 @@
-
-
-target - In GRASS usage, the database @glossary("location",16.glossary/loc.def) with which images
-registered to an arbitrary x,y coordinate system can be linked, in
-order to co-register images to maps under this location.

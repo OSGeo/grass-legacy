@@ -10,25 +10,36 @@ struct line_pnts *Points;
 
 int area_perim (double y, double x, struct Map_info *map,
    struct line_pnts *p, char *mapset, char *name, char *color,
-   int fill, char *Dvect_color)
+   int fill, char *Dvect_color, struct Categories *cats)
 {
- int a_index;
+ int do_islands; 
+ int a_index, att_index;
  int num_areas;     
  int x_screen[512],y_screen[512];
  int np = 0;				/* this variable is used before set -dpg */
  int i;
- double f_area;
+ double f_area, in_area;
  double tot_perim;
  int color_num;
  static int first = {1};
  static int prev_a_index;
  double x1,y1,x2,y2;
+ double cx, cy;
  long int screen_x1,screen_y1,screen_x2,screen_y2;
  short int accept;
  extern struct Cell_head window;
  static int points_first = 1;
 
-
+ CELL cat_no;
+ P_LINE *Lines;
+ char *label_name;
+ 
+ if(proc_i_flag(GET_VAL, &do_islands)) {
+   G_warning( "Could not determine if internal areas are to be calculated.\nWill calculate areas by default\n" );
+   do_islands = 1;
+ }
+ fprintf(stderr, "Islands flag is %d\n", do_islands);
+                  
  if (points_first)
  {
      Points = Vect_new_line_struct ();
@@ -49,7 +60,7 @@ int area_perim (double y, double x, struct Map_info *map,
  a_index = dig_point_to_area(map,x,y);
  if (a_index > 0)
   {
-   fprintf(stderr,"AREA INDEX NUMBER: %d\n",a_index);
+   fprintf(stderr,"Area index number: %d\n",a_index);
   }
  else
   {
@@ -166,7 +177,7 @@ int area_perim (double y, double x, struct Map_info *map,
 
 /* Calculate polygon perimeter and print information */
  tot_perim = perimeter(np,Points->x,Points->y);
- fprintf(stderr,"PERIMETER:  %.2f meters   %.2f feet   %.3f miles\n",
+ fprintf(stderr,"Perimeter:  %.2f meters   %.2f feet   %.3f miles\n",
         tot_perim,(tot_perim*3.2808),((tot_perim*3.2808)/5280.) );
 
 /* Display current polygon if it is not the same as previous polygon displayed*/
@@ -265,12 +276,92 @@ int area_perim (double y, double x, struct Map_info *map,
 
 /* Calculate polygon area and print information */
 /* dig_find_area(map,&(map->Area[a_index]),&f_area,&x,&y,(double)0.0);*/
- f_area = G_area_of_polygon(Points->x, Points->y, Points->n_points);
- fprintf(stderr,"AREA:  \t%.2f sq meters   \t%.2f hectares\n",
+ if(do_islands) {
+   if( (in_area = get_total_area_of_islands(map, a_index)) < 0)
+     G_fatal_error( "Could not get area of internal island.\n" );
+ }
+ else in_area = 0.0;
+
+ f_area = G_area_of_polygon(Points->x, Points->y, Points->n_points) - in_area;
+ fprintf(stderr,"Area:  \t%.2f sq meters   \t%.2f hectares\n",
          f_area,(f_area/10000.) );
  fprintf(stderr,"       \t%.3f acres  \t\t%.4f sq miles\n",
  ((f_area*10.763649)/43560.),(((f_area*10.763649)/43560.)/640.) );
- fprintf(stderr,"AREA CENTROID: %.2f (N) %.2f (E)\n\n",y,x);
+
+ /* added ddg July 2000 */
+ /* Centroid. This gets the coords of the registered label point (if any) */
+ att_index = map->Area[a_index].att;
+ cx = map->Att[att_index].x;
+ cy = map->Att[att_index].y;
+ if(cx > 0 )
+   fprintf(stderr,"Area centroid: %.2f (N) %.2f (E)\n",cy,cx);
+ else
+   fprintf(stderr,"Area centroid: Area unlabelled \n" );
+
+/* added 4/2000 MN: */
+ cat_no = map->Att[att_index].cat;
+ if (cats->num > 0)
+ {
+    label_name = G_get_cat( cat_no, cats);
+    fprintf(stderr,"cat#= %d, label= <%s>\n", cat_no, label_name);
+ }
+                        
  R_flush();
  return(6);
+}
+
+/* ddg July 2000 */
+double get_total_area_of_islands(struct Map_info *map1, plus_t a_indx) {
+
+  /* Find the total area dissected by all the islands of area of given index */
+
+  int i; 
+  int n_isle_pnts;
+  plus_t i_indx;
+  P_AREA *area1;
+  struct line_pnts *ring;
+  double tmp_area, total_area;
+
+  area1 = &map1->Area[a_indx];
+
+  ring = Vect_new_line_struct();
+
+  total_area = 0.0;
+  
+  for( i = 0; i < area1->n_isles; i++ ) {
+    i_indx = area1->isles[i];
+
+    /* Extract perimeter of island to ring */
+    n_isle_pnts = Vect_get_isle_points(map1, i_indx, ring);
+
+    /* Get area */
+    tmp_area = G_area_of_polygon(ring->x, ring->y, n_isle_pnts);
+    if(tmp_area < 0) tmp_area = -tmp_area;
+    total_area += tmp_area;
+  }
+
+  Vect_destroy_line_struct(ring);
+  return total_area;
+}
+
+/* ddg July 2000 */
+int proc_i_flag(int opflag, int *if_val) {
+
+  /* Set or get value of the flag determining whether islands are to be considered */
+
+  static int curr_i_flag = 1;
+
+  if(!if_val) return -1;
+
+  if(opflag == SET_VAL) {
+    fprintf(stderr, "Setting value %d with opflag %d\n", *if_val, SET_VAL );
+    curr_i_flag = *if_val;
+  }
+  else if(opflag == GET_VAL) {
+    fprintf(stderr, "Getting value %d with opflag %d\n", curr_i_flag, GET_VAL );
+    *if_val = curr_i_flag;
+  }
+  else return -1;
+
+  return 0;
 }

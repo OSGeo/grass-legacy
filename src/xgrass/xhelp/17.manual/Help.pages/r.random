@@ -1,5 +1,0 @@
-
-@man("r.random") - Creates a raster map layer and sites list containing randomly
-located sites.
-
-(GRASS Raster Program)

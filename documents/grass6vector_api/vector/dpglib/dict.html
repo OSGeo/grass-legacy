@@ -1,0 +1,149 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Dictionary
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Dictionary
+</h1>
+
+<blockquote><i>
+    Status:  Delta<br>
+    This module has been designed, and coded but is currently under review.
+    It is fairly stable but its interface could change.<p>
+    The internal code is terribly inefficient and should eventually
+    be rebuilt.
+</i></blockquote>
+
+<p>
+This library implements a simple dictionary. It stores key/value
+records in a simple colon delimited format.  This library is the basis
+for the Head interface in the Vector API.
+<p>
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li> <a href=#>  </a>
+    
+
+<li>dpgDictP  <a href=#dpgDictCreate> dpgDictCreate </a>
+     (VOID)
+
+
+<li>void      <a href=#dpgDictDestroy> dpgDictDestroy </a>
+    (dpgDictP dict)
+
+
+<li>int       <a href=#dpgDictGet> dpgDictGet </a>
+        (dpgDictP dp, char *key, char **data)
+
+
+<li>int       <a href=#dpgDictUnset> dpgDictUnset </a>
+      (dpgDictP dp, char *key)
+
+
+<li>int       <a href=#dpgDictSet> dpgDictSet </a>
+        (dpgDictP dp, char *key, char *string)
+
+
+<li>void      <a href=#dpgDictRewind> dpgDictRewind </a>
+     (dpgDictP dp)
+
+
+<li>int       <a href=#dpgDictNext> dpgDictNext </a>
+       (dpgDictP dp, char **key, char **string)
+
+
+<li>int       <a href=#dpgDictWrite> dpgDictWrite </a>
+      (char *file, dpgDictP dp)
+
+
+<li>int       <a href=#dpgDictLoad> dpgDictLoad </a>
+       (char *file, dpgDictP dp)
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+<a name="dpgDictCreate">
+<pre>
+dpgDictP  <strong>dpgDictCreate</strong>  (VOID)
+
+</pre>
+
+<a name="dpgDictDestroy">
+<pre>
+void      <strong>dpgDictDestroy</strong> (dpgDictP dict)
+
+</pre>
+
+<a name="dpgDictGet">
+<pre>
+int       <strong>dpgDictGet</strong>     (dpgDictP dp, char *key, char **data)
+
+</pre>
+
+<a name="dpgDictUnset">
+<pre>
+int       <strong>dpgDictUnset</strong>   (dpgDictP dp, char *key)
+
+</pre>
+
+<a name="dpgDictSet">
+<pre>
+int       <strong>dpgDictSet</strong>     (dpgDictP dp, char *key, char *string)
+
+</pre>
+
+<a name="dpgDictRewind">
+<pre>
+void      <strong>dpgDictRewind</strong>  (dpgDictP dp)
+
+</pre>
+
+<a name="dpgDictNext">
+<pre>
+int       <strong>dpgDictNext</strong>    (dpgDictP dp, char **key, char **string)
+
+</pre>
+
+<a name="dpgDictWrite">
+<pre>
+int       <strong>dpgDictWrite</strong>   (char *file, dpgDictP dp)
+
+</pre>
+
+<a name="dpgDictLoad">
+<pre>
+int       <strong>dpgDictLoad</strong>    (char *file, dpgDictP dp)
+
+</pre>
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

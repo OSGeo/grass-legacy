@@ -1,9 +1,0 @@
-
-
-i.colors - 
-
-i.colors allows the user to interactively assign red, green and blue
-colors to the @glossary("band files",16.glossary/bandfil.def) in an imagery group while viewing the 
-display of the combined bands on the @glossary("graphics monitor",16.glossary/graphmon.def).
-
-Manual entry for @man("i.colors")

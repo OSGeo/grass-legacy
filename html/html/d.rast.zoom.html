@@ -1,0 +1,78 @@
+<html>
+
+<TITLE>d.rast.zoom</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.rast.zoom</b></EM>  - To interactively zoom in or zoom out of regions
+on a raster map displayed in the active frame on the graphics monitor.
+
+<BR>
+
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.rast.zoom</B>
+
+<BR>
+
+<B>d.rast.zoom help</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.rast.zoom</EM>
+allows the user to zoom in or out of a region of interest
+on the raster map layer currently displayed
+in the active frame of the graphics monitor.
+The user zooms in and out interactively, using a mouse
+to establish the zoom region.
+To zoom, click the left mouse button to establish a corner,
+then drag the mouse to estabilsh the second (diagonal) corner and hit the
+right mouse button to accept the region.  "Unzoom" will move back one step
+(i.e., to the last modified region).  If the user tries to unzoom once
+again, the zoom region will be set equal to the default region settings.
+The user can zoom or unzoom any number of times until satisfied.
+
+<H2>NOTES</H2>
+
+<EM>d.rast.zoom</EM> is sensitive to the current mask (see <EM>
+<A HREF="r.mask.html">r.mask</A>
+</EM>).
+
+
+<P>
+
+This program runs only interactively.
+
+<H2>SEE ALSO</H2>
+
+<table width=500>
+<tr>
+	<td><EM><A HREF="d.frame.html">d.frame</A></EM></td>
+	<td><EM><A HREF="d.rast.html">d.rast</A> </EM></td>
+	<td><EM><A HREF="d.rast.arrow.html">d.rast.arrow</A></EM></td>
+</tr>
+<tr>	<td><EM><A HREF="d.rast.edit.html">d.rast.edit</A></EM></td>
+	<td><EM><A HREF="d.rast.num.html">d.rast.num</A></EM></td>
+	<td><EM><A HREF="d.zoom.html">d.zoom</A> </EM></td>
+</tr>
+<tr>	<td><EM><A HREF="g.region.html">g.region</A></EM></td>
+	<td><EM><A HREF="r.mask.html">r.mask</A> </EM></td>
+	<td><EM><A HREF="parser.html">parser</A></EM></td>
+</tr>
+
+
+<H2>AUTHOR</H2>
+
+Raghavan Srinivasan, Agricultural Engineering, Purdue University
+
+</body>
+</html>
+

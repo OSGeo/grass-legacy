@@ -8,7 +8,6 @@
 #include <unistd.h>
 #include "gis.h"
 #include "digit.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "display_line.h"
 #include "Map_proto.h"
@@ -373,13 +372,13 @@ int do_digitize (
 	    /* is this an area boundary that will affect neighbor areas? */
 	    if (type == AREA)
 	    {
-		if (area = check_next (map, line, RIGHT))
+		if ((area = check_next (map, line, RIGHT)))
 		    Del_area (map, area);
-		if (area = check_next (map, line, LEFT))
+		if ((area = check_next (map, line, LEFT)))
 		    Del_area (map, area);
-		if (area = check_next (map, -line, RIGHT))
+		if ((area = check_next (map, -line, RIGHT)))
 		    Del_area (map, area);
-		if (area = check_next (map, -line, LEFT))
+		if ((area = check_next (map, -line, LEFT)))
 		    Del_area (map, area);
 		/*
 		** PSU, dont want digizing loop

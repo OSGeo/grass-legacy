@@ -2,18 +2,23 @@
 #	man/utilities/Nroff
 #
 #	Script to produce cat* entries from GRASS man* man page source.
-#	Usage:	Nroff version date directory
-#	    version	GRASS version number, e.g. "4.1"
-#	    date	date of this GRASS version, e.g. "Spring 1993"
-#	    directory	GISBASE directory, e.g. /home/local/src/grass4.1
+#	Usage:	Nroff version date directory make
+#	    version	GRASS version number, e.g. "5.0"
+#	    date	date of this GRASS version, e.g. "Spring 2000"
+#	    directory	GISBASE directory, e.g. /home/local/src/grass5
+#           make        make program
+#
+# $Id: Nroff,v 1.4 2000-07-18 05:55:15 markus Exp $
 #
 umask 0
 
 if test $# -lt 3
 then
-    echo "Usage: $0  version  date  GISBASE"
+    echo "Usage: $0  version  date  GISBASE make"
     exit 2
 fi
+
+MAKE=$4
 
 wd=$3\/man/utilities
 
@@ -42,6 +47,8 @@ done
 #
 for dir in cat?
 do
+ echo $dir | grep CVS  # ignore CVS diretories (added 1/2000 M.N.)
+ if [ $? -eq 0 ]; then
     srcdir=`echo $dir | sed -e s/cat/man/`
     list=`echo $dir/*`
     if [ "$list" != "$dir/*" ]; then		# in case directories are empty
@@ -54,6 +61,7 @@ do
 	    fi
 	done
     fi
+  fi
 done
 
 #	Main loop.  Find all the source man pages in the 'man' directories,
@@ -81,21 +89,21 @@ do
 	    echo 'all: list' >> .makefile
 	fi
 	i=`expr $i + 1`
-	cat=`echo $man | sed s/man/cat/`
+	cat=`echo $man | sed s/CVS// |sed s/man/cat/`
 	list="$list $cat"
 	echo "$cat: $man $header $notice ; tbl -TX $wd/man.version $header $wd/man.header $man $notice" \| nroff \| col -b \> $cat >> .makefile
 #
 	if test $i = 100
 	then
 	    echo "list: $list" >> .makefile
-	    make -f .makefile
+	    ${MAKE} -f .makefile
 	    i=0
 	fi
     done
     if test $i != 0
     then
 	echo "list: $list" >> .makefile
-	make -f .makefile
+	${MAKE} -f .makefile
     fi
 done
 

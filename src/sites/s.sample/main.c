@@ -166,7 +166,7 @@ int main (argc, argv)
   if (usesitecat) dodiff=1;
 
   G_get_window (&window);
-
+           
   if ((mapset = G_find_file ("site_lists", isiteslist, "")) == NULL)
   {
     sprintf (errmsg, "sites file [%s] not found", isiteslist);
@@ -222,8 +222,8 @@ int main (argc, argv)
      That way we don't have to load all of the sites into memory at
       once. */
  
-  z = readsites (fdisite, verbose, &nsites, window);
-
+  nsites = readsites (fdisite, verbose, &z);
+  
   if (nsites <= 0)
     G_fatal_error ("No sites found");
 

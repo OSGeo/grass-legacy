@@ -1,7 +1,0 @@
-               BRIEF HELP ENTRIES FOR PRINT COMMANDS       
-
-Below is a list of GRASS 4.0 print commands.
-
-  @ref("p.chart help",17.manual/Help.pages/p.chart)         @ref("p.colors help",17.manual/Help.pages/p.colors)         @ref("p.icons help",17.manual/Help.pages/p.icons)
-  @ref("p.labels help",17.manual/Help.pages/p.labels)        @ref("p.map help",17.manual/Help.pages/p.map)            @ref("p.ppm help",17.manual/Help.pages/p.ppm)
-  @ref("p.screen help",17.manual/Help.pages/p.screen)        @ref("p.select help",17.manual/Help.pages/p.select)

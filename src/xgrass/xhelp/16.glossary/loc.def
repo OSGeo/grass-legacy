@@ -1,9 +1,0 @@
-
-
-location - A directory containing the GRASS mapsets accessible by a
-user within a given GRASS session.  All mapsets stored under the same
-GRASS location must use the same @glossary("map coordinate system",16.glossary/mapcoord.def).  Typically,
-each GRASS location stores mapsets whose data are referenced to the
-same geographic region on the earth's surface.  Each location directory
-contains the special @glossary("mapset",16.glossary/mapset.def) "PERMANENT" and other user mapsets.
-The variable $LOCATION_NAME denotes the user's current GRASS location.

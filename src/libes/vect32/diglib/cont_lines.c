@@ -1,6 +1,6 @@
 #include <math.h>
 #include <stdlib.h>
-#include "digit.h"
+#include "Vect.h"
 /*
 **  Written by Dave Gerdes  12/1989
 **  US Army Construction Engineering Research Lab

@@ -1,0 +1,12 @@
+OFILES = main.o 
+
+
+PROG = $(BIN_ALPHA_CMD)/v.rm.dangles
+
+all:  $(PROG)
+
+$(PROG): $(OFILES) $(VECTLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(VECTLIB): #in case of library changes
+$(GISLIB): #

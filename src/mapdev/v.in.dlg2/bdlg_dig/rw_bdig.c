@@ -2,7 +2,6 @@
 /*  -dpg  */
 #include <stdio.h>
 #include "Vect.h"
-#include "dig_head.h"
 #include "gis.h"
 
 #ifdef OLD_LIB

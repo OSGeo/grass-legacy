@@ -1,3 +1,7 @@
+Feb 2000 added cwidth, offset, coffset, lpos for vectors by Radim Blazek 
+
+Jan 2000 added vector areas and legend label for vectors by Radim Blazek 
+
 1998
 Patch, which enables user to choose one vector category 
 to print from a vector file (Janne Soimasuo, Finnland)

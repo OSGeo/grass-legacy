@@ -1,0 +1,151 @@
+<HTML>
+<TITLE>d.scale</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.scale</b></EM>  - Overlays a bar scale and north arrow for the current 
+geographic region at a user-defined location in the active display frame. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.scale</B>
+<BR>
+<B>d.scale help</B> 
+<BR>
+<B>d.scale</B> 
+[<B>-m</B>] 
+[<B>bcolor=</B><EM>name</EM>] 
+[<B>tcolor=</B><EM>name</EM>] 
+[<B>at=</B><EM>x,y</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.scale</EM> overlays a bar scale and north arrow for
+the current geographic region at a user-defined location in
+the active display frame.  The scale and north arrow are
+proportioned to fit in the active frame when placed along
+the frame's left edge.
+
+<P>
+
+The user can specify the location of the scale and north
+arrow interactively (using a mouse), or provide the
+geographic coordinates at which they will be placed.  The
+scale and north arrow will only overwrite those portions of
+the graphics display that lie directly beneath them.
+
+<P>
+
+The user can also specify the colors in which the scale and north arrow 
+will be drawn. By default, if unspecified by the user, a white scale 
+and north arrow will be displayed on a black background. 
+
+<H2>OPTIONS</H2>
+
+The user can run this program either non-interactively or interactively. 
+The program will be run non-interactively if the user specifies 
+program parameter values and desired flag settings 
+on the command line, using the form: 
+
+<P>
+<DL>
+<DD>
+<B>d.scale</B> 
+[<B>-m</B>] 
+[<B>bcolor=</B><EM>name</EM>] 
+[<B>tcolor=</B><EM>name</EM>] 
+[<B>at=</B><EM>x,y</EM>] 
+</DL>
+
+<P>
+If at least one parameter value is given on the command line 
+and the -m flag is not set, the program will be run non-interactively; 
+any other parameter values left unspecified 
+on the command line will be set equal to their default values (see below). 
+Alternately, the user can simply type <B>d.scale</B> on the command line, 
+without program arguments. In this case, the user will be prompted for 
+needed parameter values and the flag setting using the standard GRASS 
+<A HREF="parser.html">parser</A> interface.
+If the user sets the -m flag, <EM>d.scale</EM> will 
+expect the user to designate the scale's location interactively, 
+using the mouse. 
+
+<H3>Flag:</H3> 
+
+<DL>
+<DT><B>-m</B>
+<DD>Use the mouse to interactively place the location of
+    the scale and north arrow.
+</DL>
+
+<H3>Parameters:</H3>
+
+<DL>
+<DT><B>bcolor=</B><EM>name</EM>
+<DD>
+    Set the background color underlying the scale and north
+    arrow to <EM>name</EM>.
+<BR>
+    Options: <EM>red, orange, yellow, green, blue, indigo, violet, 
+    gray, brown, magenta, white</EM>, and <EM>black</EM> 
+<BR>
+    Default: <EM>black</EM> 
+
+<DT><B>tcolor=</B><EM>name</EM>
+<DD>Set the foreground color in which the text, scale, and north arrow 
+    are displayed to <EM>name</EM>.
+<BR>
+    Options: Same as <EM>bcolor</EM> colors. 
+<BR>
+    Default: <EM>white</EM> 
+
+<DT><B>at=</B><EM>x,y</EM>
+<DD>
+    The map easting (x) and northing (y) geographic
+    coordinates designating the location at which the upper
+    left corner of the scale is to be placed. The user should
+    choose geographic coordinates located within the current
+    geographic region (see 
+    <EM><A HREF="d.where.html">d.where</A></EM> and 
+    <EM><A HREF="g.region.html">g.region</A></EM> for these
+    coordinates).
+<BR>
+    Default: 0.0,0.0 
+</DL>
+
+<H2>NOTES</H2>
+
+<EM>d.scale</EM>
+assumes that layer units are in meters. 
+
+<P>
+
+The scale that <EM>d.scale</EM> generates is probably not suitable 
+for very tiny maps (in small display frames). 
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.legend.html">d.legend</A></EM><br>
+<EM><A HREF="d.measure.html">d.measure</A></EM><br>
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM><br>
+<EM><A HREF="d.what.vect.html">d.what.vect</A></EM><br>
+<EM><A HREF="d.where.html">d.where</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM><br>
+<EM><A HREF="parser.html">parser</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, 
+U.S. Army Construction Engineering 
+Research Laboratory
+
+</body>
+</HTML>

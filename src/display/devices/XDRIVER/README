@@ -1,4 +1,53 @@
+Updated to better color table management
+Date: Wed, 12 Apr 2000 23:00:28 -0400                                           
+From: Carl Anderson <candrsn@mindspring.com>
 
+tested for three(four) platforms                    
+        Linux RH 6.1 - XFree86 3.3.5 - intel                                    
+        Linux RH 6.1 - Sparc (ipx, ss5)                                         
+        SUN Solaris 2.5.1 - sparc  (490/690)                                    
+        SUN Solaris 2.7 - sparc / ultra sparc (ss5, ultra5, ultra10, e5000)     
+for a variety of graphics cards that I had on hand                              
+        ATI MACH 8      - intel 16 bit ISA                                      
+        ATI MACH 64     - intel pci                                             
+        S3 805          - intel pci                                             
+        S3 virge        - intel pci                                             
+        cgsix           - SUN sbus                                              
+        ffb             - SUN sbus                                              
+        pgx24           - SUN sbus 
+
+The Driver code should be MUCH, MUCH more robust and able to                    
+choose a public or private colormap as necessary to get the most                
+number of colors.  And chose a visual type to go with it.
+BTW the updated driver worked when forced into all visuals                      
+DirectColor, StaticColor, StaticGray, GrayColor, PseudoColor, and               
+TrueColor
+Other than TrueColor and PseudoColor, private colors maps are strictly          
+necessary.  But I am unaware of modern graphics cards that don't support        
+either PsuedoColor or TrueColor.  
+
+The SUN pgx24 card can be run in 8 bit mode with a 24 bit overlay               
+so it could have                                                                
+        8 bit PsuedoColor                                                       
+        8 bit TrueColor                                                         
+        24 bit TrueColor                                                        
+        lots of other stuff                                                     
+                                                                                
+for this configuration the updated driver has a parameter                       
+        nlev=-1                                                                 
+causing it to find the highest bit depth TrueColor display available.           
+(you still need to edit /etc/X11/XF86Config to change bit depth under           
+Linux)                                                                          
+                                                                                
+8 bit XFree86 3.3.5 has 6/7 bit TrueColor available, in this case               
+the default (PsuedoColor) is a better choice. 
+
+The problem: "can not allocate any read/write color cells"
+should be fixed.
+
+See also XDRIVER24/README.
+
+------------------------------------------------------------------------
 /* Changed for truecolor 24bit support by 
  * Roberto Flor/ITC-Irst, Trento, Italy
  * August 1999

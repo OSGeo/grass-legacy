@@ -7,14 +7,11 @@
 
 #include "param.h"
 
-find_normal(normal,w)
-    float **normal;		/* Matrix of cross-products.	*/
-    double *w;			/* Weights matrix.		*/
+int find_normal (
+    float **normal,		/* Matrix of cross-products.	*/
+    double *w			/* Weights matrix.		*/
+)
 {
-
-    int edge=EDGE;		/* Store (wsize-1)/2 to save	*/
-				/* on computation 		*/	 
-
     float  x,y,			/* Local coordinates of window.	*/
 	   x1=0,y1=0,		/* coefficients of X-products.	*/
 	   x2=0,y2=0,
@@ -94,6 +91,8 @@ find_normal(normal,w)
     normal[5][6] = normal[6][5] = y1;
 
     normal[6][6] = N;
+
+    return 0;
 }
 
 
@@ -103,15 +102,16 @@ find_normal(normal,w)
 /* 		V.1.0, Jo Wood, 11th December, 1994.	 	*/
 /****************************************************************/
 
-find_obs(z,obs,w)
-    CELL  *z;			/* Local window of elevs.	*/
-    float *obs;			/* Observed column vector.	*/
-    double  *w;			/* Weighting matrix.		*/
+int 
+find_obs (
+    CELL *z,			/* Local window of elevs.	*/
+    float *obs,			/* Observed column vector.	*/
+    double *w			/* Weighting matrix.		*/
+)
     
 {
 
     int	row,col,		/* Counts through local window.	*/
-	edge=EDGE,		/* EDGE = (wsize-1)/2.		*/
 	offset;			/* Array offset for weights & z	*/
 
     float x,y;			/* Local window coordinates.	*/
@@ -136,6 +136,8 @@ find_obs(z,obs,w)
 	    if (!constrained)	/* If constrained, should remain 0.0 */
 	 	obs[6] += *(w + offset) * *(z + offset) ;
 	}
+
+    return 0;
 }
 
 
@@ -148,14 +150,13 @@ find_obs(z,obs,w)
 /*               V.1.1, Jo Wood, 11th May, 1995.		*/
 /****************************************************************/
 
-find_weight(weight_ptr)
-    double *weight_ptr;
+int 
+find_weight (double *weight_ptr)
 {
     int row,col;		/* Counts through the rows and	*/
 				/* columns of weights matrix.	*/
 
-    double dist,		/* Distance to centre of kernel.*/
-	   sum_weight=0;	/* Sum of weights.		*/	
+    double dist;		/* Distance to centre of kernel.*/
 
 
     /* --- Find inverse distance of all cells to centre. ---*/
@@ -167,5 +168,7 @@ find_weight(weight_ptr)
 		pow(sqrt((EDGE-col)*(EDGE-col) + (EDGE-row)*(EDGE-row))+1.0,exponent);
 	    *(weight_ptr + row*wsize + col) = dist;
 	}
+
+    return 0;
 }
 

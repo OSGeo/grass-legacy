@@ -1,4 +1,6 @@
-Ppictsize (rows, cols)
+#include <stdio.h>
+
+int Ppictsize (int rows, int cols)
 {
     char buf[128];
 
@@ -9,4 +11,6 @@ Ppictsize (rows, cols)
     Pouts(buf);
 /* maximum color level. */
     Pouts("255\n");
+
+    return 0;
 }

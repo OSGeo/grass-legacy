@@ -11,6 +11,8 @@ LIBES = $(GISLIB) $(DATETIMELIB)
 LIST  = \
 	main.o 
 
+all: $(PGM)
+
 $(PGM): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 

@@ -2,20 +2,28 @@
 #include <stdlib.h>
 #include "global.h"
 
+/* Modified to support Grass 5.0 fp format 11 april 2000
+ *
+ * Pierre de Mouveaux - pmx@audiovu.com
+ *
+ */
+
 int rectify (
     char *name,
     char *mapset,
     char *result)
 {
-    struct Cell_head cellhd, win;
+    struct Cell_head  win, cellhd;
     int ncols, nrows;
     int row, col;
     int infd;
     void *rast;
+	char buf[64]="";
 
     select_current_env();
     if (G_get_cellhd (name, mapset, &cellhd) < 0)
 	return 0;
+    map_type = G_raster_map_type(name, mapset);
 
 /* open the result file into target window
  * this open must be first since we change the window later
@@ -27,30 +35,34 @@ int rectify (
  */
 
     select_target_env();
-    G_set_window (&target_window);
-    G_set_cell_format (cellhd.format);
-    select_current_env();
+    G_set_window(&target_window);
+    G_set_cell_format(cellhd.format);
 
 /* open the file to be rectified
  * set window to cellhd first to be able to read file exactly
  */
-    G_set_window (&cellhd);
-    infd = G_open_cell_old (name, mapset);
+
+/*  	G_suppress_warnings(1); */
+
+
+	select_current_env();
+	G_set_window (&cellhd);
+	infd = G_open_cell_old (name, mapset);
     if (infd < 0)
     {
+	close (infd);
 	return 0;
     }
-    map_type = G_raster_map_type(name, mapset);
-    rast = (void *)  G_calloc (G_window_cols()+1, G_raster_size(map_type));
+  
+	rast = (void *)  G_calloc (G_window_cols()+1, G_raster_size(map_type));
     G_set_null_value(rast, G_window_cols()+1, map_type);
-
     G_copy (&win, &target_window, sizeof(win));
 
     win.west += win.ew_res/2;
     ncols = target_window.cols;
     col = 0;
-
-    temp_fd = 0;
+	
+	temp_fd = 0;
     while (ncols > 0)
     {
 	if ((win.cols = ncols) > NCOLS)
@@ -77,13 +89,28 @@ int rectify (
 	col += win.cols;
 	win.west += (win.ew_res * win.cols);
     }
-    select_target_env();
-    target_window.compressed=cellhd.compressed;
-    write_map(result);
-    select_current_env();
+/*      select_target_env(); */
+/*  	G_suppress_warnings(0); */
 
-    G_close_cell (infd);
+/*  	G_suppress_warnings(1); */
+    target_window.compressed=cellhd.compressed;
+ 	G_close_cell (infd); /* pmx 17 april 2000: need closing before cganging window if different projs !*/
+   write_map(result);
+    select_current_env();
+/*   	G_suppress_warnings(0); */
+/*  	G_close_cell (infd); */  /* original position ... !#@?! */
     G_free (rast);
 
     return 1;
 }
+
+
+
+
+
+
+
+
+
+
+

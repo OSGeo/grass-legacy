@@ -1,0 +1,130 @@
+<HTML>
+
+<TITLE>i.texture</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>i.texture</b></EM>  - calculate textural features on a
+raster file
+
+<BR>
+
+<EM>(GRASS Image Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>i.texture</B>
+
+<BR>
+
+<B>i.texture help</B>
+
+<BR>
+
+<B>i.texture rast=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+Reads a GRASS raster map as input.  Calculates textural
+features based on spatial dependence matrices for
+north-south, east-west, northwest, and southwest directions
+using a 3x3 neighborhood (i.e., a distance of 1).  Writes
+to standard output.  Be sure to carefully set your
+resolution (using
+
+<EM><A HREF="g.region.html">g.region</A></EM>) 
+
+before running this program, or else your computer could
+run out of memory.  Also, make sure that your raster map
+has no more than 255 categories.
+
+
+<H2>OPTIONS</H2>
+<H3>Parameter:</H3>
+<DL>
+<DT><B>rast=</B><EM>name</EM> 
+<DD>Raster map name.
+</DL>
+
+
+<H2>NOTES</H2>
+Textural features include:
+
+<OL> 
+
+<LI>Angular Second Moment,
+<LI> Contrast,
+<LI> Correlation,
+<LI> Variance,          
+<LI> Inverse Difference Moment,
+<LI> Sum Average,
+<LI> Sum Variance,
+<LI> Sum Entropy,
+<LI> Entropy,
+<LI> Difference Variance,
+<LI> Difference Entropy,
+<LI> Information Measure of Correlation, 
+<LI> Another Information Measure of Correlation, and
+<LI> Maximal Correlation Coefficient.
+</OL>
+
+Algorithm taken from:
+
+<BR>
+
+Haralick, R.M., K. Shanmugam, and I. Dinstein. 1973. Textural features
+for image classification.  
+<EM>IEEE Transactions on Systems, Man</EM>,
+<EM>and Cybertinetics</EM>,
+SMC-3(6):610-621.
+
+<P>
+
+The code was taken by permission from <EM>pgmtexture</EM>, part of
+
+PBMPLUS 
+(Copyright 1991, Jef Poskanser and Texas
+Agricultural Experiment Station, employer for hire of James
+Darrell McCauley).
+
+<H2>BUGS</H2>
+
+The program can run incredibly slow for large raster files 
+(larger than 64 x 64) and command line options are limited.
+
+<P>
+
+The method for finding (14) the maximal correlation coefficient, which
+requires finding the second largest eigenvalue of a matrix Q, does not
+always converge. 
+
+<P>
+
+It would be interesting to write raster files to map features for 
+neighborhoods, with some sort of quantization to record category values.
+This may be useful for image classification schemes, but this exercise is 
+left to the reader (the changes would be fairly trivial).
+
+<H2>REFERENCES</H2>
+
+<EM>IEEE Transactions on Systems, Man, and Cybertinetics</EM>,
+SMC-3(6):610-621.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.region.html">g.region</A></EM><BR>
+<EM><A HREF="r.reclass.html">r.reclass</A></EM><BR>
+
+<H2>AUTHOR</H2>
+
+James Darrell McCauley, Agricultural
+Engineering, Purdue University
+
+</BODY>
+</HTML>

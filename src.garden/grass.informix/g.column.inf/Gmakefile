@@ -1,4 +1,4 @@
-PGM       = $(GARDEN_BIN)/g.column.inf
+PGM       = $(BIN_MAIN_CMD)/g.column.inf
 LIBES     = $(GISLIB)
 
 

@@ -1,0 +1,5 @@
+interface_build {
+    {db.select.all} 0
+    {Select all.}
+    {entry table {Table} 0 ""}
+}

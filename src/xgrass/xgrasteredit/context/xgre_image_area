@@ -1,7 +1,0 @@
-This is the raster-editor's image display area.  When
-a raster map is loaded using either the File-Open or 
-File-Resume menu option, it will be loaded into this area.  
-
-If the raster map is too big to fit in this area, then you
-may either resize the raster-editor's window, and/or use the 
-scroll-bars to move about the image. 

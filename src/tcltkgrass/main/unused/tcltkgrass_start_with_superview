@@ -45,7 +45,7 @@ export GIS_LOCK
 # set PATH to GRASS bin, ETC to GRASS etc
 #
 ETC=$GISBASE/etc
-PATH=$GISBASE/bin:$GISBASE/scripts:$GISBASE/garden/bin:$PATH
+PATH=$GISBASE/bin:$GISBASE/scripts:$PATH
 export PATH
 
 #

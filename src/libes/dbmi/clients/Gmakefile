@@ -1,22 +1,23 @@
-#HOME = $(DBMIDIR)/bin
+HOME=$(GISBASE)/etc/bin/main/cmd
 
-HOME=$(GISBASE)/etc/dbmi/bin
 INCLUDE = ../include
-DBMILIB = ../lib/libdbmi.a
+DBMILIB = $(LIBDIR)/libdbmi.a
 
-LIBES = $(GISLIB) $(DBMILIB)
+LIBES = $(DBMILIB) $(GISLIB) 
 EXTRA_CFLAGS=-I$(INCLUDE)
 
-all: 
-	if [ ! -d $(GISBASE)/etc/dbmi ]; then mkdir $(GISBASE)/etc/dbmi; fi; \
-	if [ ! -d $(HOME) ]; then mkdir $(HOME); fi; \
-	$(HOME)/db.columns \
+all: 	$(HOME)/db.columns \
+	$(HOME)/db.createdb \
+	$(HOME)/db.dropdb \
+	$(HOME)/db.droptable \
 	$(HOME)/db.databases \
 	$(HOME)/db.describe \
 	$(HOME)/db.drivers \
 	$(HOME)/db.execute \
 	$(HOME)/db.select \
-	$(HOME)/db.tables
+	$(HOME)/db.tables \
+	$(HOME)/db.connect \
+	$(GISBASE)/db.attr
 
 $(HOME)/db.columns: columns.o $(LIBES)
 	$(CC) -o $@ columns.o $(LIBES) $(XDRLIB) $(MATHLIB)
@@ -47,5 +48,13 @@ $(HOME)/db.select: select.o $(LIBES)
 
 $(HOME)/db.tables: tables.o $(LIBES)
 	$(CC) -o $@ tables.o $(LIBES) $(XDRLIB) $(MATHLIB)
+
+$(HOME)/db.connect: connect.o $(LIBES)
+	$(CC) -o $@ connect.o $(LIBES) $(XDRLIB) $(MATHLIB)
+	
+$(GISBASE)/db.attr: db.attr
+	if [ ! -d $(GISBASE)/scripts ]; then mkdir $(GISBASE)/scripts; fi
+	cp db.attr $(GISBASE)/scripts
+	chmod 0755 $(GISBASE)/scripts/db.attr
 
 $(LIBES): #

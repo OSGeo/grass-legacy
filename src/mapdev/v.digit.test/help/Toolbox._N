@@ -1,4 +1,0 @@
- Build Neat Line	Build a neat line from 1st four registration points
-   This function can be used to create an accurately defined line that will
- trace the border of the current map.  It builds the line using the 1st four
- points you used to register the map.

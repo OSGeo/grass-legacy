@@ -10,8 +10,6 @@ NAME
      (GRASS Data Import/Processing Program)
 
 SYNOPSIS
-     m.ipf
-     m.ipf help
      m.ipf [-emz] [input=name] [format=string] [stop=value]
 
 DESCRIPTION
@@ -19,7 +17,6 @@ DESCRIPTION
      or r.kappa, smooths zero counts, and does iterative
      proportional fitting to normalize the matrix.
 
-OPTIONS
      Flags:
 
      -e		       Indicate when the iterative algorithm
@@ -56,11 +53,14 @@ OPTIONS
 
 EXAMPLE
      For the following input,
+	  3
+	  712	    0	   12
+	    0	  584	    2
 
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			1
+GRASS 5.0beta8	      GRASS Development Team			1
 
 
 
@@ -71,9 +71,6 @@ m.ipf <contrib>	      GRASS Reference Manual	  <contrib> m.ipf
 
 
 
-	  3
-	  712	    0	   12
-	    0	  584	    2
 	   18	    0	  434
 
      zero counts in the matrix will be smoothed:
@@ -88,7 +85,7 @@ m.ipf <contrib>	      GRASS Reference Manual	  <contrib> m.ipf
 	    0.001   0.999   0.004
 	    0.031   0.001   0.973
 
-NOTES
+PROGRAM NOTES
      Iterative proportional curve fitting is useful when
      comparing the output of image classification algorithms (for
      example, i.maxlik and i.smap), especially when training
@@ -97,20 +94,17 @@ NOTES
      multiple comparison test.
 
 SEE ALSO
-     r.coin, r.kappa,
-     Assessing Multiple Classifications - GRASS Tutorial on m.ipf
-     and
-     Zhuang, X., B.A. Engel, X. Xiong, and C. Johanssen. 1994.
-     Analysis of Classification Results of Remotely Sensed Data
-     and Evaluation of Classification Algorithms,
+     r.coin, r.kappa, printf(3), and Zhuang, X., B.A. Engel, X.
+     Xiong, and C. Johanssen. 1994.  Analysis of Classification
+     Results of Remotely Sensed Data and Evaluation of
+     Classification Algorithms,
       Photogrammetric Engineering and Remote Sensing (in press)
 
 BUGS
      Please send all bug fixes and comments to the author.
 
 AUTHOR
-     James Darrell McCauley, Agricultural Engineering, Purdue
-     University
+     James Darrell McCauley, Purdue University
      (mccauley@ecn.purdue.edu)
 
 NOTICE
@@ -126,7 +120,13 @@ NOTICE
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+
+
+
+
+
+
+2		      GRASS Development Team	   GRASS 5.0beta8
 
 
 

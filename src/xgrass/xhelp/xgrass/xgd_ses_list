@@ -1,5 +1,0 @@
-This is a scrolled list containing the names of all your sessions.  A
-'session' combines the notion of a database-location-mapset into a
-single item.  Sessions are stored in your home directory in
-~/.xgrass/sessions.  Click on a session to select the database-
-location-mapset stored therein.

@@ -11,7 +11,6 @@
 #include "raster.h"
 #include "debug.h"
 #include "digit.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "line_pnts.h"
 #include "display_line.h"
@@ -530,22 +529,25 @@ int tell_line_label (struct Map_info *map, int line)
     return (0);
 }
 
-
-/* Document this !!   return values?? */
 /* called by find_line_w_mouse */
+/* Returns -1 == No area selected as current.	*/
+/* Returns 1 == Existing area selected as current.	*/
+/* Returns 0 == New area selected as current.	*/
 int make_area_label (struct Map_info *map, int line)
 {
     int area;
     char buf[200];
 
-    if (local_prev)
+    if (local_prev) {
 	if (local_area)
 	    display_area (local_area, map);
 	else
 	    _display_area (&Garea, map);
+    }
 	
     if ((area = check_area (map, line, local_x, local_y)) > 0)
     {
+        /* Valid Area selected */
 	local_prev = 1;
 	local_area = area;
 
@@ -567,9 +569,11 @@ int make_area_label (struct Map_info *map, int line)
     }
     else
     {
+        /* No area, create one */
 	local_area = 0;
-	if (0 >= build_area (map, local_x, local_y, line, &Garea))	/* create new area */
+	if (0 >= build_area (map, local_x, local_y, line, &Garea))
 	{
+            /* Oops, can't create */
 	    BEEP;
 	    Write_info (2, "Could not create area.");
 	    sleep (2);
@@ -577,12 +581,9 @@ int make_area_label (struct Map_info *map, int line)
 	    display_line (AREA, &Gpoints, line, map);	/* undo highlight */
 	    return (-1);	/* NO Current Area */
 	}
-	else
-	{
-	    if (Auto_Window && area_outside_window (&Garea))
-		expand_window (Garea.N, Garea.S, Garea.E, Garea.W, 1);
-	    _highlight_area (&Garea, map);
-	}
+        if (Auto_Window && area_outside_window (&Garea))
+            expand_window (Garea.N, Garea.S, Garea.E, Garea.W, 1);
+        _highlight_area (&Garea, map);
     }
 
     return (0);

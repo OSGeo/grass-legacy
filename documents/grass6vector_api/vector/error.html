@@ -1,0 +1,104 @@
+
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Error Handling
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Error Handling
+</h1>
+
+<blockquote><i>
+    Status:  Gamma<br>
+    This module has been designed, reviewed and coded.
+    It should be considered stable.
+</i></blockquote>
+
+These routines provide the caller with information about current error
+status from the API.
+<p>
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li>int     <a href="#gvGetErrorCode"> gvGetErrorCode </a>
+     (VOID);
+
+
+<li>char *  <a href="#gvGetErrorMsg"> gvGetErrorMsg </a>
+     (VOID);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+<a name="gvGetErrorCode">
+<pre>
+int     <strong>gvGetErrorCode</strong>  (VOID);
+
+This function returns the current error code.  This may be 
+called after any gv() function returns an abnormal code to 
+determine the current error status.
+
+INPUT
+    None
+OUTPUT
+    None
+RETURN
+    gvStatus 
+		GV_OK
+		GV_FAILURE
+		GV_MEMORY_ERR
+		...
+
+</pre>
+<a href="#index">index</a>
+
+<hr>   <!--------------------------------------------------->
+
+<a name="gvGetErrorMsg">
+<pre>
+char *  <strong>gvGetErrorMsg</strong>  (VOID);
+
+This function can be called after any gv() function returns 
+an abnormal code to get more information about the error.
+
+INPUT
+    None
+OUTPUT
+    None
+RETURN
+    char *      String describing error
+
+</pre>
+<a href="#index">index</a>
+
+
+<!--hr------------------------------------------------>
+<p>
+
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>
+

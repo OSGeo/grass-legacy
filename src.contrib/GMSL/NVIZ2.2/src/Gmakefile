@@ -1,8 +1,32 @@
+# $Log: Gmakefile,v $
+# Revision 1.6  2000-07-14 10:10:52  bill
+# *** empty log message ***
+#
+# Revision 1.5  2000/03/06 17:17:22  markus
+# Alex Shevlakov: added new fields in WHATS HERE menu for GRASS/PostgreSQL interface
+#
+# Revision 1.5  2000/03/06 09:04:07  markus
+# Philip Warner/Markus Neteler: updated to relative paths
+#
+# Revision 1.4  2000/02/29 14:38:28  markus
+# Philip Warner (pjw@rhyme.com.au): Handle Tcl/Tk shared libs (remove tkBind.c), Remove tk*.c as far as possible, Use idle handler instead of SpecialWait
+#
+# 26-Feb-2000 Philip Warner (pjw@rhyme.com.au)
+# 	Handle Tcl/Tk shared libs (remove tkBind.c)
+#	Remove tk*.c as far as possible
+#	Use idle handler instead of SpecialWait
+#
+# Revision 1.3  2000/02/22 19:02:48  markus
+# added XEXTRALIBS for Solaris2.6
+#
+# Revision 1.2  2000/02/22 18:21:23  markus
+# added XDRLIB
+#
 # updated -ldl lib added (10/199) (pmx)
 # updated ogsf path to src/libes/ 10/99 MN
 # bugfixes 8/99 MN
 # nviz 2.2 based in tcl/tk 8.x (7/99)
-
+#	
 # nviz v1.1
 # 5/1/96
 # Makefile for building nvwish
@@ -11,10 +35,10 @@
 # These should be set by the configure script
 TK_LIB_PATH=-L/usr/X11R6/lib -L/usr/lib -L/usr/local/lib -ltk8.0 -ltcl8.0
 TK_INCLUDE_PATH=-I/usr/include/GL -I/usr/include/X11 -I/usr/local/include
-SCRIPTS=/usr/local/grass-5.0b/etc/nviz2.2/scripts
 NVWISH_VER=NVWISH2.2
+PQ_OBJS=openvect.o getCat.o buildInfxQry.o runInfxQry.o
 
-OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) -ldl
+OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) -ldl $(XDRLIB) $(XEXTRALIBS)
 
 SURF_INCDIR = $(LIBDIR)/ogsf
 SURFLIB = $(LIBDIR)/ogsf/libgsf.a
@@ -23,20 +47,19 @@ SURFLIB = $(LIBDIR)/ogsf/libgsf.a
 # DSPLIB = $(LIBDIR)/libes/dspf/libdsp3.a
 # DSPINC = $(LIBDIR)/libes/dspf
 
-#EXTRA_CFLAGS= -xansi -O0 -g -I${SURF_INCDIR} $(VECT_INCLUDE) -D_NO_PROTO\
-#        -D__STDC__ $(TK_INCLUDE_PATH) -DSRC_BOOT=\"$(SCRIPTS)\" -I$(DSPINC)
-EXTRA_CFLAGS= -I${SURF_INCDIR} $(VECT_INCLUDE) -D_NO_PROTO\
-        -D__STDC__ $(TK_INCLUDE_PATH) -DSRC_BOOT=\"$(SCRIPTS)\" -I$(DSPINC) $(GISLIB)
+EXTRA_CFLAGS= -I${SURF_INCDIR} -D_NO_PROTO\
+        -D__STDC__ $(TK_INCLUDE_PATH) -I$(DSPINC) $(GISLIB) $(PQINCPATH)
 
 IMGLIB= $(LIBDIR)/libimage/libimage.a
 
-XTRA_LDFLAGS=$(DFLAGS) $(TK_LIB_PATH) $(OGL_LIBS)
+XTRA_LDFLAGS=$(DFLAGS) $(TK_LIB_PATH) $(OGL_LIBS) $(PQLIB)
 
-OBJS = tkAppInit.o change_view.o draw.o exag.o glwrappers.o \
+OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 	init_commands.o lights.o map_obj.o misc.o nviz_init.o \
 	position.o quick_draw.o anim_support.o cutplane_obj.o \
-	tkSpecial_Wait.o tkBind.o script_support.o \
-	tkSend.o label.o tkMain.o togl.o togl_cb.o
+	script_support.o \
+	label.o nvizMain.o togl.o togl_cb.o\
+	query_postgr.o $(PQ_OBJS)
 # mkdspf_calc_linefax.o mkdspf_init_file.o mkdspf_main.o \
 # mkdspf_fill_cfax.o mkdspf_iso_surface.o
 

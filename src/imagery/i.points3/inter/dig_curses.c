@@ -1,6 +1,6 @@
 #include <curses.h>
 #include "gis.h"
-#include "digit.h"
+#include "Vect.h"
 #include "menu.h"
 #include "ginput.h"
 

@@ -5,7 +5,6 @@
 
 #include "digit.h"
 #include "dig_curses.h"
-#include "dig_head.h"
 #include "wind.h"
 #include "Map_proto.h"
 #include "local_proto.h"

@@ -1,4 +1,5 @@
 /*
+** $Id$
 **  Written by Dave Gerdes  4/1988
 **  US Army Construction Engineering Research Lab
 */
@@ -619,7 +620,7 @@ zoom_window ()
 	if (Window_Device == MOUSE)
 	    set_window_w_mouse ();
 	else
-	    set_window();
+	    set_window_w();
 	clear_window ();
 	replot(CMap);
     }
@@ -704,7 +705,7 @@ zoom_window (void)
 	} 
 	else
 	{
-	    set_window();
+	    set_window_w();
 	    clear_window ();
 	    replot(CMap);
 	}

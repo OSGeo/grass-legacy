@@ -45,7 +45,8 @@ $(ETC)/r.combine:      $(OFILES) $(LIBES)
 text:
 	rm -rf $(TXT)/COMBINE
 	mkdir $(TXT)/COMBINE
-	cp HELP_TEXT/* $(TXT)/COMBINE
+#	cp HELP_TEXT/* $(TXT)/COMBINE
+	(cd HELP_TEXT/ ; tar -cvf - * | (cd $(TXT)/COMBINE ; tar -xvf - 2>/dev/null ) ; true )
 
 #
 

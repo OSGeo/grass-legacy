@@ -1,0 +1,61 @@
+<TITLE>r.reclass.scs</TITLE>
+
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.reclass.scs</b></EM>  - Create a new raster map layer based on an existing
+raster map.
+
+<BR>
+
+<EM>(SCS GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.reclass.scs</B>
+
+<BR>
+
+<B>r.reclass.scs help</B>
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.reclass.scs</EM> is an interface to the GRASS <EM>r.reclass</EM> program.
+The program will reclassify the category values in a raster map layer
+based on reclass instructions entered by the user.
+The user can enter map reclassification rules to <EM>r.reclass.scs</EM>
+either from standard input or from a file.
+The program then issues <EM>r.reclass</EM> commands to produce the
+new reclassified raster map layer.
+
+
+<P>
+
+Input to <EM>r.reclass.scs</EM> consists of a list of category names
+or category values that will be grouped into the same category in the
+output (reclassified) map.  Only one category name should appear on each
+line of input.  Input can be entered either interactively, or from
+a file.
+
+
+<P>
+
+A file containing these reclass rules can be created using a text editor,
+word-processor, DBMS, etc.
+It is no more than a list of category names which will have the same
+category value after the reclassification.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.reclass.html">r.reclass</A></EM><br>
+<EM><A HREF="r.resample.html">r.resample</A></EM><br>
+<EM><A HREF="r.rescale.html">r.rescale</A></EM>
+
+<H2>AUTHOR</H2>
+
+R.L. Glenn, USDA, SCS, NHQ-CGIS
+
+

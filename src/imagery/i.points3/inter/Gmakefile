@@ -9,8 +9,8 @@ HOME 	= $(BIN_MAIN_INTER)
 all:	$(HOME)/$(PGR)
 
 ####	required - suplimental imagery libary 
-IMAGERY_SUBINC = ../../image3
-IMAGERYLIB_SUP  = ../../image3/libimage_sup.a
+IMAGERY_SUBINC = $(SRC)/libes/image3
+IMAGERYLIB_SUP = $(SRC)/libes/image3/libimage_sup.a
 
 ####	object files
 LIST	= \
@@ -73,7 +73,7 @@ $(LIBES): 			# in case of lib changes
 
 ####   required compile flags
 ####   NOTE: probably needs -D_NO_PROTO for now
-EXTRA_CFLAGS = $(VECT_INCLUDE) -I$(IMAGERY_SUBINC)
+EXTRA_CFLAGS = -I$(IMAGERY_SUBINC)
 
 ####	any required link flags
 #EXTRA_LDFLAGS =  

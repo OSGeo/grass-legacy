@@ -1,0 +1,53 @@
+
+
+
+s.proj <main>	      GRASS Reference Manual	    <main> s.proj
+
+
+
+NAME
+     s.proj - Allows the user to re-project a sites file from
+     one location to the current location.
+     (GRASS Sites Program)
+
+SYNOPSIS
+     s.proj
+     s.proj help
+     s.proj input=name [output=name] [mapset=name] location=name
+     [dbase=name]
+
+DESCRIPTION
+     Allows the user to create a new sites file in the current
+     location by re-projecting a sites file from another
+     location, similar to v.proj and r.proj.  Each site will
+     retain all associated category, double, and string
+     attributes.  The header information is copied and an
+     additional header comment is written containing the s.proj
+     command line used to create the new file.
+
+
+COMMAND LINE OPTIONS
+     Parameters
+
+     input
+	  input sites list
+
+     output
+	  output sites list
+
+     mapset
+	  mapset of input
+
+     location
+	  location of input
+
+     dbase
+	  database of input
+
+
+SEE ALSO
+     v.proj, r.proj
+
+AUTHOR
+     Bill Brown
+

@@ -29,16 +29,16 @@ disp_matrix(a,x,z,n)
 
     for (row=1; row<=n; row++)
     {
-	printf("[ ");
+	fprintf(stdout, "[ ");
 
 	for (col=1; col<=n; col++)
-	    printf("%.3f\t",a[row][col]/1);	
+	    fprintf(stdout, "%.3f\t",a[row][col]/1);	
 
-	printf("]\t[ %.0f\t]\t[ %.0f\t]\n",x[row],z[row]);
+	fprintf(stdout, "]\t[ %.0f\t]\t[ %.0f\t]\n",x[row],z[row]);
     }
-    printf("\n\n");
+    fprintf(stdout, "\n\n");
 
-    gets(dummy);
+    fgets(dummy,70,stdin);
 }
 
 disp_wind(z)
@@ -52,10 +52,10 @@ disp_wind(z)
     for (row=0; row<wsize; row++)
     {
 	for (col=0; col<wsize; col++)
-	    printf("%d\t",*(z + (row*wsize) + col));
+	    fprintf(stdout, "%d\t",*(z + (row*wsize) + col));
 
-	printf("\n");
+	fprintf(stdout, "\n");
     }
 
-    gets(dummy);
+    fgets(dummy,70,stdin);
 }

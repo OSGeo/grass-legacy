@@ -69,7 +69,7 @@ select_digitizer( fp, selected_digitizer, Driver)
 	which_driver = -1 ;
 	while(1)
 	{
-		if ( gets(buf) == NULL)
+		if ( fgets(buf,128,stdin) == NULL)
 			exit(-1) ;
 
 		G_squeeze(buf) ;

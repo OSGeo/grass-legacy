@@ -5,4 +5,7 @@ interface_build {
     {entry grid {Number of rows and columns to appear in grid (rows,columns):} 0 ""}
     {entry coordinate {Lower left corner of new vector map (easting,norting):} 0 xy}
     {entry box {Boxes dimension in new grid (length,width):} 0 ""}
+    {entry angle {Angle of rotation about SW corner (degrees) :} 0 ""}
+    {entry type {Type of attribute [blank=none] | const | rows | cols :} 0 ""}
+    {entry value {Value of constant attribute:} 0 ""}
 }

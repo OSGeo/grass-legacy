@@ -1,6 +1,7 @@
 /* Function: vect_legend
 **
 ** Author: Paul W. Carlson	April 1992
+** Modified by: Radim Blazek Jan 2000 area, label added 
 */
 
 #include "vector.h"
@@ -9,8 +10,42 @@
 
 int vect_legend (void)
 {
-    int i;
-    double x, y, fontsize, dy, margin;
+    int i, j, k, l, lcount=0, vcount=0;
+    double x, y, fontsize, dy, yo, margin;
+    int vec[MAXVECTORS], last[MAXVECTORS];
+
+    /* sorted array of vectors with marked last vectors in one legend row */
+    j=-1;
+    for ( l=1; l <= MAXVECTORS; l++ )
+    {
+	k=0;
+	for ( i = vector.count; i >= 0; i-- )
+	    if ( vector.lpos[i] == l )
+	    {
+		vec[vcount]=i;	
+		last[vcount]=0;
+		k=1;
+		vcount++;
+	    }
+	if ( k == 1 )
+	{
+	    last[vcount-1]=1;	    
+	    lcount++;
+	}
+	else
+	    while ( j < vector.count )
+	    {
+		j++;
+		if ( vector.lpos[j] == -1 )
+		{
+		    vec[vcount]=j;
+		    last[vcount]=1;	
+		    vcount++;
+		    lcount++;
+		    break;
+		}
+	    }
+    }
 
     /* set font */
     fontsize = (double)vector.fontsize;
@@ -28,9 +63,16 @@ int vect_legend (void)
 
     /* make PostScript array "a" of name-mapset strings */
     fprintf(PS.fp, "/a [\n");
-    for (i = 0; i < vector.count; i++)
+    for ( j=0; j < vcount; j++ )
     {
-        fprintf(PS.fp, "(  %s (%s))\n", vector.name[i], vector.mapset[i]);
+	while ( j < vcount && last[j] == 0 ){
+	    j++;
+	}
+	i = vec[j];
+	if ( vector.label[i] == NULL )
+	    fprintf(PS.fp, "( %s (%s))\n", vector.name[i], vector.mapset[i]);
+	else		
+	    fprintf(PS.fp, "( %s)\n", vector.label[i]);
     }
     fprintf(PS.fp, "] def\n");
 
@@ -47,13 +89,16 @@ int vect_legend (void)
     	/* make white background for text */
     	fprintf(PS.fp, "1 1 1 C ");
     	fprintf(PS.fp, "%.1f %.1f w %.1f B fill \n", 
-		x - margin,  y - vector.count * dy - margin, y);
+		x - margin,  y - lcount * dy - margin, y);
     }
 
     /* make the legend */
-    for (i = 0; i < vector.count; i++)
+    k=0;
+    for (j = 0; j < vcount; j++)
     {
-	y -= dy;
+	i = vec[j];
+	if ( j==0 || last[j-1] == 1 )
+	    y -= dy;
 
 	/* make a grey box if needed */
 	if ((vector.hwidth[i] > 0. && vector.hcolor[i] == WHITE) ||
@@ -64,27 +109,49 @@ int vect_legend (void)
 		x, y, x + 72.0, y + fontsize);
 	}
 
-	/* do highlight, if any */
-	if (vector.hwidth[i])
+        if ( vector.area[i] )  /* added for areas */
 	{
-	    set_rgb_color(vector.hcolor[i]);
-	    fprintf(PS.fp, "%.8f W\n",  
-		  vector.width[i] + 2 * vector.hwidth[i]);
-	    fprintf(PS.fp, "[] 0 setdash\n");
-	    fprintf(PS.fp, "%.1f %.1f %.1f %.1f L\n",
-		x + 72.0, y + 0.5 * fontsize, x, y + 0.5 * fontsize);
+	    /* plot rectangle */
+	    fprintf(PS.fp, "%.2f %.2f %.2f C\n", (double) vector.acolor[i].r/255., vector.acolor[i].g/255., vector.acolor[i].b/255.);  
+	    fprintf(PS.fp, "%.1f %.1f %.1f %.1f rectfill\n",
+		x + 10.0 , y , 52.0, 0.8 * fontsize);
+	    if (vector.width[i])
+	    {	
+        	fprintf(PS.fp, "%.8f W\n", vector.width[i] );
+		set_rgb_color(vector.colors[i][0]);
+		fprintf(PS.fp, "[] 0 setdash\n");
+		fprintf(PS.fp, "%.1f %.1f %.1f %.1f rectstroke\n",
+		    x + 10.0 , y , 52.0, 0.8 * fontsize);
+	    }	    
 	}
+	else
+	{
+	    yo = y + 0.5 * fontsize - vector.offset[i]; 
+	    /* do highlight, if any */
+	    if (vector.hwidth[i])
+	    {
+		set_rgb_color(vector.hcolor[i]);
+		fprintf(PS.fp, "%.8f W\n",  
+		      vector.width[i] + 2 * vector.hwidth[i]);
+		fprintf(PS.fp, "[] 0 setdash\n");
+		fprintf(PS.fp, "%.1f %.1f %.1f %.1f L\n",
+		    x + 72.0, yo, x, yo);
+	    }
 
-	/* plot the primary color line */
-	set_rgb_color(vector.colors[i][0]);
-	fprintf(PS.fp, "%.8f W\n", vector.width[i] );
-	fprintf(PS.fp, "%s setdash\n", vector.setdash[i]);
-	fprintf(PS.fp, "%.1f %.1f %.1f %.1f L\n",
-	    x + 72.0, y + 0.5 * fontsize, x, y + 0.5 * fontsize);
+	    /* plot the primary color line */
+	    set_rgb_color(vector.colors[i][0]);
+	    fprintf(PS.fp, "%.8f W\n", vector.width[i] );
+	    fprintf(PS.fp, "%s setdash\n", vector.setdash[i]);
+	    fprintf(PS.fp, "%.1f %.1f %.1f %.1f L\n",
+		x + 72.0, yo, x, yo);
+	}
 
 	/* plot the text */
 	set_rgb_color(BLACK);
-	fprintf(PS.fp, "a %d get %.1f %.1f MS\n", i, x + 72.0, y);
+	if ( last[j] == 1 ) {
+	    fprintf(PS.fp, "a %d get %.1f %.1f MS\n", k, x + 72.0, y);
+	    k++;    
+	}    
     }
     fprintf(PS.fp, "[] 0 setdash\n");
 

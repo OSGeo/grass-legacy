@@ -1,0 +1,146 @@
+<TITLE>r.rescale.inf</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.rescale.inf</b></EM>  - Generate a raster map layer in which the categories represent values
+in a database column which have been divided into equal interval units.
+
+<BR>
+
+<EM>(GRASS-RDBMS Raster Interface Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.rescale.inf</B>
+
+<BR>
+
+<B>r.rescale.inf help</B>
+
+<BR>
+
+<B>r.rescale.inf</B> <B>tab=</B><EM>name</EM> <B>key=</B><EM>name</EM> <B>col=</B><EM>name</EM> <B>cats=</B><EM>name</EM> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> <B>[join=</B><EM>tab,tabkey,pkey]</EM>
+
+<H2>DESCRIPTION</H2>
+
+r.rescale.inf creates a reclassed raster map layer by dividing the values in a numeric column in the currently
+selected database into equal interval units. The number of resulting categories is determined by the user
+via the command line parameter [cats=]. r.rescale.inf evaluates the range of values for the database
+column and subsets these values into equal interval groups of records returned by the query. For example,
+if the database column contains values which range from 1-1000 and the [cats] value is equal to 10 the
+resulting raster map layer will contain the 10 categories:1=1-100, 2=101-200 etc. In other words, each
+category in the new raster map layer will represent a range of 100 values from the database column used
+in the rescale operation. The database column being evaluated must be numeric in type. To identify the 
+data types of columns in a database table use the g.column.inf command with the [-v] flag. r.rescale.inf 
+does not take outlying data values into account. Therefore, if the range of values for a database column 
+contains a limited number of extreme values the resulting rescale operation will be skewed in the direction 
+of these values.
+
+
+<P>
+
+
+
+<P>
+
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+
+<P>
+
+Parameters
+
+<DT><EM><B>tab=</B>database_table_name</EM> 
+
+<DD>Table containing a column linked to category values in an existing raster map.
+
+<DT><EM><B>key=</B>database_column_name</EM> 
+
+<DD>Column corresponding to category values in an existing raster map.
+
+<DT><EM><B>col=</B>database_column_name</EM> 
+
+<DD>Column to base rescale operation on which is numeric in type.
+
+<DT><EM><B>cats=</B>value</EM> 
+
+<DD>Number of categories to define in the resulting reclass map.
+
+<DT><EM><B>input=</B>map</EM> 
+
+<DD>Name of an existing raster file with category values linked to a column in the currently selected databae.
+
+<DT><EM><B>output=</B>map</EM> 
+
+<DD>Name of new raster map.
+
+<DT><EM><B>join=</B>tab,tabkey,pkey</EM> 
+
+<DD>
+
+<P>
+
+Tab is the table used to develop the current SQL query. Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file. Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+
+
+<P>
+</DT>
+
+For instance, assume that stf1_main is a table containing column values associated with category values 
+in a the GRASS raster file blkgrp.ids. In addition, assume that stf1_main is a table containing 
+attribute data on age in the column pop100. In this example stf1_main is the table 
+associated with the GRASS raster map and tract_blck is the column linking stf1_main to the GRASS category 
+file. The column pop100 in stf1_main will be the basis for the rescale effort.  To specify the rescale:
+<DL>
+<DD><B>r.rescale.inf tab=</B><EM>stf1_main</EM><B> key=</B><EM>tract_blck</EM><B> col=</B><EM>pop100</EM>
+<DD><B>cats=</B><EM>5</EM><B> input=</B><EM>blkgrp.ids</EM><B> output=</B><EM>pop100.rescale </EM>
+</DL>
+
+Specifying these conditions would insure that all rows from table stf1_main which satisfy the query criteria would be related to the spatial features in the GRASS data layer via the GRASS category values.
+
+
+<P>
+
+
+
+<P>
+
+
+<H2>BUGS</H2>
+
+None known.
+
+
+<P>
+
+
+<H2>NOTE</H2>
+
+This program requires the Informix database software.
+
+
+<P>
+
+
+<H2>SEE ALSO</H2>
+
+g.column.inf, g.select.inf, g.stats.inf, g.table.inf, d.rast.inf, d.site.inf, d.vect.inf, d.what.r.inf, d.what.s.inf, d.what.v.inf, r.reclass.inf, <A HREF="v.reclass.inf.html">v.reclass.inf</A>
+
+
+<P>
+
+
+<H2>AUTHOR</H2>
+
+James A. Farley, Wang Song and W. Fredrick Limp
+University of Arkansas, CAST
+
+

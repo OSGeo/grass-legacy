@@ -31,12 +31,28 @@ src/libes/vect32/Vlib
 src/libes/vect32/diglib
 src/libes/vect32/georef
 src/libes/image3
+src/libes/bwidget
+src/general/init
 src/display/devices/lib
 src/display/devices/monitorcap
 src/display/devices/CELL
 src/display/devices/XDRIVER
+src/display/devices/HTMLMAP
 src/fonts/for_grass
 src/front.end
+##### DBMI DRIVERS #####    
+src/libes/dbmi/lib
+src/libes/dbmi/drivers/stubs
+# requires ODBC:
+# src/libes/dbmi/drivers/odbc
+#
+# requires Informix, needs update:
+# src/libes/dbmi/drivers/informix
+#
+# requires SQLBASE, needs update:
+# src/libes/dbmi/drivers/sqlbase
+#
+src/libes/dbmi/clients
 ################
 # start with modules:
 ################
@@ -47,7 +63,9 @@ src/display/d.barscale
 src/display/d.colormode
 src/display/d.colors
 src/display/d.colortable
+src/display/d.db
 src/display/d.display
+src/display/d.dm
 src/display/d.erase
 src/display/d.font
 src/display/d.frame
@@ -59,6 +77,7 @@ src/display/d.histogram
 src/display/d.icons
 src/display/d.label
 src/display/d.labels
+#src/display/d.layers
 src/display/d.leg.thin
 src/display/d.legend
 src/display/d.mapgraph
@@ -67,6 +86,7 @@ src/display/d.menu
 src/display/d.mon
 src/display/d.p.labels
 src/display/d.pan
+src/display/d.param.scale
 src/display/d.points
 src/display/d.profile
 src/display/d.rast
@@ -78,8 +98,9 @@ src/display/d.rgb
 src/display/d.rhumbline
 src/display/d.save
 src/display/d.scale
-src/display/d.site.labels
-src/display/d.sites.label
+# the following both modules need to be updated to new sites API:
+#src/display/d.site.labels
+#src/display/d.sites.label
 src/display/d.siter
 src/display/d.sites
 src/display/d.sites.qual
@@ -88,6 +109,7 @@ src/display/d.title
 src/display/d.vect
 src/display/d.vect.cats
 src/display/d.vect.zoom
+src/display/d.what.db
 src/display/d.what.rast
 src/display/d.what.sites
 src/display/d.what.vect
@@ -105,7 +127,7 @@ src/general/g.region
 src/general/g.tempfile
 src/general/g.setproj
 src/general/g.version
-src/general/gis
+# manage contains g.list, g.remove, g.rename:
 src/general/manage
 src/imagery/i.ask
 src/imagery/i.cca
@@ -127,7 +149,7 @@ src/imagery/i.ortho.photo
 src/imagery/i.out.erdas
 src/imagery/i.pca
 src/imagery/i.points
-#src/imagery/i.points3
+src/imagery/i.points3
 src/imagery/i.quantize
 src/imagery/i.rectify
 src/imagery/i.rectify2
@@ -149,46 +171,69 @@ src/mapdev/v.alabel
 src/mapdev/v.apply.census
 src/mapdev/v.area
 src/mapdev/v.autocorr
+src/mapdev/v.bubble
 src/mapdev/v.build
+src/mapdev/v.build.polylines
 src/mapdev/v.cadlabel
 src/mapdev/v.clean
 src/mapdev/v.cutter
+src/mapdev/v.db.reclass
 src/mapdev/v.digit
+src/mapdev/v.distance
 src/mapdev/v.export
 src/mapdev/v.extract
 src/mapdev/v.from.3
-src/mapdev/v.import
 src/mapdev/v.geom
+src/mapdev/v.import
 src/mapdev/v.in.arc
+src/mapdev/v.in.arc.poly
 src/mapdev/v.in.ascii
+src/mapdev/v.in.atlas
 src/mapdev/v.in.dlg
+src/mapdev/v.in.dlg2
 src/mapdev/v.in.dxf
+src/mapdev/v.in.dxf2
+src/mapdev/v.in.dxf3d
 src/mapdev/v.in.shape
 src/mapdev/v.in.tig.basic
 src/mapdev/v.in.tig.lndmk
 src/mapdev/v.in.transects
 src/mapdev/v.info
+src/mapdev/v.llabel
 src/mapdev/v.merge
 src/mapdev/v.mkgrid
 src/mapdev/v.mkquads
 src/mapdev/v.out.arc
+src/mapdev/v.out.atlas
 src/mapdev/v.out.dlg
 src/mapdev/v.out.dxf
+src/mapdev/v.out.e00
+src/mapdev/v.out.idrisi
+src/mapdev/v.out.mapinfo
+src/mapdev/v.out.mif
 src/mapdev/v.out.moss
+src/mapdev/v.out.shape
 src/mapdev/v.patch
 src/mapdev/v.proj
 src/mapdev/v.prune
 src/mapdev/v.random
 src/mapdev/v.reclass
+src/mapdev/v.rm.dangles
+src/mapdev/v.rmdup
 src/mapdev/v.spag
+#src/mapdev/v.spag.ascii
 src/mapdev/v.stats
 src/mapdev/v.support
 src/mapdev/v.surf.rst
+src/mapdev/v.timestamp
+src/mapdev/v.to.db
 src/mapdev/v.to.rast
 src/mapdev/v.to.sites
 src/mapdev/v.transform
 src/mapdev/v.trim
-# src/misc/m.datum.shift
+src/mapdev/v.what
+#src/misc/m.clump # does not compile
+src/misc/m.datum.shift
 src/misc/m.dem.examine
 src/misc/m.dem.extract
 src/misc/m.dmaUSGSread
@@ -198,9 +243,12 @@ src/misc/m.examine.tape
 src/misc/m.flip
 src/misc/m.gc2ll
 src/misc/m.in.e00
+#src/misc/m.in.ntf
 src/misc/m.in.pl94.db3
 src/misc/m.in.stf1.db3
 src/misc/m.in.stf1.tape
+src/misc/m.ipf
+src/misc/m.kappa
 src/misc/m.ll2gc
 src/misc/m.ll2u
 src/misc/m.lulc.USGS
@@ -208,6 +256,7 @@ src/misc/m.lulc.read
 src/misc/m.proj
 src/misc/m.region.ll
 src/misc/m.rot90
+src/misc/m.svfit
 src/misc/m.tiger.region
 src/misc/m.u2ll
 src/paint/Interface
@@ -218,13 +267,13 @@ src/paint/Programs
 src/paint/Programs/p.map.new/cmd
 src/paint/Tests
 src/ps.map
+src/raster/r.agnps50
 src/raster/r.average
 src/raster/r.basins.fill
 src/raster/r.bilinear
 src/raster/r.binfer
 src/raster/r.buffer
 src/raster/r.cats
-# r.circle was r.dist (but not r.distance)
 src/raster/r.circle
 src/raster/r.clump
 src/raster/r.coin
@@ -240,17 +289,24 @@ src/raster/r.describe
 src/raster/r.digit
 src/raster/r.drain
 src/raster/r.flow
+src/raster/r.flowmd
 src/raster/r.grow
 src/raster/r.in.arc
 src/raster/r.in.ascii
 src/raster/r.in.bin
+src/raster/r.in.dem
+src/raster/r.in.doq
 src/raster/r.in.dted/r.in.dted
 src/raster/r.in.ll
-src/raster/r.in.ppm
+#src/raster/r.in.pbm # replaced by r.in.ppm
+src/raster/r.in.png
 src/raster/r.in.poly
+src/raster/r.in.ppm
+src/raster/r.in.shape
 src/raster/r.in.sunrast
 src/raster/r.infer
 src/raster/r.info
+src/raster/r.kappa
 src/raster/r.line
 src/raster/r.los
 src/raster/r.mapcalc
@@ -263,15 +319,20 @@ src/raster/r.null
 src/raster/r.out.arc
 src/raster/r.out.ascii
 src/raster/r.out.mpeg
+src/raster/r.out.png
+src/raster/r.out.pov
 src/raster/r.out.ppm
 src/raster/r.out.tga
 src/raster/r.out.xyz
+src/raster/r.param.scale
 src/raster/r.patch
 src/raster/r.poly
 src/raster/r.profile
 src/raster/r.proj
 src/raster/r.quant
 src/raster/r.random
+src/raster/r.random.cells
+src/raster/r.random.surface
 src/raster/r.reclass
 src/raster/r.recode
 src/raster/r.report
@@ -282,9 +343,9 @@ src/raster/r.rescale.eq
 src/raster/r.slope.aspect
 src/raster/r.statistics
 src/raster/r.stats
-src/raster/r.support
 src/raster/r.sum
 src/raster/r.sun
+src/raster/r.support
 src/raster/r.surf.area
 src/raster/r.surf.contour
 src/raster/r.surf.fractal
@@ -293,6 +354,7 @@ src/raster/r.surf.idw
 src/raster/r.surf.idw2
 src/raster/r.surf.random
 src/raster/r.thin
+src/raster/r.tiff
 src/raster/r.timestamp
 src/raster/r.to.sites
 src/raster/r.transect
@@ -302,52 +364,65 @@ src/raster/r.watershed
 src/raster/r.weight
 src/raster/r.weight2
 src/raster/r.what
+src/raster/wildfire
 src/scripts
-#src/sites/s.geom # needs update to 4.2 API
+#src/sites/s.geom # needs update to 5.0 API
 src/sites/s.in.ascii
+src/sites/s.in.shape
 src/sites/s.info
-src/sites/s.menu
+src/sites/s.kcv   
+#src/sites/s.menu # needs update to 5.0 API
+src/sites/s.normal
+src/sites/s.o2n.tps
 src/sites/s.out.ascii
+src/sites/s.out.e00
+src/sites/s.perturb
+src/sites/s.probplt
+src/sites/s.proj
+src/sites/s.qcount
+src/sites/s.rand
+src/sites/s.sample
 src/sites/s.surf.idw
 src/sites/s.surf.rst
-src/sites/s.surf.tps
+src/sites/s.sv    
 src/sites/s.territory
 src/sites/s.to.rast
 src/sites/s.to.vect
-src/sites/sroff
-src/sites/s.kcv
-src/sites/s.normal
-src/sites/s.perturb
-src/sites/s.qcount
-src/sites/s.probplt
-src/sites/s.rand
-src/sites/s.sample
-src/sites/s.sv
 src/sites/s.univar
+src/sites/sroff
 src/tcltkgrass
 #######################################
 src.contrib/CERL/raster/r.distance
 src.contrib/CERL/raster/r.hydro.CASC2D
 #
 # requires MOTIF:
-#src.contrib/GMSL/xganim
+# src.contrib/GMSL/xganim
 # src.contrib/GMSL/ogl3d_linux
-# src.contrib/GMSL/NVIZ2.2 # compile manually there: configure; gmake5
+#
+# compile manually with: configure; gmake5
+# src.contrib/GMSL/NVIZ2.2
+# only on SGI:
+# src.contrib/GMSL/SG3d
+# grid3d support (raster voxel):
+#src.contrib/GMSL/g3d
+#
+#######################################
+# PostgreSQL support: (working!)
+#src.garden/grass.postgresql
 #######################################
 # from here onwards it becomes experimental!!
 #
-src.contrib/CAST/r.colors.paint
 src.contrib/CERL/imagery/i.rvi.prediction2
 src.contrib/CERL/imagery/i.shape
 ###src.contrib/CERL/libes/projsupp   # obsolete!!
-# src.contrib/CERL/misc/m.regression  # missing tscore()
-# src.contrib/CERL/raster/r.linear.regression  # missing tscore()
-# src.contrib/CERL/raster/r.ndvi.model  # missing tscore()
+# src.contrib/CERL/misc/m.regression
+src.contrib/CERL/raster/r.linear.regression
+# src.contrib/CERL/raster/r.ndvi.model
 src.contrib/CERL/raster/r.out.mpeg
-# src.contrib/CERL/raster/r.rational.regression # missing tscore()
+src.contrib/CERL/raster/r.rational.regression
 src.contrib/CERL/raster/r.rvi
 src.contrib/CERL/raster/r.water.fea/src
-src.contrib/CERL/sites/s.surf.krig
+#src.contrib/CERL/sites/s.surf.krig # not working
 # src.contrib/CORPS/FLOOD        # not working
 # src.contrib/CORPS/FLOOD2/cmd   # not working
 # src.contrib/CWU/Census/scripts # requires RIM DBMS
@@ -435,8 +510,10 @@ src.contrib/SCS/vector/v.mk_stats
 # src.contrib/SCS/vector/v.reclass  # obsolete(?)/better?, already in src/mapdev/
 src.contrib/SCS/vector/v.report
 src.contrib/SCS/vector/v.rmedge
+src.contrib/SDTS
 src.contrib/UCB/gdbase
-# src.contrib/GMSL/SG3d # only on SGI
 #src.contrib/eurogis/v.out.DI # very special, outdated?
 #src.contrib/eurogis/v.in.EE
 #src.contrib/eurogis/r.to.SVF
+#src.garden/grass.hdf/hdf3
+src.garden/answers/src.answers/raster/r.fill.dir

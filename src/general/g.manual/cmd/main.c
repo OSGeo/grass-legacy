@@ -131,7 +131,7 @@ int display_man_page (char *path)
     char buf[1024];
 
     if (isatty(1))
-         sprintf(buf,"more %s",path);
+         sprintf(buf,"$PAGER %s",path);
     else 
 	 sprintf(buf,"cat %s",path);
     G_system(buf);
@@ -282,7 +282,7 @@ int list_all_tty (int pretty, int fflag, int eflag)
 	if(pretty)free(temp1);
 	if(pretty)free(temp2);
     if(isatty(1))
-         sprintf(buf,"more %s",tempfile);
+         sprintf(buf,"$PAGER %s",tempfile);
     else
 	 sprintf(buf,"cat %s",tempfile);
     G_system(buf);
@@ -324,7 +324,7 @@ list_all_not_tty (int pretty, int fflag, int eflag)
 			fflush(stdout);
 		    }
 		    if(isatty(1))
-                       sprintf(buf,"more %s",tempfile);
+                       sprintf(buf,"$PAGER %s",tempfile);
                     else
 		       sprintf(buf,"cat %s",tempfile);
                     G_system(buf);
@@ -343,7 +343,7 @@ list_all_not_tty (int pretty, int fflag, int eflag)
 		fflush(stdout);
 	    }
 	    if(isatty(1))
-                 sprintf(buf,"more %s",tempfile);
+                 sprintf(buf,"$PAGER %s",tempfile);
             else
 		 sprintf(buf,"cat %s",tempfile);
             G_system(buf);

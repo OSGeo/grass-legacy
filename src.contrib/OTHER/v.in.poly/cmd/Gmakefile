@@ -1,14 +1,11 @@
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 OFILES = main.o
 PGM = v.in.poly
 
 all:	$(BIN_CONTRIB_CMD)/$(PGM)
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(OFILES)
-	rm -f a.out
-	$(CC) $(LDFLAGS) $(OFILES) $(DIG_ATTLIB) $(VECTLIB) \
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DIG_ATTLIB) $(VECTLIB) \
 		$(GISLIB) $(MATHLIB) $(XDRLIB)
-	mv a.out $@
 
 
 $(GISLIB): # in case LIB changes

@@ -5,7 +5,8 @@ int more_print (char *tmpname)
 {
     char line[80],command[256],name[128];
 
-    sprintf(command,"clear; more -d %s",tmpname);
+/*    sprintf(command,"clear; more -d %s",tmpname);*/
+     sprintf(command,"clear; $PAGER %s",tmpname);
     system(command);
     if (G_yes("Do you wish to print this report out? ", 0))
     {

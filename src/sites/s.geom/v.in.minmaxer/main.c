@@ -2,9 +2,8 @@
 #include <search.h>
 #endif
 #include "gis.h"
-#include "digit.h"
+#include "Vect.h"
 #include "dig_atts.h"
-#include "dig_head.h"
 #include "optri.h"
 
 /*--------------------------------------------------------------------------*/
@@ -142,7 +141,7 @@ closeGlobal ()
 {
   fclose(In);
   fclose (OutAtt);
-  Vect_close (OutMap);
+  Vect_close (&OutMap);
   Vect_destroy_line_struct (Points);
 }
 

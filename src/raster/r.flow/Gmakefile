@@ -5,7 +5,6 @@ HEADERS=r.flow.$(VER).h io.$(VER).h mem.$(VER).h aspect.$(VER).h \
 	precomp.$(VER).h
 
 #LDFLAGS =
-EXTRA_CFLAGS = $(VECT_INCLUDE)
 
 DIR=$(BIN_ALPHA_CMD)
 #DIR=.
@@ -46,7 +45,6 @@ mem.$(VER).o:			r.flow.$(VER).h io.$(VER).h mem.$(VER).h
 precomp.$(VER).o:		aspect.$(VER).h
 
 saber_src:
-	#load $(CFLAGS) $(LDFLAGS) $(VECT_INCLUDE) $(SOURCES) $(LIBS) \
 		$(MATHLIB)
 
 $(GISLIB) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB): #

@@ -1,0 +1,9 @@
+:
+
+ls dig/* > vptmp
+vp2 `cat vptmp`
+
+for n
+do
+	v.proj map=$n outset=out$$
+done

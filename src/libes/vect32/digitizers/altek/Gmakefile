@@ -8,9 +8,9 @@ DIG_DRIVER		= $(ETC)/dig_drivers
 DRIVER_DIR	= $(DIG_DRIVER)/altek
 DRIVER_NAME	= ALTEK
 
-COMPILE_DIGIT 	= $(LDFLAGS) -o  digit  $(OBJ) $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(GISLIB)
+COMPILE_DIGIT 	= $(LDFLAGS) -o  $(DRIVER_DIR)/digit  $(OBJ) $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(CURSES) $(GISLIB)
 
-EXTRA_CFLAGS	= $(DIGITFLAGS) $(VECT_INCLUDE)
+EXTRA_CFLAGS	= $(DIGITFLAGS)
 
 
 OBJ = \
@@ -61,8 +61,6 @@ mk_driver_dev:
 mk_driver_dig: $(OBJ) $(DRIVER_DIR) $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB) $(DISPLAYLIB) $(RASTERLIB) $(VASKLIB) $(GISLIB)
 #  compile driver into the program
 	$(CC) $(COMPILE_DIGIT) $(MATHLIB) $(XDRLIB)
-	rm -f $(DRIVER_DIR)/digit
-	mv digit $(DRIVER_DIR)/digit
 
 #  'digit'  must be owned by root and have mode 06775
 #  chown  root digit
@@ -72,17 +70,13 @@ mk_driver_dig: $(OBJ) $(DRIVER_DIR) $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATT
 #    geo.reg goes to etc/dig_drivers/? and is called by geo.reg in etc
 
 geo.reg: $(GEO_REG) $(DRIVER_DIR) $(LIBGEO) $(LIBTRANS) $(VECTLIB) $(VASKLIB) $(GISLIB)
-	$(CC) $(LDFLAGS) -o  geo.reg  $(GEO_REG)  $(LIBGEO) $(LIBTRANS)  $(VECTLIB) $(VASKLIB) $(CURSES) $(GISLIB) $(MATHLIB) $(XDRLIB)
-	rm -f $(DRIVER_DIR)/geo.reg
-	mv geo.reg $(DRIVER_DIR)/geo.reg
+	$(CC) $(LDFLAGS) -o  $(DRIVER_DIR)/geo.reg  $(GEO_REG)  $(LIBGEO) $(LIBTRANS)  $(VECTLIB) $(VASKLIB) $(CURSES) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 #    geo.point goes to etc/dig_drivers/? and is called by geo.point in etc
 
 geo.point: $(GEO_POINT) $(DRIVER_DIR) $(LIBGEO) $(LIBTRANS) $(LOCLIB) $(VASKLIB) $(GISLIB)
 #  compile driver into the program
-	$(CC) $(LDFLAGS) -o  geo.point  $(GEO_POINT)  $(LIBGEO) $(LIBTRANS) $(CURSES) $(GISLIB)  $(LOCKLIB) $(MATHLIB) $(XDRLIB)
-	rm -f $(DRIVER_DIR)/geo.point
-	mv geo.point $(DRIVER_DIR)/geo.point
+	$(CC) $(LDFLAGS) -o  $(DRIVER_DIR)/geo.point  $(GEO_POINT)  $(LIBGEO) $(LIBTRANS) $(CURSES) $(GISLIB)  $(LOCKLIB) $(MATHLIB) $(XDRLIB)
 
 $(RASTERLIB) $(DISPLAYLIB) (VASKLIB) $(GISLIB): #
 $(LIBDIGIT) $(VECTLIB) $(LIBTRANS) $(DIG_ATTLIB): #

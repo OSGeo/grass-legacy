@@ -1,0 +1,393 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Stdio Replacement
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Stdio Replacement
+</h1>
+
+<hr>   <!--------------------------------------------------->
+
+<blockquote><i>
+    Status:  Delta<br>
+    This module has been designed, and coded but is currently under review.
+    It is fairly stable but its interface could change.
+<p>
+    I want to add a file system capability so I don't have to have so
+    many open file descriptors.  And I want to add a transaction
+    committal capability.  (have all writes go to a separate file and
+    the original file only gets modified on a commit.
+
+</i></blockquote>
+
+<p>
+This library is almost a plug and play replacement for the UNIX stdio
+library.  There are only a small handful of function which are not 
+represented.  The most obvious of which is scanf() because there is no
+vscanf() function.    I have replaced the FILE * with a dpgFileP and
+they are not interchangeable. 
+<p>
+The reason this library exists is because I wanted more functionality
+from the stdio library.  There are three primary things I wanted to 
+add and two of them don't yet exist.
+<p>
+
+<dl>
+<dt> 1. Unlimited number of open files. (exists)
+<dt> 2. Transaction/Committal capability (i.e. don't touch file until commit)
+<dt> 3. File system within a file.  Virtual files can be stored in one file.
+</dl>
+
+This library currently takes care of temporarily closing any files
+it needs to to keep under the system limit for open files.  If it can
+it queries the system for the current limit.  Files are automatically
+re-opened and their state restored when their dpgFileP is used.
+This library uses the <a href="age.html">age</a> library to do file
+pointer aging.
+<p>
+
+I want the file system support because my vector library opens so many 
+files currently, and I want the committal function so that it will take
+care of file integrity issues for me. Someday maybe my dreams will
+come true.
+<p>
+
+Feel free to use this library just as you would the UNIX versions.
+<p>
+
+Currently these functions are not supported:<br>
+<ul>
+    <li> setbuf
+    <li> setvbuf
+</ul>
+<p>
+
+
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li> <a href=#>  </a>
+    
+
+<li>dpgFileP  <a href=#dpgFopen> dpgFopen </a>
+           (char *file, char *mode);
+
+
+<li>int       <a href=#dpgFclose> dpgFclose </a>
+          (dpgFileP fp);
+
+
+<li>int       <a href=#dpgFflush> dpgFflush </a>
+          (dpgFileP fp);
+
+
+<li>size_t    <a href=#dpgFread> dpgFread </a>
+           (char *, size_t , size_t , dpgFileP);
+
+
+<li>size_t    <a href=#dpgFwrite> dpgFwrite </a>
+          (char *, size_t , size_t , dpgFileP);
+
+
+<li>int       <a href=#dpgFprintf> dpgFprintf </a>
+         (dpgFileP fp, char *fmt, ...);
+
+
+<li>int       <a href=#dpgVFprintf> dpgVFprintf </a>
+        (dpgFileP fp, char *fmt, va_list ap);
+
+
+<li>unsigned long  <a href=#dpgFtell> dpgFtell </a>
+      (dpgFileP fp);
+
+
+<li>unsigned long  <a href=#dpgFseek> dpgFseek </a>
+      (dpgFileP fp, long offset, int mode);
+
+
+<li>int       <a href=#dpgFeof> dpgFeof </a>
+            (dpgFileP fp);
+
+
+<li>int       <a href=#dpgFerror> dpgFerror </a>
+          (dpgFileP fp);
+
+
+<li>void      <a href=#dpgFclearerr> dpgFclearerr </a>
+       (dpgFileP fp);
+
+
+<li>void      <a href=#dpgSetSaveFiles> dpgSetSaveFiles </a>
+    (int num);
+
+
+<li>void      <a href=#dpgSetMaxFiles> dpgSetMaxFiles </a>
+     (int num);
+
+
+<li>int       <a href=#dpgGetMaxFiles> dpgGetMaxFiles </a>
+     (VOID);
+
+
+<li>int       <a href=#dpgGetSaveFiles> dpgGetSaveFiles </a>
+    (VOID);
+
+
+<li>int       <a href=#dpgFputc> dpgFputc </a>
+           (int c, dpgFileP fp);
+
+
+<li>int       <a href=#dpgFgetc> dpgFgetc </a>
+           (dpgFileP fp);
+
+
+<li>int       <a href=#dpgFputs> dpgFputs </a>
+           (char *s, dpgFileP fp);
+
+
+<li>char *    <a href=#dpgFgets> dpgFgets </a>
+           (char *s, int size, dpgFileP fp);
+
+
+<li>int       <a href=#dpgFgetOpenCount> dpgFgetOpenCount </a>
+    (VOID);
+
+
+<li>int       <a href=#dpgFgetFileCount> dpgFgetFileCount </a>
+    (VOID);
+
+
+<li>double    <a href=#dpgFgetFileThrash> dpgFgetFileThrash </a>
+    (VOID);
+
+
+<li>void      <a href=#dpgFsetbuf> dpgFsetbuf </a>
+         (dpgFileP fp, char *buf);
+
+
+<li>int       <a href=#dpgFsetvbuf> dpgFsetvbuf </a>
+        (dpgFileP , char *, int , size_t );
+
+
+<li>char *    <a href=#dpgFgetName> dpgFgetName </a>
+        (dpgFileP fp);
+
+
+<li>int       <a href=#dpgFopenTotalCnt> dpgFopenTotalCnt </a>
+    (VOID);
+
+
+<li>int       <a href=#dpgFopenOpenCnt> dpgFopenOpenCnt </a>
+     (VOID);
+
+
+<li>int       <a href=#dpgFopenSaveCnt> dpgFopenSaveCnt </a>
+     (VOID);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+<a name="dpgFopen">
+<pre>
+dpgFileP  <strong>dpgFopen</strong>        (char *file, char *mode);
+
+</pre>
+
+<a name="dpgFclose">
+<pre>
+int       <strong>dpgFclose</strong>       (dpgFileP fp);
+
+</pre>
+
+<a name="dpgFflush">
+<pre>
+int       <strong>dpgFflush</strong>       (dpgFileP fp);
+
+</pre>
+
+<a name="dpgFread">
+<pre>
+size_t    <strong>dpgFread</strong>        (char *, size_t , size_t , dpgFileP);
+
+</pre>
+
+<a name="dpgFwrite">
+<pre>
+size_t    <strong>dpgFwrite</strong>       (char *, size_t , size_t , dpgFileP);
+
+</pre>
+
+<a name="dpgFprintf">
+<pre>
+int       <strong>dpgFprintf</strong>      (dpgFileP fp, char *fmt, ...);
+
+</pre>
+
+<a name="dpgVFprintf">
+<pre>
+int       <strong>dpgVFprintf</strong>     (dpgFileP fp, char *fmt, va_list ap);
+
+</pre>
+
+<a name="dpgFtell">
+<pre>
+unsigned long  <strong>dpgFtell</strong>   (dpgFileP fp);
+
+</pre>
+
+<a name="dpgFseek">
+<pre>
+unsigned long  <strong>dpgFseek</strong>   (dpgFileP fp, long offset, int mode);
+
+</pre>
+
+<a name="dpgFeof">
+<pre>
+int       <strong>dpgFeof</strong>         (dpgFileP fp);
+
+</pre>
+
+<a name="dpgFerror">
+<pre>
+int       <strong>dpgFerror</strong>       (dpgFileP fp);
+
+</pre>
+
+<a name="dpgFclearerr">
+<pre>
+void      <strong>dpgFclearerr</strong>    (dpgFileP fp);
+
+</pre>
+
+<a name="dpgSetSaveFiles">
+<pre>
+void      <strong>dpgSetSaveFiles</strong> (int num);
+
+</pre>
+
+<a name="dpgSetMaxFiles">
+<pre>
+void      <strong>dpgSetMaxFiles</strong>  (int num);
+
+</pre>
+
+<a name="dpgGetMaxFiles">
+<pre>
+int       <strong>dpgGetMaxFiles</strong>  (VOID);
+
+</pre>
+
+<a name="dpgGetSaveFiles">
+<pre>
+int       <strong>dpgGetSaveFiles</strong> (VOID);
+
+</pre>
+
+<a name="dpgFputc">
+<pre>
+int       <strong>dpgFputc</strong>        (int c, dpgFileP fp);
+
+</pre>
+
+<a name="dpgFgetc">
+<pre>
+int       <strong>dpgFgetc</strong>        (dpgFileP fp);
+
+</pre>
+
+<a name="dpgFputs">
+<pre>
+int       <strong>dpgFputs</strong>        (char *s, dpgFileP fp);
+
+</pre>
+
+<a name="dpgFgets">
+<pre>
+char *    <strong>dpgFgets</strong>        (char *s, int size, dpgFileP fp);
+
+</pre>
+
+<a name="dpgFgetOpenCount">
+<pre>
+int       <strong>dpgFgetOpenCount</strong> (VOID);
+
+</pre>
+
+<a name="dpgFgetFileCount">
+<pre>
+int       <strong>dpgFgetFileCount</strong> (VOID);
+
+</pre>
+
+<a name="dpgFgetFileThrash">
+<pre>
+double    <strong>dpgFgetFileThrash</strong> (VOID);
+
+</pre>
+
+<a name="dpgFsetbuf">
+<pre>
+void      <strong>dpgFsetbuf</strong>      (dpgFileP fp, char *buf);
+
+</pre>
+
+<a name="dpgFsetvbuf">
+<pre>
+int       <strong>dpgFsetvbuf</strong>     (dpgFileP , char *, int , size_t );
+
+</pre>
+
+<a name="dpgFgetName">
+<pre>
+char *    <strong>dpgFgetName</strong>     (dpgFileP fp);
+
+</pre>
+
+<a name="dpgFopenTotalCnt">
+<pre>
+int       <strong>dpgFopenTotalCnt</strong> (VOID);
+
+</pre>
+
+<a name="dpgFopenOpenCnt">
+<pre>
+int       <strong>dpgFopenOpenCnt</strong>  (VOID);
+
+</pre>
+
+<a name="dpgFopenSaveCnt">
+<pre>
+int       <strong>dpgFopenSaveCnt</strong>  (VOID);
+
+</pre>
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

@@ -1,9 +1,0 @@
-
-The File-Close Menu Option
-
-This menu option will close the current editing session and 
-will return the raster-editor to @ref("Edit-Unloaded mode.",xgre/mode_unloaded)  If you
-are editing a raster map, the raster map will remain as a 
-@ref("segment file",xgre/segfile.def) in your mapset so that your may resume editing
-at a later time (using the @ref("File-Resume",xgre/file_resume) menu option).
-

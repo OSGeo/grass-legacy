@@ -390,6 +390,7 @@ cell_values_float (int fd, register unsigned char *data, register COLUMN_MAPPING
   register XDR* xdrs;
   register FCELL *c;
   register COLUMN_MAPPING cmapold;
+  char rsbbuf[40];
 
   c = (FCELL *) cell;
 
@@ -405,9 +406,13 @@ cell_values_float (int fd, register unsigned char *data, register COLUMN_MAPPING
 
 	while (cmapold++ != *cmap) /* skip */
 	  if (! xdr_float (xdrs, c)) {
-	    fprintf (stderr, 
+	    /* fprintf (stderr, 
 	      "ERROR: cell_values_f: xdr_float failed for index %d.\n", n);
-	    exit (1);
+	    exit (1); */
+	    /* Roger Bivand 17 June 2000 */
+	    sprintf(rsbbuf, "cell_values_f: xdr_float failed for index %d.", n);
+	    G_fatal_error(rsbbuf);
+	    return;
 	  } 
 	
 	cmapold--;
@@ -434,6 +439,7 @@ cell_values_double (int fd, register unsigned char *data, register COLUMN_MAPPIN
   register XDR* xdrs;
   register DCELL *c;
   register COLUMN_MAPPING cmapold;
+  char rsbbuf[40];
 
   c = (DCELL *) cell;
 
@@ -449,9 +455,13 @@ cell_values_double (int fd, register unsigned char *data, register COLUMN_MAPPIN
 
 	while (cmapold++ != *cmap) /* skip */
 	  if (! xdr_double (xdrs, c)) {
-	    fprintf (stderr, 
-	      "ERROR: cell_values_f: xdr_float failed for index %d.\n", n);
-	    exit (1);
+	    /* fprintf (stderr, 
+	      "ERROR: cell_values_d: xdr_double failed for index %d.\n", n);
+	    exit (1); */
+	    /* Roger Bivand 17 June 2000 */
+	    sprintf(rsbbuf, "cell_values_d: xdr_double failed for index %d.", n);
+	    G_fatal_error(rsbbuf);
+	    return;
 	  } 
 	
 	cmapold--;
@@ -982,6 +992,13 @@ G_get_null_value_row_nomask (int fd, char *flags, int row)
             }
          }
          /* remember the null row for i for the future reference */
+	 
+	 /*bf-We should take of the size - or we get 
+	 zeros running on their own after flags convertions -A.Sh.*/
+	 FCB.NULL_ROWS[i] = (unsigned char *) realloc(FCB.NULL_ROWS[i],
+	 	sizeof(unsigned char)*G__null_bitstream_size(WINDOW.cols)+1);
+		if (FCB.NULL_ROWS[i] == NULL) G_fatal_error ("Could not realloc buffer");
+		
          G__convert_01_flags(flags, FCB.NULL_ROWS[i], WINDOW.cols);
 
      }  /* for loop */

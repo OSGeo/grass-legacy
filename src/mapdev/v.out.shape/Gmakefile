@@ -1,0 +1,17 @@
+
+PGM =	v.out.shape
+
+OBJ =	extract.o\
+	database.o\
+	private.o\
+	shpopen.o\
+	dbfopen.o\
+	main.o
+
+
+$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
+
+$(VECTLIB): #
+$(DIG_ATTLIB): #
+$(GISLIB): #

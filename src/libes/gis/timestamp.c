@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include <string.h>
 #include "gis.h"
 
@@ -8,7 +12,7 @@ void G_init_timestamp (struct TimeStamp *ts)
 
 void G_set_timestamp (struct TimeStamp *ts, DateTime *dt)
 {
-    datetime_copy (&ts->dt[0], dt);
+    datetime_copy (&ts->dt[0],dt);
     ts->count = 1;
 }
 

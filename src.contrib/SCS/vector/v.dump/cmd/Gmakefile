@@ -1,6 +1,5 @@
 PGM      = v.dump
 
-EXTRA_CFLAGS	= $(VECT_INCLUDE)
 
 LIST =  main.o \
 	do_areas.o \

@@ -189,7 +189,8 @@ int main (int argc, char *argv[])
 	fprintf(stderr,"Nlev is zero, resetting to 32\n");
 	nlev=32;
     }
-    if ( nlev < 0 ) {
+/* pass nlev=-1 to Graph_Set as a flag to try to force TrueColor  */;
+    if ( nlev < -1 ) {
 	fprintf(stderr,"Nlev is negative, resetting to 32\n");
 	nlev=32;
     }
@@ -759,6 +760,7 @@ int main (int argc, char *argv[])
                 SEND(&l, sizeof l);
                 SEND(&r, sizeof r);
                 break;
+#ifndef __CYGWIN__
             case FONT:
                 RECTEXT(text);
                 x = Font_get(text);
@@ -768,6 +770,7 @@ int main (int argc, char *argv[])
                 RECTEXT(text);
                 Text(text);
                 break;
+#endif
             case TEXT_SIZE:
                 REC(&x, sizeof x);
                 REC(&y, sizeof y);

@@ -1,0 +1,7 @@
+PGM = v.out.e00
+HOME = $(BIN_CONTRIB_CMD)
+#LDFLAGS = -g
+LIST = 	v.out.e00.o
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(GISLIB) $(VASK) $(DATETIMELIB) $(XDRLIB) $(MATHLIB)

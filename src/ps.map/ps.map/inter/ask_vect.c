@@ -17,6 +17,7 @@ int ask_vectors (FILE *fd)
 	{
 	    sprintf (fullname, "%s in %s", name, mapset);
 	    fprintf (fd, "vect %s\n", name);
+	    ask_acolor (name, fd);	    	    
 	    ask_color (name, fd);
 	    ask_width (name, fd);
 	    ask_masked (name, fd);

@@ -14,9 +14,7 @@
 # endif
 
 #include    "gis.h"
-#include    "digit.h"
 #include    "Vect.h"
-#include    "dig_head.h"
 #include "local_proto.h"
 
 
@@ -237,15 +235,15 @@ int doit (
     /*NOTREACHED*/
 }
 
-int cp_filep (FILE *in, FILE *out)
+int cp_filep (const FILE *in, FILE *out)
 {
     char buf[BUFSIZ];
     int red;
     int err=0;
 
-    fseek (in, 0L, 0);
+    fseek ((FILE *)in, 0L, 0);
     {
-        while (red = fread (buf, 1, BUFSIZ, in))
+        while (red = fread (buf, 1, BUFSIZ, (FILE *)in))
 	{
             if (red != fwrite (buf, 1, red, out))
 	    {
@@ -253,7 +251,7 @@ int cp_filep (FILE *in, FILE *out)
 		break;
 	    }
 	}
-        fclose (in);
+ /*       fclose (in);  */
     }
     return (err);
 }

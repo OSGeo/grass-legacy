@@ -1,5 +1,13 @@
 
+#define GET_VAL 0
+#define SET_VAL 1
 
+typedef enum {
+  ATT_NONE,
+  ATT_CONSTANT,
+  ATT_ROWS,
+  ATT_COLS,
+} AttributeType;
 
 struct grid_description
 {

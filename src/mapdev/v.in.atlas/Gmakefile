@@ -1,0 +1,9 @@
+
+VFILES = vinatnrcs.o atl2dig2.o atl2dig1.o isle.o grfix.o
+
+all:	$(BIN_CONTRIB_CMD)/v.in.atlas
+
+$(BIN_CONTRIB_CMD)/v.in.atlas: $(VFILES)
+	$(CC) $(LDFLAGS) -o $@ $(VFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #

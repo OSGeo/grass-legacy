@@ -1,6 +1,12 @@
 #include <unistd.h>
 #include "global.h"
 
+/* Modified to support Grass 5.0 fp format 11 april 2000
+ *
+ * Pierre de Mouveaux - pmx@audiovu.com
+ *
+ */
+
 int rectify (char *name, char *mapset, char *result, int order)
 {
     struct Cell_head cellhd, win;
@@ -8,6 +14,7 @@ int rectify (char *name, char *mapset, char *result, int order)
     int row, col;
     int infd;
     void *rast;
+	char buf[64]="";
 
     select_current_env();
     if (G_get_cellhd (name, mapset, &cellhd) < 0)
@@ -30,6 +37,7 @@ int rectify (char *name, char *mapset, char *result, int order)
 /* open the file to be rectified
  * set window to cellhd first to be able to read file exactly
  */
+	G_suppress_warnings(1);
     G_set_window (&cellhd);
     infd = G_open_cell_old (name, mapset);
     if (infd < 0)
@@ -61,7 +69,7 @@ int rectify (char *name, char *mapset, char *result, int order)
 	    if ((win.rows = nrows) > NROWS)
 		win.rows = NROWS;
 
-            compute_georef_matrix (&cellhd, &win,order);
+		compute_georef_matrix (&cellhd, &win,order);
 	    perform_georef (infd, rast);
 	    write_matrix (row, col);
 
@@ -75,11 +83,32 @@ int rectify (char *name, char *mapset, char *result, int order)
 	win.west += (win.ew_res * win.cols);
     }
     select_target_env();
+	G_suppress_warnings(0);
+	if (cellhd.proj == 0) { /* x,y imagery */
+			cellhd.proj = target_window.proj;
+			cellhd.zone = target_window.zone;
+	}
+
+	if (target_window.proj != cellhd.proj) {
+			cellhd.proj = target_window.proj;
+			sprintf(buf,"WARNING %s@%s: projection don't match current settings.\n",name,mapset);
+			G_warning(buf);
+	}  
+
+	if (target_window.zone != cellhd.zone) {
+			cellhd.zone = target_window.zone;
+			sprintf(buf,"WARNING %s@%s: zone don't match current settings .\n",name,mapset);
+			G_warning(buf);
+	}  
+
+	G_suppress_warnings(1);
     target_window.compressed=cellhd.compressed;
+    G_close_cell (infd); /* (pmx) 17 april 2000 */
     write_map(result);
     select_current_env();
+/*    G_close_cell (infd); */ /* moved up! (pmx) 17 april 2000 */
 
-    G_close_cell (infd);
+	G_suppress_warnings(0);
     G_free (rast);
 
     return 1;

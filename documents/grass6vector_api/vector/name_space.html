@@ -1,0 +1,86 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    GRASS 5.0 Vector API: Name Space
+</h1>
+
+The Vector API has the convention that every global name has a prefix
+of the letters GV.  This includes any variation of upper and lower case
+letters.  For example<p>
+<ul>
+    <li> #define's typically begin with <em>GV</em>.
+    <li> functions begin with <em>gv</em>.
+    <li> typedefs and structurs begin with <em>gv</em>.
+    <li> global variables, what global variables?
+</ul>
+
+
+<hr>
+
+<h2> Gotcha's </h2>
+
+    <h3> Function Names </h3>
+	All global functions in this library and the <em>DPG</em> library
+	which it references have one of these prefixes: 
+	<ul>
+	    <li> gv
+	    <li> dpg
+	    <li> tavl
+	</ul>
+
+    <h3> Global Variable Names </h3>
+	There are <strong> no </strong> global variables in this library.<p>
+
+    <h3> #defines </h3>
+
+	There are a very few wild #defines left.  And each of these is tested
+	to see if it already exists and is not over-ridden if so, which may 
+	or may not be a good thing depending on what they are previously 
+	declared as.  <p> 
+
+	<dl>
+	<dt> VOID
+	    <dd>  This is used only for filling prototypes of functions which 
+		do not take an argument.  This isn't even necessary as the 
+		GV_ARGS macro removes this stuff anyway.
+	<dt> SIGNED
+	    <dd>  This is defined as <em>signed</em> if ANSI or nothing 
+		otherwise.
+	<dt> CONST
+	    <dd>  This is defined as <em>const</em> if ANSI or nothing 
+		otherwise.
+	<dt> BEGIN_DECLS
+	    <dd>  This is used to surround prototypes with 
+	    <strong> extern "C" { } </strong> if <em>__cplusplus</em> 
+	    is defined.
+	<dt> BEGIN_DECLS
+	    <dd>  The other end
+	</dl>
+
+	These of course could be converted to GV_, but I just got sick of
+	prefixing everything. <p>
+
+
+<!--hr------------------------------------------------>
+<p>
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

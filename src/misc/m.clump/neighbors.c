@@ -2,7 +2,11 @@
 #include <math.h>
 #include "geom/basic.h"
 #include "geom/optri.h"
-
+#ifdef __CYGWIN__
+#ifndef MAX
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
+#endif
+#endif
 /*--------------------------------------------------------------------------*/
 
 void

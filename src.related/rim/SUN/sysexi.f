@@ -1,3 +1,0 @@
-      SUBROUTINE SYSEXI
-      RETURN
-      END

@@ -1,7 +1,0 @@
-            BRIEF HELP ENTRIES FOR SITE DATA COMMANDS
-
-Below is a list of GRASS 4.0 site data manipulation commands.
-
-       @ref("s.db.rim help",17.manual/Help.pages/s.db.rim)       @ref("s.in.ascii help",17.manual/Help.pages/s.in.ascii)      @ref("s.menu help",17.manual/Help.pages/s.menu)
-       @ref("s.out.ascii help",17.manual/Help.pages/s.out.ascii)    @ref("s.surf.idw help",17.manual/Help.pages/s.surf.idw)                   
-

@@ -11,8 +11,6 @@
 */
 #include    <stdio.h>
 #include    "gis.h"
-#include    "digit.h"
-#include    "dig_head.h"
 #include    "Vect.h"
 #include    <math.h>
 

@@ -1,7 +1,17 @@
-/* $Log$
-/* Revision 1.1  1999-12-29 15:10:23  markus
-/* Initial revision
-/*
+/*-
+ * $Log$
+ * Revision 1.4  2000-01-02 12:23:20  markus
+ * again comments fixed
+ *
+ * Revision 1.3  2000/01/02 12:21:47  markus
+ * comments fixed
+ *
+ * Revision 1.2  2000/01/02 12:18:16  markus
+ * Bill Hughes: some variable types fixed
+ *
+ * Revision 1.1.1.1  1999/12/29 15:10:23  markus
+ * initial CVS import
+ *
  * Revision 1.13  1996/05/23  brown - brown@gomez.gis.uiuc.edu
  * changed DateTime stuff to use TimeStamp instead
  *

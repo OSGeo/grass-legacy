@@ -1,0 +1,30 @@
+#!/bin/sh
+cd $GISBASE/etc/nviz2.2/scripts
+
+# this is the NVIZ start script in $GISBASE/bin
+# $Id$
+# 3/2000 Philip Warner
+# maybe further parameters need to be added
+
+if [ "$1" = "help" ]
+then
+ echo "NVIZ visualization tool."
+ echo "Usage:"
+ echo "      nviz2.2"
+ echo "or:"
+ echo "      nviz2.2 rastermap"
+ exit
+fi
+
+rastermap=`echo $1 | cut -d'=' -f2`
+
+if [ "$rastermap" != "" ]
+then
+ ELEV="elev=$rastermap"
+fi
+
+#required for NVWISH (src/nviz_init.c)
+NVIZ_SCRIPTS=$GISBASE/etc/nviz2.2/scripts
+
+# now start:
+$GISBASE/etc/bin/contrib/cmd/NVWISH2.2 -f $GISBASE/etc/nviz2.2/scripts/nviz2.2_script $ELEV -name nviz

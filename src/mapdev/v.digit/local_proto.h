@@ -176,7 +176,7 @@ int calc_thresh(double);
 int map_to_dig_thresh(double);
 /* set_window.c */
 int init_window(void);
-int set_window(void);
+int set_window_w(void);
 /* slid_window.c */
 int slid_window_w_mouse(void);
 /* snap.c */
@@ -224,7 +224,7 @@ int line_in_window (P_LINE *);
 int window_rout(double, double, double, double);
 int fit_window(double *, double *, double *, double *);
 
-#ifdef DIG__HEAD__FOO__
+#ifdef GRASS_DIGHEAD_H
 /* head_info.c */
 int get_head_info(int, struct dig_head *);
 #endif

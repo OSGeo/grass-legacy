@@ -1,5 +1,0 @@
-
-@man("r.slope.aspect") - Generate raster map layers of slope and aspect
-from a raster map layer of true elevation values.
-
-(GRASS Raster Program)

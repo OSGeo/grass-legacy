@@ -1,0 +1,135 @@
+<HTML>
+<HEAD>
+<TITLE>v.build.polylines(polylines) manual page</TITLE>
+</HEAD>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+<I>v.build.polylines </I> - Build polylines from lines.    <BR>
+<I>(GRASS</I> Vector Program) 
+ 
+<H2>SYNOPSIS</H2>
+<B>v.build.polylines </B>  <BR>
+<B>v.build.polylines help </B>  <BR>
+<B>v.build.polylines  </B>[<B>-acoq 
+</B>] <B>input<I>name </I></B> <B>output<I>name </I></B> <I>type=name </I>   
+
+<H2>DESCRIPTION</H2>
+<I>v.build.polylines </I> builds 
+polylines from the lines in a binary vector file.  It outputs the polylines 
+in either binary or ASCII vector format, and if requested, copies the 
+attribute and category files from the original file. <P>
+ A line is a single 
+straight line segment defined by one start node, one end node and no other 
+nodes.  A polyline is also defined by one start node, one end node and 
+no other nodes, but is made of two or more consecutive straight line segments. 
+ The connections between the constituent line segments of a polyline do 
+not appear as nodes in the vector map. <P>
+ Polylines provide the most appropriate 
+representation of curved lines when it is important that nodes serve to 
+define topology rather than geometry.  Curved lines are usually digitized 
+as polylines, but these are sometimes broken into their constituent straight 
+line segments during  conversion from one data format to another.  <I>v.build.polylines 
+</I> can  be used to rebuild such broken polylines. <P>
+  
+<H2>OPTIONS</H2>
+The program can 
+be run either non-interactively or interactively. To run <I>v.build.polylines 
+</I> non-interactively, the user must specify <I>input </I> and <I>output </I> file names 
+on the command line.  The line  <I>type </I> and flags are optional.    <P>
+ To run 
+ <I>v.build.polylines </I> interactively the user should simply type <B>v.build.polylines 
+</B> on the command line, in which case the program will prompt for parameter 
+values using the standard GRASS interface described in the manual entry 
+for <I>parser </I>. <P>
+ <P>
+<B>Flags: </B> 
+<DL>
+
+<DT><B>-a </B> </DT>
+<DD>Make the <I>output </I> file an ASCII vector map instead 
+of a binary vector map. </DD>
+
+<DT><B>-c </B> </DT>
+<DD>Copy the attribute (`dig_att') and category (`dig_cats') 
+files associated with the <I>input </I> file to new files with the <I>output </I> file 
+name.  You should set this flag if you wish to retain category information 
+in the new binary file. </DD>
+
+<DT><B>-o </B> </DT>
+<DD>Silently overwrite the <I>output </I> file if it exists 
+in the current mapset. When this flag is not set <I>v.build.polylines </I> will 
+refuse to create the  <I>output </I> file if a file of the same name exists in 
+either the `dig' or the `dig_ascii' mapset elements. </DD>
+
+<DT><B>-q </B> </DT>
+<DD>Run (relatively) quietly. 
+ Specifically, do not provide information  (including warnings) about 
+each polyline.   </DD>
+</DL>
+<P>
+<B>Parameters: </B> 
+<DL>
+
+<DT><B>input<I>name </I></B> </DT>
+<DD>The name of a binary vector map 
+layer containing lines (and possibly some polylines). </DD>
+
+<DT><B>output<I>name </I></B> </DT>
+<DD>The name 
+of the ASCII vector map to be created in the dig_ascii mapset  element. 
+  </DD>
+
+<DT><B>type<I>name </I></B> </DT>
+<DD>The type of each new polyline can be set from the <I>input </I> map, 
+or  alternatively all new polylines can be bulk labeled as either lines, 
+area edges, or points.  <BR>
+Options: source, line, area, point. </DD>
+</DL>
+ 
+<H2>NOTES</H2>
+For full 
+functionality <I>v.build.polylines </I> requires <I>v.support </I> and <I>v.in.ascii </I>. <P>
+ If the 
+lines that make up a polyline are of different types, then <I>v.build.polylines 
+</I> will set the type from the first constituent line.  <I>v.build.polylines </I> will 
+issue a warning unless the flag <I>-q </I> has  been set.  It is possible to keep 
+a list of all such warnings by redirecting  standard output to a file. 
+<P>
+ If the lines that make up a polyline have different attribute values 
+then <I>v.build.polylines </I> will set the attribute value of the polyline to 
+that of the last line (this is the behaviour of  <I>v.support </I>, which is used 
+to assign the attribute values).  Any warnings issued by <I>v.support </I> will 
+be visible unless the flag <I>-q </I> has been set. <P>
+ <I>v.build.polylines </I> correctly 
+handles <I>input </I> maps containing lines, area edges and points.  Lines and 
+area edges will be converted to polylines  of the desired type.  Areas 
+are only guaranteed to be preserved if the  constituent lines of the polylines 
+that define them are all area edges in  the input map. Points will remain 
+points provided that <I>type </I> has been set to `source'.  It is possible to convert 
+lines and area edges to points or vice versa, but this is rarely useful. 
+  <P>
+ Use <I>v.import </I> to convert an ASCII <I>output </I> map to a binary vector map. 
+<P>
+  
+<H2>SEE ALSO</H2>
+<I><a href=v.import.html>v.import</a></I>, 
+<I><a href=v.support.html>v.support</a></I>, 
+<I><a href=v.in.ascii.html>v.in.ascii</a></I>, 
+<I><a href=parser.html>parser</a></I> <P>
+  
+<H2>ACKNOWLEDGEMENTS</H2>
+This program was written during the author's tenure of a Leverhulme Special 
+ Research Fellowship at University College London. <P>
+  
+<H2>AUTHOR</H2>
+Mark Lake, 
+Institute of Archaeology, University College London. <P>
+  
+<H2>BUGS</H2>
+Please email 
+mark.lake@ucl.ac.uk if you find any bugs. <P>
+
+</BODY></HTML>

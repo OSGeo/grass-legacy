@@ -182,7 +182,7 @@ void basic_istaque_push (
 {
   Internal_istaque *q = cast (s);
   q->top ++;
-  if (q->top == q->stacksize)
+  if (q->top == q->stacksize) {
     if (q->factor <= 1)
       basic_error ("basic_istaque_push: overflow");
     else
@@ -192,6 +192,7 @@ void basic_istaque_push (
         MARK (q->stack, -Magic);
         q->stacksize = newsize;
       }
+  }
   q->stack[q->top] = value;
 }
 

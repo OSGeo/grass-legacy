@@ -4,7 +4,6 @@
 #include "debug.h"
 #include "raster.h"
 #include "display_line.h"
-#include "dig_head.h"
 #include "dig_curses.h"
 #include "Map_proto.h"
 #include "local_proto.h"

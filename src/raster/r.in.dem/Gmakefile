@@ -1,0 +1,17 @@
+PGM    = r.in.dem
+HOME   = $(BIN_CONTRIB_CMD)
+
+EXTRA_CFLAGS = 
+OBJ	= main.o dem_read.o trans_ll2u.o bintree.o
+INCLUDE = -I$(INCLUDE_DIR)
+LIBS	= $(GISLIB) $(LIBDIR)/libcoorcnv.a
+
+$(HOME)/$(PGM): $(OBJ) $(GISLIB) $(VECTLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBS) $(MATHLIB) $(DATETIMELIB) $(XDRLIB)
+
+$(GISLIB): #
+$(VECTLIB): #
+$(DATETIMELIB): #
+
+clean:
+	rm *.o
