@@ -14,6 +14,7 @@ cell:rast:raster:raster files
   cell_misc:misc
   fcell:fcell
   g3dcell:g3dcell
+grid3:rast3d:raster3D:raster3D files
 dig:oldvect:vector:old (GRASS 5.0) binary vector files
   dig_att:attributes
   dig_plus:topology
@@ -21,7 +22,7 @@ dig:oldvect:vector:old (GRASS 5.0) binary vector files
   dig_misc:misc
   reg:point registration
 vector:vect:vector:binary vector files
-dig_ascii:asciivect:vector:ascii vector files
+dig_ascii:asciivect:asciivector:ascii vector files
 icons:icon:icon:paint icon files
 paint/labels:labels:label:paint label files
 site_lists:sites:site list:site list files
