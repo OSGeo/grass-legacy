@@ -8,4 +8,5 @@ all: $(HDF_LIBDIR)
 	make clean
 
 $(HDF_LIBDIR):
+	if [ ! -d lib ]; then mkdir lib ; fi
 	mkdir $(HDF_LIBDIR)
