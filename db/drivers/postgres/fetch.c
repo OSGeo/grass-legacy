@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "dbmi.h"
 #include "globals.h"
 #include "proto.h" 
@@ -55,14 +56,14 @@ db_driver_fetch(cn, position, more)
     table = db_get_cursor_table(cn);
 
     for (i = 0; i < c->ncols; i++) {
-	int col, pgtype, sqltype;
+	int col, gpgtype, sqltype;
 	dbColumn   *column;
 	dbValue    *value;
 
 	col = c->cols[i]; /* known cols */
  		
 	column = db_get_table_column (table, i);
-	pgtype  = db_get_column_host_type(column);
+	gpgtype  = db_get_column_host_type(column);
 	sqltype = db_get_column_sqltype(column);
 
 	value  = db_get_column_value (column);
@@ -76,25 +77,28 @@ db_driver_fetch(cn, position, more)
 	    value->isNull = 0;
 	}
 
-	G_debug (3, "row %d, col %d, sqltype %d: val = '%s'", 
-		    c->row, col, sqltype, PQgetvalue(c->res, c->row, col) );
+	G_debug (3, "row %d, col %d, gpgtype %d, sqltype %d: val = '%s'", 
+		    c->row, col, gpgtype, sqltype, PQgetvalue(c->res, c->row, col) );
 	
-	switch (pgtype) {
+	switch (gpgtype) {
 	    int ns, tz;
 	    
 	    case PG_TYPE_CHAR:
+	    case PG_TYPE_BPCHAR:
 	    case PG_TYPE_VARCHAR:
+	    case PG_TYPE_TEXT:
 		db_set_string ( &(value->s),  PQgetvalue(c->res, c->row, col) );
 		break;
 
 	    case PG_TYPE_INT2:
 	    case PG_TYPE_INT4:
+	    case PG_TYPE_INT8:
 	    case PG_TYPE_SERIAL:
 	    case PG_TYPE_OID:
 	    	value->i = atoi ( PQgetvalue(c->res, c->row, col) );
 		break;
 		
-	    case PG_TYPE_REAL:
+	    case PG_TYPE_FLOAT4:
 	    case PG_TYPE_FLOAT8:
 	    case PG_TYPE_NUMERIC:
 	    	value->d = atof ( PQgetvalue(c->res, c->row, col) );
@@ -147,6 +151,15 @@ db_driver_fetch(cn, position, more)
 		    report_error();
 		    return DB_FAILED;
 		}
+		break;
+
+	    case PG_TYPE_BOOL:
+		if ( strcmp ( PQgetvalue(c->res, c->row, col), "t") == 0 )
+		    db_set_string ( &(value->s), "1");
+		else if ( strcmp ( PQgetvalue(c->res, c->row, col), "f") == 0 )
+		    db_set_string ( &(value->s), "0" );
+		else
+		    G_warning ("Cannot recognize boolean value");
 		break;
 	}
     }

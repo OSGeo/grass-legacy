@@ -1,16 +1,16 @@
 /* error.c */
 void init_error ( void );
-void append_error ( char *msg );
+void append_error ( char * );
 void report_error ( void );
 
 /* cursor.c */
 cursor * alloc_cursor ();
-void free_cursor ( cursor *c );
+void free_cursor ( cursor * );
 
 /* describe.c*/
-int describe_table( PGresult *res, dbTable **table, cursor *c );
-int get_column_info ( PGresult *res, int col, int *pgtype, int *type, int *size);
-int get_pg_type ( int pg_type );
+int describe_table( PGresult *, dbTable **, cursor * );
+int get_column_info ( PGresult *, int, int *, int *, int *, int * );
+int get_gpg_type ( int );
 
 /* parse.c */
-int parse_conn ( char *str, PGCONN *pgconn );
+int parse_conn ( char *, PGCONN *);

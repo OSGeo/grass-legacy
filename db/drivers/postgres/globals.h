@@ -21,22 +21,24 @@ typedef enum {     /* name in pg_type, aliases */
 
   PG_TYPE_INT2,	    /* int2,	smallint */
   PG_TYPE_INT4,      /* int4,	integer, int */
+  PG_TYPE_INT8,      /* int8,	bigint */
   PG_TYPE_SERIAL,    /* serial */
   PG_TYPE_OID,       /* oid */
 
-  PG_TYPE_REAL,      /* real,   float4 */
+  PG_TYPE_FLOAT4,    /* float4, real */
   PG_TYPE_FLOAT8,    /* float8, double precision */
   PG_TYPE_NUMERIC,   /* numeric, decimal */
   
   PG_TYPE_CHAR,      /* char,	character */
   PG_TYPE_BPCHAR,    /* ??? blank padded character, oid of this type is returned for char fields */
   PG_TYPE_VARCHAR,   /* varchar,	character varying */
-  
   PG_TYPE_TEXT,      /* text */
   
   PG_TYPE_DATE,      /* date */
   PG_TYPE_TIME,      /* time */
   PG_TYPE_TIMESTAMP, /* timestamp */
+
+  PG_TYPE_BOOL,      /* bool, boolean */
 } PG_TYPES;
 
 

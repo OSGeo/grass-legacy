@@ -43,7 +43,7 @@ int db_driver_describe_table(table_name, table)
 int describe_table( PGresult *res, dbTable **table, cursor *c)
 {
     int i, ncols, kcols;
-    int pgtype;
+    int pgtype, gpgtype;
     char *fname;
     int sqltype, fsize, precision, scale;
     dbColumn *column;
@@ -56,7 +56,7 @@ int describe_table( PGresult *res, dbTable **table, cursor *c)
     /* Count columns of known type */
     kcols = 0;
     for (i = 0; i < ncols; i++) {
-	get_column_info (res, i, &pgtype, &sqltype, &fsize );
+	get_column_info (res, i, &pgtype, &gpgtype, &sqltype, &fsize );
 
 	if ( sqltype == DB_SQL_TYPE_UNKNOWN ) continue;
 	    
@@ -92,21 +92,33 @@ int describe_table( PGresult *res, dbTable **table, cursor *c)
     kcols = 0;
     for (i = 0; i < ncols; i++) {
 	fname = PQfname(res, i);
-	get_column_info (res, i, &pgtype, &sqltype, &fsize );
-	G_debug(3, "col: %s, kcols %d, pgtype : %d, sqltype %d, fsize : %d", 
-		    fname, kcols, pgtype, sqltype, fsize);
+	get_column_info (res, i, &pgtype, &gpgtype, &sqltype, &fsize );
+	G_debug(3, "col: %s, kcols %d, pgtype : %d, gpgtype : %d, sqltype %d, fsize : %d", 
+		    fname, kcols, pgtype, gpgtype, sqltype, fsize);
 
 	if ( sqltype == DB_SQL_TYPE_UNKNOWN ) {
 	    /* Warn, ignore and continue */
 	    G_warning ( "pg driver: column '%s', type %d  is not supported", fname, pgtype);
 	    continue;
 	}
+
+	if ( gpgtype == PG_TYPE_INT8 )
+	    G_warning ( "column '%s' : type int8 (bigint) is stored as integer (4 bytes) "
+		        "some data may be damaged", fname);
+	
+	if ( gpgtype == PG_TYPE_TEXT )
+	    G_warning ( "column '%s' : type text is stored as varchar(250) "
+		        "some data may be lost", fname);
+	
+	if ( gpgtype == PG_TYPE_BOOL )
+	    G_warning ( "column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), "
+		        "1 (true)", fname);
 	
 	column = db_get_table_column(*table, kcols);
 
 	db_set_column_name(column, fname);
 	db_set_column_length(column, fsize);
-	db_set_column_host_type(column, pgtype);
+	db_set_column_host_type(column, gpgtype);
 	db_set_column_sqltype(column, sqltype);
 
         /* TODO */
@@ -139,16 +151,18 @@ int describe_table( PGresult *res, dbTable **table, cursor *c)
     return DB_OK;
 }
 
-int get_column_info ( PGresult *res, int col, int *pgtype, int *sqltype, int *size)
+int get_column_info ( PGresult *res, int col, int *pgtype, int *gpgtype, int *sqltype, int *size)
 {
-    *pgtype = get_pg_type ( (int) PQftype(res, col) );
+    *pgtype = (int) PQftype(res, col);
+    *gpgtype = get_gpg_type ( *pgtype );
 
     /* Convert internal type to PG_TYPE_* */
     
     /* TODO: we should load field names from pg_type table instead of using copy of #defines */
-    switch ( *pgtype) {
+    switch ( *gpgtype) {
 	case PG_TYPE_INT2:
 	case PG_TYPE_INT4:
+	case PG_TYPE_INT8:
 	case PG_TYPE_SERIAL:
 	case PG_TYPE_OID:
 	    *sqltype = DB_SQL_TYPE_INTEGER;
@@ -162,14 +176,12 @@ int get_column_info ( PGresult *res, int col, int *pgtype, int *sqltype, int *si
 	    *size = PQfmod(res, col) - 4; /* Looks strange but works, something better? */
 	    break;
 	    
-	/*
 	case PG_TYPE_TEXT: 
 	    *sqltype = DB_SQL_TYPE_CHARACTER;
-	    *size = -1; 
+	    *size = 250; /* This is not optimal of course, some data may be lost */
 	    break;
-	*/
 
-	case PG_TYPE_REAL:
+	case PG_TYPE_FLOAT4:
 	case PG_TYPE_FLOAT8:
 	case PG_TYPE_NUMERIC:
 	    *sqltype = DB_SQL_TYPE_DOUBLE_PRECISION;
@@ -192,6 +204,11 @@ int get_column_info ( PGresult *res, int col, int *pgtype, int *sqltype, int *si
 	    *size = 22; /* YYYY-MM-DD HH:MM:SS+TZ */
 	    break;
 
+	case PG_TYPE_BOOL:
+	    *sqltype = DB_SQL_TYPE_CHARACTER;
+	    *size = 1;
+	    break;
+
 	default:
 	    *sqltype = DB_SQL_TYPE_UNKNOWN;
 	    *size = 0;
@@ -200,8 +217,8 @@ int get_column_info ( PGresult *res, int col, int *pgtype, int *sqltype, int *si
     return 0;
 }
 
-/* for given internal postgres type returns one of PG_TYPE_* defined in GRASS */
-int get_pg_type (int pgtype )
+/* for given internal postgres type returns GRASS Postgres type (one of PG_TYPE_*) */
+int get_gpg_type (int pgtype )
 {
     int i;
 
