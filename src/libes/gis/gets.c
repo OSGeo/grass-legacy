@@ -36,6 +36,7 @@ G_gets (buf)
 	int tty;
 	int eof;
 
+	if ( isatty(1) ) (void)fflush(stdout);
 	ctrlz = 0;
 #ifdef SIGTSTP
 	if (tty = isatty(0))
