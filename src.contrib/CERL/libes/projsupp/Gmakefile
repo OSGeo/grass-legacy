@@ -1,7 +1,3 @@
-# for gcc compiler (for now)
-
-#CC = gcc
-
 # EXTRA_CFLAGS = -O 
 
 EXTRA_CFLAGS = -g -I../
@@ -21,18 +17,4 @@ $(PROJSUPPLIB): $(OBJ)
 	$(AR)
 
 $(OBJ): projects.h
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
