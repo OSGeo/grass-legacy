@@ -181,22 +181,16 @@ has never been tested with negative values.
 
 <P>
 
-If this program is being used to transform maps from State
-Plane to UTM coordinates, and vice versa, users should be
-aware of the following points.  This program will work
-better with State Plane zones that use the Transverse
-Mercator projection. Those are states that have their state
-zones splitting the state vertically, like Illinois.  This
-program will not work as well with states that use the
-Lambert Conformal Conic projection. Those are states that
-have their state zones splitting the state horizontally,
-like Wisconsin. It is also best to keep the area being
-transformed relatively small.
+It is not recommended to use this program to transform maps 
+from State Plane to UTM coordinates (or between any two different
+projections). Using
+<A HREF="v.proj.html">v.proj</A> will give better results.
 
 <H2>SEE ALSO</H2>
 
 <EM><A HREF="v.digit.html">v.digit</A></EM><br>
 <EM><A HREF="v.support.html">v.support</A></EM>
+<EM><A HREF="v.proj.html">v.proj</A></EM>
 
 <H2>AUTHOR</H2>
 
