@@ -84,3 +84,16 @@ reset_map_location ( void )
     G_debug ( 3, "map: w = %f h = %f", PS.map_width, PS.map_height);
 }
 
+void 
+print_papers ( void ) 
+{
+    int i;    
+    
+    i = 0;
+    while ( papers[i].name != NULL ) {
+        fprintf ( stdout, "%s %f %f %f %f %f %f\n", papers[i].name,
+	          papers[i].page_width, papers[i].page_height,
+	          papers[i].left_marg, papers[i].right_marg, papers[i].top_marg, papers[i].bot_marg );
+	i++;
+    }
+}

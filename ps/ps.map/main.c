@@ -59,7 +59,7 @@ int main(int argc,char *argv[])
     struct Option *input_file;
     struct Option *output_file;
     struct Option *copies;
-    struct Flag *rflag;
+    struct Flag *rflag, *pflag;
     struct GModule *module;
     static char *def_font = "Helvetica";
 
@@ -81,6 +81,10 @@ int main(int argc,char *argv[])
     rflag = G_define_flag();
     rflag->key = 'r';
     rflag->description = "rotate plot";
+
+    pflag = G_define_flag();
+    pflag->key = 'p';
+    pflag->description = "print paper formats ( name width height left right tob bottom(margin) )";
 
     input_file = G_define_option();
     input_file->key = "input";
@@ -104,11 +108,17 @@ int main(int argc,char *argv[])
     output_file->key = "output";
     output_file->type = TYPE_STRING;
     output_file->description = "PostScript output file";
-    output_file->required = YES;
+    output_file->required = NO;
 
     if (!isatty(0)) G_disable_interactive();
     if (G_parser(argc, argv)) usage(0);
 
+    /* Print papers */
+    if ( pflag->answer ) {
+	print_papers();
+	exit(0);
+    }
+    
     rotate_plot = rflag->answer;
     /* set default paper */
     set_paper ("a4" );
