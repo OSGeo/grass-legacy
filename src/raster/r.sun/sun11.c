@@ -509,44 +509,44 @@ com_par (void)
 						}
 			  }
 			  else {
-			if (pom < 0) {
-	  printf("\n Sun is ABOVE the surface during the whole day\n");
-			  sunrise_time = 0;
-			  sunset_time = 24;
-			  if (fabs(pom) - 1 <= EPS)
-			printf("\texcept at midnight is sun ON THE HORIZONT\n");
+				if (pom < 0) {
+				  printf("\n Sun is ABOVE the surface during the whole day\n");
+				  sunrise_time = 0;
+				  sunset_time = 24;
+				  if (fabs(pom) - 1 <= EPS)
+					printf("\texcept at midnight is sun ON THE HORIZONT\n");
 				}
 				else {
-		  printf("\n The sun is BELOW the surface during the whole day\n");
-			  if (fabs(pom) - 1 <= EPS) {
-			printf("\texcept at noon is sun ON HORIZONT\n");
-			sunrise_time = 12;
-			sunset_time = 12;
-/*                       if (old_time != sunrise_time)
+				  printf("\n The sun is BELOW the surface during the whole day\n");
+				  if (fabs(pom) - 1 <= EPS) {
+				printf("\texcept at noon is sun ON HORIZONT\n");
+				sunrise_time = 12;
+				sunset_time = 12;
+/*                      	 if (old_time != sunrise_time)
 na toto sa este riadne pozri		  request -= LUMCLINE;*/
-							  }
-/*				  else
-			   request -= LUMCLINE;*/
-						}
 				  }
+/*				  else
+				   request -= LUMCLINE;*/
+				}
+			  }
 			}
 			else {
 			  if (fabs(lum_Lz) >= EPS) {
 				if (lum_Lz > 0) {
-			  printf("\tSun is ABOVE area during the whole day\n");
+				  printf("\tSun is ABOVE area during the whole day\n");
 				  sunrise_time = 0;
 				  sunset_time = 24;
-					}
-					else {
-			  printf("\tSun is BELLOW area during the whole day");
-			 /*	  request -= LUMCLINE;*/
-					}
-				  }
-				  else {
-			printf("\tThe Sun is ON HORIZON during the whole day\n");
-						sunrise_time = 0;
-						sunset_time = 24;
-				  }
+				}
+				else {
+				  printf("\tSun is BELLOW area during the whole day");
+				 /*  request -= LUMCLINE;*/
+				}
+			  }
+			  else {
+				printf("\tThe Sun is ON HORIZON during the whole day\n");
+				sunrise_time = 0;
+				sunset_time = 24;
+			  }
 			}
 
 		  h0 = asin (lum_Lz);   /* vertical angle of the sun */
@@ -560,31 +560,31 @@ na toto sa este riadne pozri		  request -= LUMCLINE;*/
 
 		  if (fabs(pom) > EPS) {
 			A0 = lum_Ly / pom;
-		A0 = acos(A0);     /* horiz. angle of the Sun */
+			A0 = acos(A0);     /* horiz. angle of the Sun */
 /*			A0 *= RAD;*/
 			if (lum_Lx < 0)
 			  A0 = M2_PI - A0;
 /*			printf ("horizontal angle of the sun = %.4f\n", A0*RAD);*/
-			  }
-			  else {
+		  }
+		  else {
 			A0 = UNDEF;
 			if (h0 > 0)
 			  printf ("A0 = Zenit\n");
 			else
 			  printf ("A0 = Nadir\n");
-				  }
-				  angle = A0;
+		  }
+		  angle = A0;
                   if ( tlac == 1) {
-			 fprintf(stderr,"\n\n ----------------------------------------------------");
-			 fprintf(stderr,"\n declination = %f", decl);  
+			fprintf(stderr,"\n\n ----------------------------------------------------");
+			fprintf(stderr,"\n declination = %f", decl);  
                         fprintf(stderr,"\n sunrise (hr.) = %.2f",  sunrise_time);
                         fprintf(stderr,"\n sunset (hr.) = %.2f", sunset_time);
-		if(incidout != NULL) fprintf (stderr,"\n vertical angle (in degrees) of the sun = %.4f", h0*RAD);
-		if(incidout != NULL) fprintf (stderr,"\n horizontal angle (in degrees) of the sun = %.4f", A0*RAD); 
-		  fprintf(stderr,"\n ------------------------------------------------------\n\n");
-		tlac = 0; 
-                        }   
-			}
+			if(incidout != NULL) fprintf (stderr,"\n vertical angle (in degrees) of the sun = %.4f", h0*RAD);
+			if(incidout != NULL) fprintf (stderr,"\n horizontal angle (in degrees) of the sun = %.4f", A0*RAD); 
+			fprintf(stderr,"\n ------------------------------------------------------\n\n");
+			tlac = 0; 
+		   }   
+}
 /**********************************************************/
 
 double 
