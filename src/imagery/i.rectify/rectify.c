@@ -18,6 +18,7 @@ int rectify (
     int row, col;
     int infd;
     void *rast;
+	char buf[64]="";
 
     select_current_env();
     if (G_get_cellhd (name, mapset, &cellhd) < 0)
@@ -41,6 +42,7 @@ int rectify (
 /* open the file to be rectified
  * set window to cellhd first to be able to read file exactly
  */
+	G_suppress_warnings(1);
     G_set_window (&cellhd);
     infd = G_open_cell_old (name, mapset);
     if (infd < 0)
@@ -85,11 +87,42 @@ int rectify (
 	win.west += (win.ew_res * win.cols);
     }
     select_target_env();
+	G_suppress_warnings(0);
+	if (cellhd.proj == 0) { /* x,y imagery */
+			cellhd.proj = target_window.proj;
+			cellhd.zone = target_window.zone;
+	}
+
+	if (target_window.proj != cellhd.proj) {
+			cellhd.proj = target_window.proj;
+			sprintf(buf,"WARNING %s@%s: projection don't match current settings.\n",name,mapset);
+			G_warning(buf);
+	}  
+
+	if (target_window.zone != cellhd.zone) {
+			cellhd.zone = target_window.zone;
+			sprintf(buf,"WARNING %s@%s: zone don't match current settings .\n",name,mapset);
+			G_warning(buf);
+	}  
+
+	G_suppress_warnings(1);
     target_window.compressed=cellhd.compressed;
     write_map(result);
     select_current_env();
-    G_close_cell (infd);
+ 	G_suppress_warnings(0);
+	G_close_cell (infd);
     G_free (rast);
 
     return 1;
 }
+
+
+
+
+
+
+
+
+
+
+
