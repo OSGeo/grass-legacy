@@ -17,20 +17,21 @@ label .wait_ok.wait -text \"Please wait...\" -fg red -bg black\n\
 pack .wait_ok.wait -ipadx 20 -ipady 20 -expand 1 -fill both\n\
 wm geometry .wait_ok \"+800+50\"\n\
 wm geometry . \"+100+100\"\n\
+wm title . \"NVIZ\"\n\
 update\n\
-grab .wait_ok.wait";
+grab .wait_ok.wait\n";
+
+int script_mode=0;
 
 int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 		  int argc, char **argv)
 {
     struct Option *elev, *colr, *vct;
     struct Option *panel_path, *script, *state;
-    struct Flag *no_args, *script_kill, *demo;
+    struct Flag *no_args, *script_kill, *demo, *verbose;
     struct GModule *module;
     char *arglist[3], *autoload;
     int i, aload = 1;
-    char *saved_argv0 = argv[0];
-
     /*
      * Flags and Options:
      * -q : quickstart, starts nvwish without querying for the usual maps
@@ -87,6 +88,10 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
     demo->key = 'x';
     demo->description = "Start in Demo mode";
 
+    verbose = G_define_flag();
+    verbose->key = 'v';
+    verbose->description = "Output more comments (default=quiet)";
+
     panel_path = G_define_option();
     panel_path->key = "path";
     panel_path->type = TYPE_STRING;
@@ -105,13 +110,9 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
     state->required = NO;
     state->description = "Load previosly saved state file";
 
-    argv[0] = "nviz";
-    
     if (G_parser(argc, argv))
 	exit(0);
 
-    argv[0] = saved_argv0; /* to make it work on cmd line */
-    
     /* Exit status is zero to avoid TCL complaints */
 
     {
@@ -133,6 +134,8 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
 
     }
 
+    if (verbose->answer)
+    {
     fprintf(stderr, "\n");
     fprintf(stderr, "\n");
     fprintf(stderr, "Version: %s\n", GRASS_VERSION_STRING);
@@ -167,6 +170,7 @@ int parse_command(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. *
     fprintf(stderr, "\n");
     fprintf(stderr, "The papers are available at\n");
     fprintf(stderr, "http://www2.gis.uiuc.edu:2280/modviz/\n");
+    } /* done verbose */
 
 
     /* Look for quickstart flag */
@@ -289,19 +293,35 @@ int Ngetargs(Tcl_Interp * interp,	/* Current interpreter. */
 	     char ***args)
 {
     char *tmp, *tmp2, *argv0;
+    const char *cmd;
     int argc;
 
     argv0 = Tcl_GetVar(interp, "argv0", TCL_LEAVE_ERR_MSG);
     tmp = Tcl_GetVar(interp, "argv", TCL_LEAVE_ERR_MSG);
-    tmp2 = (char *)malloc((strlen(argv0) + strlen(tmp) + 2) * (sizeof(char)));
-    sprintf(tmp2, "%s %s", argv0, tmp);
+    cmd = Tcl_GetNameOfExecutable();
+
+    if (strstr(argv0, "script_tools") != NULL ||
+		    strstr(argv0, "script_play") != NULL ||
+		    strstr(argv0, "script_get_line") != NULL ||
+		    strstr(argv0, "script_file_tools") != NULL) {
+	    fprintf(stderr, "Entering script mode ...\n");
+	    tmp2 = (char *)malloc((strlen(cmd) + 2) * (sizeof(char)));
+	    sprintf(tmp2, "%s", cmd);
+	    script_mode = 1;
+    } else if ( strstr(cmd, argv0) == NULL) {
+	    tmp2 = (char *)malloc((strlen(cmd) + strlen(argv0) + strlen(tmp) + 4 ) * (sizeof(char)));
+	    sprintf(tmp2, "%s %s %s", cmd, argv0, tmp);
+    } else {
+	    tmp2 = (char *)malloc((strlen(argv0) + strlen(tmp) + 2) * (sizeof(char)));
+	    sprintf(tmp2, "%s %s", argv0, tmp);
+    }
 
     if (TCL_ERROR == Tcl_SplitList(interp, tmp2, &argc, args))
-	exit(-1);
+	    exit(-1);
 
     return (argc);
 }
-
+    
 int make_red_yellow_ramp(int *ramp, int num, int minval, int maxval)
 {
     int g, i, incr;
@@ -387,13 +407,17 @@ int set_default_wirecolors(Nv_data * dc, int surfs)
 int Ninit(Tcl_Interp * interp, Tk_Window w)
 {
     static Nv_data data;
+    char nviz_script[] = "source [exec g.gisenv GISBASE]/etc/nviz2.2/scripts/nviz2.2_script\n";
+
+    /* compile in the home directory */
+    Tcl_SetVar(interp, "src_boot", getenv("GISBASE"), TCL_GLOBAL_ONLY);
 
     init_commands(interp, &data);
 
     Ninitdata(interp, &data);
 
-    /* compile in the home directory */
-    Tcl_SetVar(interp, "src_boot", getenv("GISBASE"), TCL_GLOBAL_ONLY);
+    if (!script_mode)
+	    Tcl_Eval(interp, nviz_script); /* source nviz_script to start main window */
 
     return(TCL_OK);
 }
@@ -417,7 +441,8 @@ int Ninitdata(Tcl_Interp * interp,	/* Current interpreter. */
 	GS_set_swap_func(swap_togl);
     data->NumCplanes = 0;
     data->CurCplane = 0;
-    parse_command(data, interp, argc, argv);
+    if (!script_mode)
+	    parse_command(data, interp, argc, argv);
 
     return(TCL_OK);
 }
