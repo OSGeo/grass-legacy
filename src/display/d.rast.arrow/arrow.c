@@ -15,6 +15,7 @@
  *****************************************************************************/
 
 /* some minor cleanup done by Andreas Lange, andreas.lange@rhein-main.de
+ * Update to handle NULLs and floating point aspect maps: Hamish Bowman, Aug 2004
  */
 
 /*
@@ -70,9 +71,12 @@ main (int argc, char **argv)
     struct Cell_head window ;
     int t, b, l, r ;
     char full_name[128] ;
+    RASTER_MAP_TYPE raster_type;
     int layer_fd;
-    CELL *cell;
+    void *raster_row, *ptr;
     int nrows, ncols, row, col;
+    int aspect_c;
+    float aspect_f;
     double ew_res, ns_res;
     double D_south, D_west ;
     double D_north, D_east ;
@@ -88,8 +92,8 @@ main (int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Draws arrows representing cell "
-		"aspect direction for a raster map layer.";
+		"Draws arrows representing cell aspect direction "
+		"for a raster map containing aspect data.";
 
     opt1 = G_define_option() ;
     opt1->key        = "map" ;
@@ -97,7 +101,7 @@ main (int argc, char **argv)
     opt1->required   = NO ;
     opt1->multiple   = NO ;
     opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description= "Name of existing raster map to be displayed" ;
+    opt1->description= "Name of raster aspect map to be displayed" ;
 
     opt2 = G_define_option() ;
     opt2->key        = "type" ;
@@ -127,9 +131,9 @@ main (int argc, char **argv)
     opt5->key        = "x_color" ;
     opt5->type       = TYPE_STRING ;
     opt5->required   = NO ;
-    opt5->answer     = "white" ;
+    opt5->answer     = DEFAULT_FG_COLOR ;
     opt5->options    = D_COLOR_LIST;
-    opt5->description= "Color for drawing x's" ;
+    opt5->description= "Color for drawing x's (Null values)" ;
 
     opt6 = G_define_option() ;
     opt6->key        = "unknown_color" ;
@@ -239,7 +243,7 @@ main (int argc, char **argv)
 
 /* resolutions */
 
-    ew_res  = window.ew_res;
+    ew_res = window.ew_res;
     ns_res = window.ns_res;
 
 /* how many screen units of distance for each cell */
@@ -308,6 +312,7 @@ main (int argc, char **argv)
     }
 
 /* open the cell file */
+    raster_type = G_raster_map_type(layer_name, mapset);
 
     layer_fd = G_open_cell_old (layer_name, mapset);
     if (layer_fd < 0) {
@@ -315,17 +320,17 @@ main (int argc, char **argv)
         exit(0);
     }
 
-
 /* allocate the cell array */
 
-   cell  = G_allocate_cell_buf ();
+   raster_row = G_allocate_raster_buf(raster_type);
 
 /* loop through cells, find value, determine direction (n,s,e,w,ne,se,sw,nw),
    and call appropriate function to draw an arrow on the cell */
    
    for(row = 0; row < nrows; row++)
-    {
-	G_get_map_row (layer_fd, cell, row);
+   {
+	G_get_raster_row (layer_fd, raster_row, row, raster_type);
+	ptr = raster_row;
 
 /* determine screen y coordinate of top of current cell */
 
@@ -340,71 +345,61 @@ main (int argc, char **argv)
 
 /* find aspect direction based on cell value, draw arrow */
 
-/*case switch for standard aspect map */
+	    if (raster_type == CELL_TYPE)
+		aspect_f = *((CELL *) ptr);
+	    else if (raster_type == FCELL_TYPE)
+		aspect_f = *((FCELL *) ptr);
+	    else if (raster_type == DCELL_TYPE)
+		aspect_f = *((DCELL *) ptr);
 
-            if(map_type == 1){
-            R_standard_color(arrow_color);
-            switch(cell[col]) 
-            {
-                case 1:
-                case 2:
-                case 24:
-                    arrow_e();
-                    break;
-                case 3:
-                case 4:
-                case 5:
-                    arrow_ne();
-                    break;
-                case 6:
-                case 7:
-                case 8:
-                    arrow_n();
-                    break;
-                case 9:
-                case 10:
-                case 11:
-                    arrow_nw();
-                    break;
-                case 12:
-                case 13:
-                case 14:
-                    arrow_w();
-                    break;
-                case 15:
-                case 16:
-                case 17:
-                    arrow_sw();
-                    break;
-                case 18:
-                case 19:
-                case 20:
-                    arrow_s();
-                    break;
-                case 21:
-                case 22:
-                case 23:
-                    arrow_se();
-                    break;
-                 case 25:
-                    R_standard_color(unknown_color);
-                    unknown_();
-                    R_standard_color(arrow_color);
-                    break;
-                default:
-                    R_standard_color(x_color);
-                    draw_x();
-                    R_standard_color(arrow_color);
-                    break;
+	    /* treat AGNPS and ANSWERS data like old zero-as-null CELL */
+	    /*   TODO: update models */
+	    if(map_type == 2 || map_type == 3) {
+		if(G_is_null_value(ptr, raster_type))
+		    aspect_c = 0;
+		else
+		    aspect_c = (int)(aspect_f + 0.5);
+	    }
+
+	/* case switch for standard aspect map */
+	    if(map_type == 1) {
+		R_standard_color(arrow_color);
+
+		if(G_is_null_value(ptr, raster_type)) {
+		    R_standard_color(x_color);
+		    draw_x();
+		    R_standard_color(arrow_color);
+		}
+	/* GRASS aspect maps are measured in degrees counterclockwise of east */
+		else if(aspect_f >= 67.5 && aspect_f < 112.5)
+		    arrow_n();
+		else if(aspect_f >= 22.5 && aspect_f < 67.5)
+		    arrow_ne();
+		else if( (aspect_f >= 337.5 && aspect_f <= 360.0) || (aspect_f >= 0.0 && aspect_f < 22.5) )
+		    arrow_e();
+		else if(aspect_f >= 292.5 && aspect_f < 337.5)
+		    arrow_se();
+		else if(aspect_f >= 247.5 && aspect_f < 292.5)
+		    arrow_s();
+		else if(aspect_f >= 202.5 && aspect_f < 247.5)
+		    arrow_sw();
+		else if(aspect_f >= 157.5 && aspect_f < 202.5)
+		    arrow_w();
+		else if(aspect_f >= 112.5 && aspect_f < 157.5)
+		    arrow_nw();
+		else {
+		    R_standard_color(unknown_color);
+		    unknown_();
+		    R_standard_color(arrow_color);
+		}
             }
-            }
-            else if(map_type == 2){
-            R_standard_color(arrow_color);
 
-/* case switch for agnps type aspect map */
 
-            switch(cell[col]) 
-            {
+	/* case switch for AGNPS type aspect map */
+	    else if(map_type == 2) {
+	      R_standard_color(arrow_color);
+	      switch(aspect_c)
+	      {
                case 0:
                     R_standard_color(x_color);
                     draw_x();
@@ -437,15 +432,15 @@ main (int argc, char **argv)
                 default:
                     unknown_();
                     break;
+               }
              }
-             }
-            else if(map_type == 3){
-            R_standard_color(arrow_color);
 
-/* case switch for answers type aspect map */
 
-            switch(cell[col]) 
-            {
+	/* case switch for ANSWERS type aspect map */
+            else if(map_type == 3) {
+	      R_standard_color(arrow_color);
+	      switch(aspect_c)
+	      {
                 case 15:
                     arrow_e();
                     break;
@@ -498,11 +493,11 @@ main (int argc, char **argv)
                     draw_x();
                     R_standard_color(arrow_color);
                     break;
-            }
+              }
             }
 
-
-        }
+	    ptr = G_incr_void_ptr(ptr, G_raster_size(raster_type));
+	}
     }
     G_close_cell (layer_fd);
     R_close_driver();
