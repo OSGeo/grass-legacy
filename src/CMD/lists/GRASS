@@ -378,8 +378,7 @@ src/raster/r.topidx
 src/raster/r.topmodel
 src/raster/r.transect
 src/raster/r.volume
-#doesn't work properly:
-#src/raster/r.water.outlet
+src/raster/r.water.outlet
 src/raster/r.watershed
 #should be merged:
 src/raster/r.weight
