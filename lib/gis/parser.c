@@ -1301,6 +1301,10 @@ int G_gui (void)
 	   "    update idletasks\n"
 	   "}\n");
 
+    /* Help button */
+    append(cmd, "button .help -text \"Help\" -command \"exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/%s.html\" \n", pgm_name);
+    append(cmd, "pack .run .help -side left -expand yes -padx 20 -pady 5\n");
+
     /* Close button */
     append(cmd, "button .close -text \"Close\" -command { exit }\n");
     append(cmd, "pack .run .close -side left -expand yes -padx 20 -pady 5\n");
