@@ -1,0 +1,48 @@
+This directory "src.contrib" contains GRASS code that may be useful.  Some
+entries work very well, others don't, still others are just silly.  Some are
+useful only to programmers; none are supported nor planned to become
+part of the primary GRASS release.  All can be a starting point for adventurous
+programmers.
+
+Dcorr        (Michael Shapiro, CERL)
+                 Multi-image band correlation scatterplot
+Dscatter.plot (Michael Shapiro, CERL)
+	         Generate a scatterplot using two image bands
+Newworld     (Author unknown)
+	         World-Data-Base-I data projection program
+cats2paint   (Anonymous)
+	         Creates paint-labels file based on cell cats file
+contour      (Chuck Ehlschlaeger, CERL)
+	         Interpolates between contours in a raster file
+d            (Michael Shapiro, CERL)
+	         Display program which manages contents of windows. Try it!!
+devices/TEKTRONIX (Westervelt, CERL)
+                 Lines only graphics driver for TEK 4014.  Not generally useful.
+dig2dxf      (Chuck Ehlschlaeger, CERL)
+	         Convert digit to DXF format
+flat.colors  (Shapiro)
+	         Creates color table 0-255 with grey scale 0-255
+prune        (Westervelt, CERL)
+	         Vector prunning program for GRASS ascii vector files
+range.place  (Kewan Khawaja, MIT)
+	         Interesting interface to several functions
+suntools.start (Westervelt, CERL)
+	         .grass3rc startup file
+ttd          (Westervelt, CERL)
+	         Primitive Tactical Terrain Data to digit code
+wdbII        (Westervelt, CERL)
+	         Code used to convert WDB-II data into digit files
+paint/Drivers/cal5800  (Donald Newcomb, NAVOCEANO)
+             Calcomp paint driver. Requires F77 and calcomp library.
+paint/Drivers/calcomp  (Bruce Powell, NPS)
+paint/Drivers/calcomp1 (Bruce Powell, NPS)
+paint/Drivers/calcomp2 (Bruce Powell, NPS)
+paint/Drivers/calcompx1(Bruce Powell, NPS)
+paint/Drivers/calcompx2(Bruce Powell, NPS)
+             Various versions of calcomp paint driver?
+grelas       (Bruce Powell, Kenny Gilmore, Jim Farley)
+			 Grass cell-files (and color tables) to/from ELAS
+dlg_extract.sh (Jim Farley, Arkansas Archeological Survey)
+             Shell script to assist in reading raw DLG-3 optional format tapes
+pmake.label.sh (Jim Farley & Fred Limp, Arkansas Archeological Survey)
+             Shell script to 
