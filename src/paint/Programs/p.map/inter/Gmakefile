@@ -1,5 +1,5 @@
 PGM=p.map
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = ../../../Interface/applib/lib.a
 EXTRA_CFLAGS = -I$(SRC)/paint
 ICONLIB = $(LIBDIR)/libicon.a
 LIST = main.o\

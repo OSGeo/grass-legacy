@@ -11,7 +11,7 @@ PGM = p.map.new
 
 PAINT = $(ETC)/paint
 
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = ../../../Interface/applib/lib.a
 LIBES =	$(VECTLIB) $(GISLIB) $(ICONLIB) $(DATETIMELIB)
 
 

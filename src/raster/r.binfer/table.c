@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include <math.h>
 #include "symtab.h"
-#include "gram.h"
 #include "local_proto.h"
 
 extern struct symtab table;

@@ -49,16 +49,9 @@ OFILES =  \
 	Work.o\
 	alloc.o
 
-all: winname.h $(GISBASE)/driver/$(PGM)
+all: $(GISBASE)/driver/$(PGM)
 
 $(GISBASE)/driver/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(OFILES) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
-
-Graph_Set.o: winname.h
-
-winname.h: $(VERSION_FILE)
-	rm -f winname.h
-	echo '#define WIN_NAME "GRASS $(VERSION_NUMBER)"' > $@
-
 
 $(LIBES): #

@@ -56,7 +56,16 @@ AC_SUBST(BINDIR)
 
 # Set SRCDIR and DSTDIR
 
-SRCDIR=`pwd`
+if test -f /$srcdir/html/html/grass5.html ; then
+  SRCDIR=$srcdir
+else
+  if test -n "$srcdir" -o "$srcdir" = "." ; then
+    SRCDIR=`pwd`
+  else
+    SRCDIR=`pwd`/$srcdir
+  fi
+fi
+
 DSTDIR=`pwd`
 
 AC_SUBST(SRCDIR)
@@ -75,8 +84,8 @@ AC_SUBST(ARCH)
 
 # Set GISBASE and GRASS_BIN
 
-GISBASE=${SRCDIR}/dist.${ARCH}
-GRASS_BIN=${SRCDIR}/bin.${ARCH}
+GISBASE=${DSTDIR}/dist.${ARCH}
+GRASS_BIN=${DSTDIR}/bin.${ARCH}
 
 AC_SUBST(GISBASE)
 AC_SUBST(GRASS_BIN)
@@ -353,6 +362,8 @@ fi
 
 AC_SUBST(XLIB)
 AC_SUBST(XTLIB)
+
+LOC_CHECK_INCLUDES(curses.h,curses,)
 
 AC_MSG_CHECKING(curses.h WINDOW structure component)
 CURSES_MAXY=NONE
@@ -991,7 +1002,13 @@ LOC_OPTIONAL(i.shape,FFTW,I_SHAPE,src.contrib/CERL/imagery/i.shape)
 
 # Done checking for optional packages
 
-AC_OUTPUT(Makefile src/CMD/head/head src/CMD/lists/optional)
+mkdir -p mk src/CMD/head src/CMD/lists src/include
+AC_OUTPUT(Makefile src/CMD/head/head src/CMD/lists/optional
+	mk/Makefile src/include/version.h src/include/winname.h)
+
+# Generate files for conventional (non-gmake5) build
+
+cp -f src/CMD/head/head mk/vars.mk
 
 LOC_MSG([Copying config.status to config.status.${ARCH}])
 cp -f config.status config.status.${ARCH}
@@ -1002,6 +1019,7 @@ LOC_MSG()
 LOC_MSG([GRASS is now configured for ${host}])
 LOC_MSG()
 LOC_MSG([  Source directory:          ${SRCDIR}])
+LOC_MSG([  Build directory:           ${DSTDIR}])
 LOC_MSG([  Installation directory:    ${prefix}/grass${NAME_VER}])
 LOC_MSG([  C compiler:                ${CC} ${CFLAGS}])
 LOC_MSG([  FORTRAN compiler:          ${F77}])

@@ -79,7 +79,6 @@ index      : INTEGER       { $$ = $1; }
            | '-' INTEGER   { $$ = -$2; }
 	   ;
 %%
-#include "lex.yy.c"
 
 int yywrap()
 {

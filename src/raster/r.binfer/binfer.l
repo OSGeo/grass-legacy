@@ -32,7 +32,7 @@ int yynerrs = 0;
 #else   ! DEBUG
 
 #   include   "symtab.h"
-#   include   "gram.h"
+#   include   "y.tab.h"
 #   define     token(x)      x
 
 #endif   DEBUG

@@ -16,7 +16,7 @@ $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 lex.yy.c : mif.l
-	$(LEX) mif.l
+	$(LEX) -t mif.l > $@
 
 $(VECTLIB): #
 $(GISLIB): # 

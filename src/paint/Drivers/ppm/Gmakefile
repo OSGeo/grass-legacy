@@ -1,5 +1,5 @@
 NAME=ppm
-LIBS = $(SRC)/paint/Interface/driverlib/lib.a $(LOCKLIB)
+LIBS = ../../Interface/driverlib/lib.a $(LOCKLIB)
 PAINT = $(ETC)/paint
 LIST =\
     main.o \

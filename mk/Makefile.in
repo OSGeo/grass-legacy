@@ -1,0 +1,81 @@
+
+include @DSTDIR@/mk/vars.mk
+
+INST_DIR	= ${prefix}/grass${NAME_VER}
+ERROR_LOG	= error.log
+
+all: dirs binaries html links
+
+makefiles:
+	@echo "making makefiles ..."
+	-find ${SRCDIR} -name Gmakefile | \
+		sed -e 's#^\(.*\)/Gmakefile#\1#' | \
+		while read dir ; do \
+			${SRCDIR}/mk/genmake.sed < $$dir/Gmakefile > $$dir/makefile ; \
+		done
+
+dirs:
+	@echo "making directories ..."
+	-mkdir -p ${GRASS_BIN}
+	-mkdir -p ${GISBASE}
+	-for dir in bin bwidget dev documents driver etc fonts include lib \
+		locks man scripts tcltkgrass txt \
+		etc/bin etc/bin/cmd etc/bin/inter etc/imagery \
+		etc/paint/driver etc/paint/driver.sh etc/paint/driver.uninst ; \
+		do \
+			mkdir -p ${GISBASE}/$$dir ; \
+		done
+
+binaries:
+	@echo "making binaries ..."
+	echo "Start of compilation: "`date` > ${ERROR_LOG}
+	-cat ${SRCDIR}/src/CMD/lists/GRASS ${DSTDIR}/src/CMD/lists/optional | \
+		grep -v '^ *#' | grep -v '^ *$$' | grep -v '^html$$' | \
+		while read dir ; do \
+			mkdir -p $$dir ; \
+			${MAKE} -I${DSTDIR}/mk -I${SRCDIR}/mk -C ${SRCDIR}/$$dir -f makefile || \
+				echo "Compilation error in module: $$dir" >> ${ERROR_LOG} ; \
+		done
+	echo "End of compilation:   "`date` >> ${ERROR_LOG}
+
+html:
+	-mkdir -p html
+	${MAKE} -I${DSTDIR}/mk -I${SRCDIR}/mk -C ${SRCDIR}/html -f makefile
+
+links:
+	@echo "making links ..."
+	@( cd ${GISBASE}/etc/bin/cmd;   ls; \
+	   cd ${GISBASE}/etc/bin/inter; ls; ) | sort -u | \
+		while read file ; do \
+			echo Creating link for $$file ; \
+			rm -f ${GISBASE}/bin/$$file ; \
+			ln ${GISBASE}/etc/front.end ${GISBASE}/bin/$$file ; \
+		done
+
+install:
+	-mkdir -p ${INST_DIR}
+	-tar cfC - ${GISBASE} . | tar xBfC - ${INST_DIR}
+	-mkdir -p ${UNIX_BIN}
+	-sed -e 's#^GISBASE.*#GISBASE=${INST_DIR}#' ${GRASS_BIN}/grass${NAME_VER} > ${UNIX_BIN}/grass${NAME_VER}
+	-chmod a+x ${UNIX_BIN}/grass${NAME_VER}
+	-chmod -R 1777 ${INST_DIR}/locks
+	-chmod -R a+rX ${INST_DIR}
+	-cp -f ${INST_DIR}/scripts/create_fifos.sh ${INST_DIR}/dev
+
+fifos:
+	${INST_DIR}/scripts/create_fifos.sh ${INST_DIR}
+
+clean:
+	-rm -rf ${GISBASE}
+	-rm -rf ${GRASS_BIN}
+	-rm -f Makefile src/CMD/head/head src/CMD/lists/optional \
+		mk/Makefile src/include/version.h src/include/winname.h
+	-rm -f src/include/config.h
+	-rm -f mk/vars.mk
+
+clean-makefiles:
+	@echo "cleaning makefiles ..."
+	-find ${SRCDIR} -name makefile -exec rm {} \;
+
+%/makefile: %/Gmakefile
+	${SRCDIR}/mk/genmake.sed < $< > $@

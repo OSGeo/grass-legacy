@@ -1,13 +1,10 @@
 PGM=r.binfer
-FILES = gram.c lex.c makefile symtab.h symtab.c table.c main.c \
+FILES = y.tab.c lex.yy.c makefile symtab.h symtab.c table.c main.c \
 		flags.c engine.c misc.c reclass.c yywrap.c
-OBJS = gram.o lex.o symtab.o table.o main.o \
+OBJS = y.tab.o lex.yy.o symtab.o table.o main.o \
 		flags.o engine.o misc.o reclass.o yywrap.o
 
-all: clean $(BIN_CMD)/$(PGM)
-
-clean:
-	-rm -f lex.c gram.c
+all: $(BIN_CMD)/$(PGM)
 
 $(BIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
 	$(CC) -o $@ $(LDFLAGS) $(OBJS) $(GISLIB) $(LEXLIB) $(MATHLIB) $(XDRLIB)
@@ -19,13 +16,8 @@ count:
 $(OBJS): symtab.h
 $(GISLIB): #
 
-lex.c: binfer.l
-	$(LEX) binfer.l
-	rm -f lex.c
-	mv lex.yy.c lex.c
+lex.yy.c: binfer.l
+	$(LEX) -t binfer.l > $@
 
-gram.c: binfer.y
-	$(YACC) binfer.y
-	rm -f gram.c
-	mv y.tab.c gram.c
-
+y.tab.c: binfer.y
+	$(YACC) -d binfer.y

@@ -1,5 +1,5 @@
 PGM=p.chart
-INTERFACE = $(SRC)/paint/Interface/applib/lib.a
+INTERFACE = ../../Interface/applib/lib.a
 EXTRA_CFLAGS = -I../../
 
 LIST =	main.o

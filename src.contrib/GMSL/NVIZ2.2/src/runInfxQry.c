@@ -1,5 +1,9 @@
 /*	Alex Shevlakov sixote@yahoo.com 02/2000
 */
+#include "config.h"
+
+#if defined(HAVE_POSTGRES_H) || defined(HAVE_POSTGRES_FE_H)
+
 #include "gis.h"
 #include "infx.h"
 #include <libpq-fe.h>
@@ -171,3 +175,6 @@ char* runqry(SQL_stmt, pts)
 
 	return long_str ;
 }
+
+#endif
+

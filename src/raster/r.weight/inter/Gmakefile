@@ -16,8 +16,8 @@ OFILES  =\
 	list_maps.o\
 	sav_rec.o\
 	weighted.o\
-	gis_pars.o\
-	gis_lxcl.o\
+	y.tab.o\
+	lex.yy.o\
 	set_sigs.o\
 	write_supp.o
 
@@ -39,31 +39,25 @@ help:
 	(cd HELP_TEXT/ ; tar -cvf - * | (cd $(TXT)/WEIGHT ; tar -xvf - 2>/dev/null ) ; true )
 
 clean:
-	-rm -f gis_pars.c gis_pars.h gis_lxcl.c gis_pars.o gis_lxcl.o
+	-rm -f y.tab.c y.tab.h lex.yy.c y.tab.o lex.yy.o
 
 #
 #
 # PARSER
-gis_pars.c:     yes_no.h gis_pars.y
-	rm -f gis_pars.c gis_pars.h gis_pars.out y.tab.c y.tab.h
-	$(YACC) -v -d gis_pars.y
-	mv y.tab.c gis_pars.c
-	mv y.tab.h gis_pars.h
-	mv y.output gis_pars.out
-	@echo "See gis_pars.out for review of this parser." 
+y.tab.c:     yes_no.h gis_pars.y
+	$(YACC) -d gis_pars.y
 
-gis_lxcl.c:     gis_lxcl.l gis_pars.h
-	rm -f gis_lxcl.c
-	$(LEX) -t gis_lxcl.l > gis_lxcl.c
+lex.yy.c:     gis_lxcl.l y.tab.h
+	$(LEX) -t gis_lxcl.l > $@
 
-gis_pars.h: gis_pars.c
+y.tab.h: y.tab.c
 
 add_mult.o: include.h
 assign.o: include.h
 choose_map.o: include.h
 choose_map.o: yes_no.h
 execute.o: include.h
-gis_pars.o: include.h
+y.tab.o: include.h
 list_anal.o: include.h
 list_cats.o: include.h
 sav_rec.o: include.h

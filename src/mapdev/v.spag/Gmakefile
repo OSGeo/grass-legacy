@@ -1,6 +1,6 @@
 PGM = v.spag
 
-BUILD_LIB = $(SRC)/mapdev/v.build/libbuild.a
+BUILD_LIB = ../v.build/libbuild.a
 
 ATTLIB	= 	$(LIBDIR)/libdig_atts.a
 
