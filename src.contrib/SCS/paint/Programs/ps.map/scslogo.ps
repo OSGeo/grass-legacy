@@ -1,0 +1,31 @@
+%!PS-Adobe-2.0 EPSF-1.2
+%%Title: scslogo   Author: Paul W. Carlson	March 1992
+%%EndComments
+
+% ---- proc scslogo -----------------
+% stack: x y logo_width  (x and y to center of logo, all in inches)
+/scslogo {
+gsave 3 1 roll 72 mul exch 72 mul exch translate dup scale newpath
+27 30 9 0 90 arc -27 30 9 90 180 arc -27 -30 9 180 270 arc 27 -30 9 270 360 arc
+closepath gsave 1 1 1 setrgbcolor fill grestore
+0 0 0 setrgbcolor 1 setlinewidth stroke
+newpath -3 30 cos div 30 moveto 0 0 18 150 30 arc 3 30 cos div 30 lineto
+closepath 0 0 1 setrgbcolor fill
+newpath 0 24 moveto 0 0 12 150 30 arc closepath 1 1 1 setrgbcolor fill
+newpath 0 0 27 180 0 arc 0 0 21 0 180 arcn closepath 0 1 0 setrgbcolor fill
+/Helvetica findfont 3.6 scalefont setfont
+0 0 0 setrgbcolor -27.4 -34 moveto (SOIL CONSERVATION SERVICE) show grestore
+} bind def
+
+%%EndProlog
+
+% test the proc by drawing 4 logos - 1, 2, 3 and 4 inches wide
+1.25 9.0 1 scslogo
+3.25 8.5 2 scslogo
+6.25 8.0 3 scslogo
+4.25 3.5 4 scslogo
+
+showpage
+%%Trailer
+%%EOF
+
