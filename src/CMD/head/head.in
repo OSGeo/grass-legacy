@@ -68,5 +68,10 @@ TCLTKLIBS           = @TCLTKLIBS@
 LIBRULE             = ar ruv $@ $?; @RANLIB@ $@
 USE_TERMIO          = @USE_TERMIO@
 
-#Input Korean(Asian?) characters in v.digit or etc.
+# Uncomment below to input Korean(Asian?) characters in v.digit or etc.
 #DASIAN_CHARS        = -DASIAN_CHARS
+
+# It's hard to click two buttons simultaneously with two button mouse.
+# Situation is worse, if it requires continuous clicking.
+# In this case uncomment below.
+#DANOTHER_BUTTON     = -DANOTHER_BUTTON
