@@ -1,5 +1,8 @@
 # $Log: makefile,v $
-# Revision 1.3  2000-05-22 14:52:03  markus
+# Revision 1.4  2000-05-26 14:40:17  markus
+# Frank Koormann <frank.koormann@intevation.de>: converter to support DBF file generation - attribute support for SHAPE files
+#
+# Revision 1.3  2000/05/22 14:52:03  markus
 # updated to reflect move of shapelib into SRC/libes/vbect32_64/shapelib-1.2.8
 #
 # Revision 1.2  2000/03/22 20:05:34  markus
@@ -27,14 +30,18 @@ CC=gcc
 # add -DWITH_STRICMP if you are compiling i.e. with MS VC
 CFLAGS=-I$(SHAPELIBPATH) # -DDEBUG
 
-all: gen2shp
+all: gen2shp txt2dbf
 
 utils.o: utils.c utils.h
 	$(CC) -c utils.c
 
 gen2shp: gen2shp.c utils.o
-	$(CC) $(CFLAGS) -o $@ gen2shp.c  $(SHAPELIBPATH)/shpopen.o\
-		$(SHAPELIBPATH)/dbfopen.o utils.o
+	$(CC) $(CFLAGS) -o $@ gen2shp.c  $(SHAPELIBPATH)/OBJ*/shpopen.o\
+		$(SHAPELIBPATH)/OBJ*/dbfopen.o utils.o
+
+txt2dbf: txt2dbf.c utils.o
+	$(CC) $(CFLAGS) -o $@ txt2dbf.c  $(SHAPELIBPATH)/OBJ*/shpopen.o\
+		$(SHAPELIBPATH)/OBJ*/dbfopen.o utils.o
 
 test: gen2shp
 	rm -f pnttest.dbf pnttest.shp pnttest.shx
