@@ -26,7 +26,7 @@ a binary GRASS vector file.
 
 <B>v.alabel</B> [<B>-i</B>] <B>map=</B><EM>name</EM>
 [<B>value=</B><EM>value</EM>]
-
+[<B>label=</B><EM>value</EM>]
 
 <P>
 
@@ -65,7 +65,8 @@ labeling changes to be made evident.
 
 builds GRASS support files for (binary) GRASS vector
 data files.  These support files supply topology (<EM>dig_plus</EM>)
-and category (<EM>dig_att</EM>) information that are needed by other GRASS
+and category (<EM>dig_att</EM>, <EM>dig_cats</EM>) information that
+are needed by other GRASS
 programs (e.g., by 
 
 <EM><A HREF="v.digit.html">v.digit</A></EM>, 
@@ -104,10 +105,14 @@ user's current GRASS mapset.
 vector map layer.  If the <EM>-i</EM> flag is set, <EM>v.alabel</EM>
 will increment the initial <EM>value</EM> by one for each unique unlabeled
 polygon in the vector map.
-
 <BR>
-
 Default:  1
+
+<DT><B>label=</B><EM>value</EM>
+
+<DD>The category label to be assigned to all unlabeled areas in the
+vector map layer. If not specified, each category added will have
+an empty label in the <EM>dig_cats</EM> file.
 </DL>
 
 
