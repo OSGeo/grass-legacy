@@ -33,6 +33,10 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
+#ifdef __MINGW32__
+# define mkdir(name, mode) ((mkdir) (name))
+#endif
+
 /*
  * Returns 0 on success.
  * Returns -1 to indicate a system error (check errno).
