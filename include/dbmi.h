@@ -1,6 +1,5 @@
-/*
- * $Id$
- */
+#ifndef GRASS_DBMI_H
+#define GRASS_DBMI_H
 
 #include <stdio.h>
 #include <gis.h>
@@ -240,6 +239,7 @@ typedef struct
 {
     int  n_values; 
     int  alloc;
+    int  ctype;   /* C type of values stored in array DB_C_TYPE_* */
     dbCatVal *value;
 }dbCatValArray;
 
@@ -268,3 +268,5 @@ typedef struct
 }dbRclsRule;
 
 #include "proto_dbmi.h"
+
+#endif

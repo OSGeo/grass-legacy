@@ -180,7 +180,7 @@ int cmpcatkey ( const void *pa, const void *pb)
 }
 
 /*!
- \fn 
+ \fn  
  \brief 
  \return 
  \param 
@@ -243,6 +243,8 @@ int db_select_CatValArray ( dbDriver *driver, char *tab, char *key, char *col, c
     if ( type != DB_C_TYPE_INT && type != DB_C_TYPE_DOUBLE ) {
 	G_fatal_error ( "Column type not supported by db_select_to_array()" );
     }	
+
+    cvarr->ctype = type;
 
     /* fetch the data */
     for ( i = 0; i < nrows; i++ ) {
