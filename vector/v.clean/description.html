@@ -17,7 +17,7 @@ removes duplicate lines (pay attention to categories!)
 
 <p>
 
-<b>svtlx</b>
+<b>snap</b>
 <br>
 snaps vertex to a line and create new vertex at that line
 
@@ -30,9 +30,28 @@ removes duplicate area centroids ('type' option ignored)
 </pre>
 
 <p>
+You do <em>not</em> have to run  <em><a HREF="v.build.html">v.build</a></em> afterwards.
+<P>
+<b>What is a bridge?</b>
+<P>
 
-You do <em>not</em> have to run 
-<em><a HREF="v.build.html">v.build</a></em> afterwards.
+A bridge is an area type connection of an island (polygon in a polygon) to the outer
+polygon. This is topologically incorrect (but OGC Simple Features allow it). <em>v.clean</em>
+can be used to optionally change the line type to fulfill the topology rules or to
+remove the bridge from the map:
+
+<pre>
+    +-------------+             +-------------+   +-------------+
+    |            P|  P: polygon |            P|   |            P|
+    |    +---+    |  I: island  |    +---+    |   |    +---+    |
+    |    | I |    |  B: bridge  |    | I |    |   |    | I |    |
+    |    |   |    |  :  line    |    |   |    |   |    |   |    |
+    |    +-+-+    |             |    +---+    |   |    +-.-+    |
+    |      |      |             |             |   |      .      |
+    |      | B    |             |             |   |      . L    |
+    |      |      |             |             |   |      .      |
+    +------+------+             +-------------+   +-------------+
+</pre>
 
 <h2>EXAMPLE</h2>
 
