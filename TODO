@@ -25,6 +25,8 @@ Missing modules:
 - possibility to compile a module in binary distribution (is it possible?) (?)
 - write Vect_map_exists() and implement in g.remove and v.digit -n (radim)
 
+- add '-d' dissolve to v.reclass
+
 - change default color white to black:
    (better define DEFAULT_FG_COLOR, DEFAULT_BG_COLOR in gis.h, update in 5.0 and 5.7)
 display/d.erase/main.c:	color->answer = "white";	/* set default color! */
