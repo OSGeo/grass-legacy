@@ -1,0 +1,707 @@
+<html><head>
+<!-- This document was created from RTF source by rtftohtml version 2.7.5,
+     extended by rtftoweb version 1.2. -->
+<title>Arbeitsbericht Regionalisierung in der Hydrologie '94 - Systemtechnische Arbeiten und Programmentwicklung</title></head><body>
+<a href="arb94-Zusammen.html">&lt;&lt;</a>
+, <a href="arb94-Anhang.html">&gt;&gt;</a>
+, <a href="arb94.html">Titelseite</a>
+, <a href="arb94-Contents.html">Inhaltsverzeichnis</a>
+<hr>
+<h1> Systemtechnische Arbeiten und Programmentwicklung
+</h1>
+<ul>
+<li><a href="arb94-Systemte.html#Heading23">  r.length.sh</a>
+<ul>
+<li><a href="arb94-Systemte.html#Heading24">  F&auml;higkeiten/M&ouml;glichkeiten des Moduls</a>
+<li><a href="arb94-Systemte.html#Heading25">  Nutzen des Moduls </a>
+</ul>
+<li><a href="arb94-Systemte.html#Heading26">  r.statistics</a>
+<ul>
+<li><a href="arb94-Systemte.html#Heading27">  F&auml;higkeiten/M&ouml;glichkeiten des Moduls</a>
+<li><a href="arb94-Systemte.html#Heading28">  Nutzen des Moduls</a>
+</ul>
+<li><a href="arb94-Systemte.html#Heading29">  r.aggreg</a>
+<ul>
+<li><a href="arb94-Systemte.html#Heading30">  F&auml;higkeiten/M&ouml;glichkeiten des Moduls</a>
+<li><a href="arb94-Systemte.html#Heading31">  Nutzen des Moduls</a>
+</ul>
+<li><a href="arb94-Systemte.html#Heading32">  Fitting</a>
+<ul>
+<li><a href="arb94-Systemte.html#Heading33">  F&auml;higkeiten/M&ouml;glichkeiten des Moduls</a>
+<li><a href="arb94-Systemte.html#Heading34">  Nutzen des Moduls</a>
+</ul>
+<li><a href="arb94-Systemte.html#Heading35">  r.density.sh</a>
+<ul>
+<li><a href="arb94-Systemte.html#Heading36">  F&auml;higkeiten/M&ouml;glichkeiten des Moduls</a>
+<li><a href="arb94-Systemte.html#Heading37">  Nutzen des Moduls</a>
+</ul>
+<li><a href="arb94-Systemte.html#Heading38">  Installation eines neuen Netzwerkdateiensystems: AFS</a>
+</ul>
+<hr>
+<p>
+Im folgenden Kapitel werden die einzelnen GRASS-Module beschrieben, die
+von uns im Rahmen der morphometrischen Analyse entwickelt wurden. Es werden
+zun&auml;chst die prinzipiellen F&auml;higkeiten, d.h. die mit Hilfe der Module
+potentiell zu entwickelnden Datenstrukturen aufgef&uuml;hrt und die
+M&ouml;glichkeiten des jeweiligen Tools im Rahmen der Objekt- und
+Datenbearbeitung und der Regionalisierung er&ouml;rtert. Desweiteren werden
+Sinn und Nutzen der von uns vorgenommenen AFS-Kopplung unserer Rechner
+dargelegt (siehe <a href="arb94-Einfueru.html#Heading4">Kapitel 1.3</a>).<p>
+<p>
+
+<a name="Heading23">
+<h2>r.length.sh</h2></a>
+<p>
+<b>
+<a name="Heading24">
+<h3> F&auml;higkeiten/M&ouml;glichkeiten des Moduls
+</h3></a>
+</b><p>
+<b>Syntax</b>:<p>
+r.length.sh input=name output=name res=number<p>
+<p>
+<b>Kurzbeschreibung:</b><p>
+<p>
+Erzeugte Datenstruktur:<br>
+Rasterkarte ('output') einer linaeren Datenstruktur, die als Information die
+L&auml;nge der linearen Elemente im Pixel enth&auml;lt.<p>
+<p>
+Ben&ouml;tigte Datenstruktur:<br>
+Rasterkarte ('input') mit linearen Elementen; Gitterweite der Rasterkarte.<p>
+<p>
+<p>
+Das GRASS-Shellscript r.length.sh erzeugt aus einer vorliegenden Rasterkarte
+mit linearen Strukturen (z.B. Tiefenlinie, Stra&szlig;e) eine Rasterkarte die
+als Information zus&auml;tzlich die L&auml;ngen dieser linearen Elemente in
+jedem Pixel enth&auml;lt.<p>
+<p>
+F&uuml;r die eingehende Rasterkarte gelten folgende Bedingungen:<p>
+- Breite der linearen Strukturen: 1 Pixel<p>
+- Katergorie-Wert in den linearen Strukturen: 1; au&szlig;erhalb der linearen
+Struktur: 0.<p>
+<p>
+F&uuml;r die Bereitstellung einer solchen Karte bietet GRASS folgende Hilfe:<p>
+<p>
+r.thin<p>
+ist ein GRASS-alpha-Modul, das aus einem Rasterlayer mit linearen Strukturen,
+die zu breit sind, ein Rasterlayer erzeugt, in dem die linearen Strukturen auf
+die Breite eines Pixels ausged&uuml;nnt sind.<p>
+      Syntax: r.thin input=name output=name<p>
+<p>
+Das Ausgabe-Rasterlayer von r.length.sh enth&auml;lt in jedem Pixel, das im
+Eingabe-Rasterlayer auf 1 gesetzt war, eine L&auml;ngeninformation. Diese
+beschreibt die Summe der Verbindungslinien (bis zum Pixelrand) zu allen
+Nachbarpixeln, die ebenfalls auf 1 gesetzt sind. (Bei Diagonalen wird
+entsprechend der Faktor 0.5 * sqrt(2) ber&uuml;cksichtigt). Das bedeutet,
+da&szlig; jedes Pixel die L&auml;nge der linearen Elemente in diesem Pixel
+enth&auml;lt, wobei die linearen Elemente jeweils von Pixelmittelpunkt zu
+Pixelmittelpunkt angenommen werden, z.B.:<p>
+<p>
+<p>
+<p>
+
+<a name="Abbildung5">
+<IMG src="s57.gif"><br></a>
+<b>Abbildung 5:Struktur und Arbeitsweise des Algorithmus</b>
+<p>
+Das GRASS-Modul r.length.sh nutzt die M&ouml;glichkeiten des GRASS-alpha-Moduls
+r.mfilter. Mit Hilfe dieses Moduls ist es m&ouml;glich, jedem Pixel eine
+gewichtete Summation der Nachbarn (beliebiger Ordnung) um dieses Pixel
+zuzuordnen.<p>
+<p>
+r.length.sh l&auml;&szlig;t ein 3*3 Fenster mit bin&auml;rer
+Gewichtungsstruktur &uuml;ber das Raster laufen. Diese Gewichtungstruktur macht
+es m&ouml;glich jedem Zahlenwert im Pixel eine eindeutige Kombination von
+Nachbarn, in denen ebenfalls lineare Elemente vorkommen (= Inhalt '1'),
+zuzuordnen.Eine anschlie&szlig;ende Reklassifikation ordnet jedem dieser
+Zahlenwerte eine L&auml;nge der linearen Elemente in diesem Pixel (siehe oben)
+zu (zun&auml;chst bezogen auf Pixell&auml;nge '1000'). Abschlie&szlig;end wird
+die errechnete L&auml;nge mit dem Parameter 'res' auf die tats&auml;chliche
+Pixell&auml;nge umgerechnet. Entsprechend liefert der Algorithmus bei einer
+Pixell&auml;nge '1000' die gr&ouml;&szlig;te Genauigkeit.<p>
+<p>
+
+<a name="Heading25">
+<h3>Nutzen des Moduls</h3></a>
+<p>
+M&ouml;glichkeiten des Einsatzes dieses Moduls bieten sich in der
+Analyse linearer Strukturen, insbesondere in der Netzwerkanalyse. Es lassen
+sich aus den L&auml;ngeninformationen im Pixel &uuml;ber entsprechende
+Operationen aufsummierte L&auml;ngen in Objekten oder Dichten berechnen.<p>
+Durch das GRASS-Modul r.watershed l&auml;&szlig;t sich z.B. &uuml;ber die
+Option 'Streams' ein Tiefenliniennetzwerk erzeugen. Nach einer Reklassifikation
+und Ausd&uuml;nnen (r.thin) kann dieses als Eingabe f&uuml;r r.length.sh
+dienen. &Uuml;ber das Ausgabelayer von r.length.sh l&auml;&szlig;t sich die
+Tiefenliniendichte in beliebigen Objekten berechnen (z.B. &uuml;ber
+r.statistics, r.density.sh).<p>
+<hr>
+<a name="Heading26">
+<h2>r.statistics</h2></a>
+<p>
+<b>
+
+<a name="Heading27">
+<h3>  F&auml;higkeiten/M&ouml;glichkeiten des Moduls</h3></a>
+</b><p>
+<b>Syntax</b>: <p>
+r.statistics [-c] base=name cover=name method=name [output=name]<p>
+<p>
+<b>Kurzbeschreibung:</b><p>
+<p>
+Erzeugte Datenstruktur: <p>
+<p>
+Einfache statistische Kenngr&ouml;&szlig;en (Mittelwert, Modus, Abweichung,
+Schiefe, ...) werden aus den Daten einer Karte 'cover' innerehalb der Objekte
+gleicher Kategorie einer Karte 'base' berechnet. Diese statistischen
+Kenngr&ouml;&szlig;en werden als Labels der Ausgabekarte 'output' (die
+dieselben Kategoriewerte hat wie die Karte 'base') gespeichert. Es werden die
+H&auml;ufigkeitsverteilungen der Daten einer Karte 'cover' innerhalb der
+Objekte einer Karte 'base' berechnet. Diese H&auml;ufigkeitsverteilungen
+f&uuml;r jedes Objekt werden auf 'standart.out' ausgegeben.<p>
+<p>
+Ben&ouml;tigte Datenstruktur:<p>
+<p>
+Karte 'cover': Karte einer r&auml;umlich verteilten Gr&ouml;&szlig;e, f&uuml;r
+die die Statistik berechnet werden soll.<p>
+Karte 'base': Karte mit Objekten, innerhalb derer die Statistik gemacht werden
+soll.<p>
+<p>
+<p>
+Das GRASS-Modul 'r.statistics' dient zur statistischen Analyse von
+r&auml;umlich verteilten Daten (wie z.B. Hangneigung, Tiefenlinien,
+Bodenfeuchte) innerhalb von definierten Objekten. Hierbei k&ouml;nnen &uuml;ber
+den Parameter 'method' verschiedene statistische Kenngr&ouml;&szlig;en der
+verteilten Daten berechnet werden. M&ouml;gliche Optionen sind:<p>
+<p>
+<b>distribution:</b>	 Verteilung in Prozent<br>
+<b>average:</b>	 Durchschnitt<br>
+<b>mode:</b>		 Modalwert<br>
+<b>median:</b>	 Median<br>
+<b>avedev:</b>	 Durchschnittliche Abweichung<br>
+<b>stddev:</b>		 Standardabweichung<br>
+<b>variance:</b>	 Varianz<br>
+<b>skewness:</b>	 Schiefe der Verteilung<br>
+<b>kurtosis:</b>	 Relative Abflachung (-) oder Zuspitzung (+)<br>
+<b>min:</b>		 Minimum<br>
+<b>max:</b>		 Maximum<br>
+<b>sum:</b>		 Summe der Pixelwerte<br>
+<b>area:</b>		 Anzahl der Pixel	<br>
+<p>
+Die Berechnung der statistischen Kennwerte der verteilten Daten (Karte 'cover')
+erfolgt innerhalb von Objekten, die durch die Angabe einer Karte 'base' (wie
+z.B. Subeinzugsgebiete, Bodentypen) zu definieren sind.<p>
+<p>
+Die eingehende Karte 'cover' kann eine beliebig verteilte Datenstruktur sein.
+Hierbei kann die statistische Analyse wahlweise f&uuml;r die Kategoriewerte
+(default) oder f&uuml;r die Label-Werte dieser Kategorie (Option '-c')
+berechnet werden.<p>
+<p>
+Die eingehende Karte 'base' sollte sinnvollerweise eine Karte mit Objekten
+jeweils einheitlicher Kategoriewerte sein. r.statistics fasst nun alle
+Pixelwerte der Karte 'cover' in Pixeln gleicher Kategorie der Karte 'base'
+zusammen und f&uuml;hrt f&uuml;r diese die statistische Analyse aus.<p>
+<p>
+Das Ausgabeformat kann je nach gew&auml;hlter Option zwei Formen annehmen:<p>
+<p>
+<dl>
+<dt> F&uuml;r 'method = distribution'<p>
+<dd>
+Die H&auml;ufigkeitsverteilung der einzelnen Objekte wird in Form einer Tabelle
+auf standart.out ausgegeben. Diese Tabelle hat folgendes Format:<p>
+<p>
+Spalte 1 - Kategorie der Karte 'base'<p>
+<p>
+Spalte 2 - vorkommende Kategorie- oder Labelwerte der Karte 'cover' innerhalb
+des Objektes der Kategorie aus Spalte 1<p>
+<p>
+Spalte 3: - H&auml;ufigkeit (in %) des Wertes aus Spalte 2 im Objekt von Spalte
+1.<p>
+<p>
+<dt>F&uuml;r alle restlichen Statistiken:<p>
+<dd>
+Die berechneten statistischen Kenngr&ouml;&szlig;en werden in einer Karte (Name
+anzugeben als 'output') gespeichert. Der Karte werden dabei als Kategoriewerte
+die Kategoriewerte der Karte 'base' zugewiesen, als Labels enth&auml;lt sie die
+berechneten statistischen Kenngr&ouml;&szlig;en.<p>
+<p>
+</dl>
+<a name="Heading28">
+<h3>Nutzen des Moduls  </h3></a>
+<p>
+Das GRASS - Modul r.statistics kann in folgenden Bereichen eingesetzt
+werden:<p>
+<p>
+<ul>
+<li> Durchf&uuml;hrung objektinterner Statistik<br>
+<li> Objektcharakterisierung durch statistische Gr&ouml;&szlig;en<br>
+<li> Klasseninterne Statistiken und Klassencharakterisierung durch statistische
+Gr&ouml;&szlig;en<br>
+<li> Weiterverarbeitung der Ausgabe von objektorientierten
+H&auml;ufigkeitsverteilungen (=&gt; Berechnung komplexerer Parameter,
+weitergehende Statistik)<br>
+<li> Weiterverarbeitung der Ausgabe in h&ouml;herskalige Parameter (z.B.
+Tiefenliniendichte)<p>
+</ul>
+<p>
+Durch die M&ouml;glichkeit der Durchf&uuml;hrung von objektorientierter
+Statistik kann das Modul r.statistics besonders zur Analyse von Objekten oder
+Klassen einheitlicher Kategorien innerhalb von Rasterlayern dienen. Objekte
+oder Klassen k&ouml;nnen hierbei r&auml;umlich zusammenh&auml;ngende Gebiete
+(z.B. Einzugsgebiete, H&ouml;henschichten) oder aber auch verteilte
+Gr&ouml;&szlig;en sein. Die statistischen Kennwerte k&ouml;nnen dem jeweiligen
+Objekt zugeordnet werden. Mit Hilfe der Kenngr&ouml;&szlig;en k&ouml;nnen
+Objekte voneinander unterschieden, kategorisiert und weitergehend klassifiziert
+werden. Besonders sei hier auf die Bildung von h&ouml;herskaligen Objekten
+hingewiesen, was einen Teilaspekt der Regionalisierung darstellt. Als konkretes
+Beispiel sei die Bildung des Mittelwertes von Neigungen in Einzugsgebieten
+genannt. Durch Klassifizierung der Mittelwerte und Regionalisierung der
+Einzugsgebiete ist die Bildung gr&ouml;&szlig;erer Objekte &auml;hnlicher
+Hangneigung m&ouml;glich. Andererseits k&ouml;nnen die statistischen
+Gr&ouml;&szlig;en zur Weiterverarbeitung in h&ouml;herskalige Parameter und zur
+Objektcharakterisierung und -regionalisierung dienen, oder direkt in Modelle
+eingehen. 
+<p>
+Ein besonders interessanter Aspekt bietet die Ausgabe der
+objektbezogenen H&auml;ufigkeitsverteilung als Tabelle: Hierdurch ist es
+m&ouml;glich, die Daten direkt weiterzuverarbeiten (dies ist zum Beispiel
+notwendig, wenn andere als die durch den Befehlsapparat von r.statistics
+gegebenen statistischen Kenngr&ouml;&szlig;en berechnet werden sollen). Diese
+Ausgabe wurde von uns genutzt, um h&ouml;herskalige Parameter durch Kurven -
+Fitting zu gewinnen (siehe <a href="#Heading32">Kapitel 5.4</a>).<p>
+<hr>
+<a name="Heading29">
+<h2>r.aggreg  </h2></a>
+<p>
+<b>
+
+<a name="Heading30">
+<h3>F&auml;higkeiten/M&ouml;glichkeiten des Moduls </h3></a>
+</b><p>
+<b>Syntax</b>:<p>
+r.aggreg input=name output=name neibor=name [aggregation=value]<p>
+<p>
+<b>Kurzbeschreibung:</b> <p>
+<p>
+Erzeugte Datenstruktur:<p>
+Die erzeugte Rasterkarte 'output' beinhaltet Objekte mit eindeutiger
+Objektnummer, die den Pixeln des jeweiligen Objektes als Kategoriewert
+zugewiesen wird. Diese Objekte ergeben sich aus der eingehenden Rasterkarte
+'input' durch fl&auml;chenhaft zusammenh&auml;ngende Pixel gleicher
+Kategoriewerte. Die Berechnung kann f&uuml;r 4 oder 8 (default) Nachbarn des
+jeweils untersuchten Pixels durchgef&uuml;hrt werden. Diese Angabe erfolgt
+&uuml;ber den Parameter 'aggregation'.<p>
+Die erzeugte Textdatei 'neibor' enth&auml;lt Informationen &uuml;ber die
+Nachbarobjekte jedes Objektes von 'output' (Anzahl, Gr&ouml;&szlig;e,
+Grenzl&auml;nge, etc.). Die Daten werden in einer bestimmten Form f&uuml;r
+jedes Objekt der Rasterkarte 'output' gespeichert (siehe unten). Die Textdatei
+kann zur Weiterverarbeitung genutzt werden.<p>
+<p>
+Ben&ouml;tigte Datenstruktur:<p>
+Die ben&ouml;tigte Rasterkarte 'input' kann ein beliebiges GRASS-Rasterlayer
+sein. Allerdings sollte darauf geachtet werden, da&szlig; es auch sinnvolle
+Informationen enth&auml;lt, d.h. fl&auml;chenhaft zusammenh&auml;ngende Pixel
+gleicher Kategoriewerte!<p>
+<p>
+<p>
+Das GRASS Modul r.aggreg dient zur Objektaggregation und Nachbarschaftsanalyse
+von Objekten.<p>
+<p>
+Die Objektaggregation wird von r.aggreg durch folgende Systematik
+durchgef&uuml;hrt: Zusammenh&auml;ngende Pixel gleicher Kategorie des
+Rasterlayers 'input' werden als neue Objekte zusammengefasst, die in der
+Ausgabekarte eine neue, eindeutige Objektnummer erhalten. Der Algorithmus
+&uuml;berpr&uuml;ft f&uuml;r jedes Pixel der eingehenden Rasterkarte die
+Nachbarn auf Gleichheit der Kategoriewerte und f&uuml;gt sie entsprechend dem
+neuen Objekt zu. Die &Uuml;berpr&uuml;fung der Nachbarpixel wird
+standardm&auml;&szlig;ig auf allen 8 Nachbarn durchgef&uuml;hrt, kann aber
+durch den Parameter 'aggregation' auf die 4 senkrechten Nachbarpixel
+eingeschr&auml;nkt werden ('aggregation=4'). Das hat zur Folge, da&szlig;
+Objekte, die nur &uuml;ber Diagonalen verbunden sind, als getrennte Objekte
+betrachtet werden. F&uuml;r die Zusammenfassung zweier Pixel gelten also zwei
+Bedingungen: (1) Es mu&szlig; ein gleicher Kategoriewert der Pixel vorliegen,
+(2) die Pixel m&uuml;ssen r&auml;umlich benachtbart sein.<p>
+Die Bildung der neuen Objekte aufgrund dieser Bedingungen hat zur Folge,
+da&szlig; zwei Objekte durchaus dieselbe Ursprungskategorie haben k&ouml;nnen,
+aber r&auml;umlich getrennt vorliegen (keine Klassenbildung). Die auf diese
+Weise gebildeten Objekte werden als 'output' Rasterlayer gespeichert.<p>
+<p>
+Die Nachbarschaftsanalyse wird f&uuml;r die Objekte der 'output' Karte
+durchgef&uuml;hrt. Jedes Objekt dieser Karte wird auf folgende Eigenattribute
+und Nachbarschaftsattribute untersucht:<p>
+<p>
+<dl>
+<dt>Eigenattribute:<br>
+<dd>
+- Objektnummer nach der Nomenklatur des Rasterlayers 'output'<br>
+- Urspr&uuml;ngliche Kategorie der Pixel des Objektes nach Rasterlayer
+'input'<br>
+- Gr&ouml;&szlig;e des Objektes in Pixel<br>
+- Grenzl&auml;nge, d.h. Umfang des Objektes in Pixel<p>
+<dt>Nachbarschaftsattribute:<br>
+<dd>
+- Anzahl der Nachbarobjekte<br>
+- Objektnummer jedes Nachbarobjektes nach der Nomenklatur des Rasterlayers
+'output'<br>
+- Urspr&uuml;ngliche Kategorie jedes Nachbarobjektes nach Rasterlayer 'input'<br>
+- Gr&ouml;&szlig;e jedes Nachbarobjektes in Pixel<br>
+- Grenzl&auml;nge zu jedem Nachbarobjekt in Pixeln<p>
+</dl>
+<p>
+Diese Attribute werden f&uuml;r jedes Objekt extrahiert und in eine Textdatei
+geschrieben, die beim Programmaufruf von r.aggreg als 'neibor' angegeben werden
+mu&szlig;. Die Struktur dieser Textdatei hat folgende Form:<p>
+<p>
+F&uuml;r jedes Objekt wird ein durch Leerzeilen getrennter Block erzeugt. Die
+erste Zeile dieses Blockes enth&auml;lt die Attribute des Objektes (mit
+Leerzeichen getrennt). Es folgt eine Zeile mit einer Trennungslinie. Die
+folgenden Zeilen enthalten die Objektattribute der Nachbarobjekte.<p>
+<p>
+<dl>
+<dt>erste Zeile:
+<dd>
+	Anzahl der gefundenen Nachbarn<br>
+	Objektnummer in output<br>
+	Urspruengliche Kategorie des Objekts in input<br>
+	Groesse des Objekts in Pixel<br>
+	Gesamte Grenzlaenge des Objektes in Pixel<p>
+<p>
+<dt>zweite Zeile:
+<dd>---------------------------------------------------------------------
+<p>
+<dt>weitere Zeilen:
+<dd>
+	Laufende Nummer des Nachbarn<br>
+	Objektnummer des Nachbarn in output<br>
+	Urspruengliche Kategorie des Nachbarn<br>
+	Groesse des Nachbarn in Pixel<br>
+	Laenge der Grenze des Nachbarn zum Objekt in der Kopfzeile<p>
+</dl>
+Diese Ausgabe steht der weiteren Bearbeitung zur Verf&uuml;gung. Die Daten
+k&ouml;nnen direkt aus der Datei ausgelesen werden und somit als Input f&uuml;r
+weitere (manuelle oder automatische) Berechnungen dienen oder auch in eine
+Datenbank (wie ORACLE) &uuml;ber eine Maske eingelesen werden und dort
+verarbeitet werden.<p>
+<p>
+
+<a name="Heading31">
+<h3>Nutzen des Moduls </h3></a>
+<p>
+Entsprechend den verschiedenen Ausgabem&ouml;glichkeiten von r.aggreg
+ergeben sich zwei Einsatzgebiete:<p>
+<p>
+<dl>
+<dt><i>Objekterzeugung</i><p>
+<dd>
+Durch die M&ouml;glichkeit, aus der Analyse zusammenh&auml;ngender Pixel
+gleicher Kategorie eindeutige Objekte zu bilden, denen entsprechend eine
+Objektnummer zugeordnet wird, kann r.aggreg bei der Objekterzeugung eingesetzt
+werden. So k&ouml;nnen zum Beispiel aus einer klassifizierten
+W&ouml;lbungskarte Objekte gleicher W&ouml;lbungsbereiche berechnet werden. Es
+sei darauf hingewiesen, da&szlig; durch r.aggreg zusammenh&auml;ngende Objekte
+gleicher Kategorie gebildet werden (also keine Klassen). Das bedeutet,
+da&szlig; zwei berechnete Objekte durchaus derselben Ursprungskategorie
+zugeordnet werden k&ouml;nnen. <p>
+<p>
+<dt><i>Objektanalyse hinsichtlich von Nachbarschaftsattributen</i><p>
+<dd>
+Die Ausgabe der Textdatei 'neibor' bietet M&ouml;glichkeiten der
+Nachbarschaftsanalyse von Objekten. Jedes Objekt wird in Bezug auf Anzahl,
+Objektnummer, Gr&ouml;&szlig;e und Grenzl&auml;nge der Nachbarn untersucht
+(siehe oben). Die Textdatei 'neibor', die die entsprechenden Daten speichert,
+kann Grundlage f&uuml;r eine weitergehende (z.B. statistische) Analyse
+bilden.<p>
+</dl>
+
+Im folgenden seien einige Beispiele f&uuml;r m&ouml;gliche einfache
+Berechnungen aus der Datei 'neibor' genannt:<p>
+<ul>
+<li> Durchschnittliche Gr&ouml;&szlig;e der Objekte einer Ursprungskategorie<br>
+<li> Durchschnittliche Gr&ouml;&szlig;e der Nachbarn der Objekte einer
+Ursprungskategorie<br>
+<li> Durchschnittliche Grenzl&auml;nge der Objekte einer Ursprungskategorie<br>
+<li> Durchschnittliche Anzahl der Nachbarn der Objekte einer Ursprungskategorie<br>
+<li> Zusammenhang Objektgr&ouml;&szlig;e - Grenzl&auml;nge<br>
+<li> Durchschnittliche Grenzl&auml;nge zwischen Objekten definierter
+Ursprungskategorien<br>
+<li> Zusammenhang Objektgr&ouml;&szlig;e - Anzahl der Nachbarn<br>
+<li>...<p>
+</ul>
+<hr>
+<a name="Heading32">
+<h2> Fitting </h2></a>
+<p>
+Die urspr&uuml;ngliche Motivation zur Besch&auml;ftigung mit Problemen
+der Anpassung theoretischer mathematischer Funktionen an empirische Datenreihen
+von Werten (=fitting), erwuchs aus der Besch&auml;ftigung mit dem
+Topographie-Parameter ln(a/tan&szlig;) aus TOPMODEL (siehe 
+<a href="arb94-Geomorph.html#Heading9">Kapitel 2.3</a>). Einige
+Autoren hatten Vergleiche verschiedener Einzugsgebiete durch Analyse der
+gefitteten H&auml;ufigkeitsverteilungen zum Topographie-Parameter publiziert
+(z.B. SIVAPALAN, 1987).<p>
+Eine weitere Grundlage zum Fitting-Problem war das von uns entwickelte Modul
+r.statistics: Neben statistischen Parametern der Verteilung einer
+Gr&ouml;&szlig;e in einem Gebiet wird auch die H&auml;ufigkeitsverteilung
+selbst als Wertepaare ausgegeben. Allerdings ist die topographische
+Beschreibung eines Gebietes durch statistische Parameter (z.B. Mittelwert der
+Neigung) eine sehr einschr&auml;nkende Betrachtungsweise, da die Form der
+Verteilung vollkommen verloren geht! Unsere &Uuml;berlegung ging davon aus,
+durch das Anpassen von theoretischen Kurven an eine empirische
+H&auml;ufigkeitsverteilung eine wesentlich bessere Informations&uuml;bertragung
+von r&auml;umlich verteiltem Gebietsparameter auf den effektiven
+geomorphometrischen Parameter zu erm&ouml;glichen. Die Art der theoretischen
+Verteilung und deren Gleichungskonstanten k&ouml;nnen damit als Parameter
+f&uuml;r die Gebietsbeschreibung verwendet werden!<p>
+<p>
+
+<a name="Heading33">
+<h3>F&auml;higkeiten/M&ouml;glichkeiten des Moduls   </h3></a>
+<p>
+<b>Syntax:</b><p>
+r.fit.sh base=name cover=name method=name output=name<br>
+r.fitmap.sh base=name cover=name method=name output=name<p>
+<p>
+<b>Kurzbeschreibung:</b><p>
+ <p>
+<i>r.fit.sh:</i><p>
+<p>
+<dl>
+<dt>Erzeugte Datenstruktur: 
+<dd>
+ASCII-Datei 'output' <br>
+<dd>erste Spalte: Objektgr&ouml;&szlig;e<br>
+weitere Spalten: Fitparameter<p>
+</dl>
+Ben&ouml;tigte Datenstruktur: GRASS-Rasterlayer 'base' mit Objekten, innerhalb
+derer der Fit durchgef&uuml;hrt werden soll, GRASS-Rasterlayer 'cover' mit den
+Daten f&uuml;r den Fit.<p>
+<p>
+Berechnet Fitparameter (die sich aus dem Fit der Werte der Coverkarte innerhalb
+der Objekte der Basekarte ergeben) in den Objekten der Basekarte. Es wird eine
+Ausgabedatei erzeugt, die Gr&ouml;&szlig;e der Objekte und zugeh&ouml;rige
+bestimmte Fitparameter  enth&auml;lt.<p>
+<p>
+<p>
+<p>
+<i>r.fitmap.sh:</i><p>
+<p>
+Erzeugte Datenstrukturen sind GRASS-Rasterlayer, die als Label Fitparameter
+enthalten<p>
+Ben&ouml;tigte Datenstruktur: GRASS-Rasterlayer 'base' mit Objekten, innerhalb
+derer der Fit durchgef&uuml;hrt werden soll, GRASS-Rasterlayer 'cover' mit den
+Daten f&uuml;r den Fit.<p>
+<p>
+Berechnet Fitparameter (die sich aus dem Fit der Werte der Coverkarte innerhalb
+der Objekte der Basekarte ergeben) in den Objekten der Basekarte. Es werden
+Ausgabelayer erzeugt, die als Label die bestimmten Fitparameter in den
+jeweiligen Objekten enthalten.<p>
+Durch den Parameter 'method' kann die anzupassende theoretische Verteilung
+gew&auml;hlt werden (bisher verf&uuml;gbar: Gauss, Lorenz, Lognormal).<p>
+<p>
+Die Algorithmen der entwickelten Module arbeiten nach folgendem Shema:<p>
+<p>
+<ul>
+<li> Export der Daten (H&auml;ufigkeitsverteilungen) aus GRASS<br>
+<li> Fitting-Proze&szlig;:<br>
+<ul>
+<li> Initialisierung der Fitparameter nach der Methode 'method of moments'<br>
+<li> Einsetzen der Fitparameter in die theoretische Verteilung<br>
+<li> Weiteres Fitten durch Minimierung der Chi-Quadrat-Funktion<br>
+</ul>
+<li> Ausgabe der Ergebnisse in verschiedenen Formen<p>
+</ul>
+<p>
+<i>Exportieren der Daten aus Grass</i><p>
+<p>
+Zum Export der Daten aus Grass (die ja dann als Verteilungen vorliegen
+m&uuml;ssen) benutzen wir das GRASS-Modul r.statistics, das die Verteilung
+einer cover-Gr&ouml;&szlig;e innerhalb der Objekte einer base-Karte
+ermittelt.<p>
+<p>
+<i>Fitten mit dem Programm fit2</i><p>
+<p>
+Zum Anpassen theoretischer Verteilungsfunktionen an die
+H&auml;ufigkeitsverteilungen wurde das Programm 'fit2' benutzt, das von Michael
+Courtney, USA geschrieben wurde. Das Programm fit2 bietet
+standardm&auml;&szlig;ig einige Alternativen als theoretische fit-Funktion an
+(lineare Regression, Gauss-Verteilung, Lorenz-Verteilung, ...), die mittels
+Chi-Quadrat-Minimum Methode an eine empirische Verteilung angepasst werden
+k&ouml;nnen. Dar&uuml;ber hinaus k&ouml;nnen eigene analytische Funktionen (die
+gewissen Kriterien gen&uuml;gen m&uuml;ssen, z.B. Differenzierbarkeit) in das
+Programm eingebaut werden.<p>
+Probleme ergeben sich beim Finden von Minima wegen der Nicht-Eindeutigkeit des
+absoluten Minimums, d.h. das Programm bestimmt iterativ ein Minimum aus der
+Ableitung der Chi-Quadrat-Funktion. Ein so gefundenes Minimum muss also im
+allgemeinen ein nur lokales, nicht aber das absolute Minimum sein. Da
+entsprechend der Datenmenge die Komplexit&auml;t der Chi-Quadrat-Funktion
+steigt, steigt auch die Anzahl lokaler Minima. Entsprechend schwer wird es, das
+absolute Minimum zu finden, da fit2 auch in lokalen Minima
+'h&auml;ngenbleibt'!<p>
+<p>
+Es ist daher notwendig, die Fit-Parameter m&ouml;glichst genau vorzugeben
+(initialisieren), um nah am absoluten Minimum zu sein. Die Idee zur L&ouml;sung
+dieses Problem war es, aus analytischen Befunden eine theoretische Verteilung
+f&uuml;r einen topographischen Parameter in allen Gr&ouml;&szlig;enordnungen
+als anwendbar anzuerkennen, um mit Hilfe der empirisch zu ermittelnden
+einfachen statitischen Kenngr&ouml;&szlig;en eine Parameterinitialisierung
+vorzunehmen. Zur Realisierung der eben beschriebenen Methode wurden die
+statistischen Parameter  (Mittelwert, Modus, Median, Varianz, Stddev.) der
+verschiedenen theoretischen Verteilungen bestimmt, um durch Vergleich mit den
+&uuml;ber r.statistics leicht zu bestimmenden Parametern eine Initialisierung
+der fit-Parameter zu ereichen. Dazu wurden die Gleichungssysteme f&uuml;r
+Mittelwert, Varianz und Maximalwert nach den Fit-Parametern aufgel&ouml;st.
+Diese Werte werden sodann f&uuml;r empirische Verteilungen bestimmt und aus
+diesen wiederum die Fit-Parameter errechnet.<p>
+Die Anwendung im Fitprogramm zeigte eine gute &Uuml;bereinstimmung der
+theoretischen und empirischen Verteilung. Ein anschlie&szlig;endes fitten
+konnte denn Chi-Quadrat-Wert weiter senken. Die beschriebene Methode der
+Initialisierung der Fitparameter wird als 'method of moments' bezeichnet und
+wurde auch von SIVAPALAN (1987) verwendet, der eine Gamma-Verteilung an
+kummulierte ln(a/tan&szlig;) -H&auml;ufigkeitsverteilungen fittete.<p>
+<p>
+<cite>Ausgabe der Daten</cite><p>
+<cite></cite><p>
+Die auf diese Weise gewonnenen Fitparameter sollen <p>
+<p>
+1) in Bezug gesetzt werden zur Objektgr&ouml;&szlig;e um eine
+Schwellenwertanalyse zu erlauben<p>
+2) direkt als Label der Objekte in den Layern ausgegeben werden um eine weitere
+Verarbeitung (z.B. Klassifizierung der Objekte) zu erm&ouml;glichen<p>
+<p>
+Nach den eben beschriebenen Methoden wurde ein Algorithmus zur Automatisierung
+des Fittens entwickelt. Dieser leistet folgendes:<p>
+Nach Eingabe von Basisparametern und Objekten passt das Programm mit Hilfe von
+r.statistics und fit2 die empirische Verteilung der Parameter in den Objekten
+an eine gew&auml;hlte theoretische Verteilung an (verschiedene Fitkurven
+m&ouml;glich). Die Fitparameter werden durch die besprochene Methode der
+Berechnung der empirischen statistischen Werte gewonnen. Weiteres fitten
+liefert die Fitparameter. Diese k&ouml;nnen in Bezug gesetzt werden zu der
+Objektgr&ouml;&szlig;e (Datensatz, der Objektgr&ouml;&szlig;e und Fitparameter
+enth&auml;lt). Als weitere M&ouml;glichkeit werden die gewonnenen Fitparameter
+in Form einer Parametermatrix dargestellt. <p>
+Das Programm wurde durch zwei Shellscripte realisiert (r.fit.sh,
+r.fitmap.sh).<p>
+<p>
+Die Weiterentwicklung beinhaltete:<p>
+<ul>
+<li> Extraktion von doppelt vorkommenden Werten aus den Ergebnisdateien<br>
+<li> Technische Verbesserungen im Abspeichern der tempor&auml;ren Dateien<br>
+<li> Entwicklung einer komfortableren interaktiven Eingabe und
+</ul>
+<i>&Uuml;berpr&uuml;fen der Eingabeparameter</i>
+<p>
+
+<a name="Heading34">
+<h3>Nutzen des Moduls   </h3></a>
+<p>
+Die beschriebenen Module sind f&uuml;r den Einsatz bei der
+Schwellenwertanalyse sowie bei der Objektcharakterisierung konzipiert. Es kann
+eine Objektcharakterisierung durch komplexere Parameter erreicht werden. Die
+Parameter sind in der Lage die gesamte H&auml;ufigkeitsverteilung eines
+Basisparameters zu beschreiben.<p>
+<hr>
+<a name="Heading35">
+<h2> r.density.sh </h2></a>
+<p>
+Im Arbeitsbericht zum Antrag Reliefhydrlogie III wurden Dichteanalysen
+vorgestellt. Es wurde die Dichte der Tiefenlinien durch die GRASS-Module
+r.length.sh und r.mapcalc im Filter erzeugt. Dadurch kann mit Hilfe von
+r.statistics eine Tiefenliniendichte im Objekt berechnet werden. Der Nachteil
+dieser Methode ist eine gr&ouml;&szlig;ere Ungenauigkeit durch Fehler der
+ganzzahligen Operationen durch GRASS. Um eine bessere Absch&auml;tzung der
+Tiefenliniendichte im Objekt zu erhalten, wurde das Shellscript 'r.density.sh'
+geschrieben, welches die notwendigen Dichteberechnungen au&szlig;erhalb von
+GRASS ausf&uuml;hrt und die Ergebnisse als Labels in ein seperates Layer
+zur&uuml;ckschreibt. Hierdurch kann die Tiefenliniendichte als exakte
+Flie&szlig;kommazahl abgerufen werden.<p>
+<p>
+
+<a name="Heading36">
+<h3> F&auml;higkeiten/M&ouml;glichkeiten des Moduls  </h3></a>
+<p>
+<b>Syntax: </b><p>
+r.density.sh base=name covermap=name output=name<p>
+<p>
+<b>Kurzbeschreibung:</b><p>
+<p>
+Erzeugte Datenstruktur:<p>
+Rasterkarte 'output', die als Label der Objekte der Rasterkarte 'base' die
+Dichten der Rasterkarte 'cover' innerhalb der Objekte von 'base'
+enth&auml;lt.<p>
+<p>
+Ben&ouml;tigte Datenstruktur:<p>
+Rasterkarte 'base' mit Objekten, f&uuml;r die Dichten berechnet werden
+sollen.<br>
+Rasterkarte 'cover' mit den Werten, f&uuml;r die die Dichte berechnet werden
+soll.<p>
+<p>
+Das GRASS-Shellscript r.density.sh berechnet aus einer vorliegenden Rasterkarte
+mit Parameterwerten (z.B. Tiefenlinien) und einer vorliegenden Rasterkarte mit
+Objekten (z.B. Einzugsgebiete) die Dichte dieser Werte im Einzugsgebiet und
+speichert diese Dichtewerte als Label der erzeugten Rasterkarte ab.<p>
+<p>
+Der Algorithmus arbeitet nach folgendem Schema:<p>
+<p>
+Mithilfe des Moduls r.statistics werden die Werte der Rasterkarte 'cover'
+innerhalb der Objekte der Rasterkarte 'base' aufsummiert (r.statistics,
+method=sum). Das Modul r.stats berechnet die Fl&auml;chen der Objekte der
+Rasterkarte 'base'. Die durch r.statistics berechneten Summen werden
+anschlie&szlig;end durch die jeweils zugeh&ouml;rige Fl&auml;che dividiert.
+Diese Operation wird au&szlig;erhalb von GRASS durchgef&uuml;hrt, um
+Flie&szlig;kommaergebnisse zu erlauben. Die als Flie&szlig;kommazahlen
+berechneten Dichtewerte werden anschlie&szlig;end in die 'cats'-Datei der
+erzeugten Rasterkarte als Label der Kategorien &uuml;bertragen. Hierdurch
+k&ouml;nnen die Dichtewerte als exaktere Zahlen ohne Rundungsfehler unter GRASS
+abgespeichert und dort weiterverarbeitet werden.<p>
+
+<a name="Heading37">
+<h3> Nutzen des Moduls </h3></a>
+<p>
+Das Modul wurde zur Berechnung von exakten, objektbezogenen Dichtewerten
+entwickelt, wie z.B. Tiefenliniendichte oder Flu&szlig;dichte. Diese
+Dichtewerte k&ouml;nnen als repr&auml;sentative Parameter f&uuml;r
+geomorphometrische Objekte verwendet werden. <p>
+<hr>
+<a name="Heading38">
+<h2> Installation eines neuen Netzwerkdateiensystems: AFS </h2></a>
+<p>
+Das AFS - Andrews File System - ist ein kommerzielles Softwareprodukt
+der Firma Transarc Corporation , Pittsburg. F&uuml;r die Universit&auml;t
+Heidelberg wurde eine Campus- Lizenz erworben. S&auml;mtliche Daten unter UNIX
+werden im Universit&auml;ts - Rechenzentrum (URZ ) von AFS verwaltet. Das URZ
+assistiert den Instituten der Universit&auml;t bei der Installation von AFS.
+Nachdem wir dieses System auf unseren SUN-Workstations eingerichtet haben (im
+Juli 1994), existiert nun im Geographischen Institut der erste AFS-Server
+(Dateien k&ouml;nnen nicht nur importiert, sondern auch exportiert werden)
+au&szlig;erhalb des Rechenzentrums. <p>
+<p>
+Im Vergleich zum bisherigen Netzwerk bietet AFS die M&ouml;glichkeit, den
+direkten Dateizugriff auch auf andere AFS- Zellen auszudehnen. Das bedeutet
+konkret, da&szlig; Berechnungen, die auf Maschinen im Rechenzentrum laufen, auf
+Daten im Geographischen Institut zugreifen k&ouml;nnen und umgekehrt. F&uuml;r
+den Benutzer entf&auml;llt der eigentlich &uuml;berfl&uuml;ssige Vorgang des
+Kopierens von Ausgangs- und Ergebnisdateien zwischen den Rechnern der beiden
+Institute. Damit waren bisher Nachteile verbunden:  eine Vielzahl der Dateien
+existierte mehrfach, da sonst der Aufwand f&uuml;r das Aussortieren und
+Transferieren der wirklich ben&ouml;tigten Daten zu gro&szlig; war.
+Namenskonflikte beim Transfer der Ergebnisdateien waren vorprogrammiert.
+Rechenzeitintensive Prozesse wurden am Geographischen Institut gestartet,
+w&auml;hrend am URZ Kapazit&auml;ten frei waren. Darunter litt die Performance
+einfacher Auswertungen am Institut.<p>
+<p>
+Die grunds&auml;tzliche Motivation zur Einrichtung des AFS auf unseren Rechnern
+enstand bei der Bearbeitung sehr gro&szlig;er Datens&auml;tze (siehe <a
+href="arb94-Bearbeit.html#Heading16">Kapitel
+3.2</a>). Bei der Einzugsgebietsmodellierung  des Neckar mu&szlig;ten wir wegen der
+notwendigen Rechenkapazit&auml;t auf die Rechner des URZ ausweichen. Da die
+Daten (MilGeo-Datensatz) auf den Rechnern im Geographischen Institut lagen, war
+ein st&auml;ndiger Datentransfer zwischen den Systemen notwendig (Basis- und
+Ergebnisdaten). Es k&ouml;nnen nun Prozesse, die auf einem der beiden Systeme
+laufen auf Daten beider Systeme unmittelbar zugreifen, was besonders im
+Hinblick auf die Modellierung des Einzugsgebiets der Weser das
+Proze&szlig;handling wesentlich vereinfacht.<p>
+<p><hr>
+<a href="arb94-Zusammen.html">&lt;&lt;</a>
+, <a href="arb94-Anhang.html">&gt;&gt;</a>
+, <a href="arb94.html">Titelseite</a>
+, <a href="arb94-Contents.html">Inhaltsverzeichnis</a>
+</body></html>
