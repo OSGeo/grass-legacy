@@ -1,4 +1,9 @@
 struct signalflag
 {
 	int interrupt;
-} signalflag ;
+};
+#ifdef MAIN
+struct signalflag signalflag;
+#else
+extern struct signalflag signalflag;
+#endif
