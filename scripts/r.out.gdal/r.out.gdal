@@ -72,7 +72,7 @@ fi
 #check gdal_translate exists
 if [ -z "`which gdal_translate`" ] ; then
    echo "ERROR: Required program gdal_translate is missing"
-   echo "       Full GDAL binaries are needed to use r.out.gdal."
+   echo "       Full GDAL binaries with GDAL/GRASS support are needed to use r.out.gdal."
    exit 1
 fi
 
