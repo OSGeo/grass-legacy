@@ -8,6 +8,15 @@
 #	define ANOTHER_CELL_NULL
 #endif
 
+#ifdef linux
+#	define ANOTHER_CELL_NULL
+#endif
+
+/* add other platforms here if
+ *  r.mapcalc test=-129
+ * fails.
+ */
+
 /*************************************************************
 *   G_set_f_null_value(f, n)
 *      FCELL *f;
