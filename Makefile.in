@@ -10,7 +10,7 @@ BINDIR=			@BINDIR@
 SRCDIR=			`pwd`
 SERVERNAME=		`uname -n`
 SYSTEM=			`uname -s`
-ARCH=			`grep ARCH src/CMD/head/head | cut -d'=' -f2 | sed -e 's/\ //g'`
+ARCH=			`grep "host\@" config.status | tr -s '%' ' ' | cut -d' ' -f 3`
 VERSION=		`cat src/CMD/VERSION | head -1`
 
 # Get the major release number from the version for appending to gmake,
@@ -82,7 +82,7 @@ install: pre-install do-install
 pre-install:
 	test -d ${PREFIX} || ${INSTALL_DATA_DIR} ${PREFIX}
 	test -d src/CMD/next_step || mkdir -p src/CMD/next_step
-	cp src/CMD/head/head src/CMD/head/head.${ARCH}
+	mv src/CMD/head/head src/CMD/head/head.${ARCH}
 	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh ${ARCH}
 	${SHELL} ${IS64BIT} ${ARCH}
 	@ echo "Now proceed with make install"
