@@ -8,6 +8,7 @@ SUBDIRS = \
 	d.slide.show \
 	g.manual \
 	i.spectral \
+	i.tasscap \
 	pg.postgisdb \
 	r.out.gdal \
 	r.univar \
