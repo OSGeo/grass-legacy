@@ -1,0 +1,7 @@
+:
+# test for d.site.db where all required command line args are provided
+# DB=seco_wells, GISdb=SECO
+# $1=color, $2=icon, $3=size
+#
+d.site.db tab=well coords=utm_east,utm_north where='aquif matches "e*" OR aquif matches "g*"' \
+plot=$1,$2,$3
