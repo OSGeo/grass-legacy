@@ -160,6 +160,9 @@ LAPACKLIB           = @LAPACKLIB@
 GDALLIBS            = @GDAL_LIBS@
 GDALCFLAGS          = @GDAL_CFLAGS@
 
+#OGR
+OGR_LIB             = @OGR_LIB@
+
 #FreeType:
 FTINC               = @FTINC@
 FTLIB               = @FTLIB@
