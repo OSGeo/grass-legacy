@@ -14,7 +14,7 @@
 #include "symtab.h"
 #include "local_proto.h"
 
-extern int yylineno;
+/* extern int yylineno; */
 extern char yytext[];
 extern FILE *yyin;
 int verbose;
@@ -51,7 +51,7 @@ int main (int argc, char **argv)
 
 int yyerror (char *s)
 {
-    fprintf(stderr,"\n%s: line number %d at or near \"%s\"\n",s,yylineno,yytext);
+    fprintf(stderr,"\n%s: line number ? at or near \"%s\"\n",s,yytext);
     exit(0);
 }
 

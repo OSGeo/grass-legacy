@@ -42,7 +42,7 @@ int yynerrs = 0;
 #ifndef linux
 #ifndef __FreeBSD__
 #ifndef __CYGWIN__
-int yylineno = 1;
+/* int yylineno = 1; */
 #endif
 #endif
 #endif
@@ -118,7 +118,7 @@ return token(Constant);
 {white_space}+             ;
 
 {new_line}                 {
-  yylineno++;
+  /* yylineno++; */
 }
 
 {other}                    return token(yytext[0]);
