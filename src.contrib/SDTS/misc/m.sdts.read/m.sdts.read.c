@@ -299,7 +299,7 @@ do {
         for (i=0; i<str_len; i++)
                 {
                 if (interactive) printf ("%2.2x",temp[i]);
-                if (have_outfile) printf (fpout,"%2.2x",temp[i]);
+                if (have_outfile) fprintf (fpout,"%2.2x",temp[i]);
                 }
        if (interactive) printf (" (hex)");
        if (have_outfile) fprintf (fpout," (hex)");
