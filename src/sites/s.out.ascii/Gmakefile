@@ -1,9 +1,8 @@
 PGM=s.out.ascii
-HOME=$(BIN_MAIN_CMD)
 
 LIBES=$(GISLIB) $(DATETIMELIB)
 
-$(HOME)/$(PGM): main.o $(LIBES)
+$(BIN_MAIN_CMD)/$(PGM): main.o $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ main.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

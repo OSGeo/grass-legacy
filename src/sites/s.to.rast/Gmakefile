@@ -1,10 +1,9 @@
 PGM = s.to.rast
-HOME = $(BIN_ALPHA_CMD)
 
 LIST =  main.o\
 	write_cell.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
 		$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB) $(DATETIMELIB):	#

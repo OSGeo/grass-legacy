@@ -1,12 +1,10 @@
-LIBRARIES = $(GISLIB) $(DATETIMELIB) $(XDRLIB) $(MATHLIB)
+LIBES = $(GISLIB) $(DATETIMELIB)
 
-PGM = $(BIN_CONTRIB_CMD)/s.territory
+PGM = s.territory
 
 OFILES = main.o \
 	 territory.o \
 	 load.o
 
-$(PGM): $(OFILES)
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES)
-
-
+$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
