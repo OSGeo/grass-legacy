@@ -1,0 +1,250 @@
+#***************************************************************************
+#
+#
+#                         NCSA HDF version 3.2 release 3
+#                            December 1, 1992
+#
+# NCSA HDF Version 3.2 source code and documentation are in the public
+# domain.  Specifically, we give to the public domain all rights for future
+# licensing of the source code, all resale rights, and all publishing rights.
+#
+# We ask, but do not require, that the following message be included in all
+# derived works:
+#
+# Portions developed at the National Center for Supercomputing Applications at
+# the University of Illinois at Urbana-Champaign, in collaboration with the
+# Information Technology Institute of Singapore.
+#
+# THE UNIVERSITY OF ILLINOIS GIVES NO WARRANTY, EXPRESSED OR IMPLIED, FOR THE
+# SOFTWARE AND/OR DOCUMENTATION PROVIDED, INCLUDING, WITHOUT LIMITATION,
+# WARRANTY OF MERCHANTABILITY AND WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE
+#
+#***************************************************************************
+
+NCSA HDF is the Hierarchical Data Format, a standard file format
+developed by NCSA. This document describes:
+
+	 Routines included in the current release of HDF; 
+	 Platforms supported by the current release; 
+	 Obtaining a version of HDF for your system; and 
+ 	 Obtaining HDF documentations. 
+
+Other information, including hints on using HDF, and instructions 
+on how to to create a library, can be found in other README files 
+in this directory.
+
+For more information about HDF, see the document "NCSA HDF Calling 
+Interfaces and Utilities", the document "HDF Specification" and 
+"NCSA HDF Vset".
+
+If you have any questions, problems, bug reports or suggestions, 
+you can contact us via Email at sxu@ncsa.uiuc.edu,  or by writing 
+to HDF, Software Tools Group, NCSA, 605 East Springfield Ave., 
+Champaign, IL 61820, or call (217) 244-0647.
+
+
+************************************************************************
+Routines included in HDF3.2r1.
+************************************************************************
+
+This is NCSA HDF version 3.2 release 1. Included in this version are:
+
+	the basic low-level routines to perform I/O to HDF files, 
+	routines to process 8-bit Raster Image Sets
+	routines to process Scientific Data Sets.
+	routines to process 24-bit Raster Image Sets
+	routines to process Palettes (independently of images)
+	routines to process Annotations for data items
+        routines to process Vsets.
+
+
+************************************************************************
+Platforms supported by HDF3.2r1.
+************************************************************************
+
+This version of HDF runs on the following platforms:
+
+        Platform        Machine Type
+        --------        ------------
+        Sun-4           SUN
+        Cray-2          UNICOS
+        Cray-Y/MP       UNICOS
+        Convex          CONVEX
+        SGI Iris 4D     IRIS4
+        IBM RS/6000     IBM6000
+        DECstation 3100 MIPSEL
+        DECstation 5000 MIPSEL
+        Vax/VMS         VMS
+        HP 9000         HP9000
+        Macintosh       MAC
+        IBM PC/clone    PC
+        NeXT            NEXT
+        CONVEX          CONVEXNATIVE
+
+Compilation of these programs produces a library of HDF routines that 
+can be called from either FORTRAN or C programs.
+
+
+************************************************************************
+	Obtaining HDF using anonymous ftp
+************************************************************************
+
+HDF3.2r1 is available on the NCSA anonymous ftp server
+(ftp.ncsa.uiuc.edu, IP address 141.142.20.50) in the
+directory HDF/HDF3.2r1.  This directory  contains
+the following:
+
+    this file "README.FIRST" 
+
+    the file "README.VMS" which explains how to use the utility
+    FIXATR to convert files between different formats on VMS.
+
+    the file "README.IBMPC" which lists system requirement for
+    installation of HDF3.2r2 on IBMPC.
+
+    the file "README.NCSA" which describes where HDF is installed 
+    on various platforms at NCSA.
+
+    the file "MigrationNotes" with documentation of the
+    differences between HDF 3.1 and HDF 3.2, and implications
+    of these differences for writing programs that use HDF.
+
+    the file "CODECHANGES" which lists code changes made  
+    since HDF3.2r1.
+
+    makefiles for several of the supported platforms, plus a
+    generic "Makefile.template". The makefile for IBM/PC is
+    the subdirectory src/makepc.msc. 
+
+    an INSTALL.ALL file that explains how to use a makefile to
+    install all or any part of HDF.
+
+    a "src" directory with only the source modules for
+    the HDF library.
+  
+    a "test" directory containing the test suite.
+
+    a "bkwdtest" directory containing the programs and hdf files 
+      to test the compatibility of HDF3.2r2.
+
+    a "util" directory containing the utilities.
+    
+    a "examples" directory containing the example data/hdf files
+      which can be used to test the utilities.
+
+    a "doc" directory containing HDF documentations.
+
+The HDF/tarHDF3.2r1 directory contains a collection of compressed
+    tar files, which together contain the entire HDF 3.2r1
+    release. This directory contains a file "README.NOW"
+    that explains how to process the compressed tar files.
+
+
+To download HDF from NCSA anonymous ftp server, you need to
+login to ftp.ncsa.uiuc.edu (141.142.20.50), with a login name of 
+"anonymous". Give your real name as password.  Move to the directory 
+"HDF" by issuing the command "cd HDF" to ftp.  Now you are ready to 
+transfer files.  There are two ways to do this:
+
+1. You may use the command "mget hdf3.2r1.tar.Z*" to download a compressed
+"tar" format file, then concatenate them in your directory with the Unix
+command "cat hdf3.2r1.tar.Z* > hdf3.2r1.tar.Z".  Be sure to set file transfer
+mode to binary with the command "binary".  (NOTE: this tar file is very
+large, as it contains all the source files, plus all of the documentation. 
+If space is dear, consider using the method described in paragraph 2.)
+
+Uncompress and detar this file with the Unix commands 
+"uncompress hdf3.2r1.tar" and "tar xvf hdf3.2r1.tar". This produces 
+a tree of subdirectories similar to the ones in this directory.    
+
+These files are described in the files INSTALL.ALL , which is in the 
+same directory, and INSTALL in the subdirectory src.  They must be 
+compiled according to the instructions in those files.  
+
+1a) For MacII/MPW users, HDF3.2r1 currently supports C interface only on
+Macintosh. For users who need Fortran support, there is a binhexed 
+stuffit file called Spyglass3.1.sit.hqx which contains HDF3.1r3 binary
+code and README files for Mac. It is in the directory 
+ftp/HDF/prev_releases. Use ascii mode to get this file, unbinhex it, 
+then unstuff it. This will provide you will all the files for the MacII.
+
+2. As an alternative to "tar", you may download the files you require 
+directly.  Use "cd src" to move to the directory containing source 
+files.  Then use the command "mget *". If your system is VMS, get the
+files in util/fixatr also.  This will prompt you for each
+of the source files, asking if you want to download them. Answer "y" to each.
+This will produce the source files for that system in your directory. 
+Compile these files according to the instructions in the file INSTALL.
+
+
+**********************************************************************
+                   Obtaining HDF documentation 
+**********************************************************************
+
+Hardcopy versions of the documetation can be purchased from NCSA.  To
+obtain a catalog, contact:
+
+NCSA Documentation Orders
+152 Computing Applications Building
+605 E. Springfield Ave.
+Champaign, IL 61820
+
+(217) 244-0072  
+
+
+To obtain the documentations enter "cd doc".  There are three
+subdirectories, HDF3.1 -- containing the user documentation (NCSA HDF
+Calling Interfaces and Utilities), HDF.Specs -- containing the 
+technical specification (NCSA HDF Specifications), and HDF.Vset2.0
+-- containing Vset documentation (NCSA HDF Vset), respectively. Under
+each subdirectory there are three forms of the documentation, 
+one ASCII, one PostScript, and one in Macintosh Microsoft Word format.  
+In the doc directory there is also an hdf.man -- the manpage for HDF, and
+an  ASCII file named  vset2.1.extra.doc, which can be regraded as a supplement
+to the documentations for HDFVset2.0. 
+
+The ASCII form of the user documentation is in doc/HDF3.1/HDF.ascii/. 
+This version was created by saving the MS Word version as text, 
+so it is quite crude and has no formatting or illustrations.
+The ascii files may be downloaded in ascii mode.
+
+The PostScript version of the documentation is in doc/HDF3.1/HDF.postscript.
+
+The Macintosh Microsoft Word files are stored in doc/HDF3.1/HDF3.1.msw.sit.hqx.
+It is a binhexed stuffit file, which can be transmitted in ascii mode.  Use
+ascii mode to get this file, unbinhex it, then unstuff it.
+
+The Microsoft Word files are in Microsoft Word 4.0 format.  This
+is the format used to print the hard copy versions distributed by
+NCSA.  If you do not have MS Word 4.0, you will probably not be able
+to print the documents in these files.  MS Word 3.0, for instance, does not
+correctly print these files.
+
+Similarly, there is an ASCII version of HDF Specification in 
+doc/HDF.Specs/HDFSpecs.asc.tar; a MicroSoft Word version in 
+doc/HDF.Specs/HDFSpecs.msw.sit.hqx; and a PostScript version
+in doc/HDF.Specs/HDFSpecs.postscript/.
+
+The ASCII, PostScript and MSW versions of HDF Vset documentation are
+in doc/HDF.Vset2.0/HDFVset/ascii/, doc/HDF.Vset2.0/HDFVset.postscript/
+and doc/HDF.Vset2.0/HDFVset.msw/sit.hqx, respectively.
+
+***********************************************************************
+* If you want to see more software like NCSA HDF, you need to send us a 
+* letter, email or US mail, telling us what you are doing with NCSA HDF. 
+* We need to know: 
+* 1) What science you are working on (an abstract of your work would be 
+* fine); 
+* 2) How NCSA HDF has helped you, e.g., whether it has increased your 
+* productivity or allowed you to perform operations you were unable to 
+* do before. 
+*  
+* We encourage you to cite the use of NCSA HDF , and any other NCSA 
+* software you have used, in your publications.  A bibliography of your 
+* work would be extremely helpful. 
+*  
+* This is a new kind of shareware.  You share your science and successes
+* with us, and we attain the resources necessary to share more software 
+* like NCSA HDF with you. 
+* 
+***********************************************************************
