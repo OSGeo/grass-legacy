@@ -120,7 +120,7 @@ label_mlines (map, cat)
 		    }
 		}
 	    }
-	    R_flush ();
+	    V_flush ();
 	    if (pass == 1)
 	    {
 		char *str;
