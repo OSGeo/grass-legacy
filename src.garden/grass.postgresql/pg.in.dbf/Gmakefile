@@ -1,6 +1,9 @@
 PGM = pg.in.dbf
 HOME = $(BIN_CMD)
-EXTRA_CFLAGS = $(PQINCPATH)
+PACKAGE = "pg.in.dbf"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
+
 LIST = 	main.o \
 	dbfopen.o \
 	pgdump.o
