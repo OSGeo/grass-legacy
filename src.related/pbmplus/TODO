@@ -1,0 +1,39 @@
+Things still to be done, in approximate order of likelihood:
+
+
+Test the TIFF and xwd converters on a little-endian box.
+
+Imakefile fixes from David Lawrence.
+
+Merge pgmtops and ppmtops into pnmtops; add auto-scaling and -rotate flag.
+
+VMS fixes from Terry Poot.
+
+Add IBM, Mac, and Amiga stuff to OTHER.SYSTEMS file.
+
+picttoppm and ppmtopict may still have some bugs.
+
+ilbmtoppm and ppmtoilbm should handle some of the new Amiga image formats.
+
+ppmtoilbm should not bother with HAM mode if the "colors" are actually
+grays.
+
+hipstopgm should have a -image flag like fitstopgm and giftoppm.
+
+Add ppmtocmyk4.
+
+Upgrade xpmtoppm and ppmtoxpm to handle XPM2.
+
+Turn pbmtoascii into pgmtoascii, using the font routines from pbmtext.
+
+Figure out why ppmquant doesn't generate all N colors.  Maybe the
+colormap it makes has some duplicate entries.
+
+Figure out why compiling pnmconvol makes gcc die on some systems.
+
+Fix the inflection-point leaks in ppmd_fill().
+
+The Converter Generator reorganization: all filters become three library
+routines, one to initialize, one to handle each line, and one to finish off.
+This will make it possible to generate self-contained pipelines on demand,
+and they should run substantially faster without all that I/O.
