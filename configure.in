@@ -90,7 +90,7 @@ AC_CHECK_PROGS(ENV, env)
 AC_CHECK_PROGS(F77, f77 g77)
 AC_PATH_XTRA
 AC_HEADER_STDC
-AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h zlib.h)
+AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h)
 AC_CHECK_HEADERS(sys/ioctl.h sys/mtio.h sys/resource.h sys/time.h)
 AC_CHECK_HEADERS(sys/timeb.h sys/types.h sys/utsname.h)
 AC_HEADER_TIME
@@ -155,40 +155,6 @@ AC_CHECK_LIB(c, xdrmem_create, XDRLIB="")
 fi
 AC_SUBST(XDRLIB)
 
-ZLIB=
-AC_ARG_WITH(zlib-includes,
-  [  --with-zlib-includes=DIR  
-                          Specify path for ZLIB header files],
-  [   
-   	case "$withval" in
-	"" | "y" | "ye" | "yes" | "n" | "no")
-	    AC_MSG_ERROR([*** You must supply a directory to --with-zlib-includes.])
-	;;
-	esac
-	zlib_includes="$withval"
-   ])
-
-if test "$zlib_includes"; then
-    for dir in $zlib_includes; do
-        if test -d "$dir" && test -f "$dir/zlib.h"; then
-            ZLIBINC="$ZLIBINCPATH -I$dir"
-        fi
-    done
-else
-    for dir in $my_inc_dirs; do
-        if test -d "$dir" && test -f "$dir/zlib.h"; then
-            ZLIBINC="$ZLIBINCPATH -I$dir"
-	elif test -d "$dir/zlib" && test -f "$dir/zlib/zlib.h"; then
-            ZLIBINC="$ZLIBINCPATH -I$dir/zlib"
-        fi
-    done
-fi
-AC_SUBST(ZLIBINCPATH)
-
-if test -z "${ZLIB}"; then
-AC_CHECK_LIB(z, deflate, ZLIB=-lz)
-fi
-AC_SUBST(ZLIB)
 
 # Test if mathlib needs -lm flag or is included with libc
 MATHLIB="-lm"
@@ -219,6 +185,69 @@ AC_SUBST(DLLIB)
 # Some search directories to use as the base for other searches when not specified
 my_inc_dirs="/usr/include /usr/local/include /usr/X11R6/include /opt/include /usr/freeware/include"
 my_lib_dirs="/usr/lib /usr/local/lib /usr/X11R6/lib /opt/lib /usr/freeware/lib"
+
+ZLIBINCPATH=/usr/include # prefix?
+AC_MSG_CHECKING(for location of zlib includes)
+AC_ARG_WITH(zlib-includes,
+[  --with-zlib-includes=DIR DIR is path where ZLIB header files can be
+                           found, defaults to /usr/include])
+if test "X$with_zlib_includes" != "X"; then
+  ZLIBINCPATH=$with_zlib_includes
+fi
+if test ! -f "$ZLIBINCPATH/zlib.h"; then
+  AC_MSG_ERROR(could not find zlib.h in $ZLIBINCPATH)
+fi
+AC_MSG_RESULT($ZLIBINCPATH)
+AC_SUBST(ZLIBINCPATH)
+
+# With zlib library directory:
+AC_MSG_CHECKING(for location of zlib lib)
+AC_ARG_WITH(zlib-libs,
+  [  --with-zlib-libs=DIR
+                          Specify library directory for zlib],
+  [
+   	case "$withval" in
+	"" | "y" | "ye" | "yes" | "n" | "no")
+	    AC_MSG_ERROR([*** You must supply a directory to --with-zlib-libs.])
+	;;
+	esac
+	zlib_dirs="$withval"
+   ])
+
+ZLIBLIBPATH=
+if test "$zlib_dirs"; then
+    for dir in $zlib_dirs; do
+        if test -d "$dir"; then
+            ZLIBLIBPATH="$ZLIBLIBPATH -L${dir}"
+        else
+            AC_MSG_ERROR([*** zlib library directory $dir does not exist.])
+        fi
+    done
+    AC_MSG_RESULT($ZLIBLIBPATH)
+fi
+
+if test -z "$ZLIBLIBPATH"; then
+    for dir in $my_lib_dirs; do
+        if test -z "$ZLIBLIBPATH" && test -d "$dir" && test -f "$dir/libz.a" && test -f "$dir/libz.so"; then
+            ZLIBLIBPATH="-L$dir"
+        fi
+    done
+    AC_MSG_RESULT($ZLIBLIBPATH)
+fi
+
+if test -z "$ZLIBLIBPATH"; then
+        AC_MSG_RESULT($ZLIBLIBPATH)
+	AC_MSG_ERROR([*** Could not find zlib library in. This lib is required.])
+fi
+AC_SUBST(ZLIBLIBPATH)
+
+
+if test -z "${ZLIB}"; then
+ #AC_CHECK_LIB(z, deflate, ZLIB=-lz)
+ ZLIB=-lz
+fi
+AC_SUBST(ZLIB)
+
 
 # TIFF includes and library checks....
 AC_ARG_WITH(tiff-includes,
