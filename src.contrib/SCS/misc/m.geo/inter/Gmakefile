@@ -1,3 +1,4 @@
+# %W%  %G%
 SCSFIPS      = $(LIBDIR)/scsfips.a
 
 PGM      = m.geo
@@ -18,6 +19,7 @@ START:
 
 LIBPROJ: $(LIBPROJ) $(LIBSUPP)
 	cd $(SRC)/../src.related/mapgen/proj; grassmke $(LIBARCH) $(GISBASE) $(SRC)
+
 main.o: geo.h
 geo_func.o: geo.h
 geo_supp.o: geo.h
