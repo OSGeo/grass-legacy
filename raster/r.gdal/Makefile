@@ -1,6 +1,6 @@
 MODULE_TOPDIR = ../..
 
-LIBES= $(GISLIB) $(IMAGERYLIB) $(GPROJLIB) $(GDAL_LIBS) $(DLLIB)
+LIBES= $(GISLIB) $(IMAGERYLIB) $(GPROJLIB) $(GDALLIBS) $(DLLIB)
 DEPENDENCIES = $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
@@ -18,9 +18,9 @@ default: $(BIN_CMD)/$(INPGM)
 # $(BIN_CMD)/$(OUTPGM)
 
 #   compile the command programs
-$(BIN_CMD)/$(INPGM):  $(OBJ_IN) $(LIBES)
+$(BIN_CMD)/$(INPGM):  $(OBJ_IN)
 	\mkdir -p $(OBJDIR)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ_IN) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-#$(BIN_CMD)/$(OUTPGM):  $(OBJ_OUT) $(LIBES) 
+#$(BIN_CMD)/$(OUTPGM):  $(OBJ_OUT)
 #	$(CC) $(LDFLAGS) -o $@ $(OBJ_OUT) $(LIBES) $(MATHLIB) $(XDRLIB)
