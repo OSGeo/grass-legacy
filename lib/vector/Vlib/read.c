@@ -18,7 +18,9 @@
 #include "Vect.h"
 
 static int read_next_dummy () { return -1; }
-static long last_offset_dummy () { return -1; }
+static long last_offset_dummy () { 
+    G_fatal_error("Vect_last_offset_ not available for this format.");
+}
 
 static int (*Read_next_line_array[][3]) () =
 {
@@ -59,7 +61,7 @@ static long (*Next_line_offset_array[]) () =
 static long (*Last_line_offset_array[]) () =
 {
    Vect_last_line_offset_nat 
-   , last_offset_dummy  
+   , Vect_last_line_offset_shp  
 #ifdef HAVE_POSTGRES
    , last_offset_dummy 
 #endif
