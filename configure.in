@@ -806,6 +806,7 @@ if test -n "$USE_POSTGRES"; then
     LDFLAGS=${ac_save_ldflags}
 
     AC_DEFINE(HAVE_POSTGRES)
+    AC_DEFINE(HAVE_POSTGRES_H)
 fi
 # Done with PostgreSQL
 AC_SUBST(PQINCPATH)
