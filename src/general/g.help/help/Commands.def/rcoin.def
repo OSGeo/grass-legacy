@@ -1,0 +1,9 @@
+
+
+r.coin - 
+
+r.coin tabulates the mutual occurrence of two \raster\ map layers'
+\categories\ with respect to one another.  This analysis program
+respects the current \geographic region\ and \mask\ settings.
+
+Manual entry for \r.coin\
