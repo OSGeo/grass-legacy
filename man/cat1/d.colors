@@ -1,7 +1,7 @@
 
 
 
-d.colors             GRASS Reference Manual              d.colors
+d.colors <main>      GRASS Reference Manual       <main> d.colors
 
 
 
@@ -26,25 +26,50 @@ DESCRIPTION
      displaying the map to the graphics monitor, any color
      changes that you subsequently make while in d.colors will
      immediately (and interactively) appear on the graphics
-     display.  Otherwise, if d.colormode is "fixed", any color
-     changes made using d.colors will not immediately be shown on
-     the graphics display; however, any color changes saved will
-     still alter the map's color table and will appear next time
-     the raster map layer is redisplayed (see d.colormode and
-     d.colortable).  Note that some graphics display monitors or
-     drivers cannot support interactive color change.
+     display.
+
+     While running d.colors, the cursor must be inside the window
+     where the execution takes place.  When in "float" colormode,
+     the correct colors appear on the graphics monitor only if
+     the cursor is inside the monitor. To see the correct colors,
+     move the cursor from the execution window to inside the
+     graphics monitor, then move back to the window to continue
+     making changes.
+
+     If d.colormode is "fixed", any color changes made using
+     d.colors will not immediately be shown on the graphics
+     display; however, any color changes saved will still alter
+     the map's color table and will appear next time the raster
+     map layer is redisplayed (see d.colormode and d.colortable).
+     Note that some graphics display monitors or drivers cannot
+     support interactive color change.
 
      The user must first display the relevant raster map layer to
      the active frame on the graphics monitor (e.g., using d.rast
      or d.display) before running d.colors.  The user can then
      either enter the name of the raster map layer whose color
-     table is to be changed on the command line
-     (e.g., by typing:  d.colors map=soils),
-     or type d.colors without program arguments.  If the user
-     simply types d.colors without program arguments on the
-     command line, d.colors will ask the user to enter the name
-     of an existing raster map layer using the standard GRASS
-     interface described in the manual entry for parser.
+     table is to be changed on the command line (e.g., by typing:
+     d.colors map=soils), or type d.colors without program
+     arguments.  If the user simply types d.colors without
+     program arguments on the command line, d.colors will ask the
+     user to enter the name of an existing raster map layer using
+     the standard GRASS interface described in the manual entry
+     for parser.
+
+
+
+
+
+GRASS 4.1                U.S. Army CERL                         1
+
+
+
+
+
+
+d.colors <main>      GRASS Reference Manual       <main> d.colors
+
+
 
      In either case, the user is then presented with the d.colors
      command menu, shown below.  This menu is the same as the
@@ -57,20 +82,6 @@ DESCRIPTION
      from invoking these commands will be reflected in the
      Category and Category Number sections of the d.colors
      screen.  On the d.colors screen menu, commands appear in the
-
-
-
-GRASS 4.0                U.S. Army CERL                         1
-
-
-
-
-
-
-d.colors             GRASS Reference Manual              d.colors
-
-
-
      right half of the screen, and the current status of
      categories appears in the left half of the screen.
 
@@ -112,6 +123,20 @@ d.colors             GRASS Reference Manual              d.colors
      screen by a box around the current color.
 
      Changing colors - The color associated with the current
+
+
+
+GRASS 4.1                U.S. Army CERL                         2
+
+
+
+
+
+
+d.colors <main>      GRASS Reference Manual       <main> d.colors
+
+
+
      category can be changed with the R, r, G, g, B, and b keys.
      The upper case letters increase the intensities of red R,
      green G, and blue B for the current category;  the lower
@@ -122,20 +147,6 @@ d.colors             GRASS Reference Manual              d.colors
      colors, this can be confusing.  For starters, yellow is made
      by mixing red and green.  The intensities are listed on the
      text screen in as percentages.
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
-
-
-
-
-
-
-d.colors             GRASS Reference Manual              d.colors
-
-
 
      Keys I and i increase and decrease the percentage change
      that each keystroke of one of the color keys (R, r, G, g, B,
@@ -178,6 +189,20 @@ d.colors             GRASS Reference Manual              d.colors
      the program will ask:
      Quit anyway?  (y/n)
 
+
+
+
+GRASS 4.1                U.S. Army CERL                         3
+
+
+
+
+
+
+d.colors <main>      GRASS Reference Manual       <main> d.colors
+
+
+
 NOTES
      To see map color changes reflected on the display monitor as
      you make them, you must put the monitor in float color mode
@@ -189,20 +214,6 @@ NOTES
      the graphics monitor before d.colors is run.  This can be
      done using the command d.rast map=name (where name is a
      raster map layer whose color table the user wishes to
-
-
-
-GRASS 4.0                U.S. Army CERL                         3
-
-
-
-
-
-
-d.colors             GRASS Reference Manual              d.colors
-
-
-
      alter).
 
      The user might type the following sequence of commands to
@@ -233,8 +244,8 @@ d.colors             GRASS Reference Manual              d.colors
      capability.
 
 SEE ALSO
-     d.colormode, d.colortable, d.display, d.rast, p.colors,
-     r.colors and parser
+     d.colors.boxes, d.colormode, d.colortable, d.display,
+     d.rast, p.colors, r.colors and parser
 
 AUTHOR
      James Westervelt, U.S. Army Construction Engineering
@@ -247,18 +258,7 @@ AUTHOR
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
