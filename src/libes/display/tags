@@ -1,0 +1,79 @@
+D_a_to_d_col	cnversions.c	/^D_a_to_d_col(A_col) $/
+D_a_to_d_row	cnversions.c	/^D_a_to_d_row(A_row) $/
+D_add_to_list	list.c	/^D_add_to_list(string)$/
+D_cell_draw_setup	raster.c	/^D_cell_draw_setup(t, b, l, r)$/
+D_check_colormap_size	raster2.c	/^D_check_colormap_size (min, max, ncolors)$/
+D_check_map_window	window.c	/^D_check_map_window(wind)$/
+D_claim_offset_is	list.c	/^D_claim_offset_is(num)$/
+D_clear_window	list.c	/^D_clear_window()$/
+D_clip	clip.c	/^D_clip( s, n, w, e, x, y, c_x, c_y)$/
+D_color	raster2.c	/^D_color (cat, colors)$/
+D_cont_abs	draw.c	/^D_cont_abs (x, y)$/
+D_cont_rel	draw.c	/^D_cont_rel (x, y)$/
+D_d_to_a_col	cnversions.c	/^D_d_to_a_col(D_col) $/
+D_d_to_a_row	cnversions.c	/^D_d_to_a_row(D_row) $/
+D_d_to_u_col	cnversions.c	/^D_d_to_u_col(D_col) $/
+D_d_to_u_row	cnversions.c	/^D_d_to_u_row(D_row) $/
+D_do_conversions	cnversions.c	/^D_do_conversions(window, t, b, l, r)$/
+D_draw_cell	raster.c	/^D_draw_cell(A_row, xarray, colors)$/
+D_erase_window	window.c	/^D_erase_window()$/
+D_get_a_east	cnversions.c	/^D_get_a_east()$/
+D_get_a_north	cnversions.c	/^D_get_a_north()$/
+D_get_a_south	cnversions.c	/^D_get_a_south()$/
+D_get_a_to_d_xconv	cnversions.c	/^D_get_a_to_d_xconv()$/
+D_get_a_to_d_yconv	cnversions.c	/^D_get_a_to_d_yconv()$/
+D_get_a_west	cnversions.c	/^D_get_a_west()$/
+D_get_cell_name	list.c	/^D_get_cell_name(name)$/
+D_get_cur_wind	window.c	/^D_get_cur_wind(name)$/
+D_get_d_east	cnversions.c	/^D_get_d_east()$/
+D_get_d_north	cnversions.c	/^D_get_d_north()$/
+D_get_d_south	cnversions.c	/^D_get_d_south()$/
+D_get_d_west	cnversions.c	/^D_get_d_west()$/
+D_get_ew_resolution	cnversions.c	/^D_get_ew_resolution()$/
+D_get_ns_resolution	cnversions.c	/^D_get_ns_resolution()$/
+D_get_screen_window	window.c	/^D_get_screen_window(t, b, l, r)$/
+D_get_u_east	cnversions.c	/^D_get_u_east()$/
+D_get_u_north	cnversions.c	/^D_get_u_north()$/
+D_get_u_south	cnversions.c	/^D_get_u_south()$/
+D_get_u_to_a_xconv	cnversions.c	/^D_get_u_to_a_xconv()$/
+D_get_u_to_a_yconv	cnversions.c	/^D_get_u_to_a_yconv()$/
+D_get_u_to_d_xconv	cnversions.c	/^D_get_u_to_d_xconv()$/
+D_get_u_to_d_yconv	cnversions.c	/^D_get_u_to_d_yconv()$/
+D_get_u_west	cnversions.c	/^D_get_u_west()$/
+D_lookup_colors	raster2.c	/^D_lookup_colors (cell, ncols, colors)$/
+D_move_abs	draw.c	/^D_move_abs (x, y)$/
+D_move_rel	draw.c	/^D_move_rel (x, y)$/
+D_new_window	window.c	/^D_new_window(name, t, b, l, r)$/
+D_offset_is	list.c	/^D_offset_is(num)$/
+D_popup	popup.c	/^D_popup(back_colr, text_colr, div_colr, top, left,/
+D_raster	raster2.c	/^D_raster (cell, ncols, nrows, colors)$/
+D_remove_window	window.c	/^D_remove_window()$/
+D_reset_color	raster2.c	/^D_reset_color (cat, r, g, b)$/
+D_reset_screen_window	window.c	/^D_reset_screen_window(t, b, l, r)$/
+D_scan_double	scan_dbl.c	/^D_scan_double (buf, f)$/
+D_scan_float	scan_float.c	/^D_scan_float (buf, f)$/
+D_scan_int	scan_int.c	/^D_scan_int (buf, f)$/
+D_set_cell_name	list.c	/^D_set_cell_name(name)$/
+D_set_clip_window	draw.c	/^D_set_clip_window (Top, Bottom, Left, Right)$/
+D_set_clip_window_to_map_window	draw.c	/^D_set_clip_window_to_map_window ()$/
+D_set_colors	raster2.c	/^D_set_colors (colors)$/
+D_set_cur_wind	window.c	/^D_set_cur_wind(name)$/
+D_set_overlay_mode	raster2.c	/^D_set_overlay_mode (n)$/
+D_setup	setup.c	/^D_setup (clear)$/
+D_show_window	window.c	/^D_show_window(color)$/
+D_timestamp	window.c	/^D_timestamp()$/
+D_translate_color	tran_colr.c	/^D_translate_color(str)$/
+D_u_to_a_col	cnversions.c	/^D_u_to_a_col(U_col) $/
+D_u_to_a_row	cnversions.c	/^D_u_to_a_row(U_row) $/
+D_u_to_d_col	cnversions.c	/^D_u_to_d_col(U_col) $/
+D_u_to_d_row	cnversions.c	/^D_u_to_d_row(U_row) $/
+X	draw.c	/^#define X(y)  line_eq(y,y0,x0,dy,dx,yround)$/
+Y	draw.c	/^#define Y(x)  line_eq(x,x0,y0,dx,dy,xround)$/
+allocate_colors	raster2.c	/^allocate_colors(ncolors)$/
+clip	draw.c	/^clip ()$/
+get_win_w_mouse	get_win.c	/^get_win_w_mouse(top, bottom, left, right)$/
+ident_win	ident_win.c	/^ident_win(cur_pad)$/
+limit	draw.c	/^#define limit(a,x,b) x<a/a:(x>b/b:x)$/
+line_eq	draw.c	/^line_eq (x,x0,y0,dx,dy,round)$/
+swap	draw.c	/^#define swap(x,y) {int t; t=x; x=y; y=t;}$/
+synch	raster2.c	/^synch()$/
