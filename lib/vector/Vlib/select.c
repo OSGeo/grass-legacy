@@ -18,16 +18,14 @@
 #include "gis.h"
 #include "Vect.h"
 
-/* 
-*  Vect_select_lines_by_box ()
-*  
-*  Select lines by box. Select lines whose boxes overlap specified box!!!
-*  It means that selected line may or may not overlap the box.
-*  
-*  argument 'list' must be initialized
-*  
-*  returns: number of areas
-*           
+/*!
+ \fn int Vect_select_lines_by_box (struct Map_info *Map, BOUND_BOX *Box, 
+	                            int type, struct ilist *list)
+ \brief Select lines by box. Select lines whose boxes overlap specified box!!!
+  It means that selected line may or may not overlap the box.
+  Argument 'list' must be initialized.
+ \return number of areas
+ \param Map_info structure, BOUND_BOX , vector type?, ilist
 */
 int 
 Vect_select_lines_by_box (struct Map_info *Map, BOUND_BOX *Box, 
@@ -63,16 +61,14 @@ Vect_select_lines_by_box (struct Map_info *Map, BOUND_BOX *Box,
     
     return list->n_values;
 }
-/* 
-*  Vect_select_areas_by_box ()
-*  
-*  Select areas by box. Select areas whose boxes overlap specified box!!!
-*  It means that selected area may or may not overlap the box.
-*  
-*  argument 'list' must be initialized
-*  
-*  returns: number of areas
-*           
+
+/*!
+ \fn int Vect_select_areas_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
+ \brief Select areas by box. Select areas whose boxes overlap specified box!!!
+  It means that selected area may or may not overlap the box.
+  Argument 'list' must be initialized
+ \return number of areas
+ \param Map_info structure, BOUND_BOX , vector type?, ilist
 */
 int 
 Vect_select_areas_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
@@ -92,16 +88,14 @@ Vect_select_areas_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
     return list->n_values;
 }
 
-/* 
-*  Vect_select_isles_by_box ()
-*  
-*  Select isles by box. Select isles whose boxes overlap specified box!!!
-*  It means that selected isle may or may not overlap the box.
-*  
-*  argument 'list' must be initialized
-*  
-*  returns: number of isles
-*           
+
+/*!
+ \fn  int Vect_select_isles_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
+ \brief   Select isles by box. Select isles whose boxes overlap specified box!!!
+    It means that selected isle may or may not overlap the box.
+    Argument 'list' must be initialized
+ \return number of isles
+ \param Map_info structure
 */
 int 
 Vect_select_isles_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
@@ -116,15 +110,12 @@ Vect_select_isles_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
     return list->n_values;
 }
 
-/* 
-*  Vect_select_nodes_by_box ()
-*  
-*  Select nodes by box. 
-*  
-*  argument 'list' must be initialized
-*  
-*  returns: number of nodes
-*           
+/*!
+ \fn int Vect_select_nodes_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)
+ \brief Select nodes by box.
+   Argument 'list' must be initialized
+ \return number of nodes
+ \param Map_info structure, BOUND_BOX, ilist
 */
 int 
 Vect_select_nodes_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *list)

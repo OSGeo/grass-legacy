@@ -178,7 +178,7 @@ V2_read_next_line_post (struct Map_info *Map,
   /* NOTREACHED */
 }
 
-/*********************************************************************************************
+/********************************************************************************
 * Function name: Vect__read_line_post.
 * Arguments    : Map , points, cats, id
 * Return       : Status (-1 error, -2 end of table, else line type), and modify Map structures.
@@ -186,7 +186,7 @@ V2_read_next_line_post (struct Map_info *Map,
 * Description  : Seek the cursor to specified id, fetch the  geometry row, declare  a cursor 
 *                for category table row with a given id and read all categories.
 *
-*********************************************************************************************/
+*********************************************************************************/
 int
 Vect__Read_line_post (struct Map_info *Map,
 		      struct line_pnts *p, struct line_cats *c, long id)
@@ -210,7 +210,7 @@ Vect__Read_line_post (struct Map_info *Map,
       free (query);
       return (-2);		/* last record reached */
     }
-/**************************************************************************************************/
+/**********************************************************************************/
   if ((id - Map->fInfo.post.nextRow))
 /*Move cursor if necessary */
     {
@@ -237,7 +237,7 @@ Vect__Read_line_post (struct Map_info *Map,
     }
 /***********Geometry Parser ***********************/
 
-/****************************************************************************************************/
+/*********************************************************************************/
   gId = atoi (PQgetvalue (Map->fInfo.post.geomRes, 0, 0));	/* int4     Goem id */
   gType = atoi (PQgetvalue (Map->fInfo.post.geomRes, 0, 1));	/* int4     Geom type */
   if (p != NULL)
@@ -271,7 +271,7 @@ Vect__Read_line_post (struct Map_info *Map,
 	  free (query);
 	  return (-1);
 	}
-    /***********************Dynamic select genarator***************************************************/
+    /***********************Dynamic select generator*************************************/
       /*Generate a Select for the specific row */
       sprintf (query, "SELECT");
       switch (gType)
@@ -315,7 +315,7 @@ Vect__Read_line_post (struct Map_info *Map,
 	  free (query);
 	  return (-1);
 	}
-    /***************************************************************************************************/
+    /********************************************************************************/
       switch (gType)
 	{
 	case 1:		/*GV_POINT */
@@ -355,7 +355,7 @@ Vect__Read_line_post (struct Map_info *Map,
 	  return (-1);
 	}
     }
-/***************************************************************************************************/
+/*********************************************************************************/
   Map->fInfo.post.nextRow = id + 1;
   PQclear (Map->fInfo.post.geomRes);
   Map->fInfo.post.geomRes = NULL;
@@ -449,9 +449,12 @@ Vect__Read_line_post (struct Map_info *Map,
   return type;
 }
 
-/*
-* *  Returns  next line offset
-* */
+/*!
+ \fn long Vect_next_line_offset_post (struct Map_info *Map)
+ \brief get next line offset for PostGRASS format
+ \return next line offset
+ \param Map_info structure
+*/
 long
 Vect_next_line_offset_post (struct Map_info *Map)
 {
