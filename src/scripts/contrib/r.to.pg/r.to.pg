@@ -4,9 +4,6 @@
 # exports GRASS raster map to PostgreSQL database
 # supports only one value, no attribute cats
 #
-# BUG: celltable needs to be exchanged to user's wish. But how
-#      to tell "awk" about it?
-#      Problem is to use environment variables within "awk".
 #
 # $Id$
 #
@@ -30,18 +27,31 @@ if [ "$#" -lt 1 ]; then
  echo "r.to.pg exports GRASS raster map to PostgreSQL database"
  echo "        into a one column table (raster values only)."
  echo "Usage:"
- echo "        r.to.pg rastermap"
+ echo "        r.to.pg rastermap [celltable]"
  exit
 fi
 
 #replacing eventual dots from table name to avoid name conflicts:
 FIELDNAME=`echo $1 | sed 's/\./\_/'`
 
+if [ "x$2" != "x" ]
+then
+ CELLTABLE=`echo $2 | sed 's/\./\_/'`
+else
+ CELLTABLE=$FIELDNAME
+fi
+
 # check for database settings
 DB_DATABASE=`cat ~/.grassrc5 | grep DB_DATABASE| cut -d' ' -f2`
-if [ "DB_DATABASE" == "" ]
+
+if [ "$DB_DATABASE" = "" ]
 then
- echo "Please select database with g.select.db or db.connect"
+ DB_DATABASE=`cat ~/.grassrc5 | grep PG_DBASE| cut -d' ' -f2`
+fi
+
+if [ "$DB_DATABASE" = "" ]
+then
+ echo "Please select database with g.select.pg or db.connect"
  exit
 fi
 echo "Import into PostgreSQL database: $DB_DATABASE..."
@@ -51,24 +61,24 @@ echo ""
 #     below???
 
 # start writing SQL file:
-echo "CREATE TABLE celltable (" > /tmp/pgimport.sql
-echo "    $FIELDNAME float );"  >> /tmp/pgimport.sql
+echo "CREATE TABLE $CELLTABLE (" > $TMP/pgimport.sql
+echo "    $FIELDNAME float );"  >> $TMP/pgimport.sql
 
-psql -q -d $DB_DATABASE < /tmp/pgimport.sql
+psql -q -d $DB_DATABASE < $TMP/pgimport.sql
 if [ $? != 0 ]; then
- echo "Table celltable already exists."
+ echo "Table $CELLTABLE already exists."
  echo "Replace existing table [y/n]?"
  read ans
  if [ "$ans" = "Y" -o "$ans" = "y" ]
   then
-     SQL_COMMAND="drop table celltable;"
+     SQL_COMMAND="drop table $CELLTABLE;"
      echo $SQL_COMMAND | psql -q -d $DB_DATABASE
      echo "Replacing table..."
-     psql -q -d $DB_DATABASE < /tmp/pgimport.sql
-     rm -f /tmp/pgimport.sql
+     psql -q -d $DB_DATABASE < $TMP/pgimport.sql
+     rm -f $TMP/pgimport.sql
   else
      echo "Stopped. Existing table not replaced." 
-     rm -f /tmp/pgimport.sql
+     rm -f $TMP/pgimport.sql
      exit
   fi
 fi
@@ -76,24 +86,24 @@ fi
 #get the raster values and write out SQL:
 r.stats -1 nv='-9999' in=$1 | awk 'BEGIN{}
   NR == 1{}
-         {printf "INSERT INTO %s VALUES ( %.5f);\n", "celltable", $1  >> "/tmp/pgimport.sql"}
+         {printf "INSERT INTO %s VALUES ( %.5f);\n", "'$CELLTABLE'", $1  >> "'$TMP'/pgimport.sql"}
 END{}'
 
 # proceeding with field entries:
-echo "Importing into PostgreSQL table: celltable...."
-psql -q -d $DB_DATABASE < /tmp/pgimport.sql
+echo "Importing into PostgreSQL table: $CELLTABLE...."
+psql -q -d $DB_DATABASE < $TMP/pgimport.sql
 #check the exit status:
 if [ $? != 0 ]; then
  echo "ERROR. Stopped."
  exit
 fi
-rm -f /tmp/pgimport.sql
+rm -f $TMP/pgimport.sql
 
 echo "Finished import into PostgreSQL."
-echo "Created table celltable with column $FIELDNAME"
+echo "Created table $CELLTABLE with column $FIELDNAME"
 
 #check number of imported values:
 #not working yet (some shell problem with asterix)
-#echo "Number of imported cell values (= rows in celltable):
-#SQL_COMMAND="select count(*) from celltable;"
-#echo $SQL_COMMAND | psql -q -d $DB_DATABASE
+echo "Number of imported cell values (= rows in $CELLTABLE):
+SQL_COMMAND="select count(*) from $CELLTABLE;"
+echo $SQL_COMMAND | psql -q -d $DB_DATABASE
