@@ -1,3 +1,4 @@
+/* updated by Roger Miller <rgrmill@rt66.com> 4/02 */
 #include <stdio.h>
 #include <stdlib.h>
 #include "gis.h"
@@ -41,9 +42,9 @@ main (argc, argv)
     typopt->key              = "type";
     typopt->type             =  TYPE_STRING;
     typopt->required         =  NO;
-    typopt->answer           =  "line";
-    typopt->options          =  "point,line,both";
-    typopt->description      =  "Select point or line";
+    typopt->answer           =  "all";
+    typopt->options          =  "point, line or edge";
+    typopt->description      =  "Select type of arc to label.";
 
     value = G_define_option();
     value->key 		= "value";
@@ -71,13 +72,13 @@ main (argc, argv)
 
     Points = Vect_new_line_struct ();
 
-    otype = 0;
+    otype = DOT | LINE | AREA;
     if (typopt->answer[0] == 'p')
         otype = DOT;
     else if (typopt->answer[0] == 'l')
         otype = LINE;
-    else if (typopt->answer[0] == 'b')
-        otype = DOT | LINE;	
+    else if (typopt->answer[0] == 'e')
+        otype = AREA;
 
 
     if (!*(vectfile->answer))
@@ -100,7 +101,7 @@ main (argc, argv)
 
     if (level < 1)
 	G_fatal_error ("File open failed");
-
+/*
     if (level < 2)
     {
 	printf ("\n");
@@ -108,7 +109,7 @@ main (argc, argv)
 	printf ("\n");
 	exit (1);
     }
-
+*/
 
 #ifdef FOO
     if (NULL != (afp = G_fopen_old ("dig_att", vectfile->answer)))
@@ -160,7 +161,7 @@ main (argc, argv)
             Y = Points->y[0];
 	    tp = 'P';    
         }
-	else if (type == LINE)
+	else if (type == LINE || type == AREA)
 	{ 
 	    X = Points->x[1] + 0.5*(Points->x[0] - Points->x[1]);
             X = G_adjust_easting (X, &window); /* for LL wrap ? */
