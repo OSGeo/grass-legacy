@@ -4,7 +4,7 @@
 binary format. The module may import two formats:
 <UL>
 <LI><B>standard</B> contains all data types, each coordinate on one row
-<LI><B>point</B> reads only points, each point defined on one row.
+<LI><B>point</B> (default) reads only points, each point defined on one row.
     Values are separated by a user definable deliminator. If the 'columns' option is not defined, 
     default names are used. It is possible to specify the column order for the 
     x,y,z coordinates and category values.
@@ -36,7 +36,8 @@ The primitive codes are as follows:
 </UL>
 
 The coordinates are listed following the initial line containing the
-primitive code and the total number of vertices in the series. 
+primitive code and the total number of vertices in the series. On top
+a header has to be defined (see example below).<BR>
 The order of coordinates is <BR><BR>
   X Y [Z]
 <P>
@@ -58,14 +59,15 @@ using the <b>fs=','</b> option with <em>v.in.ascii</em> in <b>points</b> mode.
 <h2>EXAMPLES</h2>
 
 <b>Example 1</b><br>
-Direct file editing:
-Sample ASCII vector file. Note the blank before entering vertex coordinates:<p>
+Sample ASCII polygon vector file for 'standard' mode. 
+Note the blank before entering vertex coordinates:
+<p>
 <pre>
        ORGANIZATION: GRASS Development Team
-       DIGIT DATE:   1/9/2002
+       DIGIT DATE:   1/9/2005
        DIGIT NAME:   -
        MAP NAME:     test
-       MAP DATE:     2002
+       MAP DATE:     2005
        MAP SCALE:    10000
        OTHER INFO:   Test polygons
        ZONE:         0
@@ -84,6 +86,9 @@ Sample ASCII vector file. Note the blank before entering vertex coordinates:<p>
         5959091.38259917 3401450.99070932
         5959010.9323622 3401338.36037757
 </pre>
+<P>
+To create a vector line of a GPS track, in a similar way the GPS points have
+to be stored into a file with a preceding 'L' and the number of points (per line).
 
 <p><BR>
 <b>Example 2</b><br>
