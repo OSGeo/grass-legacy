@@ -1,0 +1,25 @@
+D_PGM = D3d
+D_OFILES =  Dmain.o command.o threed.o transform.o clip.o check_opt.o sigint.o
+
+PGM = d.3d
+OFILES =  main.o threed.o transform.o clip.o check_opt.o get_inputs.o sigint.o
+
+all: $(BIN)/$(D_PGM) $(BIN)/$(PGM)
+
+$(BIN)/$(PGM): $(OFILES) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(D_LIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(D_LIB) $(DISPLAYLIB) ${RASTERLIB} $(GISLIB) $(VASK) $(MATHLIB)
+
+$(BIN)/$(D_PGM): $(D_OFILES) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+	$(CC) $(LDFLAGS) -o $@ $(D_OFILES) $(DISPLAYLIB) ${RASTERLIB} $(GISLIB) $(MATHLIB)
+
+$(GISLIB):	#
+$(DISPLAYLIB):	#
+$(RASTERLIB):	#
+$(D_LIB):	#
+
+Dmain.o:	options.h
+check_opt.o:	3d.h options.h
+command.o:	options.h
+get_inputs.o:	options.h
+main.o:	options.h
+threed.o:	3d.h options.h
