@@ -1,0 +1,6 @@
+interface_build {
+    {v.stats} 0
+    {Prints information about vector map.}
+    {entry map {Input vector map:} 0 vector}
+    {checkbox -h {Display header information:} "" -h}
+}
