@@ -1,17 +1,18 @@
-# GRASS .po file.
-# Copyright (C) 2002 Free Software Foundation, Inc.
-# Alex Shevlakov<sixote@yahoo.com>, 2002.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: 5.0\n"
-"POT-Creation-Date: 2002-11-27 11:19+0300\n"
-"PO-Revision-Date: 2002-03-04 14:40+0300\n"
-"Last-Translator: Alex Shevlakov<sixote@yahoo.com>, 2002\n"
-"Language-Team: ru <ru@li.org>\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-27 11:26+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: buildPg.c:11
@@ -25,7 +26,7 @@ msgstr ""
 
 #: getAllOpts.c:35
 msgid "Name of the table with X,Y coord.:"
-msgstr "Название таблицы с коорд. X,Y:"
+msgstr ""
 
 #: getAllOpts.c:38
 msgid "xcol"
@@ -33,7 +34,7 @@ msgstr ""
 
 #: getAllOpts.c:42
 msgid "X coord. (E/W) column:"
-msgstr "X коорд. (В/З) столбец:"
+msgstr ""
 
 #: getAllOpts.c:45
 msgid "ycol"
@@ -41,7 +42,7 @@ msgstr ""
 
 #: getAllOpts.c:49
 msgid "Y coord. (N/S) column:"
-msgstr "Y коорд. (С/Ю) столбец:"
+msgstr ""
 
 #: getAllOpts.c:52
 msgid "xpos"
@@ -49,7 +50,7 @@ msgstr ""
 
 #: getAllOpts.c:56
 msgid "X coord. (E/W) of search:"
-msgstr "X коорд. (В/З) поиска:"
+msgstr ""
 
 #: getAllOpts.c:59
 msgid "ypos"
@@ -57,7 +58,7 @@ msgstr ""
 
 #: getAllOpts.c:63
 msgid "Y coord. (N/S) of search:"
-msgstr "Y коорд. (С/Ю) поиска:"
+msgstr ""
 
 #: getAllOpts.c:67 getSopts.c:55
 msgid "distance"
@@ -65,7 +66,7 @@ msgstr ""
 
 #: getAllOpts.c:71
 msgid "Radius of cursor:"
-msgstr "Радиус курсора:"
+msgstr ""
 
 #: getAllOpts.c:74 getSopts.c:66
 msgid "hv"
@@ -77,7 +78,7 @@ msgstr ""
 
 #: getAllOpts.c:77 getSopts.c:69
 msgid "DB output type - [v(ert)/h(oriz)]:"
-msgstr "Формат вывода результата - [v(ert)/h(oriz)]:"
+msgstr ""
 
 #: getAllOpts.c:83
 msgid "d.what.s.pg help -s"
@@ -89,13 +90,10 @@ msgid ""
 "\n"
 "Buttons:\n"
 msgstr ""
-"\n"
-"\n"
-"Кнопки:\n"
 
 #: getArea.c:29
 msgid "Left:  Select site for DB query.\n"
-msgstr "Левая: Выбрать объект для запроса БД.\n"
+msgstr ""
 
 #: getArea.c:30
 msgid ""
@@ -103,9 +101,6 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
-"Правая: Закончить. \n"
-"\n"
-"\n"
 
 #: getArea.c:33
 msgid "red"
@@ -113,7 +108,7 @@ msgstr ""
 
 #: getSopts.c:42
 msgid "Use [s] for query with a command file."
-msgstr "Используйте [s] для запроса через командный файл SQL."
+msgstr ""
 
 #: getSopts.c:46
 msgid "sql"
@@ -125,11 +120,11 @@ msgstr ""
 
 #: getSopts.c:51
 msgid "SQL query. "
-msgstr "SQL запрос."
+msgstr ""
 
 #: getSopts.c:59
 msgid "Cursor radius."
-msgstr "Радиус курсора."
+msgstr ""
 
 #: getSopts.c:74 getSopts.c:75
 msgid "help"
@@ -146,7 +141,7 @@ msgstr ""
 #: getSopts.c:90
 #, c-format
 msgid "File read error on %s\n"
-msgstr "Ошибка чтения файла на %s\n"
+msgstr ""
 
 #: main.c:53 runPg.c:46
 msgid "PG_DBASE"
@@ -154,7 +149,7 @@ msgstr ""
 
 #: main.c:56
 msgid "Please run g.select.pg to identify a current database.\n"
-msgstr "Выполните g.select.pg и выберите БД.\n"
+msgstr ""
 
 #: runPg.c:35
 #, c-format
@@ -177,14 +172,14 @@ msgid "PG_HOST"
 msgstr ""
 
 #: runPg.c:48
-#, fuzzy, c-format
+#, c-format
 msgid "Error: connect Postgres:%s\n"
-msgstr "Ошибка: select Postgres:%s\n"
+msgstr ""
 
 #: runPg.c:56
 #, c-format
 msgid "Error: select Postgres:%s\n"
-msgstr "Ошибка: select Postgres:%s\n"
+msgstr ""
 
 #: runPg.c:68
 #, c-format
@@ -216,13 +211,8 @@ msgid ""
 "\n"
 "%d rows selected\n"
 msgstr ""
-"\n"
-"%d записей выбрано\n"
 
 #: runPg.c:116
 #, c-format
 msgid "Error converting %s, have %f \n"
-msgstr "Ошибка преобразования %s, есть %f \n"
-
-#~ msgid "Error: Connecting to Postgres:%s\n"
-#~ msgstr "Ошибка: Connecting to Postgres:%s\n"
+msgstr ""

@@ -1,0 +1,305 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: new_io.c:448 perror.c:11
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-27 11:31+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Font.c:11
+msgid "romand"
+msgstr ""
+
+#: Font.c:21
+#, c-format
+msgid "%s/fonts/%s"
+msgstr ""
+
+#: io.c:189
+msgid "Unable to allocate memory\n"
+msgstr ""
+
+#: io.c:210 new_io.c:120
+#, c-format
+msgid "ERROR %s from graphics driver.\n"
+msgstr ""
+
+#: io.c:211 new_io.c:120
+msgid "reading"
+msgstr ""
+
+#: io.c:211 new_io.c:120
+msgid "eof"
+msgstr ""
+
+#: io.c:257
+msgid "MONITOR_OVERRIDE"
+msgstr ""
+
+#: io.c:259 new_io.c:161 new_io.c:457
+msgid "MONITOR"
+msgstr ""
+
+#: io.c:265 new_io.c:165
+msgid "No graphics monitor has been selected for output.\n"
+msgstr ""
+
+#: io.c:266 new_io.c:166
+msgid "Please run \"d.mon\" to select a graphics monitor.\n"
+msgstr ""
+
+#: io.c:276 new_io.c:180
+#, c-format
+msgid "No such graphics monitor as <%s>.\n"
+msgstr ""
+
+#: io.c:277 new_io.c:181
+msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
+msgstr ""
+
+#: io.c:289
+#, c-format
+msgid "Failed to get socket name for monitor <%s>.\n"
+msgstr ""
+
+#: io.c:302
+#, c-format
+msgid "No socket to connect to for monitor <%s>.\n"
+msgstr ""
+
+#: io.c:329
+msgid ""
+"Socket is already in use or not accepting connections.\n"
+"Use d.mon to select a monitor\n"
+msgstr ""
+
+#: io.c:337
+msgid ""
+"Trying to connect to something not a socket.\n"
+"Probably program error.\n"
+msgstr ""
+
+#: io.c:344
+msgid "Connect attempt timed out. Probably an error with the server.\n"
+msgstr ""
+
+#: io.c:351
+msgid "Not connected...\n"
+msgstr ""
+
+#: io.c:354
+msgid "Couldn't connect to monitor. Will try once more.\n"
+msgstr ""
+
+#: io.c:360
+msgid "Connection failed.\n"
+msgstr ""
+
+#: io.c:370 new_io.c:231
+#, c-format
+msgid "%s %s"
+msgstr ""
+
+#: io.c:375
+#, c-format
+msgid "Can't stat %s\n"
+msgstr ""
+
+#: io.c:382 new_io.c:191
+msgid "GIS_LOCK"
+msgstr ""
+
+#: io.c:383 new_io.c:192
+#, c-format
+msgid "%d"
+msgstr ""
+
+#: io.c:391 new_io.c:200
+#, c-format
+msgid "Error - Monitor <%s> is in use.\n"
+msgstr ""
+
+#: io.c:393 new_io.c:203
+#, c-format
+msgid "Error - Monitor <%s> is in use by %s.\n"
+msgstr ""
+
+#: io.c:403 new_io.c:221
+#, c-format
+msgid "Error - Could not complete locking process for monitor <%s>.\n"
+msgstr ""
+
+#: io.c:405 new_io.c:223
+#, c-format
+msgid "Lock file is %s\n"
+msgstr ""
+
+#: io.c:417
+msgid "Error - Can't set up pipe to graphics device.\n"
+msgstr ""
+
+#: io.c:423 new_io.c:245
+#, c-format
+msgid "Error - Graphics monitor <%s> not running!\n"
+msgstr ""
+
+#: io.c:427
+#, c-format
+msgid "Please start graphics monitor <%s>.\n"
+msgstr ""
+
+#: io.c:492 new_io.c:348
+msgid "ERROR - eof from graphics monitor.\n"
+msgstr ""
+
+#: io.c:509
+#, c-format
+msgid "Warning - no response from graphics monitor <%s>.\n"
+msgstr ""
+
+#: io.c:511 new_io.c:367
+msgid "Check to see if the mouse is still active.\n"
+msgstr ""
+
+#: io.c:514 new_io.c:370
+#, c-format
+msgid "ERROR - no response from graphics monitor <%s>.\n"
+msgstr ""
+
+#: io.c:600
+#, c-format
+msgid "%s/locks"
+msgstr ""
+
+#: io.c:615
+msgid "/"
+msgstr ""
+
+#: io.c:621
+#, c-format
+msgid "%s/mon.%d"
+msgstr ""
+
+#: lists.c:24 lists.c:30 perror.c:14 Raster.c:51
+msgid "out of memory"
+msgstr ""
+
+#: new_io.c:239
+msgid "Error - Can't set up pipe to graphics device.\n"
+msgstr ""
+
+#: new_io.c:249
+#, c-format
+msgid "Please start graphics monitor <%s>.\n"
+msgstr ""
+
+#: new_io.c:365
+#, c-format
+msgid "Warning - no response from graphics monitor <%s>.\n"
+msgstr ""
+
+#: new_io.c:456
+msgid "DISPLAY"
+msgstr ""
+
+#: new_io.c:458 parse_mon.c:26
+msgid "GISBASE"
+msgstr ""
+
+#: new_io.c:462
+msgid "unix:"
+msgstr ""
+
+#: new_io.c:468
+#, c-format
+msgid "%s:%s"
+msgstr ""
+
+#: new_io.c:470
+#, c-format
+msgid "%s/locks/%s/%s/%s"
+msgstr ""
+
+#: new_io.c:471 new_io.c:475 new_io.c:491
+#, c-format
+msgid "%s/locks/%s/%s"
+msgstr ""
+
+#: new_io.c:476 new_io.c:484
+#, c-format
+msgid "%s/locks/%s"
+msgstr ""
+
+#: parse_mon.c:29
+msgid "ERROR: GISBASE not set\n"
+msgstr ""
+
+#: parse_mon.c:39
+#, c-format
+msgid "%s/etc/monitorcap"
+msgstr ""
+
+#: parse_mon.c:40
+msgid "r"
+msgstr ""
+
+#: parse_mon.c:72 parse_mon.c:76 parse_mon.c:80 parse_mon.c:84 parse_mon.c:88
+#: parse_mon.c:204
+msgid ":"
+msgstr ""
+
+#: parse_mon.c:92
+msgid "\n"
+msgstr ""
+
+#: parse_mon.c:146
+msgid "error:  input line too long\n"
+msgstr ""
+
+#: perror.c:8
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: perror.c:12
+msgid "no current pad"
+msgstr ""
+
+#: perror.c:13
+msgid "pad not found"
+msgstr ""
+
+#: perror.c:15
+msgid "item not found"
+msgstr ""
+
+#: perror.c:16
+msgid "illegal request"
+msgstr ""
+
+#: perror.c:17
+msgid "duplicate name"
+msgstr ""
+
+#: perror.c:18
+msgid "unknown error"
+msgstr ""
+
+#: perror.c:21
+msgid " : "
+msgstr ""
+
+#: perror.c:22
+#, c-format
+msgid "%s\n"
+msgstr ""

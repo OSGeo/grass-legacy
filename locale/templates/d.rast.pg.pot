@@ -1,0 +1,259 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: getAllOpts.c:87 getSopts.c:92
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-27 11:28+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: buildPg.c:25
+#, c-format
+msgid "%s and"
+msgstr ""
+
+#: buildPg.c:33
+#, c-format
+msgid ""
+"SELECT %s,%s,%s from %s where %s %s is not null and %s is not null order by %"
+"s,%s"
+msgstr ""
+
+#: buildPg.c:38
+#, c-format
+msgid ""
+"SELECT %s,%s from %s where %s %s is not null and %s is not null order by %s,%"
+"s"
+msgstr ""
+
+#: getAllOpts.c:28 getSopts.c:54
+msgid "old,cell,raster"
+msgstr ""
+
+#: getAllOpts.c:29 getSopts.c:53
+msgid "input"
+msgstr ""
+
+#: getAllOpts.c:33
+msgid "Name of existing raster file."
+msgstr ""
+
+#: getAllOpts.c:36
+msgid "key"
+msgstr ""
+
+#: getAllOpts.c:41
+msgid "Column corresponding to cats in raster map [input]"
+msgstr ""
+
+#: getAllOpts.c:44
+msgid "tab"
+msgstr ""
+
+#: getAllOpts.c:48
+msgid "Table containing [col]."
+msgstr ""
+
+#: getAllOpts.c:52
+msgid "col"
+msgstr ""
+
+#: getAllOpts.c:56
+msgid "Column to base reclass on."
+msgstr ""
+
+#: getAllOpts.c:59
+msgid "lab"
+msgstr ""
+
+#: getAllOpts.c:63
+msgid "Column to use as labels (optional)."
+msgstr ""
+
+#: getAllOpts.c:66
+msgid "where"
+msgstr ""
+
+#: getAllOpts.c:71
+msgid "Where clause for query (ie. where col='paved'). "
+msgstr ""
+
+#: getAllOpts.c:74 getSopts.c:70
+msgid "new,cell,raster"
+msgstr ""
+
+#: getAllOpts.c:75 getSopts.c:69
+msgid "output"
+msgstr ""
+
+#: getAllOpts.c:79
+msgid "Name of for new reclass file."
+msgstr ""
+
+#: getAllOpts.c:83
+msgid "d.rast.pg -s help"
+msgstr ""
+
+#: getAllOpts.c:88
+#, c-format
+msgid "Raster file %s not found.\n"
+msgstr ""
+
+#: getSopts.c:50
+msgid "Use [-s] flag for query input from file."
+msgstr ""
+
+#: getSopts.c:58
+msgid "Raster map (must exist):"
+msgstr ""
+
+#: getSopts.c:61
+msgid "sql"
+msgstr ""
+
+#: getSopts.c:62
+msgid "file"
+msgstr ""
+
+#: getSopts.c:66
+msgid "SQL command file: "
+msgstr ""
+
+#: getSopts.c:74
+msgid "Reclass map (new):"
+msgstr ""
+
+#: getSopts.c:79 getSopts.c:80
+msgid "help"
+msgstr ""
+
+#: getSopts.c:82
+msgid "-s"
+msgstr ""
+
+#: getSopts.c:93
+#, c-format
+msgid "Raster map %s not found.\n"
+msgstr ""
+
+#: getSopts.c:98
+msgid "r"
+msgstr ""
+
+#: getSopts.c:99
+#, c-format
+msgid "File read error on select file (%s)\n"
+msgstr ""
+
+#: getSopts.c:110
+#, c-format
+msgid "%c"
+msgstr ""
+
+#: main.c:44 runPg.c:40
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:47
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr ""
+
+#: runPg.c:35
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Executing\n"
+"%s;\n"
+"\n"
+msgstr ""
+
+#: runPg.c:38
+msgid "PG_HOST"
+msgstr ""
+
+#: runPg.c:42
+#, c-format
+msgid "Error: connect Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:49
+#, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:56
+msgid "w"
+msgstr ""
+
+#: runPg.c:57
+msgid "File write error on temporary file (rules)\n"
+msgstr ""
+
+#: runPg.c:66
+#, c-format
+msgid "%s = %s %s\n"
+msgstr ""
+
+#: runPg.c:69
+#, c-format
+msgid "%s = %s\n"
+msgstr ""
+
+#: runPg.c:73
+msgid "end"
+msgstr ""
+
+#: runPg.c:76 runPg.c:100 runPg.c:101 runPg.c:102 runPg.c:103 runPg.c:104
+#: runPg.c:105
+msgid "tmp.recl"
+msgstr ""
+
+#: runPg.c:80
+#, c-format
+msgid "r.reclass input=%s output=%s < %s\n"
+msgstr ""
+
+#: runPg.c:86
+msgid ""
+"Output map name has NOT been given,\n"
+"so we try to plot and exit..\n"
+msgstr ""
+
+#: runPg.c:87
+#, c-format
+msgid "d.rast %s\n"
+msgstr ""
+
+#: runPg.c:100
+msgid "cell"
+msgstr ""
+
+#: runPg.c:101
+msgid "cats"
+msgstr ""
+
+#: runPg.c:102
+msgid "cellhd"
+msgstr ""
+
+#: runPg.c:103
+msgid "hist"
+msgstr ""
+
+#: runPg.c:104
+msgid "cell_misc"
+msgstr ""
+
+#: runPg.c:105
+msgid "colr"
+msgstr ""
