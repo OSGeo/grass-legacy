@@ -1,0 +1,163 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
+   <title>REQUIREMENTS to compile GRASS GIS</title>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EF" vlink="#59188E" alink="#FF0000">
+
+<h2>REQUIREMENTS to compile GRASS GIS</h2>
+
+A workstation running some flavor of UNIX like Solaris, IRIX, Linux, BSD,
+Mac OS X or cygwin (on Win32). Ideally, you should have at least 500 Mb for data
+and 32 Mb RAM. The source code package needs around 80 MB uncompressed.
+The resulting binaries may need between 20 MB and 180 MB depending on your
+platform. During a full compilation you need temporarily 550MB including the
+source code.
+<p>
+To disable features please read the INSTALL file.
+
+<br>&nbsp;
+
+<h3>General requirements:</h3>
+
+(most tools are standard tools on Linux, for other platforms you may have
+to install some of them.)
+
+<ul>
+<li>C-compiler (cc, gcc, egcs, ...)</li>
+<br>gcc: <a href="http://www.gnu.org/software/gcc/gcc.html">http://www.gnu.org/software/gcc/gcc.html</a>
+<br><br>
+
+<li>GNU make is recommended</li>
+<br><a href="http://www.gnu.org/software/make/make.html">http://www.gnu.org/software/make/make.html</a>
+<br><br>
+
+<li>zlib compression library (already installed on modern systems)</li>
+<br>It is used to internally compress GRASS raster files:
+<br>libz: <a href="http://www.gzip.org/zlib/">http://www.gzip.org/zlib/</a>
+<!-- freesoftware.com is broken! <br><a href="ftp://ftp.freesoftware.com/pub/infozip/zlib/">ftp://ftp.freesoftware.com/pub/infozip/zlib/</a> -->
+<br><br>
+
+<li>lexical analyzer generator (flex),</li>
+<br>(lex is no longer supported, please use flex instead)
+<br>flex: <a href="http://www.gnu.org/software/flex/flex.html">http://www.gnu.org/software/flex/flex.html</a>
+<br><br>
+
+<li>parser generator (yacc, bison)</li>
+<br>bison: <a href="http://www.gnu.org/software/bison/bison.html">http://www.gnu.org/software/bison/bison.html</a>
+<br><br>
+
+<li>libncurses4.x/5.x (already installed on modern systems)</li>
+<br><a href="http://www.gnu.org/software/ncurses/ncurses.html">http://www.gnu.org/software/ncurses/ncurses.html</a>
+<br><a href="ftp://ftp.gnu.org/pub/gnu/ncurses/">ftp://ftp.gnu.org/pub/gnu/ncurses/</a>
+<br><br>
+
+<li>X11 window system for graphical output, development libraries (X development
+libraries, in some linux distributions they are separate packages, e.g. xlibs-dev)</li>
+<br><a href="http://www.xfree.org">http://www.xfree.org</a>
+<br><br>
+
+<li>winGRASS: As alternative a generic MS-Windows driver is under
+construction which does not require X11</li>
+<br><br>
+
+<li>PROJ4 - Projection Library<br>
+<a href="http://www.remotesensing.org/proj/">http://www.remotesensing.org/proj/</a>
+<br></li>
+</ul>
+
+
+<h3>
+Optional requirements:</h3>
+
+<ul>
+<li>Tcl/Tk 8.x libraries (they include 'wish') to use TclTkGRASS Interface and to compile src.contrib/GMSL/NVIZ2.2/<br>
+see <a href="http://tcl.sourceforge.net/">http://tcl.sourceforge.net/</a>
+<br></li>
+
+<li>r.in.gdal requires GDAL - Geospatial Data Abstraction Library<br>
+<a href="http://www.remotesensing.org/gdal/">http://www.remotesensing.org/gdal/</a>
+<br></li>
+
+<li>Mesa-3.x (openGL clone) required for NVIZ2.2<br>
+<a href="http://mesa3d.sourceforge.net/">http://mesa3d.sourceforge.net/</a><br>
+Special compile instructions:<br>
+<a href="http://grass.itc.it/grass5/README.mesa31">http://grass.itc.it/grass5/README.mesa31</a>
+<br></li>
+
+<li>FFTW 2.x (library for computing the Discrete Fourier Transform) required for
+i.fft and i.ifft modules<br>
+<a href="http://www.fftw.org">http://www.fftw.org</a>
+<br></li>
+
+<li>LAPACK / BLAS (libraries for numerical computing) required for
+GMATH library (GRASS numerical lib)<br>
+[<a href="http://www.netlib.org/lapack/">http://www.netlib.org/lapack/</a>] (usually on Linux distros)
+<br>
+Note: the support is intended for future module implementations
+<br></li>
+
+<li>libpng (for r.in.png, r.out.png), usually already installed.<br>
+<a href="http://www.libpng.org/pub/png/libpng.html">http://www.libpng.org/pub/png/libpng.html</a>
+<br></li>
+
+<li>libjpeg (for r.in.tiff, r.out.tiff), usually already installed.<br>
+<a href="http://www.ijg.org/">http://www.ijg.org</a><br>
+<a href="ftp://ftp.uu.net/graphics/jpeg/">ftp://ftp.uu.net/graphics/jpeg/</a>
+<br></li>
+
+<li>libtiff (for r.in.tiff, r.out.tiff), usually already installed.<br>
+<a href="http://www.libtiff.org">http://www.libtiff.org</a>
+<br></li>
+
+<li>PostgreSQL libraries (for the PostgreSQL database interface)<br>
+<a href="http://www.postgresql.org">http://www.postgresql.org</a>
+<br></li>
+
+<li>mySQL libraries (for the mySQL database interface)<br>
+<a href="http://www.mysql.org">http://www.mysql.org</a>
+<br></li>
+
+<li>unixODBC (for the ODBC database interface)<br>
+<a href="http://www.unixodbc.org">http://www.unixodbc.org</a>
+<br></li>
+
+<li>Only required for "xanim" and "ogl3d": the Motif or Lesstif libraries<br>
+<a href="http://www.lesstif.org">http://www.lesstif.org</a>
+<br></li>
+
+<li>R language (for the R language interface)<br>
+<a href="http://cran.r-project.org">http://cran.r-project.org</a>
+<br></li>
+
+<li>FreeType2 (for d.text.freetype)<br>
+<a href="http://www.freetype.org/">http://www.freetype.org/</a>
+<br></li>
+
+</ul>
+
+<h3>Note:</h3>
+
+SUN Solaris users may go here to download precompiled libraries etc.:
+<br><a href="http://www.sunfreeware.com/">http://www.sunfreeware.com/</a>
+
+<p>
+SGI IRIX users may go here to download precompiled libraries etc.:
+<br><a href="http://freeware.sgi.com/">http://freeware.sgi.com/</a>
+
+<p>
+MacOSX users may go here to download precompiled libraries etc.:
+<br><a href="http://fink.sourceforge.net/">http://fink.sourceforge.net/</a>
+
+<p>
+
+<hr WIDTH="100%">
+<br><i>GRASS Development Team 2001-2003</i>
+<p>Please report bugs here:
+<br><a href="http://grass.itc.it/bugtracking/bugreport.html">http://grass.itc.it/bugtracking/bugreport.html</a>
+
+<p><i>$Id$</i>
+</body>
+</html>
