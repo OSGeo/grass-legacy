@@ -388,7 +388,6 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
     struct Plus_head *plus ;
     int    i, j, s, type, lineid, offset; 
     int    side, line, area;
-    int     progress, last_progress;
     struct line_pnts *Points, *APoints;
     struct line_cats *Cats;
     P_LINE *Line;
@@ -515,14 +514,8 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	/* Build areas */
 	/* Go through all bundaries and try to build area for both sides */
 	prnmsg ("Building areas: ");
-	last_progress = -1; 
 	for (i = 1; i <= plus->n_lines; i++) {
-	    /* print progress */
-	    progress = ( int ) 100 *  i / plus->n_lines;
-	    if ( progress > last_progress + 2 ) {
-		prnmsg ("%4d%%\b\b\b\b\b", progress);
-		last_progress = progress;
-	    }
+	    G_percent2 ( i, plus->n_lines, 1, msgout );
 
 	    /* build */
 	    if ( plus->Line[i] == NULL ) { continue; } /* dead line */
@@ -546,18 +539,10 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
     /* Attach isles to areas */
     if ( plus->built < GV_BUILD_ATTACH_ISLES ) {
 	prnmsg (_("Attaching islands: "));
-	last_progress = -1; 
 	for (i = 1; i <= plus->n_isles; i++) {
+	    G_percent2 ( i, plus->n_isles, 1, msgout );
 	    Vect_attach_isle ( Map, i ) ;
-
-	    /* print progress */
-	    progress = ( int ) 100 *  i / plus->n_isles;  
-	    if ( progress > last_progress + 2 ) {
-		prnmsg ("%4d%%\b\b\b\b\b", progress);
-		last_progress = progress;
-	    }
 	}
-	prnmsg ("\r                                  \r" );
 	plus->built = GV_BUILD_ATTACH_ISLES;
     }
     
@@ -568,15 +553,10 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	int nlines;
 	
 	prnmsg (_("Attaching centroids: "));
-	last_progress = -1; 
 	
 	nlines = Vect_get_num_lines (Map);
 	for ( line = 1; line <= nlines; line++ ) {
-	    progress = ( int ) 100 *  line / nlines;  
-	    if ( progress > last_progress + 2 ) {
-		prnmsg ("%4d%%\b\b\b\b\b", progress);
-		last_progress = progress;
-	    }
+	    G_percent2 ( line, nlines, 1, msgout );
 
 	    Line = plus->Line[line];
 	    if ( !Line ) continue; /* Dead */
@@ -600,7 +580,6 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 		}
 	    }
 	}
-	prnmsg ("\r                                      \r");
 	plus->built = GV_BUILD_CENTROIDS;
     }
 
