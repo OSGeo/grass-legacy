@@ -8,12 +8,22 @@ static int label_area (struct Map_info *,int);
 #endif
 /* for every area line, try to build an area */
 
-int build_all_areas (struct Map_info *map)
+int build_all_areas (struct Map_info *map, struct Map_info *Err)
 {
     register int line, cnt;
     P_LINE *Line;
+    int ret, type;
+    int *errlines;  
+    struct line_pnts *Points;
 
+    /* init array */
+    errlines = (int *)G_malloc( (map->n_lines + 1 ) * sizeof(int) ); 
+    for (line = 1 ; line <= map->n_lines ; line++) {
+	errlines[line] = 0;
+    }
 
+    Points = Vect_new_line_struct();
+    
     cnt = 0;
     for (line = 1 ; line <= map->n_lines ; line++)
     {
@@ -21,14 +31,40 @@ int build_all_areas (struct Map_info *map)
 	Line = &(map->Line[line]);
 	if (!LINE_ALIVE (Line) || Line->type != AREA)
 	    continue;
-	if (Line->right == 0)
-	    if (build_area(map, line) > 0)
+	
+	if (Line->right == 0) {
+	    ret = build_area(map, line);
+	    if ( ret  == 0) 
 		cnt++;
-	if (Line->left == 0)
-	    if (build_area(map, -line) > 0)
+	    else {
+		errlines[abs(ret)] = 1;
+	    }
+	}
+
+	if (Line->left == 0) {
+	    ret = build_area(map, -line);
+	    if ( ret  == 0) 
 		cnt++;
+	    else {
+		errlines[abs(ret)] = 1;
+	    }
+	}
     }
 
+    /* Report error lines and write to error file */
+    for (line = 1 ; line <= map->n_lines ; line++) {
+	if ( errlines[line] == 0 )
+            continue;
+
+	fprintf ( stderr, "Unclosed area, free end or edge inside area: line %d\n", line);
+	
+	if (Err != NULL ) { 
+	    type = V2_read_line( map, Points, line);
+	    Vect_write_line (Err, type, Points);
+	}
+    }
+    free (errlines);
+    
     return (cnt);
 }
 
@@ -40,12 +76,16 @@ int
 build_area (struct Map_info *map, int line)
 {
     /* dont make this static, is not like struct line_pnts */
-    register int ret, area = 0;
+    register int ret, area, isle;
     P_AREA Area;
+    int errline;
 
+    area = 0;
+    isle = 0;
+    errline = 0;
     Area.n_lines = Area.alloc_lines = 0;
 
-    if ((ret = dig_build_area_with_line (map, line, &Area)) > 0)
+    if ((ret = dig_build_area_with_line (map, line, &Area, &errline)) > 0)
     {
 	area = dig_new_area (map, &Area, 0);	/* give dummy att info*/
 	free (Area.lines);
@@ -53,15 +93,15 @@ build_area (struct Map_info *map, int line)
     else 
     if (ret == -2)  /* found an island */
     {
-	dig_new_isle (map, &Area, 0);	/*ISLE*/  /* give dummy area info */
+	isle = dig_new_isle (map, &Area, 0);	/*ISLE*/  /* give dummy area info */
 	free (Area.lines);
     }
 
-
-    if (area)
-	return (1);
-    else
+    if (area || isle) {
 	return (0);
+    } else { 
+	return (errline);
+    }
 }
 
 
