@@ -1,0 +1,22 @@
+
+#!/bin/sh
+prgm=`basename $0`
+if test $# = 0; then
+	echo Usage: $prgm layer_name
+	exit
+fi
+CHECK.MAP
+if test $? = 1
+	then
+	exit
+fi
+for i in $*
+do
+if test $prgm = "rm.fill"; then
+	rm fills/$i fills/cat/$i legend/$i ovm/$i 2> /dev/null
+elif test $prgm = "rm.legend"; then
+	rm ovm/$i legend/*/$i 2> /dev/null
+else
+	rm -r */$i legend/$i 2> /dev/null
+fi
+done
