@@ -52,10 +52,6 @@
 
 #include <stdarg.h>
 
-#ifdef sun
-#include <varargs.h>
-#endif
-
 /* static int (*error)() = 0; */
 static int (*ext_error)() = 0; /* Roger Bivand 17 June 2000 */
 static int no_warn = 0;
