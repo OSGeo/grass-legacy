@@ -1,6 +1,4 @@
-#include <X11/Xos.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+#include "includes.h"
 #include "../lib/driver.h"
 
 /* A polygon is drawn using the current color.  It has "number"
@@ -32,7 +30,7 @@ int *xarray, *yarray, number;
     }
     XFillPolygon(dpy, grwin, gc, xpnts, number, Complex,
             CoordModeOrigin);
-    if (backing_store != Always)
+    if (!backing_store)
         XFillPolygon(dpy, bkupmap, gc, xpnts, number, Complex,
                 CoordModeOrigin);
     return 1;
@@ -54,7 +52,7 @@ int *xarray, *yarray, number;
     }
     XFillPolygon(dpy, grwin, gc, xpnts, number, Complex,
             CoordModePrevious);
-    if (backing_store != Always)
+    if (!backing_store)
         XFillPolygon(dpy, bkupmap, gc, xpnts, number, Complex,
                 CoordModePrevious);
     return 1;
