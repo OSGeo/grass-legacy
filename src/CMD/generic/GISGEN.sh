@@ -155,7 +155,9 @@ do
 
     case $i in
     DONE)
-	echo DONE generating GIS binary code
+	echo DONE generating GRASS GIS binary code
+	date >> $SRC/../$errorlog
+	echo DONE generating GRASS GIS binary code >> $SRC/../$errorlog
 	exit 0
 	;;
 
