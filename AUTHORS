@@ -43,6 +43,11 @@ GRASS 5.7/6.0: Primary authors of new source code
 -------------------------------------------------
 (work in progress: please complete and correct)
 
+Institutions:
+ ITC-IRST, Trento, Italy   Providing web structure and various mailing lists
+ Intevation GmbH, Germany  Providing CVS and Request Tracker
+ Baylor University, USA    Providing users mailing list
+
 VECTOR
  - Radim Blazek <blazek itc it>: vector engine core developer
  - David D Gray: vector engine contributions
@@ -54,23 +59,32 @@ DBMI
  - Alexander Shevlakov: drivers and sqlp contributions
 
 DGLib: vector networking
- - Roberto Micarelli: LIBDGL - graph library for vector network analysis
+ - Roberto Micarelli <mi ro iol it>: LIBDGL - graph library for vector
+     network analysis
 
 FORMS library
  - Radim Blazek <blazek itc it>: core developer 
 
 RASTER
- - Modules: see 5.4 authors below
+ - Modules: see 5.4 authors below + individual modules
  - Integration of raster modules: Markus Neteler <neteler itc it>
+ - Large file support (LFS): Glynn Clements  <glynn gclements.plus.com>
 
 3D RASTER
  - Grid3D library by CERL and GMSL/University of Illinois
  - Jaro Hofierka <hofierka geomodel sk>
  - Helena Mitasova <hmitaso unity ncsu edu>
+ - Alfonso Vitti <alfonso vitti ing unitn it>: important bugfixes
 
 PROJ
  - Integrated by Paul Kelly <paul-grass stjohnspoint co uk>
 
+NEW DOCUMENTATION:
+ - existing documentation: see 5.4 authors below + individual modules
+ - Markus Neteler <neteler itc it>
+ - Otto Dassau <dassau gdf-hannover de>
+ - M. Hamish Bowman <hbowman albers otago ac nz>
+ - Radim Blazek <blazek itc it>
 
 
 GRASS 6.0 major project contributers
@@ -78,32 +92,49 @@ GRASS 6.0 major project contributers
 
 PROJECT INTEGRATION
  - Markus Neteler <neteler itc it>: GRASS project coordination
+ - Radim Blazek <blazek itc it>: driving force for vector enhancements
  - M. Hamish Bowman <hbowman albers otago ac nz>: General sanitation
  - Bernhard Reiter <bernhard intevation de>: Maintain CVS, Bug-tracker
 
 BUILD SYSTEM
+ - Eric Mitchell: core development
  - Paul Kelly <paul-grass stjohnspoint co uk>: Fine tuning
  - Glynn Clements <glynn gclements plus com>: Assistance and advice
 
 DOCUMENTATION
  - New docs engine: Markus Neteler <neteler itc it>
- - Programming docs/doxygen: Markus Neteler <neteler itc it>
+ - Programming docs/doxygen: Markus Neteler <neteler itc it>, Paolo Armani
 
 GUI
  - Radim Blazek <blazek itc it>: primary author of d.m and v.digit
  - Michael Barton <michael.barton asu edu>: tcltkgrass menu system 
    partial rewrite and integration into d.m
+ - Multibyte FreeType Font Support: www.FOSS4G.org team
 
 INTERNATIONALIZATION
- - Integration: Markus Neteler <neteler itc it>
+ - Integration: Markus Neteler <neteler itc it>, based on www.FOSS4G.org initiative:
+    (S. Masumoto, V. Raghavan, S. Nonogaki, M. Neteler, T. Nemoto, T. Mori, M. Niwa,
+     A. Hagiwara, and N. Hattori)
  - Multi-byte text support: FOSS4G members, see http://www.foss4g.org
  - Translators: There are as many to thank as there are languages to speak
+    - Czech: Martin Landa, Jachym Cepicky, Michal Bil, Radim Blazek
+    - German: Stephan Holl 
+    - French: Emmanuel Saracco, Daniel Calvelo
+    - Italian: Maurizio Napolitano
+    - Slovenia: Miha Staut
+    - Spanish: el bueno
 
 NVIZ
  - Radim Blazek <blazek itc it>: updated vector and 3D vector support
  - Bob Covill <bcovill tekmap ns ca>: Core enhancements
- - Helena Mitasova <hmitaso unity ncsu edu>: 3D volume support
+ - Helena Mitasova <hmitaso unity ncsu edu>: 3D volume support supervision
+ - Jaro Hofierka <hofierka geomodel sk>: 3D volume support supervision
+ - Tomas Paudits: 3D volume support implementation
 
+SPECIAL THANKS:
+ - Frank Warmerdam <warmerdam pobox com>: for writing and maintaining the
+    essential GDAL and OGR libraries as well as PROJ4, GeoTIFF, etc etc.
+    He plays a key role in (Free) GIS interoperability.
 
 
 In addition, we must thank those that have packaged GRASS 6.0 into the
@@ -114,8 +145,7 @@ Linux (generic): Markus Neteler <neteler itc it>
 Linux (Debian):  DebianGIS Project <pkg-grass-devel lists.alioth.debian.org>
 Linux (SuSE):    GDF Hannover bR, see http://www.gdf-hannover.de
 Mac OS/X:        Lorenzo Moretti <lorenzo.moretti bologna enea it>
-Windows/Cygwin:  Huidae Cho <grass4u gmail com>
-
+MS-Windows/Cygwin:  Huidae Cho <grass4u gmail com>
 
 
 
@@ -128,7 +158,7 @@ Please check additionally the GRASS 1.x-5.x credits list at:
 
 While it is impossible for us to give credit to everyone (past 
 and present) who has contributed to GRASS, the following is the 
-incomplete official list for GRASS 5.0:
+incomplete official list for GRASS 5.0-5.4:
 
 Institutions:
  ITC-IRST, Trento, Italy   Providing web structure and various mailing lists
@@ -184,18 +214,18 @@ Former programmers (GRASS 5.0):
 
 Significant contributions (very incomplete, please add):
  Angus Carr      <apcarr flash.lakeheadu.ca> (ERDAS LAN)
- Eric Mitchell   <emitchell altaira.com>     (new Makefile system)
+ Eric Mitchell   <emitchell altaira com>     (new 5.1 Makefile system)
  Pierre de Mouveaux <pierre polaris-technologies.com>  (NVIZ, d.layers)
- Job Spijker     <spijker geo.uu.nl>         (v.bubble)
- Laura Toma      <ltoma bowdoin.edu>         (r.terraflow)
- Philip Warner   <pjw rhyme.com.au>          (NVIZ code cleanup)
+ Job Spijker     <spijker geo uu.nl>         (v.bubble)
+ Laura Toma      <ltoma bowdoin edu>         (r.terraflow)
+ Philip Warner   <pjw rhyme com.au>          (NVIZ code cleanup)
 
 Additional project contributions (very incomplete, please add):
- Florian Goessmann <florian wallweg39.de>
- Scott Mitchell    <smitch mac.com>
- Martin Wegmann    <wegmann biozentrum.uni-wuerzburg.de>
+ Florian Goessmann <florian wallweg39 de>
+ Scott Mitchell    <smitch mac com>
+ Martin Wegmann    <wegmann biozentrum uni-wuerzburg.de>
 
-Former User support:
+Former User support (GRASS 5.0):
  Edward Zarecky  <Edward_Zarecky baylor.edu> (user support)
  Lisa Zygo       <Lisa_Zygo baylor.edu>      (user support, GRASS manuals)
 
