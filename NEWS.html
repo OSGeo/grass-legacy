@@ -38,6 +38,7 @@ Many thanks to all contributors!
 <li>d.what.rast: -c bugfixed (Huidae Cho)
 <li>d.what.vect: added database table support (Radim Blazek)
 <li>g.manual: removed bashisms, should work on Solaris now (Andreas Lange)
+<li>m.in.e00: raster null values added (Michel Wurtz)
 <li>nviz: fixed rotated TIFF output (Glynn Clements)
 <li>p.vrml: cleaned code (Glynn Clements)
 <li>r.bilinear: fixed 0/NULL problem (Glynn Clements)
@@ -82,6 +83,7 @@ Many thanks to all contributors!
 <li>v.build/v.support: fix for thresholds to avoid topology problems with
     clean data (Radim Blazek)
 <li>v.cutter: added new options (Roger Miller)
+<li>v.digit: zoom menu simplified (Radim Blazek)
 <li>v.extract: several bugfixes (Glynn Clements)
 <li>v.in.tig.basic: segfault fixed (Roger Miller)
 <li>v.in.tig.lndmk: fixed problem with not writing to latlong locations
@@ -96,7 +98,8 @@ Many thanks to all contributors!
 <li>v.proj: added nad27/nad83 datum transformation for US and Canada (Roger Miller)
 <li>v.support: produces error vector file now (Radim Blazek)
 <li>v.surf.rst: added optional anisotropy (Jaro Hofierka)
-<li>v.transform: uses binary vector files now (Radim Blazek)
+<li>v.transform: uses binary vector files now (Radim Blazek), copies category
+labels (Eric Miller)
 <p>
 <li>session management:  With the exception of the monitor auto-redraw code,
 it should be possible to switch GISDBASE/LOCATION_NAME/MAPSET mid-session -
@@ -107,7 +110,7 @@ however, more work on this is required to enable this feature (Glynn Clements)
 
 <b>Source Code:</b><br>
 <ul>
-<li>portability: improved for SGI (Eric Miller)
+<li>portability: improved for SGI (Paul Kelly, Eric Miller, Glynn Clements)
 <li>DBMI support: dbmscap file is not required anymore (Radim Blazek)
 <li>configure: added configure status report, fixed lex/yacc/bison test (Glynn Clements)
 <li>added false northing query for Transverse Mercator (Markus Neteler)
