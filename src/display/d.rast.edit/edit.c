@@ -1,4 +1,4 @@
-/*
+/*  $Id$
  * 
  * Chris Rewerts, Agricultural Engineering, Purdue University April 1991
  * 
@@ -224,7 +224,7 @@ int edit(void)
 		}
 		/* middle button means we want to edit that cell */
 		if (button == MIDDLEB) {
-			int             tmpx, tmpy;
+			int tmpx, tmpy;
 
 			edit_mouse_info2(c, buf[col]);
 			R_get_location_with_pointer(&tmpx, &tmpy, &button);
@@ -255,7 +255,7 @@ int edit(void)
 					    }
 					    if (!num_ok) {
 						sprintf(line, "enter %s value between %s and %s\n",
-(map_type==CELL_TYPE)? "an integer":"a", val_str1, val_str2);
+						    (map_type==CELL_TYPE)? "an integer":"a", val_str1, val_str2);
 
 						error(0, line);
 						continue;
@@ -263,7 +263,7 @@ int edit(void)
 					    sscanf(string, "%lf", &num);
 					    if ((num < min_value) || (num > max_value)) {
 						sprintf(line, "enter %s value between %s and %s\n",
-(map_type==CELL_TYPE)? "an integer":"a", val_str1, val_str2);
+						    (map_type==CELL_TYPE)? "an integer":"a", val_str1, val_str2);
 						error(0, line);
 						continue;
 					    }
@@ -284,26 +284,28 @@ int edit(void)
 
 				G_get_d_raster_color(&c, &red, &green, &blue, &colr);
 				R_RGB_color(red, green, blue);
+				D_y = (int)(0.5+(row * D_ns + D_north));
+				D_x = (int)(0.5+(col * D_ew + D_west));
 
+				/* draw filled box */
+				R_box_abs(D_x+1, D_y+1, (D_x + (int)(0.5+D_ew)), (D_y + (int)(0.5+D_ns)));
 
-				D_y = (int) (row * D_ns + D_north);
-				D_x = (int) (col * D_ew + D_west);
-				R_box_abs(D_x, D_y, (D_x + (int) D_ew), (D_y + (int) D_ns));
+				/* draw cleanup frame */
 				R_move_abs(D_x, D_y);
-
 				R_standard_color(grid_color);
+				R_cont_rel(0, (int)(0.5+D_ns));
+				R_cont_rel((int)(0.5+D_ew), 0);
+				R_cont_rel(0, -1*(int)(0.5+D_ns));
+				R_cont_rel(-1*(int)(0.5+D_ew), 0);
 
-				R_cont_rel(0, (int) D_ns);
-				R_cont_rel((int) D_ew, 0);
+				/* draw "X" */
+				R_standard_color(grid_color);
+				R_move_abs(D_x + (int)(D_ew*0.2), D_y + (int)(D_ns*0.2));
+				R_cont_rel((int)(D_ew*0.6), (int)(D_ns*0.6));
+				R_move_rel(0, (int)(D_ns*-0.6));
+				R_cont_rel((int)(D_ew*-0.6), (int)(D_ns*0.6));
 
-				R_cont_rel(0, (int) (D_ns * -1.0));
-				R_cont_rel((int) (D_ew * -1.0), 0);
-				R_move_abs(D_x, D_y);
-				for (i = 0; i < 5; i++) {
-					R_move_rel(0, (int) (D_ns * .2));
-					R_cont_rel((int) D_ew, 0);
-					R_move_rel((int) (D_ew * -1), 0);
-				}
+				R_stabilize();
 			}
 			edit_mouse_info();
 		}
