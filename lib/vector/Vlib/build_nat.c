@@ -34,10 +34,11 @@ int
 Vect_build_line_area ( struct Map_info *Map, int iline, int side )
 {
     int    j, area, isle, n_lines, line, type, direction;
+    static int first = 1;
     long   offset;
     struct Plus_head *plus ;
     P_LINE *BLine;
-    struct line_pnts *Points, *APoints;
+    static struct line_pnts *Points, *APoints;
     plus_t *lines;
     double area_size;
 
@@ -45,8 +46,11 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side )
 
     G_debug ( 3, "Vect_build_line_area() line = %d, side = %d", iline, side );
     
-    Points = Vect_new_line_struct ();
-    APoints = Vect_new_line_struct ();
+    if ( first ) {
+	Points = Vect_new_line_struct ();
+	APoints = Vect_new_line_struct ();
+	first = 0;
+    }
 
     area = dig_line_get_area (plus, iline, side); 
     if ( area != 0 ) {
@@ -111,29 +115,33 @@ int
 Vect_isle_find_area ( struct Map_info *Map, int isle ) 
 {
     int    j, k, line, node, sel_area, first, area, part, bline;
+    static int first_call = 1;
     struct Plus_head *plus ;
     P_LINE *Line, *BLine;
     P_NODE *Node;
     P_ISLE *Isle;
     double  dist, cur_dist;
     BOUND_BOX box;
-    struct ilist *List;
-    struct line_pnts *Points, *APoints;
+    static struct ilist *List;
+    static struct line_pnts *APoints;
 
     /* Note: We should check all isle points (at least) because if topology is not clean
     *  and two areas overlap, isle which is not completely within area may be attached,
     *  but it would take long time */
     G_debug ( 3, "Vect_isle_find_area () island = %d", isle );
     plus = &(Map->plus);
-    List = Vect_new_list ();
-    
-    Points = Vect_new_line_struct ();
-    APoints = Vect_new_line_struct ();
 
     if (  plus->Isle[isle] == NULL ) {
 	G_warning ("Request to find area outside nonexisting isle");
 	return 0;
     }
+
+    if ( first_call ) {
+	List = Vect_new_list ();
+	APoints = Vect_new_line_struct ();
+	first_call = 0;
+    }
+
     Isle = plus->Isle[isle];
     line = abs(Isle->lines[0]);
     Line = plus->Line[line];
@@ -151,7 +159,9 @@ Vect_isle_find_area ( struct Map_info *Map, int isle )
 	area = List->value[j];
 	G_debug ( 3, "area = %d", area );
 
+	/* This (reading area points, takes most of time in this function ! */
 	Vect_get_area_points (Map, area, APoints);
+
 	cur_dist = dig_point_in_poly ( Node->x, Node->y, APoints);
 	G_debug ( 3, "current dist = %f", cur_dist );
 	
@@ -232,13 +242,18 @@ int
 Vect_attach_isles ( struct Map_info *Map, BOUND_BOX *box )
 {
     int i, isle;
-    struct ilist *List;
+    static int first = 1;
+    static struct ilist *List;
     struct Plus_head *plus ;
 
     G_debug ( 3, "Vect_attach_isles ()");
 
     plus = &(Map->plus);
-    List = Vect_new_list (); 
+
+    if ( first ) {
+        List = Vect_new_list (); 
+	first = 0;
+    }
     
     Vect_select_isles_by_box ( Map, box, List);
     G_debug ( 3, "  number of isles to attach = %d", List->n_values);
@@ -260,7 +275,8 @@ int
 Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box ) 
 {
     int i, sel_area, centr;
-    struct ilist *List;
+    static int first = 1;
+    static struct ilist *List;
     P_AREA *Area;
     P_NODE *Node;
     P_LINE *Line;
@@ -269,7 +285,11 @@ Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box )
     G_debug ( 3, "Vect_attach_centroids ()");
     
     plus = &(Map->plus);
-    List = Vect_new_list (); 
+
+    if ( first ) {
+        List = Vect_new_list (); 
+	first = 0;
+    }
     
     Vect_select_lines_by_box ( Map, box, GV_CENTROID, List);
     G_debug ( 3, "  number of centroids to reattach = %d", List->n_values);
