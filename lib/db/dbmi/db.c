@@ -13,7 +13,7 @@ db_start_driver_open_database ( char *drvname, char *dbname )
     dbHandle handle;
     dbDriver *driver;
 
-    G_debug ( 0, "db_start_driver_open_database():\n  drvname = %s, dbname = %s", drvname, dbname );
+    G_debug ( 3, "db_start_driver_open_database():\n  drvname = %s, dbname = %s", drvname, dbname );
 
     db_init_handle (&handle);
 
