@@ -43,6 +43,12 @@ int main (int argc, char **argv)
     if (argc > 1 && G_parser(argc,argv))
         exit(1);
 
+    if(latlong->answer && wgs84->answer)
+	G_fatal_error("Ambiguous request for lat/long ellipsoids");
+
+    if(decimal->answer && !(latlong->answer || wgs84->answer))
+	G_fatal_error("Please specify a lat/long ellipsoid with -l or -w");
+
     if ( ((G_projection() == PROJECTION_LL) && wgs84->answer) || 
 	 ((G_projection() != PROJECTION_LL) && (latlong->answer || wgs84->answer)) )
        have_spheroid = 1;
