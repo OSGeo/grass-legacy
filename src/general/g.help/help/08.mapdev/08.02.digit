@@ -1,0 +1,28 @@
+                           DIGITIZING MAPS
+
+The commands listed below allow the user to enter paper (and other
+hardcopy geographic information) into GRASS databases, and to manipulate
+such data in GRASS. Their prefixes ("v.", "r.", and "s.") respectively
+denote whether commands operate on data in GRASS vector, raster or
+site_lists file format.  The section, "Raster, Vector, and Sites Data
+File Formats," discusses these formats.
+
+Although all of the commands listed below are used to develop new map
+data, "v.digit" is mainly used to develop new map data from non-digital
+sources.  "v.digit" is a robust, highly interactive data development
+program used for vector \digitizing\, editing, labeling and converting
+\vector\ data to \raster\ format.  The user can digitize data using
+either a \digitizer\ hooked-up to his system, or GRASS's on-screen
+digitizing capability.
+
+        \-  v.digit \           \-  r.random \     \-  s.menu \
+        \-  v.mkcontour \       \-  r.patch \  
+        \-  v.mkgrid \
+        \-  v.mkquads \
+        \-  v.support \
+        \-  v.patch \         
+
+For more information on a specific command, select a command and press
+ESC.
+
+
