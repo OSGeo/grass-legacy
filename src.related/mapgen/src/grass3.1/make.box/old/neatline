@@ -1,0 +1,40 @@
+tput clear
+
+echo -n "Enter the name of the map definition file to use [map.def]: "
+read mapf
+if test "$mapf" != ""
+	then
+	mapf="-m $mapf"
+else mapf="-m map.def"
+fi
+if test ! -d misc
+	then
+	mkdir misc
+fi
+
+echo -n "Enter the pen to use for the neatline [1]: "
+read pen
+
+echo "Are the coordinates for this box relative to the map or"
+echo "relative to the data area."
+echo -n "Enter [p] for map d for data: "
+read win
+
+
+
+tput clear
+make_box $mapf -o ovm/neatline > misc/neatline 2> /dev/null << EOF
+c
+${win:-p}
+${pen:-1}
+l
+0
+b
+0
+r
+0
+t
+0
+EOF
+chmod 755 misc/neatline
+misc/neatline
