@@ -7,53 +7,53 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grasslibs fr 5.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 09:13+0200\n"
-"PO-Revision-Date: 2004-09-25 08:50+0200\n"
-"Last-Translator: Emmanuel Saracco <esaracco@users.labs.libre-entreprise.org>\n"
+"POT-Creation-Date: 2004-09-28 07:47+0200\n"
+"PO-Revision-Date: 2004-09-28 07:45+0200\n"
+"Last-Translator: Emmanuel Saracco <esaracco@users.labs.libre-entreprise>\n"
 "Language-Team: French <grass5@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../lib/gis/adj_cellhd.c:66
 msgid "Illegal n-s resolution value"
-msgstr "Valeur de rÃ©solution n-s illÃ©gale"
+msgstr "Valeur de résolution n-s illégale"
 
 #: ../lib/gis/adj_cellhd.c:71
 msgid "Illegal row value"
-msgstr "Valeur de colonne illÃ©gale"
+msgstr "Valeur de colonne illégale"
 
 #: ../lib/gis/adj_cellhd.c:76
 msgid "Illegal e-w resolution value"
-msgstr "Valeur de rÃ©solution e-o illÃ©gale"
+msgstr "Valeur de résolution e-o illégale"
 
 #: ../lib/gis/adj_cellhd.c:81
 msgid "Illegal col value"
-msgstr "Valeur de colonne illÃ©gale"
+msgstr "Valeur de colonne illégale"
 
 #: ../lib/gis/adj_cellhd.c:88
 msgid "Illegal latitude for North"
-msgstr "Latitude illÃ©gale pour Nord"
+msgstr "Latitude illégale pour Nord"
 
 #: ../lib/gis/adj_cellhd.c:90
 msgid "Illegal latitude for South"
-msgstr "Latitude illÃ©gale pour Sud"
+msgstr "Latitude illégale pour Sud"
 
 #: ../lib/gis/adj_cellhd.c:99
 msgid "North must be north of South"
-msgstr "Le Nord doit Ãªtre le nord du Sud"
+msgstr "Le Nord doit être le nord du Sud"
 
 #: ../lib/gis/adj_cellhd.c:101
 msgid "North must be larger than South"
-msgstr "Le Nord doit Ãªtre plus grand que le Sud"
+msgstr "Le Nord doit être plus grand que le Sud"
 
 #: ../lib/gis/adj_cellhd.c:104
 msgid "East must be larger than West"
-msgstr "L'Est doit Ãªtre plus grand que l'Ouest"
+msgstr "L'Est doit être plus grand que l'Ouest"
 
 #: ../lib/gis/adj_cellhd.c:124
 msgid "Invalid coordinates"
-msgstr "CoordonnÃ©es invalides"
+msgstr "Coordonnées invalides"
 
 #: ../lib/gis/env.c:268
 msgid "GISRC - variable not set"
@@ -67,36 +67,36 @@ msgstr "%s n'a pas de valeur"
 #: ../lib/gis/gisinit.c:44
 #, c-format
 msgid "MAPSET %s - permission denied"
-msgstr "MAPSET %s - permission refusÃ©e"
+msgstr "MAPSET %s - permission refusée"
 
 #: ../lib/gis/gisinit.c:49 ../lib/gis/mapset.c:47
 #, c-format
 msgid "MAPSET %s not found"
-msgstr "MAPSET %s n'a pas Ã©tÃ© trouvÃ©e"
+msgstr "MAPSET %s n'a pas été trouvée"
 
 #: ../lib/gis/gisinit.c:75
 #, c-format
 msgid "ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"
 msgstr ""
-"ERREUR: Le systÃ¨me n'est pas initialisÃ©. Le dÃ©veloppeur Ã  oubliÃ© d'appeler "
+"ERREUR: Le système n'est pas initialisé. Le développeur a oublié d'appeler "
 "G_gisinit()\n"
 
 #: ../lib/gis/mapset_msc.c:69
 #, c-format
 msgid "can't make mapset element %s (%s)"
-msgstr "ne peut pas fabriquer l'Ã©lÃ©ment %s (%s) du mapset"
+msgstr "ne peut pas fabriquer l'élément %s (%s) du mapset"
 
 #: ../lib/gis/parser.c:306
 msgid ""
 "WHERE conditions of SQL statement without 'where' keyword. (example: income "
 "< 1000 and inhab >= 10000)"
 msgstr ""
-"WHERE conditions d'une close SQL sans le mot clÃ© 'where'. (exemple: income < "
+"WHERE conditions d'une close SQL sans le mot clé 'where'. (exemple: income < "
 "1000 and inhab >= 10000)"
 
 #: ../lib/gis/parser.c:314 ../lib/gis/parser.c:328
 msgid "Name of input raster"
-msgstr "Nom de l'entrÃ©e raster"
+msgstr "Nom de l'entrée raster"
 
 #: ../lib/gis/parser.c:321
 msgid "Name of output raster"
@@ -104,7 +104,7 @@ msgstr "Nom de la sortie raster"
 
 #: ../lib/gis/parser.c:336 ../lib/gis/parser.c:350
 msgid "Name of input vector"
-msgstr "Nom de l'entrÃ©e vecteur"
+msgstr "Nom de l'entrée vecteur"
 
 #: ../lib/gis/parser.c:343
 msgid "Name of output vector"
@@ -112,7 +112,7 @@ msgstr "Nom de la sortie vecteur"
 
 #: ../lib/gis/parser.c:359
 msgid "Select type: point, line, boundary, centroid or area"
-msgstr "SÃ©lectionnez un type: point, ligne, intervalle, centroÃ¯d ou surface"
+msgstr "Sélectionnez un type: point, ligne, intervalle, centroïd ou surface"
 
 #: ../lib/gis/parser.c:366
 msgid "Field value"
@@ -120,16 +120,16 @@ msgstr "Valeur du champ"
 
 #: ../lib/gis/parser.c:372
 msgid "Category value"
-msgstr "Valeur de la catÃ©gorie"
+msgstr "Valeur de la catégorie"
 
 #: ../lib/gis/parser.c:378
 msgid "Category values (example: 1,3,7-9,13)"
-msgstr "Valeurs de la catÃ©gorie (example: 1,3,7-9,13)"
+msgstr "Valeurs de la catégorie (example: 1,3,7-9,13)"
 
 #: ../lib/gis/parser.c:564
 #, c-format
 msgid "Sorry <%s> is not a valid option\n"
-msgstr "DÃ©solÃ© <%s> n'est pas une option valide\n"
+msgstr "Désolé <%s> n'est pas une option valide\n"
 
 #: ../lib/gis/parser.c:628
 #, c-format
@@ -167,12 +167,12 @@ msgid ""
 "Parameters:\n"
 msgstr ""
 "\n"
-"ParamÃ¨tres:\n"
+"Paramètres:\n"
 
 #: ../lib/gis/parser.c:720
 #, c-format
 msgid "  %*s   default: %s\n"
-msgstr "  %*s   dÃ©faut: %s\n"
+msgstr "  %*s   défaut: %s\n"
 
 #: ../lib/gis/parser.c:1186
 #, c-format
@@ -182,17 +182,17 @@ msgstr "  %*s   options: "
 #: ../lib/gis/parser.c:1233 ../lib/gis/parser.c:1250
 #, c-format
 msgid "Sorry, <%c> is not a valid flag\n"
-msgstr "DÃ©solÃ©, <%c> n'est pas un drapeau valide\n"
+msgstr "Désolé, <%c> n'est pas un drapeau valide\n"
 
 #: ../lib/gis/parser.c:1305
 #, c-format
 msgid "Sorry, <%s=> is ambiguous\n"
-msgstr "DÃ©solÃ©, <%s=> est ambigu\n"
+msgstr "Désolé, <%s=> est ambigu\n"
 
 #: ../lib/gis/parser.c:1312
 #, c-format
 msgid "Sorry, <%s> is not a valid parameter\n"
-msgstr "DÃ©solÃ©, <%s> n'est pas un paramÃ¨tre valide\n"
+msgstr "Désolé, <%s> n'est pas un paramètre valide\n"
 
 #: ../lib/gis/parser.c:1397
 #, c-format
@@ -201,12 +201,12 @@ msgid ""
 "Error: illegal range syntax for parameter <%s>\n"
 msgstr ""
 "\n"
-"Erreur: syntaxe de l'intervalle illÃ©gale pour le paramÃ¨tre <%s>\n"
+"Erreur: syntaxe de l'intervalle illégale pour le paramètre <%s>\n"
 
 #: ../lib/gis/parser.c:1399
 #, c-format
 msgid "       Presented as: %s\n"
-msgstr "       PrÃ©sentÃ© comme: %s\n"
+msgstr "       Présenté comme: %s\n"
 
 #: ../lib/gis/parser.c:1402
 #, c-format
@@ -215,7 +215,7 @@ msgid ""
 "Error: value <%s> out of range for parameter <%s>\n"
 msgstr ""
 "\n"
-"Erreur: valeur <%s> en dehors des limites pour le paramÃ¨tre <%s>\n"
+"Erreur: valeur <%s> en dehors des limites pour le paramètre <%s>\n"
 
 #: ../lib/gis/parser.c:1404
 #, c-format
@@ -229,7 +229,7 @@ msgid ""
 "Error: Missing value for parameter <%s>\n"
 msgstr ""
 "\n"
-"Erreur: Valeur manquante pour le paramÃ¨tre <%s>\n"
+"Erreur: Valeur manquante pour le paramètre <%s>\n"
 
 #: ../lib/gis/parser.c:1567
 #, c-format
@@ -239,7 +239,7 @@ msgid ""
 "    (%s).\n"
 msgstr ""
 "\n"
-"ERREUR: Le paramÃ¨tre obligatoire <%s> n'a pas de valeur:\n"
+"ERREUR: Le paramètre obligatoire <%s> n'a pas de valeur:\n"
 "    (%s).\n"
 
 #: ../lib/gis/parser.c:1670
@@ -249,12 +249,12 @@ msgid ""
 "Error: option <%s> must be provided in multiples of %d\n"
 msgstr ""
 "\n"
-"Erreur: l'option <%s> doit Ãªtre un multiple de %d\n"
+"Erreur: l'option <%s> doit être un multiple de %d\n"
 
 #: ../lib/gis/parser.c:1672
 #, c-format
 msgid "       You provided %d items:\n"
-msgstr "       Vous avez founi %d Ã©lÃ©ments:\n"
+msgstr "       Vous avez founi %d éléments:\n"
 
 #: ../lib/gis/parser.c:1715
 #, c-format
@@ -263,7 +263,7 @@ msgid ""
 "FLAG: Set the following flag?\n"
 msgstr ""
 "\n"
-"DRAPEAU: Avez-vous positionnÃ© ce drapeau?\n"
+"DRAPEAU: Avez-vous positionné ce drapeau?\n"
 
 #: ../lib/gis/parser.c:1728
 #, c-format
@@ -277,7 +277,7 @@ msgstr ""
 #: ../lib/gis/parser.c:1729
 #, c-format
 msgid "     key: %s\n"
-msgstr "     clÃ©: %s\n"
+msgstr "     clé: %s\n"
 
 #: ../lib/gis/parser.c:1731
 #, c-format
@@ -287,7 +287,7 @@ msgstr "  format: %s\n"
 #: ../lib/gis/parser.c:1733
 #, c-format
 msgid " default: %s\n"
-msgstr " dÃ©faut: %s\n"
+msgstr " défaut: %s\n"
 
 #: ../lib/gis/parser.c:1734
 #, c-format
@@ -311,12 +311,12 @@ msgstr "entrez une option > "
 
 #: ../lib/gis/parser.c:1765 ../lib/gis/parser.c:1776
 msgid "   Try again? "
-msgstr "   Essayer Ã  nouveau? "
+msgstr "   Essayer à nouveau? "
 
 #: ../lib/gis/parser.c:1774
 #, c-format
 msgid "Sorry, %s is not accepted.\n"
-msgstr "DÃ©solÃ©, %s n'est pas acceptÃ©e.\n"
+msgstr "Désolé, %s n'est pas acceptée.\n"
 
 #: ../lib/gis/parser.c:1785
 #, c-format
@@ -335,7 +335,7 @@ msgstr "Est-ce correct? "
 
 #: ../lib/gis/parser.c:1844
 msgid "to accept the default"
-msgstr "pour accepter le choix par dÃ©faut"
+msgstr "pour accepter le choix par défaut"
 
 #: ../lib/gis/ask.c:293
 msgid "to cancel request"
@@ -374,7 +374,7 @@ msgstr "une liste %s"
 #: ../lib/gis/ask.c:379
 #, c-format
 msgid "an extended list"
-msgstr "une liste Ã©tendue"
+msgstr "une liste étendue"
 
 #: ../lib/gis/ask.c:383
 #, c-format
@@ -388,7 +388,7 @@ msgid ""
 "**<%s> illegal name **\n"
 msgstr ""
 "\n"
-"**<%s> nom illÃ©gal **\n"
+"**<%s> nom illégal **\n"
 
 #: ../lib/gis/ask.c:452
 #, c-format
@@ -397,7 +397,7 @@ msgid ""
 "** %s - illegal request **\n"
 msgstr ""
 "\n"
-"** %s - requÃªte illÃ©gale **\n"
+"** %s - requête illégale **\n"
 
 #: ../lib/gis/ask.c:467
 #, c-format
@@ -406,7 +406,7 @@ msgid ""
 "** %s - exists, select another name **\n"
 msgstr ""
 "\n"
-"** %s - existe, sÃ©lectionnez un autre nom **\n"
+"** %s - existe, sélectionnez un autre nom **\n"
 
 #: ../lib/gis/ask.c:477
 #, c-format
@@ -415,7 +415,7 @@ msgid ""
 "** %s exists. ok to overwrite? "
 msgstr ""
 "\n"
-"** %s existe. d'accord pour l'Ã©craser? "
+"** %s existe. d'accord pour l'écraser? "
 
 #: ../lib/gis/ask.c:491 ../lib/gis/ask.c:513
 #, c-format
@@ -446,13 +446,13 @@ msgstr "Impossible d'ouvrir le MASK automatique du fichier"
 #: ../lib/gis/cats.c:357
 #, c-format
 msgid "category support for [%s] in mapset [%s] %s"
-msgstr "support de la catÃ©gorie [%s] dans le mapset [%s] %s"
+msgstr "support de la catégorie [%s] dans le mapset [%s] %s"
 
 #: ../lib/gis/cats.c:381
 #, c-format
 msgid "category support for vector file [%s] in mapset [%s] %s"
 msgstr ""
-"support de la catÃ©gorie pour le fichier vecteur [%s] dans le mapset [%s] %s"
+"support de la catégorie pour le fichier vecteur [%s] dans le mapset [%s] %s"
 
 #: ../lib/gis/color_read.c:95
 #, c-format
@@ -470,7 +470,7 @@ msgstr "Impossible d'ouvrir le fichier temporaire"
 #: ../lib/proj/datum.c:298
 #, c-format
 msgid "Hit RETURN to cancel request\n"
-msgstr "Pressez REROUT pour abandonner\n"
+msgstr "Pressez REROUR pour abandonner\n"
 
 #: ../lib/gis/datum.c:353 ../lib/gis/datum.c:433 ../lib/proj/datum.c:344
 #: ../lib/proj/datum.c:418
@@ -487,12 +487,12 @@ msgstr "erreur dans la table du fichier de datums, ligne %d"
 #: ../lib/gis/done_msg.c:29
 #, c-format
 msgid "%s complete. %s\n"
-msgstr "%s terminÃ©. %s\n"
+msgstr "%s terminé. %s\n"
 
 #: ../lib/gis/format.c:162
 #, c-format
 msgid "Fail of initial read of compressed file [%s in %s]"
-msgstr "Echec de la premiÃ¨re lecture du fichier compressÃ© [%s dans %s]"
+msgstr "Echec de la première lecture du fichier compressé [%s dans %s]"
 
 #: ../lib/gis/G_dump.c:6
 #, c-format
@@ -502,17 +502,17 @@ msgstr "Taille de cellule dans les cartes fp = %d\n"
 #: ../lib/gis/G_dump.c:7
 #, c-format
 msgid "type for writing floating maps = %d\n"
-msgstr "type d'Ã©criture pour les cartes flottantes = %d\n"
+msgstr "type d'écriture pour les cartes flottantes = %d\n"
 
 #: ../lib/gis/G_dump.c:8
 #, c-format
 msgid "current window = %p\n"
-msgstr "fenÃªtre courante = %p\n"
+msgstr "fenêtre courante = %p\n"
 
 #: ../lib/gis/G_dump.c:9
 #, c-format
 msgid "Flag: window set? %d\n"
-msgstr "Drapeau: fenÃªtre dÃ©finie? %d\n"
+msgstr "Drapeau: fenêtre définie? %d\n"
 
 #: ../lib/gis/G_dump.c:10
 #, c-format
@@ -537,7 +537,7 @@ msgstr "tampon pour lire les lignes nulles %p\n"
 #: ../lib/gis/G_dump.c:14
 #, c-format
 msgid "Pre/post compressed data buffer %p\n"
-msgstr "Tampon pour les donnÃ©es compressÃ©es pre/post %p\n"
+msgstr "Tampon pour les données compressées pre/post %p\n"
 
 #: ../lib/gis/G_dump.c:15
 #, c-format
@@ -547,7 +547,7 @@ msgstr "sizeof compressed_buf %d\n"
 #: ../lib/gis/G_dump.c:16
 #, c-format
 msgid "work data buffer %p\n"
-msgstr "tampon des donnÃ©es de travail %p\n"
+msgstr "tampon des données de travail %p\n"
 
 #: ../lib/gis/G_dump.c:17
 #, c-format
@@ -582,7 +582,7 @@ msgstr "mode d'ouverture = %d\n"
 #: ../lib/gis/G_dump.c:24
 #, c-format
 msgid "Cell header %p\n"
-msgstr "En-tÃªte de cellule %p\n"
+msgstr "En-tête de cellule %p\n"
 
 #: ../lib/gis/G_dump.c:25
 #, c-format
@@ -622,22 +622,22 @@ msgstr "Adresses de la ligne du fichier %p\n"
 #: ../lib/gis/G_dump.c:32
 #, c-format
 msgid "Data to window col mapping %p\n"
-msgstr "DonnÃ©e du tracÃ© de la colonne dans la fenÃªtre %p\n"
+msgstr "Donnée du tracé de la colonne dans la fenêtre %p\n"
 
 #: ../lib/gis/G_dump.c:33
 #, c-format
 msgid "Data to window row constants %f,%f\n"
-msgstr "DonnÃ©es des constantes de lignes dans la fenÃªtre %f,%f\n"
+msgstr "Données des constantes de lignes dans la fenêtre %f,%f\n"
 
 #: ../lib/gis/G_dump.c:34
 #, c-format
 msgid "Current data row in memory %d\n"
-msgstr "Lignes de donnÃ©es actuellement en mÃ©moire %d\n"
+msgstr "Lignes de données actuellement en mémoire %d\n"
 
 #: ../lib/gis/G_dump.c:35
 #, c-format
 msgid "Current null row in memory %d\n"
-msgstr "Ligne vide courante en mÃ©moire %d\n"
+msgstr "Ligne vide courante en mémoire %d\n"
 
 #: ../lib/gis/G_dump.c:36
 #, c-format
@@ -647,7 +647,7 @@ msgstr "Nombre d'octets par cellule pour la ligne courante %d\n"
 #: ../lib/gis/G_dump.c:37
 #, c-format
 msgid "Decompressed data buffer %s\n"
-msgstr "Tampon de donnÃ©es dÃ©compressÃ©s %s\n"
+msgstr "Tampon de données décompressés %s\n"
 
 #: ../lib/gis/G_dump.c:38
 #, c-format
@@ -687,7 +687,7 @@ msgstr "Mapset du fichier ouvert %s\n"
 #: ../lib/gis/G_dump.c:45
 #, c-format
 msgid "io error warning given %d\n"
-msgstr "erreur d'e/s renvoyÃ© %d\n"
+msgstr "erreur d'e/s renvoyé %d\n"
 
 #: ../lib/gis/G_dump.c:46
 #, c-format
@@ -702,17 +702,17 @@ msgstr "NULL_ROWS array[%d] = %p\n"
 #: ../lib/gis/G_dump.c:48
 #, c-format
 msgid "data buffer for reading null rows %p\n"
-msgstr "tampon de donnÃ©es pour lire les lignes nulles %p\n"
+msgstr "tampon de données pour lire les lignes nulles %p\n"
 
 #: ../lib/gis/G_dump.c:49
 #, c-format
 msgid "Minimum row null row number in memory %d\n"
-msgstr "Nombre minimum d'une rangÃ©e d'une rangÃ©e nulle en mÃ©moire %d\n"
+msgstr "Nombre minimum d'une rangée d'une rangée nulle en mémoire %d\n"
 
 #: ../lib/gis/get_cellhd.c:59 ../lib/gis/get_cellhd.c:88
 #, c-format
 msgid "Can't read header file for [%s in %s]\n"
-msgstr "Impossible de lire l'en-tÃªte de fichier pour [%s dans %s]\n"
+msgstr "Impossible de lire l'en-tête de fichier pour [%s dans %s]\n"
 
 #: ../lib/gis/get_cellhd.c:61
 #, c-format
@@ -727,18 +727,18 @@ msgstr "qui est manquant"
 #: ../lib/gis/get_cellhd.c:66
 #, c-format
 msgid "whose header file can't be opened"
-msgstr "dont le fichier d'en-tÃªte ne peut Ãªtre ouvert"
+msgstr "dont le fichier d'en-tête ne peut être ouvert"
 
 #: ../lib/gis/get_cellhd.c:76
 #, c-format
 msgid "Can't open header file for [%s in %s]"
-msgstr "Impossible d'ouvrir le fichier d'en-tÃªte pour [%s dans %s]"
+msgstr "Impossible d'ouvrir le fichier d'en-tête pour [%s dans %s]"
 
 #: ../lib/gis/get_cellhd.c:92
 #, c-format
 msgid "It is a reclass of [%s in %s] whose header file is invalid\n"
 msgstr ""
-"C'est une reclassification de [%s dans %s] dont l'en-tÃªte est invalide\n"
+"C'est une reclassification de [%s dans %s] dont l'en-tête est invalide\n"
 
 #: ../lib/gis/get_cellhd.c:96
 #, c-format
@@ -754,18 +754,18 @@ msgstr "Impossible d'ouvrir le fichier %s dans %s"
 #, c-format
 msgid "Error reading datum shift parameters for %s from table"
 msgstr ""
-"Erreur en lisant le paramÃ¨tre de dÃ©calage du datum dans la table pour %s"
+"Erreur en lisant le paramètre de décalage du datum dans la table pour %s"
 
 #: ../lib/gis/get_datum.c:91
 #, c-format
 msgid "Error reading ellipsoid parameters for %s from table"
 msgstr ""
-"Erreur en lisant les paramÃ¨tres de l'ellipsoÃ¯de depuis la table pour %s"
+"Erreur en lisant les paramètres de l'ellipsoïde depuis la table pour %s"
 
 #: ../lib/gis/get_datum.c:96
 #, c-format
 msgid "No ellipsoid field %s in file %s in %s"
-msgstr "Pas de champ ellipsoÃ¯de %s dans le fichier %s de %s"
+msgstr "Pas de champ ellipsoïde %s dans le fichier %s de %s"
 
 #: ../lib/gis/get_datum.c:130
 #, c-format
@@ -779,7 +779,7 @@ msgid ""
 "Please specify datum name\n"
 msgstr ""
 "\n"
-"Veuillez spÃ©cifier un nom de datum\n"
+"Veuillez spécifier un nom de datum\n"
 
 #: ../lib/gis/get_datum_name.c:42
 #, c-format
@@ -803,7 +803,7 @@ msgstr "a invalide: champ %s dans le fichier %s de %s"
 #: ../lib/gis/get_ellipse.c:74
 #, c-format
 msgid "invalid ellipsoid %s in file %s in %s"
-msgstr "ellipsoÃ¯de %s invalide dans le fichier %s"
+msgstr "ellipsoïde %s invalide dans le fichier %s"
 
 #: ../lib/gis/get_ellipse.c:91
 #, c-format
@@ -813,30 +813,23 @@ msgstr "es invalide: champ %s dans le fichier %s de %s"
 #: ../lib/gis/get_ellipse.c:105
 #, c-format
 msgid "No ellipsoid info given in file %s in %s"
-msgstr "Aucune information sur l'ellipsoÃ¯de dans le fichier %s de %s"
+msgstr "Aucune information sur l'ellipsoïde dans le fichier %s de %s"
 
 #: ../lib/gis/get_ellipse.c:270 ../lib/proj/ellipse.c:228
 #, c-format
 msgid "unable to open ellipsoid table file: %s"
-msgstr "impossible d'ouvrir le fichier de l'ellipsoÃ¯de: %s"
+msgstr "impossible d'ouvrir le fichier de l'ellipsoïde: %s"
 
-#: ../lib/gis/get_ellipse.c:318
+#: ../lib/gis/get_ellipse.c:319
 #, c-format
-msgid "Line%s%s of ellipsoid table file <%s> %s invalid"
+msgid "Lines%s of ellipsoid table file <%s> are invalid"
 msgstr ""
-"La ligne%s%s du fichier <%s> %s de la table de l'ellipsoÃ¯de est invalide"
+"Les lignes%s du fichier <%s> de la table de l'ellipsoïde sont invalides"
 
-#: ../lib/gis/get_ellipse.c:319
-msgid "s"
-msgstr "s"
-
-#: ../lib/gis/get_ellipse.c:319
-msgid "is"
-msgstr "est"
-
-#: ../lib/gis/get_ellipse.c:319
-msgid "are"
-msgstr "sont"
+#: ../lib/gis/get_ellipse.c:320
+#, c-format
+msgid "Line%s of ellipsoid table file <%s> is invalid"
+msgstr "La ligne%s du fichier <%s> de la table de l'ellipsoïde est invalide"
 
 #: ../lib/gis/get_ell_name.c:44
 #, c-format
@@ -845,12 +838,12 @@ msgid ""
 "Please specify ellipsoid name\n"
 msgstr ""
 "\n"
-"Veuillez spÃ©cifier un nom d'ellipsoÃ¯de\n"
+"Veuillez spécifier un nom d'ellipsoïde\n"
 
 #: ../lib/gis/get_ell_name.c:45
 #, c-format
 msgid "Enter 'list' for the list of available ellipsoids\n"
-msgstr "Entrer 'list' pour une liste des ellipsoÃ¯des existantes\n"
+msgstr "Entrer 'list' pour une liste des ellipsoïdes existantes\n"
 
 #: ../lib/gis/get_ell_name.c:62
 #, c-format
@@ -859,7 +852,7 @@ msgid ""
 "invalid ellipsoid\n"
 msgstr ""
 "\n"
-"ellipsoÃ¯de invalide\n"
+"ellipsoïde invalide\n"
 
 #: ../lib/gis/get_projinfo.c:17 ../lib/gis/get_projinfo.c:45
 #, c-format
@@ -916,7 +909,7 @@ msgstr ""
 #: ../lib/gis/get_row.c:426
 #, c-format
 msgid "cell_values_double: xdr_double failed for index %d."
-msgstr "cell_values_double: Ã©chec de xdr_double pour l'index %d"
+msgstr "cell_values_double: échec de xdr_double pour l'index %d"
 
 #: ../lib/gis/get_row.c:569
 #, c-format
@@ -934,7 +927,7 @@ msgstr "erreur en lisant la ligne nulle %d"
 
 #: ../lib/gis/get_row.c:1009
 msgid "Could not realloc buffer"
-msgstr "RÃ©allocation mÃ©moire impossible pour le tampon"
+msgstr "Réallocation mémoire impossible pour le tampon"
 
 #: ../lib/gis/get_window.c:39
 #, c-format
@@ -948,11 +941,11 @@ msgstr ""
 #: ../lib/gis/get_window.c:62
 #, c-format
 msgid "default region %s"
-msgstr "rÃ©gion par dÃ©faut %s"
+msgstr "région par défaut %s"
 
 #: ../lib/gis/get_window.c:83
 msgid "is not set"
-msgstr "n'est pas dÃ©finie"
+msgstr "n'est pas définie"
 
 #: ../lib/gis/get_window.c:93
 #, c-format
@@ -991,7 +984,7 @@ msgstr "fichier d'histogramme invalide pour [%s dans %s]"
 #: ../lib/gis/histogram.c:341
 #, c-format
 msgid "can't create histogram for [%s in %s]"
-msgstr "impossible de crÃ©er l'histogramme pour [%s dans %s]"
+msgstr "impossible de créer l'histogramme pour [%s dans %s]"
 
 #: ../lib/gis/history.c:104
 #, c-format
@@ -1001,26 +994,26 @@ msgstr "impossible d'obtenir l'historique pour [%s] dans le mapset [%s]"
 #: ../lib/gis/history.c:138
 #, c-format
 msgid "can't write history information for [%s]"
-msgstr "impossible d'Ã©crire l'historique pour [%s]"
+msgstr "impossible d'écrire l'historique pour [%s]"
 
 #: ../lib/gis/history.c:154
 #, c-format
 msgid "generated by %s"
-msgstr "gÃ©nÃ©rÃ© par %s"
+msgstr "généré par %s"
 
 #: ../lib/gis/home.c:29
 msgid "unable to determine user's home directory"
-msgstr "impossible d'obtenir le rÃ©pertoire de l'utilisateur"
+msgstr "impossible d'obtenir le répertoire de l'utilisateur"
 
 #: ../lib/gis/legal_name.c:18
 #, c-format
 msgid "Illegal filename.  Cannot be '.' or 'NULL'\n"
-msgstr "Nom de fichier illÃ©gal.  Ne peut pas Ãªtre '.' ou 'NULL'\n"
+msgstr "Nom de fichier illégal.  Ne peut pas être '.' ou 'NULL'\n"
 
 #: ../lib/gis/legal_name.c:24
 #, c-format
 msgid "Illegal filename. character <%c> not allowed."
-msgstr "Nom de fichier illÃ©gal. caractÃ¨re <%c> interdit."
+msgstr "Nom de fichier illégal. caractère <%c> interdit."
 
 #: ../lib/gis/list.c:110
 #, c-format
@@ -1056,7 +1049,7 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"La table des couleurs est nÃ©cessaire pour le fichier |%s] dans le mapset [%"
+"La table des couleurs est nécessaire pour le fichier |%s] dans le mapset [%"
 "s].\n"
 
 #: ../lib/gis/make_colr.c:54
@@ -1066,12 +1059,12 @@ msgid ""
 "Please identify the type desired:\n"
 msgstr ""
 "\n"
-"Veuillez sÃ©lectionner le type dÃ©sirÃ©:\n"
+"Veuillez sélectionner le type désiré:\n"
 
 #: ../lib/gis/make_colr.c:55
 #, c-format
 msgid "    1:  Random colors\n"
-msgstr "    1:  Couleurs alÃ©atoires\n"
+msgstr "    1:  Couleurs aléatoires\n"
 
 #: ../lib/gis/make_colr.c:56
 #, c-format
@@ -1124,7 +1117,7 @@ msgstr ""
 
 #: ../lib/gis/mapset.c:28
 msgid "MAPSET is not set"
-msgstr "MAPSET n'est pas dÃ©finie"
+msgstr "MAPSET n'est pas définie"
 
 #: ../lib/gis/mask_info.c:42
 #, c-format
@@ -1145,23 +1138,23 @@ msgstr "Emplacement inconnu"
 
 #: ../lib/gis/null_val.c:95
 msgid "EmbedGivenNulls: wrong data type!"
-msgstr "EmbedGivenNulls: mauvais type de donnÃ©e!"
+msgstr "EmbedGivenNulls: mauvais type de donnée!"
 
 #: ../lib/gis/null_val.c:116
 msgid "Null values have not been initialized. "
-msgstr "La valeur nulle n'a pas Ã©tÃ© initialisÃ©e. "
+msgstr "La valeur nulle n'a pas été initialisée. "
 
 #: ../lib/gis/null_val.c:117
 msgid "G_gisinit() must be called first. "
-msgstr "G_gisinit() doit Ãªtre prÃ©alablement appelÃ©e. "
+msgstr "G_gisinit() doit être préalablement appelée. "
 
 #: ../lib/gis/null_val.c:118
 msgid "Please advise GRASS developers of this error.\n"
-msgstr "Veuillez avertir les dÃ©vÃ©loppeurs GRASS de cette erreur.\n"
+msgstr "Veuillez avertir les dévéloppeurs GRASS de cette erreur.\n"
 
 #: ../lib/gis/null_val.c:232
 msgid "G_set_null_value: wrong data type!"
-msgstr "G_set_null_value: mauvais type de donnÃ©e!"
+msgstr "G_set_null_value: mauvais type de donnée!"
 
 #: ../lib/gis/opencell.c:165
 #, c-format
@@ -1181,7 +1174,7 @@ msgstr ""
 #, c-format
 msgid "[%s] in mapset [%s]-format field in header file invalid"
 msgstr ""
-"[%s] dans le mapset [%s]-le champ de format dans le fichier d'en-tÃªte est "
+"[%s] dans le mapset [%s]-le champ de format dans le fichier d'en-tête est "
 "invalide"
 
 #: ../lib/gis/opencell.c:280
@@ -1190,16 +1183,16 @@ msgid ""
 "[%s] in mapset [%s] - in different projection than current region:\n"
 " found map [%s] in: <%s>, should be <%s> "
 msgstr ""
-"[%s] dans le mapset [%s] - est dans une projection diffÃ©rente par rapport Ã  "
-"la rÃ©gion courante:\n"
-" la carte [%s] dans: <%s>, devrait Ãªtre <%s> "
+"[%s] dans le mapset [%s] - est dans une projection différente par rapport à "
+"la région courante:\n"
+" la carte [%s] dans: <%s>, devrait être <%s> "
 
 #: ../lib/gis/opencell.c:287
 #, c-format
 msgid "[%s] in mapset [%s] - in different zone [%d] than current region [%d]"
 msgstr ""
-"[%s] dans le mapset [%s] - est dans une zone diffÃ©rente [%d] de celle de la "
-"rÃ©gion courante [%d]"
+"[%s] dans le mapset [%s] - est dans une zone différente [%d] de celle de la "
+"région courante [%d]"
 
 #: ../lib/gis/opencell.c:295
 #, c-format
@@ -1209,13 +1202,13 @@ msgstr "[%s] dans [%s] - octets par cellule (%d) trop grand"
 #: ../lib/gis/opencell.c:598
 #, c-format
 msgid "opencell: %s - illegal file name"
-msgstr "opensell: %s - nom de fichier illÃ©gal"
+msgstr "opensell: %s - nom de fichier illégal"
 
 #: ../lib/gis/opencell.c:699
 msgid "Can't write embedded null values for map open for random access"
 msgstr ""
-"Impossible d'Ã©crire les valeurs nulles intÃ©grÃ©es pour une carte ouverte en "
-"accÃ¨s alÃ©atoire"
+"Impossible d'écrire les valeurs nulles intégrées pour une carte ouverte en "
+"accès aléatoire"
 
 #: ../lib/gis/opencell.c:930 ../lib/gis/opencell.c:951
 #, c-format
@@ -1240,7 +1233,7 @@ msgstr "type invalide: champ %s dans le fichier %s"
 #: ../lib/gis/opencell.c:1042
 #, c-format
 msgid "%s - ** illegal name **"
-msgstr "%s - ** nom illÃ©gal **"
+msgstr "%s - ** nom illégal **"
 
 #: ../lib/gis/proj2.c:49
 msgid "Latitude-Longitude"
@@ -1257,32 +1250,32 @@ msgstr "Projection inconnue"
 #: ../lib/gis/put_cellhd.c:26
 #, c-format
 msgid "Unable to create header file for [%s]"
-msgstr "Impossible de crÃ©er le fichier d'en-tÃªte pour [%s]"
+msgstr "Impossible de créer le fichier d'en-tête pour [%s]"
 
 #: ../lib/gis/put_row.c:311
 #, c-format
 msgid "map [%s] - unable to write row %d"
-msgstr "carte [%s] - impossible d'Ã©crire la ligne %d"
+msgstr "carte [%s] - impossible d'écrire la ligne %d"
 
 #: ../lib/gis/put_row.c:785 ../lib/gis/put_row.c:791
 #, c-format
 msgid "error writing null row %d"
-msgstr "erreur lors de l'Ã©criture d'une ligne nulle %d"
+msgstr "erreur lors de l'écriture d'une ligne nulle %d"
 
 #: ../lib/gis/put_title.c:28
 #, c-format
 msgid "category information for [%s] in [%s] missing or invalid"
-msgstr "La catÃ©gorie de [%s] dans [%s] est manquante ou invalide"
+msgstr "La catégorie de [%s] dans [%s] est manquante ou invalide"
 
 #: ../lib/gis/put_title.c:38
 #, c-format
 msgid "G_put_title - can't create a temp file"
-msgstr "G_put_title - impossible de crÃ©er le fichier temporaire"
+msgstr "G_put_title - impossible de créer le fichier temporaire"
 
 #: ../lib/gis/put_title.c:58
 #, c-format
 msgid "category information for [%s] in [%s] invalid"
-msgstr "CatÃ©gorie invalide pour [%s] dans [%s]"
+msgstr "Catégorie invalide pour [%s] dans [%s]"
 
 #: ../lib/gis/put_title.c:66
 #, c-format
@@ -1293,17 +1286,17 @@ msgstr "G_put_title - impossible de reouvrir le fichier temporaire"
 #, c-format
 msgid "can't write category information for [%s] in [%s]"
 msgstr ""
-"impossible d'Ã©crire les informations de la catÃ©gorie pour [%s] dans [%s]"
+"impossible d'écrire les informations de la catégorie pour [%s] dans [%s]"
 
 #: ../lib/gis/quant_io.c:91
 #, c-format
 msgid "The floating data range for %s@%s is empty"
-msgstr "L'intervalle de donnÃ©es flottantes pour %s@%s est vide"
+msgstr "L'intervalle de données flottantes pour %s@%s est vide"
 
 #: ../lib/gis/quant_io.c:100
 #, c-format
 msgid "The integer data range for %s@%s is empty"
-msgstr "L'intervalle des donnÃ©es entiÃ¨res pour %s@%s est vide"
+msgstr "L'intervalle des données entières pour %s@%s est vide"
 
 #: ../lib/gis/quant_io.c:171
 #, c-format
@@ -1313,12 +1306,12 @@ msgstr "fichier de quatification [%s] dans le mapset [%s] %s"
 #: ../lib/gis/quant_rw.c:154
 #, c-format
 msgid "Cannot write quant rules: map %s is integer"
-msgstr "Impossible d'Ã©crire les rÃ¨gles de quantitÃ©: la carte %s est un entier"
+msgstr "Impossible d'écrire les règles de quantité: la carte %s est un entier"
 
 #: ../lib/gis/quant_rw.c:164
 #, c-format
 msgid "Cannot write quant rules for map %s"
-msgstr "Impossible d'Ã©crire la rÃ¨gle de quantitÃ© pour la carte %s"
+msgstr "Impossible d'écrire la règle de quantité pour la carte %s"
 
 #: ../lib/gis/range.c:153
 msgid "Too many open files"
@@ -1337,7 +1330,7 @@ msgstr "impossible de lire le fichier de limites pour [%s dans %s]"
 #: ../lib/gis/range.c:303 ../lib/gis/range.c:341
 #, c-format
 msgid "can't write range file for [%s in %s]"
-msgstr "impossible d'Ã©crire le fichier de limites pour [%s dans %s]"
+msgstr "impossible d'écrire le fichier de limites pour [%s dans %s]"
 
 #: ../lib/gis/rd_cellhd.c:75
 msgid "duplicate projection field"
@@ -1373,11 +1366,11 @@ msgstr "multiples occurences du champ Ouest"
 
 #: ../lib/gis/rd_cellhd.c:155
 msgid "duplicate e-w resolution field"
-msgstr "multiples occurences du champ de rÃ©solution e-o"
+msgstr "multiples occurences du champ de résolution e-o"
 
 #: ../lib/gis/rd_cellhd.c:166
 msgid "duplicate n-s resolution field"
-msgstr "multiples occurences n-s dans le champ de rÃ©solution"
+msgstr "multiples occurences n-s dans le champ de résolution"
 
 #: ../lib/gis/rd_cellhd.c:177
 msgid "duplicate rows field"
@@ -1436,19 +1429,19 @@ msgstr "impossible de deviner le format"
 #: ../lib/gis/readsites.c:49
 #, c-format
 msgid "decimal field %i not present in sites file"
-msgstr "le champ dÃ©cimal %i n'est pas prÃ©sent dans le fichier de sites"
+msgstr "le champ décimal %i n'est pas présent dans le fichier de sites"
 
 #: ../lib/gis/readsites.c:55
 msgid ""
 "I'm finding records that do not have a floating point attributes (fields "
 "prefixed with '%')."
 msgstr ""
-"J'ai trouvÃ© des enregistrements sans attribut en virgule flottante (champs "
-"prÃ©fixÃ©s par '%')"
+"J'ai trouvé des enregistrements sans attribut en virgule flottante (champs "
+"préfixés par '%')"
 
 #: ../lib/gis/readsites.c:60 ../lib/gis/readsites.c:69
 msgid "cannot allocate memory"
-msgstr "Allocation mÃ©moire impossible"
+msgstr "Allocation mémoire impossible"
 
 #: ../lib/gis/readsites_xyz.c:76
 msgid "Unable to guess site format!"
@@ -1472,11 +1465,11 @@ msgstr "Index de l'attribut double en dehors des limites"
 
 #: ../lib/gis/readsites_xyz.c:106
 msgid "No string attributes in site_list"
-msgstr "Pas d'attribut chaÃ®ne de caractÃ¨re dans site_list"
+msgstr "Pas d'attribut chaîne de caractère dans site_list"
 
 #: ../lib/gis/readsites_xyz.c:109
 msgid "String attribute index out of range"
-msgstr "Index de l'attribut chaÃ®ne en dehors des limites"
+msgstr "Index de l'attribut chaîne en dehors des limites"
 
 #: ../lib/gis/readsites_xyz.c:116
 msgid "Unknown attribute type in call to G_readsites_xyz()!\n"
@@ -1489,39 +1482,39 @@ msgstr "Echec lors de la conversion de l'attribut."
 #: ../lib/gis/reclass.c:119
 #, c-format
 msgid "Too many reclass categories for [%s in %s]"
-msgstr "Trop de catÃ©gories reclassification pour [%s dans %s]"
+msgstr "Trop de catégories reclassification pour [%s dans %s]"
 
 #: ../lib/gis/reclass.c:122
 #, c-format
 msgid "Illegal reclass format in header file for [%s in %s]"
 msgstr ""
-"Format de reclassification illÃ©gal dans l'en-tÃªte de fichier pour [%s dans %"
+"Format de reclassification illégal dans l'en-tête de fichier pour [%s dans %"
 "s]"
 
 #: ../lib/gis/reclass.c:199
 msgid "Illegal reclass request"
-msgstr "RequÃªte de reclassification illÃ©gale"
+msgstr "Requête de reclassification illégale"
 
 #: ../lib/gis/reclass.c:204
 msgid "Illegal reclass type"
-msgstr "Type de reclassification illÃ©gal"
+msgstr "Type de reclassification illégal"
 
 #: ../lib/gis/reclass.c:211
 #, c-format
 msgid "Unable to create header file for [%s in %s]"
-msgstr "Impossible de crÃ©er l'en-tÃªte de fichier pour [%s dans %s]"
+msgstr "Impossible de créer l'en-tête de fichier pour [%s dans %s]"
 
 #: ../lib/gis/reclass.c:262
 #, c-format
 msgid "Unable to create dependency file in [%s in %s]"
-msgstr "Impossible de crÃ©er le fichier de dÃ©pendance dans [%s dans %s]"
+msgstr "Impossible de créer le fichier de dépendance dans [%s dans %s]"
 
 #: ../lib/gis/set_window.c:66
 msgid ""
 "G_set_window(): projection/zone differs from that of currently open raster "
 "files"
 msgstr ""
-"G_set_window(): projection/zone diffÃ¨rent de ceux prÃ©sents dans le fichier "
+"G_set_window(): projection/zone diffèrent de ceux présents dans le fichier "
 "raster actuellement ouvert"
 
 #: ../lib/gis/spawn.c:56
@@ -1530,11 +1523,11 @@ msgstr "trop d'arguments"
 
 #: ../lib/gis/spawn.c:78 ../lib/gis/spawn.c:390
 msgid "unable to create a new process"
-msgstr "impossible de crÃ©er un nouveau processus"
+msgstr "impossible de créer un nouveau processus"
 
 #: ../lib/gis/spawn.c:88 ../lib/gis/spawn.c:413
 msgid "unable to execute command"
-msgstr "impossible d'exÃ©cuter la commande"
+msgstr "impossible d'exécuter la commande"
 
 #: ../lib/gis/spawn.c:164 ../lib/gis/spawn.c:172
 #, c-format
@@ -1544,7 +1537,7 @@ msgstr "G_spawn: impossible de restaurer le signal %d"
 #: ../lib/gis/spawn.c:205
 #, c-format
 msgid "G_spawn: unable to reset signal %d"
-msgstr "G_spawn: impossible de rÃ©initialiser le signal %d"
+msgstr "G_spawn: impossible de réinitialiser le signal %d"
 
 #: ../lib/gis/spawn.c:215
 #, c-format
@@ -1559,7 +1552,7 @@ msgstr "G_spawn: impossible d'ignorer le signal %d"
 #: ../lib/gis/spawn.c:235
 #, c-format
 msgid "G_spawn: unable to unblock signal %d"
-msgstr "G_spawn: impossible de dÃ©bloquer le signal %d"
+msgstr "G_spawn: impossible de débloquer le signal %d"
 
 #: ../lib/gis/spawn.c:261
 #, c-format
@@ -1574,22 +1567,22 @@ msgstr "G_spawn: impossible de dupliquer le descripteur %d vers %d"
 #: ../lib/gis/spawn.c:405
 #, c-format
 msgid "unable to change directory to %s"
-msgstr "impossible de changer de rÃ©pertoire pour aller dans %s"
+msgstr "impossible de changer de répertoire pour aller dans %s"
 
 #: ../lib/gis/system.c:67
 #, c-format
 msgid "WARNING: can not create a new process\n"
-msgstr "ATTENTION: impossible de crÃ©er un nouveau processus\n"
+msgstr "ATTENTION: impossible de créer un nouveau processus\n"
 
 #: ../lib/gis/timestamp.c:173
 #, c-format
 msgid "Can't create timestamp file for %s map %s in mapset %s"
-msgstr "Impossible de crÃ©er le fichier de timestamp pour %s dans le mapset %s"
+msgstr "Impossible de créer le fichier de timestamp pour %s dans le mapset %s"
 
 #: ../lib/gis/timestamp.c:183
 #, c-format
 msgid "Invalid timestamp specified for %s map %s in mapset %s"
-msgstr "Le timestamp spÃ©cifiÃ© pour la carte %s est invalide dans le mapset %s"
+msgstr "Le timestamp spécifié pour la carte %s est invalide dans le mapset %s"
 
 #: ../lib/gis/timestamp.c:208
 #, c-format
@@ -1606,7 +1599,7 @@ msgstr "Fichier de timestamp invalide pour la carte %s dans le mapset %s"
 #: ../lib/gis/view.c:164
 #, c-format
 msgid "Unable to open %s for writing"
-msgstr "Impossible d'ouvrir %s en Ã©criture"
+msgstr "Impossible d'ouvrir %s en écriture"
 
 #: ../lib/gis/view.c:253 ../lib/gis/view.c:472
 #, c-format
@@ -1616,13 +1609,13 @@ msgstr "Impossible d'ouvrir %s en lecture"
 #: ../lib/gis/view.c:458
 #, c-format
 msgid "GRASS window when view was saved:\n"
-msgstr "fenÃªtre GRASS quand la vue a Ã©tÃ© sauvegardÃ©e:\n"
+msgstr "fenêtre GRASS quand la vue a été sauvegardée:\n"
 
 #: ../lib/gis/view.c:544
 #, c-format
 msgid " Window saved in \"%s\" is completely outside of current GRASS window."
 msgstr ""
-"La fenÃªtre sauvegardÃ©e dans \"%s\" est complÃ¨tement en dehors de la fenÃªtre "
+"La fenêtre sauvegardée dans \"%s\" est complètement en dehors de la fenêtre "
 "GRASS courante."
 
 #: ../lib/gis/view.c:548
@@ -1630,22 +1623,22 @@ msgstr ""
 msgid ""
 " Only %d%% of window saved in \"%s\" overlaps with current GRASS window."
 msgstr ""
-" Seulement %d%% de la fenÃªtre sauvegardÃ©e dans \"%s\" chevauche(nt) la "
-"fenÃªtre GRASS courante."
+" Seulement %d%% de la fenêtre sauvegardée dans \"%s\" chevauche(nt) la "
+"fenêtre GRASS courante."
 
 #: ../lib/proj/ellipse.c:85
 #, c-format
 msgid "invalid ellipsoid %s in file"
-msgstr "l'ellipsoÃ¯de %s du fichier est invalide"
+msgstr "l'ellipsoïde %s du fichier est invalide"
 
 #: ../lib/proj/ellipse.c:128
 msgid "No ellipsoid info given in file"
-msgstr "Le fichier ne contient pas d'information sur l'ellipsoÃ¯de"
+msgstr "Le fichier ne contient pas d'information sur l'ellipsoïde"
 
 #: ../lib/raster/io.c:190
 #, c-format
 msgid "Unable to allocate memory\n"
-msgstr "Allocation mÃ©moire impossible\n"
+msgstr "Allocation mémoire impossible\n"
 
 #: ../lib/raster/io.c:211
 #, c-format
@@ -1655,23 +1648,23 @@ msgstr "ERREUR %s du driver graphique.\n"
 #: ../lib/raster/io.c:282
 #, c-format
 msgid "No graphics monitor has been selected for output.\n"
-msgstr "Aucun moniteur graphique n'a Ã©tÃ© sÃ©lectionnÃ© pour l'affichage.\n"
+msgstr "Aucun moniteur graphique n'a été sélectionné pour l'affichage.\n"
 
 #: ../lib/raster/io.c:283
 #, c-format
 msgid "Please run \"d.mon\" to select a graphics monitor.\n"
-msgstr "Veuillez lancer \"d.mon\" pour sÃ©lectionner un moniteur graphique.\n"
+msgstr "Veuillez lancer \"d.mon\" pour sélectionner un moniteur graphique.\n"
 
 #: ../lib/raster/io.c:293
 #, c-format
 msgid "No such graphics monitor as <%s>.\n"
-msgstr "Aucun moniteur graphique correspondant Ã  <%s>.\n"
+msgstr "Aucun moniteur graphique correspondant à <%s>.\n"
 
 #: ../lib/raster/io.c:294
 #, c-format
 msgid "Please run \"d.mon\" to select a valid graphics monitor.\n"
 msgstr ""
-"Veuillez lancer \"d.mon\" pour sÃ©lectionner un moniteur graphique valide.\n"
+"Veuillez lancer \"d.mon\" pour sélectionner un moniteur graphique valide.\n"
 
 #: ../lib/raster/io.c:306
 #, c-format
@@ -1681,7 +1674,7 @@ msgstr "Echec lors de l'obtention du nom de socket pour le moniteur <%s>.\n"
 #: ../lib/raster/io.c:319
 #, c-format
 msgid "No socket to connect to for monitor <%s>.\n"
-msgstr "Aucune socket oÃ¹ se connecter pour le moniteur <%s>.\n"
+msgstr "Aucune socket où se connecter pour le moniteur <%s>.\n"
 
 #: ../lib/raster/io.c:346
 #, c-format
@@ -1689,8 +1682,8 @@ msgid ""
 "Socket is already in use or not accepting connections.\n"
 "Use d.mon to select a monitor\n"
 msgstr ""
-"La socket est dÃ©jÃ  utilisÃ©e ou n'accepte pas les connexions.\n"
-"Utilisez d.mon pour sÃ©lectionner un moniteur\n"
+"La socket est déjà utilisée ou n'accepte pas les connexions.\n"
+"Utilisez d.mon pour sélectionner un moniteur\n"
 
 #: ../lib/raster/io.c:354
 #, c-format
@@ -1698,14 +1691,14 @@ msgid ""
 "Trying to connect to something not a socket.\n"
 "Probably program error.\n"
 msgstr ""
-"Tentative de connexion Ã  quelque chose qui n'est pas une socket.\n"
-"Certaine dÃ» Ã  une erreur du programme.\n"
+"Tentative de connexion à quelque chose qui n'est pas une socket.\n"
+"Certainement dû à une erreur du programme.\n"
 
 #: ../lib/raster/io.c:361
 #, c-format
 msgid "Connect attempt timed out. Probably an error with the server.\n"
 msgstr ""
-"DÃ©lai de connexion dÃ©passÃ©. Certainement dÃ» Ã  un problÃ¨me avec le serveur.\n"
+"Délai de connexion dépassé. Certainement dû à un problème avec le serveur.\n"
 
 #: ../lib/raster/io.c:368
 #, c-format
@@ -1737,7 +1730,7 @@ msgstr "Erreur - Le moniteur <%s> est en cours d'utilisation.\n"
 #: ../lib/raster/io.c:410
 #, c-format
 msgid "Error - Monitor <%s> is in use by %s.\n"
-msgstr "Erreur - Le moniteur <%s> est utilisÃ© par %s.\n"
+msgstr "Erreur - Le moniteur <%s> est utilisé par %s.\n"
 
 #: ../lib/raster/io.c:420
 #, c-format
@@ -1747,37 +1740,37 @@ msgstr "Erreur - Impossible de bloquer le moniteur <%s>.\n"
 #: ../lib/raster/io.c:434
 #, c-format
 msgid "Error - Can't set up pipe to graphics device.\n"
-msgstr "Erreur - Impossible de crÃ©er un tube vers la sortie graphique.\n"
+msgstr "Erreur - Impossible de créer un tube vers la sortie graphique.\n"
 
 #: ../lib/raster/io.c:440
 #, c-format
 msgid "Error - Graphics monitor <%s> not running!\n"
-msgstr "Erreur - Le moniteur graphique <%s> n'est pas lancÃ©!\n"
+msgstr "Erreur - Le moniteur graphique <%s> n'est pas lancé!\n"
 
 #: ../lib/raster/io.c:444
 #, c-format
 msgid "Please start graphics monitor <%s>.\n"
-msgstr "Veuillez dÃ©marrer le moniteur graphique <%s>.\n"
+msgstr "Veuillez démarrer le moniteur graphique <%s>.\n"
 
 #: ../lib/raster/io.c:509
 #, c-format
 msgid "ERROR - eof from graphics monitor.\n"
-msgstr "ERREUR - le moniteur graphique a renvoyÃ© eof.\n"
+msgstr "ERREUR - le moniteur graphique a renvoyé eof.\n"
 
 #: ../lib/raster/io.c:526
 #, c-format
 msgid "Warning - no response from graphics monitor <%s>.\n"
-msgstr "Attention - le moniteur graphique <%s> ne rÃ©pond pas.\n"
+msgstr "Attention - le moniteur graphique <%s> ne répond pas.\n"
 
 #: ../lib/raster/io.c:528
 #, c-format
 msgid "Check to see if the mouse is still active.\n"
-msgstr "VÃ©rifiez que la souris est toujours active.\n"
+msgstr "Vérifiez que la souris est toujours active.\n"
 
 #: ../lib/raster/io.c:531
 #, c-format
 msgid "ERROR - no response from graphics monitor <%s>.\n"
-msgstr "ERREUR - le moniteur graphique <%s> ne rÃ©pond pas.\n"
+msgstr "ERREUR - le moniteur graphique <%s> ne répond pas.\n"
 
 #: ../lib/raster/parse_mon.c:29
 #, c-format
@@ -1788,15 +1781,15 @@ msgstr "ERREUR: GISBASE sans valeur\n"
 #, c-format
 msgid "Illegal vector map name <%s>. May not contain '.' or 'NULL'.\n"
 msgstr ""
-"Nom de carte vecteur illÃ©gal <%s>. Ne doit contenir ni '.', ni 'NULL'.\n"
+"Nom de carte vecteur illégal <%s>. Ne doit contenir ni '.', ni 'NULL'.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:29
 #, c-format
 msgid "Illegal vector map name <%s>. Must start with a letter.\n"
-msgstr "Nom de carte vecteur illÃ©gal <%s>. Doit commencer par une lettre.\n"
+msgstr "Nom de carte vecteur illégal <%s>. Doit commencer par une lettre.\n"
 
 #: ../lib/vector/Vlib/legal_vname.c:35
 #, c-format
 msgid "Illegal vector map name <%s>. Character <%c> not allowed.\n"
 msgstr ""
-"Nom de carte vecteur illÃ©gal <%s>. Le caractÃ¨re <%c> n'est pas autorisÃ©.\n"
+"Nom de carte vecteur illégal <%s>. Le caractère <%c> n'est pas autorisé.\n"

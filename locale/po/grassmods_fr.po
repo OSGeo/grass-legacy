@@ -7,39 +7,39 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods fr 5.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 09:13+0200\n"
-"PO-Revision-Date: 2004-09-23 17:53+0200\n"
-"Last-Translator: Emmanuel Saracco <esaracco@users.labs.libre-entreprise.org>\n"
+"POT-Creation-Date: 2004-09-28 07:47+0200\n"
+"PO-Revision-Date: 2004-09-28 07:46+0200\n"
+"Last-Translator: Emmanuel Saracco <esaracco@users.labs.libre-entreprise>\n"
 "Language-Team: French <grass5@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../raster/r.colors/rules.c:45
 #, c-format
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
 msgstr ""
-"Entrez une rÃ¨gle, \"end\" une fois terminÃ©, \"help\" si vous en avez "
+"Entrez une règle, \"end\" une fois terminé, \"help\" si vous en avez "
 "besoin.\n"
 
 #: ../raster/r.colors/rules.c:47
 #, c-format
 msgid "fp: Data range is %.25f to %.25f\n"
-msgstr "fp: L'intervalle va de %.25f Ã  %.25f\n"
+msgstr "fp: L'intervalle va de %.25f à %.25f\n"
 
 #: ../raster/r.colors/rules.c:49
 #, c-format
 msgid "Data range is %ld to %ld\n"
-msgstr "L'intervalle va de %ld Ã  %ld\n"
+msgstr "L'intervalle va de %ld à %ld\n"
 
 #: ../raster/r.colors/rules.c:110 ../raster/r.colors/rules.c:114
 msgid "Your color rules do not cover the whole range of data!"
-msgstr "Vos rÃ¨gles de couleurs n'englobent pas la totalitÃ© des donnÃ©es!"
+msgstr "Vos règles de couleurs n'englobent pas la totalité des données!"
 
 #: ../raster/r.colors/rules.c:188
 #, c-format
 msgid "Enter a rule in one of these formats:\n"
-msgstr "Entrez une rÃ¨gle dans l'un des formats suivants:\n"
+msgstr "Entrez une règle dans l'un des formats suivants:\n"
 
 #: ../raster/r.colors/rules.c:190
 #, c-format
@@ -59,12 +59,12 @@ msgstr " nv couleur\n"
 #: ../raster/r.colors/rules.c:193
 #, c-format
 msgid " default color\n"
-msgstr " couleur par dÃ©faut\n"
+msgstr " couleur par défaut\n"
 
 #: ../raster/r.colors/rules.c:194
 #, c-format
 msgid "color can be one of:\n"
-msgstr "la couleur peut Ãªtre l'une de celles-ci:\n"
+msgstr "la couleur peut être l'une de celles-ci:\n"
 
 #: ../raster/r.colors/rules.c:196
 #, c-format
@@ -84,7 +84,7 @@ msgstr ""
 #: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
 #, c-format
 msgid "** rule is not added **\n"
-msgstr "** la rÃ¨gle n'a pas Ã©tÃ© ajoutÃ©e **\n"
+msgstr "** la règle n'a pas été ajoutée **\n"
 
 #: ../raster/r.colors/rules.c:253
 #, c-format
