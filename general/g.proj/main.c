@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
        
         wktstring = GPJ_grass_to_wkt(projinfo, projunits, esristyle->answer,
 				     !(dontprettify->answer));
-        fprintf(stdout, wktstring);       
+        fprintf(stdout, "%s\n", wktstring);       
         G_free(wktstring);       
     }	
 #endif   
@@ -119,6 +119,7 @@ int main(int argc, char *argv[])
 	    else
 	        fputc(*i, stdout);
 	}       
+        fputc('\n', stdout);
         G_free(projstring);
     }
 
