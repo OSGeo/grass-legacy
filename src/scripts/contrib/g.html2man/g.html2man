@@ -93,6 +93,11 @@ sub DoEscape {
   s#&gt;#>#i;
   s#&lt;#<#i;
   s#&amp;#&#i;
+  s#&quot;#"#i;
+  s#&nbsp;# #i;
+  s#&copy;#©#i;
+  s#&auml;#ä#i;
+  s#&uuml;#ü#i;
 }
 
 sub DoSection {
