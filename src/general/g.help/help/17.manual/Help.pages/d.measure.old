@@ -1,0 +1,6 @@
+
+\d.measure.old\ - Measures the lengths and areas of features
+drawn by the user in the active display frame on the graphics monitor.
+Corresponds to GRASS 4.0 version of d.measure.
+
+(GRASS Display Program)
