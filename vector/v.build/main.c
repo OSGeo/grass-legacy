@@ -34,7 +34,7 @@ main (int argc, char *argv[])
     
     err_opt = G_define_standard_option(G_OPT_V_OUTPUT);
     err_opt->key = "error";
-    err_opt->description  = "Name of vector where errors are written";
+    err_opt->description  = "Name of vector map where erroneous vectors are written to";
     err_opt->required = NO;
     
     opt = G_define_option();

@@ -3,18 +3,23 @@
 <em>v.build</em> builds GRASS support files for (binary)
 GRASS vector data files.  These support files supply
 topology and category information that are needed by other
-GRASS programs
+GRASS programs.<BR>
+GRASS is generating these support files automatically,
+only in rare cases the user has to (re)build them.
+
 
 <h2>NOTES</h2>
 
 <em>v.build</em> creates support files only for binary
 vector files located in the user's current mapset. If binary file 
-is located in another mapset, you need to specify this.
+is located in another mapset, you need to specify this:
 
 <p>
 
 <b>v.build map=</b><em>geology@PERMANENT</em> 
-
+<P>
+In case of errors, the user can optionally generate an error
+vector map containing the erroneous vectors for later inspection.
 
 <h2>SEE ALSO</h2>
 
