@@ -1,0 +1,15 @@
+# setup src for BSD systems
+cp BSD/*.f src
+cp BSD/*.d src
+cat <<endmake >Makefile
+# definitions for BSD rim
+PILE = f77
+EXTRA = 
+LIBEXTRA = 
+RANLIB=ranlib
+AR = ar cqs
+RAN = ranlib
+endmake
+cp Makefile src
+cat MAKEFILE >>Makefile
+cat src/MAKEFILE >>src/Makefile
