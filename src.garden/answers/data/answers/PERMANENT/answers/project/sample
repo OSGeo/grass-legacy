@@ -1,0 +1,39 @@
+ANSWERS on GRASS Project Manager (v 1.0) Status File
+This file is written and read by the Project Manager
+programs to record the current status of a project
+EDITING THIS FILE COULD HAVE UNPREDICTABLE EFFECTS
+
+rewerts
+324
+100
+1
+mask:  a.wshd in PERMANENT
+1
+soils:  a.soils in PERMANENT
+1
+cover:  a.cover in PERMANENT
+1
+aspect:  a.aspect in PERMANENT
+slope:  a.slope in PERMANENT
+1
+rain:  none in nowhere
+event:  rain7
+1
+outlet: row 16 col 6
+1
+tile: all in watershed
+1
+channel:  a.channel in PERMANENT
+1
+channel slope:  none in watershed
+1
+1:  none in nowhere
+2:  none in nowhere
+3:  a.waterway in PERMANENT
+4:  none in nowhere
+1
+1
+deposit:  sample.deposit
+1
+loss:  sample.loss
+0
