@@ -152,7 +152,7 @@ int main (int argc, char **argv)
   {
     if ((Vect_open_old (&Map, old->answer, mapset)) < 2)
     {
-      sprintf (errmsg, "Could not open vector file <%s>\n", dig_name);
+      sprintf (errmsg, "Could not open vector file <%s> (run v.support to build topology)\n", dig_name);
       G_fatal_error (errmsg);
     }
     out = G_fopen_sites_new (site_name);
