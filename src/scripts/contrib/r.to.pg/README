@@ -1,0 +1,11 @@
+# r.to.pg:
+# exports GRASS raster map to PostgreSQL database
+# supports only one value, no attribute cats
+#
+# BUG: celltable needs to be exchanged to user's wish. But how
+#      to tell "awk" about it?
+#      Problem is to use environment variables within "awk".
+#
+# Jul 19 17:42:19 MEST 2000
+# by  Markus Neteler
+#     neteler@geog.uni-hannover.de

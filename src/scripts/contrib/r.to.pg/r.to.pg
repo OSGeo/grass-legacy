@@ -1,0 +1,98 @@
+#!/bin/sh
+
+# r.to.pg:
+# exports GRASS raster map to PostgreSQL database
+# supports only one value, no attribute cats
+#
+# BUG: celltable needs to be exchanged to user's wish. But how
+#      to tell "awk" about it?
+#      Problem is to use environment variables within "awk".
+#
+# Jul 19 17:42:19 MEST 2000
+# by  Markus Neteler
+#     neteler@geog.uni-hannover.de
+
+TMP=/tmp
+
+if test "$GISBASE" = ""; then
+echo "You must be in GRASS to run this program."
+exit
+fi
+
+which psql > /dev/null
+if [ $? != 0 ]; then
+ echo "ERROR: psql not found. Required for PostgreSQL import!"
+ exit
+fi
+
+if [ "$#" -lt 1 ]; then
+ echo "r.to.pg exports GRASS raster map to PostgreSQL database"
+ echo "        into a one column table (raster values only)."
+ echo "Usage:"
+ echo "        r.to.pg rastermap"
+ exit
+fi
+
+#replacing eventual dots from table name to avoid name conflicts:
+FIELDNAME=`echo $1 | sed 's/\./\_/'`
+
+# check for database settings
+DB_DATABASE=`cat ~/.grassrc5 | grep DB_DATABASE| cut -d' ' -f2`
+if [ "DB_DATABASE" == "" ]
+then
+ echo "Please select database with g.select.db or db.connect"
+ exit
+fi
+echo "Import into PostgreSQL database: $DB_DATABASE..."
+echo ""
+
+#BUG: "celltable" should be a selectable name. But how to manage in awk
+#     below???
+
+# start writing SQL file:
+echo "CREATE TABLE celltable (" > /tmp/pgimport.sql
+echo "    $FIELDNAME float );"  >> /tmp/pgimport.sql
+
+psql -q -d $DB_DATABASE < /tmp/pgimport.sql
+if [ $? != 0 ]; then
+ echo "Table celltable already exists."
+ echo "Replace existing table [y/n]?"
+ read ans
+ if [ "$ans" = "Y" -o "$ans" = "y" ]
+  then
+     SQL_COMMAND="drop table celltable;"
+     echo $SQL_COMMAND | psql -q -d $DB_DATABASE
+     echo "Replacing table..."
+     psql -q -d $DB_DATABASE < /tmp/pgimport.sql
+     rm -f /tmp/pgimport.sql
+  else
+     echo "Stopped. Existing table not replaced." 
+     rm -f /tmp/pgimport.sql
+     exit
+  fi
+fi
+
+#get the raster values and write out SQL:
+r.stats -1 nv='-9999' in=$1 | awk 'BEGIN{}
+  NR == 1{}
+         {printf "INSERT INTO %s VALUES ( %.5f);\n", "celltable", $1  >> "/tmp/pgimport.sql"}
+END{}'
+
+# proceeding with field entries:
+echo "Importing into PostgreSQL table: celltable...."
+psql -q -d $DB_DATABASE < /tmp/pgimport.sql
+#check the exit status:
+if [ $? != 0 ]; then
+ echo "ERROR. Stopped."
+ exit
+fi
+rm -f /tmp/pgimport.sql
+
+echo "Finished import into PostgreSQL."
+echo "Created table celltable with column $FIELDNAME"
+
+#check number of imported values:
+#not working yet (some shell problem with asterix)
+#echo "Number of imported cell values (= rows in celltable):
+#SQL_COMMAND="select count(*) from celltable;"
+#echo $SQL_COMMAND | psql -q -d $DB_DATABASE
