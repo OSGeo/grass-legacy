@@ -48,6 +48,7 @@ LIB_OBJS = \
     color_ryg.o \
     color_set.o \
     color_shift.o \
+    color_str.o \
     color_wave.o \
     color_write.o \
     commas.o\

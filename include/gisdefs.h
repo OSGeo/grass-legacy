@@ -321,6 +321,9 @@ int G_set_default_color(int, int, int, struct Colors *);
 int G_shift_colors(int, struct Colors *);
 int G_shift_d_colors(DCELL, struct Colors *);
 
+/* color_str.c */
+int G_str_to_color (char *, int *, int *, int *);
+
 /* color_wave.c */
 int G_make_wave_colors(struct Colors *, CELL, CELL);
 int G_make_wave_fp_colors(struct Colors *, DCELL, DCELL);
