@@ -1,9 +1,11 @@
 #include <stdio.h>
 
+#define QUOTE(x) #x
+
 int main(int argc, char *argv[])
 {
     fprintf (stdout, "GRASS %s (%s) %s\n", 
-	    VERSION_NUMBER, VERSION_DATE, VERSION_UPDATE_PKG );
+       QUOTE(VERSION_NUMBER), QUOTE(VERSION_DATE), QUOTE(VERSION_UPDATE_PKG) );
     fprintf (stdout, "\n");
     fprintf (stdout, "Copyright and License Statement\n");
     fprintf (stdout, "\n");
