@@ -90,12 +90,18 @@ int label_mlines (struct Map_info *map, int cat)
 			
 			/* if line is labelled a different value then continue */
 			/* this needs to be cleaned up to allow RE-labelling of cont lines */
+
+/*
+#define RELABEL
+*/
+#ifndef RELABEL
 			if (cat)	/* else UNLABELLING */
 			    if (LINE_LABELED (Line) && cat != map->Att[Line->att].cat)
 			    {
 				lines[i][j] = 0;
 				break;
 			    }
+#endif
 		    }
 
 
@@ -125,6 +131,10 @@ int label_mlines (struct Map_info *map, int cat)
 		}
 	    }
 	    V_flush ();
+/*
+#define CONFIRM
+*/
+#ifdef CONFIRM
 	    if (pass == 1)
 	    {
 		char *str;
@@ -134,6 +144,9 @@ int label_mlines (struct Map_info *map, int cat)
 		    str = "Un-label these lines?";
 		doit = mouse_yes_no (str);
 	    }
+#else
+	    doit = 1;
+#endif
 	}
     }
 }
