@@ -1075,18 +1075,21 @@ menu_build 1 .main_menu {
 				"Inverse distance weighted from sites" "" {
                 		"source $env(TCLTKGRASSBASE)/module/s.surf.idw"
             		}
-				"Inverse distance weighted from raster (Lat./Long. locations)" "" {
+				"Inverse distance weighted from raster" "" {
                 		"source $env(TCLTKGRASSBASE)/module/r.surf.idw"
             		}
-            		"Inverse distance weighted from raster (non-Lat./Long. loc.)" "" {
+            	"Inverse distance weighted from raster (alternate method)" "" {
                 		"source $env(TCLTKGRASSBASE)/module/r.surf.idw2"
             		}
-            		"Regularized spline tension from sites" "" {
+            	"Regularized spline tension from sites" "" {
                 		"source $env(TCLTKGRASSBASE)/module/s.surf.rst"
+            		}
+            	"Regularized spline tension from vector points" "" {
+                		"source $env(TCLTKGRASSBASE)/module/v.surf.rst"
             		}
 			}
 			"Interpolate surfaces from contours" "" {
-            		"Regularized spline tension from raster contours" "" {
+            		"Interpolate from raster contours" "" {
                 		"source $env(TCLTKGRASSBASE)/module/r.surf.contour"
             		}
             		"Regularized spline tension from vector contours" "" {
