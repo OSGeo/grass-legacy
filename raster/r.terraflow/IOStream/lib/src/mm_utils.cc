@@ -53,8 +53,7 @@ void
 LOG_avail_memo() {
   size_t sz_avail=0;
   sz_avail = MM_manager.memory_available();
-  cout << form("available memory: %.2fMB\n", sz_avail/(float)(1<<20));
-  cout.flush();
+  printf("available memory: %.2fMB\n", sz_avail/(float)(1<<20));
 }
 
 size_t
