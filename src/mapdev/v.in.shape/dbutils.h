@@ -37,6 +37,7 @@
 /* Functions */
 int vertRegister( BTREE *, partDescript *, int );
 char *calcKeyValue( pntDescript *, float, int, double, double );
+char *calcKeyValue2(double, double, float, int, double, double);
 
 /* Helper Function Prototypes */
 
@@ -50,5 +51,6 @@ int proc_max_shapes(int, int *);
 int proc_test_dbf( int, int *, DBFHandle *, char *, int *);
 int allocate_recs(duff_recs_t *, int);
 int add_rec_spec(duff_recs_t *, int, int);
+int key_outside_bounds(char *, char *);
 
 #endif /* _DB_UTILS_TOPO_H */

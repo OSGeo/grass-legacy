@@ -30,7 +30,7 @@
 #include "dbutils.h"
 
 
-int set_bounds(SHPHandle hs) {
+int set_bounds(SHPHandle hs, region *bb) {
 
 
   /* Main structures */
@@ -51,10 +51,10 @@ int set_bounds(SHPHandle hs) {
 
   SHPGetInfo(hs, dummy1, dummy2, minvals, maxvals);
 
-  minx = minvals[0];
-  miny = minvals[1];
-  maxx = maxvals[0];
-  maxy = maxvals[1];
+  bb->w = minx = minvals[0];
+  bb->s = miny = minvals[1];
+  bb->e = maxx = maxvals[0];
+  bb->n = maxy = maxvals[1];
 
   G_free(minvals);
   G_free(maxvals);

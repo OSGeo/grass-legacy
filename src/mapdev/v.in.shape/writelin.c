@@ -34,7 +34,7 @@
 /* Create a repository of segments for inclusion into GRASS
    database */
 
-int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
+int vbase2segd( segmentList *seg0, BTREE *btr0, region *ubb ) {
 
   /* local variables */
   int i0, j0, k0, k1, l0;
@@ -53,13 +53,18 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 
   double phi; /* Temp angle var */
   double xlen0, xlen1, ylen0, ylen1;
+  float sn0;
+  double east0, north0, west0, south0;
+  int digits0;
 
   char *tmpKey;
   void *tmpData;
+  char chkKey[33];
 
   int track_line = 0;
   int chaining;  /* flag set while tracking a segment is active */
   int isdone;    /* flag to avoid extracting further vertices */
+  int no_check = 0;
   
   /* Possibly required co-ordinates */
   double xstart, xmid, xend, ystart, ymid, yend;
@@ -67,6 +72,7 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 
   pntDescript *pinit, *pcurr, *pnext = NULL, *pprev, *pstart, *pnew;
   pntDescript *pdfr0, *pdfr1, *pdfr2, *pmidd, *poffs;
+
 
   /* Initialise data holders */
   tmpKey = (char *)malloc( 33 );
@@ -83,6 +89,15 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
     minangle = 1.745e-4;
   }
   
+  if( procSnapDistance( GET_VAL, &sn0 ) != 0 ) {
+    fprintf( stderr, "Could not retrieve snap distance. Setting default\n" );
+    minangle = 0.000001;
+  }
+  
+  if( proc_key_params( GET_VAL, &digits0, &west0, &south0 ) != 0 ) {
+    fprintf( stderr, "Could not retrieve map parameters. Will try to do without.\n" );
+    no_check = 1;
+  }
 
   /* Rewind database to root */
   btree_rewind( btr0 );
@@ -93,6 +108,19 @@ int vbase2segd( segmentList *seg0, BTREE *btr0 ) {
 
 
     pntDescript **data1;
+
+    /* Break out if the key is outside the accepted bounds  */
+
+    /*
+    if(!no_check) {
+      strncpy(chkKey, calcKeyValue2(ubb->e, ubb->n, sn0, 16 - digits0, west0, south0), 32);
+      chkKey[32] = '\0';
+      if(key_outside_bounds(chkKey, tmpKey) ) {
+	fprintf(stderr, "Tried to access invalid key. Map is probably complete.\n");
+	continue;
+      }
+    }
+    */
 
     data1 = (pntDescript **)tmpData;
     pcurr = *data1;

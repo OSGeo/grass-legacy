@@ -64,7 +64,8 @@ double scale = 1.0;
 int main( int   argc, char *argv[])
 {
     SHPHandle	hShapeDB;
-    DBFHandle   hDBF, hDB1 = NULL;
+    DBFHandle   hDBF, hDB1 = NULL, hCat = NULL;
+    region BB;
     duff_recs_t *drec0;
     double	adfMinBound[4], adfMaxBound[4];
     int		nShapeType, nShapes, iShape, iPart, iArc, ia;
@@ -89,13 +90,16 @@ int main( int   argc, char *argv[])
     char    AttText[512];    /* added MN 10/99 */
     int attval;
     int lab_field = -1;
+    int cat_wide, cat_decs;
+    char cat_name[17];
     int old_indx;
+    int orig0;
 
     int unity = 1, zero = 0;
     int f_indx = -1;
     char s_field[512], s_val[512];
 
-    DBFFieldType tmp_type;
+    DBFFieldType tmp_type, cat_type;
     char tmp_cat_name[17], tmp_string_val[512];
     int field_wide, field_decs, tmp_int_val;
     double tmp_double_val;
@@ -393,7 +397,7 @@ int main( int   argc, char *argv[])
     	
     /* Find the overall bounding box and set parameters for key values */
 
-    if(set_bounds(hShapeDB) < 0)
+    if(set_bounds(hShapeDB, &BB) < 0)
       G_fatal_error("Could not determine limits of region");
 
     /* Establish the shape types and corresponding GRASS type */
@@ -695,7 +699,7 @@ int main( int   argc, char *argv[])
 
     /* Extract arcs from V-base into segment list */
     fprintf(stderr, "Extracting and storing area edges...\n\n");
-    vbase2segd( segl, hVB );
+    vbase2segd( segl, hVB, &BB );
 
     
     /*
@@ -766,6 +770,7 @@ int main( int   argc, char *argv[])
 	  }  /* end switch */
 
 	}
+
 	orig_val[pntCount] = iShape;
 	xlab[pntCount] = ll0->lines[iShape].parts[iPart].centroid->xcentroid;
 	ylab[pntCount++] = ll0->lines[iShape].parts[iPart].centroid->ycentroid;
@@ -808,16 +813,29 @@ int main( int   argc, char *argv[])
     
 
     /* Write attributes and category file */
+
+    if(lab_field > -1) {
+
+      if( (hCat = DBFOpen(infile, "r")) == NULL ) {
+	fprintf(stderr, "Can't access file for reading categories. Continuing but category \
+support disabled.\n");
+	lab_field = -1;
+      }
+
+      cat_type = DBFGetFieldInfo(hCat, lab_field, cat_name, &cat_wide, &cat_decs);
+    }
 	
     if( f_att != NULL ) {
       if(cat_field == -1)
 	G_warning( "No attribute value field assigned. Using record ID.\n" );	
       for( iRec = 0; iRec < totalPnts; ++iRec ) {
 
+	orig0 = orig_val[iRec];
+
 	/* Skip records that are not to be extracted */
 
 	if(selflag->answer) {
-	  if(drec0->duff_rec_list[orig_val[iRec]])
+	  if(drec0->duff_rec_list[orig0])
 	    continue;
 	}
 
@@ -840,29 +858,39 @@ int main( int   argc, char *argv[])
 
                      
 	/* set cat for dig_cats file*/ /* M Neteler 10/99 */
-	/* if( lab_field >= 0 ) {
+
+	if( lab_field > -1 ) {
+
+	  switch(cat_type) {
 
 	  case 0:
-	    strncpy(AttText, fd0[lab_field+4].fldRecs[iRec].stringField, 511 );
-	    break;
+	    {
+	      strncpy(AttText, DBFReadStringAttribute(hCat, orig0, lab_field), 511 );
+	      break;
+	    }
 	  case 1:
-	    snprintf(AttText, 10, "%-d", fd0[lab_field+4].fldRecs[iRec].intField );
-	    AttText[strlen(AttText)] = '\0';
-	    break;
+	    {
+	      snprintf(AttText, 10, "%-d", DBFReadIntegerAttribute(hCat, orig0, lab_field) );
+	      AttText[strlen(AttText)] = '\0';
+	      break;
+	    }
 	  case 2:
-	    snprintf(AttText, 20, "%-f", fd0[lab_field+4].fldRecs[iRec].doubleField );
-	    AttText[strlen(AttText)] = '\0';
-	    break;
+	    {
+	      snprintf(AttText, 20, "%-f", DBFReadDoubleAttribute(hCat, orig0, lab_field) );
+	      AttText[strlen(AttText)] = '\0';
+	      break;
+	    }
 	  default:
-	    G_warning("Error in category type assignment, not assigning category text.\n");
-	    strcpy(AttText, "");
-	    break;
+	    {
+	      G_warning("Error in category type assignment, not assigning category text.\n");
+	      strcpy(AttText, "");
+	      break;
+	    }
 	  }
 
 	  if (G_set_cat(attval, AttText, &cats) != 1)
 	    G_fatal_error("Error setting category in dig_cats");
 	}
-	*/
 	    
       }
 
@@ -899,6 +927,7 @@ int main( int   argc, char *argv[])
     SHPClose( hShapeDB );
 
     if(hDB1) DBFClose(hDB1);
+    if(hCat) DBFClose(hCat);
 
     if( hDBF != NULL )
     {
