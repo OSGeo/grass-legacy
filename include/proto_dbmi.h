@@ -76,7 +76,7 @@ int         db_d_open_database        P((void ));
 int         db_d_open_insert_cursor   P((void ));
 int         db_d_open_select_cursor   P((void ));
 int         db_d_open_update_cursor   P((void ));
-void        db_double_quoute_string    ( dbString *src );
+void        db_double_quote_string    ( dbString *src );
 int         db_driver                 P((int argc , char *argv []));
 
 int         db_driver_mkdir           P((char *path , int mode , int parentdirs ));
