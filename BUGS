@@ -1,25 +1,19 @@
-                 $Id: BUGS,v 1.131 2002-01-22 04:50:47 glynn Exp $
+                 $Id: BUGS,v 1.131.4.1 2005-03-01 21:12:52 bernhard Exp $
 
-Known bugs in current GRASS GIS version 5.0 CVS
-[In sync with GRASS 5.0 beta CVS version]
+Known bugs in current GRASS GIS version 5.0 and 5.4 CVS.
+Note that development as moved to GRASS6
+bugs that are listed here are likely to not get fixed in further 5.x releases.
 
-Maintained by
-   Markus Neteler  <neteler@itc.it>
-
-Please send a note if detecting an unknown bug:
+If you find a new bug, please report it to our tracking system:
 http://grass.itc.it/bugtracking/bugreport.html
 
-Bugs being release-critical with regard to GRASS 5.0stable release 
-are indicated [RC].
-
 ------------------------------------------------------------------------
-RC-Bug list:
+The following reports might predate the bug-tracker 
+and need to be checked if they still apply or where entered 
+in the tracking system later.
+We appreciate any help, send email to the grass development list.
 
- GRASS bugtracking system:
- http://intevation.de/rt/webrt?q_queue=grass
-
-
-[RC] CELL-Driver: 
+CELL-Driver: 
   -colors are not correct
    Comment from Carl Anderson <candrsn@mindspring.com>
     Tracking of the "bug" will have to start in
@@ -33,14 +27,14 @@ RC-Bug list:
     problem did not exist in version 5b10.
     reported by: Reinhard Brunzema <r.brunzema@web.de>)
 
------------ libraries ---------------------------------------------
+----------- libraries 
 
 - GRASS raster colors bug:
   GRASS becomes extremely slow in case more than 8000 colors are within
   a raster map (therefore color quantization in r.in.tiff etc).
    (being worked on by ?)
 
------------ modules ---------------------------------------------
+----------- modules 
 
 d.param.scale (at src.nonGPL/display/d.param.scale/)
  - replace numerical recipes functions with src/libes/gmath/ functions
@@ -48,16 +42,14 @@ d.param.scale (at src.nonGPL/display/d.param.scale/)
  - sometimes "floating point exeption", especially in par=geary
    (being worked on by ?)
 
------------------------------------------------------------------------
-Modules with interface problems (parser etc): 
------------------------------------------------------------------------
+-------------------- Modules with interface problems (parser etc): 
 (collected by Andreas Lange, not release critical, bu should be fixed
  sometimes for consistency)
 
---------------- script used --------------------                                
+--------------- script used 
 cd $GISBASE/bin                                                                 
 for f in ?.*; do echo '---> '$f; $f -help; done 2>&1 | more                     
-------------------------------------------------- 
+---------------------------
 
 d.vect.pg, d.what.r.pg, d.what.s.pg, d.what.v.pg,        
 g.column.pg, g.stats.pg, g.table.pg, v.reclass.pg print :                
@@ -94,9 +86,7 @@ On the other hand, some help messages are huge (75 lines...)
 Sometimes, a blank line is printed before the "Usage:" string 
 this is also not consistent...
 
------------------------------------------------------------------------
-Further discussion/hints:
------------------------------------------------------------------------
+--------------------- Further discussion/hints:
 
  - Comments on updating 4.x vector modules to 5.x vector:
    There is a slightly modified category support:
