@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.8 2000-11-23 14:37:48 michel Exp $
+$Id: SUBMITTING,v 1.9 2000-11-30 11:38:01 justin Exp $
 
 NOTE: Please improve this list!
 
@@ -69,7 +69,17 @@ care of following rules:
      * <$>Id<$>
      */
 
-5.  Always specify the return type for ALL functions including those that
+5.  To ensure that the software system continues to work, please include
+
+	#include "config.h"
+
+    in your files and make use of the various system dependencies
+    contained therein.  As one example of this, see
+    src/paint/Interface/driverlib/io.c.  Please refrain from declaring
+    system functions within the software; include the proper header files
+    (conditionally dependent on config.h macros if necessary) instead.
+    
+6.  Always specify the return type for ALL functions including those that
     return type "void", and insert return statements for ALL functions.
     Also, use ANSI C prototypes to declare your functions. Examples:
     
@@ -90,9 +100,9 @@ care of following rules:
 	return(0);
     }
     
-6.  Use fprintf instead of printf
+7.  Use fprintf instead of printf
 
-7.  Use the following GRASS library functions instead of the standard C
+8.  Use the following GRASS library functions instead of the standard C
     functions. The reason for this is that the following functions ensure
     good programming practice (eg always checking if memory was allocated)
     and/or improves portability. PLEASE refer to the programmers manual
@@ -111,22 +121,22 @@ care of following rules:
 	Could somebody please add others (please verify that they are
 	useful and safe first)
 
-8.  Don't use the C++ comment style! This confuses several compilers.
+9.  Don't use the C++ comment style! This confuses several compilers.
     Use instead:
        /* C-comments */
 
-9.  PLEASE take the time to add comments throughout your code explaining what
+10. PLEASE take the time to add comments throughout your code explaining what
     the code is doing. It will save a HUGE amount of time and frustration for
     other programmers that may have to change your code in the future.
     
-10. Platform dependent code:
+11. Platform dependent code:
     Do not remove #ifdef __CYGWIN__ and/or #ifndef __CYGWIN__ lines and 
     their encapsulated lines from source code (one example was that someone
     removed drand48 definition.)
 
-11. Make sure a new line is at the end of each file
+12. Make sure a new line is at the end of each file
 
-12. When writing Gmakefiles, use the current standard
+13. When writing Gmakefiles, use the current standard
     [insert module example here]
 
     Someone please take care of this:
@@ -137,26 +147,32 @@ care of following rules:
      	- The XDRLIB and MATHLIB may not go into the $(LIBES) line, but only
           into the $(CC) line.
 
-13. Add the module's directory name (pointing to the local Gmakefile)
-    to the compile list at src/CMD/lists/GRASS
+14. To add the executable for your module to the GRASS system run the command
+    gmakelinks5 after your module has been compiled successfully. Note that
+    command only needs to be called once.
+    
+15. Add the module's directory name (pointing to the local Gmakefile)
+    to the compile list at src/CMD/lists/GRASS once the developers approve 
+    your module.
 
-14. Place the documentation in HTML format into html/html/ and add it to
+16. Place the documentation in HTML format into html/html/ and add it to
     the module's list in html/...  The easiest way to do this is to copy
     an existing HTML page or the template page template.ht and modify it for
     your purposes (to get the page style). The shell script makemanpage.sh
     make things easier : look at html/README.txt for more details and the
     rules to be used.
+    
     The online WWW man pages will be updated over-night by CVS.
 
-15. For consistency, use README rather than README.txt for any README files.
+17. For consistency, use README rather than README.txt for any README files.
 
-16. Tell the other developers about the new code using the following e-mail:
+18. Tell the other developers about the new code using the following e-mail:
     grass5@geog.uni-hannover.de
  
     To subscribe to this mailing list, see
     http://www.geog.uni-hannover.de/grass/grassdevel.html
 
-17. In case of questions feel free to contact the developers at the above
+19. In case of questions feel free to contact the developers at the above
     mailing list.
 
 ...
