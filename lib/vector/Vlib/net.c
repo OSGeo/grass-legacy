@@ -268,7 +268,7 @@ Vect_net_build_graph (  struct Map_info *Map,
 *           -1 : destination unreachable
 */
 int
-Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *List ) 
+Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *List, double *cost ) 
 {
     int i, line, *pclip, cArc;
     gnGrpSPReport_s * pSPReport;
@@ -295,8 +295,11 @@ Vect_net_shortest_path ( struct Map_info *Map, int from, int to, struct ilist *L
         Vect_list_append ( List, line );
     }
 
-	cArc = pSPReport->cArc;
-	gnGrpFreeSPReport( &(Map->graph), pSPReport );
+    cArc = pSPReport->cArc;
+    gnGrpFreeSPReport( &(Map->graph), pSPReport );
+	
+    if ( cost != NULL )
+	*cost = (double) pSPReport->distance;
 
     return (cArc);
 }

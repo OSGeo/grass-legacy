@@ -21,6 +21,7 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
     double x1, y1, x2, y2, maxdist;
     struct ilist *AList;
     int from = 0, to = 0, node;
+    double cost;
 
     AList = Vect_new_list ();
 
@@ -98,7 +99,8 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 
 	    if ( from > 0 && to > 0 && from != to ) {
 		G_debug (1, "find path %d -> %d\n", from, to);
-		Vect_net_shortest_path ( Map, from, to, AList);
+		Vect_net_shortest_path ( Map, from, to, AList, &cost);
+		fprintf (stdout, "Number of arcs = %d, total costs = %f\n",  AList->n_values, cost);
 		
                 display ( Map, AList, hcolor );
 	    }
