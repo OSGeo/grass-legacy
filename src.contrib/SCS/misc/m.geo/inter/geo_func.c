@@ -28,7 +28,7 @@ get_enz()
 	    if (!ier) return(0);
 	    else continue;
 	    }
-	 if (strcmp(proj_name, "utm", 3) == 0)
+	 if (strncmp(proj_name, "utm", 3) == 0)
             {
 	    fprintf(stderr,"\n    Enter Zone     : ");
             if (!get_zone()) 
@@ -106,7 +106,7 @@ get_ll()
 	    if (!ier) return(0);
 	    else continue;
 	    }
-	 if (strcmp(proj_name, "utm", 3) == 0)
+	 if (strncmp(proj_name, "utm", 3) == 0)
             {
 	    fprintf(stderr,"\n    Enter Zone <CR for default> : "); 
   	    if (!get_zone()) 
