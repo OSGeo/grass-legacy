@@ -196,7 +196,9 @@ int main (int argc, char *argv[])
 /*      Set up the window representing the data we have.                */
 /* -------------------------------------------------------------------- */
     cellhd.rows = GDALGetRasterYSize(hDS);
+    cellhd.rows3 = GDALGetRasterYSize(hDS);
     cellhd.cols = GDALGetRasterXSize(hDS);
+    cellhd.cols3 = GDALGetRasterXSize(hDS);
 
     if( GDALGetGeoTransform( hDS, adfGeoTransform ) == CE_None
         && adfGeoTransform[5] < 0.0 )
@@ -206,10 +208,16 @@ int main (int argc, char *argv[])
 
         cellhd.north = adfGeoTransform[3];
         cellhd.ns_res = fabs(adfGeoTransform[5]);
+        cellhd.ns_res3 = fabs(adfGeoTransform[5]);
         cellhd.south = cellhd.north - cellhd.ns_res * cellhd.rows;
         cellhd.west = adfGeoTransform[0];
         cellhd.ew_res = adfGeoTransform[1];
+        cellhd.ew_res3 = adfGeoTransform[1];
         cellhd.east = cellhd.west + cellhd.cols * cellhd.ew_res;
+
+	cellhd.top = 1.;
+	cellhd.bottom = 0.;
+	cellhd.tb_res = 1.;
     }
     else
     {
@@ -224,9 +232,14 @@ int main (int argc, char *argv[])
           cellhd.north  = cellhd.rows;
           cellhd.south  = 0.0;
           cellhd.ns_res = 1.0;
+          cellhd.ns_res3 = 1.0;
           cellhd.west   = 0.0;
           cellhd.east   = cellhd.cols;
           cellhd.ew_res = 1.0;
+          cellhd.ew_res3 = 1.0;
+	  cellhd.top = 1.;
+	  cellhd.bottom = 0.;
+	  cellhd.tb_res = 1.;
         }
         else
         {
@@ -235,9 +248,15 @@ int main (int argc, char *argv[])
           cellhd.north  = 0.0;
           cellhd.south  = (-1) * cellhd.rows;
           cellhd.ns_res = 1.0;
+          cellhd.ns_res3 = 1.0;
           cellhd.west   = (-1) * cellhd.cols;
           cellhd.east   = 0.0;
           cellhd.ew_res = 1.0;
+          cellhd.ew_res3 = 1.0;
+	  cellhd.top = 1.;
+	  cellhd.bottom = 0.;
+	  cellhd.tb_res = 1.;
+
         }
     }
 
