@@ -1,6 +1,11 @@
 /*-
  * $Log$
- * Revision 1.4  2000-01-02 12:23:20  markus
+ * Revision 1.5  2000-10-06 04:13:53  eric
+ * Added the G_readsites_xyz() function and related G_alloc_site_xyz() and
+ * G_free_site_xyz() convenience functions.  Will send Markus a short LaTeX
+ * documentation and example...
+ *
+ * Revision 1.4  2000/01/02 12:23:20  markus
  * again comments fixed
  *
  * Revision 1.3  2000/01/02 12:21:47  markus
@@ -85,6 +90,75 @@ typedef struct
   char *name, *desc, *form, *labels, *stime;
   struct TimeStamp *time;
 } Site_head;
+
+
+/* ========================================================================== *
+ * G_readsites_xyz(): New implementation of the readsites() library           *
+ * function limited generating an xyz array SITE_XYZ.                         *
+ * ========================================================================== *
+ * Copyright (c) 2000 Eric G. Miller <egm2@jps.net>                           *
+ * -------------------------------------------------------------------------- *
+ * This program is free software; you can redistribute it and/or modify       *
+ * it under the terms of the GNU General Public License as published by       *
+ * the Free Software Foundation; either version 2 of the License, or          *
+ * (at your option) any later version.                                        *
+ *                                                                            *
+ * This program is distributed in the hope that it will be useful,            *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the              *
+ * GNU General Public License for more details.                               *
+ *                                                                            *
+ * You should have received a copy of the GNU General Public License          *
+ * along with this program; if not, write to the Free Software                *
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA  *
+ * -------------------------------------------------------------------------- *
+ */
+
+/* Some defines for which column type to use */
+#define SITE_COL_DIM 1
+#define SITE_COL_DBL 2
+#define SITE_COL_STR 3
+
+
+/* The XYZ site struct. Note the use of a union for the cat value is
+ * different than the Site struct.
+ */
+typedef struct {
+	double x, y, z;
+	RASTER_MAP_TYPE cattype;
+	union {
+		double d;
+		float  f;
+		int    c;
+	} cat ;
+} SITE_XYZ;
+
+
+/* Allocate 'num' SITE_XYZ structs. Returns NULL on failure */
+SITE_XYZ * G_alloc_site_xyz(size_t num);
+
+
+/* Free the array of SITE_XYZ struct */
+void G_free_site_xyz(SITE_XYZ *theSites);
+
+
+/* G_readsites_xyz: Reads a sites file converting to a site struct of xyz
+ * values and the cat value.  The Z value can come from one of the
+ * n-dimensions, a double attribute, or a string attribute converted to a
+ * double with strtod().  The 'size' must not be greater than the number
+ * of elements in the SITE_XYZ array, or bad things will happen. The number 
+ * of records read is returned or EOF on end of file. NOTE: EOF won't be
+ * returned unless no records are read and the EOF bit is set. It's safe
+ * to assume that if the number of records read is less than the size of
+ * the array, that there aren't any more records.
+ */
+int G_readsites_xyz( 
+	FILE * fdsite,   /* The FILE stream to the sites file               */
+	int    type,     /* Attribute type: SITE_COL_DIM, etc...            */
+	int    index,    /* The field index (1 based) for the attribute     */
+	int    size,     /* Size of the array                               */
+	SITE_XYZ *xyz    /* The site array of size 'size'                   */
+	);
 
 #include "P_site.h"
 
