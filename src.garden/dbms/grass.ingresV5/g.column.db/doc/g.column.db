@@ -1,0 +1,132 @@
+
+
+
+g.column.db          GRASS Reference Manual           g.column.db
+
+
+
+NAME
+     g.column.db - Generate a list of database columns for a
+     specified table in the currently selected database.
+     (GRASS-RDBMS General Interface Program)
+
+SYNOPSIS
+     g.column.db
+     g.column.db help
+     g.column.db [-v] table=name
+
+DESCRIPTION
+     g.column.db is used to generate a list of the columns in the
+     specified table [table] of the currenty selected database.
+     If the [-v] option is used the data type and length of the
+     column are reported as well. The currently selected database
+     is identified by the GRASS environment variable $DATABASE
+     which is set using the g.select.db GRASS-RDBMS interface
+     tool. If this environment variable is not set the program
+     terminates with a message to the user. To generate a list of
+     the available tables in the currently selected database use
+     the command g.table.db. The information provided by
+     g.column.db will be used in subsequent GRASS-RDBMS
+     applications to formulate and construct well formed database
+     queries.
+
+
+COMMAND LINE OPTIONS
+     Flags
+
+     -v   Use v for a verbose listing of columns.
+
+     Parameters
+
+     table=database_table_name
+          Name of table in the currently selected  database.
+
+
+EXAMPLE OUTPUT (terse)
+     g.column.db table=nri
+
+     The following columns are defined in table: utm
+
+     fips              flood             hydunit
+     landcl82          landcl87          mlra
+     nriptr            other             point
+     psu               refname           slope
+     soil5             text_mod          texture
+     tfact             ukfact            utm_e
+     utm_n             xfact
+
+
+
+
+
+
+GRASS                    U.S. Army CERL                         1
+
+
+
+
+
+
+g.column.db          GRASS Reference Manual           g.column.db
+
+
+
+EXAMPLE OUTPUT (verbose)
+     g.column.db table=nri -v
+
+     The following columns are defined in table: utm
+
+                    flood                     char     5
+                  hydunit                     char     8
+                 landcl82                     char     2
+                 landcl87                     char     2
+                     mlra                     char     4
+                   nriptr                  integer     4
+                    other                     char     40
+                    point                  integer     4
+                  refname                     char     40
+                    slope                     char     6
+                    soil5                     char     6
+                 text_mod                     char     8
+                  texture                     char     8
+                    tfact                 smallint     2
+                   ukfact                  decimal     3,2
+                    utm_e                  integer     4
+                    utm_n                  integer     4
+                    xfact                  integer     4
+                    xfact                  integer     4
+
+
+BUGS
+     None
+
+
+SEE ALSO
+     g.select.db, g.stats.db, g.table.db, d.rast.db, d.site.db,
+     d.vect.db, d.what.r.db, d.what.s.db, d.what.v.db,
+     r.reclass.db, r.rescale.db, v.reclass.db
+
+
+AUTHOR
+     James A. Farley, Wang Song and W. Fredrick Limp University
+     of Arkansas, CAST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS                    U.S. Army CERL                         2
+
+
+
