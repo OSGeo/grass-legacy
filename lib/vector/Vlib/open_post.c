@@ -73,7 +73,7 @@ setup (struct Map_info *Map)
       return -1;
   }
   if ( Map->fInfo.post.cat_table == NULL || strlen (Map->fInfo.post.cat_table) == 0 ) {
-      G_warning ("Gategory table name not available for vector '%s'", Map->name);
+      G_warning ("Category table name not available for vector '%s'", Map->name);
       return -1;
   }
   
