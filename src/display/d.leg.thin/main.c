@@ -109,12 +109,12 @@ int main( int argc, char **argv )
 
 	opt7 = G_define_option() ;
 	opt7->key        = "at";
-	opt7->key_desc   = "x1,y1,x2,y2";
-	opt7->type       = TYPE_DOUBLE;		/* should it be type_double or _string ??*/
+	opt7->key_desc   = "bottom,top,left,right";
+	opt7->type       = TYPE_DOUBLE;		/* needs to be TYPE_DOUBLE to get past options check */
 	opt7->required   = NO;
 	opt7->options    = "0-100" ;
 	opt7->description= "Screen coordinates to place the legend (as percentage)" ;
-
+	opt7->answer     = NULL;
 
 	/* opt8 will be the use= option */
 
@@ -255,19 +255,18 @@ int main( int argc, char **argv )
 	D_get_screen_window(&t, &b, &l, &r) ;
 	R_set_window(t, b, l, r) ;
 
-	
 	if(use_mouse)
 		get_legend_box(&x0, &x1, &y0, &y1);
 	else {
 		if (opt7->answer != NULL) {	/* should this be answerS ? */
-			sscanf(opt7->answers[0], "%lf", &X0) ;
+			sscanf(opt7->answers[0], "%lf", &Y1) ;
 			sscanf(opt7->answers[1], "%lf", &Y0) ;
-			sscanf(opt7->answers[2], "%lf", &X1) ;
-			sscanf(opt7->answers[3], "%lf", &Y1) ;
-			x0 = (int)(X0*(r-l)/100.);
-			x1 = (int)(X1*(r-l)/100.);
-			y0 = (int)(Y0*(b-t)/100.);
-			y1 = (int)(Y1*(b-t)/100.);
+			sscanf(opt7->answers[2], "%lf", &X0) ;
+			sscanf(opt7->answers[3], "%lf", &X1) ;
+			x0 = l+(int)((r-l)*X0/100.);
+			x1 = l+(int)((r-l)*X1/100.);
+			y0 = t+(int)((b-t)*(100.-Y0)/100.);	/* make lower left the origin */
+			y1 = t+(int)((b-t)*(100.-Y1)/100.);
 		}
 		else {	/* default */
 			x0 = l+4;
@@ -288,6 +287,9 @@ int main( int argc, char **argv )
 		x1 = xyTemp;
 	}
 	
+	if((x0 < l) || (x1 > r) || (y0 < t) || (y1 > b))	/* for mouse or at= 0- or 100+; needs to be after order check */
+		fprintf(stderr, "Warning: legend box lies outside of frame. Text may not display properly.\n");
+
 	horiz = (x1-x0 > y1-y0);
 	if(horiz)
 		fprintf(stderr, "Drawing horizontal legend as box width exceeds height.\n");
@@ -546,10 +548,11 @@ int main( int argc, char **argv )
 	}
 	else{   /* non FP, no smoothing */
 
-		int txsiz, true_r;
+		int txsiz, true_l, true_r;
 		float ScaleFactor = 1.0;
 		
 		/* set legend box bounds */
+		true_l = l;
 		true_r = r;	/* preserve window width */
 		l=x0;
 		t=y0;
@@ -570,7 +573,7 @@ int main( int argc, char **argv )
 
 		/* scale text to fit in window if position not manually set */
 		if( !use_mouse && opt7->answer == NULL)	{	/* ie defualt scaling */
-			ScaleFactor = (true_r/((MaxLabelLen+3)*txsiz*0.81));	/* ?? txsiz*.81=actual text width. */
+			ScaleFactor = ((true_r-true_l)/((MaxLabelLen+3)*txsiz*0.81));	/* ?? txsiz*.81=actual text width. */
 			if( ScaleFactor < 1.0) {
 				txsiz = (int)floor(txsiz*ScaleFactor);
 				dots_per_line = (int)floor(dots_per_line*ScaleFactor);
@@ -685,7 +688,7 @@ int main( int argc, char **argv )
 		
 		    /* shrink text if it will run off the screen */
 		    MaxLabelLen=strlen(buff)+4;
-		    ScaleFactor = ((true_r-l)/(MaxLabelLen*txsiz*0.81));	/* ?? txsiz*.81=actual text width. */
+		    ScaleFactor = ((true_r-true_l)/(MaxLabelLen*txsiz*0.81));	/* ?? txsiz*.81=actual text width. */
 		    if( ScaleFactor < 1.0) {
 			txsiz = (int)floor(txsiz*ScaleFactor);
 			R_text_size(txsiz, txsiz);
