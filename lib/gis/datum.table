@@ -73,7 +73,7 @@ ire65    "TM65"                   modif_airy    dx=506      dy=-122     dz=611
 # http://www.asprs.org/asprs/resources/grids/07-2001-swiss.pdf
 ch1903   "CH1903"     bessel        dx=674.253  dy=15.053   dz=405.324
 # http://www.asprs.org/asprs/resources/grids/01-2001-france.pdf and http://crs.ifag.de/
-ntf87    "Nouvelle_Triangulation_Francaise"                    plessis       dx=-168     dy=-60      dz=320
+ntf      "Nouvelle_Triangulation_Francaise"                    clark80       dx=-168     dy=-60      dz=320
 etrs89   "European_Terrestrial_Reference_System_1989"   grs80       dx=0        dy=0       dz=0
 # http://crs.ifag.de/
 rd18     "Rijksdriehoeks Datum 1918 (Netherlands)" bessel dx=99999  dy=99999    dz=99999
