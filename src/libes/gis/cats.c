@@ -143,7 +143,7 @@
  *  Writes the category information associated with cell file "name"
  *  into current mapset from the structure "pcats".
  *
- *   returns:    0  if successful
+ *   returns:    1  if successful
  *              -1  on fail
  **********************************************************************
  *
@@ -154,7 +154,7 @@
  *  Writes the category information associated with vector file "name"
  *  into current mapset from the structure "pcats".
  *
- *   returns:    0  if successful
+ *   returns:    1  if successful
  *              -1  on fail
  **********************************************************************
  *
@@ -268,7 +268,7 @@ G__read_cats (element, name, mapset, pcats, full)
     if (G_getl(buff,sizeof buff,fd) == NULL)
 	goto error;
     G_strip (buff);
-    G_ascii_check(buff) ;
+/*    G_ascii_check(buff) ; */
     G_init_cats ((CELL)num, buff, pcats);
     if (!old)
     {
@@ -299,6 +299,7 @@ G__read_cats (element, name, mapset, pcats, full)
 		continue;
 	    if(*label == '#')
 		continue;
+	    *label = 0;
 	    if (sscanf (buff, "%ld:%[^\n]", &num, label) < 1)
 		goto error;
 	    G_set_cat ((CELL)num, label, pcats);
@@ -326,7 +327,7 @@ G_get_cat (num, pcats)
     CELL num ;
     struct Categories *pcats ;
 {
-    static char label[256] ;
+    static char label[1024] ;
     char *f, *l, *v;
     int i;
     float a[2];
@@ -485,10 +486,10 @@ G_set_cat (num, label, pcats)
 	    pcats->nalloc = nalloc;
 	}
     }
-    G_ascii_check (label);
-    G_strip (label);
     pcats->list[n].num = num;
     pcats->list[n].label = G_store(label) ;
+    G_newlines_to_spaces (pcats->list[n].label);
+    G_strip (pcats->list[n].label);
     if (num > pcats->num)
 	pcats->num = num;
     return 1;
@@ -534,9 +535,14 @@ G__write_cats (element, name, cats)
     G_sort_cats (cats);
     n = cats->count;
     for (i = 0; i < n; i++)
-	fprintf(fd,"%ld:%s\n",
-		(long) cats->list[i].num,
+    {
+	if ((cats->fmt && cats->fmt[0])
+	||  (cats->list[i].label && cats->list[i].label[0]))
+	{
+	    fprintf(fd,"%ld:%s\n", (long) cats->list[i].num,
 		cats->list[i].label!=NULL?cats->list[i].label:"") ;
+	}
+    }
     fclose (fd) ;
     return(1) ;
 }
@@ -564,6 +570,8 @@ G_set_cats_title (title, pcats)
 {
     if (title == NULL) title="";
     pcats->title = G_store (title);
+    G_newlines_to_spaces (pcats->title);
+    G_strip (pcats->title);
 }
 
 G_set_cats_fmt (fmt, m1, a1, m2, a2, pcats)
@@ -577,6 +585,8 @@ G_set_cats_fmt (fmt, m1, a1, m2, a2, pcats)
     pcats->a2 = a2;
 
     pcats->fmt = G_store (fmt);
+    G_newlines_to_spaces (pcats->fmt);
+    G_strip(fmt);
 }
 
 G_sort_cats (pcats)
