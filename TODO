@@ -1,4 +1,4 @@
-$Id: TODO,v 1.5 2000-07-06 19:51:03 michel Exp $
+$Id: TODO,v 1.6 2000-07-07 10:48:12 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -16,14 +16,14 @@ Configure:
   (Being worked on by )
 
 Libraries:
-- src/libes/gis/sites.c: Required is a new function which allows
-  to read an attribute/dimension selectable by user. This function
-  is needed for s.to.rast in order to select which attribute shall
-  be converted (assuming multi-attribute sites lists).
-  (Being worked on by )
+- src/libes/gis/readsites.c: Required is a new function which allows
+  to read an attribute/dimension selectable by user. Useful 
+  in order to select which attribute to be converted 
+  (assuming multi-attribute sites lists).
+  (Being worked on by Markus)
 
 - projection datum support for maps
-  (Being worked on by )
+  (Being worked on by Andreas Lange)
 
 - new 3D vector format: evetually http://gts.sourceforge.net/ ??
   (Being worked on by )
@@ -31,7 +31,7 @@ Libraries:
 Package:
 - split into packages: GRASS-CORE, GRASS-Raster, ...
   (Being worked on by )
-
+- release import/export routines separately under LGPL
 
 Modules:
 - r.buffer: should save info about used buffers into map history
@@ -42,7 +42,7 @@ Modules:
 
 - fix s.to.rast and s.to.vect to accept site lists created
   by r.to.sites
-  (Being worked on by )
+  (Being worked on by Markus)
 
 - NVIZ:
     - Z axis scalable when displaying 3D sites
@@ -53,6 +53,8 @@ Modules:
 
     - high resolution output (definable extent like CELL driver)
       (Being worked on by )
+
+    - fix legend, scale and box drawings
 
 - v.out.e00: make it working
   (Being worked on by Michel Wurtz)
