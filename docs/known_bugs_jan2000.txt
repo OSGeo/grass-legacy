@@ -9,7 +9,10 @@ Maintained by
 [In sync with GRASS 5 beta 6f]
 
  $Log$
- Revision 1.4  2000-01-12 14:58:04  markus
+ Revision 1.5  2000-01-18 12:45:52  markus
+ added r.coin FP-bug
+
+ Revision 1.4  2000/01/12 14:58:04  markus
  d.area fixed. bug description for d.legend and d.rast.leg added
 
  Revision 1.3  2000/01/12 11:47:32  markus
@@ -20,8 +23,6 @@ Maintained by
 
  Revision 1.1  2000/01/10 19:14:53  markus
  *** empty log message ***
-
-
 
 ----------- modules ---------------------------------------------
 configure script:
@@ -52,6 +53,10 @@ i.ortho.photo
 
 i.rectify/i.rectify2
  - do not work properly
+
+r.coin
+ - needs to be updated to GRASS 5 properly: r.stats call must be
+   adjusted
 
 r.drain - segm. fault
 
