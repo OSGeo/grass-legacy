@@ -1,19 +1,26 @@
 <H2>DESCRIPTION</H2>
 
-
-<EM>photo.init</EM>
-creates or modifies entries in a camera initial 
-exposure station file for imagery group referenced by a sub-block.  
-These entries include:
-the (XC,YC,ZC) UTM approximate coordinates of the camera exposure station;
-initial roll, pitch, and yaw angles (in degrees) of the cameras attitude; 
-and the <EM>a priori</EM> standard deviations for these parameters.
-During the imagery program, hoto.rectify,
-the initial camera exposure station file 
-is used for computation of the ortho-rectification parameters.  
-If no initial camera
-exposure station file exist, the default values are computed from the control 
-points file created in <EM><A HREF="photo.2target.html">photo.2target</A></EM>. 
+Aerial photographs may be either vertical or oblique. Vertical photographs
+can be truly vertical (nadir), or slightly tilted (less than 3 degree
+from the vertical). Usually aerial photos are tilted to some degree. We
+refer to the term <i>vertical photograph</i> up to a tilt of 3 degree.
+<br>
+Oblique aerial photographs are purposely taken with an
+angle between 3 and 90 degree from the nadir direction.
+<P>
+<b>The use of <EM>photo.init</EM> (menu 6) is only required when rectifying a
+tilted or oblique aerial photo.</b>
+<P>
+<EM>photo.init</EM> creates or modifies entries in a camera initial exposure
+station file for imagery group referenced by a sub-block.  These entries
+include: the (XC,YC,ZC) UTM approximate coordinates of the camera exposure
+station; initial roll, pitch, and yaw angles (in degrees) of the cameras
+attitude; and the <EM>a priori</EM> standard deviations for these
+parameters. During the imagery program, hoto.rectify, the initial camera
+exposure station file is used for computation of the ortho-rectification
+parameters.  If no initial camera exposure station file exist, the default
+values are computed from the control points file created in <EM><A
+HREF="photo.2target.html">photo.2target</A></EM>.
 
 
 <P>
@@ -35,6 +42,8 @@ The following menu is displayed:
 	Std. Dev. omega (roll) degrees:   __________
 	Std. Dev. phi  (pitch) degrees:   __________
 	Std. Dev. kappa  (yaw) degrees:   __________
+
+        Use these values at run time? (1=yes, 0=no)
 
      AFTER COMPLETING ALL ANSWERS, HIT &lt;ESC&gt; TO CONTINUE
                   (OR &lt;Ctrl-C&gt; TO CANCEL)
@@ -81,6 +90,9 @@ The standard deviations for (omega,phi,kappa) are expressed in degrees, and
 are used as <EM>a priori</EM> values for the standard deviations used in 
 computation of the ortho rectification parameters.
 
+<P>
+If <i>Use these values at run time? (1=yes, 0=no)</i> is set to 0, the
+values in this menu are not used.
 
 <H2>SEE ALSO</H2>
 
