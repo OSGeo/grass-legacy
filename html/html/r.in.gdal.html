@@ -138,10 +138,10 @@ the underlying format driver supports it:<p>
 <DT> Data Types
 <DD> Most GDAL data types are supported.  Float32 and Float64 type bands
 are translated as GRASS floating point cells (but not double precision ...
-this could be added if needed), and all other types are translated as 
+this could be added if needed), and most other types are translated as 
 GRASS integer cells.  This includes 16bit integer data sources.  Complex
-(some SAR signal data formats) data is currently truncated to integer values
-from the real component. <BR>
+(some SAR signal data formats) data bands are translated to two floating
+point cell layers (*.real and *.imaginary).<BR>
 
 <DT> Georeferencing
 <DD> If the dataset has affine georeferencing information, this will be used
