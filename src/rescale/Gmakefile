@@ -1,0 +1,10 @@
+# %W% %G%
+PGM = rescale
+
+LIST = main.o ask.o range.o
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(VASK) -o $@
+
+$(GISLIB): #
+$(VASKLIB): #
