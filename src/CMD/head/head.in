@@ -127,6 +127,10 @@ OPENGLLIB           = @OPENGLLIB@
 OPENGLULIB          = @OPENGLULIB@
 LGLWM               = @LGLWM@
 
+#IrisGL files for SG3d
+GLINC               = @GLINC@
+GLLIB               = @GLLIB@
+
 #tcl/tk stuff
 TCLINCDIR           = @TCLINCDIR@
 TKINCDIR            = @TKINCDIR@

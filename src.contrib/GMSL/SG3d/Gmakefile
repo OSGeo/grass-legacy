@@ -3,15 +3,16 @@ PANEL_INCDIR = $(SRC)/../src.contrib/CERL/SGI/panel/9.6/include
 PANEL_LIBDIR = $(SRC)/../src.contrib/CERL/SGI/panel/9.6/lib
 IMG_LIBDIR = $(SRC)/../src.contrib/CERL/SGI/libimage/lib
 
-EXTRA_CFLAGS= -I${PANEL_INCDIR} -DVERSION_NUMBER="\"$(VERSION_NUMBER)\""
+EXTRA_CFLAGS= -I${PANEL_INCDIR} $(GLINC) -DVERSION_NUMBER="\"$(VERSION_NUMBER)\""
 
 # use this line if you have two versions of the panel library -
 # one for pre-IRIX 5.0, other for IRIX 5.0+, in architecture-specific
-# directories 
-#PANELLIB= ${PANEL_LIBDIR}/libpanel.a
+# directories
+# Also use this line if you have comiled libpanel using gmake5
+PANELLIB= ${PANEL_LIBDIR}/libpanel.a
 
-# otherwise, use this line
-PANELLIB= ${PANEL_LIBDIR}/libpanel.\a
+# otherwise, use this line (if you have compiled it with make)
+#PANELLIB= ${PANEL_LIBDIR}/libpanel.\a
 
 # probably not needed - most SGIs have libimage now (see -limage below)
 # use this line if you have two versions of the libimage library -
@@ -59,7 +60,8 @@ PROG = $(BIN_CMD)/SG3d
 #PROG = ./sg3dnew
 
 $(PROG): $(OFILES) $(DEPVECTLIB) $(DEPGISLIB) $(DEPDATETIMELIB)
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(PANELLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(XDRLIB) -lsphere $(MATHLIB) -limage -lfm -lgl
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(PANELLIB) $(VECTLIB) $(GISLIB) \
+$(DATETIMELIB) $(XDRLIB) -lsphere $(MATHLIB) -limage -lfm $(GLLIB)
 	@rm -f a.out
 #	cp doc/catman $(MAN4)/SG3d
 
