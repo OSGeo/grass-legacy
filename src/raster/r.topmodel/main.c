@@ -7,43 +7,12 @@
  * $Id$
  *
  *	Copyright (C) 2000 by the GRASS Development Team
- *	Author: Huidae Cho <hdcho@geni.knu.ac.kr>
+ *	Author: Huidae Cho <hdcho@water.knu.ac.kr>
  *		Hydro Laboratory, Kyungpook National University
  *		South Korea
  *
  *	This program is free software under the GPL (>=v2)
  *	Read the file COPYING coming with GRASS for details.
- *
- *
- * $Log$
- * Revision 1.7  2002-01-22 04:51:31  glynn
- * Merge releasebranch_11_april_2001_5_0_0 with HEAD
- *
- * Revision 1.6.4.2  2001/11/25 14:27:37  glynn
- * Include stdlib.h for definition of atoi()
- * Fix bug in r.in.doq, calling exit() without arguments
- *
- * Revision 1.6.4.1  2001/06/15 18:37:36  glynn
- * Call G_gisinit(argv[0]) before anything else
- *
- * Revision 1.6  2000/11/22 09:34:41  jan
- * added module description
- *
- * Revision 1.5  2000/11/01 17:26:36  cho
- * updated copyleft
- *
- * Revision 1.4  2000/09/05 08:58:10  cho
- * added Qobs parameter and cosmetics
- *
- * Revision 1.3  2000/08/21 04:21:21  cho
- * modulized and cosmetics
- *
- * Revision 1.2  2000/08/20 06:35:19  cho
- * cosmetics
- *
- * Revision 1.1  2000/08/20 05:57:21  cho
- * Huidae Cho <hdcho@geni.knu.ac.kr>: TOPMODEL simulation and other stuff
- *
  *
  */
 
@@ -99,7 +68,7 @@ main(argc, argv)
 	param.elev			= G_define_option();
 	param.elev->key			= "elevation";
 	param.elev->description		=
-		"(i)   Elevation map";
+		"(i)   Rectangular elevation map";
 	param.elev->type		= TYPE_STRING;
 	param.elev->required		= NO;
 	param.elev->gisprompt		= "old,cell,raster";
@@ -162,14 +131,14 @@ main(argc, argv)
 	param.params			= G_define_option();
 	param.params->key		= "parameters";
 	param.params->description	=
-		"(i)   Parameters file";
+		"(i)   TOPMODEL Parameters file";
 	param.params->type		= TYPE_STRING;
 	param.params->required		= YES;
 
 	param.input			= G_define_option();
 	param.input->key		= "input";
 	param.input->description	=
-		"(i)   Input file";
+		"(i)   Rainfall and potential evapotranspiration data file";
 	param.input->type		= TYPE_STRING;
 	param.input->required		= YES;
 
@@ -190,14 +159,14 @@ main(argc, argv)
 	param.timestep			= G_define_option();
 	param.timestep->key		= "timestep";
 	param.timestep->description	=
-		"      Time step for output";
+		"      output for given time step";
 	param.timestep->type		= TYPE_INTEGER;
 	param.timestep->required	= NO;
 
 	param.idxclass			= G_define_option();
 	param.idxclass->key		= "idxclass";
 	param.idxclass->description	=
-		"      Topographic index class for output";
+		"      output for given topographic index class";
 	param.idxclass->type		= TYPE_INTEGER;
 	param.idxclass->required	= NO;
 
