@@ -248,8 +248,6 @@ src/misc/m.examine.tape
 src/misc/m.flip
 src/misc/m.gc2ll
 src/misc/m.in.e00
-#buggy: new version from Mark Lake planned:
-#src/misc/m.in.ntf
 src/misc/m.in.stf1.tape
 src/misc/m.ipf
 src/misc/m.kappa
