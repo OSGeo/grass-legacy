@@ -1,0 +1,46 @@
+
+
+MAPGEN sites file					MAPGEN sites file
+
+
+NAME
+MAPGEN sites file - Site file used by the GRASS/MAPGEN interface.
+
+Discussion
+The GRASS system records point information in a number of projection systems.
+Because MAPGEN requires point information in the latitude/longitude geographic
+coordinate system it was necessary to create a file structure to store GRASS
+point information in Latitude/longitude.
+
+The MAPGEN sites files reside in the sites_geo directory (see directory structure)
+and can be used by the make.symbol or make.label interface programs.The programs
+att.to.geo, cat.to.geo and sites.to.geo will take GRASS attribute, category or
+sites files and generate the MAPGEN sites file directly. The following format is
+provide so that a user may provide non GRASS point data to the GRASS/MAPGEN interface.
+
+The format is as follows:
+
+LON (tab) LAT (tab) [LABEL]	#LABEL is an optional label the can be used by the
+LON (tab) LAT (tab) [LABEL]	#make.label program
+
+Note: The longitude and latitude numbers must be in degrees minutes and seconds
+and must be separated by one tab character. The label is a collection of ASCII
+characters with no tabs. The label must be separated from the latitude value
+with exactly one tab character.
+
+
+Example
+
+103d49'34.894"w	44d22'54.379"n   Signature Rock
+103d50'39.335"w 44d27'23.07"n    No Name
+103d52'14.512"w 44d26'51.612"n   Canyon Station
+103d51'49.57"w  44d27'17.941"n   Spearfish Creek
+103d49'25.37"w  44d28'43.34"n    No Name
+103d44'16.638"w 44d28'31.456"n   Prairie Site
+103d39'36.668"w 44d26'3.652"n    Jensen Pass
+103d47'45.667"w 44d28'35.819"n   No Name
+103d43'47.599"w 44d29'5.974"n    No Name
+103d42'43.816"w 44d24'15.513"n   Slaughterhouse Gulch
+103d50'52.731"w 44d28'6.635"n    No Name
+103d42'17.839"w 44d28'30.612"n   Elkhorn Peak
+103d50'33.701"w 44d26'24.675"n   No Name
