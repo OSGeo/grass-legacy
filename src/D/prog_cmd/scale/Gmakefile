@@ -1,0 +1,18 @@
+#  %W%  %G%
+
+OFILES = \
+	command.o \
+	draw_scale.o \
+	main.o
+
+Dscale: $(BIN)/Dscale
+
+$(BIN)/Dscale: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
+command.o:	options.h
+main.o:	options.h
