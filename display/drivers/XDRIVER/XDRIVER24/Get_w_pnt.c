@@ -67,7 +67,7 @@ int Get_location_with_pointer2 (int *wx, int *wy, int *button, int cmd)
 	    }
 	}
 
-	if ( ( cmd == 2 && button != NULL) || cmd == 3 ) {
+	if ( ( cmd == 2 && *button > 0 ) || cmd == 3 ) {
             XUndefineCursor(dpy, grwin);
 	    XSelectInput(dpy, grwin, gemask);
         }
