@@ -10,7 +10,6 @@
 #include <fcntl.h>
 #include "gis.h"
 #include "Vect.h"
-#include "shapefil.h"
 #include "shp2dig.h"
 #include "dbutils.h"
 #include "writelin.h"
@@ -47,6 +46,8 @@
  *     
  ******************************************************************/
 
+static char *extract_base_name( char *, const char * );
+
 enum {ANALYSE, RASTER, LINES, VECTOR, ALL} todo;
 
 int debug = 0;			/* debug level (verbosity) */
@@ -65,9 +66,9 @@ int main( int   argc, char *argv[])
     int		cat_field;
     int 	pgdmp, no_rattle;
 
-    char name[128], *p;	/* name of output files */
+    char name[128], dbf_file[128], *p;	/* name of output files */
 
-    char *infile, *newmapset;
+    char infile[512], *newmapset;
     int cover_type;		/* type of coverage (line, point, area) */
 
     FILE *f_att = NULL;
@@ -110,6 +111,8 @@ int main( int   argc, char *argv[])
 	struct Option *scale, *pgdump, *dumpmode, *catlabel;
     } parm;
 
+    struct Flag *listflag;
+
     /* Are we running in Grass environment ? */
 
     G_gisinit (argv[0]);
@@ -117,7 +120,7 @@ int main( int   argc, char *argv[])
     /* define the different options */
 
     parm.input = G_define_option() ;
-    parm.input->key        = "input";
+    parm.input->key        = "in";
     parm.input->type       = TYPE_STRING;
     parm.input->required   = YES;
     parm.input->description= "Name of .shp (or just .dbf) file to be imported";
@@ -177,14 +180,52 @@ int main( int   argc, char *argv[])
     parm.catlabel->answer     = "";
     
 
+    /* Set flag for listing fields of database */
+
+    listflag = G_define_flag();
+    listflag->key     = 'l';
+    listflag->description = "List fields of DBF file";
+
+
     /* get options and test their validity */
 
     if (G_parser(argc, argv))
 	exit(-1);
     
-    infile = parm.input->answer;
+    /* extract name of file and get names of dbf file */
+
+    strcpy(infile, parm.input->answer);
     newmapset = parm.mapset->answer;
-    
+    extract_base_name( name, infile );
+    strcat( strcpy(dbf_file, name), ".dbf" );
+
+
+    /* Examine the flag `-l' first */
+
+    if(listflag->answer) {
+      int	i;
+        
+      hDBF = DBFOpen( dbf_file, "r" );
+      if( hDBF == NULL )
+        {
+	  sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
+	  G_fatal_error (buf);
+        }
+
+      fprintf (stdout, "Attributes available in %s\n", infile );
+      for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
+        {
+	  char	field_name[15];
+
+	  DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
+	  fprintf (stdout, "%s\n", field_name );
+        }
+        
+      DBFClose( hDBF );
+
+      exit( 0 );
+    }
+
     debug = atoi( parm.verbose->answer);
     if (parm.logfile->answer == NULL)
 	fdlog = stderr;
@@ -297,7 +338,7 @@ int main( int   argc, char *argv[])
 /* -------------------------------------------------------------------- */
 /*      Extract basename of shapefile.                                  */
 /* -------------------------------------------------------------------- */
-    for( p = infile+strlen(infile)-1;
+    /*    for( p = infile+strlen(infile)-1;
          p != infile-1 && (isalnum(*p) || *p == '_' || *p == '.' );
          p-- ) {}
     strcpy( name, p+1);
@@ -308,6 +349,7 @@ int main( int   argc, char *argv[])
 
     if (debug > 4)
 	fprintf( fdlog, "Name of output file is \"%s\"\n", name);
+    */
 
 /* -------------------------------------------------------------------- */
 /*      Create the GRASS vector layer based on the basename of the      */
@@ -322,122 +364,112 @@ int main( int   argc, char *argv[])
     if( strcmp(parm.attribute->answer,"") == 0 ) {
         cat_field = -1;
         
-    } else if( strcmp(parm.attribute->answer,"list") == 0 ||
-	       strcmp(parm.catlabel->answer,"list") == 0) {
-        int	i;
+    } 
+
+    else {
+      int	i;
         
-        hDBF = DBFOpen( infile, "r" );
-        if( hDBF == NULL )
+      hDBF = DBFOpen( dbf_file, "r" );
+      if( hDBF == NULL )
         {
-            sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
-            G_fatal_error (buf);
+	  sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
+	  G_fatal_error (buf);
         }
 
-        fprintf (stdout, "Attributes available in %s\n", infile );
-        for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
+      cat_field = -1;
+      for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
         {
-            char	field_name[15];
+	  char	field_name[15];
 
-            DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
-            fprintf (stdout, "%s\n", field_name );
-        }
-        
-        DBFClose( hDBF );
-        SHPClose( hShapeDB );
-
-        exit( 0 );
-        
-    } else {
-        int	i;
-        
-        hDBF = DBFOpen( infile, "r" );
-        if( hDBF == NULL )
-        {
-            sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
-            G_fatal_error (buf);
+	  DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
+	  if( strcasecmp( parm.attribute->answer, field_name ) == 0 )
+	    cat_field = i;
         }
 
-        for( i = 0; i < DBFGetFieldCount(hDBF); i++ )
-        {
-            char	field_name[15];
-
-            DBFGetFieldInfo( hDBF, i, field_name, NULL, NULL );
-            if( strcasecmp( parm.attribute->answer, field_name ) == 0 )
-                cat_field = i;
-        }
-
-        if( cat_field == -1 ) {
-            sprintf( buf,
-                     "No attribute `%s' found on %s.\n"
-                     "Use attribute=list to get a list of attributes.\n",
-                     parm.attribute->answer, infile );
+      if( cat_field == -1 ) {
+	sprintf( buf,
+		 "No attribute `%s' found on %s.\nUse attribute=list to get a list of attributes.\n",
+		 parm.attribute->answer, strcat(name, ".shp") );
             
-            DBFClose( hDBF );
-            SHPClose( hShapeDB );
+	DBFClose( hDBF );
+	SHPClose( hShapeDB );
 
-            G_fatal_error( buf );
-        }
+	G_fatal_error( buf );
+      }
 
-        if (debug > 4)
-            fprintf( fdlog, "Selected attribute field %d.\n", cat_field);
+      if (debug > 4)
+	fprintf( fdlog, "Selected attribute field %d.\n", cat_field);
 
-	/* Find field number of category label */ /* May '00 : DDG */
 
-	if( strcmp(parm.catlabel->answer, "") != 0 ) {
-	  int j;
-
-	  for( j = 0; j < DBFGetFieldCount(hDBF); j++ )
-	    {
-	      char label_name[15];
-
-	      DBFGetFieldInfo( hDBF, j, label_name, NULL, NULL );
-	      if( strcasecmp( parm.catlabel->answer, label_name) == 0 )
-		lab_field = j;
-	    }
-	}
-
-	if( lab_field == -1 ) {
-	  sprintf( buf, "No attribute `%s' found on %s. \nNot writing category labels.\n",
-		   parm.catlabel->answer, infile);
-	  fprintf( stderr, buf );
-	}
-
-        /*
-         * Create the dig_att file (or append).
-         */
-        if (G_find_file( "dig_att", name, G_mapset()) == NULL) {
-            f_att = G_fopen_new( "dig_att", name);
-            if (debug)
-                fprintf( fdlog, "Creating dig_att(L) file \"%s\"\n", name);
-        } else {
-            f_att = G_fopen_append( "dig_att", name);
-            if (debug)
-                fprintf( fdlog, "Updating dig_att(L) file \"%s\"\n", name);
-        }
-        if (f_att == NULL)
-        {
-            sprintf( buf, "Unable to create attribute file `%s'.", name );
-            G_fatal_error( buf );
-        }
-
-	/* Create the dig_cats file */ /* Is this necessary? */
-
-        if (G_find_file( "dig_cats", name, G_mapset()) == NULL) {
-            f_cats = G_fopen_new( "dig_cats", name);
-            if (debug)
-                fprintf( fdlog, "Creating dig_cats(L) file \"%s\"\n", name);
-        } else {
-            f_cats = G_fopen_append( "dig_cats", name);
-            if (debug)
-                fprintf( fdlog, "Updating dig_cats(L) file \"%s\"\n", name);
-        }
-        if (f_cats == NULL)
-        {
-            sprintf( buf, "Unable to create category label file `%s'.", name );
-            G_fatal_error( buf );
-        }
+      if(hDBF != NULL) DBFClose( hDBF );
 	
+    }
 
+    /*
+     * Create the dig_att file (or append).
+     */
+    if (G_find_file( "dig_att", name, G_mapset()) == NULL) {
+      f_att = G_fopen_new( "dig_att", name);
+      if (debug)
+	fprintf( fdlog, "Creating dig_att(L) file \"%s\"\n", name);
+    } else {
+      f_att = G_fopen_append( "dig_att", name);
+      if (debug)
+	fprintf( fdlog, "Updating dig_att(L) file \"%s\"\n", name);
+    }
+    if (f_att == NULL)
+      {
+	sprintf( buf, "Unable to create attribute file `%s'.", name );
+	G_fatal_error( buf );
+      }
+
+
+
+    /* -------------------------------------------------------------------- */
+    /*	Identify the category label to be used (if any)		            */
+    /* -------------------------------------------------------------------- */
+
+    if( strcmp(parm.catlabel->answer,"") == 0 ) {
+        lab_field = -1;
+        
+    } 
+    else {
+      int	i;
+        
+      hDBF = DBFOpen( dbf_file, "r" );
+      if( hDBF == NULL )
+        {
+	  sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
+	  G_fatal_error (buf);
+        }
+
+      /* Find field number of category label */ /* May '00 : DDG */
+
+      if( strcmp(parm.catlabel->answer, "") != 0 ) {
+	int j;
+
+	for( j = 0; j < DBFGetFieldCount(hDBF); j++ )
+	  {
+	    char label_name[15];
+
+	    DBFGetFieldInfo( hDBF, j, label_name, NULL, NULL );
+	    if( strcasecmp( parm.catlabel->answer, label_name) == 0 ) {
+	      lab_field = j;
+	      break;
+	    }
+	    else lab_field = -2;
+	  }
+      }
+
+      if( lab_field == -2 ) {
+	sprintf( buf, "No attribute `%s' found on %s. \nNot writing category labels.\n",
+		 parm.catlabel->answer, strcat(name, ".shp") );
+	G_warning( buf );
+      }
+
+
+      if(hDBF != NULL) DBFClose( hDBF );
+	
     }
 
 
@@ -446,14 +478,12 @@ int main( int   argc, char *argv[])
   /*           Also create line segments from vertex database.             */
   /* -------------------------------------------------------------------- */
 
-    if( cat_field == -1 ) {
-      hDBF = DBFOpen( infile, "r" );
-      if( hDBF == NULL )
-	{
-	  sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
-	  G_fatal_error (buf);
-	}
-    }
+    hDBF = DBFOpen( dbf_file, "r" );
+    if( hDBF == NULL )
+      {
+	sprintf (buf, "%s - DBF not found, or wrong format.\n", infile);
+	G_fatal_error (buf);
+      }
 
     /*****************************/
 
@@ -486,8 +516,9 @@ int main( int   argc, char *argv[])
     /*
      * Create the dig_cats file
      */
-    if(strcmp(parm.catlabel->answer, "") != 0) {
-      G_init_cats( (CELL)0,(char *)NULL,&cats);      
+    if(lab_field >=  0) {
+      G_init_cats( (CELL)0,"",&cats);
+      G_write_vector_cats(name, &cats);
     }
     else fprintf( stderr, "Not assigning category labels\n" );
     /* if (G_write_vector_cats(name, &cats) != 1)
@@ -540,7 +571,9 @@ int main( int   argc, char *argv[])
     /* Write attributes and category file */
 	
     if( f_att != NULL ) {
-      if(fd0[cat_field+4].fldType != 1)
+      if(cat_field == -1)
+	G_warning( "No attribute value field assigned. Using record ID.\n" );	
+      else if(fd0[cat_field+4].fldType != 1)
 	G_warning( "Named attribute field is not integer value. Using record ID.\n" );	
       for( iRec = 0; iRec < fd0[0].nRec; ++iRec ) {
 	if( cover_type == LINE ) {
@@ -562,7 +595,7 @@ int main( int   argc, char *argv[])
 
                      
 	/* set cat for dig_cats file*/ /* M Neteler 10/99 */
-	if( lab_field > -1 ) {
+	if( lab_field >= 0 ) {
 
 	  switch(fd0[lab_field+4].fldType){
 	  case 0:
@@ -593,13 +626,20 @@ int main( int   argc, char *argv[])
 	    
       }
 
-      /*if (G_write_vector_cats(name, &cats) != 0)
-	G_fatal_error("Error writing dig_cats file");
-      */
 
       free( xlab );
       free( ylab );
     }
+
+    /* if( lab_field >= 0 ) {
+      if (G_write_vector_cats(name, &cats) != 0)
+	G_fatal_error("Error writing dig_cats file");
+    }
+    */
+
+    G_write_vector_cats(name, &cats);
+      
+    
 
 	
 
@@ -632,3 +672,28 @@ int main( int   argc, char *argv[])
     exit(0);
 }
 
+
+static char *extract_base_name( char *base_name, const char *in_name ) {
+  
+  /* Extract the basename of a fullname of the input file. ie. the answer to
+     the option `in'
+  */
+
+  char *name;
+  char *p;
+
+  name = (char *)malloc(strlen(in_name)+1);
+  strcpy( name, in_name );
+
+  for( p = name+strlen(name)-1;
+       p != name-1 && (isalnum(*p) || *p == '_' || *p == '.' );
+       p-- ) {}
+  strcpy( base_name, p+1);
+  free(name);
+    
+  p = strrchr( base_name, '.');
+  if (p != NULL)
+    *p = '\0';
+  base_name = p;
+  return base_name;
+}

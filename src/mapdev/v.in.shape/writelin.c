@@ -25,7 +25,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <assert.h>
-#include "shapefil.h"
 #include "shp2dig.h"
 #include "writelin.h"
 #include "dbutils.h"

@@ -20,5 +20,10 @@
 
  ******************************************************************************/
 
+#ifndef _CLEANUP_H
+#define _CLEANUP_H
+
 void vector_map_cleanup( char *mapname );
+
+#endif
 
