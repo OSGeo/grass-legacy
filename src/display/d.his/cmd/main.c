@@ -218,17 +218,15 @@ main (int argc, char **argv)
 
 	alloc_pass_buff(window.cols) ;
 
-	G_zeros_r_nulls(0);
-
 	next_row = 0;
 	for (atrow=0; atrow<window.rows; )
 	{
 		G_percent (atrow, window.rows, 5);
-		if(G_get_map_row(hue_file, hue_array, atrow) < 0)
+		if(G_get_c_raster_row(hue_file, hue_array, atrow) < 0)
 			exit(1);
-		if (int_used && (G_get_map_row(int_file, int_array, atrow) < 0))
+		if (int_used && (G_get_c_raster_row(int_file, int_array, atrow) < 0))
 			exit(1);
-		if (sat_used && (G_get_map_row(sat_file, sat_array, atrow) < 0))
+		if (sat_used && (G_get_c_raster_row(sat_file, sat_array, atrow) < 0))
 			exit(1);
 
 		for (atcol=0; atcol<window.cols; atcol++)
@@ -250,7 +248,7 @@ main (int argc, char **argv)
 		if (out_used)
 		{
 			/*if(G_put_map_row (out_file, out_array, &out_colors) < 0)*/
-			if(G_put_map_row (out_file, out_array) < 0)
+			if(G_put_c_raster_row (out_file, out_array) < 0)
 				out_used = 0;
 		}
 		if (out_used)
