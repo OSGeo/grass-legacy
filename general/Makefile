@@ -12,6 +12,7 @@ SUBDIRS = \
 	g.parser \
 	g.proj \
 	g.region \
+	g3.region \
 	g.setproj \
 	g.tempfile \
 	g.version \
