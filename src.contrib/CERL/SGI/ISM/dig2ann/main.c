@@ -70,12 +70,14 @@ main(argc, argv)
 	user->key		= 'n';
 	user->description	= "Don't go interactive";
 
-	User_Entry = !user->answer;
-	dig_name = old->answer;
-	ism_name = new->answer;
 
         if (G_parser (argc, argv))
                 exit(-1);
+
+/* Aug 29 -dpg  moved these from before G_parser () */
+	User_Entry = !user->answer;
+	dig_name = old->answer;
+	ism_name = new->answer;
 
     }
 
