@@ -118,6 +118,23 @@
 
 #define POINTS		3	/* this is thrown in for get_type_cnt() */
 
+
+#define GV_POINT		0x01
+#define GV_DEAD_DOT		0x02
+
+#define GV_LINE			0x04
+#define GV_DEAD_LINE		0x08
+
+#define GV_BOUNDARY		0x10
+#define GV_DEAD_BOUNDARY	0x20
+
+#define GV_CENTROID	0x40
+#define GV_DEAD_CENTROID	0x80
+
+#define GV_ALIVE 0x55
+#define GV_DEAD 0xAA
+
+/* start of old, deprecated element (line) types */
 #define DOT		0x01
 #define DEAD_DOT	0x02
 
@@ -136,6 +153,7 @@
 
 #define ELEMENT_TYPE_DOT (DOT | DEAD_DOT | CENTROID | DEAD_CENTROID)
 #define ELEMENT_TYPE_LINE (LINE | DEAD_LINE | BOUNDARY | DEAD_BOUNDARY)
+/* end of depracated types */
 
 #define ESC	033
 
