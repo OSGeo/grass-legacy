@@ -1,0 +1,2 @@
+Will rotate matrix files 90 degrees.  Useful for orienting data which
+has "west" at the top of the matrix so that "north" is at the top.
