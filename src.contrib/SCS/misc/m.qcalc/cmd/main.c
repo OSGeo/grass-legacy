@@ -1,7 +1,7 @@
 /* %W% %G% */
 #ident " @(#)main.c     1.2   02/26/91 "
 /* qcalc    1.1   12/10/87
-/* m.qcalc    1.2   02/26/91  for 4.0
+* m.qcalc    1.2   02/26/91  for 4.0
 *    Created by : R.L.Glenn , Soil Conservation Service, USDA
 *    Purpose: Productivity tool
 *             calculation of acre and hectare values for cellsize
