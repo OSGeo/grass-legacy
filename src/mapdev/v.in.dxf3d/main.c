@@ -123,7 +123,7 @@ main(int argc, char *argv[])
 						if (strcmp(linein,"VERTEX\n")==0) nvert = nvert + 1;
 						if (nvert == 2) {			/* Utilizando el segundo VERTICE para tomar las coordenadas */
 							fgets(linein,MAXLINE,dxf_fp);
-							while (strcmp(linein,"VERTEX\n")!=0) {          /* Captura de las coordenadas X, Y y Z */
+							while (strcmp(linein,"  0\n")!=0) {          /* Captura de las coordenadas X, Y y Z */
 								if (strcmp(linein," 10\n")==0) {
 									fgets(linein,MAXLINE,dxf_fp);
 									xcoord = atof(linein);
