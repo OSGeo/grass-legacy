@@ -1,7 +1,7 @@
 
 
 
-m.ll2u               GRASS Reference Manual                m.ll2u
+m.ll2u <main>        GRASS Reference Manual         <main> m.ll2u
 
 
 
@@ -49,28 +49,37 @@ DESCRIPTION
 
      Input can be entered from the keyboard or from an input
      file.  In either case, input should be entered with one
-     longitude and latitude pair per line, in the form:
+     longitude and latitude pair per line, in either of the below
+     forms:
 
           degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}
           degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}
           degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}
           degrees:minutes:seconds{E|W} degrees:minutes:seconds{N|S}
             .
+
+
+
+GRASS 4.1                U.S. Army CERL                         1
+
+
+
+
+
+
+m.ll2u <main>        GRASS Reference Manual         <main> m.ll2u
+
+
+
             .
+          end
 
-
-
-GRASS 4.0                U.S. Army CERL                         1
-
-
-
-
-
-
-m.ll2u               GRASS Reference Manual                m.ll2u
-
-
-
+          degrees.decimal{E|W} degrees.decimal{N|S}
+          degrees.decimal{E|W} degrees.decimal{N|S}
+          degrees.decimal{E|W} degrees.decimal{N|S}
+          degrees.decimal{E|W} degrees.decimal{N|S}
+            .
+            .
           end
 
      If the user sets the -r flag, m.ll2u will expect the order
@@ -115,27 +124,30 @@ m.ll2u               GRASS Reference Manual                m.ll2u
                        into this UTM zone).
                        Options:  1-60
 
+
+
+GRASS 4.1                U.S. Army CERL                         2
+
+
+
+
+
+
+m.ll2u <main>        GRASS Reference Manual         <main> m.ll2u
+
+
+
      input=name        Name of an existing input file containing
                        longitude, latitude coordinates to be
-                       converted.
+                       converted.  Input lines may either be
+                       input in the form of
+                       degrees:minutes:seconds, or as decimal
+                       degrees.  If input as decimal degrees,
+                       m.ll2u recognizes negative numbers.
 
      output=name       Name to be assigned to the output file
                        containing UTM coordinates and zone
                        designations.
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
-
-
-
-
-
-
-m.ll2u               GRASS Reference Manual                m.ll2u
-
-
 
      AVAILABLE SPHEROIDS
      (The on-line listing includes only the spheroid names)
@@ -177,6 +189,20 @@ EXAMPLE
           237740.85270818 2167292.1076231 5
           447560.64349407 2165450.19058336 3
           656921.61734802 2212183.40032627 6
+
+
+
+GRASS 4.1                U.S. Army CERL                         3
+
+
+
+
+
+
+m.ll2u <main>        GRASS Reference Manual         <main> m.ll2u
+
+
+
           448035.11644906 2322228.3038167 8
           end
 
@@ -188,20 +214,6 @@ NOTES
      for establishing control points to use as a reference when
      determining exact locations on the earth.  A cohesive set of
      these control points is called a datum.
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         3
-
-
-
-
-
-
-m.ll2u               GRASS Reference Manual                m.ll2u
-
-
 
      The spheroids listed above have been used as the basis for a
      number of different datums.  The North American Datum of
@@ -225,6 +237,10 @@ m.ll2u               GRASS Reference Manual                m.ll2u
      spheroid was used to produce the map on which you are
      working.
 
+     This program recognizes negative numbers if coordinates are
+     input in decimal degrees rather than in the form of
+     degrees:minutes:seconds.
+
      This program has received only limited testing.  It should
      be used with some caution.
 
@@ -240,6 +256,19 @@ SEE ALSO
      Geological Survey Professional Paper 1395;  from Table 1,
      p.12.
 
+
+
+GRASS 4.1                U.S. Army CERL                         4
+
+
+
+
+
+
+m.ll2u <main>        GRASS Reference Manual         <main> m.ll2u
+
+
+
      For bessel, airy, everest, and wgs66 ellipsoid parameter
      values, see:
      Thomas O. Seppelin, The  Department  of Defense World
@@ -254,20 +283,6 @@ SEE ALSO
      Also read GRASS User's Reference Manual entries for:
      d.labels, d.points, d.sites, d.where, m.datum.shift,
      m.gc2ll, m.ll2gc, m.u2ll, and parser
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         4
-
-
-
-
-
-
-m.ll2u               GRASS Reference Manual                m.ll2u
-
-
 
 AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
@@ -309,22 +324,7 @@ AUTHOR
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         5
+GRASS 4.1                U.S. Army CERL                         5
 
 
 
