@@ -1,0 +1,22 @@
+COMBINE command syntax:
+
+Valid map expressions (MAP_EXPR).  Note nesting capability
+    (MAP_NAME)     (any valid map layer name)
+    (name  new_map_name MAP_EXPR)
+    (and   MAP_EXPR MAP_EXPR)
+    ( or   MAP_EXPR MAP_EXPR)
+    (group cat-nums MAP_EXPR )
+    note: for "NOT":  (group 0 MAP_EXPR )
+    (exp  number)
+
+Commands and requests:
+    quit
+    help
+    erase
+    window
+    window map_name
+    statistics MAP_NAME
+    categories MAP_NAME
+      cats     MAP_NAME
+    ! shell-command
+    < filename
