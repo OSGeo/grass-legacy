@@ -9,6 +9,7 @@ char **argv ;
 {
 	char buff[512] ;
 	char window_name[64] ;
+	char *D_color_list();
 	struct Cell_head window ;
 	int i ;
 	int t, b, l, r ;
@@ -19,7 +20,7 @@ char **argv ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = NO ;
 	opt1->answer     = "gray" ;
-	opt1->options="red,orange,yellow,green,blue,indigo,violet,gray,brown,white,black";
+	opt1->options    = D_color_list();
 	opt1->description= "Sets the current color to that stated" ;
 
 	opt2 = G_define_option() ;
@@ -94,27 +95,8 @@ char **argv ;
 
 	/* Setup driver and check important information */
 	R_open_driver();
-
-	if (D_get_cur_wind(window_name))
-		G_fatal_error("No current window") ;
-
-	if (D_set_cur_wind(window_name))
-		G_fatal_error("Current window not available") ;
-
-	/* Read in the map window associated with window */
-	G_get_window(&window) ;
-
-	if (D_check_map_window(&window))
-		G_fatal_error("Setting map window") ;
-
-	if (G_set_window(&window) == -1)
-		G_fatal_error("Current window not settable") ;
-
-	/* Determine conversion factors */
-	if (D_get_screen_window(&t, &b, &l, &r))
-		G_fatal_error("Getting screen window") ;
-	if (D_do_conversions(&window, t, b, l, r))
-		G_fatal_error("Error in calculating conversions") ;
+	D_setup(0);
+	G_get_set_window (&window);
 
 	/* Do the plotting */
 	R_standard_color (color) ;
@@ -134,21 +116,6 @@ char **argv ;
 		break ;
 	}
 
-	/* Add this command to list */
-	/* This doesn't make sense
-        strcpy(buff, argv[0]) ;
-        for(i=1; i<argc; i++) {
-            strcat(buff, " ") ;
-            strcat(buff, argv[i]) ;
-		}
-        if (infile == stdin)
-        {
-          strcat(buff, " < ");
-          strcat(buff, temp_name);
-          fclose(temp_file);
-        }
-        D_add_to_list(buff) ;
-	*/
-
 	R_close_driver();
+	exit(0);
 }
