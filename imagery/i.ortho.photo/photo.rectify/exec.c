@@ -48,19 +48,12 @@ int exec_rectify (void)
     unlink (mailfile);
     close(creat(mailfile,0666));
 
-#ifdef DEBUG3
-    fclose (Bugsr); 
-#endif
-
 /* open stderr to /dev/null so all GRASS error messages will be
  * mailed to the user
  */
 
     freopen ("/dev/null","w",stderr);
     freopen ("/dev/null","w",stdout);
-#ifdef DEBUG3
-    freopen ("ortho_rectify.rst","a",Bugsr);
-#endif
 
     /* rectify each file */
     for (n = 0; n < group.group_ref.nfiles; n++)
