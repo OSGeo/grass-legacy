@@ -346,8 +346,8 @@ G_matrix_transpose(mat_struct *mt) {
 /*** NOT YET COMPLETE: only some solutions' options available ***/
 
 int
-G_matrix_LU_solve(const mat_struct *mt1, mat_struct **xmat0, const mat_struct *bmat,
-		  mat_type mtype) {
+G_matrix_LU_solve(const mat_struct *mt1, mat_struct **xmat0, 
+			const mat_struct *bmat, mat_type mtype) {
 
   int i; /* loop */
   mat_struct *wmat, *xmat, *mtx; 
