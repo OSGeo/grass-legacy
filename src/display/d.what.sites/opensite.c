@@ -13,13 +13,13 @@ int open_sites(char *sname)
 char *site_map;
     
         if (NULL == (site_map = G_find_file2 ("site_lists", sname, ""))){
-	    fprintf (stderr,  "Could not find file '%s'", sname);
+	    fprintf (stderr,  "Could not find file '%s'\n", sname);
 	    return(0);
 	}
 
 	Sitefd = G_fopen_sites_old (sname, site_map);
 	if (Sitefd == NULL){
-	    fprintf (stderr, "can't open sites file [%s]", sname);
+	    fprintf (stderr, "can't open sites file [%s]\n", sname);
 	    return(0);
 	}
 	fprintf(stderr,"loading %s...", sname);
