@@ -29,7 +29,7 @@
 #%End
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+  exec g.parser "$0" "$@"
 fi
 
 COVER="$GIS_OPT_map"
