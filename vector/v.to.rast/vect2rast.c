@@ -171,6 +171,8 @@ int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int
 	return 1;
     }
 
+    Vect_close ( &Map );
+
     start_clock(NULL);
     inform ("Creating support files for raster map ...");
     G_close_cell(fd);
