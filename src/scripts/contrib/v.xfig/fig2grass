@@ -1,14 +1,16 @@
-#!/bin/awk -f
+#!/bin/sh
 
 # Name       : fig2grass
-# Version    : 0.3
-# Date       : Mon Jan 25 1999
+# Version    : 0.4
+# Date       : 6 Mar 2001
 # Author     : Jacques Bouchard
 #
 # Description: convert a file in FIG 3.2 format
 #              to an ASCII vector file to be imported in GRASS
 #
 # Usage      : fig2grass [inputfile ...] [> outputfile]
+
+awk --source='
 
 function formerr() {
     printf "*** WRONG FIG 3.2 FORMAT ! ***\n"
@@ -92,3 +94,4 @@ VERTI:\n", scale, west, east, south, north
         }
     }
 }
+' $1 $2
