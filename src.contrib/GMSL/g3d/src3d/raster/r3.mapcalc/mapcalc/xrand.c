@@ -1,5 +1,11 @@
+
+#include <stdlib.h>
+
 #include "gis.h"
-/* Author: Michael Shapiro. 16 feb 1993 
+#include "mapcalc.h"
+#include "config.h"
+
+/* Author: Michael Shapiro. 16 feb 1993 / update 12/99 on __CYGWIN__
  * NOTE:
  *   This depends on the Unix function drand48() which returns a
  *   double between 0.0 and 1.0
@@ -7,34 +13,55 @@
  * g_randseed(): it does nothing at present
  */
 
-#if defined(__CYGWIN__)
-extern double drand48();
-#else
-double drand48()
-{
-	return(rand()/32767.0);
-}
-#if defined(__APPLE__)
-#define srand48(sv) (srand((unsigned)(sv)))
-#endif
+#if !defined(HAVE_DRAND48)
+#define drand48() ((double)rand()/RAND_MAX)
 #endif
 
-g_randseed()
+int 
+g_randseed (void)
 {
 /* this could be written to seed the random numbers based on the time.
  * but I have grown gun shy of UNix include files (eg, <time.h>) and
  * their "types" (time_t) not to mention the need to generate 3 shorts
  * for the seed to drand48()
  */
+
+    return 0;
+}
+
+int 
+i_rand (int argc, CELL *argv[], register CELL *cell, register int ncols)
+{
+    register int i;
+    CELL lo, hi;
+    double x;
+
+    for (i = 0; i < ncols; i++)
+    {
+	x = drand48();             /* x is between 0.0 and 1.0 */
+	lo = argv[0][i];
+	hi = argv[1][i];
+	if (lo > hi)
+	{
+	    lo = argv[1][i];
+	    hi = argv[0][i];
+	}
+    /* x*(hi-lo)+lo: biases results against lo,hi due to rounding */
+	cell[i] = (CELL)round(x*(hi - lo + 1) + lo - .5);
+	if (cell[i] > hi)
+	    cell[i] = hi;
+	if (cell[i] < lo)
+	    cell[i] = lo;
+    }
+
+    return 0;
 }
 
 /* NOTE: if this function is used, the results will be biased at the end points
  * when cast to CELL
  */
-x_rand (argc, argv, cell, ncols)
-    double *argv[];
-    register double *cell;
-    register int ncols;
+int 
+x_rand (int argc, double *argv[], register double *cell, register int ncols)
 {
     register int i;
     double lo, hi;
@@ -47,9 +74,12 @@ x_rand (argc, argv, cell, ncols)
 	hi = argv[1][i];
 	cell[i] = x*(hi - lo) + lo;
     }
+
+    return 0;
 }
 
-n_rand (n,name) char *name;
+int 
+n_rand (int n, char *name)
 {
     if (n==2) return 1;
     fprintf (stderr, "%s - ", name);
