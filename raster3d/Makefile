@@ -12,7 +12,7 @@ SUBDIRS = \
 	r3.out.v5d \
 	r3.timestamp
 
-OPENGLBASED = r3.mkdspf r3.showdspf
+OPENGLBASED = r3.mkdspf
 
 #compile if OPENGLU present:
 ifneq ($(strip $(OPENGLULIB)),)
