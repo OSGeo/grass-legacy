@@ -22,7 +22,7 @@ int main (int argc, char *argv[])
     input->type            = TYPE_STRING;
     input->required        = YES;
     input->multiple        = NO;
-    input->gisprompt       = "old,dig,vector";
+    input->gisprompt       = "old,vector,vector";
     input->description     = "vector input file";
 
     output = G_define_option();
