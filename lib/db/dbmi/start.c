@@ -46,7 +46,7 @@ db_start_driver(name)
 	char msg[256];
 
 	db_free_dbmscap (list);
-	sprintf (msg, "%s: no such driver in %s", name, db_dbmscap_filename());
+	sprintf (msg, "%s: no such driver available", name );
 	db_error (msg);
 	return (dbDriver *) NULL;
     }
