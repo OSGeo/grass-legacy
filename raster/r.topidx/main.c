@@ -36,7 +36,6 @@ main(int argc, char **argv)
 
 	struct
 	{
-		struct	Flag	*overwr;
 		struct	Flag	*verbose;
 	} flags;
 
@@ -60,10 +59,6 @@ main(int argc, char **argv)
 	params.output->required		= YES;
 	params.output->gisprompt	= "new,cell,raster";
 
-	flags.overwr			= G_define_flag();
-	flags.overwr->key		= 'o';
-	flags.overwr->description	= _("Overwrite output map");
-
 	flags.verbose			= G_define_flag();
 	flags.verbose->key		= 'v';
 	flags.verbose->description	= _("Output verbosely");
@@ -75,7 +70,6 @@ main(int argc, char **argv)
 	iname   = params.input->answer;
 	mapset  = G_find_cell2 (iname, "");
 	oname   = params.output->answer;
-	overwr  = flags.overwr->answer;
 	verbose = flags.verbose->answer;
 
 	if(check_ready())
