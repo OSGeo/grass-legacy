@@ -124,7 +124,7 @@ srcdist: distclean
 	echo "Distribution source package: grass${VERSION}_src.tar.gz ready."
 
 # make a binary package for distribution:
-#  Bug: VER is not expaning properly (wrong directory):
+#  Bug: VER is not expanded properly (wrong directory):
 bindist:
 	VER=${VERSION}
 	(cd ${PREFIX};  tar cvfz grass${VER}_${SYSTEM}_bin.tar.gz * )
