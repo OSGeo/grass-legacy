@@ -28,6 +28,8 @@ int Raster_int(int num, int nrows, int *array, int withzeros, int color_type)
 		}
 	}
 
+	modified = 1;
+
 	return 0;
 }
 
