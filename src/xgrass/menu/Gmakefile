@@ -1,8 +1,6 @@
-YACC = yacc
-LEX = lex
 SED = sed
 LIBS =  $(XGILIB) $(XGDLIB) $(GISLIB) $(XMLIBPATH) $(XMLIB) $(XTLIBPATH) \
-	$(XTLIB) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB) -ll
+	$(XTLIB) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB) $(LEXLIB)
 EXTRA_CFLAGS = $(XCFLAGS) -I../include \
 	$(XINCPATH) $(XMINCPATH)
 
@@ -46,7 +44,6 @@ XCOBJS = \
 	xc.comstr.o \
 	xc.require.o \
 	xc.create.o
-
 XCOBJS2 = \
 	xc.topmain.o \
 	xc.main.o \
@@ -129,7 +126,7 @@ grammar.c: grammar.y
 
 lex.c: lex.l grammar.c y.tab.h
 	rm -f lex.c
-	lex -t lex.l > lex.c
+	$(LEX) -t lex.l > lex.c
 
 y.tab.h: grammar.c
 
@@ -144,7 +141,7 @@ xc.y.tab.h: xc.grammar.c
 	$(SED) -e "s/yy/zz/g" y.tab.h | $(SED) -e "s/YY/ZZ/g" > xc.y.tab.h
 
 xc.lex.c: xc.lex.l xc.y.tab.h
-	rm -f xc.$(LEX).c
+	rm -f xc.lex.c
 	$(LEX) -t xc.lex.l | $(SED) -e "s/yy/zz/g" | $(SED) -e "s/YY/ZZ/g" | $(SED) -e "s/zzwrap/yywrap/g" > xc.lex.c
 
 clean:
