@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.120 2001-02-27 21:52:43 markus Exp $
+                 $Id: BUGS,v 1.121 2001-02-28 01:48:41 bob Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -121,10 +121,6 @@ i.in.gtc/i.in.pri
   (reported by Stefano Merler <merler@itc.it>)
   -> NOTE: r.in.gdal offers SAR import, shall we remove i.in.gtc/i.in.pri?
   (being worked on by ?)
-
-i.rectify*:
- - should update the history "was transformed with i.rectify"
-   (currently keeps old hist only! Confusing.)
 
 i.ortho.photo
  - if second control point is set by mouse, it is not indicated
@@ -414,14 +410,8 @@ g3.region:
 i.tape.tm.fast:
   ERROR (only for xy-locations), no "Usage: " Info
 
-m.region.ll -help prints :                                                      
-m.region.ll - must be in a UTM database
-
 m.in.stf1.tape:
  must be run in command mode only (USAGE:) ... no parser interface
-
-r.mapcalc -help prints :
-you have confused me
 
 v.in.arc.pg -help prints :
  Coverage type:
