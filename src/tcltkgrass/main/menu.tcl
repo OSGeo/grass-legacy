@@ -828,6 +828,9 @@ menu_build 1 .main_menu {
                 "source $env(TCLTKGRASSBASE)/module/db.describe"
             }
             -separator
+            "Select all" "" {
+                "source $env(TCLTKGRASSBASE)/module/db.select.all"
+            }	    
             "Select" "" {
                 "source $env(TCLTKGRASSBASE)/module/db.select"
             } 
@@ -837,7 +840,10 @@ menu_build 1 .main_menu {
 	    -separator
             "Reclass vector" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.db.reclass"
-            }	    
+            }
+            "Load vector to DB" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.to.db"
+            }	    	    
         }
     }
     Help Help {
