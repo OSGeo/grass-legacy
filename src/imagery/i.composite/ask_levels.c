@@ -7,7 +7,7 @@ ask_levels (void)
 
     while(1)
     {
-	fprintf (stderr, "How many color levels? ");
+	fprintf (stderr, "How many color levels (number of colors for each channel)? ");
 	if (!G_gets(buf)) continue;
 	if (sscanf (buf, "%d", &n) != 1) continue;
 	if (n < 2)
