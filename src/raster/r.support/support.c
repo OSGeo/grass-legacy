@@ -1,3 +1,27 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       r.support (GRASS core)
+* AUTHOR(S):    Original Michael  Shapiro - CERL
+*               Preliminary parser support by Markus Neteler
+* PURPOSE:      Build support file for raster map
+*               - Edit the header
+*               - Update the stats (histogram,range)
+*               - Edit the category fil
+*               - Create/Update the color table
+*               - Edit the history file
+*               - create/reset null file
+*               - delete null file
+* COPYRIGHT:    (C) 2000 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public 
+*               License (>=v2). Read the file COPYING that comes with GRASS
+*               for details.
+*
+*****************************************************************************/
+
 #include <unistd.h>
 #include <stdlib.h>
 #include "gis.h"
@@ -5,7 +29,7 @@
 
 int main (int argc, char *argv[])
 {
-    char name[256];
+    char *name;
     char rname[256], rmapset[256];
     struct Cell_head cellhd;
     int row, col, null_fd;
@@ -15,24 +39,53 @@ int main (int argc, char *argv[])
     int cellhd_ok;
     int is_reclass;
     int error();
-	struct GModule *module;
+    int calc_range;
+    int commandmode;
+    struct GModule *module;
+    struct Option *map;
+    struct Flag *flag1;          
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->description =
+    module = G_define_module();
+    module->description =
 		"Allows the user to create and/or modify raster map layer "
-		"support files.";
+		"support files. Note: Interactive mode offers more functionality than "
+		"command line mode.";
 
-    if (G_ask_cell_in_mapset ("Enter name of raster file for which you will create/modify support files", name) == NULL)
-	exit(0) ;
+    map = G_define_option();            
+    map->key = "map";
+    map->required = YES;
+    map->type = TYPE_STRING;
+    map->gisprompt = "old,cell,raster";
+    map->description = "raster map name";
+
+    /* test if running in command line mode */
+    if (argc >2 ) /* -r is specified */
+    {
+      flag1 = G_define_flag() ;
+      flag1->key         = 'r';
+      flag1->description = "Calculate range";
+      commandmode=1; /* Calculate range wanted == run in command mode */
+    }
+    else
+      commandmode=0; /* Calculate range not wanted */
+    
+
+    if (G_parser(argc,argv))
+            exit(1);
+
+    name = map->answer;
+    if (commandmode)
+        calc_range= flag1->answer;
 
 /* cell header */
     cellhd_ok = G_get_cellhd (name, G_mapset(), &cellhd) >= 0 ;
     is_reclass = (G_is_reclass (name, G_mapset(), rname, rmapset) > 0);
 
+  if (! commandmode)
+  {
     sprintf (buf, "Edit the header for [%s]? ", name);
-
     if (is_reclass)
     {
 	fprintf (stdout,"\nNote: [%s] is a reclass of [%s in %s]\n\n",
@@ -55,11 +108,14 @@ int main (int argc, char *argv[])
 	sleep(3);
 	exit(1);
     }
-
+   }
+   
 /* check the histogram and range */
-    check_stats (name);
+  check_stats (name, commandmode);
 
 /* category file */
+  if (! commandmode)
+  {
     sprintf (buf, "Edit the category file for [%s]? ", name);
     if (G_yes (buf, 0))
     {
@@ -69,8 +125,11 @@ int main (int argc, char *argv[])
 	hitreturn();
 	G_clear_screen();
     }
-
+   }
+   
 /* color table */
+  if (! commandmode)
+  {
     sprintf (buf, "Create/Update the color table for [%s]? ", name);
     if (G_yes (buf, 0))
     {
@@ -80,8 +139,11 @@ int main (int argc, char *argv[])
 	hitreturn();
 	G_clear_screen();
     }
-
+  }
+  
 /* history file */
+  if (! commandmode)
+  {
     sprintf (buf, "Edit the history file for [%s]? ", name);
     if (G_yes (buf, 0))
     {
@@ -91,8 +153,11 @@ int main (int argc, char *argv[])
 	hitreturn();
 	G_clear_screen();
     }
-
+  }
+  
 /* null file */
+  if (! commandmode)
+  {
     fprintf(stdout, "\nThe null file for [%s] might indicate that some cells contain\n", name);
     fprintf(stdout, "no data. If null file for [%s] doesn't exist all zero cells in [%s]\n", name, name);
     fprintf(stdout, "are treated by GRASS application programs as no data.\n");
@@ -150,7 +215,9 @@ int main (int argc, char *argv[])
 	fprintf(stdout, "Done.\n");
 
     }
-    exit(0);
+   }
+   
+   exit(0);
 }
 
 int G_clear_screen (void){return 0;}

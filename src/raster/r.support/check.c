@@ -1,7 +1,7 @@
 #include "gis.h"
 #include "local_proto.h"
 
-int check_stats (char *name)
+int check_stats (char *name, int commandmode)
 {
     struct Histogram histogram;
     struct Categories cats;
@@ -19,8 +19,12 @@ int check_stats (char *name)
 
     /* note return value 1 = do hitreturn(), 0 otherwise */
 
-    sprintf (question, "Update the stats (histogram,range) for [%s]? ", name);
-    if (!G_yes (question, 0)) return 0;
+    if (! commandmode)
+    {
+     sprintf (question, "Update the stats (histogram,range) for [%s]? ", name);
+     if (!G_yes (question, 0)) return 0;
+    }
+    /* always run calculation if in commandmode */
 
     fprintf (stdout,"\n  Updating the stats for [%s]\n\n", name);
     if(!do_histogram (name, mapset))
