@@ -1,0 +1,76 @@
+.\" %W% %G%
+.TH Dnew 2D D-language
+.SH NAME
+Dnew \- To create new windows on the monitor
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dnew
+.fI "[name [bottom top left right]]"
+.br
+.B Dnew
+[option\*=\fIvalue\fR] [option\*=\fIvalue\fR] ...
+.SH DESCRIPTION
+.I Dnew 
+creates new graphics windows on the graphics monitor.
+Options are
+.ns
+.TP 
+.RI name\*= name
+Name to be assigned to newly created window.  If the user provides
+no name,
+.I Dnew
+will generate a unique name.
+.br
+.ns
+.TP 
+.RI top\*= number
+Sets the vertical coordinate of the top of the window to the specified
+.I number.
+.br
+.ns
+.TP 
+.RI bottom\*= number
+Sets the vertical coordinate of the bottom of the window to the specified
+.I number.
+.br
+.ns
+.TP 
+.RI left\*= number
+Sets the horizontal coordinate of the left of the window to the specified
+.I number.
+.br
+.ns
+.TP 
+.RI right\*= number
+Sets the horizontal coordinate of the right of the window to the specified
+.I number.
+.br
+.PP
+Coordinates use a percentage scale; values are in the range 0-100 with the
+coordinate 0,0 being the lower left corner of the screen.
+.PP
+.I Dnew
+runs interactively if window coordinates are not provided on the command line.
+It uses the pointing device (mouse) to construct the new window, and returns
+the name of the new window upon completion (usually a number).  \fIDnew\fR
+can be used to create multiple windows on the monitor;  these windows can
+overlap.  Note, however, that \fIDnew\fR will not \fIchoose\fR a window
+for display of graphics (see \fIDchoose[2D]\fR).
+.PP
+\fIDnew\fR exits with the name of the new window.  A unique name is
+also given to the window if not specified on the command line.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+.sp
+\fIDchoose[2D]\fR	To choose a window in which to display graphics
+.br
+\fIDclear.screen[2D]\fR	To clear all windows from the monitor, and from memory
+.br
+\fIDerase[2D]\fR	To erase the contents of the current window
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
