@@ -1,0 +1,44 @@
+<H2>DESCRIPTION</H2>
+
+This program outputs, in ASCII, the values in a raster map
+which lie along one or more user-defined transect lines.
+The transects are described by their starting coordinates,
+azimuth, and distance. 
+
+<!-- The transects may be single-cell
+ wide lines, or multiple-cell wide lines.  The output, for
+ each transect, may be the values at each of the cells, or a
+ single aggregate value (e.g., average or median value). -->
+<P>
+
+The <EM><B>line</B></EM> parameter is a definition of (each) transect line,
+specified by the geographic coordinates of its starting point (<EM>easting,
+northing</EM>), the angle and direction of its travel (<EM>azimuth</EM>),
+and its distance (<EM>distance</EM>).
+
+<P>
+The <EM>azimuth</EM> is an angle, in degrees, measured to
+the east of north.  The <EM>distance</EM> is in map units
+(meters for a metered database, like UTM).
+
+<H2>NOTES</H2>
+
+This program is a front-end to the <EM><A
+HREF="r.profile.html">r.profile</A></EM> program.  It simply converts the
+azimuth and distance to an ending coordinate and then runs <EM><A
+HREF="r.profile.html">r.profile</A></EM>.
+
+<H2>BUGS</H2>
+
+There once were <B>width=</B> and <B>result=</B><EM>raw|median|average</EM>
+ options which are not currently implemented.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="r.profile.html">r.profile</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
+
+<p><i>Last changed: $Date$</i>
