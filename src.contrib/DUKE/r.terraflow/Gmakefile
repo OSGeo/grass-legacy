@@ -12,18 +12,18 @@ HEADERS = common.h stats.h streamutils.h types.h \
 	weightWindow.h
 
 
-OBJ := $(patsubst %.cc,%.o,$(SOURCES))
-FLOAT_OBJ = $(patsubst %.cc, $(OBJARCH)/FLOAT/%.o, $(SOURCES))
-SHORT_OBJ = $(patsubst %.cc, $(OBJARCH)/SHORT/%.o, $(SOURCES))
+OBJ := $(patsubst %.cc, %.o , $(SOURCES))
+FLOAT_OBJ = $(patsubst %.cc, FLOAT/%.o , $(SOURCES))
+SHORT_OBJ = $(patsubst %.cc, SHORT/%.o , $(SOURCES))
 
 
 #Note: 	if a header file is modified, the .o files do not get rebuilt..
 #		header files should be included as prerequisites, but does not work 
 #		because of GRASS scripts 
-$(OBJARCH)/FLOAT/%.o:%.cc
+FLOAT/%.o : %.cc
 	$(CXX) -c $(CXXFLAGS) -DELEV_FLOAT $< -o $@
 
-$(OBJARCH)/SHORT/%.o:%.cc
+SHORT/%.o : %.cc
 	$(CXX) $(CXXFLAGS)  -DELEV_SHORT -c $< -o $@
 
 

@@ -215,10 +215,11 @@ then
 fi
 
 # reject any explicit .o rules
-badline="`awk '
-	    /^ *[0-9a-zA-Z_\.\-]*\.o[ \	]*:/{line=NR;next}
-	    /^\t./{if(line) {print line+1; exit}}
-	    {line=0}' Gmakefile`"
+# Disabled because r.terraflow Gmakefile relies on explicit .o rules
+#badline="`awk '
+#	    /^ *[0-9a-zA-Z_\.\-]*\.o[ \        ]*:/{line=NR;next}
+#	    /^\t./{if(line) {print line+1; exit}}
+#	    {line=0}' Gmakefile`"
 
 if test ! "$badline" = ""
 then
@@ -262,9 +263,9 @@ echo GMAKE = $me
 
 # prepend all .o with $(OBJARCH) and .a files with $(LIBARCH)
 sed \
-    -e 's#[\/\*0-9a-zA-Z_\.\-\$\(\)]*\.o[ \	]#$(OBJARCH)/&#g' \
-    -e 's#[\/\*0-9a-zA-Z_\.\-\$\(\)]*\.o:[ \	]#$(OBJARCH)/&#g' \
-    -e 's#[\/\*0-9a-zA-Z_\.\-\$\(\)]*\.o$#$(OBJARCH)/&#g' \
+    -e 's#[%\/\*0-9a-zA-Z_\.\-\$\(\)]*\.o[ \	]#$(OBJARCH)/&#g' \
+    -e 's#[%\/\*0-9a-zA-Z_\.\-\$\(\)]*\.o:[ \	]#$(OBJARCH)/&#g' \
+    -e 's#[%\/\*0-9a-zA-Z_\.\-\$\(\)]*\.o$#$(OBJARCH)/&#g' \
     -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.a[ \	]#$(LIBARCH)/&#g' \
     -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.a:[ \	]#$(LIBARCH)/&#g' \
     -e 's#[\*0-9a-zA-Z_\.\-\$\(\)]*\.a$#$(LIBARCH)/&#g' \
