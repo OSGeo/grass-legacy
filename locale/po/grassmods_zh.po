@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: grassmods_zh\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-05 17:02+0800\n"
-"PO-Revision-Date: 2005-03-16 13:03+0800\n"
+"PO-Revision-Date: 2005-03-23 12:03+0800\n"
 "Last-Translator: zhangjun <nilarcs@gmail.com>\n"
 "Language-Team: Chinese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -512,7 +512,7 @@ msgstr " 左键： 这是什么\n"
 #: ../display/d.what.vect/what.c:429
 #, c-format
 msgid " Middle: toggle flash color\n"
-msgstr " 中键： 触发闪烁颜色\n"
+msgstr " 中键： 闪烁\n"
 
 #: ../display/d.what.vect/what.c:434
 #, c-format
@@ -1006,37 +1006,37 @@ msgstr "无效的区域：%s"
 
 #: ../raster/r.region/main.c:378
 msgid "unable to update boundaries"
-msgstr ""
+msgstr "无法更新边界"
 
 #: ../raster/r.report/main.c:15
 msgid "Reports statistics for raster map layers."
-msgstr ""
+msgstr "报告栅格图层的统计数据"
 
 #: ../raster/r.report/parse.c:44
 msgid "Raster map(s) to report on"
-msgstr ""
+msgstr "需要统计的栅格地图"
 
 #: ../raster/r.report/parse.c:52
 msgid "mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p(ercent_cover)"
-msgstr ""
+msgstr "mi(英里)，me(米)，k(公里)，a(英亩)，h(公顷)，c(像元的数据)，p(覆盖率)"
 
 #: ../raster/r.report/parse.c:60
 msgid "Character representing no data cell value"
-msgstr ""
+msgstr "代表无数据像元的字符"
 
 #: ../raster/r.report/parse.c:66
 #, c-format
 msgid "Page length (default: %d lines)"
-msgstr ""
+msgstr "页面长度(默认：%d行)"
 
 #: ../raster/r.report/parse.c:73
 #, c-format
 msgid "Page width (default: %d characters)"
-msgstr ""
+msgstr "页面宽度(默认：%d字符)"
 
 #: ../raster/r.report/parse.c:80
 msgid "Name of an output file to hold the report"
-msgstr ""
+msgstr "输出报告的名称"
 
 #: ../raster/r.report/parse.c:87
 #: ../raster/r.stats/main.c:113
@@ -1045,11 +1045,11 @@ msgstr ""
 
 #: ../raster/r.report/parse.c:91
 msgid "Suppress page headers"
-msgstr ""
+msgstr "禁止页眉"
 
 #: ../raster/r.report/parse.c:95
 msgid "Use formfeeds between pages"
-msgstr ""
+msgstr "页面间使用换页"
 
 #: ../raster/r.report/parse.c:99
 #: ../raster/r.clump/main.c:62
@@ -1065,19 +1065,19 @@ msgstr ""
 #: ../raster/r.slope.aspect/main.c:253
 #: ../raster/r.describe/main.c:78
 msgid "Quiet"
-msgstr ""
+msgstr "安静的"
 
 #: ../raster/r.report/parse.c:103
 msgid "Scientific format"
-msgstr ""
+msgstr "合理布局"
 
 #: ../raster/r.report/parse.c:107
 msgid "Filter out all no data cells"
-msgstr ""
+msgstr "过滤所有无数据的像元"
 
 #: ../raster/r.report/parse.c:111
 msgid "Filter out cells where all maps have no data"
-msgstr ""
+msgstr "过滤那些在所有地图上都没有数据的像元"
 
 #: ../raster/r.report/parse.c:115
 #: ../raster/r.stats/main.c:166
@@ -1106,8 +1106,9 @@ msgid "Aggregate operation"
 msgstr ""
 
 #: ../raster/r.series/main.c:116
+#, fuzzy
 msgid "Propagate NULLs"
-msgstr ""
+msgstr "扩散空值"
 
 #: ../raster/r.his/main.c:64
 msgid "Generates red, green and blue raster map layers combining hue, intensity, and saturation (his) values from user-specified input raster map layers."
@@ -3523,71 +3524,71 @@ msgstr ""
 #: ../vector/v.convert/old2new.c:27
 #: ../vector/v.convert/att.c:30
 msgid "Input vector was not found."
-msgstr ""
+msgstr "未发现输入的矢量"
 
 #: ../vector/v.convert/old2new.c:32
 msgid "Failed opening input dig file."
-msgstr ""
+msgstr "无法打开输入的dig文件。"
 
 #: ../vector/v.convert/old2new.c:47
 msgid "dig_att file doesn't exist."
-msgstr ""
+msgstr "dig_att文件不存在。"
 
 #: ../vector/v.convert/old2new.c:50
 msgid "Failed opening input dig_att file."
-msgstr ""
+msgstr "无法打开输入的dig_att文件。"
 
 #: ../vector/v.convert/old2new.c:71
 msgid "Attaching categories...\n"
-msgstr ""
+msgstr "分类...\n"
 
 #: ../vector/v.convert/old2new.c:89
 #, c-format
 msgid "Failed to attach an attribute (category %d) to a line."
-msgstr ""
+msgstr "无法为线添加属性(类别%d)。"
 
 #: ../vector/v.convert/old2new.c:92
 #, c-format
 msgid "WARNING: line %d label: %d matched another label: %d."
-msgstr ""
+msgstr "警告：线%d的类别：%d与以知类别：%d相同。"
 
 #: ../vector/v.convert/old2new.c:100
 msgid "Writing new file...\n"
-msgstr ""
+msgstr "写入新文件...\n"
 
 #: ../vector/v.convert/old2new.c:121
 #, c-format
 msgid "%-5d points and lines written to output file.\n"
-msgstr ""
+msgstr "%-5d个点和线写入输出文件。\n"
 
 #: ../vector/v.convert/old2new.c:135
 #, c-format
 msgid "%-5d centroids written to output file.\n"
-msgstr ""
+msgstr "%-5d个质心写入输出文件。\n"
 
 #: ../vector/v.convert/att.c:36
 msgid "No category labels (dig_cats) found, no table created.\n"
-msgstr ""
+msgstr "未发现类别标签(dig_cats)，不创建任何表。\n"
 
 #: ../vector/v.convert/att.c:41
 msgid "Cannot open dig_cats file."
-msgstr ""
+msgstr "无法打开dig_cats文件。"
 
 #: ../vector/v.convert/att.c:68
 #, c-format
 msgid "Cannot open database %s"
-msgstr ""
+msgstr "无法打开数据库%s"
 
 #: ../vector/v.convert/att.c:74
 #: ../vector/v.to.points/main.c:246
 #, c-format
 msgid "Cannot create table: %s"
-msgstr ""
+msgstr "无法创建表：%s"
 
 #: ../vector/v.convert/att.c:99
 #, c-format
 msgid "Cannot insert into table: %s"
-msgstr ""
+msgstr "无法向表中插入新记录：%s"
 
 #: ../vector/v.convert/read.c:41
 msgid "Reading dig file...\n"
@@ -3726,84 +3727,86 @@ msgstr ""
 #: ../vector/v.to.points/main.c:54
 #, c-format
 msgid "Cannot insert new row: %s"
-msgstr ""
+msgstr "无法插入新行：%s"
 
 #: ../vector/v.to.points/main.c:152
 msgid "Create points along input lines."
-msgstr ""
+msgstr "沿着输入的线创建点。"
 
 #: ../vector/v.to.points/main.c:155
 msgid "Input map containing lines"
-msgstr ""
+msgstr "包含线的输入地图"
 
 #: ../vector/v.to.points/main.c:161
 msgid "Output map where points will be written"
-msgstr ""
+msgstr "将要写入点的输出地图"
 
 #: ../vector/v.to.points/main.c:170
 msgid "Write line vertices."
-msgstr ""
+msgstr "写入线的结点"
 
 #: ../vector/v.to.points/main.c:174
 msgid "Interpolate points between line vertices."
-msgstr ""
+msgstr "在线的结点间内插点"
 
 #: ../vector/v.to.points/main.c:181
 msgid "Maximum distance between points in map units."
-msgstr ""
+msgstr "点间的最大距离"
 
 #: ../vector/v.to.points/main.c:185
 msgid "Do not create attribute table."
-msgstr ""
+msgstr "不能创建属性表。"
 
 #: ../vector/v.to.points/main.c:203
 #, c-format
 msgid "Could not find input %s\n"
-msgstr ""
+msgstr "未找到输入%s\n"
 
 #: ../vector/v.to.points/main.c:250
 msgid "Cannot create index"
-msgstr ""
+msgstr "无法创建索引"
 
 #: ../vector/v.to.points/main.c:253
 #, c-format
 msgid "Cannot grant privileges on table %s"
-msgstr ""
+msgstr "无法为表%s授予权限"
 
 #: ../vector/v.to.points/main.c:321
 #, c-format
 msgid "%d points written to output map\n"
-msgstr ""
+msgstr "%d个点写入输出地图\n"
 
 #: ../vector/v.in.region/main.c:46
 msgid "Select type: line or area"
-msgstr ""
+msgstr "选择类型：线 或 面"
 
 #: ../vector/v.db.select/main.c:89
 msgid "Database connection not defined"
-msgstr ""
+msgstr "数据库连接未定义"
 
 #: ../vector/v.db.select/main.c:97
 msgid "Cannot open select cursor"
-msgstr ""
+msgstr "无法打开选择游标"
 
 #: ../vector/v.db.select/main.c:115
 msgid "Cannot fetch data"
-msgstr ""
+msgstr "无法获取数据"
 
 #: ../vector/v.transform/print_trans.c:29
 msgid ""
 "                          CHECK MAP RESIDUALS\n"
 "\n"
 msgstr ""
+"                          检查地图残差\n"
+"\n"
 
 #: ../vector/v.transform/print_trans.c:30
 msgid "                Current Map                  New Map\n"
-msgstr ""
+msgstr "                当前地图                  新地图\n"
 
 #: ../vector/v.transform/print_trans.c:31
 msgid " POINT      X coord    Y coord  |        X coord   Y coord    |      residuals\n"
-msgstr ""
+msgstr "  点        X坐标      Y坐标    |         X坐标     Y坐标    |      残差\n"
 
 #: ../vector/v.transform/print_trans.c:43
 #, c-format
@@ -3812,98 +3815,103 @@ msgid ""
 "\n"
 "  Number of points: %d\n"
 msgstr ""
+"\n"
+"\n"
+"  点的数量：%d\n"
 
 #: ../vector/v.transform/print_trans.c:44
 #, c-format
 msgid "  Residual mean average   : %f\n"
-msgstr ""
+msgstr "  平均残差：%f\n"
 
 #: ../vector/v.transform/ask_trans.c:83
 msgid "ask_transform_coor():  Leaving session.. \n"
-msgstr ""
+msgstr "ask_transform_coor()：退出此过程。\n"
 
 #: ../vector/v.transform/setup_trans.c:88
 msgid "The points weren't spread out enough."
-msgstr ""
+msgstr "点分布不广。"
 
 #: ../vector/v.transform/setup_trans.c:91
 #, c-format
 msgid "You need to enter at least %d points."
-msgstr ""
+msgstr "至少需要输入%d个点。"
 
 #: ../vector/v.transform/main.c:166
 #, c-format
 msgid "Could not open file with coordinates : %s\n"
-msgstr ""
+msgstr "无法以此坐标打开文件：%s\n"
 
 #: ../vector/v.transform/main.c:172
 #, c-format
 msgid "Could not find input map <%s>\n"
-msgstr ""
+msgstr "无法找到输入地图<%s>\n"
 
 #: ../vector/v.transform/main.c:206
 msgid ""
 "\n"
 "Now transforming the vectors ...\n"
 msgstr ""
+"\n"
+"现在开始转换矢量...\n"
 
 #: ../vector/v.transform/main.c:224
 #, c-format
 msgid "New vector map <%s> boundary coordinates:\n"
-msgstr ""
+msgstr "新的矢量地图<%s>的边界范围：\n"
 
 #: ../vector/v.transform/main.c:225
 #, c-format
 msgid " N: %-10.3f    S: %-10.3f\n"
-msgstr ""
+msgstr " 北：%-10.3f    南：%-10.3f\n"
 
 #: ../vector/v.transform/main.c:226
 #, c-format
 msgid " E: %-10.3f    W: %-10.3f\n"
-msgstr ""
+msgstr " 东：%-10.3f    西：%-10.3f\n"
 
 #: ../vector/v.transform/main.c:227
 #, c-format
 msgid " B: %6.3f    T: %6.3f\n"
-msgstr ""
+msgstr " 底：%6.3f    顶：%6.3f\n"
 
 #: ../vector/v.transform/main.c:232
 #, c-format
 msgid "'%s' has finished the transformation of the vectors.\n"
-msgstr ""
+msgstr "'%s'完成了矢量转换。\n"
 
 #: ../vector/v.transform/creat_trans.c:69
 #, c-format
 msgid " Number of points that have been entered: %d\n"
-msgstr ""
+msgstr " 已输入点的数量：%d\n"
 
 #: ../vector/v.transform/creat_trans.c:90
 #, c-format
 msgid "%s"
-msgstr ""
+msgstr "%s"
 
 #: ../vector/v.transform/creat_trans.c:100
 msgid "Please answer yes or no"
-msgstr ""
+msgstr "请选择yes或no"
 
 #: ../vector/v.transform/creat_trans.c:123
 #, c-format
 msgid "Number of points that have been entered: %d\n"
-msgstr ""
+msgstr "已输入点的数量：%d\n"
 
 #: ../vector/v.category/main.c:173
 msgid "Too many layers for this operation"
-msgstr ""
+msgstr "为此操作指定了过多的图层"
 
 #: ../vector/v.category/main.c:176
 msgid "2 layers must be specified"
-msgstr ""
+msgstr "必须指定两个图层"
 
 #: ../vector/v.category/main.c:180
 msgid "Output vector wasn't entered."
-msgstr ""
+msgstr "未指定输出矢量"
 
 #: ../imagery/i.group/main.c:84
 msgid "No input map(s) specified."
-msgstr ""
+msgstr "未指定输入地图"
 
