@@ -3,6 +3,7 @@
 #include "dbmi.h"
 #include "globals.h"
 #include "proto.h" 
+#include "glocale.h"
 
 int
 db__driver_fetch(cn, position, more)
@@ -159,7 +160,7 @@ db__driver_fetch(cn, position, more)
 		else if ( strcmp ( PQgetvalue(c->res, c->row, col), "f") == 0 )
 		    db_set_string ( &(value->s), "0" );
 		else
-		    G_warning ("Cannot recognize boolean value");
+		    G_warning (_("Cannot recognize boolean value"));
 		break;
 	}
     }

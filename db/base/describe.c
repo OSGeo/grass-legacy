@@ -31,7 +31,7 @@ main(int argc, char *argv[])
     parse_command_line (argc, argv);
     driver = db_start_driver(parms.driver);
     if (driver == NULL)
-	G_fatal_error("No db connection for driver <%s> defined. Run db.connect", parms.driver);
+	G_fatal_error(_("No db connection for driver <%s> defined. Run db.connect"), parms.driver);
 
     db_init_handle (&handle);
     db_set_handle (&handle, parms.database, NULL );
@@ -42,7 +42,7 @@ main(int argc, char *argv[])
     db_set_string(&table_name, parms.table);
 
     if(db_describe_table (driver, &table_name, &table) != DB_OK) {
-	G_warning ("Cannot describe table" ); 
+	G_warning (_("Cannot describe table") ); 
 	exit(ERROR);
     }
 
@@ -51,11 +51,11 @@ main(int argc, char *argv[])
     else
     {
         ncols = db_get_table_number_of_columns(table);
-        fprintf (stdout, _("ncols:%d\n"), ncols);
+        G_message (stdout, _("ncols:%d\n"), ncols);
         for (col = 0; col < ncols; col++)
         {
           column = db_get_table_column (table, col);
-          fprintf (stdout, _("Column %d: %s\n"), (col+1), db_get_column_name (column));
+          G_message (stdout, _("Column %d: %s\n"), (col+1), db_get_column_name (column));
         }
         fflush (stdout);
     }
