@@ -40,9 +40,9 @@ for i in "$@" ; do
     case $i in
     
     	# Check if the user asked for help
-	-help|-h|help|--help)
+	help|-h|-help|--help)
 	    echo "Usage:"
-	    echo "    $CMD_NAME [-h | -help | --help] [-text | -tcltk] [<GISDBASE>] [<LOCATION>] [<MAPSET>]"
+	    echo "    $CMD_NAME [-h | -help | --help] [-text | -tcltk] [[[<GISDBASE>/]<LOCATION>/]<MAPSET>]"
 	    echo
 	    echo "Flags:"
 	    echo "    -h or -help or --help => print this help message"
