@@ -422,6 +422,10 @@ AC_CHECK_LIB(curses, initscr, CURSESLIB=-lcurses, [
 ])])
 AC_SUBST(CURSESLIB)
 
+AC_CHECK_LIB(ncurses, keypad, [AC_DEFINE(HAVE_KEYPAD)], [
+AC_CHECK_LIB(curses, keypad, [AC_DEFINE(HAVE_KEYPAD)], [
+])])
+
 AC_CHECK_LIB(compat, gtty, COMPATLIB=-lcompat, [
 AC_CHECK_LIB(bsd-compat, gtty, COMPATLIB=-lbsd-compat, [
 AC_CHECK_LIB(bsd, gtty, COMPATLIB=-lbsd, [
