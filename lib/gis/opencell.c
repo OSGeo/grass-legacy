@@ -235,8 +235,8 @@ int G__open_cell_old (
     if (cellhd.proj != G__.window.proj)
     {
         G_warning (
-            _("[%s] in mapset [%s] - in different projection than current region"),
-            name, mapset);
+            _("[%s] in mapset [%s] - in different projection than current region:\n found map [%s] in: <%s>, should be <%s> "),
+            name, mapset, name, G__projection_name(cellhd.proj), G__projection_name(G__.window.proj));
         return -1;
     }
     if (cellhd.zone != G__.window.zone)
