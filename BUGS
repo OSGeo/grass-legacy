@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.70 2000-11-10 15:59:19 markus Exp $
+$Id: BUGS,v 1.71 2000-11-10 18:38:23 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -77,7 +77,7 @@ d.param.scale
     (being worked on by ?)
 
 [RC]d.profile
- - problems when loading a map containing NULLs
+ - problems when loading a reclassified maps containing NULLs
    (reported by Markus)
    (being worked on by ?)   
 
