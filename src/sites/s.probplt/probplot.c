@@ -147,7 +147,7 @@ int main ( int argc, char **argv)
   }
 
   /* read sites */
-  if ((nsites = G_readsites (fdsite, all, verbose, field, &z))==0)
+  if ((nsites = G_readsites (fdsite, all, verbose, field, &window, &z))==0)
     G_fatal_error("No sites found. Check your region.");
 
   if (verbose)

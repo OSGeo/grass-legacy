@@ -136,7 +136,7 @@ int main (int argc, char **argv)
   }
   
 
-  nsites = G_readsites (fdisite, all, verbose, field, &z);
+  nsites = G_readsites (fdisite, all, verbose, field, &window, &z);
 
   /* fprintf (stdout,"%g %g ... %g %g\n",z[0],z[1],z[nsites-2],z[nsites-1]); */
 

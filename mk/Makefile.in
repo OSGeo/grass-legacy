@@ -8,7 +8,7 @@ all: dirs binaries links documents
 
 makefiles:
 	@echo "making makefiles ..."
-	-find ${SRCDIR} -name Gmakefile | \
+	-find ${SRCDIR} -name Gmakefile -print | \
 		sed -e 's#^\(.*\)/Gmakefile#\1#' | \
 		while read dir ; do \
 			${SRCDIR}/mk/genmake.sed < $$dir/Gmakefile > $$dir/makefile ; \
