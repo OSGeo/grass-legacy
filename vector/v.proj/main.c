@@ -165,6 +165,7 @@ int main (int argc, char *argv[])
     G_free_key_value(in_unit_keys);
     G_free_key_value(out_proj_keys);
     G_free_key_value(out_unit_keys);
+    pj_print_proj_params(&info_in, &info_out);
 
     G_debug ( 1, "Open new: location: %s mapset : %s", G__location_path(), G_mapset() );
     Vect_open_new (&Out_Map, omap_name, Vect_is_3d(&Map) );
