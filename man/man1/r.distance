@@ -1,6 +1,6 @@
 .TH r.distance
 .SH NAME
-\fIr.distance\fR \- ENTER ONE LINE DESCRIPTION HERE
+\fIr.distance\fR \- Locates the closest points between "objects" in two raster maps.
 .br
 .I "(GRASS Raster Program)"
 .SH SYNOPSIS
@@ -55,7 +55,7 @@ the output using awk and then into d.mapgraph:
 .ti +5
 r.distance maps=map1,map2 | \e
 .ti +10
-awk -F: '{print "move",$4,$5;"draw",$6,$7}' | d.mapgraph
+awk -F':' '{print "move",$4,$5" draw",$6,$7}' | d.mapgraph
 .fi
 
 To create a site list of all the "map1" coordinates, filter the output
