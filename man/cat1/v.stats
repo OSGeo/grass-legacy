@@ -1,12 +1,12 @@
 
 
 
-v.stats <main>       GRASS Reference Manual        <main> v.stats
+v.stats	<main>	     GRASS Reference Manual	   <main> v.stats
 
 
 
 NAME
-     v.stats - Prints information about a binary GRASS vector map
+     v.stats - Prints information about	a binary GRASS vector map
      layer.
      (GRASS Vector Program)
 
@@ -16,79 +16,79 @@ SYNOPSIS
      v.stats [-h] map=name
 
 DESCRIPTION
-     The program v.stats will print to standard output
-     information about a user-specified binary GRASS vector map
+     The program v.stats will print to standard	output
+     information about a user-specified	binary GRASS vector map
      layer.
 
      Flag:
 
-     -h                Display header information from the vector
-                       file.
+     -h			Display	header information from	the
+		       vector file.
 
      Parameter:
 
-     map=name          Name of the binary GRASS vector file to be
-                       queried.
+     map=name	       Name of the binary GRASS	vector file to be
+		       queried.
 
      The program will be run non-interactively if the user
      specifies the parameter value and (optionally) sets the -h
      flag on the command line, using the form:
 
-          v.stats [-h] map=name
+	  v.stats [-h] map=name
 
-     If the user instead simply types v.stats without specifying
-     program arguments on the command line, the program will
-     prompt the user to enter inputs through the standard user
-     interface described in the manual entry for parser.
+     If	the user instead simply	types v.stats without specifying
+     program arguments on the command line, the	program	will
+     prompt the	user to	enter inputs through the standard user
+     interface described in the	manual entry for parser.
 
 NOTES
      Sample output follows:
 
-          Format: Version 4.0  (Level 2 access)  (Portable)
+	  Format: Version 4.0  (Level 2	access)	 (Portable)
 
-          Number of Lines: 3
-          Number of Nodes: 2
-          Number of Areas: 2   (complete)
-          Number of Isles: 1   (complete)
-          Number of Atts : 2
+	  Number of Lines: 3
+	  Number of Nodes: 2
+	  Number of Areas: 2   (complete)
+	  Number of Isles: 1   (complete)
+	  Number of Atts : 2
 
 
-     The GRASS version number is given.  Parenthetical text
+     The GRASS version number is given.	 Parenthetical text
      following this describes the read access level available and
      notes whether or not the file is in GRASS version 4.0
-     portable data format.  The access level indicates the types
+     portable data format.  The	access level indicates the types
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
 
 
 
-v.stats <main>       GRASS Reference Manual        <main> v.stats
+v.stats	<main>	     GRASS Reference Manual	   <main> v.stats
 
 
 
-     of data available for the named vector map layer.  "Level 1"
+     of	data available for the named vector map	layer.	"Level 1"
      denotes a binary vector file (without any accompanying
      dig_plus file), while "Level 2" denotes the existence of a
-     dig_plus (vector topology) file for the named map layer
-     (generally created by v.support).  If only Level 1
+     dig_plus (vector topology)	file for the named map layer
+     (generally	created	by v.support).	If only	Level 1
      information is available for a vector map layer, only the
      number of lines and (optionally) the file header will be
-     printed to standard output.
+     printed to	standard output.
 
-     If all areas and islands (isles) in the vector file have
+     If	all areas and islands (isles) in the vector file have
      been identified (usually by v.support), their counts will be
-     followed by "complete." If not, they will be followed by
-     "incomplete".  The dig_plus file, which is created and
-     updated by v.support, must exist for this information to be
+     followed by "complete."  If not, they will	be followed by
+     "incomplete".  The	dig_plus file, which is	created	and
+     updated by	v.support, must	exist for this information to be
      output.
 
 SEE ALSO
-     v.digit, v.import, v.support, and parser
+     v.digit, v.import,	v.support, and parser
 
 AUTHOR
      Dave Gerdes, U.S. Army Construction Engineering Research
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
