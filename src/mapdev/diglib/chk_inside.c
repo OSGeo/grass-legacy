@@ -49,7 +49,7 @@ dig_point_in_area(map, X, Y, Area)
     for(l=0; l<Area->n_lines; l++)
     {
     /* Read in line coordinates */
-	at_line = ABS(Area->lines[l]);
+	at_line = abs(Area->lines[l]);
 
 	Line = &(map->Line[at_line]);
 
@@ -153,6 +153,9 @@ dig_in_area_bbox (Area, x, y)
 ** a generic polygon, build with 'Points'
 **   dpg 12/89  (for Vcontour or whatever it may be called by the time
 **               this is read)
+**
+**   WARNING:  if poly is an area,  this will NOT tell you if it inside
+**     an Island w/in the area.
 */
 double
 dig_point_in_poly (X, Y, Points)
