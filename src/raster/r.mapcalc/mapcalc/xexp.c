@@ -39,10 +39,17 @@ static int _pow (
 	    SETNULL_D(xcell);
 	else
 	{
-	    floating_point_exception = 0;
-	    *xcell = pow(*a,*b);
-	    if (floating_point_exception)
-		SETNULL_D(xcell);
+	    if (*a < 0.0 && *b != ceil(*b))
+	    {
+		SETNULL_D(a);
+	    }
+	    else
+	    {
+		floating_point_exception = 0;
+		*xcell = pow(*a,*b);
+		if (floating_point_exception)
+		    SETNULL_D(xcell);
+	    }
 	}
     }
 
