@@ -15,6 +15,8 @@ struct G__ G__ ;
 static int initialized = 0;
 static gisinit();
 
+CELL CELL_NODATA; /* defined in gis.h */
+
 G_gisinit(pgm)
     char *pgm;
 {
@@ -23,6 +25,8 @@ G_gisinit(pgm)
     char msg[100];
 
     G_set_program_name (pgm);
+
+    CELL_NODATA = 0;	/* 0 for the moment */
 
 /* Make sure location and mapset are set */
     G_location_path();
