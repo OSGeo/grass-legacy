@@ -2,9 +2,18 @@
 **  Written by Dave Gerdes  11/90
 **  US Army Construction Engineering Research Lab
 **
-**  Last modified by Dave Gerdes  12/90 to add dig_plus support
+**  Modified by Dave Gerdes  12/90 to add dig_plus support
+**  Last modified by Jacques Bouchard 19. Jan. 1999: bugfix
+**
 */
 #include    <stdio.h>
+
+# if	defined(__STDC__) || defined(__cplusplus)
+#	include    <stdlib.h>
+# else
+	extern	double	atof();
+# endif
+
 #include    "gis.h"
 #include    "digit.h"
 #include    "dig_head.h"
@@ -12,11 +21,9 @@
 
 #define MAIN
 
-long ftell ();
-double atof ();
-
 /*
 #define DEBUG
+
 */
 /*  command line args */
 
@@ -109,8 +116,9 @@ export(dig_name, mapset)
 	if (0 > cp_filep (Map.dig_fp, Out))
 	    G_fatal_error ("File copy failed.  Cannot Proceed.");
 
-	fclose (Out);
-	Vect_close (&Map);
+	(void)fclose(Out);
+
+	/* Vect_close (&Map);*/ /*Jacques Bouchard */
 
 /***************************************************************************/
 
@@ -229,7 +237,7 @@ doit (Plus, Map, Outmap)
 	    if (Plus)		/* update Plus structure */
 	    {
 		new_offset = ftell (Outmap->dig_fp);
-		for (i = 1 ; i < Map->n_lines ; i++)
+		for (i = 1 ; i <= Map->n_lines ; i++)
 		    if (Map->Line[i].offset == old_offset)
 		    {
 		        Map->Line[i].offset = new_offset;
@@ -249,14 +257,13 @@ cp_filep  (in, out)
 {
     char buf[BUFSIZ];
     int red, ret;
-    int no_file = 0;
     int err=0;
 
     fseek (in, 0L, 0);
     {
         while (red = fread (buf, 1, BUFSIZ, in))
 	{
-            if (!(ret = fwrite (buf, 1, red, out)))
+            if (red != fwrite (buf, 1, red, out))
 	    {
 		err++;
 		break;
@@ -264,9 +271,6 @@ cp_filep  (in, out)
 	}
         fclose (in);
     }
-    if (0 != fclose (out))
-	err++;
-
     return (err);
 }
 
