@@ -1,0 +1,47 @@
+** PNMTOPNG / PNGTOPNM
+** version 2.37.4 - 5 December 1999
+
+[This is a semi-official bug-fix and enhancement release; I sort of took over
+ maintenance of this package while Willem was on an extended bike trip, and
+ for now I'm continuing with periodic, small updates.  Version 2.37 (March
+ 1998) was never publicly released, partly because Willem had hoped to quiet
+ gcc's "<var> might be clobbered by `longjmp'" warnings.  Those are fixed in
+ 2.37.2; under Solaris, they resulted in stack corruption even when there was
+ no error in the image files or libraries.  Version 2.37.3 fixes a minor bug
+ w.r.t. error exits and generally does cleaner error exits (close files, etc.)
+ Version 2.37.4 fixes a bug that caused 16-shade grayscale images to be written
+ as 8-bit grayscale instead of (smaller) 4-bit colormapped images (bug report,
+ analysis and fix by Rafal Rzeczkowski), and it supports the new/upcoming
+ pbmplus release.  --Greg Roelofs]
+
+The utilities pnmtopng and pngtopnm are based on other pbm tools and require
+the libraries included in the pbmplus/netpbm package. Also required are the
+png library and the zlib compression library.
+
+These can be found at:
+	ftp://swrinde.nde.swri.edu/pub/png/src/libpng-*
+	ftp://swrinde.nde.swri.edu/pub/png/src/zlib-*
+	ftp://ftp.x.org/contrib/utilities/netpbm-1mar1994*
+or see
+	http://www.cdrom.com/pub/png/pngcode.html
+	http://www.acme.com/software/pbmplus/		[update coming soon!]
+
+To compile and install a makefile is provided. Do check the directories
+where you have put the required libraries. Then either accommodate the 
+makefile or make links from generic names to version specific directories,
+which is the recommended way.
+
+For testing purposes, have a look at the test-set PngSuite.tar.gz, which
+contains a small test-image for every PNG color type and for most PNG chunk
+types. It can be found at:
+	http://www.schaik.com/pngsuite/pngsuite.html
+	ftp://swrinde.nde.swri.edu/pub/png/images/suite/
+
+Other web pages with PNG images are at:
+	http://www.cdrom.com/pub/png/pngpic2.html
+	http://www.cdrom.com/pub/png/pngs-img.html
+
+------
+Alexander Lehmann <lehmann@usa.net>
+Willem van Schaik <willem@schaik.com>
+Greg Roelofs <newt@pobox.com>
