@@ -7,10 +7,11 @@
 *  Written by the GRASS Team, 02/16/90, -mh.
 */
 
-#include	<stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include	"trans.h"
-#include	"local_proto.h"
+#include "Vect.h"
+#include "trans.h"
+#include "local_proto.h"
 
 int 
 create_transform_conversion (struct file_info *Coord, int quiet)

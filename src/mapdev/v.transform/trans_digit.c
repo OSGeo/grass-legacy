@@ -1,9 +1,5 @@
-
 /*
-*  Most of this is from the ../src/mapdev programs to convert
-*  ascii digit files to binary and vice versa.
-*
-*  Written by the GRASS Team, 02/16/90, -mh.
+*  Written by the Radim Blazek
 */
 
 #include "Vect.h"
@@ -11,73 +7,26 @@
 #include "libtrans.h"
 
 int 
-transform_digit_file (FILE *current_file, FILE *new_file)
+transform_digit_file (struct Map_info *Old, struct Map_info *New)
 {
-	char ctype ;
-	char buff[128] ;
-	double x, y ;
-	double new_x, new_y ;
-	int end_of_file ;
+    int    i, type;
+    static struct line_pnts *Points;
 
-	end_of_file = 0 ;
-
-	if (NULL == fgets(buff,128,current_file))
+    Points = Vect_new_line_struct ();
+    
+    while (1) {
+	type = Vect_read_next_line (Old, Points);
+        
+	if ( type == -1 ) /* error */
 	    return 0;
-
-	for(;;)
-	{
-		sscanf(buff, "%1c", &ctype) ;
-		switch(ctype)
-		{
-		case 'A':
-		case 'L':
-		case 'P':
-		case 'a':
-		case 'l':
-		case 'p':
-	    		fprintf(new_file, "%s", buff);
-			break ;
-
-		case 'E': case 'e':
-			return 0;
-		default:
-			fprintf (stdout,"ERROR:  Unknown type, don't know what this line means: ?? %s\n", buff) ;
-			fprintf (stdout,"Giving it up!\n") ;
-			exit(-1) ;
-		}
-
-	/* Collect the points */
-		if (NULL == fgets(buff,128,current_file))
-		    break;
-
-		for(;;)
-		{
-			char buf1[100], buf2[100];
-
-			sscanf(buff, "%1c%lf%lf", &ctype, &y, &x) ;
-
-			/*  beginning of a new line */
-			if (ctype != ' ')
-				break ;
-
-			transform_a_into_b( x, y, &new_x, &new_y ) ;
-
-			/*  8/92  dpg
-	    		fprintf(new_file, " %12.2lf %12.2lf\n", new_y, new_x) ;
-			*/
-
-			G_format_northing (new_y, buf1, -1);
-			G_format_easting (new_x, buf2, -1);
-			fprintf(new_file, " %-12s %-12s\n", buf1, buf2);
-			
-			if (NULL == fgets(buff,128,current_file) )
-			{
-				end_of_file = 1 ;
-				break ;
-			}
-		}
-
-		if (end_of_file)
-			return 0;
+	
+	if ( type == -2 ) /* EOF */
+	    return 1;
+	
+	for ( i = 0; i < Points->n_points; i++ ) {
+            transform_a_into_b( Points->x[i], Points->y[i], &(Points->x[i]), &(Points->y[i]) );
 	}
+	
+	Vect_write_line (New,  type, Points);
+    }
 }
