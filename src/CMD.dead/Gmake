@@ -1,0 +1,45 @@
+#!/bin/sh
+# EDIT the next line to reflect the placement of GRASS in your system.
+
+GIS=/home/grass3.1
+
+# do not edit below this line
+
+base=$GIS/src
+
+echo
+if test $# = 0
+then
+	cdir=`pwd`
+else
+	cdir=$1
+	shift
+fi
+
+if test -d $cdir
+then
+	cd $cdir
+	echo '==========================================================='
+	pwd
+	if test ! -r Gmakefile
+	then
+		echo "Gmakefile not found (or not readable)"
+		exit 1
+	fi
+	echo ' '
+	echo "GMAKE=$base/CMD/Gmake" > makefile
+	cat $base/CMD/makehead >> makefile
+	echo '###########################################################' >> makefile
+	cat $base/CMD/make.mid >> makefile
+	echo '###########################################################' >> makefile
+	cat Gmakefile >> makefile
+	if test -r $base/CMD/make.tail
+	then
+	    echo '###########################################################' >> makefile
+	    cat $base/CMD/make.tail >> makefile
+	fi
+	make -f makefile $*
+	exit $?
+else
+	exit 1
+fi
