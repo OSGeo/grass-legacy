@@ -31,7 +31,7 @@ AR                  = @AR@
 RANLIB              = @RANLIB@
 MKDIR               = mkdir -p
 CHMOD               = chmod
-INSTALL             = install
+INSTALL             = @INSTALL@ 
 
 ARCH                = @host@
 prefix              = @prefix@
