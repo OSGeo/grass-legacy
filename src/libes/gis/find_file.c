@@ -92,6 +92,43 @@ static char *G__find_file (
     return NULL;
 }
 
+
+/*!
+ * \brief find a database file
+ *
+ * Look for the file <b>name</b> under the specified
+ * <b>element</b> in the database. The <b>mapset</b> parameter can either be
+ * the empty string "", which means search all the mapsets in the user's current
+ * mapset search path,\remarks{See Mapset_Search_Path for more details
+ * about the search path} or it can be a specific mapset, which means
+ * <i>.</i> look for the file only in this one mapset (for example, in the
+ * current mapset).
+ * If found, the mapset where the file lives is returned. If not found, the NULL
+ * pointer is returned.
+ * If the user specifies a fully qualified file name, (i.e, a name that also
+ * contains the mapset; see Fully_Qualified_File_Names) then
+ * <i>G_find_file( )</i> modifies <b>name</b> by eliminating the mapset
+ * from the <b>name</b>
+ * For example, to find a "paint/labels" file anywhere in the database:
+\code
+  char name[50];
+  char *mapset;
+  if ((mapset = G_find_file("paint/labels",name,"")) == NULL)
+  // not found
+\endcode
+ * To check that the file exists in the current mapset:
+\code
+  char name[50];
+  if (G_find_file("paint/labels",name,G_mapset( )) == NULL)
+  // not found
+\endcode
+ *
+ *  \param element
+ *  \param name
+ *  \param mapset
+ *  \return char * 
+ */
+
 char *G_find_file (
     char *element,
     char *name,
@@ -109,6 +146,7 @@ char *G_find_file (
 
     return mp;
 }
+
 char *G_find_file2 (
     char *element,
     char *name,

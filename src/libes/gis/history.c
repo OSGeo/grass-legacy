@@ -41,6 +41,22 @@
 #include "gis.h"
 #include "glocale.h"
 
+
+/*!
+ * \brief read raster history file
+ *
+ * This routine reads the history file for
+ * the raster file <b>name</b> in <b>mapset</b> into the <b>history</b>
+ * structure.
+ * A diagnostic message is printed and -1 is returned if there is an error
+ * reading the history file. Otherwise, 0 is returned.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param history
+ *  \return int
+ */
+
 int G_read_history (
     char *name,
     char *mapset,
@@ -106,6 +122,22 @@ error:
     return -1;
 }
 
+
+/*!
+ * \brief write raster history file
+ *
+ * This routine writes the history file for the raster file
+ * <b>name</b> in the current mapset from the <b>history</b> structure.
+ * A diagnostic message is printed and -1 is returned if there is an error
+ * writing the history file. Otherwise, 0 is returned.
+ * <b>Note.</b> The <b>history</b> structure should first be initialized
+ * using <i>G_short_history.</i>
+ *
+ *  \param name
+ *  \param history
+ *  \return int
+ */
+
 int G_write_history (
     char *name,
     struct History *hist)
@@ -139,6 +171,23 @@ error:
     return -1;
 }
 
+
+
+/*!
+ * \brief initialize history structure
+ *
+ * This routine initializes the
+ * <b>history</b> structure, recording the date, user, module name and the
+ * raster file <b>name</b> structure. The <b>type</b> is an anachronism from
+ * earlier versions of GRASS and should be specified as "raster".
+ * <b>Note.</b> This routine only initializes the data structure. It does not
+ * write the history file.
+ *
+ *  \param name
+ *  \param type
+ *  \param history
+ *  \return int
+ */
 
 int G_short_history (
     char *name,

@@ -1,4 +1,23 @@
 #include "gis.h"
+
+/*!
+ * \brief Bresenham line algorithm
+ *
+ * Draws a line from <b>x1,y1</b> to <b>x2,y2</b>
+ * using Bresenham's algorithm. A routine to plot points must be provided, as is
+ * defined as:
+ * point(x, y) plot a point at x,y
+ * This routine does not require a previous call to <i>G_setup_plot</i> to 
+ * function correctly, and is independent of all following routines.
+ *
+ *  \param x0
+ *  \param y0
+ *  \param x1
+ *  \param y1
+ *  \param point
+ *  \return int
+ */
+
 int G_bresenham_line (
     register int x0, register int y0 ,
     int x1,int y1 ,

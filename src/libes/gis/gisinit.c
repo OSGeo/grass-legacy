@@ -21,6 +21,22 @@ static int gisinit();
 
 CELL CELL_NODATA; /* defined in gis.h */
 
+
+/*!
+ * \brief initialize gis library
+ *
+ * This routine reads the user's GRASS environment file into memory and makes sure
+ * that the user has selected a valid database and mapset. It also initializes
+ * hidden variables used by other routines. If the user's database information is
+ * invalid, an error message is printed and the module exits.  The
+ * <b>program_name</b> is stored for later recall by
+ * <i>G_program_name.</i> It is recommended that argv[0] be used for the
+ * <b>program_name:</b>
+ *
+ *  \param program_name
+ *  \return int
+ */
+
 int G_gisinit( char *pgm)
 {
     char *mapset;

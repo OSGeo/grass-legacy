@@ -64,6 +64,16 @@ static int mail_msg (char *,int);
 static int write_error(char *, int,char *,time_t,char *);
 static int log_error (char *,int);
 
+
+/*!
+ * \brief print error message and
+ *       exit
+ *
+ *  \param message
+ *  \param ...
+ *  \return int
+ */
+
 int G_fatal_error ( char *msg,...)
 {
     char buffer[256];  /* No novels to the error logs, OK? */
@@ -76,6 +86,26 @@ int G_fatal_error ( char *msg,...)
 
     exit (1);
 }
+
+
+/*!
+ * \brief print warning message and continue
+ *
+ * These routines report errors to the user. The normal mode is to
+ * write the <b>message</b> to the screen (on the standard error output) and
+ * wait a few seconds.  G_warning(~) will return and G_fatal_error(~) will
+ * exit.
+ * If the standard error output is not a tty device, then the message is mailed
+ * to the user instead.
+ * If the file GIS_ERROR_LOG exists (with write permission), in either the
+ * user's home directory or in the $GISBASE\remarks{$GISBASE is the directory
+ * where GRASS is installed. See UNIX_Environment for details.}
+ * directory, the messages will also be logged to this file.
+ *
+ *  \param message
+ *  \param ...
+ *  \return int
+ */
 
 int G_warning ( char *msg, ...)
 {
@@ -92,6 +122,18 @@ int G_warning ( char *msg, ...)
     return 0;
 }
 
+
+/*!
+ * \brief suppress warnings?
+ *
+ * If <b>flag</b> is 0, then <i>G_warning</i> will no longer print warning
+ * messages. If <b>flag</b> is 1, then G_warning( ) will print warning
+ * messages.
+ *
+ *  \param flag
+ *  \return int
+ */
+
 int G_suppress_warnings (int flag)
 {
     int prev;
@@ -100,6 +142,18 @@ int G_suppress_warnings (int flag)
     no_warn = flag;
     return prev;
 }
+
+
+/*!
+ * \brief sleep on error?
+ *
+ * If <b>flag</b>
+ * is 0, then no pause will occur after printing an error or warning message.
+ * Otherwise the pause will occur.
+ *
+ *  \param flag
+ *  \return int
+ */
 
 int G_sleep_on_error (int flag)
 {
@@ -110,12 +164,43 @@ int G_sleep_on_error (int flag)
     return prev;
 }
 
+
+/*!
+ * \brief change error handling
+ *
+ * This routine provides a different error handler for
+ * G_fatal_error(~) and G_warning(~). The <b>handler</b> routine must be
+ * defined as follows:
+  \code
+  int handler (char *message, int fatal)
+  \endcode
+ * where <b>message</b> is the message to be handled and <b>fatal</b> indicates
+ * the type of error: 1 (fatal error) or 0 (warning).
+ * <b>Note.</b> The handler only provides a way to send the message somewhere
+ * other than to the error output. If the error is fatal, the module will exit
+ * after the handler returns.
+ *
+ *  \param ~
+ *  \return int
+ */
+
 int G_set_error_routine ( int (*error_routine)())
 {
     /* error = error_routine; */
     ext_error = error_routine; /* Roger Bivand 17 June 2000 */
     return 0;
 }
+
+
+/*!
+ * \brief reset normal error handling
+ *
+ * This routine resets the error handling for <i>G_fatal_error</i> and
+ * <i>G_warning</i> back to the default action.
+ *
+ *  \param void
+ *  \return int
+ */
 
 int G_unset_error_routine ()
 {

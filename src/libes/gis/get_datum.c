@@ -26,6 +26,30 @@ static char *PERMANENT = "PERMANENT";
  *
  * Returns: 1 ok, 0 default values used, -1 on internal error.
  */
+
+/*!
+ * \brief get datum parameters from database
+ *
+ * This function sets the datum parameters for the map datum of the current database.
+ * These are the semi-major axis <b>a</b> (in meters), the eccentricity squared
+ * <b>e2</b> and the inverse flattening <b>f</b> of the spheroid associated
+ * with the database and the x shift <b>dx</b>, the y shift <b>dy</b> and the
+ * z shift <b>dz</b> of the map datum associated with the database. If there is
+ * no map datum explicitely associated with the actual database, the standard
+ * values for the WGS84 spheroid and map datum are set. The funcion returns 1 on
+ * success, 0 if the default WGS84 parameters are set. If an error occurs, the
+ * function dies with a diagnostic message (HINT: to change, very bad practice to
+ * die in a library function!). 
+ *
+ *  \param a
+ *  \param e2
+ *  \param f
+ *  \param dx
+ *  \param dy
+ *  \param dz
+ *  \return int
+ */
+
 int 
 G_get_datum_parameters (double *a, double *e2, double *f, 
 			double *dx, double *dy, double *dz)
@@ -112,6 +136,26 @@ G_get_datum_parameters (double *a, double *e2, double *f,
 }
 
 /* placeholder, not yet implemented */
+
+/*!
+ * \brief get datum parameters from database
+ *
+ * This is a placeholder as the 7
+ * parameter datum shift support is not implemented yet. 
+ *
+ *  \param a
+ *  \param e2
+ *  \param f
+ *  \param dx
+ *  \param dy
+ *  \param dz
+ *  \param rx
+ *  \param ry
+ *  \param rz
+ *  \param m
+ *  \return int
+ */
+
 int
 G_get_datum_parameters7(double *a, double *e2, double *f, 
 			double *dx, double *dy, double *dz, 

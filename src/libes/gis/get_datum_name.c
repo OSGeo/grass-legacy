@@ -1,5 +1,4 @@
 /*
- * $Id$
  *
  ****************************************************************************
  *
@@ -28,6 +27,19 @@
  * returns <0 on error
  * returns 1 on success
  ***********************************************************************/
+
+/*!
+ * \brief ask for a valid datum name
+ *
+ * This function asks the user interactively for a valid datum name from the datum
+ * table. The datum name is stored in the character array pointed to by
+ * <b>datum</b>. The function returns 1 on sucess, -1 if no datum was entered
+ * on command line and 0 on internal error. 
+ *
+ *  \param datum
+ *  \return int
+ */
+
 int G_ask_datum_name(char *datumname, char *ellpsname)
 { 
     char buff[1024],answer[100], ellipse[100];
