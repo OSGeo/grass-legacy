@@ -1,15 +1,15 @@
 2000:
 
-XDriver sockets: replacement of XDriver fifos (needed to improve speed and
+XDriver ipcs: replacement of XDriver fifos (needed to improve speed and
                  to run GRASS Monitors on Windows)
 
 The source code from Ronald Wiemer (MessQ.tar.Z) is merged into
 the current driver code by Huidae Cho.
 
-The updated files including the sockets are here:
- src/display/devices/XDRIVER/XDRIVER24/socket.new/
- src/display/devices/XDRIVER/lib/socket.new/
- src/libes/raster/socket.new/
+The updated files including the ipcs are here:
+ src/display/devices/XDRIVER/XDRIVER24/ipc.new/
+ src/display/devices/XDRIVER/lib/ipc.new/
+ src/libes/raster/ipc.new/
 
 TODO: 
  The updated driver has to be tested and finally made to be standard
