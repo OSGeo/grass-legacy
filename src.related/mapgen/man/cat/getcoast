@@ -1,0 +1,132 @@
+
+
+
+
+
+
+_g_e_t_c_o_a_s_t - _e_x_t_r_a_c_t _d_a_t_a _f_r_o_m _a _c_o_m_p_r_e_s_s_e_d _c_o_a_s_t_l_i_n_e
+
+
+_g_e_t_c_o_a_s_t left_lon right_lon lata latb [ -f ] [ -r  ]  [
+-D ] [ -b ] file[s]
+
+_G_e_t_c_o_a_s_t extracts vector  information  from  compressed
+coastline  files and outputs the information on _s_t_d_o_u_t.
+Four geographic coordinate values on the  command  line
+are  required  to  specify  the geographic range of the
+retrieved data.  The first two are respective  lefthand
+and  righthand  longitude range.  Ordering of longitude
+is critical because of  the  ambiquity  caused  by  the
+cyclic  nature  of  longitude  values.  Ordering of the
+latitude range is not critical other than |latitude|  <_
+90.   Values  are  to  be  specified in DMS format.  To
+retrieve all data use: -180 180 -90 90.  The  following
+optional command line parameters must follow geographic
+range specifications: This option provides  for  selec-
+tion of only those line segments in the coastline files
+which have the selected feature  codes.   _N_s  specifies
+the  lower  range of the feature code number.  If _n_e is
+specified, it will define the upper  range;  otherwise,
+only  the _n_s value is employed.  There may be more than
+one set of _n_s-_n_e sets.  For example:
+        -f 0-10,20,30-35
+specifies feature codes 0 to  10,  20  and  30  to  35.
+Omission  of this option implies that all feature codes
+are to be selected.  Normal output order of the coordi-
+nates on each line is latitude - longitude.  Use of the
+-_r option will reverse the order to longitude  -  lati-
+tude.   -_D  The -_D option will cause the data output to
+be expressed in DMS  (degrees,minutes,seconds)  format.
+Default  format  is decimal degrees.  Breaks or discon-
+tinuities of the vector stream may be changed to a line
+containing  _s_t_r_i_n_g.  If a null _s_t_r_i_n_g is specified (ie.
+-b"") break records will not  be  ouput.   The  default
+break  record consists of "# -b".  One or more _f_i_l_e_s of
+compressed coastline  source  data  may  be  specified.
+These  _f_i_l_e names are ".cdr"/".cdt" suffixed files gen-
+erally created by _m_k_c_o_a_s_t.
+
+_T_h_e _f_o_l_l_o_w_i_n_g _s_e_l_e_c_t_s  _v_e_c_t_o_r_s  _w_i_t_h  _f_e_a_t_u_r_e  _c_o_d_e_s  _1
+_t_h_r_o_u_g_h  _3  _f_r_o_m  _a  _W_o_r_l_d  _D_a_t_a  _B_a_n_k _I_I _N_o_r_t_h _A_m_e_r_i_c_a
+_c_o_a_s_t_l_i_n_e, _i_s_l_a_n_d_s _a_n_d _l_a_k_e_s _f_i_l_e:
+        _g_e_t_c_o_a_s_t   -_1_1_0   -_1_0_6   _4_4   _4_6._1    -_f    _1-_3
+/_u_s_r/_c_o_a_s_t/_n_a/_c_i_l
+
+._c_d_r _a_n_d ._c_d_t _c_o_m_p_r_e_s_s_e_d _c_o_a_s_t_l_i_n_e _f_i_l_e_s.
+
+_c_o_a_s_t, _m_c_o_a_s_t, _s_t_r_p_c_s_t
+
+
+
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 2 -
+
+
+_G_e_r_a_l_d _I. _E_v_e_n_d_e_n, _U_S_G_S, _W_o_o_d_s _H_o_l_e, _M_A.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     June 4, 1991
+
+
