@@ -1,4 +1,5 @@
 # Makefile.in
+# $Id$
 
 SHELL=			/bin/sh
 
@@ -34,6 +35,7 @@ pre-install:
 	${ENV} ${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh
 	${INSTALL_DATA_DIR} ${PREFIX}
 	${SHELL} ${IS64BIT}
+	if [ ! -d src/CMD/next_step ]; then mkdir src/CMD/next_step ; fi
 
 do-install:
 	${ENV} ${MAKE_ENV} ${SHELL} src/CMD/generic/GISGEN.sh
