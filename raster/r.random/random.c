@@ -105,7 +105,7 @@ int execute_random (struct rr_state *theState)
     nc = (theState->use_nulls) ? theState->nCells : 
             theState->nCells - theState->nNulls ;
     nt = theState->nRand;
-    cat = 0;
+    cat = 1;
     for (row = 0; row < nrows && nt ; row++)
     {
         if (G_get_raster_row (infd, theState->buf.data.v, row, theState->buf.type) < 0)
@@ -141,7 +141,7 @@ int execute_random (struct rr_state *theState)
                     val = cell_as_dbl(&theState->buf, col);
 
                     Vect_append_point ( Points, x, y, 0.0 );
-                    Vect_cat_set (Cats, 1, cat++);
+                    Vect_cat_set (Cats, 1, cat);
 
                     Vect_write_line ( &Out, GV_POINT, Points, Cats );
 
@@ -150,6 +150,8 @@ int execute_random (struct rr_state *theState)
                     
                     if (db_execute_immediate (driver, &sql) != DB_OK )
                         G_fatal_error ( "Cannot insert new row: %s", db_get_string ( &sql )  );
+
+                    cat++;
                 }
                 G_percent ((theState->nRand - nt), theState->nRand, 2);
             }
