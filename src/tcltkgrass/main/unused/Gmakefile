@@ -1,4 +1,4 @@
 all:
-	cp tcltkgrass $(UNIX_BIN)
-	chmod 0755 $(UNIX_BIN)/tcltkgrass
+	cp tcltkgrass $(GRASS_BIN)
+	chmod 0755 $(GRASS_BIN)/tcltkgrass
 	cp gis_set.tcl $(GISBASE)/tcltkgrass/script
