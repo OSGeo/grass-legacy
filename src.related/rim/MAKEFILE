@@ -6,7 +6,7 @@ rim::
 	(cd src;     make rim)
 	(cd src;     make rimlib)
 #	$(PILE) -o rim src/rim.o src/rimlib
-	$(PILE) -Bstatic -o rim src/rim.o src/rimlib
+	$(PILE) -o rim src/rim.o src/rimlib
 #
 # Rim file editor (for debugging)
 #
