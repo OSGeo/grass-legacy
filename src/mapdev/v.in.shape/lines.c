@@ -1093,7 +1093,7 @@ static char *get_vkey( double xa, double ya, double sr, int decs, double efalse,
 
   /* To elliminate small negative values */
   if(xtmp < 0.0) xtmp = 0.0;
-  if(ytmp < 0.0) xtmp = 0.0;
+  if(ytmp < 0.0) ytmp = 0.0;
 
   if(decs < 0 || decs > 16)
     return NULL;
