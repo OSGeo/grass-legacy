@@ -22,7 +22,7 @@ proc mklightsPanel { BASE } {
     catch {destroy $BASE}
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-        set panel [St_create {window name size priority} $BASE "Lights" 2 5]
+        set panel [St_create {window name size priority} $BASE "Lighting" 2 5]
     } else {
 	set panel $Nv_($BASE)
     }
