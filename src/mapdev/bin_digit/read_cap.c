@@ -61,39 +61,56 @@ read_cap_line( fp, Driver)
 	FILE	*fp ;
 	struct  driver_desc  *Driver ;
 {
-	int		num_read ;
-	char	buf[BUFFERSIZE];
+    int		num_read ;
+    char	buf[BUFFERSIZE];
+    char        cbuf[10];
 
-	while ( fgets( buf, BUFFERSIZE-1, fp ) != NULL)
-	{
+    while ( fgets( buf, BUFFERSIZE-1, fp ) != NULL)
+    {
+
 
 	/*  skip commented lines  */
-		if ( buf[0] == COMMENT_CHAR)
-			continue ;
+	if (1 != sscanf (buf, "%1s", cbuf))
+	    continue;
 
-		*Driver->name = NULL ;  *Driver->device = NULL ;
-		*Driver->dig_program = NULL ;  *Driver->dig_desc = NULL ;
+	if ( buf[0] == COMMENT_CHAR)
+	    continue ;
+
+/*DEBUG fprintf (stderr, "%s", buf);*/
+
+	*Driver->name = NULL ;  *Driver->device = NULL ;
+	*Driver->dig_program = NULL ;  *Driver->dig_desc = NULL ;
 
 	/*  
 	*	the notation '%[^:]' in the sscanf means copy all characters
 	*	into the the assigned memory (name,..) until a ':' is found.
 	*/
-		num_read = sscanf( buf, "%[^:]:%[^:]:%[^:]:%[^:]", Driver->name,
-			Driver->device, Driver->dig_program, Driver->dig_desc) ;
+	num_read = sscanf( buf, "%[^:]:%[^:]:%[^:]:%[^:]", Driver->name,
+	Driver->device, Driver->dig_program, Driver->dig_desc) ;
 
-		if ( ! num_read)
-			continue ;
+	if ( ! num_read)
+	{
+/*DEBUG fprintf (stderr, "Scanf failed\n");*/
+	    continue ;
+	}
 
 	/* check to make sure that values were copyed into these fields,
 	*  there doesn't have to be a digitizer description
 	*/
-		if ( *Driver->name  &&  *Driver->device  &&  *Driver->dig_program)
-			return(1) ;
-
-		return(-1) ;
+	if ( *Driver->name  &&  *Driver->device  &&  *Driver->dig_program)
+	{
+/*DEBUG fprintf (stderr, "GOOD read\n");*/
+	    return(1) ;
 	}
 
-	return(0) ;
+/*DEBUG fprintf (stderr, "Bad read\n");*/
+
+	return(-1) ;
+    }
+
+/*DEBUG fprintf (stderr, "END OF FILE\n");*/
+
+    return(0) ;
 
 }
 
