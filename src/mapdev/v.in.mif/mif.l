@@ -83,6 +83,8 @@ int cnt;
 int nparts, numparts, nvertices;
 
 char *ssx, *ssy, *ssx1, *ssy1, *ssx2, *ssy2;
+char *str_indx0, *str_indx1;
+char par_buf[32];
 double sx, sy, sx1, sy1, sx2, sy2;
 
 char dels[4];
@@ -97,7 +99,7 @@ region uni_bb;
 %}
 
 whitespace [ \t]+
-float (\+|\-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))
+float (\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))
 version (Version|VERSION|version)
 charset (Charset|CHARSET|charset)
 delimiter (Delimiter|DELIMITER|delimiter)
@@ -118,14 +120,13 @@ symbol (SYMBOL|Symbol|symbol)
 center (Center|CENTER|center)
 param \(.*\)
 
-charf [Cc]har[ \t]*\([ \t]*[1-9][0-9]*[ \t]*\)
+charf [Cc]har
 intf [Ii]nteger
 sintf [Ss]mallint
-decf [Dd]ecimal[ \t]*\([ \t]*[1-9][0-9]*[ \t]*,[ \t]*[1-9][0-9]*[ \t]*\)
+decf [Dd]ecimal
 floatf [Ff]loat
 datef [Dd]ate
 logf [Ll]ogical
-typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 
 %x MIF_VERSION
 %x CHARSET
@@ -186,20 +187,6 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 
 {midcols}	        {BEGIN COLS;}
 
-<COLS>[0-9]+		{
-                          numcols = atoi(yytext);
-			  ncols = 0;
-			}
-
-<COLS>[A-Za-z_0-9]+{whitespace}	        {
-                                          strcpy(&field_info[ncols][0], yytext);
-                                          BEGIN COLTYPE;
-                                        }
-<COLTYPE>{typef}        {
-                          strcpy(&field_type[ncols++][0], yytext);
-			  BEGIN COLS;
-                        }
-
 <COLS>{datastart}	{
                           if(ncols != numcols)  {
 			    fprintf(stderr, "WARNING: Number of fields does\
@@ -215,6 +202,41 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 			  is_vert1 = 1;
 			}
 
+<COLS>[0-9]+		{
+                          numcols = atoi(yytext);
+			  ncols = 0;
+			}
+
+<COLS>[A-Za-z_0-9]+     {
+                          strcpy(&field_info[ncols][0], yytext);
+			  BEGIN COLTYPE;
+                        }
+
+
+<COLTYPE>{charf}   |
+<COLTYPE>{decf}         {
+			  yymore();
+                        }
+
+<COLTYPE>{intf}    |
+<COLTYPE>{sintf}   |
+<COLTYPE>{floatf}  |
+<COLTYPE>{datef}   |
+<COLTYPE>{logf}         {
+                          strcpy(&field_type[ncols++][0], yytext);
+                        }
+
+<COLTYPE>{param}        {
+                          strcpy(par_buf, yytext);
+			  str_indx0 = strtok(yytext, "(");
+
+			  strcpy(&field_type[ncols++][0], str_indx0);
+                        }
+
+<COLTYPE>{end}          { 
+                          BEGIN COLS;
+                        }
+
 <DATA>{point}           {
                           if( append_type_spec(type0, DOT, site_index++ ) < 0 ) {
 			    return -1;
@@ -227,6 +249,20 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
                                                  sx = atof(ssx);
 						 ssy = strtok(NULL, " \t");
 						 sy = atof(ssy);
+
+						 if(is_vert1) {
+						   is_vert1 = 0;
+						   uni_bb.w = uni_bb.e = sx;
+						   uni_bb.n = uni_bb.s = sy;
+						 }
+
+						 else {
+						   if(sx > uni_bb.e) uni_bb.e = sx;
+						   if(sx < uni_bb.w) uni_bb.w = sx;
+						   if(sy > uni_bb.n) uni_bb.n = sy;
+						   if(sy < uni_bb.s) uni_bb.s = sy;
+						 }
+
 						 if(alloc_site_space( site0, nsites + 1))
 						   return -1;
 						 site0->x[nsites] = sx;
@@ -246,20 +282,48 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 						 BEGIN GLINE; 
                                                }
                             
-<GLINE>({float}{whitespace}){3}{float}                { 
-                                                        ssx1 = strtok(yytext, " \t");
-                                                        sx1 = atof(ssx1);
-							ssy1 = strtok(NULL, " \t");
-							sy1 = atof(ssy1);
-							ssx2 = strtok(NULL, " \t");
-							sx2 = atof(ssx2);
-							ssy2 = strtok(NULL, " \t");
-							sy2 = atof(ssy2);
-							if(alloc_glines( line0, nglines + 1))
-							  return -1;
-							append_simple_line(line0, sx1, sy1, sx2, sy2,
-									   nglines++);
-                                                       }
+<GLINE>({float}{whitespace}){3}{float}         { 
+                                                 ssx1 = strtok(yytext, " \t");
+						 sx1 = atof(ssx1);
+						 ssy1 = strtok(NULL, " \t");
+						 sy1 = atof(ssy1);
+
+						 if(is_vert1) {
+						   is_vert1 = 0;
+						   uni_bb.w = uni_bb.e = sx1;
+						   uni_bb.n = uni_bb.s = sy1;
+						 }
+
+						 else {
+						   if(sx1 > uni_bb.e) uni_bb.e = sx1;
+						   if(sx1 < uni_bb.w) uni_bb.w = sx1;
+						   if(sy1 > uni_bb.n) uni_bb.n = sy1;
+						   if(sy1 < uni_bb.s) uni_bb.s = sy1;
+						 }
+
+						 ssx2 = strtok(NULL, " \t");
+						 sx2 = atof(ssx2);
+						 ssy2 = strtok(NULL, " \t");
+						 sy2 = atof(ssy2);
+
+						 if(is_vert1) {
+						   is_vert1 = 0;
+						   uni_bb.w = uni_bb.e = sx2;
+						   uni_bb.n = uni_bb.s = sy2;
+						 }
+
+						 else {
+						   if(sx2 > uni_bb.e) uni_bb.e = sx2;
+						   if(sx2 < uni_bb.w) uni_bb.w = sx2;
+						   if(sy2 > uni_bb.n) uni_bb.n = sy2;
+						   if(sy2 < uni_bb.s) uni_bb.s = sy2;
+						 }
+
+						 if(alloc_glines( line0, nglines + 1))
+						   return -1;
+						 append_simple_line(line0, sx1, sy1, sx2, sy2,
+								    nglines++);
+                                               }
 <GLINE>{end}             { BEGIN DATA;}
 
 <DATA>{pline}            { 
@@ -282,9 +346,23 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 
 <LDATALINES>{ldata}                 { 
                                       ssx = strtok(yytext, " \t");
-                                      sx = atof(ssx);
+				      sx = atof(ssx);
 				      ssy = strtok(NULL, " \t");
 				      sy = atof(ssy);
+
+				      if(is_vert1) {
+					is_vert1 = 0;
+					uni_bb.w = uni_bb.e = sx;
+					uni_bb.n = uni_bb.s = sy;
+				      }
+
+				      else {
+					if(sx > uni_bb.e) uni_bb.e = sx;
+					if(sx < uni_bb.w) uni_bb.w = sx;
+					if(sy > uni_bb.n) uni_bb.n = sy;
+					if(sy < uni_bb.s) uni_bb.s = sy;
+				      }
+				       
 				      Vect_append_point(linex, sx, sy);
 				      if(linex->n_points == nvertices) {
 					if(alloc_glines( line0, nglines + 1))
@@ -315,6 +393,21 @@ typef {charf}|{intf}|{sintf}|{decf}|{floatf}|{datef}|{logf}
 				       sx = atof(ssx);
 				       ssy = strtok(NULL, " \t");
 				       sy = atof(ssy);
+
+				       if(is_vert1) {
+					 is_vert1 = 0;
+					 uni_bb.w = uni_bb.e = sx;
+					 uni_bb.n = uni_bb.s = sy;
+				       }
+
+				       else {
+					 if(sx > uni_bb.e) uni_bb.e = sx;
+					 if(sx < uni_bb.w) uni_bb.w = sx;
+					 if(sy > uni_bb.n) uni_bb.n = sy;
+					 if(sy < uni_bb.s) uni_bb.s = sy;
+				       }
+				       
+
 				       Vect_append_point(linex, sx, sy);
 				       if(linex->n_points == nvertices) {
 					 if(alloc_glines( line0, nglines + 1))
@@ -613,7 +706,6 @@ int alloc_offsets ( ring_offsets *ro, int size ) {
       return -1;
     }
     ro->alloc_offs = 128;
-    memset(ro->offs, 0, 128 * sizeof(int));
   }
 
   else {
@@ -623,7 +715,6 @@ int alloc_offsets ( ring_offsets *ro, int size ) {
       return -1;
     }
     ro->alloc_offs += 128;
-    memset(&ro->offs[ro->alloc_offs - 128], 0, 128 * sizeof(int));
   }
 
   return 0;
@@ -743,6 +834,7 @@ int append_offset(ring_offsets *ro, int indx, int val) {
     return -1;
 
   ro->offs[indx] = val;
+  ro->n_offs = indx + 1;
   return 0;
   
 }
