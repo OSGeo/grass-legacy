@@ -1,0 +1,8 @@
+interface_build {
+    {d.text} 0
+    {Draws text.}
+    {entry size {Letters height in % of frame height (0-100) [5]:} 0 ""}
+    {entry color {Text color [gray]:} 0 color}
+    {entry line {Screen line number on which text will begin (1-1000) [1]:} 0 ""}
+    {entry < {Text command file:} 0 file}
+}
