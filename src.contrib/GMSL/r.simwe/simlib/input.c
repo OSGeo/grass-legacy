@@ -14,6 +14,12 @@
 /* ************************************************************** */
 /*    			   GRASS input procedures, allocations    */
 /* *************************************************************** */
+/*!
+ * \brief allocate memory, read input rasters, assign UNDEF to NODATA
+ *
+ *  \return int
+ */
+
 
 int input_data()
 
@@ -230,24 +236,77 @@ fclose(fdsfile);
         for (j=0; j<mx; j++)
         {
            row_rev = my - row - 1;
+	   if(!G_is_f_null_value(cell1+j))
            zz[row_rev][j] = (float ) (conv * cell1[j]);
+	   else
+		   zz[row_rev][j] = UNDEF;
+	   if(!G_is_f_null_value(cell2+j))
            v1[row_rev][j] = (double ) cell2[j];
+	   else
+		   v1[row_rev][j] = UNDEF;
+	   if(!G_is_f_null_value(cell3+j))
            v2[row_rev][j] = (double ) cell3[j];
+	   else
+		   v2[row_rev][j] = UNDEF;
+
+	if(v1[row_rev][j] == UNDEF || v2[row_rev][j] == UNDEF)
+		zz[row_rev][j] = UNDEF; /* undef all area if something's missing */
+	   
 	  if(rain != NULL)
+		  if(!G_is_f_null_value(cell4+j))
            si[row_rev][j] = (double ) cell4[j]; /* add conv */
+		  else {
+			  si[row_rev][j] = UNDEF;
+			zz[row_rev][j] = UNDEF;
+		  }
           if(infil != NULL)
+		  if(!G_is_f_null_value(cell4a+j))
            inf[row_rev][j] = (double ) cell4a[j]; /* add conv */
+		  else {
+			  inf[row_rev][j] = UNDEF;
+                        zz[row_rev][j] = UNDEF;
+		  }
           if(traps != NULL)
+		  if(!G_is_f_null_value(cell4b+j))
            trap[row_rev][j] = (float) cell4b[j]; /* add conv */
+		  else {
+			  trap[row_rev][j] = UNDEF;
+                        zz[row_rev][j] = UNDEF;
+		  }
+	  if(!G_is_f_null_value(cell5+j))
            cchez[row_rev][j] = (float ) cell5[j]; /* add conv? */
+	  else {
+		  cchez[row_rev][j] = UNDEF;
+                        zz[row_rev][j] = UNDEF;
+	  }
         if(detin != NULL)
+		if(!G_is_f_null_value(cell9+j))
            dc[row_rev][j] = (float ) cell9[j];
+		else {
+			dc[row_rev][j] = UNDEF;
+                        zz[row_rev][j] = UNDEF;
+		}
         if(tranin != NULL)
+		if(!G_is_f_null_value(cell10+j))
            ct[row_rev][j] = (float ) cell10[j];
+		else {
+			ct[row_rev][j] = UNDEF;
+                        zz[row_rev][j] = UNDEF;
+		}
         if(tauin != NULL)
+		if(!G_is_f_null_value(cell11+j))
            tau[row_rev][j] = (float ) cell11[j];
+		else {
+			tau[row_rev][j] = UNDEF;
+                        zz[row_rev][j] = UNDEF;
+		}
         if(wdepth != NULL)
+		if(!G_is_f_null_value(cell12+j))
            gama[row_rev][j] = (double ) cell12[j];
+		else {
+			gama[row_rev][j] = UNDEF;
+                        zz[row_rev][j] = UNDEF;
+		}
          }
    }
   G_close_cell(fd1);
@@ -325,6 +384,7 @@ int grad_check ()
     for (k = 0; k < my; k++) {
         for (l = 0; l < mx; l++) {
 
+		if (zz[k][l] != UNDEF) {
             zx = v1[k][l];
             zy = v2[k][l];
             zd2 = zx * zx + zy * zy;
@@ -388,43 +448,60 @@ int grad_check ()
 	    cchezmax = amax1(cchezmax,cchez[k][l]);
 
 	cchez[k][l] *= sqrt(sinsl); /* saved sqrt(sinsl)*cchez to cchez array for output*/
-
+	} /* DEFined area */
         }
     }
+    if (inf != NULL && smax < infmax) G_warning("Infiltration exceeds the rainfall rate everywhere! No overland flow.\n");
 
     cc = (double) mx * my;
     si0 = sisum / cc;
     vmean = vsum / cc;
     chmean = chsum / cc;
-        if (inf != NULL) 
-    infmean = infsum / cc;
-
-	if (wdepth != NULL)
-    deltaw = 0.8/(sigmax * vmax);
+        if (inf != NULL) infmean = infsum / cc;
+	if (wdepth != NULL) deltaw = 0.8/(sigmax * vmax);
     deltap = 0.25 * sqrt(stepx * stepy)/vmean;
         if(deltaw > deltap)
                 timec = 4.;
         else
                 timec = 1.25;
 
-/*    deltap = amin1(deltap,deltaw);*/
+printf("\n");
+printf("\n zmin,zmax %f %f",zmin,zmax);
+printf("\n simean,vmean,chmean,deltap,deltaw %f %f %f %f %f",si0,vmean,chmean,deltap,deltaw);
+if (wdepth != NULL) printf("\n sigmax,vmax,deltaw %f %f %f",sigmax,vmax,deltaw);
+printf("\n MITER, timec %d %f",miter,timec);
 
-    if (wdepth != NULL) deltap = 0.1; /* deltap for sediment is ar. average deltap and deltaw */
+
+/*    deltap = amin1(deltap,deltaw);*/
+/*    if (wdepth != NULL) deltap = 0.1;  deltap for sediment is ar. average deltap and deltaw */
+
+    if (wdepth != NULL) deltap = (deltaw+deltap)/2.;  /*deltap for sediment is ar. average deltap and deltaw */
+
 
     miter = (int)(timesec / (deltap * timec)); /* number of iterations */
     iterout = (int)(iterout / (deltap * timec)); /* iterations for time series */
 
-printf("\n");
-printf("\n zmin,zmax %f %f",zmin,zmax);
-printf("\n simean,vmean,chmean,deltap %f %f %f %f",si0,vmean,chmean,deltap);
-if (wdepth != NULL) printf("\n sigmax,vmax,deltaw %f %f %f",sigmax,vmax,deltaw);
-printf("\n MITER, timec %d %f",miter,timec);
-
+/*! For each cell (k,l) compute the length s=(v1,v2) of the path 
+ *  that the particle will travel per one time step
+ *  \f$ s(k,l)=v(k,l)*dt \f$, [m]=[m/s]*[s]
+ *  give warning if there is a cell that will lead to path longer than 2 cells 
+ *
+ *  if running erosion, compute sediment transport capacity for each cell si(k,l)
+ *  \f$
+ * T({\bf r})=K_t({\bf r}) \bigl[\tau({\bf r})\bigr]^p
+ * =K_t({\bf r}) \bigl[\rho_w\, g h({\bf r}) \sin \beta ({\bf r}) \bigr]^p
+ * \f$
+ * [kg/ms]=...
+*/
     for (k = 0; k < my; k++) {
         for (l = 0; l < mx; l++) {
 
-                v1[k][l] *= deltap; /* normalization */
-                v2[k][l] *= deltap;
+        if (zz[k][l] != UNDEF) {
+            v1[k][l] *= deltap; 
+            v2[k][l] *= deltap;
+
+/*      if(v1[k][l]*v1[k][l]+v2[k][l]*v2[k][l] > cellsize, warning, napocitaj
+*       ak viac ako 10%a*/
 
 	if (inf!=NULL) inf[k][l] *= timesec; /* THIS IS CORRECT SOLUTION currently commented out*/
 
@@ -436,9 +513,16 @@ printf("\n MITER, timec %d %f",miter,timec);
 		else
 			si[k][l] = si[k][l] / (slope[k][l] * sigma[k][l]); /* temp for transp. cap. erod */
 		}
+	      } /* DEFined area */
         }
     }
 
+/*! compute transport capacity limted erosion/deposition et 
+*   as a divergence of sediment transport capacity
+*   \f$
+    D_T({\bf r})= \nabla\cdot {\bf T}({\bf r})
+*   \f$
+*/
 	if(et!=NULL) {
 
           erod(si); /* compute divergence of t.capc */
@@ -446,15 +530,24 @@ printf("\n MITER, timec %d %f",miter,timec);
 	 if (output_et() != 1) G_fatal_error ("Cannot write et file");
 	}
 
+/*! compute the inversion operator and store it in sigma - note that after this
+*   sigma does not store the first order reaction coefficient but the operator
+*   WRITE the equation here
+*/
+
 	if(wdepth != NULL) {
 
 	    for (k = 0; k < my; k++) {
         	for (l = 0; l < mx; l++) {
+			if (zz[k][l] != UNDEF) {
 
 		if(et!=NULL) si[k][l] = si[k][l] * slope[k][l] * sigma[k][l]; /* get back from temp */
 		if( sigma[k][l] != 0.)
+/* rate of weight loss - w=w*sigma , vaha prechadzky po n-krokoch je sigma^n */
 		sigma[k][l] = exp(-sigma[k][l] * deltap * slope[k][l]); /* not clear what's here :-\ */
+/* if(sigma[k][l]<0.5) warning, napocitaj, ak vacsie ako 50% skonci, zmensi deltap)
 		}
+		} /*DEFined area */
 	   }
 	}
 
