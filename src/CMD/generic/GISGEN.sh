@@ -18,6 +18,7 @@ echo " SRC     = $SRC"
 echo " CMD     = $CMD"
 echo " HEADER  = $HEADER"
 
+
 list=lists/GRASS
 if test -r $CMD/lists/local
 then
@@ -128,6 +129,11 @@ then
     echo "Skipped"
     shift
 fi
+
+# added 5/2000 MN
+errorlog=error.log
+rm -f $SRC/../error.log     # remove old log
+
 for i
 do
     cd $SRC/..
@@ -158,7 +164,9 @@ do
     case $bailout in
     1)
 	echo GISGEN failure at STEP: $i
-	exit 1
+  # commented 5/2000: we want to proceed!
+  #	exit 1
+	echo "Compilation error at STEP: $i (ignored)" >> $errorlog
 	;;
     *) ;;
     esac
