@@ -2,6 +2,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <string.h>
+#include <errno.h>
 #include "global.h"
 
 /********************************************
@@ -30,7 +32,7 @@ int write_matrix (int row, int col)
                                 != G_raster_size(map_type)*matrix_cols)
         {
            unlink(temp_name);
-           G_fatal_error("error while writing to temp file. You might want to check available disk space and write permissions.");
+           G_fatal_error("error while writing to temp file: %s", strerror(errno));
         }
     }
     select_current_env();
