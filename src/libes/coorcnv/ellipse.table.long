@@ -1,0 +1,27 @@
+airy	"Airy 1830"	a=6377563.396	f=1/299.3249646
+modif_airy	"Airy 1830 Modified"	a=6377340.189	f=1/299.3249646
+australian	"Australian National"	a=6378160.000	f=1/298.25
+bess_nam	"Bessel 1841 (Namibia)"	a=6377483.865	f=1/299.1528128
+bessel	"Bessel 1841"	a=6377397.155	f=1/299.1528128
+clark66	"Clarke 1866"	a=6378206.400	f=1/294.9786982
+clark80	"Clarke 1880"	a=6378249.145	f=1/293.465
+everest	"Everest (India 1830)"	a=6377276.345	b=300.8017
+evrstSS	"Everest (Sabah Sarawak)"	a=6377298.556	b=300.8017
+evrst56	"Everest (India 1956)"	a=6377301.243	b=300.8017
+evrst69	"Everest (Malaysia 1969)"	a=6377295.664	b=300.8017
+evrst48	"Everest (Malay & Sing)"	a=6377304.063	b=300.8017
+everest_p	"Everest (Pakistan)"	a=6377309.613	b=300.8017
+modif_fischer	"Modified Fischer 1960"	a=6378155.000	f=1/298.3
+helmert	"Helmert 1906"	a=6378200.000	f=1/298.3
+hough	"Hough 1960"	a=6378270.000	f=1/297.0
+indonesian	"Indonesian 1974"	a=6378160.000	f=1/298.247
+international	"International 1924"	a=6378388.000	f=1/297.0
+krassovsky	"Krassovsky 1940"	a=6378245.000	f=1/298.3
+GRS67	"GRS67"	a=6378160.000	b=6356774.516
+GRS75	"GRS75"	a=6378140.000	b=6356755.288
+grs80	"GRS80"	a=6378137.000	f=1/298.257222101
+SAm69	"S. American 1969"	a=6378160.000	f=1/298.25
+wgs60	"WGS60"	a=6378165.000	f=1/298.3
+wgs66	"WGS66"	a=6378145.000	f=1/298.25
+wgs72	"WGS72"	a=6378135.000	f=1/298.26
+wgs84	"WGS84"	a=6378137.000	f=1/298.257223563
