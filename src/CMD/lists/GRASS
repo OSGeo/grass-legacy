@@ -118,7 +118,6 @@ src/general/g.filename
 src/general/g.findfile
 src/general/g.gisenv
 src/general/g.help
-src/general/g.manual
 src/general/g.mapsets
 src/general/g.region
 src/general/g.tempfile
