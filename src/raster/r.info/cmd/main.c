@@ -1,8 +1,4 @@
 #include "gis.h"
-/*---------------------------------------------------------------------
- |      Map Layer Information Table
- |
- */
 
 #define printline(x) fprintf (out," | %-74.74s |\n",x)
 #define divider(x) \
@@ -77,7 +73,7 @@ main (argc, argv)
     sprintf (line, "DataBase: %s", G_gisdbase());
     printline (line);
 
-    sprintf (line, "Title:    %s", cats_ok ? cats.title : "??");
+    sprintf (line, "Title:    %s ( %s )", cats_ok ? cats.title : "??", hist_ok ? hist.title : "??");
     printline (line);
 
     divider ('|');
@@ -142,9 +138,10 @@ main (argc, argv)
 	printline("");
         if(hist.edlinecnt)
 	{
-	    printline ("  Comments:");
+	    printline ("  Comments:  ");
 
 	    for (i = 0; i < hist.edlinecnt; i++)
+	    /**************************************/
 	    {
 		sprintf (line, "   %s", hist.edhist[i]);
 		printline(line);
@@ -192,5 +189,5 @@ main (argc, argv)
     divider ('+');
 
     fprintf(out,"\n");
+    return 0;
 }
-
