@@ -26,5 +26,17 @@
 #      BASEDIR/dev/DVGA.a BASEDIR/dev/DVGA.b \
 #      ::
 #vdc600:/driver/vdc600:Paul Carlson's ATT-600 device driver: \
-#      BASEDIR/dev/vdc600.a BASEDIR/dev/vdc600.b \
+#      BASEDIR/dev/DVGA.a BASEDIR/dev/DVGA.b \
 #      ::
+DVGA2:driver/DVGA:Paul Carlson's Orchid device driver: \
+      /dev/DVGA.a /dev/DVGA.b \
+      ::
+DVGA3:driver/DVGA:Paul Carlson's Orchid device driver: \
+      /dev/DVGA.a /dev/DVGA.b \
+      ::
+DVGA9:driver/vdc600:Paul Carlson's ATT-600 device driver: \
+      /dev/DVGA.a /dev/DVGA.b \
+      ::
+DVGA6:driver/DVGA:Paul Carlson's Orchid device driver: \
+      /dev/DVGA.a /dev/DVGA.b \
+      ::
