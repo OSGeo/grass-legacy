@@ -1,20 +1,18 @@
 .TH m.eigensystem
 .SH NAME
-\fIm.eigensystem\fR \- Computes eigen values and eigen vectors
-for square matricies.
+m.eigensystem \- Computes eigen values and eigen vectors
 .br	
-.I (GRASS Data Import/Processing Program)
+.I (G Language Tool)
 .SH SYNOPSIS
-\fBm.eigensystem < \fIinputfile \fR
+\fBm.eigensystem\fR < inputfile
 .SH DESCRIPTION
+The module
 .I m.eigensystem 
 determines the eigen values and eigen vectors for square matricies.
 The
 .I inputfile
-must have the following format:
-the first line contains an integer K
-which is the number of rows and columns in the matrix;
-the remainder of the file is the matrix, i.e.,
+must have the following format: the first line contains an integer K which is
+the number of rows and columns in the matrix; the remainder of the file is the matrix, i.e.,
 K lines, each containing K real numbers.
 For example:
 
@@ -30,7 +28,7 @@ nnnn.
 .TE
 .RE
 
-The output will be K groups of lines;  each group will have the format:
+The output will be K groups of lines, each group will have the format
 .RS
 .TS
 tab(:);
@@ -106,23 +104,24 @@ W:-10.8698904856:0.0000000000
 .TE
 .RE
 
-.SH PROGRAM NOTES
+.SH NOTES
 The relative importance of the eigen value (E) is the ratio (percentage)
-of the eigen value to the sum of the eigen values.  Note that the output
+of the eigen value to the sum of the eigen values. Note that the output
 is not sorted by relative importance.
 
 In general, the solution to the eigen system results in complex
-numbers (with both real and imaginary parts).  However, in the example
+numbers (with both real and imaginary parts). However, in the example
 above, since the input matrix is symmetric (i.e., inverting the rows and columns
 gives the same matrix) the eigen system has only real values (i.e., the
 imaginary part is zero).
 This fact makes it possible to use eigen vectors to perform principle component
-transformation of data sets.  The covariance or correlation
+transformation of data sets. The covariance or correlation
 matrix of any data set is symmetric
 and thus has only real eigen values and vectors.
+
 .SH PRINCIPLE COMPONENTS
-To perform principle component transformation on GRASS data layers,
-one would use
+To perform principle component transformation on GRASS data layers, one would
+use
 .I r.covar
 to get the covariance (or correlation) matrix for a set of data layers,
 .I m.eigensystem
@@ -132,7 +131,7 @@ to form the desired components.
 For example, to get the eigen vectors for 3 layers:
 
 .if t .RS
-\fB(echo 3; r.covar map.1,map.2,map.3) | m.eigensystem \fR
+(echo 3; r.covar map.1,map.2,map.3) | m.eigensystem
 .if t .RE
 
 Note that since m.covar only outputs the matrix, we must manually prepend the matrix
@@ -141,22 +140,15 @@ size (3) using the echo command.
 Then, using the W vector, new maps are created:
 
 .if t .RS
-.B
 .nf
 r.mapcalc 'pc.1 = 21.2395*map.1 + 22.1470*map.2 + 14.7696*map.3'
 r.mapcalc 'pc.2 =  2.9083*map.1 +  4.4599*map.2 \- 10.8699*map.3'
 r.mapcalc 'pc.3 =  1.8175*map.1 \-  1.6232*map.2 \-  0.1797*map.3'
 .fi
-.R
 .if t .RE
-.SH NOTES
-The source code for this program lives
-under /src.contrib/CERL/misc/m.eigensystem and requires a Fortran compiler.
 .SH SEE ALSO
-.I r.covar,
-.I r.mapcalc,
-.I r.pca,
-.I r.rescale
+r.covar,
+r.mapcalc
 .SH AUTHOR
-This code uses routines from the EISPACK system.  The interface was coded by
+This code uses routines from the EISPACK system. The interface was coded by
 Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
