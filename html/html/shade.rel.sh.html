@@ -1,6 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
+<HEAD>
 <TITLE>shade.rel.sh</TITLE>
+</HEAD>
 <body bgcolor="white">
 <img src="grass.smlogo.gif">
 <hr width="100%" align=center size=6 noshade>
@@ -17,12 +19,10 @@ values entered by the user.
 
 <H2>SYNOPSIS</H2>
 
-<B>shade.rel.sh</B> <BR><B>shade.rel.sh help</B> <BR>
-
-<B>shade.rel.sh</B> [<B>altitude=</B><EM>value</EM>] 
-[<B>azimuth=</B><EM>value</EM>]
-[<B>elevation=</B><EM>name</EM>]
-[<B>shade=</B><EM>value|m|f</EM>]
+<B>shade.rel.sh<BR>
+shade.rel.sh help<BR>
+shade.rel.sh</B> [<B>altitude=</B><EM>value</EM>] [<B>azimuth=</B><EM>value</EM>]
+[<B>elevation=</B><EM>name</EM>] [<B>shade=</B><EM>value|m|f</EM>]
 
 
 <H2>DESCRIPTION</H2>
@@ -37,8 +37,8 @@ mapset.  The map is assigned a grey-scale color table.
 
 <P>
 
-In case, no parameter are provided on startup, this program is interactive;
-the user enters the command:
+If no parameters are provided on startup, this program is interactive;
+thus if the user enters the command:
 
 <DL>
 <DD>
@@ -47,25 +47,29 @@ the user enters the command:
 
 The program then prompts the user to enter values for:
 <OL>
-<LI>the altitude of the sun in degrees above the horizon
+<LI>The <B>altitude</B> of the sun in degrees above the horizon
 (a value between 0 and 90 degrees), and
 
-<LI>the azimuth of the sun in degrees to the east of north
+<LI>The <B>azimuth</B> of the sun in degrees to the east of north
 (a value between -1 and 360 degrees).
 
-<LI>the name of a raster map layer whose cell category values are to
-provide elevation values for the shaded relief map.  Typically, this
+<LI>The name of a raster map layer whose cell category values are to
+provide <B>elevation</B> values for the shaded relief map.  Typically, this
 would be a map layer of elevation;  however, any raster map layer
 can be named.
 
-<LI>vertical scale: The script scales latitude and longitude equally, so
-it's only approximately right, but for shading its close enough. It makes
-the difference between an unusable and usable shade.
+<LI>The scaling parameter, which compensates for a different horizontal
+<B>scale</B> than vertical scale.
+For example, when a latitude-longitude projection is used with an elevation
+map measured in meters.
 If 'scale' is a number then the ewres and nsres are multiplied by that
 scale to calculate the shading. If 'scale' is the letter M (either case)
-the number of meters is degree of latitude is used as the scale.
+the number of meters in a degree of latitude is used as the scale.
 If 'scale' is the letter F (either case) then the number of feet in a
 degree is used.
+The script scales latitude and longitude equally, so
+it's only approximately right, but for shading its close enough. It makes
+the difference between a usable and unusable shade.
 
 </OL>
 
@@ -73,8 +77,8 @@ Specifically, <EM>shade.rel.sh</EM> executes the following
 <EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
 statement:
 
-
-<B>
+<!-- is it really necessary to list this here? -->
+<tt>
 <DL>
 <DT><A HREF="r.mapcalc.html">r.mapcalc</A> &lt;&lt; EOF <BR>
 <DD>
@@ -86,13 +90,13 @@ $ELEV.shade = eval( \\<BR>
  slope=90.-atan(sqrt(x*x + y*y)), \\<BR>
  a=round(atan(x,y)), \\<BR>
  a=if(isnull(a),1,a), \\<BR>
- aspect=if(x||y,if(a,a,360.)), \\<BR>
+ aspect=if(x!=0||y!=0,if(a,a,360.)), \\<BR>
  cang = sin($alt)*sin(slope) + cos($alt)*cos(slope) * cos($az-aspect), \\<BR>
  if(cang < 0.,0.,100.*cang), \\<BR>
  if(isnull(cang), null(), 100.*cang))<BR>
 <DT>EOF
 </DL>
-</B>
+</tt>
 
 
 <P>
@@ -105,8 +109,9 @@ See, for example, the section on "The Neighborhood Modifier".
 
 <P>
 
-<EM>shade.rel.sh</EM> then runs <EM><a href="r.colors.html">r.colors</A></EM> to assign a grey-scale color table to
-the new shaded relief map <EM>&lt;elevation&gt;.shade</EM>, by executing the command:
+<EM>shade.rel.sh</EM> then runs <EM><a href="r.colors.html">r.colors</A></EM>
+to assign a grey-scale color table to the new shaded relief map
+<EM>&lt;elevation&gt;.shade</EM>, by executing the command:
 <P>
 
 <DL>
@@ -117,8 +122,8 @@ the new shaded relief map <EM>&lt;elevation&gt;.shade</EM>, by executing the com
 <H2>FILES</H2>
 
 This program is simply a shell script.  Users are encouraged to make their
-own shell scripts using similar techniques.  See
-<KBD>$GISBASE/scripts/shade.rel.sh</KBD>.
+own shell scripts using similar techniques.
+See <KBD>$GISBASE/scripts/shade.rel.sh</KBD>.
 
 <H2>SEE ALSO</H2>
 
@@ -127,13 +132,12 @@ Westervelt, U.S. Army Construction Engineering Research Laboratory
 (March/1991) (get from GRASS web site).
 
 <P>
-
+<EM><A HREF="shade.clr.sh.html">shade.clr.sh</A></EM><BR>
 <EM><A HREF="blend.sh.html">blend.sh</A></EM><br>
 <EM><A HREF="g.ask.html">g.ask</A></EM><br>
 <EM><A HREF="g.region.html">g.region</A></EM><br>
 <EM><A HREF="r.colors.html">r.colors</A></EM><br>
 <EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
-<EM><A HREF="shade.clr.sh.html">shade.clr.sh</A></EM>
 
 <H2>AUTHOR</H2>
 
