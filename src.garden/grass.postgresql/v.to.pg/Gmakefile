@@ -1,0 +1,21 @@
+PGM       = $(BIN_CMD)/v.to.pg
+LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB)		
+PACKAGE = "v.to.pg"
+DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
+EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
+
+
+OBJS = \
+	main.o\
+	bsearch.o\
+	find.o\
+	getAllOpts.o \
+	getSopts.o \
+	buildInfxQry.o \
+	runInfxFile.o \
+	plotCat.o 
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(XEXTRALIBS) $(MATHLIB) $(XDRLIB)
+
+$(LIBES): #
