@@ -1,6 +1,7 @@
 #include "gis.h"
 
 #include "config.h"
+#ifndef __MINGW32__
 #ifdef HAVE_TERMIO_H
 # include <termio.h>
 # define TYPE termio
@@ -12,13 +13,15 @@
 # define C t_intrc
 # define GET TIOCGETC
 #endif
-
+#endif
 char G_intr_char()
 {
-    char c;
+    char c = 0;
+#ifndef __MINGW32__    
     struct TYPE buf;
 
     ioctl (2, GET, &buf);
     c = buf.C;
+#endif    
     return c;
 }
