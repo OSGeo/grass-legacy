@@ -55,12 +55,12 @@ void fatalError(char *errorMsg) {
  */
 void setParams() {
   param.input = G_define_option();
-  param.input->key = "map";
+  param.input->key = "grid3";
   param.input->type = TYPE_STRING;
   param.input->required = YES;
   param.input->gisprompt = "old,grid3,3d-raster";
   param.input->multiple = NO;
-  param.input->description = "G3d raster map to be converted to v5d";
+  param.input->description = "3dcell map to be converted to Vis5d (v5d) file";
   
   param.output = G_define_option();
   param.output->key = "output";
