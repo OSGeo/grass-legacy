@@ -1,0 +1,32 @@
+# %W% %G%
+OBJ = \
+	dlg_init.o \
+	dlg_w_hdr.o\
+	dlg_read.o \
+	read_area.o \
+	read_area2.o \
+	write_area.o \
+	read_node.o \
+	write_node.o \
+	read_line.o \
+	write_line.o \
+	read_write.o \
+	dlg_w_node.o \
+        dlg_w_line.o \
+        dlg_w_area.o
+
+
+LIB = $(LIBDIR)/libdlg.a
+DLG = $(LIBDIR)/dlg.h
+all: $(DLG) $(LIB)
+
+$(LIB): $(OBJ)
+	$(AR)
+
+$(DLG): dlg.h
+	rm -f $@
+	cp $? $@
+	chmod +r $@
+
+$(OBJ): dlg.h
+
