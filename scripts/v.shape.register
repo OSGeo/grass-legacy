@@ -5,9 +5,8 @@
 #
 # TODOs:
 #  - allow for .SHP extension (currently only .shp)
-#  - add stuff if _ID not found from ogrinfo (different name)
-#      ... probably, if not found, list the fields and ask user?
-#  - add stuff for multilayer SHAPE (ID field identification with ogrinfo)
+#  - add stuff for multilayer SHAPE (ID field identification with ogrinfo,
+#    currently only first layer supported)
 #
 #  - eventully add .prj/.PRJ support (not sure)
 
@@ -44,7 +43,7 @@ DIRNAME=`dirname $INPUT`
 
 if test ! -f $DIRNAME/$SHAPE.shp
 then
- echo "ERROR: $DIRNAME/$SHAPE.shp not found"
+ echo "ERROR: $DIRNAME/$SHAPE.shp not found (or not a shp file)"
  exit
 fi
 
@@ -57,7 +56,19 @@ cp $DIRNAME/$SHAPE.shp $DIRNAME/$SHAPE.shx $DIRNAME/$SHAPE.dbf $SHPTARGET
 
 #analyse the file for later:
 LAYER1=`ogrinfo $DIRNAME/$SHAPE.shp |grep 1 | cut -d' ' -f2`
-IDFIELD=`ogrinfo $DIRNAME/$SHAPE.shp $LAYER1 |grep _ID | head -1 | cut -d':' -f1`
+IDFIELD=`ogrinfo $DIRNAME/$SHAPE.shp $LAYER1 |awk '/Layer name/,/OGRFeature/' |grep Integer| cut -d':' -f1`
+
+# any integer field there?
+if test ! "$IDFIELD"
+then
+  echo "No integer fields found in SHAPE file, can't register ID"
+  exit
+else
+ echo "Found following integer field(s) in SHAPE file:"
+ echo "$IDFIELD"
+ echo "which field do you want to use? Enter name from above list:"
+ read USERIDFIELD
+fi
 
 # now build FRMT file
 if test ! -d $VECTTARGET/$SHAPE.shp
@@ -69,7 +80,7 @@ cd $VECTTARGET/$SHAPE.shp
 
 echo "FORMAT: shape
 SHAPE: $SHPTARGET/$SHAPE
-CAT_COLUMN: $IDFIELD" > frmt
+CAT_COLUMN: $USERIDFIELD" > frmt
 
 TODAY=`LC_ALL=C date -R | cut -d' ' -f2,3,4 | tr -s ' ' '/'`
 
@@ -83,4 +94,5 @@ OTHER INFO:   -
 ZONE:         0
 MAP THRESH:   0.500000" > head
 
-echo "$SHAPE.shp is registered now. Consider to run v.build"
+echo "$SHAPE.shp is registered now. Consider to run v.build:"
+echo "     v.build $SHAPE.shp"
