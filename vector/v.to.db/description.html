@@ -3,16 +3,37 @@
 <em>v.to.db</em> load values from vector to database.
 
 
-<H2>EXAMPLE</H2>
+<H2>EXAMPLES</H2>
 
-Uploading of the attributes of a vector map to the DBMS has to be done 
-column-wise:
+<h3>Updating attribute tables</h3>
 
-<p>
+Note: Uploading of the attributes of a vector map to the DBMS has to be done 
+column-wise. The column must be present in the table 
+(use <a href=db.execute.html>db.execute</a> to add column if needed).
+
+<P>
+Upload category numbers to attribute table (used for new map):<br>
 <tt>v.to.db map=soils type=area option=cat</tt> 
-<p>
-<tt>v.to.db map=soils type=area option=area col1=area_size</tt>
 
+<p>
+Upload area sizes of each polygon to attribute table:<br>
+<tt>v.to.db map=soils type=area option=area col1=area_size unit=h</tt>
+
+<h3>Printing reports</h3>
+
+Report all area sizes of a map:<br>
+<tt>v.to.db -p soils option=area type=boundary units=h</tt>
+
+Report all area sizes of a map, sorted by category number:<br>
+<tt>v.to.db -p soils option=area type=boundary units=h | sort -n</tt>
+
+<p>
+Report all area sizes of a map:<br>
+<tt>v.to.db -p roads option=length type=line units=k</tt>
+
+<p>
+Report number of featurs for each category in map:<br>
+<tt>v.to.db -p roads option=count type=line</tt>
 
 <H2>AUTHOR</H2>
 Radim Blazek
