@@ -150,7 +150,7 @@ fprintf(stderr, "cols: %i rows: %i depths: %i\n", cols, rows, depths);
 	}
   if (rows > MAXROWS)
   	{
-	 G_fatal_error("Viz5D allows %d rows, you have %d rows", MAXCOLUMNS, cols);
+	 G_fatal_error("Viz5D allows %d rows, you have %d rows", MAXROWS, rows);
 	 exit(1);
 
   	}
