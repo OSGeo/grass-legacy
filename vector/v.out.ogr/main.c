@@ -27,10 +27,13 @@ int    nocat, noatt, nocatskip; /* number of features without cats/atts written/
 int mk_att ( int cat, struct field_info *Fi, dbDriver *Driver, int ncol, int keycol, int doatt, 
 	 OGRFeatureH Ogr_feature);
 
+char *OGR_list_write_drivers();
+char OGRdrivers[2000];
+
 int 
 main (int argc, char *argv[])
 {
-    int    i, j, k, centroid, otype, wkbtype, donocat;
+    int    i, j, k, centroid, otype, wkbtype=wkbUnknown, donocat;
     char   *mapset;
     int    field;
     struct GModule *module;
@@ -46,16 +49,16 @@ main (int argc, char *argv[])
     int    type, cat;
 
     /* Attributes */
-    int doatt, ncol, colsqltype, colctype, keycol;
-    struct field_info *Fi;
-    dbDriver *Driver;
+    int doatt=0, ncol=0, colsqltype, colctype, keycol=-1;
+    struct field_info *Fi=NULL;
+    dbDriver *Driver=NULL;
     dbHandle handle;
     dbTable *Table;
     dbString dbstring;
     dbColumn *Column;
     
     /* OGR */
-    int drn, ogr_ftype;
+    int drn, ogr_ftype=OFTInteger;
     OGRDataSourceH Ogr_ds;
     OGRSFDriverH Ogr_driver;  
     OGRLayerH Ogr_layer;	
@@ -101,8 +104,8 @@ main (int argc, char *argv[])
     frmt_opt->type =  TYPE_STRING;
     frmt_opt->required = NO;
     frmt_opt->multiple = NO;
-    frmt_opt->answer = "ESRI Shapefile";
-    frmt_opt->options = "ESRI Shapefile,TIGER,MapInfo File,GML";
+    frmt_opt->answer = "ESRI_Shapefile";
+    frmt_opt->options = OGR_list_write_drivers();
     frmt_opt->description = "OGR format.";
     
     cat_flag = G_define_flag ();
@@ -148,7 +151,10 @@ main (int argc, char *argv[])
     for ( i = 0; i < OGRGetDriverCount(); i++ ) {
 	Ogr_driver = OGRGetDriver( i );  
 	G_debug (2, "driver %d : %s", i, OGR_Dr_GetName ( Ogr_driver) ); 
-	if ( strcmp (  OGR_Dr_GetName ( Ogr_driver) ,  frmt_opt->answer ) == 0 ) {
+        /* chg white space to underscore in OGR driver names */
+	sprintf (buf, "%s", OGR_Dr_GetName ( Ogr_driver) );
+	G_strchg(buf,' ','_');
+	if ( strcmp ( buf ,  frmt_opt->answer ) == 0 ) {
 	    drn = i;
 	    G_debug (2, " -> driver = %d" ); 
 	}
@@ -422,3 +428,32 @@ mk_att ( int cat, struct field_info *Fi, dbDriver *Driver, int ncol, int keycol,
     return 1;
 }
 
+/* to print available drivers in help text */
+char *
+OGR_list_write_drivers(void)
+{
+    int drn, i;
+    OGRSFDriverH Ogr_driver;  
+    char buf[2000];
+    
+    /* Open OGR DSN */
+    OGRRegisterAll();
+    G_debug (2, "driver count = %d", OGRGetDriverCount() ); 
+    drn = -1;
+    for ( i = 0; i < OGRGetDriverCount(); i++ ) {
+        /* only fetch read/write drivers */
+	if (OGR_Dr_TestCapability( OGRGetDriver(i),ODrCCreateDataSource) )
+	{
+	  Ogr_driver = OGRGetDriver( i ); 
+	  G_debug (2, "driver %d/%d : %s", i, OGRGetDriverCount(), OGR_Dr_GetName ( Ogr_driver) ); 
+          /* chg white space to underscore in OGR driver names */
+	  sprintf (buf, "%s", OGR_Dr_GetName ( Ogr_driver) );
+	  G_strchg(buf,' ','_');
+	  strcat (OGRdrivers, buf);
+	  if (i < OGRGetDriverCount() - 1 )
+	     strcat (OGRdrivers, ",");
+	}
+    }
+    G_debug (2, "all drivers: %s",OGRdrivers);
+    return OGRdrivers;
+}
