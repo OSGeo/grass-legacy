@@ -1,0 +1,31 @@
+INSTLIBFLAGS = -m 0644
+
+SRCS=  busy.c \
+ 	c_bsb.c \
+	c_form.c \
+	c_pop_shell.c \
+	c_button.c \
+	c_label.c \
+	c_view.c \
+	c_dialog.c \
+	c_menu_btn.c \
+	c_line.c
+OBJS=  busy.o \
+ 	c_bsb.o \
+	c_form.o \
+	c_pop_shell.o \
+	c_button.o \
+	c_label.o \
+	c_view.o \
+	c_dialog.o \
+	c_menu_btn.o \
+	c_line.o
+
+CC = /bin/cc
+
+all:: libXutils.a lintlib install install.ln
+
+NormalLibraryTarget(Xutils,$(OBJS))
+LintLibraryTarget(Xutils,$(SRCS))
+InstallLibrary(Xutils, ..)
+InstallLintLibrary(Xutils, ..)
