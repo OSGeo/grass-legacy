@@ -1,3 +1,17 @@
+***********************************************
+SGI/IRIX notes:
+
+Get GNU Tools and the free "egcs" compiler from
+
+  http://freeware.sgi.com
+
+Both are provided as packages (ready-to-install).
+Using the common SGI compiler will cause troubles.
+
+***********************************************
+
+
+
 Notes on SGI compiling:
 The freeware page of gcc 2.8.1 (http://freeware.sgi.com ...) says that                                     
 gcc does not support the old 32 bit ABI (o32 option, see your section                                      
