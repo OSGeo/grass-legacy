@@ -29,4 +29,6 @@ all:
 	cp v.line2area/v.line2area $(GISBASE)/scripts
 	cp v.plant/v.plant $(GISBASE)/scripts
 	cp v.xfig/*fig*  $(GISBASE)/scripts
+	cp s.in.garmin.sh/s.in.garmin.sh $(GISBASE)/scripts
+	cp v.in.garmin.sh/v.in.garmin.sh $(GISBASE)/scripts
 	chmod 755 $(GISBASE)/scripts/*
