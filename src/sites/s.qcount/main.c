@@ -191,9 +191,9 @@ int main (argc, argv)
       G_fatal_error("Memory Exhausted");
     *ctmp = '\0';
     sHead.name = ctmp;
-    if (NULL == (ctmp = (char *) G_malloc(sizeof(char) * 512)))
+    if (NULL == (ctmp = (char *) G_malloc(strlen(siteslist) + 65)))
       G_fatal_error("Memory exhausted!");
-    snprintf(ctmp, 512, "output of s.qcount -c sites=%s n=%d r=%g", 
+    sprintf(ctmp, "output of s.qcount -c sites=%s n=%d r=%g", 
         siteslist, nquads, radius);
     sHead.desc = ctmp;
     if (NULL == (ctmp = (char *) G_malloc(sizeof(char) * 80)))
@@ -240,4 +240,4 @@ fprintf(stdout,"sites_list: %s n=%d (%d quadrats of radius %g)\n",siteslist,site
 
   exit (0);
 }
-/* vim: softtabstop=2 shiftwidth=2 expandtab */
+/* vim: set softtabstop=2 shiftwidth=2 expandtab */
