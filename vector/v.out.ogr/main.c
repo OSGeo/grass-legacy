@@ -1,4 +1,5 @@
-/* ***************************************************************
+/* $Id$
+ * ***************************************************************
  * *
  * * MODULE:       v.out.ogr
  * * 
@@ -115,10 +116,10 @@ main (int argc, char *argv[])
     
     cat_flag = G_define_flag ();
     cat_flag->key            = 'c';
-    cat_flag->description    = "Export features with category (labeled) only."
+    cat_flag->description    = "Export features with category (labeled) only. "
 			       "Otherwise all features are exported";
     
-    if (G_parser (argc, argv)) exit(-1); 
+    if (G_parser (argc, argv)) exit(1); 
     
     /* read options */
     field = atoi( field_opt->answer );
