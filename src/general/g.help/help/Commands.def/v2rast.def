@@ -1,0 +1,11 @@
+
+
+v.to.rast - 
+
+v.to.rast transforms (binary) GRASS \vector\ \map layers\ into GRASS
+\raster\ map layer format.  It is used during the final stage in the
+GRASS map development process, which converts a hardcopy map to a
+digital map layer in GRASS raster format.
+
+Manual entry for \v.to.rast\
+
