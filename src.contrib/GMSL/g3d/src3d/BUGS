@@ -1,4 +1,4 @@
-$Id: BUGS,v 1.6 2001-02-15 13:40:43 markus Exp $
+$Id: BUGS,v 1.7 2001-04-02 08:57:38 markus Exp $
 
                            G3D bugs list
                   ---> Call for assistance <------
@@ -83,6 +83,15 @@ Check these modules:
     is used
    Is G3d_getBlock () consistent with "for" loops used in other modules?
 
+- r3.mkdspf: problem to find dspf file in r3.showdspf
+  Eric Miller wrote:
+   There's a bug in the naming of the output file from r3.mkdspf.  It'll be
+   there, just not named as you specified (has some extra junk added).  If
+   I'm remembering correctly, if you go into the grid3 directory under the
+   mapset and move the dsp<semi-random junk> directory to "dsp", everything
+   will function normally thereafter (including creation of new dspf files). 
+   I may have misremembered, but it's something like that...
+   -> bug does not appear on all platforms!
 
  - r3.to.sites/main.c
 
