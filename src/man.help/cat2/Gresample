@@ -1,0 +1,66 @@
+
+
+
+Gresample(2G)        GRASS Reference Manual         Gresample(2G)
+
+
+
+NAME
+     Gresample - GRASS resampling capability
+     (G Language Tool)
+
+SYNOPSIS
+     Gresample [-v] input_layer output_layer
+
+DESCRIPTION
+     Gresample resamples a Gresample reads the user-specified
+     into the current masked by the current mask, and produces a
+     new containing the result of the resampling. The values in
+     the new cell will be the same as in the original, except
+     that the resolution and extent of the new will match those
+     of the current Use of the -v option will reduce the amount
+     of chatter that Gresample will do while running.
+
+NOTES
+     The resulting can be the same as the original The color
+     table, category file, and history file for the original are
+     copied to those for the resulting
+
+SEE ALSO
+     resample[1]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
