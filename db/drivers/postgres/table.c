@@ -106,6 +106,7 @@ int load_table(int t, char *stmt)
     int i, j;
     int header_only = 0;
     char **tokens;
+    int ntokens;
 
     G_debug(3, "load_table()");
         
@@ -210,24 +211,49 @@ int load_table(int t, char *stmt)
 		    val->d = atof(PQgetvalue(res, i, j));
 		    break;
 		case PG_DATE:
-		    buf = (char *) PQgetvalue(res, i, j);
-		    tokens = G_tokenize (buf, "-"); /* depends on LOCALE ? */
-		    val->t.year  = atoi(tokens[0]);
-		    val->t.month = atoi(tokens[1]);
-		    val->t.day   = atoi(tokens[2]);
-		    val->t.hour   = 0;
-		    val->t.minute = 0;
-		    val->t.seconds = 0;
-		    break;
-		case PG_TIME:
-		    buf = (char *) PQgetvalue(res, i, j);
-		    tokens = G_tokenize (buf, ":"); /* depends on LOCALE ? */
 		    val->t.year  = 0;
 		    val->t.month = 0;
 		    val->t.day   = 0;
-		    val->t.hour   = atoi(tokens[0]);
-		    val->t.minute = atoi(tokens[1]);
-		    val->t.seconds = atoi(tokens[2]);
+		    val->t.hour   = 0;
+		    val->t.minute = 0;
+		    val->t.seconds = 0;
+
+		    if ( ! PQgetisnull(res, i, j) ) {
+			buf = (char *) PQgetvalue(res, i, j);
+			fprintf ( stderr, "buf = '%s'\n", buf );
+			tokens = G_tokenize (buf, "-"); /* depends on LOCALE ? */
+			ntokens = G_number_of_tokens (tokens);
+			if ( ntokens >= 3 ) {
+			    val->t.year  = atoi(tokens[0]);
+			    val->t.month = atoi(tokens[1]);
+			    val->t.day   = atoi(tokens[2]);
+			} else {
+			    G_warning ("Cannot parse type date (%s)", buf );
+			}	
+			G_free_tokens( tokens );
+		    }
+		    break;
+		case PG_TIME:
+		    val->t.year  = 0;
+		    val->t.month = 0;
+		    val->t.day   = 0;
+		    val->t.hour   = 0;
+		    val->t.minute = 0;
+		    val->t.seconds = 0;
+
+		    if ( ! PQgetisnull(res, i, j) ) {
+			buf = (char *) PQgetvalue(res, i, j);
+			tokens = G_tokenize (buf, ":"); /* depends on LOCALE ? */
+			ntokens = G_number_of_tokens (tokens);
+			if ( ntokens >= 3 ) {
+			    val->t.hour   = atoi(tokens[0]);
+			    val->t.minute = atoi(tokens[1]);
+			    val->t.seconds = atoi(tokens[2]);
+			} else {
+			    G_warning ("Cannot parse type date (%s)", buf );
+			}
+			G_free_tokens( tokens );
+		    }
 		    break;
 		}
 
