@@ -63,13 +63,6 @@ GS_libinit()
 int r,c;
 static int first = 1;
     
-    for(r=0; r < 4; r++){
-	for (c=0; c < 4; c++){
-	    ID_matrix[r][c] = 0.;
-	}
-	ID_matrix[r][r] = 1.;
-    }
-
     G_get_set_window (&wind);
 
     Region[0] = wind.north;
