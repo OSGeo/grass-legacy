@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.27 2000-10-09 08:55:40 markus Exp $
+# $Id: configure,v 1.28 2000-10-09 19:20:29 markus Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -3389,7 +3389,7 @@ if test "${TKDIR}" = "no" -a "${TCLDIR}" = "no"; then
   WANT_TCLTK=no
 fi
 
-
+# following implementation is very poor! Should be improved!
 #TCLTKLIBS=
 if test "$WANT_TCLTK" = "yes"; then
     cat >> confdefs.h <<\EOF
@@ -3397,8 +3397,8 @@ if test "$WANT_TCLTK" = "yes"; then
 EOF
 
     WANT_TCLTK="1"
-    echo $ac_n "checking for matching Tk/Tcl libraries""... $ac_c" 1>&6
-echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
+    echo $ac_n "checking for Tk/Tcl libraries""... $ac_c" 1>&6
+echo "configure:2632: checking for Tk/Tcl libraries" >&5
 
     #
     # Check for matching libtk*.a and libtcl*.a
@@ -3410,8 +3410,8 @@ echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
     do
         ltcltkver=`echo $tcltkver | sed 's/\.//'`
         if test \( \( -r "$TKDIR/lib/libtk$tcltkver.so" -a		\
-	              -r "$TCLDIR/lib/libtcl$tcltkver.so" \) -o		\
-	           \( -r "$TKDIR/lib/libtk$ltcltkver.so" -a		\
+	              -r "$TCLDIR/lib/libtcl$tcltkver.so" \) -o 	\
+                   \( -r "$TKDIR/lib/libtk$ltcltkver.so" -a		\
 	              -r "$TCLDIR/lib/libtcl$ltcltkver.so" \) \) -a	\
 	        -d "$TKDIR/lib/tk$tcltkver" -a				\
 		-d "$TCLDIR/lib/tcl$tcltkver"; then
@@ -3430,11 +3430,36 @@ echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
 	    fi
 	    if test -r "$TKDIR/lib/libtk$ltcltkver.so" -a	\
 	    	    -r "$TCLDIR/lib/libtcl$ltcltkver.so"; then
-#	        TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk$ltcltkver.so $TCLDIR/lib/libtcl$ltcltkver.so"
-	        TCLTKLIBS="$TCLTKLIBS -ltk$ltcltkver -ltcl$ltcltkver"
+	        TCLTKLIBS="-L$TKDIR/lib -L$TCLDIR/lib $TCLTKLIBS -ltk$ltcltkver -ltcl$ltcltkver"
 	    else
-#	        TCLTKLIBS="$TCLTKLIBS $TKDIR/lib/libtk$tcltkver.so $TCLDIR/lib/libtcl$tcltkver.so"
-	        TCLTKLIBS="$TCLTKLIBS -ltk$tcltkver -ltcl$tcltkver"
+	        TCLTKLIBS="-L$TKDIR/lib -L$TCLDIR/lib $TCLTKLIBS -ltk$tcltkver -ltcl$tcltkver"
+	    fi
+
+	    FOUND=1
+	    break
+
+        elif test \(  -r "$TKDIR/local/lib/libtk$tcltkver.so" -a	\
+	              -r "$TCLDIR/local/lib/libtcl$tcltkver.so" \) -a	\
+	        -d "$TKDIR/lib/tk$tcltkver" -a				\
+		-d "$TCLDIR/lib/tcl$tcltkver"; then
+
+	    TKLIBDIR=$TKDIR/local/lib/tk$tcltkver
+	    TCLLIBDIR=$TCLDIR/local/lib/tcl$tcltkver
+	    if test -d "$TKDIR/include/tk$tcltkver"; then
+	        TKINCDIR="-I$TKDIR/include/tk$tcltkver"
+	    else
+	        TKINCDIR="-I$TKDIR/include"
+	    fi
+	    if test -d "$TCLDIR/include/tcl$tcltkver"; then
+	        TCLINCDIR="-I$TCLDIR/include/tcl$tcltkver"
+	    else
+	        TCLINCDIR="-I$TCLDIR/include"
+	    fi
+	    if test -r "$TKDIR/lib/libtk$ltcltkver.so" -a	\
+	    	    -r "$TCLDIR/lib/libtcl$ltcltkver.so"; then
+	        TCLTKLIBS="-L$TKDIR/local/lib -L$TCLDIR/local/lib $TCLTKLIBS -ltk$ltcltkver -ltcl$ltcltkver"
+	    else
+	        TCLTKLIBS="-L$TKDIR/local/lib -L$TCLDIR/local/lib $TCLTKLIBS -ltk$tcltkver -ltcl$tcltkver"
 	    fi
 
 	    FOUND=1
@@ -3461,11 +3486,9 @@ echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
 	    fi
 	    if test -r "$PREFIX/lib/libtk$ltcltkver.so" -a	\
 	    	    -r "$PREFIX/lib/libtcl$ltcltkver.so"; then
-#	        TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk$ltcltkver.so $PREFIX/lib/libtcl$ltcltkver.so"
-	        TCLTKLIBS="$TCLTKLIBS -ltk$ltcltkver -ltcl$ltcltkver"
+	        TCLTKLIBS="-L$TKDIR/lib -L$TCLDIR/lib $TCLTKLIBS -ltk$ltcltkver -ltcl$ltcltkver"
 	    else
-#	        TCLTKLIBS="$TCLTKLIBS $PREFIX/lib/libtk$tcltkver.so $PREFIX/lib/libtcl$tcltkver.so"
-	        TCLTKLIBS="$TCLTKLIBS -ltk$tcltkver -ltcl$tcltkver"
+	        TCLTKLIBS="-L$TKDIR/lib -L$TCLDIR/lib $TCLTKLIBS -ltk$tcltkver -ltcl$tcltkver"
 	    fi
 
 	    FOUND=1
