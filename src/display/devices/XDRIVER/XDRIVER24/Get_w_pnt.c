@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "includes.h"
 
 /* Using mouse device, get a new screen coordinate and button number.
@@ -19,10 +20,6 @@ static u_long mask;
 
 int Get_location_with_pointer (int *wx, int *wy, int *button)
 {
-    XEvent bpevent;
-    u_int  mask;
-    Window root, child;
-    int    rx, ry;
 
     /* set the grass cursor on (defined in Graph_Set.c) */
     XDefineCursor(dpy, grwin, grcurse);
@@ -31,12 +28,23 @@ int Get_location_with_pointer (int *wx, int *wy, int *button)
      * x,y coord and button number */
 
     if(*button == -1){
-	XQueryPointer(dpy, grwin, &root, &child, &rx, &ry, wx, wy, &mask);
-	*button = (mask&Button1Mask ? 1
+        u_int  mask;
+        Window root, child;
+        int    rx, ry;
+
+        XGetInputFocus(dpy, &child, &rx);
+	if(child == grwin){
+	    XQueryPointer(dpy, grwin, &root, &child, &rx, &ry, wx, wy, &mask);
+	    *button = (mask&Button1Mask ? 1
 			: (mask&Button2Mask ? 2
 				: (mask&Button3Mask ? 3
 					: *button)));
+	}else{
+	    *wx = *wy = -1;
+	}
     }else{
+        XEvent bpevent;
+
 	XWindowEvent(dpy, grwin, ButtonPressMask, &bpevent);
 
 	*wx = bpevent.xbutton.x;
