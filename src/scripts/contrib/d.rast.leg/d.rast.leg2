@@ -38,8 +38,8 @@ SEE ALSO
 	  exit
 fi
 
-#for i in `cat $LOCATION/SEARCH_PATH`
-for i in `ls $LOCATION/..`
+for i in `cat $LOCATION/SEARCH_PATH`
+#for i in `ls $GISDBASE/$LOCATION_NAME/$MAPSET..`
 	do
 	  if test -f $GISDBASE/$LOCATION_NAME/$i/cats/$1
 	    then file=$GISDBASE/$LOCATION_NAME/$i/cats/$1
