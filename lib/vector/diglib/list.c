@@ -35,13 +35,14 @@ int
 dig_list_add ( struct ilist *list, int val ) 
 {
     void *p;
-    int n;
+    int  size;
     
     if ( list->n_values == list->alloc_values ) {
-	n = list->n_values + 1000;
-	p = realloc ( (void *) list->value, n * sizeof(int) ); 
+	size = (list->n_values + 1000) * sizeof(int);
+	p = realloc ( (void *) list->value, size ); 
         if ( p == NULL ) return 0;
         list->value = (int *) p;
+	list->alloc_values = list->n_values + 1000; 
     }
    
     list->value[list->n_values] = val;
