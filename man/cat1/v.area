@@ -1,7 +1,7 @@
 
 
 
-v.area               GRASS Reference Manual                v.area
+v.area <main>        GRASS Reference Manual         <main> v.area
 
 
 
@@ -56,77 +56,11 @@ SEE ALSO
      d.vect
 
 AUTHOR
-     Dave Gerdes, U.S. Army Construction Engineering Research
+     Bruce Powell, National Park Service, Denver CO.
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
-
-
-
-
-
-
-v.area               GRASS Reference Manual                v.area
-
-
-
-     Laboratory
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
