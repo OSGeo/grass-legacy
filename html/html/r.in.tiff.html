@@ -21,9 +21,8 @@
 <H2>SYNOPSIS</H2>
 
 
-<B>r.in.tiff </b>[<b>-vb</b>] 
+<B>r.in.tiff </b>[<b>-v</b>] 
 	<b>input=</b><em>name</em> <b>output=</b><em>name</em>
-	[<B>nlev=</B><EM>value</EM>]
 
 <H2>DESCRIPTION</H2>
 
@@ -36,11 +35,6 @@ under the user's current GRASS mapset.
 <DT><B>-v</B>
 <DD>Verbose mode</DD>
 
-<DT><B>-b</B>
-<DD>Import TrueColor (24 bit) TIFF into separate red, blue, and green bands. 
-Each band file will be named <em>output</em>.[r|b|g] depending on the band.
-</DL>
-
 <H3>Parameters:</H3>
 
 <DL>
@@ -48,14 +42,7 @@ Each band file will be named <em>output</em>.[r|b|g] depending on the band.
 <DD>Name of an existing TIFF raster file to be imported. 
 <DT><B>output=</B><EM>name</EM>
 <DD>Name to be assigned to resultant binary raster map layer. 
-<DT><B>nlev=</B><EM>value</EM>
-<DD>Optionally specify the number of colors per band for TrueColor 
-TIFF files.<BR>
-<B>Options:</B> 1 - 256<BR>
-<B>Default:</B> 20 (8000 colors)
 </DL>
-
-
 
 <P>
 
@@ -67,11 +54,20 @@ compression schemes may not be read correctly.
 LZW compression is not supported due to UNISYS patent.
 
 <P>
+If the image is a 24-bit RGB TIFF, then the output will be split into
+respective red, green and blue band files; each having the <em>output</em>
+name as its prefix followed by <EM>.r</EM>, <EM>.g</EM> or <EM>.b</EM>,
+respectively.  Color composites can be displayed with 
+<a href="d.rgb.html">d.rgb</a>.
+
+<P>
 If a TIFF World file exists with an extension of "tfw", "tifw", "TFW",
 or "TIFW", it will be used to set the boundary coordinates and cell size. 
-Rotation in the TIFF World file is not supported (second and third numbers).
+Rotation in the TIFF World file is not supported (second and third numbers),
+and if present the TIFF will be imported as an XY (unreferenced) image.
 If no TIFF World file exists, the user should adjust boundary coordinates
-stored in the cell header after import using <EM> <a href="r.support.html">r.support</A> </EM>.
+stored in the cell header after import using 
+<EM><a href="r.support.html">r.support</A> </EM>.
 <p>
 
 A sample TFW file opened up would look like: 
@@ -85,14 +81,14 @@ A sample TFW file opened up would look like:
                   807714.00 
 
          Line 1 - Cell size in the "X" direction 
-         Line 2 - Rotation term for the row 
-         Line 3 - Rotation term for the column
+         Line 2 - "Rotation" term for the row 
+         Line 3 - "Rotation" term for the column
          Line 4 - Cell size in the "Y" direction 
          Line 5 - Easting value of insertion point "X" 
          Line 6 - Northing value of insertion point "Y" 
 </pre>
 
-Note: The y-scale (E) is negative because the origins of an image and a
+Note: The y-scale (4) is negative because the origins of an image and a
 geographic coordinates system are different. The origin of an image is
 located in the upper-left corner, whereas the origin of the map coordinate
 system is located in the lower-left corner. Row values in the image increase
@@ -101,14 +97,17 @@ the origin upward.
 
 
 <H2>NOTE</H2>
-
-For non-*nix Operating Systems, the TIFF World file may not be found
-if it's under a directory tree that has one of ".tfw", ".tifw", ".TFW" or
-".TIFW".  Also, be aware that the TIFF World file is a text file.  Therefore,
-if it has come from an operating system with a different idea about the
-end of line character(s), it may not be read properly.  The input routine
-expects each entry on a separate line.  Scripts like dos2unix can be used
-to fixed this.
+<P>
+This module only supports TIFF's conforming to the base TIFF 6 specification.
+These include monochrome, grayscale, palette and RGB ("True Color"), with
+at most 8 bits per "sample".  Other features, like larger bits/sample, floating
+point (or rational) samples, alpha blending, transparency masks, and multiband
+images, are not currently handled.
+<P>
+This module also doesn't handle true GeoTIFF's (those with coordinate
+reference information actually embedded in the TIFF file).  So the assumption
+with the TIFF world file is that it make sense in whatever coordinate
+system the current region settings return.
 
 <H2>SEE ALSO</H2>
 
