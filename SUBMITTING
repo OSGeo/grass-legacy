@@ -1,0 +1,36 @@
+$Id: SUBMITTING,v 1.1 2000-09-26 13:34:07 markus Exp $
+
+Dear (new) GRASS Developer,
+
+when submitting to GRASS CVS repositiory, please take
+care of following rules:
+
+- for programming style, please take a look at 
+  STYLE_PROGRAMMING file
+
+- place your module into the appropriate directory:
+  - libes go into src/libes/
+  - raster goes into src/raster/
+  - vector goes into src/mapdev/
+  - sites goes into src/sites
+  - ...
+
+- add the module's directory name (pointing to the local Gmakefile)
+  to the compile list at src/CMD/lists/GRASS
+
+- place the documentation in HTML format into html/html/ and
+  add it to the module's list in html/
+  Easiest way is to modify an existing HTML page for your purposes
+  (to get the page style).
+  The online WWW man pages will be updated over-night by CVS.
+
+- Tell the other developers about it:
+   grass5@geog.uni-hannover.de
+ 
+  To subscribe to the list, see
+  http://www.geog.uni-hannover.de/grass/grassdevel.html
+
+- In case of question feel free to contact the developers at above
+  mailing list.
+
+That's it. We are glad to receive your contributions!
