@@ -1,10 +1,8 @@
 OBJS = main.o function.o
 PGM = s.kernel
 
-LIBES = $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
+DEPLIBS = $(DEPGISLIB) $(DEPDATETIMELIB)
+LIBES = $(GISLIB) $(DATETIMELIB)
 
-$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(OBJS) $(DEPLIBS) 
 	$(CC)  $(LDFLAGS)  -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
-
-$(OBJS): #
-$(LIBES): #
