@@ -1,0 +1,17 @@
+# %W% %G%
+
+PGM=basins
+
+BACK = basins.o usage.o
+#FRONT = frontend.o
+
+#all: $(BIN)/basins $(BIN)/Gbasins
+
+#$(BIN)/basins: $(FRONT) $(GISLIB)
+#	$(CC) $(LDFLAGS) $(FRONT) $(GISLIB) $(TERMLIB) -o $@
+
+$(ETC)/Gbasins: $(BACK) $(GISLIB)
+	$(CC) $(LDFLAGS) $(BACK) $(GISLIB) $(TERMLIB) $(MATHLIB) -o $@
+
+
+$(GISLIB): #
