@@ -1,7 +1,7 @@
 
 
 
-m.eigensystem        GRASS Reference Manual         m.eigensystem
+m.eigensystem <contribGRASS Reference Manu<contrib> m.eigensystem
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-m.eigensystem        GRASS Reference Manual         m.eigensystem
+m.eigensystem <contribGRASS Reference Manu<contrib> m.eigensystem
 
 
 
@@ -126,14 +126,14 @@ PRINCIPLE COMPONENTS
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-m.eigensystem        GRASS Reference Manual         m.eigensystem
+m.eigensystem <contribGRASS Reference Manu<contrib> m.eigensystem
 
 
 
@@ -154,6 +154,11 @@ AUTHOR
      interface was coded by Michael Shapiro, U.S. Army
      Construction Engineering Research Laboratory
 
+NOTICE
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
+     Integration.
 
 
 
@@ -187,12 +192,7 @@ AUTHOR
 
 
 
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
