@@ -283,7 +283,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
   /* Open history file */  
   sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
 
-  if ( update ) { /* native or postGIS only */
+  if ( update ) { /* native only */
       Map->hist_fp = G_fopen_modify (buf, GRASS_VECT_HIST_ELEMENT);
       if ( Map->hist_fp == NULL ) {
           sprintf ( errmsg, "Cannot open history file for vector '%s'", Vect_get_full_name(Map) ); 
@@ -292,6 +292,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
       }
       fseek ( Map->hist_fp, 0, SEEK_END);
       Vect_hist_write ( Map, "---------------------------------------------------------------------------------\n");
+      
   } else {
       if ( Map->format == GV_FORMAT_NATIVE ) {
           Map->hist_fp = G_fopen_old (buf, GRASS_VECT_HIST_ELEMENT, Map->mapset);
@@ -303,6 +304,26 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
 
   if ( !head_only ) { /* Cannot rewind if not fully opened */
       Vect_rewind ( Map );
+  }
+
+  /* Delete support files if native format was opened for update */
+  if ( update ) {
+      char file_path[2000];
+      struct stat info;
+      
+      sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
+
+      G__file_name ( file_path, buf, GV_TOPO_ELEMENT, G_mapset ());
+      if (stat (file_path, &info) == 0)      /* file exists? */
+	  unlink (file_path);
+
+      G__file_name ( file_path, buf, GV_SIDX_ELEMENT, G_mapset ());
+      if (stat (file_path, &info) == 0)      /* file exists? */
+	  unlink (file_path);
+
+      G__file_name ( file_path, buf, GV_CIDX_ELEMENT, G_mapset ());
+      if (stat (file_path, &info) == 0)      /* file exists? */
+	  unlink (file_path);
   }
   
   return (level);
