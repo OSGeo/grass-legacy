@@ -614,6 +614,7 @@ USE_OGR=
 
 if test "$GDAL_CONFIG" != "" ; then
   GDAL_LIBS=`"$GDAL_CONFIG" --libs`
+  GDAL_DEP_LIBS=`"$GDAL_CONFIG" --dep-libs`
   GDAL_CFLAGS=`"$GDAL_CONFIG" --cflags`
   USE_GDAL=1
   if test `"$GDAL_CONFIG" --ogr-enabled` = "yes" ; then
@@ -621,6 +622,16 @@ if test "$GDAL_CONFIG" != "" ; then
     USE_OGR=1
   fi
 fi
+
+ac_save_ldflags="$LDFLAGS"
+LDFLAGS="$LDFLAGS $GDAL_LIBS"
+AC_CHECK_FUNC(GDALOpen,[],[
+LDFLAGS="$LDFLAGS $GDAL_DEP_LIBS"
+AC_CHECK_FUNC(GDALOpen,[GDAL_LIBS="$GDAL_LIBS $GDAL_DEP_LIBS"],[
+    AC_MSG_ERROR([*** Unable to locate GDAL library.])
+])
+])
+LDFLAGS=${ac_save_ldflags}
 
 AC_SUBST(GDAL_LIBS)
 AC_SUBST(GDAL_CFLAGS)
