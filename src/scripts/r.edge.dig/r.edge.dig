@@ -1,0 +1,23 @@
+#!/bin/csh -f
+# from Dr. Agustin Lobo - alobo@ija.csic.es
+
+echo "Digitize a vector line between two given raster values in a raster map"
+#set echo
+#set verbose
+if ($#argv < 2) then
+        echo ""
+        echo "Usage: input(raster) rastervalue1 rastervalue2 output(vector)"
+        exit
+endif
+r.mapcalc "del.me.1 = if($argv[1] == $argv[2])"
+r.mapcalc "del.me.2 = if($argv[1] == $argv[3])"
+r.grow in=del.me.1 out=del.me.1g
+r.grow in=del.me.2 out=del.me.2g
+r.mapcalc "del.me = if(del.me.1g && del.me.2g)"
+r.mapcalc "del.me = if(del.me.1 && del.me)"
+#r.thin in=del.me out=del.me
+r.line in=del.me out=$argv[4]
+g.remove rast=del.me,del.me.1,del.me.2,del.me.1g,del.me.2g > callate
+\rm callate
+v.support map=$argv[4]
+echo "Result edge vector map: $argv[4]. Ready."
