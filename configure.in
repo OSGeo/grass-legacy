@@ -147,6 +147,7 @@ LOC_ARG_WITH(gd, GD)
 LOC_ARG_WITH(tcltk, Tcl/Tk)
 LOC_ARG_WITH(postgres, PostgreSQL)
 LOC_ARG_WITH(opengl, OpenGL)
+LOC_ARG_WITH(irisgl, SGI IRIS GL, no)
 LOC_ARG_WITH(odbc, ODBC)
 LOC_ARG_WITH(fftw, FFTW)
 LOC_ARG_WITH(blas, BLAS, no)
@@ -198,6 +199,9 @@ LOC_ARG_WITH_LIB(postgres, PostgreSQL)
 
 LOC_ARG_WITH_INC(opengl, OpenGL)
 LOC_ARG_WITH_LIB(opengl, OpenGL)
+
+LOC_ARG_WITH_INC(irisgl, SGI IRIS GL)
+LOC_ARG_WITH_LIB(irisgl, SGI IRIS GL)
 
 LOC_ARG_WITH_INC(odbc, ODBC)
 LOC_ARG_WITH_LIB(odbc, ODBC)
@@ -863,6 +867,36 @@ AC_SUBST(OPENGLULIB)
 
 # Done checking OpenGL
 
+# Enable SGI IRIS GL option
+
+LOC_CHECK_USE(irisgl,SGI IRIS GL,USE_GL)
+
+GLINC=
+GLLIB=
+
+if test -n "${USE_GL}"; then
+
+# With GL includes directory
+
+LOC_CHECK_INC_PATH(irisgl,SGI IRIS GL,GLINC)
+
+LOC_CHECK_INCLUDES(gl/gl.h gl/device.h,SGI IRIS GL,$GLINC)
+
+# With GL library directory
+
+LOC_CHECK_LIB_PATH(irisgl,SGI IRIS GL,GLLIBPATH)
+
+LOC_CHECK_LIBS(gl,bgncurve,SGI IRIS GL,$GLLIBPATH,GLLIB, -lsphere $MATHLIB -limage -lfm,,,)
+
+AC_DEFINE(USE_GL)
+
+fi # $USE_GL
+
+AC_SUBST(GLINC)
+AC_SUBST(GLLIB)
+
+# Done checking GL
+
 # Enable ODBC option
 
 LOC_CHECK_USE(odbc,ODBC,USE_ODBC)
@@ -1157,6 +1191,9 @@ LOC_OPTIONAL(FreeType programs,FREETYPE,FREETYPE,src/display/d.text.freetype)
 
 LOC_OPTIONAL(NLS support,NLS,NLS,locale)
 
+LOC_OPTIONAL(Panel Library,GL,PANELLIB,src.contrib/CERL/SGI/panel/9.6/src)
+LOC_OPTIONAL(SG3d,GL,SG3D,src.contrib/GMSL/SG3d)
+
 AC_MSG_CHECKING(whether to build FFTW programs)
 AC_MSG_RESULT()
 LOC_OPTIONAL(i.fft,FFTW,I_FFT,src/imagery/i.fft)
@@ -1204,6 +1241,7 @@ LOC_MSG_USE(GD support,USE_GD)
 LOC_MSG_USE(Tcl/Tk support,USE_TCLTK)
 LOC_MSG_USE(PostgreSQL support,USE_POSTGRES)
 LOC_MSG_USE(OpenGL(R) support,USE_OPENGL)
+LOC_MSG_USE(SGI IRIS GL support,USE_GL)
 LOC_MSG_USE(ODBC support,USE_ODBC)
 LOC_MSG_USE(FFTW support,USE_FFTW)
 LOC_MSG_USE(BLAS support,USE_BLAS)
