@@ -185,6 +185,9 @@ char *G_get_cell_title(char *, char *);
 int G_cell_stats_histo_eq(struct Cell_stats *, CELL, CELL, CELL, CELL, int,
     void (*)());
 
+/* chop.c */
+char *G_chop(char *);
+
 /* clear_scrn.c */
 int G_clear_screen(void);
 
