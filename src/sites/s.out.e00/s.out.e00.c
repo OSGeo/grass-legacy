@@ -81,10 +81,12 @@ int main( int argc, char *argv[])
     strncpy( name, infile, 27);
     for (p=name; *p; p++) {
 	if (!isalnum( *p))
+	{
 	    if (p == name)
 		*p = 'X';
 	    else
 		*p = 0;
+	}
     }
     G_toucase( name);
 
