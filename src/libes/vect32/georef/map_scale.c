@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <math.h>
-#include "dig_inter.h"
-#include "digit.h"
 #include "libtrans.h"
-#include "dig_head.h"
+#include "Vect.h"
 
 static  double  scale ;
 

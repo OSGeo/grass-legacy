@@ -3,10 +3,8 @@
 #include "display.h"
 #include "lock.h"
 #include "gis.h"
-#include "dig_head.h"
-#include "dig_inter.h"
-#include "digit.h"
-#include    "georef.h"
+#include "Vect.h"
+#include "georef.h"
 
 int geo_point_main(char  *control_file,char *point_file )
 {
