@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include "glocale.h"
 #include "gis.h"
 #include "Vect.h"
 #include "sw_defs.h"
@@ -34,6 +35,8 @@ main (int argc, char **argv)
   struct Option *in_opt, *out_opt;
   struct GModule *module;
   struct line_pnts *Points;
+  struct line_cats *Cats;
+  int nareas, area;
 
   G_gisinit (argv[0]);
 
@@ -62,6 +65,7 @@ main (int argc, char **argv)
   All = all_flag->answer;
 
   Points = Vect_new_line_struct ();
+  Cats = Vect_new_cats_struct();
 
   /* open files */
   if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
@@ -95,6 +99,31 @@ main (int argc, char **argv)
 
   Vect_close ( &In );
 
+  Vect_build_partial ( &Out, GV_BUILD_ATTACH_ISLES, NULL );
+
+  nareas = Vect_get_num_areas ( &Out );
+  G_debug ( 3, "nareas = %d", nareas );
+  for ( area = 1; area <= nareas; area++ ) {
+      double x, y;
+      int ret;
+
+      Vect_reset_line ( Points );
+      Vect_reset_cats ( Cats );
+      
+      ret = Vect_get_point_in_area ( &Out, area, &x, &y );
+
+      if ( ret < 0 ) {
+	  G_warning ( _("Cannot calculate area centroid") );
+	  continue;
+      }
+      
+      Vect_append_point ( Points, x, y, 0.0 );
+      Vect_cat_set ( Cats, 1, area );
+      
+      Vect_write_line ( &Out, GV_CENTROID, Points, Cats );
+  }
+
+  Vect_build_partial ( &Out, GV_BUILD_NONE, NULL );
   Vect_build ( &Out, stderr );
   Vect_close ( &Out );
 

@@ -21,7 +21,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <math.h>
+#include "glocale.h"
 #include "gis.h"
+#include "dbmi.h"
 #include "Vect.h"
 #include "sw_defs.h"
 #include "defs.h"
@@ -68,11 +70,12 @@ int cmp ( void *a, void *b ) {
 int 
 main (int argc, char **argv)
 {
-  int i;
+  int i, *cats, ncats, acats;
   char *mapset;
   struct Flag *line_flag;
   /* struct Flag *all_flag; */
   struct Option *in_opt, *out_opt;
+  struct Flag *table_flag;
   struct GModule *module;
   struct line_pnts *Points;
   struct line_cats *Cats;
@@ -97,6 +100,10 @@ main (int argc, char **argv)
   line_flag = G_define_flag ();
   line_flag->key = 'l';
   line_flag->description = "Output triangulation as a graph (lines), not areas";
+
+  table_flag = G_define_flag ();
+  table_flag->key             = 't';
+  table_flag->description     = "Do not create attribute table.";
 
   if (G_parser (argc, argv))
     exit (1);
@@ -198,18 +205,57 @@ main (int argc, char **argv)
   free (coor);
 
   /* Copy input points as centroids */
+  cats = NULL;
+  ncats = acats = 0;
   if ( 1 ) {
       int line, nlines, type;
   
       nlines = Vect_get_num_lines ( &In );
 
       for ( line = 1; line <= nlines; line++ ) {
-	  type = Vect_read_line ( &In, Points, NULL, line );
+	  type = Vect_read_line ( &In, Points, Cats, line );
 	  if ( !(type & GV_POINTS ) ) continue;
 
+	  if ( !Vect_point_in_box ( Points->x[0], Points->y[0], 0.0, &Box) ) continue;
+
 	  Vect_write_line ( &Out, GV_CENTROID, Points, Cats );
+
+	  for ( i = 0; i < Cats->n_cats; i++ ) {
+	      if ( Cats->field[i] == 1 ) {
+		  if ( ncats == acats ) {
+		      acats += 1000;
+		      cats = (int *) G_realloc ( cats, acats * sizeof(int) );
+		  }
+		  cats[ncats] = Cats->cat[i];
+		  ncats++;
+	      }
+	  }
       }
+
   }
+
+  /* Copy table */
+  if ( !(table_flag->answer)) {
+      int ret;
+      struct field_info *IFi, *OFi;
+
+      IFi = Vect_get_field( &In, 1);
+      
+      if ( IFi != NULL ) {
+          OFi = Vect_default_field_info ( &Out, 1, NULL, GV_1TABLE );
+      
+          ret = db_copy_table_by_ints ( IFi->driver, IFi->database, IFi->table, OFi->driver, 
+	                  Vect_subst_var(OFi->database,&Out), OFi->table, IFi->key, cats, ncats );
+
+	  if ( ret == DB_FAILED ) {
+	      G_warning ( _("Cannot copy table") );
+	  } else {
+	      Vect_map_add_dblink ( &Out, 1, NULL, OFi->table, IFi->key, OFi->database, OFi->driver);
+	  }
+
+      }	  
+  }
+	  
 
   Vect_close ( &In );
   Vect_build ( &Out, stderr );
