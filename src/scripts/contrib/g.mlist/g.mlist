@@ -13,7 +13,10 @@
 #
 #
 # $Log$
-# Revision 1.3  2000-11-01 17:14:25  cho
+# Revision 1.4  2000-11-22 09:11:10  cho
+# updated
+#
+# Revision 1.3  2000/11/01 17:14:25  cho
 # nothing :-)
 #
 # Revision 1.2  2000/11/01 17:12:03  cho
@@ -22,6 +25,17 @@
 # Revision 1.1  2000/08/21 20:27:15  cho
 # added g.mlist
 #
+
+program=`basename $0`
+
+if [ ! "$GISBASE" ]
+then
+	echo
+	echo "ERROR: must be in GRASS to use $program"
+	echo
+	exit 1
+fi
+
 
 type=rast
 
