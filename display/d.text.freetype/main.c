@@ -232,7 +232,6 @@ main(int argc, char **argv)
 			FT_Done_Face(face);
 			FT_Done_FreeType(library);
 			R_close_driver();
-			G_free(out);
 			exit(1);
 		}
 		east  = D_d_to_u_col((double)x);
@@ -283,8 +282,6 @@ main(int argc, char **argv)
 		x += face->glyph->advance.x >> 6;
 		y += face->glyph->bitmap_top;
 	}
-
-	G_free(out);
 
 	if (opt2->answer)
 		D_add_to_list(G_recreate_command());
