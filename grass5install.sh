@@ -4,7 +4,7 @@
 # platform indendent
 
 # $Id$
-# Version 9
+# Version 10
 # 1999-2000 by Markus Neteler, neteler@geog.uni-hannover.de
 
 ######################################################
@@ -132,7 +132,7 @@ chmod ugo+x $BINDIR/grass5.0beta
 
 
 echo "Creating the locks directory for monitors..."
-SERVERNAME=`uname -n`
+SERVERNAME=`uname -n | sed -e "s/\..*//"`
 rm -rf $DESTDIR/locks/*
 mkdir $DESTDIR/locks/$SERVERNAME
 chmod -R 1777 $DESTDIR/locks
