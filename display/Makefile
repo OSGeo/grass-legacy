@@ -8,9 +8,7 @@ SUBDIRS = \
 	d.colorlist \
 	d.colors \
 	d.colortable \
-	d.dm \
 	d.erase \
-	d.extend \
 	d.font \
 	d.frame \
 	d.geodesic \
