@@ -1,5 +1,6 @@
 #include "gis.h"
 
+
 static struct table
 {
     char *name;
@@ -21,50 +22,81 @@ G_get_ellipsoid_parameters (a, e2)
 {
     FILE *fd;
     char buf1[100], buf2[100];
-    int stat;
-    char err[1024];
-
-    static char *ELLIPSOID = "ELLIPSOID";
+    int stat, in_stat;
+    char err[1024], ipath[1024], buffa[100], *str, *str1;
+    struct Key_Value *proj_keys;
     static char *PERMANENT = "PERMANENT";
-    if (G_find_file ("", ELLIPSOID, PERMANENT) == NULL)
+
+
+    G__file_name (ipath, "", PROJECTION_FILE, PERMANENT);
+    if (access(ipath,0) !=0) 
     {
 	*a = 6378137.0 ;
 	*e2 = .006694385 ;
 	return 0;
     }
-    fd = G_fopen_old ("", ELLIPSOID, PERMANENT);
-    if (fd == NULL)
+    proj_keys = G_read_key_value_file(ipath, &in_stat); 
+    if (in_stat !=0)
     {
-	sprintf (err, "Unable to open file %s in %s", ELLIPSOID, PERMANENT);
+	sprintf (err, "Unable to open file %s in %s",PROJECTION_FILE,PERMANENT);
 	G_fatal_error (err);
     }
-    stat = fscanf (fd, "%s %s", buf1, buf2);
-    fclose (fd);
-    switch (stat)
-    {
-    case 1:
-	read_ellipsoid_table(1);
-	if (G_get_ellipsoid_by_name (buf1, a, e2))
-	    return 1;
-	sprintf (err, "%s in %s: %s - unknown ellipsoid",
-		    ELLIPSOID, PERMANENT, buf1);
-	G_fatal_error (err);
-	exit(-1); /*NOTREACHED*/
+    if ((str = G_find_key_value("ellps",proj_keys))!=NULL) {
+      if (strncmp(str,"sphere",6)==0) { 
+        str = G_find_key_value("a",proj_keys); 
+        if (str!=NULL)  {
+          if(sscanf(str,"%lf",a)!=1) {
+	    sprintf (err, "invalid a: field %s in file %s in %s"
+                              ,str,PROJECTION_FILE,PERMANENT);
+	    G_fatal_error (err);
+          }
+        }
+        else {
+	  *a = 6370997.0 ;
+        }
+	*e2 = 0.0 ;
+	return 0;
+      }
+      else {
+        if (G_get_ellipsoid_by_name (str, a, e2)==0) {
+	  sprintf (err, "invalid ellipsoid %s in file %s in %s"
+                              ,str,PROJECTION_FILE,PERMANENT);
+	  G_fatal_error (err);
+        }
+        else return 1;
+      }
+    }
+    else {
+      str = G_find_key_value("a",proj_keys); 
+      str1 = G_find_key_value("es",proj_keys); 
+      if ((str!=NULL) && (str1!=NULL)) {
+        if(sscanf(str,"%lf",a)!=1) {
+	  sprintf (err, "invalid a: field %s in file %s in %s"
+                            ,str,PROJECTION_FILE,PERMANENT);
+	  G_fatal_error (err);
+        }
+        if(sscanf(str,"%lf",e2)!=1) {
+	  sprintf (err, "invalid es: field %s in file %s in %s"
+                            ,str,PROJECTION_FILE,PERMANENT);
+	  G_fatal_error (err);
+        }
+        return 1;
+      }
+      else { 
+        str = G_find_key_value("proj",proj_keys); 
+        if ((str==NULL)||(strcmp(str,"ll")==0)) { 
+  	  *a = 6378137.0 ;
+	  *e2 = .006694385 ;
+	  return 0;
+        }
+        else {
+ 	  sprintf (err, "No ellipsoid info given in file %s in %s",
+                                        PROJECTION_FILE,PERMANENT);
+	  G_fatal_error (err);
+        }
+      }
+    }
 
-    case 2:
-	if (get_a_e2 (buf1, buf2, a, e2) || get_a_e2 (buf2, buf1, a, e2))
-	    return 1;
-	sprintf (err, "%s in %s: %s %s - illegal ellipsoid specified",
-		    ELLIPSOID, PERMANENT, buf1, buf2);
-	G_fatal_error (err);
-	exit(-1); /*NOTREACHED*/
-    
-    default:
-	sprintf (err, "%s in %s - illegal file format", ELLIPSOID, PERMANENT);
-	G_fatal_error (err);
-	exit(-1); /*NOTREACHED*/
-    }
-/*NOTREACHED*/
 }
 
 /*
