@@ -369,8 +369,8 @@ compareFilesNocache (map, map2)
     for (y = 0; y < ny * tileY; y++) {
       for (x = 0; x < nx * tileX; x++) {
 
-	G3d_getBlock (map, x, y, z, 1, 1, 1, n1p, typeIntern);
-	G3d_getBlock (map2, x, y, z, 1, 1, 1, n2p, typeIntern2);
+	G3d_getBlock (map, x, y, z, 1, 1, 1, (char *)n1p, typeIntern);
+	G3d_getBlock (map2, x, y, z, 1, 1, 1, (char *)n2p, typeIntern2);
 
 	if (typeIntern == G3D_FLOAT)
 	  if (typeIntern2 == G3D_FLOAT)
@@ -388,7 +388,7 @@ compareFilesNocache (map, map2)
 
 	  G3d_coord2tileCoord (map2, x, y, z, &xTile, &yTile, &zTile, 
 			       &xOffs, &yOffs, &zOffs);
-	  printf ("(%d %d %d) (%d %d %d) (%d %d %d) %.20lf %.20lf\n", 
+	  printf ("(%d %d %d) (%d %d %d) (%d %d %d) %.20f %.20f\n", 
 		  x, y, z, xTile, yTile, zTile, xOffs, yOffs, zOffs,
 		  *n1p, *n2p);
 	  G3d_fatalError ("compareFilesNocache: files don't match\n");
@@ -476,8 +476,8 @@ G3d_compareFiles (f1, mapset1, f2, mapset2)
 
     for (y = 0; y < rows; y++)
       for (x = 0; x < cols; x++) {
-	G3d_getValueRegion (map, x, y, z, n1p, typeIntern);
-	G3d_getValueRegion (map2, x, y, z, n2p, typeIntern2);
+	G3d_getValueRegion (map, x, y, z, (char *)n1p, typeIntern);
+	G3d_getValueRegion (map2, x, y, z, (char *)n2p, typeIntern2);
 
 	G3d_isNullValueNum (n1p, typeIntern);
 	G3d_isNullValueNum (n2p, typeIntern2);

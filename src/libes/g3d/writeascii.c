@@ -37,12 +37,12 @@ G3d_writeAscii (map, fname)
     for (y = 0; y < rows; y++) {
       fprintf (fp, "z y x %d %d (%d - %d)\n", z, y, 0, cols - 1);
       for (x = 0; x < cols; x++) {
-	G3d_getValueRegion (map, x, y, z, d1p, typeIntern);
+	G3d_getValueRegion (map, x, y, z, (char *)d1p, typeIntern);
 	
 	if (typeIntern == G3D_FLOAT)
 	  fprintf (fp, "%.18f ", *f1p);
 	else
-	  fprintf (fp, "%.50lf ", d1);
+	  fprintf (fp, "%.50f ", d1);
       }
       fprintf (fp, "\n");
     }

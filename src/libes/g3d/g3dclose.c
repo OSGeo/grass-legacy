@@ -82,7 +82,7 @@ G3d_closeCellNew (map)
     return 0;
   }
     
-  G3d_longEncode (&(map->indexOffset), &ltmp, 1);
+  G3d_longEncode (&(map->indexOffset), (unsigned char *)&ltmp, 1);
   if (write (map->data_fd, &ltmp, sizeof (long)) != sizeof (long)) {
     G3d_error ("G3d_closeCellNew: can't write header");
     return 0;
