@@ -11,10 +11,6 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	char north[30], south[30], east[30], west[30], nsres[30], ewres[30];
 	/* BOB */
 	double EW_DIST1, EW_DIST2, NS_DIST1, NS_DIST2;
-	struct Key_Value *in_proj_info, *in_unit_info; /* projection information of input map */
-	struct Key_Value *out_proj_info, *out_unit_info;
-	struct pj_info iproj;    /* input map proj parameters  */
-	struct pj_info oproj;    /* output map proj parameters  */
 	double longitude, latitude;
 	double lo1,la1,lo2,la2,lo3,la3,lo4,la4; /* for map center in lat/long */
 	double mid_n_lo,mid_n_la,mid_s_lo,mid_s_la,mid_w_lo,mid_w_la,mid_e_lo,mid_e_la;
@@ -79,7 +75,10 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	 /* if coordinates are not in lat/long format, transform them: */
 	 if ((G_projection() != PROJECTION_LL) && window->proj != 0)
 	 {
-	    double a, es;
+	    struct Key_Value *in_proj_info, *in_unit_info; /* projection information of input map */
+	    struct pj_info iproj;    /* input map proj parameters  */
+	    struct pj_info oproj;    /* output map proj parameters  */
+	    
 	   /* read current projection info */
 	    if ((in_proj_info = G_get_projinfo()) == NULL)
 	       G_fatal_error("Can't get projection info of current location");
@@ -90,29 +89,15 @@ int print_window(struct Cell_head *window,int print_flag, int dist_flag)
 	    if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
 	       G_fatal_error("Can't get projection key values of current location");
 	
-	   /* set output projection to lat/long w/ same ellipsoid as input */
-            out_proj_info = G_create_key_value();
-            out_unit_info = G_create_key_value();
-	    
-            G_set_key_value("proj", "ll", out_proj_info);
-
-            G_get_ellipsoid_parameters(&a, &es);
-            sprintf(buf, "%.16g", a);
-            G_set_key_value("a", buf, out_proj_info);
-            sprintf(buf, "%.16g", es);
-            G_set_key_value("es", buf, out_proj_info);
-	    
-            G_set_key_value("unit", "degree", out_unit_info);
-            G_set_key_value("units", "degrees", out_unit_info);
-            G_set_key_value("meters", "1.0", out_unit_info);
-	    
-	    if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
-	       G_fatal_error("Unable to set up lat/long projection parameters");            
-	
             G_free_key_value( in_proj_info );
             G_free_key_value( in_unit_info );
-            G_free_key_value( out_proj_info );
-            G_free_key_value( out_unit_info );
+	
+	   /* set output projection to lat/long w/ same ellipsoid as input */
+	    oproj.zone = 0;
+	    oproj.meters = 1.;
+	    sprintf(oproj.proj, "ll");
+	    if ((oproj.pj = pj_latlong_from_proj(iproj.pj)) == NULL)
+	       G_fatal_error("Unable to set up lat/long projection parameters");            
 	    
 	   /* do the transform
 	    * syntax: pj_do_proj(outx, outy, in_info, out_info) 

@@ -420,8 +420,6 @@ int main(int argc, char *argv[])
     if (latin == NULL && lt == NULL && (G_projection() != PROJECTION_LL)) {
 
 	struct Key_Value *in_proj_info, *in_unit_info;
-	struct Key_Value *out_proj_info, *out_unit_info;
-	double a, es;
 	char buf[50];
 
 	if ((in_proj_info = G_get_projinfo()) == NULL)
@@ -435,29 +433,16 @@ int main(int argc, char *argv[])
 	    G_fatal_error
 		("Can't get projection key values of current location");
 
-	/* Set output projection to latlong w/ same ellipsoid */
-	out_proj_info = G_create_key_value();
-	out_unit_info = G_create_key_value();
-
-	G_set_key_value("proj", "ll", out_proj_info);
-
-	G_get_ellipsoid_parameters(&a, &es);
-	sprintf(buf, "%.16g", a);
-	G_set_key_value("a", buf, out_proj_info);
-	sprintf(buf, "%.16g", es);
-	G_set_key_value("es", buf, out_proj_info);
-
-	G_set_key_value("unit", "degree", out_unit_info);
-	G_set_key_value("units", "degrees", out_unit_info);
-	G_set_key_value("meters", "1.0", out_unit_info);
-
-	if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
-	    G_fatal_error("Unable to set up lat/long projection parameters");
-
 	G_free_key_value(in_proj_info);
 	G_free_key_value(in_unit_info);
-	G_free_key_value(out_proj_info);
-	G_free_key_value(out_unit_info);
+
+	/* Set output projection to latlong w/ same ellipsoid */
+	oproj.zone = 0;
+	oproj.meters = 1.;
+	sprintf(oproj.proj, "ll");
+	if ((oproj.pj = pj_latlong_from_proj(iproj.pj)) == NULL)
+	    G_fatal_error("Unable to set up lat/long projection parameters");
+       
     }
 
 /**********end of parser - ******************************/
