@@ -1,0 +1,10 @@
+PGM = Xchoose
+OFILES =  choose_win.o 
+
+LIBES = $(GISLIB) $(XDISPLAYLIB)
+
+$(BIN)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) -lX11
+
+
+$(LIBES):	#
