@@ -179,7 +179,7 @@ remove_dangles ( struct Map_info *Map, int type, int chtype, double maxlength, s
 		length += Vect_line_length ( Points );
 	    }
 
-	    if ( maxlength < 0 || length < maxlength ) { // delete the chain
+	    if ( maxlength < 0 || length < maxlength ) { /* delete the chain */
 		G_debug (3, "  delete the chain" );
 		
 		for ( i = 0; i < List->n_values; i++) {
