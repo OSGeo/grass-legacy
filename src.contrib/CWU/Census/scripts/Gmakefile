@@ -1,0 +1,28 @@
+LIB = $(LIBDIR)/libcoorcnv.a
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+SCRIPTS = $(GISBASE)/scripts
+
+all:	$(SCRIPTS)/Gen.Vect.sh  \
+	$(SCRIPTS)/Gen.bgs.sh \
+	$(SCRIPTS)/stf1.labels.sh
+
+$(SCRIPTS)/Gen.Vect.sh: Gen.Vect.sh
+	rm -f $(SCRIPTS)/Gen.Vect.sh
+	cp Gen.Vect.sh $(SCRIPTS)/Gen.Vect.sh
+	chmod +x $(SCRIPTS)/Gen.Vect.sh
+
+$(SCRIPTS)/Gen.bgs.sh: Gen.bgs.sh
+	rm -f $(SCRIPTS)/Gen.bgs.sh
+	cp Gen.bgs.sh $(SCRIPTS)/Gen.bgs.sh
+	chmod +x $(SCRIPTS)/Gen.bgs.sh
+
+$(SCRIPTS)/stf1.labels.sh: stf1.labels.sh
+	rm -f $(SCRIPTS)/stf1.labels.sh
+	cp stf1.labels.sh $(SCRIPTS)/stf1.labels.sh
+	chmod +x $(SCRIPTS)/stf1.labels.sh
+
+$(LIB): # in case LIB changes
+$(GISLIB): #
+$(VECTLIB): #
+$(DIG_ATTLIB): #
