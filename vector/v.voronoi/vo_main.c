@@ -70,7 +70,8 @@ int cmp ( void *a, void *b ) {
 int 
 main (int argc, char **argv)
 {
-  int i, *cats, ncats, acats;
+  int i;
+  int **cats, *ncats, nfields, *fields;
   char *mapset;
   struct Flag *line_flag;
   /* struct Flag *all_flag; */
@@ -205,14 +206,23 @@ main (int argc, char **argv)
   free (coor);
 
   /* Copy input points as centroids */
-  cats = NULL;
-  ncats = acats = 0;
+  nfields = Vect_cidx_get_num_fields ( &In );
+  cats = (int **) G_malloc ( nfields * sizeof(int *) );
+  ncats = (int *) G_malloc ( nfields * sizeof(int) );
+  fields = (int *) G_malloc ( nfields * sizeof(int) );
+  for ( i = 0; i < nfields; i++ ) {
+    ncats[i] = 0;
+    cats[i] = (int *) G_malloc ( Vect_cidx_get_num_cats_by_index(&In,i) * sizeof(int) );
+    fields[i] = Vect_cidx_get_field_number ( &In, i );
+  }
+
   if ( 1 ) {
       int line, nlines, type;
   
       nlines = Vect_get_num_lines ( &In );
 
       for ( line = 1; line <= nlines; line++ ) {
+	  
 	  type = Vect_read_line ( &In, Points, Cats, line );
 	  if ( !(type & GV_POINTS ) ) continue;
 
@@ -220,40 +230,75 @@ main (int argc, char **argv)
 
 	  Vect_write_line ( &Out, GV_CENTROID, Points, Cats );
 
+	  
 	  for ( i = 0; i < Cats->n_cats; i++ ) {
-	      if ( Cats->field[i] == 1 ) {
-		  if ( ncats == acats ) {
-		      acats += 1000;
-		      cats = (int *) G_realloc ( cats, acats * sizeof(int) );
-		  }
-		  cats[ncats] = Cats->cat[i];
-		  ncats++;
-	      }
+		int f, j; 
+		for ( j = 0; j < nfields; j++ ) { /* find field */
+	    	    if ( fields[j] == Cats->field[i] ) {
+			f = j;
+			break;
+		    }
+		}
+		cats[f][ncats[f]] = Cats->cat[i];
+		ncats[f]++;
 	  }
       }
 
   }
 
-  /* Copy table */
+  /* Copy tables */
   if ( !(table_flag->answer)) {
-      int ret;
-      struct field_info *IFi, *OFi;
+        int ttype, ntabs=0;
+        struct field_info *IFi, *OFi;
 
-      IFi = Vect_get_field( &In, 1);
-      
-      if ( IFi != NULL ) {
-          OFi = Vect_default_field_info ( &Out, 1, NULL, GV_1TABLE );
-      
-          ret = db_copy_table_by_ints ( IFi->driver, IFi->database, IFi->table, OFi->driver, 
-	                  Vect_subst_var(OFi->database,&Out), OFi->table, IFi->key, cats, ncats );
+	/* Number of output tabs */
+	for ( i = 0; i < Vect_get_num_dblinks ( &In ); i++ ) {
+	    int f, j;
+	    
+	    IFi = Vect_get_dblink ( &In, i );
+	    
+	    for ( j = 0; j < nfields; j++ ) { /* find field */
+	    	if ( fields[j] == IFi->number ) {
+		    f = j;
+		    break;
+		}
+	    }
+	    if ( ncats[f] > 0 ) ntabs++;
+	}
+	
+	if ( ntabs > 1 )
+	    ttype = GV_MTABLE;
+	else 
+	    ttype = GV_1TABLE;
+	
+	for ( i = 0; i < nfields; i++ ) {
+	    int ret;
 
-	  if ( ret == DB_FAILED ) {
-	      G_warning ( _("Cannot copy table") );
-	  } else {
-	      Vect_map_add_dblink ( &Out, 1, NULL, OFi->table, IFi->key, OFi->database, OFi->driver);
-	  }
+	    if ( fields[i] == 0 ) continue;
+	
+	    G_message ( "Layer %d", fields[i] );
 
-      }	  
+	    /* Make a list of categories */
+	    IFi = Vect_get_field ( &In, fields[i] );
+	    if ( !IFi ) { /* no table */
+		G_message ( "No table." );
+		continue;
+	    }
+	    
+	    OFi = Vect_default_field_info ( &Out, IFi->number, IFi->name, ttype );
+
+	    ret = db_copy_table_by_ints ( IFi->driver, IFi->database, IFi->table,
+				  OFi->driver, Vect_subst_var(OFi->database,&Out), OFi->table,
+				  IFi->key, cats[i], ncats[i] );
+
+	    if ( ret == DB_FAILED ) {
+		G_warning ( _("Cannot copy table") );
+	    } else {
+		Vect_map_add_dblink ( &Out, OFi->number, OFi->name, OFi->table, 
+				      IFi->key, OFi->database, OFi->driver);
+	    }
+	    G_message ( "Done." );
+	}
   }
 	  
 
