@@ -3,6 +3,6 @@ LIBES  = $(DISPLAYLIB) $(RASTERLIB) $(VECTLIB) $(GISLIB) $(DATETIMELIB)
 LIST   = main.o
 
 $(BIN_MAIN_CMD)/d.extend: $(LIST) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(LIBES): #
