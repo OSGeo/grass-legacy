@@ -123,16 +123,25 @@ G_northing_to_row (north, window)
     return (window->north - north) / window->ns_res;
 }
 
+double G_adjust_east_longitude (east, west)
+    double east, west;
+{
+    while (east > west + 360.0)
+	east -=360.0;
+    while (east <= west)
+	east += 360.0;
+    return east;
+}
+
 double G_adjust_easting (east, window)
     double east;
     struct Cell_head *window;
 {
     if (window->proj == PROJECTION_LL)
     {
-	while (east > window->west + 360.0)
-	    east -=360.0;
-	while (east < window->west)
-	    east += 360.0;
+	east = G_adjust_east_longitude(east, window->west);
+	if (east > window->east && east == window->west + 360)
+	    east = window->west;
     }
     return east;
 }
