@@ -27,11 +27,17 @@ make_procs (void)
     /* exch sub operator */
     fprintf(PS.fp, "/XS {exch sub} BD\n");
 
+    /* newpath operator */
+    fprintf(PS.fp, "/NP {newpath} BD\n");
+
     /* newpath moveto operator */
     fprintf(PS.fp, "/NM {newpath moveto} BD\n");
 
     /* moveto operator */
     fprintf(PS.fp, "/M {moveto} BD\n");
+
+    /* closepath operator */
+    fprintf(PS.fp, "/CP {closepath} BD\n");
 
     /* closepath fill operator */
     fprintf(PS.fp, "/CF {closepath fill} BD\n");
