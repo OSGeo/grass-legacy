@@ -247,10 +247,9 @@ char *argv[];
 	 * for ATT */
 	/* setpgrp(0, getpid()); */
 	/* setpgid(0, getpid()); */
+
+        /* only FIFO? */
 	   setsid();
-/* FIFO
-	setsid();
-*/
     }                           /* monitor runs */
 #ifdef SIGPIPE
     signal(SIGPIPE, catch);
