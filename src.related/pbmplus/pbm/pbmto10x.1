@@ -1,0 +1,30 @@
+.TH pbmto10x 1 "1 January 1990"
+.SH NAME
+pbmto10x - convert a portable bitmap into Gemini 10X printer graphics
+.SH SYNOPSIS
+.B pbmto10x
+.RB [ -h ]
+.RI [ pbmfile ]
+.SH DESCRIPTION
+Reads a portable bitmap as input.
+Produces a file of Gemini 10X printer graphics as output.
+The 10x's printer codes are alleged to be similar to the Epson codes.
+.PP
+Note that there is no 10xtopbm tool - this transformation is one way.
+.SH OPTIONS
+.PP
+The resolution is normally 60H by 72V.
+If the
+.B -h
+flag is specified, resolution is 120H by 144V.
+You may find it useful to rotate landscape images before printing.
+.SH "SEE ALSO"
+pbm(5)
+.SH AUTHOR
+Copyright (C) 1990 by Ken Yap
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
