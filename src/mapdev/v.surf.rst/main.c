@@ -109,6 +109,7 @@ char *Tmp_file_xy = NULL;
 
 double gmin, gmax, c1min, c1max, c2min, c2max, fi, rsm;
 double xmin, xmax, ymin, ymax, zmin, zmax;
+double theta, scalex;
 
 struct BM *bitmask;
 struct Cell_head cellhd;
@@ -134,7 +135,7 @@ int main ( int argc, char *argv[])
   {
     struct Option *input, *elev, *slope, *aspect, *pcurv, *tcurv, *mcurv, *treefile,
     *overfile, *maskmap, *dmin, *dmax, *zmult, *fi, *rsm, *segmax, *npmin,
-    *devi;
+    *devi,*theta, *scalex;
   } parm;
   struct
   {
@@ -326,6 +327,18 @@ int main ( int argc, char *argv[])
   parm.npmin->required = NO;
   parm.npmin->description = "Min number of points for interpolation(>segmax)";
 
+  parm.theta = G_define_option ();
+  parm.theta ->key = "theta";
+  parm.theta ->type = TYPE_DOUBLE;
+  parm.theta ->required = NO;
+  parm.theta ->description = "Anisotropy angle (in degrees)";
+
+  parm.scalex = G_define_option ();
+  parm.scalex ->key = "scalex";
+  parm.scalex ->type = TYPE_DOUBLE;
+  parm.scalex ->required = NO;
+  parm.scalex ->description = "Anisotropy scaling factor";
+
   parm.treefile = G_define_option ();
   parm.treefile->key = "treefile";
   parm.treefile->type = TYPE_STRING;
@@ -378,6 +391,15 @@ int main ( int argc, char *argv[])
   sscanf (parm.segmax->answer, "%d", &KMAX);
   sscanf (parm.npmin->answer, "%d", &npmin);
   sscanf (parm.zmult->answer, "%lf", &zmult);
+
+  if(parm.theta->answer)
+  sscanf (parm.theta->answer, "%lf", &theta);
+
+  if(parm.scalex->answer) {
+  sscanf (parm.scalex->answer, "%lf", &scalex);
+        if (!parm.theta->answer)
+        G_fatal_error("Using anisotropy - both theta and scalex have to be specified");
+        }
 
   if (npmin > MAXPOINTS - 50)
     KMAX2 = npmin + 50;
@@ -597,8 +619,7 @@ int main ( int argc, char *argv[])
 
   IL_init_params_2d (&params, NULL, 1, 1, zmult, KMIN, KMAX, maskmap, n_rows, n_cols,
 	  az, adx, ady, adxx, adyy, adxy, fi, KMAX2, SCIK1, SCIK2, SCIK3,
-		     rsm, elev, slope, aspect, pcurv, tcurv, mcurv, dmin, x_orig, y_orig, deriv,
-		     0.0, 0.0,
+		     rsm, elev, slope, aspect, pcurv, tcurv, mcurv, dmin, x_orig, y_orig, deriv,theta, scalex,
 		     Tmp_fd_z, Tmp_fd_dx, Tmp_fd_dy, Tmp_fd_xx, Tmp_fd_yy, Tmp_fd_xy, fddevi, inhead.time);
 
   IL_init_func_2d (&params, IL_grid_calc_2d, IL_matrix_create, IL_check_at_points_2d,
