@@ -116,6 +116,7 @@
 
 /* define if postgres exists */
 #undef HAVE_POSTGRES
+#undef HAVE_POSTGRES_H
 
 /* Whether or not we are using G_socks for display communications */
 #undef USE_G_SOCKS
