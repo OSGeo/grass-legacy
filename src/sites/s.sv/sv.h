@@ -26,7 +26,5 @@ char **cdpath(char *, int *, char *, char *);
 int nbins(double);
 /* plthgpt.c */
 int plot_hg_points(HGN *, int, int, char *);
-/* readsite.c */
-int readsites(FILE *, int, int, int, Z **);
 /* save.c */
 void save_plot(char *, char *);

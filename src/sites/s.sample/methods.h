@@ -11,16 +11,6 @@
 #define BILINEAR 2
 #define CUBIC 3
 
-#ifdef USE_OLD_CODE
-struct zstruct
-{
-  double x, y; 
-  char desc[80];
-};
-typedef struct zstruct Z;
-
-int readsites();
-#endif
 double nearest ();
 double bilinear ();
 double scancatlabel ();
