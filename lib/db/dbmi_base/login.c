@@ -4,7 +4,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "version.h"
 #include "gis.h"
 #include "dbmi.h"
 
@@ -27,7 +26,7 @@ login_filename( void )
 
     if ( !file ) {
 	file = (char *) malloc (1000);
-	sprintf ( file, "%s/.grasslogin%s", G_home(), GRASS_VERSION_MAJOR );    
+	sprintf ( file, "%s/.grasslogin6", G_home() );    
     }
     return file;
 }
