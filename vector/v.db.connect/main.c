@@ -103,8 +103,13 @@ int main (int argc, char **argv)
       
     G_debug ( 3, "Mapset = %s", mapset);
 
-    Vect_open_update ( &Map, inopt->answer, G_mapset());
-    Vect_hist_command ( &Map );
+    if (print->answer)
+      Vect_open_old ( &Map, inopt->answer, G_mapset());
+    else
+    {
+      Vect_open_update ( &Map, inopt->answer, G_mapset());
+      Vect_hist_command ( &Map );
+    }
 
     if (print->answer)
     {
@@ -122,7 +127,7 @@ int main (int argc, char **argv)
           driver = db_start_driver(fi->driver);
           if (driver == NULL)
               G_warning("Cannot open driver %s", fi->driver) ; /* error ? */
-          fprintf(stderr,"field <%d> table <%s> in database <%s> through driver <%s>\n", i, fi->table, fi->database, fi->driver);
+          fprintf(stderr,"field <%d> table <%s> in database <%s> through driver <%s> with key <%s>\n", i, fi->table, fi->database, fi->driver, fi->key);
         }
       } /* else */
 
@@ -162,7 +167,7 @@ int main (int argc, char **argv)
                G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted or overwritten by GRASS modules.", dbtable->answer, input);
          }
        }
-       else
+       else /* incomplete parameters given */
           G_fatal_error("For defining a new connection you have to specify these parameters: driver, database, table [, key [, field]]");
     } /* end define new dbln settings */
 
