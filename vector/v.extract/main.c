@@ -18,7 +18,6 @@
  *             for details.
  *
  * TODO:       - fix white space problems for file= option
- *             - copy only relevant rows of the table, not full table
  ****************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -64,11 +63,7 @@ int main (int argc, char **argv)
     dbDriver *driver;
     dbHandle handle;
 
-    /* TODO: remove orphaned centroids after dissolving common boundaries */
-    /* TODO: field number */
-
     /* set up the options and flags for the command line parser */
-
     module = G_define_module();
     module->description =
 	"Selects vector objects from an existing vector map and "
@@ -215,6 +210,9 @@ int main (int argc, char **argv)
     }
 
     type = Vect_option_to_types ( typopt );
+    if ( type & GV_AREA ) {
+	type |= GV_CENTROID;
+    }
     
     xtract_line( cat_count, cat_array, &In, &Out, new_cat, type, dissolve, field);
 
@@ -222,7 +220,32 @@ int main (int argc, char **argv)
         Vect_copy_table_by_cats ( &In, &Out, field, 1, NULL, GV_1TABLE, cat_array, cat_count );
 
     Vect_close (&In);
+
     Vect_build (&Out, stdout );
+
+    /* remove duplicate centroids */
+    if ( dissolve ) { 
+	int line, nlines, ltype, area;
+	
+	fprintf(stderr,"Removing duplicate centroids ..." );
+	nlines = Vect_get_num_lines ( &Out );
+	for ( line = 1; line <= nlines; line++) {
+	    if ( !Vect_line_alive ( &Out, line ) ) continue; /* should not happen */
+
+	    ltype = Vect_read_line ( &Out, NULL, NULL, line);
+	    if ( !(ltype & GV_CENTROID ) ) {
+	        continue;
+	    }
+	    area = Vect_get_centroid_area ( &Out, line );
+		
+	    if ( area < 0 ) {
+		Vect_delete_line ( &Out, line );
+	    }
+	}
+	Vect_build_partial ( &Out, GV_BUILD_NONE, NULL );
+	Vect_build ( &Out, stderr );
+    }
+    
     Vect_close (&Out);
 
     /* give the user this message  */
