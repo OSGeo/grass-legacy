@@ -1,0 +1,44 @@
+ISNULL	null.h	/^#define ISNULL(x)   G_is_null_value(x)$/
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+SETNULL	null.h	/^#define SETNULL(x)  G_set_null_value(x,1)$/
+area_ok	do_areas.c	/^area_ok(Map, index)$/
+begin_mapgraph	mapgraph.c	/^begin_mapgraph()$/
+begin_rasterization	raster.c	/^begin_rasterization(nrows, f)$/
+cell_dot	raster.c	/^cell_dot (x, y)$/
+char_dot	raster.c	/^char_dot (x, y)$/
+comp_double	do_areas.c	/^comp_double(i, j)$/
+compare	do_areas.c	/^compare (a, b)$/
+configure_plot	raster.c	/^configure_plot()$/
+cont	raster.c	/^cont (x, y)$/
+do_areas	do_areas.c	/^do_areas (Map, Points)$/
+do_lines	do_lines.c	/^do_lines (Map, Points)$/
+do_sites	do_sites.c	/^do_sites (Map, Points)$/
+end_mapgraph	mapgraph.c	/^end_mapgraph()$/
+get_area_label	label.c	/^get_area_label (Map, index, cat)$/
+get_line_label	label.c	/^get_line_label (Map, index, cat)$/
+get_site_label	label.c	/^get_site_label (Map, index, cat)$/
+getformat	getformat.c	/^getformat (Map)$/
+inform	inform.c	/^inform (msg)$/
+is_labeled	label.c	/^is_labeled (cat)$/
+line_ok	do_lines.c	/^line_ok (Map, index)$/
+mapgraph	mapgraph.c	/^mapgraph(x,y,n,polygon)$/
+mapgraph_line	mapgraph.c	/^mapgraph_line(x1,y1,x2,y2)$/
+mapgraph_polygon	mapgraph.c	/^mapgraph_polygon(x,y,n)$/
+mapgraph_polyline	mapgraph.c	/^mapgraph_polyline(x,y,n)$/
+mark_unlabeled	label.c	/^mark_unlabeled (cat)$/
+move	raster.c	/^move (x, y)$/
+output_raster	raster.c	/^output_raster (fd)$/
+plot_line	do_lines.c	/^plot_line (x, y, n)$/
+plot_points	do_sites.c	/^plot_points (x, y, n)$/
+raster_dot	raster.c	/^raster_dot(x,y)$/
+set_cat	raster.c	/^set_cat(x)$/
+short_dot	raster.c	/^short_dot (x, y)$/
+site_ok	do_sites.c	/^site_ok (Map, index)$/
+sort_areas	do_areas.c	/^sort_areas (Map, Points)$/
+start_clock	clock.c	/^start_clock (save)$/
+stop_clock	clock.c	/^stop_clock (save)$/
+uchar_dot	raster.c	/^uchar_dot (x, y)$/
+update_cats	support.c	/^update_cats(raster_name, vector_name, vector_mapse/
+update_colors	support.c	/^update_colors (raster_name)$/
+update_hist	support.c	/^update_hist(raster_name, vector_name, vector_mapse/
+vect_to_rast	vect2rast.c	/^vect_to_rast (vector_map, raster_map, nrows)$/

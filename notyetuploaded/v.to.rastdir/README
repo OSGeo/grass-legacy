@@ -1,0 +1,28 @@
+Apr 23, 1991.
+
+    This is a new version of v.to.rast.  It has the following features:
+
+    (1) It does not use a temporary file. Results go directly to the raster map.
+	It does this by making one or more passes thru the vector map,
+	rasterizing only a fixed number of rows (in memory, default 512),
+	writing these rows to the raster map, and then repeating for the
+	next set of rows, etc;
+
+    (2) The line drawing algorithm is better. The original version of v.to.rast
+	moved each line to the nearest grid-cell center before rasterizing.
+	This version more nearly reflects the actual path of the vector lines 
+	through the grid cells; and
+
+    (3) It works for lat/lon databases as well as planimetric databases.
+
+Nov 3, 1994
+	
+    This version uses null values instead of zeros as the "background"
+    It also rasterizes unlabeled areas using nulls instead of zeros.
+
+Nov 1999
+
+the cells where is the vector line have the value of line direction
+(as an aspect angle 0-360) instead of just 1. 
+see  vect2rast.c
+vect_to_rast (vector_map, raster_map, nrows, use_angles)
