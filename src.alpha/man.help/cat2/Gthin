@@ -1,0 +1,66 @@
+
+
+
+Gthin(2G)            GRASS Reference Manual             Gthin(2G)
+
+
+
+NAME
+     Gthin - Thins lines in cell files into new cell file
+
+SYNOPSIS
+     Gthin old_cell_file new_cell_file
+
+DESCRIPTION
+     Gthin assumes the input cell file contains linear features
+     on a no-data background.  It thins the linear features down
+     to lines of grid-cells representing the features.  The
+     results can be used to create a digit file by passing the
+     results through Gline.
+
+SEE ALSO
+     Gline - convert single-cell cell lines to vector lines
+
+AUTHOR
+     Jean Ezell, CERL
+
+BUGS
+     Gthin, when run on an already thinned files does not yeild
+     an identical output file as expected.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Printed 10/16/89                                                1
+
+
+
