@@ -1,0 +1,7 @@
+testlog1: main1.o log_write.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o log_write.o $(GISLIB)
+
+testlog2: main2.o log_depends.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o log_depends.o $(GISLIB)
+
+$(GISLIB): #
