@@ -1,55 +1,37 @@
-#include <stdio.h>
 #include "digit.h"
+#include "gis.h"
 
-extern int cur_category;
-
-do_sites (Map, header, Pnts)
-	struct Map_info *Map ;
-	struct Cell_head *header ;
-	struct  line_pnts  *Pnts ;  
+do_sites (Map, Points)
+    struct Map_info *Map;
+    struct line_pnts *Points;
 {
-    int at_line ;
-    int cat ;
-    double *yarr ;
-    double *xarr ;
-    int n_vert ;
-    int max_lines ;
-    int pkgs ;
-    int er ;
-    int  status ;
+    int nlines;
+    int index;
+    int count;
+    CELL cat;
 
-
-    pkgs = 0 ;
-    status = 0 ;
-
-    max_lines = V2_num_lines(Map) ;
-
-    for(at_line=1; at_line <= max_lines; at_line++)
+    nlines = V2_num_lines (Map);
+    for (count = 0, index = 1; index <= nlines; index++)
     {
-	if (Map->Line[at_line].type != DOT)
+	if (Map->Line[index].type != DOT)
 	    continue;
-
-	cur_category = V2_line_att( Map, at_line) ;
-
-	if ( ! cur_category)
-		continue ;
-
-	if (0 > V2_read_line ( Map, Pnts, at_line)) 
-		return(-1) ;
-
-	pkgs++ ;
-
-/*  break out x and y  */
-	n_vert = Pnts->n_points ;
-	xarr = Pnts->x ;
-	yarr = Pnts->y ;
-
-    /*  convert utm's to row & col  */
-	translate (xarr, yarr, n_vert) ;
-
-	find_line (n_vert, xarr, yarr) ;
-
+	cat = V2_line_att (Map, index);
+	if (cat == 0)
+	    continue;
+	if (V2_read_line (Map, Points, index) < 0)
+	    return -1;
+	count++;
+	set_cat(cat);
+	plot_points (Points->x, Points->y, Points->n_points);
     }
+    return count;
+}
 
-    return(pkgs) ;
+static
+plot_points (x, y, n)
+    double *x, *y;
+{
+/* only plot the first point */
+    if (n > 0)
+	G_plot_point (*x, *y);
 }
