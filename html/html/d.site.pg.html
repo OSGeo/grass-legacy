@@ -45,11 +45,11 @@ For example, if you want to select only those records from the table well where 
 <P>
 To select all wells in an area where the value for well is between 50 and 120:
 <P>
-<DD><EM>well.depth > 50 and well.depth < 120</EM>
+<DD><EM>well.depth &gt; 50 and well.depth &lt; 120</EM>
 <P>
 To select all wells of depth greater than 75 where the value for owner is not equal to SMITH:
 <P>
-<DD><EM>well.depth > 75 and well.owner != "SMITH"</EM>
+<DD><EM>well.depth &gt; 75 and well.owner != "SMITH"</EM>
 <P>
 If the database column used as the selection criteria is a character field then the associated value must be placed in double quotes. To determine the data types associated with columns in the currently selected database use the <EM>g.column.pg</EM> command with the <EM>-v</EM> flag.
 <P>
@@ -94,7 +94,7 @@ The user must also specify the name of the GRASS data layer containing these cat
 <P>
 
 <DD><EM>retrieve unique (utm.utme, utm.utmn)
-<DD>where utm.mlra="116A" and utm.hydunit=11110103 and utm.utme > 0 and utm.utmn > 0 sort by utme, utmn</EM>
+<DD>where utm.mlra="116A" and utm.hydunit=11110103 and utm.utme &gt; 0 and utm.utmn &gt; 0 sort by utme, utmn</EM>
 
 <H3>Flag:</H3>
 <DL>

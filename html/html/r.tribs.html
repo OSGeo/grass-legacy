@@ -239,7 +239,7 @@ Woolhiser, D.A., Smith, R.E., Goodrich, D.C., 1990, KINEROS, A Kinematic Runoff 
 <H3>Appendix I: main.c code for r.tribs</H3>
 <PRE>
 #include "/GRASS4.1/src/include/gis.h"
-#include <stdio.h>
+#include &lt;stdio.h&gt;
 int **imatrix();
 int *ivector();
 /*
@@ -290,29 +290,29 @@ struct Option *aspect ;
 * Set values for parm.accum
 */
 parm.accum = G_define_option() ;
-parm.accum->key = "accumulation";
-parm.accum->type = TYPE_STRING;
-parm.accum->required = YES;
-parm.accum->gisprompt = "old,cell,raster" ;
-parm.accum->description= "Name of the ACCUMULATION map" ;
+parm.accum-&gt;key = "accumulation";
+parm.accum-&gt;type = TYPE_STRING;
+parm.accum-&gt;required = YES;
+parm.accum-&gt;gisprompt = "old,cell,raster" ;
+parm.accum-&gt;description= "Name of the ACCUMULATION map" ;
 /*
 * Set values for parm.chann
 */
 parm.chann = G_define_option() ;
-parm.chann->key = "stream";
-parm.chann->type = TYPE_STRING;
-parm.chann->required = YES;
-parm.chann->gisprompt = "old,cell,raster" ;
-parm.chann->description= "Name of the STREAM map" ;
+parm.chann-&gt;key = "stream";
+parm.chann-&gt;type = TYPE_STRING;
+parm.chann-&gt;required = YES;
+parm.chann-&gt;gisprompt = "old,cell,raster" ;
+parm.chann-&gt;description= "Name of the STREAM map" ;
 /*
 * Set values for parm.aspect
 */
 parm.aspect = G_define_option() ;
-parm.aspect->key = "drainage";
-parm.aspect->type = TYPE_STRING;
-parm.aspect->required = YES;
-parm.aspect->gisprompt = "old,cell,raster" ;
-parm.aspect->description= "Name of the DRAINAGE DIRECTION map";
+parm.aspect-&gt;key = "drainage";
+parm.aspect-&gt;type = TYPE_STRING;
+parm.aspect-&gt;required = YES;
+parm.aspect-&gt;gisprompt = "old,cell,raster" ;
+parm.aspect-&gt;description= "Name of the DRAINAGE DIRECTION map";
 /*
 * Initailize GIS library for this program
 */
@@ -323,16 +323,16 @@ G_gisinit(argv[0]);
 */
 if (G_parser(argc, argv))
 exit (-1);
-accum_name = parm.accum->answer;
-chann_name = parm.chann->answer;
-aspect_name = parm.aspect->answer;
+accum_name = parm.accum-&gt;answer;
+chann_name = parm.chann-&gt;answer;
+aspect_name = parm.aspect-&gt;answer;
 /*
 * Find the name of mapset that we are going to use.
 */
 mapset = G_find_cell2 (accum_name, "");
 if (mapset == NULL) {
 char msg[100]; 
-sprintf (msg, "%s: <%s> cellfile not found\n",
+sprintf (msg, "%s: &lt;%s&gt; cellfile not found\n",
 G_program_name(), accum_name);
 G_fatal_error (msg);
 exit(1);
@@ -341,13 +341,13 @@ exit(1);
 * Open the cell files in "mapset".
 */
 fd_accum = G_open_cell_old (accum_name, mapset);
-if (fd_accum < 0)
+if (fd_accum &lt; 0)
 exit(1);
 fd_chann = G_open_cell_old (chann_name, mapset);
-if (fd_chann < 0)
+if (fd_chann &lt; 0)
 exit(1);
 fd_aspect = G_open_cell_old (aspect_name, mapset);
-if (fd_aspect < 0)
+if (fd_aspect &lt; 0)
 exit(1);
 /*
 * Open up a vector that is just long enough to hold one 
@@ -371,20 +371,20 @@ aspect = imatrix(0,nrows,0,ncols);
 /*
 * Process DEM and Channel files.
 */
-for (row=(nrows-1); row>=0; row--) {
-if(G_get_map_row (fd_accum, cell, row) < 0)
+for (row=(nrows-1); row&gt;=0; row--) {
+if(G_get_map_row (fd_accum, cell, row) &lt; 0)
 exit(1);
-for (col = 0; col < ncols; col++) {
+for (col = 0; col &lt; ncols; col++) {
 accum[row][col] = (int)cell[col];
 }
-if(G_get_map_row (fd_chann, cell, row) < 0)
+if(G_get_map_row (fd_chann, cell, row) &lt; 0)
 exit(1);
-for (col = 0; col < ncols; col++) {
+for (col = 0; col &lt; ncols; col++) {
 chann[row][col] = (int)cell[col];
 }
-if(G_get_map_row (fd_aspect, cell, row) < 0)
+if(G_get_map_row (fd_aspect, cell, row) &lt; 0)
 exit(1);
-for (col = 0; col < ncols; col++) {
+for (col = 0; col &lt; ncols; col++) {
 aspect[row][col] = (int)cell[col];
 }
 }

@@ -83,11 +83,11 @@ The following operators are supported:
      -          subtraction                         Arithmetic  3
      ==         equal                               Logical     2
      !=         not equal                           Logical     2
-     >          greater than                        Logical     2
-     >=         greater than or equal               Logical     2
-     <          less than                           Logical     2
-     <=         less than or equal                  Logical     2
-     &&         and                                 Logical     1
+     &gt;          greater than                        Logical     2
+     &gt;=         greater than or equal               Logical     2
+     &lt;          less than                           Logical     2
+     &lt;=         less than or equal                  Logical     2
+     &amp;&amp;         and                                 Logical     1
      ||         or                                  Logical     1
      #          color separator operator            Arithmetic
 </PRE>
@@ -498,7 +498,7 @@ to integer number(s).
 
 <H2>NULL support</H2>
 
-<menu>
+&lt;menu&gt;
 <li>Division by zero should result in NULL. 
 <li>Modulus by zero should result in NULL. 
 <li>     NULL-values in any arithmetic operation should result in NULL. 
@@ -507,9 +507,9 @@ to integer number(s).
               NULL || true = true 
               NULL || false = NULL 
               NULL || NULL = NULL 
-              NULL && true = NULL 
-              NULL && false = false 
-              NULL && NULL = NULL 
+              NULL &amp;&amp; true = NULL 
+              NULL &amp;&amp; false = false 
+              NULL &amp;&amp; NULL = NULL 
 </pre>
 <li>     NULL-values in function arguments should result in NULL. 
 <li>     Even though this is also true for the if() function, 

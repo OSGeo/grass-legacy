@@ -152,15 +152,15 @@ the GRASS vector map layer output would be named <EM>streams.</EM>.
 <P>
 </DT>
 The below examples are given for a DXF design file named <EM>cont.dxf</EM>
-containing contou<HREF="r.line.html">r.line</A>s and contour line labels, in which:
+containing contour lines and contour line labels, in which:
 <P>
 <DL>
 <DD>
-index contou<HREF="r.line.html">r.line</A>s are in DXF layer 9,
+index contour lines are in DXF layer 9,
 <BR>
-intermediate contou<HREF="r.line.html">r.line</A>s are in DXF layer 11, and
+intermediate contour lines are in DXF layer 11, and
 <BR>
-index labels and some intermediate contou<HREF="r.line.html">r.line</A>s are in DXF layer 12.
+index labels and some intermediate contour lines are in DXF layer 12.
 </DL>
 <P>
 <P>
@@ -169,7 +169,7 @@ index labels and some intermediate contou<HREF="r.line.html">r.line</A>s are in 
 <P>
 <DL>
 <DD>
-<B>v.in.dxf  dxf=</B>cont.dxf >
+<B>v.in.dxf  dxf=</B>cont.dxf
 </DL>
 <P>
 <P>
@@ -186,14 +186,14 @@ GRASS <EM>dig</EM> files (named <EM>cont.9, cont.11</EM>, and <EM>cont.12</EM>)
 and one <EM>dig_att</EM> file (named <EM>cont.12</EM>).
 <P>
 In our example, however, the <EM>cont.12</EM> file contains intermediate
-contou<HREF="r.line.html">r.line</A>s that the user would like to add to the <EM>dig</EM> file
+contour lines that the user would like to add to the <EM>dig</EM> file
 <EM>cont.11</EM>.
 Our user also wishes to use a different file prefix than the default prefix
 <EM>cont</EM>.  The user therefore types the following command:
 <P>
 <DL>
 <DD>
-<B>v.in.dxf  dxf=</B>cont.dxf  <B>lines=</B>9,11,12:11  <B>labels=</B>12  <B>prefix=</B>contour>
+<B>v.in.dxf  dxf=</B>cont.dxf  <B>lines=</B>9,11,12:11  <B>labels=</B>12  <B>prefix=</B>contour
 </DL>
 <P>
 <P>
@@ -201,7 +201,7 @@ The above command will generate three <EM>dig</EM> files
 (named <EM>contour.9, contour.11, contour.12</EM>),
 and will create one <EM>dig_att</EM> file containing text labels
 (called <EM>contour.12</EM>).
-No contou<HREF="r.line.html">r.line</A>s will appear in the <EM>dig_att</EM> file.
+No contour lines will appear in the <EM>dig_att</EM> file.
 
 <H2>NOTES</H2>
 
@@ -262,12 +262,12 @@ may require editing by the user in <EM><A HREF="v.digit.html">v.digit</A></EM>.
 <BR>
 
 The <EM>v.in.dxf</EM> program attaches attributes only to DXF text data
-that are converted to GRASS vector data (such as contou<HREF="r.line.html">r.line</A> labels).
+that are converted to GRASS vector data (such as contour line labels).
 Attributes are not attached to converted DXF line data.  For each layer
 of text data in the DXF design file, <EM>v.in.dxf</EM> generates a vector file
 consisting of rectangular boxes (lines) that are drawn around the DXF text data,
 and uses the text values to create a GRASS attribute file for the boxes.
-The vector and attribute files can then be used to label contou<HREF="r.line.html">r.line</A>s with the 
+The vector and attribute files can then be used to label contour lines with the 
 <EM><A HREF="v.cadlabel.html">v.cadlabel</A></EM> program.
 
 <H2>SEE ALSO</H2>
