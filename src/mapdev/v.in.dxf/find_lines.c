@@ -1,3 +1,4 @@
+/* modified 1998-OCT-06 Benjamin Horner-Johnson - 80->256 char dxf_line */
 /* last modified by J Moorman
 ** 7/23/90
 **
@@ -21,7 +22,6 @@
 **   fall within the map location.
 */
 
-
 #include <stdlib.h>
 #include "dxf2vect.h"
 
@@ -43,7 +43,7 @@ int dxf_find_lines (FILE *dxf_file)
 	{
 	    if (code == -2)  /* EOF */
 		return(0);
-	    dxf_fgets (dxf_line,80,dxf_file);  
+	    dxf_fgets (dxf_line,256,dxf_file);  
 	    if (feof(dxf_file) != 0) /* EOF */
 		return(0);
 
@@ -59,7 +59,7 @@ int dxf_find_lines (FILE *dxf_file)
 			    break;
 			if (code == -2)  /* EOF */
 			    return(0);
-			dxf_fgets (dxf_line,80,dxf_file);  
+			dxf_fgets (dxf_line,256,dxf_file);  
 			if (feof(dxf_file) != 0) /* EOF */
 			    return(0);
 			switch (code)
@@ -91,7 +91,7 @@ int dxf_find_lines (FILE *dxf_file)
 			if (code == -2)  /* EOF */
 			    return(0);
 
-			dxf_fgets (dxf_line,80,dxf_file);  
+			dxf_fgets (dxf_line,256,dxf_file);  
 			if (feof(dxf_file) != 0) /* EOF */
 			    return(0);
 
@@ -119,7 +119,7 @@ int dxf_find_lines (FILE *dxf_file)
 			    break;
 			if (code == -2)  /* EOF */
 			    return(0);
-			dxf_fgets (dxf_line,80,dxf_file);  
+			dxf_fgets (dxf_line,256,dxf_file);  
 			if (feof(dxf_file) != 0) /* EOF */
 			    return(0);
 		    }
@@ -140,7 +140,7 @@ int dxf_find_lines (FILE *dxf_file)
     ARR_MAX = ARR_INCR;
     n = e = DBL_MIN;
     w = s = DBL_MAX;
-    dxf_fgets (dxf_line, 80, dxf_file);
+    dxf_fgets (dxf_line, 256, dxf_file);
     while (feof (dxf_file) == 0)
     {
 	if (strcmp (dxf_line, polyline) == 0)
@@ -159,9 +159,9 @@ int dxf_find_lines (FILE *dxf_file)
 	    dxf_add_circle (dxf_file);
 
 	else if (strcmp (dxf_line, text) == 0)
-	    dxf_add_labelbox (dxf_file);
+  	       dxf_add_labelbox (dxf_file);
 
-	dxf_fgets (dxf_line, 80, dxf_file);
+	dxf_fgets (dxf_line, 256, dxf_file);
     }
     return 0;
 }

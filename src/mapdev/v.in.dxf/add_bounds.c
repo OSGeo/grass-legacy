@@ -10,7 +10,8 @@
 
 
 #ifdef FOO
-int dxf_add_boundaries (void)
+int
+dxf_add_boundaries (void)
 {
     int		count;
     char	filename[300];
