@@ -43,5 +43,7 @@ OBJ =   main.o \
 	site_types.o \
 	line_types.o
 
+LIBES = $(BTREELIB) $(VECTLIB) $(GISLIB) ${PANELLIB} 
+
 $(PROG): $(OBJ) $(PANELOBJ)
-	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(PANELOBJ) $(BTREELIB) $(VECTLIB) $(GISLIB) $(MATHLIB) ${PANELLIB} $(GLLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(PANELOBJ) $(LIBES) $(MATHLIB) $(GLLIBS)
