@@ -10,7 +10,7 @@ LIB_OBJS = generate.o open.o
 HTMLLIB=$(GISBASE)/etc/form/html_library.tcl
 FORM=$(GISBASE)/etc/form/form.tcl
 FORMPROG=$(GISBASE)/etc/form/form
-EXTRA_CFLAGS = $(TCLINCDIR) $(TKINCDIR)
+EXTRA_CFLAGS = $(XCFLAGS) $(TCLINCDIR) $(TKINCDIR)
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
