@@ -52,12 +52,12 @@ int G_read_colors (
 	name = xname;
     }
 
+    if(fp) G_mark_colors_as_fp(colors);
+
 /* first look for secondary color table in current mapset */
     sprintf (buf,"colr2/%s", mapset);
     if (read_colors (buf, name, G_mapset(), colors) >= 0)
 	return 1;
-
-    if(fp) G_mark_colors_as_fp(colors);
 
 /* now look for the regular color table */
     switch (read_colors ("colr", name, mapset, colors))
