@@ -1,0 +1,31 @@
+#!/bin/sh
+CHECK.MAP
+if test $? = 1
+	then
+	exit
+fi
+if test ! -d legend
+	then
+	mkdir legend
+fi
+if test ! -d legend/cmd
+	then
+	mkdir legend/cmd
+fi
+if test ! -d legend/par
+	then
+	mkdir legend/par
+fi
+tput clear
+echo -n "Enter the name of the map definition file to use [map.def]: "
+read mapf
+mapf=${mapf:-map.def}
+
+echo -n "Enter the name of the overlay file to create [legend]: "
+read overf
+overf=${overf:-legend}
+
+cmd="awk -F'=' '{print \$2}' legend/par/$overf | make_leg /dev/null $GRAPH/etc/pattern  2> /dev/null | legend -m $mapf -o ovm/$overf"
+echo $cmd > legend/cmd/$overf
+make_leg legend/par/$overf $GRAPH/etc/pattern | legend -m $mapf -o ovm/$overf
+#tput clear
