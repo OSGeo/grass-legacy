@@ -2,10 +2,6 @@
 ARCH=$1
 HEAD_FILE=`dirname $0`"/../head/head.$ARCH"
 
-# Save head for this architecture.
-#ARCH="`sed 's/=/ /' $HEAD_FILE | awk '$1 ~ /^ARCH$/ {if(NF>1)print $2}'`"
-#mv $HEAD_FILE $HEAD_FILE.$ARCH
-
 # set (and create) UNIX_BIN
 eval `cat ${HEAD_FILE} | grep UNIX_BIN | sed "s/ //g"`
 if [ ! -d $UNIX_BIN ]; then mkdir -p $UNIX_BIN ; fi
