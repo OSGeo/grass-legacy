@@ -1,0 +1,132 @@
+
+
+
+i.texture <contrib>   GRASS Reference Manual  <contrib> i.texture
+
+
+
+NAME
+     i.texture - calculate textural features on a raster file
+     (GRASS Image Processing Program)
+
+SYNOPSIS
+     i.texture
+     i.texture help
+     i.texture rast=name
+
+DESCRIPTION
+     Reads a GRASS raster map as input.	 Calculates textural
+     features based on spatial dependence matrices for
+     north-south, east-west, northwest, and southwest directions
+     using a 3x3 neighborhood (i.e., a distance of 1).	Writes to
+     standard output.  Be sure to carefully set your resolution
+     (using g.region) before running this program, or else your
+     computer could run out of memory.	Also, make sure that your
+     raster map has no more than 255 categories.
+
+     Parameter:
+
+     rast=name	       Raster map name.
+
+     Textural features include:
+
+	  (1) Angular Second Moment,
+	  (2) Contrast,
+	  (3) Correlation,
+	  (4) Variance,
+	  (5) Inverse Difference Moment,
+	  (6) Sum Average,
+	  (7) Sum Variance,
+	  (8) Sum Entropy,
+	  (9) Entropy,
+	  (10) Difference Variance,
+	  (11) Difference Entropy,
+	  (12, 13) Information Measures of Correlation, and
+	  (14) Maximal Correlation Coefficient.
+
+     Algorithm taken from:
+     Haralick, R.M., K. Shanmugam, and I. Dinstein. 1973.
+     Textural features for image classification.  IEEE
+     Transactions on Systems, Man, and Cybertinetics,
+     SMC-3(6):610-621.
+
+     The code was taken by permission from pgmtexture, part of
+     PBMPLUS (Copyright 1991, Jef Poskanser and Texas
+     Agricultural Experiment Station, employer for hire of James
+     Darrell McCauley).
+
+BUGS
+     The program can run incredibly slow for large raster files
+
+
+
+GRASS 4.2.1		Baylor University			1
+
+
+
+
+
+
+i.texture <contrib>   GRASS Reference Manual  <contrib> i.texture
+
+
+
+     (larger than 64 x 64) and command line options are limited.
+
+     The method for finding (14) the maximal correlation
+     coefficient, which requires finding the second largest
+     eigenvalue of a matrix Q, does not always converge.
+
+     It would be interesting to write raster files to map
+     features for neighborhoods, with some sort of quantization
+     to record category values.	 This may be useful for image
+     classification schemes, but this exercise is left to the
+     reader (the changes would be fairly trivial).
+
+REFERENCES
+     IEEE Transactions on Systems, Man, and Cybertinetics,
+     SMC-3(6):610-621.
+
+SEE ALSO
+     g.region(1), r.reclass(1)
+
+AUTHOR
+     James Darrell McCauley (mccauley@ecn.purdue.edu), Purdue
+     University.
+
+
+NOTICE
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
+     Integration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2.1		Baylor University			2
+
+
+
