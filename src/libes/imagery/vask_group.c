@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include <stdio.h>
 #define OLD 1
 #define NEW 2
