@@ -1,0 +1,22 @@
+PGM = i.cluster
+LIST = main.o\
+	checkpt.o\
+	print1.o\
+	print2.o\
+	print3.o\
+	print4.o\
+	print5.o\
+	print6.o\
+	open_files.o\
+	timer.o
+
+$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(IMAGERYLIB) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(LIST) $(IMAGERYLIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+open_files.o: global.h
+checkpt.o: global.h
+main.o: global.h
+
+$(IMAGERYLIB) $(GISLIB): #
