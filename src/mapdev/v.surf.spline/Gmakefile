@@ -1,0 +1,64 @@
+##############################################################
+## A Gmakefile - This is necessary for all GRASS programs   ##
+##  		 and links all necessary functions and      ##
+##		 libraries.				    ##
+##############################################################
+
+
+PROG = $(BIN_CONTRIB_CMD)/v.surf.spline
+#-----------^ Name of the GRASS module here.
+
+
+LIBES = $(GISLIB) $(VASK) $(MATHLIB) $(VECTLIB) $(DIG_ATTLIB)
+#-----------^ Library necessary for all GRASS programs.
+#---------------------^ Parses keyboard input.
+#------------------------------^ For non arithmetic maths.
+#-----------------------------------------^ For any vector manipulation.
+#----------------------------------------------------^ Vector attributes.
+
+
+INCLUDES =\
+		spline.h
+#-----------------^  Any include files go here.
+
+COMPILE_FLAGS = -O
+#---------------^ For optimising the code.
+
+
+#-----------COMPILE_FLAGS = -g
+#------------------^ For use with dbx(tool) - must replace the -O option.
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+#-------------------^ This call if vectors are ever used.
+
+
+OBJ =\
+	main.o			\
+	interface.o		\
+	open_vect.o		\
+	process.o		\
+	interpol_layer.o	\
+	interpol_spline.o	\
+	interpol_edges.o	\
+	profile.o		\
+	spline.o
+#----------^ These are the names of all seperate files that
+#	     the programmer creates. Must have ONE tab in
+#	     front of each line.
+
+######### DEPENDENCIES #########
+
+all: $(PROG)
+	cp -f scripts/* $(GISBASE)/scripts
+
+$(PROG): ${OBJ} ${LIBES}
+	 ${CC} $(COMPILER_FLAGS) -o $@ ${OBJ} ${LIBES} ${LIBES} 
+#
+#-----^ This compiles the whole program bringing all labels together.
+
+$(OBJ): ${INCLUDES}
+
+$(LIBES): #
+#---^ Ignore this line (used for future additions of the library).
+
+
