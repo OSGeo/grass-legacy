@@ -2,9 +2,16 @@
 ############################################################
 # Script to create a tiff output file with the cell driver #
 # Reinhard Brunzema r.brunzema@web.de                      #
-# V 1.1: 15.2.2001                                         #
+# V 1.2: 26.3.2001                                         #
 ############################################################
-declare -i STIME=1
+
+declare -i STIME=1 	# Sleep time. Gives you the time to view what the script is
+						# plotting and to have an eye on messages from the used 
+						# modules. If you don't need that and if you are interested
+						# in faster plotting set STIME=0
+declare -i CELLSLEEP=2	# After plotting large maps, GRASS needs a little time 
+						# to close the D_cell file. On really HUGE maps or slow 
+						# machines you might want to raise this value.
 
 function show_help  {
 echo "This program collects several display functions to create a map that can"
@@ -33,8 +40,10 @@ function display_all {
 # This function is used for test output on the selected
 # monitor and for final output in the cell driver
 IFS=" "
+
 d.erase "$erasecolor"
 
+# Display rastermaps
 if [ -n "$baseraster" ]; then
 	d.rast map="$baseraster"
 	echo d.rast map="$baseraster"
@@ -57,6 +66,7 @@ if [ -n "$rastercount" ]; then
 	done
 fi
 
+# Display vector polygons
 if [ -n "$vectorpolcount" ]; then
 	count=0
 	while [ $count -lt $vectorpolcount ]
@@ -75,6 +85,7 @@ if [ -n "$vectorpolcount" ]; then
 	done
 fi
 
+# Display vector maps
 if [ -n "$vectorcount" ]; then
 	count=0
 	while [ $count -lt $vectorcount ]
@@ -91,7 +102,7 @@ if [ -n "$vectorcount" ]; then
 	done
 fi
 
-
+# Display sites
 if [ -n "$sitecount" ]; then
 	count=0
 	while [ $count -lt $sitecount ]
@@ -112,6 +123,7 @@ if [ -n "$sitecount" ]; then
 	done
 fi
 
+# Display legend
 if [ -n "$legendmap" ]; then
 	if [ -z "$leg_text_color" ]; then
 		leg_text_color="black"
@@ -129,8 +141,6 @@ return
 function exit_func {
 
 echo "Returning to old settings..."
-export XDRIVER_WIDTH=old_XDRIVEX
-export XDRIVER_HEIGTH=old_XDRIVEY
 
 g.region region="$regionname"
 d.mon select="$monitor"
@@ -140,7 +150,6 @@ export GRASS_HEIGHT=$old_GRASSH
 
 echo "Done";
 exit 0;
-
 }
 
 if test "$GISBASE" = ""; then
@@ -155,6 +164,7 @@ then
 	exit
 fi
 
+# Save old settings
 old_GRASSW=$GRASS_WIDTH
 old_GRASSH=$GRASS_HEIGHT
 
@@ -165,15 +175,11 @@ if [ "$old_GRASSH" = "" ]; then
 	old_GRASSH=480
 fi
 
-old_XDRIVEX=XDRIVER_WIDTH
-old_XDRIVEY=XDRIVER_HEIGTH
-
 regionname=before_cell_out_tiff
 g.region save="$regionname"
 
 monitor=`d.mon -p`
 monitor="x${monitor#*x}"
-
 
 # Set new default for d.erase (more usefull for export)
 erasecolor="color=white"
@@ -271,6 +277,8 @@ do
 done
 
 # Check for rquired parameters
+if [ -z "$t" ]; then
+
 if [ -z "$cellx" -o -z "$celly" ]; then
 	echo "Error: Size of cell driver is required"
 	exit 1
@@ -281,8 +289,9 @@ if [ -z "$outfile" ]; then
 	exit 1
 fi
 
-# Get the filenames
+fi
 
+# Get the filenames
 IFS=",$IFS"
 
 if [ -n "$rastermaps" ]; then
@@ -389,7 +398,7 @@ if [ -n "$siteicons" ]; then
 		done
 fi
 
-# test output
+# Test output
 if [ -z "$monitor" ]; then
 	echo "No monitor for preview selected."
 else
@@ -413,22 +422,37 @@ unset GRASS_HEIGHT
 export GRASS_WIDTH="$cellx"
 export GRASS_HEIGHT="$celly"
 
-export XDRIVER_WIDTH="$cellx"
-export XDRIVER_HEIGTH="$celly"
+ROW_NUM=`g.region -p | grep rows: | cut -d: -f 2`
+NSRES=`g.region -p | grep nsres: | cut -d: -f 2`
+let "RESOLUTION=$ROW_NUM * $NSRES"
+let "RESOLUTION=RESOLUTION / $celly"
+
+echo
+echo "Saving current region settings as 'before_cell_out_tiff.'"
+echo "Use 'g.region region=before_cell_out_tiff', if the"
+echo "program aborts abnormally to return to your old region"
+echo "settings."
+echo
+
+g.region res="$RESOLUTION" 	# This is required to avoid ugly white streams
+								# in the created output, if the Cell size is 
+								# near the number of rows.
+
 sleep 1s
 
 # Clean CELL
 g.remove rast=D_cell > /dev/null
 
+trap "exit_func" 1 2 3 15 # Unfortunately, this doesn't work as I want it.
 # Write to D_Cell
 echo "Starting cell driver..."
-d.mon start=CELL
+d.mon start=CELL 
 d.mon select=CELL
-d.mon nlev=8
+
+d.colormode mode=float
 echo "Plotting in D_cell..."
 
 STIME=0
-
 display_all
 
 sleep 1s
@@ -439,15 +463,9 @@ fi
 
 d.mon stop=CELL
 
-sleep 2s
-# Export as tiff
-echo
-echo "Saving current region settings as 'before_cell_out_tiff.'"
-echo "Use 'g.region region=before_cell_out_tiff', if the"
-echo "program aborts abnormally to return to your old region"
-echo "settings."
-echo
+sleep "$CELLSLEEP"s	# Wait for D_cell closing.
 
+# Export as tiff
 echo "Changing to xy-projection."
 g.region raster=D_cell
 
