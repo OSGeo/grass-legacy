@@ -22,7 +22,7 @@ LDFLAGS     = -L$(LIBDIR) -Wl,-rpath-link,$(LIBDIR) $(LINK_FLAGS)
 MANROFF     = # 
 LIBRULE_ST  = ar ruv $@ $?; $(RANLIB) $@
 LIBRULE     = $(LIBRULE_ST)
-LIBRULE_SH  = $(CC) -shared -o $@ $? $(LDFLAGS) $(SLIBDEPS) && ln -sf $(notdir $@) $(patsubst %.so.$(LIB_VER),%.so,$@)
+LIBRULE_SH  = $(CC) -shared -o $@ $^ $(LDFLAGS) $(SLIBDEPS) && ln -sf $(notdir $@) $(patsubst %.so.$(LIB_VER),%.so,$@)
 SLIBRULE    = $(LIBRULE_SH)
 PICFLAGS    = -fPIC
 
