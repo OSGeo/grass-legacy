@@ -12,6 +12,7 @@ G_insert_commas(buf)
     int i,len;
     int comma;
 
+    while (*buf == ' ') buf++;
     strcpy (number, buf);
     for (len=0; number[len]; len++)
 	if(number[len] == '.')
@@ -38,3 +39,24 @@ G_insert_commas(buf)
 	*buf++ = number[i++];
     *buf = 0;
 }
+
+/* removes commas from strings representing a number 
+	1,234,567    becomes 1234567
+	1,234,567.89 becomes 1234567.89
+	12,345      becomes 12345
+	1234       stays   1234
+*/
+G_remove_commas(buf)
+    char *buf;
+{
+    char *b;
+
+    for (b=buf; *b; b++)
+	if(*b != ',')
+	    *buf++ = *b;
+
+    *buf = 0;
+    return;
+}
+
+
