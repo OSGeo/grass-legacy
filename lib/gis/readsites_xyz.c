@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "site.h"
 
 SITE_XYZ *G_alloc_site_xyz(size_t num)
 {
