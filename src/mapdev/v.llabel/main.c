@@ -1,13 +1,9 @@
 /* updated by Roger Miller <rgrmill@rt66.com> 4/02 */
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 #include "gis.h"
-#include "dig_atts.h"
 #include "Vect.h"
 
-int
 main (argc, argv)
     char *argv[];
 {
@@ -23,7 +19,7 @@ main (argc, argv)
     struct line_pnts *Points;
     FILE *afp;
     double X, Y;
-    int i;
+    int i, ret;
     int cnt = 0;
     int label, type, otype;
     char tp;
@@ -46,7 +42,8 @@ main (argc, argv)
     typopt->key              = "type";
     typopt->type             =  TYPE_STRING;
     typopt->required         =  NO;
-    typopt->answer           =  "all";
+    typopt->multiple         =  YES;
+    typopt->answer           =  "point,line,edge";
     typopt->options          =  "point,line,edge";
     typopt->description      =  "Select type of arc to label.";
 
@@ -76,14 +73,17 @@ main (argc, argv)
 
     Points = Vect_new_line_struct ();
 
-    otype = DOT | LINE | AREA;
-    if (typopt->answer[0] == 'p')
-        otype = DOT;
-    else if (typopt->answer[0] == 'l')
-        otype = LINE;
-    else if (typopt->answer[0] == 'e')
-        otype = AREA;
-
+    i = 0;
+    otype = 0;
+    while ( typopt->answers[i] ) {
+	if (*typopt->answers[i] == 'p')
+	    otype |= DOT;
+	else if (*typopt->answers[i] == 'l')
+	    otype |= LINE;
+	else if (*typopt->answers[i] == 'e')
+	    otype |= AREA;
+	i++;
+    }
 
     if (!*(vectfile->answer))
     {
