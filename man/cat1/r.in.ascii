@@ -1,119 +1,119 @@
 
 
 
-r.in.ascii <main>    GRASS Reference Manual     <main> r.in.ascii
+r.in.ascii <main>    GRASS Reference Manual	<main> r.in.ascii
 
 
 
 NAME
-     r.in.ascii - Convert an ASCII raster text file into a
+     r.in.ascii	- Convert an ASCII raster text file into a
      (binary) raster map layer.
-     (GRASS Raster Data Import Program)
+     (GRASS Raster Data	Import Program)
 
 SYNOPSIS
      r.in.ascii
-     r.in.ascii help
-     r.in.ascii input=name output=name [title="phrase"]
+     r.in.ascii	help
+     r.in.ascii	input=name output=name [title="phrase"]
      [mult=multiplier]
 
 DESCRIPTION
-     r.in.ascii allows a user to create a (binary) GRASS raster
+     r.in.ascii	allows a user to create	a (binary) GRASS raster
      map layer from an ASCII raster input file with (optional)
      title.
 
-COMMAND LINE OPTIONS
+COMMAND	LINE OPTIONS
      Parameters:
 
-     input=name          Name of an existing ASCII raster file to
-                         be imported.
+     input=name		 Name of an existing ASCII raster file to
+			 be imported.
 
-     output=name         Name to be assigned to resultant binary
-                         raster map layer.
+     output=name	 Name to be assigned to	resultant binary
+			 raster	map layer.
 
-     title="phrase"      Title to be assigned to resultant raster
-                         map layer.
+     title="phrase"	 Title to be assigned to resultant raster
+			 map layer.
 
-     mult=multiplier     Multiply all raster cell values by
-                         multiplier.  multiplier is a floating
-                         point value, and has a default value of
-                         1.0.
+     mult=multiplier	 Multiply all raster cell values by
+			 multiplier.  multiplier is a floating
+			 point value, and has a	default	value of
+			 1.0.
 
-     The input file has a header section which describes the
-     location and size of the data, followed by the data itself.
+     The input file has	a header section which describes the
+     location and size of the data, followed by	the data itself.
 
-     The header has 6 lines:
+     The header	has 6 lines:
 
-          north:   xxxxxx.xx
-          south:   xxxxxx.xx
-          east:    xxxxxx.xx
-          west:    xxxxxx.xx
-          rows:    r
-          cols:    c
+	  north:   xxxxxx.xx
+	  south:   xxxxxx.xx
+	  east:	   xxxxxx.xx
+	  west:	   xxxxxx.xx
+	  rows:	   r
+	  cols:	   c
 
-     The north, south, east, and west field values entered are
-     the coordinates of the edges of the geographic region.  The
-     rows and cols field values entered describe the dimensions
-     of the matrix of data to follow.  The data which follows is
+     The north,	south, east, and west field values entered are
+     the coordinates of	the edges of the geographic region.  The
+     rows and cols field values	entered	describe the dimensions
+     of	the matrix of data to follow.  The data	which follows is
      r rows of c integers.
 
 
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
 
 
 
-r.in.ascii <main>    GRASS Reference Manual     <main> r.in.ascii
+r.in.ascii <main>    GRASS Reference Manual	<main> r.in.ascii
 
 
 
 EXAMPLE
-     The following is a sample input file to r.in.ascii:
+     The following is a	sample input file to r.in.ascii:
 
      _____________________________________
-    | north:                   4299000.00|
-    | south:                   4247000.00|
-    | east:                     528000.00|
-    | west:                     500000.00|
-    | rows:                         10   |
-    | cols:                         15   |
-    |                                    |
-    | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15|
-    | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15|
-    | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15|
-    | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15|
-    | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15|
-    | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15|
-    | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15|
-    | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15|
-    | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15|
-    | 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15|
+    | north:		       4299000.00|
+    | south:		       4247000.00|
+    | east:			528000.00|
+    | west:			500000.00|
+    | rows:			    10	 |
+    | cols:			    15	 |
+    |					 |
+    | 1	2 3 4 5	6 7 8 9	10 11 12 13 14 15|
+    | 1	2 3 4 5	6 7 8 9	10 11 12 13 14 15|
+    | 1	2 3 4 5	6 7 8 9	10 11 12 13 14 15|
+    | 1	2 3 4 5	6 7 8 9	10 11 12 13 14 15|
+    | 1	2 3 4 5	6 7 8 9	10 11 12 13 14 15|
+    | 1	2 3 4 5	6 7 8 9	10 11 12 13 14 15|
+    | 1	2 3 4 5	6 7 8 9	10 11 12 13 14 15|
+    | 1	2 3 4 5	6 7 8 9	10 11 12 13 14 15|
+    | 1	2 3 4 5	6 7 8 9	10 11 12 13 14 15|
+    | 1	2 3 4 5	6 7 8 9	10 11 12 13 14 15|
     |____________________________________|
 
 
 NOTES
-     The geographic coordinates north, south, east, and west
-     describe the outer edges of the geographic region.  They run
-     along the edges of the cells at the edge of the geographic
-     region and NOT through the center of the cells at the edges.
+     The geographic coordinates	north, south, east, and	west
+     describe the outer	edges of the geographic	region.	 They run
+     along the edges of	the cells at the edge of the geographic
+     region and	NOT through the	center of the cells at the edges.
 
-     The data (which follows the header section) must contain r x
-     c values, but it is not necessary that all the data for a
-     row be on one line.  A row may be split over many lines.
+     The data (which follows the header	section) must contain r	x
+     c values, but it is not necessary that all	the data for a
+     row be on one line.  A row	may be split over many lines.
 
-     r.in.ascii handles floating point cell values, but truncates
-     them into integer values.  The mult option allows the number
-     of significant figures of a floating point cell to be
-     increased before truncation to an integer.  Multiples of ten
+     r.in.ascii	handles	floating point cell values, but	truncates
+     them into integer values.	The mult option	allows the number
+     of	significant figures of a floating point	cell to	be
+     increased before truncation to an integer.	 Multiples of ten
      are the most functional multipliers.
 
 
 AUTHOR
-     Michael Shapiro, U.S. Army Construction Engineering Research
+     Michael Shapiro, U.S. Army	Construction Engineering Research
      Laboratory
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
