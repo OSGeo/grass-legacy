@@ -3,7 +3,7 @@ LIST = main.o\
 	classify.o\
 	invert.o
 
-$(BIN)/i.maxlik: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+$(BIN_MAIN_INTER)/i.maxlik: $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB)
 
 $(LIST): global.h
