@@ -37,15 +37,15 @@
 #include "gis.h"
 #include "cdhc.h"
 
-int main (argc, argv)
-  char **argv;
-  int argc;
+struct Cell_head window;
+
+int main (int argc, char **argv)
 {
   char *isiteslist, errmsg[256], *mapset;
   int i, nsites, verbose, warn_once = 0, readz (), scan_cats ();
-  int field;
+  int field, all;
   long x, y;
-  struct Cell_head window;
+  extern struct Cell_head window;
   struct GModule *module;
   struct
   {
@@ -53,7 +53,7 @@ int main (argc, argv)
   } parm;
   struct
   {
-    struct Flag *q, *l;
+    struct Flag *q, *l, *all;
   } flag;
   FILE *fdisite = NULL;
   double *w, *z;
@@ -86,6 +86,10 @@ int main (argc, argv)
   parm.dfield->required = NO;
   parm.dfield->description = "which decimal attribute (if multiple)";
 
+  flag.all = G_define_flag ();
+  flag.all->key = 'a';
+  flag.all->description = "Use all sites (do not limit to current region)";
+      
   flag.q = G_define_flag ();
   flag.q->key = 'q';
   flag.q->description = "Quiet";
@@ -104,10 +108,14 @@ int main (argc, argv)
   }
 
   isiteslist = parm.input->answer;
+  all = flag.all->answer;
   verbose = (flag.q->answer == (char) NULL) ? 1 : 0;
   sscanf(parm.dfield->answer,"%d", &field);
 
-  G_get_window (&window);
+  if (!all)
+    G_get_window (&window);   
+  else
+    G_get_default_window (&window);
 
   if ((mapset = G_find_file ("site_lists", isiteslist, "")) == NULL)
   {
@@ -127,7 +135,7 @@ int main (argc, argv)
   }
   
 
-  nsites = readz (fdisite, verbose, field, &z, window);
+  nsites = G_readsites (fdisite, all, verbose, field, &z);
 
   /* fprintf (stdout,"%g %g ... %g %g\n",z[0],z[1],z[nsites-2],z[nsites-1]); */
 

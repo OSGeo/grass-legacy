@@ -1,5 +1,6 @@
 #include "gis.h"
 #include "krig.h"
+#include "site.h"
 
 int read_sites (char *name)
 {

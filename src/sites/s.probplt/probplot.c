@@ -39,15 +39,14 @@
 
 int nsites;
 char *plot_file, *data_file;
+struct Cell_head window;
 
-int main (argc, argv)
-  char **argv;
-  int argc;
+int main ( int argc, char **argv)
 {
   char *mapset, *sitefile, *graphfile, errmsg[200];
-  int all, i, log, verbose, dcmp (), readz(), pltsqq();
+  int field, all, i, log, verbose, dcmp (), pltsqq();
 
-  struct Cell_head window;
+  extern struct Cell_head window;
   struct GModule *module;
   double factor;
   double  *z;
@@ -58,7 +57,7 @@ int main (argc, argv)
   } flag;
   struct
   {
-    struct Option *input, *width, *save;
+    struct Option *input, *width, *save, *dfield;
   } parm;
 
   G_gisinit (argv[0]);
@@ -85,6 +84,14 @@ int main (argc, argv)
   parm.save->type = TYPE_STRING;
   parm.save->required = NO;
   parm.save->description = "basename of a graphing data/commands files";
+
+  parm.dfield = G_define_option ();
+  parm.dfield->key = "field";
+  parm.dfield->type = TYPE_INTEGER;
+  parm.dfield->answer = "1";
+  parm.dfield->multiple = NO;
+  parm.dfield->required = NO;
+  parm.dfield->description = "which decimal attribute (if multiple)";
 
   flag.all = G_define_flag ();
   flag.all->key = 'a';
@@ -114,6 +121,7 @@ int main (argc, argv)
   verbose = (!flag.q->answer);
   log = (!flag.l->answer);
   sitefile= parm.input->answer;
+  sscanf(parm.dfield->answer,"%d", &field);
   graphfile= parm.save->answer;
   if ((i=sscanf(parm.width->answer,"%lf",&factor))!=1)
       G_fatal_error("error scanning arguments");
@@ -126,6 +134,12 @@ int main (argc, argv)
     G_fatal_error (errmsg);
   }
 
+  if (field < 1)
+  {
+     sprintf (errmsg, "Decimal attribute field 0 doesn't exist.");
+     G_fatal_error (errmsg);
+  }
+
   fdsite = G_fopen_sites_old (parm.input->answer, mapset);
   if (fdsite == NULL)
   {
@@ -134,7 +148,7 @@ int main (argc, argv)
   }
 
   /* read sites */
-  if ((nsites = readz (fdsite, verbose, &z, window, all))==0)
+  if ((nsites = G_readsites (fdsite, all, verbose, field, &z))==0)
     G_fatal_error("No sites found. Check your region.");
 
   if (verbose)

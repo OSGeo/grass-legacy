@@ -1,6 +1,6 @@
 PGM=s.sv
 
-LIST=main.o readsite.o cdpath.o save.o nbins.o angleok.o plthgpt.o
+LIST=main.o cdpath.o save.o nbins.o angleok.o plthgpt.o
 
 LIBES=$(GISLIB) $(RASTERLIB) $(DATETIMELIB)
 
@@ -8,6 +8,5 @@ $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 main.o		: sv.h 
-readsites.o	: sv.h 
 save.o		: sv.h 
 plthgpt.o	: sv.h 
