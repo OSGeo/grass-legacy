@@ -7,6 +7,7 @@ SUBDIRS = \
 	g.manual \
 	g.projinfo \
 	pg.postgisdb \
+	r.out.gdal \
 	r.univar \
 	v.distance.connect \
 	v.shape.regist
