@@ -183,7 +183,8 @@ struct field_info
 
 /*!
  \fn struct field_info *Vect_get_dblink (  struct Map_info *Map, int link)
- \brief get information about link to database, variables are substituted by values 
+ \brief get information about link to database, variables are substituted by values,
+        link is index to array of dblinks
  \return pointer to new field_info structure
  \param pointer Map_info structure, link number
 */
@@ -212,6 +213,31 @@ struct field_info
     fi->database = Vect_subst_var ( Map->dblnk->field[link].database, Map->name, Map->mapset );
     fi->driver = G_store ( Map->dblnk->field[link].driver );
 
+    return fi;
+}
+
+/*!
+ \fn struct field_info *Vect_get_field (  struct Map_info *Map, int field )
+ \brief get information about link to database, variables are substituted by values,
+        field is number of requested field
+ \return pointer to new field_info structure or NULL
+ \param pointer Map_info structure, field number
+*/
+struct field_info
+*Vect_get_field (  struct Map_info *Map, int field )
+{
+    int i;
+    struct field_info *fi = NULL;
+
+    G_debug (1, "Vect_get_field(): field = %d", field);
+
+    for ( i = 0; i < Map->dblnk->n_fields; i++ ) {
+        if ( Map->dblnk->field[i].number == field ) {
+            fi = Vect_get_dblink ( Map, i );
+	    break;
+	}
+    }
+	    
     return fi;
 }
 
@@ -418,6 +444,7 @@ Vect_subst_var ( char *in, char *map, char *mapset )
     char *c;
     char buf[1000], str[1000];
     
+    G_debug (0, "Vect_subst_var(): in = %s, map = %s, mapset = %s", in, map, mapset);
     
     strcpy ( str, in );
     
@@ -449,6 +476,7 @@ Vect_subst_var ( char *in, char *map, char *mapset )
         sprintf (str, "%s%s%s", buf, map, c+4 );
     }
     
+    G_debug (0, "  -> %s", str);
     return ( G_store(str) );
 }
 

@@ -50,6 +50,7 @@ int Vect_read_dblinks ( char *, char *,  struct dblinks *p );
 int Vect_write_dblinks ( char *, char *,  struct dblinks *p );
 struct field_info *Vect_default_field_info ( char *map, int  field, char *field_name, int  type );
 struct field_info *Vect_get_dblink (  struct Map_info *Map, int link );
+struct field_info *Vect_get_field (  struct Map_info *Map, int field );
 
       /* List of FID (feature ID) (integers) */
 struct ilist *Vect_new_list (void);
