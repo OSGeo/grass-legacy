@@ -8,6 +8,7 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 PGM=XDRIVER
 
 LIBES = $(DRIVERLIB) $(D_LIB) $(GISLIB)
+DEPENDENCIES = $(GISDEP)
 
 # if you are compiling under X11R3 add this define
 #R3DEFINE=-DX11R3
@@ -60,7 +61,7 @@ ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
 default: $(ARCH_INCDIR)/winname.h $(DRIVERDIR)/$(PGM)
 
-$(DRIVERDIR)/$(PGM): $(ARCH_OBJS)
+$(DRIVERDIR)/$(PGM): $(ARCH_OBJS) $(DEPENDENCIES)
 	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(LIBPATH) $(ARCH_OBJS) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
 
 $(ARCH_INCDIR)/winname.h:
