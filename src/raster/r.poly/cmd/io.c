@@ -20,9 +20,9 @@
 /*    last_read     flag to indicate we have reached EOF on input */
 /*    in_file_d     input cell file descriptor */
 /*    ascii_digit   output ascii digit file */
-/*    area_digit    output supplemental file which gives categories to */
-/*                  the left and right of each line;  this info is written */
-/*                  in the same order as the lines in the digit files */
+/*    cell_name     input cell file name */
+/*    dig_name      output digit file name */
+/*    mapset        input raster(cell) map mapset */
 /*    tmp_digit     temporary file where area information is stored before */
 /*                  being remapped */
 /*    row_length    length of each row of the cell file (i.e., number of */
@@ -41,6 +41,8 @@
 
 /* Entry points: */
 /*    write_line    write a line out to the digit files */
+/*    lab_digit     file pointer to attribute file */
+/*    lab_name      name of the attribute file */
 /*    write_area    make table of area mappings and write dlg label file */
 /*    read_row      read another row of data--handles putting a "no data" */
 /*                  boundary around the edges of the file */
@@ -83,7 +85,9 @@ static int direction;
 static int first_read, last_read;
 static char cell_name[256];
 static char lab_name[256];
-static FILE *area_digit, *lab_digit, *ascii_digit;
+static char dig_name[256];
+static char *mapset;
+static FILE *lab_digit, *ascii_digit;
 static FILE *tmp_digit;
 static int in_file_d;
 static int row_length, row_count, n_rows, total_areas;
@@ -104,46 +108,48 @@ io_init ()
 write_line(seed)
 struct COOR *seed;
 {
-    struct COOR *point, *begin, *end, *find_end(), *move();
+    struct COOR *point, *line_begin, *line_end, *find_end(), *move();
     int dir, line_type, n, n1;
 
     point = seed;
     if (dir = at_end(point))		/* already have one end of line */
     {
-	begin = point;
-	end = find_end(point,dir,&line_type,&n);
+	line_begin = point;
+	line_end = find_end(point,dir,&line_type,&n);
 	if (line_type == OPEN)
 	    return(-1);			/* unfinished line */
 	direction = dir;
     }
     else	/* in middle of a line */
     {
-	end = find_end(point,FORWARD,&line_type,&n);
+	line_end = find_end(point,FORWARD,&line_type,&n);
 	if (line_type == OPEN)		/* line not finished */
 	    return(-1);
 	if (line_type == END)		/* found one end at least */
 	{					/* look for other one */
-	    begin = find_end(point,BACKWARD,&line_type,&n1);
+	    line_begin = find_end(point,BACKWARD,&line_type,&n1);
 	    if (line_type == OPEN)		/* line not finished */
 		return(-1);
 	    if (line_type == LOOP)		/* this should NEVER be the case */
 	    {
+	    /*
 		fprintf(stderr,"%s:  write_line:  found half a loop!\n",error_prefix);
+		*/
 		return(-1);
 	    }
-	    direction = at_end(begin);	/* found both ends now; total length */
+	    direction = at_end(line_begin);	/* found both ends now; total length */
 	    n += n1;				/*   is sum of distances to each end */
 	}
 	else	/* line_type = LOOP by default */
 	{					/* already have correct length */
-	    begin = end;			/* end and beginning are the same */
+	    line_begin = line_end;			/* end and beginning are the same */
 	    direction = FORWARD;		/* direction is arbitrary */
 	}
     }
     if (smooth_flag == SMOOTH)
-	write_smooth_ln(begin, end, n);
+	write_smooth_ln(line_begin, line_end, n);
     else
-	write_ln(begin,end,n);
+	write_ln(line_begin,line_end,n);
     return(0);
 }
 
@@ -152,8 +158,8 @@ struct COOR *seed;
 /* writes binary and ASCII digit files and supplemental file */
 
 static int 
-write_ln(begin,end,n)
-struct COOR *begin, *end;		/* start and end point of line */
+write_ln(line_begin,line_end,n)
+struct COOR *line_begin, *line_end;		/* start and end point of line */
 int n;				/* number of points to write */
 {
     double x;
@@ -167,7 +173,7 @@ int n;				/* number of points to write */
     n++;					/* %% 6.4.88 */
     type = AREA;
 
-    p = begin;
+    p = line_begin;
     y = cell_head.north - (double) p->row * cell_head.ns_res;
     x = cell_head.west  + (double) p->col * cell_head.ew_res;
 
@@ -193,9 +199,34 @@ int n;				/* number of points to write */
 	if (which_outputs & BINARY)
 	    Vect_append_point (Points, x, y);
 
-	free(last);
+/*	free(last);*/
     }
-    free(p);
+
+    /* now free all thwe pointers */
+    p = line_begin;
+
+    for (i = 1; i < n; i++) 
+    {
+    /*
+	if( i<10)
+         printf(" row: %d col: %d\n", p->row, p->col);
+	 */
+	last = p;
+	if ((p = move(p)) == NULPTR)
+	  break;
+	if(last==p) break;
+	if(last->fptr!=NULPTR)
+	   if(last->fptr->fptr==last) last->fptr->fptr=NULPTR;
+        /* it can be NULL after the previous line, even though before it wasn't */
+	if(last->fptr!=NULPTR)
+	   if(last->fptr->bptr==last) last->fptr->bptr=NULPTR;
+	if(last->bptr!=NULPTR) 
+	   if(last->bptr->fptr==last) last->bptr->fptr=NULPTR;
+	if(last->bptr!=NULPTR) 
+	   if(last->bptr->bptr==last) last->bptr->bptr=NULPTR;
+	free(last);
+    } /* end of for i */
+    if(p!=NULPTR) free(p);
 
     if (which_outputs & BINARY)
 	Vect_write_line (&Map, type, Points);
@@ -207,8 +238,8 @@ int n;				/* number of points to write */
 #define SNAP_THRESH 0.00001
 
 static int 
-write_smooth_ln(begin,end,n)
-struct COOR *begin, *end;		/* start and end point of line */
+write_smooth_ln(line_begin,line_end,n)
+struct COOR *line_begin, *line_end;		/* start and end point of line */
 int n;				/* number of points to write */
 {
     double x, y;
@@ -221,7 +252,7 @@ int n;				/* number of points to write */
     n++;					/* %% 6.4.88 */
     type = AREA;
 
-    p = begin;
+    p = line_begin;
     /* allocate the arrays and get the first point */
 
     y = cell_head.north - (double) p->row * cell_head.ns_res;
@@ -232,8 +263,15 @@ int n;				/* number of points to write */
 
     /* generate the list of smoothed points, may be duplicate points */
     total = 1;
+    /*
+    printf ("Writing line...%d points...\n", n);
+    */
     for (i = 1; i < n; i++) 
     {
+    /*
+	if( i<10)
+         printf(" row: %d col: %d\n", p->row, p->col);
+	 */
 	last = p;
 	if ((p = move(p)) == NULPTR)	/* this should NEVER happen */
 	{
@@ -258,8 +296,15 @@ int n;				/* number of points to write */
 	total++;
 	Vect_append_point (Points, x, y);
 
-	free(last);
+	/* free(last);*/
     } /* end of for i */
+
+    y = cell_head.north - (double) p->row * cell_head.ns_res;
+    x = cell_head.west  + (double) p->col * cell_head.ew_res;
+    total++;
+    Vect_append_point (Points, x, y);
+
+    /* strip out the duplicate points from the list */
 
     y = cell_head.north - (double) p->row * cell_head.ns_res;
     x = cell_head.west  + (double) p->col * cell_head.ew_res;
@@ -294,7 +339,31 @@ int n;				/* number of points to write */
     if (which_outputs & BINARY)
 	Vect_write_line (&Map, type, Points);
 
-    free(p);
+    /* now free all thwe pointers */
+    p = line_begin;
+
+    for (i = 1; i < n; i++) 
+    {
+    /*
+	if( i<10)
+         printf(" row: %d col: %d\n", p->row, p->col);
+	 */
+	   last = p;
+	if ((p = move(p)) == NULPTR)
+	  break;
+	if(last==p) break;
+	if(last->fptr!=NULPTR)
+	   if(last->fptr->fptr==last) last->fptr->fptr=NULPTR;
+	/* now it can already ne NULL */
+	if(last->fptr!=NULPTR)
+	   if(last->fptr->bptr==last) last->fptr->bptr=NULPTR;
+	if(last->bptr!=NULPTR)
+	   if(last->bptr->fptr==last) last->bptr->fptr=NULPTR;
+	if(last->bptr!=NULPTR)
+	   if(last->bptr->bptr==last) last->bptr->bptr=NULPTR;
+	free(last);
+    } /* end of for i */
+    if(p!=NULPTR) free(p);
 }
 
 
@@ -393,9 +462,16 @@ write_area(a_list,e_list,n_areas,n_equiv)
 {
     char type;
     int n, i;
+    long count;
     struct area_table *p;
+    char *temp_buf;
+    struct Categories RastCats;
+    struct Categories VectCats;
+    struct Cell_stats stats;
+    int cat;
     char *G_malloc();
 
+    G_init_cell_stats(&stats);
     total_areas = 0;
     if (n_equiv < n_areas)
     {
@@ -437,6 +513,7 @@ write_area(a_list,e_list,n_areas,n_equiv)
 		  cell_head.west + (p->col + (p->width/2.0)) * cell_head.ew_res,
 		  cell_head.north - (p->row + 0.5) * cell_head.ns_res,
 		  p->cat);
+		  G_update_cell_stats((CELL *) &(p->cat),1,&stats);
 		/*
 		fprintf(lab_digit,"A    %7.2lf  %7.2lf     %3d \n",
 		  cell_head.west + (p->col + (p->width/2.0)) * cell_head.ew_res,
@@ -445,9 +522,23 @@ write_area(a_list,e_list,n_areas,n_equiv)
 		  */
 	    }
 	}
-    }
-}
+	G_rewind_cell_stats(&stats);
+	if(G_read_cats(cell_name, mapset, &RastCats))
+			  G_init_cats((CELL)0,"", &RastCats);
+        G_init_cats((CELL)0,  G_get_cats_title(&RastCats), &VectCats);
+        while(G_next_cell_stat((CELL *)&cat, &count, &stats))
+        {
+           temp_buf = G_get_cat(cat, &RastCats);
+           if (strcmp(temp_buf,"")!=0)
+	       G_set_cat(cat, temp_buf, &VectCats);
+        }
+	G_write_vector_cats(dig_name, &VectCats);
+	G_free_cats(&VectCats);
+	G_free_cats(&RastCats);
+	G_free_cell_stats(&stats);
+     }
 
+}
 /* syntax - check syntax of command line and compile which_outputs to tell */
 /* which output files the user wants generated; returns -1 on error, zero */
 /* otherwise; default output files are binary digit and dlg label; anything */
@@ -547,7 +638,7 @@ open_file (cell,digit)
 char *cell, *digit;
 {
     FILE *open_it();
-    char *mapset, *p;
+    char *p;
 
     /* open cell file */
     if ((mapset = G_find_cell(cell,"")) == NULL)
@@ -567,17 +658,21 @@ char *cell, *digit;
 	exit(-1);
     }
     G_set_window(&cell_head);
+    strcpy(dig_name, digit);
 
     G__file_name (lab_name, "dig_att", digit, G_mapset());
 
     G__make_mapset_element("dig_att");
     G__make_mapset_element("dig");
+    G__make_mapset_element("cats_dig");
 
     if (which_outputs & BINARY)
 	Vect_open_new (&Map, digit);
 
     if (which_outputs & LABEL)
+    {
 	lab_digit = open_it(lab_name);
+    }
     first_read = 1;
     last_read = 0;
     direction = FORWARD;
