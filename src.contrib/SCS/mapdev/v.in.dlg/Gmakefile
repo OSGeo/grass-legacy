@@ -1,0 +1,14 @@
+EXTRA_CFLAGS	=$(VECT_INCLUDE)
+
+OBJ = v.in.dlg.o
+
+PROG = $(BIN_CONTRIB_CMD)/v.in.dlg.scs
+
+all:  $(PROG)
+	
+
+$(PROG): $(OBJ) $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(MATHLIB) $(EXTRALIB)
+	mv a.out $@
+
