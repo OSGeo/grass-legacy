@@ -60,6 +60,9 @@ int main (int argc, char *argv[])
 	use_mouse = 1;
 	if (parm.coor->answer)
 	{
+		if(parm.coor->answers[0] == NULL)
+			G_fatal_error("No coordinates given");
+
 		if (!G_scan_easting (parm.coor->answers[0], &lon1, G_projection()))
 		{
 			G_usage();
