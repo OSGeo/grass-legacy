@@ -1,4 +1,4 @@
-#define MAIN
+#define GLOBAL
 
 #include "gis.h"
 #include "globals.h"
@@ -41,7 +41,7 @@ char *argv[];
 	opt2->key        = "bands";
 	opt2->type       = TYPE_STRING;
 	opt2->required   = YES;
-	opt2->mutilple   = YES;
+	opt2->multiple   = YES;
 	opt2->description= "image band file(s)" ;
 	opt2->gisprompt  = "old,cell,raster";
 
@@ -55,17 +55,22 @@ char *argv[];
 	if (G_parser(argc, argv) < 0)
 		exit(-1);
 
-	for (n = 0; opt2->answers[n]; n++) 
-		{} /* count number of input files */
+/*	for (n = 0; opt2->answers[n]; n++) 
+		{}  count number of input files */
 	
 	modelfile = opt1->answer;
+	inputfiles[0] = opt2->answer;
+	inputfiles[1] = opt3->answer;
+	inputfiles[2] = opt4->answer;
+	outputfiles = opt5->answer;
 
+/*
 	strcpy(modelfile, opt1->answer);
 	strcpy(inputfiles[0], opt2->answer);
 	strcpy(inputfiles[1], opt3->answer);
 	strcpy(inputfiles[2], opt4->answer);
 	strcpy(outputfiles, opt5->answer);
-						/* get model vector */
+*/						/* get model vector */
 	fdmodel = fopen (modelfile, "w");
 	if (fdmodel == NULL)
 	{
