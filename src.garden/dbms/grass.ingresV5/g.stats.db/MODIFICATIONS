@@ -1,0 +1,49 @@
+****************************************
+g.stats.db - Modifications for INGRES
+
+Katarina Johnsson, 930421
+****************************************
+
+INGRES version: 5
+
+INGRES version specific subroutines:
+	chktype
+	sqlStats
+
+Modified and/or renamed subroutines:
+	main
+	sqlStats <=> infxStats
+	chktype
+	buildSQL <=> buildInfx
+
+New subroutines:
+	ingresUnTable
+
+Modified and/or renamed include files:
+	ingres.h <=> infx.h (NEVER USED)
+	ingstats.h <=> stats.h (NEVER USED)
+
+New include files:
+	ingresUtils.h
+
+INGRES modifications:
+	Program structure is modified: 
+		'sqlStats' is called from 'main' and not from 'chktype'.
+		'buildSQL' is only called from 'main' and not from 'sqlStats'.
+	Two arguments to 'chktype'. sqlFile is not passed.
+	'ingresUnTable added to read SQL output (chktype, sqlStats).
+	Syntax for execution of SQL command modified (chktype, sqlStats).
+	'\g' added to SQL query (sqlStats).
+	SQL query to check datatype is modified for INGRES ver 5 (chktype).
+	Test for numeric datatype is modified for INGRES ver 5 (chktype):
+		30 Integer
+		31 Float
+	Reading and printing of output stats modified for INGRES ver5 (sqlStats)
+
+Improvements:
+	Explanatory messages added.
+
+Bug Fixes:
+	The program has been restructured and a number of modifications
+	have been implemented, mainly for handlig of files (open, close, 
+	pass to subroutines etc).
