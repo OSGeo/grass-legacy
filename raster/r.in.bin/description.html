@@ -23,38 +23,8 @@ suggesting a closer bytes value.
 
 <P>
 <EM>r.in.bin</EM> can be used to import numerous binary arrays including:
-etopo30, etopo-5, Globe DEM, BIL, AVHRR and GMT binary arrays (ID 1 &amp; 2)
+ETOPO30, ETOPO-5, ETOPO-2, Globe DEM, BIL, AVHRR and GMT binary arrays (ID 1 &amp; 2)
 <P>
-
-<H2>EXAMPLE</H2>
-
-The following is a sample call of <EM>r.in.bin</EM> to import GTOPO30 DEM
-data:
-<P>
-<TT>
-r.in.bin -sb input=E020N90.DEM output=gtopo30 bytes=2 north=90 south=40
-east=60 west=20 r=6000 c=4800
-</TT>
-<P>
-(you can add "anull=-9999" if you want sea level to have a NULL value)
-
-<P>
-The following is a sample call of <EM>r.in.bin</EM> to import a GMT 
-type 1 (float) binary array:
-<P>
-<TT>
-r.in.bin -hf input=sample.grd output=sample.grass
-</TT>
-<P>
-(-b could be used to swap bytes if required)
-
-<P>
-The following is a sample call of <EM>r.in.bin</EM> to import an AVHRR image:
-<P> 
-<TT>
-r.in.bin in=p07_b6.dat out=avhrr c=128 r=128
-</TT>
-
 
 <H2>NOTES</H2>
 
@@ -90,6 +60,48 @@ exactly).
 <P>
 This flag is only used if <B>bytes=</B> 1. If <B>bytes=</B> is greater
 than 1 the flag is ignored.
+
+<H2>EXAMPLES</H2>
+
+<h3>GTOPO30 DEM</h3>
+The following is a sample call of <EM>r.in.bin</EM> to import  
+<a href=http://edcdaac.usgs.gov/gtopo30/gtopo30.asp>GTOPO30 DEM</a>
+data:
+<P>
+<TT>
+r.in.bin -sb input=E020N90.DEM output=gtopo30 bytes=2 north=90 south=40
+east=60 west=20 r=6000 c=4800
+</TT>
+<P>
+(you can add "anull=-9999" if you want sea level to have a NULL value)
+
+<h3>GMT</h3>
+The following is a sample call of <EM>r.in.bin</EM> to import a GMT 
+type 1 (float) binary array:
+<P>
+<TT>
+r.in.bin -hf input=sample.grd output=sample.grass
+</TT>
+<P>
+(-b could be used to swap bytes if required)
+
+<h3>AVHRR</h3>
+The following is a sample call of <EM>r.in.bin</EM> to import an AVHRR image:
+<P> 
+<TT>
+r.in.bin in=p07_b6.dat out=avhrr c=128 r=128
+</TT>
+
+
+<h3>ETOPO2</h3>
+The following is a sample call of <EM>r.in.bin</EM> to import 
+<a href=http://www.ngdc.noaa.gov/mgg/image/2minrelief.html>ETOPO2 DEM</a> data (here full data set):
+<P>
+<TT>
+r.in.bin ETOPO2.dos.bin out=ETOPO2min r=5400 c=10800 n=90 s=-90 w=-180 e=180 bytes=2
+r.colors ETOPO2min rules=terrain
+</TT>
+
 
 <H2>SEE ALSO</H2>
 
