@@ -15,6 +15,8 @@ struct cost{
     struct cost *lower;
     struct cost *higher;
     struct cost *above;
+    struct cost *nexttie;
+    struct cost *previoustie;
 };
 
 /* btree.c */

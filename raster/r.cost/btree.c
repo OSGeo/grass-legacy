@@ -38,6 +38,8 @@ struct cost *insert(double min_cost,int row,int col)
 	new_cell->above = NULL ;
 	new_cell->higher = NULL ;
 	new_cell->lower = NULL ;
+	new_cell->nexttie = NULL ;
+	new_cell->previoustie = NULL ;
 
 	if (start_cell == NULL)
 	{
@@ -71,11 +73,11 @@ struct cost *insert(double min_cost,int row,int col)
 		}
 
 		/* If we find a value that is exactly equal to new value */
-		if (next_cell->lower != NULL)
-			next_cell->lower->above = new_cell ;
-		new_cell->lower = next_cell->lower ;
-		new_cell->above = next_cell ;
-		next_cell->lower = new_cell ;
+		new_cell->nexttie = next_cell->nexttie ;
+		next_cell->nexttie = new_cell ;
+		new_cell->previoustie = next_cell ;
+		if(new_cell->nexttie != NULL)
+			new_cell->nexttie->previoustie = new_cell ;
 
 		return(new_cell) ;
 	}
@@ -85,13 +87,21 @@ struct cost *insert(double min_cost,int row,int col)
 struct cost *find(double min_cost,int row,int col)
 {
 	struct cost *next_cell ;
+	struct cost *next_tie_cell ;
 
 	for(next_cell=start_cell;;)
 	{
 		if (min_cost <= next_cell->min_cost)
 		{
+			for(next_tie_cell=next_cell;
+				next_tie_cell != NULL;
+				next_tie_cell = next_tie_cell->nexttie)
+				if (next_tie_cell->row == row && next_tie_cell->col == col)
+					return(next_tie_cell) ;
+			/*
 			if (next_cell->row == row && next_cell->col == col)
 				return(next_cell) ;
+			*/
 
 			if (next_cell->lower != NULL)
 			{
@@ -135,6 +145,10 @@ get_lowest (void)
 		next_cell->lower != NULL;
 		next_cell = next_cell->lower) ;
 
+	/* Grab my first tie instead of me */
+	if(next_cell->nexttie != NULL)
+		next_cell = next_cell->nexttie ;
+
 	if(next_cell->row == -1)
 	{
 /*
@@ -159,6 +173,42 @@ int delete(struct cost *delete_cell)
 		fprintf(stderr,"Illegal delete request\n") ;
 		return 0;
 	}
+
+	/* Simple remove if I'm a one of the "ties" */
+	if (delete_cell->previoustie != NULL)
+	{
+		delete_cell->previoustie->nexttie = delete_cell->nexttie ;
+		if (delete_cell->nexttie != NULL)
+			delete_cell->nexttie->previoustie = delete_cell->previoustie ;
+		give(delete_cell) ;
+		return 0;
+	}
+	/* If I have a list of ties, link replace me with the first
+	   in that list  */
+	if (delete_cell->nexttie != NULL)
+	{
+		delete_cell->nexttie->above = delete_cell->above ;
+		if (delete_cell->above != NULL)
+		{
+			if (delete_cell->above->lower == delete_cell)
+				delete_cell->above->lower = delete_cell->nexttie ;
+			else
+				delete_cell->above->higher = delete_cell->nexttie ;
+		}
+
+		delete_cell->nexttie->lower = delete_cell->lower ;
+		if (delete_cell->lower != NULL)
+			delete_cell->lower->above = delete_cell->nexttie ;
+
+		delete_cell->nexttie->higher = delete_cell->higher ;
+		if (delete_cell->higher != NULL)
+			delete_cell->higher->above = delete_cell->nexttie ;
+		if (start_cell == delete_cell) start_cell = delete_cell->nexttie ;
+		delete_cell->nexttie->previoustie = NULL ;
+
+		give(delete_cell) ;
+		return(0) ;
+	}
 /*
        \      \      \      \   
      1  X   4  X   7  X   10 X  
@@ -172,7 +222,6 @@ int delete(struct cost *delete_cell)
      3  X   6  X   9  X   12 X  
        N N    / N    N \    / \
 */
-
 	if (delete_cell->higher == NULL)        /* 123456       */
 	{
 		if (delete_cell->lower == NULL)     /* 123          */
@@ -334,31 +383,26 @@ int show_all(void)
 		fprintf(stderr, "Nothing to show\n") ;
 		return 1;
 	}
-	fprintf(stderr, "start: %p %d,%d,%f %p %p\n",
-		start_cell,
-		start_cell->row,
-		start_cell->col,
-		start_cell->min_cost,
-		start_cell->lower,
-		start_cell->higher) ;
-	show(start_cell->lower) ;
-	show(start_cell->higher) ;
+	show(start_cell) ;
 
 	return 0;
 }
 
 int show(struct cost *next)
 {
+	struct cost *next_cell ;
 	if(next == NULL)
 		return 0;
-	fprintf(stderr, "%p %d,%d,%f %p %p %p\n",
-		next,
-		next->row,
-		next->col,
-		next->min_cost,
-		next->lower,
-		next->higher,
-		next->above) ;
+	for (next_cell=next;next_cell!=NULL;next_cell=next_cell->nexttie)
+		fprintf(stderr, "%p %d,%d,%f %p %p %p %p\n",
+			next_cell,
+			next_cell->row,
+			next_cell->col,
+			next_cell->min_cost,
+			next_cell->nexttie,
+			next_cell->lower,
+			next_cell->higher,
+			next_cell->above) ;
 	show(next->lower) ;
 	show(next->higher) ;
 
