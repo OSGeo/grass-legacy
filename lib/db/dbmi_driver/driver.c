@@ -25,8 +25,6 @@ db_driver(int argc,
     int rfd, wfd;
     FILE *send, *recv;
 
-    umask(0);
-
     /* Read and set enviroment variables, see dbmi_client/start.c */
     if ( getenv ( "GISRC_MODE_MEMORY" ) ) {
         G_set_gisrc_mode ( G_GISRC_MODE_MEMORY );
