@@ -132,8 +132,8 @@ int extract_points( SHPObject **hObj, struct Map_info *Map, int *indx_list, int 
   return 1;
 }
 
-int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nIndices,
-		  const int curr_indx ) {
+int extract_ring( SHPObject **sh1, struct Map_info *Map, 
+        int *indx_list, int *nIndices, const int curr_indx, const int all) {
 
   /* Extract a ring from the vector map, based on the current index position,
      and write it to the area shapefile.
@@ -162,16 +162,6 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
 
   cindx = curr_indx + 1;
   if( curr_indx >= Map->n_areas ) return 0;
-
-  if (!V2_area_att(Map, cindx)) {
-    fprintf ( lfp, "Skipping unlabeled area (hole?) #%d\n", cindx);
-    return -1;
-  }
-
-  if( V2_get_area( Map, cindx, &Area ) != 0 ) {
-    fprintf( lfp, "Area %d unassigned\n", cindx );
-    return -1;
-  }
  
   logfile_name = (char *)malloc(128);
 
@@ -179,6 +169,16 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
 
   if( (lfp = fopen( logfile_name, "a" )) == NULL ) {
     lfp = stdout;
+  }
+
+  if (!all && !V2_area_att(Map, cindx)) {
+    fprintf ( lfp, "Skipping unlabeled area (hole?) #%d\n", cindx);
+    return -1;
+  }
+
+  if( V2_get_area( Map, cindx, &Area ) != 0 ) {
+    fprintf( lfp, "Area %d unassigned\n", cindx );
+    return -1;
   }
 
   Points = Vect_new_line_struct();
