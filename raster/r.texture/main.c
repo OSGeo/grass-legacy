@@ -53,7 +53,7 @@ main(int argc, char *argv[])
 	int row,col,i,j;
   	CELL **data;			/* Data structure containing image */
   	CELL *cell_row;
-  	FCELL measure;			/* Containing mesure done */
+  	FCELL measure;			/* Containing measure done */
   	int t_measure, dist, size;    /* dist = value of distance, size = s. of sliding window */
 	int infd, outfd;
 	int verbose;
@@ -336,7 +336,7 @@ for (t_measure=0; t_measure < 56; t_measure++)
 			G_fatal_error ("Cannot write to <%s>",result);
 
 	G_close_cell (outfd);
-	fprintf (stdout, "Measure %d of 56 done.\n", (t_measure+1));
+	fprintf (stdout, "Calculated measure #%d (56 measures available).\n", (t_measure+1));
 }
    G_free(outrast); 
    G_free (data);
