@@ -1,0 +1,20 @@
+*** main.c.Orig	Mon Feb 27 16:22:38 1995
+--- main.c	Mon Mar 30 12:37:16 1998
+***************
+*** 387,389 ****
+  /* Make sure that vector file "output" does not already exist in "vect_mapset". */
+!   if ( (vect_mapset = G_find_vector2(output,vect_mapset)) != NULL )
+     {
+--- 387,389 ----
+  /* Make sure that vector file "output" does not already exist in "vect_mapset". */
+!   if ( G_find_vector2(output,vect_mapset) != NULL )
+     {
+***************
+*** 479,481 ****
+    /* "Vect_close" will write the header for the vector file. */
+!   Vect_close(map);
+    fclose(fd_site);
+--- 479,481 ----
+    /* "Vect_close" will write the header for the vector file. */
+!   Vect_close(&map);
+    fclose(fd_site);
