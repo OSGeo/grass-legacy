@@ -133,6 +133,9 @@ old2new (char *in, char *out, int endian)
 	}
     } 
     fprintf(stdout,"%-5d centroids written to output file.\n",j);
+
+    /* Convert dig_cats to table */
+    attributes ( in, &Mapout );
     
     Vect_build ( &Mapout, stdout );  
     Vect_close ( &Mapout );
