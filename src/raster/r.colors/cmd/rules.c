@@ -1,3 +1,4 @@
+/* $Id$ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -187,7 +188,7 @@ int read_rule (double *val, int *r, int *g, int *b, int *set, int *nvalue, int *
 		badrule(buf,line);
 		continue;
 	    }
-	    *val = min + ((double)max-(double)min)*(n+0.5)/100.0;
+	    *val = min + ((double)max-(double)min)*n/100.0;
 	    *set = 1;
 	    return 1;
 	}
@@ -244,7 +245,7 @@ int read_rule (double *val, int *r, int *g, int *b, int *set, int *nvalue, int *
 		badrule(buf,line);
 		continue;
 	    }
-	    *val = min + ((double)max-(double)min)*(n+0.5)/100.0;
+	    *val = min + ((double)max-(double)min)*n/100.0;
 	    *set = 1;
 	    return 1;
 	}
