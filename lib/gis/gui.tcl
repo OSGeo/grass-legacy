@@ -70,27 +70,25 @@ proc prnout {dlg fh} {
 			$outtext delete $pos
 			$outtext insert end $str1
 		}
-		if { [regexp -- {^GRASS_INFO_([^ ]+): (.+)$} $str match key val rest] } {
-			if { $key == "PERCENT" } { 
-                                progress $dlg $val
-				if { $val >= 100 } { 
-                                	progress $dlg -1
-		    			$outtext insert end "\n"
-				}
-			} else { 
-			    if { $key == "MESSAGE" } {
+		if { [regexp -- {^GRASS_INFO_([^(]+)\(([0-9]+),([0-9]+)\): (.+)$} $str match key message_pid message_id val rest] } {
+			if { $key == "MESSAGE" } {
 				$outtext image create end -image [image create photo -file "$imagepath/info.gif"] 
-			    } 
-			    if { $key == "WARNING" } {
+			} elseif { $key == "WARNING" } {
 				$outtext image create end -image [image create photo -file "$imagepath/warning.gif"] 
-			    } 
-			    if { $key == "ERROR" } {
+			} elseif { $key == "ERROR" } {
 				$outtext image create end -image [image create photo -file "$imagepath/error.gif"] 
-			    }
-			    $outtext insert end $val
 			}
+			$outtext insert end $val
+		} elseif { [regexp -- {^GRASS_INFO_PERCENT: (.+)$} $str match val rest] } {
+			progress $dlg $val
+			if { $val >= 100 } { 
+				progress $dlg -1
+				$outtext insert end "\n"
+			}
+		} elseif { [regexp -- {^GRASS_INFO_END.+} $str match key rest] } {
+			# nothing
 		} else {
-		    $outtext insert end $str
+			$outtext insert end $str
                 }
 		$outtext yview end
 	}

@@ -50,6 +50,7 @@
 #include <unistd.h>
 #include <time.h>
 #include <stdarg.h>
+#include <sys/types.h>
 #include "glocale.h"
 #include "gis.h"
 
@@ -61,10 +62,11 @@
 static int (*ext_error)() = 0; /* Roger Bivand 17 June 2000 */
 static int no_warn = 0;
 static int no_sleep = 1;
+static int message_id = 1;
 
 extern char *getenv();
 static int print_word ( FILE *,char **,int *,int);
-static void print_sentence ( FILE *, char *, char *);
+static void print_sentence ( FILE *, int type, char *);
 static int print_error(char *,int);
 static int mail_msg (char *,int);
 static int write_error(char *, int,char *,long,char *);
@@ -153,16 +155,12 @@ int G_unset_error_routine ()
 static int print_error(char *msg,int type)
 {
     static char *prefix_std[3];
-    static char *prefix_gui[3];
     int fatal, format;
     
     if ( !prefix_std[0] ) { /* First time: set prefixes  */
         prefix_std[0] = "";
 	prefix_std[1] = _("WARNING: ");
 	prefix_std[2] = _("ERROR: ");
-        prefix_gui[0] = "GRASS_INFO_MESSAGE: ";
-	prefix_gui[1] = "GRASS_INFO_WARNING: ";
-	prefix_gui[2] = "GRASS_INFO_ERROR: ";
     }
     
     if ( type == ERR )
@@ -199,7 +197,7 @@ static int print_error(char *msg,int type)
 		mail_msg (msg, fatal);
 	    }
 	} else { /* GUI */
-	    print_sentence ( stderr, prefix_gui[type], msg );
+	    print_sentence ( stderr, type, msg );
 	}
     }
 
@@ -348,14 +346,26 @@ static int print_word ( FILE *fd, char **word, int *len, int lead)
 }
 
 /* Print one message, prefix inserted before each new line */
-static void print_sentence ( FILE *fd, char *prefix, char *msg )
+static void print_sentence ( FILE *fd, int type, char *msg )
 {
-    int  i;
-    char *start, *end;
-    int  len; /*length of one row */
+    char *start;
+    static char prefix[100];
+
+    switch ( type ) {
+	case MSG: 
+    	    sprintf ( prefix, "GRASS_INFO_MESSAGE(%d,%d): ", (int)getpid(), message_id ); 
+	    break;
+	case WARN:
+    	    sprintf ( prefix, "GRASS_INFO_WARNING(%d,%d): ", (int)getpid(), message_id ); 
+	    break;
+	case ERR:
+    	    sprintf ( prefix, "GRASS_INFO_ERROR(%d,%d): ", (int)getpid(), message_id ); 
+	    break;
+    }
 
     start = msg;
 
+    fprintf(stderr, "\n" );
     while ( *start != '\0' ) {
 	fprintf ( fd, "%s", prefix);
 
@@ -370,6 +380,8 @@ static void print_sentence ( FILE *fd, char *prefix, char *msg )
 	
 	fprintf (fd, "\n" );
     }
+    fprintf(stderr, "GRASS_INFO_END(%d,%d)\n", (int)getpid(), message_id );
+    message_id++;
 }
     
 int G_info_format ( void ) 
