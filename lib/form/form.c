@@ -151,7 +151,7 @@ submit ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 		break;
 	    }
 	}
-	if ( !found ) { 
+	if ( !found && (G_strcasecmp(Cols[i].name, F_ENCODING) != 0)) { 
 	    G_warning ( "Cannot find column type" );
 	    db_close_database(driver);
 	    db_shutdown_driver(driver); 
@@ -169,11 +169,40 @@ submit ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
     first = 1;
     for ( i = 0; i < nCols; i++ ) {
 	if ( G_strcasecmp( Cols[i].name, Key ) == 0  )  continue;
+		
+	if (G_strcasecmp(Cols[i].name, F_ENCODING) == 0) {
+
+	    G_debug(3, "env is %s, val is %s", G__getenv("GRASS_DB_ENCODING"),
+		    Cols[i].value);
+
+	    if (G_strcasecmp(Cols[i].value, G__getenv("GRASS_DB_ENCODING")) ==
+		0)
+		continue;
+	    else {
+		G_setenv("GRASS_DB_ENCODING", Cols[i].value);
+		db_close_database(driver);
+		db_shutdown_driver(driver);
+		sprintf(buf,
+			"set submit_msg \"View data encoding now is %s\"",
+			Cols[i].value);
+		Tcl_Eval(interp, buf);
+		Tcl_Eval(interp, "set submit_result 0");
+		return TCL_OK;
+	    }
+	}
+
 	if ( !first ) { db_append_string (&sql, ", "); }
 	if ( Cols[i].ctype == DB_C_TYPE_INT || Cols[i].ctype == DB_C_TYPE_DOUBLE ) {
             sprintf (buf, "%s = %s", Cols[i].name, Cols[i].value );
 	} else {
-	    db_set_string ( &strval, Cols[i].value );
+		memset(buf, '\0', strlen(buf));
+	    	Tcl_UtfToExternal(interp,
+		Tcl_GetEncoding(interp, G__getenv("GRASS_DB_ENCODING")),
+		Cols[i].value, strlen(Cols[i].value), 0, NULL,
+		buf, strlen(Cols[i].value) * 2, NULL, NULL,
+			NULL);
+
+	    db_set_string ( &strval, buf );
 	    db_double_quote_string (&strval);
             sprintf (buf, "%s = '%s'", Cols[i].name, db_get_string(&strval) );
 	}
@@ -217,6 +246,7 @@ main ( int argc, char *argv[] )
     static FILE *child_send, *child_recv;
     static      Tcl_Interp *interp;
     static int  frmid = 0; 
+    char *encoding_val;
     
     G_debug ( 2, "Form: main()" );
     
@@ -274,10 +304,21 @@ main ( int argc, char *argv[] )
 		child_html = (char *) G_malloc ( length + 1 ); 
 		fread ( child_html, length, 1, child_recv);
 		child_html[length] = '\0';
-		G_debug ( 2, "Form: html = %s", child_html );
+		
+		memset(buf, '\0', strlen(buf));
+
+		encoding_val = G__getenv("GRASS_DB_ENCODING");
+		
+		Tcl_ExternalToUtf(interp,
+		Tcl_GetEncoding(interp, encoding_val),
+		child_html, strlen(child_html), 0, NULL,
+		buf, strlen(child_html) * 2, NULL, NULL,
+			NULL);
+
+		G_debug ( 2, "Form: html = %s", buf );
 
 		/* Insert new page */
-		Tcl_SetVar ( interp, "html", child_html, 0);
+		Tcl_SetVar ( interp, "html", buf, 0);
 		sprintf (buf, "add_form %d \"%s\"", frmid, child_title );
 		Tcl_Eval( interp, buf );
 		

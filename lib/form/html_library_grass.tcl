@@ -906,17 +906,12 @@ proc HMtag_/form {win param text} {
 		lappend form(submit) [list $name \$form(radio_$name)]
 	}
 
-	# process the reset button(s)
-
-	foreach item $form(reset_button) {
-		$item configure -command $form(reset)
-	}
-
 	# no submit button - add one
 	if {$form(submit_button) == ""} {
 		HMinput_submit $win {}
+				
 	}
-
+	
 	# process the "submit" command(s)
 	# each submit button could have its own name,value pair
 
@@ -926,6 +921,12 @@ proc HMtag_/form {win param text} {
 		$item configure -command  \
 				[list HMsubmit_button $win $var(form_id) $form(param) \
 				$submit]
+	}
+
+	# process the reset button(s)
+	HMinput_reset $win {}
+	foreach item $form(reset_button) {
+		$item configure -command $form(reset)
 	}
 
 	# unset all unused fields here
@@ -1113,7 +1114,7 @@ proc HMinput_reset {win param} {
 	HMextract_param $param value
 
 	set item $win.input_reset,$var(tags)
-	button $item -text [HMmap_esc $value]
+	button $item -text [HMmap_esc $value] -cursor left_ptr
 	HMwin_install $win $item
 	lappend form(reset_button) $item
 }
@@ -1130,7 +1131,7 @@ proc HMinput_submit {win param} {
 	set value submit
 	HMextract_param $param value
 	set item $win.input_submit,$var(tags)
-	button $item -text [HMmap_esc $value] -fg blue -cursor left_ptr 
+	button $item -text [HMmap_esc $value] -fg blue -cursor left_ptr
 	HMwin_install $win $item
 	lappend form(submit_button) $item
 	# need to tie the "name=value" to this button
@@ -1162,7 +1163,7 @@ proc HMtag_select {win param text} {
 	set item $win.select,$var(tags)
     frame $item
     set form(select_frame) $item
-	listbox $item.list -selectmode $mode -width 0 -exportselection 0
+	listbox $item.list -selectmode $mode -width 0 -exportselection 0 -cursor left_ptr
 	HMwin_install $win $item
 }
 
