@@ -17,6 +17,13 @@
 
 #include "y.tab.h"
 
+#ifndef YY_NULL
+	#define YY_NULL 0
+#endif
+#ifndef yyterminate
+	#define yyterminate() return YY_NULL
+#endif
+
 static const char *input_string;
 static int input_length;
 static int input_offset;
