@@ -18,9 +18,6 @@
 #include "rtree.h"
 
 
-#ifdef HAVE_POSTGRES
-#include "libpq-fe.h"
-#endif
 #ifdef HAVE_OGR
 #include "ogr_api.h"
 #endif
@@ -155,43 +152,7 @@ struct Coor_info
   };
 
 /* Non-native format inforamtion */
-/* Shapefile */
-struct Format_info_shp {
-    char       *file;    /* path to shp file without .shp */
-    char       *baseName; /* Name of the file without .shp */
-    char       *dirName; /* Name of the directory shape is inside */
-    /* char       *cat_col; */ /* category column */
-    /* int        cat_col_num; */ /* category column number */
-    SHPHandle  hShp;     
-    DBFHandle  hDbf;
-    int        type;     /* shapefile type */
-    int        nShapes;  /* number of shapes */
-    int        shape;    /* offset: next shape */ 
-    int        part;     /* offset: next part */ 
-};
-/* PostGIS */
-#ifdef HAVE_POSTGRES
-struct Format_info_post {
-    char       *db;          /* database connection string */
-    char       *host;        /* host name */
-    char       *port;        /* port number */
-    char       *options;        
-    char       *tty;
-    char       *database;    /* database name */
-    char       *user;        /* user name */ 
-    char       *password;    /* user password */
-    char       *geom_table;  /* geometry table name */
-    char       *cat_table;   /* category table name */
-    char       *geom_id;     /* geometry table: id column */
-    char       *geom_type;   /* geometry table: type column */
-    char       *geom_geom;   /* geometry table: column name */
-    char       *cat_id;      /* category table: id column */
-    char       *cat_field;   /* category table: field column */
-    char       *cat_cat;     /* category table: category column */
-    PGconn     *conn;        /* connection */
-    int        lastRead;   /* id of last read line, 0 if no one was yet read */
-};
-#endif
+/* TODO: structer size should not change depending on compilation I think */
 /* OGR */
 #ifdef HAVE_OGR
 struct Format_info_ogr {
@@ -232,10 +193,6 @@ struct Format_info_ogr {
 #endif
 struct Format_info {
     int i;
-    struct Format_info_shp shp;
-#ifdef HAVE_POSTGRES
-    struct Format_info_post post;
-#endif
 #ifdef HAVE_OGR
     struct Format_info_ogr ogr;
 #endif

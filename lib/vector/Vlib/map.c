@@ -181,20 +181,8 @@ Vect_delete ( char *map )
 	return -1;
     }
 
-#ifdef HAVE_POSTGRES
-    /* If not Vect_open_old() must fail */
-    /* Delete PostGis tables (shoud be in some _post.c) */
-    if ( Map.format == GV_FORMAT_POSTGIS ) {
-	ret = Vect_delete_post_tables (  &Map );
-	if ( ret == -1 ) {
-	    G_warning ("Cannot delete PostGIS tables" );
-	    return -1;
-	}
-    }
-#endif
-    
     /* Delete all tables, NOT external like shapefile */
-    if ( Map.format == GV_FORMAT_NATIVE || Map.format == GV_FORMAT_POSTGIS ) {
+    if ( Map.format == GV_FORMAT_NATIVE ) {
 	n = Vect_get_num_dblinks ( &Map );
 	for ( i = 0; i < n; i++ ) {
 	    Fi = Vect_get_dblink ( &Map, i );

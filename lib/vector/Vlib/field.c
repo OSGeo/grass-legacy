@@ -373,14 +373,10 @@ Vect_read_dblinks ( struct Map_info *Map )
     dbl = Map->dblnk;
     Vect_reset_dblinks ( dbl );
     
-    if ( Map->format == GV_FORMAT_SHAPE ) {
-        G_debug ( 3, "Vector format shape");
-	Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.shp.baseName, "shp_fid", Map->fInfo.shp.dirName, "shp" );
-	return ( 1 );
-    } else if ( Map->format == GV_FORMAT_OGR ) {
+    if ( Map->format == GV_FORMAT_OGR ) {
 	Vect_add_dblink ( dbl, 1, NULL, Map->fInfo.ogr.layer_name, "FID", Map->fInfo.ogr.dsn, "ogr" ) ; 
 	return ( 1 );
-    } else if ( Map->format != GV_FORMAT_NATIVE &&  Map->format != GV_FORMAT_POSTGIS ) {
+    } else if ( Map->format != GV_FORMAT_NATIVE ) {
 	G_fatal_error ("Don't know how to read links for format %d", Map->format );
     }
     

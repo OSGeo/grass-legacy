@@ -29,12 +29,6 @@ static int format () { G_fatal_error ("Requested format is not compiled in this 
 static int (*Close_array[][2]) () =
 {
      { clo_dummy, V1_close_nat }
-   , { clo_dummy, V1_close_shp } 
-#ifdef HAVE_POSTGRES
-   , { clo_dummy, V1_close_post }
-#else
-   ,{ clo_dummy, format }
-#endif
 #ifdef HAVE_OGR
    , { clo_dummy, V1_close_ogr }
 #else
@@ -85,7 +79,7 @@ Vect_close (struct Map_info *Map)
 
     }
 
-    if ( Map->format == GV_FORMAT_NATIVE || Map->format == GV_FORMAT_POSTGIS ) {
+    if ( Map->format == GV_FORMAT_NATIVE ) {
         G_debug (1, "close history file" );
 	if ( Map->hist_fp != NULL ) fclose ( Map->hist_fp );
     }

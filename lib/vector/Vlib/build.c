@@ -26,12 +26,6 @@ static int format () { G_fatal_error ("Requested format is not compiled in this 
 static int (*Build_array[]) () =
 {
       Vect_build_nat
-    , Vect_build_shp
-#ifdef HAVE_POSTGRES
-    , Vect_build_post
-#else
-    , format
-#endif
 #ifdef HAVE_OGR
     , Vect_build_ogr
 #else
@@ -100,7 +94,7 @@ Vect_get_built ( struct Map_info *Map )
  All calls to Vect_write_line, Vect_rewrite_line, Vect_delete_line respect the last value of 
  build used in this function.
 
- Values lower than GV_BUILD_ALL are supported only by GV_FORMAT_NATIVE and GV_FORMAT_POSTGIS,
+ Values lower than GV_BUILD_ALL are supported only by GV_FORMAT_NATIVE,
  other formats ignore build and build always GV_BUILD_ALL
 
  Note that the functions has effect only if requested level is higher than current level, to rebuild

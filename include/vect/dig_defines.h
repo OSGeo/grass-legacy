@@ -60,9 +60,7 @@
 /* Geometry data formats supported by lib */
 /* Don't change GV_FORMAT_* values, this order is hardcoded in lib */
 #define GV_FORMAT_NATIVE   0 /* grass native format */
-#define GV_FORMAT_SHAPE    1 /* shapefile format */
-#define GV_FORMAT_POSTGIS  2 /* postgis format */
-#define GV_FORMAT_OGR      3 /* OGR format */
+#define GV_FORMAT_OGR      1 /* OGR format */
 
 /* How may tables linked to map */
 #define GV_1TABLE  0   /* One table */

@@ -26,12 +26,6 @@ static int format () { G_fatal_error ("Requested format is not compiled in this 
 static int (*Read_next_line_array[][3]) () =
 {
     { read_next_dummy, V1_read_next_line_nat, V2_read_next_line_nat }
-   ,{ read_next_dummy, V1_read_next_line_shp, V2_read_next_line_shp }
-#ifdef HAVE_POSTGRES
-   ,{ read_next_dummy, V1_read_next_line_post, V2_read_next_line_post }
-#else
-   ,{ read_next_dummy, format, format }
-#endif
 #ifdef HAVE_OGR
    ,{ read_next_dummy, V1_read_next_line_ogr, V2_read_next_line_ogr }
 #else
@@ -42,12 +36,6 @@ static int (*Read_next_line_array[][3]) () =
 static int (*V2_read_line_array[]) () =
 {
    V2_read_line_nat 
-   , V2_read_line_shp 
-#ifdef HAVE_POSTGRES
-   , V2_read_line_post
-#else
-   , format
-#endif
 #ifdef HAVE_OGR
    , V2_read_line_ogr
 #else
