@@ -1,90 +1,3 @@
-/**********************************************************************
- *  G_read_histogram (name, mapset, histogram)
- *      char *name                   name of map
- *      char *mapset                 mapset that map belongs to
- *      struct Histogram *histogram  struct for histogram
- *
- *  Reads the histogram information associated with map layer "map"
- *  in mapset "mapset" into the structure "histogram".
- *
- *   returns:    1  if successful
- *               0  if no histogram file
- *              -1  on fail
- *
- *  note:   a warning message is printed if the file is missing or incorrect
- **********************************************************************
- *  G_init_histogram (histogram)
- *      struct Histogram *histogram
- *
- *  initializes the histogram structure for calls to G_set_histogram()
- *  and G_add_histogram()
- **********************************************************************
- *  G_add_histogram (cat, count, histogram);
- *      CELL cat
- *      long count
- *      struct Histogram *histogram
- *
- *  adds count to the histogram value for cat
- **********************************************************************
- *  G_set_histogram (cat, count, histogram);
- *      CELL cat
- *      long count
- *      struct Histogram *histogram
- *
- *  sets the histogram value for cat to count
- **********************************************************************
- *  G_sort_histogram (histogram)
- *      struct Histogram *histogram
- *
- *  Sorts the histogram in ascending order by category,
- *  combining (by adding) elements that have the same category.
- **********************************************************************
- *  G_sort_histogram_by_count (histogram)
- *      struct Histogram *histogram
- *
- *  Sorts the histogram in ascending order by counts then category.
- *  No combining is done.
- **********************************************************************
- *  G_get_histogram_num (histogram)
- *
- *  returns the number of elements in the histogram
- **********************************************************************
- *  CELL
- *  G_get_histogram_cat (n, histogram)
- *      int n
- *      struct Histogram *histogram
- *
- *  Returns cat for the nth element in the histogram
- **********************************************************************
- *  long
- *  G_get_histogram_count (n, histogram)
- *      int n
- *      struct Histogram *histogram
- *
- *  Returns count for the nth element in the histogram
- **********************************************************************
- *  G_write_histogram (name, &histogram)
- *      char *name
- *      struct Histogram *histogram
- *
- *  Writes the histogram information associated with map layer "name"
- *
- *   returns:    1  if successful
- *              -1  on fail
- *
- **********************************************************************
- *  G_remove_histogram (name)
- *      char *name
- *
- *  Removes the histogram information associated with map layer "name"
- *
- **********************************************************************
- * G_free_histogram (histogram)
- *      struct Histogram *histogram
- *
- * frees the memory allocated for the histogram
- **********************************************************************/
-
 #include "gis.h"
 #include "glocale.h"
 #include <stdlib.h>
@@ -95,6 +8,15 @@ static FILE *fopen_histogram_new(char *);
 static int cmp(const void *, const void *);
 static int cmp_count (const void *, const void *);
 
+/*!
+ * \brief initializes the histogram structure
+ * 
+ * initializes the histogram structure for calls to G_set_histogram()
+ * and G_add_histogram()
+ * \param  histogram
+ * \return int
+ */
+
 int G_init_histogram (
     struct Histogram *histogram)
 {
@@ -103,6 +25,21 @@ int G_init_histogram (
 
     return 0;
 }
+
+/*!
+ * \brief read the histogram information
+ *
+ *  Reads the histogram information associated with map layer "map"
+ *  in mapset "mapset" into the structure "histogram".
+ *
+ *  note:   a warning message is printed if the file is missing or incorrect
+ * \param name: name of map
+ * \param mapset: mapset that map belongs to 
+ * \param histogram: struct for histogram
+ * \return 1  if successful,
+ *               0  if no histogram file,
+ *              -1  on fail
+ */
 
 int G_read_histogram (
     char *name,char *mapset,
@@ -156,6 +93,16 @@ int G_read_histogram (
     return 1;
 }
 
+/*!
+ * \brief Writes the histogram information
+ *
+ *  Writes the histogram information associated with map layer "name"
+ * \param name: name of map
+ * \param histogram: struct for histogram
+ * \return  1  if successful,
+ *              -1  on fail
+ */
+
 int G_write_histogram (
     char *name,
     struct Histogram *histogram)
@@ -178,6 +125,14 @@ int G_write_histogram (
     return 1;
 }
 
+/*!
+ * \brief Writes the histogram information to file
+ *
+ * \param name: name of map
+ * \param statf
+ * \return 
+ */
+
 int G_write_histogram_cs (
     char *name,
     struct Cell_stats *statf)
@@ -199,6 +154,12 @@ int G_write_histogram_cs (
     return 1;
 }
 
+/*!
+ * \brief 
+ *
+ * \param 
+ * \return 
+ */
 int G_make_histogram_cs (
     struct Cell_stats *statf,
     struct Histogram *histogram)
@@ -215,11 +176,27 @@ int G_make_histogram_cs (
     return 0;
 }
 
+/*!
+ * \brief Sorts the histogram in ascending order by counts then category
+ *
+ *  Sorts the histogram in ascending order by counts then category.
+ *  No combining is done.
+ * \param histogram: struct for histogram
+ * \return  1  if successful,
+ *              -1  on fail
+ */
 int G_get_histogram_num (struct Histogram *histogram)
 {
     return histogram->num;
 }
 
+/*!
+ * \brief Returns cat for the nth element in the histogram
+ *
+ *  Returns cat for the nth element in the histogram
+ * \param histogram: struct for histogram
+ * \return CELL
+ */
 CELL G_get_histogram_cat (int n, struct Histogram *histogram)
 {
     if (n < 0 || n >= histogram->num)
@@ -227,6 +204,14 @@ CELL G_get_histogram_cat (int n, struct Histogram *histogram)
     return histogram->list[n].cat;
 }
 
+/*!
+ * \brief Returns count for the nth element in the histogram
+ *
+ *  Returns count for the nth element in the histogram
+ * \param n: nth element
+ * \param histogram: struct for histogram
+ * \return count
+ */
 long G_get_histogram_count (int n, struct Histogram *histogram)
 {
     if (n < 0 || n >= histogram->num)
@@ -234,6 +219,13 @@ long G_get_histogram_count (int n, struct Histogram *histogram)
     return histogram->list[n].count;
 }
 
+/*!
+ * \brief frees the memory allocated for the histogram
+ *
+ * frees the memory allocated for the histogram
+ * \param histogram: struct for histogram
+ * \return 
+ */
 int G_free_histogram ( struct Histogram *histogram)
 {
     if (histogram->num > 0)
@@ -243,6 +235,15 @@ int G_free_histogram ( struct Histogram *histogram)
     return 1;
 }
 
+/*!
+ * \brief Sorts the histogram
+ *
+ *  Sorts the histogram in ascending order by category,
+ *  combining (by adding) elements that have the same category.
+ * \param histogram: struct for histogram
+ * \return  0  if successful,
+ *              1  on fail
+ */
 int G_sort_histogram ( struct Histogram *histogram)
 {
     int a,b,n;
@@ -289,6 +290,15 @@ static int cmp(const void *aa, const void *bb)
     return 0;
 }
 
+/*!
+ * \brief Sorts the histogram by counts
+ *
+ *  Sorts the histogram in ascending order by counts then category.
+ *  No combining is done.
+ * \param histogram: struct for histogram
+ * \return  0  if successful,
+ *              1  on fail
+ */
 int G_sort_histogram_by_count ( struct Histogram *histogram)
 {
     int n;
@@ -334,6 +344,14 @@ static FILE *fopen_histogram_new ( char *name)
     return fd;
 }
 
+/*!
+ * \brief Removes the histogram
+ *
+ *  Removes the histogram information associated with map layer "name"
+ * \param name: name of map
+ * \return 0
+ */
+
 int G_remove_histogram(name)
     char *name;
 {
@@ -344,6 +362,16 @@ int G_remove_histogram(name)
     return 0;
 }
 
+/*!
+ * \brief adds count to the histogram value for cat
+ *
+ *  adds count to the histogram value for cat
+ * \param cat: category
+ * \param count
+ * \param histogram: struct for histogram
+ * \return 0  if successful,
+ *              1  on fail
+ */
 int G_add_histogram (
     CELL cat,
     long count,
@@ -363,6 +391,16 @@ int G_add_histogram (
     return 0;
 }
 
+/*!
+ * \brief sets the histogram value for cat to count
+ *
+ *  sets the histogram value for cat to count
+ * \param cat: category
+ * \param count
+ * \param histogram: struct for histogram
+ * \return 0  if successful,
+ *              1  on fail
+ */
 int G_set_histogram (
     CELL cat,
     long count,
@@ -382,6 +420,14 @@ int G_set_histogram (
     return 0;
 }
 
+/*!
+ * \brief 
+ *
+ * \param cat: category
+ * \param count
+ * \param histogram: struct for histogram
+ * \return 
+ */
 int G_extend_histogram (
     CELL cat,
     long count,
@@ -396,6 +442,12 @@ int G_extend_histogram (
     return 0;
 }
 
+/*!
+ * \brief 
+ *
+ * \param histogram: struct for histogram
+ * \return 
+ */
 int G_zero_histogram ( struct Histogram *histogram)
 {
     int i;
