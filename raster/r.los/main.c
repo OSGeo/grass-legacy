@@ -220,6 +220,11 @@ main (int argc, char *argv[])
 		G_fatal_error (buf);
 		exit(1);
 	}
+	
+	/*Warning needed unless module is upgraded */
+	if (G_raster_map_is_fp(elev_layer, old_mapset) == 1)
+	   G_warning("The input map <%s> is a floating point map, but r.los operates only on integer maps (FP update needed). Consider to multiply the map values by 100 or 1000.", elev_layer);
+	
 	/*	open cell layer for writing output 		*/
 	new = G_open_cell_new (out_layer);
 	if (new < 0)
