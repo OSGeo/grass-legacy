@@ -16,7 +16,7 @@
 #include <Xm/Xm.h>
 #include <Xm/Form.h>
       /* include file for GL drawing widget */
-#include "GLwMDrawA.h"
+#include <GL/GLwMDrawA.h>
 #include "Ball.h"
 
 BallData Trackball;
