@@ -249,13 +249,16 @@ cpvalue(dest, dcol, src, scol)
 			switch(src.type)
 			{
 				case CELL_TYPE:
-					dest.data.c[dcol] = (CELL) src.data.c[scol];
+					dest.data.c[dcol] =
+						(CELL) src.data.c[scol];
 					break;
 				case FCELL_TYPE:
-					dest.data.c[dcol] = (CELL) src.data.f[scol];
+					dest.data.c[dcol] =
+						(CELL) src.data.f[scol];
 					break;
 				case DCELL_TYPE:
-					dest.data.c[dcol] = (CELL) src.data.d[scol];
+					dest.data.c[dcol] =
+						(CELL) src.data.d[scol];
 					break;
 			}
 			break;
@@ -263,13 +266,16 @@ cpvalue(dest, dcol, src, scol)
 			switch(src.type)
 			{
 				case CELL_TYPE:
-					dest.data.f[dcol] = (FCELL) src.data.c[scol];
+					dest.data.f[dcol] =
+						(FCELL) src.data.c[scol];
 					break;
 				case FCELL_TYPE:
-					dest.data.f[dcol] = (FCELL) src.data.f[scol];
+					dest.data.f[dcol] =
+						(FCELL) src.data.f[scol];
 					break;
 				case DCELL_TYPE:
-					dest.data.f[dcol] = (FCELL) src.data.d[scol];
+					dest.data.f[dcol] =
+						(FCELL) src.data.d[scol];
 					break;
 			}
 			break;
@@ -277,13 +283,16 @@ cpvalue(dest, dcol, src, scol)
 			switch(src.type)
 			{
 				case CELL_TYPE:
-					dest.data.d[dcol] = (DCELL) src.data.c[scol];
+					dest.data.d[dcol] =
+						(DCELL) src.data.c[scol];
 					break;
 				case FCELL_TYPE:
-					dest.data.d[dcol] = (DCELL) src.data.f[scol];
+					dest.data.d[dcol] =
+						(DCELL) src.data.f[scol];
 					break;
 				case DCELL_TYPE:
-					dest.data.d[dcol] = (DCELL) src.data.d[scol];
+					dest.data.d[dcol] =
+						(DCELL) src.data.d[scol];
 					break;
 			}
 			break;
