@@ -1,4 +1,4 @@
-PGM    = r.in.bin2
+PGM    = r.in.bin
 HOME   = $(BIN_MAIN_CMD)
 
 LIST   = main.o tif_swab.o
