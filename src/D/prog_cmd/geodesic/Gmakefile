@@ -1,0 +1,9 @@
+PGM=Dgeodesic
+LIBES=$(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(MATHLIB)
+
+LIST = main.o mouse.o plot.o
+
+$(BIN)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIBES): #
