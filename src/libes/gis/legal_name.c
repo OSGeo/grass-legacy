@@ -1,4 +1,5 @@
 #include "gis.h"
+#include "glocale.h"
 /**********************************************************************
  *
  *   char *
@@ -14,13 +15,13 @@
 int G_legal_filename (char *s)
 {
     if (*s == '.' || *s == 0) {
-	fprintf(stderr, "Illegal filename.  Cannot be '.' or 'NULL'\n");
+	fprintf(stderr, _("Illegal filename.  Cannot be '.' or 'NULL'\n"));
 	return -1;
     }
 
     for ( ; *s; s++)
 	if (*s == '/' || *s == '"' || *s == '\'' || *s <= ' ' || *s > 0176) {
-		fprintf(stderr, "Illegal filename. character <%c> not allowed.", *s);
+		fprintf(stderr, _("Illegal filename. character <%c> not allowed."), *s);
 	    return -1;
 	}
 

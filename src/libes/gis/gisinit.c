@@ -13,6 +13,7 @@
 #include "gis.h"
 #include "G.h"
 #include "version.h"
+#include "glocale.h"
 
 struct G__ G__ ;
 static int initialized = 0;
@@ -36,12 +37,12 @@ int G_gisinit( char *pgm)
     case 1:
 	    break;
     case 0:
-	    sprintf(msg,"MAPSET %s - permission denied", mapset);
+	    sprintf(msg,_("MAPSET %s - permission denied"), mapset);
 	    G_fatal_error (msg);
 	    exit(-1);
 	    break;
     default:
-	    sprintf(msg,"MAPSET %s not found", mapset);
+	    sprintf(msg,_("MAPSET %s not found"), mapset);
 	    G_fatal_error (msg);
 	    exit(-1);
 	    break;
@@ -62,7 +63,7 @@ int G_no_gisinit(void)
 int G__check_gisinit()
 {
     if (initialized) return 1;
-    fprintf (stderr, "\7ERROR: System not initialized. Programmer forgot to call G_gisinit()\n");
+    fprintf (stderr, _("\7ERROR: System not initialized. Programmer forgot to call G_gisinit()\n"));
     sleep(3);
     exit(-1);
 }

@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include "G.h"
 #include "gis.h"
+#include "glocale.h"
 
 int G_get_window (struct Cell_head *window )
 {
@@ -35,7 +36,7 @@ int G_get_window (struct Cell_head *window )
 
 	if(err = G__get_window (&dbwindow,"","WIND",G_mapset()))
 	{
-	    G_fatal_error ("region for current mapset %s\nrun \"g.region\"", err);
+	    G_fatal_error (_("region for current mapset %s\nrun \"g.region\""), err);
 	    G_free (err);
 	}
     }
@@ -58,7 +59,7 @@ int G_get_default_window ( struct Cell_head *window )
 
     if ((err = G__get_window (window,"","DEFAULT_WIND","PERMANENT")))
     {
-	G_fatal_error ("default region %s", err);
+	G_fatal_error (_("default region %s"), err);
 	G_free (err);
     }
     return 1;
@@ -79,7 +80,7 @@ char path[1024];
 G__file_name (path,element,name,mapset);
 fprintf (stderr, "G__get_window(%s)\n",path);
 */
-	return G_store ("is not set");
+	return G_store (_("is not set"));
     }
 
     err = G__read_Cell_head(fd, window, 0);
@@ -89,7 +90,7 @@ fprintf (stderr, "G__get_window(%s)\n",path);
     {
 	char msg[1024];
 
-	sprintf (msg, "is invalid\n%s", err);
+	sprintf (msg, _("is invalid\n%s"), err);
 	G_free (err);
 	return G_store (msg);
     }
