@@ -39,6 +39,8 @@ static int initialize_map(expression *e)
 	allocate_buf(e);
 	e->data.map.idx = open_map(e->data.map.name, e->data.map.mod,
 				   e->data.map.row, e->data.map.col);
+	if (e->data.map.idx < 0)
+		return -1;
 	return 0;
 }
 
