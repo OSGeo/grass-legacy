@@ -1,5 +1,7 @@
 GRAPH = -lsuntool -lsunwindow -lpixrect $(MATHLIB)
 
+DR_LIB = ../lib/driverlib.a
+
 OFILES =  \
 	Can_do.o\
 	Clr_table.o \
@@ -21,8 +23,10 @@ OFILES =  \
 $(GISBASE)/driver/SUNVIEW: SUNVIEW
 	mv SUNVIEW $@
 
-SUNVIEW: $(OFILES) ../lib/driverlib.a
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)
+SUNVIEW: $(OFILES) $(DR_LIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DR_LIB) $(GRAPH)
+
+$(DR_LIB): #
 
 Color.o:	graphics.h
 Draw_line.o:	graphics.h
