@@ -1,6 +1,6 @@
 #############################################################################
 #
-# $Id: Gmakefile,v 1.22 2001-02-05 13:45:13 markus Exp $
+# $Id: Gmakefile,v 1.23 2001-02-05 13:54:26 markus Exp $
 #
 # MODULE:   	Grass Documentation
 # AUTHOR(S):	Original author unknown - probably CERL
@@ -108,7 +108,7 @@ pdf-docs:
 	if [ ! -d $(GRASS_PDFDIR) ]; then mkdir $(GRASS_PDFDIR); fi
 	$(HTML2PDF) --webpage database.html html/db*.html html/*pg.html -f $(GRASS_PDFDIR)/grass5database.pdf
 	$(HTML2PDF) --webpage display.html html/d*.html -f $(GRASS_PDFDIR)/grass5display.pdf
-	$(HTML2PDF) --webpage drivers.html html/celldriver.html html/htmlmapdriver.html html/xdriver.html html/*pg.html -f $(GRASS_PDFDIR)/grass5database.pdf
+	$(HTML2PDF) --webpage drivers.html html/celldriver.html html/htmlmapdriver.html html/xdriver.html html/*pg.html -f $(GRASS_PDFDIR)/grass5drivers.pdf
 	$(HTML2PDF) --webpage general.html html/g*.html -f $(GRASS_PDFDIR)/grass5general.pdf
 	$(HTML2PDF) --webpage imagery.html html/i*.html -f $(GRASS_PDFDIR)/grass5imagery.pdf
 	$(HTML2PDF) --webpage misc.html html/m*.html -f $(GRASS_PDFDIR)/grass5misc.pdf
@@ -116,4 +116,4 @@ pdf-docs:
 	$(HTML2PDF) --webpage        html/s*.html -f $(GRASS_PDFDIR)/grass5sites.pdf
 	$(HTML2PDF) --webpage vector.html html/v*.html -f $(GRASS_PDFDIR)/grass5vector.pdf
 	$(HTML2PDF) --webpage grid3d.html html/?3*.html html/*.vol.*.html -f $(GRASS_PDFDIR)/grass5grid3d.pdf
-	$(HTML2PDF) --webpage scripts.html html/*sh.html -f $(GRASS_PDFDIR)/grass5shells.pdf
+	$(HTML2PDF) --webpage scripts.html html/*sh.html -f $(GRASS_PDFDIR)/grass5scripts.pdf
