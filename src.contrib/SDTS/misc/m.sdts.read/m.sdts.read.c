@@ -104,7 +104,7 @@ long li;      /* long integer used for binary dumps */
 int i;                   /* loop counter */
 int status;              /* status returned by FIPS library routines */
 int interactive;         /* TRUE if "interactive" mode:  output to screen */
-char junk[100],junk1[2]; /* user input after subfield displaced */
+char junk[101],junk1[2]; /* user input after subfield displaced */
 char ice;                /* inline code extension from beg123file */
 char leadid;             /* leader ID returned by rd123sfld */
 char ccs[4];             /* character set string returned by beg123file */
@@ -382,7 +382,7 @@ else
               printf ("\n               <enter> - display next record");
               printf ("\nEnter command: ");
 
-            gets (junk);
+            fgets (junk,100,stdin);
             strncpy (junk1,junk,1);
             if (!strcmp (junk1,"q")) goto done;
 
