@@ -8,7 +8,9 @@ struct {
 	int f;
 } parms;
 
-main(argc, argv) char *argv[];
+
+int
+main(int argc, char *argv[])
 {
     dbDbmscap *list, *p;
 
@@ -28,8 +30,8 @@ main(argc, argv) char *argv[];
     exit(OK);
 }
 
-void parse_command_line (argc, argv)
-    char *argv[];
+void
+parse_command_line (int argc, char *argv[])
 {
     struct Flag *full;
 

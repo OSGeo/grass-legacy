@@ -8,6 +8,7 @@
 #include "gis.h"
 #include "dbmi.h"
 #include "codes.h"
+#include <stdlib.h>
 
 struct {
 	char *driver, *database, *location, *table;
@@ -15,8 +16,8 @@ struct {
 
 void parse_command_line();
 
-
-main(argc, argv) char *argv[];
+int
+main(int argc, char *argv[])
 {
     dbDriver *driver;
     dbHandle handle;
@@ -52,13 +53,14 @@ main(argc, argv) char *argv[];
 }
 
 void
-parse_command_line(argc, argv) char *argv[];
+parse_command_line(int argc, char *argv[])
 {
     struct Option *driver, *database, *location, *table;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
+    driver->options     = db_driver_list();
     driver->required 	= NO;
     driver->description = "driver name";
 

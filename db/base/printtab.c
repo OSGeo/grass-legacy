@@ -1,7 +1,8 @@
 #include "dbmi.h"
 
-print_table_definition(table)
-    dbTable *table;
+void
+print_table_definition(
+    dbTable *table)
 {
     int ncols, col;
     dbColumn *column;
@@ -21,8 +22,9 @@ print_table_definition(table)
     }
 }
 
-print_column_definition(column)
-    dbColumn *column;
+void
+print_column_definition(
+    dbColumn *column)
 {
     dbString value_string;
 
@@ -45,8 +47,10 @@ print_column_definition(column)
     print_priv ("update", db_get_column_update_priv(column));
 }
 
-print_priv (label, priv)
-    char *label;
+void
+print_priv (
+    int label,
+    char *label)
 {
     fprintf (stdout,"%s:", label);
     switch (priv)
