@@ -172,9 +172,9 @@ G_read_cats (name, mapset, pcats)
 {
     char err[100];
     char *type;
-    CELL read_cats();
+    CELL G__read_cats();
 
-    switch (read_cats ("cats", name, mapset, pcats, 1))
+    switch (G__read_cats ("cats", name, mapset, pcats, 1))
     {
     case -2:
 	    type = "missing";
@@ -199,9 +199,9 @@ G_read_vector_cats (name, mapset, pcats)
 {
     char err[100];
     char *type;
-    CELL read_cats();
+    CELL G__read_cats();
 
-    switch (read_cats ("dig_cats", name, mapset, pcats, 1))
+    switch (G__read_cats ("dig_cats", name, mapset, pcats, 1))
     {
     case -2:
 	    type = "missing";
@@ -225,20 +225,19 @@ G_number_of_cats (name, mapset)
     char *mapset ;
 {
     struct Categories pcats ;
-    CELL read_cats();
-    return (read_cats ("cats", name, mapset, &pcats, 0));
+    CELL G__read_cats();
+    return (G__read_cats ("cats", name, mapset, &pcats, 0));
 }
 
-static
 CELL
-read_cats (element, name, mapset, pcats, full)
+G__read_cats (element, name, mapset, pcats, full)
     char *element;
     char *name ;
     char *mapset ;
     struct Categories *pcats ;
 {
     FILE *fd ;
-    char buff[258] ;
+    char buff[1024] ;
     CELL cat;
     int old;
     long num;
@@ -288,7 +287,7 @@ read_cats (element, name, mapset, pcats, full)
 /* Read all category names */
     for (cat=0;;cat++) 
     {
-	char label[256];
+	char label[1024];
 	if (G_getl(buff, sizeof buff, fd) == 0)
 	    break;
 	if (old)
@@ -296,6 +295,10 @@ read_cats (element, name, mapset, pcats, full)
 	else
 	{
 	    *label = 0;
+	    if (sscanf (buff, "%1s", label) != 1)
+		continue;
+	    if(*label == '#')
+		continue;
 	    if (sscanf (buff, "%ld:%[^\n]", &num, label) < 1)
 		goto error;
 	    G_set_cat ((CELL)num, label, pcats);
@@ -465,15 +468,22 @@ G_set_cat (num, label, pcats)
     }
     else
     {
-	long len;
 	n = pcats->count++;
-	len = (long) pcats->count * sizeof(struct Cat_List) ;
-	if (len != (int) len) /* make sure len doesn't overflow int */
+	if (pcats->count > pcats->nalloc)
 	{
-	    pcats->count--;
-	    return -1;
+	    long len;
+	    long nalloc;
+
+	    nalloc = pcats->nalloc + 256;
+	    len = (long) nalloc * sizeof(struct Cat_List) ;
+	    if (len != (int) len) /* make sure len doesn't overflow int */
+	    {
+		pcats->count--;
+		return -1;
+	    }
+	    pcats->list = (struct Cat_List *) G_realloc(pcats->list, (int)len);
+	    pcats->nalloc = nalloc;
 	}
-	pcats->list = (struct Cat_List *) G_realloc(pcats->list, (int)len);
     }
     G_ascii_check (label);
     G_strip (label);
@@ -488,18 +498,17 @@ G_write_cats (name, cats)
     char *name ;
     struct Categories *cats ;
 {
-    return write_cats ("cats", name, cats);
+    return G__write_cats ("cats", name, cats);
 }
 
 G_write_vector_cats (name, cats)
     char *name ;
     struct Categories *cats ;
 {
-    return write_cats ("dig_cats", name, cats);
+    return G__write_cats ("dig_cats", name, cats);
 }
 
-static
-write_cats (element, name, cats)
+G__write_cats (element, name, cats)
     char *element ;
     char *name ;
     struct Categories *cats ;
@@ -540,6 +549,7 @@ G_init_cats (num, title, pcats)
     G_set_cats_title (title, pcats);
     pcats->list = NULL;
     pcats->count = 0;
+    pcats->nalloc = 0;
     pcats->num = num < 0 ? 0 : num;
     pcats->fmt = NULL;
     pcats->m1 = 0.0;
@@ -613,6 +623,7 @@ G_free_cats (pcats)
     }
     pcats->count = 0;
     pcats->num = 0;
+    pcats->nalloc = 0;
 }
 
 static
