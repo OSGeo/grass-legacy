@@ -8,6 +8,7 @@ interface_build {
     {checkbox units {Kilometers.} "" kilometers}
     {checkbox units {Feet.} "" feet}
     {checkbox units {Miles.} "" miles}
+    {checkbox units {Nautical Miles.} "" nautmiles}
     {separator grey 1}
     {checkbox -q {Run quietly.} "" -q}
 }
