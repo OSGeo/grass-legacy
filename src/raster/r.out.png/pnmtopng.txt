@@ -1,0 +1,6 @@
+Title           PNG-file
+Author          Your Name
+Description     how to include a text-chunk
+                into a PNG file
+"Creation date" 3-feb-1987
+Software        pnmtopng
