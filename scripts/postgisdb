@@ -30,7 +30,7 @@ current_version='1.0'
 postgis="/usr/local/pgsql/"
 
 usage="Usage: $program [OPTION] [ARGUMENTS] ....
-Create and Destroy PostGrass database 
+Create and Destroy PostGRASS (GRASS/PostGIS) database
 
 [Primary Options]
  -h, --help                           display this help and exit
@@ -59,7 +59,7 @@ Create and Destroy PostGrass database
  -q, --quiet                     Don't write any messages
 
 
-All options that are not available in primary options scope will be ignoreted.
+All options that are not available in primary options scope will be ignored.
 Only Postmaster can run this script to create a new database (use -U to define database owner)
 
 Report bugs to <enr.omano@genie.it> "
