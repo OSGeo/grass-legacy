@@ -7,7 +7,7 @@
 
 int main (int argc, char **argv)
 {
-	char achar ;
+	int achar ;
 	char buf[200];
 	char buf2[200];
 	char *bptr ;
