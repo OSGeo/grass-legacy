@@ -185,8 +185,8 @@ static int _add_link_V1  (
 		pto = pToNodeItem->data.pv;
 	}
 
-	GNGRP_NODE_STATUS(pfrom) |= GNGRP_NF_FROM;
-	GNGRP_NODE_STATUS(pto)   |= GNGRP_NF_TO;
+	GNGRP_NODE_STATUS(pfrom) |= GNGRP_NS_FROM;
+	GNGRP_NODE_STATUS(pto)   |= GNGRP_NS_TO;
 
 	GNGRP_NODE_ID(pfrom) = lFrom;
 	GNGRP_NODE_ID(pto)   = lTo;
@@ -372,7 +372,7 @@ static int _unflatten_V1( gnGrpGraph_s * pgraph )
 
 	GNGRP_NB_FOREACH_NODE(pgraph,pnode)
 	{
-		if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NF_FROM )
+		if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NS_FROM )
 		{
 			plinkarea = (gnInt32_t*) (pgraph->pLinkBuffer + GNGRP_NODE_LINKAREA_OFFSET(pnode));
 
@@ -447,7 +447,7 @@ static int _flatten_V1( gnGrpGraph_s * pgraph )
 	{
 		if ( (pnode = pheapnode->value.pv) != NULL )
 		{
-			if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NF_FROM )
+			if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NS_FROM )
 			{
 				pgraph->cFrom ++;
 
@@ -485,7 +485,7 @@ static int _flatten_V1( gnGrpGraph_s * pgraph )
 				pgraph->iLinkBuffer += GNGRP_LINKAREA_SIZEOF(GNGRP_LINKAREA_LINKCOUNT(plinkarea), pgraph->LinkAttrSize);
 			}
 
-			if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NF_TO )
+			if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NS_TO )
 			{
 				pgraph->cTo ++;
 			}
@@ -521,7 +521,7 @@ static int _flatten_V1( gnGrpGraph_s * pgraph )
 		pflat1 += GNGRP_NODE_WSIZE(pgraph->NodeAttrSize)
 		)
 	{
-		if ( GNGRP_NODE_STATUS(pflat1) & GNGRP_NF_FROM )
+		if ( GNGRP_NODE_STATUS(pflat1) & GNGRP_NS_FROM )
 		{
 			pflat2 = (gnInt32_t*) (pgraph->pLinkBuffer + GNGRP_NODE_LINKAREA_OFFSET(pflat1));
 			for (
@@ -749,7 +749,7 @@ static void * _dijkstra_V1	(
 		goto sp_error;
 	}
 
-	if ( ! (GNGRP_NODE_STATUS(pfromnode) & GNGRP_NF_FROM) )
+	if ( ! (GNGRP_NODE_STATUS(pfromnode) & GNGRP_NS_FROM) )
 	{
 		pgraph->iErrno = 0;
 		goto sp_error;
@@ -782,7 +782,7 @@ static void * _dijkstra_V1	(
 	{
 		ptonode = (gnInt32_t*) (pgraph->pNodeBuffer + GNGRP_LINK_TONODE_OFFSET(plink) );
 
-		if ( ! (GNGRP_NODE_STATUS(ptonode) & GNGRP_NF_TO) )
+		if ( ! (GNGRP_NODE_STATUS(ptonode) & GNGRP_NS_TO) )
 		{
 			pgraph->iErrno = GNGRP_ERR_BadLink;
 			goto sp_error;
@@ -899,7 +899,7 @@ static void * _dijkstra_V1	(
 		 * If the from-node is not marked as having departing links, then we are into a
 		 * blind alley. Just give up this direction and continue looping.
 		 */
-		if ( ! (GNGRP_NODE_STATUS(pfromnode) & GNGRP_NF_FROM) )  continue;
+		if ( ! (GNGRP_NODE_STATUS(pfromnode) & GNGRP_NS_FROM) )  continue;
 
 		/*
 		 * We do not want to explore twice the same node as a relative starting point,
@@ -936,7 +936,7 @@ static void * _dijkstra_V1	(
 		{
 			ptonode = (gnInt32_t*) (pgraph->pNodeBuffer + GNGRP_LINK_TONODE_OFFSET(plink) );
 		
-			if ( ! (GNGRP_NODE_STATUS(ptonode) & GNGRP_NF_TO) )
+			if ( ! (GNGRP_NODE_STATUS(ptonode) & GNGRP_NS_TO) )
 			{
 				pgraph->iErrno = GNGRP_ERR_BadLink;
 				goto sp_error;
@@ -1115,6 +1115,107 @@ spr_error:
 		return NULL;
 	}
 }
+
+/*
+ * Build the depth-first spanning tree of 'pgraphIn' with vertex 'nNodeId' into 'pgraphOut'
+ * As usual this algorithm applies to a FLAT state pgraphIn
+ * pgraphOut must have been previously initialized by the caller and is returned in TREE state
+ * I prefer using a iterative approach with a stack for 'waiting links' instead of recursion
+ */
+static int _depthfirst_spanning_V1( gnGrpGraph_s * pgraphIn , gnGrpGraph_s * pgraphOut , gnInt32_t nNodeId )
+{
+	gnInt32_t * 	pfrom;
+	gnInt32_t * 	pto;
+	gnInt32_t * 	plinkarea;
+	gnInt32_t * 	plink;
+	gnInt32_t 		id[2] , * pid;
+	void * 			pvVisited = NULL;	
+	long 			istack = 0;
+	unsigned char *	pstack = NULL;
+	int				nret;
+
+
+	if ( ! (pgraphIn->Flags & 0x1) ) {
+		pgraphIn->iErrno = GNGRP_ERR_BadOnTreeGraph; return -pgraphIn->iErrno;
+	}
+
+	if ( (pvVisited = gnTreeCreate( _node_free , NULL )) == NULL ) {
+		pgraphIn->iErrno = GNGRP_ERR_MemoryExhausted; goto dfs_error;
+	}
+
+	if ( (pfrom = gnGrpGetNode( pgraphIn, nNodeId )) == NULL ) {
+		pgraphIn->iErrno = GNGRP_ERR_FromNodeNotFound; goto dfs_error;
+	}
+
+	if ( ! (GNGRP_NODE_STATUS(pfrom) & GNGRP_NS_FROM) ) {
+		gnTreeDestroy( pvVisited );
+		return 0;
+	}
+
+	plinkarea = (gnInt32_t*)(pgraphIn->pLinkBuffer + GNGRP_NODE_LINKAREA_OFFSET(pfrom));
+
+	GNGRP_LB_FOREACH_LINK(pgraphIn, plinkarea, plink) {
+		id[0] = GNGRP_NODE_BUFFER_OFFSET(pgraphIn, pfrom);
+	   	id[1] = GNGRP_LINK_BUFFER_OFFSET(pgraphIn, plink);
+		if ( (pstack = _mempush( pstack , & istack , sizeof( gnInt32_t ) * 2 , id )) == NULL ) {
+			pgraphIn->iErrno = GNGRP_ERR_MemoryExhausted; goto dfs_error;
+		}
+	}
+
+	if ( __node(pvVisited , GNGRP_NODE_ID(pfrom)) == NULL ) {
+		pgraphIn->iErrno = GNGRP_ERR_MemoryExhausted; goto dfs_error;
+	}
+
+	while( (pid = (gnInt32_t*)_mempop( pstack , & istack , sizeof(gnInt32_t)  * 2)) != NULL )
+	{
+		pfrom  = (gnInt32_t*)(pgraphIn->pNodeBuffer + pid[0]);
+		plink  = (gnInt32_t*)(pgraphIn->pLinkBuffer + pid[1]);
+		pto    = (gnInt32_t*)(pgraphIn->pNodeBuffer + GNGRP_LINK_TONODE_OFFSET(plink));
+
+		if ( gnTreeSearch( pvVisited , GNGRP_NODE_ID(pto) ) ) continue; /* already visited */
+
+		if ( __node(pvVisited , GNGRP_NODE_ID(pto)) == NULL ) {
+			pgraphIn->iErrno = GNGRP_ERR_MemoryExhausted; goto dfs_error;
+		}
+
+		/* add this link */
+		nret = _add_link_V1( pgraphOut,
+					GNGRP_NODE_ID(pfrom),
+					GNGRP_NODE_ID(pto),
+					GNGRP_LINK_COST(plink),
+					GNGRP_LINK_USER(plink),
+					GNGRP_NODE_ATTR_PTR(pfrom),
+					GNGRP_NODE_ATTR_PTR(pto),
+					GNGRP_LINK_ATTR_PTR(plink)
+					);
+
+		if ( nret < 0 ) {
+			goto dfs_error;
+		}
+
+		if ( GNGRP_NODE_STATUS(pto) & GNGRP_NS_FROM ) {
+			plinkarea = (gnInt32_t*)(pgraphIn->pLinkBuffer + GNGRP_NODE_LINKAREA_OFFSET(pto));
+
+			GNGRP_LB_FOREACH_LINK(pgraphIn, plinkarea, plink) {
+				id[0] = GNGRP_NODE_BUFFER_OFFSET(pgraphIn, pto);
+	   			id[1] = GNGRP_LINK_BUFFER_OFFSET(pgraphIn, plink);
+				if ( (pstack = _mempush( pstack , & istack , sizeof( gnInt32_t ) * 2 , id )) == NULL ) {
+					pgraphIn->iErrno = GNGRP_ERR_MemoryExhausted; goto dfs_error;
+				}
+			}
+		}
+	}
+
+	if ( pvVisited ) gnTreeDestroy( pvVisited );
+	if ( pstack ) free( pstack );
+	return 0;
+
+dfs_error:
+	if ( pvVisited ) gnTreeDestroy( pvVisited );
+	if ( pstack ) free( pstack );
+	return -pgraphIn->iErrno;
+}
+
 
 static int _release_V1( gnGrpGraph_s * pgraph )
 {
@@ -1578,6 +1679,15 @@ gnGrpSPReport_s * gnGrpShortestPath	(
 	return _dijkstra_V1( pgraph, from, to, clip, pvcliparg );
 }
 
+int				gnGrpDepthSpanning	(
+									gnGrpGraph_s *  pgraphInput,
+									gnGrpGraph_s *  pgraphOutput,
+									gnInt32_t		nVertexNode
+									)
+{
+	return _depthfirst_spanning_V1( pgraphInput, pgraphOutput, nVertexNode );
+}
+
 void gnGrpFreeSPReport( gnGrpGraph_s * pgraph , gnGrpSPReport_s * pSPReport )
 {
 	int iArc;
@@ -1594,16 +1704,6 @@ void gnGrpFreeSPReport( gnGrpGraph_s * pgraph , gnGrpSPReport_s * pSPReport )
 		}
 		free( pSPReport );
 	}
-}
-
-void gnGrpSetOpaque( gnGrpGraph_s * pgraph, gnInt32_t * pOpaque )
-{
-	memcpy( pgraph->aOpaqueSet , pOpaque , sizeof( gnInt32_t ) * 16 );
-}
-
-gnInt32_t * gnGrpGetOpaque( gnGrpGraph_s * pgraph )
-{
-	return pgraph->aOpaqueSet;
 }
 
 
@@ -1656,3 +1756,45 @@ char * gnGrpStrerror( gnGrpGraph_s * pgraph )
 
 	return "unknown graph error code";
 }
+
+/*
+ * gnGrpGraph_s hiders
+ */
+int	gnGrpGet_Version		(gnGrpGraph_s *  pgraph) {
+	return pgraph->Version;
+}
+int	gnGrpGet_Endianess		(gnGrpGraph_s *  pgraph) {
+	return pgraph->Endian;
+}
+int	gnGrpGet_NodeAttrSize	(gnGrpGraph_s *  pgraph) {
+	return pgraph->NodeAttrSize;
+}
+int	gnGrpGet_LinkAttrSize	(gnGrpGraph_s *  pgraph) {
+	return pgraph->LinkAttrSize;
+}
+int	gnGrpGet_NodeCount		(gnGrpGraph_s *  pgraph) {
+	return pgraph->cNode;
+}
+int	gnGrpGet_FromNodeCount	(gnGrpGraph_s *  pgraph) {
+	return pgraph->cFrom;
+}
+int	gnGrpGet_ToNodeCount	(gnGrpGraph_s *  pgraph) {
+	return pgraph->cTo;
+}
+int	gnGrpGet_LinkCount		(gnGrpGraph_s *  pgraph) {
+	return pgraph->cArc;
+}
+int	gnGrpGet_GraphState		(gnGrpGraph_s *  pgraph) {
+	return pgraph->Flags;
+}
+gnInt32_t * gnGrpGet_Opaque	(gnGrpGraph_s *  pgraph) {
+	return pgraph->aOpaqueSet;
+}
+void gnGrpSet_Opaque( gnGrpGraph_s * pgraph, gnInt32_t * pOpaque ) {
+	memcpy( pgraph->aOpaqueSet , pOpaque , sizeof( gnInt32_t ) * 16 );
+}
+
+
+
+
+
