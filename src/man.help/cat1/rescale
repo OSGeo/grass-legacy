@@ -1,0 +1,66 @@
+
+
+
+rescale(1)           GRASS Reference Manual            rescale(1)
+
+
+
+NAME
+     rescale - Rescales the values in a
+     (Available through grass3 menu)
+
+SYNOPSIS
+     rescale
+
+DESCRIPTION
+     The rescale program creates a new that is a rescaling of an
+     existing This command is useful for producing
+     representations with a reduced number of categories from a
+     with a large range of category values (e.g., elevation).
+     Rescaled are appropriate for use in such GRASS programs as
+     cell.stats[1], report[1], and coin[1].
+
+     The user is prompted for the name of the
+      to be rescaled, and for the name of the resulting
+
+     The user is also prompted for the input range and the output
+     range.  These ranges determine the scaling to be performed.
+     The ranges are input as minimum and maximum values.  For
+     example, if the elevation contained category values ranging
+     from 1090 meters to 1800 meters, the user could set the
+     input range to: 1090 1800, and the output range to: 1 255.
+
+     An appropriate category file and color table based upon the
+     original map are generated with category labels that reflect
+     the original values that produced each category.
+
+NOTES
+     The rescaled range is actually unlimited, but the range 1 to
+     255 is frequently used due to limitations of color
+
+     which falls beyond the input range will become zero.  This
+     allows the user to select a subset of the full range for
+     rescaling if desired.  This also means that the user should
+     know the range for the input The user can request the
+     rescale program to determine this range, or can obtain it
+     using the describe[1] command.  If the range is determined
+     using rescale, the input is examined, and the minimum and
+     maximum non-zero values are selected as the input range.
+
+     The rescale program actually runs reclass[1] to represent
+     the rescaled categories.
+
+SEE ALSO
+     cell.stats[1], coin[1], describe[1], reclass[1], report[1]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
