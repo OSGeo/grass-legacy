@@ -34,10 +34,10 @@ default:
 	${SHELL} -c "cp -f ${ARCH_BINDIR}/grass51 ${ARCH_DISTDIR}/grass51.tmp ; true"
 
 mix:
-	./tools/link -old=$(GRASS50) -new=./ -conf=./tools/link.conf
+	GRASS_PERL=${PERL} sh ./tools/link -old=$(GRASS50) -new=./ -conf=./tools/link.conf
 
 copymix:
-	./tools/link -copy -old=$(GRASS50) -new=./ -conf=./tools/link.conf
+	GRASS_PERL=${PERL} sh ./tools/link -copy -old=$(GRASS50) -new=./ -conf=./tools/link.conf
 
 mixclean:
 	 ${SHELL} -c "find . -lname '*' -exec rm {} \; 2>/dev/null ; true"
