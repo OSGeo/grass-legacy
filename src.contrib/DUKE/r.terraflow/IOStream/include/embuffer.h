@@ -385,7 +385,9 @@ public:
   // from the begining of stream;
      
   // return the number of items actually inserted 
-  long insert(AMI_STREAM<T>* str, long bos=0); 
+  long insert(AMI_STREAM<T>* str, 
+	      //long bos=0); 
+	      long bos); 
   
   //print range of elements in buffer
   void print_range();
