@@ -124,8 +124,8 @@ void check_overwrite(long *cells, long count)
         for (i = 0; i < all_size; i++) {
             for (j = 0; j < count; j++) {
                 if (cells[j] == all_cells[i] && !said_it) { /* Do warning */
-                    G_warning("Writing same cells more than once!\n"
-                            "Consider reducing your cell resolution or"
+                    G_warning("Writing same cells more than once (several sites falling into a cell)!\n"
+                            "Consider changing your cell resolution or"
                             " reducing the 'size' parameter.");
                     said_it = 1;
                     goto break_out;
