@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.24 2000-10-11 16:51:17 markus Exp $
+$Id: BUGS,v 1.25 2000-10-12 08:19:16 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -58,10 +58,6 @@ d.his:
  - color wrong if input value=0
  - added NULL randomly when using "out" for saving
 
-d.legend:
- - option "-n" does not work. no data is colored with color of
-   highest category
-
 d.mon: hangs with "-L" option
    (would be nice to fix to improve "d.monsize" script
   Andreas Lange wrote:
@@ -82,10 +78,6 @@ d.rast.num: some numbers are displayed in wrong (unreadable) color
 
 d.rgb: Is there a difference between d.rgb and i.composite?
 
-d.site.label: needs to be updated to new sites API
-
-d.sites.label needs modified for the new Sites API
-
 d.sites.qual: not all the sites are used/displayed
   d.sites.qual doesn't work properly: not all the sites 
   are used/displayed if the number of fields of the input site file is 
@@ -101,7 +93,6 @@ i.ortho.photo
 
 i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
 - Attempting to change the default Title causes a segfault.
-
 
 g3.region:
  - after defining the 3D-region with g3.createwind (which runs o.k.),
@@ -313,7 +304,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.24  2000-10-11 16:51:17  markus
+ Revision 1.25  2000-10-12 08:19:16  markus
+ removed d.legend, d.site.labels, d.sites.label as being fixed
+
+ Revision 1.24  2000/10/11 16:51:17  markus
  added s.in.ascii dimension bug
 
  Revision 1.23  2000/10/11 14:44:58  markus
