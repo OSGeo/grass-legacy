@@ -1,10 +1,11 @@
 # @(#)Gmakefile	v1.3 - 27 Jun 1995 	-emes-
 
 
-PGM = r.proj
+PGM = r.proj.new
 
 OBJ = \
 	main.o \
+	bordwalk.o \
 	readcell.o \
 	nearest.o \
 	bilinear.o \
