@@ -1,0 +1,66 @@
+
+
+
+s.surf.krig <main>   GRASS Reference Manual    <main> s.surf.krig
+
+
+
+NAME
+     s.surf.krig Surface interpolation from site data via kriging
+
+SYNOPSIS
+     s.surf.krig
+
+     s.surf.krig -help [npoints=count] [range=semivariogram
+     range] [power=exponetial power] [nugget=semivariogram
+     nugget] [sill=semivariogram sill] [max_lag=max_lag]
+
+DESCRIPTION
+     Is	missing.
+
+Parameters:
+     Name of input site	map Name of output z value raster map
+     Name of output z variance raster map Name of output z
+     variance raster map Type of semivariogram model to	be used
+
+     options: power,spherical,exp,log,gaussian Number of
+     interpolation points
+
+     default: 12 Not used with log or power models
+
+     default: 1.0 Only for use with the	power model
+
+     default: 1.0 The variogram	nugget variance
+
+     default: 0.0 The variogram	sill scaled to the sample
+     variance
+
+     default: 1.0 The max_lag is only used with	the power model
+
+     default: 1000.0
+
+NOTE
+     You  have to play with the	parameters to get a reasonable
+     result and	not a segmentation violation
+
+AUTHORS
+     Chris Skelly
+
+     School of Earth Sciences
+
+     Macquarie Univerity
+
+     North Ryde	2109 NSW Australia
+
+
+     Darrel McCauley
+
+
+
+
+
+
+GRASS 4.3		Baylor University			1
+
+
+
