@@ -258,6 +258,8 @@ main ( int argc, char *argv[] )
     static int  frmid = 0;
     char * encoding_val;
 
+    G_gisinit ("form");
+
     G_debug ( 2, "Form: main()" );
     
     setlocale(LC_CTYPE, "");
