@@ -255,6 +255,7 @@ main (int argc, char *argv[])
 	Vect_copy_map_lines ( &In, &Out );
 	Vect_copy_tables ( &In, &Out, 0 );
 
+	Vect_set_release_support ( &In );
 	Vect_close (&In);
 
 	/* Start with GV_BUILD_NONE and for each tool use unly the necessary level! */
