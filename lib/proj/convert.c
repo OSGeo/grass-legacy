@@ -522,9 +522,6 @@ int GPJ_osr_to_grass(struct Cell_head *cellhd, struct Key_Value **projinfo,
 /*      Fallback to returning an ungeoreferenced definition.            */
 /* -------------------------------------------------------------------- */
   default_to_xy:
-    if( hSRS != NULL )
-        OSRDestroySpatialReference( hSRS );
-
     if( cellhd != NULL )
     {
         cellhd->proj = PROJECTION_XY;
