@@ -189,6 +189,7 @@ install: FORCE
 	
 real-install: FORCE
 	test -d ${INST_DIR} || ${MAKE_DIR_CMD} ${INST_DIR}
+	test -d ${INST_DIR}/dev || ${MAKE_DIR_CMD} ${INST_DIR}/dev
 	test -d ${BINDIR} || ${MAKE_DIR_CMD} ${BINDIR}
 	${SHELL} -c "sed -e \"s#^GISBASE.*#GISBASE=${INST_DIR}#\" ${GRASS_BIN}/grass${NAME_VER} > ${BINDIR}/grass${NAME_VER} ; true"
 	${SHELL} -c "chmod a+x ${BINDIR}/grass${NAME_VER} ; true"
