@@ -1,3 +1,22 @@
+/***************************************************************************
+ * $Id$
+ *
+ * MODULE: 	g.region (interactive)
+ * AUTHOR(S):	Michael Shapiro, CERL
+ * PURPOSE: 	Program to manage and print the boundary definitions for the
+ *              geographic region.
+ *             
+ * COPYRIGHT:  	(C) 2000 by the GRASS Development Team
+ *
+ *   	    	This program is free software under the GPL (>=v2)
+ *   	    	Read the file COPYING that comes with GRASS for details.
+ ****************************************************************************
+ * $Log$
+ * Revision 1.3  2000-11-08 20:31:28  andreas
+ * added output of map datum
+ *
+ */
+
 #define MAIN
 #include <string.h>
 #include <unistd.h>
@@ -24,7 +43,7 @@ main (int argc, char *argv[])
     int from_view();
     char *G_database_projection_name();
     char *G__get_window();
-    char *prj;
+    char *prj, *datum;
     char north[20], south[20], nsres[20];
     char east[20], west[20], ewres[20];
     int len1, len2, len3;
@@ -69,11 +88,14 @@ main (int argc, char *argv[])
 	    len1, east, len2, west, len3, ewres, cur_window.cols);
 
 	prj = G_database_projection_name();
+	datum = G_database_datum_name();
 	if (!prj) prj = "** unknown **";
+	if (!datum) datum = "** unknown (default WGS84) **";
 	fprintf (stderr, "PROJECTION: %d (%s)\n", cur_window.proj, prj);
 	fprintf (stderr, "ZONE:       %d\n", cur_window.zone);
+	fprintf (stderr, "DATUM:      %s\n", datum);
 
-	fprintf (stderr, "\n\nPlease select one of the following options\n\n");
+	fprintf (stderr, "\nPlease select one of the following options:\n\n");
 	fprintf (stderr, "   Current Region                           Region Database\n\n");
 	fprintf (stderr, "1  Modify current region directly        8  Save current region in the database\n");
 	fprintf (stderr, "2  Set from default region               9  Create a new region\n");
