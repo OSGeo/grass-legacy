@@ -1,0 +1,141 @@
+.\" %W% %G%
+.TH d.3d 1
+.SH NAME
+d.3d \- Interactive three-dimensional 
+.CT map "cell map"
+display program
+.br
+.I (Available through grass3 menu)
+.SH SYNOPSIS
+.B d.3d
+.SH DESCRIPTION
+.I d.3d 
+provides 3-dimensional graphic images based on 
+GRASS 
+.XT grid 
+cell maps.  The user identifies the viewing 
+.CT "location," "position,"
+.XT "the viewing location,"
+the viewing direction, the field of view,
+a vertical exaggeration factor, and
+the 
+.CT map "cell map"
+to be used for "elevation" data.  The responses are gathered
+in the following screen format.  The \fID\fR language program \fIDscreen\fR
+must be run before your initial run of \fId.3d\fR to prepare the screen
+for graphics.
+
+.NF
+.in +.5i
+    You will be viewing the area bounded by the current geographic window:
+
+    SOUTH:           NORTH:              resolution:  50.00__
+    4914000.00       4928000.00
+    WEST:            EAST:
+    590000.00        609000.00
+
+    RUN?  Y/N  Y_    ERASE?  Y/N  Y_
+
+
+    Please identify your desired viewing coordinates:
+
+    Viewing from:                   Center of area to be viewed:
+        Northing  4900000.00             Northing  4921000.00
+        Easting   571000.00_             Easting   599500.00_
+        Elevation 5000.00___             Elevation 0.00______
+
+    Vertical Exager.    2.00___     File used for height: elevation__
+    Field of View (deg) 20.00__     Map used for color:   elevation__
+    Line frequency      10___
+
+       AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+
+.in -.5i
+.FI
+The program offers the users some suggested values.  They place the viewing
+.CT location position
+just to the south-west of the current 
+.CT window "geographic window"
+with a viewing direction
+to the center of the 
+.CT "window." "geographic window."
+While completing the answers imagine yourself floating above the landscape
+looking out on your area of interest.  Holding a camera with a zoom lens
+you center your picture and zoom in appropriately.  To get the same image on
+the screen, identify your 
+.CT location position
+in space as the "Viewing from" coordinates,
+and identify the picture center using the "Center to be viewed" coordinates.
+The zoom factor is reflected in the "Field of View".  Easting and northing
+coordinates are actual UTM (or State Plane) 
+.CT "locations." "positions."
+The elevation values
+are in meters as are the easting and northings.  (Note below that the elevation
+values from the 
+.CT database "data base"
+are not in meters.)
+.PP
+While many of your 3-d images will be a simulation of reality using a real
+elevation 
+.CT "database," "data base,"
+many will use other data for providing the vertical
+resolution.  Enter the 
+.CT "map layer" "cell map"
+used at the "File used for height" prompt.
+The units in the 
+.CT "map layer" "cell map"
+are assumed to be the same as the units of
+measure for the 
+.CT "map." "map coordinate system."
+Thus, an "elevation" value of 50 in a UTM (meters)
+projection is read as 50 meters.  This value can be further modified with
+the user's "Vertical Exaggeration" factor.  Most users will need to
+experiment and see what they get.  As the vertical coordinates are
+exaggerated, the elevation value of the "center to be viewed" must
+be increased.
+.PP
+Lastly, the "Line Frequency" entry provides for the addition of east to west
+lines to enhance the 3-d effect for 
+.CT maps "cell maps"
+with little color change.  The value
+will be the number of rows to skip between lines.
+.PP
+To run \fId.3d\fR type \fBY\fR (for "yes") beside RUN in the screen shown
+above.  If you do not wish to continue with \fId.3d\fR, type \fBN\fR here.
+If you have just finished running \fId.3d\fR and wish to run it again,
+type \fBY\fR beside ERASE in the screen shown above to prepare the
+.CT "monitor screen." "graphics monitor."
+This will serve the same purpose as that served by your
+initial use of \fIDscreen\fR before your first run of \fId.3d\fR.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+\fID3d[2D]\fR	\fID\fR version of three-dimensional 
+.CT map "cell map"
+display program
+.br
+\fIDscreen[2D]\fR	Clears the full screen, and makes it the current 
+.CT window "geographic window"
+.TE
+.SH "BUGS and ADDITIONS"
+When viewing from the east or west the image is plotted both from the south
+and the north edge.  The two halves do not meet correctly.  This is only a 
+visual problem when the grid size is large.
+
+Several additions to this program have been suggested. 1) Save the last viewing
+parameters to be used 
+.CT a as
+defaults when next running the program.  2) Border the
+image with a visually appealing curtain.  3) Add x,y,z coordinates and scale
+information.  4) Plot the 
+.XT grid 
+cells as a pair of split triangles.  This 
+would make the plot more accurate, but slower.  5) Provide a graphic oriented
+user interface for identifying viewing parameters.  6) Plot faster by doing 
+mathematics in integers.  7) Offer options for changing the background color.
+8) Add the option of plotting vector 
+.CT "files." "maps."
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
