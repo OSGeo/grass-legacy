@@ -1018,11 +1018,11 @@ AC_MSG_RESULT($XDRIVER)
 AC_SUBST(XDRIVER)
 
 if test "$XDRIVER" = "ipc"; then
-    echo env GRASS_IN_CONFIGURE=yes ./README.ipc new
-    env GRASS_IN_CONFIGURE=yes ./README.ipc new
+    echo GRASS_IN_CONFIGURE=yes ./README.ipc new
+    GRASS_IN_CONFIGURE=yes ./README.ipc new
 else
-    echo env GRASS_IN_CONFIGURE=yes ./README.ipc orig
-    env GRASS_IN_CONFIGURE=yes ./README.ipc orig
+    echo GRASS_IN_CONFIGURE=yes ./README.ipc orig
+    GRASS_IN_CONFIGURE=yes ./README.ipc orig
 fi
 
 
