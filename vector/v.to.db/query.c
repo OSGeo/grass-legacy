@@ -9,7 +9,7 @@
 int 
 query (struct Map_info *Map )
 {
-    int i, idx, cat_no, nlines, type;
+    int i, j, idx, cat_no, nlines, type;
     register int line_num;
     struct line_pnts *Points;
     struct line_cats *Cats;
@@ -30,19 +30,41 @@ query (struct Map_info *Map )
 	type = Vect_read_line ( Map, Points, Cats, line_num);
 	if ( !(type & options.type ) ) continue;
 		
-	Vect_cat_get ( Cats, options.field, &cat_no );
-	/* Go on even if cat is -1, values for cat -1 are reported at the end */
-
-	idx = find_cat( cat_no);
-	
 	for ( i = 0; i < Cats->n_cats; i++ ) {
-	    if ( Cats->field[i] == options.qfield ) { /* Add to list */
-		if ( Values[idx].nqcats == Values[idx].aqcats ) { /* Alloc space */
-		    Values[idx].aqcats += 2;
-		    Values[idx].qcat = (int *) G_realloc ( Values[idx].qcat, Values[idx].aqcats * sizeof(int) );
+	    if ( Cats->field[i] == options.field ) {
+	
+		cat_no = Cats->cat[i];
+
+		idx = find_cat( cat_no);
+		
+		for ( j = 0; j < Cats->n_cats; j++ ) {
+		    if ( Cats->field[j] == options.qfield ) { /* Add to list */
+			if ( Values[idx].nqcats == Values[idx].aqcats ) { /* Alloc space */
+			    Values[idx].aqcats += 2;
+			    Values[idx].qcat = (int *) G_realloc ( Values[idx].qcat, Values[idx].aqcats * sizeof(int) );
+			}
+			Values[idx].qcat[Values[idx].nqcats] = Cats->cat[j];
+			Values[idx].nqcats++;
+		    }
 		}
-		Values[idx].qcat[Values[idx].nqcats] = Cats->cat[i];
-		Values[idx].nqcats++;
+	    }
+	}
+
+	/* If there is no field cat add cat -1, values for cat -1 are reported at the end  */
+	Vect_cat_get ( Cats, options.field, &cat_no );
+
+	if  ( cat_no == -1 ) {
+	    idx = find_cat( cat_no);
+	    
+	    for ( j = 0; j < Cats->n_cats; j++ ) {
+		if ( Cats->field[j] == options.qfield ) { /* Add to list */
+		    if ( Values[idx].nqcats == Values[idx].aqcats ) { /* Alloc space */
+			Values[idx].aqcats += 2;
+			Values[idx].qcat = (int *) G_realloc ( Values[idx].qcat, Values[idx].aqcats * sizeof(int) );
+		    }
+		    Values[idx].qcat[Values[idx].nqcats] = Cats->cat[j];
+		    Values[idx].nqcats++;
+		}
 	    }
 	}
     }
