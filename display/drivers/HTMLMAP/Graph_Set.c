@@ -26,6 +26,10 @@ int SCREEN_TOP    = 1;
 int SCREEN_RIGHT;
 int SCREEN_BOTTOM;
 
+int BBOX_MINIMUM;
+int MAX_POINTS;
+int MINIMUM_DIST;
+
 int Graph_Set (void) 
 {
     char *p;
@@ -57,6 +61,45 @@ int Graph_Set (void)
         }
     } else {
 	SCREEN_BOTTOM = DEF_HEIGHT;
+    }
+
+    /*
+     * set the minimum bounding box dimensions 
+     */
+
+    if (NULL != (p = getenv ("GRASS_HTMLMINBBOX"))) {
+	BBOX_MINIMUM = atoi (p);
+        if (BBOX_MINIMUM <= 0) {
+            BBOX_MINIMUM = DEF_MINBBOX;
+        }
+    } else {
+	BBOX_MINIMUM = DEF_MINBBOX;
+    }
+
+    /*
+     * set the maximum number of points
+     */
+
+    if (NULL != (p = getenv ("GRASS_HTMLMAXPOINTS"))) {
+	MAX_POINTS = atoi (p);
+        if (MAX_POINTS <= 0) {
+            MAX_POINTS = DEF_MAXPTS;
+        }
+    } else {
+	MAX_POINTS = DEF_MAXPTS;
+    }
+
+    /*
+     * set the minimum difference to keep a point
+     */
+
+    if (NULL != (p = getenv ("GRASS_HTMLMINDIST"))) {
+	MINIMUM_DIST = atoi (p);
+        if (MINIMUM_DIST <= 0) {
+            MINIMUM_DIST = DEF_MINDIST;
+        }
+    } else {
+	MINIMUM_DIST = DEF_MINDIST;
     }
 
 
@@ -109,7 +152,7 @@ int Graph_Set (void)
      * initialize text memory and list pointers
      */
     
-    last_text = (char *) G_malloc(INITIAL_TEXT+1);
+    last_text = (char *) malloc(INITIAL_TEXT+1);
     last_text[0] = '\0';
     last_text_len = INITIAL_TEXT;
 

@@ -10,6 +10,10 @@
 
 #define DEF_WIDTH  640
 #define DEF_HEIGHT 480
+#define DEF_MINBBOX  2
+#define DEF_MINDIST  2
+#define DEF_MAXPTS  99
+
 #define FILE_NAME  "htmlmap"
 
 #define INITIAL_TEXT 1000
