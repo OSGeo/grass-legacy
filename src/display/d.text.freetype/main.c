@@ -96,7 +96,7 @@ main(int argc, char **argv)
 	opt2->type       = TYPE_DOUBLE;
 	opt2->required   = NO;
 	opt2->key_desc   = "east,north";
-	opt2->description= "Coordinates";
+	opt2->description= "Lower left coordinates";
 
 	opt3 = NULL;
 	if(fonts_count)
