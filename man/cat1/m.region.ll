@@ -1,7 +1,7 @@
 
 
 
-m.region.ll          GRASS Reference Manual           m.region.ll
+m.region.ll <main>   GRASS Reference Manual    <main> m.region.ll
 
 
 
@@ -60,14 +60,14 @@ EXAMPLE
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-m.region.ll          GRASS Reference Manual           m.region.ll
+m.region.ll <main>   GRASS Reference Manual    <main> m.region.ll
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
