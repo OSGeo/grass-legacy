@@ -31,20 +31,25 @@ V_init()
 {
     static int first = 1;
 
+    system("clear");	/* this is a kludge - xterm has problems
+			 * it shows what was on the screen after
+			 * endwin is called in V_exit()
+			 */
     if (first)
     {
-	V_get_old_tty();	/* get current tty settings */
-
 	initscr () ;		/* initialize curses and tty */
-	raw();
-	noecho() ;
-	nonl()   ;
-
-	V_get_new_tty();	/* get new tty settings */
 	first = 0;
     }
-    V_set_new_tty();
+
+/* the order of these 3 calls is important for
+ * Mips' braindead implementation of curses
+ */
+    noecho() ;
+    nonl()   ;
+    raw();
+
     clear()  ;
+    refresh();
 
     return(0) ;
 }
