@@ -1,0 +1,107 @@
+/* Saber-C Project File */
+/* Set current directory */
+cd /grass.src/4.0/src/mapdev/v.in.dxf
+/* Options for project */
+unsetopt ansi
+setopt auto_compile
+unsetopt auto_reload
+setopt auto_replace
+unsetopt batch_load
+unsetopt batch_run
+unsetopt cc_prog
+setopt ccargs               -g
+unsetopt create_file
+unsetopt debug_child
+unsetopt echo
+setopt edit_jobs            5
+unsetopt eight_bit
+setopt line_edit
+setopt line_meta
+setopt lint_load            2
+setopt lint_run             2
+setopt list_action
+setopt load_flags           -I/grass.src/4.0/src/libes -I/grass.src/4.0/src/mapdev/lib -L/grass.src/4.0/src/libes/LIB.sun4 -L/grass.src/4.0/src/mapdev/lib/LIB.sun4
+unsetopt long_not_int
+unsetopt make_args
+setopt make_hfiles
+unsetopt make_offset
+setopt make_prog            make -f OBJ.sun4/make.rules
+setopt make_symbol          #
+setopt mem_config           16384
+unsetopt mem_trace
+setopt num_proc             1
+unsetopt page_cmds
+setopt page_list            25
+unsetopt page_load
+unsetopt path
+setopt proto_path           . /home/local/saber_dir30/sun4-40/proto /home/local/saber_dir30/sun4-40/../common/proto
+unsetopt preprocessor
+setopt program_name         a.out
+unsetopt print_custom
+setopt print_pointer
+setopt print_string         20
+unsetopt save_memory
+setopt sbrk_size            1048576
+setopt src_err              3
+setopt src_step             1
+setopt src_stop             3
+setopt sys_load_flags       -L/lib -L/usr/lib -L/usr/local/lib -I/usr/include -Dunix -Dsun -Dsparc
+unsetopt tab_stop
+unsetopt terse_suppress
+unsetopt terse_where
+setopt unset_value          191
+unsetopt win_fork_nodup
+unsetopt win_no_raise
+unsetopt win_message_list
+unsetopt win_project_list
+/* Suppressions for project */
+
+/* Contents of project */
+load -I/grass.src/4.0/src/libes\ -I/grass.src/4.0/src/mapdev/lib\ -L/grass.src/4.0/src/libes/LIB.sun4\ -L/grass.src/4.0/src/mapdev/lib/LIB.sun4 /lib/libc.a
+load -I/grass.src/4.0/src/libes\ -I/grass.src/4.0/src/mapdev/lib\ -L/grass.src/4.0/src/libes/LIB.sun4\ -L/grass.src/4.0/src/mapdev/lib/LIB.sun4 /grass.src/4.0/src/libes/LIB.sun4/libgis.a
+load -I/grass.src/4.0/src/libes\ -I/grass.src/4.0/src/mapdev/lib\ -L/grass.src/4.0/src/libes/LIB.sun4\ -L/grass.src/4.0/src/mapdev/lib/LIB.sun4 /lib/libm.a
+load -I/grass.src/4.0/src/libes\ -I/grass.src/4.0/src/mapdev/lib\ -L/grass.src/4.0/src/libes/LIB.sun4\ -L/grass.src/4.0/src/mapdev/lib/LIB.sun4 add_bounds.c add_extents.c add_line.c add_point.c add_polyline.c add_circle.c add_arc.c check_ext.c debug.c entities.c header.c find_lines.c init_chars.c make_header.c close_layer.c open_layer.c reopen_layer.c which_layer.c label_box.c main.c
+load -I/grass.src/4.0/src/libes\ -I/grass.src/4.0/src/mapdev/lib\ -L/grass.src/4.0/src/libes/LIB.sun4\ -L/grass.src/4.0/src/mapdev/lib/LIB.sun4 /grass.src/4.0/src/libes/LIB.sun4/libdig.a
+link
+
+/* Signals caught and ignored */
+catch HUP
+catch INT
+catch QUIT
+catch ILL
+catch TRAP
+catch IOT
+catch EMT
+catch FPE
+catch KILL
+catch BUS
+catch SEGV
+catch SYS
+catch PIPE
+catch TERM
+catch URG
+catch STOP
+catch TSTP
+catch TTIN
+catch TTOU
+catch IO
+catch XCPU
+catch XFSZ
+catch VTALRM
+catch PROF
+catch LOST
+catch USR1
+catch USR2
+ignore ALRM
+ignore CONT
+ignore CHLD
+ignore WINCH
+
+/* Status of project */
+stop at "find_lines.c":160
+stop at "open_layer.c":15
+stop at "label_box.c":36
+stop at "label_box.c":42
+stop at "label_box.c":45
+display vect_file
+display type
