@@ -254,6 +254,7 @@ USAGE:	<B>geogrid</B> spacing unit
 	<B>numbers</B> # [color]
 	<B>font</B> font name
 	<B>fontsize</B> font size
+	<B>width</B> #
 	<B>end</B>
 </PRE>
 The <B>spacing</B> and spacing unit of the geographic grid is given 
@@ -262,7 +263,9 @@ degrees, <B>m</B> for minutes, and <B>s</B> for seconds.
 The subsection instructions allow the user to specify
 the <B>color</B> of the geographic grid lines,
 whether coordinate <B>numbers</B> should appear
-on the geographic grid lines, and
+on the geographic grid lines, the <B>width</B>
+of the lines (accepts decimal points [floating points] 
+as well as integers), and
 if they should appear every grid line (1), every other grid line 
 (2), etc., and what color the numbers should be.  The defaults are
 black grid lines, unnumbered.
