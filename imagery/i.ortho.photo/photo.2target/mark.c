@@ -4,6 +4,9 @@
 #include "globals.h"
 #include "local_proto.h"
 
+/* define MOUSE_YN to answer y/n by mouse click */
+#define	MOUSE_YN
+
 static int get_point2 (double *,double *,double *);
 static int keyboard (void);
 static int _keyboard (void);
@@ -171,16 +174,29 @@ static int _keyboard (void)
 	else
 		sprintf (buf, "Elevation: %f\n", Z);
 	Curses_write_window (INFO_WINDOW, 4, 2, buf);
+#ifdef	MOUSE_YN
+	Curses_write_window (INFO_WINDOW, 6, 1, "Look ok? (Left: y / Right: n) ");
+#else
 	Curses_write_window (INFO_WINDOW, 6, 1, "Look ok? (y/n) ");
+#endif
 
 	while(1)
 	{
+#ifdef	MOUSE_YN
+	    int x, y, b;
+	    R_get_location_with_pointer(&x,&y,&b);
+	    if (b == 1)
+		return 1;
+	    else if (b == 3)
+		break;
+#else
 	    int c;
 	    c = Curses_getch(0);
 	    if (c == 'y' || c == 'Y')
 		return 1;
 	    if (c == 'n' || c == 'N')
 		break;
+#endif
 	    Beep();
 	}
     }
@@ -207,15 +223,34 @@ char buf[100];
 	    else
 	    	sprintf (buf, "Elevation: %f\n", Z);
 	    Curses_write_window (INFO_WINDOW, 5, 2, buf);
+#ifdef	MOUSE_YN
+	    Curses_write_window (INFO_WINDOW, 7, 1, "Look ok? (Left: y / Right: n) ");
+#else
 	    Curses_write_window (INFO_WINDOW, 7, 1, "Look ok? (y/n) ");
+#endif
 	  
 	    while(1)
 	      {
+#ifdef	MOUSE_YN
+		int x, y, b;
+		R_get_location_with_pointer(&x,&y,&b);
+		if (b == 1)
+		{
+			ok = 1;
+			break;
+		}
+		else if (b == 3)
+		{
+			ok = -1;
+			break;
+		}
+#else
 		c = Curses_getch(0);
 		if (c == 'y' || c == 'Y')
 		  {ok = 1; break;}
 		if (c == 'n' || c == 'N')
 		  {ok = -1; break;}
+#endif
 		Beep();
 	      }
 	    Curses_clear_window (INFO_WINDOW);
@@ -254,16 +289,35 @@ static int screen (int x, int y, int button)
     else
     	sprintf (buf, "Elevation: %10.2f\n", Z);
     Curses_write_window (INFO_WINDOW, 5, 2, buf);
+#ifdef	MOUSE_YN
+    Curses_write_window (INFO_WINDOW, 7, 1, "Look ok? (Left: y / Right: n) ");
+#else
     Curses_write_window (INFO_WINDOW, 7, 1, "Look ok? (y/n) ");
+#endif
 
 	while(1)
 	{
+#ifdef	MOUSE_YN
+	    int x, y, b;
+	    R_get_location_with_pointer(&x,&y,&b);
+	    if (b == 1)
+	    {
+		ok = 1;
+		break;
+	    }
+	    else if (b == 3)
+	    {
+		ok = -1;
+		break;
+	    }
+#else
 	    int c;
 	    c = Curses_getch(0);
 	    if (c == 'y' || c == 'Y')
 	      { ok = 1; break;}
 	    if (c == 'n' || c == 'N')
               { ok = -1; break;}
+#endif
 	    Beep();
 	}
     Curses_clear_window (INFO_WINDOW);
