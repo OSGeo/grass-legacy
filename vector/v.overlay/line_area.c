@@ -19,7 +19,7 @@
  */
 int point_area ( struct Map_info *Map, int field, double x, double y, struct line_cats *Cats)
 {
-    int i, area, cat, centr;
+    int i, area, centr;
     struct line_cats *CCats = NULL;
     
     Vect_reset_cats ( Cats );
@@ -45,7 +45,7 @@ int point_area ( struct Map_info *Map, int field, double x, double y, struct lin
 }
 
 int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct field_info *Fi, 
-	        dbDriver *driver, int operator, int *ofield  )
+	        dbDriver *driver, int operator, int *ofield, ATTRIBUTES *attr  )
 {
     int    line, nlines, ncat;
     struct line_pnts *Points;
@@ -136,24 +136,60 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 
 		    /* Attributes */
 		    if ( driver ) { 
+			ATTR *at;
+
 			sprintf ( buf, "insert into %s values ( %d", Fi->table, ncat ); 
 			db_set_string ( &stmt, buf);
 
 			/* cata */
-			if ( i >= 0 )
-			     sprintf ( buf, ", %d", Cats->cat[i] );
-			else
-			     sprintf ( buf, ", null");
-			
-			db_append_string ( &stmt, buf);
+			if ( i >= 0 ) {
+			    if (  attr[0].columns ) {
+				at = find_attr( &(attr[0]), Cats->cat[i] );
+				if ( !at )
+				    G_fatal_error ("Attribute not found");
+
+				if ( at->values )
+				    db_append_string ( &stmt, at->values );
+				else
+				    db_append_string ( &stmt, attr[0].null_values );
+			    } else {
+				sprintf ( buf, ", %d", Cats->cat[i] );
+				db_append_string ( &stmt, buf);
+			    }
+			} else {
+			    if (  attr[0].columns ) {
+				db_append_string ( &stmt, attr[0].null_values );
+			    } else {
+				sprintf ( buf, ", null");
+				db_append_string ( &stmt, buf);
+			    }
+			}
 
 			/* catb */
-			if ( j >= 0 )
-			    sprintf ( buf, ", %d )", ACats->cat[j] );
-			else 
-			    sprintf ( buf, ", null )");
+			if ( j >= 0 ) {
+			    if (  attr[1].columns ) {
+				at = find_attr( &(attr[1]), ACats->cat[j] );
+				if ( !at )
+				    G_fatal_error ("Attribute not found");
 
-			db_append_string ( &stmt, buf);
+				if ( at->values )
+				    db_append_string ( &stmt, at->values );
+				else
+				    db_append_string ( &stmt, attr[1].null_values );
+			    } else {
+				sprintf ( buf, ", %d", ACats->cat[j] );
+				db_append_string ( &stmt, buf);
+			    }
+			} else {
+			    if (  attr[1].columns ) {
+				db_append_string ( &stmt, attr[1].null_values );
+			    } else {
+				sprintf ( buf, ", null");
+				db_append_string ( &stmt, buf);
+			    }
+			}
+		    
+		        db_append_string ( &stmt, " )");
 
 			G_debug ( 3, db_get_string ( &stmt ) );
 
