@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
 <TITLE>r.out.elas</TITLE>
@@ -7,7 +8,7 @@
 
 <img src="grass.smlogo.gif">
 
-<hr width=100% align=center size=6 no shade>
+<hr width="100%" align=center size=6 noshade>
 
 <H2>NAME</H2>
 
@@ -47,29 +48,26 @@ r.out.elas" exports a GRASS cell file to an ELAS raster file.
 <DD>ELAS output raster file name.
 </DL>
 
- "r.out.elas" will transfer and convert a GRASS  cell  file
-       to  an  ELAS raster file.  The GRASS cell file will be a 1
-       to 4 byte integer per element file.  This GRASS cell  file
-       may  be converted to either a 1 to 4 byte integer per ele­
-       ment ELAS file (default) or a 4  byte  floating-point  per
-       element  ELAS file.  Color values will be transferred from
-       GRASS to ELAS for GRASS 1 byte integer per  element  files
-       only.   "r.out.elas"  only transfers GRASS cell files that
-       have either an unreferenced XY or UTM projection.  Whether
-       the  GRASS  cell  file is either an unreferenced XY or UTM
-       projection, the ELAS file created will be  a  UTM  projec­
-       tion.   "r.out.elas"  will  transfer  the  GRASS cell file
-       based on the selected region and will  only  transfer  the
-       portion  of  the  GRASS  cell  file  that  is  within that
-       selected region.  "r.out.elas" will notify the user as  to
-       whether  the  current  region  has  the same values as the
-       "cellhd" file for the GRASS cell file being transferred to
-       ELAS.  Since the area transferred to ELAS is determined by
-       the region (WIND file) and not the cellhd  file  then  the
-       notification  of  a  difference  between  these files will
-       indicate that not all of  the  GRASS  cell  file  will  be
-       transferred  to  ELAS.  Also, this program will notify the
-       user as to whether the raster "MASK" is on or not.
+"r.out.elas" will transfer and convert a GRASS cell file to an ELAS
+raster file. The GRASS cell file will be a 1 to 4 byte integer per
+element file. This GRASS cell file may be converted to either a 1 to 4
+byte integer per element ELAS file (default) or a 4 byte
+floating-point per element ELAS file. Color values will be transferred
+from GRASS to ELAS for GRASS 1 byte integer per element files only. 
+"r.out.elas" only transfers GRASS cell files that have either an
+unreferenced XY or UTM projection. Whether the GRASS cell file is
+either an unreferenced XY or UTM projection, the ELAS file created
+will be a UTM projection. "r.out.elas" will transfer the GRASS cell
+file based on the selected region and will only transfer the portion
+of the GRASS cell file that is within that selected region. 
+"r.out.elas" will notify the user as to whether the current region has
+the same values as the "cellhd" file for the GRASS cell file being
+transferred to ELAS. Since the area transferred to ELAS is determined
+by the region (WIND file) and not the cellhd file then the
+notification of a difference between these files will indicate that
+not all of the GRASS cell file will be transferred to ELAS. Also, this
+program will notify the user as to whether the raster "MASK" is on or
+not.
 
 <H2>SEE ALSO</H2>
 <EM>

@@ -1,3 +1,4 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <A NAME="i.tape.tm3">
 <TITLE>i.tape.tm3</TITLE>
@@ -5,7 +6,7 @@
 
 <img src="grass.smlogo.gif">
 
-<hr width=100% align=center size=6 no shade>
+<hr width="100%" align=center size=6 noshade>
 
 <H2>NAME</H2>
 <B><EM>i.tape.tm3</B></EM> - Import Landsat thematic mapper imagery.<BR>
@@ -36,7 +37,7 @@
 <H3>Parameters:</H3>
 <DL>
 <DT><B>input=name</B>
-<DD>The name of the device or file to extract imagery from.  If not given, <EM>i.tape.tm3</EM> will assume the import is from disk files and will prompt for file¡ names.
+<DD>The name of the device or file to extract imagery from.  If not given, <EM>i.tape.tm3</EM> will assume the import is from disk files and will prompt for file names.
 
 <DT><B>group=name</B>
 <DD>The name of the group to store imported bands in.  The group will be created if it does not already exist.
@@ -107,7 +108,7 @@ The volume directory file must have the .ls0 suffix.  Only the leader, imagery, 
 <DD><EM>i.tape.tm3 input=landsat group=landsat bands=1,2,3</EM>
 <P>
 
-The input option specifies the prefix to use for the file¡ names.  The .ls# suffix should not be included in the input option.  <EM>i.tape.tm3</EM> will automatically append the .ls# suffix to each file in turn.
+The input option specifies the prefix to use for the file names.  The .ls# suffix should not be included in the input option.  <EM>i.tape.tm3</EM> will automatically append the .ls# suffix to each file in turn.
 <P>
 
 Naming the imagery files in this fashion is the easiest way to import from disk.  However, <EM>i.tape.tm3</EM> can import from files that have any names.  The program will prompt for filenames.  Enter the filenames at each prompt in the order that the files would be read from tape in.  To import this way, omit the input option in the command, like this:
