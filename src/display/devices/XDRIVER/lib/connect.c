@@ -1,9 +1,9 @@
 #include <stdio.h>
+#include <unistd.h>
 #include <setjmp.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/types.h>
-#include <sys/ipc.h>
-#include <sys/msg.h>
 #include <sys/stat.h>
 #ifdef __CYGWIN__
 #define MODE 0644
@@ -11,33 +11,26 @@
 #define MODE 0666
 #endif
 
-int get_connection(files, rfd, wfd)
-char *files;
-int *rfd, *wfd;
+int get_connection (char *files, int *rfd, int *wfd)
 {
-    int keyin, keyout, midin, midout;
     char input[1024], output[1024];
 
     sscanf(files, "%s %s", input, output);
-    keyin = ftok(input,0);
-    keyout = ftok(output, 0);
-    midin = msgget(keyin , IPC_CREAT | 0600);
-    *rfd = midin;
-    if (midin == -1) {
+    *rfd = open(input, 0);
+    if (*rfd == -1) {
         perror(input);
         exit(-1);
     }
-    midout = msgget(keyout, IPC_CREAT | 0600);
-    *wfd = midout;
-    if (midout == -1) {
+    *wfd = open(output, 1);
+    if (*wfd == -1) {
         perror(output);
         exit(-1);
     }
-    
+
     return 0;
 }
 
-int prepare_connection(void)
+int prepare_connection (void)
 {
     return 0;
 }
@@ -53,10 +46,9 @@ int prepare_connection(void)
 /* this is the AT&T version. */
 
 static jmp_buf save;
-static void timeout(int);
+static void timeout();
 
-int check_connection(me, link)
-char *me, *link;
+int check_connection (char *me, char *link)
 {
     struct stat buf;
     char in_fifo[1024], out_fifo[1024];
@@ -70,6 +62,12 @@ char *me, *link;
         fprintf(stderr, "Sorry, <%s> not available\n", in_fifo);
         goto error;
     }
+#ifdef S_IFIFO
+    if (!(buf.st_mode & S_IFIFO)) {
+        fprintf(stderr, "Sorry, <%s> is not a fifo file\n", in_fifo);
+        goto error;
+    }
+#endif  /* FIFO */
     if ((buf.st_mode & MODE) != MODE) {
         fprintf(stderr, "Sorry, permissions on <%s> (%o) should be %o\n",
                 in_fifo, buf.st_mode & MODE, MODE);
@@ -79,16 +77,32 @@ char *me, *link;
         fprintf(stderr, "Sorry, <%s> not available\n", out_fifo);
         goto error;
     }
-    if ((buf.st_mode & MODE) != MODE) {
-        fprintf(stderr, "Sorry, permissions on <%s> (%o) should be %o\n",
-                out_fifo, buf.st_mode & MODE);
+#ifdef S_IFIFO
+    /* Check existence and access of out_fifo */
+    if (!(buf.st_mode & S_IFIFO)) {
+        fprintf(stderr, "Sorry, <%s> is not a fifo file\n", out_fifo);
         goto error;
     }
-    out_file = msgget(ftok(in_fifo,0), 0600); /* reading here? */
-    in_file = msgget(ftok(out_fifo,0), 0600); /* writing here? */
-    if( (out_file == -1) || (in_file == -1) )
-	return (0);
-
+#endif  /* FIFO */
+    if ((buf.st_mode & MODE) != MODE) {
+        fprintf(stderr, "Sorry, permissions on <%s> (%o) should be %o\n",
+                out_fifo, buf.st_mode & MODE, MODE);
+        goto error;
+    }
+    if (setjmp(save)) {         /* if timed out waiting below */
+        signal(SIGALRM, def);   /* back to normal for timer */
+        return (0);             /* tell caller nobody's listening */
+    }
+    /* else first time through */
+    def = signal(SIGALRM, timeout);     /* where to go when timer goes
+                                         * off */
+    alarm(time);                /* set timer */
+    out_file = open(in_fifo, O_WRONLY); /* reading here? */
+    in_file = open(out_fifo, O_RDONLY); /* writing here? */
+    alarm(0);                   /* turn off alarm */
+    signal(SIGALRM, def);       /* and restore normal operation */
+    close(out_file);
+    close(in_file);
     fprintf(stderr, "Graphics driver [%s] is already running (now selected)\n", me);
     fflush(stderr);
     return (-1);                /* tell caller someone's listening */
@@ -99,7 +113,7 @@ char *me, *link;
 
 }
 
-static void timeout(int dummy)
+static void timeout (void)
 {
     longjmp(save, -1);
 }
