@@ -20,11 +20,16 @@ $Date$
 
 <hr SIZE=5 NOSHADE WIDTH="100%">
 <p><font face="Arial,Helvetica">This directory contains the latest Win32
-binary distribution of GRASS 5.0 as a gzipped tape archive
-(<a href="http://grass.itc.it/grass5/binary/windows_cygnus/">grass5.0beta12_CYGWIN_NT-4.0_bin.tar.gz</a>
-or newer).
+binary distribution of GRASS 5.0 as a gzipped tape archives. We provide two
+versions:
 
-The script <a href="http://grass.itc.it/grass5/binary/windows_cygnus/">grass5install.sh</a>
+<ul>
+<li>winGRASS with Xserver requirement: wingrass_xserver/
+<li>winGRASS without Xserver requirement: wingrass_generic/ (eventually more
+    limited in functionality)
+</ul>
+
+The script <tt>grass5install.sh</tt>
 should be run from within the cygwin shell to install the binary package.
 Please read the <a href="cygwin_grass50bininstall.html">detailed installation
 instruction</a>. If you want to compile yourself, you can get the latest
@@ -33,7 +38,7 @@ the <a href="cygwin_grass50compile.html">compiling instruction</a>.</font>
 
 <p><font face="Arial,Helvetica">The port is compiled with the <a href="http://sources.redhat.com/cygwin/">Cygnus
 compiler</a> (gcc) from the same source code as the UNIX version. The port
-was done by John Huddleston<!-- (<i>John.Huddleston@usda.gov</i>) -->.</font>
+was mostly done by John Huddleston <!-- (<i>John.Huddleston@usda.gov</i>) -->.</font>
 
 <p><font face="Arial,Helvetica">GRASS on Windows is still experimental.
 Please expect some functionality missing or not working. Please assist
@@ -63,7 +68,7 @@ with NTFS</font></li>
 <font face="Arial,Helvetica"><a href="http://sources.redhat.com/cygwin/">Cygwin</a>
 installation (Cygnus tools for Windows),</font></li>
 
-<li>
+<li>Only Xserver/winGRASS version:
 <font face="Arial,Helvetica"><a href="http://sources.redhat.com/cygwin/xfree/">X
 Window</a> Server.</font></li>
 </ul>
