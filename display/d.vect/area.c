@@ -1,3 +1,8 @@
+/* Author: Radim Blazek
+*
+* added color support: Markus Neteler
+*/
+
 #include "gis.h"
 #include "Vect.h"
 #include "display.h"
@@ -6,8 +11,33 @@
 #include "colors.h"
 #include "dbmi.h"
 
+/* TODO: should use 24bit instead of 16 colors, maybe implement
+   predefined color tables? */
+struct rgb_color {
+        unsigned char R, G, B;
+       };
+static const int palette_ncolors = 16;
+static struct rgb_color palette[16] =  {
+	{198, 198, 198}, /*  1: light gray */
+	{127, 127, 127}, /*  2: medium/dark gray */
+	{255,   0,   0}, /*  3: bright red */
+	{139,   0,   0}, /*  4: dark red */
+	{  0, 255,   0}, /*  5: bright green */
+	{  0, 139,   0}, /*  6: dark green */
+	{  0,   0, 255}, /*  7: bright blue */
+	{  0,   0, 139}, /*  8: dark blue   */
+	{255, 255,   0}, /*  9: yellow */
+	{139, 126,  10}, /* 10: olivey brown */
+	{255, 165,   0}, /* 11: orange */
+	{255, 192, 203}, /* 12: pink   */
+	{255,   0, 255}, /* 13: magenta */
+	{139,   0, 139}, /* 14: dark magenta */
+	{  0, 255, 255}, /* 15: cyan */
+	{  0, 139, 139}  /* 16: dark cyan */
+};
+
 int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor, 
-	     int chcat, int id_flag, int table_colors_flag ) {
+	     int chcat, int id_flag, int table_colors_flag, int cats_color_flag) {
     int    num, area, isle, n_isles, n_points;
     double xl, yl;
     struct line_pnts *Points, *IPoints;
@@ -24,6 +54,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
     dbColumn *column;
     char buf[2000], colorstring[8]; /* RR:GG:BB */
     int more, ret;
+    unsigned char which;
 
     G_debug (1, "display areas:");
     Points = Vect_new_line_struct ();
@@ -53,7 +84,7 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 
 	if ( !Vect_area_alive (Map, area) ) continue;
         if ( chcat ) /* check category: where_opt or cat_opt used */
-          { 
+        { 
 	     if ( id_flag ) {
 		 if ( !(Vect_cat_in_cat_list (area, Clist)) )
 		     continue;
@@ -75,8 +106,8 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 		     }
 		 }
 		 if (!found) continue;
-	     }
-          }
+	     } /* end else */
+        } /* end if id_flag */
         G_debug (3, "display area %d", area);
 
         /* fill */
@@ -128,12 +159,23 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 				G_warning("Error in color definition column GRASSRGB, area %d with cat %d: colorstring %s (not drawing this area)", area, cat, colorstring);
 			}
 		}
+	     } /* end if cat */
+	} /* end if table_colors_flag */
+ 	
+	/* random colors */
+	if( cats_color_flag ) {
+	    cat=Vect_get_area_cat ( Map, area, Clist->field );
+	     if( cat >= 0 ){
+		G_debug (3, "display area %d, centroid %d, cat %d", area, centroid, cat);
+		/* fetch color number from category */
+		which = (cat % palette_ncolors);
+		G_debug(3,"cat:%d which color:%d r:%d g:%d b:%d",cat, which,palette[which].R,palette[which].G,palette[which].B);
+		R_RGB_color (palette[which].R,palette[which].G,palette[which].B);
+		G_plot_polygon ( Points->x, Points->y, Points->n_points);
 	     }
 	}
- 	
-	/* TODO: implement random colors here */
 	
-	if ( fcolor > -1 && ! table_colors_flag ) {
+	if ( fcolor > -1 && !table_colors_flag && !cats_color_flag) {
                 R_color(fcolor) ;
 		G_plot_polygon ( Points->x, Points->y, Points->n_points);
 	}
@@ -154,12 +196,12 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 		}
 	    }
 	}
-    }
+    } /* end for */
 
-   if( table_colors_flag ) {
+    if( table_colors_flag ) {
        db_close_database(driver);
        db_shutdown_driver(driver);
-   }
+    }
 
     Vect_destroy_line_struct (Points);
     Vect_destroy_cats_struct (Cats);
