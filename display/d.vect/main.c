@@ -409,8 +409,11 @@ main (int argc, char **argv)
 	if (!quiet)
 	     fprintf (stdout,"Plotting ... "); fflush (stdout);
 
-	Vect_get_map_box ( &Map, &box );
-	if ( window.north < box.S || window.south >  box.N || window.east < box.W || window.west > box.E ){
+	if ( level >= 2 )
+	    Vect_get_map_box ( &Map, &box );
+	if ( level >= 2 && ( window.north < box.S || window.south >  box.N || 
+		             window.east < box.W || window.west > box.E ) )
+	{
 	    fprintf (stdout,"The bounding box of the map outside current region, nothing displayed.\n");
 	} else { 
 	    overlap =  G_window_percentage_overlap(&window, box.N, box.S, box.E, box.W);
