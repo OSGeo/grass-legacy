@@ -147,9 +147,9 @@ make_location (char *gisdbase, char *location_name)
     G__setenv ("MAPSET", mapset);
     G__setenv ("LOCATION_NAME", location_name);
 
-    sprintf (buf, "mkdir %s/%s", gisdbase, location_name);
+    sprintf (buf, "mkdir '%s'/'%s'", gisdbase, location_name);
     if(system(buf)) return 0;
-    sprintf (buf, "mkdir %s/%s/%s", gisdbase, location_name, mapset);
+    sprintf (buf, "mkdir '%s'/'%s'/'%s'", gisdbase, location_name, mapset);
     if(system(buf)) return 0;
     /* set the dummy window */
     window.north =1.;
@@ -165,7 +165,7 @@ make_location (char *gisdbase, char *location_name)
     /* later after calling g.setrpj we will let user create a real default window */
     G__put_window (&window, "", "DEFAULT_WIND");
     G__put_window (&window, "", "WIND");
-    sprintf (buf, "echo '%s' >  %s/%s/%s/MYNAME", myname, gisdbase, location_name, mapset);
+    sprintf (buf, "echo '%s' >  '%s'/'%s'/'%s'/MYNAME", myname, gisdbase, location_name, mapset);
     system(buf);
     return 1;
 }
