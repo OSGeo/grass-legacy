@@ -28,7 +28,12 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.3  2003-01-26 17:47:01  paul
+ * Revision 1.4  2003-02-14 12:58:59  paul
+ * Fix Multiply Defined Symbol errors in proj library by removing global
+ * variable definitions (in the end should probably be separate header files
+ * for proj internal files and for GRASS modules that use proj)
+ *
+ * Revision 1.3  2003/01/26 17:47:01  paul
  * Implement general datum transformation support in [rsv].proj,
  * Fix some other programs' usage of the GRASS PROJ.4 wrapper functions
  *     to reflect changes in these.
@@ -345,10 +350,6 @@ extern char const pj_release[];
 #ifdef __cplusplus
 }
 #endif
-
-/* globals added for GRASS */
-int INVERSE_FLAG;
-struct CTABLE *CONVERSION_TABLE;
 
 /* header information added for GRASS */
 struct pj_info {
