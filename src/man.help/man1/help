@@ -1,0 +1,23 @@
+.\" %W% %G%
+.TH help 1
+.SH NAME
+help \- GRASS help facility
+.br
+.I (Available through
+.B grass3
+.I menu)
+.SH SYNOPSIS
+.B help
+.SH DESCRIPTION
+.I Help
+provides a user with quick information about the GRASS tools.
+A user may choose
+to (1) see a list of tools, (2) have a list printed on paper, or (3) request
+information about a particular tool.  For reference manual entries refer to
+the GRASS \fImanual[1]\fR command.
+.SH "SEE ALSO"
+\fIGRASS Reference Manual\fR
+.br
+\fImanual[1]\fR
+.SH "AUTHOR"
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
