@@ -34,7 +34,7 @@
  *   Erases the window on scree.  Does not affect window contents list.
  */
 
-#include "../colors.h"
+#include "colors.h"
 #include "gis.h"
 
 D_new_window(name, t, b, l, r)
