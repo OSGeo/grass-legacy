@@ -1,0 +1,3 @@
+Produces a cross product of multiple data layers. The resulting data layer
+contains a unqiue category for every combination of values in the input
+data layers.
