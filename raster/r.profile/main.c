@@ -12,12 +12,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <math.h>
 #include "gis.h"
 #include "display.h"
-#include <math.h>
+#include "raster.h"
 
 static int move(int, int);
 static int cont(int, int);
+int do_profile(double, double, double, double, char *, int, double, int, int, FILE *, char *);
+/* read_rast.c */
+int read_rast(double, double, double, int, int, RASTER_MAP_TYPE, FILE *, char *);
+
 static int min_range[5], max_range[5];
 static int which_range;
 static int change_range;
@@ -30,14 +36,14 @@ int main(int argc, char *argv[])
     FILE *fp;
     int screen_x, screen_y, button;
     double res;
-    char errbuf[256];
+    char errbuf[256], *null_string;
     int coords = 0, i, k = -1;
     double e1, e2, n1, n2;
     RASTER_MAP_TYPE data_type;
     struct Cell_head window;
     struct
     {
-	struct Option *opt1, *profile, *res, *output;
+	struct Option *opt1, *profile, *res, *output, *null_str;
 	struct Flag *i, *g;
     }
     parm;
@@ -80,6 +86,12 @@ int main(int argc, char *argv[])
     parm.res->description =
 	"Resolution along profile (default = current region resolution)";
 
+    parm.null_str = G_define_option() ;
+    parm.null_str->key        = "null";
+    parm.null_str->type       = TYPE_STRING;
+    parm.null_str->required   = NO;
+    parm.null_str->answer     = "*";
+    parm.null_str->description= "Char string to represent no data cell" ;
 
     parm.i = G_define_flag();
     parm.i->key = 'i';
@@ -92,12 +104,14 @@ int main(int argc, char *argv[])
 
 
     if (G_parser(argc, argv))
-	exit(-1);
+	exit(1);
 
     if ((!parm.i->answer) && (!parm.profile->answer)) {
 	sprintf(msg, "Either -i flag and/or profile parameter must be used.");
 	G_fatal_error(msg);
     }
+
+    null_string = parm.null_str->answer;
 
     G_get_window(&window);
     projection = G_projection();
@@ -203,7 +217,7 @@ int main(int argc, char *argv[])
 	    G_plot_line(e1, n1, e2, n2);
 
 	    /* Get profile info */
-	    do_profile(e1, e2, n1, n2, name, coords, res, fd, data_type, fp);
+	    do_profile(e1, e2, n1, n2, name, coords, res, fd, data_type, fp, null_string);
 
 	    n1 = n2;
 	    e1 = e2;
@@ -226,7 +240,7 @@ int main(int argc, char *argv[])
 	    e2 = e1;
 	    n2 = n1;
 	    /* Get profile info */
-	    do_profile(e1, e2, n1, n2, name, coords, res, fd, data_type, fp);
+	    do_profile(e1, e2, n1, n2, name, coords, res, fd, data_type, fp, null_string);
 	}
 	else {
 	    for (i = 0; i <= k - 2; i += 2) {
@@ -236,7 +250,7 @@ int main(int argc, char *argv[])
 		sscanf(parm.profile->answers[i + 3], "%lf", &n2);
 		/* Get profile info */
 		do_profile(e1, e2, n1, n2, name, coords, res, fd, data_type,
-			   fp);
+			   fp, null_string);
 
 	    }
 	}
@@ -250,12 +264,8 @@ int main(int argc, char *argv[])
 
 /* Calculate the Profile Now */
 /* Establish parameters */
-int do_profile
-    (double e1,
-     double e2,
-     double n1,
-     double n2,
-     char *name, int coords, double res, int fd, int data_type, FILE * fp)
+int do_profile(double e1, double e2, double n1, double n2, char *name, int coords, 
+		double res, int fd, int data_type, FILE * fp, char *null_string)
 {
     float rows, cols, LEN;
     double Y, X, AZI;
@@ -271,7 +281,7 @@ int do_profile
 	/* Special case for no movement */
 	e = e1;
 	n = n1;
-	read_rast(e, n, dist, fd, coords, data_type, fp);
+	read_rast(e, n, dist, fd, coords, data_type, fp, null_string);
     }
 
     if (rows >= 0 && cols < 0) {
@@ -287,7 +297,7 @@ int do_profile
 	    dist -= G_distance(e, n, e1, n1);
 	}
 	for (e = e1, n = n1; e < e2 || n > n2; e += X, n -= Y) {
-	    read_rast(e, n, dist, fd, coords, data_type, fp);
+	    read_rast(e, n, dist, fd, coords, data_type, fp, null_string);
 	    /* d+=res; */
 	    dist += G_distance(e - X, n + Y, e, n);
 	}
@@ -305,11 +315,11 @@ int do_profile
 	if (e != 0.0 && (e != e1 || n != n1)) {
 	    dist -= G_distance(e, n, e1, n1);
 	    /*
-	     * read_rast (e1, n1, dist, fd, coords, data_type, fp);
+	     * read_rast (e1, n1, dist, fd, coords, data_type, fp, null_string);
 	     */
 	}
 	for (e = e1, n = n1; e < e2 || n < n2; e += X, n += Y) {
-	    read_rast(e, n, dist, fd, coords, data_type, fp);
+	    read_rast(e, n, dist, fd, coords, data_type, fp, null_string);
 	    /* d+=res; */
 	    dist += G_distance(e - X, n - Y, e, n);
 	}
@@ -328,7 +338,7 @@ int do_profile
 	    dist -= G_distance(e, n, e1, n1);
 	}
 	for (e = e1, n = n1; e > e2 || n > n2; e -= X, n -= Y) {
-	    read_rast(e, n, dist, fd, coords, data_type, fp);
+	    read_rast(e, n, dist, fd, coords, data_type, fp, null_string);
 	    /* d+=res; */
 	    dist += G_distance(e + X, n + Y, e, n);
 	}
@@ -347,7 +357,7 @@ int do_profile
 	    dist -= G_distance(e, n, e1, n1);
 	}
 	for (e = e1, n = n1; e > e2 || n < n2; e -= X, n += Y) {
-	    read_rast(e, n, dist, fd, coords, data_type, fp);
+	    read_rast(e, n, dist, fd, coords, data_type, fp, null_string);
 	    /* d+=res; */
 	    dist += G_distance(e + X, n - Y, e, n);
 	}
