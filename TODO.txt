@@ -167,6 +167,11 @@ Configure:
        for it's availability
      - search for "yacc" and "(f)lex"
   (Being worked on by Eric Miller)
+  
+- clean up make variables in head.in etc. Things like
+    XDRLIB    = @XDRLIB@ @ZLIBINCPATH@ @ZLIBLIBPATH@ @ZLIB@ $(XEXTRALIBS)
+  are confusing. Probably requires modification of all Gmakefiles (600+ ?)
+  A good time to do this is with the new Makefile system.
 
 --------------------------------------------------------------------
 Removal of absolute path codings:
