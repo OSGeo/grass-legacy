@@ -1,0 +1,132 @@
+
+
+
+s.in.ascii <contrib>  GRASS Reference Manual <contrib> s.in.ascii
+
+
+
+NAME
+     s.in.ascii.dem - Converts an ASCII listing of spot heights
+     into a GRASS site list file.
+     (GRASS Sites Program)
+
+SYNOPSIS
+     s.in.ascii.dem
+     s.in.ascii.dem help
+     s.in.ascii.dem sites=name [input=name]
+     [fs=character|space|tab]
+
+DESCRIPTION
+     s.in.ascii.dem converts an ASCII listing of spot heights
+     into a file in GRASS site list file format.
+
+     Input can be entered via standard input or from the file
+     input=name.  Each line of input should contain the easting,
+     northing and the z-value.	The fs=name option (where name is
+     either a character, a space, or a tab) can be used to
+     specify the use of a particular field separator between
+     these three input fields.	This is useful when input is
+     obtained from other programs (see NOTES, below).  Output is
+     stored in the file sites=name and placed in the site_lists
+     directory under the user's current mapset.
+
+     The GRASS program s.out.ascii can be used to perform the
+     reverse function, converting a file in GRASS site list
+     format into an ASCII listing of eastings, northings and spot
+     heights.
+
+     Parameters:
+
+     sites=name	       Name of the new GRASS site list file to be
+		       output.
+
+     input=name	       Name of an existing ASCII file containing
+		       site locations and labels.
+
+     fs=character|space|tab
+		       The field separator separating the
+		       easting, northing and spot height in each
+		       line of the input file.	The field
+		       separator can be a character, a space, or
+		       a tab.
+		       Default:	 space
+
+     s.in.ascii.dem can be run either non-interactively or
+     interactively.  The program will be run non-interactively if
+     the user specifies a name to be assigned to the sites file
+     output, the name of an existing ASCII file containing input,
+     and (optionally) a field separator fs appearing in the input
+     file, using the form:
+
+
+
+GRASS 4.2.1		Baylor University			1
+
+
+
+
+
+
+s.in.ascii <contrib>  GRASS Reference Manual <contrib> s.in.ascii
+
+
+
+	  s.in.ascii.dem sites=name [input=name]
+	  [fs=character|space|tab]
+
+     Alternately, the user can simply type s.in.ascii.dem on the
+     command line, without program arguments.  In this case, the
+     user will be prompted for parameter values using the
+     standard GRASS parser interface described in the manual
+     entry for parser.	If the user does not specify the name of
+     an input file containing z-values, these should be entered
+     to the program via standard input.
+
+NOTES
+     Other GRASS programs can be used to produce output in a
+     format suitable for input to s.in.ascii.dem.  For example,
+     the user might pipe output produced by d.where into
+     s.in.ascii.dem to create a site list file called my.sites
+     containing site locations pointed to with the mouse, as
+     illustrated below.	 In this example it was unnecessary to
+     specify the field separator used in the input, since d.where
+     output separates the easting and northing values with
+     spaces, and spaces are the default field separator assumed
+     by s.in.ascii.dem.
+
+	  d.where | s.in.ascii.dem sites=my.sites
+
+SEE ALSO
+     d.points, d.sites, d.what.rast, d.where, s.out.ascii,
+     s.in.ascii, and parser
+
+AUTHOR
+     Michael Shapiro, U.S. Construction Engineering Research
+     Laboratory Converted from s.in.ascii by Markus Neteler,
+     Hannover (neteler@geog.uni-hannover.de
+
+NOTICE
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
+     Integration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2.1		Baylor University			2
+
+
+
