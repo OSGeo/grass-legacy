@@ -19,7 +19,7 @@ unix:
 	echo ':' > $(UNIX_BIN)/$(shell)
 	echo GISBASE=$(GISBASE) >> $(UNIX_BIN)/$(shell)
 	echo export GISBASE >> $(UNIX_BIN)/$(shell)
-	echo exec '$$'GISBASE/etc/Init.sh >> $(UNIX_BIN)/$(shell)
+	echo exec '$$'GISBASE/etc/Init.sh '$$'@ >> $(UNIX_BIN)/$(shell)
 	chmod +x $(UNIX_BIN)/$(shell)
 
 $(ETC)/Init.sh: init.head init.shell init.tail version.sed $(SRC)/CMD/VERSION

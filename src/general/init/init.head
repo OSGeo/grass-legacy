@@ -1,5 +1,60 @@
 : ${GISBASE?}
 
+# parsing argument to get LOCATION
+
+if [ "$1" = "-" ]
+then
+
+	# try interactive startup
+
+	LOCATION=
+
+else
+
+	# try non-interactive startup
+
+	L=
+	if [ "$LOCATION" -a ! "$1" ]
+	then
+		L=$LOCATION
+	elif [ "$1" ]
+	then
+		L=$1
+	fi
+
+	if [ "$L" ]
+	then
+		MAPSET=`basename $L`
+		L=`dirname $L`
+		if [ "$L" != "." ]
+		then
+			LOCATION_NAME=`basename $L`
+			L=`dirname $L`
+			if [ "$L" != "." ]
+			then
+				GISDBASE=$L
+			fi
+		fi
+	fi
+
+	if [ "$GISDBASE" -a "$LOCATION_NAME" -a "$MAPSET" ]
+	then
+		LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
+		if [ ! -r $LOCATION/WIND ]
+		then
+			echo "$LOCATION: No such location"
+			exit
+		fi
+		export GISDBASE LOCATION_NAME MAPSET
+	elif [ "$L" ]
+	then
+		echo "GISDBASE, LOCATION_NAME and MAPSET variables not set properly"
+		exit
+	fi
+
+fi
+
+
 # set PAGER environment variable if not set
 
 if [ ! "$PAGER" ]
@@ -50,13 +105,17 @@ then
 	read ans
 fi
 
-# user selects LOCATION and MAPSET
 
-$ETC/set_data
-case $? in
- 0) ;;
- *) exit ;;
-esac
+# user selects LOCATION and MAPSET if not set
+
+if [ ! "$LOCATION" ]
+then
+	$ETC/set_data
+	case $? in
+	 0) ;;
+	 *) exit ;;
+	esac
+fi
 
 # unset the MONITOR variable to force user to select one if they are going
 # to do graphics.
