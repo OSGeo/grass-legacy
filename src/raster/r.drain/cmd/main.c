@@ -15,7 +15,9 @@
 * bugfix in FCELL, DCELL: Markus Neteler 12/2000                      *
 **********************************************************************/
 
+/*
 #define DEBUG
+*/
 
 #include <unistd.h>
 #include <stdlib.h>
