@@ -12,7 +12,7 @@
 <BR>
 <B>g.manual help</B>
 <BR>
-<B>g.manual</B> [<B>-1as</B>] 
+<B>g.manual</B> [<B>-1</B>] [<B>-a</B>] [<B>-d</B>] [<B>-s</B>]
 [<B>entries=</B><EM>name</EM>[,<EM>name</EM>,...]]
 <BR>
 <H2>DESCRIPTION</H2>
@@ -33,12 +33,16 @@ may get a manual entry printed to the terminal screen.
 appealing format.  The manual page list will be separated
 by manual section.
 
-<DT><B>-s</B> 
+<DT><B>-d</B> 
 
 <DD>This option will display a short description of all manual entries
 specified.  If this option is used without a manual entrie's <EM>name</EM>
 a summary of all manual entries will be displayed (option yet not active).
 
+<DT><B>-s</B>
+
+<DD>Run silently to set exit status if entry exists. Requires only one
+command.
 
 </DL>
 These entries may also be accessed through the 

@@ -3,18 +3,21 @@
 if [ ! "$GISBASE" ]
 then
   echo "You must be in GRASS to run this program"
-  exit
+  exit 1
 fi
 
 HELP="
 Usage:
- `basename $0` [-1] [-a] [-m] [-s] [browser=name] [entries=command,command]
+ `basename $0` [-1] [-a] [-d] [-m] [-s] [browser=name] [entries=command,command]
    command command ...
 
 Flags:
   -1   List all manual entries, one per line.
   -a   List all manual entries in a more appealing format.
+  -d   Display a short description of all manual entries specified(NOT YET).
   -m   Force to use man program rather than GRASS_TEXT_BROWSER, if any.
+  -s   Run silently to set exit status if entry exists.
+       Requires only one command.
 
 Parameters:
   browser   Override GRASS_TEXT_BROWSER env variable to browser html pages.
@@ -31,8 +34,9 @@ then
   exit 1
 fi
 
+desc=
 forceman=
-shortdesc=
+silent=
 tentries=
 until [ $# -eq 0 ]
 do
@@ -45,9 +49,11 @@ do
 
     -a) /bin/ls -C $GISBASE/man/man1 | $PAGER; exit 0 ;;
 
+    -d) desc=1 ;;
+
     -m) forceman=1 ;;
 
-    -s) shortdesc=1 ;;
+    -s) silent=1 ;;
 
     b=*|br=*|bro=*|brow=*|brows=*|browse=*|browser=*)
       GRASS_TEXT_BROWSER=`echo $1 | awk -F '=' '{print $2}'` ;;
@@ -60,14 +66,14 @@ do
   shift
 done
 
-if [ "$shortdesc" ]
+if [ "$desc" ]
 then
   GRASS_TEXT_BROWSER=
 else
   which $GRASS_TEXT_BROWSER > /dev/null 2>&1
   if [ $? -ne 0 -o "$forceman" ]
   then
-    if [ "$GRASS_TEXT_BROWSER" -a ! "$forceman" ]
+    if [ "$GRASS_TEXT_BROWSER" -a ! "$forceman" -a ! "$silent" ]
     then
       echo
       echo Warning: $GRASS_TEXT_BROWSER does not exist. Use man.
@@ -86,17 +92,29 @@ do
   
   if [ -e $html -a "$GRASS_TEXT_BROWSER" ]
   then
+    if [ "$silent" ]
+    then
+      exit 0
+    fi
     entries="$entries $html"
-  elif [ -e $man -a ! "$GRASS_TEXT_BROWSER" ] || [ -e $man -a "$shortdesc" ]
+  elif [ -e $man -a ! "$GRASS_TEXT_BROWSER" ]
   then
+    if [ "$silent" ]
+    then
+      exit 0
+    fi
     entries="$entries $i"
   else
+    if [ "$silent" ]
+    then
+      exit 1
+    fi
     msg="$msg
 No entry for $i"
   fi
 done
 
-if [ "$shortdesc" ]
+if [ "$desc" ]
 then
   if [ ! "$tentries" ]
   then
@@ -125,7 +143,7 @@ else
       $GRASS_TEXT_BROWSER $i
     done
   else
-    man -M $GISBASE/man 1 $entries
+    man -P $PAGER -M $GISBASE/man 1 $entries
   fi
 fi
 
@@ -134,4 +152,6 @@ then
   echo
   echo "$msg"
 fi
+
+exit 0
 
