@@ -130,10 +130,10 @@ proc epsgLocCom args {
                                   if {[file exists $browsedepsg]== 1} {
                                       if {[file exists $thelocation ]==0} {  
                                         destroy .optPopup; 
-                                        exec $env(GISBASE)/etc/make_location_epsg_g57.sh \
+                                        exec -- xterm -e $env(GISBASE)/etc/make_location_epsg_g57.sh \
                                             $epsg_code $epsgLocation $database >@stdout 2>@stderr; 
-                                        DialogGen .wrnDlg "WARNING: restart Grass" warning "WARNING: \
-                                            Please restart Grass in order find the created location in the list" \
+                                        DialogGen .wrnDlg "WARNING: restart Grass please" warning "WARNING: \
+                                            Please restart Grass in order find the created location in the list (closing it for you now)" \
                                             0 OK; 
                                         set env(EPSGSCRIPT) {yes};
                                         puts stdout "exit";
