@@ -39,9 +39,6 @@ dig_calc_begin_angle (
   double last_y;
   double *xptr;
   double *yptr;
-#ifndef atan2
-  double atan2 ();
-#endif	/* atan2 */
   int short_line;
   int i;
   int n_points;
@@ -60,44 +57,30 @@ dig_calc_begin_angle (
 
   if (n_points == 1)
     return ((float) -9.);
-/*DEBUG fprintf (stderr, "Thresh = %lf\n", thresh); */
 
   short_line = 1;
-  if (n_points != 2)
-    {
-      /* Search for next different coord */
+  if (n_points != 2) {
+      /* Search for next different coord. Note that in >= g5.1, threshold
+      * is not used for build process. */
       /* 4.1 but do not use opposite node if there are other points */
-      for (i = 1; i < n_points - 1; i++)
-	{
-	  if ((thresh < fabs (*xptr - last_x)) ||
-	      (thresh < fabs (*yptr - last_y)))
-	    {
+      for (i = 1; i < n_points - 1; i++) {
+	  if ((thresh < fabs (*xptr - last_x)) || (thresh < fabs (*yptr - last_y))) {
 	      short_line = 0;
 	      break;
-	    }
+	  }
 	  xptr++;
 	  yptr++;
-	}
-    }
+      }
+  }
 
-#ifdef OLD
-  /* if entire line is w/in threshold, get angle from end points */
-  if (short_line)
-    {
-      return ((float) d_atan2 (yarray[n_points - 1] - last_y, xarray[n_points - 1] - last_x));
-    }
-#else /* for 4.1 change this to take 1st point after node  -dpg 12/92 */
-  if (short_line)
-    {
+  if (short_line) {
+      /* for 4.1 change this to take 1st point after node  -dpg 12/92 */
+      /* return ((float) d_atan2 (yarray[n_points - 1] - last_y, xarray[n_points - 1] - last_x)); */
       return ((float) d_atan2 (yarray[1] - last_y, xarray[1] - last_x));
-    }
-#endif
+  }
 
   return ((float) d_atan2 (*yptr - last_y, *xptr - last_x));
-
 }				/*  calc_begin_angle()  */
-
-
 
 float 
 dig_calc_end_angle (struct line_pnts *points, double thresh)
@@ -106,16 +89,11 @@ dig_calc_end_angle (struct line_pnts *points, double thresh)
   double last_y;
   double *xptr;
   double *yptr;
-  double fabs ();
-#ifndef atan2
-  double atan2 ();
-#endif	/* atan2 */
   int short_line;
   int i;
   int n_points;
   double *xarray;
   double *yarray;
-
 
   short_line = 1;
 
@@ -133,31 +111,24 @@ dig_calc_end_angle (struct line_pnts *points, double thresh)
 
   if (n_points != 2)
     {
-      /* Search for next different coord */
+      /* Search for next different coord. Note that in >= g5.1, threshold
+      * is not used for build process. */
       /* 4.1 but do not use opposite node if there are other points */
-      for (i = n_points - 2; i > 0; i--)
-	{
-	  if ((thresh < fabs (*xptr - last_x)) ||
-	      (thresh < fabs (*yptr - last_y)))
-	    {
+      for (i = n_points - 2; i > 0; i--) {
+	  if ((thresh < fabs (*xptr - last_x)) || (thresh < fabs (*yptr - last_y))) {
 	      short_line = 0;
 	      break;
-	    }
+	  }
 	  xptr--;
 	  yptr--;
-	}
-    }
+      }
+  }
 
-  /* if entire line is w/in threshold, get angle from end points */
-#ifdef OLD
-  if (short_line)
-    return ((float) d_atan2 (yarray[0] - last_y, xarray[0] - last_x));
-#else /* updated for 4.1 to take next point away from node  -dpg */
-  if (short_line)
-    {
+  if (short_line) {
+      /* updated for 4.1 to take next point away from node  -dpg */
+      /* return ((float) d_atan2 (yarray[0] - last_y, xarray[0] - last_x)); */
       return ((float) d_atan2 (yarray[n_points - 2] - last_y, xarray[n_points - 2] - last_x));
-    }
-#endif
+  }
 
   return ((float) d_atan2 (*yptr - last_y, *xptr - last_x));
 }
@@ -213,3 +184,4 @@ d_atan2 (double y, double x)
   else
     return (atan2 (y, x));
 }
+
