@@ -45,20 +45,6 @@ query (struct Map_info *Map )
 		Values[idx].nqcats++;
 	    }
 	}
-	
-	/*
-	if (  options.option == O_CAT ) {
-	} else if (  options.option == O_COUNT ) {
-	    Values[idx].i1++;
-	} else if ( options.option == O_LENGTH && (type & GV_LINES) ) {
-	    len = length (Points->n_points, Points->x, Points->y);
-	    Values[idx].d1 += len;
-	} else if ( options.option == O_COOR && (type & GV_POINTS) ) {
-	    Values[idx].d1 = Points->x[0];
-	    Values[idx].d2 = Points->y[0];
-	    Values[idx].i1++;
-	}
-	*/
     }
 
     db_init_string (&stmt);

@@ -5,6 +5,7 @@ int
 report (void)
 {
     int i;
+    char left[20], right[20];
 
     switch (options.option) {
         case O_CAT:
@@ -16,7 +17,7 @@ report (void)
         case O_COUNT:
     	    fprintf (stdout,"cat|count\n");
 	    for ( i = 0; i < vstat.rcat; i++ )
-	        fprintf (stdout, "%d|%d\n", Values[i].cat, Values[i].i1);
+	        fprintf (stdout, "%d|%d\n", Values[i].cat, Values[i].count1);
             break;
 
 	case O_AREA:
@@ -34,8 +35,41 @@ report (void)
         case O_COOR:
     	    fprintf (stdout,"cat|x|y\n");
 	    for ( i = 0; i < vstat.rcat; i++ ) {
-		if ( Values[i].i1 == 1 )
+		if ( Values[i].count1 == 1 )
 	            fprintf (stdout, "%d|%f|%f\n", Values[i].cat, Values[i].d1, Values[i].d2);
+	    }
+            break;
+
+        case O_SIDES:
+    	    fprintf (stdout,"cat|left|right\n");
+	    for ( i = 0; i < vstat.rcat; i++ ) {
+		if ( Values[i].count1 == 1 ) {
+		    if ( Values[i].i1 >= 0 )
+		        sprintf ( left, "%d", Values[i].i1 );
+		    else
+		        sprintf ( left, "-1" ); /* NULL, no area/cat */
+		} else if ( Values[i].count1 > 1 ) {
+		    sprintf ( left, "-" );
+		} else { /* Values[i].count1 == 0 */
+		    G_warning ( "Bug in this module, nothing found on the left side of line with "
+			        "category %d", Values[i].cat );
+		    sprintf ( left, "e" );
+		}
+
+		if ( Values[i].count2 == 1 ) {
+		    if ( Values[i].i2 >= 0 )
+		        sprintf ( right, "%d", Values[i].i2 );
+		    else
+		        sprintf ( right, "-1" ); /* NULL, no area/cat */
+		} else if ( Values[i].count2 > 1 ) {
+		    sprintf ( right, "-" );
+		} else { /* Values[i].count1 == 0 */
+		    G_warning ( "Bug in this module, nothing found on the left side of line with "
+			        "category %d", Values[i].cat );
+		    sprintf ( right, "e" );
+		}
+
+	        fprintf ( stdout, "%d|%s|%s\n", Values[i].cat, left, right );
 	    }
             break;
 

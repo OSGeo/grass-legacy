@@ -44,13 +44,15 @@ parse_command_line (int argc, char *argv[])
     parms.option->type         = TYPE_STRING;
     parms.option->required     = YES;
     parms.option->multiple     = NO;
-    parms.option->options      = "cat,area,length,count,coor,query";
+    parms.option->options      = "cat,area,length,count,coor,sides,query";
     parms.option->description  = "Uploaded value:\n"
 				 "\tcat - insert new row for each category if doesn't exist yet\n"
 	                         "\tarea - area size\n"
 				 "\tlength - line length\n"
 				 "\tcount - number of features for each category\n"
 				 "\tcoor - point coordinates\n"
+				 "\tsides - categories of areas on the left and right side of the boundary, "
+    					   "\t\t'qfield' is used for area category.\n"
 				 "\tquery - result of a database query for all records of the geometry\n"
 				           "\t\t(or geometries) from table specified by 'qfield' option";	
 
@@ -115,6 +117,9 @@ parse_command_line (int argc, char *argv[])
     options.col2 = parms.col2->answer;
     options.qcol = parms.qcol->answer;
 
+    if ( options.option == O_SIDES && !(options.type | GV_BOUNDARY) )
+	G_fatal_error ( "The 'sides' option makes sense only for boundaries.");
+
     return 0;
 }
 
@@ -141,6 +146,7 @@ int parse_option (char *s)
     else if (strcmp (s, "length") == 0) x = O_LENGTH;
     else if (strcmp (s, "count") == 0) x = O_COUNT;
     else if (strcmp (s, "coor") == 0) x = O_COOR;
+    else if (strcmp (s, "sides") == 0) x = O_SIDES;
     else if (strcmp (s, "query") == 0) x = O_QUERY;
 
     return x;

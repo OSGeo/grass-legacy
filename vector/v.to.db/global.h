@@ -9,7 +9,10 @@
 
 typedef struct {
     int     cat;   /* category */
-    int     i1;    /* value (count, query) */
+    int     count1, count2; /* Count of found values; i1: count, coor, sides; i2: sides */
+                            /* for sides set to 2, if more than 1 area category was found, */
+                            /* including no category (cat = -1)! */
+    int     i1,i2; /* values; i1: query (result int), sides; i2: sides */
     double  d1,d2; /* values (length, area, x/y, query) */
     char    *str1;  /* string value (query) */
     int     *qcat; /* array query categories */
@@ -54,8 +57,9 @@ EXT VSTAT
 #define O_AREA		2
 #define O_LENGTH	3
 #define O_COUNT		4
-#define O_COOR		5
-#define O_QUERY		6
+#define O_COOR		5  /* Point coordinates */
+#define O_QUERY		6  /* Query database records linked by another field (qfield) */
+#define O_SIDES         7  /* Left and right area of boundary */
 
 #define U_ACRES		1
 #define U_HECTARES	2
