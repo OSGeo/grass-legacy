@@ -1192,27 +1192,35 @@ AC_SUBST(PROJLIB)
 
 LOC_CHECK_USE(opendwg,openDWG,USE_OPENDWG)
 
-OPENDWGINC=
+OPENDWGINCPATH=
+OPENDWGLIBPATH=
 OPENDWGLIB=
 
 if test -n "${USE_OPENDWG}"; then
 
 # With OPENDWG includes directory
 
-LOC_CHECK_INC_PATH(opendwg,openDGW,OPENDWGINC)
+LOC_CHECK_INC_PATH(opendwg,openDGW,OPENDWGINCPATH)
 
-LOC_CHECK_INCLUDES(ad2.h,openDWG,$OPENDWGINC)
+LOC_CHECK_INCLUDES(ad2.h,openDWG,$OPENDWGINCPATH)
 
 # With OPENDWG library directory
 
-LOC_CHECK_LIB_PATH(opendwg,openDWG,OPENDWGLIB)
+LOC_CHECK_LIB_PATH(opendwg,openDWG,OPENDWGLIBPATH)
 
-# how to program that:
-# LOC_CHECK_LIBS(ad2,adSeekLayer,openDWG,$OPENDWGLIB,OPENDWGLIB,,,)
+#search for ad2.a, ad3.a ... in openDWG toolkit directory:
+#FIX ME  how to program this test??
+#LOC_CHECK_LIBS(ad?.a,adSeekLayer,openDWG,$OPENDWGLIBPATH,OPENDWGLIB,,)
+#
+#for now hack (but working):
+TRUEOPENDWGLIBPATH=`echo $OPENDWGLIBPATH | cut -b3-`
+adlib=`ls -1 $TRUEOPENDWGLIBPATH/ad?.a | tail -1`
+OPENDWGLIB=$adlib
 
 fi # $USE_OPENDWG
 
-AC_SUBST(OPENDWGINC)
+AC_SUBST(OPENDWGINCPATH)
+AC_SUBST(OPENDWGLIBPATH)
 AC_SUBST(OPENDWGLIB)
 
 # Done checking OPENDWG
