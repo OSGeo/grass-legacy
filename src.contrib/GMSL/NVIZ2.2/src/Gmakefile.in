@@ -21,7 +21,7 @@ EXTRA_CFLAGS= ${XCFLAGS} ${TCLINCDIR} ${TKINCDIR} \
 
 IMGLIB= $(LIBDIR)/libimage/libimage.a
 
-XTRA_LDFLAGS=$(DFLAGS) $(TCLTKLIBPATH) $(TCLTKLIBS) $(OGL_LIBS) $(PQLIB)
+XTRA_LDFLAGS=$(DFLAGS) $(TCLTKLIBPATH) $(TCLTKLIBS) $(OGL_LIBS) $(PQLIBPATH) $(PQLIB)
 
 OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 	init_commands.o lights.o map_obj.o misc.o nviz_init.o \
