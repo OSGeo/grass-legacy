@@ -16,7 +16,9 @@
 <B>s.sample help</B>
 <BR>
 <B>s.sample</B> 
-[<B>-BCcdlq</B>] <B>input=</B><EM>name</EM> [<B>output=</B><EM>name</EM>] 
+[<B>-BClq</B>] <B>input=</B><EM>name</EM> 
+[<B>attr=</B><EM>type</EM>] [<B>index=</B><EM>value</EM>] 
+[<B>output=</B><EM>name</EM>] 
 <B>rast=</B><EM>name</EM> [<B>z=</B><EM>name</EM>] 
 
 <H2>DESCRIPTION</H2>
@@ -24,7 +26,7 @@
 <EM>s.sample</EM> samples a GRASS raster map at the site
 locations in the input file by either cubic convolution
 interpolation, bilinear interpolation, or nearest neighbor
-sampling (default).  Categories values are sampled.
+sampling (default).  Category label values may sampled.
 
 <P>
 
@@ -46,22 +48,10 @@ map.
 
 <DD>Use cubic convolution interpolation. 
 
-<DT><B>-c</B>
-
-<DD>Use numeric category labels instead of category
-values.
-
-<DT><B>-d</B>
-
-<DD>Calculate difference between raster value and site
-value (raster minus site).
-
 <DT><B>-l</B>
 
-<DD>If site is in the <EM>E|N|#n label</EM> format (instead
-of the <EM>E|N|label</EM> format), use the numeric
-<EM>label</EM> as the site value. Implies the <B>-d</B>
-flag.
+<DD>Use raster category label values instead of cell values. Labels
+must be numeric.
 
 <DT><B>-q</B>
 
@@ -76,6 +66,15 @@ flag.
 
 <DT><B>input=</B><EM>name</EM>
 <DD>Name of sites list defining sample points. 
+
+<DT><B>attr=</B><EM>type</EM>
+<DD>Site attribute type to use for comparison.<BR>
+<B>Options:</B> <EM>none, dim, cat, decimal</EM><BR>
+If <EM>none</EM> is chosen no comparison will be done.
+
+<DT><B>index=</B><EM>value</EM>
+<DD>Site attribute index to use for comparison.<BR>
+Ignored when the attribute is <EM>none</EM> or <EM>cat</EM>.
 
 <DT><B>output=</B><EM>name</EM>
 <DD>Optional name of sites list in which output will be
@@ -93,11 +92,27 @@ omitted, this is set to 1.0.
 
 <H2>NOTES</H2>
 
-If any of <B>-cdl</B> are specified, it is important that
-the raster category label and/or the site description are
+<P>
+
+The output site list will have the easting and northing of the input site list.
+The category value will either be the same as the value in the input site list
+or a unique value if there were no categories in the input site list.  One
+decimal attribute will be output containing either, the cell value of the
+raster if no comparison was done (i.e. <B>attr=none</B>) or it will be the
+difference between the cell value and the site list attribute value.
+
+<P>
+
+If <B>-l</B> is specified, it is important that
+the raster category label is
 numeric. No error checking is done except for "no data"
 values as raster category labels. In this instance, a
 warning is issued and a zero value is assumed.
+
+<P>
+When NULL values are encountered for a cell, zero value is used
+instead.  In these cases, more acurrate results may be obtained
+by using the default nearest neighbor comparisons.
 
 <P>
 
@@ -138,5 +153,8 @@ HREF="mailto:darrell@mccauley-usa.com">&lt;darrell@mccauley-usa.com&gt;</A>,
 <A HREF="http://ABE.www.ecn.purdue.edu/ABE/">Agricultural
 Engineering</A>
 <A HREF="http://www.purdue.edu/">Purdue University</A>
-</HTML>
+<P>
+Updated for GRASS 5.0 by Eric G. Miller
 
+</BODY>
+</HTML>
