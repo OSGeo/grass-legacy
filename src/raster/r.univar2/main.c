@@ -31,8 +31,8 @@ int main(int argc, char *argv[]) {
     unsigned int n = 0;
     double sum = 0.;
     double sumsq = 0.;
-    double min = -999999.; /* init just to quieten compile warning */
-    double max =  999999.; /* init just to quieten compile warning */
+    double min = 0.0/0.0; /* init as nan */
+    double max = 0.0/0.0; /* init as nan */
     double mean, stdev, var_coef;
     double variance;       /* unbiased! (n-1) */
 
