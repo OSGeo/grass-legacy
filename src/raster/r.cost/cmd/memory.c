@@ -7,7 +7,7 @@
  *
  *  Used in GRASS 5.0 r.cost module
  *
- *  GPL etc...
+ *  Released under GPL
  */
 
 
