@@ -1,47 +1,31 @@
 <html>
+
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
    <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
-<title>GRASS 5.0 Tutorial for nviz</title>
- </head>
+<title>NVIZ Manual</title>
+</head>
+
 <body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
 
-<A HREF="nviz_toc.html">INDEX</A>
+<h1><img src="grass.smlogo.gif">NVIZ Reference Manual</h1>
+<hr width="100%" align=center size=4 noshade>
+<p>
+<a href="nviz_toc.html">CONTENTS</a>
+</p>
 
+<h2>Description</h2>
+<p><strong>NVIZ</strong> is a <strong>GRASS</strong> tool used for viewing data
+surfaces in three dimensions. It evolved from the earlier <strong>GRASS</strong> program <em>SG3d</em>.
+</p> 
 
-<h3>NVIZ - Description</h3>
-
-<em> nviz </em> is meant to be used as a tool for viewing data
-surfaces in three dimensions using <strong>GRASS</strong> on
-<em>Silicon Graphics IRIS</em> computers.  It evolved from
-the earlier <strong>GRASS</strong> program
-<em>SG3d</em>. Users familiar with <em>SG3d</em>
-will find <em>nviz</em> similar but with a slightly different
-interface and many added features. New features include the ability to
-visualize multiple raster, vector, and site files at one time, and the
-addition of volume data among others.  Hardware requirements are a
-Z-buffer and 24 bit graphics OR a 24 bit graphic emulator, such as
-that on the <em>IRIS Indigo</em>. 
-
-<em>nviz</em> uses raster files as "elevation" and also as
-attributes of the surfaces (such as color, transparency, etc.).  While
-a true elevation data file used as elevation will produce the most
-realistic surfaces, users are encouraged to be creative in selecting
-other types of data to be represented by the vertical dimension.  Most
-continuous (as opposed to discrete) data types will result in a
-visualization that makes sense.  While developing the program, we used
-chemical concentrations as the elevation file with good visual
-results. 
-
-Emphasis during development was on ease and speed of viewer
-positioning and flexibility for using a wide range of data values and
-sizes.  Since a wire grid can be drawn very quickly, such a grid is
-used to provide real-time viewer positioning capabilities.  Similarly,
-a lighting "model" provides real-time feedback as the user adjusts
-lighting.  Grid and polygon resolution control allows the user to
+<p>Developers emphasized on the ease and speed of viewer
+positioning and provided flexibility for using a wide range of data.  A low resolution surface or wire grid (optional) provides real-time viewer positioning capabilities.  Similarly,
+a lighting &#034;model&#034; provides real-time feedback as the user adjusts
+lighting.  Grid and polygon resolution controls allow the user to
 further refine drawing speed and detail as needed.  Continuous scaling
-of elevation values from 1.0ee-7 to 1.0ee+7 provides the ability to
-use various data types for the vertical dimension. 
+of elevation provides the ability to
+use various data types for the vertical dimension.</p> 
 
 </body>
 </html>

@@ -2,115 +2,93 @@
 <head>
    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
    <meta name="GENERATOR" content="Mozilla/4.76 [de] (X11; U; Linux 2.2.16 i686) [Netscape]">
-<title>GRASS 5.0 Tutorial for nviz</title>
- </head>
+<title>NVIZ Manual</title>
+</head>
+
 <body bgcolor="#FFFFFF" link="#0000DF" vlink="#006000">
 
-<P>
-<A HREF="nviz_toc.html">INDEX</A>
-</P>
+<h1><img src="grass.smlogo.gif">NVIZ Reference Manual</h1>
+<hr width="100%" align=center size=4 noshade>
+<p>
+<a href="nviz_toc.html">CONTENTS</a>
+</p>
 
-<h3>NVIZ - Movement</h3>
-</A><p>
+<h2>Movement Panel</h2>
 
-<em>nviz</em></strong> starts up with one graphics window and one
-control panel window.  The top third of the control panel window
-contains the <a href="#MovementP"> Movement </a> panel.  Other panels
-may be selected from the <em>Panel</em></strong> menu at the top of
-the window. When a panel is selected it appears in the control panel
-window.  If the window is full, and there is no room for the new
-panel, one or more panels that are open on the control panel window
-will be closed to make room for the new panel.  Panels can also be
-closed using the <em>Close</em></strong> button that appears on each
-panel.  The <em>Movement panel</em>, however is always visible. Each
-panel from the <em>Panel</em></strong> menu will be described in more
-detail below.  <p>
+<p>The <strong>Movement</strong> panel always appears at the top of the <strong>Controls</strong> window. You use the <strong>Movement</strong> panel to set the position, direction, and perspective of the view. As you change movement options, a low resolution or wire grid of the surface redraws (<strong><em>fast display mode</em></strong>) showing the results of your changes.</p>
 
-<h3>
-<IMG SRC="nvimg/panel/main.gif" ALT = ""> <A name="MovementP">Movement Panel</A>
-</h3><p>
+<img src="nvimg/panel/main.gif" alt = "Movement Panel" width="302" height="323">
 
-Use the <strong>Movement</em></strong> panel to position the viewer
-over the data and to indicate viewing direction and perspective.  As
-options in this panel are changed, a wire grid of the surface is
-redrawn (<em>fast display mode</em></strong>) to immediately show the
-results of the changes.  This panel also controls the actual drawing.
- <P>
+<h3>OPTIONS</h3>
 
-<DL>
-<DT> <B>Auto Clear</B>
-<DD> This is a toggle button. If it is enabled
-the screen is automatically cleared before surfaces are drawn.  <P>
+<dl>
+<dt> <strong>Auto: Clear</strong></dt>
+<dd>Clears the screen before drawing the surfaces (if selected).<br><br></dd>
 
-<DT> <B>Clear</B>
-<DD> Clears the screen with the background color.  <P>
+<dt> <strong>Auto: Draw</strong></dt>
+<dd>Redraws the scene each time the view changes (if selected).<br><br></dd>
+
+<dt> <strong>Feature: Surface</strong></dt>
+<dd>Draws all loaded surfaces (if selected).<br><br></dd>
+
+<dt> <strong>Feature: Vectors</strong></dt>
+<dd>Draws all loaded vectors (if selected).<br><br></dd>
+  
+<dt> <strong>Feature: Sites</strong></dt>
+<dd>Draws all loaded sites files (if selected).<br><br></dd>
+
+<dt> <strong>Draw</strong></dt>
+<dd>Draws selected files using the current viewing and lighting options.<br><br></dd>
+
+<dt> <strong>Clear</strong></dt>
+<dd>Clears the screen to the background color.<br><br></dd>   
+
+<dt> <strong>Cancel</strong></dt>
+<dd>Cancels the drawing in progress.<br><br></dd>
+
+<dt> <strong>View: eye</strong></dt>
+<dd>Sets the position box (directly below) to control the eye position of the view. The view center remains unchanged.<br><br></dd>
+
+<dt> <strong>View: center</strong></dt>
+<dd>Sets the position box (directly below) to control the view center position. The eye position remains unchanged.<br><br></dd>
+
+<dt> <strong>Position Box</strong></dt>
+<dd>If the <strong><em>eye</em></strong> view is selected, the position box shows a puck with a direction arrow pointing to the center. The direction arrow indicates the look direction (azimuth). You click and drag the puck to change the current eye position. The box annotations are <strong><em>N</em></strong>orth, <strong><em>S</em></strong>outh, <strong><em>E</em></strong>ast, and <strong><em>W</em></strong>est.
+<br><br>
+If the <strong><em>center</em></strong> view is selected, the position box shows as a cross hair. You click and drag the cross hair to change the current center of view.<br><br></dd> 
 
 
-<DT> <B>Surface</B>
-<DD> Draws loaded surfaces with current drawing
-and lighting options.  <P>
+<dt> <strong>Height</strong></dt>
+<dd> Adjusts the viewer's height above the scene.<br><br></dd>
 
-<DT> <B>Vectors</B>
-<DD> Draws loaded vector files on selected
-surfaces.  <P>
+<dt> <strong>zexag</strong></dt>
+<dd> Adjusts the vertical exaggeration of the surface. As an example, if the easting and northing are in meters and the elevation in feet, a vertical exaggeration of .305 would produce a true (unexaggerated) surface. <br><br></dd>
 
-<DT> <B>Sites</B>
-<DD> Draws loaded site files on selected surfaces.
-<P>
+<dt> <strong>Look here</strong></dt>
+<dd> Allows you to select a point on the surface that becomes the new center of view. 
+<br><br></dd>   
 
-<DT> <B>Cancel</B>
-<DD> Cancels drawing in progress.  <p>
+<dt> <strong>Look center</strong></dt>
+<dd>Resets the view to the original default center of view.
+<br><br></dd>   
 
-<DT> <B>XY position</B>
-<DD> The <em>XY position</em></strong> box contains a star-shaped puck
-which represents the viewer.  Click on the puck and drag to move the
-viewer around.  The data may be thought of as always lying in the
-center of the box, with north at the top. <p>
+<dt> <strong>Look top</strong></dt>
+<dd>Sets the viewer directly over the scene's center position. This <strong><em>top</em></strong> view orients approximately north south.<br><br></dd>
 
-<DT> <B>Height</B>
-<DD> Adjusts the viewer's height.  <p>
+<dt> <strong>Look cancel</strong></dt>
+<dd> Allows you to move over the surface with no center of view. 
+<br><br></dd>   
 
-<DT> <B>look here</B>
-<DD> Allows the user to click on a spot on the data surface which will
-remain centered as the viewer position changes.  After clicking on the
-surface, the new center is automatically set and the surface is
-redrawn.  <p>
+<dt> <strong>perspective</strong></dt>
+<dd> Adjusts the viewer's angle of view.<br><br></dd> 
 
-<DT> <B>look center</B>
-<DD> Automatically fixes new center of view at the <em>center of the
-graphics window</em></strong> (not the center of the data).  <p>
+ <dt> <strong>twist</strong></dt>
+<dd> Rotates the scene about the horizontal axis. An angle of 0 is flat. The scene rotates between -90 and 90 degrees.<br><br></dd> 
 
-<DT> <B>look cancel</B>
-<DD> Clicking on <em>cancel</em></strong> allows the user to move over
-the surface with no fixed center of view (default).  <p>
+<dt> <strong>RESET</strong></dt>
+<dd>Returns all current settings to their startup values.<br><br></dd>  
 
-<DT> <B>zexag</B>
-<DD> Exaggerates the vertical dimension of the surface.  An
-exaggeration of 1.0 represents the surface with x, y, and z units all
-being equal.  For example, if the easting and northing units are in
-meters and the elevation in feet, a Z exaggeration of .305 would be
-the <em>true</em></strong> exaggeration for the surface.  For most
-geographical applications, greater than true exaggeration produces
-more visually pleasing images.  <p>
+</dl>
 
-<DT> <B>Perspective</B>
-<DD> Adjusts the viewer's angle of view.  <p>
-
-<DT> <B>Reset</B>
-<DD> Sets all settings to their startup values.  <p>
-
-</DL>
-<P>
-
-Occasionally, the bounds of the <B>height</B> slider are too narrow to
-position the camera as desired.  In this case, the type-in entry next
-to the height slider may be used to set camera height directly.
-Typing in a value will also automatically adjust the slider bounds to
-account for the new maximum and minimum height.  In general, most
-sliders with corresponding type-ins provide this functionality where
-it makes sense.  Color sliders, for example, cannot be adjusted since
-color components must always be between 0.0 and 1.0.
- <P>
-
-</BODY>
-</HTML>
+</body>
+</html>
