@@ -1,0 +1,132 @@
+
+
+
+r.param.scale <contribGRASS Reference Manu<contrib> r.param.scale
+
+
+
+NAME
+     r.param.scale  - Calculates surface parameters and features
+     from a DEM.
+     (GRASS Raster Program)
+
+SYNOPSIS
+     r.param.scale
+     r.param.scale help
+     r.param.scale [-c] in=name out=name [tol=value] [size=value]
+     [param=name]
+
+DESCRIPTION
+     The GRASS program r.param.scale can be used to calculate
+     surface parameters and features from a DEM.
+
+PROGRAM OPTIONS
+     r.param.scale can be run either non-interactively or
+     interactively.  In non-interactive use, the user must
+     specify the names of the raster map layers to be used for
+     input and output on the command line, using the form in=name
+     (where each name is the name of a raster map layer to be
+     read in resp. to be generated.
+
+Flags:
+     If set, r.param.scale  constrains model through central
+     window cell
+
+Parameters:
+     parameter that defines a `flat' surface (degrees) - default:
+     1.0 surface -  default: 1.0 processing window (odd number
+     only) - default: 3 elev, slope, aspect, profc, planc, longc,
+     crosc, minic, maxic, feature - default: elev (0.0-4.0) 1
+     implies a linear decay, 2 an inverse distance squared decay
+     - default: 0.0 (no distance decay).  With:
+
+	  elev:	    Generalised elevation value.
+	  slope:    Maximum gradient at a point.
+	  aspect:   Direction of maximum gradient.
+	  profc:    Profile convexity (vertical in direction of
+     steepest slope).
+	  planc:    Plan convexity (contour curvature).
+	  crosc:    Cross sectional convexity (tangent to
+     contours, downslope).
+	  longc:    Longitudinal convexity (perpendicular to
+     contours downslope).
+	  minic:    Minimum convexity.
+	  maxic:    Maximum convexity.
+	  feature:  Morphometric features:
+		      peaks, ridges, passes, channels, pits and
+     planes.
+
+
+
+
+
+GRASS 4.2.1		Baylor University			1
+
+
+
+
+
+
+r.param.scale <contribGRASS Reference Manu<contrib> r.param.scale
+
+
+
+SEE ALSO
+     d.param.scale
+     parser
+
+AUTHOR
+     Jo Wood, PROJECT ASSIST,
+
+     Department of Geography, University of Leicester
+
+NOTICE
+     This program is part of the contrib section of the GRASS
+     distribution.  As such, it is externally contributed code
+     that has not been examined or tested by the Office of GRASS
+     Integration.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.2.1		Baylor University			2
+
+
+
