@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "gis.h"
+#include "G3d.h"
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
@@ -105,7 +106,7 @@ G3d_getFloat (map, x, y, z)
 {
   float value;
 
-  G3d_getValue (map, x, y, z, &value, G3D_FLOAT);
+  G3d_getValue (map, x, y, z, (char *)&value, G3D_FLOAT);
   return value;
 }
 
@@ -120,7 +121,7 @@ G3d_getDouble (map, x, y, z)
 {
   double value;
 
-  G3d_getValue (map, x, y, z, &value, G3D_DOUBLE);
+  G3d_getValue (map, x, y, z, (char *)&value, G3D_DOUBLE);
   return value;
 }
 
