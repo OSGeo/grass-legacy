@@ -1,6 +1,11 @@
 PGM       = $(BIN_CMD)/g.table.pg
-EXTRA_CFLAGS = $(PQINCPATH)
+EXTRA_CFLAGS = $(PQINCPATH) $(DEFS)
 LIBES     = $(GISLIB) 
+
+LOCALEDIR=$(INST_DIR)/locale
+PACKAGE=g.table.pg
+
+DEFS = -Wall -DLOCALEDIR=\"$(LOCALEDIR)\" -DPACKAGE=\"$(PACKAGE)\"
 
 OBJS = \
 	main.o \
