@@ -1,0 +1,10 @@
+PGM = r.reclass.scs
+
+RECLASS = main.o
+
+all: $(BIN_CONTRIB_INTER)/$(PGM)
+
+$(BIN_CONTRIB_INTER)/$(PGM): $(RECLASS) $(GISLIB)
+	cc $(LDFLAGS) -o $@ $(RECLASS) $(GISLIB) $(TERMLIB)
+
+$(GISLIB): #
