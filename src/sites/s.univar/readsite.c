@@ -10,7 +10,8 @@ int readsites (fdsite, all, verbose, field, xyz)
 /* Reads a sites list into {\tt xyz}, returning the number of sites found.  */
 {
   char *dum;
-  int i, n,c,d,allocated=1000;
+  int i, strs, dims,map_type,dbls,allocated=1000;
+  /*       i     n     c       d */
   double east, north, ndesc, atof ();
   char desc[80];
   Site *s;
@@ -24,15 +25,15 @@ int readsites (fdsite, all, verbose, field, xyz)
     fprintf (stderr, "Reading sites list ...                  ");
 
 
-  if (G_site_describe (fdsite, &n, &c, &i, &d)!=0)
+  if (G_site_describe (fdsite, &dims, &map_type, &strs, &dbls)!=0)
     G_fatal_error("failed to guess format");
-  s = G_site_new_struct (c, 2, 0, d);
+  s = G_site_new_struct (map_type, dims, strs, dbls);
 
-  if(field >= d){
+  if(field >= dbls){
       G_fatal_error("decimal field not present in sites file");
   }
 
-  if (d==0)
+  if (dbls==0)
   {
     fprintf(stderr,"\n");
     G_warning("I'm finding records that do not have a floating point attributes (fields prefixed with '%').");
