@@ -1,0 +1,190 @@
+.\" %W% %G%
+.TH i.maxlik 1 GRASSimagery
+.nh
+.SH NAME
+.IP i.maxlik\ \- 11
+An imagery function that classifies the 
+.CT pixel cell
+spectral reflectances
+in imagery 
+.CT data "cell maps"
+based on the 
+spectral signature information generated in \fIi.cluster\fR
+.br
+.I (GRASS Imagery Tool)
+.SH SYNOPSIS
+.B i.maxlik
+.SH DESCRIPTION
+.I i.maxlik
+is a maximum-likelihood discriminant analysis classifier.  It performs
+the second pass in a two-pass procedure that is commonly known as an
+unsupervised classification.  It also performs the second step in a 
+supervised classification;  however, the supervised classification is 
+not currently supported by GRASS 3.0. The first pass in the 
+unsupervised classification is executed by the GRASS program
+\fIi.cluster\fR.  Both passes are required to complete the unsupervised
+classification.  The maximum-likelihood classifier uses the cluster
+means and covariance matrices from the \fIi.cluster\fR signature
+file to determine to which category (spectral class) 
+each 
+.CT pixel cell
+in the 
+.CT image "image cell maps"
+has the 
+highest probability of belonging 
+.CT "to a spectral class." "to."
+The resulting
+.CT file "cell map"
+is a classified
+image in which each 
+.CT pixel cell
+has been assigned to a 
+.CT "spectral class." "category (spectral class)."
+The spectral classes 
+.CT "" "(categories)"
+can be related to specific land cover types
+on the ground.
+
+The first 
+.CT menu screen
+asks the user for the \fIgroup\fR and \fIsubgroup\fR
+to be classified:
+
+.if t \fB
+.ce 2
+Please select the group/subgroup containing the signatures
+to be used in the classification
+
+.TS
+center, tab(|);
+l l.
+GROUP:|\fIspot\f________
+SUBGROUP:|\fI123\fP________
+.TE
+
+.ce 2
+AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+(OR <Ctrl-C> TO CANCEL)
+\fR
+
+This group should contain the subgroup to be classified.
+The subgroup should contain the band 
+.CT files "cell maps"
+that were used
+to create the signature file in the program \fIi.cluster\fR.
+
+The first prompt asks the user for the name of the signature
+file to be used for the classification.  The signature file
+contains the cluster and covariance matrices that were 
+calculated in the GRASS program \fIi.cluster\fR.  These
+signatures are what determine the categories in the
+classification process.
+
+The next prompt asks the user for the name of the classified
+.CT "map layer" "cell map"
+that will be generated in \fIi.maxlik\fR.  This is 
+the cell 
+.CT file map
+that will contain the categories that can be
+related to land cover categories on the ground.
+
+Next, the user is asked to enter the name of the reject
+threshold 
+.CT "map layer" "cell map"
+that is also generated in \fIi.maxlik\fR.
+After classifying the 
+.CT image,"image cell maps"
+\fIi.maxlik\fR runs a chi square test on each discriminant result at 
+various threshold levels of confidence to determine at what confidence
+level each 
+.CT pixel cell
+is likely to belong to the assigned 
+.CT "class." "category."
+This is
+the reject threshold 
+.CT "map layer." "cell map."
+It contains one calculated confidence 
+level for each classified 
+.CT pixel cell
+in the classified 
+.CT "image." "image cell map."
+One of the 
+possible uses for this 
+.CT "map layer" "cell map"
+is as a \fImask\fR, to identify 
+.CT pixels cells
+in the classified 
+.CT image "image cell map"
+that have the lowest probability of being assigned
+to the correct 
+.CT "class." "category."
+
+Next, the following menu is displayed:
+
+.ne 15
+.if t \fB
+.ce 1
+COLOR CONFIGURATION FOR CLASSIFIED LAYER [\fIspotclass1\fP]
+
+Please indicate which 
+.CT files "cell maps"
+to use for red, green, and blue colors.
+You may leave any color out.  You may specify more than one color
+per color 
+.CT "file." "cell maps."
+However, each color may only be used once.
+
+For example, to get a full color 
+.CT "image," "image cell map,"
+specify r,g,b for 3 different
+.CT "files." "cell maps."
+To get a grey scale 
+.CT "image," "image cell map,"
+ specify rgb for a single 
+.CT "file." "cell maps."
+
+.TS
+center, tab(:);
+l l.
+b___:spot.1 in demo
+g___:spot.2 in demo
+r___:spot.3 in demo
+.TE
+
+
+.ce 2
+AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+(OR <Ctrl-C> TO CANCEL)
+\fR
+
+More than three 
+.CT bands "band cell maps"
+can be classified, but since only three 
+.CT bands "band cell maps"
+can be
+displayed on most color graphics monitors at one time, only three
+.CT bands "band cell maps"
+are assigned a color in the above menu.  This subgroup, therefore,
+could have more than three 
+.CT bands "band cell maps"
+in it.
+
+\fIi.maxlik\fR runs in the background and the user is notified by mail
+when it is complete.
+
+.SH NOTES
+The maximum-likelihood classifier assumes that the spectral 
+signatures for each 
+.CT class "category (class)"
+in each
+.CT band "band cell map"
+are normally distributed (i.e., Gaussian in nature).
+Clustering algorithms, however, can create signatures that are not normally
+distributed.  If this occurs, \fIi.maxlik\fR will reject them and display 
+an error message.
+.SH SEE ALSO
+.I Grass Tutorial: Image Processing
+.br
+\fImask[1], i.cluster[1]\fR
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
