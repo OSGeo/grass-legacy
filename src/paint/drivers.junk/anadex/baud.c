@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "config.h"
 #ifdef HAVE_TERMIO_H
 #include <termio.h>
@@ -10,7 +11,6 @@
 
 baud ()
 {
-    char *getenv();
     char *BAUD;
     char msg[200];
 

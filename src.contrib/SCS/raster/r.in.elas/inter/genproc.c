@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <termcap.h>
 /* 2pm 7/31/86                                                  GENPROC.C */
 
 /* GENERAL-PURPOSE "C" ROUTINES
@@ -50,7 +52,7 @@ set_term (termtype)
    char termtype[];
    {
    char *term,entry[1024],s[20];
-   char *getenv(), *tgetstr();
+   char *tgetstr();
    if (strcmp(termtype,"")==0) term=getenv("TERM"); else term=termtype;
    while (tgetent(entry,term) != 1) 
       { fprintf (stdout,"\n\nUnknown terminal '%s' : ",term);

@@ -15,7 +15,7 @@ all:	$(BIN_CMD)/v.in.gef
 
 
 $(BIN_CMD)/v.in.gef:	$(IMP_OFILES)
-	cc $(LDFLAGS) -o $@ $(IMP_OFILES) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(IMP_OFILES) $(GISLIB) $(XDRLIB) $(VASKLIB) $(CURSES) $(MATHLIB)
 
 
 imp_gef.o:	format.h
