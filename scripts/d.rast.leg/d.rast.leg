@@ -31,6 +31,7 @@
 # Markus Neteler 8/2002: added simple d.legend logic
 # Jianping Xu and Scott Madry, Rutgers University. October 19, 1993
 # Markus Neteler 10/2003: added g.parser
+# Michael Barton 12/2004: remove reference to (null)
 ##############################################################################
 
 #%Module
@@ -77,22 +78,7 @@ d.frame -e
 
 #at=bottom,top,left,right
 
-if [ "$GIS_OPT_map" = "(null)" ]
-then
-    d.frame -s at=0,100,0,65 frame=left
-    d.rast
-  
-   # title not supported here (we do not know the map name)
-
-    echo " "
-    echo "Please enter the name of the raster file again!"
-    d.frame -s at=0,100,65,100 frame=right
-    d.legend 
-    d.frame -s frame=left
-    exit
-fi
-
-if [ "$GIS_OPT_num_of_lines" = "(null)" ]
+if [ -z "$GIS_OPT_num_of_lines" ]
 then
 	d.frame -s at=0,100,0,65 frame=left
         d.erase col=white
