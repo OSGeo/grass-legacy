@@ -4,9 +4,8 @@ Maintained by
    Markus Neteler
    neteler@geog.uni-hannover.de
 
-
 ----------------------------------------------------------------
-[In sync with GRASS 5 beta 6i]
+[In sync with GRASS 5 beta 7/CVS]
 History at end of file.
 
 ----------- modules ---------------------------------------------
@@ -42,6 +41,14 @@ i.ortho.photo
 
 i.rectify/i.rectify2
  - do not work properly
+
+i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
+bugreport: 
+ * After entering the device name and selecting the bands to load,
+ the dialog which asks for the Group is not visible.  The window goes 
+ blank, but text can still be entered correctly, so it is merely an 
+ annoyance rather than a showstopper.
+* Attempting to change the default Title causes a segfault.
 
 r.binfer
   bug in table.c causing segfault
@@ -244,7 +251,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.2  2000-04-06 16:51:39  markus
+ Revision 1.3  2000-04-06 17:55:25  markus
+ added i.tape.tm.fast bugs
+
+ Revision 1.2  2000/04/06 16:51:39  markus
  r.in.png/r.out.png removed, as they are written by Alex Shevlakov
 
  Revision 1.1  2000/04/05 08:25:15  markus
