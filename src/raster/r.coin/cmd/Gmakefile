@@ -1,0 +1,21 @@
+PGM   = r.coin
+HOME  = $(BIN_MAIN_CMD)
+
+LIST  = main.o\
+	cmd.o\
+	inter.o\
+	check.o\
+	make_coin.o\
+	print_coin.o\
+	print_hdr.o\
+	prnt_entry.o\
+	format.o\
+	totals.o
+
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) -o $@
+
+$(LIST):  coin.h
+
+$(GISLIB): #
