@@ -13,7 +13,7 @@ CFLAGS += $(SHLIB_CFLAGS) $(NLS_CFLAGS)
 LDFLAGS += $(SHLIB_LDFLAGS)
 
 $(SHLIB): $(SHLIB_OBJS)
-	$(SHLIB_LD) -o $@ $(LDFLAGS) $^ $(EXTRA_LIBS) && ln -sf $(notdir $@) $(patsubst %.$(VERSION_NUMBER).so,%.so,$@)
+	$(SHLIB_LD) -o $@ $(LDFLAGS) $^ $(EXTRA_LIBS) && ln -sf $(notdir $@) $(patsubst %.$(VERSION_NUMBER)$(SHLIB_SUFFIX),%$(SHLIB_SUFFIX),$@)
 
 shlib: $(SHLIB)
 
