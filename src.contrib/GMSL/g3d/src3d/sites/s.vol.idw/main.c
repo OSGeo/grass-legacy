@@ -183,8 +183,9 @@ int main(argc, argv)
 
     for (row = 0; row < Nr; row++)
     {
-        fprintf (stderr, "%-10d\b\b\b\b\b\b\b\b\b\b", Nl-lev);
-
+        /*fprintf (stderr, "%-10d\b\b\b\b\b\b\b\b\b\b", Nl-lev);*/
+        G_percent (row, Nr, 2);
+                
 	if (mask)
 	{
 	    if(G_get_map_row(maskfd, mask, row) < 0)
