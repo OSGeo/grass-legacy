@@ -72,6 +72,7 @@ static int count = 0;
 static int count2 = 0;
 static int init[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 static char *gisrc = NULL;
+static int varmode = G_GISRC_MODE_FILE; /* where find/store variables */ 
 
 static int read_env( int );
 static int set_env ( char *, char *, int);
@@ -79,6 +80,12 @@ static int unset_env ( char *, int);
 static char *get_env( char *, int);
 static int write_env ( int );
 static FILE *open_env ( char *, int);
+
+/* Set where to find/store variables */
+void G_set_gisrc_mode ( int mode )
+{
+    varmode = mode; 
+}
 
 static int 
 read_env ( int loc )
@@ -89,6 +96,8 @@ read_env ( int loc )
 
     FILE *fd;
 
+    if ( loc == G_VAR_GISRC && varmode == G_GISRC_MODE_MEMORY ) return 0; /* don't use file for GISRC */
+    
     if (init[loc])
 	return 1;
 
@@ -213,6 +222,7 @@ static int write_env ( int loc )
 #endif
 ;
 
+    if ( loc == G_VAR_GISRC && varmode == G_GISRC_MODE_MEMORY ) return 0; /* don't use file for GISRC */
 
 /*
  * THIS CODE NEEDS TO BE PROTECTED FROM INTERRUPTS
@@ -290,7 +300,7 @@ char *G_getenv2( char *name, int loc )
 char *G__getenv ( char *name)
 {
     char *fakestart;
-    
+
     /* fake session for HTML generation with parser */
     fakestart = getenv( "GRASS_FAKE_START" );
     if (strcmp (name, "GISBASE") == 0)
