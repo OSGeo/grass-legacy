@@ -100,7 +100,7 @@ int main (int argc, char **argv)
 
 	opt2 = G_define_option();
 	opt2->key = "remove";
-	opt2->description = "List no to be removed";
+	opt2->description = "List no's to be removed, which are displayed right-most comments.";
 	opt2->type = TYPE_INTEGER;
 	opt2->required = NO;
 	opt2->multiple = YES;
