@@ -88,7 +88,7 @@ void set_grid_attributes( int *gatts, struct Categories *cats, struct grid_descr
 	  colnum = j;
 	  gatts[i*nc+j] = colnum * nr + rownum + 1;
 	  let = (char) ( rownum + 'A' );
-	  snprintf (buf, 100, "%c %d", let, colnum+1);
+	  sprintf (buf, "%c %d", let, colnum+1);
 	  G_set_cat( gatts[i*nc+j], buf  , cats);	  
 	}
       }
@@ -102,7 +102,7 @@ void set_grid_attributes( int *gatts, struct Categories *cats, struct grid_descr
 	  colnum = j;
 	  gatts[i*nc+j] = rownum * nc + colnum + 1;
 	  let = (char) ( rownum + 'A' );
-	  snprintf (buf, 100, "%c %d", let, colnum+1);
+	  sprintf (buf, "%c %d", let, colnum+1);
 	  G_set_cat( gatts[i*nc+j], buf  , cats);	  
 	}
       }

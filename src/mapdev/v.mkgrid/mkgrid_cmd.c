@@ -101,13 +101,14 @@ main (int argc, char *argv[])
   type->type = TYPE_STRING;
   type->required = NO;
   type->description = "provide attributes of type: const,rows,cols";
+  type->options = "const,rows,cols";
   type->answer = "";
 
   attval = G_define_option ();
   attval->key = "value";
   attval->type = TYPE_INTEGER;
   attval->required = NO;
-  attval->description = "angle of rotation";
+  attval->description = "initial attribute value";
   attval->answer = "1";
 
   q = G_define_flag ();
