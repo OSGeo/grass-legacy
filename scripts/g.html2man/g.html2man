@@ -198,7 +198,7 @@ open(INP,$infile) || die "Can't open '$infile' for reading: $!";
 if (! &GetTitle($page,$sect)) {  
   print "$infile: Did not find a valid <TITLE> line\n";
   close(INP);
-  return;
+  exit;
 }
 open(OUT,"> $outfile") || die "Can't open '$outfile' for writing: $!";
 print "Converting: $infile to $outfile\n";
