@@ -73,6 +73,7 @@ Ndraw_wire_cmd(),
 Ndraw_X_cmd(),
 Ndraw_Narrow_cmd(),
 Ndraw_legend_cmd(),
+Ndraw_fringe_cmd(),
 Ndelete_list_cmd(),
 Ndone_draw_cmd(),
 Nready_draw_cmd(),
@@ -273,6 +274,7 @@ int init_commands(Tcl_Interp * interp, Nv_data * data)
     Tcl_CreateCommand(interp, "Ndraw_X", Ndraw_X_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Ndraw_Narrow", Ndraw_Narrow_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Ndraw_legend", Ndraw_legend_cmd, data, NULL);
+    Tcl_CreateCommand(interp, "Ndraw_fringe", Ndraw_fringe_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Ndelete_list", Ndelete_list_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Ndone_draw", Ndone_draw_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nready_draw", Nready_draw_cmd, data, NULL);
