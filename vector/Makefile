@@ -32,6 +32,7 @@ SUBDIRS1 = \
 	v.transform \
 	v.to.db \
 	v.to.rast \
+	v.type \
 	v.what.rast
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
