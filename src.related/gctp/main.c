@@ -215,7 +215,7 @@ GctpError(s1)
 char *s1;
 {
     extern int errno, sys_nerr;
-    extern char *sys_errlist[];
+/*    extern char *sys_errlist[];*/
 
     fprintf(stderr,"%c>>%c  ", 7, 7);
     fprintf(stderr, s1);
