@@ -233,7 +233,7 @@ main(int argc, char **argv)
 
 	flag.c = G_define_flag();
 	flag.c->key         = 'c';
-	flag.c->description = "Compatibility with d.text";
+	flag.c->description = "Command mode (Compatibility with d.text)";
 
 
 	if(G_parser(argc, argv))
