@@ -5,8 +5,9 @@
 # Primary tcltk script for GIS Manager: GUI for GRASS 6 
 # Author: Michael Barton (Arizona State University)
 # Based on Display Manager for GRASS 5.7 by Radim Blazek (ITC-IRST)
-# and tcltkgrass for GRASS 5.7 by Michael Barton (Arizona State University)
-# with contributions by Glynn Clements, Markus Neteler, Lorenzo Moretti, and others
+# and tcltkgrass for GRASS 5.7 by Michael Barton (Arizona State University)--
+# with contributions by Glynn Clements, Markus Neteler, Lorenzo Moretti, 
+# Florian Grossman, and others
 #
 # COPYRIGHT:	(C) 1999 - 2005 by the GRASS Development Team
 #
@@ -41,7 +42,8 @@ source $env(GISBASE)/etc/gui.tcl
 
 source $dmpath/cmd.tcl
 source $dmpath/tree.tcl
-source $dmpath/tool.tcl
+source $dmpath/tool1.tcl
+source $dmpath/tool2.tcl
 source $dmpath/group.tcl
 source $dmpath/vector.tcl
 source $dmpath/raster.tcl
@@ -170,10 +172,14 @@ proc Dm::create { } {
     # toolbar 1 creation
     set tb1  [$mainframe addtoolbar]
     DmToolBar::create $tb1
-
-    set pw [PanedWindow $mainwindow.pw -side right ]
-   
+    set pw [PanedWindow $mainwindow.pw -side right ]   
     pack $pw -side top -expand yes -fill both -anchor n 
+
+    # toolbar 2 creation
+    set tb1  [$mainframe addtoolbar]
+    DmMonitorsel::create $tb1
+    set pw2 [PanedWindow $mainwindow.pw2 -side right ]   
+    pack $pw2 -side bottom -expand yes -fill both -anchor n 
 
     # tree 
     set tree_pane  [$pw add -minsize 50 -weight 1]
