@@ -96,7 +96,7 @@ src/display/d.rast
 src/display/d.rast.arrow
 src/display/d.rast.edit
 src/display/d.rast.num
-src/display/d.rgb
+#src/display/d.rgb
 src/display/d.rhumbline
 src/display/d.save
 src/display/d.scale
