@@ -26,6 +26,24 @@ db_start_driver(name)
     int stat;
     dbConnection connection;
 
+    /* Set some enviroment variables which are later read by driver.
+     * This is necessary when application is running without GISRC file and all
+     * gis variables are set by application. 
+     * Even if GISRC is set, application may change some variables during runtime,
+     * if for example reads data from different gdatabase, location or mapset*/
+    
+    if (  G_get_gisrc_mode() == G_GISRC_MODE_MEMORY ) {
+        setenv( "GISRC_MODE_MEMORY", "1", 1 ); /* to tell driver that it must read variables */
+	if ( G__getenv ( "DEBUG" ) ) 
+	    setenv( "DEBUG", G__getenv ( "DEBUG" ), 1 );
+	else 
+	    setenv( "DEBUG", "0", 1 );
+	
+	setenv( "GISDBASE", G__getenv ( "GISDBASE" ), 1 );
+	setenv( "LOCATION_NAME", G__getenv ( "LOCATION_NAME" ), 1 );
+	setenv( "MAPSET", G__getenv ( "MAPSET" ), 1 );
+    }
+    
 /* read the dbmscap file */
     if(NULL == (list = db_read_dbmscap()))
 	return (dbDriver *) NULL;
