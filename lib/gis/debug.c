@@ -22,8 +22,7 @@ static int grass_debug_level = -1;
 int G_debug (int level, char *msg,...)
 {
 #ifdef GDEBUG
-    int     n, size = 100;
-    char    *buffer, *lstr, *filen;
+    char    *lstr, *filen;
     va_list ap;
     FILE    *fd;
    
@@ -37,21 +36,7 @@ int G_debug (int level, char *msg,...)
     }
 	
     if ( grass_debug_level >= level ) {
-	buffer = (char *) G_malloc (size);
-
-	while (1) {
-	    /* Try to print in the allocated space. */
-	    va_start(ap, msg);
-	    n = vsnprintf (buffer, size, msg, ap);
-	    va_end(ap);
-
-	    /* If that worked, continue. */
-            if (n > -1 && n < size) break;
-
-	    /* Else try again with more space. */
-	    size *= 2;  /* twice the old size */
-	    buffer = (char *) G_realloc (buffer, size);
-	}
+        va_start(ap, msg);
 
 	filen =  getenv("GRASS_DEBUG_FILE"); 
         if ( filen != NULL ) {
@@ -60,11 +45,17 @@ int G_debug (int level, char *msg,...)
 		G_warning ( "Cannot open debug file '%s'", filen);
 		return 0;
 	    }
-            fprintf (fd, "D%d/%d: %s\n", level, grass_debug_level, buffer);
-	    fclose ( fd );
 	} else {
-            fprintf (stderr, "D%d/%d: %s\n", level, grass_debug_level, buffer);
+	    fd = stderr;
 	}
+        
+	fprintf (fd, "D%d/%d: %s\n", level, grass_debug_level, buffer);
+	vfprintf (fd, msg, ap);
+	fprintf (fd, "\n");
+	
+	if ( filen != NULL ) fclose ( fd );
+	
+	va_end(ap);
     }
 #endif
 
