@@ -91,40 +91,40 @@ int main(int argc, char **argv)
               exit(1) ;
 	    }
 	}
-    }
 
-  Map = (struct Map_info *) G_malloc(nvects * sizeof(struct Map_info));
-  Cats = (struct Categories *) G_malloc(nvects * sizeof(struct Categories));
-
-  width = mwidth = 0;
-  for(i=0; i<nvects; i++)
-    {
-      str = strchr(vect[i], '@');
-      if(str) j = str - vect[i];
-      else    j = strlen(vect[i]);
-      if(j > width)
-        width = j;
-
-      mapset = openvect(vect[i]);
-      j = strlen(mapset);
-      if(j > mwidth)
-        mwidth = j;
-
-      level = Vect_open_old (&Map[i], vect[i], mapset);
-      if (level < 0)
+      Map = (struct Map_info *) G_malloc(nvects * sizeof(struct Map_info));
+      Cats = (struct Categories *) G_malloc(nvects * sizeof(struct Categories));
+    
+      width = mwidth = 0;
+      for(i=0; i<nvects; i++)
         {
-	  sprintf(temp, "Vector file [%s] not available", vect[i]);
-          G_fatal_error (temp);
-	}
-
-      if (level < 2)
-        {
-	  sprintf(temp, "%s: You must first run v.support on vector file", vect[i]);
-          G_fatal_error (temp);
-	}
-
-      if (G_read_vector_cats(vect[i], mapset, &Cats[i]) < 0)
-        Cats[i].num = -1  ;
+          str = strchr(vect[i], '@');
+          if(str) j = str - vect[i];
+          else    j = strlen(vect[i]);
+          if(j > width)
+            width = j;
+    
+          mapset = openvect(vect[i]);
+          j = strlen(mapset);
+          if(j > mwidth)
+            mwidth = j;
+    
+          level = Vect_open_old (&Map[i], vect[i], mapset);
+          if (level < 0)
+            {
+    	  sprintf(temp, "Vector file [%s] not available", vect[i]);
+              G_fatal_error (temp);
+    	}
+    
+          if (level < 2)
+            {
+    	  sprintf(temp, "%s: You must first run v.support on vector file", vect[i]);
+              G_fatal_error (temp);
+    	}
+    
+          if (G_read_vector_cats(vect[i], mapset, &Cats[i]) < 0)
+            Cats[i].num = -1  ;
+        }
     }
 
   if (R_open_driver() != 0)

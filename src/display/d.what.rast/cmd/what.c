@@ -4,9 +4,8 @@
 #include "what.h"
 #include "local_proto.h"
 
-int what (int once, int terse, int colrow, char *fs)
+int what (int once, int terse, int colrow, char *fs, int width, int mwidth)
 {
-    int width, mwidth;
     int i;
     int row, col;
     int nrows, ncols;
@@ -29,17 +28,8 @@ int what (int once, int terse, int colrow, char *fs)
     screen_x = ((int)D_get_d_west() + (int)D_get_d_east()) / 2 ;
     screen_y = ((int)D_get_d_north() + (int)D_get_d_south()) / 2 ;
 
-    width = 0;
-    mwidth = 0;
     for (i=0; i < nrasts; i++)
     {
-        int n;
-
-        n = strlen (name[i]);
-        if (n > width) width = n;
-
-        n = strlen (mapset[i]);
-        if (n > mwidth) mwidth = n;
 	map_type[i] = G_raster_map_type(name[i], mapset[i]);
     }
 
