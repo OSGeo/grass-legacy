@@ -1,12 +1,12 @@
+#ifdef HAVE_TCLTK
+
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h> 
+#include "gis.h"
 #include <tcl.h>
 #include <tk.h>
-#include "gis.h"
-
-#ifdef HAVE_TCLTK
 
 int code = -1;
 char user[100], password[100];
