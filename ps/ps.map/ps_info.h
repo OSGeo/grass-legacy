@@ -29,7 +29,7 @@ struct PS_data
     char *cell_name; 
     char *plfile;
     char *commentfile;
-    char *grid_font;
+    char *grid_font, *geogrid_font;
     char *psfiles[MAX_PSFILES];
     char scaletext[100];
     char celltitle[100];
@@ -39,9 +39,14 @@ struct PS_data
     int do_header;
     int do_raster;
     int do_colortable;
+    int do_scalebar;
     int num_psfiles;
     int grid, grid_color, grid_numbers, grid_numbers_color, grid_fontsize;
-    double grid_width;
+    float grid_cross;
+    char geogridunit[64];
+    int geogrid, geogrid_color, geogrid_numbers;
+    int  geogrid_numbers_color, geogrid_fontsize;
+    double grid_width, geogrid_width;
     int do_outline, outline_color;
     int cell_fd;
     int row_delta, col_delta; 

@@ -13,7 +13,11 @@ int do_comment(void);
 double distance(double, double);
 /* do_grid.c */
 int do_grid(void);
+int do_grid_cross(void);
 int do_grid_numbers(void);
+/* do_geogrid */
+int do_geogrid(void);
+int do_geogrid_numbers(void);
 /* do_header.c */
 int do_map_header(char *);
 int read_header_file(char *);
@@ -28,6 +32,8 @@ int do_masking(void);
 int do_plt(int);
 /* do_psfiles.c */
 int do_psfiles(void);
+/* do_scalebar */
+int do_scalebar(void);
 /* do_vectors.c */
 int do_vectors(int);
 /* error.c */
@@ -38,6 +44,9 @@ int fit_map_to_box(void);
 int get_font(char *);
 /* getgrid.c */
 int getgrid(void);
+int getgeogrid(void);
+/* get_scalebar.c */
+int read_scalebar(void);
 /* gprims.c */
 int draw_line(double, double, double, double);
 int start_line(double, double);
