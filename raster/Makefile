@@ -29,6 +29,7 @@ SUBDIRS = \
 	r.in.bin \
 	r.info \
 	r.in.gridatb \
+	r.in.mat \
 	r.in.poly \
 	r.kappa \
 	r.le \
@@ -43,6 +44,7 @@ SUBDIRS = \
 	r.out.ascii \
 	r.out.bin \
 	r.out.gridatb \
+	r.out.mat \
 	r.out.mpeg \
 	r.out.pov \
 	r.out.ppm \
