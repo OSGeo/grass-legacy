@@ -27,26 +27,28 @@
 program=`echo "$0"| sed -e 's/[^\/]*\///g'`
 current_version='1.0'
 
-postgis="/usr/local/pgsql/"
+postgis="/usr/local/pgsql"
 
 usage="Usage: $program [OPTION] [ARGUMENTS] ....
-Create and Destroy PostGRASS (GRASS/PostGIS) database
+Create and Destroy PostGrass database 
 
 [Primary Options]
- -h, --help                           display this help and exit
- -v, --version                        display version information and exit 
- -c, --create  DATABASE_NAME          Create a new database 
+ -h, --help                        display this help and exit
+ -v, --version                     display version information and exit 
+ -c, --create  DATABASE_NAME       Create a new database 
 
      [Create Option]  
-        -D, --location PATH           Alternative place to store the database
-        -E, --encoding ENCODING       Multibyte encoding for the database
-        -P, --postgis  PATH           Specifies path to postgis
-                                      [default: $postgis]
+        -D, --location PATH        Alternative place to store the database
+        -E, --encoding ENCODING    Multibyte encoding for the database
+        -P, --postgis  PATH        Specifies path to postgis
+                                   [default: $postgis]
+        -G, --postgissql  PATH     Specifies path to postgis.sql file
+                                   [default: $postgis/share/contrib/]
 
- -d, --drop    DATABASE_NAME                    Destroy an exist database
+ -d, --drop    DATABASE_NAME       Destroy an exist database
  
      [Drop Option]
-        -i, --interactive             Prompt before deleting anything
+        -i, --interactive          Prompt before deleting anything
 
 
 [Common Option]
@@ -59,10 +61,10 @@ Create and Destroy PostGRASS (GRASS/PostGIS) database
  -q, --quiet                     Don't write any messages
 
 
-All options that are not available in primary options scope will be ignored.
+All options that are not available in primary options scope will be ignoreted.
 Only Postmaster can run this script to create a new database (use -U to define database owner)
 
-Report bugs to <enr.omano@genie.it> "
+Report bugs to <enr.omano@genie.it> or the GRASS Development Team"
 
 version="$program [$current_version]
 Written by (alphabetic order): 
@@ -89,6 +91,8 @@ argvect[0]=
 argvect[1]=
 argvect[2]=
 argvect[3]=  
+argvect[4]=
+argvect[5]=
 fsql=1
 
 function ArgSplit(){
@@ -100,6 +104,7 @@ function ArgSplit(){
     argvect[2]="$1 "    # Drop arg
     argvect[3]=" "      # Common arg
     argvect[4]="-d $1 " # Dbname
+    argvect[5]="$postgis/share/contrib" # postgis.sql
     shift
     while [ $# != 0 ] 
     do
@@ -141,6 +146,15 @@ function ArgSplit(){
              fi
           ;;
 
+          -G | --postgissql) 
+             tmp=$1
+             shift
+             if [ $# != 0 ]; then
+                postgisfiledir=$1
+             else  Error "Error in parsing option '$tmp'"
+             fi
+          ;;
+
           -i | --interactive )
              tmp="${argvect[2]} $1" 
              argvect[2]=$tmp 
@@ -151,7 +165,6 @@ function ArgSplit(){
 return 0
 }
 
-
 case "$1" in  
          
      -c | --create)
@@ -160,15 +173,19 @@ case "$1" in
          # check files existence
          libpostgisdir="$postgis/lib/contrib/"
          plpgsql="$postgis/lib/plpgsql.so"
-         postgisfile="$postgis/share/contrib/postgis.sql"
-         echo "Create database:"
+         postgisfile="$postgisfiledir/postgis.sql"
+         echo "Create database. Expecting following settings:"
          echo "libpostgis.so.x.x dir: '$libpostgisdir'"
          echo "plpgsql.so file      : '$plpgsql'"
-         echo -e "postgis.sql file     : '$postgisfile'\n"
+         echo "postgis.sql file     : '$postgisfile'"
 
-         if ! test -d $libpostgisdir; then Error "Directory does not exist: '$libpostgisdir'"; fi
-         if ! test -e $plpgsql; then Error "File does not exist: '$plpgsql'"; fi
-         if ! test -e $postgisfile; then Error "File does not exist: '$postgisfile'"; fi
+         #only check directories if working locally (no host defined):
+         echo ${argvect[3]} | grep '\-h\|\-\-host' > /dev/null
+	 if [ $? -eq 1 ] ; then
+           if ! test -d $libpostgisdir; then Error "Directory does not exist: '$libpostgisdir'"; fi
+           if ! test -e $plpgsql; then Error "File does not exist: '$plpgsql'"; fi
+           if ! test -e $postgisfile; then Error "File does not exist: '$postgisfile'"; fi
+         fi
          
          postgisfunction="
              CREATE FUNCTION plpgsql_call_handler () RETURNS OPAQUE AS
@@ -181,6 +198,7 @@ case "$1" in
            if [ $? = 0 ]; then 
 	     echo "$postgisfunction" | psql ${argvect[4]} ${argvect[3]}
 	       if [ $? = 0 ]; then 
+echo "cat $postgisfile | tr -d '\015' | sed -e 's#/usr/local/pgsql/lib/contrib/#$libpostgisdir#g' | psql  ${argvect[1]} ${argvect[3]}"
 		 cmd="cat $postgisfile | tr -d '\015' | sed -e 's#/usr/local/pgsql/lib/contrib/#$libpostgisdir#g' | psql  ${argvect[1]} ${argvect[3]}"
 		 eval "$cmd"
 		   if [ ! $? = 0 ]; then   dropdb  $dbname ${argvect[3]}; Error "Error on adding postgis featuress";
@@ -224,7 +242,7 @@ echo -e "  \n \
          echo "Sorry but it seems that it isn't implemented..yet!!! ;-)" 
          ;;
        -*)
-         Error "Undefined option '$1'"
+         Error "Undefined or incomplete option '$1'"
         ;;
 
         *)
