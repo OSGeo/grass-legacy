@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
-<TITLE>v.build.polylines(polylines) manual page</TITLE>
+<TITLE>v.build.polylines manual page</TITLE>
 </HEAD>
 <body bgcolor="white">
 <img src="grass.smlogo.gif">
@@ -14,8 +14,8 @@
 <H2>SYNOPSIS</H2>
 <B>v.build.polylines </B>  <BR>
 <B>v.build.polylines help </B>  <BR>
-<B>v.build.polylines  </B>[<B>-acoq 
-</B>] <B>input<I>name </I></B> <B>output<I>name </I></B> <I>type=name </I>   
+<B>v.build.polylines  </B>[<B>-acoq</B>]
+<B>input=</B><I>name </I> <B>output=</B><I>name </I> [<B>type=</B><I>name</I>]
 
 <H2>DESCRIPTION</H2>
 <I>v.build.polylines </I> builds 
@@ -74,16 +74,16 @@ each polyline.   </DD>
 <B>Parameters: </B> 
 <DL>
 
-<DT><B>input<I>name </I></B> </DT>
+<DT><B>input=</B><I>name </I></DT>
 <DD>The name of a binary vector map 
 layer containing lines (and possibly some polylines). </DD>
 
-<DT><B>output<I>name </I></B> </DT>
+<DT><B>output=</B><I>name </I></DT>
 <DD>The name 
 of the ASCII vector map to be created in the dig_ascii mapset  element. 
   </DD>
 
-<DT><B>type<I>name </I></B> </DT>
+<DT><B>type=</B><I>name </I></DT>
 <DD>The type of each new polyline can be set from the <I>input </I> map, 
 or  alternatively all new polylines can be bulk labeled as either lines, 
 area edges, or points.  <BR>
