@@ -1,4 +1,4 @@
-$Id: TODO,v 1.30 2000-10-16 17:03:29 markus Exp $
+$Id: TODO,v 1.31 2000-10-17 17:30:13 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -216,6 +216,7 @@ Modules:
   (Being worked on by )
 
 ---------------------------------------------------------------------
+Numerical Recipes:
 From ddgray@armadce.demon.co.uk Tue Sep 26 22:31:31 2000
 
 The following references to Numerical Recipes was found.
@@ -235,7 +236,6 @@ i.shape
 *d.param.scale
 
 * currently in `main' !!
-
 
 Details.
 
@@ -265,14 +265,46 @@ replace.
 It's difficult to know how much more NR stuff there is around, as the
 last two in particular don't acknowledge the NR dependency.
 
-
 Can I suggest moving the last two at least to src.nonGPL, so that we can
 retain a working copy of the functions till the offending routines can
 be replaced, as they would be in the slot held by the existing modules.
 The other routines require only minor modifications, so we can patch
 them all sometime during the freeze.
+[done.]
 
 Regards
 
 David
 
+---------------------------------------------------------------------
+./src/libes/coorcnv/TODO
+./src/libes/dbmi/clients/TODO
+./src/libes/dbmi/drivers/odbc/TODO
+./src/libes/dbmi/drivers/sqlbase/TODO
+./src/libes/dbmi/lib/TODO
+./src/libes/ogsf/TODO
+./src/mapdev/v.area/TODO
+./src/mapdev/v.db.reclass/TODO
+./src/mapdev/v.in.shape/TODO
+./src/mapdev/v.out.shape/TODO
+./src/mapdev/v.to.db/TODO
+./src/mapdev/v.to.sites/TODO
+./src/raster/r.agnps50/TODO
+./src/raster/r.circle/TODO
+./src/raster/r.random.surface/TODO
+./src/raster/r.surf.area/TODO
+./src/raster/r.to.sites/TODO
+./src/raster/r.water.outlet/TODO
+./src/sites/s.to.rast/TODO
+./src/sites/s.to.vect/cmd/TODO
+./src/sites/s.datum.shift/TODO
+./src/tcltkgrass/docs/TODO.txt
+./src.contrib/GMSL/NVIZ2.2/src/TODO
+./src.contrib/GMSL/NVIZ2.2/TODO.linux
+./src.contrib/GMSL/NVIZ2.2/TODO
+./src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.sgi/TODO
+./src.garden/answers/src.answers/raster/r.fill.dir/TODO
+./src.garden/grass.java/TODO
+./src.garden/grass.postgresql/v.in.shape.pg/TODO
+./src.garden/grass.postgresql/TODO
+./src/tcltkgrass/todo
