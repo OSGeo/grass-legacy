@@ -9,9 +9,33 @@ If raster values is NULL, attribute value is set to NULL.
 
 <H2>EXAMPLE</H2>
 
-<p>
+A) Reading values from raster map at position of vector points, writing these values
+   into column of vector map:
+<br>
 <tt>v.what.rast vect=pnt rast=demf col=valf</tt> 
 
+<P>
+B) In case of a vector map without attached attribute table, first one row for
+each category has to be generated. Then the new table can be populated with values
+from the raster map query:
+<br>
+<pre>
+      v.db.connect -p vectpoints
+      # .. no table yet.
+
+      echo 'create table vectpoints (cat integer, value integer)' | db.execute
+      #link new table to vector map:
+      v.db.connect table=vectpoints map=vectpoints
+      
+      #generate rows for each category:
+      v.to.db map=vectpoints option=cat
+
+      #query raster map and write values into vector table:
+      v.what.rast vect=vectpoints rast=rastmap col=value
+
+      #verify uploaded values:
+      v.univar map=vectpoints col=value
+</pre>
 
 <H2>AUTHOR</H2>
 <A HREF=mailto:blazek@itc.it>Radim Blazek</A>
