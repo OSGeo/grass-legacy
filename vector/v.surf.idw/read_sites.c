@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "glocale.h"
 #include "gis.h"
-#include "site.h"
+#include "dbmi.h"
+#include "Vect.h"
 #include "proto.h"
 
 /* 1/2001 added field parameter MN
@@ -11,51 +13,81 @@
  * mccauley
  */
 
-void read_sites ( char *name, int field)
+void read_sites ( char *name, int field, char *col)
 {
-    char *mapset;
-    FILE *fd;
-    int n, c, i, d;
-    Site *site;
     extern long npoints;
+    int   nrec, ctype, nlines, line;
+    struct Map_info Map;
+    struct field_info *Fi;
+    dbDriver *Driver;
+    dbCatValArray cvarr;
+    struct line_pnts *Points;
+    struct line_cats *Cats;
   
-    field -= 1;  /* field number -> array index */
-  
-    mapset = G_find_sites (name,"");
-    if (mapset == NULL)
-    {
-	fprintf (stderr, "%s: %s - sites map not found\n", G_program_name(), name);
-	exit(1);
+    Vect_set_open_level (2);
+    Vect_open_old (&Map, name, "");
+
+    db_CatValArray_init ( &cvarr );
+
+    Fi = Vect_get_field( &Map, field);
+    if ( Fi == NULL )
+	G_fatal_error (_("Cannot read field info"));	
+
+    Driver = db_start_driver_open_database ( Fi->driver, Fi->database );
+    if ( Driver == NULL )
+	G_fatal_error(_("Cannot open database %s by driver %s"), Fi->database, Fi->driver);
+
+    nrec = db_select_CatValArray ( Driver, Fi->table, Fi->key, col, NULL, &cvarr );
+    G_debug (0, "nrec = %d", nrec );
+
+    ctype = cvarr.ctype;
+    if ( ctype != DB_C_TYPE_INT && ctype != DB_C_TYPE_DOUBLE )
+	G_fatal_error ( _("Column type not supported") );
+
+    if ( nrec < 0 ) 
+	G_fatal_error (_("Cannot select data from table"));
+
+    G_message ( "%d records selected from table", nrec);
+
+    db_close_database_shutdown_driver(Driver);
+    
+
+    Points = Vect_new_line_struct();
+    Cats = Vect_new_cats_struct ();
+
+    nlines = Vect_get_num_lines ( &Map );
+
+    for ( line = 1; line <= nlines; line++) {
+	int type, cat, ival, ret;
+	double dval;
+	
+	type = Vect_read_line ( &Map, Points, Cats, line );
+
+	if ( !(type & GV_POINTS ) ) continue;
+
+	/* TODO: what to do with multiple cats */
+	Vect_cat_get ( Cats, field, &cat );
+	if ( cat < 0 ) continue;
+
+	if ( ctype == DB_C_TYPE_INT ) {
+	    ret = db_CatValArray_get_value_int ( &cvarr, cat, &ival );
+	    dval = ival;
+	} else { /* DB_C_TYPE_DOUBLE */
+	    ret = db_CatValArray_get_value_double ( &cvarr, cat, &dval );
+	}
+
+	if ( ret != DB_OK ) {
+	    G_warning (_("No record for line (cat = %d)"), cat );
+	    continue;
+	}
+	    
+	newpoint ( dval, Points->x[0], Points->y[0] );
     }
-    fd = G_fopen_sites_old(name,mapset);
-    if (fd == NULL)
-    {
-	fprintf (stderr, "%s: %s - can't open sites map\n", G_program_name(), name);
-	exit(1);
-    }
 
-    if (G_site_describe (fd, &n, &c, &i, &d)!=0)
-      G_fatal_error("failed to guess format");
+    db_CatValArray_free( &cvarr ) ;
 
-    site = G_site_new_struct (c, n, i, d);
+    Vect_close ( &Map );
 
-    fprintf (stderr, "Reading sites map (%s) ...", name);
-
-    if(field >= d)
-      G_fatal_error("\n decimal field %i not present in sites file", field + 1 );
-
-    if (d==0)
-    {
-      fprintf(stderr,"\n");
-      G_warning("I'm finding records that do not have a floating point attributes (fields prefixed with '%').");
-    }
-
-    while (G_site_get(fd, site) >= 0)
-    {
-	newpoint(site->dbl_att[field],site->east,site->north);
-        if(!(npoints%1000)) 
-            fprintf(stderr,"%10ld sites\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", npoints);
-    }
-    G_sites_close (fd);
-    fprintf (stderr, "%10ld sites loaded\n", npoints);
+    G_message ( "%d points loaded\n", npoints);
 }
+
