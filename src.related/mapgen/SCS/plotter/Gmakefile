@@ -1,0 +1,39 @@
+# @(#)Gmakefile	2.2   7/24/87
+
+GRAPH=$(GISBASE)/mapgen
+MAPGEN_BIN=$(GRAPH)/interface
+GRAPHB = $(GRAPH)/gfonts:sr:
+
+
+
+MAP_BIN = $(GRAPH)/bin
+MAP_SRC = $(SRC)/../src.related/mapgen
+MINCL = $(MAP_SRC)/include
+MPLOTTER = $(MAP_SRC)/graphics/plotter
+
+
+MAPGEN = $(MAP_SRC)/lib/libdev.a \
+	$(MAP_SRC)/lib/libplt.a \
+	$(MAP_SRC)/lib/libgraph.a
+
+LDFLAGS = -s
+
+OPT = -O
+
+CFLAGS = $(OPT) -I$(MINCL) -I$(LIBDIR) -D_GENVB=\"GRAPHB\" -DGRASS
+
+
+OFILES = DGRASS.o devlist.o plotter.o
+
+
+$(MAP_BIN)/plotter: START $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(CFLAGS) $(OFILES) $(MAPGEN) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB)
+
+START:
+	cp $(MPLOTTER)/plotter.c plotter.c
+	cp $(MPLOTTER)/devlist.c devlist.c
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+
