@@ -1,0 +1,12 @@
+OFILES	= do_climb.o do_call.o do_leave.o \
+		menu.o scrn_clear.o execute.o tty.o
+
+$(ETC)/menu:	$(OFILES)
+	$(CC) ${LDFLAGS} -o $@ $(OFILES) $(GISLIB) $(VASK) $(MATHLIB)
+
+do_call.o: do_climb.h
+do_call.o: menu.h
+do_climb.o: do_climb.h
+do_climb.o: menu.h
+do_leave.o: menu.h
+menu.o: menu.h
