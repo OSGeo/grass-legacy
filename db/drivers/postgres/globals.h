@@ -131,7 +131,7 @@ typedef struct
 }
 cursor;
 
-#ifndef MAIN
+#ifdef MAIN
 DATABASE db;
 char errMsg[PG_MSG];
 PGconn *pg_conn;
