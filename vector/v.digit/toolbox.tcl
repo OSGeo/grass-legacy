@@ -32,9 +32,11 @@ proc new_line_options { create } {
 	Label $row1.flab -padx 2 -pady 2 -relief sunken -anchor w -text "Field"
 	set GWidget(field) [Entry $row1.fval -width 10 -textvariable GVariable(field) \
 			    -command { c_var_set field $GVariable(field) } ]
+        bind $GWidget(field) <KeyRelease> { c_var_set field $GVariable(field) } 
 	Label $row1.clab -padx 2 -pady 2 -relief sunken -anchor w -text "Category"
 	set GWidget(cat) [Entry $row1.cval -width 10 -textvariable GVariable(cat) \
 			    -command { c_var_set cat $GVariable(cat) }]
+        bind $GWidget(cat) <KeyRelease> { c_var_set cat $GVariable(cat) } 
 	set GWidget(cat_mode) [ComboBox $row1.cmode -label "Mode" -width 20  -textvariable cmode \
 			-modifycmd {
 			    set GVariable(cat_mode) [ $GWidget(cat_mode) getvalue]

@@ -225,6 +225,7 @@ proc settings {} {
                 -command { c_var_set snap_mode $GVariable(snap_mode) }
     Entry $row.c -width 10 -textvariable GVariable(snap_screen) \
                            -command { c_var_set snap_screen $GVariable(snap_screen) } 
+    bind $row.c <KeyRelease> { c_var_set snap_screen $GVariable(snap_screen) }
     pack $row.a -side left; pack $row.c $row.b -side right; 
     pack $row -side top -fill x -expand no -anchor n 
     
@@ -234,6 +235,7 @@ proc settings {} {
                 -command { c_var_set snap_mode $GVariable(snap_mode) }
     Entry $row.c -width 10 -textvariable GVariable(snap_map) \
                            -command { c_var_set snap_map $GVariable(snap_map) }
+    bind $row.c <KeyRelease> { c_var_set snap_map $GVariable(snap_map) }
     pack $row.a -side left; pack $row.c $row.b -side right; 
     pack $row -side top -fill x -expand no -anchor n 
 
