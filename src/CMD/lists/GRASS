@@ -23,8 +23,7 @@ src/libes/linkm
 src/libes/bitmap
 src/libes/D
 src/libes/datetime
-###libes/geom is required for s.geom, v.geom:
-#src/libes/geom
+src/libes/geom
 src/libes/rst_gmsl
 src/libes/vect32/libes
 src/libes/vect32/Vlib
