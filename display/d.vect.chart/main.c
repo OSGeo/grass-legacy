@@ -75,7 +75,8 @@ main (int argc, char **argv)
     columns_opt->key        = "columns" ;
     columns_opt->type       = TYPE_STRING ;
     columns_opt->required   = YES ;
-    columns_opt->description= "Atribute columns containing data" ;
+    columns_opt->multiple   = YES ;
+    columns_opt->description= "Attribute columns containing data" ;
     
     sizecol_opt = G_define_option() ;
     sizecol_opt->key        = "sizecol" ;
@@ -201,5 +202,4 @@ main (int argc, char **argv)
 
     exit(ret);
 }
-
 

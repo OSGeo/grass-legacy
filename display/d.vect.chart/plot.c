@@ -32,6 +32,9 @@ plot ( int ctype, struct Map_info *Map, int type, int field,
     db_init_string (&sql);
     
     Fi = Vect_get_field ( Map, field);
+    if ( Fi == NULL )
+	G_fatal_error( "No database table defined for selected field <%d>", field );
+
     /* Open driver */
     driver = db_start_driver_open_database ( Fi->driver, Fi->database );
     if ( driver == NULL ) {
@@ -87,7 +90,7 @@ plot ( int ctype, struct Map_info *Map, int type, int field,
 		    val[col] = db_get_value_double( value );
 		    break;
 		default:
-		    G_warning ( "Column type not supported" );
+		    G_warning ( "Column type not supported (must be INT or FLOAT)" );
 		    return 1;
 	    }
 	    G_debug ( 4, "  val[%d]: %f", col, val[col] );
