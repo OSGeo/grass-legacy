@@ -40,6 +40,16 @@ of flowlines, a raster map <I>lgout</I> of flowpath lengths, and a raster
 map <I>dsout</I> of flowline densities (which are equal upslope contributed
 areas per unit width, when multiplied by resolution).
 
+<P>r.flow uses an original vector-grid algorithm which uses an infinite
+number of directions between 0.0000... and 360.0000...  and traces the flow
+as a line (vector) in the direction of gradient (rather than from cell to
+cell in one of the 8 directions = Dinf algorithm) The value in the outlet is
+very similar for both r.flow and <a href=r.flowmd.html>r.flowmd</a>
+algorithms (because it is essentially the watershed area), however the
+spatial distribution of flow, especially on hillslopes is quite different.
+It is still a 1D flow routing so the dispersal flow is not accurately
+described, but still better than D8.
+
 <P>Aspect used for input must follow the same rules as aspect computed
 in other GRASS programs (see <A HREF="s.surf.rst.html">s.surf.rst</A>
 or <A HREF="r.slope.aspect.html">r.slope.aspect</A>).
