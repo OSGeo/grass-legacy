@@ -1,33 +1,44 @@
-This package was debianized by root <neteler@itc.it> on
+This package was debianized by Markus Neteler <neteler@itc.it> on
 Mon, 10 Nov 2003 17:59:04 +0100.
 
 It was downloaded from http://grass.itc.it
 
-Upstream Author: Markus Neteler
-
-Copyright:
-
-Copyright and License Statement
+The upstream contributors are listed in the AUTHORS file.
 
 The Geographic Resources Analysis and Support System (GRASS)
 Geographic Information System (GIS) is Copyright by the
-GRASS Development Team headquartered at ITC-irst, Trento, Italy.
+GRASS Development Team headquartered at ITC-irst, in Trento, Italy.
 
-Please refer to:
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2 of the License, or (at your
+option) any later version.
 
-/usr/share/common-licenses/GPL
+Parts of GRASS are not copyright by the GRASS development team.
+The original authors hold the copyrights and you have to abide
+to their licensing terms where noted.
+(Keep in mind that code linking into GRASS can only be distributed
+if compatible with the GPL.)
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License (GPL) for more details.
+
+On Debian systems, the complete text of the GNU General Public
+License can be found in the /usr/share/common-licenses/GPL file.
 
 Questions regarding GRASS GIS should be directed to the
 GRASS Development Team at the following address:
 
  GRASS Development Team
- Attn. M. Neteler
  ITC-Irst
+ c/o M. Neteler
  SSI/MPA
  Via Sommarive, 18
  38050 Trento (Povo)
  Italy
+ neteler@itc.it
 
 Internet:  http://grass.itc.it
-
-Mirrors:   http://grass.ibiblio.org
+           http://grass.ibiblio.org
