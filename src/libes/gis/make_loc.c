@@ -142,10 +142,46 @@ G_compare_projections( struct Key_Value *proj_info1,
 /* -------------------------------------------------------------------- */
 /*      Are they both in the same projection?                           */
 /* -------------------------------------------------------------------- */
-    if( G_find_key_value( "proj", proj_units1 ) != NULL
+    if( G_find_key_value( "proj", proj_info1 ) != NULL
         && G_find_key_value( "meter", proj_units1 ) != NULL
         && atof(G_find_key_value( "meter", proj_units1 ))
            != atof(G_find_key_value( "meter", proj_units2 )) )
+        return FALSE;
+
+/* -------------------------------------------------------------------- */
+/*      Do they both have the same map datum?                           */
+/* -------------------------------------------------------------------- */
+
+    sprintf(buf1,"%s",G_find_key_value( "datum", proj_info1 ));
+    G_tolcase(buf1);
+    sprintf(buf2,"%s",G_find_key_value( "datum", proj_info2 ));
+    G_tolcase(buf2);
+
+    if ( strcmp(buf1, buf2) != 0 )
+        return FALSE;
+
+/* -------------------------------------------------------------------- */
+/*      Do they both have the same ellipsoid?                           */
+/* -------------------------------------------------------------------- */
+
+    sprintf(buf1,"%s",G_find_key_value( "ellps", proj_info1 ));
+    G_tolcase(buf1);
+    sprintf(buf2,"%s",G_find_key_value( "ellps", proj_info2 ));
+    G_tolcase(buf2);
+
+    if ( strcmp(buf1, buf2) != 0 )
+        return FALSE;
+
+/* -------------------------------------------------------------------- */
+/*      Do they both have the same zone?                           */
+/* -------------------------------------------------------------------- */
+
+    sprintf(buf1,"%s",G_find_key_value( "zone", proj_info1 ));
+    G_tolcase(buf1);
+    sprintf(buf2,"%s",G_find_key_value( "zone", proj_info2 ));
+    G_tolcase(buf2);
+
+    if ( strcmp(buf1, buf2) != 0 )
         return FALSE;
 
 /* -------------------------------------------------------------------- */
