@@ -1,3 +1,5 @@
+SOME CHANGES IN GRASS 5.7/6.0
+
 - G_gui() - new, generates GUI for command, it is run by default if no
             parameters were specified on command line; terminal interface
             may be forced by setting variable GRASS_UI_TERM
@@ -11,3 +13,5 @@
   - new dbf driver
 - vector library completely rewritten (multilayer, multiformat, 3D)
 - new make system
+- programmer's manual integrated into source code (doxygen)
+

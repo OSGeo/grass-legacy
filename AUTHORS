@@ -1,4 +1,4 @@
-GRASS 5.7 authors
+GRASS 5.7/6.0 authors
 (please complete this list)
 $Date$
 
@@ -20,13 +20,15 @@ FORMS library
 
 RASTER
  - Modules: see 5.3 authors
- - Integration of modules: Markus Neteler <neteler itc it>
+ - Integration of raster modules: Markus Neteler <neteler itc it>
 
 PROJ
- - Paul Kelly
+ - integrated by Paul Kelly
 
 DOCUMENTATION
  - new docs engine: Markus Neteler <neteler itc it>
+ - Programming docs/doxygen: Markus Neteler <neteler itc it>
 
 TCLTKGRASS
- - see 5.3 authors, partially rewritten by Michael Barton
+ - see 5.3 authors, partially rewritten and integrated into d.m 
+   by Michael Barton
