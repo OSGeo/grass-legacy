@@ -172,6 +172,8 @@ Vect_cidx_get_type_count ( struct Map_info *Map, int field, int type)
 
     G_debug (3, "Vect_cidx_get_type_count() field = %d, type = %d", field, type); 
     
+    check_status ( Map );
+    
     if ( (fi = Vect_cidx_get_field_index(Map, field)) < 0 ) return 0;  /* field not found */
     G_debug (3, "field_index = %d", fi); 
     
@@ -205,7 +207,7 @@ int
 Vect_cidx_get_cat_by_index ( struct Map_info *Map, int field_index, int cat_index, 
 	                     int *cat, int *type, int * id)
 {
-    /* check_status ( Map ); */ /* This check would be slow ? */
+    check_status ( Map ); /* This check is slow ? */
 
     if ( field_index >= Map->plus.n_cidx ||  cat_index >= Map->plus.cidx[field_index].n_cats )
 	G_fatal_error("Field/cat index out of range");
@@ -251,7 +253,7 @@ Vect_cidx_find_next ( struct Map_info *Map, int field_index, int cat, int type_m
 
     G_debug (3, "Vect_cidx_find_next() cat = %d, type_mask = %d, start_index = %d", cat, type_mask, start_index);
 
-    /* check_status ( Map ); */ /* This check would be slow ? */
+    check_status ( Map ); /* This check is slow ? */
     *type = *id = 0;
 
     if ( field_index >= Map->plus.n_cidx )
@@ -355,6 +357,7 @@ Vect_cidx_save ( struct Map_info *Map )
     GVFILE  fp;
 
     G_debug (2, "Vect_cidx_save()"); 
+    check_status ( Map );
 
     plus = &(Map->plus);
     
