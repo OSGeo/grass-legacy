@@ -3,12 +3,15 @@
 # GRASS 5 binary package installation tool
 # platform indendent
 
-# Version 4/Sun Oct 17 21:51:40 MEST 1999
-# 1999 by Markus Neteler, neteler@geog.uni-hannover.de
+# Version 7/Sun Jan  2 07:44:32 MET 2000
+# 1999-2000 by Markus Neteler, neteler@geog.uni-hannover.de
 
 ######################################################
 #setting: where to put the GRASS start script:
 BINDIR=/usr/local/bin
+
+#setting: standard path of GRASS installation
+DESTDIR=/usr/local/grass-5.0b
 
 ######################################################
 # check for first parameter:
@@ -17,11 +20,12 @@ then	echo "
 
 GRASS GIS 5 binary package installation tool
 
-Usage:        sh grass5install.sh grass_binpackage.tar.gz dest_dir
+Usage:        sh grass5install.sh grass_binpackage.tar.gz [dest_dir]
 
       with:
         grass_binpackage : name of GRASS 5 binary package   
-        dist_dir - FULL path name to the installation directory
+        [dist_dir] - optional: FULL path name to the installation directory
+                     (default: /usr/local/grass-5.0b/)
 
 You may need login as root for installation.
 "
@@ -29,20 +33,9 @@ You may need login as root for installation.
 fi
 
 # check for second parameter:
-if [ ! "$2" ]
-then    echo "
-
-GRASS GIS 5 binary package installation tool
-ERROR: Please specify destination directory for installation (full path).
- 
-Usage:        sh grass5install.sh grass_binpackage.tar.gz dest_dir
-
-      with:
-        grass_binpackage : name of GRASS 5 binary package
-        dist_dir - FULL path name to the installation directory
-                   (example: /usr/local/grass5  )
-"
-        exit
+if [ "$2" ]
+then
+  DESTDIR=$2
 fi
 
 # check for correct package name:
@@ -63,28 +56,74 @@ fi
 # Start the installation job...
 echo "GRASS GIS 5 binary package installation tool"
 echo ""
-echo "The package $1 seems to be o.k. Proceeding..."
+echo "The package $1 seems to be o.k."
+echo " Proceeding..."
 echo ""
 echo "Checking and creating installation directory..."
-if [ ! -d "$2" ]
-then	mkdir -p $2
-else	echo $2
+echo "Installing to $DESTDIR"
+
+if [ ! -d "$DESTDIR" ] ;
+then
+        #check if a word "grass" is in string $DESTDIR
+        echo $DESTDIR |grep -w "grass"
+        if [ $? -eq 1 ] ; then
+            echo "WARNING: Your destination path $DESTDIR does not contain the word 'grass'"
+            echo "Continue (y/n)?"
+            read ans         
+            if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+             exit
+            fi
+        fi
+
+        mkdir -p $DESTDIR
+        if [ $? -eq 1 ] ; then
+          echo "An error occured! Exiting."
+          exit
+        fi
+else
+     if [ -d $DESTDIR/bin ] ; then
+          echo ""
+          echo "ERROR: Old GRASS distribution existing in $DESTDIR!"
+          echo "Remove first!"
+          exit
+     else
+          #check if a word "grass" is in string $DESTDIR
+          echo $DESTDIR |grep -w "grass"
+echo $? scheise
+          if [ $? -eq 1 ] ; then
+            echo "WARNING: Your destination path $DESTDIR does not contain the word 'grass'"
+            echo "Continue (y/n)?"
+            read ans         
+            if [ "$ans" = "n" -o "$ans" = "N" ] ; then
+             exit
+            fi
+          fi
+     fi        
 fi
 
-echo "Installing GRASS binaries in $2"
+echo "Installing GRASS binaries into $DESTDIR"
 echo ""
 
-echo "Uncompressing the package..."
-gunzip $1
+echo "Uncompressing the package and extracting to target directory..."
+gunzip -c $1 |tar -C $DESTDIR -xvf -
+if [ $? -eq 1 ] ; then
+     echo "An error occured/user break! Exiting."
+     exit
+fi
 
-# shorten the name for tar command:
-NAME=`echo $1 |sed -e '1,$s/.gz//g'`
-echo "Extract to target directory..."
-tar -C $2 -xvf $NAME
-
+##Creating start script
+if [ ! -d "$BINDIR" ] ;
+then
+ BINDIR=/usr/bin
+fi
 echo "Creating start script: $BINDIR/grass5.0beta"
 echo ":"                          >$BINDIR/grass5.0beta
-echo "GISBASE=$2"                >>$BINDIR/grass5.0beta
+if [ $? -eq 1 ] ; then
+          echo "An error occured! Exiting."
+          echo "You must be 'root' to install into $BINDIR"
+          exit
+fi
+echo "GISBASE=$DESTDIR"          >>$BINDIR/grass5.0beta
 echo "export GISBASE"            >>$BINDIR/grass5.0beta
 echo "exec \$GISBASE/etc/GIS.sh" >>$BINDIR/grass5.0beta
 chmod ugo+x $BINDIR/grass5.0beta
@@ -92,24 +131,24 @@ chmod ugo+x $BINDIR/grass5.0beta
 
 echo "Creating the locks directory for monitors..."
 SERVERNAME=`uname -n`
-rm -rf $2/locks/*
-mkdir $2/locks/$SERVERNAME
-chmod -R 1777 $2/locks
+rm -rf $DESTDIR/locks/*
+mkdir $DESTDIR/locks/$SERVERNAME
+chmod -R 1777 $DESTDIR/locks
 
 
 # update paths in etc/monitorcap:
-cp $2/etc/monitorcap $2/etc/monitorcap.orig
-NEWPATH=$2
-sed 's*/usr/local/grass-5.0b*'${NEWPATH}'*g' $2/etc/monitorcap.orig > $2/etc/monitorcap
+cp $DESTDIR/etc/monitorcap $DESTDIR/etc/monitorcap.orig
+NEWPATH=$DESTDIR
+sed 's*/usr/local/grass-5.0b*'${NEWPATH}'*g' $DESTDIR/etc/monitorcap.orig > $DESTDIR/etc/monitorcap
 
 
 echo""
 echo "Creating the monitor fifos..."
-rm -f $2/dev/fifo.*
+rm -f $DESTDIR/dev/fifo.*
 # create script with paths updated:
-sed 's*/usr/local/grass-5.0b*'${NEWPATH}'*g' $2/dev/create_fifos.sh >$2/dev/create_fifos_new.sh
-chmod ugo+x $2/dev/create_fifos_new.sh
-sh $2/dev/create_fifos_new.sh
+sed 's*/usr/local/grass-5.0b*'${NEWPATH}'*g' $DESTDIR/dev/create_fifos.sh > $DESTDIR/dev/create_fifos_new.sh
+chmod ugo+x $DESTDIR/dev/create_fifos_new.sh
+sh $DESTDIR/dev/create_fifos_new.sh
 
 
 echo "Installation finished. Start GRASS 5 with"
@@ -117,5 +156,5 @@ echo "    grass5.0beta"
 echo ""
 echo "The graphical user interface can be started within GRASS GIS."
 echo ""
-echo "Welcome to GRASS GIS. Enjoy this open source product!"
+echo "Welcome to GRASS GIS. Enjoy this open source GNU GRASS GIS!"
 echo ""
