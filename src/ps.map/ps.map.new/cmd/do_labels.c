@@ -181,6 +181,7 @@ do_label (FILE *fd)
 	    if (border >= 0)
 	    {
 		/* draw the border */
+		set_line_width(width ); /* added by RB, ? add bwidth option */
 		set_rgb_color(border);
 		fprintf(PS.fp, "D ");
 		border = -1;
