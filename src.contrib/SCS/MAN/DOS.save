@@ -1,0 +1,19 @@
+.TH DOS.save
+.SH NAME
+\fIDOS.save\fR \- stores screen images to the PC6300 MS-DOS hard disk.
+.br
+.I "(Available for PC6300 workstations, only)"
+.SH SYNOPSIS
+\fBDOS.save\fR
+.br
+\fBDOS.save help\fR
+.SH DESCRIPTION
+allows a user to interactively save PC6300 screen images produced by "d.display", "d.rast", etc. to the PC6300 hard disk. Program will assign the extension ".GRS" to the filename given, and will store the image file in the current DOS directory. The files are binary image files, representing the red, green, and blue planes of the DEB board graphic memory.
+
+.SH "INTERACTIVE MODE"
+.SH BUGS
+.SH "SEE ALSO"
+DOS.delete, DOS.list, DOS.show
+.SH AUTHOR
+P.W.Carlson, USDA, SCS, NHQ-CGIS
+
