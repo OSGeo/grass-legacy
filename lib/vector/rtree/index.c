@@ -15,7 +15,7 @@
 *****************************************************************************/
 
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include "assert.h"
 #include "index.h"
 #include "card.h"
