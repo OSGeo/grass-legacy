@@ -241,7 +241,7 @@ void getpataat( char *name, struct Info info, int ncatmin, int flag)
 	label[info.item[ncatmin-1-usecovnum].fsize] = 0;
 	sscanf( label, "%d", &id);
 	if (debug > 2 && (l*100/(info.ndr-1))%2 == 0)
-	    fprintf( fdlog, "%4ld%%\b\b\b\b\b", l*100/(info.ndr-1));
+	    fprintf( stderr, "%4ld%%\b\b\b\b\b", l*100/(info.ndr-1));
 	for (i = ncatmin; i < info.uitems; i++) {
 	    strncpy( label, &infoline[info.item[i].fpos], info.item[i].fsize);
 	    label[info.item[i].fsize] = 0;
@@ -303,10 +303,14 @@ int getinfo( char *name, int flag)
 	/* 14 for float, 24 for double and fsize for strings */
 
 	    G_tolcase( info.item[i].fname);
-	    if (info.item[i].ftype == 60 || info.item[i].ftype == 40)
+	    if (info.item[i].ftype == 60)
 		info.item[i].fsize = (info.item[i].fsize == 4 ? 14:24);
 	    if (info.item[i].ftype == 50)
                 info.item[i].fsize = (info.item[i].fsize == 2 ? 6:11);
+	    if (info.item[i].ftype == 40)
+		info.item[i].fsize = 14;
+	    if (info.item[i].ftype == 10)
+		info.item[i].fsize = 8;
 	    if (i < info.uitems)
 		info.length += info.item[i].fsize;
 	    if (i == 0)
