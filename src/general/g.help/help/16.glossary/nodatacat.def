@@ -1,0 +1,7 @@
+
+
+no data category - Also referred to a "null category".  \Map layer\
+data that are not assigned any \category\ value are automatically
+assigned a \category value\ of "0" and a \category label\ of "no data".
+Each map layer contains this category, in addition to others specified
+by the user.
