@@ -1,0 +1,17 @@
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+PGM =	v.out.arc
+
+OBJ =	Vexport_arc.o\
+	write_areas.o\
+	write_lines.o\
+	write.o\
+	writ_a_lines.o
+
+
+$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
+
+$(VECTLIB): #
+$(DIG_ATTLIB): #
+$(GISLIB): #
