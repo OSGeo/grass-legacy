@@ -1,3 +1,5 @@
+# $Id: Gmakefile,v 1.5 2000-09-11 09:47:34 justin Exp $
+
 EXTRA_CFLAGS	=  -I$(SRC)/include/geom
 
 TRIANGLIB = $(SRC)/libes/liboptri.a $(SRC)/libes/libsos.a $(SRC)/libes/liblia.a $(SRC)/libes/libbasic.a \
@@ -5,22 +7,23 @@ TRIANGLIB = $(SRC)/libes/liboptri.a $(SRC)/libes/libsos.a $(SRC)/libes/liblia.a 
 
 LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(TRIANGLIB)
 
-#ifeq ($(shell uname),IRIX64)
-#LIBES += -lmalloc
-#endif
-
 SOURCES = \
 	main.c
 
 OBJ = \
 	main.o
 
-
 PROG =   $(BIN_CONTRIB_CMD)/v.geom
 
 all:  $(PROG)
 
+# SGI machines need to include a -lmalloc for SGI specific code
 $(PROG): $(OBJ) $(LIBES)
-	$(CC) $(EXTRA_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
+	if [ "`echo $(ARCH) | grep -i sgi`" = "" ] ;\
+	then \
+	    $(CC) $(EXTRA_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB) ;\
+	else \
+	    $(CC) $(EXTRA_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) -lmalloc $(MATHLIB) $(XDRLIB) ;\
+	fi
 
 $(LIBES): #

@@ -1,3 +1,5 @@
+# $Id: Gmakefile,v 1.4 2000-09-11 09:47:37 justin Exp $
+
 DBMILIB = $(LIBDIR)/libdbmi.a
 
 PGM=v.to.db
@@ -15,7 +17,7 @@ LIST = main.o\
 	areas.o\
 	units.o	
 
-	
+
 all: $(BIN_CONTRIB_CMD)/$(PGM)
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES) 

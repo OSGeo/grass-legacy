@@ -1,15 +1,5 @@
-#ifndef lint
-/*static char yysccsid[] = "from: @(#)yaccpar	1.9 (Berkeley) 02/21/93";*/
-static char yyrcsid[] = "$Id$";
-#endif
-#define YYBYACC 1
-#define YYMAJOR 1
-#define YYMINOR 9
-#define yyclearin (yychar=(-1))
-#define yyerrok (yyerrflag=0)
-#define YYRECOVERING (yyerrflag!=0)
-#define YYPREFIX "yy"
-#line 13 "binfer.y"
+
+# line 13 "binfer.y"
 
 #include "symtab.h"
 #include <stdlib.h>
@@ -30,479 +20,878 @@ static char yyrcsid[] = "$Id$";
     extern int combinedmap;
     extern int colortable;
 
-#line 35 "binfer.y"
-typedef union {
+
+# line 35 "binfer.y"
+typedef union
+#ifdef __cplusplus
+	YYSTYPE
+#endif
+ {
     char *y_sym;
 } YYSTYPE;
-#line 38 "y.tab.c"
-#define Identifier 257
-#define String 258
-#define Constant 259
-#define LAYER 260
-#define CONTEXT 261
-#define SUBJECTIVE 262
-#define INFERRED 263
-#define QUESTION 264
-#define THRU 265
-#define NO_COMBINED_MAP 266
-#define NO_PROBABILITY_MAPS 267
-#define COMBINED_MAP 268
-#define ASPECT 269
-#define GREY 270
-#define HISTO 271
-#define RAINBOW 272
-#define RAMP 273
-#define RANDOM 274
-#define REDYELLOWGREEN 275
-#define WAVE 276
-#define YYERRCODE 256
-short yylhs[] = {                                        -1,
-   11,    0,   10,   12,   12,   14,   14,   14,   14,   14,
-   14,   14,   14,   14,   14,   13,   13,   13,   20,   15,
-   19,   19,   25,   22,   24,   24,   27,   27,   30,   26,
-   29,   29,    6,    6,    6,    6,    5,    4,    4,    2,
-   33,   17,   32,   32,   36,   34,   35,   38,   38,   39,
-   37,   40,   18,   42,   16,   44,   41,   43,   43,   46,
-   46,   45,   45,   50,   48,   49,   49,   49,   49,   49,
-   49,   49,   49,   49,   51,    9,    9,    8,    8,    7,
-    3,    3,    1,   28,   23,   47,   31,   21,
-};
-short yylen[] = {                                         2,
-    0,    2,    2,    0,    2,    1,    1,    2,    2,    2,
-    2,    2,    2,    2,    2,    2,    3,    4,    0,    5,
-    2,    3,    0,    5,    0,    4,    2,    3,    0,    4,
-    0,    3,    1,    2,    1,    2,    3,    2,    1,    1,
-    0,    5,    2,    3,    0,    5,    4,    2,    3,    0,
-    3,    0,    6,    0,    5,    0,    8,    0,    3,    1,
-    3,    1,    3,    0,    9,    0,    1,    1,    1,    1,
-    1,    1,    1,    1,    3,    2,    3,    1,    3,    1,
-    0,    4,    1,    1,    1,    1,    1,    1,
-};
-short yydefred[] = {                                      1,
-    0,    4,    2,    0,    0,    6,    7,    0,    3,    5,
-    0,   19,    8,    9,   10,   11,   12,   13,   14,   15,
-    0,    0,   16,    0,    0,   41,   54,    0,   17,    0,
-   83,    0,    0,    0,    0,    0,   52,   18,   23,   88,
-   20,    0,   85,   21,    0,    0,    0,    0,    0,    0,
-    0,   22,   45,   42,    0,   43,   56,   55,    0,    0,
-    0,    0,   44,    0,    0,   29,    0,    0,   24,    0,
-    0,    0,    0,   53,    0,    0,    0,    0,   50,    0,
-   46,   60,    0,    0,    0,    0,   27,   84,    0,   26,
-    0,    0,    0,    0,   86,    0,   59,   64,    0,   62,
-   40,    0,    0,    0,    0,   30,   28,   82,   51,   48,
-    0,   47,   61,    0,    0,    0,    0,    0,   34,   39,
-    0,   87,   32,   49,   67,   68,   69,   70,   71,   72,
-   73,   74,    0,   63,   57,   37,   38,    0,    0,    0,
-    0,   75,   80,   78,    0,    0,    0,    0,   79,    0,
-    0,    0,   65,
-};
-short yydgoto[] = {                                       1,
-   45,  102,   69,  103,  104,  105,  144,  145,  148,    3,
-    2,    4,    9,   10,   11,   23,   24,   30,   33,   25,
-   41,   34,   44,   61,   51,   67,   77,   90,   86,   75,
-  123,   46,   35,   47,   71,   62,   80,   94,   92,   50,
-   49,   36,   73,   64,   99,   83,   97,  100,  133,  114,
-  139,
-};
-short yysindex[] = {                                      0,
-    0,    0,    0, -214,  -27,    0,    0, -174,    0,    0,
- -240,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-  -17,  -15,    0, -201, -199,    0,    0,    7,    0, -197,
-    0,    9,  -37,   18, -199, -199,    0,    0,    0,    0,
-    0,   18,    0,    0,   11,  -37,   18,   12,   34, -199,
-   33,    0,    0,    0,   18,    0,    0,    0,   18, -199,
-  -49,   36,    0,  -46,   34,    0,   35, -186,    0, -199,
-  -49, -199,   40,    0,  -10, -199,    4, -176,    0,   42,
-    0,    0,  -34, -199, -175,  -49,    0,    0, -199,    0,
-  -33,  -49, -199,    6,    0, -199,    0,    0,   15,    0,
-    0, -177, -175, -175,   -4,    0,    0,    0,    0,    0,
- -199,    0,    0, -166, -199,   18, -175, -177,    0,    0,
- -175,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,   51,    0,    0,    0,    0, -147,    2,   52,
- -146,    0,    0,    0,  -26, -146, -146,   56,    0,   72,
-  -92,   72,    0,
-};
-short yyrindex[] = {                                      0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-  -40,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-   71,    0,    0,   78,    0,    0,    0,    0,    0,    0,
-   71,    0,    0,    0,  -36,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,   16,    0,    0,    0,    0,
-    0,   16,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,  -91,   26,   27,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,   61,    0,    0,    0,  -90,    0,    0,
-   29,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,   64,
-    0,   65,    0,
-};
-short yygindex[] = {                                      0,
-  -21,  -77,  -57,   21,   23,    0,  -19, -117,    0,    0,
-    0,    0,    0,    0,    0,  -11,    0,    0,    0,    0,
-  -29,   95,  -31,    0,    0,  -67,    0,  -62,    0,    0,
-  -22,    0,    0,   -8,    0,    0,  -86,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,   39,   17,    0,    0,
-    0,
-};
-#define YYTABLESIZE 220
-short yytable[] = {                                      40,
-  122,   39,   38,   32,   31,   25,  110,   31,   87,   96,
-   52,   32,   29,   81,   48,   56,   54,  146,   38,   58,
-   21,  107,   22,   63,  124,  118,  120,   65,  106,  150,
-   12,  112,  147,  152,  109,   74,  116,   55,   66,  136,
-   26,   59,   27,  137,   88,    5,   88,   89,   79,  111,
-   82,    6,    7,    8,   66,   88,   81,   31,  115,   81,
-   28,   22,   98,   43,   37,   22,   39,   66,   53,   57,
-   40,   79,   60,   68,  113,   70,   72,   78,   76,   84,
-   85,   91,   25,  101,  135,   93,   31,  117,  122,   79,
-   95,   95,  141,   98,   13,   14,   15,   16,   17,   18,
-   19,   20,  125,  126,  127,  128,  129,  130,  131,  132,
-  138,  140,  143,  142,  151,  146,   81,   58,   33,   35,
-   66,   36,   76,   77,  121,  119,  149,   42,  153,  108,
-    0,  134,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,  143,   39,   38,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
-    0,    0,    0,    0,    0,    0,    0,    0,    0,   31,
-};
-short yycheck[] = {                                      37,
-   93,   93,   93,   25,   41,   46,   93,   44,   76,   44,
-   42,   33,   24,   71,   36,   47,   46,   44,   30,   49,
-  261,   89,  263,   55,  111,  103,  104,   59,   86,  147,
-   58,   94,   59,  151,   92,   65,   99,   46,   60,  117,
-   58,   50,   58,  121,   41,  260,   41,   44,   70,   44,
-   72,  266,  267,  268,   76,   41,   41,  257,   44,   44,
-  262,  263,   84,   46,   58,  263,   58,   89,   58,   58,
-   37,   93,   40,  123,   96,   40,  123,  264,   44,   40,
-   91,  258,  123,  259,  116,   44,  123,  265,   93,  111,
-  125,  125,   91,  115,  269,  270,  271,  272,  273,  274,
-  275,  276,  269,  270,  271,  272,  273,  274,  275,  276,
-   60,  259,  259,   62,   59,   44,   46,   40,   93,   93,
-   60,   93,   59,   59,  104,  103,  146,   33,  151,   91,
-   -1,  115,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,  259,  259,  259,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,
-   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,   -1,  257,
-};
-#define YYFINAL 1
-#ifndef YYDEBUG
-#define YYDEBUG 0
+# define Identifier 257
+# define String 258
+# define Constant 259
+# define LAYER 260
+# define CONTEXT 261
+# define SUBJECTIVE 262
+# define INFERRED 263
+# define QUESTION 264
+# define THRU 265
+# define NO_COMBINED_MAP 266
+# define NO_PROBABILITY_MAPS 267
+# define COMBINED_MAP 268
+# define ASPECT 269
+# define GREY 270
+# define HISTO 271
+# define RAINBOW 272
+# define RAMP 273
+# define RANDOM 274
+# define REDYELLOWGREEN 275
+# define WAVE 276
+
+#include <malloc.h>
+#include <memory.h>
+#include <unistd.h>
+#include <values.h>
+
+#ifdef __cplusplus
+extern "C" {
 #endif
-#define YYMAXTOKEN 276
-#if YYDEBUG
-char *yyname[] = {
-"end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,"'%'",0,0,"'('","')'",0,0,"','",0,"'.'",0,0,0,0,0,0,0,0,0,0,0,"':'","';'",
-"'<'",0,"'>'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"'['",0,
-"']'",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"'{'",0,"'}'",0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,"Identifier","String","Constant","LAYER","CONTEXT",
-"SUBJECTIVE","INFERRED","QUESTION","THRU","NO_COMBINED_MAP",
-"NO_PROBABILITY_MAPS","COMBINED_MAP","ASPECT","GREY","HISTO","RAINBOW","RAMP",
-"RANDOM","REDYELLOWGREEN","WAVE",
-};
-char *yyrule[] = {
-"$accept : Program",
-"$$1 :",
-"Program : $$1 Script",
-"Script : Output_Options MainScript",
-"Output_Options :",
-"Output_Options : Output_Options Output_Option",
-"Output_Option : NO_COMBINED_MAP",
-"Output_Option : NO_PROBABILITY_MAPS",
-"Output_Option : COMBINED_MAP ASPECT",
-"Output_Option : COMBINED_MAP GREY",
-"Output_Option : COMBINED_MAP HISTO",
-"Output_Option : COMBINED_MAP RAINBOW",
-"Output_Option : COMBINED_MAP RAMP",
-"Output_Option : COMBINED_MAP RANDOM",
-"Output_Option : COMBINED_MAP REDYELLOWGREEN",
-"Output_Option : COMBINED_MAP WAVE",
-"MainScript : Layer_Section Inferred_Section",
-"MainScript : Layer_Section Context_Section Inferred_Section",
-"MainScript : Layer_Section Context_Section Subjective_Section Inferred_Section",
-"$$2 :",
-"Layer_Section : LAYER ':' $$2 Layer_Att_Declarations end",
-"Layer_Att_Declarations : Layer_Att_Declaration ep",
-"Layer_Att_Declarations : Layer_Att_Declarations Layer_Att_Declaration ep",
-"$$3 :",
-"Layer_Att_Declaration : Name ':' $$3 Layer_Value_List Question_Attachment",
-"Layer_Value_List :",
-"Layer_Value_List : '(' Layer_Value Layer_Value_Sublist rp",
-"Layer_Value_Sublist : ',' Layer_Value",
-"Layer_Value_Sublist : Layer_Value_Sublist ',' Layer_Value",
-"$$4 :",
-"Layer_Value : Name $$4 Category_Range Question_Attachment",
-"Category_Range :",
-"Category_Range : '[' Reclass_Rule rbr",
-"Reclass_Rule : Input_Cat_List",
-"Reclass_Rule : Input_Cat_List Input_Cat_Range",
-"Reclass_Rule : Input_Cat_Range",
-"Reclass_Rule : Input_Cat_Range Input_Cat_List",
-"Input_Cat_Range : Input_Cat THRU Input_Cat",
-"Input_Cat_List : Input_Cat_List Input_Cat",
-"Input_Cat_List : Input_Cat",
-"Input_Cat : Constant",
-"$$5 :",
-"Context_Section : CONTEXT ':' $$5 Context_Att_Declarations end",
-"Context_Att_Declarations : Context_Att_Declaration ep",
-"Context_Att_Declarations : Context_Att_Declarations Context_Att_Declaration ep",
-"$$6 :",
-"Context_Att_Declaration : Name ':' $$6 Context_Value_List Question_Attachment",
-"Context_Value_List : '(' Context_Value Context_Value_Sublist rp",
-"Context_Value_Sublist : ',' Context_Value",
-"Context_Value_Sublist : Context_Value_Sublist ',' Context_Value",
-"$$7 :",
-"Context_Value : Name $$7 Question_Attachment",
-"$$8 :",
-"Subjective_Section : SUBJECTIVE ':' $$8 Context_Att_Declaration ep end",
-"$$9 :",
-"Inferred_Section : INFERRED ':' $$9 Inferred_Att_Declaration end",
-"$$10 :",
-"Inferred_Att_Declaration : Name ':' $$10 Determinant_List '(' Inferred_Value_List rp ep",
-"Determinant_List :",
-"Determinant_List : '{' Att_List rb",
-"Att_List : Name",
-"Att_List : Att_List ',' Name",
-"Inferred_Value_List : Inferred_Value",
-"Inferred_Value_List : Inferred_Value_List ',' Inferred_Value",
-"$$11 :",
-"Inferred_Value : Name $$11 Optional_Color_Table Prior_Probability '[' Probability_List Conditional_Probability_Table ';' rbr",
-"Optional_Color_Table :",
-"Optional_Color_Table : ASPECT",
-"Optional_Color_Table : GREY",
-"Optional_Color_Table : HISTO",
-"Optional_Color_Table : RAINBOW",
-"Optional_Color_Table : RAMP",
-"Optional_Color_Table : RANDOM",
-"Optional_Color_Table : REDYELLOWGREEN",
-"Optional_Color_Table : WAVE",
-"Prior_Probability : '<' Constant '>'",
-"Conditional_Probability_Table : ';' Probability_List",
-"Conditional_Probability_Table : Conditional_Probability_Table ';' Probability_List",
-"Probability_List : Probability",
-"Probability_List : Probability_List ',' Probability",
-"Probability : Constant",
-"Question_Attachment :",
-"Question_Attachment : '{' QUESTION String rb",
-"Name : Identifier",
-"rp : ')'",
-"ep : '.'",
-"rb : '}'",
-"rbr : ']'",
-"end : '%'",
-};
+extern char *gettxt(const char *, const char *);
+#if !defined(yylex) && !defined(__my_yylex)
+	extern int yylex(void);
 #endif
-#ifdef YYSTACKSIZE
-#undef YYMAXDEPTH
-#define YYMAXDEPTH YYSTACKSIZE
-#else
-#ifdef YYMAXDEPTH
-#define YYSTACKSIZE YYMAXDEPTH
-#else
-#define YYSTACKSIZE 500
-#define YYMAXDEPTH 500
+
+#ifdef __cplusplus
+}
 #endif
+
+#if (defined(__cplusplus) || defined(_XOPEN_SOURCE)) && !defined(yyerror) && !defined(__my_yyerror)
+	void yyerror(const char *);
 #endif
-int yydebug;
-int yynerrs;
-int yyerrflag;
-int yychar;
-short *yyssp;
-YYSTYPE *yyvsp;
-YYSTYPE yyval;
+int yyparse(void);
+#define yyclearin yychar = -1
+#define yyerrok yyerrflag = 0
+extern int yychar;
+extern int yyerrflag;
 YYSTYPE yylval;
-short yyss[YYSTACKSIZE];
-YYSTYPE yyvs[YYSTACKSIZE];
-#define yystacksize YYSTACKSIZE
-#line 511 "binfer.y"
+YYSTYPE yyval;
+typedef int yytabelem;
+#ifndef YYMAXDEPTH
+#define YYMAXDEPTH 150
+#endif
+#if YYMAXDEPTH > 0
+int yy_yys[YYMAXDEPTH], *yys = yy_yys;
+YYSTYPE yy_yyv[YYMAXDEPTH], *yyv = yy_yyv;
+#else	/* user does initial allocation */
+int *yys;
+YYSTYPE *yyv;
+#endif
+static int yymaxdepth = YYMAXDEPTH;
+# define YYERRCODE 256
+
+# line 510 "binfer.y"
+
 
 
 #include <stdio.h>
-#line 338 "y.tab.c"
-#define YYABORT goto yyabort
-#define YYREJECT goto yyabort
-#define YYACCEPT goto yyaccept
-#define YYERROR goto yyerrlab
-int
-#if defined(__STDC__)
-yyparse(void)
+yytabelem yyexca[] ={
+-1, 1,
+	0, -1,
+	-2, 0,
+	};
+# define YYNPROD 89
+# define YYLAST 253
+yytabelem yyact[]={
+
+   120,   121,   122,   123,   124,   125,   126,   127,    16,    17,
+    18,    19,    20,    21,    22,    23,    11,   135,    81,    27,
+    14,    14,     8,     9,    10,    15,   130,    14,   144,   141,
+   116,    94,    47,    38,   142,   129,   115,    89,   143,    90,
+    72,    68,   113,    48,   114,    44,    79,    71,    88,    73,
+   130,    86,   140,   100,   145,   147,   137,   149,    57,    45,
+    53,    50,    32,    95,    29,    28,    24,    49,    97,    97,
+   148,   106,   102,   147,    97,    92,    37,    96,    83,    41,
+    75,    37,    43,    70,    65,    47,   136,    56,    36,   119,
+    58,   103,    12,    76,    85,    60,    67,    61,    40,    62,
+    52,    33,    54,    39,    93,    91,    25,    69,    63,    42,
+    34,    74,    99,    84,    77,    82,    80,    78,    90,    31,
+    66,    87,    51,    64,    46,    55,    59,    35,    30,    74,
+    26,    13,     7,    98,     6,   104,     5,     4,    80,   107,
+     3,   108,    74,   109,     2,   117,   110,   111,    87,   101,
+   132,   134,    80,   128,   118,   105,     1,   133,   131,   146,
+   112,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+   138,     0,   139,     0,     0,     0,     0,     0,     0,     0,
+     0,     0,     0,   151,   153,   152,   150,     0,     0,     0,
+     0,     0,   144,     0,     0,     0,     0,     0,     0,     0,
+     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     0,     0,    38 };
+yytabelem yypact[]={
+
+-10000000,-10000000,-10000000,-10000000,  -244,-10000000,-10000000,  -236,-10000000,-10000000,
+  -261,     8,-10000000,  -243,     7,     6,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,  -242,     4,-10000000,-10000000,
+  -224,-10000000,-10000000,  -224,  -224,    -5,    21,     3,-10000000,  -224,
+    48,     2,    -5,    21,     0,-10000000,    21,-10000000,-10000000,-10000000,
+-10000000,    21,-10000000,-10000000,-10000000,    21,-10000000,-10000000,-10000000,    44,
+    48,   -82,-10000000,    43,   -83,  -224,-10000000,    40,  -224,   -83,
+  -224,-10000000,  -246,    34,-10000000,  -224,    -7,-10000000,-10000000,    31,
+-10000000,  -227,    33,  -224,   -38,    28,-10000000,-10000000,-10000000,  -224,
+-10000000,    27,  -224,   -83,   -86,-10000000,  -224,-10000000,-10000000,   -83,
+  -229,    21,  -224,  -269,-10000000,-10000000,  -224,-10000000,-10000000,-10000000,
+-10000000,-10000000,   -43,  -229,  -229,  -248,-10000000,-10000000,-10000000,    -4,
+-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,-10000000,
+-10000000,-10000000,  -248,  -229,-10000000,  -229,   -39,  -230,-10000000,-10000000,
+  -231,    -8,    11,-10000000,-10000000,-10000000,    -2,  -231,  -231,   -67,
+-10000000,    29,-10000000,    29 };
+yytabelem yypgo[]={
+
+     0,    45,    36,    47,    42,    44,   160,    38,    34,   159,
+   156,   144,   140,   137,   136,   134,   132,    92,   131,   130,
+   128,   127,    59,    88,    43,   126,   123,    49,   115,    63,
+   113,   112,    35,   110,   109,    82,   108,   107,    46,   105,
+   104,   103,   101,    98,    97,    96,    94,    93,    48,    51,
+    91,    89,    86 };
+yytabelem yyr1[]={
+
+     0,    11,    10,    12,    13,    13,    15,    15,    15,    15,
+    15,    15,    15,    15,    15,    15,    14,    14,    14,    20,
+    16,    21,    21,    25,    23,    26,    26,    28,    28,    30,
+    27,    31,    31,     6,     6,     6,     6,     5,     4,     4,
+     2,    33,    18,    34,    34,    36,    35,    37,    39,    39,
+    40,    38,    41,    19,    42,    17,    44,    43,    45,    45,
+    47,    47,    46,    46,    50,    49,    51,    51,    51,    51,
+    51,    51,    51,    51,    51,    52,     9,     9,     8,     8,
+     7,     3,     3,     1,    29,    24,    48,    32,    22 };
+yytabelem yyr2[]={
+
+     0,     1,     5,     4,     0,     4,     3,     3,     5,     5,
+     5,     5,     5,     5,     5,     5,     4,     6,     8,     1,
+    11,     4,     6,     1,    11,     0,     8,     4,     6,     1,
+     9,     0,     7,     3,     5,     3,     5,     7,     5,     3,
+     3,     1,    11,     4,     6,     1,    11,     8,     4,     6,
+     1,     7,     1,    13,     1,    11,     1,    17,     0,     6,
+     3,     7,     2,     6,     1,    19,     0,     3,     3,     3,
+     3,     3,     3,     3,     3,     7,     5,     7,     3,     7,
+     3,     1,     9,     2,     3,     3,     3,     3,     3 };
+yytabelem yychk[]={
+
+-10000000,   -10,   -11,   -12,   -13,   -14,   -15,   -16,   266,   267,
+   268,   260,   -17,   -18,   263,   261,   269,   270,   271,   272,
+   273,   274,   275,   276,    58,   -17,   -19,   262,    58,    58,
+   -20,   -17,    58,   -42,   -33,   -21,   -23,    -1,   257,   -41,
+   -43,    -1,   -34,   -35,    -1,   -22,   -23,    37,   -24,    46,
+    58,   -35,   -22,    58,   -22,   -35,   -24,    58,   -24,   -25,
+   -24,   -44,   -24,   -36,   -26,    40,   -22,   -45,   123,   -37,
+    40,    -3,   123,   -27,    -1,    40,   -47,    -1,    -3,   -38,
+    -1,   264,   -28,    44,   -30,   -46,   -49,    -1,   -48,    44,
+   125,   -39,    44,   -40,   258,   -29,    44,    41,   -27,   -31,
+    91,   -29,    44,   -50,    -1,   -29,    44,   -38,    -3,   -48,
+   -27,    -3,    -6,    -4,    -5,    -2,   259,   -24,   -49,   -51,
+   269,   270,   271,   272,   273,   274,   275,   276,   -38,   -32,
+    93,    -5,    -2,    -4,    -2,   265,   -52,    60,    -2,    -2,
+    91,   259,    -8,    -7,   259,    62,    -9,    44,    59,    59,
+    -7,    -8,   -32,    -8 };
+yytabelem yydef[]={
+
+     1,    -2,     4,     2,     0,     3,     5,     0,     6,     7,
+     0,     0,    16,     0,     0,     0,     8,     9,    10,    11,
+    12,    13,    14,    15,    19,    17,     0,     0,    54,    41,
+     0,    18,    52,     0,     0,     0,     0,     0,    83,     0,
+     0,     0,     0,     0,     0,    20,     0,    88,    21,    85,
+    23,     0,    55,    56,    42,     0,    43,    45,    22,    25,
+     0,    58,    44,     0,    81,     0,    53,     0,     0,    81,
+     0,    24,     0,     0,    29,     0,     0,    60,    46,     0,
+    50,     0,     0,     0,    31,     0,    62,    64,    59,     0,
+    86,     0,     0,    81,     0,    26,     0,    84,    27,    81,
+     0,     0,     0,    66,    61,    47,     0,    48,    51,    82,
+    28,    30,     0,    33,    35,    39,    40,    57,    63,     0,
+    67,    68,    69,    70,    71,    72,    73,    74,    49,    32,
+    87,    34,    38,    36,    39,     0,     0,     0,    38,    37,
+     0,     0,     0,    78,    80,    75,     0,     0,     0,     0,
+    79,    76,    65,    77 };
+typedef struct
+#ifdef __cplusplus
+	yytoktype
+#endif
+{ char *t_name; int t_val; } yytoktype;
+#ifndef YYDEBUG
+#	define YYDEBUG	0	/* don't allow debugging */
+#endif
+
+#if YYDEBUG
+
+yytoktype yytoks[] =
+{
+	"Identifier",	257,
+	"String",	258,
+	"Constant",	259,
+	"LAYER",	260,
+	"CONTEXT",	261,
+	"SUBJECTIVE",	262,
+	"INFERRED",	263,
+	"QUESTION",	264,
+	"THRU",	265,
+	"NO_COMBINED_MAP",	266,
+	"NO_PROBABILITY_MAPS",	267,
+	"COMBINED_MAP",	268,
+	"ASPECT",	269,
+	"GREY",	270,
+	"HISTO",	271,
+	"RAINBOW",	272,
+	"RAMP",	273,
+	"RANDOM",	274,
+	"REDYELLOWGREEN",	275,
+	"WAVE",	276,
+	"(",	40,
+	")",	41,
+	"[",	91,
+	"]",	93,
+	"{",	123,
+	"}",	125,
+	"<",	60,
+	">",	62,
+	",",	44,
+	".",	46,
+	"%",	37,
+	"-unknown-",	-1	/* ends search */
+};
+
+char * yyreds[] =
+{
+	"-no such reduction-",
+	"Program : /* empty */",
+	"Program : Script",
+	"Script : Output_Options MainScript",
+	"Output_Options : /* empty */",
+	"Output_Options : Output_Options Output_Option",
+	"Output_Option : NO_COMBINED_MAP",
+	"Output_Option : NO_PROBABILITY_MAPS",
+	"Output_Option : COMBINED_MAP ASPECT",
+	"Output_Option : COMBINED_MAP GREY",
+	"Output_Option : COMBINED_MAP HISTO",
+	"Output_Option : COMBINED_MAP RAINBOW",
+	"Output_Option : COMBINED_MAP RAMP",
+	"Output_Option : COMBINED_MAP RANDOM",
+	"Output_Option : COMBINED_MAP REDYELLOWGREEN",
+	"Output_Option : COMBINED_MAP WAVE",
+	"MainScript : Layer_Section Inferred_Section",
+	"MainScript : Layer_Section Context_Section Inferred_Section",
+	"MainScript : Layer_Section Context_Section Subjective_Section Inferred_Section",
+	"Layer_Section : LAYER ':'",
+	"Layer_Section : LAYER ':' Layer_Att_Declarations end",
+	"Layer_Att_Declarations : Layer_Att_Declaration ep",
+	"Layer_Att_Declarations : Layer_Att_Declarations Layer_Att_Declaration ep",
+	"Layer_Att_Declaration : Name ':'",
+	"Layer_Att_Declaration : Name ':' Layer_Value_List Question_Attachment",
+	"Layer_Value_List : /* empty */",
+	"Layer_Value_List : '(' Layer_Value Layer_Value_Sublist rp",
+	"Layer_Value_Sublist : ',' Layer_Value",
+	"Layer_Value_Sublist : Layer_Value_Sublist ',' Layer_Value",
+	"Layer_Value : Name",
+	"Layer_Value : Name Category_Range Question_Attachment",
+	"Category_Range : /* empty */",
+	"Category_Range : '[' Reclass_Rule rbr",
+	"Reclass_Rule : Input_Cat_List",
+	"Reclass_Rule : Input_Cat_List Input_Cat_Range",
+	"Reclass_Rule : Input_Cat_Range",
+	"Reclass_Rule : Input_Cat_Range Input_Cat_List",
+	"Input_Cat_Range : Input_Cat THRU Input_Cat",
+	"Input_Cat_List : Input_Cat_List Input_Cat",
+	"Input_Cat_List : Input_Cat",
+	"Input_Cat : Constant",
+	"Context_Section : CONTEXT ':'",
+	"Context_Section : CONTEXT ':' Context_Att_Declarations end",
+	"Context_Att_Declarations : Context_Att_Declaration ep",
+	"Context_Att_Declarations : Context_Att_Declarations Context_Att_Declaration ep",
+	"Context_Att_Declaration : Name ':'",
+	"Context_Att_Declaration : Name ':' Context_Value_List Question_Attachment",
+	"Context_Value_List : '(' Context_Value Context_Value_Sublist rp",
+	"Context_Value_Sublist : ',' Context_Value",
+	"Context_Value_Sublist : Context_Value_Sublist ',' Context_Value",
+	"Context_Value : Name",
+	"Context_Value : Name Question_Attachment",
+	"Subjective_Section : SUBJECTIVE ':'",
+	"Subjective_Section : SUBJECTIVE ':' Context_Att_Declaration ep end",
+	"Inferred_Section : INFERRED ':'",
+	"Inferred_Section : INFERRED ':' Inferred_Att_Declaration end",
+	"Inferred_Att_Declaration : Name ':'",
+	"Inferred_Att_Declaration : Name ':' Determinant_List '(' Inferred_Value_List rp ep",
+	"Determinant_List : /* empty */",
+	"Determinant_List : '{' Att_List rb",
+	"Att_List : Name",
+	"Att_List : Att_List ',' Name",
+	"Inferred_Value_List : Inferred_Value",
+	"Inferred_Value_List : Inferred_Value_List ',' Inferred_Value",
+	"Inferred_Value : Name",
+	"Inferred_Value : Name Optional_Color_Table Prior_Probability '[' Probability_List Conditional_Probability_Table ';' rbr",
+	"Optional_Color_Table : /* empty */",
+	"Optional_Color_Table : ASPECT",
+	"Optional_Color_Table : GREY",
+	"Optional_Color_Table : HISTO",
+	"Optional_Color_Table : RAINBOW",
+	"Optional_Color_Table : RAMP",
+	"Optional_Color_Table : RANDOM",
+	"Optional_Color_Table : REDYELLOWGREEN",
+	"Optional_Color_Table : WAVE",
+	"Prior_Probability : '<' Constant '>'",
+	"Conditional_Probability_Table : ';' Probability_List",
+	"Conditional_Probability_Table : Conditional_Probability_Table ';' Probability_List",
+	"Probability_List : Probability",
+	"Probability_List : Probability_List ',' Probability",
+	"Probability : Constant",
+	"Question_Attachment : /* empty */",
+	"Question_Attachment : '{' QUESTION String rb",
+	"Name : Identifier",
+	"rp : ')'",
+	"ep : '.'",
+	"rb : '}'",
+	"rbr : ']'",
+	"end : '%'",
+};
+#endif /* YYDEBUG */
+/* 
+ *	Copyright 1987 Silicon Graphics, Inc. - All Rights Reserved
+ */
+
+/* #ident	"@(#)yacc:yaccpar	1.10" */
+#ident	"$Revision$"
+
+/*
+** Skeleton parser driver for yacc output
+*/
+#include "stddef.h"
+
+/*
+** yacc user known macros and defines
+*/
+#define YYERROR		goto yyerrlab
+#define YYACCEPT	return(0)
+#define YYABORT		return(1)
+#ifdef __cplusplus
+#define YYBACKUP( newtoken, newvalue )\
+{\
+	if ( yychar >= 0 || ( yyr2[ yytmp ] >> 1 ) != 1 )\
+	{\
+		yyerror( gettxt("uxlibc:78", "syntax error - cannot backup") );\
+		goto yyerrlab;\
+	}\
+	yychar = newtoken;\
+	yystate = *yyps;\
+	yylval = newvalue;\
+	goto yynewstate;\
+}
 #else
-yyparse()
+#define YYBACKUP( newtoken, newvalue )\
+{\
+	if ( yychar >= 0 || ( yyr2[ yytmp ] >> 1 ) != 1 )\
+	{\
+		yyerror( gettxt("uxlibc:78", "Syntax error - cannot backup") );\
+		goto yyerrlab;\
+	}\
+	yychar = newtoken;\
+	yystate = *yyps;\
+	yylval = newvalue;\
+	goto yynewstate;\
+}
+#endif
+#define YYRECOVERING()	(!!yyerrflag)
+#define YYNEW(type)	malloc((size_t)(sizeof(type) * yynewmax))
+#define YYCOPY(to, from, type) \
+	(type *) memcpy(to, (char *) from, (size_t)(yynewmax * sizeof(type)))
+#define YYENLARGE( from, type) \
+	(type *) realloc((char *) from, (size_t)(yynewmax * sizeof(type)))
+#ifndef YYDEBUG
+#	define YYDEBUG	1	/* make debugging available */
+#endif
+
+/*
+** user known globals
+*/
+int yydebug;			/* set to 1 to get debugging */
+
+/*
+** driver internal defines
+*/
+#define YYFLAG		(-10000000)
+
+/*
+** global variables used by the parser
+*/
+YYSTYPE *yypv;			/* top of value stack */
+int *yyps;			/* top of state stack */
+
+int yystate;			/* current state */
+int yytmp;			/* extra var (lasts between blocks) */
+
+int yynerrs;			/* number of errors */
+int yyerrflag;			/* error recovery flag */
+int yychar;			/* current input token number */
+
+
+
+/*
+** yyparse - return 0 if worked, 1 if syntax error not recovered from
+*/
+#if defined(__STDC__) || defined(__cplusplus)
+int yyparse(void)
+#else
+int yyparse()
 #endif
 {
-    register int yym, yyn, yystate;
-#if YYDEBUG
-    register char *yys;
-    extern char *getenv();
+	register YYSTYPE *yypvt;	/* top of value stack for $vars */
 
-    if (yys = getenv("YYDEBUG"))
-    {
-        yyn = *yys;
-        if (yyn >= '0' && yyn <= '9')
-            yydebug = yyn - '0';
-    }
+	/*
+	** Initialize externals - yyparse may be called more than once
+	*/
+	yypv = &yyv[-1];
+	yyps = &yys[-1];
+	yystate = 0;
+	yytmp = 0;
+	yynerrs = 0;
+	yyerrflag = 0;
+	yychar = -1;
+
+#if YYMAXDEPTH <= 0
+	if (yymaxdepth <= 0)
+	{
+		if ((yymaxdepth = YYEXPAND(0)) <= 0)
+		{
+#ifdef __cplusplus
+			yyerror(gettxt("uxlibc:79", "yacc initialization error"));
+#else
+			yyerror(gettxt("uxlibc:79", "Yacc initialization error"));
+#endif
+			YYABORT;
+		}
+	}
 #endif
 
-    yynerrs = 0;
-    yyerrflag = 0;
-    yychar = (-1);
+	goto yystack;
+	{
+		register YYSTYPE *yy_pv;	/* top of value stack */
+		register int *yy_ps;		/* top of state stack */
+		register int yy_state;		/* current state */
+		register int  yy_n;		/* internal state number info */
 
-    yyssp = yyss;
-    yyvsp = yyvs;
-    *yyssp = yystate = 0;
+		/*
+		** get globals into registers.
+		** branch to here only if YYBACKUP was called.
+		*/
+	yynewstate:
+		yy_pv = yypv;
+		yy_ps = yyps;
+		yy_state = yystate;
+		goto yy_newstate;
 
-yyloop:
-    if ((yyn = yydefred[yystate]) != 0) goto yyreduce;
-    if (yychar < 0)
-    {
-        if ((yychar = yylex()) < 0) yychar = 0;
+		/*
+		** get globals into registers.
+		** either we just started, or we just finished a reduction
+		*/
+	yystack:
+		yy_pv = yypv;
+		yy_ps = yyps;
+		yy_state = yystate;
+
+		/*
+		** top of for (;;) loop while no reductions done
+		*/
+	yy_stack:
+		/*
+		** put a state and value onto the stacks
+		*/
 #if YYDEBUG
-        if (yydebug)
-        {
-            yys = 0;
-            if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-            if (!yys) yys = "illegal-symbol";
-            printf("%sdebug: state %d, reading %d (%s)\n",
-                    YYPREFIX, yystate, yychar, yys);
-        }
+		/*
+		** if debugging, look up token value in list of value vs.
+		** name pairs.  0 and negative (-1) are special values.
+		** Note: linear search is used since time is not a real
+		** consideration while debugging.
+		*/
+		if ( yydebug )
+		{
+			register int yy_i;
+
+			printf( "State %d, token ", yy_state );
+			if ( yychar == 0 )
+				printf( "end-of-file\n" );
+			else if ( yychar < 0 )
+				printf( "-none-\n" );
+			else
+			{
+				for ( yy_i = 0; yytoks[yy_i].t_val >= 0;
+					yy_i++ )
+				{
+					if ( yytoks[yy_i].t_val == yychar )
+						break;
+				}
+				printf( "%s\n", yytoks[yy_i].t_name );
+			}
+		}
+#endif /* YYDEBUG */
+		if ( ++yy_ps >= &yys[ yymaxdepth ] )	/* room on stack? */
+		{
+			int yynewmax;
+			ptrdiff_t yys_off;
+
+			/* The following pointer-differences are safe, since
+			 * yypvt, yy_pv, and yypv all are a multiple of
+			 * sizeof(YYSTYPE) bytes from yyv.
+			 */
+			ptrdiff_t yypvt_off = yypvt - yyv;
+			ptrdiff_t yy_pv_off = yy_pv - yyv;
+			ptrdiff_t yypv_off = yypv - yyv;
+
+			int *yys_base = yys;
+#ifdef YYEXPAND
+			yynewmax = YYEXPAND(yymaxdepth);
+#else
+			yynewmax = 2 * yymaxdepth;	/* double table size */
+			if (yymaxdepth == YYMAXDEPTH)	/* first time growth */
+			{
+				void *newyys = YYNEW(int);
+				void *newyyv = YYNEW(YYSTYPE);
+				if (newyys != 0 && newyyv != 0)
+				{
+					yys = YYCOPY(newyys, yys, int);
+					yyv = YYCOPY(newyyv, yyv, YYSTYPE);
+				}
+				else
+					yynewmax = 0;	/* failed */
+			}
+			else				/* not first time */
+			{
+				yys = YYENLARGE(yys, int);
+				yyv = YYENLARGE(yyv, YYSTYPE);
+				if (yys == 0 || yyv == 0)
+					yynewmax = 0;	/* failed */
+			}
 #endif
-    }
-    if ((yyn = yysindex[yystate]) && (yyn += yychar) >= 0 &&
-            yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
-    {
+			if (yynewmax <= yymaxdepth)	/* tables not expanded */
+			{
+#ifdef __cplusplus
+				yyerror( gettxt("uxlibc:80", "yacc stack overflow") );
+#else
+				yyerror( gettxt("uxlibc:80", "Yacc stack overflow") );
+#endif
+				YYABORT;
+			}
+			yymaxdepth = yynewmax;
+
+			/* reset pointers into yys */
+			yys_off = yys - yys_base;
+			yy_ps = yy_ps + yys_off;
+			yyps = yyps + yys_off;
+
+			/* reset pointers into yyv */
+			yypvt = yyv + yypvt_off;
+			yy_pv = yyv + yy_pv_off;
+			yypv = yyv + yypv_off;
+		}
+		*yy_ps = yy_state;
+		*++yy_pv = yyval;
+
+		/*
+		** we have a new state - find out what to do
+		*/
+	yy_newstate:
+		if ( ( yy_n = yypact[ yy_state ] ) <= YYFLAG )
+			goto yydefault;		/* simple state */
 #if YYDEBUG
-        if (yydebug)
-            printf("%sdebug: state %d, shifting to state %d\n",
-                    YYPREFIX, yystate, yytable[yyn]);
+		/*
+		** if debugging, need to mark whether new token grabbed
+		*/
+		yytmp = yychar < 0;
 #endif
-        if (yyssp >= yyss + yystacksize - 1)
-        {
-            goto yyoverflow;
-        }
-        *++yyssp = yystate = yytable[yyn];
-        *++yyvsp = yylval;
-        yychar = (-1);
-        if (yyerrflag > 0)  --yyerrflag;
-        goto yyloop;
-    }
-    if ((yyn = yyrindex[yystate]) && (yyn += yychar) >= 0 &&
-            yyn <= YYTABLESIZE && yycheck[yyn] == yychar)
-    {
-        yyn = yytable[yyn];
-        goto yyreduce;
-    }
-    if (yyerrflag) goto yyinrecovery;
-    yyerror("syntax error");
-#ifdef lint
-    goto yyerrlab;
-#endif
-yyerrlab:
-    ++yynerrs;
-yyinrecovery:
-    if (yyerrflag < 3)
-    {
-        yyerrflag = 3;
-        for (;;)
-        {
-            if ((yyn = yysindex[*yyssp]) && (yyn += YYERRCODE) >= 0 &&
-                    yyn <= YYTABLESIZE && yycheck[yyn] == YYERRCODE)
-            {
+		if ( ( yychar < 0 ) && ( ( yychar = yylex() ) < 0 ) )
+			yychar = 0;		/* reached EOF */
 #if YYDEBUG
-                if (yydebug)
-                    printf("%sdebug: state %d, error recovery shifting\
- to state %d\n", YYPREFIX, *yyssp, yytable[yyn]);
-#endif
-                if (yyssp >= yyss + yystacksize - 1)
-                {
-                    goto yyoverflow;
-                }
-                *++yyssp = yystate = yytable[yyn];
-                *++yyvsp = yylval;
-                goto yyloop;
-            }
-            else
-            {
+		if ( yydebug && yytmp )
+		{
+			register int yy_i;
+
+			printf( "Received token " );
+			if ( yychar == 0 )
+				printf( "end-of-file\n" );
+			else if ( yychar < 0 )
+				printf( "-none-\n" );
+			else
+			{
+				for ( yy_i = 0; yytoks[yy_i].t_val >= 0;
+					yy_i++ )
+				{
+					if ( yytoks[yy_i].t_val == yychar )
+						break;
+				}
+				printf( "%s\n", yytoks[yy_i].t_name );
+			}
+		}
+#endif /* YYDEBUG */
+		if ( ( ( yy_n += yychar ) < 0 ) || ( yy_n >= YYLAST ) )
+			goto yydefault;
+		if ( yychk[ yy_n = yyact[ yy_n ] ] == yychar )	/*valid shift*/
+		{
+			yychar = -1;
+			yyval = yylval;
+			yy_state = yy_n;
+			if ( yyerrflag > 0 )
+				yyerrflag--;
+			goto yy_stack;
+		}
+
+	yydefault:
+		if ( ( yy_n = yydef[ yy_state ] ) == -2 )
+		{
 #if YYDEBUG
-                if (yydebug)
-                    printf("%sdebug: error recovery discarding state %d\n",
-                            YYPREFIX, *yyssp);
+			yytmp = yychar < 0;
 #endif
-                if (yyssp <= yyss) goto yyabort;
-                --yyssp;
-                --yyvsp;
-            }
-        }
-    }
-    else
-    {
-        if (yychar == 0) goto yyabort;
+			if ( ( yychar < 0 ) && ( ( yychar = yylex() ) < 0 ) )
+				yychar = 0;		/* reached EOF */
 #if YYDEBUG
-        if (yydebug)
-        {
-            yys = 0;
-            if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-            if (!yys) yys = "illegal-symbol";
-            printf("%sdebug: state %d, error recovery discards token %d (%s)\n",
-                    YYPREFIX, yystate, yychar, yys);
-        }
+			if ( yydebug && yytmp )
+			{
+				register int yy_i;
+
+				printf( "Received token " );
+				if ( yychar == 0 )
+					printf( "end-of-file\n" );
+				else if ( yychar < 0 )
+					printf( "-none-\n" );
+				else
+				{
+					for ( yy_i = 0;
+						yytoks[yy_i].t_val >= 0;
+						yy_i++ )
+					{
+						if ( yytoks[yy_i].t_val
+							== yychar )
+						{
+							break;
+						}
+					}
+					printf( "%s\n", yytoks[yy_i].t_name );
+				}
+			}
+#endif /* YYDEBUG */
+			/*
+			** look through exception table
+			*/
+			{
+				register int *yyxi = yyexca;
+
+				while ( ( *yyxi != -1 ) ||
+					( yyxi[1] != yy_state ) )
+				{
+					yyxi += 2;
+				}
+				while ( ( *(yyxi += 2) >= 0 ) &&
+					( *yyxi != yychar ) )
+					;
+				if ( ( yy_n = yyxi[1] ) < 0 )
+					YYACCEPT;
+			}
+		}
+
+		/*
+		** check for syntax error
+		*/
+		if ( yy_n == 0 )	/* have an error */
+		{
+			/* no worry about speed here! */
+			switch ( yyerrflag )
+			{
+			case 0:		/* new error */
+#ifdef __cplusplus
+				yyerror( gettxt("uxlibc:81", "syntax error") );
+#else
+				yyerror( gettxt("uxlibc:81", "Syntax error") );
 #endif
-        yychar = (-1);
-        goto yyloop;
-    }
-yyreduce:
+				goto skip_init;
+			yyerrlab:
+				/*
+				** get globals into registers.
+				** we have a user generated syntax type error
+				*/
+				yy_pv = yypv;
+				yy_ps = yyps;
+				yy_state = yystate;
+				yynerrs++;
+				/* FALLTHRU */
+			skip_init:
+			case 1:
+			case 2:		/* incompletely recovered error */
+					/* try again... */
+				yyerrflag = 3;
+				/*
+				** find state where "error" is a legal
+				** shift action
+				*/
+				while ( yy_ps >= yys )
+				{
+					yy_n = yypact[ *yy_ps ] + YYERRCODE;
+					if ( yy_n >= 0 && yy_n < YYLAST &&
+						yychk[yyact[yy_n]] == YYERRCODE)					{
+						/*
+						** simulate shift of "error"
+						*/
+						yy_state = yyact[ yy_n ];
+						goto yy_stack;
+					}
+					/*
+					** current state has no shift on
+					** "error", pop stack
+					*/
 #if YYDEBUG
-    if (yydebug)
-        printf("%sdebug: state %d, reducing by rule %d (%s)\n",
-                YYPREFIX, yystate, yyn, yyrule[yyn]);
+#	define _POP_ "Error recovery pops state %d, uncovers state %d\n"
+					if ( yydebug )
+						printf( _POP_, *yy_ps,
+							yy_ps[-1] );
+#	undef _POP_
 #endif
-    yym = yylen[yyn];
-    yyval = yyvsp[1-yym];
-    switch (yyn)
-    {
+					yy_ps--;
+					yy_pv--;
+				}
+				/*
+				** there is no state on stack with "error" as
+				** a valid shift.  give up.
+				*/
+				YYABORT;
+			case 3:		/* no shift yet; eat a token */
+#if YYDEBUG
+				/*
+				** if debugging, look up token in list of
+				** pairs.  0 and negative shouldn't occur,
+				** but since timing doesn't matter when
+				** debugging, it doesn't hurt to leave the
+				** tests here.
+				*/
+				if ( yydebug )
+				{
+					register int yy_i;
+
+					printf( "Error recovery discards " );
+					if ( yychar == 0 )
+						printf( "token end-of-file\n" );
+					else if ( yychar < 0 )
+						printf( "token -none-\n" );
+					else
+					{
+						for ( yy_i = 0;
+							yytoks[yy_i].t_val >= 0;
+							yy_i++ )
+						{
+							if ( yytoks[yy_i].t_val
+								== yychar )
+							{
+								break;
+							}
+						}
+						printf( "token %s\n",
+							yytoks[yy_i].t_name );
+					}
+				}
+#endif /* YYDEBUG */
+				if ( yychar == 0 )	/* reached EOF. quit */
+					YYABORT;
+				yychar = -1;
+				goto yy_newstate;
+			}
+		}/* end if ( yy_n == 0 ) */
+		/*
+		** reduction by production yy_n
+		** put stack tops, etc. so things right after switch
+		*/
+#if YYDEBUG
+		/*
+		** if debugging, print the string that is the user's
+		** specification of the reduction which is just about
+		** to be done.
+		*/
+		if ( yydebug )
+			printf( "Reduce by (%d) \"%s\"\n",
+				yy_n, yyreds[ yy_n ] );
+#endif
+		yytmp = yy_n;			/* value to switch over */
+		yypvt = yy_pv;			/* $vars top of value stack */
+		/*
+		** Look in goto table for next state
+		** Sorry about using yy_state here as temporary
+		** register variable, but why not, if it works...
+		** If yyr2[ yy_n ] doesn't have the low order bit
+		** set, then there is no action to be done for
+		** this reduction.  So, no saving & unsaving of
+		** registers done.  The only difference between the
+		** code just after the if and the body of the if is
+		** the goto yy_stack in the body.  This way the test
+		** can be made before the choice of what to do is needed.
+		*/
+		{
+			/* length of production doubled with extra bit */
+			register int yy_len = yyr2[ yy_n ];
+
+			if ( !( yy_len & 01 ) )
+			{
+				yy_len >>= 1;
+				yyval = ( yy_pv -= yy_len )[1];	/* $$ = $1 */
+				yy_state = yypgo[ yy_n = yyr1[ yy_n ] ] +
+					*( yy_ps -= yy_len ) + 1;
+				if ( yy_state >= YYLAST ||
+					yychk[ yy_state =
+					yyact[ yy_state ] ] != -yy_n )
+				{
+					yy_state = yyact[ yypgo[ yy_n ] ];
+				}
+				goto yy_stack;
+			}
+			yy_len >>= 1;
+			yyval = ( yy_pv -= yy_len )[1];	/* $$ = $1 */
+			yy_state = yypgo[ yy_n = yyr1[ yy_n ] ] +
+				*( yy_ps -= yy_len ) + 1;
+			if ( yy_state >= YYLAST ||
+				yychk[ yy_state = yyact[ yy_state ] ] != -yy_n )
+			{
+				yy_state = yyact[ yypgo[ yy_n ] ];
+			}
+		}
+					/* save until reenter driver code */
+		yystate = yy_state;
+		yyps = yy_ps;
+		yypv = yy_pv;
+	}
+	/*
+	** code supplied by user is placed in this switch
+	*/
+	switch( yytmp )
+	{
+		
 case 1:
-#line 80 "binfer.y"
-{ init(); }
-break;
+# line 80 "binfer.y"
+{ init(); } break;
 case 2:
-#line 81 "binfer.y"
+# line 81 "binfer.y"
 { 
                  check_table(&yyparse_return,verbose);
                  if ( verbose ) fprintf(stderr,"\nAll input parsed.\n");
                  return(-1);
-             }
-break;
+             } break;
 case 6:
-#line 95 "binfer.y"
+# line 95 "binfer.y"
 { 
                           combinedmap = 0;
                           fprintf(stderr,"NoCombinedMap option set.\n"); 
-                      }
-break;
+                      } break;
 case 7:
-#line 101 "binfer.y"
+# line 101 "binfer.y"
 { 
                           probabilitymaps = 0;
                           fprintf(stderr,"NoProbabiltyMaps option set.\n"); 
-                      }
-break;
+                      } break;
 case 8:
-#line 107 "binfer.y"
+# line 107 "binfer.y"
 { 
                           if ( combinedmap ) {
                               colortable = AspectColors;
@@ -511,10 +900,9 @@ case 8:
                               fprintf(stderr,"Warning: Combined map colortable not set.\n");
                               fprintf(stderr,"NoCombinedMap option is set.\n");
                           }
-                      }
-break;
+                      } break;
 case 9:
-#line 117 "binfer.y"
+# line 117 "binfer.y"
 { 
                           if ( combinedmap ) {
                               colortable = GreyScale;
@@ -523,10 +911,9 @@ case 9:
                               fprintf(stderr,"Warning: Combined map colortable not set.\n");
                               fprintf(stderr,"NoCombinedMap option is set.\n");
                           }
-                      }
-break;
+                      } break;
 case 10:
-#line 127 "binfer.y"
+# line 127 "binfer.y"
 { 
                           if ( combinedmap ) {
                               colortable = HistoGreyScale;
@@ -535,10 +922,9 @@ case 10:
                               fprintf(stderr,"Warning: Combined map colortable not set.\n");
                               fprintf(stderr,"NoCombinedMap option is set.\n");
                           }
-                      }
-break;
+                      } break;
 case 11:
-#line 137 "binfer.y"
+# line 137 "binfer.y"
 { 
                           if ( combinedmap ) {
                               colortable = Rainbow;
@@ -547,10 +933,9 @@ case 11:
                               fprintf(stderr,"Warning: Combined map colortable not set.\n");
                               fprintf(stderr,"NoCombinedMap option is set.\n");
                           }
-                      }
-break;
+                      } break;
 case 12:
-#line 147 "binfer.y"
+# line 147 "binfer.y"
 { 
                           if ( combinedmap ) {
                               colortable = Ramp;
@@ -559,10 +944,9 @@ case 12:
                               fprintf(stderr,"Warning: Combined map colortable not set.\n");
                               fprintf(stderr,"NoCombinedMap option is set.\n");
                           }
-                      }
-break;
+                      } break;
 case 13:
-#line 157 "binfer.y"
+# line 157 "binfer.y"
 { 
                           if ( combinedmap ) {
                               colortable = Random;
@@ -571,10 +955,9 @@ case 13:
                               fprintf(stderr,"Warning: Combined map colortable not set.\n");
                               fprintf(stderr,"NoCombinedMap option is set.\n");
                           }
-                      }
-break;
+                      } break;
 case 14:
-#line 167 "binfer.y"
+# line 167 "binfer.y"
 { 
                           if ( combinedmap ) {
                               colortable = RYG;
@@ -583,10 +966,9 @@ case 14:
                               fprintf(stderr,"Warning: Combined map colortable not set.\n");
                               fprintf(stderr,"NoCombinedMap option is set.\n");
                           }
-                      }
-break;
+                      } break;
 case 15:
-#line 177 "binfer.y"
+# line 177 "binfer.y"
 { 
                           if ( combinedmap ) {
                               colortable = Wave;
@@ -595,204 +977,172 @@ case 15:
                               fprintf(stderr,"Warning: Combined map colortable not set.\n");
                               fprintf(stderr,"NoCombinedMap option is set.\n");
                           }
-                      }
-break;
+                      } break;
 case 19:
-#line 194 "binfer.y"
+# line 194 "binfer.y"
 { 
                        expected_type = AttributeSymbol;
                        value_type = LayerAttribute; 
-                   }
-break;
+                   } break;
 case 20:
-#line 199 "binfer.y"
+# line 199 "binfer.y"
 { 
                        if ( verbose ) fprintf(stderr,"\nParsed layers section.\n"); 
-                   }
-break;
+                   } break;
 case 23:
-#line 208 "binfer.y"
+# line 208 "binfer.y"
 { 
-                   cur_sym = s_create(yyvsp[-1].y_sym,expected_type,value_type);
+                   cur_sym = s_create(yypvt[-1].y_sym,expected_type,value_type);
                    expected_type = ValueSymbol; 
-               }
-break;
+               } break;
 case 24:
-#line 214 "binfer.y"
+# line 214 "binfer.y"
 { 
                    expected_type = AttributeSymbol;
-                   if ( yyvsp[0].y_sym != (char *)0 )
-                       cur_att->question = strsave(yyvsp[0].y_sym); 
+                   if ( yypvt[-0].y_sym != (char *)0 )
+                       cur_att->question = strsave(yypvt[-0].y_sym); 
                    valno = 1;
-               }
-break;
+               } break;
 case 29:
-#line 230 "binfer.y"
+# line 230 "binfer.y"
 { 
-               cur_sym = s_create(yyvsp[0].y_sym,expected_type,value_type); 
-           }
-break;
+               cur_sym = s_create(yypvt[-0].y_sym,expected_type,value_type); 
+           } break;
 case 30:
-#line 234 "binfer.y"
+# line 234 "binfer.y"
 { 
-               if ( yyvsp[0].y_sym != (char *)0 )
-                   cur_sym->question = strsave(yyvsp[0].y_sym); 
-           }
-break;
+               if ( yypvt[-0].y_sym != (char *)0 )
+                   cur_sym->question = strsave(yypvt[-0].y_sym); 
+           } break;
 case 32:
-#line 243 "binfer.y"
+# line 243 "binfer.y"
 { 
                cur_sym->element.val->desc.layer->cat_num = (CELL)valno;
             
-               sprintf(cur_sym->reclass,"%s = %d %s",strsave(yyvsp[-1].y_sym),valno++,
+               sprintf(cur_sym->reclass,"%s = %d %s",strsave(yypvt[-1].y_sym),valno++,
                        cur_sym->name);
-           }
-break;
+           } break;
 case 33:
-#line 251 "binfer.y"
-{ yyval.y_sym = strsave(yyvsp[0].y_sym); }
-break;
+# line 251 "binfer.y"
+{ yyval.y_sym = strsave(yypvt[-0].y_sym); } break;
 case 34:
-#line 252 "binfer.y"
-{ sprintf(reclassbuf,"%s %s",yyvsp[-1].y_sym,yyvsp[0].y_sym);
-                                       yyval.y_sym = strsave(reclassbuf); }
-break;
+# line 252 "binfer.y"
+{ sprintf(reclassbuf,"%s %s",yypvt[-1].y_sym,yypvt[-0].y_sym);
+                                       yyval.y_sym = strsave(reclassbuf); } break;
 case 35:
-#line 254 "binfer.y"
-{ yyval.y_sym = strsave(yyvsp[0].y_sym); }
-break;
+# line 254 "binfer.y"
+{ yyval.y_sym = strsave(yypvt[-0].y_sym); } break;
 case 36:
-#line 255 "binfer.y"
-{ sprintf(reclassbuf,"%s %s",yyvsp[-1].y_sym,yyvsp[0].y_sym);
-                                       yyval.y_sym = strsave(reclassbuf); }
-break;
+# line 255 "binfer.y"
+{ sprintf(reclassbuf,"%s %s",yypvt[-1].y_sym,yypvt[-0].y_sym);
+                                       yyval.y_sym = strsave(reclassbuf); } break;
 case 37:
-#line 260 "binfer.y"
-{ sprintf(reclassbuf,"%s thru %s",yyvsp[-2].y_sym,yyvsp[0].y_sym);
-                                 yyval.y_sym = strsave(reclassbuf); }
-break;
+# line 260 "binfer.y"
+{ sprintf(reclassbuf,"%s thru %s",yypvt[-2].y_sym,yypvt[-0].y_sym);
+                                 yyval.y_sym = strsave(reclassbuf); } break;
 case 38:
-#line 264 "binfer.y"
-{ sprintf(reclassbuf,"%s %s",yyvsp[-1].y_sym,yyvsp[0].y_sym);
-                                 yyval.y_sym = strsave(reclassbuf); }
-break;
+# line 264 "binfer.y"
+{ sprintf(reclassbuf,"%s %s",yypvt[-1].y_sym,yypvt[-0].y_sym);
+                                 yyval.y_sym = strsave(reclassbuf); } break;
 case 39:
-#line 266 "binfer.y"
-{ yyval.y_sym = strsave(yyvsp[0].y_sym); }
-break;
+# line 266 "binfer.y"
+{ yyval.y_sym = strsave(yypvt[-0].y_sym); } break;
 case 40:
-#line 269 "binfer.y"
-{ yyval.y_sym = strsave(yyvsp[0].y_sym);}
-break;
+# line 269 "binfer.y"
+{ yyval.y_sym = strsave(yypvt[-0].y_sym);} break;
 case 41:
-#line 273 "binfer.y"
+# line 273 "binfer.y"
 { 
                       expected_type = AttributeSymbol;
                       value_type = ContextAttribute; 
-                  }
-break;
+                  } break;
 case 42:
-#line 278 "binfer.y"
+# line 278 "binfer.y"
 { 
                if ( verbose ) fprintf(stderr,"\nParsed context section.\n"); 
-           }
-break;
+           } break;
 case 45:
-#line 287 "binfer.y"
+# line 287 "binfer.y"
 { 
-                    cur_att = cur_sym = s_create(yyvsp[-1].y_sym,expected_type,value_type);
+                    cur_att = cur_sym = s_create(yypvt[-1].y_sym,expected_type,value_type);
                     expected_type = ValueSymbol; 
-               }
-break;
+               } break;
 case 46:
-#line 292 "binfer.y"
+# line 292 "binfer.y"
 { 
                    expected_type = AttributeSymbol;
-                   if ( yyvsp[0].y_sym != (char *)0 )
-                       cur_att->question = strsave(yyvsp[0].y_sym); 
-               }
-break;
+                   if ( yypvt[-0].y_sym != (char *)0 )
+                       cur_att->question = strsave(yypvt[-0].y_sym); 
+               } break;
 case 50:
-#line 307 "binfer.y"
+# line 307 "binfer.y"
 { 
-               cur_sym = s_create(yyvsp[0].y_sym,expected_type,value_type); 
-           }
-break;
+               cur_sym = s_create(yypvt[-0].y_sym,expected_type,value_type); 
+           } break;
 case 51:
-#line 311 "binfer.y"
+# line 311 "binfer.y"
 { 
-               if ( yyvsp[0].y_sym != (char *)0 )
-                   cur_sym->question = strsave(yyvsp[0].y_sym); 
-           }
-break;
+               if ( yypvt[-0].y_sym != (char *)0 )
+                   cur_sym->question = strsave(yypvt[-0].y_sym); 
+           } break;
 case 52:
-#line 318 "binfer.y"
+# line 318 "binfer.y"
 { 
                          expected_type = AttributeSymbol;
                          value_type = SubjectiveAttribute; 
-                     }
-break;
+                     } break;
 case 53:
-#line 323 "binfer.y"
+# line 323 "binfer.y"
 { 
                          if ( verbose ) 
                              fprintf(stderr,"\nParsed subjective section.\n"); 
-                     }
-break;
+                     } break;
 case 54:
-#line 329 "binfer.y"
+# line 329 "binfer.y"
 { 
                         expected_type = AttributeSymbol;
                         value_type = InferredAttribute; 
-                    }
-break;
+                    } break;
 case 55:
-#line 334 "binfer.y"
+# line 334 "binfer.y"
 { 
                         if ( verbose ) 
                             fprintf(stderr,"\nParsed inferred section.\n"); 
-                    }
-break;
+                    } break;
 case 56:
-#line 340 "binfer.y"
+# line 340 "binfer.y"
 { 
-                   cur_sym = s_create(yyvsp[-1].y_sym,expected_type,value_type);
+                   cur_sym = s_create(yypvt[-1].y_sym,expected_type,value_type);
                    expected_type = ValueSymbol; 
-               }
-break;
+               } break;
 case 57:
-#line 345 "binfer.y"
+# line 345 "binfer.y"
 { 
                    expected_type = AttributeSymbol; 
-               }
-break;
+               } break;
 case 60:
-#line 355 "binfer.y"
+# line 355 "binfer.y"
 { 
-               if (!add_name(yyvsp[0].y_sym)) yyerror("Name not stored"); 
-           }
-break;
+               if (!add_name(yypvt[-0].y_sym)) yyerror("Name not stored"); 
+           } break;
 case 61:
-#line 359 "binfer.y"
+# line 359 "binfer.y"
 { 
-               if (!add_name(yyvsp[0].y_sym)) yyerror("Name not stored"); 
-           }
-break;
+               if (!add_name(yypvt[-0].y_sym)) yyerror("Name not stored"); 
+           } break;
 case 64:
-#line 369 "binfer.y"
+# line 369 "binfer.y"
 { 
-               cur_sym = s_create(yyvsp[0].y_sym,expected_type,value_type); 
-           }
-break;
+               cur_sym = s_create(yypvt[-0].y_sym,expected_type,value_type); 
+           } break;
 case 65:
-#line 374 "binfer.y"
+# line 374 "binfer.y"
 {
-                sprintf(probbuf,"%s%s;",yyvsp[-3].y_sym,yyvsp[-2].y_sym);
+                sprintf(probbuf,"%s%s;",yypvt[-3].y_sym,yypvt[-2].y_sym);
                 if (!add_prob_list(probbuf)) yyerror("Problist not stored");
-            }
-break;
+            } break;
 case 67:
-#line 382 "binfer.y"
+# line 382 "binfer.y"
 {
                  if ( probabilitymaps ) {
                      cur_sym->colortable = AspectColors;
@@ -802,10 +1152,9 @@ case 67:
                              ,cur_sym->name);
                      fprintf(stderr,"NoProbabilityMaps option is set.\n");
                  }
-           }
-break;
+           } break;
 case 68:
-#line 392 "binfer.y"
+# line 392 "binfer.y"
 {
                  if ( probabilitymaps ) {
                      cur_sym->colortable = GreyScale;
@@ -815,10 +1164,9 @@ case 68:
                              ,cur_sym->name);
                      fprintf(stderr,"NoProbabilityMaps option is set.\n");
                  }
-           }
-break;
+           } break;
 case 69:
-#line 402 "binfer.y"
+# line 402 "binfer.y"
 {
                  if ( probabilitymaps ) {
                      cur_sym->colortable = HistoGreyScale;
@@ -828,10 +1176,9 @@ case 69:
                              ,cur_sym->name);
                      fprintf(stderr,"NoProbabilityMaps option is set.\n");
                  }
-           }
-break;
+           } break;
 case 70:
-#line 412 "binfer.y"
+# line 412 "binfer.y"
 {
                  if ( probabilitymaps ) {
                      cur_sym->colortable = Rainbow;
@@ -841,10 +1188,9 @@ case 70:
                              ,cur_sym->name);
                      fprintf(stderr,"NoProbabilityMaps option is set.\n");
                  }
-           }
-break;
+           } break;
 case 71:
-#line 422 "binfer.y"
+# line 422 "binfer.y"
 {
                  if ( probabilitymaps ) {
                      cur_sym->colortable = Ramp;
@@ -854,10 +1200,9 @@ case 71:
                              ,cur_sym->name);
                      fprintf(stderr,"NoProbabilityMaps option is set.\n");
                  }
-           }
-break;
+           } break;
 case 72:
-#line 432 "binfer.y"
+# line 432 "binfer.y"
 {
                  if ( probabilitymaps ) {
                      cur_sym->colortable = Random;
@@ -867,10 +1212,9 @@ case 72:
                              ,cur_sym->name);
                      fprintf(stderr,"NoProbabilityMaps option is set.\n");
                  }
-           }
-break;
+           } break;
 case 73:
-#line 442 "binfer.y"
+# line 442 "binfer.y"
 {
                  if ( probabilitymaps ) {
                      cur_sym->colortable = RYG;
@@ -880,10 +1224,9 @@ case 73:
                              ,cur_sym->name);
                      fprintf(stderr,"NoProbabilityMaps option is set.\n");
                  }
-           }
-break;
+           } break;
 case 74:
-#line 452 "binfer.y"
+# line 452 "binfer.y"
 {
                  if ( probabilitymaps ) {
                      cur_sym->colortable = Wave;
@@ -893,127 +1236,59 @@ case 74:
                              ,cur_sym->name);
                      fprintf(stderr,"NoProbabilityMaps option is set.\n");
                  }
-           }
-break;
+           } break;
 case 75:
-#line 465 "binfer.y"
+# line 465 "binfer.y"
 { 
-                cur_sym->element.val->desc.infr->prior_prob = atof(yyvsp[-1].y_sym); 
-            }
-break;
+                cur_sym->element.val->desc.infr->prior_prob = atof(yypvt[-1].y_sym); 
+            } break;
 case 76:
-#line 472 "binfer.y"
+# line 472 "binfer.y"
 { 
-                sprintf(probbuf,";%s",yyvsp[0].y_sym); 
+                sprintf(probbuf,";%s",yypvt[-0].y_sym); 
                 yyval.y_sym = strsave(probbuf);
-            }
-break;
+            } break;
 case 77:
-#line 477 "binfer.y"
+# line 477 "binfer.y"
 { 
-                sprintf(probbuf,"%s;%s",yyvsp[-2].y_sym,yyvsp[0].y_sym);
+                sprintf(probbuf,"%s;%s",yypvt[-2].y_sym,yypvt[-0].y_sym);
                 yyval.y_sym = strsave(probbuf);
-            }
-break;
+            } break;
 case 78:
-#line 484 "binfer.y"
+# line 484 "binfer.y"
 { 
-                yyval.y_sym = strsave(yyvsp[0].y_sym); 
-            }
-break;
+                yyval.y_sym = strsave(yypvt[-0].y_sym); 
+            } break;
 case 79:
-#line 488 "binfer.y"
+# line 488 "binfer.y"
 { 
-                sprintf(probbuf,"%s,%s",yyvsp[-2].y_sym,yyvsp[0].y_sym);
+                sprintf(probbuf,"%s,%s",yypvt[-2].y_sym,yypvt[-0].y_sym);
                 yyval.y_sym = strsave(probbuf);
-            }
-break;
+            } break;
 case 80:
-#line 494 "binfer.y"
-{ yyval.y_sym = strsave(yyvsp[0].y_sym); }
-break;
+# line 494 "binfer.y"
+{ yyval.y_sym = strsave(yypvt[-0].y_sym); } break;
 case 81:
-#line 497 "binfer.y"
-{ yyval.y_sym = (char *)0; }
-break;
+# line 497 "binfer.y"
+{ yyval.y_sym = (char *)0; } break;
 case 82:
-#line 498 "binfer.y"
-{ yyval.y_sym = strsave(yyvsp[-1].y_sym); }
-break;
+# line 498 "binfer.y"
+{ yyval.y_sym = strsave(yypvt[-1].y_sym); } break;
 case 84:
-#line 504 "binfer.y"
-{ yyerrok; }
-break;
+# line 504 "binfer.y"
+{ yyerrok; } break;
 case 85:
-#line 505 "binfer.y"
-{ yyerrok; }
-break;
+# line 505 "binfer.y"
+{ yyerrok; } break;
 case 86:
-#line 506 "binfer.y"
-{ yyerrok; }
-break;
+# line 506 "binfer.y"
+{ yyerrok; } break;
 case 87:
-#line 507 "binfer.y"
-{ yyerrok; }
-break;
+# line 507 "binfer.y"
+{ yyerrok; } break;
 case 88:
-#line 508 "binfer.y"
-{ yyerrok; }
-break;
-#line 964 "y.tab.c"
-    }
-    yyssp -= yym;
-    yystate = *yyssp;
-    yyvsp -= yym;
-    yym = yylhs[yyn];
-    if (yystate == 0 && yym == 0)
-    {
-#if YYDEBUG
-        if (yydebug)
-            printf("%sdebug: after reduction, shifting from state 0 to\
- state %d\n", YYPREFIX, YYFINAL);
-#endif
-        yystate = YYFINAL;
-        *++yyssp = YYFINAL;
-        *++yyvsp = yyval;
-        if (yychar < 0)
-        {
-            if ((yychar = yylex()) < 0) yychar = 0;
-#if YYDEBUG
-            if (yydebug)
-            {
-                yys = 0;
-                if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-                if (!yys) yys = "illegal-symbol";
-                printf("%sdebug: state %d, reading %d (%s)\n",
-                        YYPREFIX, YYFINAL, yychar, yys);
-            }
-#endif
-        }
-        if (yychar == 0) goto yyaccept;
-        goto yyloop;
-    }
-    if ((yyn = yygindex[yym]) && (yyn += yystate) >= 0 &&
-            yyn <= YYTABLESIZE && yycheck[yyn] == yystate)
-        yystate = yytable[yyn];
-    else
-        yystate = yydgoto[yym];
-#if YYDEBUG
-    if (yydebug)
-        printf("%sdebug: after reduction, shifting from state %d \
-to state %d\n", YYPREFIX, *yyssp, yystate);
-#endif
-    if (yyssp >= yyss + yystacksize - 1)
-    {
-        goto yyoverflow;
-    }
-    *++yyssp = yystate;
-    *++yyvsp = yyval;
-    goto yyloop;
-yyoverflow:
-    yyerror("yacc stack overflow");
-yyabort:
-    return (1);
-yyaccept:
-    return (0);
+# line 508 "binfer.y"
+{ yyerrok; } break;
+	}
+	goto yystack;		/* reset registers in driver code */
 }

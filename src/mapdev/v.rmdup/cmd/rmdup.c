@@ -1,4 +1,6 @@
-/*-v.rmdup
+/*
+ * $Id$
+**-v.rmdup
 **
 ** Author: James Darrell McCauley (mccauley@ecn.purdue.edu)
 **         USDA Fellow
@@ -92,7 +94,6 @@ export (dig_name, mapset)
   char buf[1024];
   char *tmpfile;
   struct Map_info Map;
-  char *err;
   int level;
 
   if (!mapset)
@@ -113,7 +114,7 @@ export (dig_name, mapset)
   Vect_close (&Map);
 
   if (0 > (level = Vect__open_update_1 (&Map, dig_name)))
-    G_fatal_error (err);
+    G_fatal_error ("Failed to open update");
   else
     fclose (Map.dig_fp);	/* close pointer to old digit file */
 
@@ -189,11 +190,12 @@ killdups (Closet, Suitcase)
  *
  * -> but today?
  */
- /*     while (match == 0 && Closet->dig_fp->_cnt) */
-#if !defined(__CYGWIN__) && !defined(__FreeBSD__)
-    while (match == 0 && Closet->dig_fp->_shortbuf[1])  /* try to upgrade in 5/2000 */
-#else
+#if defined(sgi)
+    while (match == 0 && Closet->dig_fp->_cnt) 
+#elif defined(__CYGWIN__) || defined(__FreeBSD__)
     while (match == 0 && Closet->dig_fp->_bf._size)
+#else
+    while (match == 0 && Closet->dig_fp->_shortbuf[1])  /* try to upgrade in 5/2000 */
 #endif
     {
       if (0 < (type = V1_read_line (Closet, Points_b, new_offset)))

@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include "gis.h" 
 #include "raster.h"
 #include "display.h" 
@@ -154,7 +158,7 @@ int main(int argc ,char **argv )
         fprintf ( stderr, "%d sites read from DB\n", nsites); 
 	
 	/* read selected point and find site */
-	maxdsq = D_d_to_u_col( 100 ); // maximum acceptable distance from site
+	maxdsq = D_d_to_u_col( 100 ); /* maximum acceptable distance from site */
 	do {
     	    show_buttons(once);
 	    R_get_location_with_pointer(&d_x, &d_y, &button) ;
@@ -164,7 +168,7 @@ int main(int argc ,char **argv )
     	    }
 	    u_x = D_d_to_u_col( (double)d_x );
 	    u_y = D_d_to_u_row( (double)d_y );
-	    dsq = 2*maxdsq;   // set initial value to more than maxdsq
+	    dsq = 2*maxdsq;   /* set initial value to more than maxdsq */
 	    for ( i=0; i < nsites; i++) {
 		dx = u_x - sites[i].coor[0];
 		dy = u_y - sites[i].coor[1];

@@ -1,3 +1,7 @@
+/*
+ * $id$
+ */
+
 /* -*-c-basic-offset:4;-*-
 /* Cell-file line extraction */
 /*   Input/output and line tracing routines */
@@ -366,11 +370,23 @@ int read_row (void *buf)
 		}
 		else
 		{
-			p = buf + data_size;
+			/* The buf variable is a void pointer and thus */
+			/* points to anything. Therefore, it's size is */
+			/* unknown and thus, it cannot be used for pointer */
+			/* arithmetic (some compilers treat this as an error */
+			/* - SGI MIPSPro compiler for one). Make the */
+			/* assumption that data_size is the proper number of */
+			/* bytes and cast the buf variable to char * before */
+			/* incrementing */
+			p = ((char *) buf) + data_size;
 			G_get_raster_row(input_fd,p,row_count++,data_type);
 			p = buf;
 			G_set_null_value(p,1,data_type);
-			p += (row_length + 1)*data_size;
+			
+			/* Again we need to cast p to char * under the */
+			/* assumption that the increment is the proper */
+			/* number of bytes. */
+			p = ((char *) p) + (row_length + 1)*data_size;
 			G_set_null_value(p,1,data_type);
 		}
 	}

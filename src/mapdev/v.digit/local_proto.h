@@ -1,4 +1,11 @@
-#include "Vect.h"
+/*
+ * $Id$
+ */
+ 
+#ifndef V_DIGIT_LOCAL_PROTO_H
+#define V_DIGIT_LOCAL_PROTO_H
+
+#include "digit.h"
 
 int print_binary_int(int);
 int print_binary_char(int);
@@ -234,4 +241,6 @@ int get_head_info(int, struct dig_head *);
 #ifdef GRASS_GIS_H
 /* eq.c */
 int eq_grey_colors (char *,char *,struct Colors *,int);
+#endif
+
 #endif

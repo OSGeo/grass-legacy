@@ -95,7 +95,7 @@
 #define HAVE_SETREUID 1
 
 /* define if setruid() exists */
-/* #undef HAVE_SETRUID */
+#define HAVE_SETRUID 1
 
 /* define if setpgrp() takes no argument */
 #define SETPGRP_VOID 1

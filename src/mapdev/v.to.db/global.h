@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #ifndef MAIN
 # define MAIN extern
 #endif
@@ -9,27 +13,27 @@ MAIN struct Cell_head window ;
 
 typedef struct
 {
-    int     cat;   // category
-    int     i1;    // value
+    int     cat;   /* category */
+    int     i1;    /* value */
 }CI;  
 
 typedef struct
 {
-    int     cat;   // category
-    double  d1;    // value
+    int     cat;   /* category */
+    double  d1;    /* value */
 }CD;
 
 typedef struct
 {
-    int     cat;   // category
-    int     i1;    // value    
-    double  d1,d2; // value
+    int     cat;   /* category */
+    int     i1;    /* value    */
+    double  d1,d2; /* value */
 }CI2D;
 
 typedef struct
 {
-    int     cat;   // category
-    char    *c1;   // value    
+    int     cat;   /* category */
+    char    *c1;   /* value    */
 }CC;
 
 MAIN CI     *list_ci;
@@ -48,26 +52,26 @@ MAIN OPTIONS
     char *col2;
     int  type;
     int  option;
-    int  print;     // print only
-    int  sql;       // print only sql statements   
+    int  print;     /* print only */
+    int  sql;       /* print only sql statements */
     int  units;
-    int  list;      // list type        
+    int  list;      /* list type */
 } options;
 
 #define STAT struct _stat_
 MAIN STAT
 {
-    int  cat;       // number of categories in map
-    int  alloc;     // allocated in list
-    int  sort;      // number of sorted cats in list
-    int  rcat;      // number of categories read from map
-    int  select;    // number of categories selected from DB    
-    int  exist;     // number of cats existing in selection from DB    
-    int  notexist;  // number of cats not existing in selection from DB        
-    int  dupl;      // number of cats with duplicate elements       
-    int  update;    // number of updated rows   
-    int  error;     // number of errors
-    int  maxerror;  // max errors allowed    
+    int  cat;       /* number of categories in map */
+    int  alloc;     /* allocated in list */
+    int  sort;      /* number of sorted cats in list */
+    int  rcat;      /* number of categories read from map */
+    int  select;    /* number of categories selected from DB */
+    int  exist;     /* number of cats existing in selection from DB */
+    int  notexist;  /* number of cats not existing in selection from DB */
+    int  dupl;      /* number of cats with duplicate elements */
+    int  update;    /* number of updated rows */
+    int  error;     /* number of errors */
+    int  maxerror;  /* max errors allowed */
 } stat;
 
 /* exit codes */
