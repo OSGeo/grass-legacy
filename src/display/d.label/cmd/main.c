@@ -18,6 +18,7 @@ char **argv ;
 	int t, b, l, r ;
 	int textcolor ;
 	int tsize ;
+	char *D_color_list();
 	struct Option *opt1, *opt2, *opt3, *opt4 ;
 
 	opt1 = G_define_option() ;
@@ -33,7 +34,7 @@ char **argv ;
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = NO ;
 	opt2->answer     = "black" ;
-	opt2->options="red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black";
+	opt2->options    = D_color_list();
 	opt2->description= "Sets the color of the label background" ;
 
 	opt3 = G_define_option() ;
@@ -41,7 +42,7 @@ char **argv ;
 	opt3->type       = TYPE_STRING ;
 	opt3->required   = NO ;
 	opt3->answer     = "white" ;
-	opt3->options="red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black";
+	opt3->options    = D_color_list();
 	opt3->description= "Sets the color of the label text" ;
 
 	opt4 = G_define_option() ;
