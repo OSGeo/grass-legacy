@@ -35,6 +35,7 @@
  *
  */
 
+#include <limits.h>
 #include "profile.h"
 
 int 
@@ -43,6 +44,7 @@ ExtractProfile (struct Profile *profile, char *name, char *mapset)
 int    fd;               /* cell-file desciptor */
 struct Cell_head window; /* current GIS window */
 CELL   *buf;             /* storage for one cell-file row */
+CELL   theCell;          /* storage of the current cell of interest - for NULL fix */
 struct ProfileNode *ptr = NULL; 
 int    stop;
 int    row1, col1;    
@@ -130,19 +132,24 @@ if ( (row1 != row2) && (abs(row1-row2) > abs(col1-col2)) )
 #     ifdef DEBUG
       fprintf (stdout,"[(%d,%d):%d] ",row,col,buf[col]);
 #     endif
-
+      /* Test if NULL, if so set to the minimum integer value */
+      if (G_is_c_null_value(&(buf[col])))
+	      theCell = INT_MIN;
+      else
+	      theCell = buf[col];
+		      
       /* set mins and maxes */
       if (row==row1)
          {
-         profile->MaxCat = buf[col];
-         profile->MinCat = buf[col];
+         profile->MaxCat = theCell;
+         profile->MinCat = (theCell == INT_MIN) ? INT_MAX : theCell ;
          }
       else
          {
-         if (buf[col] > profile->MaxCat)
-            profile->MaxCat = buf[col];
-         if (buf[col] < profile->MinCat)
-            profile->MinCat = buf[col];
+         if (theCell > profile->MaxCat)
+            profile->MaxCat = theCell;
+         if (theCell < profile->MinCat && theCell != INT_MIN)
+            profile->MinCat = theCell;
          }
 
       /* add to linked list */
@@ -151,7 +158,7 @@ if ( (row1 != row2) && (abs(row1-row2) > abs(col1-col2)) )
          /* first in list */
          profile->ptr = (struct ProfileNode *)
                         G_malloc(sizeof(struct ProfileNode));
-         profile->ptr->cat = buf[col];
+         profile->ptr->cat = theCell;
          profile->ptr->next = NULL;
          ptr = profile->ptr;
          }
@@ -160,7 +167,7 @@ if ( (row1 != row2) && (abs(row1-row2) > abs(col1-col2)) )
          /* not first in list */
          ptr->next = (struct ProfileNode *)
                      G_malloc(sizeof(struct ProfileNode));
-         ptr->next->cat = buf[col];
+         ptr->next->cat = theCell;
          ptr->next->next = NULL;
          ptr = ptr->next; 
          } 
@@ -197,19 +204,24 @@ else
 #     ifdef DEBUG
       fprintf (stdout,"[(%d,%d):%d] ",row,col,buf[col]);
 #     endif
-
+      /* Test if NULL, if so set to the minimum integer value */
+      if (G_is_c_null_value(&(buf[col])))
+	      theCell = INT_MIN;
+      else
+	      theCell = buf[col];
+	
       /* set mins and maxes */
       if (col==col1)
          {
-         profile->MaxCat = buf[col];
-         profile->MinCat = buf[col];
+         profile->MaxCat = theCell;
+         profile->MinCat = (theCell == INT_MIN) ? INT_MAX : theCell;
          }
       else
          {
-         if (buf[col] > profile->MaxCat)
-            profile->MaxCat = buf[col];
-         if (buf[col] < profile->MinCat)
-            profile->MinCat = buf[col];
+         if (theCell > profile->MaxCat)
+            profile->MaxCat = theCell;
+         if (theCell < profile->MinCat && theCell != INT_MIN)
+            profile->MinCat = theCell;
          }
 
       /* add to linked list */
@@ -218,7 +230,7 @@ else
          /* first in list */
          profile->ptr = (struct ProfileNode *)
                         G_malloc(sizeof(struct ProfileNode));
-         profile->ptr->cat = buf[col];
+         profile->ptr->cat = theCell;
          profile->ptr->next = NULL;
          ptr = profile->ptr;
          }
@@ -227,7 +239,7 @@ else
          /* not first in list */
          ptr->next = (struct ProfileNode *)
                      G_malloc(sizeof(struct ProfileNode));
-         ptr->next->cat = buf[col];
+         ptr->next->cat = theCell;
          ptr->next->next = NULL;
          ptr = ptr->next; 
          } 
