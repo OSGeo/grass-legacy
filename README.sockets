@@ -92,7 +92,8 @@ else
 		fi
 		go=1
 		echo mv $i.orig $i
-		mv $i.orig $i
+		cp $i.orig $i
+		rm $i.orig
 	done
 fi
 
