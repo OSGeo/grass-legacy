@@ -1,0 +1,12 @@
+grass (5.7.0-1) unstable; urgency=low
+
+  * fixes for Debian built (with Paolo Brunetti and Donato Minati).
+
+ -- Markus Neteler (devel) <neteler@itc.it>  Thu, 13 Nov 2003 11:30:11 +0100 
+
+grass (57-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Markus Neteler <neteler@itc.it>  Mon, 10 Nov 2003 17:59:04 +0100
+

@@ -1,0 +1,24 @@
+Source: grass 
+Section: science
+Priority: optional
+Maintainer: Markus Neteler <neteler@itc.it>
+Build-Depends: debhelper (>> 4.1.25), libc6 (>= 2.2.4-4), flex, bison|byacc, libncurses5 (>= 5.2.20020112a-1), csh|c-shell, fftw2 | fftw2-double, fftw-dev, libtiff3g-dev, tk8.3 (>= 8.3.0), tk8.3-dev (>= 8.3.0), tcl8.3 (>= 8.3.0), tcl8.3-dev (>= 8.3.0), xlibs (>> 4.1.0), xlibs-dev, zlib1g (>= 1:1.1.4), doxygen
+Standards-Version: 3.6.0
+
+Package: grass-bin
+Section: science
+Architecture: all
+Description: Geographic Resources Analysis Support System
+ Geographic Resources Analysis Support System, commonly referred to as
+ GRASS, is a Geographic Information System (GIS) used for data
+ management, image processing, graphics production, spatial modeling,
+ and visualization of many types of data. Originally written by the
+ U.S. Army Construction Engineering Research Laboratories (USA-CERL)
+ branch of the US Army Corp of Engineers as a tool for land management
+ and environmental planning by the military, GRASS has evolved into a
+ powerful utility with a wide range of applications in many different
+ areas of scientific research. GRASS is currently used in academic and
+ commercial settings around the world, as well as many governmental
+ agencies including NASA, NOAA, USDA, the National Park Service, the
+ U.S. Census Bureau, USGS, and many environmental consulting companies.
+ The main site is hosted at ITC-irst, Trento, Italy.
