@@ -1,0 +1,10 @@
+MODULE_TOPDIR = ../..
+
+PGM = r.cost
+
+LIBES = $(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB) $(DATETIMELIB)
+DEPENDENCIES = $(GISDEP) $(DISPLAYDEP) $(SEGMENTDEP) $(DATETIMEDEP)
+
+include $(MODULE_TOPDIR)/include/Make/Module.make
+
+default: cmd
