@@ -45,6 +45,7 @@
 		Bill Hughes
 */
 
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
@@ -66,20 +67,23 @@ static int log_error (char *,int);
 
 int G_fatal_error ( char *msg,...)
 {
-    char buffer[256];  /* No novels to the error logs, OK? */
+    char buffer[2000];  /* No novels to the error logs, OK? */
     va_list ap;
 
     va_start(ap,msg);
     vsprintf(buffer,msg,ap);
     va_end(ap);
+
     print_error (buffer,1);
 
+    if ( ext_error ) return 0; /* do not exit error routine is specified */
+    
     exit (1);
 }
 
 int G_warning ( char *msg, ...)
 {
-    char buffer[256];
+    char buffer[2000];
     va_list ap;
 
     if (no_warn) return 0;
