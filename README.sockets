@@ -153,8 +153,7 @@ then
 	done
 fi
 
-ARCH=`grep "host\@" config.status | tr -s '%' ' ' | cut -d' ' -f 3`
-GISBASE=`sed 's| ||g; s|	||g' src/CMD/head/head.$ARCH | awk -F '=' '/^GISBASE=/{print $2}'`
+GISBASE=`grep "@prefix@" config.status | cut -d '%' -f 3`
 
 if [ ! -f $GISBASE/dev/create_buffers.sh ]
 then
