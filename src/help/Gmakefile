@@ -1,0 +1,6 @@
+# %W% %G%
+
+$(BIN)/help: main.o manual.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o manual.o $(GISLIB) $(TERMLIB)
+
+$(GISLIB): #
