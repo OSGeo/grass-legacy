@@ -1,7 +1,6 @@
 BUGS:
- * The modules (still) crashes if the the WIND3 region differs from
-  the volume coordinates (region settings which where used when
-  the volume was generated).
+ * non-square volumes (if re-adjusting the settings with g3.region)
+   are not exported correctly.
 
  * if 100 rows/cols/depth are there, only 99 rows/cols/depth will
    be exported to Vis5D: problem of center cell and corner cell
