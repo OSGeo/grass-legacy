@@ -1,0 +1,8 @@
+Mbackend	backend.c	/^main (argc, argv) char *argv[];$/
+Mfrontend	frontend.c	/^main (argc,argv) char *argv[];$/
+Mper_vs_deg	per_vs_deg.c	/^main()$/
+abs	backend.c	/^#define abs(x) ((x)<0?-(x):(x))$/
+input	input.c	/^input (prompt, answer)$/
+opennew	opennew.c	/^opennew(name)$/
+percent	percent.c	/^percent (n,d,s)$/
+usage	usage.c	/^usage(me)$/
