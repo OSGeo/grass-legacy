@@ -87,7 +87,7 @@ int delete(struct my_string *str) {
 }
 
 
-int DumpFromDBF (char *infile, char *outfile) {
+int DumpFromDBF (char *infile, char *outfile, char *timestamp) {
 	
 	DBFHandle   hDBF;
 	char buf[256]="";
@@ -98,7 +98,7 @@ int DumpFromDBF (char *infile, char *outfile) {
 	struct my_string SQL_create;
 	struct my_string SQL_insert;
 	struct my_string chunks;
-	struct my_string headerline;
+	struct my_string headerN, headerD, headerT;
 	struct my_string fldstrng;
 
 	static char name[128]="";
@@ -119,11 +119,15 @@ int DumpFromDBF (char *infile, char *outfile) {
 	init(&SQL_create);
 	init(&SQL_insert);
 	init(&chunks);
-	init(&headerline);
+	init(&headerN); /*name*/
+	init(&headerD); /*desc*/
+	init(&headerT); /*time*/
 	init(&fldstrng);
 
-	append(&headerline, "#"); /* it will become a comment */
-	
+	append(&headerN, "name|");
+	append(&headerD, "desc|");
+	append(&headerT, "time|");
+
 /* -------------------------------------------------------------------- */
 /*      Extract basename of dbf file.                                   */
 /* -------------------------------------------------------------------- */
@@ -198,7 +202,10 @@ int DumpFromDBF (char *infile, char *outfile) {
 	
 	
 	fprintf(stdout, "Writing to sites map %s...\n", outfile);
-
+	append(&headerN, outfile);
+	
+	append(&headerT, timestamp);
+	
 	/* reorder header: first int and float as it comes */
         for( k = 0; k < DBFGetFieldCount(hDBF); k++ )
         {
@@ -206,8 +213,8 @@ int DumpFromDBF (char *infile, char *outfile) {
 	  ftype=DBFGetFieldInfo( hDBF, k, fname, NULL, NULL );
 	  if (ftype != 0) /* no text */
 	  {
-	    append(&headerline, fname );
-	    append(&headerline, " " );
+	    append(&headerD, fname );
+	    append(&headerD, " " );
 	  }
         }
 
@@ -218,14 +225,15 @@ int DumpFromDBF (char *infile, char *outfile) {
 	  ftype=DBFGetFieldInfo( hDBF, k, fname, NULL, NULL );
 	  if (ftype == 0) /* text */
 	  {
-	    append(&headerline, fname );
-	    append(&headerline, " " );
+	    append(&headerD, fname );
+	    append(&headerD, " " );
 	  }
         }
 
-        /* Write Header to sites list*/
-        fprintf(sites, "%s\n", headerline);
-        fprintf(sites, "#\n");
+        /* Write Header to sites list - should be G_sites routines*/
+        fprintf(sites, "%s\n", headerN);
+        fprintf(sites, "%s\n", headerD);
+        /* fprintf(sites, "%s\n", headerT); */ /* not yet implemented */
 
         /* dump the fields */
 
@@ -335,14 +343,14 @@ static void * SfRealloc( void * pMem, int nNewSize )
 		break;
 	case 1: /*int*/
 		if (iField < 2) /* treat the first coordinate columns differently */
-			sprintf(fbuf,"%s", pszStringField);
+			sprintf(fbuf,"%.1f", atof(pszStringField));
 		else
 			sprintf(fbuf,"%%%.1f ", atof(pszStringField)); /* bug, should be %int*/
 		sprintf(pszStringField, fbuf);
 		break;
 	case 2: /* float */
 		if (iField < 2) /* treat the first coordinate columns differently */
-			sprintf(fbuf,"%f", atof(pszStringField));
+			sprintf(fbuf,"%.1f", atof(pszStringField));
 		else
 			sprintf(fbuf,"%%%f ", atof(pszStringField));
 		sprintf(pszStringField,fbuf);
