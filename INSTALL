@@ -1,11 +1,12 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.26 2003-09-27 10:42:55 hamish Exp $)
+($Id: INSTALL,v 1.27 2004-02-09 14:52:37 markus Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
     
     INSTALLATION
+    STARTING GRASS
     CODE OPTIMIZATION
     DEBUGGING OPTIONS
     CONFIGURE OPTIONS
@@ -95,6 +96,23 @@ error.log.
 
 Note for Alpha64 users: Please read the ALPHA64/README.alpha64
 and apply the 64bit patches.
+
+
+STARTING GRASS
+
+Ensure that the path to grass is in your PATH environment or
+start grass with the full path name.  To start grass:
+  grass53
+
+Usage:
+  grass53 [-h | -help | --help] [-text | -tcltk | -gui] [[[<GISDBASE>/]<LOCATION_NAME>/]<MAPSET>]
+
+Flags:
+  -h or -help or --help          print this help message
+  -text                          use text based interface and set as default
+  -tcltk or -gui                 use Tcl/Tk based graphical user interface
+                                    and set as default
+  [...]
 
 
 CODE OPTIMIZATION
@@ -373,4 +391,4 @@ http://grass.itc.it/announces/announce_lzw_removal.html
 
 
 GRASS Development Team
-$Date: 2003-09-27 10:42:55 $
+$Date: 2004-02-09 14:52:37 $
