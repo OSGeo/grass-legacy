@@ -209,7 +209,7 @@ int main ( int argc, char *argv[])
   parm.input->key = "input";
   parm.input->type = TYPE_STRING;
   parm.input->required = YES;
-  parm.input->gisprompt = "old,dig,vector";
+  parm.input->gisprompt = "old,vector,vector";
   parm.input->description = "Name of the vector file with input data";
 
   parm.field = G_define_standard_option(G_OPT_V_FIELD);
