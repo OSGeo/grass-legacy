@@ -1,6 +1,6 @@
 #
 # Copyright (C) 1998 The Information-technology Promotion Agency, Japan(IPA), LGPL
-# $Id: GNUmakefile,v 1.3 2000-03-14 14:35:28 markus Exp $
+# $Id: GNUmakefile,v 2.0 2000-04-22 10:58:17 markus Exp $
 #
 
 SHELL = /bin/sh

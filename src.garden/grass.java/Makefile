@@ -1,4 +1,4 @@
-# $Id: Makefile,v 1.1 2000-03-13 13:08:17 markus Exp $
+# $Id: Makefile,v 2.0 2000-04-22 10:58:18 markus Exp $
 
 # My make files exploit features of GNU make that other makes
 # do not have.  This make file that does nothing
