@@ -1,5 +1,5 @@
 /*******************************************************************
- * putenv (name, value)
+ * G_putenv (name, value)
  *   char *name, *value
  *
  * this routine sets the UNIX envirnoment varaible name to value
@@ -24,7 +24,7 @@ char *store();
 char *malloc();
 char *realloc();
 
-putenv (name, value)
+G_putenv (name, value)
     char *name;
     char *value;
 {
