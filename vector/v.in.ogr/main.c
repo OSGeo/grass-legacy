@@ -287,12 +287,11 @@ main (int argc, char *argv[])
 		namebuf2      = G_strchg(namebuf , '#', '_');
 		namebuf3      = G_strchg(namebuf2, '-', '_');
 		
-		/* check if we start with '_', in this case add a leading 'a' */
+		/* check if column name starts with '_', in this case we delete this leading character */
 		if (*namebuf3 == '_')
 		{
 		    G_debug(3, "init: %s",namebuf3);
-		    sprintf(namebuf4,"%s","a");      /* Is this a good idea? */
-		    strcat(namebuf4,namebuf3);
+		    sprintf(namebuf4,"%s",++namebuf3);
 		}
 		else
 		    sprintf(namebuf4,"%s",namebuf3); /* just copy over */
