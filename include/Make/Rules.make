@@ -12,7 +12,7 @@ endif
 # default cc rules
 $(OBJDIR)/%.o : %.c $(DEPENDENCIES) $(LOCAL_HEADERS) 
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)	
-	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(ALLINC) $(EXTRA_INCL) $(INC) \
+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(GDALCFLAGS) $(ALLINC) $(EXTRA_INCL) $(INC) \
 		-o $(OBJDIR)/$*.o -c $*.c
 
 # default parser generation rules, include prefix for files/vars

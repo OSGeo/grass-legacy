@@ -24,20 +24,23 @@ LIB_OBJS = \
     struct_alloc.o \
     update.o
 
+
 include $(MODULE_TOPDIR)/include/Make/Lib.make
+
+EXTRA_CLEAN_FILES = $(ARCH_INCDIR)/portable.h
 
 default: $(ARCH_INCDIR)/portable.h lib $(OBJDIR)/test
 
 #  Test the machine size and orientation for the Portable Library
 $(ARCH_INCDIR)/portable.h:
 	@test -d $(OBJDIR) || mkdir $(OBJDIR)
-	$(CC) $(LDFLAGS) $(ALLINC) -o $(OBJDIR)/port_test port_test.c
+	$(CC) $(LDFLAGS) $(GDALCFLAGS) $(ALLINC) -o $(OBJDIR)/port_test port_test.c
 	echo "/* Architecture: $(ARCH) */" > $(ARCH_INCDIR)/portable.h
 	$(OBJDIR)/port_test >> $(ARCH_INCDIR)/portable.h
 	
 #  Test portable read/write functions
 $(OBJDIR)/test: test.c 
-	$(CC) $(LDFLAGS) $(ALLINC) -o $@ test.c $(DIG2LIB) $(GISLIB)
+	$(CC) $(LDFLAGS) $(GDALCFLAGS) $(ALLINC) -o $@ test.c $(DIG2LIB) $(GISLIB)
 	cd $(OBJDIR); ./test
 
 
