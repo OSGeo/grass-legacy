@@ -294,7 +294,7 @@ dig_spidx_del_isle ( struct Plus_head *Plus, int isle )
 }
 /************************* SELECT BY BOX *********************************/
 /* This function is called by  RTreeSearch() to add selected node/line/area/isle to thelist */
-int _add_item(int id, struct ilist *list)
+static int _add_item(int id, struct ilist *list)
 {
     dig_list_add ( list, id );
     return 1;
@@ -323,7 +323,7 @@ dig_select_nodes ( struct Plus_head *Plus, BOUND_BOX *box, struct ilist *list )
 }
 
 /* This function is called by  RTreeSearch() for nodes to add selected node to list */
-int _add_node(int id, int *node)
+static int _add_node(int id, int *node)
 {
     *node = id;
     return 0;
