@@ -5,14 +5,19 @@
 * 	               -- GRASS Development Team --
 *
 * MODULE: 	GRASS ogsf library
-* FILENAME:	gsd_fonts.c
 * AUTHOR(S):	none
 * PURPOSE: 	This file needs to be re-written in OpenGL
-* DATE CREATED: Jan 00 0000
 * COPYRIGHT:  	(C) 2000 by the GRASS Development Team
 *
 *   	    	This program is free software under the GPL (>=v2)
 *   	    	Read the file COPYING that comes with GRASS for details.
+*
+*****************************************************************************
+*
+* $Log$
+* Revision 1.3  2000-11-10 02:46:30  justin
+* Test of new header style
+*
 *
 *****************************************************************************/
 
