@@ -23,55 +23,12 @@ PURPOSE OF FUNCTION:
 /*                                       */
 /*              Zhian Li, April,1995     */
 
-
-/*   Include X window libraries:
-            LIBS: -lXm -lXt -lX11        */
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>     /*added 6/96 */
-
-/******************************
-NOT NEEDED IN REVISED VERSION:
-
-Mike Foster 2-21-96
-
-#include <X11/Xatom.h>
-#include <X11/Intrinsic.h>
-#include <X11/Shell.h>
-
-#include <Xm/Xm.h>
-#include <Xm/FileSB.h>
-#include <Xm/PushB.h>
-#include <Xm/Scale.h>
-#include <Xm/SelectioB.h>
-#include <Xm/ToggleB.h>
-#include <Xm/ToggleBG.h>
-
-*********************************/
-
-/********************************
-NOT NEEDED IN REVISED VERSION
-
-Mike Foster 2-21-96
-
-Define map display option     
-
-  int show_opt = 1;
-void 
-Show_map_option (w, client_data, call_data )
-Widget w;
-XtPointer client_data;
-XmToggleButtonCallbackStruct *call_data;
-{
-
-    get the map display option 
-
-    show_opt = (int )client_data;
-    return; 
-}
-
-**************************************/
+#include <unistd.h>
+#include <signal.h>
+#include "gis.h"        /*added 6/2000 */
 
 /* prototypes for functions added by Dave Peterson, April 1996 */
 void show_summary      (int cell, char *runoff, char *sediment, char *n_sediment,
@@ -126,54 +83,6 @@ show_maps (char *input_nps_filename)
       cmd[i] = ' ';
       }
 
-
-/*  Get the selected file name from the file selector*/
-/******************************************************
-NOT NEEDED: Mike Foster 2-21-96
-
-    slength = 0;
-    if(call_data->length == 0) {
-       fprintf(stderr,"No file has been selected\n");
-       return;
-       }
-      else
-       {
-       getstring_ok = XmStringGetLtoR(call_data->value,
-          XmSTRING_DEFAULT_CHARSET,&file_selected);
-       fprintf(stderr,"the filename is %s \n",file_selected);
-       }
-
-*********************************************************/
-
-
-  /* Get the directory name from the selected simulation*/
-
-/********************************************************
-NOT NEEDED: Mike Foster 2-21-96
-
-      slength = strlen(file_selected);
-      fprintf(stderr,"the string length %6d\n",slength);
-
-      slength = slength +1;
-      slength =slength - 6;
-      strncpy(directory, file_selected, slength);
-
-      directory[slength]='\0';
-      t = strlen(directory);
-      fprintf(stderr,"the string length %d %d\n",slength,t);
-
-***********************************************************/
-
-
-  /* Show maps according to the selection user made   */
-
-/***********************************************************
-NOT NEEDED: Mike Foster 2-12-96
-
-      fprintf(stderr,"the value of show_opt %i \n",show_opt);
-      fprintf(stderr,"the value of map_type %i \n",mapflag);
-*************************************************************/
-
 for (; ; )
  { system("clear");
    for (; ; )
@@ -194,15 +103,14 @@ for (; ; )
       fprintf (stderr,"  0=Quit\n\n");
       fprintf (stderr,"Please enter 0-12 for your choice of contaminant>");              
       mapflag=atoi(fgets(mapflagstring,2,stdin)); 
-      
-      fprintf (stderr,"\nThe choice you entered was %d\n",mapflag);
-      
+
+      fprintf (stderr,"\nThe choice you entered was %d.\n",mapflag);
+
       if (mapflag >=0 && mapflag <= 12) break;
       else {
         fprintf (stderr,"Please review the choices and make a new selection\n");
         fprintf (stderr,"Press any key to continue> "); 
-        fgets(mapflagstring,2,stdin); 
-        
+        mapflag=atoi(fgets(mapflagstring,2,stdin));
         system("clear");
       }
     }
@@ -216,14 +124,14 @@ for (; ; )
       for (; ; )
        { 
          fprintf (stderr,"\nPlease enter your cell size in meters (1-9999)>");
-         res=atoi(fgets(resstring,2,stdin)); 
-         fprintf (stderr,"\nThe resolution you entered was %d\n",res);
+         res=atoi(fgets(resstring,4,stdin));
+         fprintf (stderr,"\nThe resolution you entered was %d.\n",res);
                  
          if (res >= 1 && res <= 9999) break;
 
          fprintf (stderr,"The number entered should be 1-9999\n");
          fprintf (stderr,"Press any key to continue> ");
-         fgets(resstring,2,stdin); 
+         res=atoi(fgets(resstring,4,stdin));
          system("clear");
        }
       strcpy(cellnummapname,"cell_num.map.");
@@ -284,7 +192,7 @@ for (; ; )
           "To see output from another cell, enter the cell number [1 - %d],\n",
           max_cell_num);
           fprintf (stderr,"or enter 0 when done viewing cells ==========================> ");
-          cell_choice = atoi(fgets(cell_choice_str,81,stdin));
+          cell_choice = atoi(fgets(cell_choice_str,80,stdin));
 
           system("clear"); /* clear the screen */
 
@@ -317,13 +225,13 @@ for (; ; )
     }
    else
     { if (mapflag<=2)
-       sprintf(cmd,"show_N.csh %d %d",mapflag,res);
+       sprintf(cmd,"$GISBASE/etc/agnps50/show_N.csh %d %d",mapflag,res);
       else if (mapflag>=3 && mapflag<=4)
-       sprintf(cmd,"show_P.csh %d %d",mapflag,res);
+       sprintf(cmd,"$GISBASE/etc/agnps50/show_P.csh %d %d",mapflag,res);
       else if (mapflag==5)
-       sprintf(cmd,"show_COD.csh %d %d",mapflag,res);
+       sprintf(cmd,"$GISBASE/etc/agnps50/show_COD.csh %d %d",mapflag,res);
       else if (mapflag>=6 && mapflag<8)
-       sprintf(cmd,"show_S.csh %d %d",mapflag,res);  
+       sprintf(cmd,"$GISBASE/etc/agnps50/show_S.csh %d %d",mapflag,res);  
       system(cmd);   
 
     }
