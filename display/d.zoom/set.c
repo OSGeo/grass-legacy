@@ -128,6 +128,11 @@ int set_win ( struct Cell_head *window, double ux1, double uy1, double ux2, doub
 		break;
 	 }	
     }
+
+    if ( window->proj == PROJECTION_LL ) {
+	if(tnorth > 90)   tnorth = 90;
+	if(tsouth < -90)  tsouth = -90;
+    }
     
     if ( tnorth == tsouth ) tnorth += window->ns_res;
     if (  window->proj != PROJECTION_LL ) 
