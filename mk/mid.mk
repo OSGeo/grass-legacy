@@ -119,7 +119,7 @@ VECTLIB        = -lgrass_vect_combined
 DEPDBMILIB     = $(LIBDIR)/$(STLIB_PREFIX)dbmi$(STLIB_SUFFIX)
 DBMILIB        = -ldbmi
 
-DEPIMAGESUPLIB = $(LIBDIR)/$(LIB_PREFIX)grass_image_sup$(LIB_SUFFIX)
+DEPIMAGESUPLIB = $(LIBDIR)/$(STLIB_PREFIX)grass_image_sup$(STLIB_SUFFIX)
 IMAGESUPLIB    = -lgrass_image_sup
 
 # triangulation libraries

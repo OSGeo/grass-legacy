@@ -1,0 +1,8 @@
+interface_build {
+    {s.kernel} 0
+    {Create raster density map from sites, using moving Gaussian kernel.}
+    {entry input {Sites file:} 0 site}
+    {entry output {Raster density map:} 0 raster}
+    {entry stddeviation {Standard deviation in map units:} 0 ""}
+    {checkbox -d {Consider distances.} "" -d}
+}

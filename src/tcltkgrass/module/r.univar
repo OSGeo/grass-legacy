@@ -1,0 +1,7 @@
+interface_build {
+    {r.univar} 0
+    {Calculates univariate statistics for non-NULL cells of raster map.}
+    {entry input {Raster map:} 0 raster}
+    {checkbox -q {Run quietly.} "" -q}
+    {checkbox -g {Print statistics shellscript style} "" -g}
+}

@@ -118,7 +118,7 @@ AC_SUBST(LIB_VER)
 
 AC_ARG_ENABLE(gmake,
 [  --enable-gmake          use the old GRASS gmake system for compiling],,
-[enable_gmake=yes])
+[enable_gmake=no])
 
 AC_ARG_ENABLE(sysv,
 [  --enable-sysv           define the compiler macro SYSV],,

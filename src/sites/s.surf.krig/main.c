@@ -357,17 +357,10 @@ main (int argc, char *argv[])
 
       if (mask && mask[col] == 0)
       {				/* don't interpolate outside of the mask */
-	if( G_set_null_value(cell1, 1, DCELL_TYPE) < 0 ) {
-	  fprintf(stderr, "Failed to assign raster cell value\n");
-	  exit(1);  /* raster map of value z */
-	}
+	G_set_null_value(cell1, 1, DCELL_TYPE);
 	cell1++;
 
-	if( G_set_null_value(cell2, 1, DCELL_TYPE) < 0 ) {
-	  fprintf(stderr, "Failed to assign raster cell value\n");
-	  exit(1);  /* raster map of the 
-		       var. of value z */
-	}
+	G_set_null_value(cell2, 1, DCELL_TYPE);
 	cell2++;
       }
       else
