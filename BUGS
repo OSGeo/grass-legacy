@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.112 2001-02-07 02:55:12 cho Exp $
+                 $Id: BUGS,v 1.113 2001-02-21 09:54:36 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -12,7 +12,13 @@ http://www.geog.uni-hannover.de/grass/bugtracking/bugreport.html
 Bugs being release-critical with regard to GRASS 5.0stable release 
 are indicated [RC].
 
------------ drivers ---------------------------------------------
+------------------------------------------------------------------------
+RC-Bug list:
+
+ GRASS bugtracking system:
+ http://intevation.de/rt/webrt?q_queue=grass
+
+
 [RC] CELL-Driver: colors are not correct
    Comment from Carl Anderson <candrsn@mindspring.com>
     Tracking of the "bug" will have to start in
@@ -21,6 +27,66 @@ are indicated [RC].
     drivers, I suspect one of the Libraries and not the XDRIVER.
     look at D_set_colors ().
     (being worked on by ?)
+
+[RC]r.los:
+  r.los seems to work perfectly if the elevation data is UTM.  But if the         
+  elevation data is latitude-longitude, like most of my elevation data, the       
+  output map looks like a hollow footprint: mostly "N" for cell values, except    
+  for a few arcs of cells with values like 179 and 180, out where the horizon     
+  might be expected.  If indeed these values mark the horizon, why do so few      
+  (if any) cells between these arcs and the observer's cell have non-"N"          
+  values?
+  I tried a previous Grass version (5.0 beta 6) to see if r.los works with        
+  latitude-longitude-projected elevation data, but the output maps look just      
+  as bad.  Sometimes the output map looks like a TV-test-pattern: a really        
+  bizarre pattern of radial lines emanating from the observer towards the         
+  west.  Cells in this region have values in the millions or billions (I          
+  forget how many digits).  The lines don't converge all the way to the           
+  observer because the radial pattern is cut off along a vertical                 
+  (north-south) line.  To the east of this vertical line, the cells have          
+  smaller values - typically a few hundred - and form vertical stripes when       
+  when the color map is rescaled to the lower values.                             
+  Presumably the TV-test-pattern anomalies plagued only old versions of r.los,    
+  but the hollow footprint anomaly persists in the current version.  What am I    
+  doing wrong?
+  (reported by Pelizzari, Michael <michael.pelizzari@lmco.com>)
+  (being worked on by ?)
+
+
+[RC]r.neighbors 
+  seems doesn't work with a float number                   
+  when use median method. It fails in -0.001 value with 3x3 window. 
+  (reported by Bruno Crippa <bruno@ipmtf4.topo.polimi.it>)
+  (being worked on by ?)
+
+[RC]r.poly
+bugreport 1: I've noticed that r.poly doesn't extract polygons for 0
+category areas. This was correct in GRASS 4, but not in GRASS 5. 
+I don't know if it works correctly with null values.
+
+RC bugreport 2: I've noticed that v.support complains about labels when
+r.poly exports polygons with islands. In fact, I've seen that in
+dig_att's file there is one label for each island (that's correct),
+but the container +polygon is associated with n+1 labels, where n is
+the number of contained islands. Everithing seems to work fine anyway,
+but I may be related with another bug on v.trim that I'm going to
+point out in a separate bug report
+(reported by: Andrea Aime <aaime@comune.modena.it>)
+
+[RC]r.to.sites:
+ -  r.to.sites -z does not output third dimension
+    however r.to.sites -cz works o.k.
+  (being worked on by ?)
+
+[RC]v.trim 
+ bugreport: If a polygon has island, v.trim removes such islands
+ from the vector file... urgh! I've obtained such a behaviour with a
+ map obtained with r.poly, v.support (see my other bug report about
+ r.poly), I don't know if there is a relation (my map was a
+ reclassified DEM).
+ (reported by: Andrea Aime <aaime@comune.modena.it>)
+ (being worked on by ?)
+
 
 ----------- libraries ---------------------------------------------
 
@@ -106,7 +172,7 @@ g3.region:
   -> this test is incorrect!
   (being worked on by ?)  
 
-[RC]nviz2.2:
+nviz2.2:
  - I have a surface with VERY small floating point values (ie 7.7e-011 etc). 
    I've imported using r.in.ascii and all is OK in normal GRASS display.      
    However, starting nviz you see the surface the right way up, then it flips 
@@ -195,66 +261,23 @@ r.in.hdf/r.out.hdf (src.garden/grass.hdf)
  -> or add this to r.in.gdal
   (being worked on by ?)
 
-[RC]r.in.png:
+r.in.png:
  -  seg. faults on Pentium CPU (compare r.binfer)
  -  r.in.png refused to import a 24-bit image.  However it seems to work 
     OK with an 8-bit image.
     (reported by Steve Trick <TrickSG1@cf.ac.uk>)
-  (being worked on by ?)
+   (being worked on by ?)
  - r.in.png does not work                                                          
-  (r.out.png, then r.in.png with this image gives me a totally white              
-  raster on IRIX). r.stats says: 100% * (NULL)                                    
-  (being worked on by ?)
+   (r.out.png, then r.in.png with this image gives me a totally white              
+   raster on IRIX). r.stats says: 100% * (NULL)                                    
+   (being worked on by ?)
+-> r.in.gdal can be used
 
-[RC]r.in.ppm
+r.in.ppm
   seg. fault on Pentium CPU (compare r.binfer)
   Memory bug fixed by Alex Shevlakov
   (being worked on by ?)
-
-[RC]r.los:
-  r.los seems to work perfectly if the elevation data is UTM.  But if the         
-  elevation data is latitude-longitude, like most of my elevation data, the       
-  output map looks like a hollow footprint: mostly "N" for cell values, except    
-  for a few arcs of cells with values like 179 and 180, out where the horizon     
-  might be expected.  If indeed these values mark the horizon, why do so few      
-  (if any) cells between these arcs and the observer's cell have non-"N"          
-  values?
-  I tried a previous Grass version (5.0 beta 6) to see if r.los works with        
-  latitude-longitude-projected elevation data, but the output maps look just      
-  as bad.  Sometimes the output map looks like a TV-test-pattern: a really        
-  bizarre pattern of radial lines emanating from the observer towards the         
-  west.  Cells in this region have values in the millions or billions (I          
-  forget how many digits).  The lines don't converge all the way to the           
-  observer because the radial pattern is cut off along a vertical                 
-  (north-south) line.  To the east of this vertical line, the cells have          
-  smaller values - typically a few hundred - and form vertical stripes when       
-  when the color map is rescaled to the lower values.                             
-  Presumably the TV-test-pattern anomalies plagued only old versions of r.los,    
-  but the hollow footprint anomaly persists in the current version.  What am I    
-  doing wrong?
-  (reported by Pelizzari, Michael <michael.pelizzari@lmco.com>)
-  (being worked on by ?)
-
-
-[RC]r.neighbors 
-  seems doesn't work with a float number                   
-  when use median method. It fails in -0.001 value with 3x3 window. 
-  (reported by Bruno Crippa <bruno@ipmtf4.topo.polimi.it>)
-  (being worked on by ?)
-
-[RC]r.poly
-bugreport 1: I've noticed that r.poly doesn't extract polygons for 0
-category areas. This was correct in GRASS 4, but not in GRASS 5. 
-I don't know if it works correctly with null values.
-
-bugreport 2: I've noticed that v.support complains about labels when
-r.poly exports polygons with islands. In fact, I've seen that in
-dig_att's file there is one label for each island (that's correct),
-but the container +polygon is associated with n+1 labels, where n is
-the number of contained islands. Everithing seems to work fine anyway,
-but I may be related with another bug on v.trim that I'm going to
-point out in a separate bug report
-(reported by: Andrea Aime <aaime@comune.modena.it>)
+  -> r.in.gdal can be used
 
 
 r.random.surface
@@ -308,10 +331,6 @@ r.stats: some inconsistent results comparing to r.average
   (being worked on by ?)
 
 
-[RC]r.to.sites:
- -  r.to.sites -z does not output third dimension
-    however r.to.sites -cz works o.k.
-  (being worked on by ?)
 
 r.water.outlet:
  needs to be updated to GRASS 5 FP/NULL
@@ -349,7 +368,7 @@ s.kcv
  - needs modified for the new Sites API
   (being worked on by ?)
 
-[RC]s.surf.krig                                                                    
+s.surf.krig                                                                    
   Not working. Needs various bugfixes.                                     
   Calls to G_distance() seem to suffer stack corruption. The values        
   of parameters passed in and out of G_distance() are corrupted.      
@@ -395,15 +414,6 @@ v.support/v.build
   much more than autodigitised (like those done with v.mkgrid), so         
   perhaps it is in v.digit, or maybe in v.build.                           
   (being worked on by Daid D. Gray)
-
-[RC]v.trim 
- bugreport: If a polygon has island, v.trim removes such islands
- from the vector file... urgh! I've obtained such a behaviour with a
- map obtained with r.poly, v.support (see my other bug report about
- r.poly), I don't know if there is a relation (my map was a
- reclassified DEM).
- (reported by: Andrea Aime <aaime@comune.modena.it>)
- (being worked on by ?)
 
 -----------------------------------------------------------------------
 Modules with interface problems (parser etc): 
