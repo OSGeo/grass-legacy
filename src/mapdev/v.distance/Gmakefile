@@ -1,0 +1,15 @@
+OFILES = main.o  distance.o box_closer.o
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+PROG = $(BIN_ALPHA_CMD)/v.distance
+
+all: $(PROG) 
+
+$(PROG): $(OFILES) $(VECTLIB) $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+$(VECTLIB): #in case of library changes
+$(GISLIB): #
