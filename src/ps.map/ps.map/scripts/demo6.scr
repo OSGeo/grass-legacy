@@ -1,0 +1,18 @@
+maploc 0.25 1.5
+header
+  font Helvetica Bold
+  fontsize 15
+  end
+vector roads
+  width 1
+  color black
+  end
+vector fields
+  width 3
+  color green
+  end
+mapinfo
+  end
+vlegend
+  end
+end
