@@ -1,0 +1,224 @@
+.\" @(#)mpeg_play.1 2.1 93/01/27 SMI;
+.TH MPEG_PLAY 1 "28 April 1995"
+.SH NAME
+mpeg_play \- plays mpeg-1 encoded bitstreams using X11
+.SH SYNOPSIS
+.B mpeg_play
+[
+.B -nob
+] [
+.B -nop
+] [
+[
+.B -display display_name
+] [
+.B -quality [on|off] 
+] [
+.B -dither dither_option
+] [
+.B -loop 
+] [
+.B -eachstat 
+] [
+.B -seek offset
+] [
+.B -start num
+] [
+.B -end num
+] [
+.B -gamma gamma_correction_value
+] [
+.B -framerate num
+] [
+.B -no_display 
+] [
+.B -shmem_off 
+] [
+.B -l_range num
+] [
+.B -cr_range num
+] [
+.B -cb_range num
+] [
+.B -quiet 
+]
+.B file_name
+.SH DESCRIPTION
+.B mpeg_play
+decodes and displays mpeg-1 encoded bitstreams on systems running X11.
+The player will create a new window, display the bitstream, and exit.
+Any error messages or notices are sent to stderr. 
+.SH OPTIONS
+.HP
+.B -nob 
+: causes the player to ignore and not display any B frames.
+.HP
+.B -nop 
+: causes the player to ignore and not display any P and B frames.
+.HP
+.B -display display_name 
+: causes the player to open the window on the display \fIdisplay_name\fP.
+.HP
+.B -quality [on|off]
+: forces player to choose output quality over speed when on, and vice versa
+when off.  When quality is on, the player uses a computationally expensive
+IDCT and also improves playback through improved handling of half pixel
+motion vectors.  The default can be set to on if you compile mpeg_play 
+with the flag -DQUALITY.
+.HP
+.B -dither dither_option 
+: selects from a variety of dither options. The possible values are:
+.RS
+.HP
+ordered - ordered dither. 
+.HP
+ordered2 - a faster ordered dither. This is the default.
+.HP
+mbordered - ordered dithering at the macroblock level. Although there
+is a noticeable decrease in dither quality, this is the fastest dither
+available.
+.HP
+fs4 - Floyd-Steinberg dithering with 4 error values propagated.
+.HP
+fs2 - Floyd-Steinberg dithering with 2 error values propagated.
+.HP
+fs2fast - Fast Floyd-Steinberg dithering with 2 error values propagated.
+.HP
+hybrid - Hybrid dithering, a combination of ordered dithering for the luminance
+channel and Floyd-Steinberg 2 error dithering for the chrominance channels. Errors
+are NOT propagated properly and are dropped all together every two pixels in either
+direction.
+.HP
+hybrid2 - Hybrid dithering as above, but with error propagation among pixels.
+.HP
+2x2 - A dithering technique using a 2x2 pixel area for each pixel. The image displayed
+is 4 times larger than the original image encoded. Random error terms are added to 
+each pixel to break up contours and gradients.
+.HP
+gray - Grayscale dithering. The image is dithered into 128 grayscales. Chrominance
+information is thrown away.
+.HP
+gray256 - Grayscale dithering. The image is dithered into 256 grayscales
+(requires private colormap). Chrominance information is thrown away.
+.HP
+color - Full color display (only available on 16/24 bit color displays).
+.HP
+color2 - Full color display with increased size (only available on 16/24
+bit color displays).
+.HP
+none - no dithering is done, no image is displayed. Used to time decoding process.
+.HP
+mono - Floyd-Steinberg dithering for monochrome displays.
+.HP
+threshold - Floyd-simple dithering for monochrome displays.
+.HP
+ppm - Write a PPM file for each frame.
+.RE
+.HP
+.B -loop
+: makes the player loop back to the beginning after reaching the end.
+.HP 
+.B -owncm
+: makes the player use a private colormap for the window.
+.HP 
+.B -step
+: requires the user to press return for each new frame.
+.HP 
+.B -seek offset
+: before playing the movie, seek to the given offset in the file (useful
+for large movies).  In this case -end is redefined to give the number of
+frames to play, and -start has no meaning.  The offset should point to a
+Sequence or (closed) GOP header, but data will be discarded until one is
+found.
+The initial sequence header will be parsed before the seek.  The skipped
+sections must not change the quantization matrices or the results are
+undefined. 
+.HP
+.B -start num
+: Waits to start display until this frame number (previous frames are
+parsed).
+.HP 
+.B -end num
+: ends display at this frame number (except when -seek is used).
+.HP
+.B -gamma gamma_correction_param
+: specifies the amount of gamma correction.  Default is 1.0.  Use higher
+values if movie looks dark and hard to see.
+.HP 
+.B -framerate num
+: sets the framerate of the playback to num frames per second.  A value of
+0 indicates that the stream should be played as fast as possible.  The
+default is to play at the rate specified in the stream (if possible).  Note
+this is merely a framerate limiter, it will not discard frames to meet the
+rate.
+.HP 
+.B -quiet
+: suppresses printing of frame numbers, timing information, and most error
+messages.
+.HP
+.B -eachstat
+: causes statistics to be displayed after each frame. Only valid when
+compiled with -DANALYSIS.
+.HP
+.B -shmem_off
+: turns shared memory off.
+.HP
+.B -l_range num_colors
+: sets the number of colors assigned to the luminance component when
+dithering the image.  The product of l_range, cr_range and cb_range
+should be less than the number of colors on the display.
+.HP
+.B -cr_range num_colors
+: sets the number of colors assigned to the red component of the
+chrominance range when dithering the image.  The product of l_range,
+cr_range and cb_range should be less than the number of colors on the
+display.
+.HP
+.B -cb_range num_colors
+: sets the number of colors assigned to the blue component of the
+chrominance range when dithering the image.  The product of l_range,
+cr_range and cb_range should be less than the number of colors on the
+display.
+.HP
+.B -no_display
+: dithers, but does not display, usually used for testing and timing
+purposes.
+.SH NOTES
+The player expects video streams only. It can handle multiplexed MPEG streams
+(video+audio streams) by discarding the audio. 
+.LP
+Some streams do not end with the proper sequence end code and will probably generate
+an "Improper sequence end code." error when done playing.
+.LP
+This player can play XING data files. Be aware that XING makes no use of temporal 
+redundancy or motion vector information. In other words, they do not use any P or 
+B frames in their streams. Instead, XING data is simply a sequence of I frames. Since
+I frames take significantly longer to decode, performance of the player using XING
+data is not representative of the player's ability.
+.LP
+The player does not play MPEG-1 D-frame streams, but they are a rarity.
+.SH VERSION
+This is version 2.1, containing some new features since 2.0, and several bug
+fixes.  It is a major change since version 1.0.
+.SH BUGS
+The only known bug is that multiple mpeg_plays cannot seem to be run
+simultaneously on a multiprocessor SPARC 20 or a SparcCenter 2000E
+(in particular: On a bi-processor Sparc 20/20 sparc-processor 2000E running 
+Solaris 2.3 or 2.4, it is not possible to run two concurrent "mpeg_play -loop" 
+on the same bitstream.  One of the mpeg_play dies when it loops.  This
+may be a problem with the X shared memory library and not our code.
+)
+.SH AUTHORS
+.HP
+Ketan Patel - University of California, Berkeley, kpatel@cs.berkeley.edu
+.HP
+Brian Smith - University of California, Berkeley, bsmith@cs.berkeley.edu
+.HP
+Henry Chi-To Ma - University of California, Berkeley, cma@cs.berkeley.edu
+.HP
+Kim Man Liu - University of California, Berkeley, kliu@cs.berkeley.edu
+.HP
+Steve Smoot - University of California, Berkeley, smoot@cs.berkeley.edu
+.HP
+Eugene Hung - University of California, Berkeley, eyhung@cs.berkeley.edu
+
