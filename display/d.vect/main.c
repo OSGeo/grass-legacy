@@ -100,7 +100,7 @@ main (int argc, char **argv)
 	fcolor_opt = G_define_option() ;
 	fcolor_opt->key        = "fcolor" ;
 	fcolor_opt->type       = TYPE_STRING ;
-	fcolor_opt->answer     = "white" ;
+	fcolor_opt->answer     = "gray" ;
 	fcolor_opt->description= "Area fill color" ;
 
 	lfield_opt = G_define_standard_option(G_OPT_V_FIELD) ;
