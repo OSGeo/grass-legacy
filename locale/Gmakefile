@@ -12,7 +12,7 @@ LOC_DIR = $(GISBASE)/locale
 MSGFMT = msgfmt
 LOCALES = ru
 
-all: mofiles
+all: mofiles tcltkgrass textintro
 
 mofiles:
 	@test -d $(LOC_DIR) || mkdir $(LOC_DIR)
@@ -29,32 +29,40 @@ mofiles:
 	    done); \
 	done
 
-# doesn't work - blindly installs Russian tcltkgrass
+
 tcltkgrass:
 	@test -d $(GISBASE)/tcltkgrass || echo "ERROR: TCLTKGRASS not found"
+	@test -d $(LOC_DIR) || mkdir $(LOC_DIR)
 
 	for LCL in $(LOCALES) ; do \
+	    NLOC_DIR=$(LOC_DIR)/$$LCL; \
+	    test -d $$NLOC_DIR || mkdir $$NLOC_DIR; \
+	    test -d $$NLOC_DIR/tcltkgrass || mkdir $$NLOC_DIR/tcltkgrass; \
+	    test -d $$NLOC_DIR/tcltkgrass/main || mkdir $$NLOC_DIR/tcltkgrass/main; \
+	    test -d $$NLOC_DIR/tcltkgrass/module || mkdir $$NLOC_DIR/tcltkgrass/module; \
 	    test -d $$LCL/tcltkgrass/main && (cd $$LCL/tcltkgrass/main; \
-	    for h in *.tcl; do \
+	    for h in *; do \
 	        test -d $$h && continue; \
-		test -d $(GISBASE)/tcltkgrass/module && cp $$h $(GISBASE)/tcltkgrass/main; \
+		cp $$h $$NLOC_DIR/tcltkgrass/main; \
 	    done); \
-	    test -f $$LCL/tcltkgrass/main/gis_set.tcl \
-	    	&& test -d $(GISBASE)/tcltkgrass/script \
-	    	&& cp $$LCL/tcltkgrass/main/gis_set.tcl $(GISBASE)/tcltkgrass/script; \
 	    test -d $$LCL/tcltkgrass/module && (cd $$LCL/tcltkgrass/module; \
 	    for h in *; do \
 	        test -d $$h && continue; \
-	        test -d $(GISBASE)/tcltkgrass/module && cp $$h $(GISBASE)/tcltkgrass/module; \
+	        cp $$h $$NLOC_DIR/tcltkgrass/module; \
 	    done); \
+	test -d $$LCL/tcltkgrass/script/msgs && (cp -a $$LCL/tcltkgrass/script/msgs $(GISBASE)/tcltkgrass/script;) \
 	done
 
-# doesn't work - version.sed missing
 textintro:
+	@test -d $(LOC_DIR) || mkdir $(LOC_DIR)
+
 	for LCL in $(LOCALES) ; do \
-		test -f $$LCL/init.sh && test -f $(SRC)/general/init/version.sed && cd $$LCL/; \
-sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" init.sh > $(GISBASE)/etc/Init.sh; \
+		NLOC_DIR=$(LOC_DIR)/$$LCL; \
+		test -d $$NLOC_DIR || mkdir $$NLOC_DIR; \
+		test -d $$NLOC_DIR/etc || mkdir $$NLOC_DIR/etc; \
+		test -f $$LCL/license.txt && test -f $(SRC)/general/init/version.sed && cd $$LCL/; \
+sh $(SRC)/general/init/version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" license.txt > $$NLOC_DIR/etc/license; \
 		test -f $$LCL/grass_intro.txt && test -f $(SRC)/general/init/version.sed && cd $$LCL/; \
-sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" grass_intro.txt > $(GISBASE)/etc/grass_intro; \
+sh $(SRC)/general/init/version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" grass_intro.txt > $$NLOC_DIR/etc/grass_intro; \
 	done
 
