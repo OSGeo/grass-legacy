@@ -7,7 +7,7 @@
 
 typedef struct {
     double x, y;
-    int cat[2]; /* category in map a and b */
+    struct line_cats *cat[2]; /* category in map a and b */
     char valid; 
 } CENTR; 
 

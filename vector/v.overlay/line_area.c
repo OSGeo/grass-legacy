@@ -13,20 +13,36 @@
 #include "Vect.h"
 #include "local.h"
 
-/* Check if point is inside area with category of given field and returns 0 or category */
-int point_area ( struct Map_info *Map, int field, double x, double y)
+/* Check if point is inside area with category of given field. All cats are set in 
+ * Cats with original field.
+ * returns number of cats.
+ */
+int point_area ( struct Map_info *Map, int field, double x, double y, struct line_cats *Cats)
 {
-    int area, cat;
+    int i, area, cat, centr;
+    struct line_cats *CCats = NULL;
     
+    Vect_reset_cats ( Cats );
     area = Vect_find_area ( Map, x, y );
     G_debug (4, "  area = %d", area );
 
     if (!area) return 0;
 
     cat = Vect_get_area_cat ( Map, area, field );
-    G_debug (4, "  cat = %d", cat );
+    centr = Vect_get_area_centroid ( Map, area );
 
-    return cat;
+    if ( centr <= 0) return 0;
+
+    if ( !CCats ) CCats = Vect_new_cats_struct();
+    Vect_read_line ( Map, NULL, CCats, centr);
+    
+    for ( i = 0 ; i < CCats->n_cats; i++ ) {
+	if ( CCats->field[i] == field ) {
+	    Vect_cat_set ( Cats, field, CCats->cat[i]);
+	}
+    }
+
+    return Cats->n_cats;
 }
 
 int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct field_info *Fi, 
@@ -34,13 +50,15 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 {
     int    line, nlines, ncat;
     struct line_pnts *Points;
-    struct line_cats *Cats;
+    struct line_cats *Cats, *ACats, *OCats;
 
     char     buf[1000];
     dbString stmt;
 
     Points = Vect_new_line_struct();
     Cats = Vect_new_cats_struct();
+    ACats = Vect_new_cats_struct();
+    OCats = Vect_new_cats_struct();
     db_init_string (&stmt);
 
     /* Basic topology needed only */
@@ -57,8 +75,7 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
     /* Check if the line is inside or outside binput area */
     ncat = 1;
     for ( line = 1; line <= nlines; line++ ) {
-	int ltype, acat, lcat;
-
+	int ltype;
 
 	G_percent ( line, nlines, 1 ); /* must be before any continue */
 	
@@ -92,40 +109,66 @@ int line_area ( struct Map_info *In, int *field, struct Map_info *Out, struct fi
 	
 	G_debug (3, "line = %d", line );
 
-	acat = point_area(&(In[1]), field[1], (Points->x[0]+Points->x[1])/2, (Points->y[0]+Points->y[1])/2);
+	point_area(&(In[1]), field[1], (Points->x[0]+Points->x[1])/2, (Points->y[0]+Points->y[1])/2, ACats);
 
-	if ( (acat > 0 && operator == OP_AND) || (acat < 1 && operator == OP_NOT)  ) {
+	if ( (ACats->n_cats > 0 && operator == OP_AND) || (ACats->n_cats == 0 && operator == OP_NOT)  ) {
+	    int i;
+	    
 	    /* Point is inside */
-	    G_debug (3, "  -> OK, write line" );
+	    G_debug (0, "  OK, write line, line ncats = %d area ncats = %d", Cats->n_cats, ACats->n_cats );
 	    
-	    /* rewrite with area cat */
-	    Vect_cat_get(Cats, field[0], &lcat);
-	    
-	    Vect_reset_cats ( Cats );
-	    Vect_cat_set (Cats, 1, ncat );
-	    Vect_cat_set (Cats, 2, lcat);
-	    if ( operator == OP_AND )
-	        Vect_cat_set (Cats, 3, acat);
-	    
-	    Vect_rewrite_line ( Out, line, ltype, Points, Cats );
+	    Vect_reset_cats ( OCats );
 
-	    /* Attributes */
-	    sprintf ( buf, "insert into %s values ( %d, %d", Fi->table, ncat, lcat ); 
-	    db_set_string ( &stmt, buf);
+	    /* rewrite with all combinations of acat - bcat (-1 in cycle for null) */
+	    for ( i = -1; i < Cats->n_cats; i++ ) { /* line cats */
+		int j;
 
-	    if ( operator == OP_AND )
-		 sprintf ( buf, ", %d )", acat );
-	    else
-		 sprintf ( buf, ")");
-	    
-	    db_append_string ( &stmt, buf);
+		if ( i == -1 && Cats->n_cats > 0 ) continue; /* no need to make null */
 
-	    G_debug ( 3, db_get_string ( &stmt ) );
+		for ( j = -1; j < ACats->n_cats; j++ ) {
+		    if ( j == -1 && ACats->n_cats > 0 ) continue; /* no need to make null */
 
-	    if (db_execute_immediate (driver, &stmt) != DB_OK )
-		G_warning ( "Cannot insert new row: %s", db_get_string ( &stmt ) );
+		    Vect_cat_set (OCats, 1, ncat);
 
-	    ncat++;
+		    /* Attributes */
+		    if ( driver ) { 
+			sprintf ( buf, "insert into %s values ( %d", Fi->table, ncat ); 
+			db_set_string ( &stmt, buf);
+
+			/* cata */
+			if ( i >= 0 )
+			     sprintf ( buf, ", %d", Cats->cat[i] );
+			else
+			     sprintf ( buf, ", null");
+			
+			db_append_string ( &stmt, buf);
+
+			/* catb */
+			if ( j >= 0 )
+			    sprintf ( buf, ", %d )", ACats->cat[j] );
+			else 
+			     sprintf ( buf, ", null )");
+
+			G_debug ( 3, db_get_string ( &stmt ) );
+
+			if (db_execute_immediate (driver, &stmt) != DB_OK )
+			    G_warning ( "Cannot insert new row: %s", db_get_string ( &stmt ) );
+		    }
+
+		    ncat++;
+		}
+	    }
+
+	    /* Add all cats from imput vectors */
+	    for ( i = 0 ; i < Cats->n_cats; i++ ) {
+		Vect_cat_set ( OCats, 2, Cats->cat[i]);
+	    }
+
+	    for ( i = 0 ; i < ACats->n_cats; i++ ) {
+		Vect_cat_set ( OCats, 3, ACats->cat[i]);
+	    }
+
+	    Vect_rewrite_line ( Out, line, ltype, Points, OCats );
 	} else {
 	    Vect_delete_line ( Out, line );
 	}
