@@ -22,28 +22,28 @@ For further available drivers go
 
 <h2>EXAMPLE</h2>
 
-Export lines of GRASS 5.7 vector map to SHAPE format (generates /tmp/testogr.shp #and related files):
+Export <b>lines</b> from GRASS vector map to SHAPE format (generates /tmp/testogr.shp and related files):
 <br>
 <b>v.out.ogr input=</b><em>multi</em> <b>typ=</b><em>line</em> 
 <b>dsn=</b><em>/tmp</em> <b>layer=</b><em>testogr</em>
 
 <p>
 
-Export areas of GRASS 5.7 vector map to SHAPE format (generates /tmp/testogr.shp #and related files):
+Export <b>areas</b> from GRASS vector map to SHAPE format (generates /tmp/testogr.shp and related files):
 <br>
-<b>v.out.ogr input=</b><em>multi</em> <b>typ=</b><em>area,centroid</em> 
+<b>v.out.ogr input=</b><em>multi</em> <b>typ=</b><em>area</em> 
 <b>dsn=</b><em>/tmp</em> <b>layer=</b><em>testogr</em>
 
 <p>
 
-Export lines to GML format (generates /tmp/testogr.gml file with layer 'testogr'):
+Export <b>lines</b> from GRASS vector map to GML format (generates /tmp/testogr.gml file with layer 'testogr'):
 <br>
 <b>v.out.ogr input=</b><em>multi</em> <b>type=</b><em>line</em> 
 <b>dsn=</b><em>/tmp/testogr.gml</em> <b>layer=</b><em>testogr</em> 
 <b>format=</b><em>GML</em>
 <p>
 
-Export areas directly to PostGIS:
+Export <b>areas</b> from GRASS vector map directly to PostGIS:
 <br>
 <b>v.out.ogr input=</b><em>polygons</em> <b>type=</b><em>area</em>
 <b>dsn=</b><em>"PG:host=localhost dbname=postgis user=postgres"</em> <b>layer=</b><em>polymap</em>
