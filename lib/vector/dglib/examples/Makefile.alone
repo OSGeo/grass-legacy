@@ -1,13 +1,16 @@
-CFLAGS = -I../include -g
-LNFLAGS = -L.. -ldgl
-PROGRAMS = cr_from_a view shortest_path
-OBJECTS = opt.o cr_from_a.o view.o shortest_path.o
+CFLAGS = -Wall -I../include -DGNGRP_STATS -DGNGRP_NEWCLIP
+LNFLAGS = -L.. -ldgl -lm
+PROGRAMS = cr_from_a view shortest_path cr_large_graph
+OBJECTS = opt.o cr_from_a.o view.o shortest_path.o cr_large_graph.o
 
 
 all: $(PROGRAMS)
 
 cr_from_a: cr_from_a.o opt.o
 	cc -o $@ cr_from_a.o opt.o $(LNFLAGS)
+
+cr_large_graph: cr_large_graph.o opt.o
+	cc -o $@ cr_large_graph.o opt.o $(LNFLAGS)
 
 view: view.o opt.o
 	cc -o $@ view.o opt.o $(LNFLAGS)
