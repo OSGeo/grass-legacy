@@ -47,6 +47,12 @@ extracted into the message files.
 
 See for example ./vector/v.what.rast/main.c
 
+NOTE3: Such lines
+        fprintf (stdout,"\n");
+  become simply:
+ 	G_message ("\n");
+  as no translation is needed.
+
 ------------------------------------------------------
 
 GENERAL TRANSLATION PROCEDURE (no programming required)
