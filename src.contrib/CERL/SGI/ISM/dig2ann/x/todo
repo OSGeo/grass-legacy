@@ -1,0 +1,30 @@
+
+dig2ann
+=======
+
+LINE:  
+	line style		1-10
+	color			1-8
+	labelling  (cat)	
+
+    if Cats:
+	Display labels:  Y/N
+
+    User specified:  line style[1], color[1] 
+	OR
+    if (# cats <= 8)
+	color = index
+    else
+	Random assignment % Num_styles (sans railroad) and colors
+
+Poly:
+	fill style		0,1-21
+	fill size		1-10
+	color			1-8
+	labelling (cat)
+
+    if (!labelled) fill pattern = 0, color = 1, size = 1
+
+    User specified:  fill pattern[2], color[1], size[1]
+	OR
+    random assignment  of  style(sans 0), color, size(1-5)
