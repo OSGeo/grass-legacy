@@ -1,0 +1,33 @@
+.\" %W% %G%
+.TH filtermap 1
+.SH NAME
+filtermap \- generate filtered map layer
+.br
+.I (GRASS-GRID Tool)
+.SH SYNOPSIS
+.nf
+filtermap
+.fi
+.SH DESCRIPTION
+Filtermap
+generates an output layer from the input layer by filtering
+the data. Input is interactive.  The user enters input map
+name, output map name, and the desired number of filter
+iterations.  The filtering is done on 3x3 neighborhoods,
+with the following weighted average:
+.NF
+1 2 1
+2 4 2  /  16
+1 2 1
+.FI
+The filtering is done only on the input values, not on rows
+already averaged during the filtering process.
+.SH NOTES
+filtermap works properly with supercell layers.
+The current window setting is ignored.  Instead,
+the window of the input map layer is used.
+
+.SH "AUTHOR"
+Marjorie Larson, U.S. Army Construction Engineering Research Laboratory
+.br
+Larry Band, Dept. of Geography, University of Toronto
