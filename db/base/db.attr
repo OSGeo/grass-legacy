@@ -29,8 +29,7 @@ set suf [$sf getframe]
 
 for {set i 0} {$i < $ncols} {incr i} {
     frame $suf.rw$i -width 300
-    label $suf.rw$i.col -width $colen -text "$col($i)" -anchor w
-   
+    label $suf.rw$i.col -width $colen -text "$col($i)" -anchor w   
     Entry $suf.rw$i.val -width 100 -text $val($i) -textvariable val($i)
     if { $i == 0} { $suf.rw$i.val configure -editable 0 }
     pack $suf.rw$i $suf.rw$i.col -side left
@@ -38,7 +37,7 @@ for {set i 0} {$i < $ncols} {incr i} {
     pack $sf $suf.rw$i -side top
 }
 $suf.rw0.val configure -editable 0
-pack $sw $sf
+pack $sw $sf -expand yes -fill both
 
 button .update -text "Update" -command {
 	set cmd "update $table set " 
