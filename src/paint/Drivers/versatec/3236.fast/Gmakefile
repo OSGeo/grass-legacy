@@ -1,0 +1,4 @@
+$(ETC)/paint/driver.sh/v3236.fast: DRIVER.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
