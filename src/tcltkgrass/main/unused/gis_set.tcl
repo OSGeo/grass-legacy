@@ -56,29 +56,23 @@ proc putGRASSRC { filename } {
 
   global grassrc_list
 
-  puts stderr "$filename"
   set ofp [open $filename "w"]
 
   foreach i $grassrc_list {
-      puts stderr "$i"
       if { [regexp {^GISDBASE:} $i] } \
       {
-      	  puts stderr "dbase = $database"
 	  puts $ofp "GISDBASE: $database"
       } \
       elseif { [regexp {^LOCATION_NAME:} $i] } \
       {
-      	  puts stderr "location = $location"
-	  puts $ofp "LOCATION_NAME: $location"
+ 	  puts $ofp "LOCATION_NAME: $location"
       } \
       elseif { [regexp {^MAPSET:} $i] } \
       {
-      	  puts stderr "mapset = $mapset"
           puts $ofp "MAPSET: $mapset"
       } \
       else \
       {
-      	  puts stderr "none"
       	  puts $ofp $i
       }
   }
