@@ -7,9 +7,9 @@
 *                           (puck or keyboard)
 *  get_reg_response()  -  get user response (puck or keyboard)
 */
-
 #include	<stdio.h>
 #include	"map.h"
+#include        "ginput.h" 
 
 #define	LEAVE -1
 #define	ADD_MORE 0
@@ -27,7 +27,6 @@ register_map_coor ( n_points)
 	double  X, Y ;
 	char	buff[85] ;
 
-
 show_reg_menu() ;
 
 i = 0 ;
@@ -43,7 +42,9 @@ while (1)
 
 	/*  if there are enough points registered compute residuals  */
 	if(reg_cnt >= MIN_COOR)
-		status = compute_transformation_coef (ax, ay, bx, by, use, MAX_COOR) ;
+	{
+	    status = compute_transformation_coef (ax, ay, bx, by, use, MAX_COOR) ;
+	}
 	else
 		status = -2 ;
 
@@ -53,10 +54,14 @@ while (1)
 		show_residual_results(n_points, i ) ;
 	}
 	else
+	{
 		show_coor_only(n_points, i, status ) ;
+	}
 
+/*DEBUG*/ debugf ("looking for response\n");
 	action = get_reg_response( &X, &Y) ;
 
+/*DEBUG*/ debugf ("action  = %d\n", action);
 	switch (action)
 	{
 		case 1:  /*  point registered  */
@@ -145,12 +150,20 @@ show_reg_menu()
 	char  buf[100] ;
 
 	/*  for digitizers with keys to press  */
+#ifdef CURSORKEYS
 	if (D_cursor_buttons() )
+#endif
 	{
 		/*  how are the buttons numbered on the cursor  */
 		first_button = D_start_button() ;
-
-		Write_info( 1, "            USING DIGITIZER CURSOR FOR INPUT") ;
+#ifdef USE_KEYS
+		Write_info( 1, " USE DIGITIZER CURSOR OR KEYBOARD FOR INPUT") ;
+#else
+		if (D_cursor_buttons() < 5)
+		    Write_info( 1, "USE KEYBOARD FOR INPUT") ;
+		else
+		    Write_info( 1, "USE DIGITIZER CURSOR FOR INPUT") ;
+#endif
 
 		sprintf( buf, "  Key <%d> - register point,      Key<%d> - add more points", first_button, first_button+3) ;
 		Write_info( 2, buf) ;
@@ -163,6 +176,7 @@ show_reg_menu()
 
 		return(0) ;
 	}
+#ifdef CURSORKEYS
 
 	/*  for digitizers with no keys to press and they have to walk across
 	* the room to use the keyboard.
@@ -172,7 +186,7 @@ show_reg_menu()
 	Write_info( 2, "  s - skip a point") ;
 	Write_info( 3, "  u - unregister point") ;
 	Write_info( 4, "  a - add more points") ;
-
+#endif
 }
 
 get_reg_response( x, y)
@@ -184,7 +198,9 @@ get_reg_response( x, y)
 
 
 /*  we are using the cursor, keep looking until we see a button we can use */
-	if (D_cursor_buttons() )
+#ifdef CURSORKEYS
+        if (D_cursor_buttons())
+#endif
 	{
 		while( 1)
 		{
@@ -192,7 +208,6 @@ get_reg_response( x, y)
 			if (button >= 1  &&  button <= 5)
 				break ;
 		}
-
 		return( button) ;
 	}
 
@@ -201,18 +216,21 @@ get_reg_response( x, y)
 *  with the buttons above 
 */
 
-
+#ifdef CURSORKEYS
 	while(1)
 	{
-		Get_curses_char( &key) ;
+
+		Get_curses_char( &key) ; 
 
 		switch (key)
 		{
 			case 'r':
 			D_clear_driver() ;
-			D_read_raw( &xraw, &yraw) ;
+			D_read_raw( &xraw, &yraw) ; 
+			
 			*x = (double)xraw ;
 			*y = (double)yraw ;
+	
 				return(1) ;
 				break ;
 			case 's':
@@ -232,5 +250,5 @@ get_reg_response( x, y)
 		}
 
 	}	/*  while(1)  */
-
+#endif
 }
