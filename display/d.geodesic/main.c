@@ -46,8 +46,8 @@ int main (int argc, char *argv[])
     parm.tcolor->key        = "tcolor" ;
     parm.tcolor->type       = TYPE_STRING ;
     parm.tcolor->required   = NO ;
-    parm.tcolor->description= "Text color" ;
-    parm.tcolor->options    = D_color_list();
+    parm.tcolor->description= "Text color or \"none\"" ;
+/*    parm.tcolor->options    = D_color_list(); */
 
     if (G_parser(argc, argv))
         exit(-1);
@@ -63,6 +63,9 @@ int main (int argc, char *argv[])
     use_mouse = 1;
     if (parm.coor->answer)
     {
+	if(parm.coor->answers[0] == NULL)
+	    G_fatal_error("No coordinates given");
+
         if (!G_scan_easting (parm.coor->answers[0], &lon1, G_projection())) 
 	{
 	    G_usage();
@@ -100,6 +103,8 @@ int main (int argc, char *argv[])
 
     if (parm.tcolor->answer == NULL)
 	text_color = D_translate_color (deftcolor);
+    else if(strcmp (parm.tcolor->answer, "none") == 0)
+	text_color = -1;
     else
 	text_color = D_translate_color (parm.tcolor->answer);
 
