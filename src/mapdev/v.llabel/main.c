@@ -1,9 +1,13 @@
 /* updated by Roger Miller <rgrmill@rt66.com> 4/02 */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 #include "gis.h"
+#include "dig_atts.h"
 #include "Vect.h"
 
+int
 main (argc, argv)
     char *argv[];
 {
@@ -19,7 +23,7 @@ main (argc, argv)
     struct line_pnts *Points;
     FILE *afp;
     double X, Y;
-    int i, ret;
+    int i;
     int cnt = 0;
     int label, type, otype;
     char tp;
