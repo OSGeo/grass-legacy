@@ -37,9 +37,11 @@ Nget_to_cmd(),
 Nget_from_cmd(),
 Nlook_here_cmd(),
 Nset_focus_cmd(),
+Nset_focus_real_cmd(),
 Nset_focus_top_cmd(),
 Nset_focus_gui_cmd(),
 Nget_focus_gui_cmd(),
+Nget_real_position_cmd(),
 Nget_focus_cmd(),
 Nhas_focus_cmd(),
 Nset_focus_map_cmd(),
@@ -212,12 +214,15 @@ int init_commands(Tcl_Interp * interp, Nv_data * data)
     Tcl_CreateCommand(interp, "Nhas_focus", Nhas_focus_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nget_focus", Nget_focus_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nset_focus", Nset_focus_cmd, data, NULL);
+    Tcl_CreateCommand(interp, "Nset_focus_real", Nset_focus_real_cmd, data, NULL);
     Tcl_CreateCommand(interp, "Nset_focus_top", Nset_focus_top_cmd, data,
 		      NULL);
     Tcl_CreateCommand(interp, "Nset_focus_gui", Nset_focus_gui_cmd, data,
 		      NULL);
     Tcl_CreateCommand(interp, "Nget_focus_gui", Nget_focus_gui_cmd, data,
 		      NULL);
+    Tcl_CreateCommand(interp, "Nget_real_position", Nget_real_position_cmd, data,
+		    NULL);
     Tcl_CreateCommand(interp, "Nset_focus_map", Nset_focus_map_cmd, data,
 		      NULL);
     Tcl_CreateCommand(interp, "Nset_no_focus", Nset_no_focus_cmd, data, NULL);

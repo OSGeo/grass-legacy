@@ -182,6 +182,50 @@ int Nget_focus_gui_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpret
 
 }
 
+/************************************************************/
+int Nget_real_position_cmd (Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
+		       int argc,	/* Number of arguments. */
+		       char **argv	/* Argument strings. */
+    )
+{
+float realto[3];
+int pos_flag;
+char *list[3], east[32], north[32], elev[32];
+
+    if (argc != 2)
+	return (TCL_ERROR);
+    pos_flag = atoi(argv[1]);
+    
+    if (pos_flag == 1) {
+    /* Get from position in real coords */
+	GS_get_from_real(realto);
+	
+	sprintf(east, "%f", realto[0]);
+	list[0] = east;
+	sprintf(north, "%f", realto[1]);
+	list[1] = north;
+	sprintf(elev, "%f", realto[2]);
+	list[2] = elev;
+		
+	Tcl_SetResult(interp, Tcl_Merge(3, list), TCL_VOLATILE);
+	
+      } else {
+      /* Get to position in real coords */
+      GS_get_to_real(realto);
+      	sprintf(east, "%f", realto[0]);
+	list[0] = east;
+	sprintf(north, "%f", realto[1]);
+	list[1] = north;
+	sprintf(elev, "%f", realto[2]);
+	list[2] = elev;
+
+      Tcl_SetResult(interp, Tcl_Merge(3, list), TCL_VOLATILE);
+      }
+	
+	return (TCL_OK);
+	
+}
+
 /***********************************/
 int Nset_focus_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
 		   int argc,	/* Number of arguments. */
@@ -195,6 +239,25 @@ int Nset_focus_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. 
 	realto[1] = (float) atof(argv[2]);
 	realto[2] = (float) atof(argv[3]);
 	GS_set_focus(realto);
+    }
+
+    return (TCL_OK);
+
+}
+
+/***********************************/
+int Nset_focus_real_cmd(Nv_data * data, Tcl_Interp * interp,	/* Current interpreter. */
+		   int argc,	/* Number of arguments. */
+		   char **argv	/* Argument strings. */
+    )
+{
+    float realto[3];
+
+    if (argc == 4) {
+	realto[0] = (float) atof(argv[1]);
+	realto[1] = (float) atof(argv[2]);
+	realto[2] = (float) atof(argv[3]);
+	GS_set_focus_real(realto);
     }
 
     return (TCL_OK);

@@ -695,15 +695,26 @@ int set_drawmode(Tcl_Interp * interp, int type, int id, Nv_data * data,
     /* Set the mode flags by parsing the surface style and shading arguments */
     mode = 0;
 
-    if (!strcmp(argv[3], "gouraud"))
+    if (!strcmp(argv[4], "gouraud"))
 	mode |= DM_GOURAUD;
-    else if (!strcmp(argv[3], "flat"))
+    else if (!strcmp(argv[4], "flat"))
 	mode |= DM_FLAT;
     else {
 	Tcl_SetResult(interp,
-		      "Usage: <map_obj> set_drawmode [ poly | wire_poly | wire | col_wire] [ gouraud | flat ]",
+		      "Usage: <map_obj> set_drawmode [ poly | wire_poly | wire | col_wire] [grid_wire | grid_surf] [ gouraud | flat ]",
 		      TCL_VOLATILE);
 	return (TCL_ERROR);
+    }
+
+    if (!strcmp(argv[3], "grid_wire"))
+	    mode |= DM_GRID_WIRE;
+    else if (!strcmp(argv[3], "grid_surf"))
+	    mode |= DM_GRID_SURF;
+    else {
+	    Tcl_SetResult(interp,
+			    "Usage: <map_obj> set_drawmode [ poly | wire_poly | wire | col_wire] [grid_wire | grid_surf] [ gouraud | flat ]",
+			    TCL_VOLATILE);
+	    return (TCL_ERROR);
     }
 
     if (!strcmp(argv[2], "poly"))
@@ -716,7 +727,7 @@ int set_drawmode(Tcl_Interp * interp, int type, int id, Nv_data * data,
 	mode |= DM_COL_WIRE;
     else {
 	Tcl_SetResult(interp,
-		      "Usage: <map_obj> set_drawmode [ poly | wire_poly | wire | col_wire] [ gouraud | flat ]",
+		      "Usage: <map_obj> set_drawmode [ poly | wire_poly | wire | col_wire] [grid_wire | grid_surf] [ gouraud | flat ]",
 		      TCL_VOLATILE);
 	return (TCL_ERROR);
     }
@@ -735,8 +746,8 @@ int set_drawmode(Tcl_Interp * interp, int type, int id, Nv_data * data,
 int get_drawmode(int type, int id, Nv_data * data, Tcl_Interp * interp)
 {
     int mode;
-    char surf[32], shade[32];
-    char *list[3];
+    char surf[32], wire[32], shade[32];
+    char *list[4];
 
     /* Make sure we are using a surface */
     if (type != SURF) {
@@ -778,12 +789,24 @@ int get_drawmode(int type, int id, Nv_data * data, Tcl_Interp * interp)
 		      TCL_VOLATILE);
 	return (TCL_ERROR);
     }
+    
+    if (mode & DM_GRID_WIRE)
+	strcpy(wire, "grid_wire");
+    else if (mode & DM_GRID_SURF)
+	strcpy(wire, "grid_surf");
+    else {
+	Tcl_SetResult(interp,
+		      "Internal Error: unknown surface style returned in get_drawmode",
+		      TCL_VOLATILE);
+	return (TCL_ERROR);
+    }
 
     list[0] = shade;
     list[1] = surf;
-    list[2] = NULL;
+    list[2] = wire;
+    list[3] = NULL;
 
-    interp->result = Tcl_Merge(2, list);
+    interp->result = Tcl_Merge(3, list);
     interp->freeProc = (Tcl_FreeProc *) free;
     return (TCL_OK);
 
@@ -1629,9 +1652,13 @@ int set_att(int id, int type, Nv_data * data, Tcl_Interp * interp, int argc,
 		max2 = max / 5;
 		if (max2 < 1)
 		    max2 = 1;
+		/* reset max to finer for coarse surf drawing */
+		max = max2 + max2/2;
+		if (max < 1)
+			max = 1;
 
 		GS_set_drawres(id, max2, max2, max, max);
-		GS_set_drawmode(id, DM_GOURAUD | DM_POLY);
+		GS_set_drawmode(id, DM_GOURAUD | DM_POLY | DM_GRID_SURF );
 	    }
 
 	    /* Not sure about this next line, should probably just
