@@ -60,7 +60,7 @@ setParams ()
   param.output->type = TYPE_STRING;
   param.output->required = YES;
   param.output->multiple = NO ;
-  param.output->gisprompt = "new,cell,raster(2d+3d)" ;
+  param.output->gisprompt = "any,grid3,3d raster";
   param.output->description = "Name for G3d raster map";
 
   param.nv = G_define_option();
