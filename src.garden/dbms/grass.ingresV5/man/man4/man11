@@ -1,0 +1,66 @@
+
+
+
+r.reclass.db()    MISC. REFERENCE MANUAL PAGES     r.reclass.db()
+
+
+
+NAME
+     _r._r_e_c_l_a_s_s._d_b - ENTER ONE LINE DESCRIPTION HERE
+     (_G_R_A_S_S _R_a_s_t_e_r _P_r_o_g_r_a_m)
+
+SYNOPSIS
+     r.reclass.db
+     r.reclass.db help
+     r.reclass.db  sql=_n_a_m_e  key=_n_a_m_e  input=_n_a_m_e   [output=_n_a_m_e]
+     [label=_n_a_m_e]
+
+DESCRIPTION
+     enter short description of r.reclass.db here
+
+
+COMMAND LINE OPTIONS
+     Parameters
+
+     _s_q_l  Name of file containing SQL query statements.
+
+     _k_e_y  Key column in db.
+
+     _i_n_p_u_t
+          Name of existing raster  file  to  be  reclassed  using
+          query output.
+
+     _o_u_t_p_u_t
+          Name of new raster (reclass),  file.
+
+     _l_a_b_e_l
+          Label for new categories.
+
+
+BUGS
+     Describe known bugs here
+
+
+SEE ALSO
+     Refer reader to related programs here
+
+
+AUTHOR
+     Provide the programmers name and institution
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sun Release 4.1           Last change:                          1
+
+
+
