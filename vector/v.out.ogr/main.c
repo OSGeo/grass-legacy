@@ -79,17 +79,17 @@ main (int argc, char *argv[])
     dsn_opt->key = "dsn";
     dsn_opt->type =  TYPE_STRING;
     dsn_opt->required = YES;
-    dsn_opt->description = "OGR datasource name."
-			   "ESRI Shapefile: directory containing shapefiles"
-			   "MapInfo File: directory containing mapinfo files";
+    dsn_opt->description = "OGR datasource name.\n"
+			   "\t\tESRI Shapefile: directory containing shapefiles\n"
+			   "\t\tMapInfo File: directory containing mapinfo files";
 
     layer_opt = G_define_option();
     layer_opt->key = "layer";
     layer_opt->type = TYPE_STRING;
     layer_opt->required = YES;
-    layer_opt->description = "OGR layer name."
-			   "ESRI Shapefile: shapefile name"
-			   "MapInfo File: mapinfo file name";
+    layer_opt->description = "OGR layer name.\n"
+			   "\t\tESRI Shapefile: shapefile name\n"
+			   "\t\tMapInfo File: mapinfo file name";
     
     field_opt = G_define_standard_option(G_OPT_V_FIELD);
     field_opt->answer = "1";
