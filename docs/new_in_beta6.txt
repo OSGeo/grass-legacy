@@ -1,0 +1,41 @@
+New in GRASS 5 beta6 against beta5
+
+$Id$
+
+Modules:
+- d.area: fixed. Now dynamic allocation to remove the 4096 vector
+    line limit (Bill Hughes)
+
+- i.in.erdas: "-m" reads in map coordinate info (reference) now (Angus Carr)
+- i.out.erdas added (Angus Carr)
+
+- nviz code:  removed MouseWheelEvent problem in compilation (Angus Carr)
+
+- r.coin fixed (hopefully) (Markus Neteler)
+
+- again general sites import bug (in beta6a-d) fixed
+- s.surf.idw import routine updated (Job Spijker, Markus Neteler)
+- s.in.ascii fixed for x y z datasets (like DEM) (Markus Neteler)
+- s.sample fix (Markus Neteler)
+
+- v.in.arc should be fixed (Werner Droege, Alex Shevlakov)
+- v.in.dxf2 added (Ben Johnson)
+
+Shells:
+- i.tasscap.tm5: updated for GRASS 5 (Markus Neteler)
+- r.reclass.area: updated for GRASS 5 (Markus Neteler)
+- slide.show.sh: addec parameter "prefix" to display only selected
+                 files (Markus Neteler)
+
+Source code structure:
+- New source code tree: src.nonGPL/ (modules not shipped with GPL)
+- all libraries under src/libes/ now (Markus Neteler)
+- final upates for prototypes, along with several 'return 0;'
+   (Bill Hughes)
+- updated/checked all Gmakefiles on "mv" command for WIN/Cygnus
+   (John Huddleston)
+- added HUGE, drand48, srand48 for WIN/Cygnus (John Huddleston)
+
+- configure:
+  automatically choosing the diglib64 library at compile-time for 
+  64-bit machines (Bill Hughes)
