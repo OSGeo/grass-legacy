@@ -1,0 +1,11 @@
+# %W% %G%
+
+LIBES = $(IMAGERYLIB) $(GISLIB)
+LIST = main.o\
+	ask_files.o\
+	mke_subgrp.o
+
+$(ETC)/imagery/subgroup: $(LIST) $(LIBES) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK)
+
+$(LIBES) $(VASKLIB): #
