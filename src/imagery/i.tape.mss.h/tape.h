@@ -1,5 +1,3 @@
-/* %W% %G% */
-
 #define BIL		1
 #define BSQ		2
 #define UNKNOWN		0
@@ -31,4 +29,4 @@ GLOBAL char date[30];
 GLOBAL char sun_angle[30];
 GLOBAL char mission[3];
 
-#include <stdio.h>
+#include "gis.h"
