@@ -26,7 +26,6 @@ int what(int once, int terse, int width, int mwidth,
   int notty;
   double maxdist;
   int getz;
-  struct Plus_head *Plus ;
   struct field_info *Fi;
   
   plus_t line, area, centroid ;
@@ -85,10 +84,9 @@ int what(int once, int terse, int width, int mwidth,
       
       for(i=0; i<nvects; i++)
         {
-          Plus = &(Map[i].plus);
           line = Vect_find_line (&Map[i], east, north, 0, 
 		                    GV_POINT|GV_LINE|GV_BOUNDARY|GV_CENTROID,
-				    maxdist);
+				    maxdist, 0);
           area = Vect_find_area (&Map[i], east, north) ;
 	  getz = Vect_tin_get_z (&Map[i], east, north, &z, NULL, NULL);
           
@@ -127,7 +125,7 @@ int what(int once, int terse, int width, int mwidth,
             {
               fprintf (stdout,"Line %d\n", line);
 	      
-	      V2_read_line (Map, Points, Cats, line );
+	      Vect_read_line (Map, Points, Cats, line );
               for(j = 0; j < Cats->n_cats; j++ ) {
                   fprintf (stdout,"field = %d category = %d\n", Cats->field[j],
 			             Cats->cat[j]);
@@ -161,7 +159,7 @@ int what(int once, int terse, int width, int mwidth,
 
 	      centroid = Vect_get_area_centroid ( Map, area );
 	      if ( centroid > 0 ) {
-		  V2_read_line (Map, Points, Cats, centroid );
+		  Vect_read_line (Map, Points, Cats, centroid );
 		  for(j = 0; j < Cats->n_cats; j++ ) {
 		      fprintf (stdout,"field = %d category = %d\n", Cats->field[j],
 					 Cats->cat[j]);

@@ -29,7 +29,7 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
     
     /* Lines */
     for ( el = 1; el <= num; el++ ) {
-	ltype =  V2_read_line (Map, Points, Cats, el );   
+	ltype =  Vect_read_line (Map, Points, Cats, el );   
         G_debug (3, "ltype = %d", ltype);
         switch ( ltype )
 	{
@@ -113,7 +113,7 @@ int topo ( struct Map_info *Map, int type, int do_area, LATTR *lattr ) {
     
     /* Nodes */
     for ( el = 1; el <= num; el++ ) {
-	Vect_get_node_point (Map, el, &xl, &yl );   
+	Vect_get_node_coor (Map, el, &xl, &yl, NULL );   
         G_debug (3, "node = %d", el);
 	
 	X = (int)(D_u_to_d_col(xl)) ;
