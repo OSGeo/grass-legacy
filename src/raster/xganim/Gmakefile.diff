@@ -1,0 +1,6 @@
+20c20,21
+< 	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) -lm -lXm -lXt -lX11
+---
+> 	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) \
+>         $(XMLIBPATH) $(XMLIB) $(XTLIBPATH) $(XTLIB) $(XLIBPATH) $(XLIB) 
+
