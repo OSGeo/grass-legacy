@@ -46,6 +46,9 @@ int main(int argc,char **argv)
 	CELL min_ind, max_ind, null_cell;
 	DCELL dmin, dmax, val;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
 	opt1->type       = TYPE_STRING ;
@@ -88,9 +91,6 @@ int main(int argc,char **argv)
         flag1->key      = 'n';
         flag1->description= "Do not display no data (NULL) values.";
                         
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 	if (G_parser(argc, argv))
