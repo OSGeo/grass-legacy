@@ -6,7 +6,7 @@ then
 	echo 
 	echo "ERROR: must be in GRASS to use $program"
 	echo 
-	exit
+	exit 1
 fi
 
 if [ $# -lt 1 -o "x$1" = "xhelp" ]
@@ -14,7 +14,7 @@ then
 	echo
 	echo "Usage: $program map=name [nsteps=value]"
 	echo
-	exit
+	exit 1
 fi
 
 nsteps=30
@@ -44,3 +44,5 @@ for($i=0;$i<=$#outLines;$i++){
 	printf "%15f  %15d\n",$outLines[$i][0],$outLines[$i][1];
 }
 '
+
+exit 0
