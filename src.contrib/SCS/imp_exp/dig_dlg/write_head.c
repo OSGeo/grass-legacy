@@ -70,7 +70,10 @@ line2 (map, d_head, fp)
     struct dig_head *d_head;
     FILE *fp;
 {
-    fprintf (fp, LINE2_FMT, d_head->map_name, d_head->date, ' ', d_head->orig_scale);
+    if (G_projection() != 0 && G_projection() != 3 )
+       fprintf (fp, LINE2_FMT, d_head->map_name, d_head->date, ' ', d_head->orig_scale);
+    else
+       fprintf (fp, LINE2_FMT, d_head->map_name, d_head->date, ' ', 1);
 }
 
 #define UNIT_FILE "PROJ_UNITS"
@@ -82,7 +85,7 @@ line3 (map, d_head, fp)
     FILE *fp;
 {
     int i, status;
-    char path[100], buf[20];
+    char path[100], buf[50];
     /*
     fprintf (fp, LINE3_FMT);
     */
@@ -107,14 +110,19 @@ line3 (map, d_head, fp)
           sprintf(path,"Current mapset %s not found\n",PROJECTION_FILE);
           G_fatal_error(path) ;
           }
+
            /* read values and create line_3 proj info */
-/*fprintf(stderr,"proj_keys items= %d\n",proj_keys->nitems);*/
        path[0] = '\0';
        for (i=1; i<=proj_keys->nitems-1; i++)
 	  {
 	  sprintf(buf,"%s=%s ",
 	  proj_keys->key[i],proj_keys->value[i]);
 	  strcat(path,buf);
+	  if (strlen(path) > 72)
+	     {
+	     sprintf(path,"%s",proj_keys->value[0]);
+	     break;
+	     }
 	  }
        fprintf (fp, "%-72.72s\n", path);
        }
@@ -141,6 +149,7 @@ line4 (map, d_head, fp)
 {
     int status, line4_proj;
     char mesg[30], *unit_type;
+    double factr, G_database_units_to_meters_factor(); 
 
     switch (G_projection()) {
 	case 0:				/* XY   */
@@ -156,17 +165,29 @@ line4 (map, d_head, fp)
 	default:			/* other projections */
 	    line4_proj = 0;
 	    if (strcmp(proj_keys->value[2],"utm") == 0) line4_proj = 1;
-	    if (strcmp(proj_keys->value[2],"aea") == 0) line4_proj = 4;
+	    if (strcmp(proj_keys->value[2],"aea") == 0) line4_proj = 3;
 	    if (strcmp(proj_keys->value[2],"lcc") == 0) line4_proj = 5;
+	    if (strcmp(proj_keys->value[2],"merc") == 0) line4_proj = 6;
+	    if (strcmp(proj_keys->value[2],"tmerc") == 0) line4_proj = 7;
+	    if (strncmp(proj_keys->value[0],"State",5) == 0) line4_proj = 2;
 	    if (line4_proj == 0) line4_proj = PROJECTION_OTHER;
 	    proj = PROJECTION_OTHER;
-	    unit_type = G_database_unit_name();
+	    unit_type = G_database_unit_name(0);
+	    if ((*unit_type == 'u') || (*unit_type == 'U'))
+	        unit_type = G_database_unit_name(1);
+
 		       /* USGS spec, says meters is code 2, 
 			  GRASS code says meters are code 1 */
 	    if ((*unit_type == 'm') || (*unit_type == 'M'))
 	         units = 2;    /* meters */
             else units = 1;    /* feet   */
-            resolution = d_head->orig_scale * G_database_units_to_meters_factor() * DIG_UNITS; 
+            factr = G_database_units_to_meters_factor();
+            if (factr == 0.0)
+	       {
+	       if (units == 1) factr = .3048;
+	       else factr = 1.0;
+	       }
+            resolution = d_head->orig_scale * factr * DIG_UNITS; 
 	    break;
     }
 
@@ -219,7 +240,7 @@ line11_14 (map, d_head, fp)
     FILE *fp;
 {
     register int i, cmd_cnt;
-    char buff[100], cmnd[100];
+    char buff[100], cmnd[256];
     double latNE, latNW, lonNE, lonNW;
     double latSE, latSW, lonSE, lonSW;
     double N, S, E, W;
