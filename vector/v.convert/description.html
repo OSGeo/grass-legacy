@@ -1,26 +1,29 @@
 <h2>DESCRIPTION</h2>
 
-<em>v.convert</em> converts between GRASS vector versions 5.0/5.3 and 5.7.
+<em>v.convert</em> converts GRASS 5.0/5.3 vectors into 5.7 vectors.
 
 <h2>NOTES</h2>
 
 Vector maps from 5.0/5.3 and 5.7 do not interfere. They are stored in different 
 directories, so you can use the same names.
+<P>
+If you need to convert back from 5.7 into the 5.0/5.3 vector format,
+use <em>v.out.ogr</em> (to SHAPE format) and then <em>v.in.shape</em>
+in the old GRASS program.
+Alternatively use "<em>v.out.ascii -o</em>" and <em>v.in.ascii</em>.
+
 
 <h2>EXAMPLE</h2>
 
 <b>v.convert in=</b><em>vectormap_from_50</em> <b>out=</b><em>vectormap_57</em>
 
-<h2>NOTE</h2>
-
-If needed, to convert back from 5.7 into 5.0/5.3 vector format, 
-use <em>v.out.ogr</em> (to SHAPE format) and then <em>v.in.shape</em>
-of the old GRASS program.
-
 <h2>SEE ALSO</h2>
 
-<em><a HREF="http://grass.itc.it/grass57/tutorial/ex_basic.html#convert">GRASS 5.7
-tutorial pages</a></em>
+<A HREF="v.out.ascii.html">v.out.ascii</A><BR>
+<A HREF="v.out.ogr.html">v.out.ogr</A><BR>
+<em><a HREF="http://grass.itc.it/grass57/tutorial/ex_basic.html#convert">
+GRASS 5.7 tutorial pages</a></em>
+
 
 <h2>AUTHOR</h2>
 
