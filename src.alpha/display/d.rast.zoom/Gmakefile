@@ -20,4 +20,4 @@ $(OFILES): what.h
 $(RASTERLIB): #
 $(DISPLAYLIB): #
 $(GISLIB): #
-$(G_LIB): #
+$(D_LIB): #
