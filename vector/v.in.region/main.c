@@ -19,7 +19,7 @@
 #include "gis.h"
 #include "Vect.h"
 #include "dbmi.h"
-
+#include "glocale.h"
 
 int main(int argc, char **argv)
 {
@@ -43,6 +43,7 @@ int main(int argc, char **argv)
     type_opt->multiple = NO;
     type_opt->options = "line,area";
     type_opt->answer = "area";
+    type_opt->description  = _("Select type: line or area");
 
     if(G_parser(argc,argv)) exit(1);
 
