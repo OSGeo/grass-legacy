@@ -1,0 +1,16 @@
+PGM       = $(BIN_CONTRIB_CMD)/g.table.pg
+#PGM       = g.table.pg
+LIBES     = $(GISLIB)
+
+
+
+OBJS = \
+	main.o \
+	infxTable.o \
+	delcr.o
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #
+
