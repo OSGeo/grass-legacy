@@ -59,7 +59,7 @@ int get_psuedo_control_pt (int tie_row, int tie_col)
 #endif
 
     
-    switch (I_compute_georef_equations (&ps_cp,E12,N12,E21,N21)) 
+    switch (I_compute_ref_equations (&ps_cp,E12,N12,E21,N21)) 
     {
     case -1:
 #ifdef DEBUG3
