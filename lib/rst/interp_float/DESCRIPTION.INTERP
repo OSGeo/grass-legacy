@@ -149,12 +149,13 @@ Returns number of segments in the quad tree.
 
 
 
-int 
-IL_create_bitmask(params,bitmask)
+struct BM *
+IL_create_bitmask(params)
   struct interp_params *params;
-  struct BM *bitmask;
 
-Creates a bitmap mask from given raster file 
+Creates a bitmap mask from maskmap raster file and/or current MASK if
+present and returns a pointer to the bitmask. If no mask is in force returns
+NULL.
 
 
 
