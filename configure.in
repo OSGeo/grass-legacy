@@ -25,16 +25,16 @@ AC_ARG_WITH(includes,
     ])
 
 if test "$INC_DIRS"; then
-	for dir in $INC_DIRS; do
-		if test -d "$dir"; then
-			INCLUDE_DIRS="$INCLUDE_DIRS -I$dir"
-		else
-			AC_MSG_WARN([*** Include directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(additional include dirs)
-	AC_MSG_RESULT($INCLUDE_DIRS)
-	CPPFLAGS="$CPPFLAGS $INCLUDE_DIRS"
+    for dir in $INC_DIRS; do
+        if test -d "$dir"; then
+            INCLUDE_DIRS="$INCLUDE_DIRS -I$dir"
+        else
+            AC_MSG_WARN([*** Include directory $dir does not exist.])
+        fi
+    done
+    AC_MSG_CHECKING(additional include dirs)
+    AC_MSG_RESULT($INCLUDE_DIRS)
+    CPPFLAGS="$CPPFLAGS $INCLUDE_DIRS"
 fi
 AC_SUBST(INCLUDE_DIRS)
 
@@ -50,16 +50,16 @@ AC_ARG_WITH(libs,
     ])
 
 if test "$LIB_DIRS"; then
-	for dir in $LIB_DIRS; do
-		if test -d "$dir"; then
-			LIBRARY_DIRS="$LIBRARY_DIRS -L$dir"
-		else
-			AC_MSG_WARN([*** Library directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(additional library dirs)
-	AC_MSG_RESULT($LIBRARY_DIRS)
-	LDFLAGS="$LDFLAGS $LIBRARY_DIRS"
+    for dir in $LIB_DIRS; do
+        if test -d "$dir"; then
+            LIBRARY_DIRS="$LIBRARY_DIRS -L$dir"
+        else
+            AC_MSG_WARN([*** Library directory $dir does not exist.])
+        fi
+    done
+    AC_MSG_CHECKING(additional library dirs)
+    AC_MSG_RESULT($LIBRARY_DIRS)
+    LDFLAGS="$LDFLAGS $LIBRARY_DIRS"
 fi
 AC_SUBST(LIBRARY_DIRS)
 
@@ -144,16 +144,16 @@ AC_SUBST(ZLIB)
 MATHLIB="-lm"
 AC_CHECK_LIB(c, atan, MATHLIB="")
 if test "$MATHLIB"; then
-	AC_CHECK_LIB(m, atan, MATHLIB=-lm, MATHLIB="")
-	if test -z "$MATHLIB"; then
-		AC_MSG_WARN([*** Failed check for math library.])
-	fi
+    AC_CHECK_LIB(m, atan, MATHLIB=-lm, MATHLIB="")
+    if test -z "$MATHLIB"; then
+        AC_MSG_WARN([*** Failed check for math library.])
+    fi
 fi
 AC_SUBST(MATHLIB)
 
 
 BINDIR=/usr/local/bin
-if test -z "${exec_prefix}" = "NONE"; then
+if test -z "${exec_prefix}"; then
 exec_prefix="/usr/local"
 fi
 if test "${bindir}"; then
@@ -184,25 +184,25 @@ AC_ARG_WITH(tiff-includes,
 
 TIFF_INCLUDE_DIRS=
 if test "$tiff_inc_dirs"; then
-	for dir in $tiff_inc_dirs; do
-		if test -d "$dir"; then
-			TIFF_INCLUDE_DIRS="$TIFF_INCLUDE_DIRS -I$dir"
-		else
-			AC_MSG_WARN([*** TIFF include directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(TIFF include dirs)
-	AC_MSG_RESULT($TIFF_INCLUDE_DIRS)
+    for dir in $tiff_inc_dirs; do
+        if test -d "$dir"; then
+            TIFF_INCLUDE_DIRS="$TIFF_INCLUDE_DIRS -I$dir"
+        else
+            AC_MSG_WARN([*** TIFF include directory $dir does not exist.])
+        fi
+    done
+    AC_MSG_CHECKING(TIFF include dirs)
+    AC_MSG_RESULT($TIFF_INCLUDE_DIRS)
 fi
 
 if test -z "$TIFF_INCLUDE_DIRS"; then
-	AC_MSG_CHECKING(TIFF include dirs)
-	for dir in $my_inc_dirs; do
-		if test -z "$TIFF_INCLUDE_DIRS" && test -d "$dir" && test -f "$dir/tiffio.h"; then
-			TIFF_INCLUDE_DIRS="-I$dir"
-		fi
-	done
-	AC_MSG_RESULT($TIFF_INCLUDE_DIRS)
+    AC_MSG_CHECKING(TIFF include dirs)
+    for dir in $my_inc_dirs; do
+        if test -z "$TIFF_INCLUDE_DIRS" && test -d "$dir" && test -f "$dir/tiffio.h"; then
+            TIFF_INCLUDE_DIRS="-I$dir"
+        fi
+    done
+    AC_MSG_RESULT($TIFF_INCLUDE_DIRS)
 fi
 if test -z "$TIFF_INCLUDE_DIRS"; then
 	AC_MSG_WARN([*** Couldn't find 'tiffio.h'.])
@@ -222,15 +222,15 @@ AC_ARG_WITH(tiff-libs,
 
 TIFF_LIB_DIRS=
 if test "$tiff_lib_dirs"; then
-	for dir in $tiff_lib_dirs; do
-		if test -d "$dir"; then
-			TIFF_LIBRARY_DIRS="$TIFF_LIBRARY_DIRS -L$dir"
-		else
-			AC_MSG_WARN([*** TIFF library directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(additional TIFF library dirs)
-	AC_MSG_RESULT($TIFF_LIBRARY_DIRS)
+    for dir in $tiff_lib_dirs; do
+        if test -d "$dir"; then
+            TIFF_LIBRARY_DIRS="$TIFF_LIBRARY_DIRS -L$dir"
+        else
+            AC_MSG_WARN([*** TIFF library directory $dir does not exist.])
+        fi
+    done
+    AC_MSG_CHECKING(additional TIFF library dirs)
+    AC_MSG_RESULT($TIFF_LIBRARY_DIRS)
 fi
 
 ldflags_save="$LDFLAGS"
@@ -248,7 +248,7 @@ AC_CHECK_HEADER(/usr/include/tk.h, HAVE_TK_H=1)
 AC_CHECK_HEADER(/usr/include/tcl.h,HAVE_TCL_H=1)
 tcltk_ver=
 if test "$HAVE_TK_H"; then
-	tcltk_ver=$(grep '#define TK_VERSION' "/usr/include/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/')
+    tcltk_ver=$(grep TK_VERSION "/usr/include/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/')
 fi
 
 AC_ARG_WITH(tcltk-includes,
@@ -265,74 +265,78 @@ AC_ARG_WITH(tcltk-includes,
     ])
 
 TKINCDIR=
-if test "$tkincdir" && test -z "$HAVE_TK_H"; then
-	for dir in $tkincdir; do
-		if test -d "$dir"; then
-			TKINCDIR="$TKINCDIR -I$dir"
-			if test -f "$dir/tk.h"; then
-				tcltk_ver=$(grep '#define TK_VERSION' "$dir/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/')
-			fi
-		else
-			AC_MSG_WARN([*** TK include directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(TK include dirs)
-	AC_MSG_RESULT($TKINCDIR)
+if test $tkincdir && test -z $HAVE_TK_H ; then
+    for dir in $tkincdir; do
+        if test -d "${dir}"; then
+            TKINCDIR="$TKINCDIR -I${dir}"
+            if test -f "${dir}/tk.h"; then
+                grep_cmd="grep TK_VERSION ${dir}/tk.h"
+                tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
+            fi
+        else
+            AC_MSG_WARN([*** TK include directory $dir does not exist.])
+        fi
+    done
+    AC_MSG_CHECKING(TK include dirs)
+    AC_MSG_RESULT($TKINCDIR)
 fi
 if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
-	AC_MSG_CHECKING(TK include dirs)
-	for my_dir in $my_inc_dirs; do
-		if test -z "$TKINCDIR" && test -d $my_dir; then
-			tk_try="tk8.3 tk8.2 tk8.1 tk8.0"
-			for dir in $tk_try; do
-				if test -z "$TKINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tk.h"; then
-					tcltk_ver=$(grep '#define TK_VERSION' "$my_dir/$dir/tk.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/')
-					TKINCDIR="-I$my_dir/$dir"
-				fi
-			done
-		fi
-	done
-	AC_MSG_RESULT($TKINCDIR)
+    AC_MSG_CHECKING(TK include dirs)
+    for my_dir in $my_inc_dirs; do
+        if test -z "$TKINCDIR" && test -d $my_dir; then
+            tk_try="tk8.3 tk8.2 tk8.1 tk8.0"
+            for dir in $tk_try; do
+                if test -z "$TKINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tk.h"; then
+                    grep_cmd="grep TK_VERSION ${my_dir}/${dir}/tk.h"
+                    tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
+                    TKINCDIR="-I${my_dir}/${dir}"
+                fi
+            done
+        fi
+    done
+    AC_MSG_RESULT($TKINCDIR)
 fi
 
 if test -z "$TKINCDIR" && test -z "$HAVE_TK_H"; then
-	AC_MSG_WARN([*** Didn't find tk.h, maybe okay...])
+    AC_MSG_WARN([*** Didn't find tk.h, maybe okay...])
 fi
 AC_SUBST(TKINCDIR)
 
 TCLINCDIR=
 if test "$tclincdir" && test -z "$HAVE_TCL_H"; then
-	for dir in $tclincdir; do
-		if test -d "$dir"; then
-			TCLINCDIR="$TCLINCDIR -I$dir"
-			if test -f "$dir/tcl.h"; then
-				tcltk_ver=$(grep '#define TCL_VERSION' "$dir/tcl.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/')
-			fi
-		else
-			AC_MSG_WARN([*** TCL include directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(TCL include dirs)
-	AC_MSG_RESULT($TCLINCDIR)
+    for dir in $tclincdir; do
+        if test -d "$dir"; then
+            TCLINCDIR="$TCLINCDIR -I${dir}"
+            if test -f "$dir/tcl.h"; then
+                grep_cmd="grep TCL_VERSION ${dir}/tcl.h"
+                tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
+            fi
+        else
+            AC_MSG_WARN([*** TCL include directory $dir does not exist.])
+        fi
+    done
+    AC_MSG_CHECKING(TCL include dirs)
+    AC_MSG_RESULT($TCLINCDIR)
 fi
 # NEEDS else check known places ...
 if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
-	AC_MSG_CHECKING(TCL include dirs)
-	for my_dir in $my_inc_dirs; do
-		if test -z "$TKINCDIR" && test -d $my_dir; then
-			tk_try="tcl8.3 tcl8.2 tcl8.1 tcl8.0"
-			for dir in $tk_try; do
-				if test -z "$TCLINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tcl.h"; then
-					TCLINCDIR="-I$my_dir/$dir"
-					tcltk_ver=$(grep '#define TCL_VERSION' "$my_dir/$dir/tcl.h" | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/' )
-				fi
-			done
-		fi
-	done
-	AC_MSG_RESULT($TCLINCDIR)
+    AC_MSG_CHECKING(TCL include dirs)
+    for my_dir in $my_inc_dirs; do
+        if test -z "$TKINCDIR" && test -d $my_dir; then
+            tk_try="tcl8.3 tcl8.2 tcl8.1 tcl8.0"
+            for dir in $tk_try; do
+                if test -z "$TCLINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tcl.h"; then
+                    grep_cmd="grep TCL_VERSION ${my_dir}/${dir}/tcl.h"
+                    tcltk_ver=`$grep_cmd | sed -e 's/^\(.*\)\"\(.*\)\"$/\2/'`
+                    TCLINCDIR="-I${my_dir}/${dir}"
+                fi
+            done
+        fi
+    done
+    AC_MSG_RESULT($TCLINCDIR)
 fi
 if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
-	AC_MSG_WARN([*** Didn't find tcl.h, maybe okay...])
+    AC_MSG_WARN([*** Didn't find tcl.h, maybe okay...])
 fi
 AC_SUBST(TCLINCDIR)
 
@@ -350,30 +354,30 @@ AC_ARG_WITH(tcltk-libs,
 TCLTKLIBS=
 TCLTKLIBPATH=
 if test "$tcltk_lib_dirs"; then
-	for dir in $tcltk_lib_dirs; do
-		if test -d "$dir"; then
-			TCLTKLIBPATH="$TCLTKLIBPATH -L$dir"
-		else
-			AC_MSG_WARN([*** TCL/TK library directory $dir does not exist.])
-		fi
-	done
-	AC_MSG_CHECKING(additional TCL and TK library dirs)
-	AC_MSG_RESULT($TCLTKLIBPATH)
+    for dir in $tcltk_lib_dirs; do
+        if test -d "$dir"; then
+            TCLTKLIBPATH="$TCLTKLIBPATH -L${dir}"
+        else
+            AC_MSG_WARN([*** TCL/TK library directory $dir does not exist.])
+        fi
+    done
+    AC_MSG_CHECKING(additional TCL and TK library dirs)
+    AC_MSG_RESULT($TCLTKLIBPATH)
 fi
 
 if test "$tcltk_ver"; then
-	ac_save_ldflags="$LDFLAGS"
-	LDFLAGS="$LDFLAGS $TCLTKLIBPATH $X_LIBS -Xt -ltcl$tcltk_ver"
-	AC_CHECK_LIB("tk$tcltk_ver", Tk_MainWindow, has_tk_lib="1")
-	if test "$has_tk_lib"; then
-		TCLTKLIBS="$TCLTKLIBS -ltk$tcltk_ver -ltcl$tcltk_ver"
-	else
-		AC_MSG_WARN([*** Failed to find TCL/TK libraries])
-	fi
-	LDFLAGS=${ac_save_ldflags}
-	AC_SUBST(TCLTKLIBS)
+    ac_save_ldflags="$LDFLAGS"
+    LDFLAGS="$LDFLAGS $TCLTKLIBPATH $X_LIBS -Xt -ltcl$tcltk_ver"
+    AC_CHECK_LIB("tk$tcltk_ver", Tk_MainWindow, has_tk_lib="1")
+    if test "$has_tk_lib"; then
+        TCLTKLIBS="$TCLTKLIBS -ltk$tcltk_ver -ltcl$tcltk_ver"
+    else
+        AC_MSG_WARN([*** Failed to find TCL/TK libraries])
+    fi
+    LDFLAGS=${ac_save_ldflags}
+    AC_SUBST(TCLTKLIBS)
 else
-	AC_MSG_WARN([*** Unable to find TCL/TK libraries and headers])
+    AC_MSG_WARN([*** Unable to find TCL/TK libraries and headers])
 fi
 AC_SUBST(TCLTKLIBPATH)
 
@@ -417,11 +421,8 @@ AC_ARG_WITH(USE_TERMIO,
     ])
 AC_SUBST(USE_TERMIO)
 
-if test -z "${top_srcdir}"; then
-SRCDIR=$(pwd)
-else
-SRCDIR="${top_srcdir}"
-fi
+# Make sure this is set correctly
+SRCDIR=`pwd`
 AC_SUBST(SRCDIR)
 
 ARCH=
@@ -502,70 +503,70 @@ PQLIB=
 PQLIBPATH=
 
 if test "$pg_root"; then
-	if test -z "$pg_includes"; then
-		pg_includes="$pg_root/include"
-	fi
-	if test -z "$pg_libs"; then
-		pg_libs="$pg_root/lib"
-	fi
+    if test -z "$pg_includes"; then
+        pg_includes="$pg_root/include"
+    fi
+    if test -z "$pg_libs"; then
+        pg_libs="$pg_root/lib"
+    fi
 fi
 	
 if test "$pg_includes"; then
-	AC_MSG_CHECKING(libpq-fe.h)
-	for dir in $pg_includes; do
-		if test -d "$dir" && test -f "$dir/libpq-fe.h"; then
-			PQINCPATH="$PQINCPATH -I$dir"
-		fi
-	done
-	AC_MSG_RESULT($PQINCPATH)
+    AC_MSG_CHECKING(libpq-fe.h)
+    for dir in $pg_includes; do
+        if test -d "$dir" && test -f "$dir/libpq-fe.h"; then
+            PQINCPATH="$PQINCPATH -I$dir"
+        fi
+    done
+    AC_MSG_RESULT($PQINCPATH)
 fi
 
 if test "$pg_libs"; then
-	AC_MSG_CHECKING(libpq path)
-	for dir in $pg_libs; do
-		if test -d "$dir"; then
-			  PQLIBPATH="$PQLIBPATH -L$dir"
-		fi
-	done
-	AC_MSG_RESULT($PQLIBPATH)
+    AC_MSG_CHECKING(libpq path)
+    for dir in $pg_libs; do
+        if test -d "$dir"; then
+            PQLIBPATH="$PQLIBPATH -L$dir"
+        fi
+    done
+    AC_MSG_RESULT($PQLIBPATH)
 fi
 
 # If enabled but no paths given, look in our search paths
 if test -n "$USE_POSTGRES"; then
-	if test -z "$PQINCPATH"; then
-		my_pginc_path="/usr/include /usr/include/pgsql /usr/include/postgresql /usr/local/include /usr/local/pgsql/include /opt/pgsql/include"
-		AC_MSG_CHECKING(libpq-fe.h)
-		for dir in $my_pginc_path; do
-			if test -d "$dir" && test -f "$dir/libpq-fe.h"; then
-				PQINCPATH="$PQINCPATH -I$dir"
-			fi
-		done
-		AC_MSG_RESULT($PQINCPATH)
-		if test -z "$PQINCPATH"; then
-			AC_MSG_WARN([*** libpq-fe.h not found, but needed for PostgreSQL support])
-		fi
-	fi
-	if test -z "$PQLIBPATH"; then
-		my_pglib_path="/usr/lib /usr/local/lib /usr/local/pgsql/lib /usr/lib/pgsql /usr/lib/postgres /opt/pgsql/lib"
-		AC_MSG_CHECKING(libpq paths)
-		for dir in $my_pglib_path; do
-			if test -d "$dir"; then
-				  PQLIBPATH="$PQLIBPATH -L$dir"
-			fi
-		done
-		AC_MSG_RESULT($PQLIBPATH)
-	fi
+    if test -z "$PQINCPATH"; then
+        my_pginc_path="/usr/include /usr/include/pgsql /usr/include/postgresql /usr/local/include /usr/local/pgsql/include /opt/pgsql/include"
+        AC_MSG_CHECKING(libpq-fe.h)
+        for dir in $my_pginc_path; do
+            if test -d "$dir" && test -f "$dir/libpq-fe.h"; then
+                PQINCPATH="$PQINCPATH -I$dir"
+            fi
+        done
+        AC_MSG_RESULT($PQINCPATH)
+        if test -z "$PQINCPATH"; then
+            AC_MSG_WARN([*** libpq-fe.h not found, but needed for PostgreSQL support])
+        fi
+fi
+if test -z "$PQLIBPATH"; then
+        my_pglib_path="/usr/lib /usr/local/lib /usr/local/pgsql/lib /usr/lib/pgsql /usr/lib/postgres /opt/pgsql/lib"
+        AC_MSG_CHECKING(libpq paths)
+        for dir in $my_pglib_path; do
+            if test -d "$dir"; then
+                  PQLIBPATH="$PQLIBPATH -L$dir"
+            fi
+        done
+        AC_MSG_RESULT($PQLIBPATH)
+    fi
 fi
 
 if test -n "$USE_POSTGRES"; then
-	ac_save_ldflags=${LDFLAGS}
-	LDFLAGS="$LDFLAGS $PQLIBPATH"
-	AC_CHECK_LIB(pq,PQcmdTuples, 
-		[
-		  AC_DEFINE(HAVE_PQCMDTUPLES)
-		  PQLIB=-lpq
-		])
-	LDFLAGS=${ac_save_ldflags}
+    ac_save_ldflags=${LDFLAGS}
+    LDFLAGS="$LDFLAGS $PQLIBPATH"
+    AC_CHECK_LIB(pq,PQcmdTuples, 
+        [
+          AC_DEFINE(HAVE_PQCMDTUPLES)
+          PQLIB=-lpq
+        ])
+    LDFLAGS=${ac_save_ldflags}
 fi
 # Done with PostgreSQL
 AC_SUBST(PQINCPATH)
@@ -579,14 +580,14 @@ AC_ARG_ENABLE(opengl,
   [  --enable-opengl=yes/no
                           Enable or disable OpenGL programs (default: yes)],
   [
-  	case "$enableval" in
-	"n" | "no")
-		USE_OPENGL=
-	;;
-	*)
-		USE_OPENGL="1"
-	;;
-	esac
+    case "$enableval" in
+    "n" | "no")
+        USE_OPENGL=
+    ;;
+    *)
+        USE_OPENGL="1"
+    ;;
+    esac
   ],
   [
   USE_OPENGL="1"
@@ -597,12 +598,12 @@ AC_ARG_WITH(opengl-includes,
   [  --with-opengl-includes=DIR
                           Specify the directory for OpenGL (or Mesa) headers],
    [
-   	case "$withval" in
-	"" | "y" | "ye" | "yes" | "n" | "no")
-	    AC_MSG_ERROR([*** You must supply a directory to --with-opengl-includes.])
-	;;
-	esac
-	opengl_includes="$withval"
+    case "$withval" in
+    "" | "y" | "ye" | "yes" | "n" | "no")
+        AC_MSG_ERROR([*** You must supply a directory to --with-opengl-includes.])
+    ;;
+    esac
+    opengl_includes="$withval"
    ])
 
 AC_ARG_WITH(opengl-libs,
@@ -618,9 +619,9 @@ AC_ARG_WITH(opengl-libs,
    ])
 
 if test -n "$opengl_libs" || test -n "opengl_includes" ; then
-	if test -z "$USE_OPENGL"; then
-		USE_OPENGL="1"
-	fi
+    if test -z "$USE_OPENGL"; then
+        USE_OPENGL="1"
+    fi
 fi
 
 OPENGLINC=
@@ -630,65 +631,61 @@ OPENGLULIB=
 LGLWM=
 
 if test -z "$opengl_includes" && test -n "$USE_OPENGL"; then
-	opengl_includes="/usr/include/GL /usr/local/include/GL \
-	/usr/include/Mesa/GL /usr/local/include/Mesa/GL \
-	/usr/local/Mesa/include/GL /opt/include/GL /opt/Mesa/include/GL \
-	/usr/X11R6/include /usr/X11R6/include/GL /opt/Mesa/include"
+    opengl_includes="/usr/include/GL /usr/local/include/GL \
+    /usr/include/Mesa/GL /usr/local/include/Mesa/GL \
+    /usr/local/Mesa/include/GL /opt/include/GL /opt/Mesa/include/GL \
+    /usr/X11R6/include /usr/X11R6/include/GL /opt/Mesa/include"
 fi
 if test -n "$opengl_includes"; then
-	AC_MSG_CHECKING(GL/gl.h and GL/GLwMDrawA.h)
-	for dir in $opengl_includes; do
-		if test -d "$dir" && test -f "$dir/gl.h"; then
-			OPENGLINC="$OPENGLINC -I$dir"
-		fi
-		if test -d "$dir" && test -f "$dir/GLwMDrawA.h"; then
-			OPENGLwINC="$OPENGLwINC -I$dir"
-		fi
-	done
-	if test -z "$OPENGLINC"; then
-		AC_MSG_WARN([*** Didn't find GL/gl.h])
-	fi
-	if test -z "$OPENGLwINC"; then
-		AC_MSG_WARN([*** Didn't find GL/GLwMDrawA.h])
-	fi
-	AC_MSG_RESULT($OPENGLINC and $OPENGLwINC)
-fi
-
-if test -z "$OPENGLINC" ; then
-        AC_MSG_WARN([*** Didn't find GL/gl.h, maybe okay...])
+    AC_MSG_CHECKING(GL/gl.h and GL/GLwMDrawA.h)
+    for dir in $opengl_includes; do
+        if test -d "$dir" && test -f "$dir/gl.h"; then
+            OPENGLINC="$OPENGLINC -I$dir"
+        fi
+        if test -d "$dir" && test -f "$dir/GLwMDrawA.h"; then
+            OPENGLwINC="$OPENGLwINC -I$dir"
+        fi
+    done
+    if test -z "$OPENGLINC"; then
+        AC_MSG_WARN([*** Didn't find GL/gl.h])
+    fi
+    if test -z "$OPENGLwINC"; then
+        AC_MSG_WARN([*** Didn't find GL/GLwMDrawA.h])
+    fi
+    AC_MSG_RESULT($OPENGLINC and $OPENGLwINC)
 fi
 
 if test -z "$opengl_libs" && test -n "$USE_OPENGL"; then
-	opengl_libs="/usr/lib /usr/local/lib /usr/lib/X11 \
-	/usr/local/Mesa/lib /usr/X11R6/lib /usr/local/X11/lib \
-	/usr/local/X11R6/lib /usr/lib/Mesa /opt/lib /opt/Mesa \
-	/opt/Mesa/lib"
+    opengl_libs="/usr/lib /usr/local/lib /usr/lib/X11 \
+    /usr/local/Mesa/lib /usr/X11R6/lib /usr/local/X11/lib \
+    /usr/local/X11R6/lib /usr/lib/Mesa /opt/lib /opt/Mesa \
+    /opt/Mesa/lib"
 fi
 
 if test -n "$opengl_libs"; then
-	for dir in $opengl_libs; do
-		if test -d "$dir"; then
-			OPENGLLIB="$OPENGLLIB -L$dir"
-		fi
-	done
+    for dir in $opengl_libs; do
+        if test -d "$dir"; then
+            OPENGLLIB="$OPENGLLIB -L$dir"
+        fi
+    done
 fi
 
 if test -n "$USE_OPENGL"; then
-	ac_save_ldflags="$LDFLAGS"
-	LDFLAGS="$OPENGLLIB"
-	AC_CHECK_LIB(GL,glBegin,OPENGLLIB="$OPENGLLIB -lGL")
-	LDFLAGS=${ac_save_ldflags}
+    ac_save_ldflags="$LDFLAGS"
+    LDFLAGS="$OPENGLLIB"
+    AC_CHECK_LIB(GL,glBegin,OPENGLLIB="$OPENGLLIB -lGL")
+    LDFLAGS=${ac_save_ldflags}
 
-	ac_save_ldflags="$LDFLAGS"
-	LDFLAGS="$LDFLAGS $OPENGLLIB"
-	AC_CHECK_LIB(GLU,gluBeginCurve, OPENGLULIB="-lGLU")
-	LDFLAGS=${ac_save_ldflags}
+    ac_save_ldflags="$LDFLAGS"
+    LDFLAGS="$LDFLAGS $OPENGLLIB"
+    AC_CHECK_LIB(GLU,gluBeginCurve, OPENGLULIB="-lGLU")
+    LDFLAGS=${ac_save_ldflags}
 
-	ac_save_ldflags="$LDFLAGS"
-	LDFLAGS="$LDFLAGS $OPENGLLIB $OPENGLULIB $X_LIBS -lXt -lXm"
-	AC_CHECK_LIB(GLw,GLwDrawingAreaMakeCurrent,LGLWM=-lGLw)
-	AC_CHECK_LIB(GLwM,GLwCreateMDrawingArea,LGLWM="$LGLWM -lGLwM")
-	LDFLAGS=${ac_save_ldflags}
+    ac_save_ldflags="$LDFLAGS"
+    LDFLAGS="$LDFLAGS $OPENGLLIB $OPENGLULIB $X_LIBS -lXt -lXm"
+    AC_CHECK_LIB(GLw,GLwDrawingAreaMakeCurrent,LGLWM=-lGLw)
+    AC_CHECK_LIB(GLwM,GLwCreateMDrawingArea,LGLWM="$LGLWM -lGLwM")
+    LDFLAGS=${ac_save_ldflags}
 fi
 
 AC_SUBST(OPENGLINC)
@@ -714,18 +711,18 @@ AC_ARG_WITH(odbc-includes,
    ])
 
 if test -z "$odbc_includes"; then
-	for dir in $odbc_includes; do
-		if test -d "$dir" && test -f "$dir/sql.h"; then
-			ODBCINC="$ODBCINCPATH -I$dir"
-		fi
-	done
+    for dir in $odbc_includes; do
+        if test -d "$dir" && test -f "$dir/sql.h"; then
+            ODBCINC="$ODBCINCPATH -I$dir"
+        fi
+    done
 else
-	for dir in "/usr/include /usr/include/odbc /usr/local/include \
-              /usr/local/include/odbc /usr/X11R6/include /opt/include"; do
-	    	if test -d "$dir" && test -f "$dir/sql.h"; then
-			ODBCINC="$ODBCINCPATH -I$dir"
-		fi
-	done
+    for dir in "/usr/include /usr/include/odbc /usr/local/include \
+          /usr/local/include/odbc /usr/X11R6/include /opt/include"; do
+        if test -d "$dir" && test -f "$dir/sql.h"; then
+            ODBCINC="$ODBCINCPATH -I$dir"
+        fi
+    done
 fi
 
 ac_save_cppflags="$CPPFLAGS"
@@ -765,23 +762,23 @@ AC_ARG_WITH(jpeg-libs,
    ])
 
 if test "$jpeg_includes"; then
-	for dir in $jpeg_includes; do
-		if test -d "$dir"; then
-			JPEGINCPATH="$JPEGINCPATH -I$dir"
-		else
-			AC_MSG_WARN([*** Directory $dir does not exist])
-		fi
-	done
+    for dir in $jpeg_includes; do
+        if test -d "$dir"; then
+            JPEGINCPATH="$JPEGINCPATH -I$dir"
+        else
+            AC_MSG_WARN([*** Directory $dir does not exist])
+        fi
+    done
 fi
 
 if test "$jpeg_libs"; then
-	for dir in $jpeg_libs ; do
-		if test -d "$dir" ; then
-			JPEGLIBPATH="$JPEGLIBPATH -L$dir"
-		else
-			AC_MSG_WARN([*** Directory $dir does not exist])
-		fi
-	done
+    for dir in $jpeg_libs ; do
+        if test -d "$dir" ; then
+            JPEGLIBPATH="$JPEGLIBPATH -L$dir"
+        else
+            AC_MSG_WARN([*** Directory $dir does not exist])
+        fi
+    done
 fi                         
 
 ac_save_cppflags="$CPPFLAGS"
