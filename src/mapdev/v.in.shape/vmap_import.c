@@ -58,7 +58,6 @@ int vmap_import(param_import_ctrl *pic0) {
   int res1, res2;
   int go_out = 0;
   int null_recs = 0;
-  int vert_cnt = 0;
   int part_cnt = 0;
   int no_atts = 0;
   int verb = pic0->verbose_level;
@@ -72,7 +71,6 @@ int vmap_import(param_import_ctrl *pic0) {
   struct Map_info Map1;
   polygon_ctrl *pgc1 = NULL;
   ringset *prings;
-  repository *vrep;
 
   /* loop */
   int ia, ib, ic;
@@ -733,9 +731,7 @@ int shp_write_fields(param_import_ctrl *paric0, FILE *att_fp, DBFHandle hDBF, st
 		     const double x_coord0, const double y_coord0, char cov_type) {
 
   int no_atts = 0, no_cats = 0;
-  int attval;
   DBFFieldType dbft;
-  int go_out = 0;
 
   int f_size, f_decs;
   char buffer1[64] = "";

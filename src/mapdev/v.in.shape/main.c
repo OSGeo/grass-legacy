@@ -26,12 +26,14 @@
 #include <string.h>
 #include "gis.h"
 #include "import.h"
+#include "basename.h"
 #include "shapefil.h"
+#include "vmap_import.h"
 
 int main(int argc, char *argv[]) {
 
   struct Option *iput, *oput, *lfile, *verbose;
-  struct Option *snapd, *minangle, *mscale, *attribute, *catlabel;
+  struct Option *snapd, *mscale, *attribute, *catlabel;
   struct Flag *oflag, *fleflag, *uflag, *listflag;
   struct GModule *module;
 
@@ -44,7 +46,7 @@ int main(int argc, char *argv[]) {
   int print_to_error = 0, ires = 0, verbosity = 1, do_overwrite = 0, force_le = 0;
   int u_val = 0;
 
-  FILE *lf, *sf;
+  FILE *lf;
   DBFHandle   hDBF;
 
   int scale1;
@@ -89,12 +91,14 @@ int main(int argc, char *argv[]) {
   snapd->description= "Snap distance in ground units (Default = 10^-10)";
   snapd->answer     = "1.0e-10";
 
+  /*
   minangle = G_define_option() ;
   minangle->key        = "sliver";
   minangle->type       = TYPE_STRING;
   minangle->required   = NO;
   minangle->description= "Min. angle subtended by a wedge at node (degrees - default 0.0001)";
   minangle->answer     = "0.0001";
+  */
 
   mscale = G_define_option() ;
   mscale->key        = "scale";
@@ -178,7 +182,7 @@ int main(int argc, char *argv[]) {
   /* Process editing parameters */
 
   snap1 = atof(snapd->answer);
-  sliver1 = atof(minangle->answer);
+  sliver1 = 0.0001;
   scale1 = atoi(mscale->answer);
 
 
@@ -245,7 +249,7 @@ int main(int argc, char *argv[]) {
   } /* -d list */
 
 
-  if(ms0 = G_find_file("dig", vmap, "")) {
+  if((ms0 = G_find_file("dig", vmap, ""))) {
 
     /* Is this in the current mapset. If so we can only continue
        if over-write is allowed
@@ -295,21 +299,27 @@ int main(int argc, char *argv[]) {
   case -1: 
     {
       fprintf(stderr, "\n\nFATAL ERROR: There was a problem importing the map.\n");
-      fprintf(stderr, "Please consult the log file `%s' for details.\n", log_file);
+      if(! print_to_error) {
+        fprintf(stderr, "Please consult the log file `%s' for details.\n", log_file);
+      }
       break;
     }
 
   case -2: 
     {
       fprintf(stderr, "\n\nWARNING. Map `%s' imported, but there were problems.\n", vmap);
-      fprintf(stderr, "Please consult the log file `%s' for details.\n", log_file);
+      if(! print_to_error) {
+        fprintf(stderr, "Please consult the log file `%s' for details.\n", log_file);
+      }
       break;
     }
 
   default: 
     {
-      fprintf(stderr, "\n\nWARNING. Map `%s' imported, apparently without problems.\n", vmap);
-      fprintf(stderr, "Please consult the log file `%s' for details.\n", log_file);    
+      fprintf(stderr, "\n\nMap `%s' imported, apparently without problems.\n", vmap);
+      if(! print_to_error) {
+        fprintf(stderr, "Please consult the log file `%s' for details.\n", log_file);
+      }    
     }
   }
 

@@ -52,7 +52,7 @@ int get_file_basename(char *retstr, char *instr, char *exts0) {
   chptr1 = strtok(exts1, ":");
   strncpy(ec1->extensions[0], chptr1, 10);
 
-  while( chptr1 = strtok(NULL, ":") ) {
+  while( (chptr1 = strtok(NULL, ":")) ) {
     strncpy(ec1->extensions[n_exts++], chptr1, 10);
   }
 
