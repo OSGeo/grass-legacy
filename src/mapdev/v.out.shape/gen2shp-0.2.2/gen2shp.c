@@ -18,8 +18,8 @@
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  * $Log$
- * Revision 1.1  2000-03-08 14:32:23  markus
- * contribution from Jan Wagner
+ * Revision 1.2  2000-03-08 16:29:45  markus
+ * Jan Wagner: changed delimiter from comma to point
  *
  * Revision 1.5  1999/11/05  08:02:40  jwagner
  * Added CASE_INSENSITIVE_STR_CMP
@@ -216,19 +216,19 @@ static void GeneratePoints (	FILE *fp,
 #endif
 			break;
 		}
-		if ((str = dtok(linebuf, ',')) == NULL) {
+		if ((str = strtok(linebuf, " ,")) == NULL) {
 			fprintf(stderr, "format error in line %d\n", rec + 1);
 			exit(ERR_FORMAT);
 		}
 		id = atoi((const char *)str);
 
-		if ((str = dtok(NULL, ',')) == NULL) {
+		if ((str = strtok(NULL, " ,")) == NULL) {
 			fprintf(stderr, "format error in line %d\n", rec + 1);
 			exit(ERR_FORMAT);
 		}
 		x = atof((const char *)str);
 
-		if ((str = dtok(NULL, ',')) == NULL) {
+		if ((str = strtok(NULL, " ,")) == NULL) {
 			fprintf(stderr, "format error in line %d\n", rec + 1);
 			exit(ERR_FORMAT);
 		}
@@ -296,14 +296,14 @@ static void GenerateLines (	FILE *fp,
 				}
 			}
 
-			if ((str = dtok(linebuf, ',')) == NULL) {
+			if ((str = strtok(linebuf, " ,")) == NULL) {
 				fprintf(stderr, "format error for line with "
 					"id=%d\n", id);
 				exit(ERR_FORMAT);
 			}
 			x[coord] = atof((const char *)str);
 
-			if ((str = dtok(NULL, ',')) == NULL) {
+			if ((str = strtok(NULL, " ,")) == NULL) {
 				fprintf(stderr, "format error for line with "
 					"id=%d\n", id);
 				exit(ERR_FORMAT);
@@ -378,14 +378,14 @@ static void GeneratePolygons (	FILE *fp,
 				}
 			}
 
-			if ((str = dtok(linebuf, ',')) == NULL) {
+			if ((str = strtok(linebuf, " ,")) == NULL) {
 				fprintf(stderr, "format error for polygon with "
 					"id=%d\n", id);
 				exit(ERR_FORMAT);
 			}
 			x[coord] = atof((const char *)str);
 
-			if ((str = dtok(NULL, ',')) == NULL) {
+			if ((str = strtok(NULL, " ,")) == NULL) {
 				fprintf(stderr, "format error for polygon with "
 					"id=%d\n", id);
 				exit(ERR_FORMAT);
