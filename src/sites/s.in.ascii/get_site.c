@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include "gis.h"
 #include "local_proto.h"
+#include <ctype.h>
 
 #define isnull(c) (c==(char)NULL)
 
@@ -101,6 +102,7 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
   {
     switch (*buf)
     {
+    /* check for prefixed atts first, then without prefix */
     case '#':			/* category field */
       if (n == 0)
       {
@@ -145,8 +147,11 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
       }
       else
 	buf++;
-    default:			/* defaults to string attribute */
+    default: /* changed to unprefixed decimals */
+   /* commented 12/99: default shall be decimal field! M.N.*/
+                    /* defaults to string attribute */
       /* allow both prefixed and unprefixed strings */
+   /* 
       if (c >= site->str_alloc)
       {
 	site->str_alloc++;
@@ -169,13 +174,25 @@ Site *get_site (FILE *fd, int dims, char *fs, int *has_cat)
 	*buf = '\0';
       buf = my_next_att (buf);
       break;
+     ***/ /* end of comment (default=strings) */
+     
+     			/* default is unprefixed decimal attribute */
+      if (d >= site->dbl_alloc)
+      {
+	site->dbl_alloc++;
+	site->dbl_att = (double *) G_realloc (site->dbl_att,
+				      site->dbl_alloc * sizeof (double));
+      }
+      if ((err = sscanf (buf, "%lf", &(site->dbl_att[d++]))) < 1)
+	G_warning ("error scanning floating point attribute");
+      buf = my_next_att (buf);
+      break;
     }
   }
   *has_cat = n;
   return site;
 }
 
-#include <ctype.h>
 
 static char *my_next_att (char *buf)
 {
