@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <math.h>
 #include <string.h>
-#include  "gis.h"
+#include "gis.h"
 #include "projects.h"
 #define MAIN
 
@@ -14,16 +14,21 @@
 #define PERMANENT "PERMANENT"
 #define MAX_PARGS 100
 
+static void alloc_options(char *);
+
+static char *opt_in[MAX_PARGS];
+static int  nopt1;
+
 int pj_get_kv(info, in_proj_keys, in_units_keys)
 struct pj_info *info;
 struct Key_Value *in_proj_keys, *in_units_keys;
 
 {
-	char *opt_in[MAX_PARGS];
 	char *str;
-	int  nopt1;
 	int i, south;
-	int nsize;
+        int returnval = 1;
+        double a, es, f;
+        double dx, dy, dz;
 	char buffa[300], factbuff[50];
 	char proj_in[50];
 	PJ *pj;
@@ -65,26 +70,23 @@ struct Key_Value *in_proj_keys, *in_units_keys;
                 if( strncmp(in_proj_keys->key[i],"name",4) == 0 ) {
                     continue;
 
-		/* Don't need dx dy dz if datum= is specified; PROJ.4 will 
-		 * get these from pj_datums.c file; otherwise dx dy dz used to
-		 * form +towgs84 parameter after end of this loop PK */
+		/* Datum-related parameters will be handled separately
+		 * after end of this loop PK */
 
-                } else if( strncmp(in_proj_keys->key[i], "dx", 2) == 0
-			   || strncmp(in_proj_keys->key[i], "dy", 2) == 0
-		           || strncmp(in_proj_keys->key[i], "dz", 2) == 0 ) {
+                } else if( strncmp(in_proj_keys->key[i], "datum", 5) == 0
+		   || strncmp(in_proj_keys->key[i], "dx", 2) == 0
+		   || strncmp(in_proj_keys->key[i], "dy", 2) == 0
+		   || strncmp(in_proj_keys->key[i], "dz", 2) == 0
+		   || strncmp(in_proj_keys->key[i], "datumparams", 11) == 0
+		   || strncmp(in_proj_keys->key[i], "ellps", 5) == 0 ) {
 		    continue;
 		
 		   
                 /* Don't pass through underlying parameters if we have ellps=
-		 * settings; don't pass through ellps= settings if we have
-		 * datum= settings. Changed from old logic by PK to use only
-		 * top-level data sources if possible (i.e. within PROJ.4.)
-		 * 
-		 * N.B. This will be changed back to passing parameters when
-		 * GRASS datum table format is updated
+		 * or datum= settings.
 		 * 
 		 * If there are many underlying ellipsoid parameters pass 
-		 * them all through and let proj sort it out. */
+		 * them all through and let PROJ.4 sort it out. */
 
                 } else if( strncmp(in_proj_keys->key[i], "a", 1) == 0
 			   || strncmp(in_proj_keys->key[i], "b", 1) == 0
@@ -97,13 +99,6 @@ struct Key_Value *in_proj_keys, *in_units_keys;
                     else
                         sprintf(buffa, "%s=%s", 
                                 in_proj_keys->key[i], in_proj_keys->value[i]);             	       		
-
-		} else if( strncmp(in_proj_keys->key[i], "ellps", 5) == 0 ) {
-                    if( G_find_key_value("datum", in_proj_keys) != NULL)
-                        continue;
-                    else
-                        sprintf(buffa, "%s=%s", 
-                                in_proj_keys->key[i], in_proj_keys->value[i]);
 
 		/* PROJ.4 uses latlong instead of ll as 'projection name' */
 		   
@@ -148,47 +143,103 @@ struct Key_Value *in_proj_keys, *in_units_keys;
 
 		else if (strncmp(in_proj_keys->key[i], "no_defs", 7) == 0)
 			sprintf(buffa, "no_defs");
-		/* workaround because pj_ellps.c does not include sphere as valid ellipsoid */
 		else 
 			sprintf(buffa, "%s=%s", 
                                 in_proj_keys->key[i], in_proj_keys->value[i]);
-
-                nsize = strlen(buffa);
-                if (!(opt_in[nopt1++] = (char *) malloc(nsize + 1)))
-                    G_fatal_error("cannot allocate options\n");
-                sprintf(opt_in[nopt1-1], buffa);
+	   
+                alloc_options(buffa);
 	}
 
-        /* If datum= is not specified but dx dy dz are, we can use them to
-         * form the towgs84 parameter for datum shift PK */
-        if( G_find_key_value("datum", in_proj_keys) == NULL
-	    && G_find_key_value("dx", in_proj_keys) != NULL
-	    && G_find_key_value("dy", in_proj_keys) != NULL
-	    && G_find_key_value("dz", in_proj_keys) != NULL ) {
-	        sprintf(buffa, "towgs84=%s,%s,%s",
-			G_find_key_value("dx", in_proj_keys),
-			G_find_key_value("dy", in_proj_keys),
-			G_find_key_value("dz", in_proj_keys) );      
-                nsize = strlen(buffa);
-                if (!(opt_in[nopt1++] = (char *) malloc(nsize + 1)))
-                    G_fatal_error("cannot allocate options\n");
-                sprintf(opt_in[nopt1-1], buffa);
-        }
-   
-        /* Set finder function for locating datum conversion tables PK */
-        pj_set_finder( FINDERFUNC ); 
+    if (G_find_key_value("datum", in_proj_keys) != NULL ||
+	G_find_key_value("ellps", in_proj_keys) != NULL) {
+        str = G_find_key_value("datum", in_proj_keys);
+        if( str != NULL )
+	 
+	    /* If 'datum' key is present, look up correct ellipsoid
+	     * from datum.table */
+	    str = G_datum_ellipsoid(G_get_datum_by_name(str));
+	else
+	 
+	    /* else use ellipsoid defined in PROJ_INFO */
+            str = G_find_key_value("ellps", in_proj_keys);
+       
+        if (G_get_spheroid_by_name(str, &a, &es, &f) ) {
+	   
+            /* Use a and 1/f values from ellipse.table if available */
+            sprintf(buffa, "a=%f", a);
+            alloc_options(buffa);
+	    sprintf(buffa, "rf=%f", f);
+	    alloc_options(buffa);
+        } else {
+	   
+	    /* else pass on ellipsoid name and hope it is recognised by
+	     * PROJ.4 even though it wasn't by GRASS */
+            sprintf(buffa, "ellps=%s", str);
+	}
+    } /* else if 'datum' or 'ellps' keys were not present ellipsoid 
+       * parameters will have been set in loop above */    
 
-        if (!(pj = pj_init(nopt1, opt_in))) {
-            fprintf(stderr, "cannot initialize pj\ncause: ");
-            fprintf(stderr,"%s\n",pj_strerrno(pj_errno));
-            return -1;
-        }
-        info->pj = pj;
+    /* If new 'datumparams' key is present, pass the options on */
+    str = G_find_key_value("datumparams", in_proj_keys);
+    if( str != NULL ) { 
+        sprintf(buffa, str);
+        alloc_options(buffa);
+       
+    /* else see if the old-style dx dy dz params are there on their own */
+    } else if( G_find_key_value("datum", in_proj_keys) == NULL
+	     && G_find_key_value("dx", in_proj_keys) != NULL
+	     && G_find_key_value("dy", in_proj_keys) != NULL
+	     && G_find_key_value("dz", in_proj_keys) != NULL ) {
+        sprintf(buffa, "towgs84=%s,%s,%s",
+	        G_find_key_value("dx", in_proj_keys),
+	      	G_find_key_value("dy", in_proj_keys),
+	       	G_find_key_value("dz", in_proj_keys) );
+	alloc_options(buffa);
+       
+    /* else if a datum name is present take it and look up the parameters 
+     * from the datum.table file */
+    } else if ( (str = G_find_key_value("datum", in_proj_keys)) != NULL
+	     && G_datum_shift(G_get_datum_by_name(str), &dx, &dy, &dz) ) {
+        sprintf(buffa, "towgs84=%f,%f,%f", dx, dy, dz);
+        alloc_options(buffa);
+        returnval = 2;
+       
+    /* else just pass the datum name on and hope it is recognised by PROJ.4
+     * even though it isn't recognised by GRASS */
+    } else if ( (str = G_find_key_value("datum", in_proj_keys)) != NULL ) {
+        sprintf(buffa, "datum=%s", str);
+        returnval = 3;
+       
+    /* else there'll be no datum transformation taking place here... */
+    } else {
+        returnval = 4;
+    }
+    
+    /* Set finder function for locating datum conversion tables PK */
+    pj_set_finder( FINDERFUNC ); 
 
-	return 1;
+    if (!(pj = pj_init(nopt1, opt_in))) {
+        fprintf(stderr, "cannot initialize pj\ncause: ");
+        fprintf(stderr,"%s\n",pj_strerrno(pj_errno));
+        return -1;
+    }
+    info->pj = pj;
+
+    return returnval;
 }
 
-
+static void alloc_options(char * buffa)
+{
+    int nsize;
+   
+    nsize = strlen(buffa);
+    if (!(opt_in[nopt1++] = (char *) malloc(nsize + 1)))
+        G_fatal_error("cannot allocate options\n");
+    sprintf(opt_in[nopt1-1], buffa);
+    printf("/%s/ ", buffa);
+    return;
+}
+   
 int pj_get_string(info, str)
 struct pj_info *info;
 char *str;

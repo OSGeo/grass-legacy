@@ -43,7 +43,6 @@
 #include <stdlib.h>
 #include "geo.h"
 #include "gis.h"
-#include "CC.h" /* for datum support */
 #include "local_proto.h"
 #define MAIN
 
@@ -61,15 +60,13 @@ int main(int argc, char *argv[])
 	int old_zone;
 	int i;
 	int stat;
-	int set_datum = 0;
 	char cmnd2[500], out_lon0[20], out_lat0[20];
 	char proj_out[20], proj_name[50], set_name[20], file[1024],
-	*value1, *a;
+	    *value1, *a;
 	char path[1024], epath[1024], buffa[1024], buffb[1024], answer[200],
-	 answer1[200];
+	     answer1[200];
 	char answer2[200], buff[1024];
-	char tmp_buff[20], *buf;
-	char datum[50], dat_ellps[50];
+	char tmp_buff[20], *buf, *bufa;
 
 	struct Option *projopt;
 	struct Key_Value *old_proj_keys, *out_proj_keys, *in_unit_keys;
@@ -77,9 +74,10 @@ int main(int argc, char *argv[])
 	double f, dx, dy, dz;
 	FILE *ls, *out1, *FPROJ, *pj;
 	int exist = 0;
-	char *new_data, *key, *value, spheroid[50], *sph;
+	char *new_data, *key, *value, spheroid[100], *sph;
 	int j, k, in_stat, ii, npr, sph_check;
 	struct Cell_head cellhd;
+	char datum[100], dat_ellps[100], dat_params[100];
 
 
 	G_gisinit(argv[0]);
@@ -110,9 +108,13 @@ int main(int argc, char *argv[])
 
 	if (access(path, 0) == 0) {
 		exist = 1;
-		fprintf(stderr, "\n\nWARNING!  A projection file '%s' \n   already exists for this location\n", path);
-		fprintf(stderr, "\nThis file contains all the parameters for the location's projection: %s\n", G__projection_name(Out_proj));
-		fprintf(stderr, "\nOverriding this information implies that the old projection parameters\n");
+		FPROJ = fopen(path, "r");
+		old_proj_keys = G_fread_key_value(FPROJ);
+		fclose(FPROJ);
+		buf = G_find_key_value("name", old_proj_keys);
+		fprintf(stderr, "\n\nWARNING!  A projection file already exists for this location\n(Filename '%s')\n", path);
+		fprintf(stderr, "\nThis file contains all the parameters for the\nlocation's projection: %s\n", buf);
+		fprintf(stderr, "\n    Overriding this information implies that the old projection parameters\n");
 		fprintf(stderr, "    were incorrect.  If you change the parameters, all existing data will be\n");
 		fprintf(stderr, "    interpreted differently by the projection software.\n%c%c%c", 7, 7, 7);
 		fprintf(stderr, "    GRASS will not re-project your data automatically\n\n");
@@ -125,9 +127,6 @@ int main(int argc, char *argv[])
 	out_proj_keys = G_create_key_value();
 
 	if (exist) {
-		FPROJ = fopen(path, "r");
-		old_proj_keys = G_fread_key_value(FPROJ);
-		fclose(FPROJ);
 		buf = G_find_key_value("zone", old_proj_keys);
 		if (buf != NULL)
 			sscanf(buf, "%d", &zone);
@@ -160,11 +159,21 @@ int main(int argc, char *argv[])
 			if (G_ask_proj_name(proj_out, proj_name) < 0) {
 				leave(SP_NOCHANGE);
 			}
-			Out_proj = 4;
 			proj_index = G_geo_get_proj_index(proj_out);
-			if (proj_index == LL || proj_index == UTM)
-				fprintf(stderr, "%c\nProjection 99 does not support UTM or LL\n\n", 7);
-			else
+			switch(proj_index)
+		     {
+		      case LL:
+				Out_proj = PROJECTION_LL;
+			break;
+		      case UTM:
+                                Out_proj = PROJECTION_UTM;
+			break;
+		      case STP:
+			        Out_proj = PROJECTION_SP;
+			break;
+		      default:
+			Out_proj = 4;
+		     }
 				break;
 		}
 		break;
@@ -179,72 +188,116 @@ int main(int argc, char *argv[])
 	}
 	G_set_key_value("name", proj_name, out_proj_keys);
 
+	/* ask for map datum, Andreas Lange, 7/2000 */
+   
+    sph_check = 0;
+    if(G_yes("Do you want to specify a map datum for this location?", 1))
+    {
+        if (exist && (buf = G_find_key_value("datum", old_proj_keys)) != NULL &&
+	    (bufa = G_find_key_value("datumparams", old_proj_keys)) != NULL )
+	{
+	    G_strip(buf);
+            if (i = G_get_datum_by_name(buf))
+            {
+                fprintf(stderr, "The current datum is %s\n", G_datum_name(i));
+                if (G_yes("Would you want to change the datum (or the datum transformation parameters)?", 0))
+                    sph_check = ask_datum(datum, dat_ellps, dat_params);
+                else 
+		{
+		    sprintf(datum, buf);
+		    sprintf(dat_params, bufa);
+		    sprintf(dat_ellps, G_datum_ellipsoid(i));
+		    sph_check = 1;
+                    fprintf(stderr, "The datum information is not changed\n");
+		}
+	    }
+            else
+                sph_check = ask_datum(datum, dat_ellps, dat_params);
+
+	    G_free(buf);
+	    G_free(bufa);
+        }
+        else
+            sph_check = ask_datum(datum, dat_ellps, dat_params);
+    }
+
+    if (sph_check > 0)
+    {
+        /* write out key/value pairs to out_proj_keys */
+        G_set_key_value("datum", datum, out_proj_keys);
+        G_set_key_value("datumparams", dat_params, out_proj_keys);
+        sprintf(spheroid, "%s", dat_ellps);
+    }    
+    else   
+    {      
 /*****************   GET spheroid  **************************/
 
-	if (Out_proj != PROJECTION_SP) {	/* some projections have fixed spheroids */
-		if ((proj_index == ALSK) || (proj_index == GS48) || (proj_index == GS50)) {
-			sprintf(spheroid, "%s", "clark66");
-			G_set_key_value("ellps", spheroid, out_proj_keys);
-			sph_check = 1;
-		} else if ((proj_index == LABRD) || (proj_index == NZMG)) {
-			sprintf(spheroid, "%s", "international");
-			G_set_key_value("ellps", spheroid, out_proj_keys);
-			sph_check = 1;
-		} else if (proj_index == SOMERC) {
-			sprintf(spheroid, "%s", "bessel");
-			G_set_key_value("ellps", spheroid, out_proj_keys);
-			sph_check = 1;
-		} else if (proj_index == OB_TRAN) {
+        if (Out_proj != PROJECTION_SP) {	/* some projections have 
+						 fixed spheroids */
+            if ((proj_index == ALSK) || (proj_index == GS48) || 
+		                            (proj_index == GS50)) {
+	        sprintf(spheroid, "%s", "clark66");
+		G_set_key_value("ellps", spheroid, out_proj_keys);
+		sph_check = 1;
+	    } else if ((proj_index == LABRD) || (proj_index == NZMG)) {
+	        sprintf(spheroid, "%s", "international");
+		G_set_key_value("ellps", spheroid, out_proj_keys);
+		sph_check = 1;
+	    } else if (proj_index == SOMERC) {
+		sprintf(spheroid, "%s", "bessel");
+		G_set_key_value("ellps", spheroid, out_proj_keys);
+		sph_check = 1;
+	    } else if (proj_index == OB_TRAN) {
 			/* Hard coded to use "Equidistant Cylincrical"
 			   until g.setproj has been changed to run
 			   recurively, to allow input of options for
 			   a second projection, MHu991010 */
-			G_set_key_value("o_proj", "eqc", out_proj_keys);
-			sph_check = 2;
-		} else {
-			if (exist) {
-				buf = G_find_key_value("ellps", old_proj_keys);
-				if (buf != NULL)
-					strcpy(spheroid, buf);
-				else
-					sprintf(spheroid, "%s", "sphere");
-				G_strip(spheroid);
-				if ((G_get_spheroid_by_name(spheroid, &aa, &e2, &f)) || (strcmp(spheroid, "sphere") == 0)) {	/* if legal ellips. exist, ask wether or not to change it */
-					fprintf(stderr, "The current ellipsoid is %s\n", spheroid);
-					if (G_yes("Would you want to change ellipsoid parameter ", 0))
-						sph_check = G_ask_ellipse_name(spheroid);
-					else {
-						fprintf(stderr, "The ellipse information is not changed\n");
-						if (strcmp(spheroid, "sphere") == 0)
-							sph_check = 2;
-						else
-							sph_check = 1;
-					}
-				}	/* the val is legal */
-			} else
-				sph_check = G_ask_ellipse_name(spheroid);
-		}		/* if proj_index = ALSK ... OB_TRANS */
+	        G_set_key_value("o_proj", "eqc", out_proj_keys);
+		sph_check = 2;
+	    } else {
+	        if (exist && (buf = G_find_key_value("ellps", old_proj_keys)) != NULL)
+		{
+	            strcpy(spheroid, buf);
+                    G_strip(spheroid);
+                    if ( G_get_spheroid_by_name(spheroid, &aa, &e2, &f) )  {  /* if legal
+			ellips. exist, ask wether or not to change it */
+		        fprintf(stderr, "The current ellipsoid is %s\n", spheroid);
+			if (G_yes("Would you want to change ellipsoid "
+		        	      "parameter ", 0))
+			    sph_check = G_ask_ellipse_name(spheroid);
+		        else
+			{
+                            fprintf(stderr, "The ellipse information is "
+	               		            "not changed\n");
+                            sph_check = 1;
+			}		    
+		    }	/* the val is legal */
+		    else
+		        sph_check = G_ask_ellipse_name(spheroid);
+		    G_free(buf);
+		} else
+		    sph_check = G_ask_ellipse_name(spheroid);
+	    }
+	}		/* if proj_index = ALSK ... OB_TRANS */
 
-		if (sph_check < 0)
-			leave(SP_NOCHANGE);
-
-		if (sph_check == 2) {	/* ask radius */
-			if (exist) {
-				buf = G_find_key_value("a", old_proj_keys);
-				if ((buf != NULL) && (sscanf(buf, "%lf", &radius) == 1)) {
-					fprintf(stdout, "The radius right now is %f\n", radius);
-					if (G_yes("Would you want to change the radius ", 0))
-						radius = prompt_num_double("Enter radius for the sphere in meters", RADIUS_DEF, 1);
-				}
-			} else
-				radius = prompt_num_double("Enter radius for the sphere in meters", RADIUS_DEF, 1);
-		}		/* end ask radius */
+	if (sph_check > 0)
+	{
+            if (sph_check == 2) {	/* ask radius */
+	        if (exist) {
+                    buf = G_find_key_value("a", old_proj_keys);
+                if ((buf != NULL) && (sscanf(buf, "%lf", &radius) == 1)) {
+                    fprintf(stdout, "The radius right now is %f\n", radius);
+                    if (G_yes("Would you want to change the radius ", 0))
+                        radius = prompt_num_double("Enter radius for "
+				    "the sphere in meters", RADIUS_DEF, 1);
+                }
+            } else
+                radius = prompt_num_double("Enter radius for the sphere in meters", RADIUS_DEF, 1);
+        }        /* end ask radius */
 	}
+    }
 /*** END get spheroid  ***/
 
-	/* ask for map datum, Andreas Lange, 7/2000 */
-	if (ask_datum(datum))
-	   set_datum = 1;
 
 	/* create the PROJ_INFO & PROJ_UNITS files, if required */
 	switch (proj_index) {
@@ -252,14 +305,16 @@ int main(int argc, char *argv[])
 		break;
 
 	case STP:
-		if (Out_proj == PROJECTION_SP) {
-			if (get_stp_code(old_zone, buffb) == 0) {
+/*
+                if (Out_proj == PROJECTION_SP) {
+			if (get_stp_code(old_zone, buffb, STP1927PARAMS) == 0) {
 				sprintf(buff, "Invalid State Plane Zone : %d", old_zone);
 				G_fatal_error(buff);
 			}
 		} else {
+ */
 			get_stp_proj(buffb);
-		}
+/*		}*/
 		break;
 
 	default:
@@ -271,30 +326,6 @@ int main(int argc, char *argv[])
 		break;
 	}
 
-	/* datum support added by Andreas Lange 07/2000 */
-	if (set_datum) {
-	  if (!CC_get_datum_parameters(datum, dat_ellps, &dx, &dy, &dz)) {
-	    sprintf(buff, "Error reading datum paramters!");
-	    G_fatal_error(buff);
-	  }
-
-	  if(strcmp(dat_ellps, spheroid)!=0) {
-	    sprintf(buff, "WARNING: ellipsoid defined by datum (%s) is not the same as choosen by user (%s)!\n", dat_ellps, spheroid);
-	    G_warning(buff);
-	    if (!G_yes("Continue anyway?", 0))
-	      sprintf(buff, "Exiting, no update done!");
-	      G_fatal_error(buff);
-	  }
-	  /* write out key/value pairs to out_proj_keys */
-	  sprintf(tmp_buff, "%s", datum);
-	  G_set_key_value("datum", tmp_buff, out_proj_keys);
-	  sprintf(tmp_buff, "%lf", dx);
-	  G_set_key_value("dx", tmp_buff, out_proj_keys);
-	  sprintf(tmp_buff, "%lf", dy);
-	  G_set_key_value("dy", tmp_buff, out_proj_keys);
-	  sprintf(tmp_buff, "%lf", dz);
-	  G_set_key_value("dz", tmp_buff, out_proj_keys);    
-	}
 
       write_file:
 	/*
@@ -661,9 +692,36 @@ int main(int argc, char *argv[])
 			G_set_key_value("meters", "1.0", in_unit_keys);
 			break;
 		case PROJECTION_SP:
+	for (;;) {
+
+		do {
+			fprintf(stderr, "\nSpecify the correct units to use:\n");
+			fprintf(stderr, "Enter the corresponding number\n");
+			fprintf(stderr, "1.\tUS Survey Foot (Default for State Plane 1927)\n");
+			fprintf(stderr, "2.\tInternational Foot\n");
+			fprintf(stderr, "3.\tMeter\n");
+			fprintf(stderr, ">");
+		} while (!G_gets(answer));
+
+		G_strip(answer);
+	        if (strcmp(answer, "1") == 0) {
+			G_set_key_value("unit", "USfoot", in_unit_keys);
+			G_set_key_value("units", "USfeet", in_unit_keys);
+			G_set_key_value("meters", "0.30480060960121920243", in_unit_keys);
+		        break;
+		} else if (strcmp(answer, "2") == 0) {
 			G_set_key_value("unit", "foot", in_unit_keys);
 			G_set_key_value("units", "feet", in_unit_keys);
-			G_set_key_value("meters", "0.30479999", in_unit_keys);
+			G_set_key_value("meters", "0.3048", in_unit_keys);
+		        break;
+		} else if (strcmp(answer, "3") == 0) {
+			G_set_key_value("unit", "meter", in_unit_keys);
+			G_set_key_value("units", "meters", in_unit_keys);
+			G_set_key_value("meters", "1.0", in_unit_keys);
+		        break;
+		} else
+			fprintf(stderr, "\nInvalid Entry (number 1 - 3)\n");		
+	}
 			break;
 		case PROJECTION_LL:
 			G_set_key_value("unit", "degree", in_unit_keys);

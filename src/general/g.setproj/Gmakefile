@@ -2,8 +2,8 @@ PGM=g.setproj
 OFILES = \
 	main.o get_deg.o get_num.o get_stp.o get_datum.o
 
-LIBES = $(GISLIB) $(COORCNVLIB)
-DEPLIBS= $(DEPGISLIB) $(DEPCOORCNVLIB)
+LIBES = $(GISLIB)
+DEPLIBS= $(DEPGISLIB)
 
 $(BIN_INTER)/$(PGM): $(OFILES) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)

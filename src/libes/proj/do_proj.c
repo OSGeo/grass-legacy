@@ -2,7 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include  "gis.h"
+#include "gis.h"
 #include "projects.h"
 
 /********************* PARMS FOR PROJ **********************/ 
@@ -69,6 +69,11 @@ int pj_do_proj(x,y,info_in,info_out)
             *y = v / METERS_out;
         }
     }
+    if (ok < 0)
+    {
+        fprintf(stderr, "pj_transform() failed\ncause: ");
+        fprintf(stderr,"%s\n",pj_strerrno(ok));
+    }
     return ok;
 }
 
@@ -116,7 +121,12 @@ int pj_do_transform (int count, double *x, double *y, double *h,
             DIVIDE_LOOP(x,y,count,METERS_out);
         }
     }
-    if (!has_h)  free (h);
+    if (!has_h)  G_free (h);
    
+    if (ok < 0)
+    {
+        fprintf(stderr, "pj_transform() failed\ncause: ");
+        fprintf(stderr,"%s\n",pj_strerrno(ok));
+    }
     return ok;
 }

@@ -21,59 +21,84 @@
 #include "glocale.h"
 
 /***********************************************************************
- * G_ask_datum_name(char *datum)
+ * G_ask_datum_name(char *datumname, char *ellpsname)
  *
  * ask interactively for a valid datum name
  *
- * returns -1, 0 on error
+ * returns <0 on error
  * returns 1 on success
  ***********************************************************************/
-int 
-G_ask_datum_name(char *datum)
+int G_ask_datum_name(char *datumname, char *ellpsname)
 { 
-	char buff[1024],answer[50];
-	char  *dat, *Tmp_file;
-        FILE  *Tmp_fd = NULL;
-	int  i;
+    char buff[1024],answer[100], ellipse[100];
+    char  *dat, *Tmp_file;
+    FILE  *Tmp_fd = NULL;
+    int  i;
 
-        Tmp_file = G_tempfile ();
-        if (NULL == (Tmp_fd = fopen (Tmp_file, "w"))) {
-	    G_fatal_error(_("Cannot open temp file")) ;
-        }
-        fprintf(Tmp_fd,"datum\n");
-        for (i=0; (dat = G_datum_name(i)); i++) {
-          fprintf(Tmp_fd,"%s\n",dat);
-        }
 
-        fclose(Tmp_fd);
-
-        for(;;) {
-	  do {
-	      fprintf(stderr,_("\nPlease specify datum name\n"));
-	      fprintf(stderr,_("Enter 'list' for the list of available datums\n"));
-	      fprintf (stderr, _("Hit RETURN to cancel request\n"));
-	      fprintf(stderr,">");
-          } while(!G_gets(answer));
-          G_strip(answer); 
-          if(strlen(answer)==0) return -1;
-          if (strcmp(answer,"list") == 0) {
-            if (isatty(1)) {
-	      sprintf(buff,"$GRASS_PAGER %s",Tmp_file);
-            }
+    for(;;) {
+        do {
+            fprintf(stderr,_("\nPlease specify datum name\n"));
+            fprintf(stderr,_("Enter 'list' for the list of available datums\n"));
+            fprintf(stderr,("or 'custom' if you wish to enter custom parameters\n"));
+            fprintf (stderr, _("Hit RETURN to cancel request\n"));
+            fprintf(stderr,">");
+        } while(!G_gets(answer));
+        G_strip(answer);
+       
+        if(strlen(answer)==0)
+            return -1;
+             
+        if (strcmp(answer,"list") == 0) {
+            Tmp_file = G_tempfile ();
+            if (NULL == (Tmp_fd = fopen (Tmp_file, "w")))
+                fprintf(stderr, (_("Cannot open temp file")) );
             else
-	      sprintf(buff,"cat %s",Tmp_file);
-            system(buff);
-          }
-          else {
-            if (strcmp(answer,"datum") == 0) break; 
-            if (G_get_datum_by_name(answer) < 0) {
-	      fprintf(stderr,_("\ninvalid datum\n"));
+	    { 
+                fprintf(Tmp_fd,"Short Name\tLong Name / Description\n---\n");
+                for (i=0; (dat = G_datum_name(i)); i++) {
+                    fprintf(Tmp_fd,"%s\t%s\n\t\t\t(%s ellipsoid)\n---\n",
+                            dat, G_datum_description(i), G_datum_ellipsoid(i));
+                }
+                fclose(Tmp_fd);
+                if (isatty(1)) {
+                    sprintf(buff,"$GRASS_PAGER %s",Tmp_file);
+                }
+                else
+                    sprintf(buff,"cat %s",Tmp_file);
+                G_system(buff);
+
+	        remove ( Tmp_file );
+	    }
+            G_free ( Tmp_file );
+        }
+        else {
+            if (G_strcasecmp(answer,"custom") == 0) break; 
+
+	    if (G_get_datum_by_name(answer) < 0) {
+                fprintf(stderr,_("\ninvalid datum\n"));
             }
             else break;
-          }
         }
-        sprintf(datum,"%s",answer);
-        remove ( Tmp_file );
-        return 1;
+    }
+
+   
+    if (G_strcasecmp(answer,"custom") == 0)
+    {
+        /* For a custom datum we need to interactively ask for the ellipsoid */
+        i = G_ask_ellipse_name(ellipse);
+        sprintf(ellpsname, G_ellipsoid_name(i));
+        sprintf(datumname, "custom");
+    }
+    else
+    {
+        /* else can look it up from datum.table */
+        i = G_get_datum_by_name(answer);
+        sprintf(ellpsname, G_datum_ellipsoid(i));
+        sprintf(datumname, G_datum_name(i));
+    }
+      
+    return 1;
+
 }
 
