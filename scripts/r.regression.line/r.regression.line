@@ -50,8 +50,10 @@ if [ "$1" != "@ARGS_PARSED@" ] ; then
 fi
 
 
+TMP="`g.tempfile pid=$$`"
+
 #calculate regression equation
-r.stats -c input=$GIS_OPT_map1,$GIS_OPT_map2  > /tmp/corr.del
+r.stats -c input=$GIS_OPT_map1,$GIS_OPT_map2  > "$TMP"
 awk '{tot += $3;sumX +=$1 * $3; sumsqX +=$1*$1*$3;sumY +=$2 * $3; sumsqY +=$2*$2*$3;\
  sumXY +=$1*$2*$3;\
 }\
@@ -60,13 +62,13 @@ R= (sumXY - sumX*sumY/tot)/((sumsqX - sumX^2/tot)*(sumsqY - sumY^2/tot))^0.5;\
 mediaX=sumX/tot;sumsqX=sumsqX/tot;varX=sumsqX-(mediaX^2);sdX=varX^0.5;\
 mediaY=sumY/tot;sumsqY=sumsqY/tot;varY=sumsqY-(mediaY^2);sdY=varY^0.5;\
 A=mediaY - B*mediaX; F= R^2/(1-R^2/tot-2);\
-print A, B, R, tot, F, mediaX, sdX, mediaY, sdY}' /tmp/corr.del > /tmp/corr.delb
-#cat /tmp/corr.delb
+print A, B, R, tot, F, mediaX, sdX, mediaY, sdY}' "$TMP" > "$TMP"b
+#cat "$TMP"b
 
 #send output to screen or text file
-if [ $GIS_OPT_output = "" ] 
+if [ -z "$GIS_OPT_output" ] 
 then
-	RESULTADO = `cat /tmp/corr.delb`
+	RESULTADO = `cat "$TMP"b`
         echo "y = a + b*x"
         echo "           a, b: coefficients"
         echo "a  b"
@@ -78,10 +80,9 @@ else
         echo "   N: number of elements"
         echo "   medX, medY: Medians"
         echo "   sdX, sdY: Standard deviations"
-	echo "a  b  R  N  F medX  sdX  medY  sdY" > /tmp/corr.delc
-	cat /tmp/corr.delb >> /tmp/corr.delc
-	mv /tmp/corr.delc $GIS_OPT_output
-        cat $GIS_OPT_output
+	echo "a  b  R  N  F medX  sdX  medY  sdY" > "$TMP"c
+	cat "$TMP"b >> "$TMP"c
+	mv "$TMP"c "$GIS_OPT_output"
+	cat "$GIS_OPT_output"
 fi
-\rm /tmp/corr.del*
-
+rm -f "$TMP"*
