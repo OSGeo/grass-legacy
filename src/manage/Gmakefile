@@ -1,0 +1,74 @@
+# %W% %G%
+
+LIB = lib.a
+L = $(ETC)/lister
+
+all: $(LIB)\
+	$(BIN)/copy   $(BIN)/Gcopy \
+	$(BIN)/list   $(BIN)/Glist \
+	$(BIN)/remove $(BIN)/Gremove \
+	$(BIN)/rename $(BIN)/Grename \
+	$(ETC)/copy \
+	$(ETC)/element_list\
+	$L \
+	$L/cell
+
+#############################################################
+OBJ =\
+	add_elem.o ask.o copyfile.o do_copy.o do_list.o do_remove.o \
+	do_rename.o empty.o find.o get_len.o menu.o read_list.o \
+	show_elem.o sighold.o 
+
+$(LIB): $(OBJ)
+	$(AR)
+
+$(OBJ): list.h
+#############################################################
+$(BIN)/copy: copy.o $(LIB) $(GISLIB)
+	$(CC) $(LDFLAGS) copy.o $(LIB) $(GISLIB) $(TERMLIB) -o $@
+
+$(BIN)/Gcopy: Gcopy.o $(LIB) $(GISLIB)
+	$(CC) $(LDFLAGS) Gcopy.o $(LIB) $(GISLIB) -o $@
+
+copy.o Gcopy.o:  list.h
+#############################################################
+$(BIN)/list: list.o $(LIB) $(GISLIB)
+	$(CC) $(LDFLAGS) list.o $(LIB) $(GISLIB) $(TERMLIB) -o $@
+
+$(BIN)/Glist: Glist.o $(LIB) $(GISLIB)
+	$(CC) $(LDFLAGS) Glist.o $(LIB) $(GISLIB) -o $@
+
+list.o Glist.o:  list.h
+#############################################################
+$(BIN)/remove: remove.o $(LIB) $(GISLIB)
+	$(CC) $(LDFLAGS) remove.o $(LIB) $(GISLIB) $(TERMLIB) -o $@
+
+$(BIN)/Gremove: Gremove.o $(LIB) $(GISLIB)
+	$(CC) $(LDFLAGS) Gremove.o $(LIB) $(GISLIB) -o $@
+
+remove.o Gremove.o:  list.h
+#############################################################
+$(BIN)/rename: rename.o $(LIB) $(GISLIB)
+	$(CC) $(LDFLAGS) rename.o $(LIB) $(GISLIB) $(TERMLIB) -o $@
+
+$(BIN)/Grename: Grename.o $(LIB) $(GISLIB)
+	$(CC) $(LDFLAGS) Grename.o $(LIB) $(GISLIB) -o $@
+
+rename.o Grename.o:  list.h
+#############################################################
+
+$(ETC)/copy: copy.etc
+	rm -f $@ ; cp $? $@ ; chmod 0755 $@
+
+$(ETC)/element_list: Element_List
+	rm -f $@ ; cp $? $@ ; chmod 0444 $@ ;
+
+#############################################################
+
+$L:
+	mkdir $L
+
+$(L)/cell: Lcell.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ Lcell.o $(GISLIB)
+	
+$(GISLIB): #
