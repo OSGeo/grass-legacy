@@ -214,13 +214,13 @@ srcdist: distclean
 # make a binary package for distribution:
 #  Bug: VER is not expanded properly (wrong directory):
 bindist:
-	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ${PREFIX}/  2>/dev/null ; true"
-	${SHELL} -c "sed -e \"s/BIN_DIST_VERSION/${NAME_VER}/\" -e \"s#BIN_DIST_DIR#'${PREFIX}'#\" -e \"s/TEST_STR=/TEST_STR=executable/\" -e \"s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#\" -e \"s/# executable shell.*//\" -e \"s/# make bindist.*//\"  binaryInstall.src > grass${NAME_VER}install.sh 2>/dev/null ; true"
+	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ${GISBASE}/  2>/dev/null ; true"
+	${SHELL} -c "sed -e \"s/BIN_DIST_VERSION/${NAME_VER}/\" -e \"s#BIN_DIST_DIR#'${GISBASE}'#\" -e \"s/TEST_STR=/TEST_STR=executable/\" -e \"s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#\" -e \"s/# executable shell.*//\" -e \"s/# make bindist.*//\"  binaryInstall.src > grass${NAME_VER}install.sh 2>/dev/null ; true"
 	${SHELL} -c "chmod a+x grass${NAME_VER}install.sh  2>/dev/null ; true"
-	(cd ${PREFIX}; tar cf - ${BIN_DIST_FILES} | gzip -fc > grass${VERSION}_${SYSTEM}_bin.tar.gz )
+	(cd ${GISBASE}; tar cf - ${BIN_DIST_FILES} | gzip -fc > grass${VERSION}_${SYSTEM}_bin.tar.gz )
 	@ echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
 	@ echo "DO NOT FORGET!! Upload grass${VERSION}_${SYSTEM}_bin.tar.gz and grass${NAME_VER}install.sh to the GRASS ftp server"
-	@ echo "The binary package is stored at ${PREFIX}"
+	@ echo "The binary package is stored at ${GISBASE}"
 
 # automatically run DejaGNU tests:
 # added 10/2000 by Andreas Lange
