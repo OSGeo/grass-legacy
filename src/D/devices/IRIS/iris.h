@@ -1,0 +1,1 @@
+#define COLOR_OFFSET 256
