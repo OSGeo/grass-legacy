@@ -257,12 +257,19 @@ int db_select_CatValArray ( dbDriver *driver, char *tab, char *key, char *col, c
 
 	column = db_get_table_column(table, 1);
 	value  = db_get_column_value(column);
+	cvarr->value[i].isNull = value->isNull;
 	switch ( type ) {
 	    case ( DB_C_TYPE_INT ):
-                cvarr->value[i].val.i = db_get_value_int(value);
+		if ( value->isNull )
+		    cvarr->value[i].val.i = 0;
+		else
+                    cvarr->value[i].val.i = db_get_value_int(value);
 	        break;
 	    case ( DB_C_TYPE_DOUBLE ):
-                cvarr->value[i].val.d = db_get_value_double(value);
+		if ( value->isNull )
+		    cvarr->value[i].val.d = 0.0;
+		else
+                    cvarr->value[i].val.d = db_get_value_double(value);
 	        break;
             default:
 	    	return (-1);
