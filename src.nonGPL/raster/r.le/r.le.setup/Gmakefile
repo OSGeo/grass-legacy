@@ -1,0 +1,33 @@
+DIR  = $(GISBASE)/src.contrib/UW/r.le.setup/polytocell
+LIST =  main.o sample.o setup.o mv_wind.o ask_group.o user_input.o
+LIST2 = $(DIR)/do_dots.o $(DIR)/do_line.o $(DIR)/find_area.o $(DIR)/ply_t_bmif.o $(DIR)/save_area.o $(DIR)/wrte_recrd.o $(DIR)/yadjust.o
+LIST3 = $(DIR)/bmf_to_cll.o
+
+EXTRA_CFLAGS = -I$(SRC)/mapdev/diglib  # gives location of .dig includes
+
+all: $(BIN_CONTRIB_CMD)/r.le.setup 
+	$(GMAKE) polytocell 
+
+$(BIN_CONTRIB_CMD)/r.le.setup: $(LIST) $(RASTERLIB) $(DISPLAYLIB) $(GISLIB) $(VECTLIB) $(VASKLIB)
+#setup: $(LIST) $(RASTERLIB) $(DISPLAYLIB) $(GISLIB) $(VECTLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VECTLIB) $(MATHLIB) $(VASK)
+
+#$(BIN_CONTRIB_CMD)/poly_to_bmif: $(LIST2)
+#	$(CC) $(LDFLAGS) -o $@ $(LIST2)
+
+#$(BIN_CONTRIB_CMD)/bmif_to_cell: $(LIST3)
+#	$(CC) $(LDFLAGS) -o $@ $(LIST3) $(GISLIB)
+
+bmf_to_cll.o: $(DIR)/ply_to_cll.h
+do_dots.o:    $(DIR)/ply_to_cll.h
+do_line.o:    $(DIR)/ply_to_cll.h
+find_area.o:  $(DIR)/ply_to_cll.h
+ply_t_bmif.o: $(DIR)/ply_to_cll.h
+save_area.o:  $(DIR)/ply_to_cll.h
+
+
+$(DISPLAYLIB): # in case library changes
+$(RASTERLIB): # in case library changes
+$(GISLIB): # in case library changes
+$(VECTLIB): # in case library changes
+$(VASKLIB): # in case library changes
