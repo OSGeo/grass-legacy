@@ -90,6 +90,16 @@ int Graph_Set (int argc, char **argv)
 			       screen_bottom - screen_top,
 			       color);
     }
+    else
+    {
+	int color = _get_lookup_for_color(255, 255, 255);
+	if ( strcmp(DEFAULT_FG_COLOR, "white") )
+		gdImageFilledRectangle(im, screen_left, screen_top,
+			       screen_right - screen_left,
+			       screen_bottom - screen_top,
+			       color);
+	   
+    }
 
     p = getenv("GRASS_TRANSPARENT");
     if (p && strcmp(p, "TRUE") == 0) {
