@@ -85,6 +85,7 @@ docs:
 install:
 	-mkdir -p ${INST_DIR}
 	-(cd ${GISBASE}; tar cf - .) | (cd ${INST_DIR}; tar xBf -)
+	-cp -f ${GRASS_BIN}/grass${NAME_VER} ${INST_DIR}/grass${NAME_VER}.tmp
 	-mkdir -p ${UNIX_BIN}
 	-sed -e 's#^GISBASE.*#GISBASE=${INST_DIR}#' ${GRASS_BIN}/grass${NAME_VER} > ${UNIX_BIN}/grass${NAME_VER}
 	-chmod a+x ${UNIX_BIN}/grass${NAME_VER}
