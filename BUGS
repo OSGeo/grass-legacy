@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.20 2000-09-25 14:34:21 markus Exp $
+$Id: BUGS,v 1.21 2000-09-28 08:56:34 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -115,6 +115,14 @@ p.map.new:
 
 ps.map: -fwritable-strings is required on Linux
    some variable implementation needs to be improved.
+
+r3.in.v5d/r3.out.v5d:
+ src.contrib/GMSL/g3d/src3d/raster/r3.in.v5d/binio.c
+ src.contrib/GMSL/g3d/src3d/raster/r3.out.v5d/binio.c
+ -> does not yet contain little/big endian sensivity (currently only by
+   compiler flag)
+  solution:  code could be taken from src/libes/ogsf/gsd_img_ppm.c
+
 
 r3.showdspf.openGL:  (src.contrib/GMSL/g3d/src3d/raster/r3.showdspf.openGL)
  - the dependency to OpenGL and Mesa should be checked automatically
@@ -296,7 +304,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.20  2000-09-25 14:34:21  markus
+ Revision 1.21  2000-09-28 08:56:34  markus
+ added little/big endian problem
+
+ Revision 1.20  2000/09/25 14:34:21  markus
  v.surf.rst fixed by Helena
 
  Revision 1.19  2000/09/20 15:50:22  markus
