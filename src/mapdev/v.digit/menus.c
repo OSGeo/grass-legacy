@@ -192,7 +192,7 @@ Set_Global (item, onoff)
     int item;
     int onoff;
 {
-    return (set_menu_item (&M_global, item, onoff));
+    set_menu_item (&M_global, item, onoff);
 }
 
 Set_G_Mask (item, onoff)
