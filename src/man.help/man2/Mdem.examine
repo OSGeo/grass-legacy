@@ -1,0 +1,27 @@
+.\" %W% %G%
+.TH Mdem.examine 2M GRASSmapdev
+.nh
+.SH NAME
+Mdem.examine \- Provides a terse description of USGS DEM files stored on 1/2
+inch magnetic tape
+.br
+.I (Map Development Tool)
+.SH SYNOPSIS
+.B Mdem.examine \fR[if\*=\fItapedev\fR] bs\*=\fIblocksize\fR 
+.SH DESCRIPTION
+.I Mdem.examine  
+reads DEM terrain elevation data from the input file (if) specified by
+.I tapedev,
+in the block size (bs) specified by 
+.I blocksize.
+If \fIif\fR is unspecified on the command line, the program assumes that
+/dev/rmt0 is the input file.
+The information provided to the user comes from each file included on tape.
+Included are the maximum and minimum elevation values
+and the approximate UTM boundaries of each file.  The program
+assumes unlabeled tapes in ascii format with no header or trailer
+files.
+.SH "SEE ALSO"
+\fIexamine.tape[1], Mdem.extract[2M]\fR
+.SH "AUTHOR"
+Andrew Heekin, U.S. Army Construction Engineering Research Laboratory
