@@ -34,7 +34,7 @@ XEXTRALIBS          = @X_EXTRA_LIBS@
 COMPATLIB           = @COMPATLIB@
 TERMLIB             = @TERMLIB@
 CURSES              = @CURSESLIB@ $(TERMLIB) $(COMPATLIB)
-MATHLIB             = -lm
+MATHLIB             = @MATHLIB@ 
 XDRLIB              = @XDRLIB@
 ZLIB                = @ZLIB@
 
