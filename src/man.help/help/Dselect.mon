@@ -1,0 +1,2 @@
+Selects a graphics device (monitor) for output, initializes the screen,
+and locks the device for use by the user
