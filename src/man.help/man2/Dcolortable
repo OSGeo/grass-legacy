@@ -1,0 +1,77 @@
+.\" %W% %G%
+.TH Dcolortable 2D D-Language
+.SH NAME
+Dcolortable \- To display the color table associated with a cell file
+.SH SYNOPSIS
+.ns
+\fBDcolortable\fR\ name\*=\fIcell_file\fR\ [color\*=\fIcolor\fR]\ [lines\*=\fInum_lines\fR]\ [cols\*=\fInum_cols\fR]
+.SH DESCRIPTION
+The GRASS tool \fIDcolortable\fR
+is used to display the color table associated with a cell file in the
+current window.  The \fIcell_file\fR named should be an available cell file
+in the user's mapset and location.  Options can be stated either positionally
+or explicitly on the command line (see \fIDINTRO[2D]\fR).  If options are
+not entered on the command line, defaults are used.  If options are entered
+positionally on the command line, a dash \fB-\fR can be used to indicate
+that the default should be used for the option at that position.  Options
+are:
+.br
+.ns
+.TP
+.RI color\*= \fIcolor\fR
+Color of the lines separating the colors of the color table.  If no color is
+stated on the command line, \fIDcolortable\fR defaults to the use
+of black lines.
+.br
+.ns
+.TP
+.RI lines\*= \fInum_lines\fR
+.br
+.ns
+.TP
+.RI cols\*= \fInum_cols\fR
+.br
+If num_lines and num_cols are not specified, \fIDcolortable\fR
+divides the current window equally among the number of categories
+present in the named cell file.  If one option is specified,
+the other is automatically set  to accommodate all categories.
+If both are specified, as many categories as possible are displayed.
+.SH EXAMPLE
+The user running the command:
+
+\fBDcolortable name\*=soils color\*=red lines\*=1 cols\*=3\fR
+
+would see the current window divided into three columns extending the full
+window height.  The lines dividing the color table associated with the
+soils map would be displayed in red.
+The user would see, at most, only three of the colors from the soils
+color table displayed in the current window (because the user requested
+that this window be divided into three sections).
+.SH NOTES
+If the user wishes to display the entire color table associated with
+a map, the user should stipulate a number of lines (rows) and columns
+sufficient to accommodate the number of categories in the map's color
+table.  If the user runs \fIDcolortable\fR using the default number of
+lines and columns (the full window), all categories from the map's color
+table will be displayed.  However, if the user requests that the color
+table associated with a map which has 10 data categories be displayed
+in a window with only 3 lines (rows) and 2 columns (a total of six cells),
+only six of the ten categories will be displayed.
+
+The user should run the GRASS tool \fIDerase\fR between
+runs of \fIDcolortable\fR to avoid confusion.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+\fIDcell[2D]\fR	To display grid cell files on the monitor
+.br
+\fIDerase[2D]\fR	To erase the contents of the current window
+.br
+\fId.colors[1]\fR	To change the color table associated with a map
+.br
+\fIdisplay[1]\fR	To display and generate final map products
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
