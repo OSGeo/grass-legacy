@@ -1,0 +1,42 @@
+#include "gis.h"
+
+new_stats (name, reclass)
+    char *name;
+    struct Reclass *reclass;
+{
+    struct Histogram histo;
+    struct Range range;
+    CELL cat;
+    int i;
+    CELL min,max;
+
+    G_suppress_warnings (1);
+    i = G_read_histogram (reclass->name, reclass->mapset, &histo);
+    G_suppress_warnings (0);
+    if (i <= 0) return;
+
+    G_init_range (&range);
+
+/* reclassify the histogram */
+
+    min = reclass->min;
+    max = reclass->max;
+    for (i = 0; i < histo.num; i++)
+    {
+	cat = histo.list[i].cat;
+	if (cat < min || cat > max)
+	    cat = 0;
+	else
+	    cat = reclass->table[cat - min];
+	histo.list[i].cat = cat;
+	G_update_range (cat, &range);
+    }
+
+/*
+ * Sort the resultant histogram.
+ * This will combine duplicates into single cat
+ */
+    G_sort_histogram (&histo);
+    G_write_histogram (name, &histo);
+    G_write_range (name, &range);
+}
