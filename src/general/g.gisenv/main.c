@@ -7,7 +7,21 @@ int main(int argc, char *argv[])
     int tty;
     char *name;
     char *value;
+    char *help[2];
     char xname[30], xvalue[70];
+    struct GModule *module;
+    
+    module = G_define_module();
+    module->description =
+		"Outputs the user's current GRASS variable settings.";
+    
+    G_gisinit (argv[0]);
+
+    if (argc > 1) /* print out the help stuff */
+    {
+    if (G_parser(argc, argv) < 0)
+       exit(-1);
+    }
 
     for (n = 1; n < argc; n++)
     {
