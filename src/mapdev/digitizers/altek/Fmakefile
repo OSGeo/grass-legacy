@@ -1,4 +1,3 @@
-#  %W%  %G%
 
 LIBTRANS	= ../../libes/libtrans.a
 LIBDIGIT	= ../../digit/libdigit.a
