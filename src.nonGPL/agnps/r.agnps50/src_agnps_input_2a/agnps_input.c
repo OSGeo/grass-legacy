@@ -662,7 +662,7 @@ main()
            for(j=0;j < ncols;j++) {
                 if(wshd->rbuf[j] > 0){
                   land_use = assign_landuse(G_tolcase(G_get_cat(landuse->rbuf[j], &landuse_cats)));
-
+                  
 /* check for landuse for slope, also check for 0 slope */
                   if(land_use == water || land_use == marsh)
                      cel[ct].ovl_slope = 0.0;
