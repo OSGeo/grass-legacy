@@ -118,5 +118,8 @@ fi
 # Export the user interface variable
 export GRASS_GUI
 
+#replace multiple white spaces with single white space if present:
+CMD_LINE_ARGS=`echo $CMD_LINE_ARGS | tr -s ' ' ' '`
+
 # Need to call /bin/sh in order to pass command line options properly
 /bin/sh -c "$GISBASE/etc/Init.sh $CMD_LINE_ARGS"
