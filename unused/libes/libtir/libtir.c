@@ -558,6 +558,11 @@ r_copy_value2(RASTER_MAP_TYPE stype, RASTER_MAP_ROW sdata, int scol,
 double
 r_get_c(RASTER_MAP_ROW data, int col)
 {
+	if(col < 0){
+		G_warning("r_get_c(): col < 0");
+		return 0;
+	}
+
 	return (double) data.c[col];
 }
 
@@ -565,6 +570,11 @@ r_get_c(RASTER_MAP_ROW data, int col)
 double
 r_get_f(RASTER_MAP_ROW data, int col)
 {
+	if(col < 0){
+		G_warning("r_get_f(): col < 0");
+		return 0;
+	}
+
 	return (double) data.f[col];
 }
 
@@ -572,34 +582,161 @@ r_get_f(RASTER_MAP_ROW data, int col)
 double
 r_get_d(RASTER_MAP_ROW data, int col)
 {
+	if(col < 0){
+		G_warning("r_get_d(): col < 0");
+		return 0;
+	}
+
 	return (double) data.d[col];
 }
 
 
-void
-r_set_c(RASTER_MAP_ROW data, int col, double val)
+double *
+r_get_cs(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
 {
-	data.c[col] = (CELL) val;
+	int	i;
+
+	if(col < 0 || num <= 0 || val == NULL){
+		G_warning("r_get_cs(): col < 0 || num <= 0 || val == NULL");
+		return NULL;
+	}
+
+	for(i=0; i<num; i++)
+		val[idx+i] = (double) data.c[col+i];
+
+	return val;
+}
+
+
+double *
+r_get_fs(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
+{
+	int	i;
+
+	if(col < 0 || num <= 0 || val == NULL){
+		G_warning("r_get_fs(): col < 0 || num <= 0 || val == NULL");
+		return NULL;
+	}
+
+	for(i=0; i<num; i++)
+		val[idx+i] = (double) data.f[col+i];
+
+	return val;
+}
+
+
+double *
+r_get_ds(RASTER_MAP_ROW data, int col, int num, double *val, int idx)
+{
+	int	i;
+
+	if(col < 0 || num <= 0 || val == NULL){
+		G_warning("r_get_ds(): col < 0 || num <= 0 || val == NULL");
+		return NULL;
+	}
+
+	for(i=0; i<num; i++)
+		val[idx+i] = (double) data.d[col+i];
+
+	return val;
 }
 
 
 void
-r_set_f(RASTER_MAP_ROW data, int col, double val)
+r_set_c(RASTER_MAP_ROW data, int col, double val, int num)
 {
-	data.f[col] = (FCELL) val;
+	int	i;
+
+	if(col < 0 || num <= 0){
+		G_warning("r_set_c(): col < 0 || num <= 0");
+		return;
+	}
+
+	for(i=0; i<num; i++)
+		data.c[col+i] = (CELL) val;
+
+	return;
 }
 
 
 void
-r_set_d(RASTER_MAP_ROW data, int col, double val)
+r_set_f(RASTER_MAP_ROW data, int col, double val, int num)
 {
-	data.d[col] = (DCELL) val;
+	int	i;
+
+	if(col < 0 || num <= 0){
+		G_warning("r_set_f(): col < 0 || num <= 0");
+		return;
+	}
+
+	for(i=0; i<num; i++)
+		data.f[col+i] = (FCELL) val;
+
+	return;
+}
+
+
+void
+r_set_d(RASTER_MAP_ROW data, int col, double val, int num)
+{
+	int	i;
+
+	if(col < 0 || num <= 0){
+		G_warning("r_set_d(): col < 0 || num <= 0");
+		return;
+	}
+
+	for(i=0; i<num; i++)
+		data.d[col+i] = (DCELL) val;
+
+	return;
+}
+
+
+void
+r_set_null_c(RASTER_MAP_ROW data, int col, int num)
+{
+	if(col < 0 || num <= 0){
+		G_warning("r_set_null_c(): col < 0 || num <= 0");
+		return;
+	}
+
+	return G_set_c_null_value(&data.c[col], num);
+}
+
+
+void
+r_set_null_f(RASTER_MAP_ROW data, int col, int num)
+{
+	if(col < 0 || num <= 0){
+		G_warning("r_set_null_f(): col < 0 || num <= 0");
+		return;
+	}
+
+	return G_set_f_null_value(&data.f[col], num);
+}
+
+
+void
+r_set_null_d(RASTER_MAP_ROW data, int col, int num)
+{
+	if(col < 0 || num <= 0){
+		G_warning("r_set_null_d(): col < 0 || num <= 0");
+		return;
+	}
+
+	return G_set_d_null_value(&data.d[col], num);
 }
 
 
 int
 r_is_null_c(RASTER_MAP_ROW data, int col)
 {
+	if(col < 0){
+		G_warning("r_is_null_c(): col < 0");
+		return;
+	}
+
 	return G_is_c_null_value(&data.c[col]);
 }
 
@@ -607,6 +744,11 @@ r_is_null_c(RASTER_MAP_ROW data, int col)
 int
 r_is_null_f(RASTER_MAP_ROW data, int col)
 {
+	if(col < 0){
+		G_warning("r_is_null_f(): col < 0");
+		return;
+	}
+
 	return G_is_f_null_value(&data.f[col]);
 }
 
@@ -614,6 +756,11 @@ r_is_null_f(RASTER_MAP_ROW data, int col)
 int
 r_is_null_d(RASTER_MAP_ROW data, int col)
 {
+	if(col < 0){
+		G_warning("r_is_null_d(): col < 0");
+		return;
+	}
+
 	return G_is_d_null_value(&data.d[col]);
 }
 
@@ -621,6 +768,11 @@ r_is_null_d(RASTER_MAP_ROW data, int col)
 int
 r_str_c(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
 {
+	if(str == NULL || col < 0){
+		G_warning("r_str_c(): str == NULL || col < 0");
+		return 0;
+	}
+
 	sprintf(str, "%*d", width, data.c[col]);
 
 	if(width <= 0){
@@ -639,6 +791,11 @@ r_str_c(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
 int
 r_str_f(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
 {
+	if(str == NULL || col < 0){
+		G_warning("r_str_f(): str == NULL || col < 0");
+		return 0;
+	}
+
 	sprintf(str, "%*.*f", width, prec, data.f[col]);
 
 	if(width <= 0){
@@ -657,6 +814,11 @@ r_str_f(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
 int
 r_str_d(char *str, int width, int prec, RASTER_MAP_ROW data, int col)
 {
+	if(str == NULL || col < 0){
+		G_warning("r_str_d(): str == NULL || col < 0");
+		return 0;
+	}
+
 	sprintf(str, "%*.*lf", width, prec, data.d[col]);
 
 	if(width <= 0){
