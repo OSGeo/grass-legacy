@@ -210,8 +210,8 @@ AC_CHECK_LIB(dl, dlsym, DLLIB=-ldl)
 AC_SUBST(DLLIB)
 
 # Some search directories to use as the base for other searches when not specified
-my_inc_dirs="/usr/include /usr/local/include /usr/X11R6/include /opt/include /usr/freeware/include"
-my_lib_dirs="/usr/lib /usr/local/lib /usr/X11R6/lib /opt/lib /usr/freeware/lib"
+my_inc_dirs="/usr/include /usr/local/include /usr/X11R6/include /opt/include /usr/freeware/include /usr/X11r6/include"
+my_lib_dirs="/usr/lib /usr/local/lib /usr/X11R6/lib /opt/lib /usr/freeware/lib /usr/X11r6/lib"
 
 ZLIB=
 # With zlib includes directory:
