@@ -1,0 +1,28 @@
+PGM = Glos
+LIST =  color_rnge.o\
+	command.o\
+	delete.o\
+	main.o\
+	make_list.o\
+	make_point.o\
+	mark_pts.o\
+	pts_elim.o\
+	segment.o
+
+ 
+$(BIN)/$(PGM): $(LIST) $(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB) $(MATHLIB)
+ 
+$(GISLIB) $(DISPLAYLIB) $(SEGMENTLIB): #
+
+command.o:	cmd_line.h
+delete.o:	point.h
+main.o:	cmd_line.h
+main.o:	point.h
+make_list.o:	point.h
+make_point.o:	point.h
+mark_pts.o:	point.h
+pts_elim.o:	point.h
+pts_elim.o:	radians.h
+segment.o:	point.h
+
