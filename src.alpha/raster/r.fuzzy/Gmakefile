@@ -1,0 +1,5 @@
+all:
+	$(GMAKE) fuzzy/src
+	$(GMAKE) r.fuz.map
+	$(GMAKE) r.fuz.set
+	$(GMAKE) r.fuz.rule
