@@ -1,12 +1,13 @@
 
 MODULE_TOPDIR = ../..
 
+#the order is relevant
 SUBDIRS = \
 	dbmi_base \
 	dbmi_client \
+	stubs \
 	dbmi_driver \
-	sqlp \
-	stubs
+	sqlp
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 

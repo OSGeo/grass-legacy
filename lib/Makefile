@@ -3,16 +3,17 @@ MODULE_TOPDIR = ..
 
 #order is relevant:
 SUBDIRS = \
+	datetime \
+	gis \
 	bitmap \
 	btree \
-	D \
-	datetime \
-	db \
 	display \
+	D \
+	db \
+	vask \
 	edit \
 	external \
 	fonts \
-	gis \
 	gmath \
 	gtcltk \
 	form \
@@ -23,7 +24,6 @@ SUBDIRS = \
 	raster \
 	rowio \
 	segment \
-	vask \
 	vector \
 	front.end \
 	rst \
