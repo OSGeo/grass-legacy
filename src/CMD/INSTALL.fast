@@ -1,0 +1,21 @@
+
+For experienced GRASS users/developers/installers....
+
+To get things moving quickly, the only files to 
+edit here are
+
+ GISGEN.my
+
+and 
+
+ MAKELINKS.my
+
+Depending on your platform you have to change paths in
+
+ head/linux
+
+or 
+
+ head/solaris
+
+etc.
