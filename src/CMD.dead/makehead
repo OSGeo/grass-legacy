@@ -1,0 +1,20 @@
+# SUN
+# set these definitions according to your system requirements
+
+GIS                 = /home/grass3.1
+GISDBASE            = /home/grass3.1/data
+UNIX_BIN            = /usr/local/bin
+DEFAULT_LOCATION    = spearfish
+
+OS                  = BERK
+COMPILE_FLAGS       = -O
+DIGIT_FLAGS         =
+LDFLAGS             = -s
+TERMLIB             = -ltermlib
+CURSES              = -lcurses $(TERMLIB)
+MATHLIB             = -lm
+CLEAR               = ok
+AR                  = ar ruv $@ $?; ranlib $@
+
+LATLONLIB = $(LIBDIR)/libll.a
+LATLONBIN = $(GIS)/bin.ll
