@@ -1,6 +1,9 @@
 /**********************************************************************
    parse.c   - parse the command line
  *********************************************************************/
+#include <string.h>
+#include <errno.h>
+
 #ifndef _PATCHLEVEL_H_
 #define _PATCHLEVEL_H_
 #include "xgrass.h"
@@ -68,10 +71,8 @@ ParseCommand(argc,argv)
 		}
 		_XG_Global.menuData.specFile = *argv;
 		if ((access(_XG_Global.menuData.specFile,R_OK)) < 0 ) {
-		    extern char *sys_errlist[];
-
 		    sprintf(errorbuf,"\"%s\", %s",_XG_Global.menuData.specFile,
-		        sys_errlist[errno]);
+		        strerror(errno));
 		    FatalError("parsing command line arguments",errorbuf);
 		}
 		match = True;
