@@ -321,15 +321,20 @@ proc add_option {optn optlist} {
 
 	if {$opts(options) != {}} {
 		set vals [split $opts(options) ,]
+		set answers [split $opts(answer) ,]
 		set opt($dlg,$optn,nmulti) [llength $vals]
 		if {$opts(multi)} {
 			set i 1
 			foreach x $vals {
 				do_check $dlg $optn $i $x
+				if { [lsearch $answers $x] >= 0 } {
+					set opt($dlg,$optn,val,$i) 1
+				}
 				incr i
 			}
 		} else {
 			do_combo $dlg $optn $vals
+			set opt($dlg,$optn,val) $opts(answer)
 		}
 	} else {
 		set prompt $opts(prompt)
