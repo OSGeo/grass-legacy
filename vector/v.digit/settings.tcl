@@ -99,7 +99,7 @@ proc make_table { } {
 
 # create settings window
 proc settings {} {
-    global symb GVariable  table_page table_frame tabrow
+    global symb GVariable  table_page table_frame tabrow GWidget GBgcmd
     set clw 30
 
     if { [winfo exists .settings] } {
@@ -251,6 +251,11 @@ proc settings {} {
 
     c_table_definition
 
+    # --- Background commands ---
+    set GWidget(bgcmd) [$nb insert end bgcmd -text "Background"]
+
+    c_create_bgcmd
+    
     # -- pack notebook --
     pack $nb -fill both -expand yes -padx 1 -pady 1
     $nb raise [$nb page 0]

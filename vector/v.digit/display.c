@@ -183,7 +183,8 @@ void display_bg ( void )
 
     driver_close();
     for(i=0; i < nbgcmd; i++) {
-	system ( Bgcmd[i] );
+	if ( Bgcmd[i].on ) 
+	    system ( Bgcmd[i].cmd );
     }
     driver_open();
 }

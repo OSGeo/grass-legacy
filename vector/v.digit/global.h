@@ -20,10 +20,15 @@ typedef enum
     TOOL_MOVE_VERTEX,  
     TOOL_ADD_VERTEX,    /* add vertex on line */
     TOOL_RM_VERTEX,     /* remove vertex from line */
+    TOOL_SPLIT_LINE,
     TOOL_MOVE_LINE,  
     TOOL_DELETE_LINE,  
+    TOOL_DISPLAY_ATTRIBUTES,  
     TOOL_ZOOM_WINDOW,    /* zoom by window */
     TOOL_ZOOM_OUT_CENTRE, 
+    TOOL_ZOOM_PAN, 
+    TOOL_ZOOM_DEFAULT, 
+    TOOL_ZOOM_REGION, 
     TOOL_REDRAW 
 } ToolNumber;
     
@@ -97,6 +102,8 @@ typedef struct {
 #define VARN_SNAP_SCREEN "snap_screen" /* Snapping threshold in screen pixels */
 #define VAR_SNAP_MAP     8        
 #define VARN_SNAP_MAP    "snap_map" /* Snapping threshold in map units */ 
+#define VAR_ZOOM_REGION  9        
+#define VARN_ZOOM_REGION "zoom_region" /* Name of region to zoom in */ 
 
 #ifdef MAIN
 VAR Variable[] = {
@@ -109,6 +116,7 @@ VAR Variable[] = {
     { VAR_SNAP_MODE, VARN_SNAP_MODE, VART_INT, 0, 0, NULL },
     { VAR_SNAP_SCREEN, VARN_SNAP_SCREEN, VART_INT, 0, 0, NULL },
     { VAR_SNAP_MAP, VARN_SNAP_MAP, VART_DOUBLE, 0, 0, NULL },
+    { VAR_ZOOM_REGION, VARN_ZOOM_REGION, VART_CHAR, 0, 0, NULL },
     { 0, NULL, 0, 0, 0, NULL }
 };
 #else
@@ -150,12 +158,17 @@ Global int *NodeSymb; /* array of nodes' symbology codes, start from index 1 */
 Global int aNodeSymb; /* number of nodes / allocated space (array size + 1) */
 
 /* Background commands */
+typedef struct {
+    char *cmd;   /* command */
+    int  on;     /* 1 display, 0 do not display */
+} BGCMD;
+
 #ifdef MAIN
-char **Bgcmd = NULL;
+BGCMD  *Bgcmd = NULL;
 int nbgcmd = 0;
 int abgcmd = 0; 
 #else
-extern char **Bgcmd;
+extern BGCMD *Bgcmd;
 extern int nbgcmd;
 extern int abgcmd; 
 #endif

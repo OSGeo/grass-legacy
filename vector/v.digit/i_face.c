@@ -201,3 +201,39 @@ int i_message ( int type, int icon, char *msg )
     return 1;
 }
 
+/* add background command */
+void i_add_bgcmd ( int index ) 
+{
+    char cmd[2000];    
+    
+    G_debug (3, "i_add_bgcmd()");
+
+    sprintf (cmd, "set GBgcmd(%d,on) %d", index, Bgcmd[index].on);
+    Tcl_Eval ( Toolbox, cmd );
+
+    sprintf (cmd, "GBgcmd(%d,cmd)", index);
+    Tcl_SetVar(Toolbox, cmd, Bgcmd[index].cmd, TCL_GLOBAL_ONLY);  
+
+    sprintf (cmd, "set row [ frame $GWidget(bgcmd).row%d ]", index);
+    Tcl_Eval ( Toolbox, cmd );
+
+    sprintf (cmd, "checkbutton $row.a -variable GBgcmd(%d,on) -height 1 "
+	          "-command { c_set_bgcmd %d $GBgcmd(%d,on) $GBgcmd(%d,cmd) }", 
+		              index, index, index, index);
+    Tcl_Eval ( Toolbox, cmd );
+
+    sprintf (cmd, "Entry $row.b -width 40 -textvariable GBgcmd(%d,cmd) "
+	          "-command { c_set_bgcmd %d $GBgcmd(%d,on) $GBgcmd(%d,cmd) }", 
+		              index, index, index, index);
+    Tcl_Eval ( Toolbox, cmd );
+
+    Tcl_Eval ( Toolbox, "pack $row.a $row.b -side left;");
+
+    Tcl_Eval ( Toolbox, "pack $row -side top -fill x -expand no -anchor n");
+
+    sprintf (cmd, "bind $GWidget(bgcmd).row%d.b <KeyRelease> "
+	          " { c_set_bgcmd %d $GBgcmd(%d,on) $GBgcmd(%d,cmd) }",
+		       index, index, index, index);
+    Tcl_Eval ( Toolbox, cmd );
+}
+
