@@ -97,7 +97,6 @@ ask_for_double (double *num, char *quest)
 {
 
 	char	buf[80] ;
-	double  atof() ;
 
 	while(1)
 	{

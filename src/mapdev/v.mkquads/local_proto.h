@@ -26,8 +26,6 @@ int calculate_quads(struct quads_description *, struct Cell_head *, struct comma
 int find_quad_point(struct quads_description *, struct Cell_head *, struct command_flags *, int, int);
 int convert_window_to_ll(struct Cell_head *);
 int print_wind(struct Cell_head *, char *);
-/* init_head.c */
-int init_header(FILE *, struct Cell_head *, struct dig_head *);
 /* init_quad.c */
 int init_quad_struct(struct quads_description *, struct Cell_head *, int, int);
 /* wind_quads.c */
@@ -36,6 +34,8 @@ int write_window(int, double, double, double, double, struct Cell_head *);
 #endif
 
 #ifdef GRASS_VECT_H
+/* init_head.c */
+int init_header(FILE *, struct Cell_head *, struct dig_head *);
 /* write_quads.c */
 int write_quads(FILE *, struct quads_description *, struct Map_info *);
 int write_vect(FILE *, double, double, double, double, struct Map_info *, struct line_pnts *);
