@@ -207,8 +207,10 @@ parse_command_line(argc, argv) char *argv[];
     h->description	= "horizontal output (instead of vertical)";
 
     G_disable_interactive();
-    if(G_parser(argc, argv))
-	exit(ERROR);
+
+    if (argc > 1) {
+	if(G_parser(argc, argv)) exit(ERROR);
+    }
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;
