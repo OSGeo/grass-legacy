@@ -1,8 +1,6 @@
 PGM       = $(BIN_MAIN_CMD)/d.what.v.inf
 LIBES     = $(VECTLIB) $(VECTLIB) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
 
-
-
 OBJS = \
 	main.o  \
         getAllOpts.o \
@@ -13,8 +11,7 @@ OBJS = \
 	openvect.o 
 
 
-
 $(PGM): $(OBJS) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	$(CC) $(INC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $(LIBES): #
