@@ -37,8 +37,6 @@ src/display/devices/lib
 src/display/devices/monitorcap
 src/display/devices/CELL
 src/display/devices/XDRIVER
-#XDRIVER2 is a layers XDRIVER for d.layers
-#src/display/devices/XDRIVER2
 src/display/devices/HTMLMAP
 src/fonts/for_grass
 src/front.end
@@ -48,14 +46,13 @@ src/libes/dbmi/drivers/stubs
 # requires ODBC:
 # src/libes/dbmi/drivers/odbc
 #
-# requires Informix, needs update?:
+# requires Informix, needs update:
 # src/libes/dbmi/drivers/informix
 #
-# requires SQLBASE, needs update?:
+# requires SQLBASE, needs update:
 # src/libes/dbmi/drivers/sqlbase
 #
 src/libes/dbmi/clients
-#
 ################
 # start with modules:
 ################
