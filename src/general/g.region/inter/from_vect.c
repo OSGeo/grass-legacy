@@ -3,9 +3,10 @@
 from_vect()
 {
     char name[30];
-    char *mapset;
+    char *mapset, *err;
     struct Cell_head window;
     struct Map_info Map;
+    char *G_align_window();
 
     G_copy (&window, &cur_window, sizeof (window));
 
@@ -23,6 +24,17 @@ from_vect()
 	window.south = Map.head.S;
 	window.west  = Map.head.W;
 	window.east  = Map.head.E;
+	if(window.north == window.south)
+	{
+	      window.north = window.north + 0.5 * cur_window.ns_res;
+	      window.south = window.south - 0.5 * cur_window.ns_res;
+        }
+	if(window.east == window.west)
+	{
+	      window.west = window.west - 0.5 * cur_window.ew_res;
+	      window.east = window.east + 0.5 * cur_window.ew_res;
+        }
+
 	G_align_window (&window, &cur_window);
 
 	if(!edit_window (&window)) return 1;
@@ -30,3 +42,4 @@ from_vect()
     }
     return 0;
 }
+
