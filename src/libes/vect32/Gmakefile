@@ -1,6 +1,64 @@
-all:
-	$(GMAKE) ../dig_atts
-	$(GMAKE) Vlib
-	$(GMAKE) diglib
+all: $(DEPVECTLIB)
 	$(GMAKE) libes
 	$(GMAKE) georef
+
+SLIBDEPS = $(DIG_ATTLIB) $(LINKMLIB) $(GISLIB)
+
+OBJ = \
+    Vlib/close.o \
+    Vlib/constraint.o \
+    Vlib/get_area.o \
+    Vlib/header.o \
+    Vlib/init_head.o \
+    Vlib/level.o \
+    Vlib/level_two.o \
+    Vlib/line_struct.o \
+    Vlib/open.o \
+    Vlib/open1.o \
+    Vlib/open2.o \
+    Vlib/portable_io.o \
+    Vlib/poly.o \
+    Vlib/read.o \
+    Vlib/read1.o \
+    Vlib/read2.o \
+    Vlib/support.o \
+    Vlib/rewind.o \
+    Vlib/window.o \
+    Vlib/write.o \
+    Vlib/x_point_io.o \
+    Vlib/x_rw_binary.o \
+    diglib/allocation.o  \
+    diglib/attribute.o \
+    diglib/area.o \
+    diglib/bound_box.o  \
+    diglib/calc_angl.o  \
+    diglib/check_node.o  \
+    diglib/chk_inside.o \
+    diglib/clock.o \
+    diglib/cont_lines.o \
+    diglib/debugf.o \
+    diglib/file_checks.o \
+    diglib/find_area.o \
+    diglib/format.o \
+    diglib/isle.o \
+    diglib/linecros.o \
+    diglib/line_dist.o \
+    diglib/load_plus.o \
+    diglib/map_to_head.o  \
+    diglib/memory_io.o \
+    diglib/node_op.o  \
+    diglib/old2new.o \
+    diglib/point_t_line.o \
+    diglib/point_t_area.o \
+    diglib/prune.o  \
+    diglib/rw_ascii.o  \
+    diglib/struct_alloc.o  \
+    diglib/struct_copy.o \
+    diglib/unit_conv.o \
+    diglib/write_file.o \
+    diglib/portable.o \
+    diglib/portable2.o \
+    diglib/x_struct_io.o 
+
+$(DEPVECTLIB): $(OBJ)
+	$(SLIBRULE)

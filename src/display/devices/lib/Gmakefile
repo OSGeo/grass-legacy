@@ -47,7 +47,7 @@ OBJ =\
 all: $(DEPDRIVERLIB)
 
 $(DEPDRIVERLIB): $(OBJ)
-	$(SLIBRULE)
+	$(LIBRULE)
 
 Cont_abs.o: driver.h
 Cont_rel.o: driver.h
