@@ -1,4 +1,3 @@
-/* %W% %G% */
 /* sum: sum of x
  * sum2: sum of x squared
  * n:    number of points
