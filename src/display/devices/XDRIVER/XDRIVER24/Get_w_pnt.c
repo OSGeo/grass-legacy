@@ -10,7 +10,7 @@
  * returned in *button. */
 
 #include "includes.h"
-
+#include "local_proto.h"
 
 extern Display *dpy;
 extern Window grwin;
@@ -45,8 +45,19 @@ int Get_location_with_pointer (int *wx, int *wy, int *button)
     }else{
         XEvent bpevent;
 
-	XWindowEvent(dpy, grwin, ButtonPressMask, &bpevent);
+	/**************
+	while (XCheckWindowEvent(dpy, grwin, 
+		ButtonPressMask, &bpevent) == False)
+	***************/
+	do 
+	{
+		XWindowEvent(dpy, grwin, 
+				ButtonPressMask | ExposureMask, &bpevent);
 
+		if (bpevent.type == Expose)
+			if (handleExposeEvent() != 0)
+				return -1;
+	} while (bpevent.type != ButtonPress);
 	*wx = bpevent.xbutton.x;
 	*wy = bpevent.xbutton.y;
 	*button = bpevent.xbutton.button;

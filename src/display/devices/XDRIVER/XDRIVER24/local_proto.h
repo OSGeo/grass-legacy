@@ -41,6 +41,7 @@ int Polygon_rel(int *, int *, int);
 int create_pad(char *);
 /* Serve_Xevent.c */
 int Service_Xevent(void);
+int handleExposeEvent(void);
 /* alloc.c */
 XPoint *AllocXPoints(int);
 /* command_pend.c */
