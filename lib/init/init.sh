@@ -201,7 +201,13 @@ if [ ! "$GRASS_HTML_BROWSER" ] ; then
             GRASS_HTML_BROWSER=netscape
             break
         elif [ "$HOSTTYPE" = "macintosh" ] ; then
-            GRASS_HTML_BROWSER="open"
+            GRASS_HTML_BROWSER=open
+            break
+        elif [ "$HOSTTYPE" = "arm" ] ; then
+            GRASS_HTML_BROWSER=dillo
+            break
+        elif [ "$HOSTTYPE" = "arm" ] ; then
+            GRASS_HTML_BROWSER=dillo2
             break
         fi
     done
