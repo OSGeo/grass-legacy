@@ -1,10 +1,10 @@
-GIP: 0
+GIP: 2
 Title: GRASS raster "live links" proposal
 Version: $Date$
 Author: neteler@itc.it (Markus Neteler), Frank Warmerdam
 Status: Active
 Type: Informational
-Created: 
+Created: 26-Feb-2003
 
 INTRODUCTION
 

@@ -1,0 +1,38 @@
+GIP: 3
+Title: Image processing library cleanup
+Version: $Date$
+Author: neteler@itc.it (Markus Neteler)
+Status: Active
+Type: Informational
+Created: 15-May-2003
+
+INTRODUCTION
+
+GRASS comes with numerous image processing modules. These
+modules are based on
+src/libes/imagery/
+which was developed in the late '80th. 
+An improved version of the library developed in the early '90th
+is stored in
+src/libes/image3/
+
+Unfortunately this library was never finished but left in
+an incomplete state. Only i.points3, i.rectify3 are based on it.
+
+Additionally i.ortho.photo owns it's own library overlap to
+the above mentioned libs:
+src/imagery/i.ortho.photo/libes/
+
+
+PROPOSOSALS
+
+- cleanup of the src/libes/image3/ 
+   note: src/libes/image3/crs.c has been added cleaned to GDAL as
+         gdal/alg/gdal_crs.c
+- merge needed functions from src/libes/imagery/
+  into src/libes/image3/
+- update functions in src/imagery/ modules
+- move functions from src/imagery/ modules to library
+  (clones removal)
+- use doxygen to document the functions (docs are in Programmer's Manual
+  in GRASS CVS)
