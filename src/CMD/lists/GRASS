@@ -86,7 +86,6 @@ src/display/d.menu
 src/display/d.mon
 src/display/d.p.labels
 src/display/d.pan
-src/display/d.param.scale
 src/display/d.points
 src/display/d.profile
 src/display/d.rast
@@ -328,7 +327,6 @@ src/raster/r.out.pov
 src/raster/r.out.ppm
 src/raster/r.out.tga
 src/raster/r.out.xyz
-src/raster/r.param.scale
 src/raster/r.patch
 src/raster/r.poly
 src/raster/r.profile
@@ -524,3 +522,5 @@ src.contrib/UCB/gdbase
 #src.contrib/eurogis/r.to.SVF
 #src.garden/grass.hdf/hdf3
 src.garden/answers/src.answers/raster/r.fill.dir
+src.nonGPL/raster/r.param.scale
+src.nonGPL/display/d.param.scale
