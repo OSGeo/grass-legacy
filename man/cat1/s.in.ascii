@@ -1,7 +1,7 @@
 
 
 
-s.in.ascii           GRASS Reference Manual            s.in.ascii
+s.in.ascii <main>    GRASS Reference Manual     <main> s.in.ascii
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-s.in.ascii           GRASS Reference Manual            s.in.ascii
+s.in.ascii <main>    GRASS Reference Manual     <main> s.in.ascii
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
