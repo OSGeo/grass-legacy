@@ -283,7 +283,7 @@ int G_parser (int argc, char **argv)
 			strcpy(opt->answer, opt->answers[0]);
 			for(i=1; opt->answers[i]; i++)
 			{
-				opt->answer = G_realloc (opt->answer,
+				opt->answer = (char *)G_realloc (opt->answer,
 						strlen(opt->answer)+
 						strlen(opt->answers[i])+2);
 				strcat(opt->answer, ",");
@@ -739,7 +739,7 @@ static int set_option (char *string)
 	/* Allocate memory where answer is stored */
 	if (opt->count++)
 	{
-		opt->answer = G_realloc (opt->answer,
+		opt->answer = (char *)G_realloc (opt->answer,
 			strlen (opt->answer)+strlen(string)+2);
 		strcat (opt->answer, ",");
 		strcat (opt->answer, string);
@@ -1029,7 +1029,7 @@ static int split_opts (void)
 
 				if (len > 0)        /* skip ,, */
 				{
-					opt->answers[ans_num]=G_malloc(len+1) ;
+					opt->answers[ans_num]=(char *)G_malloc(len+1) ;
 					G_copy(opt->answers[ans_num], ptr1, len) ;
 					opt->answers[ans_num][len] = 0;
 
