@@ -43,7 +43,13 @@
 #% required : no
 #%END
 #%option
-#% key: meta
+#% key: createopt
+#% type: string
+#% description: creation option to the output format driver. Multiple options may be listed
+#% required : no
+#%END
+#%option
+#% key: metaopt
 #% type: string
 #% description: metadata key passed on the output dataset if possible
 #% required : no
@@ -72,7 +78,8 @@ fi
 INPUT="$GIS_OPT_input"
 FORMAT="$GIS_OPT_format"
 OUTPUT="$GIS_OPT_output"
-METAKEY="-co $GIS_OPT_meta"
+CREATEKEY="-co $GIS_OPT_createopt"
+METAKEY="-mo $GIS_OPT_metaopt"
 
 if [ $GIS_FLAG_l -eq 1 ] ; then
   gdal_translate | grep ':' | grep -v 'Usage' | grep -v 'The following'
@@ -97,4 +104,4 @@ fi
 
 #do it
 CELLHD=`echo $file | sed 's+/cell/+/cellhd/+g'`
-gdal_translate -of $FORMAT $METAKEY $CELLHD $OUTPUT 
+gdal_translate -of $FORMAT $CREATEKEY $METAKEY $CELLHD $OUTPUT 
