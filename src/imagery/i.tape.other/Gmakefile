@@ -1,0 +1,21 @@
+LIST	= main.o\
+	  ask_format.o\
+	  ask_window.o\
+	  bil.o\
+	  bsq1.o\
+	  bsq2.o\
+	  tapename.o\
+	  mount_tape.o\
+	  put_row.o\
+	  readbil.o\
+	  readbsq.o
+
+LIBES= $(IMAGERYLIB) $(GISLIB)
+
+$(BIN)/i.tape.other: $(LIST) $(LIBES) $(VASKLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(VASK) -o $@
+
+$(LIBES):	# in case library changes
+$(VASKLIB):	# in case library changes
+
+$(LIST):	tape.h
