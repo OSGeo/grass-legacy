@@ -135,5 +135,5 @@ echo "New settings:"
 echo "n:$north s:$south w:$west e:$east t:$top b:$bottom r:$res dres:$dres"
 
 echo "Now check with"
-echo "    g3.region."
+echo "    g3.region"
 
