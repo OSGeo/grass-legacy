@@ -235,6 +235,7 @@ int gvd_vect(geovect *gv, geosurf *gs, int do_fast)
 			glVertex3fv(points[0]);
 		    }
 		    glEnd();
+		    glLightModeli ( GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
 		    free ( points );
 		} 
 	    } else { /* 2D polygons */
