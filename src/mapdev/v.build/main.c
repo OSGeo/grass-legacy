@@ -167,7 +167,7 @@ int main (int argc, char **argv)
     /* Save the threshold to file header, if the threshold was specified, for future */
     if ( s_val->answer != NULL || p_flag->answer ) {
         Map.head.map_thresh = snap_val;
-	fprintf (stdout,"Snapping threshold was saved in the vector header.\n");
+	fprintf (stdout,"  Snapping threshold was saved in the vector header.\n");
     }
     
     /* Set threshold for this build process */
@@ -180,9 +180,10 @@ int main (int argc, char **argv)
 	if ( Map.snap_thresh == 0.0 )
 	    fprintf (stdout,"Warning: snapping requested by threshold is %7.2f\n", Map.snap_thresh);
 	else
-	    fprintf (stdout,"Snapping will be done \n");
-    } else {
-	    fprintf (stdout,"Snapp No snapping will be done \n");
+	    fprintf (stdout,"  Snapping will be done.\n");
+    } 
+    else {
+	    fprintf (stdout,"  No snapping will be done.\n");
     }
 
     fprintf (stdout, "    Reading Vector file");
