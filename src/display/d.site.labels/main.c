@@ -1,5 +1,6 @@
 /* Hacked for new sites API by Eric G. Miller <egm2@jps.net> 2000-10-01 */
-/* $Id$ */
+/* 
+ * $Id$ */
 
 #include <stdio.h>
 #include <stdlib.h>

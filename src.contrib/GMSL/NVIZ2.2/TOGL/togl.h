@@ -1,4 +1,5 @@
-/* $Id$ */
+/* 
+ * $Id$ */
 
 /*
  * Togl - a Tk OpenGL widget
@@ -10,8 +11,11 @@
 
 /*
  * $Log$
- * Revision 1.1  1999-12-29 15:12:26  markus
- * Initial revision
+ * Revision 1.2  2000-11-01 17:40:53  markus
+ * updated CVS-Id style
+ *
+ * Revision 1.1.1.1  1999/12/29 15:12:26  markus
+ * initial CVS import
  *
  * Revision 1.17  1997/11/15 04:14:37  brianp
  * changed version to 1.5
