@@ -32,6 +32,7 @@
 #include <assert.h>
 #include <time.h>
 #include "gis.h"
+#include "site.h"
 /* #include "Vect.h" */
 #include "shapefil.h"
 #include "s_procs.h"

@@ -11,6 +11,7 @@
 */
 #include    <stdio.h>
 #include    "gis.h"
+#include    "site.h"
 #include    "Vect.h"
 #include    <math.h>
 

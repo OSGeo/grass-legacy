@@ -13,7 +13,10 @@
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
  * $Log$
- * Revision 1.5  2000-12-20 14:42:42  jan
+ * Revision 1.6  2001-01-12 08:16:18  justin
+ * Added site.h since it was removed from gis.h
+ *
+ * Revision 1.5  2000/12/20 14:42:42  jan
  * Added module description.
  *
  * Revision 1.4  2000/11/26 16:33:14  andreas
@@ -27,6 +30,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "site.h"
 #include "Vect.h"
 #include "local_proto.h"
 

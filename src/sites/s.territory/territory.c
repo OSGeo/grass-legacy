@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "gis.h"
+#include "site.h"
 
 /*
 #define WRITEMAP

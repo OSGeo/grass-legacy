@@ -1,5 +1,6 @@
 #include <string.h>
 #include "gis.h"
+#include "site.h"
 #include "options.h"
 #include "local_proto.h"
 

@@ -16,6 +16,7 @@
  */
 #include <string.h>
 #include "gis.h"
+#include "site.h"
 
 int centroids(int, int *, int *, int, int);
 

@@ -27,6 +27,7 @@ May 20, 1993
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "gis.h"
+#include "site.h"
 #include "local_proto.h"
 
 int main (int argc, char *argv[])

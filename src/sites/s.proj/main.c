@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include <projects.h>
 #include <gis.h>
+#include "site.h"
 #include "local_proto.h"
 
 

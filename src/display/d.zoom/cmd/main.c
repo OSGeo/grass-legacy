@@ -5,6 +5,7 @@
  */
 
 #include "gis.h"
+#include "site.h"
 #include "display.h"
 #include "raster.h"
 #include "Vect.h"

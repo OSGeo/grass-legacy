@@ -34,12 +34,13 @@
  * <13 Sep 2000> - released under GPL
  */
 
-#include "gis.h"
 #include <stdlib.h>
 #include <math.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <string.h>
+#include "gis.h"
+#include "site.h"
 
 #ifndef RAND_MAX 
 #define RAND_MAX (pow(2.0,31.0)-1) 

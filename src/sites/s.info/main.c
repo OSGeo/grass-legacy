@@ -2,6 +2,7 @@
  */
 
 #include "gis.h"
+#include "site.h"
 #include "local_proto.h"
 
 struct Cell_head    Wind;

@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "site.h"
 #include "raster.h"
 #include "display.h"
 #include "colors.h"

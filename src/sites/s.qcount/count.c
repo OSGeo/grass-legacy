@@ -10,6 +10,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "site.h"
 #include "quaddefs.h"
 
 int *count_sites (SITE_XYZ *quads, int nquads, int *counts, double radius, 

@@ -19,6 +19,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "gis.h"
+#include "site.h"
 #include "local_proto.h"
 
 static int loop; /* added #cat support for site_list 11/99 M. Neteler

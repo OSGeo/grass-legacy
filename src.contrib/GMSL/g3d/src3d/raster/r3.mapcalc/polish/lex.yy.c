@@ -1176,6 +1176,20 @@ static int input()
 #endif
 	{
 	int c;
+	static int _xpg = -1;
+
+	if (_xpg == -1)
+		{
+			char *_xpgenv = getenv("_XPG");
+			if (_xpgenv == NULL)
+				_xpg = 0;
+			else
+				{
+				_xpg = atoi(_xpgenv);
+				if (_xpg < 0)
+					_xpg = 0;
+				}
+		}
 
 	*yy_c_buf_p = yy_hold_char;
 
@@ -1213,18 +1227,21 @@ static int input()
 					/* fall through */
 
 				case EOB_ACT_END_OF_FILE:
-					{
-					if ( yywrap() )
-						return EOF;
+					if (_xpg)
+						return 0;
+					else
+						{
+						if ( yywrap() )
+							return 0;
 
-					if ( ! yy_did_buffer_switch_on_eof )
-						YY_NEW_FILE;
+						if ( ! yy_did_buffer_switch_on_eof )
+							YY_NEW_FILE;
 #ifdef __cplusplus
-					return yyinput();
+						return yyinput();
 #else
-					return input();
+						return input();
 #endif
-					}
+						}
 
 				case EOB_ACT_CONTINUE_SCAN:
 					yy_c_buf_p = yytext_ptr + offset;
