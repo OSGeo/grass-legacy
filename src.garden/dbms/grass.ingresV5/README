@@ -1,0 +1,22 @@
+This is the GRASS-INGRES interface for INGRES version 5
+
+It is modified from the GRASS-INFORMIX interface developed by 
+Jim Farley at Univ. of Arkansas.
+
+All modules have been tested for INGRES version 5.
+
+Each directory contains a file called MODIFICATIONS. It describes the
+modifications from INFORMIX to INGRES, as well as the INGRES version
+dependent parts of the modules. 
+
+There is also a file called STRUCTURE in each directory. It describes
+the program structure of the module.
+
+The file SQLsyntax in this directory describes the differences in 
+SQL syntax between INFORMIX and INGRES.
+
+Katarina Johnsson, Stockholm April 23, 1993
+Dept. of Geodesy and Photogrammetry
+Royal Institute of Technology
+email: katarina@fmi.kth.se
+
