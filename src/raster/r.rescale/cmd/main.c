@@ -39,7 +39,7 @@ char *argv[];
 	parm.from->key_desc   = "min,max";
 	parm.from->type       = TYPE_INTEGER;
 	parm.from->required   = NO;
-	parm.from->description= "The input map range to be rescaled (default: full range of input map)";
+	parm.from->description= "The input data range to be rescaled (default: full range of input map)";
 
 	parm.output = G_define_option() ;
 	parm.output->key        = "output";
@@ -53,7 +53,7 @@ char *argv[];
 	parm.to->key_desc   = "min,max";
 	parm.to->type       = TYPE_INTEGER;
 	parm.to->required   = NO;
-	parm.to->description= "The output map range rescaled";
+	parm.to->description= "The output data range";
 	parm.to->answer     = "1,255";
 
 	parm.title = G_define_option() ;
@@ -99,7 +99,7 @@ char *argv[];
 	{
 		value = old_min; /* swap */
 		old_min = old_max;
-		old_min = value;
+		old_max = value;
 	}
 
 	sscanf (parm.to->answers[0], "%ld", &new_min);
@@ -110,6 +110,7 @@ char *argv[];
 		new_min = new_max;
 		new_max = value;
 	}
+	
 	if (!flag.quiet->answer)
 		fprintf (stderr, "Rescale %s[%ld,%ld] to %s[%ld,%ld]\n",
 		    old_name, old_min, old_max, new_name, new_min, new_max);
