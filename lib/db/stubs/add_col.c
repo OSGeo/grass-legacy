@@ -1,7 +1,7 @@
 #include "dbmi.h"
 
 /*!
- \fn int db_driver_add_column (dbString *tableName, dbColumn *column)
+ \fn int db__driver_add_column (dbString *tableName, dbColumn *column)
  \brief 
  \return 
  \param 

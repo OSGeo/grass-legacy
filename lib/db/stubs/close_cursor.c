@@ -1,7 +1,7 @@
 #include "dbmi.h"
 
 /*!
- \fn int db_driver_close_cursor (dbCursor *cursor)
+ \fn int db__driver_close_cursor (dbCursor *cursor)
  \brief 
  \return 
  \param 

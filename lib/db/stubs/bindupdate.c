@@ -1,7 +1,7 @@
 #include "dbmi.h"
 
 /*!
- \fn int db_driver_bind_update (cursor)
+ \fn int db__driver_bind_update (cursor)
  \brief 
  \return 
  \param 
