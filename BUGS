@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.53 2000-10-25 16:36:00 markus Exp $
+$Id: BUGS,v 1.54 2000-10-26 13:26:31 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -471,3 +471,5 @@ src/libes/geom: optri  -> used by s.geom, v.geom
    moment to get the compile to work.
    (being worked on by Andreas Lange)
 
+Vector:
+ R_polygon_abs() seems to ignore islands.
