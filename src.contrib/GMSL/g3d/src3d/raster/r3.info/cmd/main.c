@@ -11,7 +11,7 @@
 
 static char *name;
 
-main (argc, argv)   
+int main (argc, argv)   
     int argc;
     char *argv[];
 {
@@ -167,7 +167,7 @@ main (argc, argv)
     return 0;
 }
 
-static
+extern
 format_double (value, buf)
     double value;
     char *buf;
