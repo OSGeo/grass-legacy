@@ -14,9 +14,7 @@ OBJ =	Vexport_arc.o\
 $(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
 	$(GMAKE) $(GEN2SHP)
 	$(GMAKE) $(SHAPELIB)
-	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
-	(cd $(GEN2SHP); make clean)
-	(cd $(SHAPELIB); make clean)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB): #
 $(DIG_ATTLIB): #
