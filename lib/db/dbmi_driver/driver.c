@@ -25,6 +25,16 @@ db_driver(int argc,
 
     umask(0);
 
+    /* Read and set enviroment variables, see dbmi_client/start.c */
+    if ( getenv ( "GISRC_MODE_MEMORY" ) ) {
+        G_set_gisrc_mode ( G_GISRC_MODE_MEMORY );
+	G__setenv( "DEBUG", getenv ( "DEBUG" ) );
+	G__setenv( "GISDBASE", getenv ( "GISDBASE" ) );
+	G__setenv( "LOCATION_NAME", getenv ( "LOCATION_NAME" ) );
+	G__setenv( "MAPSET", getenv ( "MAPSET" ) );
+	G_debug (3, "Driver GISDBASE set to '%s'", G_getenv ( "GISDBASE" ) );
+    }
+
     send = stdout;
     recv = stdin;
 
