@@ -51,7 +51,7 @@ void bst_free (struct libavl_allocator *, void *);
 
 /* Maximum BST height. */
 #ifndef BST_MAX_HEIGHT
-#define BST_MAX_HEIGHT 32
+#define BST_MAX_HEIGHT 128
 #endif
 
 /* Tree data structure. */
