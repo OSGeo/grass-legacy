@@ -61,7 +61,7 @@
 [Ii][Nn][Tt]			{ return INT; }
 [Ii][Nn][Tt][Ee][Gg][Ee][Rr]	{ return INTEGER; }
 [Dd][Oo][Uu][Bb][Ll][Ee]	{ return DOUBLE; }
-
+[Oo][Rr]			{ return OR; }
  /***************************************
   * EQUAL
   ***************************************/
@@ -226,7 +226,7 @@ void yyerror( char *s )
 /**********************************************************************
  * yywrap
  *
- * We are not doing any buffer switching but lets not use the Flex verion of
+ * We are not doing any buffer switching but lets not use the Flex version of
  * of this func anyway so we can avoid the link dependency.
  *
  **********************************************************************/

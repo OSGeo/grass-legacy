@@ -53,6 +53,7 @@
 %token INSERT INTO VALUES
 %token UPDATE SET
 %token AND
+%token OR
 %token CREATE TABLE
 %token DROP TABLE
 %token VARCHAR
@@ -86,11 +87,13 @@ y_drop:
 	;
 
 y_select:
-		SELECT y_columns FROM y_table y_condition	{ sqpCommand(SQLP_SELECT); }
+		SELECT y_columns FROM y_table			{ sqpCommand(SQLP_SELECT); }
+	|	SELECT y_columns FROM y_table WHERE y_condition	{ sqpCommand(SQLP_SELECT); }
 	;
 	
 y_delete:
-		DELETE FROM y_table y_condition			{ sqpCommand(SQLP_DELETE); }
+		DELETE FROM y_table				{ sqpCommand(SQLP_DELETE); }
+		DELETE FROM y_table WHERE y_condition			{ sqpCommand(SQLP_DELETE); }
 	;
 
 y_insert:
@@ -99,7 +102,9 @@ y_insert:
 	;
 
 y_update:
-		UPDATE y_table SET y_assignments y_condition	{ sqpCommand(SQLP_UPDATE); }
+		UPDATE y_table SET y_assignments		{ sqpCommand(SQLP_UPDATE); }
+	|	UPDATE y_table SET y_assignments WHERE y_condition	{ sqpCommand(SQLP_UPDATE); }
+
 	;
 	
 y_columndefs:
@@ -153,15 +158,18 @@ y_assignment:
 	;
 
 y_condition:
-		
-	|	WHERE y_comparisons
+			
+		y_comparisons
+	|	'(' y_comparisons ')'			{ sqpGroupIncrement(); }
+	|	y_condition OR '(' y_comparisons ')'  { sqpGroupIncrement(); }
+
 	;
 	
 y_comparisons:
 		y_comparison
 	|	y_comparisons AND y_comparison
 	;
-	
+
 y_comparison:
 		NAME EQUAL STRING		{ sqpComparison( $1, "=", $3,    0,  0, SQLP_S ); }
         |	NAME EQUAL INTNUM		{ sqpComparison( $1, "=", NULL, $3,  0, SQLP_I ); }

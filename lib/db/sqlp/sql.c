@@ -48,8 +48,21 @@ int sqpInitParser(SQLPSTMT *st)
     sqlpStmt->nCol = 0;
     sqlpStmt->nVal = 0;
     sqlpStmt->nCom = 0;
-    
+    sqlpStmt->numGroupCom = 0;
+
     return (1);
+}
+
+void sqpGroupIncrement( void )
+{
+    sqlpStmt->numGroupCom += 1;          
+
+
+/*
+ *    fprintf (stderr, "sqpGroupIncrement(): number of groups is %d\n", sqlpStmt->numGroupCom);
+ */
+
+    return;
 }
 
 void sqpCommand( int command )
@@ -147,7 +160,7 @@ void sqpAssignment( char *col, char *strval, int intval, double dblval, int type
     return;
 }
 
-void sqpComparison( char *col, char *oper, char *strval, int intval, double dblval, int type )
+void sqpComparison( char *col, char *oper, char *strval, int intval, double dblval, int type)
 {
     int i;
     
@@ -169,7 +182,13 @@ void sqpComparison( char *col, char *oper, char *strval, int intval, double dblv
     else if ( strcmp ( oper, "<>") == 0 )
 	sqlpStmt->ComOpe[i] = SQLP_NE;
     
+/*
+ *     fprintf (stderr, "sqpComparison(): number of groups is %d\n", sqlpStmt->numGroupCom);
+ */
+
     sqlpStmt->ComVal[i].type = type;
+    sqlpStmt->ComGrp[i] = sqlpStmt->numGroupCom;
+    
     switch ( type  )
       {
         case (SQLP_S):

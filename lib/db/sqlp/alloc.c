@@ -87,6 +87,7 @@ int sqpAllocCom(SQLPSTMT *st, int n)
 	n += 15;      
         st->ComCol = (SQLPVALUE *) realloc ( st->ComCol, n * sizeof(SQLPVALUE));
         st->ComOpe = (int *) realloc ( st->ComOpe, n * sizeof(int));
+        st->ComGrp = (int *) realloc ( st->ComGrp, n * sizeof(int));	
         st->ComVal = (SQLPVALUE *) realloc ( st->ComVal, n * sizeof(SQLPVALUE));
 	
         for (i = st->nCom; i < n; i++)
@@ -132,9 +133,11 @@ int sqpFreeStmt(SQLPSTMT *st)
       }
     free ( st->ComCol );
     free ( st->ComOpe );
+    free ( st->ComGrp );    
     free ( st->ComVal );
     st->aCom = 0;
     st->nCom = 0;
+    st->numGroupCom = 0;
 
     free ( st );
     return (1);
