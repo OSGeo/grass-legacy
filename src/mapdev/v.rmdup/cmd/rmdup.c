@@ -81,6 +81,9 @@ int main (argc, argv)
   digin_name = input->answer;
   digout_name = output->answer;
 
+  if(strcmp(digin_name,digout_name)==0)
+    G_fatal_error("Input and output files must be different.");
+
   thresh=-1.;
   if(threshold->answer != NULL)thresh=strtod(threshold->answer,NULL);
 
