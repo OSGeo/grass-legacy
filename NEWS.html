@@ -1,7 +1,7 @@
 <HTML>
 <HEAD>
    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-   <meta name="Author" content="Created by: (c) 1999-2003 Markus Neteler, ITC-irst, Italy">
+   <meta name="Author" content="Created by: (c) 1999-2004 Markus Neteler, ITC-irst, Italy">
    <TITLE>GRASS GIS 5.0.x - new features</TITLE>
 </HEAD>
 <BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000EE" VLINK="#551A8B" ALINK="#FF0000">
@@ -31,6 +31,8 @@ Many thanks to all contributors!
     r.proj, s.proj, v.proj (Paul Kelly)</li>
 <li>d.grid: added optional border marks plotting (Markus Neteler)
 <li>d.legend: new parameters added, better horizontal legends (Hamish Bowman)
+<li>d.rast.num: updated to FP (Markus Neteler)
+<li>d.[auto|grid|mon|rast|vect|set].viewproj: added (Beverly Wallace)
 <li>d.scale: DEPRECATED. Use 'd.barscale -l' instead (Hamish Bowman)
 <li>d.site.labels: add precision option for numerical attributes (Hamish Bowman)
 <li>d.text: new placement option, bold option (Hamish Bowman)
@@ -38,31 +40,49 @@ Many thanks to all contributors!
 <li>d.where: Can now report lat/long co-ordinates for projected locations
     other than UTM (Paul Kelly)</li>
 <li>Update remaining core display modules for TrueColor support (Hamish Bowman)
+<li>g.parser: added (Glynn Clements)
 <li>g.setproj: Supports State Plane 83 as well as 27 and prompts for units, 
     improved datum support (Paul Kelly)</li>
 <li>GUI startup: 'grass5 -gui' alias added, support for creating new mapset added
     (Markus Neteler)
+<li>i.ortho.photo: fixed bug with FP DEMs (Ivan Michelazzi, Paul Kelly, Markus Neteler)
 <li>m.proj2: updated for easy WGS84 input/output (Hamish Bowman)
 <li>NVIZ: various updates and add-ons in kanimator and main window (Bob
     Covill)
 <li>pg.in.dbf: fixes and improvements (Thierry Laronde)
-<li>r.in.gdal: fix several longstanding bugs (Paul Kelly, Andrey Kiselev)
+<li>r.in.gdal: fix several longstanding bugs (Paul Kelly, Andrey Kiselev), 
+       use compression, added -k flag, stop if input map is rotated (Markus Neteler)
+<li>r.mapcalc: added graph() function (James Westervelt, Glynn Clements)
+<li>r.out.v5d.topo: added (Beverly Wallace)
 <li>r.proj: copies colour table when re-projecting maps (Paul Kelly)</li>
+<li>r.series: added (Glynn Clements)
+<li>r.simwe: added (Helena Mitasova, Jaro Hofierka)
+<li>r.sim.sediment: added (Helena Mitasova, Jaro Hofierka)
 <li>r.sun: NULL data support, much faster (Jaro Hofierka, Marcel Suri)
+<li>r.univar2: added (Hamish Bowman)
 <li>RST modules (s.surf.rst, v.surf.rst, r.resamp.rst): Now honour the MASK
    (Paul Kelly)</li>
+<li>s.bspline.reg, s.correction, s.edgedetection, s.growing, s.to.qrast: LIDAR analysis
+    suite added (M.A. Brovelli, Longoni, M Cannata)
 <li>s.in.garmin.sh: automatic transformation from WGS84 to current projection (Hamish Bowman)
+<li>s.kernel: added (Stefano Menegon)
 <li>s.surf.idw: improved efficiency with sites index (Paul Kelly)
+<li>s.surf.rst/RST lib: fixed latitude-longitude problems (Helena Mitasova)
 <li>tcltkgrass: Updated version 4.0 now included, new menu structure and
 bugfixes (Michael Barton and others)
 <li>v.out.e00: Number of areas corrected to number of active areas,
     unlabeled areas will only optionally be exported  (option -A) like in
     v.out.shape (H. Wziontek)
+<li>v.out.v5d.topo: added (Beverly Wallace)
 <li>v.what: substract islands (Thierry Laronde)
 </ul>
 
 <b>Source Code:</b><br>
 <ul>
+<li>Init.sh: [t]csh: keep history in mapset as bash is already doing ; BASH: added raster 
+      MASK presence indicator to prompt (Markus Neteler)
+<li>moved numerical functions from libgis to libgmath (Markus Neteler)
+<li>'fake session' support added to generate HTML man pages in 5.7 when compiling (Markus Neteler)
 <li>GD dependency removed (Glynn Clements)
 <li>GLw fixes for SUN/Solaris (Beverly Wallace, Glynn Clements)
 <li>added GIPs - GRASS Improvement Proposals in grass5/gip/
@@ -79,6 +99,8 @@ bugfixes (Michael Barton and others)
     write new HTML pages (Markus Neteler)
 <li>SGI IRIS GL modules (SG3d and panellib): Compilation now controlled 
     automatically by configure script (--with-irisgl option) (Paul Kelly)</li>
+<li>started 'doxygenization' of source code: done for libimagery, libraster etc (Markus Neteler, 
+    Paolo Armani)
 </ul>
 
 
