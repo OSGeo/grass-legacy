@@ -164,15 +164,16 @@ DETAILED PROCEDURE :
     kbabel ./po/grassmods_de.po
 
    KBABEL: You may load .po files from other projects [see footnote 1]
+           Then use TOOLS -> ROUGH TRANSLATION to auto-translate messages.
+
+   NOTES:
+   * Pay attention to keep '%s', '\n' and other stuff also 
+     in the translated messages!
    
-   Pay attention to keep '%s', '\n' and other stuff also 
-   in the translated messages!
-   
-   Please use 'ISO-8859-1' or 'ISO-8859-15' for western languages.  
-   See http://en.wikipedia.org/wiki/ISO_8859 for details.
+   * Please use 'ISO-8859-1' or 'ISO-8859-15' for western languages.
+     See http://en.wikipedia.org/wiki/ISO_8859 for details.
    
    After finishing the translation, save the files.
-
 
      
 5. CREATE MO FILES
@@ -186,13 +187,19 @@ DETAILED PROCEDURE :
 6. Now recompile, install and run GRASS.
    It should work :-)
 
+   If you don't have this possibility, just skip this step.
+
 7. Send the updated .po files to a GRASS Development Team member.
-   If you already updated .c files with G_message("...") as explained
-   above, please send diffs against CVS:
+   If possible, please send diffs against CVS:
+   cvs diff -u grasslibs_LANG.po > grasslibs_LANG_po.diff
+   cvs diff -u grassmods_LANG.po > grassmods_LANG_po.diff
+
+   If you updated .c files with _() macros as explained
+   above, please send C file diffs against CVS:
    
    cvs diff -u file.c > file.diff
    
-   In this case send both the C diff files and the .po files.
+   Thanks for submitting.
 
    
 PLEASE HELP TO TRANSLATE GRASS MESSAGES!
@@ -203,7 +210,7 @@ LINKS
 
 - KBabel: http://i18n.kde.org/tools/kbabel/
 - poEdit: http://poedit.sourceforge.net/
-- .po files for many languages:  KDE translator center, http://i18n.kde.org/teams/
+- *.po files for many languages:  KDE translator center, http://i18n.kde.org/teams/
 
 NOTES
 
