@@ -1,0 +1,2 @@
+rm /usr/grass3/data/spearfish/higgins/dig/junk2
+v.mkquads < run.data
