@@ -1,5 +1,3 @@
-/* -*- c-basic-offset: 4; -*-
-
 /* changed to use the main "graph.h" in the grass libes/raster directory  */
 /* Pierre de Mouveaux - 2 may 2000 */
 
