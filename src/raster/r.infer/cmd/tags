@@ -1,0 +1,38 @@
+Minfer	infer.c	/^main (argc, argv)$/
+TRUTHVAL	infer.c	/^# define TRUTHVAL(E)    ((E->type & NOT) / (E->str/
+askmap_map	infer.c	/^askmap_map (e)$/
+askmap_person	infer.c	/^askmap_person (e)$/
+catmatch	compile.c	/^catmatch (cat1, cat2)$/
+clear_truths	infer.c	/^clear_truths()$/
+close_maps	run_maps.c	/^close_maps()$/
+compile	compile.c	/^compile (fp)$/
+emalloc	compile.c	/^emalloc (n)$/
+equal	compile.c	/^equal (a, b)$/
+freecats	compile.c	/^freecats(cats)$/
+getkey	compile.c	/^getkey (line)$/
+gets	run_maps.c	/^printf ("-->"); if (!gets(buf)) exit(0);$/
+incr_cols	run_maps.c	/^incr_cols()$/
+infer	infer.c	/^infer ()$/
+make_cats	compile.c	/^make_cats(s)$/
+mark_cats	compile.c	/^mark_cats(cats, first, last)$/
+newstate	compile.c	/^newstate (new)$/
+open_maps	run_maps.c	/^open_maps()$/
+popwhy	infer.c	/^popwhy ()$/
+prcirc	infer.c	/^prcirc ()$/
+prove	infer.c	/^prove (e)$/
+prrule	infer.c	/^prrule (rule, fp)$/
+prstr	infer.c	/^prstr(e)$/
+prtype	infer.c	/^prtype (type, word)$/
+prval	infer.c	/^prval (e)$/
+push	compile.c	/^push (type, ptr)$/
+pushwhy	infer.c	/^pushwhy (r)$/
+read_maps	run_maps.c	/^read_maps(row)$/
+rulealloc	compile.c	/^rulealloc ()$/
+run_through_maps	run_maps.c	/^run_through_maps()$/
+savestr	compile.c	/^savestr (key, line)$/
+showwhy	infer.c	/^showwhy ()$/
+squeeze	compile.c	/^squeeze (s, c)$/
+stripbl	compile.c	/^stripbl (s)$/
+tell_open_maps	run_maps.c	/^tell_open_maps()$/
+test_infer	run_maps.c	/^test_infer()$/
+verify	infer.c	/^verify (rule)$/
