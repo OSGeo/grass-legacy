@@ -22,12 +22,14 @@ int main(int argc, char *argv[])
     get->key          = "get" ;
     get->type         = TYPE_STRING ;
     get->description  = "GRASS variable to get" ;
+    get->key_desc     = "VARIABLE" ;
     get->required     = NO;
 
     set               = G_define_option() ;
     set->key          = "set" ;
     set->type         = TYPE_STRING ;
     set->description  = "GRASS variable to set" ;
+    set->key_desc     = "\"VARIABLE=value\"" ;
     set->required     = NO;
 
     store_opt               = G_define_option() ;
