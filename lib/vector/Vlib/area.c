@@ -33,7 +33,7 @@ Vect_get_area_points (
 {
   int i, line, aline, dir;
   struct Plus_head *Plus;
-  P_AREA_2D *Area;
+  P_AREA *Area;
   static int first_time = 1;
   static struct line_pnts *Points;
   
@@ -41,7 +41,7 @@ Vect_get_area_points (
   BPoints->n_points = 0;
 
   Plus = &(Map->plus);
-  Area = Plus->Area_2d[area];
+  Area = Plus->Area[area];
 
   if (first_time == 1){
       Points = Vect_new_line_struct ();	
@@ -83,7 +83,7 @@ Vect_get_isle_points (
 {
   int i, line, aline, dir;
   struct Plus_head *Plus;
-  P_ISLE_2D *Isle;
+  P_ISLE *Isle;
   static int first_time = 1;
   static struct line_pnts *Points;
   
@@ -91,7 +91,7 @@ Vect_get_isle_points (
   BPoints->n_points = 0;
 
   Plus = &(Map->plus);
-  Isle = Plus->Isle_2d[isle];
+  Isle = Plus->Isle[isle];
 
   if (first_time == 1) {
       Points = Vect_new_line_struct ();	
@@ -132,12 +132,12 @@ Vect_get_area_centroid (
 		       int area )
 {
   struct Plus_head *Plus;
-  P_AREA_2D *Area;
+  P_AREA *Area;
   
   G_debug ( 3, "Vect_get_area_centroid(): area = %d", area );	
 
   Plus = &(Map->plus);
-  Area = Plus->Area_2d[area];
+  Area = Plus->Area[area];
   if ( Area->n_centroids > 0 )
       return ( Area->centroids[0] );
   else
@@ -152,12 +152,12 @@ Vect_get_area_num_isles (
 		       int area )
 {
   struct Plus_head *Plus;
-  P_AREA_2D *Area;
+  P_AREA *Area;
   
   G_debug ( 3, "Vect_get_area_num_isles(): area = %d", area );	
 
   Plus = &(Map->plus);
-  Area = Plus->Area_2d[area];
+  Area = Plus->Area[area];
   return ( Area->n_isles );
 
 }
@@ -170,12 +170,12 @@ Vect_get_area_isle (
                        int isle)
 {
   struct Plus_head *Plus;
-  P_AREA_2D *Area;
+  P_AREA *Area;
   
   G_debug ( 3, "Vect_get_area_num_isles(): area = %d", area );	
 
   Plus = &(Map->plus);
-  Area = Plus->Area_2d[area];
+  Area = Plus->Area[area];
   return ( Area->isles[isle] );
 }
 
@@ -192,13 +192,13 @@ Vect_point_in_area (
 {
   int    i, isle;
   struct Plus_head *Plus;
-  P_AREA_2D *Area;
+  P_AREA *Area;
   double poly;
   static struct line_pnts *Points;
   static first_time = 1;
   
   Plus = &(Map->plus);
-  Area = Plus->Area_2d[area];
+  Area = Plus->Area[area];
   if ( Area == NULL ) return 0;
 
   if (first_time == 1)

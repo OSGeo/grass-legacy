@@ -33,7 +33,7 @@ Vect_tin_get_z (
 {
   int    i, area, n_points;
   struct Plus_head *Plus;
-  P_AREA_2D *Area;
+  P_AREA *Area;
   static struct line_pnts *Points;
   static first_time = 1;
   double *x, *y, *z;
@@ -52,7 +52,7 @@ Vect_tin_get_z (
   G_debug (3, "area = %d", area ); 
   if ( area == 0 ) return 0;
   
-  Area = Plus->Area_2d[area];
+  Area = Plus->Area[area];
   if ( Area->n_isles > 0 ) return -1;
   
   Vect_get_area_points (Map, area, Points);

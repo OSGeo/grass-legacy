@@ -30,7 +30,7 @@ Vect_find_line (
   static struct line_pnts *Points;
   static int first_time = 1;
   struct Plus_head *Plus;
-  P_LINE_2D *Line;
+  P_LINE *Line;
   
   if (first_time) {
       Points = Vect_new_line_struct ();
@@ -43,7 +43,7 @@ Vect_find_line (
   cur_dist = HUGE_VAL;
 
   for (i = 1; i <= Plus->n_lines; i++) {
-      Line = Plus->Line_2d[i]; 	
+      Line = Plus->Line[i]; 	
       if ( Line == NULL ) continue;
       
       /* limit searches to specific line types */
