@@ -36,7 +36,10 @@ Get_location_with_pointer(wx, wy, button)
 /* set all buttons to mode 1 ( up, down, single-click) */
 	Set_win_button_mode( WNO, 1) ;
 
+	/* cursor should be already on*/
+	/*
 	Show_cursor() ;
+	*/
 
 /*  clear buttons hits in the event queue  */
 	Clear_motion_data() ;
@@ -61,5 +64,7 @@ Get_location_with_pointer(wx, wy, button)
 	Disable_events (BUTTON_EVENT | MOTION_EVENT) ;
 	Reset_events () ;
 
+	/*
 	Hide_cursor() ;
+	*/
 }
