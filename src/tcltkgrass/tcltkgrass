@@ -4,10 +4,11 @@
 # The script searches for wish8.x and starts tcltkgrass
 
 # Markus Neteler
-# $Id: tcltkgrass,v 1.2 2000-09-27 11:18:46 markus Exp $
+# $Id: tcltkgrass,v 1.3 2000-11-16 01:32:36 justin Exp $
 
 #searching for wish8.x:
 SEARCHCOMMAND=wish8
+CURR_DIR=`pwd`
 
 k=0
 PATHLIST=""
@@ -25,6 +26,8 @@ for i in $SEARCHPATHS ; do
       PATHLIST="$i/`ls -1 |grep $SEARCHCOMMAND` $PATHLIST"
    fi
 done
+
+cd $CURR_DIR
 
 #now all wish8.x are stored in $PATHLIST
 #take the first and start tcltkgrass
