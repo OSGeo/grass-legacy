@@ -7,7 +7,7 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 DRIVER=$(DBDRIVERDIR)/dbf
 
-LIBES = $(DBMILIB) $(SQLPLIB) $(SHAPELIB) $(DBSTUBSLIB) $(GISLIB) 
+LIBES = $(DBMILIB) $(SQLPLIB) $(SHAPELIB) $(DBSTUBSLIB) $(GISLIB) $(DATETIMELIB)
 
 OBJS 	=  \
 	column.o \
