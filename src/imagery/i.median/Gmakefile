@@ -1,0 +1,15 @@
+LIBES = $(IMAGERYLIB) $(GISLIB) $(VASK)
+
+PROG = $(BIN_MAIN_INTER)/i.median
+
+OBJ =\
+	main.o\
+	ask_levels.o\
+	compose.o\
+	gen_colors.o \
+	median.o
+
+$(PROG): ${OBJ} ${LIBES}
+	$(CC) ${LDFLAGS} -o $@ ${OBJ} ${LIBES}
+
+$(LIBES): #
