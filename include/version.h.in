@@ -1,0 +1,4 @@
+static char *VERSION_STRING  = "@(#) @VERSION_NUMBER@ (@VERSION_DATE@)";
+static char *VERSION_MAJOR   = "@VERSION_MAJOR@";
+static char *VERSION_MINOR   = "@VERSION_MINOR@";
+static char *VERSION_RELEASE = "@VERSION_RELEASE@";
