@@ -1,11 +1,10 @@
-/* $Id$ */
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 struct rule
 {
@@ -43,11 +42,11 @@ int read_color_rules(
     G_init_colors (colors);
     if (isatty(fileno(fp)))
     {
-	fprintf (stdout, "Enter rules, \"end\" when done, \"help\" if you need it.\n");
+	fprintf (stdout, _("Enter rules, \"end\" when done, \"help\" if you need it.\n"));
 	if (is_fp)
-	  fprintf (stdout, "fp: Data range is %.25f to %.25f\n", (double)min, (double)max);
+	  fprintf (stdout, _("fp: Data range is %.25f to %.25f\n"), (double)min, (double)max);
 	else
-	  fprintf (stdout, "Data range is %ld to %ld\n", (long)min, (long)max);
+	  fprintf (stdout, _("Data range is %ld to %ld\n"), (long)min, (long)max);
     }
     while (read_rule(fp, &val, &r, &g, &b, &set, &nv, &others, min, max))
     {
@@ -107,7 +106,7 @@ int read_color_rules(
     }
 
     if((rule[0].val > min || rule[nrules-1].val < max) && !quiet)
-       G_warning("Your color rules do not cover the whole range of data!");
+       G_warning(_("Your color rules do not cover the whole range of data!"));
 
 /* fill in all unset val */
     for (n=0; n < nrules; n++)
@@ -180,15 +179,15 @@ static int read_rule(
 
 	if (strncmp(buf, "help", 4) == 0)
 	{
-	    fprintf (stdout, "Enter a rule in one of these formats:\n");
-/*	    fprintf (stdout, " color\n"); */ /* does this actually do anything?? */
-	    fprintf (stdout, " val color\n");
-	    fprintf (stdout, " n%% color\n");
-	    fprintf (stdout, " nv color\n");
-	    fprintf (stdout, " default color\n");
-	    fprintf (stdout, "color can be one of:\n");
+	    fprintf (stdout, _("Enter a rule in one of these formats:\n"));
+/*	    fprintf (stdout, _(" color\n")); */ /* does this actually do anything?? */
+	    fprintf (stdout, _(" val color\n"));
+	    fprintf (stdout, _(" n%% color\n"));
+	    fprintf (stdout, _(" nv color\n"));
+	    fprintf (stdout, _(" default color\n"));
+	    fprintf (stdout, _("color can be one of:\n"));
 	    show_colors (stdout);
-	    fprintf (stdout, "or an R:G:B triplet, e.g.: 0:127:255\n");
+	    fprintf (stdout, _("or an R:G:B triplet, e.g.: 0:127:255\n"));
 
 	    continue;
 	}
@@ -229,8 +228,8 @@ static int read_rule(
 		*r<0 || *r>255
 		|| *g<0 || *g>255 || *b<0 || *b>255)
             {
-                fprintf(stderr, "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n", *r, *g, *b);
-                fprintf(stderr, "** rule is not added **\n");
+                fprintf(stderr, _("** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"), *r, *g, *b);
+                fprintf(stderr, _("** rule is not added **\n"));
                 continue;
             }
 	    *set = 1;
@@ -245,8 +244,8 @@ static int read_rule(
 		*r<0 || *r>255
 		|| *g<0 || *g>255 || *b<0 || *b>255)
             {
-                fprintf(stderr, "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n", *r, *g, *b);
-                fprintf(stderr, "** rule is not added **\n");
+                fprintf(stderr, _("** warning: R G B value(s) out of range [0..255]: %d %d %d **\n"), *r, *g, *b);
+                fprintf(stderr, _("** rule is not added **\n"));
                 continue;
             }
 	    *set = 1;
@@ -258,8 +257,8 @@ static int read_rule(
 	{
 	    if (*r<0 || *r>255 || *g<0 || *g>255 || *b<0 || *b>255)
 	    {
-		fprintf(stderr, "** warning: no such value **\n");
-                fprintf(stderr, "** rule is not added **\n");
+		fprintf(stderr, _("** warning: no such value **\n"));
+                fprintf(stderr, _("** rule is not added **\n"));
                 continue;
             }
 	    if (!strcmp("nv", tmpstr)) {
@@ -271,7 +270,7 @@ static int read_rule(
 		return 1;
 	    }
 	    else {
-	    	fprintf(stderr, "** rule is not added **\n");
+	    	fprintf(stderr, _("** rule is not added **\n"));
 	    	continue;
 	    }
         }
@@ -280,8 +279,8 @@ static int read_rule(
 	{
 	    if (*r<0 || *r>255 || *g<0 || *g>255 || *b<0 || *b>255)
 	    {
-		fprintf(stderr, "** warning: no such value **\n");
-                fprintf(stderr, "** rule is not added **\n");
+		fprintf(stderr, _("** warning: no such value **\n"));
+                fprintf(stderr, _("** rule is not added **\n"));
                 continue;
             }
 	    if (!strcmp("nv", tmpstr)) {
@@ -293,7 +292,7 @@ static int read_rule(
 		return 1;
 	    }
 	    else {
-	    	fprintf(stderr, "** rule is not added **\n");
+	    	fprintf(stderr, _("** rule is not added **\n"));
 	    	continue;
 	    }
         }
@@ -368,7 +367,7 @@ static int read_rule(
 		return 1;
 	    }
 	    else {
-	    	fprintf(stderr, "** rule is not added **\n");
+	    	fprintf(stderr, _("** rule is not added **\n"));
 	    	continue;
 	    }
         }
@@ -394,9 +393,9 @@ static int read_rule(
 static int badrule(int tty, char *s, int line)
 {
     if (!tty)
-	fprintf (stderr, "%s:line %d:%s\n", G_program_name(), line,  s);
-    fprintf (stderr, "** bad color specification **\n");
-    fprintf (stderr, "** rule is not added **\n");
+	fprintf (stderr, _("%s:line %d:%s\n"), G_program_name(), line,  s);
+    fprintf (stderr, _("** bad color specification **\n"));
+    fprintf (stderr, _("** rule is not added **\n"));
     if (!tty)
 	exit(1);
 
@@ -416,8 +415,8 @@ static int lookup_color(int tty, char *color, int *r, int *g, int *b)
     }
     if (tty)
     {
-	fprintf (stderr, "%s - unknown color\n", color);
-	fprintf (stderr, "Valid colors are:\n");
+	fprintf (stderr, _("%s - unknown color\n"), color);
+	fprintf (stderr, _("Valid colors are:\n"));
 	show_colors (stderr);
     }
     return 0;
