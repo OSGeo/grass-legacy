@@ -1,4 +1,3 @@
-/* %W%  %G% */
 /***************************************************
  * routines for creating new band files as cell files
  *
@@ -55,7 +54,7 @@ I_close_band (fd, tape_info, band)
 
 
     I_get_histogram (name, G_mapset(), &histogram);
-    G_make_histo_grey_scale (&colr, &histogram);
+    I_grey_scale (&histogram, &colr);
     G_write_colors (name, G_mapset(), &colr);
     G_free_histogram (&histogram);
     G_free_colors (&colr);
