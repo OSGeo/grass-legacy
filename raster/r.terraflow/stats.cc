@@ -99,29 +99,55 @@ noclobberFile(char *fname) {
   int fd=-1;
   
   while(fd<0) {
-	fd = open(fname, O_WRONLY|O_CREAT|O_EXCL, 0644);
-	if(fd < 0) {
-	  if(errno != EEXIST) {
-		perror(fname);
-		exit(1);
-	  } else { /* file exists */
-		char buf[BUFSIZ];
-		fprintf(stderr, "file %s exists - renaming.\n", fname);
-		sprintf(buf, "%s.old", fname);
-		if(rename(fname, buf) != 0) {
-		  perror(fname);
-		  exit(1);
-		}
-	  }
+    fd = open(fname, O_WRONLY|O_CREAT|O_EXCL, 0644);
+    if(fd < 0) {
+      if(errno != EEXIST) {
+	perror(fname);
+	exit(1);
+      } else { /* file exists */
+	char buf[BUFSIZ];
+	fprintf(stderr, "file %s exists - renaming.\n", fname);
+	sprintf(buf, "%s.old", fname);
+	if(rename(fname, buf) != 0) {
+	  perror(fname);
+	  exit(1);
 	}
+      }
+    }
   }
   return fd;
 }
 
+char* 
+noclobberFileName(char *fname) {
+  int fd;
+  fd = open(fname, O_WRONLY|O_CREAT|O_EXCL, 0644);
+  if(fd < 0) {
+    if(errno != EEXIST) {
+      perror(fname);
+      exit(1);
+    } else { /* file exists */
+      char buf[BUFSIZ];
+      fprintf(stderr, "file %s exists - renaming.\n", fname);
+      sprintf(buf, "%s.old", fname);
+      if(rename(fname, buf) != 0) {
+	perror(fname);
+	exit(1);
+      }
+      close(fd);
+    }
+  }
+  return fname;
+}
+
+
 
 /* ********************************************************************** */
 
-statsRecorder::statsRecorder(char *fname) : ofstream(noclobberFile(fname)) {
+statsRecorder::statsRecorder(char *fname) : ofstream(noclobberFileName(fname)){
+  //note: in the new version of gcc there is not constructor for
+  //ofstream that takes an fd; wrote another noclobber() function that
+  //closes fd and returns the name;
   rt_start(tm);
   bss = sbrk(0);
   char buf[BUFSIZ];
@@ -173,7 +199,7 @@ statsRecorder::timestamp(const char *s) {
 
 
 void 
-statsRecorder::comment(const char *s, const int verbose=1) {
+statsRecorder::comment(const char *s, const int verbose) {
   *this << timestamp() << s << endl;
   if (verbose) {
     cout << s << endl;
