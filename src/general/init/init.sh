@@ -83,7 +83,7 @@ for i in "$@" ; do
 done
 
 # Set the GRASSRC file
-GISRC="$HOME/.grassrc5"
+GISRC="$HOME/.grassrcNAME_VER"
 export GISRC
 
 # remove invalid GISRC file to avoid disturbing error messages:
@@ -112,7 +112,7 @@ fi
 export GRASS_GUI
 
 # Set the GIS_LOCK variable to current process id
-lockfile="$HOME/.gislock5"
+lockfile="$HOME/.gislockNAME_VER"
 GIS_LOCK=$$
 export GIS_LOCK
 
