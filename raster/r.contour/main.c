@@ -82,6 +82,7 @@ int main ( int argc, char *argv[])
     vect->key        = "output";
     vect->type       = TYPE_STRING;
     vect->required   = YES;
+    vect->gisprompt  = "new,vector,vector";
     vect->description= _("Name of output vector file") ;
 
     levels=G_define_option () ;
