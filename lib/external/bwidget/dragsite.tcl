@@ -120,12 +120,13 @@ proc DragSite::_begin_drag { event source state X Y } {
             set _state "press"
         }
         motion {
-            if { ![string compare $_state "press"] } {
+            catch { if { ![string compare $_state "press"] } {
                 if { abs($_x0-$X) > 3 || abs($_y0-$Y) > 3 } {
                     set _state "done"
                     _init_drag $source $state $X $Y
                 }
             }
+	    }
         }
     }
 }
