@@ -1,11 +1,9 @@
-PGM1   = $(BIN_MAIN_CMD)/r.topmodel
-LIBS   = $(GISLIB)
+PGM    = r.topmodel
+LIBES  = $(GISLIB)
 SRCS   = main.c check_ready.c misc.c file_io.c topmodel.c infiltration.c
 OBJS   = main.o check_ready.o misc.o file_io.o topmodel.o infiltration.o
 
 
-all:	 $(PGM1)
-
-$(PGM1): $(OBJS) $(LIBS)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS) $(MATHLIB) $(XDRLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 

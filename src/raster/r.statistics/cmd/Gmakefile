@@ -1,5 +1,4 @@
 PGM    = r.statistics
-HOME   = $(BIN_CONTRIB_CMD)
 
 METHODS = \
 	o_average.o\
@@ -22,9 +21,8 @@ OTHER =\
 
 LIST   = $(METHODS) $(OTHER)
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB) method.h
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
-	chmod 755 $@        
 
 main.o: method.h
 

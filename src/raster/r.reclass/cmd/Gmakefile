@@ -1,5 +1,4 @@
 PGM=r.reclass
-HOME=$(BIN_MAIN_CMD)
 
 LIST = main.o\
 	add_rule.o\
@@ -8,8 +7,8 @@ LIST = main.o\
 	range.o\
 	reclass.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(XDRLIB) $(MATHLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST): rule.h
 $(GISLIB): #

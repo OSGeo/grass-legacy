@@ -1,6 +1,7 @@
+PGM=r.random
 OFILES = main.o count.o creat_rand.o random.o support.o
 
-$(BIN_MAIN_CMD)/r.random: $(OFILES) $(GISLIB) $(DATETIMELIB)
-	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(DATETIMELIB) $(XDRLIB) $(MATHLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(GISLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB) $(DATETIMELIB): #

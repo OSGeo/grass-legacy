@@ -1,9 +1,8 @@
-HOME=$(BIN_MAIN_CMD)
-all: $(HOME)/r.support
+PGM = r.support
 
 SUPPORT = support.o check.o histo.o
 
-$(HOME)/r.support: $(SUPPORT) $(GISLIB)
+$(BIN_MAIN_CMD)/$(PGM): $(SUPPORT) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(SUPPORT) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

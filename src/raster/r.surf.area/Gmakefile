@@ -1,9 +1,7 @@
-LIBRARIES = $(GISLIB) 
-
-PGM = $(BIN_CONTRIB_CMD)/r.surf.area
+LIBES = $(GISLIB) 
+PGM = r.surf.area
 
 OFILES = main.c 
 
-
-$(PGM): $(OFILES) $(LIBRARIES)
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBRARIES) -I$(INCLUDE_DIR) $(MATHLIB) $(XDRLIB)
+$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)

@@ -1,3 +1,4 @@
+PGM = r.surf.contour
 OBJS = 	main.o add_in.o addpts.o find_con.o \
 	bseg_close.o bseg_get.o bseg_open.o \
 	bseg_put.o bseg_read.o bseg_write.o \
@@ -14,16 +15,12 @@ LIST = 	main.c add_in.c addpts.c find_con.c \
 	flag_clr_all.c flag_create.c flag_destroy.c \
 	flag_get.c flag_set.c flag_unset.c 
 
-$(BIN_MAIN_CMD)/r.surf.contour: $(OBJS) $(GISLIB) $(SEGMENTLIB) $(DISPLAYLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(SEGMENTLIB) $(DISPLAYLIB) $(XDRLIB) $(MATHLIB)
+LIBES=$(GISLIB) $(SEGMENTLIB) $(DISPLAYLIB)
+
+$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(DISPLAYLIB) $(GISLIB) $(SEGMENTLIB): #
-
-saber_src:
-	#load $(CFLAGS) $(LIST) $(GISLIB) $(SEGMENTLIB)
-
-saber_obj:
-	#load $(LDFLAGS) $(OBJS) $(GISLIB) $(SEGMENTLIB)
 
 add_in.o: contour.h
 addpts.o: contour.h

@@ -1,4 +1,4 @@
-PGM      = r.weight.new
+PGM  = r.weight.new
 
 LIST = main.o\
 	input.o\
