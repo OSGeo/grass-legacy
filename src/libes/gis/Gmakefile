@@ -252,8 +252,6 @@ get_window.o: G.h
 gisinit.o: G.h
 maskfd.o: G.h
 opencell.o: G.h
-# openvect.o ***DEPRECATED*** delete next line for 5.1
-openvect.o: G.h
 put_row.o: G.h
 radii.o: pi.h
 rhumbline.o: pi.h
