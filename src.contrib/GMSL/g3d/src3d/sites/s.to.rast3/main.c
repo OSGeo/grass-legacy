@@ -1,7 +1,8 @@
 /*
  * s.to.rast3
  *
- * s.to.r3 was developed from s.vol.idw written 
+ * 1/2001: added field parameter Markus Neteler
+ * s.to.r3 was developed 2000 from s.vol.idw written 
  * by Jaro Hofierka
 
    s.to rast3 reads a sites list and writes 3d raster (voxel) maps.
@@ -11,10 +12,11 @@
 */
 
 /*************************************************************************/ 
-#include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
-#include <gis.h>
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include "gis.h"
 #include "G3d.h"
 
 FILE *finput, *foutput;
@@ -40,9 +42,8 @@ struct Point
 struct Point *points = NULL;
 struct Point *list;
 
-main(argc, argv) 
-    int   argc;
-    char *argv[];
+
+int main(int argc, char *argv[])
 {
     int fd, maskfd;
     CELL *cell, *mask;
@@ -54,11 +55,13 @@ main(argc, argv)
     double dx,dy,dz;
     double maxdist,dist;
     double sum1, sum2;
-	float *data, value;
+    float *data, value;
+    char errmsg[200];
     int i,n,max,sz;
+    int field;
     struct
     {
-	struct Option *input, *npoints, *output;
+	struct Option *input, *npoints, *output, *field;
     } parm;
 
     parm.input = G_define_option() ;
@@ -75,6 +78,13 @@ main(argc, argv)
     parm.output->description= "Name of G3D grid file" ;
     parm.output->gisprompt  = "any,grid3,3d raster" ;
 
+    parm.field = G_define_option();
+    parm.field ->key        = "field" ;
+    parm.field ->type       = TYPE_INTEGER ;
+    parm.field ->required   = NO ;
+    parm.field ->description="Number of z-field attribute to use for calculation";
+    parm.field ->answer = "1";
+
     G_gisinit(argv[0]);
 
     if (G_parser(argc, argv))
@@ -89,12 +99,19 @@ main(argc, argv)
     G3d_getWindow (&current_region);
     G3d_readWindow(&current_region,NULL);
 
-	output = parm.output->answer;
+    output = parm.output->answer;
+    sscanf(parm.field->answer,"%d",&field);
+
+    if (field < 1)
+    {
+      sprintf (errmsg, "Decimal attribute field 0 doesn't exist.");
+      G_fatal_error (errmsg);
+    }
 
     list = (struct Point *) G_calloc (search_points, sizeof (struct Point));
 
 /* read the elevation points from the input sites file */
-    read_sites (parm.input->answer);
+    read_sites (parm.input->answer, field);
 
     if (npoints == 0)
     {
