@@ -125,7 +125,7 @@ disp_graph(scr_x,scr_y,param_ptr,mwsize)
     }	
     R_text(text);
     if (text_out)
-	printf("%s\n",text);
+	fprintf(stdout, "%s\n",text);
 
     lef += (rit-lef)/10;
     top += (bot-top)/10;
@@ -237,7 +237,7 @@ disp_graph(scr_x,scr_y,param_ptr,mwsize)
 	}
 
 	if (text_out)
-	    printf("%d\t%d\n",size,param);
+	    fprintf(stdout, "%d\t%d\n",size,param);
     }
 
     /*------------------------------------------------------------------*/
@@ -252,7 +252,7 @@ disp_graph(scr_x,scr_y,param_ptr,mwsize)
 	    if (fp[size] != 0.0)
 	    	entrop += -fp[size]*log(fp[size]);
 	}
-	printf("Scaled Entropy\t%.3lf\n", entrop/EMAX);
+	fprintf(stdout, "Scaled Entropy\t%.3lf\n", entrop/EMAX);
     }
     else
     {
@@ -265,7 +265,7 @@ disp_graph(scr_x,scr_y,param_ptr,mwsize)
     	}
 	stdev = sqrt(stdev/n);
 
-	printf("Mean\t%.3lf\nStdev\t%.3lf\n",mean,stdev);
+	fprintf(stdout, "Mean\t%.3lf\nStdev\t%.3lf\n",mean,stdev);
     }
 
 

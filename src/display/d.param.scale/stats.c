@@ -54,10 +54,10 @@ CELL stats(ptype,coeff,z,w)
 
 		    	resid += (*(w+row*wsize+col))*(*(w+row*wsize+col))*(obs-model)*(obs-model); 
 
-		printf("[%d][%d] obs=%d model=%d\n",x,y,obs,model);
+		fprintf(stdout, "[%d][%d] obs=%d model=%d\n",x,y,obs,model);
 		    }
 		resid /= (wsum*wsum);
-printf("resid = %lf obs = %d, mod=%d\n",resid,obs,model);
+fprintf(stdout, "resid = %lf obs = %d, mod=%d\n",resid,obs,model);
 
 		return (sqrt(100*resid/(wsize*wsize)));
 */
@@ -91,7 +91,7 @@ printf("resid = %lf obs = %d, mod=%d\n",resid,obs,model);
 			var   += (model - mean)*(model - mean);
 			/*covar += (model - mean)*(f - mean)*(*(w+row*wsize+col));*/
 			covar += (model - mean)*(*(w+row*wsize+col));
-printf("[%d][%d] obs=%d model=%d\n",x,y,obs,model);
+fprintf(stdout, "[%d][%d] obs=%d model=%d\n",x,y,obs,model);
 		    }
 		var /= (wsize*wsize);
 
