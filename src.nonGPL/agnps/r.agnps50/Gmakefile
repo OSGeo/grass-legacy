@@ -1,0 +1,9 @@
+all:
+	$(GMAKE) agnps-source
+	$(GMAKE) agview
+	$(GMAKE) hydro_tools
+	$(GMAKE) src_agnps_input_1
+	$(GMAKE) src_agnps_input_2a
+	cp scripts/r.agnps50.input $(GISBASE)/scripts/
+	if [ ! -d $(GISBASE)/etc/agnps50 ]; then mkdir $(GISBASE)/etc/agnps50 ; fi
+	(cd scripts/ ; tar --exclude=CVS -cvf - * | tar -C $(GISBASE)/etc/agnps50 -xvf - 2>/dev/null ; true )
