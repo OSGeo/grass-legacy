@@ -10,7 +10,7 @@ int
 update (struct Map_info *Map)
 {
     int    i, *catexst, *cex, upd, fcat;
-    char   buf1[2000], buf2[2000];
+    char   buf1[2000], buf2[2000], left[20], right[20];
     struct field_info *Fi;
     dbString stmt; 
     dbDriver *driver;
@@ -49,6 +49,7 @@ update (struct Map_info *Map)
 	    sprintf (buf1, "update %s set %s =", Fi->table, options.col1);
             break;
         case O_COOR:
+        case O_SIDES:
 	    sprintf (buf1, "update %s set ", Fi->table);	
             break;
     } 
@@ -66,7 +67,7 @@ update (struct Map_info *Map)
         	break;	
 
     	    case O_COUNT:
-	        sprintf (buf2, "%s %d where %s = %d", buf1, Values[i].i1, Fi->key,  Values[i].cat);
+	        sprintf (buf2, "%s %d where %s = %d", buf1, Values[i].count1, Fi->key,  Values[i].cat);
 		break;
 
     	    case O_LENGTH:
@@ -75,16 +76,48 @@ update (struct Map_info *Map)
         	break;
 
     	    case O_COOR:
-		if ( Values[i].i1 > 1 ){
+		if ( Values[i].count1 > 1 ){
 		    G_warning ( "More points of category %d, nothing loaded to DB", Values[i].cat);
 		    vstat.dupl++;
 		    continue;
 		}		
-	        if ( Values[i].i1 < 1 ){ /* No points */
+	        if ( Values[i].count1 < 1 ){ /* No points */
 		    continue;
 		}
     		sprintf (buf2, "%s %s = %f, %s = %f  where %s = %d", buf1, options.col1, Values[i].d1, 
 			    options.col2, Values[i].d2, Fi->key,  Values[i].cat);    		
+		break;
+
+	    case O_SIDES:
+		if ( Values[i].count1 == 1 ) {
+		    if ( Values[i].i1 >= 0 )
+			sprintf ( left, "%d", Values[i].i1 );
+		    else
+			sprintf ( left, "-1" ); /* NULL, no area/cat */
+		} else if ( Values[i].count1 > 1 ) {
+		    sprintf ( left, "null" );
+		} else { /* Values[i].count1 == 0 */
+		    G_warning ( "Bug in this module, nothing found on the left side of line with "
+				"category %d", Values[i].cat );
+		    sprintf ( left, "null" );
+		}
+
+		if ( Values[i].count2 == 1 ) {
+		    if ( Values[i].i2 >= 0 )
+			sprintf ( right, "%d", Values[i].i2 );
+		    else
+			sprintf ( right, "-1" ); /* NULL, no area/cat */
+		} else if ( Values[i].count2 > 1 ) {
+		    sprintf ( right, "null" );
+		} else { /* Values[i].count1 == 0 */
+		    G_warning ( "Bug in this module, nothing found on the left side of line with "
+				"category %d", Values[i].cat );
+		    sprintf ( right, "null" );
+		}
+
+    		sprintf (buf2, "%s %s = %s, %s = %s  where %s = %d", buf1, options.col1, left, 
+			    options.col2, right, Fi->key,  Values[i].cat);    		
+
 		break;
 
     	    case O_QUERY:
@@ -103,7 +136,6 @@ update (struct Map_info *Map)
 			    break;
 		    }
 		}
-		break;
 	} 
 
 	db_set_string (&stmt, buf2);

@@ -25,7 +25,9 @@ main (int argc, char *argv[])
     G_gisinit(argv[0]);
 
     module = G_define_module();
-    module->description = "Load values from vector to database.";
+    module->description = "Load values from vector to database. In uploaded/printed category values "
+			"'-1' is used for 'no category' and 'null'/'-' if category is cannot be found or "
+                        "multiple categories were found.";
 
     parse_command_line (argc, argv);
 
@@ -37,7 +39,7 @@ main (int argc, char *argv[])
     Vect_open_old(&Map,options.name,options.mapset);
 
     /* allocate array for values (number of cats may not be greater than number of lines ) */
-    /* (+ 1 is for cat 0 (no category) reported at the end ) */
+    /* (+ 1 is for cat -1 (no category) reported at the end ) */
     Values = (VALUE *) G_calloc ( Vect_get_num_lines( &Map ) + 1, sizeof ( VALUE ) );
     vstat.rcat = 0;
 
