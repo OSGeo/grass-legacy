@@ -52,10 +52,16 @@ main (int argc, char **argv)
 	int t, b, l, r ;
 	struct Cell_head window ;
 	struct Colors colors;
+	struct GModule *module;
 	struct Option *opt1, *opt2 ;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
+
+	module = G_define_module();
+	module->description =
+		"Overlays cell category values on a raster map layer "
+		"displayed to the graphics monitor.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;

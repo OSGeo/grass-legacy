@@ -12,8 +12,14 @@ int main (int argc, char **argv)
 	char *mapset ;
 	struct Cell_head window ;
 	struct Categories cats ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
 	struct Flag *flag ;
+
+	module = G_define_module();
+	module->description =
+		"Outputs a TITLE for a raster map layer in a form suitable "
+		"for display by d.text.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
