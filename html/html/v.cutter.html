@@ -7,7 +7,7 @@
 
 <H2>NAME</H2>
 
-<EM><b>v.cutter</b></EM>  - Polygon Cookie Cutter  (Boolean <EM>AND</EM> Overlay)
+<EM><b>v.cutter</b></EM>  - Polygon Cookie Cutter
 
 <BR>
 
@@ -23,14 +23,14 @@
 
 <BR>
 
-<B>v.cutter [-u] [-q] cutter=</B><EM>name</EM> <B>data=</B><EM>name</EM> <B>out=</B><EM>name</EM> 
+<B>v.cutter [-o] [-l] [-a] [-q] cutter=</B><EM>name</EM> <B>input=</B><EM>name</EM> <B>output=</B><EM>name</EM> <B>type=</B><EM>name</EM>
 
 <H2>DESCRIPTION</H2>
 
 This program provides a way to generate new maps based on an intersection
 of two existing maps.  It in effect provides a way to create masked
-versions of vector maps.  Both lines, sites, and polygons are clipped 
-correctly.
+versions of vector maps.  Lines, sites, and polygons are clipped 
+correctly.  By default v.cutter will extract line-type arcs.
 
 <H2>OPTIONS</H2>
 
@@ -38,42 +38,45 @@ correctly.
 <DL>
 <DT><B>-q</B>   
 <DD>Run quietly.  Don't print percent information.
-<DT><B>-u</B>   
-<DD>Intersect all areas even those that are unlabeled. Not generally useful
-and also not fully tested.
+<DT><B>-o</B>   
+<DD>Only intersect labeled areas.  Intersection of unlabeled areas may not be dependable.  The flag is meaningful only for type=area or type=both.
+
+<DT><B>-a</B>
+<DD>Extract area-edge arc types only.  The flag is meaningful only for type=line or type=both.  By default the program uses both area-edge and line arc types.
+
+<DT><B>-l</B>
+<DD>Extract line arc types only.  The flag is meaningful only for type=line or type=both.  By default the program uses both area-edge and line arc types.
 </DL>
 
 <H3>Parameters:</H3>
 
 <DL>
-<DT><B>cutter</B>=<EM>mapname</EM> 
+<DT><B>cutter=</B><EM>mapname</EM> 
 <DD>Name of the binary vector file to use for the cookie cutter.
 
-<DT><B>data=</B><EM>mapname</EM> 
+<DT><B>input=</B><EM>mapname</EM> 
 <DD>Name of the binary vector file which is to be cut.
 
-<DT><B>out=</B><EM>mapname</EM> 
-<DD>Name ofnew vector file to be created.
-</DL>
+<DT><B>output=</B><EM>mapname</EM> 
+<DD>Name of new vector file to be created.
 
+<DT><B>type=</B><EM>object type</EM>
+<DD>Type of object (area, line or both) to extract.  The default is to extract lines.
+</DL>
+<P>
 <H2>NOTES</H2>
 
-The user must run <EM>
-<A HREF="v.spag.html">v.spag</A>
- -i</EM> after running <EM>v.cutter</EM> to remove
-identical lines.
-
-
+If v.cutter is only used to extract lines then it automatically runs <EM><A HREF="v.support.html">v.support</A></EM> on the output file.  
+If v.cutter is used to extract polygons then the user may need to run<EM>
+<A HREF="v.spag.html">v.spag</A> -i</EM> after running <EM>v.cutter</EM>
+to remove identical lines.
 <P>
 
-The polygons of the cutter map must be labeled to be effective unless
-the -u flag is specified.
-
-
+If type=area then the edge created by the cutter file will appear on closed polygons in the output. If type=line then the edge does not appear in the output.
 <P>
 
-The attributes of created polygons will be generated from the attributes
-of the <EM>data</EM> map.
+The attributes of the output map will be generated from the attributes
+of the <EM>input</EM> map.
 
 <H2>BUGS</H2>
 
@@ -82,34 +85,14 @@ These mostly involve nodes or vertices intersecting exactly with lines
 of the opposite map.  You will know you have hit one of these cases
 because a lot of strange text will start spitting out.
 
-
 <P>
 
-Currently the program generates many duplicate lines.  So <EM>
-<A HREF="v.spag.html">v.spag</A>
- -i</EM>
-must be run on the new file to clean them up.  The -i flag specifies
-to only do the identical line removal phase and is a new option 
-to <EM>
-<A HREF="v.spag.html">v.spag</A>
-</EM> in release 4.1.  Don't forget to use this flag, as
-it will run much faster, and will not make any other changes to your data.
-
-
-<P>
-
-Borders between areas with the same attributes are not disolved.
-
-
-<P>
-
-There is no <EM>fuzzy</EM> data handling code, so expect to see slivers.
+Borders between areas with the same attributes are not dissolved.
 
 
 <P>
 
 There are many places where the code could be optimized greatly.
-
 
 <P>
 
