@@ -16,8 +16,9 @@ typedef struct
     {
 	int configured;
 	struct Cell_head head;
-	char name[30];
-	char mapset[30];
+	struct Colors colors;
+	char name[100];
+	char mapset[100];
 	int top, bottom ,left, right;
 	double ew_res, ns_res;	/* original map resolution */
     } cell;
@@ -26,7 +27,7 @@ typedef struct
 
 typedef struct
 {
-    char name[50];
+    char name[100];
     struct Ref ref;
     struct Control_Points points;
     double E12[3], N12[3], E21[3], N21[3];
