@@ -57,12 +57,12 @@ dofirst:
 	-mkdir -p $(OBJARCH)/SHORT
 
 $(BIN_CMD)/r.terraflow: $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
-	(cd IOStream/lib ; make)
+	(cd IOStream/lib ; $(MAKE) )
 	$(CXX) -DELEV_FLOAT $(LDFLAGS) -o $@ $(FLOAT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
 
 $(BIN_CMD)/r.terraflow.short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
-	(cd IOStream/lib ; make)
+	(cd IOStream/lib ; $(MAKE) )
 	$(CXX) -DELEV_SHORT $(LDFLAGS) -o $@ $(SHORT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
 

@@ -10,7 +10,7 @@ all: build $(LIBRARY)
 
 
 build:
-	(cd src ; make)
+	(cd src ; $(MAKE) )
 
 $(LIBRARY): $(LIBSRCPATH)/$(LIBRARY)
 	cp $< $@
