@@ -279,7 +279,7 @@ Vect_copy_pnts_to_xyz (
 *               counter clockwise from x axis) or NULL
 *  *slope     - pointer to slope angle in radians (positive up)
 * 
-*  Returns: 1 OK
+*  Returns: number of segment the point is on (first is 1)
 *           0 error - point is outside the line 
 */
 int 
@@ -322,7 +322,7 @@ Vect_point_on_line ( struct line_pnts *Points, double distance,
 	    if ( slope != NULL )
 	       *slope = atan2(dz, dxy);
 	    
-	    return 1;
+	    return (j + 1);
 	}
     }
 
@@ -354,18 +354,26 @@ Vect_line_length ( struct line_pnts *Points )
 
 /* original dig__check_dist () in grass50 
 *  
-*  returns nearest segment (first is 1)
+*  returns: nearest segment (first is 1)
+*  sets (if not null): px, py - point on line
+*                      dist   - distance to line
+*                      spdist - distance to point on line from segment beginning
+*                      sldist - distance to point on line form line beginning along line
 */  
 int 
 Vect_line_distance (
-		  struct line_pnts *points,
-		  double ux,
-		  double uy,
-		  double *dist)
+		  struct line_pnts *points, /* line */
+		  double ux, double uy,     /* point */
+		  double *px, double *py,   /* point on line */
+		  double *dist,             /* distance to line */
+		  double *spdist,           /* distance of point from segment beginning */
+		  double *lpdist)           /* distance of point from line beginning */
 {
   register int i;
   register double distance;
   register double new_dist;
+  double   tpx, tpy, tdist, tspdist, tlpdist;
+  double dx, dy, dz;
   register int n_points;
   int segment;
 
@@ -373,27 +381,59 @@ Vect_line_distance (
 
   if ( n_points == 1 ) {
     distance = dig_distance2_point_to_line (ux, uy, points->x[0], points->y[0],
-              					    points->x[0], points->y[0]);
+              					    points->x[0], points->y[0],
+				  	    NULL, NULL, NULL, NULL);
+    tpx = points->x[0];
+    tpy = points->y[0];
+    tdist = sqrt(distance);
+    tspdist = 0;
+    tlpdist = 0;
+    segment = 0;
+    
+  } else {
 
-    *dist = sqrt(distance);
-    return (0);
-  }
-
-  distance = dig_distance2_point_to_line (ux, uy, points->x[0], points->y[0],
-        					  points->x[1], points->y[1]);
-  segment = 1;
-      
-  for ( i = 1 ; i < n_points - 1; i++)
-    {
-      new_dist = dig_distance2_point_to_line (ux, uy, points->x[i], points->y[i],
-					points->x[i + 1], points->y[i + 1]);
-      if (new_dist < distance)
+      distance = dig_distance2_point_to_line (ux, uy, points->x[0], points->y[0],
+						      points->x[1], points->y[1],
+						NULL, NULL, NULL, NULL);
+      segment = 1;
+	  
+      for ( i = 1 ; i < n_points - 1; i++)
 	{
-	  distance = new_dist;
-	  segment = i + 1;
+	  new_dist = dig_distance2_point_to_line (ux, uy, points->x[i], points->y[i],
+					    points->x[i + 1], points->y[i + 1],
+					    NULL, NULL, NULL, NULL);
+	  if (new_dist < distance)
+	    {
+	      distance = new_dist;
+	      segment = i + 1;
+	    }
 	}
-    }
-  *dist = sqrt(distance);
+
+      /* we have segment and now we can recalculate other values (speed) */
+      new_dist = dig_distance2_point_to_line (ux, uy, points->x[segment - 1], points->y[segment - 1],
+					    points->x[segment], points->y[segment],
+					    &tpx, &tpy, &tspdist, NULL);
+      
+      /* calculate distance from beginning of line */
+      if ( lpdist ) { 
+          tlpdist = 0;
+	  for ( i = 0; i < segment - 1; i++) {
+              dx = points->x[i+1] - points->x[i];
+	      dy = points->y[i+1] - points->y[i];
+	      dz = points->z[i+1] - points->z[i];
+	      tlpdist += hypot ( hypot (dx, dy), dz );
+	  }
+	  tlpdist += tspdist;
+      }
+      tdist = sqrt(distance);
+  }
+  
+  if (px) *px = tpx;
+  if (py) *py = tpy;
+  if (dist) *dist = tdist;
+  if (spdist) *spdist = tspdist;
+  if (lpdist) *lpdist = tlpdist;
+  
   return (segment);
 }
 
