@@ -13,6 +13,7 @@
 
 #include "gis.h"
 #include "includes.h"
+#include "glocale.h"
 
 /* Returns: -1  error
 *            0
@@ -35,7 +36,7 @@ int Get_location_with_line2 (
 
     if (redraw_pid)
     {
-	fprintf(stderr, "Monitor: interactive command in redraw\n");
+	fprintf(stderr, _("Monitor: interactive command in redraw\n"));
 	return -1;
     }
 

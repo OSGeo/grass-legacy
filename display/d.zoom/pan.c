@@ -8,6 +8,7 @@
 #include "display.h"
 #include "raster.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 
 int do_pan(struct Cell_head *window) {
@@ -16,9 +17,9 @@ int do_pan(struct Cell_head *window) {
 
     while( !end ) {
 	if (printmenu){
-	    fprintf(stderr, "\n\nButtons:\n");
-	    fprintf(stderr, "%s Pan\n", LEFTS);
-	    fprintf(stderr, "%s Quit\n", RIGHTS);
+	    fprintf(stderr, _("\n\nButtons:\n"));
+	    fprintf(stderr, _("%s Pan\n"), LEFTS);
+	    fprintf(stderr, _("%s Quit\n"), RIGHTS);
 	    printmenu = 0;
 	}
 

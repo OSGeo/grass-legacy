@@ -14,6 +14,7 @@
 #include "driver.h"
 #include "pad.h"
 #include "utils.h"
+#include "glocale.h"
 
 #define REC(a,b)    if ((eof=rec((a),(b)))) break
 #define RECTEXT(x,s)  if ((eof=rectext(&x,&s))) break
@@ -570,7 +571,7 @@ process_command(int c)
 	break;
 
     default:
-	fprintf(stderr, "\nUnknown command: %d last: %d\n", c, lc);
+	fprintf(stderr, _("\nUnknown command: %d last: %d\n"), c, lc);
 	break;
     }
     lc = c;
@@ -612,7 +613,7 @@ int get_command(char *c)
         while (*c == COMMAND_ESC)
             if (read1(c) != 0)
 	    {
-		fprintf(stderr, "Monitor: get_command: Premature EOF\n");
+		fprintf(stderr, _("Monitor: get_command: Premature EOF\n"));
                 return 1;               /* EOF */
 	    }
         if (*c)
@@ -686,7 +687,7 @@ static int _send(void *buf, int n)
     if (r < n)
     {
 	fprintf(stderr,
-		"Monitor: _send: write returned short count: %d of %d\n",
+		_("Monitor: _send: write returned short count: %d of %d\n"),
 		r, n);
 	return 1;
     }

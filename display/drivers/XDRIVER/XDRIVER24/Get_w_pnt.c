@@ -12,6 +12,7 @@
 #include "gis.h"
 #include "includes.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int Get_location_with_pointer2 (int *wx, int *wy, int *button, int cmd)
 {
@@ -19,7 +20,7 @@ int Get_location_with_pointer2 (int *wx, int *wy, int *button, int cmd)
     
     if (redraw_pid)
     {
-	fprintf(stderr, "Monitor: interactive command in redraw\n");
+	fprintf(stderr, _("Monitor: interactive command in redraw\n"));
 	return -1;
     }
 

@@ -9,6 +9,7 @@
 #include "form.h"
 #include "dbmi.h"
 #include "what.h"
+#include "glocale.h"
 
 static int nlines = 50;
 
@@ -150,8 +151,8 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 
 	    if (line + area == 0) {
                 if ( txt ) {
-		    fprintf(stdout, "Nothing Found.\n");
-		    if (notty) fprintf(stderr, "Nothing Found.\n");
+		    fprintf(stdout, _("Nothing Found.\n"));
+		    if (notty) fprintf(stderr, _("Nothing Found.\n"));
 		    nlines++;
 		}
 		continue;
@@ -199,10 +200,10 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		    
 		    fprintf(stdout, "-----------------------------------------------\n" );
 		    Vect_get_line_areas ( &(Map[i]), line, &left, &right );
-		    fprintf(stdout, "Line: %d  Type: %s  Left: %d  Right: %d  ", line, buf, left, right);
+		    fprintf(stdout, _("Line: %d  Type: %s  Left: %d  Right: %d  "), line, buf, left, right);
 		    if ( type & GV_LINES ) {
 			nnodes = 2;
-			fprintf(stdout, "Length: %f\n", l);
+			fprintf(stdout, _("Length: %f\n"), l);
 		    } else { /* points */
 			nnodes = 1;
 			fprintf(stdout, "\n");
@@ -212,18 +213,18 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 
 		    for ( n = 0; n < nnodes; n++ ) { 
 			nnlines = Vect_get_node_n_lines (  &(Map[i]), node[n]);
-		        fprintf(stdout, "  Node[%d]: %d  Number of lines: %d\n", n, node[n], nnlines);
+		        fprintf(stdout, _("  Node[%d]: %d  Number of lines: %d\n"), n, node[n], nnlines);
 			
 			for ( nli = 0; nli < nnlines; nli++ ) {
 			    nodeline =  Vect_get_node_line ( &(Map[i]), node[n], nli );
 			    angle =  Vect_get_node_line_angle ( &(Map[i]), node[n], nli );
-		            fprintf(stdout, "    Line: %5d  Angle: %.8f\n", nodeline, angle);
+		            fprintf(stdout, _("    Line: %5d  Angle: %.8f\n"), nodeline, angle);
 			}
 		    }
 		    
 		} else if ( txt ) {
 		    fprintf(stdout, "%s\n", buf);
-		    if ( type & GV_LINES ) fprintf(stdout, "length %f\n", l);
+		    if ( type & GV_LINES ) fprintf(stdout, _("length %f\n"), l);
 		} else { 
 		    db_append_string (&html, "feature type: " );
 		    db_append_string (&html, buf );
@@ -241,7 +242,7 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		    double min, max;
 
 		    if ( type & GV_POINTS ) {
-			if ( txt ) fprintf(stdout, "Point height: %f\n", Points->z[0]);
+			if ( txt ) fprintf(stdout, _("Point height: %f\n"), Points->z[0]);
 			else {
 			    sprintf(buf, "Point height: %f<BR>", Points->z[0] );
 			    db_append_string (&html, buf);
@@ -253,13 +254,13 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 			    if ( Points->z[j] > max ) max = Points->z[j];
 			}
 			if ( min == max ) {
-			    if ( txt ) fprintf(stdout, "Line height: %f\n", min);
+			    if ( txt ) fprintf(stdout, _("Line height: %f\n"), min);
 			    else {
 				sprintf(buf, "Line height: %f<BR>", min);
 				db_append_string (&html, buf);
 			    }
 			} else { 
-			    if ( txt ) fprintf(stdout, "Line height min: %f max: %f\n", min, max);
+			    if ( txt ) fprintf(stdout, _("Line height min: %f max: %f\n"), min, max);
 			    else {
 				sprintf(buf, "Line height min: %f max: %f<BR>", min, max );
 				db_append_string (&html, buf);
@@ -276,14 +277,14 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 
 	    if (area > 0) {
 		if (Map[i].head.with_z && getz) {
-		    if ( txt ) fprintf(stdout, "Area height: %f\n", z);
+		    if ( txt ) fprintf(stdout, _("Area height: %f\n"), z);
 		    else {
 			sprintf(buf, "feature type: Area<BR>height: %f<BR>", z );
 		        db_append_string (&html, buf);
 		    }
 		} else {
 		    if ( txt ) {
-			fprintf(stdout, "Area\n");
+			fprintf(stdout, _("Area\n"));
 		    } else {
 			sprintf(buf, "feature type: Area<BR>");
 		        db_append_string (&html, buf);
@@ -296,34 +297,34 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		    
 		    nisles = Vect_get_area_num_isles ( &Map[i], area );
 		    fprintf(stdout, "-----------------------------------------------\n" );
-		    fprintf(stdout, "Area: %d  Number of isles: %d\n", area, nisles );
+		    fprintf(stdout, _("Area: %d  Number of isles: %d\n"), area, nisles );
 
 		    for ( isleidx = 0; isleidx < nisles; isleidx++ ) {
 		        isle = Vect_get_area_isle ( &Map[i], area, isleidx );
-			fprintf(stdout, "  Isle[%d]: %d\n", isleidx, isle );
+			fprintf(stdout, _("  Isle[%d]: %d\n"), isleidx, isle );
 		    }
 
 		    isle = Vect_find_island ( &Map[i], east, north );
 		    
 		    if ( isle ) {
 			isle_area = Vect_get_isle_area ( &Map[i], isle );
-		        fprintf(stdout, "Island: %d  In area: %d\n", isle, isle_area );
+		        fprintf(stdout, _("Island: %d  In area: %d\n"), isle, isle_area );
 		    }
 
 		} else if ( txt ) {
-		    fprintf(stdout, "Size - Sq Meters: %.3f\t\tHectares: %.3f\n",
+		    fprintf(stdout, _("Size - Sq Meters: %.3f\t\tHectares: %.3f\n"),
 			    sq_meters, (sq_meters / 10000.));
 
-		    fprintf(stdout, "           Acres: %.3f\t\tSq Miles: %.4f\n",
+		    fprintf(stdout, _("           Acres: %.3f\t\tSq Miles: %.4f\n"),
 			    ((sq_meters * 10.763649) / 43560.),
 			    ((sq_meters * 10.763649) / 43560.) / 640.);
 		    if (notty) {
 			fprintf(stderr,
-				"Size - Sq Meters: %.3f\t\tHectares: %.3f\n",
+				_("Size - Sq Meters: %.3f\t\tHectares: %.3f\n"),
 				sq_meters, (sq_meters / 10000.));
 
 			fprintf(stderr,
-				"           Acres: %.3f\t\tSq Miles: %.4f\n",
+				_("           Acres: %.3f\t\tSq Miles: %.4f\n"),
 				((sq_meters * 10.763649) / 43560.),
 				((sq_meters * 10.763649) / 43560.) / 640.);
 		    }
@@ -349,7 +350,7 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		for (j = 0; j < Cats->n_cats; j++) {
 		    G_debug(2, "field = %d category = %d", Cats->field[j], Cats->cat[j]);
 		    if ( txt ) {
-			fprintf( stdout, "field: %d\ncategory: %d\n", Cats->field[j], Cats->cat[j] );
+			fprintf( stdout, _("field: %d\ncategory: %d\n"), Cats->field[j], Cats->cat[j] );
 		    } else { 
 			db_append_string (&html, "<HR><BR>");
 			sprintf(buf, "field: %d<BR>category: %d<BR>", Cats->field[j], Cats->cat[j] );
@@ -358,7 +359,7 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 		    Fi = Vect_get_field( &(Map[i]), Cats->field[j]);
 		    if (Fi == NULL) {
 			if ( txt ) {
-			    fprintf( stdout, "Database connection not defined\n" );
+			    fprintf( stdout, _("Database connection not defined\n" ));
 			} else { 
 			    db_append_string (&html, "Database connection not defined<BR>" );
 			}
@@ -366,7 +367,7 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 			int format;
 			
 			if ( txt ) {
-			    fprintf( stdout, "driver: %s\ndatabase: %s\ntable: %s\nkey column: %s\n",
+			    fprintf( stdout, _("driver: %s\ndatabase: %s\ntable: %s\nkey column: %s\n"),
 				     Fi->driver, Fi->database, Fi->table, Fi->key);
 			} else { 
 			    sprintf(buf, "driver: %s<BR>database: %s<BR>table: %s<BR>key column: %s<BR>",
@@ -417,20 +418,20 @@ int what(int once, int txt, int terse, int flash, int width, int mwidth, int top
 int show_buttons(int once, int flash)
 {
     if (once) {
-	fprintf(stderr, "\nClick mouse button on desired location\n\n");
+	fprintf(stderr, _("\nClick mouse button on desired location\n\n"));
 	nlines = 3;
     }
     else if (nlines >= 18) {	/* display prompt every screen full */
 	fprintf(stderr, "\n");
-	fprintf(stderr, "Buttons\n");
-	fprintf(stderr, " Left:  what's here\n");
+	fprintf(stderr, _("Buttons\n"));
+	fprintf(stderr, _(" Left:  what's here\n"));
 	if(flash){
-	   fprintf (stderr, " Middle: toggle flash color\n");
+	   fprintf (stderr, _(" Middle: toggle flash color\n"));
 	   nlines = 5;
 	}
 	else
 	   nlines = 4;	
-	fprintf (stderr, " Right: quit\n");
+	fprintf (stderr, _(" Right: quit\n"));
     }
 
     return 0;
