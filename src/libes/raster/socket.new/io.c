@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <signal.h>
+#include <unistd.h>
 #include <errno.h>
 #include "graph.h"
 #include "monitors.h"
 #include "gis.h"
+#include "raster.h"
 
 /* for locking based on inode number of a fifo */
 #ifdef HAVE_SYS_TYPES_H
@@ -29,8 +31,9 @@ static void dead(int);
 static void (*sigalarm)();
 static void (*sigint)();
 static void (*sigquit)();
-static int _get(char *,int);
+int _get(char *,int);
 static int _rec (char *);
+int flushout (void);
 
 
 int
@@ -163,12 +166,11 @@ _get_text (buf)
     return 0;
 }
 
-static int
+int
 _get(buf, n)
 char *buf;
 int n;
 {
-    int stat;
     while (n-- > 0) _rec(buf++);
 
     return 0;
