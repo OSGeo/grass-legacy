@@ -1,4 +1,4 @@
-$Id: TODO,v 1.44 2000-10-28 13:29:28 markus Exp $
+$Id: TODO,v 1.45 2000-10-29 16:44:49 andreas Exp $
 
 TODO for GRASS GIS:
 
@@ -28,11 +28,7 @@ Removal of absolute path codings:
 
 --------------------------------------------------------------------
 Regression test suite:
- There are already some testing programs in the source code (e. g.               
- src/libes/gis/TESTS, src/libes/datetime/tests). Not a real regression           
- testing suite, but may be good as a starting point.   
- A testgrass.sh is stored in this directory. Please add further test
- routines.
+- see testsuite/TODO !
  (Being worked on by Andreas Lange)
 
 --------------------------------------------------------------------
