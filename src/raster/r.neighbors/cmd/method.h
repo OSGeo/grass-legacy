@@ -21,6 +21,7 @@ struct menu
     DCELL c_min(register DCELL *, register int, RASTER_MAP_TYPE);
     DCELL c_mode(DCELL *, register int, RASTER_MAP_TYPE);
     DCELL c_stddev(register DCELL *, int, RASTER_MAP_TYPE);
+    DCELL c_sum(register DCELL *, int, RASTER_MAP_TYPE);
     DCELL c_var(register DCELL *, int, RASTER_MAP_TYPE);
 
 /* declare all category name routines here */
@@ -39,6 +40,7 @@ struct menu
     {c_min,    NO_CATS, 1,   "minimum", "lowest value"},
     {c_max,    NO_CATS, 1,   "maximum", "highest value"},
     {c_stddev, NO_CATS, 0,   "stddev", "standard deviation"},
+    {c_sum,    NO_CATS, 1,   "sum", "sum of values"},
     {c_var,    NO_CATS, 0,   "variance", "statistical variance"},
     {c_divr,   divr_cats, 0, "diversity", "number of different values"},
     {c_intr,   intr_cats, 0, "interspersion", "number of values different than center value"},
