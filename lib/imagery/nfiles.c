@@ -27,7 +27,7 @@ static int nfiles(char *group,char *subgroup)
     FILE *I_fopen_subgroup_ref_old();
     int n;
     char buf[1024];
-    char name[NAME_LEN], mapset[NAME_LEN];
+    char name[INAME_LEN], mapset[INAME_LEN];
 
     G_suppress_warnings(1);
     n = 0;
