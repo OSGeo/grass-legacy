@@ -1,0 +1,54 @@
+From waupo@cs.uiuc.edu Wed May 15 21:59:45 1996
+Received: from sal.cs.uiuc.edu by gomez.gis.uiuc.edu with SMTP id AA18133
+  (5.67b/IDA-1.5); Wed, 15 May 1996 21:59:44 -0500
+Received: from sal (localhost [127.0.0.1]) by sal.cs.uiuc.edu (8.7.5/8.7.3) with SMTP id VAA21700; Wed, 15 May 1996 21:59:43 -0500 (CDT)
+Sender: waupo@cs.uiuc.edu
+Message-Id: <319A9A1F.1509@cs.uiuc.edu>
+Date: Wed, 15 May 1996 21:59:43 -0500
+From: Roman Waupotitsch <waupo@cs.uiuc.edu>
+X-Mailer: Mozilla 2.02 (X11; I; SunOS 5.4 sun4m)
+Mime-Version: 1.0
+To: Helena Mitasova <helena@gis.uiuc.edu>
+Cc: astley@gis.uiuc.edu, brown@gis.uiuc.edu
+Subject: Re: testdata
+References: <199605091607.LAA14409@rogue.gis.uiuc.edu>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Status: RO
+
+hi, i ran the program today. and could not see any problem in the
+output data. let me know if the problem still exists please.
+
+i fixed the WIND3 problem. the problem was in my error message.
+(bill you need to install a default WIND3 file in the PERMANENT
+mapset)
+
+since i was already at it i took the liberty to move bills/mikes
+"r3" programs into the raster3d directory. after fixing some 
+dependentcies you can now recompile all the r3 programs with one
+gmake in directory raster3d.
+
+roman
+
+
+
+
+Helena Mitasova wrote:
+> 
+> In case you need more test data - these seem to be good.
+> (I am sending you also the commands how they were created)
+> This is the soil ph, interpolated form soil cores with given elevation
+> (not just depth), however this elevation has been computed as elev-20*depth,
+> so the depth is rescaled. The interpolation has not been masked so
+> you can see rather straight isosurfaces (cone or cylinder-like)
+> in areas above terrain and under the lowest horizon, where we don't have
+> data. It will be clear when we get this into nviz.
+> the resolution is rather low, but it still looks pretty good.
+> It is nice to be able to run this right from GRASS.
+> 
+> Helena
+> 
+> s.vol.rst input=xyzall20.sites z_orig=422.0 tb_res=4 n_levs=19 ten=10 sm=0.1 elev=phel2.nomask npmin=150 attrib=0
+> 
+> r3.showdspf phel2.nomask dspf=phel2.iso1
+
