@@ -1,0 +1,18 @@
+PGM=i.maxlik
+HOME=$(BIN_MAIN_CMD)
+LIST = main.o\
+	open.o\
+	classify.o\
+	hist.o\
+	invert.o
+
+$(HOME)/$(PGM): $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASKLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(LIST) $(IMAGERYLIB) $(GISLIB) $(VASK) $(MATHLIB)
+	mv a.out $@
+
+$(LIST): global.h
+
+$(IMAGERYLIB): #
+$(GISLIB): #
+$(VASKLIB): #
