@@ -1,3 +1,4 @@
+#  %W%  %G%
 LIBPROJ         = $(SRC)/../src.related/mapgen/lib/libproj.a
 LIBSUPP         = $(SRC)/../src.related/mapgen/lib/libsupp.a
 
@@ -21,11 +22,11 @@ CFILES = \
 	SetProj.c
 
 
-all:  START $(BIN_CONTRIB_CMD)/v.out.scsgef
+all:  START $(BIN_CONTRIB_CMD)/v.out.gef
 	
 
-$(BIN_CONTRIB_CMD)/v.out.scsgef: $(OFILES) v.export_gef.o
-	$(CC) $(LDFLAGS) -o $@ v.export_gef.o $(OFILES) $(VECTLIB) $(LIBPROJ) $(LIBSUPP) $(VASK) $(GISLIB) $(MATHLIB)
+$(BIN_CONTRIB_CMD)/v.out.gef: $(OFILES) v.exp_gef.o
+	$(CC) $(LDFLAGS) -o $@ v.exp_gef.o $(OFILES) $(GISLIB) $(VECTLIB) $(LIBPROJ) $(LIBSUPP) $(GISLIB) $(VASK) $(MATHLIB)
 
 
 START:
