@@ -162,7 +162,7 @@ int         db_insert                 P((dbCursor *cursor ));
 void        db_interval_range         P((int sqltype , int *from , int *to ));
 int         db_isdir                  P((char *path ));
 int         db_list_databases         P((dbDriver *driver , dbString *path , int npaths , dbHandle **handles , int *count ));
-char *      db_list_drivers(void);
+char *      db_list_drivers           P((void ));
 int         db_list_indexes           P((dbDriver *driver , dbString *table_name , dbIndex **list , int *count ));
 int         db_list_tables            P((dbDriver *driver , dbString **names , int *count , int system ));
 void *      db_malloc                 P((int n ));
