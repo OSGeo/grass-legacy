@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.36 2000-10-20 12:11:40 markus Exp $
+# $Id: configure,v 1.37 2000-10-20 13:36:58 frankw Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -3218,7 +3218,10 @@ else
   PQLIBPATH=$PGSQL_DIR/lib
 fi
 test -d $PGSQL_DIR/lib/pgsql && PQLIBPATH=$PGSQL_DIR/lib/pgsql
-LDFLAGS="$LDFLAGS -L$PQLIBPATH"
+if test -d $PGSQL_DIR/lib/pgsql ; then
+  PQLIBPATH=$PGSQL_DIR/lib/pgsql
+  LDFLAGS="$LDFLAGS -L$PQLIBPATH"
+fi
 echo $ac_n "checking for PQcmdTuples in -lpq""... $ac_c" 1>&6
 echo "configure:1532: checking for PQcmdTuples in -lpq" >&5
 ac_lib_var=`echo pq'_'PQcmdTuples | sed 'y%./+-%__p_%'`
