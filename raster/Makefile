@@ -31,6 +31,7 @@ SUBDIRS = \
 	r.in.gridatb \
 	r.in.poly \
 	r.kappa \
+	r.le \
 	r.los \
 	r.mapcalc \
 	r.median \
