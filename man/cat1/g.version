@@ -1,7 +1,7 @@
 
 
 
-g.version <main>     GRASS Reference Manual      <main> g.version
+g.version <main>     GRASS Reference Manual	 <main>	g.version
 
 
 
@@ -17,16 +17,16 @@ DESCRIPTION
      g.version prints to standard output the GRASS version number
      and date, in the form:
 
-          GRASS 4.0 (Summer 1991)
+	  GRASS	4.0 (Summer 1991)
 
 NOTES
      This program requires no command line arguments;  the user
-     simply types g.version on the command line to see the
-     version number and date of the GRASS software currently
+     simply types g.version on the command line	to see the
+     version number and	date of	the GRASS software currently
      being run by the user.
 
 AUTHOR
-     Michael Shapiro, U.S. Army Construction Engineering Research
+     Michael Shapiro, U.S. Army	Construction Engineering Research
      Laboratory
 
 
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
