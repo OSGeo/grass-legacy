@@ -127,13 +127,13 @@ proc DmPrint::init_tmpfiles { } {
     # get temporary file for script file
     set pid [ pid ]
     set PVar(tmpscript) [ exec g.tempfile pid=$pid ]
-    puts "tmpscript: $PVar(tmpscript)"
+    #puts "tmpscript: $PVar(tmpscript)"
 
     set PVar(tmppsfile) [ exec g.tempfile pid=$pid ]
-    puts "tmppsfile: $PVar(tmppsfile)"
+    #puts "tmppsfile: $PVar(tmppsfile)"
 
     set PVar(tmpppmfile) [ exec g.tempfile pid=$pid ]
-    puts "tmpppmfile: $PVar(tmpppmfile)"
+    #puts "tmpppmfile: $PVar(tmpppmfile)"
 }
 
 proc DmPrint::window { } {
