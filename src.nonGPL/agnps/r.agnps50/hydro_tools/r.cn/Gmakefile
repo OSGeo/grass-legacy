@@ -13,13 +13,7 @@ OBJ = \
 	amc_conversion.o
 
 
-#$(PROG): $(LIST) $(LIBES)
-#			$(CC) $(LDFLAGS) -g -o $@ $(LIST) $(LIBES)
-
-COMPILE_FLAGS = -O
-#-----------------^ For optimising the code.
-
 $(PROG): ${OBJ} ${LIBES}
-	 ${CC} $(COMPILER_FLAGS) -o $@ ${OBJ} ${LIBES} ${LIBES}
+	 ${CC} -o $@ ${OBJ} ${LIBES} ${XDRLIB}
 
 $(LIBES): #
