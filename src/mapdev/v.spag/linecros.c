@@ -172,24 +172,14 @@ int find_intersection (double ax1, double ay1, double ax2, double ay2, double bx
     }
     else
     {
-	if (ax1 > ax2)
-	{
-	    t=ax1;
-	    ax1=ax2;
-	    ax2=t;
-	}
-	if (bx1 > bx2)
-	{
-	    t=bx1;
-	    bx1=bx2;
-	    bx2=t;
-	}
-	if (ax1 > bx2) return 0;
-	if (ax2 < bx1) return 0;
+        if ( (bx1 > ax1) && (bx2 > ax1) && (bx1 > ax2) && (bx2 > ax2)  )
+            return 0;
+        if ( (bx1 < ax1) && (bx2 < ax1) && (bx1 < ax2) && (bx2 < ax2)  )
+            return 0; 
 
     /* there is overlap */
 
-	if (ax1 == bx2)
+	if ( (ax1 == bx1 && ay1 == by1) || (ax1 == bx2 && ay1 == by2) )
 	{
 	    *x = ax1;
 	    *y = ay1;
@@ -198,7 +188,7 @@ int find_intersection (double ax1, double ay1, double ax2, double ay2, double bx
 #endif
 	    return 1; /* endpoints only */
 	}
-	if(ax2 == bx1)
+	if ( (ax2 == bx1 && ay2 == by1) || (ax2 == bx2 && ay2 == by2) )
 	{
 	    *x = ax2;
 	    *y = ay2;
