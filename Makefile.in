@@ -75,7 +75,7 @@ BIN_DIST_FILES =    	AUTHORS \
 			NEWS.html \
 			README \
 			REQUIREMENTS \
-			TODO \
+			TODO.txt \
 			grass${NAME_VER} \
     	    	    	bin/ \
 			bwidget/ \
@@ -363,16 +363,23 @@ bindist: FORCE
 	${MAKE} real-bindist
 
 real-bindist: FORCE
-        ${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO ${INST_DIR}/  ; true"
-        ${SHELL} -c "cp -f ${BINDIR}/grass${NAME_VER} ${INST_DIR}/  ; true"
-        ${SHELL} -c "sed -e \"s/BIN_DIST_VERSION/${NAME_VER}/\" -e \"s#BIN_DIST_DIR#'${INST_DIR}'#\" -e \"s/TEST_STR=/TEST_STR=executable/\" -e \"s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#\" -e \"s/# executable shell.*//\" -e \"s/# make bindist.*//\"  binaryInstall.src > grass${NAME_VER}install.sh 2>/dev/null ; true"
-        ${SHELL} -c "chmod a+x grass${NAME_VER}install.sh  2>/dev/null ; true"
-        (cd ${INST_DIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ${SRCDIR}/grass${VERSION}_${SYSTEM}_bin.tar.gz )
-        ${SHELL} -c "rm -f ${INST_DIR}/AUTHORS ${INST_DIR}/BUGS ${INST_DIR}/COPYING ${INST_DIR}/NEWS.html ${INST_DIR}/README ${INST_DIR}/REQUIREMENTS ${INST_DIR}/TODO ; true"
-        ${SHELL} -c "rm -f ${INST_DIR}/grass${NAME_VER} ; true"
-        @ echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
-        @ echo "DO NOT FORGET!! Upload grass${VERSION}_${SYSTEM}_bin.tar.gz and grass${NAME_VER}install.sh to the GRASS ftp server."
-        @ echo "The binary package is stored at ${SRCDIR}."
+	${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html README REQUIREMENTS TODO.txt ${INST_DIR}/  ; true"
+	${SHELL} -c "cp -f ${BINDIR}/grass${NAME_VER} ${INST_DIR}/  ; true"
+	(cd ${INST_DIR}; tar cBf - ${BIN_DIST_FILES} | gzip -fc > ${SRCDIR}/grass${VERSION}_${SYSTEM}_bin.tar.gz )
+	@ name=${SRCDIR}/grass${VERSION}_${SYSTEM}_bin.tar.gz; \
+	    size=`ls -l $$name | awk '{print $$5}'`; \
+	    sed -e "s/BIN_DIST_VERSION/${NAME_VER}/" \
+	    -e "s/SIZE_TAR_FILE/$$size/" -e "s#BIN_DIST_DIR#'${INST_DIR}'#" \
+	    -e "s/TEST_STR=/TEST_STR=executable/" \
+	    -e "s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#" \
+	    -e "s/# executable shell.*//" -e "s/# make bindist.*//" \
+	    binaryInstall.src > grass${NAME_VER}install.sh  ; true
+	${SHELL} -c "chmod a+x grass${NAME_VER}install.sh  2>/dev/null ; true"
+	${SHELL} -c "rm -f ${INST_DIR}/AUTHORS ${INST_DIR}/BUGS ${INST_DIR}/COPYING ${INST_DIR}/NEWS.html ${INST_DIR}/README ${INST_DIR}/REQUIREMENTS ${INST_DIR}/TODO.txt ; true"
+	${SHELL} -c "rm -f ${INST_DIR}/grass${NAME_VER} ; true"
+	@ echo "Distribution binary package: grass${VERSION}_${SYSTEM}_bin.tar.gz ready."
+	@ echo "DO NOT FORGET!! Upload grass${VERSION}_${SYSTEM}_bin.tar.gz and grass${NAME_VER}install.sh to the GRASS ftp server."
+	@ echo "The binary package is stored at ${SRCDIR}."
 
 # automatically run DejaGNU tests:
 # added 10/2000 by Andreas Lange
