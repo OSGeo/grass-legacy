@@ -177,14 +177,14 @@ write_group_sat (FILE *fd, Satellite *sat_info)
   int i;
 
 /**  fprintf (fd,"CAMERA NAME   %s \n",cam_info.cam_name);
-/**  fprintf (fd,"CAMERA ID     %s \n",cam_info.cam_id);
+ **  fprintf (fd,"CAMERA ID     %s \n",cam_info.cam_id);
 **/
 
   fprintf (fd,"SAT XP     %f \n",sat_info->Xpix);
   fprintf (fd,"SAT YP     %f \n",sat_info->Ypix);
 
 /**  fprintf (fd,"CAMERA CFL    %lf \n",cam_info.CFL);
-/**  fprintf (fd,"NUM FID       %d \n",cam_info.num_fid);
+ **  fprintf (fd,"NUM FID       %d \n",cam_info.num_fid);
 **/
 
   /* 4 corners */
