@@ -29,6 +29,7 @@ SUBDIRS = \
 	rst \
 	ogsf \
 	symbol \
+	sites \
 	init
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make

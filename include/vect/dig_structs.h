@@ -45,6 +45,13 @@ typedef int plus_t;
 #define P_LINE struct P_line
 #define P_ISLE struct P_isle
 
+/* Used by sites lib */
+typedef struct {
+    int cat;    /* category */
+    double *dbl;   /* double attributes */
+    char **str;   /* string attributes */
+} SITE_ATT;
+
 struct bound_box        /* Bounding Box */
   {
     double N;	/* north */			
@@ -357,6 +364,12 @@ struct Map_info
 
     /* history file */
     FILE *hist_fp;
+
+    /* Temporary solution for sites */
+    SITE_ATT *site_att;  /* array of attributes loaded from db */
+    int n_site_att;      /* number of attributes in site_att array */
+    int n_site_dbl;      /* number of double attributes for one site */
+    int n_site_str;      /* number of string attributes for one site */
   };
 
 struct P_node

@@ -18,7 +18,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
-#include "site.h"
 #include "Vect.h"
 #include "local_proto.h"
 #include "projects.h"
@@ -62,7 +61,7 @@ int main (int argc, char *argv[])
 		*north,*south,*east,*west,
 		*res, *nsres, *ewres,
 		*save, *region, *view,
-		*raster, *align, *zoom, *vect, *sites;
+		*raster, *align, *zoom, *vect;
 	} parm;
 
 	G_gisinit (argv[0]);
@@ -135,14 +134,6 @@ int main (int argc, char *argv[])
 	parm.vect->multiple    = NO;
 	parm.vect->type        = TYPE_STRING;
 	parm.vect->description = "Set region to match this vector map";
-
-	parm.sites = G_define_option();
-	parm.sites->key         = "sites";
-	parm.sites->key_desc    = "name";
-	parm.sites->required    = NO;
-	parm.sites->multiple    = NO;
-	parm.sites->type        = TYPE_STRING;
-	parm.sites->description = "Set region to match this sites map";
 
 	parm.view = G_define_option();
 	parm.view->key         = "3dview";
@@ -377,69 +368,6 @@ int main (int argc, char *argv[])
 
 		Vect_close (&Map);
 	}
-
-	/* sites= */
-	if (name = parm.sites->answer)
-	{
-		FILE *fp;
-		int i, rtype, ndim, nstr, ndec;
-                Site *mysite;
-
-		mapset = G_find_sites2 (name, "");
-		if (!mapset)
-			G_fatal_error ("sites map <%s> not found", name);
-		if (NULL == (fp = G_fopen_sites_old (name, mapset)))
-			G_fatal_error ("Could not open sites map <%s>", name);
-
-		rtype = -1;
-		G_site_describe(fp, &ndim, &rtype, &nstr, &ndec);
-		mysite = G_site_new_struct(rtype, ndim, nstr, ndec);
-
-		for (i = 0; G_site_get (fp, mysite) == 0; i++)
-		{
-			if (i==0)
-			{
-				G_copy (&temp_window, &window, sizeof(window));
-				window.east = window.west = mysite->east;
-				window.north = window.south = mysite->north;
-			}
-			else
-			{
-				if (mysite->east > window.east) 
-					window.east = mysite->east;
-				if (mysite->east < window.west) 
-					window.west = mysite->east;
-				if (mysite->north > window.north) 
-					window.north = mysite->north;
-				if (mysite->north < window.south) 
-					window.south = mysite->north;
-			}
-		}
-		G_free(mysite);
-		fclose (fp);
-		if (i)
-		{
-		     window.east += 100;
-		     window.west -= 100;
-		     window.south -= 100;
-		     window.north += 100;
-
-       	             if(window.north == window.south)
-       	             {
-       	                   window.north = window.north + 0.5 * temp_window.ns_res;
-                           window.south = window.south - 0.5 * temp_window.ns_res;
-                     }
-                     if(window.east==window.west)
-                     {
-                           window.west = window.west - 0.5 * temp_window.ew_res;
-                           window.east = window.east + 0.5 * temp_window.ew_res;
-                     }
-
-		     G_align_window (&window, &temp_window);
-                }
-	}
-
-
 
 	/* n= */
 	if (value = parm.north->answer)

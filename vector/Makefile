@@ -30,7 +30,9 @@ SUBDIRS = \
 	v.out.pov \
 	v.overlay \
 	v.patch \
+	v.random \
 	v.segment \
+	v.surf.idw \
 	v.surf.rst \
 	v.transform \
 	v.to.db \
