@@ -3,34 +3,25 @@ MODULE_TOPDIR = ../..
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-#always compile dbf driver:
+#always compile dialog lib and dbf driver:
 SUBDIRS1 = dialog dbf
 
-#odbc:
+# add odbc:
 ifneq ($(strip $(ODBCLIB)),)
-    SUBDIRS2 = $(SUBDIRS1) odbc
-else
-    SUBDIRS2 = $(SUBDIRS1)
+    SUBDIRS2 = odbc
 endif
 
-#postgresql:
+# add postgresql:
 ifneq ($(strip $(PQLIB)),)
-    SUBDIRS3 = $(SUBDIRS2) postgres
-else
-    SUBDIRS3 = $(SUBDIRS2)
+    SUBDIRS3 = postgres
 endif
 
-#mysql
+# add mysql:
 ifneq ($(strip $(MYSQLLIB)),)
-    SUBDIRS4 = $(SUBDIRS3) mysql
-else
-    SUBDIRS4 = $(SUBDIRS3)
+    SUBDIRS4 = mysql
 endif
 
-#1. add new driver here, increase SUBDIRSx number
-
-#2. increase number here
-SUBDIRS = $(SUBDIRS4)
+SUBDIRS =  $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3) $(SUBDIRS4)
 
 default: subdirs
 

@@ -21,12 +21,10 @@ include $(MODULE_TOPDIR)/include/Make/Dir.make
 #compile if GDAL present:
 ifneq ($(strip $(GDALLIBS)),)
     SUBDIRS2 = $(SUBDIRS1) $(GDALBASED)
-else
-    SUBDIRS2 = $(SUBDIRS1)
 endif
 
 
-SUBDIRS = $(SUBDIRS2)
+SUBDIRS = $(SUBDIRS1) $(SUBDIRS2)
 default: subdirs
 
 clean: cleansubdirs
