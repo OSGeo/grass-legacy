@@ -114,11 +114,13 @@ print_file = fopen (file,"w");
 sprintf(cmd,".print %s",flag);
 print(cmd);
 fclose(print_file);
-if (strcmp(real_file,"lp") )
+if (strcmp(real_file,"lp") ) {
         sprintf(cmd,"mv %s %s",file,real_file);
-else
+	G_system(cmd);
+}
+else {
         sprintf(cmd,"cat %s | lp", file);
-G_system(cmd);
-unlink(file);
-
+	G_system(cmd);
+	unlink(file);
+}
 }
