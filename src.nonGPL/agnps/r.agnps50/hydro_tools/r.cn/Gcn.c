@@ -1,5 +1,3 @@
-/* %W% %G% */
-
 /* January, 1991 Agricultural Engineering, Purdue University
    Raghavan Srinivasan (srin@ecn.purdue.edu)
 
@@ -62,35 +60,35 @@ char	*argv[];
 	 this_mapset = G_mapset();
 
 /*	check for the legal file names for all the map layer required */
-	 if(G_legal_filename(hy_soil_group_name) == -1)
+	 if(G_legal_filename(*hy_soil_group_name) == -1)
 	 {
 	      sprintf(buf, "hydrological soil group map layer name [%s] not legal for GRASS\n",hy_soil_group_name);
 	      G_fatal_error(buf);
 	      exit(1);
 	 }
 
-	 if(G_legal_filename(land_use_name) == -1)
+	 if(G_legal_filename(*land_use_name) == -1)
 	 {
 	      sprintf(buf, "landuse map layer name [%s] not legal for GRASS\n",land_use_name);
 	      G_fatal_error(buf);
 	      exit(1);
 	 }
 
-	 if(G_legal_filename(veg_cover_name) == -1)
+	 if(G_legal_filename(*veg_cover_name) == -1)
 	 {
 	      sprintf(buf, "vegetation cover map layer name [%s] not legal for GRASS\n",veg_cover_name);
 	      G_fatal_error(buf);
 	      exit(1);
 	 }
 
-	 if(G_legal_filename(hy_cond_name) == -1)
+	 if(G_legal_filename(*hy_cond_name) == -1)
 	 {
 	      sprintf(buf, "hydrological condition map layer name [%s] not legal for GRASS\n",hy_cond_name);
 	      G_fatal_error(buf);
 	      exit(1);
 	 }
 
-	 if(G_legal_filename(cn_name) == -1)
+	 if(G_legal_filename(*cn_name) == -1)
 	 {
 	      sprintf(buf, "curver number map layer name [%s] not legal for GRASS\n",cn_name);
 	      G_fatal_error(buf);
@@ -100,7 +98,7 @@ char	*argv[];
 /*	if curver number output map exists in the mapset then
 	print error message and quit */
 
-	 cn_mapset = G_find_cell2(cn_name, this_mapset);
+	 cn_mapset = G_find_cell2(*cn_name, this_mapset);
 	 if (cn_mapset)
 	 {
 	     sprintf(buf, "curve number file [%s] is existing\n", cn_name);
@@ -110,7 +108,7 @@ char	*argv[];
 
 /*	find all the map in the mapset and get their mapset location */
 
-	 hy_soil_group_mapset = G_find_cell2(hy_soil_group_name, "");
+	 hy_soil_group_mapset = G_find_cell2(*hy_soil_group_name, "");
 	 if (!hy_soil_group_mapset)
 	 {
 	     sprintf(buf, "hydrological soil group file [%s] not found\n", hy_soil_group_name);
@@ -118,7 +116,7 @@ char	*argv[];
 	     exit(1);
 	 }
 
-	 land_use_mapset = G_find_cell2(land_use_name, "");
+	 land_use_mapset = G_find_cell2(*land_use_name, "");
 	 if (!land_use_mapset)
 	 {
 	     sprintf(buf, "landuse file [%s] not found\n", land_use_name);
@@ -126,7 +124,7 @@ char	*argv[];
 	     exit(1);
 	 }
 
-	 veg_cover_mapset = G_find_cell2(veg_cover_name, "");
+	 veg_cover_mapset = G_find_cell2(*veg_cover_name, "");
 	 if (!veg_cover_mapset)
 	 {
 	     sprintf(buf, "vegetation cover file [%s] not found\n", veg_cover_name);
@@ -134,7 +132,7 @@ char	*argv[];
 	     exit(1);
 	 }
 
-	 hy_cond_mapset = G_find_cell2(hy_cond_name, "");
+	 hy_cond_mapset = G_find_cell2(*hy_cond_name, "");
 	 if (!hy_cond_mapset)
 	 {
 	     sprintf(buf, "hydrological condition file [%s] not found\n", hy_cond_name);
@@ -158,13 +156,13 @@ char	*argv[];
 
 /* get the category names and cell title */
 
-	if (G_read_cats (hy_soil_group_name, hy_soil_group_mapset, &hy_soil_group_cats) < 0)
+	if (G_read_cats (*hy_soil_group_name, hy_soil_group_mapset, &hy_soil_group_cats) < 0)
 	    exit(-1);
-	if (G_read_cats (land_use_name, land_use_mapset, &land_use_cats) < 0)
+	if (G_read_cats (*land_use_name, land_use_mapset, &land_use_cats) < 0)
 	    exit(-1);
-	if (G_read_cats (veg_cover_name, veg_cover_mapset, &veg_cover_cats) < 0)
+	if (G_read_cats (*veg_cover_name, veg_cover_mapset, &veg_cover_cats) < 0)
 	    exit(-1);
-	if (G_read_cats (hy_cond_name, hy_cond_mapset, &hy_cond_cats) < 0)
+	if (G_read_cats (*hy_cond_name, hy_cond_mapset, &hy_cond_cats) < 0)
 	    exit(-1);
 
 
@@ -248,10 +246,9 @@ char	*argv[];
 	 G_close_cell(cn_id);
 
 /*	write the appropriate CN title in the curver number map generated */
-	 if (amc == 1) strcpy(title,"Curve Number Map for AMC I");
-	 if (amc == 2) strcpy(title,"Curve Number Map for AMC II");
-	 if (amc == 3) strcpy(title,"Curve Number Map for AMC III");
+	 if (amc == 1) strcpy(*title,"Curve Number Map for AMC I");
+	 if (amc == 2) strcpy(*title,"Curve Number Map for AMC II");
+	 if (amc == 3) strcpy(*title,"Curve Number Map for AMC III");
 
-	 G_put_cell_title(cn_name,title);
-
+	 G_put_cell_title(*cn_name,*title);
 }
