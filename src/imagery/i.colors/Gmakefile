@@ -11,7 +11,7 @@ LIST = main.o \
 
 LIBES = $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB)
 
-$(BIN)/i.colors: $(LIST) $(LIBES) $(VASKLIB)
+$(BIN_MAIN_INTER)/i.colors: $(LIST) $(LIBES) $(VASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK)
 
 $(LIST): globals.h defs.h
