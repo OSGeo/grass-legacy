@@ -7,12 +7,12 @@ interface_build {
     {entry direction {Direction of semivariogram [default=omnidirectional]:} 0 ""}
     {entry angtol {Angular tolerance on direction:} 0 ""}
     {entry field {Number of sites attribute field to use for calculation [default=1]:} 0 ""}
-    {checkbox model {Fit to linear model:} 0 1}
-    {checkbox model {Fit to spherical model:} 0 2}
-    {checkbox model {Fit to exponential model:} 0 3}
-    {checkbox model {Fit to gaussian model:} 0 4}
-    {checkbox model {Fit to quadratic model:} 0 5}
-    {checkbox model {Fit to wave or hole effect model:} 0 6}
+    {checkbox model {Fit to linear model:} "" 1}
+    {checkbox model {Fit to spherical model:} "" 2}
+    {checkbox model {Fit to exponential model:} "" 3}
+    {checkbox model {Fit to gaussian model:} "" 4}
+    {checkbox model {Fit to quadratic model:} "" 5}
+    {checkbox model {Fit to wave or hole effect model:} "" 6}
     {entry range {Semivariogram range:} 0 ""}
     {entry graph {Output results to GNUPlot *.gp and *.dat format (implies -p; print to screen if blank):} 0 file}
     {checkbox -p {Save output to GNUplot files} "" -p}
