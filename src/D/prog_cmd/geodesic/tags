@@ -1,0 +1,10 @@
+METERS_TO_MILES	plot.c	/^#define METERS_TO_MILES(x) ((x) * 6.213712e-04)$/
+Mmain	main.c	/^main(argc, argv) char *argv[];$/
+cont	plot.c	/^cont(x,y)$/
+geodesic	plot.c	/^geodesic(x)$/
+get_text_x	plot.c	/^get_text_x()$/
+mouse	mouse.c	/^mouse ()$/
+move	plot.c	/^move(x,y)$/
+plot	plot.c	/^plot (lon1,lat1,lon2,lat2)$/
+setup_plot	plot.c	/^setup_plot()$/
+stash	main.c	/^stash(position, value)$/
