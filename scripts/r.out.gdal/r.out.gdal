@@ -1,0 +1,93 @@
+#!/bin/sh
+
+############################################################################
+#
+# MODULE:	r.out.gdal
+# AUTHOR(S):	Markus Neteler. neteler@itc.it
+# PURPOSE:	r.out.gdal script hack unless a C version is written
+# COPYRIGHT:	(C) 2003 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+# REQUIRES:     GDAL compiled with GRASS support (libgrass)
+#               http://gdal.velocet.ca/projects/grass/
+#               or GRASS CVS/libgrass/
+#############################################################################
+
+#%Module
+#% description: export GRASS raster data into various formats (requires GDAL)
+#%End
+#%flag
+#%  key: l
+#%  description: list supported output formats
+#%END
+#%option
+#% key: input
+#% type: string
+#% gisprompt: old,cell,raster
+#% description: Name of input raster map
+#% required : no
+#%END
+#%option
+#% key: format
+#% type: string
+#% description: GIS format to write (see also -l flag)
+#% options: VRT,GTiff,NITF,HFA,ELAS,AAIGrid,DTED,PNG,JPEG,MEM,GIF,BSB,XPM,BMP,PNM,ENVI,PAux,MFF,MFF2,FIT
+#% required : no
+#%END
+#%option
+#% key: output
+#% type: string
+#% description: Name of output file
+#% required : no
+#%END
+
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+gdal-config --formats >& /dev/null
+if [ $? -ne 0 ] ; then
+   echo "ERROR: GDAL not installed (gdal-config not found)"
+   exit 1
+fi
+
+#check if GRASS is supported by gdal_translate for reading
+GDAL_INPUT_FORMATS=`gdal-config --formats`
+echo $GDAL_INPUT_FORMATS | grep grass >& /dev/null
+if [ $? -ne 0 ] ; then
+   echo "ERROR: GDAL installation does not support GRASS."
+   echo "       Recompile GDAL libraries to use r.out.gdal."
+   exit 1
+fi
+
+INPUT="$GIS_OPT_input"
+FORMAT="$GIS_OPT_format"
+OUTPUT="$GIS_OPT_output"
+
+if [ $GIS_FLAG_l -eq 1 ] ; then
+  gdal_translate | grep ':' | grep -v 'Usage' | grep -v 'The following'
+  exit 0
+fi
+
+if [ "$FORMAT" = "(null)" ] ; then
+  echo "ERROR: output format not specified"
+  exit 1
+fi
+
+#DEBUG:
+#echo $INPUT $FORMAT $OUTPUT
+#echo $GDAL_INPUT_FORMATS
+
+#fetch the input raster map
+eval `g.findfile element=cell file=$INPUT` 
+if [ ! "$file" ] ; then
+  echo "Input map not found"
+  exit 1
+fi
+
+#do it
+CELLHD=`echo $file | sed 's+/cell/+/cellhd/+g'`
+gdal_translate -of $FORMAT $CELLHD $OUTPUT
