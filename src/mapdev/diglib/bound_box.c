@@ -88,6 +88,8 @@ dig_bound_box2 (points, N, S, E, W, orig_scale)
      }
 #endif
 
+     /*  new code added for scale problems */
+
      dist = fabs (*E * 0.0000001); 
      *E += dist;
      *W -= dist;
