@@ -1,0 +1,5 @@
+IFMAP         geology 1-5
+THENMAPHYP    1   Category 1
+!
+IFMAP         soils 1-15
+THENMAPHYP    2   Category 2
