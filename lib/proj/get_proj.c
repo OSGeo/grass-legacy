@@ -180,8 +180,15 @@ int pj_get_kv(struct pj_info *info, struct Key_Value *in_proj_keys,
 	alloc_options(buffa);
 	/* Cannot use es directly because the OSRImportFromProj4() 
 	 * function in OGR only accepts b or rf as the 2nd parameter */
-	if (es == 0)
+	if (es == 0) {
 	    sprintf(buffa, "b=%.16g", a);
+	    /* Workaround to stop PROJ reading values from defaults file when
+	     * rf is not specified */
+	    if (G_find_key_value("no_defs", in_proj_keys) == NULL) {
+	        alloc_options(buffa);
+	        sprintf(buffa, "no_defs");
+	    }	    	    
+	}
 	else
 	    sprintf(buffa, "rf=%.16g", rf);
 	alloc_options(buffa);
