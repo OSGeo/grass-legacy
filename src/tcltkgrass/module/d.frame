@@ -1,0 +1,11 @@
+interface_build {
+    {d.frame} 0
+    {Manages display frames on the user's graphics monitor.}
+    {entry frame {Display frame to be created/selected:} 0 ""}
+    {entry at {Frame position (implies -c): bottom,top,left,right} 0 ""}
+    {checkbox -c {Create a new frame.} "" -c}
+    {checkbox -e {Remove all frames and erase the screen.} "" -e}
+    {checkbox -p {Print name of current frame.} "" -p}
+    {checkbox -s {Select a frame.} "" -s}
+    {checkbox -D {Debugging output.} "" -D}
+}
