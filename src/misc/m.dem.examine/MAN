@@ -1,0 +1,23 @@
+.TH Mdem.examine 2M GRASSmapdev
+.SH NAME
+Mdem.examine \- provides information about DEM elevation tape        
+.br
+.I (Map Development Tool)
+.SH SYNOPSIS
+Mdem.examine [if=tapedev] bs=blocksize 
+.SH DESCRIPTION
+.I Mdem.examine  
+reads DEM terrain elevation data from the file specified by
+.I tapedev
+in blocks determined by 
+.I blocksize.
+If omitted the program assumes /dev/rmt0 as the input file.
+The information provided to the user includes the maximum and
+minimum elevations on tape, the individual file header information,
+and the approximate UTM boundaries of each file.  The program
+assumes unlabelled tapes in ascii format with no header or trailer
+files.
+.SH SEE ALSO
+Mdem.extract
+.SH "AUTHOR"
+Andrew Heekin, U.S. Construction Engineering Research Laboratory
