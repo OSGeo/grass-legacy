@@ -12,4 +12,7 @@ DEPENDENCIES= $(GISDEP)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
-default: cmd
+default: cmd COPYING
+
+COPYING:
+	cat ./../../COPYING | sed -f sed.script | tr -d '\012' > $(VERSION_FILE)
