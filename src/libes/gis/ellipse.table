@@ -10,7 +10,7 @@
 # no spaces before or after the =
 
 
-# these are from [Synder, Table 1, p.12]
+# these are from [Snyder, Table 1, p.12]
 australian     a=6378160     f=1/298.25
 clark66       a=6378206.4   b=6356583.8
 grs80         a=6378137     f=1/298.257
@@ -29,8 +29,8 @@ airy          a=6377563.396 e=.006670540
 everest       a=6377276.345 e=.0066378466
 wgs66         a=6378145     f=1/298.25
 
-# Synder.
-#      John P. Synder, "Map Projections - A  Working  Manual,"
+# Snyder.
+#      John P. Snyder, "Map Projections - A  Working  Manual,"
 #      U.S.  Government  Printing Office, Washington DC, 1989.
 #      U.S. Geological Survey Professional Paper 1395
 
