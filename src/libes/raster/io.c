@@ -22,6 +22,7 @@
 #include "monitors.h"
 #include "gis.h"
 #include "raster.h"
+#include "glocale.h"
 
 #include "open.h"
 
@@ -185,7 +186,7 @@ _get_text_2 (void)
 	    buf = realloc(buf, len);
 	    if (!buf)
 	    {
-		fprintf(stderr, "Unable to allocate memory\n");
+		fprintf(stderr, _("Unable to allocate memory\n"));
 		exit(1);
 	    }
 	}
@@ -206,7 +207,7 @@ _get (char *buf, int n)
         x = read (_rfd, buf, n);
         if (x <= 0)
         {
-            fprintf(stderr, "ERROR %s from graphics driver.\n",
+            fprintf(stderr, _("ERROR %s from graphics driver.\n"),
 		    x ? "reading" : "eof");
             exit(1);
         }
@@ -261,8 +262,8 @@ R_open_driver(void)
     {
         if (verbose)           /* #31 Aug 87 - want error stuff */
         {
-            fprintf(stderr,"No graphics monitor has been selected for output.\n");
-            fprintf(stderr,"Please run \"d.mon\" to select a graphics monitor.\n");
+            fprintf(stderr,_("No graphics monitor has been selected for output.\n"));
+            fprintf(stderr,_("Please run \"d.mon\" to select a graphics monitor.\n"));
             exit(-1);
         }
         return(NO_MON);
@@ -272,8 +273,8 @@ R_open_driver(void)
     {
         if (verbose)
         {
-            fprintf(stderr,"No such graphics monitor as <%s>.\n",name);
-            fprintf(stderr,"Please run \"d.mon\" to select a valid graphics monitor.\n");
+            fprintf(stderr,_("No such graphics monitor as <%s>.\n"),name);
+            fprintf(stderr,_("Please run \"d.mon\" to select a valid graphics monitor.\n"));
             exit(-1);
         }
         return(NO_MON);
@@ -285,7 +286,7 @@ R_open_driver(void)
     {
         if (verbose)
         {
-            fprintf (stderr, "Failed to get socket name for monitor <%s>.\n",
+            fprintf (stderr, _("Failed to get socket name for monitor <%s>.\n"),
                             name);
         }
         return (NO_MON);
@@ -298,7 +299,7 @@ R_open_driver(void)
     {
         if (verbose)
         {
-            fprintf (stderr, "No socket to connect to for monitor <%s>.\n",
+            fprintf (stderr, _("No socket to connect to for monitor <%s>.\n"),
                             name);
         }
         return (NO_MON);
@@ -325,38 +326,38 @@ R_open_driver(void)
             case ECONNREFUSED:
             case EADDRINUSE:
                     if (verbose)
-                        fprintf (stderr, "Socket is already in use or not "
+                        fprintf (stderr, _("Socket is already in use or not "
 				 "accepting connections.\n"
-				 "Use d.mon to select a monitor\n");
+				 "Use d.mon to select a monitor\n"));
                     return (NO_RUN);
                     break;
             case EBADF:
             case ENOTSOCK:
                     if (verbose)
-                        fprintf (stderr, "Trying to connect to something "
+                        fprintf (stderr, _("Trying to connect to something "
 				 "not a socket.\nProbably program "
-				 "error.\n");
+				 "error.\n"));
                     return (NO_RUN);
                     break;
             case ETIMEDOUT:
                     if (verbose)
-                        fprintf (stderr, "Connect attempt timed out. "
-				 "Probably an error with the server.\n");
+                        fprintf (stderr, _("Connect attempt timed out. "
+				 "Probably an error with the server.\n"));
                     return (NO_RUN);
                     break;
             default:
                     break;
         }
-        fprintf (stderr, "Not connected...\n");
+        fprintf (stderr, _("Not connected...\n"));
         if (verbose && try < 1)
         {
-            fprintf (stderr, "Couldn't connect to monitor. "
-		     "Will try once more.\n");
+            fprintf (stderr, _("Couldn't connect to monitor. "
+		     "Will try once more.\n"));
             sleep (1);
         }
         else if (verbose && try > 0)
         {
-            fprintf (stderr, "Connection failed.\n");
+            fprintf (stderr, _("Connection failed.\n"));
         }
     }
             
@@ -371,7 +372,7 @@ R_open_driver(void)
     {
         if (verbose)
         {
-            fprintf (stderr, "Can't stat %s\n", our_output_file);
+            fprintf (stderr, _("Can't stat %s\n"), our_output_file);
             exit(-1);
         }
         return (LOCK_FAILED);
@@ -387,9 +388,9 @@ R_open_driver(void)
         if (verbose)
         {
             if ((user = who_locked_driver()) == NULL)
-                fprintf(stderr,"Error - Monitor <%s> is in use.\n",name);
+                fprintf(stderr,_("Error - Monitor <%s> is in use.\n"),name);
             else
-                fprintf(stderr,"Error - Monitor <%s> is in use by %s.\n",name,user);
+                fprintf(stderr,_("Error - Monitor <%s> is in use by %s.\n"),name,user);
             exit(-1);
         }
         return(LOCKED);
@@ -399,7 +400,7 @@ R_open_driver(void)
         if (verbose)
         {
             char file[512];
-            fprintf(stderr,"Error - Could not complete locking process for monitor <%s>.\n",name);
+            fprintf(stderr,_("Error - Could not complete locking process for monitor <%s>.\n"),name);
             lockfile(file);
             fprintf (stderr, "Lock file is %s\n", file);
             exit(-1);
@@ -413,17 +414,17 @@ R_open_driver(void)
             switch (fifoto (our_input_file,our_output_file,try?15:3))
             {
             case -1:
-                fprintf(stderr, "Error - Can't set up pipe to graphics device.\n");
+                fprintf(stderr, _("Error - Can't set up pipe to graphics device.\n"));
                 unlock_driver(1);
                 exit(-1);
             case 0:
                 if (try)
                 {
-                    fprintf (stderr, "Error - Graphics monitor <%s> not running!\n",name);
+                    fprintf (stderr, _("Error - Graphics monitor <%s> not running!\n"),name);
                     unlock_driver(1);
                     exit(1);
                 }
-                fprintf (stderr, "Please start graphics monitor <%s>.\n",name);
+                fprintf (stderr, _("Please start graphics monitor <%s>.\n"),name);
                 break;
             default:
                 sync_driver(name); /* syncronize driver */
@@ -488,7 +489,7 @@ sync_driver(char *name)
             {
                 if (no_mon)
                     break; /* from while */
-                fprintf (stderr, "ERROR - eof from graphics monitor.\n");
+                fprintf (stderr, _("ERROR - eof from graphics monitor.\n"));
                 exit(-1);
             }
             if (c == 0)
@@ -505,12 +506,12 @@ sync_driver(char *name)
         if (try)
             break;
 
-        fprintf (stderr, "Warning - no response from graphics monitor <%s>.\n",
+        fprintf (stderr, _("Warning - no response from graphics monitor <%s>.\n"),
             name);
-        fprintf (stderr, "Check to see if the mouse is still active.\n");
+        fprintf (stderr, _("Check to see if the mouse is still active.\n"));
         signal(SIGALRM, dead);
     }
-    fprintf (stderr, "ERROR - no response from graphics monitor <%s>.\n",
+    fprintf (stderr, _("ERROR - no response from graphics monitor <%s>.\n"),
         name);
     exit(-1);
 }

@@ -1,7 +1,10 @@
 SLIBDEPS = $(GISLIB)
 
+PACKAGE ="libraster"
+DEFS=-DPACKAGE=\"$(PACKAGE)\"
+
 INCLUDE = $(SRC)/display/devices/lib
-EXTRA_CFLAGS = -I$(INCLUDE) $(PICFLAGS)
+EXTRA_CFLAGS = -I$(INCLUDE) $(PICFLAGS) $(DEFS)
 
 OBJ = \
 	Box.o\
