@@ -15,7 +15,7 @@ proc add_cat { line field cat } {
 
     set row [ frame $CatsFr.${field}_$cat -relief sunken -borderwidth 2 ]
 
-    Label $row.field -anchor w -width 10 -text "Field: $field"
+    Label $row.field -anchor w -width 10 -text "Layer: $field"
     Label $row.cat -anchor w -width 10 -text "Cat: $cat"
     Button $row.del -anchor w -text [G_msg "Delete"] -command "c_del_cat $line $field $cat" 
 
@@ -47,7 +47,7 @@ proc mk_cats { } {
     set CatsFr [$CatsSf getframe]
 
     set row1 [ frame $Cats.row1 ]
-    Label $row1.flab -anchor w -width 7 -text [G_msg "Field:"]
+    Label $row1.flab -anchor w -width 7 -text [G_msg "Layer:"]
     Entry $row1.fentry -width 5 -textvariable GVariable(new_cat_field)
     Label $row1.clab -anchor w -width 10 -text [G_msg "Category:"]
     Entry $row1.centry -width 8 -textvariable GVariable(new_cat_cat)
