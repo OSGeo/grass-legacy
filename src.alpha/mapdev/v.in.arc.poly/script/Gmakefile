@@ -1,0 +1,3 @@
+all:
+	cp v.in.arc.poly $(GISBASE)/scripts
+	chmod 0555 $(GISBASE)/scripts/*
