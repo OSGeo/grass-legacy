@@ -20,7 +20,15 @@ If you have first set \fId.colormode\fR to "float" before displaying the map
 to the graphics monitor, any color changes that you subsequently make
 while in \fId.colors\fR will immediately (and interactively) appear
 on the graphics display.
-Otherwise, if \fId.colormode\fR is "fixed", any color changes made using
+.LP
+While running \fId.colors\fR, the cursor must be inside the window where the
+execution takes place.  When in "float" colormode, the correct colors
+appear on the graphics monitor only if the cursor is inside the monitor.  
+To see the correct colors, move the cursor from the execution window
+to inside the graphics monitor, then move back to the window to continue 
+making changes.
+.LP
+If \fId.colormode\fR is "fixed", any color changes made using
 \fId.colors\fR will not immediately be shown on the graphics display;
 however, any color changes saved will still alter the map's color table and
 will appear next time the raster map layer is redisplayed
@@ -33,9 +41,7 @@ frame on the graphics monitor (e.g., using \fId.rast\fR or \fId.display\fR)
 before running \fId.colors\fR.
 The user can then either enter the name of the raster map layer whose
 color table is to be changed on the command line
-.br
-(e.g., by typing:  \fBd.colors map\*=soils\fR),
-.br
+(e.g., by typing: \fBd.colors map\*=soils\fR),
 or type \fBd.colors\fR without program arguments.
 If the user simply types \fBd.colors\fR without program arguments
 on the command line,
@@ -220,6 +226,7 @@ made with \fId.colors\fR that are saved will appear in the map's color table.
 .LP
 Some monitors may not support an interactive color change capability.
 .SH "SEE ALSO"
+.I d.colors.boxes,
 .I d.colormode,
 .I d.colortable,
 .I d.display,
