@@ -112,7 +112,7 @@ db_driver_fetch(cn, position, more)
 	    ret = SQLGetData( c->stmt, col, SQL_C_LONG, &value->i, sizeof( value->i ), NULL );    
 	    break;
 	case DB_C_TYPE_DOUBLE:
-	    ret = SQLGetData( c->stmt, col, SQL_C_LONG, &value->d, sizeof( value->d ), NULL );    
+	    ret = SQLGetData( c->stmt, col, SQL_C_DOUBLE, &value->d, sizeof( value->d ), NULL );    
 	    break;
 	    
 	case DB_C_TYPE_DATETIME:
