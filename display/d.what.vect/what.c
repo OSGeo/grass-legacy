@@ -30,6 +30,7 @@ int what(int once, int txt, int terse, int width, int mwidth )
     double maxdist;
     int getz = 0;
     struct field_info *Fi;
+    int flash_basecolr, flash_colr;
 
     plus_t line, area = 0, centroid;
     int i, j;
@@ -38,7 +39,6 @@ int what(int once, int txt, int terse, int width, int mwidth )
     char buf[1000], *str, title[500];
     dbString html; 
     char *form;
-
     char *panell;
 
     if ( terse ) txt = 1; /* force text for terse */
@@ -64,6 +64,7 @@ int what(int once, int txt, int terse, int width, int mwidth )
     else notty = 0;
 
     panell = G_tempfile();
+    flash_basecolr=YELLOW;
 
     do {
 	R_panel_save(panell, R_screen_top(), R_screen_bot(),
@@ -78,6 +79,8 @@ int what(int once, int txt, int terse, int width, int mwidth )
 	    }
 	    if (button == 2) {
 		R_panel_delete(panell);
+		flash_basecolr++;
+		if (flash_basecolr > MAX_COLOR_NUM) flash_basecolr = 1;
 		continue;
 	    }
 	}
@@ -102,6 +105,7 @@ int what(int once, int txt, int terse, int width, int mwidth )
 	else maxdist = y1;
 	G_debug(1, "Maximum distance in map units = %f\n", maxdist);
 
+	flash_colr = flash_basecolr;
 	F_clear ();
 	for (i = 0; i < nvects; i++) {
 	    Vect_reset_cats ( Cats );
@@ -109,7 +113,7 @@ int what(int once, int txt, int terse, int width, int mwidth )
 	       *  otherwise point on line could not be selected ans similarly for areas */
 	    line = Vect_find_line(&Map[i], east, north, 0, GV_POINT | GV_CENTROID, maxdist, 0, 0);
 	    if (line == 0) line = Vect_find_line(&Map[i], east, north, 0,
-			                         GV_LINE | GV_BOUNDARY, maxdist, 0, 0);
+			                         GV_LINE | GV_BOUNDARY | GV_FACE, maxdist, 0, 0);
 
 	    area = 0; 
 	    if ( line == 0 ) {
@@ -166,6 +170,9 @@ int what(int once, int txt, int terse, int width, int mwidth )
 		    case GV_BOUNDARY:
 			sprintf ( buf, "Boundary" );
 			break;
+		    case GV_FACE:
+			sprintf ( buf, "Face" );
+			break;
 		    case GV_CENTROID:
 			sprintf ( buf, "Centroid" );
 			break;
@@ -191,7 +198,7 @@ int what(int once, int txt, int terse, int width, int mwidth )
 		    }
 		}
 		flash_line(&Map[i], line, Points, BLACK);
-		flash_line(&Map[i], line, Points, YELLOW);
+		flash_line(&Map[i], line, Points, flash_colr);
 	    }
 
 	    if (area > 0) {
@@ -239,7 +246,7 @@ int what(int once, int txt, int terse, int width, int mwidth )
 		}
 
 		flash_area(&Map[i], area, Points, BLACK);
-		flash_area(&Map[i], area, Points, YELLOW);
+		flash_area(&Map[i], area, Points, flash_colr);
 	    }
 
 	    if ( Cats->n_cats > 0 ) {
@@ -290,6 +297,8 @@ int what(int once, int txt, int terse, int width, int mwidth )
 		G_debug ( 3, db_get_string (&html) ); 
 		F_open ( title, db_get_string(&html) );
 	    }
+	 
+	 flash_colr++; if (flash_colr > MAX_COLOR_NUM) flash_colr=1;
 	}
 
 	R_panel_restore(panell);
@@ -312,8 +321,9 @@ int show_buttons(int once)
 	fprintf(stderr, "\n");
 	fprintf(stderr, "Buttons\n");
 	fprintf(stderr, " Left:  what's here\n");
+	fprintf(stderr, " Middle: toggle flash color\n");
 	fprintf(stderr, " Right: quit\n");
-	nlines = 4;
+	nlines = 5;
     }
 
     return 0;
