@@ -271,12 +271,12 @@ int b3,b4,bs,qa=0;
 
 			else if((west==(west/2)*2) && west > 0)
 			{
-			/*	fprintf(jog,"AREA LABEL FOR %s MOVED FROM %18.8f ",b1,Cx);/**/
+			/*	fprintf(jog,"AREA LABEL FOR %s MOVED FROM %18.8f ",b1,Cx); */
 				if(Wclose!=0.0 && W2!=0.0)
 					Cx = (Wclose + W2) / 2;
 			/*	fprintf(jog,"TO %18.8f\n",Cx);
 				fprintf(jog,"Wclose=%18.8f\n",Wclose);
-				fprintf(jog,"W2=%18.8f\n",W2);/**/
+				fprintf(jog,"W2=%18.8f\n",W2); */
 			}
 /* When the centroid is inside polygon already, center it between Eclose and 
    Wclose. */
@@ -284,12 +284,12 @@ int b3,b4,bs,qa=0;
 			if((east!=(east/2)*2)&&east>0&&west>0&&west!=(west/2)*2)
 			{
 		/*		fprintf(jog,"ALREADY INSIDE\n");
-				fprintf(jog,"AREA LABEL FOR %s MOVED FROM %18.8f ",b1,Cx);/**/
+				fprintf(jog,"AREA LABEL FOR %s MOVED FROM %18.8f ",b1,Cx); */
 				if(Eclose!=0.0 && Wclose!=0.0) 
 					Cx = (Eclose + Wclose) / 2;
 		/*		fprintf(jog,"TO %18.8f\n",Cx);
 				fprintf(jog,"Eclose=%18.8f\n",Eclose);
-				fprintf(jog,"Wclose=%18.8f\n",Wclose);/**/
+				fprintf(jog,"Wclose=%18.8f\n",Wclose); */
 			}
 		}
 
