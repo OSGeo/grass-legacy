@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.26 2000-10-13 15:19:40 markus Exp $
+$Id: BUGS,v 1.27 2000-10-13 17:13:10 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -73,6 +73,14 @@ d.param.scale
 d.profile: the min/max printed at profile are wrong
            sometimes the entire profile wrong
            obviously problem with fp/int maps
+      * displays the correct location and elevation with the "where        
+  am I" selection, but generates a flat line profile for any transect             
+  across my raster elevation maps. The flat line has a consistent value on        
+  the y axes of 17519 and /3963632 at the origin. I recall this module            
+  worked ok for me in early 5b releases, but has failed in this manner in         
+  both 5b7 and 5b8. 
+   (Tom Strang  tstrang@trytel.com)
+
 
 d.rast.num: some numbers are displayed in wrong (unreadable) color
 
@@ -82,6 +90,14 @@ d.sites.qual: not all the sites are used/displayed
   d.sites.qual doesn't work properly: not all the sites 
   are used/displayed if the number of fields of the input site file is 
   not constant. Compare with d.sites.
+
+d.what.rast 
+ displays its output twice to the tcltkgrass screen and           
+ prints it twice to file when in single selection mode. In command line          
+ mode d.what.rast works fine. I program in c and tcl, so I looked around         
+ a bit at the sources - but don't have the familiarity with the code base        
+ to find an obvious solution.
+ (Tom Strang  tstrang@trytel.com)
 
 i.ortho.photo
  - if second control point is set by mouse, it is not indicated
@@ -178,17 +194,21 @@ r.mapcalc
   (already fixed for FreeBSD/Linux. Check for other platforms, 
    corrections go here:
    src/libes/gis/null_val.c)
-
+ -  r.mapcalc does not like it if the cellvalues are very high for eg.,            
+    initially I put the col=fips which ranges from 1001 to 55141 - it 
+    core dumped ... I guess the limit in r.mapcalc is 32xxx which 
+    is a "huge" limitation
+    (Anantha Prasad  aprasad@fs.fed.us)
  - r.mapcalc/polish: (when compiling)
-make[2]: Entering directory
-/home/neteler/src5/grass5.0beta/src/raster/r.mapcalc/polish'
-rm -f lex.yy.c y.tab.c
-rm -f OBJ.i586-linux-elf/main.o
-gcc -g -O2   -I/home/neteler/src5/grass5.0beta/src/include  -c main.c
-mv main.o OBJ.i586-linux-elf/main.o
-flex pol.l
-yacc pol.y
-yacc: 14 shift/reduce conflicts, 17 reduce/reduce conflicts.
+  make[2]: Entering directory
+  /home/neteler/src5/grass5.0beta/src/raster/r.mapcalc/polish'
+  rm -f lex.yy.c y.tab.c
+  rm -f OBJ.i586-linux-elf/main.o
+  gcc -g -O2   -I/home/neteler/src5/grass5.0beta/src/include  -c main.c
+  mv main.o OBJ.i586-linux-elf/main.o
+  flex pol.l
+  yacc pol.y
+  yacc: 14 shift/reduce conflicts, 17 reduce/reduce conflicts.
 
 r.null:
  does not work with reclassified maps
@@ -202,6 +222,20 @@ r.random
 r.reclass
  - segm. fault on Pentium CPU (same problem as r.binfer,...)
  - does not accept "*" to reclass NULL values
+
+r.resamp.rst:
+ When processing quite a big DEM file with r.resamp.rst I got the  
+ following message for output file:                                                                                                               
+     WARNING: quantization file [z_50] in mapset [erdep] empty.                                                                             
+  Does anybody knows what is going on? I tried to run r.support but no
+  success. Iseems that r.resamp.rst finished its correctly.
+  (Reported by Rado Bonk <rado@cosmos.dsc.unomaha.edu>)
+
+r.rescale:
+  r.rescale input=asp1 from=0,180 output=test_north to=1,1                      
+  r.rescale does not set cells outside the "from" range to 0 (described in the    
+  help), but to null
+  (reported by timcera@earthlink.net)
 
 r.surf.contour
   fixed by Pierre de Mouveaux <pmx@audiovu.com>
@@ -240,11 +274,41 @@ s.to.rast, s.to.vect:
 s.rand
  should write #cats rather than %cats (site numbering)
 
+v.cutter: (report from Stefan.Neumann@agrar.uni-giessen.de)
+ For reducing the volume a rather large vectormap (16.000 polygons) I wrote a    
+ grass5-script which                                                            
+  1. automatically generates a rectangle around the current region (works at
+    least with tmerc,lat/long,lambert-projection)                                        
+  2. cuts the original map with v.cutter                                          
+  3. runs v.spag -i and v.support                                                 
+ This works fine, but only sometimes. I cut country outlines, DEM-contours       
+ (created with r.contour) and a map with soil properties and I noticed that
+ the size of the region seems to influence v.cutter. If, for example, i cut
+ parts of the coastline of norway, v.cutter works for a region with a maximum width
+ of 6 geographic degrees, a wider region produces an empty vector file. The          
+ DEM-contour-map, which seems to contain much more data, can be cut using a     
+ region of any size.                                                            
+ Thus it appears that certain combinations of datafile and cutterfile cause      
+ v.cutter to generate no vectors at all. I don't see any rule as to when it     
+ works an when it doesn't so I think that this might be some bug in
+ v.cutter.  
+
+v.out.shape:
+ segmentation fault on Pentium II CPUs /Linux
+ (reported by Stephan.Holl@stud.uni-hannover.de)
+
 v.reclass:
 The problem with v.reclass seems to stem from an input field for old=new        
 reclass rule that cannot be more than 7 characters long (i.e. 11250=16 is       
 eight characters long and will cause v.reclass to return an error). Someone     
 needs to look at correcting this perhaps.
+
+v.to.rast:
+ Working with a vector file and a region of(11242 rows*13301 cols) the
+ module is 'killed' at step 13/22.                                              
+ Module works well with the same data and a smaller region.                      
+ My pc conf:pentium3 600 & 128 RAM       
+ marco  <scurra@infinito.it>
 
 --------------------------------------------------
 
@@ -261,10 +325,10 @@ rm -f gis_pars.c gis_pars.h gis_pars.out
 
 Further discussion:
 -----------------------------------------------------------------------
-Two severe problems (to be checked):
 
- - the mapdev/vector-modules need to be updated to new vector
-   category support:
+ - Comments on updating 4.x vector modules to 5.x vector:
+   There is a slightly modified category support:
+
   Comment on vector cats from Bill Hughes:
   The Categories structure was changed between 4.x and 5.0beta.
   The change seems to have moved the *labels element out of the list
@@ -277,23 +341,10 @@ Two severe problems (to be checked):
   Already sucessfully updated: v.random,v.extract,v.merge,v.autocorr
   updated src.contrib tree as well (10/99, Bill H.)
 
-- src/libes/gis/set_windows.c
-  There is a bug breaking a number of raster modules.
-  This bug affects several commands including r.in.poly,r.digit,r.flow,
-  r.bilinear, v.to.rast, ...
-
-Jaro Hofierka on this:
-  The bug is in ~src/libes/gis/set_window.c between lines 97-119.
-  My quick fix was to remove these lines and re-compile gis lib and also
-  all affected commands. Of course, it would be better to fix it in a more
-  convenient way, however I have no time to figure out what is wrong there...
-  
- ==> In GRASS 5 beta4h/4i this passage became commented as recommended by Jaro.
-     The denoted modules are currently *working*! Will these comments cause
-     any problems??
-
 
 --------------------------------------------------------------------
+Libraries:
+
 src/libes/geom: optri  -> used by s.geom, v.geom
  I [Bill Hughes] have been working through some errors in 
 src/libes/geom/optri and I have a tarball of the directory attached below.  
@@ -313,182 +364,4 @@ else within Grass, though.
 
 ---------------------------------------------------------------------
 
- $Log: BUGS,v $
- Revision 1.26  2000-10-13 15:19:40  markus
- added r.flow BUG
-
- Revision 1.25  2000/10/12 08:19:16  markus
- removed d.legend, d.site.labels, d.sites.label as being fixed
-
- Revision 1.24  2000/10/11 16:51:17  markus
- added s.in.ascii dimension bug
-
- Revision 1.23  2000/10/11 14:44:58  markus
- added r3.info bug
-
- Revision 1.22  2000/10/11 14:09:41  markus
- added g3.region
-
- Revision 1.21  2000/09/28 08:56:34  markus
- added little/big endian problem
-
- Revision 1.20  2000/09/25 14:34:21  markus
- v.surf.rst fixed by Helena
-
- Revision 1.19  2000/09/20 15:50:22  markus
- added ps.map fwritable-strings problem
-
- Revision 1.18  2000/09/19 16:25:54  markus
- added bugreport form
-
- Revision 1.17  2000/09/11 19:01:08  markus
- added G3D cache bug
-
- Revision 1.16  2000/09/09 11:55:18  markus
- fixed r.los, r.info
-
- Revision 1.15  2000/09/08 21:53:37  markus
- cosmetics
-
- Revision 1.14  2000/09/08 21:52:16  markus
- cosmetics
-
- Revision 1.13  2000/08/26 13:00:51  markus
- more wishes and bug reports...
-
- Revision 1.12  2000/08/21 17:34:08  bernhard
- clarified r3.showdspf.openGL Mesa problem.
-
- Revision 1.11  2000/08/21 17:14:54  bernhard
- Added item to be checked: r3.showdspf.openGL dependency
-
- Revision 1.10  2000/08/20 15:44:40  markus
- g.manual bug fixed, r.mapcalc bug fixed on FreeBSD and Linux
-
- Revision 1.9  2000/07/28 08:27:25  markus
- g.version bug fixed, new reports on r.mapcalc and g.manual
-
- Revision 1.8  2000/07/26 13:10:44  markus
- r.support bug fixed by Huidae Cho
-
- Revision 1.7  2000/07/26 12:48:56  markus
- added r.in.tiff seg.fault
-
- Revision 1.6  2000/07/26 12:35:52  markus
- added i.ortho.photo bug comment
-
- Revision 1.5  2000/07/26 09:38:21  markus
- added d.mon -L comment
-
- Revision 1.4  2000/07/25 11:43:58  markus
- added v.surf.rst bug
-
- Revision 1.3  2000/07/12 14:56:33  markus
- added CELL driver color bug
-
- Revision 1.2  2000/07/12 13:29:51  markus
- added d.rgb
-
- Revision 1.1  2000/07/12 12:48:26  markus
- was documents/known_bugs_current.txt
-
- Revision 1.16  2000/07/10 13:52:37  markus
- added r.support bug
-
- Revision 1.15  2000/05/27 08:41:25  markus
- added cats.ncats info
-
- Revision 1.14  2000/05/15 18:13:38  markus
- added i.ortho.photo NULL bug
-
- Revision 1.13  2000/05/11 17:57:26  markus
- added p.map.new bug (is it still there?)
-
- Revision 1.12  2000/05/09 13:37:26  markus
- added d.legend and g.version bug
-
- Revision 1.11  2000/05/04 13:45:45  markus
-  fixed r.timestamp bug and v.extract bug
-
- Revision 1.10  2000/04/17 19:35:13  markus
- added i.rectify and i.rectify2 fix (Pierre de Mouveaux <pmx@audiovu.com>), i.tape.tm.fast fixed (Markus Neteler)
-
- Revision 1.9  2000/04/17 13:51:37  markus
- r.surf.contour fixed by Pierre de Mouveaux <pmx@audiovu.com>
-
- Revision 1.8  2000/04/16 11:28:32  markus
- v.extract does not copy the category support for vector file
-
- Revision 1.7  2000/04/16 11:16:01  markus
- r.drain: fixed by Pierre de Mouveaux <pmx@audiovu.com>
-
- Revision 1.6  2000/04/12 13:48:19  markus
- added v.reclass bug
-
- Revision 1.5  2000/04/11 20:39:38  markus
- added further r.surf.contour bug
-
- Revision 1.4  2000/04/11 20:36:45  markus
- r.cost bug /segment lib bug fixed by Pierre de Mouveaux <pmx@audiovu.com>
-
- Revision 1.3  2000/04/06 17:55:25  markus
- added i.tape.tm.fast bugs
-
- Revision 1.2  2000/04/06 16:51:39  markus
- r.in.png/r.out.png removed, as they are written by Alex Shevlakov
-
- Revision 1.1  2000/04/05 08:25:15  markus
- was stored in docs/ before
-
- Revision 1.12  2000/02/22 17:33:12  markus
- i.shape fixed, removed here
-
- Revision 1.11  2000/02/16 12:02:41  markus
- added r.contour bug
-
- Revision 1.10  2000/02/15 17:57:10  markus
- added r.los seg.fault
-
- Revision 1.9  2000/02/09 16:28:12  markus
- added i.shape segfault
-
- Revision 1.8  2000/02/09 16:15:56  markus
- d.param.scale bug added, r.binfer bug specified
-
- Revision 1.7  2000/02/07 17:39:21  markus
- d.his color bug/NULL bug added
-
- Revision 1.6  2000/02/07 17:17:41  markus
- d.rast.num color bug added
-
- Revision 1.5  2000/02/04 11:19:42  markus
- added r.reclass bug on '*' and r.null wish
-
- Revision 1.4  2000/02/02 20:05:17  markus
- configure script improved, entry removed here
-
- Revision 1.3  2000/02/01 19:09:31  markus
- added r.reclass bug on Pentium CPU
-
- Revision 1.2  2000/02/01 18:47:42  markus
- d.legend/d.rast.leg bugs fixed (Markus)
-
- Revision 1.1  2000/02/01 17:47:04  markus
- was former known_bugs_jan2000.txt, added d.mon -L bug
-
- Revision 1.0e  2000/01/19 09:50:45  markus
- r.coin fixed. Added  r.binfer, r.cost, r.random
-
- Revision 1.0d  2000/01/18 12:45:52  markus
- added r.coin FP-bug
-
- Revision 1.0c  2000/01/12 14:58:04  markus
- d.area fixed. bug description for d.legend and d.rast.leg added
-
- Revision 1.0b  2000/01/12 11:47:32  markus
- added entries: r.info, r.in.tiff/r.out.tiff, r.in.png/r.out.png, r.timestamp, s.rand
-
- Revision 1.0a  2000/01/11 09:52:35  markus
- added i.rectify/2 problem
-
- Revision 1.0  2000/01/10 19:14:53  markus
+ $Id: BUGS,v 1.27 2000-10-13 17:13:10 markus Exp $
