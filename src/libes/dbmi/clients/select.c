@@ -153,13 +153,13 @@ parse_command_line(argc, argv) char *argv[];
     driver 		= G_define_option();
     driver->key 	= "driver";
     driver->type 	= TYPE_STRING;
-    driver->required 	= YES;
+    driver->required 	= NO;           //changed to NO, RB 4/2000
     driver->description = "driver name";
 
     database 		= G_define_option();
     database->key 	= "database";
     database->type 	= TYPE_STRING;
-    database->required 	= YES;
+    database->required 	= NO;         //changed to NO, RB 4/2000
     database->description = "database name";
 
     location 		= G_define_option();
