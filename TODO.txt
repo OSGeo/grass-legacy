@@ -405,6 +405,7 @@ Modules:
 - d.what.sites:
   needs multiple sites file support
   (Being worked on by Huidae Cho)
+  -> DONE: please test!
   
 - g.list, g.remove should accept wildcards (*, ?) for convenience
   (Being worked on by ?)
