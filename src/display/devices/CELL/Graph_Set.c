@@ -1,5 +1,4 @@
 /*  Written by Dave Gerdes CERL   11/90 */
-/*  
 
 /*
  * Start up graphics processing.  Anything that needs to be assigned, set up,
