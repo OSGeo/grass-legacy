@@ -952,7 +952,7 @@ menu_build 1 .main_menu {
            "source $env(TCLTKGRASSBASE)/main/about.tcl"
         }
         "About GRASS" "" {
-           "run g.version &"
+           "source $env(TCLTKGRASSBASE)/main/grassabout.tcl"
         }
 	-separator
 	"Help on scripting" "" {
