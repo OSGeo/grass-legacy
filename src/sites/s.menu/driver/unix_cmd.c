@@ -3,6 +3,7 @@
 
 unix_cmd (pgm, site_list)
 
+	char *pgm;
 	SITE_LIST *site_list;
 {
 	char temp[3];
