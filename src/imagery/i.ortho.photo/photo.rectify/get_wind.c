@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <string.h>
 #include "global.h"
 /* FILE *Bugsr; */
 
@@ -54,7 +56,7 @@ int georef_window (struct Cell_head *w1, struct Cell_head *w2)
     double n,e,z1;
     double n0,e0; 
     double aver_z;
-
+    double diffew,diffns;
 
     /* get an average elevation from the active control points */    
     get_aver_elev (&group.control_points,&aver_z);
@@ -126,6 +128,17 @@ int georef_window (struct Cell_head *w1, struct Cell_head *w2)
 
     w2->ns_res = (w2->north - w2->south) / w1->rows;
     w2->ew_res = (w2->east  - w2->west ) / w1->cols;
+
+    /* Miori Luca & Mauro Martinelli, ITC-irst 2003: extend region to
+     * avoid cut-off of image edges in mountainous terrain: 
+     * extend target area by (empirically) 15% 
+     */
+    diffew=(w2->east  - w2->west);
+    diffns=(w2->north - w2->south);
+    w2->east=w2->east + 0.15*diffew;
+    w2->west=w2->west - 0.15*diffew;
+    w2->south=w2->south - 0.15*diffns;
+    w2->north=w2->north + 0.15*diffns;
 
 #ifdef DEBUG3
     fprintf (Bugsr,"FINAL\n");
