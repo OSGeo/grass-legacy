@@ -1,6 +1,9 @@
 
 /* draw_scale places a scale in the upper left hand corner of a map image */
 #include <stdio.h>
+#include <math.h>
+#include "options.h"
+#include "gis.h"
 #define NUMSCALES	12
 
 
@@ -25,15 +28,16 @@ static struct
 		  "10000 km"  ,10000000.,70000000.
 		} ;
 
-draw_scale (color1, color2, east, north, have_coord, use_mouse)
-     float east, north ;
+draw_scale ( use_mouse)
 {
-	double meters ;
+	double meters;
 	int line_len ;
 	int incr ;
 	double D_get_a_to_d_xconv() ;
 	double D_get_u_east(), D_get_u_west() ;
+	double D_get_u_north(), D_get_u_south() ;
 	double D_get_d_west(), D_get_d_north() ;
+	double D_get_d_east(), D_get_d_south() ;
 	double D_u_to_d_row(), D_u_to_d_col();
 	int x_pos, y_pos, button;
 	double D_get_ew_resolution() ;
@@ -50,11 +54,13 @@ draw_scale (color1, color2, east, north, have_coord, use_mouse)
 	R_set_window(t, b, l, r) ;
 	size = (int)(.025 * (float)(b - t)) ;
 	R_text_size(size, size) ;
+        G_begin_distance_calculations();
 
-	meters  = D_get_u_east() - D_get_u_west() ;
+        /* compute the distance from east to west in the middle of the window */
+	meters = G_distance(D_get_u_east(), (D_get_u_north() + D_get_u_south())/2., D_get_u_west(), (D_get_u_north() + D_get_u_south())/2.);
 
 /* get the dot coordinates for the position */
-	if (have_coord==0) {
+	if (coord_inp==0) {
 	  y_pos  = (int)D_get_d_north() ;
 	  x_pos = (int)D_get_d_west() ;
 	}
@@ -81,7 +87,8 @@ draw_scale (color1, color2, east, north, have_coord, use_mouse)
 		if (! incr)
 			return(-1) ;
 
-		line_len = (int)(D_get_a_to_d_xconv() * (scales[incr].size / D_get_ew_resolution()) ) ;
+		line_len = (int)(D_get_a_to_d_xconv() * (scales[incr].size / 
+			      G_distance(D_get_u_west(), (D_get_u_north() + D_get_u_south())/2., D_get_u_west() + D_get_ew_resolution(), (D_get_u_north() + D_get_u_south())/2.))) ;
 
 	/* Blank out area with background color */
 		R_standard_color(color1) ;
