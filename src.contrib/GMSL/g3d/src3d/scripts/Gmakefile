@@ -1,0 +1,2 @@
+all:
+	cp g3.createwind $(GISBASE)/scripts
