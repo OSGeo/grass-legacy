@@ -1,0 +1,137 @@
+<html>
+<TITLE>r.sun</TITLE>
+<body>
+<B>NAME</B><p>
+     r.sun - computes solar rays incidence angle raster maps for
+     given time and latitude, and amount of direct solar energy
+     raster maps for given day and latitude from elevation, slope
+     and aspect raster files. The shading effect of surrounding
+     terrain is incorporated.
+<p>
+<b>SYNOPSIS</B><p>
+     r.sun<p>
+     r.sun help<p>
+     r.sun  [-s]<p>
+      elevin = name [zmult] aspin = name slopein = name
+      [incidout = name] [energyout = name] latitude
+      dej [lum_time]
+<p>
+<b>DESCRIPTION</b><p>
+     This program computes solar rays incidence angle raster map
+     incidout for given day dej, time lum_time and latitude
+     latitude and amount of direct solar energy energyout  for a
+     given day dej and latitude from elevation elevin, slope
+     slopein and aspect aspin raster files. If elevations in the
+     raster elevation map elevin are in different units than the
+     mapset coordinate system, a multiplier zmult must be used.
+     For instance, if elevations are in centimeters and x, y
+     coordinates in meters, you should use zmult = 100. Specified
+     day dej is the number where January 1 is day no.1 and
+     December 31 is 365 (366).	Time lum_time must be a local
+     time in decimal system, e.g.  7.5 (i.e. 7h 30m). Latitude
+     must be also in decimal system and has positive values for
+     northern hemisphere and negative for southern one.
+     Incidence angle is angle between normal vector of given
+     surface and solar ray vector. Output incidence angles are in
+     degrees.  Amount of direct solar energy for given day is
+     computed integrating the incidence angle between sunrise and
+     sunset times. Ouput is in kW per squared meter.  The
+     incidence angle and amount of direct solar energy can be
+     computed without shading influence of surrounding terrain by
+     default, they can be computed incorporating this influnce
+     using the flag -s. In hilly areas this can lead to very
+     different results!	 A declination is computed internally
+     using Cooper's approximation for each day and energy input
+     using solar constant 1370 kW per squared meter.  It is
+     possible to compute an amount of direct solar energy for
+     some time interval during the year (e.g. a vegetation
+     period). This can be done using a shell script.  Elevation,
+     aspect and slope input values should not be reclassified
+     into coarser categories. This could lead to incorrect
+     results.
+ 
+<p>
+<b>OPTIONS</b>
+     The user can run this program either interactively or non-
+     interactively.  The program will be run non-interactively if
+     the user specifies program arguments and flag settings on
+     the command line using the form:
+<p>
+	  r.sun [-s] elevin = name [zmult = val] aspin = name
+	  slopein = name [incidout = name] [energyout = name]
+	  latitude = val dej = val [lum_time = val]
+<p>
+     Alternately, the user can simply type r.sun on the command
+     line without program arguments.  In this case, the user will
+     be prompted for parameter values using the standard GRASS
+     parser interface.
+<p>
+     Flag:
+<p>
+     [-s]	       Incorporates shading effect of terrain
+		       (default not)
+<p>
+     Parameters:
+<p>
+     elevin=name       Use the existing raster file with
+		       elevationsname as input.
+<p>
+     zmult=val	       Set a multiplier for elevations to val.
+<p>
+     aspin=name	       Use the existing raster file with
+		       aspectname as input.
+<p>
+     slopein=name      Use the existing raster file with
+		       slopename as input.
+<p>
+     incidout=name     Output solar rays incidence angle values
+		       to raster file named  name.
+<p>
+     energyout=name    Output direct solar energy values to
+		       raster file named  name.
+<p>
+     latitude=val      Set the value of latitude of given region
+		       to val.
+<p>
+     dej=val	       Set the serial number of day to val.
+
+     lum_time=val      Set the decimal value of time to val.
+<p>
+<B>NOTES</B><p>
+     Solar energy is important input parameter in different
+     models concerning landscape, vegetation, evapotranspiration,
+     snowmelt or remote sensing.  Solar rays incidence angle can
+     be effectively used in radiometric corrections in hilly
+     terrain where very precise investigations are performed.
+     Incidence angle multiplied by solar constant (here is used
+     1370 kW per squared meter) gives irradiance which can be
+     computed using r.mapcalc.
+<p>
+<b>SEE ALSO</b><p>
+     s.surf.tps, r.slope.aspect
+<p>
+<b>AUTHOR</b><p>
+     Original version of the program :
+     Jaroslav Hofierka and Maros Zlocha, Comenius University,
+     Bratislava, Slovakia,
+<p>
+     Modified program (adapted for GRASS):
+     Jaroslav Hofierka, Comenius University, Slovakia
+<p>
+<b>REFERENCES</b><p>
+     Mitasova, H. and Hofierka, J. (1993): Interpolation by
+     Regularized Spline with Tension: II. Aplication to Terrain
+     Modeling and Surface Geometry Analysis.  Mathemtical Geology
+     (in press).<p>
+     Krcho, J. (1977, 1990) ...<p>
+     Jenco, M. (1992): Distribution of direct solar radiation on
+     georelief and its modelling by means of complex digital
+     model of terrain. Geograficky casopis 44, 1992,
+     pp.342-355.(in Slovak)
+<p>
+
+<b>NOTICE</b><p>
+     This program is part of the alpha section of the GRASS
+     distribution.  Unlike the code in the main section of GRASS,
+     the alpha code has not yet been fully tested for one release
+     cycle.
