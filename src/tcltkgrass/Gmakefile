@@ -11,5 +11,6 @@ all:
 	tar cf - docs/Pro* docs/HIS* main/* module/* script/* | (cd $(GISBASE)/tcltkgrass; tar xf -)
 	cp main/gis_set.tcl $(GISBASE)/tcltkgrass/script
 	cp tcltkgrass $(GISBASE)/bin/tcltkgrass
+	chmod ugo+x $(GISBASE)/tcltkgrass/main/tksys.tcl
 	chmod ugo+x $(GISBASE)/bin/tcltkgrass
 	chmod -R u+w $(GISBASE)/tcltkgrass
