@@ -1,6 +1,6 @@
 LIBES  = $(GISLIB)
 
-LIST   = main.o describe.o dumplist.o percent.o
+LIST   = main.o describe.o dumplist.o
 
 $(BIN_MAIN_CMD)/r.describe: $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
