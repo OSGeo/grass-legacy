@@ -63,7 +63,7 @@ int main (int argc, char *argv[])
 	int maxcost ;
 	double cost ;
 	int cost_fd, cum_fd ;
-	int have_stop_points ;
+	int have_stop_points = 0;
 	int in_fd, out_fd ;
 	double my_cost ;
 	double null_cost;
