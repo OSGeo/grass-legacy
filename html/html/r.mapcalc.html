@@ -526,7 +526,7 @@ Note, that the row() and col() indexing starts with 1.
 Floating point numbers are allowed in the expression. A floating point
 number is a number which contains a decimal point:
 <PRE>
-2.3   12.   .81
+    2.3   12.0   12.   .81
 </PRE>
 Floating point values in the expression are handled in a special way.
 With arithmetic and logical operators, if either operand is float,
@@ -539,6 +539,14 @@ the result is float if any argument is float, integer otherwise.
 Note: If you calculate with integer numbers, the resulting map will
 be integer. If you want to get a float result, add the decimal point
 to integer number(s).
+<P>
+If you want floating point division, at least one of the arguments has
+to be a floating point value. Multiplying one of them by 1.0 will
+produce a floating-point result, as will using float():
+<pre>
+      r.mapcalc "ndvi=float(lsat.4 - lsat.3) / (lsat.4 + lsat.3)"
+</pre>
+
 
 <H2>NULL support</H2>
 
