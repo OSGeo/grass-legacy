@@ -1,20 +1,22 @@
 /*
-* Copyright (C) 2000 by the GRASS Development Team
-* Author: Jacques Bouchard <bouchard@onera.fr>
-* Author: Bob Covill <bcovill@tekmap.ns.ca>
-* 
-* This Program is free software under the GPL (>=v2)
-* Read the file COPYING coming with GRASS for details
-*
-* $ID$
-*
-*/
+ *   r.in.bin
+ *
+ *   Copyright (C) 2000 by the GRASS Development Team
+ *   Author: Bob Covill <bcovill@tekmap.ns.ca>
+ *
+ *   This program is free software under the GPL (>=v2)
+ *   Read the file COPYING coming with GRASS for details.
+ *
+ *   $Id$
+ */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include "gis.h"
-#include <tiffio.h>
 #include <sys/stat.h>
+#include "./swab.h"
+#include "./gmt_grd.h"
+
 
 FILE *Tmp_fd = NULL;
 char *Tmp_file = NULL;
@@ -43,6 +45,7 @@ int main (int argc, char *argv[])
 	int FILE_SIZE;
 	char *err;
 	char dummy[2];
+	struct GRD_HEADER header;
 	struct
 	{
 		struct Option *input, *output, *title, *bytes,
@@ -51,7 +54,7 @@ int main (int argc, char *argv[])
 	} parm;
 	struct
 	{
-	    struct Flag *s, *f, *b;
+	    struct Flag *s, *f, *b, *gmt_hd;
 	} flag;
 	char *G_adjust_Cell_head();
 	int G_scan_northing();
@@ -84,36 +87,36 @@ int main (int argc, char *argv[])
 	parm.bytes->type = TYPE_INTEGER;
 	parm.bytes->answer = "1";
 	parm.bytes->required = NO;
-	parm.bytes->description = "Number of bytes per cell (1, 2, 4, 8)" ;
+	parm.bytes->description = "Number of bytes per cell (1, 2, 4)" ;
 
 	parm.north = G_define_option();
 	parm.north->key = "north";
 	parm.north->type = TYPE_DOUBLE;
-	parm.north->required = YES;
+	parm.north->required = NO;
 	parm.north->description = "Northern limit of geographic region" ;
 
 	parm.south = G_define_option();
 	parm.south->key = "south";
 	parm.south->type = TYPE_DOUBLE;
-	parm.south->required = YES;
+	parm.south->required = NO;
 	parm.south->description = "Southern limit of geographic region" ;
 
 	parm.east = G_define_option();
 	parm.east->key = "east";
 	parm.east->type = TYPE_DOUBLE;
-	parm.east->required = YES;
+	parm.east->required = NO;
 	parm.east->description = "Eastern limit of geographic region" ;
 
 	parm.west = G_define_option();
 	parm.west->key = "west";
 	parm.west->type = TYPE_DOUBLE;
-	parm.west->required = YES;
+	parm.west->required = NO;
 	parm.west->description = "Western limit of geographic region" ;
 
 	parm.rows = G_define_option();
 	parm.rows->key = "r";
 	parm.rows->type = TYPE_DOUBLE;
-	parm.rows->required = YES;
+	parm.rows->required = NO;
 	parm.rows->description = "Number of rows";
 
 	flag.s = G_define_flag();
@@ -128,10 +131,14 @@ int main (int argc, char *argv[])
         flag.b->key = 'b';
         flag.b->description = "Byte Swap the Data During Import";
 
+        flag.gmt_hd = G_define_flag();
+        flag.gmt_hd->key = 'h';
+        flag.gmt_hd->description = "Get region info from GMT style header";
+
 	parm.cols = G_define_option();
 	parm.cols->key = "c";
 	parm.cols->type = TYPE_DOUBLE;
-	parm.cols->required = YES;
+	parm.cols->required = NO;
 	parm.cols->description = "Number of columns";
 
 	parm.subst = G_define_option();
@@ -158,6 +165,8 @@ int main (int argc, char *argv[])
 
 	cellhd.zone = G_zone();
 	cellhd.proj = G_projection();
+
+	if (!flag.gmt_hd->answer) {
 	if (! G_scan_northing(parm.north->answer, &cellhd.north, cellhd.proj)) return 1;
 	if (! G_scan_northing(parm.south->answer, &cellhd.south, cellhd.proj)) return 1;
 	if (! G_scan_easting (parm.east->answer,  &cellhd.east,  cellhd.proj)) return 1;
@@ -166,15 +175,11 @@ int main (int argc, char *argv[])
 	|| cellhd.rows <= 0) return 1;
 	if (sscanf(parm.cols->answer,"%d%1s",&cellhd.cols, dummy) != 1
 	|| cellhd.cols <= 0) return 1;
+	}
 
 	if (parm.subst->answer !=NULL) 
 	sscanf(parm.subst->answer, "%lf", &oldval);
 	
-	if (err = G_adjust_Cell_head (&cellhd, 1, 1)) {
-		fprintf(stderr, "%s\n", err);
-		return 1;
-	}
-
 	if (strcmp ("-", input) == 0)
 	{
 		Tmp_file = G_tempfile ();
@@ -194,6 +199,49 @@ int main (int argc, char *argv[])
 		G_usage();
 		exit(-1) ;
 	}
+
+/* Read binary GMT style header */
+	if (flag.gmt_hd->answer) {
+fread(&header, sizeof (struct GRD_HEADER), 1, fd);
+cellhd.cols = header.nx;
+cellhd.rows = header.ny;
+cellhd.west = header.x_min;
+cellhd.east = header.x_max;
+cellhd.south = header.y_min;
+cellhd.north = header.y_max;
+cellhd.ew_res = header.x_inc;
+cellhd.ns_res = header.y_inc;
+
+if (swap == 1) {
+/* Swapping Header Values */
+TIFFSwabLong((long *)&cellhd.cols);
+TIFFSwabLong((long *)&cellhd.rows);
+TIFFSwabDouble(&cellhd.west);
+TIFFSwabDouble(&cellhd.east);
+TIFFSwabDouble(&cellhd.south);
+TIFFSwabDouble(&cellhd.north);
+TIFFSwabDouble(&cellhd.ew_res);
+TIFFSwabDouble(&cellhd.ns_res);
+}
+
+/* DEBUG */
+fprintf(stderr, "Header Size %d, INT %d Double %d, Char %d\n", sizeof(struct GRD_HEADER), sizeof(int), sizeof(double), sizeof(char[320]) );
+
+fprintf(stderr, "Cols %d\n", cellhd.cols);
+fprintf(stderr, "Rows %d\n", cellhd.rows);
+fprintf(stderr, "West %f\n", cellhd.west);
+fprintf(stderr, "East %f\n", cellhd.east);
+fprintf(stderr, "South %f\n", cellhd.south);
+fprintf(stderr, "North %f\n", cellhd.north);
+fprintf(stderr, "EW_Res %f\n", cellhd.ew_res);
+fprintf(stderr, "NS_Res %f\n", cellhd.ns_res);
+}
+
+	/* Adjust Cell Header to New Values */
+       if (err = G_adjust_Cell_head (&cellhd, 1, 1)) {
+                fprintf(stderr, "%s\n", err);
+                return 1;
+        }
 
 	nrows = cellhd.rows;
 	ncols = cellhd.cols;
@@ -215,11 +263,21 @@ int main (int argc, char *argv[])
 stat(input, &fileinfo);
 FILE_SIZE = fileinfo.st_size;
 
+if (flag.gmt_hd->answer) {
+if (FILE_SIZE != (sizeof(struct GRD_HEADER) + (ncols*nrows*bytes))) {
+fprintf(stderr, "Bytes do not match File size\n");
+fprintf(stderr, "File Size %d ... Total Bytes %d\n", FILE_SIZE, sizeof(struct GRD_HEADER) + (ncols*nrows*bytes) );
+fprintf(stderr, "Try bytes=%d\n", (FILE_SIZE-sizeof(struct GRD_HEADER)) / (ncols*nrows) );
+exit(1);
+}
+} else {
+/* No Header */
 if (FILE_SIZE != (ncols*nrows*bytes)) {
 fprintf(stderr, "Bytes do not match File size\n");
 fprintf(stderr, "File Size %d ... Total Bytes %d\n", FILE_SIZE, ncols*nrows*bytes);
 fprintf(stderr, "Try bytes=%d\n", FILE_SIZE/(ncols*nrows) );
 exit(1);
+}
 }
 
 	if (flag.f->answer) { 

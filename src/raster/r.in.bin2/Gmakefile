@@ -1,9 +1,9 @@
 PGM    = r.in.bin2
 HOME   = $(BIN_MAIN_CMD)
 
-LIST   = main.o
+LIST   = main.o tif_swab.o
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(TIFFINCPATH) $(TIFFLIBPATH) -ltiff $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
