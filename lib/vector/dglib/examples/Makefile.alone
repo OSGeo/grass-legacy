@@ -1,4 +1,4 @@
-CFLAGS = -Wall -I../include -DGNGRP_STATS -DGNGRP_NEWCLIP
+CFLAGS = -Wall -I../include -DGNGRP_STATS
 LNFLAGS = -L.. -ldgl -lm
 PROGRAMS = cr_from_a view shortest_path cr_large_graph unflatten span components parse
 OBJECTS = opt.o cr_from_a.o view.o shortest_path.o cr_large_graph.o unflatten.o span.o components.o parse.o

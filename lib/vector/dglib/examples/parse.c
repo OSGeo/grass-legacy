@@ -33,7 +33,6 @@
 #include "../type.h"
 #include "../graph.h"
 
-
 static void _regmtostring( char * pszOut , int cszOut , char * pszIn , regmatch_t * pregm )
 {
     int i , iout;
@@ -47,13 +46,13 @@ static int _sztoattr( unsigned char * pbNodeAttr, int cbNodeAttr, char * szw ) {
 	int i , ib;
 	for( ib = 0 , i = 0 ; szw[i] && ib < cbNodeAttr ; i ++ ) {
 		if ( szw[i] == ' ' ) continue;
-		pbNodeAttr[ib] = 	(szw[i]>='0'&&szw[i]<='9')?(szw[i]-0x30)*16:
+		pbNodeAttr[ib] = 	(szw[i]>='0'&&szw[i]<='9')?(szw[i]-'0')*16:
 							(szw[i]>='A'&&szw[i]<='F')?(10+(szw[i]-'A'))*16:
 							(szw[i]>='a'&&szw[i]<='f')?(10+(szw[i]-'a'))*16:
 							0;
 		i++;
 		if ( szw[i] ) {
-			pbNodeAttr[ib] += 	(szw[i]>='0'&&szw[i]<='9')?(szw[i]-0x30):
+			pbNodeAttr[ib] += 	(szw[i]>='0'&&szw[i]<='9')?(szw[i]-'0'):
 								(szw[i]>='A'&&szw[i]<='F')?(10+(szw[i]-'A')):
 								(szw[i]>='a'&&szw[i]<='f')?(10+(szw[i]-'a')):
 								0;
@@ -82,9 +81,9 @@ int main( int argc , char ** argv ) {
 	regex_t reCounters;
 	regex_t reOpaque;
 	regex_t reNodeFrom;
-	regex_t reNodeTo;
 	regex_t reNodeAttr;
 	regex_t reLink;
+	regex_t reToNodeAttr;
 	regex_t reLinkAttr;
 
 
@@ -93,7 +92,7 @@ int main( int argc , char ** argv ) {
 	int fInOpaque;
 	int fInBody;
 
-	unsigned char * pbNodeAttr , * pbLinkAttr;
+	unsigned char * pbNodeAttr , * pbLinkAttr , * pbToNodeAttr;
 
 	struct stat statdata;
 
@@ -151,19 +150,19 @@ int main( int argc , char ** argv ) {
 	/*
 		NODE 1        - ROLE 'from/to' - LINKAREA OFFSET 0        - ATTR HEX DUMP [0a000000 2a000000 00000000]
 	*/
-	if ( regcomp( &reNodeFrom, "^NODE ([0-9]+)[ ]*- ROLE (('from')|('from/to'))[ ]*" , REG_EXTENDED ) != 0) goto regc_error;
+	if ( regcomp( &reNodeFrom, "^NODE ([0-9]+)[ ]*- [tofrom/']+" , REG_EXTENDED ) != 0) goto regc_error;
 	i++;
-	if ( regcomp( &reNodeTo, "^NODE ([0-9]+)[ ]*- ROLE 'to'[ ]*" , REG_EXTENDED ) != 0) goto regc_error;
-	i++;
-	if ( regcomp( &reNodeAttr, ".*ATTR HEX DUMP [[]([0-9a-fA-F ]+)]" , REG_EXTENDED ) != 0) goto regc_error;
+	if ( regcomp( &reNodeAttr, "LINKAREA.*ATTR HEX DUMP [[]([0-9a-fA-F ]+)]" , REG_EXTENDED ) != 0) goto regc_error;
 	i++;
 
 	/*
 		LINK #0       : TO NODE 2        - COST 1000     - USER 1       
 	*/
-	if (regcomp(&reLink, "^LINK #([0-9]+)[ ]*: TO NODE ([0-9]+)[ ]*- COST ([0-9]+)[ ]*- USER ([0-9]+)", REG_EXTENDED) != 0) goto regc_error;
+	if (regcomp(&reLink, "^LINK #([0-9]+)[ ]*: TO NODE ([0-9]+)[ ]*- [tofrom/']+[ ]+- COST ([0-9]+)[ ]*- USER ([0-9]+)", REG_EXTENDED) != 0) goto regc_error;
 	i++;
-	if (regcomp(&reLinkAttr, ".*ATTR HEX DUMP [[]([0-9a-fA-F ]+)]", REG_EXTENDED) != 0) goto regc_error;
+	if (regcomp(&reToNodeAttr, ".*NODE ATTR HEX DUMP [[]([0-9a-fA-F ]+)]", REG_EXTENDED) != 0) goto regc_error;
+	i++;
+	if (regcomp(&reLinkAttr,   ".*LINK ATTR HEX DUMP [[]([0-9a-fA-F ]+)]", REG_EXTENDED) != 0) goto regc_error;
 	i++;
 
 	printf( "done.\n" );
@@ -196,6 +195,7 @@ regc_ok:
 	nNodeAttrSize = 0;
 	nLinkAttrSize = 0;
 	pbNodeAttr = NULL;
+	pbToNodeAttr = NULL;
 	pbLinkAttr = NULL;
 
 	cOut = 0;
@@ -226,6 +226,10 @@ regc_ok:
 				if ( nNodeAttrSize ) {
 					pbNodeAttr = (unsigned char *) malloc( nNodeAttrSize );
 					if ( pbNodeAttr == NULL ) {
+						fprintf( stderr , "Memory Exhausted\n" ); exit(1);
+					}
+					pbToNodeAttr = (unsigned char *) malloc( nNodeAttrSize );
+					if ( pbToNodeAttr == NULL ) {
 						fprintf( stderr , "Memory Exhausted\n" ); exit(1);
 					}
 				}
@@ -383,6 +387,23 @@ regc_ok:
 #endif
 					}
 				}
+				if ( nNodeAttrSize > 0 ) {
+					if ( regexec( &reToNodeAttr, sz, 64, aregm, 0 ) == 0 ) {
+						_regmtostring( szw , sizeof(szw) , sz , & aregm[1] );
+						if ( _sztoattr( pbToNodeAttr, nNodeAttrSize, szw ) != nNodeAttrSize ) {
+							fprintf( stderr, "to node attr size mismatch\n" );
+						}
+#ifdef VERYVERBOSE
+						{
+								int k;
+								for(k=0;k<nNodeAttrSize;k++) {
+								printf("%02x", pbToNodeAttr[k]);
+								}
+								printf("\n");
+						}
+#endif
+					}
+				}
 				nret = gnGrpAddLink(
 								& graphOut,
 								nNodeFrom,
@@ -390,7 +411,7 @@ regc_ok:
 								nCost,
 								nUser,
 								pbNodeAttr,
-								NULL,
+								pbToNodeAttr,
 								pbLinkAttr );
 
 				if ( nret < 0 ) {
@@ -407,6 +428,7 @@ regc_ok:
 	printf( "\ndone.\n" );
 #endif
 
+#if 0
 	/*
 	 * reloop to set 'to' node attributes
 	 */
@@ -450,6 +472,7 @@ regc_ok:
 		printf( "\ndone.\n" );
 #endif
 	}
+#endif
 
 	fclose( fp );
 
@@ -460,12 +483,13 @@ regc_ok:
 	regfree( & reCounters );
 	regfree( & reOpaque );
 	regfree( & reNodeFrom );
-	regfree( & reNodeTo );
 	regfree( & reNodeAttr );
 	regfree( & reLink );
+	regfree( & reToNodeAttr );
 	regfree( & reLinkAttr );
 
 	if ( pbNodeAttr ) free( pbNodeAttr );
+	if ( pbToNodeAttr ) free( pbToNodeAttr );
 	if ( pbLinkAttr ) free( pbLinkAttr );
 
 

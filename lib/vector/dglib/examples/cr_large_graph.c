@@ -39,17 +39,17 @@
 extern int errno;
 
 
-/*
 #define NROWS 600
 #define NCOLS 100
 #define FACTOR 10000
 #define BIDIRECTIONAL 1
-*/
 
+/*
 #define NROWS 600
 #define NCOLS 400
 #define FACTOR 10000
 #define BIDIRECTIONAL 1
+*/
 
 
 static int _add_link( 	gnGrpGraph_s * pgraph ,
