@@ -1,5 +1,3 @@
-#DIGLIB = $(SRC)/mapdev/lib/libdig.a
-
 CMD_CFILES = Build_cmd.c\
       Col.c\
       CountLines.c\
@@ -10,6 +8,7 @@ CMD_CFILES = Build_cmd.c\
       GenToDig.c\
       L_labs_cmd.c\
       DO_txt_file.c\
+      process_inp.c\
 	  main_cmd.c
 
 CMD_OBJ = Build_cmd.o\
@@ -22,6 +21,7 @@ CMD_OBJ = Build_cmd.o\
       GenToDig.o\
       L_labs_cmd.o\
       DO_txt_file.o\
+      process_inp.o\
       main_cmd.o
 
 INTER_CFILES = Build_inter.c\
@@ -34,6 +34,7 @@ INTER_CFILES = Build_inter.c\
       GenToDig.c\
       L_labs_inter.c\
       DO_txt_file.c\
+      process_inp.c\
 	  main_inter.c
 
 INTER_OBJ = Build_inter.o\
@@ -46,6 +47,7 @@ INTER_OBJ = Build_inter.o\
       GenToDig.o\
       L_labs_inter.o\
       DO_txt_file.o\
+      process_inp.o\
       main_inter.o
 
 EXTRA_CFLAGS = $(VECT_INCLUDE)
@@ -54,20 +56,21 @@ PGM = v.in.arc
 
 all:  $(BIN_ALPHA_CMD)/$(PGM) $(BIN_ALPHA_INTER)/$(PGM)
 
-$(BIN_ALPHA_INTER)/$(PGM): $(INTER_OBJ) $(VECTLIB)
-	$(CC) -o $@  $(LDFLAGS) $(INTER_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+$(BIN_ALPHA_INTER)/$(PGM): $(INTER_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+	$(CC) -o $@  $(LDFLAGS) $(INTER_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
 
-$(BIN_ALPHA_CMD)/$(PGM): $(CMD_OBJ) $(VECTLIB)
-	$(CC) -o $@  $(LDFLAGS) $(CMD_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+$(BIN_ALPHA_CMD)/$(PGM): $(CMD_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+	$(CC) -o $@  $(LDFLAGS) $(CMD_OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
 
 $(VECTLIB): #
 $(GISLIB): #
+$(DIG_ATTLIB): #
 
 sabersrc_i:
-		#load $(EXTRA_CFLAGS) $(CFLAGS) $(INTER_CFILES) /grass.src/4.0/src/mapdev/Vlib/*.c /grass.src/4.0/src/mapdev/diglib/*.c $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
+		#load $(EXTRA_CFLAGS) $(CFLAGS) $(INTER_CFILES) /grass.src/4.0/src/mapdev/Vlib/*.c /grass.src/4.0/src/mapdev/diglib/*.c $(VECTLIB)  $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
 
 sabersrc_c:
-		#load $(CFLAGS) $(CMD_CFILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+		#load $(EXTRA_CFLAGS) $(CFLAGS) $(CMD_CFILES) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
 
 
 sabersrc_lib:
