@@ -66,7 +66,11 @@ int main (int argc, char **argv)
 	char     *mapname,		 /* ptr to name of output layer	 */
 	         *setname,		 /* ptr to name of input mapset	 */
 	         *ipolname,		 /* name of interpolation method */
-	          errbuf[256];		 /* buffer for error messages	 */
+	          errbuf[256],		 /* buffer for error messages	 */
+		  in_datum[64],		 /* data and ellipses for datum  */
+		  in_ellipse[64],	 /* conversion */
+		  out_datum[64],
+		  out_ellipse[64];
 
 	int       fdi,			 /* input map file descriptor	 */
 	          fdo,			 /* output map file descriptor	 */
@@ -221,6 +225,8 @@ int main (int argc, char **argv)
 	if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
 		G_fatal_error("Can't get projection key values of output map");
 
+	strncpy(out_datum,G_database_datum_name(),sizeof(out_datum));
+	strncpy(out_ellipse,G_database_ellipse_name(),sizeof(out_ellipse));
 
 
    /* Change the location 		 */
@@ -259,14 +265,19 @@ int main (int argc, char **argv)
 		if (pj_get_kv(&iproj, in_proj_info, in_unit_info) < 0)
 			G_fatal_error("Can't get projection key values of input map");
 
-
+	/* this call causes r.proj to read the entire map into memeory */
 		G_get_cellhd(inmap->answer, setname, &incellhd);
+	/* this call causes r.proj to use the WIND file settings */
+		/*G_get_window(&incellhd);*/
 
 		G_set_window(&incellhd);
 		cell_type = G_raster_map_type(inmap->answer, setname);
 
 		if (!G_projection())	/* XY data 		 */
 			G_fatal_error("Can't work with xy data");
+
+		strncpy(in_datum,G_database_datum_name(),sizeof(in_datum));
+		strncpy(in_ellipse,G_database_ellipse_name(),sizeof(in_ellipse));
 
 	} else {		/* can't access mapset 	 */
 
@@ -278,6 +289,9 @@ int main (int argc, char **argv)
 		       : "not found\n");
 		G_fatal_error(errbuf);
 	}
+
+	/* determin which do_proj function to use */
+	set_datumshift(in_datum,in_ellipse,out_datum,out_ellipse);
 
     /* Save default borders so we can show them later */
 
@@ -298,8 +312,8 @@ int main (int argc, char **argv)
               
     /* Cut non-overlapping parts of input map */
 
-	if (bordwalk(&outcellhd, &incellhd, &oproj, &iproj, errbuf) < 0)
-	    G_fatal_error(errbuf);
+	/*if (bordwalk(&outcellhd, &incellhd, &oproj, &iproj, errbuf) < 0)
+	    G_fatal_error(errbuf);*/
 
     /* Add 2 cells on each side for bilinear/cubic & future interpolation methods */
     /* (should probably be a factor based on input and output resolution) */
@@ -323,8 +337,24 @@ int main (int argc, char **argv)
 
 	if (bordwalk(&incellhd, &outcellhd, &iproj, &oproj, errbuf) < 0)
 	    G_fatal_error(errbuf);
-
-	if (res->answer != NULL)   /* set user defined resolution		*/
+/*  
+	outcellhd.west=outcellhd.south=HUGE_VAL;
+	outcellhd.east=outcellhd.north=-HUGE_VAL;
+	for(row=0;row<incellhd.rows;row++)
+	{
+		ycoord1=G_row_to_northing((double)(row+0.5),&incellhd);
+		for(col=0;col<incellhd.cols;col++)
+		{
+			xcoord1=G_col_to_easting((double)(col+0.5),&incellhd);
+			proj_f(&xcoord1,&ycoord1,&iproj,&oproj);
+			if(xcoord1>outcellhd.east)outcellhd.east=xcoord1;
+			if(ycoord1>outcellhd.north)outcellhd.north=ycoord1;
+			if(xcoord1<outcellhd.west)outcellhd.west=xcoord1;
+			if(ycoord1<outcellhd.south)outcellhd.south=ycoord1;
+		}
+	}
+*/  
+	if (res->answer != NULL)   /* set user defined resolution */
 		outcellhd.ns_res = outcellhd.ew_res = atof(res->answer);
 
 	G_adjust_Cell_head(&outcellhd, 0, 0);
@@ -372,6 +402,8 @@ int main (int argc, char **argv)
 	ycoord1 = ycoord2 = outcellhd.north - (outcellhd.ns_res / 2);	/**/
 
 
+	/* now invert the sense of the projection */
+	INVERSE_FLAG = INVERSE_FLAG==1 ? 0 : 1;
 
 	fprintf(stderr, "Projecting... ");
 	G_percent(0, outcellhd.rows, 2);
@@ -382,8 +414,8 @@ int main (int argc, char **argv)
 		for (col = 0; col < outcellhd.cols; col++) {
    /* project coordinates in output matrix to		 */
    /* coordinates in input matrix			 */
-			if (pj_do_proj(&xcoord1, &ycoord1, &oproj, &iproj) < 0)
-				G_fatal_error("Error in pj_do_proj\n");
+			if (proj_f(&xcoord1, &ycoord1, &oproj, &iproj) < 0)
+				G_fatal_error("Error in proj_f\n");
 
    /* convert to row/column indices of input matrix	 */
 			col_idx = (xcoord1 - incellhd.west) / incellhd.ew_res;
