@@ -424,6 +424,6 @@ main (int argc, char **argv)
     if (site)
       R_pad_freelist(site, nsites);
 
-    exit(stat);
+    exit(0);
 }
 
