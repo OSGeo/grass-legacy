@@ -1,0 +1,13 @@
+#!/bin/csh
+d.menu bcolor=blue tcolor=white dcolor=indigo size=3 << EOF
+.T 25
+.L 25
+Main Menu
+Display Input Maps
+Display Sediment Movement
+Display Erosion Ranges
+Display Deposition Ranges
+Display Outlet Hydrograph
+Quit
+EOF
+
