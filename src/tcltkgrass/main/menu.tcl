@@ -699,9 +699,6 @@ menu_build 1 .main_menu {
             "Patch (overlay vector maps)" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.patch"
             }
-            "Geometrical calculations" "" {
-                 "source $env(TCLTKGRASSBASE)/module/v.geom"
-            }
             "Interpolate raster map from contours" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.surf.rst"
             }
