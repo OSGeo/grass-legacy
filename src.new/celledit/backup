@@ -1,0 +1,8 @@
+#! /bin/csh -fx
+# copy everything to ../backup
+echo "Copying Files..."
+cp *.[ch] ../backup/.
+cp {M,I,T}* ../backup/.
+cp -r lib ../backup/.
+cp -r brushes ../backup/.
+echo "Done."
