@@ -253,6 +253,7 @@ int main (int argc, char *argv[])
     }
 
     /* Open database driver */
+    driver = NULL;
     if ( !print_flag->answer ) { 
         db_init_string (&stmt);
 
@@ -268,7 +269,7 @@ int main (int argc, char *argv[])
 	    if ( driver == NULL ) 
 		G_fatal_error ( "Cannot open default database");
 	}
-    }
+    } 
 
     FPoints=Vect_new_line_struct();
     TPoints=Vect_new_line_struct();
@@ -564,7 +565,9 @@ int main (int argc, char *argv[])
 
     if ( !all ) count = nfcats;
     
-    db_begin_transaction ( driver );
+    if ( driver ) 
+        db_begin_transaction ( driver );
+
     for ( i = 0; i < count; i++ ) {
 	/* Write line connecting nearest points */
 	if ( Outp != NULL ) {
@@ -737,7 +740,9 @@ int main (int argc, char *argv[])
 	}
 
     }
-    db_commit_transaction ( driver );
+
+    if ( driver ) 
+        db_commit_transaction ( driver );
     
     /* print stats */
     fprintf (stderr,"\nStatistics:\n");
