@@ -104,7 +104,13 @@ int Digitize (void)
 			G_free(Cat_name);
 			Cat_name = NULL;
 		    }
-		    ans = ask_for_name(type, &lcats);
+		    if ( type == 1 ) /* LINE */ 
+		        ans = ask_for_name("Do you wish to enter line labels?", &lcats);
+		    else if (type == 2)    /* AREA EDGE*/
+		        ans = ask_for_name("Do you wish to enter area edges labels?", &lcats);
+		    else if (type == 4)     /* DOT */
+		        ans = ask_for_name("Do you wish to enter site labels?", &lcats);
+		        	
 		    auto_label = ask_cat ();
 		    if (auto_label && ans)
 		    {
