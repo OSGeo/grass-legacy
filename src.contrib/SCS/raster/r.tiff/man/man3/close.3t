@@ -1,0 +1,36 @@
+.\" $Header: /usr/people/sam/tiff/man/man3/RCS/close.3t,v 1.4 90/11/25 11:38:42 sam Exp $
+.\"
+.\" Copyright (c) 1990 by Sam Leffler.
+.\" All rights reserved.
+.\"
+.\" This file is provided for unrestricted use provided that this
+.\" legend is included on all tape media and as a part of the
+.\" software program in whole or part.  Users may copy, modify or
+.\" distribute this file at will.
+.\"
+.TH TIFFClose 3T "May 2, 1990"
+.SH NAME
+TIFFClose \- close a previously opened
+.SM TIFF
+file
+.SH SYNOPSIS
+.B "#include <tiffio.h>"
+.br
+.B "void TIFFClose(TIFF* tif)"
+.SH DESCRIPTION
+.IR TIFFClose ()
+closes a file that was previously opened with
+.IR TIFFOpen (3T).
+Any buffered data are flushed to the file, including the contents of
+the current directory (if modified); and all resources
+are reclaimed.
+.SH DIAGNOSTICS
+All error messages are directed to the
+.IR TIFFError (3T)
+routine.
+Likewise, warning messages are directed to the
+.IR TIFFWarning (3T)
+routine.
+.SH "SEE ALSO"
+.IR intro (3T),
+.IR TIFFOpen (3T)
