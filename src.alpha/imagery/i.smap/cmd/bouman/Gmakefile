@@ -1,0 +1,15 @@
+OBJ = decimate.o\
+	interp.o\
+	alpha_max.o\
+	model.o\
+	solve.o\
+	eigen.o\
+	invert.o\
+	multialloc.o\
+	reg_util.o\
+	segment.o
+
+lib.a: $(OBJ)
+	$(AR)
+
+segment.o: ../shapiro/parms.h ../shapiro/files.h
