@@ -360,6 +360,10 @@ menu_build 1 .main_menu {
     Display "Display maps" {
         Monitors "" $monitors_menu
         -separator
+         "Display Manager" "" {
+          "exec xterm -title {Display Manager Messages} -e d.dm"
+        }
+        -separator
         Raster "" $display_raster
         Vector "" $display_vector
         Sites  "" $display_sites
