@@ -1,0 +1,60 @@
+## Grass -> Postgres interface v0.01a ##
+## written by Richard Nairn  July /97 ##
+##        nairnr@cadvision.com        ##
+
+------------------------------------------------
+Update 8/98: 
+      - Source code reorganized, 
+      - small Gmakefile bugfixes
+      - SQL.select/readfile.c extended
+
+             Markus Neteler
+             neteler@geog.uni-hannover.de
+------------------------------------------------
+7/97
+These modules are my first attempt at writing grass software, and
+programming in C in general.  So, if there are bugs let me know...
+
+There are a few programs that I have developed.  They most likely will
+need to be customized by you for your use.  I have made a few
+assumptions about some of the variables and fields that most likely
+won't be the same as what you envision.  That said, here is a brief
+description of the programs.
+
+SQL.select: This program is needed by the others, and I will use it to
+incorporate new programs. It creates a file .pg-grc in the users home
+directory which will have the following information : database name,
+table name (for queries), postgres port number, and postgres hosts.
+It is not a very visually appealing program but it works.  Besides
+that it was my first attempt at a few things...  As far as I remember,
+the other programs honour the settings.  I don't believe anything was
+left hard coded.
+
+SQL.where:  This program uses the values set with SQL.select, it is
+used to click on a map and query the database and return the
+attributes, it tries to print it a little bit nicer.  It will find
+nearby sites, then figure the closest site to the point.  I am
+strictly using UTM maps, so I don't know if the program will work any
+other way because of the way I set up the query.  It should work with
+any table, The only assumption that I have made is that Easting and
+northing are the two first fields.
+
+SQL.site: Based on an SQL query, it will create a new site file and/or
+raster file.  It will also create a new table in Postgres for further
+querying. Yeh! I figured out grass options and flags :-) The query is
+only the condition, as I included the "select * from table_name where"
+bit.
+
+--------------------------------------------------------------------------
+
+I am using Postgres SQL v6.1, I am not sure about backwards 
+compatibility but I believe all the commands are the same.  I have a
+Gmakefile for two of the programs, and a straight Makefile.  Edit to
+make sure that the include files are coming from the right
+directories.  You will have to install them yourself.  
+
+Aside from that -- It is still a work in progress, I had a few
+requests to post what I had to see how it worked.  If you do use these
+modules please email me at nairnr@cadvision.com and tell me how they
+are working, and what modifications you have made.  I will return the
+favour with anything else I have come up with :-)
