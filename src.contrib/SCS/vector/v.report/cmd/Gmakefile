@@ -20,7 +20,7 @@ LIST = main.o\
 all: $(BIN_CONTRIB_CMD)/$(PGM)
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES) 
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VECTLIB) $(GISLAB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VECTLIB) $(LIBES) $(MATHLIB)
 
 $(LIST): global.h
 
