@@ -2,7 +2,7 @@ MODULE_TOPDIR = ..
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
-SUBDIRS1 = \
+SUBDIRS = \
 	r.average \
 	r.basins.fill \
 	r.bilinear \
@@ -85,22 +85,27 @@ FFTWBASED = r.surf.fractal r.surf.gauss r.surf.random
 
 PNGBASED = r.out.png
 
+CXXBASED = r.terraflow
+
 #compile if GDAL present:
 ifneq ($(strip $(GDALLIBS)),)
-    SUBDIRS2 = $(GDALBASED)
+    SUBDIRS += $(GDALBASED)
 endif
 
 #compile if FFTW present:
 ifneq ($(strip $(FFTWLIB)),)
-    SUBDIRS3 = $(FFTWBASED)
+    SUBDIRS += $(FFTWBASED)
 endif
 
 #compile if PNG present:
 ifneq ($(strip $(PNGLIB)),)
-    SUBDIRS4 = $(PNGBASED)
+    SUBDIRS += $(PNGBASED)
 endif
 
-SUBDIRS = $(SUBDIRS1) $(SUBDIRS2) $(SUBDIRS3) $(SUBDIRS4)
+#compile if C++ compiler present:
+ifneq ($(strip $(CXX)),)
+    SUBDIRS += $(CXXBASED)
+endif
 
 default: subdirs
 
