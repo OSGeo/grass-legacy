@@ -1,0 +1,135 @@
+
+
+                                   APPENDIX I                    1
+                              GRASS-MAPGEN User's Guide
+            make.arrow                                      make.arrow
+
+
+
+
+            
+            
+            NAME
+            make.arrow - Draws an arrow symbol to show approximate north
+            orientation on the map composition.
+            
+            SYNOPSIS
+            make.arrow [filename]            make.arrow           
+            
+            DESCRIPTION
+            make.arrow produces a graphic symbol to show north
+            orientation on the map composition.  The user must respond
+            to a series of questions regarding the pen selection, the
+            height of the "N" in the north arrow, and location of the
+            arrow symbol.  If given, the [filename] is used as the name
+            of the overlay created.
+            
+            The user is required to provide the following:
+            
+                 - map definition file name
+                 - overlay file name (if not specified on the command
+                      line)
+                 - plotter pen number
+                 - relationship of the arrow to a window within the
+                      map composition
+                 - arrow symbol length (which is approximately 2.5 times
+                      the height of the "N")
+                 - location for the middle of the "N" in the the symbol
+            
+            Completing the response sequence generates the required
+            files to construct the map element.  Definition parameters
+            are stored in the misc directory; graphic elements to draw
+            the map on the screen or plotter are stored in the ovm
+            directory.  The default file name for both directories is
+            northarrow.
+            
+            Changing the appearance of the north arrow (e.g. location,
+            size, etc.) can be done by regenerating the make.arrow
+            command and overwriting the initial file, or by editing the
+            parameter file, then executing the redo command.
+            
+                 (edit) example:          vi misc/[filename]
+                                          vi misc/n.arrow
+            
+            Information entered through the interactive make.arrow
+            command has been reformatted to meet the requirements of the
+            MAPGEN command legend, prefacing the element characteristics
+            with options for the legend command.  All options available
+            in the legend command are available for use in the GRASS-
+            MAPGEN Interface.  Commonly used legend options associated
+
+                                   APPENDIX I                    2
+                              GRASS-MAPGEN User's Guide
+            make.arrow                                      make.arrow
+
+
+
+
+            with making the north arrow are:
+                 
+                 -w (window/region) [data=d][map plot=p]
+                 -p (pen) [plotter pen location=value]
+                 -j (justify) [center=c][right=r][left=l]
+                 -x (horizontal coordinate) [right=>[centimeter=value]]
+                                          [left=<[centimeter=value]]
+                                          [center=|[centimeter=value]]
+                 -y (vertical coordinate) [top=>[centimeter=value]]
+                                        [bottom=<[centimeter=value]]
+                                        [center=|[centimeter=value]]
+                 -f (font/symbol) [font=-alphanumeric]
+                 -s (size) [centimeter=value]
+                 -r (rotate) [degrees=value]
+                 -t (text)
+                 [text string]
+                 . (end text)
+            
+            EXAMPLE
+            The file misc/northarrow will draw a north arrow symbol,
+            which is identified as symbol 79 on the ksym2 font, rotated
+            90 degrees, at 20 cm in x and 5.5 cm in y away from the
+            lower left corner of the data window.  It will be drawn with
+            the pen in position one on the plotter .75 cm high.
+            
+                 legend -m map.def -o ovm/n.arrow << EOF
+                 -w d
+                 -j l
+                 -x 20.0
+                 -y 5.5
+                 -f -ksym2
+                 -p 1
+                 -s 0.75
+                 -r 90
+                 -t
+                 O              # ascii character for symbol 79
+                 .
+                 EOF
+            
+            NOTE
+            If only one map element will be drawn on the map
+            composition, the default selection for the file name is
+            recommended for use.
+            
+            The delete key will abort the make.arrow command.
+            
+            SEE ALSO 
+                 legend         User Manual for MAPGEN (UNIX Version),
+                                USGS, p. 29.
+                 TASK 12        GRASS-MAPGEN User's Guide, USDA-SCS.
+                 redo           GRASS-MAPGEN User's Guide, APPENDIX I,
+
+                                   APPENDIX I                    3
+                              GRASS-MAPGEN User's Guide
+            make.arrow                                      make.arrow            make.arrow                                      make.arrow
+
+
+
+
+                                USDA-SCS.
+                 redo.misc      (Same)
+                 getting loca-  GRASS-MAPGEN User's Guide, APPENDIX 1-A,
+                   tion         USDA-SCS.
+            
+            AUTHOR
+            Marty Holko, Computer Systems Analyst, Cartography and
+            Geographic Information Systems Division, USDA, Soil
+            Conservation Service, Washington, DC. (October l990).
