@@ -1,0 +1,76 @@
+all: port_test $(DIG2LIB) test
+
+###########################################################
+
+OBJ = \
+    allocation.o  \
+    area.o \
+    bound_box.o  \
+    calc_angl.o  \
+    check_node.o  \
+    chk_inside.o \
+    clock.o \
+    cont_lines.o \
+    debugf.o \
+    file_checks.o \
+    find_area.o \
+    format.o \
+    isle.o \
+    linecros.o \
+    line_dist.o \
+    load_plus.o \
+    map_to_head.o  \
+    memory_io.o \
+    node_op.o  \
+    point_t_line.o \
+    point_t_area.o \
+    prune.o  \
+    rw_ascii.o  \
+    struct_alloc.o  \
+    struct_copy.o \
+    unit_conv.o \
+    write_file.o \
+    portable.o \
+    x_struct_io.o 
+
+
+$(DIG2LIB): $(OBJ)
+	$(AR)
+
+#  Test the machine size and orientation for the Portable Library
+port_test: port_test.c
+	$(CC) $(CFLAGS) -o $@ port_test.c
+	echo "/* Architecture: $(ARCH) */" > portable.h
+	./$@ >> portable.h
+	-rm port_test
+	
+#  Test portable read/write functions
+test: test.c
+	$(CC) $(CFLAGS) -o $@ test.c $(DIG2LIB)
+	./$@
+	-rm test
+
+
+check_node.o:
+curses.o:	menu.h
+digitize.o:	
+edit.o:		
+first_plot.o:
+interact.o:	
+mark.o:		
+move_point.o:	
+node_op.o:
+remove.o:	
+set_thresh.o:	
+snap.o:	
+snap.o:	
+map_ask.o: map.h
+map_coor.o: map.h
+map_init.o: map.h
+map_resid.o: map.h
+map_scale.o:	
+menus.o:  menus.i
+portable.o : portable.h
+
+
+
