@@ -17,6 +17,8 @@ old2new (char *in, char *out, int endian)
     double dist, sdist;
     struct line_cats *cat_out;
     struct line_pnts *pnt_out;
+   
+    cats = NULL;
     
     /* open in map */
     if ( NULL == (mapset = G_find_file ("dig", in, "") )) {
@@ -39,7 +41,7 @@ old2new (char *in, char *out, int endian)
     
     /* open input dig_att file if exists */
     att = FALSE;
-    if (NULL == (mapset = G_find_file ("dig_att", in, ""))) {
+    if (NULL == G_find_file ("dig_att", in, mapset)) {
     	fprintf(stderr,"dig_att file doesn't exist.\n"); 
     } else {
         if (NULL == (Attin = G_fopen_old ("dig_att", in, mapset))) {
@@ -47,6 +49,7 @@ old2new (char *in, char *out, int endian)
 	} else {
 	   att = TRUE;
 	}
+    }
    
     /* read old dig file */
     nlines = read_dig ( Digin, &Mapout, &lines, endian, att );
@@ -56,7 +59,6 @@ old2new (char *in, char *out, int endian)
     if ( att ) {
             ncats = read_att (Attin, &cats );
             fclose (Attin);
-        }
     }
      	
     /* Attach categories to lines and points.
@@ -140,7 +142,9 @@ old2new (char *in, char *out, int endian)
 	free (lines[i].y);    
     }
     free (lines);
-    free (cats);
+    if (att)
+        free (cats);
+    
     Vect_destroy_cats_struct (cat_out);
     Vect_destroy_line_struct (pnt_out);
     
