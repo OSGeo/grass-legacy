@@ -25,6 +25,8 @@ int zoomwindow(int, int, double, char);
 /* redraw.c */
 int redraw(void);
 
+#define DEPRECATED
+
 #ifdef MAIN
 #define	GLOBAL
 #else
