@@ -14,6 +14,7 @@
             		{separator}
             		{command "Binary file (includes GTOPO30 format)" {} "r.in.bin" {} -command { execute r.in.bin }}
             		{command "ERDAS LAN" {} "i.in.erdas" {} -command { execute i.in.erdas }}
+            		{command "ESRI Arc/Info ASCII grid" {} "r.in.arc" {} -command { execute r.in.arc }}
             		{command "GRIDATB.FOR map file (TOPMODEL)" {} "r.in.gridatb" {} -command { execute r.in.gridatb }}
             		{command "MAT-File (v.4) map file (Matlab or Octave)" {} "r.in.gridatb" {} -command { execute r.in.mat }}
         	    }}
@@ -54,6 +55,7 @@
         	    {cascad "Vector map" {} "" 1 {			
             		{command "Various formats using OGR (SHAPE, MapInfo etc)" {} "v.out.ogr" {} -command { execute v.out.ogr }}
             		{separator}
+            		{command "DXF file (ASCII)" {} "v.out.dxf" {} -command { execute v.out.dxf }}
             		{command "GRASS vector file" {} "v.out.ascii" {} -command { execute v.out.ascii }}
             		{command "Import/export old GRASS vector format" {} "v.convert" {} -command { execute v.convert }}
             		{command "POV-Ray format" {} "v.out.pov" {} -command { execute v.out.pov }}
@@ -96,7 +98,7 @@
         	    {command "Rename Grid3D volumes" {} "" {} -command {execute g3.rename }}
         	    {command "Remove Grid3D volumes" {} "" {} -command  {execute g3.remove }}
             }}
-        	{cascad "Manage region" {} "" 1 {			
+        	{cascad "Region" {} "" 1 {			
               	{command "Display region settings" {} "" {} -command {run g.region -p }}
         	    {command "Manage region" {} "" {} -command {execute g.region }}
         	    {command "Select default region" {} "" {} -command {run g.region -d ; run d.redraw }}
@@ -104,7 +106,7 @@
         	    {command "Create WIND3 (default 3D window) from current 2D region" {} "" {} -command {execute g3.createwind }}
         	    {command "Manage 3D region" {} "" {} -command {execute g3.setregion }}
         	}}
-        	{cascad "Manage GRASS working environment" {} "" 1 {			
+        	{cascad "GRASS working environment" {} "" 1 {			
         	    {command "Modify access by other users to current mapset" {} "" {} -command  {term g.access }}
         	    {command "Modify mapset search path" {} "" {} -command {spawn $env(GISBASE)/etc/g.mapsets.tcl}}
         	    {command "Change current working session to new mapset, location, or GISDBASE" {} "" {} -command {execute g.mapset }}
@@ -180,6 +182,7 @@
         	{separator}
 			{command "Manage displays" {} "" {} -command {execute d.mon }}
 			{command "Manage display frames" {} "" {} -command {execute d.frame }}
+			{command "Display information about active display monitor" {} "" {} -command {execute d.info }}
         	{separator}
 			{command "Redraw active display (Note: some items may not be redrawn)" {} "" {} -command {execute d.redraw }}
 			{command "Save file of commands to recreate active display" {} "" {} -command {execute d.save }}
@@ -221,7 +224,9 @@
 			{command "Create raster buffers" {} "" {} -command { execute r.buffer }}
 			{command "Locate closest points between areas in 2 raster maps" {} "" {} -command  { execute r.distance }}
 			{command "Map calculator" {} "" {} -command { execute r.mapcalculator }}
-			{command "Neighborhood analysis" {} "" {} -command  { execute r.neighbors }}
+			{cascad "Neighborhood analysis" {} "" 1 {			
+    			{command "Moving window analysis of raster cells" {} "" {} -command  { execute r.neighbors }}
+    			{command "Analyze vector points in neighborhood of raster cells" {} "" {} -command  { execute v.neighbors }}
 			{cascad "Overlay maps" {} "" 1 {			
 			    {command "Cross product" {} "" {} -command {execute  r.cross }}
 			    {command "Function of map series (time series)" {} "" {} -command {execute  r.series }}
@@ -256,6 +261,7 @@
 			    {command "Topographic index map" {} "" {} -command {execute  r.topidx }}
 			    {command "TOPMODEL simulation" {} "" {} -command {execute  r.topmodel }}
 			    {command "Watershed subbasins" {} "" {} -command {execute  r.basins.fill }}
+			    {command "Watershed basin analysis" {} "" {} -command {execute  r.watershed }}
 			    {command "Watershed basin creation" {} "" {} -command {execute  r.water.outlet }}
 			}}
 			{cascad "Landscape structure modeling" {} "" 1 {			
@@ -374,6 +380,7 @@
 			    {command "Patch multiple maps (combine)" {} "" {} -command {execute  v.patch }}
 			}}
 			{command "Generate area feature for extent of current region" {} "" {} -command {execute  v.in.region }}
+			{command "Generate retangular vector grid" {} "" {} -command {execute  v.mkgrid }}
 			{separator}
 			{cascad "Change attributes" {} "" 1 {			
 			    {command "Attach, delete, or report categories" {} "" {} -command {execute  v.category }}
@@ -395,6 +402,7 @@
         			{command "Sample raster map at point locations" {} "" {} -command {execute  v.what.rast }}
         			{command "Sample raster neighborhood around points" {} "" {} -command {execute  v.sample }}
     			}}
+    			{command "Partition points into test/training sets for k-fold cross validatation" {} "" {} -command {execute  v.kcv }}
 			}}
 			{separator}
 			{cascad "Reports and statistics" {} "" 1 {			
