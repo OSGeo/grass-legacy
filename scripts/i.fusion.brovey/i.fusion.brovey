@@ -3,7 +3,7 @@
 ############################################################################
 #
 # MODULE:	i.fusion.brovey
-# AUTHOR(S):	Markus Neteler. neteler itc it
+# AUTHOR(S):	Markus Neteler. <neteler itc it>
 # PURPOSE:	Brovey transform to merge
 #                 - LANDSAT-7 MS (2, 4, 5) and pan (high res)
 #                 - SPOT MS and pan (high res)
@@ -15,7 +15,13 @@
 #		License (>=v2). Read the file COPYING that comes with GRASS
 #		for details.
 #
-# REFERENCE:    for LANDSAT 5: see Pohl, C 1996 and others
+# REFERENCES:
+#             (?) Roller, N.E.G. and Cox, S., 1980. Comparison of Landsat MSS
+#                and merged MSS/RBV data for analysis of natural vegetation.
+#                Proc. of the 14th International Symposium on Remote Sensing
+#                of Environment, San Jose, Costa Rica, 23-30 April, pp. 1001-1007.
+#
+#               for LANDSAT 5: see Pohl, C 1996 and others
 #
 # TODO:         add overwrite test at beginning of the script
 #############################################################################
