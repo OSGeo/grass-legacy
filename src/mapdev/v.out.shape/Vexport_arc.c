@@ -304,14 +304,14 @@ main (int argc, char **argv)
 	/* do we need points ??: see v.out.idrisi for implementation */
 
 	fprintf(stdout, "Converting $LOCATION/arc_tmp/%s.%s to SHAPE file...\n", shape_prefix, extension);
-	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc_tmp/%s.%s", shape_prefix, shape_type, shape_prefix, extension);
+	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc_tmp/%s.%s ; rm -rf  $LOCATION/arc_tmp/", shape_prefix, shape_type, shape_prefix, extension);
 	G_system(buf);
-
+	
 	/* remove the temporal ungenerate files */
-	sleep(2); /* DANGEROUS!! This might not be enough */
-	G_remove("arc_tmp", lin_filename);
+	/* 5/2000 MN: commented as being dangeous! Added rm -f above.*/
+/*	G_remove("arc_tmp", lin_filename);
 	G_remove("arc_tmp", lab_filename);
-	G_remove("arc_tmp", txt_filename);
+	G_remove("arc_tmp", txt_filename); */
 
 	exit(0);
 }
