@@ -119,7 +119,7 @@ int main (int argc, char *argv[])
     sprintf( error_msg, "%s/lib", getenv( "GISBASE" ) );                  
     if( !GDALBridgeInitialize( error_msg ) )
     {
-        G_fatal_error( "Unable to initialize GDAL bridge.\n" );
+        G_fatal_error( "Unable to initialize GDAL bridge (check libgdal installation).\n" );
         exit( 10 );
     }
 
