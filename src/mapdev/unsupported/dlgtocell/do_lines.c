@@ -1,4 +1,3 @@
-/* %W%  %G% */
 #include <stdio.h>
 #include "dlg.h"
 #include "bmif.h"
