@@ -3,7 +3,7 @@
 #include "color.h"
 #include "clr.h"
 #define PI 3.14159265   
-//#define MAXVECTORS 20
+/* #define MAXVECTORS 20 */
 
 /* layer type */
 #define VPOINTS 0
