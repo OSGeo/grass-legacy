@@ -286,3 +286,9 @@ packagehtmldocs: htmldocs
 pdfdocs:
 	(cd lib/db/ ; $(MAKE) pdfdocs)
 	(cd lib/vector/ ; $(MAKE) pdfdocs)
+
+changelog:
+	@ echo "creating ChangeLog file..."
+	@ # cvs2cl.pl creates a GNU style ChangeLog file:
+	@ # http://www.red-bean.com/cvs2cl
+	GRASS_PERL=${PERL} sh tools/cvs2cl.pl -f ./ChangeLog
