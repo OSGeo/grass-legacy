@@ -11,10 +11,7 @@ int main (int argc, char **argv)
 {
     struct GModule *module;
     struct Flag *once, *decimal, *latlong, *wgs84;
-    char s_names[2048];
-    char *name;
     int have_spheroid = 0;
-    int i;
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
@@ -42,8 +39,9 @@ int main (int argc, char **argv)
                         "transformation parameters defined in current location if available";
      
      
-    if (G_parser(argc,argv))
-	exit(1);
+    /* if (G_parser(argc,argv))
+	exit(1);*/
+    if (argc > 1 && G_parser(argc,argv));
 
     if ( ((G_projection() == PROJECTION_LL) && wgs84->answer) || 
 	 ((G_projection() != PROJECTION_LL) && (latlong->answer || wgs84->answer)) )
