@@ -75,21 +75,26 @@ msgstr "Ошибка чтения файла %s\n"
 msgid "Please run g.select.pg to identify a current database.\n"
 msgstr "Выполните g.select.pg и выберите БД.\n"
 
-#: runInfxFile.c:51
+#: runInfxFile.c:54
 #, c-format
 msgid "Cannot open %s"
 msgstr "Невозможно открыть %s"
 
-#: runInfxFile.c:66
+#: runInfxFile.c:69
 #, c-format
 msgid "Error: Selecting from Postgres:%s\n"
 msgstr "Ошибка: Selecting from Postgres:%s\n"
 
-#: runInfxFile.c:73
+#: runInfxFile.c:76
 #, c-format
 msgid "Error: Connecting to Postgres:%s\n"
 msgstr "Ошибка: Connecting to Postgres:%s\n"
 
-#: runInfxFile.c:94
+#: runInfxFile.c:116
+#, c-format
+msgid "Can not use the field type id %d for category\n"
+msgstr "Невозможно использовать тип поля %d для категорий\n"
+
+#: runInfxFile.c:130
 msgid "Display error(exiting..)\n"
 msgstr "Ошибка дисплея (выход..)\n"
