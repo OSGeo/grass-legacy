@@ -182,6 +182,7 @@ main (int argc, char *argv[])
     if ( Ogr_ds == NULL ) G_fatal_error ("Cannot open OGR data source '%s'", dsn_opt->answer);
     
     Ogr_layer = OGR_DS_CreateLayer( Ogr_ds, layer_opt->answer, Ogr_projection, wkbtype, NULL );
+    if ( Ogr_layer == NULL ) G_fatal_error ("Cannot create layer");
     
     db_init_string(&dbstring);
 
@@ -277,6 +278,7 @@ main (int argc, char *argv[])
 	for ( i = 1; i <= Vect_get_num_lines(&In) ; i++ ) {
 	    int j;
 
+	    G_percent(i,Vect_get_num_lines(&In),2);
 	    type = Vect_read_line (&In, Points, Cats, i);
 	    G_debug (2, "line = %d type = %d", i, type );
 	    if ( !(otype & type ) ) {
@@ -322,6 +324,7 @@ main (int argc, char *argv[])
 	for ( i = 1; i <= Vect_get_num_areas(&In) ; i++ ) {
 	    int j;
 	    
+	    G_percent(i,Vect_get_num_areas(&In),2);
 	    centroid = Vect_get_area_centroid ( &In, i );
 	    cat = 0;
 	    if ( centroid > 0 ) {
