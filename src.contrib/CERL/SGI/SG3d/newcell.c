@@ -4,12 +4,14 @@
 **  US Army Construction Engineering Research Lab
 */
 
+/*
+** Copyright USA CERL 1992. All rights reserved.
+*/
+
+
 #include "gis.h"
 #include <gl.h>
-#include <device.h>
 #include <math.h>
-#include "digit.h"
-
 #include "externs.h"
 
 static unsigned char *Red;
@@ -19,8 +21,6 @@ static unsigned char *Set;
 
 newcell ()
 {
-    char *vect_map;
-    /*struct Cell_head wind;*/
     char name1[200];
     char name2[200];
     char name3[200];
@@ -32,7 +32,7 @@ newcell ()
     /*float Z_Span, Z_Span2;*/
 
     float xfrom, yfrom, zfrom, xto, yto, zto;
-    int save_three;
+    int ret, save_three;
 
 /******************************************************************************/
 
@@ -61,17 +61,28 @@ newcell ()
     }
 
     if (Three_map)
-	return _newcell (name1, name2, name3);
+	ret =  _newcell (name1, name2, name3);
+    else if (strcmp(name1, Elevname))
+	ret =  _newcell (name1, NULL, NULL);
     else
-	return _newcell (name1, NULL, NULL);
+	ret =  _newcell_is_elev(name1, NULL);
+
+    if(ret > 0){   /* successful, so change globals */
+	strcpy(Cellname[0], name1);
+	strcpy(Cellname[1], name2);
+	strcpy(Cellname[2], name3);
+    }
+
+    return(ret);
 }
 
+static int firstcell = 1;
+static int colalloc = 0;
 
 _newcell (name1, name2, name3)
     char *name1, *name2, *name3;
 {
-    register int row, col;
-    int i;
+    register int row, i;
     char *name1_map;
     char *name2_map;
     char *name3_map;
@@ -81,12 +92,10 @@ _newcell (name1, name2, name3)
     char buff[128];
     CELL *xarray;
     long *color_array;
-    static int first = 1;
 
     {
-	static int first = 1;
 
-	if (first)
+	if (firstcell)
 	{
 	    /* alllocate buffers */
 	    Red = G_malloc (X_Size);
@@ -94,14 +103,15 @@ _newcell (name1, name2, name3)
 	    Blue = G_malloc (X_Size);
 	    Set = G_malloc (X_Size);
 	    visual = (int *)G_malloc (X_Size * Y_Size * sizeof (int));
-	    first = 0;
+	    firstcell = 0;
 	}
     }
     name1_map = G_find_file2 ("cell", name1, "");
     if ((cellfile1 = G_open_cell_old(name1, name1_map)) == -1) 
     {
 	sprintf(buff,"Not able to open cellfile for [%s]", name1);
-	G_fatal_error(buff);
+	G_warning(buff);
+	return(-1);
     }
     if (Three_map)
     {
@@ -109,22 +119,23 @@ _newcell (name1, name2, name3)
 	if ((cellfile2 = G_open_cell_old(name2, name2_map)) == -1) 
 	{
 	    sprintf(buff,"Not able to open cellfile for [%s]", name2);
-	    G_fatal_error(buff);
+	    G_warning(buff);
+	    return(-1);
 	}
 	name3_map = G_find_file2 ("cell", name3, "");
 	if ((cellfile3 = G_open_cell_old(name3, name3_map)) == -1) 
 	{
 	    sprintf(buff,"Not able to open cellfile for [%s]", name3);
-	    G_fatal_error(buff);
+	    G_warning(buff);
+	    return(-1);
 	}
     }
     else
     {
-	if (first)
-	    first = 0;
-	else
+	if (colalloc)
 	    G_free_colors (&Pcolor);
 	G_read_colors (name1, name1_map, &Pcolor);
+	colalloc = 1;
     }
 
 /* Allocate space for cell buffer */
@@ -176,7 +187,6 @@ _newcell (name1, name2, name3)
     }
 
     /* color table has been converted into RGB map */
-    Three_map = 1;
 
     G_close_cell(cellfile1);
     if (Three_map)
@@ -189,6 +199,61 @@ _newcell (name1, name2, name3)
 
     fprintf (stderr, "Done.\n");
 
+    /*
     do_clear ();
+    */
+    return (1);
+}
+
+
+_newcell_is_elev (name1, name1_map)
+char *name1, *name1_map;
+{
+    CELL *xarray;
+    long *color_array;
+    register int row, i;
+    char buff[128];
+    
+    if(name1_map == NULL)
+	name1_map = G_find_file2 ("cell", name1, "");
+    if (firstcell)
+    {
+	/* alllocate buffers */
+	Red = G_malloc (X_Size);
+	Green = G_malloc (X_Size);
+	Blue = G_malloc (X_Size);
+	Set = G_malloc (X_Size);
+	visual = (int *)G_malloc (X_Size * Y_Size * sizeof (int));
+	firstcell = 0;
+    }
+    if(colalloc)
+	G_free_colors (&Pcolor);
+    G_read_colors (name1, name1_map, &Pcolor);
+    colalloc = 1;
+
+    fprintf (stderr, "Loading data:  ");
+
+    for (row = 0; row < Y_Size ; row++) 
+    {
+	int row_off;
+
+	row_off = row * X_Size;
+
+	xarray = &elev_buf[row_off];
+
+	G_lookup_colors (xarray,
+	    Red, Green, Blue, Set, X_Size, &Pcolor);
+	for (i = 0 ; i < X_Size ; i++)
+	{
+	    visual[row_off+i] = Red[i] & 0xff | 
+		((Green[i] & 0xff) << 8) | ((Blue[i] & 0xff) << 16);
+	}
+    }
+
+    /* color table has been converted into RGB map */
+    Three_map = 0;
+
+    fprintf (stderr, "Done.\n");
+
     return (1);
 }
