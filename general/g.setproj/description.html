@@ -1,0 +1,77 @@
+<H2>NAME</H2>
+
+<EM><b>g.setproj</b></EM>  - Allows the user to create the PROJ_INFO and the 
+PROJ_UNITS files to record the projection information associated with a 
+current location. 
+<BR>
+
+<H2>SYNOPSIS</H2>
+
+<B>g.setproj</B> 
+
+<H2>DESCRIPTION</H2>
+
+Allows a user to create a PROJ_INFO file in the PERMANENT mapset of the 
+current location. PROJ_INFO file is used to record the projection information 
+associated with the specified mapset. 
+
+<H2>NOTES</H2> 
+
+User running <EM>g.setproj</EM> must own PERMANENT mapset.
+It is highly recommended to run <EM>g.setproj</EM> after
+creating a new location so that conversion programs (such
+as <EM>v.proj</B>)</EM> can be run.
+
+<P>
+
+The current location must not contain a PROJ_INFO or 
+PROJ_UNITS file. 
+
+<P>The user will be prompted for the projection name. 
+Most projections are supported. The 
+<A HREF="http://www.remotesensing.org/proj/">PROJ.4</A> 
+abbreviations for the names are
+used with two exceptions, viz. 'll', for latitude / longitude geographic
+co-ordinates, and 'stp', for the State Plane Co-ordinate system (used in the
+USA).</P>
+
+<P>After the projection name, the user will be asked for a geodetic datum. If 
+no datum transformation support is needed, the question may be answered with no,
+and no datum will be specified in the PROJ_INFO file. If this is the case
+the user must specify the ellipsoid (model of the curvature of the earth) to
+be used, otherwise it is determined by the datum being used.</P>
+
+<P>If the datum or ellipsoid required are not 
+listed within this program, the user/administrator may add the definition 
+to the files datum.table, datumtransform.table and ellipse.table in the
+$GISBASE/etc/ directory.</P>
+
+<P>Depending on the projection selected, the user will then be prompted for
+the various other parameters required to define it.</P>
+
+
+<P>
+
+The projections of aea, lcc, merc, leae (GRASS 5.x), leac (GRASS 5.x), and 
+tmerc will generate a request to the user for the prime meridian and standard 
+parallel for the output map. 
+
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="g.projinfo.html">g.projinfo</A></EM>,
+<EM><A HREF="r.proj.html">r.proj</A></EM>,
+<EM><A HREF="s.proj.html">s.proj</A></EM>,
+<EM><A HREF="v.proj.html">v.proj</A></EM>,
+<EM><A HREF="http://www.remotesensing.org/proj/">PROJ.4</A></EM>
+
+
+<H2>AUTHOR</H2>
+
+Irina Kosinovsky, 
+U.S. Army Construction Engineering 
+Research Laboratory<BR>
+Morten Hulden, morten@tor.ngb.se - rewrote module and added 121 projections <BR>
+Andreas Lange, andreas.lange@rhein-main.de - added prelimnary map datum support
+
+<p><i>Last changed: $Date$</i>
