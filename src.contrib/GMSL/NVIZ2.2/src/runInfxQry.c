@@ -29,7 +29,7 @@ char* runInfxQry(SQL_stmt)
  	if(vrbs)  
     	fprintf (stderr,"\n\nExecuting\n%s\n---------------------\n",sqlcmd);
     
-    if ((pghost=G_getenv("PG_HOST"))==NULL) pghost == NULL;      
+    pghost = G__getenv("PG_HOST");      
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
 
     if (PQstatus (pg_conn) == CONNECTION_BAD) {
@@ -112,7 +112,7 @@ char* runqry(SQL_stmt, pts)
 	  cfa 11/98   */
     
     fprintf (stderr,"\n\nExecuting\n%s;\n clause  @ '( )'::box addded autonmatically.\n\n",sqlcmd);
-    if ((pghost=G_getenv("PG_HOST"))==NULL) pghost == NULL;      
+    pghost = G__getenv("PG_HOST");      
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
 
     if (PQstatus (pg_conn) == CONNECTION_BAD) {
