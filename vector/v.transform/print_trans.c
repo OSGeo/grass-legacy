@@ -24,7 +24,7 @@ print_transform_resids (int n_points)
 {
 	int	i ;
 
-	fprintf (stdout,"\n\n\n");
+	fprintf (stdout,"\n");
 	fprintf (stdout,"                          CHECK MAP RESIDUALS\n\n");
 	fprintf (stdout,"                Current Map                  New Map\n");
 	fprintf (stdout," POINT      X coord    Y coord  |        X coord   Y coord    |      residuals\n");

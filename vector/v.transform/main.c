@@ -38,11 +38,13 @@ int main (int argc, char *argv[])
     struct file_info  Current, Trans, Coord ;
     struct GModule *module;
     struct Option *old, *new, *pointsfile, *zscale, *zshift;
-    struct Flag *quiet_flag;
+    struct Flag *quiet_flag, *tozero_flag;
     char   *mapset, mon[4], date[40], buf[1000];
     struct Map_info Old, New;
     int    day, yr; 
     struct field_info *Fi, *Fin;
+    BOUND_BOX box;
+    float ztozero;
 
     G_gisinit(argv[0]) ;
 
@@ -51,8 +53,12 @@ int main (int argc, char *argv[])
 			  "coordinate system into another coordinate system.";
 
     quiet_flag = G_define_flag();
-    quiet_flag->key		= 'y';
+    quiet_flag->key		= 'q';
     quiet_flag->description = "suppress display of residuals or other information"; 
+
+    tozero_flag = G_define_flag();
+    tozero_flag->key		= 't';
+    tozero_flag->description = "shift all z values to bottom=0"; 
 
     old = G_define_option();
     old->key			= "input";
@@ -147,7 +153,13 @@ int main (int argc, char *argv[])
     
     if (!quiet_flag->answer) fprintf (stdout,"\nNow transforming the vectors ...\n") ;
     
-    transform_digit_file( &Old, &New, atof(zscale->answer), atof(zshift->answer)) ;
+    Vect_get_map_box (&Old, &box );
+    if (tozero_flag->answer)
+       ztozero = 0 - box.B;
+    else
+       ztozero = 0;
+
+    transform_digit_file( &Old, &New, ztozero, atof(zscale->answer), atof(zshift->answer)) ;
 
     /* Copy tables */
     if (!quiet_flag->answer) fprintf (stdout,"Copying tables ...\n") ;
@@ -176,6 +188,13 @@ int main (int argc, char *argv[])
     Vect_close (&Old);
 
     if (!quiet_flag->answer) Vect_build (&New, stdout); else Vect_build (&New, NULL);
+
+    Vect_get_map_box (&New, &box );
+    fprintf (stdout,"New vector map <%s> boundary coordinates:\n", new->answer);
+    fprintf (stdout, " N: %-10.3f    S: %-10.3f\n", box.N, box.S);
+    fprintf (stdout, " E: %-10.3f    W: %-10.3f\n", box.E, box.W);
+    fprintf (stdout, " B: %6.3f    T: %6.3f\n", box.B, box.T);
+
     Vect_close (&New);
 
     if (!quiet_flag->answer)
@@ -183,4 +202,3 @@ int main (int argc, char *argv[])
 
     exit(0) ;
 }
-
