@@ -39,7 +39,7 @@ break_connections()
     }
 
 /* vector barriers */
-    for (i = 0; name = get_barrier_name(i); i++)
+    for (i = 0; name = (char *) get_barrier_name(i); i++)
     {
 	if (!be_quiet())
 	    fprintf (stderr, "Processing vector barrier map [%s] ...\n", name);
