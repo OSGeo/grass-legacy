@@ -859,7 +859,7 @@ extern Tk_ImageType		tkPhotoImageType;
 extern Tcl_HashTable		tkPredefBitmapTable;
 extern int			tkSendSerial;
 
-#include "tkIntDecls.h"
+#include "tkIntDecls8.1.1.h"
 
 #ifdef BUILD_tk
 # undef TCL_STORAGE_CLASS
