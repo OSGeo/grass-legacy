@@ -1,0 +1,28 @@
+.\" @(#)MAN	2.1 6/26/87
+.TH Dmove 2D D-language
+.SH NAME
+Dmove \- Macro for moving a graphics window
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dmove
+.SH DESCRIPTION
+.I Dmove 
+is an
+.I interactive
+Bourne shell macro which, using the 
+.I D
+commands
+.I "Dsave, Dchoose, Dremove and Derase, "
+moves a window containing mapped information on the screen to a new user chosen
+screen location.
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
+.SH LIMITATIONS
+Since
+.I Dsave
+command does not catch input to such commands as 
+.B "Dpoints, Dsites, and Dmapgraph",
+the moved window may not be regenerated exactly.
+Note that ONLY maps can be moved.  The programming for this utility is
+incomplete.  Use of Dmove during demonstrations should be avoided.
