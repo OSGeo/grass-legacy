@@ -17,4 +17,4 @@ GLOBAL	FCELL	*cell;
 GLOBAL	char	*file;
 GLOBAL	char	*mapset,*iname;
 GLOBAL	char	overwr;
-
+GLOBAL  char    *oname;
