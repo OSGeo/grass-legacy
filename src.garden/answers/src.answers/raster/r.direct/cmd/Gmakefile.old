@@ -1,0 +1,23 @@
+OBJ = direct.o cell_open.o cell_open_new.o
+OBJ1 = direct_for.o
+OBJ2 = fmt_un.o
+OBJ3 = un_fmt.o
+
+LIST = direct.c cell_open.c cell_open_new.c
+
+all: $(BIN_ALPHA_CMD)/direct_for $(BIN_ALPHA_CMD)/r.direct $(BIN_ALPHA_CMD)/fmt_un_dir $(BIN_ALPHA_CMD)/un_fmt_dir
+
+$(BIN_ALPHA_CMD)/r.direct: $(OBJ) $(GISLIB)
+	$(CC) -o $(BIN_ALPHA_CMD)/r.direct $(LDFLAGS) $(OBJ) $(GISLIB) -lm
+
+$(BIN_ALPHA_CMD)/direct_for: $(OBJ1)
+	f77 -o $(BIN_ALPHA_CMD)/direct_for $(LDFLAGS) $(OBJ1)
+
+$(BIN_ALPHA_CMD)/fmt_un_dir: $(OBJ2)
+	f77 -o $(BIN_ALPHA_CMD)/fmt_un_dir $(LDFLAGS) $(OBJ2)
+
+$(BIN_ALPHA_CMD)/un_fmt_dir: $(OBJ3)
+	f77 -o $(BIN_ALPHA_CMD)/un_fmt_dir $(LDFLAGS) $(OBJ3)
+
+$(GISLIB): #
+
