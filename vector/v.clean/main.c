@@ -24,6 +24,7 @@ int break_lines ( struct Map_info *Out, int otype, int x_flag );
 int rmdupl ( struct Map_info *Out, int otype );
 int rmdac ( struct Map_info *Out );
 int svtl ( struct Map_info *Out, int otype, int tool, double thresh, int x_flag );
+int break_polygons ( struct Map_info *Out, int otype, int x_flag );
 
 int 
 main (int argc, char *argv[])
@@ -51,12 +52,16 @@ main (int argc, char *argv[])
 	tool_opt->type =  TYPE_STRING;
 	tool_opt->required = YES;
 	tool_opt->multiple = YES;
-	tool_opt->options = "break,rmdupl,svtlx,rmdac";
+	tool_opt->options = "break,rmdupl,svtlx,rmdac,bpol";
         tool_opt->description = "Action to be done:\n"
 	                        "\t\tbreak - break lines at each intersection\n"
 			        "\t\trmdupl - remove duplicate lines (pay attention to categories!)\n"
 			        "\t\tsvtlx - snap vertex to a line and create new vertex at that line\n"
-			        "\t\trmdac - remove duplicate area centroids ('type' option ignored)";
+			        "\t\trmdac - remove duplicate area centroids ('type' option ignored)\n"
+			        "\t\tbpol - break (topologicaly clean) polygons (imported from "
+				"non topological format (like shapefile). Boundaries are broken on each "
+				"point shared between 2 and more polygons where angles of segments "
+			        "are different";
 	
 	thresh_opt = G_define_option();
 	thresh_opt ->key = "thresh";
@@ -94,6 +99,8 @@ main (int argc, char *argv[])
 		tools[ntools] = TOOL_SVTLX;
 	    else if ( strcmp ( tool_opt->answers[i], "rmdac" ) == 0 )
 		tools[ntools] = TOOL_RMDAC;
+	    else if ( strcmp ( tool_opt->answers[i], "bpol" ) == 0 )
+		tools[ntools] = TOOL_BPOL;
 	    else 
 		G_fatal_error ( "Tool doesn't exist" );
 
@@ -135,6 +142,9 @@ main (int argc, char *argv[])
 		case ( TOOL_RMDAC ) :
 	            fprintf (stdout, "| Remove duplicate area centroids |" );	    
 		    break;
+		case ( TOOL_BPOL ) :
+	            fprintf (stdout, "| Break polygons                  |" );	    
+		    break;
 	    }
 	    fprintf (stdout, " %e |\n", threshs[i] );	    
 	}
@@ -144,8 +154,10 @@ main (int argc, char *argv[])
         if ((mapset = G_find_vector2 (in_opt->answer, "")) == NULL) {
 	     G_fatal_error ("Could not find input %s\n", in_opt->answer);
 	}
-	
-        Vect_set_open_level (2); 
+
+        /* Input vector may be both on level 1 and 2. Level 2 is required for 
+	 * virtual centroids (shapefile/OGR) and level 1 if input is too big 
+	 * and build would take a long time */
 	Vect_open_old (&In, in_opt->answer, mapset); 
 
 	with_z = Vect_is_3d (&In);
@@ -162,12 +174,15 @@ main (int argc, char *argv[])
 	Vect_hist_command ( &Out );
 	Vect_copy_map_lines ( &In, &Out );
 	Vect_copy_tables ( &In, &Out, 0 );
-	Vect_build ( &Out, NULL );
+	
+	fprintf (stdout, "Building topology for copy of input vector ...\n" );	    
+	Vect_build ( &Out, stdout );
 	Vect_close (&In);
 	Vect_close (&Out);
 
 	Vect_open_update (&Out, out_opt->answer, G_mapset()); 
 
+	fprintf (stdout,         "--------------------------------------------------\n" );
 	for ( i = 0; i < ntools ; i++ ) { 
 	    switch ( tools[i] ) {
 		case TOOL_BREAK:
@@ -189,6 +204,11 @@ main (int argc, char *argv[])
 		    fprintf (stderr, "Tool: Snap vertex to a line and create new vertex at that line\n" );
 		    fflush ( stderr );
                     svtl ( &Out, otype, TOOL_SVTLX, threshs[i], (int) x_flag->answer );
+		    break;
+		case TOOL_BPOL:
+		    fprintf (stderr, "Tool: Break polygons\n" );
+		    fflush ( stderr );
+                    break_polygons ( &Out, otype, (int) x_flag->answer );
 		    break;
 	    }
 	    fprintf (stdout,         "--------------------------------------------------\n" );
