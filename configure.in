@@ -1,7 +1,5 @@
 #############################################################################
 #
-# $Id$
-#
 # MODULE:   	Grass Compilation
 # AUTHOR(S):	Original author unknown - probably CERL
 #   	    	Eric G. Miller - egm2@jps.net
@@ -25,7 +23,7 @@ define([AC_CACHE_VAL], [
 $2
 ])
 
-AC_INIT(include/Make/Grass.make)
+AC_INIT(include/Make/Grass.make.in)
 AC_PREFIX_DEFAULT(/usr/local)
 AC_CONFIG_HEADER(include/config.h)
 AC_CANONICAL_HOST
