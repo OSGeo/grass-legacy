@@ -6,6 +6,6 @@ all: $(BIN_CONTRIB_CMD)/$(PGM)
 
 
 $(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB) 
-	$(CC) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #
