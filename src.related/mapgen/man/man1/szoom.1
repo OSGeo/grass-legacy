@@ -1,6 +1,6 @@
-.\" @(#)szoom.1 - 1.1
+.\" @(#)szoom.1 - 1.2
 .nr LL 5.5i
-.TH SZOOM 1 4/25/89 "USGS/OEMG Systems"
+.TH SZOOM 1 4/26/89 "USGS/OEMG Systems"
 .ad b
 .hy 1
 .SH NAME
@@ -117,6 +117,14 @@ This option provides for digitizing a series of vectors whose
 coordinates are recorded in the log file by clicking the
 left button at each of the nodes selected.
 The operation is discontinued when the right button is clicked.
+.TP
+.B Poly
+.br
+.B Poly
+is the same as
+.B Line
+except that the when drafting is discontinued (right button click)
+a closure vector to the first point is made (thus a poly-line).
 .TP
 .B Text
 .br
