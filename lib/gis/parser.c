@@ -903,6 +903,7 @@ int G_usage_html (void)
 
 
 			opt = opt->next_opt ;
+			fprintf(stdout," ");
 		}
 		fprintf(stdout, "\n");
 	}
