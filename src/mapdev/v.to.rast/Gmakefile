@@ -1,0 +1,37 @@
+EXTRA_CFLAGS = $(VECT_INCLUDE) 
+
+OFILES = \
+	do_areas.o \
+	do_lines.o \
+	do_sites.o \
+	find_line.o \
+	bres_line.o \
+	polyfill.o \
+	clock.o \
+	update_hist.o \
+	vtoc.o
+
+CFILES = \
+	do_areas.c \
+	do_lines.c \
+	do_sites.c \
+	find_line.c \
+	bres_line.c \
+	polyfill.c \
+	clock.c \
+	update_hist.c \
+	vtoc.c
+
+all: $(BIN_MAIN_CMD)/v.to.rast
+
+$(BIN_MAIN_CMD)/v.to.rast: $(OFILES) $(VECTLIB) $(GISLIB)
+	rm -f a.out $@
+	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	mv a.out $@
+
+
+$(OFILES):	vtoc.h
+
+
+saber_src:
+	#load $(EXTRA_CFLAGS) $(CFLAGS) ../Vlib/*.c ../diglib/*.c $(CFILES) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
