@@ -44,7 +44,8 @@ void set_datumshift(
 		    if(strcmp(out_ellipse,"grs80")!=0)
 			G_warning("Ellipse for nad83 should be grs80");
 		    INVERSE_FLAG=0;
-		    CONVERSION_TABLE=nad_init("%s/etc/nad/conus",G_gisbase());
+		    sprintf(cnv_table,"%s/etc/nad/conus",G_gisbase());
+		    CONVERSION_TABLE=nad_init(cnv_table);
 		    proj_f=pj_do_proj_nad;
 		    return;
 		}
