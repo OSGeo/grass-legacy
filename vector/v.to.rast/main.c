@@ -1,4 +1,3 @@
-/* $Id$ */
 #include <stdio.h> 
 #include <stdlib.h>
 #include "gis.h"
@@ -81,7 +80,7 @@ int main (int argc, char *argv[])
     if ( use_opt->answer[0] == 'a' ) {
 	use = USE_ATTR;
 	if ( !col->answer )
-    	    G_fatal_error ("col option missing" );	    
+    	    G_fatal_error ("col parameter missing (or use value parameter)" );
     } else if ( use_opt->answer[0] == 'c' ) {
 	use = USE_CAT;
     } else if ( use_opt->answer[0] == 'v' ) {
