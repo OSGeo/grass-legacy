@@ -57,7 +57,7 @@ fi
 #######################################################
 
 echo "Starting GRASS 5 ..."
-GISBASE=/usr/local/grass-5.0b
+GISBASE=/usr/people/jhickey/grassCVS/grass
 export GISBASE
 
 TCLTKGRASSBASE=$GISBASE/tcltkgrass
@@ -138,9 +138,9 @@ g.gisenv MONITOR=
 LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
 export LOCATION
 
-if [ $CREATE_NEW_LOCATION = "Y" ] ; then
+if [ $LOCATION_NAME == "##NONE##" ] ; then
   rm -f ~/.grassrc5
-  $GISBASE/etc/gis_set
+  $GISBASE/etc/set_data
   if [ $? != 0 ]; then
     exit
   fi
