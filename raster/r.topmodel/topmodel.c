@@ -67,7 +67,7 @@ initialize(void)
 		if(t > misc.tch_[params.nch - 1]){
 			misc.Add[i] = 1.0;
 		}else{
-			for(j=1; j<misc.nreach_; j++){
+			for(j=1; j<params.nch; j++){
 				if(t <= misc.tch_[j]){
 					misc.Add[i] = params.Ad_r[j-1] +
 					  (params.Ad_r[j] - params.Ad_r[j-1]) *
@@ -76,7 +76,6 @@ initialize(void)
 					break;
 				}
 			}
-
 		}
 	}
 
