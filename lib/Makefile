@@ -13,6 +13,7 @@ SUBDIRS = \
 	external \
 	fonts \
 	gis \
+	gmath \
 	gtcltk \
 	form \
 	image \
