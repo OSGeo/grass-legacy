@@ -9,6 +9,10 @@ The TCLTKGRASS shell must be run (in the background) from the GRASS shell.
     exit 1
 }
 
+set env(GISDBASE) [exec g.gisenv get=GISDBASE]
+set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
+set env(MAPSET) [exec g.gisenv get=MAPSET]
+
 set env(TCLTKGRASSBASE) $env(GISBASE)/tcltkgrass
 
 append regexp .* $env(GISBASE) {[^:]*}
