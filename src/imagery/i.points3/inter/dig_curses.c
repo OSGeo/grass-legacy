@@ -554,14 +554,14 @@ curses_yes_no_default (n, str, def)
 
 /*
 */
-suspend ()
+mysuspend ()
 {
     move (LINES-1, 0);
     refresh ();
     endwin ();
 }
 
-respend ()
+myrespend ()
 {
     crmode ();
     noecho();
