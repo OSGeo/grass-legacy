@@ -1,0 +1,6 @@
+EXTRA_CFLAGS=-I..
+
+LIST  =  main.o io.o colors125.o colors216.o
+
+all: $(LIST)
+$(LIST): ../interface.h
