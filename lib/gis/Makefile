@@ -164,6 +164,7 @@ LIB_OBJS = \
 	short_way.o\
 	sites.o\
 	sleep.o\
+	spawn.o \
 	squeeze.o\
 	store.o\
 	strings.o\
