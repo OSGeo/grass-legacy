@@ -11,6 +11,7 @@ main(int argc, char *argv[])
     dbConnection conn;
     struct Flag *print;
     struct Option *driver, *database, *location, *user, *password, *keycol;
+    struct GModule *module;
     
     print = G_define_flag();
     print->key               = 'p';
@@ -21,7 +22,7 @@ main(int argc, char *argv[])
     driver->type       = TYPE_STRING ;
     driver->required   = NO  ;
     driver->multiple   = NO ;
-    driver->description= "DBMI driver name:" ;
+    driver->description= "driver name:" ;
      
     database = G_define_option() ;
     database->key        = "database" ;
@@ -58,12 +59,16 @@ main(int argc, char *argv[])
     keycol->multiple   = NO ;
     keycol->description= "Key column:" ;
 
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Connect to the database through DBMI.";
+
     /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
 
-    /* Check command line */
-    if (G_parser(argc, argv))
-	exit(-1);
+    if(G_parser(argc, argv))
+	exit(ERROR);
 
     /* set connection*/
     if( !print->answer) 

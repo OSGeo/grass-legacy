@@ -54,6 +54,7 @@ parse_command_line(int argc, char *argv[])
 {
     struct Option *driver, *database, *location;
     struct Flag *s;
+    struct GModule *module;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -78,11 +79,16 @@ parse_command_line(int argc, char *argv[])
     s->key		= 's';
     s->description	= "system tables instead of user tables";
 
-    G_disable_interactive();
-    
-    if (argc > 1) {
-	if(G_parser(argc, argv)) exit(ERROR);
-    }
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "List all tables for a given database.";
+
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
+    if(G_parser(argc, argv))
+	exit(ERROR);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;

@@ -73,6 +73,7 @@ void
 parse_command_line(argc, argv) char *argv[];
 {
     struct Option *driver, *database, *location, *input;
+    struct GModule *module;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -100,11 +101,16 @@ parse_command_line(argc, argv) char *argv[];
     input->required 	= NO;
     input->description 	= "filename with sql statement";
 
-    G_disable_interactive();
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Execute any SQL statement.";
+
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
     
-    if (argc > 1) {
-	if(G_parser(argc, argv)) exit(ERROR);
-    }
+    if(G_parser(argc, argv))
+	exit(ERROR);
 
     parms.driver	= driver->answer;
     parms.database	= database->answer;

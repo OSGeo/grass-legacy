@@ -50,6 +50,7 @@ parse_command_line(int argc, char *argv[])
 {
     struct Option *driver, *location;
     struct Flag *l;
+    struct GModule *module;
 
     driver 		= G_define_option();
     driver->key 	= "driver";
@@ -69,11 +70,16 @@ parse_command_line(int argc, char *argv[])
     l->key 		= 'l';
     l->description	= "output database location also";
     
-    G_disable_interactive();
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "List all databases for a given driver.";
 
-    if (argc > 1) {
-	if (G_parser(argc, argv)) exit(ERROR);
-    }
+    /* Initialize the GIS calls */
+    G_gisinit(argv[0]) ;
+
+    if(G_parser(argc, argv))
+            exit(ERROR);
 
     parms.driver     = driver->answer;
     parms.l          = l->answer;
