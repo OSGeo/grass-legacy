@@ -37,8 +37,6 @@ int exec_rectify(void);
 /* get_wind.c */
 int get_target_window(void);
 int georef_window(struct Cell_head *, struct Cell_head *);
-/* mail.c */
-int mail(char *);
 /* matrix.c */
 int compute_georef_matrix(struct Cell_head *, struct Cell_head *);
 /* perform.c */
@@ -48,7 +46,7 @@ int get_psuedo_control_pt(int, int);
 /* rectify.c */
 int rectify(char *, char *, char *);
 /* report.c */
-int report(char *, char *, char *, char *, long, long, int);
+int report(char *, char *, char *, long, long, int);
 /* target.c */
 int get_target(char *);
 /* write.c */
