@@ -1,0 +1,3 @@
+$(BIN_MAIN_CMD)/g.findfile: main.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB)
+$(GISLIB): #
