@@ -13,7 +13,10 @@
  *   	    	Read the file COPYING that comes with GRASS for details.
  ****************************************************************************
  * $Log$
- * Revision 1.3  2000-11-06 19:42:22  andreas
+ * Revision 1.4  2000-11-28 13:07:29  andreas
+ * added module descr.
+ *
+ * Revision 1.3  2000/11/06 19:42:22  andreas
  * changed sequence of call to G_parser and opening log file
  *
  */
@@ -34,9 +37,14 @@ char *argv[];
 	int err;
 	struct Option *input, *type, *globe;
 	struct Flag *flag;
+	struct GModule *module;
 
 	G_gisinit(argv[0]);
 
+	module = G_define_module();
+	module->description = 
+		"Import ATLAS GIS vector files into GRASS binary vector files. ";
+	
 	input = G_define_option();
 	input->key = "input";
 	input->description = "Atlas filename, no extension";
