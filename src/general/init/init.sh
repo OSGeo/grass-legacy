@@ -274,10 +274,12 @@ echo
 echo "This version running thru the $shellname ($SHELL)"
 echo "Help is available with the command:      g.help"
 echo "See the licence terms with:              g.version"
-#
-#if [ $GRASS_GUI = "text" ] ; then
+
+if [ $GRASS_GUI = "text" ] ; then
     echo "Start the graphical user interface with: tcltkgrass&"
-#fi
+else
+    echo "If required, restart the graphical user interface with: tcltkgrass&"
+fi
 
 echo "When ready to quit enter:                exit"
 
