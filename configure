@@ -1139,7 +1139,7 @@ if test "${enable_socket+set}" = set; then
   enableval="$enable_socket"
   :
 else
-  enable_socket=yes
+  enable_socket=no
 fi
 
 
