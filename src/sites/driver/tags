@@ -1,0 +1,7 @@
+Mmain	main.c	/^main()$/
+catch	duplicates.c	/^static catch(n)$/
+duplicates	duplicates.c	/^duplicates (s1)$/
+get_site	get_site.c	/^get_site(site_list)$/
+run	run.c	/^run (site_list, pgm, action, clipped, with_comment/
+site_edit	site_edit.c	/^site_edit (site_list)$/
+unix_cmd	unix_cmd.c	/^unix_cmd (pgm, site_list)$/
