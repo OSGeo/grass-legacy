@@ -22,51 +22,78 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <p>
 <b>Modules</b>
 <menu>
+<li> d.dm: added, new display manager (replaces d.display) (Radim Blazek)
 <li> d.what.db added: view/edit DB sites attributes (Radim Blazek)
+<li> g.version: fixed (Andreas Lange)
 <li> i.colors: automated refresh added (Markus Neteler)
+<li> i.points3: small fix, better than i.points
+<li> ps.map: old version replaced by ps.map.new (Radim Blazek)
 <li> r.agnps.*: updated to make it work within GRASS 5 (Markus Neteler)
 <li> r.cn, r.cn2: updated (Markus Neteler, John Huddleston)
 <li> r.cost: accepts sites files as start and stop points (Pierre de Mouveaux)
 <li> r.drain: corrected lat-lon projection issues, 3 selectable output modes (Pierre de Mouveaux)
 <li> r.in.globedem added for importing GLOBE DEM data (Markus Neteler)
 <li> r.in.dem added to read USGS DEMs (Eric Buddington)
+<li> r.in.globedem: added, script to import GLOBE DEM from NOAA (Markus Neteler)
 <li> r.in.tiff: bugfix for seg. fault (Carl Anderson)
 <li> r.in.shape: added (Radim Blazek)
+<li> r.flowmd: bugfix on Floating exception error (Huidae Cho)
 <li> r.line working now with Grass5 (Pierre de Mouveaux)
+<li> r.null: bugfix (Huidae Cho)
+<li> r.out.pov: added for POVRAY export (Klaus D. Meyer)
 <li> r.timestamp: fixed library function (Bill Hughes, Bill Brown)
-<li> r.to.sites: bugfix for seg. fault (Bill Brown)
+<li> r.to.pg: script to store raster maps in PostgreSQL (Markus Neteler)
+<li> r.to.sites: bugfix on seg. fault (Bill Brown)
+<li> s.in.garmin.sh: added (Andreas Lange)
 <li> s.in.shape: added, reads an ArcView Shapefile with points or
      multipoint SHAPES (David D. Gray)
+<li> s.to.rast: bugfix (Markus Neteler)
+<li> v.area: added -i to take island areas into account (David D. Gray)
 <li> v.autocorr: bugfix (David D. Gray)
-<li> v.extract: writes cats now (David D. Gray)
+<li> v.bubble: added parameter to select sites attribute (Markus Neteler)
+<li> v.circle: bugfix (Markus Neteler)
+<li> v.clean: bugfix (David D. Gray)
+<li> v.cutter: added category support (David D. Gray)
+<li> v.extract: writes cats now, accept comma-separated fields (David D. Gray)
 <li> v.in.shape: Splitting of shapefile rings to arc-node segments,
       Correction (through options) of some common topological problems with imported
      data, Removal of duplicate rings and line segments, label bug
      fix  (David D. Gray)
+<li> v.in.shape.pg: updated, in sync with v.in.shape (David D. Gray)
 <li> v.in.ascii: fixed to read DIGIT DATE properly (Huidae Cho)
 <li> v.in.dxf: fixed to read DXF header correctly (Huidae Cho)
 <li> v.in.dxf2: fixed to read DXF header correctly (Huidae Cho)
 <li> v.in.dxf3d: fixed to handle file names correctly (Huidae Cho)
+<li> v.in.garmin.sh: added (Andreas Lange)
 <li> v.out.arc: small fix for importing into ARC/INFO (Markus Neteler)
+<li> v.out.e00: added, write ESRI E00 (Michel Wurtz)
+<li> v.out.shape: added, write ESRI SHAPE (David D. Gray)
 <li> v.spag: fixed loop error, new flags (Radim Blazek)
 <li> v.timestamp: added (Markus Neteler, based on r.timestamp)
 <li> v.to.db: added to load values from vector to database (Radim Blazek)
 <p>
 <li> NVIZ: fixed image dump bug on FreeBSD and Linux (Huidae Cho)
+<p>
+<li> CELL driver: CELL resolution fixed to
+        get GRASS_WIDTH and GRASS_HEIGHT work correctly (Huidae Cho)
 </menu>
 
 <b>Database Management System support (DBMS)</b>
 <menu>
-<li>new general DBMS driver (can be used e.g. with <a href=http://www.unixodbc.org>unixODBC</a>
-to link GRASS to PostgreSQL, Oracle, MySQL, ... (Radim Blazek)
-<li>new DBMS-modules: db.attr, d.db, d.what.db, v.db.reclass, v.to.db (Radim Blazek)
+<li> new general DBMS driver (can be used e.g. with <a href=http://www.unixodbc.org>unixODBC</a>
+     to link GRASS to PostgreSQL, Oracle, MySQL, ... (Radim Blazek)
+<li> new DBMS-modules: db.attr, db.columns, db.connect, d.db, db.describe, 
+     db.execute, 
+     db.select, db.tables, d.what.db, v.db.reclass, v.to.db (Radim Blazek)
 </menu>
 
 <b>G3D-support</b> (new 3D raster format "voxels")
 <menu>
-<li>new grid3D modules added: r3.in.v5d, r3.out.v5d to exchange
-    data with VIS5D, s.to.rast3 to convert 3D sites to grid3D (Jaro Hofierka)
-<li>g3.createwind added to create 3D region from 2D region (Markus Neteler)
+<li> new grid3D modules added: r3.in.v5d, r3.out.v5d to exchange
+     data with VIS5D, s.to.rast3 to convert 3D sites to grid3D (Jaro Hofierka)
+<li> g3.createwind added to create 3D region from 2D region (Markus Neteler)
+<li> r3.mapcalc: bugfix on NULL values at edges (Jaro Hofierka)
+<li> g3.list, g3.remove, g3.rename scripts added (Markus Neteler)
 </menu>
 
 <b>Simulation models</b>
@@ -77,16 +104,30 @@ to link GRASS to PostgreSQL, Oracle, MySQL, ... (Radim Blazek)
 
 <b>Source Code</b>
 <menu>
+<li> updated all vector modules on include headers (Vect.h only now) (Bill
+     Hughes)
 <li> changed compilation process script to ignore errors and
      missing modules and write this into file error.log (Markus Neteler)
-<li> removed src.related section for code cleanup
-<li> removed XGRASS for code cleanup
+<li> removed src.related section for code cleanup (Markus Neteler)
+<li> removed XGRASS for code cleanup (Markus Neteler)
 <dd> you can still access the code using an old tag:<br>
  cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src.related<br>
  cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src/xgrass<br>
  cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src/include
 <li> WINDOWS/NT: improved portability (John Huddleston)
 <li> libes: fixes for src/libes/ogsf and src/libes/ and src/libes/libimage
+<li> Vect_get_area_points() and Vect_get_isle_points() updated (David D
+     Gray)
+<li> SGI-fixes (John Edgecombe)
+<li> $GISBASE/garden eliminated as unused (Markus Neteler)
+<li> libgis.a and gis.h are stored in binaries now (needed for R statistics
+     package) (Roger Bivand/Markus Neteler)
+<li> src/general/init: internal improvement (Justin Hickey)
+</menu>
+
+<b>Font support</b>
+<menu>
+<li> added cyrillic encoding (Alex Shevlakov)
 </menu>
 
 <hr>
