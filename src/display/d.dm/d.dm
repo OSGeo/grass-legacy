@@ -464,7 +464,7 @@ proc dm_save { } {
     global env slb set map
     set slist [$slb items]
     set fpath "$env(GISDBASE)/$env(LOCATION_NAME)/$env(MAPSET)/.d.dmrc"
-    puts stdout "Writting to $fpath" 
+    puts stdout "Writing to $fpath" 
     set file [open $fpath w]
 
     foreach s $slist {
