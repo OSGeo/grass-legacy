@@ -151,7 +151,8 @@ LOC_ARG_WITH(fftw, FFTW)
 LOC_ARG_WITH(blas, BLAS, no)
 LOC_ARG_WITH(lapack, LAPACK, no)
 LOC_ARG_WITH(motif, Motif, no)
-LOC_ARG_WITH(freetype, FreeType,no)
+LOC_ARG_WITH(freetype, FreeType, no)
+LOC_ARG_WITH(glw, GLw, no)
 
 # With includes and libs options
 
@@ -206,6 +207,9 @@ LOC_ARG_WITH_LIB(motif, Motif)
 
 LOC_ARG_WITH_INC(freetype, FreeType)
 LOC_ARG_WITH_LIB(freetype, FreeType)
+
+LOC_ARG_WITH_INC(glw, GLw)
+LOC_ARG_WITH_LIB(glw, GLw)
 
 # Enable SysV option
 
@@ -814,16 +818,6 @@ AC_SUBST(OPENGLULIB)
 
 # Done checking OpenGL
 
-# GLw isn't used currently, so there's not much point in checking for it
-
-OPENGLwINC=
-LGLWM=
-
-AC_SUBST(OPENGLwINC)
-AC_SUBST(LGLWM)
-
-# Done checking GLw
-
 # Enable ODBC option
 
 LOC_CHECK_USE(odbc,ODBC,USE_ODBC)
@@ -964,6 +958,45 @@ AC_SUBST(XMLIB)
 
 # Done checking Motif
 
+# Enable GLw option
+
+LOC_CHECK_USE(glw,GLw,USE_GLW)
+
+OPENGLwINC=
+LGLWM=
+
+if test -n "$USE_GLW"; then
+
+# With GLw includes directory
+
+LOC_CHECK_INC_PATH(glw,GLw,OPENGLwINC)
+
+LOC_CHECK_INCLUDES(GL/GLwMDrawA.h,GLwM,$OPENGLwINC $XMINC $OPENGLINC)
+
+# With GLw library directory
+
+LOC_CHECK_LIB_PATH(glw,GLw,LGLWM)
+
+LOC_CHECK_LIBS(GLw, GLwCreateMDrawingArea, GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(GLw, GLwCreateM1DrawingArea,GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(GLw, GLwCreateM2DrawingArea,GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(GLwM,GLwCreateMDrawingArea, GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(GLwM,GLwCreateM1DrawingArea,GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+LOC_CHECK_LIBS(GLwM,GLwCreateM2DrawingArea,GLwM,$LGLWM $XMLIB $OPENGL_LIB_PATH,LGLWM,$X_LIBS $OPENGLLIB -lXm -lXt $X_PRE_LIBS -lX11 $X_EXTRA_LIBS,,[
+])
+])
+])
+])
+])
+])
+
+fi # $USE_OPENGL && $USE_MOTIF
+
+AC_SUBST(OPENGLwINC)
+AC_SUBST(LGLWM)
+
+# Done checking GLw
+
 # Enable FreeType option
 
 LOC_CHECK_USE(freetype,FreeType,USE_FREETYPE)
@@ -1063,4 +1096,5 @@ LOC_MSG_USE(BLAS support,USE_BLAS)
 LOC_MSG_USE(LAPACK support,USE_LAPACK)
 LOC_MSG_USE(Motif support,USE_MOTIF)
 LOC_MSG_USE(FreeType support,USE_FREETYPE)
+LOC_MSG_USE(GLw support,USE_GLW)
 LOC_MSG()
