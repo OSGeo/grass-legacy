@@ -1,0 +1,9 @@
+
+
+s.out.ascii - 
+
+s.out.ascii converts an existing site list file into an ASCII listing of
+site locations and (optionally) their \category labels\, in a format
+suitable for input to other programs (e.g., \d.points\, \m.u2ll\, etc.)
+
+Manual entry for \s.out.ascii\
