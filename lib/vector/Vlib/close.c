@@ -61,8 +61,10 @@ Vect_close (struct Map_info *Map)
 	Vect_save_spatial_index ( Map );
 	Vect_cidx_save ( Map );
 
+#ifdef HAVE_OGR
 	if ( Map->format == GV_FORMAT_OGR ) 
 	    V2_close_ogr ( Map );
+#endif
     }
     
     if ( Map->level == 2 ) {

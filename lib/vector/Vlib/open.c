@@ -211,6 +211,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
 	      level = 1;
 	  }
       }
+#ifdef HAVE_OGR
       /* Open OGR specific support files */
       if ( level == 2 && Map->format == GV_FORMAT_OGR ) {
 	  if ( V2_open_old_ogr ( Map ) < 0 ) {
@@ -220,6 +221,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
 	      level = 1;
 	  }
       }
+#endif
       if (level_request == 2 && level < 2) {
 	  sprintf ( errmsg, "Cannot open old vector %s on level %d", Vect_get_full_name(Map), level_request ); 
 	  fatal_error (ferror, errmsg);
