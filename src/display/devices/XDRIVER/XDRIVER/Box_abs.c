@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include <X11/Xos.h>
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+#include "includes.h"
 #include "../lib/driver.h"
 
 extern Display *dpy;
@@ -26,7 +24,7 @@ Box_abs(x1, y1, x2, y2)
     }
     XFillRectangle(dpy, grwin, gc, x1, y1, (unsigned) x2 - x1 + 1,
             (unsigned) y2 - y1);
-    if (backing_store != Always)
+    if (!backing_store)
         XFillRectangle(dpy, bkupmap, gc, x1, y1, (unsigned) x2 - x1 + 1,
                 (unsigned) y2 - y1);
 }
@@ -38,7 +36,7 @@ int x1, y1, width, height;
 {
     XFillRectangle(dpy, grwin, gc, x1, y1, (unsigned) width + 1,
             (unsigned) height);
-    if (backing_store != Always)
+    if (!backing_store)
         XFillRectangle(dpy, bkupmap, gc, x1, y1, (unsigned) width + 1,
                 (unsigned) height);
 }
@@ -48,7 +46,7 @@ int width, height;
 {
     XFillRectangle(dpy, grwin, gc, cur_x, cur_y, (unsigned) width + 1,
             (unsigned) height);
-    if (backing_store != Always)
+    if (!backing_store)
         XFillRectangle(dpy, bkupmap, gc, cur_x, cur_y,
                 (unsigned) width + 1, (unsigned) height);
 }
