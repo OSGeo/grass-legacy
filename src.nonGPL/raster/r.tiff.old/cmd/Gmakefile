@@ -1,0 +1,26 @@
+# %W% %G%
+
+PGM1=r.out.tiff
+PGM2=r.in.tiff
+
+EXTRA_CFLAGS = -I../libtiff 
+
+PGM1OFILES = \
+	r.out.tiff.o
+
+PGM2OFILES = \
+	r.in.tiff.o
+
+#all:  $(BIN_CONTRIB_CMD)/$(PGM1) $(BIN_CONTRIB_CMD)/$(PGM2) $(MAN1)/$(PGM)
+all:  $(BIN_CONTRIB_CMD)/$(PGM1) $(BIN_CONTRIB_CMD)/$(PGM2)
+
+$(BIN_CONTRIB_CMD)/$(PGM1): $(PGM1OFILES) 
+	$(CC) $(LDFLAGS) -o $@ $(PGM1OFILES) $(GISLIB) ../libtiff/libtiff.a $(EXTRALIB)
+
+$(BIN_CONTRIB_CMD)/$(PGM2): $(PGM2OFILES) 
+	$(CC) $(LDFLAGS) -o $@ $(PGM2OFILES) $(GISLIB) ../libtiff/libtiff.a $(EXTRALIB)
+
+$(MAN1)/$(PGM): MAN
+	rm -f $@ ; cp $? $@; chmod +r $@
+
+$(GISLIB): #
