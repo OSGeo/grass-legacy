@@ -19,7 +19,6 @@
 #include "string.h"
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "gis.h"
 #include "Vect.h"
 /*
 
@@ -284,12 +283,34 @@ Vect_open_new (
 		char *name,
 		int with_z)
 {
-    int format;
+    int format, ret, ferror;
     char buf[200];
     FILE *fp;
     
     Vect__init_head (Map);
+    ferror = Vect_get_fatal_error ();
+    Vect_set_fatal_error (GV_FATAL_EXIT);
 
+    /* Check if map already exists */
+    if ( G_find_file(GRASS_VECT_DIRECTORY, name, G_mapset()) != NULL ) {
+       G_warning ("Vector '%s' already exists and will be overwritten.");
+       ret = Vect_delete ( name );
+       if ( ret == -1 ) {
+	  switch ( ferror ) {
+	      case GV_FATAL_EXIT:
+		  G_fatal_error ( "Cannot delete existing vector %s", name ); 
+		  break;
+	      case GV_FATAL_PRINT:
+		  fprintf(stderr, "ERROR: Cannot delete existing vector %s\n", name ); 
+		  return (-1);
+		  break;
+	      case GV_FATAL_RETURN:
+		  return (-1);
+		  break;
+	  }
+       }
+    }
+    
     Map->name = G_store (name);
     Map->mapset = G_store ( G_mapset() );
     
@@ -307,7 +328,7 @@ Vect_open_new (
     Map->format = format;
     
     if (0 > (*Open_new_array[format][1]) (Map, name, with_z)) {
-	  switch ( Vect_get_fatal_error () ) {
+	  switch ( ferror ) {
 	      case GV_FATAL_EXIT:
 		  G_fatal_error ( "Cannot open new vector %s", Vect_get_full_name(Map) ); 
 		  break;
@@ -319,7 +340,6 @@ Vect_open_new (
 		  return (-1);
 		  break;
 	  }
-	  Vect_set_fatal_error (GV_FATAL_EXIT);
     }
 
     Open_level = 0;
