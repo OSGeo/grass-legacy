@@ -17,7 +17,8 @@ SUBDIRS1 = \
 	i.rectify \
 	i.rgb.his \
 	i.smap \
-	i.target
+	i.target \
+	i.vpoints 
 
 FFTWBASED = i.cca i.fft i.ifft i.pca i.zc
 
