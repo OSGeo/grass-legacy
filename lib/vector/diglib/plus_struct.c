@@ -156,10 +156,7 @@ dig_Wr_P_node (
 }
 
 int 
-dig_Rd_P_line (
-		  struct Plus_head *Plus,
-		  int  n,
-		  GVFILE * fp)
+dig_Rd_P_line ( struct Plus_head *Plus, int  n, GVFILE * fp)
 {
   int n_edges, vol;
   char  tp;
@@ -179,7 +176,8 @@ dig_Rd_P_line (
 
   ptr = dig_alloc_line();
 
-  ptr->type = tp;
+  ptr->type = dig_type_from_store ( tp );
+  G_debug (5, "    line type  %d -> %d", tp, ptr->type);
   
   if (0 >= dig__fread_port_L (&(ptr->offset), 1, fp)) return (-1);
 
@@ -248,11 +246,11 @@ dig_Wr_P_line (
 		  int  n,
 		  GVFILE * fp)
 {
-  int n_edges = 0, vol = 0;
+  int  n_edges = 0, vol = 0;
   char ch;
   P_LINE *ptr; 
 
-  G_debug (3, "dig_Wr_P_line() line = %d", n);
+  G_debug (4, "dig_Wr_P_line() line = %d", n);
   
   ptr = Plus->Line[n];
   
@@ -264,7 +262,9 @@ dig_Wr_P_line (
       return 0;
   }
   
-  if (0 >= dig__fwrite_port_C (&(ptr->type), 1, fp)) return (-1);
+  ch = (char) dig_type_to_store ( ptr->type ); 
+  G_debug (5, "    line type  %d -> %d", ptr->type, ch);
+  if (0 >= dig__fwrite_port_C (&ch, 1, fp)) return (-1);
   if (0 >= dig__fwrite_port_L (&(ptr->offset), 1, fp)) return (-1);
 
   /* First node */

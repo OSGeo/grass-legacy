@@ -8,6 +8,8 @@ LIB_OBJS = \
     allocation.o  \
     angle.o  \
     box.o  \
+    cindex.o  \
+    cindex_rw.o  \
     file.o \
     frmt.o \
     head.o \
@@ -25,6 +27,7 @@ LIB_OBJS = \
     spindex.o  \
     spindex_rw.o  \
     struct_alloc.o \
+    type.o \
     update.o
 
 

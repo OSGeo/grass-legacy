@@ -88,6 +88,7 @@ dig_init_plus (struct Plus_head *Plus)
     Plus->Hole_spidx_offset = 0L ;
     
     dig_spidx_init ( Plus );
+    dig_cidx_init ( Plus );
     
     return 1;
 }
@@ -97,24 +98,26 @@ dig_free_plus_nodes (struct Plus_head *Plus)
 {
     int i;    
     P_NODE *Node;
+    
+    G_debug(2, "dig_free_plus_nodes()");
 
     /* Nodes */
-    for (i = 1; i <= Plus->n_nodes; i++) {
-        Node = Plus->Node[i]; 	
-	if ( Node == NULL ) continue;
-	
-	if ( Node->alloc_lines > 0 ) {
-	    free ( Node->lines);
-	    free ( Node->angles);
+    if ( Plus->Node ) { /* it may be that header only is loaded */
+	for (i = 1; i <= Plus->n_nodes; i++) {
+	    Node = Plus->Node[i]; 	
+	    if ( Node == NULL ) continue;
+	    
+	    if ( Node->alloc_lines > 0 ) {
+		free ( Node->lines);
+		free ( Node->angles);
+	    }
+	    free (Node);
 	}
-        free (Node);
+        free ( Plus->Node );
     }
-    free ( Plus->Node );
     Plus->Node = NULL ;
     Plus->n_nodes = 0 ;
     Plus->alloc_nodes = 0 ;
-
-    dig_spidx_free_nodes ( Plus );
 }
 
 void 
@@ -123,14 +126,18 @@ dig_free_plus_lines (struct Plus_head *Plus)
     int i;    
     P_LINE *Line;
 
+    G_debug(2, "dig_free_plus_lines()");
+
     /* Lines */
-    for (i = 1; i <= Plus->n_lines; i++) {
-        Line = Plus->Line[i]; 	
-	if ( Line == NULL ) continue;
-	
-        free (Line);
+    if ( Plus->Line ) { /* it may be that header only is loaded */
+	for (i = 1; i <= Plus->n_lines; i++) {
+	    Line = Plus->Line[i]; 	
+	    if ( Line == NULL ) continue;
+	    
+	    free (Line);
+	}
+        free ( Plus->Line );
     }
-    free ( Plus->Line );
 
     Plus->Line = NULL ;
     Plus->n_lines = 0 ;
@@ -142,8 +149,6 @@ dig_free_plus_lines (struct Plus_head *Plus)
     Plus->n_clines = 0 ;
     Plus->n_flines = 0 ;
     Plus->n_klines = 0 ;
-
-    dig_spidx_free_lines ( Plus );
 }
 
 void 
@@ -152,25 +157,27 @@ dig_free_plus_areas (struct Plus_head *Plus)
     int i;    
     P_AREA *Area;
 
+    G_debug(2, "dig_free_plus_areas()");
+    
     /* Areas */
-    for (i = 1; i <= Plus->n_areas; i++) {
-        Area = Plus->Area[i]; 	
-	if ( Area == NULL ) continue;
-	
-	if ( Area->alloc_lines > 0 ) 
-	    free ( Area->lines);
+    if ( Plus->Area ) { /* it may be that header only is loaded */
+	for (i = 1; i <= Plus->n_areas; i++) {
+	    Area = Plus->Area[i]; 	
+	    if ( Area == NULL ) continue;
+	    
+	    if ( Area->alloc_lines > 0 ) 
+		free ( Area->lines);
 
-	if ( Area->alloc_isles > 0 ) 
-	    free ( Area->isles);
-	
-        free (Area);
+	    if ( Area->alloc_isles > 0 ) 
+		free ( Area->isles);
+	    
+	    free (Area);
+	}
+        free ( Plus->Area );
     }
-    free ( Plus->Area );
     Plus->Area = NULL ;
     Plus->n_areas = 0 ;
     Plus->alloc_areas = 0 ;
-
-    dig_spidx_free_areas ( Plus );
 }
 
 void 
@@ -179,23 +186,25 @@ dig_free_plus_isles (struct Plus_head *Plus)
     int i;    
     P_ISLE *Isle;
 
-    /* Isles */
-    for (i = 1; i <= Plus->n_isles; i++) {
-        Isle = Plus->Isle[i]; 	
-	if ( Isle == NULL ) continue;
-	
-	if ( Isle->alloc_lines > 0 ) 
-	    free ( Isle->lines);
+    G_debug(2, "dig_free_plus_isles()");
 
-        free (Isle);
+    /* Isles */
+    if ( Plus->Isle ) { /* it may be that header only is loaded */
+	for (i = 1; i <= Plus->n_isles; i++) {
+	    Isle = Plus->Isle[i]; 	
+	    if ( Isle == NULL ) continue;
+	    
+	    if ( Isle->alloc_lines > 0 ) 
+		free ( Isle->lines);
+
+	    free (Isle);
+	}
+	free ( Plus->Isle );
     }
-    free ( Plus->Isle );
 
     Plus->Isle = NULL ;
     Plus->n_isles = 0 ;
     Plus->alloc_isles = 0 ;
-
-    dig_spidx_free_isles ( Plus );
 }
 
 /* Free head structure. 
@@ -204,10 +213,13 @@ dig_free_plus_isles (struct Plus_head *Plus)
 void 
 dig_free_plus (struct Plus_head *Plus)
 {
+    G_debug(2, "dig_free_plus()");
     dig_free_plus_nodes (Plus);
     dig_free_plus_lines (Plus);
     dig_free_plus_areas (Plus);
     dig_free_plus_isles (Plus);
+
+    dig_cidx_free(Plus);
 }
 
 /* dig_load_plus reads topo file to topo structure
@@ -216,8 +228,7 @@ dig_free_plus (struct Plus_head *Plus)
 *            0 error
 */
 int 
-dig_load_plus (	struct Plus_head *Plus,
-		GVFILE * plus)
+dig_load_plus (	struct Plus_head *Plus, GVFILE * plus, int head_only)
 {
   int i;
 
@@ -229,12 +240,14 @@ dig_load_plus (	struct Plus_head *Plus,
   */
  
   /* free and init old */ 
-  dig_free_plus ( Plus );
   dig_init_plus ( Plus );
   
   /* Now let's begin reading the Plus file nodes, lines, areas and isles */
   
   dig_Rd_Plus_head (plus, Plus);
+
+  if ( head_only ) return 1;
+  
   dig_set_cur_port ( &(Plus->port) ); 
 
   /* Nodes */
