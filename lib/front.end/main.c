@@ -127,7 +127,7 @@ fprintf(stderr, "Commandline?: %i\n", cmdLine);
 	    execvp (pgm, argv);
 	    
 	    /* Exit program with proper message */
-	    sprintf(errMsg, "ERROR: unable to run %s\n", pgm);
+	    sprintf(errMsg, "unable to run %s\n", pgm);
 	    G_fatal_error(errMsg);
 	}
 
@@ -142,7 +142,7 @@ fprintf(stderr, "p:%s i:%s c:%s\n", pgm, INTERACTIVE, cmdName);
 	if (access(pgm, F_OK | X_OK) == 0)
 	{
 	    /* Exit program with proper message */
-	    sprintf(errMsg, "Usage:\n  %s\n\n", cmdName);
+	    sprintf(errMsg, "Usage:\n  %s\n", cmdName);
 	    strcat(errMsg, "    (This command must be run interactively)\n");
 	    G_fatal_error(errMsg);
 	}
@@ -157,7 +157,7 @@ fprintf(stderr, "p:%s i:%s c:%s\n", pgm, INTERACTIVE, cmdName);
 	    execvp (pgm, argv);
 	    
 	    /* Exit program with proper message */
-	    sprintf(errMsg, "ERROR: unable to run %s\n", pgm);
+	    sprintf(errMsg, "unable to run %s\n", pgm);
 	    G_fatal_error(errMsg);
 	}
 
@@ -169,7 +169,7 @@ fprintf(stderr, "p:%s i:%s c:%s\n", pgm, INTERACTIVE, cmdName);
 	    execvp (pgm, argv);
 
 	    /* Exit program with proper message */
-	    sprintf(errMsg, "ERROR: unable to run %s\n", pgm);
+	    sprintf(errMsg, "unable to run %s\n", pgm);
 	    G_fatal_error(errMsg);
 	}
     }
@@ -177,10 +177,10 @@ fprintf(stderr, "p:%s i:%s c:%s\n", pgm, INTERACTIVE, cmdName);
     /* Exit program with proper message, note that the return */
     /* statement is there to keep compilers from complaining - it is */
     /* never executed */
-    sprintf(errMsg, "\nERROR: program '%s' cannot be executed ", cmdName);
-    strcat(errMsg, "because:\n");
-    strcat(errMsg, "\nNeither a command line (cmd) or interactive (inter) ");
-    strcat(errMsg, "version was found\n\n");
+    sprintf(errMsg, "program '%s' cannot be executed ", cmdName);
+    strcat(errMsg, "because: ");
+    strcat(errMsg, "Neither a command line (cmd) or interactive (inter) ");
+    strcat(errMsg, "version was found\n");
     G_fatal_error(errMsg);
     
     return(0);
