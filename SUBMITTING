@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.1 2000-09-26 13:34:07 markus Exp $
+$Id: SUBMITTING,v 1.2 2000-10-01 16:46:10 markus Exp $
 
 Dear (new) GRASS Developer,
 
@@ -7,6 +7,12 @@ care of following rules:
 
 - for programming style, please take a look at 
   STYLE_PROGRAMMING file
+
+- Get the latest GRASS 5 Programmer's Manual here:
+  http://www.geog.uni-hannover.de/grass/grassdevel.html
+
+  or (better) grab it from CVS server (Latex):
+    cvs -z3 co progmangrass50
 
 - place your module into the appropriate directory:
   - libes go into src/libes/
@@ -21,13 +27,13 @@ care of following rules:
 - place the documentation in HTML format into html/html/ and
   add it to the module's list in html/
   Easiest way is to modify an existing HTML page for your purposes
-  (to get the page style).
+  (to get the page style). There is a local README telling more details.
   The online WWW man pages will be updated over-night by CVS.
 
 - Tell the other developers about it:
    grass5@geog.uni-hannover.de
  
-  To subscribe to the list, see
+  To subscribe to this list, see
   http://www.geog.uni-hannover.de/grass/grassdevel.html
 
 - In case of question feel free to contact the developers at above

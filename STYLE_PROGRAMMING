@@ -1,15 +1,14 @@
 GRASS GIS programming style standards
 
-$Id: STYLE_PROGRAMMING,v 1.4 2000-08-21 12:42:31 markus Exp $
+$Id: STYLE_PROGRAMMING,v 1.5 2000-10-01 16:46:10 markus Exp $
 
 Please improve this list!
-Get the latest
-GRASS 5 Programmer's Manual
-here:
-http://www.geog.uni-hannover.de/grass/grassdevel.html
+ 
+ Get the latest GRASS 5 Programmer's Manual here:
+   http://www.geog.uni-hannover.de/grass/grassdevel.html
 
-or grab it from CVS server (Latex):
-cvs -z3 co progmangrass50
+ or (better) grab it from CVS server (Latex):
+   cvs -z3 co progmangrass50
 
 -----------------------------------------------------------
 GRASS GIS programming style standards
