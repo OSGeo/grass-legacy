@@ -76,7 +76,7 @@ int make_window_box ( struct Cell_head *window, double magnify)
 	case 2: make_window_center(window, magnify);
 		prebutton=2;
 	        button=3;
-	        quitonly=1;   /* leave after unzoom */
+	        quitonly=2;   /* leave after unzoom */
 	        break;
 	case 3: button=3;
 		if (prebutton == 1)
@@ -109,16 +109,6 @@ int make_window_box ( struct Cell_head *window, double magnify)
 	west = window->west + (t) * window->ew_res;
 
 	strcpy (buffer, "?");
-	G_format_northing(north, buffer, window->proj)  ;
-	len_n = max (len_n, strlen(buffer));
-	fprintf(stderr,"north: %-*s  ", len_n, buffer);
-
-	strcpy (buffer, "?");
-	G_format_northing(south, buffer, window->proj)  ;
-	len_s = max (len_s, strlen(buffer));
-	fprintf(stderr,"south: %-*s  ", len_s, buffer);
-
-	strcpy (buffer, "?");
 	G_format_easting(east, buffer, window->proj)  ;
 	len_e = max (len_e, strlen(buffer));
 	fprintf(stderr,"east: %-*s  ", len_e, buffer);
@@ -128,16 +118,29 @@ int make_window_box ( struct Cell_head *window, double magnify)
 	len_w = max (len_w, strlen(buffer));
 	fprintf(stderr,"west: %-*s  ", len_w, buffer);
 
+	strcpy (buffer, "?");
+	G_format_northing(north, buffer, window->proj)  ;
+	len_n = max (len_n, strlen(buffer));
+	fprintf(stderr,"north: %-*s  ", len_n, buffer);
+
+	strcpy (buffer, "?");
+	G_format_northing(south, buffer, window->proj)  ;
+	len_s = max (len_s, strlen(buffer));
+	fprintf(stderr,"south: %-*s  ", len_s, buffer);
+
 	fprintf (stderr,"\r");
 	fflush (stderr);
     } while (button != 3) ;
 
     fprintf (stderr, "\n\n");
 
-    window->north = north;
-    window->south = south;
-    window->east  = east ;
-    window->west  = west ;
+    if(prebutton != 2)
+    {
+    	window->north = north;
+    	window->south = south;
+    	window->east  = east ;
+    	window->west  = west ;
+    }
 
     return quitonly;
 }
