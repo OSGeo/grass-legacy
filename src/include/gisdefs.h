@@ -296,6 +296,12 @@ char *G_find_file2(char *, char *, char *);
 /* find_vect.c */
 char *G_find_vector(char *, char *);
 char *G_find_vector2(char *, char *);
+/* flate.c */
+int G_zlib_compress(unsigned char *, int, unsigned char *, int);
+int G_zlib_expand(unsigned char *, int, unsigned char *, int);
+int G_zlib_write(int, unsigned char *, int);
+int G_zlib_read(int, int, unsigned char *, int);
+int G_zlib_write_noCompress (int, unsigned char *, int);
 /* fork.c */
 int G_fork(void);
 /* format.c */
