@@ -41,6 +41,9 @@ ncols = window.cols;
 row = (window.north - north) / window.ns_res ;
 col = (east - window.west) / window.ew_res ;
 
+if (row < 0 )
+ G_fatal_error("Coordinate request outsite current region settings");
+
         if (data_type == CELL_TYPE) {
          cell = G_allocate_c_raster_buf();
          if (G_get_c_raster_row(fd, cell, row) < 0)
