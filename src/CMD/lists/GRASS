@@ -411,7 +411,6 @@ src.contrib/CERL/raster/r.hydro.CASC2D
 #######################################
 # from here onwards it becomes experimental!!
 #
-src.contrib/CAST/r.colors.paint
 src.contrib/CERL/imagery/i.rvi.prediction2
 src.contrib/CERL/imagery/i.shape
 ###src.contrib/CERL/libes/projsupp   # obsolete!!
