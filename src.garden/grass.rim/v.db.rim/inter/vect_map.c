@@ -233,19 +233,9 @@ char *inp_buf;
       case LINE_CHAR:
         /* get the line and add it to the binary vector file */
         cur_line = dig_point_to_line(&(Curr_map.info), s1->east,
-                                     s1->north, LINE);
-        cur_type = LINE;
-/*fprintf(stdout,"Returned line value: %d\n",cur_line);
-fprintf(stdout,"Easting/Northing: %lf / %lf\n",s1->east,s1->north);*/
+                                     s1->north, LINE|AREA);
+        cur_type = Curr_map.info.Line[cur_line].type;
 
-        /* deal with the fact that area edges can be labelled as lines too!! */
-        if (cur_line == 0) 
-	{
-          cur_line = dig_point_to_line(&(Curr_map.info), s1->east,
-                                       s1->north, AREA);
-          cur_type = AREA;
-        }
-/*fprintf(stdout,"Returned line value: %d\n",cur_line);*/
         read_write_line(s1, cur_line, &(Curr_map.info), cur_type,&new_vect_map,
                         fp_att, att_field_num, cat_field_num);
         break;
