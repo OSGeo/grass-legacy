@@ -1,0 +1,20 @@
+LIST = main.o \
+	bars.o\
+	colors.o\
+	driver.o\
+	graphics.o\
+	image.o\
+	input.o\
+	info.o\
+	mouse.o\
+	title.o
+
+LIBES = $(IMAGERYLIB) $(GISLIB) $(D_LIB) $(DISPLAYLIB) $(RASTERLIB)
+
+$(BIN)/i.colors: $(LIST) $(LIBES) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK)
+
+$(LIST): globals.h defs.h
+
+$(LIBES) $(VASKLIB): #
+
