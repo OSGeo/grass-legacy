@@ -8,6 +8,23 @@ Please modify and improve:
 $Id$
 
 
+General ideas
+
+New concepts:
+ - the I/O routines should be removed from src/libes/gis
+   and replaced by Frank Warmerdams libgrass[io]
+   This I/O routines should be treated as plugin and released under
+   LGPL for optional commerical use to allow commercial packages
+   to read/write GRASS data
+ - The raster data storage structure should be changed to the G3D
+   structure: all files related to a raster map should go into one
+   directory. Currently many files are spreaded in many directories.
+   An example for the G3D data structure can be found here:
+   http://www.geog.uni-hannover.de/grass/grid3d/index.html (sample dataset)
+
+--------------------
+Code structure:
+
 /include
 [move src/includes here]
 -> probably the includes should go with their .c files?
