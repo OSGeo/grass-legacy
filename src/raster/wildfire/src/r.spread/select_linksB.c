@@ -16,10 +16,12 @@
  *
  *************************************************************************/
 
+#include <stdio.h>
+#include <math.h>
 #include "gis.h"
 #include "costHa.h"
 #include "cell_ptrHa.h"
-#include <math.h>
+#include "local_proto.h"
 
 #ifndef PI
 #define PI 3.1415926535897932
@@ -29,10 +31,8 @@
 
 /*#define DEBUG*/
 
-select_linksB (pres_cell, least, comp_dens)
-	float           comp_dens;
-	int		least;
-	struct costHa  *pres_cell;
+void
+select_linksB (struct costHa *pres_cell, int least, float comp_dens)
 {
 	extern CELL	*map_max, *map_dir, *map_base; 		/*for ellipse*/
 	extern CELL	*map_visit;		/*for avoiding redundancy*/
@@ -51,7 +51,6 @@ select_linksB (pres_cell, least, comp_dens)
 	int		ros_max, ros_base, dir;	/*3 params defining an elps*/
 	int             row, col;
 	int             to_cell_ros;
-	struct cell_ptrHa *insert2Ha();
 #ifdef DEBUG
 printf("\nin select pres(%d,%d) ", pres_cell->row, pres_cell->col);
 #endif

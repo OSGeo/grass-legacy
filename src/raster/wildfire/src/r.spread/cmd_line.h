@@ -6,30 +6,27 @@
 /*                                                              */
 /****************************************************************/
 
-#ifdef MAIN
-#define GLOBAL
-#else
-#define GLOBAL extern
-#endif
+#ifndef CMD_LINE_H
+#define CMD_LINE_H
+extern char *backdrop_layer;
+extern char *base_layer;
+extern char *dir_layer;
+extern char *max_layer;
+extern char *spotdist_layer;
+extern char *mois_layer;
+extern char *out_layer;
+extern char *start_layer;
+extern char *velocity_layer;
+extern char *x_out_layer;
+extern char *y_out_layer;
 
-GLOBAL char *backdrop_layer;
-GLOBAL char *base_layer;
-GLOBAL char *dir_layer;
-GLOBAL char *max_layer;
-GLOBAL char *spotdist_layer;
-GLOBAL char *mois_layer;
-GLOBAL char *out_layer;
-GLOBAL char *start_layer;
-GLOBAL char *velocity_layer;
-GLOBAL char *x_out_layer;
-GLOBAL char *y_out_layer;
-
-GLOBAL float comp_dens;
-GLOBAL int display;
-GLOBAL int init_time;
-GLOBAL int least;
-GLOBAL int spotting;
-GLOBAL int time_lag;
-GLOBAL int verbose;
-GLOBAL int x_out;
-GLOBAL int y_out;
+extern float comp_dens;
+extern int display;
+extern int init_time;
+extern int least;
+extern int spotting;
+extern int time_lag;
+extern int verbose;
+extern int x_out;
+extern int y_out;
+#endif /* CMD_LINE_H */

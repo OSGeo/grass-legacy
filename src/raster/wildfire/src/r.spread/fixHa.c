@@ -8,10 +8,10 @@
  **************************************************/
 
 #include "costHa.h"
+#include "local_proto.h"
 
-struct costHa *fixHa(go_pos, heap, heap_len)
-	struct costHa  *heap;
-	long            go_pos, heap_len;
+struct costHa *
+fixHa(long go_pos, struct costHa *heap, long heap_len)
 {
 	long            vacant, smaller_child;
 

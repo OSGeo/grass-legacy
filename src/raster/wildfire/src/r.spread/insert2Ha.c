@@ -9,14 +9,14 @@
 /*                                                             */
 /***************************************************************/
 
-#include "cell_ptrHa.h"
 #include "gis.h" 
+#include "cell_ptrHa.h"
+#include "local_proto.h"
 
-
-struct cell_ptrHa *insert2Ha(front_cell, rear_cell, angle, row, col) 
-        struct cell_ptrHa **front_cell, **rear_cell;
-        int row, col;
-        float angle;
+void
+insert2Ha(struct cell_ptrHa **front_cell,
+          struct cell_ptrHa **rear_cell,
+          float angle, int row, int col) 
      
 {
 	struct cell_ptrHa *temp_cell, *temp_cell2;
@@ -44,7 +44,4 @@ struct cell_ptrHa *insert2Ha(front_cell, rear_cell, angle, row, col)
 }
 
 /**************** END OF FUNCTION "INSERT2HA" *********************/
-
-
-
 

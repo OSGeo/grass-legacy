@@ -8,17 +8,41 @@
  *	able to terminate.
  *********************************************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
-#define MAIN
 #include "cmd_line.h"
 #include "costHa.h"
+#include "local_proto.h"
 
 #define DATA(map, r, c)		(map)[(r) * ncols + (c)]
 
 /*#define DEBUG*/
 
-collect_ori (start_fd)
-int 	start_fd;
+/* Globals from cmd_line */
+char *backdrop_layer;
+char *base_layer;
+char *dir_layer;
+char *max_layer;
+char *spotdist_layer;
+char *mois_layer;
+char *out_layer;
+char *start_layer;
+char *velocity_layer;
+char *x_out_layer;
+char *y_out_layer;
+
+float comp_dens;
+int display;
+int init_time;
+int least;
+int spotting;
+int time_lag;
+int verbose;
+int x_out;
+int y_out;
+
+void collect_ori (int start_fd)
 {
 	extern CELL	min, max;
 	extern CELL 	*cell;

@@ -9,12 +9,12 @@
  ************************************************************/
 
 #include "costHa.h"
+#include "local_proto.h"
 
-get_minHa(heap, pres_cell, heap_len)
-	struct costHa  *heap, *pres_cell;
-	long            heap_len;
+void
+get_minHa(struct costHa *heap, struct costHa *pres_cell, long heap_len)
 {
-	struct costHa  *fixHa();
+	/* struct costHa  *fixHa(); */
 	if (heap_len == 0)
 		return;
 	pres_cell->min_cost = heap[1].min_cost;
