@@ -24,6 +24,7 @@ LIB_OBJS = \
     plus_struct.o \
     poly.o \
     portable.o \
+    prune.o \
     spindex.o  \
     spindex_rw.o  \
     struct_alloc.o \
