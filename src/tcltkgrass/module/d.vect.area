@@ -4,7 +4,7 @@ interface_build {
     {entry map {Vector map, required:} 0 vector}
     {entry fillcolor {Area fill color [white]:} 0 color}
     {entry linecolor {Area boundary color [black]:} 0 color}
-    {entry catnum {List of category number to restrict drawing:} 1 ""}
+    {entry catnum {List of category numbers to restrict drawing:} 1 ""}
     {entry legend {Use a legend file:} 0 file}
     {checkbox -r {Fill with random colors} "" -r}
 }

@@ -74,13 +74,17 @@ set display_vector {
     "Display vector maps" "" {
         "source $env(TCLTKGRASSBASE)/module/d.vect"
     }
-    "Display vector polygons" "" {
+    "Display labelled vector areas" "" {
         "source $env(TCLTKGRASSBASE)/module/d.vect.area"
     }
-    "Display USGS DLG-3 files" "" {
-        ""
+    "Display labelled vector lines" "" {
+    	"source $env(TCLTKGRASSBASE)/module/d.vect.line"
     }
 }
+#    "Display USGS DLG-3 files" "" {
+#        ""
+#    }
+#}
 set display_sites {
     "Display site markers (symbols)" "" {
         "source $env(TCLTKGRASSBASE)/module/d.sites"
