@@ -518,6 +518,7 @@ main (int argc, char *argv[])
             case GET_LOCATION_WITH_POINTER:
                 REC (&x, sizeof x);
                 REC (&y, sizeof y);
+                REC (&button, sizeof button);
                 Get_location_with_pointer(&x,&y,&button) ;
                 send(&x,sizeof x) ;
                 send(&y,sizeof y) ;
