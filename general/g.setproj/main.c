@@ -130,6 +130,7 @@ int main(int argc, char *argv[])
 	switch (Out_proj) {
 	case 0:		/* No projection/units */
 		/* leap frog over code, and just make sure we remove the file */
+		fprintf(stderr, "XY-location cannot be projected.\n");
 		goto write_file;
 		break;
 
