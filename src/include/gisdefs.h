@@ -802,6 +802,7 @@ int G_plot_point(double, double);
 int G_plot_line(double, double, double, double);
 int G_plot_line2(double, double, double, double);
 int G_plot_polygon(double *, double *, int);
+int G_plot_area (double **, double **, int *, int);
 int G_plot_fx(double (*)(), double, double);
 
 /* pole_in_poly.c */
