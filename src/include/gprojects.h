@@ -29,7 +29,7 @@
 
 #include "config.h"
 #ifdef USE_PROJ
-  #include "proj_api.h"
+  #include <proj_api.h>
 #else
   #include "gproj_api.h"
 #endif

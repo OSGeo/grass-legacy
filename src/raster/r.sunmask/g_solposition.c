@@ -59,7 +59,6 @@ long G_calc_solar_position (double longitude, double latitude, double timezone,
     struct Key_Value *out_proj_info, *out_unit_info;   
     struct pj_info iproj;    /* input map proj parameters  */
     struct pj_info oproj;    /* output map proj parameters  */
-    char *ellps;
     extern struct Cell_head window;
     int inside;
 
@@ -94,7 +93,9 @@ fprintf(stderr, "window.west:  %f, window.east : %f\n", window.west, window.east
 #ifdef DEBUG
 fprintf(stderr, "Transforming input coordinates to lat/long (req. for solar position)\n");
 #endif
-
+     double a, es;
+     char buf[50];
+       
      /* read current projection info */
      if ((in_proj_info = G_get_projinfo()) == NULL)
         G_fatal_error("Can't get projection info of current location");
@@ -106,6 +107,7 @@ fprintf(stderr, "Transforming input coordinates to lat/long (req. for solar posi
         G_fatal_error("Can't get projection key values of current location");
 
 #ifdef DEBUG
+/* Try using pj_print_proj_params() instead of all this */       
 fprintf(stderr, "Projection found in location:\n");
 fprintf(stderr, "IN: meter: %f zone: %i proj: %s (iproj struct)\n", iproj.meters, iproj.zone, iproj.proj);
 fprintf(stderr, "IN: ellps: a: %f  es: %f\n", iproj.pj->a, iproj.pj->es);
@@ -122,11 +124,11 @@ fprintf(stderr, "IN coord: longitude: %f, latitude: %f\n", longitude, latitude);
 	    
      G_set_key_value("proj", "ll", out_proj_info);
 
-     ellps = G_find_key_value("ellps", in_proj_info);
-     if( ellps != NULL )
-         G_set_key_value("ellps", ellps, out_proj_info);
-     else
-         G_set_key_value("ellps", "wgs84", out_proj_info);
+     G_get_ellipsoid_parameters(&a, &es);
+     sprintf(buf, "%.16g", a);
+     G_set_key_value("a", buf, out_proj_info);
+     sprintf(buf, "%.16g", es);
+     G_set_key_value("es", buf, out_proj_info);
 	    
      G_set_key_value("unit", "degree", out_unit_info);
      G_set_key_value("units", "degrees", out_unit_info);
@@ -135,6 +137,11 @@ fprintf(stderr, "IN coord: longitude: %f, latitude: %f\n", longitude, latitude);
      if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
          G_fatal_error("Unable to set up lat/long projection parameters");     
 
+     G_free_key_value( in_proj_info );
+     G_free_key_value( in_unit_info );
+     G_free_key_value( out_proj_info );
+     G_free_key_value( out_unit_info );
+       
      /* XX do the transform 
       *               outx        outy    in_info  out_info */
      if(pj_do_proj(&longitude, &latitude, &iproj, &oproj) < 0)
