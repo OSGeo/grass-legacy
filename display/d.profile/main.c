@@ -113,10 +113,7 @@ int main (int argc, char **argv)
 if (!quick_range(old_mapname,old_mapset,&min,&max))
    {
    if (!slow_range(old_mapname,old_mapset,&min,&max))
-      {
       G_fatal_error("Unable to read from cell-file");
-      exit(-1);
-      }
    }
 if (min > 0) min = 0;
 if (max < 0) max = 0;
@@ -290,20 +287,11 @@ if (max < 0) max = 0;
                         DrawText(25,2,1,"       of current window");
                     }
                     else if (err==-2)
-                    {
-                        fprintf (stdout,"Error opening cell-file\n");
-                        exit(-1);
-                    }
+                        G_fatal_error("Error opening cell-file");
                     else if (err==-3)
-                    {
-                        fprintf (stdout,"Error reading from cell-file\n");
-                        exit(-1);
-                    }
+                        G_fatal_error("Error reading from cell-file");
                     else if (err==-4)
-                    {
-                        fprintf (stdout,"Mysterious window inconsistancy error\n");
-                        exit(-1);
-                    }
+                        G_fatal_error("Mysterious window inconsistancy error");
                     else
                     {
                         /* draw profile line on cell-file */

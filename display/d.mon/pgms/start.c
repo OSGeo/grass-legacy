@@ -32,6 +32,7 @@
 #include "raster.h"
 #include "monitors.h"
 #include "local_proto.h"
+#include "gis.h"
 
 #ifdef __W98__
 
@@ -62,17 +63,10 @@ int start_mon (char *name)
 	int pid;
 
 	if ((mon = R_parse_monitorcap(MON_NAME,name)) == NULL)
-	{
-		fprintf(stderr,"Error:  no such monitor '%s'\n",name);
-		exit(1);
-	}
+		G_fatal_error("no such monitor '%s'", name);
 
 	if (*mon->tty != '\0' && strcmp(mon->tty,ttyname(0)) != 0)
-	{
-		fprintf(stderr,"Error:  must start %s from %s\n",name,mon->where);
-		fprintf(stderr,"You are on %s\n",ttyname(0));
-		exit(1);
-	}
+		G_fatal_error("Error:  must start %s from %s\n You are on %s",name,mon->where,ttyname(0));
 
 	execl(	mon->path,
 		mon->path,

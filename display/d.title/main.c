@@ -83,10 +83,8 @@ int main (int argc, char **argv)
 	type = flag->answer ? FANCY : NORMAL ;
 
 	if (! strlen(map_name))
-	{
-		G_usage() ;
-		exit(-1) ;
-	}
+		G_fatal_error("No map name given") ;
+
 	/* Make sure map is available */
 	mapset = G_find_cell (map_name, "") ;
 	if (mapset == NULL)

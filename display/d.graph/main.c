@@ -57,9 +57,8 @@ int main (int argc, char **argv)
 	*/
 	    if ((infile = fopen(opt1->answer,"r")) == NULL)
 		{
-			fprintf (stdout,"Graph file <%s> not found\n",opt1->answer);
-			G_usage() ;
-			exit(-1) ;
+			G_usage();
+			G_fatal_error ("Graph file <%s> not found",opt1->answer);
 		}
 	}
 	else
@@ -69,10 +68,7 @@ int main (int argc, char **argv)
 	{
 		color = D_translate_color(opt2->answer) ;
 		if (color == 0)
-		{
-			fprintf (stdout,"Don't know the color %s\n", opt2->answer) ;
-			exit(-1);
-		}
+			G_fatal_error ("Don't know the color %s", opt2->answer) ;
 	}
 
 	if (R_open_driver() != 0)

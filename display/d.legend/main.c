@@ -147,10 +147,7 @@ int main( int argc, char **argv )
 	{
 		new_colr = D_translate_color(opt2->answer) ;
 		if (new_colr == 0)
-		{
-			fprintf (stdout,"Don't know the color %s\n", opt2->answer) ;
-			exit(-1);
-		}
+			G_fatal_error ("Don't know the color %s", opt2->answer) ;
 		color = new_colr ;
 	}
 

@@ -91,10 +91,7 @@ int main(int argc, char **argv)
 	{
 	  mapset = openvect(vect[i]);
 	  if(mapset == NULL)
-	    {
-              fprintf (stderr, "Unable to open %s\n", vect[i]) ;
-              exit(1) ;
-	    }
+	     G_fatal_error("Unable to open %s", vect[i]) ;
 	}
 
       Map = (struct Map_info *) G_malloc(nvects * sizeof(struct Map_info));

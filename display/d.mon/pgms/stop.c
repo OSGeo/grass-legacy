@@ -46,7 +46,7 @@ int
 usage (char *me)
 {
     fprintf(stderr,"Usage: %s [-f] monitor_name\n", me);
-    exit(-1);
+    exit(1);
 }
 
 int 
