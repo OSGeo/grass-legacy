@@ -1,3 +1,4 @@
+#! /bin/sh
 #############################################################################
 #
 # $Id$
@@ -440,7 +441,7 @@ esac
 trap 2 3
 
 # Grass session finished
-clear
+tput clear
 echo "Cleaning up temporary files....."
 
 ($ETC/clean_temp > /dev/null &)
