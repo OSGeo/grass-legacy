@@ -18,7 +18,7 @@ OFILES = \
 all: $(BIN_ALPHA_INTER)/v.out.moss
 
 $(BIN_ALPHA_INTER)/v.out.moss: $(OFILES)
-	cc $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
 
 #$(OFILES):	$(LIBDIG)/digit.h $(LIBDIR)/gis.h
 
