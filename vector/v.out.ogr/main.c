@@ -344,8 +344,7 @@ main (int argc, char *argv[])
 
     /* Areas (run always to count features of different type) */
     if ( otype & GV_AREA ) {
-	fprintf(stderr,"Exporting %i areas...\n", Vect_get_num_areas(&In) );
-	fprintf(stderr,"GRASS Topology -> Simple Features conversion (may take some time)...\n" );
+	fprintf(stderr,"Exporting %i areas (may take some time) ...\n", Vect_get_num_areas(&In) );
 	for ( i = 1; i <= Vect_get_num_areas(&In) ; i++ ) {
 	    fprintf(stderr,"\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\bProcessing area %i...", i );
 	    
