@@ -22,6 +22,9 @@ layer. See NOTES.</dd>
 
 The raster <i>elevation</i> map layer specified by the user must contain
 true elevation values, <i>not</i> rescaled or categorized data.
+If the elevation values are in feet or other units than meters (with a
+conversion factor defined in PROJ_UNITS), they must be converted to 
+meters using the parameter <i>zfactor</i>.
 <br>The raster <i>aspect</i> map layer which is created indicates the direction
 that slopes are facing. The aspect categories represent the number degrees
 of east. Category and color table files are also generated for the aspect
