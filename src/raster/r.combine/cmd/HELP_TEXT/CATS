@@ -1,0 +1,7 @@
+CATEGORIES - command
+
+Lists in order the category names for a named map.
+
+syntax: categories MAP_NAME
+
+aliases: categories      cats     CATS
