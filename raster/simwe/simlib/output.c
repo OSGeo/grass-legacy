@@ -225,9 +225,13 @@ int output_data(int tt, double ft)
            {
             for(j=0;j<mx;j++)
               {
+	      if(zz[i][j] == UNDEF || gama[i][j] == UNDEF)
+	      G_set_f_null_value (cell6+j,1);
+	      else {
 		a1 = pow(gama[i][j],3./5.);
                 cell6[j]=(FCELL) a1;/* add conv? */
                 gmax = amax1(gmax, a1);
+	      }
                }
                G_put_f_raster_row (fd6, cell6);
             }
@@ -236,9 +240,13 @@ int output_data(int tt, double ft)
             {
              for(j=0;j<mx;j++)
                {
+               if(zz[i][j] == UNDEF || gama[i][j] == UNDEF || cchez[i][j] == UNDEF)
+               G_set_f_null_value (cell7+j,1);
+	       else {
                 a2 = step * gama[i][j] * cchez[i][j]; /* cchez incl. sqrt(sinsl) */
    		cell7[j]=(FCELL) a2;/* add conv? */
-                dismax = amax1(dismax, a2); 
+                dismax = amax1(dismax, a2);
+	       }
                 }
               G_put_f_raster_row (fd7, cell7);
              }
@@ -247,8 +255,12 @@ int output_data(int tt, double ft)
              {
               for(j=0;j<mx;j++)
                 {
+		if(zz[i][j] == UNDEF || gammas[i][j] == UNDEF)
+		G_set_f_null_value (cell8+j,1);
+		else {
                   cell8[j]=(FCELL)gammas[i][j];
                   gsmax = amax1(gsmax, gammas[i][j]);/* add conv? */
+		}
                  }
                G_put_f_raster_row (fd8, cell8);
               }
@@ -258,8 +270,12 @@ int output_data(int tt, double ft)
              {
               for(j=0;j<mx;j++)
                 {
+		if(zz[i][j] == UNDEF || gama[i][j] == UNDEF)
+		G_set_f_null_value (cell14+j,1);
+		else {
                   cell14[j]=(FCELL)gama[i][j];
             /*      gsmax = amax1(gsmax, gama[i][j]); */
+		}
                  }
                G_put_f_raster_row (fd14, cell14);
               }
@@ -269,10 +285,14 @@ int output_data(int tt, double ft)
              {
               for(j=0;j<mx;j++)
                 {
+		if(zz[i][j] == UNDEF || gama[i][j] == UNDEF || slope[i][j] == UNDEF)
+		G_set_f_null_value (cell15+j,1);
+		else {
 		  a2 = gama[i][j] * slope[i][j];
                   cell15[j]=(FCELL) a2;
                   dismax = amax1(dismax, a2);
                  }
+		}
                G_put_f_raster_row (fd15, cell15);
               }
 
@@ -281,10 +301,14 @@ int output_data(int tt, double ft)
              {
               for(j=0;j<mx;j++)
                 {
+		if(zz[i][j] == UNDEF || er[i][j] == UNDEF)
+		G_set_f_null_value (cell16+j,1);
+		else {
                   cell16[j]=(FCELL)er[i][j];
                   ermax = amax1(ermax, er[i][j]);
 		  ermin = amin1(ermin, er[i][j]);
                  }
+		}
                G_put_f_raster_row (fd16, cell16);
               }
 
@@ -407,7 +431,18 @@ int output_data(int tt, double ft)
     dat2 = (FCELL) dismax;
     G_add_f_raster_color_rule(&dat1,191,127,63,&dat2,0,0,0,&colors);
 
-
+    if (tserie != NULL) {
+            if ((mapst = G_find_file("cell", flux0, "")) == NULL)
+            {
+                sprintf(msg, "cannot find file %s", flux0);
+		G_fatal_error(msg);
+            }
+	    G_write_colors(flux0, mapst, &colors);
+	    G_quantize_fp_map_range(flux0,mapst,0.,(FCELL)dismax,0,(CELL)dismax);
+	    G_free_colors(&colors);
+    }
+         else {
+		    
             if ((mapst = G_find_file("cell", flux, "")) == NULL)
             {
                 sprintf(msg, "cannot find file %s", flux);
@@ -416,6 +451,7 @@ int output_data(int tt, double ft)
             G_write_colors(flux, mapst, &colors);
             G_quantize_fp_map_range(flux, mapst,0.,(FCELL)dismax,0,(CELL)dismax);
             G_free_colors(&colors);
+    }
    }
 
 
@@ -508,10 +544,10 @@ int output_data(int tt, double ft)
     sprintf(hist.edhist[2],"written walkers=%d, deltap=%f, mean vel.=%f",
              lwwfin, deltap, vmean);
 
-    sprintf(hist.edhist[3], "mean source (si)=%f, metric conversion factor=%f", si0, conv);
+    sprintf(hist.edhist[3], "mean source (si)=%e, mean infil=%e", si0, infmean);
 
       sprintf (hist.datsrc_1, "input files: %s %s %s", elevin,dxin,dyin);
-      sprintf (hist.datsrc_2, "input files: %s %s", rain,manin);
+      sprintf (hist.datsrc_2, "input files: %s %s %s", rain,infil,manin);
     hist.edlinecnt = 4;
     if (tserie!=NULL) G_write_history (depth0, &hist);
 	else
@@ -541,10 +577,10 @@ int output_data(int tt, double ft)
     sprintf(hist.edhist[2],"written walkers=%d, deltap=%f, mean vel.=%f",
              lwwfin, deltap, vmean);
 
-    sprintf(hist.edhist[3], "mean source (si)=%f, metric conversion factor=%f", si0, conv);
+    sprintf(hist.edhist[3], "mean source (si)=%e, mean infil=%e", si0, infmean);
 
       sprintf (hist.datsrc_1, "input files: %s %s %s", elevin,dxin,dyin);
-      sprintf (hist.datsrc_2, "input files: %s %s", rain,manin);
+      sprintf (hist.datsrc_2, "input files: %s %s %s", rain,infil,manin);
     hist.edlinecnt = 4;
     if (tserie!=NULL) G_write_history (disch0, &hist);
 	else
@@ -574,7 +610,7 @@ int output_data(int tt, double ft)
     sprintf(hist.edhist[2],"written walkers=%d, deltap=%f, mean vel.=%f",
              lwwfin, deltap, vmean);
 
-    sprintf(hist.edhist[3], "mean source (si)=%f, metric conversion factor=%f", si0, conv);
+    sprintf(hist.edhist[3], "mean source (si)=%f", si0);
 
       sprintf (hist.datsrc_1, "input files: %s %s %s", wdepth,dxin,dyin);
       sprintf (hist.datsrc_2, "input files: %s %s %s %s", manin,detin,tranin,tauin);
@@ -670,9 +706,13 @@ int output_et()
            {
             for(j=0;j<mx;j++)
               {
+		      if(zz[i][j] == UNDEF || er[i][j] == UNDEF)
+			      G_set_f_null_value (cell17+j,1);
+		      else {
                 cell17[j]=(FCELL) er[i][j];/* add conv? */
                 etmax = amax1(etmax, er[i][j]);
                 etmin = amin1(etmin, er[i][j]);
+		      }
                }
                G_put_f_raster_row (fd17, cell17);
             }
@@ -681,12 +721,16 @@ int output_et()
              {
               for(j=0;j<mx;j++)
                 {
+		if(zz[i][j] == UNDEF || sigma[i][j] == UNDEF || si[i][j] == UNDEF)
+		G_set_f_null_value (cell13+j,1);
+		else {
 		if (sigma[i][j] == 0.) trc = 0.;
 			else
 			trc = si[i][j] / sigma[i][j];
                   cell13[j]=(FCELL) trc;
                 /*  gsmax = amax1(gsmax, trc); */
-                 }
+		}
+                }
                G_put_f_raster_row (fd13, cell13);
               }
 	}
