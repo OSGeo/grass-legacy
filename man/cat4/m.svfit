@@ -23,7 +23,6 @@ DESCRIPTION
      For more information, refer to the tutorial or see the
      example below.
 
-OPTIONS
      Flags:
 
      -q		       Quiet. Cut out the chatter.
@@ -57,10 +56,11 @@ OPTIONS
 NOTES
      Three columns of data are expected as input: lag distance
      (h), semivariogram value (gamma), and the number of data
+     pairs used to compute it (N(h)). This may either be from a
 
 
 
-GRASS 5.0beta6	      GRASS Development Team			1
+GRASS 5.0beta8	      GRASS Development Team			1
 
 
 
@@ -71,7 +71,6 @@ m.svfit <contrib>     GRASS Reference Manual	<contrib> m.svfit
 
 
 
-     pairs used to compute it (N(h)). This may either be from a
      UNIX file, entered from the command line (terminated by
      control-d), or via a pipe or redirection.
 
@@ -97,14 +96,13 @@ EXAMPLE
 SEE ALSO
      s.univar, s.normal, g.gnuplot, s.sv and
      Semivariogram Modeling - A GRASS Tutorial on Exploratory
-     Data Analysis and Semivariogram Modeling.
+     Data Analysis and Semivariogram Modeling (in preparation).
 
 BUGS
      Please send all bug fixes and comments to the author.
 
 AUTHOR
-     James Darrell McCauley, Agricultural Engineering, Purdue
-     University
+     James Darrell McCauley, Purdue University
      (mccauley@ecn.purdue.edu)
 
 NOTICE
@@ -126,7 +124,9 @@ NOTICE
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta6
+
+
+2		      GRASS Development Team	   GRASS 5.0beta8
 
 
 
