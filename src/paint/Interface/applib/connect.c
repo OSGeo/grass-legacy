@@ -1,19 +1,27 @@
-/* %W% %G% */
-#include <stdio.h>
 #include "interface.h"
+#include <stdio.h>
 Pconnect()
 {
-    char *getenv();
-    char *device;
+    char *Ppainter_name();
+    char *G_gisbase();
+    char *painter;
+    char pgm[1024];
+    char *argv[3];
     char transparent;
 
-    device = getenv ("PAINT_DRIVER_SHELL");
-    if (device == NULL)
+    painter = Ppainter_name();
+    if (painter == NULL)
     {
-	fprintf (stderr, "PAINT_DRIVER_SHELL not set\n");
+	fprintf (stderr, "no PAINTER selected\n");
 	exit(1);
     }
-    P__opendev (device);
+    sprintf (pgm,"%s/etc/paint/driver.shell", G_gisbase());
+
+    argv[0] = "driver.shell";
+    argv[1] = painter;
+    argv[2] = NULL;
+
+    P__opendev (pgm, argv, painter);
     P__readdev (&transparent, 1);
     P__transparent (transparent);
 }
