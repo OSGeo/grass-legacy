@@ -323,7 +323,7 @@ int main(int argc, char *argv[])
     parm.ltime->type = TYPE_DOUBLE;
     /*          parm.ltime->answer = TIME; */
     parm.ltime->required = NO;
-    parm.ltime->description = "Local time";
+    parm.ltime->description = "Local (solar) time [decimal hours]";
 
     parm.dist = G_define_option();
     parm.dist->key = "dist";
@@ -356,11 +356,25 @@ int main(int argc, char *argv[])
     diff_rad = parm.diff_rad->answer;
     refl_rad = parm.refl_rad->answer;
 
+    if((insol_time != NULL) && (incidout != NULL))
+	G_fatal_error("insol_time and incidout are incompatible options");
+
     sscanf(parm.day->answer, "%d", &day);
     sscanf(parm.step->answer, "%lf", &step);
+
     tt = parm.ltime->answer;
-    if (parm.ltime->answer != NULL)
+    if (parm.ltime->answer != NULL) {
+	if(insol_time != NULL) G_fatal_error("time and insol_time are incompatible options");
+	fprintf(stdout, "Mode 1: instantaneous solar incidence angle & irradiance using a set local time\n");
+	fflush(stdout);
 	sscanf(parm.ltime->answer, "%lf", &timo);
+    }
+    else {
+	if(incidout != NULL) G_fatal_error("incidout requres time parameter to be set");
+	fprintf(stdout, "Mode 2: integrated daily irradiation\n");
+	fflush(stdout);
+    }
+
     if (parm.linkein->answer == NULL)
 	sscanf(parm.lin->answer, "%lf", &linke);
     if (parm.albedo->answer == NULL)
@@ -481,13 +495,13 @@ int INPUT(void)
     }
 
     if ((mapset = G_find_cell(elevin, "")) == NULL)
-	printf("cell file not found\n");
+	G_fatal_error("elevin cell file not found");
 
     if ((mapset = G_find_cell(aspin, "")) == NULL)
-	printf("cell file not found\n");
+	G_fatal_error("aspin cell file not found");
 
     if ((mapset = G_find_cell(slopein, "")) == NULL)
-	printf("cell file not found\n");
+	G_fatal_error("slopein cell file not found");
 
     fd1 = G_open_cell_old(elevin, mapset);
     fd2 = G_open_cell_old(aspin, mapset);
@@ -500,7 +514,7 @@ int INPUT(void)
 	    li[l] = (float *)malloc(sizeof(float) * (n));
 
 	if ((mapset = G_find_cell(linkein, "")) == NULL)
-	    printf("cell file not found\n");
+	    G_fatal_error("linkein cell file not found");
 
 	fd4 = G_open_cell_old(linkein, mapset);
     }
@@ -512,7 +526,7 @@ int INPUT(void)
 	    a[l] = (float *)malloc(sizeof(float) * (n));
 
 	if ((mapset = G_find_cell(albedo, "")) == NULL)
-	    printf("cell file not found\n");
+	    G_fatal_error("albedo cell file not found");
 
 	fd5 = G_open_cell_old(albedo, mapset);
     }
@@ -524,7 +538,7 @@ int INPUT(void)
 	    la[l] = (float *)malloc(sizeof(float) * (n));
 
 	if ((mapset = G_find_cell(latin, "")) == NULL)
-	    printf("cell file not found\n");
+	    G_fatal_error("latin cell file not found");
 
 	fd6 = G_open_cell_old(latin, mapset);
     }
@@ -536,7 +550,7 @@ int INPUT(void)
 	    cbhr[l] = (float *)malloc(sizeof(float) * (n));
 
 	if ((mapset = G_find_cell(coefbh, "")) == NULL)
-	    printf("cell file not found\n");
+	    G_fatal_error("coefbh cell file not found");
 
 	fr1 = G_open_cell_old(coefbh, mapset);
     }
@@ -548,7 +562,7 @@ int INPUT(void)
 	    cdhr[l] = (float *)malloc(sizeof(float) * (n));
 
 	if ((mapset = G_find_cell(coefdh, "")) == NULL)
-	    printf("cell file not found\n");
+	    G_fatal_error("coefdh cell file not found");
 
 	fr2 = G_open_cell_old(coefdh, mapset);
     }
@@ -1485,8 +1499,7 @@ void calculate(void)
 
 			if (pj_do_proj(&longitude, &latitude, &iproj, &oproj) <
 			    0) {
-			    fprintf(stderr, "Error in pj_do_proj\n");
-			    exit(0);
+			    G_fatal_error("Error in pj_do_proj");
 			}
 
 			la_max = AMAX1(la_max, latitude);
@@ -1555,37 +1568,61 @@ void calculate(void)
     }
     fprintf(stderr, "\n");
 
-    G_short_history (beam_rad, "raster", &hist);
+    /* re-use &hist, but try all to initiate it for any case */
+    /*   note this will result in incorrect map titles       */
+    if (incidout != NULL) {
+        G_short_history(incidout, "raster", &hist);
+    }
+    else if (beam_rad != NULL) {
+        G_short_history(beam_rad, "raster", &hist);
+    }
+    else if (diff_rad != NULL) {
+        G_short_history(diff_rad, "raster", &hist);
+    }
+    else if (refl_rad != NULL) {
+        G_short_history(refl_rad, "raster", &hist);
+    }
+    else if (insol_time != NULL) {
+        G_short_history(insol_time, "raster", &hist);
+    }
+    else G_fatal_error("Failed to init map history: should never get to this point");
 
     sprintf (hist.edhist[0], " ----------------------------------------------------------------");
     sprintf (hist.edhist[1], " Day [1-365]:                              %d", day);
-    sprintf (hist.edhist[2], " Solar constant (W/m^2):                   1367");
-    sprintf (hist.edhist[3], " Extraterrestrial irradiance (W/m^2):      %f", c);
-    sprintf (hist.edhist[4], " Declination (rad):                        %f", -declination);
-    hist.edlinecnt = 5;
+    hist.edlinecnt = 2;
+
+    if (tt != NULL) {
+	sprintf (hist.edhist[hist.edlinecnt], " Local (solar) time (decimal hr.):         %.4f", timo);
+	hist.edlinecnt++;
+    }
+
+    sprintf (hist.edhist[hist.edlinecnt], " Solar constant (W/m^2):                   1367");
+    sprintf (hist.edhist[hist.edlinecnt+1], " Extraterrestrial irradiance (W/m^2):      %f", c);
+    sprintf (hist.edhist[hist.edlinecnt+2], " Declination (rad):                        %f", -declination);
+    hist.edlinecnt += 3;
 
     if (lt != NULL)
-	sprintf (hist.edhist[5], " Latitude (deg):                           %.4f", -latitude * RAD);
+	sprintf (hist.edhist[hist.edlinecnt], " Latitude (deg):                           %.4f", -latitude * RAD);
     else
-	sprintf (hist.edhist[5], " Latitude min-max(deg):                    %.4f - %.4f", la_min, la_max);
+	sprintf (hist.edhist[hist.edlinecnt], " Latitude min-max(deg):                    %.4f - %.4f", la_min, la_max);
     hist.edlinecnt++;
 
     if (tt != NULL) {
-	sprintf (hist.edhist[6], " Sunrise time (hr.):                       %.2f", sunrise_time);
-	sprintf (hist.edhist[7], " Sunset time (hr.):                        %.2f", sunset_time);
-	sprintf (hist.edhist[8], " Daylight time (hr.):                      %.2f", sunset_time - sunrise_time);
+	sprintf (hist.edhist[hist.edlinecnt], " Sunrise time (hr.):                       %.2f", sunrise_time);
+	sprintf (hist.edhist[hist.edlinecnt+1], " Sunset time (hr.):                        %.2f", sunset_time);
+	sprintf (hist.edhist[hist.edlinecnt+2], " Daylight time (hr.):                      %.2f", sunset_time - sunrise_time);
     }
     else {
-	sprintf (hist.edhist[6], " Sunrise time min-max (hr.):               %.2f - %.2f", sr_min, sr_max);
-	sprintf (hist.edhist[7], " Sunset time min-max (hr.):                %.2f - %.2f", ss_min, ss_max);
-	sprintf (hist.edhist[8], " Time step (hr.):                          %.4f", step);
+	sprintf (hist.edhist[hist.edlinecnt], " Sunrise time min-max (hr.):               %.2f - %.2f", sr_min, sr_max);
+	sprintf (hist.edhist[hist.edlinecnt+1], " Sunset time min-max (hr.):                %.2f - %.2f", ss_min, ss_max);
+	sprintf (hist.edhist[hist.edlinecnt+2], " Time step (hr.):                          %.4f", step);
     }
     hist.edlinecnt += 3;
 
     if (incidout != NULL || tt != NULL) {
 	sprintf (hist.edhist[hist.edlinecnt], " Solar altitude (deg):                     %.4f", h0 * RAD);
 	sprintf (hist.edhist[hist.edlinecnt+1], " Solar azimuth (deg):                      %.4f", A0 * RAD);
-	hist.edlinecnt+=2;
+	hist.edlinecnt += 2;
     }
 
     if (linkein == NULL)
@@ -1604,7 +1641,6 @@ void calculate(void)
     hist.edlinecnt++;
 
     /* don't call G_write_history() until after G_close_cell() or it just gets overwritten */
-
 }
 
 double com_sol_const(int no_of_day)
