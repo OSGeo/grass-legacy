@@ -10,6 +10,7 @@ extern int total_vects;
 extern int total_vertices;
 extern int total_import;
 extern int verbose;
+extern int to_postgis;
 
 int getAllOpts (int, char **);
 int getSelectOpts (int, char **);

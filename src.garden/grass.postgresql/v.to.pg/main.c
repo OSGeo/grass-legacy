@@ -19,6 +19,7 @@ int total_vects=0;
 int total_vertices=0;
 int total_import=0;
 int verbose=0;
+int to_postgis=0;
 
 int main(argc, argv)
 int argc ;

@@ -11,7 +11,7 @@ int getAllOpts(argc, argv)
 {
 
 	struct Option *key, *vtype, *where, *tab, *map,*color;
-	struct Flag *flag1, *flag2, *flag3;
+	struct Flag *flag1, *flag2, *flag3, *flag4;
 	char *mapset;
 	int colr, fillcolr, retval;
 
@@ -74,6 +74,10 @@ int getAllOpts(argc, argv)
 	flag3->key         = 'v' ;
 	flag3->description = _("Verbose mode") ;
 	
+	flag4 = G_define_flag() ;
+	flag4->key         = 'p' ;
+	flag4->description = _("Create and populate PostGIS table instead") ;
+
 
 
 	/* Invoke parser */
@@ -91,6 +95,7 @@ int getAllOpts(argc, argv)
 	fillcolr = flag1->answer;
 	total_import = flag2->answer;
 	verbose = flag3->answer;
+	to_postgis = flag4->answer;
 	
 	
 	if ((mapset=G_find_file2("dig",map->answer,""))==NULL)  {
