@@ -1,0 +1,14 @@
+#  %W%  %G%
+EXTRA_CFLAGS = -I$(GRAPH)/src/grass3.1/include
+OFILES = main.o 
+GMAPLIB = $(GRAPH)/src/grass3.1/libes/gmaplib.a
+UNIX_BIN = $(GRAPH)/macros
+
+$(UNIX_BIN)/get_cord: $(OFILES) $(DISPLAYLIB) $(RASTERLIB)  $(GISLIB) $(GMAPLIB)
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(GMAPLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
+
+$(GMAPLIB): #
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
