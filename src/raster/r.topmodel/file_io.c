@@ -103,6 +103,12 @@ read_inputs(void)
 			break;
 	}
 
+	if(params.qs0 == 0.0){
+		fclose(fp);
+		fprintf(stderr, "\n** parameters.qs0 can not be 0.0 **\n");
+		exit(1);
+	}
+
 	for(; !feof(fp); ){
 		get_line(fp, buf);
 
