@@ -220,7 +220,7 @@ AC_ARG_WITH(tiff-libs,
 	tiff_lib_dirs="$withval"
     ])
 
-TIFF_LIB_DIRS=
+TIFF_LIBRARY_DIRS=
 if test "$tiff_lib_dirs"; then
     for dir in $tiff_lib_dirs; do
         if test -d "$dir"; then
@@ -233,8 +233,22 @@ if test "$tiff_lib_dirs"; then
     AC_MSG_RESULT($TIFF_LIBRARY_DIRS)
 fi
 
+if test -z "$TIFF_LIBRARY_DIRS"; then
+    AC_MSG_CHECKING(TIFF library dirs)
+    for dir in $my_lib_dirs; do
+        if test -z "$TIFF_LIBRARY_DIRS" && test -d "$dir" && test -f "$dir/libtiff.a"; then
+            TIFF_LIBRARY_DIRS="-L$dir"
+        fi
+    done
+    AC_MSG_RESULT($TIFF_LIBRARY_DIRS)
+fi
+if test -z "$TIFF_LIBRARY_DIRS"; then
+	AC_MSG_WARN([*** Couldn't find 'libtiff.a'.])
+fi
+AC_SUBST(TIFF_LIBRARY_DIRS)
+
 ldflags_save="$LDFLAGS"
-LDFLAGS="$LDFLAGS $TIFF_LIBRARY_DIRS"
+LDFLAGS="$LDFLAGS $MATHLIB $TIFF_LIBRARY_DIRS"
 AC_CHECK_LIB(tiff, TIFFOpen, has_tiff_lib=1)
 LDFLAGS="$ldflags_save"
 if test -z "$has_tiff_lib"; then
@@ -322,7 +336,7 @@ fi
 if test -z "$TCLINCDIR" && test -z "$HAVE_TCL_H"; then
     AC_MSG_CHECKING(TCL include dirs)
     for my_dir in $my_inc_dirs; do
-        if test -z "$TKINCDIR" && test -d $my_dir; then
+        if test -z "$TCLINCDIR" && test -d $my_dir; then
             tk_try="tcl8.3 tcl8.2 tcl8.1 tcl8.0"
             for dir in $tk_try; do
                 if test -z "$TCLINCDIR" && test -d "$my_dir/$dir" && test -f "$my_dir/$dir/tcl.h"; then
