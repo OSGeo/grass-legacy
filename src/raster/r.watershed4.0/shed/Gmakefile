@@ -1,0 +1,32 @@
+PGN = r.watershed4.0
+BIN = $(BIN_MAIN_INTER)
+
+SOURCE = main.c intro.c com_line.c basin_maps.c file_in.c read.c valid.c \
+	 free.c print.c accum_down.c insert_cat.c
+
+LIST =   main.o intro.o com_line.o basin_maps.o file_in.o read.o valid.o \
+	 free.o print.o accum_down.o insert_cat.o
+
+$(BIN)/$(PGN): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(ADD_LIBS) $(GISLIB) $(MATHLIB) -o $@
+
+$(GISLIB): #
+
+saber_src:
+	#load $(CFLAGS)$(ADD_LIBS) $(SOURCE) $(GISLIB) $(MATHLIB)
+
+saber_obj:
+	#load $(LDFLAGS) $(ADD_LIBS) $(LIST) $(GISLIB) $(MATHLIB)
+
+main.o: watershed.h
+intro.o: watershed.h
+com_line.o: watershed.h
+basin_maps.o: watershed.h
+file_in.o: watershed.h
+read.o: watershed.h
+valid.o: watershed.h
+free.o: watershed.h
+print.o: watershed.h
+accum_down.o: watershed.h
+ram_to_seg.o: watershed.h
+insert_cat.o: watershed.h
