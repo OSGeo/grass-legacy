@@ -85,6 +85,14 @@ the variable(s) in the <tt>.grassrc57</tt> file.
 <br>[d.mon]
 <br>&nbsp; defines the height of GRASS monitor, see also GRASS_WIDTH
 
+<P>GRASS_INT_ZLIB
+<br>[libgis]
+<br>&nbsp; If the environment variable GRASS_INT_ZLIB exists, new compressed
+ rasters will be compressed using zlib instead of RLE compression. Such
+ rasters will have a "compressed" value of 2 in the cellhd file.<br>
+ Obviously, decompression is controlled by the raster's "compressed"
+ value, not the environment variable.
+
 <p>GRASS_PAGER
 <br>[various modules]
 <br>Maybe set to either "less" or "more"
