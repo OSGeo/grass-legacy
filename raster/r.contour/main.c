@@ -28,6 +28,7 @@
 #include <math.h>
 #include <ctype.h>
 #include <float.h>
+#include <unistd.h>
 #include "gis.h"
 #include "Vect.h"
 #include "local_proto.h"
@@ -271,10 +272,11 @@ double *getlevels(
 		dmax = dmax > zmax ? zmax : dmax;
 		if (!quiet)
 		{
-	    	fprintf (stderr, "Minimum level will be %f\n", dmin);
+	    	    fprintf (stderr, "Minimum level will be %f\n", dmin);
 		    fprintf (stderr, "Maximum level will be %f\n", dmax);
-		    if (!G_yes ("Continue?", 1))
-    		exit (0);
+		    if (!isatty(0)) {
+		       if (!G_yes ("Continue?", 1)) exit (0);
+		    }
 		}
 
 		nlevels = (dmax - dmin)/dstep + 2;
