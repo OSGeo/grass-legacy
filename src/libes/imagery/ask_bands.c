@@ -1,7 +1,7 @@
 #include "imagery.h"
 
 #define MAX 11
-static char prefix[30];
+static char prefix[100];
 
 char *
 I_bandname (n)
@@ -16,6 +16,12 @@ char *
 I_bandname_prefix()
 {
     return prefix;
+}
+
+I_set_band_prefix(p)
+	char *p;
+{
+	strcpy (prefix, p);
 }
 
 int *
