@@ -7,6 +7,7 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 DRIVER=$(DBDRIVERDIR)/dbf
 SHPDRIVER=$(DBDRIVERDIR)/shp
+DEPENDENCIES = $(GISDEP)
 
 LIBES = $(DBMILIB) $(SQLPLIB) $(SHAPELIB) $(DBSTUBSLIB) $(GISLIB) $(DATETIMELIB)
 
@@ -45,14 +46,12 @@ D_OBJS 	=  \
 ARCH_OBJS := $(foreach obj,$(OBJS),$(OBJDIR)/$(obj))
 D_ARCH_OBJS := $(foreach obj,$(D_OBJS),$(OBJDIR)/$(obj))
 
-debug_driver: $(D_ARCH_OBJS) $(LIBES)
+debug_driver: $(D_ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o dbf $(D_ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 default: $(DRIVER)
 
-$(DRIVER): $(ARCH_OBJS) $(LIBES)
+$(DRIVER): $(ARCH_OBJS)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 	cp $(DRIVER) $(SHPDRIVER)
-
-
 
