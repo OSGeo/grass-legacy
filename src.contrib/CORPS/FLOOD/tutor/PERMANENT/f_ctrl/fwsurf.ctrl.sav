@@ -1,0 +1,22 @@
+  9 # of  events to be processed by f.wsurf
+
+  1 year flood frequency event
+  2 year flood frequency event
+  5 year flood frequency event
+ 10 year flood frequency event
+ 25 year flood frequency event
+ 50 year flood frequency event
+100 year flood frequency event
+500 year flood frequency event
+spf year flood frequency event
+
+
+*****
+Notice that the format of this file is fairly loosly defined.
+Finput only reads the first token in each line.  Any text
+which follows is ignored.
+
+The first occurrence of a "numeric-first-token" line specifies the 
+number of events that follow.  Finput only reads the specified number 
+of "numeric-first-token" lines.  Blank lines in between are ok.
+Any text at the top or bottom of the file is ignored.
