@@ -1,0 +1,17 @@
+PGM = Xvect
+EXTRA_CFLAGS = -I$(SRC)/mapdev/lib -I$(SRC)/mapdev/libes
+LIBES     = $(XDISPLAYLIB) $(DISPLAYLIB) $(RASTERLIB) $(DIGLIB) $(GISLIB)
+
+
+SOURCES =  main.c command.c p_lines.c p_coors.c
+
+OBJECTS =  main.o command.o p_lines.o p_coors.o
+
+$(BIN)/$(PGM):  $(OBJECTS)   $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) $(LIBES) -lX11 $(MATHLIB)
+
+$(LIBES): #
+
+command.o:      options.h
+main.o: options.h
+
