@@ -1,4 +1,3 @@
-.\" %W% %G%
 .TH Digraph GRASS-Intergraph
 .SH NAME
 Digraph \- Graphics interface for GRASS on the Intergraph.
