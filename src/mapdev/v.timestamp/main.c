@@ -1,7 +1,12 @@
 /* based on r.timestamp by Michael Shapiro
  * 
- * v.timestamp by Markus Neteler 5/2000
- *                neteler@geog.uni-hannover.de
+ *      Copyright (C) 2000 by the GRASS Development Team
+ *      Author:  Markus Neteler <neteler@geog.uni-hannover.de>
+ *               Institute of Physical Geography and Landscape Ecology
+ *               University of Hannover, Germany
+ *
+ *      This program is free software under the GPL (>=v2)
+ *      Read the file COPYING coming with GRASS for details.
  */
  
 #include <stdio.h>
