@@ -1,0 +1,11 @@
+MGmapsets	Gmapsets.c	/^main (argc, argv)$/
+Mmain	main.c	/^main()$/
+_display_mapset_path	dsply_path.c	/^_display_mapset_path()$/
+display_available_mapsets	dsply_maps.c	/^display_available_mapsets()$/
+display_mapset_path	dsply_path.c	/^display_mapset_path()$/
+get_available_mapsets	get_maps.c	/^get_available_mapsets ()$/
+get_mapset_path	get_path.c	/^get_mapset_path ()$/
+myhelp	Gmapsets.c	/^myhelp (prog, vars)$/
+scan_int	scan_int.c	/^scan_int (buf, n)$/
+set_mapset_path	set_path.c	/^set_mapset_path ()$/
+stuffem	Gmapsets.c	/^stuffem (position, mapset)$/
