@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     struct Key_Value *out_proj_info, *out_proj_units;
 
     struct Option *input, *output, *p_in, *p_out;
-    struct Flag *wgs84_in, *wgs84_out;
+    struct Flag *wgs84_in, *wgs84_out, *decimal_flag;
     int use_wgs84_in, use_wgs84_out;
 
     int proj_changed_in = 0;
@@ -81,6 +81,11 @@ int main(int argc, char *argv[])
     wgs84_out->key = 'o';
     wgs84_out->description =
 	"Use current location as input and WGS84 as output projection";
+
+    decimal_flag = G_define_flag();
+    decimal_flag->key = 'd';
+    decimal_flag->description = "Output lat/long in decimal degrees";
+
 
     if (G_parser(argc, argv))
 	exit(-1);
@@ -350,7 +355,7 @@ int main(int argc, char *argv[])
 	else if (pj_do_proj(&X, &Y, &info_in, &info_out) < 0)
 	    G_fatal_error("Error in pj_do_proj()");
 
-	if (proj_index_out != PROJECTION_LL) {
+	if (decimal_flag->answer || (proj_index_out != PROJECTION_LL)) {
 	    EAS_res = X;
 	    NOR_res = Y;
 	    cur_LAT = LAT;
