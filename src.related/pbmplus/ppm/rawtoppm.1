@@ -1,0 +1,56 @@
+.TH rawtoppm 1 "15 December 89"
+.SH NAME
+rawtoppm - convert raw RGB bytes into a portable pixmap
+.SH SYNOPSIS
+.B rawtoppm
+.RB [ -headerskip
+.IR N ]
+.RB [ -rowskip
+.IR N ]
+.RB [ -rgb | -rbg | -grb | -gbr | -brg | -bgr ]
+.RB [ -interpixel | -interrow ]
+.I width height
+.RI [ imagedata ]
+.SH DESCRIPTION
+Reads raw RGB bytes as input.
+Produces a portable pixmap as output.
+The input file is just RGB bytes.
+You have to specify the width and height on the command line,
+since the program obviously can't get them from the file.
+The maxval is assumed to be 255.
+If the resulting image is upside down, run it through
+.B "pnmflip -tb" .
+.SH OPTIONS
+.TP
+.B -headerskip
+If the file has a header, you can use this flag to
+skip over it.
+.TP
+.B -rowskip
+If there is padding at the ends of the rows, you can skip it with this flag.
+.TP
+.B -rgb -rbg -grb -gbr -brg -bgr
+These flags let you specify alternate color orders.  The default is
+.BR -rgb .
+.TP
+.B -interpixel -interrow
+These flags let you specify how the colors are interleaved.
+The default is
+.BR -interpixel ,
+meaning three interleaved bytes make up each pixel.
+.B -interrow
+means three interleaved rows - a row of red, a row of green, a row of blue,
+assuming standard rgb color order.
+The
+.B -interplane
+flag is an obvious extension, but is not implemented.
+.SH "SEE ALSO"
+ppm(5), rawtopgm(1), pnmflip(1)
+.SH AUTHOR
+Copyright (C) 1991 by Jef Poskanzer.
+.\" Permission to use, copy, modify, and distribute this software and its
+.\" documentation for any purpose and without fee is hereby granted, provided
+.\" that the above copyright notice appear in all copies and that both that
+.\" copyright notice and this permission notice appear in supporting
+.\" documentation.  This software is provided "as is" without express or
+.\" implied warranty.
