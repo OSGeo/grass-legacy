@@ -48,7 +48,6 @@ SOURCES="
 
 #############################################################################
 
-
 if [ ! -f INSTALL -o ! -f NEWS.html -o "$0" != "./README.ipc" ]
 then
 	echo
@@ -84,8 +83,22 @@ then
 	exit
 fi
 
-which gmake5 > /dev/null 2>&1
-if [ $? -ne 0 ]
+GMAKE5=
+# Search for gmake5 command in user's path
+for i in `echo $PATH | sed 's/^:/.:/
+    	    		    s/::/:.:/g
+			    s/:$/:./
+			    s/:/ /g'`
+do
+    if [ -f $i/gmake5 ] ; then
+	# Save the path of the gmake5 command
+	GMAKE5=$i/gmake5
+	# Use the first one in user's path
+	break
+    fi
+done
+
+if [ ! "$GMAKE5" ]
 then
 	echo
 	echo "gmake5 is not under \$PATH."
