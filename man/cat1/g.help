@@ -1,7 +1,7 @@
 
 
 
-g.help <main>        GRASS Reference Manual         <main> g.help
+g.help <main>	     GRASS Reference Manual	    <main> g.help
 
 
 
@@ -15,10 +15,10 @@ SYNOPSIS
 DESCRIPTION
      g.help provides the user with functional information on
      GRASS programs, a glossary, and access to on-line User's
-     Reference Manual entries.  The help facility is accessed by
-     simply typing g.help on the command line.  The user can then
+     Reference Manual entries.	The help facility is accessed by
+     simply typing g.help on the command line.	The user can then
      wend his way through a series of menus (organized by
-     functional area) and key-word searches.
+     functional	area) and key-word searches.
 
      On-line reference manual entries can also be accessed
      directly, through the GRASS g.manual command.
@@ -31,12 +31,12 @@ SEE ALSO
 AUTHOR
      James Westervelt, U.S. Army Construction Engineering
      Research Laboratory
-     Deb Brinegar, U.S. Army Construction Engineering Research
+     Deb Brinegar, U.S.	Army Construction Engineering Research
      Laboratory
      Mary Martin, U.S. Army Construction Engineering Research
      Laboratory
 
-     Note.  The help facility uses the hyper program written by
+     Note.  The	help facility uses the hyper program written by
      Jim Westervelt.
 
 
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
