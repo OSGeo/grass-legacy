@@ -21,7 +21,11 @@ main (argc, argv) char *argv[];
 
     strcpy (msg, "Double click on the");
     if (argc > 2 && argv[2][0] != '-')
+    {
+	if (argv[2][0] != ' ')
+	    strcat (msg, " ");
 	strcat (msg, argv[2]);
+    }
     else
 	strcat (msg, " file to be selected");
 
