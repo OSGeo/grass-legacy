@@ -1,3 +1,4 @@
+# 18 March 2005
 
 namespace eval DmRaster {
     variable array opt # raster options
@@ -67,40 +68,38 @@ proc DmRaster::options { id frm } {
     set row [ frame $frm.name ]
     Button $row.a -text [G_msg "Raster name:"] \
            -command "DmRaster::select_map $id"
-    Entry $row.b -width 40 -text "$opt($id,map)" \
+    Entry $row.b -width 40 -text " $opt($id,map)" \
           -textvariable DmRaster::opt($id,map)
     pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
 
     # cat query
     set row [ frame $frm.cat ]
-    LabelEntry $row.a -label [G_msg " List of cat# to display (integer maps only) "] \
-    -textvariable DmRaster::opt($id,cquery) -width 30
-    pack $row.a -side left
+    Label $row.a -text " List of cat# to display (integer maps only)"
+    LabelEntry $row.b -textvariable DmRaster::opt($id,cquery) -width 30
+    pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
-
 
     # value query
     set row [ frame $frm.val ]
-    LabelEntry $row.a -label [G_msg " List of values to display (fp maps only)     "] \
-    -textvariable DmRaster::opt($id,vquery) -width 30
-    pack $row.a -side left
-    pack $row -side top -fill both -expand yes
-    
+    Label $row.a -text " List of values to display (fp maps only)"
+    LabelEntry $row.b -padx 10 -textvariable DmRaster::opt($id,vquery) -width 30
+    pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes 
     
     # background color
     set row [ frame $frm.bg ]
-    ComboBox $row.a -label [G_msg " Background color for null values                 "] \
-                    -width 10 -textvariable DmRaster::opt($id,bkcolor) \
+    Label $row.a -text " Background color for null values"
+    ComboBox $row.b -padx 33 -width 10 -textvariable DmRaster::opt($id,bkcolor) \
                     -values {"white" "grey" "gray" "black" "brown" "red" "orange" \
                     "yellow" "green" "aqua" "cyan" "indigo" "blue" "purple" "violet" "magenta"}
-    pack $row.a -side left
+    pack $row.a $row.b -side left
     pack $row -side top -fill both -expand yes
     
     # legend
     set row [ frame $frm.leg ]
     checkbutton $row.a -text [G_msg "show legend in selected display monitor"] -variable DmRaster::opt($id,legend) 
-    ComboBox $row.b -width 4 -textvariable DmRaster::opt($id,legmon) \
+    ComboBox $row.b -padx 2 -width 4 -textvariable DmRaster::opt($id,legmon) \
                     -values {"x0" "x1" "x2" "x3" "x4" "x5" "x6"}
     LabelEntry $row.c -label [G_msg " thin legend by "] -textvariable DmRaster::opt($id,legthin) -width 6
     pack $row.a $row.b $row.c -side left

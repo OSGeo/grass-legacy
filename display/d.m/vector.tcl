@@ -1,3 +1,4 @@
+# 18 March 2005
 
 namespace eval DmVector {
     variable array opt # vector options
@@ -63,8 +64,7 @@ proc DmVector::create { tree parent } {
                            -variable DmVector::opt($count,_check) \
                            -height 1 -padx 0 -width 0]
     set can [ canvas $frm.c -width $DmTree::legend_width \
-                     -height $DmTree::legend_height -borderwidth 0 \
-                     -highlightbackground gray ]
+                     -height $DmTree::legend_height ]
     set opt($count,_legend) $can
     pack $check $can -side left
 
@@ -608,8 +608,7 @@ proc DmVector::duplicate { tree parent node id } {
                            -variable DmVector::opt($count,_check) \
                            -height 1 -padx 0 -width 0]
     set can [ canvas $frm.c -width $DmTree::legend_width \
-                     -height $DmTree::legend_height -borderwidth 0 \
-                     -highlightbackground gray ]
+                     -height $DmTree::legend_height -borderwidth 0 ]
     set opt($count,_legend) $can
     pack $check $can -side left
 
