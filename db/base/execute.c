@@ -29,6 +29,7 @@ main( int argc, char *argv[] )
     dbHandle handle;
     int ret;
     FILE *fd;
+    int error = 0;
 
     parse_command_line (argc, argv);
 
@@ -58,15 +59,17 @@ main( int argc, char *argv[] )
 	if(!stmt_is_empty(&stmt)) {
 	    G_debug (3, "sql: %s", db_get_string(&stmt) );
             ret = db_execute_immediate (driver, &stmt);
-	    if ( ret != DB_OK )
+	    if ( ret != DB_OK ) {
 	       G_warning ( "Error while executing: \"%s\"\n", db_get_string( &stmt ) );
+	       error++;
+	    }
 	}
     }
 
     db_close_database(driver);
     db_shutdown_driver(driver);
 
-    exit(0);
+    exit(error);
 }
 
 void
