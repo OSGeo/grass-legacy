@@ -522,7 +522,8 @@ int main( int argc, char **argv )
 			R_move_abs(x1+4,y1) ;
 		    else
 			R_move_abs(x1+4,y0+ppl*k + txsiz/2) ;
-		    R_text(buff) ;
+		    if(! hide_catnum)
+			R_text(buff) ;
 		} /* for */
 	    } /* !use_mouse || !horiz */
 
