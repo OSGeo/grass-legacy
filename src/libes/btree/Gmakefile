@@ -6,17 +6,17 @@ OBJ = \
 	rewind.o\
 	update.o
 
-all: $(BTREELIB) $(LIBDIR)/btree.h
+all: $(BTREELIB) #$(LIBDIR)/btree.h
 
 $(BTREELIB): $(OBJ)
 	$(AR)
 
-$(LIBDIR)/btree.h: btree.h
-	rm -f $@
-	cp $? $@
-	chmod +r $@
+#$(LIBDIR)/btree.h: btree.h
+#	rm -f $@
+#	cp $? $@
+#	chmod +r $@
 
-$(OBJ): btree.h
+$(OBJ): #btree.h
 
 try: try.o $(BTREELIB)
 	$(CC) $(LDFLAGS) try.o $(BTREELIB) -o try
