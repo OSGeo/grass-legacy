@@ -1,11 +1,24 @@
-# Creates all manpages in $(GISBASE)/man/man1
-# (Think to add grass programmer's manual pages in $(GISBASE)/man/man3
-# and file format in $(GISBASE)/man/man5 later...)
-# Copy html tree (without the other files) in $(GISBASE)/documents
-# The manual in html format will be in $(GISBASE)/documents/html
-# (default in tcltkgrass ?)
-# The manual in postscript format will be in $(GISBASE)/documents/postscript
+#############################################################################
 #
+# $Id: Gmakefile,v 1.21 2001-01-31 07:15:02 justin Exp $
+#
+# MODULE:   	Grass Documentation
+# AUTHOR(S):	Original author unknown - probably CERL
+# PURPOSE:  	Creates all manpages in $(GISBASE)/man/man1
+#   	    	(Think to add grass programmer's manual pages in
+#   	    	$(GISBASE)/man/man3 and file format in $(GISBASE)/man/man5
+#   	    	later...) Copy html tree (without the other files) in
+#   	    	$(GISBASE)/documents The manual in html format will be in
+#   	    	$(GISBASE)/documents/html (default in tcltkgrass ?) The
+#   	    	manual in postscript format will be in
+#   	    	$(GISBASE)/documents/postscript
+# COPYRIGHT:    (C) 2000 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
 
 # default manual section number is 1
 # SECT should be "1" not "man1". Otherwise $(HTML2MAN) and g.manual won't work.
@@ -19,11 +32,7 @@ HTML_DIR = html
 HTML2MAN = $(SRC)/scripts/contrib/g.html2man/g.html2man
 HTML2PS = html2ps -n
 
-#all: htmlpages g.help-manpages postscript-docs
-#all: htmlpages manpages postscript-docs
-#all: htmlpages manpages
 all: htmlpages g.help-manpages
-
 
 # copy the HTML pages only and related images
 htmlpages:
@@ -38,7 +47,9 @@ htmlpages:
 	  do \
 	  	test -d $$h && continue; \
 		f=`echo $$h | sed 's@^@$(GRASS_HTMLDIR)/@;'`; \
-		if [ ! -f $$f -o $$f -ot $$h ]; then echo Generating: $$f; cp -p $$h $$f; fi; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then echo Generating: $$f; cp -p $$h $$f; fi; \
 	  done)
 
 # generate the g.help compatible man pages
@@ -54,7 +65,9 @@ g.help-manpages:
 		tmpf="$${tmp}_.$(SECT)"; \
 		tmpm="$${m}_"; \
 		f="$$tmp.$(SECT)"; \
-		if [ ! -f $$f -o $$f -ot $$h ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "            $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$tmpf $(SECT); man -M $(GISBASE)/man 1 $$tmpm > $$f; rm $$tmpf; echo "            $$tmpm.$(SECT) => $$m.$(SECT)"; fi; \
 	  done)
 
 # generate the man pages
@@ -65,7 +78,9 @@ manpages:
 	  for h in *.html; \
 	  do \
 		f=`echo $$h | sed 's@^@$(GRASS_MANDIR)/@; s@\.html@\.$(SECT)@'`; \
-		if [ ! -f $$f -o $$f -ot $$h ]; then $(HTML2MAN) $$h $$f $(SECT); fi; \
+	    	F_MOD_TIME=`${GISBASE}/etc/getModTime $$f`; \
+	    	H_MOD_TIME=`${GISBASE}/etc/getModTime $$h`; \
+		if [ ! -f $$f -o $$H_MOD_TIME -gt $$F_MOD_TIME ]; then $(HTML2MAN) $$h $$f $(SECT); fi; \
 	  done)
 
 #Postscript-docs:
