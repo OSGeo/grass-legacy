@@ -46,7 +46,7 @@ int I_list_elev (int full)
 	fprintf (temp, "no raster files available\n");
     fprintf (temp, "---------------------------------\n");
     fclose (temp);
-    sprintf (buf, "more -d %s", tempfile);
+    sprintf (buf, "$PAGER %s", tempfile);
     system(buf);
     unlink (tempfile);
     fprintf (stderr, "hit RETURN to continue -->");
