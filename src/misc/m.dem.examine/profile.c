@@ -2,7 +2,7 @@
 
 get_profile()
 {
-	double junk;
+	float junk;
 	buffer += get_int(&bas_n);
 	if(filestat != blocksize)
 		return(0);
