@@ -1,7 +1,5 @@
 EXTRA_CFLAGS = $(VECT_INCLUDE)
 
-#DIGLIB = $(GISs)/src/mapdev/lib/libdig.a
-
 PGM =	v.out.arc
 
 OBJ =	Vexport_arc.o\
@@ -11,8 +9,9 @@ OBJ =	Vexport_arc.o\
 	writ_a_lines.o
 
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(VECTLIB)
-	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
+	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(MATHLIB)
 
-$(DIGLIB): #
+$(VECTLIB): #
+$(DIG_ATTLIB): #
 $(GISLIB): #
