@@ -1,3 +1,5 @@
+#include "Vect.h"
+
 int print_binary_int(int);
 int print_binary_char(int);
 int change_mode(int);
