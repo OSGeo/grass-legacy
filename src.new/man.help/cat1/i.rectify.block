@@ -1,0 +1,198 @@
+
+
+
+i.rectify.block(1)   GRASS Reference Manual    i.rectify.block(1)
+
+
+
+NAME
+     i.rectify.block -
+                An imagery function that ortho-rectifies an
+                imagery group file
+                (GRASS Imagery Tool)
+
+SYNOPSIS
+     i.rectify.block
+
+DESCRIPTION
+     i.rectify.block allows the user to ortho-rectify an imagery
+     group file. An imagery photo block consists of several
+     scanned aerial photographs (cell files) of a common area. An
+     imagery sub-block is a subset of these cell files.  Block
+     and sub-blocks of imagery groups are created by the GRASS
+     Imagery Tool i.build.block.
+
+     i.rectify.block guides the user through the steps required
+     to ortho-rectify a single imagery group contained in a sub-
+     block.
+
+     The first menu in the i.rectify.block program asks the user
+     to select a block and sub-block.  If the block and sub-block
+     do not exist, the user will be asked to run i.build.block.
+
+     This program ortho-rectifies a single sub-block of imagery
+     groups.
+        Please enter the block and sub-block to ortho-rectify:
+
+     BLOCK: _________________ (enter 'list' for a list of blocks)
+     SUB_BLOCK: _________ (enter 'list' for a list of sub-blocks)
+
+         AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                        (OR <Ctrl-C> TO EXIT)
+
+
+     If the word list is entered, blocks or sub-blocks that have
+     already been created in the current LOCATION and MAPSET(S)
+     will be displayed.
+
+     The second menu in i.rectify.block provides the user with
+     the following options:
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+i.rectify.block(1)   GRASS Reference Manual    i.rectify.block(1)
+
+
+
+        1.    Select another sub-block
+        2.    Compute image-to-photo transformation parameters
+        3.    Initialize exposure station parameters
+        4.    Compute ortho-rectification parameters
+        5.    Ortho-rectify the selected sub-block files
+
+              RETURN to exit
+
+
+     The options are described as follows:
+
+     Select another sub-block
+          If option number 1 is chosen, the following menu is
+          displayed:
+
+                 Please enter the sub-block to be selected
+
+          SUB-BLOCK: _____________ (enter 'list' for a list of sub-blocks)
+
+
+            AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                           (OR <Ctrl-C> TO EXIT)
+
+
+          If the word list is entered, sub-blocks that have
+          already been created in the current block will be
+          displayed.
+
+
+     Compute image-to-photo transformation parameters
+          If option number 2 is selected, image-to-photo
+          transformation parameters of the imagery group in the
+          selected sub-block are computed.  The user associates
+          reference points (fiducials, reseau marks, etc.) with
+          their known photo coordinates.  Complete documentation
+          for this option is available under the manual entry
+          i.ortho.reference.
+
+
+     Select initial exposure station parameters
+          If option number 3 is selected, initial camera exposure
+          station parameters are selected or modified.  Complete
+          documentation for this option is available under the
+          manual entry i.ortho.initial.
+
+
+     Compute ortho-rectification parameters
+          If option number 4 is selected, ortho-rectification
+          parameters for the imagery sub-block are computed.
+          Here control points are marked on one or more sub-block
+          imagery cell-files and associated with there known UTM
+          coordinates. Complete documentation for this option is
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
+
+
+
+i.rectify.block(1)   GRASS Reference Manual    i.rectify.block(1)
+
+
+
+          available under the manual entry i.ortho.control.
+
+
+     ortho-rectify selected dub-block
+          If option number 5 is chosen, the cell files referenced
+          by the imagery sub-block are ortho-rectified.
+          Rectified  cell files will be created in the target
+          location.  Complete documentation for this option is
+          available under the manual entry i.ortho.rectify.
+
+
+NOTES
+     The i.rectify.block options are only available for imagery
+     files in the current LOCATION.
+
+SEE ALSO
+     i.build.block[1], i.ortho.reference[1], i.ortho.initial[1],
+     i.ortho.control[1], i.ortho.rectify[1]
+
+
+
+AUTHOR
+     Mike Baba
+     DBA Systems, Inc.
+     10560 Arrowhead Drive
+     Fairfax, Virginia 22030
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         3
+
+
+
