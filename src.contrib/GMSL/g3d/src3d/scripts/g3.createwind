@@ -4,7 +4,7 @@
 
 # written by Markus Neteler
 #            neteler@geog.uni-hannover.de
-# 5/2000
+# $Id$
 
 if test "$GISBASE" = ""; then
 echo "You must be in GRASS to run this program."
@@ -73,15 +73,17 @@ cat $LOCATION/WIND | awk ' /n-s/ { print "n-s resol: "$3 }' >> $LOCATION/WIND3
 echo "t-b resol: $3" >> $LOCATION/WIND3
 echo "t-b resol: $3"
 
-number=`echo $number_rows $number_cols $layer_number | awk '{print ($1 * $2 * $3)}'`
-echo "WIND3 file created."
-echo "You have defined a volume of $number tiles (cubes)."
-
 # check bottom_height > top_height:
 if [ $1 -gt $2 ]
 then
- echo "----- WARNING: bottom_height should be less than top_height."
+ echo "----- ERROR: bottom_height must be less than top_height."
+ rm -f $LOCATION/WIND3
+ exit
 fi
+
+number=`echo $number_rows $number_cols $layer_number | awk '{print ($1 * $2 * $3)}'`
+echo "WIND3 file created."
+echo "You have defined a volume of $number tiles (cubes)."
 
 # this needs to be improved!!:
 cp $LOCATION/WIND3 $LOCATION/../PERMANENT/DEFAULT_WIND3
