@@ -3,6 +3,12 @@
 TMP=`g.tempfile pid=$$`
 TMP2=`g.tempfile pid=$$`
 
+if ! test -f $LOCATION/site_lists/$1
+    then
+        echo "ERROR: Map $1 does not exist."
+        exit
+fi
+   
 if [ $# = 0 ] || [ $1. = . ]
     then
 	g.ask type=old element=site_lists unixfile=$TMP2
