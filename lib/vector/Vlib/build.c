@@ -72,7 +72,7 @@ Vect_build ( struct Map_info *Map, FILE *msgout ) {
     if ( ret == 0 ) { return 0; } 
     
     /*  write out all the accumulated info to the plus file  */
-    prnmsg ("\nWritting topo file ...\n");
+    prnmsg ("\nWriting topo file ...\n");
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
     G__file_name (fname, buf, GV_TOPO_ELEMENT, Map->mapset);
     G_debug (1, "Open topo: %s", fname);

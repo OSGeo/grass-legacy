@@ -8,7 +8,7 @@
  *
  * G_debug (int level, char *msg)
  * 
- * Print debugging message if environmet variable GRASS_DEBUG_LEVEL
+ * Print debugging message if environment variable GRASS_DEBUG_LEVEL
  * is set to level equal or greater  
  *
  * Levels: (recommended levels) 
