@@ -8,7 +8,7 @@ r.out.ascii <main>   GRASS Reference Manual    <main> r.out.ascii
 NAME
      r.out.ascii - Converts a raster map layer into an ASCII text
      file.
-     (GRASS Raster Data Export Program)
+     (GRASS Raster Data	Export Program)
 
 SYNOPSIS
      r.out.ascii
@@ -17,50 +17,50 @@ SYNOPSIS
 
 DESCRIPTION
      r.out.ascii converts a user-specified raster map layer
-     (map=name) into an ASCII text file suitable for export to
+     (map=name)	into an	ASCII text file	suitable for export to
      other computer systems.  The digits=value option (where
-     value is a number of the user's choice) can be used to
+     value is a	number of the user's choice) can be used to
      request that numbers in the ouput be equally-spaced (i.e.,
-     columnar output).  Each category value in the ASCII map
-     layer will then take up value number of spaces.  However, to
-     use this, the user should know the maximum number of digits
-     that will occur in the output file, and add one to this
-     number (to leave a space between each column).  The user can
-     find the maximum number of digits occurring in the output
+     columnar output).	Each category value in the ASCII map
+     layer will	then take up value number of spaces.  However, to
+     use this, the user	should know the	maximum	number of digits
+     that will occur in	the output file, and add one to	this
+     number (to	leave a	space between each column).  The user can
+     find the maximum number of	digits occurring in the	output
      file by running r.out.ascii without the digits=value option.
 
      The GRASS program r.in.ascii can be used to perform the
-     reverse function, converting an ASCII file in suitable
+     reverse function, converting an ASCII file	in suitable
      format to GRASS raster file format.
 
      Flag:
 
-     -h                Suppress printing of header information.
+     -h		       Suppress	printing of header information.
 
-                       Parameters:
+		       Parameters:
 
-     map=name          Name of an existing raster map layer.
+     map=name	       Name of an existing raster map layer.
 
      digits=value      The minimum number of digits (per cell) to
-                       be printed.
+		       be printed.
 
-     r.out.ascii can be run either non-interactively or
+     r.out.ascii can be	run either non-interactively or
      interactively.  The program will be run non-interactively if
-     the user specifies the name of a raster map layer and
-     (optionally) a value for digits, using the form
+     the user specifies	the name of a raster map layer and
+     (optionally) a value for digits, using the	form
 
-          r.out.ascii map=name [digits=value]
+	  r.out.ascii map=name [digits=value]
 
-     where name is the name of a raster map layer to be converted
-     to ASCII format, and value is the minimum number of digits
-     (per cell) to be printed to output.  The user can also the
-     -h option to suppress the output of file header information.
-
-
+     where name	is the name of a raster	map layer to be	converted
+     to	ASCII format, and value	is the minimum number of digits
+     (per cell)	to be printed to output.  The user can also the
+     -h	option to suppress the output of file header information.
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+
+
+GRASS 4.2		Baylor University			1
 
 
 
@@ -73,24 +73,24 @@ r.out.ascii <main>   GRASS Reference Manual    <main> r.out.ascii
 
      Alternately, the user can simply type r.out.ascii on the
      command line, without program arguments.  In this case, the
-     user will be prompted for parameter values using the
+     user will be prompted for parameter values	using the
      standard GRASS parser interface described in the manual
      entry for parser.
 
 NOTES
-     The output from r.out.ascii may be placed into a file by
-     using the UNIX redirection mechanism;  e.g.:
+     The output	from r.out.ascii may be	placed into a file by
+     using the UNIX redirection	mechanism;  e.g.:
 
-          r.out.ascii map=soils > out.file
+	  r.out.ascii map=soils	> out.file
 
-     The output file out.file can then be printed or copied onto
-     a magnetic tape or floppy disk for export purposes.
+     The output	file out.file can then be printed or copied onto
+     a magnetic	tape or	floppy disk for	export purposes.
 
 SEE ALSO
      r.in.ascii, and parser
 
 AUTHOR
-     Michael Shapiro, U.S. Construction Engineering Research
+     Michael Shapiro, U.S. Construction	Engineering Research
      Laboratory
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
