@@ -338,13 +338,23 @@ double G_geodesic_distance_lon_to_lon(double, double);
 double G_geodesic_distance(double, double, double, double);
 /* get_cellhd.c */
 int G_get_cellhd(char *, char *, struct Cell_head *);
+/*get_datum.c */
+int G_get_datum_parameters(double *, double *, double *, double *, double *, double *);
+int G_get_datum_parameters7(double *, double *, double *, double *, double *, double *, double *, double *, double *, double *);
+/* get_datum_name.c */
+int G_ask_datum_name(char *);
 /* get_ell_name.c */
 int G_ask_ellipse_name(char *);
 /* get_ellipse.c */
 int G_get_ellipsoid_parameters(double *, double *);
+/* new by al 05/2000 */
+/* this function is needed for datum shift, which needs the f parameter */
+int G_get_spheroid_by_name(const char *, double *, double *, double*);
 int G_get_ellipsoid_by_name(const char *, double *, double *);
 char *G_ellipsoid_name(int);
+char *G_ellipsoid_description(int);
 /* get_proj_name.c */
+/* empty file, al 05/2000 */
 /* get_projinfo.c */
 struct Key_Value *G_get_projunits(void);
 struct Key_Value *G_get_projinfo(void);
@@ -611,6 +621,8 @@ char *G__projection_name(int);
 char *G_database_unit_name(int);
 char *G_database_projection_name(void);
 double G_database_units_to_meters_factor(void);
+char *G_database_datum_name();
+char *G_database_ellipse_name();;
 /* put_cellhd.c */
 int G_put_cellhd(char *, struct Cell_head *);
 /* put_row.c */
