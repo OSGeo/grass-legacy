@@ -147,5 +147,9 @@
  HREF="http://www.dinama.gub.uy/grass/index2.html"
   ALT="http://www.dinama.gub.uy/grass/index2.html"
   COORDS="216,217, 217,214, 220,214, 223,216, 224,219, 222,222, 219,222, 216,220, 216,217">
+<AREA SHAPE="POLY"
+ HREF="ftp://geografia.forest.ula.ve/pub/grass/index2.html"
+  ALT="ftp://geografia.forest.ula.ve/pub/grass/index2.html"
+  COORDS="189,143, 190,140, 193,138, 192,141, 195,139, 198,140, 201,141, 204,142, 207,141, 210,140, 207,141, 210,142, 211,145, 211,148, 212,151, 209,152, 206,152, 206,155, 204,158, 201,157, 199,154, 199,151, 200,148, 197,149, 194,147, 191,147, 189,143">
 <AREA SHAPE="RECT" NOHREF COORDS="0,0 640,320">
 </MAP>
