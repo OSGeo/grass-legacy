@@ -412,7 +412,6 @@ src.contrib/GMSL/NVIZ2.2
 #
 src.contrib/CERL/imagery/i.rvi.prediction2
 src.contrib/CERL/imagery/i.shape
-###src.contrib/CERL/libes/projsupp   # obsolete!!
 # src.contrib/CERL/misc/m.regression
 src.contrib/CERL/raster/r.linear.regression
 # src.contrib/CERL/raster/r.ndvi.model
