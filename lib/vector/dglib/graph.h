@@ -49,7 +49,6 @@ __BEGIN_DECLS
 #define GNGRP_NODE_STATUS(p)				((p)[GNGRP_IN_STATUS])
 #define GNGRP_NODE_LINKAREA_OFFSET(p)		((p)[GNGRP_IN_OFFSET])
 #define GNGRP_NODE_ATTR_PTR(p)				((p) + GNGRP_IN_ATTR)
-#define GNGRP_NODE_BUFFER_OFFSET(pgrp,p)	((gnInt32_t)p - (gnInt32_t)(pgrp)->pNodeBuffer)
 
 /*
  * LinkArea macros - addresses in a flat link-area
@@ -88,25 +87,30 @@ __BEGIN_DECLS
 #define GNGRP_LINK_TONODE_ID(pgrp,pl)		((pgrp->Flags&1)?\
 												GNGRP_NODE_ID(pgrp->pNodeBuffer+GNGRP_LINK_TONODE_OFFSET(pl)):\
 												GNGRP_LINK_TONODE_OFFSET(pl))
-#define GNGRP_LINK_BUFFER_OFFSET(pgrp,pl)	((gnInt32_t)pl - (gnInt32_t)(pgrp)->pLinkBuffer)
 
-
+/*
+ * Scan a node buffer
+ */
+#define GNGRP_FOREACH_NODE(pgrp,pn)		for((pn)=(gnInt32_t*)(pgrp)->pNodeBuffer;\
+												(pn)<(gnInt32_t*)((pgrp)->pNodeBuffer+(pgrp)->iNodeBuffer);\
+												(pn)+=GNGRP_NODE_WSIZE((pgrp)->NodeAttrSize))
+/*
+ * Scan a linkarea
+ */
+#define GNGRP_FOREACH_LINK(pgrp,pla,pl)	for((pl)=GNGRP_LINKAREA_LINKARRAY_PTR(pla);\
+												(pl)<(pla)+GNGRP_LINK_WSIZE((pgrp)->LinkAttrSize)*GNGRP_LINKAREA_LINKCOUNT(pla);\
+												(pl)+=GNGRP_LINK_WSIZE((pgrp)->LinkAttrSize))
 /*
  * Node Buffer Utilities
  */
-#define GNGRP_NB_FOREACH_NODE(pgrp,pn)		for((pn)=(gnInt32_t*)(pgrp)->pNodeBuffer;\
-												(pn)<(gnInt32_t*)((pgrp)->pNodeBuffer+(pgrp)->iNodeBuffer);\
-												(pn)+=GNGRP_NODE_WSIZE((pgrp)->NodeAttrSize))
-
-#define GNGRP_NB_NODE_I(pgrp,i)				((gnInt32_t*)((pgrp)->pNodeBuffer[GNGRP_NODE_SIZEOF((pgrp)->LinkAttrSize)*(i)]))
-#define GNGRP_NB_NODE_OFF(pgrp,o)			((gnInt32_t*)((pgrp)->pNodeBuffer + (o)))
+#define GNGRP_NODEBUFFER_SHIFT(pgrp,o)		((gnInt32_t*)((pgrp)->pNodeBuffer + (o)))
+#define GNGRP_NODEBUFFER_OFFSET(pgrp,p)		((gnInt32_t)p - (gnInt32_t)(pgrp)->pNodeBuffer)
 
 /*
  * Link Buffer Utilities
  */
-#define GNGRP_LB_FOREACH_LINK(pgrp,pla,pl)	for((pl)=GNGRP_LINKAREA_LINKARRAY_PTR(pla);\
-												(pl)<(pla)+GNGRP_LINK_WSIZE((pgrp)->LinkAttrSize)*GNGRP_LINKAREA_LINKCOUNT(pla);\
-												(pl)+=GNGRP_LINK_WSIZE((pgrp)->LinkAttrSize))
+#define GNGRP_LINKBUFFER_SHIFT(pgrp,o)		((gnInt32_t*)((pgrp)->pLinkBuffer + (o)))
+#define GNGRP_LINKBUFFER_OFFSET(pgrp,pl)	((gnInt32_t)pl - (gnInt32_t)(pgrp)->pLinkBuffer)
 
 
 
@@ -132,7 +136,7 @@ __BEGIN_DECLS
 
 #ifdef GNGRP_NEWCLIP
 /*
- * shortest path clip function takes a pointer to
+ * Shortest Path clip function takes a pointer to
  * gnGrpSPClipInput_s and gnGrpSPClipOutput_s
  */
 typedef struct _gnGrpSPClipInput
@@ -151,11 +155,35 @@ typedef struct _gnGrpSPClipOutput
 
 } gnGrpSPClipOutput_s;
 
-
 #endif /* GNGRP_NEWCLIP */
-/* forward declaration of gnGrpGraph structure  */
+
+
+/*
+ * Spanning clip definitions
+ */
+typedef struct _gnGrpSpanClipInput
+{
+	gnInt32_t *		pnNodeFrom;
+	gnInt32_t *		pnLink;
+	gnInt32_t *		pnNodeTo;
+
+} gnGrpSpanClipInput_s;
+
+typedef struct _gnGrpSpanClipOutput
+{
+	gnInt32_t *		pnReserved;
+
+} gnGrpSpanClipOutput_s;
+
+
+/*
+ * Forward declaration of gnGrpGraph structure
+ */
 struct _gnGrpGraph;
 
+/*
+ * Virtual graph API
+ */
 typedef struct _gnGrpIOMethods
 {
 	int 		(*write)			(
@@ -206,6 +234,18 @@ typedef struct _gnGrpGraph
 #endif
 }
 gnGrpGraph_s;
+
+/*
+ * Shortest Path clip function type
+ */
+#ifdef GNGRP_NEWCLIP
+typedef int (*gnGrpSPClip_fn)(gnGrpGraph_s *, gnGrpSPClipInput_s *, gnGrpSPClipOutput_s *, void *);
+#endif
+
+/*
+ * Spanning clip function type
+ */
+typedef int (*gnGrpSpanClip_fn)(gnGrpGraph_s *, gnGrpGraph_s *, gnGrpSpanClipInput_s *, gnGrpSpanClipOutput_s *, void *);
 
 
 /*
@@ -378,9 +418,19 @@ extern gnGrpSPReport_s *gnGrpShortestPath	(
 					 						);
 
 extern int				gnGrpDepthSpanning	(
-											gnGrpGraph_s *  pgraphInput,
-											gnGrpGraph_s *  pgraphOutput,
-											gnInt32_t		nVertexNode
+											gnGrpGraph_s *  	pgraphInput,
+											gnGrpGraph_s *  	pgraphOutput,
+											gnInt32_t			nVertexNode,
+											gnGrpSpanClip_fn	fnClip,
+											void *				pvClipArg
+											);
+
+extern int				gnGrpDepthComponents(
+											gnGrpGraph_s *  	pgraphInput,
+											gnGrpGraph_s *  	pgraphComponents,
+											int					cgraphComponents,
+											gnGrpSpanClip_fn	fnClip,
+											void *				pvClipArg
 											);
 
 extern void 			gnGrpFreeSPReport	(

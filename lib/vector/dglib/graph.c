@@ -136,6 +136,7 @@ static int _add_link_V1  (
 			pgraph->iErrno = GNGRP_ERR_MemoryExhausted;
 			return -1;
 		}
+		GNGRP_NODE_STATUS(pfrom) = 0;
 		pFromNodeItem->data.pv = pfrom;
 		HeapData.pv        = pfrom;
 
@@ -163,6 +164,7 @@ static int _add_link_V1  (
 			pgraph->iErrno = GNGRP_ERR_MemoryExhausted;
 			return -pgraph->iErrno;
 		}
+		GNGRP_NODE_STATUS(pto) = 0;
 		pToNodeItem->data.pv = pto;
 		HeapData.pv      = pto;
 
@@ -184,6 +186,7 @@ static int _add_link_V1  (
 	{
 		pto = pToNodeItem->data.pv;
 	}
+
 
 	GNGRP_NODE_STATUS(pfrom) |= GNGRP_NS_FROM;
 	GNGRP_NODE_STATUS(pto)   |= GNGRP_NS_TO;
@@ -237,6 +240,7 @@ static int _add_link_V1  (
 	}
 
 	GNGRP_LINKAREA_LINKCOUNT(plinkarea) ++;
+
 	return 0;
 }
 
@@ -370,7 +374,7 @@ static int _unflatten_V1( gnGrpGraph_s * pgraph )
 	 */
 	pgraph->Flags &= ~0x1;
 
-	GNGRP_NB_FOREACH_NODE(pgraph,pnode)
+	GNGRP_FOREACH_NODE(pgraph,pnode)
 	{
 		if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NS_FROM )
 		{
@@ -505,7 +509,7 @@ static int _flatten_V1( gnGrpGraph_s * pgraph )
 		}
 	}
 
-	gnTreeDestroy( pgraph->pNodeTree );
+	if ( pgraph->pNodeTree ) gnTreeDestroy( pgraph->pNodeTree );
 	pgraph->pNodeTree = NULL;
 
 	gnHeapFree( & pgraph->NodeHeap );
@@ -627,7 +631,7 @@ int gnGrpScan(
 		return -pgraph->iErrno;
 	}
 
-	GNGRP_NB_FOREACH_NODE(pgraph, pnode) {
+	GNGRP_FOREACH_NODE(pgraph, pnode) {
 		if ( (nret=push( pgraph, pnode, pvarg )) ) return nret;	
 	}
 
@@ -662,22 +666,21 @@ static void * _dijkstra_V1	(
 							gnGrpGraph_s * 	pgraph ,
 							gnInt32_t 			from ,
 							gnInt32_t 			to ,
-							int (*clip)		(
 #ifndef GNGRP_NEWCLIP
+							int (*clip)		(
 											gnGrpGraph_s * pgraph,
 											gnInt32_t * pprevlink,
 											gnInt32_t * pfromnode,
 											gnInt32_t * plink,
 											gnInt32_t * ptonode,
 											gnInt32_t * pcost,
-#else /* GNGRP_NEWCLIP */
-											gnGrpGraph_s * ,
-											gnGrpSPClipInput_s * ,
-											gnGrpSPClipOutput_s * ,
-#endif /* GNGRP_NEWCLIP */
 											void *
 											) ,
-							void * 			pvcliparg
+							void * 				pvcliparg
+#else /* GNGRP_NEWCLIP */
+							gnGrpSPClip_fn		fnClip,
+							void * 				pvClipArg
+#endif /* GNGRP_NEWCLIP */
 							)
 {
 	gnInt32_t *					pfrom;				/* pointer to the from node (pgraph->pNodeBuffer) */
@@ -797,18 +800,20 @@ static void * _dijkstra_V1	(
 		clipOutput.nLinkCost = GNGRP_LINK_COST(plink);
 #endif /* GNGRP_NEWCLIP */
 
+#ifndef GNGRP_NEWCLIP
 		if ( clip )
 		{
-#ifndef GNGRP_NEWCLIP
 			if ( clip( pgraph , NULL , pfromnode , plink , ptonode , &nTmpCost , pvcliparg ) ) continue;
 #else /* GNGRP_NEWCLIP */
+		if ( fnClip )
+		{
 			clipInput.pnPrevLink 	= NULL;
 			clipInput.pnNodeFrom 	= pfromnode;
 			clipInput.pnLink		= plink;
 			clipInput.pnNodeTo		= ptonode;
 			clipInput.nFromDistance = 0;
 
-			if ( clip( pgraph , & clipInput , & clipOutput , pvcliparg ) ) continue;
+			if ( fnClip( pgraph , & clipInput , & clipOutput , pvClipArg ) ) continue;
 #endif /* GNGRP_NEWCLIP */
 		}
 
@@ -951,18 +956,20 @@ static void * _dijkstra_V1	(
 			clipOutput.nLinkCost = GNGRP_LINK_COST(plink);
 #endif /* GNGRP_NEWCLIP */
 
+#ifndef GNGRP_NEWCLIP
 			if ( clip )
 			{
-#ifndef GNGRP_NEWCLIP
 				if ( clip( pgraph , plink_prev , pfromnode , plink , ptonode , &nTmpCost , pvcliparg ) ) continue;
 #else /* GNGRP_NEWCLIP */
+			if ( fnClip )
+			{
 				clipInput.pnPrevLink 	= plink_prev;
 				clipInput.pnNodeFrom 	= pfromnode;
 				clipInput.pnLink		= plink;
 				clipInput.pnNodeTo		= ptonode;
 				clipInput.nFromDistance = fromDist;
 
-				if ( clip( pgraph , & clipInput , & clipOutput , pvcliparg ) ) continue;
+				if ( fnClip( pgraph , & clipInput , & clipOutput , pvClipArg ) ) continue;
 #endif /* GNGRP_NEWCLIP */
 			}
 
@@ -1118,29 +1125,36 @@ spr_error:
 
 /*
  * Build the depth-first spanning tree of 'pgraphIn' with vertex 'nNodeId' into 'pgraphOut'
- * As usual this algorithm applies to a FLAT state pgraphIn
- * pgraphOut must have been previously initialized by the caller and is returned in TREE state
- * I prefer using a iterative approach with a stack for 'waiting links' instead of recursion
+ * - As usual this algorithm applies to a FLAT state pgraphIn
+ * - pgraphOut must have been previously initialized by the caller and is returned in TREE state
+ * - I prefer using a iterative approach with a stack for 'waiting links' instead of recursion: it's
+ *   cheaper to stack 8 bytes for each link than the whole function stack
+ * - The visited network is passed by the caller because this function can be used for two purposes:
+ *   1. generate a single spanning tree (gnGrpDepthSpanning)
+ *   2. part of a loop for generating connected-components of the graph (gnGrpDepthComponents)
  */
-static int _depthfirst_spanning_V1( gnGrpGraph_s * pgraphIn , gnGrpGraph_s * pgraphOut , gnInt32_t nNodeId )
+static int _depthfirst_spanning_V1(
+						gnGrpGraph_s * pgraphIn ,
+						gnGrpGraph_s * pgraphOut ,
+						gnInt32_t nNodeId ,
+						void * pvVisited ,
+						gnGrpSpanClip_fn	fnClip ,
+						void *				pvClipArg
+						)
 {
 	gnInt32_t * 	pfrom;
 	gnInt32_t * 	pto;
 	gnInt32_t * 	plinkarea;
 	gnInt32_t * 	plink;
 	gnInt32_t 		id[2] , * pid;
-	void * 			pvVisited = NULL;	
 	long 			istack = 0;
 	unsigned char *	pstack = NULL;
 	int				nret;
+	gnGrpSpanClipInput_s	clipInput;
 
 
 	if ( ! (pgraphIn->Flags & 0x1) ) {
 		pgraphIn->iErrno = GNGRP_ERR_BadOnTreeGraph; return -pgraphIn->iErrno;
-	}
-
-	if ( (pvVisited = gnTreeCreate( _node_free , NULL )) == NULL ) {
-		pgraphIn->iErrno = GNGRP_ERR_MemoryExhausted; goto dfs_error;
 	}
 
 	if ( (pfrom = gnGrpGetNode( pgraphIn, nNodeId )) == NULL ) {
@@ -1148,15 +1162,14 @@ static int _depthfirst_spanning_V1( gnGrpGraph_s * pgraphIn , gnGrpGraph_s * pgr
 	}
 
 	if ( ! (GNGRP_NODE_STATUS(pfrom) & GNGRP_NS_FROM) ) {
-		gnTreeDestroy( pvVisited );
 		return 0;
 	}
 
-	plinkarea = (gnInt32_t*)(pgraphIn->pLinkBuffer + GNGRP_NODE_LINKAREA_OFFSET(pfrom));
+	plinkarea = GNGRP_LINKBUFFER_SHIFT(pgraphIn, GNGRP_NODE_LINKAREA_OFFSET(pfrom));
 
-	GNGRP_LB_FOREACH_LINK(pgraphIn, plinkarea, plink) {
-		id[0] = GNGRP_NODE_BUFFER_OFFSET(pgraphIn, pfrom);
-	   	id[1] = GNGRP_LINK_BUFFER_OFFSET(pgraphIn, plink);
+	GNGRP_FOREACH_LINK(pgraphIn, plinkarea, plink) {
+		id[0] = GNGRP_NODEBUFFER_OFFSET(pgraphIn, pfrom);
+	   	id[1] = GNGRP_LINKBUFFER_OFFSET(pgraphIn, plink);
 		if ( (pstack = _mempush( pstack , & istack , sizeof( gnInt32_t ) * 2 , id )) == NULL ) {
 			pgraphIn->iErrno = GNGRP_ERR_MemoryExhausted; goto dfs_error;
 		}
@@ -1172,7 +1185,16 @@ static int _depthfirst_spanning_V1( gnGrpGraph_s * pgraphIn , gnGrpGraph_s * pgr
 		plink  = (gnInt32_t*)(pgraphIn->pLinkBuffer + pid[1]);
 		pto    = (gnInt32_t*)(pgraphIn->pNodeBuffer + GNGRP_LINK_TONODE_OFFSET(plink));
 
-		if ( gnTreeSearch( pvVisited , GNGRP_NODE_ID(pto) ) ) continue; /* already visited */
+		if ( gnTreeSearch( pvVisited , GNGRP_NODE_ID(pto) ) ) { /* already visited */
+			continue;
+		}
+
+		if ( fnClip ) {
+			clipInput.pnNodeFrom = pfrom;
+			clipInput.pnLink     = plink;
+			clipInput.pnNodeTo   = pto;
+			if ( fnClip( pgraphIn, pgraphOut, & clipInput, NULL, pvClipArg ) ) continue;
+		}
 
 		if ( __node(pvVisited , GNGRP_NODE_ID(pto)) == NULL ) {
 			pgraphIn->iErrno = GNGRP_ERR_MemoryExhausted; goto dfs_error;
@@ -1194,11 +1216,11 @@ static int _depthfirst_spanning_V1( gnGrpGraph_s * pgraphIn , gnGrpGraph_s * pgr
 		}
 
 		if ( GNGRP_NODE_STATUS(pto) & GNGRP_NS_FROM ) {
-			plinkarea = (gnInt32_t*)(pgraphIn->pLinkBuffer + GNGRP_NODE_LINKAREA_OFFSET(pto));
+			plinkarea = GNGRP_LINKBUFFER_SHIFT(pgraphIn, GNGRP_NODE_LINKAREA_OFFSET(pto));
 
-			GNGRP_LB_FOREACH_LINK(pgraphIn, plinkarea, plink) {
-				id[0] = GNGRP_NODE_BUFFER_OFFSET(pgraphIn, pto);
-	   			id[1] = GNGRP_LINK_BUFFER_OFFSET(pgraphIn, plink);
+			GNGRP_FOREACH_LINK(pgraphIn, plinkarea, plink) {
+				id[0] = GNGRP_NODEBUFFER_OFFSET(pgraphIn, pto);
+	   			id[1] = GNGRP_LINKBUFFER_OFFSET(pgraphIn, plink);
 				if ( (pstack = _mempush( pstack , & istack , sizeof( gnInt32_t ) * 2 , id )) == NULL ) {
 					pgraphIn->iErrno = GNGRP_ERR_MemoryExhausted; goto dfs_error;
 				}
@@ -1206,12 +1228,10 @@ static int _depthfirst_spanning_V1( gnGrpGraph_s * pgraphIn , gnGrpGraph_s * pgr
 		}
 	}
 
-	if ( pvVisited ) gnTreeDestroy( pvVisited );
 	if ( pstack ) free( pstack );
 	return 0;
 
 dfs_error:
-	if ( pvVisited ) gnTreeDestroy( pvVisited );
 	if ( pstack ) free( pstack );
 	return -pgraphIn->iErrno;
 }
@@ -1659,33 +1679,140 @@ gnGrpSPReport_s * gnGrpShortestPath	(
 								 	gnGrpGraph_s * 	pgraph ,
 								 	gnInt32_t 		from ,
 								 	gnInt32_t 		to ,
+#ifndef GNGRP_NEWCLIP
 								 	int (*clip)(
 											 	gnGrpGraph_s *, /* graph pointer */
-#ifndef GNGRP_NEWCLIP
 											 	gnInt32_t *,	/* previous link pointer */
 											 	gnInt32_t *,	/* from node pointer */
 											 	gnInt32_t *,	/* this link pointer */
 											 	gnInt32_t *,	/* to node pointer */
 											 	gnInt32_t *,	/* real cost pointer */
-#else /* GNGRP_NEWCLIP */
-											 	gnGrpSPClipInput_s *,
-											 	gnGrpSPClipOutput_s *,
-#endif /* GNGRP_NEWCLIP */
 											 	void  *			/* caller's context pointer */
-											 	) ,
+											 	),
 								 	void * 		pvcliparg		/* caller's context pointer (passed back to clip)*/
+#else /* GNGRP_NEWCLIP */
+									gnGrpSPClip_fn	fnClip,
+									void *			pvClipArg
+#endif /* GNGRP_NEWCLIP */
 								 	)
 {
+#ifndef GNGRP_NEWCLIP
 	return _dijkstra_V1( pgraph, from, to, clip, pvcliparg );
+#else /* GNGRP_NEWCLIP */
+	return _dijkstra_V1( pgraph, from, to, fnClip, pvClipArg );
+#endif /* GNGRP_NEWCLIP */
 }
 
-int				gnGrpDepthSpanning	(
-									gnGrpGraph_s *  pgraphInput,
-									gnGrpGraph_s *  pgraphOutput,
-									gnInt32_t		nVertexNode
-									)
+
+int	gnGrpDepthSpanning	(
+						gnGrpGraph_s *  	pgraphInput,
+						gnGrpGraph_s *  	pgraphOutput,
+						gnInt32_t			nVertexNode,
+						gnGrpSpanClip_fn	fnClip,
+						void *				pvClipArg
+						)
 {
-	return _depthfirst_spanning_V1( pgraphInput, pgraphOutput, nVertexNode );
+	int nret;
+	void * pvVisited;
+
+	if ( gnGrpGet_LinkCount(pgraphInput) == 0 ) { /* no span */
+		pgraphInput->iErrno = 0;
+		return 0;
+	}
+
+	nret = gnGrpInitialize( pgraphOutput,
+			gnGrpGet_Version(pgraphInput),
+			gnGrpGet_NodeAttrSize(pgraphInput),
+			gnGrpGet_LinkAttrSize(pgraphInput), 
+			gnGrpGet_Opaque(pgraphInput) );
+
+	if ( nret < 0 ) return nret;
+
+	if ( (pvVisited = gnTreeCreate( _node_free , NULL )) == NULL ) {
+		pgraphInput->iErrno = GNGRP_ERR_MemoryExhausted;
+		return -pgraphInput->iErrno;
+	}
+
+	nret = _depthfirst_spanning_V1( pgraphInput, pgraphOutput, nVertexNode , pvVisited , fnClip , pvClipArg );
+
+	gnTreeDestroy( pvVisited );
+
+	return nret;
+}
+
+int gnGrpDepthComponents(
+						gnGrpGraph_s *  	pgraphInput,
+						gnGrpGraph_s *  	pgraphComponents,
+						int					cgraphComponents,
+						gnGrpSpanClip_fn	fnClip,
+						void *				pvClipArg
+						)
+{
+	int i, nret;
+	void * pvVisited;
+	gnInt32_t * pvertex , * pnode;
+
+	if ( gnGrpGet_LinkCount(pgraphInput) == 0 ) { /* no span */
+		pgraphInput->iErrno = 0;
+		return 0;
+	}
+
+	if ( (pvVisited = gnTreeCreate( _node_free , NULL )) == NULL ) {
+		pgraphInput->iErrno = GNGRP_ERR_MemoryExhausted; goto error;
+	}
+
+	/*
+	 * choose a vertex to start from
+	 */
+	pvertex = NULL;
+	GNGRP_FOREACH_NODE(pgraphInput, pnode) {
+		if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NS_FROM ) {
+			pvertex = pnode;
+			break;
+		}
+	}
+
+	if ( pvertex == NULL ) {
+		pgraphInput->iErrno = GNGRP_ERR_UnexpectedNullPointer; goto error;
+	}
+
+	for (
+		i = 0;
+		i < cgraphComponents && pvertex;
+		i++
+		)
+	{
+		nret = gnGrpInitialize( & pgraphComponents[i],
+				gnGrpGet_Version(pgraphInput),
+				gnGrpGet_NodeAttrSize(pgraphInput),
+				gnGrpGet_LinkAttrSize(pgraphInput), 
+				gnGrpGet_Opaque(pgraphInput) );
+
+		if ( nret < 0 ) goto error;
+
+		nret = _depthfirst_spanning_V1(pgraphInput, & pgraphComponents[i], GNGRP_NODE_ID(pvertex), pvVisited, fnClip, pvClipArg);
+		if ( nret < 0 ) goto error;
+		
+		/*
+		 * select next unvisited vertex
+		 */
+		pvertex = NULL;
+		GNGRP_FOREACH_NODE(pgraphInput, pnode) {
+			if ( GNGRP_NODE_STATUS(pnode) & GNGRP_NS_FROM ) {
+				if ( gnTreeSearch( pvVisited, GNGRP_NODE_ID(pnode) ) == NULL ) {
+					pvertex = pnode;
+					break;
+				}
+			}
+		}
+	}
+
+	gnTreeDestroy(pvVisited);
+	return i;
+
+error:
+	gnTreeDestroy(pvVisited);
+	return -pgraphInput->iErrno;
 }
 
 void gnGrpFreeSPReport( gnGrpGraph_s * pgraph , gnGrpSPReport_s * pSPReport )
