@@ -126,7 +126,7 @@ int parse (char *line,RULE **rules,RULE **tail,struct Categories *cats)
     if(default_rule) 
     {
       DEFAULT = new;
-      if (*label) default_label = G_store(label);
+      default_label = G_store((*label ? label : ""));
       return 1;
     }
 
