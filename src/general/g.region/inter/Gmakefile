@@ -17,7 +17,7 @@ LIST     = main.o\
 	   from_view.o\
 	   yes.o
 
-LIBES=$(GISLIB) $(VASKLIB) $(VECTLIB) $(DATETIMELIB)
+LIBES=$(EDITLIB) $(GISLIB) $(VASKLIB) $(VECTLIB) $(DATETIMELIB)
 
 $(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)

@@ -1,6 +1,7 @@
 
 #include <string.h>
 #include "gis.h"
+#include "edit.h"
 
 int 
 main (int argc, char *argv[])
@@ -49,7 +50,7 @@ main (int argc, char *argv[])
 
     if(!vector && G_raster_map_is_fp(name, mapset))
     {
-        if (G_edit_fp_cats (name, &cats) < 0)
+        if (E_edit_fp_cats (name, &cats) < 0)
         {
     	    fprintf (stdout,"Category file for [%s] not updated\n", name);
 	    exit(0);
@@ -57,7 +58,7 @@ main (int argc, char *argv[])
     }
     else
     {
-        if(G_edit_cats (name, &cats, stat<0) < 0)
+        if(E_edit_cats (name, &cats, stat<0) < 0)
         {
 	    fprintf (stdout,"Category file for [%s] not updated\n", name);
 	    exit(0);
