@@ -246,6 +246,10 @@ USAGE:	\*Llabels\*O  labelfile|<EM>list
 	\*Lend\*O
 .DE
 \*O
+.PP
+NOTE: ps.map.new can read new option 'ROTATE:' from labels file, which
+specifies counter clockwise rotation in degrees. 
+.PP
 This example would paint labels from the labels file called
 town.names.  Presumably, these labels would indicate the names of
 towns on the map.
@@ -761,6 +765,7 @@ USAGE:	\*Lvector\*O vectormap|<EM>list
 	\*Lhwidth\*O #
 	\*Loffset\*O #
 	\*Lcoffset\*O #
+	\*Lref\*O left|right
 	\*Lmasked\*O [y|n]
 	\*Lstyle\*O  0-9
 	\*Lline_cat\*O #	
@@ -769,44 +774,58 @@ USAGE:	\*Lvector\*O vectormap|<EM>list
 	\*Lend\*O
 .DE
 \*O
-The user can specify
-the \*Lcolor\*O of the vector lines or area boundaries;
-the area color (\*Lacolor\*O). If acolor is used areas are plotted
+The user can specify:
+.PP
+\*Lcolor\*O - color of the vector lines or area boundaries;
+.PP
+\*Lacolor\*O - the area color. If acolor is used areas are plotted
 instead of lines (accepts 3 integers from 0 to 255 for red, green
 and blue separated by spaces);
-the \*Lwidth\*O of the vectors lines or area boundaries in pixels
+.PP
+\*Lwidth\*O - width of the vectors lines or area boundaries in pixels
 (accepts decimal points [floating points] as well as integers);
-the \*Lcwidth\*O of the vectors lines. If cwidth is used then 
+.PP
+\*Lcwidth\*O - width of the vectors lines. If cwidth is used then 
 width of line is equal to cwidth * category value and width is 
 used in legend;
-the highlight color (\*Lhcolor\*O) for the vector lines;
-the width of the highlight color (\*Lhwidth\*O) in pixels;
-the \*Loffset\*O for the vectors lines in pixels for plotting
+.PP
+\*Lhcolor\*O - the highlight color for the vector lines;
+.PP
+\*Lhwidth\*O - the width of the highlight color in pixels;
+.PP
+\*Loffset\*O (experimental) - offset for the vectors lines in pixels for plotting
 parallel lines in distance equal to offset (accepts positive or 
 negative decimal points);
-the \*Lcoffset\*O for the vectors lines. If coffset is used then 
+.PP
+\*Lcoffset\*O (experimental) - offset for the vectors lines. If coffset is used then 
 offset of line is equal to coffset * category value and offset is 
 used in legend;
-whether or not the raster map layer is to be \*Lmasked\*O
-by the current mask
+.PP
+\*Lref\*O (experimental) - line justification. 
+.PP
+\*Lmasked\*O - whether or not the raster map layer is to be masked
+by the current mask 
 (see manual entry 
 \*Lr.mask\*O
 for more information on the mask);
-and the line \*Lstyle\*O.
-The line style allows the vectors
+.PP
+\*Lstyle\*O - the line style allows the vectors
 to be dashed in different patterns.  This is done by typing a
 series of numbers (0's and 1's) in a desired sequence or pattern.
 Blanks and
 non-digit characters are recognized as 0's. Using 0 would allow the
 colors of the raster map layer (or the background color
 if no raster map layer was selected) to show through;
-which category (\*Lline_cat\*O) should be plotted (default is all);
-the \*Llabel\*O for description in vlegend [default is 
-vectormap(mapset)];
-vector is plotted on \*Llpos\*O position in legend. If lpos is
+.PP
+\*Lline_cat\*O - which category should be plotted (default is all);
+.PP
+\*Llabel\*O - for description in vlegend. Default is: 
+map(mapset);
+.PP
+\*Llpos\*O - position vector is plotted in legend. If lpos is
 0 then this vector is omitted in legend. If more vectors used the 
 same lpos then their symbols in legend are merged and label for
-first vector is used. 
+first vector is used.
 .PP
 .PP
 This example would paint a map of the vector map layer
@@ -923,34 +942,60 @@ two columns.  This script file can be entered at the command line:
 \*O
 \*C
 .DS
-	(cont.)
-\*Lraster\*O soils		\*Lvlegend\*O
-\*Lvector\*O roads	  	   \*Lwhere\*O 4.5 0
-   \*Lwidth\*O 2	  	   \*Lend\*O
-   \*Lstyle\*O 0011		\*Ltext\*O 608000.00 3476004.73 SPEARFISH SOILS MAP
-   \*Lcolor\*O 1 black	   	   \*Lcolor\*O red  
-   \*Lcolor\*O 2 red	   	   \*Lwidth\*O 2  
-   \*Lmasked\*O n	   	   \*Lhcolor\*O black
-   \*Lend\*O	   	   	   \*Lhwidth\*O 1  
-\*Llabels\*O town.names   	   \*Lbackground\*O white
-\*Lregion\*O subregion	   \*Lborder\*O red  
-   \*Lcolor\*O white	   	   \*Lsize\*O 500
-   \*Lwidth\*O 2	   	   \*Lref\*O lower left
-   \*Lend\*O	           	   \*Lopaque\*O y
-\*Lgrid\*O 10000	   	   \*Lend\*O
-   \*Lcolor\*O green		\*Lline\*O 606969.73 3423092.91 616969.73 3423092.91
-   \*Lnumbers\*O 2 red	   \*Lcolor\*O yellow
-   \*Lend\*O	  	   	   \*Lwidth\*O 2
-\*Loutline\*O	   	   	   \*Lopaque\*O yes
-   \*Lcolor\*O black	   	   \*Lend\*O
-   \*Lend\*O			\*Lpoint\*O 40% 60%
-\*Lcolortable\*O y	   	   \*Lcolor\*O purple
-\*Lcomments\*O soil.cmt   	   \*Licon\*O diamond
-   \*Lfont\*O Helvetica   	   \*Lsize\*O 2	
-   \*Lend\*O	   	   	   \*Lmasked\*O n
-\*Lscale\*O 1:25000       	   \*Lend\*O	
-\*Lsetcolor\*O 6,8,9 white	\*Lend\*O	
+
+\*Lraster\*O soils
+\*Lvector\*O roads
+   \*Lwidth\*O 2
+   \*Lstyle\*O 0011
+   \*Lcolor\*O 1 black  
+   \*Lcolor\*O 2 red  
+   \*Lmasked\*O n
+   \*Lend\*O   
+\*Llabels\*O town.names
+\*Lregion\*O subregion	  
+   \*Lcolor\*O white	
+   \*Lwidth\*O 2	
+   \*Lend\*O	        
+\*Lgrid\*O 10000	
+   \*Lcolor\*O green	
+   \*Lnumbers\*O 2 red	
+   \*Lend\*O	  	
+\*Loutline\*O	   	
+   \*Lcolor\*O black	
+   \*Lend\*O		
+\*Lcolortable\*O y	
+\*Lcomments\*O soil.cmt
+   \*Lfont\*O Helvetica	
+   \*Lend\*O	   	
+\*Lscale\*O 1:25000    	
+\*Lsetcolor\*O 6,8,9 white	
 \*Lsetcolor\*O 10 green
+\*Lvlegend\*O
+    \*Lwhere\*O 4.5 0
+    \*Lend\*O
+\*Ltext\*O 608000.00 3476004.73 SPEARFISH SOILS MAP
+    \*Lcolor\*O red  
+    \*Lwidth\*O 2  
+    \*Lhcolor\*O black
+    \*Lhwidth\*O 1  
+    \*Lbackground\*O white
+    \*Lborder\*O red  
+    \*Lsize\*O 500
+    \*Lref\*O lower left
+    \*Lopaque\*O y
+    \*Lend\*O
+\*Lline\*O 606969.73 3423092.91 616969.73 3423092.91
+    \*Lcolor\*O yellow
+    \*Lwidth\*O 2
+    \*Lopaque\*O yes
+    \*Lend\*O
+\*Lpoint\*O 40% 60%
+    \*Lcolor\*O purple
+    \*Licon\*O diamond
+    \*Lsize\*O 2	
+    \*Lmasked\*O n
+    \*Lend\*O	
+\*Lend\*O	
 
 .DE
 \*O
@@ -965,3 +1010,5 @@ at this level.
 \*Lps.select\*O
 .SH AUTHOR
 Paul Carlson, USDA, SCS, NHQ-CGIS
+.br
+Modifications: Radim Blazek
