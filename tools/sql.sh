@@ -5,12 +5,19 @@ tmpdir=/tmp/sql-grass
 builddir=$HOME/grass/build
 dbname=grass
 
+if [ -n "$1" ] ; then
+	builddir="$1"
+fi
+
 rm -rf "$tmpdir"
 mkdir -m 711 "$tmpdir" || exit 1
 
 cd $builddir
 
 ( cd dist.*
+
+LD_LIBRARY_PATH=`pwd`/lib
+export LD_LIBRARY_PATH
 
 find . -type f -perm +111 \! -name '*.so.*' \
 	| while read file ; do ldd $file | sed 's!^!'$file'!' ; done 2>/dev/null \
@@ -32,28 +39,42 @@ find src* -name 'lib?*.a' \
 	| egrep ':[0-9a-f]{8} [BCDGRSTW] ' \
 	| sed 's/:/ /g' \
 	| awk -vOFS='\t' '{print gensub("^[^ ]*/","",1,$1),$2,$5}' \
-	> "$tmpdir/exports.lst"
+	> "$tmpdir/stlib_exp.lst"
 
 find src* -name 'lib?*.so' \
 	| xargs nm -AD \
 	| egrep ':[0-9a-f]{8} [BCDGRSTW] ' \
 	| sed 's/:/ /g' \
 	| awk -vOFS='\t' '{print gensub("^[^ ]*/","",1,$1),$4}' \
-	> "$tmpdir/exports2.lst"
+	> "$tmpdir/shlib_exp.lst"
+
+find src* -name '*.o' \
+	| xargs nm -A \
+	| egrep ':[0-9a-f]{8} [BCDGRSTW] ' \
+	| sed 's/:/ /g' \
+	| awk -vOFS='\t' '{print $1,$4}' \
+	> "$tmpdir/obj_exp.lst"
 
 find src* -name 'lib?*.a' \
 	| xargs nm -A \
 	| egrep ': {8} U ' \
 	| sed 's/:/ /g' \
 	| awk -vOFS='\t' '{print gensub("^[^ ]*/","",1,$1),$2,$4}' \
-	> "$tmpdir/imports.lst"
+	> "$tmpdir/stlib_imp.lst"
 
 find src* -name 'lib?*.so' \
 	| xargs nm -AD \
 	| egrep ': {8} U ' \
 	| sed 's/:/ /g' \
 	| awk -vOFS='\t' '{print gensub("^[^ ]*/","",1,$1),$3}' \
-	> "$tmpdir/imports2.lst"
+	> "$tmpdir/shlib_imp.lst"
+
+find src* -name '*.o' \
+	| xargs nm -A \
+	| egrep ': {8} U ' \
+	| sed 's/:/ /g' \
+	| awk -vOFS='\t' '{print $1,$3}' \
+	> "$tmpdir/obj_imp.lst"
 
 libs=`awk '{print $3}' "$tmpdir/ldd.lst" | uniq | sort | uniq`
 
@@ -166,35 +187,49 @@ psql -n -q -d "$dbname" << EOF
 
 -- ----------------------------------------------------------------------
 
-CREATE TABLE exports_0 (
-	library VARCHAR(40) NOT NULL,
+CREATE TABLE stlib_exp (
+	library VARCHAR(80) NOT NULL,
 	object VARCHAR(40) NOT NULL,
 	symbol VARCHAR(80) NOT NULL
 	) ;
 
-COPY exports_0 FROM '$tmpdir/exports.lst' ;
+COPY stlib_exp FROM '$tmpdir/stlib_exp.lst' ;
 
-CREATE TABLE exports_1 (
-	library VARCHAR(40) NOT NULL,
+CREATE TABLE shlib_exp (
+	library VARCHAR(80) NOT NULL,
 	symbol VARCHAR(80) NOT NULL
 	) ;
 
-COPY exports_1 FROM '$tmpdir/exports2.lst' ;
+COPY shlib_exp FROM '$tmpdir/shlib_exp.lst' ;
 
-CREATE TABLE imports_0 (
-	library VARCHAR(40) NOT NULL,
+CREATE TABLE obj_exp (
+	object VARCHAR(80) NOT NULL,
+	symbol VARCHAR(80) NOT NULL
+	) ;
+
+COPY obj_exp FROM '$tmpdir/obj_exp.lst' ;
+
+CREATE TABLE stlib_imp (
+	library VARCHAR(80) NOT NULL,
 	object VARCHAR(40) NOT NULL,
 	symbol VARCHAR(80) NOT NULL
 	) ;
 
-COPY imports_0 FROM '$tmpdir/imports.lst' ;
+COPY stlib_imp FROM '$tmpdir/stlib_imp.lst' ;
 
-CREATE TABLE imports_1 (
-	library VARCHAR(40) NOT NULL,
+CREATE TABLE shlib_imp (
+	library VARCHAR(80) NOT NULL,
 	symbol VARCHAR(80) NOT NULL
 	) ;
 
-COPY imports_1 FROM '$tmpdir/imports2.lst' ;
+COPY shlib_imp FROM '$tmpdir/shlib_imp.lst' ;
+
+CREATE TABLE obj_imp (
+	object VARCHAR(80) NOT NULL,
+	symbol VARCHAR(80) NOT NULL
+	) ;
+
+COPY obj_imp FROM '$tmpdir/obj_imp.lst' ;
 
 CREATE TABLE programs (
 	program VARCHAR(80) NOT NULL,
@@ -212,14 +247,14 @@ COPY libs FROM '$tmpdir/libs.lst' ;
 
 CREATE TABLE ldd (
 	program VARCHAR(80) NOT NULL,
-	library VARCHAR(40) NOT NULL,
+	library VARCHAR(80) NOT NULL,
 	path VARCHAR(80)
 	) ;
 
 COPY ldd FROM '$tmpdir/ldd.lst' ;
 
 CREATE TABLE ansi (
-	symbol VARCHAR(40) NOT NULL
+	symbol VARCHAR(80) NOT NULL
 	) ;
 
 COPY ansi FROM '$tmpdir/ansi.lst' ;
@@ -227,46 +262,46 @@ COPY ansi FROM '$tmpdir/ansi.lst' ;
 -- ----------------------------------------------------------------------
 
 SELECT DISTINCT library, symbol
-	INTO TABLE exports
-	FROM exports_0
+	INTO TABLE lib_exp
+	FROM stlib_exp
 UNION
 SELECT DISTINCT library, symbol
-	FROM exports_1 ;
+	FROM shlib_exp ;
 
 CREATE TABLE duplicates AS
 	SELECT DISTINCT symbol
-	FROM exports
+	FROM lib_exp
 	GROUP BY symbol
 	HAVING COUNT(*) > 1 ;
 
 CREATE TABLE duplicates2 AS
 	SELECT *
-	FROM exports
+	FROM lib_exp
 	WHERE symbol IN (
 		SELECT symbol
 		FROM duplicates
 	) ;
 
 SELECT DISTINCT library, symbol
-	INTO TABLE imports_2
-	FROM imports_0
+	INTO TABLE lib_imp
+	FROM stlib_imp
 UNION
 SELECT DISTINCT library, symbol
-	FROM imports_1 ;
+	FROM shlib_imp ;
 
 CREATE TABLE imports AS
 	SELECT a.library, a.symbol
-	FROM imports_2 a
+	FROM lib_imp a
 	WHERE NOT EXISTS (
 		SELECT b.library, b.symbol
-		FROM exports b
+		FROM lib_exp b
 		WHERE b.symbol = a.symbol
 		AND b.library = a.library
 	) ;
 
 CREATE TABLE defined AS
 	SELECT DISTINCT symbol
-	FROM exports ;
+	FROM lib_exp ;
 
 CREATE TABLE used AS
 	SELECT DISTINCT symbol
@@ -291,14 +326,14 @@ SELECT b.symbol
 
 CREATE TABLE undefined_2 AS
 	SELECT i.symbol, i.object, i.library
-	FROM imports_0 i, undefined_1 u
+	FROM stlib_imp i, undefined_1 u
 	WHERE i.symbol = u.symbol ;
 
 CREATE TABLE depends AS
 	SELECT	i.library AS im_lib,
 		i.symbol AS symbol,
 		e.library AS ex_lib
-	FROM imports i, exports e
+	FROM imports i, lib_exp e
 	WHERE i.symbol = e.symbol ;
 
 CREATE TABLE lib_deps AS
@@ -334,7 +369,7 @@ SELECT im_lib, ex_lib
 
 CREATE TABLE prog_libs AS
 SELECT DISTINCT a.program, b.library
-FROM programs a, exports b
+FROM programs a, lib_exp b
 WHERE a.symbol = b.symbol ;
 
 SELECT DISTINCT a.symbol
