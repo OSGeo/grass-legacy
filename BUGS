@@ -1,4 +1,4 @@
-                 $Id: BUGS,v 1.124 2001-03-05 16:33:58 markus Exp $
+                 $Id: BUGS,v 1.125 2001-03-09 16:36:44 markus Exp $
 
 Known bugs in current GRASS GIS version 5.0 CVS
 [In sync with GRASS 5.0 beta CVS version]
@@ -32,12 +32,6 @@ RC-Bug list:
     concerns vector maps, fonts (in d.legend), grid an d.erase. I think this
     problem did not exist in version 5b10.
     reported by: Reinhard Brunzema <r.brunzema@web.de>)
-
-[RC]r.neighbors 
-  seems doesn't work with a float number                   
-  when use median method. It fails in -0.001 value with 3x3 window. 
-  (reported by Bruno Crippa <bruno@ipmtf4.topo.polimi.it>)
-  (being worked on by ?)
 
 [RC]r.poly
 - bugreport 1: I've noticed that r.poly doesn't extract polygons for 0
