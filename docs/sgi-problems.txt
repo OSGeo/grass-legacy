@@ -1,0 +1,50 @@
+> gcc -g -O2  -I. -I/usr/people/krikke/grass5.0/grass5.0beta/src/include  -c
+> biveval.c
+> gcc: Internal compiler error: program cc1 got fatal signal 6
+> make[1]: *** [OBJ.mips-sgi-irix6.5/biveval.o] Error 1
+> make[1]: Leaving directory
+> /usr/people/krikke/grass5.0/grass5.0beta/src/libes/proj'
+> GISGEN failure at STEP: src/libes/proj
+> gmake: *** [do-install] Error 1
+
+
+> gcc -g -O2   -I/usr/people/krikke/grass5.0/grass5.0beta/src/include  -c
+> multialloc.c
+> multialloc.c: In function 
+ultialloc':
+> multialloc.c:30: parse error before 	nt'
+> multialloc.c:30: parse error before 	nt'
+> multialloc.c:30: parse error before 	nt'
+> multialloc.c:30: parse error before 	nt'
+> multialloc.c:30: parse error before 	nt'
+> multialloc.c:30: parse error before )'
+> make[3]: *** [OBJ.mips-sgi-irix6.5/multialloc.o] Error 1
+> make[3]: Leaving directory
+> /usr/people/krikke/grass5.0/grass5.0beta/src/imagery/i.smap/cmd/bouman'
+> make[2]: *** [all] Error 2
+> make[2]: Leaving directory
+> /usr/people/krikke/grass5.0/grass5.0beta/src/imagery/i.smap/cmd'
+> make[1]: *** [all] Error 1
+> make[1]: Leaving directory
+> /usr/people/krikke/grass5.0/grass5.0beta/src/imagery/i.smap'
+> GISGEN failure at STEP: src/imagery/i.smap
+> gmake: *** [do-install] Error 1
+
+
+> malloc.c
+> malloc.c: In function asic_malloc_debug':
+> malloc.c:151: 
+_DEBUG' undeclared (first use in this function)
+> malloc.c:151: (Each undeclared identifier is reported only once
+> malloc.c:151: for each function it appears in.)
+> make[3]: *** [OBJ.mips-sgi-irix6.5/malloc.o] Error 1
+> make[3]: Leaving directory
+> /usr/people/krikke/grass5.0/grass5.0beta/src/libes/geom/basic'
+> make[2]: *** [all] Error 1
+> make[2]: Leaving directory
+> /usr/people/krikke/grass5.0/grass5.0beta/src/libes/geom'
+> make[1]: *** [all] Error 2
+> make[1]: Leaving directory
+> /usr/people/krikke/grass5.0/grass5.0beta/src/mapdev/v.geom'
+> GISGEN failure at STEP: src/mapdev/v.geom
+> gmake: *** [do-install] Error 1
