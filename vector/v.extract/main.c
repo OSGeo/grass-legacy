@@ -93,7 +93,7 @@ int main (int argc, char **argv)
     newopt->required         =  NO;
     newopt->answer           = "1";
     newopt->description      = "Enter -1 to keep original category or a desired NEW category value. "
-	                       "If new <> 0, table is not copied.";
+	                       "If new >= 0, table is not copied.";
 
     listopt = G_define_option();
     listopt->key             = "list";
@@ -216,7 +216,7 @@ int main (int argc, char **argv)
     
     xtract_line( cat_count, cat_array, &In, &Out, new_cat, type, dissolve, field);
 
-    if ( !t_flag->answer && new_cat == 0 ) 
+    if ( !t_flag->answer && new_cat == -1 ) 
         Vect_copy_table_by_cats ( &In, &Out, field, 1, NULL, GV_1TABLE, cat_array, cat_count );
 
     Vect_close (&In);
