@@ -80,7 +80,7 @@ void interface(int argc, char **argv)
     tol2_val->description = "Curvature tolerance that defines `planar' surface";
     tol2_val->type	  = TYPE_DOUBLE;
     tol2_val->required	  = NO;
-    tol2_val->answer	  = "0.02";
+    tol2_val->answer	  = "0.0001";
 
     sprintf(buf, "Size of processing window (odd number only, max: %i)", MAX_WSIZE);
     win_size->key	  = "size";
