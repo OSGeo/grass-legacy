@@ -118,9 +118,8 @@ GLOBAL	struct
 	double	*fex_;
 	/* input.ntimestep * (misc.nidxclass + 1)'s */
 	double	**qt_, **qo_, **qv_;
-	/* (input.ntimestep + 1) * misc.nidxclass's */
-	double	**Srz_, **Suz_;
 	/* input.ntimestep * misc.nidxclass's */
+	double	**Srz_, **Suz_;
 	double	**S_;
 	double	**Ea_;
 	double	**ex_;
