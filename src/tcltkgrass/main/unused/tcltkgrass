@@ -57,7 +57,10 @@ fi
 #######################################################
 
 echo "Starting GRASS 5 ..."
-GISBASE=/usr/people/jhickey/grassCVS/grass
+
+#grab the GRASS 5 install path from grass5 start script:
+BINPATH=`type -p grass5`
+GISBASE=`grep GISBASE $BINPATH | head -1 | cut -d'=' -f2`
 export GISBASE
 
 TCLTKGRASSBASE=$GISBASE/tcltkgrass
