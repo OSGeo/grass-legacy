@@ -12,7 +12,7 @@
 <EM>(GRASS Display Program)</EM>
 
 <H2>SYNOPSIS</H2>
-<B>d.barscale</B> [<B>-m</B>] [<B>-f</B>] [<B>-t</B>]
+<B>d.barscale</B> [<B>-m</B>] [<B>-f</B>] [<B>-l</B>] [<B>-t</B>]
 [<B>bcolor</B><EM>=name</EM>] [<B>tcolor</B><EM>=name</EM>] [<B>at</B><EM>=x,y</EM>]
 
 <H2>DESCRIPTION</H2>
@@ -28,6 +28,8 @@ or with given screen coordinates.
 <DD>Use mouse to interactively place scale
 <DT><B>-f</B>
 <DD>Use feet/miles instead of meters
+<DT><B>-l</B>
+<DD>Draw a line scale instead of a bar scale
 <DT><B>-t</B>
 <DD>Write text on top of the scale, not to the right
 </DL>
@@ -36,12 +38,12 @@ or with given screen coordinates.
 <DL>
 <DT><B>bcolor</B>
 <DD>Color used for the background, or "none"
-<DD>Options: red, orange, yellow, green, blue, indigo, white, black, brown, magenta, aqua, gray, grey
+<DD>Options: red, orange, yellow, green, blue, indigo, white, black, brown, magenta, aqua, gray, grey, or R:G:B triplet
 <DD>Default: black
 
 <DT><B>tcolor</B>
 <DD>Color used for the text
-<DD>Options: red, orange, yellow, green, blue, indigo, white, black, brown, magenta, aqua, gray, grey
+<DD>Options: red, orange, yellow, green, blue, indigo, white, black, brown, magenta, aqua, gray, grey, or R:G:B triplet
 <DD>Default: white
 
 <DT><B>at</B>
