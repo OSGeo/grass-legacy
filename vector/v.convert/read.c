@@ -23,9 +23,8 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
     struct line_cats *cat_out;
     
     Vect__init_head (&(In_head));
-    In_head.byte_order = endian;
     /* set conversion matrices */
-    dig__init_head_portable (&(In_head));
+    dig_init_portable (&(In_head.port), endian);
 
     /* Version 3 dig files were not portable and some version 4 
      * files may be also non portable */
@@ -85,7 +84,7 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 	    
     /* set Cur_Head because it is used by dig__*_convert()
        called by dig__fread_port_*() */
-    dig__set_cur_head ( &In_head );
+    dig_set_cur_port ( &(In_head.port) );
 
     if (0 >= dig__fread_port_L ( &Mapout->head.orig_scale, 1, Digin)) return -1;
     if (0 >= dig__fread_port_I ( &Mapout->head.plani_zone, 1, Digin)) return -1;
@@ -132,7 +131,7 @@ int read_dig ( FILE *Digin, struct Map_info *Mapout,
 	if ( (type & BOUNDARY) || !att){
             Vect_write_line ( Mapout, type, nline, cat_out );
             /* reset In_head */
-	    dig__set_cur_head ( &In_head );
+	    dig_set_cur_port ( &(In_head.port) );
 	} else {   /* DOT or LINE */
 	    if ( line >= lalloc ) {
 	        lalloc += 10000;

@@ -129,6 +129,8 @@ old2new (char *in, char *out, int endian)
     } 
     fprintf(stdout,"%-5d centroids written to output file.\n",j);
     
+    Vect_build ( &Mapout, stdout );  
+    
     /* free memory */
     for (i=0; i < nlines; i++) {
 	free (lines[i].x);    
