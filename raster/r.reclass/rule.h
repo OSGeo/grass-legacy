@@ -14,8 +14,6 @@ int add_rule(RULE **, CELL, CELL, CELL);
 int parse(char *, RULE **, RULE **, struct Categories *);
 /* reclass.c */
 int reclass(char *, char *, char *, RULE *, struct Categories *, char *);
-int _reclass(RULE *, struct Categories *, struct Reclass *);
-int re_reclass(RULE *, struct Categories *, struct Reclass *, struct Reclass *, char *, char *);
 /* input.c */
 int input(char *);
 /* range.c */
