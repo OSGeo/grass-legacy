@@ -1,0 +1,138 @@
+.\" @(#)symgen.1 - 1.4
+.nr LL 5.5i
+.TH SYMGEN 1 11/30/90 "USGS/OEMG Systems"
+.ad b
+.hy 1
+.SH NAME
+symgen - generate symbol tables for program plotter
+.SH SYNOPSIS
+.LP
+.B symgen
+font_def font_file descriptor_file[s]
+.SH DESCRIPTION
+Program
+.B symgen
+reformats vector information for drafting characters
+into a binary file structure,
+.I font_file
+for use by the graphics driver program
+.B plotter.
+The file
+.I font_def
+contains a definition of the mapping of the
+.B ascii
+character set values and the symbol identifier
+numbers in the
+.I descriptor_file.
+.P
+The first line of the
+.I font_def
+file must containing two numeric values:
+the height of the character set's upper case letters followed
+by the y axis offset of the character's
+origin from the character base line.
+If a non-zero y-offset value is employed, the origin of the characters
+is shifted from the normal central position
+to the lower left hand corner.
+This latter feature is useful when the symbol set is to be used
+in typesetting applications.
+.P
+The remaining lines of the
+.I font_def
+file contain either an ascii
+symbol or two digit numeric value of the symbol followed by the symbol
+number in the
+.I descriptor_file.
+.P
+The
+.I descriptor_file
+is a compressed version
+(all unneccessary blanks removed)
+of the Hershey symbol tables.
+A line starting with a number
+is the beginning of a symbol vector definition and the
+number is the symbol number referenced in the
+.I font_def
+file.
+Entries must be in ascending symbol number order and
+a line beginning with a : is a continuation of the
+previous line.
+The pair of values immediately following the symbol number (subsequent
+pairs delimited by colons) indicate the extent of the symbol to the
+left and right of the symbol's center.
+The remaining symbol pairs are either x\-y coordinates drafting
+the symbol or pen control.
+Special coordinates 128 0 and 129 0 represent
+respective pen-up motion to the
+next value and end of symbol definition
+(note that the original Hershey usage employed
+\-64 0 and \-64 \-64 respectively).
+Pen-up to the first coordinate is always implied.
+.P
+There may be more than one 
+.I descriptor_file
+as long as the ascending sequence of the symbol numbers is preserved.
+This allows local expansion of symbols without modifying the
+original Hershey definitions.
+If the
+.I descriptor_file
+is omitted or a \- is used then stdin is assumed.
+.P
+Special note: the y coordinates of the original Hershey
+table are positive downward.
+The current version of
+.B symgen
+reverses this sign convention internally.
+.SH EXAMPLE
+A sample execution for generating a standard font selection
+for the program
+.B plotter
+is:
+.RS 5
+.sp
+symgen fonts/basic-fonts/sr.D sr fonts/H????.tab
+.sp
+.RE
+where the partial contents of fonts/basic-fonts/sr.D appear as:
+.RS
+.sp
+.nf
+	21	0	simplex roman, size 21 units
+	01	899	ascii 0 cannot be used
+	02	900
+	...
+	31	718	degree
+	32	698	space
+	!	714
+	...
+	0	700	numbers
+	1	701
+	...
+	A	501	upper case letters
+	B	502
+	etc.
+.fi
+.sp
+.RE
+As demonstrated, comments can follow the second numeric entry.
+.SH FILES
+H0000.tab standard Hershey symbol set.
+.sp
+H4000.tab expansion symbols referenced on pages 24 and 25
+of NBS 424.
+.sp
+By using the Hxxxx.tab nomenclature with the xxxx representing
+the first symbol number of the file,
+wild card expansion (i.e. H????.tab)
+on the runline will ensure proper loading of multiple
+.I
+descriptor files.
+.SH SEE ALSO
+Device Independent Vector Graphics manual.
+.br
+NBS Special Publication 424, Hershey symbol tables.
+.br
+Font definition files and Hershey symbol table files in
+directory fonts.
+.SH AUTHOR/MAINTENANCE
+Gerald I. Evenden, USGS, Woods Hole, MA 02543
