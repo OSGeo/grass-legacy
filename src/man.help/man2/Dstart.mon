@@ -1,0 +1,57 @@
+.\" %W% %G%
+.TH Dstart.mon 2D D-language
+.SH NAME
+Dstart.mon \- Load graphics device driver program
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dstart.mon
+.I "monitor_name"
+.SH DESCRIPTION
+.I Dstart.mon
+loads the named graphics device driver program (also called a monitor)
+into memory.  If the program is already in memory, no action is taken.
+.SH DIAGNOSTICS
+.I Dstart.mon
+will complain if the control program is already loaded
+or if it cannot find the named program in the \fImonitorcap\fR file.
+Certain monitors can be started only by typing the
+.I Dstart.mon
+command on a specific terminal.  Attempts to start these
+monitors from another terminal will generate an error
+message.
+.SH BUGS
+Frequently, the graphics device must be turned on before
+starting the controller program or things will get hung-up.
+It takes about 20 seconds to start a monitor that is not
+already running.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+\fIDlist.mon[2D]\fR	Lists all GRASS device driver programs (monitors)
+.br
+\fIDrelease.mon[2D]\fR	Relinquishes control of a graphics output device
+.br
+\fIDselect.mon[2D]\fR	Selects a graphics device for output
+.br
+\fIDstatus.mon[2D]\fR	Lists the status of all GRASS device driver programs
+.br
+\fIDstop.mon[2D]\fR	Terminates graphics device driver program
+.br
+\fIDwhich.mon[2D]\fR	T{
+States which output device is currently selected for output
+T}
+.br
+\fImonitor[1]\fR	T{
+Highly interactive, menu-driven program performing all of the functions
+of the \fID\fR monitor commands listed above
+T}
+.br
+\fImonitorcap[5]\fR	Device driver database file format
+.TE
+.SH "AUTHORS"
+Jean Ezell, U.S. Army Construction Engineering Research Laboratory
+.br
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
