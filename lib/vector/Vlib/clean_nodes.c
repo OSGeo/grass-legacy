@@ -52,7 +52,7 @@ Vect_clean_small_angles_at_nodes ( struct Map_info *Map, int otype, struct Map_i
 
 	while ( 1 ) {
 	    float angle1 = -100;
-	    int line1;
+	    int line1 = -999; /* value not important, just for debug */
 	    int clean = 1;
 	    
 	    
@@ -73,13 +73,14 @@ Vect_clean_small_angles_at_nodes ( struct Map_info *Map, int otype, struct Map_i
 		angle2 = Vect_get_node_line_angle ( Map, node, i );
 		if ( angle2 == -9.0 ) continue; /* Degenerated line */
 	    
-		G_debug (4, "  line2 = %d angle2 = %e", line2, angle2 );
+		G_debug (4, "  line1 = %d angle1 = %e line2 = %d angle2 = %e", line1, angle1, line2, angle2 );
 
 		if ( angle2 == angle1 ) { 
 		    int j;
 		    double length1, length2;
 		    int short_line; /* line with shorter end segment */
 		    int long_line;  /* line with longer end segment */
+		    int new_short_line; /* line number of short line after rewrite */
 		    int short_type, long_type, type;
 		    double x, y, z, nx, ny, nz;
 		    
@@ -134,12 +135,22 @@ Vect_clean_small_angles_at_nodes ( struct Map_info *Map, int otype, struct Map_i
 		    }
 
 		    if ( Points->n_points > 1 ) {
-			Vect_rewrite_line ( Map, abs(short_line), short_type, Points, SCats );
+			new_short_line = Vect_rewrite_line ( Map, abs(short_line), short_type, Points, SCats );
 		    } else {
 			Vect_delete_line ( Map, abs(short_line) );
 		    }
 
-		    /* Add new line (must be rewrite of long_line otherwise node could be deleted) */
+		    /* It may happen that it is one line, in that case we have to take the new
+		     * short line as long line, orientation is not changed */
+		    if ( abs(line1) == abs(line2) ) {
+			if ( long_line > 0 )
+			    long_line = new_short_line;
+			else 
+			    long_line = -new_short_line;
+		    }
+		    
+
+		    /* Add new line (must be before rewrite of long_line otherwise node could be deleted) */
 		    long_type = Vect_read_line ( Map, NULL, LCats, abs(long_line) );
 		    
 		    Vect_reset_cats ( OCats );
