@@ -1,4 +1,7 @@
-/* draw_scale places a scale in the upper left hand corner of a map image */
+/* $Id$
+ * draw_scale places a scale in the upper left hand corner of a map image
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include "gis.h"
@@ -7,7 +10,7 @@
 #include "options.h"
 #include "colors.h"
 
-#define NUMSCALES	14
+#define NUMSCALES	16
 
 /* declare variables */
 static const struct scale {
@@ -18,7 +21,9 @@ static const struct scale {
 } all_scales[2][NUMSCALES] = {
 	{
 		/* meters */
-		{""          ,       0.,      20., 10},
+		{""          ,       0.,       2., 10},
+		{"1 meter"   ,       1.,       7., 10},
+		{"5 meters"  ,       5.,      20.,  5},
 		{"10 meters" ,      10.,      70., 10},
 		{"50 meters" ,      50.,     200.,  5},
 		{"100 meters",     100.,     700., 10},
@@ -35,7 +40,9 @@ static const struct scale {
 	},
 	{
 		/* feet/miles */
-		{""          ,      0.000,      10., 10},
+		{""          ,      0.000,       1., 10},
+		{"1 foot"    ,      0.305,       2., 10},
+		{"5 feet"    ,      1.524,      10.,  5},
 		{"10 feet"   ,      3.048,      20., 10},
 		{"50 feet"   ,     15.240,     100.,  5},
 		{"100 feet"  ,     30.480,     200., 10},
@@ -140,7 +147,7 @@ int draw_scale(char *save, int toptext)
 		R_move_abs (x_pos + 25, y_pos + 17) ;
 		R_cont_rel ((int) line_len, 0) ;
 		R_cont_rel (0, -4) ;
-		R_cont_rel ((int) line_len * -1, 0) ;
+		R_cont_rel ((int) (line_len * -1), 0) ;
 		R_cont_rel (0, 4) ;
 		xarr[0] = 0; yarr[0] = 0;
 		xarr[1] = (int) seg_len; yarr[1] = 0;
