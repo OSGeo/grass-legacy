@@ -24,7 +24,7 @@ main (int argc, char **argv)
     struct Flag *quiet;
 #endif
     struct Flag *just, *full, *hand;
-    struct Option *rmap, *vmap, *smap, *zoom;
+    struct Option *rmap, *vmap, *zoom;
     struct GModule *module;
     double magnify;
     int i, first=1;
@@ -270,9 +270,6 @@ main (int argc, char **argv)
 		}
 	}
     }
-
-    if (smap->required == YES && smap->answers == NULL)
-	exit(0);
 
 #ifdef BOUNDARY
     if(!first)
