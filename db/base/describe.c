@@ -25,7 +25,6 @@ main(int argc, char *argv[])
     dbString table_name;
 
     parse_command_line (argc, argv);
-
     driver = db_start_driver(parms.driver);
     if (driver == NULL)
 	exit(ERROR);
@@ -57,7 +56,6 @@ parse_command_line(int argc, char *argv[])
     driver->type 	= TYPE_STRING;
     driver->options     = db_list_drivers();
     driver->required 	= NO;
-    driver->options     = db_list_drivers();
     driver->description = "driver name";
 
     database 		= G_define_option();
