@@ -20,16 +20,20 @@ Upload category numbers to attribute table (used for new map):<br>
 
 <p>
 Upload area sizes of each polygon to attribute table:<br>
-<tt>v.to.db map=soils type=area option=area col1=area_size unit=h</tt>
+<tt>v.to.db map=soils type=area option=area col=area_size unit=h</tt>
 
 <p>
 Upload line lengths (in meters) of each vector line to attribute table
 (use <em>v.category</em> in case of missing categories):<br>
-<tt>v.to.db map=roads option=length type=line col1=linelength units=me</tt>
+<tt>v.to.db map=roads option=length type=line col=linelength units=me</tt>
 
 <p>
 Upload x and y coordinates from vector geometry to attribute table:<br>
-<tt>v.to.db map=pointsmap option=coor col1=x col2=y</tt>
+<tt>v.to.db map=pointsmap option=coor col=x,y</tt>
+
+<p>
+Upload x, y and z coordinates from vector geometry to attribute table:<br>
+<tt>v.to.db map=pointsmap option=coor col=x,y,z</tt>
 
 <h3>Printing reports</h3>
 

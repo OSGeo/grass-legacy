@@ -13,7 +13,7 @@ typedef struct {
                             /* for sides set to 2, if more than 1 area category was found, */
                             /* including no category (cat = -1)! */
     int     i1,i2; /* values; i1: query (result int), sides; i2: sides */
-    double  d1,d2; /* values (length, area, x/y, query) */
+    double  d1,d2,d3; /* values (length, area, x/y/z, query) */
     char    *str1;  /* string value (query) */
     int     *qcat; /* array query categories */
     int     nqcats; /* number of query cats */
@@ -29,8 +29,7 @@ EXT OPTIONS
     char *name;
     char *mapset;
     int  field;    
-    char *col1;
-    char *col2;
+    char *col[3];
     char *qcol;
     int  type;
     int  option;

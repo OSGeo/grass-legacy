@@ -119,6 +119,7 @@ read_lines(struct Map_info *Map )
 		    /* overwrite by last one, count is used in update */ 
 		    Values[idx].d1 = Points->x[0];
 		    Values[idx].d2 = Points->y[0];
+		    Values[idx].d3 = Points->z[0];
 		    Values[idx].count1++;
 		} else if ( options.option == O_SIDES && type == GV_BOUNDARY ) {
 		    int j, area_cat_found;
@@ -140,6 +141,7 @@ read_lines(struct Map_info *Map )
 	    } else if ( options.option == O_COOR && (type & GV_POINTS) ) {
 		Values[idx].d1 = Points->x[0];
 		Values[idx].d2 = Points->y[0];
+		Values[idx].d3 = Points->z[0];
 		Values[idx].count1++;
 	    } else if ( options.option == O_SIDES && type == GV_BOUNDARY ) {
 		read_side_cats ( LCats, &(Values[idx].i1), &(Values[idx].count1) );

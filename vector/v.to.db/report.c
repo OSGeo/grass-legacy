@@ -33,10 +33,10 @@ report (void)
             break;
 
         case O_COOR:
-    	    fprintf (stdout,"cat|x|y\n");
+    	    fprintf (stdout,"cat|x|y|z\n");
 	    for ( i = 0; i < vstat.rcat; i++ ) {
 		if ( Values[i].count1 == 1 )
-	            fprintf (stdout, "%d|%g|%g\n", Values[i].cat, Values[i].d1, Values[i].d2);
+	            fprintf (stdout, "%d|%g|%g|%g\n", Values[i].cat, Values[i].d1, Values[i].d2, Values[i].d3);
 	    }
             break;
 

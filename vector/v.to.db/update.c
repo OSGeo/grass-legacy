@@ -46,7 +46,7 @@ update (struct Map_info *Map)
         case O_LENGTH:
 	case O_AREA:
 	case O_QUERY:
-	    sprintf (buf1, "update %s set %s =", Fi->table, options.col1);
+	    sprintf (buf1, "update %s set %s =", Fi->table, options.col[0]);
             break;
         case O_COOR:
         case O_SIDES:
@@ -84,8 +84,14 @@ update (struct Map_info *Map)
 	        if ( Values[i].count1 < 1 ){ /* No points */
 		    continue;
 		}
-    		sprintf (buf2, "%s %s = %f, %s = %f  where %s = %d", buf1, options.col1, Values[i].d1, 
-			    options.col2, Values[i].d2, Fi->key,  Values[i].cat);    		
+		if ( options.col[2] ) {
+		    sprintf (buf2, "%s %s = %g, %s = %g, %s = %g where %s = %d", buf1, options.col[0], 
+			            Values[i].d1, options.col[1], Values[i].d2, options.col[2], Values[i].d3,
+				    Fi->key,  Values[i].cat);    		
+		} else {
+		    sprintf (buf2, "%s %s = %g, %s = %g  where %s = %d", buf1, options.col[0], Values[i].d1, 
+				options.col[1], Values[i].d2, Fi->key,  Values[i].cat);    		
+		}
 		break;
 
 	    case O_SIDES:
@@ -115,8 +121,8 @@ update (struct Map_info *Map)
 		    sprintf ( right, "null" );
 		}
 
-    		sprintf (buf2, "%s %s = %s, %s = %s  where %s = %d", buf1, options.col1, left, 
-			    options.col2, right, Fi->key,  Values[i].cat);    		
+    		sprintf (buf2, "%s %s = %s, %s = %s  where %s = %d", buf1, options.col[0], left, 
+			    options.col[1], right, Fi->key,  Values[i].cat);    		
 
 		break;
 
