@@ -1,3 +1,5 @@
+1/2002 Stefano Menegon/Lorenzo Potrich: curvatures fixed
+
 1/2002: Lorenzo Potrich & Markus Neteler (ITC-irst):
         - update to FP (increased precision), kept CELL for features
         - changed features numbers from 0..5 -> 1..6
