@@ -94,7 +94,6 @@ main (int argc, char *argv[])
 	
 	if (G_parser (argc, argv))
 		exit(-1);
-G_debug(0,"zcol %d",zcoorf->answer);
 	if (zcoorf->answer && zcol_opt->answer == "0")
 		G_fatal_error("Please specify zcol.");
 
