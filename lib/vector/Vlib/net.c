@@ -719,6 +719,9 @@ int Vect_net_nearest_nodes ( struct Map_info *Map,
  \param tmax maximum distance to the network from 'to'
  \param costs pointer where to store costs on the network (or NULL)
  \param Points pointer to the structure where to store vertices of shortest path (or NULL)
+ \param List pointer to the structure where list of lines on the network is stored (or NULL)
+ \param FPoints pointer to the structure where to store line from 'from' to first network node (or NULL)
+ \param TPoints pointer to the structure where to store line from last network node to 'to' (or NULL)
  \param fdist distance from 'from' to the net (or NULL)
  \param tdist distance from 'to' to the net (or NULL)
 */
@@ -726,14 +729,15 @@ int
 Vect_net_shortest_path_coor ( struct Map_info *Map, 
                 double fx, double fy, double fz, double tx, double ty, double tz,
 		double fmax, double tmax,
-		double *costs, struct line_pnts *Points,
+		double *costs, struct line_pnts *Points, 
+		struct ilist *List, struct line_pnts *FPoints, struct line_pnts *TPoints,
 		double *fdist, double *tdist )
 {
     int fnode[2], tnode[2]; /* nearest nodes, *node[1] is 0 if only one was found */
     double fcosts[2], tcosts[2], cur_cst; /* costs to nearest nodes on the network */
     int nfnodes, ntnodes, fline, tline;
     static struct line_pnts *APoints, *SPoints, *fPoints[2], *tPoints[2];
-    static struct ilist *List;
+    static struct ilist *LList;
     static int first = 1;
     int reachable, shortcut;
     int i, j, fn, tn;
@@ -747,7 +751,7 @@ Vect_net_shortest_path_coor ( struct Map_info *Map,
 	fPoints[1] = Vect_new_line_struct();
 	tPoints[0] = Vect_new_line_struct();
 	tPoints[1] = Vect_new_line_struct();
-	List = Vect_new_list ();
+	LList = Vect_new_list ();
 	first = 0;
     }
     
@@ -756,6 +760,9 @@ Vect_net_shortest_path_coor ( struct Map_info *Map,
     if ( Points ) Vect_reset_line ( Points );
     if ( fdist ) *fdist = 0;
     if ( tdist ) *tdist = 0;
+    if ( List ) List->n_values = 0;
+    if ( FPoints ) Vect_reset_line ( FPoints );
+    if ( TPoints ) Vect_reset_line ( TPoints );
 
     /* Find nearest nodes */
     fnode[0] = fnode[1] = tnode[0] = tnode[1] = 0;
@@ -848,21 +855,26 @@ Vect_net_shortest_path_coor ( struct Map_info *Map,
     if ( reachable ) {
 	int ret;
 
-	if ( Points ) {
-	    if ( shortcut) {
-		Vect_append_points ( Points, SPoints, GV_FORWARD );
-	    } else {
-		ret = Vect_net_shortest_path ( Map, fnode[fn], tnode[tn], List, NULL);
-		G_debug (3, "Number of lines %d", List->n_values);
+	if ( shortcut) {
+	    if ( Points ) 
+	        Vect_append_points ( Points, SPoints, GV_FORWARD );
+	} else {
+	    ret = Vect_net_shortest_path ( Map, fnode[fn], tnode[tn], LList, NULL);
+	    G_debug (3, "Number of lines %d", LList->n_values);
 
-		Vect_append_points ( Points, fPoints[fn], GV_FORWARD );
+	    if ( Points )
+	        Vect_append_points ( Points, fPoints[fn], GV_FORWARD );
 
-		for ( i = 0; i < List->n_values; i++ ) {
-		    int line;
+	    if ( FPoints )
+	        Vect_append_points ( FPoints, fPoints[fn], GV_FORWARD );
+
+	    for ( i = 0; i < LList->n_values; i++ ) {
+		int line;
+	    
+		line = LList->value[i];
+		G_debug (3, "i = %d line = %d", i, line);
 		
-		    line = List->value[i];
-		    G_debug (3, "i = %d line = %d", i, line);
-		    
+		if ( Points ) {
 		    Vect_read_line ( Map, APoints, NULL, abs(line) );
 
 		    if ( line > 0 ) 
@@ -871,8 +883,14 @@ Vect_net_shortest_path_coor ( struct Map_info *Map,
 			Vect_append_points ( Points, APoints, GV_BACKWARD );
 		}
 
-		Vect_append_points ( Points, tPoints[tn], GV_FORWARD );
+		if ( List ) Vect_list_append ( List, line );
 	    }
+
+	    if ( Points )
+	        Vect_append_points ( Points, tPoints[tn], GV_FORWARD );
+
+	    if ( TPoints )
+	        Vect_append_points ( TPoints, tPoints[tn], GV_FORWARD );
 	}
 
 	if ( costs ) *costs = cur_cst;

@@ -127,7 +127,7 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 	    G_debug (2, "find path %f %f -> %f %f", fx, fy, tx, ty);
 	    
 	    ret = Vect_net_shortest_path_coor ( Map, fx, fy, 0.0, tx, ty, 0.0, 5*maxdist, 5*maxdist,
-				                &cost, Points, &fdist, &tdist );
+				                &cost, Points, NULL, NULL, NULL, &fdist, &tdist );
 	    if ( ret == 0 ) {
 		fprintf (stdout, "Destination unreachable\n" );
 		sp_disp = 0;
