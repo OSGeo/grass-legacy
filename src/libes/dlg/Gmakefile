@@ -16,16 +16,17 @@ OBJ = \
 
 
 LIB = $(LIBDIR)/libdlg.a
-DLG = $(LIBDIR)/dlg.h
-all: $(DLG) $(LIB)
+#DLG = $(LIBDIR)/dlg.h
+#all: $(DLG) $(LIB)
+all: $(LIB)
 
 $(LIB): $(OBJ)
 	$(AR)
 
-$(DLG): dlg.h
-	rm -f $@
-	cp $? $@
-	chmod +r $@
+#$(DLG): dlg.h
+#	rm -f $@
+#	cp $? $@
+#	chmod +r $@
 
-$(OBJ): dlg.h
+#$(OBJ): dlg.h
 
