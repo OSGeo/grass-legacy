@@ -25,6 +25,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
+
 #define MAIN
 
 int infxTables(void);
@@ -42,20 +44,23 @@ char **argv ;
     char *dbname;
     int res= 99;
 
+  setlocale (LC_ALL, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
         /* Check command line for help  */
 	if ((argc == 2) && (strcmp(argv[1],"help") == 0) ) {
-		fprintf(stderr, "\n\nUsage: %s (without arguments!).\n", argv[0]);
+		fprintf(stderr, _("\n\nUsage: %s (without arguments!).\n"), argv[0]);
 		exit(0);
 	}
 
 	/* Check DATABASE env variable */
         if ((dbname=G__getenv("PG_DBASE")) == NULL) {
             fprintf(stderr,
-                   "Please run g.select.pg to identify a current database.\n");
+                   _("Please run g.select.pg to identify a current database.\n"));
 	    exit(-1);
            }
 

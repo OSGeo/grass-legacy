@@ -1,7 +1,7 @@
 #include "gis.h"
 #include <stdlib.h>
 #include <libpq-fe.h>
-
+#include "glocale.h"
 
 	/*A.Sh. 12.99 -trimmed for pgsql 6.5*/
 
@@ -21,7 +21,7 @@ pgdbase = G_getenv ("PG_DBASE");
 pg_conn = PQsetdb(pghost,NULL,NULL,NULL,pgdbase);
 
 if (PQstatus (pg_conn) == CONNECTION_BAD) {
-    fprintf (stderr, "Error: select Postgres:%s\n",
+    fprintf (stderr, _("Error: select Postgres:%s\n"),
        PQerrorMessage(pg_conn));
     exit (-1);
   }
@@ -32,7 +32,7 @@ if (PQstatus (pg_conn) == CONNECTION_BAD) {
  
 res  = PQexec(pg_conn, "select tablename from pg_tables where tablename !~ 'pg_*' order by tablename");
  if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
-    printf ("Error:connect Postgres:%s\n",PQerrorMessage(pg_conn));
+    printf (_("Error:connect Postgres:%s\n"),PQerrorMessage(pg_conn));
     PQfinish(pg_conn);
     exit (-1);      
   } 	   
