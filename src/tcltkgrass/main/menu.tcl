@@ -541,6 +541,9 @@ menu_build 1 .main_menu {
             "Modify color table" "" {
                 "source $env(TCLTKGRASSBASE)/module/d.colors"
             }
+	    "Assign histogram contrast grey scale color table" "" {
+		"source $env(TCLTKGRASSBASE)/module/i.grey.scale"
+	    }
             -separator
             "Digitize" "" {
                 "run r.digit &"
