@@ -193,11 +193,13 @@ int read_rule (double *val, int *r, int *g, int *b, int *set, int *nvalue, int *
 	}
 	if (sscanf (buf, "%lf %d %d %d", val, r, g, b) == 4)
 	{
-            if (/*(*val < (double) min) || (*val > (double) max) || 
-		commented out by Olga */ *r<0 || *r>255
+            if (
+               /*(*val < (double) min) || (*val > (double) max) || 
+		commented out by Olga */
+		*r<0 || *r>255
 		|| *g<0 || *g>255 || *b<0 || *b>255)
             {
-                fprintf(stderr, "** warning: no such value **\n");
+                fprintf(stderr, "** warning: R G B value(s) out of range [0..255]: %d %d %d **\n", *r, *g, *b);
                 fprintf(stderr, "** rule is not added **\n");
                 continue;
             }
