@@ -257,7 +257,8 @@ main(int argc, char **argv)
 
 	for(i=0; i<l; i+=4)
 	{
-		int j, k;
+		int j, k, l;
+		unsigned char *buffer;
 
 		ch = (out[i+2] << 8) | out[i+3];
 
@@ -265,13 +266,25 @@ main(int argc, char **argv)
 			continue;
 		if(FT_Load_Glyph(face, index, FT_LOAD_DEFAULT))
 			continue;
-		if(FT_Render_Glyph(face->glyph, ft_render_mode_normal))
+		if(FT_Render_Glyph(face->glyph, ft_render_mode_mono))
 			continue;
 
-		k = face->glyph->bitmap.rows * face->glyph->bitmap.width;
-		for(j=0; j<k; j++)
-			if(face->glyph->bitmap.buffer[j])
-				face->glyph->bitmap.buffer[j] = color;
+		l = face->glyph->bitmap.rows * face->glyph->bitmap.width;
+
+		buffer = (unsigned char *) G_malloc(l);
+		memset(buffer, 0, l);
+
+		k = face->glyph->bitmap.width / 8 +
+			(face->glyph->bitmap.width % 8 ? 1 : 0);
+
+		for(j=0; j<l; j++)
+		{
+			if(face->glyph->bitmap.buffer[
+				(j / face->glyph->bitmap.width) * k +
+				(j % face->glyph->bitmap.width) / 8
+			   ] & (1 << (7 - (j % face->glyph->bitmap.width) % 8)))
+				buffer[j] = color;
+		}
 
 		for(j=0; j<face->glyph->bitmap.rows; j++)
 		{
@@ -279,9 +292,10 @@ main(int argc, char **argv)
 				   y - face->glyph->bitmap_top + j);
 			R_raster_char(face->glyph->bitmap.width,
 					1, 0,
-					face->glyph->bitmap.buffer
-					+ face->glyph->bitmap.width * j);
+					buffer + face->glyph->bitmap.width * j);
 		}
+
+		G_free(buffer);
 
 		x += face->glyph->advance.x >> 6;
 		y += face->glyph->advance.y >> 6;
