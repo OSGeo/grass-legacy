@@ -1,0 +1,132 @@
+
+
+
+
+
+
+_f_e_n_c_e - _c_r_e_a_t_e _f_e_n_c_e/_p_r_o_f_i_l_e _d_a_t_a _o_v_e_r_l_a_y
+
+
+_f_e_n_c_e [ -oci [args]] [ -m ] def_file [ files ]
+
+_F_e_n_c_e is a  graphic  function  in  the  _m_a_p_g_e_n  graphic
+series which provides for creating fence or profile map
+overlays from geographic coordinate and 'z'  axis  data
+field[s].   Most of the following options can appear in
+any order:  This  option  specifies  the  required  map
+definition  file.   If the -_m is omitted, _d_e_f__f_i_l_e must
+be the first file listed.  This  option  specifies  the
+map  overlay  meta-graphic  file.   If  this  option is
+specified a "preview" of the graphic file is output  to
+the  controlling  terminal.   It the option is omitted,
+then is implied.  This options  provides  for  run-line
+inclusion of graphic options listed below.  If there is
+more than one option or imbedded blanks, the field must
+be  enclosed  in  quotes  or apostrophies.  One or more
+data _f_i_l_e_s that contain geographic, posting and control
+data.  If no files are specified, or if a - argument is
+encountered,  _f_e_n_c_e  reads  from  the  standard  input.
+Files  are  processed in left to right order.  The fol-
+lowing options provide for graphic control and may only
+appear  in  the  -_c run-line field or the data file[s].
+Control data in the data files must be on lines with  a
+'#' character in column one.  A second '#' character on
+these lines causes the remainder  of  the  line  to  be
+ignore  and,  consequently,  may  be used for comments.
+This option specifies a "break" in the line.   Drafting
+of  all  data channels will be discontinued at the last
+point and restarted at the next data point.   _F_l_o_n  and
+_f_l_a_t  are  the  respective  field  control words of the
+longitude and latitude data fields (data must be in DMS
+format).   Both  field  control  words  are of the form
+[_f][.[_o][._l]] where _f is the field  number,  _o  is  the
+number  of characters to skip from the beginning of the
+field, and _l is the length of the field.  If _l  is  not
+specified  or  0,  then  the  remainder of the field is
+employed.  If _f or _o are  omitted  then  1  and  0  are
+respective assumptions.  If this option is omitted then
+a default of "-d 2,1" is assumed.  This option  selects
+the  z  axis  data  'channel' for reference by the line
+control options.  Values of _n correspond to  the  field
+values  specified by the option.  If _n<= then line con-
+trol refers to the pen drafting fence posts  and  other
+options.   The  default channel selected at start-up is
+1.  The value of _f_f_n defines the data  field[s]  to  be
+drafted.  The format of _f_f_n is the same form as for the
+"-d" option.  Specification of the data  fields  should
+be  made  only  once.  If the value of _m is d then dash
+line mode is selected otherwise solid line  mode.   _A_r_g
+is  the  value for the dash line mask for the currently
+selected channel.  It is treated as a 16  bit  quantity
+
+
+
+                     June 4, 1991
+
+
+
+
+
+                         - 2 -
+
+
+where  each  on  bit  is  a solid segment of the dashed
+line.  Note that it must be entered as a decimal, octal
+or hexadecimal value (123, 0123 or 0x123 respectively).
+_C_m is the size of the dash line interval in centimeters
+for the currently selected channel.  If the value of _c_m
+is zero, solid line mode is assumed.  Start drafting of
+the  currently selected channel.  To terminate drafting
+of current channel see Stop drafting of  current  chan-
+nel.   To  restart  drafting  of a channel see _N is the
+mechanical pen to be employed for the currently  speci-
+fied  channel.  If this option controls vertical bar or
+"fence post" drafting.  If _m is =1 a single fence  post
+will  be  drafted  at the next point, if >1 fence posts
+will be drafted at each point, and if  <=0  fence  post
+drafting  terminated.   The  initial  value  is 0.  The
+values of _z__m_i_n/_m_a_x and _c__m_i_n/_m_a_x define the respective
+data and centimeter values of the vertical axis scaling
+range.  Z-axis scaling is determined by the equivalency
+of _z__m_i_n to _c__m_i_n and _z__m_a_x to _c__m_a_x.  If the values of
+_c__m_i_n/_m_a_x are negative they are below the  datum  value
+of  the  geographic  coordinate location.  The z values
+are not windowed and may be plotted beyond  the  ranges
+specified.   Positive  _c__m_i_n  or  negative _c__m_a_x values
+should be avoided as they will cause the fence pole  to
+float  above  or below the geographic coordinate.  This
+parameter must be specied and applies to  all  channels
+selected.  _A_n_g is the clockwise angle (in degrees) that
+the z axis is to be shifted  from  the  vertical.   The
+default  value  is 0 degrees.  The character _c, immedi-
+ately  following  -_t,  delimits  data  fields  on  data
+records (default: "t\t" (tab)).  Use of special charac-
+ters may require quote mark enclosure.  The character _c
+immediately following z will replace the normal # char-
+acter indicating control line and comment.
+
+ _M_a_p _d_e_f_i_n_i_t_i_o_n _f_i_l_e.
+
+ _M_a_p_g_e_n _s_y_s_t_e_m _d_o_c_u_m_e_n_t_a_t_i_o_n.
+
+ _E_r_r_o_r _m_o_n_i_t_o_r_i_n_g _o_n_l_y.
+
+_T_o_o _e_a_r_l_y _t_o _t_e_l_l (_p_r_o_b_a_b_l_y).
+
+_G_e_r_a_l_d _I. _E_v_e_n_d_e_n, _U_S_G_S, _W_o_o_d_s _H_o_l_e, _M_A.
+
+
+
+
+
+
+
+
+
+
+
+
+
+                     June 4, 1991
+
+
