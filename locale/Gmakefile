@@ -1,0 +1,29 @@
+#############################################################################
+#
+# COPYRIGHT:    (C) 2000-2001 by the GRASS Development Team
+#
+#               This program is free software under the GNU General Public
+#   	    	License (>=v2). Read the file COPYING that comes with GRASS
+#   	    	for details.
+#
+#############################################################################
+
+LCL = `echo $$LANG | sed 's/\(..\)\(.*\)/\1/'`
+LOC_DIR = $(GISBASE)/locale
+NLOC_DIR = $(LOC_DIR)/$(LCL)
+MSGFMT = msgfmt
+
+all: mofiles
+
+mofiles:
+	@test -d $(LOC_DIR) || mkdir $(LOC_DIR)
+	@test -d $(NLOC_DIR) || mkdir $(NLOC_DIR)
+	@test -d $(LOC_DIR) || mkdir $(NLOC_DIR)/LC_MESSAGES
+
+	@(cd $(LCL)/LC_MESSAGES; \
+	for h in *.po; \
+	  do \
+	  	test -d $$h && continue; \
+		$(MSGFMT) $$h -o `basename $$h .po`.mo; \
+		mv `basename $$h .po`.mo $(NLOC_DIR)/LC_MESSAGES; \
+	  done)
