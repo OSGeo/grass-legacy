@@ -1,0 +1,10 @@
+HOWTO document in this GRASS version?
+
+- source code docs: use doxygen style 
+  example: lib/proj/
+           other libs
+
+- modules:
+   - write a file 'description.html' (see modules how to do that)
+   - you can add figures (PNG format), the figure name prefix
+     should be the module name
