@@ -52,7 +52,7 @@ int a_type;
         new_entry->s_type = s_type;
         new_entry->question = (char *) 0;
         strcpy(new_entry->reclass,"");
-        strcpy(new_entry->reclassname);
+        strcpy(new_entry->reclassname,"");
         new_entry->stripped = 0;
         new_entry->colortable = Ramp;
         switch(s_type) {
