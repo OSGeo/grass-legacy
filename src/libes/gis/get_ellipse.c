@@ -313,10 +313,12 @@ read_ellipsoid_table(int fatal)
 	qsort ((void *)table, (size_t)count, (size_t)sizeof(*table), (int (*)(const void*, const void *))(compare_table_names));
 	return 1;
     }
-    /* for i18n this is not very inconvenient grammar*/
     
-    sprintf (buf, _("Line%s%s of ellipsoid table file <%s> %s invalid"),
-	err==1?"":_("s"), badlines, file, err==1?_("is"):_("are"));
-    fatal ? G_fatal_error(buf) : G_warning (buf);
+    (fatal ? G_fatal_error : G_warning)(
+	(err > 1)
+	    ? _("Lines%s of ellipsoid table file <%s> are invalid")
+	    : _("Line%s of ellipsoid table file <%s> is invalid"),
+	badlines, file);
+
     return 0;
 }
