@@ -13,7 +13,20 @@ G3d_nearestNeighbor (map, row, col, depth, value, type)
      int type;
 
 {
-  G3d_getValueRegion (map, row, col, depth, value, type);
+
+/*AV*/
+/* BEGIN OF ORIGINAL CODE */
+/*
+	G3d_getValueRegion (map, row, col, depth, value, type);
+*/
+/* END OF ORIGINAL CODE */
+
+/*AV*/
+/* BEGIN OF MY CODE*/
+	G3d_getValueRegion (map, col, row, depth, value, type);
+/* END OF MY CODE */
+
+
 }
 
 /*--------------------------------------------------------------------------*/
