@@ -1,0 +1,2 @@
+dlg_to_cell
+    MAPDEV program to convert dlg file to grass grid cell file.
