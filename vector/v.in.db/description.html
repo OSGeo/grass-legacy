@@ -12,6 +12,25 @@ Creating a map from PostgreSQL table:
          table=pat_stazioni x=east y=north z=quota  key=id output=pat_stazioni
 </pre>
 
+<P>
+<b>Import of a points table (x, y, z) from DBF to vector points map:</b>
+<P>
+The DBF file has to be copied into $MAPSET/dbf/ (to be created
+if not existing yet). Then the DBMI needs to be connected to
+this directory:
+
+<pre>
+db.connect driver=dbf database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/'
+
+#if no ID column present in the DBF file, the 'shp' driver can be used
+#instead of the 'dbf' driver to generate the virtual ID/key column 'shp_fid'
+#on-the-fly:
+
+v.in.db driver=shp database='$GISDBASE/$LOCATION_NAME/$MAPSET/dbf/' \
+  table=pointsfile x=x y=y z=z key=shp_fid out=dtm
+v.info dtm
+</pre>
+
 <H2>AUTHOR</H2>
 <A HREF=mailto:blazek@itc.it>Radim Blazek</A>
 
