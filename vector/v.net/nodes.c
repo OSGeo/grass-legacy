@@ -42,6 +42,8 @@ int nodes ( char *in, char *out)
     }
 
     Vect_copy_head_data (&In, &Out);
+    Vect_hist_copy (&In, &Out);
+    Vect_hist_command ( &Out );
 
     Points = Vect_new_line_struct ();
     Pout = Vect_new_line_struct ();
@@ -82,6 +84,8 @@ int nodes ( char *in, char *out)
     Vect_destroy_line_struct (Pout);
     Vect_destroy_cats_struct (Cats);
 
+    Vect_copy_tables ( &In, &Out, 0 );
+    
     /* Support */    
     Vect_build (&Out, stdout); 
     
