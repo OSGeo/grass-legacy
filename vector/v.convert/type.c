@@ -1,5 +1,6 @@
 #include "Vect.h"
 #include "conv.h"
+#include "glocale.h"
 
 /* conversion of old file format elment type codes to new 
 *
@@ -25,7 +26,7 @@ char dig_old_to_new_type (char type)
 	    type = 0;
 	    break;
 	default:
-	    fprintf (stderr, "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x\n", type);
+	    G_warning ( _("SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"), type);
 	    type = -1;
 	    break;
     }
@@ -46,7 +47,7 @@ char dig_new_to_old_type ( char  type)
 	    type = FILE_DOT;
 	    break;
 	default:
-	    fprintf (stderr, "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x\n", type);
+	    G_warning ( _("SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"), type);
 	    type = 0;
 	    break;
     }
