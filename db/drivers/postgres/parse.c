@@ -27,6 +27,7 @@ int parse_conn ( char *str, PGCONN *pgconn )
     pgconn->dbname = NULL;
     pgconn->user = NULL;
     pgconn->password = NULL;
+    pgconn->schema = NULL;
  
     G_debug (3, "parse_conn : %s", str ); 
     
@@ -54,6 +55,8 @@ int parse_conn ( char *str, PGCONN *pgconn )
 	   else if ( strncmp(tokens[i], "password", 8 ) == 0 )
 	       /* pgconn->password = G_store ( tokens[i] + 9 ); */
 	       G_warning ( _("'password' in database definition is not supported, use db.login") );
+	   else if ( strncmp(tokens[i], "schema", 6 ) == 0 )
+	       pgconn->schema = G_store ( tokens[i] + 7 );
 	   else {
 	       append_error ( _("Unknown option in database definition for PostgreSQL: "));
 	       append_error ( tokens[i] );
