@@ -1,0 +1,9 @@
+PGM=r.out.png
+
+LIST= main.o
+
+$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(EXTRALIB) $(MATHLIB) \
+	$(XDRLIB) -lpng -lppm -lpgm -lpbm -lpnm -lz
+
+$(GISLIB): #
