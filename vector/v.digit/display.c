@@ -182,7 +182,7 @@ void display_erase ( void )
     char command[128];
     
     driver_close();
-    sprintf(command, "d.erase color=black");
+    sprintf(command, "d.erase color=white");
     system( command ); /* It does everything and command is registered */
     driver_open();
 
