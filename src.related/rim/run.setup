@@ -1,0 +1,49 @@
+#!/bin/sh
+
+#
+# Try to find setup file from system information
+#
+files=`ls SETUP-*`
+sys=`uname|tr [a-z] [A-Z]`
+procs=`uname -p|tr [a-z] [A-Z]`
+
+if [ $sys = "DGUX" -a $procs = "PENTIUMPRO" ]
+then
+	procs="-INTEL"
+fi
+
+echo "sys=$sys"
+echo "procs=$procs"
+if [ -n "$sys" ]
+then
+	file_setup="SETUP-$sys$procs"
+	for i in $files
+	do
+		if [ $i = $file_setup ]
+		then
+			echo "Execute $file_setup"
+			$file_setup
+			exit 0
+		fi
+	done
+	file_setup="SETUP-$sys"
+	for i in $files
+	do
+		if [ $i = $file_setup ]
+		then
+			echo "Execute $file_setup"
+			$file_setup
+			exit 0
+		fi
+	done
+fi
+echo "Here are the possible setup files:"
+echo $files
+echo
+echo "Which setup file do you want to use?"
+read line
+set $line
+echo 
+echo "Running $1..."
+$1
+echo "Done"
