@@ -10,6 +10,7 @@ SUBDIRS1 = \
 	r.gdal \
 	r.his \
 	r.mapcalc \
+	r.proj \
 	r.neighbors \
 	r.stats
 
