@@ -32,7 +32,8 @@ FILE *fde00, *fdlog;		/* input and log file descriptors */
 
 int compressed;			/* 1 if e00 file is compressed, 0 else */
 int current_position;		/* Where are we in input file ? */
-int usecovnum = 1;		/* set to 1 if we want link table by COVER#  */
+int usecovnum = 1;		/* set to 1 if we want link table by COVER# */
+				/* (must be 0 for raster) */
 double scale = 1.0;
 
 extern void getraster( char*, int, int);
@@ -324,7 +325,7 @@ int main( int argc, char *argv[])
 			if (flag.table->answer)
         		    cat_management = 2;
     			if (flag.db->answer)
-    			    cat_management++;
+    			    cat_management = 3;
 		    }
 		    cover = getinfo( name, cat_management, 1 + (newmapset != NULL));
 		}
