@@ -16,7 +16,9 @@
  *   released by the unix free() routine.
  *
  * note:
- *   GIS mapset manangement will clean up the temp directory
+ *   It is recommended to unlink() the tempfile on exit/error.
+ *   Only if GRASS is left with 'exit', the GIS mapset manangement 
+ *   will clean up the temp directory (ETC/clean_temp)
  ***********************************************************/
 
 #include <string.h>
