@@ -91,14 +91,14 @@ int line_data_write(site_array *s0, line_array *l0, line_array *a0, ring_offsets
     with_areas = 0;
   }
 
-  if(numsites > 0 && numlines == 0 && numrings == 0) {
+  else if(numsites > 0 && numlines == 0 && numrings == 0) {
     strcpy(out_sites, vectfile);
     with_sites = 1;
     with_lines = 0;
     with_areas = 0;
   }
 
-  if(numsites == 0 && numlines == 0 && numrings > 0) {
+  else if(numsites == 0 && numlines == 0 && numrings > 0) {
     strcpy(out_areas, vectfile);
     with_sites = 0;
     with_lines = 0;
@@ -412,7 +412,8 @@ int line_data_write(site_array *s0, line_array *l0, line_array *a0, ring_offsets
 
   /* Extract the lines to the vector map */
 
-  vbase_extract_lines(hVB, &Map3);
+  if(with_areas)
+    vbase_extract_lines(hVB, &Map3);
 
   G_get_window(&Region);
 
@@ -448,7 +449,7 @@ int line_data_write(site_array *s0, line_array *l0, line_array *a0, ring_offsets
 
   if(with_areas) {
 
-    Map2.head.orig_scale = (long)init_scale;
+    Map3.head.orig_scale = (long)init_scale;
     G_strncpy( Map3.head.your_name, G_whoami(), 20);
     G_strncpy( Map3.head.date, G_date(), 20);
     G_strncpy( Map3.head.map_name, out_areas, 20);

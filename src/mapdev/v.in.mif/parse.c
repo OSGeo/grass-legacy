@@ -34,11 +34,14 @@ int parse_all_fields(d_type *dt, field_data *fd0, d_type del0, int icnt, int *fc
   /* local */
 
   char *tmpbuf;
+  char fbuf[512];
   int cnt;
 
   cnt = 0;
 
-  if( (tmpbuf = strtok(dt[icnt], del0)) == NULL ) {
+  strncpy(fbuf, dt[icnt], 511);
+
+  if( (tmpbuf = strtok(fbuf, del0)) == NULL ) {
     fprintf( stderr, "Data contains no fields\n");
     return -1;
   }
