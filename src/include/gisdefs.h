@@ -923,6 +923,7 @@ char *G__read_Cell_head(FILE *, struct Cell_head *, int);
 
 /* reclass.c */
 int G_is_reclass(char *, char *, char *, char *);
+int G_is_reclassed_to(char *, char *, int *, char ***);
 int G_get_reclass(char *, char *, struct Reclass *);
 int G_free_reclass(struct Reclass *);
 int G_put_reclass(char *, struct Reclass *);
