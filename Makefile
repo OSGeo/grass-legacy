@@ -211,6 +211,7 @@ real-install: FORCE
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - etc | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - fonts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - tcltkgrass | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	@##### ${SHELL} -c "cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	@ # The man, include, and lib could go to ${PREFIX}/ BUT if this is
 	@ # done, then the corresponding uninstall instructions must delete
