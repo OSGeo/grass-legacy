@@ -89,11 +89,11 @@ main(int argc, char **argv)
 	char	str[20];
 	RASTER_MAP	buf;
 
-	opt = G_define_option() ;
-	opt->key         = "map" ;
-	opt->description = "Map to manipulate" ;
-	opt->type        = TYPE_STRING ;
-	opt->required    = YES ;
+	opt		 = G_define_option();
+	opt->key         = "map";
+	opt->description = "Map to manipulate";
+	opt->type        = TYPE_STRING;
+	opt->required    = YES;
 	opt->gisprompt   = "old,cell,raster";
 
 	G_gisinit(argv[0]);
