@@ -6,7 +6,6 @@
 
  */
 #include <string.h>
-#define GLOBAL
 #include "edit.h"
 #include "D.h"
 
