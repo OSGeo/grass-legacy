@@ -49,12 +49,12 @@ int do_vectors (int after_masking)
 	else
 	{
 	    fprintf(PS.fp, "[] 0 setdash\n");
-	    if (vector.hwidth[n])
+	    if (vector.hwidth[n] && vector.ref[n] == LINE_REF_CENTER)
 	    {
 		set_rgb_color(vector.hcolor[n]);
 		fprintf(PS.fp, "%.8f W\n",  
 		   vector.width[n] + 2. * vector.hwidth[n]);
-		PS_vector_plot(&Map, n, 'h');
+		PS_vector_plot(&Map, n, LINE_DRAW_HIGHLITE);
 		Vect_rewind(&Map); 
 	    }
 
@@ -107,9 +107,10 @@ int do_vectors (int after_masking)
 	    strcat(dashes, buf);
 	    fprintf(PS.fp, "%s setdash\n", dashes);
 	    vector.setdash[n] = G_store(dashes);
-	    PS_vector_plot(&Map, n, 'l');
+	    PS_vector_plot(&Map, n, LINE_DRAW_LINE);
 	}
     	
+	
 	Vect_close(&Map);
 	fprintf(PS.fp, "[] 0 setdash\n");
 	if (verbose > 1) fprintf (stdout,"\n");
