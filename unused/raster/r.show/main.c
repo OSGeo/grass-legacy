@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include "gis.h"
 
+#ifdef	OLD_CPVALUE
 #define	KEEPTYPE	0
 #define	OVERTYPE	1
+#endif
 
 
 #define G_TYPE_NAME(t)		(t ==  CELL_TYPE ?  "CELL" : \
@@ -30,8 +32,13 @@ struct RASTER_MAP_PTR
 int is_null_value(struct RASTER_MAP_PTR buf, int col);
 int value2str(char *str, int width, int prec,
 		struct RASTER_MAP_PTR buf, int col);
+#ifndef	OLD_CPVALUE
+int cpvalue(struct RASTER_MAP_PTR dest, int dcol,
+		struct RASTER_MAP_PTR src, int scol);
+#else
 int cpvalue(struct RASTER_MAP_PTR dest, int dcol,
 		struct RASTER_MAP_PTR src, int scol, int mode);
+#endif
 
 int
 main(argc, argv)
@@ -110,7 +117,11 @@ main(argc, argv)
 		value2str(str, 15, 5, tmp, 2);
 		printf("\n >> %s ", str);
 
+#ifndef	OLD_CPVALUE
+		cpvalue(tmp, 2, buf, 10);
+#else
 		cpvalue(tmp, 2, buf, 10, KEEPTYPE);
+#endif
 
 		value2str(str, 15, 5, tmp, 2);
 		printf("<< %s ", str);
@@ -168,6 +179,83 @@ value2str(str, width, prec, buf, col)
 }
 
 
+#ifndef	OLD_CPVALUE
+
+int
+cpvalue(dest, dcol, src, scol)
+	struct	RASTER_MAP_PTR dest, src;
+	int	dcol, scol;
+{
+/*
+	if(mode == KEEPTYPE && src.type != dest.type)
+		return 0;
+
+	dest.type = src.type;
+
+	switch(src.type)
+	{
+		case CELL_TYPE:
+			dest.data.c[dcol] = src.data.c[scol];
+			break;
+		case FCELL_TYPE:
+			dest.data.f[dcol] = src.data.f[scol];
+			break;
+		case DCELL_TYPE:
+			dest.data.d[dcol] = src.data.d[scol];
+			break;
+	}
+*/
+	switch(dest.type)
+	{
+		case CELL_TYPE:
+			switch(src.type)
+			{
+				case CELL_TYPE:
+					dest.data.c[dcol] = (CELL) src.data.c[scol];
+					break;
+				case FCELL_TYPE:
+					dest.data.c[dcol] = (CELL) src.data.f[scol];
+					break;
+				case DCELL_TYPE:
+					dest.data.c[dcol] = (CELL) src.data.d[scol];
+					break;
+			}
+			break;
+		case FCELL_TYPE:
+			switch(src.type)
+			{
+				case CELL_TYPE:
+					dest.data.f[dcol] = (FCELL) src.data.c[scol];
+					break;
+				case FCELL_TYPE:
+					dest.data.f[dcol] = (FCELL) src.data.f[scol];
+					break;
+				case DCELL_TYPE:
+					dest.data.f[dcol] = (FCELL) src.data.d[scol];
+					break;
+			}
+			break;
+		case DCELL_TYPE:
+			switch(src.type)
+			{
+				case CELL_TYPE:
+					dest.data.d[dcol] = (DCELL) src.data.c[scol];
+					break;
+				case FCELL_TYPE:
+					dest.data.d[dcol] = (DCELL) src.data.f[scol];
+					break;
+				case DCELL_TYPE:
+					dest.data.d[dcol] = (DCELL) src.data.d[scol];
+					break;
+			}
+			break;
+	}
+
+	return 1;
+}
+
+#else
+
 int
 cpvalue(dest, dcol, src, scol, mode)
 	struct	RASTER_MAP_PTR dest, src;
@@ -193,4 +281,6 @@ cpvalue(dest, dcol, src, scol, mode)
 
 	return 1;
 }
+
+#endif
 
