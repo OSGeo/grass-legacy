@@ -284,7 +284,7 @@ find_inclination (int x, int y, int viewpt_elev, SEGMENT *seg_in_p, int row_view
 {
 	double del_x, del_y,dist,atan(),sqrt();
 	int abs();
-	CELL picked_pt_elev;
+	FCELL picked_pt_elev;
 	extern struct Cell_head window;
 
 	del_x = abs(x) ;
