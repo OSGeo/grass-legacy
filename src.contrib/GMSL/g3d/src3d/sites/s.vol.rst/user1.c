@@ -84,7 +84,7 @@ INPUT (int field)
    
     /* Read site header */
     G_site_get_head(fdinp,&site_info);
-
+ 
     if (G_site_describe(fdinp, &dims, &cat, &strs, &dbls) != 0) {
       sprintf(buf, "failed to guess format");
       clean_fatal_error(buf);
@@ -95,7 +95,7 @@ INPUT (int field)
                fprintf (stderr, "Requested attribute field no. %d not found\n", field);
                return(0);
             }
-
+                                
     /* Fix for case where no category given */
     if (cat == -1)
       cat=FCELL_TYPE;
@@ -105,22 +105,22 @@ INPUT (int field)
 
   while (G_site_get(fdinp, site_mgt) != -1) {
     x=site_mgt->east;
-		y=site_mgt->north;
+    y=site_mgt->north;
     z=site_mgt->dim[0];
     w=site_mgt->dbl_att[field-1]; /* first z field is no. 0 */
     k++;
     w=w*wmult;
     z=z*zmult;
     c1 = x - ((struct octdata *) (root->data))->x_orig;
-    c2 = ((struct octdata *) (root->data))->x_orig +
+    c2 = ((struct octdata *) (root->data))->x_orig + 
       ((struct octdata *) (root->data))->n_cols * ew_res - x;
-		c3 = y - ((struct octdata *) (root->data))->y_orig;
-		c4 = ((struct octdata *) (root->data))->y_orig +
+    c3 = y - ((struct octdata *) (root->data))->y_orig;
+    c4 = ((struct octdata *) (root->data))->y_orig + 
       ((struct octdata *) (root->data))->n_rows * ns_res - y;
-		c5 = z - ((struct octdata *) (root->data))->z_orig;
-    c6 = ((struct octdata *) (root->data))->z_orig +
+    c5 = z - ((struct octdata *) (root->data))->z_orig;
+    c6 = ((struct octdata *) (root->data))->z_orig + 
       ((struct octdata *) (root->data))->n_levs * tb_res - z;
-
+    
     if (!((c1 >= 0)&&(c2 >= 0)&&(c3 >= 0)&&(c4 >= 0)&&(c5 >=0)&&(c6 >=0))) {
       if (!OUTRANGE) {
 	fprintf (stderr, "Warning: some points outside of region -- will ignore...\n");
@@ -130,17 +130,17 @@ INPUT (int field)
       if (!(point = point_new (x, y, z, w))) {
 	clean_fatal_error("cannot allocate memory for point");
       }
-
+	  
       a=OT_insert_oct (point, root);
       if(a==0) {
 	NPOINT++;
       }
-
+	  
       if(a<0) {
 	fprintf (stderr,"can't insert %lf,%lf,%lf,%lf a=%d\n",x,y,z,w,a);
 	return -1;
       }
-
+	  
       if (first_time) {
 	first_time = 0;
 	xmin = x;
@@ -195,7 +195,7 @@ INPUT (int field)
   
   ((struct octdata *) (root->data))->x_orig=0;
   ((struct octdata *) (root->data))->y_orig=0;
-  /*((struct octdata *) (root->data))->z_orig=0;*/
+ ((struct octdata *) (root->data))->z_orig=0;/* was commented out */
   
   if (outz != NULL) ddisk+=disk;
   if (gradient != NULL) ddisk+=disk;
@@ -332,9 +332,9 @@ OUTGR ()
       sprintf(buff, "Can't open %s for writing ",outz);
       clean_fatal_error(buff);
     }
-
+    
     /* seek to the beginning */
-    fseek(Tmp_fd_z,0L,0);
+    fseek(Tmp_fd_z,0L,0);  
 
      /* Read data in from temp file */
       read_val = fread(data, sizeof(float), nsizr*nsizc*nsizl, Tmp_fd_z);
@@ -344,25 +344,13 @@ OUTGR ()
 	cnt=0;
     for (iarc = 0; iarc < nsizl; iarc++) {
 
-/*AV*/
-/* BEGIN OF ORIGINAL CODE */
-/*
-			for (y=0; y<nsizr; y++) {
-*/
-/* END OF ORIGINAL CODE */
-
-/*AV*/
-/* BEGIN OF MY CODE */
-			for (y=nsizr-1; y>=0; y--) {
-/* END OF MY COEDE */
-
-
+      for (y=nsizr-1; y>=0; y--) { /* changed by AV */
 	for (x=0; x<nsizc; x++) {
 	  if (maskmap != NULL)
 	    bmask = BM_get(bitmask, x, y);
 	  else
 	    bmask = 1;
-         value = data[cnt];
+         value = data[cnt];	
 	  if (!bmask)
 	    G3d_setNullValue(&value, 1, G3D_FLOAT);
 	  if (G3d_putFloat(cf1, x, y, iarc, value)==0) {
@@ -383,7 +371,7 @@ OUTGR ()
       clean_fatal_error(buff);
     }
   }
-
+  
   /*** Write out the gradient results ***/
   if (gradient != NULL) {
 
@@ -406,19 +394,7 @@ OUTGR ()
         cnt=0;
     for (iarc = 0; iarc < nsizl; iarc++) {
 
-/*AV*/
-/* BEGIN OF ORIGINAL CODE */
-/*
-			for (y=0; y<nsizr; y++) {
-*/
-/* END OF ORIGINAL CODE */
-
-/*AV*/
-/* BEGIN OF MY CODE */
-			for (y=nsizr-1; y>=0; y--) {
-/* END OF MY COEDE */
-
-
+      for (y=nsizr-1; y>=0; y--) { /* changed by AV */
         for (x=0; x<nsizc; x++) {
           if (maskmap != NULL)
             bmask = BM_get(bitmask, x, y);
@@ -468,19 +444,8 @@ OUTGR ()
         cnt=0;
     for (iarc = 0; iarc < nsizl; iarc++) {
 
-/*AV*/
-/* BEGIN OF ORIGINAL CODE */
-/*
-			for (y=0; y<nsizr; y++) {
-*/
-/* END OF ORIGINAL CODE */
-
-/*AV*/
-/* BEGIN OF MY CODE */
-			for (y=nsizr-1; y>=0; y--) {
-/* END OF MY COEDE */
-
-				for (x=0; x<nsizc; x++) {
+      for (y=nsizr-1; y>=0; y--) { /* changed by AV */
+        for (x=0; x<nsizc; x++) {
           if (maskmap != NULL)
             bmask = BM_get(bitmask, x, y);
           else
@@ -529,20 +494,8 @@ OUTGR ()
         cnt=0;
     for (iarc = 0; iarc < nsizl; iarc++) {
 
-/*AV*/
-/* BEGIN OF ORIGINAL CODE */
-/*
-			for (y=0; y<nsizr; y++) {
-*/
-/* END OF ORIGINAL CODE */
-
-/*AV*/
-/* BEGIN OF MY CODE */
-			for (y=nsizr-1; y>=0; y--) {
-/* END OF MY COEDE */
-
-
-				for (x=0; x<nsizc; x++) {
+      for (y=nsizr-1; y>=0; y--) { /* changed by AV */
+        for (x=0; x<nsizc; x++) {
           if (maskmap != NULL)
             bmask = BM_get(bitmask, x, y);
           else
@@ -591,17 +544,8 @@ OUTGR ()
         cnt=0;
     for (iarc = 0; iarc < nsizl; iarc++) {
 
-/* BEGIN OF MY CODE */
-			for (y=nsizr-1; y>=0; y--) {
-/* END OF MY COEDE */
-
-/* BEGIN OF ORIGINAL CODE */
-/*
-			for (y=0; y<nsizr; y++) {
-*/
-/* END OF ORIGINAL CODE */
-
-				for (x=0; x<nsizc; x++) {
+      for (y=nsizr-1; y>=0; y--) { /* changed by AV */
+        for (x=0; x<nsizc; x++) {
           if (maskmap != NULL)
             bmask = BM_get(bitmask, x, y);
           else
@@ -650,20 +594,8 @@ OUTGR ()
         cnt=0;
     for (iarc = 0; iarc < nsizl; iarc++) {
 
-/*AV*/
-/* BEGIN OF ORIGINAL CODE */
-/*
-			for (y=0; y<nsizr; y++) {
-*/
-/* END OF ORIGINAL CODE */
-
-/*AV*/
-/* BEGIN OF MY CODE */
-			for (y=nsizr-1; y>=0; y--) {
-/* END OF MY COEDE */
-
-
-				for (x=0; x<nsizc; x++) {
+      for (y=nsizr-1; y>=0; y--) { /* changed by AV */
+        for (x=0; x<nsizc; x++) {
           if (maskmap != NULL)
             bmask = BM_get(bitmask, x, y);
           else
@@ -712,20 +644,8 @@ OUTGR ()
         cnt=0;
     for (iarc = 0; iarc < nsizl; iarc++) {
 
-/*AV*/
-/* BEGIN OF ORIGINAL CODE */
-/*
-			for (y=0; y<nsizr; y++) {
-*/
-/* END OF ORIGINAL CODE */
-
-/*AV*/
-/* BEGIN OF MY CODE */
-			for (y=nsizr-1; y>=0; y--) {
-/* END OF MY COEDE */
-
-
-				for (x=0; x<nsizc; x++) {
+      for (y=nsizr-1; y>=0; y--) { /* changed by AV */
+        for (x=0; x<nsizc; x++) {
           if (maskmap != NULL)
             bmask = BM_get(bitmask, x, y);
           else
@@ -753,7 +673,7 @@ OUTGR ()
   }
 
   free(data);
-
+  
   return 1;
 }
 

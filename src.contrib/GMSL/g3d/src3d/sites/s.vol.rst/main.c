@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <unistd.h>
 #include "gis.h"
 #include "site.h"
 #include "userglobs.h"
@@ -66,6 +67,7 @@ char   filnam[10];
 
 FILE   *fdinp, *fdredinp, *fdzout, *fddxout, *fddyout, *fddzout,
   *fdxxout, *fdyyout, *fd4, *fxyout;
+FILE *fddev = NULL;
 int    fdcell,fdcout;
 
 /*
@@ -97,6 +99,8 @@ int    fdcell,fdcout;
 including 3D topo parameters, and 2nd RST derivatives
 
 12/07/00 (MN) - added field selection parameter for sites lists
+
+02/03/03 (jh) - added deviation site file to the output
 */
 
 char *input;
@@ -114,6 +118,7 @@ char *mcurv = NULL;
 
 char *maskmap = NULL;
 char *redinp = NULL;
+char *devi = NULL;
 
 int  sdisk,disk;
 FILE *Tmp_fd_z = NULL;
@@ -139,6 +144,7 @@ struct Cell_head cellhd;
 G3D_Region out_region;
 G3D_Region current_region;
 
+
 int main (int argc, char *argv[])
 {
     int             INPUT ();
@@ -156,22 +162,22 @@ int main (int argc, char *argv[])
     int             min1 ();
     int             field, scan_int;
     int             per,npmin;
-    int             ii,i, n_rows, n_cols, n_levs, np;
+    int             ii,i, n_rows, n_cols, n_levs;
     double          x_orig, y_orig, z_orig;
     char            dminchar[10];
-    char *p;
     struct octdata *data;
     struct octfunc *functions;
     struct octtree *tree;
     int dims, strs, dbls = 0;
     RASTER_MAP_TYPE map_type;
-/*DEBUG */ int testout = 1;
+/*DEBUG  int testout = 1; */
+  Site_head inhead, devihead;
 
     struct
     {
        struct Option  *input, *field, *rescalex, *fi, *segmax, *dmin1, *npmin, *wmult,
  	     *outz, *rsm, *maskmap,*zmult,
- 	     *gradient,*aspect1,*aspect2,*ncurv,*gcurv,*mcurv,*cellinp,*cellout;
+ 	     *gradient,*aspect1,*aspect2,*ncurv,*gcurv,*mcurv,*cellinp,*cellout,*devi;
     }  parm;
     struct GModule *module;
 
@@ -180,7 +186,7 @@ int main (int argc, char *argv[])
     module = G_define_module();
     module->description =
       "Interpolates point data to a G3D grid volume using "
-      "regularised splines with tension (RST) algorithm";
+      "regularized spline with tension (RST) algorithm";
 
     if (G_get_set_window (&cellhd) == -1)
       G_fatal_error("G_get_set_window() failed"); 
@@ -243,6 +249,13 @@ int main (int argc, char *argv[])
     parm.rsm->required = NO;
     parm.rsm->description = "Smoothing parameter";
 
+    parm.devi = G_define_option ();
+    parm.devi->key = "devi";
+    parm.devi->type = TYPE_STRING;
+    parm.devi->required = NO;
+    parm.devi->gisprompt = "new,site_lists,sites";
+    parm.devi->description = "Name of the output deviations site file";
+
     parm.maskmap = G_define_option ();
     parm.maskmap->key = "maskmap";
     parm.maskmap->type = TYPE_STRING;
@@ -255,7 +268,7 @@ int main (int argc, char *argv[])
     parm.segmax->type = TYPE_INTEGER;
     parm.segmax->answer = MAXSEGM;
     parm.segmax->required = NO;
-    parm.segmax->description = "Max number of points in segment (<=400)";
+    parm.segmax->description = "Max number of points in segment (<=700)";
 
     parm.dmin1 = G_define_option ();
     parm.dmin1->key = "dmin";
@@ -367,6 +380,7 @@ int main (int argc, char *argv[])
     cellout = parm.cellout->answer;
     maskmap = parm.maskmap->answer;
     outz = parm.outz->answer;
+    devi = parm.devi->answer;
     gradient = parm.gradient->answer;
     aspect1 = parm.aspect1->answer;
     aspect2 = parm.aspect2->answer;
@@ -461,6 +475,30 @@ int main (int argc, char *argv[])
       G_fatal_error("Only found %i dimensions in sites file %s. Need 3 dimensions.", dims, input);
     
     ii=INPUT(field);
+
+  if (devi != NULL)
+  {
+    if ((fddev = G_fopen_sites_new (devi)) == NULL)
+    {
+      sprintf (msg, "Cannot open %s", devi);
+      G_fatal_error (msg);
+    }
+    else
+    {
+      devihead.name = devi;
+      devihead.desc = G_strdup ("deviations at sample points");
+      devihead.desc = (char *) G_malloc (128 * sizeof (char));
+      sprintf (devihead.desc, "deviations of %s [raster] at %s [sites]",
+               cellout, input);
+      devihead.time = inhead.time;
+      devihead.stime = inhead.stime;
+      devihead.labels = NULL;
+      devihead.form = NULL;
+      G_site_put_head (fddev, &devihead);
+	dev = fddev;
+    }
+  }
+
     if (ii>0)
     {
       if ((cellinp != NULL) && (cellout != NULL)) {
@@ -686,6 +724,10 @@ fprintf(stderr,"finished interpolating\n");
 	  fclose(Tmp_fd_xy);
 	  unlink(Tmp_file_xy);
         }
+
+        if (fddev != NULL)
+           fclose (fddev);
+
 	fprintf (stderr, "\n");
 	fprintf (stderr, "The number of points in sites file is %d\n", NPT);
 	fprintf (stderr, "The number of points outside of region %d\n", OUTRANGE);
@@ -699,8 +741,6 @@ fprintf(stderr,"finished interpolating\n");
       clean_fatal_error("input failed!");
     if (fd4 != NULL) fclose (fd4);
     fclose (fdinp);
+
+    return 0;
 }
-
-
-
-
