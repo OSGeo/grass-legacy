@@ -4,8 +4,8 @@
  ****************************************************************************
  *
  * MODULE:       s.in.ascii
- * AUTHOR(S):    Original author unknown - probably CERL
- *               Markus Neteler - neteler@geog.uni-hannover.de (improvements)
+ * AUTHOR(S):    Michael Shapiro - US Army CERL
+ *               Markus Neteler - neteler@geog.uni-hannover.de
  * PURPOSE:      Import ASCII sites lists and their descriptions into
  *               a GRASS sites list file. 
  * COPYRIGHT:    (C) 2000 by the GRASS Development Team
