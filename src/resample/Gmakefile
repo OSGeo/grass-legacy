@@ -1,0 +1,6 @@
+LIST = main.o
+
+$(BIN)/resample: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
+
+$(GISLIB): #
