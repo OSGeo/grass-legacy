@@ -105,11 +105,15 @@ dig__Init_portable_code (portable)
     static int ret = 0;
 	
     if (portable)
+    {
 	if (First)
 	{
 	    First = 0;
 	    ret = Checkout();
 	}
+    }
+    else
+	first_time = 0;
 
     return ret;
 }
@@ -277,6 +281,7 @@ dig__double_convert (in, out, count, head)
     }
 
 
+    /* TODO  change this to avoid FP errors when copying to u.d and out[i]  */
     for (i = 0 ; i < count ; i++)
     {
 	u.d = in[i];
