@@ -332,7 +332,7 @@ others(void)
 		misc.Qt_bar_ += misc.Qt_[i];
 		if(!i || misc.Qt_peak_ < misc.Qt_[i]){
 			misc.Qt_peak_ = misc.Qt_[i];
-			misc.tt_peak_  = i + 1;
+			misc.tt_peak_ = i + 1;
 		}
 	}
 	misc.Qt_bar_ /= input.ntimestep;
@@ -342,7 +342,7 @@ others(void)
 		for(i=0; i<input.ntimestep; i++){
 			if(!i || misc.Qobs_peak_ < misc.Qobs_[i]){
 				misc.Qobs_peak_ = misc.Qobs_[i];
-				misc.tobs_peak_  = i + 1;
+				misc.tobs_peak_ = i + 1;
 			}
 		}
 	}
