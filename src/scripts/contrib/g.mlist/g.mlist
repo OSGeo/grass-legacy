@@ -3,14 +3,6 @@
 #
 # $Id$
 #
-# $Log$
-# Revision 1.2  2000-11-01 17:12:03  cho
-# updated copyleft
-#
-# Revision 1.1  2000/08/21 20:27:15  cho
-# added g.mlist
-#
-#
 #	Copyright (C) 2000 by the GRASS Development Team
 #	Author: Huidae Cho <hdcho@geni.knu.ac.kr>
 #		Hydro Laboratory, Kyungpook National University
@@ -18,6 +10,17 @@
 #
 #	This program is free software under the GPL (>=v2)
 #	Read the file COPYING coming with GRASS for details.
+#
+#
+# $Log$
+# Revision 1.3  2000-11-01 17:14:25  cho
+# nothing :-)
+#
+# Revision 1.2  2000/11/01 17:12:03  cho
+# updated copyleft
+#
+# Revision 1.1  2000/08/21 20:27:15  cho
+# added g.mlist
 #
 
 type=rast
