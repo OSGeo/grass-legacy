@@ -138,4 +138,19 @@ Database modules
 
 ------------------------------------------------------------------
 Note: In case of parameter changes the related HTML page has to be
-updated in html/html!
+updated in html/html (donkey's work, should be done automated)!
+
+------------------------------------------------------------------
+
+General proposal for import modules:
+- flag -q quiet (default is verbose)
+- flag -o overwrite (default is exit if out exists)
+- support of new envvar: GRASS_AUTO_EXTEND_LOCATION (function is already
+  present in r.in.gdal -e, this should be moved to libgis and added to
+  all import modules)
+- read from stdin with 'in=-' (for all import modules)
+- G_basename() function, present in v.in.shape, this should be moved to
+  libgis
+- write history file (copy at least command line with parameter with 
+  G_recreate_command() )
+- add 'timestamp' parameter as already present in s.in.dbf
