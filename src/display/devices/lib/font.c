@@ -76,18 +76,20 @@ get_char_vects(achar, n, X, Y)
 	unsigned char **Y ;
 {
 	unsigned char *work_point ;
+	int i;
 
 	if (font == NULL)
 	{
 		*n = 0 ;
 		return ;
 	}
-	if (achar < 041 || achar > 0176)
+	i = (int) achar - 040;   /* translate achar to char# in font index */
+	if (i < 1 || i >= nchars)
 	{
 		*n = 0 ;
 		return ;
 	}
-	work_point = font + index[achar - 040] ;
+	work_point = font + index[i];
 
 	/*
 	*n = *((int *) work_point) ;
