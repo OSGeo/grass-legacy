@@ -1,16 +1,18 @@
 
 /*
 **  Written by Dave Gerdes  Summer 1990
+**  Enhanced by Bill Brown, 1992        
 **  US Army Construction Engineering Research Lab
 */
 
 
-#define USAGE	"cell_file"
+/*
+** Copyright USA CERL 1992. All rights reserved.
+*/
+
+
 
 #define MAIN
-/*
-#include "options.h"
-*/
 #include "gis.h"
 #include "externs.h"
 
@@ -18,12 +20,13 @@ main(argc, argv)
 	int argc;
 	char **argv;
 {
-    struct Flag *swrit;
-    struct Option *elev, *colr, *vect, *aut;
+    struct Flag *swrit, *sitez;
+    struct Option *elev, *colr, *vect, *site, *aut, *view;
 
     char *name1 = NULL;
     char *name2 = NULL;
     char *name3 = NULL;
+    char *vname = NULL;
     int i;
 
     G_gisinit (argv[0]);
@@ -52,6 +55,22 @@ main(argc, argv)
     vect->gisprompt              = "old,dig,Vector";
     vect->description            = "Vector overlay file";
 
+    view = G_define_option();
+    view->key                    = "3dview";
+    view->type                   = TYPE_STRING;
+    view->required               = NO;
+    view->multiple               = NO;
+    view->gisprompt              = "old,3d.view,3dview";
+    view->description            = "3D viewing parameters";
+
+    site = G_define_option();
+    site->key                    = "sites";
+    site->type                   = TYPE_STRING;
+    site->required               = NO;
+    site->multiple               = NO;
+    site->gisprompt              = "old,site_lists,Sites";
+    site->description            = "Sites overlay file";
+
     aut = G_define_option();
     aut->key                    = "script";
     aut->type                   = TYPE_STRING;
@@ -63,6 +82,10 @@ main(argc, argv)
     swrit->key = 'w';
     swrit->description = "Enable writing to script files";
 
+    sitez = G_define_flag ();
+    sitez->key = 'z';
+    sitez->description = "Use site category as Z value";
+
     if (G_parser (argc, argv))
 	exit (-1);
 
@@ -70,6 +93,8 @@ main(argc, argv)
     AUTO_FILE = aut->answer;  /* either file name or NULL */
 
     Write_script = swrit->answer;
+
+    Site_cat_isZ = sitez->answer;
 
     for (i = 0 ; colr->answers[i] ; i++)
 	;
@@ -81,9 +106,25 @@ main(argc, argv)
     {
 	name2 = colr->answers[1];
 	name3 = colr->answers[2];
+	strcpy(Cellname[1], name2);
+	strcpy(Cellname[2], name3);
     }
     name1 = colr->answers[0];
 
+    strcpy(Cellname[0], name1);
+    strcpy(Elevname, elev->answer);
 
-	Dcell(elev->answer, name1, name2, name3, vect->answer);
+    if(view->answer){
+	View_file = 1;
+	strcpy(Viewname, view->answer);
+    }
+    else
+	View_file = 0;
+
+
+    Dcell(elev->answer, name1, name2, name3, 
+			vect->answer, site->answer, view->answer);
 }
+
+
+
