@@ -17,6 +17,7 @@ dump_report (report_file, filter)
 	return 0;
     }
 
+    print_prompt = 1;
     while (1)
     {
 	if (print_prompt)
