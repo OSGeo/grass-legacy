@@ -1,0 +1,96 @@
+.TH i.mod.camera
+.nh
+.SH NAME
+\fIi.mod.camera\fR \- An imagery function that creates or modifies
+entries in a camera reference file.
+.br
+.I (GRASS Image Processing Program)
+.SH SYNOPSIS
+\fBi.mod.camera\fR
+.br
+\fBi.mod.camera help\fR
+.SH DESCRIPTION
+.I i.mod.camera
+creates or modifies entries in a camera reference file.
+In the imagery programs \fIi.ortho.reference\fR, \fIi.ortho.control\fR,
+and \fIi.ortho.rectify\fR, a camera reference file is required
+for computation of reference points and ortho-rectification parameters.
+The program \fIi.camera\fR, which selects a camera reference file to be
+used with an imagery group, also requires an existing camera reference file.
+
+This program runs interactively.
+It first prompts the user for the name of 
+the camera reference file to be created or modified.
+
+The following menu is then displayed:
+
+.ne 19
+.if t \fB
+.ce 1
+Please provide the following information
+
+.nf
+	Camera Name:                               \fIcamera name\fP______
+	Camera Identification:                     \fIidentification\fP___
+	Calibrated Focal Length mm.:                _________________
+	Point of Symmetry: X-coordinate mm.:        _________________
+	Point of Symmetry: Y-coordinate mm.:        _________________
+	Maximum number of fiducial or reseau marks: _________________
+.fi
+
+.ce 2
+AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+(OR <Ctrl-C> TO CANCEL)
+\fR
+
+The user is then asked to enter the X and Y photo coordinates
+of each fiducial as follows:
+
+.ne 19
+.if t \fB
+.ce 1
+Please provide the following information
+
+.nf
+	Fid#	Fid ID		  Xf          Yf
+
+
+	1__	_____		0.0___	0.0___
+	2__	_____		0.0___	0.0___
+	3__	_____		0.0___	0.0___				
+	4__	_____		0.0___	0.0___
+	5__	_____		0.0___	0.0___				
+	6__	_____		0.0___	0.0___
+	7__	_____		0.0___	0.0___
+	8__	_____		0.0___	0.0___				
+	9__	_____		0.0___	0.0___
+	10_	_____		0.0___	0.0___				
+
+		     next:  end__
+.fi
+
+.ce 2
+AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+(OR <Ctrl-C> TO CANCEL)
+\fR
+The input display is repeated until the maximum number of fiducials specified
+by the user is reached.
+.SH FILES
+.nf
+Camera reference files are stored under the directory
+.fi
+$GISDBASE/$LOCATION_NAME/$MAPSET/camera.
+(This is the same as $LOCATION/camera, the /camera directory under the user's
+current mapset.)
+.SH SEE ALSO
+.I i.camera,
+.I i.ortho.control,
+.I i.ortho.rectify,
+.I i.ortho.reference
+.SH AUTHOR
+.nf
+Mike Baba
+DBA Systems, Inc.
+10560 Arrowhead Drive
+Fairfax, Virginia 22030
+.fi
