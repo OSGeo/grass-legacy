@@ -28,7 +28,7 @@ while(!ok)
 
 ok = 1;
 V_clear() ;
-V_line( 0, "Please set the target window");
+V_line( 0, "Please set the target region");
 V_line( 2, "           ============================= MINIMAL WINDOW ========") ;
 V_line( 3, "           |                  North:                           |") ;
 V_line( 4, "           |                                                   |") ;
@@ -43,10 +43,10 @@ V_line(12, "           |                                                   |") ;
 V_line(13, "           |                  South:                           |") ;
 V_line(14, "           =====================================================") ;
 
-V_line(16, "                   Minimal   GRID RESOLUTION   Window           ") ;
+V_line(16, "                   Minimal   GRID RESOLUTION   Region           ") ;
 V_line(17, "                            --- East-West ---                   ") ;
 V_line(18, "                            -- North-South --                   ") ;
-V_line (20, "(Minimal window is just large enough to hold entire image)");
+V_line (20, "(Minimal region is just large enough to hold entire image)");
 
     /* V_ques ( variable, type, row, col, length) ; */
     V_ques ( &window->north ,  'd',  6, 36, 11) ;
@@ -137,26 +137,26 @@ V_line (20, "(Minimal window is just large enough to hold entire image)");
     ok = 1;
     if (window->north > minimal.north)
     {
-	printf ("warning - north falls outside the minimal window\n");
+	printf ("warning - north falls outside the minimal region\n");
 	ok = 0;
     }
     if (window->south < minimal.south)
     {
-	printf ("warning - south falls outside the minimal window\n");
+	printf ("warning - south falls outside the minimal region\n");
 	ok = 0;
     }
     if (window->east > minimal.east)
     {
-	printf ("warning - east falls outside the minimal window\n");
+	printf ("warning - east falls outside the minimal region\n");
 	ok = 0;
     }
     if (window->west < minimal.west)
     {
-	printf ("warning - west falls outside the minimal window\n");
+	printf ("warning - west falls outside the minimal region\n");
 	ok = 0;
     }
 
-    ok = G_yes("\nDo you accept this window? ", ok);
+    ok = G_yes("\nDo you accept this region? ", ok);
 }
 }
 
