@@ -98,7 +98,7 @@ mk_cover_tbl()
     G_clear_screen();
     i = 0;
     while (intro_screen[i])
-	fprintf (stdout,"%s\n", intro_screen[i++]);
+	fprintf (stderr,"%s\n", intro_screen[i++]);
    if(complete[3] == 0)
        hit_return();
 
@@ -135,7 +135,7 @@ mk_cover_tbl()
 
 	    if (cat_tbl[i].cat != check_digit)
 	    {
-		fprintf (stdout,"\nWARNING: Expecting category <%d> but found category <%d>\n", 
+		fprintf (stderr,"\nWARNING: Expecting category <%d> but found category <%d>\n", 
 		cat_tbl[i].cat, check_digit);
 		strcpy(buf, "Categories found in cover layer do not match those\n");
 		strcat(buf, "in the parameters saved in the project database.\n");
@@ -155,7 +155,7 @@ mk_cover_tbl()
    
 	    if (err != 8)
 	    {
-		fprintf (stdout,"\nWARNING: Expecting 8 data items but found %d\n", err);
+		fprintf (stderr,"\nWARNING: Expecting 8 data items but found %d\n", err);
 		strcpy(buf, "Problem with previously stored parameters in project\n");
 		strcat(buf, "database. You can continue, but previously saved \n");
 		strcat(buf, "parameters will be lost.\n");
@@ -322,7 +322,7 @@ LOOP:
                 "value for <%s> <PIT %.2f> should not be greater than 99",
                 label[i], cat_tbl[i].param[1]);
                 croak(0, buf);
-                fprintf (stdout,"\nsetting to 99\n");
+                fprintf (stderr,"\nsetting to 99\n");
                 cat_tbl[i].param[1] = 99;
             }
             fprintf(data2_fp, " PIT:%3.0f.", cat_tbl[i].param[1]);
@@ -336,7 +336,7 @@ LOOP:
             "value for <%s> <PER %.0f> should not be greater than 100",
             label[i], cat_tbl[i].param[2]);
             croak(0, buf);
-            fprintf (stdout,"\nsetting to 100\n");
+            fprintf (stderr,"\nsetting to 100\n");
             cat_tbl[i].param[2] = 100;
         }
             fprintf(data2_fp, " PER:%3.0f", cat_tbl[i].param[2]);
@@ -350,7 +350,7 @@ LOOP:
             "value for <%s> <RC %.2f> should not be greater than 1",
             label[i], cat_tbl[i].param[3]);
             croak(0, buf);
-            fprintf (stdout,"\nsetting to .99\n");
+            fprintf (stderr,"\nsetting to .99\n");
             cat_tbl[i].param[3] = .99;
         }
         if (cat_tbl[i].param[4] >= 1000)
@@ -359,7 +359,7 @@ LOOP:
             "value for <%s> <HU %.2f> should not be greater than 999",
             label[i], cat_tbl[i].param[4]);
             croak(0, buf);
-            fprintf (stdout,"\nsetting to 999\n");
+            fprintf (stderr,"\nsetting to 999\n");
             cat_tbl[i].param[4] = 999;
         }
 
@@ -374,7 +374,7 @@ LOOP:
             "value for <%s> <N %.2f> should not be greater than 1",
             label[i], cat_tbl[i].param[5]);
             croak(0, buf);
-            fprintf (stdout,"\nsetting to .99\n");
+            fprintf (stderr,"\nsetting to .99\n");
             cat_tbl[i].param[5] = .99;
         }
 	fprintf(data2_fp, " N:%.3f", cat_tbl[i].param[5]);
@@ -387,7 +387,7 @@ LOOP:
             "value for <%s> <C %.2f> should not be greater than 10",
             label[i], cat_tbl[i].param[6]);
             croak(0, buf);
-            fprintf (stdout,"\nsetting to 9.9\n");
+            fprintf (stderr,"\nsetting to 9.9\n");
             cat_tbl[i].param[6] = 9.9;
         }
     
@@ -422,7 +422,7 @@ LOOP:
     }
     else
     {
-        fprintf (stdout,"\n\nANSWERS inputp data extraction complete.\n\n");
+        fprintf (stderr,"\n\nANSWERS inputp data extraction complete.\n\n");
         complete[3] = 1;
     }
 
@@ -438,7 +438,7 @@ LOOP:
 
 /* see if the user wants a copy, if so make one */
 
-    fprintf (stdout,"\nParameters now stored in the project database.\n");
+    fprintf (stderr,"\nParameters now stored in the project database.\n");
     if(G_yes("Would you like to review, copy or print this information?",0))
         user_file(tmpname);
     return (0);

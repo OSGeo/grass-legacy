@@ -99,7 +99,7 @@ mk_soil_tbl()
     G_clear_screen();
     i = 0;
     while (intro_screen[i])
-	fprintf (stdout,"%s\n", intro_screen[i++]);
+	fprintf (stderr,"%s\n", intro_screen[i++]);
     if(complete[2] == 0)
         hit_return();
 
@@ -138,7 +138,7 @@ mk_soil_tbl()
 
 	    if (cat_tbl[i].cat != check_digit)
 	    {
-		fprintf (stdout,"\nERROR: Expecting category %d but found category %d\n", 
+		fprintf (stderr,"\nERROR: Expecting category %d but found category %d\n", 
 		    cat_tbl[i].cat, check_digit);
 		strcpy(buf, "Categories found in soil layer do not match those\n");
 		strcat(buf, "in the parameters saved in the project database.\n");
@@ -158,7 +158,7 @@ mk_soil_tbl()
    
 	    if (err != 9)
 	    {
-		fprintf (stdout,"\nERROR: Expecting 9 data items but found %d\n", err);
+		fprintf (stderr,"\nERROR: Expecting 9 data items but found %d\n", err);
 		strcpy(buf, "Problem reading previously stored parameters in project\n");
 		strcat(buf, "database. You can continue, but previously saved \n");
 		strcat(buf, "parameters will be lost.\n");
@@ -383,7 +383,7 @@ LOOP:
 
 /* see if the user wants a copy, if so make one */
 
-        fprintf (stdout,"\n");
+        fprintf (stderr,"\n");
         if(G_yes("Would you like to review, copy or print this information?",0))
             user_file(tmpname);
     }
@@ -450,7 +450,7 @@ LOOP:
     }
     else
     {
-        fprintf (stdout,"\n\nANSWERS input data extraction complete.\n\n");
+        fprintf (stderr,"\n\nANSWERS input data extraction complete.\n\n");
         complete[2] = 1;
     }
 
@@ -466,7 +466,7 @@ LOOP:
 
 /* see if the user wants a copy, if so make one */
 
-    fprintf (stdout,"\nParameters now stored in the project database.\n");
+    fprintf (stderr,"\nParameters now stored in the project database.\n");
     if(G_yes("Would you like to review, copy or print this information?",0))
         user_file(tmpname);
     return (0);
