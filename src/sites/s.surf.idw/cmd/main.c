@@ -28,6 +28,8 @@ static struct Cell_head window;
 static struct Flag *noindex;
 void calculate_distances(int, int, double, double, int*);
 void calculate_distances_noindex(double, double);
+/* read_sites.c */
+void read_sites(char *, int);
 
 int main(int argc, char *argv[])
 {
@@ -43,7 +45,6 @@ int main(int argc, char *argv[])
     double dist;
     double sum1, sum2, interp_value;
     int n, field;
-    void read_sites();
     struct
     {
         struct Option *input, *npoints, *output, *dfield;
@@ -404,8 +405,6 @@ void newpoint ( double z,double east,double north)
         noidxpoints[npoints].z     = z;
   }
         npoints++;
-        if(!(npoints%1000)) 
-            fprintf(stderr,"%10ld sites\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", npoints);
     }
 }
 

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "gis.h"
 #include "site.h"
 #include "proto.h"
@@ -16,6 +17,7 @@ void read_sites ( char *name, int field)
     FILE *fd;
     int n, c, i, d;
     Site *site;
+    extern long npoints;
   
     field -= 1;  /* field number -> array index */
   
@@ -51,7 +53,9 @@ void read_sites ( char *name, int field)
     while (G_site_get(fd, site) >= 0)
     {
 	newpoint(site->dbl_att[field],site->east,site->north);
+        if(!(npoints%1000)) 
+            fprintf(stderr,"%10ld sites\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", npoints);
     }
     fclose (fd);
-    fprintf (stderr, "\n");
+    fprintf (stderr, "%10ld sites loaded\n", npoints);
 }
