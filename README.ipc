@@ -118,9 +118,6 @@ then
 	exit
 fi
 
-########## END OF MANUAL EXECUTION
-fi
-
 compile=1
 dmon=0
 sources=""
@@ -163,6 +160,10 @@ then
 	echo "Using current sources"
 	echo
 fi
+
+########## END OF MANUAL EXECUTION
+fi
+
 
 changed=0
 if [ "$cmd" = "new" ]
