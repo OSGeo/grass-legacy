@@ -13,14 +13,14 @@ Raster_char (int num, int nrows, unsigned char *array, int withzeros, int color_
 	if(! array_alloc)
 	{
 		array_alloc = num ;
-		int_array = (int *)malloc(array_alloc * sizeof(int)) ;
+		int_array = (int *)malloc((size_t) (array_alloc * sizeof(int))) ;
 	}
 	else
 	{
 		if (num > array_alloc)
 		{
 			array_alloc = num ;
-			int_array = (int *)realloc((char *)int_array, num * sizeof(int)) ;
+			int_array = (int *)realloc((void *)int_array, (size_t)(num * sizeof(int))) ;
 		}
 	}
 
