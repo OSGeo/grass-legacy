@@ -1,26 +1,25 @@
-.TH Dvect 2D D-language
+.TH d.vect.cats 2D
 .SH NAME
-Dvect \- tool for viewing DLG map
+d.vect.cats \- tool for viewing vector maps with labels
 .br
-.I (D Language Tool)
+.I (GRASS vector program)
 .SH SYNOPSIS
-.B Dvect
-mapname
-[color]
+.B d.vect.cats
+ [-f] map=name [color=name] cat=value[,value,...]
 .br
-.B Dvect
-[option=value] ...
 .SH DESCRIPTION
-.I Dvect 
-displays the vect map (Digital Line Graph - Level 3, DLG-3, in binary form),
-.I mapname
+.I d.vect.cats 
+displays a vector map (vector binary file),
+.I mapname 
 in the current graphics window.  This window must be a 
 .I map
 window, or an unclaimed window.  Options are
 .ns
 .TP 
-.RI name= mapname
+.RI map= mapname
 Name of vector map to be displayed.
+.RI cat= value
+category value to be displayed
 .br
 .ns
 .TP 
@@ -33,12 +32,4 @@ The window type is set to
 if not already.
 .SH "AUTHOR"
 James Westervelt, U.S. Army Construction Engineering Research Laboratory
-.SH BUGS
-This tool cries for massive upgrade including:
-.RS
-1) Allowing different colors and textures for lines.
-.br
-2) Allowing different fill patterns and colors for areas.
-.br
-3) An associated program for identifying these options.
 .RE
