@@ -1,0 +1,23 @@
+Mlist_main	list_main.c	/^main(argc,argv)$/
+Mmain	main.c	/^main(argc,argv)$/
+azimuth_to_angle	main.c	/^double azimuth_to_angle(string)$/
+calculate_initial_angles	calc_angles.c	/^calculate_initial_angles(lower, higher, x,y)$/
+check	pts_elim.c	/^POINT *check(CHECK_PT,BLOCK_PT,head,dtheta,seg_in_/
+check_for_closure	calc_angles.c	/^int check_for_closure(x, distance)$/
+decide_color_range	main.c	/^double decide_color_range(angle)$/
+delete	delete.c	/^POINT *delete(PT_TO_DELETE,head)$/
+find_ABabcdisc	make_list.c	/^find_ABabcdisc(A,B,a,b,c,disc,seg_in_p,dist,ii,jj)/
+find_angles	make_list.c	/^find_angles(low,high,disc,a,b)$/
+find_orientation	make_list.c	/^double find_orientation(x,y)$/
+iterate_trajectory	calc_angles.c	/^double iterate_trajectory(delta_time, change, thet/
+make_list	make_list.c	/^POINT *make_list(head,y,x,seg_in_p)$/
+make_point	make_point.c	/^POINT *make_point(distance, orientation, y, x,$/
+mark_impact_points	mark_pts.c	/^mark_impact_points(head,seg_out_p,row_firept,col_f/
+numerically_integrate	calc_angles.c	/^numerically_integrate(distance, height, x, y, thet/
+obscured	pts_elim.c	/^obscured(bp_ltraj,bp_htraj,cp_ltraj,cp_htraj)$/
+read_file	main.c	/^static read_file(file, options)$/
+search_angles	pts_elim.c	/^search_angles(head, BLOCK_PT, low, high, neighbor_/
+show_ammo	list_main.c	/^show_ammo(ammunition_file)$/
+show_weapons	list_main.c	/^show_weapons(weapons_file)$/
+sort_list	sort_list.c	/^POINT *sort_list(total,head)$/
+unhittable_pts_elimination	pts_elim.c	/^POINT *unhittable_pts_elimination(head, seg_in)$/
