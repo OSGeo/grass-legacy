@@ -1,7 +1,7 @@
 #!/bin/sh
 # written by Markus Neteler 18. August 1998 / 20. Jan. 1999
-#            neteler@geog.uni-hannover.de
-# mosaic code from Felix Gershunov (Felix@spsl.nsc.ru)
+#            neteler geog.uni-hannover.de
+# mosaic code from Felix Gershunov (Felix spsl.nsc.ru)
 # updated for GRASS 5.7 by Michael Barton 2004/04/05
 #
 # TODO: - implement g.findfile for 3 and 4 maps (currently only current mapset supported)
@@ -15,7 +15,7 @@
 
 
 #% Module
-#% description: i.image.mosaic - mosaics up to 4 images and extends colormap; creates map *.mosaic
+#% description: Mosaics up to 4 images and extends colormap; creates map *.mosaic
 #% End
 #% option
 #% key: image1

@@ -1,11 +1,10 @@
 #!/bin/sh
 #
-#
 ############################################################################
 #
-# MODULE:		d.split for GRASS 5.7, based on split.sh for GRASS 5
+# MODULE:	d.split for GRASS 5.7, based on split.sh for GRASS 5
 # AUTHOR(S):	split.sh by the GRASS team 1989. 
-#			Updated to GRASS 5.7 by Michael Barton 2004/04/06
+#		Updated to GRASS 5.7 by Michael Barton 2004/04/06
 #              
 # PURPOSE:	Divides active display into 2 frames and draws maps 
 #			(or runs GRASS commands) in each frame
@@ -19,7 +18,7 @@
 
 
 #%Module
-#%  description: d.split - Divides active display into 2 frames & displays maps/executes commands in each frame.
+#%  description: Divides active display into 2 frames & displays maps/executes commands in each frame.
 #%End
 #%option
 #% key: map1

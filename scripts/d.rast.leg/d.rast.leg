@@ -1,5 +1,6 @@
 #!/bin/sh
 
+##############################################################################
 #	d.rast.leg	(GRASS Shell Script)
 #
 # displays a raster map and its legend on a graphics window. 
@@ -35,7 +36,7 @@
 ##############################################################################
 
 #%Module
-#%  description: d.rast.leg - displays a raster map and its legend on a graphics window
+#%  description: Displays a raster map and its legend on a graphics window
 #%End
 #%flag
 #%  key: n
