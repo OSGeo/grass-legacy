@@ -5,7 +5,7 @@
 # needs doxygen  (http://www.doxygen.org)
 # needs Graphviz (http://www.research.att.com/sw/tools/graphviz/)
 #
-# To build the GRASS 5.7 programmer's documentation, run
+# To build the GRASS programmer's documentation, run
 #   make htmldocs
 # here. This takes quite some time. The result is in doxygenhtml/index.html
 # which refers to further document repositories in
@@ -33,13 +33,13 @@
 # The PROJECT_NAME tag is a single word (or a sequence of words surrounded 
 # by quotes) that should identify the project. 
 
-PROJECT_NAME           = grass57
+PROJECT_NAME           = GRASS
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. 
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = 
+PROJECT_NUMBER         = 6
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
