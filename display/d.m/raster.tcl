@@ -32,6 +32,7 @@ proc DmRaster::create { tree parent } {
 
     set opt($count,map) "" 
     set opt($count,overlay) 0 
+    set opt($count,legend) 0 
 
     incr count
     return $node
@@ -84,7 +85,7 @@ proc DmRaster::save { tree depth node } {
     set id [Dm::node_id $node]
 
 
-    foreach key { _check map overlay } {
+    foreach key { _check map overlay legend } {
         Dm::rc_write $depth "$key $opt($id,$key)"
     } 
 }
