@@ -1,0 +1,48 @@
+.\" %W% %G%
+.TH a.b.vect 1
+.SH NAME
+a.b.vect \- Converts ascii vector 
+.CT files maps
+to binary vector 
+.CT files maps
+.br
+.I (Map Development Tool)
+.SH SYNOPSIS
+\fBa.b.vect\fR 
+.XT "\fIascii_filename binary_filename\fR"
+.br
+.SH DESCRIPTION
+The GRASS program \fIa.b.vect\fR
+converts ascii vector 
+.XT "(digit)" 
+.CT files maps
+to binary vector 
+.XT "(digit)" 
+.CT "files." "maps."
+Support files must be built using the GRASS tool
+.I support.vect[1]
+before using the converted vector 
+.CT file  map
+with the GRASS \fIdigit\fR program.
+Alternately, the GRASS program \fIb.a.vect[1]\fR
+converts binary vector 
+.CT files maps
+created by a digitizing session into readable
+ascii vector 
+.CT "files." "maps."
+.sp
+Both
+.I a.b.vect 
+and
+.I b.a.vect[1]
+are 
+.CT "non-interactive" interactive
+programs used for importing and exporting vector 
+.CT files maps
+into and from GRASS.
+.SH SEE ALSO
+\fIb.a.vect[1], digit[1], import.to.vect[1], support.vect[1]\fR
+.SH AUTHOR
+Michael Higgins, U.S. Army Construction Engineering Research Laboratory
+.br
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
