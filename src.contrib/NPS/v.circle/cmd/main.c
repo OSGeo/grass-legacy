@@ -479,6 +479,8 @@ Area = %f square meters\n",pow((area/(double)M_PI),(double)0.5),area );
    }
  
   /* cycle again through the sites list */
+  count = 0;
+    
   for (i1=0;i1<nsites;i1++)
    {
       sprintf(catbuffer, "%g", bsite[i1].z); /* use sites z-value as cat */
