@@ -1,3 +1,4 @@
+# Updated 15-10-2004 by Michael Barton, Arizona State University
 # menu.tcl
 # produces menu bar for d.m
 
@@ -105,8 +106,8 @@
         	    {command "Manage 3D region" {} "" {} -command {execute g3.setregion }}
         	}}
         	{cascad "Manage GRASS working environment" {} "" 1 {			
-        	    {command "Modify access by other users to current mapset" {} "" {} -command  {execute g.access }}
-        	    {command "Modify mapset search path" {} "" {} -command {execute g.mapsets }}
+        	    {command "Modify access by other users to current mapset" {} "" {} -command  {term g.access }}
+        	    {command "Modify mapset search path" {} "" {} -command {exec g.mapsets.tcl}}
         	    {command "Change current working session to new mapset, location, or GISDBASE" {} "" {} -command {execute g.mapset }}
                 {command "Show current GRASS environment settings" {} "g.gisenv" {} -command {execute g.gisenv }}
                 {command "Show current GRASS version" {} "g.version -c" {} -command {run g.version -c }}
@@ -251,8 +252,7 @@
 			{separator}
 			{cascad "Hydrologic modeling" {} "" 1 {			
 			    {command "Depressionless elevation map and flowline map" {} "" {} -command {execute  r.fill.dir }}
-			    {command "Flow accumulation for massive grids (floating-point version)" {} "" {} -command {execute  r.terraflow }}
-			    {command "Flow accumulation for massive grids (integer version)" {} "" {} -command {execute  r.terraflow.short }}
+			    {command "Flow accumulation for massive grids" {} "" {} -command {exec r.terraflow &}}
 			    {command "Topographic index map" {} "" {} -command {execute  r.topidx }}
 			    {command "TOPMODEL simulation" {} "" {} -command {execute  r.topmodel }}
 			    {command "Watershed subbasins" {} "" {} -command {execute  r.basins.fill }}
@@ -272,7 +272,7 @@
 			}}
 			{separator}
 			{cascad "Change category values and labels" {} "" 1 {			
-			    {command "Edit category values of individual cells for displayed raster map" {} "" {} -command {execute  d.rast.edit }}
+			    {command "Edit category values of individual cells for displayed raster map" {} "" {} -command {term  d.rast.edit }}
 			    {separator}
 			    {command "Reclassify categories for areas of specified sizes" {} "" {} -command {execute  r.reclass.area }}
 			    {command "Reclassify categories using rules" {} "" {} -command {execute  $env(GISBASE)/etc/dm/script/r.reclass.rules }}
@@ -305,7 +305,7 @@
 						{command "Interpolation from raster contours" {} "" {} -command { execute r.surf.contour }}
 			            {separator}
 						{command "Inverse distance weighted interpolation from vector points" {} "" {} -command { execute v.surf.idw }}
-						{command "Regularized spline tension interpolation from vector points or contours" {} "" {} -command { exec v.surf.rst &}}
+						{command "Regularized spline tension interpolation from vector points or contours" {} "" {} -command { spawn v.surf.rst}}
 			            {separator}
 			            {command "Fill NULL cells by interpolation using regularized spline tension" {} "" {} -command {execute  r.fillnulls }}
 			}}
@@ -356,7 +356,7 @@
 			{separator}
 			{command "Query by attributes" {} "" {} -command {execute  v.extract }}
 			{command "Query by map features" {} "" {} -command {execute  v.select }}
-			{command "Query with mouse" {} "" {} -command {spawn d.what.vect -xf }}
+			{command "Query with mouse (form mode, editing enabled)" {} "" {} -command {spawn d.what.vect -ef}}
 			{separator}
 			{command "Buffer features" {} "" {} -command {execute  v.buffer }}
 			{command "Locate nearest features to points or centroids" {} "" {} -command {execute  v.distance }}
