@@ -1,0 +1,5 @@
+Note that an assumption has been made here that all information
+will be in METERS.  Should the capabilities (and data) change
+within GRASS, changes to the routine run_Bnoise.c should be
+made as per the comments within the code.
+
