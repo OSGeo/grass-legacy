@@ -16,23 +16,24 @@ settings are saved in <em>$LOCATION/vector_map/dbln</em>.
 through ODBC:</em><br>
 <b>db.copy from_driver=</b><em>dbf</em> <b>from_database=</b><em>./</em> 
 <b>from_table=</b><em>markveggy</em> <b>to_driver=</b><em>pg</em> 
-<b>to_database=</b><em>"host=pgserver,dbname=grass51test,user=neteler"</em>  
+<b>to_database=</b><em>"host=pgserver,dbname=grass51test"</em>  
 <b>to_table=</b><em>markveggy</em>
 
 <P>
 <P>
 <b>PG -> DBF</a><P>
 
-<tt>db.copy from_driver=pg  from_database="host=pgserver.itc.it,dbname=testdb,user=postgres" 
+<tt>db.copy from_driver=pg  from_database="host=pgserver.itc.it,dbname=testdb" 
    from_table=origtable to_driver=dbf to_database=./ to_table=origtable</tt>
    
 <h2>SEE ALSO</h2>
 
-<em><a HREF="http://grass.itc.it/grass51/tutorial/attrib_storage.html">GRASS 5.7
+<em><a HREF="http://grass.itc.it/grass57/tutorial/attrib_storage.html">GRASS 5.7
 tutorial pages</a></em><br>
-<em><a HREF="v.db.connect.html">v.db.connect</a></em><br>
-<em><a HREF="db.drivers.html">db.drivers</a></em><br>
-<em><a HREF="v.clean.html">v.clean</a></em>
+<em><a HREF="v.db.connect.html">v.db.connect</a>,
+<a HREF="db.drivers.html">db.drivers</a>,
+<a HREF="db.login.html">db.login</a>,
+<a HREF="v.clean.html">v.clean</a></em>
 
 <h2>AUTHOR</h2>
 
