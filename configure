@@ -3573,6 +3573,11 @@ else
 ARCH="${host}"
 fi
 
+# Add VERSION and GISBASE
+VERSION=`cat ${SRCDIR}/src/CMD/VERSION | head -1`
+NAME_VER=`echo -n ${VERSION} | sed 's/\..*//'`
+GISBASE="${exec_prefix}/grass${NAME_VER}"
+
 
 # Enable PostgreSQL always ...
 USE_POSTGRES=
@@ -4461,6 +4466,8 @@ s%@USE_TERMIO@%$USE_TERMIO%g
 s%@SRCDIR@%$SRCDIR%g
 s%@ARCH@%$ARCH%g
 s%@GISBASE@%$GISBASE%g
+s%@VERSION@%$VERSION%g  
+s%@NAME_VER@%$NAME_VER%g
 s%@PQINCPATH@%$PQINCPATH%g
 s%@PQLIBPATH@%$PQLIBPATH%g
 s%@PQLIB@%$PQLIB%g
