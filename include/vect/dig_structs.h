@@ -317,6 +317,8 @@ struct Map_info
     struct dblinks *dblnk;      /* info about tables */ 
     
     struct Plus_head plus;      /* topo file *head; */
+
+    int graph_line_type;        /* line type used to build the graph */
     dglGraph_s   graph;       	/* graph structure */
     dglSPCache_s spCache;       /* Shortest path cache */ 
     double *edge_fcosts;        /* costs used for graph, (dglGetEdge() is not supported for _DGL_V1) */
@@ -491,5 +493,7 @@ typedef struct {
     struct Node *root;
 } SPATIAL_INDEX;
 
+typedef dglGraph_s GRAPH;     	/* graph structure */
+    
 #endif /* DIG___STRUCTS___ */
 
