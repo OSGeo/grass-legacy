@@ -1,0 +1,20 @@
+PGM=Greport.new
+LIBES= $(GISLIB)
+LIST = main.o\
+	format.o\
+	header.o\
+	label.o\
+	maskinfo.o\
+	parse.o\
+	prt_report.o\
+	prt_unit.o\
+	report.o\
+	stats.o\
+	sums.o
+
+$(BIN)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIST): global.h
+
+$(LIBES): #
