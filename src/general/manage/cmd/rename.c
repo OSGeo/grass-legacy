@@ -82,7 +82,6 @@ main (int argc, char *argv[])
 		    parm[n]->key,old,new);
 		continue;
 	    }
-	    printf(">> %s => %s\n", old, new);
 	    do_rename (n, old, new);
 	}
     }
