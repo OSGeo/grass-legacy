@@ -1,0 +1,80 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+   <meta name="GENERATOR" content="Mozilla/4.77 [ru] (X11; U; Linux 2.2.19-3.asp i686) [Netscape]">
+   <meta name="Author" content="Alex Shevlakov, sixote@yahoo.com">
+   <title>GRASS code i18n mini-HOWTO</title>
+</head>
+<body>
+<b><font size=+1>Grass code internationalization&nbsp;
+(i18n) mini-HOWTO.</font></b>
+<br><a href="#p1"></a>&nbsp;
+<blockquote><a href="#p1">1. GRASS modules code and Gmakefile changes.</a>
+<br><a href="#p2">2. GRASS libraries code and Gmakefile changes.</a>
+<br><a href="#p3">3. Using gettext binaries for messages catalogues creation
+and maintenance.</a>
+<br>&nbsp;</blockquote>
+
+<p><br><a NAME="p1"></a><b>1. GRASS modules code and Gmakefile changes.</b>
+<p>To prepare a module being able to translate its messages to the user's
+locale national language, the module's developer or maintainer has
+<br>to make the following changes into the code and Gmakefile of this module:
+<br>&nbsp;
+<blockquote>a) Lines of C code which contain translatable strings, e.g.,
+<i>fprintf(stderr, "This module is cool!\n");</i> have to be replaced with
+<i>fprintf(stderr, _("This module is cool!\n"));, </i>i.e., all "comments"
+are put inside brackets and underscored from the left, thus becoming _("comments").
+No changes into any other lines are needed.
+<p>b) Files with C code that have been modified in this way must be referenced
+to the header file "glocale.h". Add line <i>#include "glocale.h" </i>somewhere<i>
+</i>below other 'include' directives.
+<p>c) There must be G_int_locale() function call to set up the locale when
+the module is started. To do that, add line: <i>G_init_locale(); </i>somewhere
+to the beginning code of "main", e.g,
+<blockquote>int main(argc, argv)
+<br>int argc ;
+<br>char **argv ;
+<br>{
+<p>&nbsp;&nbsp;&nbsp; char *dbname;
+<p>&nbsp;&nbsp;&nbsp; int i;
+<p>/* Initialize the locale */
+<br>&nbsp;G_init_locale();
+<p>&nbsp;/* Initialize the GIS calls */
+<br>&nbsp;G_gisinit(argv[0]) ;
+<p>. . . . . . . .
+<br>. . . . . . . .</blockquote>
+</blockquote>
+
+<blockquote>d) The Gmakefile of this module has to be modified to have
+the following additional compiler options definitions in it:
+<p>PACKAGE = "<i>your_module_name</i>"
+<br>DEFS = -DPACKAGE=\"$(PACKAGE)\"
+<br>EXTRA_CFLAGS&nbsp;&nbsp;&nbsp; = $(...) $(...) ... $(DEFS)</blockquote>
+
+<p><br><a NAME="p2"></a><b>2. GRASS libraries code and Gmakefile changes.</b><b></b>
+<p>Statements a), b) and d) from the first paragraph wholly apply to the
+procedure of GRASS libraries code i18n changes. However, there is no need
+to initialize locale for the libraries, as it must have been already done
+in modules. So, do the same work as for the module, except c). The 'PACKAGE'
+variable would be called, for libraries, as 'libgis' or 'libraster', etc.
+<p><a NAME="p3"></a><b>3. Using gettext binaries for messages catalogues
+creation and maintenance.</b>
+<br>&nbsp;
+<p>In the C files catalogue of a module or library, run command:
+<p>xgettext -a *.c -o <i>your_module_name</i>.po<b></b>
+<p>This creates a new template .po file which you (module NLS maintainer)
+have to edit. See other manuals and HOWTO's that explicitly cover the .po
+files editing, including header part with names of the translation team
+members. Usually, it is just enough to take any existing .po file as ready
+example.
+<p>After your .po file is ready, test that the module and libs translate
+new messages: run 'msgfmt <i>your_module_name</i>.po -o <i>your_module_name</i>.mo'
+and put the result .mo file in the GRASS locale catalogue ($gisbase/locale/your_language/LC_MESSAGES).
+Then run the module and see if the translations are done correctly.
+<p>From time to time, as the code gets changed by developers, run 'msgmerge
+old.po new.po > <i>your_module_name</i>.po' where old.po is the outdated
+version of the module and new.po is done by 'xgettext -a *.c'. This updates
+translatable line numbers.
+</body>
+</html>
