@@ -1585,7 +1585,7 @@ void calculate(void)
     else if (insol_time != NULL) {
         G_short_history(insol_time, "raster", &hist);
     }
-    else G_fatal_error("Failed to init map history: should never get to this point");
+    else G_fatal_error("Failed to init map history: no output maps requested!");
 
     sprintf (hist.edhist[0], " ----------------------------------------------------------------");
     sprintf (hist.edhist[1], " Day [1-365]:                              %d", day);
