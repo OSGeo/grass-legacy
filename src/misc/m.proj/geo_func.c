@@ -9,6 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
+#include <ctype.h>
 #include "gis.h"
 #include "geo.h"
 #include "local_proto.h"
@@ -326,3 +327,15 @@ int DMS(int in)
 
 	return 0;
 }
+
+int init_used_table(void)
+{
+	int i;
+	for (i = 0; i < NOPTIONS; i++) {
+		USED_in[i].was = 0;
+		USED_out[i].was = 0;
+	}
+
+	return 0;
+}
+

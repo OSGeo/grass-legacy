@@ -29,8 +29,7 @@ int main(int argc, char *argv[])
 	sprintf(ellps_name_in, "None");
 	sprintf(ellps_name_out, "None");
 
-	init_table();
-	init_unit_table();
+	G_geo_init_table();
 	init_used_table();
 	
 	/*  user main menu */
@@ -69,8 +68,8 @@ int main(int argc, char *argv[])
 				if (pj_get_string(&info_out, parms_out) < 0)
 					G_fatal_error("Cannot initialize proj_info_out");
 			}
-			proj_index_in = get_proj_index(proj_name_in);
-			proj_index_out = get_proj_index(proj_name_out);
+			proj_index_in = G_geo_get_proj_index(proj_name_in);
+			proj_index_out = G_geo_get_proj_index(proj_name_out);
 
 			if (input_typ == 1) {	/* keyboard input */
 				for (;;) {
