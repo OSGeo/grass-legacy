@@ -84,6 +84,7 @@ proc DmVector::create { tree parent } {
     set opt($count,display_cat) 0
     set opt($count,display_topo) 0 
     set opt($count,display_dir) 0 
+    set opt($count,display_attr) 1
     set opt($count,type_point) 1 
     set opt($count,type_line) 1 
     set opt($count,type_boundary) 1 
@@ -150,7 +151,9 @@ proc DmVector::options { id frm } {
                 -command "DmVector::legend $id"
     checkbutton $row.e -text "direction" -variable DmVector::opt($id,display_dir) \
                 -command "DmVector::legend $id"
-    pack $row.a $row.b $row.c $row.d $row.e -side left
+    checkbutton $row.f -text "attribute" -variable DmVector::opt($id,display_attr) \
+                -command "DmVector::legend $id"
+    pack $row.a $row.b $row.c $row.d $row.e $row.f -side left
     pack $row -side top -fill both -expand yes
 
     # type
@@ -171,7 +174,7 @@ proc DmVector::options { id frm } {
 
     # color
     set row [ frame $frm.color ]
-    Label $row.a -text "Color:" 
+    Label $row.a -text "Line color:" 
     SelectColor $row.b -type menubutton -variable DmVector::opt($id,color) \
                 -command "DmVector::legend $id"
     Label $row.c -text "Fill color:" 
@@ -200,6 +203,12 @@ proc DmVector::options { id frm } {
     LabelEntry $row.a -label "Field" -textvariable DmVector::opt($id,field) -width 5
     LabelEntry $row.b -label "Label Field" -textvariable DmVector::opt($id,lfield) -width 5
     pack $row.a $row.b -side left
+    pack $row -side top -fill both -expand yes
+
+    # attribute column
+    set row [ frame $frm.attribute ]
+    LabelEntry $row.a -label "Attribute col" -textvariable DmVector::opt($id,attribute) -width 40
+    pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
     # category
@@ -231,9 +240,9 @@ proc DmVector::save { tree depth node } {
     set id [Dm::node_id $node]
 
 
-    foreach key { _check map display_shape display_cat display_topo display_dir 
+    foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area 
-                  color fcolor lcolor icon size field lfield cat where 
+                  color fcolor lcolor icon size field lfield attribute cat where 
                   _query_attr } {
         Dm::rc_write $depth "$key $opt($id,$key)"
 
@@ -262,7 +271,8 @@ proc DmVector::display { node } {
     if { $opt($id,map) == "" } { return } 
 
     if { !$opt($id,display_shape) && !$opt($id,display_cat) &&
-         !$opt($id,display_topo)  && !$opt($id,display_dir) } { return } 
+         !$opt($id,display_topo)  && !$opt($id,display_dir) &&
+         !$opt($id,display_attr) } { return } 
 
     if { !$opt($id,type_point) && !$opt($id,type_line) &&
          !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
@@ -281,6 +291,8 @@ proc DmVector::display { node } {
     foreach d { shape cat topo dir } {
        if { $opt($id,display_$d) } { lappend dlist $d }
     }
+    if { $opt($id,display_attr) && $opt($id,attribute) != "" } { lappend dlist attr }
+    
     set display [join $dlist , ]
     append cmd " display=$display"
 
@@ -296,6 +308,9 @@ proc DmVector::display { node } {
 
     if { $opt($id,field) != "" } { 
         append cmd " field=$opt($id,field)" 
+    } 
+    if { $opt($id,attribute) != "" } { 
+        append cmd " att=$opt($id,attribute)" 
     } 
     if { $opt($id,lfield) != "" } { 
         append cmd " lfield=$opt($id,lfield)" 
@@ -321,7 +336,8 @@ proc DmVector::query { node } {
     if { $opt($id,map) == "" } { return } 
 
     if { !$opt($id,display_shape) && !$opt($id,display_cat) &&
-         !$opt($id,display_topo)  && !$opt($id,display_dir) } { return } 
+         !$opt($id,display_topo)  && !$opt($id,display_dir) &&
+         !$opt($id,display_attr) } { return } 
 
     if { !$opt($id,type_point) && !$opt($id,type_line) &&
          !$opt($id,type_boundary)  && !$opt($id,type_centroid) && 
