@@ -123,6 +123,6 @@
     /* target.c */
     int get_target(char *);
     /* write.c */
-    int write_matrix(int, int, int);
+    int write_matrix(int, int);
 
 #endif
