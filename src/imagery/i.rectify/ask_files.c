@@ -40,7 +40,7 @@ ask_files (group)
 	    mapset = ref.file[f2].mapset;
 	    if (G_find_cell (name, mapset))
 	    {
-		sprintf (line[i], "%s in %s", name, mapset);
+		sprintf (line[i], "%s@%s", name, mapset);
 		dots (line[i], 36);
 		V_line (ln, line[i]);
 		V_ques (result[i], 's', ln, 37, 14);
@@ -51,7 +51,7 @@ ask_files (group)
 	}
 	if (!any)
 	    break;
-	V_line (ln+2, "(enter list by any name to get a list of existing cell files)");
+	V_line (ln+2, "(enter list by any name to get a list of existing raster files)");
 	V_intrpt_ok();
 	if(!V_call())
 	    exit(0);
@@ -113,7 +113,7 @@ ask_files (group)
 	{
 	    repeat = 1;
 	    select_target_env();
-	    G_list_element ("cell", "", G_mapset(), (int(*)())0);
+	    G_list_element ("cell", "raster", G_mapset(), (int(*)())0);
 	    select_current_env();
 	}
 
@@ -135,7 +135,7 @@ ask_files (group)
 		{
 		    repeat = 1;
 		    printf ("\n");
-		    printf ("** The following cell files already exist in\n");
+		    printf ("** The following raster files already exist in\n");
 		    printf ("** LOCATION %s, MAPSET %s:\n\n", G_location(), G_mapset());
 		}
 		printf ("%-18s%s", result[i], repeat%4?" ":"\n");
