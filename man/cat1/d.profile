@@ -1,7 +1,7 @@
 
 
 
-d.profile            GRASS Reference Manual             d.profile
+d.profile <main>     GRASS Reference Manual      <main> d.profile
 
 
 
@@ -60,14 +60,14 @@ USER PROMPTS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-d.profile            GRASS Reference Manual             d.profile
+d.profile <main>     GRASS Reference Manual      <main> d.profile
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
