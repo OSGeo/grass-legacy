@@ -124,7 +124,7 @@ main (int argc, char **argv)
 	  just->answer = 1;
     }
 
-    if (argc > 1 && G_parser(argc,argv))
+    if ((argc > 1 || (!rast && !vect && !site)) && G_parser(argc,argv))
 	exit(1);
 
     sscanf(zoom->answer,"%lf", &magnify);
