@@ -33,19 +33,21 @@ set MAKE_MODE=unix while you are in the environmental area
 4. Download the ncurses tar.gz file from Michael Hirmke's page:
 ftp://ftp.franken.de/pub/win32/develop/gnuwin32/cygwin/porters/Hirmke_Michael/
 
-5 Read obout Unix running under Windows here:
+5. Read about Unix running under Windows here:
     http://cygutils.netpedia.net/V1.1/index.html
     http://sourceware.cygnus.com/cygwin/docs.html
 
+6. Get the unixODBC source, build and install it.
+   Current version is 1.8.8 as of August, 2000
 -----------------------------------------------------------------------------
 
-6. To start GRASS compilation proceed like this:
+7. To start GRASS compilation proceed like this:
 
     ./configure
     make
     make install
 
-7.  The current build was made using Cygwin 1.1.2
+8.  The current build was made using Cygwin 1.1.2
 
 </pre>
 
