@@ -1,4 +1,4 @@
-HEADER = $(LIBDIR)/segment.h
+#HEADER = $(LIBDIR)/segment.h
 
 OBJ = \
 	address.o\
@@ -16,14 +16,15 @@ OBJ = \
 	setup.o
 
 
-all: $(SEGMENTLIB) $(HEADER) debug.o
+#all: $(SEGMENTLIB) $(HEADER) debug.o
+all: $(SEGMENTLIB) debug.o
 
 $(SEGMENTLIB): $(OBJ)
 	$(AR)
 
-$(OBJ): segment.h
+$(OBJ): #segment.h
 
-$(HEADER): segment.h
-	rm -f $@
-	cp $? $@
-	chmod 0644 $@
+#$(HEADER): segment.h
+#	rm -f $@
+#	cp $? $@
+#	chmod 0644 $@
