@@ -1,21 +1,22 @@
 
 
 
-g.region             GRASS Reference Manual              g.region
+g.region <main>      GRASS Reference Manual       <main> g.region
 
 
 
 NAME
      g.region - Program to manage the boundary definitions for
      the geographic region.
-     (GRASS File Management Program)
+     (GRASS Region Management Program)
 
 SYNOPSIS
      g.region
      g.region help
-     g.region [-dgpu] [region=name] [raster=name] [vector=name] [sites=name] [n=value] [s=value]
-         [e=value] [w=value] [res=value] [nsres=value] [ewres=value] [zoom=name]
-         [align=name] [save=name]
+     g.region [-dgpu] [region=name] [raster=name] [vector=name]
+        [sites=name] [3dview=name] [n=value] [s=value] [e=value]
+        [w=value] [res=value] [nsres=value] [ewres=value]
+        [zoom=name] [align=name] [save=name]
 
 DESCRIPTION
      The g.region program allows the user to manage the settings
@@ -59,15 +60,14 @@ INTERACTIVE PROGRAM USE: MAIN MENU
 
 
 
-
-GRASS 4.0                U.S. Army CERL                         1
-
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
-g.region             GRASS Reference Manual              g.region
+
+g.region <main>      GRASS Reference Manual       <main> g.region
 
 
 
@@ -126,14 +126,14 @@ DEFINITIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-g.region             GRASS Reference Manual              g.region
+g.region <main>      GRASS Reference Manual       <main> g.region
 
 
 
@@ -192,14 +192,14 @@ REGION EDIT PROMPT
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-g.region             GRASS Reference Manual              g.region
+g.region <main>      GRASS Reference Manual       <main> g.region
 
 
 
@@ -258,14 +258,14 @@ region
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
 
 
 
-g.region             GRASS Reference Manual              g.region
+g.region <main>      GRASS Reference Manual       <main> g.region
 
 
 
@@ -324,14 +324,14 @@ NON-INTERACTIVE PROGRAM USE
 
 
 
-GRASS 4.0                U.S. Army CERL                         5
+GRASS 4.1                U.S. Army CERL                         5
 
 
 
 
 
 
-g.region             GRASS Reference Manual              g.region
+g.region <main>      GRASS Reference Manual       <main> g.region
 
 
 
@@ -369,6 +369,11 @@ g.region             GRASS Reference Manual              g.region
                        named site_lists file, aligned with the
                        current region.
 
+     3dview=name       Make current region settings same as those
+                       in the named 3dview file, which holds the
+                       region that was current when the 3dview
+                       was saved.
+
      n=value           Set map coordinate value for the region's
                        northern edge to x
 
@@ -382,24 +387,25 @@ g.region             GRASS Reference Manual              g.region
                        western edge to x
 
      res=value         Set grid resolution (both north-south and
+
+
+
+GRASS 4.1                U.S. Army CERL                         6
+
+
+
+
+
+
+g.region <main>      GRASS Reference Manual       <main> g.region
+
+
+
                        east-west) to x
 
      nsres=value       Set north-south grid resolution value to x
 
      ewres=value       Set east-west grid resolution value to x
-
-
-
-GRASS 4.0                U.S. Army CERL                         6
-
-
-
-
-
-
-g.region             GRASS Reference Manual              g.region
-
-
 
      zoom=name         Set current region settings to the
                        smallest region encompassing all non-zero
@@ -447,26 +453,26 @@ EXAMPLES
           boundary is decreased by 500 units.
 
      g.region n=s+1000 e=w+1000
+
+
+
+GRASS 4.1                U.S. Army CERL                         7
+
+
+
+
+
+
+g.region <main>      GRASS Reference Manual       <main> g.region
+
+
+
           This form allows the user to set the region boundary
           values relative to one another.  Here, the northern
           boundary coordinate is set equal to 1000 units larger
           than the southern boundary's coordinate value, and the
           eastern boundary's coordinate value is set equal to
           1000 units larger than the western boundary's
-
-
-
-GRASS 4.0                U.S. Army CERL                         7
-
-
-
-
-
-
-g.region             GRASS Reference Manual              g.region
-
-
-
           coordinate value.  The corresponding forms s=n-value
           and
           w=e-value may be used to set the values of the region's
@@ -513,26 +519,26 @@ g.region             GRASS Reference Manual              g.region
                south:        4249950.00
                east:         526050.00
                west:         500950.00
+
+
+
+GRASS 4.1                U.S. Army CERL                         8
+
+
+
+
+
+
+g.region <main>      GRASS Reference Manual       <main> g.region
+
+
+
                nsres:        100.00
                ewres:        100.00
                rows:         441
                cols:         251
 
      g.region -g
-
-
-
-GRASS 4.0                U.S. Army CERL                         8
-
-
-
-
-
-
-g.region             GRASS Reference Manual              g.region
-
-
-
           The -g option prints the region in the following
           format:
 
@@ -582,13 +588,7 @@ AUTHOR
 
 
 
-
-
-
-
-
-
-GRASS 4.0                U.S. Army CERL                         9
+GRASS 4.1                U.S. Army CERL                         9
 
 
 
