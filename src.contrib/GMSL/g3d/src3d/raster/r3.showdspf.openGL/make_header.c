@@ -1,5 +1,5 @@
 
-#include "viz.h" 
+#include "vizual.h" 
 
 #include "G3d.h"
 

@@ -1,4 +1,4 @@
-#include "viz.h"
+#include "vizual.h"
 #include "G3d.h"
 
 #define	XDIMYDIM	(Headfax->xdim)*(Headfax->ydim)
