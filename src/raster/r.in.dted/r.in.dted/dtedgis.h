@@ -18,8 +18,8 @@
 typedef short dted_d;
 
 /* dted_read.c */
-int sbytes_to_int(char *, int);
-int ubytes_to_int(char *, int);
+int sbytes_to_int(unsigned char *inc, int num);
+int ubytes_to_int(unsigned char *inc, int num);
 int dmshtodd(char *, double *);
 int get_header(FILE *, struct Cell_head *, int *);
 int add_dted_hist(FILE *, struct History *);
