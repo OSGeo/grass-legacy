@@ -1,0 +1,48 @@
+<html>
+<TITLE>d.leg.thin</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+<H2>NAME</H2>
+<b>d.leg.thin</b> - improved version of d.legend that allows:<br>
+
+    - Thinning the categories to be represented in the legend<br>
+    - Displaying a continuous gradient of all categories in the legend<br>
+    - Interactive mouse placement of the smooth gradient box<br>
+<P>
+
+<H2>Usage:</H2>
+ <b>d.leg.thin</b> [-nsm] <b>map=</b>name [<b>color=</b>name] [<b>lines=</b>value] [<b>thin=</b>value]
+
+<h2>Flags:</H2>
+  -n   Do not show category values<p>
+  -s   Draw smooth gradient<p>
+  -m   Use mouse to size & place legend (only when -s is specified)<p>
+
+<H2>Parameters:</H2>
+<b>    map</b>   Name of raster map<p>
+<b>  color</b>   Sets the legend's text color<br>
+          options: red,orange,yellow,green,blue,indigo,white,black,brown,
+                   magenta,aqua,gray,grey<br>
+          default: white<p>
+<b>  lines</b>   Number of text lines (useful for truncating long legends)<br>
+          options: 0-1000<br>
+          default: 0<p>
+<b>   thin</b>   Thinning factor (thin=10 gives cats 0,10,20...)<br>
+          options: 0-1000<br>
+          default: 1<p>
+
+<p>
+ 
+
+<H2>NOTE</H2>
+Note that when using the mouse to size & place the smooth legend,
+if you make a horizontal box the values run from left to right and no
+category values are printed (you may want to use d.label for that). <p>
+
+<HR>
+<ADDRESS>
+ <a href=mailto:brown@gis.uiuc.edu>Bill Brown</a>
+</ADDRESS>
+</BODY>
+</HTML>
