@@ -40,6 +40,7 @@ int main (int argc, char *argv[])
     int cellhd_ok;
     int is_reclass;
     int error();
+    char question[100];
     struct GModule *module;
     struct Option *map;
     struct Flag *rangeflag, *colorflag;
@@ -91,19 +92,12 @@ int main (int argc, char *argv[])
 
 /* Edit the category file in ../inter/ */
    
-/* color table */
-  if (colorflag->answer)
-    {
-	G_clear_screen();
-	sprintf (buf, "%s/etc/modcolr '%s'", G_gisbase(), G_fully_qualified_name(name, G_mapset()));
-	system (buf);
-	G_clear_screen();
-    }
+/* color table in ../inter/ */
   
 /* Edit the history file in ../inter/ */
   
 /* null file in ../inter/ */
-   /* This might be added here, too */
+   /* This might be added here, too (12/2000) */
   
    
   exit(0);

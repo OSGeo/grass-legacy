@@ -1,14 +1,9 @@
 HOME=$(BIN_MAIN_CMD)
-all: $(ETC)/modcolr \
-	$(ETC)/modhist \
+all: $(ETC)/modhist \
 	$(HOME)/r.support
 
 SUPPORT = support.o check.o histo.o
 MODHIST = modhist.o
-MODCOLR = modcolr.o
-
-$(ETC)/modcolr: $(MODCOLR) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(MODCOLR) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(HOME)/r.support: $(SUPPORT) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(SUPPORT) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
