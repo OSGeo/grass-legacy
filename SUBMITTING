@@ -1,4 +1,4 @@
-$Id: SUBMITTING,v 1.11 2000-12-01 08:59:23 cho Exp $
+$Id: SUBMITTING,v 1.12 2000-12-01 12:47:01 markus Exp $
 
 NOTE: Please improve this list!
 
@@ -146,6 +146,8 @@ care of following rules:
      	- please add them before these
      	- The XDRLIB and MATHLIB may not go into the $(LIBES) line, but only
           into the $(CC) line.
+        - don't (!) add:
+          $(MATHLIB): # at end of file, use this only for GRASS libs
 
 14. To add the executable for your module to the GRASS system run the command
     gmakelinks5 after your module has been compiled successfully. Note that
