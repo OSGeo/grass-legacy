@@ -1,0 +1,291 @@
+#!/bin/sh
+#
+# Alternative XDriver: replacement of XDriver fifos
+#	(needed to improve speed and to run GRASS Monitors on all platforms)
+#
+# Contact: Huidae Cho  <grass@geni.cemtlo.com>
+# 
+# The source code from Ronald Wiemer (MessQ.tar.Z) is merged into
+# the current driver code by Huidae Cho.
+# 
+# The updated files are here:
+#  src/display/devices/XDRIVER/XDRIVER24/*.new/
+#  src/display/devices/XDRIVER/lib/*.new/
+#  src/display/devices/lib/*.new/
+#  src/libes/raster/*.new/
+#
+# TODO: 
+#  The updated driver has to be tested and finally made to be standard
+#  driver.
+#
+# NOTE for ipc XDriver:
+#  The $GISBASE/dev/fifo* files are still required for ipc XDriver.
+#  However, these files need not to be FIFO files. It's ok if these files
+#  are just zero size file, not FIFO nor other special file. ipc XDriver
+#  communicate through these files.
+#
+# KNOWN BUGS for ipc XDriver:
+#  Killing the monitor has to be done with d.mon stop=name. This is
+#  the only way to get rid of the message-queues. If you destroy a monitor
+#  without d.mon, the monitor will be unusable till your computer reboot,
+#  maybe.
+#############################################################################
+#
+# Please test new XDRIVER and report bugs to developers list.
+#
+#	./README.xdriver ipc
+#  Or
+#	./README.xdriver socket
+#                       (make sure to run configure --with-socket).
+#	
+# Then you can revert to original XDRIVER.
+#
+#	./README.xdriver fifo
+#
+#############################################################################
+
+SOURCES="
+	src/display/devices/XDRIVER/XDRIVER24/NEW_SRC/SWITCHER.c
+	src/display/devices/XDRIVER/lib/NEW_SRC/connect.c
+	src/display/devices/lib/NEW_SRC/SWITCHER.c
+	src/libes/raster/NEW_SRC/io.c
+"
+
+#############################################################################
+
+if [ ! -f INSTALL -o ! -f NEWS.html -o "$0" != "./README.xdriver" ]
+then
+	echo
+	echo "This should be run under grass root directory."
+	echo
+	exit
+fi
+
+########## MANUAL EXECUTION
+if [ ! "$GRASS_IN_CONFIGURE" ]
+then
+
+if [ ! -f config.status -o ! -f Makefile ]
+then
+	echo
+	echo "You must ./configure first. Or GRASS is not installed."
+	echo "Read INSTALL for more information."
+	echo
+	exit
+fi
+
+GISBASE=`grep '^GISBASE=' Makefile | sed 's/^GISBASE=[ 	]*//'`
+if [ ! -d $GISBASE/dev ]
+then
+	echo
+	echo "You must install GRASS first."
+	echo "Read INSTALL for more information."
+	echo
+	exit
+fi
+
+GRASS_BIN=`grep '^GRASS_BIN=' Makefile | sed 's/^GRASS_BIN=[ 	]*//'`
+GMAKE5=
+# Search for gmake5 command in user's path
+for i in `echo $PATH | sed 's/^:/.:/
+    	    		    s/::/:.:/g
+			    s/:$/:./
+			    s/:/ /g'` $GRASS_BIN
+do
+    if [ -f $i/gmake5 ] ; then
+	# Save the path of the gmake5 command
+	GMAKE5=$i/gmake5
+	# Use the first one in user's path
+	break
+    fi
+done
+
+if [ ! "$GMAKE5" ]
+then
+	echo
+	echo "gmake5 is not under \$PATH nor $GRASS_BIN."
+	echo
+	exit
+fi
+
+if [ $# -eq 0 -o "$1" = "help" ]
+then
+	echo
+	echo "Please read README.xdriver first."
+	echo
+	echo "Usage:"
+	echo " ./README.xdriver [-n] [-f] [-m] [fifo|ipc|socket]"
+	echo
+	echo "   -n: Do not compile"
+	echo "   -f: Force to compile"
+	echo "   -m: Compile d.mon only"
+	echo
+	exit
+fi
+
+compile=1
+dmon=0
+sources=""
+cmd=""
+for i
+do
+	case $i in
+		-n)
+			compile=0
+			sources=" sources"
+			;;
+		-f)
+			compile=2
+			sources=""
+			;;
+		-m)
+			dmon=1
+			if [ $compile -eq 0 ]
+			then
+				compile=1
+			fi
+			sources=""
+			;;
+		fifo|ipc|socket)
+			cmd=$i
+			;;
+		*)
+			echo
+			echo "$i: Invalid argument"
+			echo
+			exit
+			;;
+	esac
+	shift
+done
+
+if [ "$cmd" = "" ]
+then
+	echo
+	echo "Using current sources"
+	echo
+fi
+
+########## END OF MANUAL EXECUTION
+else
+	cmd=$1
+fi
+
+
+changed=0
+if [ "$cmd" = "fifo" ]
+then
+	for i in $SOURCES
+	do
+		src=`echo $i | sed 's|NEW_SRC/||'`
+		org=`echo $i | sed 's|NEW_SRC/|fifo.orig/|'`
+		diff $org $src > /dev/null 2>&1
+		if [ $? -eq 0 ]
+		then
+			continue
+		fi
+		changed=1
+		echo cp $org $src
+		cp $org $src
+	done
+elif [ "$cmd" = "ipc" ]
+then
+	for i in $SOURCES
+	do
+		src=`echo $i | sed 's|NEW_SRC/||'`
+		new=`echo $i | sed 's|NEW_SRC/|ipc.new/|'`
+		diff $new $src > /dev/null 2>&1
+		if [ $? -eq 0 ]
+		then
+			continue
+		fi
+		changed=1
+		echo cp $new $src
+		cp $new $src
+	done
+elif [ "$cmd" = "socket" ]
+then
+	for i in $SOURCES
+	do
+		src=`echo $i | sed 's|NEW_SRC/||'`
+		org=`echo $i | sed 's|NEW_SRC/|socket.new/|'`
+		diff $org $src > /dev/null 2>&1
+		if [ $? -eq 0 ]
+		then
+			continue
+		fi
+		changed=1
+		echo cp $org $src
+		cp $org $src
+	done
+
+fi
+
+if [ "$GRASS_IN_CONFIGURE" ]
+then
+	exit
+fi
+
+if [ ! -f $GISBASE/dev/create_fifos.sh ]
+then
+	cp src/scripts/shells/create_fifos.sh $GISBASE/dev/create_fifos.sh
+	chmod 755 $GISBASE/dev/create_fifos.sh
+fi
+
+if [ ! -f $GISBASE/dev/create_ipcs.sh ]
+then
+	cp src/scripts/shells/create_ipcs.sh $GISBASE/dev/create_ipcs.sh
+	chmod 755 $GISBASE/dev/create_ipcs.sh
+fi
+
+if [ "$cmd" = "fifo" -a -f $GISBASE/dev/fifo.1a ]
+then
+	sh $GISBASE/dev/create_fifos.sh $GISBASE
+elif [ "$cmd" = "ipc" -a -p $GISBASE/dev/fifo.1a ]
+then
+	sh $GISBASE/dev/create_ipcs.sh $GISBASE
+fi
+
+if [ $changed -eq 0 -a $compile -ne 2 -a "$cmd" != "" ]
+then
+	echo
+	if [ "$cmd" = "fifo" ]
+	then
+		echo "It's already original fifo XDriver$sources."
+	elif [ "$cmd" = "ipc" ]
+	then
+		echo "It's already new ipc XDriver$sources."
+	elif [ "$cmd" = "socket" ]
+	then
+		echo "It's already new socket XDriver$sources."
+	fi
+	echo
+	exit
+fi
+
+
+if [ $compile -eq 0 ]
+then
+	exit
+fi
+
+(cd src/display/devices/XDRIVER && $GMAKE5 -i)
+(cd src/libes/raster && $GMAKE5 -i)
+
+if [ $dmon -eq 1 ]
+then
+	(cd src/display/d.mon && $GMAKE5 -i)
+else
+	(cd src/display && $GMAKE5 -i)
+	(cd src/raster && $GMAKE5 -i)
+	(cd src/mapdev && $GMAKE5 -i)
+	(cd src/paint/Drivers/preview && $GMAKE5 -i)
+	(cd src/paint/Drivers/preview2 && $GMAKE5 -i)
+fi
+
+
+echo
+echo "Thanks for your time."
+echo "If you have more time, you might want to recompile entire sources. :-)"
+echo
+
