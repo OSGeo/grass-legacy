@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "gis.h"
 #include "dbmi.h"
 
@@ -10,8 +11,14 @@ char *
 db_get_default_driver_name ( void )
 {
     char *drv;
-    if ( (drv = G__getenv2("DB_DRIVER", G_VAR_MAPSET))  )
-	return G_store(drv);
+    char *fakestart;
+    
+    /* fake session for HTML generation with parser */
+    fakestart = getenv( "GRASS_FAKE_START" );
+    if ( fakestart == NULL ) {
+       if ( (drv = G__getenv2("DB_DRIVER", G_VAR_MAPSET))  )
+	  return G_store(drv);
+    }
 
     return NULL;
 }
@@ -25,8 +32,14 @@ char *
 db_get_default_database_name ( void )
 {
     char *drv;
-    if ( (drv = G__getenv2("DB_DATABASE", G_VAR_MAPSET))  )
-	return G_store(drv);
+    char *fakestart;
+    
+    /* fake session for HTML generation with parser */
+    fakestart = getenv( "GRASS_FAKE_START" );
+    if ( fakestart == NULL ) {
+       if ( (drv = G__getenv2("DB_DATABASE", G_VAR_MAPSET))  )
+	  return G_store(drv);
+    }
 
     return NULL;
 }
