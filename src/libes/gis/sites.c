@@ -13,7 +13,13 @@
 
 /*-
  * $Log$
- * Revision 1.4  2000-06-30 11:33:12  markus
+ * Revision 1.5  2000-10-13 00:54:52  eric
+ * Small modifications to G__site_get() to fix missing the first attribute
+ * when no cat exists and returning a spurious error code when everything
+ * was okay.  s.to.rast should now work fine with sites like
+ * east|north|%double
+ *
+ * Revision 1.4  2000/06/30 11:33:12  markus
  * Bill Brown: fix to parse multiple strings in site_list properly
  *
  * Revision 1.3  1999/12/30 10:24:19  markus
@@ -379,19 +385,30 @@ int G__site_get ( FILE *ptr, Site *s, int fmt)
       }
 
       /* move to beginning of next attribute */
+      /* unneccessary and causes first attribute to be missed...
       if ((buf = next_att (buf)) == (char *) NULL)
 	return (FOUND_ALL(s,n,dim,c,d)? err: -2);
       break;
+      */
     case '%':			/* decimal attribute */
       if (d < s->dbl_alloc) {
-	if (sscanf (buf, "%%%lf", &(s->dbl_att[d++])) < 1)
-	  return -2;
+	p1 = buf;
+	s->dbl_att[d++] = strtod(++buf, &p1);
+	if (p1 == buf) {
+		/* replace with:
+		 * s->dbl_att[d - 1] = NAN
+		 * when we add NULL attribute support
+		 */
+		return -2;
+	}
+	err = 0; /* Make sure this is zeroed */
       } else {
-	err = 1;  /* extra decimal */
+	 err = 1;  /* extra decimal */
       }
 
-      if ((buf = next_att (buf)) == (char *) NULL)
-	return (FOUND_ALL(s,n,dim,c,d)? err: -2);
+      if ((buf = next_att (buf)) == (char *) NULL) {
+	return (FOUND_ALL(s,n,dim,c,d)) ? err : -2;
+      }
       break;
     case '@':			/* string attribute */
       if (isnull(*buf) || isnull(*(buf + 1)))
