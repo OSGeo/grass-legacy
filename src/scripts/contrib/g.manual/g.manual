@@ -8,13 +8,13 @@ fi
 
 HELP="
 Usage:
- `basename $0` [-1] [-a] [-d] [-m] [-s] [-q] [browser=name] [entries=name[,name,...]]
+ `basename $0` [-1admsq] [browser=name] [entries=name[,name,...]]
    name name ...
 
 Flags:
   -1   List all manual entries, one per line.
   -a   List all manual entries in a more appealing format.
-  -d   Display a short description of all manual entries specified(NOT YET).
+  -d   Display a short description of all manual entries specified.
   -m   Force to use man program rather than GRASS_TEXT_BROWSER, if any.
   -s   Run silently to set exit status if entry exists.
        Requires only one command name.
@@ -39,29 +39,41 @@ then
   exit 1
 fi
 
-desc=
-forceman=
-silent=
-quit=
-tentries=
-until [ $# -eq 0 ]
+for i
 do
-  case $1 in
-    help|-help|-f|-e)
+  case $i in
+    help|-help)
       echo "$HELP"
       exit 1 ;;
+  esac
+done
 
-    -1) /bin/ls $GISBASE/man/man1 | $PAGER; exit 0 ;;
+opt1=
+opta=
+optd=
+optm=
+opts=
+optq=
+while getopts "1admsq" option
+do
+  case $option in
+    1) opt1=1
+       opta=
+       optd= ;;
 
-    -a) /bin/ls -C $GISBASE/man/man1 | $PAGER; exit 0 ;;
+    a) opta=1
+       opt1=
+       optd= ;;
 
-    -d) desc=1 ;;
+    d) optd=1
+       opt1=
+       opta= ;;
 
-    -m) forceman=1 ;;
+    m) optm=1 ;;
 
-    -s) silent=1 ;;
+    s) opts=1 ;;
 
-    -q) quit=1
+    q) optq=1
       which rman > /dev/null 2>&1
       if [ $? -ne 0 ]
       then
@@ -69,6 +81,27 @@ do
         exit 1
       fi ;;
 
+    *) echo "$HELP"
+       exit 1 ;;
+  esac
+done
+
+if [ "$opt1" ]
+then
+  /bin/ls $GISBASE/man/man1 | $PAGER
+  exit 0
+elif [ "$opta" ]
+then
+  /bin/ls -C $GISBASE/man/man1 | $PAGER
+  exit 0
+fi
+
+shift `expr $OPTIND - 1`
+
+tentries=
+for i
+do
+  case $i in
     b=*|br=*|bro=*|brow=*|brows=*|browse=*|browser=*)
       GRASS_TEXT_BROWSER=`echo $1 | awk -F '=' '{print $2}'` ;;
 
@@ -77,17 +110,16 @@ do
 
     *) tentries="$tentries $1" ;;
   esac
-  shift
 done
 
-if [ "$desc" -o "$quit" ]
+if [ "$optd" -o "$optq" ]
 then
   GRASS_TEXT_BROWSER=
 else
   which $GRASS_TEXT_BROWSER > /dev/null 2>&1
-  if [ $? -ne 0 -o "$forceman" ]
+  if [ $? -ne 0 -o "$optm" ]
   then
-    if [ "$GRASS_TEXT_BROWSER" -a ! "$forceman" -a ! "$silent" ]
+    if [ "$GRASS_TEXT_BROWSER" -a ! "$optm" -a ! "$opts" ]
     then
       echo
       echo Warning: $GRASS_TEXT_BROWSER does not exist. Use man.
@@ -106,20 +138,20 @@ do
   
   if [ -e $html -a "$GRASS_TEXT_BROWSER" ]
   then
-    if [ "$silent" ]
+    if [ "$opts" ]
     then
       exit 0
     fi
     entries="$entries $html"
   elif [ -e $man -a ! "$GRASS_TEXT_BROWSER" ]
   then
-    if [ "$silent" ]
+    if [ "$opts" ]
     then
       exit 0
     fi
     entries="$entries $i"
   else
-    if [ "$silent" ]
+    if [ "$opts" ]
     then
       exit 1
     fi
@@ -128,7 +160,7 @@ No entry for $i"
   fi
 done
 
-if [ "$desc" ]
+if [ "$optd" ]
 then
   if [ ! "$tentries" ]
   then
@@ -156,7 +188,7 @@ else
       $GRASS_TEXT_BROWSER $i
     done
   else
-    if [ ! "$quit" ]
+    if [ ! "$optq" ]
     then
       man -P $PAGER -M $GISBASE/man 1 $entries
     else
