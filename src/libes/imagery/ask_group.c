@@ -1,4 +1,3 @@
-/* %W%  %G% */
 /*************************************************************
 * I_ask_group_old (prompt,group)
 * I_ask_group_new (prompt,group)
