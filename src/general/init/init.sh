@@ -5,6 +5,7 @@
 #
 # MODULE:   	Grass Initialization
 # AUTHOR(S):	Original author unknown - probably CERL
+#               Andreas Lange - Germany - andreas.lange@rhein-main.de
 #   	    	Huidae Cho - Korea - hdcho@geni.knu.ac.kr
 #   	    	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
 #   	    	Markus Neteler - Germany - neteler@geog.uni-hannover.de
@@ -59,7 +60,11 @@ esac
 
 # Set some environment variables if they are not set
 if [ ! "$PAGER" ] ; then
-    PAGER=more
+    if [ -x /bin/more ] ; then
+        PAGER=more
+    else 
+        PAGER=less
+    fi
     export PAGER
 fi
 
@@ -334,16 +339,25 @@ LOCATION=${GISDBASE?}/${LOCATION_NAME?}/${MAPSET?}
 export LOCATION
 
 trap "" 2 3
+CYGWIN=$(uname | grep CYGWIN)
 
-sh="`basename $SHELL`"
-case "$sh" in
-    ksh)  shellname="Korn Shell";;
-    csh)  shellname="C Shell" ;;
-    tcsh) shellname="TC Shell" ;;
-    bash) shellname="Bash Shell" ;;
-    sh)   shellname="Bourne Shell";;
-    *)    shellname=shell;;
-esac
+# cygwin has many problems with the shell setup
+# below, so i hardcoded everything here.
+if [ "$CYGWIN" ] ; then
+    sh="cygwin"
+    shellname="GNU Bash (Cygwin)"
+    SHELL=/usr/bin/bash.exe
+else 
+    sh="`basename $SHELL`"
+    case "$sh" in
+        ksh)  shellname="Korn Shell";;
+        csh)  shellname="C Shell" ;;
+        tcsh) shellname="TC Shell" ;;
+        bash) shellname="Bash Shell" ;;
+        sh)   shellname="Bourne Shell";;
+        *)    shellname=shell;;
+    esac
+fi
 
 # Start the chosen GUI but ignore text
 case "$GRASS_GUI" in
@@ -359,7 +373,7 @@ case "$GRASS_GUI" in
 esac
 
 # Display the version and license info
-clear
+tput clear
 
 echo "Welcome to GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG"
 echo
@@ -442,6 +456,31 @@ bash)
     bashrc=$HOME/.bashrc
     rm -f $bashrc
     echo "test -z $PROFILEREAD && . /etc/profile" > $bashrc
+    echo "test -e ~/.alias && . ~/.alias" >> $bashrc
+    echo "umask 022" >> $bashrc
+    echo "PS1='GRASS:\w > '" >> $bashrc
+
+    if [ -r $USERHOME/.grass.bashrc ]
+    then
+        cat $USERHOME/.grass.bashrc >> $bashrc
+    fi
+
+    echo "export PATH=$PATH" >> $bashrc
+    echo "export HOME=$USERHOME" >> $bashrc # restore user home path
+
+    $ETC/run $SHELL
+    HOME=$USERHOME
+    export HOME
+    ;;
+
+cygwin)
+    USERHOME=$HOME      # save original home
+    HOME=$LOCATION      # save .bashrc in $LOCATION
+    export HOME
+    bashrc=$HOME/.bashrc
+    rm -f $bashrc
+    # this does not work on cygwin for unknown reasons
+    # echo "test -z $PROFILEREAD && . /etc/profile" > $bashrc
     echo "test -e ~/.alias && . ~/.alias" >> $bashrc
     echo "umask 022" >> $bashrc
     echo "PS1='GRASS:\w > '" >> $bashrc
