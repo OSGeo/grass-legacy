@@ -1,0 +1,79 @@
+#include "xgrass_dlib.h"
+#include "clrtbl.h"
+
+void
+#ifdef _NO_PROTO
+_XgdFreeColors(obj)
+     XgdObject *obj;
+#else
+_XgdFreeColors(XgdObject *obj)
+#endif
+{
+  Pixel  *l, *b;
+  Pixel  *pixels;
+  int     nclrs;
+  int     i, j, k, nb;
+  XColor black;
+
+  black.red = 0; black.green = 0; black.blue = 0;
+  black.flags = DoRed | DoGreen | DoBlue;
+
+  l = obj->Obj.GeoFrame.lookup_tbl;
+  b = obj->Obj.GeoFrame.borrowed;
+  nclrs = obj->Obj.GeoFrame.numcols;
+  nb = obj->Obj.GeoFrame.numborrowed;
+
+  if ( nclrs == 0 ) return;
+
+  pixels = (Pixel *) XtMalloc((nclrs + 1)* sizeof(Pixel));
+  j = 0;
+  for (i = 0; i <= nclrs; i++) {
+      Boolean borrowed = False;
+      for ( k = 0; k < nb && !borrowed ; k++ ) {
+        if (b[k] == l[i] ) {
+            borrowed = True;
+	}
+      }
+      if ( !borrowed ) {
+        pixels[j] = l[i];
+        j++;
+      }
+  }
+
+  if ( j )  {
+      for ( i = 0; i < j; i++ ) {
+          for ( k = 0; k < __XGDPrivateCells; k++ ) {
+              if ( pixels[i] == __XGDLut[k].pixel ) {
+                  black.pixel = __XGDLut[k].pixel;
+                  XStoreColor(obj->display, __XGDColormap, &black);
+                  switch ( __XGDLut[k].status ) {
+                      case XG_LUT_STATUS_FIXED:
+                          if ( !__XGDFixedColors && __XGDLut[k].accesses < 2 ) {
+                              __XGDLut[k].status = XG_LUT_STATUS_AVAILABLE;
+			      __XGDPrivateCellsLeft++;
+                           }
+			  __XGDLut[k].accesses--;
+                          break;
+                      case XG_LUT_STATUS_IN_USE:
+                          __XGDLut[k].status = XG_LUT_STATUS_AVAILABLE;
+			  __XGDLut[k].accesses--;
+			  __XGDPrivateCellsLeft++;
+                          break;
+                      case XG_LUT_STATUS_SHARED:
+                          __XGDLut[k].status = XG_LUT_STATUS_IN_USE;
+			  __XGDLut[k].accesses--;
+			  __XGDPrivateCellsLeft++;
+                          break;
+                  }
+              }
+          }
+      }
+  }
+  XtFree(pixels);
+  XtFree(l);
+  XtFree(b);
+  obj->Obj.GeoFrame.lookup_tbl = NULL;
+  obj->Obj.GeoFrame.numcols = 0;
+  obj->Obj.GeoFrame.borrowed = NULL;
+  obj->Obj.GeoFrame.numborrowed = 0;
+}
