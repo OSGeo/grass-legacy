@@ -1,12 +1,12 @@
 /*
- * $Id$
- *
  ****************************************************************************
  *
  * MODULE:       r.composite
  * AUTHOR(S):    Glynn Clements - glynn.clements@virgin.net
  * PURPOSE:      Combine red, green and blue layers into a single
  *               layer using a quantisation of the RGB color space.
+ *               Using Floyd-Steinberg dithering
+ *
  * COPYRIGHT:    (C) 2001 by the GRASS Development Team
  *
  *               This program is free software under the GNU General Public
