@@ -26,23 +26,33 @@ Many thanks to all contributors!
 <hr>
 <h3><font color="#00FE00">What's new in GRASS 5 betaCVS comparing to beta10</font></h3>
 
+<font color="#FF0000">Floating point raster maps and G3D raster volume maps
+in zlib/FLATE compression now due to patent restrictions</font> (all maps
+have to be converted - see <a href=http://www.geog.uni-hannover.de/grass/announces/announce_lzw_removal.html>announcement</a>)
+<p>
 <b>Modules fixed/updated</b> (major changes only)
 <menu>
 <li>grass5 startup: fixes on tcl/tk problems (Justin Hickey)
 <li>d.colors: fixed "u" jump bug (Markus Neteler)
+<li>i.points3: compiles now (Markus Neteler)
 <li>i.tape.tm.fast: segfault fixed (Eric G. Miller)
 <li>pg.in.dbf: fixed for inserting fields longer than 128 bytes (Federico Ponchio)
 <li>ps.map: Add some standard US paper configs (Eric G. Miller)
 <li>r.drain: fixed for floating-point elevations (Markus Neteler)
 <li>r.in.gdal: update to accept GDAL lib in GISBASE/lib/
+<li>r.line: region sensivity added (Markus Neteler)
 <li>r.out.tiff: file extensions fix (tif, tfw), NULL data color bugfix (Eric
     G. Miller)
-<li>r3.out.v5d: added region settings sensivity (Markus Neteler)
-<li>r.support: added cmd line support (Markus Neteler)
+<li>r3.out.v5d: region sensivity added (Markus Neteler)
+<li>r3.showdspf: re-sized colortable window, fixed window redraw (Eric G. Miller)
+<li>r.profile: rewritten, updated to FP (Bob Covill)
+<li>r.support: added cmd line parser support (Markus Neteler)
+<li>s.in.dbf: added to import dBase tables (Markus Neteler)
 <li>s.to.vect: several new flags, fixed "find mapset" problem, fixed 'dim'
   index error, fix for FP cats, category selection parameter (Eric G. Miller)
 <li>shade.rel.sh: fix for NULL and flat areas (David Finlayson)
 <li>v.digit: fixed core dump on SGI (Justin Hickey, Roger S. Miller)
+<li>v.in.gshhs: added to import GSHHS shoreline vectors (Bob Covill)
 <li>v.in.mif: region sensivity added (David D. Gray)
 <li>v.in.shape: bunch of bugfixes, selective import supported now (David D.
    Gray)
@@ -60,6 +70,7 @@ clean" (Justin Hickey)
 <li>LZW removal ready to switch on: will come for GRASS 5.0 stable. GRASS 
     will be using DEFLATE/zlib then (Eric G. Miller)
 <li>src/libes/g3d/: major cleanup, prototypes (Eric G. Miller)
+<li>getModTime tool added (Justin Hickey)
 <li>testsuite: updated, added more modules to test (Andreas Lange)
 </menu>
 
