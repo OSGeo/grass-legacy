@@ -1,4 +1,4 @@
-NAME=s.rand
+NAME=s.random
 
 PGM=$(BIN_CONTRIB_CMD)/$(NAME)
 
