@@ -91,12 +91,17 @@ char *key;
 				}
 			}
 		}
-		if (field == MON_NEXT || (field == MON_NAME && !strcmp(key,cap.name))
-		    || (field == MON_PATH && !strcmp(key, cap.path))
-		    || (field == MON_LINK && !strcmp(key,cap.link)))
-			return(&cap);
-		else
-			free(cap.name);
+		if( cap.path==NULL || cap.link==NULL || cap.where==NULL|| cap.tty == NULL || cap.comment==NULL)
+		   free(cap.name);
+                else
+		{
+  		   if (field == MON_NEXT || (field == MON_NAME && !strcmp(key,cap.name))
+		       || (field == MON_PATH && !strcmp(key, cap.path))
+		       || (field == MON_LINK && !strcmp(key,cap.link)))
+		   	return(&cap);
+		   else
+		   	free(cap.name);
+                }
 	}
 }
 
