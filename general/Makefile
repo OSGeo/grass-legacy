@@ -9,6 +9,7 @@ SUBDIRS = \
 	g.gisenv \
 	g.mapsets \
 	g.parser \
+	g.proj \
 	g.region \
 	g.setproj \
 	g.tempfile \
