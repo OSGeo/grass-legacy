@@ -1,0 +1,11 @@
+all:
+	$(GMAKE) d.3d
+	$(GMAKE) d.colors
+	$(GMAKE) d.labels
+	$(GMAKE) d.measure
+	$(GMAKE) d.savescreen
+	$(GMAKE) d.scale
+	$(GMAKE) d.where
+	$(GMAKE) paint
+	$(GMAKE) v.build
+	$(GMAKE) v.import
