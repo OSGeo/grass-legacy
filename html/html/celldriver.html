@@ -1,0 +1,70 @@
+<TITLE>CELL driver</TITLE>
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><B>CELL driver</B></EM>  - driver to redirect graphical output into a
+raster map<BR>
+<EM>(drivers)</EM>
+
+<H2>DESCRIPTION</H2>
+The CELL driver can be used to redirect the output of the GRASS monitor into
+a raster map. Features are:
+
+<ul>
+<li> storing graphical output into a file with better resolution than
+through screen grabbing.
+<li>saving 3-dimensional output from d.3d or other display programs 
+to a <i>D_cell</i> raster map.
+<li>saving display overlays (raster/raster/vector/...) to a file for high
+resolution export with r.out.tiff or similar
+</ul>
+
+The user will find a <i>D_cell</i> raster file in GRASS database  after starting
+the driver and using d.rast, d.vect etc. and finally stopping the driver
+again. The <i>D_cell</i> raster file is written during closing procedure
+(this may require some time according to the selected resolution).<br>
+
+Then the user can export this file through r.out.tiff etc. for use in
+external mapping software.<p>
+
+Be aware that <i>D_cell</i> map is in a xy-projection which may differ to the
+current location's projection.
+So the <i>D_cell</i> map cannot be directly displayed on a GRASS monitor.
+
+<h2>Usage in details</h2>
+
+<ul>
+<li>Set the map size for the CELL driver:
+<ul>
+<dd><tt>export GRASS_WIDTH=xxx</tt> &nbsp;&nbsp; (default is 640)
+<dd><tt>export GRASS_HEIGHT=yyy</tt> &nbsp;&nbsp; (default is 480)<br>
+<dd>If "export" command is not accepted by your shell, use "setenv" instead:
+<dd><tt> setenv GRASS_WIDTH xxx</tt>
+<dd><tt> setenv GRASS_HEIGHT yyy</tt>
+</ul>
+<li>Start the CELL driver:
+<dd><tt> d.mon start=CELL</tt>&nbsp;&nbsp; Wait for "Ready" message (may
+                                                  take some time due to the
+                                                  file size selected)
+<li>Now the user can work with the common display modules:
+<dd><tt>d.zzzz (d.rast, d.vect, d.3d,...)</tt>&nbsp;&nbsp; Note that an
+eventually started GRASS monitor won't display anything as the output is
+redirected to <i>D_cell</i> file.
+<li>Stop the CELL driver (and write <i>D_cell</i> file):
+<dd><tt>d.mon stop=CELL</tt>&nbsp;&nbsp; Note that this may require some
+time.
+<li>To export the<i>D_cell</i> file, re-set the region:
+<dd><tt>g.region raster=D_cell</tt>
+<dd>Use the r.out.* export module.
+</ul>
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="g.region.html">g.region</A></EM>
+
+<H2>AUTHOR</H2>
+CERL 
+</BODY>
+</HTML>
