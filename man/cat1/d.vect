@@ -1,7 +1,7 @@
 
 
 
-d.vect               GRASS Reference Manual                d.vect
+d.vect <main>        GRASS Reference Manual         <main> d.vect
 
 
 
@@ -60,14 +60,14 @@ NOTES
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-d.vect               GRASS Reference Manual                d.vect
+d.vect <main>        GRASS Reference Manual         <main> d.vect
 
 
 
@@ -78,8 +78,6 @@ SEE ALSO
 AUTHOR
      Michael Shapiro, U.S. Army Construction Engineering Research
      Laboratory
-     James Westervelt, U.S. Army Construction Engineering
-     Research Laboratory
 
 
 
@@ -126,7 +124,9 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+
+
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
