@@ -1,0 +1,10 @@
+LIBES  = $(GISLIB)
+
+PGM    = Mimportcell
+
+LIST   = main.o gethead.o
+
+$(BIN)/$(PGM): $(LIST) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+$(LIBES): #
