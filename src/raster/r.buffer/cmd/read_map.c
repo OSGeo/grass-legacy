@@ -2,8 +2,9 @@
 
     /* read the input map. convert non-zero to 1 */
 
-read_input_map (input, mapset)
+read_input_map (input, mapset, quiet)
     char *input, *mapset;
+    int quiet;
 {
     int fd;
     int row;
@@ -27,14 +28,16 @@ read_input_map (input, mapset)
     minrow = -1; maxrow = -1;
     mincol = window.cols; maxcol = 0;
 
-    fprintf (stderr, "Reading input map (%s)    ... ", input);
+    if ( ! quiet )
+       fprintf (stderr, "Reading input map (%s)    ... ", input);
 
     count_rows_with_data = 0;
 
     for (row = 0; row < window.rows; row++)
     {
 	hit = 0;
-	G_percent (row, window.rows, 2);
+        if ( ! quiet )
+	   G_percent (row, window.rows, 2);
 
 	if (G_get_map_row (fd, cell, row) < 0)
 	{
@@ -58,7 +61,8 @@ read_input_map (input, mapset)
 	}
 	cell -= window.cols;
     }
-    G_percent (row, window.rows, 2);
+    if ( ! quiet )
+       G_percent (row, window.rows, 2);
     G_close_cell(fd);
     free (cell);
 }
