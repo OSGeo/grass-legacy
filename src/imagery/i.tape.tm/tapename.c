@@ -1,4 +1,3 @@
-/* %W% %G% */
 get_tapename (name)
     char *name;
 {
