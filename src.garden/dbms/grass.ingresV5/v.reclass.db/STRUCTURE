@@ -1,0 +1,14 @@
+************************************
+v.reclass.db
+
+(m) means modified for INGRES
+
+Katarina Johnsson 920417
+************************************
+
+main (m)
+	sqlQry (m, <=> infxQry)
+		ingresUnTable (new)
+		ingresGetKey (new)
+		modCat
+
