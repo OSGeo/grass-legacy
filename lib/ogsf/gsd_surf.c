@@ -2007,7 +2007,7 @@ int gsd_surf_map(geosurf * surf)
     unsigned int ktrans;
     
     int step_val = 2; /* should always be factor of 2 for fan */
-    int start_val = 1;
+    int start_val = 1; /* one half of step_val */
 
     /* avoid scaling by zero */
     GS_get_scale(&tx, &ty, &tz, 1);
@@ -2131,7 +2131,7 @@ int gsd_surf_map(geosurf * surf)
     /* will also need to set check_transp, check_shine, etc & fix material */
     cnt = 0;
                         
-    for (row = 1; row < ycnt; row+=step_val) {
+    for (row = start_val; row < ycnt; row+=step_val) {
       	if (GS_check_cancel()) {
 	    gsd_popmatrix();
 	    gsd_blend(0); 
