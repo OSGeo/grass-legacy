@@ -366,7 +366,9 @@ int main (int argc, char *argv[])
      * we need to read some more data and then buil a scanline.
      * This way we don-t need to change the rest of the code.
      */
-   
+  if (Verbose)
+    G_percent (row, height, 2);
+ 
     switch (readmode) {
       case READ_IMAGE_BY_TILE:
         if (row % tilelength == 0) {
@@ -558,7 +560,7 @@ int count_colors( TIFF *tif, int height,int width, u_char *buf)
     
     tilesize = TIFFTileSize(tif);
     
-    tilebuf = (int*)G_malloc(TIFFTileSize(tif));
+    tilebuf = (u_char*)G_malloc(TIFFTileSize(tif));
     
     for (y = 0; y < height; y += tilelength)
       for (x = 0; x < width; x += tilewidth) {
@@ -701,7 +703,7 @@ int get_tif_colors( TIFF *tif, u_long height, u_long width, u_char *buf)
     
     tilesize = TIFFTileSize(tif);
     
-    tilebuf = (int*)G_malloc(TIFFTileSize(tif));
+    tilebuf = (u_char*)G_malloc(TIFFTileSize(tif));
     
     for (y = 0; y < height; y += tilelength)
       for (x = 0; x < width; x += tilewidth) {
