@@ -15,7 +15,7 @@ main(int argc, char *argv[])
     
     print = G_define_flag();
     print->key               = 'p';
-    print->description       = "Use -p flag to print only current connection parameters";    
+    print->description       = "print current connection parameters and exit";
     
     driver = G_define_option() ;
     driver->key        = "driver" ;
