@@ -32,7 +32,6 @@ OBJ =\
 	orthoref.o\
 	ref_points.o\
 	title_camera.o
-#	vask_block.o
 
 all: $(IMAGERYLIB2) 
 
