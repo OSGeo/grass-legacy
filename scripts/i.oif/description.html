@@ -1,15 +1,25 @@
 <H2>DESCRIPTION</H2>
 
-
-<EM>i.oif</EM> Calculates Optimum Index Factor for LANDSAT TM bands 1,2,3,4,5 and 7.
-<br>
-
+<EM>i.oif</EM> calculates the Optimum Index Factor for LANDSAT TM bands 1,2,3,4,5 and 7.
+<P>
+The Optimum Index Factor is calculated to determine the band combination which
+shows the maximum information when combined into a composite image. The bands
+comprising the highest scoring combination from <EM>i.oif</EM> are used as the 
+three color channels required for <EM><A HREF="d.rgb.html">d.rgb</A></EM> or
+<EM><A HREF="r.composite.html">r.composite</A></EM>.
+<P>
+The analysis is saved to a file in the current directory called "i.oif.result".
 
 <H2>REFERENCES</H2>
 
 Jensen, 1996. Introductory digital image processing, p.98. ISBN 0-13-205840-5
 
-
+<H2>SEE ALSO</H2>
+<EM><A HREF="d.rgb.html">d.rgb</A></EM><BR>
+<EM><A HREF="r.composite.html">r.composite</A></EM><BR>
+<EM><A HREF="r.covar.html">r.covar</A></EM><BR>
+<EM><A HREF="r.univar.html">r.univar</A></EM><BR>
+<BR>
 <H2>AUTHOR</H2>
 
 Markus Neteler, ITC-Irst, Trento, Italy
