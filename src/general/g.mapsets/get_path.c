@@ -21,7 +21,6 @@ get_mapset_path (void)
 	fprintf (stdout,"or the names themselves)\n");
 	fprintf (stdout,"    (to ADD to end of list, use + . . .)\n");
 	fprintf (stdout,"    (to DELETE from list, use - . . .)\n");
-	fprintf (stdout,"    ('+' or '-' must be followed by space)\n");
 	first = 0;
     }
 
@@ -29,23 +28,22 @@ get_mapset_path (void)
 
     fprintf (stdout,"\nnew list> ");
     if (!fgets (b = buf,1024,stdin)) goto same;
-    buf[strlen(buf)-1]='\0';
-    if (sscanf (buf,"%s",name) != 1)
-	    goto same;
+    while(isspace(*b))b++;
 
-    if (strlen (name) == 1) 
-	switch (name[0]) {
+	switch (*b) {
 	case '+':	/* preload existing path into choice array */
 	    action = ADD;
             for (n = 0; n < ncurr_mapsets;
 	     choice[nchoices++] = curr_mapset[n++]);
-	    goto next;
+	    b++;
 	    break;
 	case '-':
 	    action = DELETE;
-	    goto next;
+	    b++;
+	    break;
+	default :
+	    action = REPLACE;
 	}
-    action = REPLACE;
 	
     while (1)
     {
