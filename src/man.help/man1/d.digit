@@ -1,0 +1,86 @@
+.\" %W% %G%
+.TH d.digit 1
+.SH NAME
+d.digit \- Interactive tool used to draw and save vector features
+on a graphics monitor using a 
+.CT "pointing device (mouse)" "mouse"
+.br
+\fI(Available through\fR \fBgrass3\fR \fImenu)\fR
+.SH SYNOPSIS
+.B d.digit
+.SH DESCRIPTION
+The GRASS tool \fId.digit\fR provides the user with a way to draw lines, areas,
+and circles on a 
+.CT "monitor screen," "graphics monitor,"
+and to save these features in a cell 
+.CT "file." "map."
+Lines, areas, and circles are to be drawn using a 
+.CT "pointing device (mouse)." "mouse."
+A mouse button menu indicates the consequences of pressing each
+mouse button.  The user is requested to enter the category 
+.CT number value
+associated with the line, area, or circle subsequently drawn by the
+user.  Lines, areas, and circles are defined by the series of points
+marked by the user inside the 
+.CT map display
+window.  \fId.digit\fR will close
+areas when the user has not.  By drawing a series of such features,
+the user can repair 
+.CT "maps," "cell maps,"
+identify areas of interest, or simply draw
+graphics for advertisement.  When drawing is completed, a 
+.XT grid 
+cell map based on the user's instructions is generated.  It is available
+for use as a mask, in analyses, and for display.
+.PP
+Digitizing is done in a "polygon" method.  Each area is circumscribed
+completely.  Two or more areas and/or lines might define a single
+part of a 
+.CT "map." "ceel map."
+Each part of the 
+.CT "map," "cell map,"
+however, is assigned only the
+LAST area or line which covered it.
+.PP
+THE PROCESS:
+.in +.5i
+Step 1:  Choose to define an area or line, quit, or finish.
+If you quit, the session exits with nothing created.
+If you choose to finish (\fIdone\fR), you will be prompted for a
+new 
+.CT map "cell map"
+name;  the new 
+.CT map "cell map"
+is then created.
+.sp
+Step 2:  If you choose to make an area or line you must identify
+the category 
+.CT number value
+for that area or line.
+.sp
+Step 3:  Using the mouse trace the line or circumscribe the area;
+or, finish (go to Step 1).
+.in -.5i
+.SH NOTES
+The GRASS tool \fIdisplay(1)\fR also offers an on-screen digitizing
+option through its \fIdigitize\fR option.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO(2D)\fR	Introduction to GRASS \fID\fR tools
+.br
+.sp
+\fIdigit(1)\fR	T{
+Highly interactive tool for digitizing, editing, 
+.CT "" and
+labeling 
+.CT "and converting vector data to raster form" "vector data"
+T}
+.br
+\fIdisplay(1)\fR	Tool for displaying and producing maps
+.br
+\fIDmapgraph(2D)\fR	Draws simple graphics 
+.CT "on a map" "in a geographic window"
+.TE
+.SH "AUTHOR"
+Jim Westervelt, U.S. Army Construction Engineering Research Lab
