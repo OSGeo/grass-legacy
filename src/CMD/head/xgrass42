@@ -1,40 +1,46 @@
-CC                  = cc
-ARCH                =
-
-GISBASE             = /stokes3/macgyver/grass/bin42
-UNIX_BIN            = /export/home/macgyver/bin1
-
-DEFAULT_DATABASE    = /stokes3/macgyver/grassdata
-DEFAULT_LOCATION    = PERMANENT
-
-COMPILE_FLAGS       = -O
-LDFLAGS             = -s
-
+CC                  = gcc
+FC                  = f77
+YACC                = yacc
+LEX                 = lex -l
+#LEXLIB              = -ll
+ARCH                = linux
+ 
+GISBASE             = /usr/local/grass42
+UNIX_BIN            = /usr/local/bin
+ 
+DEFAULT_DATABASE    = 
+DEFAULT_LOCATION    = 
+ 
+# -fwritable-strings - for ps.map only
+#COMPILE_FLAGS       = -O2 -m486 -fwritable-strings
+COMPILE_FLAGS       = -O2 -m486
+LDFLAGS             = -Wl,-s
+ 
 XCFLAGS             = -D_NO_PROTO
 XLDFLAGS            =
-XINCPATH            = -I/usr/openwin/include
-XMINCPATH           = -I/usr/dt/include
-XLIBPATH            = -L/usr/openwin/lib
-XTLIBPATH           = -L/usr/openwin/lib
-XMLIBPATH           =
+XINCPATH            =
+XMINCPATH           =
+XLIBPATH            = -L/usr/X11R6/lib
+XTLIBPATH           = -L/usr/X11R6/lib
+XMLIBPATH           = -L/usr/X11R6/lib
 XLIB                = -lX11
 XTLIB               = -lXt
 XMLIB               = -lXm
 XEXTRALIBS          =
-
-TERMLIB             = -ltermlib
+ 
+TERMLIB             =
 CURSES              = -lcurses $(TERMLIB)
 MATHLIB             = -lm
-
+ 
 #                   LIBRULE = ar ruv $@ $?
 #                   LIBRULE = ar ruv $@ $?; ranlib $@
 #                   LIBRULE = ar ruv $@ $?; ar ts $@
 #                   LIBRULE = ar rc $@ `lorder $(OBJ) | tsort`
 LIBRULE             = ar ruv $@ $?
-
-USE_TERMIO          =
+ 
+USE_TERMIO          = -DUSE_TERMIO
 USE_MTIO            = -DUSE_MTIO
-USE_FTIME           =
-DIGITFLAGS          =
+USE_FTIME           = -DUSE_FTIME
+DIGITFLAGS          = -DUSE_SETREUID -DUSE_SETPRIORITY
 VECTLIBFLAGS        =
-GETHOSTNAME         = -DGETHOSTNAME_UNAME
+GETHOSTNAME         = -DGETHOSTNAME_OK
