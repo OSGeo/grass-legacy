@@ -19,7 +19,7 @@ int do_copy (int n, char *old, char *mapset, char *new)
 
     hold_signals(1);
     if ( strcmp(list[n].alias, "vect") == 0 ) {
-	ret = Vect_copy ( old, mapset, new );
+	ret = Vect_copy ( old, mapset, new, stderr );
 	if ( ret == -1 ) {
 	    G_warning ("Cannot copy %s to %s", G_fully_qualified_name(old, mapset), new );
 	}
