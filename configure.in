@@ -1181,6 +1181,14 @@ LOC_CHECK_INC_PATH(proj,External PROJ.4,PROJINC)
 
 LOC_CHECK_INCLUDES(proj_api.h,External PROJ.4,$PROJINC)
 
+# PROJ version check
+
+LOC_CHECK_VERSION(proj_api.h,PJ_VERSION,External PROJ.4,proj_ver,$PROJINC,UNKNOWN)
+
+if test `expr "$proj_ver" \< 446` = 1 ; then
+    AC_MSG_ERROR([*** PROJ.4.4.6 or later is required.])
+fi
+
 # With PROJ library directory
 
 LOC_CHECK_LIB_PATH(proj,External PROJ.4,PROJLIB)
