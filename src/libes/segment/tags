@@ -1,0 +1,19 @@
+Mtry	try.c	/^main()$/
+check	debug.c	/^static check(SEG, row, col, me)$/
+read_int	init.c	/^read_int (fd, n)$/
+segment_address	address.c	/^segment_address (SEG, row, col, n, index)$/
+segment_flush	flush.c	/^segment_flush (SEG)$/
+segment_format	format.c	/^segment_format (fd, nrows, ncols, srows, scols, le/
+segment_get	debug.c	/^segment_get (SEG, buf, row, col)$/
+segment_get_row	get_row.c	/^segment_get_row (SEG, buf, row)$/
+segment_init	init.c	/^segment_init (SEG, fd, nseg)$/
+segment_pagein	pagein.c	/^segment_pagein (SEG,n)$/
+segment_pageout	pageout.c	/^segment_pageout (SEG,i)$/
+segment_put	debug.c	/^segment_put (SEG, buf, row, col)$/
+segment_put_row	put_row.c	/^segment_put_row (SEG, buf, row)$/
+segment_release	release.c	/^segment_release (SEG)$/
+segment_seek	seek.c	/^segment_seek (SEG, n, index)$/
+segment_setup	setup.c	/^segment_setup (SEG)$/
+select	pagein.c	/^select (SEG, n)$/
+write_int	format.c	/^write_int (fd, n)$/
+zero_fill	format.c	/^zero_fill(fd,nbytes)$/
