@@ -1,6 +1,6 @@
 Known bugs in current GRASS GIS version 5.0 CVS
 
-$Id: BUGS,v 1.102 2001-01-10 12:55:55 markus Exp $
+$Id: BUGS,v 1.103 2001-01-12 15:46:29 markus Exp $
 [In sync with GRASS 5.0 beta CVS version]
 
 Maintained by
@@ -27,16 +27,6 @@ being release-critical. They are indicated [RC].
     (being worked on by ?)
 
 ----------- libraries ---------------------------------------------
-src/libes/geom: optri  -> used by s.geom, v.geom
-   I [Bill Hughes] have been working through some errors in 
-   src/libes/geom/optri and I have a tarball of the directory attached below.  
-   This is not done yet, but it needs some expertise from somebody who 
-   understands it.  Two references to grAllocate() have only 3 parameters.  
-   I don't understand what it does, so I can't really guess at what
-   should be passed as the final parameter.  I have put in 0 for the
-   moment to get the compile to work.
-   (being worked on by Andreas Lange)
-
 Vector:
  R_polygon_abs() seems to ignore islands. Correct?
 
