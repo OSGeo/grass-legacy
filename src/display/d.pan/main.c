@@ -26,11 +26,28 @@ int main (int argc, char **argv)
     R_open_driver();
 
     if(D_get_cell_list (&rast, &nrasts) < 0)
-               rast = NULL;
+	rast = NULL;
+    else
+    {
+	rast = (char **)G_realloc(rast, (nrasts+1)*sizeof(char *));
+	rast[nrasts] = NULL;
+    }
+
     if(D_get_dig_list (&vect, &nvects) < 0)
-               vect = NULL;
+	vect = NULL;
+    else
+    {
+	vect = (char **)G_realloc(rast, (nvects+1)*sizeof(char *));
+	vect[nvects] = NULL;
+    }
+
     if(D_get_site_list (&site, &nsites) < 0)
-               site = NULL;
+	site = NULL;
+    else
+    {
+	site = (char **)G_realloc(rast, (nsites+1)*sizeof(char *));
+	site[nsites] = NULL;
+    }
 
     R_close_driver();
                     
