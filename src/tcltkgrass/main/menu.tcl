@@ -571,6 +571,9 @@ menu_build 1 .main_menu {
             "Trim small spurs" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.trim"
             }
+            "Build polylines" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.build.polylines"
+            }            
             -separator
             "Change projection on ASCII vector" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.proj"
