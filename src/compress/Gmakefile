@@ -1,0 +1,14 @@
+all: $(BIN)/compress $(BIN)/decompress
+
+$(BIN)/compress: compress.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ compress.o $(GISLIB)
+
+$(BIN)/decompress: decompress.o $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ decompress.o $(GISLIB)
+
+decompress.c: compress.c
+	rm -f $@
+	echo '#define DECOMPRESS' > $@
+	cat $? >> $@
+
+$(GISLIB): #
