@@ -890,7 +890,7 @@ wkt_to_grass( const char * wkt,
             pszValue++;
         }
         else
-            pszValue = "";
+            pszValue = "defined";
         
         /* The latlong projection is known as ll in GRASS */
         if( G_strcasecmp(pszToken,"proj") == 0
