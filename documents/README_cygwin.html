@@ -16,13 +16,13 @@ GIS on Windows/Cygwin</font></font></h1></center>
 
 <hr SIZE=5 NOSHADE WIDTH="100%">
 <p><font face="Arial,Helvetica">This directory contains the latest Win32
-binary distribution of GRASS 5.0 as a gzipped tape archive (<a href="grass5.0beta12_CYGWIN_NT_5.0bin.tar.gz">grass5.0beta12_CYGWIN_NT-5.0_bin.tar.gz</a>).
-The script <a href="grass5install.sh">grass5install.sh</a> should be run
-from within the cygwin shell to install the binary package. Please read
-the <a href="grass5_0bininstall-cygnus.html">detailed installation instruction</a>.
-If you want to compile yourself, you can get the latest GRASS source code
-from the <a href="grasscvs.html">CVS-Server</a> and follow the <a href="grass5_0compile-cygwin.html">compiling
-instruction</a>.</font>
+binary distribution of GRASS 5.0 as a gzipped tape archive (<a href="http://www.geog.uni-hannover.de/grass/grass5/binary/windows_cygnus/">grass5.0beta12_CYGWIN_NT-5.0_bin.tar.gz</a>).
+The script <a href="http://www.geog.uni-hannover.de/grass/grass5/binary/windows_cygnus/">grass5install.sh</a>
+should be run from within the cygwin shell to install the binary package.
+Please read the <a href="cygwin_grass50bininstall.html">detailed installation
+instruction</a>. If you want to compile yourself, you can get the latest
+GRASS source code from the <a href="grasscvs.html">CVS-Server</a> and follow
+the <a href="cygwin_grass50compile.html">compiling instruction</a>.</font>
 <p><font face="Arial,Helvetica">The port is compiled with the <a href="http://sources.redhat.com/cygwin/">Cygnus
 compiler</a> (gcc) from the same source code as the UNIX version. The port
 was done by John Huddleston (<i>John.Huddleston@usda.gov</i>).</font>
@@ -67,14 +67,27 @@ works, but is not very well tested.</font>
 within the X Window system on top of cygwin.</font>
 <p><u><font face="Arial,Helvetica">Not working:</font></u>
 <blockquote><font face="Arial,Helvetica">menu system tcltkgrass (needs
-to be ported to cygwin wish)</font>
+to be ported to cygwin wish, partly done)</font>
 <br><font face="Arial,Helvetica">tcl/tk scripts (could be ported with minor
 effort)</font>
-<br><font face="Arial,Helvetica">nviz (togl needs to be ported, cygwin
-wish)</font>
-<br><font face="Arial,Helvetica">postgreSQL-Interface (not tested)</font>
-<br><font face="Arial,Helvetica">ODBC-Interface (not tested)</font>
-<br><font face="Arial,Helvetica">R-interface (not tested)</font></blockquote>
+<br><font face="Arial,Helvetica">nviz (togl needs to be ported, must be
+linked with the cygwin wish)<br>
+&nbsp;&nbsp;&nbsp; [src.contrib/GMSL/NVIZ2.2]</font>
+<br><font face="Arial,Helvetica">GRID3D raster volume support (needs to
+be ported)</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp;&nbsp; [src.contrib/GMSL/g3d]</font>
+<br><font face="Arial,Helvetica">PostgreSQL-Interface (not tested)</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp;&nbsp; [src.garden/grass.postgresql]</font>
+<br><font face="Arial,Helvetica">ODBC-Interface (compiles with unixODBC-2.0.5,
+but not tested)</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp;&nbsp; [src/libes/dbmi/drivers/odbc]</font>
+<br><font face="Arial,Helvetica">R-interface (not tested)</font>
+<br><font face="Arial,Helvetica">r.in.gdal (requires external gdal library,
+compiles, but produces stackdump)</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp;&nbsp; [src/raster/r.in.gdal]</font>
+<br><font face="Arial,Helvetica">PNGdriver (problems compiling the gd library,
+not tested)</font>
+<br><font face="Arial,Helvetica">&nbsp;&nbsp;&nbsp; [src/display/devices/PNGdriver]</font></blockquote>
 <font face="Arial,Helvetica">These parts do currently not work and require
 some work and user feedback.</font>
 <p><i><font face="Arial,Helvetica">We are searching for developers to assist
@@ -86,9 +99,8 @@ instruction</a></font>
 instruction</a></font>
 <p>
 <hr SIZE=5 NOSHADE WIDTH="100%"><font face="Arial,Helvetica"><a href="http://www.geog.uni-hannover.de/grass/grass5/binary/windows_cygnus/README_cygwin.html">Save
-this text.</a></font>
-<hr SIZE=5 NOSHADE WIDTH="100%">
-<br><font face="Arial,Helvetica"><font size=-2>Andreas Lange, andreas.lange@rhein-main.de,
+this text.
+<hr SIZE=5 NOSHADE WIDTH="100%"></a><font size=-2>Andreas Lange, andreas.lange@rhein-main.de,
 28.03.2001</font></font>
 </body>
 </html>
