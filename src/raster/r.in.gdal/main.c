@@ -184,6 +184,9 @@ int main (int argc, char *argv[])
     if( GDALGetGeoTransform( hDS, adfGeoTransform ) == CE_None
         && adfGeoTransform[5] < 0.0 )
     {
+        if (adfGeoTransform[2] != 0.0 || adfGeoTransform[4] != 0.0)
+          G_fatal_error("Input map is rotated - cannot import. You may use 'gdalwarp' to transform the map to North-up.");
+
         cellhd.north = adfGeoTransform[3];
         cellhd.ns_res = fabs(adfGeoTransform[5]);
         cellhd.south = cellhd.north - cellhd.ns_res * cellhd.rows;
