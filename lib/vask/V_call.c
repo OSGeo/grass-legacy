@@ -87,41 +87,43 @@ CALLS:
 ***********************************************************************/
 #include <stdlib.h>
 #include <string.h>
+#include "config.h"
 #include "vask.h"
 
-static int centered(char *);
+static int centered(const char *);
 static int fmt(char *,int,double);
 
 /* define the V__ struct defined in vask.h */
 struct V__ V__ ;
 
 #define DUMP	001
-#define BELL	007
-#define BS		010
-#define FS		014
-#define NL		012
-#define UP		013
-#define CR		015
+#define BS	010
+#define FS	014
+#define NL	012
+#define UP	013
+#define CR	015
 #define RPLT	022
-#define ESC		033
-#define CTRLC		003
+#define ESC	033
+#define CTRLC	003
 
 #define TARGET	V__.usr_answ[at_answer].targetptr
-#define ROW		V__.usr_answ[at_answer].row
-#define COL		V__.usr_answ[at_answer].col
+#define ROW	V__.usr_answ[at_answer].row
+#define COL	V__.usr_answ[at_answer].col
 #define LENGTH	V__.usr_answ[at_answer].length
 #define TYPE	V__.usr_answ[at_answer].var_type
 #define ANSWER	scr_answ[at_answer].position
-#define RELINE	move(ROW, COL) ;                       \
-				for (incr2=0;incr2<LENGTH; incr2++)    \
-					addch('_')  ;                      \
-				move(ROW, COL) 
+#define RELINE	do {                                           \
+			move(ROW, COL) ;                       \
+			for (incr2=0;incr2<LENGTH; incr2++)    \
+				addch('_')  ;                  \
+			move(ROW, COL) ;                       \
+		} while (0)
 
 /* flag ctrl-c is to be allowed */
 
 static int interrupts_ok = 0;			/* mod shapiro */
 
-int V_call() 
+int V_call(void) 
 {
     int incr ;
     int incr2 ;
@@ -129,13 +131,13 @@ int V_call()
     int at_answer   ;
     int at_constant ;
     int ans_col     ;
-    char newchar    ;
-    char lastchar = 0;
-    int c;
+    int newchar     ;
+    int lastchar = 0;
+    int new_answer  ;
     struct { char position[80]; } scr_answ[MAX_ANSW] ;
     int y,x;		/* shapiro */
     char temp[100];
-
+    int done;
 
 /* Zero out screen answer locations */
     for(incr=0; incr<MAX_ANSW; incr++)
@@ -242,194 +244,178 @@ int V_call()
 
 /* Begin taking commands/answers from terminal */
     at_answer = 0 ;
+    new_answer = 0 ;
     ans_col  = 0 ;
 
     move(ROW, COL) ;
     refresh() ;
 
-    while(1)
+    for (done = 0; !done; )
     {
 	getyx (stdscr, y, x);
 
-	c = getch() & 0177;
-	if(c == EOF)
-	{
-	    move (y, x);
-	    refresh();
-	    continue;
-	}
-	if (c == CTRLC && interrupts_ok == 0)
-	{
-	    move (y, x);
-	    refresh();
-	    continue;
-	}
-	if (V__.NUM_ANSW <= 0)
-	{
-	    if (c == ESC || c == CTRLC)
-	    {
-		interrupts_ok = 0;
-		V_exit() ;
-fprintf(stderr,"Returning from V_call\n");
-		return(c == ESC) ;
-	    }
-	    move (y, x);
-	    refresh();
-	    continue;
-	}
-	newchar = c;
+	newchar = getch();
+
 	switch (newchar)  
 	{
-	case CR: case NL: case UP: case ESC: case CTRLC:
-		V__remove_trail(LENGTH, ANSWER) ;
-		switch (TYPE) 
-		{
-		case 's':
-		    /*
-			ans_col = (LENGTH) ; 
-			while((ANSWER[--ans_col] < 041) || (ANSWER[ans_col] > 0175));
-			ANSWER[++ans_col] = 000 ;
-		    */
-		    /*
-			V__remove_trail(LENGTH, ANSWER) ;
-		    */
-			strcpy(TARGET.c, ANSWER) ;
-			RELINE ;
-			addstr(TARGET.c) ;
-			break ;
-		case 'i':
-			*TARGET.i = atoi(ANSWER) ;
-			RELINE ;
-			sprintf(temp,"%d", *TARGET.i) ;
-			addstr (temp) ;
-			break ;
-		case 'l':
-			*TARGET.l = atol(ANSWER) ;
-			RELINE ;
-			sprintf(temp,"%ld", *TARGET.l) ;
-			addstr (temp) ;
-			break ;
-		case 'f':
-			sscanf (ANSWER,"%f",TARGET.f);
-			RELINE ;
-			fmt (ANSWER, V__.usr_answ[at_answer].decimal_places,
-				(double)*TARGET.f);
-			sscanf (ANSWER,"%f",TARGET.f);
-			addstr (ANSWER) ;
-			break ;
-		case 'd':
-			sscanf (ANSWER,"%lf",TARGET.d);
-			RELINE ;
-			fmt (ANSWER, V__.usr_answ[at_answer].decimal_places,
-				(double)*TARGET.d);
-			sscanf (ANSWER,"%lf",TARGET.d);
-			addstr (ANSWER) ;
-			break ;
-		default:
-			break ;
-		}
-		if ((newchar == CR && lastchar == ESC)|| newchar == CTRLC) 
-		{
-		    interrupts_ok = 0;
-		    V_exit() ;
-		    return(c == CR) ;
-		}
-                if (newchar == ESC) 
-		{
-                    lastchar = ESC;
-                    break;
-                }
-		if (newchar == UP)
-		    at_answer = (at_answer+num_answers-1) % num_answers ;
-		else
-		    at_answer = (at_answer+1) % num_answers ;
-		ans_col  = 0 ;
-		move(ROW, COL) ;
-		refresh() ;
-		break ;
+	case ERR:
+	    break;
 
+	case ESC:
+	    if (V__.NUM_ANSW <= 0)
+		done = 1;
+	    break;
+
+	case CTRLC:
+	    if (interrupts_ok || V__.NUM_ANSW <= 0)
+		done = 1;
+	    break;
+
+#ifdef KEY_UP
+	case KEY_UP:
+#endif
+	case UP:
+	    new_answer = (at_answer+num_answers-1) % num_answers ;
+	    ans_col = 0 ;
+	    break ;
+
+#ifdef KEY_DOWN
+	case KEY_DOWN:
+#endif
+	case CR:
+	case NL:
+	    new_answer = (at_answer+1) % num_answers ;
+	    ans_col  = 0 ;
+	    if (lastchar == ESC && newchar == CR)
+		done = 1;
+	    break ;
+
+#ifdef KEY_BACKSPACE
+	case KEY_BACKSPACE:
+#endif
+#ifdef KEY_LEFT
+	case KEY_LEFT:
+#endif
 	case BS:
-		ans_col = (ans_col-1 >= 0) ? ans_col-1 : 0 ;
-		move(ROW, COL + ans_col) ;
-		refresh() ;
-		break ;
+	    ans_col = (ans_col-1 >= 0) ? ans_col-1 : 0 ;
+	    break ;
 
+#ifdef KEY_RIGHT
+	case KEY_RIGHT:
+#endif
 	case FS:
-		if (ANSWER[ans_col+1] != '\0')
-		{
-		    ans_col = (ans_col+1 <= LENGTH) ? ans_col+1 : LENGTH ;
-		    move(ROW, COL + ans_col) ;
-		    refresh() ;
-		}
-		else
-		    putc(BELL, stderr) ;
-		break ;
+	    ans_col = (ans_col+1 < LENGTH && ANSWER[ans_col]) ? ans_col+1 : ans_col ;
+	    break ;
 
+#ifdef KEY_HOME
+	case KEY_HOME:
+	    ans_col = 0 ;
+	    break ;
+#endif
+
+#ifdef KEY_END
+	case KEY_END:
+	    for (ans_col = 0; ans_col < LENGTH && ANSWER[ans_col]; ans_col++)
+		;
+	    break ;
+#endif
+
+#ifdef KEY_REFRESH
+	case KEY_REFRESH:
+#endif
 	case RPLT:
-		getyx (stdscr, y, x);		/* shapiro */
-		wrefresh(curscr) ;
-		move (y, x);		/* shapiro */
-		refresh();		/* shapiro */
-		break ;
+	    wrefresh(curscr) ;
+	    break ;
 
+#ifdef KEY_PRINT
+	case KEY_PRINT:
+#endif
 	case DUMP:
-		V__dump_window() ;
-		break ;
+	    V__dump_window() ;
+	    break ;
+
+	case '\177':
+	    break;
 
 	default:
-                if (newchar == 91 && lastchar == ESC) {
-                    lastchar = -91;
-                    break;
-                }
-                if (lastchar == -91) {
-                    lastchar = 0;
-                    if (newchar == 49) {        /* HOME */
-		        ans_col = 0 ;
-                    } else if (newchar == 52) { /* END */
-                        for (c = 0; c < LENGTH && ANSWER[c]; c++) {}
-		        ans_col = --c ;
-                    } else if (newchar == 65) { /* UP */
-		        at_answer = (at_answer+num_answers-1) % num_answers ;
-		        ans_col  = 0 ;
-                    } else if (newchar == 66) { /* DOWN */
-		        at_answer = (at_answer+1) % num_answers ;
-		        ans_col  = 0 ;
-                    } else if (newchar == 67) { /* LEFT */
-		        if (ans_col+1 < LENGTH && ANSWER[ans_col+1]) ++ans_col;
-                    } else if (newchar == 68) { /* RIGHT */
-		        ans_col = (ans_col-1 >= 0) ? ans_col-1 : 0 ;
-                    } else if (newchar == 50) { /* DELETE */
-                        break;
-                    }
-		    move(ROW, COL + ans_col) ;
-		    refresh() ;
-                    break;
-                }
-		if (ans_col >= LENGTH) 
-		    break ;
-		if ((newchar >= '\040') && (newchar < '\176')) 
-		{
-		    addch(newchar) ;
-		    ANSWER[ans_col] = newchar ;
-		    ans_col++ ;
-		    refresh() ;
-		}
+	    if (ans_col < LENGTH && newchar >= 040 && newchar <= 0377)
+	    {
+		addch(newchar) ;
+		ANSWER[ans_col] = newchar ;
+		ans_col++ ;
+	    }
+	    break ;
+	}
+
+	if (new_answer != at_answer || done)
+	{
+	    V__remove_trail(LENGTH, ANSWER) ;
+	    switch (TYPE) 
+	    {
+	    case 's':
+		strcpy(TARGET.c, ANSWER) ;
+		RELINE ;
+		addstr(TARGET.c) ;
 		break ;
-	} 
-    } 
+	    case 'i':
+		*TARGET.i = atoi(ANSWER) ;
+		RELINE ;
+		sprintf(temp,"%d", *TARGET.i) ;
+		addstr (temp) ;
+		break ;
+	    case 'l':
+		*TARGET.l = atol(ANSWER) ;
+		RELINE ;
+		sprintf(temp,"%ld", *TARGET.l) ;
+		addstr (temp) ;
+		break ;
+	    case 'f':
+		sscanf (ANSWER,"%f",TARGET.f);
+		RELINE ;
+		fmt (ANSWER, V__.usr_answ[at_answer].decimal_places,
+		     (double)*TARGET.f);
+		sscanf (ANSWER,"%f",TARGET.f);
+		addstr (ANSWER) ;
+		break ;
+	    case 'd':
+		sscanf (ANSWER,"%lf",TARGET.d);
+		RELINE ;
+		fmt (ANSWER, V__.usr_answ[at_answer].decimal_places,
+		     (double)*TARGET.d);
+		sscanf (ANSWER,"%lf",TARGET.d);
+		addstr (ANSWER) ;
+		break ;
+	    default:
+		break ;
+	    }
+
+	    at_answer = new_answer;
+	}
+
+	lastchar = newchar;
+	move(ROW, COL + ans_col) ;
+	refresh();
+
+	if (done)
+	{
+	    interrupts_ok = 0;
+	    V_exit() ;
+	    return (newchar != CTRLC);
+	}
+    }
 }
 
-int V_intrpt_ok()
+int V_intrpt_ok(void)
 {
     interrupts_ok = 1;		/* will be set false when V_call() exists */
 
-	return 0;
+    return 0;
 }
-int V_intrpt_msg ( char *msg)
+int V_intrpt_msg (const char *msg)
 {
     strcpy (V__.interrupt_msg, msg);
 
-	return 0;
+    return 0;
 }
 
 
@@ -448,10 +434,10 @@ static int fmt(char *s,int n, double x)
     if (n < 0)
 	V__trim_decimal(s);
 
-	return 0;
+    return 0;
 }
 
-static int centered( char *msg)
+static int centered(const char *msg)
 {
     int indent;
 
@@ -461,5 +447,5 @@ static int centered( char *msg)
     addstr(msg);
     addstr("\n");
 
-	return 0;
+    return 0;
 }

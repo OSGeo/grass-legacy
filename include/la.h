@@ -37,6 +37,8 @@
    [Also a consideration for -lg2c]
 */
 
+#include <stdio.h>
+
 /* The following may have to be selectively installed according
    to platform, at least partly
 */
@@ -146,6 +148,15 @@ int G_vector_set(vec_struct *, int, int, vtype, int);
 double G_vector_norm_euclid(vec_struct *);
 double G_vector_norm_maxval(vec_struct *, int);
 vec_struct *G_vector_copy(const vec_struct *, int);
+
+/* Matrix and vector routines corresponding to ?? */
+
+void G_vector_free(vec_struct *);
+vec_struct *G_vector_sub(vec_struct *, vec_struct *, vec_struct *);
+double G_vector_norm1(vec_struct *);
+int G_matrix_read(FILE *, mat_struct *);
+int G_matrix_stdin(mat_struct *);
+int G_matrix_eigen_sort(vec_struct *, mat_struct *);
 
 #endif /* LA_H_ */
 

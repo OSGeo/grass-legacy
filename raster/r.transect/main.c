@@ -23,7 +23,6 @@ int main (int argc, char *argv[])
     } parms;
 
     G_gisinit (argv[0]);
-    projection = G_projection();
 
 	module = G_define_module();
 	module->description =
@@ -63,6 +62,8 @@ int main (int argc, char *argv[])
 
     if (G_parser(argc,argv))
 	exit(1);
+
+    projection = G_projection();
 
     sscanf (parms.width->answer, "%d", &n);
     if (n <= 0 || n%2 == 0)

@@ -22,6 +22,8 @@ main (int argc, char *argv[])
 	struct Option *raster, *fs, *cats, *vals;
     } parm;
 
+    G_gisinit (argv[0]);
+
 	module = G_define_module();
 	module->description =
 		"Prints category values and labels associated "
@@ -56,9 +58,6 @@ main (int argc, char *argv[])
     parm.fs->type       = TYPE_STRING ;
     parm.fs->required   = NO;
     parm.fs->description= "Output separator character (default: tab)" ;
-
-
-    G_gisinit (argv[0]);
 
     if (G_parser(argc, argv))
 	exit(-1);

@@ -4,6 +4,7 @@
  * This program is free software under the GPL (>=v2)
  * Read the file GPL.TXT coming with GRASS for details.
  */
+#include <stdlib.h>
 #include "datetime.h"
 #include "math.h"
 

@@ -1,4 +1,20 @@
 /*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       GRASS 5 gis library, gishelp.c
+ * AUTHOR(S):    unknown
+ * PURPOSE:      Print help information
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
+/*
  **********************************************************************
  *
  *  G_gishelp(helpfile, request)
@@ -30,7 +46,7 @@ int G_gishelp( char *helpfile , char *request )
     if (! access(file, 04))
     {
 	fprintf(stderr, "one moment...\n") ;
-	sprintf(buffer, "more %s", file) ;
+	sprintf(buffer, "$GRASS_PAGER %s", file) ;
 	system(buffer) ;
     }
     else

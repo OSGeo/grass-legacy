@@ -20,6 +20,9 @@ int main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt1, *opt2 ;
 
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
+
 	module = G_define_module();
 	module->description =
 		"Program for generating and displaying simple graphics to the "
@@ -37,9 +40,6 @@ int main (int argc, char **argv)
 	opt2->answer     = "white" ;
 	opt2->options    = D_color_list();
 	opt2->description= "Color selection graphics" ;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	hsize = vsize = 5. ;
 

@@ -8,12 +8,25 @@
 
 #include "png.h"
 
-extern int colorTable[];
- 
-int color(number)
-	int number ;
+#include "colors.h"
+#include "driverlib.h"
+#include "gis.h"
+
+int color(int number)
 {
-  currentColor = colorTable[number];
-  /*fprintf(stderr,"color: Setter farge til %d\n",number);*/
-  return(0);
+    if (number >= NCOLORS || number < 0)
+    {
+        G_warning("Color: can't set color %d\n", number);
+        return 0;
+    }
+
+    if (get_table_type() == FLOAT)
+        currentColor = number;
+    else if (true_color)
+        currentColor = number;
+    else
+        currentColor = xpixels[number];
+
+    return 0;
 }
+

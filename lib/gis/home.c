@@ -13,6 +13,7 @@
  *   NULL if can't determine
  *
  ***************************************************************/
+#include <stdlib.h>
 #include "gis.h"
 
 char *

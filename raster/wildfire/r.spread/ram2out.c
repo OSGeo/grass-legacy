@@ -37,9 +37,9 @@ ram2out ()
 				else	*(y_cell + col) = (int)(north - window.ns_res*DATA(map_y_out, row, col));
 			}
 		}
-		G_put_map_row(cum_fd,cell);
-		if (x_out)	G_put_map_row(x_fd,x_cell);
-		if (y_out)	G_put_map_row(y_fd,y_cell);
+		G_put_raster_row(cum_fd,cell, CELL_TYPE);
+		if (x_out)	G_put_raster_row(x_fd,x_cell, CELL_TYPE);
+		if (y_out)	G_put_raster_row(y_fd,y_cell, CELL_TYPE);
 	}
 	if (verbose)
 	    G_percent (row, nrows, 2);

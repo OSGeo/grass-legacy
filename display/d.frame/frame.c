@@ -24,7 +24,7 @@ main (int argc, char *argv[])
 {
     int check_at();
     char buf[1024];
-    int create, select, print, debug;
+    int create, select, print, debug, list;
 	struct GModule *module;
     struct
     {
@@ -33,11 +33,14 @@ main (int argc, char *argv[])
     struct
     {
 	struct Flag *debug;
+	struct Flag *list;
 	struct Flag *select;
 	struct Flag *print;
 	struct Flag *create;
 	struct Flag *erase;
     } flag;
+
+    G_gisinit(argv[0]);
 
 	module = G_define_module();
 	module->description =
@@ -59,6 +62,10 @@ main (int argc, char *argv[])
     flag.select->key = 's';
     flag.select->description = "Select a frame";
 
+    flag.list = G_define_flag();
+    flag.list->key = 'l';
+    flag.list->description = "List map names displayed in GRASS monitor";
+
     flag.debug = G_define_flag();
     flag.debug->key = 'D';
     flag.debug->description = "Debugging output";
@@ -76,7 +83,7 @@ main (int argc, char *argv[])
     parm.at->type = TYPE_DOUBLE;
     parm.at->required = NO;
     parm.at->multiple = NO;
-    parm.at->description = "Where to place the frame (implies -c)";
+    parm.at->description = "Where to place the frame (implies -c), values in percent";
     parm.at->checker = check_at;
 
     if (G_parser(argc,argv))
@@ -89,6 +96,7 @@ main (int argc, char *argv[])
     print  = flag.print->answer;
     select = flag.select->answer;
     debug  = flag.debug->answer;
+    list   = flag.list->answer;
 
     if (parm.at->answer)
     {
@@ -135,6 +143,12 @@ main (int argc, char *argv[])
     if (debug)
     {
 	sprintf (buf, "%s/etc/frame.dumper", G_gisbase());
+	if(system (buf)) exit(1);
+    }
+
+    if (list)
+    {
+	sprintf (buf, "%s/etc/frame.list", G_gisbase());
 	if(system (buf)) exit(1);
     }
 

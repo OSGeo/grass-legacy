@@ -168,11 +168,6 @@ int select_current_env(void);
 int select_target_env(void);
 /* title.c */
 int display_title(View *);
-/* tty.c */
-int Get_old_tty(void);
-int Get_new_tty(void);
-int Old_tty(void);
-int New_tty(void);
 /* use_camera.c */
 int setup_camera_file(void);
 /* view.c */

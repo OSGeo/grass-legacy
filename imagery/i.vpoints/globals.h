@@ -184,11 +184,6 @@ int select_current_env(void);
 int select_target_env(void);
 /* title.c */
 int display_title(View *);
-/* tty.c */
-int Get_old_tty(void);
-int Get_new_tty(void);
-int Old_tty(void);
-int New_tty(void);
 /* use_plot1.c */
 int use_plot1(char *, char *);
 /* view.c */

@@ -6,8 +6,8 @@
  * The external variables define the pixle limits of the graphics surface.  The
  * coordinate system used by the applications programs has the (0,0) origin
  * in the upper left-hand corner.  Hence,
- *    SCREEN_LEFT < SCREEN_RIGHT
- *    SCREEN_TOP  < SCREEN_BOTTOM 
+ *    screen_left < screen_right
+ *    screen_top  < screen_bottom 
  *
  * NCOLORS is set to the total number of colors available on the device.  This
  * most certainly needs to be more than 100 (or so).  If you are writing a
@@ -22,20 +22,22 @@
 #include "gis.h"
 #include "driverlib.h"
 
-
-#define MAIN
 #include "png.h"
 
-int SCREEN_LEFT	  = 1;
-int SCREEN_TOP    = 1;
-
-int SCREEN_RIGHT;
-int SCREEN_BOTTOM;
-
+char *file_name;
+FILE *output;
+gdImagePtr im;
 int NCOLORS = gdMaxColors;
-int colorTable[gdMaxColors];
+int currentColor;
+unsigned long *xpixels;
+int true_color;
 
-int Graph_Set (void) 
+int screen_left;
+int screen_top;
+int screen_right;
+int screen_bottom;
+
+int Graph_Set (int argc, char **argv, int nlev) 
 {
     char *p;
     int ret;
@@ -55,21 +57,21 @@ int Graph_Set (void)
      */
 
     if (NULL != (p = getenv ("GRASS_WIDTH"))) {
-	SCREEN_RIGHT = atoi (p);
-        if (SCREEN_RIGHT <= 1) {
-	    SCREEN_RIGHT = DEF_WIDTH;
+	screen_right = atoi (p);
+        if (screen_right <= 0) {
+	    screen_right = DEF_WIDTH;
         }
     } else {
-	SCREEN_RIGHT = DEF_WIDTH;
+	screen_right = DEF_WIDTH;
     }
 
     if (NULL != (p = getenv ("GRASS_HEIGHT"))) {
-	SCREEN_BOTTOM = atoi (p);
-        if (SCREEN_BOTTOM <= 0) {
-            SCREEN_BOTTOM = DEF_HEIGHT;
+	screen_bottom = atoi (p);
+        if (screen_bottom <= 0) {
+            screen_bottom = DEF_HEIGHT;
         }
     } else {
-	SCREEN_BOTTOM = DEF_HEIGHT;
+	screen_bottom = DEF_HEIGHT;
     }
 
 
@@ -95,57 +97,27 @@ int Graph_Set (void)
     /*
      * Creating the image
      */
-    
-    if (NULL == (p = getenv ("GRASS_BACKGROUNDCOLOR"))) {
-        p = "FFFFFF";
-    }
-    /*
-    if (strlen(p)<>6) {
-      p = "FFFFFF";
-    } 
-    */
-    im = gdImageCreate(SCREEN_RIGHT, SCREEN_BOTTOM);
-    colorBuffer[0] = p[0];
-    colorBuffer[1] = p[1];
-    colorBuffer[2] = '\0';
-    red = (int) strtol(colorBuffer, (char **)NULL, 16);
-    colorBuffer[0] = p[2];
-    colorBuffer[1] = p[3];
-    colorBuffer[2] = '\0';
-    green = (int) strtol(colorBuffer, (char **)NULL, 16);
-    colorBuffer[0] = p[4];
-    colorBuffer[1] = p[5];
-    colorBuffer[2] = '\0';
-    blue = (int) strtol(colorBuffer, (char **)NULL, 16);
-    
-    ret = gdImageColorAllocate(im, red, green, blue);
-    if(ret == -1) {
-      fprintf(stderr, "PNG: color allocation error");
-      exit(1);
-    }
-    currentColor = ret;
 
-    if (NULL == (p = getenv ("GRASS_TRANSPARENT"))) {
-      p = "DEFAULT";
+#ifdef HAVE_GDIMAGECREATETRUECOLOR
+    p = getenv("GRASS_TRUECOLOR");
+    if (p && strcmp(p, "TRUE") == 0) {
+	true_color = 1;
+	im = gdImageCreateTrueColor(screen_right - screen_left, screen_bottom - screen_top);
     }
+    else
+#endif
+    im = gdImageCreate(screen_right - screen_left, screen_bottom - screen_top);
 
-    if (strcmp(p,"TRUE") == 0) {
-      gdImageColorTransparent(im, currentColor);
-    }
+    InitColorTableFixed();
 
     /*
      * Init finished
      */
     
-    printf("PNG: collecting to file: %s, width = %d, height = %d\n",
-		file_name, SCREEN_RIGHT, SCREEN_BOTTOM);
+    fprintf(stdout, "PNG: collecting to file: %s,\n     GRASS_WIDTH=%d, GRASS_HEIGHT=%d\n",
+	   file_name, screen_right - screen_left, screen_bottom - screen_top);
 
     fflush(stdout);
     return 0;
 }
-
-
-
-
-
 

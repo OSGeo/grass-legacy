@@ -1,71 +1,70 @@
 /*
+ * $Id$
+ *
+ * 11/2001: added c,v flags, fixed mouse for CELL maps MN
+ * 10/2001: added labelnum MN
+ *
  * This file is a first attempt to merge the 5.0 version of d.leg.thin
  * and the 4.3 code which supports the flags.
  *
  * The old 4.x code is here:
  *  src421/untested/display/d.leg.thin/
  *
- * Not working yet! Volunteers welcome.
- *
- * $Id$
  */
 
+#include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
+#include "local_proto.h"
 
 /* height to width ratio when generating automatic smooth legends */
 #define LEGEND_HTOW 8
 
-/* number of labels printed when generating smooth legends */
-#define NUM_SM_LABELS 5
-
+#define VAL     0x1
+#define CAT     0x10
 
 int main( int argc, char **argv )
 {
 	char *mapset ;
-	char buff[512] , tmp_buf1[50], tmp_buf2[50], *descr;
+	char buff[512];
 	char map_name[64] ;
 	char window_name[64] ;
 	int black ;
 	int cats_num ;
-	int cats_num_real ;
 	int color ;
 	int cur_dot_row ;
 	int do_cats ;
 	int dots_per_line ;
-	int dot_rows_per_box;
         int thin ;
-        int i, j, k ;
-	int lines ;
+        int i, j;
+	int lines, steps ;
 	int new_colr, fp;
 	int t, b, l, r ;
-	int hide_cats, do_smooth, use_mouse;
+	int hide_catnum, hide_catstr, do_smooth, use_mouse;
 	char *cstr;
-	int type ;
 	int white ;
-	int x_box[5] , px_box[5];
-	int y_box[5] , py_box[5];
+	int x_box[5];
+	int y_box[5];
 	struct Categories cats ;
 	struct Colors colors ;
 	struct GModule *module;
-	struct Option *opt1, *opt2, *opt3, *opt4, *opt5;
-	struct Flag *hide, *smooth, *mouse;
+	struct Option *opt1, *opt2, *opt4, *opt5, *opt6;
+	struct Flag *hidestr, *hidenum, *smooth, *mouse;
 	struct Range range ;
 	struct FPRange fprange ;
 	CELL min_ind, max_ind, null_cell;
 	DCELL dmin, dmax, val;
+	int x0, x1, y0, y1;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
 	module->description =
-		"improved version of d.legend that allows:\n"
-		"- Thinning the categories to be represented in the legend\n"
-		"- Displaying a continuous gradient of all categories in the legend\n"
-		"- Interactive mouse placement of the smooth gradient box.";
+		"Displays  a  legend  for a raster map layer in the active "
+		"frame on the graphics monitor.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
@@ -105,9 +104,24 @@ int main( int argc, char **argv )
 	opt5->options    = "1-1000" ;
 	opt5->description= "Thinning factor (thin=10 gives cats 0,10,20...)";
 
-	hide = G_define_flag ();
-	hide->key = 'n';
-	hide->description = "Do not show category values";
+	opt6 = G_define_option() ;
+	opt6->key        = "labelnum" ;
+	opt6->type       = TYPE_INTEGER ;
+	opt6->answer     = "5" ;
+	opt6->options    = "2-100" ;
+	opt6->description= "Number of labels for legend description" ;
+
+	hidestr = G_define_flag ();
+	hidestr->key = 'v';
+	hidestr->description = "Do not show category labels";
+
+	hidenum = G_define_flag ();
+	hidenum->key = 'c';
+	hidenum->description = "Do not show category numbers";
+
+        /*	hidenodata = G_define_flag ();
+	hidenodata->key = 'n';
+	hidenodata->description = "Do not show no data values"; */
 
 	smooth = G_define_flag ();
 	smooth->key = 's';
@@ -115,7 +129,7 @@ int main( int argc, char **argv )
 
 	mouse = G_define_flag ();
 	mouse->key = 'm';
-	mouse->description = "Use mouse to size & place legend (only when -s is specified)";
+	mouse->description = "Use mouse to size & place legend";
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -123,7 +137,9 @@ int main( int argc, char **argv )
 
 	strcpy(map_name, opt1->answer) ;
 
-	hide_cats = hide->answer;
+        hide_catstr = hidestr->answer;
+        hide_catnum = hidenum->answer;
+        /*        hide_nodata = hidenodata->answer; */
 	do_smooth = smooth->answer;
 	use_mouse = mouse->answer;
 	
@@ -157,6 +173,10 @@ int main( int argc, char **argv )
 		sscanf(opt5->answer,"%d", &thin);
 	if(!thin) thin=1;
 
+	if (opt6->answer != NULL)
+		sscanf(opt6->answer,"%d",&steps);
+
+
 	/* Make sure map is available */
 	mapset = G_find_cell (map_name, "") ;
 	if (mapset == NULL)
@@ -172,12 +192,16 @@ int main( int argc, char **argv )
 	}
 
         fp = G_raster_map_is_fp(map_name, mapset);
-	if (fp) do_smooth = TRUE;
+	if (fp)
+	{ 
+	 do_smooth = TRUE;
+	 fprintf(stderr, "FP map found - switching gradient legend on\n");
+	}
 
 	if (G_read_cats(map_name, mapset, &cats) == -1)
 	{
 		sprintf(buff,"Category file for [%s] not available", map_name) ;
-		G_fatal_error(buff) ;
+		G_warning(buff) ;
 	}
 
 	G_set_c_null_value(&null_cell, 1);
@@ -205,13 +229,18 @@ int main( int argc, char **argv )
 	{
 	   if (G_read_range(map_name, mapset, &range) == -1)
 	   {
-	     sprintf(buff,"Range information for [%s] not available", map_name);
+	     sprintf(buff,"Range information for [%s] not available (run r.support)", map_name);
 	     G_fatal_error(buff) ;
 	   }
 	   G_get_range_min_max (&range, &min_ind, &max_ind);
+	/*   if(G_is_c_null_value(&min_ind) && G_is_c_null_value(&max_ind))
+	   {
+	    min_ind = 1;
+	    max_ind = 0;
+	   } */
 	   cats_num = max_ind - min_ind + 1 ;
         }
-	else
+	else /* is fp */
 	{
 	   if (G_read_fp_range(map_name, mapset, &fprange) == -1)
 	   {
@@ -227,25 +256,32 @@ int main( int argc, char **argv )
 
 	/* Figure number of lines, number of pixles per line and text size */
 	dots_per_line = (b - t) / lines ;
+	if ((dots_per_line == 0) && (do_smooth == 0))
+	{
+	   do_smooth = 1; /* for CELL maps with lot's of cats */
+	   fprintf(stderr, "Forcing smooth legend as too many categories for current monitor height.\n");
+	   /* an alternate solution is to set   dots_per_line=1   */
+	}
+		
 	R_text_size((int)(dots_per_line*4/5), (int)(dots_per_line*4/5)) ;
 
 /* Here the 4.3 version starts:  */
-	if(do_smooth){
-	int x0, x1, y0, y1;
-	int k, wleg, lleg, dx, dy, horiz;
-	int  txt, txb, txl, txr, txsiz;
-	int ppl;
-	int tcell;
-	    
-	    if(use_mouse)
+
+	if(use_mouse)
 		get_legend_box(&x0, &x1, &y0, &y1);
-	    else{
+	else{
 		x0 = l+4;
 		y0 = t+4;
 		y1 = b-4;
 		x1 = x0 + (y1 - y0)/LEGEND_HTOW;
-	    }
-		
+	}
+
+	if(do_smooth){
+	int k, wleg, lleg, dx, dy, horiz;
+	int txsiz;
+	int ppl;
+	int tcell;
+	    
 	    horiz = (x1-x0 > y1-y0);
 
 	    if(horiz){
@@ -260,7 +296,7 @@ int main( int argc, char **argv )
 	    }
 	    R_move_abs(x0, y0);
 	    txsiz = (int)((y1-y0)/20);
-	    ppl = (lleg)/(NUM_SM_LABELS-1);
+	    ppl = (lleg)/(steps-1);
 	    R_text_size(txsiz, txsiz);
 	    for (k = 0; k < lleg; k++){
 		if (!fp){
@@ -278,33 +314,41 @@ int main( int argc, char **argv )
 
 	    if(!use_mouse || !horiz){
 		R_standard_color(color) ;
-		for(k = 0; k< NUM_SM_LABELS; k++){
+		for(k = 0; k< steps; k++){
 		    /* Draw text */
 		    if (!fp){	
-		        tcell = min_ind + k * (double)(max_ind - min_ind)/(NUM_SM_LABELS-1);
-		        if(hide_cats)
-			    sprintf(buff, "%s", G_get_cat(tcell, &cats));
+		        tcell = min_ind + k * (double)(max_ind - min_ind)/(steps-1);
+		        cstr = G_get_cat(tcell, &cats);
+		        if(!cstr[0]) /* no cats found, disable str output */
+		          hide_catstr=1;
+
+		        if(hide_catnum && ! hide_catstr) /* str only */
+			    sprintf(buff, " %s", cstr);
 		        else{
-			    cstr = G_get_cat(tcell, &cats);
-			    if(cstr[0])
-			        sprintf(buff, "%2d) %s", tcell, cstr);
-			    else
+			    if(! hide_catnum && hide_catstr) /* num only */
 			        sprintf(buff, "%2d", tcell);
-		        }
+			    else{
+			        if(hide_catnum && hide_catstr) /* nothing, box only */
+			           buff[0] = 0;
+			        else
+			           sprintf(buff, "%2d) %s", tcell, cstr); /* both */
+			        }
+			    }
 		    } 
 		    else {
-		        val = dmin + k * (dmax - dmin)/(NUM_SM_LABELS-1);
-			sprintf(buff, "%lf", val);
+		        /* FP map */
+		        val = dmin + k * (dmax - dmin)/(steps-1);
+			sprintf(buff, "%f", val);
 		    }
 		    if(!k) /* first  */
 			R_move_abs(x1+4, y0+txsiz) ;
-		    else if(k == NUM_SM_LABELS-1) /* last */
+		    else if(k == steps-1) /* last */
 			R_move_abs(x1+4,y1) ;
 		    else
 			R_move_abs(x1+4,y0+ppl*k + txsiz/2) ;
 		    R_text(buff) ;
-		}
-	    }
+		} /* for */
+	    } /* !use_mouse || !horiz */
 
 	    lleg = y1-y0;
 	    wleg = x1-x0;
@@ -326,8 +370,40 @@ int main( int argc, char **argv )
 	    R_cont_rel(-wleg, 0) ;
 
 	}
-	else{
+	else{   /* no smooth */
 
+	    /* if mouse, adjust legend box to mouse settings */
+	    if (mouse->answer)
+	    {
+	      int lleg, dx, dy, horiz, txsiz;
+
+	      /* set legend box according to nouse settings */
+	      t=x0;
+	      l=y0;
+	      b=x1;
+	      r=y1;
+
+	      horiz = (x1-x0 > y1-y0);
+	      if(horiz){
+		lleg = x1-x0;
+		dx = 0;
+		dy = y1-y0;
+	      }
+	      else{
+		lleg = y1-y0;
+		dy = 0;
+		dx = x1-x0;
+	      }
+	      R_move_abs(x0, y0);
+	      
+	      /* adjust text size */
+	      txsiz = (int)((y1-y0)/20);
+	      R_text_size(txsiz, txsiz);
+	      
+	      /* smaller boxes */
+	      dots_per_line = (b - t) / lines ;
+	    }
+	    
 	    /* Set up box arrays */
 	    x_box[0] = 0                 ;
 	    y_box[0] = 0                 ;
@@ -339,6 +415,7 @@ int main( int argc, char **argv )
 	    y_box[3] = (dots_per_line-6) ;
 	    x_box[4] = (6-dots_per_line) ;
 	    y_box[4] = 0                 ;
+
 
 	    /* Draw away */
 	    cur_dot_row = t + dots_per_line/2;
@@ -369,15 +446,23 @@ int main( int argc, char **argv )
 
 		    /* Draw text */
 		    R_standard_color(color) ;
-		    if(hide_cats)
-			sprintf(buff, "%s", G_get_cat(i, &cats));
-		    else{
-			cstr = G_get_cat(i, &cats);
-			if(cstr[0])
-			    sprintf(buff, "%2d) %s", i, cstr);
-			else
-			    sprintf(buff, "%2d", i);
-		    }
+		    cstr = G_get_cat(i, &cats);
+	            if(!cstr[0])    /* no cats found, disable str output */
+	              hide_catstr=1;
+		   
+	            if(hide_catnum && ! hide_catstr) /* str only */
+		        sprintf(buff, " %s", cstr);
+	            else{
+		        if(! hide_catnum && hide_catstr) /* num only */
+		            sprintf(buff, "%2d", i);
+		        else{
+		            if(hide_catnum && hide_catstr) /* nothing, box only */
+		               buff[0] = 0;
+		            else
+		               sprintf(buff, "%2d) %s", i, cstr); /* both */
+		            }
+		        }
+
 		    R_move_abs((l+3+dots_per_line), (cur_dot_row));
 		    R_text(buff);
 	    }
@@ -390,9 +475,9 @@ int main( int argc, char **argv )
 		    R_text(buff) ;
 	    }
 	}
+
 	if (! mouse->answer)
 	    D_add_to_list(G_recreate_command()) ;
-
 
 	R_close_driver();
 	exit(0);

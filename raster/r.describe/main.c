@@ -31,6 +31,8 @@ int main (int argc, char *argv[])
 	  struct Option *nsteps;
 	} option;
 
+	G_gisinit (argv[0]);
+
 	module = G_define_module();
 	module->description =
 		"Prints terse list of category values found in a raster map layer.";
@@ -81,10 +83,6 @@ int main (int argc, char *argv[])
 	flag.i =G_define_flag() ;
 	flag.i->key        = 'i';
 	flag.i->description = "read fp map as integer";
-
-
-
-	G_gisinit (argv[0]);
 
 	verbose = 1;
 

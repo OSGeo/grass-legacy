@@ -84,9 +84,8 @@ int	nrows, ncols;
 struct 	Cell_head window;
 
 
-main(argc,argv)
-int argc;
-char *argv[];
+int
+main (int argc, char *argv[])
 {
 	/***input of Rothermel equation (1972)***/
 	float h=8000.0,	/*heat of combustion, BTU/lb.*/
@@ -207,6 +206,19 @@ char *argv[];
 	} parm;
 
 	struct Flag *flag1, *flag2;
+	struct GModule *module;
+
+	/* initialize access to database and create temporary files */
+	G_gisinit (argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+
+	"Generates three, or four raster map layers showing 1) the base "
+	"(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, "
+	"3) the direction of the maximum ROS, and optionally 4) the "
+	"maximum potential spotting distance.";
 
 	parm.model = G_define_option() ;
 	parm.model->key        = "model" ;
@@ -284,11 +296,6 @@ char *argv[];
 	flag2 = G_define_flag();
 	flag2->key = 's';
 	flag2->description = "Also produce maximum SPOTTING distance";
-
-
-	/* initialize access to database and create temporary files */
-	G_gisinit (argv[0]);
-            
 
 	/*   Parse command line */
 	if (G_parser(argc, argv))
@@ -798,10 +805,11 @@ char *argv[];
 			maxdir[col] = (int)Rdir;
 /*printf("(%d, %d)\nR0=%.2f, vel=%d, dir=%d, phiw=%.2f, s=%d, as=%d, phis=%.2f, R=%.1f, Rdir=%.0f\n", row, col, R0, vel[col], dir[col], phiw, slope[col], aspect[col], phis, R, Rdir);*/
 		}
-		G_put_map_row(base_fd,base);
-		G_put_map_row(max_fd,max);
-		G_put_map_row(maxdir_fd,maxdir);
-		if (spotting) G_put_map_row(spotdist_fd,spotdist);
+		G_put_raster_row(base_fd,base, CELL_TYPE);
+		G_put_raster_row(max_fd,max, CELL_TYPE);
+		G_put_raster_row(maxdir_fd,maxdir, CELL_TYPE);
+		if (spotting)
+			G_put_raster_row(spotdist_fd,spotdist, CELL_TYPE);
 	} 
 	if (verbose)
 	    G_percent (row, nrows, 2);

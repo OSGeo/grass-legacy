@@ -29,11 +29,24 @@ int parse (char *line,RULE **rules,RULE **tail,struct Categories *cats)
     {
 	while (*cur == ' ' || *cur == '\t' || *cur == '\n')
 	    cur++;
+	if(!*cur)
+	    break;
  
 	switch (state)
 	{
 	case 0:
             save = cur;
+            if(!strncmp(cur, "help", 4)) /* help text */
+	    {
+                fprintf (stdout, "Enter a rule in one of these formats:\n");
+                fprintf (stdout, "1 3 5      = 1   poor quality\n");
+                fprintf (stdout, "1 thru 10  = 1\n");
+                fprintf (stdout, "20 thru 50 = 2   medium quality\n");
+                fprintf (stdout, "*          = NULL\n");
+                state = 0;
+                cur += 4;
+                continue;
+            }
   	    if(*cur == '*') /* default rule */
             {
               default_rule = 1;
@@ -45,10 +58,10 @@ int parse (char *line,RULE **rules,RULE **tail,struct Categories *cats)
 		return -1;
             if(G_is_c_null_value(&v)) 
             {
-              G_warning("can't have null on the left-hand side of the rule");;
+              G_warning("can't have null on the left-hand side of the rule");
               return -1;
             }
-	    state = 1;
+            state = 1;
 	    cur = save;
 	    continue;
 	case 1:
@@ -74,7 +87,7 @@ int parse (char *line,RULE **rules,RULE **tail,struct Categories *cats)
 		continue;
             if(last_null)
             {
-               G_warning("can't have null on the left-hand side of the rule");;
+               G_warning("can't have null on the right-hand side of the rule");;
                return -1;
             }
 	    cur += 4;
@@ -87,7 +100,7 @@ int parse (char *line,RULE **rules,RULE **tail,struct Categories *cats)
 		return -1;
             if(G_is_c_null_value(&v)) 
             {
-               G_warning("can't have null on the left-hand side of the rule");;
+               G_warning("can't have null on the right-hand side of the rule");;
                return -1;
             }
 
@@ -143,7 +156,8 @@ int parse (char *line,RULE **rules,RULE **tail,struct Categories *cats)
 
 static int scan_value (CELL *v)
 {
-    int sign;
+    int i, sign, dec;
+    double fv, fd;
 
     if(strncmp(cur, "null", 4) == 0 || strncmp(cur, "NULL", 4) == 0)
     {
@@ -158,14 +172,43 @@ static int scan_value (CELL *v)
    	   sign = -1;
 	   cur++;
        }
+       /*
        if (*cur < '0' || *cur > '9')
    	   return 0;
-
        *v = *cur++ - '0' ;
-       while (*cur >= '0'  && *cur <= '9')
-   	   *v = *v * 10 + *cur++ - '0';
-       *v *= sign;
+       */
+       dec = 0;
+       fv = 0.0;
+
+       while ((*cur >= '0'  && *cur <= '9') || *cur == '.')
+       {
+	   if (*cur == '.')
+	   {
+		   if (!dec)
+			   dec++;
+		   cur++;
+		   continue;
+	   }
+	   if (!dec)
+	   	   fv = fv * 10 + *cur++ - '0';
+	   else
+	   {
+		   fd = 1.0;
+		   for(i=0; i<dec; i++)
+			   fd *= 0.1;
+		   dec++;
+		   fv += (*cur++ - '0') * fd;
+	   }
+       }
+
+       if(dec)
+	    fv += 0.5;
+       *v = sign * (CELL) fv;
+
+       if(dec && state)
+	    fprintf(stdout, "%f rounded up to %d\n", sign*fv, *v);
     }
+
     switch (*cur)
     {
     case 0:
@@ -178,3 +221,4 @@ static int scan_value (CELL *v)
 		return 0;
     }
 }
+

@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_find_database (handle, found)
     dbHandle *handle;
     int *found;

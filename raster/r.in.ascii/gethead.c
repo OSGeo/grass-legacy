@@ -9,13 +9,83 @@
 #define FLOAT      "float"
 #define DOUBLE     "double"
 #define TMPBUFSIZE 8192
+/* rsb fix 
 #define SEEK_SET   0
-#define SEEK_CUR   1
+#define SEEK_CUR   1 */
 
 static int error(char *);
 static int missing(int,char *);
 static int extract(int,char *,char *,void *,int,int (*)());
 static int scan_int(char *,int *,int);
+
+const char gs_ascii_flag[5]={"DSAA"};
+
+int getgrdhead (
+FILE *fd,
+struct Cell_head *cellhd)
+{
+	char grd_flag[6];
+	int nc,nr;
+	float xmin,xmax,ymin,ymax,zmin,zmax;
+
+/* make sure the input file is positioned at the beginning */
+	rewind(fd);
+
+/* read and check the flag on the first line */
+	fgets(grd_flag,sizeof(grd_flag),fd);
+	if(strncmp(gs_ascii_flag,grd_flag,strlen(gs_ascii_flag)))
+	{
+		fprintf(stderr,"Input file is not a Surfer ascii grid file.\n");
+		return 0;
+	}
+
+/* read the row and column dimensions */
+	if(fscanf(fd,"%d %d \n",&nc,&nr) != 2 )
+	{
+		fprintf(stderr,"Error reading the column and row dimension from the Surfer grid file\n");
+		return 0;
+	}
+
+/* read the range of x values */
+	if(fscanf(fd,"%f %f \n", &xmin, &xmax) != 2 )
+	{
+		fprintf(stderr,"Error reading the X range from the Surfer grid file\n");
+		return 0;
+	}
+
+/* read the range of y values */
+	if(fscanf(fd,"%f %f \n", &ymin, &ymax) != 2 )
+	{
+		fprintf(stderr,"Error reading the Y range from the Surfer grid file\n");
+		return 0;
+	}
+
+/* read the range of z values (not used) */
+	if(fscanf(fd,"%f %f \n", &zmin, &zmax) != 2 )
+	{
+		fprintf(stderr,"Error reading the Z range from the Surfer grid file\n");
+		return 0;
+	}
+
+/* initialize the cell header */
+	cellhd->zone = G_zone();
+	cellhd->proj = G_projection();
+	cellhd->rows=nr;
+	cellhd->cols=nc;
+
+	cellhd->ew_res=(double)(xmax-xmin)/(nc-1);
+	cellhd->ns_res=(double)(ymax-ymin)/(nr-1);
+/* the Surfer grid specifies x,y locations of gridded points.  The GRASS raster
+   specifies an area covered by rectangular cells centerd at gridded points.
+   That difference requires an adjustment */
+	cellhd->north = ymax+cellhd->ns_res/2.;
+	cellhd->south = ymin-cellhd->ns_res/2.;
+	cellhd->east = xmax+cellhd->ew_res/2.;
+	cellhd->west = xmin-cellhd->ew_res/2.;
+
+	return 1;
+
+}
 
 int gethead (
 FILE *fd,
@@ -30,6 +100,8 @@ char **nval)
 	char buf[1024];
 	char *err;
 	int ret, len;
+/* rsb fix */
+	fpos_t p;
 
 	n = s = e = w = r = c = 0;
 
@@ -37,10 +109,15 @@ char **nval)
 	cellhd->proj = G_projection();
 
 /*	while (n == 0 || s== 0 || e == 0 || w == 0 || r == 0 || c == 0)*/
+
         while(1)
 	{
+/* rsb fix */
+	  if(fgetpos(fd, &p) != 0) G_fatal_error("File position error");
 	  if (!G_getl(buf,sizeof buf, fd)) break;
+
 	  len = strlen(buf);
+
 	  *label = *value = '\0';
 	  if(NULL == G_strstr(buf, ":")) break;
 	  if(sscanf (buf, "%[^:]:%s", label, value)!=2) break;
@@ -139,7 +216,9 @@ char **nval)
       } /* while */
       /* the line read was not a header line, but actually
       the first data line, so put it back on the stack and break */
-      fseek(fd, -(len+1), SEEK_CUR);
+/* rsb fix */
+      fsetpos(fd, &p);
+
       missing(n,"north") ;
       missing(s,"south") ;
       missing(e,"east") ;

@@ -102,9 +102,9 @@ strcpy (cmd, "pnmcat -lr ");
 sprintf(filename, "%s_%d_%d.ppm ", pref, i, j);
 strcat (cmd, filename);
 	}
-sprintf(filename, "> tmp%d.ppm", i);
+sprintf(filename, "> %stmp%d.ppm", pref, i);
 strcat (cmd, filename);
-sprintf(filename, "tmp%d.ppm ", k);
+sprintf(filename, "%stmp%d.ppm ", pref, k);
 strcat (cmd2, filename);
 if (system(cmd) != 0) {
 fprintf(stderr, "pnmcat failed to create assembled image\n");
@@ -124,7 +124,7 @@ fprintf(stderr, "pnmcat failed to create assembled images\n");
 fprintf(stderr, "Check that pnmcat is installed and path is set\n");
 } else {
 for (m = 1; m <= var_i; m++) {
-sprintf(filename, "tmp%d.ppm", m);
+sprintf(filename, "%stmp%d.ppm", pref, m);
 remove (filename);
 }
 }

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include "rule.h"
@@ -73,7 +74,7 @@ int main (int argc, char *argv[])
 
     if (G_is_reclass (old_name, old_mapset, rname, rmapset) > 0)
     {
-      sprintf(buf, "%s is a reclass of another map. Exiting.\n Use r.mapcalc to generate a copy of input map %s to work with", old_name, old_name);
+      sprintf(buf, "%s is a reclass of map <%s> in mapset <%s>. Consider to use r.mapcalc to generate a map copy. Exiting.", old_name, rname, rmapset);
 	  G_fatal_error(buf);
     }
 
@@ -81,6 +82,11 @@ int main (int argc, char *argv[])
     G_init_cats (0, "", &cats);
     rules = tail = NULL;
     any = 0;
+
+    if(isatty(0))
+	{
+	  fprintf (stdout,"\nEnter the rule or 'help' for the format description:\n");
+	}
 
     while (input(buf))
     {

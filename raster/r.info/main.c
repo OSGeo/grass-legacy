@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <string.h>
 #include "gis.h"
 #include "local_proto.h"
@@ -20,7 +21,9 @@ main (int argc, char *argv[])
     char tmp1[100], tmp2[100], tmp3[100];
     int i;
     CELL mincat, maxcat, cat;
+    double zmin, zmax; /* min and max data values */
     FILE *out, *fopen();
+    struct FPRange range;
     struct Cell_head cellhd;
     struct Categories cats;
     struct History hist;
@@ -34,6 +37,8 @@ main (int argc, char *argv[])
 	struct GModule *module;
     struct Option *opt1;
 
+    G_gisinit(argv[0]);
+
 	module = G_define_module();
 	module->description =
 		"Outputs basic information about a " 
@@ -45,8 +50,6 @@ main (int argc, char *argv[])
     opt1->required   = YES ;
     opt1->gisprompt  = "old,cell,raster" ;
     opt1->description= "Name of existing raster map" ;
-
-    G_gisinit(argv[0]);
 
     if (G_parser(argc, argv))
         exit(1);
@@ -64,6 +67,10 @@ main (int argc, char *argv[])
     hist_ok = G_read_history (name, mapset, &hist) >= 0;
     is_reclass = G_get_reclass (name, mapset, &reclass);
     data_type = G_raster_map_type(name, mapset);
+
+    if (G_read_fp_range (name, mapset, &range) < 0)
+        G_fatal_error ("could not read range file");
+    G_get_fp_range_min_max(&range,&zmin,&zmax);
 
     out = stdout;
 
@@ -133,6 +140,12 @@ main (int argc, char *argv[])
         sprintf (line, "           E: %10s    W: %10s   Res: %5s",
 	    tmp1, tmp2, tmp3);
         printline (line);
+
+        if (data_type ==  CELL_TYPE)
+	  sprintf(line, "  Range of data:    min =  %i max = %i", (CELL)zmin, (CELL)zmax);
+        else
+	  sprintf(line, "  Range of data:    min =  %f max = %f", zmin, zmax);
+	printline (line);
     }
 
     printline ("");

@@ -144,7 +144,7 @@ sprintf(txt_buf,"%d",max);
 R_get_text_box(txt_buf,&tt,&tb,&tl,&tr);
 R_move_abs((int)(l+TEXT_COLUMN*(r-l)-.5*(tr-tl)),(int)(y_line[0]+.5*(tb-tt)));
 R_text(txt_buf);
-R_flush();
+R_stabilize();
 
     return 0;
 }

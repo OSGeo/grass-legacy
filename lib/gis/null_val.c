@@ -67,7 +67,6 @@ static int EmbedGivenNulls (void *cell, char *nulls, RASTER_MAP_TYPE map_type,
     CELL    *c;
     FCELL   *f;
     DCELL   *d;
-    int     ind;
     int     i;
 
     c = (CELL *) cell;

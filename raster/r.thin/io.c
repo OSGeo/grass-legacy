@@ -27,6 +27,7 @@
 /*   n_rows        number of rows in the work file (includes pads) */
 /*   n_cols        number of columns in the work file (includes pads) */
 
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <math.h>
@@ -165,7 +166,7 @@ int
 close_file (char *name)
 {
 	int cell_file, row, k;
-	int row_count, col_count;
+	int row_count, col_count, col;
 	CELL *get_a_row(), *buf;
 
 	if ((cell_file = G_open_cell_new(name)) < 0)
@@ -181,7 +182,12 @@ close_file (char *name)
 	for (row = 0, k = PAD; row < row_count; row++, k++)
 	{
 		buf = get_a_row(k);
-		G_put_map_row(cell_file,buf + PAD);
+		for (col = 0; col < n_cols; col++)
+		{
+		  if (buf[col] == 0)
+			G_set_null_value(&buf[col],1,CELL_TYPE);
+		}
+		G_put_raster_row(cell_file,buf + PAD, CELL_TYPE);
 	}
 	G_close_cell(cell_file);
 	rowio_flush(&row_io);

@@ -1,4 +1,3 @@
-#include "pnm.h"
 #include "png.h"	/* includes zlib.h and setjmp.h */
 #include "version.h"	/* VERSION macro */
 
@@ -35,3 +34,5 @@ static void pnmtopng_error_handler (png_structp png_ptr, png_const_charp msg);
 static int filter = -1;
 static int compression = Z_DEFAULT_COMPRESSION;
 static jmpbuf_wrapper pnmtopng_jmpbuf_struct;
+
+typedef unsigned char xelval;

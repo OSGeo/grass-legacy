@@ -93,9 +93,8 @@ int main (int argc, char *argv[])
     double scik1 = 100000.;
     double zfactor;
     double aspect, min_asp=360., max_asp=0.;
-    double dnorm1, ro, dx2, dy2, grad2, grad, disk, cur1, cur2, dxy2;
+    double dnorm1, dx2, dy2, grad2, grad, dxy2;
     double gradmin = 0.001;
-    int    j, got;
 
     double answer[92];
     double degrees;
@@ -120,11 +119,13 @@ int main (int argc, char *argv[])
 	struct Flag *a,*q;
     } flag;
 
+    G_gisinit (argv[0]);
+
 	module = G_define_module();
     module->description =
 		"Generates raster map layers of slope, aspect, "
 		"curvatures and partial derivatives from a raster "
-		"map layer of true elevation values.";
+		"map layer of true elevation values. Aspect is calculated counterclockwise from east.";
 
     parm.elevation = G_define_option() ;
     parm.elevation->key        = "elevation" ;
@@ -242,8 +243,6 @@ int main (int argc, char *argv[])
     flag.q = G_define_flag() ;
     flag.q->key         = 'q' ;
     flag.q->description = "Quiet" ;
-
-    G_gisinit (argv[0]);
 
     radians_to_degrees = 180.0 / 3.14159 ;
     degrees_to_radians = 3.14159 / 180.0 ;
@@ -991,7 +990,7 @@ int main (int argc, char *argv[])
            G_quantize_fp_map_range(aspect_name, G_mapset(), 0., 360., 0, 360);
 
         G_read_raster_cats (aspect_name, G_mapset(), &cats);
-        G_set_raster_cats_title ("aspect in degrees from east", &cats);
+        G_set_raster_cats_title ("aspect counterclockwise in degrees from east", &cats);
 
 	fprintf(stdout, "min computed aspect %.4f  max computed aspect %.4f\n", min_asp, max_asp);
 	/* the categries quant intervals are 1.0 long, plus

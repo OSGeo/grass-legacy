@@ -1,4 +1,23 @@
 /*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       d.text
+*
+* AUTHOR(S):    James Westervelt, US Army CERL
+*
+* PURPOSE:      display text in active frame
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
+/*
  *   d.text
  *
  *   Draw text in a text window.   Text lines come from stdin.
@@ -19,7 +38,7 @@
 int 
 main (int argc, char **argv)
 {
-        char *cmd_ptr ;
+        char *cmd_ptr, *max_buff ;
         char buff[512] ;
         char window_name[64] ;
         float size ;
@@ -34,6 +53,9 @@ main (int argc, char **argv)
         struct Option *opt1, *opt2, *opt3;
         char *wind_file_name;
         FILE *wind_file;
+
+        /* Initialize the GIS calls */
+        G_gisinit(argv[0]) ;
 
 		module = G_define_module();
 		module->description =
@@ -63,10 +85,6 @@ main (int argc, char **argv)
         opt3->options    = "1-1000" ;
         opt3->description= "The screen line number on which text will begin to be drawn ";
 
-
-        /* Initialize the GIS calls */
-        G_gisinit(argv[0]) ;
-
         /* Check command line */
         if (G_parser(argc, argv))
                 exit(-1);
@@ -78,10 +96,7 @@ main (int argc, char **argv)
 
         color = D_translate_color(opt2->answer) ;
         if (color == 0)
-        {
-                fprintf (stdout,"Don't know the color %s\n", opt2->answer) ;
-                exit(-1);
-        }
+                G_fatal_error("Don't know the color %s\n", opt2->answer) ;
 
         sscanf(opt3->answer,"%d",&start_line);
 
@@ -114,7 +129,7 @@ main (int argc, char **argv)
         /* Do the plotting */
         while (fgets(buff,512,stdin))
         {
-                fprintf(wind_file, "%s\n", buff);
+                fprintf(wind_file, "%s", buff);
                 if (*buff == '.')
                 {
                         for(cmd_ptr=buff+2; *cmd_ptr==' '; cmd_ptr++) ;
@@ -161,9 +176,12 @@ main (int argc, char **argv)
 
         R_text_size(5, 5) ;
 
-        fclose(wind_file);
-
-		D_add_to_list(G_recreate_command()) ;
+	fclose(wind_file);
+	
+	max_buff = G_malloc(strlen(wind_file_name)+strlen(G_recreate_command())+4);
+	sprintf(max_buff, "%s < %s", G_recreate_command(), wind_file_name);
+	D_add_to_list(max_buff);
+	G_free(max_buff);
 
         R_close_driver();
 

@@ -3,7 +3,10 @@
  * color table is available.
  */
 
-can_do_float()
+#include "png.h"
+
+int 
+can_do_float (void)
 {
-	return 1 ;
+	return !true_color ;
 }

@@ -1,8 +1,8 @@
 #include "gis.h"
 
 
-get_legend_box (x0, x1, y0, y1)
-int *x0, *x1, *y0, *y1;
+int 
+get_legend_box (int *x0, int *x1, int *y0, int *y1)
 {
     int screen_x, screen_y ;
     int button ;
@@ -42,6 +42,3 @@ int *x0, *x1, *y0, *y1;
     return(1);
 
 }
-
-
-

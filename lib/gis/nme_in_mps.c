@@ -1,4 +1,3 @@
-#include "gis.h"
 /*****************************************************************
  * G__name_in_mapset (name_in, name_out, mapset)
  *
@@ -13,6 +12,8 @@
  ****************************************************************/
 
 #include "gis.h"
+#include <string.h>
+
 #ifndef COMMENTED_OUT
 int G__name_in_mapset (
     char *name_in,

@@ -24,10 +24,10 @@
     } 
 
     variables [] = { 
-         "x_input",BACKCOL_LAYER,
-         "y_input",BACKROW_LAYER,
-         "coor",START_PT,
-         "output",PATH_LAYER
+         {"x_input",BACKCOL_LAYER},
+         {"y_input",BACKROW_LAYER},
+         {"coor",START_PT},
+         {"output",PATH_LAYER}
     };
 
     static int n_variables = 4;

@@ -73,37 +73,43 @@ int main (int argc, char **argv)
 	char current_frame[64];
 
 	G_gisinit(argv[0]);
-
-	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
-	Sheight = R_screen_bot() - R_screen_top() + 1;
-	Swidth = R_screen_rite() - R_screen_left() + 1;
-
-        Mwind = (struct Cell_head *) G_malloc(sizeof(struct Cell_head));
-	R_pad_list (&pads, &npads);
-
-	/* process the screen pad */
-	p = -1;
-	stat = R_pad_select ("");
-	if (stat) {
-		R_pad_perror ("echo     ERROR", stat);
-		fprintf (stdout,"exit -1\n\n");
-	}
-	else process_pad(&items, &nitems);
-
+	
 	opt1 = G_define_option();
 	opt1->key = "frame";
 	opt1->description = "Name of frame(s) to save";
 	opt1->type = TYPE_STRING;
 	opt1->required = NO;
-	opt1->answer = Scurwin;
 	opt1->multiple = YES;
-	buff[0] = '\0';
-	for (p=npads-1; p>=0; p--) {
-		strcat(buff, pads[p]);
-		if (p != 0)  strcat(buff, ",");
+	/* Conditionalize so "help" and "--interface-description" work */
+	R__open_quiet();  /* don't let library code make us die */
+	if (R_open_driver() == 0)
+	{
+		Sheight = R_screen_bot() - R_screen_top() + 1;
+		Swidth = R_screen_rite() - R_screen_left() + 1;
+
+		Mwind = (struct Cell_head *) G_malloc(sizeof(struct Cell_head));
+		R_pad_list (&pads, &npads);
+
+		/* process the screen pad */
+		p = -1;
+		stat = R_pad_select ("");
+		if (stat) {
+			R_pad_perror ("echo     ERROR", stat);
+			fprintf (stdout,"exit -1\n\n");
+		}
+		else process_pad(&items, &nitems);
+
+
+		opt1->answer = Scurwin;
+		buff[0] = '\0';
+		for (p=npads-1; p>=0; p--) {
+			strcat(buff, pads[p]);
+			if (p != 0)  strcat(buff, ",");
+		}
+		opt1->options = buff;
 	}
-	opt1->options = buff;
+	else
+		stat = -1; /* used to exit, if driver open failed */
 
 	opt2 = G_define_option();
 	opt2->key = "remove";
@@ -142,6 +148,9 @@ int main (int argc, char **argv)
 
 	if (G_parser(argc, argv))
 		exit(1);
+
+	if (stat) /* Check we have monitor */
+		G_fatal_error ("No monitor selected");
 
 	total_rno = 0;
 	if (opt2->answers)

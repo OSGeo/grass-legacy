@@ -162,7 +162,7 @@ CELL cross (int fd[],int verbose,int non_zero,int primary,int outfd)
 		pnode->right = N;             /* add right */
 	    }
 	}
-	G_put_map_row (outfd, result_cell);
+	G_put_raster_row (outfd, result_cell, CELL_TYPE);
     }
     if (verbose)
 	G_percent (nrows, nrows, 5);

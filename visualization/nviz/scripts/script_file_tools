@@ -1,4 +1,4 @@
-#!$(GISBASE)/etc/bin/contrib/cmd/NVWISH2.2 -f
+#!$(GISBASE)/etc/nviz2.2/NVWISH2.2 -f
 # Please log changes in the ChangeLog file in this directory
 # (Use "C-x 4 a" from emacs to add an entry)
 
@@ -299,6 +299,7 @@ proc done_script {} {
 ###################################################
 proc build_script {} {
     global Field_Data state_file
+    global ProcessName
 
     # Tasks
     #   1. Determine the number of frames we need.  By definition, fields
@@ -315,11 +316,11 @@ proc build_script {} {
 
     # 1.
     set num_frames [.fields.display_area.frames.frame_list size]
-    send nviz "Nv_script_add_string \"\\n\# Start of file sequence code\""
+    send $ProcessName "Nv_script_add_string \"\\n\# Start of file sequence code\""
 
     # Output command to load the state file if present
     if {"$state_file" != ""} then {
-	send nviz "Nv_script_add_string \"SendScriptLineWait \\\"load_state_aux $state_file\\\" script_play\""
+	send $ProcessName "Nv_script_add_string \"SendScriptLineWait \\\"load_state_aux $state_file\\\" script_play\""
     }
 
     # 2.
@@ -332,12 +333,12 @@ proc build_script {} {
 	lappend field_list "$temp"
 	set field_source [lindex $field 3]
 	set field_type [lindex $field 1]
-	send nviz "Nv_script_add_string \"set $new_id \\\[ReturnMapHandle $field_source\\\]\""
+	send $ProcessName "Nv_script_add_string \"set $new_id \\\[ReturnMapHandle $field_source\\\]\""
     }
 
-    send nviz "Nv_script_add_string \"for \{set $loop_id 0\} \{\\\$$loop_id < $num_frames\} \{incr $loop_id\} \{\""
-    send nviz "Nv_script_add_string \" SendScriptLine \\\"global NVIZ_BLANK_MAPS\\\"\""
-    send nviz "Nv_script_add_string \" SendScriptLine \\\"set NVIZ_BLANK_MAPS \{\}\\\"\""
+    send $ProcessName "Nv_script_add_string \"for \{set $loop_id 0\} \{\\\$$loop_id < $num_frames\} \{incr $loop_id\} \{\""
+    send $ProcessName "Nv_script_add_string \" SendScriptLine \\\"global NVIZ_BLANK_MAPS\\\"\""
+    send $ProcessName "Nv_script_add_string \" SendScriptLine \\\"set NVIZ_BLANK_MAPS \{\}\\\"\""
 
     # 3.
     foreach field $field_list {
@@ -384,26 +385,26 @@ proc build_script {} {
 	}
 
 	# Now output code to handle the current frame for this field
-	send nviz "Nv_script_add_string \" if \{\\\$$loop_id < [llength $file_list]\} then \{\""
-	send nviz "Nv_script_add_string \"  if \{\\\[lsearch \\\{$no_changes\\\} \\\$$loop_id\\\] == -1\} then \{\""
-	send nviz "Nv_script_add_string \"   if \{\\\[lsearch \\\{$blanks\\\} \\\$$loop_id\\\] > -1\}  then \{\""
+	send $ProcessName "Nv_script_add_string \" if \{\\\$$loop_id < [llength $file_list]\} then \{\""
+	send $ProcessName "Nv_script_add_string \"  if \{\\\[lsearch \\\{$no_changes\\\} \\\$$loop_id\\\] == -1\} then \{\""
+	send $ProcessName "Nv_script_add_string \"   if \{\\\[lsearch \\\{$blanks\\\} \\\$$loop_id\\\] > -1\}  then \{\""
 
 	# Blanking a map object is a little tricky, heres the code to do it
-	send nviz "Nv_script_add_string \"    SendScriptLine \\\"lappend NVIZ_BLANK_MAPS \\\[ExtractMapID \\\$$map_handle\\\]\\\"\""
+	send $ProcessName "Nv_script_add_string \"    SendScriptLine \\\"lappend NVIZ_BLANK_MAPS \\\[ExtractMapID \\\$$map_handle\\\]\\\"\""
 	
  	# Finally close off with the rest of the code for this frame
- 	send nviz "Nv_script_add_string \"   \} else \{\""
- 	send nviz "Nv_script_add_string \"    SendScriptLine \\\"\\\$$map_handle set_att $att_type \\\[lindex \\\{$file_list\\\} \\\$$loop_id\\\]\\\"\""
- 	send nviz "Nv_script_add_string \"   \}\""
- 	send nviz "Nv_script_add_string \"  \}\""
- 	send nviz "Nv_script_add_string \" \}\""
+ 	send $ProcessName "Nv_script_add_string \"   \} else \{\""
+ 	send $ProcessName "Nv_script_add_string \"    SendScriptLine \\\"\\\$$map_handle set_att $att_type \\\[lindex \\\{$file_list\\\} \\\$$loop_id\\\]\\\"\""
+ 	send $ProcessName "Nv_script_add_string \"   \}\""
+ 	send $ProcessName "Nv_script_add_string \"  \}\""
+ 	send $ProcessName "Nv_script_add_string \" \}\""
 
     }
     # End foreach field ...
 
     # 4.
-    send nviz "Nv_script_add_string \" \# Put image saving code here\""
-    send nviz "Nv_script_add_string \"\}\\n\""
+    send $ProcessName "Nv_script_add_string \" \# Put image saving code here\""
+    send $ProcessName "Nv_script_add_string \"\}\\n\""
 }
 
 ###################################################
@@ -590,6 +591,7 @@ proc add_field {} {
 ###################################################
 proc create_new_field {} {
     global source_files source_index FieldsChanged
+    global ProcessName
 
     # Extract field type, attribute and set from information.
     # If set-from is none then popup a warning and exit
@@ -619,9 +621,9 @@ proc create_new_field {} {
 
     # Figure out logical name
     switch $map_type {
-	Surface { set log_name [send nviz "Nlogical_from_literal Nsurf[lindex $map_from 1]"] }
-	Vector   { set log_name [send nviz "Nlogical_from_literal Nvect[lindex $map_from 1]"] }
-	Site        { set log_name [send nviz "Nlogical_from_literal Nsite[lindex $map_from 1]"] } 
+	Surface { set log_name [send $ProcessName "Nlogical_from_literal Nsurf[lindex $map_from 1]"] }
+	Vector   { set log_name [send $ProcessName "Nlogical_from_literal Nvect[lindex $map_from 1]"] }
+	Site        { set log_name [send $ProcessName "Nlogical_from_literal Nsite[lindex $map_from 1]"] } 
     }
 
     # Create the new field entry with the given maps
@@ -639,7 +641,7 @@ proc create_new_field {} {
 # Routine to get list of available entries for the set-from field
 ###################################################
 proc set_sources {type} {
-    global source_files source_index
+    global source_files source_index ProcessName
 
     set source_list [list]
     set source_files [list]
@@ -648,22 +650,22 @@ proc set_sources {type} {
 
     switch $type {
 	Surface { 
-	    foreach i [send nviz "Nget_map_list surf" ] {
-		set map_name [lindex [send nviz "Nsurf$i get_att topo"] 1]
+	    foreach i [send $ProcessName "Nget_map_list surf" ] {
+		set map_name [lindex [send $ProcessName "Nsurf$i get_att topo"] 1]
 		lappend source_list "$map_name"
 		lappend source_files [list "$map_name" $i]
 	    }
 	}
 	Vector  { 
-	    foreach i [send nviz "Nget_map_list vect" ] {
-		set map_name [send nviz "Nvect$i get_att map" ]
+	    foreach i [send $ProcessName "Nget_map_list vect" ] {
+		set map_name [send $ProcessName "Nvect$i get_att map" ]
 		lappend source_list "$map_name"
 		lappend source_files [list "$map_name" $i]
 	    }
 	}
 	Site    { 
-	    foreach i [send nviz "Nget_map_list site" ] {
-		set map_name [send nviz "Nsite$i get_att map" ]
+	    foreach i [send $ProcessName "Nget_map_list site" ] {
+		set map_name [send $ProcessName "Nsite$i get_att map" ]
 		lappend source_list "$map_name"
 		lappend source_files [list "$map_name" $i]
 	    }

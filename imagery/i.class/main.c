@@ -1,6 +1,7 @@
 #define MAIN
 #define GLOBAL
 
+#include <stdlib.h>
 #include <string.h>
 #include "raster.h"
 #include "globals.h"
@@ -25,7 +26,8 @@ int main (int argc, char *argv[])
 	"i.cluster.";			          
 
   /* must have a graphics terminal selected */
-  R_open_driver();
+  if (R_open_driver() != 0)
+      G_fatal_error ("No graphics device selected");
 
   /* check to see if a MASK is set */
   if (G_maskfd() >= 0)

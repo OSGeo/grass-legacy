@@ -31,6 +31,7 @@
 *    Martin Rymes
 *    National Renewable Energy Laboratory
 *    25 March 1998
+*
 *----------------------------------------------------------------------------*/
 
 /*============================================================================
@@ -292,8 +293,8 @@ VARIABLE      Mask       Required Variables
  utime      L_GEOM     All date, time, and location inputs
  zenetr     L_ZENETR   declination, latitude, hrang
  zenref     L_REFRAC   elevetr, press, temp
-*/
 
+*/
 
 /*============================================================================
 *    Long int function S_solpos, adapted from the NREL VAX solar libraries
@@ -361,4 +362,3 @@ void S_init(struct posdata *pdat);
 *    OUTPUTS: Descriptive text of errors to stderr
 *----------------------------------------------------------------------------*/
 void S_decode(long code, struct posdata *pdat);
-

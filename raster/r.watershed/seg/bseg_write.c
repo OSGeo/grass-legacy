@@ -29,7 +29,7 @@ bseg_write_cellfile (BSEG *bseg, char *map_name)
 			bseg_get (bseg, &value, row, col);
 			buffer[col] = value;
 		}
-		if (G_put_map_row (map_fd, buffer) < 0)
+		if (G_put_raster_row (map_fd, buffer, CELL_TYPE) < 0)
 		{
 			G_free (buffer);
 			G_unopen_cell (map_fd);

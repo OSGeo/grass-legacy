@@ -277,7 +277,7 @@ interpolate (MELEMENT rowlist[], SHORT nrows, SHORT ncols, SHORT datarows, int n
 		}
        	    }	/* end of loop over columns */
 
-	G_put_map_row(out_fd, cell);
+	G_put_raster_row(out_fd, cell, CELL_TYPE);
 
 	/* advance current row pointer if necessary */
 	if (current_row->start->y == row && current_row != lastrow)

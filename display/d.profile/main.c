@@ -164,7 +164,6 @@ if (max < 0) max = 0;
         R_standard_color(D_translate_color("black"));
         D_erase_window();
         R_standard_color(D_translate_color("red"));
-        R_flush();
         DrawText(25,1,1,"GRASS PROGRAM: profile");
         R_standard_color(D_translate_color("white"));
         DrawText(15,3,1,"MOUSE   | Left:   Where am I?");
@@ -175,6 +174,7 @@ if (max < 0) max = 0;
         DrawText(15,4,1,"BUTTON  | Middle: Set FIRST point");
         DrawText(15,5,1,"MENU    | Right:  Quit this\n");
 #endif
+	R_stabilize();
 
         /* LOOP to get first point of line */
         do
@@ -210,8 +210,8 @@ if (max < 0) max = 0;
                 R_standard_color(D_translate_color("black"));
                 D_erase_window();
                 R_standard_color(D_translate_color("red"));
-                R_flush();
                 DrawText(25,1,1,"OUTSIDE CURRENT WINDOW");
+                R_stabilize();
                 button = LEFTB;
             }
             else
@@ -228,7 +228,6 @@ if (max < 0) max = 0;
         R_standard_color(D_translate_color("black"));
         D_erase_window();
         R_standard_color(D_translate_color("red"));
-        R_flush();
         DrawText(25,1,1,"GRASS PROGRAM: profile");
         R_standard_color(D_translate_color("white"));
         DrawText(15,3,1,"MOUSE   | Left:   Where am I?");
@@ -239,6 +238,7 @@ if (max < 0) max = 0;
         DrawText(15,4,1,"BUTTON  | Middle: Set SECOND point");
         DrawText(15,5,1,"MENU    | Right:  Quit this\n");
 #endif
+	R_stabilize();
 
         /* move graphics position to first point chosen */
         R_move_abs(screen_x, screen_y) ;
@@ -265,7 +265,6 @@ if (max < 0) max = 0;
                 R_standard_color(D_translate_color("black"));
                 D_erase_window();
                 R_standard_color(D_translate_color("red"));
-                R_flush();
                 DrawText(25,1,1,"OUTSIDE CURRENT WINDOW");
                 button = LEFTB;
             }
@@ -287,7 +286,6 @@ if (max < 0) max = 0;
                         R_standard_color(D_translate_color("black"));
                         D_erase_window();
                         R_standard_color(D_translate_color("red"));
-                        R_flush();
                         DrawText(25,1,1,"ERROR: end-point outside");
                         DrawText(25,2,1,"       of current window");
                     }
@@ -361,7 +359,6 @@ if (max < 0) max = 0;
                         R_standard_color(D_translate_color("black"));
                         D_erase_window();
                         R_standard_color(D_translate_color("red"));
-                        R_flush();
                         DrawText(25,1,1,"PLOTTING PROFILE");
 
                         /* plot profile data in profile window */
@@ -383,6 +380,7 @@ if (max < 0) max = 0;
                         break;
                 }
             }
+	    R_stabilize();
         }   while (button != RIGHTB && button != MIDDLEB);
 
         /* display mouse-menu in mouse-menu window */
@@ -390,7 +388,6 @@ if (max < 0) max = 0;
         R_standard_color(D_translate_color("black"));
         D_erase_window();
         R_standard_color(D_translate_color("red"));
-        R_flush();
         DrawText(25,1,1,"GRASS PROGRAM: profile");
         R_standard_color(D_translate_color("white"));
         DrawText(15,3,1,"MOUSE   | Left:   DO ANOTHER");
@@ -401,6 +398,7 @@ if (max < 0) max = 0;
         DrawText(15,4,1,"BUTTON  | Middle: CLEAR DISPLAY");
         DrawText(15,5,1,"MENU    | Right:  QUIT");
 #endif
+	R_stabilize();
 
         R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
         if (button == RIGHTB)

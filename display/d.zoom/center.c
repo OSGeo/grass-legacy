@@ -11,9 +11,6 @@ int make_window_center (struct Cell_head *window, double magnify, double east, d
     char buffer[64] ;
     double east_west, north_south;
     int len_n, len_e;
-    int t;
-    int button ;
-
 
     len_n = len_e = 0;
 

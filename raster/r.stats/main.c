@@ -61,6 +61,8 @@ int main (int argc, char *argv[])
 				   is int, nsteps is ignored */
     } option;
 
+    G_gisinit (argv[0]);
+
     module = G_define_module();
     module->description =
 		"Generates area statistics for raster map layers.";
@@ -162,8 +164,6 @@ int main (int argc, char *argv[])
     flag.i = G_define_flag() ;
     flag.i->key = 'i';
     flag.i->description = "Read fp map as integer (use map's quant rules)";
-
-    G_gisinit (argv[0]);
 
     if (G_parser(argc, argv))
 	exit (-1);

@@ -157,48 +157,6 @@ int main (int argc, char *argv[])
 	"input raster file to a new raster file (possibly with "
 	"different resolution) using regularized spline with "
 	"tension and smoothing.";
-			          
-  if (G_get_set_window (&winhd) == -1)
-    G_fatal_error ("G_get_set_window failed");
-
-  inp_ew_res = winhd.ew_res;
-  inp_ns_res = winhd.ns_res;
-  inp_cols = winhd.cols;
-  inp_rows = winhd.rows;
-  inp_x_orig = winhd.west;
-  inp_y_orig = winhd.south;
-
-    fprintf (stderr, "\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Version: GRASS5.0 beta,  update: November 1999\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Authors: original version -  H.Mitasova, L.Mitas\n");
-    fprintf (stderr, "         GRASS implementation and segmentation: I.Kosinovsky, D.P. Gerdes\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Methods used in this program are described in the following papers:\n");
-    fprintf (stderr, "Mitasova, H., and  Mitas, L., 1993,\n");
-    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf (stderr, "I. Theory  and  implementation.  Mathematical Geology, 25, 641-655.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Mitasova, H., and Hofierka, L., 1993\n");
-    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
-    fprintf (stderr, "II. Application to terrain modeling and surface   geometry  analysis.\n");
-    fprintf (stderr, "Mathematical Geology, 25, 657-669.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Mitasova, H., Mitas, L., Brown, W.M., Gerdes, D.P., Kosinovsky, I.,\n");
-    fprintf (stderr, "Baker, T., 1995, Modeling spatially and temporally\n");
-    fprintf (stderr, "distributed phenomena: New methods and tools for GRASS GIS.\n");
-    fprintf (stderr, "International Journal of Geographic Information Systems,V(9), No(4).\n");
-    fprintf (stderr, "(special issue on Integration of GIS and Environmental Modeling)\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "The postscript versions of these papers are available via Internet at\n");
-    fprintf (stderr, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "Please cite these references in publications where the results of this\n");
-    fprintf (stderr, "program were used.\n");
-    fprintf (stderr, "\n");
-    fprintf (stderr, "\n");
-
 
   parm.input = G_define_option ();
   parm.input->key = "input";
@@ -312,6 +270,47 @@ int main (int argc, char *argv[])
 
   if (G_parser (argc, argv))
     exit (1);
+
+  if (G_get_set_window (&winhd) == -1)
+    G_fatal_error ("G_get_set_window failed");
+
+  inp_ew_res = winhd.ew_res;
+  inp_ns_res = winhd.ns_res;
+  inp_cols = winhd.cols;
+  inp_rows = winhd.rows;
+  inp_x_orig = winhd.west;
+  inp_y_orig = winhd.south;
+
+    fprintf (stderr, "\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Version: GRASS5.0 beta,  update: November 1999\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Authors: original version -  H.Mitasova, L.Mitas\n");
+    fprintf (stderr, "         GRASS implementation and segmentation: I.Kosinovsky, D.P. Gerdes\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Methods used in this program are described in the following papers:\n");
+    fprintf (stderr, "Mitasova, H., and  Mitas, L., 1993,\n");
+    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
+    fprintf (stderr, "I. Theory  and  implementation.  Mathematical Geology, 25, 641-655.\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Mitasova, H., and Hofierka, L., 1993\n");
+    fprintf (stderr, "Interpolation by Regularized Spline with Tension:\n");
+    fprintf (stderr, "II. Application to terrain modeling and surface   geometry  analysis.\n");
+    fprintf (stderr, "Mathematical Geology, 25, 657-669.\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Mitasova, H., Mitas, L., Brown, W.M., Gerdes, D.P., Kosinovsky, I.,\n");
+    fprintf (stderr, "Baker, T., 1995, Modeling spatially and temporally\n");
+    fprintf (stderr, "distributed phenomena: New methods and tools for GRASS GIS.\n");
+    fprintf (stderr, "International Journal of Geographic Information Systems,V(9), No(4).\n");
+    fprintf (stderr, "(special issue on Integration of GIS and Environmental Modeling)\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "The postscript versions of these papers are available via Internet at\n");
+    fprintf (stderr, "http://www2.gis.uiuc.edu:2280/modviz/papers/listsj.html\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "Please cite these references in publications where the results of this\n");
+    fprintf (stderr, "program were used.\n");
+    fprintf (stderr, "\n");
+    fprintf (stderr, "\n");
 
   per = 1;			/* flag.per->answer; */
   input = parm.input->answer;

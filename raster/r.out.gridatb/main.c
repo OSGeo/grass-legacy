@@ -1,5 +1,5 @@
 /*
- * r.out.gridatb: exports GRIDATB.FOR map file. 
+ * r.out.gridatb: Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)
  *
  * GRIDATB.FOR Author: Keith Beven <k.beven@lancaster.ac.uk>
  *
@@ -35,7 +35,14 @@ main(argc,argv)
 	{
 		struct	Flag	*overwr;
 	} flags;
-
+	struct GModule *module;
+	
+	G_gisinit(argv[0]);
+	
+	/* Set description */
+	module              = G_define_module();
+	module->description = ""\
+	"Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)";
 
 	params.input			= G_define_option();
 	params.input->key		= "input";
@@ -53,9 +60,6 @@ main(argc,argv)
 	flags.overwr			= G_define_flag();
 	flags.overwr->key		= 'o';
 	flags.overwr->description	= "Overwrite output map file";
-
-
-	G_gisinit(argv[0]);
 
 	if(G_parser(argc, argv)){
 	        exit(-1);

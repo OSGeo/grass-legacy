@@ -9,8 +9,10 @@
 #include "driverlib.h"
 
 /* sreen dimensions defined in Graph_Set.c */
-extern int SCREEN_RIGHT;
-extern int SCREEN_BOTTOM;
+extern int screen_top;
+extern int screen_left;
+extern int screen_right;
+extern int screen_bottom;
 
 
 /* point in polygon test by Randolph Franklin */
@@ -147,8 +149,8 @@ Graph_Close (void)
         break;
 
       case CLIENT:
-	fprintf(output,"<AREA SHAPE=\"RECT\" NOHREF COORDS=\"0,0 %d,%d\">\n",
-		SCREEN_RIGHT, SCREEN_BOTTOM);
+	fprintf(output,"<AREA SHAPE=\"RECT\" NOHREF COORDS=\"%d,%d %d,%d\">\n",
+		screen_left, screen_top, screen_right, screen_bottom);
 	fprintf(output,"</MAP>\n");
         break;
 

@@ -1,4 +1,4 @@
-#!$(GISBASE)/etc/bin/contrib/cmd/NVWISH2.2 -f
+#!$(GISBASE)/etc/nviz2.2/NVWISH2.2 -f
 # This file allows the user to input a line for output
 # to a script.  We do this in a separate file so that
 # the events processed here are not sent to the script

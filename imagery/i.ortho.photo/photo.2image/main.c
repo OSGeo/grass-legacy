@@ -37,7 +37,8 @@ int main (int argc, char *argv[])
     group_list = G_tempfile();
     digit_points = G_tempfile();
 
-    R_open_driver();
+    if (R_open_driver() != 0)
+           G_fatal_error ("No graphics device selected");
 
     /* get image group and image group referenc file */
     name = argv[1];

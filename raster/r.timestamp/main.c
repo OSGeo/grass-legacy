@@ -30,7 +30,7 @@ int main (int argc, char *argv[])
     date->description = "datetime, datetime1/datetime2, or none";
 
     if (G_parser(argc,argv))
-	exit(0);
+	exit(1);
 
     name = map->answer;
 

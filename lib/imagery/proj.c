@@ -1,5 +1,7 @@
 #include "imagery.h"
 #include "gis.h"
+#include <stdlib.h>
+
 int I_must_be_imagery_projection()
 {
     int proj;

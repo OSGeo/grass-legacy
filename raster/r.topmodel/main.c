@@ -16,7 +16,17 @@
  *
  *
  * $Log$
- * Revision 1.6  2000-11-22 09:34:41  jan
+ * Revision 1.7  2002-01-22 04:51:31  glynn
+ * Merge releasebranch_11_april_2001_5_0_0 with HEAD
+ *
+ * Revision 1.6.4.2  2001/11/25 14:27:37  glynn
+ * Include stdlib.h for definition of atoi()
+ * Fix bug in r.in.doq, calling exit() without arguments
+ *
+ * Revision 1.6.4.1  2001/06/15 18:37:36  glynn
+ * Call G_gisinit(argv[0]) before anything else
+ *
+ * Revision 1.6  2000/11/22 09:34:41  jan
  * added module description
  *
  * Revision 1.5  2000/11/01 17:26:36  cho
@@ -36,6 +46,9 @@
  *
  *
  */
+
+#include <stdio.h>
+#include <stdlib.h>
 
 #define	MAIN
 #include "local_proto.h"
@@ -74,6 +87,9 @@ main(argc, argv)
 		struct	Flag	*overwr;
 		struct	Flag	*wide;
 	} flag;
+
+	/* Initialize GRASS and parse command line */
+	G_gisinit(argv[0]);
 
     module = G_define_module();
     module->description =
@@ -201,10 +217,6 @@ main(argc, argv)
 	flag.wide->key			= 'w';
 	flag.wide->description		=
 		"Wide output";
-
-
-	/* Initialize GRASS and parse command line */
-	G_gisinit(argv[0]);
 
 	if(G_parser(argc, argv)){
 	        exit(-1);

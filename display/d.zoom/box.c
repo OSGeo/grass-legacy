@@ -19,7 +19,6 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
     int cur_screen_x, cur_screen_y ;
     int quitonly;  /* required if user just wants to quit d.zoom */
     int prebutton; /* which previous button was pressed? */
-    int reached;
     
     screen_y = get_map_top() ;
     screen_x = get_map_left() ;
@@ -28,8 +27,13 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
     fprintf(stderr, "\n\n");
     fprintf(stderr, "Buttons:\n") ;
     fprintf(stderr, "Left:   Establish a corner to zoom in\n") ;
+#ifdef ANOTHER_BUTTON
     fprintf(stderr, "Middle: Unzoom stepwise\n") ;
     fprintf(stderr, "Right:  Accept region/Quit\n\n") ;
+#else
+    fprintf(stderr, "Middle: Accept region/Quit\n") ;
+    fprintf(stderr, "Right:  Unzoom stepwise\n\n") ;
+#endif
 
     ux1 = D_get_u_west() ;
     uy1 = D_get_u_south() ;
@@ -48,7 +52,6 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
     len_n = len_s = len_e = len_w = 0;
     do
     {
-	reached = 0;
 	R_get_location_with_box(cur_screen_x, cur_screen_y, &screen_x, &screen_y, &button) ;
 	button &= 0xf;
 /*	fprintf (stdout,"\nscreen_x: %d screen_y: %d\n",screen_x,screen_y);*/
@@ -66,19 +69,20 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
 
 	switch(button)
 	{
-	case 1:
+	case LEFTB:
 		cur_screen_x = screen_x ;
 		cur_screen_y = screen_y ;
 		ux1 = ux2 ;
 		uy1 = uy2 ;
 		quitonly=0;
 		break ;
-	case 2:
-		if(U_east > window->east ||
-		   U_west < window->west ||
-		   U_south < window->south ||
-		   U_north > window->north)
-		{
+	case MIDDLEB:
+		if (prebutton == LEFTB)
+		  quitonly=0; /* box opening */
+		else
+		  quitonly=1; /* quit only, no action*/
+		break;
+	case RIGHTB:
 			/* ALTERNATIVE
 			 *
 			if(pan)
@@ -105,33 +109,22 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
 			ux2 = window->west - ew/2;
 			uy1 = window->north + ns/2;
 			uy2 = window->south - ns/2;
-		}
-		else
-		{
-			reached = 1;
-			fprintf(stderr, "** Reached at region boundary **\n");
-		}
-	        button=3;
+
+	        button=MIDDLEB;
 	        quitonly=2;   /* leave after unzoom */
 	        break;
-	case 3:
-		if (prebutton == 1)
-		  quitonly=0; /* box opening */
-		else
-		  quitonly=1; /* quit only, no action*/
-		break;
 	}
 
 	if(quitonly==2)
-	   prebutton = 2;
+	   prebutton = RIGHTB;
 	else
 	   prebutton = button;
 
 	/* ALTERNATIVE
 	 *
-	if(prebutton==1)
+	if(prebutton==LEFTB)
 	 */
-	if(prebutton==1 || prebutton==2)
+	if(prebutton==LEFTB || prebutton==RIGHTB)
 	{
 	   north = uy1;
 	   east = ux1;
@@ -158,13 +151,13 @@ int make_window_box ( struct Cell_head *window, double magnify, char pan)
            fprintf (stderr,"\r");
            fflush (stderr);
 	}
-    } while (button != 3) ;
+    } while (button != MIDDLEB) ;
 
     if(quitonly != 1)
     {
     /* ALTERNATIVE
      *
-	if(prebutton == 2)
+	if(prebutton == RIGHTB)
 	{
 	   east = window->east;
 	   west = window->west;

@@ -23,12 +23,10 @@
 
 #define IDX int
 
-/*****
-#define DEBUG3 3
+/* activate debug in Gmakefile */
 #ifdef  DEBUG3
 GLOBAL FILE *Bugsr;
 #endif
-*****/
 
 GLOBAL ROWCOL row_map[NROWS][NCOLS] ;
 GLOBAL ROWCOL col_map[NROWS][NCOLS] ;
@@ -39,7 +37,10 @@ GLOBAL ROWCOL row_right[NROWS];
 GLOBAL IDX row_idx[NROWS];
 GLOBAL int matrix_rows, matrix_cols;
 
+GLOBAL int temp_fd;
+GLOBAL RASTER_MAP_TYPE map_type;
 GLOBAL CELL **cell_buf;
+GLOBAL char *temp_name;
 
 GLOBAL int *ref_list;
 GLOBAL char **new_name;
@@ -52,8 +53,8 @@ GLOBAL struct Ortho_Control_Points temp_points;
 GLOBAL struct Ortho_Camera_File_Ref cam_info;
 
 GLOBAL struct Cell_head elevhd;
-GLOBAL CELL *elevbuf; 
-GLOBAL int elev;
+GLOBAL DCELL *elevbuf; 
+GLOBAL int elevfd;
 GLOBAL char *elev_layer;
 GLOBAL char *mapset_elev;
 

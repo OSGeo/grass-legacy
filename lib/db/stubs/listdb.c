@@ -1,5 +1,6 @@
 #include "dbmi.h"
 
+int
 db_driver_list_databases (path, npaths, handles, num)
     dbString *path;
     int npaths;
