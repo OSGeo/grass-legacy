@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.91 2000-12-01 14:20:57 markus Exp $
+$Id: BUGS,v 1.92 2000-12-04 08:26:10 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -467,6 +467,11 @@ v.cutter:
   (reported by Stephan.Holl@stud.uni-hannover.de
    and David Finlayson <david_finlayson@yahoo.com>)
   (being worked on by David D Gray)
+
+v.sdts.meta
+ src.contrib/SDTS/mapdev/v.sdts.meta/inter/v.sdts.meta
+ -> tcl bugs (probably update needed to tcl/tk 8.x)
+  (being worked on by ?)
 
 v.support/v.build                                                               
   During the build process an area (polygon edge) that is just a single     
