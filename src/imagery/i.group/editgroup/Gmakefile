@@ -1,0 +1,12 @@
+# %W% %G%
+
+LIST = main.o\
+	ask_files1.o\
+	ask_files2.o\
+	cellfiles.o\
+	$(GISLIB) $(IMAGERYLIB)
+
+$(ETC)/imagery/editgroup: $(LIST) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(VASK)
+
+$(GISLIB) $(IMAGERYLIB) $(VASKLIB): #
