@@ -18,6 +18,7 @@ SUBDIRS = \
 	d.grid \
 	d.his \
 	d.histogram \
+	d.info \
 	d.legend \
 	d.linegraph \
 	d.m \
