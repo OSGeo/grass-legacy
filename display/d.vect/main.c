@@ -22,27 +22,26 @@
 
 int quiet = 1;
 
-/* next functions taken from r.colors */
+/* adopted from r.colors */
 static char *icon_files(void)
 {
-	char path[4096];
+        char path[4096];
+        char path_i[4096];
 	char *buf = NULL;
 	char *list = NULL;
 	int size = 0;
 	int len = 0;
-	DIR *dir;
+	DIR *dir, *dir_i;
 
-  /* TODO: loop over directories in /etc/symbol */
-	sprintf(path, "%s/etc/symbol/basic", G_gisbase());
+	sprintf(path, "%s/etc/symbol", G_gisbase());
 
 	dir = opendir(path);
 	if (!dir)
 		return NULL;
 
-	for (;;)
+	for (;;) /*loop over etc/symbol*/
 	{
 		struct dirent *d = readdir(dir);
-		int n;
 
 		if (!d)
 			break;
@@ -50,30 +49,47 @@ static char *icon_files(void)
 		if (d->d_name[0] == '.')
 			continue;
 
+		sprintf(path_i, "%s/etc/symbol/%s", G_gisbase(), d->d_name);
+		dir_i = opendir(path_i);
 		
-		n = strlen(d->d_name);
-		buf = G_realloc(buf, 6 + n);
-		sprintf(buf, "basic/%s", d->d_name);
-		n = strlen(buf);
+		if (!dir_i)
+		  return NULL;
+	   
+		for (;;) { /*loop over each directory in etc/symbols*/
+		
+		  struct dirent *di = readdir(dir_i);
+		  int ni;
 
-		if (size < len + n + 2)
-		{
-			size = len + n + 200;
-			list = G_realloc(list, size);
+		  if (!di)
+			break;
+
+		  if (di->d_name[0] == '.')
+			continue;
+
+		  ni = strlen(di->d_name);
+		  buf = G_realloc(buf, strlen(d->d_name) + ni + 1);
+		  sprintf(buf, "%s/%s", d->d_name, di->d_name);
+		  ni = strlen(buf);
+
+		  if (size < len + ni + 2 )
+		    {
+		      size = len + ni + 200;
+		      list = G_realloc(list, size);
+		    }
+
+		  if (len > 0)
+		    list[len++] = ',';
+
+		  memcpy(&list[len], buf, ni + 1);
+		  len += ni;
 		}
-
-		if (len > 0)
-			list[len++] = ',';
-
-		memcpy(&list[len], buf, n + 1);
-		len += n;
 	}
-
-	/*closedir(dir);*/ 
-
+	
 	return list;
+	
+	closedir(dir_i);
+	closedir(dir);
 }
-
 
 int 
 main (int argc, char **argv)
