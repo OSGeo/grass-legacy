@@ -1,0 +1,375 @@
+Adot	screen_plt.c	/^Adot ( x, y, string) $/
+Base_string	ATTCURSES.C	/^Base_string (y, x, message)$/
+Blot	screen_plt.c	/^Blot ( x, y) $/
+Clear_base	ATTCURSES.C	/^Clear_base()$/
+Clear_covr	curses.C	/^Clear_covr()$/
+Clear_help	ATTCURSES.C	/^Clear_help()$/
+Clear_info	ATTCURSES.C	/^Clear_info()$/
+Close_curses	ATTCURSES.C	/^Close_curses()$/
+Collect_points	collect_p.c	/^Collect_points(mode, type, p)$/
+Covr_string	curses.C	/^Covr_string (y, x, message)$/
+Curses_error	curses.C	/^Curses_error (str)$/
+Curses_state	ATTCURSES.C	/^Curses_state()$/
+Custom_settings	customize.c	/^Custom_settings (map)$/
+Customize	customize.c	/^Customize ()$/
+Debug	debug.c	/^Debug ()$/
+Del_area	area.c	/^Del_area (map, area)$/
+Del_isle	isle.c	/^Del_isle (map, isle)$/
+Dig_menu_opts	curses.C	/^Dig_menu_opts ()$/
+Digitize	digitize.c	/^Digitize ()$/
+Display_color_settings	color.c	/^Display_color_settings ()$/
+Display_settings	window_setup.c	/^Display_settings (menu)$/
+Dot	screen_plt.c	/^Dot (x, y) $/
+Edit	edit.c	/^Edit()$/
+First	screen_plt.c	/^First(x, y)$/
+G_CLEAR_WIN	curses.C	/^#define G_CLEAR_WIN(WIN)    { werase(WIN);}$/
+G_adjust_window_to_box	wind_2_box.c	/^G_adjust_window_to_box (src, dst, rows, cols)$/
+Get_curses_char	ATTCURSES.C	/^Get_curses_char(answer)$/
+Get_curses_text	ATTCURSES.C	/^Get_curses_text(answer)$/
+Get_new_tty	tty.c	/^Get_new_tty()$/
+Get_old_tty	tty.c	/^Get_old_tty()$/
+Help	help.c	/^Help (Menu)$/
+Help_color	menus.c	/^Help_color() {}$/
+Help_custom	menus.c	/^Help_custom () {}$/
+Help_debug	menus.c	/^Help_debug() {}$/
+Help_digitize	menus.c	/^Help_digitize () {}$/
+Help_display	menus.c	/^Help_display() {}$/
+Help_edit	menus.c	/^Help_edit () {}$/
+Help_global	menus.c	/^Help_global () {}$/
+Help_label	menus.c	/^Help_label () {}$/
+Help_main	menus.c	/^Help_main () {}$/
+Help_string	ATTCURSES.C	/^Help_string (y, x, message)$/
+Help_tool	menus.c	/^Help_tool () {}$/
+Help_window	menus.c	/^Help_window () {}$/
+Hide_help	ATTCURSES.C	/^Hide_help ()$/
+Init_curses	ATTCURSES.C	/^Init_curses()$/
+Init_help	ATTCURSES.C	/^Init_help ()$/
+Label	label.c	/^Label()$/
+Label_settings	label.c	/^Label_settings ()$/
+Main_info	interact.c	/^Main_info ()$/
+Mmain	main.c	/^main(argc, argv)$/
+New_tty	tty.c	/^New_tty()$/
+Next	screen_plt.c	/^Next(x, y)$/
+Old_tty	tty.c	/^Old_tty()$/
+Replot_screen	ATTCURSES.C	/^Replot_screen() $/
+Restore_Disp_settings	window.c	/^Restore_Disp_settings ()$/
+Save_Disp_settings	window.c	/^Save_Disp_settings ()$/
+Set_G_Mask	menus.c	/^Set_G_Mask (item, onoff)$/
+Set_Global	menus.c	/^Set_Global (item, onoff)$/
+Show_help	ATTCURSES.C	/^Show_help ()$/
+Toolbox	toolbox.c	/^Toolbox ()$/
+V_flush	flush.c	/^V_flush ()$/
+Window	window.c	/^Window ()$/
+Write_base	ATTCURSES.C	/^Write_base(line, message)$/
+Write_base_win	ATTCURSES.C	/^Write_base_win()$/
+Write_covr	curses.C	/^Write_covr(line, message)$/
+Write_dig_win	ATTCURSES.C	/^Write_dig_win()$/
+Write_edit_win	ATTCURSES.C	/^Write_edit_win()$/
+Write_generic_win	ATTCURSES.C	/^Write_generic_win(menu)$/
+Write_header_info	ATTCURSES.C	/^Write_header_info()$/
+Write_help	ATTCURSES.C	/^Write_help(line, message)$/
+Write_info	ATTCURSES.C	/^Write_info(line, message)$/
+Write_type_info	ATTCURSES.C	/^Write_type_info()$/
+XADJ	screen_plt.c	/^#define XADJ(x)		(int)((x - U_west ) * U_to_D_xcon/
+YADJ	screen_plt.c	/^#define YADJ(y)		(int)((y - U_south) * U_to_D_ycon/
+Zero_Disp_settings	window.c	/^Zero_Disp_settings ()$/
+_Base_refresh	ATTCURSES.C	/^_Base_refresh()$/
+_Base_string	ATTCURSES.C	/^_Base_string (y, x, message)$/
+_BigBlot	screen_plt.c	/^_BigBlot ( x, y) $/
+_Blot	screen_plt.c	/^_Blot ( x, y) $/
+_Clear_base	ATTCURSES.C	/^_Clear_base()$/
+_Clear_covr	curses.C	/^_Clear_covr()$/
+_Clear_help	ATTCURSES.C	/^_Clear_help()$/
+_Clear_info	ATTCURSES.C	/^_Clear_info()$/
+_Covr_refresh	curses.C	/^_Covr_refresh()$/
+_Covr_string	curses.C	/^_Covr_string (y, x, message)$/
+_Curses_off	ATTCURSES.C	/^_Curses_off()$/
+_Curses_on	ATTCURSES.C	/^_Curses_on()$/
+_Help_refresh	ATTCURSES.C	/^_Help_refresh()$/
+_Help_string	ATTCURSES.C	/^_Help_string (y, x, message)$/
+_Info_refresh	ATTCURSES.C	/^_Info_refresh()$/
+_Show_version	curses.C	/^_Show_version ()$/
+_Write_base	ATTCURSES.C	/^_Write_base(line, message)$/
+_Write_base_win	ATTCURSES.C	/^_Write_base_win()$/
+_Write_covr	curses.C	/^_Write_covr(line, message)$/
+_Write_dig_win	ATTCURSES.C	/^_Write_dig_win()$/
+_Write_generic_win	ATTCURSES.C	/^_Write_generic_win(menu)$/
+_Write_header_info	ATTCURSES.C	/^_Write_header_info()$/
+_Write_help	ATTCURSES.C	/^_Write_help(line, message)$/
+_Write_info	ATTCURSES.C	/^_Write_info(line, message)$/
+_Write_mouse_covr	curses.C	/^_Write_mouse_covr ()$/
+_Write_type_info	ATTCURSES.C	/^_Write_type_info()$/
+_area_display	display_area.c	/^_area_display (Area, map, mode)$/
+_coll_a_pnt	ask_driver.c	/^_coll_a_pnt ( x, y)$/
+_color_line	display_line.c	/^_color_line(type, points, line, map, color)$/
+_color_site	display_site.c	/^_color_site(type, points, line, map, color)$/
+_display_area	display_area.c	/^_display_area (Area, map)$/
+_display_isle	display_area.c	/^_display_isle (Isle, map)$/
+_display_line	display_line.c	/^_display_line (type, points, line, map)$/
+_display_line_label	display_line.c	/^_display_line_label (map, line, color)$/
+_display_site	display_site.c	/^_display_site (type, points, line, map)$/
+_display_site_label	display_site.c	/^_display_site_label (map, line, color)$/
+_do_break_line	break.c	/^_do_break_line (map, Points, label, type, node)$/
+_erase_area	display_area.c	/^_erase_area (Area, map)$/
+_erase_isle	display_area.c	/^_erase_isle (Isle, map)$/
+_erase_line	display_line.c	/^_erase_line(type, points, line, map)$/
+_erase_site	display_site.c	/^_erase_site(type, points, line, map)$/
+_find_line_with_mouse	find_w_mouse.c	/^_find_line_with_mouse (type_mask, header, call, ty/
+_highlight_area	display_area.c	/^_highlight_area (Area, map)$/
+_highlight_isle	display_area.c	/^_highlight_isle (Isle, map)$/
+_highlight_line	display_line.c	/^_highlight_line(type, points, line, map)$/
+_highlight_site	display_site.c	/^_highlight_site(type, points, line, map)$/
+_is_enabled	menus.c	/^_is_enabled (chr, menu)$/
+_isle_display	display_area.c	/^_isle_display (Isle, map, mode)$/
+_line_in_window	replot.c	/^_line_in_window (Line, north, south, east, west)$/
+_line_really_in_window	replot.c	/^_line_really_in_window (map, Line, north, south, e/
+_map_to_dig_thresh	set_thresh.c	/^_map_to_dig_thresh (map_thresh)$/
+_remove_line	remove.c	/^_remove_line (map, line)$/
+_reset_area	display_area.c	/^_reset_area (Area, map)$/
+_reset_isle	display_area.c	/^_reset_isle (Isle, map)$/
+_show_mode	curses.C	/^_show_mode(mode, type, label)$/
+_update_global_menu	menus.c	/^_update_global_menu ()$/
+_write_generic_title	ATTCURSES.C	/^_write_generic_title (name)$/
+add_scale	add_scale.c	/^add_scale ()$/
+area_outside_window	window.c	/^area_outside_window (Area)$/
+ask_backdrop	backdrop.c	/^ask_backdrop ()$/
+ask_cat	label.c	/^ask_cat ()$/
+ask_driver	ask_driver.c	/^ask_driver()$/
+ask_driver_raw	ask_driver.c	/^ask_driver_raw( X, Y) $/
+ask_driver_yes_no	ask_driver.c	/^ask_driver_yes_no(quest)$/
+ask_for_name	label.c	/^ask_for_name(Type,pcats)$/
+ask_map_coor	map_ask.c	/^ask_map_coor (n_points)$/
+ask_name	label.c	/^ask_name(pcats)$/
+ask_overlay	overlay.c	/^ask_overlay ()$/
+ask_yes_no	ask_driver.c	/^ask_yes_no(quest)$/
+break_line	break.c	/^break_line (map)$/
+break_line_w_point	break.c	/^break_line_w_point (map, line, ux, uy)$/
+build_area	area.c	/^build_area (map, x, y, line, Area)$/
+build_neat	build_neat.c	/^build_neat (map)$/
+calc_snap_thresh	set_thresh.c	/^calc_snap_thresh (new_thresh)$/
+calc_thresh	set_thresh.c	/^calc_thresh (new_thresh)$/
+calculate_map_scale	map_scale.c	/^calculate_map_scale ()$/
+check_area	label.c	/^check_area (map, line, x, y)$/
+check_list	contour.c	/^check_list (map, list, cnt)$/
+check_map_buttons	reset_map.c	/^check_map_buttons ()$/
+check_map_explain	reset_map.c	/^check_map_explain() $/
+check_map_ft_swtch	reset_map.c	/^check_map_ft_swtch()$/
+check_map_generic	reset_map.c	/^check_map_generic()$/
+check_next	retype_line.c	/^check_next (map, line, direction)$/
+check_scale	map_scale.c	/^check_scale(Map)$/
+clear_window	window.c	/^clear_window ()$/
+close_debug	main.c	/^close_debug()$/
+close_down	main.c	/^close_down()$/
+cmp_x	contour.c	/^cmp_x (a, b)$/
+cmp_y	contour.c	/^cmp_y (a, b)$/
+coll_a_pnt	ask_driver.c	/^coll_a_pnt ( x, y)$/
+color_line	display_line.c	/^color_line(type, points, line, map, color)$/
+color_name	color.c	/^color_name (color)$/
+color_node	display_node.c	/^color_node (node, map, color)$/
+color_setup	color.c	/^color_setup (map)$/
+color_site	display_site.c	/^color_site(type, points, line, map, color)$/
+color_toggle	color.c	/^color_toggle (color)$/
+compress	compress.c	/^compress (map, tell)$/
+curses_getchar	ATTCURSES.C	/^curses_getchar ()$/
+curses_yes_no	ATTCURSES.C	/^curses_yes_no(n, s)$/
+curses_yes_no_default	curses.C	/^curses_yes_no_default (n, str, def)$/
+d_area_info	debug.c	/^d_area_info (map)$/
+d_find_area	debug.c	/^d_find_area (map)$/
+d_find_line	debug.c	/^d_find_line (map)$/
+d_find_node	debug.c	/^d_find_node (map)$/
+d_line_info	debug.c	/^d_line_info (map)$/
+d_node_info	debug.c	/^d_node_info (map)$/
+d_show_areas	debug.c	/^d_show_areas (map)$/
+d_show_isles	debug.c	/^d_show_isles (map) \/*ISLE*\/$/
+d_show_lines	debug.c	/^d_show_lines (map)$/
+d_show_nodes	debug.c	/^d_show_nodes (map)$/
+debugf	main.c	/^debugf (format, a, b, c, d, e, f, g, h, i, j, k, l/
+dig_node_color	node_color.c	/^dig_node_color (num)$/
+disable_backdrop	backdrop.c	/^disable_backdrop ()$/
+disable_overlay	overlay.c	/^disable_overlay ()$/
+disenable_backdrop	backdrop.c	/^disenable_backdrop (onoff)$/
+disenable_overlay	overlay.c	/^disenable_overlay (onoff)$/
+display_alabels	window.c	/^display_alabels (map)$/
+display_all_areas	label.c	/^display_all_areas (map)$/
+display_all_lines	replot.c	/^display_all_lines (map)$/
+display_area	display_area.c	/^display_area (area, map)$/
+display_area_label	display_area.c	/^display_area_label (area, map)$/
+display_backdrop	backdrop.c	/^display_backdrop ()$/
+display_cents	window.c	/^display_cents (map)$/
+display_duplicate_lines	duplicate.c	/^display_duplicate_lines (Map)$/
+display_islands	window.c	/^display_islands (map)$/
+display_isle	display_area.c	/^display_isle (isle, map)$/
+display_labeled_areas	label.c	/^display_labeled_areas (map)$/
+display_labeled_lines	label.c	/^display_labeled_lines (map)$/
+display_lareas	window.c	/^display_lareas (map)$/
+display_line	display_line.c	/^display_line (type, points, line, map)$/
+display_llabel	window.c	/^display_llabel (map, i)$/
+display_llabels	window.c	/^display_llabels (map)$/
+display_llines	window.c	/^display_llines (map)$/
+display_node	display_node.c	/^display_node (node, map)$/
+display_nodes	replot.c	/^display_nodes (map)$/
+display_overlay	overlay.c	/^display_overlay ()$/
+display_site	display_site.c	/^display_site(type, points, line, map)$/
+display_tlines	replot.c	/^display_tlines (map, type)$/
+display_unlabeled_areas	window.c	/^display_unlabeled_areas (map)$/
+do_digitize	digitize.c	/^do_digitize(map, mode, type, sample_thresh, multi,/
+do_file_checks	main.c	/^do_file_checks (map)$/
+do_graphics	graphics.c	/^do_graphics()$/
+do_psu_dig	digitize.c	/^do_psu_dig(map, mode, type, sample_thresh)$/
+draw_default_window	mk_window.c	/^draw_default_window (N, S, E, W)$/
+drawcell	drawcell.c	/^drawcell(window)$/
+enable_backdrop	backdrop.c	/^enable_backdrop ()$/
+enable_overlay	overlay.c	/^enable_overlay ()$/
+erase_area	display_area.c	/^erase_area (area, map)$/
+erase_isle	display_area.c	/^erase_isle (isle, map)$/
+erase_line	display_line.c	/^erase_line(type, points, line, map)$/
+erase_node	display_node.c	/^erase_node (node, map)$/
+erase_site	display_site.c	/^erase_site(type, points, line, map)$/
+erase_window	window.c	/^erase_window ()$/
+expand_window	window.c	/^expand_window (N, S, E, W, plus)$/
+find_line_with_dig	find_w_dig.c	/^find_line_with_dig (type_mask, header, call)$/
+find_line_with_mouse	find_w_mouse.c	/^find_line_with_mouse (type_mask, header, call)$/
+find_node_with_dig	find_w_dig.c	/^find_node_with_dig ( x, y, thresh, header)$/
+find_node_with_mouse	find_w_mouse.c	/^find_node_with_mouse ( x, y, thresh, header)$/
+find_point_with_dig	find_w_dig.c	/^find_point_with_dig ( x, y, n_points, thresh)$/
+find_point_with_mouse	find_w_mouse.c	/^find_point_with_mouse ( x, y, n_points, thresh)$/
+fit_window	window_rout.c	/^fit_window (N, S, E, W)$/
+flush_keyboard	flush_input.c	/^flush_keyboard ()$/
+free_name_info	overlay.c	/^free_name_info (Map)$/
+get_D_east	wind_conv.c	/^get_D_east()$/
+get_D_north	wind_conv.c	/^get_D_north()$/
+get_D_south	wind_conv.c	/^get_D_south()$/
+get_D_west	wind_conv.c	/^get_D_west()$/
+get_digitizer_button_xy	ask_driver.c	/^get_digitizer_button_xy (X, Y)$/
+get_head_info	head_info.c	/^get_head_info(have_old, dhead)$/
+get_line_center	label.c	/^get_line_center (x, y, Points)$/
+get_map_scale	map_scale.c	/^get_map_scale()$/
+get_mem	states.c	/^get_mem (r_w)$/
+get_menu_command	menus.c	/^get_menu_command (menu, chr)$/
+get_point	get_point.c	/^get_point (x, y, str)$/
+get_reg_response	map_reg.c	/^get_reg_response( x, y)$/
+get_site_num	digitize.c	/^get_site_num(area_num, pcats)$/
+get_type_cnt	ATTCURSES.C	/^get_type_cnt (type)$/
+global_menu	menus.c	/^global_menu (chr, from)$/
+gorun	gorun.c	/^gorun(cmd, args)$/
+help_file_name	help.c	/^help_file_name (str)$/
+help_get_key	ATTCURSES.C	/^help_get_key ()$/
+help_valid_key	help.c	/^help_valid_key (key, Menu)$/
+highlight_area	display_area.c	/^highlight_area (area, map)$/
+highlight_area_label	display_area.c	/^highlight_area_label (area, map)$/
+highlight_isle	display_area.c	/^highlight_isle (isle, map)$/
+highlight_line	display_line.c	/^highlight_line(type, points, line, map)$/
+highlight_llabel	window.c	/^highlight_llabel (map, i)$/
+highlight_node	display_node.c	/^highlight_node (node, map)$/
+highlight_site	display_site.c	/^highlight_site(type, points, line, map)$/
+init_colors	initialize.c	/^init_colors ()$/
+init_debug	main.c	/^init_debug (file)$/
+init_graphics	graphics.c	/^init_graphics()$/
+init_init	initialize.c	/^init_init (digit, att, plusfil, coor)$/
+init_map	map_init.c	/^init_map ( coor_file)$/
+init_plus	initialize.c	/^init_plus (map)$/
+init_priority	set_prior.c	/^init_priority ()$/
+init_states	states.c	/^init_states ()$/
+init_window	set_window.c	/^init_window ()$/
+initialize	initialize.c	/^initialize (digit, att, plusfil, coor)$/
+interact	interact.c	/^interact()$/
+intersect_line	intersect.c	/^intersect_line (map)$/
+key_hit	set_key.c	/^key_hit(buf)$/
+label_all_lines	label.c	/^label_all_lines (map, cat)$/
+label_area	label.c	/^label_area  (map, cat)$/
+label_contour	contour.c	/^label_contour (map, interval)$/
+label_line	label.c	/^label_line (map, line, cat, Points)$/
+label_lines	label.c	/^label_lines  (map, cat)$/
+label_mlines	label_mult.c	/^label_mlines (map, cat)$/
+label_psu	label.c	/^label_psu  (map, cat)$/
+label_sites	label.c	/^label_sites  (map, cat)$/
+last_words	main.c	/^last_words (map, ret)$/
+leave	leave.c	/^leave()$/
+line_in_bbox	contour.c	/^line_in_bbox (Line, N, S, E, W)$/
+line_in_window	replot.c	/^line_in_window (Line)$/
+line_outside_window	window.c	/^line_outside_window (Line)$/
+list	list.c	/^list(ELEM)$/
+load_coor_from_file	map_coor.c	/^load_coor_from_file (fp)$/
+m_line_info	debug.c	/^m_line_info (map, line)$/
+m_node_info	debug.c	/^m_node_info (map, node)$/
+make_area_label	label.c	/^make_area_label (map, line)$/
+map_to_dig_thresh	set_thresh.c	/^map_to_dig_thresh (map_thresh)$/
+mouse_collect_points	mouse_coll.c	/^mouse_collect_points (mode, type, Points)$/
+mouse_get_point	mouse_coll.c	/^mouse_get_point (screen_x, screen_y, cnt)$/
+mouse_next_prev	mouse_yn.c	/^mouse_next_prev ( header)$/
+mouse_yes_no	mouse_yn.c	/^mouse_yes_no ( header)$/
+move_line	move_line.c	/^move_line (map)$/
+move_point	move_point.c	/^move_point(map)$/
+move_window	window.c	/^move_window (N, S, E, W, plus)$/
+near_zero	snap.c	/^near_zero (x)$/
+new_line	new_line.c	/^new_line (map, type, node, points)$/
+new_point_with_dig	find_w_dig.c	/^new_point_with_dig (x, y, header)$/
+new_point_with_digitizer	get_point.c	/^new_point_with_digitizer (x, y, str)$/
+new_point_with_mouse	find_w_mouse.c	/^new_point_with_mouse (x, y, header)$/
+node_lines	node_lines.c	/^node_lines (map)$/
+nplot_points	plot.c	/^nplot_points (type, Points, line_color, N1, N2, pn/
+order_cmp	build_neat.c	/^order_cmp (a, b)$/
+outline_window	wind_conv.c	/^outline_window()$/
+plot_overlay	overlay.c	/^plot_overlay (overlay)$/
+plot_points	oplot.c	/^plot_points(type, n_coors, xarray, yarray, line_co/
+register_map_coor	map_reg.c	/^register_map_coor ( n_points)$/
+remove_block	remove_block.c	/^remove_block (Map)$/
+remove_line	remove.c	/^remove_line (map, mtype)$/
+replot	replot.c	/^replot(map)$/
+replot_lines	replot.c	/^replot_lines (map, points)$/
+reset_area	display_area.c	/^reset_area (area, map)$/
+reset_isle	display_area.c	/^reset_isle (isle, map)$/
+reset_map	reset_map.c	/^reset_map(Map, coor_file)$/
+reset_snap_thresh	set_thresh.c	/^reset_snap_thresh(map)$/
+reset_thresh	set_thresh.c	/^reset_thresh(map)$/
+respend	ATTCURSES.C	/^respend ()$/
+retype_line	retype_line.c	/^retype_line (map)$/
+save_coor_to_file	map_coor.c	/^save_coor_to_file (fp) $/
+scal_window	window.c	/^scal_window ()$/
+scal_window_w_mouse	scal_window.c	/^scal_window_w_mouse ()$/
+screen_to_utm	wind_conv.c	/^screen_to_utm(Sx, Sy, Ux, Uy)$/
+set_default_display	states.c	/^set_default_display()$/
+set_keyboard	set_key.c	/^set_keyboard ()$/
+set_menu_item	menus.c	/^set_menu_item (menu, item, onoff)$/
+set_priority	set_prior.c	/^set_priority ()$/
+set_priority_3b2	set_prior.c	/^set_priority_3b2 ()$/
+set_thresh	set_thresh.c	/^set_thresh() $/
+set_uid_to_user	set_prior.c	/^set_uid_to_user ()$/
+set_window	set_window.c	/^set_window()$/
+set_window_w_mouse	mk_window.c	/^set_window_w_mouse ()$/
+show_coor_only	map_resid.c	/^show_coor_only ( n_points, active_point, status)$/
+show_mode	ATTCURSES.C	/^show_mode(mode, type)$/
+show_reg_menu	map_reg.c	/^show_reg_menu()$/
+show_residual_results	map_resid.c	/^show_residual_results ( n_points, active_point)$/
+shrink_map_coor	map_ask.c	/^shrink_map_coor()$/
+slid_window	window.c	/^slid_window ()$/
+slid_window_w_mouse	slid_window.c	/^slid_window_w_mouse ()$/
+snap_nodes	snap.c	/^snap_nodes(map)$/
+suspend	ATTCURSES.C	/^suspend ()$/
+swap	build_neat.c	/^swap (a, b)$/
+swap_re_uids	set_prior.c	/^swap_re_uids ()$/
+tell_area_label	label.c	/^tell_area_label (map, line)$/
+tell_area_unlabel	label.c	/^tell_area_unlabel (map, line)$/
+tell_line_label	label.c	/^tell_line_label (map, line)$/
+tell_type	node_lines.c	/^tell_type (type)$/
+undisplay_area_label	display_area.c	/^undisplay_area_label (area, map)$/
+unfinished_areas	bad_areas.c	/^unfinished_areas (map)$/
+unlabel_area	label.c	/^unlabel_area  (map)$/
+unlabel_line	label_mult.c	/^unlabel_line (map, line, Points)$/
+unlabel_lines	label.c	/^unlabel_lines  (map)$/
+unlabel_sites	label.c	/^unlabel_sites (map)$/
+unset_dot	display_area.c	/^unset_dot (x, y)$/
+unset_keyboard	set_key.c	/^unset_keyboard ()$/
+unset_priority	set_prior.c	/^unset_priority ()$/
+update_global_menu	menus.c	/^update_global_menu ()$/
+update_menu	menus.c	/^update_menu (menuhead)$/
+utm_to_screen	wind_conv.c	/^utm_to_screen(Ux, Uy, Sx, Sy)$/
+vask_respend	ATTCURSES.C	/^vask_respend ()$/
+vask_suspend	ATTCURSES.C	/^vask_suspend ()$/
+where_am_i	where_am_i.c	/^where_am_i(map)$/
+window_conversions	wind_conv.c	/^window_conversions(N, S, E, W)$/
+window_rout	window_rout.c	/^window_rout (N, S, E, W)$/
+window_setup	window_setup.c	/^window_setup (map)$/
+within_a_thresh	withinthresh.c	/^within_a_thresh (map)$/
+write_out	compress.c	/^write_out (tell)$/
+zoom_window	window.c	/^zoom_window ()$/
