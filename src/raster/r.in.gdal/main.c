@@ -109,7 +109,8 @@ int main (int argc, char *argv[])
 /* -------------------------------------------------------------------- */
 /*      Initialize GDAL Bridge, and open the file.                      */
 /* -------------------------------------------------------------------- */
-    if( !GDALBridgeInitialize( "/home/warmerda/gdal" ) )
+    sprintf( error_msg, "%s/lib", getenv( "GISBASE" ) );                  
+    if( !GDALBridgeInitialize( error_msg ) )
     {
         G_fatal_error( "Unable to initialize GDAL bridge.\n" );
         exit( 10 );
