@@ -36,7 +36,9 @@ fi
 
 if [ ! -f NEWS.html ]
 then
+	echo
 	echo "This should be run under grass root directory."
+	echo
 	exit
 fi
 
@@ -53,12 +55,13 @@ fi
 
 if [ "$1" != "new" -a "$1" != "orig" ]
 then
+	echo
 	echo "$1: Invalid argument."
+	echo
 	exit
 fi
 
 go=0
-
 if [ "$1" = "new" ]
 then
 	for i in src/display/devices/XDRIVER/XDRIVER24/SOCKET_NEW/SWITCHER.c \
@@ -95,6 +98,14 @@ fi
 
 if [ $go -eq 0 ]
 then
+	echo
+	if [ "$1" = "new" ]
+	then
+		echo "It's already new driver."
+	else
+		echo "It's already original driver."
+	fi
+	echo
 	exit
 fi
 
