@@ -77,8 +77,6 @@
 #include <stdio.h>
 #include "gis.h"
 
-#define	r_value(buf, col)	r_get_value(buf, col);
-
 union	R_PTR
 {
 	void	*v;
@@ -98,8 +96,12 @@ char	*r_type_name[] = { "CELL", "FCELL", "DCELL" };
 char	*r_type_spec[] = { "%%d",  "%%f",   "%%lf"  };
 
 
+#define	r_value(buf, col)	r_get_value(buf, col);
+
 double	r_get_value(struct R_MAP_PTR buf, int col);
 int	r_get_value2(double *ret, struct R_MAP_PTR buf, int col);
+double	r_set_value(struct R_MAP_PTR buf, int col, double val);
+int	r_set_value2(struct R_MAP_PTR buf, int col, double val);
 int	r_is_null_value(struct R_MAP_PTR buf, int col);
 int	r_str_for_value(char *str, int width, int prec,
 		struct R_MAP_PTR buf, int col);
