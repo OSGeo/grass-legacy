@@ -1,3 +1,6 @@
+/*
+* $Id$
+*/
 
 /*  gsd_prim.c
     Bill Brown, USACERL  
@@ -5,18 +8,32 @@
     Primitive drawing functions
 */
 
+/* DEBUG */
+#include <stdio.h>
+
+#include "gis.h"
 #include "gstypes.h"
 
-#ifdef USE_OGL	
 #include "GL/gl.h"
 #include "GL/glu.h"
-#endif
 
 #define USE_GL_NORMALIZE
 
+#define RED_MASK 0x000000FF
+#define GRN_MASK 0x0000FF00
+#define BLU_MASK 0x00FF0000
+#define ALP_MASK 0xFF000000
 
-/* DEBUG */
-#include <stdio.h>
+#define INT_TO_RED(i, r)    (r = (i & RED_MASK))
+#define INT_TO_GRN(i, g)    (g = (i & GRN_MASK) >> 8)
+#define INT_TO_BLU(i, b)    (b = (i & BLU_MASK) >> 16)
+#define INT_TO_ALP(i, a)    (a = (i & ALP_MASK) >> 24)
+
+#define MAX_OBJS 64
+/* ^ TMP - move to gstypes */
+
+static GLuint LightList[MAX_LIGHTS];
+static GLuint ObjList[MAX_OBJS];
 
 static int Shade;
 
@@ -35,112 +52,80 @@ static float ogl_lmodel[4];
 /* Mostly for flushing drawing commands accross a network - glFlush
 *  doesn't block, so if blocking is desired use glFinish.
 */
-gsd_flush()
+void gsd_flush(void)
 {
-
-#ifdef USE_OGL
     glFlush();
-#endif
-
+    
+    return;
 }
 
 /************************************************************************/
 /* Call glColorMaterial before enabling the GL_COLOR_MATERIAL */
-gsd_colormode(cm)
-int cm;
+void gsd_colormode(int cm)
 {
-
-#ifdef USE_OGL
-    switch(cm){
+    switch (cm)
+    {
 	case CM_COLOR:
 
 	    glDisable(GL_COLOR_MATERIAL);
 	    glDisable(GL_LIGHTING);
+	
 	    break;
-
 	case CM_EMISSION:
 
 	    glColorMaterial(GL_FRONT_AND_BACK, GL_EMISSION);
 	    glEnable(GL_COLOR_MATERIAL);
 	    glEnable(GL_LIGHTING);
-	    break;
 
+	    break;
 	case CM_DIFFUSE:
-/*
-	    glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
-*/
+
 	    glColorMaterial(GL_FRONT, GL_DIFFUSE);
 	    glEnable(GL_COLOR_MATERIAL);
 	    glEnable(GL_LIGHTING);
-/*
-	    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-***/
-	    break;
 
+	    break;
 	case CM_AD:
-/*
-	    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-***/
+
 	    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 	    glEnable(GL_COLOR_MATERIAL);
 	    glEnable(GL_LIGHTING);
-	    break;
 
+	    break;
 	case CM_NULL:
-	/* OGLXXX
-	 * lmcolor: if LMC_NULL,  use:
-	 * glDisable(GL_COLOR_MATERIAL);
-	 * LMC_NULL: use glDisable(GL_COLOR_MATERIAL);
-	 */
+	    
+	    /* OGLXXX
+	    * lmcolor: if LMC_NULL,  use:
+	    * glDisable(GL_COLOR_MATERIAL);
+	    * LMC_NULL: use glDisable(GL_COLOR_MATERIAL);
+	    */
 	    glDisable(GL_COLOR_MATERIAL);
 	    glEnable(GL_LIGHTING);
+	    
 	    break;
 	default:
+	    
 	    glDisable(GL_COLOR_MATERIAL);
 	    break;
     }
 
-/*
-
-fprintf(stderr," light 1 ambient: %f %f %f %f\n",
-    ogl_light_amb[0][0],ogl_light_amb[0][1],
-    ogl_light_amb[0][2],ogl_light_amb[0][3]);
-fprintf(stderr," light 2 ambient: %f %f %f %f\n",
-    ogl_light_amb[1][0],ogl_light_amb[1][1],
-    ogl_light_amb[1][2],ogl_light_amb[1][3]);
-fprintf(stderr,"material ambient: %f %f %f %f\n",
-    ogl_mat_amb[0],ogl_mat_amb[1],ogl_mat_amb[2],ogl_mat_amb[3]);
-fprintf(stderr," light 1 diffuse: %f %f %f %f\n",
-    ogl_light_diff[0][0],ogl_light_diff[0][1],
-    ogl_light_diff[0][2],ogl_light_diff[0][3]);
-fprintf(stderr," light 2 diffuse: %f %f %f %f\n",
-    ogl_light_diff[1][0],ogl_light_diff[1][1],
-    ogl_light_diff[1][2],ogl_light_diff[1][3]);
-fprintf(stderr,"material diffuse: %f %f %f %f\n",
-    ogl_mat_diff[0],ogl_mat_diff[1],ogl_mat_diff[2],ogl_mat_diff[3]);
-
-*/
-
-#endif
-
+    return;
 }
 
 /************************************************************************/
-show_colormode()
+void show_colormode(void)
 {
-GLint mat;
+    GLint mat;
 
     glGetIntegerv(GL_COLOR_MATERIAL_PARAMETER,&mat);
     fprintf(stderr,"Color Material: %d\n", mat);
 
+    return;
 }
 
 /************************************************************************/
-
-gsd_circ(x, y, rad)
-float x, y, rad;
+void gsd_circ(float x, float y, float rad)
 {
-#ifdef USE_OGL
     GLUquadricObj *qobj = gluNewQuadric(); 
     gluQuadricDrawStyle(qobj, GLU_SILHOUETTE); 
     glPushMatrix(); 
@@ -148,15 +133,13 @@ float x, y, rad;
     gluDisk( qobj, 0.,  rad, 32, 1); 
     glPopMatrix(); 
     gluDeleteQuadric(qobj); 
-#endif
+
+    return;
 }
 
 /************************************************************************/
-
-gsd_disc(x, y, z, rad)
-float x, y, z, rad;
+void gsd_disc(float x, float y, float z, float rad)
 {
-#ifdef USE_OGL
     GLUquadricObj *qobj = gluNewQuadric(); 
     gluQuadricDrawStyle(qobj, GLU_FILL); 
     glPushMatrix(); 
@@ -164,395 +147,390 @@ float x, y, z, rad;
     gluDisk( qobj, 0.,  rad, 32, 1); 
     glPopMatrix(); 
     gluDeleteQuadric(qobj); 
-#endif
+
+    return;
 }
 
 /************************************************************************/
-gsd_sphere(center, siz)
-float center[3], siz;
+void gsd_sphere(float *center, float siz)
 {
-#ifndef USE_OGL
-float params[4];
-static int first=1;
+    static int first=1;
+    static GLUquadricObj *QOsphere;
 
-    if(first){
-        /* set sphere mode */
-        sphmode(SPH_ORIENT, FALSE);
-        first = 0;
-    }
-    
-    params[0]=center[0];
-    params[1]=center[1];
-    params[2]=center[2];
-    params[3]=siz;
-    sphdraw(params);
-#else
-static int first=1;
-static GLUquadricObj *QOsphere;
-
-    if(first){
+    if (first)
+    {
 	QOsphere = gluNewQuadric();
-	if(QOsphere){
+	
+	if (QOsphere)
+	{
 	    gluQuadricNormals(QOsphere, GLU_SMOOTH); /* default */
 	    gluQuadricTexture(QOsphere, GL_FALSE); /* default */
 	    gluQuadricOrientation(QOsphere, GLU_OUTSIDE); /* default */
 	    gluQuadricDrawStyle(QOsphere, GLU_FILL); 
 	}
-        first = 0;
+        
+	first = 0;
     }
+    
     glPushMatrix();
     glTranslatef(center[0],  center[1],  center[2]);
     gluSphere(QOsphere, (double)siz, 24, 24);
     glPopMatrix();
-#endif
+    
+    return;
 }
+
 /************************************************************************/
-gsd_zwritemask(n)
-unsigned long n;
+void gsd_zwritemask(unsigned long n)
 {
-#ifdef USE_OGL
 	/* OGLXXX glDepthMask is boolean only */
     glDepthMask((GLboolean)(n));
-#endif
+
+    return;
 }
 
 /************************************************************************/
-gsd_backface(n)
-int n;
+void gsd_backface(int n)
 {
-#ifdef USE_OGL
     glCullFace(GL_BACK); 
     (n) ? glEnable(GL_CULL_FACE):glDisable(GL_CULL_FACE);
-#endif
+
+    return;
 }
 
 /************************************************************************/
-gsd_linewidth(n)
-short n;
+void gsd_linewidth(short n)
 {
-#ifdef USE_OGL
     glLineWidth((GLfloat)(n));
-#endif
+
+    return;
 }
 
 /************************************************************************/
-gsd_bgnqstrip()
+void gsd_bgnqstrip(void)
 {
-#ifdef USE_OGL
     glBegin(GL_QUAD_STRIP);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_endqstrip()
+void gsd_endqstrip(void)
 {
-#ifdef USE_OGL
     glEnd();
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_bgntmesh()
+void gsd_bgntmesh(void)
 {
-#ifdef USE_OGL
     glBegin(GL_TRIANGLE_STRIP);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_endtmesh()
+void gsd_endtmesh(void)
 {
-#ifdef USE_OGL
     glEnd();
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_bgntstrip()
+void gsd_bgntstrip(void)
 {
-#ifdef USE_OGL
     glBegin(GL_TRIANGLE_STRIP);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_endtstrip()
+void gsd_endtstrip(void)
 {
-#ifdef USE_OGL
     glEnd();
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_bgntfan()
+void gsd_bgntfan(void)
 {
-#ifdef USE_OGL
     glBegin(GL_TRIANGLE_FAN);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_endtfan()
+void gsd_endtfan(void)
 {
-#ifdef USE_OGL
     glEnd();
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_swaptmesh()
+void gsd_swaptmesh(void)
 {
-#ifdef USE_OGL
-	/* OGLXXX
-	 * swaptmesh not supported, maybe glBegin(GL_TRIANGLE_FAN)
-	 * swaptmesh()
-	 */
+    /* OGLXXX
+     * swaptmesh not supported, maybe glBegin(GL_TRIANGLE_FAN)
+     * swaptmesh()
+     */
+    
     /*DELETED*/;
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_bgnpolygon()
+void gsd_bgnpolygon(void)
 {
-#ifdef USE_OGL
-	/* OGLXXX
-	 * special cases for polygons:
-	 * 	independant quads: use GL_QUADS
-	 * 	independent triangles: use GL_TRIANGLES
-	 */
+    /* OGLXXX
+     * special cases for polygons:
+     * 	independant quads: use GL_QUADS
+     * 	independent triangles: use GL_TRIANGLES
+     */
     glBegin(GL_POLYGON);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_endpolygon()
+void gsd_endpolygon(void)
 {
-#ifdef USE_OGL
     glEnd();
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_bgnline()
+void gsd_bgnline(void)
 {
-#ifdef USE_OGL
-	/* OGLXXX for multiple, independent line segments: use GL_LINES */
+    /* OGLXXX for multiple, independent line segments: use GL_LINES */
     glBegin(GL_LINE_STRIP);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_endline()
+void gsd_endline(void)
 {
-#ifdef USE_OGL
     glEnd();
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_shademodel(bool)
-int bool;
+void gsd_shademodel(int bool)
 {
     Shade = bool;
-#ifdef USE_OGL
-    if(bool)
+    
+    if (bool)
+    {
 	glShadeModel(GL_SMOOTH);
+    }
     else
+    {
 	glShadeModel(GL_FLAT);
-#endif
+    }
+    
+    return;
 }
 
 /************************************************************************/
-gsd_getshademodel()
+int gsd_getshademodel(void)
 {
     return(Shade);
 }
 
 /************************************************************************/
-gsd_bothbuffer()
+void gsd_bothbuffer(void)
 {
-#ifdef USE_OGL
-	/* OGLXXX frontbuffer: other possibilities include GL_FRONT_AND_BACK */
+    /* OGLXXX frontbuffer: other possibilities include GL_FRONT_AND_BACK */
     glDrawBuffer(GL_FRONT_AND_BACK);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_frontbuffer(bool)
-int bool;
+void gsd_frontbuffer(int bool)
 {
-#ifdef USE_OGL
-	/* OGLXXX frontbuffer: other possibilities include GL_FRONT_AND_BACK */
+    /* OGLXXX frontbuffer: other possibilities include GL_FRONT_AND_BACK */
     glDrawBuffer((bool) ? GL_FRONT : GL_BACK);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_backbuffer(bool)
-int bool;
+void gsd_backbuffer(int bool)
 {
-#ifdef USE_OGL
-	/* OGLXXX backbuffer: other possibilities include GL_FRONT_AND_BACK */
+    /* OGLXXX backbuffer: other possibilities include GL_FRONT_AND_BACK */
     glDrawBuffer((bool) ? GL_BACK : GL_FRONT);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_swapbuffers()
+void gsd_swapbuffers(void)
 {
-#ifdef USE_OGL
     /* OGLXXX swapbuffers: 
     glXSwapBuffers(*display, window);
     replace display and window */
-/*
-fprintf(stderr,"About to call Swap_func\n");
-*/
 
     Swap_func();
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_popmatrix()
+void gsd_popmatrix(void)
 {
-#ifdef USE_OGL
     glPopMatrix();
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_pushmatrix()
+void gsd_pushmatrix(void)
 {
-#ifdef USE_OGL
     glPushMatrix();
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_scale(xs,ys,zs)
-float xs, ys, zs;
+void gsd_scale(float xs, float ys, float zs)
 {
-#ifdef USE_OGL
-    glScalef(xs,  ys,  zs);
-#endif
+    glScalef(xs, ys, zs);
+    
+    return;
 }
 
 /************************************************************************/
-gsd_translate(dx,dy,dz)
-float dx, dy, dz;
+void gsd_translate(float dx, float dy, float dz)
 {
-#ifdef USE_OGL
-    glTranslatef(dx,  dy,  dz);
-#endif
+    glTranslatef(dx, dy, dz);
+    
+    return;
 }
 
 /************************************************************************/
-gsd_rot(angle, axis)
-float angle;
-char axis;
+void gsd_rot(float angle, char axis)
 {
-#ifdef USE_OGL
-	/* OGLXXX You can do better than this. */
-    glRotatef(angle, ( axis)=='x'||( axis)=='X', ( axis)=='y'||( axis)=='Y', ( axis)=='z'||( axis)=='Z');
-#endif
+    GLfloat x;
+    GLfloat y;
+    GLfloat z;
+    char    wrnMsg[512];
+    
+    switch (axis)
+    {
+    	case 'x':
+	case 'X':
+	    
+	    x = 1.0;
+	    y = 0.0;
+	    z = 0.0;
+	    
+	    break;
+    	case 'y':
+	case 'Y':
+	    
+	    x = 0.0;
+	    y = 1.0;
+	    z = 0.0;
+	    
+	    break;
+    	case 'z':
+	case 'Z':
+	    
+	    x = 0.0;
+	    y = 0.0;
+	    z = 1.0;
+	    
+	    break;
+	default:
+	    
+	    sprintf(wrnMsg, "gsd_rot(): %c is an invalid axis ", axis);
+	    strcat(wrnMsg, "specification. Rotation ignored\n");
+	    strcat(wrnMsg, "Please advise GRASS developers of this error.\n");
+	    
+	    G_warning(wrnMsg);
+	    return;
+    }
+    
+    glRotatef((GLfloat) angle, x, y, z);
+    
+    return;
 }
 
 /************************************************************************/
-gsd_litvert_func(norm, col, pt)
-float norm[3];
-unsigned long col;
-float pt[3];
+void gsd_litvert_func(float *norm, unsigned long col, float *pt)
 {
-#ifdef USE_OGL
     glNormal3fv(norm);
     gsd_color_func(col);
     glVertex3fv(pt);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_litvert_func2(norm, col, pt)
-float norm[3];
-unsigned long col;
-float pt[3];
+void gsd_litvert_func2(float *norm, unsigned long col, float *pt)
 {
-#ifdef USE_OGL
     glNormal3fv(norm);
     glVertex3fv(pt);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_vert_func(pt)
-float pt[3];
+void gsd_vert_func(float *pt)
 {
-#ifdef USE_OGL
     glVertex3fv(pt);
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-
-
-#define RED_MASK 0x000000FF
-#define GRN_MASK 0x0000FF00
-#define BLU_MASK 0x00FF0000
-#define ALP_MASK 0xFF000000
-
-#define INT_TO_RED(i, r)    (r = (i & RED_MASK))
-#define INT_TO_GRN(i, g)    (g = (i & GRN_MASK) >> 8)
-#define INT_TO_BLU(i, b)    (b = (i & BLU_MASK) >> 16)
-#define INT_TO_ALP(i, a)    (a = (i & ALP_MASK) >> 24)
-
-gsd_color_func(col)
-unsigned col;
+void gsd_color_func(unsigned int col)
 {
-#ifdef USE_OGL
-GLbyte r, g, b, a;
+    GLbyte r, g, b, a;
 
-	/* OGLXXX
-	 * cpack: if argument is not a variable
-	 * might need to be:
-	 * 	glColor4b(($1)&0xff, ($1)>>8&0xff, ($1)>>16&0xff, ($1)>>24&0xff)
-	 */
+    /* OGLXXX
+     * cpack: if argument is not a variable
+     * might need to be:
+     * 	glColor4b(($1)&0xff, ($1)>>8&0xff, ($1)>>16&0xff, ($1)>>24&0xff)
+     */
     INT_TO_RED(col, r);
     INT_TO_GRN(col, g);
     INT_TO_BLU(col, b);
     INT_TO_ALP(col, a);
     glColor4ub(r, g, b, a);
 
-#endif
+    return;
 }
 
-#ifdef USE_OGL
-
-#define MAX_OBJS 64
-/* ^ TMP - move to gstypes */
-
-
-static GLuint LightList[MAX_LIGHTS];
-static GLuint ObjList[MAX_OBJS];
-#endif
 /************************************************************************/
-gsd_init_lightmodel()
+void gsd_init_lightmodel(void)
 {
-#ifdef USE_OGL
-    
     glEnable(GL_LIGHTING);
 
-/* normal vector renormalization */
-#ifdef USE_GL_NORMALIZE
-    glEnable(GL_NORMALIZE);
-#endif
+    /* normal vector renormalization */
+    #ifdef USE_GL_NORMALIZE
+    {
+    	glEnable(GL_NORMALIZE);
+    }
+    #endif
 
-	/* OGLXXX
-	 * Ambient:
-	 * 	If this is a light model lmdef, then use 
-	 *      glLightModelf and GL_LIGHT_MODEL_AMBIENT.
-	 *      Include ALPHA parameter with ambient
-	 */
-	 /* Default is front face lighting, infinite viewer
-	 */
+    /* OGLXXX
+     * Ambient:
+     * 	If this is a light model lmdef, then use 
+     *      glLightModelf and GL_LIGHT_MODEL_AMBIENT.
+     *      Include ALPHA parameter with ambient
+     */
+
+    /* Default is front face lighting, infinite viewer
+     */
     ogl_mat_amb[0] = 0.1;
     ogl_mat_amb[1] = 0.1;
     ogl_mat_amb[2] = 0.1;
@@ -575,47 +553,49 @@ gsd_init_lightmodel()
 
     ogl_mat_shin = 25.0;
 
-	/* OGLXXX
-	 * attenuation: see glLightf man page: (ignored for infinite lights)
-	 * Add GL_LINEAR_ATTENUATION.
+    /* OGLXXX
+     * attenuation: see glLightf man page: (ignored for infinite lights)
+     * Add GL_LINEAR_ATTENUATION.
     sgi_lmodel[0] = GL_CONSTANT_ATTENUATION;
     sgi_lmodel[1] = 1.0;
     sgi_lmodel[2] = 0.0;
     sgi_lmodel[3] = ;
-	 */
-	/* OGLXXX
-	 * lmdef other possibilities include:
-	 * 	glLightf(light, pname, *params);
-	 * 	glLightModelf(pname, param);
-	 * Check list numbering.
-	 * Translate params as needed.
-	 */
-
+     */
+    
+    /* OGLXXX
+     * lmdef other possibilities include:
+     * 	glLightf(light, pname, *params);
+     * 	glLightModelf(pname, param);
+     * Check list numbering.
+     * Translate params as needed.
+     */
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ogl_mat_amb);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, ogl_mat_diff);
     glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, ogl_mat_spec);
     glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, ogl_mat_emis);
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, ogl_mat_shin);
 
-	/* OGLXXX lmbind: check object numbering. */
-	/* OGLXXX
-	 * lmbind: check object numbering.
-	 * Use GL_FRONT in call to glMaterialf.
-	 * Use GL_FRONT in call to glMaterialf.
+    /* OGLXXX lmbind: check object numbering. */
+    /* OGLXXX
+     * lmbind: check object numbering.
+     * Use GL_FRONT in call to glMaterialf.
+     * Use GL_FRONT in call to glMaterialf.
     if(1) {glCallList(1); glEnable(LMODEL);} else glDisable(LMODEL);
     if(1) {glCallList(1); glEnable(GL_FRONT);} else glDisable(GL_FRONT);
-	 */
+     */
 
-#endif
+    return;
 }
 
 /************************************************************************/
-gsd_set_material(set_shin, set_emis, sh, em, emcolor)
-int set_shin, set_emis;  /* flags */
-float sh, em; /* sh & em should be 0. - 1. */
-int emcolor;  /* packed colors to use for emission */
+/* set_shin, set_emis  flags */
+/* sh, em    sh & em should be 0. - 1. */
+/* emcolor   packed colors to use for emission */
+void gsd_set_material(int set_shin, int set_emis, float sh, float em,
+    int emcolor)
 {
-    if(set_shin){
+    if (set_shin)
+    {
 	ogl_mat_spec[0] = sh;
 	ogl_mat_spec[1] = sh;
 	ogl_mat_spec[2] = sh;
@@ -626,10 +606,11 @@ int emcolor;  /* packed colors to use for emission */
 	ogl_mat_shin = 60. + (int)(sh * 68.);
 
 	glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, ogl_mat_shin);
-fprintf(stderr, "shine set to: %f\n", ogl_mat_shin);
+    	fprintf(stderr, "shine set to: %f\n", ogl_mat_shin);
     }
 
-    if(set_emis){
+    if (set_emis)
+    {
 	ogl_mat_emis[0] = (em * (emcolor & 0x0000FF))/255.;
 	ogl_mat_emis[1] = (em * ((emcolor & 0x00FF00)>>8))/255.;
 	ogl_mat_emis[2] = (em * ((emcolor & 0xFF0000)>>16))/255.;
@@ -637,15 +618,14 @@ fprintf(stderr, "shine set to: %f\n", ogl_mat_shin);
 	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, ogl_mat_emis);
     }
 
+    return;
 }
 
 /************************************************************************/
-gsd_deflight(num, vals)
-int num;
-struct lightdefs *vals;
+void gsd_deflight(int num, struct lightdefs *vals)
 {
-#ifdef USE_OGL
-    if(num > 0 && num <= MAX_LIGHTS){
+    if (num > 0 && num <= MAX_LIGHTS)
+    {
 	ogl_light_pos[num - 1][0] = vals->position[X];
 	ogl_light_pos[num - 1][1] = vals->position[Y];
 	ogl_light_pos[num - 1][2] = vals->position[Z];
@@ -673,42 +653,41 @@ struct lightdefs *vals;
 	ogl_light_spec[num - 1][3] = .3;
 
 	glLightfv(GL_LIGHT0 + num, GL_SPECULAR, ogl_light_spec[num-1]);
-
     }
-#endif
-
+    
+    return;
 }
 
 /************************************************************************/
 /* on = 0 turns them off */
-gsd_switchlight(num, on)
-int num, on;
+void gsd_switchlight(int num, int on)
 {
-#ifdef USE_OGL
-short defin;
+    short defin;
 
     defin = on? num: 0 ;  
-    if(defin) 
-	glEnable(GL_LIGHT0 + num); 
-    else 
+    
+    if (defin) 
+    {
+	glEnable(GL_LIGHT0 + num);
+    }
+    else
+    {
 	glDisable(GL_LIGHT0 + num);
-#endif
-
+    }
+    
+    return;
 }
 
 /************************************************************************/
-gsd_getimage(pixbuf, xsize, ysize)
-unsigned long **pixbuf;
-int *xsize, *ysize;
+int gsd_getimage(unsigned long **pixbuf, unsigned int *xsize,
+    unsigned int *ysize)
 {
-#ifdef USE_OGL
-GLuint l, r, b, t;
+    GLuint l, r, b, t;
 
-	/* OGLXXX
-	 * get GL_VIEWPORT:
-	 * You can probably do better than this.
-	 */
-    {
+    /* OGLXXX
+     * get GL_VIEWPORT:
+     * You can probably do better than this.
+     */
     GLint tmp[4];
 
     glGetIntegerv(GL_VIEWPORT, tmp);
@@ -716,158 +695,159 @@ GLuint l, r, b, t;
     r=tmp[0]+tmp[2]-1;
     b=tmp[1];
     t=tmp[1]+tmp[3]-1;
-    }
-
+    
     *xsize = r - l + 1; 
     *ysize = t - b + 1; 
 
-    if(NULL == (*pixbuf = 
+    if (NULL == (*pixbuf = 
 	    (unsigned long *)malloc(*xsize * *ysize * sizeof(unsigned long))))
+    {
 	return (0);
+    }
+    
     glReadBuffer(GL_FRONT);
-	/* OGLXXX lrectread: see man page for glReadPixels */
+    
+    /* OGLXXX lrectread: see man page for glReadPixels */
     glReadPixels(l, b, (r)-(l)+1, (t)-(b)+1, GL_RGBA, GL_UNSIGNED_BYTE,  *pixbuf);
+    
     return(1);
-#endif
-    return(0);
 }
 
 /************************************************************************/
-gsd_blend(yesno)
-int yesno;
+void gsd_blend(int yesno)
 {
-#ifdef USE_OGL
-    if(yesno){
+    if (yesno)
+    {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
-    else{
+    else
+    {
 	glDisable(GL_BLEND);
 	glBlendFunc(GL_ONE, GL_ZERO);
     }
-#endif
+    
+    return;
 }
 
 /************************************************************************/
-gsd_def_clipplane(num, params)
-int num;
-double *params;
+void gsd_def_clipplane(int num, double *params)
 {
-#ifdef USE_OGL
-int wason=0;
+    int wason=0;
 
-	/* OGLXXX see man page for glClipPlane equation */
-    if (glIsEnabled(GL_CLIP_PLANE0+(num))){
+    /* OGLXXX see man page for glClipPlane equation */
+    if (glIsEnabled(GL_CLIP_PLANE0+(num)))
+    {
 	wason=1;
     }
+    
     glClipPlane( GL_CLIP_PLANE0+(num), params); 
-    if(wason) 
-	glEnable(GL_CLIP_PLANE0+(num)); 
-    else 
+    
+    if (wason)
+    {
+	glEnable(GL_CLIP_PLANE0+(num));
+    }
+    else
+    {
 	glDisable(GL_CLIP_PLANE0+(num));
-/*
-*/
-#endif
+    }
+    
+    return;
 }
 
 /************************************************************************/
-gsd_set_clipplane(num, able)
-int num, able;
+void gsd_set_clipplane(int num, int able)
 {
-#ifdef USE_OGL
-	/* OGLXXX see man page for glClipPlane equation */
+    /* OGLXXX see man page for glClipPlane equation */
     if (able)
-	glEnable(GL_CLIP_PLANE0+(num)); 
-    else 
+    {
+	glEnable(GL_CLIP_PLANE0+(num));
+    }
+    else
+    {
 	glDisable(GL_CLIP_PLANE0+(num));
-#endif
+    }
+    
+    return;
 }
 
 /************************************************************************/
-/* gl_flush or finish */
-gsd_finish()
+/* does nothing */
+/* only called from src.contrib/GMSL/NVIZ2.2/src/glwrappers.c */
+void gsd_finish(void)
 {
-#ifdef SGI_GL
-    finish();
-#endif
+    return;
 }
 
 /************************************************************************/
-gsd_viewport(l,r,b,t)
-int l,r,b,t;
-/* Screencoord */
+void gsd_viewport(int l, int r, int b, int t)
 {
-#ifdef SGI_GL
-    viewport((Screencoord)l, (Screencoord)r, (Screencoord)b, (Screencoord)t);
-#endif
-#ifdef USE_OGL
-    glViewport( l, b, r, t);
-#endif
+    /* Screencoord */
+    glViewport(l, b, r, t);
+    
+    return;
 }
 
 /************************************************************************/
 /* first time called, gets a bunch of objects, then hands them back
  * when needed
 */
-gsd_makelist()
+int gsd_makelist(void)
 {
-int i;
-static int numobjs=0;
+    int i;
+    static int numobjs=0;
 
-#ifdef USE_OGL
-    if(numobjs){
-	if(numobjs < MAX_OBJS)
+    if (numobjs)
+    {
+	if (numobjs < MAX_OBJS)
+	{
 	    return(numobjs++);
+	}
+	
 	return(-1);
     }
-    else{
+    else
+    {
 	ObjList[0]=glGenLists(MAX_OBJS);
+	
 	for (i=1 ; i<MAX_OBJS; i++)
+	{
 	    ObjList[i] = ObjList[0]+i;
-        numobjs=1;
+	}
+        
+	numobjs=1;
+	
 	return(0);
     }
-#endif
-
 }
 
 /************************************************************************/
-
-gsd_bgnlist(listno, do_draw)
-int listno, do_draw;
+void gsd_bgnlist(int listno, int do_draw)
 {
-
-#ifdef USE_OGL
-    if(do_draw)
+    if (do_draw)
+    {
 	glNewList(ObjList[listno], GL_COMPILE_AND_EXECUTE);
+    }
     else
+    {
 	glNewList(ObjList[listno], GL_COMPILE);
-#endif
+    }
 
+    return;
 }
 
 /************************************************************************/
-
-gsd_endlist()
+void gsd_endlist(void)
 {
-
-#ifdef USE_OGL
-	glEndList();
-#endif
-
+    glEndList();
+    
+    return;
 }
 
 /************************************************************************/
-
-gsd_calllist(listno)
-int listno;
+void gsd_calllist(int listno)
 {
-
-#ifdef USE_OGL
     glCallList(ObjList[listno]);
-#endif
-
+    
+    return;
 }
-/************************************************************************/
-
-

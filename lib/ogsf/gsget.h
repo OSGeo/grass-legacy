@@ -1,6 +1,13 @@
+/*
+* $Id$
+*/
+
 /***********
 * gsget.h
 ***********/
+
+#ifndef _GSGET_H
+#define _GSGET_H
 
 #include "gsurf.h"
 
@@ -52,5 +59,4 @@
   ((unsigned int)((nv[Y]*XYMAXPOS)+XYMAXPOS) << 10) |               \
   (unsigned int)(nv[Z]*ZMAXPOS)
 
-
-
+#endif /* _GSGET_H */
