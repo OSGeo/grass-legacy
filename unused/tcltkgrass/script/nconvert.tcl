@@ -248,7 +248,7 @@ proc mapset_listbox_widget { fp } {
   puts $fp ""
   puts $fp "  listbox .mapset.frame1.listbox \\"
   puts $fp "    -relief \{sunken\} \\"
-  puts $fp "    -geometry 20x10 \\"
+  puts $fp "    -width 20 -height10 \\"
   puts $fp "    -yscrollcommand \{.mapset.frame1.vscrollbar set\}"
 
   puts $fp ""
@@ -451,7 +451,7 @@ proc get_exit_condition  { } {
   if { $flag == 0 } {
      set condition "\t\tset cmd \[put_command\]\n"  
      set condition "$condition \t\tif \{ \$cmd != \"\"\ \} \{\n"
-     set condition "$condition \t\t   eval \" exec xterm -title $program_name -geometry 50x5 -exec \$cmd \" \n" 
+     set condition "$condition \t\t   eval \" exec xterm -title $program_name -width 50 -height 5 -exec \$cmd \" \n" 
      set condition "$condition \t\t   destroy .cmd\n"
      set condition "$condition \t\t\}\n"
      return $condition
@@ -476,7 +476,7 @@ proc get_exit_condition  { } {
   set condition "\n\t\tif \{ $condition \} \{\n"
   set condition "$condition \t\tset cmd \[put_command\]\n"  
   set condition "$condition \t\tif \{ \$cmd != \"\"\ \} \{\n"
-  set condition "$condition \t\t   eval \" exec xterm -title $program_name -geometry 50x5 -exec \$cmd \" \n" 
+  set condition "$condition \t\t   eval \" exec xterm -title $program_name -width 50 -height 5 -exec \$cmd \" \n" 
   set condition "$condition \t\t   destroy .cmd\n"
   set condition "$condition \t\t\}\n"
   set condition "$condition \t\}\n"

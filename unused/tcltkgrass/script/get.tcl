@@ -84,20 +84,20 @@ proc mapset_listbox { type } {
     .mapset.frame2 { bottom expand fill }
 
   bind .mapset.frame1.listbox <Button-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	    set file_name [%W get [%W nearest %y]]
   }
 
   bind .mapset.frame1.listbox <ButtonRelease-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	    set file_name [%W get [%W nearest %y]]
   }
 
   bind .mapset.frame1.listbox <Double-ButtonPress-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	    set file_name [%W get [%W nearest %y]]
   }
 

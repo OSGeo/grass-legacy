@@ -146,32 +146,32 @@ proc dir_dialog { } {
   }
 
   bind $dir_list <ButtonRelease-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	eval $file_entry delete 0 end
 	eval $file_entry insert 0 [%W get [%W nearest %y]]
         set file_selected [$file_entry get] 
   }
 
   bind $dir_list <Button-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	eval $file_entry delete 0 end
 	eval $file_entry insert 0 [%W get [%W nearest %y]]
         set file_selected [$file_entry get] 
   }
 
   bind $dir_list <Key> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
         eval $file_entry delete 0 end
 	eval $file_entry insert 0 [%W get [%W nearest %y]]
         set file_selected [$file_entry get] 
   }
 
   bind $dir_list <Double-ButtonPress-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	eval $file_entry delete 0 end
 	eval $file_entry insert 0 [%W get [%W nearest %y]]
         set selected [$file_entry get]
@@ -192,8 +192,8 @@ proc dir_dialog { } {
   }
 
   bind $dir_list <Return> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	eval $file_entry delete 0 end
 	eval $file_entry insert 0 [%W get [%W nearest %y]]
 
@@ -2600,7 +2600,7 @@ proc mapset_dialog { view } {
 
   listbox .feature.frame4.listbox \
     -relief {raised} \
-    -geometry 30x10 \
+    -width 30 -height 10 \
     -yscrollcommand {.feature.frame4.vscrollbar set} \
     -xscrollcommand {.feature.frame4.hscrollbar set}
 
@@ -2710,38 +2710,38 @@ proc mapset_dialog { view } {
 
 
   bind .feature.frame2.listbox <Button-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set file_name [%W get [%W nearest %y]]
   }
 
   bind .feature.frame2.listbox <ButtonRelease-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set file_name [%W get [%W nearest %y]]
   }
 
   bind .feature.frame2.listbox <Double-ButtonPress-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set file_name [%W get [%W nearest %y]]
   }
 
   bind .feature.frame4.listbox <Button-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set layer_name [%W get [%W nearest %y]]
   }
 
   bind .feature.frame4.listbox <ButtonRelease-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set layer_name [%W get [%W nearest %y]]
   }
 
   bind .feature.frame4.listbox <Double-ButtonPress-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set layer_name [%W get [%W nearest %y]]
   }
 
@@ -3533,7 +3533,7 @@ proc mainWindow { mainWindowTitle } {
            -command { exec g.region -d }
         .frame0.region.pulldown add command \
            -label { Zoom in the display monitor } \
-           -command { exec xterm -title d.zoom -geometry 50x6 -exec d.zoom } 
+           -command { exec xterm -title d.zoom -width 50 -height 6 -exec d.zoom } 
         .frame0.region.pulldown add command \
            -label { Manage region interactively } \
            -command { exec xterm -title g.region -exec g.region } 

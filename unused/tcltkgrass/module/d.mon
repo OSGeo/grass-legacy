@@ -121,12 +121,12 @@ proc d.mon { } {
     -padx {2}
 
   scrollbar .cmd.frame0.hscrollbar \
-    -command {.cmd.frame0.entry view} \
+    -command {.cmd.frame0.entry xview} \
     -orient {horizontal}
 
   entry .cmd.frame0.entry \
     -relief {sunken} \
-    -scrollcommand {.cmd.frame0.hscrollbar set}
+    -xscrollcommand {.cmd.frame0.hscrollbar set}
 
 
   pack append .cmd.frame0 \
@@ -149,12 +149,12 @@ proc d.mon { } {
     -padx {2}
 
   scrollbar .cmd.frame1.hscrollbar \
-    -command {.cmd.frame1.entry view} \
+    -command {.cmd.frame1.entry xview} \
     -orient {horizontal}
 
   entry .cmd.frame1.entry \
     -relief {sunken} \
-    -scrollcommand {.cmd.frame1.hscrollbar set}
+    -xscrollcommand {.cmd.frame1.hscrollbar set}
 
 
   pack append .cmd.frame1 \
@@ -179,7 +179,7 @@ proc d.mon { } {
   listbox .cmd.frame2.listbox \
     -relief {sunken} \
     -exportselection false \
-    -geometry 25x8 \
+    -width 25 -height 8 \
     -yscrollcommand {.cmd.frame2.vscrollbar set}
 
   scrollbar .cmd.frame2.vscrollbar \
@@ -194,8 +194,8 @@ proc d.mon { } {
 
 
   bind .cmd.frame2.listbox <Button-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set monitor [%W get [%W nearest %y]]
         if { [.cmd.frame3.listbox curselection] != "" } { 
            .cmd.frame0.entry configure -state normal
@@ -207,8 +207,8 @@ proc d.mon { } {
   }
 
   bind .cmd.frame2.listbox <ButtonRelease-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set monitor [%W get [%W nearest %y]]
         if { [.cmd.frame3.listbox curselection] != "" } { 
            .cmd.frame0.entry configure -state normal
@@ -220,8 +220,8 @@ proc d.mon { } {
   }
 
   bind .cmd.frame2.listbox <Double-ButtonPress-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set monitor [%W get [%W nearest %y]]
         if { [.cmd.frame3.listbox curselection] != "" } { 
            .cmd.frame0.entry configure -state normal
@@ -246,7 +246,7 @@ proc d.mon { } {
   listbox .cmd.frame3.listbox \
     -relief {sunken} \
     -exportselection false \
-    -geometry 25x5 \
+    -width 25 -height 5 \
     -yscrollcommand {.cmd.frame3.vscrollbar set}
 
   scrollbar .cmd.frame3.vscrollbar \
@@ -259,8 +259,8 @@ proc d.mon { } {
     .cmd.frame3.vscrollbar { right fill }
 
   bind .cmd.frame3.listbox <Button-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set function [%W get [%W nearest %y]]
         .cmd.frame0.entry configure -state normal
         .cmd.frame0.entry delete 0 end
@@ -273,8 +273,8 @@ proc d.mon { } {
   }
 
   bind .cmd.frame3.listbox <ButtonRelease-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set function [%W get [%W nearest %y]]
         .cmd.frame0.entry configure -state normal
         .cmd.frame0.entry delete 0 end
@@ -287,8 +287,8 @@ proc d.mon { } {
   }
 
   bind .cmd.frame3.listbox <Double-ButtonPress-1> {
-        %W select from [%W nearest %y]
-        %W select to [%W nearest %y]
+        %W select set [%W nearest %y]
+        %W select set [%W nearest %y]
 	set function [%W get [%W nearest %y]]
         .cmd.frame0.entry configure -state normal
         .cmd.frame0.entry delete 0 end
