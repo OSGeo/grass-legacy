@@ -311,46 +311,46 @@ int R__open_quiet()
 *      this is the plumbing, the idea is to
 *      open fifo pipes for read/write.
 *************************************************/
+/* Use sigaction instead of signal due to unreliable behavior of signal() */
 
 static int fifoto( char *input,char *output,int alarm_time)
 {
-    int oldflags;
+    struct sigaction mysig;
+    sigset_t mask;
     no_mon = 0;
-    sigalarm = signal(SIGALRM, dead);
+    
+    /* Set up signal handling */
+    sigemptyset (&mask);
+    mysig.sa_handler = dead;
+    mysig.sa_mask = mask;
+    mysig.sa_flags = 0;
+    
+/*    sigalarm = signal(SIGALRM, dead); */
+    sigaction (SIGALRM, &mysig, NULL);
     alarm(alarm_time);
-    /* Open in non blocking mode, so this doesn't hang */
-    _wfd = open (output, O_WRONLY | O_NONBLOCK);
+    _wfd = open (output, O_WRONLY);
     alarm(0);
-    signal(SIGALRM, sigalarm);
+/*    signal(SIGALRM, sigalarm); */
+    mysig.sa_handler = SIG_DFL;
+    sigaction (SIGALRM, &mysig, NULL);
     if (no_mon)
         return 0 ;
 
-    /* Set back to blocking mode */
-    oldflags = fcntl (_wfd, F_GETFL, 0);
-    if (oldflags == -1)
-	return -1;
-    oldflags &= ~O_NONBLOCK;
-    if (fcntl(_wfd, F_SETFL, oldflags) == -1)
-	return -1;
-    
+   
     no_mon = 0;
-    signal(SIGALRM, dead);
+/*    signal(SIGALRM, dead); */
+    mysig.sa_handler = dead;
+    sigaction (SIGALRM, &mysig, NULL);
     alarm(alarm_time);
-    /* Open inf non blocking mode so this doesn't hang */
-    _rfd = open (input, O_RDONLY | O_NONBLOCK);
+    _rfd = open (input, O_RDONLY);
     alarm(0);
-    signal(SIGALRM, sigalarm);
+/*    signal(SIGALRM, sigalarm); */
+    mysig.sa_handler = SIG_DFL;
+    sigaction (SIGALRM, &mysig, NULL);
     if (no_mon)
         return 0 ;
 
-    /* Set back to blocking mode */
-    oldflags = fcntl (_rfd, F_GETFL, 0);
-    if (oldflags == -1)
-	return -1;
-    oldflags &= ~O_NONBLOCK;
-    if (fcntl (_rfd, F_SETFL, oldflags) == -1 )
-	return -1;
-    
+   
     if( (_wfd == -1) || (_rfd == -1) )
         return -1;
 
