@@ -54,7 +54,7 @@ openmap (name, mapset, code, row)
     if (use_colors && !initcolors(nmaps))
 	return -1;
 
-    if((list[nmaps++].fd = G3d_openCellOld (name, mapset,&current_region,G3D_TILE_SAME_AS_FILE,G3D_USE_CACHE_DEFAULT)) < 0)
+    if((list[nmaps++].fd = G3d_openCellOld (name, mapset,&current_region,G3D_TILE_SAME_AS_FILE,G3D_USE_CACHE_DEFAULT)) == NULL)
 	return -1;
     else
     {
@@ -68,7 +68,7 @@ closemaps()
 
     for (i=0; i < nmaps; i++)
     {
-	if (list[i].fd >= 0)
+	if (list[i].fd != NULL)
 	{
 	    G3d_closeCell (list[i].fd);
 	    if (list[i].have_cats)
