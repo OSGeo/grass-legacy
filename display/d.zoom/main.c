@@ -260,7 +260,7 @@ main (int argc, char **argv)
 	for(i=0; vect[i]; i++);
 	nvects = i;
 
-        Vect_set_open_level(2);
+        //Vect_set_open_level(2);
 	for(i=0; i<nvects; i++){
     		mapset = G_find_vector2 (vect[i], "");
     		if (mapset == NULL)
@@ -271,7 +271,7 @@ main (int argc, char **argv)
 		}
 		else
 		{
-			if(Vect_open_old(&Map, vect[i], mapset) == 1)
+			if(Vect_open_old(&Map, vect[i], mapset) >= 2)
 			{
 			        Vect_get_map_box (&Map, &box );
 	 			if(first)
