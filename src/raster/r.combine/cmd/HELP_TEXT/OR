@@ -1,0 +1,19 @@
+OR
+
+The OR operator combines the results from two valid EXPRS (see
+help for "syntax" for a list of valid EXPRS) using the boolean
+operation or.
+
+syntax:   (OR EXPR1 EXPR2)
+operation:
+              222000
+    EXPR1 --  210000 --
+              111100   \          111000
+                         OR --->  110111
+              100000   /          111111    Note that any non-zero
+    EXPR2 --  000111 --                     value is treated as a 1.
+              011111
+
+aliases:
+    OR    or     ||     |
+
