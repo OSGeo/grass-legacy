@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # Name       : fig2grass
-# Version    : $Id: fig2grass,v 1.4 2001-03-07 09:09:45 markus Exp $
 # Author     : Jacques Bouchard
 #
 # Description: convert a file in FIG 3.2 format
@@ -11,7 +10,7 @@
 
 awk '
 
-function formerr() {
+formerr() {
     printf "*** WRONG FIG 3.2 FORMAT ! ***\n"
     exit 1
 }

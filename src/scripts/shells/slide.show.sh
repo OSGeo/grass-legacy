@@ -31,7 +31,7 @@ else
 	MAPSETS=`echo $MAPSET PERMANENT`
 fi
 
-function helptext()
+helptext()
 {
   echo "Slide show of GRASS raster/vector maps."
   echo "Options: [-v] [across=#maps_across] [down=#_maps_down] [prefix=character[s]] [mapsets=list]"
@@ -77,7 +77,7 @@ for i do
 	esac
 done
 
-function drawframes()
+drawframes()
 {
  d.frame -e
  if [ $? -ne 0 ] ; then
@@ -116,7 +116,7 @@ function drawframes()
  done
 }
 
-function drawraster()
+drawraster()
 {
  for mapset in $MAPSETS
  do
@@ -150,7 +150,7 @@ function drawraster()
 }
 
 
-function drawvector()
+drawvector()
 {
  for mapset in $MAPSETS
  do
