@@ -60,6 +60,9 @@ extern args_t c_if	;
 extern func_t f_isnull	;
 extern args_t c_isnull	;
 
+extern func_t f_graph	;
+extern args_t c_graph	;
+
 extern func_t f_min	;
 extern func_t f_max	;
 extern args_t c_varop	;
