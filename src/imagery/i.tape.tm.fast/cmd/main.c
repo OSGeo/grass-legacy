@@ -154,7 +154,7 @@ int main (int argc, char *argv[])
   tape.lastrow=lastrow;
   tape.firstcol=firstcol;
   tape.lastcol=lastcol;
-  strcpy(tape.info.title, parm.title); 
+  strcpy(tape.info.title, parm.title->answer);
 
 /* examine file name */
   if (test_pathname(inf) == 0)
