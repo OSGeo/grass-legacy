@@ -5,7 +5,7 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-LIBES = $(DRIVERLIB) $(GISLIB) $(FTLIB)
+LIBES = $(DRIVERLIB) $(GISLIB) $(FTLIB) $(ICONVLIB)
 DEPENDENCIES = $(DRIVERDEP) $(GISDEP)
 
 # if you are compiling under X11R3 add this define
