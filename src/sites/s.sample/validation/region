@@ -1,0 +1,10 @@
+projection: 0 (x,y)
+zone:       0
+north:      80
+south:      0
+east:       64
+west:       0
+nsres:      10
+ewres:      8
+rows:       8
+cols:       8
