@@ -90,7 +90,8 @@ static int rgb_ok(int red, int green, int blue);
 static int use_legend_file(const char *filename);
 static int rgb_parse(const char *clr_spec, 
 		unsigned char *red, unsigned char *green, unsigned char *blue);
-static int use_const_color(const char *area_clr, const char *line_clr);
+static int use_const_color(const char *area_clr, 
+		const char *line_clr, char **catlist);
 static int use_random_color(void);
 static int write_legend(const char *filename);
 static void adjust_point(double *x, double *y, 
@@ -227,6 +228,9 @@ static int const_color_func (const int cat, enum line_or_area which)
 {
 	int colornum = MAXCOLORS + 1;
 	int status = 0;
+
+	if (cat_tbl && avl_find (cat_tbl, &cat) == NULL)
+		return status;
 	
 	switch (which) {
 		case DRAW_AREA:
@@ -452,11 +456,36 @@ static int rgb_parse (const char *clr_spec,
 	return status;
 }
 
-static int use_const_color (const char *area_clr, const char *line_clr)
+static int use_const_color (const char *area_clr, 
+		            const char *line_clr,
+			    char ** catlist)
 {
 	int std_color, status = 0;
+	int catnum;
 	unsigned char red, green, blue;
+	struct cat_color *cat;
 	
+	if (catlist) {
+		cat_tbl = avl_create (cat_comp, NULL, NULL);
+		if (!cat_tbl)
+			G_fatal_error ("creating avl tree. Out of memory?");
+		while (*catlist) {
+			catnum = atoi (*catlist);
+			if (catnum) {
+				cat = new_cat_color();
+				cat->cat = catnum;
+				cat->line = cat->area = NULL;
+				avl_insert (cat_tbl, cat);
+			}
+			catlist++;
+		}
+		if (avl_count(cat_tbl) == 0) {
+			avl_destroy (cat_tbl, NULL);
+			cat_tbl = NULL;
+			G_warning ("Failed to convert category numbers!");
+		}
+	}
+
 	std_color = D_translate_color (area_clr);
 	if (std_color) {
 		std_clr_area = std_color;
@@ -659,6 +688,7 @@ int main (int argc, char **argv)
 	struct Option *map;
 	struct Option *color_const;
 	struct Option *line_color;
+	struct Option *catnum;
 	struct Option *leg_opt;
 	struct Flag *rand_colr;
 	struct GModule *mod;
@@ -686,7 +716,7 @@ int main (int argc, char **argv)
 	color_const		= G_define_option();
 	color_const->description = "Draw areas using either a GRASS standard color or "\
 				   "R:G:B triplet (separated by colons)";
-	color_const->key	= "color";
+	color_const->key	= "fillcolor";
 	color_const->required   = NO;
 	color_const->type	= TYPE_STRING;
 	color_const->answer     = "white";
@@ -698,6 +728,15 @@ int main (int argc, char **argv)
 	line_color->type	= TYPE_STRING;
 	line_color->required	= NO;
 	line_color->answer	= "black";
+	
+	catnum			= G_define_option();
+	catnum->key		= "catnum";
+	catnum->description     = "Only draw areas with a matching category number "\
+				  "(for constant color option only)";
+	catnum->required	= NO;
+	catnum->multiple	= YES;
+	catnum->type		= TYPE_INTEGER;
+	catnum->answers		= NULL;
 	
 	leg_opt			= G_define_option();
 	leg_opt->description    = "Draw areas according to a legend file "\
@@ -731,7 +770,9 @@ int main (int argc, char **argv)
 	}
 	else
 	{
-		if (!use_const_color (color_const->answer, line_color->answer)) {
+		if (!use_const_color (color_const->answer, 
+				      line_color->answer,
+				      catnum->answers)) {
 			G_fatal_error ("setting constant color [%s]!",
 					color_const->answer);
 		}
