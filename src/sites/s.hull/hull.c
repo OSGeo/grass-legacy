@@ -150,10 +150,12 @@ int loadSiteCoordinates(FILE* fdsite, struct Point **points , int all, struct Ce
     return pointIdx;
 }
 
-// Outputs the points that comprises the convex hull as a single closed line
-// and the hull baricenter as the label points (as it is a linear combination
-// of points on the hull is guaranteed to be inside the hull, follow from the
-// definition of convex polygon)
+/*
+ * Outputs the points that comprises the convex hull as a single closed line
+ * and the hull baricenter as the label points (as it is a linear combination
+ * of points on the hull is guaranteed to be inside the hull, follow from the
+ * definition of convex polygon)
+ */
 int outputHull(struct Map_info *Map, struct Point* P, int *hull,
                int numPoints, FILE* f_att) {
     struct line_pnts *Points;

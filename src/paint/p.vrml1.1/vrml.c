@@ -1,13 +1,11 @@
 
 #include "pv.h"
 
-
 void
-vrml_begin(vout)
-FILE *vout;
+vrml_begin(FILE *vout)
 {
 
-#ifdef V2.0
+#ifdef VRML2
     vrml_putline(0, vout,"#VRML V2.0 utf8");
 #else
     vrml_putline(0, vout,"#VRML V1.0 ascii");
@@ -22,10 +20,9 @@ FILE *vout;
 }
 
 void
-vrml_end(vout)
-FILE *vout;
+vrml_end(FILE *vout)
 {
-#ifdef V2.0
+#ifdef VRML2
 #else
     vrml_putline(-1,vout,"}");
 #endif
@@ -38,10 +35,7 @@ FILE *vout;
 */
 
 void
-vrml_putline(indent,vout,str)
-int indent;
-FILE *vout;
-char *str;
+vrml_putline(int indent, FILE *vout, char *str)
 {
 static int ind=0; 
 int i;

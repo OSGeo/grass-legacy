@@ -5,9 +5,7 @@
 #include <stdlib.h>
 #include "pv.h"
 
-typedef int FILEDESC;
-
-struct Cell_head    W;
+struct Cell_head W;
 
 int main(int argc, char *argv[])
 {
@@ -15,7 +13,7 @@ int main(int argc, char *argv[])
     struct Option 	*rast_el, *rast_co, *out;
     struct Option       *exag_opt;
     char		*t_mapset;
-    FILEDESC    	elevfd = NULL, colorfd = NULL;
+    FILEDESC    	elevfd = 0, colorfd = 0;
     FILE                *vout = NULL;
     struct Colors       colr;
     char 		errbuf[100], outfile[256];
@@ -73,7 +71,6 @@ int main(int argc, char *argv[])
     {
     CELL cmin, cmax;
     struct Range range ;
-#ifdef FP_GRASS
     int is_fp;
     DCELL dmin, dmax;
     struct FPRange fp_range ;
@@ -91,7 +88,6 @@ int main(int argc, char *argv[])
 	    max = dmax;
 	}
 	else{
-#endif
 	    if (G_read_range(rast_el->answer, t_mapset, &range) == -1) {
 		sprintf(errbuf,
 			"Range info for [%s] not available (run r.support)\n",
@@ -101,9 +97,7 @@ int main(int argc, char *argv[])
 	    G_get_range_min_max (&range, &cmin, &cmax);
 	    min = cmin;
 	    max = cmax;
-#ifdef FP_GRASS
 	}
-#endif
     }
 
     if(rast_co->answer){
@@ -178,10 +172,6 @@ static double scaleXZ, scaleY;
 static double transX, transY, transZ;
 static double Xrange,Yrange,Zrange;
 
-double G_adjust_easting();
-double G_row_to_northing();
-double G_col_to_easting();
-
 
 /* REMEMBER - 
  * Y is HEIGHT 
@@ -201,9 +191,7 @@ double G_col_to_easting();
 */
 
 int
-init_coordcnv(exag, w, min, max)
-    double              exag, min, max;
-    struct Cell_head    *w;
+init_coordcnv(double exag, struct Cell_head *w, double min, double max)
 {
 
     Yrange = (max-min) * exag;
@@ -229,11 +217,9 @@ init_coordcnv(exag, w, min, max)
 }
 
 int
-do_coordcnv(dval, axis)
-double *dval;
-char axis;
+do_coordcnv(double *dval, int axis)
 {
-double dret;
+double dret = 0.0;
 
     switch (axis){
 	case 'x':
@@ -247,6 +233,9 @@ double dret;
 	case 'y':
 	case 'Y':
 	    dret = (*dval + transY) * scaleY;
+	    break;
+	default:
+	    G_fatal_error("invalid axis: %c", axis);
 	    break;
     }
     
