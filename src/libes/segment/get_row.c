@@ -4,7 +4,8 @@
 #include <errno.h>
 #include "segment.h"
 
-int segment_get_row (SEGMENT *SEG, CELL *buf,int row)
+/*  int segment_get_row (SEGMENT *SEG, CELL *buf,int row) */
+int segment_get_row (SEGMENT *SEG, void *buf,int row)
 {
     int size;
     int ncols;
