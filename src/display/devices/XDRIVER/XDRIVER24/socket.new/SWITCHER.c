@@ -150,7 +150,8 @@ int main (int argc, char *argv[])
         if ((listenfd = G_sock_connect(sockpath)) != -1)
         {
 	    close (listenfd);
-	    G_fatal_error ("Monitor <%s> is already running", me);
+	    fprintf (stderr, "Monitor <%s> is already running", me);
+            exit (EXIT_FAILURE);
         }
         unlink (sockpath);
     }
