@@ -160,6 +160,12 @@
 /* define to path of locale directory */
 #undef LOCALEDIR
 
+/* define if libintl.h exists */
+#undef HAVE_LIBINTL_H
+
+/* define if iconv.h exists */
+#undef HAVE_ICONV_H
+
 /*
  * It's hard to click two buttons simultaneously with two button mouse.
  * Situation is worse, if it requires continuous clicking.
