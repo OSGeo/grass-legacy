@@ -3,6 +3,9 @@
 #include "globals.h"
 #include "camera_ref.h"
 
+/* define MOUSE_YN to answer y/n by mouse click */
+#define	MOUSE_YN
+
 static char buf[300];
 static int get_point2 (double *,double *);
 static int keyboard (void);
@@ -157,16 +160,29 @@ static int _keyboard (void)
 	Curses_write_window (INFO_WINDOW, 3, 2, buf);
 	sprintf (buf, "Y:  %f\n", N);
 	Curses_write_window (INFO_WINDOW, 4, 2, buf);
+#ifdef	MOUSE_YN
+	Curses_write_window (INFO_WINDOW, 5, 2, "Look ok? (Left: y / Right: n) ");
+#else
 	Curses_write_window (INFO_WINDOW, 5, 2, "Look ok? (y/n) ");
+#endif
 
 	while(1)
 	{
+#ifdef	MOUSE_YN
+	    int x, y, b;
+	    R_get_location_with_pointer(&x,&y,&b);
+	    if (b == 1)
+		return 1;
+	    else if (b == 3)
+		break;
+#else
 	    int c;
 	    c = Curses_getch(0);
 	    if (c == 'y' || c == 'Y')
 		return 1;
 	    if (c == 'n' || c == 'N')
 		break;
+#endif
 	    Beep();
 	}
     }
@@ -339,11 +355,29 @@ static int pick (int x, int y)
 	Curses_write_window (INFO_WINDOW, 3, 2, buf);
 	sprintf (buf, "Y:  %f\n", N);
 	Curses_write_window (INFO_WINDOW, 4, 2, buf);
+#ifdef	MOUSE_YN
+	Curses_write_window (INFO_WINDOW, 5, 1, "Look ok? (Left: y / Right: n) ");
+#else
 	Curses_write_window (INFO_WINDOW, 5, 1, "Look ok? (y/n) ");
 	Curses_write_window (PROMPT_WINDOW, 1, 1, "Keyboard Input Required ");
+#endif
 
 	while(1)
 	{
+#ifdef	MOUSE_YN
+	    int x, y, b;
+	    R_get_location_with_pointer(&x,&y,&b);
+	    if (b == 1)
+	    {
+		ok = 1;
+		return -1;
+	    }
+	    else if (b == 3)
+	    {
+		ok = 0;
+		break;
+	    }
+#else
 	    int c;
 	    c = Curses_getch(0);
 	    if (c == 'y' || c == 'Y')
@@ -354,6 +388,7 @@ static int pick (int x, int y)
                {  ok = 0;
                   break;
                }
+#endif
 	    Beep();
 	}
 
