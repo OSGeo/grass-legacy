@@ -1,4 +1,21 @@
 /*
+****************************************************************************
+*
+* MODULE:       v.transform
+* AUTHOR(S):    See below also.
+*               Eric G. Miller <egm2@jps.net>
+* PURPOSE:      To transform a vector layer's coordinates via a set of tie
+*               points.
+* COPYRIGHT:    (C) 2002 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
+
+/*
 *  This takes an ascii digit file in one coordinate system and converts
 *  the map to another coordinate system.
 *  Uses the transform library:  ../src/libes/vect32/libes/libtrans.a .
