@@ -133,20 +133,20 @@ Create source and binary distributions:
         - mkdir grass5.0.0preXXX ; cd grass5.0.0preXXX
         - export CVSROOT=:pserver:grass-guest@intevation.de:/home/grass/grassrepository
         - cvs login
-        - cvs -z3 co -r releasebranch_11_april_2001_5_0_0 grass
-          cvs up -dP
-        -> check for missing stuff
+        - cvs -z3 co -r releasebranch_XXX grass
+          -> check for missing stuff, should be fine
 
-        - cvs tag release_16_january_2002_grass5_0_0_pre3
+        - cvs tag release_XX_YY_2002_grass5_0_0_preZ
           
-     - Run
+     - Run inside other directory of release branch:
         make changelog
       
-     - add Changelog file to src package 
+     - add 'Changelog' file to src package 
 
      - mail to "grass5" to re-allow submitting
 
-     - build source tarball: grass5.0.0XXX_src.tar.gz
+     - build source tarball (including the parent directory): 
+         grass5.0.0XXX_src.tar.gz
 
    o Markus:
      Update the PDF-docs on server (needs "htmldoc" tool):
@@ -154,12 +154,12 @@ Create source and binary distributions:
 
        gmake5 html/ pdf-docs
 
-     upload result from dist.$ARCH/documents/pdf to GRASS web server,
-     remove here (makes binaries too big).
- 
-   o Store the file in
+     upload result from dist.$ARCH/documents/pdf to GRASS web server
+     (grass5/manuals/) remove files then from dist.$ARCH/documents/pdf.
+
+   o Store the source tarball in:
      http://grass.itc.it/grass/grass5/source/
-     along with associated NEWS, TODO etc.
+     along with associated NEWS, ChangeLog etc.
 
    o update web site to new version (HTML in /cvsweb )
      index2.html, grass5/index.html, download.html
