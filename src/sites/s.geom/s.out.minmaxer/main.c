@@ -1,8 +1,7 @@
 #include "math.h"
 #include "gis.h"
-#include "digit.h"
+#include "Vect.h"
 #include "dig_atts.h"
-#include "dig_head.h"
 #include "optri.h"
 
 /*--------------------------------------------------------------------------*/
