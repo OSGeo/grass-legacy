@@ -1,0 +1,75 @@
+#***************************************************************************
+#
+#
+#                         NCSA HDF version 3.2
+#                            August 28, 1992
+#
+# NCSA HDF Version 3.2 source code and documentation are in the public
+# domain.  Specifically, we give to the public domain all rights for future
+# licensing of the source code, all resale rights, and all publishing rights.
+#
+# We ask, but do not require, that the following message be included in all
+# derived works:
+#
+# Portions developed at the National Center for Supercomputing Applications at
+# the University of Illinois at Urbana-Champaign, in collaboration with the
+# Information Technology Institute of Singapore.
+#
+# THE UNIVERSITY OF ILLINOIS GIVES NO WARRANTY, EXPRESSED OR IMPLIED, FOR THE
+# SOFTWARE AND/OR DOCUMENTATION PROVIDED, INCLUDING, WITHOUT LIMITATION,
+# WARRANTY OF MERCHANTABILITY AND WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE
+#
+#***************************************************************************
+
+
+***************************** 
+        Using HDF at NCSA
+*****************************
+
+ HDF is installed on various systems at NCSA.  The following is a list 
+of directories in which HDF is installed on different systems:
+
+
+       Cray-2:      	/usr/local/apps/hdf
+       Cray-YMP:    	/usr/local/apps/hdf
+       Convex (C3):	/usr/local/apps/hdf
+       Sun 4:       	/soft/hdf/SPARC
+       Sun 3:	    	/soft/hdf/SUN3
+       IBM6000 (ACB):	/usr/local/appl/hdf
+       SGI (REL):   	/ncsa/apps/hdf
+
+The current version of HDF will be in that directory and its 
+subdirectories.
+
+In the bin/ directory you will find several HDF utilities, such as:
+
+   hdfls - a utility to display information about the contents of an            
+	      HDF file.
+
+   hdfrseq - a utility to display a raster 8 bit image remotely using
+              the NCSA Interactive Color Raster protocol.
+
+   hdftor8 - a utility to convert an HDF raster 8 bit image into a raw
+              raster image.
+
+   r8tohdf - a utility to convert a raw raster image to an HDF raster 8
+              bit image.
+
+   hdfcomp - a utility to change the compression scheme used for 8-bit
+             raster images in HDF files.
+
+If you execute any of these commands with no parameters, it will display 
+the list of acceptable parameters.
+
+In the include/ directory you will find the necessary include files for
+use in your own programs that link with the HDF library.
+
+In the lib/ directory you will find the HDF library which contains the
+necessary subroutines for developing your own HDF applications.
+
+Information about HDF source code, documentation, test suite, 
+and examples, can be found in the README.FIRST file in this directory.
+
+If you have any questions, please contact the NCSA Consulting Office.
+
+
