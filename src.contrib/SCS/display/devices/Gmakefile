@@ -1,0 +1,10 @@
+all:
+	$(GMAKE) lib
+	$(GMAKE) vdc600
+	$(GMAKE) DVGA
+	$(GMAKE) DEGA
+	$(GMAKE) DUMB
+	$(GMAKE) DEB
+	$(GMAKE) EGAVGA
+	$(GMAKE) monitorcap
+
