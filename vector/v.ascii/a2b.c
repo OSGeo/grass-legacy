@@ -32,7 +32,7 @@ int asc_to_bin(
 	Cats = Vect_new_cats_struct ();	
 
 	end_of_file = 0 ;
-	//alloc_points     = 1000 ;
+	/*alloc_points     = 1000 ; */
 	alloc_points     = 1;
 	xarray = (double *) dig_falloc(alloc_points, sizeof(double)) ;
 	yarray = (double *) dig_falloc(alloc_points, sizeof(double)) ;
@@ -131,7 +131,7 @@ int asc_to_bin(
 			if ( sscanf(buff, "%u%u", &catn, &cat) != 2 ) {
 			    fprintf (stderr,"Error reading categories:\n%s\n", buff) ;
 			    return 0;
-			}    
+			}
 			Vect_cat_set ( Cats, catn, cat );
 		}
             } else {  /* points format */
@@ -155,8 +155,10 @@ int asc_to_bin(
 		bptr = strchr( bptr + 1, '|' );
 
 		if ( bptr ) {
-		    if (  sscanf(bptr + 1, "%d", &cat) == 1 ) 
+		    if (  sscanf(bptr + 1, "%d", &cat) == 1 )
 		        Vect_cat_set ( Cats, 1, cat );
+		    else
+		       fprintf (stderr, "cat: %s ignored (must be integer). Using internal cat instead.\n", bptr +1 );
 		}	
 	    }
 	    /* Allocation is handled for line_pnts */
