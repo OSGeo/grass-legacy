@@ -1,6 +1,7 @@
 #include "coin.h"
 
 make_coin(verbose)
+
 {
     FILE *fd, *popen();
     FILE *statfd;
@@ -34,6 +35,8 @@ make_coin(verbose)
 	G_fatal_error ("can't create any tempfiles");
 	exit(1);
     }
+    /*G_fatal_error(buf);*/
+    
     fd = popen (buf, "r");
     if (fd == NULL)
     {
