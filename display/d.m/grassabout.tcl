@@ -93,4 +93,4 @@ global env
 set shell $env(SHELL)
 set cmd "g.version -c"
 set text [eval "exec echo \"$cmd\" | $shell "]
-Dm::helptext {About GRASS} {-width 75} {-justify center} $text
+Dm::helptext {About GRASS} {-width 75} {-justify left} $text

@@ -70,6 +70,12 @@ proc DmRaster::options { id frm } {
     pack $row.a -side left
     pack $row -side top -fill both -expand yes
 
+    # display with legend
+    set row [ frame $frm.legend ]
+    checkbutton $row.a -text [G_msg "display with legend"] -variable DmRaster::opt($id,legend) 
+    pack $row.a -side left
+    pack $row -side top -fill both -expand yes
+
 }
 
 proc DmRaster::save { tree depth node } {
@@ -99,8 +105,13 @@ proc DmRaster::display { node } {
     if { $opt($id,overlay) } { 
         append cmd " -o"
     }
-
-    Dm::execute $cmd
+    
+    #display with legend
+    if { $opt($id,legend) } { 
+        set cmd "d.rast.leg map=$opt($id,map)"
+    }
+    
+    run $cmd
 }
 
 proc DmRaster::print { file node } {
@@ -127,6 +138,7 @@ proc DmRaster::query { node } {
     if { $opt($id,map) == "" } { return } 
 
     set cmd "d.what.rast map=$opt($id,map)"
+    
+    term $cmd
 
-    Dm::execute $cmd
 }

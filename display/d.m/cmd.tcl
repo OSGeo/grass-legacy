@@ -78,7 +78,7 @@ proc DmCmd::display { node } {
 
     set cmd $opt($id,cmd)
 
-    Dm::execute $cmd
+    run $cmd
 }
 
 proc DmCmd::query { node } {

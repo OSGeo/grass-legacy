@@ -1,3 +1,20 @@
+##########################################################################
+#
+# d.m.tcl
+#
+# Primary tcltk script for GIS Manager: GUI for GRASS 5.7
+# Based on Display Manager for GRASS 5.7 by Radim Blazek (ITC-IRST)
+# and tcltkgrass for GRASS 5.7 by Michael Barton (Arizona State University)
+# with contributions by Glynn Clemments
+#
+# COPYRIGHT:	(C) 1999 - 2004 by the GRASS Development Team
+#
+#		This program is free software under the GNU General Public
+#		License (>=v2). Read the file COPYING that comes with GRASS
+#		for details.
+#
+##########################################################################
+
 lappend auto_path $env(GISBASE)/bwidget
 package require -exact BWidget 1.2.1
 
@@ -14,6 +31,7 @@ set dmpath $env(GISBASE)/etc/dm/
 source $env(GISBASE)/etc/gtcltk/gmsg.tcl
 
 source $env(GISBASE)/etc/gtcltk/select.tcl
+source $env(GISBASE)/etc/gui.tcl
 
 source $dmpath/cmd.tcl
 source $dmpath/tree.tcl
@@ -35,6 +53,87 @@ namespace eval Dm {
     variable rcfile
 }
 
+
+###############################################################################
+proc execute {cmd} {
+    global dlg path
+
+    set code [exec -- $cmd --tcltk]
+
+    set path .dialog$dlg
+    toplevel $path
+    eval $code
+}
+
+###############################################################################
+
+append regexp .* $env(GISBASE) {[^:]*}
+regsub -- $regexp $env(PATH) "&:$env(GISBASE)/etc/dm/script" env(PATH)
+
+
+###############################################################################
+proc spawn {cmd args} {
+    eval exec -- $cmd $args &
+}
+
+
+###############################################################################
+proc run {cmd args} {
+    eval exec -- $cmd $args >@ stdout 2>@ stderr
+}
+
+
+###############################################################################
+proc term {cmd args} {
+    eval exec -- xterm -e $cmd $args &
+}
+
+
+###############################################################################
+
+proc read_moncap {} {
+	global env moncap
+
+	set file [open [file join $env(GISBASE) etc monitorcap] r]
+	set data [read $file]
+	close $file
+
+	set data [subst -nocommands -novariables $data]
+	set moncap {}
+	foreach line [split $data \n] {
+		if {[string match {\#*} $line]} continue
+		if {![string match {*:*:*:*:*:*} $line]} continue
+		set fields {}
+		foreach field [split $line :] {
+			lappend fields [string trim $field]
+		}
+		lappend moncap $fields
+	}
+}
+
+###############################################################################
+
+proc monitor_menu {op} {
+	global moncap
+
+	set submenu {}
+	set last_driver {}
+	foreach mon $moncap {
+		set name [lindex $mon 0]
+		set driver [lindex $mon 1]
+		if {$last_driver != "" && $last_driver != $driver} {
+			lappend submenu {separator}
+		}
+		set last_driver $driver
+		lappend submenu [list command $name {} "" {} -command "run d.mon $op=$name"]	}
+
+	return [list $submenu]
+}
+
+###############################################################################
+
+read_moncap
+
 proc Dm::create { } {
     global dmpath
     global mainwindow
@@ -51,27 +150,7 @@ proc Dm::create { } {
     
     # eval "exec sleep 20"
 
-    set descmenu {
-        "&File" all file 0 {
-	    {command "New" {} "Create new file" {} -accelerator Ctrl-N -command { Dm::new}}
-	    {command "Open..." {} "Open file" {} -accelerator Ctrl-O -command { Dm::OpenFileBox {}}}
-	    {command "Save" {} "Save file" {} -accelerator Ctrl-S -command { Dm::SaveFileBox {}}}
-	    {command "Save as..." {} "Save file as name" {} 
-	     -command { if {[catch {unset ::Dm::filename}]} {}; Dm::SaveFileBox {}}}
-	    {command "Close" {} "Close file" {} -accelerator Ctrl-W -command { Dm::FileClose {}}}
-	     {separator}
-            {command "E&xit" {} "Exit d.m" {} -accelerator Ctrl-Q -command { DmPrint::clean;  exit } }
-        }
-        "&Options" all options 0 {
-            {command "Launch &tcltkgrass" {} "tcltkgrass" {} -command { exec $env(GISBASE)/bin/tcltkgrass & } }
-        }
-        "&Help" all options 0 {
-            {command "d.m &help" {} "d.m help" {} -command { exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/d.m.html & } }
-            {command "About &GRASS" {} "About GRASS" {} -command { source $env(GISBASE)/etc/dm/grassabout.tcl} }
-            {command "About &System" {} "About System" {} -command { exec $env(GRASS_WISH) $env(GISBASE)/etc/dm/tksys.tcl --tcltk } }
-        }
-
-    }
+    source $dmpath/menu.tcl 
 
     set prgtext   "Creating MainFrame..."
     set mainframe [MainFrame .mainframe \
@@ -106,7 +185,7 @@ proc Dm::create { } {
  
     set prgtext   [G_msg "Done"]
 
-    set Dm::status [G_msg "Welcome to Display manager"]
+    set Dm::status [G_msg "Welcome to GRASS GIS manager"]
     $mainframe showstatusbar status 
 
     pack $mainframe -fill both -expand yes
@@ -129,7 +208,7 @@ proc Dm::_create_intro { } {
     set ximg  [label $top.x -image [image create photo -file "$dmpath/intro.gif"] ]
 
     set frame [frame $ximg.f -background white]
-    set lab1  [label $frame.lab1 -text "GRASS 5.7 - Display Manager" \
+    set lab1  [label $frame.lab1 -text "GRASS 5.7 - GIS Manager" \
                      -background white -foreground black -font {times 16}]
     set lab2  [label $frame.lab2 -textvariable Dm::prgtext -background white -font {times 12} -width 35]
     set prg   [ProgressBar $frame.prg -width 50 -height 15 -background white \
@@ -268,7 +347,7 @@ proc Dm::monitor { } {
             }
         }
     }
-    Dm::execute "d.mon start=x0"
+    run "d.mon start=x0"
 }
 
 #digitize
@@ -287,6 +366,7 @@ proc Dm::edit { } {
 
     switch $type {
         raster {
+        term r.digit $sel
             return
         }
         labels {
@@ -306,7 +386,8 @@ proc Dm::edit { } {
 proc Dm::display { } {
 
     Dm::monitor
-    Dm::execute "d.erase"
+    run "d.frame -e"
+#    execute "d.erase"
     DmGroup::display "root"
 }
 
@@ -314,7 +395,7 @@ proc Dm::display { } {
 proc Dm::displayall { } {
     
     set cmd "g.region -d"
-    Dm::execute $cmd 
+    run $cmd 
 
     Dm::display
 }
@@ -325,7 +406,7 @@ proc Dm::display_region { } {
     set reg [GSelect windows]
     if { $reg != "" } {
 	set cmd "g.region region=$reg"
-	Dm::execute $cmd 
+	run $cmd 
 
 	Dm::display
     }
@@ -335,7 +416,23 @@ proc Dm::display_region { } {
 proc Dm::zoom { } {
     
     set cmd "d.zoom"
-    Dm::execute $cmd 
+    term $cmd
+
+}
+
+# pan
+proc Dm::pan { } {
+    
+    set cmd "d.zoom -p"
+    term $cmd 
+
+}
+
+# erase to white
+proc Dm::erase { } {
+    
+    set cmd "d.erase white"
+    run $cmd 
 
 }
 
@@ -419,6 +516,7 @@ proc Dm::query { } {
     }
 
 }
+
 
 # save tree/options to file
 proc Dm::save { spth } {
@@ -616,33 +714,33 @@ proc Dm::rc_write { depth args } {
     puts $rcfile $row
 }
 
-# returnes node type
+# returns node type
 proc Dm::node_type { node } {
     variable tree
 
     if { [string compare $node "root"] == 0 } {
        return "group"
     }  
-    if { [string compare -length 5 $node "group"] == 0 } {
+    if { [string match group* $node] } {
        return "group"
     }  
-    if { [string compare -length 6 $node "raster"] == 0 } {
+    if { [string match raster* $node] } {
        return "raster"
     }  
-    if { [string compare -length 6 $node "labels"] == 0 } {
+    if { [string match labels* $node] } {
        return "labels"
     }  
-    if { [string compare -length 6 $node "vector"] == 0 } {
+    if { [string match vector* $node] } {
        return "vector"
     }  
-    if { [string compare -length 3 $node "cmd"] == 0 } {
+    if { [string match cmd* $node] } {
        return "cmd"
     }  
     
     return ""
 }
 
-# returnes node id
+# returns node id
 proc Dm::node_id { node } {
     variable tree
 
@@ -732,7 +830,7 @@ proc main {argc argv} {
     global auto_path
 
     wm withdraw .
-    wm title . [G_msg "GRASS 5.7 Display Manager"]
+    wm title . [G_msg "GRASS 5.7 GIS Manager"]
 
     bind . <Control-Key-o> {
 	Dm::OpenFileBox {}
@@ -751,6 +849,9 @@ proc main {argc argv} {
     }
     bind . <Control-Key-w> {
 	Dm::FileClose {}
+    }
+    bind . <Control-Key-p> {
+    Dm::print
     }
 
     Dm::create
