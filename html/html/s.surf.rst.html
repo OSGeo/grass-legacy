@@ -19,7 +19,7 @@ SYNOPSIS</h2>
 <b>s.surf.rst</b>
 <br><b>s.surf.rst help</b>
 <br><b>s.surf.rst [-d] [-t]&nbsp; input </b>= name [<b>elev </b>= name]
-[<b>elatt</b>=val] [<b>slope </b>= name] [<b>aspect
+[<b>field</b>=val] [<b>slope </b>= name] [<b>aspect
 </b>= name] [<b>pcurv
 </b>=
 name] [<b>tcurv </b>= name] [<b>mcurv </b>= name] [<b>maskmap</b> = name]
@@ -41,7 +41,7 @@ given in a sites file named <i>input</i> as x|y|%z<sub><font size=-2>1</font></s
 to grid cells in the output raster file
 <i>elev</i> representing a surface.
 The user can select which floating point attribute will be interpolated
-by setting the parameter <i>elatt</i> to the value i for the i-th floating
+by setting the parameter <i>field</i> to the value i for the i-th floating
 point attribute<b>.</b>
 <p>As an option, simultaneously with interpolation, topographic parameters
 slope, aspect, profile curvature (measured in the direction of steepest
@@ -96,7 +96,7 @@ OPTIONS</h2>
 The user can run this program either interactively or non-interactively.
 The program will be run non-interactively if the user specifies program
 arguments and flag settings on the command line using the form:
-<p><b>s.surf.rst [-d] [-t] input </b>= name <b>elev </b>= name [<b>elatt</b>=val]
+<p><b>s.surf.rst [-d] [-t] input </b>= name <b>elev </b>= name [<b>field</b>=val]
 [<b> slope </b>= name] [<b> aspect </b>= name] [<b> pcurv </b>= name] [<b>
 tcurv </b>= name] [<b> mcurv </b>= name] [<b> maskmap</b> = name] [<b>
 dmin </b>= val] [<b> zmult = </b>val] [<b> tension </b>= val] [<b> smooth
@@ -115,9 +115,8 @@ interface described in the manual entry for<i> parser</i>.
 <br>Use the existing site file name as input.
 <p><b>elev </b>= <i>name</i>
 <br>Output elevation values to raster file <i>name</i>.
-<p><b>elatt</b>=<i>val</i>
-<br>order of floating point site attribute to use for interpolation (1=first),
-options (1-100), default is 1.
+<p><b>field</b>=<i>val</i>
+<br>decimal attribute to use for elevation (1=first) options (1-100), default is 1.
 <p><b>slope </b>= <i>name</i>
 <br>Output slope or dx values to raster file <i>name</i>.
 <p><b>aspect </b>= <i>name</i>

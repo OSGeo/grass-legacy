@@ -251,13 +251,13 @@ int main ( int argc, char *argv[])
   parm.aspect->description = "Aspect";
 
   parm.elatt = G_define_option ();
-  parm.elatt->key = "elatt";
+  parm.elatt->key = "field";
   parm.elatt->type = TYPE_INTEGER;
   parm.elatt->options = "1-100";
   parm.elatt->answer = "1";
   parm.elatt->required = NO;
   parm.elatt->description = 
-	  "Which fp site attribute to use for elevation (1=first)";
+	  "decimal attribute to use for elevation (1=first)";
 
   parm.smatt = G_define_option ();
   parm.smatt->key = "smatt";
