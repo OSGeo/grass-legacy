@@ -29,10 +29,10 @@ DCELL feature(double *coeff)	/* Set of six quadratic coefficents. 	*/
 	   slope,		/* Slope.				*/
 	   crosc;		/* Cross-sectional curvature.		*/
 
-    minic = 20*wsize*resoln*(-a-b-sqrt((a-b)*(a-b) + c*c));
-    maxic = 20*wsize*resoln*(-a-b+sqrt((a-b)*(a-b) + c*c));
+    minic = (-a-b-sqrt((a-b)*(a-b) + c*c));
+    maxic = (-a-b+sqrt((a-b)*(a-b) + c*c));
     slope = RAD2DEG*atan(sqrt((d*d) + (e*e)));     
-    crosc = -20*wsize*resoln*(b*d*d + a*e*e - c*d*e)/(d*d + e*e);
+    crosc = -2.0*(b*d*d + a*e*e - c*d*e)/(d*d + e*e);
 
 
     /* Case 1: Surface is sloping. Cannot be a peak,pass or pit. Therefore
