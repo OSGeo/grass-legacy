@@ -1,0 +1,22 @@
+PGM = v.in.mif
+
+HOME = $(BIN_CONTRIB_CMD)
+
+LIST = 	lex.yy.o \
+	main.o \
+	attval.o \
+	parse.o \
+	write_lines.o \
+	fields.o \
+	static.o
+
+
+$(HOME)/$(PGM): $(LIST) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(DATETIMELIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(VASK) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
+
+lex.yy.c : mif.l
+	$(LEX) mif.l
+
+$(VECTLIB): #
+$(GISLIB): # 
+$(DIG_ATTLIB): #
