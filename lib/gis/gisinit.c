@@ -19,17 +19,16 @@ struct G__ G__ ;
 static int initialized = 0;
 static int gisinit();
 
-CELL CELL_NODATA; /* defined in gis.h */
-
 int G_gisinit( char *pgm)
 {
     char *mapset;
     char msg[100];
     char *fakestart;
 
-    G_set_program_name (pgm);
+    if ( initialized )
+	return 0;
 
-    CELL_NODATA = 0;	/* 0 for the moment */
+    G_set_program_name (pgm);
 
  /* fake session for HTML generation with parser */
  fakestart = getenv( "GRASS_FAKE_START" );
@@ -62,6 +61,9 @@ int G_gisinit( char *pgm)
 
 int G_no_gisinit(void)
 {
+    if ( initialized )
+	return 0;
+
     gisinit();
 
     return 0;
