@@ -297,10 +297,8 @@ menu_build 1 .main_menu {
 	    "Display standard GRASS colors" "" {
 	    "exec show.color.sh &"}
 	    -separator
-	    "Overlay bar scale and north arrow" "" {
+	    "Overlay scale and north arrow" "" {
 	    "exec d.barscale &"}
-	    "Overlay line scale and north arrow" "" {
-	    "exec d.scale &"}
 	    "Overlay grid" "" {
 	    "exec d.grid &"}
 	    "Overlay slope arrows on aspect raster map" "" {
