@@ -200,7 +200,7 @@ char **argv;
 		  case CELL_TYPE:
 		  	G_get_c_raster_row(map_id, map_rbuf.buf.v, sl);
 		  	for(ss = 0; ss < ncols; ss++){
-			         if(map_rbuf.buf.c[ss] > 0){
+			         if(!G_is_c_null_value(&map_rbuf.buf.c[ss])){
 				  count = count + 1;
 				  short_int = map_rbuf.buf.c[ss];
 				  fprintf(fd,"%d\n",short_int);
@@ -210,7 +210,7 @@ char **argv;
 		  case FCELL_TYPE:
 		  	G_get_f_raster_row(map_id, map_rbuf.buf.v, sl);
 		  	for(ss = 0; ss < ncols; ss++){
-			         if(map_rbuf.buf.f[ss] > 0){
+			         if(!G_is_f_null_value(&map_rbuf.buf.f[ss])){
 				  count = count + 1;
 #ifdef DEBUGG
 fprintf(stderr,"%g\n", fvalue);
@@ -223,7 +223,7 @@ fprintf(stderr,"%g\n", fvalue);
 		  case DCELL_TYPE:
 		  	G_get_d_raster_row(map_id, map_rbuf.buf.v, sl);
 		  	for(ss = 0; ss < ncols; ss++){
-			         if(map_rbuf.buf.d[ss] > 0){
+			         if(!G_is_d_null_value(&map_rbuf.buf.d[ss])){
 				  count = count + 1;
 				  dvalue = map_rbuf.buf.d[ss];
 				  fprintf(fd,"%g\n", dvalue);
@@ -233,8 +233,8 @@ fprintf(stderr,"%g\n", fvalue);
 		}
 
 		if (count > 0){
-	       		nl = nl + 1;
-		       ns = count;
+			nl = nl + 1;
+			ns = count;
 		}
 		count = 0;
 	}
@@ -373,7 +373,7 @@ fprintf(stderr, "Saving...");
 	    for(ss = 0; ss < ncols; ss++){
 	    	switch (map_rbuf.type) {
 		  case CELL_TYPE:
-		       if(map_rbuf.buf.c[ss] > 0){
+			if(!G_is_c_null_value(&map_rbuf.buf.c[ss])){
 				fscanf(fd,"%d",&elev_dat);
 				new_rbuf.buf.c[ss] = elev_dat;
 				fscanf(ft,"%d",&short_int);
@@ -381,7 +381,7 @@ fprintf(stderr, "Saving...");
 		 	}
 	  		break;
 		  case FCELL_TYPE:
-		       if(map_rbuf.buf.f[ss] > 0.0){
+			if(!G_is_f_null_value(&map_rbuf.buf.f[ss])){
 				fscanf(fd,"%g",&elev_dat);
 				new_rbuf.buf.f[ss] = elev_dat;
 				fscanf(ft,"%g",&fvalue);
@@ -389,7 +389,7 @@ fprintf(stderr, "Saving...");
 		 	}	  		
 		 	break;
 		  case DCELL_TYPE:
-		       if(map_rbuf.buf.d[ss] > 0){
+			if(!G_is_d_null_value(&map_rbuf.buf.d[ss])){
 				fscanf(fd,"%g",&elev_dat);
 				new_rbuf.buf.d[ss] = elev_dat;
 				fscanf(ft,"%g",&dvalue);
