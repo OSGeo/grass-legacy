@@ -1,0 +1,11 @@
+scale 1 inch equals 2 miles
+maploc 1.25 1.1
+raster landuse
+colortable
+  where 1.5 6.0
+  font Helvetica
+  fontsize 20
+  end
+mapinfo
+  end
+end
