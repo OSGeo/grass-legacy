@@ -581,20 +581,19 @@ bin_to_asc (struct Map_info *Map, FILE *ascii, struct Categories *cats, double d
 }
 
 
-#define BUFSIZ 512
 void exportLabelToSite(FILE* f_att, struct Categories *cats, FILE* out)
 {
 	char type;
 	double x, y;
 	int cat, numMatch;
 	Site *s;
-	char buffer[BUFSIZ];
+	char buffer[512];
 	char *ret;
 
 	s = G_site_new_struct(CELL_TYPE, 2, 1, 0);
 	for(;;)	/* skip heading. */
 	{
-		ret = fgets(buffer, BUFSIZ, f_att);
+		ret = fgets(buffer, sizeof(buffer), f_att);
 		if(ret == NULL) return;
 		if(buffer[0] == 'A') break;
 	}
@@ -611,7 +610,7 @@ void exportLabelToSite(FILE* f_att, struct Categories *cats, FILE* out)
 			s->str_att[0] = G_get_cat(cat, cats);
 			G_site_put(out, s);
 		}
-		ret = fgets(buffer, BUFSIZ, f_att);
+		ret = fgets(buffer, sizeof(buffer), f_att);
 		if(ret == NULL) break;
    }
 	G_site_free_struct(s);
