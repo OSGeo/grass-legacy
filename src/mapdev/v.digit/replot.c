@@ -32,7 +32,7 @@ replot(map)
 		;
 #endif
 
-    R_flush ();
+    V_flush ();
     Write_info (2, "");
 }
 
@@ -104,7 +104,7 @@ display_nodes (map)
 	    R_standard_color (dcolors[dig_node_color (Node[i].n_lines)]);
 	    _Blot (&(Node[i].x), &(Node[i].y));
 	}
-    R_flush ();
+    V_flush ();
 }
 
 /* returns 0 on completion,  or -1 if interupted by key press */
@@ -116,7 +116,7 @@ display_all_lines (map)
     int ret;
 
     ret = 0;
-    Write_info (3, "                                  ...Press <ESC> key to stop redraw");
+    Write_info (3, "");
 
 if (!Disp_lines && !Disp_llines && !Disp_llabels && !Disp_points && !Disp_nodes && !Disp_sites && !Disp_slabels)
 	return (1);
@@ -138,7 +138,8 @@ if (!Disp_lines && !Disp_llines && !Disp_llabels && !Disp_points && !Disp_nodes 
 	}
     }
     unset_keyboard ();
-    R_flush ();
+    V_flush ();
+    Write_info (3, "                                                                    ");
     return (ret);
 }
 
@@ -170,7 +171,7 @@ replot_lines (map, points)
 	    */
 	}
     }
-    R_flush ();
+    V_flush ();
 }
 #endif
 
@@ -189,5 +190,5 @@ display_tlines (map, type)
 	    display_line (map->Line[i].type, &Gpoints, i, map);
 	}
     }
-    R_flush ();
+    V_flush ();
 }
