@@ -42,8 +42,8 @@ int pj_do_proj_nad(x,y,info_in,info_out)
 	/* project ll to output */
 	if (strncmp(info_out->proj,"ll",2) == 0 )
 	{
-		data.u = (*x) * RAD_TO_DEG;
-                data.v = (*y) * RAD_TO_DEG;
+		(*x) = data.u * RAD_TO_DEG;
+		(*y) = data.v * RAD_TO_DEG;
         }
 	else
 	{
