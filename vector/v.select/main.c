@@ -412,7 +412,7 @@ main (int argc, char *argv[])
     }
 
     /* Copy tables */
-    if ( !(table_flag->answer) && (IFi != NULL) ) {
+    if ( !(table_flag->answer) ) {
 	int ttype, ntabs=0;
 	
 	G_message ( "Writing attributes ...\n" );
