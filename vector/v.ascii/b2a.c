@@ -22,6 +22,8 @@ int bin_to_asc(
 	/*  but we can override that (in Level I only) by specifying */
 	/*  the type  -1, which means match all line types */
 
+	Vect_rewind ( Map );
+
 	while(1)
 	{
 	        if (-1 == (type = Vect_read_next_line (Map, Points, Cats)))
