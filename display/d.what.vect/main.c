@@ -20,7 +20,7 @@
 
 int main(int argc, char **argv)
 {
-  struct Flag *once, *terse, *txt, *topo_flag;
+  struct Flag *once, *terse, *txt, *topo_flag, *flash;
   struct Option *opt1;
   struct GModule *module;
   char *mapset, *openvect();
@@ -63,12 +63,16 @@ int main(int argc, char **argv)
  
   txt = G_define_flag();
   txt->key = 'x';
-  txt->description = "Print informations as plain text to terminal window";
+  txt->description = "Print informations as plain text to terminal window.";
   
   topo_flag = G_define_flag();
   topo_flag->key = 'd';
   topo_flag->description = "Print topological informations (debugging).";
-  
+ 
+  flash = G_define_flag();
+  flash->key = 'f';
+  flash->description = "Enable flashingi (slower).";
+ 
   module = G_define_module();
   module->description = 
     "Allows the user to interactively query a vector map layer "
@@ -130,7 +134,8 @@ int main(int argc, char **argv)
     G_fatal_error ("No graphics device selected");
   D_setup(0);
 
-  what(once->answer, txt->answer, terse->answer, width, mwidth, topo_flag->answer); 
+  what(once->answer, txt->answer, terse->answer, flash->answer,
+       width, mwidth, topo_flag->answer); 
 
   for(i=0; i<nvects; i++)
       Vect_close (&Map[i]);
