@@ -3,6 +3,7 @@ MODULE_TOPDIR = ..
 
 SUBDIRS = \
 	v.ascii \
+	v.build \
 	v.category \
 	v.convert 
 
