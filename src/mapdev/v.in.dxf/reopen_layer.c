@@ -1,3 +1,4 @@
+/* 1/28/98 change from Jacques Bouchard <bouchard@onera.fr> */
 /* written by J Moorman  
 ** 7/23/90
 */
@@ -14,7 +15,7 @@ dxf_reopen_layer (type, cl_count, o_count)
     char	filename[300];
 	FILE *fp;
 
-    sprintf (filename, "%s.%s", basename, closed_layers[cl_count].name);
+    sprintf (filename, "%s.%s", base_name, closed_layers[cl_count].name);
 
     if (type == DXF_ASCII)
     {
