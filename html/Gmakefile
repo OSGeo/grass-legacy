@@ -1,24 +1,37 @@
-all:
+GRASS_MANDIR=./man_new
+HTML_DIR=./html
+
+# the files we want to create/update are now MAN_FILES
+all: copy $(GRASS_MANDIR) $(MAN_FILES)
+
+#copy the HTML pages
+copy:
 	if [ ! -d $(GISBASE)/html ]; then mkdir $(GISBASE)/html; fi
 	(tar -cf - * | (cd $(GISBASE)/html; tar -xf - 2>/dev/null ); true )
 
-#html2man:
-	rm -rf $(GISBASE)/man
-	html/convert_to_man.sh $(SRC) $(GISBASE)
 
-#Postscript-docs:
-#http://www.tdb.uu.se/~jan/html2ps.html
-#	if [ ! -d $(GISBASE)/postscript ]; then mkdir $(GISBASE)/postscript; fi
-#	html2ps html/d*.html > $(GISBASE)/postscript/grass5display.ps
-#	html2ps html/g*.html > $(GISBASE)/postscript/grass5general.ps
-#	html2ps html/i*.html > $(GISBASE)/postscript/grass5imagery.ps
-#	html2ps html/m*.html > $(GISBASE)/postscript/grass5misc.ps
-#	html2ps html/r*.html > $(GISBASE)/postscript/grass5raster.ps
-#	html2ps html/s*.html > $(GISBASE)/postscript/grass5sites.ps
-#	html2ps html/v*.html > $(GISBASE)/postscript/grass5vector.ps
-#	html2ps html/?3*.html > $(GISBASE)/postscript/grass5grid3d.ps
-#	html2ps html/db*.html html/*pg.html > $(GISBASE)/postscript/grass5database.ps
-#	html2ps html/*sh.html > $(GISBASE)/postscript/grass5shells.ps
+# process the html pages into man pages
+%.man: %.html
+	$SRCDIR/scripts/contrib/g.html2man/g.html2man $< > $@
 
-#ps2pdf...
+# make sure the man directory exists
+$(GRASS_MANDIR):
+	test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
 
+# copy the man pages
+$(GRASS_MANDIR)/%:% $(GRASS_MANDIR)
+	cp $< $@
+
+
+# set HTML_FILES to the set of .html files in HTML_DIR
+HTML_FILES = $(wildcard $(HTML_DIR)/*.html)
+
+# transform HTML_FILES to MAN_FILES
+# substitute .man for .html in HTML_FILES
+MAN_TMP = $(subst .html,.man,$(HTML_FILES))
+
+# substitute MAN_DIR for HTML_DIR in MAN_TMP
+MAN_FILES = $(subst $(HTML_DIR),$(MAN_DIR),$(MAN_TMP))
+	%.man
+
+#
