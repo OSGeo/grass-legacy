@@ -5,7 +5,7 @@ LIST=main.o\
 	log.o\
 	rules.o
 
-COLRFILES = aspect bgyr byg byr elevation grey gyr rainbow ramp ryg slope terrain wave
+COLRFILES = aspect bcyr byg byr elevation grey gyr rainbow ramp ryg slope terrain wave
 
 all:  $(BIN_CMD)/$(PGM) $(ETC)/colors
 
@@ -13,7 +13,7 @@ $(BIN_CMD)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(ETC)/colors: $(COLRFILES)
-	-mkdir $@
+	-mkdir -p $@
 	cp -f $^ $@
 
 $(DEPGISLIB): #
