@@ -32,6 +32,10 @@ int main(int argc, char **argv)
     /*                        OPEN INPUT AND OUTPUT RASTER FILES		*/
     /*--------------------------------------------------------------------------*/
 
+    /* Make sure that the current projection is not lat/long */
+    if ((G_projection() == PROJECTION_LL))
+         G_fatal_error ("lat/long databases not supported - sorry.");
+
     open_files();
 
 
