@@ -228,6 +228,7 @@ src/mapdev/v.reclass
 src/mapdev/v.rm.dangles
 src/mapdev/v.rmdup
 src/mapdev/v.spag
+src/mapdev/v.split
 src/mapdev/v.stats
 src/mapdev/v.support
 src/mapdev/v.surf.rst
