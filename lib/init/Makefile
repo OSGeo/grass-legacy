@@ -36,7 +36,8 @@ default: $(ARCH_BINDIR)/$(START_UP) \
 	$(ETC)/run \
 	$(ETC)/echo \
 	$(ETC)/grass_intro \
-	$(ETC)/license
+	$(ETC)/license \
+	$(ETC)/gis_set.tcl
 
 $(ARCH_BINDIR)/$(START_UP): init.sh 
 	@test -d $(ARCH_BINDIR) || (echo 'ARCH_DISTDIR($(ARCH_BINDIR))' not found; exit 1)
@@ -78,3 +79,8 @@ $(ETC)/license: license.txt version.sed
 	rm -f $@
 	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" "$(VERSION_UPDATE_PKG)" license.txt > $@
 	chmod +r $@
+
+$(ETC)/gis_set.tcl: gis_set.tcl
+	rm -f $@
+	cp gis_set.tcl $(ETC)
+	chmod +x $@
