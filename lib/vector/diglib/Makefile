@@ -35,7 +35,7 @@ $(ARCH_INCDIR)/portable.h:
 	
 #  Test portable read/write functions
 $(OBJDIR)/test: test.c 
-	$(CC) $(LDFLAGS) $(ALLINC) -static -o $@ test.c $(DIG2LIB) $(GISLIB)
+	$(CC) $(LDFLAGS) $(ALLINC) -o $@ test.c $(DIG2LIB) $(GISLIB)
 	cd $(OBJDIR); ./test
 
 
