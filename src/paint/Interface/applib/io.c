@@ -1,4 +1,3 @@
-/* %W% %G% */
 static int ascii_int = 0 ;
 static int ascii_float = 0 ;
 
