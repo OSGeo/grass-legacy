@@ -8,6 +8,7 @@ SUBDIRS = \
 	db \
 	display \
 	general \
+	raster \
 	scripts \
 	tools \
 	vector \
