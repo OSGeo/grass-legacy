@@ -1,15 +1,63 @@
+/*
+ * char	*
+ * type_name[] = { "CELL", "FCELL", "DCELL" };
+ *
+ *		type_name[CELL_TYPE]  or type_name[0]:	"CELL"
+ *		type_name[FCELL_TYPE] or type_name[1]:	"FCELL"
+ *		type_name[DCELL_TYPE] or type_name[2]:	"DCELL"
+ *
+ * char	*
+ * type_spec[] = { "%%d",  "%%f",   "%%lf"  };
+ *
+ * 		type_spec[CELL_TYPE]  or type_spec[0]:	"%%d"
+ * 		type_spec[FCELL_TYPE] or type_spec[1]:	"%%f"
+ * 		type_spec[DCELL_TYPE] or type_spec[2]:	"%%lf"
+ *
+ *		it's not flexible for precision control.
+ *		use value2str() instead. see main_old.c for more info.
+ *
+ * double
+ * raster_value(struct RASTER_MAP_PTR buf, int col);
+ *
+ *		returns double value from any types
+ *
+ * int
+ * raster_value2(double *ret, struct RASTER_MAP_PTR buf, int col)
+ *
+ * 		sets *ret to double value.
+ * 		
+ * 		returns 1		if successful
+ * 			0		if given type is unknown
+ *
+ * int
+ * is_null_value(struct RASTER_MAP_PTR buf, int col);
+ *
+ * 		returns 1		if buf[col] is NULL
+ * 			0		if buf[col] is not NULL
+ * 		       -1		if given type is unknown
+ *
+ * int
+ * value2str(char *str, int width, int prec,
+ *		struct RASTER_MAP_PTR buf, int col);
+ *
+ * 		fill str buffer with given value.
+ *		for CELL type, prec is meaningless.
+ *
+ *		returns str length	if successful
+ *			0		if given type is unknown
+ *
+ * int	cpvalue(struct RASTER_MAP_PTR dst, int dcol,
+ * 		struct RASTER_MAP_PTR src, int scol);
+ *
+ *		copys src[scol] value to dst[dcol]
+ *
+ * 		returns 1		if successful
+ * 			0		if given type is unknown
+ */
+
+
 #include <stdio.h>
 #include "gis.h"
-
-
-
-#define G_TYPE_NAME(t)		(t ==  CELL_TYPE ?  "CELL" : \
-				(t == FCELL_TYPE ? "FCELL" : \
-				(t == DCELL_TYPE ? "DCELL" : NULL)))
-
-#define G_TYPE_FORMAT(t)	(t ==  CELL_TYPE ?  "%d" : \
-				(t == FCELL_TYPE ?  "%f" : \
-				(t == DCELL_TYPE ? "%lf" : "")))
 
 
 union	RASTER_PTR
@@ -27,7 +75,12 @@ struct	RASTER_MAP_PTR
 };
 
 
+char	*type_name[] = { "CELL", "FCELL", "DCELL" };
+char	*type_spec[] = { "%%d",  "%%f",   "%%lf"  };
+
+
 double	raster_value(struct RASTER_MAP_PTR buf, int col);
+int	raster_value2(double *ret, struct RASTER_MAP_PTR buf, int col);
 int	is_null_value(struct RASTER_MAP_PTR buf, int col);
 int	value2str(char *str, int width, int prec,
 		struct RASTER_MAP_PTR buf, int col);
@@ -36,7 +89,7 @@ int	cpvalue(struct RASTER_MAP_PTR dst, int dcol,
 
 
 int
-main(int argc, char *argv[])
+main(int argc, char **argv)
 {
 	struct	Option		*opt;
 	struct	Cell_head	cellhd;
@@ -73,7 +126,7 @@ main(int argc, char *argv[])
 	buf.type   = G_raster_map_type(name, mapset);
 	buf.data.v = G_allocate_raster_buf(buf.type);
 
-	fprintf(stderr, "%s\n", G_TYPE_NAME(buf.type));
+	fprintf(stderr, "%s\n", type_name[buf.type]);
 
 	if((fd = G_open_cell_old(name, mapset)) < 0){
 		fprintf(stderr, "\n** %s - could not read **\n", name);
@@ -143,6 +196,29 @@ raster_value(struct RASTER_MAP_PTR buf, int col)
 
 
 int
+raster_value2(double *ret, struct RASTER_MAP_PTR buf, int col)
+{
+	switch(buf.type)
+	{
+		case CELL_TYPE:
+			*ret = (double) buf.data.c[col];
+			break;
+		case FCELL_TYPE:
+			*ret = (double) buf.data.f[col];
+			break;
+		case DCELL_TYPE:
+			*ret = (double) buf.data.d[col];
+			break;
+		default:
+			return 0;
+			break;
+	}
+
+	return 1;
+}
+
+
+int
 is_null_value(struct RASTER_MAP_PTR buf, int col)
 {
 	switch(buf.type)
@@ -206,6 +282,9 @@ cpvalue(struct RASTER_MAP_PTR dst, int dcol,
 					dst.data.c[dcol] =
 						(CELL) src.data.d[scol];
 					break;
+				default:
+					return 0;
+					break;
 			}
 			break;
 		case FCELL_TYPE:
@@ -222,6 +301,9 @@ cpvalue(struct RASTER_MAP_PTR dst, int dcol,
 				case DCELL_TYPE:
 					dst.data.f[dcol] =
 						(FCELL) src.data.d[scol];
+					break;
+				default:
+					return 0;
 					break;
 			}
 			break;
@@ -240,7 +322,13 @@ cpvalue(struct RASTER_MAP_PTR dst, int dcol,
 					dst.data.d[dcol] =
 						(DCELL) src.data.d[scol];
 					break;
+				default:
+					return 0;
+					break;
 			}
+			break;
+		default:
+			return 0;
 			break;
 	}
 
