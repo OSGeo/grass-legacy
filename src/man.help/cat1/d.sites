@@ -1,0 +1,66 @@
+
+
+
+d.sites(1)           GRASS Reference Manual            d.sites(1)
+
+
+
+NAME
+     d.sites - Displays
+
+SYNOPSIS
+     d.sites
+
+DESCRIPTION
+     d.sites is a UNIX Bourne shell macro which prompts the user
+     for the site to be used for generating the picture as well
+     as color, size, and type of marker used to identify the
+     sites.  Once the information is collected, the is printed
+     with the Gsites[2G] command and piped through the
+     Dpoints[2D] command.
+
+SEE ALSO
+     Dpoints[2D], Gsites[2G]
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
