@@ -47,8 +47,13 @@ set_keyboard ()
   */
 
 	new_termio.c_lflag = 0 ;
+#if defined(VMIN) && defined(VTIME)
+	new_termio.c_cc[VTIME] = 0 ;
+	new_termio.c_cc[VMIN] = 0 ;
+#else
 	new_termio.c_cc[VEOF] = 0 ;
 	new_termio.c_cc[VEOL] = 0 ;
+#endif
 
  /* 
   * now set the modes and flags 
