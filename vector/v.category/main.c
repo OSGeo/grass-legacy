@@ -22,6 +22,7 @@
 #define O_DEL  2
 #define O_REP  3
 #define O_PRN  4
+#define O_SUM  5
 
 #define FRTYPES 7  /* number of field report types */
 
@@ -70,9 +71,14 @@ main (int argc, char *argv[])
 	option_opt->type =  TYPE_STRING;
 	option_opt->required = NO;
 	option_opt->multiple = NO;
-	option_opt->options = "add,del,report,print";
+	option_opt->options = "add,del,sum,report,print";
 	option_opt->answer = "add";
-        option_opt->description = "Action to be done";
+        option_opt->description = "Action to be done:\n"
+	    	"\tadd - add a new category\n"
+		"\tdel - delete category\n"
+		"\tsum - add the value specified by cat option to the current category value\n"
+		"\treport - print report (statistics)\n"
+		"\tprint - print category values";
 
 	cat_opt = G_define_standard_option(G_OPT_V_CAT);
 	cat_opt->answer = "1";
@@ -102,6 +108,9 @@ main (int argc, char *argv[])
 		break;
 	    case ( 'd' ):
 		option = O_DEL;
+		break;
+	    case ( 's' ):
+		option = O_SUM;
 		break;
 	    case ( 'r' ):
 		option = O_REP;
@@ -170,7 +179,7 @@ main (int argc, char *argv[])
 	Vect_open_old (&In, in_opt->answer, mapset); 
 
 	/* open output vector if needed */
-	if (option == O_ADD || option == O_DEL)
+	if (option == O_ADD || option == O_DEL || option == O_SUM)
           {
 	    with_z = In.head.with_z;
 	
@@ -216,7 +225,7 @@ main (int argc, char *argv[])
 			}
 			Vect_reset_line ( Points );
 			Vect_reset_cats ( Cats );
-			Vect_append_point ( Points, x, y, 0 );
+			Vect_append_point ( Points, x, y, 0.0 );
 			Vect_cat_set (Cats, fields[0], cat);
 			cat += step;
 			Vect_write_line ( &Out, GV_CENTROID, Points, Cats );
@@ -237,6 +246,19 @@ main (int argc, char *argv[])
 	          }
 		break;
 		
+	    case (O_SUM):	  
+	        while ( (type = Vect_read_next_line (&In, Points, Cats)) > 0) {
+	            if ( type & otype ) {
+			for ( i = 0 ; i < Cats->n_cats; i++ ) {
+			   if ( Cats->field[i] == fields[0] ) {
+			       Cats->cat[i] += cat;
+			   }
+			}
+	            }	   
+	            Vect_write_line ( &Out, type, Points, Cats );  
+	        }
+		break;
+
 	    case (O_REP):	  
 		nfreps = 0;
 		freps = NULL;
@@ -347,7 +369,7 @@ main (int argc, char *argv[])
 		break;
 	  }
 	
-	if (option == O_ADD || option == O_DEL) {
+	if (option == O_ADD || option == O_DEL || option == O_SUM) {
 	    Vect_copy_tables ( &In, &Out, 0 );
 	    Vect_build (&Out, stdout);
 	    Vect_close (&Out);
