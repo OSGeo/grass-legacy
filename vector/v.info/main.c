@@ -101,9 +101,15 @@ main (int argc, char *argv[])
     printline (line);
     sprintf (line, "                                         Number of areas:      %-9ld", (long)Vect_get_num_areas(&Map));
     printline (line);
+    sprintf (line, "                                         Number of faces:      %-9ld", (long)Vect_get_num_faces(&Map));
+    printline (line);
+    sprintf (line, "                                         Number of kernels:    %-9ld", (long)Vect_get_num_kernels(&Map));
+    printline (line);
     sprintf (line, "                                         Number of islands:    %-9ld", (long)Vect_get_num_islands(&Map));
     printline (line);
     sprintf (line, "                                         Map is 3D:            %d", Vect_is_3d(&Map));
+    printline (line);
+    sprintf (line, "                                         Number of dblinks:    %-9ld", (long)Vect_get_num_dblinks(&Map));
     printline (line);
   }
   else
@@ -116,9 +122,11 @@ main (int argc, char *argv[])
   printline (line);
 
   Vect_get_map_box (&Map, &box );
-  sprintf (line, "           N: %10.0f    S: %10.0f", box.N, box.S);
+  sprintf (line, "           N: %-10.3f    S: %-10.3f", box.N, box.S);
   printline (line);
-  sprintf (line, "           E: %10.0f    W: %10.0f", box.E, box.W);
+  sprintf (line, "           E: %-10.3f    W: %-10.3f", box.E, box.W);
+  printline (line);
+  sprintf (line, "           B: %-6.3f    T: %-6.3f", box.B, box.T);
   printline (line);
 
   printline ("");
@@ -128,7 +136,6 @@ main (int argc, char *argv[])
   printline (line);
   sprintf (line, "    %s", v_head.line_3);
   printline (line);
-  printline ("");
   divider ('+');
   fprintf (stdout, "\n");
  
