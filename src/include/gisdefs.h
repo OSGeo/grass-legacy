@@ -561,11 +561,13 @@ int G_gisinit(char *);
 int G_no_gisinit(void);
 int G__check_gisinit(void);
 
+#ifndef SWIGGING
 /* grid_dist1.c */
 double G_ellipsoid_grid_dist(double, double, double, double, double, double);
 
 /* grid_dist2.c */
 double G_ellipsoid_grid_dist(double, double, double, double, double, double);
+#endif
 
 /* histo_eq.c */
 int G_histogram_eq(struct Histogram *, unsigned char **, CELL *, CELL *);
@@ -672,6 +674,7 @@ char *G__location_path(void);
 int G_ludcmp(double **, int, int *, double *);
 void G_lubksb(double **, int, int *, double []);
 
+#ifndef SWIGGING
 /* lzw.c */
 unsigned char *lzw_decode(unsigned char *, unsigned int);
 int lzw_expand(int (*)(), int (*)());
@@ -689,6 +692,7 @@ int G_lzw_read2(int, unsigned char *, int, int);
 int G_lzw_read(int, unsigned char *, int);
 int G_lzw_transfer_compress(int, int, int);
 int G_lzw_transfer_expand(int, int, int);
+#endif
 
 /* mach_name.c */
 char *G__machine_name(void);
@@ -1007,11 +1011,13 @@ char *G_strdup(char *);
 int G_strip(register char *);
 
 /* support.c */
+#ifndef SWIGGING
 int G_open_support_old(char *, char *, char *);
 FILE *G_fopen_support_old(char *, char *, char *);
 int G_open_support_new(char *, char *, char *);
 FILE *G_fopen_support_new(char *, char *, char *);
 int G__getsome (FILE *, char *, int, int, int);
+#endif
 
 /* svd.c */
 int G_svdcmp(double **, int, int, double *, double **);
@@ -1054,12 +1060,14 @@ int G_trim_decimal(char *);
 char *G_unctrl(int);
 
 /* unix_socks.c */
+#ifndef SWIGGING
 char *G_sock_get_fname(char *);
 int G_sock_exists(char *);
 int G_sock_bind(char *);
 int G_sock_listen(int, unsigned int);
 int G_sock_accept(int);
 int G_sock_connect(char *);
+#endif
 
 /* view.c */
 int G_3dview_warning(int);
