@@ -1,10 +1,10 @@
 REQUIREMENTS to compile GRASS GIS
 
-A workstation running some flavor of unix like Solaris,
-Irix, Linux, BSD or Mac OS X.  Ideally, you should have at least 500
-Mb for data and 32 Mb RAM. The source code package needs
-around 100MB uncompressed. The resulting binaries may need
-between 60MB and 160MB depending on your platform.
+A workstation running some flavor of unix like Solaris, Irix, 
+Linux, BSD, Mac OS X, CygWindows.  Ideally, you should have at
+least 500 Mb for data and 32 Mb RAM. The source code package needs
+around 100MB uncompressed. The resulting binaries may need between 
+80MB and 180MB depending on your platform.
 
 General requirements:
 (most tools are standard tools on Linux, for other platforms you
@@ -15,6 +15,11 @@ General requirements:
 
  - Fortran compiler (f77, g77, ...) for a few modules
     g77: coming along with gcc
+
+ - zlib compression library (already installed on modern systems)
+   It is used to compress GRASS raster files:
+    libz: http://www.info-zip.org/pub/infozip/zlib/
+          ftp://ftp.freesoftware.com/pub/infozip/zlib/
 
  - lexical analyzer generator (flex), 
    (lex is no longer supported, please use flex instead)
@@ -43,8 +48,6 @@ Optional requirements:
      [http://www.geog.uni-hannover.de/grass/grass5/related/README.mesa3d]
  - libpng (for r.in.png, r.out.png), usually already installed.
      [ftp://ftp.cdrom.com/pub/png/]
- - libz (compression library, for some modules), usually already installed.
-     [ftp://ftp.freesoftware.com/pub/infozip/zlib/]
  - libjpeg (for r.in.tiff, r.out.tiff, for HDF library), 
    usually already installed.
      [ftp://ftp.uu.net/graphics/jpeg/]
@@ -58,7 +61,7 @@ Optional requirements:
  - libg2c (for r.fill.dir, or use g77)
      [http://?]
      
- - postgreSQL libraries (for the postgres database interface)
+ - PostgreSQL libraries (for the PostgreSQL database interface)
      [http://www.postgresql.org]
 
  - Unix ODBC (for the ODBC database interface)
@@ -75,15 +78,15 @@ Optional requirements:
  - r.in.gdal requires GDAL - Geospatial Data Abstraction Library
      [http://www.remotesensing.org/gdal/]
 
-SUN users may go here to download precompiled libraries etc.:
-  http://www.sunfreeware.com/
+Note: 
+ SUN users may go here to download precompiled libraries etc.:
+   http://www.sunfreeware.com/
   
-SGI users may go here to download precompiled libraries etc.:
-  http://freeware.sgi.com/
-
+ SGI users may go here to download precompiled libraries etc.:
+   http://freeware.sgi.com/
 
 
 GRASS Development Team 2001
 grass@baylor.edu
 
-$Id: REQUIREMENTS,v 1.9 2001-02-14 15:42:10 markus Exp $
+$Id: REQUIREMENTS,v 1.10 2001-03-28 07:41:44 markus Exp $
