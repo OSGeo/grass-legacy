@@ -9,7 +9,7 @@ RAWFONT = \
 all: ...clean ...fonts
 
 ...fonts: ...dir splitfont font.bin
-	splitfont $(FONT)
+	./splitfont $(FONT)
 	rm -f splitfont font_2_bin font.bin
 
 
@@ -22,7 +22,7 @@ all: ...clean ...fonts
 
 
 font.bin: font_2_bin $(RAWFONT)
-	cat $(RAWFONT) | font_2_bin
+	cat $(RAWFONT) | ./font_2_bin
 
 font_2_bin: font_2_bin.o
 	$(CC) $(LDFLAGS) font_2_bin.o -o $@
