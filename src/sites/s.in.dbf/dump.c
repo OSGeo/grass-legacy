@@ -42,9 +42,6 @@
 #include "site.h"
 #include "shapefil.h"
 
-#define BSLASH 92   /* as long as sites format doesn't accept backslashes in strings */
-#define REPLACE '!' /* used as replacement character for backslash (bug in libes/gis/sites.c)*/
-
 typedef unsigned char uchar;
 
 struct my_string {
@@ -397,9 +394,6 @@ static void * SfRealloc( void * pMem, int nNewSize )
   fprintf(stderr, "C: %i-line %i: %s\n",iField, hEntity, pszStringField);
 #endif
 
-        /* replace backslash with something else: */
- 	G_strchg(pszStringField, BSLASH, REPLACE);
-
     	/*Remove white spaces if any*/
 #ifdef TRIM_DBF_WHITESPACE
     	if (1)
@@ -494,9 +488,6 @@ static void * SfRealloc( void * pMem, int nNewSize )
 		break;
 	} /* switch */
 
-        /* replace backslash with something else: */
- 	G_strchg(pszStringField, BSLASH, REPLACE);
-	
     	/*Remove white spaces if any*/
 #ifdef TRIM_DBF_WHITESPACE
     	if (1)
