@@ -1,6 +1,7 @@
 /*
- * s.rand
- * Copyright (C) 1993-1995. James Darrell McCauley.
+ * Based on:
+ *  s.rand
+ *  Copyright (C) 1993-1995. James Darrell McCauley.
  *
  * Author: James Darrell McCauley darrell@mccauley-usa.com
  * 	                          http://mccauley-usa.com/
@@ -77,7 +78,7 @@ int main (int argc, char *argv[])
   
   module = G_define_module();
   module->description =        
-                  "Randomly generate a GRASS sites list.";
+                  "Randomly generate a GRASS vector points map.";
                   
   parm.output = G_define_option ();
   parm.output->key = "output";
@@ -90,11 +91,11 @@ int main (int argc, char *argv[])
   parm.nsites->key = "n";
   parm.nsites->type = TYPE_INTEGER;
   parm.nsites->required = YES;
-  parm.nsites->description = "number of sites to be created (1-32767)";
+  parm.nsites->description = "number of points to be created (1-32767)";
 
   flag.drand48 = G_define_flag ();
   flag.drand48->key = 'd';
-  flag.drand48->description = "Use drand48() [default=rand()]";
+  flag.drand48->description = "Use drand48() function (default=rand() )";
 
   if (G_parser (argc, argv))
     exit (1);
