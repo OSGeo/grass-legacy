@@ -58,7 +58,7 @@ int runPg(SQL_stmt, print_out)
 	if (nrows == 1 && vert) {
 	    for (j = 0; j < nfields; j++) {
 		strncpy(buf, PQgetvalue(res, 0, j), QRY_LENGTH);
-		printf( "%10s I %s\n", PQfname(res, j), buf);
+		fprintf(stderr,  "%10s I %s\n", PQfname(res, j), buf);
 	    }
 	}
 	else if (nrows) {
@@ -79,7 +79,7 @@ int runPg(SQL_stmt, print_out)
 	    }
 	}
 
-	printf( _("\n%d rows selected\n\n"), nrows);
+	fprintf(stderr, _("\n%d rows selected\n\n"), nrows);
     }
     else {
 
