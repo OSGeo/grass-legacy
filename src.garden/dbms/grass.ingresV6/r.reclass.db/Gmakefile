@@ -1,0 +1,24 @@
+MAN	  = doc/r.reclass.db
+#PGM       = $(BIN_CONTRIB_CMD)/r.reclass.db
+PGM	= r.reclass.db
+LIBES     = $(GISLIB) $(VASKLIB) -ltermcap
+
+
+
+OBJS = \
+	displayUtils.o \
+	ingresUtils.o \
+	main.o \
+	sqlQry.o 
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
+	#cp $(MAN)  $(GISBASE)/man/4
+
+$(LIBES): #
+###########################################
+#
+	ctags *.[ch]
+	sed 's/\?/\//g' tags > tags.tmp
+	mv tags.tmp tags
