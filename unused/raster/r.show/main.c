@@ -46,7 +46,8 @@
  *		returns str length	if successful
  *			0		if given type is unknown
  *
- * int	cpvalue(struct RASTER_MAP_PTR dst, int dcol,
+ * int
+ * cpvalue(struct RASTER_MAP_PTR dst, int dcol,
  * 		struct RASTER_MAP_PTR src, int scol);
  *
  *		copys src[scol] value to dst[dcol]
