@@ -427,7 +427,6 @@ int G_parser (int argc, char **argv)
 	char *ptr ;
 	int i;
 	struct Option *opt ;
-	char *fakestart;
 
 	error = 0 ;
 	need_first_opt = 1 ;
@@ -521,13 +520,6 @@ int G_parser (int argc, char **argv)
 		if (strcmp(argv[1],"--tcltk") == 0)
 		{
 			G_tcltk();
-			exit(0);
-		}
-
-		/* fake session for HTML generation with parser */
-		fakestart = getenv( "GRASS_FAKE_START" );
-		if ( fakestart != NULL )
-		{
 			exit(0);
 		}
 
