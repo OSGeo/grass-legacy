@@ -190,7 +190,7 @@ fi
 # Save the user interface variable in the grassrc file - choose a temporary
 # file name that should not match another file
 if [ -f "$GISRC" ] ; then
-    awk '$ARGS !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
+    awk '$1 !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
     echo "GRASS_GUI: $GRASS_GUI" >> "$GISRC.$$"
     mv -f "$GISRC.$$" "$GISRC"
 fi
@@ -311,7 +311,7 @@ if [ ! "$LOCATION" ] ; then
 		    GRASS_GUI="text"
 
                     if [ -f "$GISRC" ] ; then
-                        awk '$ARGS !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
+                        awk '$1 !~ /GRASS_GUI/ {print}' "$GISRC" > "$GISRC.$$"
                         echo "GRASS_GUI: $GRASS_GUI" >> "$GISRC.$$"
                         mv -f "$GISRC.$$" "$GISRC"
                     fi
