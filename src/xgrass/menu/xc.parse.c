@@ -1,6 +1,9 @@
 /**********************************************************************
    parse.c   - parse the command line
  *********************************************************************/
+#include <string.h>
+#include <errno.h>
+
 #ifndef _PATCHLEVEL_H_
 #define _PATCHLEVEL_H_
 #include "xc.xclip.h"
@@ -164,7 +167,6 @@ XCParseCommand(argc,argv,Global)
 	     */
             Global->scriptFile = *argv;
             if ((access(Global->scriptFile,4)) < 0) {
-                extern char *sys_errlist[];
 		char *libdir;
                 char buf[512];
 
@@ -175,7 +177,7 @@ XCParseCommand(argc,argv,Global)
 		sprintf(buf,"%s/xclip/%s",libdir,Global->scriptFile);
 		if ((access(buf,4)) < 0) {
 		    sprintf(errorbuf,"\"%s\", %s",Global->scriptFile,
-			sys_errlist[errno]);
+			strerror(errno));
 		    XCFatalError("parsing command line arguments",errorbuf);
 		}
                 Global->scriptFile = XtNewString(buf);
