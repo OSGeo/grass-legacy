@@ -12,7 +12,7 @@
 <h1>
 
 <hr SIZE=5 NOSHADE WIDTH="100%">Installing
-GRASS 5.0 on Win32 with Cygwin 1.x</h1></center>
+GRASS 5.0 on Win32 with Cygwin</h1></center>
 
 <center>
 <h1>
@@ -39,6 +39,9 @@ Cygwin, latest release,</li>
 NTFS filesystem (FAT will not work!),</li>
 
 <li>
+No white spaces in path(s).</li>
+
+<li>
 X Window Server and Client (only needed for the
 X-version of winGRASS)</li>
 
@@ -63,19 +66,13 @@ to a local disk, run it and follow the instructions.
 <p>When installing the Cygwin tools, please
 select all packages, or at least:
 <ul>
-<li>
-ash, bash, bzip2, clear, cygwin, file, fileutils,
-findutils, </li>
-<br>gawk, gettext, grep, groff, gzip,
-inetutils, jpeg,
-less, libpng, 
-<br>login, man, ncurses, opengl, perl, readline,
-regex, 
-<br>sed, sh-utils/shellutils, tar, tcltk,
-tcsh, termcap, 
-<br>texinfo, textutils, tiff, time, unzip,
-w32api, 
-<br>zip, zlib.
+
+<li> ash, bash, bzip2, clear, cygwin, file, fileutils, findutils,
+gawk, gettext, grep, groff, gzip, inetutils, jpeg, less, libpng,
+login, man, ncurses, opengl, perl, readline, regex, sed,
+sh-utils/shellutils, sunrpc, tar, tcltk, tcsh, termcap, texinfo, textutils,
+tiff, time, unzip, w32api, zip, zlib</li>
+
 <li>
 Remark: This list contains only the packages
 that are strictly required for running GRASS. For production use of the
@@ -151,24 +148,7 @@ or a newer package
 from the same directory.
 
 <h2>
-3a. Get the sunrpc libraries
-</h2>
-
-
-The sunrpc package contains SUN remote procedure calls, a requirement for
-GRASS/Cygwin. Download from:
-
-<br><a
-href="http://grass.itc.it/grass5/binary/windows_cygnus/sunrpc/">http://grass.itc.it/grass5/binary/windows_cygnus/sunrpc/</a>.
-Open a Bash window on
-your PC. Change the directory to the root directory and untar the file:
-<pre>
-cd /
-tar xzf /where/ever/you/saved/this/sunrpc-4.0.cygwin1.bin.tar.gz
-</pre>
-
-<h2>
-3b. Get the tcl/tk 8.x libraries
+4. Get the tcl/tk 8.x libraries (requires X Server)
 </h2>
 
 The only GRASS features which require X are tcltkgrass and NVIZ.
@@ -195,7 +175,7 @@ tar xzf /where/ever/you/saved/this/xtcltk-*.tar.gz
 </pre>
 
 <h2>
-4. And now FINALLY to the GRASS installation</h2>
+5. And now FINALLY to the GRASS installation</h2>
 Log into the cygwin shell. Please check the
 required disk space and permissions first. The default installation path
 is <tt>/usr/local/grass5</tt>. Next:
@@ -220,8 +200,7 @@ in an empty directory, e. g.
 Again remember to do this from within the cygwin shell.
 
 <h2>
-5.&nbsp;<a NAME="Start GRASS"></a>Starting
-GRASS 5</h2>
+6.<a NAME="Start GRASS"></a>Starting GRASS 5</h2>
 
 You can log into a GRASS session on the commandline
 (no graphics monitors) by issuing '<tt>grass5</tt>' in the cygwin shell. Follow the
@@ -273,7 +252,7 @@ or the winGRASS mailing list at
 subscription information</a>).
 
 <h2>
-6. This build was compiled with Cygwin 1.1.8</h2>
+7. References</h2>
 Read about Unix running under Windows here:
 <ul>
 <li>
