@@ -20,8 +20,7 @@
         	    {cascad "Vector map" {} "" 1 {			
             		{command "Various formats using OGR" {} "v.in.ogr" {} -command { execute v.in.ogr }}
             		{separator}
-            		{command "ASCII points file" {} "" {} -command { execute $env(GISBASE)/etc/dm/script/v.in.asciipoints }}
-            		{command "GRASS vector file" {} "v.in.ascii" {} -command { execute v.in.ascii }}
+            		{command "ASCII points file or GRASS ASCII vector file" {} "v.in.ascii" {} -command { execute v.in.ascii }}
             		{command "Import/export old GRASS vector format" {} "v.convert" {} -command { execute v.convert }}
         		    {separator}
         	    	{command "Garmin GPS Waypoints/Routes/Tracks" {} "v.in.garmin" {} -command { execute v.in.garmin }}
