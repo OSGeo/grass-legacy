@@ -17,7 +17,7 @@ their descriptions into a GRASS site list file.
 <BR>
 <B>s.in.dbf help</B> 
 <BR>
-<B>s.in.dbf</B> [-l]
+<B>s.in.dbf</B> [-lz]
 <B>input=</B><EM>name</EM>
 [<B>sites=</B><EM>name</EM>]
 
@@ -36,11 +36,13 @@ category label associated with a site. Output is
 stored in the file <B>sites=</B><EM>name</EM> and placed in
 the site_lists directory under the user's current mapset.
 
-<H3>Parameters:</H3>
+<H3>Flags:</H3>
 
 <DL>
-<DT><B>-l</B
+<DT><B>-l</B>
 <DD> List fields of DBF file, then exit.
+<DT><B>-z</B>
+<DD>treat third column as third dimension (z)
 </DL>
 
 
