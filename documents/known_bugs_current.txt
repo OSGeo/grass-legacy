@@ -71,7 +71,7 @@ r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
  (script: v.asc.degen)
 
 r.cost
- segment_put_row write error Bad address (same problem with r.surf.contour)
+ fixed by Pierre de Mouveaux <pmx@audiovu.com>
  
 r.drain - segm. fault
 
@@ -251,7 +251,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.3  2000-04-06 17:55:25  markus
+ Revision 1.4  2000-04-11 20:36:45  markus
+ r.cost bug /segment lib bug fixed by Pierre de Mouveaux <pmx@audiovu.com>
+
+ Revision 1.3  2000/04/06 17:55:25  markus
  added i.tape.tm.fast bugs
 
  Revision 1.2  2000/04/06 16:51:39  markus
