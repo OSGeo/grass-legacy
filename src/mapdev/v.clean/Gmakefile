@@ -1,6 +1,6 @@
 PGM=v.clean
 
-$(BIN_MAIN_CMD)/$(PROG): Vclean.o $(VECTLIB) $(GISLIB)
+$(BIN_MAIN_CMD)/$(PGM): Vclean.o $(VECTLIB) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ Vclean.o $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #
