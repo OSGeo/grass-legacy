@@ -142,7 +142,7 @@ int Vect_select_areas_by_box (struct Map_info *, BOUND_BOX *, struct ilist *);
 int Vect_select_isles_by_box (struct Map_info *, BOUND_BOX *, struct ilist *);
 int Vect_select_nodes_by_box (struct Map_info *, BOUND_BOX *, struct ilist *);
 int Vect_find_node (struct Map_info *, double, double, double, double, int);
-int Vect_find_line (struct Map_info *, double, double, double, int, double, int);
+int Vect_find_line (struct Map_info *, double, double, double, int, double, int, int);
 int Vect_find_area (struct Map_info *, double, double);
 
       /* Analysis */
