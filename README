@@ -28,6 +28,12 @@ Internet:  http://grass.baylor.edu/
 GRASS Development Team 2000    
 
 -------------------------------------------------------
+GRASS Installation:
+
+Please see the INSTALL file for installation
+instructions.
+
+-------------------------------------------------------
 GRASS 5 Programmer's Manual:
 
 http://www.geog.uni-hannover.de/grass/contrib.html
@@ -36,5 +42,8 @@ Or Latex sources from CVS server
 (http://www.geog.uni-hannover.de/grass/grasscvs.html)
 
 cvs -z3 co progmangrass50
+
+Please see the SUBMITTING file for instructions on
+submitting code to the GRASS code base
 
 -------------------------------------------------------
