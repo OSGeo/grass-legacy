@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.41 2000-11-14 13:36:44 markus Exp $
+# $Id: configure,v 1.42 2000-11-23 08:30:12 cho Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -20,7 +20,7 @@
 ac_help=
 ac_default_prefix=/usr/local
 # Any additions from configure.in:
-ac_default_prefix=/usr/local/grass-5.0b
+ac_default_prefix=/usr/local/grass5
 ac_help="$ac_help
   --with-x                use the X Window System"
 ac_help="$ac_help
