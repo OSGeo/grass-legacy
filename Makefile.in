@@ -215,7 +215,9 @@ real-install: FORCE
 	${SHELL} -c "cd ${GISBASE} ; tar cBf - lib/ | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
 	${SHELL} -c "$(INSTALL) ${GISBASE}/dev/create_fifos.sh ${INST_DIR}/dev ; true"
 	${SHELL} -c "$(INSTALL) ${GISBASE}/dev/create_ipcs.sh ${INST_DIR}/dev ; true"
-	test ${XDRIVER} != socket && ${SHELL} -c "${SHELL} ${SRCDIR}/src/scripts/shells/create_${XDRIVER}s.sh ${INST_DIR} 2>/dev/null ; true"
+	if [ ${XDRIVER} != socket ] ; then \
+		${SHELL} -c "${SHELL} ${SRCDIR}/src/scripts/shells/create_${XDRIVER}s.sh ${INST_DIR} 2>/dev/null ; true"; \
+	fi
 	${SHELL} -c "sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap ; true"
 	${SHELL} -c "chmod -R 1777 ${INST_DIR}/locks 2>/dev/null ; true"
 
