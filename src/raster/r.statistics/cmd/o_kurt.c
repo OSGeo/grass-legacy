@@ -65,7 +65,7 @@ o_kurt (char *basemap, char *covermap, char *outputmap, int usecats, struct Cate
            {
              mem += MEM * sizeof(double);
              tab = (double *)G_realloc(tab,mem);
-             /* fprintf(stderr,"MALLOC: %d KB needed\n",(int)(mem/1024));/**/
+             /* fprintf(stderr,"MALLOC: %d KB needed\n",(int)(mem/1024)); */
            }
            tab[count++] = x;
         }
