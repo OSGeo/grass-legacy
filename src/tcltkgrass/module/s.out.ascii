@@ -5,4 +5,18 @@ interface_build {
     {entry fs {Output field separator [space]:} 0 ""}
     {checkbox -a {Output all sites (do not limit to current region).} "" -a}
     {checkbox -d {Include site descriptions in the output.} "" -d}
+    {checkbox -i {Include site attribute identifiers in the output.} "" -i}
 }
+
+Usage:
+ s.out.ascii [-adi] sites=name [fs=character|space|tab]
+
+Flags:
+  -a   Output all sites (do not limit to current region)
+  -d   Include site attributes in the output
+  -i   Include site attribute identifiers in the output
+
+Parameters:
+  sites   name of a sites file to be output
+     fs   Output field separator
+          default: space
