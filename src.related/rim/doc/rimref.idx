@@ -94,7 +94,7 @@
 \indexentry{union@\QuoteBold union\QuoteBold }{42}
 \indexentry{missing value}{42}
 \indexentry{intersection@\QuoteBold intersection\QuoteBold }{42}
-\indexentry{subtract@\QuoteBold subtract\QuoteBold }{42}
+\indexentry{subtractj\QuoteBold subtract\QuoteBold }{42}
 \indexentry{join@\QuoteBold join\QuoteBold }{43}
 \indexentry{project@\QuoteBold project\QuoteBold }{43}
 \indexentry{algebra|)}{43}
@@ -129,7 +129,7 @@
 \indexentry{set!report width@\QuoteBold report width\QuoteBold }{46}
 \indexentry{set!report height@\QuoteBold report height\QuoteBold }{47}
 \indexentry{set!trace@\QuoteBold trace\QuoteBold }{47}
-\indexentry{set!parsing@\ArrowIt parsing parameters>}{47}
+\indexentry{set!parsingj\ArrowIt parsing parameters>}{47}
 \indexentry{parsing}{47}
 \indexentry{comments}{47}
 \indexentry{continuation}{48}
