@@ -1,0 +1,4 @@
+
+all:
+	$(GMAKE) cmd
+	$(GMAKE) inter
