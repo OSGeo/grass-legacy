@@ -164,6 +164,21 @@ v.info -c mypoints3D
 v.info mypoints3D
 </pre>
 
+
+<p><BR>
+<b>Example 6</b><br>
+Generate points file by clicking onto the map:
+<pre>
+#For LatLong locations:
+d.where -d -l | awk '{printf "%f|%f|point\n", $1, $2}' | v.in.ascii out=points catcol=0 columns='x double, y double, label varchar(20)'
+
+#For other projections:
+d.where | awk '{printf "%f|%f|point\n", $1, $2}' | v.in.ascii out=points catcol=0 columns='x double, y double, label varchar(20)'
+</pre>
+The 'point' string (or some similar entry) is required to generate a database table.
+When simply piping the coordinates (and optionally height) without additional column(s) 
+into <em>v.in.ascii</em>, only the vector map geometry will be generated.
+
 <P>
 The GRASS program <em><a HREF="v.out.ascii.html">v.out.ascii</a></em>
 performs the function of <em>v.in.ascii</em> in reverse;
