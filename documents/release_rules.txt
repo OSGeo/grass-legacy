@@ -41,8 +41,9 @@ General methodolgy: call for release - pre-testing - bug fixes - publish
    o Once all claimed bugs are fixed, tag this branch as pre release 1
      and start the pretest phase
 
-1. Add disclaimer to all mails:
+1. Add disclaimer to all mails to be send to the pre-testers:
 
+   ------------------
    GRASS 5 beta DISCLAIMER: WARNING
    This pre-release of GRASS 5 is in alpha-quality only. The
    pre-release is intended to find critical bugs which would
@@ -55,9 +56,14 @@ General methodolgy: call for release - pre-testing - bug fixes - publish
 
    Unless the pre-testing phase isn't finished, no official release
    is possible.
+   ------------------
+
+   This displaimer shall lower the expectations and make the users
+   recall that they are using beta software not yet announced to be
+   stable.
 
    List of pre-testers:
-   See pretesters.txt
+   See ./pretesters.txt
    (find more!)
    And send them the pretesting_grass.txt file (improvements?)
 
