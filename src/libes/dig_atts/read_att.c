@@ -34,7 +34,7 @@
  *
  *  read_att_struct (fp ,att)
  *      FILE *fp                 file containing attributes
- *      struct attributes *att  structure to load info into
+ *      struct attribute *att  structure to load info into
  *
  *  read_att (fp, type, x, y, cat, offset)
  *	FILE	*fp ;
@@ -82,7 +82,7 @@ read_area_att (fp, atts_index, att, num)
 read_line_att (fp, atts_index, att, num)
     FILE *fp ;
 	struct atts_index *atts_index ;
-	struct attributes *att ;
+	struct attribute *att ;
     	int num ;
 {
 	if (fseek(fp, atts_index->line_off[num], 0) != 0)
