@@ -1,0 +1,45 @@
+.\" %W% %G%
+.TH Dwhich 2D D-language
+.SH NAME
+Dwhich \- Identify window by screen location
+.br
+.I (D Language Tool)
+.SH SYNOPSIS
+.B Dwhich
+[\fIhorizontal\fR] [\fIvertical\fR]
+.br
+.B Dwhich
+[option\*=\fIvalue\fR] [option\*=\fIvalue\fR]
+.SH DESCRIPTION
+.I Dwhich 
+determines which available graphics window accomodates the given screen
+coordinate.  On exit it prints the graphics window name.
+Options are:
+.ns
+.TP 
+.RI horizontal\*= number
+Where \fInumber\fR is the X, or horizontal screen coordinate.
+.br
+.ns
+.TP 
+.RI vertical\*= number
+Where \fInumber\fR is the Y, or vertical screen coordinate.
+.br
+.PP
+The coordinates are percentage values (within the range of 0-99), with
+the coordinates 0,0 representing the lower left corner of the screen.
+.SH BUGS
+A coordinate location falling inside two or more overlapping windows
+will arbitrarily select the window whose right side is closest to
+that coordinate location.  Care must be taken with overlapping windows,
+as the results will be undefined.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the GRASS \fID\fR tools
+.br
+.sp
+\fIDstatus[2D]\fR	Prints the status of monitor windows
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
