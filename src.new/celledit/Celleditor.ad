@@ -1,0 +1,83 @@
+celleditor*font: 75helvr14
+celleditor*Command*font: 75helvb14
+celleditor*MenuButton.font: 75helvb14
+celleditor*Label*font: 75helvb14
+
+celleditor*quit.background:	black
+celleditor*quit.foreground:	white
+celleditor*quit.label:		Quit
+
+celleditor*load.label:		Load
+celleditor*load.fromHoriz:	quit
+celleditor*load.foreground:	white
+celleditor*load.background:	black
+
+celleditor*editor.width:	400
+celleditor*editor.height:	400
+
+celleditor*Viewport.allowHoriz: TRUE
+celleditor*Viewport.allowVert:  TRUE
+celleditor*Viewport.useBottom:  TRUE
+celleditor*Viewport.useRight:   TRUE
+celleditor*Viewport.fromVert:   quit
+
+celleditor*List*foreground:	white
+celleditor*List*background:	black
+
+celleditor*save.label:		Save
+celleditor*save.fromHoriz:	load
+celleditor*save*Foreground:	white
+celleditor*save*Background:	black
+celleditor*save*value.foreground:	black
+celleditor*save*value.background:	white
+
+celleditor*save*saveShell*save.label:		Save
+celleditor*save.saveShell.saveAs.label:		Save As
+
+
+celleditor*fileName.label:		Filename:
+!celleditor*Dialog*Background:		yellow
+!celleditor*Dialog*Done*background:	green
+!celleditor*Dialog*Done*foreground:	white
+!celleditor*Dialog*value*Background:	navyBlue
+!celleditor*Dialog*value*Foreground:	white
+!celleditor*Dialog*Cancel*background:	red
+!celleditor*Dialog*Cancel*foreground:	black
+
+celleditor*propForm.background:		navyBlue
+celleditor*propForm.resizbale:			true
+celleditor*propForm*Form.background:		yellow
+celleditor*propForm*stateForm.background:		red
+
+celleditor*propForm.brushForm.background:		red
+celleditor*propForm.brushForm.fromVert:		pairsForm
+celleditor*propForm.brushForm.fromHoriz:		stateForm
+celleditor*propForm.brushForm.resizbale:		true
+
+celleditor*propForm*brushName.fromVert: brushTitle
+celleditor*propForm*brushPart.fromVert: brushName
+celleditor*propForm*brushPart.resizable: true
+celleditor*propForm*brushPart.background: navyBlue
+celleditor*propForm*brushPart1.fromVert: brushName
+celleditor*propForm*brushPart1.resizable: true
+celleditor*propForm*brushPart1.background: navyBlue
+
+celleditor*propForm*funcForm.fromHoriz: valForm
+
+celleditor*propForm*brushBtn.label: Load Brush
+celleditor*propForm*brushBtn.fromHoriz: brushName
+celleditor*propForm*brushBtn.fromVert: brushTitle
+celleditor*propForm*brushBtn.menuName: brushBtnShell
+
+celleditor*SmeLine.lineWidth: 2
+
+celleditor*value*translations:  #override \
+				<Key>Return:    DoneProc() \n\
+				Ctrl<Key>m:     DoneProc() \n\
+				Ctrl<Key>J:     DoneProc() \n\
+				Ctrl<Key>O:     DoneProc() \n\
+				Ctrl<Key>N:     DoneProc() \n\
+				Meta<Key>V:     DoneProc()
+
+celleditor*quit*translations:	#override \
+				<Btn1Up>: ExitEditor() reset()
