@@ -8,16 +8,7 @@
 #include "Vect.h"
 #include "gis.h"
 
-#define DEBUG
-
-/*---------------------typedefs*/
-
-typedef struct {
-    double x,y;
-    double z;
-}bubblesite;
-
-
+/* #define DEBUG */
 
 
 /*--------------------functions */
@@ -26,6 +17,6 @@ typedef struct {
 int Date(char *);
 
 /*bubbling.c*/
-int  bubbling (bubblesite *  , int, struct Map_info*,double units );
+int bubbling (SITE_XYZ *, int, struct Map_info*, double );
 
 #endif /*V_BUBBLE_H*/

@@ -41,7 +41,7 @@ int main( int argc, char **argv )
   struct line_pnts *pnts;
   char command[1024];
   struct Flag *flag;
-  bubblesite *bsite;
+  SITE_XYZ *bsite;
   int nsites; /*number of sites*/
   int i1,i2,i3;
   struct Map_info map;
@@ -206,19 +206,33 @@ Please choose a different vector file name.\n",
    }
 
   pnts = Vect_new_line_struct();
-  
- /* the next 10 lines create the bubble plot*/ 
- /* G_readsites (FILE *fdsite, int all, int verbose, int dec_field, site **xyz) */
- 
-   if ((nsites = G_readsites (fd_site,1,1,dec_field, &bsite))==0) {
-       G_fatal_error("No sites found. .");
-   } else {
-       fprintf(stderr, "%i sites found\n",nsites);
-   }
 
+   /* How many Sites max ? */
+   {
+        char site_line[MAX_SITE_LEN];
+        nsites = 0;
+        while(NULL != fgets(&(site_line[0]), MAX_SITE_LEN, fd_site))
+            nsites++;
+        if (!nsites)
+            G_fatal_error("No sites found.");
+        rewind(fd_site);
+    }
+   /* Get the SITES_XYZ */
+   {
+        if (NULL == (bsite = G_alloc_site_xyz(nsites)))
+            G_fatal_error ("Out of Memory!");
+        nsites = G_readsites_xyz(fd_site, SITE_COL_DBL, dec_field, 
+                nsites, NULL, &(bsite[0]));
+        if (nsites <= 0)
+            G_fatal_error ("Unable to read sites list.");
+        else
+            fprintf(stderr, "%d sites found\n", nsites);
+        
+    }
+   
    i1=bubbling(bsite,nsites,&map,radius);
   
-   
+   G_free_site_xyz(bsite);
    
   fclose(fd_site);
   
