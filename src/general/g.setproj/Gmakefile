@@ -3,7 +3,7 @@ OFILES = \
 
 LIBES = $(GISLIB) $(COORCNVLIB) $(MATHLIB) $(XDRLIB)
 
-$(BIN_MAIN_CMD)/g.setproj: $(OFILES) $(GISLIB)
+$(BIN_MAIN_INTER)/g.setproj: $(OFILES) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES)
 
 $(GISLIB): #
