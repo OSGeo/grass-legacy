@@ -4,7 +4,10 @@
 <a href="http://gdal.velocet.ca/projects/opengis/">OGR</a> vectors to GRASS. 
 OGR (Simple Features Library) is part of the 
 <a href="http://www.remotesensing.org/gdal">GDAL</a> library, so you need to
-install gdal to use <em>v.in.ogr</em>. 
+install GDAL to use <em>v.in.ogr</em>. 
+<P>
+If a layer is not given, the available layers are printed and the module
+exits.
 
 <h3>Supported OGR Vector Formats</h3>
 
@@ -17,19 +20,21 @@ Shapefile</a><br>
 For further available drivers go 
 <a href="http://gdal.velocet.ca/projects/opengis/ogrhtml/ogr_formats.html">here</a>
 
-
 <h2>EXAMPLE</h2>
 
+<B>SHAPE files</B><BR>
 <b>v.in.ogr dsn=</b><em>/home/user/shape_data</em>
 <b>layer=</b><em>test_shape</em> <b>output=</b><em>grass_map</em> <br>
+<P>
+<B>MapInfo files</B><BR>
 <b>v.in.ogr dsn=</b><em>./</em> <b>layer=</b><em>mapinfo_test</em> 
 <b>output=</b><em>grass_map</em> 
 
 <h2>SEE ALSO</h2>
 
+<em><a HREF="v.db.connect.html">v.db.connect</a></em>,
+<em><a HREF="v.format.html">v.format</a></em>,
 <em><a HREF="v.out.ogr.html">v.out.ogr</a></em>
-
-
 
 <h2>AUTHOR</h2>
 
