@@ -1,2 +1,6 @@
-all:
-	make
+EXTRA_CFLAGS = -I.
+
+OBJ =   shpopen.o dbfopen.o
+
+libshape.a:	$(OBJ)
+	$(AR)
