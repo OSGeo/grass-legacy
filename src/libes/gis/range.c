@@ -37,6 +37,11 @@
  * G_update_range (cat, range)
  *    CELL cat                    cat to be factored into range
  *    struct Range *range         struct for range info
+ **********************************************************************
+ *
+ * G_get_range_min_max (range, min, max)
+ *    struct Range *range;
+ *    CELL *min, *max;
  **********************************************************************/
 
 #include "gis.h"
@@ -103,7 +108,7 @@ G_read_range (name, mapset, range)
 error:
     if (fd)
 	fclose(fd) ;
-    sprintf (buf, "can't read range file for cell [%s in %s]", name, mapset);
+    sprintf (buf, "can't read range file for [%s in %s]", name, mapset);
     G_warning (buf);
     return -1;
 }
@@ -127,7 +132,7 @@ G_write_range (name, range)
     return 0;
 
 error:
-    sprintf (buf, "can't write range file for cell [%s in %s]",
+    sprintf (buf, "can't write range file for [%s in %s]",
 	name, G_mapset());
     G_warning (buf);
     return -1;
@@ -186,4 +191,12 @@ G_init_range (range)
     range->nmax = 0 ;
     range->pmin = 0 ;
     range->pmax = 0 ;
+}
+
+G_get_range_min_max(range, min, max)
+    struct Range *range;
+    CELL *min, *max;
+{
+    *min = range->nmin ? range->nmin : range->pmin;
+    *max = range->pmax ? range->pmax : range->nmax;
 }
