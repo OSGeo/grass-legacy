@@ -5,6 +5,7 @@
 int 
 command_version (int argc, char *argv[])
 {
+	struct GModule *module;
     struct
     {
 	struct Option *map1, *map2, *units;
@@ -13,6 +14,11 @@ command_version (int argc, char *argv[])
     {
 	struct Flag *w, *q;
     } flag;
+
+	module = G_define_module();
+	module->description =
+			"Tabulates the mutual occurrence (coincidence) "
+			"of categories for two raster map layers.";
 
     parm.map1 = G_define_option();
     parm.map1->key = "map1";

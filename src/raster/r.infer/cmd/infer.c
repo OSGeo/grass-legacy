@@ -22,11 +22,18 @@ int
 main (int argc, char **argv)
 {
 	FILE *fp;
+	struct GModule *module;
 	struct Flag *flag1 ;
 	struct Flag *flag2 ;
 	struct Option *opt1 ;
 
 	SP = NULL ;
+
+	module = G_define_module();
+	module->description =
+		"Outputs a raster map layer whose category values "
+		"represent the application of user-specified criteria "
+		"(rules statements) to other raster map layers' category values.";
 
 	/* Define the different options */
 

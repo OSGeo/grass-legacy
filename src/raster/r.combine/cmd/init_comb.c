@@ -12,6 +12,12 @@ int
 init_comb (int argc, char *argv[])
 {
     struct Flag *s;
+	struct GModule *module;
+
+	module = G_define_module();
+	module->description =
+		"Allows category values from several raster "
+		"map layers to be combined.";
 
     s = G_define_flag();
     s->key = 's';

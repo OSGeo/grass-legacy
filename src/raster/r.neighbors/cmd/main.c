@@ -32,6 +32,7 @@ int main (int argc, char *argv[])
 	struct Colors colr;
 	struct Cell_head cellhd;
 	struct Cell_head window;
+	struct GModule *module;
 	struct
 	    {
 		struct Option *input, *output;
@@ -46,6 +47,13 @@ int main (int argc, char *argv[])
 	DCELL *values;   /* list of neighborhood values */
 
 	G_gisinit (argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Makes each cell category value a "
+		"function of the category values assigned to the cells "
+		"around it, and stores new cell values in an output raster "
+		"map layer.";
 
 	parm.input = G_define_option() ;
 	parm.input->key        = "input" ;

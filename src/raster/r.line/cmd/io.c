@@ -307,7 +307,14 @@ static int at_end(struct COOR *ptr)
 
 int syntax (int argc, char *argv[], char *input, char *output)
 {
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt4 ;
+
+	module = G_define_module();
+	module->description =
+		"Creates a new binary GRASS vector "
+		"(v.digit) file by extracting linear features "
+		"from a thinned raster file.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
