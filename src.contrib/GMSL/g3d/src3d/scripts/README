@@ -1,0 +1,7 @@
+# g3.createwind creates a WIND3 from WIND file
+
+# written by Markus Neteler
+#            neteler@geog.uni-hannover.de
+# 5/2000
+
+Usage: g3.createwind bottom_height  top_height  resolution_of_3Dlayers"
