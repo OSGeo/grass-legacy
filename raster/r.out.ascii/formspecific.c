@@ -153,12 +153,13 @@ int writeGSheader(FILE *fp, char *name, char *mapset)
 	G_get_window (&region);
 	fprintf (fp,"%d %d\n", region.cols, region.rows);
 
-	G_format_easting (region.west+region.ew_res/2., fromc, region.proj);
-	G_format_easting (region.east-region.ew_res/2., toc, region.proj);
+	/* Projection set to -1 to force floating point output */
+	G_format_easting (region.west+region.ew_res/2., fromc, -1);
+	G_format_easting (region.east-region.ew_res/2., toc, -1);
 	fprintf (fp,"%s %s\n", fromc, toc);
 
-	G_format_northing (region.south+region.ns_res/2., fromc, region.proj);
-	G_format_northing (region.north-region.ns_res/2., toc, region.proj);
+	G_format_northing (region.south+region.ns_res/2., fromc, -1);
+	G_format_northing (region.north-region.ns_res/2., toc, -1);
 	fprintf (fp,"%s %s\n", fromc, toc);
 
 	G_get_fp_range_min_max(&range, &Z_MIN, &Z_MAX);
