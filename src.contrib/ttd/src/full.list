@@ -1,0 +1,200 @@
+Product type           :    48
+Data set id            :      TTD PROTOTYPE  
+Edition                : 001
+Compilation date       : 8712
+Maintenance date       : 8712
+FACS version date      : 871231
+ISO version date       : 851215
+
+Security code          : U
+Security release       :   
+Downgrade date         :       
+Security handling      : DOD USE ONLY         
+
+Data type              : GEO
+Horizontal units       : SEC
+Horizontal resolution  : 0.001
+Geodetic datum         : WGE
+Vertical units         :   M
+Vertical resolution    : 1.000
+Vertical ref system    :  MSL
+Sounding datum         :  MLW
+Latitude of origin     : 310000000
+Longitide of origin    : -974460000
+Latitude of SW corner  : 31000000N
+Longitude of SW corner : 097450000W
+Latitude of NE corner  : 31150000N
+Longitude of NE corner : 097300000W
+
+Num edge records       : 28400
+Num node records       : 28404
+Num face records       : 28408
+
+Num feature comp. recs.: 28392
+Num feature records    : 28396
+
+EDGE 892 448:
+  Bounding rectangle:
+     xmin:1121762 ymin:205237 zmin:201
+     xmax:1140614 ymax:232000 zmax:231
+  Positive direction:
+     ID:1524  #-Feature-Components:0
+     left face:217  next DE left:1525 end node:1055
+  Negative direction:
+     ID:1526  #-Feature-Components:0
+     left-face:216  next-DE-rite:1527 start-node:1054
+  Coordinate count:110
+EDGE 892 449:
+  Bounding rectangle:
+     xmin:1123001 ymin:226803 zmin:201
+     xmax:1143998 ymax:241625 zmax:245
+  Positive direction:
+     ID:1525  #-Feature-Components:0
+     left face:217  next DE left:1528 end node:1056
+  Negative direction:
+     ID:1529  #-Feature-Components:0
+     left-face:216  next-DE-rite:1526 start-node:1055
+  Coordinate count:110
+EDGE 882 450:
+  Bounding rectangle:
+     xmin:1117169 ymin:205684 zmin:212
+     xmax:1123001 ymax:227206 zmax:238
+  Positive direction:
+     ID:1528  #-Feature-Components:0
+     left face:217  next DE left:1524 end node:1054
+  Negative direction:
+     ID:1527  #-Feature-Components:0
+     left-face:216  next-DE-rite:1529 start-node:1056
+  Coordinate count:72
+EDGE 882 451:
+  Bounding rectangle:
+     xmin:1203784 ymin:235369 zmin:238
+     xmax:1204719 ymax:237894 zmax:244
+  Positive direction:
+     ID:1530  #-Feature-Components:0
+     left face:442  next DE left:1531 end node:1058
+  Negative direction:
+     ID:1532  #-Feature-Components:0
+     left-face:218  next-DE-rite:1533 start-node:1057
+  Coordinate count:11
+
+  
+     
+NODE 293 1054:
+  Containing-face:0:
+  Coordinate:
+     x:1121762 y:205684 z:223
+  Point-count:0:
+NODE 293 1055:
+  Containing-face:0:
+  Coordinate:
+     x:1140614 y:232000 z:201
+  Point-count:0:
+NODE 293 1056:
+  Containing-face:0:
+  Coordinate:
+     x:1123001 y:226894 z:238
+  Point-count:0:
+NODE 293 1057:
+  Containing-face:0:
+  Coordinate:
+     x:1204719 y:237894 z:244
+  Point-count:0:
+NODE 293 1058:
+  Containing-face:0:
+  Coordinate:
+     x:1203804 y:235369 z:238
+  Point-count:0:
+
+  
+  
+FACE 764 216:
+  Bounding rectangle:
+     xmin:-2000000000 ymin:-2000000000 zmin:2000000000
+     xmax:2000000000 ymax:2000000000 zmax:-2000000000
+  Area-count:0:
+FACE 454 217:
+  Bounding rectangle:
+     xmin:1117169 ymin:205237 zmin:201
+     xmax:1143998 ymax:241625 zmax:245
+  Area-count:1:
+FACE 454 218:
+  Bounding rectangle:
+     xmin:1155447 ymin:233888 zmin:218
+     xmax:1205994 ymax:246865 zmax:247
+  Area-count:1:
+FACE 454 219:
+  Bounding rectangle:
+     xmin:1259358 ymin:100811 zmin:152
+     xmax:1321500 ymax:134914 zmax:210
+  Area-count:1:
+
+  
+     
+FCIN 505 1:
+  Containing-face:0:
+  Bounding rectangle:
+     xmin:429422 ymin:450221 zmin:240
+     xmax:452879 ymax:522636 zmax:257
+  Feture-code   : 1L020
+  Attribute-count:11
+  Relation-count: 2
+FCIN 505 2:
+  Containing-face:0:
+  Bounding rectangle:
+     xmin:516439 ymin:459863 zmin:226
+     xmax:538428 ymax:510829 zmax:239
+  Feture-code   : 1L020
+  Attribute-count:11
+  Relation-count: 2
+FCIN 505 3:
+  Containing-face:0:
+  Bounding rectangle:
+     xmin:418183 ymin:408662 zmin:236
+     xmax:516811 ymax:518300 zmax:269
+  Feture-code   : 1L020
+  Attribute-count:11
+  Relation-count: 2
+FCIN 505 4:
+  Containing-face:0:
+  Bounding rectangle:
+     xmin:447626 ymin:443722 zmin:239
+     xmax:459854 ymax:454487 zmax:246
+  Feture-code   : 1L020
+  Attribute-count:11
+  Relation-count: 2
+
+
+
+FCIN 545 212:
+  Containing-face:0:
+  Bounding rectangle:
+     xmin:1304613 ymin:219290 zmin:192
+     xmax:1337652 ymax:246325 zmax:226
+  Feture-code   : 1L020
+  Attribute-count:11
+  Relation-count: 2
+FCIN 545 213:
+  Containing-face:0:
+  Bounding rectangle:
+     xmin:1117169 ymin:205237 zmin:201
+     xmax:1143998 ymax:241625 zmax:245
+  Feture-code   : 1L020
+  Attribute-count:11
+  Relation-count: 2
+FCIN 545 214:
+  Containing-face:0:
+  Bounding rectangle:
+     xmin:1155447 ymin:233888 zmin:218
+     xmax:1205994 ymax:246865 zmax:247
+  Feture-code   : 1L020
+  Attribute-count:11
+  Relation-count: 2
+FCIN 545 215:
+  Containing-face:0:
+  Bounding rectangle:
+     xmin:1259358 ymin:100811 zmin:152
+     xmax:1321500 ymax:134914 zmax:210
+  Feture-code   : 1L020
+  Attribute-count:11
+  Relation-count: 2
