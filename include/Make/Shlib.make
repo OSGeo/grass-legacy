@@ -3,12 +3,10 @@ include $(MODULE_TOPDIR)/include/Make/Platform.make
 
 SHLIB = $(ARCH_LIBDIR)/$(SHLIB_PREFIX)$(SHLIB_NAME).$(SHLIB_SUFFIX)
 
-#optional i18N support
-ifdef HAVE_NLS
+#for i18N support
 PACKAGE ="grasslibs"
 DEFS=-DPACKAGE=\"$(PACKAGE)\"
 NLS_CFLAGS=$(GETHOSTNAME) $(ZLIBINCPATH) $(PICFLAGS) $(DEFS)
-endif
 
 CFLAGS += $(SHLIB_CFLAGS)
 LDFLAGS += $(SHLIB_LDFLAGS)
