@@ -37,7 +37,6 @@ SUBDIRS = \
 	db \
 	display \
 	general \
-	gui \
 	imagery \
 	ps \
 	raster \
@@ -68,8 +67,7 @@ BIN_DIST_FILES = $(FILES) \
 	include \
 	lib \
 	man \
-	scripts \
-	tcltkgrass
+	scripts
 
 default: builddemolocation
 	@echo "GRASS GIS compilation log"     > $(GRASS_HOME)/error.log
@@ -134,7 +132,6 @@ cleandistdirs:
 	-rm -rf ${ARCH_DISTDIR}/locale/      2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/man/         2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/scripts/     2>/dev/null
-	-rm -rf ${ARCH_DISTDIR}/tcltkgrass/  2>/dev/null
 	-rm -rf ${ARCH_DISTDIR}/demolocation/ 2>/dev/null
 	-rm -f ${ARCH_DISTDIR}/README ${ARCH_DISTDIR}/REQUIREMENTS.html ${ARCH_DISTDIR}/COPYING ${ARCH_DISTDIR}/grass${GRASS_VERSION_MAJOR}${GRASS_VERSION_MINOR}.tmp 2>/dev/null
 	-rmdir ${ARCH_DISTDIR}
@@ -229,7 +226,6 @@ real-install: FORCE
 	-cd ${GISBASE} ; tar cBf - fonts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	-cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
-	-cd ${GISBASE} ; tar cBf - tcltkgrass | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null
 	if [ ${LOCALE} -eq 1 ] ; then cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; fi
 	@ # The man, include, and lib could go to ${PREFIX}/ BUT if this is
 	@ # done, then the corresponding uninstall instructions must delete
