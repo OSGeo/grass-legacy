@@ -10,6 +10,7 @@ int exec_rectify (int order)          /* ADDED WITH CRS MODIFICATIONS */
     char *name;
     char *mapset;
     char *result;
+    char *type;
     int i,n;
     struct Colors colr;
     struct Categories cats;
@@ -60,7 +61,13 @@ int exec_rectify (int order)          /* ADDED WITH CRS MODIFICATIONS */
 	G_suppress_warnings(1);
 	cats_ok = G_read_cats (name, mapset, &cats) >= 0;
 	colr_ok = G_read_colors (name, mapset, &colr) > 0;
+/*
 	hist_ok = G_read_history (name, mapset, &hist) >= 0;
+*/
+	/* Initialze History */
+        type = "raster";
+        G_short_history(name, type, &hist);
+
 	G_suppress_warnings(0);
 
 	time (&start_time);
@@ -79,8 +86,15 @@ int exec_rectify (int order)          /* ADDED WITH CRS MODIFICATIONS */
 		G_write_colors (result, G_mapset(), &colr) ;
 		G_free_colors (&colr);
 	    }
-	    if(hist_ok)
-		G_write_history (result, &hist) ;
+
+                /* Write out History Structure History */
+                sprintf(hist.title, "%s", result);
+                sprintf(hist.datsrc_1, "%s", name);
+                sprintf(hist.edhist[0], "Created from: i.rectify2");
+		sprintf(hist.edhist[1], "Transformation order = %d", order);
+                hist.edlinecnt = 2;
+                G_write_history (result, &hist) ;
+
 	    select_current_env();
 	    time (&rectify_time);
 	    if (compress(result))
