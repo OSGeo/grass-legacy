@@ -1,7 +1,4 @@
-<html>
-<body>
-<pre>
-                                              Tue Jul 25 11:20:54  2000
+$Id$
 
 This directory contains the experimental binary
 version of GRASS under WINDOWS/Cygnus.
