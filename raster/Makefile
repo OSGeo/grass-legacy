@@ -57,6 +57,7 @@ SUBDIRS1 = \
 	r.random.surface \
 	r.reclass \
 	r.recode \
+	r.region \
 	r.report \
 	r.resample \
 	r.rescale \
