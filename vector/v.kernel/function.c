@@ -1,17 +1,31 @@
 #include <math.h>
 #include "gis.h"
+#include "Vect.h"
 #include "global.h"
 
-double gaussian2dBySigma(d,sigma)
-     /*
-       probability for gaussian distribution 
-     */
-     double sigma, d;
+/*
+  probability for gaussian distribution 
+*/
+double gaussian2dBySigma(double d, double sigma)
 {
   double res;
-  res=1/(2.*M_PI*sigma*sigma)*exp(-d*d/(2.*sigma*sigma));
+  res=1./(2.*M_PI*sigma*sigma)*exp(-d*d/(2.*sigma*sigma));
   return(res);
 }
+
+double gaussianFunction(double x, double sigma, double dimension)
+{
+  return((1./(pow(2.*M_PI,dimension/2.)*pow(sigma,dimension)))*exp(-0.5*pow(x/sigma,2.)));
+}
+
+/*
+  probability for gaussian distribution 
+*/
+double gaussianKernel(double x, double term)
+{
+  return(term * exp(-(x*x)/2.));
+}
+
 
 double gaussian2dByTerms(d,term1,term2)
      /*
