@@ -1,4 +1,4 @@
-$Id: TODO,v 1.67 2001-01-28 10:55:25 markus Exp $
+$Id: TODO,v 1.68 2001-02-06 18:15:16 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -187,6 +187,13 @@ Code merge:
  users like now)
 
 ---------------------------------------------------------------------
+Monitor:
+ - Display current map scale in monitor window top line (set by 
+   xwindows name?)
+ - allow to close by click
+ - auto-redraw when resizing
+
+---------------------------------------------------------------------
 Modules:
 
 -IMPORT/EXPORT modules:
@@ -352,6 +359,10 @@ r.proj/v.proj/s.proj:
 - r.water.outlet
   - needs FP update
 
+- r3.mapcalc:
+  add option to read 2D cells. Could be very useful to generate
+  mask etc.
+  
 - v.buffer: write it
   (Being worked on by ?)
 
