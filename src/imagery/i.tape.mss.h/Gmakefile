@@ -6,7 +6,8 @@ LIST = main.o\
 	tape_dir.o\
 	tape_vol.o
 
-$(BIN)/i.tape.mss.h: $(LIST)
-	$(CC) $(LDFLAGS) -o $@ $(LIST)
+$(BIN_MAIN_CMD)/i.tape.mss.h: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
 
 $(LIST) : tape.h
+$(GISLIB): #
