@@ -32,7 +32,7 @@
 #include "scanner.h"
 #include "store.h"
 #include "cpoly.h"
-
+#include <stdio.h>
 
 /* Globals */
 /* Mostly used in the scanner source file */

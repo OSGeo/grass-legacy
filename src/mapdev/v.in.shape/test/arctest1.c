@@ -33,7 +33,7 @@
 #include "shapefil.h"
 #include "shp2dig.h"
 #include "gbtree.h"
-
+#include <stdio.h>
 
 int main( int argc, char **argv ) {
 

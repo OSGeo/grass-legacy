@@ -3,8 +3,9 @@
  */
 
 #include <stdlib.h>
-#include <gis.h>
+#include "gis.h"
 #include <dbmi.h>
+#include <stdio.h>
 
 static int cmp();
 static int srch();

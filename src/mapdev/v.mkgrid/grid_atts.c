@@ -9,6 +9,7 @@
 #include "dig_atts.h"
 #include "grid_structs.h"
 #include "local_proto.h"
+#include <stdio.h>
 
 void set_grid_area_points( double *xlist, double *ylist, struct grid_description *gd1 ) {
   

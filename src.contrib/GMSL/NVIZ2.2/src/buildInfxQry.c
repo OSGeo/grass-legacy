@@ -1,4 +1,5 @@
 #include "gis.h"
+#include <stdio.h>
 
 
 char* buildInfxQry(ktab,keycat,curcat)

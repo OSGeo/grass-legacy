@@ -2,6 +2,7 @@
 #include "odbc.h"
 #include "globals.h"
 #include "proto.h"
+#include <stdio.h>
 
 db_driver_execute_immediate (sql)
     dbString *sql;

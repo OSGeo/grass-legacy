@@ -3,6 +3,7 @@
 #include "gis.h"
 #include "infx.h"
 #include <libpq-fe.h>
+#include <stdio.h>
 
 char* runInfxQry(SQL_stmt)
 	char *SQL_stmt;

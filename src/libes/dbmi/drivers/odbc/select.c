@@ -2,6 +2,7 @@
 #include "odbc.h"
 #include "globals.h"
 #include "proto.h"
+#include <stdio.h>
 
 int
 db_driver_open_select_cursor(sel, dbc, mode)

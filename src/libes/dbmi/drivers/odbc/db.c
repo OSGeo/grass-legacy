@@ -1,8 +1,9 @@
-#include <gis.h>
+#include "gis.h"
 #include <dbmi.h>
 #include "odbc.h"
 #include "globals.h"
 #include "proto.h" 
+#include <stdio.h>
 
 db_driver_open_database (handle)
     dbHandle *handle;
