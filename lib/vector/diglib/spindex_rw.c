@@ -23,13 +23,13 @@
 
 
 int 
-dig_Wr_spindx_head ( FILE * fp,
+dig_Wr_spindx_head ( GVFILE * fp,
 		     struct Plus_head *ptr)
 {
   unsigned char buf[5];
   long length = 42;
     
-  rewind (fp);
+  dig_rewind (fp);
   dig_set_cur_port (&(ptr->spidx_port));
 
   /* bytes 1 - 5 */
@@ -62,21 +62,21 @@ dig_Wr_spindx_head ( FILE * fp,
   /* bytes 39 - 42 : Offsets */
   if (0 >= dig__fwrite_port_L (&(ptr->coor_size), 1, fp)) return (-1);
 
-  G_debug (2, "spidx body offset %d", ftell( fp) );
+  G_debug (2, "spidx body offset %d", dig_ftell( fp) );
 
   return (0);
 }
 
 
 int 
-dig_Rd_spindx_head (   FILE * fp,
+dig_Rd_spindx_head (   GVFILE * fp,
 		     struct Plus_head *ptr)
 {
   unsigned char buf[5];
   int byte_order;
   long coor_size;
 
-  rewind (fp);
+  dig_rewind (fp);
   
   /* bytes 1 - 5 */
   if (0 >= dig__fread_port_C (buf, 5, fp))  return (-1);
@@ -131,7 +131,7 @@ dig_Rd_spindx_head (   FILE * fp,
   if (0 >= dig__fread_port_L (&coor_size, 1, fp)) return (-1);
   G_debug (2, "  coor size %d", coor_size );
 
-  fseek ( fp, ptr->spidx_head_size, SEEK_SET );
+  dig_fseek ( fp, ptr->spidx_head_size, SEEK_SET );
 
   return (0);
 }
@@ -176,10 +176,10 @@ int rtree_dump_node( FILE *fp, struct Node *n, int with_z)
     return 0;
 }
 
-int rtree_write_node( FILE *fp, struct Node *n, int with_z);
+int rtree_write_node( GVFILE *fp, struct Node *n, int with_z);
 
 /* Write RTree branch to file */
-int rtree_write_branch( FILE *fp, struct Branch *b, int with_z, int level)
+int rtree_write_branch( GVFILE *fp, struct Branch *b, int with_z, int level)
 {
     struct Rect *r;
     int i;
@@ -203,7 +203,7 @@ int rtree_write_branch( FILE *fp, struct Branch *b, int with_z, int level)
 }
 
 /* Write RTree node to file */
-int rtree_write_node( FILE *fp, struct Node *n, int with_z)
+int rtree_write_node( GVFILE *fp, struct Node *n, int with_z)
 {
     int i, nn;
 
@@ -223,10 +223,10 @@ int rtree_write_node( FILE *fp, struct Node *n, int with_z)
     return 0;
 }
 
-int rtree_read_node( FILE *fp, struct Node *n, int with_z);
+int rtree_read_node( GVFILE *fp, struct Node *n, int with_z);
 
 /* Read RTree branch from file */
-int rtree_read_branch( FILE *fp, struct Branch *b, int with_z, int level)
+int rtree_read_branch( GVFILE *fp, struct Branch *b, int with_z, int level)
 {
     struct Rect *r;
     int i;
@@ -257,7 +257,7 @@ int rtree_read_branch( FILE *fp, struct Branch *b, int with_z, int level)
 }
 
 /* Read RTree node to file */
-int rtree_read_node( FILE *fp, struct Node *n, int with_z)
+int rtree_read_node( GVFILE *fp, struct Node *n, int with_z)
 {
     int level, count, i;
 
@@ -280,26 +280,26 @@ int rtree_read_node( FILE *fp, struct Node *n, int with_z)
 
 /* Write spatial index */
 int
-dig_write_spidx ( FILE * fp, struct Plus_head *Plus)
+dig_write_spidx ( GVFILE * fp, struct Plus_head *Plus)
 {
     dig_set_cur_port(&(Plus->spidx_port));
-    rewind (fp);
+    dig_rewind (fp);
 
     dig_Wr_spindx_head ( fp, Plus );
      
-    Plus->Node_spidx_offset = ftell ( fp );
+    Plus->Node_spidx_offset = dig_ftell ( fp );
     rtree_write_node( fp, Plus->Node_spidx, Plus->with_z);
 	 
-    Plus->Line_spidx_offset = ftell ( fp );
+    Plus->Line_spidx_offset = dig_ftell ( fp );
     rtree_write_node( fp, Plus->Line_spidx, Plus->with_z);
 
-    Plus->Area_spidx_offset = ftell ( fp );
+    Plus->Area_spidx_offset = dig_ftell ( fp );
     rtree_write_node( fp, Plus->Area_spidx, Plus->with_z);
 
-    Plus->Isle_spidx_offset = ftell ( fp );
+    Plus->Isle_spidx_offset = dig_ftell ( fp );
     rtree_write_node( fp, Plus->Isle_spidx, Plus->with_z);
 
-    rewind (fp);
+    dig_rewind (fp);
     dig_Wr_spindx_head ( fp, Plus ); /* rewrite with offsets */
 
     return 0; 
@@ -307,27 +307,27 @@ dig_write_spidx ( FILE * fp, struct Plus_head *Plus)
 
 /* Read spatial index file */
 int
-dig_read_spidx ( FILE * fp, struct Plus_head *Plus)
+dig_read_spidx ( GVFILE * fp, struct Plus_head *Plus)
 {
     G_debug (1, "dig_read_spindx()");
 
     /* TODO: free old tree */
     dig_spidx_init ( Plus);
 
-    rewind (fp);
+    dig_rewind (fp);
     dig_Rd_spindx_head ( fp, Plus);
     dig_set_cur_port(&(Plus->spidx_port));
     
-    fseek ( fp, Plus->Node_spidx_offset, 0);
+    dig_fseek ( fp, Plus->Node_spidx_offset, 0);
     rtree_read_node( fp, Plus->Node_spidx, Plus->with_z);
 	 
-    fseek ( fp, Plus->Line_spidx_offset, 0);
+    dig_fseek ( fp, Plus->Line_spidx_offset, 0);
     rtree_read_node( fp, Plus->Line_spidx, Plus->with_z);
 	 
-    fseek ( fp, Plus->Area_spidx_offset, 0);
+    dig_fseek ( fp, Plus->Area_spidx_offset, 0);
     rtree_read_node( fp, Plus->Area_spidx, Plus->with_z);
 	 
-    fseek ( fp, Plus->Isle_spidx_offset, 0);
+    dig_fseek ( fp, Plus->Isle_spidx_offset, 0);
     rtree_read_node( fp, Plus->Isle_spidx, Plus->with_z);
 	 
     return 0; 

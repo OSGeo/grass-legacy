@@ -80,7 +80,7 @@ V1_read_next_line_nat (
 
   while (1)
     {
-      offset = ftell (Map->dig_fp);
+      offset = dig_ftell ( &(Map->dig_fp) );
       itype = Vect__Read_line_nat (Map, line_p, line_c, offset);
       if (itype < 0)
 	return (itype);
@@ -218,9 +218,9 @@ Vect__Read_line_nat (
   /* reads must set in_head, but writes use default */
   dig_set_cur_port (&(Map->head.port));
 
-  fseek (Map->dig_fp, offset, 0);
+  dig_fseek ( &(Map->dig_fp), offset, 0);
 
-  if (0 >= dig__fread_port_C (&rhead, 1, Map->dig_fp))
+  if (0 >= dig__fread_port_C (&rhead, 1, &(Map->dig_fp) ))
       return (-2);
 
   if ( !(rhead & 0x01) ) /* dead line */
@@ -240,8 +240,7 @@ Vect__Read_line_nat (
       c->n_cats = 0;
   
   if ( do_cats ) { 
-      if (0 >= dig__fread_port_C (&nc, 1, Map->dig_fp))
-	  return (-2);
+      if (0 >= dig__fread_port_C (&nc, 1, &(Map->dig_fp) )) return (-2);
 
       n_cats = (int) nc;
       if ( c != NULL )
@@ -253,27 +252,24 @@ Vect__Read_line_nat (
 	      return (-1);
             
 	    for (i = 0; i < n_cats; i++) { 
-		if (0 >= dig__fread_port_S (&field, 1, Map->dig_fp))
-		    return (-2);
+		if (0 >= dig__fread_port_S (&field, 1, &(Map->dig_fp) )) return (-2);
                 c->field[i] = (int) field; 
 	    }
-	    if (0 >= dig__fread_port_I (c->cat, n_cats, Map->dig_fp))
-		return (-2);
+	    if (0 >= dig__fread_port_I (c->cat, n_cats, &(Map->dig_fp) )) return (-2);
 	    
 	  }
 	}
       else
 	{
 	  size = ( PORT_SHORT + PORT_INT ) * n_cats;
-	  fseek (Map->dig_fp, size, SEEK_CUR);
+	  dig_fseek ( &(Map->dig_fp), size, SEEK_CUR);
 	}
   }
   
   if ( type & GV_POINTS ) {
       n_points = 1;
   } else {
-      if (0 >= dig__fread_port_I (&n_points, 1, Map->dig_fp))
-	  return (-2);
+      if (0 >= dig__fread_port_I (&n_points, 1, &(Map->dig_fp) )) return (-2);
   }
 
 #ifdef GDEBUG
@@ -285,14 +281,11 @@ Vect__Read_line_nat (
 	  return (-1);
 
       p->n_points = n_points;
-      if (0 >= dig__fread_port_D (p->x, n_points, Map->dig_fp))
-	  return (-2);
-      if (0 >= dig__fread_port_D (p->y, n_points, Map->dig_fp))
-	  return (-2);
+      if (0 >= dig__fread_port_D (p->x, n_points, &(Map->dig_fp) )) return (-2);
+      if (0 >= dig__fread_port_D (p->y, n_points, &(Map->dig_fp) )) return (-2);
 
       if (Map->head.with_z) {
-	  if (0 >= dig__fread_port_D (p->z, n_points, Map->dig_fp))
-	      return (-2);
+	  if (0 >= dig__fread_port_D (p->z, n_points, &(Map->dig_fp) )) return (-2);
       } else {
 	  for ( i = 0; i <  n_points; i++ )
 	      p->z[i] = 0.0;
@@ -303,10 +296,10 @@ Vect__Read_line_nat (
       else 
 	  size = n_points * 2 * PORT_DOUBLE;
       
-      fseek (Map->dig_fp, size, SEEK_CUR);
+      dig_fseek ( &(Map->dig_fp), size, SEEK_CUR);
   }
   
-  G_debug (3, "    off = %ld", ftell(Map->dig_fp) );
+  G_debug (3, "    off = %ld", dig_ftell( &(Map->dig_fp) ));
   
   if ( dead ) return 0;
   
@@ -322,7 +315,7 @@ Vect__Read_line_nat (
 long 
 Vect_next_line_offset_nat ( struct Map_info *Map )
 {
-  return ftell (Map->dig_fp);
+  return dig_ftell ( &(Map->dig_fp) );
 }
 
 /*!

@@ -36,8 +36,8 @@ V1_write_line_nat (  struct Map_info *Map,
 {
   long offset;
 
-  fseek (Map->dig_fp, 0L, SEEK_END);	/*  end of file */
-  offset = ftell (Map->dig_fp);
+  dig_fseek ( &(Map->dig_fp), 0L, SEEK_END);	/*  end of file */
+  offset = dig_ftell ( &(Map->dig_fp) );
 
   return V1__rewrite_line_nat (Map, offset, type, points, cats);
 }
@@ -245,8 +245,8 @@ V1_rewrite_line_nat (  struct Map_info *Map,
       V1_delete_line_nat ( Map, offset);
       
       /* write new */
-      fseek (Map->dig_fp, 0L, SEEK_END);	/*  end of file */
-      new_offset = ftell (Map->dig_fp);
+      dig_fseek ( &(Map->dig_fp), 0L, SEEK_END);	/*  end of file */
+      new_offset = dig_ftell ( &(Map->dig_fp) );
 
       return V1__rewrite_line_nat (Map, new_offset, type, points, cats);
   }
@@ -291,11 +291,11 @@ V1__rewrite_line_nat (
   int  i, n_points;
   char rhead, nc;
   short field;
-  FILE *dig_fp;
+  GVFILE *dig_fp;
   
   dig_set_cur_port (&(Map->head.port));
-  dig_fp = Map->dig_fp;
-  fseek (dig_fp, offset, 0);
+  dig_fp = &(Map->dig_fp);
+  dig_fseek ( dig_fp, offset, 0);
 
   /* first byte:   0 bit: 1 - alive, 0 - dead
   *                1 bit: 1 - categories, 0 - no category
@@ -347,7 +347,7 @@ V1__rewrite_line_nat (
           return -1;
   }
   
-  fflush (dig_fp);
+  dig_fflush (dig_fp);
 
   return offset;
 }
@@ -363,13 +363,13 @@ V1_delete_line_nat (
 		       long   offset )
 {
   char rhead;
-  FILE *dig_fp;
+  GVFILE *dig_fp;
   
   G_debug ( 3, "V1_delete_line_nat(), offset = %ld", offset );
   
   dig_set_cur_port (&(Map->head.port));
-  dig_fp = Map->dig_fp;
-  fseek (dig_fp, offset, 0);
+  dig_fp = &(Map->dig_fp);
+  dig_fseek ( dig_fp, offset, 0);
 
   /* read old */
   if (0 >= dig__fread_port_C (&rhead, 1, dig_fp))
@@ -377,7 +377,7 @@ V1_delete_line_nat (
   
   rhead &= 0xFE; 
   
-  fseek (dig_fp, offset, 0);
+  dig_fseek (dig_fp, offset, 0);
   if (0 >= dig__fwrite_port_C (&rhead, 1, dig_fp))
     return -1;
 

@@ -34,7 +34,7 @@ main (int argc, char **argv)
   int   err = 0;
   int   byte_order;
   struct Port_info port;
-  FILE  *fp;
+  GVFILE  fp;
   
   double db, td[] = { -(PORT_DOUBLE_MAX), -(D_TEST), -(PORT_DOUBLE_MIN),
 	             0, PORT_DOUBLE_MIN,    D_TEST,   PORT_DOUBLE_MAX }; 
@@ -46,11 +46,12 @@ main (int argc, char **argv)
   char  cb, tc[]  = {   PORT_CHAR_MIN,  -(C_TEST), 0, C_TEST, PORT_CHAR_MAX  };
 		    
 
-    if (NULL == (fp = fopen ("test.tmp", "wb+")))
+    if (NULL == (fp.file = fopen ("test.tmp", "wb+")))
       { 
         fprintf (stderr, "ERROR, cannot open test.tmp file.\n");
         return (1);
       }  
+    fp.loaded = 0;
 
     dig_set_cur_port (&port);
       
@@ -60,11 +61,11 @@ main (int argc, char **argv)
         dig_init_portable ( &(port), byte_order );
         for (j=0; j < 7; j++)
           {
-	    fprintf (fp, "double  ");	  
-            dig__fwrite_port_D ( &(td[j]), 1, fp);
-            fseek (fp, -(PORT_DOUBLE), SEEK_CUR);
-	    dig__fread_port_D (&db, 1, fp);
-	    fflush(fp);
+	    fprintf (fp.file, "double  ");	  
+            dig__fwrite_port_D ( &(td[j]), 1, &fp);
+            dig_fseek (&fp, -(PORT_DOUBLE), SEEK_CUR);
+	    dig__fread_port_D (&db, 1, &fp);
+	    dig_fflush(&fp);
 	    if ( db != td[j] )
 	      {
                 fprintf (stderr, "ERROR in read/write portable double\n");
@@ -74,11 +75,11 @@ main (int argc, char **argv)
 	  }    
         for (j=0; j < 7; j++)
           {
-	    fprintf (fp, "float       ");	  
-	    dig__fwrite_port_F ( &(tf[j]), 1, fp);
-            fseek (fp, -(PORT_FLOAT), SEEK_CUR);
-	    dig__fread_port_F (&fb, 1, fp);
-	    fflush(fp);
+	    fprintf (fp.file, "float       ");	  
+	    dig__fwrite_port_F ( &(tf[j]), 1, &fp);
+            dig_fseek (&fp, -(PORT_FLOAT), SEEK_CUR);
+	    dig__fread_port_F (&fb, 1, &fp);
+	    dig_fflush(&fp);
 	    if ( fb != tf[j] )
 	      {
                 fprintf (stderr, "ERROR in read/write portable float\n");
@@ -89,11 +90,11 @@ main (int argc, char **argv)
 
         for (j=0; j < 5; j++)
           {
-	    fprintf (fp, "long        ");	  
-            dig__fwrite_port_L ( &(tl[j]), 1, fp);
-            fseek (fp, -(PORT_LONG), SEEK_CUR);
-	    dig__fread_port_L (&lb, 1, fp);
-	    fflush(fp);
+	    fprintf (fp.file, "long        ");	  
+            dig__fwrite_port_L ( &(tl[j]), 1, &fp);
+            dig_fseek (&fp, -(PORT_LONG), SEEK_CUR);
+	    dig__fread_port_L (&lb, 1, &fp);
+	    dig_fflush(&fp);
 	    if ( lb != tl[j] )
 	      {
                 fprintf (stderr, "ERROR in read/write portable long\n");
@@ -104,11 +105,11 @@ main (int argc, char **argv)
 	    
         for (j=0; j < 5; j++)
           {
-	    fprintf (fp, "int         ");	  
-            dig__fwrite_port_I ( &(ti[j]), 1, fp);
-            fseek (fp, -(PORT_INT), SEEK_CUR);
-	    dig__fread_port_I (&ib, 1, fp);
-	    fflush(fp);
+	    fprintf (fp.file, "int         ");	  
+            dig__fwrite_port_I ( &(ti[j]), 1, &fp);
+            dig_fseek (&fp, -(PORT_INT), SEEK_CUR);
+	    dig__fread_port_I (&ib, 1, &fp);
+	    dig_fflush(&fp);
 	    if ( ib != ti[j] )
 	      {
                 fprintf (stderr, "ERROR in read/write portable int\n");
@@ -119,11 +120,11 @@ main (int argc, char **argv)
 	    
         for (j=0; j < 5; j++)
           {
-	    fprintf (fp, "short         ");	  
-            dig__fwrite_port_S ( &(ts[j]), 1, fp);
-            fseek (fp, -(PORT_SHORT), SEEK_CUR);
-	    dig__fread_port_S (&sb, 1, fp);
-	    fflush(fp);
+	    fprintf (fp.file, "short         ");	  
+            dig__fwrite_port_S ( &(ts[j]), 1, &fp);
+            dig_fseek (&fp, -(PORT_SHORT), SEEK_CUR);
+	    dig__fread_port_S (&sb, 1, &fp);
+	    dig_fflush(&fp);
 	    if ( sb != ts[j] )
 	      {
                 fprintf (stderr, "ERROR in read/write portable short\n");
@@ -133,11 +134,11 @@ main (int argc, char **argv)
           }
         for (j=0; j < 5; j++)
           {
-	    fprintf (fp, "char           ");	  
-            dig__fwrite_port_C ( &(tc[j]), 1, fp);
-            fseek (fp, -(PORT_CHAR), SEEK_CUR);
-	    dig__fread_port_C (&cb, 1, fp);
-	    fflush(fp);
+	    fprintf (fp.file, "char           ");	  
+            dig__fwrite_port_C ( &(tc[j]), 1, &fp);
+            dig_fseek (&fp, -(PORT_CHAR), SEEK_CUR);
+	    dig__fread_port_C (&cb, 1, &fp);
+	    dig_fflush(&fp);
 	    if ( cb != tc[j] )
 	      {
                 fprintf (stderr, "ERROR in read/write portable char\n");
@@ -150,7 +151,7 @@ main (int argc, char **argv)
         byte_order = ENDIAN_BIG;
       }	  
 
-  fclose ( fp );
+  fclose ( fp.file );
       
   return ( err );
 }

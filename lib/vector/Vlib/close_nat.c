@@ -51,7 +51,8 @@ V1_close_nat (struct Map_info *Map)
   Map->digit_file = NULL;
   Map->open = VECT_CLOSED_CODE;
 
-  return fclose (Map->dig_fp);
+  dig_file_free ( &(Map->dig_fp) );
+  return fclose (Map->dig_fp.file);
 }
 
 /* 
@@ -77,7 +78,8 @@ V2_close_nat (struct Map_info *Map)
  }
 
   /* close coor file */
-  fclose (Map->dig_fp);
+  fclose (Map->dig_fp.file);
+  dig_file_free ( &(Map->dig_fp) );
 
   /* Save topo if necessary */
   if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW)) {

@@ -284,8 +284,7 @@ Vect_open_new (
 		int with_z)
 {
     int format, ret, ferror;
-    char buf[200], *frmt;
-    FILE *fp;
+    char *frmt;
 
     G_debug ( 2, "Vect_open_new(): name = %s", name);
     
@@ -469,7 +468,7 @@ Vect_open_topo (struct Map_info *Map)
 {
     int  err;
     char buf[500];
-    FILE *fp;
+    GVFILE fp;
     struct Coor_info CInfo;
     struct Plus_head *Plus;
     
@@ -477,11 +476,12 @@ Vect_open_topo (struct Map_info *Map)
 
     Plus = &(Map->plus);
     
-    
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
-    fp = G_fopen_old (buf, GV_TOPO_ELEMENT, Map->mapset);
 
-    if ( fp == NULL ) { /* topo file is not available */
+    dig_file_init ( &fp );
+    fp.file = G_fopen_old (buf, GV_TOPO_ELEMENT, Map->mapset);
+
+    if ( fp.file == NULL ) { /* topo file is not available */
 	G_debug( 1, "Cannot open topo file for vector '%s@%s'.", 
 		      Map->name, Map->mapset);
 	return -1;
@@ -491,7 +491,7 @@ Vect_open_topo (struct Map_info *Map)
     Vect_coor_info ( Map, &CInfo); 
 
     /* load head */
-    dig_Rd_Plus_head (fp, Plus);
+    dig_Rd_Plus_head (&fp, Plus);
     G_debug ( 1, "Topo head: coor size = %ld, coor mtime = %ld", 
 	                              Plus->coor_size, Plus->coor_mtime);
 
@@ -514,11 +514,15 @@ Vect_open_topo (struct Map_info *Map)
 	return -1;
     }
     
+    /* load file to the memory */
+    /* dig_file_load ( &fp); */
+
     /* load topo to memory */
     dig_init_plus ( Plus );    
-    dig_load_plus ( Plus, fp );    
+    dig_load_plus ( Plus, &fp );    
    
-    fclose ( fp );  
+    fclose ( fp.file );  
+    /* dig_file_free ( &fp); */
 
     return 0;
 }
@@ -533,7 +537,7 @@ int
 Vect_open_spatial_index (struct Map_info *Map)
 {
     char buf[500];
-    FILE *fp;
+    GVFILE fp;
     /* struct Coor_info CInfo; */
     struct Plus_head *Plus;
     
@@ -542,9 +546,10 @@ Vect_open_spatial_index (struct Map_info *Map)
     Plus = &(Map->plus);
     
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
-    fp = G_fopen_old (buf, GV_SIDX_ELEMENT, Map->mapset);
+    dig_file_init ( &fp );
+    fp.file = G_fopen_old (buf, GV_SIDX_ELEMENT, Map->mapset);
 
-    if ( fp == NULL ) { /* spatial index file is not available */
+    if ( fp.file == NULL ) { /* spatial index file is not available */
 	G_debug( 1, "Cannot open spatial index file for vector '%s@%s'.", 
 		      Map->name, Map->mapset);
 	return -1;
@@ -580,11 +585,16 @@ Vect_open_spatial_index (struct Map_info *Map)
 	return -1;
     }
     */
+    
+    /* load file to the memory */
+    /* dig_file_load ( &fp); */
+    
     /* load topo to memory */
     dig_spidx_init ( Plus);
-    dig_read_spidx ( fp, Plus );    
+    dig_read_spidx ( &fp, Plus );    
    
-    fclose ( fp );  
+    fclose ( fp.file );  
+    /* dig_file_free ( &fp); */
 
     return 0;
 }

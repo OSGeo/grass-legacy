@@ -30,7 +30,7 @@ dig__write_head ( struct Map_info *Map )
     G_debug ( 1, "dig__write_head()");
     
     dig_set_cur_port (&(Map->head.port));
-    fseek (Map->dig_fp, 0L, 0);
+    dig_fseek ( &(Map->dig_fp), 0L, 0);
     
     /* bytes 1 - 5 */
     buf[0] = GV_COOR_VER_MAJOR;
@@ -38,20 +38,20 @@ dig__write_head ( struct Map_info *Map )
     buf[2] = GV_COOR_EARLIEST_MAJOR;
     buf[3] = GV_COOR_EARLIEST_MINOR;
     buf[4] = Map->head.port.byte_order;
-    if (0 >= dig__fwrite_port_C ( buf, 5, Map->dig_fp)) return (0);
+    if (0 >= dig__fwrite_port_C ( buf, 5, &(Map->dig_fp) )) return (0);
     
     /* bytes 6 - 9 : header size */
-    if (0 >= dig__fwrite_port_L ( &length, 1, Map->dig_fp)) return (0);
+    if (0 >= dig__fwrite_port_L ( &length, 1, &(Map->dig_fp) )) return (0);
     
     /* byte 10 : dimension 2D or 3D */
     buf[0] = Map->head.with_z;           
-    if (0 >= dig__fwrite_port_C ( buf, 1, Map->dig_fp)) return (0);
+    if (0 >= dig__fwrite_port_C ( buf, 1, &(Map->dig_fp) )) return (0);
     
     /* bytes 11 - 14 : size of coordinate file */
     G_debug ( 1, "write coor size (%ld) to head", Map->head.size);
-    if (0 >= dig__fwrite_port_L ( &(Map->head.size), 1, Map->dig_fp)) return (0);
+    if (0 >= dig__fwrite_port_L ( &(Map->head.size), 1, &(Map->dig_fp) )) return (0);
 
-    G_debug (2, "coor body offset %d", ftell( Map->dig_fp) );
+    G_debug (2, "coor body offset %d", dig_ftell( &(Map->dig_fp) ));
     return (1);    
 }
 
@@ -62,10 +62,10 @@ dig__read_head ( struct Map_info *Map )
     unsigned char buf[10];
     struct Port_info port;
 
-    fseek (Map->dig_fp, 0L, 0);
+    dig_fseek ( &(Map->dig_fp), 0L, 0);
    
     /* bytes 1 - 5 */
-    if (0 >= dig__fread_port_C ( buf, 5, Map->dig_fp)) return (0);
+    if (0 >= dig__fread_port_C ( buf, 5, &(Map->dig_fp) )) return (0);
     Map->head.Version_Major = buf[0];
     Map->head.Version_Minor = buf[1];
     Map->head.Back_Major    = buf[2];
@@ -95,21 +95,21 @@ dig__read_head ( struct Map_info *Map )
     dig_set_cur_port (&port);
 
     /* bytes 6 - 9 : header size */
-    if (0 >= dig__fread_port_L ( &(Map->head.head_size), 1, Map->dig_fp)) return (0);
+    if (0 >= dig__fread_port_L ( &(Map->head.head_size), 1, &(Map->dig_fp) )) return (0);
     G_debug (2, "  header size %d", Map->head.head_size );
 
     /* byte 10 : dimension 2D or 3D */
-    if (0 >= dig__fread_port_C ( buf, 1, Map->dig_fp)) return (0);
+    if (0 >= dig__fread_port_C ( buf, 1, &(Map->dig_fp) )) return (0);
     Map->head.with_z  = buf[0];
     G_debug (2, "  with_z %d", Map->head.with_z );
 
     /* bytes 11 - 14 : size of coordinate file */
-    if (0 >= dig__fread_port_L ( &(Map->head.size), 1, Map->dig_fp)) return (0);
+    if (0 >= dig__fread_port_L ( &(Map->head.size), 1, &(Map->dig_fp) )) return (0);
     G_debug (2, "  coor size %d", Map->head.size );
     
     /* Go to end of header, file may be written by new version of GRASS with longer header */
 
-    fseek ( Map->dig_fp, Map->head.head_size, SEEK_SET );
+    dig_fseek ( &(Map->dig_fp), Map->head.head_size, SEEK_SET );
     
     return (1);
 }

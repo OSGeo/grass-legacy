@@ -55,6 +55,16 @@ struct bound_box        /* Bounding Box */
     double B;   /* bottom */
   };
 
+typedef struct {
+    FILE *file;
+    char *start;   /* pointer to beginnig of the file in the memory */
+    char *current; /* current position set by dig_seek */
+    char *end;     /* end of file in the memory (pointer to first byte after) */
+    long size;     /* size of the file loaded to memory */
+    long alloc;    /* allocated space */
+    int  loaded;   /* 0 - not loaded, 1 - loaded */
+} GVFILE;
+
 /* category field information */
 struct field_info
   {
@@ -333,7 +343,7 @@ struct Map_info
 
     /* format specific */
     /* native */
-    FILE   *dig_fp;		/* Dig file pointer */
+    GVFILE dig_fp;		/* Dig file pointer */
     char   *digit_file;		/* digit file */
     struct dig_head head;	/* coor file head */
     
