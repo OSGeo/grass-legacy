@@ -1,3 +1,7 @@
+/* Added flag to write a TIFF World file like r.out.arctiff
+ * Eric G. Miller 4-Nov-2000
+ */
+
 /* removed LZW support 5/5000 */
 
 /* Corrected G_set_window to G_get_window to make r.out.tiff sensitive
@@ -32,6 +36,8 @@ u_short	compression = -1;
 u_short	rowsperstrip = 0;
 int DEBUG = 0;
 
+int write_tfw(char *, struct Cell_head *, int);
+
 int 
 main (int argc, char *argv[])
 {
@@ -41,7 +47,7 @@ main (int argc, char *argv[])
 	int in;
 	struct rasterfile h;
 	struct Option *inopt, *outopt;
-	struct Flag *pflag, *vflag;
+	struct Flag *pflag, *vflag, *tflag;
 	CELL *cell, *cellptr;
 	struct Cell_head cellhd;
 	int col,verbose;
@@ -68,6 +74,10 @@ main (int argc, char *argv[])
 	pflag = G_define_flag();
 	pflag->key		= 'p';
 	pflag->description	= "TIFF Pallete output (8bit instead of 24bit).";
+
+	tflag = G_define_flag();
+	tflag->key		= 't';
+	tflag->description      = "Output TIFF world file";
 
 	vflag = G_define_flag();
 	vflag->key		= 'v';
@@ -198,6 +208,64 @@ main (int argc, char *argv[])
 		G_percent (row, h.ras_height, 2);
 
 	(void) TIFFClose(out);
+	
+	if (tflag->answer)
+		write_tfw(outopt->answer, &cellhd, verbose);
+	
+	return 0;
+}
+
+int
+write_tfw(char *fname, struct Cell_head *win, int verbose) {
+	
+	int  len, i, has_suf = 0;
+	char *name, *ptr, suf[4][4] = {"tif", "tiff", "TIFF", "TIF"};
+	FILE *outfile;
+	
+	if (verbose)
+		fprintf(stderr, "Writing TIFF World file ...     ");
+
+	if (fname == NULL)
+		G_fatal_error("Got null file name");
+	if (win == NULL)
+		G_fatal_error("Got null region struct");
+	
+	len = strlen(fname) + 4 + 1;
+	name = G_malloc(len);
+	if (name == NULL)
+		G_fatal_error("Out of Memory");
+	
+	strncpy(name, fname, len-4);
+	
+	for (i = 0; i < 4; i++)
+		if ((ptr = strstr(name, suf[i])) != NULL) {
+			if (*(ptr-1) == '.') {
+				has_suf = 1;
+				break;
+			}
+		}
+
+	if (has_suf) {
+		strncpy(ptr,"tfw\0", 4);
+	}	
+	else {
+		ptr = strchr(name, '\0');
+		strncpy(ptr,".tfw", 4);
+	}
+
+	outfile = fopen(name, "w");
+	if (outfile == NULL)
+		G_fatal_error("Couldn't open TIFF world file for writing");
+	
+	fprintf (outfile, "%.8f\n%.8f\n%.8f\n%.8f\n%.8f\n%.8f\n",
+			win->ew_res, 0.0, 0.0, -1 * win->ns_res,
+			win->west + win->ew_res / 2.0, 
+			win->north - win->ns_res / 2.0);
+
+	fclose(outfile);
+	if (verbose)
+		fprintf(stderr,"Done\n");
+	free(name);
 
 	return 0;
 }
