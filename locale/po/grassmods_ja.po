@@ -6,10 +6,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ja\n"
-"POT-Creation-Date: 2004-11-15 11:47+0100\n"
+"POT-Creation-Date: 2004-11-17 09:31+0100\n"
 "PO-Revision-Date: 2004-10-17 15:13+0200\n"
 "Last-Translator: Markus Neteler <neteler@itc.it>\n"
-"Language-Team: japanese\n"
+"Language-Team: Japanese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -538,6 +538,213 @@ msgstr ""
 msgid "Valid colors are:\n"
 msgstr ""
 
+#: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
+#, fuzzy
+msgid "Input vector was not found."
+msgstr "入力するファイル"
+
+#: ../vector/v.convert/att.c:36
+msgid "No category labels (dig_cats) found, no table created."
+msgstr ""
+
+#: ../vector/v.convert/att.c:41
+msgid "Cannot open dig_cats file."
+msgstr ""
+
+#: ../vector/v.convert/att.c:68
+#, c-format
+msgid "Cannot open database %s"
+msgstr ""
+
+#: ../vector/v.convert/att.c:74
+#, c-format
+msgid "Cannot create table: %s"
+msgstr ""
+
+#: ../vector/v.convert/att.c:92
+#, c-format
+msgid "Cannot insert into table: %s"
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:32
+#, fuzzy
+msgid "Failed opening input dig file."
+msgstr "入力するファイル"
+
+#: ../vector/v.convert/old2new.c:47
+msgid "dig_att file doesn't exist."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:50
+#, fuzzy
+msgid "Failed opening input dig_att file."
+msgstr "入力するファイル"
+
+#: ../vector/v.convert/old2new.c:71
+msgid "Attaching categories..."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:89
+#, c-format
+msgid "Failed to attach an attribute (category %d) to a line."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:92
+#, c-format
+msgid "WARNING: line %d label: %d matched another label: %d."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:100
+msgid "Writing new file..."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:121
+#, c-format
+msgid "%-5d points and lines written to output file."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:135
+#, fuzzy, c-format
+msgid "%-5d centroids written to output file."
+msgstr "出力ファイルの上書き"
+
+#: ../vector/v.convert/read.c:41
+msgid "Reading dig file..."
+msgstr ""
+
+#: ../vector/v.convert/read.c:75
+msgid "Input file is version 3."
+msgstr ""
+
+#: ../vector/v.convert/read.c:78
+msgid "Input file is version 4."
+msgstr ""
+
+#: ../vector/v.convert/read.c:87
+#, fuzzy
+msgid "Input file is portable."
+msgstr "入力するデバイスまたはファイル"
+
+#: ../vector/v.convert/read.c:89
+msgid ""
+"WARNING: Input file is not portable.We will attempt to convert anyway but "
+"conversion may fail.Please read manual for detail information."
+msgstr ""
+
+#: ../vector/v.convert/read.c:161
+#, c-format
+msgid "%-5d points read to memory"
+msgstr ""
+
+#: ../vector/v.convert/read.c:162
+#, c-format
+msgid "%-5d lines read to memory"
+msgstr ""
+
+#: ../vector/v.convert/read.c:164
+#, c-format
+msgid "%-5d points read and written to output"
+msgstr ""
+
+#: ../vector/v.convert/read.c:165
+#, c-format
+msgid "%-5d lines read and written to output"
+msgstr ""
+
+#: ../vector/v.convert/read.c:167
+#, c-format
+msgid "%-5d area boundaries read and written to output"
+msgstr ""
+
+#: ../vector/v.convert/read.c:168
+#, c-format
+msgid "%-5d dead points skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:169
+#, c-format
+msgid "%-5d dead lines skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:170
+#, c-format
+msgid "%-5d dead area boundaries skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:171
+#, c-format
+msgid "%-5d elements of unknown type skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:173
+#, c-format
+msgid "%-5d elements read to memory."
+msgstr ""
+
+#: ../vector/v.convert/read.c:212
+msgid "Reading dig_att file..."
+msgstr ""
+
+#: ../vector/v.convert/read.c:220
+#, c-format
+msgid "Error: %s"
+msgstr ""
+
+#: ../vector/v.convert/read.c:241
+#, c-format
+msgid "Unknown type: %c"
+msgstr ""
+
+#: ../vector/v.convert/read.c:260
+#, c-format
+msgid "%-5d point categories read"
+msgstr ""
+
+#: ../vector/v.convert/read.c:261
+#, c-format
+msgid "%-5d line categories read"
+msgstr ""
+
+#: ../vector/v.convert/read.c:262
+#, c-format
+msgid "%-5d centroids read"
+msgstr ""
+
+#: ../vector/v.convert/read.c:263
+#, c-format
+msgid "%-5d dead point categories skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:264
+#, c-format
+msgid "%-5d dead line categories skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:265
+#, c-format
+msgid "%-5d dead centroids skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:266
+#, c-format
+msgid "%-5d categories of unknown type skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:268
+#, fuzzy, c-format
+msgid "%-5d categories read into memory."
+msgstr "タイトル"
+
+#: ../vector/v.convert/type.c:29
+#, c-format
+msgid "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"
+msgstr ""
+
+#: ../vector/v.convert/type.c:50
+#, c-format
+msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
+msgstr ""
+
 #: ../vector/v.surf.idw/read_sites.c:34
 msgid "Cannot read field info"
 msgstr ""
@@ -584,34 +791,34 @@ msgstr ""
 msgid "You need to enter at least %d points."
 msgstr ""
 
-#: ../vector/v.what.rast/main.c:329
+#: ../vector/v.what.rast/main.c:330
 #, fuzzy, c-format
-msgid "%d categories loaded from table\n"
+msgid "%d categories loaded from table"
 msgstr "タイトル"
 
-#: ../vector/v.what.rast/main.c:330
-#, c-format
-msgid "%d categories loaded from vector\n"
-msgstr ""
-
 #: ../vector/v.what.rast/main.c:331
-#, c-format
-msgid "%d categories from vector missing in table\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "%d categories loaded from vector"
+msgstr "タイトル"
 
 #: ../vector/v.what.rast/main.c:332
-#, c-format
-msgid "%d duplicate categories in vector\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "%d categories from vector missing in table"
+msgstr "タイトル"
 
 #: ../vector/v.what.rast/main.c:333
 #, c-format
-msgid "%d records updated\n"
+msgid "%d duplicate categories in vector"
 msgstr ""
 
 #: ../vector/v.what.rast/main.c:334
 #, c-format
-msgid "%d update errors\n"
+msgid "%d records updated"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:335
+#, c-format
+msgid "%d update errors"
 msgstr ""
 
 #, fuzzy
@@ -771,10 +978,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Copy attributes and category files"
 #~ msgstr "属性およびカテゴリーファイルをコピー"
-
-#, fuzzy
-#~ msgid "Overwrite output file"
-#~ msgstr "出力ファイルの上書き"
 
 #, fuzzy
 #~ msgid "Run quietly"
@@ -1342,10 +1545,6 @@ msgstr ""
 #~ "Allows projection conversion of vector files (no datum transformation "
 #~ "yet)."
 #~ msgstr "ベクトルマップの投影変換を行います"
-
-#, fuzzy
-#~ msgid "input vector map"
-#~ msgstr "入力するファイル"
 
 #, fuzzy
 #~ msgid "location containing input vector map"
@@ -2889,10 +3088,6 @@ msgstr ""
 #~ msgstr "PNGファイルをラスターマップとしてインポートします"
 
 #, fuzzy
-#~ msgid "Name of input PNG file."
-#~ msgstr "入力するファイル"
-
-#, fuzzy
 #~ msgid "Name of new raster file."
 #~ msgstr "出力するファイル"
 
@@ -3370,10 +3565,6 @@ msgstr ""
 #~ "Generates an output raster map layer with contiguous areas grown by one "
 #~ "cell (pixel)."
 #~ msgstr "エリアを拡大したラスターマップを作成します"
-
-#, fuzzy
-#~ msgid "Name of existing input raster file"
-#~ msgstr "入力するファイル"
 
 #, fuzzy
 #~ msgid "Name of output raster file"
@@ -4696,10 +4887,6 @@ msgstr ""
 #~ "Extracts USGS Digital Elevation Model (DEM) data from 1/2-inch magnetic "
 #~ "tape."
 #~ msgstr "1/2インチ磁気テープのデータからDEMデータを抽出します"
-
-#, fuzzy
-#~ msgid "Input device or file"
-#~ msgstr "入力するデバイスまたはファイル"
 
 #, fuzzy
 #~ msgid "Output raster map (examine only if none specified)"

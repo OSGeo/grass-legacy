@@ -6,36 +6,163 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods fr 5.7.0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-19 06:08+0200\n"
+"POT-Creation-Date: 2004-11-17 09:31+0100\n"
 "PO-Revision-Date: 2004-10-19 06:14+0200\n"
 "Last-Translator: Emmanuel Saracco <esaracco@users.labs.libre-entreprise>\n"
-"Language-Team: French <grass5@grass.itc.it>\n"
+"Language-Team: French <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 
-#: ../display/d.font.freetype/main.c:33
+#: ../db/base/connect.c:107
+#, c-format
+msgid "driver:%s\n"
+msgstr ""
+
+#: ../db/base/connect.c:108
+#, c-format
+msgid "database:%s\n"
+msgstr ""
+
+#: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
+#: ../db/base/select.c:126
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: ../db/base/databases.c:43 ../db/base/printtab.c:21 ../db/base/printtab.c:66
+msgid "\n"
+msgstr ""
+
+#: ../db/base/describe.c:53 ../db/base/printtab.c:17
+#, c-format
+msgid "ncols:%d\n"
+msgstr ""
+
+#: ../db/base/describe.c:57
+#, fuzzy, c-format
+msgid "Column %d: %s\n"
+msgstr "%s:ligne %d:%s\n"
+
+#: ../db/base/drivers.c:24
+msgid "Error trying to read dbmscap file\n"
+msgstr ""
+
+#: ../db/base/drivers.c:30
+#, c-format
+msgid ":%s"
+msgstr ""
+
+#: ../db/base/printtab.c:11
+#, c-format
+msgid "table:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:12 ../db/base/printtab.c:35
+#, c-format
+msgid "description:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:34
+#, c-format
+msgid "column:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:36
+#, c-format
+msgid "type:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:37
+#, c-format
+msgid "len:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:38
+#, c-format
+msgid "scale:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:39
+#, c-format
+msgid "precision:%d\n"
+msgstr ""
+
+#: ../db/base/printtab.c:40
+#, fuzzy
+msgid "default:"
+msgstr " couleur par défaut\n"
+
+#: ../db/base/printtab.c:48
+#, c-format
+msgid "nullok:%s\n"
+msgstr ""
+
+#: ../db/base/printtab.c:62
+msgid "yes"
+msgstr ""
+
+#: ../db/base/printtab.c:63
+msgid "no"
+msgstr ""
+
+#: ../db/base/printtab.c:64
+msgid "?"
+msgstr ""
+
+#: ../db/base/select.c:311
+#, c-format
+msgid "column%s%s\n"
+msgstr ""
+
+#: ../db/base/select.c:312
+#, c-format
+msgid "type%s%s\n"
+msgstr ""
+
+#: ../db/base/select.c:313
+#, c-format
+msgid "len%s%d\n"
+msgstr ""
+
+#: ../db/base/select.c:314
+#, c-format
+msgid "scale%s%d\n"
+msgstr ""
+
+#: ../db/base/select.c:315
+#, c-format
+msgid "precision%s%d\n"
+msgstr ""
+
+#: ../display/d.font.freetype/main.c:52
 msgid ""
 "Selects the font in which text will be displayed on the user's graphics "
 "monitor."
 msgstr ""
-"Selectionnez la police à utiliser pour afficher le texte sur le moniteur graphique."
+"Selectionnez la police à utiliser pour afficher le texte sur le moniteur "
+"graphique."
 
-#: ../display/d.font.freetype/main.c:40
+#: ../display/d.font.freetype/main.c:60
+msgid ""
+"Font name (not supported interactively, see also -l flag) or path to "
+"TrueType font (including file name)"
+msgstr ""
+
+#: ../display/d.font.freetype/main.c:62
 msgid "Path to TrueType font (including file name)"
 msgstr "Chemin pour la police TrueType (nom de fichier inclu)"
 
-#: ../display/d.font.freetype/main.c:47
+#: ../display/d.font.freetype/main.c:71
 msgid "Character encoding"
 msgstr "Encodage du caractère"
 
-#: ../display/d.font.freetype/main.c:58
+#: ../display/d.font.freetype/main.c:102
 msgid "No graphics device selected"
 msgstr "Aucune sortie graphique sélectionnée"
 
-#: ../display/d.font.freetype/main.c:117
-#, c-format
+#: ../display/d.font.freetype/main.c:170
 msgid ""
 "\n"
 "Setting release of FreeType\n"
@@ -43,8 +170,285 @@ msgstr ""
 "\n"
 "Paramétrage du nettoyage de FreeType\n"
 
-#: ../raster/r.colors/rules.c:45
+#: ../display/d.paint.labels/do_labels.c:143
 #, c-format
+msgid "Error: %s\n"
+msgstr ""
+
+#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:211
+msgid "Region size is lower than minreg, nothing displayed.\n"
+msgstr ""
+
+#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:220
+msgid "Region size is greater than maxreg, nothing displayed.\n"
+msgstr ""
+
+#: ../display/d.path/select.c:32
+msgid "L: from  M: to R: quit\n"
+msgstr ""
+
+#: ../display/d.path/select.c:57
+#, c-format
+msgid "Node %d: %f %f\n"
+msgstr ""
+
+#: ../display/d.path/select.c:133
+msgid "Destination unreachable\n"
+msgstr ""
+
+#: ../display/d.path/select.c:136
+#, c-format
+msgid "Costs on the network = %f\n"
+msgstr ""
+
+#: ../display/d.path/select.c:137
+#, c-format
+msgid "  Distance to the network = %f, distance from the network = %f\n"
+msgstr ""
+
+#: ../display/d.vect/attr.c:54 ../display/d.vect/dir.c:34
+#: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
+#: ../display/d.vect/topo.c:38
+msgid ""
+"\n"
+"ERROR: vector file - can't read\n"
+msgstr ""
+
+#: ../display/d.vect/main.c:417
+msgid "Plotting ... "
+msgstr ""
+
+#: ../display/d.vect/main.c:426
+msgid ""
+"The bounding box of the map outside current region, nothing displayed.\n"
+msgstr ""
+
+#: ../display/d.vect/main.c:480
+msgid "Done\n"
+msgstr ""
+
+#: ../display/d.what.vect/main.c:150
+msgid "Done.\n"
+msgstr ""
+
+#: ../display/d.what.vect/openvect.c:12
+#, c-format
+msgid "warning: %s - vector file not found\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
+msgid "Nothing Found.\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:203
+#, c-format
+msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
+msgstr ""
+
+#: ../display/d.what.vect/what.c:206
+#, c-format
+msgid "Length: %f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:216
+#, c-format
+msgid "  Node[%d]: %d  Number of lines: %d\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:221
+#, c-format
+msgid "    Line: %5d  Angle: %.8f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:227
+#, c-format
+msgid "length %f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:245
+#, c-format
+msgid "Point height: %f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:257
+#, c-format
+msgid "Line height: %f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:263
+#, c-format
+msgid "Line height min: %f max: %f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:280
+#, c-format
+msgid "Area height: %f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:287
+msgid "Area\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:300
+#, c-format
+msgid "Area: %d  Number of isles: %d\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:304
+#, c-format
+msgid "  Isle[%d]: %d\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:311
+#, c-format
+msgid "Island: %d  In area: %d\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:315 ../display/d.what.vect/what.c:323
+#, c-format
+msgid "Size - Sq Meters: %.3f\t\tHectares: %.3f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:318 ../display/d.what.vect/what.c:327
+#, c-format
+msgid "           Acres: %.3f\t\tSq Miles: %.4f\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:353
+#, c-format
+msgid ""
+"field: %d\n"
+"category: %d\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:362
+msgid "Database connection not defined\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:370
+#, c-format
+msgid ""
+"driver: %s\n"
+"database: %s\n"
+"table: %s\n"
+"key column: %s\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:421
+msgid ""
+"\n"
+"Click mouse button on desired location\n"
+"\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:426
+msgid "Buttons\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:427
+msgid " Left:  what's here\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:429
+msgid " Middle: toggle flash color\n"
+msgstr ""
+
+#: ../display/d.what.vect/what.c:434
+msgid " Right: quit\n"
+msgstr ""
+
+#: ../display/d.zoom/main.c:158
+msgid "ERROR: can not get \"list\" items\n"
+msgstr ""
+
+#: ../display/d.zoom/main.c:159
+msgid "-j flag forced\n"
+msgstr ""
+
+#: ../display/d.zoom/main.c:196
+msgid "ERROR: No map is displayed in GRASS monitor\n"
+msgstr ""
+
+#: ../display/d.zoom/main.c:320
+#, c-format
+msgid "%d raster%s, %d vector%s\n"
+msgstr ""
+
+#: ../display/d.zoom/main.c:346
+msgid "Zooming finished.\n"
+msgstr ""
+
+#: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr ""
+
+#: ../display/d.zoom/pan.c:21 ../display/d.zoom/zoom.c:17
+#, c-format
+msgid "%s Pan\n"
+msgstr ""
+
+#: ../display/d.zoom/pan.c:22 ../display/d.zoom/zoom.c:18
+#, c-format
+msgid "%s Quit\n"
+msgstr ""
+
+#: ../display/d.zoom/zoom.c:16
+#, c-format
+msgid "%s Zoom menu\n"
+msgstr ""
+
+#: ../display/d.zoom/zoom.c:41
+msgid ""
+"This region now saved as current region.\n"
+"\n"
+msgstr ""
+
+#: ../display/d.zoom/zoom.c:42
+msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
+#: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
+msgid "Monitor: interactive command in redraw\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:116
+#, c-format
+msgid "found %d visuals of type TrueColor\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
+msgid "searching for highest bit depth\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:135
+#, c-format
+msgid "selected %d bit depth\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:197
+#, c-format
+msgid "using default visual which is %s\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:127
+#, c-format
+msgid "Monitor: waitpid: expected %d but got %d\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
+msgid "Monitor: XGetWMName failed\n"
+msgstr ""
+
+#: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
+msgid "Monitor: XGetWMName: bad result\n"
+msgstr ""
+
+#: ../raster/r.colors/rules.c:45
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
 msgstr ""
 "Entrez une règle, \"end\" une fois terminé, \"help\" si vous en avez "
@@ -65,12 +469,10 @@ msgid "Your color rules do not cover the whole range of data!"
 msgstr "Vos règles de couleurs n'englobent pas la totalité des données!"
 
 #: ../raster/r.colors/rules.c:188
-#, c-format
 msgid "Enter a rule in one of these formats:\n"
 msgstr "Entrez une règle dans l'un des formats suivants:\n"
 
 #: ../raster/r.colors/rules.c:190
-#, c-format
 msgid " val color\n"
 msgstr "val couleur\n"
 
@@ -80,22 +482,18 @@ msgid " n%% color\n"
 msgstr " n%% couleur\n"
 
 #: ../raster/r.colors/rules.c:192
-#, c-format
 msgid " nv color\n"
 msgstr " nv couleur\n"
 
 #: ../raster/r.colors/rules.c:193
-#, c-format
 msgid " default color\n"
 msgstr " couleur par défaut\n"
 
 #: ../raster/r.colors/rules.c:194
-#, c-format
 msgid "color can be one of:\n"
 msgstr "la couleur peut être l'une de celles-ci:\n"
 
 #: ../raster/r.colors/rules.c:196
-#, c-format
 msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
 msgstr "ou un triplet R:G:B, ex.: 0:127:255\n"
 
@@ -110,7 +508,6 @@ msgstr ""
 #: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
 #: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
 #: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
-#, c-format
 msgid "** rule is not added **\n"
 msgstr "** la règle n'a pas été ajoutée **\n"
 
@@ -122,7 +519,6 @@ msgstr ""
 "[0..255]: %d %d %d **\n"
 
 #: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
-#, c-format
 msgid "** warning: no such value **\n"
 msgstr "** attention: aucune valeur **\n"
 
@@ -132,7 +528,6 @@ msgid "%s:line %d:%s\n"
 msgstr "%s:ligne %d:%s\n"
 
 #: ../raster/r.colors/rules.c:403
-#, c-format
 msgid "** bad color specification **\n"
 msgstr "** mauvaise indication de couleur **\n"
 
@@ -142,7 +537,284 @@ msgid "%s - unknown color\n"
 msgstr "%s - couleur inconnue\n"
 
 #: ../raster/r.colors/rules.c:425
-#, c-format
 msgid "Valid colors are:\n"
 msgstr "Les couleurs valides sont:\n"
 
+#: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
+msgid "Input vector was not found."
+msgstr ""
+
+#: ../vector/v.convert/att.c:36
+msgid "No category labels (dig_cats) found, no table created."
+msgstr ""
+
+#: ../vector/v.convert/att.c:41
+msgid "Cannot open dig_cats file."
+msgstr ""
+
+#: ../vector/v.convert/att.c:68
+#, c-format
+msgid "Cannot open database %s"
+msgstr ""
+
+#: ../vector/v.convert/att.c:74
+#, c-format
+msgid "Cannot create table: %s"
+msgstr ""
+
+#: ../vector/v.convert/att.c:92
+#, c-format
+msgid "Cannot insert into table: %s"
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:32
+msgid "Failed opening input dig file."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:47
+msgid "dig_att file doesn't exist."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:50
+msgid "Failed opening input dig_att file."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:71
+msgid "Attaching categories..."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:89
+#, c-format
+msgid "Failed to attach an attribute (category %d) to a line."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:92
+#, c-format
+msgid "WARNING: line %d label: %d matched another label: %d."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:100
+msgid "Writing new file..."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:121
+#, c-format
+msgid "%-5d points and lines written to output file."
+msgstr ""
+
+#: ../vector/v.convert/old2new.c:135
+#, c-format
+msgid "%-5d centroids written to output file."
+msgstr ""
+
+#: ../vector/v.convert/read.c:41
+msgid "Reading dig file..."
+msgstr ""
+
+#: ../vector/v.convert/read.c:75
+msgid "Input file is version 3."
+msgstr ""
+
+#: ../vector/v.convert/read.c:78
+msgid "Input file is version 4."
+msgstr ""
+
+#: ../vector/v.convert/read.c:87
+msgid "Input file is portable."
+msgstr ""
+
+#: ../vector/v.convert/read.c:89
+msgid ""
+"WARNING: Input file is not portable.We will attempt to convert anyway but "
+"conversion may fail.Please read manual for detail information."
+msgstr ""
+
+#: ../vector/v.convert/read.c:161
+#, c-format
+msgid "%-5d points read to memory"
+msgstr ""
+
+#: ../vector/v.convert/read.c:162
+#, c-format
+msgid "%-5d lines read to memory"
+msgstr ""
+
+#: ../vector/v.convert/read.c:164
+#, c-format
+msgid "%-5d points read and written to output"
+msgstr ""
+
+#: ../vector/v.convert/read.c:165
+#, c-format
+msgid "%-5d lines read and written to output"
+msgstr ""
+
+#: ../vector/v.convert/read.c:167
+#, c-format
+msgid "%-5d area boundaries read and written to output"
+msgstr ""
+
+#: ../vector/v.convert/read.c:168
+#, c-format
+msgid "%-5d dead points skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:169
+#, c-format
+msgid "%-5d dead lines skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:170
+#, c-format
+msgid "%-5d dead area boundaries skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:171
+#, c-format
+msgid "%-5d elements of unknown type skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:173
+#, c-format
+msgid "%-5d elements read to memory."
+msgstr ""
+
+#: ../vector/v.convert/read.c:212
+msgid "Reading dig_att file..."
+msgstr ""
+
+#: ../vector/v.convert/read.c:220
+#, c-format
+msgid "Error: %s"
+msgstr ""
+
+#: ../vector/v.convert/read.c:241
+#, c-format
+msgid "Unknown type: %c"
+msgstr ""
+
+#: ../vector/v.convert/read.c:260
+#, c-format
+msgid "%-5d point categories read"
+msgstr ""
+
+#: ../vector/v.convert/read.c:261
+#, c-format
+msgid "%-5d line categories read"
+msgstr ""
+
+#: ../vector/v.convert/read.c:262
+#, c-format
+msgid "%-5d centroids read"
+msgstr ""
+
+#: ../vector/v.convert/read.c:263
+#, c-format
+msgid "%-5d dead point categories skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:264
+#, c-format
+msgid "%-5d dead line categories skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:265
+#, c-format
+msgid "%-5d dead centroids skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:266
+#, c-format
+msgid "%-5d categories of unknown type skipped"
+msgstr ""
+
+#: ../vector/v.convert/read.c:268
+#, c-format
+msgid "%-5d categories read into memory."
+msgstr ""
+
+#: ../vector/v.convert/type.c:29
+#, c-format
+msgid "SYSTEM_ERROR: OLD_T_NEW Got a bad type code %x"
+msgstr ""
+
+#: ../vector/v.convert/type.c:50
+#, c-format
+msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:34
+msgid "Cannot read field info"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:38
+#, c-format
+msgid "Cannot open database %s by driver %s"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:45
+msgid "Column type not supported"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:48
+msgid "Cannot select data from table"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:50
+#, c-format
+msgid "%d records selected from table"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:80
+#, c-format
+msgid "No record for line (cat = %d)"
+msgstr ""
+
+#: ../vector/v.surf.idw/read_sites.c:91
+#, c-format
+msgid "%d points loaded\n"
+msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:124
+#, c-format
+msgid "Number of points that have been entered: %d"
+msgstr ""
+
+#: ../vector/v.transform/setup_trans.c:88
+msgid "The points weren't spread out enough."
+msgstr ""
+
+#: ../vector/v.transform/setup_trans.c:91
+#, c-format
+msgid "You need to enter at least %d points."
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:330
+#, c-format
+msgid "%d categories loaded from table"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:331
+#, c-format
+msgid "%d categories loaded from vector"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:332
+#, c-format
+msgid "%d categories from vector missing in table"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:333
+#, c-format
+msgid "%d duplicate categories in vector"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:334
+#, c-format
+msgid "%d records updated"
+msgstr ""
+
+#: ../vector/v.what.rast/main.c:335
+#, c-format
+msgid "%d update errors"
+msgstr ""
