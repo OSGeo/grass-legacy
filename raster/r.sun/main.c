@@ -235,7 +235,7 @@ struct Option *elevin,*aspin,*slopein,*linkein,*lin,*albedo,*alb,*latin,*lat,*co
           parm.coefbh->type = TYPE_STRING;
           parm.coefbh->required = NO;
           parm.coefbh->gisprompt = "new,cell,raster";
-          parm.coefbh->description = " The real-sky beam radiation coefficient file";
+          parm.coefbh->description = "The real-sky beam radiation coefficient file";
 
 	  parm.coefdh = G_define_option();
 	  parm.coefdh->key = "coefdh";
@@ -314,7 +314,7 @@ struct Option *elevin,*aspin,*slopein,*linkein,*lin,*albedo,*alb,*latin,*lat,*co
 
           flag.shade = G_define_flag();
           flag.shade->key = 's';
-          flag.shade->description = "Do you want to incorporate the shadowing effect of terrain (y/n)";
+          flag.shade->description = "Incorporate the shadowing effect of terrain";
 		
 		if(G_parser(argc,argv)) exit(1);
 
