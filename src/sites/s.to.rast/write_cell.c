@@ -43,7 +43,7 @@ int write_temp (int fd, struct Cell_head *window,
             lseek(fd,offset,0);
             if(write(fd, rast, G_raster_size(map_type))!=
 			                     G_raster_size(map_type))
-		   G_fatal_error("error while writing to temp file");
+		   G_fatal_error("error while writing to temp file (disk full?)");
         }
 
 	return 0;
@@ -70,7 +70,7 @@ int close_temp (int fd, char *name, char *temp_name,
        {
             if(read(fd, rast, ncols * G_raster_size(map_type))!=
 			                     ncols * G_raster_size(map_type))
-		   G_fatal_error("error while reading temp file");
+		   G_fatal_error("error while reading temp file (disk full?)");
             G_put_raster_row(rast_fd, rast, map_type);
        }
        unlink(temp_name);
