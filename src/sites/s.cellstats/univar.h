@@ -6,7 +6,7 @@
 struct ustruct
 {
   int n;
-  double m, s, cv, skw, skwb, kur, mse, mav, min, q1, med, q3, max;
+  double m, s, cv, skw, skwb, kur, mse, mav, min, q1, med, q3, max, sum;
 };
 typedef struct ustruct UNIV;
 
