@@ -1,0 +1,3 @@
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
+ask_files	ask_files.c	/^ask_files (group, subgroup, ref1, ref2)$/
+make_subgroup	mke_subgrp.c	/^make_subgroup (group, subgroup, ref1)$/
