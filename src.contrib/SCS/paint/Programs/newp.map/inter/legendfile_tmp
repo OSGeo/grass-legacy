@@ -1,0 +1,27 @@
+title:Test test
+east: 702908.00
+north: 5468323.00
+size: 500
+xoffset: 0 
+yoffset: 0 
+border: none
+end:
+
+raster:geology
+vert: 0 
+xoffset: 0 
+yoffset: 0
+size:	500
+border:	none
+end:
+begincat:
+cat:
+25:25testing
+cwidth: 30
+cheight: 20
+cat: 
+35:35testing
+cwidth: 30
+cheight: 10
+endcat:
+
