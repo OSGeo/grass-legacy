@@ -24,9 +24,15 @@ main (int argc, char **argv)
 	int color;
 	char *D_color_list();
 	char map_name[128] ;
+	struct GModule *module;
 	struct Option *opt1, *opt2;
 	struct Flag   *levone,  *_quiet;
 	struct line_pnts *Points;
+
+	module = G_define_module();
+	module->description =
+		"Displays GRASS vector data in the active frame on the "
+		"graphics monitor.";
 
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;

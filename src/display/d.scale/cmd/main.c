@@ -11,11 +11,18 @@ int main (int argc, char **argv)
 	char window_name[64] ;
 	struct Cell_head window ;
 	int t, b, l, r ;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
 	struct Flag *mouse ;
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]);
+
+	module = G_define_module();
+	module->description =
+		"Overlays a bar scale and north arrow for "
+		"the current geographic region at a user-defined "
+		"location in the active display frame.";
 
 	mouse = G_define_flag() ;
 	mouse->key        = 'm';

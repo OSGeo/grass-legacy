@@ -24,6 +24,7 @@ int main (int argc, char **argv)
     char buff[128] ;
     int t, b, l, r ;
     int i, column, index ;
+    struct GModule *module;
     struct Option *site_opt, *xref_opt, *yref_opt, *color_opt, *size_opt, *backgr_opt;
     struct Option *border_opt, *font_opt, *col_opt, *index_opt ;
     struct Flag *mouse;
@@ -31,6 +32,12 @@ int main (int argc, char **argv)
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
+
+    module = G_define_module();
+    module->description =
+        "Interactively label sites using a string or double "
+        "attribute value or the category value on the current "
+        "graphics monitor.";
 
     mouse = G_define_flag() ;
     mouse->key = 'm';
