@@ -4,10 +4,14 @@
 ** by  Chuck Ehlschlaeger
 */
 
+#include <stdlib.h>
+#include <stdio.h>
 #define MAIN
 #include "contour.h"
 #include <unistd.h>
 #undef MAIN
+#include "gis.h"
+#include "glocale.h"
 
 int 
 main (int argc, char *argv[])
@@ -27,25 +31,25 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-		"Surface generation program from rasterized contours.";
+		_("Surface generation program from rasterized contours.");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES ;
 	opt1->gisprompt  = "old,cell,raster" ;
-	opt1->description= "Name of existing raster map containing contours" ;
+	opt1->description= _("Name of existing raster map containing contours") ;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "output" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = YES ;
 	opt2->gisprompt  = "new,cell,raster" ;
-	opt2->description= "Output elevation raster map" ;
+	opt2->description= _("Output elevation raster map") ;
 
 	flag1 = G_define_flag() ;
 	flag1->key         = 'f' ;
-	flag1->description = "Invoke fast, but memory intensive operation" ;
+	flag1->description = _("Invoke fast, but memory intensive operation") ;
 
 	s_f = 0;
 	on = 1;

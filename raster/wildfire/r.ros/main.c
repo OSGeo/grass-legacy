@@ -54,8 +54,12 @@
  *
  *****************************************************/
 
-#include "gis.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
+#include "gis.h"
+#include "glocale.h"
+
 #define DATA(map, r, c)         (map)[(r) * ncols + (c)]
 #define DEBUG
 
@@ -213,89 +217,88 @@ main (int argc, char *argv[])
 	
 	/* Set description */
 	module              = G_define_module();
-	module->description = ""\
-
-	"Generates three, or four raster map layers showing 1) the base "
+	module->description = 
+	_("Generates three, or four raster map layers showing 1) the base "
 	"(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, "
 	"3) the direction of the maximum ROS, and optionally 4) the "
-	"maximum potential spotting distance.";
+	"maximum potential spotting distance.");
 
 	parm.model = G_define_option() ;
 	parm.model->key        = "model" ;
     	parm.model->type       = TYPE_STRING ;
 	parm.model->required   = YES ;
 	parm.model->gisprompt  = "old,cell,raster" ;
-	parm.model->description= "Name of raster map containing fuel MODELs\n";
+	parm.model->description= _("Name of raster map containing fuel MODELs");
 
 	parm.mois_1h = G_define_option() ;
 	parm.mois_1h->key        = "moisture_1h" ;
     	parm.mois_1h->type       = TYPE_STRING ;
 	parm.mois_1h->gisprompt  = "old,cell,raster" ;
-	parm.mois_1h->description= "Name of raster map containing the 1-HOUR fuel MOISTURE (%)";
+	parm.mois_1h->description= _("Name of raster map containing the 1-HOUR fuel MOISTURE (%)");
 
 	parm.mois_10h = G_define_option() ;
 	parm.mois_10h->key        = "moisture_10h" ;
     	parm.mois_10h->type       = TYPE_STRING ;
 	parm.mois_10h->gisprompt  = "old,cell,raster" ;
-	parm.mois_10h->description= "Name of raster map containing the 10-HOUR fuel MOISTURE (%)";
+	parm.mois_10h->description= _("Name of raster map containing the 10-HOUR fuel MOISTURE (%)");
 
 	parm.mois_100h = G_define_option() ;
 	parm.mois_100h->key        = "moisture_100h" ;
     	parm.mois_100h->type       = TYPE_STRING ;
 	parm.mois_100h->gisprompt  = "old,cell,raster" ;
-	parm.mois_100h->description= "Name of raster map containing the 100-HOUR fuel MOISTURE (%)";
+	parm.mois_100h->description= _("Name of raster map containing the 100-HOUR fuel MOISTURE (%)");
 
 	parm.mois_live = G_define_option() ;
 	parm.mois_live->key        = "moisture_live" ;
     	parm.mois_live->type       = TYPE_STRING ;
 	parm.mois_live->required   = YES ;
 	parm.mois_live->gisprompt  = "old,cell,raster" ;
-	parm.mois_live->description= "Name of raster map containing LIVE fuel MOISTURE (%)\n";
+	parm.mois_live->description= _("Name of raster map containing LIVE fuel MOISTURE (%)");
 
 	parm.vel = G_define_option() ;
 	parm.vel->key        = "velocity" ;
     	parm.vel->type       = TYPE_STRING ;
 	parm.vel->gisprompt  = "old,cell,raster" ;
-	parm.vel->description= "Name of raster map containing midflame wind VELOCITYs (ft/min)";
+	parm.vel->description= _("Name of raster map containing midflame wind VELOCITYs (ft/min)");
 
 	parm.dir = G_define_option() ;
 	parm.dir->key        = "direction" ;
     	parm.dir->type       = TYPE_STRING ;
 	parm.dir->gisprompt  = "old,cell,raster" ;
-	parm.dir->description= "Name of raster map containing wind DIRECTIONs (degree)\n" ;
+	parm.dir->description= _("Name of raster map containing wind DIRECTIONs (degree)") ;
 
 	parm.slope = G_define_option() ;
 	parm.slope->key        = "slope" ;
     	parm.slope->type       = TYPE_STRING ;
 	parm.slope->gisprompt  = "old,cell,raster" ;
-	parm.slope->description= "Name of raster map containing SLOPE (degree)";
+	parm.slope->description= _("Name of raster map containing SLOPE (degree)");
 
 	parm.aspect = G_define_option() ;
 	parm.aspect->key        = "aspect" ;
     	parm.aspect->type       = TYPE_STRING ;
 	parm.aspect->gisprompt  = "old,cell,raster" ;
-	parm.aspect->description= "Name of raster map containing ASPECT (degree, anti-clockwise from E)";
+	parm.aspect->description= _("Name of raster map containing ASPECT (degree, anti-clockwise from E)");
 
 	parm.elev = G_define_option() ;
 	parm.elev->key        = "elevation" ;
     	parm.elev->type       = TYPE_STRING ;
 	parm.elev->gisprompt  = "old,cell,raster" ;
-	parm.elev->description= "Name of raster map containing ELEVATION (m) (required w/ -s)\n";
+	parm.elev->description= _("Name of raster map containing ELEVATION (m) (required w/ -s)");
 
 	parm.output = G_define_option() ;
 	parm.output->key        = "output" ;
     	parm.output->type       = TYPE_STRING ;
 	parm.output->required   = YES ;
 	parm.output->gisprompt  = "new,cell,raster" ;
-	parm.output->description= "Name of raster map to contain results (several new layers)";
+	parm.output->description= _("Name of raster map to contain results (several new layers)");
 
 	flag1 = G_define_flag();
 	flag1->key = 'v';
-	flag1->description = "Run verbosely";
+	flag1->description = _("Run verbosely");
 
 	flag2 = G_define_flag();
 	flag2->key = 's';
-	flag2->description = "Also produce maximum SPOTTING distance";
+	flag2->description = _("Also produce maximum SPOTTING distance");
 
 	/*   Parse command line */
 	if (G_parser(argc, argv))

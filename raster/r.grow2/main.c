@@ -1,9 +1,8 @@
-/* $Id$ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "gis.h"
+#include "glocale.h"
 
 static int size;
 static int count;
@@ -114,35 +113,35 @@ int main(int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Generates a raster map layer"
-		"with contiguous areas grown by one cell.";
+		_("Generates a raster map layer"
+		"with contiguous areas grown by one cell.");
 
 	opt.in = G_define_option();
 	opt.in->key          = "input";
 	opt.in->type         = TYPE_STRING;
 	opt.in->required     = YES;
 	opt.in->gisprompt    = "old,cell,raster";
-	opt.in->description  = "Name of existing input raster file";
+	opt.in->description  = _("Name of existing input raster file");
 
 	opt.out = G_define_option();
 	opt.out->key         = "output";
 	opt.out->type        = TYPE_STRING;
 	opt.out->required    = YES;
 	opt.out->gisprompt   = "new,cell,raster";
-	opt.out->description = "Name of output raster file";
+	opt.out->description = _("Name of output raster file");
 
 	opt.rad = G_define_option();
 	opt.rad->key         = "radius";
 	opt.rad->type        = TYPE_DOUBLE;
 	opt.rad->required    = NO;
-	opt.rad->description = "Radius of buffer";
+	opt.rad->description = _("Radius of buffer");
 	opt.rad->answer      = "1.01";
 
 	opt.met = G_define_option();
 	opt.met->key         = "metric";
 	opt.met->type        = TYPE_STRING;
 	opt.met->required    = NO;
-	opt.met->description = "Metric";
+	opt.met->description = _("Metric");
 	opt.met->options     = "euclidian,maximum,manhattan";
 	opt.met->answer      = "euclidian";
 
@@ -150,17 +149,17 @@ int main(int argc, char **argv)
 	opt.old->key         = "old";
 	opt.old->type        = TYPE_INTEGER;
 	opt.old->required    = NO;
-	opt.old->description = "Value to write for input cells which are non-NULL (-1 => NULL)";
+	opt.old->description = _("Value to write for input cells which are non-NULL (-1 => NULL)");
 
 	opt.new = G_define_option();
 	opt.new->key         = "new";
 	opt.new->type        = TYPE_INTEGER;
 	opt.new->required    = NO;
-	opt.new->description = "Value to write for \"grown\" cells";
+	opt.new->description = _("Value to write for \"grown\" cells");
 
 	flag.q = G_define_flag();
 	flag.q->key         = 'q';
-	flag.q->description = "Quiet";
+	flag.q->description = _("Quiet");
 
 	if (G_parser(argc, argv))
 		exit(1);

@@ -1,9 +1,5 @@
 /* main.c - r.surf.area */
 
-/* 
- * $Id$ 
- */
-
 /* Copyright Notice
  * ---------------- 
  * Written by Bill Brown, USACERL December 21, 1994 
@@ -59,6 +55,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "gis.h"
+#include "glocale.h"
 
 #define X 0
 #define Y 1
@@ -89,7 +86,7 @@ main(argc, argv)
 
     module = G_define_module();
     module->description =
-        "Surface area estimation for rasters.";
+        _("Surface area estimation for rasters.");
 
     surf = G_define_option();
     surf->key                    = "input";
@@ -97,14 +94,14 @@ main(argc, argv)
     surf->required               = YES;
     surf->multiple               = NO;
     surf->gisprompt              = "old,cell,Raster";
-    surf->description            = "Raster file for surface.";
+    surf->description            = _("Raster file for surface");
 
     vscale = G_define_option();
     vscale->key                    = "vscale";
     vscale->type                   = TYPE_DOUBLE;
     vscale->required               = NO;
     vscale->multiple               = NO;
-    vscale->description            = "Vertical scale";
+    vscale->description            = _("Vertical scale");
 
 
     if (G_parser (argc, argv))

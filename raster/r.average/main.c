@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "gis.h"
+#include "glocale.h"
 
 #define STATS "r.stats"
 #define RECODE "r.recode"
@@ -27,34 +28,34 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Finds the average of values in a cover map within "
+		_("Finds the average of values in a cover map within "
 		"areas assigned the same category value in a "
-		"user-specified base map.";
+		"user-specified base map.");
 
     basemap = G_define_option();
     basemap->key        = "base";
     basemap->type       = TYPE_STRING ;
     basemap->required   = YES ;
     basemap->gisprompt  = "old,cell,raster" ;
-    basemap->description = "base raster map";
+    basemap->description = _("base raster map");
 
     covermap = G_define_option();
     covermap->key       = "cover";
     covermap->type      = TYPE_STRING;
     covermap->required  = YES ;
     covermap->gisprompt  = "old,cell,raster" ;
-    covermap->description = "cover raster map";
+    covermap->description = _("cover raster map");
 
     outputmap = G_define_option();
     outputmap->key       = "output";
     outputmap->type      = TYPE_STRING;
     outputmap->required  = YES ;
     outputmap->gisprompt  = "new,cell,raster" ;
-    outputmap->description = "resultant raster map";
+    outputmap->description = _("resultant raster map");
 
     flag_c = G_define_flag();
     flag_c->key = 'c';
-    flag_c->description = "cover values extracted from the category labels of the cover map";
+    flag_c->description = _("cover values extracted from the category labels of the cover map");
 
     if (G_parser(argc,argv))
 	exit(1);

@@ -7,13 +7,13 @@
  *   This program is free software under the GPL (>=v2)
  *   Read the file COPYING coming with GRASS for details.
  *
- *   $Id$
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "gis.h"
+#include "glocale.h"
 
 #include "./gmt_grd.h"
 #include "./swab.h"
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-	"Exports a GRASS raster to a binary array.";
+	_("Exports a GRASS raster to a binary array.");
 
 /* Define the different options */
 
@@ -75,35 +75,36 @@ int main(int argc, char *argv[])
     parm.input->type       = TYPE_STRING;
     parm.input->required   = YES;
     parm.input->gisprompt  = "old,cell,raster" ;
-    parm.input->description= "Name of an existing raster map" ;
+    parm.input->description= _("Name of an existing raster map") ;
 
     parm.output = G_define_option() ;
     parm.output->key        = "output";
     parm.output->type       = TYPE_STRING;
     parm.output->required   = YES;
-    parm.output->description= "Name for output binary map (use out=- for stdout)" ;
+    parm.output->description= _("Name for output binary map (use out=- for stdout)") ;
 
     parm.null = G_define_option() ;
     parm.null->key        = "null";
     parm.null->type       = TYPE_INTEGER;
     parm.null->required   = NO;
     parm.null->answer     = "0";
-    parm.null->description= "Value to write out for null" ;
+    parm.null->description= _("Value to write out for null" );
 
     flag.int_out = G_define_flag();
     flag.int_out->key = 'i';
-    flag.int_out->description = "Output integer category values, not cell values";
+    flag.int_out->description = _("Output integer category values, not cell values");
+
     flag.gmt_hd = G_define_flag();
     flag.gmt_hd->key = 'h';
-    flag.gmt_hd->description = "Export Array with GMT compatible header";
+    flag.gmt_hd->description = _("Export Array with GMT compatible header");
 
     flag.BIL_hd = G_define_flag();
     flag.BIL_hd->key = 'b';
-    flag.BIL_hd->description = "Generate BIL world and header files";
+    flag.BIL_hd->description = _("Generate BIL world and header files");
 
     flag.swap = G_define_flag();
     flag.swap->key = 's';
-    flag.swap->description = "Byte Swap output";
+    flag.swap->description = _("Byte Swap output");
 
     if (G_parser(argc, argv))
        	exit (1);

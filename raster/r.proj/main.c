@@ -61,6 +61,7 @@
 #include "gis.h"
 #include "gprojects.h"
 #include "r.proj.h"
+#include "glocale.h"
 
 /* modify this table to add new methods */
 struct menu menu[] = {
@@ -76,8 +77,7 @@ int main (int argc, char **argv)
 {
 	char     *mapname,		 /* ptr to name of output layer	 */
 	         *setname,		 /* ptr to name of input mapset	 */
-	         *ipolname,		 /* name of interpolation method */
-	          errbuf[256];		 /* buffer for error messages	 */
+	         *ipolname;		 /* name of interpolation method */
 
 	int       fdi,			 /* input map file descriptor	 */
 	          fdo,			 /* output map file descriptor	 */
@@ -135,38 +135,37 @@ int main (int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Re-projects a raster map from one location to the current location.";
-
+		_("Re-project a raster map from one location to the current location.");
 
 	inmap = G_define_option();
 	inmap->key = "input";
 	inmap->type = TYPE_STRING;
 	inmap->required = YES;
-	inmap->description = "input raster map";
+	inmap->description = _("Input raster map");
 
 	inlocation = G_define_option();
 	inlocation->key = "location";
 	inlocation->type = TYPE_STRING;
 	inlocation->required = YES;
-	inlocation->description = "location of input map";
+	inlocation->description = _("Location of input map");
 
 	imapset = G_define_option();
 	imapset->key = "mapset";
 	imapset->type = TYPE_STRING;
 	imapset->required = NO;
-	imapset->description = "mapset of input map";
+	imapset->description = _("Mapset of input map");
 
 	indbase = G_define_option();
 	indbase->key = "dbase";
 	indbase->type = TYPE_STRING;
 	indbase->required = NO;
-	indbase->description = "path to GRASS database of input location";
+	indbase->description = _("Path to GRASS database of input location");
 
 	outmap = G_define_option();
 	outmap->key = "output";
 	outmap->type = TYPE_STRING;
 	outmap->required = NO;
-	outmap->description = "output raster map";
+	outmap->description = _("Output raster map");
 
 	ipolname = make_ipol_list();
 
@@ -176,21 +175,21 @@ int main (int argc, char **argv)
 	interpol->required = NO;
 	interpol->answer = "nearest";
 	interpol->options = ipolname;
-	interpol->description = "interpolation method to use";
+	interpol->description = _("Interpolation method to use");
 
 	res = G_define_option();
 	res->key = "resolution";
 	res->type = TYPE_DOUBLE;
 	res->required = NO;
-	res->description = "resolution of output map";
+	res->description = _("Resolution of output map");
 
 	list = G_define_flag();
 	list->key = 'l';
-	list->description = "List raster files in input location and exit";
+	list->description = _("List raster files in input location and exit");
 
 	nocrop = G_define_flag();
 	nocrop->key = 'n';
-	nocrop->description = "Do not perform region cropping optimization";
+	nocrop->description = _("Do not perform region cropping optimization");
 
 	if (G_parser(argc, argv))
 		exit(1);

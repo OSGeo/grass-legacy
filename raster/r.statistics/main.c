@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
+#include "glocale.h"
 
 #define MAIN
 #include "method.h"
@@ -13,7 +14,7 @@ is_ok (char *method, char *map)
 {
    if(map == NULL)
    {
-     fprintf(stderr,"Sorry, with method '%s' you have to define an outputmap.\n",
+     fprintf(stderr,"Sorry, with method '%s' you have to define an output map.\n",
                      method);
      exit(1);
     }
@@ -39,21 +40,21 @@ main (int argc, char **argv)
 
     module = G_define_module();
     module->description =
-		"Category or object oriented statistics.";
+		_("Category or object oriented statistics.");
 					        
     basemap = G_define_option();
     basemap->key        = "base";
     basemap->type       = TYPE_STRING ;
     basemap->required   = YES ;
     basemap->gisprompt  = "old,cell,raster" ;
-    basemap->description = "base raster map";
+    basemap->description = _("Base raster map");
 
     covermap = G_define_option();
     covermap->key       = "cover";
     covermap->type      = TYPE_STRING;
     covermap->required  = YES ;
     covermap->gisprompt  = "old,cell,raster" ;
-    covermap->description = "cover raster map";
+    covermap->description = _("Cover raster map");
 
     method = G_define_option();
     method->key          = "method";
@@ -68,19 +69,19 @@ main (int argc, char **argv)
       	  *(method->options) = 0;
 	  strcat (method->options, menu[o_method].name);
     }
-    method->description  = "method of object-based statistic";
+    method->description  = _("Method of object-based statistic");
     
     outputmap = G_define_option();
     outputmap->key       = "output";
     outputmap->type      = TYPE_STRING;
     outputmap->required  = NO ;
     outputmap->gisprompt  = "new,cell,raster" ;
-    outputmap->description = "resultant raster map (not used with 'distribution')";
+    outputmap->description = _("Resultant raster map (not used with 'distribution')");
     
     
     flag_c = G_define_flag();
     flag_c->key = 'c';
-    flag_c->description = "cover values extracted from the category labels of the cover map";
+    flag_c->description = _("Cover values extracted from the category labels of the cover map");
 
     if (G_parser(argc,argv))
 	exit(1);

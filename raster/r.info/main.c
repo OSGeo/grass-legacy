@@ -2,6 +2,7 @@
 #include <string.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define printline(x) fprintf (out," | %-74.74s |\n",x)
 #define divider(x) \
@@ -44,27 +45,27 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Outputs basic information about a " 
-		"user-specified raster map layer.";
+		_("Outputs basic information about a " 
+		"user-specified raster map layer.");
 
     opt1 = G_define_option() ;
     opt1->key        = "map" ;
     opt1->type       = TYPE_STRING ;
     opt1->required   = YES ;
     opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description= "Name of existing raster map" ;
+    opt1->description= _("Name of existing raster map") ;
 
     rflag = G_define_flag();
     rflag->key            = 'r';
-    rflag->description    = "print range only.";
+    rflag->description    = _("Print range only");
 
     sflag = G_define_flag();
     sflag->key            = 's';
-    sflag->description    = "print resolution (NS-res, EW-res) only.";
+    sflag->description    = _("Print resolution (NS-res, EW-res) only");
 
     tflag = G_define_flag();
     tflag->key            = 't';
-    tflag->description    = "print raster map type only.";
+    tflag->description    = _("Print raster map type only");
 
     if (G_parser(argc, argv))
         exit(1);
@@ -74,7 +75,6 @@ main (int argc, char *argv[])
     {
         sprintf (line, "Cannot find %s", name);	
         G_fatal_error (line);
-        exit(1);
     }
 
     head_ok = G_get_cellhd (name, mapset, &cellhd) >= 0;

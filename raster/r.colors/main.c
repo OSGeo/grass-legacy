@@ -10,6 +10,7 @@
 #include <dirent.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 
 static char *rules_files(void)
@@ -131,15 +132,15 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Creates/Modifies the color table associated with "
-		"a raster map layer.";
+		_("Creates/Modifies the color table associated with "
+		"a raster map layer.");
 
     opt1 = G_define_option();
     opt1->key         = "map";
     opt1->type        = TYPE_STRING;
     opt1->required    = NO;
     opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description = "raster map name";
+    opt1->description = _("Raster map name");
 
     opt2 = G_define_option();
     opt2->key         = "color";
@@ -147,33 +148,33 @@ int main (int argc, char *argv[])
     opt2->type        = TYPE_STRING;
     opt2->required    = NO;
     opt2->options     = "aspect,grey,grey.eq,grey.log,byg,byr,gyr,rainbow,ramp,random,ryg,wave,rules";
-    opt2->description = "type of color table";
+    opt2->description = _("Type of color table");
 
     opt3 = G_define_option();
     opt3->key         = "rast";
     opt3->type        = TYPE_STRING;
     opt3->required    = NO;
     opt3->gisprompt  = "old,cell,raster" ;
-    opt3->description = "raster map name from which to copy color table";
+    opt3->description = _("Raster map name from which to copy color table");
 
     opt4 = G_define_option();
     opt4->key         = "rules";
     opt4->type        = TYPE_STRING;
     opt4->required    = NO;
-    opt4->description = "name of predefined rules file";
+    opt4->description = _("Name of predefined rules file");
     opt4->options     = rules_files();
 
     flag1 = G_define_flag();
     flag1->key = 'w';
-    flag1->description = "Keep existing color table";
+    flag1->description = _("Keep existing color table");
 
     flag2 = G_define_flag();
     flag2->key = 'q';
-    flag2->description = "Quietly";
+    flag2->description = _("Quietly");
 
     flag3 = G_define_flag();
     flag3->key = 'l';
-    flag3->description = "List rules";
+    flag3->description = _("List rules");
 
     if (G_parser(argc, argv) < 0)
     {

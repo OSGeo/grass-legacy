@@ -1,12 +1,17 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "gis.h"
+#include "glocale.h"
 #define GLOBAL
 #include "kappa.h"
 
+int
 main (argc, argv)
  int argc;
  char *argv[];
 {
  int i;
- char *mapf, *reff; 
  struct GModule *module;
  struct { 
    struct Option *map, *ref, *output, *titles;
@@ -20,46 +25,46 @@ main (argc, argv)
 
  module = G_define_module();
  module->description =
-  "Calculate error matrix and kappa "
+  _("Calculate error matrix and kappa "
   "parameter for accuracy assessment of classification "
-  "result.";
+  "result.");
 
  parms.map = G_define_option();
  parms.map->key		="classification";
  parms.map->type	=TYPE_STRING;
  parms.map->required	=YES;
- parms.map->description	="File name of classification result";
+ parms.map->description	=_("File name of classification result");
 
  parms.ref = G_define_option();
  parms.ref->key		="reference";
  parms.ref->type	=TYPE_STRING;
  parms.ref->required	=YES;
- parms.ref->description	="File name of reference classes";
+ parms.ref->description	=_("File name of reference classes");
 
  parms.output = G_define_option();
  parms.output->key		="output";
  parms.output->type		=TYPE_STRING;
  parms.output->required		=NO;
- parms.output->description 	="Name of an output file containing of error matrix and kappa";
+ parms.output->description 	=_("Name of an output file containing of error matrix and kappa");
 
  parms.titles = G_define_option();
  parms.titles->key		="title";
  parms.titles->type		=TYPE_STRING;
  parms.titles->required		=NO;
- parms.titles->description	="Title for error matrix and kappa";
+ parms.titles->description	=_("Title for error matrix and kappa");
  parms.titles->answer		="ACCURACY ASSESSMENT";
 
  flags.w = G_define_flag();
  flags.w->key = 'w';
- flags.w->description = "wide report, 132 columns (default: 80)";
+ flags.w->description = _("wide report, 132 columns (default: 80)");
 
  flags.q = G_define_flag();
  flags.q->key	= 'q';
- flags.q->description = "quiet";
+ flags.q->description = _("quiet");
 
  flags.h = G_define_flag();
  flags.h->key = 'h';
- flags.h->description = "no header in the report";
+ flags.h->description = _("no header in the report");
 
  if (G_parser(argc, argv))
    exit (-1);
@@ -99,6 +104,8 @@ main (argc, argv)
 
 /* generate the error matrix, kappa and variance */
  calc_kappa();
+ 
+ return 0;
 }
 
 layer (s)

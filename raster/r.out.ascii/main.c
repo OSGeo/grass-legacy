@@ -22,6 +22,7 @@
 #include <string.h>
 #include "gis.h"
 #include "localproto.h"
+#include "glocale.h"
 
 
 int
@@ -57,7 +58,7 @@ main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-		"Converts a raster map layer into an ASCII text file.";
+		_("Converts a raster map layer into an ASCII text file.");
 
 /* Define the different options */
 
@@ -66,49 +67,49 @@ main(int argc, char *argv[])
     parm.map->type       = TYPE_STRING;
     parm.map->required   = YES;
     parm.map->gisprompt  = "old,cell,raster" ;
-    parm.map->description= "Name of an existing raster map" ;
+    parm.map->description= _("Name of an existing raster map") ;
 
     parm.output = G_define_option() ;
     parm.output->key        = "output";
     parm.output->type       = TYPE_STRING;
     parm.output->required   = NO;
     parm.output->gisprompt  = "any,cell,raster" ;
-    parm.output->description= "Name of an output ASCII grid map (use out=- for stdout)";
+    parm.output->description= _("Name of an output ASCII grid map (use out=- for stdout)");
 
     parm.dp = G_define_option() ;
     parm.dp->key        = "dp";
     parm.dp->type       = TYPE_INTEGER;
     parm.dp->required   = NO;
-    parm.dp->description= "Number of significant digits (floating point only)" ;
+    parm.dp->description= _("Number of significant digits (floating point only)") ;
 
     parm.width = G_define_option() ;
     parm.width->key        = "width" ;
     parm.width->type       = TYPE_INTEGER;
     parm.width->required   = NO;
-    parm.width->description="Number of values printed before wrapping a line (only SURFER or MODFLOW format)" ;
+    parm.width->description=_("Number of values printed before wrapping a line (only SURFER or MODFLOW format)") ;
 
     parm.null = G_define_option() ;
     parm.null->key        = "null";
     parm.null->type       = TYPE_STRING;
     parm.null->required   = NO;
     parm.null->answer     = "*";
-    parm.null->description= "String to represent null cell (GRASS grid only)" ;
+    parm.null->description= _("String to represent null cell (GRASS grid only)") ;
 
     flag.noheader = G_define_flag();
     flag.noheader->key = 'h';
-    flag.noheader->description = "Suppress printing of header information";
+    flag.noheader->description = _("Suppress printing of header information");
 
     flag.surfer = G_define_flag();
     flag.surfer->key = 's';
-    flag.surfer->description = "Write SURFER (Golden Software) ASCII grid";
+    flag.surfer->description = _("Write SURFER (Golden Software) ASCII grid");
 
     flag.modflow = G_define_flag();
     flag.modflow->key = 'm';
-    flag.modflow->description = "Write MODFLOW (USGS) ASCII array";
+    flag.modflow->description = _("Write MODFLOW (USGS) ASCII array");
 
     flag.int_out = G_define_flag();
     flag.int_out->key = 'i';
-    flag.int_out->description = "Force output of integer values";
+    flag.int_out->description = _("Force output of integer values");
 
     if (G_parser(argc, argv))
        	exit (-1);

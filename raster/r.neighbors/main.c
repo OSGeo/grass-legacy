@@ -2,10 +2,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "gis.h"
+#include "glocale.h"
 #define MAIN
 #include "ncb.h"
 #include "method.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 /*
  * July 99 - BB - added RASTER_MAP_TYPE args to methods in order
@@ -51,24 +53,24 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Makes each cell category value a "
+		_("Makes each cell category value a "
 		"function of the category values assigned to the cells "
 		"around it, and stores new cell values in an output raster "
-		"map layer.";
+		"map layer.");
 
 	parm.input = G_define_option() ;
 	parm.input->key        = "input" ;
 	parm.input->type       = TYPE_STRING ;
 	parm.input->required   = YES ;
 	parm.input->gisprompt  = "old,cell,raster" ;
-	parm.input->description= "Name of existing raster file" ;
+	parm.input->description= _("Name of existing raster file") ;
 
 	parm.output = G_define_option() ;
 	parm.output->key        = "output" ;
 	parm.output->type       = TYPE_STRING ;
 	parm.output->required   = YES ;
 	parm.output->gisprompt  = "any,cell,raster" ;
-	parm.output->description= "Name of the new raster file" ;
+	parm.output->description= _("Name of the new raster file") ;
 
 	parm.method = G_define_option() ;
 	parm.method->key        = "method" ;
@@ -83,29 +85,29 @@ int main (int argc, char *argv[])
 			*p = 0;
 		strcat (p, menu[n].name);
 	}
-	parm.method->description= "Neighborhood operation" ;
+	parm.method->description= _("Neighborhood operation") ;
 
 	parm.size = G_define_option() ;
 	parm.size->key        = "size" ;
 	parm.size->type       = TYPE_INTEGER ;
 	parm.size->required   = YES ;
 	parm.size->options    = "1,3,5,7,9,11,13,15,17,19,21,23,25" ;
-	parm.size->description= "Neighborhood size" ;
+	parm.size->description= _("Neighborhood size") ;
 
 	parm.title = G_define_option() ;
 	parm.title->key        = "title" ;
 	parm.title->key_desc   = "\"phrase\"" ;
 	parm.title->type       = TYPE_STRING ;
 	parm.title->required   = NO ;
-	parm.title->description= "Title of the output raster file" ;
+	parm.title->description= _("Title of the output raster file") ;
 
 	flag.align = G_define_flag();
 	flag.align->key = 'a';
-	flag.align->description = "Do not align output with the input";
+	flag.align->description = _("Do not align output with the input");
 
 	flag.quiet = G_define_flag();
 	flag.quiet->key = 'q';
-	flag.quiet->description = "Run quietly";
+	flag.quiet->description = _("Run quietly");
 
 	if (G_parser(argc,argv))
 		exit(1);

@@ -7,12 +7,15 @@
 /**********************************************************************/
 
 
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <fcntl.h>
 #include "segment.h"
 #include "gis.h"
 #define MAIN
 #include "stash.h"
+#include "glocale.h"
 
 struct Cell_head window;
 char *value;
@@ -49,41 +52,41 @@ char *argv[];
 	
 	/* Set description */
 	module              = G_define_module();
-	module->description = ""\
-	"Recursively traces the least cost path backwards to "
-	"cells from which the cumulative cost was determined.";
+	module->description =
+	_("Recursively traces the least cost path backwards to "
+	"cells from which the cumulative cost was determined.");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "x_input" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES ;
 	opt1->gisprompt  = "old,cell,raster" ;
-	opt1->description= "Name of raster map containing back-path easting information";
+	opt1->description= _("Name of raster map containing back-path easting information");
 
 	opt2 = G_define_option() ;
 	opt2->key        = "y_input" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = YES ;
 	opt2->gisprompt  = "old,cell,raster" ;
-	opt2->description= "Name of raster map containing back-path norhting information";
+	opt2->description= _("Name of raster map containing back-path norhting information");
 
 	opt3 = G_define_option() ;
 	opt3->key        = "coordinate" ;
 	opt3->type       = TYPE_STRING ;
 	opt3->multiple   = YES;
 	opt3->key_desc   = "x,y" ;
-	opt3->description= "The map E and N grid coordinates of starting points";
+	opt3->description= _("The map E and N grid coordinates of starting points");
 
 	opt4 = G_define_option() ;
 	opt4->key        = "output" ;
 	opt4->type       = TYPE_STRING ;
 	opt4->required   = YES ;
 	opt4->gisprompt  = "new,cell,raster" ;
-	opt4->description= "Name of spread path raster map" ;
+	opt4->description= _("Name of spread path raster map") ;
 
      	flag1 = G_define_flag();
     	flag1->key = 'v';
-     	flag1->description = "Run verbosly";
+     	flag1->description = _("Run verbosly");
 
 	/*   Do command line parsing	*/
 

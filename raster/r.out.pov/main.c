@@ -15,8 +15,9 @@
    Date: July 1998
 */
 
-#include "gis.h"
 #include <stdio.h>
+#include "gis.h"
+#include "glocale.h"
 
 void writeHeader(FILE *outf);
 void processProfiles(int inputFile, FILE *outputF);
@@ -103,7 +104,7 @@ int main(int argc, char *argv[])
 
 	module = G_define_module();
     module->description =
-		"Converts a raster map layer into a height-field file for POVRAY.";
+		_("Converts a raster map layer into a height-field file for POVRAY.");
 
 /* Define the different options */
 
@@ -112,31 +113,31 @@ int main(int argc, char *argv[])
     parm.map->type       = TYPE_STRING;
     parm.map->required   = YES;
     parm.map->gisprompt  = "old,cell,raster" ;
-    parm.map->description= "Name of an existing raster map" ;
+    parm.map->description= _("Name of an existing raster map") ;
 
     parm.tga = G_define_option() ;
     parm.tga->key        = "tga";
     parm.tga->type       = TYPE_STRING;
     parm.tga->required   = YES;
-    parm.tga->description= "Name of output povray file (TGA height field file)" ;
+    parm.tga->description= _("Name of output povray file (TGA height field file)") ;
 
     parm.hftype = G_define_option() ;
     parm.hftype->key        = "hftype";
     parm.hftype->type       = TYPE_INTEGER;
     parm.hftype->required   = NO;
-    parm.hftype->description= "Height-field type (0=actual heights 1=normalized)";
+    parm.hftype->description= _("Height-field type (0=actual heights 1=normalized)");
 
     parm.bias = G_define_option() ;
     parm.bias->key        = "bias";
     parm.bias->type       = TYPE_DOUBLE;
     parm.bias->required   = NO;
-    parm.bias->description= "Elevation bias";
+    parm.bias->description= _("Elevation bias");
 
     parm.scaleFactor = G_define_option() ;
     parm.scaleFactor->key        = "scale";
     parm.scaleFactor->type       = TYPE_DOUBLE;
     parm.scaleFactor->required   = NO;
-    parm.scaleFactor->description= "Vertical scaling factor";
+    parm.scaleFactor->description= _("Vertical scaling factor");
 
     if (G_parser(argc, argv))
        	exit (-1);

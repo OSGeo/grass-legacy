@@ -20,13 +20,11 @@
  * output.
  * andreas.lange@rhein-main.de
  *
- * $Id$
- *
  */
 
 #include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
+#include <math.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include "gis.h"
@@ -34,6 +32,7 @@
 #include "costHa.h"
 #include "cell_ptrHa.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define DATA(map, r, c)		(map)[(r) * ncols + (c)]
 
@@ -115,121 +114,120 @@ main (int argc, char *argv[])
 	
 	/* Set description */
 	module              = G_define_module();
-	module->description = ""\
-	"Simulates elliptically anisotropic spread on a graphics window and "
+	module->description =
+	_("Simulates elliptically anisotropic spread on a graphics window and "
 	"generates a raster map of the cumulative time of spread, "
 	"given raster maps containing the rates of spread (ROS), the ROS "
 	"directions and the spread origins. It optionally produces raster maps "
-	"to contain backlink UTM coordinates for tracing spread paths. (GRASS "
-	"Raster/Display Program)";
+	"to contain backlink UTM coordinates for tracing spread paths.");
 
 	parm.max = G_define_option() ;        
 	parm.max->key        = "max" ;        
 	parm.max->type       = TYPE_STRING ;  
 	parm.max->required   = YES ;
 	parm.max->gisprompt  = "old,cell,raster" ;
-	parm.max->description= "Name of raster map containing MAX rate of spread (ROS) (cm/min)" ;
+	parm.max->description = _("Name of raster map containing MAX rate of spread (ROS) (cm/min)");
 
         parm.dir = G_define_option() ;
 	parm.dir->key        = "dir" ;
 	parm.dir->type       = TYPE_STRING ;
 	parm.dir->required   = YES ;
 	parm.dir->gisprompt  = "old,cell,raster" ;
-	parm.dir->description= "Name of raster map containing DIRections of max ROS (degree)";
+	parm.dir->description = _("Name of raster map containing DIRections of max ROS (degree)");
 
         parm.base = G_define_option() ;
 	parm.base->key        = "base" ;
 	parm.base->type       = TYPE_STRING ;
 	parm.base->required   = YES ;
 	parm.base->gisprompt  = "old,cell,raster" ;
-	parm.base->description= "Name of raster map containing BASE ROS (cm/min)" ;
+	parm.base->description = _("Name of raster map containing BASE ROS (cm/min)") ;
 
 	parm.start = G_define_option() ;
 	parm.start->key        = "start" ;
 	parm.start->type       = TYPE_STRING ;
 	parm.start->required   = YES ;
 	parm.start->gisprompt  = "old,cell,raster" ;
-	parm.start->description= "Name of raster map containing STARTing sources" ;
+	parm.start->description = _("Name of raster map containing STARTing sources") ;
 
 	parm.spotdist = G_define_option() ;
 	parm.spotdist->key        = "spot_dist" ;
 	parm.spotdist->type       = TYPE_STRING ;
 	parm.spotdist->gisprompt  = "old,cell,raster" ;
-	parm.spotdist->description= "Name of raster map containing max SPOTting DISTance (m) (required w/ -s)" ;
+	parm.spotdist->description = _("Name of raster map containing max SPOTting DISTance (m) (required w/ -s)") ;
 
         parm.velocity = G_define_option() ;
         parm.velocity->key        = "w_speed" ;
         parm.velocity->type       = TYPE_STRING ;
         parm.velocity->gisprompt  = "old,cell,raster" ;
-        parm.velocity->description= "Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)";
+        parm.velocity->description = _("Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)");
 
         parm.mois = G_define_option() ;
         parm.mois->key        = "f_mois" ;
         parm.mois->type       = TYPE_STRING ;
         parm.mois->gisprompt  = "old,cell,raster" ;
-        parm.mois->description= "Name of raster map containing fine Fuel MOISture of the cell receiving a spotting firebrand (%) (required w/ -s)";
+        parm.mois->description = _("Name of raster map containing fine Fuel MOISture of the cell receiving a spotting firebrand (%) (required w/ -s)");
 
         parm.least = G_define_option() ;
         parm.least->key        = "least_size" ;
         parm.least->type       = TYPE_STRING ;
         parm.least->key_desc   = "odd int" ;
         parm.least->options 	  = "3,5,7,9,11,13,15" ;
-        parm.least->description= "Basic sampling window SIZE needed to meet certain accuracy (3)" ;
+        parm.least->description = _("Basic sampling window SIZE needed to meet certain accuracy (3)") ;
 
         parm.comp_dens = G_define_option() ;
         parm.comp_dens->key        = "comp_dens" ;
         parm.comp_dens->type       = TYPE_STRING ;
         parm.comp_dens->key_desc   = "decimal" ;
-        parm.comp_dens->description= "Sampling DENSity for additional COMPutin (range: 0.0 - 1.0 (0.5))" ;
+        parm.comp_dens->description = _("Sampling DENSity for additional COMPutin (range: 0.0 - 1.0 (0.5))") ;
 
         parm.init_time = G_define_option() ;
         parm.init_time->key        = "init_time" ;
         parm.init_time->type       = TYPE_STRING ;
         parm.init_time->key_desc   = "int (>= 0)" ;
-        parm.init_time->description= "INITial TIME for current simulation (0) (min)" ;
+        parm.init_time->description = _("INITial TIME for current simulation (0) (min)") ;
 
         parm.time_lag = G_define_option() ;
         parm.time_lag->key        = "lag" ;
         parm.time_lag->type       = TYPE_STRING ;
         parm.time_lag->key_desc   = "int (>= 0)" ;
-        parm.time_lag->description= "Simulating time duration LAG (fill the region) (min)" ;
+        parm.time_lag->description = _("Simulating time duration LAG (fill the region) (min)") ;
 
         parm.backdrop = G_define_option() ;
         parm.backdrop->key        = "backdrop" ;
         parm.backdrop->type       = TYPE_STRING ;
         parm.backdrop->gisprompt  = "old,cell,raster" ;
-        parm.backdrop->description= "Name of raster map as a display backdrop";
+        parm.backdrop->description = _("Name of raster map as a display backdrop");
 
 	parm.out = G_define_option() ;
 	parm.out->key        = "output" ;
 	parm.out->type       = TYPE_STRING ;
 	parm.out->required   = YES ;
 	parm.out->gisprompt  = "new,cell,raster" ;
-	parm.out->description= "Name of raster map to contain OUTPUT spread time (min)";
+	parm.out->description = _("Name of raster map to contain OUTPUT spread time (min)");
 
 	parm.x_out = G_define_option() ;
 	parm.x_out->key        = "x_output" ;
 	parm.x_out->type       = TYPE_STRING ;
 	parm.x_out->gisprompt  = "new,cell,raster" ;
-	parm.x_out->description= "Name of raster map to contain X_BACK coordiates";
+	parm.x_out->description = _("Name of raster map to contain X_BACK coordiates");
 
 	parm.y_out = G_define_option() ;
 	parm.y_out->key        = "y_output" ;
 	parm.y_out->type       = TYPE_STRING ;
 	parm.y_out->gisprompt  = "new,cell,raster" ;
-	parm.y_out->description= "Name of raster map to contain Y_BACK coordiates";
+	parm.y_out->description = _("Name of raster map to contain Y_BACK coordiates");
 
 	flag.verbose = G_define_flag();
 	flag.verbose->key = 'v';
-	flag.verbose->description = "Run VERBOSELY";
+	flag.verbose->description = _("Run VERBOSELY");
 
 	flag.display = G_define_flag();
 	flag.display->key = 'd';
-	flag.display->description = "DISPLAY 'live' spread process on screen";
+	flag.display->description = _("DISPLAY 'live' spread process on screen");
 
 	flag.spotting = G_define_flag();
 	flag.spotting->key = 's';
-	flag.spotting->description = "For wildfires: consider SPOTTING effect";
+	flag.spotting->description = _("For wildfires: consider SPOTTING effect");
 
 	/*   Parse command line */
 	if (G_parser(argc, argv))

@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int search_points = 12;
 
@@ -39,20 +40,20 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-		"Surface generation program.";
+		_("Surface generation program.");
 					        
     parm.input = G_define_option() ;
     parm.input->key        = "input" ;
     parm.input->type       = TYPE_STRING ;
     parm.input->required   = YES ;
-    parm.input->description= "Name of input raster map" ;
+    parm.input->description= _("Name of input raster map") ;
     parm.input->gisprompt  = "old,cell,raster" ;
 
     parm.output = G_define_option() ;
     parm.output->key        = "output" ;
     parm.output->type       = TYPE_STRING ;
     parm.output->required   = YES;
-    parm.output->description= "Name of output raster map" ;
+    parm.output->description= _("Name of output raster map") ;
     parm.output->gisprompt  = "any,cell,raster" ;
 
     parm.npoints = G_define_option() ;
@@ -60,7 +61,7 @@ main (int argc, char *argv[])
     parm.npoints->key_desc   = "count" ;
     parm.npoints->type       = TYPE_INTEGER ;
     parm.npoints->required   = NO ;
-    parm.npoints->description="Number of interpolation points";
+    parm.npoints->description=_("Number of interpolation points");
     parm.npoints->answer = "12";
 
     if (G_parser(argc, argv))

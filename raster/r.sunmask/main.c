@@ -106,9 +106,9 @@ int main(int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-            "Calculates cast shadow areas from sun position and DEM. Either "
+            _("Calculates cast shadow areas from sun position and DEM. Either "
             "A: exact sun position is specified, or B: date/time to calculate "
-            "the sun position by r.sunmask itself.";
+            "the sun position by r.sunmask itself.");
 
     parm.opt1 = G_define_option();
     parm.opt1->key        = "elev" ;
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
     parm.opt1->required   = YES ;
     parm.opt1->multiple   = NO ;
     parm.opt1->gisprompt  = "old,cell,raster" ;
-    parm.opt1->description= "Name of elevation raster map" ;
+    parm.opt1->description= _("Name of elevation raster map") ;
 
     parm.opt2 = G_define_option() ;
     parm.opt2->key        = "output" ;
@@ -124,93 +124,93 @@ int main(int argc, char *argv[])
     parm.opt2->required   = YES ;
     parm.opt2->multiple   = NO ;
     parm.opt2->gisprompt  = "new,cell,raster" ;
-    parm.opt2->description= "Output raster map having shadows" ;
+    parm.opt2->description= _("Output raster map having shadows") ;
 
     parm.opt3 = G_define_option() ;
     parm.opt3->key        = "altitude" ;
     parm.opt3->type       = TYPE_DOUBLE ;
     parm.opt3->required   = NO;
     parm.opt3->options    = "0-89.999";
-    parm.opt3->description= "A: altitude of the sun above horizon, degrees" ;
+    parm.opt3->description= _("A: altitude of the sun above horizon, degrees") ;
 
     parm.opt4 = G_define_option() ;
     parm.opt4->key        = "azimuth" ;
     parm.opt4->type       = TYPE_DOUBLE ;
     parm.opt4->required   = NO;
     parm.opt4->options    = "0-360";
-    parm.opt4->description= "A: azimuth of the sun from the north, degrees" ;
+    parm.opt4->description= _("A: azimuth of the sun from the north, degrees") ;
 
     parm.year = G_define_option();
     parm.year->key = "year";
     parm.year->type = TYPE_INTEGER;
     parm.year->required = NO;
-    parm.year->description = "B: year (1950..2050)";
+    parm.year->description = _("B: year (1950..2050)");
 
     parm.month = G_define_option();
     parm.month->key = "month";
     parm.month->type = TYPE_INTEGER;
     parm.month->required = NO;
-    parm.month->description = "B: month (0..12)";
+    parm.month->description = _("B: month (0..12)");
 
     parm.day = G_define_option();
     parm.day->key = "day";
     parm.day->type = TYPE_INTEGER;
     parm.day->required = NO;
-    parm.day->description = "B: day (0..31)";
+    parm.day->description = _("B: day (0..31)");
 
     parm.hour= G_define_option();
     parm.hour->key = "hour";
     parm.hour->type = TYPE_INTEGER;
     parm.hour->required = NO;
-    parm.hour->description = "B: hour (0..24)";
+    parm.hour->description = _("B: hour (0..24)");
 
     parm.minutes = G_define_option();
     parm.minutes->key = "minute";
     parm.minutes->type = TYPE_INTEGER;
     parm.minutes->required = NO;
-    parm.minutes->description = "B: minutes (0..60)";
+    parm.minutes->description = _("B: minutes (0..60)");
 
     parm.seconds = G_define_option();
     parm.seconds->key = "second";
     parm.seconds->type = TYPE_INTEGER;
     parm.seconds->required = NO;
-    parm.seconds->description = "B: seconds (0..60)";
+    parm.seconds->description = _("B: seconds (0..60)");
 
     parm.timezone = G_define_option();
     parm.timezone->key = "timezone";
     parm.timezone->type = TYPE_INTEGER;
     parm.timezone->required = NO;
-    parm.timezone->description = "B: timezone (east positive, offset from GMT, also use to adjust daylight savings)";
+    parm.timezone->description = _("B: timezone (east positive, offset from GMT, also use to adjust daylight savings)");
 
     parm.east = G_define_option();
     parm.east->key = "east";
     parm.east->key_desc    = "value";
     parm.east->type = TYPE_STRING;
     parm.east->required = NO;
-    parm.east->description = "east coordinate (point of interest, default: map center)";
+    parm.east->description = _("east coordinate (point of interest, default: map center)");
 
     parm.north = G_define_option();
     parm.north->key = "north";
     parm.north->key_desc    = "value";
     parm.north->type = TYPE_STRING;
     parm.north->required = NO;
-    parm.north->description = "north coordinate (point of interest, default: map center)";
+    parm.north->description = _("north coordinate (point of interest, default: map center)");
 
     flag1 = G_define_flag();
     flag1->key         = 'z' ;
-    flag1->description = "Zero is a real elevation" ;
+    flag1->description = _("Zero is a real elevation") ;
 
     flag2 = G_define_flag();
     flag2->key         = 'v' ;
-    flag2->description = "verbose output (also print out sun position etc.)" ;
+    flag2->description = _("verbose output (also print out sun position etc.)") ;
 
     flag3 = G_define_flag();
     flag3->key         = 's' ;
-    flag3->description = "calculate sun position only and exit" ;
+    flag3->description = _("calculate sun position only and exit") ;
 
     flag4 = G_define_flag();
     flag4->key         = 'g' ;
-    flag4->description = "Print the sun position output in shell script style" ;
+    flag4->description = _("Print the sun position output in shell script style") ;
     
     if (G_parser(argc, argv))
       exit(-1);

@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define NOMASK 1
 
@@ -30,35 +31,35 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Generates a raster map layer showing "
-		"watershed subbasins.";
+		_("Generates a raster map layer showing "
+		"watershed subbasins.");
 
     opt1 = G_define_option() ;
     opt1->key        = "number" ;
     opt1->type       = TYPE_INTEGER ;
     opt1->required   = YES ;
-    opt1->description= "Number of passes through the dataset" ;
+    opt1->description= _("Number of passes through the dataset") ;
 	opt1->gisprompt  = "old,cell,raster" ;
 
     opt2 = G_define_option() ;
     opt2->key        = "c_map" ;
     opt2->type       = TYPE_STRING ;
     opt2->required   = YES ;
-    opt2->description= "Coded stream network file name";
+    opt2->description= _("Coded stream network file name");
 	opt2->gisprompt  = "old,cell,raster" ;
 
     opt3 = G_define_option() ;
     opt3->key        = "t_map" ;
     opt3->type       = TYPE_STRING ;
     opt3->required   = YES ;
-    opt3->description= "Thinned ridge network file name" ;
+    opt3->description= _("Thinned ridge network file name") ;
 	opt3->gisprompt  = "old,cell,raster" ;
 
     opt4 = G_define_option() ;
     opt4->key        = "result" ;
     opt4->type       = TYPE_STRING ;
     opt4->required   = YES ;
-    opt4->description= "Name for the resultant watershed partition file" ;
+    opt4->description= _("Name for the resultant watershed partition file") ;
 	opt4->gisprompt  = "new,cell,raster" ;
 
     if (G_parser(argc, argv) < 0)

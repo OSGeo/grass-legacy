@@ -1,5 +1,9 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 #include <math.h>
 #include "gis.h"
+#include "glocale.h"
 
 int main(int argc, char *argv[])
 {
@@ -29,8 +33,8 @@ int main(int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Outputs a covariance/correlation matrix "
-		"for user-specified raster map layer(s).";
+		_("Outputs a covariance/correlation matrix "
+		"for user-specified raster map layer(s).");
 
     maps = G_define_option();
     maps->key = "map";
@@ -38,15 +42,15 @@ int main(int argc, char *argv[])
     maps->multiple = YES;
     maps->type = TYPE_STRING;
     maps->gisprompt  = "old,cell,raster" ;
-    maps->description = "Raster map(s) to be read";
+    maps->description = _("Raster map(s) to be read");
 
     flag.r = G_define_flag();
     flag.r->key = 'r';
-    flag.r->description = "Print correlation matrix";
+    flag.r->description = _("Print correlation matrix");
 
     flag.q = G_define_flag();
     flag.q->key = 'q';
-    flag.q->description = "Quiet";
+    flag.q->description = _("Quiet");
 
     if (G_parser(argc, argv))
 	exit(1);

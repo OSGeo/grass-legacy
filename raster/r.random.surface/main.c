@@ -1,4 +1,8 @@
-/* main.c								*/
+/* main.c */
+#include <stdlib.h>
+#include <stdio.h>
+#include "gis.h"
+#include "glocale.h"
 
 #define TRACE
 #undef TRACE
@@ -9,6 +13,7 @@
 #include "ransurf.h"
 #undef MAIN
 
+int
 main (argc, argv)
 	int	argc;
 	char    *argv[];
@@ -22,7 +27,7 @@ main (argc, argv)
 
 	module = G_define_module();
 	module->description =
-		"Generates random surface(s) with spatial dependence.";
+		_("Generates random surface(s) with spatial dependence.");
 
 	Init( argc, argv);
 	if( Uniform->answer)
@@ -62,4 +67,6 @@ main (argc, argv)
 		if(! Verbose->answer) printf( "\n");
 		SaveMap( DoMap, MapSeed);
 	}
+
+	return 0;
 }

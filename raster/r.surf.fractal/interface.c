@@ -5,7 +5,10 @@
 /****************************************************************************/
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "frac.h"
+#include "gis.h"
+#include "glocale.h"
 
 int 
 interface (
@@ -27,12 +30,12 @@ interface (
 
     module = G_define_module();
     module->description =
-		"GRASS module to create a fractal surface of a given "
+		_("GRASS module to create a fractal surface of a given "
 		"fractal dimension. Uses spectral synthesis method. "
 		"Can create intermediate layers showing the build up "
 		"of different spectral coefficients (see Saupe, pp.106-107 "
 		"for an example of this). Use this module to generate "
-		"naturally looking synthetical elevation models (DEM).";
+		"naturally looking synthetical elevation models (DEM).");
 
     /*---------------------------------------------------------------------*/
     /*                              SET PARSER OPTIONS                     */
@@ -48,18 +51,18 @@ interface (
          	     and an indication whether manditory or not */
 
     rast_out->key         = "out";
-    rast_out->description = "Name of fractal surface raster layer";
+    rast_out->description = _("Name of fractal surface raster layer");
     rast_out->type        = TYPE_STRING;
     rast_out->required    = YES;
     
     frac_dim->key         = "d";
-    frac_dim->description = "Fractal dimension of surface (2 < D < 3)";
+    frac_dim->description = _("Fractal dimension of surface (2 < D < 3)");
     frac_dim->type        = TYPE_DOUBLE;
     frac_dim->required    = NO;
     frac_dim->answer	  = "2.05";
 
     num_images->key         = "n";
-    num_images->description = "Number of intermediate images to produce";
+    num_images->description = _("Number of intermediate images to produce");
     num_images->type        = TYPE_INTEGER;
     num_images->required    = NO;
     num_images->answer	    = "0";

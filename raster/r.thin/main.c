@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 char *error_prefix;
 
@@ -30,22 +31,22 @@ main (int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-		"Thins non-zero cells that denote linear "
-		"features in a raster map layer.";
+		_("Thins non-zero cells that denote linear "
+		"features in a raster map layer.");
 					        
 	opt1 = G_define_option() ;
 	opt1->key        = "input" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES ;
 	opt1->gisprompt  = "old,cell,raster" ;
-	opt1->description= "Name of existing raster map" ;
+	opt1->description= _("Name of existing raster map") ;
 
 	opt2 = G_define_option() ;
 	opt2->key        = "output" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = YES ;
 	opt2->gisprompt  = "new,cell,raster" ;
-	opt2->description= "Name of output raster file" ;
+	opt2->description= _("Name of output raster file") ;
 
 	if (G_parser(argc, argv))
 		exit(-1);

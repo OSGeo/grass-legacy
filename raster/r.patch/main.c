@@ -3,6 +3,7 @@
 #include "gis.h"
 #include "nfiles.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -35,9 +36,9 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
 	module->description =
-		"Creates a composite raster map layer by using "
+		_("Creates a composite raster map layer by using "
 		"known category values from one (or more) map layer(s) "
-		"to fill in areas of \"no data\" in another map layer.";
+		"to fill in areas of \"no data\" in another map layer.");
 
 /* Define the different options */
 
@@ -47,24 +48,24 @@ int main (int argc, char *argv[])
     opt1->required   = YES;
     opt1->multiple   = YES;
     opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description= "Name of raster maps to be patched together" ;
+    opt1->description= _("Name of raster maps to be patched together") ;
 
     opt2 = G_define_option() ;
     opt2->key        = "output";
     opt2->type       = TYPE_STRING;
     opt2->required   = YES;
     opt2->gisprompt  = "new,cell,raster" ;
-    opt2->description= "Name of the result map";
+    opt2->description= _("Name of the result map");
 
 /* Define the different flags */
 
     flag1 = G_define_flag() ;
     flag1->key         = 'q' ;
-    flag1->description = "Quiet" ;
+    flag1->description = _("Quiet") ;
 
     zeroflag = G_define_flag() ;
     zeroflag->key         = 'z' ;
-    zeroflag->description = "Use zero (0) for transparency instead of NULL" ;
+    zeroflag->description = _("Use zero (0) for transparency instead of NULL") ;
 
     verbose = 1;
     ZEROFLAG = 0; /* default: use NULL for transparency */

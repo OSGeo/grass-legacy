@@ -4,6 +4,7 @@
 #endif
 #include "gis.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 FILE *Tmp_fd = NULL;
 char *Tmp_file = NULL;
@@ -37,21 +38,21 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Convert an ESRI ARC/INFO ascii raster file (GRID) "
-		"into a (binary) raster map layer.";
+		_("Convert an ESRI ARC/INFO ascii raster file (GRID) "
+		"into a (binary) raster map layer.");
 
 	parm.input = G_define_option();
 	parm.input->key = "input";
 	parm.input->type = TYPE_STRING;
 	parm.input->required = YES;
-	parm.input->description = "ARC/INFO ascii raster file (GRID) to be imported";
+	parm.input->description = _("ARC/INFO ascii raster file (GRID) to be imported");
 	parm.input->gisprompt = "file,file,file";
 
 	parm.output = G_define_option();
 	parm.output->key = "output";
 	parm.output->type = TYPE_STRING;
 	parm.output->required = YES;
-	parm.output->description = "Name for resultant raster map";
+	parm.output->description = _("Name for resultant raster map");
 	parm.output->gisprompt = "any,cell,raster";
 
 	parm.type = G_define_option();
@@ -60,21 +61,21 @@ int main (int argc, char *argv[])
 	parm.type->required = NO;
 	parm.type->options = "CELL,FCELL,DCELL";
         parm.type->answer = "FCELL";
-	parm.type->description = "Storage type for resultant raster map";
+	parm.type->description = _("Storage type for resultant raster map");
 
 	parm.title = G_define_option();
 	parm.title->key = "title";
 	parm.title->key_desc = "\"phrase\"";
 	parm.title->type = TYPE_STRING;
 	parm.title->required = NO;
-	parm.title->description = "Title for resultant raster map";
+	parm.title->description = _("Title for resultant raster map");
 
         parm.mult = G_define_option();
         parm.mult->key = "mult";
         parm.mult->type = TYPE_DOUBLE;
         parm.mult->answer = "1.0";
         parm.mult->required = NO;
-        parm.mult->description = "Multiplier for ascii data" ;
+        parm.mult->description = _("Multiplier for ascii data") ;
                                                 
 
 

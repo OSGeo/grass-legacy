@@ -7,6 +7,7 @@
 #include "gis.h"
 #include "raster.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int main (int argc, char **argv)
 {
@@ -21,9 +22,9 @@ int main (int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Interactive tool used to draw and save "
+		_("Interactive tool used to draw and save "
 		"vector features on a graphics monitor using a pointing "
-		"device (mouse).";
+		"device (mouse).");
 
     if(getenv("GRASS_ANOTHER_BUTTON")){
 	    leftb   = 1; lefts   = "Left:  ";

@@ -4,8 +4,6 @@
  *
  * GRIDATB.FOR Author: Keith Beven <k.beven@lancaster.ac.uk>
  *
- * $Id$
- *
  *	Copyright (C) 2000 by the GRASS Development Team
  *	Author: Huidae Cho <grass4u@gmail.com>
  *		Hydro Laboratory, Kyungpook National University
@@ -16,10 +14,15 @@
  *
  */
 
+#include <stdlib.h>
+#include <stdio.h>
+
 #define	MAIN
 #include "local_proto.h"
 #undef	MAIN
 
+#include "gis.h"
+#include "glocale.h"
 
 int
 main(int argc, char **argv)
@@ -40,30 +43,30 @@ main(int argc, char **argv)
 	G_gisinit(argv[0]);
 
 	module = G_define_module();
-    module->description =
-		"Creates topographic index, ln(a/tan(beta)), map from elevation map.";
+        module->description =
+		_("Creates topographic index, ln(a/tan(beta)), map from elevation map.");
 
 	params.input			= G_define_option();
 	params.input->key		= "input";
-	params.input->description	= "Elevation map";
+	params.input->description	= _("Elevation map");
 	params.input->type		= TYPE_STRING;
 	params.input->required		= YES;
 	params.input->gisprompt		= "old,cell,raster";
 
 	params.output			= G_define_option();
 	params.output->key		= "output";
-	params.output->description	= "Topographic index ln(a/tanB) map";
+	params.output->description	= _("Topographic index ln(a/tanB) map");
 	params.output->type		= TYPE_STRING;
 	params.output->required		= YES;
 	params.output->gisprompt	= "new,cell,raster";
 
 	flags.overwr			= G_define_flag();
 	flags.overwr->key		= 'o';
-	flags.overwr->description	= "Overwrite output map";
+	flags.overwr->description	= _("Overwrite output map");
 
 	flags.verbose			= G_define_flag();
 	flags.verbose->key		= 'v';
-	flags.verbose->description	= "Output verbosely";
+	flags.verbose->description	= _("Output verbosely");
 
 	if(G_parser(argc, argv)){
 	        exit(-1);

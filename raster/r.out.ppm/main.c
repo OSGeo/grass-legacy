@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #include "gis.h"
+#include "glocale.h"
 
 #define DEF_RED 255
 #define DEF_GRN 255
@@ -38,8 +39,8 @@ int main( int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Converts a GRASS raster file to a PPM image file "
-		"at the pixel resolution of the CURRENTLY DEFINED REGION.";
+		_("Converts a GRASS raster file to a PPM image file "
+		"at the pixel resolution of the CURRENTLY DEFINED REGION.");
 
     rast = G_define_option();
     rast->key                    = "input";
@@ -47,7 +48,7 @@ int main( int argc, char *argv[])
     rast->required               = YES;
     rast->multiple               = NO;
     rast->gisprompt              = "old,cell,Raster";
-    rast->description            = "Raster file to be converted.";
+    rast->description            = _("Raster input map");
 
     ppm_file = G_define_option();
     ppm_file->key                    = "output";
@@ -56,15 +57,15 @@ int main( int argc, char *argv[])
     ppm_file->multiple               = NO;
     ppm_file->answer	       	     = "<rasterfilename>.ppm";
     ppm_file->description            
-		    = "Name for new PPM file. (use out=- for stdout)";
+		    = _("Name for new PPM file. (use out=- for stdout)");
 
     bequiet = G_define_flag ();
     bequiet->key = 'q';
-    bequiet->description = "Run quietly";
+    bequiet->description = _("Run quietly");
 
     gscale = G_define_flag ();
     gscale->key = 'G';
-    gscale->description = "Output greyscale instead of color";
+    gscale->description = _("Output greyscale instead of color");
 
     if (G_parser (argc, argv))
 	exit (-1);

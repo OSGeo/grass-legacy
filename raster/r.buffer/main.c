@@ -14,6 +14,7 @@
 #define GLOBAL
 #include "distance.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -44,36 +45,36 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Creates a raster map layer showing buffer zones "
-		"surrounding cells that contain non-NULL category values.";
+		_("Creates a raster map layer showing buffer zones "
+		"surrounding cells that contain non-NULL category values.");
 
     opt1 = G_define_option() ;
     opt1->key        = "input" ;
     opt1->type       = TYPE_DOUBLE;
     opt1->required   = YES ;
     opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description= "Name of input map" ;
+    opt1->description= _("Name of input map") ;
 
     opt2 = G_define_option() ;
     opt2->key        = "output" ;
     opt2->type       = TYPE_STRING ;
     opt2->required   = YES ;
     opt2->gisprompt  = "new,cell,raster" ;
-    opt2->description= "Name of output map" ;
+    opt2->description= _("Name of output map") ;
 
     opt3 = G_define_option() ;
     opt3->key        = "distances" ;
     opt3->type       = TYPE_DOUBLE;
     opt3->required   = YES ;
     opt3->multiple   = YES;
-    opt3->description= "Distance zone(s)" ;
+    opt3->description= _("Distance zone(s)") ;
 
     opt4 = G_define_option() ;
     opt4->key        = "units" ;
     opt4->options    = "meters,kilometers,feet,miles,nautmiles";
     opt4->type       = TYPE_STRING ;
     opt4->required   = NO ;
-    opt4->description= "Units of distance" ;
+    opt4->description= _("Units of distance") ;
     opt4->answer     = "meters";
 
     flag1 = G_define_flag() ;
@@ -82,7 +83,7 @@ int main (int argc, char *argv[])
 
     flag2 = G_define_flag() ;
     flag2->key         = 'z' ;  
-    flag2->description = "Ignore zero (0) data cells instead of NULL cells" ;
+    flag2->description = _("Ignore zero (0) data cells instead of NULL cells") ;
 
     if (G_parser(argc, argv))
         exit(-1);

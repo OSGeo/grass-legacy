@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "filter.h"
 #include "glob.h"
+#include "gis.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -28,7 +30,7 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Raster file matrix filter.";
+		_("Raster file matrix filter.");
 
     /* Define the different options */
 
@@ -38,7 +40,7 @@ int main (int argc, char *argv[])
     opt1->multiple   = NO;
     opt1->required   = YES;
     opt1->gisprompt  = "old,cell,raster" ;
-    opt1->description= "Name of the input raster file" ;
+    opt1->description= _("Name of the input raster file") ;
 
     opt2 = G_define_option() ;
     opt2->key        = "output";
@@ -46,14 +48,14 @@ int main (int argc, char *argv[])
     opt2->multiple   = NO;
     opt2->required   = YES;
     opt2->gisprompt  = "new,cell,raster" ;
-    opt2->description= "Name of the output raster file" ;
+    opt2->description= _("Name of the output raster file") ;
 
     opt3 = G_define_option() ;
     opt3->key        = "filter";
     opt3->type       = TYPE_STRING;
     opt3->multiple   = NO;
     opt3->required   = YES;
-    opt3->description= "Name of the filter file" ;
+    opt3->description= _("Name of the filter file") ;
 
     opt4 = G_define_option() ;
     opt4->key        = "repeat";
@@ -61,30 +63,30 @@ int main (int argc, char *argv[])
     opt4->multiple   = NO;
     opt4->required   = NO;
     opt4->answer     = "1";
-    opt4->description= "Number of times to repeat the filter" ;
+    opt4->description= _("Number of times to repeat the filter") ;
 
     opt5 = G_define_option() ;
     opt5->key        = "title";
     opt5->key_desc   = "\"phrase\"";
     opt5->type       = TYPE_STRING;
     opt5->required   = NO;
-    opt5->description= "Output raster file title" ;
+    opt5->description= _("Output raster file title") ;
 
     /* Define the different flags */
 
     flag1 = G_define_flag() ;
     flag1->key         = 'q' ;
-    flag1->description = "Quiet" ;
+    flag1->description = _("Quiet") ;
 
     /* this isn't implemented at all 
     flag3 = G_define_flag() ;
     flag3->key         = 'p' ;
-    flag3->description = "Preserved edge" ;
+    flag3->description = _("Preserved edge") ;
     */
 
     flag2 = G_define_flag() ;
     flag2->key         = 'z' ;
-    flag2->description = "Apply filter only to zero data values" ;
+    flag2->description = _("Apply filter only to zero data values") ;
 
     if (G_parser(argc, argv))
         exit(-1);

@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 #include "global.h"
+#include "glocale.h"
 
 int 
 main (int argc, char *argv[])
@@ -22,7 +23,7 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"This routine produces the quantization file for a floating-point map.";
+		_("This routine produces the quantization file for a floating-point map.");
 
     basemap = G_define_option();
     basemap->key = "basemap";
@@ -30,7 +31,7 @@ main (int argc, char *argv[])
     basemap->type = TYPE_STRING;
     basemap->answer = "NONE";
     basemap->gisprompt  = "old,cell,raster" ;
-    basemap->description = "Base map to take quant rules from";
+    basemap->description = _("Base map to take quant rules from");
 
     input = G_define_option();
     input->key = "input";
@@ -38,12 +39,12 @@ main (int argc, char *argv[])
     input->multiple = YES ;
     input->type = TYPE_STRING;
     input->gisprompt  = "old,cell,raster" ;
-    input->description =  "Raster map(s) to be quantized";
+    input->description =  _("Raster map(s) to be quantized");
 
     fprange = G_define_option();
     fprange->key = "fprange";
     fprange->key_desc = "dmin,dmax";
-    fprange->description = "Floating point range: dmin,dmax";
+    fprange->description = _("Floating point range: dmin,dmax");
     fprange->type = TYPE_STRING;
     fprange->answer = "";
     fprange->required = YES;
@@ -51,18 +52,18 @@ main (int argc, char *argv[])
     range = G_define_option();
     range->key = "range";
     range->key_desc = "min,max";
-    range->description = "Integer range: min,max";
+    range->description = _("Integer range: min,max");
     range->type = TYPE_STRING;
     range->answer = "1,255";
     range->required = YES;
 
     trunc = G_define_flag();
     trunc->key = 't';
-    trunc->description	= "truncate floating point data";
+    trunc->description	= _("Truncate floating point data");
 
     rnd = G_define_flag();
     rnd->key = 'r';
-    rnd->description	= "round floating point data";
+    rnd->description	= _("Round floating point data");
 
     if (G_parser(argc, argv))
 	exit(1);

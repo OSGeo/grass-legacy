@@ -1,5 +1,4 @@
 /*
-*$Id$
 ************************************************************
 * MODULE: r.le.setup/main.c                                *
 *         Version 5.0beta            Oct. 1, 2001          *
@@ -21,6 +20,11 @@
 *				                           *
 ************************************************************/
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "gis.h"
+
 #define MAIN
 #include "setup.h"
 #include "config.h"
@@ -28,6 +32,7 @@
 
 				/* MAIN PROGRAM */
 
+int
 main(argc, argv)
 int  argc;
 char *argv[];

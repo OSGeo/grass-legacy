@@ -1,5 +1,4 @@
 /*
-* $Id$
 *
 *****************************************************************************
 *
@@ -37,7 +36,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <strings.h>
+#include <string.h>
 #include <math.h>
 
 /* for using the "open" statement */
@@ -49,6 +48,7 @@
 #include <unistd.h>
 
 #include "gis.h"
+#include "glocale.h"
 
 #define DEBUG
 #include "tinf.h"
@@ -83,46 +83,46 @@ main(int argc, char **argv)
 
    module = G_define_module();
    module->description = 
-       "Filters and generates a depressionless elevation map and a flow "
-       "direction map from a given elevation layer";
+       _("Filters and generates a depressionless elevation map and a flow "
+       "direction map from a given elevation layer");
 
    opt1 = G_define_option();
    opt1->key        = "input" ;
    opt1->type       = TYPE_STRING ;
    opt1->required   = YES ;
    opt1->gisprompt  = "old,cell,raster" ;
-   opt1->description= "Name of existing raster map containing elevation surface\n" ;
+   opt1->description= _("Name of existing raster map containing elevation surface") ;
    
    opt2 = G_define_option() ;
    opt2->key        = "elevation" ;
    opt2->type       = TYPE_STRING ;
    opt2->required   = YES ;
    opt2->gisprompt  = "new,cell,raster" ;
-   opt2->description= "Output elevation raster map after filling\n" ;
+   opt2->description= _("Output elevation raster map after filling") ;
 
    opt4 = G_define_option() ;
    opt4->key        = "direction" ;
    opt4->type       = TYPE_STRING ;
    opt4->required   = YES ;
    opt4->gisprompt  = "new,cell,raster" ;
-   opt4->description= "Output direction raster map\n" ;
+   opt4->description= _("Output direction raster map") ;
 
    opt5 = G_define_option() ;
-   opt5->key        ="areas" ;
-   opt5->type       =TYPE_STRING ;
+   opt5->key        = "areas" ;
+   opt5->type       = TYPE_STRING ;
    opt5->required   = NO ;
    opt5->gisprompt  = "new,cell,raster" ;
-   opt5->description="Output raster map of problem areas\n" ;
+   opt5->description= _("Output raster map of problem areas") ;
 
    opt3 = G_define_option() ;
    opt3->key        = "type" ;
    opt3->type       = TYPE_STRING ;
    opt3->required   = NO;
-   opt3->description= "Output direction type AGNPS, ANSWERS or GRASS aspect\n              default: GRASS\n" ;
+   opt3->description= _("Output direction type AGNPS, ANSWERS or GRASS aspect\n              default: GRASS") ;
    
    flag1 = G_define_flag() ;
    flag1->key        = 'f' ;
-   flag1->description= "find unresolved areas only" ;
+   flag1->description= _("find unresolved areas only") ;
    flag1->answer     = '0' ;
 
 

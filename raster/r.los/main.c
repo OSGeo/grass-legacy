@@ -22,6 +22,7 @@
 #include "cmd_line.h"
 #include "point.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 #define   COLOR_SHIFT      155.0
 #define   COLOR_MAX        255.0
@@ -58,7 +59,7 @@ main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Line-of-sight raster analysis program.";
+		_("Line-of-sight raster analysis program.");
 
 	/* Define the different options */
 
@@ -67,27 +68,27 @@ main (int argc, char *argv[])
 	opt1->type       = TYPE_STRING;
 	opt1->required   = YES;
 	opt1->gisprompt  = "old,cell,raster" ;
-	opt1->description= "Raster map containing elevation data" ;
+	opt1->description= _("Raster map containing elevation data") ;
    
 	opt7 = G_define_option() ;
 	opt7->key        = "output";
 	opt7->type       = TYPE_STRING;
 	opt7->required   = YES;
 	opt7->gisprompt  = "new,cell,raster" ;
-	opt7->description= "Raster map name for storing results";
+	opt7->description= _("Raster map name for storing results");
 
 	opt3 = G_define_option() ;
 	opt3->key        = "coordinate";
 	opt3->type       = TYPE_STRING;
 	opt3->required   = YES;
 	opt3->key_desc   = "x,y";
-	opt3->description= "Coordinate identifying the viewing location";
+	opt3->description= _("Coordinate identifying the viewing location");
 
 	opt2 = G_define_option() ;
 	opt2->key        = "patt_map";
 	opt2->type       = TYPE_STRING;
 	opt2->required   = NO;
-	opt2->description= "Binary (1/0) raster map";
+	opt2->description= _("Binary (1/0) raster map");
 	opt2->gisprompt  = "old,cell,raster" ;
 
 	opt5 = G_define_option() ;
@@ -95,7 +96,7 @@ main (int argc, char *argv[])
 	opt5->type       = TYPE_DOUBLE;
 	opt5->required   = NO;
 	opt5->answer     = "1.75";
-	opt5->description= "Height of the viewing location";
+	opt5->description= _("Height of the viewing location");
 
 	opt6 = G_define_option() ;
 	opt6->key        = "max_dist";
@@ -103,7 +104,7 @@ main (int argc, char *argv[])
 	opt6->required   = NO;
 	opt6->answer     = "1000";
 	opt6->options    = "0-99999" ;
-	opt6->description= "Max distance from the viewing point (meters)" ;
+	opt6->description= _("Max distance from the viewing point (meters)") ;
 
 	if (G_parser(argc, argv))
 		exit (-1);

@@ -3,13 +3,14 @@
 /***       Function to get input from user and check files can be opened       ***/
 /***  									       ***/
 /***         Jo Wood, Department of Geography, V1.2, 7th February 1992         ***/
-/***				$Id$					       ***/
 /*********************************************************************************/
 
 #include <stdlib.h>
 #include <string.h>
 
 #include "param.h"
+#include "gis.h"
+#include "glocale.h"
 
 void interface(int argc, char **argv) 
 {
@@ -42,8 +43,8 @@ void interface(int argc, char **argv)
 
     module = G_define_module();
     module->description =
-      "Extracts terrain parameters from a DEM. Uses a multi-scalar approach"
-      " by taking fitting quadratic parameters to any size window (via least squares)";
+      _("Extracts terrain parameters from a DEM. Uses a multi-scalar approach"
+      " by taking fitting quadratic parameters to any size window (via least squares)");
 
     rast_in   = G_define_option();	/* Request memory for each option.	*/
     rast_out  = G_define_option();
@@ -60,29 +61,29 @@ void interface(int argc, char **argv)
     /* a 'type' (eg int, or string), and an indication whether manditory or not	*/
 
     rast_in->key	  = "in";
-    rast_in->description  = "Raster surface layer to process";
+    rast_in->description  = _("Raster surface layer to process");
     rast_in->type	  = TYPE_STRING;
     rast_in->required	  = YES;
 
 
     rast_out->key	  = "out";
-    rast_out->description = "Output raster layer containing morphometric parameter";
+    rast_out->description = _("Output raster layer containing morphometric parameter");
     rast_out->type	  = TYPE_STRING;
     rast_out->required	  = YES;
 
     tol1_val->key	  = "s_tol";
-    tol1_val->description = "Slope tolerance that defines a 'flat' surface (degrees)";
+    tol1_val->description = _("Slope tolerance that defines a 'flat' surface (degrees)");
     tol1_val->type	  = TYPE_DOUBLE;
     tol1_val->required	  = NO;
     tol1_val->answer	  = "1.0";
 
     tol2_val->key	  = "c_tol";
-    tol2_val->description = "Curvature tolerance that defines 'planar' surface";
+    tol2_val->description = _("Curvature tolerance that defines 'planar' surface");
     tol2_val->type	  = TYPE_DOUBLE;
     tol2_val->required	  = NO;
     tol2_val->answer	  = "0.0001";
 
-    sprintf(buf, "Size of processing window (odd number only, max: %i)", MAX_WSIZE);
+    sprintf(buf, _("Size of processing window (odd number only, max: %i)"), MAX_WSIZE);
     win_size->key	  = "size";
     win_size->description = buf;
     win_size->type	  = TYPE_INTEGER;
@@ -90,26 +91,26 @@ void interface(int argc, char **argv)
     win_size->answer	  = "3";
 
     parameter->key	  = "param";
-    parameter->description= "Morphometric parameter in 'size' window to calculate";
+    parameter->description= _("Morphometric parameter in 'size' window to calculate");
     parameter->type	  = TYPE_STRING;
     parameter->required	  = NO;
     parameter->options	  = "elev,slope,aspect,profc,planc,longc,crosc,minic,maxic,feature";
     parameter->answer  	  = "elev";
 
     expon->key	  	  = "exp";
-    expon->description 	  = "Exponent for distance weighting (0.0-4.0)";
+    expon->description 	  = _("Exponent for distance weighting (0.0-4.0)");
     expon->type	  	  = TYPE_DOUBLE;
     expon->required	  = NO;
     expon->answer	  = "0.0";
 
     vert_sc->key	  = "zscale";
-    vert_sc->description  = "Vertical scaling factor";
+    vert_sc->description  = _("Vertical scaling factor");
     vert_sc->type	  = TYPE_DOUBLE;
     vert_sc->required	  = NO;
     vert_sc->answer	  = "1.0";
 
     constr->key		  = 'c';
-    constr->description   = "Constrain model through central window cell";
+    constr->description   = _("Constrain model through central window cell");
 
 
     if (G_parser(argc,argv))		/* Actually performs the prompting for	*/

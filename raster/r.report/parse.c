@@ -1,6 +1,8 @@
 #include <string.h>
 #include <unistd.h>
 #include "global.h"
+#include "gis.h"
+#include "glocale.h"
 
 int parse_command_line (int argc, char *argv[])
 {
@@ -39,7 +41,7 @@ int parse_command_line (int argc, char *argv[])
 	parms.cell->required = YES ;
 	parms.cell->multiple = YES ;
 	parms.cell->gisprompt  = "old,cell,raster" ;
-	parms.cell->description = "raster map(s) to report on";
+	parms.cell->description = _("Raster map(s) to report on");
 
 	parms.units = G_define_option();
 	parms.units->key   = "units";
@@ -47,7 +49,7 @@ int parse_command_line (int argc, char *argv[])
 	parms.units->required = NO ;
 	parms.units->multiple = YES ;
 	parms.units->description =
-	    "mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p(ercent_cover)";
+	    _("mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p(ercent_cover)");
 
 	parms.nv = G_define_option();
 	parms.nv->key   = "null";
@@ -55,66 +57,66 @@ int parse_command_line (int argc, char *argv[])
 	parms.nv->required = NO ;
         parms.nv->multiple   = NO;
 	parms.nv->answer     = "*";
-        parms.nv->description= "string representing no data cell value";
+        parms.nv->description= _("Character representing no data cell value");
 
 	parms.pl = G_define_option();
 	parms.pl->key = "pl";
 	parms.pl->type = TYPE_INTEGER;
 	parms.pl->required = NO ;
-	sprintf (pl_desc, "page length (default: %d lines)", DEFAULT_PAGE_LENGTH);
+	sprintf (pl_desc, _("Page length (default: %d lines)"), DEFAULT_PAGE_LENGTH);
 	parms.pl->description = pl_desc;
 
 	parms.pw = G_define_option();
 	parms.pw->key = "pw";
 	parms.pw->type = TYPE_INTEGER;
 	parms.pw->required = NO ;
-	sprintf (pw_desc, "page width (default: %d characters)", DEFAULT_PAGE_WIDTH);
+	sprintf (pw_desc, _("Page width (default: %d characters)"), DEFAULT_PAGE_WIDTH);
 	parms.pw->description = pw_desc;
 
 	parms.outfile = G_define_option();
 	parms.outfile->key = "output";
 	parms.outfile->type = TYPE_STRING;
 	parms.outfile->required = NO ;
-	parms.outfile->description = "name of an output file to hold the report";
+	parms.outfile->description = _("Name of an output file to hold the report");
         parms.nsteps = G_define_option();
         parms.nsteps->key    = "nsteps";
         parms.nsteps->type   = TYPE_INTEGER;
 	parms.nsteps->required   = NO;
         parms.nsteps->multiple   = NO;
 	parms.nsteps->answer     = "255";
-        parms.nsteps->description= "number of fp subranges to collect stats from";
+        parms.nsteps->description= _("Number of fp subranges to collect stats from");
 
 	flags.h = G_define_flag();
 	flags.h->key = 'h';
-	flags.h->description = "suppress page headers";
+	flags.h->description = _("Suppress page headers");
 
 	flags.f = G_define_flag();
 	flags.f->key = 'f';
-	flags.f->description = "use formfeeds between pages";
+	flags.f->description = _("Use formfeeds between pages");
 
 	flags.q = G_define_flag();
 	flags.q->key = 'q';
-	flags.q->description = "quiet";
+	flags.q->description = _("Quiet");
 
 	flags.e = G_define_flag();
 	flags.e->key = 'e';
-	flags.e->description = "scientific format";
+	flags.e->description = _("Scientific format");
 
 	flags.n = G_define_flag();
 	flags.n->key = 'n';
-	flags.n->description = "filter out all no data cells";
+	flags.n->description = _("Filter out all no data cells");
 
 	flags.N = G_define_flag();
 	flags.N->key = 'N';
-	flags.N->description = "filter out cells where all maps have no data";
+	flags.N->description = _("Filter out cells where all maps have no data");
 
 	flags.C = G_define_flag() ;
         flags.C->key         = 'C' ;
-	flags.C->description = "report for cats fp ranges (fp maps only)" ;
+	flags.C->description = _("Report for cats fp ranges (fp maps only)");
 
 	flags.i = G_define_flag() ;
         flags.i->key = 'i';
-	flags.i->description = "Read fp map as integer (use map's quant rules";
+	flags.i->description = _("Read fp map as integer (use map's quant rules");
 
 
 /* hidden feature.

@@ -7,6 +7,7 @@
 #include "Vect.h"
 #include "global.h"
 #include "lines.h"
+#include "glocale.h"
 
 /* 
 * Attributes for lines are ignored. For points and area by default unique new category is assigned
@@ -24,7 +25,7 @@ int main (int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
-    module->description = "Converts a raster map into a vector map layer.";
+    module->description = _("Converts a raster map into a vector map layer.");
 
     in_opt = G_define_option();
     in_opt->key             = "input";
@@ -32,7 +33,7 @@ int main (int argc, char *argv[])
     in_opt->required        = YES;
     in_opt->multiple        = NO;
     in_opt->gisprompt       = "old,cell,raster";
-    in_opt->description     = "raster input file";
+    in_opt->description     = _("raster input file");
 
     out_opt = G_define_standard_option(G_OPT_V_OUTPUT);
 
@@ -43,15 +44,15 @@ int main (int argc, char *argv[])
     feature_opt->multiple       = NO;
     feature_opt->options        = "point,line,area";
     feature_opt->answer         = "line";
-    feature_opt->description    = "Feature type";
+    feature_opt->description    = _("Feature type");
 
     smooth_flg = G_define_flag();
     smooth_flg->key = 's';
-    smooth_flg->description = "Smooth Corners";
+    smooth_flg->description = _("Smooth Corners");
 
     value_flg = G_define_flag();
     value_flg->key = 'v';
-    value_flg->description = "Use raster values as categories instead of unique sequence (CELL only)";
+    value_flg->description = _("Use raster values as categories instead of unique sequence (CELL only)");
 
     if (G_parser (argc, argv)) exit (-1);
 

@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #include "gis.h"
+#include "glocale.h"
 
 #define DEF_RED 255
 #define DEF_GRN 255
@@ -43,13 +44,13 @@ int main(int argc, char **argv)
 
 	module = G_define_module();
 	module->description =
-		"Converts 3 GRASS raster layers (R,G,B) to a PPM image file "
-		"at the pixel resolution of the CURRENTLY DEFINED REGION.";
+		_("Converts 3 GRASS raster layers (R,G,B) to a PPM image file "
+		"at the pixel resolution of the CURRENTLY DEFINED REGION.");
 
 	for (i = 0; i < 3; i++)
 	{
 		char buff[80];
-		sprintf(buff, "Name of raster map to be used for <%s>",
+		sprintf(buff, _("Name of raster map to be used for <%s>"),
 			color_names[i]);
 
 		B[i].opt = G_define_option();
@@ -68,15 +69,15 @@ int main(int argc, char **argv)
 	ppm_file->required    = YES;
 	ppm_file->multiple    = NO;
 	ppm_file->answer	  = NULL;
-	ppm_file->description = "Name for new PPM file. (use out=- for stdout)";
+	ppm_file->description = _("Name for new PPM file. (use out=- for stdout)");
 
 	bequiet = G_define_flag ();
 	bequiet->key = 'q';
-	bequiet->description = "Run quietly";
+	bequiet->description = _("Run quietly");
 
 	comment = G_define_flag ();
 	comment->key = 'c';
-	comment->description = "Add comments to describe the region";
+	comment->description = _("Add comments to describe the region");
 
 	if (G_parser (argc, argv))
 		exit (-1);

@@ -32,6 +32,7 @@
 #include "dbmi.h"
 #include "Vect.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 int main ( int argc, char *argv[])
 {
@@ -67,61 +68,61 @@ int main ( int argc, char *argv[])
     G_gisinit (argv[0]);
 
     module = G_define_module();
-    module->description = "Produces a GRASS binary vector map of specified "
-		          "contours from GRASS raster map layer.";
+    module->description = _("Produces a GRASS binary vector map of specified "
+		          "contours from GRASS raster map layer.");
 
     map=G_define_option () ;
     map->key        = "input";
     map->type       = TYPE_STRING;
     map->required   = YES;
     map->gisprompt  = "old,cell,raster";
-    map->description= "Name of an existing raster map" ;
+    map->description= _("Name of an existing raster map") ;
 
     vect=G_define_option () ;
     vect->key        = "output";
     vect->type       = TYPE_STRING;
     vect->required   = YES;
-    vect->description= "Name of output vector file" ;
+    vect->description= _("Name of output vector file") ;
 
     levels=G_define_option () ;
     levels->key        = "levels";
     levels->type       = TYPE_DOUBLE;
     levels->required   = NO;
     levels->multiple   = YES;
-    levels->description= "List of contour levels" ;
+    levels->description= _("List of contour levels") ;
     
     min=G_define_option () ;
     min->key        = "minlevel";
     min->type       = TYPE_DOUBLE;
     min->required   = NO;
-    min->description= "Minimum contour level" ;
+    min->description= _("Minimum contour level") ;
 
     max=G_define_option () ;
     max->key        = "maxlevel";
     max->type       = TYPE_DOUBLE;
     max->required   = NO;
-    max->description= "Maximum contour level" ;
+    max->description= _("Maximum contour level") ;
 
     step=G_define_option () ;
     step->key        = "step";
     step->type       = TYPE_DOUBLE;
     step->required   = NO;
-    step->description= "Increment between contour levels" ;
+    step->description= _("Increment between contour levels") ;
 
     cut=G_define_option () ;
     cut->key        = "cut";
     cut->type       = TYPE_INTEGER;
     cut->required   = NO;
     cut->answer = "0";
-    cut->description= "Minimum number of points for a contour line (0 -> no limit)" ;
+    cut->description= _("Minimum number of points for a contour line (0 -> no limit)") ;
 
     quiet = G_define_flag() ;
     quiet->key        = 'q';
-    quiet->description = "Suppress progress report & min/max information" ;
+    quiet->description = _("Suppress progress report & min/max information") ;
 
     noerr = G_define_flag() ;
     noerr->key        = 'n';
-    noerr->description = "Suppress single crossing error messages" ;
+    noerr->description = _("Suppress single crossing error messages") ;
 
     if (G_parser(argc, argv))
         exit (-1);

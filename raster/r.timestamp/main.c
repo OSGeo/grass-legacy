@@ -1,4 +1,7 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "gis.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -13,21 +16,21 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
     module->description =
-		"Print/add/remove a timestamp for a raster map.";
+		_("Print/add/remove a timestamp for a raster map.");
 				        
     map = G_define_option();
     map->key = "map";
     map->required = YES;
     map->type = TYPE_STRING;
     map->gisprompt = "old,cell,raster";
-    map->description = "raster map name";
+    map->description = _("Raster map name");
 
     date = G_define_option();
     date->key = "date";
     date->key_desc = "timestamp";
     date->required = NO;
     date->type = TYPE_STRING;
-    date->description = "datetime, datetime1/datetime2, or none";
+    date->description = _("Datetime, datetime1/datetime2, or none");
 
     if (G_parser(argc,argv))
 	exit(1);

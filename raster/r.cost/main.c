@@ -41,6 +41,7 @@
 #include "cost.h"
 #include "stash.h"
 #include "local_proto.h"
+#include "glocale.h"
 
 struct Cell_head window;
 
@@ -94,59 +95,59 @@ int main (int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Outputs a raster map layer showing the "
+		_("Outputs a raster map layer showing the "
 		"cumulative cost of moving between different "
 		"geographic locations on an input raster map "
-		"layer whose cell category values represent cost.";
+		"layer whose cell category values represent cost.");
 							
 	opt2 = G_define_option() ;
 	opt2->key        = "input" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->required   = YES ;
 	opt2->gisprompt  = "old,cell,raster" ;
-	opt2->description= "Name of raster map containing grid cell cost information" ;
+	opt2->description= _("Name of raster map containing grid cell cost information");
 
 	opt1 = G_define_option() ;
 	opt1->key        = "output" ;
 	opt1->type       = TYPE_STRING ;
 	opt1->required   = YES ;
 	opt1->gisprompt  = "new,cell,raster" ;
-	opt1->description= "Name of raster map to contain results" ;
+	opt1->description= _("Name of raster map to contain results") ;
 
 	opt7 = G_define_option() ;
 	opt7->key        = "start_points" ;
 	opt7->type       = TYPE_STRING;
 	opt7->gisprompt  = "old,vector,vector";
 	opt7->required   = NO;
-	opt7->description= "Starting points vector map";
+	opt7->description= _("Starting points vector map");
 
 	opt8 = G_define_option() ;
 	opt8->key        = "stop_points" ;
 	opt8->type       = TYPE_STRING;
 	opt8->gisprompt  = "old,vector,vector";
 	opt8->required   = NO;
-	opt8->description= "Stop points vector map";
+	opt8->description= _("Stop points vector map");
 
 	opt9 = G_define_option() ;
 	opt9->key        = "start_rast" ;
 	opt9->type       = TYPE_STRING;
 	opt9->gisprompt  = "old,cell,raster";
 	opt9->required   = NO;
-	opt9->description= "Starting points raster file";
+	opt9->description= _("Starting points raster file");
 
 	opt3 = G_define_option() ;
 	opt3->key        = "coordinate" ;
 	opt3->type       = TYPE_STRING ;
 	opt3->key_desc   = "x,y" ;
 	opt3->multiple   = YES;
-	opt3->description= "The map E and N grid coordinates of a starting point (E,N)" ;
+	opt3->description= _("The map E and N grid coordinates of a starting point (E,N)") ;
 
 	opt4 = G_define_option() ;
 	opt4->key        = "stop_coordinate" ;
 	opt4->type       = TYPE_STRING ;
 	opt4->key_desc   = "x,y" ;
 	opt4->multiple   = YES;
-	opt4->description= "The map E and N grid coordinates of a stopping point (E,N)" ;
+	opt4->description= _("The map E and N grid coordinates of a stopping point (E,N)") ;
 
 	opt5 = G_define_option() ;
 	opt5->key        = "max_cost" ;
@@ -155,7 +156,7 @@ int main (int argc, char *argv[])
 	opt5->required   = NO;
 	opt5->multiple   = NO;
 	opt5->answer     = "0";
-	opt5->description= "An optional maximum cumulative cost";
+	opt5->description= _("An optional maximum cumulative cost");
 
 	opt6 = G_define_option() ;
 	opt6->key        = "null_cost" ;
@@ -163,7 +164,7 @@ int main (int argc, char *argv[])
 	opt6->key_desc   = "null cost" ;
 	opt6->required   = NO;
 	opt6->multiple   = NO;
-	opt6->description= "Cost assigned to null cells. By default, null cells are excluded";
+	opt6->description= _("Cost assigned to null cells. By default, null cells are excluded");
 
 	opt10 = G_define_option() ;
 	opt10->key        = "percent_memory" ;
@@ -172,23 +173,23 @@ int main (int argc, char *argv[])
 	opt10->required   = NO;
 	opt10->multiple   = NO;
 	opt10->answer     = "25";
-	opt10->description= "percent of map to keep in memory";
+	opt10->description= _("Percent of map to keep in memory");
 
 	flag1 = G_define_flag();
 	flag1->key = 'v';
-	flag1->description = "Run verbosely";
+	flag1->description = _("Run verbosely");
 
 	flag2 = G_define_flag();
 	flag2->key = 'k';
-	flag2->description = "Use the 'Knight's move'; slower, but more accurate";
+	flag2->description = _("Use the 'Knight's move'; slower, but more accurate");
 
 	flag3 = G_define_flag();
 	flag3->key = 'n';
-	flag3->description = "Keep null values in output map";
+	flag3->description = _("Keep null values in output map");
 
 	flag4 = G_define_flag();
 	flag4->key = 'r';
-	flag4->description = "Start with values in raster map";
+	flag4->description = _("Start with values in raster map");
 
 	/*   Parse command line */
 	if (G_parser(argc, argv))

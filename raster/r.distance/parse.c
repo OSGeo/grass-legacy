@@ -1,4 +1,8 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "defs.h"
+#include "gis.h"
+#include "glocale.h"
 
 void 
 parse (int argc, char *argv[], struct Parms *parms)
@@ -14,7 +18,7 @@ parse (int argc, char *argv[], struct Parms *parms)
     maps->required = YES;
     maps->multiple = NO;
     maps->type = TYPE_STRING;
-    maps->description = "maps for computing inter-class distances";
+    maps->description = _("Maps for computing inter-class distances");
     maps->gisprompt = "old,cell,raster";
 
     fs  = G_define_option();
@@ -23,15 +27,15 @@ parse (int argc, char *argv[], struct Parms *parms)
     fs->multiple = NO;
     fs->answer   = ":";       /* colon is default output fs */
     fs->type = TYPE_STRING;
-    fs->description = "output field separator";
+    fs->description = _("Output field separator");
 
     labels = G_define_flag();
     labels -> key = 'l';
-    labels->description = "include category labels in the output";
+    labels->description = _("Include category labels in the output");
 
     quiet = G_define_flag();
     quiet -> key = 'q';
-    quiet->description = "run quietly";
+    quiet->description = _("Run quietly");
 
     if (G_parser(argc, argv))
 	exit(0);

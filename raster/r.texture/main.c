@@ -25,6 +25,7 @@
 #include <string.h>
 #include "gis.h"
 #include "h_measure.h"
+#include "glocale.h"
 
 static const char *suffixes[56] = {
 	"_ASM_0", "_ASM_45", "_ASM_90", "_ASM_135",
@@ -68,7 +69,7 @@ main(int argc, char *argv[])
 
 	module = G_define_module();
 	module->description =
-		"Generate images with textural features from a raster map";
+		_("Generate images with textural features from a raster map");
 					        
 	/* Define the different options */
 
@@ -77,21 +78,21 @@ main(int argc, char *argv[])
 	input->type       = TYPE_STRING;
 	input->required   = YES;
 	input->gisprompt  = "old,cell,raster" ;
-	input->description= "Name of the input raster map" ;
+	input->description= _("Name of the input raster map") ;
 
 	output = G_define_option() ;
 	output->key        = "prefix";
 	output->type       = TYPE_STRING;
 	output->required   = YES;
 	output->gisprompt  = "new,cell,raster" ;
-	output->description= "Name of the ouput raster map";
+	output->description= _("Name of the ouput raster map");
 
 	size_O = G_define_option() ;
 	size_O->key        = "size";
 	size_O->key_desc   = "value";
 	size_O->type       = TYPE_INTEGER;
 	size_O->required   = YES;
-	size_O->description= "The size of the sliding window (odd and >= 3)";
+	size_O->description= _("The size of the sliding window (odd and >= 3)");
 
 	/* Textural character is in direct relation of the spatial size of the texture primitives. */
 
@@ -100,74 +101,74 @@ main(int argc, char *argv[])
 	dist_O->key_desc   = "value";
 	dist_O->type       = TYPE_INTEGER;
 	dist_O->required   = YES;
-	dist_O->description= "The distance between two samples (>= 1)\n";
+	dist_O->description= _("The distance between two samples (>= 1)");
 
 	/* Define the different flags */
 
 	flag0 = G_define_flag() ;
 	flag0->key         = 'N' ;
-	flag0->description = "Normalized" ;
+	flag0->description = _("Normalized") ;
 
 	flag1 = G_define_flag() ;
 	flag1->key         = 'q' ;
-	flag1->description = "Quiet" ;
+	flag1->description = _("Quiet") ;
 
 	flag2 = G_define_flag();
 	flag2->key         = 'a';
-	flag2->description = "Angular Second Moment" ;
+	flag2->description = _("Angular Second Moment") ;
 
 	flag3 = G_define_flag();
 	flag3->key         = 'c';
-	flag3->description = "Contrast" ;
+	flag3->description = _("Contrast") ;
 
 	flag4 = G_define_flag();
 	flag4->key         = 'k' ;
-	flag4->description = "Correlation" ;
+	flag4->description = _("Correlation") ;
 
 	flag5 = G_define_flag();
 	flag5->key         = 'v' ;
-	flag5->description = "Variance" ;
+	flag5->description = _("Variance") ;
 
 	flag6 = G_define_flag();
 	flag6->key         = 'i';
-	flag6->description = "Inverse Diff Moment" ;
+	flag6->description = _("Inverse Diff Moment") ;
 
 	flag7 = G_define_flag();
 	flag7->key         = 's';
-	flag7->description = "Sum Average" ;
+	flag7->description = _("Sum Average") ;
 
 	flag8 = G_define_flag();
 	flag8->key         = 'w';
-	flag8->description = "Sum Variance" ;
+	flag8->description = _("Sum Variance") ;
 
 	flag9 = G_define_flag();
 	flag9->key         = 'x';
-	flag9->description = "Sum Entropy" ;
+	flag9->description = _("Sum Entropy") ;
 
 	flag10 = G_define_flag();
 	flag10->key         = 'e' ;
-	flag10->description = "Entropy" ;
+	flag10->description = _("Entropy") ;
 
 	flag11 = G_define_flag();
 	flag11->key         = 'd';
-	flag11->description = "Difference Variance" ;
+	flag11->description = _("Difference Variance") ;
 
 	flag12 = G_define_flag();
 	flag12->key         = 'p';
-	flag12->description = "Difference Entropy" ;
+	flag12->description = _("Difference Entropy") ;
 
 	flag13 = G_define_flag();
 	flag13->key         = 'm';
-	flag13->description = "Measure of Correlation-1" ;
+	flag13->description = _("Measure of Correlation-1") ;
 
 
 	flag14 = G_define_flag();
 	flag14->key         = 'n';
-	flag14->description = "Measure of Correlation-2" ;
+	flag14->description = _("Measure of Correlation-2") ;
 
 	flag15 = G_define_flag();
 	flag15->key         = 'o';
-	flag15->description = "Max Correlation Coeff" ;
+	flag15->description = _("Max Correlation Coeff") ;
 
 	if (G_parser(argc, argv))
 		exit (-1);

@@ -1,10 +1,9 @@
-/* $Id$ */
-
 #define GLOBAL
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include "global.h"
+#include "glocale.h"
 
 int main (int argc, char *argv[])
 {
@@ -68,7 +67,7 @@ int main (int argc, char *argv[])
 
     module = G_define_module();
     module->description =
-		"Generates area statistics for raster map layers.";
+		_("Generates area statistics for raster map layers.");
 					        
 /* Define the different options */
 
@@ -78,7 +77,7 @@ int main (int argc, char *argv[])
     option.cell->required   = YES;
     option.cell->multiple   = YES;
     option.cell->gisprompt  = "old,cell,raster" ;
-    option.cell->description= "raster maps(s)" ;
+    option.cell->description= _("Raster input maps(s)") ;
 
     option.fs = G_define_option() ;
     option.fs->key        = "fs";
@@ -87,7 +86,7 @@ int main (int argc, char *argv[])
     option.fs->required   = NO;
     option.fs->multiple   = NO;
     option.fs->answer     = "space";
-    option.fs->description= "output field separator";
+    option.fs->description= _("Output field separator");
 
     option.nv = G_define_option() ;
     option.nv->key        = "nv";
@@ -95,14 +94,14 @@ int main (int argc, char *argv[])
     option.nv->required   = NO;
     option.nv->multiple   = NO;
     option.nv->answer     = "*";
-    option.nv->description= "string representing no data cell value";
+    option.nv->description= _("String representing no data cell value");
 
     option.output = G_define_option();
     option.output->key    = "output";
     option.output->type   = TYPE_STRING;
     option.output->required   = NO;
     option.output->multiple   = NO;
-    option.output->description= "output file name";
+    option.output->description= _("Output file name");
 
     option.nsteps = G_define_option();
     option.nsteps->key    = "nsteps";
@@ -110,7 +109,7 @@ int main (int argc, char *argv[])
     option.nsteps->required   = NO;
     option.nsteps->multiple   = NO;
     option.nsteps->answer     = "255";
-    option.nsteps->description= "number of fp subranges to collect stats from";
+    option.nsteps->description= _("Number of fp subranges to collect stats from");
     /*
     option.output->answer     = to_screen;
     */
@@ -119,55 +118,55 @@ int main (int argc, char *argv[])
 
     flag.one = G_define_flag() ;
     flag.one->key         = '1' ;
-    flag.one->description = "One cell (range) per line" ;
+    flag.one->description = _("One cell (range) per line" );
 
     flag.a = G_define_flag() ;
     flag.a->key         = 'a' ;
-    flag.a->description = "Print area totals" ;
+    flag.a->description = _("Print area totals") ;
 
     flag.c = G_define_flag() ;
     flag.c->key         = 'c' ;
-    flag.c->description = "Print cell counts" ;
+    flag.c->description = _("Print cell counts") ;
 
     flag.p = G_define_flag() ;
     flag.p->key         = 'p' ;
-    flag.p->description = "Print APPROXIMATE percents (total percent may not be 100%)" ;
+    flag.p->description = _("Print APPROXIMATE percents (total percent may not be 100%)") ;
 
     flag.l = G_define_flag() ;
     flag.l->key         = 'l' ;
-    flag.l->description = "Print category labels" ;
+    flag.l->description = _("Print category labels") ;
 
     flag.q = G_define_flag() ;
     flag.q->key         = 'q' ;
-    flag.q->description = "Quiet" ;
+    flag.q->description = _("Quiet") ;
 
     flag.n = G_define_flag() ;
     flag.n->key         = 'n' ;
-    flag.n->description = "Suppress reporting of any NULLs" ;
+    flag.n->description = _("Suppress reporting of any NULLs") ;
 
     flag.N = G_define_flag() ;
     flag.N->key         = 'N' ;
-    flag.N->description = "Suppress reporting of NULLs when all values are NULL" ;
+    flag.N->description = _("Suppress reporting of NULLs when all values are NULL") ;
 
     flag.g = G_define_flag() ;
     flag.g->key = 'g';
-    flag.g->description = "Print grid coordinates (east and north)";
+    flag.g->description = _("Print grid coordinates (east and north)");
 
     flag.x = G_define_flag() ;
     flag.x->key = 'x';
-    flag.x->description = "Print x and y (column and row)";
+    flag.x->description = _("Print x and y (column and row)");
 
     flag.C = G_define_flag() ;
     flag.C->key         = 'C' ;
-    flag.C->description = "report for cats fp ranges (fp maps only)" ;
+    flag.C->description = _("Report for cats fp ranges (fp maps only)") ;
 
     flag.r = G_define_flag() ;
     flag.r->key = 'r';
-    flag.r->description = "Print raw indexes of fp ranges (fp maps only)";
+    flag.r->description = _("Print raw indexes of fp ranges (fp maps only)");
 
     flag.i = G_define_flag() ;
     flag.i->key = 'i';
-    flag.i->description = "Read fp map as integer (use map's quant rules)";
+    flag.i->description = _("Read fp map as integer (use map's quant rules)");
 
     if (G_parser(argc, argv))
 	exit (-1);
