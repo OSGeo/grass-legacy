@@ -83,11 +83,11 @@ int G_percent (int n,int d,int s)
 
 int G_percent2 (int n,int d,int s, FILE *out)
 {
-    int format;
+    int x, format;
 
     format = G_info_format ();
 
-    int x = (d <= 0 || s <= 0)
+    x = (d <= 0 || s <= 0)
 	? 100
 	: 100 * n / d;
 	
