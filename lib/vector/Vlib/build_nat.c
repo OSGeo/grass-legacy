@@ -18,6 +18,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "glocale.h"
 #include "gis.h"
 #include "Vect.h"
 
@@ -83,7 +84,7 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side )
 	area = dig_add_area (plus, n_lines, lines);
 	if ( area == -1 ) { /* error */
 	    Vect_close ( Map );
-	    G_fatal_error ( "Cannot add area (map closed, topo saved)" );
+	    G_fatal_error ( _("Cannot add area (map closed, topo saved)") );
 	}
 	G_debug ( 3, "  -> area %d", area );
 	return area;
@@ -91,7 +92,7 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side )
 	isle = dig_add_isle (plus, n_lines, lines);
 	if ( isle == -1 ) { /* error */
 	    Vect_close ( Map );
-	    G_fatal_error ( "Cannot add isle (map closed, topo saved)" );
+	    G_fatal_error ( _("Cannot add isle (map closed, topo saved)") );
 	}
 	G_debug ( 3, "  -> isle %d", isle );
 	return -isle;
@@ -100,7 +101,7 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side )
 	*        so that may be found and cleaned by some utility
 	*  Note: it would be useful for vertical closed polygons, but such would be added twice
 	*        as area */
-	G_warning ("Area of size = 0.0 ignored"); 
+	G_warning (_("Area of size = 0.0 ignored")); 
     }
     return 0;
 }
@@ -462,7 +463,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
        
 	/* register lines, create nodes */ 
 	Vect_rewind ( Map );
-	prnmsg ("Registering lines: ");
+	prnmsg (_("Registering lines: "));
 	i = 1; j = 1;
 	while ( 1 ) {
 	    /* register line */
@@ -503,7 +504,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 	    }
 	    i++; j++;
 	}
-	prnmsg ("\r%d primitives registered      \n", plus->n_lines);
+	prnmsg (_("\r%d primitives registered      \n"), plus->n_lines);
 
 	plus->built = GV_BUILD_BASE;
     }
@@ -536,7 +537,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
 		Vect_build_line_area ( Map, i, side );
 	    }
 	}
-	prnmsg ("\r%d areas built      \n%d isles built\n", plus->n_areas, plus->n_isles );
+	prnmsg (_("\r%d areas built      \n%d isles built\n"), plus->n_areas, plus->n_isles );
 	plus->built = GV_BUILD_AREAS;
     }
     
@@ -544,7 +545,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
     
     /* Attach isles to areas */
     if ( plus->built < GV_BUILD_ATTACH_ISLES ) {
-	prnmsg ("Attaching islands: ");
+	prnmsg (_("Attaching islands: "));
 	last_progress = -1; 
 	for (i = 1; i <= plus->n_isles; i++) {
 	    Vect_attach_isle ( Map, i ) ;
@@ -566,7 +567,7 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
     if ( plus->built < GV_BUILD_CENTROIDS ) {
 	int nlines;
 	
-	prnmsg ("Attaching centroids: ");
+	prnmsg (_("Attaching centroids: "));
 	last_progress = -1; 
 	
 	nlines = Vect_get_num_lines (Map);

@@ -14,10 +14,14 @@
 *   	    	for details.
 *
 *****************************************************************************/
+#include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "glocale.h"
+#include "gis.h"
 #include "Vect.h"
 /*
 
@@ -35,7 +39,7 @@
 
 static int open_old_dummy () { return 0; }
 static int open_new_dummy () { return 0; }
-static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
+static int format () { G_fatal_error (_("Requested format is not compiled in this version")); return 0; }
 
 static int Open_level = 0;
 
@@ -88,7 +92,7 @@ Vect_set_open_level (int level)
   Open_level = level;
   if (Open_level < 1 || Open_level > MAX_OPEN_LEVEL)
     {
-      fprintf (stderr, "Warning, Programmer requested unknown open_level\n");
+      fprintf (stderr, _("Warning, Programmer requested unknown open_level\n"));
       Open_level = 0;
     }
 
@@ -115,6 +119,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
   FILE *fp;
   int level, level_request, ferror;
   int format;
+  char *fmapset;
 
   G_debug (1, "Vect_open_old(): name = %s mapset= %s update = %d", name, mapset, update);
   
@@ -130,7 +135,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
   
   if (G__name_is_fully_qualified (name, xname, xmapset)) {
       sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, xname);
-      sprintf (buf2, "%s@%s", GRASS_VECT_COOR_ELEMENT, xmapset); /* ==coor@mapset */
+      sprintf (buf2, "%s@%s", GRASS_VECT_COOR_ELEMENT, xmapset);
        
       Map->name = G_store (xname);
       Map->mapset = G_store (xmapset);
@@ -138,14 +143,26 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
       sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
       sprintf (buf2, "%s", GRASS_VECT_COOR_ELEMENT);
       Map->name = G_store (name);
-      Map->mapset = G_store (mapset);
+      
+      if ( mapset )
+          Map->mapset = G_store (mapset);
+      else 
+	  Map->mapset = G_store ("");
   }
+
+  fmapset = G_find_vector2 ( Map->name, Map->mapset );
+  if ( fmapset == NULL ) {
+      sprintf ( errmsg, _("Cannot find vector %s"), Vect_get_full_name(Map) ); 
+      fatal_error (ferror, errmsg);
+      return -1;
+  }
+  Map->mapset = G_store ( fmapset );
 
   Map->location = G_store ( G_location() );
   Map->gisdbase = G_store ( G_gisdbase() );
   
   if ( update && (0 != strcmp(Map->mapset, G_mapset()) ) ) {
-      G_warning ( "A map which is not in the current mapset cannot be opened for update.");
+      G_warning ( _("A map which is not in the current mapset cannot be opened for update.") );
       return -1;
   }
 
@@ -163,7 +180,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
       
       G_debug ( 1, "Vector format: %d (non-native)", format);
       if ( format < 0 ) {
-	  sprintf ( errmsg, "Cannot open old vector %s", Vect_get_full_name(Map) ); 
+	  sprintf ( errmsg, _("Cannot open old vector %s"), Vect_get_full_name(Map) ); 
 	  fatal_error (ferror, errmsg);
           return -1;
       }
@@ -173,7 +190,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
 
   /* Read vector head */
   if ( Vect__read_head (Map) != GRASS_OK ) {
-      sprintf ( errmsg, "Cannot open old vector %s on level %d", Vect_get_full_name(Map), level_request ); 
+      sprintf ( errmsg, _("Cannot open old vector %s on level %d"), Vect_get_full_name(Map), level_request ); 
       fatal_error (ferror, errmsg);
       return -1;
   }
@@ -223,7 +240,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
       }
 #endif
       if (level_request == 2 && level < 2) {
-	  sprintf ( errmsg, "Cannot open old vector %s on level %d", Vect_get_full_name(Map), level_request ); 
+	  sprintf ( errmsg, _("Cannot open old vector %s on level %d"), Vect_get_full_name(Map), level_request ); 
 	  fatal_error (ferror, errmsg);
 	  return -1;
       }
@@ -239,7 +256,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
 	      dig_spidx_free ( &(Map->plus) );
 	      dig_cidx_free ( &(Map->plus) );
 	  }
-	  sprintf ( errmsg, "Cannot open old vector %s on level %d", Vect_get_full_name(Map), level_request ); 
+	  sprintf ( errmsg, _("Cannot open old vector %s on level %d"), Vect_get_full_name(Map), level_request ); 
 	  fatal_error (ferror, errmsg);
 	  return -1;
       }
@@ -286,7 +303,7 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
   if ( update ) { /* native only */
       Map->hist_fp = G_fopen_modify (buf, GRASS_VECT_HIST_ELEMENT);
       if ( Map->hist_fp == NULL ) {
-          sprintf ( errmsg, "Cannot open history file for vector '%s'", Vect_get_full_name(Map) ); 
+          sprintf ( errmsg, _("Cannot open history file for vector '%s'"), Vect_get_full_name(Map) ); 
           fatal_error (ferror, errmsg);
 	  return (-1);
       }
@@ -413,8 +430,8 @@ Vect_open_new (
 		char *name,
 		int with_z)
 {
-    int format, ret, ferror;
-    char *frmt, errmsg[2000], buf[200];
+    int  ret, ferror;
+    char errmsg[2000], buf[200];
 
     G_debug ( 2, "Vect_open_new(): name = %s", name);
     
@@ -424,7 +441,7 @@ Vect_open_new (
 
     /* check for [A-Za-z][A-Za-z0-9_]* in name */
     if (Vect_legal_filename(name) < 0 ) {
-       sprintf ( errmsg, "Map name not SQL compliant.");
+       sprintf ( errmsg, _("Map name is not SQL compliant.") );
        fatal_error (ferror , errmsg );
        return (-1);
     }
@@ -435,19 +452,19 @@ Vect_open_new (
 	int over;
 
 	over = 1;
-	if ( overstr = G__getenv ( "OVERWRITE" ) ) {
+	if ( (overstr = G__getenv ( "OVERWRITE" )) ) {
 	    over = atoi ( overstr );
 	} 
 
 	if ( over != 1 ) { 
-	    G_fatal_error ("The vector '%s' already exists.", name);
+	    G_fatal_error (_("The vector '%s' already exists."), name);
 	}
 		
-        G_warning ("The vector '%s' already exists and will be overwritten.", name); 
+        G_warning (_("The vector '%s' already exists and will be overwritten."), name); 
 	
         ret = Vect_delete ( name );
         if ( ret == -1 ) {
-            sprintf ( errmsg, "Cannot delete existing vector %s", name ); 
+            sprintf ( errmsg, _("Cannot delete existing vector %s"), name ); 
 	    fatal_error (ferror , errmsg );
 	    return (-1);
         }
@@ -461,7 +478,7 @@ Vect_open_new (
     Map->format = GV_FORMAT_NATIVE;
 
     if ( V1_open_new_nat (Map, name, with_z) < 0 ) {
-        sprintf ( errmsg, "Cannot open new vector %s", Vect_get_full_name(Map) ); 
+        sprintf ( errmsg, _("Cannot open new vector %s"), Vect_get_full_name(Map) ); 
 	fatal_error (ferror , errmsg );
 	return (-1);
     }
@@ -470,7 +487,7 @@ Vect_open_new (
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
     Map->hist_fp = G_fopen_new (buf, GRASS_VECT_HIST_ELEMENT);
     if ( Map->hist_fp == NULL ) {
-        sprintf ( errmsg, "Cannot open history file for vector '%s'", Vect_get_full_name(Map) ); 
+        sprintf ( errmsg, _("Cannot open history file for vector '%s'"), Vect_get_full_name(Map) ); 
         fatal_error (ferror, errmsg);
         return (-1);
     }
@@ -504,9 +521,8 @@ Vect_open_new (
 int 
 Vect_coor_info ( struct Map_info *Map, struct Coor_info *Info )
 {
-    char buf[2000], path[2000], *ptr;
+    char buf[2000], path[2000];
     struct stat stat_buf;
-    int ret;
     
     switch (  Map->format ) {
         case GV_FORMAT_NATIVE :
@@ -514,7 +530,7 @@ Vect_coor_info ( struct Map_info *Map, struct Coor_info *Info )
 	    G__file_name (path, buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
             G_debug ( 1, "get coor info: %s", path);
 	    if (0 != stat (path, &stat_buf)) {
-		G_warning ("Could not stat file '%s'\n", path);
+		G_warning ( _("Could not stat file '%s'"), path);
 		Info->size = -1L;
 		Info->mtime = -1L;
 	    } else {
@@ -600,7 +616,7 @@ Vect_open_topo (struct Map_info *Map, int head_only)
     /* do checks */
     err = 0;
     if ( CInfo.size != Plus->coor_size ) {
-	G_warning ( "Size of 'coor' file differs from value saved in topo file.\n");
+	G_warning ( _("Size of 'coor' file differs from value saved in topo file.") );
 	err = 1;
     }
     /* Do not check mtime because mtime is changed by copy */
@@ -611,8 +627,7 @@ Vect_open_topo (struct Map_info *Map, int head_only)
     }
     */
     if ( err ) {
-	G_warning ( "Please rebuild topology for vector '%s@%s'\n", Map->name,
-	                          Map->mapset );
+	G_warning ( _("Please rebuild topology for vector '%s@%s'"), Map->name, Map->mapset );
 	return -1;
     }
     
