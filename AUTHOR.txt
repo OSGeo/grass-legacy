@@ -1,0 +1,11 @@
+
+This GRASS 4.3 release is brought to you by
+the GRASS Development Team.  Individual authors
+are sited in each module and are also available
+on the web at both the US and European sites.
+
+Coordinators for this release are Bruce Byars
+and Markus Neteler.
+
+
+Email grass@baylor.edu
