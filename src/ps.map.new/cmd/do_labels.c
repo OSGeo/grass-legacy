@@ -35,7 +35,8 @@ do_labels (void)
 
     for (i = 0; i < labels.count; i++)
     {
-	fd = G_fopen_old("paint/labels", labels.name[i], labels.mapset[i]);
+	fd = G_fopen_old("paint/labels", labels.name[i], labels.mapset[i]); 
+	
 	if (fd == NULL)
 	{
 	    char msg[100];
@@ -86,12 +87,12 @@ do_labels (void)
 int 
 do_label (FILE *fd)
 {
-    double east, north, dtmp;
-    float size;
-    int x, y, xoffset, yoffset, xref, yref;
+    double east, north, dtmp, x, y;
+    float size, rotate, margin;
+    int xoffset, yoffset, xref, yref;
     int background, border, color, hcolor;
     double width, hwidth;
-    int opaque, fontsize, margin, multi_text, x_int, y_int;
+    int opaque, fontsize, multi_text, x_int, y_int;
     char field[1024];
     char value[1024];
     char ch, buf[1024];
@@ -111,6 +112,7 @@ do_label (FILE *fd)
     hwidth = 0.;
     xref = CENTER;
     yref = CENTER;
+    rotate = 0., 
     size = 0;
 
     /* read the labels file */
@@ -146,24 +148,26 @@ do_label (FILE *fd)
 
 	    /* set margin to 20% of font size */
 	    if (opaque || border >= 0)
-	    {	margin = (int)(0.2 * (double)fontsize + 0.5);
-	     	if (margin < 2) margin = 2;
+	    {	
+		margin = 0.2 * (double)fontsize + 0.5;
+	     	/*if (margin < 2) margin = 2;*/ /* commented because
+		    too big box was created for little font; RB March 2000 */			    
 		if (hcolor >= 0) margin += hwidth;
 	    }
 	    else margin = 0;
-	    fprintf(PS.fp, "/mg %d def\n", margin);
+	    fprintf(PS.fp, "/mg %.2f def\n", margin);
 
 	    /* construct path for box */
 	    multi_text = multi_lines(value);
 	    if (multi_text)
 	    {
 		/* multiple lines - text is in PostScript array "ta" */
-	    	multi_text_box_path(x, y, xref, yref, value, fontsize);
+	    	multi_text_box_path(x, y, xref, yref, value, fontsize, rotate);
 	    }
 	    else
 	    {
 		/* single line - text is left on stack */
-	    	text_box_path(x, y, xref, yref, value, fontsize);
+	    	text_box_path(x, y, xref, yref, value, fontsize, rotate);
 	    }
 
 	    if (opaque)
@@ -301,8 +305,14 @@ do_label (FILE *fd)
 	    continue;
 	}
 
-    }
-    fclose (fd);
+        if (FIELD("rotate"))
+        {
+	    if (scan_northing(value, &dtmp)) rotate = dtmp;
+            continue;
+        }
 
+    }
+    /*fclose (fd);*/ /* commented because fd is closed after 
+			do_label call; RB March 2000 */
     return 0;
 }
