@@ -48,12 +48,12 @@ static void add_cat(int x)
 
 int main (int argc, char **argv)
 {
-    int i, new_cat, max_att, type, ncats, *cats;
+    int i, new_cat, max_att, type, ncats, *cats, field;
     int dissolve=0, x, y;
     char buffr[1024], text[80];
     char *input, *output, *mapset;
     struct GModule *module;
-    struct Option *inopt, *outopt, *fileopt, *newopt, *typopt, *listopt;
+    struct Option *inopt, *outopt, *fileopt, *newopt, *typopt, *listopt, *fieldopt;
     struct Option *whereopt;
     struct Map_info In;
     struct Map_info Out;
@@ -86,6 +86,8 @@ int main (int argc, char **argv)
     typopt = G_define_standard_option(G_OPT_V_TYPE);
     typopt->answer     = "point,line,boundary,centroid,area,face" ;
     typopt->options    = "point,line,boundary,centroid,area,face" ;
+
+    fieldopt = G_define_standard_option(G_OPT_V_FIELD);
 
     newopt = G_define_option();
     newopt->key              = "new";
@@ -131,6 +133,8 @@ int main (int argc, char **argv)
     output = outopt->answer;
 
     /* if ( d_flag->answer ) dissolve = 1; */
+
+    field = atoi ( fieldopt->answer );
 
     if (!newopt->answer) new_cat = 0;
     else new_cat = atoi(newopt->answer);
@@ -184,7 +188,7 @@ int main (int argc, char **argv)
 	}
 	fclose(in);
     } else { 
-        Fi = Vect_get_field( &In, 1);
+        Fi = Vect_get_field( &In, field);
 	fprintf(stderr,"Load cats from the database (table = %s, db = %s).\n",  Fi->table, Fi->database);
 	
         driver = db_start_driver(Fi->driver);
@@ -209,11 +213,11 @@ int main (int argc, char **argv)
     type = Vect_option_to_types ( typopt );
     
     max_att = xtract_line( cat_count, cat_array, &In, &Out, 
-                           new_cat, type, dissolve, 1, 1);
+                           new_cat, type, dissolve, field, 1);
     if ( 0 > max_att)
 	G_fatal_error("Error in line/site extraction processing");
 
-    Vect_copy_tables ( &In, &Out, 0 );
+    Vect_copy_table ( &In, &Out, field, 1, NULL, GV_1TABLE );
     Vect_close (&In);
     Vect_build (&Out, stdout );
     Vect_close (&Out);
