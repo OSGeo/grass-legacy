@@ -37,8 +37,8 @@ int infxStats(tab, col, freq, where, verbose)
     }
     
  if (freq )  {
-  sprintf (SQL_stmt,"SELECT count(*) as count, %s from %s %s 
-         group by %s order by count(*)"
+  sprintf (SQL_stmt,"SELECT count(*) as count, %s from %s %s"
+        " group by %s order by count(*)"
          ,col,tab,wherecl,col);  }
   else 
   { sprintf (SQL_stmt, "select avg(%s) from %s where oid is null",col,tab);
@@ -48,11 +48,11 @@ int infxStats(tab, col, freq, where, verbose)
  
     PQclear (res);     
     if ( can_avg_col ) {
-       sprintf (SQL_stmt,"SELECT min(%s) as Min, max(%s) as Max, avg(%s) as Mean
-       FROM %s %s",col,col,col,tab,wherecl);  }
+       sprintf (SQL_stmt,"SELECT min(%s) as Min, max(%s) as Max, avg(%s) as Mean"
+       " FROM %s %s",col,col,col,tab,wherecl);  }
     else
-       {sprintf (SQL_stmt,"SELECT min(%s) as Min, max(%s) as Max
-       FROM %s %s",col,col,tab,wherecl);  }     
+       {sprintf (SQL_stmt,"SELECT min(%s) as Min, max(%s) as Max "
+       " FROM %s %s",col,col,tab,wherecl);  }     
     }
     
     
