@@ -1,4 +1,5 @@
 #define GLOBAL
+#include <stdlib.h>
 #include "local_proto.h"
 
 int main(int argc, char **argv)
