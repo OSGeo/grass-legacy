@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<TITLE>PNG driver</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+</HEAD>
+<BODY bgColor=white>
+<IMG src="grass.smlogo.gif"> 
+<HR align=center width="100%" SIZE=6 no shade>
+
+<H2>NAME</H2>
+<EM><B> PNGdriver</B></EM>  - driver to create PNG images 
+<BR><EM>(drivers)</EM> 
+
+<H2>DESCRIPTION</H2>
+The PNG driver generates PNG pictures from GRASS display commands.
+<H2>USAGE</H2>
+<H3>Environment variables</H3>Several environment variables effect the operation 
+of the PNG driver. 
+<UL>
+  <LI><B>GRASS_WIDTH=xxx</B><BR>the width of the image map (default is 
+  640).<BR><BR>
+  <LI><B>GRASS_HEIGHT=yyy</B><BR>the height of the image map (default is 
+  480).<BR><BR>
+  <LI><B>GRASS_PNGFILE=filename</B><BR>the filename to put the resulting image in, default is <b>map.png</b>.<br><br> 
+  <LI><B>GRASS_BACKGROUNDCOLOR=RRGGBB</B><BR>specifies the background color to use in RGB
+  notation (hex values). Default is <b>FFFFFF</b> (white).<br><br>
+  <LI><B>GRASS_TRANSPARENT=[TRUE|FALSE]</B><BR>sets transparent background on (TRUE) or off (FALSE, 
+  default).</LI>        
+</UL>
+
+<H3>Example</H3>
+<OL>
+<LI>Start up the driver<BR><PRE>
+         d.mon start=PNG
+         d.mon select=PNG
+</PRE>
+<LI>Display text strings (HREF's) and polygons<BR>
+<PRE>
+         d.area map=<i>someareamap</i> fillcolor=green linecolor=black
+         d.vect map=<i>somevectormap</i> color=red
+</PRE>
+<LI> Stop the driver when all polygon have been displayed. This will cause a 
+file named <i>map.png</i> to be created in your current directory.
+<PRE>
+         d.mon stop=PNG
+</PRE></LI>
+
+</OL>
+
+<H2>NOTES</H2> 
+
+The PNG driver uses the <a href="http://www.boutell.com/gd/">Gd library</a>
+(http://www.boutell.com/gd/) developed by Boutell.Com, Inc. The Gd library
+in turn relies on libpng (see the <a
+href="http://www.libpng.org/pub/png/">libpng</a> home page) and zlib (see
+the <a href="http://www.info-zip.org/pub/infozip/zlib/">info-zip</a> home
+page), all which needs to be installed for the PNG driver to work (it's
+worth it)..
+
+<h2>SEE ALSO</h2>
+<a href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/htmlmapdriver.html">HTMLMAP driver</a></EM>, 
+<EM><A 
+href ="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/celldriver.html"<a>celldriver</A></EM>, 
+<EM><A 
+href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/xdriver.html">XDRIVER</A></EM>, 
+<EM><A 
+href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/d.vect.html">d.vect</A></EM>, 
+<EM><A 
+href="http://www.geog.uni-hannover.de/grass/gdp/html_grass5/html/d.area.html">d.area</A></EM> 
+
+<H2>AUTHOR</H2>
+Per Henrik Johansen<BR>
+<I>phj@norgit.no</I><BR> 
+<I><a href="http://www.norgit.no">NORGIT AS</a></I>
+</BODY></HTML>
+
