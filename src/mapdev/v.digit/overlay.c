@@ -124,7 +124,7 @@ plot_overlay (overlay)
 			CLR_OVERLAY,0);
 	 }
 end:
-	 R_flush ();
+	 V_flush ();
 	 return (ret);
 }
 
