@@ -37,7 +37,7 @@ find_node_with_mouse ( x, y, thresh, header)
 	switch (button)
 	 {
 	    case 1:			/*  choose this  */
-		if (node_num)
+		if (node_num > 0)
 		{
 		    R_standard_color (dcolors[dig_node_color (CM->Node[node_num].n_lines)]);
 		    Blot (&(CM->Node[node_num].x), &(CM->Node[node_num].y));
