@@ -1,0 +1,5 @@
+OFILES = main.o where.o
+
+$(BIN_CONTRIB_CMD)/d.to.sites: $(OFILES)
+		$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+
