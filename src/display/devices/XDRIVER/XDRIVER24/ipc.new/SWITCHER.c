@@ -57,11 +57,11 @@ typedef struct _pad_ {
 
 static struct MESSIN {
 	long mtype;
-	char buf[4096];
+	char buf[1024];  /* was 4096 */
 } rb;
 static struct MESSOUT {
 	long mtype;
-	char buf[4096];
+	char buf[1024];  /* was 4096 */
 } sb;
 
 static char *me;
@@ -790,7 +790,7 @@ char *argv[];
                 SEND(&l, sizeof l);
                 SEND(&r, sizeof r);
                 break;
-#ifndef __CYGWIN__
+/*#ifndef __CYGWIN__*/
             case FONT:
                 RECTEXT(text);
                 x = Font_get(text);
@@ -800,7 +800,7 @@ char *argv[];
                 RECTEXT(text);
                 Text(text);
                 break;
-#endif
+/*#endif*/
             case TEXT_SIZE:
                 REC(&x, sizeof x);
                 REC(&y, sizeof y);
@@ -1067,7 +1067,7 @@ char *c;
 {
     if (atbuf == n_read) {
         atbuf = 0;
-        n_read = msgrcv(_rfd, (struct msgbuff *) &rb, sizeof rb.buf, 0L, 0);
+        n_read = msgrcv(_rfd, (struct msgbuf *) &rb, sizeof rb.buf, 0L, 0);
         if (n_read < 0)
 	{
 	    n_read = 0;

@@ -1,24 +1,16 @@
-
-/* Changed for truecolor 24bit support by 
- * Roberto Flor/ITC-Irst, Trento, Italy
- * August 1999
- *
- * added new parameter "nlev" to specify number of colors per color channel
- * example; nlev=256 means 8bit for each R, G, B equal to 24bit truecolor
-*/
-     
-
 /* - This driver extensively updated for ICCCM compliance, lint, etc.
  * by P. Thompson (phils@athena.mit.edu) on 9/13/90 - Driver modified
  * to work with Decstation X11r3 server. by David B. Satnik
  * (SATNIKDB%cwu.bitnet) on 8/90 */
 
-#include "gis.h"
 #include <stdio.h>
-#include <signal.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
+#include <signal.h>
 #include <setjmp.h>
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
 #include "includes.h"
 
 #include "../lib/graph.h"
@@ -37,26 +29,51 @@
 int debug(char *x,...) {
    va_list ap;
    va_start(ap,x);
-   vfprintf (stderr,x,ap);
+   vfprintf(stderr,x,ap);
    va_end(ap);
    fprintf(stderr,"\n");
    return 0;
 }
 #else
-#define debug 
+#define debug
 #endif  /* DEBUG */
 
-#include "pad.h"
+typedef struct _list {
+    char *value;
+    struct _list *next;
+} LIST;
+
+typedef struct _item_ {
+    char *name;
+    LIST *list;
+    struct _item_ *next, *prev;
+} ITEM;
+
+typedef struct _pad_ {
+    char *name;
+    ITEM *items;
+    struct _pad_ *next, *prev;
+} PAD;
+
+static struct MESSIN {
+	long mtype;
+	char buf[4096];
+} rb;
+static struct MESSOUT {
+	long mtype;
+	char buf[4096];
+} sb;
 
 static char *me;
 static int _wfd, _rfd;
 static int eof, broken_pipe;
 static int n_read;
 static int atbuf;
-static char inbuf[4096];
+static int cursiz = 0;
 static char current_command;
 PAD *padlist;            /* user created pads */
 PAD *curpad;             /* current selected pad */
+PAD *find_pad();
 static jmp_buf savenv;
 static int get_command(char *);
 static void timeout(int);
@@ -65,7 +82,9 @@ static int rectext(char *);
 static int _rectext(char *);
 static int get1(char *);
 static int read1(char *);
-static int send(char *, int);
+static int send(unsigned char *, int);
+static int sendchar(unsigned char *);
+static int syncbuf(void);
 static int sendtext(char *);
 static void catch(int);
 static void close_mon();
@@ -80,7 +99,9 @@ static int RESULT(BYTE);
 
 #define LOOP_PER_SERVICE 15
 
-int main (int argc, char *argv[])
+int main(argc, argv)
+int argc;
+char *argv[];
 {
     char c, lc = 0;
     char name[200], text[1024];
@@ -90,9 +111,6 @@ int main (int argc, char *argv[])
     int index, number;
     int min, max;
     int pid, syntax, fifos;
-#ifndef ORIG
-    int nlev;
-#endif /* ORIG */
     int sts, waitime, opened;
     void (*def)();
     int t, b, l, r;
@@ -106,9 +124,10 @@ int main (int argc, char *argv[])
     PAD *pad;
     /* How many commands for each check of Xevents?? */
     static int cmd_loop_count;  
+#ifndef ORIG
+    int nlev;
+#endif
 
-    struct sigaction mysig_catch, mysig_close;
-    sigset_t m_catch, m_close;
 
     /* whoami */
     me = argv[0];
@@ -142,37 +161,37 @@ int main (int argc, char *argv[])
     default:
         syntax = 1;
     }
-#else /* ORIG */
-    nlev=32;
+#else
+    nlev = 32;
     switch (argc) {             /* syntax check */
     case 2:
         if (*argv[1] == '-')
-	   syntax = 1;
-	else 
-           fifos = 1;
+            syntax = 1;
+        else
+            fifos = 1;
         break;
     case 3:
         if (*argv[1] != '-') {
-            fifos = 1;
-	    nlev=atoi(argv[2]);
+	    fifos = 1;
+	    nlev = atoi(argv[2]);
 	}
         else
             fifos = 2;
         break;
     case 4:
-        if (*argv[1] != '-')
-		syntax = 1 ;
+	if (*argv[1] != '-')
+	    syntax = 1;
 	else {
-	   fifos = 2;
-	   nlev=atoi(argv[3]);
+	    fifos = 2;
+	    nlev = atoi(argv[3]);
 	}
-        break;
+	break;
     default:
         syntax = 1;
     }
-#endif /* ORIG */
+#endif
     if (syntax) {
-        fprintf(stderr, "Usage: %s [-] \"input_fifo output_fifo\" [nlev]\n", me);
+        fprintf(stderr, "Usage: %s [-] \"input_fifo output_fifo\"\n", me);
         exit(-1);
     }
     /* Syntax is all right.  Now we must check and see whether or not
@@ -187,7 +206,7 @@ int main (int argc, char *argv[])
     debug("Initialize Graphics");
 #ifdef ORIG
     if (!Graph_Set(argc, argv))
-#else /* ORIG */
+#else
     if ( nlev == 0 ) {
 	fprintf(stderr,"Nlev is zero, resetting to 32\n");
 	nlev=32;
@@ -202,7 +221,7 @@ int main (int argc, char *argv[])
 	nlev=32;
     }
     if (!Graph_Set(argc, argv,nlev))
-#endif /* ORIG */
+#endif
         exit(-1);
 
     /* Initialize color map stuff */
@@ -214,7 +233,7 @@ int main (int argc, char *argv[])
      * are to run in background, we will have fifos == 1 from the
      * syntax check above. */
     if (fifos == 1) {
-        if ((pid = fork())) {
+        if (pid = fork()) {
             if (pid > 0) {      /* parent exits */
                 fprintf(stderr, "Graphics driver [%s] started\n", me);
                 exit(0);
@@ -226,23 +245,16 @@ int main (int argc, char *argv[])
 	/* change process groups to be shielded from keyborad
 	 * signals note: use BSD form of call, which will also work
 	 * for ATT */
-	/* setpgrp(0, getpid());*/
+	/* setpgrp(0, getpid()); */
+	/* setpgid(0, getpid()); */
+
+        /* only FIFO? */
 	   setsid();
     }                           /* monitor runs */
 #ifdef SIGPIPE
-    sigemptyset(&m_catch);
-    mysig_catch.sa_handler = catch;
-    mysig_catch.sa_mask = m_catch;
-    mysig_catch.sa_flags = 0;
-    sigaction(SIGPIPE, &mysig_catch, NULL);
-    /*    signal(SIGPIPE, catch); */
+    signal(SIGPIPE, catch);
 #endif
-    sigemptyset(&m_close);
-    mysig_close.sa_handler = close_mon;
-    mysig_close.sa_mask = m_close;
-    mysig_close.sa_flags = 0;
-    sigaction(SIGTERM, &mysig_close, NULL);
-    /* signal(SIGTERM, close_mon); */ /* exit gracefully if terminated */
+    signal(SIGTERM, close_mon); /* exit gracefully if terminated */
 
 
 
@@ -266,17 +278,17 @@ int main (int argc, char *argv[])
                 get_connection(argv[fifos], &_rfd, &_wfd);
                 alarm(0);       /* open OK, turn off alarm */
 		signal(SIGALRM, def);
-                if (_rfd < 0 || _wfd < 0) {
-                    perror("no connection");
-                    exit(-1);
+                if (_rfd < 0 && _wfd < 0) {
+		    perror("no connection");
+		    exit(1);
                 }
-                opened = 1;
+		opened = 1;
             }
         }
         debug("Opened");
-
-        atbuf = n_read = 0;
-
+/* FIFO
+	atbuf = n_read = 0;
+*/
         eof = broken_pipe = 0;
         current_command = 0;
         cmd_loop_count  = 1;
@@ -294,8 +306,9 @@ int main (int argc, char *argv[])
 
             sts = get_command(&c);
             if (sts == 1) {     /* see if EOF from fifo */
-                debug("get_command failed!");
-                break;
+	    {
+                continue;
+	    }
             } else if (sts == -1) {
                 Service_Xevent();  /* take care of any events */
                 continue;       /* if timed out repeat the loop */
@@ -586,7 +599,10 @@ int main (int argc, char *argv[])
                 SEND(&button, sizeof button);
                 break;
             case GRAPH_CLOSE:
+                msgctl(_wfd, IPC_RMID,0);
+                msgctl(_rfd, IPC_RMID,0);
                 Graph_Close();
+                Service_Xevent();  /* take care of any events */
                 exit(0);
             case LINEMOD:
                 REC(&index, sizeof index);
@@ -933,20 +949,22 @@ int main (int argc, char *argv[])
                 break;
 
             default:
-                fprintf(stderr, "\nUnknown command: %d last: %d", c, lc);
                 break;
             }
             lc = c;
         }                       /* end of the "while (eof<=0 &&
                                  * !broken_pipe)" block */
         /* read encountered EOF. close fifos now */
-        close(_wfd);
-        close(_rfd);
+/*
+        msgctl(_wfd, IPC_RMID,0);
+        msgctl(_rfd, IPC_RMID,0);
+*/
     }                           /* end of the "while(1)" way back
                                  * around line 170 */
 }
 
-static int get_command(char *c)
+static int get_command(c)
+char *c;
 {
     /* is there a command char pending? */
     if (*c = current_command) {
@@ -954,7 +972,6 @@ static int get_command(char *c)
         current_command = 0;
         return 0;
     }
-    debug("get_command from fifo...");
     /* read the fifo. look for 1 (or more) COMMAND_ESC chars followed
      * by a non-zero command token char. If there is an eof return 1,
      * else return 0. */
@@ -962,8 +979,8 @@ static int get_command(char *c)
         if (*c != COMMAND_ESC)
             continue;
 #ifdef DEBUG
-        fprintf(stderr, "Got command esc(%d)\n", *c);
-#endif  /* DEBUG */
+	fprintf(stderr, "Got command esc(%d)\n", *c);
+#endif
         while (*c == COMMAND_ESC)
             if (read1(c) != 0)
                 return 1;
@@ -973,29 +990,30 @@ static int get_command(char *c)
     return 1;                   /* EOF */
 }
 
-static void timeout (int dummy)
+static void timeout(int dummy)
 {
     longjmp(savenv, -1);
 }
 
-static int rec(char *buf, int n)
+static int rec(buf, n)
+char *buf;
+int n;
 {
     int stat;
 
     debug("rec: reading %d chars", n);
-    while (n-- > 0) {
+    while (n-- > 0)
         if ((stat = get1(buf++)) != 0)
             return stat;        /* EOF or COMMAND_ESC */
-        debug(" %x ",*(buf-1));
-    }
     debug("rec: Got em all");
     return 0;
 }
 
-static int rectext(char *s)
+static int rectext(s)
+char *s;
 {
     int stat;
-    char buf[80];
+    char buf[40];
 
     debug("rectext");
     stat = _rectext(s);
@@ -1004,18 +1022,19 @@ static int rectext(char *s)
     return stat;
 }
 
-static int _rectext(char *s)
+static int _rectext(s)
+char *s;
 {
-    /* Read byte-by-byte into the buffer until '\0' */
     int stat;
 
     while ((stat = get1(s)) == 0)
-        if (*s++ == '\0')
+        if (*s++ == 0)
             return 0;
     return stat;                /* EOF or COMMAND_ESC */
 }
 
-static int get1(char *c)
+static int get1(c)
+char *c;
 {
     /* debug ("get1"); */
     if (read1(c) != 0) {
@@ -1042,32 +1061,59 @@ static int get1(char *c)
     return 0;                   /* OK */
 }
 
-static int read1(char *c)
+static int read1(c)
+char *c;
+
 {
     if (atbuf == n_read) {
         atbuf = 0;
-        n_read = read(_rfd, inbuf, sizeof inbuf);
-        if (n_read <= 0)
+        n_read = msgrcv(_rfd, (struct msgbuff *) &rb, sizeof rb.buf, 0L, 0);
+        if (n_read < 0)
+	{
+	    n_read = 0;
             return 1;           /* EOF */
+	}
     }
-    *c = inbuf[atbuf++];
+    *c = rb.buf[atbuf++];
     return 0;
 }
 
 
-static int send(char *buf, int n)
+static int send(buf, n)
+int n;
+unsigned char *buf;
 {
-    (void) write(_wfd, buf, n);
+	while (n-- > 0)
+		sendchar(buf++);
+	syncbuf();
+	return 0;
+}
+
+
+
+static int sendchar(c)
+unsigned char *c;
+{
+	sb.buf[cursiz++] = *c;
+	return 0;
+}
+
+static int syncbuf()
+{
+    sb.mtype = 1L;
+    msgsnd(_wfd, (struct msgbuf *) &sb, cursiz , 0);
+    cursiz = 0;
     return 0;
 }
 
-static int sendtext(char *s)
+static int sendtext(s)
+char *s;
 {
     SEND(s, strlen(s) + 1);
     return 0;
 }
 
-static void catch(int n)
+static void catch(n)
 {
     signal(n, catch);
 #ifdef SIGPIPE
@@ -1076,17 +1122,19 @@ static void catch(int n)
 #endif
 }
 
-static char *store(char *s)
+static char *store(s)
+char *s;
 {
     char *buf;
 
-    buf = (char *)G_malloc((size_t) (strlen(s) + 1));
+    buf = (char *)G_malloc((size_t) strlen(s) + 1);
     if (buf != NULL)
         strcpy(buf, s);
     return buf;
 }
 
-static int RESULT(BYTE n)
+static int RESULT(n)
+BYTE n;
 {
     BYTE c;
 
@@ -1096,7 +1144,8 @@ static int RESULT(BYTE n)
 }
 
 /*************** pad routines ************************************/
-int create_pad (char *name)
+int create_pad(name)
+char *name;
 {
     PAD *pad;
 
@@ -1117,10 +1166,12 @@ int create_pad (char *name)
     return 1;
 }
 
-static int delink_pad(PAD *pad)
+static
+int delink_pad(pad)
+PAD *pad;
 {
     if (pad == NULL)
-        return 1;
+        return;
 
     if (pad->prev == NULL)
         padlist = pad->next;
@@ -1129,12 +1180,10 @@ static int delink_pad(PAD *pad)
 
     if (pad->next != NULL)
         pad->next->prev = pad->prev;
-
-    return 0;
 }
 
-int 
-delete_pad (PAD *pad)
+int delete_pad(pad)
+PAD *pad;
 {
     ITEM *item, *next;
 
@@ -1153,8 +1202,8 @@ delete_pad (PAD *pad)
     return 1;
 }
 
-PAD *
-find_pad (char *name)
+PAD *find_pad(name)
+char *name;
 {
     PAD *pad;
 
@@ -1164,7 +1213,9 @@ find_pad (char *name)
     return (PAD *) NULL;
 }
 
-static int invent_pad(char *name)
+static
+int invent_pad(name)
+char *name;
 {
     static int i = 0;
 
@@ -1175,7 +1226,9 @@ static int invent_pad(char *name)
     return 0;
 }
 
-int append_item (PAD *pad, char *name, char *value)
+int append_item(pad, name, value)
+PAD *pad;
+char *name, *value;
 {
     ITEM *item;
     LIST *cur, *prev;
@@ -1197,7 +1250,7 @@ int append_item (PAD *pad, char *name, char *value)
     /* find the named item for the current pad */
     item = find_item(pad, name);
     if (item == NULL)
-        item = new_item(pad,name);
+        item = new_item(pad, name);
     if (item == NULL)
         return 0;
 
@@ -1214,7 +1267,9 @@ int append_item (PAD *pad, char *name, char *value)
     return 1;
 }
 
-int delete_item (PAD *pad, char *name)
+int delete_item(pad, name)
+PAD *pad;
+char *name;
 {
     ITEM *item;
 
@@ -1236,7 +1291,9 @@ int delete_item (PAD *pad, char *name)
     return 1;
 }
 
-static int free_item(ITEM *item)
+static
+int free_item(item)
+ITEM *item;
 {
     LIST *list, *next;
 
@@ -1254,7 +1311,11 @@ static int free_item(ITEM *item)
 }
 
 
-static ITEM *find_item(PAD *pad, char *name)
+static
+ITEM *
+ find_item(pad, name)
+PAD *pad;
+char *name;
 {
     ITEM *item;
 
@@ -1266,7 +1327,11 @@ static ITEM *find_item(PAD *pad, char *name)
 }
 
 
-static ITEM *new_item(PAD *pad, char *name)
+static
+ITEM *
+ new_item(pad, name)
+char *name;
+PAD *pad;
 {
     ITEM *item;
 
@@ -1289,14 +1354,19 @@ static ITEM *new_item(PAD *pad, char *name)
     return item;
 }
 
-static void 
-close_mon (void)
+static void close_mon()
 {
     Graph_Close();
+    msgctl(_wfd, IPC_RMID,0);
+    msgctl(_rfd, IPC_RMID,0);
+    return;
 }
 
-static char *xalloc(char *buf,int *cur,int new,int len)
+static char *xalloc(buf, cur, new, len)
+char *buf;
+int *cur, new, len;
 {
+
     if (*cur >= new)
         return buf;
     if (*cur)
@@ -1312,3 +1382,4 @@ static char *xalloc(char *buf,int *cur,int new,int len)
 }
 
 /*** end SWITCHER.c ***/
+
