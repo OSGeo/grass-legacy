@@ -96,6 +96,13 @@ As site files can consist of several attribute fields (decimals or string
 categories), the user can select the column of interest for conversion
 using the filed selection parameters (findex, string). The attribute field
 type to use for operation is selected by parameter <EM>field</EM>.
+<P>
+The user will be warned if two or more sites fall into one raster cell.
+However, the module will continue to import (the last site value will
+determine the cell value). If such overwriting is not wanted, the cell
+resolution has to be changed using g.region.
+<P>
+The user will be warned if sites fall out of the current region.
 
 <H2>SEE ALSO</H2>
 
