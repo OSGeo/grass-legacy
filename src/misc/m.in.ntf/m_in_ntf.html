@@ -1,0 +1,115 @@
+<HTML>
+<HEAD>
+	<TITLE>GRASS Source Code Details</TITLE>
+	<LINK REV="made" HREF="jwo@le.ac.uk">
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+
+
+<P>
+	 	Program to read an Ordnance Survey NTF file. Can read most raster and vector 
+	 	formats. (NTF 1 and 2).
+</P>
+
+<PRE>Each line in an NTF file starts with a 2 digit record type. 
+Included here is a list of supported and unsupported
+rocord types. 
+
+--------------------------------------------
+The following NTF record types are supported
+
+00 Continuation record
+01 Volume header record
+02 Database header record
+03 Data description record
+04 Data format record
+05 Feature classification record
+07 Section header record
+11 Name record
+12 Name position record
+14 Attribute record
+15 Point record
+16 Node record
+21 Geometry record
+22 3D Geometry record
+23 Line record
+40 Attribute description record
+43 Text record
+44 Text position record
+45 Text representation record
+50 Grid header record
+51 Grid data record
+99 Volume termination record
+
+
+-----------------------------------
+The following are not yet supported
+
+24 Chain record
+31 Polygon record
+33 Complex polygon
+34 Collection of features
+
+
+---------------------------------------------------------
+Coding history:
+
+Jo Wood, Department of Geography, V1.0
+29th May 1993
+
+Modified, 10th February, 1995
+
+Modified 18th October, 1995 - Incorporates 'STRATEGI' vector files.
+	Minor bug modifications, 19th October, 1995.
+				 23rd October, 1995.
+Last modified 24th October, 1995 - Fixed attribute labelling problem.
+
+------------
+
+Usage:
+ m.in.ntf [-l] ntf=name [out=name]
+
+Flags:
+  -l   Sends an NTF conversion log to standard output
+
+Parameters:
+  ntf   NTF file to read
+  out   Output file
+        default: No output file
+
+</PRE> 
+
+
+<P> </P>
+
+<CENTER>
+	<IMG ALT="[-----]" ALIGN=MIDDLE SRC="http://www.geog.le.ac.uk/assist/gif/line.gif"> 
+	<BR>
+	<TABLE BORDER=0 CELLSPACING=0 CELLPADDING=20 >
+	<TR>
+	<TD>
+	<A HREF="http://www.geog.le.ac.uk/assist/index.html">
+	<IMG BORDER=0 ALT="[ASSIST's Home]" ALIGN=MIDDLE SRC="http://www.geog.le.ac.uk/assist/gif/assist50.gif">
+	ASSIST's home
+	</A>
+	</TD>
+	<TD>
+	<A HREF="http://www.geog.le.ac.uk/jwo/index.html">
+	<IMG BORDER=0 ALT="[Jo's Home]" ALIGN=MIDDLE SRC="http://www.geog.le.ac.uk/jwo/images/home.gif">
+	Jo Wood's home
+	</A>
+	</TD>
+	</TR>
+	</TABLE>
+</CENTER>
+
+<ADDRESS>
+	<P ALIGN="RIGHT"> <FONT SIZE=-3>
+	Last modified, 3rd August, 1997 <BR>
+	<A HREF="MAILTO:jwo@le.ac.uk">jwo@le.ac.uk</A>
+	</P>
+</ADDRESS>
+
+</BODY>
+</HTML>
