@@ -16,5 +16,5 @@ db_isdir (path)
 
     if (stat(path, &x) != 0)
 	return DB_FAILED;
-    return ((x.st_mode & S_IFDIR) ? DB_OK : DB_FAILED);
+    return ( S_ISDIR (x.st_mode) ? DB_OK : DB_FAILED);
 }
