@@ -92,6 +92,9 @@ int path ( struct Map_info *In, struct Map_info *Out, int nfield, double maxdist
 	G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
     }
 
+    if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
+	G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+
     db_begin_transaction ( driver );
 
     /* Read stdin, find shortest path, and write connectin line and new database record */

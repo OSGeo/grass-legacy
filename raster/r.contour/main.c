@@ -173,6 +173,9 @@ int main ( int argc, char *argv[])
     if (db_execute_immediate (Driver, &sql) != DB_OK ) {
       G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql ) );
     }
+
+    if (db_grant_on_table (Driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
+	G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
     
     z_array = get_z_array (fd,Wind.rows,Wind.cols, quiet->answer);
     lev = getlevels(levels, max, min, step, &range, &nlevels, quiet->answer);
