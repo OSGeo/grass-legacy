@@ -9,7 +9,7 @@
 
 #include "gis.h"
 #include "local_proto.h"
-
+#include <math.h>
 
 void p_nearest (
     FCELL **ibuffer,		/* input matrix			 */
@@ -25,18 +25,8 @@ void p_nearest (
 
 
    /* cut indices to integer */
-
-/* Morten Hulden: workaround to fix 0.5 pixel shift.
-   If this helps, of course the correct fix would be to delete the lines
-   from the subroutines altogether, and make the type cast in main.c
-   instead, and declare row_idx and col_idx as integers. (row_idx and
-   col_idx are not used as floats anywhere, so why declare them as such).
-   but changing them requires changes in function declarations and
-   r.proj.h as well, so go for the easy test below first).
-   13.12.2001 
-   */
-   	row = (int)(*row_idx);
-	col = (int)(*col_idx);
+   	row = (int) floor(*row_idx);
+	col = (int) floor(*col_idx);
 
 
    /* check for out of bounds - if out of bounds set NULL value	 */

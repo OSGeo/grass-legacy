@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include "gis.h"
 #include "gprojects.h"
+#include <math.h>
 
 void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd, 
 	      struct pj_info *from_pj, struct pj_info *to_pj)
@@ -195,13 +196,13 @@ void bordwalk(struct Cell_head *from_hd, struct Cell_head *to_hd,
 
 	/* adjust to edges */
              
-	idx = (int) G_easting_to_col(xmin, to_hd);
+	idx = (int) floor(G_easting_to_col(xmin, to_hd));
 	xmin = G_col_to_easting(idx+0.0, to_hd);
-	idx = (int) G_easting_to_col(xmax, to_hd);
+	idx = (int) floor(G_easting_to_col(xmax, to_hd));
 	xmax = G_col_to_easting(idx+1.0, to_hd);
-	idx = (int) G_northing_to_row(ymin, to_hd);
+	idx = (int) floor(G_northing_to_row(ymin, to_hd));
 	ymin = G_row_to_northing(idx+1.0, to_hd);
-	idx = (int) G_northing_to_row(ymax, to_hd);
+	idx = (int) floor(G_northing_to_row(ymax, to_hd));
 	ymax = G_row_to_northing(idx+0.0, to_hd);
 
 	to_hd->west = (xmin < to_hd->west) ? to_hd->west : xmin;
