@@ -1,0 +1,5 @@
+OFILES = command.o draw_sites.o grass_db.o interact.o main.o support.o
+Q = /usr/cerl/lib/libQ.a -$(CURSES)
+
+t: $(OFILES) $(DISPLAYLIB) $(RASTERLIB) 
+	$(CC) -o t $(OFILES) /usr/gis/src/libes/libgis.a $Q $(DISPLAYLIB) $(RASTERLIB)  $(GISLIB)
