@@ -1,0 +1,16 @@
+Mmain	main.c	/^main(argc, argv)$/
+bad_line	read_line.c	/^bad_line (buf)$/
+check_alloc	do_graph.c	/^check_alloc(num)$/
+do_color	do_graph.c	/^do_color(buf)$/
+do_draw	do_graph.c	/^do_draw(buf)$/
+do_icon	do_graph.c	/^do_icon(buf)$/
+do_move	do_graph.c	/^do_move(buf)$/
+do_poly	do_graph.c	/^do_poly(buf, len)$/
+do_size	do_graph.c	/^do_size(buf)$/
+do_text	do_graph.c	/^do_text(buf)$/
+graphics	graphics.c	/^graphics()$/
+read_line	read_line.c	/^read_line (buf, n)$/
+scan_xy	do_graph.c	/^scan_xy (buf, x, y, skip)$/
+set_default_options	command.c	/^set_default_options()$/
+set_text_size	do_graph.c	/^set_text_size()$/
+stash_away	command.c	/^stash_away(pos, option)$/
