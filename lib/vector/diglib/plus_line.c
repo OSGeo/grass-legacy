@@ -37,8 +37,10 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
 	G_debug ( 3, "Old node found: %d", node);
     }	
     line->N1 = node;
+    G_debug ( 3, ">");
     dig_node_add_line (plus, node, lineid, Points, type );
      
+    G_debug ( 3, ">");
     if ( type & GV_LINES ) {
 	lp = Points->n_points - 1;
 	G_debug ( 3, "Register node %f,%f", Points->x[lp], Points->y[lp]);

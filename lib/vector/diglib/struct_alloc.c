@@ -33,9 +33,9 @@ dig_alloc_node_2d ( ){
 
     Node->n_lines = 0;
     Node->alloc_lines = 0;
-    Node->lines == NULL;
-    Node->angles == NULL;
-
+    Node->lines = NULL;
+    Node->angles = NULL;
+  
     return (Node);
 }
 
@@ -51,6 +51,8 @@ dig_node_alloc_line_2d ( P_NODE_2D * node, int add) {
   int  num;
   char *p;
 
+  G_debug (3, "dig_node_alloc_line_2d(): add = %d", add); 
+  
   num = node->n_lines + add;
 
   p = realloc ( node->lines, num * sizeof(plus_t) );
@@ -172,7 +174,7 @@ dig_alloc_area_2d (){
 
     Area->n_lines = 0;
     Area->alloc_lines = 0;
-    Area->lines == NULL;
+    Area->lines = NULL;
 
     Area->alloc_centroids = 0;
     Area->n_centroids = 0;
