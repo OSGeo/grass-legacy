@@ -35,7 +35,8 @@ OFILES = main.o \
 PROG = $(BIN_CONTRIB_CMD)/SG3d
 
 $(PROG): $(OFILES) $(VECTLIB)
-	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(IMGLIB) $(PANELLIB) $(MATHLIB) $(VECTLIB) $(GISLIB) -lfm_s -lgl_s
+#####	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(IMGLIB) $(PANELLIB) $(MATHLIB) $(VECTLIB) $(GISLIB) -lfm_s -lgl_s
+	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(IMGLIB) $(PANELLIB) $(MATHLIB) $(VECTLIB) $(GISLIB) -lfm -lgl
 	@rm -f a.out
 	cp doc/catman $(MAN1)/SG3d
 
