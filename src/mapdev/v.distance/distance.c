@@ -28,7 +28,7 @@ distance(Map)
     {
 	if (isatty(0))
 	    fprintf (stderr, "\neast north >  ");
-	if (gets(buf) == NULL) {
+	if (fgets(buf,1024,stdin) == NULL) {
               return;
 	}
 	if (strcmp (buf, "end") == 0) {
