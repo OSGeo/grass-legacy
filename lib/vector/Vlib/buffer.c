@@ -258,7 +258,7 @@ void parallel_line (struct line_pnts *Points, double d, double tol, struct line_
     }
 
     side = d/abs(d);
-    atol = 2 * acos( 1-tol/abs(d) );
+    atol = 2 * acos( 1-tol/fabs(d) );
 
     for (i = 0; i < np-1; i++)
     {
@@ -289,8 +289,8 @@ void parallel_line (struct line_pnts *Points, double d, double tol, struct line_
 		for (j = 0; j < na; j++)
 		{
 		    av+=atol2;
-		    nx = x[i+1] + abs(d) * cos(av);
-		    ny = y[i+1] + abs(d) * sin(av); 
+		    nx = x[i+1] + fabs(d) * cos(av);
+		    ny = y[i+1] + fabs(d) * sin(av); 
 		    Vect_append_point ( nPoints, nx, ny, 0 );
 		}
 	    }
@@ -341,9 +341,9 @@ Vect_line_buffer ( struct line_pnts *InPoints, double distance, double tolerance
     static struct line_pnts *Points = NULL;    
     static struct line_pnts *PPoints = NULL;    
 
-    distance = abs (distance );
+    distance = fabs (distance );
 
-    dangle = 2 * acos( 1-tolerance/abs(distance) ); /* angle step */
+    dangle = 2 * acos( 1-tolerance/fabs(distance) ); /* angle step */
     
     if ( Points == NULL )
         Points = Vect_new_line_struct(); 
