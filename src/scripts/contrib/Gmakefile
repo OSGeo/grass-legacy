@@ -5,6 +5,7 @@ all:
 	cp d.redraw/d.redraw $(GISBASE)/scripts
 	cp g.html2man/g.html2man $(GISBASE)/scripts
 	cp g.man2html/g.man2html $(GISBASE)/scripts
+	cp g.manual/g.manual $(GISBASE)/scripts
 	$(GMAKE) i.oif
 	$(GMAKE) i.spectral
 	cp i.image.mosaic/i.image.mosaic $(GISBASE)/scripts
