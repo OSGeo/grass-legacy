@@ -21,6 +21,9 @@
 #ifdef HAVE_POSTGRES
 #include "libpq-fe.h"
 #endif
+#ifdef HAVE_OGR
+#include "ogr_api.h"
+#endif
 
 #define HEADSTR	50
 
@@ -118,6 +121,7 @@ struct dig_head
     int with_z;
     
     long size;                  /* coor file size */
+    long head_size;             /* coor header size */
 
     struct Port_info port;      /* Portability information */
    
@@ -168,11 +172,26 @@ struct Format_info_post {
     int        lastRead;   /* id of last read line, 0 if no one was yet read */
 };
 #endif
+/* OGR */
+#ifdef HAVE_OGR
+struct Format_info_ogr {
+    char           *dsn;
+    char           *layer_name;
+    OGRDataSourceH ds;
+    OGRLayerH      layer;
+    int            nFeatures;
+    int            feature;
+    int            part;
+} ;
+#endif
 struct Format_info {
     int i;
     struct Format_info_shp shp;
 #ifdef HAVE_POSTGRES
     struct Format_info_post post;
+#endif
+#ifdef HAVE_OGR
+    struct Format_info_ogr ogr;
 #endif
 } ;
 
@@ -182,9 +201,20 @@ struct Plus_head
     int Version_Minor;
     int Back_Major;		/* earliest version that can use this data format */
     int Back_Minor;
+    
+    int spidx_Version_Major;		/* version codes for spatial index */
+    int spidx_Version_Minor;
+    int spidx_Back_Major;		/* earliest version that can use this data format */
+    int spidx_Back_Minor;
+    
     int with_z;
+    int spidx_with_z;
+
+    long head_size;             /* topo header size */
+    long spidx_head_size;       /* spatial index header size */
 
     struct Port_info port;      /* Portability information */
+    struct Port_info spidx_port;      /* Portability information for spatial index */
     int mode;			/* Read, Write, RW */
 
     struct bound_box box;      /* box */
@@ -195,31 +225,45 @@ struct Plus_head
     P_ISLE **Isle;
    
     plus_t n_nodes;		/* Current Number of nodes */
+    plus_t n_edges;		/* Current Number of edges */
     plus_t n_lines;		/* Current Number of lines */
     plus_t n_areas;		/* Current Number of areas */
     plus_t n_isles;
+    plus_t n_volumes;		/* Current Number of volumes */
+    plus_t n_holes;		/* Current Number of holes */
 
     plus_t n_plines;		/* Current Number of point    lines */
     plus_t n_llines;		/* Current Number of line     lines */
     plus_t n_blines;		/* Current Number of boundary lines */
     plus_t n_clines;		/* Current Number of centroid lines */
+    plus_t n_flines;		/* Current Number of face lines */
+    plus_t n_klines;		/* Current Number of kernel lines */
 
     plus_t alloc_nodes;		/* # of nodes we have alloc'ed space for 
 				     i.e. array size - 1 */
+    plus_t alloc_edges;
     plus_t alloc_lines;		/* # of lines we have alloc'ed space for */
     plus_t alloc_areas;		/* # of areas we have alloc'ed space for */
     plus_t alloc_isles;		/* # of isles we have alloc'ed space for */
+    plus_t alloc_volumes;
+    plus_t alloc_holes;
 
     long Node_offset;           /* offset of array of nodes in topo file */
+    long Edge_offset;
     long Line_offset;
     long Area_offset;
     long Isle_offset;
+    long Volume_offset;
+    long Hole_offset;
 
     /* Spatial index */
     long Node_spidx_offset;     /* offset of spindex */
+    long Edge_spidx_offset;
     long Line_spidx_offset;
     long Area_spidx_offset;
     long Isle_spidx_offset;
+    long Volume_spidx_offset;
+    long Hole_spidx_offset;
     
     struct Node *Node_spidx;
     struct Node *Line_spidx;
