@@ -25,7 +25,7 @@ echo "You must exit GRASS to run this GRASS test suite."
 exit
 fi
 
-export GISBASE=/usr/local/grass-5.0b
+export GISBASE=/usr/local/grass5
 
 if test "$1" = "-h"
 then
@@ -39,7 +39,7 @@ then
  echo "Usage:"
  echo "testgrass.sh  [path_to_grassbinaries]"
  echo ""
- echo "Default path: /usr/local/grass-5.0b"
+ echo "Default path: /usr/local/grass5"
 else
  if test ! "$1" = ""
  then
