@@ -345,7 +345,7 @@ The library is loaded by specifying $(IMAGERYLIB) in the
 Gmakefile. The following example is a complete Gmakefile which
 compiles code that uses this library:
 <P>
-<U>Gmakefile for $(IMAGERYLIB)</U>
+<B>Gmakefile for $(IMAGERYLIB)</B>
 
 \verbatim
 #UPDATE THIS EXAMPLE!!
