@@ -77,6 +77,7 @@ int asc_to_bin(
 			fprintf (stderr,"Error reading ascii file:\n%s\n", buff) ;
 			return 0;
 	    }
+	    G_debug(5, "feature type = %d", type);
 
 	    n_points = 0 ;
 	    x = xarray ;
