@@ -169,6 +169,12 @@ ellipsoid_table_file(file)
 }
 
 static
+compare_table_names(a,b)
+    struct table *a,*b;
+{
+    return strcmp(a->name,b->name);
+}
+static
 read_ellipsoid_table(fatal)
 {
     FILE *fd;
@@ -226,7 +232,11 @@ read_ellipsoid_table(fatal)
 	    continue;
 	}
     }
-    if (!err) return 1;
+    if (!err)
+    {
+	qsort (table, count, sizeof(*table), compare_table_names);
+	return 1;
+    }
     sprintf (buf, "Line%s%s of ellipsoid table file <%s> %s invalid",
 	err==1?"":"s", badlines, file, err==1?"is":"are");
     fatal ? G_fatal_error(buf) : G_warning (buf);
