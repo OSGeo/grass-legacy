@@ -323,8 +323,8 @@ int main( int   argc, char *argv[])
 static void get_catlab ( DBFHandle hDBF, int rec, int cat_field, int lab_field, int *cat, char *lab ) {
     DBFFieldType ftype;
 
-    if ( cat_field >= 0 )  *cat = DBFReadIntegerAttribute( hDBF, rec, cat_field ); 
-    else *cat = rec;
+    if ( cat_field > 0 )  *cat = DBFReadIntegerAttribute( hDBF, rec, cat_field ); 
+    else *cat = rec + 1;
     
     if( lab_field >= 0 ) {
         ftype = DBFGetFieldInfo( hDBF, lab_field, NULL, NULL, NULL );  
