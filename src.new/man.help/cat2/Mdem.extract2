@@ -1,0 +1,66 @@
+
+
+
+Mdem.extract(2M)     GRASS Reference Manual      Mdem.extract(2M)
+
+
+
+NAME
+     Mdem.extract    - provides information about DEM elevation
+     tape
+     (Map Development Tool)
+
+SYNOPSIS
+     Mdem.extract [if=tapedev] of=file bs=blocksize
+
+DESCRIPTION
+     Mdem.extract extracts the current user window from tapedev
+     in blocks of blocksize bytes.  The program accepts input
+     from /dev/rmt0 if omitted.  Results are placed in file.
+     Mdem.extract will not complain if the input file does not
+     cover the entire window.  The program assumes unlabelled
+     tapes in ascii format with no header or trailer files.
+
+SEE ALSO
+     Mdem.examine
+
+AUTHOR
+     Andrew Heekin, U.S. Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
