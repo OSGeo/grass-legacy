@@ -24,6 +24,7 @@ region settings interactively, with a mouse.
 <B>d.pan</B> [<B>-q</B>] 
 [<B>rast=</B><EM>name</EM>[,<EM>name</EM>,...]] 
 [<B>vector=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>site=</B><EM>name</EM>[,<EM>name</EM>,...]]
 [<B>zoom=</B><EM>value</EM>] 
 <BR>
 
@@ -35,8 +36,8 @@ device such as a mouse.
 Like <EM><A HREF="g.region.html">g.region</A></EM>, 
 <EM>d.pan</EM> re-defines the settings of the geographic
 region.  However, <EM>d.pan</EM> allows the user to change
-the current region settings interactively, by re-centering the current map. 
-The graphics display is updated automatically. 
+the current region settings interactively, by re-centering/zooming
+the current map(s). The graphics display is updated automatically. 
 
 <H2>OPTIONS</H2>
 
@@ -57,6 +58,8 @@ messages to standard output.
 <DD>Name of raster map(s)
 <DT><B>vector=</B><EM>name</EM>[,<EM>name</EM>,...]
 <DD>Name of vector map(s)
+<DT><B>site=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name of site map(s)
 <DT><B>zoom=</B><EM>value</EM>
 <DD>magnification: >1.0 zooms in, <1.0 zooms out<br>
            options: 0.001-1000.0<br>
@@ -78,4 +81,3 @@ Unkown.<br>
 Improvements to auto-redraw maps displayed in GRASS monitor by Huidae Cho and Markus Neteler
 </body>
 </html>
-
