@@ -1,6 +1,6 @@
 Mmain	main.c	/^main(argc,argv) char *argv[];$/
-enhance	enhance.c	/^enhance (group, gmapset, result, red, grn, blu, hi/
-gen_colors	gen_colors.c	/^gen_colors (result)$/
-get_histo	main.c	/^get_histo (n, histo)$/
-get_name	main.c	/^get_name (n, display_name)$/
-set_color	gen_colors.c	/^set_color (n, r, g, b)$/
+ask_levels	ask_levels.c	/^ask_levels()$/
+compose	compose.c	/^compose ()$/
+gen_colors	gen_colors.c	/^gen_colors ()$/
+make_lookup	compose.c	/^make_lookup(table, min, max, level, mult)$/
+paint	compose.c	/^paint (out, in, ncols, table, min, max)$/
