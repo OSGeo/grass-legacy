@@ -236,12 +236,12 @@ double D_a_to_d_col(double A_col )
 
 double D_u_to_d_row(double U_row )
 { 
-	return((int)((U_north - U_row) * U_to_D_yconv + D_north)) ; 
+	return((U_north - U_row) * U_to_D_yconv + D_north) ; 
 }
 
 double D_u_to_d_col( double U_col )
 { 
-	return((int)((U_col - U_west) * U_to_D_xconv + D_west)) ; 
+	return((U_col - U_west) * U_to_D_xconv + D_west) ; 
 }
 
 double D_d_to_u_row(double D_row )

@@ -203,8 +203,8 @@ char *G_strdup(char *string)
 
 
 char * G_strchg(char* bug, char character, char new) {
- /* replace all occurencies of character in string(inplace) with
-  * new */
+ /* replace all occurencies of "character" in string(bug) with
+  * "new", returns new string */
 
  char *help = bug;
  while(*help) {

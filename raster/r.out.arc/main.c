@@ -3,35 +3,47 @@
 #include <math.h>
 #include <stdio.h>
 
-/* 11/22/99 fix again for row order M. Neteler */
-/* fix for coordinates in header 11/17/99 M.N.*/
-
-/* This is the GRASS 5 r.out.ascii code. Modified to
- * write ARC/Info-ascii-GRID format.
- * 11/1999 Markus Neteler, Univ. of Hannover 
- * neteler@geog.uni-hannover.de
- */
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       r.out.arc
+* AUTHOR(S):    Original author: Michael Shapiro (r.out.ascii)
+*               modified to r.out.arc by Markus Neteler, Univ. of Hannover
+*               neteler@geog.uni-hannover.de (11/99)
+* PURPOSE:      r.out.arc: writes ARC/INFO ASCII GRID file
+* COPYRIGHT:    (C) 2000 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
 
 int main(int argc, char *argv[])
 {
     void *raster, *ptr;
-    /*
+  /*
     char  *null_row;
     */
     RASTER_MAP_TYPE out_type, map_type;
-    char *name; 
+    char *name;
+    char *outfile;
     char *mapset;
     char null_str[80];
     char cell_buf[300];
     int fd;
     int row,col;
-    int nrows, ncols, i, dp;
-    int number;
+    int nrows, ncols, dp;
+    int do_stdout;
+    FILE *fp;
     double cellsize;
 	struct GModule *module;
     struct
     {
 	struct Option *map ;
+	struct Option *output ;
 	struct Option *dp ;
 	struct Option *null ;
     } parm;
@@ -50,11 +62,18 @@ int main(int argc, char *argv[])
 /* Define the different options */
 
     parm.map = G_define_option() ;
-    parm.map->key        = "map";
+    parm.map->key        = "input";
     parm.map->type       = TYPE_STRING;
     parm.map->required   = YES;
     parm.map->gisprompt  = "old,cell,raster" ;
     parm.map->description= "Name of an existing raster map layer";
+
+    parm.output = G_define_option() ;
+    parm.output->key        = "output";
+    parm.output->type       = TYPE_STRING;
+    parm.output->required   = YES;
+    parm.output->gisprompt  = "old,cell,raster" ;
+    parm.output->description= "Name of an output ARC-GID map (use out=- for stdout)";
 
     parm.dp = G_define_option() ;
     parm.dp->key        = "dp";
@@ -78,6 +97,11 @@ int main(int argc, char *argv[])
     sscanf(parm.dp->answer, "%d", &dp);
     if(dp>20 || dp < 0)
        G_fatal_error("dp has to be from 0 to 20");
+    outfile =  parm.output->answer;
+    if((strcmp("-", outfile)) == 0)
+        do_stdout = 1;
+    else 
+        do_stdout = 0;
 
     sprintf(null_str,"-9999");
 
@@ -108,39 +132,48 @@ int main(int argc, char *argv[])
     nrows = G_window_rows();
     ncols = G_window_cols();
 
+/* open arc file for writing */
+    if(do_stdout)
+       fp = stdout;
+    else
+       if(NULL == (fp = fopen(outfile, "w")))
+          G_fatal_error("Not able to open file for [%s]", outfile );
+
     if (!flag.noheader->answer)
     {
 	struct Cell_head region;
 	char buf[128];
 
 	G_get_window (&region);
-	fprintf (stdout, "ncols %d\n", region.cols);
-	fprintf (stdout, "nrows %d\n", region.rows);
+	fprintf (fp, "ncols %d\n", region.cols);
+	fprintf (fp, "nrows %d\n", region.rows);
 
 	if(G_projection() != 3)  /* Is Projection != LL (3) */
 	{
 	  G_format_easting (region.west, buf, region.proj);
-	  fprintf (stdout, "xllcorner %s\n", buf);
+	  fprintf (fp, "xllcorner %s\n", buf);
 	  G_format_northing (region.south, buf, region.proj);
-	  fprintf (stdout, "yllcorner %s\n", buf);
+	  fprintf (fp, "yllcorner %s\n", buf);
 	}
 	else /* yes, lat/long */
 	{
-	  fprintf (stdout, "xllcorner %f\n", region.west);
-	  fprintf (stdout, "yllcorner %f\n", region.south);
+	  fprintf (fp, "xllcorner %f\n", region.west);
+	  fprintf (fp, "yllcorner %f\n", region.south);
 	}
 
 	cellsize= fabs(region.east - region.west)/region.cols;
-	fprintf(stdout, "cellsize %f\n", cellsize);
-        fprintf(stdout, "NODATA_value %s\n", null_str);
+	fprintf(fp, "cellsize %f\n", cellsize);
+        fprintf(fp, "NODATA_value %s\n", null_str);
     }
     
     fd = G_open_cell_old (name, mapset);
     if (fd < 0)
         exit(1);
 
+
     for (row = 0; row < nrows; row++)
     {
+	G_percent(row, nrows, 2);
 	if (G_get_raster_row(fd, raster, row, out_type) < 0)
              exit(1);
 	/*
@@ -153,40 +186,41 @@ int main(int argc, char *argv[])
            if(!G_is_null_value(ptr, out_type))
 	   {
                if(out_type == CELL_TYPE)
-	           fprintf (stdout,"%d", *((CELL *) ptr));
+	           fprintf (fp,"%d", *((CELL *) ptr));
 
                else if(out_type == FCELL_TYPE)
 	       {
 	           sprintf(cell_buf, "%.*f", dp, *((FCELL *) ptr));
 	           G_trim_decimal (cell_buf);
-	           fprintf (stdout,"%s", cell_buf);
+	           fprintf (fp,"%s", cell_buf);
 	       }
                else if(out_type == DCELL_TYPE)
 	       {
 	           sprintf(cell_buf, "%.*f", dp, *((DCELL *) ptr));
 	           G_trim_decimal (cell_buf);
-	           fprintf (stdout,"%s", cell_buf);
+	           fprintf (fp,"%s", cell_buf);
 	       }
             }
             else
-                fprintf (stdout,"%s", null_str);
+                fprintf (fp,"%s", null_str);
 
         if(!flag.singleline->answer)          
-	  fprintf (stdout, " ");
+	  fprintf (fp, " ");
         else
-          fprintf (stdout,"\n");
+          fprintf (fp,"\n");
         }
 
 	if(!flag.singleline->answer)
-          fprintf (stdout,"\n");
+          fprintf (fp,"\n");
 
 	/*
         for (col = 0; col < ncols; col++)
-            fprintf (stdout,"%d ", null_row[col]);
-	fprintf (stdout,"\n");
+            fprintf (fp,"%d ", null_row[col]);
+	fprintf (fp,"\n");
 	*/
     }
     G_close_cell(fd);
+    fclose(fp);
     exit(0);
 }
 

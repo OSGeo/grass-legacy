@@ -1,3 +1,19 @@
+/*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       GRASS 5 gis library, get_ell_name.c
+ * AUTHOR(S):    unknown, updated by Andreas Lange, andreas.lange@rhein-main.de
+ * PURPOSE:      Get ellipse name from user
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -33,7 +49,7 @@ int G_ask_ellipse_name( char *spheriod)
           if(strlen(answer)==0) return -1;
           if (strcmp(answer,"list") == 0) {
             if (isatty(1)) {
-	      sprintf(buff,"more %s",Tmp_file);
+	      sprintf(buff,"$GRASS_PAGER %s",Tmp_file);
             }
             else
 	      sprintf(buff,"cat %s",Tmp_file);

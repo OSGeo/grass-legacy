@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "global.h"
 
-static int cmp (IDX *,IDX *);
+static int cmp (const void *, const void *);
 
 int compute_georef_matrix (struct Cell_head *win1, struct Cell_head *win2)
 {
@@ -95,8 +95,9 @@ fprintf (Bugsr,"\n\tnx = \t%f \tex = \t%f \n\trr = \t%d \tcc = \t%d\n", nx, ex,r
     return 0;
 }
 
-static int cmp (IDX *a, IDX *b)
+static int cmp (const void *aa, const void *bb)
 {
+    const IDX *a = aa, *b = bb;
     return (int) (row_min[*a] - row_min[*b]);
 }
 

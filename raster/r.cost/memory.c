@@ -53,7 +53,7 @@ int allocate()
 	p1 = p2 = data; 
 	p2++;
 
-	for (i=1; i < NUM_IN_BLOCK; i++,p1++,p2++) {
+	for (i=1; i < NUM_IN_BLOCK - 1; i++,p1++,p2++) {
 		p1->lower = p2;
 		p2->higher = p1;
 		p1->above = NULL;
@@ -62,7 +62,7 @@ int allocate()
 	p2->above = NULL;
 	p2->lower = NULL;
 	last = p2;
-
+	
 	if (first == NULL) {
 		first_free = data;
 		first = data;

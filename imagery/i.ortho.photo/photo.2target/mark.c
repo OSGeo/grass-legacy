@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "raster.h"
 #include "globals.h"
 #include "local_proto.h"
@@ -333,7 +334,6 @@ char buf[100];
 int row, col;
 struct Cell_head elevhd;
 RASTER_MAP_TYPE data_type;
-double atof();
 
 /* allocate the elev buffer */
     

@@ -1,4 +1,5 @@
 #include "gis.h"
+#include <string.h>
 #include <stdio.h>
 
 static struct

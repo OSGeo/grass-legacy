@@ -27,6 +27,8 @@ int main(int argc, char *argv[])
 	} option ;
 	struct Flag *flag1 ;
 
+	G_gisinit(argv[0]);
+
     module = G_define_module();
     module->description =
 		"GRASS raster map layer data resampling capability.";
@@ -53,7 +55,6 @@ int main(int argc, char *argv[])
 	flag1->key         = 'q' ;
 	flag1->description = "Quiet" ;
 
-	G_gisinit(argv[0]);
 	if (G_parser(argc, argv))
 		exit (-1);
 

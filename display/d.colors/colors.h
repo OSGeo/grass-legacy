@@ -23,8 +23,3 @@ int set_signals(void);
 void sigint(int);
 /* tbl_toggle.c */
 int table_toggle(char *, char *, struct Colors *);
-/* tty.c */
-int Get_old_tty(void);
-int Get_new_tty(void);
-int Old_tty(void);
-int New_tty(void);

@@ -13,6 +13,7 @@
 #include "gstypes.h"
 #include "math.h"
 #include "GL/gl.h"
+#include "GL/glu.h"
 
 /*
 #define TRACE_DFUNCS

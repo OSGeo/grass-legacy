@@ -16,6 +16,8 @@ int main( int   argc, char *argv[])
 		"Searches for GRASS data base files "
 		"and sets variables for the shell.";
 
+	G_gisinit (argv[0]);
+
 	/* Define the different options */
 
 	opt1 = G_define_option() ;
@@ -36,8 +38,6 @@ int main( int   argc, char *argv[])
 	opt3->type       = TYPE_STRING;
 	opt3->required   = YES;
 	opt3->description= "Name of an existing map" ;
-
-	G_gisinit (argv[0]);
 
 	if (G_parser(argc, argv))
 		exit(-1);

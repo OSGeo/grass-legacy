@@ -36,8 +36,9 @@ int main (int argc, char *argv[])
 
 	/* initialize GRASS */
 
+    G_gisinit(argv[0]);
 
-    init_grass(pgm_name = argv[0]);
+    pgm_name = argv[0];
 
 	module = G_define_module();
 	module->description =
@@ -83,6 +84,8 @@ int main (int argc, char *argv[])
 
     if (G_parser(argc, argv))
         exit(-1);
+
+    init_grass();
 
 	/* get input, output map names */
 

@@ -16,8 +16,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
-#include "globals.h"
-#include "local_proto.h"
+#include "gmath.h"
+#include <math.h>
 
 int main (int argc, char *argv[])
 {
@@ -35,7 +35,7 @@ int main (int argc, char *argv[])
   double **eigmat;
   char **inp_names;
   char **out_names, temp[600];
-  int result, infd, outfd, PASSES, pass;
+  int infd, PASSES, pass;
   int *inp_file_descr;
   int scale, scale_max, scale_min;
   double min, max;
@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
   opt3->type       = TYPE_INTEGER;
   opt3->key_desc   = "min,max";
   opt3->required   = NO;
-  opt3->answer     = "1,255"; 
+  opt3->answer     = "0,255"; 
   opt3->description= "Rescaling range output (For no rescaling use 0,0)";
 
   /***** Start of main *****/
@@ -90,7 +90,7 @@ int main (int argc, char *argv[])
   rowbuf2 = G_allocate_cell_buf();
 
   scale = 1;
-  scale_min = 1;
+  scale_min = 0;
   scale_max =255;  /* default values */
   if(opt3->answer)
   {
@@ -102,8 +102,8 @@ int main (int argc, char *argv[])
 	if(scale_min==0) scale = 0;
 	else
 	{
-          fprintf(stderr, "Scale range length should be >0; Using default values: 1,255\n\n");
-          scale_min = 1;
+          fprintf(stderr, "Scale range length should be >0; Using default values: 0,255\n\n");
+          scale_min = 0;
           scale_max = 255;
         }
      }
@@ -233,9 +233,9 @@ int main (int argc, char *argv[])
   */
 
   fprintf(stderr, "Ordering eigenvalues in descending order...\n");
-  egvorder(eigval,eigmat,bands);
+  egvorder2(eigval,eigmat,bands);
   fprintf(stderr, "Transposing eigen matrix...\n");
-  transpose(eigmat,bands);
+  transpose2(eigmat,bands);
 
   fprintf(stderr, "Transforming data...\n");
   /* transform(DATA,NN,eigmat,bands,outbandmax); */
@@ -309,7 +309,7 @@ int main (int argc, char *argv[])
                    }  /* for col=0 to cols */
 	        } /* for j = 0 to bands */
 	        if(pass==PASSES)
-	           G_put_map_row( infd, rowbuf1); 
+	           G_put_raster_row( infd, rowbuf1, CELL_TYPE);
              }  /* for row = 0 to rows */
 	     G_percent(row,rows,2);
 	     if(pass==PASSES)

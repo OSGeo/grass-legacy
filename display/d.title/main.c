@@ -1,3 +1,22 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       d.title
+*
+* AUTHOR(S):    James Westervelt, US Army CERL
+*
+* PURPOSE:      print out title for raster on stdout
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
+
 #include <string.h>
 #include "display.h"
 #include "raster.h"
@@ -15,6 +34,9 @@ int main (int argc, char **argv)
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3 ;
 	struct Flag *flag ;
+
+	/* Initialize the GIS calls */
+	G_gisinit(argv[0]) ;
 
 	module = G_define_module();
 	module->description =
@@ -46,9 +68,6 @@ int main (int argc, char **argv)
 	flag = G_define_flag() ;
 	flag->key        = 'f' ;
 	flag->description= "Do a fancier title" ;
-
-	/* Initialize the GIS calls */
-	G_gisinit(argv[0]) ;
 
 	/* Check command line */
 	if (G_parser(argc, argv))
@@ -90,11 +109,6 @@ int main (int argc, char **argv)
 		normal(mapset, &window, &cats) ;
 	else
 		fancy(mapset, &window, &cats) ;
-
-	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
-	D_add_to_list(G_recreate_command()) ;
-	R_close_driver();
 
 	exit(0);
 }

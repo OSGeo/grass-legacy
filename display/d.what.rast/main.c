@@ -1,4 +1,6 @@
 #define GLOBAL
+#include <stdlib.h>
+#include <string.h>
 #include "what.h"
 #include "display.h"
 #include "raster.h"
@@ -21,19 +23,22 @@ int main (int argc, char **argv)
 	/* Initialize the GIS calls */
 	G_gisinit (argv[0]) ;
 
-	if (R_open_driver() != 0)
-		G_fatal_error ("No graphics device selected");
-
-	if (D_get_cell_list (&rast, &nrasts) < 0)
-		rast = NULL;
-	else
+	/* Don't fail initially if driver open fails, and don't let call kill
+	 * us -- set quiet mode
+	 */
+	R__open_quiet();
+	if (R_open_driver() == 0)
 	{
-		rast = (char **)G_realloc(rast, (nrasts+1)*sizeof(char *));
-		rast[nrasts] = NULL;
+		if (D_get_cell_list (&rast, &nrasts) < 0)
+			rast = NULL;
+		else
+		{
+			rast = (char **)G_realloc(rast, (nrasts+1)*sizeof(char *));
+			rast[nrasts] = NULL;
+		}
+		R_close_driver();
 	}
-
-	R_close_driver();
-
+	
 	opt1 = G_define_option() ;
 	opt1->key        = "map" ;
 	opt1->type       = TYPE_STRING ;

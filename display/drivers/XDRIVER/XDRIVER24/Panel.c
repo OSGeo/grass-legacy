@@ -2,16 +2,15 @@
 #include <stdio.h>
 #include "includes.h"
 
-extern int SCREEN_TOP;
-extern int SCREEN_BOTTOM;
-extern int SCREEN_LEFT;
-extern int SCREEN_RIGHT;
+extern int screen_top;
+extern int screen_bottom;
+extern int screen_left;
+extern int screen_right;
 
 extern Display *dpy;
 extern Window grwin;
 extern GC gc;
 extern Pixmap bkupmap;
-extern int backing_store;
 
 /* Saves all bit plane information for the screen area described by
  * top, bottom, left, and right borders.  Associates the saved
@@ -23,72 +22,24 @@ int Panel_save (char *name, int top, int bottom, int left, int right)
     int width, height, i;
     XImage *impanel;
     char *dpoint;
-    XWindowAttributes xwa;
-    Window	mywin;
-    int		win_px, win_py;
-    int 	win_qx, win_qy;
-    Window 	trashwin;
-    int new_x, new_y;
     
-    if ( !XGetWindowAttributes(dpy,grwin, &xwa) )
-      return (-1);
- 
-    XTranslateCoordinates(dpy, grwin, xwa.root, -xwa.border_width,
-	-xwa.border_width, &win_px, &win_py, &trashwin);
+    /* Adjust panel edges if outside window necessary */
+    if (top < screen_top)
+        top = screen_top;
+    if (bottom > screen_bottom)
+        bottom = screen_bottom;
+    if (left < screen_left)
+        left = screen_left;
+    if (right > screen_right)
+        right = screen_right;
 
-    win_qx = (DisplayWidth(dpy,DefaultScreen(dpy)) - win_px - 
- 		xwa.border_width * 2 - xwa.width );
-    win_qy = (DisplayHeight(dpy,DefaultScreen(dpy)) - win_py - 
-                xwa.border_width * 2 - xwa.height );
+    height = bottom - top;
+    width = right - left;
 
-    if ( win_px < 0 | win_py < 0 | win_qx < 0 | win_qy < 0 )
-    {
-       new_x = win_px;
-       new_y = win_py;
-       if (  win_px < 0 )
-         new_x = 10;
-       if ( win_py < 0 )
-         new_y = 10;
-       if ( win_qx < 0 )
-          new_x = DisplayWidth(dpy,DefaultScreen(dpy)) - xwa.width - 10;
-       if ( win_qy < 0 )
-          new_y = DisplayHeight(dpy,DefaultScreen(dpy)) - xwa.height - 10;
+    /* Get the image off the pixmap */
+    impanel = XGetImage(dpy, bkupmap, left, top, width, height,
+			AllPlanes, ZPixmap);
 
-       fprintf (stderr, "Interactive Windows must be fully visible\n");
-       fprintf (stderr, "moving window \n");
-
-       XMoveWindow(dpy, grwin, new_x, new_y);
-       if ( !XGetWindowAttributes(dpy,grwin, &xwa) )
-       return (-1);
-       XFlush (dpy);
-       sleep(1);
-    }
-
-    SCREEN_TOP = xwa.x+1;
-    SCREEN_LEFT = xwa.y+1;
-    SCREEN_RIGHT = xwa.width - 1 ;
-    SCREEN_BOTTOM = xwa.height - 1;
-
-   /* Adjust panel edges if outside window necessary */
-    if (top < SCREEN_TOP)
-        top = SCREEN_TOP;
-    if (bottom > SCREEN_BOTTOM)
-        bottom = SCREEN_BOTTOM;
-    if (left < SCREEN_LEFT)
-        left = SCREEN_LEFT;
-    if (right > SCREEN_RIGHT)
-        right = SCREEN_RIGHT;
-
-    height = bottom - top + 1;
-    width = right - left + 1;
-
-    /* Get the image off the window */
-    if (!backing_store)
-        impanel = XGetImage(dpy, bkupmap, left, top, width, height,
-                AllPlanes, ZPixmap);
-    else
-        impanel = XGetImage(dpy, grwin, left, top, width, height,
-                AllPlanes, ZPixmap);
     /* open the file */
     fd = creat(name, 0644);
     /* write the lower coordinates and size of image */
@@ -167,11 +118,9 @@ int Panel_restore (char *name)
 */
     newimage = XCreateImage(dpy, xwa.visual, depth, ZPixmap, xoffset,
             data, width, height, 8, bytes_per_line);
-    XPutImage(dpy, grwin, gc, newimage, 0, 0, left, top, width, height);
-    if (!backing_store)
-        XPutImage(dpy, bkupmap, gc, newimage, 0, 0, left, top,
-                width, height);
+    XPutImage(dpy, bkupmap, gc, newimage, 0, 0, left, top, width, height);
     XDestroyImage(newimage);
+    needs_flush = 1;
     return 1;
 }
 

@@ -1,12 +1,11 @@
 #include "distance.h"
+#include "gis.h"
 
-int init_grass (char *pgm)
+int init_grass (void)
 {
 	double a,e2;
 	double factor;
-	double G_database_units_to_meters_factor();
 
-	G_gisinit(pgm) ;
 	G_get_set_window(&window);
 	if (window.proj == PROJECTION_LL)
 	{

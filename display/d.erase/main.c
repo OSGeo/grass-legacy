@@ -18,12 +18,13 @@
 #include "display.h"
 #include "D.h"
 #include "raster.h"
+#include <stdlib.h>
 
 int main(int argc,char *argv[])
 {
 	struct Option *color;
 	struct GModule *module;
-	char name[256];
+	char name[256], buf[128];
 	char *err;
 
 	G_gisinit(argv[0]);
@@ -53,8 +54,14 @@ int main(int argc,char *argv[])
 		err = "No current frame" ;
 	else if (D_set_cur_wind(name))
 		err = "Current frame not available" ;
-	else
+	else {
+		/* D_setup(1);
+		R_standard_color(D_translate_color(color->answer));
+		D_erase_window(); */
 		Derase(color->answer) ;
+		sprintf(buf, "d.erase color=%s", color->answer);
+		D_add_to_list(buf);
+	}
 
 	R_close_driver();
 	if (err)

@@ -12,7 +12,23 @@ int make_support_files (char *output, char *units)
     G_set_cat (cat=1, "distances calculated from these locations", &pcats);
     for (cat = 0; cat < ndist; cat++)
     {
-	sprintf (label, "%s %s", distances[cat].label, units);
+	if (cat == 0)
+	  sprintf (label, "0-%s %s", distances[cat].label, units);
+        else
+        {
+         /* improved next, but it would be perfect to achieve (example):
+          * 0-100.55 meters
+          * 100.56-233.33 meters
+          *
+          *now we get:
+          * 0-100.55 meters
+          * 100.55-233.33 meters
+          *
+          *but it's better that the original code. MN 1/2002
+          */
+	  sprintf (label, "%s-%s %s", distances[cat-1].label, distances[cat].label, units);
+	 }
+	  
 	G_set_cat (cat+ZONE_INCR, label, &pcats);
     }
     

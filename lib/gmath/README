@@ -31,7 +31,7 @@ http://www.netlib.org
 
 http://www.netlib.org/lapack/
 
-Compiling of LAPACK:
+Compiling of LAPACK (be sure to have "." in PATH):
 
 Linux: 
   cd LAPACK
@@ -61,7 +61,7 @@ Sample Gmakefile:
 PGM=test
 HOME=.
 
-LIBES=$(GMATHLIB) $(GISLIB) -lblas -llapack -lg2c
+LIBES=$(GMATHLIB) $(GISLIB) $(BLASLIB) $(LAPACKLIB) -lblas -llapack -lg2c
 LIST = main.o
 
 $(HOME)/$(PGM): $(LIST) $(LIBES)

@@ -114,7 +114,7 @@ Recursively processes each segment in a tree by
 	{
 	    if (i >= 70)
 	    {
-                fprintf(stderr,"Warning: taking too long to find points for interpolation--please change the region to area where your points are\n");
+                fprintf(stderr,"Warning: taking too long to find points for interpolation--please change the region to area where your points are. Continuing calculations...\n");
 		break;
 	    }
 	    i++;
@@ -245,7 +245,7 @@ if (totsegm < cursegm) fprintf(stderr,"%d %d\n",totsegm,cursegm);
 static double smallest_segment (struct multtree *tree, int n_leafs)
 {
     static int first_time = 1;
-    int i,ii;
+    int ii;
     static double minside;
     double side;
 

@@ -23,9 +23,8 @@ static int which_range;
 static int change_range;
 static double dist, e=0, n=0;
 
-main(argc, argv) 
-int   argc;
-char *argv[];
+int
+main (int argc, char *argv[])
 { 
     char *name, *outfile, *mapset, msg[256] ;
     int fd, projection;
@@ -47,8 +46,15 @@ char *argv[];
 	struct Option *opt1, *profile, *res, *output;
 	struct Flag *i, *g ;
 	} parm;
+    struct GModule *module;
 
-G_gisinit (argv[0]);
+    G_gisinit (argv[0]);
+    
+    /* Set description */
+    module              = G_define_module();
+    module->description = ""\
+    "Outputs the raster map layer values lying on user-defined line(s).";
+    
     parm.opt1 = G_define_option() ;
     parm.opt1->key        = "input" ;
     parm.opt1->type       = TYPE_STRING ;
@@ -201,6 +207,7 @@ do_profile(e1,e2,n1,n2,name,coords,res,fd,data_type,fp);
 
 n1 = n2;
 e1 = e2;
+R_stabilize();
 }
 
 R_close_driver();

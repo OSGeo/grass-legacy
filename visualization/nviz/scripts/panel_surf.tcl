@@ -50,7 +50,14 @@ proc mksurfPanel { BASE } {
     set Nv_(WireResWidget) $tmp.gridarrows.f2.entry
     Nv_mkArrows $tmp.polyarrows "Polygon  Resolution" [concat set_res poly] 8
     set Nv_(PolyResWidget) $tmp.polyarrows.f2.entry
-    
+   
+#Add bindings for resolution update
+bind $tmp.gridarrows.f2.entry <Motion> "+ update_res wire"
+bind $tmp.gridarrows.f2.entry <Return> "+ update_res wire"
+
+bind $tmp.polyarrows.f2.entry <Motion> "+ update_res poly"
+bind $tmp.polyarrows.f2.entry <Return> "+ update_res poly"
+ 
     ########### make buttons that control scope of changes made ##################
     radiobutton $tmp.current  -text "Current Surface Only"\
 	-anchor nw -value 1 -variable Nv_(CurrOnly)
@@ -341,6 +348,29 @@ proc set_res {mode E} {
     }
 }
 
+proc update_res {mode} {
+    global Nv_
+
+    if {$Nv_(CurrOnly) != 0} {
+        set L [list [Nget_current surf]]
+    } else {
+        set L [Nget_map_list surf]
+    }
+
+if {$mode == "wire"} {
+set res [$Nv_(WireResWidget) get]
+}
+if {$mode == "poly"} {
+set res [$Nv_(PolyResWidget) get]
+}
+    foreach surf $L {
+        if {0 != $surf} then {
+            Nsurf$surf set_res $mode $res $res
+        }
+    }
+}
+
+
 proc no_zeros {} {
     global Nv_
     
@@ -403,10 +433,19 @@ proc delete_surf {} {
 }
 
 proc new_surf {} {
-    global Nv_ attPopup_Status
-    
+    global Nv_ attPopup_Status attPopup_Type
+
+
+set cur_stat [Nget_current surf]
+
+#    if {$cur_stat == 0} {
+#    #no surf loaded    
+#    set new_obj [string range [Nnew_map_obj surf] 5 end]
+#    } else {
+#    set new_obj $cur_stat
+#    }
+
     set new_obj [string range [Nnew_map_obj surf] 5 end]
-    # puts "new_obj is $new_obj"
     
     # Make sure we call the focus routine if this is the first surface loaded
     if {$Nv_(CALLED_SET_FOCUS) == "no"} then {
@@ -415,7 +454,7 @@ proc new_surf {} {
     }
     
     set_new_curr surf $new_obj
-    set_display_from_curr
+#    set_display_from_curr
     
     # Now automatically invoke the topography popup
     mkAttPopup .temporary_new_surf topography 1
@@ -427,6 +466,20 @@ proc new_surf {} {
 	    set_display_from_curr
 	} else return
     }
+
+#Reset view parameters
+if {$cur_stat == 0 &&  $attPopup_Type != "constant"} {
+
+#zexag
+set exag [Nget_first_exag]
+Nv_floatscaleCallback $Nv_(P_AREA).main.midf.zexag b 2 Nchange_exag $exag
+
+#height
+set list [Nget_height]
+set val [lindex $list 0]
+Nv_floatscaleCallback $Nv_(P_AREA).main.midf.height b 2 Nchange_height $val
+}
+
 
     # Automatically center the new map
     look_center

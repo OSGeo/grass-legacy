@@ -51,11 +51,9 @@ int IL_check_at_points_2d (
   double west = data->x_orig;
   double north = data->ymax;
   double south = data->y_orig;
-  double rfsta2, errmax, h, xx, yy, r2, hz, zz, err, xmm, ymm, zmm,
-   r;
-  int n1, mm, m, mmax;
+  double rfsta2, errmax, h, xx, yy, r2, hz, zz, err, xmm, ymm, r;
+  int n1, mm, m;
   double fstar2;
-  char desc[100];
   int inside;
   Site *site;
 

@@ -30,6 +30,8 @@ int main (int argc, char *argv[])
     struct Flag *zeroflag;
     struct Option *opt1, *opt2 ;
 
+    G_gisinit (argv[0]);
+
     module = G_define_module();
 	module->description =
 		"Creates a composite raster map layer by using "
@@ -66,8 +68,6 @@ int main (int argc, char *argv[])
     verbose = 1;
     ZEROFLAG = 0; /* default: use NULL for transparency */
     nfiles = 0;
-
-    G_gisinit (argv[0]);
 
     if (G_parser(argc, argv))
         exit(-1);

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "distance.h"
 
-static int cmp ( struct Distance *, struct Distance *);
+static int cmp (const void *, const void *);
 static int scan_dist (char *, double *);
 
 int parse_distances (char **zone_list, double to_meters)
@@ -52,8 +52,9 @@ int parse_distances (char **zone_list, double to_meters)
     return count;
 }
 
-static int cmp ( struct Distance *a, struct Distance *b)
+static int cmp (const void *aa, const void *bb)
 {
+    const struct Distance *a = aa, *b = bb;
     if (a->dist < b->dist) return -1;
     return a->dist > b->dist;
 }

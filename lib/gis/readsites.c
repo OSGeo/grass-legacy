@@ -19,6 +19,7 @@
  */
 
 
+#include <stdlib.h>
 #include "gis.h"
 #include "readsites.h"
 
@@ -26,10 +27,7 @@ int G_readsites (FILE *fdsite, int all, int verbose, int field, Z **xyz)
 
 /* Reads a sites list into {\tt xyz}, returning the number of sites found.  */
 {
-  char *dum;
   int i, strs, dims,map_type,dbls,allocated=1000;
-  double east, north, ndesc, atof ();
-  char desc[80];
   Site *s;
   extern struct Cell_head window;
 

@@ -1,5 +1,7 @@
 #include "local_proto.h"
 
+int	natb;
+
 
 void
 initialize(void)
@@ -12,7 +14,7 @@ initialize(void)
 			a[i][j]=cellhd.ns_res*cellhd.ew_res;
 			if(IScvNULL(i,j)){
 				natb++;
-				G_set_f_null_value(&atbv(i,j),1);
+				G_set_d_null_value(&atbv(i,j),1);
 			}else{
 				atbv(i,j)=-10.0;
 			}
@@ -26,7 +28,8 @@ atanb(void)
 {
 	int	i,j,k,snatb;
 	int	iter,ncells,nroute,nslp;
-	float	sum,route[9],tanB[9],dx,dx1,dx2,sumtb,C;
+	double	sum,route[9],tanB[9],dx,dx1,dx2,sumtb,C;
+	int	nsink;
 
 	dx     = cellhd.ew_res;
 	dx1    = 1 / dx;
@@ -256,11 +259,10 @@ atanb(void)
 
 					sumtb/=nslp;
 					if(sumtb>ZERO){
-						atbv(i,j)=(float)
-							log((double)(av(i,j)/
+						atbv(i,j)=log((av(i,j)/
 								(2*dx*sumtb)));
 					}else{
-						G_set_f_null_value(&atbv(i,j),
+						G_set_d_null_value(&atbv(i,j),
 									1);
 					}
 					natb++;
@@ -268,7 +270,7 @@ atanb(void)
 				}
 				
 				C=av(i,j)/sum;
-				atbv(i,j)=(float)log((double)C);
+				atbv(i,j)=log(C);
 				natb++;
 
 				if(i>0){

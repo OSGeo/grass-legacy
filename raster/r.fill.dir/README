@@ -1,129 +1,128 @@
-Updated by Huidae Cho 4/2001
+Date: Wed, 09 May 2001 22:49:03 -0600 
+From: "Roger S. Miller" <rgrmill@rt66.com>
+To: Markus Neteler <neteler@geog.uni-hannover.de>
+Subject: r.fill.dir
 
-runs with all non-NULL data.
+Markus,
 
-However, problems still exist.
+I think I finally completed all the changes I was going to make on
+r.fill.dir.
+I haven't had time yet to set up CVS or get a CVS account.  The modified
+code is in the attached zip file, along with the little shell script
+that I've been using to compile it.
+
+There's a short description in the last half of this letter about the
+methods I used to handle CELL, FCELL and DCELL maps.
+
+The program is now entirely in C and uses the gislib functions for all
+input and output.  It handles CELL, FCELL and DCELL rasters and I think
+it handles nulls correctly.
+
+I completely rewrote all of the larger code segments and the program now
+runs about 3 times faster than the original fortran version.  It also
+uses less memory and uses only three temp files.
+
+I've added a flag and an option to produce a third output file,
+otherwise the command line is identical to the original.  The new output
+file is a map of any areas that have not been filled.  The flag "f"
+instructs the program to fill single-cell pits but otherwise to just
+find the undrained areas and exit. With the "f" flag set the program
+writes an elevation map with just single-cell pits filled, a direction
+map with unresolved problems and a map of the undrained areas that were
+found but not filled.
+
+I included these options because I found while running test cases that
+filling DEMs was often not the best way to solve a drainage problem. 
+The new options let the user get a partially-fixed elevation map,
+identify the remaining problems and fix the problems appropriately.
+
+I used a couple USGS 1-degree DEMS to benchmark the new code against the
+old one.  The results are substantially identical except for three
+cases:
+
+1) The original code didn't consider the two outer rows and columns
+around the edge of the map.  The new code only neglects the outer-most
+row and column.  As a result, the two codes gave results that sometimes
+differed at the edge of the map. 
+
+2) The new code was able to solve problems that the old code would not
+solve.
+
+3) The new code may require several repeated runs (using output from one
+run as input to the next run) to completely solve the elevation map.  In
+the only case where this happened the old code didn't solve the problem
+at all.
+
+As a final test for the new code I used a part of the gtopo30 dem that
+covers the southwestern US.  The part I extracted covered New Mexico,
+about half of Colorado, large parts of Kansas, Oklahoma and Texas, and
+adjoining areas in Mexico.  The modified code found more than 10,000
+areas to fill, and got them all filled in 5 runs.  I didn't even try
+that problem with the original code.  I doubt seriously that it would
+have run it at all.
+
+I took an approach to writing the code to handle CELL, FCELL and DCELL
+maps that you might find interesting.  I don't know all of the methods
+that others use, so it may not be new.  The file "tinf.c" (for Type
+INdependent Functions) contains functions for executing simple
+operations.  There are three versions of each function, one for CELL,
+one for FCELL and one for DCELL.  The file "tinf.h" contains the
+prototypes for those functions, plus the declarations for a number of
+function pointers.  The file "tinf.c" also contains a function named
+"set_func_pointers" that assigns the correct function to the function
+pointer.  The code to read, write or process a raster file is written
+using the function pointers, not the original function.
+
+For example, tinf.c contains three functions that calculate the
+difference between two values.  These are diff_c (for CELL values)
+diff_f (for FCELL values) and diff_d (for DCELL values).  All three
+functions have the same prototypes except for their names.  tinf.h
+contains the prototypes for those functions, plus the declaration for a
+function pointer "diff".  When the program runs it checks to see the
+type of the input raster map, then calls set_func_pointers to assign the
+correct function to the pointer "diff"; if the input is a CELL map then
+"diff" points to diff_c, if it's an FCELL map then "diff" points to
+diff_f and if it's a DCELL map then "diff" points to diff_d.  The rest
+of the code is written using the function pointer diff, rather than the
+actual function.
+
+This method really works out well for i/o.  Look at the simple method
+used in main.c to read and write the input and output maps.  Other
+operations are also simplified, though the difference isn't as
+outstanding.
+
+Instead of:
+   if(type==CELL)cellvalue1-=cellvalue2;
+   else if(type==FCELL)fcellvalue1-=fcellvalue2;
+   else if(type==DCELL)dcellvalue1-=dcellvalue2;
 
 
-------------------------------------------------------
-Converted to C by Huidae Cho 4/2001
+one can write just the single line:
+   diff((void *)&value1,(void *)&value2);
 
-runs with positive (no NULLs) data only!
+This works regardless of the type of value1 and value2, as long as they
+are both the same type.
 
-r.fill.dir accepts only rectangular maps with all positive elev.
-It is the way how this and FORTRAN modules work. So until it is rewritten
-as fully native GRASS module, we can not expect this to work for maps
-containing NULLs. Its result may be wrong if NULL or negative elev is in
-maps.
+With this method the program only tests once for the type of the input
+map, and that's done with a call to set_func_pointers.  The program
+never passes the map type to a function and the program doesn't include
+duplicate code to account for different map types.  All the
+type-dependent coding is already done.
 
+The disadvantage is that most of the parameters passed to the
+type-independent functions and most of the values returned by them must
+be void pointers, and that leads to some cumbersome expressions.  Also,
+it generally isn't possible to use "=" in any expression.  Instead you
+have to use "memcpy" or something similar to move values around. 
 
-	NULL NULL 100  234  NULL		nl = 1, ns = 2
-	NULL 123  324  321  NULL		nl = 2, ns = 3
-	NULL NULL 111 NULL  NULL		nl = 3, ns = 1
-	NULL NULL 111 NULL     0		nl = 4, ns = 1
-	-1   321  111 NULL  NULL		nl = 5, ns = 2
+The tinf.c and tinf.h files contain functions to handle basic raster
+i/o, simple math operations, variable initializations, testing for
+greater than and less than and a few other things.  A few more general
+functions might also be useful, and some applications will require
+specialized functions.
 
-This map is written as the following in the input file of fortran modules:
+This might make it considerably easier to write programs that have to
+read, handle and write maps of variable types.
 
-nl = 5, ns = 2
-
-100
-234
-123
-324
-321
-111
-111
-321
-111
-
-Then read it:
-
-nl*ns = 10 data :-(
-
-100	(1,1)
-234	(1,2)
-123	(2,1)
-324	(2,2)
-321	(3,1)
-111	(3,2)
-321	(4,1)
-111	(4,2)
-111	(5,1)
-321	(5,2)
-111	unread
-
-now map is:
-
-		100 234
-		123 324
-		321 111
-		321 111
-		111 321
-
-however, we want:
-		100 234
-	    123 324 321
-	        111
-		111
-	    321 111
-
-
-It's full story.  :-)
-
-I think that we should gather all modules into some functions and
-use these in a main() with various grass lib functions.
-
-
-Regards,
-Huidae Cho
-
-
-------------------------------------------------------
-Updated to GRASS FP by Roger Miller 3/2001
-
-"Roger S. Miller" <rgrmill@rt66.com>
-
-From his mail:
-Date: Tue, 13 Mar 2001 21:34:43 -0700                                           
-
-One of the FORTRAN program (ppupdate.f) contains some logic that I think is
-aimed at determining whether a depression is real or artificial.  It doesn't
-fill holes that it determines to be real.  Possibly the NULL holes met the
-requirements for a feature that the program would not fill.
-
-I ran my test first with a raster map without null areas.  It worked on
-cell, fcell and dcell maps, all of which gave approximately the same result. 
-This raster map contains a number of shallow natural depressions (playas) --
-features that ideally r.fill.dir would not fill in.  Unfortunately it did
-fill them in.  That wasn't entirely a loss, though, because I found that I
-could subtract the original map from the new, filled map and the difference
-gave me a map of the depth of the depressions.  An interesting result.
-                                                                                
-I then filled a square area of the map with nulls, and ran it back through
-r.fill.dir.  The FORTRAN programs generated errors (this is the expected
-result) and the result was meaningless.  Then I replaced the null area with
-zeros and reran r.fill.dir.  It ran without errors.  The big hole was not
-filled but the playas were filled.  r.fill.dir also found and filled some
-small holes along some drainage channels, thus integrating the watershed. 
-This latter case is what r.fill.dir is supposed to do, so I guess we can say
-that it works.
-                                                                                
-One thing I've found is that C (at least GNU C) does not correctly read
-FORTRAN double precision numbers from formatted text.  FORTRAN prints double
-precision numbers with a "D" indicating the exponent, as in 1.77785D-23. 
-When a C program tries to read a double it looks for an "E" or "e" to
-indicate the exponent.  So the FORTRAN double precision values are
-misinterpreted by C programs.  This was a problem for r.fill.dir.  I had to
-add a little FORTRAN subroutine that converted all the "D"s in the printed
-double precision values to "E"s before the main program could reread the
-results from the last of the FORTRAN programs.
-                                                                                
-This isn't just a problem with r.fill.dir.  r.in.dem died with a
-segmentation fault when I tried to import a new dem.  Looking closer at the
-program and at the USGS DEM standard I found that large parts of the header
-are actually supposed to be FORTRAN double precision values.  I'm surprised
-that r.in.dem works for anyone.  I guess once r.fill.dir is converted to C I
-can turn to writing new input functions for r.in.dem.
 
 Roger

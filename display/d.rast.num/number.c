@@ -1,4 +1,24 @@
 /*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       d.rast.num
+ * AUTHOR(S):    Raghavan Srinivasan, Agricultural Engineering, Purdue University
+ * PURPOSE:      Print numbers of category for raster cells
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
+/* updated by Andreas Lange, andreas.lange@rhein-main.de 
+ * for text color support.
+ */
+
+/*
  *   Raghavan Srinivasan, Agricultural Engineering, Purdue University
  *   srin@ecn.purdue.edu  March 1991
  *
@@ -15,10 +35,12 @@
  *   
  */
 
-#include "gis.h"
 #include <string.h>
+#include <stdlib.h>
+#include "gis.h"
 #include "raster.h"
 #include "display.h"
+#include "colors.h"
 
 #define MAIN
 int draw_number(int);
@@ -43,9 +65,10 @@ main (int argc, char **argv)
 	double ew_res, ns_res;
 	extern double D_ew, D_ns;
 	extern int D_x, D_y ;
-	int BLACK, WHITE ;
+	int MY_BLACK, MY_WHITE ;
 	int cur_color ;
 	int new_color ;
+	int fixed_color;
 	int R, G, B;
 	int layer_fd;
 	int nrows, ncols, row, col;
@@ -53,7 +76,8 @@ main (int argc, char **argv)
 	struct Cell_head window ;
 	struct Colors colors;
 	struct GModule *module;
-	struct Option *opt1, *opt2 ;
+	struct Option *opt1, *opt2, *opt3 ;
+	struct Flag *text_color; 
 
 	/* Initialize the GIS calls */
 	G_gisinit(argv[0]) ;
@@ -63,22 +87,34 @@ main (int argc, char **argv)
 		"Overlays cell category values on a raster map layer "
 		"displayed to the graphics monitor.";
 
-	opt1 = G_define_option() ;
-	opt1->key        = "map" ;
-	opt1->type       = TYPE_STRING ;
-	opt1->required   = NO ;
-	opt1->multiple   = NO ;
-	opt1->gisprompt  = "old,cell,raster" ;
-	opt1->description= "Name of existing raster map to be displayed" ;
+	opt1              = G_define_option() ;
+	opt1->key         = "map" ;
+	opt1->type        = TYPE_STRING ;
+	opt1->required    = NO ;
+	opt1->multiple    = NO ;
+	opt1->gisprompt   = "old,cell,raster" ;
+	opt1->description = "Name of existing raster map to be displayed" ;
 
-    opt2 = G_define_option() ;
-    opt2->key        = "grid_color" ;
-    opt2->type       = TYPE_STRING ;
-    opt2->required   = NO ;
-    opt2->answer     = "gray" ;
-    opt2->options = "white,red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,black";
-    opt2->description= "Color for drawing grid" ;
+        opt2              = G_define_option() ;
+        opt2->key         = "grid_color" ;
+        opt2->type        = TYPE_STRING ;
+        opt2->required    = NO ;
+        opt2->answer      = "gray" ;
+        opt2->options     = D_COLOR_LIST;
+        opt2->description = "Color for drawing grid" ;
 
+        opt3              = G_define_option();
+        opt3->key         = "text_color";
+        opt3->type        = TYPE_STRING;
+        opt3->required    = NO;
+        opt3->answer      = "black";
+        opt3->options     = D_COLOR_LIST;
+        opt3->description = "Color for drawing text";
+    
+    	text_color              = G_define_flag();
+    	text_color->key         = 'f';
+    	text_color->description = "Get text color from cell color value";
+    	
 	/* Check command line */
 	if (G_parser(argc, argv))
 		exit(-1);
@@ -94,6 +130,12 @@ main (int argc, char **argv)
 			fprintf (stdout,"warning: no data layer drawn in current window\n");
 			exit(0);
 		}
+		
+	if ( text_color->answer ) {
+		fixed_color = 0;
+	} else {
+		fixed_color = 1;
+	}
 
 	mapset = G_find_cell (full_name, "");
 	if(mapset == NULL) {
@@ -105,7 +147,6 @@ main (int argc, char **argv)
 		fprintf (stderr,"warning: unable to open [%s]\n", full_name);
 		exit(0);
 	}
-
 
 	/* Setup driver and check important information */
 
@@ -229,13 +270,16 @@ main (int argc, char **argv)
 	G_init_colors(&colors);
 	G_read_colors(full_name,mapset,&colors);
 
+	/* fixed text color */
+        if ( fixed_color == 1 ) { 
+        	R_standard_color(D_translate_color(opt3->answer));
+	} else { 	
+		MY_WHITE = D_translate_color("white") ;
+		MY_BLACK = D_translate_color("black") ;
+		R_standard_color(cur_color = MY_BLACK) ;
+	} 
 
-	WHITE = D_translate_color("white") ;
-	BLACK = D_translate_color("black") ;
-	R_standard_color(cur_color = BLACK) ;
-
-	/* loop through cells, find value, determine direction (n,s,e,w,ne,se,sw,nw)
-   and call appropriate function to draw an arrow on the cell */
+	/* loop through cells, find value, and draw text for value */
 
 	for(row = 0; row < nrows; row++)
 	{
@@ -252,29 +296,31 @@ main (int argc, char **argv)
 
 			D_x = (int)(col * D_ew + D_west);
 
-	/*		if(cell[col] > 0){ */
+			/* if(cell[col] > 0) { */
+				if ( fixed_color == 0 ) {
+					G_get_color(cell[col],&R,&G,&B,&colors);
 
-			G_get_color(cell[col],&R,&G,&B,&colors);
-			/*
-			if(B>200 && R < 205 && G < 150)
-				R_standard_color(D_translate_color("white"));
-			else if(B>200 && G < 150 && R < 100)
-				R_standard_color(D_translate_color("white"));
-			else if(B<160 && G < 160 && R < 160)
-				R_standard_color(D_translate_color("white"));
-			else 
-				R_standard_color(D_translate_color("black"));
-			*/
-			new_color = ((B + R + G) > 300) ? BLACK : WHITE ;
-			if (new_color != cur_color)
-				R_standard_color(cur_color = new_color) ;
+				/*
+				if(B>200 && R < 205 && G < 150)
+					R_standard_color(D_translate_color("white"));
+				else if(B>200 && G < 150 && R < 100)
+					R_standard_color(D_translate_color("white"));
+				else if(B<160 && G < 160 && R < 160)
+					R_standard_color(D_translate_color("white"));
+				else 
+					R_standard_color(D_translate_color("black"));
+				*/
 
+					new_color = ((B + R + G) > 300) ? MY_BLACK : MY_WHITE ;
+					if (new_color != cur_color)
+						R_standard_color(cur_color = new_color);
+				}		
+			
 			draw_number(cell[col]);
 
 			/*}*/
 		}
 	}
-
 
 	G_close_cell (layer_fd);
 	R_close_driver();

@@ -95,9 +95,9 @@ static int setlgt_ambient (
   if (argc != 5)
     return (TCL_ERROR);
   num = get_light_num(argv[0]);
-  data->light[num].ar = r = atof(argv[2]);
-  data->light[num].ag = g = atof(argv[3]);
-  data->light[num].ab = b = atof(argv[4]);
+  data->light[num].ar = r = (float)atof(argv[2]);
+  data->light[num].ag = g = (float)atof(argv[3]);
+  data->light[num].ab = b = (float)atof(argv[4]);
   GS_setlight_ambient(num, r, g, b);
   return (TCL_OK);
 }
@@ -209,12 +209,13 @@ static int setlgt_bright (
 {
   int num;
   float r, g, b;
+  double atof();
   
   if (argc != 3)
     return (TCL_ERROR);
   num = get_light_num(argv[0]);
   
-  data->light[num].brt = atof(argv[2]);
+  data->light[num].brt = (float)atof(argv[2]);
   
   r = data->light[num].r * data->light[num].brt;
   g = data->light[num].g * data->light[num].brt;
@@ -234,14 +235,15 @@ static int setlgt_color (
 {
   int num;
   float r, g, b;
+  double atof();
   
   if (argc != 5)
     return (TCL_ERROR);
   num = get_light_num(argv[0]);
   
-  data->light[num].r = atof(argv[2]);
-  data->light[num].g = atof(argv[3]);
-  data->light[num].b = atof(argv[4]);
+  data->light[num].r = (float)atof(argv[2]);
+  data->light[num].g = (float)atof(argv[3]);
+  data->light[num].b = (float)atof(argv[4]);
   
   r = data->light[num].r * data->light[num].brt;
   g = data->light[num].g * data->light[num].brt;
@@ -261,16 +263,17 @@ static int setlgt_position (
 {
   int num, w;
   float x, y, z;
+  double atof();
   
   if (argc != 6)
     return (TCL_ERROR);
   
   num = get_light_num (argv[0]);
   
-  data->light[num].x = x = atof(argv[2]);
-  data->light[num].y = y = atof(argv[3]);
-  data->light[num].z = z = atof(argv[4]);
-  data->light[num].w = w = atoi(argv[5]);
+  data->light[num].x = x = (float)atof(argv[2]);
+  data->light[num].y = y = (float)atof(argv[3]);
+  data->light[num].z = z = (float)atof(argv[4]);
+  data->light[num].w = w = (float)atoi(argv[5]);
   GS_setlight_position(num, x, y, z, w);
   return (TCL_OK);
 }

@@ -1,4 +1,23 @@
 /*
+ * $Id$
+ *
+ ****************************************************************************
+ *
+ * MODULE:       d.rast.arrow
+ * AUTHOR(S):    Chris Rewerts, Agricultural Engineering, Purdue University
+ * PURPOSE:      Draw arrows on slope/aspect maps. 
+ * COPYRIGHT:    (C) 2000 by the GRASS Development Team
+ *
+ *               This program is free software under the GNU General Public
+ *   	    	 License (>=v2). Read the file COPYING that comes with GRASS
+ *   	    	 for details.
+ *
+ *****************************************************************************/
+
+/* some minor cleanup done by Andreas Lange, andreas.lange@rhein-main.de
+ */
+
+/*
  *   Chris Rewerts, Agricultural Engineering, Purdue University
  *   rewerts@ecn.purdue.edu  March 1991
  *
@@ -15,10 +34,13 @@
  *   as needed.
  */
 
-#include "gis.h"
+#include <stdlib.h>
 #include <string.h>
+#include "gis.h"
 #include "raster.h"
 #include "display.h"
+#include "colors.h"
+
 #define MAIN
 static void arrow_se(void);
 static void arrow_ne(void);
@@ -90,7 +112,7 @@ main (int argc, char **argv)
     opt3->type       = TYPE_STRING ;
     opt3->required   = NO ;
     opt3->answer     = "green" ;
-    opt3->options = "white,red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,black";
+    opt3->options    = D_COLOR_LIST;
     opt3->description= "Color for drawing arrows" ;
 
     opt4 = G_define_option() ;
@@ -98,7 +120,7 @@ main (int argc, char **argv)
     opt4->type       = TYPE_STRING ;
     opt4->required   = NO ;
     opt4->answer     = "gray" ;
-    opt4->options = "white,red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,black";
+    opt4->options    = D_COLOR_LIST;
     opt4->description= "Color for outlining grids" ;
 
     opt5 = G_define_option() ;
@@ -106,7 +128,7 @@ main (int argc, char **argv)
     opt5->type       = TYPE_STRING ;
     opt5->required   = NO ;
     opt5->answer     = "white" ;
-    opt5->options = "white,red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,black";
+    opt5->options    = D_COLOR_LIST;
     opt5->description= "Color for drawing x's" ;
 
     opt6 = G_define_option() ;
@@ -114,7 +136,7 @@ main (int argc, char **argv)
     opt6->type       = TYPE_STRING ;
     opt6->required   = NO ;
     opt6->answer     = "red" ;
-    opt6->options = "white,red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,black";
+    opt6->options    = D_COLOR_LIST; 
     opt6->description= "Color for showing unknown information" ;
 
     /* Check command line */
@@ -134,9 +156,9 @@ main (int argc, char **argv)
 	else
 		layer_set = 0 ;
 
-    arrow_color = D_translate_color(opt3->answer) ;
-    grid_color = D_translate_color(opt4->answer) ;
-    x_color = D_translate_color(opt5->answer) ;
+    arrow_color   = D_translate_color(opt3->answer) ;
+    grid_color    = D_translate_color(opt4->answer) ;
+    x_color       = D_translate_color(opt5->answer) ;
     unknown_color = D_translate_color(opt6->answer) ;
 
 	if (strcmp("grass", opt2->answer) == 0) 

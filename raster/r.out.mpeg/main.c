@@ -16,6 +16,15 @@
  * LIMITATION, WARRANTY OF MERCHANTABILITY AND WARRANTY OF FITNESS FOR A
  * PARTICULAR PURPOSE.
 */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <unistd.h>
+
+#include "gis.h"
+
 #include "rom_proto.h"
 
 #define MAXIMAGES 100

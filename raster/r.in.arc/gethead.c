@@ -3,8 +3,11 @@
 #include "gis.h"
 #include "local_proto.h"
 
-static int scan_int (char *, int *, int);
-static int scan_res (char *, int *, int);
+static int scan_int (char *, void *, int);
+static int scan_res (char *, void *, int);
+static int scan_easting (char *, void *, int);
+static int scan_northing (char *, void *, int);
+static int scan_cellsize (char *, void *, int);
 static int extract (int,char *,char *,void *,int,int (*)(char *,void *,int));
 static int missing (int, char *);
 static int error (char *);
@@ -50,21 +53,21 @@ int gethead (FILE *fd, struct Cell_head *cellhd, int *missingval)
 		if (strcmp (label, "xllcorner") == 0)
 		{
 			if(!extract (w++, label, value, &cellhd->west, cellhd->proj,
-			    G_scan_easting)) ok = 0;
+			    scan_easting)) ok = 0;
 			continue;
 		}
 
 		if (strcmp (label, "yllcorner") == 0)
 		{
 			if(!extract (s++, label, value, &cellhd->south, cellhd->proj,
-			    G_scan_northing)) ok = 0;
+			    scan_northing)) ok = 0;
 			continue;
 		}
 
 		if (strcmp (label, "cellsize") == 0)
 		{
 			if(!extract (res++, label, value, &cellhd->ew_res, cellhd->proj,
-			    G_scan_resolution)) ok = 0;
+			    scan_cellsize)) ok = 0;
 			    
 		        cellhd->ns_res=cellhd->ew_res;
 			cellhd->north = cellhd->south + (cellhd->ns_res * cellhd->rows);
@@ -101,9 +104,10 @@ int gethead (FILE *fd, struct Cell_head *cellhd, int *missingval)
 	return 1;
 }
 
-static int scan_int (char *s, int *i, int proj)
+static int scan_int (char *s, void *v, int proj)
 {
 	char dummy[3];
+	int  *i = v;
 
 	*dummy = 0;
 
@@ -116,9 +120,10 @@ static int scan_int (char *s, int *i, int proj)
 	return 1;
 }
 
-static int scan_res (char *s, int *i, int proj)
+static int scan_res (char *s, void *v, int proj)
 {
 	char dummy[3];
+	int *i = v;
 
 	*dummy = 0;
 
@@ -132,6 +137,20 @@ static int scan_res (char *s, int *i, int proj)
 }
 
 
+static int scan_easting (char *s, void *v, int i)
+{
+	return G_scan_easting (s, (double *) v, i);
+}
+
+static int scan_northing (char *s, void *v, int i)
+{
+	return G_scan_northing (s, (double *) v, i);
+}
+
+static int scan_cellsize (char *s, void *v, int i)
+{
+	return G_scan_resolution (s, (double *) v, i);
+}
 
 static int extract (int count, char *label, char *value,
 	void *data, int proj, int (*scanner)(char*,void*,int))

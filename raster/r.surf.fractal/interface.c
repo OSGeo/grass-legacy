@@ -32,7 +32,7 @@ interface (
 		"Can create intermediate layers showing the build up "
 		"of different spectral coefficients (see Saupe, pp.106-107 "
 		"for an example of this). Use this module to generate "
-		"naturally looking sythetical elevation models (DEM).";
+		"naturally looking synthetical elevation models (DEM).";
 
     /*---------------------------------------------------------------------*/
     /*                              SET PARSER OPTIONS                     */

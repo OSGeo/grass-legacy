@@ -16,7 +16,13 @@
  *
  *
  * $Log$
- * Revision 1.3  2000-11-22 09:34:40  jan
+ * Revision 1.4  2002-01-22 04:51:31  glynn
+ * Merge releasebranch_11_april_2001_5_0_0 with HEAD
+ *
+ * Revision 1.3.4.1  2001/06/15 18:37:36  glynn
+ * Call G_gisinit(argv[0]) before anything else
+ *
+ * Revision 1.3  2000/11/22 09:34:40  jan
  * added module description
  *
  * Revision 1.2  2000/11/01 17:26:35  cho
@@ -51,6 +57,8 @@ main(argc,argv)
 		struct	Flag	*verbose;
 	} flags;
 
+	G_gisinit(argv[0]);
+
 	module = G_define_module();
     module->description =
 		"Creates topographic index, ln(a/tan(beta)), map from elevation map.";
@@ -76,9 +84,6 @@ main(argc,argv)
 	flags.verbose			= G_define_flag();
 	flags.verbose->key		= 'v';
 	flags.verbose->description	= "Output verbosely";
-
-
-	G_gisinit(argv[0]);
 
 	if(G_parser(argc, argv)){
 	        exit(-1);

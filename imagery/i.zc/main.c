@@ -190,7 +190,7 @@ int main( int argc, char *argv[])
                 for (j=0; j<oc; j++) {
                         *(cell_row+j) = (CELL) (*(data[1]+i*cols+j));
                 }
-                G_put_map_row(zcfd, cell_row);
+                G_put_raster_row(zcfd, cell_row, CELL_TYPE);
         }
         G_close_cell(zcfd);
 

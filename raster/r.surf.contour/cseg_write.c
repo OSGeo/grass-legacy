@@ -23,7 +23,7 @@ int cseg_write_cellfile (CSEG *cseg, char *map_name)
 	for (row=0; row<nrows; row++)
 	{
 		segment_get_row (&(cseg->seg), buffer, row);
-		if (G_put_map_row (map_fd, buffer) < 0)
+		if (G_put_raster_row (map_fd, buffer, CELL_TYPE) < 0)
 		{
 			G_free (buffer);
 			G_unopen_cell (map_fd);
