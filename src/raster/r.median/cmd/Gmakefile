@@ -1,0 +1,11 @@
+PGM = r.median
+OBJS = main.o read_stats.o write_rec.o median.o
+
+$(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(GISLIB)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB)
+	mv a.out $@
+
+main.o median.o: stats.h
+
+$(GISLIB): #
