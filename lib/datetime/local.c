@@ -18,6 +18,18 @@ extern struct tm *gmtime();
 ** timezone offset.  -Bill Brown 5/31/95 
 */
 
+
+/*!
+ * \brief 
+ *
+ * Returns:
+ * 0 OK  
+ * -1 local timezone info not available 
+ *
+ *  \param minutes
+ *  \return int
+ */
+
 int 
 datetime_get_local_timezone (int *minutes)
 {
@@ -59,6 +71,17 @@ datetime_get_local_timezone (int *minutes)
     *minutes = dtdiff.positive? dtdiff.minute: -dtdiff.minute;
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * set mode/from/to ABSOLUTE/YEAR/SECOND  
+ * set the local time into 'dt'  does not set timezone.  
+ *
+ *  \param dt
+ *  \return void
+ */
 
 void
 datetime_get_local_time(dt)

@@ -25,6 +25,20 @@ static void skip_space(char **);
 static int get_int ( char **, int *, int *);
 static int get_double ( char **, double *, int *, int *);
 
+
+/*!
+ * \brief 
+ *
+ * Convert the ascii string
+ * into a DateTime. This determines the mode/from/to based on the string, inits
+ * 'dt' and then sets values in 'dt' based on the [???]
+ * Returns 0 if 'string' is legal, -1 if not. 
+ *
+ *  \param dt
+ *  \param string
+ *  \return int
+ */
+
 int datetime_scan (
     DateTime *dt,
     char *buf)

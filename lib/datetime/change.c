@@ -8,6 +8,49 @@
 
 static void make_incr();
 
+
+/*!
+ * \brief 
+ *
+ * Changes the from/to of the type for dt. 
+ * The 'from/to' must be legal
+ * values for the mode of dt; (if they are not legal, then the original values
+ * are preserved, dt is not changed).  
+ * Returns:  
+ * 0 OK  
+ * -1 invalid 'dt'  
+ * -2 invalid 'from/to' <br>
+<ul>
+<li> round =   
+ * negative implies floor() [decrease magnitude]
+ * 0 implies normal rounding, [incr/decr magnitude]
+ * positive implies ceil() [increase magnitude]
+</li>
+<li> If dt.from < 'from' (losing "lower" elements), convert the "lost"
+ * values to the equivalent value for the new 'from' Lost elements are then set
+ * to zero. (This case can only occur for dt.mode relative):
+ * months += lost years * 12 ; years = 0
+ * hours += lost days * 24 ; days = 0
+ * minutes += lost hours * 60 ; hours = 0
+ * seconds += lost minutes * 60.0 ; minutes = 0
+</li>
+<li> If dt.from > 'from' (adding "lower" elements), the new elements are set
+ * to zero.
+</li>
+<li> If dt.to < 'to' (adding "higher" elements), the new elements are set to
+ * zero.
+</li>
+<li> If dt.to > 'to' (losing "higher" elements), the the new 'to' is
+ * adjusted according to the value for 'round' After rounding the "lost"
+ * elements are set to zero.
+</li></ul>
+ *
+ *
+ *  \param from
+ *  \param round
+ *  \return int
+ */
+
 int 
 datetime_change_from_to (DateTime *dt, int from, int to, int round)
 {

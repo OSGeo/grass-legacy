@@ -6,6 +6,37 @@
  */
 #include "datetime.h"
 
+/*!
+ * \brief 
+ *
+ * This returns the components of a type
+ * (mode/from/to/fracsec) that can be used to construct a DateTime object that
+ * can be used to increment the 'src'. Also see
+ * <b>datetime_set_increment_type()</b>.
+ * returns:  
+ * 0 dt is legal  
+ * !=0 why dt is illegal 
+ * Implemented as follows:       
+ \code
+  *mode    = RELATIVE
+  *to      = src.to
+  *fracsec = src.fracsec
+  if src.mode is ABSOLUTE
+  if src.to is in {YEAR,MONTH} then
+  *from = YEAR
+  if src.to is in {DAY,HOUR,MINUTE,SECOND} then 
+  *from = DAY
+  if src.mode is RELATIVE, then
+  *from = src.from
+ \endcode
+ *
+ *  \param mode
+ *  \param from
+ *  \param to
+ *  \param fracsec
+ *  \return int
+ */
+
 int 
 datetime_get_increment_type (DateTime *dt, int *mode, int *from, int *to, int *fracsec)
 {
@@ -29,6 +60,28 @@ datetime_get_increment_type (DateTime *dt, int *mode, int *from, int *to, int *f
     }
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * src must be legal 
+ * This is a convenience routine which is implemented as follows:  
+\code
+  int mode, from ,to;
+  int fracsec;
+  if(<b>datetime_get_increment_type</b>(src, &mode, &from, &to, &fracsec))
+  return <b>datetime_get_error_code()</b>;
+  return <b>datetime_set_type</b> (incr, mode, from, to, fracsec);
+\endcode
+ * Timezone Timezones are represented in minutes from GMT in the range
+ * [-720,+780]. For a DateTime to have a timezone, it must be of type ABSOLUTE,
+ * and "to" must be in {MINUTE,SECOND}. 
+ *
+ *  \param src
+ *  \param incr
+ *  \return int
+ */
 
 int 
 datetime_set_increment_type (DateTime *src, DateTime *incr)

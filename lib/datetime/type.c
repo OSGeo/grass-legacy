@@ -6,6 +6,34 @@
  */
 #include "datetime.h"
 
+
+/*!
+ * \brief 
+ *
+ * 
+ * <ul>
+<li> This routine must be called can be made with other datetime functions.
+ * </li>
+<li> initialize all the elements in dt.
+ * </li>
+<li> Set all values to zero except:
+ * tz (set to illegal value - 99*24)
+ * positive (set to 1 for positive)
+ * </li>
+<li> Set the type info in dt: mode, from, to, fracsec
+ * </li>
+<li> validate the mode/from/to/fracsec (according to the rules for the mode)
+ * </li>
+<li> return the return value from <tt>datetime_check_type</tt>(dt)
+</li></ul>
+ *
+ *  \param mode
+ *  \param from
+ *  \param to
+ *  \param fracsec
+ *  \return int
+ */
+
 int 
 datetime_set_type (DateTime *dt, int mode, int from, int to, int fracsec)
 {
@@ -37,12 +65,54 @@ datetime_get_type (DateTime *dt, int *mode, int *from, int *to, int *fracsec)
     return datetime_check_type (dt);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Returns:  
+ * 1 if <b>datetime_check_type()</b> returns 0  
+ * 0 if not. 
+ *
+ *  \param dt
+ *  \return int
+ */
+
 int 
 datetime_is_valid_type (DateTime *dt)
 {
    /* Returns 0 if DateTime structure is not valid. */
     return datetime_check_type (dt) == 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * checks the mode/from/to/fracsec in dt.
+ * Returns: 
+ * <ul>
+<li> 0: OK
+</li>
+<li> -1: mode is invalid - not one of {ABSOLUTE,RELATIVE} 
+</li>
+<li> -2: from is invalid - not one of {YEAR,MONTH,DAY,HOUR,MINUTE,SECOND}
+</li>
+<li> -3: to is invalid - not one of {YEAR,MONTH,DAY,HOUR,MINUTE,SECOND}
+</li>
+<li> -4: from/to are reversed (from>to is illegal)
+</li>
+<li> -5: invalid from/to combination for RELATIVE mode:  
+ * from in {YEAR,MONTH} but to is not, or
+ * from in {DAY,HOUR,MINUTE,SECOND} but to is not
+</li>
+<li> -6: from is invalid for ABSOLUTE mode (from != YEAR is illegal)
+</li>
+<li> -7: fracsec is negative (only if to==SECOND)
+</li></ul>
+ *
+ *  \param dt
+ *  \return int
+ */
 
 int 
 datetime_check_type (DateTime *dt)
@@ -93,11 +163,35 @@ datetime_in_interval_day_second (int x)
     return datetime_is_between (x, DATETIME_DAY, DATETIME_SECOND);
 }
 
+
+/*!
+ * \brief 
+ *
+ * Returns:  
+ * 1 if dt.mode is absolute  
+ * 0 if not (even if dt.mode is not defined) 
+ *
+ *  \param dt
+ *  \return int
+ */
+
 int 
 datetime_is_absolute (DateTime *dt)
 {
     return (dt->mode == DATETIME_ABSOLUTE);
 }
+
+
+/*!
+ * \brief 
+ *
+ * Returns:
+ * 1 if dt.mode is relative  
+ * 0 if not (even if dt.mode is not defined) 
+ *
+ *  \param dt
+ *  \return int
+ */
 
 int 
 datetime_is_relative (DateTime *dt)
