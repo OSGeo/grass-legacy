@@ -1,0 +1,9 @@
+# %W%  %G%
+
+PGM=Gpartition
+
+$(ETC)/Gpartition:
+	cp Gpartition $(ETC)/Gpartition
+	chmod 755 $(ETC)/Gpartition
+
+$(GISLIB): #
