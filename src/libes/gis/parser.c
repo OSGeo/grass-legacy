@@ -97,6 +97,7 @@
 
 #include <string.h>
 #include <unistd.h>
+#include <limits.h>
 #include "gis.h"
 
 #define BAD_SYNTAX  1
@@ -543,7 +544,7 @@ int G_usage_xml (void)
 	struct Option *opt ;
 	struct Flag *flag ;
 	char *type;
-	char * s;
+	char *s;
 
 	if (!pgm_name)		/* v.dave && r.michael */
 	    pgm_name = G_program_name ();
@@ -560,7 +561,9 @@ int G_usage_xml (void)
 			module_info.description);
 	}
 
-	fprintf(stdout, "\t<parameter-group>\n");
+	if (n_opts || n_flags)
+		fprintf(stdout, "\t<parameter-group>\n");
+	
 	if(n_opts)
 	{
 		opt= &first_option;
@@ -605,7 +608,7 @@ int G_usage_xml (void)
 
 			if(opt->options) {
 				fprintf(stdout, "\t\t\t<values>\n");
-				s = (char *)calloc(strlen(opt->options),1);
+				s = G_calloc(strlen(opt->options) + 1,1);
 				strcpy(s, opt->options);
 				s = strtok(s, ",");
 				while (s) {
@@ -615,6 +618,7 @@ int G_usage_xml (void)
 					s = strtok(NULL, ",");
 				}
 				fprintf(stdout, "\t\t\t</values>\n");
+				G_free (s);
 			}
 
 			/* TODO:
@@ -648,7 +652,8 @@ int G_usage_xml (void)
 		}
 	}
 
-	fprintf(stdout, "\t</parameter-group>\n");
+	if (n_opts || n_flags)
+		fprintf(stdout, "\t</parameter-group>\n");
 
 	fprintf(stdout, "</task>\n");
     return 0;
@@ -1355,16 +1360,25 @@ static int gis_prompt (struct Option *opt, char *buff)
 
 char *G_recreate_command (void)
 {
-	char flg[2] ;
-	static char buff[1024] ;
+	char flg[4] ;
+	/* static char buff[1024] ; */
+	static char buff[ARG_MAX], *cur, *tmp;
 	struct Flag *flag ;
 	struct Option *opt ;
-	int n ;
+	int n , len;
+	const int maxlen = ARG_MAX - 1;
 
 	/* Flag is not valid if there are no flags to set */
 
 	*buff = '\0' ;
-	strcat(buff, G_program_name()) ;
+	cur = buff;
+	tmp = G_program_name();
+	len = strlen (tmp);
+	if (len >= maxlen)
+		return NULL;
+	strcpy (cur, tmp);
+	cur += len;
+	/* strcat(buff, G_program_name()) ; */
 
 	if(n_flags)
 	{
@@ -1373,8 +1387,19 @@ char *G_recreate_command (void)
 		{
 			if( flag->answer == 1 )
 			{
+				flg[0] = ' '; flg[1] = '-'; flg[2] = flag->key; flg[3] = '\0';
+				len += strlen (flg);
+				if (len >= maxlen)
+				{
+					G_warning ("In G_recreate_command(): maximum command length reached");
+					return NULL;
+				}
+				strcpy (cur, flg);
+				cur += len;
+				/********
 				strcat (buff, " -") ;
 				flg[0] = flag->key ; flg[1] = '\0'; strcat (buff, flg) ;
+				********/
 			}
 			flag = flag->next_flag ;
 		}
@@ -1385,14 +1410,42 @@ char *G_recreate_command (void)
 	{
 		if (opt->answer != '\0')
 		{
+			len += strlen (opt->key) + strlen (opt->answers[0]) + 2;
+			if (len >= maxlen)
+			{
+				G_warning ("In G_recreate_command(): maximum command length reached");
+				return NULL;
+			}
+			strcpy (cur, " ");
+			cur++;
+			strcpy (cur, opt->key);
+			cur = strchr (cur, '\0');
+			strcpy (cur, "=");
+			cur++;
+			strcpy (cur, opt->answers[0]);
+			cur = strchr (cur, '\0');
+			/***********
 			strcat(buff, " ") ;
 			strcat(buff, opt->key) ;
 			strcat(buff, "=") ;
 			strcat(buff, opt->answers[0]) ;
+			************/
 			for(n=1;opt->answers[n] != '\0';n++)
 			{
+				len += strlen (opt->answers[n]) + 1;
+				if (len >= maxlen)
+				{
+					G_warning ("In G_recreate_command(): maximum command length reached");
+					return NULL;
+				}
+				strcpy (cur, ",");
+				cur++;
+				strcpy (cur, opt->answers[n]);
+				cur = strchr(cur, '\0');
+				/********
 				strcat(buff, ",") ;
 				strcat(buff, opt->answers[n]) ;
+				*********/
 			}
 		}
 		opt = opt->next_opt ;
