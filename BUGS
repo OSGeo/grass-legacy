@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.38 2000-10-18 17:35:32 markus Exp $
+$Id: BUGS,v 1.39 2000-10-18 18:18:22 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -135,6 +135,10 @@ g3.region:
    the g3.region does not display the vertical resolution (top-bottom)
    correctly. -> rounding error?
   -> r3.info is affected as well
+  (being worked on by ?)  
+
+[RC]nviz2.2:
+  tkUnixPort.h needs tcl8.3 sensivity (see togl.h)
   (being worked on by ?)  
 
 p.map.new:
