@@ -3,18 +3,18 @@
 
 Please read *all* text below.
 
-Note: This version was previously called GRASS 5.1
+Note: This version was previously called GRASS 5.1 and 5.7
 
 
 SOURCE CODE DISTRIBUTION
 
 GRASS source code is currently distributed in 2 forms:
 
-1) Officially released source code (e.g. grass-5.7.0.tar.gz)
+1) Officially released source code (e.g. grass-6.0.0.tar.gz)
 
   The Full source code version contains all the GRASS source code
   required for compilation. It is distributed as one file (*.tar.gz
-  package) and the version is composed of 3 numbers, e.g. 5.7.0, 5.7.1
+  package) and the version is composed of 3 numbers, e.g. 6.0.0, 6.0.1
   etc.
 
 2) CVS or CVS Snapshots source code (CVS or CVS snapshot)
@@ -23,7 +23,7 @@ GRASS source code is currently distributed in 2 forms:
   repository (intevation.de:/grassrepository/grass51) or as a snapshot
   (*.tar.gz package) of that CVS repository. The CVS snapshot name
   contains the date when the snapshot was created (checked out from
-  the CVS repository), e.g. grass57src_cvs_snapshot_exp_2004_05_24.tar.gz
+  the CVS repository), e.g. grass61src_cvs_snapshot_exp_2005_03_19.tar.gz
 
 
 COMPILATION
@@ -69,16 +69,16 @@ INSTALLATION (first time)
 
 After compilation, the resulting code is stored in the directory
 ./dist.$ARCH
-and the scripts (grass57, ...) in
+and the scripts (grass6, ...) in
 ./bin.$ARCH
 
 To run GRASS, simply start
-./bin.$ARCH/grass57
+./bin.$ARCH/grass6
 
 or run
 
  make install
- grass57
+ grass6
 
 
 RUNNING GRASS
