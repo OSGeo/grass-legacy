@@ -75,49 +75,47 @@ proc mkkanimatorPanel { BASE } {
     
     frame $BASE  -relief groove -borderwidth 2
     set panel [St_create {window name size priority} $BASE "Keyframe Animation" 2 5]
-    Nv_mkPanelname $BASE "Animation Panel"
+    Nv_mkPanelname $BASE "Keyframe Animation Panel"
     
     # Create the top section containing play control, framerate, and Add and Delete buttons
     frame $BASE.playcontrol -relief groove -borderwidth 2
     set rname $BASE.playcontrol
 
-    button $rname.back         -bitmap @$bit_map_path/left \
+    button $rname.back  -height 20 -width 20 -bitmap @$bit_map_path/left \
 	-command "keyanimPlayBackward $BASE"
-    button $rname.slow_back    -bitmap @$bit_map_path/slow_left \
+    button $rname.slow_back -height 20 -width 20 -bitmap @$bit_map_path/slow_left \
 	-command "keyanimOneBackward $BASE"
-    button $rname.stop         -bitmap @$bit_map_path/stop \
+    button $rname.stop -height 20 -width 20 -bitmap @$bit_map_path/stop \
 	-command "keyanimStop $BASE"
-    button $rname.slow_forward -bitmap @$bit_map_path/slow_right \
+    button $rname.slow_forward -height 20 -width 20 -bitmap @$bit_map_path/slow_right \
 	-command "keyanimOneForward $BASE"
-    button $rname.forward      -bitmap @$bit_map_path/right \
+    button $rname.forward -height 20 -width 20 -bitmap @$bit_map_path/right \
 	-command "keyanimPlayForward $BASE" 
-
-    pack $rname.back $rname.slow_back $rname.stop $rname.slow_forward \
-	$rname.forward -side left -padx 2 -pady 2 -fill both -expand yes
-    pack $rname -side left -fill both -expand yes
-
-    frame $BASE.framerate -relief groove -borderwidth 2
-    set rname $BASE.framerate
     button $rname.label -text "Framerate :" -command "keyanimChangeFramerate $BASE"
     label  $rname.val   -textvariable keyanimFrameRate
-    pack $rname.label $rname.val -side left -padx 2 -pady 2 -fill both -expand yes
-    pack $rname -side left -fill both -expand yes
+    pack $rname.back $rname.slow_back $rname.stop $rname.slow_forward \
+	$rname.forward -side left -padx 4 -pady 2 -fill y -expand no
+    pack $rname.val $rname.label -side right -padx 2 -pady 2 -fill y -expand no
     
+
     frame $BASE.commands -relief groove -borderwidth 2
     set rname $BASE.commands
-    button $rname.add 		-text "Add" 	-command "keyanimAddKey $BASE"
-    button $rname.delete 	-text "Delete" 	-command "keyanimDeleteKeys $BASE"
-    button $rname.close 	-text "Close" 	-command "Nv_closePanel $BASE"
+    label $rname.label -text "File: "
     button $rname.save          -text "Save"    -command "keyanimSaveAnim $BASE"
     button $rname.load          -text "Load"    -command "keyanimLoadAnim $BASE"
-    button $rname.rands		-text "Run and Save Images" \
-	-command "keyanimRunAndSave $BASE"
-	
-    pack $rname.rands -side bottom -fill both -expand yes -padx 2 -pady 2
-    pack $rname.add $rname.delete $rname.close $rname.save $rname.load \
-	-side left -padx 2 -pady 2 -fill both -expand yes
-    pack $rname -side bottom -before $BASE.playcontrol -fill both -expand yes
+    pack $rname.label $rname.save $rname.load \
+	-side left -padx 2 -pady 2 -padx 2 -fill y -expand no
     
+    
+    frame $BASE.final -relief groove -borderwidth 2
+    set rname $BASE.final
+    button $rname.rands		-text "Run and Save" \
+	-command "keyanimRunAndSave $BASE" 
+    button $rname.close 	-text "Close" 	-command "Nv_closePanel $BASE"
+    
+    pack $rname.rands -side left -fill y -expand no -padx 2 -pady 2
+    pack $rname.close -side right -fill y -expand no -padx 2 -pady 2
+        
     # Create mid section containing the keyframe manager
     frame $BASE.keycontrol -relief groove -borderwidth 2
     set rname $BASE.keycontrol
@@ -126,53 +124,58 @@ proc mkkanimatorPanel { BASE } {
     #	label $rname.l -text "Key Frames"
     #	pack $rname.l -padx 3 -pady 3 -expand yes
     mkkeyframeArea $BASE
-    pack $BASE.keycontrol -padx 3 -pady 3 -fill both -side bottom \
-	-before $BASE.playcontrol
+    
     
     # Create bottom section containing current keytime
     frame $BASE.keytime -relief groove -borderwidth 2
     set rname $BASE.keytime
+    button $rname.add 		-text "Add" 	-command "keyanimAddKey $BASE"
+    button $rname.delete 	-text "Delete" 	-command "keyanimDeleteKeys $BASE"
     button $rname.change -text "New Key Time:" -command "keyanimChangeKeytime $BASE"
     label $rname.current -textvariable keyanimCurrentKeyTime
-    pack $rname.change $rname.current -side left -padx 2 -pady 2 -fill both -expand yes
-    pack $rname -side bottom -before $BASE.keycontrol -fill both -expand yes
+    pack $rname.add $rname.delete -side left -padx 2 -pady 2 -fill y -expand no
+    pack $rname.current $rname.change -side right -padx 2 -fill y -expand no
+    
     
     # Create bottom section containing command buttons for showing
     # paths, sites and vectors, as well as selecting interpolation
     # type and spline tension    
     frame $BASE.other_commands -relief groove -borderwidth 2
     set rname $BASE.other_commands
-    checkbutton $rname.spath -text "show path" -variable keyanimPathState \
+    label $rname.label -text "Show: "
+    checkbutton $rname.spath -text "Path" -variable keyanimPathState \
 	-command {Nshow_path $keyanimPathState} -onvalue on -offvalue off
-    checkbutton $rname.svect -text "show vect" -variable keyanimVectState \
+    checkbutton $rname.svect -text "Vect" -variable keyanimVectState \
 	-command {Nshow_vect $keyanimVectState} -onvalue on -offvalue off
-    checkbutton $rname.ssite -text "show site" -variable keyanimSiteState \
+    checkbutton $rname.ssite -text "Site" -variable keyanimSiteState \
 	-command {Nshow_site $keyanimSiteState} -onvalue on -offvalue off
-    pack $rname.spath $rname.svect $rname.ssite -fill both \
-	-padx 2 -pady 2 -expand yes -side left
+    pack $rname.label $rname.spath $rname.svect $rname.ssite -fill y \
+	-padx 2 -pady 2 -expand no -side left
     
-    pack $BASE.other_commands -after $BASE.commands \
-	-fill both -expand yes -side bottom
-    
-    set rname $BASE.other_commands.interp
+        
+    set rname $BASE.other_commands_interp
     frame $rname -relief groove
+    label $rname.label -text "Interp: "
     radiobutton $rname.linear -text "linear" \
 	-variable keyanimInterpType -value linear \
 	-command "Nset_interp_mode linear ; Nupdate_frames"
     radiobutton $rname.spline -text "spline -->" \
 	-variable keyanimInterpType -value spline \
 	-command "Nset_interp_mode spline ; Nupdate_frames"
-    
     scale $rname.tension -label "tension" -orient h \
 	-showvalue f -from 0 -to 1000 -command keyanimChangeTension \
 	-activebackground gray80 -background gray90
 
     $rname.tension set 500
 
-    pack $rname.linear $rname.spline $rname.tension \
-	-side left -anchor s -fill both -padx 2 -pady 2 -expand yes
-    pack $rname -side bottom -padx 2 -pady 2 \
-	-before $BASE.other_commands.spath -expand yes
+    pack $rname.label $rname.linear $rname.spline $rname.tension \
+	-side left -fill y -padx 2 -pady 2 -expand no
+    
+	
+    #PACK all frames
+    pack $BASE.playcontrol $BASE.keycontrol $BASE.keytime  $BASE.other_commands \
+    $BASE.other_commands_interp $BASE.commands $BASE.final \
+    -side top -expand yes -fill both
     
     # Add all animation channels
     keyanimAddChannel $BASE "FromX"
@@ -1188,6 +1191,7 @@ proc mkkeyframeArea { BASE } {
     append BASE .keycontrol
     
     # Create canvas to hold channels for keyframes
+    label $BASE.title -text "Keyframe Attributes"
     canvas $BASE.key_channels -width 10c -height 2c -yscrollcommand "$BASE.scrolly set" \
 	-xscrollcommand "$BASE.scrollx set" -confine true -xscrollincrement 1 \
 	-yscrollincrement 1
@@ -1200,6 +1204,7 @@ proc mkkeyframeArea { BASE } {
     $BASE.key_times configure -scrollregion [list 0 0 28c 2c]
     $BASE.scrolly set 0.0 0.1
     $BASE.scrollx set 0.0 0.36
+    pack $BASE.title -side top -fill x
     pack $BASE.key_channels $BASE.key_times -fill both
     pack $BASE.scrolly -side left 	-fill y -padx 2 -pady 2 -before $BASE.key_channels
     pack $BASE.scrollx -side bottom	-fill x -padx 2 -pady 2
