@@ -96,6 +96,7 @@ y_sql:
 y_alter:
 		ALTER TABLE y_table ADD COLUMN y_columndef	{ sqpCommand(SQLP_ADD_COLUMN); }
 	|	ALTER TABLE y_table ADD y_columndef		{ sqpCommand(SQLP_ADD_COLUMN); }
+	;
 	
 y_create:
 		CREATE TABLE y_table '(' y_columndefs ')'	{ sqpCommand(SQLP_CREATE); }
