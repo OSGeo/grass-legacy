@@ -94,6 +94,8 @@ main (int argc, char *argv[])
 
 	/* Read tools */
 	ntools = 0; i = 0; 
+	if ( strlen(tool_opt->answer) < 1 )
+		G_fatal_error ("You must select at least one tool.");
 	while (tool_opt->answers[i]) {
             if ( i + 1 >= atools ) {
 	        atools += 20;
