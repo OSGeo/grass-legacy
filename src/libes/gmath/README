@@ -30,3 +30,19 @@ http://netlib.bell-labs.com/netlib/master/readme.html
 http://www.netlib.org
 
 http://www.netlib.org/lapack/
+
+Compiling of LAPACK:
+
+Linux: 
+  cd LAPACK
+  cp INSTALL/make.inc.LINUX make.inc 
+  make
+
+Solaris:
+  cd LAPACK
+  cp INSTALL/make.inc.SUN4SOL2 make.inc
+  make
+
+etc.
+
+See INSTALL/ for further platforms.
