@@ -4,7 +4,7 @@
 
 /*
  * r.sunmask:
- *   Calculates the real shadows from a DEM from
+ *   Calculates the real shadows from a DEM form
  *
  * input: DEM (int, float, double)
  * output: binary shadow map
