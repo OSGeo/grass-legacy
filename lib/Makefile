@@ -13,7 +13,6 @@ SUBDIRS = \
 	external \
 	fonts \
 	form \
-	front.end \
 	gis \
 	image \
 	imagery \
@@ -24,6 +23,8 @@ SUBDIRS = \
 	segment \
 	vask \
 	vector \
+	\
+	front.end \
 	rst \
 	ogsf \
 	init
