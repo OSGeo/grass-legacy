@@ -112,6 +112,7 @@
 static int interactive_ok = 1 ;
 static int n_opts = 0 ;
 static int n_flags = 0 ;
+static int overwrite = 0 ;
 
 static struct Flag first_flag;    /* First flag in a linked list      */
 static struct Flag *current_flag; /* Pointer for traversing list      */
@@ -146,6 +147,7 @@ static int check_string( char *, char *);
 static int check_required();
 static int split_opts();
 static int check_multiple_opts();
+static int check_overwrite();
 static int interactive( char *);
 static int interactive_flag( struct Flag *);
 static int interactive_option( struct Option *);
@@ -529,8 +531,13 @@ int G_parser (int argc, char **argv)
 		{
 			ptr = *(++argv) ;
 
+			/* Overwrite option */
+			if ( strncmp(ptr,"--o", 3) == 0 || strncmp(ptr,"--overwrite",11) == 0 )
+			{
+			    overwrite = 1;
+			}
 			/* If we see a flag */
-			if(*ptr == '-')
+			else if(*ptr == '-')
 			{
 				while(*(++ptr))
 					error += set_flag(*ptr) ;
@@ -573,11 +580,16 @@ int G_parser (int argc, char **argv)
 	/* Make sure all required options are set */
 	error += check_required() ;
 
+
 	if(error)
 	{
 		G_usage();
 		return -1;
 	}
+
+	if ( check_overwrite () )
+	    return -1;
+
 	return(0) ;
 }
 
@@ -1668,6 +1680,63 @@ static int check_multiple_opts (void)
 		}
 		opt = opt->next_opt ;
 	}
+	return(error) ;
+}
+
+/* Check for all 'new' if element already exists */
+static int check_overwrite (void)
+{
+	struct Option *opt ;
+	char age[64] ;
+	char element[64] ;
+	char *ptr1, *ptr2 ;
+	int error = 0;
+	char *overstr;
+	int over;
+
+	if(! n_opts)
+		return (0) ;
+
+	over = 0;
+	if ( (overstr = G__getenv ( "OVERWRITE" )) ) {
+	    over = atoi ( overstr );
+	}
+
+	opt= &first_option;
+	while(opt != NULL)
+	{
+		if ((opt->answer != NULL) && (opt->gisprompt != NULL))
+		{
+			for(ptr1=opt->gisprompt,ptr2=age; *ptr1!='\0'; ptr1++, ptr2++)
+			{
+				if (*ptr1 == ',')
+					break ;
+				*ptr2 = *ptr1 ;
+			}
+			*ptr2 = '\0' ;
+			for(ptr1++, ptr2=element; *ptr1!='\0'; ptr1++, ptr2++)
+			{
+				if (*ptr1 == ',')
+					break ;
+				*ptr2 = *ptr1 ;
+			}
+			*ptr2 = '\0' ;
+	    
+			if ( strcmp(age,"new") == 0 ) {
+			    if ( G_find_file (element, opt->answer, G_mapset()) ) /* found */
+			    {
+				if ( !overwrite && !over ) { 
+				    fprintf(stderr,_("Error: option <%s>: <%s> exists.\n"), 
+						   opt->key, opt->answer );
+
+				    error = 1;
+				}
+			    }
+			}
+		}
+		opt = opt->next_opt ;
+	}
+
 	return(error) ;
 }
 
