@@ -27,7 +27,7 @@ fprintf(stderr,"setup\n");
   if (overlay_flag==0)
    {
 /* Clear the screen as "BG_COLOR" (black).                                   */
-    sprintf(command,"$GISBASE/bin/Derase %s",BG_COLOR);
+    sprintf(command,"$GISBASE/bin/d.erase %s",BG_COLOR);
     system (command);
    }
   R_open_driver();
