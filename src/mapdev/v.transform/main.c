@@ -85,7 +85,7 @@ int main (int argc, char *argv[])
 	/* open vectors */
 	if ( (mapset = G_find_file2 ("dig", old->answer, "")) == NULL)
 	    G_fatal_error ("Could not find input vector %s\n", old->answer);
-
+	
         if( Vect_open_old(&Old, old->answer, mapset) < 1)
             G_fatal_error("Could not open input vector %s\n", old->answer);
 
@@ -93,6 +93,7 @@ int main (int argc, char *argv[])
 	    Vect_close (&Old);
             G_fatal_error("Could not open output vector %s\n", new->answer);
 	}
+
 
         /* copy and set header */
 	Vect_copy_head_data(&Old.head, &New.head);
@@ -130,6 +131,10 @@ int main (int argc, char *argv[])
 
 	if (!quiet_flag->answer)
 		fprintf (stdout,"\n '%s' has finished the transformation of the vectors.\n", argv[0]) ;
+
+	/* set mapset */
+	Current.mapset = mapset;
+	Trans.mapset = G_mapset();
 
 	if ( open_att_files ( &Current, &Trans) )
 	{
