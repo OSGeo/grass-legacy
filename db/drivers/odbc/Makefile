@@ -6,6 +6,7 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 DRIVER=$(DBDRIVERDIR)/odbc
+EXTRA_INC = $(ODBCINC)
 
 LIBES = $(DBMILIB) $(DBSTUBSLIB) $(GISLIB) $(DATETIMELIB)
 
