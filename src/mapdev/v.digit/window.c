@@ -53,7 +53,7 @@ int Window (void)
 	{
 	    switch(command) {
 		case MWC_WIND:
-		    zoom_window ();
+		    zoom_window (0, NULL);
 		    break;
 		case MWC_PREV:
 		    break;
@@ -640,7 +640,7 @@ zoom_window ()
 */
 
 int 
-zoom_window (void)
+zoom_window (unsigned char type, struct line_pnts *Xpoints)
 {
     int button, button1 ;
     int	screen_x, screen_y ;
@@ -669,6 +669,8 @@ zoom_window (void)
 			set_window_w_mouse ();
 			clear_window ();
 			replot(CMap); 
+			if(Xpoints)
+				highlight_line (type, Xpoints, 0, NULL);
 			break ;
 		    case 2:
 			return(0);
@@ -691,13 +693,13 @@ zoom_window (void)
 			    switch(button1)
 			    {
 				case 1:
-				    scal_window ();
+				    scal_window (type, Xpoints);
 				    break;
 				case 2:
 				    zoom_pan = 0;
 				    break;
 				case 3:
-				    slid_window ();
+				    slid_window (type, Xpoints);
 				    break;
 				default:
 				    return(1);
@@ -727,16 +729,16 @@ leave:
     return 1;
 }
 
-int slid_window (void)
+int slid_window (unsigned char type, struct line_pnts *Xpoints)
 {
-    slid_window_w_mouse ();
+    slid_window_w_mouse (type, Xpoints);
 
     return 0;
 }
 
-int scal_window (void)
+int scal_window (unsigned char type, struct line_pnts *Xpoints)
 {
-    scal_window_w_mouse ();
+    scal_window_w_mouse (type, Xpoints);
 
     return 0;
 }

@@ -225,8 +225,9 @@ int do_digitize (
 	{
 	    if (Digtiz_Device == MOUSE)
 	    {
-		if (!mouse_yes_no ("Begin digitizing? "))
-		    return (0);
+		while((yes_no = mouse_yes_no_zoom ("Begin digitizing? ", 0, NULL)) != 1)
+			if(yes_no == 3)
+		    		return (0);
 	    }
 	    else
 #ifdef CURSORKEYS
@@ -243,6 +244,7 @@ int do_digitize (
 	    Write_base(10, "Site digitizing") ;
         }
 
+recollect:
 	if (Digtiz_Device == MOUSE)
 	    stream_mode = mouse_collect_points(mode, (char) type, &Xpoints);
 	else
@@ -272,23 +274,7 @@ int do_digitize (
     /*DEBUG*/ debugf ( "after prune:  %d points\n", Xpoints.n_points);
 	}
 
-	/*  toss out degenerate lines */
-	if (type != DOT)
-	{
-	  if (!close_area)	/* SCS*/
-	  {
-	    if (Xpoints.n_points == 1 ||  /* are all points w/in snapping thresh? */
-		 dig_is_line_degenerate (&Xpoints, map->head.map_thresh))
-	    {
-		Xpoints.n_points = 0;
-		BEEP;
-		Write_info(3, "Only 1 point digitized, Ignoring...");
-		sleep (3);
-		goto d_done;
-	    }
-	  }
-	}
-	else
+	if(type == DOT)
 	{
 	    if (Xpoints.n_points == 1)
 	    {
@@ -345,14 +331,36 @@ int do_digitize (
 		  break;
 	  }
 
-	  if (Digtiz_Device == MOUSE)
-	      yes_no = mouse_yes_no(str) ;
-	  else
+	  if (Digtiz_Device == MOUSE){
+	      yes_no = mouse_yes_no_zoom(str, (unsigned char) type, &Xpoints) ;
+	      if(yes_no == 2)
+		      goto recollect;
+	      yes_no = (yes_no == 1);
+	  }else
 	      yes_no = ask_yes_no(str) ;
 	}
 
 	if (yes_no)
 	{
+	    /*  toss out degenerate lines */
+	    if (type != DOT)
+	    {
+	      if (!close_area)	/* SCS*/
+	      {
+	        if (Xpoints.n_points == 1 ||  /* are all points w/in snapping thresh? */
+		     dig_is_line_degenerate (&Xpoints, map->head.map_thresh))
+	        {
+	    	    if (do_graphics())
+			erase_line ((unsigned char) type, &Xpoints, 0, NULL);
+		    Xpoints.n_points = 0;
+		    BEEP;
+		    Write_info(3, "Only 1 point digitized, Ignoring...");
+		    sleep (3);
+		    goto d_done;
+	        }
+	      }
+	    }
+
 	    if (do_graphics ())
 		erase_line ((unsigned char)type, &Xpoints, 0, NULL);
 
@@ -402,6 +410,7 @@ int do_digitize (
       { angle_in_line (map,line); }
 d_done:
 	Clear_info();
+	Xpoints.n_points = 0;
 #ifdef CURSORKEYS
 	/*  if they don't have buttons force them to start over */
 	if (Digtiz_Device != MOUSE)
@@ -432,7 +441,7 @@ int do_psu_dig (struct Map_info *map, int mode, int type, double sample_thresh)
     type = DOT;
     sprintf(buffer,"Digitize sites ? ");
     if (Digtiz_Device == MOUSE)
-	yes_no = mouse_yes_no(buffer) ;
+	yes_no = mouse_yes_no_zoom(buffer, type, NULL) ;
     else
 	yes_no = ask_yes_no(buffer) ;
 
@@ -444,7 +453,7 @@ int do_psu_dig (struct Map_info *map, int mode, int type, double sample_thresh)
         { 
         sprintf(buffer,"Digitize site # %d ? ",count);
         if (Digtiz_Device == MOUSE)
-	  yes_no = mouse_yes_no(buffer) ;
+	  yes_no = mouse_yes_no_zoom(buffer, type, NULL) ;
         else
 	  yes_no = ask_yes_no(buffer) ;
 

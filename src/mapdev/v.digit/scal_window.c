@@ -16,7 +16,7 @@
 #define SCALE_FACTOR 0.8
 
 int 
-scal_window_w_mouse (void)
+scal_window_w_mouse (unsigned char type, struct line_pnts *Xpoints)
 {
     int screen_x, screen_y ;
     int button, yn ;
@@ -54,6 +54,8 @@ top:
 	        window_rout (N, S, E, W);
                 clear_window ();
                 replot(CMap); 
+		if(Xpoints)
+			highlight_line (type, Xpoints, 0, NULL);
 		Clear_info ();
 		break;
 
@@ -72,6 +74,8 @@ top:
 	        window_rout (N, S, E, W);
                 clear_window ();
                 replot(CMap);
+		if(Xpoints)
+			highlight_line (type, Xpoints, 0, NULL);
 		Clear_info ();
 
 	        break ;
