@@ -1,0 +1,138 @@
+.\" %W% %G%
+.TH mapmask 1
+.SH NAME
+mapmask - Create cell 
+.CT file map
+masks based on user-specified
+polygons 
+.XT "(geometric shapes, not polygonal data) from map layers"
+.br
+\fI(Available through\fR \fBgrass3\fR \fImenu)\fR
+.SH SYNOPSIS
+.B mapmask
+.SH DESCRIPTION
+.na
+The GRASS tool
+.I mapmask
+provides the user with the capability of defining specific
+.I areas\ of\ interest
+within a 
+.CT "map layer." "cell map."
+These can be specified using
+regular geometric shapes, circles, or strings of corner coordinates.
+The user has the choice of creating a \fIgeneric\fR 1/0 
+.CT "map layer" "cell map"
+and/or
+a \fIcookie cutter\fR 
+.CT "map layer." "cell map."
+A \fIgeneric\fR 
+.CT "map layer" "cell map"
+has cell 
+.CT values "category values"
+of 1 within the areas of interest;  all other cells contain category 0.
+A \fIcookie cutter\fR 
+.CT "map layer" "cell map"
+retains
+original category values from a \fIsource\fI 
+.CT "map layer" "cell map"
+within the areas of interest.
+.PP
+The effectiveness of an analysis is often dependent upon the ability to clearly 
+define the exact data to be studied, and to limit the data to this definition.
+In geographic analysis, a common problem is found in trying to look at 
+specific areas, which seldom correspond to mapped areas, or even to rectangles.
+It is important for the user both to be able to define exact areas of interest
+for specific analyses and to be able to quickly define general areas for an
+overview.
+.PP
+.I Mapmask
+gives the user the tools to meet these needs quickly and easily.
+.PP
+The user can create two types of 
+.CT "map layers:" "cell maps:"
+.PP
+.ad
+.ll -.5
+.in +.75i
+.ti -.25i
+1)
+A \fIgeneric\fR 1/0 
+.CT "map layer" "cell map"
+can be created. Cells within the areas
+of interest are coded with 1; cells outside the 
+area are coded with 0.  This type of mask can be used to 
+mask sections of different 
+.CT "map layers" "cell maps"
+for use in 
+complicated analyses.  
+
+.ti -.25i
+2)
+A \fIcookie-cutter\fR 
+.CT "map layer" "cell map"
+can also be created.  This
+type of mask is one that retains the data from a
+source 
+.CT "map layer" "cell map"
+in the areas specified by the user.
+It
+.I cannot
+always be masked with other 
+.CT "map layers." "cell maps."
+
+.ti -.25i
+3)
+The user also has the option of creating both types
+of 
+.CT "map layers." "cell maps."
+
+.PP
+The user of
+.I mapmask
+has several options available when defining areas of interest:
+.PP
+.ad
+.ll -.5
+.in +.75i
+.ti -.25i
+1)
+The user may choose to define a circle as an 
+area of interest, specifying the center (easting/northing) 
+and radius of the circle.
+
+.ti -.25i
+2)
+The user may choose to define a regular polygon
+as an area of interest, specifying the center 
+(easting/northing) and radius of a circle which
+circumscribes the polygon and the number of
+sides the polygon will have.
+
+.ti -.30i
+3a)
+The user may choose to define a specific polygonal
+area, specifying the number of edges the area 
+is to have (up to 50) and the coordinates 
+for each corner of the area.  In this case, the 
+corners of the area must be entered in a clockwise
+order, though any corner can be entered first.
+
+.ti -.30i
+3b)
+The user may choose to define a specific polygonal
+area, specifying a file in which the coordinates
+for the corner points have previously been entered.
+In this case, the coordinates must be
+arranged such that there is one coordinate pair per
+line, with the northing in the first column, and the easting
+in the second.
+.na
+.PP
+.I Note:
+These four options apply to each area of interest that is designated.
+Therefore, a user
+could have one circle, one regular hexagon, and a specific polygonal area
+of interest all within one 
+.CT "map layer." "cell map."
+.SH "AUTHOR"
+Michael O'Shea, U.S. Army Construction Engineering Research Laboratory
