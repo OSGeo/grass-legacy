@@ -283,7 +283,7 @@ main (int argc, char *argv[])
 
 	    /* Output one feature for each category */
 	    for ( j = -1; j < Cats->n_cats; j++ ) {
-		if ( j == -1 && cat > 0 ) continue; /* cat(s) exists */
+		if ( j == -1 && cat == 0 ) break; /* no cat(s) exists */
 
 		if ( Cats->field[j] == field )
 		    cat = Cats->cat[j];
