@@ -18,8 +18,8 @@ int main (int argc, char *argv[])
     {
 	struct Option *map;
 	struct Option *line;
-	struct Option *width;
-	struct Option *result;
+/*	struct Option *width;
+	struct Option *result; */
     } parms;
 
     G_gisinit (argv[0]);
@@ -36,7 +36,7 @@ int main (int argc, char *argv[])
     parms.map->required = YES;
     parms.map->multiple = NO;
 
-    parms.result = G_define_option();
+/*  parms.result = G_define_option();
     parms.result->key = "result";
     parms.result->key_desc = "type";
     parms.result->type = TYPE_STRING;
@@ -45,7 +45,7 @@ int main (int argc, char *argv[])
     parms.result->multiple = NO;
     parms.result->options = "raw,median,average";
     parms.result->answer = "raw";
-
+*/
     parms.line = G_define_option();
     parms.line->key = "line";
     parms.line->key_desc = "east,north,azimuth,distance";
@@ -54,18 +54,18 @@ int main (int argc, char *argv[])
     parms.line->required = YES;
     parms.line->multiple = YES;
 
-    parms.width = G_define_option();
+/*  parms.width = G_define_option();
     parms.width->key = "width";
     parms.width->type = TYPE_INTEGER;
     parms.width->description = "Transect width, in cells (odd number)";
     parms.width->answer = "1";
-
+*/
     if (G_parser(argc,argv))
 	exit(1);
 
     projection = G_projection();
 
-    sscanf (parms.width->answer, "%d", &n);
+/*  sscanf (parms.width->answer, "%d", &n);
     if (n <= 0 || n%2 == 0)
     {
 	fprintf(stderr,"<%s=%s> ** illegal value **\n",
@@ -73,7 +73,7 @@ int main (int argc, char *argv[])
 	G_usage();
 	exit(1);
     }
-
+*/
     name = parms.map->answer;
     mapset = G_find_cell(name,"");
     if (mapset == NULL)
