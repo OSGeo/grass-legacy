@@ -72,8 +72,9 @@ read_vpoints (char *name, char *mapset)
     set_color ( &(vector.layer[vec].fcolor), 255, 0, 0 );
     vector.layer[vec].label = NULL ;    
     vector.layer[vec].lpos = -1 ;
+    vector.layer[vec].symbol = G_store("basic/diamond");
 
-    vector.layer[vec].size = 1.0;
+    vector.layer[vec].size = 6.0;
     vector.layer[vec].rotate = 0.0;    
     vector.layer[vec].epstype = 0;        
     
