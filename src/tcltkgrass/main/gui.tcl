@@ -205,20 +205,23 @@ proc interface_build {description} {
 
     set ${array}(option_list) ""
 
+    set numFlags 0
+    
     foreach element [lrange $description 3 end] {
         switch -- [lindex $element 0] {
             entry {
-                lappendu ${array}(option_list) [lindex $element 1]
+                lappendu ${array}(option_list) [lindex $element 1] -1
                 eval create_entry $path num \
                     ${array}([lindex $element 1]) [lrange $element 2 4]
             }
             scale {
-                lappendu ${array}(option_list) [lindex $element 1]
+                lappendu ${array}(option_list) [lindex $element 1] -1
                 eval create_scale $path num \
                     ${array}([lindex $element 1]) [lrange $element 2 5]
             }
             checkbox {
-                lappendu ${array}(option_list) [lindex $element 1]
+                lappendu ${array}(option_list) [lindex $element 1] $numFlags
+		incr numFlags
                 eval create_check $path num \
                     ${array}([lindex $element 1]) [lrange $element 2 4]
             }
@@ -299,7 +302,7 @@ proc interface_build {description} {
 
 proc create_entry {path num variable description scroll button} {
     upvar $num n
-    global balloonHelp terminal_input
+    global balloonHelp terminal_input g_manual
 
     if {[string length $description] > 0} {
         label $path.label$n -anchor w -padx 2 -text $description
@@ -309,6 +312,7 @@ proc create_entry {path num variable description scroll button} {
 
     if {$scroll} {set widget "scrollx_widget entry" } else {set widget entry}
     set entry [eval $widget $path.entry$n -textvariable $variable]
+
     if {[string length $button] > 0} {
         if {[string match {*(*)} $button]} {
             button $path.button$n -fg blue -activeforeground blue -text Run \
@@ -353,6 +357,7 @@ proc create_entry {path num variable description scroll button} {
 
 proc create_check {path num variable description off on} {
     upvar $num n
+
     checkbutton $path.check$n -relief flat -anchor w \
         -text $description \
         -variable $variable -offvalue $off -onvalue $on
@@ -1045,10 +1050,14 @@ proc setfont {path font} {
 
 ###############################################################################
 
-proc lappendu {list element} {
+proc lappendu {list element flag} {
     upvar $list l
     if {! [info exists l] || [lsearch -exact $l $element] < 0} {
-        lappend l $element
+        if {$flag < 0} {
+	    lappend l $element
+	} else {
+	    set l [linsert $l $flag $element]
+	}
     }
 }
 
