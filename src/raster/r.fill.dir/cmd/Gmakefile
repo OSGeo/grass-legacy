@@ -6,21 +6,23 @@ FILL = $(ETC)/fill
 # these we will put in $GIS/etc/fill
 
 PGM1 = $(FILL)/fmt_un
-PGM2 = $(FILL)/un_fmt_fill
-PGM3 = $(FILL)/dopolys_for
-PGM4 = $(FILL)/fillsngl_for
+PGM2 = $(FILL)/fillsngl_for
+PGM3 = $(FILL)/direct_for
+PGM4 = $(FILL)/dopolys_for
 PGM5 = $(FILL)/wtrshed_for
 PGM6 = $(FILL)/ppupdate_for
+PGM7 = $(FILL)/un_fmt_fill
 
 OBJ = main.o
 OBJ1 = fmt_un.o
-OBJ2 = un_fmt_fill.o
-OBJ3 = dopolys.o
-OBJ4 = fillsngl.o
+OBJ2 = fillsngl.o
+OBJ3 = direct.o
+OBJ4 = dopolys.o
 OBJ5 = wtrshed.o
 OBJ6 = ppupdate.o
+OBJ7 = un_fmt_fill.o
 
-all: $(PGM) $(PGM1) $(PGM2) $(PGM3) $(PGM4) $(PGM5) $(PGM6) 
+all: $(PGM) $(PGM1) $(PGM2) $(PGM3) $(PGM4) $(PGM5) $(PGM6) $(PGM7)
 
 $(PGM): $(OBJ) $(GISLIB)
 	$(CC) $(LDFLAGS) $(OBJ) -o $@ $(GISLIB) $(MATHLIB) $(XDRLIB)
@@ -42,6 +44,9 @@ $(PGM5): $(OBJ5) $(FILL)
 
 $(PGM6): $(OBJ6) $(FILL)
 	$(FC) $(LDFLAGS) $(OBJ6) -o $@ $(XDRLIB)
+
+$(PGM7): $(OBJ7) $(FILL)
+	$(FC) $(LDFLAGS) $(OBJ7) -o $@ $(XDRLIB)
 
 $(FILL):
 	mkdir $(FILL)
