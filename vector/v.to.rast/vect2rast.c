@@ -4,10 +4,10 @@
 #include "Vect.h"
 #include "local.h"
 
-int do_areas(struct Map_info *, struct line_pnts *, dbCatValArray *, int );
-int do_lines(struct Map_info *, struct line_pnts *, dbCatValArray *, int); 
+int do_areas(struct Map_info *, struct line_pnts *, dbCatValArray *, int, int);
+int do_lines(struct Map_info *, struct line_pnts *, dbCatValArray *, int, int); 
 
-int vect_to_rast(char *vector_map,char *raster_map, char *column, int nrows)
+int vect_to_rast(char *vector_map,char *raster_map, int field, char *column, int nrows)
 {
     int i;
     char *vector_mapset;
@@ -45,7 +45,7 @@ int vect_to_rast(char *vector_map,char *raster_map, char *column, int nrows)
     Vect_set_open_level (2);
     Vect_open_old (&Map, vector_map, vector_mapset);
 
-    Fi = Vect_get_field( &Map, 1);
+    Fi = Vect_get_field( &Map, field);
     if ( Fi == NULL ) {
 	G_fatal_error ("Cannot read field info");
     }
@@ -104,7 +104,7 @@ int vect_to_rast(char *vector_map,char *raster_map, char *column, int nrows)
 
     start_clock(NULL);
     inform ("Sorting areas by size ...");
-    if((nareas = sort_areas (&Map, Points)) < 0) {
+    if((nareas = sort_areas (&Map, Points, field)) < 0) {
 	G_fatal_error ( "ERROR processing areas from vector map <%s>\n", vector_map);
     }
     sprintf (msg, " %d areas", nareas);
@@ -139,7 +139,7 @@ int vect_to_rast(char *vector_map,char *raster_map, char *column, int nrows)
 	    if (npasses > 1) inform ("  ");
 	    inform ("Processing areas ...");
 
-	    if(do_areas (&Map, Points, &cvarr, ctype) < 0) {
+	    if(do_areas (&Map, Points, &cvarr, ctype, field) < 0) {
 		fprintf (stderr, "\nERROR processing areas from vector map <%s>\n", vector_map);
 		stat = -1;
 		break;
@@ -155,7 +155,7 @@ int vect_to_rast(char *vector_map,char *raster_map, char *column, int nrows)
 	    if (npasses > 1) inform ("  ");
 	    inform ("Processing lines ...");
 
-	    if((nlines = do_lines (&Map, Points, &cvarr, ctype)) < 0) {
+	    if((nlines = do_lines (&Map, Points, &cvarr, ctype, field)) < 0) {
 		fprintf (stderr, "\nERROR processing lines from vector map <%s>\n", vector_map);
 		stat = -1;
 		break;

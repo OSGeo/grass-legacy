@@ -8,8 +8,8 @@
 int main (int argc, char *argv[])
 {
     struct GModule *module;
-    struct Option *input, *output, *rows, *col;
-    int n;
+    struct Option *input, *output, *rows, *col, *field_opt;
+    int    field, n;
 
     G_gisinit (argv[0]);
 
@@ -25,6 +25,8 @@ int main (int argc, char *argv[])
     input->gisprompt       = "old,vector,vector";
     input->description     = "vector input file";
 
+    field_opt = G_define_standard_option(G_OPT_V_FIELD);
+    
     output = G_define_option();
     output->key            = "output";
     output->type           = TYPE_STRING;
@@ -50,7 +52,8 @@ int main (int argc, char *argv[])
 
     if (G_parser (argc, argv)) exit (-1);
 
+    field = atoi (field_opt->answer);
     sscanf (rows->answer, "%d", &n);
 
-    exit(vect_to_rast (input->answer, output->answer, col->answer, n));
+    exit(vect_to_rast (input->answer, output->answer, field, col->answer, n));
 }

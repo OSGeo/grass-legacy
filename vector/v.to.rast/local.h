@@ -14,7 +14,7 @@ int inform(char *);
 
 /* do_areas.c */
 /* int do_areas(struct Map_info *, struct line_pnts *, dbCatValArray *, int ); */
-int sort_areas(struct Map_info *, struct line_pnts * );
+int sort_areas(struct Map_info *, struct line_pnts *, int );
 /* do_lines.c */
 /* int do_lines(struct Map_info *, struct line_pnts *, dbCatValArray *, int); */
 
@@ -37,4 +37,4 @@ int update_hist(char *, char *, char *, long);
 int update_colors(char *);
 int update_cats(char *, char *, char *);
 /* vect2rast.c */
-int vect_to_rast(char *, char *, char *, int);
+int vect_to_rast(char *, char *, int, char *, int);

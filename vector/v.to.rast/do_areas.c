@@ -14,7 +14,7 @@ struct list
 static int nareas ;
 static int compare(const void *, const void *);
 
-int do_areas ( struct Map_info *Map,struct line_pnts *Points, dbCatValArray *Cvarr, int ctype)
+int do_areas ( struct Map_info *Map,struct line_pnts *Points, dbCatValArray *Cvarr, int ctype, int field)
 {
     int i,index, ret;
     CELL  cval, cat;
@@ -60,7 +60,7 @@ int do_areas ( struct Map_info *Map,struct line_pnts *Points, dbCatValArray *Cva
     return nareas;
 }
 
-int sort_areas ( struct Map_info *Map, struct line_pnts *Points)
+int sort_areas ( struct Map_info *Map, struct line_pnts *Points, int field)
 {
     int i, centroid;
     struct line_cats *Cats;
@@ -88,7 +88,7 @@ int sort_areas ( struct Map_info *Map, struct line_pnts *Points)
 	    G_warning ("Area without centroid (may be OK for island)");
 	} else {
 	    Vect_read_line ( Map, NULL, Cats, centroid );
-	    Vect_cat_get (Cats, 1, &cat);
+	    Vect_cat_get (Cats, field, &cat);
 	    if ( cat <= 0 ) {
 		SETNULL( &cat );
 		G_warning ("Area centroid without category");
