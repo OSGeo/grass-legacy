@@ -1,0 +1,7 @@
+HINT for ps.map on Linux: 
+
+ You have to recompile this module with additional compile flag:
+  COMPILE_FLAGS = -fwritable-strings
+
+ Add the flag in src/CMD/head/head and clean ps.map OBJ-files before
+ recompiling.
