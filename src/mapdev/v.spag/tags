@@ -1,6 +1,14 @@
 Link	spag2.c	/^Link (host, link, dir)$/
+Mb_a_plus	../v.build/b_a_plus.c	/^main(argc, argv)$/
+Mmain	../v.build/main.c	/^main(argc, argv)$/
 Mmain2	main2.c	/^main(argc, argv)$/
 Same_lines	intersect.c	/^Same_lines (Map, A, B)$/
+Wr_P_area_asc	../v.build/ascii_io.c	/^Wr_P_area_asc (num, ptr, fp)$/
+Wr_P_att_asc	../v.build/ascii_io.c	/^Wr_P_att_asc (num, ptr, fp)$/
+Wr_P_isle_asc	../v.build/ascii_io.c	/^Wr_P_isle_asc (num, ptr, fp)$/
+Wr_P_line_asc	../v.build/ascii_io.c	/^Wr_P_line_asc (num, ptr, fp)$/
+Wr_P_node_asc	../v.build/ascii_io.c	/^Wr_P_node_asc ( num,ptr, fp)$/
+Wr_Plus_head_asc	../v.build/ascii_io.c	/^Wr_Plus_head_asc (ptr, fp)$/
 _do_break_line	break2.c	/^_do_break_line (map, Points, label, type, node)$/
 _remove_line	remove.c	/^_remove_line (map, line)$/
 add_near	spag2.c	/^add_near (A, B, dir, x, y)$/
@@ -8,9 +16,15 @@ bboxes_cross	spag2.c	/^bboxes_cross (Aline, Bline)$/
 break_line_at_seg_w_point	break2.c	/^break_line_at_seg_w_point (map, ux, uy, line, segm/
 break_line_at_segs_w_point	break2.c	/^break_line_at_segs_w_point (map, ux, uy, line, Ase/
 break_lines_at_segs_w_point	break2.c	/^break_lines_at_segs_w_point (map, ux, uy, A, Aseg,/
+build_all_areas	../v.build/area.c	/^build_all_areas (map)$/
+build_area	../v.build/area.c	/^build_area (map, line)$/
 build_relations	spag2.c	/^build_relations (Ahead, Bhead)$/
+check_area	../v.build/area.c	/^check_area (map, line, x, y)$/
+clean_atts_file	../v.build/atts_file.c	/^clean_atts_file (file)$/
 clean_lines	intersect.c	/^clean_lines (Map, thresh)$/
+codes	../v.build/ascii_io.c	/^codes (type)$/
 compress	compress.c	/^compress (map, tell)$/
+cp_file	../v.build/atts_file.c	/^cp_file  (from, to)$/
 cross_lines	intersect.c	/^cross_lines (Map, A, B)$/
 debug_graphic	graphic.c	/^debug_graphic (map, A, B, X, Y)$/
 debug_interact	spag2.c	/^debug_interact (Ahead, Bhead)$/
@@ -18,6 +32,7 @@ debugf	main2.c	/^debugf (format, a, b, c, d, e, f, g, h, i, j, k, l/
 debugf2	main2.c	/^debugf2 (format, a, b, c, d, e, f, g, h, i, j, k, /
 debugf3	linecros.c	/^#define debugf3(x)$/
 find_intersection	linecros.c	/^find_intersection (ax1,ay1,ax2,ay2,bx1,by1,bx2,by2/
+find_nodes	../v.build/find_nodes.c	/^find_nodes( x, y, n_nodes, NODES, s_thresh)$/
 free_line	spag2.c	/^free_line (Head)$/
 g_graph_line	graphic.c	/^g_graph_line (map, A, B, x, y)$/
 g_reset_window	graphic.c	/^g_reset_window ()$/
@@ -25,15 +40,34 @@ g_set_window	graphic.c	/^g_set_window (N, S, E, W)$/
 get_window	spag2.c	/^get_window (ptr, flag, n, s, e, w)$/
 graph_hits	spag2.c	/^graph_hits (fp, ptr)$/
 graph_line	spag2.c	/^graph_line (fp, ptr)$/
-intersect	intersect.c	/^intersect (Map)$/
+import_line	../v.build/import_line.c	/^import_line (map, type, node, points, offset)$/
+init_extents	../v.build/read_digit.c	/^init_extents ()$/
+init_extents_from_head	../v.build/read_digit.c	/^init_extents_from_head (head)$/
+init_map_struct	../v.build/init_plus_s.c	/^init_map_struct(Map)$/
+init_plus_struct	../v.build/init_plus_s.c	/^init_plus_struct(Plus)$/
+intersect	intersect.c	/^intersect (Map, ident_only)$/
 is_a_node	spag2.c	/^is_a_node (ptr)$/
+label_area	../v.build/area.c	/^label_area  (map, cat)$/
+label_line	../v.build/labels.c	/^label_line (map, Att)$/
 line_length	intersect.c	/^line_length (Points)$/
 load_line	spag2.c	/^load_line (Map, Line, Head)$/
 local_check_dist	break2.c	/^local_check_dist (map, points, ux, uy, dist)$/
+matchup_isle	../v.build/isle.c	/^matchup_isle (map, isle)$/
+matchup_isles	../v.build/isle.c	/^matchup_isles (map)$/
 new_line	new_line.c	/^new_line (map, type, node, points)$/
+open_dig_files	../v.build/open_files.c	/^open_dig_files (name, fp_plus, Map, Plus)$/
 process_lines	spag2.c	/^process_lines (Map, A, B)$/
+read_atts	../v.build/labels.c	/^read_atts (map, file)$/
+read_digit	../v.build/read_digit.c	/^read_digit(Map, Plus)$/
 reset_d_window	graphic.c	/^reset_d_window ()$/
 reset_window	spag2.c	/^reset_window ()$/
 set_window	spag2.c	/^set_window (N, S, E, W)$/
 spagetti	spag2.c	/^spagetti (Map, thresh)$/
 too_small	intersect.c	/^too_small (Line, Points)$/
+update_head_from_ext	../v.build/read_digit.c	/^update_head_from_ext (head)$/
+write_areas_asc	../v.build/write_ascii.c	/^write_areas_asc(map,  ascii, plus, Plus)$/
+write_atts_asc	../v.build/write_ascii.c	/^write_atts_asc(map,  ascii, plus, Plus)$/
+write_isles_asc	../v.build/write_ascii.c	/^write_isles_asc(map,  ascii, plus, Plus)$/
+write_lines_asc	../v.build/write_ascii.c	/^write_lines_asc( map, ascii, plus, Plus)$/
+write_nodes_asc	../v.build/write_ascii.c	/^write_nodes_asc(map,  ascii, plus, Plus)$/
+write_plus_asc	../v.build/write_ascii.c	/^write_plus_asc(map,  fp_ascii, fp_plus)$/
