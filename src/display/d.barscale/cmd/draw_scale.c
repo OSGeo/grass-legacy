@@ -5,6 +5,7 @@
 #include "display.h"
 #include "raster.h"
 #include "options.h"
+#include "colors.h"
 
 #define NUMSCALES	14
 
@@ -110,12 +111,20 @@ int draw_scale(char *save, int toptext)
 		R_panel_save(save,pt,pb,pl,pr);
 
 	if(do_background) {
-		R_standard_color(color1) ;
-		R_box_abs(pl, pt, pr, pb);
+	    if(color1 > MAXCOLORS)	/* ie custom RGB color */
+		R_color(color1);
+	    else
+		R_standard_color(color1);
+
+	    R_box_abs(pl, pt, pr, pb);
 	}
 	
 	/* Draw legend */
-	R_standard_color(color2) ;
+	if(color2 > MAXCOLORS)	/* ie custom RGB color */
+	    R_color(color2);
+	else
+	    R_standard_color(color2);
+
 	R_move_abs (x_pos + 5, y_pos + 20) ;
 	R_cont_rel ( 0,-10) ;
 	R_cont_rel (10, 10) ;
