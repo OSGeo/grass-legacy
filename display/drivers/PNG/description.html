@@ -7,11 +7,13 @@
 <BODY bgColor=white>
 
 <H2>NAME</H2>
-<EM><B> PNG driver</B></EM>  - driver to create PNG images 
+<EM><B> PNG driver</B></EM>  - driver to create PNG and PPM images 
 <BR><EM>(drivers)</EM> 
 <H2>DESCRIPTION</H2>
 
-The PNG driver generates PNG images from GRASS display commands.
+The PNG driver generates PNG and PPM images from GRASS display commands.
+Per default PNG files are written.
+
 <H2>USAGE</H2>
 <H3>Environment variables</H3>
 Several environment variables effect the operation 
@@ -22,7 +24,9 @@ of the PNG driver.
   <LI><B>GRASS_HEIGHT=yyy</B><BR>
     the height of the image map (default is 480).<BR><BR>
   <LI><B>GRASS_PNGFILE=filename</B><BR>
-     the filename to put the resulting image in, default is <b>map.png</b>.<br><br> 
+     the filename to put the resulting image in, default is <b>map.png</b>.
+     If you set GRASS_PNGFILE to a filename which ends in ".ppm", a PPM 
+     file will be created.<br><br> 
   <LI><B>GRASS_BACKGROUNDCOLOR=RRGGBB</B><BR>
      specifies the background color to use in RGB
      notation (hex values). Default is <b>000000</b> (black).<br><br>
@@ -31,7 +35,11 @@ of the PNG driver.
   <LI><B>GRASS_TRUECOLOR=[TRUE|FALSE]</B><BR>
     sets true-color support<BR><BR>
   <LI><B>GRASS_PNG_COMPRESSION=[0|1|9]</B><BR>
-    compression level of PNG files (0 = none, 1 = fastest, 9 = best)
+    compression level of PNG files (0 = none, 1 = fastest, 9 = best)<BR><BR>
+  <LI><B>GRASS_PNG_AUTO_WRITE=[TRUE|FALSE]</B><BR>
+     if set to "TRUE", the image file will be written after each 
+     operation (i.e. whenever a client disconnects), rather than
+     only being written out when the driver terminates.
 </UL>
 
 <H3>Example</H3>
