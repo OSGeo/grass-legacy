@@ -47,7 +47,7 @@ o_var (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
 	{
            m_var(tab, count, &vari); 
            fprintf (reclass, "%ld = %ld %f\n", catb, catb, vari);
-           /*fprintf (stdout, "1. %ld = %ld %f\n", catb, catb, vari);/**/
+           /*fprintf (stdout, "1. %ld = %ld %f\n", catb, catb, vari); */
 	   catb = basecat;
 	   catc = covercat;
 	   count = 0;
@@ -64,7 +64,7 @@ o_var (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
            {
              mem += MEM * sizeof(double);
              tab = (double *)G_realloc(tab,mem);
-             /* fprintf(stderr,"MALLOC: %d KB needed\n",(int)(mem/1024));/**/
+             /* fprintf(stderr,"MALLOC: %d KB needed\n",(int)(mem/1024)); */
            }
            tab[count++] = x;
         }
@@ -77,7 +77,7 @@ o_var (char *basemap, char *covermap, char *outputmap, int usecats, struct Categ
     
     m_var(tab, count, &vari); 
     fprintf (reclass, "%ld = %ld %f\n", catb, catb, vari);
-    /*fprintf (stdout, "2. %ld = %ld %f\n", catb, catb, vari);/**/
+    /*fprintf (stdout, "2. %ld = %ld %f\n", catb, catb, vari); */
     
     
     pclose(stats);
@@ -117,7 +117,7 @@ m_var (double *data, int n, double *vari)
    for (i = 0; i < n; i++)             
    {                     
        s   = data[i] - ave;     
-       /*fprintf(stderr,"s: %lf  data[i]: %lf  ave: %lf  n: %d\n",s,data[i],ave,n); /**/
+       /*fprintf(stderr,"s: %lf  data[i]: %lf  ave: %lf  n: %d\n",s,data[i],ave,n);  */
        *vari  += s * s;
        ep += s;
    }
