@@ -12,7 +12,10 @@
  *	Read the file COPYING coming with GRASS for details.
  *
  * $Log$
- * Revision 1.1  2000-11-05 12:56:11  cho
+ * Revision 1.2  2000-11-05 13:09:39  cho
+ * added -v flag
+ *
+ * Revision 1.1  2000/11/05 12:56:11  cho
  * added, set window region from currently displayed maps.
  *
  *
@@ -25,6 +28,10 @@
 int 
 main (int argc, char **argv)
 {
+/*
+    struct Flag *v;
+*/
+    char v=0;
     int i, first=1;
     char buf[128];
     char *mapset;
@@ -32,8 +39,36 @@ main (int argc, char **argv)
     int nrasts, nvects, nsites;
     double east, west, south, north, nsres, ewres;
                         
-/* Initialize the GIS calls */
+/*
+    v = G_define_flag();
+    v->key = 'v';
+    v->description = "Verbose output";
+*/
+
+
     G_gisinit(argv[0]) ;
+
+/*
+    if(G_parser(argc, argv))
+    {
+	    exit(-1);
+    }
+*/
+    if(argc == 2 && !strncmp(argv[1], "-v", 2))
+	    v = 1;
+    else if(argc != 1)
+    {
+	    fprintf(stderr, "\n"
+			    "Usage:\n"
+			    " d.extent [-v]\n"
+			    "\n"
+			    "Flags:\n"
+			    "  -v   Verbose output\n"
+			    "\n");
+	    exit(-1);
+    }
+
+
     R_open_driver();
 
     if(D_get_cell_list (&rast, &nrasts) < 0)
@@ -231,8 +266,14 @@ main (int argc, char **argv)
 
     sprintf(buf, "g.region n=%lf s=%lf e=%lf w=%lf nsres=%lf ewres=%lf",
 		    north, south, east, west, nsres, ewres);
-
     system(buf);
+
+/*
+    if(v->answer)
+	    fprintf(stderr, "%s\n", buf);
+*/
+    if(v)
+	    fprintf(stderr, "%s\n", buf);
 
     exit(0);
 }
