@@ -96,7 +96,7 @@ toplevel_(numarg,quiet,for_pname,for_fname, pname_len,fname_len)
   /* initialize GRASS libs */
   G_gisinit(progname);
   G_sleep_on_error(0);
-
+  Projection = G_projection();
   /* initialize the input and output files */
   Outfile = stdout;
   Infile = stdin;
