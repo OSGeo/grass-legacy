@@ -27,8 +27,8 @@ int
 main(int argc, char **argv)
 {
 	char	buf[1024];
-	char	*imap, *omap, *imapset;
-	int	ifd, i, j, row, col, rows, cols, rbytes, nsinks;
+	char	*imap, *omap, *imapset, overwr, verbose;
+	int	fd, i, j, row, col, rows, cols, rbytes, nsinks;
 	double	min, max, lmin, val, val2, dh, maxdh;
 	RASTER_MAP	ibuf, obuf;
 
@@ -40,6 +40,11 @@ main(int argc, char **argv)
 		struct	Option	*dh;
 		struct	Option	*maxdh;
 	} params;
+	struct
+	{
+		struct	Flag	*overwr;
+		struct	Flag	*verbose;
+	} flags;
 
 	module = G_define_module();
 	module->description = "Creates a depressionless dem.";
@@ -72,6 +77,14 @@ main(int argc, char **argv)
 	params.maxdh->required		= NO;
 	params.maxdh->answer		= "up to the lowest neighbor";
 
+	flags.overwr			= G_define_flag();
+	flags.overwr->key		= 'o';
+	flags.overwr->description	= "Overwrite output map";
+
+	flags.verbose			= G_define_flag();
+	flags.verbose->key		= 'v';
+	flags.verbose->description	= "Output verbosely";
+
 
 	G_gisinit(argv[0]);
 
@@ -89,6 +102,8 @@ main(int argc, char **argv)
 	else
 	if(maxdh < dh)
 		maxdh = dh;
+	overwr  = flags.overwr->answer;
+	verbose = flags.verbose->answer;
 
 	imapset = G_find_cell(imap, "");
 	if(!imapset){
@@ -97,26 +112,36 @@ main(int argc, char **argv)
 		exit(1);
 	}
 
-	if((ifd = G_open_cell_old(imap, imapset)) < 0){
+	if((fd = G_open_cell_old(imap, imapset)) < 0){
 		sprintf(buf, "\n** %s - could not read **\n", imap);
 		G_fatal_error (buf);
 		exit(1);
+	}
+
+	if(G_find_file("cell", omap, G_mapset())){
+		if(overwr)
+			overwr = 2;
+		else{
+			sprintf(buf, "\n** %s - already exists **\n", omap);
+			G_fatal_error (buf);
+			exit(1);
+		}
 	}
 
 	rows = G_window_rows();
 	cols = G_window_cols();
 
 	ibuf.type = G_raster_map_type(imap, imapset);
-	ibuf.row  = (RASTER_MAP_ROW *)G_malloc(rows*sizeof(RASTER_MAP_ROW));
 	obuf.type = ibuf.type;
+	ibuf.row  = (RASTER_MAP_ROW *)G_malloc(rows*sizeof(RASTER_MAP_ROW));
 	obuf.row  = (RASTER_MAP_ROW *)G_malloc(rows*sizeof(RASTER_MAP_ROW));
 
 	rbytes = cols * G_raster_size(ibuf.type);
 
 	for(row=0; row<rows; row++){
 		ibuf.row[row].v = G_allocate_raster_buf(ibuf.type);
-		if(G_get_raster_row(ifd, ibuf.row[row].v, row, ibuf.type) < 0){
-			G_close_cell(ifd);
+		if(G_get_raster_row(fd, ibuf.row[row].v, row, ibuf.type) < 0){
+			G_close_cell(fd);
 			sprintf(buf, "\n** %s - read failed **\n", imap);
 			G_fatal_error (buf);
 			exit(1);
@@ -131,11 +156,15 @@ main(int argc, char **argv)
 				max = val;
 		}
 	}
-	G_close_cell(ifd);
+	G_close_cell(fd);
 
+	if(verbose)
+		fprintf(stderr, "Filling sinks...\n");
 	do{
 		nsinks = 0;
 		for(row=0; row<rows; row++){
+			if(verbose)
+				G_percent(row, rows, 2);
 			for(col=0; col<cols; col++){
 				lmin = max;
 				for(i=-1; i<=1; i++){
@@ -178,7 +207,29 @@ main(int argc, char **argv)
 				}
 			}
 		}
+		if(verbose)
+			G_percent(row, rows, 2);
+		fprintf(stderr, "Number of sinks: %d\n", nsinks);
 	}while(nsinks);
+
+	if(overwr == 2)
+		G_remove("cell", omap);
+
+	if((fd = G_open_raster_new(omap, obuf.type)) < 0){
+		sprintf(buf, "\n** %s - could not write **\n", omap);
+		G_fatal_error (buf);
+		exit(1);
+	}
+
+	if(verbose)
+		fprintf(stderr, "Writing output map...\n");
+	for(row=0; row<rows; row++){
+		if(verbose)
+			G_percent(row, rows, 2);
+		G_put_raster_row(fd, obuf.row[row].v, obuf.type);
+	}
+	if(verbose)
+		G_percent(row, rows, 2);
 
 	exit(0);
 }
