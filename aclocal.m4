@@ -919,9 +919,10 @@ dnl AC_CHECK_TOOL(AR, ar)
 	    ;;
 	Rhapsody-*|Darwin-*)
 	    # see: http://fink.sourceforge.net/doc/porting/shared.php
+	    #      http://developer.apple.com/documentation/Porting/Conceptual/PortingUnix/index.html
 	    SHLIB_CFLAGS="-fPIC -fno-common"
-#check if we want -U,_cuserid:
-	    SHLIB_LD="-dynamiclib -Wl,-flat_namespace,-U,_cuserid \${LDFLAGS}"
+#check if we need -U,_cuserid:
+	    SHLIB_LD="-dynamiclib -Wl,-flat_namespace,-U,_cuserid -undefined suppress \${LDFLAGS}"
 	    GRASS_SHLIB_LD_EXTRAS=""
 	    SHLIB_LD_LIBS='${LIBS}'
 	    SHLIB_SUFFIX="dylib"
