@@ -1,7 +1,7 @@
 
 
 
-m.dted.examine       GRASS Reference Manual        m.dted.examine
+m.dted.examine <main> GRASS Reference Manual<main> m.dted.examine
 
 
 
@@ -60,7 +60,7 @@ AUTHORS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
