@@ -5,8 +5,8 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
  * 26th. Sep. 2000
- * Last updated 28th. Sep. 2000
- *
+ * Last updated:
+ * $Id$
 
  * This file is part of GRASS GIS. It is free software. You can 
  * redistribute it and/or modify it under the terms of 
@@ -109,7 +109,6 @@ G_matrix_set(mat_struct *A, int rows, int cols, int ldim) {
 mat_struct *
 G_matrix_copy(const mat_struct *A) {
 
-  
   mat_struct *B;
 
   if( !A->is_init ) {
@@ -135,8 +134,14 @@ G_matrix_copy(const mat_struct *A) {
 /************************************************************
  *                                                          *
  * G_matrix_add()                                           *
+ * G_matrix_product()                                       *
+ * G_matrix_scale()                                         *
+ * G_matrix_subtract()                                      *
  *                                                          *
  * Add / multiply two matrices and return the result        *
+ * Scale the matrix by a given scalar value                 *
+ * Subtract two matrices                                    *
+ *                                                          *
  * The receiving structure should not be                    *
  * initialised, as the matrix is created by the routine     *
  *                                                          *
@@ -628,7 +633,6 @@ G_matrix_set_element(mat_struct *mt, int rowval, int colval,
 
 
 
-
 /************************************************************
  *                                                          *
  * G_matrix_get_element()                                   *
@@ -653,9 +657,6 @@ G_matrix_get_element(mat_struct *mt, int rowval, int colval) {
 }
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-
-
-
 
 
 
@@ -699,9 +700,6 @@ G_matvect_get_column(mat_struct *mt, int col) {
 
 
 
-
-
-
 /************************************************************
  *                                                          *
  * G_matvect_get_row()                                      *
@@ -739,6 +737,7 @@ G_matvect_get_row(mat_struct *mt, int row) {
 }
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
 
 
 /************************************************************
@@ -793,8 +792,6 @@ G_matvect_extract_vector( mat_struct *mt, vtype vt, int indx ) {
 
 
 
-
-
 /************************************************************
  *                                                          *
  * G_matvect_retrieve_matrix()                              *
@@ -818,7 +815,6 @@ G_matvect_retrieve_matrix(vec_struct *vc) {
 }
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-
 
 
 
@@ -867,6 +863,8 @@ G_vector_init(int cells, int ldim, vtype vt) {
 }
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
 
 /************************************************************
  *                                                          *
@@ -922,7 +920,6 @@ G_vector_set(vec_struct *A, int cells, int ldim, vtype vt, int vindx) {
 
 
 
-
 /************************************************************
  *                                                          *
  * G_vector_norm_euclid()                                   *
@@ -968,7 +965,6 @@ G_vector_norm_euclid(vec_struct *vc) {
 }
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-
 
 
 
@@ -1047,6 +1043,8 @@ G_vector_norm_maxval(vec_struct *vc, int vflag) {
 
   return (double)xval;
 }
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
 
 
 
@@ -1174,8 +1172,6 @@ G_vector_copy(const vec_struct *vc1, int comp_flag) {
 }
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
-
-
 
 
 
