@@ -247,6 +247,9 @@ LOC_ARG_WITH_LIB(proj, External PROJ.4)
 LOC_ARG_WITH_INC(opendwg, openDWG)
 LOC_ARG_WITH_LIB(opendwg, openDWG)
 
+#Needed to set LD_LIBRARY_PATH_VAR
+SC_CONFIG_CFLAGS
+
 # Enable SysV option
 
 AC_MSG_CHECKING(for SysV)
@@ -482,13 +485,12 @@ AC_SUBST(DLLIB)
 AC_CHECK_FUNC(iconv, ICONVLIB=, [
 AC_CHECK_LIB(iconv, iconv, ICONVLIB=-liconv, [
 AC_CHECK_LIB(giconv, iconv, ICONVLIB=-lgiconv, [
+AC_CHECK_FUNC(libiconv, ICONVLIB=, [
+AC_CHECK_LIB(iconv, libiconv, ICONVLIB=-liconv, [
+AC_CHECK_LIB(giconv, libiconv, ICONVLIB=-lgiconv, [
     AC_MSG_WARN([*** Unable to locate iconv() function.])
     ICONVLIB=
-])])])
-case "$ARCH" in
-powerpc-apple-darwin*)
-    ICONVLIB=-liconv ;;
-esac
+])])])])])])
 AC_SUBST(ICONVLIB)
 
 AC_CHECK_FUNC(gettext, INTLLIB=, [
