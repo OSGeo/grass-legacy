@@ -1,0 +1,138 @@
+Base_Name	misc.c	/^char *Base_Name(string)$/
+G_fopen_sites_new	site_list.c	/^        if ((fp=G_fopen_sites_new(p)) == NULL) {$/
+G_fopen_sites_old	site_list.c	/^if ((fp=G_fopen_sites_old(p,G_mapset()))==NULL)$/
+Mhighlevel	highlevel.c	/^main (argc, argv)$/
+OFFSET	find_query.c	/^#define OFFSET(num) Field_info[num].rec_offset$/
+add_change_field	add_change.c	/^add_change_field(inp_buf)$/
+add_change_init	add_change.c	/^add_change_init()$/
+add_done	add_change.c	/^add_done()$/
+add_init	add_change.c	/^add_init()$/
+add_line_to_list	vect_map.c	/^add_line_to_list(map_num, line_num)$/
+allocate_map_line_list	vect_map.c	/^  allocate_map_line_list(num)$/
+auto_print	find_query.c	/^auto_print()$/
+backup	backup.c	/^backup(buffer)$/
+build_new_hdr	vect_seq_map.c	/^build_new_hdr(new_head, map_struct)$/
+build_new_header	vect_map.c	/^build_new_header(new_head, map_struct)$/
+change_done	add_change.c	/^change_done()$/
+change_init	add_change.c	/^change_init(buf)$/
+clear_value	clear_value.c	/^clear_value(num)$/
+clear_values	clear_value.c	/^clear_values()$/
+close_db	dbio.c	/^close_db(name)$/
+close_ref_v	vect_seq_map.c	/^close_ref_v(map_struct)$/
+close_ref_vect	vect_map.c	/^close_ref_vect(map_struct)$/
+cmp_distance	find_query.c	/^cmp_distance(q1,q2)$/
+coord_good	find_query.c	/^coord_good()$/
+copy_list_entry	find_query.c	/^copy_list_entry(dest,src)$/
+copy_sort_query_list	vect_map.c	/^copy_sort_query_list(rec_list, last_rec)$/
+copy_sort_query_lst	vect_seq_map.c	/^copy_sort_query_lst(rec_list, last_rec)$/
+crim	dbio.c	/^int crim(table, command)$/
+crim_w_err	dbio.c	/^crim_w_err(table, command)$/
+crimdm	dbio.c	/^int crimdm(table, command, row)$/
+crimdm_w_err	dbio.c	/^crimdm_w_err(table, command, row)$/
+db_size	dbio.c	/^int db_size(db_name)$/
+delete_done	delete.c	/^delete_done()$/
+delete_found_done	delete.c	/^delete_found_done()$/
+delete_init	delete.c	/^delete_init()$/
+delete_rec	find_query.c	/^delete_rec(rec)  \/* delete a record from Record_li/
+delete_record	delete.c	/^delete_record(inp_buf)$/
+dist	find_query.c	/^dist(x,y)$/
+dist_clause	find_query.c	/^dist_clause(inp_buf)$/
+dup_rec	find_query.c	/^dup_rec(q1,q2,rec)$/
+field_offset	field_offset.c	/^int field_offset(count)$/
+fil_f_table	f_table.c	/^fil_f_table(buffer, field_num, field_name, rec_off/
+fil_m_table	m_table.c	/^fil_m_table(buffer, id_num, map_name, mapset)$/
+fil_s_table	fil_s_table.c	/^fil_s_table(buffer, line_num, line_text)$/
+fill_buf_d	fill_buf.c	/^fill_buf_d(buffer_loc, double_data)$/
+fill_buf_f	fill_buf.c	/^fill_buf_f(buffer_loc, float_data)$/
+fill_buf_i	fill_buf.c	/^fill_buf_i(buffer_loc, int_data)$/
+fill_buf_t	fill_buf.c	/^fill_buf_t(buffer_loc, text_data, text_length)$/
+fill_field	fill_field.c	/^fill_field(field_num)$/
+fill_fields	fill_field.c	/^fill_fields()$/
+fill_value	fill_value.c	/^fill_value(field_num)$/
+fill_values	fill_value.c	/^fill_values()$/
+find	find_query.c	/^find(inp_buf)$/
+find_init	find_query.c	/^find_init(inp_buf)$/
+find_string	dbio.c	/^char *find_string(substr, string)$/
+fopen	site_list.c	/^if ((fp=fopen(filename,"a"))==NULL)  \/* open it fo/
+for	site_list.c	/^for (s1=Record_list; s1<=Last_record; s1++)$/
+fprintf	site_list.c	/^fprintf(fp,"\\n# Next %d sites added by v.db.rim fr/
+free_list	vect_map.c	/^free_list(myhead)$/
+free_table	use_table.c	/^free_table(table_var, table_num)$/
+get_field_info	field_info.c	/^get_field_info()$/
+get_loc_of_record	find_query.c	/^get_loc_of_record(rec_number)$/
+get_max_map	get_max_map.c	/^int get_max_map()$/
+get_max_seq	get_max_seq.c	/^int get_max_seq()$/
+get_n_closest	find_query.c	/^get_n_closest(start,count)$/
+get_s_e_n_t_m	find_query.c	/^get_s_e_n_t_m()$/
+get_tableinfo	dbio.c	/^get_tableinfo(db_name)$/
+help	parser.c	/^help()$/
+if	backup.c	/^        if (open_db(File_name,FALSE)==FALSE) {$/
+in_mask	find_query.c	/^in_mask(flag)$/
+in_target	find_query.c	/^in_target()$/
+in_wind	find_query.c	/^in_wind(w)$/
+index	site_list.c	/^if ((p=index(inp_buf,' '))==NULL) {$/
+init_field_val	field_val.c	/^init_field_val()$/
+input_file	input_file.c	/^input_file(inp_buf)$/
+line_in_list	vect_map.c	/^int line_in_list(map_num, line_num)$/
+list	list.c	/^list()$/
+make_add	make_add.c	/^make_add(inp_buf)$/
+make_done	make_done.c	/^make_done()$/
+make_init	make_init.c	/^make_init()$/
+map	map.c	/^map(inp_buf)$/
+map_cmp	vect_map.c	/^int map_cmp(r1, r2)$/
+map_comp	vect_seq_map.c	/^int map_comp(r1, r2)$/
+maps	maps.c	/^maps()$/
+match_cmd	parser.c	/^int match_cmd(inp_line)$/
+match_word	parser.c	/^int match_word(word, string, min_chars)$/
+misplaced_end	misc.c	/^misplaced_end()$/
+my_G_yes	my_G_yes.c	/^my_G_yes (infile, outfile, question, dflt)$/
+nop	misc.c	/^nop()$/
+open_db	dbio.c	/^int open_db(name,quiet)$/
+open_ref_v	vect_seq_map.c	/^open_ref_v(num, map_struct)$/
+open_ref_vect	vect_map.c	/^open_ref_vect(num, map_struct)$/
+open_rim_db	misc.c	/^open_rim_db(dbname)$/
+output_file	output_file.c	/^output_file(inp_buf)$/
+pack	backup.c	/^pack()$/
+parser	parser.c	/^int parser(instruct, inp_line)$/
+pop_input_stack	input_stack.c	/^FILE *pop_input_stack()$/
+print	print.c	/^print(inp_buf)$/
+print_form	print.c	/^print_form()$/
+print_list	print.c	/^print_list(add_opt)$/
+push_input_stack	input_stack.c	/^FILE *push_input_stack(inpfile)$/
+put_field_info	field_info.c	/^put_field_info()$/
+query_done	find_query.c	/^query_done()$/
+query_init	find_query.c	/^query_init(inp_buf)$/
+query_line	find_query.c	/^query_line(inp_buf)$/
+read_vect	read_vect.c	/^read_vect(buffer)$/
+read_write_line	vect_map.c	/^read_write_line(rec, line, map, type, new_vect, fp/
+read_write_lne	vect_seq_map.c	/^read_write_lne(rec, offset, map, new_vect, fp_att,/
+remove	remove.c	/^remove()$/
+report_records	find_query.c	/^report_records(number)$/
+res_split_f	res_split_f.c	/^res_split_f()$/
+ret_f_table	f_table.c	/^ret_f_table(buffer, field_num, field_name, rec_off/
+ret_m_table	m_table.c	/^ret_m_table(buffer, id_num, map_name, mapset)$/
+ret_s_table	ret_s_table.c	/^ret_s_table(buffer, line_num, line_text)$/
+retr_buf_d	retr_buf.c	/^retr_buf_d(buffer_loc, double_data)$/
+retr_buf_f	retr_buf.c	/^retr_buf_f(buffer_loc, float_data)$/
+retr_buf_i	retr_buf.c	/^retr_buf_i(buffer_loc, int_data)$/
+retr_buf_t	retr_buf.c	/^retr_buf_t(buffer_loc, text_data, text_length)$/
+rim_error	dbio.c	/^rim_error(status)$/
+rim_text_len	rim_text_len.c	/^int rim_text_len(field_num)$/
+rim_type	rim_type.c	/^char *rim_type(type_c, type_str)$/
+save_finfo	save_finfo.c	/^save_finfo(number, col_name, rec_offset, f_type, l/
+save_s_e_n_t_m	find_query.c	/^save_s_e_n_t_m(s1) \/* put new entry on query list /
+set_mask_wind_app	find_query.c	/^set_mask_wind_app(buf)$/
+show	show.c	/^show()$/
+site_list	site_list.c	/^site_list(inp_buf)$/
+strip_fields	strip_fields.c	/^strip_fields(str)$/
+syntax_err	misc.c	/^syntax_err(inp_buf)$/
+tables	tables.c	/^tables()$/
+toplevel_	toplevel.c	/^toplevel_(numarg,quiet,for_pname,for_fname, pname_/
+type_to_char	type_to_char.c	/^char type_to_char(string)$/
+update_new_hdr	vect_seq_map.c	/^update_new_hdr(new_head, map_struct)$/
+update_new_header	vect_map.c	/^update_new_header(new_head, map_struct)$/
+use_table	use_table.c	/^use_table(table_var, table_num, warn)$/
+val_from_str	val_from_str.c	/^int val_from_str(field, split, string)$/
+val_to_str	val_to_str.c	/^int val_to_str(string, field)$/
+vect_map	vect_map.c	/^vect_map(inp_buf)$/
+vect_seq_map	vect_seq_map.c	/^vect_seq_map(inp_buf)$/
