@@ -7,6 +7,8 @@ CTEST = $(GISBASE)/scripts/v.clean.test
 
 LIBES = $(VECTLIB) $(DBMILIB) $(GISLIB) $(VASKLIB)
 DEPENDENCIES = $(VECTDEP) $(DBMIDEP) $(GISDEP) $(VASKDEP)
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
 
 include $(MODULE_TOPDIR)/include/Make/Module.make
 

@@ -18,6 +18,9 @@ LIB_OBJS = GS2.o GSX.o GS_util.o Gs3.o gs.o gsd_wire.o gsd_surf.o gsd_views.o \
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
+
 default: lib inc
 
 inc:

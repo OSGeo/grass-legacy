@@ -8,7 +8,7 @@ LIBES = $(VECTLIB) $(MLIB) $(DBMILIB) $(GISLIB)
 LIST = $(OBJDIR)/init.o $(MLIB)
 DEPENDENCIES = $(GISDEP) $(VECTDEP) $(DBMIDEP)
 
-EXTRA_INCL = -I..
+EXTRA_INC = -I..
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 

@@ -2,8 +2,12 @@
 MODULE_TOPDIR = ../../..
 
 PGM = g.region
+
 LIBES     = $(VECTLIB) $(GISLIB) $(DATETIMELIB) $(GPROJLIB)  
 DEPENDENCIES = $(GISDEP) $(VECTDEP) $(DATETIMEDEP) $(GPROJDEP)
+EXTRA_INC = $(VECT_INC)
+EXTRA_CFLAGS = $(VECT_CFLAGS)
+
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
 default: cmd

@@ -36,7 +36,7 @@ $(ARCH_INCDIR)/rtree.h: rtree.h
 	cp rtree.h $(ARCH_INCDIR)/rtree.h
 
 $(OBJDIR)/test: test.c
-	$(CC) $(LDFLAGS) $(ALLINC) -o $@ test.c $(RTREELIB) -lm
+	$(CC) $(LDFLAGS) $(INC) -o $@ test.c $(RTREELIB) -lm
 	cd $(OBJDIR); ./test
 
 
