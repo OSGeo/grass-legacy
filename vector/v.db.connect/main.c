@@ -31,10 +31,10 @@ int main (int argc, char **argv)
     char *input, *mapset;
     struct GModule *module;
     struct Option *inopt, *field_opt, *dbkey, *dbdriver, *dbdatabase, *dbtable;
-    struct Flag *print;
+    struct Flag *overwrite, *print;
     dbDriver *driver;
     struct field_info *fi;
-    int field;
+    int field, ret, num_dblinks, i;
     struct Map_info Map;
 
     /* set up the options and flags for the command line parser */
@@ -79,6 +79,10 @@ int main (int argc, char **argv)
     print->key               = 'p';
     print->description       = "print current connection parameters and exit";
 
+    overwrite = G_define_flag();
+    overwrite->key               = 'o';
+    overwrite->description       = "overwrite connection parameter for certain field";
+
     G_gisinit (argv[0]);
 
     /* heeeerrrrrre's the PARSER */
@@ -102,21 +106,27 @@ int main (int argc, char **argv)
 
     if (print->answer)
     {
-      fi = Vect_get_field( &Map, field);
-      if (fi == NULL)
+      num_dblinks = Vect_get_num_dblinks(&Map);
+      if (num_dblinks <= 0)
       {
          fprintf(stderr, "Database connection for map <%s> is not defined in DB file\n", input);
          exit(0);
       }
-      driver = db_start_driver(fi->driver);
-      if (driver == NULL)
-            G_fatal_error("Cannot open driver %s", fi->driver) ;
+      else /* num_dblinks > 0 */
+      {
+        fprintf(stderr,"Vector map <%s> is connected by:\n", input);
+        for (i = 1; i <= num_dblinks; i++) {
+          fi = Vect_get_field( &Map, i);
+          driver = db_start_driver(fi->driver);
+          if (driver == NULL)
+              G_warning("Cannot open driver %s", fi->driver) ; /* error ? */
+          fprintf(stderr,"field <%d> table <%s> in database <%s> through driver <%s>\n", i, fi->table, fi->database, fi->driver);
+        }
+      } /* else */
 
-      fprintf(stderr,"Vector map <%s> is connected to table <%s> in database <%s> through driver <%s>\n",  input, fi->table, fi->database, fi->driver);
-    }
+    } /* print */
     else /* define new dbln settings */
     {
-       G_warning ( "The table becomes part of the vector and may be deleted or overwritten by GRASS modules.");
        if (field_opt->answer && dbtable->answer && dbkey->answer
            && dbdatabase->answer && dbdriver->answer)
        {
@@ -127,13 +137,32 @@ int main (int argc, char **argv)
          fi->database = dbdatabase->answer;
          fi->driver   = dbdriver->answer;
        
-         /* it is automatically checked if field already defined */
-         Vect_map_add_dblink ( &Map, atoi(field_opt->answer), fi->name, fi->table, fi->key, fi->database, fi->driver);
-         Vect_write_dblinks ( Map.name, Map.mapset, Map.dblnk );
+         ret = Vect_map_check_dblink ( &Map, atoi(field_opt->answer), fi->name, fi->table, fi->key, fi->database, fi->driver);
+         G_debug(3, "Vect_map_check_dblink: %d", ret);
+         if ( ret == 0) {
+           /* field already defined */
+           if( !overwrite->answer )
+               G_fatal_error("Use -o to overwrite existing link for field <%d>",atoi(field_opt->answer));
+           else
+           {
+               if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
+                   G_fatal_error("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
+               if( Vect_map_replace_dblink( &Map, atoi(field_opt->answer), fi->name, fi->table, fi->key, fi->database, fi->driver) == 0)
+                   G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted or overwritten by GRASS modules.", dbtable->answer, input);
+           }
+         }
+         else
+         { /* field not yet defined, add new field */
+            if( db_table_exists ( dbdriver->answer, dbdatabase->answer, dbtable->answer) < 1 )
+               G_fatal_error("Table <%s> does not exist in database <%s>",dbtable->answer, dbdatabase->answer);
+
+            if( Vect_map_add_dblink ( &Map, atoi(field_opt->answer), fi->name, fi->table, fi->key, fi->database, fi->driver) == 0)
+               G_warning ( "The table <%s> is now part of vector map <%s> and may be deleted or overwritten by GRASS modules.", dbtable->answer, input);
+         }
        }
        else
           G_fatal_error("You have to specify all connection parameters.");
-    }
+    } /* end define new dbln settings */
 
     Vect_close ( &Map);
     
