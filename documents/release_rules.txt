@@ -162,6 +162,8 @@ Create source and binary distributions:
        ftp://gdal.velocet.ca/pub/outgoing/libgdal-linux-grass.tar.gz
        (Note: check ldd libgdal.1.1.so dependency, get if required:
        ftp://gdal.velocet.ca/pub/outgoing/libstdc++-libc6.2-2.so.3)
+     Other precompiled libgdal versions:
+       http://gdal.velocet.ca/projects/grass/index.html
      Get GDAL sources at:
        http://www.remotesensing.org/gdal/
 
