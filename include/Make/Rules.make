@@ -45,7 +45,7 @@ htmlcmd:
 
 # html rules for scripts
 htmlscript:
-	GRASS_FAKE_START=1 GISBASE=$(GISBASE) $(GISBASE)/scripts/$(PGM) --html-description | grep -v '</body>' > $(PGM).html ; true
+	GRASS_FAKE_START=1 GISBASE=$(GISBASE) LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(GISBASE)/lib $(GISBASE)/scripts/$(PGM) --html-description | grep -v '</body>' > $(PGM).html ; true
 	@test ! -f description.html || ( cat description.html >> $(PGM).html )
 	echo "<HR>" >> $(PGM).html
 	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).html
