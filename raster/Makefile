@@ -73,6 +73,7 @@ SUBDIRS = \
 	r.texture \
 	r.thin \
 	r.timestamp \
+	r.to.vect \
 	r.topidx \
 	r.topmodel \
 	r.transect \
