@@ -1,0 +1,10 @@
+proj:       1
+zone:       16
+north:      4486800.000000
+south:      4482060.000000
+west:       495790.000000
+east:       502450.000000
+n-s resol:  30.000000
+e-w resol:  30.000000
+format:     0
+compressed: 1
