@@ -27,7 +27,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-#include <sysexits.h>
 
 /* Grass and local include files */
 #include "gis.h"
@@ -108,7 +107,7 @@ int main(int argc,char *argv[])
 	/* Check for a command line version */
 	pgm_name(pgm, COMMAND, cmdName);
 	
-	if (access(pgm, F_OK | EX_OK) == 0)
+	if (access(pgm, F_OK | X_OK) == 0)
 	{
 	    execvp (pgm, argv);
 	    
@@ -121,7 +120,7 @@ int main(int argc,char *argv[])
 	/* if interactive version exists and inform user -dpg */
 	pgm_name(pgm, INTERACTIVE, cmdName);
 	
-	if (access(pgm, F_OK | EX_OK) == 0)
+	if (access(pgm, F_OK | X_OK) == 0)
 	{
 	    /* Exit program with proper message */
 	    sprintf(errMsg, "Usage:\n  %s\n\n", cmdName);
@@ -134,7 +133,7 @@ int main(int argc,char *argv[])
     	/* Look for an interactive version */
     	pgm_name(pgm, INTERACTIVE, cmdName);
 	
-	if (access(pgm, F_OK | EX_OK) == 0)
+	if (access(pgm, F_OK | X_OK) == 0)
 	{
 	    execvp (pgm, argv);
 	    
@@ -146,7 +145,7 @@ int main(int argc,char *argv[])
 	/* If that fails, try the command line version */
 	pgm_name(pgm, COMMAND, cmdName);
 	
-	if (access(pgm, F_OK | EX_OK) == 0)
+	if (access(pgm, F_OK | X_OK) == 0)
 	{
 	    execvp (pgm, argv);
 
