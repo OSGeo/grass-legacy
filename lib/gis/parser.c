@@ -852,73 +852,73 @@ int G_gui (void)
     append(cmd, "wm title . \"%s\"\n", pgm_name);
 
     /* Selection window */
-    append(cmd,"proc list_select_item { item } {
-		    global list_select_item
-		    set list_select_item $item
-		    .list.sw.lb selection set $item
-		    destroy .list
-		}\n" );
-    append(cmd,"proc list_select { list } {
-		    global list_select_item
-		    set list_select_item \"\"
-		    toplevel .list
-		    wm title .list \"Select item\"
-		    regexp -- {(.+)x(.+)([+-].+)([+-].+)} [wm geometry .] g w h x y 
-		    set w [expr int($w/3)]
-		    wm geometry .list ${w}x$h$x$y 
-		    set sw [ScrolledWindow .list.sw]
-		    set lb [ListBox $sw.lb -width 10 -padx 0]
-		    $sw setwidget $lb
-		    $lb bindText <ButtonPress-1> list_select_item
-		    pack $sw -fill both -expand yes
-		    frame .list.buttons
-		    pack .list.buttons -side bottom -fill x
-		    button .list.buttons.cancel -text Cancel -command {
-			set list_select_item \"\"
-			destroy .list
-		    }
-		    pack .list.buttons.cancel -side left -expand yes
-		    foreach i $list { 
-			$lb insert end [lindex $i 0] -text $i
-		    }
-		    tkwait window .list
-		    return $list_select_item
-		}\n" );
-    append(cmd,"proc element_list { element } {
-		    global env
-		    set pwd [pwd]
-		    set inpath 1
-		    set list \"\"
-		    set env(GISDBASE) [exec g.gisenv get=GISDBASE]
-		    set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
-		    set env(MAPSET) [exec g.gisenv get=MAPSET]
-		    cd $env(GISDBASE)/$env(LOCATION_NAME)
-		    foreach dir [exec g.mapsets -p] {
-			if {[string compare $dir .] == 0} {
-			    set inpath 0
-			    continue
-			}  
-			if [info exists dirstat($dir)] continue
-			set dirstat($dir) 1
-			if {[catch {eval eval cd $env(GISDBASE)/$env(LOCATION_NAME)/$dir/$element}]} {
-			    if {0 && $dir == $env(MAPSET)} {
-				tk_messageBox -message \"$typ directory\n'[subst [subst $element]]'\nnon-existent or unusable\" \
-				-type ok
-			    } 
-			} elseif {[catch {glob *} names]} {
-			} else {
-			    if {$dir == $env(MAPSET)} {
-				eval lappend list [lsort $names]
-			    } else {
-				foreach name [lsort $names] {
-				    lappend list \"$name@$dir\"
-				}
-			    }    
-			}
-		    }
-		    cd $pwd
-		    return $list
-		}\n" );
+    append(cmd,"proc list_select_item { item } {\n"
+		"    global list_select_item\n"
+		"    set list_select_item $item\n"
+		"    .list.sw.lb selection set $item\n"
+		"    destroy .list\n"
+		"}\n" );
+    append(cmd,"proc list_select { list } {\n"
+		"    global list_select_item\n"
+		"    set list_select_item \"\"\n"
+		"    toplevel .list\n"
+		"    wm title .list \"Select item\"\n"
+		"    regexp -- {(.+)x(.+)([+-].+)([+-].+)} [wm geometry .] g w h x y\n"
+		"    set w [expr int($w/3)]\n"
+		"    wm geometry .list ${w}x$h$x$y\n"
+		"    set sw [ScrolledWindow .list.sw]\n"
+		"    set lb [ListBox $sw.lb -width 10 -padx 0]\n"
+		"    $sw setwidget $lb\n"
+		"    $lb bindText <ButtonPress-1> list_select_item\n"
+		"    pack $sw -fill both -expand yes\n"
+		"    frame .list.buttons\n"
+		"    pack .list.buttons -side bottom -fill x\n"
+		"    button .list.buttons.cancel -text Cancel -command {\n"
+		"	set list_select_item \"\"\n"
+		"	destroy .list\n"
+		"    }\n"
+		"    pack .list.buttons.cancel -side left -expand yes\n"
+		"    foreach i $list {\n"
+		"	$lb insert end [lindex $i 0] -text $i\n"
+		"    }\n"
+		"    tkwait window .list\n"
+		"    return $list_select_item\n"
+		"}\n" );
+    append(cmd,"proc element_list { element } {\n"
+		"    global env\n"
+		"    set pwd [pwd]\n"
+		"    set inpath 1\n"
+		"    set list \"\"\n"
+		"    set env(GISDBASE) [exec g.gisenv get=GISDBASE]\n"
+		"    set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]\n"
+		"    set env(MAPSET) [exec g.gisenv get=MAPSET]\n"
+		"    cd $env(GISDBASE)/$env(LOCATION_NAME)\n"
+		"    foreach dir [exec g.mapsets -p] {\n"
+		"	if {[string compare $dir .] == 0} {\n"
+		"	    set inpath 0\n"
+		"	    continue\n"
+		"	}\n"
+		"	if [info exists dirstat($dir)] continue\n"
+		"	set dirstat($dir) 1\n"
+		"	if {[catch {eval eval cd $env(GISDBASE)/$env(LOCATION_NAME)/$dir/$element}]} {\n"
+		"	    if {0 && $dir == $env(MAPSET)} {\n"
+		"		tk_messageBox -message \"$typ directory\\n'[subst [subst $element]]'\\nnon-existent or unusable\" \\\n"
+		"		-type ok\n"
+		"	    }\n"
+		"	} elseif {[catch {glob *} names]} {\n"
+		"	} else {\n"
+		"	    if {$dir == $env(MAPSET)} {\n"
+		"		eval lappend list [lsort $names]\n"
+		"	    } else {\n"
+		"		foreach name [lsort $names] {\n"
+		"		    lappend list \"$name@$dir\"\n"
+		"		}\n"
+		"	    }\n"
+		"	}\n"
+		"    }\n"
+		"    cd $pwd\n"
+		"    return $list\n"
+		"}\n" );
 
     append(cmd, "set pw [PanedWindow .pw -side left ]\n");
     append(cmd, "set optpane [$pw add -minsize 50]\n");
@@ -1009,13 +1009,13 @@ int G_gui (void)
 		        strcpy(buf, opt->gisprompt);
 		        s = strtok(buf, ",");
 		        s = strtok(NULL, ",");
-			append(cmd, "button $suf.val%d.sel -text \">\" -command {
-				   set lst [element_list \"%s\" ]
-				   set val [list_select $lst]
-				   if { [string length $val] > 0 } {
-                                       set optval(%d) $val
-				   } 
-			       }\n", optn, s, optn );
+			append(cmd, "button $suf.val%d.sel -text \">\" -command {\n"
+				"    set lst [element_list \"%s\" ]\n"
+				"    set val [list_select $lst]\n"
+				"    if { [string length $val] > 0 } {\n"
+                        	"        set optval(%d) $val\n"
+				"    }\n"
+				"}\n", optn, s, optn );
 	                append(cmd, "pack $suf.val%d.sel -side left -fill x\n", optn);
 		    }
 		}
@@ -1053,68 +1053,68 @@ int G_gui (void)
     append(cmd, "set nopt %d\n", n_options);
     
     /* Command construction */
-    append(cmd, "proc mkcmd { } {
-	             global optname optval opttype nmulti optvalname
-	             set cmd \"%s\"
-		     for {set i 1} {$i <= %d } {incr i} {
-			 if { $opttype($i) == \"multi\" } {
-			     set domulti 0
-		             for {set j 1} {$j <= $nmulti($i) } {incr j} {
-			         if { $optval($i,$j) == 1 } {
-				     set domulti 1
-				 }
-			     }
-			     if { $domulti == 1 } {
-                                 append cmd \" $optname($i)=\"
-				 set first 1
-				 for {set j 1} {$j <= $nmulti($i) } {incr j} {
-				     if { $optval($i,$j) == 1 } {
-				         if { $first == 1 } {
-					     set first 0 
-					 } else {
-					     append cmd \",\" 
-					 }
-					 append cmd \"$optvalname($i,$j)\"
-				     }
-				 }
-			     }
-			 } 
-			 if { $opttype($i) == \"opt\" } {
-			     if {[string length $optval($i)] > 0} { 
-                                 append cmd \" $optname($i)=$optval($i)\"
-			     }
-			 }
-			 if { $opttype($i) == \"flag\" } {
-			     if { $optval($i) == 1 } {
-                                 append cmd \" -$optname($i)\"
-			     }
-		         }
-		     }
-		     return $cmd
-	         }\n", pgm_name, n_options );
+    append(cmd, "proc mkcmd { } {\n"
+	         "    global optname optval opttype nmulti optvalname\n"
+	         "    set cmd \"%s\"\n"
+		 "    for {set i 1} {$i <= %d } {incr i} {\n"
+		 "        if { $opttype($i) == \"multi\" } {\n"
+		 "            set domulti 0\n"
+		 "            for {set j 1} {$j <= $nmulti($i) } {incr j} {\n"
+		 "                if { $optval($i,$j) == 1 } {\n"
+		 "                    set domulti 1\n"
+		 "                }\n"
+		 "            }\n"
+		 "            if { $domulti == 1 } {\n"
+		 "                append cmd \" $optname($i)=\"\n"
+		 "                set first 1\n"
+		 "                for {set j 1} {$j <= $nmulti($i) } {incr j} {\n"
+		 "                    if { $optval($i,$j) == 1 } {\n"
+		 "                        if { $first == 1 } {\n"
+		 "                            set first 0\n"
+		 "                        } else {\n"
+		 "                            append cmd \",\"\n"
+		 "                        }\n"
+		 "                        append cmd \"$optvalname($i,$j)\"\n"
+		 "                    }\n"
+		 "                }\n"
+		 "            }\n"
+		 "        }\n"
+		 "        if { $opttype($i) == \"opt\" } {\n"
+		 "           if {[string length $optval($i)] > 0} {\n"
+		 "               append cmd \" $optname($i)=$optval($i)\"\n"
+		 "           }\n"
+		 "        }\n"
+		 "        if { $opttype($i) == \"flag\" } {\n"
+		 "            if { $optval($i) == 1 } {\n"
+		 "                append cmd \" -$optname($i)\"\n"
+		 "            }\n"
+		 "        }\n"
+		 "    }\n"
+		 "    return $cmd\n"
+	         "}\n", pgm_name, n_options );
 	    
     /* Run button */
-    append(cmd, "proc prnout { fh } {
-	             global outtext
-		     if [eof $fh] {
-			 close $fh
-		     } else {
-			 set str [ read $fh ]
-			 $outtext insert end $str
-			 $outtext yview end
-		     }
-	         }\n");
-    append(cmd, "button .run -text \"Run\" -command {
-	       global outtext pipe
-	       set cmd [ mkcmd ]
-               $outtext insert end  \"\\n$cmd\\n\"
-               $outtext yview end
-	       set cmd \"| $cmd 2>@ stdout\"
-               catch {open $cmd r} msg
-               fconfigure $msg -blocking 0 
-               fileevent $msg readable [ list prnout $msg  ]
-               update idletasks
-	   }\n");
+    append(cmd, "proc prnout { fh } {\n"
+	         "    global outtext\n"
+		 "    if [eof $fh] {\n"
+		 "        close $fh\n"
+		 "    } else {\n"
+		 "        set str [ read $fh ]\n"
+		 "        $outtext insert end $str\n"
+		 "        $outtext yview end\n"
+		 "    }\n"
+	         "}\n");
+    append(cmd, "button .run -text \"Run\" -command {\n"
+	   "    global outtext pipe\n"
+	   "    set cmd [ mkcmd ]\n"
+	   "    $outtext insert end  \"\\n$cmd\\n\"\n"
+	   "    $outtext yview end\n"
+	   "    set cmd \"| $cmd 2>@ stdout\"\n"
+ 	   "    catch {open $cmd r} msg\n"
+	   "    fconfigure $msg -blocking 0\n"
+	   "    fileevent $msg readable [ list prnout $msg  ]\n"
+	   "    update idletasks\n"
+	   "}\n");
     append(cmd, "pack .run -side top -padx 20 -pady 5\n");
 
     G_debug (1, "cmd:\n%s", cmd);  
