@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.15 2000-09-08 21:53:37 markus Exp $
+$Id: BUGS,v 1.16 2000-09-09 11:55:18 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -121,13 +121,6 @@ r.in.ppm
 
 r.in.tiff/r.out.tiff
  - segm. fault (same thing with r.binfer)
-
-r.info
- - suggestion: raster type should be printed: CELL, FCELL, DCELL
-
-r.los
- - segmentation fault in mark_pts.c line 37
- -> seems to be fixed 7/2000
 
 r.mapcalc
  - Values -129 in GRASS raster files are treated as Null
@@ -268,7 +261,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.15  2000-09-08 21:53:37  markus
+ Revision 1.16  2000-09-09 11:55:18  markus
+ fixed r.los, r.info
+
+ Revision 1.15  2000/09/08 21:53:37  markus
  cosmetics
 
  Revision 1.14  2000/09/08 21:52:16  markus
