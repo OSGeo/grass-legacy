@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 /*
  * safe to call only during checkpoint(1)
