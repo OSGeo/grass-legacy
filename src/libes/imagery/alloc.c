@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include <stdio.h>
 char *
 I_malloc(n)
