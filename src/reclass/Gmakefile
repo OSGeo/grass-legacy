@@ -1,0 +1,17 @@
+# %W%  %G%
+PGM = reclass
+
+COMMON  = maketable.o dots.o do_reclass.o
+RECLASS = reclass.o set_cats.o $(COMMON)
+MASK    = mask.o maskinfo.o makemask.o $(COMMON)
+
+all: $(BIN)/reclass $(BIN)/mask
+
+$(BIN)/reclass: $(RECLASS) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(RECLASS) $(GISLIB) $(VASK)
+
+$(BIN)/mask: $(MASK) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(MASK) $(GISLIB) $(VASK)
+
+$(GISLIB): #
+$(VASKLIB): #
