@@ -1,146 +1,348 @@
+# translation of grassmods_ja.po to Japanese
 # translation of grassmods_ja.po to japanese
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
-# Markus Neteler <neteler@itc.it>, 2004.
+# Markus Neteler <neteler@itc.it>, 2004, 2005.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_ja\n"
-"POT-Creation-Date: 2004-11-17 18:05+0100\n"
-"PO-Revision-Date: 2004-10-17 15:13+0200\n"
+"POT-Creation-Date: 2005-01-20 18:31+0100\n"
+"PO-Revision-Date: 2005-01-20 18:44+0100\n"
 "Last-Translator: Markus Neteler <neteler@itc.it>\n"
 "Language-Team: Japanese <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Report-Msgid-Bugs-To: \n"
-"X-Generator: KBabel 1.3\n"
+"X-Generator: KBabel 1.0.2\n"
 
-#: ../db/base/connect.c:107
+#: ../db/base/columns.c:33 ../db/base/createdb.c:24 ../db/base/describe.c:34
+#: ../db/base/dropdb.c:24 ../db/base/droptable.c:25 ../db/base/execute.c:52
+#: ../db/base/select.c:63 ../db/base/tables.c:34
 #, c-format
-msgid "driver:%s\n"
+msgid "No db connection for driver <%s> defined. Run db.connect"
 msgstr ""
 
-#: ../db/base/connect.c:108
+#: ../db/base/columns.c:69 ../db/base/describe.c:87
+#, fuzzy
+msgid "table name"
+msgstr "テーブル"
+
+#: ../db/base/columns.c:76 ../db/base/databases.c:62 ../db/base/describe.c:94
+#: ../db/base/select.c:195 ../db/base/tables.c:69
+#, fuzzy
+msgid "driver name"
+msgstr "ドライバ"
+
+#: ../db/base/columns.c:84 ../db/base/describe.c:102 ../db/base/select.c:186
+#: ../db/base/tables.c:77
+#, fuzzy
+msgid "database name"
+msgstr "データベース"
+
+#: ../db/base/columns.c:90
+#, fuzzy
+msgid "list all columns for a given table."
+msgstr "すべてのカラムを表示します"
+
+#: ../db/base/connect.c:27
+msgid "print current connection parameters and exit"
+msgstr ""
+
+#: ../db/base/connect.c:35
+msgid "driver name:"
+msgstr ""
+
+#: ../db/base/connect.c:43
+#, fuzzy
+msgid "Database name:"
+msgstr "データベース"
+
+#: ../db/base/connect.c:52
+msgid ""
+"Database schema. Don't use this option if schemas are not supported by "
+"driver/database server."
+msgstr ""
+
+#: ../db/base/connect.c:61
+msgid "Default group of database users to which select privilege is granted."
+msgstr ""
+
+#: ../db/base/connect.c:81
+#, fuzzy
+msgid "Connect to the database through DBMI."
+msgstr "データベースに接続します"
+
+#: ../db/base/connect.c:117
+msgid "No db connection settings defined. Set with db.connect"
+msgstr ""
+
+#: ../db/base/copy.c:27
+msgid ""
+"Copy a table. Either 'from_table' (optionaly with 'where') can be used or "
+"'select' option, but not 'from_table' and 'select' at the same time."
+msgstr ""
+
+#: ../db/base/copy.c:35
+#, fuzzy
+msgid "Input driver name"
+msgstr "入力するファイル"
+
+#: ../db/base/copy.c:43
+#, fuzzy
+msgid "Input database name"
+msgstr "入力するファイル"
+
+#: ../db/base/copy.c:51
+#, fuzzy
+msgid "Input table name (only if select is not specified)"
+msgstr "出力するファイル(未入力の場合はチェックのみ)"
+
+#: ../db/base/copy.c:58
+#, fuzzy
+msgid "Output driver name"
+msgstr "出力するファイル"
+
+#: ../db/base/copy.c:66
+#, fuzzy
+msgid "Output database name"
+msgstr "傾斜の方位を出力するファイル"
+
+#: ../db/base/copy.c:74
+#, fuzzy
+msgid "Output table name"
+msgstr "出力するファイル"
+
+#: ../db/base/copy.c:80
+msgid ""
+"Optional where condition (without WHERE key word), e.g.:\n"
+"\t\tobec = 'Liptakov'"
+msgstr ""
+
+#: ../db/base/copy.c:87
+msgid ""
+"Full select statement (only if from_table and where is not used), e.g.:\n"
+"\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
+msgstr ""
+
+#: ../db/base/copy.c:95
+msgid "Cannot combine 'from_table' and 'select' options"
+msgstr ""
+
+#: ../db/base/copy.c:107
+msgid "Either 'from_table' or 'select' option must be given."
+msgstr ""
+
+#: ../db/base/copy.c:110
+msgid "Cannot combine 'select' and 'where' options"
+msgstr ""
+
+#: ../db/base/copy.c:118
+msgid "Copy table failed"
+msgstr ""
+
+#: ../db/base/databases.c:34
 #, c-format
-msgid "database:%s\n"
+msgid "Cannot start driver '%s'."
 msgstr ""
 
-#: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
-#: ../db/base/select.c:126 ../vector/v.transform/creat_trans.c:90
-#, c-format
-msgid "%s"
+#: ../db/base/databases.c:37
+msgid "Cannot list databases."
 msgstr ""
 
-#: ../db/base/databases.c:43 ../db/base/printtab.c:21 ../db/base/printtab.c:66
-msgid "\n"
+#: ../db/base/databases.c:69
+#, fuzzy
+msgid "database location"
+msgstr "ロケーション"
+
+#: ../db/base/databases.c:74
+msgid "List all databases for a given driver and location."
 msgstr ""
 
-#: ../db/base/describe.c:53 ../db/base/printtab.c:17
-#, c-format
-msgid "ncols:%d\n"
+#: ../db/base/describe.c:45
+msgid "Cannot describe table"
 msgstr ""
 
-#: ../db/base/describe.c:57
-#, c-format
-msgid "Column %d: %s\n"
+#: ../db/base/describe.c:81
+msgid "print column names only instead of full column descriptions"
 msgstr ""
+
+#: ../db/base/describe.c:108
+#, fuzzy
+msgid "Describe a table (in detail)."
+msgstr "テーブルの詳細情報を表示します"
 
 #: ../db/base/drivers.c:24
 msgid "Error trying to read dbmscap file\n"
 msgstr ""
 
-#: ../db/base/drivers.c:30
+#: ../db/base/drivers.c:47
+msgid "Full output"
+msgstr ""
+
+#: ../db/base/drivers.c:51 ../db/base/tables.c:83
+msgid "print tables and exit"
+msgstr ""
+
+#: ../db/base/drivers.c:55
+#, fuzzy
+msgid "List all database drivers."
+msgstr "ペインタの一覧表示"
+
+#: ../db/base/execute.c:66 ../db/base/execute.c:70
 #, c-format
-msgid ":%s"
+msgid "Error while executing: \"%s\"\n"
 msgstr ""
 
-#: ../db/base/printtab.c:11
+#: ../db/base/execute.c:119
+msgid "ignore SQL errors and continue"
+msgstr ""
+
+#: ../db/base/select.c:180
+msgid "Table name, select all from this table"
+msgstr ""
+
+#: ../db/base/select.c:203
+msgid ""
+"SQL select statement, for example: 'select * from rybniky where kapri = "
+"'hodne'"
+msgstr ""
+
+#: ../db/base/select.c:209 ../vector/v.db.select/main.c:52
+#, fuzzy
+msgid "output field separator"
+msgstr "区切り"
+
+#: ../db/base/select.c:216 ../vector/v.db.select/main.c:59
+#, fuzzy
+msgid "output vertical record separator"
+msgstr "上下方向の区切り"
+
+#: ../db/base/select.c:222 ../vector/v.db.select/main.c:65
+#, fuzzy
+msgid "null value indicator"
+msgstr "NULL値の識別子"
+
+#: ../db/base/select.c:229
+#, fuzzy
+msgid "filename with sql statement"
+msgstr "入力するファイル(SQL形式)"
+
+#: ../db/base/select.c:234 ../vector/v.db.select/main.c:69
+#, fuzzy
+msgid "do not include column names in output"
+msgstr "ルートに沿ってセル値をコピー"
+
+#: ../db/base/select.c:238
+#, fuzzy
+msgid "describe query only (don't run it)"
+msgstr "クエリのみを表示(実行しないで下さい!)"
+
+#: ../db/base/select.c:242 ../vector/v.db.select/main.c:73
+#, fuzzy
+msgid "vertical output (instead of horizontal)"
+msgstr "8bitで出力"
+
+#: ../db/base/select.c:246
+#, fuzzy
+msgid "Select data from database."
+msgstr "データベースから用いるデータを選択します"
+
+#: ../db/base/tables.c:87
+#, fuzzy
+msgid "system tables instead of user tables"
+msgstr "システムテーブル"
+
+#: ../db/base/tables.c:91
+#, fuzzy
+msgid "List all tables for a given database."
+msgstr "すべてのテーブルを表示します"
+
+#: ../db/drivers/mysql/db.c:69 ../db/drivers/postgres/parse.c:53
+msgid "'user' in database definition is not supported, use db.login"
+msgstr ""
+
+#: ../db/drivers/mysql/db.c:72 ../db/drivers/postgres/parse.c:57
+msgid "'password' in database definition is not supported, use db.login"
+msgstr ""
+
+#: ../db/drivers/mysql/db.c:75
 #, c-format
-msgid "table:%s\n"
+msgid "Unknown option in database definition for mysql: '%s'"
 msgstr ""
 
-#: ../db/base/printtab.c:12 ../db/base/printtab.c:35
+#: ../db/drivers/ogr/describe.c:87
 #, c-format
-msgid "description:%s\n"
+msgid "OGR driver: column '%s', OGR type %d  is not supported"
 msgstr ""
 
-#: ../db/base/printtab.c:34
-#, fuzzy, c-format
-msgid "column:%s\n"
-msgstr "更新するカラム1"
-
-#: ../db/base/printtab.c:36
+#: ../db/drivers/ogr/describe.c:143
 #, c-format
-msgid "type:%s\n"
+msgid ""
+"column '%s', type 'string': unknown width -> stored as varchar(250) some "
+"data may be lost"
 msgstr ""
 
-#: ../db/base/printtab.c:37
+#: ../db/drivers/ogr/describe.c:151 ../db/drivers/ogr/fetch.c:124
+msgid "Unknown type"
+msgstr ""
+
+#: ../db/drivers/postgres/describe.c:102
 #, c-format
-msgid "len:%d\n"
+msgid "pg driver: column '%s', type %d  is not supported"
 msgstr ""
 
-#: ../db/base/printtab.c:38
+#: ../db/drivers/postgres/describe.c:107
 #, c-format
-msgid "scale:%d\n"
+msgid ""
+"column '%s' : type int8 (bigint) is stored as integer (4 bytes) some data "
+"may be damaged"
 msgstr ""
 
-#: ../db/base/printtab.c:39
+#: ../db/drivers/postgres/describe.c:111
 #, c-format
-msgid "precision:%d\n"
+msgid "column '%s' : type text is stored as varchar(250) some data may be lost"
 msgstr ""
 
-#: ../db/base/printtab.c:40
-msgid "default:"
-msgstr ""
-
-#: ../db/base/printtab.c:48
+#: ../db/drivers/postgres/describe.c:117
 #, c-format
-msgid "nullok:%s\n"
+msgid ""
+"column '%s' : type character varying is stored as varchar(250) some data may "
+"be lost"
 msgstr ""
 
-#: ../db/base/printtab.c:62
-msgid "yes"
-msgstr ""
-
-#: ../db/base/printtab.c:63
-msgid "no"
-msgstr ""
-
-#: ../db/base/printtab.c:64
-msgid "?"
-msgstr ""
-
-#: ../db/base/select.c:311
-#, fuzzy, c-format
-msgid "column%s%s\n"
-msgstr "更新するカラム1"
-
-#: ../db/base/select.c:312
+#: ../db/drivers/postgres/describe.c:123
 #, c-format
-msgid "type%s%s\n"
+msgid ""
+"column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), 1 "
+"(true)"
 msgstr ""
 
-#: ../db/base/select.c:313
-#, c-format
-msgid "len%s%d\n"
+#: ../db/drivers/postgres/fetch.c:163
+msgid "Cannot recognize boolean value"
 msgstr ""
 
-#: ../db/base/select.c:314
-#, c-format
-msgid "scale%s%d\n"
+#: ../db/drivers/postgres/parse.c:61
+msgid "Unknown option in database definition for PostgreSQL: "
 msgstr ""
 
-#: ../db/base/select.c:315
-#, c-format
-msgid "precision%s%d\n"
+#: ../db/db.login/main.c:56
+msgid "Cannot set user/password"
+msgstr ""
+
+#: ../db/db.login/main.c:60
+msgid "The password was stored in file."
 msgstr ""
 
 #: ../display/d.font.freetype/main.c:52
+#, fuzzy
 msgid ""
 "Selects the font in which text will be displayed on the user's graphics "
 "monitor."
-msgstr "テキストに使用するフォントを選択します"
+msgstr ""
+"テキストに使用する"
+"フォントを選択します"
 
 #: ../display/d.font.freetype/main.c:60
 msgid ""
@@ -177,11 +379,11 @@ msgstr ""
 msgid "Error: %s\n"
 msgstr ""
 
-#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:211
+#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:295
 msgid "Region size is lower than minreg, nothing displayed.\n"
 msgstr ""
 
-#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:220
+#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:304
 msgid "Region size is greater than maxreg, nothing displayed.\n"
 msgstr ""
 
@@ -208,35 +410,40 @@ msgstr ""
 msgid "  Distance to the network = %f, distance from the network = %f\n"
 msgstr ""
 
-#: ../display/d.vect/attr.c:54 ../display/d.vect/dir.c:34
+#: ../display/d.vect/attr.c:53 ../display/d.vect/dir.c:34
 #: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
 #: ../display/d.vect/topo.c:38
+#, fuzzy
 msgid ""
 "\n"
 "ERROR: vector file - can't read\n"
-msgstr ""
+msgstr "���"
 
-#: ../display/d.vect/main.c:417
+#: ../display/d.vect/main.c:501
 msgid "Plotting ... "
 msgstr ""
 
-#: ../display/d.vect/main.c:426
-msgid ""
-"The bounding box of the map outside current region, nothing displayed.\n"
+#: ../display/d.vect/main.c:510
+msgid "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr ""
 
-#: ../display/d.vect/main.c:480
+#: ../display/d.vect/main.c:567
 msgid "Done\n"
 msgstr ""
 
-#: ../display/d.what.vect/main.c:150
+#: ../display/d.what.vect/main.c:139
+msgid "Building spatial index ..."
+msgstr ""
+
+#: ../display/d.what.vect/main.c:157
 msgid "Done.\n"
 msgstr ""
 
 #: ../display/d.what.vect/openvect.c:12
 #, c-format
+#, fuzzy
 msgid "warning: %s - vector file not found\n"
-msgstr ""
+msgstr "�������: %s - ��������� ����n"
 
 #: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
 msgid "Nothing Found.\n"
@@ -244,8 +451,9 @@ msgstr ""
 
 #: ../display/d.what.vect/what.c:203
 #, c-format
+#, fuzzy
 msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
-msgstr ""
+msgstr "��� "
 
 #: ../display/d.what.vect/what.c:206
 #, c-format
@@ -259,8 +467,9 @@ msgstr ""
 
 #: ../display/d.what.vect/what.c:221
 #, c-format
+#, fuzzy
 msgid "    Line: %5d  Angle: %.8f\n"
-msgstr ""
+msgstr "���"
 
 #: ../display/d.what.vect/what.c:227
 #, c-format
@@ -274,13 +483,15 @@ msgstr ""
 
 #: ../display/d.what.vect/what.c:257
 #, c-format
+#, fuzzy
 msgid "Line height: %f\n"
-msgstr ""
+msgstr "���"
 
 #: ../display/d.what.vect/what.c:263
 #, c-format
+#, fuzzy
 msgid "Line height min: %f max: %f\n"
-msgstr ""
+msgstr "���"
 
 #: ../display/d.what.vect/what.c:280
 #, c-format
@@ -319,7 +530,7 @@ msgstr ""
 #: ../display/d.what.vect/what.c:353
 #, c-format
 msgid ""
-"field: %d\n"
+"Layer: %d\n"
 "category: %d\n"
 msgstr ""
 
@@ -359,41 +570,50 @@ msgstr ""
 msgid " Right: quit\n"
 msgstr ""
 
-#: ../display/d.zoom/main.c:158
+#: ../display/d.zoom/main.c:161
 msgid "ERROR: can not get \"list\" items\n"
 msgstr ""
 
-#: ../display/d.zoom/main.c:159
+#: ../display/d.zoom/main.c:162
 msgid "-j flag forced\n"
 msgstr ""
 
-#: ../display/d.zoom/main.c:196
+#: ../display/d.zoom/main.c:200
 #, fuzzy
 msgid "ERROR: No map is displayed in GRASS monitor\n"
 msgstr "モニターに表示されているマップ"
 
-#: ../display/d.zoom/main.c:320
+#: ../display/d.zoom/main.c:324
 #, c-format
+#, fuzzy
 msgid "%d raster%s, %d vector%s\n"
+msgstr "���"
+
+#: ../display/d.zoom/main.c:334
+msgid "this is the first d.zoom run; no previous zoom availible\n"
 msgstr ""
 
-#: ../display/d.zoom/main.c:346
+#: ../display/d.zoom/main.c:380
 msgid "Zooming finished.\n"
 msgstr ""
 
 #: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
+#, fuzzy
 msgid ""
 "\n"
 "\n"
 "Buttons:\n"
 msgstr ""
+"\n"
+"\n"
+"���:\n"
 
 #: ../display/d.zoom/pan.c:21 ../display/d.zoom/zoom.c:17
 #, c-format
 msgid "%s Pan\n"
 msgstr ""
 
-#: ../display/d.zoom/pan.c:22 ../display/d.zoom/zoom.c:18
+#: ../display/d.zoom/pan.c:22
 #, fuzzy, c-format
 msgid "%s Quit\n"
 msgstr "説明なし"
@@ -402,6 +622,11 @@ msgstr "説明なし"
 #, c-format
 msgid "%s Zoom menu\n"
 msgstr ""
+
+#: ../display/d.zoom/zoom.c:18
+#, fuzzy, c-format
+msgid "%s Quit menu\n"
+msgstr "説明なし"
 
 #: ../display/d.zoom/zoom.c:41
 #, fuzzy
@@ -452,10 +677,234 @@ msgstr ""
 msgid "Monitor: XGetWMName: bad result\n"
 msgstr ""
 
-#: ../imagery/i.group/main.c:86
+#: ../imagery/i.group/main.c:84
 #, fuzzy
 msgid "No input map(s) specified."
 msgstr "傾斜方位を示すファイル(入力)"
+
+#: ../raster/r.average/main.c:31
+#, fuzzy
+msgid ""
+"Finds the average of values in a cover map within areas assigned the same "
+"category value in a user-specified base map."
+msgstr ""
+"ベースマップにおける同一カテゴリー内での"
+"カバーマップの平均値を計算します"
+
+#: ../raster/r.average/main.c:40
+#, fuzzy
+msgid "base raster map"
+msgstr "ベースマップ"
+
+#: ../raster/r.average/main.c:47
+#, fuzzy
+msgid "cover raster map"
+msgstr "カバーマップ"
+
+#: ../raster/r.average/main.c:54
+#, fuzzy
+msgid "resultant raster map"
+msgstr "出力するファイル"
+
+#: ../raster/r.average/main.c:58
+#, fuzzy
+msgid "cover values extracted from the category labels of the cover map"
+msgstr "カテゴリー値の代わりにカテゴリーラベルを使用"
+
+#: ../raster/r.basins.fill/main.c:34
+#, fuzzy
+msgid "Generates a raster map layer showing watershed subbasins."
+msgstr "分水域を示すラスターマップを作成します"
+
+#: ../raster/r.basins.fill/main.c:41
+#, fuzzy
+msgid "Number of passes through the dataset"
+msgstr "データセットの数"
+
+#: ../raster/r.basins.fill/main.c:48
+#, fuzzy
+msgid "Coded stream network file name"
+msgstr "河川ファイル"
+
+#: ../raster/r.basins.fill/main.c:55
+#, fuzzy
+msgid "Thinned ridge network file name"
+msgstr "分水界ファイル"
+
+#: ../raster/r.basins.fill/main.c:62
+#, fuzzy
+msgid "Name for the resultant watershed partition file"
+msgstr "出力するファイル"
+
+#: ../raster/r.bilinear/main.c:29
+#, fuzzy
+msgid "Bilinear interpolation utility for raster map layers."
+msgstr "データ点から補間計算により曲面を推定します"
+
+#: ../raster/r.bilinear/main.c:36
+#, fuzzy
+msgid "Name of existing raster file."
+msgstr "入力するファイル"
+
+#: ../raster/r.bilinear/main.c:43
+#, fuzzy
+msgid "Name of new raster file."
+msgstr "出力するファイル"
+
+#: ../raster/r.bilinear/main.c:48 ../raster/r.bilinear/main.c:54
+#, fuzzy
+msgid ""
+"specific input value to be assigned to the north and/or south poles for "
+"longitude-latitude grids"
+msgstr "経度 (ddd:mm:ss{E|W}) 緯度 (dd:mm:ss{N|S})"
+
+#: ../raster/r.bilinear/main.c:72 ../raster/r.sum/main.c:46
+#, fuzzy, c-format
+msgid "Couldn't find raster file %s"
+msgstr "出力するファイル"
+
+#: ../raster/r.bilinear/main.c:86 ../raster/r.bilinear/main.c:97
+#: ../raster/r.sum/main.c:50
+#, c-format
+msgid "Not able to open cellfile for [%s]"
+msgstr ""
+
+#: ../raster/r.buffer/main.c:48
+#, fuzzy
+msgid ""
+"Creates a raster map layer showing buffer zones surrounding cells that "
+"contain non-NULL category values."
+msgstr ""
+"バッファーゾーンを示す"
+"新しいラスターマップを作成します"
+
+#: ../raster/r.buffer/main.c:56
+#, fuzzy
+msgid "Name of input map"
+msgstr "入力するファイル"
+
+#: ../raster/r.buffer/main.c:63
+#, fuzzy
+msgid "Name of output map"
+msgstr "出力するファイル"
+
+#: ../raster/r.buffer/main.c:70
+#, fuzzy
+msgid "Distance zone(s)"
+msgstr "範囲"
+
+#: ../raster/r.buffer/main.c:77
+#, fuzzy
+msgid "Units of distance"
+msgstr "距離の単位"
+
+#: ../raster/r.buffer/main.c:86
+#, fuzzy
+msgid "Ignore zero (0) data cells instead of NULL cells"
+msgstr "NULL値の代わりに値0を無視する"
+
+#: ../raster/r.cats/main.c:30
+#, fuzzy
+msgid ""
+"Prints category values and labels associated with user-specified raster map "
+"layers."
+msgstr ""
+"ラスターマップのカテゴリー値や"
+"カテゴリーラベルを表示します"
+
+#: ../raster/r.cats/main.c:38
+#, fuzzy
+msgid "Name of a raster map"
+msgstr "入力するファイル"
+
+#: ../raster/r.cats/main.c:46
+#, fuzzy
+msgid "Comma separated value list: e.g. 1.4,3.8,13"
+msgstr "カテゴリー値のリスト(例1.4,3.8,13)"
+
+#: ../raster/r.cats/main.c:54
+#, fuzzy
+msgid "Category list: e.g. 1,3-8,13"
+msgstr "カテゴリーラベルのリスト(例 1,3-8,13)"
+
+#: ../raster/r.cats/main.c:61
+#, fuzzy
+msgid "Output separator character (default: tab)"
+msgstr "区切り(デフォルト:タブ)"
+
+#: ../raster/r.clump/main.c:33
+#, fuzzy
+msgid ""
+"Recategorizes data in a raster map layer by grouping cells that form "
+"physically discrete areas into unique categories."
+msgstr ""
+"同一カテゴリーセルのグルーピングにより"
+"新しいラスターマップを作成します"
+
+#: ../raster/r.clump/main.c:41
+#, fuzzy
+msgid "Input layer name"
+msgstr "入力するファイル"
+
+#: ../raster/r.clump/main.c:49
+#, fuzzy
+msgid "Output layer name"
+msgstr "出力するファイル"
+
+#: ../raster/r.clump/main.c:56
+#, fuzzy
+msgid "Title, in quotes"
+msgstr "タイトル"
+
+#: ../raster/r.clump/main.c:62 ../raster/r.covar/main.c:53
+#: ../raster/r.cross/main.c:68 ../raster/r.describe/main.c:78
+#: ../raster/r.grow2/main.c:162 ../raster/r.mfilter/main.c:79
+#: ../raster/r.patch/main.c:64 ../raster/r.report/parse.c:99
+#: ../raster/r.resample/main.c:57 ../raster/r.rescale.eq/main.c:78
+#: ../raster/r.slope.aspect/main.c:253 ../raster/r.stats/main.c:141
+#: ../raster/r.texture/main.c:114
+#, fuzzy
+msgid "Quiet"
+msgstr "説明なし"
+
+#: ../raster/r.colors/main.c:135
+#, fuzzy
+msgid "Creates/Modifies the color table associated with a raster map layer."
+msgstr "ラスターマップのカラーテーブルを作成/編集します"
+
+#: ../raster/r.colors/main.c:143 ../raster/r.timestamp/main.c:26
+#, fuzzy
+msgid "Raster map name"
+msgstr "対象マップ"
+
+#: ../raster/r.colors/main.c:151
+#, fuzzy
+msgid "Type of color table"
+msgstr "カラーテーブル"
+
+#: ../raster/r.colors/main.c:158
+#, fuzzy
+msgid "Raster map name from which to copy color table"
+msgstr "カラーテーブルに用いるラスターマップ"
+
+#: ../raster/r.colors/main.c:164
+#, fuzzy
+msgid "Name of predefined rules file"
+msgstr "出力するファイル"
+
+#: ../raster/r.colors/main.c:169
+#, fuzzy
+msgid "Keep existing color table"
+msgstr "カラーテーブルを上書きしない"
+
+#: ../raster/r.colors/main.c:173 ../raster/r.rescale/main.c:77
+#, fuzzy
+msgid "Quietly"
+msgstr "説明なし"
+
+#: ../raster/r.colors/main.c:177
+msgid "List rules"
+msgstr ""
 
 #: ../raster/r.colors/rules.c:45
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
@@ -543,10 +992,2987 @@ msgstr ""
 msgid "Valid colors are:\n"
 msgstr ""
 
+#: ../raster/r.composite/main.c:71
+#, fuzzy
+msgid "Combines red, green and blue map layers into a single composite map layer."
+msgstr "ベクトルマップをラスターマップに変換します"
+
+#: ../raster/r.composite/main.c:89
+#, fuzzy, c-format
+msgid "Name of raster map layer to be used for <%s>"
+msgstr "<%s>に対応させるラスターマップ"
+
+#: ../raster/r.composite/main.c:100
+#, fuzzy
+msgid "Number of levels to be used for each component"
+msgstr "色相ファイル"
+
+#: ../raster/r.composite/main.c:116
+#, fuzzy, c-format
+msgid "Number of levels to be used for <%s>"
+msgstr "<%s>に対応させるラスターマップ"
+
+#: ../raster/r.composite/main.c:126 ../raster/r.cost/main.c:115
+#: ../raster/r.water.outlet/main.c:47
+#, fuzzy
+msgid "Name of raster map to contain results"
+msgstr "出力するファイル"
+
+#: ../raster/r.composite/main.c:130
+msgid "Dither"
+msgstr ""
+
+#: ../raster/r.composite/main.c:134
+#, fuzzy
+msgid "Use closest color"
+msgstr "アイコンの色"
+
+#: ../raster/r.compress/main.c:43
+#, fuzzy
+msgid "Compresses and decompresses raster files."
+msgstr "ファイルの圧縮/解凍を行います"
+
+#: ../raster/r.compress/main.c:51
+#, fuzzy
+msgid "Name of existing raster map(s)"
+msgstr "入力するファイル"
+
+#: ../raster/r.compress/main.c:55
+#, fuzzy
+msgid "Uncompress the map"
+msgstr "解凍"
+
+#: ../raster/r.compress/main.c:59 ../raster/r.distance/parse.c:38
+#: ../raster/r.neighbors/main.c:110 ../raster/r.out.ppm/main.c:64
+#: ../raster/r.out.ppm3/main.c:76 ../raster/r.random/main.c:69
+#: ../raster/r.series/main.c:112
+#, fuzzy
+msgid "Run quietly"
+msgstr "説明なし"
+
+#: ../raster/r.contour/main.c:71
+#, fuzzy
+msgid ""
+"Produces a GRASS binary vector map of specified contours from GRASS raster "
+"map layer."
+msgstr ""
+"ラスターマップから指定された"
+"高さのコンターマップを作成します"
+
+#: ../raster/r.contour/main.c:79 ../raster/r.out.ascii/main.c:70
+#: ../raster/r.out.bin/main.c:78 ../raster/r.out.mat/main.c:75
+#: ../raster/r.out.pov/main.c:116 ../raster/r.univar2/main.c:64
+#, fuzzy
+msgid "Name of an existing raster map"
+msgstr "入力するファイル"
+
+#: ../raster/r.contour/main.c:85
+#, fuzzy
+msgid "Name of output vector file"
+msgstr "出力するファイル"
+
+#: ../raster/r.contour/main.c:92
+#, fuzzy
+msgid "List of contour levels"
+msgstr "指定する高さ"
+
+#: ../raster/r.contour/main.c:98
+#, fuzzy
+msgid "Minimum contour level"
+msgstr "最小値"
+
+#: ../raster/r.contour/main.c:104
+#, fuzzy
+msgid "Maximum contour level"
+msgstr "最大値"
+
+#: ../raster/r.contour/main.c:110
+#, fuzzy
+msgid "Increment between contour levels"
+msgstr "コンター間隔"
+
+#: ../raster/r.contour/main.c:117
+#, fuzzy
+msgid "Minimum number of points for a contour line (0 -> no limit)"
+msgstr "コンターの作成に用いるデータ点の最少数(0 -> 制限なし)"
+
+#: ../raster/r.contour/main.c:121
+#, fuzzy
+msgid "Suppress progress report & min/max information"
+msgstr "説明なし"
+
+#: ../raster/r.contour/main.c:125
+#, fuzzy
+msgid "Suppress single crossing error messages"
+msgstr "単一交差に関するエラーメッセージを出力しない"
+
+#: ../raster/r.cost/main.c:98
+#, fuzzy
+msgid ""
+"Outputs a raster map layer showing the cumulative cost of moving between "
+"different geographic locations on an input raster map layer whose cell "
+"category values represent cost."
+msgstr ""
+"累積コストを表す"
+"ラスターマップを"
+"作成します"
+
+#: ../raster/r.cost/main.c:108
+#, fuzzy
+msgid "Name of raster map containing grid cell cost information"
+msgstr "入力するファイル"
+
+#: ../raster/r.cost/main.c:122
+#, fuzzy
+msgid "Starting points vector map"
+msgstr "���"
+
+#: ../raster/r.cost/main.c:129
+#, fuzzy
+msgid "Stop points vector map"
+msgstr "���"
+
+#: ../raster/r.cost/main.c:136
+#, fuzzy
+msgid "Starting points raster file"
+msgstr "始点を示すラスターマップ"
+
+#: ../raster/r.cost/main.c:143
+#, fuzzy
+msgid "The map E and N grid coordinates of a starting point (E,N)"
+msgstr "始点の座標値"
+
+#: ../raster/r.cost/main.c:150
+#, fuzzy
+msgid "The map E and N grid coordinates of a stopping point (E,N)"
+msgstr "終点の座標値"
+
+#: ../raster/r.cost/main.c:159
+#, fuzzy
+msgid "An optional maximum cumulative cost"
+msgstr "最大コスト"
+
+#: ../raster/r.cost/main.c:167
+#, fuzzy
+msgid "Cost assigned to null cells. By default, null cells are excluded"
+msgstr "NULL値に代入する値"
+
+#: ../raster/r.cost/main.c:176
+#, fuzzy
+msgid "Percent of map to keep in memory"
+msgstr "メモリに残す行"
+
+#: ../raster/r.cost/main.c:180 ../raster/wildfire/r.ros/main.c:297
+#, fuzzy
+msgid "Run verbosely"
+msgstr "説明つき表示"
+
+#: ../raster/r.cost/main.c:184
+#, fuzzy
+msgid "Use the 'Knight's move'; slower, but more accurate"
+msgstr "精度を上げる"
+
+#: ../raster/r.cost/main.c:188
+#, fuzzy
+msgid "Keep null values in output map"
+msgstr "NULL値も出力"
+
+#: ../raster/r.cost/main.c:192
+#, fuzzy
+msgid "Start with values in raster map"
+msgstr "出力するファイル"
+
+#: ../raster/r.covar/main.c:36
+#, fuzzy
+msgid ""
+"Outputs a covariance/correlation matrix for user-specified raster map layer"
+"(s)."
+msgstr ""
+"ラスターマップの"
+"共分散と相関を求めます"
+
+#: ../raster/r.covar/main.c:45
+#, fuzzy
+msgid "Raster map(s) to be read"
+msgstr "入力するファイル"
+
+#: ../raster/r.covar/main.c:49
+#, fuzzy
+msgid "Print correlation matrix"
+msgstr "共分散行列の代わりに相関行列を出力"
+
+#: ../raster/r.cross/main.c:45
+#, fuzzy
+msgid ""
+"Creates a cross product of the category values from multiple raster map "
+"layers."
+msgstr ""
+"カテゴリー値を掛け合わせて"
+"新たなラスターマップを作成します"
+
+#: ../raster/r.cross/main.c:55
+#, fuzzy, c-format
+msgid "Names of 2-%d input raster maps"
+msgstr "入力するファイル(2つ以上必要)"
+
+#: ../raster/r.cross/main.c:61
+#, fuzzy
+msgid "Name of the resulting map"
+msgstr "出力するファイル"
+
+#: ../raster/r.cross/main.c:72
+#, fuzzy
+msgid "Non-zero data only"
+msgstr "値0を無視する"
+
+#: ../raster/r.describe/main.c:39
+#, fuzzy
+msgid "Prints terse list of category values found in a raster map layer."
+msgstr "ラスターマップのカテゴリー値一覧を表示します"
+
+#: ../raster/r.describe/main.c:47
+#, fuzzy
+msgid "Name of raster map"
+msgstr "入力するファイル"
+
+#: ../raster/r.describe/main.c:56
+#, fuzzy
+msgid "string representing no data cell value"
+msgstr "データのないセルに代入する記号"
+
+#: ../raster/r.describe/main.c:64
+#, fuzzy
+msgid "number of quantization steps"
+msgstr "分割の幅"
+
+#: ../raster/r.describe/main.c:70
+#, fuzzy
+msgid "Print the output one value per line"
+msgstr "１項目ごとに改行"
+
+#: ../raster/r.describe/main.c:74
+#, fuzzy
+msgid "Only print the range of the data"
+msgstr "最大値と最小値のみ出力"
+
+#: ../raster/r.describe/main.c:82
+#, fuzzy
+msgid "Use the current region"
+msgstr "現在の地域設定を使用"
+
+#: ../raster/r.describe/main.c:86
+#, fuzzy
+msgid "Read fp map as integer"
+msgstr "実数を整数に変換して使用"
+
+#: ../raster/r.digit/main.c:25
+#, fuzzy
+msgid ""
+"Interactive tool used to draw and save vector features on a graphics monitor "
+"using a pointing device (mouse)."
+msgstr "マウスで位置を指定 ���."
+
+#: ../raster/r.distance/main.c:22
+msgid "Locates the closest points between objects in two raster maps."
+msgstr ""
+
+#: ../raster/r.distance/parse.c:21
+msgid "Maps for computing inter-class distances"
+msgstr ""
+
+#: ../raster/r.distance/parse.c:30 ../raster/r.stats/main.c:89
+#, fuzzy
+msgid "Output field separator"
+msgstr "区切り"
+
+#: ../raster/r.distance/parse.c:34
+#, fuzzy
+msgid "Include category labels in the output"
+msgstr "カテゴリーラベルも出力"
+
+#: ../raster/r.drain/main.c:94
+#, fuzzy
+msgid "Traces a flow through an elevation model on a raster map layer."
+msgstr "最小コストで目的地に到達する経路のラスターマップを作成します"
+
+#: ../raster/r.drain/main.c:101 ../raster/r.fill.dir/main.c:94
+#, fuzzy
+msgid "Name of existing raster map containing elevation surface"
+msgstr "入力するファイル"
+
+#: ../raster/r.drain/main.c:108
+#, fuzzy
+msgid "Output drain raster map"
+msgstr "出力するファイル"
+
+#: ../raster/r.drain/main.c:116
+#, fuzzy
+msgid "The map E and N grid coordinates of a starting point"
+msgstr "始点の座標値"
+
+#: ../raster/r.drain/main.c:120
+#, fuzzy
+msgid "Copy input cell values on output"
+msgstr "ルートに沿ってセル値をコピー"
+
+#: ../raster/r.drain/main.c:124
+#, fuzzy
+msgid "Accumulate input values along the path"
+msgstr "ルートに沿って累積したセル値を出力"
+
+#: ../raster/r.drain/main.c:128
+#, fuzzy
+msgid "Count cell numbers along the path"
+msgstr "ルートに沿ってセル数をカウント"
+
+#: ../raster/r.fill.dir/main.c:86
+msgid ""
+"Filters and generates a depressionless elevation map and a flow direction "
+"map from a given elevation layer"
+msgstr ""
+
+#: ../raster/r.fill.dir/main.c:101
+#, fuzzy
+msgid "Output elevation raster map after filling"
+msgstr "出力するファイル"
+
+#: ../raster/r.fill.dir/main.c:108
+#, fuzzy
+msgid "Output direction raster map"
+msgstr "出力するファイル"
+
+#: ../raster/r.fill.dir/main.c:115
+#, fuzzy
+msgid "Output raster map of problem areas"
+msgstr "出力ファイルの接尾語"
+
+#: ../raster/r.fill.dir/main.c:121
+#, fuzzy
+msgid ""
+"Output direction type AGNPS, ANSWERS or GRASS aspect\n"
+"              default: GRASS"
+msgstr "�����\n"
+
+#: ../raster/r.fill.dir/main.c:125
+msgid "find unresolved areas only"
+msgstr ""
+
+#: ../raster/r.grow2/main.c:116
+#, fuzzy
+msgid "Generates a raster map layerwith contiguous areas grown by one cell."
+msgstr "エリアを拡大したラスターマップを作成します"
+
+#: ../raster/r.grow2/main.c:124
+#, fuzzy
+msgid "Name of existing input raster file"
+msgstr "入力するファイル"
+
+#: ../raster/r.grow2/main.c:131 ../raster/r.thin/main.c:49
+#, fuzzy
+msgid "Name of output raster file"
+msgstr "出力するファイル"
+
+#: ../raster/r.grow2/main.c:137
+msgid "Radius of buffer"
+msgstr ""
+
+#: ../raster/r.grow2/main.c:144
+msgid "Metric"
+msgstr ""
+
+#: ../raster/r.grow2/main.c:152
+msgid "Value to write for input cells which are non-NULL (-1 => NULL)"
+msgstr ""
+
+#: ../raster/r.grow2/main.c:158
+#, fuzzy
+msgid "Value to write for \"grown\" cells"
+msgstr "NULL値に代入する値"
+
+#: ../raster/r.his/main.c:64
+#, fuzzy
+msgid ""
+"Generates red, green and blue raster map layers combining hue, intensity, "
+"and saturation (his) values from user-specified input raster map layers."
+msgstr "ラスターマップを色相/強度/彩度に対応させて合成します"
+
+#: ../raster/r.his/main.c:73
+#, fuzzy
+msgid "Name of layer to be used for HUE"
+msgstr "色相ファイル"
+
+#: ../raster/r.his/main.c:80
+#, fuzzy
+msgid "Name of layer to be used for INTENSITY"
+msgstr "強度ファイル"
+
+#: ../raster/r.his/main.c:87
+#, fuzzy
+msgid "Name of layer to be used for SATURATION"
+msgstr "彩度ファイル"
+
+#: ../raster/r.his/main.c:94
+#, fuzzy
+msgid "Name of output layer to be used for RED"
+msgstr "色相ファイル"
+
+#: ../raster/r.his/main.c:101
+#, fuzzy
+msgid "Name of output layer to be used for GREEN"
+msgstr "色相ファイル"
+
+#: ../raster/r.his/main.c:108
+#, fuzzy
+msgid "Name of output layer to be used for BLUE"
+msgstr "色相ファイル"
+
+#: ../raster/r.his/main.c:112
+#, fuzzy
+msgid "Respect NULL values while drawing"
+msgstr "NULL値を考慮する"
+
+#: ../raster/r.in.arc/main.c:41
+#, fuzzy
+msgid ""
+"Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
+"layer."
+msgstr ""
+"ESRI ARC/INFOファイルを"
+"ラスターマップとしてインポートします"
+
+#: ../raster/r.in.arc/main.c:48
+#, fuzzy
+msgid "ARC/INFO ascii raster file (GRID) to be imported"
+msgstr "入力するファイル"
+
+#: ../raster/r.in.arc/main.c:55 ../raster/r.in.ascii/main.c:61
+#: ../raster/r.in.bin/main.c:145 ../raster/r.in.gdal/main.c:87
+#, fuzzy
+msgid "Name for resultant raster map"
+msgstr "出力するファイル"
+
+#: ../raster/r.in.arc/main.c:64
+#, fuzzy
+msgid "Storage type for resultant raster map"
+msgstr "保存形式"
+
+#: ../raster/r.in.arc/main.c:71 ../raster/r.in.ascii/main.c:69
+#: ../raster/r.in.bin/main.c:153 ../raster/r.in.gdal/main.c:107
+#: ../raster/r.in.poly/main.c:39
+#, fuzzy
+msgid "Title for resultant raster map"
+msgstr "タイトル"
+
+#: ../raster/r.in.arc/main.c:78 ../raster/r.in.ascii/main.c:76
+#, fuzzy
+msgid "Multiplier for ascii data"
+msgstr "高さの強調"
+
+#: ../raster/r.in.ascii/main.c:48
+#, fuzzy
+msgid "Convert an ASCII raster text file into a (binary) raster map layer."
+msgstr "ASCII形式のファイルをラスターマップとしてインポートします"
+
+#: ../raster/r.in.ascii/main.c:54
+#, fuzzy
+msgid "Ascii raster file to be imported"
+msgstr "入力するファイル"
+
+#: ../raster/r.in.ascii/main.c:84
+#, fuzzy
+msgid "String representing NULL value data cell"
+msgstr "データのないセルに代入する記号"
+
+#: ../raster/r.in.ascii/main.c:89
+#, fuzzy
+msgid "integer values are imported"
+msgstr "整数データをインポート"
+
+#: ../raster/r.in.ascii/main.c:94
+#, fuzzy
+msgid "floating point values are imported"
+msgstr "浮動小数点データをインポート"
+
+#: ../raster/r.in.ascii/main.c:99
+#, fuzzy
+msgid "double floating point values are imported"
+msgstr "倍精度の浮動小数点データをインポート"
+
+#: ../raster/r.in.ascii/main.c:105
+#, fuzzy
+msgid "SURFER (Golden Software) ascii grid file will be imported"
+msgstr "SURFER(Golden Software)用グリッドをインポート"
+
+#: ../raster/r.in.bin/main.c:112
+#, fuzzy
+msgid "Import a binary raster file into a GRASS raster map layer."
+msgstr "バイナリーファイルをラスターマップとしてインポートします"
+
+#: ../raster/r.in.bin/main.c:116
+#, fuzzy
+msgid "Signed data (high bit means negative value)"
+msgstr "負の値を含む"
+
+#: ../raster/r.in.bin/main.c:120
+#, fuzzy
+msgid "Import as Floating Point Data (default: Integer)"
+msgstr "浮動小数点データをインポート"
+
+#: ../raster/r.in.bin/main.c:124
+#, fuzzy
+msgid "Import as Double Precision Data (default: Integer)"
+msgstr "浮動小数点データをインポート"
+
+#: ../raster/r.in.bin/main.c:128
+#, fuzzy
+msgid "Byte Swap the Data During Import"
+msgstr "インポート時にビットを反転"
+
+#: ../raster/r.in.bin/main.c:132
+#, fuzzy
+msgid "Get region info from GMT style header"
+msgstr "GMTファイルのヘッダーから地域情報を得る"
+
+#: ../raster/r.in.bin/main.c:138
+#, fuzzy
+msgid "Bin raster file to be imported"
+msgstr "入力するファイル"
+
+#: ../raster/r.in.bin/main.c:160
+#, fuzzy
+msgid "Number of bytes per cell (1, 2, 4)"
+msgstr "1セルのバイト数(1, 2, 4)"
+
+#: ../raster/r.in.bin/main.c:166
+#, fuzzy
+msgid "Northern limit of geographic region (outer edge)"
+msgstr "領域の北端"
+
+#: ../raster/r.in.bin/main.c:172
+#, fuzzy
+msgid "Southern limit of geographic region (outer edge)"
+msgstr "領域の南端"
+
+#: ../raster/r.in.bin/main.c:178
+#, fuzzy
+msgid "Eastern limit of geographic region (outer edge)"
+msgstr "領域の東端"
+
+#: ../raster/r.in.bin/main.c:184
+#, fuzzy
+msgid "Western limit of geographic region (outer edge)"
+msgstr "領域の西端"
+
+#: ../raster/r.in.bin/main.c:190
+#, fuzzy
+msgid "Number of rows"
+msgstr "行数"
+
+#: ../raster/r.in.bin/main.c:196
+#, fuzzy
+msgid "Number of columns"
+msgstr "列数"
+
+#: ../raster/r.in.bin/main.c:202
+#, fuzzy
+msgid "Set Value to NULL"
+msgstr "NULL値に代入する値"
+
+#: ../raster/r.in.gdal/main.c:71
+#, fuzzy
+msgid "Import GDAL supported raster file into a binary raster map layer."
+msgstr "GDALファイルをラスターマップとしてインポートします"
+
+#: ../raster/r.in.gdal/main.c:80
+#, fuzzy
+msgid "Raster file to be imported"
+msgstr "入力するファイル"
+
+#: ../raster/r.in.gdal/main.c:94
+#, fuzzy
+msgid "Band to select (default is all bands)"
+msgstr "選択するバンド(デフォルト:すべてのバンド)"
+
+#: ../raster/r.in.gdal/main.c:100
+#, fuzzy
+msgid "Name of location to read projection from for GCPs transformation"
+msgstr "投影に用いるロケーション"
+
+#: ../raster/r.in.gdal/main.c:113
+#, fuzzy
+msgid "Name for new location to create"
+msgstr "作成するロケーション"
+
+#: ../raster/r.in.gdal/main.c:117
+#, fuzzy
+msgid "Override projection (use location's projection)"
+msgstr "現在のロケーションの投影法を使用"
+
+#: ../raster/r.in.gdal/main.c:121
+#, fuzzy
+msgid "Extend location extents based on new dataset"
+msgstr "データセットをもとにロケーションを拡張"
+
+#: ../raster/r.in.gdal/main.c:125
+msgid "List supported formats then exit"
+msgstr ""
+
+#: ../raster/r.in.gdal/main.c:129
+msgid "Keep band numbers instead of using band color names"
+msgstr ""
+
+#: ../raster/r.in.gridatb/main.c:45
+#, fuzzy
+msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
+msgstr "バイナリーファイルをラスターマップとしてインポートします"
+
+#: ../raster/r.in.gridatb/main.c:49 ../raster/r.out.gridatb/main.c:59
+msgid "GRIDATB i/o map file"
+msgstr ""
+
+#: ../raster/r.in.gridatb/main.c:55 ../raster/r.mode/main.c:47
+#, fuzzy
+msgid "Output map"
+msgstr "出力するファイル"
+
+#: ../raster/r.in.mat/main.c:95
+#, fuzzy
+msgid "Import a binary MAT-File(v4) to a GRASS raster."
+msgstr "バイナリーファイルをラスターマップとしてインポートします"
+
+#: ../raster/r.in.mat/main.c:104
+#, fuzzy
+msgid "Name of an existing MAT-File(v4)"
+msgstr "入力するファイル"
+
+#: ../raster/r.in.mat/main.c:111
+#, fuzzy
+msgid "Name for the output raster map (override)"
+msgstr "出力するファイル(ラスターマップ)"
+
+#: ../raster/r.in.mat/main.c:115 ../raster/r.out.mat/main.c:85
+#, fuzzy
+msgid "Verbose mode"
+msgstr "�� ����� � ���"
+
+#: ../raster/r.in.poly/main.c:16
+msgid ""
+"Create raster maps from ascii polygon/line data files in the current "
+"directory."
+msgstr ""
+
+#: ../raster/r.in.poly/main.c:24
+#, fuzzy
+msgid "Input file"
+msgstr "入力するファイル"
+
+#: ../raster/r.in.poly/main.c:32
+#, fuzzy
+msgid "Raster output file"
+msgstr "出力するファイル"
+
+#: ../raster/r.in.poly/main.c:46
+#, fuzzy
+msgid "Number of rows to hold in memory"
+msgstr "メモリに残す行"
+
+#: ../raster/r.info/main.c:48
+#, fuzzy
+msgid "Outputs basic information about a user-specified raster map layer."
+msgstr "ラスターマップの基礎情報を出力します"
+
+#: ../raster/r.info/main.c:56 ../raster/r.profile/main.c:64
+#: ../raster/r.random/main.c:44 ../raster/r.thin/main.c:42
+#, fuzzy
+msgid "Name of existing raster map"
+msgstr "対象マップ"
+
+#: ../raster/r.info/main.c:60
+#, fuzzy
+msgid "Print range only"
+msgstr "最大値と最小値のみ出力"
+
+#: ../raster/r.info/main.c:64
+msgid "Print resolution (NS-res, EW-res) only"
+msgstr ""
+
+#: ../raster/r.info/main.c:68
+#, fuzzy
+msgid "Print raster map type only"
+msgstr "入力するファイル"
+
+#: ../raster/r.kappa/main.c:28
+msgid ""
+"Calculate error matrix and kappa parameter for accuracy assessment of "
+"classification result."
+msgstr ""
+
+#: ../raster/r.kappa/main.c:36
+#, fuzzy
+msgid "File name of classification result"
+msgstr "分類結果を出力するファイル"
+
+#: ../raster/r.kappa/main.c:42
+#, fuzzy
+msgid "File name of reference classes"
+msgstr "初期のクラスター数"
+
+#: ../raster/r.kappa/main.c:48
+#, fuzzy
+msgid "Name of an output file containing of error matrix and kappa"
+msgstr "最終レポートを出力するファイル"
+
+#: ../raster/r.kappa/main.c:54
+#, fuzzy
+msgid "Title for error matrix and kappa"
+msgstr "タイトル"
+
+#: ../raster/r.kappa/main.c:59
+#, fuzzy
+msgid "wide report, 132 columns (default: 80)"
+msgstr "レポート幅の拡大"
+
+#: ../raster/r.kappa/main.c:63
+#, fuzzy
+msgid "quiet"
+msgstr "説明なし"
+
+#: ../raster/r.kappa/main.c:67
+msgid "no header in the report"
+msgstr ""
+
+#: ../raster/r.los/main.c:62
+#, fuzzy
+msgid "Line-of-sight raster analysis program."
+msgstr "視線を変更したラスターマップを作成します"
+
+#: ../raster/r.los/main.c:71
+#, fuzzy
+msgid "Raster map containing elevation data"
+msgstr "入力するファイル"
+
+#: ../raster/r.los/main.c:78
+#, fuzzy
+msgid "Raster map name for storing results"
+msgstr "出力するファイル"
+
+#: ../raster/r.los/main.c:85
+#, fuzzy
+msgid "Coordinate identifying the viewing location"
+msgstr "始点座標"
+
+#: ../raster/r.los/main.c:91
+#, fuzzy
+msgid "Binary (1/0) raster map"
+msgstr "マスク"
+
+#: ../raster/r.los/main.c:99
+#, fuzzy
+msgid "Height of the viewing location"
+msgstr "視点の高さ"
+
+#: ../raster/r.los/main.c:107
+#, fuzzy
+msgid "Max distance from the viewing point (meters)"
+msgstr "視界の半径"
+
+#: ../raster/r.median/main.c:29
+#, fuzzy
+msgid ""
+"Finds the median of values in a cover map within areas assigned the same "
+"category value in a user-specified base map."
+msgstr "ベースマップにおける同一カテゴリー内でのカバーマップの平均値を計算します"
+
+#: ../raster/r.median/main.c:35 ../raster/r.statistics/main.c:50
+#, fuzzy
+msgid "Base raster map"
+msgstr "ベースマップ"
+
+#: ../raster/r.median/main.c:42 ../raster/r.statistics/main.c:57
+#, fuzzy
+msgid "Cover raster map"
+msgstr "カバーマップ"
+
+#: ../raster/r.median/main.c:49
+#, fuzzy
+msgid "Resultant raster map"
+msgstr "出力するファイル"
+
+#: ../raster/r.mfilter/main.c:33
+#, fuzzy
+msgid "Raster file matrix filter."
+msgstr "フィルタをかけたラスターマップを作成します"
+
+#: ../raster/r.mfilter/main.c:43 ../raster/r.resamp.rst/main.c:171
+#, fuzzy
+msgid "Name of the input raster file"
+msgstr "入力するファイル"
+
+#: ../raster/r.mfilter/main.c:51
+#, fuzzy
+msgid "Name of the output raster file"
+msgstr "出力するファイル"
+
+#: ../raster/r.mfilter/main.c:58
+#, fuzzy
+msgid "Name of the filter file"
+msgstr "フィルタ"
+
+#: ../raster/r.mfilter/main.c:66
+#, fuzzy
+msgid "Number of times to repeat the filter"
+msgstr "フィルタをかける回数"
+
+#: ../raster/r.mfilter/main.c:73
+#, fuzzy
+msgid "Output raster file title"
+msgstr "タイトル"
+
+#: ../raster/r.mfilter/main.c:89
+#, fuzzy
+msgid "Apply filter only to zero data values"
+msgstr "値0にのみフィルタを適用"
+
+#: ../raster/r.mode/main.c:27
+#, fuzzy
+msgid ""
+"Finds the mode of values in a cover map within areas assigned the same "
+"category value in a user-specified base map."
+msgstr "ベースマップにおける同一カテゴリー内でのカバーマップの平均値を計算します"
+
+#: ../raster/r.mode/main.c:33
+#, fuzzy
+msgid "Base map to be reclassified"
+msgstr "入力するファイル"
+
+#: ../raster/r.mode/main.c:40
+#, fuzzy
+msgid "Coverage map"
+msgstr "抽出するタイプ"
+
+#: ../raster/r.neighbors/main.c:56
+#, fuzzy
+msgid ""
+"Makes each cell category value a function of the category values assigned to "
+"the cells around it, and stores new cell values in an output raster map "
+"layer."
+msgstr ""
+"近傍点解析を行い"
+"新しいラスターマップ"
+"を作成します"
+
+#: ../raster/r.neighbors/main.c:66
+#, fuzzy
+msgid "Name of existing raster file"
+msgstr "入力するファイル"
+
+#: ../raster/r.neighbors/main.c:73 ../raster/r.series/main.c:101
+#, fuzzy
+msgid "Name of the new raster file"
+msgstr "出力するファイル"
+
+#: ../raster/r.neighbors/main.c:88
+#, fuzzy
+msgid "Neighborhood operation"
+msgstr "解析値"
+
+#: ../raster/r.neighbors/main.c:95
+#, fuzzy
+msgid "Neighborhood size"
+msgstr "近傍とする範囲"
+
+#: ../raster/r.neighbors/main.c:102
+#, fuzzy
+msgid "Title of the output raster file"
+msgstr "タイトル"
+
+#: ../raster/r.neighbors/main.c:106
+#, fuzzy
+msgid "Do not align output with the input"
+msgstr "現在の地域設定の使用"
+
+#: ../raster/r.out.arc/main.c:59
+#, fuzzy
+msgid "Converts a raster map layer into an ESRI ARCGRID file."
+msgstr "ラスターマップをESRI ARC/INFO ASCII-GRIDファイルとしてエクスポートします"
+
+#: ../raster/r.out.arc/main.c:68
+#, fuzzy
+msgid "Name of an existing raster map layer"
+msgstr "入力するファイル"
+
+#: ../raster/r.out.arc/main.c:75
+#, fuzzy
+msgid "Name of an output ARC-GID map (use out=- for stdout)"
+msgstr "出力するファイル"
+
+#: ../raster/r.out.arc/main.c:82
+#, fuzzy
+msgid "Number of decimal places"
+msgstr "小数点以下の有効桁数"
+
+#: ../raster/r.out.arc/main.c:86 ../raster/r.out.ascii/main.c:100
+#, fuzzy
+msgid "Suppress printing of header information"
+msgstr "ヘッダーを削除"
+
+#: ../raster/r.out.arc/main.c:91
+#, fuzzy
+msgid "List one entry per line instead of full row"
+msgstr "1項目ごとに改行"
+
+#: ../raster/r.out.ascii/main.c:61
+#, fuzzy
+msgid "Converts a raster map layer into an ASCII text file."
+msgstr "ラスターマップをASCII形式のファイルとしてエクスポートします"
+
+#: ../raster/r.out.ascii/main.c:77
+#, fuzzy
+msgid "Name of an output ASCII grid map (use out=- for stdout)"
+msgstr "出力するファイル"
+
+#: ../raster/r.out.ascii/main.c:83
+#, fuzzy
+msgid "Number of significant digits (floating point only)"
+msgstr "小数点以下の有効桁数"
+
+#: ../raster/r.out.ascii/main.c:89
+#, fuzzy
+msgid ""
+"Number of values printed before wrapping a line (only SURFER or MODFLOW "
+"format)"
+msgstr "読み込む桁数"
+
+#: ../raster/r.out.ascii/main.c:96
+#, fuzzy
+msgid "String to represent null cell (GRASS grid only)"
+msgstr "データのないセルに代入する記号"
+
+#: ../raster/r.out.ascii/main.c:104
+#, fuzzy
+msgid "Write SURFER (Golden Software) ASCII grid"
+msgstr "SURFER(Golden Software)用グリッドで出力"
+
+#: ../raster/r.out.ascii/main.c:108
+#, fuzzy
+msgid "Write MODFLOW (USGS) ASCII array"
+msgstr "MODFLOW(USGS)型の配列で出力"
+
+#: ../raster/r.out.ascii/main.c:112
+#, fuzzy
+msgid "Force output of integer values"
+msgstr "カテゴリー値を整数で出力"
+
+#: ../raster/r.out.bin/main.c:69
+#, fuzzy
+msgid "Exports a GRASS raster to a binary array."
+msgstr "ラスターマップをバイナリーファイルとしてエクスポートします"
+
+#: ../raster/r.out.bin/main.c:84
+#, fuzzy
+msgid "Name for output binary map (use out=- for stdout)"
+msgstr "出力するファイル"
+
+#: ../raster/r.out.bin/main.c:91
+#, fuzzy
+msgid "Value to write out for null"
+msgstr "NULL値に代入する値"
+
+#: ../raster/r.out.bin/main.c:95 ../raster/r.what/main.c:110
+#, fuzzy
+msgid "Output integer category values, not cell values"
+msgstr "セルの値ではなくカテゴリー値を出力"
+
+#: ../raster/r.out.bin/main.c:99
+#, fuzzy
+msgid "Export Array with GMT compatible header"
+msgstr "GMTファイルのヘッダーで出力"
+
+#: ../raster/r.out.bin/main.c:103
+#, fuzzy
+msgid "Generate BIL world and header files"
+msgstr "BILワールドファイルを作成"
+
+#: ../raster/r.out.bin/main.c:107
+#, fuzzy
+msgid "Byte Swap output"
+msgstr "強制ビット反転"
+
+#: ../raster/r.out.gridatb/main.c:48
+msgid "Exports GRASS raster map to GRIDATB.FOR map file (TOPMODEL)"
+msgstr ""
+
+#: ../raster/r.out.gridatb/main.c:52
+#, fuzzy
+msgid "Input map"
+msgstr "入力するファイル"
+
+#: ../raster/r.out.gridatb/main.c:65
+#, fuzzy
+msgid "Overwrite output map file"
+msgstr "出力するファイル"
+
+#: ../raster/r.out.mat/main.c:66
+#, fuzzy
+msgid "Exports a GRASS raster to a binary MAT-File."
+msgstr "ラスターマップをバイナリーファイルとしてエクスポートします"
+
+#: ../raster/r.out.mat/main.c:81
+#, fuzzy
+msgid "Name for the output binary MAT-File"
+msgstr "出力するファイル"
+
+#: ../raster/r.out.mat/main.c:98 ../raster/r.univar2/main.c:87
+#, fuzzy, c-format
+msgid "raster <%s> not found"
+msgstr "入力するファイル"
+
+#: ../raster/r.out.mat/main.c:105 ../raster/r.univar2/main.c:92
+#, c-format
+msgid "unable to open <%s>"
+msgstr ""
+
+#: ../raster/r.out.mpeg/main.c:389
+msgid "Raster File Series to MPEG Conversion Program."
+msgstr ""
+
+#: ../raster/r.out.mpeg/main.c:400
+#, fuzzy, c-format
+msgid "Raster file(s) for View%d"
+msgstr "色に用いるラスターマップ"
+
+#: ../raster/r.out.mpeg/main.c:410
+#, fuzzy
+msgid "Name for output file"
+msgstr "出力するファイル"
+
+#: ../raster/r.out.mpeg/main.c:420
+msgid "Quality factor (1 = highest quality, lowest compression)"
+msgstr ""
+
+#: ../raster/r.out.mpeg/main.c:424
+#, fuzzy
+msgid "Quiet - suppress progress report"
+msgstr "説明なし"
+
+#: ../raster/r.out.mpeg/main.c:428
+msgid ""
+"Convert on the fly, use less disk space\n"
+"\t(requires r.out.ppm with stdout option)"
+msgstr ""
+
+#: ../raster/r.out.pov/main.c:107
+#, fuzzy
+msgid "Converts a raster map layer into a height-field file for POVRAY."
+msgstr "ラスターマップをASCII形式のファイルとしてエクスポートします"
+
+#: ../raster/r.out.pov/main.c:122
+#, fuzzy
+msgid "Name of output povray file (TGA height field file)"
+msgstr "出力するファイル"
+
+#: ../raster/r.out.pov/main.c:128
+msgid "Height-field type (0=actual heights 1=normalized)"
+msgstr ""
+
+#: ../raster/r.out.pov/main.c:134
+msgid "Elevation bias"
+msgstr ""
+
+#: ../raster/r.out.pov/main.c:140 ../raster/r.param.scale/interface.c:107
+#, fuzzy
+msgid "Vertical scaling factor"
+msgstr "サイズ"
+
+#: ../raster/r.out.ppm/main.c:42
+#, fuzzy
+msgid ""
+"Converts a GRASS raster file to a PPM image file at the pixel resolution of "
+"the CURRENTLY DEFINED REGION."
+msgstr ""
+"ラスターマップをPPMファイルとして"
+"エクスポートします"
+
+#: ../raster/r.out.ppm/main.c:51
+#, fuzzy
+msgid "Raster input map"
+msgstr "目的ファイルを含むマップセット"
+
+#: ../raster/r.out.ppm/main.c:60 ../raster/r.out.ppm3/main.c:72
+#, fuzzy
+msgid "Name for new PPM file. (use out=- for stdout)"
+msgstr "出力するファイル"
+
+#: ../raster/r.out.ppm/main.c:68
+#, fuzzy
+msgid "Output greyscale instead of color"
+msgstr "グレースケールで出力"
+
+#: ../raster/r.out.ppm3/main.c:47
+#, fuzzy
+msgid ""
+"Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel "
+"resolution of the CURRENTLY DEFINED REGION."
+msgstr "ラスターマップをPPMファイルとしてエクスポートします"
+
+#: ../raster/r.out.ppm3/main.c:53
+#, fuzzy, c-format
+msgid "Name of raster map to be used for <%s>"
+msgstr "<%s>に対応させるラスターマップ"
+
+#: ../raster/r.out.ppm3/main.c:80
+msgid "Add comments to describe the region"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:46
+msgid ""
+"Extracts terrain parameters from a DEM. Uses a multi-scalar approach by "
+"taking fitting quadratic parameters to any size window (via least squares)"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:64
+#, fuzzy
+msgid "Raster surface layer to process"
+msgstr "出力するファイル"
+
+#: ../raster/r.param.scale/interface.c:70
+msgid "Output raster layer containing morphometric parameter"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:75
+#, fuzzy
+msgid "Slope tolerance that defines a 'flat' surface (degrees)"
+msgstr "傾斜値またはdx値を出力するファイル"
+
+#: ../raster/r.param.scale/interface.c:81
+msgid "Curvature tolerance that defines 'planar' surface"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:86
+#, c-format
+msgid "Size of processing window (odd number only, max: %i)"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:94
+msgid "Morphometric parameter in 'size' window to calculate"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:101
+msgid "Exponent for distance weighting (0.0-4.0)"
+msgstr ""
+
+#: ../raster/r.param.scale/interface.c:113
+msgid "Constrain model through central window cell"
+msgstr ""
+
+#: ../raster/r.patch/main.c:39
+#, fuzzy
+msgid ""
+"Creates a composite raster map layer by using known category values from one "
+"(or more) map layer(s) to fill in areas of \"no data\" in another map layer."
+msgstr ""
+"他のラスターマップによって"
+"パッチを作成します"
+
+#: ../raster/r.patch/main.c:51
+#, fuzzy
+msgid "Name of raster maps to be patched together"
+msgstr "入力するファイル"
+
+#: ../raster/r.patch/main.c:58
+#, fuzzy
+msgid "Name of the result map"
+msgstr "出力するファイル"
+
+#: ../raster/r.patch/main.c:68
+#, fuzzy
+msgid "Use zero (0) for transparency instead of NULL"
+msgstr "NULL値の代わりに値0を使用"
+
+#: ../raster/r.profile/main.c:56
+#, fuzzy
+msgid "Outputs the raster map layer values lying on user-defined line(s)."
+msgstr "指定した直線上でのラスターマップの値を出力します"
+
+#: ../raster/r.profile/main.c:72
+#, fuzzy
+msgid "Name of file for output (use output=- for stdout)"
+msgstr "出力するファイル"
+
+#: ../raster/r.profile/main.c:80
+#, fuzzy
+msgid "Profile Coordinate Pairs"
+msgstr "始点と終点(east,north,east,north)"
+
+#: ../raster/r.profile/main.c:87
+#, fuzzy
+msgid "Resolution along profile (default = current region resolution)"
+msgstr "値の読みとり間隔(デフォルト:現在の解像度)"
+
+#: ../raster/r.profile/main.c:94
+#, fuzzy
+msgid "Character to represent no data cell"
+msgstr "データのないセルに代入する記号"
+
+#: ../raster/r.profile/main.c:98
+#, fuzzy
+msgid "Interactively select End-Points"
+msgstr "対話形式で終点を選択"
+
+#: ../raster/r.profile/main.c:103 ../raster/r.transect/main.c:79
+#, fuzzy
+msgid "Output easting and northing in first two columns of four column output"
+msgstr "地理的座標を出力"
+
+#: ../raster/r.proj/main.c:138
+#, fuzzy
+msgid "Re-project a raster map from one location to the current location."
+msgstr "ラスターマップの投影変換を行います"
+
+#: ../raster/r.proj/main.c:144 ../raster/r.surf.idw/main.c:57
+#, fuzzy
+msgid "Input raster map"
+msgstr "入力するファイル"
+
+#: ../raster/r.proj/main.c:150
+#, fuzzy
+msgid "Location of input map"
+msgstr "目的ファイルを含むロケーション"
+
+#: ../raster/r.proj/main.c:156
+#, fuzzy
+msgid "Mapset of input map"
+msgstr "目的ファイルを含むマップセット"
+
+#: ../raster/r.proj/main.c:162
+#, fuzzy
+msgid "Path to GRASS database of input location"
+msgstr "目的ロケーションを含むデータベース"
+
+#: ../raster/r.proj/main.c:168 ../raster/r.surf.idw/main.c:64
+#, fuzzy
+msgid "Output raster map"
+msgstr "出力するファイル"
+
+#: ../raster/r.proj/main.c:178
+#, fuzzy
+msgid "Interpolation method to use"
+msgstr "補間方法"
+
+#: ../raster/r.proj/main.c:184
+#, fuzzy
+msgid "Resolution of output map"
+msgstr "解像度"
+
+#: ../raster/r.proj/main.c:188
+#, fuzzy
+msgid "List raster files in input location and exit"
+msgstr "目的ロケーション内のラスターマップ一覧表示"
+
+#: ../raster/r.proj/main.c:192
+msgid "Do not perform region cropping optimization"
+msgstr ""
+
+#: ../raster/r.quant/main.c:26
+msgid "This routine produces the quantization file for a floating-point map."
+msgstr ""
+
+#: ../raster/r.quant/main.c:34
+msgid "Base map to take quant rules from"
+msgstr ""
+
+#: ../raster/r.quant/main.c:42
+#, fuzzy
+msgid "Raster map(s) to be quantized"
+msgstr "対象マップ"
+
+#: ../raster/r.quant/main.c:47
+msgid "Floating point range: dmin,dmax"
+msgstr ""
+
+#: ../raster/r.quant/main.c:55
+msgid "Integer range: min,max"
+msgstr ""
+
+#: ../raster/r.quant/main.c:62
+msgid "Truncate floating point data"
+msgstr ""
+
+#: ../raster/r.quant/main.c:66
+#, fuzzy
+msgid "Round floating point data"
+msgstr "倍精度の浮動小数点データをインポート"
+
+#: ../raster/r.random/main.c:36
+#, fuzzy
+msgid ""
+"Creates a raster map layer and vector point map containing randomly located "
+"sites."
+msgstr "���."
+
+#: ../raster/r.random/main.c:51
+#, fuzzy
+msgid "The number of points to allocate"
+msgstr "抽出量(数またはパーセンテージ)"
+
+#: ../raster/r.random/main.c:58
+#, fuzzy
+msgid "Name of the output raster map"
+msgstr "出力するファイル(ラスターマップ)"
+
+#: ../raster/r.random/main.c:65
+#, fuzzy
+msgid "Name of the output vector points map"
+msgstr "���"
+
+#: ../raster/r.random/main.c:73
+#, fuzzy
+msgid "Generate sites for category zero also"
+msgstr "値0も抽出対象にする"
+
+#: ../raster/r.random/main.c:77
+#, fuzzy
+msgid "Report information about input raster and exit"
+msgstr "入力ファイルの情報を表示"
+
+#: ../raster/r.random.cells/main.c:33
+msgid "Generates random cell values with spatial dependence."
+msgstr ""
+
+#: ../raster/r.random.surface/main.c:30
+msgid "Generates random surface(s) with spatial dependence."
+msgstr ""
+
+#: ../raster/r.reclass/main.c:30
+#, fuzzy
+msgid ""
+"Creates a new map layer whose category values are based upon the user's "
+"reclassification of categories in an existing raster map layer."
+msgstr ""
+"現在あるラスターマップを再分類して、再分類ファイルを作成します"
+"再分類ファイルを作成します"
+
+#: ../raster/r.reclass/main.c:39
+#, fuzzy
+msgid "Raster map to be reclassified"
+msgstr "入力するファイル"
+
+#: ../raster/r.reclass/main.c:46 ../raster/r.recode/main.c:40
+#, fuzzy
+msgid "Name for the resulting raster map"
+msgstr "出力するファイル"
+
+#: ../raster/r.reclass/main.c:52 ../raster/r.recode/main.c:46
+#, fuzzy
+msgid "Title for the resulting raster map"
+msgstr "タイトル"
+
+#: ../raster/r.recode/main.c:26
+#, fuzzy
+msgid "Recode raster maps."
+msgstr "カバーマップ"
+
+#: ../raster/r.recode/main.c:33
+#, fuzzy
+msgid "Raster map to be recoded"
+msgstr "対象マップ"
+
+#: ../raster/r.recode/main.c:50
+#, fuzzy
+msgid "Align the current region to the input map"
+msgstr "現在の地域設定を使用"
+
+#: ../raster/r.recode/main.c:54
+msgid "Force output to double map type (DCELL)"
+msgstr ""
+
+#: ../raster/r.region/main.c:53
+#, fuzzy
+msgid "Sets the boundary definitions for a raster map."
+msgstr "対象地域の範囲や分解能を変更したり、デフォルトに戻すなどの管理を行います"
+
+#: ../raster/r.region/main.c:71
+#, fuzzy
+msgid "Set from current region"
+msgstr "デフォルト地域を選択"
+
+#: ../raster/r.region/main.c:75
+#, fuzzy
+msgid "Set from default region"
+msgstr "デフォルト地域を選択"
+
+#: ../raster/r.region/main.c:86
+#, fuzzy
+msgid "Raster map to change"
+msgstr "分解能を合わせるラスターマップ"
+
+#: ../raster/r.region/main.c:94
+#, fuzzy
+msgid "Set current region from named region"
+msgstr "設定に用いる地域定義ファイル"
+
+#: ../raster/r.region/main.c:102
+#, fuzzy
+msgid "Set region to match this raster map"
+msgstr "設定に用いるラスターマップ"
+
+#: ../raster/r.region/main.c:110
+#, fuzzy
+msgid "Set region to match this vector map"
+msgstr "設定に用いるベクトルマップ"
+
+#: ../raster/r.region/main.c:118
+#, fuzzy
+msgid "Set region to match this 3dview file"
+msgstr "設定に用いる3次元表示パラメータファイル"
+
+#: ../raster/r.region/main.c:126
+#, fuzzy
+msgid "Value for the northern edge"
+msgstr "東端"
+
+#: ../raster/r.region/main.c:134
+#, fuzzy
+msgid "Value for the southern edge"
+msgstr "北端"
+
+#: ../raster/r.region/main.c:142
+#, fuzzy
+msgid "Value for the eastern edge"
+msgstr "南端"
+
+#: ../raster/r.region/main.c:150
+#, fuzzy
+msgid "Value for the western edge"
+msgstr "西端"
+
+#: ../raster/r.region/main.c:158
+#, fuzzy
+msgid "Raster map to align to"
+msgstr "分解能を合わせるラスターマップ"
+
+#: ../raster/r.region/main.c:167 ../raster/r.region/main.c:224
+#: ../raster/r.region/main.c:359
+#, fuzzy, c-format
+msgid "raster map <%s> not found"
+msgstr "対象マップ"
+
+#: ../raster/r.region/main.c:169 ../raster/r.region/main.c:226
+#: ../raster/r.region/main.c:361
+#, c-format
+msgid "can't read header for <%s> in <%s>"
+msgstr ""
+
+#: ../raster/r.region/main.c:183
+#, c-format
+msgid "region <%s> not found"
+msgstr ""
+
+#: ../raster/r.region/main.c:185
+#, c-format
+msgid "can't read region <%s> in <%s>"
+msgstr ""
+
+#: ../raster/r.region/main.c:196
+#, c-format
+msgid "3dview file <%s> not found"
+msgstr ""
+
+#: ../raster/r.region/main.c:202
+#, c-format
+msgid "can't open 3dview file <%s> in <%s>"
+msgstr ""
+
+#: ../raster/r.region/main.c:206
+#, c-format
+msgid "can't read 3dview file <%s> in <%s>"
+msgstr ""
+
+#: ../raster/r.region/main.c:208
+#, c-format
+msgid "Old 3dview file. Region not found in <%s> in <%s>"
+msgstr ""
+
+#: ../raster/r.region/main.c:236
+#, fuzzy, c-format
+msgid "vector map <%s> not found"
+msgstr "���"
+
+#: ../raster/r.region/main.c:240
+#, c-format
+#, fuzzy
+msgid "can't open vector file <%s> in <%s>"
+msgstr "���"
+
+#: ../raster/r.region/main.c:370
+#, c-format
+msgid "invalid region: %s"
+msgstr ""
+
+#: ../raster/r.region/main.c:378
+msgid "unable to update boundaries"
+msgstr ""
+
+#: ../raster/r.report/main.c:15
+#, fuzzy
+msgid "Reports statistics for raster map layers."
+msgstr "ラスターマップに関する一連のレポートを作成します"
+
+#: ../raster/r.report/parse.c:44
+#, fuzzy
+msgid "Raster map(s) to report on"
+msgstr "対象マップ"
+
+#: ../raster/r.report/parse.c:52
+#, fuzzy
+msgid ""
+"mi(les),me(ters),k(ilometers),a(cres),h(ectares),c(ell_counts),p"
+"(ercent_cover)"
+msgstr "単位"
+
+#: ../raster/r.report/parse.c:60
+#, fuzzy
+msgid "Character representing no data cell value"
+msgstr "データのないセルに代入する記号"
+
+#: ../raster/r.report/parse.c:66
+#, fuzzy, c-format
+msgid "Page length (default: %d lines)"
+msgstr "1ページの行数"
+
+#: ../raster/r.report/parse.c:73
+#, fuzzy, c-format
+msgid "Page width (default: %d characters)"
+msgstr "1行の文字数"
+
+#: ../raster/r.report/parse.c:80
+#, fuzzy
+msgid "Name of an output file to hold the report"
+msgstr "出力するファイル"
+
+#: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:112
+#, fuzzy
+msgid "Number of fp subranges to collect stats from"
+msgstr "誤差の桁数"
+
+#: ../raster/r.report/parse.c:91
+#, fuzzy
+msgid "Suppress page headers"
+msgstr "ヘッダーの削除"
+
+#: ../raster/r.report/parse.c:95
+#, fuzzy
+msgid "Use formfeeds between pages"
+msgstr "フォームフィードの使用"
+
+#: ../raster/r.report/parse.c:103
+#, fuzzy
+msgid "Scientific format"
+msgstr "出力に指数を使用"
+
+#: ../raster/r.report/parse.c:107
+#, fuzzy
+msgid "Filter out all no data cells"
+msgstr "NULL値を対象に含まない"
+
+#: ../raster/r.report/parse.c:111
+#, fuzzy
+msgid "Filter out cells where all maps have no data"
+msgstr "すべてのマップでNULL値となっているセルを除く"
+
+#: ../raster/r.report/parse.c:115 ../raster/r.stats/main.c:161
+#, fuzzy
+msgid "Report for cats fp ranges (fp maps only)"
+msgstr "実数でレポートを出力"
+
+#: ../raster/r.report/parse.c:119
+#, fuzzy
+msgid "Read fp map as integer (use map's quant rules"
+msgstr "実数を整数に変換して使用"
+
+#: ../raster/r.resamp.rst/main.c:161
+#, fuzzy
+msgid ""
+"Reinterpolates and computes topographic analysis from input raster file to a "
+"new raster file (possibly with different resolution) using regularized "
+"spline with tension and smoothing."
+msgstr "���� ����."
+
+#: ../raster/r.resamp.rst/main.c:175
+#, fuzzy
+msgid "Do zeroes in input map represent elevation?"
+msgstr "入力ファイルの値０を標高に置き換える"
+
+#: ../raster/r.resamp.rst/main.c:181
+#, fuzzy
+msgid "Desired east-west resolution"
+msgstr "東西の格子間隔"
+
+#: ../raster/r.resamp.rst/main.c:187
+#, fuzzy
+msgid "Desired north-south resolution"
+msgstr "南北の格子間隔"
+
+#: ../raster/r.resamp.rst/main.c:194
+#, fuzzy
+msgid "Output z-file (elevation)"
+msgstr "標高を出力するファイル"
+
+#: ../raster/r.resamp.rst/main.c:201
+#, fuzzy
+msgid "Slope"
+msgstr "傾斜値またはdx値を出力するファイル"
+
+#: ../raster/r.resamp.rst/main.c:208
+#, fuzzy
+msgid "Aspect"
+msgstr "傾斜方位またはdy値を出力するファイル"
+
+#: ../raster/r.resamp.rst/main.c:215
+#, fuzzy
+msgid "Profile curvature"
+msgstr "断面曲率またはdxx値を出力するファイル"
+
+#: ../raster/r.resamp.rst/main.c:222
+#, fuzzy
+msgid "Tangential curvature"
+msgstr "正接曲率またはdyy値を出力するファイル"
+
+#: ../raster/r.resamp.rst/main.c:229
+#, fuzzy
+msgid "Mean curvature"
+msgstr "平均曲率またはdxy値を出力するファイル"
+
+#: ../raster/r.resamp.rst/main.c:233
+#, fuzzy
+msgid "Output partial derivatives instead"
+msgstr "傾斜値、傾斜方位、曲率の代わりに偏導関数を出力"
+
+#: ../raster/r.resamp.rst/main.c:240
+#, fuzzy
+msgid "Name of the cell file containing smoothing"
+msgstr "最終レポートを出力するファイル"
+
+#: ../raster/r.resamp.rst/main.c:247
+#, fuzzy
+msgid "Name of the raster file used as mask"
+msgstr "マスク"
+
+#: ../raster/r.resamp.rst/main.c:254
+msgid "Rows/columns overlap for segmentation"
+msgstr ""
+
+#: ../raster/r.resamp.rst/main.c:261
+#, fuzzy
+msgid "Conversion factor for z-values"
+msgstr "高さの強調"
+
+#: ../raster/r.resamp.rst/main.c:268
+#, fuzzy
+msgid "Tension"
+msgstr "テンション"
+
+#: ../raster/r.resamp.rst/main.c:274
+#, fuzzy
+msgid "Anisotropy angle (in degrees)"
+msgstr "異方性の角度"
+
+#: ../raster/r.resamp.rst/main.c:280
+#, fuzzy
+msgid "Anisotropy scaling factor"
+msgstr "異方性のスケールファクター"
+
+#: ../raster/r.resamp.rst/main.c:284
+#, fuzzy
+msgid "Use dnorm independent tension"
+msgstr "データの密度に依存しないテンションの使用"
+
+#: ../raster/r.resample/main.c:35
+#, fuzzy
+msgid "GRASS raster map layer data resampling capability."
+msgstr "ラスターマップのリサンプリングを行います"
+
+#: ../raster/r.resample/main.c:44
+#, fuzzy
+msgid "Name of an input layer"
+msgstr "入力するファイル"
+
+#: ../raster/r.resample/main.c:51
+#, fuzzy
+msgid "Name of an output layer"
+msgstr "出力するファイル"
+
+#: ../raster/r.rescale/main.c:35
+#, fuzzy
+msgid "Rescales the range of category values in a raster map layer."
+msgstr "ラスターマップのカテゴリー値の範囲を変更します"
+
+#: ../raster/r.rescale/main.c:45 ../raster/r.rescale.eq/main.c:46
+#, fuzzy
+msgid "The name of the raster map to be rescaled"
+msgstr "入力するファイル"
+
+#: ../raster/r.rescale/main.c:52 ../raster/r.rescale.eq/main.c:53
+#, fuzzy
+msgid "The input data range to be rescaled (default: full range of input map)"
+msgstr "元のカテゴリー値の範囲"
+
+#: ../raster/r.rescale/main.c:59 ../raster/r.rescale.eq/main.c:60
+#, fuzzy
+msgid "The resulting raster map name"
+msgstr "出力するファイル"
+
+#: ../raster/r.rescale/main.c:66 ../raster/r.rescale.eq/main.c:67
+#, fuzzy
+msgid "The output data range"
+msgstr "変更後のカテゴリー値の範囲"
+
+#: ../raster/r.rescale/main.c:73 ../raster/r.rescale.eq/main.c:74
+#, fuzzy
+msgid "Title for new raster map"
+msgstr "タイトル"
+
+#: ../raster/r.rescale.eq/main.c:36
+#, fuzzy
+msgid ""
+"Rescales histogram equalized the range of categoryvalues in a raster map "
+"layer."
+msgstr "ラスターマップのカテゴリー値の範囲を変更します"
+
+#: ../raster/r.series/main.c:84
+#, fuzzy
+msgid ""
+"Makes each output cell value a function of the values assigned to the "
+"corresponding cells in the input raster map layers."
+msgstr "近傍点解析を行い新しいラスターマップを作成します"
+
+#: ../raster/r.series/main.c:94
+#, fuzzy
+msgid "Names of existing raster files"
+msgstr "入力するファイル"
+
+#: ../raster/r.series/main.c:108
+#, fuzzy
+msgid "Aggregate operation"
+msgstr "説明なし"
+
+#: ../raster/r.series/main.c:116
+msgid "Propagate NULLs"
+msgstr ""
+
+#: ../raster/r.slope.aspect/main.c:134
+#, fuzzy
+msgid ""
+"Generates raster map layers of slope, aspect, curvatures and partial "
+"derivatives from a raster map layer of true elevation values. Aspect is "
+"calculated counterclockwise from east."
+msgstr ""
+"ラスターマップから"
+"傾斜の大きさと方位についての"
+"新たなラスターマップを作成します"
+
+#: ../raster/r.slope.aspect/main.c:143
+#, fuzzy
+msgid "Raster elevation file name"
+msgstr "入力するファイル"
+
+#: ../raster/r.slope.aspect/main.c:151
+#, fuzzy
+msgid "Output slope filename"
+msgstr "傾斜の大きさを出力するファイル"
+
+#: ../raster/r.slope.aspect/main.c:159
+#, fuzzy
+msgid "Format for reporting the slope"
+msgstr "���"
+
+#: ../raster/r.slope.aspect/main.c:167
+#, fuzzy
+msgid "Type of output aspect and slope maps"
+msgstr "����� ���"
+
+#: ../raster/r.slope.aspect/main.c:175
+#, fuzzy
+msgid "Output aspect filename"
+msgstr "傾斜の方位を出力するファイル"
+
+#: ../raster/r.slope.aspect/main.c:183
+#, fuzzy
+msgid "Output profile curvature filename"
+msgstr "断面曲率を出力するファイル"
+
+#: ../raster/r.slope.aspect/main.c:191
+#, fuzzy
+msgid "Output tangential curvature filename"
+msgstr "正接曲率を出力するファイル"
+
+#: ../raster/r.slope.aspect/main.c:199
+#, fuzzy
+msgid "Output first order partial derivative dx (E-W slope) filename"
+msgstr "���"
+
+#: ../raster/r.slope.aspect/main.c:207
+#, fuzzy
+msgid "Output first order partial derivative dy (N-S slope) filename"
+msgstr "���"
+
+#: ../raster/r.slope.aspect/main.c:215
+#, fuzzy
+msgid "Output second order partial derivative dxx filename"
+msgstr "dxx値の偏導関数を出力するファイル"
+
+#: ../raster/r.slope.aspect/main.c:223
+#, fuzzy
+msgid "Output second order partial derivative dyy filename"
+msgstr "dyy値の偏導関数を出力するファイル"
+
+#: ../raster/r.slope.aspect/main.c:231
+#, fuzzy
+msgid "Output second order partial derivative dxy filename"
+msgstr "dxy値の偏導関数を出力するファイル"
+
+#: ../raster/r.slope.aspect/main.c:235
+#, fuzzy
+msgid "Multiplicative factor to convert elevation units to meters"
+msgstr "高さの強調"
+
+#: ../raster/r.slope.aspect/main.c:242
+#, fuzzy
+msgid "Minimum slope val. (in percent) for which aspect is computed"
+msgstr "傾斜の最小値"
+
+#: ../raster/r.slope.aspect/main.c:249
+#, fuzzy
+msgid "Do not align the current region to the elevation layer"
+msgstr "現在の地域設定を使用"
+
+#: ../raster/r.statistics/main.c:43
+#, fuzzy
+msgid "Category or object oriented statistics."
+msgstr "マップのカテゴリー値について統計解析を行います"
+
+#: ../raster/r.statistics/main.c:72
+#, fuzzy
+msgid "Method of object-based statistic"
+msgstr "統計解析方法"
+
+#: ../raster/r.statistics/main.c:79
+#, fuzzy
+msgid "Resultant raster map (not used with 'distribution')"
+msgstr "出力するファイル"
+
+#: ../raster/r.statistics/main.c:84
+#, fuzzy
+msgid "Cover values extracted from the category labels of the cover map"
+msgstr "カテゴリー値の代わりにカテゴリーラベルを使用"
+
+#: ../raster/r.stats/main.c:70
+#, fuzzy
+msgid "Generates area statistics for raster map layers."
+msgstr "ラスターマップにおいて統計解析を行います"
+
+#: ../raster/r.stats/main.c:80
+#, fuzzy
+msgid "Raster input maps(s)"
+msgstr "入力するファイル"
+
+#: ../raster/r.stats/main.c:97
+#, fuzzy
+msgid "String representing no data cell value"
+msgstr "データのないセルに代入する記号"
+
+#: ../raster/r.stats/main.c:104
+#, fuzzy
+msgid "Output file name"
+msgstr "出力するファイル"
+
+#: ../raster/r.stats/main.c:121
+#, fuzzy
+msgid "One cell (range) per line"
+msgstr "1項目ごとに改行"
+
+#: ../raster/r.stats/main.c:125
+#, fuzzy
+msgid "Print area totals"
+msgstr "総面積(平方メートル)を出力"
+
+#: ../raster/r.stats/main.c:129
+#, fuzzy
+msgid "Print cell counts"
+msgstr "総セル数の出力"
+
+#: ../raster/r.stats/main.c:133
+#, fuzzy
+msgid "Print APPROXIMATE percents (total percent may not be 100%)"
+msgstr "占有率(%)を出力"
+
+#: ../raster/r.stats/main.c:137
+#, fuzzy
+msgid "Print category labels"
+msgstr "カテゴリーラベルの出力"
+
+#: ../raster/r.stats/main.c:145
+#, fuzzy
+msgid "Suppress reporting of any NULLs"
+msgstr "Null値の情報を除く"
+
+#: ../raster/r.stats/main.c:149
+#, fuzzy
+msgid "Suppress reporting of NULLs when all values are NULL"
+msgstr "すべてNULL値ならばレポートを作成しない"
+
+#: ../raster/r.stats/main.c:153
+#, fuzzy
+msgid "Print grid coordinates (east and north)"
+msgstr "格子点の座標を出力"
+
+#: ../raster/r.stats/main.c:157
+#, fuzzy
+msgid "Print x and y (column and row)"
+msgstr "座標成分を出力"
+
+#: ../raster/r.stats/main.c:165
+#, fuzzy
+msgid "Print raw indexes of fp ranges (fp maps only)"
+msgstr "実数でインデックスを出力"
+
+#: ../raster/r.stats/main.c:169
+#, fuzzy
+msgid "Read fp map as integer (use map's quant rules)"
+msgstr "実数を整数に変換して使用"
+
+#: ../raster/r.sum/main.c:31
+msgid "Sums up the raster cell values."
+msgstr ""
+
+#: ../raster/r.sum/main.c:38
+#, fuzzy
+msgid "Name of incidence or density file."
+msgstr "出力するファイル"
+
+#: ../raster/r.sun/main.c:156
+#, fuzzy
+msgid ""
+"Computes direct (beam), diffuse and reflected solar irradiation raster maps "
+"for given day, latitude, surface and atmospheric conditions. Solar "
+"parameters (e.g. sunrise, sunset times, declination, extraterrestrial "
+"irradiance, daylight length) are saved in a local text file. Alternatively, "
+"a local time can be specified to compute solar incidence angle and/or "
+"irradiance raster maps. The shadowing effect of the topography is optionally "
+"incorporated."
+msgstr "緯度 (dd:mm:ss{N|S})."
+
+#: ../raster/r.sun/main.c:184
+#, fuzzy
+msgid "Name of the elevation raster file"
+msgstr "入力するファイル"
+
+#: ../raster/r.sun/main.c:191
+#, fuzzy
+msgid "Name of the aspect raster file"
+msgstr "�����"
+
+#: ../raster/r.sun/main.c:198
+#, fuzzy
+msgid "Name of the slope raster file"
+msgstr "���"
+
+#: ../raster/r.sun/main.c:206
+#, fuzzy
+msgid "Name of the Linke turbidity coefficient raster file"
+msgstr "入力するファイル"
+
+#: ../raster/r.sun/main.c:215
+msgid "A single value of the Linke turbidity coefficient"
+msgstr ""
+
+#: ../raster/r.sun/main.c:223
+#, fuzzy
+msgid "Name of the albedo coefficient raster file"
+msgstr "入力するファイル"
+
+#: ../raster/r.sun/main.c:231
+msgid "A single value of the albedo coefficient"
+msgstr ""
+
+#: ../raster/r.sun/main.c:239
+#, fuzzy
+msgid "Name of the latitude raster file"
+msgstr "緯度 (dd:mm:ss{N|S})"
+
+#: ../raster/r.sun/main.c:246
+#, fuzzy
+msgid "A single value of latitude"
+msgstr "緯度 (dd:mm:ss{N|S})"
+
+#: ../raster/r.sun/main.c:254
+msgid "The real-sky beam radiation coefficient file"
+msgstr ""
+
+#: ../raster/r.sun/main.c:262
+msgid "The real-sky diffuse radiation coefficient file"
+msgstr ""
+
+#: ../raster/r.sun/main.c:269
+#, fuzzy
+msgid "Output incidence angle file (raster)"
+msgstr "出力するファイル"
+
+#: ../raster/r.sun/main.c:277
+msgid "Output direct (beam) irradiance/irradiation file (raster)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:284
+#, fuzzy
+msgid "Output insolation time file (raster)"
+msgstr "出力するファイル"
+
+#: ../raster/r.sun/main.c:292
+msgid "Output diffuse irradiance/irradiation file (raster)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:300
+msgid "Output reflected irradiance/irradiation file (raster)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:306
+msgid "No. of day of the year (1-365)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:313
+msgid "Time step computing all-day radiation"
+msgstr ""
+
+#: ../raster/r.sun/main.c:320
+msgid "Required declination value (overriding the internal value)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:327
+msgid "Local (solar) time [decimal hours]"
+msgstr ""
+
+#: ../raster/r.sun/main.c:334
+msgid "Sampling distance step coefficient (0.5-1.5)"
+msgstr ""
+
+#: ../raster/r.sun/main.c:339
+msgid "Incorporate the shadowing effect of terrain"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:109
+msgid ""
+"Calculates cast shadow areas from sun position and DEM. Either A: exact sun "
+"position is specified, or B: date/time to calculate the sun position by r."
+"sunmask itself."
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:119
+#, fuzzy
+msgid "Name of elevation raster map"
+msgstr "対象マップ"
+
+#: ../raster/r.sunmask/main.c:127
+#, fuzzy
+msgid "Output raster map having shadows"
+msgstr "出力するファイル"
+
+#: ../raster/r.sunmask/main.c:134
+msgid "A: altitude of the sun above horizon, degrees"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:141
+msgid "A: azimuth of the sun from the north, degrees"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:147
+msgid "B: year (1950..2050)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:153
+msgid "B: month (0..12)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:159
+msgid "B: day (0..31)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:165
+msgid "B: hour (0..24)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:171
+msgid "B: minutes (0..60)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:177
+msgid "B: seconds (0..60)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:183
+msgid ""
+"B: timezone (east positive, offset from GMT, also use to adjust daylight "
+"savings)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:190
+msgid "east coordinate (point of interest, default: map center)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:197
+msgid "north coordinate (point of interest, default: map center)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:201
+#, fuzzy
+msgid "Zero is a real elevation"
+msgstr "標高に用いるラスターマップ"
+
+#: ../raster/r.sunmask/main.c:205
+msgid "verbose output (also print out sun position etc.)"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:209
+msgid "calculate sun position only and exit"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:213
+#, fuzzy
+msgid "Print the sun position output in shell script style"
+msgstr "現在の設定を表示(シェルスクリプト)"
+
+#: ../raster/r.sunmask/main.c:225
+#, fuzzy
+msgid "Using map center coordinates\n"
+msgstr "現在の中心座標を表示"
+
+#: ../raster/r.sunmask/main.c:234
+msgid "Empty east coordinate specified!"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:236
+msgid "Empty north coordinate specified!"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:255
+msgid "Either define sun position or location/date/time parameters."
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:258
+msgid ""
+"Neither sun position nor east/north, date/time/timezone definition are "
+"complete."
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:263
+#, c-format
+msgid "Calculating sun position... (using solpos (V. %s) from NREL)\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:268
+msgid ""
+"Using user defined sun azimuth, altitude settings (ignoring eventual other "
+"values)\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:338
+#, c-format
+msgid " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:342
+#, c-format
+msgid " long: %f, lat: %f, timezone: %f\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:343
+#, c-format
+msgid ""
+" Solar position: sun azimuth: %f,\n"
+"   sun angle above horz.(refraction corrected): %f\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:347
+#, c-format
+msgid " Sunrise time (without refraction): %02d:%02d:%02d\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:348
+#, c-format
+msgid " Sunset time  (without refraction): %02d:%02d:%02d\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:357
+msgid "Please correct settings."
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:374
+#, c-format
+msgid "Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)!\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:377
+#, c-format
+msgid "Time (%02i:%02i:%02i) is before sunrise!\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:379 ../raster/r.sunmask/main.c:388
+msgid "Nothing to calculate. Please verify settings."
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:384
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)!\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:387
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset!\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:394
+msgid "No map calculation requested. Finished.\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:401
+msgid "You already know the sun position.\n"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:409 ../raster/r.sunmask/main.c:411
+#, c-format
+msgid "can't open %s"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:421
+#, c-format
+msgid "can't open range file for %s"
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:438
+msgid "Calculating shadows from DEM..."
+msgstr ""
+
+#: ../raster/r.sunmask/main.c:446
+#, fuzzy
+msgid "can't read row in input elevation map"
+msgstr "入力するファイル"
+
+#: ../raster/r.sunmask/main.c:511
+msgid "Finished.\n"
+msgstr ""
+
+#: ../raster/r.surf.area/main.c:89
+#, fuzzy
+msgid "Surface area estimation for rasters."
+msgstr "ラスターマップにおいて統計解析を行います"
+
+#: ../raster/r.surf.area/main.c:97
+#, fuzzy
+msgid "Raster file for surface"
+msgstr "色に用いるラスターマップ"
+
+#: ../raster/r.surf.area/main.c:104
+msgid "Vertical scale"
+msgstr ""
+
+#: ../raster/r.surf.contour/main.c:34
+#, fuzzy
+msgid "Surface generation program from rasterized contours."
+msgstr "ラスター形式の等高線図から曲面を推定します"
+
+#: ../raster/r.surf.contour/main.c:41
+#, fuzzy
+msgid "Name of existing raster map containing contours"
+msgstr "入力するファイル"
+
+#: ../raster/r.surf.contour/main.c:48
+#, fuzzy
+msgid "Output elevation raster map"
+msgstr "出力するファイル"
+
+#: ../raster/r.surf.contour/main.c:52
+#, fuzzy
+msgid "Invoke fast, but memory intensive operation"
+msgstr "高速計算(大きなメモリが必要)"
+
+#: ../raster/r.surf.fractal/interface.c:33
+msgid ""
+"GRASS module to create a fractal surface of a given fractal dimension. Uses "
+"spectral synthesis method. Can create intermediate layers showing the build "
+"up of different spectral coefficients (see Saupe, pp.106-107 for an example "
+"of this). Use this module to generate naturally looking synthetical "
+"elevation models (DEM)."
+msgstr ""
+
+#: ../raster/r.surf.fractal/interface.c:54
+#, fuzzy
+msgid "Name of fractal surface raster layer"
+msgstr "出力するファイル"
+
+#: ../raster/r.surf.fractal/interface.c:59
+msgid "Fractal dimension of surface (2 < D < 3)"
+msgstr ""
+
+#: ../raster/r.surf.fractal/interface.c:65
+#, fuzzy
+msgid "Number of intermediate images to produce"
+msgstr "補間に用いる近傍点"
+
+#: ../raster/r.surf.gauss/main.c:38
+msgid ""
+"GRASS module to produce a raster map layer of gaussian deviates whose mean "
+"and standard deviation can be expressed by the user. It uses a gaussian "
+"random number generator."
+msgstr ""
+
+#: ../raster/r.surf.gauss/main.c:54 ../raster/r.surf.random/main.c:49
+#, fuzzy
+msgid "Name of the random surface to be produced"
+msgstr "入力するファイル"
+
+#: ../raster/r.surf.gauss/main.c:59
+msgid "Distribution mean"
+msgstr ""
+
+#: ../raster/r.surf.gauss/main.c:64
+msgid "Standard deviation"
+msgstr ""
+
+#: ../raster/r.surf.idw/main.c:51
+#, fuzzy
+msgid "Surface interpolation utility for raster map layers."
+msgstr "データ点から補間計算により曲面を推定します"
+
+#: ../raster/r.surf.idw/main.c:71 ../raster/r.surf.idw2/main.c:64
+#, fuzzy
+msgid "Number of interpolation points"
+msgstr "補間に用いる近傍点"
+
+#: ../raster/r.surf.idw/main.c:76
+#, fuzzy
+msgid "Output is the interpolation error"
+msgstr "誤差を出力"
+
+#: ../raster/r.surf.idw2/main.c:43
+#, fuzzy
+msgid "Surface generation program."
+msgstr "データ点から補間計算により曲面を推定します"
+
+#: ../raster/r.surf.idw2/main.c:49 ../raster/r.water.outlet/main.c:40
+#, fuzzy
+msgid "Name of input raster map"
+msgstr "入力するファイル"
+
+#: ../raster/r.surf.idw2/main.c:56
+#, fuzzy
+msgid "Name of output raster map"
+msgstr "出力するファイル"
+
+#: ../raster/r.surf.random/main.c:34
+msgid ""
+"Produces a raster map layer of uniform random deviates whose range can be "
+"expressed by the user."
+msgstr ""
+
+#: ../raster/r.surf.random/main.c:54
+#, fuzzy
+msgid "Minimum random value"
+msgstr "最小値"
+
+#: ../raster/r.surf.random/main.c:59
+#, fuzzy
+msgid "Maximum random value"
+msgstr "最大値"
+
+#: ../raster/r.texture/main.c:72
+#, fuzzy
+msgid "Generate images with textural features from a raster map"
+msgstr "サイトマップをラスターマップに変換します"
+
+#: ../raster/r.texture/main.c:81
+#, fuzzy
+msgid "Name of the input raster map"
+msgstr "入力するファイル"
+
+#: ../raster/r.texture/main.c:88
+#, fuzzy
+msgid "Name of the ouput raster map"
+msgstr "出力するファイル(ラスターマップ)"
+
+#: ../raster/r.texture/main.c:95
+msgid "The size of the sliding window (odd and >= 3)"
+msgstr ""
+
+#: ../raster/r.texture/main.c:104
+msgid "The distance between two samples (>= 1)"
+msgstr ""
+
+#: ../raster/r.texture/main.c:110
+msgid "Normalized"
+msgstr ""
+
+#: ../raster/r.texture/main.c:118
+msgid "Angular Second Moment"
+msgstr ""
+
+#: ../raster/r.texture/main.c:122
+msgid "Contrast"
+msgstr ""
+
+#: ../raster/r.texture/main.c:126
+msgid "Correlation"
+msgstr ""
+
+#: ../raster/r.texture/main.c:130
+msgid "Variance"
+msgstr ""
+
+#: ../raster/r.texture/main.c:134
+msgid "Inverse Diff Moment"
+msgstr ""
+
+#: ../raster/r.texture/main.c:138
+msgid "Sum Average"
+msgstr ""
+
+#: ../raster/r.texture/main.c:142
+msgid "Sum Variance"
+msgstr ""
+
+#: ../raster/r.texture/main.c:146
+msgid "Sum Entropy"
+msgstr ""
+
+#: ../raster/r.texture/main.c:150
+msgid "Entropy"
+msgstr ""
+
+#: ../raster/r.texture/main.c:154
+msgid "Difference Variance"
+msgstr ""
+
+#: ../raster/r.texture/main.c:158
+msgid "Difference Entropy"
+msgstr ""
+
+#: ../raster/r.texture/main.c:162
+msgid "Measure of Correlation-1"
+msgstr ""
+
+#: ../raster/r.texture/main.c:167
+msgid "Measure of Correlation-2"
+msgstr ""
+
+#: ../raster/r.texture/main.c:171
+msgid "Max Correlation Coeff"
+msgstr ""
+
+#: ../raster/r.thin/main.c:34
+#, fuzzy
+msgid "Thins non-zero cells that denote linear features in a raster map layer."
+msgstr "図形を細線化したラスターマップを作成します"
+
+#: ../raster/r.timestamp/main.c:19
+msgid "Print/add/remove a timestamp for a raster map."
+msgstr ""
+
+#: ../raster/r.timestamp/main.c:33
+#, fuzzy
+msgid "Datetime, datetime1/datetime2, or none"
+msgstr "タイムスタンプ"
+
+#: ../raster/r.to.vect/main.c:28
+#, fuzzy
+msgid "Converts a raster map into a vector map layer."
+msgstr "���."
+
+#: ../raster/r.to.vect/main.c:36
+#, fuzzy
+msgid "raster input file"
+msgstr "出力するファイル"
+
+#: ../raster/r.to.vect/main.c:47
+#, fuzzy
+msgid "Feature type"
+msgstr "ファイルの種類"
+
+#: ../raster/r.to.vect/main.c:51
+#, fuzzy
+msgid "Smooth Corners"
+msgstr "平滑化"
+
+#: ../raster/r.to.vect/main.c:55
+msgid "Use raster values as categories instead of unique sequence (CELL only)"
+msgstr ""
+
+#: ../raster/r.topidx/main.c:46
+msgid "Creates topographic index, ln(a/tan(beta)), map from elevation map."
+msgstr ""
+
+#: ../raster/r.topidx/main.c:50
+#, fuzzy
+msgid "Elevation map"
+msgstr "入力するファイル"
+
+#: ../raster/r.topidx/main.c:57
+msgid "Topographic index ln(a/tanB) map"
+msgstr ""
+
+#: ../raster/r.topidx/main.c:64
+#, fuzzy
+msgid "Output verbosely"
+msgstr "説明つき表示"
+
+#: ../raster/r.topmodel/main.c:63
+msgid "Simulates TOPMODEL which is physically based hydrologic model."
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:69
+msgid "(i)   Rectangular elevation map"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:77
+msgid "(i)   Basin map created by r.water.outlet"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:85
+msgid "(o)   Depressionless elevation map"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:93
+msgid "(o)   Direction map with depressionless elevation map"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:101
+msgid "(i/o) Basin elevation map (extracted)"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:109
+msgid "(i/o) Topographic index ln(a/tanB) map (extracted)"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:117
+msgid "(i)   Number of topographic index classes"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:125
+msgid "(i/o) Topographic index statistics file"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:132
+msgid "(i)   TOPMODEL Parameters file"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:139
+msgid "(i)   Rainfall and potential evapotranspiration data file"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:146
+#, fuzzy
+msgid "(o)   Output file"
+msgstr "出力するファイル"
+
+#: ../raster/r.topmodel/main.c:153
+msgid "      Observed Q file"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:160
+msgid "      output for given time step"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:167
+msgid "      output for given topographic index class"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:176
+msgid "Input data given for (i/o)"
+msgstr ""
+
+#: ../raster/r.topmodel/main.c:181
+#, fuzzy
+msgid "Overwrite outputs"
+msgstr "上書き"
+
+#: ../raster/r.topmodel/main.c:186
+msgid "Wide output"
+msgstr ""
+
+#: ../raster/r.transect/main.c:34
+#, fuzzy
+msgid "Outputs raster map layer values lying along user defined transect line(s)."
+msgstr "指定した直線上でのラスターマップの値を出力します"
+
+#: ../raster/r.transect/main.c:40
+#, fuzzy
+msgid "Raster map to be queried"
+msgstr "対象マップ"
+
+#: ../raster/r.transect/main.c:58
+#, fuzzy
+msgid "Transect definition"
+msgstr "直線の設定"
+
+#: ../raster/r.transect/main.c:67 ../raster/r.what/main.c:90
+#, fuzzy
+msgid "Char string to represent no data cell"
+msgstr "データのないセルに代入する記号"
+
+#: ../raster/r.univar2/main.c:55
+msgid "Calculates univariate statistics from the non-null cells of a raster map."
+msgstr ""
+
+#: ../raster/r.univar2/main.c:68
+#, fuzzy
+msgid "Quiet mode"
+msgstr "説明なし"
+
+#: ../raster/r.univar2/main.c:72
+#, fuzzy
+msgid "Print the stats in shell script style"
+msgstr "現在の設定を表示(シェルスクリプト)"
+
+#: ../raster/r.water.outlet/main.c:33
+#, fuzzy
+msgid "Watershed basin creation program."
+msgstr "分水域の解析を行います"
+
+#: ../raster/r.water.outlet/main.c:55
+#, fuzzy
+msgid "The map E  grid coordinates"
+msgstr "始点の座標値"
+
+#: ../raster/r.water.outlet/main.c:63
+#, fuzzy
+msgid "The map N grid coordinates"
+msgstr "始点の座標値"
+
+#: ../raster/r.watershed/front/main.c:35
+#, fuzzy
+msgid "Watershed basin analysis program."
+msgstr "分水域の解析を行います"
+
+#: ../raster/r.watershed/front/main.c:39
+#, fuzzy
+msgid "Input map: elevation on which entire analysis is based"
+msgstr "入力:標高を示すファイル"
+
+#: ../raster/r.watershed/front/main.c:46
+#, fuzzy
+msgid "Input map: locations of real depressions"
+msgstr "入力:地盤沈下量を示すファイル"
+
+#: ../raster/r.watershed/front/main.c:53
+#, fuzzy
+msgid "Input map: amount of overland flow per cell"
+msgstr "入力:1セルの流量を示すファイル"
+
+#: ../raster/r.watershed/front/main.c:60
+#, fuzzy
+msgid "Input map or value: percent of disturbed land, for USLE"
+msgstr "入力:開発地域の割合を示すファイル"
+
+#: ../raster/r.watershed/front/main.c:67
+#, fuzzy
+msgid "Input map: terrain blocking overland surface flow, for USLE"
+msgstr "入力:表面流でブロック化した地形を示すファイル"
+
+#: ../raster/r.watershed/front/main.c:74
+#, fuzzy
+msgid "Input value: minimum size of exterior watershed basin"
+msgstr "外側の分水域の最小セル数"
+
+#: ../raster/r.watershed/front/main.c:81
+#, fuzzy
+msgid "Input value: maximum length of surface flow, for USLE"
+msgstr "表面流の最大長(単位:メートル)"
+
+#: ../raster/r.watershed/front/main.c:88
+#, fuzzy
+msgid "Output map: number of cells that drain through each cell"
+msgstr "出力：流れ出るセル数を示すファイル"
+
+#: ../raster/r.watershed/front/main.c:95
+#, fuzzy
+msgid "Output map: drainage direction"
+msgstr "出力:排出方向を示すファイル"
+
+#: ../raster/r.watershed/front/main.c:102
+#, fuzzy
+msgid "Output map: unique label for each watershed basin"
+msgstr "出力:分水域のラベルファイル"
+
+#: ../raster/r.watershed/front/main.c:109
+#, fuzzy
+msgid "Output map: stream segments"
+msgstr "出力:河川を示すファイル"
+
+#: ../raster/r.watershed/front/main.c:116
+#, fuzzy
+msgid "Output map: each half-basin is given a unique value"
+msgstr "出力:半盆地のラベルファイル"
+
+#: ../raster/r.watershed/front/main.c:123
+#, fuzzy
+msgid "Output map: useful for visual display of results"
+msgstr "出力:結果を可視化したファイル"
+
+#: ../raster/r.watershed/front/main.c:130
+#, fuzzy
+msgid "Output map: slope length and steepness (LS) factor for USLE"
+msgstr "出力:斜面長と斜面勾配(LSファクター)を示すファイル"
+
+#: ../raster/r.watershed/front/main.c:137
+#, fuzzy
+msgid "Output map: slope steepness (S) factor for USLE"
+msgstr "出力:RUSLE用の斜面勾配(Sファクター)を示すファイル"
+
+#: ../raster/r.watershed/front/main.c:144
+#, fuzzy
+msgid "Enable extend memory option: Operation is slow"
+msgstr "仮想メモリを使用"
+
+#: ../raster/r.watershed/front/main.c:148
+#, fuzzy
+msgid "Allow only horizontal and vertical flow of water"
+msgstr "水平及び垂直な流れのみ処理"
+
+#: ../raster/r.what/main.c:67
+#, fuzzy
+msgid "Queries raster map layers on their category values and category labels."
+msgstr "ファイルで指定した位置でのラスターマップのカテゴリー情報を表示します"
+
+#: ../raster/r.what/main.c:75
+#, fuzzy
+msgid "Name of existing raster map(s) to query"
+msgstr "入力するファイル"
+
+#: ../raster/r.what/main.c:82
+#, fuzzy
+msgid "Size of point cache"
+msgstr "ポイントキャッシュのサイズ"
+
+#: ../raster/r.what/main.c:98
+#, fuzzy
+msgid "Coordinates for query"
+msgstr "指定する位置座標"
+
+#: ../raster/r.what/main.c:102
+#, fuzzy
+msgid "Show the category label in the grid cell(s)"
+msgstr "格子セルでのラベルを表示"
+
+#: ../raster/r.what/main.c:106
+#, fuzzy
+msgid "Turn on cache reporting"
+msgstr "キャッシュレポートを記録"
+
+#: ../raster/wildfire/r.ros/main.c:221
+msgid ""
+"Generates three, or four raster map layers showing 1) the base "
+"(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the "
+"direction of the maximum ROS, and optionally 4) the maximum potential "
+"spotting distance."
+msgstr ""
+
+#: ../raster/wildfire/r.ros/main.c:231
+#, fuzzy
+msgid "Name of raster map containing fuel MODELs"
+msgstr "出力するファイル"
+
+#: ../raster/wildfire/r.ros/main.c:237
+#, fuzzy
+msgid "Name of raster map containing the 1-HOUR fuel MOISTURE (%)"
+msgstr "出力するファイル"
+
+#: ../raster/wildfire/r.ros/main.c:243
+#, fuzzy
+msgid "Name of raster map containing the 10-HOUR fuel MOISTURE (%)"
+msgstr "出力するファイル"
+
+#: ../raster/wildfire/r.ros/main.c:249
+#, fuzzy
+msgid "Name of raster map containing the 100-HOUR fuel MOISTURE (%)"
+msgstr "出力するファイル"
+
+#: ../raster/wildfire/r.ros/main.c:256
+#, fuzzy
+msgid "Name of raster map containing LIVE fuel MOISTURE (%)"
+msgstr "出力するファイル"
+
+#: ../raster/wildfire/r.ros/main.c:262
+#, fuzzy
+msgid "Name of raster map containing midflame wind VELOCITYs (ft/min)"
+msgstr "入力するファイル"
+
+#: ../raster/wildfire/r.ros/main.c:268
+#, fuzzy
+msgid "Name of raster map containing wind DIRECTIONs (degree)"
+msgstr "入力するファイル"
+
+#: ../raster/wildfire/r.ros/main.c:274
+#, fuzzy
+msgid "Name of raster map containing SLOPE (degree)"
+msgstr "出力するファイル"
+
+#: ../raster/wildfire/r.ros/main.c:280
+#, fuzzy
+msgid "Name of raster map containing ASPECT (degree, anti-clockwise from E)"
+msgstr "入力するファイル"
+
+#: ../raster/wildfire/r.ros/main.c:286
+#, fuzzy
+msgid "Name of raster map containing ELEVATION (m) (required w/ -s)"
+msgstr "出力するファイル"
+
+#: ../raster/wildfire/r.ros/main.c:293
+#, fuzzy
+msgid "Name of raster map to contain results (several new layers)"
+msgstr "出力するファイル"
+
+#: ../raster/wildfire/r.ros/main.c:301
+msgid "Also produce maximum SPOTTING distance"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:118
+msgid ""
+"Simulates elliptically anisotropic spread on a graphics window and generates "
+"a raster map of the cumulative time of spread, given raster maps containing "
+"the rates of spread (ROS), the ROS directions and the spread origins. It "
+"optionally produces raster maps to contain backlink UTM coordinates for "
+"tracing spread paths."
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:129
+#, fuzzy
+msgid "Name of raster map containing MAX rate of spread (ROS) (cm/min)"
+msgstr "入力するファイル"
+
+#: ../raster/wildfire/r.spread/main.c:136
+#, fuzzy
+msgid "Name of raster map containing DIRections of max ROS (degree)"
+msgstr "入力するファイル"
+
+#: ../raster/wildfire/r.spread/main.c:143
+#, fuzzy
+msgid "Name of raster map containing BASE ROS (cm/min)"
+msgstr "入力するファイル"
+
+#: ../raster/wildfire/r.spread/main.c:150
+#, fuzzy
+msgid "Name of raster map containing STARTing sources"
+msgstr "入力するファイル"
+
+#: ../raster/wildfire/r.spread/main.c:156
+msgid "Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:162
+#, fuzzy
+msgid "Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
+msgstr "入力するファイル"
+
+#: ../raster/wildfire/r.spread/main.c:168
+msgid ""
+"Name of raster map containing fine Fuel MOISture of the cell receiving a "
+"spotting firebrand (%) (required w/ -s)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:175
+msgid "Basic sampling window SIZE needed to meet certain accuracy (3)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:181
+msgid "Sampling DENSity for additional COMPutin (range: 0.0 - 1.0 (0.5))"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:187
+msgid "INITial TIME for current simulation (0) (min)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:193
+msgid "Simulating time duration LAG (fill the region) (min)"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:199
+#, fuzzy
+msgid "Name of raster map as a display backdrop"
+msgstr "対象マップ"
+
+#: ../raster/wildfire/r.spread/main.c:206
+#, fuzzy
+msgid "Name of raster map to contain OUTPUT spread time (min)"
+msgstr "出力するファイル"
+
+#: ../raster/wildfire/r.spread/main.c:212
+#, fuzzy
+msgid "Name of raster map to contain X_BACK coordiates"
+msgstr "出力するファイル"
+
+#: ../raster/wildfire/r.spread/main.c:218
+#, fuzzy
+msgid "Name of raster map to contain Y_BACK coordiates"
+msgstr "出力するファイル"
+
+#: ../raster/wildfire/r.spread/main.c:222
+msgid "Run VERBOSELY"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:226
+msgid "DISPLAY 'live' spread process on screen"
+msgstr ""
+
+#: ../raster/wildfire/r.spread/main.c:230
+msgid "For wildfires: consider SPOTTING effect"
+msgstr ""
+
+#: ../raster/wildfire/r.spreadpath/main.c:56
+msgid ""
+"Recursively traces the least cost path backwards to cells from which the "
+"cumulative cost was determined."
+msgstr ""
+
+#: ../raster/wildfire/r.spreadpath/main.c:64
+#, fuzzy
+msgid "Name of raster map containing back-path easting information"
+msgstr "入力するファイル"
+
+#: ../raster/wildfire/r.spreadpath/main.c:71
+#, fuzzy
+msgid "Name of raster map containing back-path norhting information"
+msgstr "入力するファイル"
+
+#: ../raster/wildfire/r.spreadpath/main.c:78
+#, fuzzy
+msgid "The map E and N grid coordinates of starting points"
+msgstr "始点の座標値"
+
+#: ../raster/wildfire/r.spreadpath/main.c:85
+#, fuzzy
+msgid "Name of spread path raster map"
+msgstr "入力するファイル"
+
+#: ../raster/wildfire/r.spreadpath/main.c:89
+#, fuzzy
+msgid "Run verbosly"
+msgstr "説明つき表示"
+
+#: ../vector/v.category/main.c:173
+msgid "Too many layers for this operation"
+msgstr ""
+
+#: ../vector/v.category/main.c:176
+#, fuzzy
+msgid "2 layers must be specified"
+msgstr "入力するファイル"
+
+#: ../vector/v.category/main.c:180
+#, fuzzy
+msgid "Output vector wasn't entered."
+msgstr "���."
+
 #: ../vector/v.convert/att.c:30 ../vector/v.convert/old2new.c:27
 #, fuzzy
 msgid "Input vector was not found."
-msgstr "入力するファイル"
+msgstr "���."
 
 #: ../vector/v.convert/att.c:36
 msgid "No category labels (dig_cats) found, no table created.\n"
@@ -561,12 +3987,12 @@ msgstr ""
 msgid "Cannot open database %s"
 msgstr ""
 
-#: ../vector/v.convert/att.c:74
+#: ../vector/v.convert/att.c:74 ../vector/v.to.points/main.c:246
 #, c-format
 msgid "Cannot create table: %s"
 msgstr ""
 
-#: ../vector/v.convert/att.c:92
+#: ../vector/v.convert/att.c:99
 #, c-format
 msgid "Cannot insert into table: %s"
 msgstr ""
@@ -753,11 +4179,17 @@ msgstr ""
 msgid "SYSTEM_ERROR: NEW_T_OLD Got a bad type code %x"
 msgstr ""
 
+#: ../vector/v.in.region/main.c:46
+#, fuzzy
+msgid "Select type: line or area"
+msgstr "タイプ"
+
 #: ../vector/v.surf.idw/read_sites.c:34
 msgid "Cannot read field info"
 msgstr ""
 
-#: ../vector/v.surf.idw/read_sites.c:38
+#: ../vector/v.surf.idw/read_sites.c:38 ../vector/v.to.points/main.c:239
+#: ../vector/v.db.select/main.c:145
 #, c-format
 msgid "Cannot open database %s by driver %s"
 msgstr ""
@@ -780,10 +4212,71 @@ msgstr ""
 msgid "No record for line (cat = %d)"
 msgstr ""
 
-#: ../vector/v.surf.idw/read_sites.c:91
+#: ../vector/v.surf.idw/read_sites.c:92
 #, c-format
 msgid "%d points loaded\n"
 msgstr ""
+
+#: ../vector/v.to.points/main.c:54
+#, c-format
+msgid "Cannot insert new row: %s"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:152
+#, fuzzy
+msgid "Create points along input lines."
+msgstr "線に沿って点を補間"
+
+#: ../vector/v.to.points/main.c:155
+#, fuzzy
+msgid "Input map containing lines"
+msgstr "入力するファイル"
+
+#: ../vector/v.to.points/main.c:161
+msgid "Output map where points will be written"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:170
+msgid "Write line vertices."
+msgstr ""
+
+#: ../vector/v.to.points/main.c:174
+#, fuzzy
+msgid "Interpolate points between line vertices."
+msgstr "線に沿って点を補間"
+
+#: ../vector/v.to.points/main.c:181
+#, fuzzy
+msgid "Maximum distance between points in map units."
+msgstr "補間を行う2点間の最大距離"
+
+#: ../vector/v.to.points/main.c:185
+#, fuzzy
+msgid "Do not create attribute table."
+msgstr "統一する属性の値"
+
+#: ../vector/v.to.points/main.c:203
+#, c-format
+msgid "Could not find input %s\n"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:229 ../vector/v.voronoi/vo_main.c:298
+msgid "Cannot copy table"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:250
+msgid "Cannot create index"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:253
+#, c-format
+msgid "Cannot grant privileges on table %s"
+msgstr ""
+
+#: ../vector/v.to.points/main.c:321
+#, fuzzy, c-format
+msgid "%d points written to output map\n"
+msgstr "出力ファイルの上書き"
 
 #: ../vector/v.transform/ask_trans.c:83
 msgid "ask_transform_coor():  Leaving session.. \n"
@@ -794,9 +4287,15 @@ msgstr ""
 msgid " Number of points that have been entered: %d\n"
 msgstr ""
 
-#: ../vector/v.transform/creat_trans.c:100
-msgid "Please answer yes or no"
+#: ../vector/v.transform/creat_trans.c:90
+#, c-format
+msgid "%s"
 msgstr ""
+
+#: ../vector/v.transform/creat_trans.c:100
+#, fuzzy
+msgid "Please answer yes or no"
+msgstr "���� yes ��no"
 
 #: ../vector/v.transform/creat_trans.c:123
 #, c-format
@@ -821,8 +4320,9 @@ msgstr ""
 
 #: ../vector/v.transform/main.c:224
 #, c-format
+#, fuzzy
 msgid "New vector map <%s> boundary coordinates:\n"
-msgstr ""
+msgstr "���"
 
 #: ../vector/v.transform/main.c:225
 #, c-format
@@ -882,6 +4382,10 @@ msgstr ""
 msgid "You need to enter at least %d points."
 msgstr ""
 
+#: ../vector/v.voronoi/dt_main.c:119
+msgid "Cannot calculate area centroid"
+msgstr ""
+
 #: ../vector/v.what.rast/main.c:330
 #, fuzzy, c-format
 msgid "%d categories loaded from table\n"
@@ -890,17 +4394,17 @@ msgstr "タイトル"
 #: ../vector/v.what.rast/main.c:331
 #, fuzzy, c-format
 msgid "%d categories loaded from vector\n"
-msgstr "タイトル"
+msgstr "���"
 
 #: ../vector/v.what.rast/main.c:332
 #, fuzzy, c-format
 msgid "%d categories from vector missing in table\n"
-msgstr "タイトル"
+msgstr "��� ������"
 
 #: ../vector/v.what.rast/main.c:333
 #, fuzzy, c-format
 msgid "%d duplicate categories in vector\n"
-msgstr "タイトル"
+msgstr "���"
 
 #: ../vector/v.what.rast/main.c:334
 #, c-format
@@ -911,6 +4415,26 @@ msgstr ""
 #, c-format
 msgid "%d update errors\n"
 msgstr ""
+
+#: ../vector/v.db.select/main.c:89
+msgid "Database connection not defined"
+msgstr ""
+
+#: ../vector/v.db.select/main.c:97
+msgid "Cannot open select cursor"
+msgstr ""
+
+#: ../vector/v.db.select/main.c:115
+msgid "Cannot fetch data"
+msgstr ""
+
+#, fuzzy
+#~ msgid "column:%s\n"
+#~ msgstr "更新するカラム1"
+
+#, fuzzy
+#~ msgid "column%s%s\n"
+#~ msgstr "更新するカラム1"
 
 #, fuzzy
 #~ msgid "Generates statistics for vector files."
@@ -929,40 +4453,8 @@ msgstr ""
 #~ msgstr "計測単位"
 
 #, fuzzy
-#~ msgid "page length (default: %d lines)"
-#~ msgstr "1ページの行数"
-
-#, fuzzy
-#~ msgid "page width (default: %d characters)"
-#~ msgstr "1行の文字数"
-
-#, fuzzy
-#~ msgid "suppress page headers"
-#~ msgstr "ヘッダーの削除"
-
-#, fuzzy
-#~ msgid "use formfeeds between pages"
-#~ msgstr "フォームフィードの使用"
-
-#, fuzzy
-#~ msgid "quiet"
-#~ msgstr "説明なし"
-
-#, fuzzy
-#~ msgid "scientific format"
-#~ msgstr "出力に指数を使用"
-
-#, fuzzy
 #~ msgid "nviz - Visualization and animation tool for GRASS data"
 #~ msgstr "作成したラスター、ベクトルおよびサイトマップを3次元で可視化します"
-
-#, fuzzy
-#~ msgid "Raster file(s) for Elevation"
-#~ msgstr "標高に用いるラスターマップ"
-
-#, fuzzy
-#~ msgid "Raster file(s) for Color"
-#~ msgstr "色に用いるラスターマップ"
 
 #, fuzzy
 #~ msgid "Vector overlay file(s)"
@@ -1045,10 +4537,6 @@ msgstr ""
 #~ msgstr "入力するファイル"
 
 #, fuzzy
-#~ msgid "Output vector map"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
 #~ msgid ""
 #~ "Set line types to:   \n"
 #~ "             source        same as in binary vector map\n"
@@ -1069,10 +4557,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Copy attributes and category files"
 #~ msgstr "属性およびカテゴリーファイルをコピー"
-
-#, fuzzy
-#~ msgid "Run quietly"
-#~ msgstr "説明なし"
 
 #, fuzzy
 #~ msgid ""
@@ -1105,10 +4589,6 @@ msgstr ""
 #~ msgstr "属性の代わりにテキストデータを使用"
 
 #, fuzzy
-#~ msgid "Interpolate points along lines (for -a only)"
-#~ msgstr "線に沿って点を補間"
-
-#, fuzzy
 #~ msgid "Write attribute as double instead of cat."
 #~ msgstr "属性値を倍精度で出力"
 
@@ -1117,21 +4597,8 @@ msgstr ""
 #~ msgstr "2点間の最大距離"
 
 #, fuzzy
-#~ msgid ""
-#~ "Converts a binary GRASS vector map layer into a GRASS raster map layer."
-#~ msgstr "ベクトルマップをラスターマップに変換します"
-
-#, fuzzy
 #~ msgid "vector input file"
 #~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "raster output file"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "number of rows to hold in memory"
-#~ msgstr "メモリに残す行"
 
 #, fuzzy
 #~ msgid "Test routine for developing MIF import."
@@ -1291,20 +4758,12 @@ msgstr ""
 #~ msgstr "指定した位置でのベクトルマップのカテゴリー情報を表示します"
 
 #, fuzzy
-#~ msgid "Identify just one location"
-#~ msgstr "一度のみ実行"
-
-#, fuzzy
 #~ msgid "Interactive"
 #~ msgstr "マウスで位置を指定"
 
 #, fuzzy
 #~ msgid "Name of existing vector map"
 #~ msgstr "対象マップ"
-
-#, fuzzy
-#~ msgid "Coordinates for query"
-#~ msgstr "指定する位置座標"
 
 #, fuzzy
 #~ msgid "Creates a (binary) GRASS vector map of a user-defined grid."
@@ -1335,10 +4794,6 @@ msgstr ""
 #~ msgstr "属性タイプ"
 
 #, fuzzy
-#~ msgid "initial attribute value"
-#~ msgstr "統一する属性の値"
-
-#, fuzzy
 #~ msgid "Quiet; No chatter"
 #~ msgstr "説明なし"
 
@@ -1359,20 +4814,12 @@ msgstr ""
 #~ msgstr "出力するファイル"
 
 #, fuzzy
-#~ msgid "Converts ASCII vector map layers into binary vector map layers."
-#~ msgstr " ASCII形式のファイルをベクトルマップとしてインポートします"
-
-#, fuzzy
 #~ msgid "ascii file to be converted to binary vector file"
 #~ msgstr "入力するファイル"
 
 #, fuzzy
 #~ msgid "name of resulting vector file"
 #~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "vector map"
-#~ msgstr "入力するファイル"
 
 #, fuzzy
 #~ msgid "type of elements"
@@ -1401,14 +4848,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "print only"
 #~ msgstr "出力のみ"
-
-#, fuzzy
-#~ msgid "print only sql statements"
-#~ msgstr "SQLファイルのみを出力"
-
-#, fuzzy
-#~ msgid "Load values from vector to database."
-#~ msgstr "ベクトルデータの更新をします"
 
 #, fuzzy
 #~ msgid "Prints information about a binary GRASS vector map layer."
@@ -1461,10 +4900,6 @@ msgstr ""
 #~ msgstr "キーカラム"
 
 #, fuzzy
-#~ msgid "Select area, line, or site "
-#~ msgstr "タイプ"
-
-#, fuzzy
 #~ msgid "Title for the resulting vector map"
 #~ msgstr "出力ファイルのタイトル"
 
@@ -1499,23 +4934,12 @@ msgstr ""
 #~ msgstr "入力するファイル"
 
 #, fuzzy
-#~ msgid "coverage type"
-#~ msgstr "抽出するタイプ"
-
-#, fuzzy
 #~ msgid "prefix for ARC/INFO output filenames"
 #~ msgstr "出力するファイル"
 
 #, fuzzy
 #~ msgid "field separator"
 #~ msgstr "区切り"
-
-#, fuzzy
-#~ msgid ""
-#~ "Interpolation and topographic analysis from given contour data in vector "
-#~ "format to GRASS floating point raster format using regularized spline "
-#~ "with tension."
-#~ msgstr "ベクトル形式の等高線図を用いて面の推定や地形解析を行います"
 
 #, fuzzy
 #~ msgid "Interpolation by Regularized Spline with Tension:"
@@ -1544,60 +4968,12 @@ msgstr ""
 #~ msgstr "属性の代わりにカテゴリーデータを標高値として出力"
 
 #, fuzzy
-#~ msgid "Do zero attributes/cats represent elevation?"
-#~ msgstr "入力ファイルの値０を標高に置き換える"
-
-#, fuzzy
-#~ msgid "Maximum distance between points "
-#~ msgstr "補間を行う2点間の最大距離"
-
-#, fuzzy
 #~ msgid "Minimum distance between points "
 #~ msgstr "補間を行う2点間の最小距離"
 
 #, fuzzy
 #~ msgid "Name of the output deviations site file"
 #~ msgstr "偏差を出力するサイトファイル"
-
-#, fuzzy
-#~ msgid "Output z-file (elevation)"
-#~ msgstr "標高を出力するファイル"
-
-#, fuzzy
-#~ msgid "Output partial derivatives instead"
-#~ msgstr "傾斜値、傾斜方位、曲率の代わりに偏導関数を出力"
-
-#, fuzzy
-#~ msgid "Slope"
-#~ msgstr "傾斜値またはdx値を出力するファイル"
-
-#, fuzzy
-#~ msgid "Aspect"
-#~ msgstr "傾斜方位またはdy値を出力するファイル"
-
-#, fuzzy
-#~ msgid "Profile curvature"
-#~ msgstr "断面曲率またはdxx値を出力するファイル"
-
-#, fuzzy
-#~ msgid "Tangential curvature"
-#~ msgstr "正接曲率またはdyy値を出力するファイル"
-
-#, fuzzy
-#~ msgid "Mean curvature"
-#~ msgstr "平均曲率またはdxy値を出力するファイル"
-
-#, fuzzy
-#~ msgid "Name of the raster file used as mask"
-#~ msgstr "マスク"
-
-#, fuzzy
-#~ msgid "Conversion factor for z-values"
-#~ msgstr "高さの強調"
-
-#, fuzzy
-#~ msgid "Tension"
-#~ msgstr "テンション"
 
 #, fuzzy
 #~ msgid "Smoothing parameter"
@@ -1612,24 +4988,12 @@ msgstr ""
 #~ msgstr "補間に用いるデータ数の最小値"
 
 #, fuzzy
-#~ msgid "Anisotropy angle (in degrees)"
-#~ msgstr "異方性の角度"
-
-#, fuzzy
-#~ msgid "Anisotropy scaling factor"
-#~ msgstr "異方性のスケールファクター"
-
-#, fuzzy
 #~ msgid "Output vector file showing segmentation"
 #~ msgstr "分割に用いた四分木を出力するファイル(ベクトル)"
 
 #, fuzzy
 #~ msgid "Output vector file showing overlapping segments"
 #~ msgstr "分割に用いた重複近傍を出力するファイル(ベクトル)"
-
-#, fuzzy
-#~ msgid "Use dnorm independent tension"
-#~ msgstr "データの密度に依存しないテンションの使用"
 
 #, fuzzy
 #~ msgid ""
@@ -1644,10 +5008,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "mapset containing input vector map"
 #~ msgstr "目的ファイルを含むマップセット"
-
-#, fuzzy
-#~ msgid "path to GRASS database of input location"
-#~ msgstr "目的ロケーションを含むデータベース"
 
 #, fuzzy
 #~ msgid "output vector map"
@@ -1778,14 +5138,6 @@ msgstr ""
 #~ msgstr "入力するファイル"
 
 #, fuzzy
-#~ msgid "Name of output raster map"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Number of interpolation points"
-#~ msgstr "補間に用いる近傍点"
-
-#, fuzzy
 #~ msgid "which decimal attribute (if multiple)"
 #~ msgstr "属性番号"
 
@@ -1806,10 +5158,6 @@ msgstr ""
 #~ msgstr "入力するファイル(サイト)"
 
 #, fuzzy
-#~ msgid "Name of resulting sites file"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
 #~ msgid "Name of raster for mask"
 #~ msgstr "入力するファイル(ラスター)"
 
@@ -1824,24 +5172,12 @@ msgstr ""
 #~ msgstr "入力するファイル"
 
 #, fuzzy
-#~ msgid "Output field separator"
-#~ msgstr "区切り"
-
-#, fuzzy
 #~ msgid "Output all sites (do not limit to current region)"
 #~ msgstr "現在の領域に限らず全てのサイトを出力"
 
 #, fuzzy
-#~ msgid "Include site attributes in the output"
-#~ msgstr "カテゴリーラベルも出力"
-
-#, fuzzy
 #~ msgid "Include site attribute identifiers in the output"
 #~ msgstr "属性識別子も出力"
-
-#, fuzzy
-#~ msgid "Converts a site file to a raster map"
-#~ msgstr "サイトマップをラスターマップに変換します"
 
 #, fuzzy
 #~ msgid "Name of input site list"
@@ -1854,10 +5190,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Number of cells to surround site cell"
 #~ msgstr "考慮する周辺のセル数"
-
-#, fuzzy
-#~ msgid "Title for the resulting raster map"
-#~ msgstr "タイトル"
 
 #, fuzzy
 #~ msgid "Attribute field type to use for operation"
@@ -1915,20 +5247,12 @@ msgstr ""
 #~ msgstr "出力するファイル"
 
 #, fuzzy
-#~ msgid "unix file containing sites"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
 #~ msgid "number of dimensions (default=2)"
 #~ msgstr "配列の数(デフォルト2)"
 
 #, fuzzy
 #~ msgid "input field separator"
 #~ msgstr "区切り"
-
-#, fuzzy
-#~ msgid "datetime or datetime1/datetime2"
-#~ msgstr "タイムスタンプ"
 
 #, fuzzy
 #~ msgid ""
@@ -1985,10 +5309,6 @@ msgstr ""
 #~ msgstr "表示しているラスターマップのカラーテーブルを編集します"
 
 #, fuzzy
-#~ msgid "Name of raster map"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
 #~ msgid ""
 #~ "Allows the user to interactively adjust the settings (zoom  and  pan) of "
 #~ "the current geographic region using a pointing device such as a mouse."
@@ -2025,16 +5345,8 @@ msgstr ""
 #~ msgstr "ラスターマップのカラーテーブルを表示します"
 
 #, fuzzy
-#~ msgid "Name of existing raster file"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
 #~ msgid "Color of lines separating the colors of the color table"
 #~ msgstr "セパレータの色"
-
-#, fuzzy
-#~ msgid "Number of columns"
-#~ msgstr "列数"
 
 #, fuzzy
 #~ msgid "Manages display frames on the user's graphics monitor."
@@ -2051,10 +5363,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Print name of current frame"
 #~ msgstr "現在選択されているフレーム"
-
-#, fuzzy
-#~ msgid "Select a frame"
-#~ msgstr "フレームの選択"
 
 #, fuzzy
 #~ msgid "Debugging output"
@@ -2077,14 +5385,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "icon file name"
 #~ msgstr "アイコンファイル"
-
-#, fuzzy
-#~ msgid "set the color"
-#~ msgstr "アイコンの色"
-
-#, fuzzy
-#~ msgid "icon scaling factor"
-#~ msgstr "サイズ"
 
 #, fuzzy
 #~ msgid "Unix file containing point coordinates"
@@ -2424,10 +5724,6 @@ msgstr ""
 #~ msgstr "ラスターマップのタイトルを表示します"
 
 #, fuzzy
-#~ msgid "Name of existing raster map"
-#~ msgstr "対象マップ"
-
-#, fuzzy
 #~ msgid "Sets the text color"
 #~ msgstr "テキストの色"
 
@@ -2438,10 +5734,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Do a fancier title"
 #~ msgstr "タイトルの色を変更"
-
-#, fuzzy
-#~ msgid "Name of existing raster map(s)"
-#~ msgstr "入力するファイル"
 
 #, fuzzy
 #~ msgid "Field separator (terse mode only)"
@@ -2519,10 +5811,6 @@ msgstr ""
 #~ msgstr "ラベルの位置をマウスで決定"
 
 #, fuzzy
-#~ msgid "Use feet/miles instead of meters"
-#~ msgstr "フィート/マイルを使用"
-
-#, fuzzy
 #~ msgid "Write text on top of the scale, not to the right"
 #~ msgstr "テキストをスケールの上部に表示"
 
@@ -2537,28 +5825,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "the screen coordinates for top-left corner of label"
 #~ msgstr "ラベルの位置"
-
-#, fuzzy
-#~ msgid ""
-#~ "Displays the result obtained by combining hue, intensity, and saturation "
-#~ "(his) values from user-specified input raster map layers."
-#~ msgstr "ラスターマップを色相/強度/彩度に対応させて合成します"
-
-#, fuzzy
-#~ msgid "Name of layer to be used for HUE"
-#~ msgstr "色相ファイル"
-
-#, fuzzy
-#~ msgid "Name of layer to be used for INTENSITY"
-#~ msgstr "強度ファイル"
-
-#, fuzzy
-#~ msgid "Name of layer to be used for SATURATION"
-#~ msgstr "彩度ファイル"
-
-#, fuzzy
-#~ msgid "Respect NULL values while drawing"
-#~ msgstr "NULL値を考慮する"
 
 #, fuzzy
 #~ msgid ""
@@ -2583,10 +5849,6 @@ msgstr ""
 #~ "Displays three user-specified raster map layers as red, green, and blue "
 #~ "overlays in the active graphics frame."
 #~ msgstr "ラスターマップを赤/緑/青に対応させて合成します"
-
-#, fuzzy
-#~ msgid "Name of raster map to be used for <%s>"
-#~ msgstr "<%s>に対応させるラスターマップ"
 
 #, fuzzy
 #~ msgid "Choose new current font"
@@ -2681,10 +5943,6 @@ msgstr ""
 #~ msgstr "ベクトルマップを表示します"
 
 #, fuzzy
-#~ msgid "Name of existing vector map to be displayed"
-#~ msgstr "対象マップ"
-
-#, fuzzy
 #~ msgid "Color desired for drawing map"
 #~ msgstr "線の色"
 
@@ -2695,10 +5953,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Fill areas of selected polygons"
 #~ msgstr "選択したカテゴリー番号の領域を塗りつぶす"
-
-#, fuzzy
-#~ msgid "Run verbosely"
-#~ msgstr "説明つき表示"
 
 #, fuzzy
 #~ msgid "Draws text in the active display frame on the graphics monitor."
@@ -2717,10 +5971,6 @@ msgstr ""
 #~ msgstr "テキストを開始する行番号"
 
 #, fuzzy
-#~ msgid "table name"
-#~ msgstr "テーブル"
-
-#, fuzzy
 #~ msgid "key column name"
 #~ msgstr "キーカラム"
 
@@ -2735,10 +5985,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Interactive profile plotting utility with optional output."
 #~ msgstr "ラスターマップの断面図を表示します"
-
-#, fuzzy
-#~ msgid "Raster map to be profiled"
-#~ msgstr "対象マップ"
 
 #, fuzzy
 #~ msgid "Optional display raster"
@@ -2833,14 +6079,6 @@ msgstr ""
 #~ msgstr "主成分分析により画像処理を行います"
 
 #, fuzzy
-#~ msgid "input layer name"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "output layer name"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
 #~ msgid "Rescaling range output (For no rescaling use 0,0)"
 #~ msgstr "出力するカテゴリーの範囲"
 
@@ -2866,10 +6104,6 @@ msgstr ""
 #~ msgstr "シグネチャファイル"
 
 #, fuzzy
-#~ msgid "Raster map to hold classification results"
-#~ msgstr "分類結果を出力するファイル"
-
-#, fuzzy
 #~ msgid "Raster map to hold reject threshold results"
 #~ msgstr "閾値を適応したマップ"
 
@@ -2888,10 +6122,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "size of submatrix to process at one time"
 #~ msgstr "使用するウィンドウサイズ(メモリサイズ)"
-
-#, fuzzy
-#~ msgid "output raster map"
-#~ msgstr "出力するファイル"
 
 #, fuzzy
 #~ msgid "Use maximum likelihood estimation (instead of smap)"
@@ -3034,10 +6264,6 @@ msgstr ""
 #~ msgstr "虚部を含む入力ファイル"
 
 #, fuzzy
-#~ msgid "output inverse raster file after ifft"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
 #~ msgid "Canonical components analysis (cca) program for image processing."
 #~ msgstr "正準分析により画像処理を行います"
 
@@ -3052,10 +6278,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Ascii file containing spectral signatures"
 #~ msgstr "スペクトルシグネチャを含むファイル(ASCII形式)"
-
-#, fuzzy
-#~ msgid "Output raster file prefix name"
-#~ msgstr "出力ファイルの接尾語"
 
 #, fuzzy
 #~ msgid ""
@@ -3076,10 +6298,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "File contains result signatures"
 #~ msgstr "シグネチャファイル"
-
-#, fuzzy
-#~ msgid "Initial number of classes"
-#~ msgstr "初期のクラスター数"
 
 #, fuzzy
 #~ msgid "File contains initial signatures"
@@ -3106,17 +6324,9 @@ msgstr ""
 #~ msgstr "ピクセルの最小値"
 
 #, fuzzy
-#~ msgid "Name of an output file to contain final report"
-#~ msgstr "最終レポートを出力するファイル"
-
-#, fuzzy
 #~ msgid ""
 #~ "Zero-crossing \"edge detection\" raster function for image processing."
 #~ msgstr "ゼロ交差法を用いて画像のエッジを決定します"
-
-#, fuzzy
-#~ msgid "input raster map"
-#~ msgstr "入力するファイル"
 
 #, fuzzy
 #~ msgid "zero crossing raster map"
@@ -3136,33 +6346,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid ""
-#~ "Makes each cell category value a function of the category values assigned "
-#~ "to the cells around it, and stores new cell values in an output raster "
-#~ "map layer."
-#~ msgstr "近傍点解析を行い新しいラスターマップを作成します"
-
-#, fuzzy
-#~ msgid "Name of the new raster file"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Neighborhood operation"
-#~ msgstr "解析値"
-
-#, fuzzy
-#~ msgid "Neighborhood size"
-#~ msgstr "近傍とする範囲"
-
-#, fuzzy
-#~ msgid "Title of the output raster file"
-#~ msgstr "タイトル"
-
-#, fuzzy
-#~ msgid "Do not align output with the input"
-#~ msgstr "現在の地域設定の使用"
-
-#, fuzzy
-#~ msgid ""
 #~ "Allows category values from several raster map layers to be combined."
 #~ msgstr "ラスターマップのカテゴリー値を論理操作します"
 
@@ -3173,10 +6356,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Import non-georeferenced PNG format image."
 #~ msgstr "PNGファイルをラスターマップとしてインポートします"
-
-#, fuzzy
-#~ msgid "Name of new raster file."
-#~ msgstr "出力するファイル"
 
 #, fuzzy
 #~ msgid "Title for new raster file."
@@ -3203,110 +6382,6 @@ msgstr ""
 #~ msgstr "説明付き表示"
 
 #, fuzzy
-#~ msgid "Watershed basin analysis program."
-#~ msgstr "分水域の解析を行います"
-
-#, fuzzy
-#~ msgid "Input map: elevation on which entire analysis is based"
-#~ msgstr "入力:標高を示すファイル"
-
-#, fuzzy
-#~ msgid "Input map: locations of real depressions"
-#~ msgstr "入力:地盤沈下量を示すファイル"
-
-#, fuzzy
-#~ msgid "Input map: amount of overland flow per cell"
-#~ msgstr "入力:1セルの流量を示すファイル"
-
-#, fuzzy
-#~ msgid "Input map or value: percent of disturbed land, for USLE"
-#~ msgstr "入力:開発地域の割合を示すファイル"
-
-#, fuzzy
-#~ msgid "Input map: terrain blocking overland surface flow, for USLE"
-#~ msgstr "入力:表面流でブロック化した地形を示すファイル"
-
-#, fuzzy
-#~ msgid "Input value: minimum size of exterior watershed basin"
-#~ msgstr "外側の分水域の最小セル数"
-
-#, fuzzy
-#~ msgid "Input value: maximum length of surface flow, for USLE"
-#~ msgstr "表面流の最大長(単位:メートル)"
-
-#, fuzzy
-#~ msgid "Output map: number of cells that drain through each cell"
-#~ msgstr "出力：流れ出るセル数を示すファイル"
-
-#, fuzzy
-#~ msgid "Output map: drainage direction"
-#~ msgstr "出力:排出方向を示すファイル"
-
-#, fuzzy
-#~ msgid "Output map: unique label for each watershed basin"
-#~ msgstr "出力:分水域のラベルファイル"
-
-#, fuzzy
-#~ msgid "Output map: stream segments"
-#~ msgstr "出力:河川を示すファイル"
-
-#, fuzzy
-#~ msgid "Output map: each half-basin is given a unique value"
-#~ msgstr "出力:半盆地のラベルファイル"
-
-#, fuzzy
-#~ msgid "Output map: useful for visual display of results"
-#~ msgstr "出力:結果を可視化したファイル"
-
-#, fuzzy
-#~ msgid "Output map: slope length and steepness (LS) factor for USLE"
-#~ msgstr "出力:斜面長と斜面勾配(LSファクター)を示すファイル"
-
-#, fuzzy
-#~ msgid "Output map: slope steepness (S) factor for USLE"
-#~ msgstr "出力:RUSLE用の斜面勾配(Sファクター)を示すファイル"
-
-#, fuzzy
-#~ msgid "Enable extend memory option: Operation is slow"
-#~ msgstr "仮想メモリを使用"
-
-#, fuzzy
-#~ msgid "Allow only horizontal and vertical flow of water"
-#~ msgstr "水平及び垂直な流れのみ処理"
-
-#, fuzzy
-#~ msgid "Exports a GRASS raster to a binary array."
-#~ msgstr "ラスターマップをバイナリーファイルとしてエクスポートします"
-
-#, fuzzy
-#~ msgid "Name of an existing raster map"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Name of an output binary map (use out=- for stdout)"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Value to write out for null"
-#~ msgstr "NULL値に代入する値"
-
-#, fuzzy
-#~ msgid "Output integer category values, not cell values"
-#~ msgstr "セルの値ではなくカテゴリー値を出力"
-
-#, fuzzy
-#~ msgid "Export Array with GMT compatible header"
-#~ msgstr "GMTファイルのヘッダーで出力"
-
-#, fuzzy
-#~ msgid "Generate BIL world and header files"
-#~ msgstr "BILワールドファイルを作成"
-
-#, fuzzy
-#~ msgid "Byte Swap output"
-#~ msgstr "強制ビット反転"
-
-#, fuzzy
 #~ msgid ""
 #~ "Converts point data in a GRASS raster map layer into a GRASS site_lists "
 #~ "file."
@@ -3325,52 +6400,8 @@ msgstr ""
 #~ msgstr "入力するファイル"
 
 #, fuzzy
-#~ msgid "Name of new sites file."
-#~ msgstr "出力するファイル"
-
-#, fuzzy
 #~ msgid "Label for site values"
 #~ msgstr "データのラベル"
-
-#, fuzzy
-#~ msgid "Convert an ASCII raster text file into a (binary) raster map layer."
-#~ msgstr "ASCII形式のファイルをラスターマップとしてインポートします"
-
-#, fuzzy
-#~ msgid "Ascii raster file to be imported"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Name for resultant raster map"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Title for resultant raster map"
-#~ msgstr "タイトル"
-
-#, fuzzy
-#~ msgid "Multiplier for ascii data"
-#~ msgstr "高さの強調"
-
-#, fuzzy
-#~ msgid "String representing NULL value data cell"
-#~ msgstr "データのないセルに代入する記号"
-
-#, fuzzy
-#~ msgid "integer values are imported"
-#~ msgstr "整数データをインポート"
-
-#, fuzzy
-#~ msgid "floating point values are imported"
-#~ msgstr "浮動小数点データをインポート"
-
-#, fuzzy
-#~ msgid "double floating point values are imported"
-#~ msgstr "倍精度の浮動小数点データをインポート"
-
-#, fuzzy
-#~ msgid "SURFER (Golden Software) ascii grid file will be imported"
-#~ msgstr "SURFER(Golden Software)用グリッドをインポート"
 
 #, fuzzy
 #~ msgid ""
@@ -3389,54 +6420,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Line type of the extracted vectors"
 #~ msgstr "出力タイプ"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates a raster map layer and site list file containing randomly located "
-#~ "sites."
-#~ msgstr "任意抽出を行います"
-
-#, fuzzy
-#~ msgid "The number of sites to allocate"
-#~ msgstr "抽出量(数またはパーセンテージ)"
-
-#, fuzzy
-#~ msgid "Name of the output raster map"
-#~ msgstr "出力するファイル(ラスターマップ)"
-
-#, fuzzy
-#~ msgid "Name of the output sites map"
-#~ msgstr "出力するファイル(サイトマップ)"
-
-#, fuzzy
-#~ msgid "Generate sites for category zero also"
-#~ msgstr "値0も抽出対象にする"
-
-#, fuzzy
-#~ msgid "Report information about input raster and exit"
-#~ msgstr "入力ファイルの情報を表示"
-
-#, fuzzy
-#~ msgid ""
-#~ "Prints category values and labels associated with user-specified raster "
-#~ "map layers."
-#~ msgstr "ラスターマップのカテゴリー値やカテゴリーラベルを表示します"
-
-#, fuzzy
-#~ msgid "Name of a raster map"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Comma separated value list: e.g. 1.4,3.8,13"
-#~ msgstr "カテゴリー値のリスト(例1.4,3.8,13)"
-
-#, fuzzy
-#~ msgid "Category list: e.g. 1,3-8,13"
-#~ msgstr "カテゴリーラベルのリスト(例 1,3-8,13)"
-
-#, fuzzy
-#~ msgid "Output separator character (default: tab)"
-#~ msgstr "区切り(デフォルト:タブ)"
 
 #, fuzzy
 #~ msgid "Imports a TIFF (8 or 24 bit) raster file into GRASS raster file(s)"
@@ -3469,20 +6452,12 @@ msgstr ""
 #~ msgstr "圧縮形式"
 
 #, fuzzy
-#~ msgid "TIFF Palette output (8bit instead of 24bit)."
-#~ msgstr "8bitで出力"
-
-#, fuzzy
 #~ msgid "Output TIFF world file"
 #~ msgstr "TIFFワールドファイルを出力"
 
 #, fuzzy
 #~ msgid "Output Tiled TIFF"
 #~ msgstr "Tiled TIFFファイルを出力"
-
-#, fuzzy
-#~ msgid "Verbose mode."
-#~ msgstr "説明付き表示"
 
 #, fuzzy
 #~ msgid "Bayesian expert system development program."
@@ -3499,49 +6474,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "file to capture output information"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid ""
-#~ "Finds the average of values in a cover map within areas assigned the same "
-#~ "category value in a user-specified base map."
-#~ msgstr ""
-#~ "ベースマップにおける同一カテゴリー内でのカバーマップの平均値を計算します"
-
-#, fuzzy
-#~ msgid "base raster map"
-#~ msgstr "ベースマップ"
-
-#, fuzzy
-#~ msgid "cover raster map"
-#~ msgstr "カバーマップ"
-
-#, fuzzy
-#~ msgid "resultant raster map"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "cover values extracted from the category labels of the cover map"
-#~ msgstr "カテゴリー値の代わりにカテゴリーラベルを使用"
-
-#, fuzzy
-#~ msgid "Generates a raster map layer showing watershed subbasins."
-#~ msgstr "分水域を示すラスターマップを作成します"
-
-#, fuzzy
-#~ msgid "Number of passes through the dataset"
-#~ msgstr "データセットの数"
-
-#, fuzzy
-#~ msgid "Coded stream network file name"
-#~ msgstr "河川ファイル"
-
-#, fuzzy
-#~ msgid "Thinned ridge network file name"
-#~ msgstr "分水界ファイル"
-
-#, fuzzy
-#~ msgid "Name for the resultant watershed partition file"
 #~ msgstr "出力するファイル"
 
 #, fuzzy
@@ -3568,368 +6500,16 @@ msgstr ""
 #~ msgstr "コロン区切りのデータ出力"
 
 #, fuzzy
-#~ msgid ""
-#~ "Produces a GRASS binary vector map of specified contours from GRASS "
-#~ "raster map layer."
-#~ msgstr "ラスターマップから指定された高さのコンターマップを作成します"
-
-#, fuzzy
-#~ msgid "List of contour levels"
-#~ msgstr "指定する高さ"
-
-#, fuzzy
-#~ msgid "Minimum contour level"
-#~ msgstr "最小値"
-
-#, fuzzy
-#~ msgid "Maximum contour level"
-#~ msgstr "最大値"
-
-#, fuzzy
-#~ msgid "Increment between contour levels"
-#~ msgstr "コンター間隔"
-
-#, fuzzy
-#~ msgid "Minimum number of points for a contour line (0 -> no limit)"
-#~ msgstr "コンターの作成に用いるデータ点の最少数(0 -> 制限なし)"
-
-#, fuzzy
-#~ msgid "Name of output vector file"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Suppress progress report & min/max information"
-#~ msgstr "説明なし"
-
-#, fuzzy
-#~ msgid "Suppress single crossing error messages"
-#~ msgstr "単一交差に関するエラーメッセージを出力しない"
-
-#, fuzzy
-#~ msgid "raster map(s) to report on"
-#~ msgstr "対象マップ"
-
-#, fuzzy
-#~ msgid ""
-#~ "mi(les),me(ters),k(ilometers),a(cres),h(ectacres),c(ell_counts),p"
-#~ "(ercent_cover)"
-#~ msgstr "単位"
-
-#, fuzzy
-#~ msgid "string representing no data cell value"
-#~ msgstr "データのないセルに代入する記号"
-
-#, fuzzy
-#~ msgid "name of an output file to hold the report"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "number of fp subranges to collect stats from"
-#~ msgstr "誤差の桁数"
-
-#, fuzzy
-#~ msgid "filter out all no data cells"
-#~ msgstr "NULL値を対象に含まない"
-
-#, fuzzy
-#~ msgid "filter out cells where all maps have no data"
-#~ msgstr "すべてのマップでNULL値となっているセルを除く"
-
-#, fuzzy
-#~ msgid "report for cats fp ranges (fp maps only)"
-#~ msgstr "実数でレポートを出力"
-
-#, fuzzy
-#~ msgid "Read fp map as integer (use map's quant rules"
-#~ msgstr "実数を整数に変換して使用"
-
-#, fuzzy
-#~ msgid "Reports statistics for raster map layers."
-#~ msgstr "ラスターマップに関する一連のレポートを作成します"
-
-#, fuzzy
-#~ msgid ""
-#~ "Generates an output raster map layer with contiguous areas grown by one "
-#~ "cell (pixel)."
-#~ msgstr "エリアを拡大したラスターマップを作成します"
-
-#, fuzzy
-#~ msgid "Name of output raster file"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
 #~ msgid "Binary map output"
 #~ msgstr "バイナリ-による出力"
-
-#, fuzzy
-#~ msgid ""
-#~ "Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster "
-#~ "map layer."
-#~ msgstr "ESRI ARC/INFOファイルをラスターマップとしてインポートします"
-
-#, fuzzy
-#~ msgid "ARC/INFO ascii raster file (GRID) to be imported"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Storage type for resultant raster map"
-#~ msgstr "保存形式"
-
-#, fuzzy
-#~ msgid ""
-#~ "re-project a raster map from one location to the current location (no "
-#~ "datum transformation yet)"
-#~ msgstr "ラスターマップの投影変換を行います"
-
-#, fuzzy
-#~ msgid "location of input map"
-#~ msgstr "目的ファイルを含むロケーション"
-
-#, fuzzy
-#~ msgid "mapset of input map"
-#~ msgstr "目的ファイルを含むマップセット"
-
-#, fuzzy
-#~ msgid "interpolation method to use"
-#~ msgstr "補間方法"
-
-#, fuzzy
-#~ msgid "resolution of output map"
-#~ msgstr "解像度"
-
-#, fuzzy
-#~ msgid "List raster files in input location and exit"
-#~ msgstr "目的ロケーション内のラスターマップ一覧表示"
 
 #, fuzzy
 #~ msgid "Don't attempt to crop output map"
 #~ msgstr "投影後の不要部分を削除しない"
 
 #, fuzzy
-#~ msgid "Generates area statistics for raster map layers."
-#~ msgstr "ラスターマップにおいて統計解析を行います"
-
-#, fuzzy
-#~ msgid "raster maps(s)"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "output field separator"
-#~ msgstr "区切り"
-
-#, fuzzy
-#~ msgid "output file name"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "One cell (range) per line"
-#~ msgstr "1項目ごとに改行"
-
-#, fuzzy
-#~ msgid "Print area totals"
-#~ msgstr "総面積(平方メートル)を出力"
-
-#, fuzzy
-#~ msgid "Print cell counts"
-#~ msgstr "総セル数の出力"
-
-#, fuzzy
-#~ msgid "Print APPROXIMATE percents (total percent may not be 100%)"
-#~ msgstr "占有率(%)を出力"
-
-#, fuzzy
-#~ msgid "Print category labels"
-#~ msgstr "カテゴリーラベルの出力"
-
-#, fuzzy
-#~ msgid "Suppress reporting of any NULLs"
-#~ msgstr "Null値の情報を除く"
-
-#, fuzzy
-#~ msgid "Suppress reporting of NULLs when all values are NULL"
-#~ msgstr "すべてNULL値ならばレポートを作成しない"
-
-#, fuzzy
-#~ msgid "Print grid coordinates (east and north) (requires -1 flag)"
-#~ msgstr "格子点の座標を出力"
-
-#, fuzzy
-#~ msgid "Print x and y (column and row) (requires -1 flag)"
-#~ msgstr "座標成分を出力"
-
-#, fuzzy
-#~ msgid "Print raw indexes of fp ranges (fp maps only)"
-#~ msgstr "実数でインデックスを出力"
-
-#, fuzzy
-#~ msgid "Read fp map as integer (use map's quant rules)"
-#~ msgstr "実数を整数に変換して使用"
-
-#, fuzzy
-#~ msgid ""
-#~ "Queries raster map layers on their category values and category labels."
-#~ msgstr ""
-#~ "ファイルで指定した位置でのラスターマップのカテゴリー情報を表示します"
-
-#, fuzzy
-#~ msgid "Size of point cache"
-#~ msgstr "ポイントキャッシュのサイズ"
-
-#, fuzzy
-#~ msgid "Char string to represent no data cell"
-#~ msgstr "データのないセルに代入する記号"
-
-#, fuzzy
-#~ msgid "Show the category label in the grid cell(s)"
-#~ msgstr "格子セルでのラベルを表示"
-
-#, fuzzy
-#~ msgid "Turn on cache reporting"
-#~ msgstr "キャッシュレポートを記録"
-
-#, fuzzy
-#~ msgid "Surface interpolation utility for raster map layers."
-#~ msgstr "データ点から補間計算により曲面を推定します"
-
-#, fuzzy
 #~ msgid "number of interpolation points"
 #~ msgstr "補間に用いる近傍点"
-
-#, fuzzy
-#~ msgid "output is the interpolation error"
-#~ msgstr "誤差を出力"
-
-#, fuzzy
-#~ msgid "Converts a raster map layer into an ESRI ARCGRID file."
-#~ msgstr ""
-#~ "ラスターマップをESRI ARC/INFO ASCII-GRIDファイルとしてエクスポートします"
-
-#, fuzzy
-#~ msgid "Name of an existing raster map layer"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Name of an output ARC-GID map (use out=- for stdout)"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Number of decimal places"
-#~ msgstr "小数点以下の有効桁数"
-
-#, fuzzy
-#~ msgid "Suppress printing of header information"
-#~ msgstr "ヘッダーを削除"
-
-#, fuzzy
-#~ msgid "List one entry per line instead of full row"
-#~ msgstr "1項目ごとに改行"
-
-#, fuzzy
-#~ msgid ""
-#~ "Outputs raster map layer values lying along user defined transect line(s)."
-#~ msgstr "指定した直線上でのラスターマップの値を出力します"
-
-#, fuzzy
-#~ msgid "Raster map to be queried"
-#~ msgstr "対象マップ"
-
-#, fuzzy
-#~ msgid "Transect definition"
-#~ msgstr "直線の設定"
-
-#, fuzzy
-#~ msgid "Prints terse list of category values found in a raster map layer."
-#~ msgstr "ラスターマップのカテゴリー値一覧を表示します"
-
-#, fuzzy
-#~ msgid "number of quantization steps"
-#~ msgstr "分割の幅"
-
-#, fuzzy
-#~ msgid "Print the output one value per line"
-#~ msgstr "１項目ごとに改行"
-
-#, fuzzy
-#~ msgid "Only print the range of the data"
-#~ msgstr "最大値と最小値のみ出力"
-
-#, fuzzy
-#~ msgid "Use the current region"
-#~ msgstr "現在の地域設定を使用"
-
-#, fuzzy
-#~ msgid "read fp map as integer"
-#~ msgstr "実数を整数に変換して使用"
-
-#, fuzzy
-#~ msgid "Line-of-sight raster analysis program."
-#~ msgstr "視線を変更したラスターマップを作成します"
-
-#, fuzzy
-#~ msgid "Raster map containing elevation data"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Raster map name for storing results"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Coordinate identifying the viewing location"
-#~ msgstr "始点座標"
-
-#, fuzzy
-#~ msgid "Binary (1/0) raster map"
-#~ msgstr "マスク"
-
-#, fuzzy
-#~ msgid "Height of the viewing location"
-#~ msgstr "視点の高さ"
-
-#, fuzzy
-#~ msgid "Max distance from the viewing point (meters)"
-#~ msgstr "視界の半径"
-
-#, fuzzy
-#~ msgid ""
-#~ "Thins non-zero cells that denote linear features in a raster map layer."
-#~ msgstr "図形を細線化したラスターマップを作成します"
-
-#, fuzzy
-#~ msgid ""
-#~ "Generates raster map layers of slope, aspect, curvatures and partial "
-#~ "derivatives from a raster map layer of true elevation values. Aspect is "
-#~ "calculated counterclockwise from east."
-#~ msgstr ""
-#~ "ラスターマップから傾斜の大きさと方位についての新たなラスターマップを作成し"
-#~ "ます"
-
-#, fuzzy
-#~ msgid "Raster elevation file name"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Output slope filename"
-#~ msgstr "傾斜の大きさを出力するファイル"
-
-#, fuzzy
-#~ msgid "format for reporting the slope"
-#~ msgstr "傾斜の単位"
-
-#, fuzzy
-#~ msgid "type of output aspect and slope maps"
-#~ msgstr "出力する値の型"
-
-#, fuzzy
-#~ msgid "Output aspect filename"
-#~ msgstr "傾斜の方位を出力するファイル"
-
-#, fuzzy
-#~ msgid "Output profile curvature filename"
-#~ msgstr "断面曲率を出力するファイル"
-
-#, fuzzy
-#~ msgid "Output tangential curvature filename"
-#~ msgstr "正接曲率を出力するファイル"
 
 #, fuzzy
 #~ msgid "Output E-W slope filename"
@@ -3940,83 +6520,10 @@ msgstr ""
 #~ msgstr "南北方向の傾斜を出力するファイル"
 
 #, fuzzy
-#~ msgid "Output partial derivative dxx filename"
-#~ msgstr "dxx値の偏導関数を出力するファイル"
-
-#, fuzzy
-#~ msgid "Output partial derivative dyy filename"
-#~ msgstr "dyy値の偏導関数を出力するファイル"
-
-#, fuzzy
-#~ msgid "Output partial derivative dxy filename"
-#~ msgstr "dxy値の偏導関数を出力するファイル"
-
-#, fuzzy
-#~ msgid "Multiplicative factor to convert elevation units to meters"
-#~ msgstr "高さの強調"
-
-#, fuzzy
-#~ msgid "Minimum slope val. (in percent) for which aspect is computed"
-#~ msgstr "傾斜の最小値"
-
-#, fuzzy
-#~ msgid "Do not align the current region to the elevation layer"
-#~ msgstr "現在の地域設定を使用"
-
-#, fuzzy
-#~ msgid "Compresses and decompresses raster files."
-#~ msgstr "ファイルの圧縮/解凍を行います"
-
-#, fuzzy
-#~ msgid "Uncompress the map"
-#~ msgstr "解凍"
-
-#, fuzzy
-#~ msgid "Outputs the raster map layer values lying on user-defined line(s)."
-#~ msgstr "指定した直線上でのラスターマップの値を出力します"
-
-#, fuzzy
-#~ msgid "Name of file for output (use out=- for stdout)"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Profile Coordinate Pairs"
-#~ msgstr "始点と終点(east,north,east,north)"
-
-#, fuzzy
-#~ msgid "Resolution along profile (default = current region resolution)"
-#~ msgstr "値の読みとり間隔(デフォルト:現在の解像度)"
-
-#, fuzzy
-#~ msgid "Interactively select End-Points"
-#~ msgstr "対話形式で終点を選択"
-
-#, fuzzy
-#~ msgid ""
-#~ "Output easting and northing in first two columns of four column output"
-#~ msgstr "地理的座標を出力"
-
-#, fuzzy
-#~ msgid "Outputs basic information about a user-specified raster map layer."
-#~ msgstr "ラスターマップの基礎情報を出力します"
-
-#, fuzzy
-#~ msgid "print range only."
-#~ msgstr "最大値と最小値のみ出力"
-
-#, fuzzy
 #~ msgid ""
 #~ "Converts raster data referenced using latitude and longitude coordinates "
 #~ "to a UTM-referenced map layer in GRASS raster format."
 #~ msgstr "緯度/経度座標ファイルから UTM座標ファイルを作成します"
-
-#, fuzzy
-#~ msgid "input file"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "output raster file"
-#~ msgstr "出力するファイル"
 
 #, fuzzy
 #~ msgid "number of bytes per cell"
@@ -4041,86 +6548,8 @@ msgstr ""
 #~ msgstr "座標変換先の楕円体"
 
 #, fuzzy
-#~ msgid "Signed data (high bit means negative value)"
-#~ msgstr "負の値を含む"
-
-#, fuzzy
-#~ msgid "Surface generation program from rasterized contours."
-#~ msgstr "ラスター形式の等高線図から曲面を推定します"
-
-#, fuzzy
-#~ msgid "Name of existing raster map containing contours"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Output elevation raster map"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Invoke fast, but memory intensive operation"
-#~ msgstr "高速計算(大きなメモリが必要)"
-
-#, fuzzy
-#~ msgid "Rescales the range of category values in a raster map layer."
-#~ msgstr "ラスターマップのカテゴリー値の範囲を変更します"
-
-#, fuzzy
-#~ msgid "The name of the raster map to be rescaled"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid ""
-#~ "The input data range to be rescaled (default: full range of input map)"
-#~ msgstr "元のカテゴリー値の範囲"
-
-#, fuzzy
-#~ msgid "The resulting raster map name"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "The output data range"
-#~ msgstr "変更後のカテゴリー値の範囲"
-
-#, fuzzy
-#~ msgid "Title for new raster map"
-#~ msgstr "タイトル"
-
-#, fuzzy
-#~ msgid "Quietly"
-#~ msgstr "説明なし"
-
-#, fuzzy
-#~ msgid ""
-#~ "Converts a GRASS raster file to a PPM image file at the pixel resolution "
-#~ "of the CURRENTLY DEFINED REGION."
-#~ msgstr "ラスターマップをPPMファイルとしてエクスポートします"
-
-#, fuzzy
 #~ msgid "Raster file to be converted."
 #~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Name for new PPM file. (use out=- for stdout)"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Output greyscale instead of color"
-#~ msgstr "グレースケールで出力"
-
-#, fuzzy
-#~ msgid ""
-#~ "Outputs a raster map layer showing the cumulative cost of moving between "
-#~ "different geographic locations on an input raster map layer whose cell "
-#~ "category values represent cost."
-#~ msgstr "累積コストを表すラスターマップを作成します"
-
-#, fuzzy
-#~ msgid "Name of raster map containing grid cell cost information"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Name of raster map to contain results"
-#~ msgstr "出力するファイル"
 
 #, fuzzy
 #~ msgid "Starting points site file"
@@ -4131,54 +6560,10 @@ msgstr ""
 #~ msgstr "終点を示すサイトマップ"
 
 #, fuzzy
-#~ msgid "Starting points raster file"
-#~ msgstr "始点を示すラスターマップ"
-
-#, fuzzy
-#~ msgid "The map E and N grid coordinates of a starting point (E,N)"
-#~ msgstr "始点の座標値"
-
-#, fuzzy
-#~ msgid "The map E and N grid coordinates of a stopping point (E,N)"
-#~ msgstr "終点の座標値"
-
-#, fuzzy
-#~ msgid "An optional maximum cumulative cost"
-#~ msgstr "最大コスト"
-
-#, fuzzy
-#~ msgid "Cost assigned to null cells. By default, null cells are excluded"
-#~ msgstr "NULL値に代入する値"
-
-#, fuzzy
-#~ msgid "Use the 'Knight's move'; slower, but more accurate"
-#~ msgstr "精度を上げる"
-
-#, fuzzy
-#~ msgid "Keep null values in output map"
-#~ msgstr "NULL値も出力"
-
-#, fuzzy
-#~ msgid "GRASS raster map layer data resampling capability."
-#~ msgstr "ラスターマップのリサンプリングを行います"
-
-#, fuzzy
-#~ msgid "Name of an input layer"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Name of an output layer"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
 #~ msgid ""
 #~ "Extracts area edges from a raster map layer and converts data to GRASS "
 #~ "vector format."
 #~ msgstr "ラスターマップからエリアエッジを抽出してベクトルマップを作成します"
-
-#, fuzzy
-#~ msgid "Smooth Corners"
-#~ msgstr "平滑化"
 
 #, fuzzy
 #~ msgid "Output values as category labels"
@@ -4191,76 +6576,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Name of a new vector map"
 #~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Converts a raster map layer into an ASCII text file."
-#~ msgstr "ラスターマップをASCII形式のファイルとしてエクスポートします"
-
-#, fuzzy
-#~ msgid "Name of an output ASCII grid map (use out=- for stdout)"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Number of significant digits (floating point only)"
-#~ msgstr "小数点以下の有効桁数"
-
-#, fuzzy
-#~ msgid "Number of values printed before wrapping a line"
-#~ msgstr "読み込む桁数"
-
-#, fuzzy
-#~ msgid "String to represent null cell (GRASS grid only)"
-#~ msgstr "データのないセルに代入する記号"
-
-#, fuzzy
-#~ msgid "Write SURFER (Golden Software) ASCII grid"
-#~ msgstr "SURFER(Golden Software)用グリッドで出力"
-
-#, fuzzy
-#~ msgid "Write MODFLOW (USGS) ASCII array"
-#~ msgstr "MODFLOW(USGS)型の配列で出力"
-
-#, fuzzy
-#~ msgid "Force output of integer values"
-#~ msgstr "カテゴリー値を整数で出力"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates a cross product of the category values from multiple raster map "
-#~ "layers."
-#~ msgstr "カテゴリー値を掛け合わせて新たなラスターマップを作成します"
-
-#, fuzzy
-#~ msgid "Names of 2-%d input raster maps"
-#~ msgstr "入力するファイル(2つ以上必要)"
-
-#, fuzzy
-#~ msgid "Name of the resulting map"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Non-zero data only"
-#~ msgstr "値0を無視する"
-
-#, fuzzy
-#~ msgid "Creates/Modifies the color table associated with a raster map layer."
-#~ msgstr "ラスターマップのカラーテーブルを作成/編集します"
-
-#, fuzzy
-#~ msgid "raster map name"
-#~ msgstr "対象マップ"
-
-#, fuzzy
-#~ msgid "type of color table"
-#~ msgstr "カラーテーブル"
-
-#, fuzzy
-#~ msgid "raster map name from which to copy color table"
-#~ msgstr "カラーテーブルに用いるラスターマップ"
-
-#, fuzzy
-#~ msgid "Keep existing color table"
-#~ msgstr "カラーテーブルを上書きしない"
 
 #, fuzzy
 #~ msgid ""
@@ -4323,139 +6638,6 @@ msgstr ""
 #~ msgstr "  rules     (ルールの新規作成)\n"
 
 #, fuzzy
-#~ msgid "Category or object oriented statistics."
-#~ msgstr "マップのカテゴリー値について統計解析を行います"
-
-#, fuzzy
-#~ msgid "method of object-based statistic"
-#~ msgstr "統計解析方法"
-
-#, fuzzy
-#~ msgid "resultant raster map (not used with 'distribution')"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates a new map layer whose category values are based upon the user's "
-#~ "reclassification of categories in an existing raster map layer."
-#~ msgstr ""
-#~ "現在あるラスターマップを再分類して、再分類ファイルを作成します再分類ファイ"
-#~ "ルを作成します"
-
-#, fuzzy
-#~ msgid "Raster map to be reclassified"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Name for the resulting raster map"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid ""
-#~ "Outputs a covariance/correlation matrix for user-specified raster map "
-#~ "layer(s)."
-#~ msgstr "ラスターマップの共分散と相関を求めます"
-
-#, fuzzy
-#~ msgid "Raster map(s) to be read"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Print correlation matrix"
-#~ msgstr "共分散行列の代わりに相関行列を出力"
-
-#, fuzzy
-#~ msgid "Import a binary raster file into a GRASS raster map layer."
-#~ msgstr "バイナリーファイルをラスターマップとしてインポートします"
-
-#, fuzzy
-#~ msgid "Bin raster file to be imported"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Number of bytes per cell (1, 2, 4)"
-#~ msgstr "1セルのバイト数(1, 2, 4)"
-
-#, fuzzy
-#~ msgid "Northern limit of geographic region"
-#~ msgstr "領域の北端"
-
-#, fuzzy
-#~ msgid "Southern limit of geographic region"
-#~ msgstr "領域の南端"
-
-#, fuzzy
-#~ msgid "Eastern limit of geographic region"
-#~ msgstr "領域の東端"
-
-#, fuzzy
-#~ msgid "Western limit of geographic region"
-#~ msgstr "領域の西端"
-
-#, fuzzy
-#~ msgid "Number of rows"
-#~ msgstr "行数"
-
-#, fuzzy
-#~ msgid "Import as Floating Point Data (default: Integer)"
-#~ msgstr "浮動小数点データをインポート"
-
-#, fuzzy
-#~ msgid "Byte Swap the Data During Import"
-#~ msgstr "インポート時にビットを反転"
-
-#, fuzzy
-#~ msgid "Get region info from GMT style header"
-#~ msgstr "GMTファイルのヘッダーから地域情報を得る"
-
-#, fuzzy
-#~ msgid "Set Value to NULL"
-#~ msgstr "NULL値に代入する値"
-
-#, fuzzy
-#~ msgid ""
-#~ "Recategorizes data in a raster map layer by grouping cells that form "
-#~ "physically discrete areas into unique categories."
-#~ msgstr ""
-#~ "同一カテゴリーセルのグルーピングにより新しいラスターマップを作成します"
-
-#, fuzzy
-#~ msgid "Title, in quotes"
-#~ msgstr "タイトル"
-
-#, fuzzy
-#~ msgid "Import GDAL supported raster file into a binary raster map layer."
-#~ msgstr "GDALファイルをラスターマップとしてインポートします"
-
-#, fuzzy
-#~ msgid "Band to select (default is all bands)"
-#~ msgstr "選択するバンド(デフォルト:すべてのバンド)"
-
-#, fuzzy
-#~ msgid "Name of location to read projection from for GCPs transformation"
-#~ msgstr "投影に用いるロケーション"
-
-#, fuzzy
-#~ msgid "Name for new location to create"
-#~ msgstr "作成するロケーション"
-
-#, fuzzy
-#~ msgid "Override projection (use locations projection)"
-#~ msgstr "現在のロケーションの投影法を使用"
-
-#, fuzzy
-#~ msgid "Extend location extents based on new dataset."
-#~ msgstr "データセットをもとにロケーションを拡張"
-
-#, fuzzy
-#~ msgid "Surface generation program."
-#~ msgstr "データ点から補間計算により曲面を推定します"
-
-#, fuzzy
-#~ msgid "Name of input raster map"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
 #~ msgid ""
 #~ "Construction of slope curves (flowlines), flowpath lengths, and flowline "
 #~ "densities (upslope areas) from a raster digital elevation model(DEM)."
@@ -4506,10 +6688,6 @@ msgstr ""
 #~ msgstr "メモリを節約"
 
 #, fuzzy
-#~ msgid "Quiet operation"
-#~ msgstr "説明なし"
-
-#, fuzzy
 #~ msgid "Display Reference Information"
 #~ msgstr "ショートヘルプを表示"
 
@@ -4533,66 +6711,8 @@ msgstr ""
 #~ msgstr "テストモード"
 
 #, fuzzy
-#~ msgid ""
-#~ "Creates a raster map layer showing buffer zones surrounding cells that "
-#~ "contain non-NULL category values."
-#~ msgstr "バッファーゾーンを示す新しいラスターマップを作成します"
-
-#, fuzzy
-#~ msgid "Name of input map"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Name of output map"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Distance zone(s)"
-#~ msgstr "範囲"
-
-#, fuzzy
-#~ msgid "Units of distance"
-#~ msgstr "距離の単位"
-
-#, fuzzy
-#~ msgid "Ignore zero (0) data cells instead of NULL cells"
-#~ msgstr "NULL値の代わりに値0を無視する"
-
-#, fuzzy
-#~ msgid "Raster file matrix filter."
-#~ msgstr "フィルタをかけたラスターマップを作成します"
-
-#, fuzzy
-#~ msgid "Name of the input raster file"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Name of the output raster file"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Name of the filter file"
-#~ msgstr "フィルタ"
-
-#, fuzzy
-#~ msgid "Number of times to repeat the filter"
-#~ msgstr "フィルタをかける回数"
-
-#, fuzzy
-#~ msgid "Output raster file title"
-#~ msgstr "タイトル"
-
-#, fuzzy
-#~ msgid "Apply filter only to zero data values"
-#~ msgstr "値0にのみフィルタを適用"
-
-#, fuzzy
 #~ msgid "Converts a PPM image file to GRASS raster map(s)."
 #~ msgstr "PPMファイルをラスターマップとしてインポートします"
-
-#, fuzzy
-#~ msgid "Name of existing PPM file."
-#~ msgstr "入力するファイル"
 
 #, fuzzy
 #~ msgid "Name of new raster map(s)."
@@ -4609,34 +6729,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Create composite color map."
 #~ msgstr "合成した色のラスターマップを出力"
-
-#, fuzzy
-#~ msgid "Traces a flow through an elevation model on a raster map layer."
-#~ msgstr "最小コストで目的地に到達する経路のラスターマップを作成します"
-
-#, fuzzy
-#~ msgid "Name of existing raster map containing elevation surface"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Output drain raster map"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "The map E and N grid coordinates of a starting point"
-#~ msgstr "始点の座標値"
-
-#, fuzzy
-#~ msgid "Copy input cell values on output"
-#~ msgstr "ルートに沿ってセル値をコピー"
-
-#, fuzzy
-#~ msgid "Accumulate input values along the path"
-#~ msgstr "ルートに沿って累積したセル値を出力"
-
-#, fuzzy
-#~ msgid "Count cell numbers along the path"
-#~ msgstr "ルートに沿ってセル数をカウント"
 
 #, fuzzy
 #~ msgid ""
@@ -4657,29 +6749,6 @@ msgstr ""
 #~ msgstr "単位"
 
 #, fuzzy
-#~ msgid "Wide report, 132 columns (default: 80)"
-#~ msgstr "レポート幅の拡大"
-
-#, fuzzy
-#~ msgid ""
-#~ "Creates a composite raster map layer by using known category values from "
-#~ "one (or more) map layer(s) to fill in areas of \"no data\" in another map "
-#~ "layer."
-#~ msgstr "他のラスターマップによってパッチを作成します"
-
-#, fuzzy
-#~ msgid "Name of raster maps to be patched together"
-#~ msgstr "入力するファイル"
-
-#, fuzzy
-#~ msgid "Name of the result map"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
-#~ msgid "Use zero (0) for transparency instead of NULL"
-#~ msgstr "NULL値の代わりに値0を使用"
-
-#, fuzzy
 #~ msgid ""
 #~ "Converts Universal Transverse Mercator (UTM) coordinates to geographic "
 #~ "(latitude/longitude) coordinates."
@@ -4692,10 +6761,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "utm zone"
 #~ msgstr "UTMゾーン"
-
-#, fuzzy
-#~ msgid "output file"
-#~ msgstr "出力するファイル"
 
 #, fuzzy
 #~ msgid "Specified zone is in the southern hemisphere"
@@ -4938,10 +7003,6 @@ msgstr ""
 #~ msgstr "1/2インチ磁気テープのデータからDTEDを抽出します"
 
 #, fuzzy
-#~ msgid "Name of output file"
-#~ msgstr "出力するファイル"
-
-#, fuzzy
 #~ msgid "Name of header output file"
 #~ msgstr "ヘッダーを出力するファイル"
 
@@ -4972,10 +7033,6 @@ msgstr ""
 #~ msgstr "1/2インチ磁気テープのデータからDEMデータを抽出します"
 
 #, fuzzy
-#~ msgid "Output raster map (examine only if none specified)"
-#~ msgstr "出力するファイル(未入力の場合はチェックのみ)"
-
-#, fuzzy
 #~ msgid "First file to look at"
 #~ msgstr "開始ファイル"
 
@@ -4992,10 +7049,6 @@ msgstr ""
 #~ msgstr "使用するデバイス"
 
 #, fuzzy
-#~ msgid "list all available painters"
-#~ msgstr "ペインタの一覧表示"
-
-#, fuzzy
 #~ msgid "print name of currently selected painter"
 #~ msgstr "現在選択されているペインタ名を表示"
 
@@ -5008,30 +7061,12 @@ msgstr ""
 #~ msgstr "ハードコピー出力の設定を行います"
 
 #, fuzzy
-#~ msgid ""
-#~ "Program to manage the boundary definitions for the geographic region."
-#~ msgstr ""
-#~ "対象地域の範囲や分解能を変更したり、デフォルトに戻すなどの管理を行います"
-
-#, fuzzy
-#~ msgid "Set from default region"
-#~ msgstr "デフォルト地域を選択"
-
-#, fuzzy
-#~ msgid "Print the current region (shell script style)"
-#~ msgstr "現在の設定を表示(シェルスクリプト)"
-
-#, fuzzy
 #~ msgid "Print the current region"
 #~ msgstr "現在の設定を表示"
 
 #, fuzzy
 #~ msgid "Print the current region in lat/long"
 #~ msgstr "経度/緯度情報の表示"
-
-#, fuzzy
-#~ msgid "Print the current region map center coordinates"
-#~ msgstr "現在の中心座標を表示"
 
 #, fuzzy
 #~ msgid "Print region resolution in meters (geodesic)"
@@ -5046,60 +7081,16 @@ msgstr ""
 #~ msgstr "領域を更新しない"
 
 #, fuzzy
-#~ msgid "Set current region from named region"
-#~ msgstr "設定に用いる地域定義ファイル"
-
-#, fuzzy
-#~ msgid "Set region to match this raster map"
-#~ msgstr "設定に用いるラスターマップ"
-
-#, fuzzy
-#~ msgid "Set region to match this vector map"
-#~ msgstr "設定に用いるベクトルマップ"
-
-#, fuzzy
 #~ msgid "Set region to match this sites map"
 #~ msgstr "設定に用いるサイトマップ"
-
-#, fuzzy
-#~ msgid "Set region to match this 3dview file"
-#~ msgstr "設定に用いる3次元表示パラメータファイル"
-
-#, fuzzy
-#~ msgid "Value for the northern edge"
-#~ msgstr "東端"
-
-#, fuzzy
-#~ msgid "Value for the southern edge"
-#~ msgstr "北端"
-
-#, fuzzy
-#~ msgid "Value for the eastern edge "
-#~ msgstr "南端"
-
-#, fuzzy
-#~ msgid "Value for the western edge "
-#~ msgstr "西端"
 
 #, fuzzy
 #~ msgid "Grid resolution (both north-south and east-west)"
 #~ msgstr "格子の分解能"
 
 #, fuzzy
-#~ msgid "North-south grid resolution"
-#~ msgstr "南北の格子間隔"
-
-#, fuzzy
-#~ msgid "East-west grid resolution  "
-#~ msgstr "東西の格子間隔"
-
-#, fuzzy
 #~ msgid "Raster map to zoom into"
 #~ msgstr "ズームするラスターマップ"
-
-#, fuzzy
-#~ msgid "Raster map to align to"
-#~ msgstr "分解能を合わせるラスターマップ"
 
 #, fuzzy
 #~ msgid "Name the current region"
@@ -5115,10 +7106,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "%s file(s) to be copied"
 #~ msgstr "対象ファイル<%s> (コピー元，コピー先)"
-
-#, fuzzy
-#~ msgid "Overwrite <to> file(s)"
-#~ msgstr "上書き"
 
 #, fuzzy
 #~ msgid "To rename data base element files in the user's current mapset."
@@ -5137,10 +7124,6 @@ msgstr ""
 #~ "Lists available GRASS data base files of the user-specified data type to "
 #~ "standard output."
 #~ msgstr "現在使用できるマップの一覧を表示します"
-
-#, fuzzy
-#~ msgid "data type"
-#~ msgstr "ファイルの種類"
 
 #, fuzzy
 #~ msgid "mapset to list (default: current search path)"
@@ -5220,3 +7203,4 @@ msgstr ""
 #, fuzzy
 #~ msgid "print current mapset search path"
 #~ msgstr "現在のマップセットを表示"
+
