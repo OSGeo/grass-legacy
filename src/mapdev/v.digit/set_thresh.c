@@ -118,11 +118,12 @@ reset_snap_thresh (struct Map_info *map)
         Get_curses_text (buf);
         sscanf (buf, "%lf", &cur_digit);
 
-        if (cur_digit < 0)                    /*  just hit return  */
+        if (cur_digit < 0) {                  /*  just hit return  */
             if ( cur_digit == save_digit)    /*  did they change it  */
                 return (0);
             else
                 return (1);
+        }
 
         if ( cur_digit < Scale  ||  cur_digit > Lower)
          {
@@ -198,11 +199,12 @@ reset_thresh (struct Map_info *map)
 	Get_curses_text (buf);
 	sscanf (buf, "%lf", &cur_digit);
 
-	if (cur_digit < 0)                    /*  just hit return  */
-		if ( cur_digit == save_digit)    /*  did they change it  */
-		    return (0);
-		else
-		    return (1);
+	if (cur_digit < 0) {                  /*  just hit return  */
+	    if ( cur_digit == save_digit)    /*  did they change it  */
+	        return (0);
+	    else
+	        return (1);
+        }
 
 	    if ( cur_digit < Scale  ||  cur_digit > Lower)
 	     {
@@ -307,26 +309,18 @@ calc_thresh (double new_thresh)
     return 0;
 }
 
-
-
-int 
-map_to_dig_thresh (double map_thresh)
+int map_to_dig_thresh (double map_thresh)
 {
     float dig_units;
-    double X1, Y1, X2, Y2;
-    double hypot();
-
 
     CMap->head.digit_thresh = _map_to_dig_thresh (map_thresh);
     return 0;
 }
 
-double 
-_map_to_dig_thresh (double map_thresh)
+double _map_to_dig_thresh (double map_thresh)
 {
     float dig_units;
-    double X1, Y1, X2, Y2;
-    double hypot();
+    /* double X1, Y1, X2, Y2; */
     double dig_thresh;
 
 

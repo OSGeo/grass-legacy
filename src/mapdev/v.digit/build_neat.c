@@ -135,13 +135,13 @@ build_neat (struct Map_info *map)
     /* is this an area boundary that will affect neighbor areas? */
     /* if (type == AREA) */
     {  /* this shouldn't be needed */
-	if (area = check_next (map, line, RIGHT))
+	if ((area = check_next (map, line, RIGHT)))
 	    Del_area (map, area);
-	if (area = check_next (map, line, LEFT))
+	if ((area = check_next (map, line, LEFT)))
 	    Del_area (map, area);
-	if (area = check_next (map, -line, RIGHT))
+	if ((area = check_next (map, -line, RIGHT)))
 	    Del_area (map, area);
-	if (area = check_next (map, -line, LEFT))
+	if ((area = check_next (map, -line, LEFT)))
 	    Del_area (map, area);
     }
 
