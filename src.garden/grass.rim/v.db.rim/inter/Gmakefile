@@ -5,7 +5,7 @@ EXTRA_CFLAGS =  -I$(MYINCLUDE) -DDBVECT
 #FFLAGS =  -g
 
 #Uncomment the next line to use the static Fortran Libraries on the SUNs
-#LDFLAGS = -Bstatic
+LDFLAGS = -Bstatic
 
 MYLIBS = $(SRC).related/rim/librim.a
 
