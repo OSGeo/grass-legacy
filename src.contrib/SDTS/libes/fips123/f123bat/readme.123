@@ -1,0 +1,25 @@
+FIPS PUB 123 Function Library
+Readme File 
+Subdirectory: <f123dir>/f123bat/
+
+This subdirectory contains the UNIX make files and script files
+that may be used to create and maintain the FIPS PUB 123 
+Function Library.
+
+The script file f123comp.m can be invoked to compile the entire 
+function library producing object code files in the subdirectory 
+<f123dir>/f123obj/ and source listing files in the subdirectory 
+<f123dir>/f123lst/.  The script file f123lib.m can be invoked 
+to create the UNIX archive library <f123dir>/f123lib/fips123.a
+from the object code files in subdirectory <f123dir>/f123obj/.
+
+
+File               Description
+------------       -----------
+sam_prg2.mak       Creates sample program 2 executable
+sam_prg3.mak       Creates sample program 3 executable
+samprg2b.mak       Creates sample program 2B executable
+samprg3b.mak       Creates sample program 3B executable
+f123lib.m          Script file create UNIX archive library
+f123comp.m         Compiles FIPS PUB 123 Function Library
+readme.123         Directory information file

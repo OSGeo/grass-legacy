@@ -2,9 +2,6 @@ PBIN = /usr/tmp
 PGM    = v.surf.rst
 HOME = $(BIN_CONTRIB_CMD)
 
-#required for Windows/Cygnus (12/99)
-#XDRLIB = /usr/local/lib/librpclib.a
-
 TREEDIR = $(SRC)/libes/rst_gmsl/tree
 TREELIB = $(TREEDIR)/libtree.a
 DATADIR = $(SRC)/libes/rst_gmsl/data

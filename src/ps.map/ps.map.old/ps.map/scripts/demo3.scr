@@ -1,0 +1,27 @@
+scale 1 inch equals 2 miles
+maploc 1.25 1.2
+raster fields
+outline
+  color white
+  end
+colortable
+  cols 4
+  font Helvetica
+  fontsize 10
+  end
+vector streams.spear
+  width 1
+  color black
+  end
+vector streams.dead
+  width 1
+  color black
+  end
+labels rush.lbl
+  font Helvetica
+  end
+mapinfo
+  end
+vlegend
+  end
+end

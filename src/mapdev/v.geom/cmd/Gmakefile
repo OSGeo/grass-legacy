@@ -5,6 +5,10 @@ TRIANGLIB = $(SRC)/libes/liboptri.a $(SRC)/libes/libsos.a $(SRC)/libes/liblia.a 
 
 LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(TRIANGLIB)
 
+ifeq ($(shell uname),IRIX64)
+LIBES += -lmalloc
+endif
+
 SOURCES = \
 	main.c
 

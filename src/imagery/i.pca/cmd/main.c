@@ -188,7 +188,7 @@ int main (int argc, char *argv[])
 	     covar[k][j] = 0.;
    for (j=0 ; j<bands ; j++)
    {
-      fprintf(stdout, "Computing row number %d of covatiance matrix...", (j+1));
+      fprintf(stdout, "Computing row number %d of covariance matrix...", (j+1));
       fflush(stdout);
       for (row=0 ; row<rows ; row++)
       {

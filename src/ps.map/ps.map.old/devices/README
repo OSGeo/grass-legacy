@@ -1,0 +1,6 @@
+Here some standard PS-devices to be stored in
+
+$(GISBASE)/etc/paint/ps.devices/
+
+Select with ps.select.
+

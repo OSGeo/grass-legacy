@@ -60,7 +60,7 @@ INTERACTIVE PROGRAM USE: MAIN MENU
 
 
 
-2				 m				 1
+6				 m				 1
 
 
 
@@ -126,7 +126,7 @@ DEFINITIONS
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -192,7 +192,7 @@ REGION EDIT PROMPT
 
 
 
-2				 m				 3
+6				 m				 3
 
 
 
@@ -258,7 +258,7 @@ region
 
 
 
-4		      GRASS Development Team	   GRASS 5.0beta2
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -324,7 +324,7 @@ NON-INTERACTIVE PROGRAM USE
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			5
+GRASS 5.0beta6	      GRASS Development Team			5
 
 
 
@@ -390,7 +390,7 @@ g.region <main>	      GRASS Reference Manual	  <main> g.region
 
 
 
-6		      GRASS Development Team	   GRASS 5.0beta2
+6		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -456,7 +456,7 @@ EXAMPLES
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			7
+GRASS 5.0beta6	      GRASS Development Team			7
 
 
 
@@ -522,7 +522,7 @@ g.region <main>	      GRASS Reference Manual	  <main> g.region
 
 
 
-8		      GRASS Development Team	   GRASS 5.0beta2
+8		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -588,7 +588,7 @@ AUTHOR
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			9
+GRASS 5.0beta6	      GRASS Development Team			9
 
 
 

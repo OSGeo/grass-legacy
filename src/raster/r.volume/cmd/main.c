@@ -11,6 +11,8 @@
  * Washington University (revised April 1989).
  *
  * Revised Jul 1995 to use new sites API (McCauley)
+ *
+ * $Id$
  */
 #include <string.h>
 #include "gis.h"
@@ -261,6 +263,6 @@ int main (
   }
   if (total_vol > 0.0 && out_mode)
     fprintf (stdout,"%58s %14.2f", "Total Volume =", total_vol);
-
-	exit(0);
+    fprintf (stdout,"\n");
+  exit(0);
 }				/* end of main() */

@@ -8,7 +8,7 @@
 .br
 \fBi.out.erdas help\fR
 .br
-\fBi.out.erdas\fR [\fB\-lbs\fR] \fBinput=\fIname[,name,...]\fR \fBouput=\fIname
+\fBi.out.erdas\fR [\fB\-lbs\fR] \fBinput=\fIname[,name,...]\fR \fBoutput=\fIname
 
 .SH DESCRIPTION
 This program creates ERDAS files from raster files.  It
@@ -29,7 +29,7 @@ Flags:
 
 Parameters:
   input   Input raster layers.
-  ouput   Erdas output file name
+  output   Erdas output file name
 .SH "SEE ALSO"
 r.support, i.group i.in.erdas
 

@@ -38,12 +38,9 @@ OFILES =  \
 	SWITCHER.o \
 	window_act.o
 
-$(GISBASE)/driver/IGRAPH: IGRAPH
-	mv IGRAPH $@
-	$(GMAKE) igraph_progs
-
-IGRAPH: $(OFILES) ../lib/driverlib.a $(GISLIB)
+$(GISBASE)/driver/IGRAPH: $(OFILES) ../lib/driverlib.a $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)  $(GISLIB) $(MATHLIB) $(XDRLIB)
+	$(GMAKE) igraph_progs
 
 ../lib/driverlib.a: #
 $(GISLIB): #

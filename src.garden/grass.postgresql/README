@@ -1,0 +1,101 @@
+		GRASS/Postgres interface modules (libpq update feb'00).
+		
+-------------------------------------------------------------------------
+		
+These modules are used to work with multi-layer environment in GRASS. Unlike
+some other GIS, GRASS keeps only one attribute in its vector/raster
+layers. To change to a different layer, or to query other attributes, one has 
+to use the database which stores the other columns.
+
+Modules in this pack, in general, provide the following functions.
+
+1. g.select.pg - select a database to use with GRASS.
+
+2. g.table.pg - list tables in currently selected DB.
+
+3. g.columns.pg - list columns information in a table of the selected DB.
+
+4. g.stats.pg - calculate means, min,max, frequencies for a specified numeric 
+column.
+
+5. d.site.pg - display and optionally copy/reclass sites selected 
+with a DB query. 
+
+6. d.vect.pg - display lines/areas selected with a DB query.
+
+7. d.rast.pg - display(optionally) and reclass raster maps with a DB query.
+
+8. d.what.s.pg - query sites on graphics monitor with mouse. Like d.what.sites,
+it gives coordinates, but lists all attributes. Gives option to geometry
+filter sites and dump the fields in comma-separated lists for other statistics 
+programs (like R or Gnumeric).
+
+9. d.what.v.pg - query lines/areas with mouse. Like d.what.vect, lists 
+attributes.
+Optionally fills queried areas (like v.area). May be used for the UPDATE command
+in Postgres through the input SQL file. The idea is to prepare an arbitrary
+algorithm, code it in SQL, and then update DB with clicking on chosen 
+polys/lines. You may consider this as piping anything you grabbed on screen
+through various filters.
+
+10. d.what.r.pg - does the same as above on the raster maps.
+
+11. v.reclass.pg - reclasses vector maps according to the 
+SELECT filter.
+
+12. v.in.shape.pg - does the same as the v.in.shape module plus dumping the relevant dbf
+information directly to postgres table. Although, using the module v.in.shape versus
+v.in.arc seems not quite an idea  , since as Frank Warmerdam who wrote v.in.shape 
+points out:
+	"Label for polygons are located on the edge, rather than
+     interior to the polygon.  This is ambiguous in cases of
+     polygons that share boundaries with other polygons and will
+     cause conflicts when running v.support."
+So if you imported a coverage with polygons whose attributes were stored in dbf-file
+by means of ArcView shapefile (and v.in.shape.pg), the table data would be relevant to
+polys, while labels would now belong to lines (after v.support really gets confused).
+If you are not bothered with this fact (say importing lines), 
+then try use v.in.shape.pg. 
+
+Admin/normal_user dump modes differ in the way the new records inserted. Admin takes 
+less time, while "normal user" dump is accompanied with HDD rattles. This is due to
+safety limitation of Postgres which allows direct copying of large files to its
+super-users only.
+
+13. v.in.arc.pg - works in interactive mode. A lot more straightforward than 
+the original "v.in.arc". Just UNGEN lines and points in arc/info, then copy
+the lines and labels files to your work directory (yes, no need to dig them into
+/db/your_database/your_name/arc), and also copy PAT.dbf (or AAT.dbf) there too,
+possibly renaming them to more reasonable names, as these would be taken by
+Postgres tables when they are created.
+Then run v.in.arc.pg and it would create area/line coverages 
+(with categories set to line/areas id's) plus dump the dbf to postgres. Then you
+would probably want to run v.reclass.pg to set proper cats.
+
+14. pg.in.dbf - just the hatcheted dumper from the two above modules. Takes DBF
+file name from user and dumps all columns to postgres.
+
+15. NVIZ2.2 - Postgres interface. See INSTALL file for detailed instructions on
+how to patch NVIZ2.2 to run Postrges queries from it. I have added new
+entries field in the "What's here" panel; Postgres queries may be disabled in
+"Attributes" checkbox.
+
+Please see module manuals for more details.
+
+Known bugs.
+
+Notice1: As of now, d.vect.pg and d.what.v.pg both use R_polygon_abs() for
+filling polys, which seems to ignore islands. So you'd rather say to no fill the
+areas.
+Notice2: Tcl-Tk modules may have input "where" clause restricted to one rule
+typed without "whitespaces",
+(unlike terminal input where number of subclause is not limited). This is due to
+general parsing routine.
+Notice3: v.reclass.pg uses standard v.reclass, which has too small input buffer
+length (see src/mapdev/v.reclass/cmd/input.c). So if trying to reclass you have
+error messages, recompile v.reclass (standard) with buffer length in input.c
+changed from 8 to 1024.
+
+Bugs and other possible caveats reports are welcome.
+Alex Shevlakov,
+sixote@yahoo.com

@@ -1,0 +1,33 @@
+
+<A NAME="r3.in.grid3">
+<H2>r3.in.grid3</H2>
+<H4>[type = default | double | float]
+[precision = default | max | 0 - 52]
+[compression = default | rle | lzw | rle+lzw | none]
+[tiledimension = XxYxZ]
+[nv = yes | no]
+input = <EM>grid3</EM>-file
+output = <EM>g3d</EM>-map
+</H4>
+
+Imports files in Bill Brown's <EM>grid3</EM> format into G3D.
+<P>
+The command line argument <EM>nv</EM> specifies whether zeros in the grid3 file
+are converted to NULL-values. Conversion is performed if the value is 
+<EM>yes</EM>. The default is <EM>no</EM>.
+<P>
+The arguments <EM>type</EM>, <EM>precision</EM>, <EM>compression</EM>, and
+<EM>tiledimension</EM> are the standard g3d arguments which allow the user
+to overwrite the default properties of the new file. Note that the 
+<EM>none</EM> value for <EM>compression</EM> only specifies that neither
+<EM>LZW</EM> nor <EM>RLE</EM> is used for compression. It does not turn
+off the compression all together. G3d does not support non-compressed files.
+<P>
+<EM>r3.in.grid3</EM> uses <EM>float</EM> as default cell-<EM>type</EM>.
+<P>
+NOTE: Currently, after the file has been imported, the stored values are 
+compared with the original data. This feature is used to find bugs in the
+library at an early stage and will be turned off as soon as confidence has
+built up.
+
+<HR>

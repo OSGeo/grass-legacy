@@ -38,6 +38,9 @@
 
 #define USE_PPM
 
+int parse_command(int, char *[], char *[MAXVIEWS][MAXIMAGES], 
+                  int *, int *, int *, int *);
+
 int     nrows, ncols, numviews, quality, quiet=0;
 char 	*vfiles[MAXVIEWS][MAXIMAGES];
 char 	outfile[BUFSIZ];

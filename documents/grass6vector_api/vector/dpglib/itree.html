@@ -1,0 +1,130 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Integer Tree 
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Integer Tree 
+</h1>
+
+<blockquote><i>
+    Status:  Delta<br>
+    This module has been designed, and coded but is currently under review.
+    It is fairly stable but its interface could change.<p>
+    I don't know if the design of this module is good or not. But
+    it serves its purpose I guess.
+</i></blockquote>
+
+<p>
+This module is a simpified front end to the <a href=tavl.html>tavl</a> library.
+It hides all the need for callbacks.  As such the only data type that it
+supports is integer keys and a void * pointer to the data.
+<p>
+
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li> <a href=#>  </a>
+    
+
+<li>PTR   <a href=#dpgItreeInit> dpgItreeInit </a>
+       ();
+
+
+<li>int   <a href=#dpgItreeDestroy> dpgItreeDestroy </a>
+    (PTR tree);
+
+
+<li>int   <a href=#dpgItreeInsert> dpgItreeInsert </a>
+     (PTR tree, int key, PTR data);
+
+
+<li>int   <a href=#dpgItreeDelete> dpgItreeDelete </a>
+     (PTR tree, int key);
+
+
+<li>PTR   <a href=#dpgItreeFind> dpgItreeFind </a>
+       (PTR tree, int key);
+
+
+<li>void  <a href=#dpgItreeReset> dpgItreeReset </a>
+      (PTR tree);
+
+
+<li>int   <a href=#dpgItreeNext> dpgItreeNext </a>
+       (PTR tree, int *key, PTR *data);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+<a name="dpgItreeInit">
+<pre>
+PTR   <strong>dpgItreeInit</strong>    ();
+
+</pre>
+
+<a name="dpgItreeDestroy">
+<pre>
+int   <strong>dpgItreeDestroy</strong> (PTR tree);
+
+</pre>
+
+<a name="dpgItreeInsert">
+<pre>
+int   <strong>dpgItreeInsert</strong>  (PTR tree, int key, PTR data);
+
+</pre>
+
+<a name="dpgItreeDelete">
+<pre>
+int   <strong>dpgItreeDelete</strong>  (PTR tree, int key);
+
+</pre>
+
+<a name="dpgItreeFind">
+<pre>
+PTR   <strong>dpgItreeFind</strong>    (PTR tree, int key);
+
+</pre>
+
+<a name="dpgItreeReset">
+<pre>
+void  <strong>dpgItreeReset</strong>   (PTR tree);
+
+</pre>
+
+<a name="dpgItreeNext">
+<pre>
+int   <strong>dpgItreeNext</strong>    (PTR tree, int *key, PTR *data);
+
+</pre>
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

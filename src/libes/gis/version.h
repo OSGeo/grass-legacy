@@ -1,1 +1,1 @@
-static char *VERSION_STRING = "@(#) GRASS 5.0beta6 (December 1999)";
+static char *VERSION_STRING = "@(#) GRASS 5.0beta7 (April 2000)";

@@ -1,7 +1,6 @@
 NAME=s.qcount
 
 PGM=$(BIN_CONTRIB_CMD)/$(NAME)
-#PGM=$(NAME)
 
 MSEC=4
 MDIR=$(SRC)/../man/man$(MSEC)
@@ -26,6 +25,7 @@ LIST = \
 LIBES= $(GISLIB) $(DATETIMELIB) $(MATHLIB) 
 
 #all: $(PGM) man hello
+all: $(PGM)
 
 $(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB)

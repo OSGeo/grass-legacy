@@ -1,0 +1,354 @@
+<H2>G3D Defaults</H2>
+
+There are three methods to set default variables. First, the default
+can be set at compile time in <EM>g3ddefault.c</EM>. This value has lowest
+priority. 
+Second, the default can be set via an environment variable.
+Third, the value can be set explicitly set at run time. This value has
+highest priority.
+There are also functions provided to query the value.
+
+<H4>Topics</H4>
+<PRE>
+<A HREF="#cache_mode">Cache Mode</A>
+<A HREF="#compression">Compression</A>
+<A HREF="#tiles">Tiles</A>
+<A HREF="#windows">Windows</A>
+<A HREF="#unit">Setting the Units</A>
+<A HREF="#erro_handling">Error Handling</A>
+</PRE>
+
+<A HREF="funindex.html"><H3>Function Index</H3></A>
+
+<HR>
+
+<A NAME="cache_mode">
+<H2>Cache Mode</H2>
+</A>
+
+<H3>Limiting the maximum cache size</H3>
+
+The limit is specified in bytes. It is a limit on the size of
+cell-data stored in the cache and does not include the support
+structure. 
+<P>
+Default G3D_CACHE_SIZE_MAX_DEFAULT. This is currently set to 2meg
+and can be changed at compilation time of the library.
+<P>
+Environment variable G3D_MAX_CACHE_SIZE.
+<P>
+<A NAME="G3d_setCacheLimit">
+<PRE>
+void
+<H4>G3d_setCacheLimit (nBytes)</H4>
+	int nBytes;
+</PRE>
+</A>
+
+<A NAME="G3d_getCacheLimit">
+<PRE>
+int
+<H4>G3d_getCacheLimit ()</H4>
+</PRE>
+</A>
+
+<H3>Setting the cache size</H3>
+
+This value specifies the number of tiles stored in the cache. It is
+the value used if at opening time of a map G3D_USE_CACHE_DEFAULT is
+used for the cache mode. Any other value used at opening time will
+supersede the default value. A default value of 0 indicates that
+non-cache mode should be used by default. 
+<P>
+Default G3D_CACHE_SIZE_DEFAULT. This is currently set to 1000 and can be changed at compilation time of the library.
+<P>
+Environment variable G3D_DEFAULT_CACHE_SIZE.
+<P>
+
+<A NAME="G3d_setCacheSize">
+<PRE>
+void
+<H4>G3d_setCacheSize (nTiles)</H4>
+	int nTiles;
+</PRE>
+</A>
+
+<A NAME="G3d_getCacheSize">
+<PRE>
+int
+<H4>G3d_getCacheSize ()</H4>
+</PRE>
+</A>
+
+
+
+
+<HR>
+
+<A NAME="compression">
+<H2>Compression</H2>
+</A>
+
+<H3>Toggling compression mode</H3>
+
+This value specifies whether compression should be used while writing
+a new map. It does not have any effect on old maps. 
+<P>
+Default G3D_COMPRESSION_DEFAULT. This is set to G3D_COMPRESSION. This
+default should not be changed. 
+<P>
+Environment variables G3D_USE_COMPRESSION and G3D_NO_COMPRESSION.
+<P>
+See functions 
+<A HREF="#G3d_setCompressionMode">G3d_setCompressionMode ()</A>
+and
+<A HREF="#G3d_getCompressionMode">G3d_getCompressionMode ()</A>.
+
+
+<H3>Toggling LZW compression</H3>
+
+This value specifies whether LZW compression should be used (in
+addition to RLE and precision). Using LZW usually does not improve the
+compression significantly but increases I/O time. 
+<P>
+Default G3D_USE_LZW_DEFAULT. This is currently set to G3D_NO_LZW and
+can be changed at compilation time of the library.
+<P>
+Environment variables G3D_USE_LZW and G3D_NO_LZW.
+<P>
+See functions 
+<A HREF="#G3d_setCompressionMode">G3d_setCompressionMode ()</A>
+and
+<A HREF="#G3d_getCompressionMode">G3d_getCompressionMode ()</A>.
+
+<H3>Toggling RLE compression</H3>
+
+This value specifies whether RLE compression should be used (in
+addition to LZW and precision). 
+<P>
+Default G3D_USE_RLE_DEFAULT. This is currently set to G3D_USE_RLE and
+can be changed at compilation time of the library.
+<P>
+Environment variables G3D_USE_RLE and G3D_NO_RLE.
+<P>
+See functions 
+<A HREF="#G3d_setCompressionMode">G3d_setCompressionMode ()</A>
+and
+<A HREF="#G3d_getCompressionMode">G3d_getCompressionMode ()</A>.
+
+<H3>Setting the precision</H3>
+
+This number specifies how many mantissa bits should be used when
+writing a cell value. The minimum value is 0. The maximum value is 23
+or G3D_MAX_PRECISION for type G3D_FLOAT, it is 52 or G3D_MAX_PRECISION
+for type G3D_DOUBLE.
+
+<P>
+Default G3D_PRECISION_DEFAULT. This is set to G3D_MAX_PRECISION. This
+default should not be changed. 
+<P>
+Environment variables G3D_PRECISION and G3D_MAX_PRECISION..
+<P>
+<A NAME="G3d_setCompressionMode">
+<PRE>
+void
+<H4>G3d_setCompressionMode (doCompress, doLzw, doRle, precision)</H4>
+	int doCompress, doLzw, doRle, precision;
+</PRE>
+</A>
+
+<EM>doCompress</EM> should be one of G3D_NO_COMPRESSION and G3D_COMPRESSION,
+<EM>doLzw</EM> should be either G3D_NO_LZW or G3D_USE_LZW, 
+<EM>doRle</EM> should be either G3D_NO_RLE or G3D_USE_RLE, and
+<EM>precision</EM> should be either G3D_MAX_PRECISION or a positive integer.
+
+<A NAME="G3d_getCompressionMode">
+<PRE>
+void
+<H4>G3d_getCompressionMode (doCompress, doLzw, doRle, precision)</H4>
+	int *doCompress, *doLzw, *doRle, *precision;
+</PRE>
+</A>
+
+
+
+<HR>
+
+<A NAME="tiles">
+<H2>Tiles</H2>
+</A>
+
+<H3>Setting the tile dimensions</H3>
+
+The dimensions are specified in number of cell.
+<P>
+Defaults G3D_TILE_X_DEFAULT, G3D_TILE_Y_DEFAULT, and
+G3D_TILE_Z_DEFAULT. These are currently set to 8 and can be changed at
+compilation time of the library.
+<P>
+Environment variables G3D_TILE_DIMENSION_X, G3D_TILE_DIMENSION_Y, and
+G3D_TILE_DIMENSION_Z.
+
+<P>
+<A NAME="G3d_setTileDimension">
+<PRE>
+void
+<H4>G3d_setTileDimension (tileX, tileY, tileZ)</H4>
+	int tileX, tileY, tileZ;
+</PRE>
+</A>
+
+<A NAME="G3d_getTileDimension">
+<PRE>
+void
+<H4>G3d_getTileDimension (tileX, tileY, tileZ)</H4>
+	int *tileX, *tileY, *tileZ;
+</PRE>
+</A>
+
+<H3>Setting the tile cell-value type</H3>
+
+Specifies which type is used to write cell-values on file. This type
+can be chosen independently of the type used to store cell-values in
+memory.
+<P>
+Default G3D_FILE_TYPE_DEFAULT. This is set to G3D_DOUBLE. This
+default should not be changed. 
+<P>
+Environment variables G3D_WRITE_FLOAT and G3D_WRITE_DOUBLE.
+<P>
+<A NAME="G3d_setFileType">
+<PRE>
+void
+<H4>G3d_setFileType (type)</H4>
+	int type;
+</PRE>
+</A>
+
+<A NAME="G3d_getFileType">
+<PRE>
+int
+<H4>G3d_getFileType ()</H4>
+</PRE>
+</A>
+
+
+<HR>
+
+<A NAME="windows">
+<H2>Windows</H2>
+</A>
+
+<H3>Setting the window</H3>
+
+The window is set from a <EM>3d</EM> window file. 
+<P>
+The default <EM>3d</EM> window file is <EM>WIND3</EM> located in the
+current mapset. 
+<P>
+Possible choices for <EM>3d</EM> window files are <EM>name</EM> which
+refers to a window file in the <EM>3d</EM> window database located at
+<EM>windows3d</EM> of the current mapset; 
+or file names which are identified by
+a leading <EM>"/"</EM> or <EM>"."</EM>;
+or fully qualified names, i.e. <EM>file@mapset</EM> which refer to 
+window files in the <EM>3d</EM> window  database of mapset.
+Note, that names <EM>WIND3</EM> and <EM>WIND3@mapset</EM> do not
+specify the default window name in the (current) mapset but rather a 
+window file in the window database of the (current) mapset.
+
+<P>
+Environment variable G3D_DEFAULT_WINDOW3D.
+<P>
+See functions 
+<A HREF="protos.html#G3d_useWindowParams">G3d_useWindowParams ()</A>,
+<A HREF="protos.html#G3d_setWindow">G3d_setWindow ()</A>, and
+<A HREF="protos.html#G3d_setWindowMap">G3d_setWindowMap ()</A>.
+
+<HR>
+
+<A NAME="unit">
+<H2>Setting the Units</H2>
+</A>
+
+<P>
+Default "none".
+<P>
+No environment variable.
+<P>
+<P>
+<A NAME="G3d_setUnit">
+<PRE>
+void
+<H4>G3d_setUnit (unit)</H4>
+	char *unit;
+</PRE>
+</A>
+
+<HR>
+<A NAME="erro_handling">
+<H2>Error Handling</H2>
+</A>
+
+<H3>Setting the error function</H3>
+
+This variable specifies the function which is invoked when an error
+(not a fatal error) occurs. For example setting the error function to
+G3d_fatalError simplifies debugging with dbx and also might show
+errors which are missed because the application does not check the
+return value.
+<P>
+Default G3d_skipError.
+<P>
+Environment variables G3D_USE_FATAL_ERROR and G3D_USE_PRINT_ERROR.
+<P>
+
+<P>
+<A NAME="G3d_setErrorFun">
+<PRE>
+void
+<H4>G3d_setErrorFun (fun)</H4>
+	void (*fun)(char *);
+</PRE>
+</A>
+
+<P>
+The following 3 functions are possible choices for error functions.
+
+<P>
+<A NAME="G3d_skipError">
+<PRE>
+void
+<H4>G3d_skipError (msg)</H4>
+	char (*msg)(char *);
+</PRE>
+</A>
+
+This function ignores the error.
+
+<P>
+<A NAME="G3d_printError">
+<PRE>
+void
+<H4>G3d_printError (msg)</H4>
+	char (*msg)(char *);
+</PRE>
+</A>
+
+This function prints the error message <EM>msg</EM> to
+<EM>stderr</EM> and returns.
+
+<P>
+<A NAME="G3d_fatalError">
+<PRE>
+void
+<H4>G3d_fatalError (msg)</H4>
+	char (*msg)(char *);
+</PRE>
+</A>
+
+This function prints the error message <EM>msg</EM> to <EM>stderr</EM>,
+flushes <EM>stdout</EM> and <EM>stderr</EM>,
+and terminates the program with a segementation fault.
+
+<HR>

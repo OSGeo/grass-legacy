@@ -33,7 +33,7 @@ Parameters:
      Use only 'can' candidate patches for faster nearest neighbor
      search.  Options: 1-30 Default: 30 Distance methods (Choose
      only 1 method): Options: m0, m1, m2, m3, m4, m5, m6, m7, m8,
-     m9 (CC=Center?Center, EE=Edge?Edge, CE=Center?Edge): m0 =
+     m9 (CC=Center-Center, EE=Edge-Edge, CE=Center-Edge): m0 =
      each patch to all adjacent neighbors CC m1 = each patch to
      all adjacent neighbors CE m2 = each patch to nearest patch
      of same gp CC m3 = each patch to nearest patch of same gp CE
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 5.0beta5	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 

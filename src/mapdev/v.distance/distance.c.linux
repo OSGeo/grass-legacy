@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <math.h>
+#include "gis.h"
+#include "dig_structs.h"
+#include "dig_defines.h"
+#include "Vect.h"
+
+
+distance(Map)
+    struct Map_info *Map;
+
+{
+    double x, y, d,d2;
+    double x1,y1,x2,y2;
+    double s,n,w,e;
+    register int line,vline;
+    register int np, i, nlines; 
+    char buf[1024],text[1024];
+
+    struct line_pnts *Points;
+
+
+    Points=Vect_new_line_struct();
+    line = 0;
+
+    if (isatty(0))
+	fprintf (stderr, "enter points, \"end\" to quit\n");
+    while (1)
+    {
+	if (isatty(0))
+	    fprintf (stderr, "\neast north >  ");
+	if (gets(buf) == NULL) {
+              return;
+	}
+	if (strcmp (buf, "end") == 0) {
+              return;
+	}
+	if (strcmp (buf, "exit") == 0) {
+              return;
+	}
+	line++;
+	sprintf(text,"\0");
+	sscanf(buf, "%lf %lf %s", &x, &y, text);
+        sprintf(buf,"\0");
+
+       	nlines=V2_num_lines(Map);	
+
+	V2_read_line(&Map,Points,1);
+
+	x1=Points->x[0];
+	y1=Points->y[0];
+	d=sqrt(dig_distance2_point_to_line(x,y,x1,y1,x1,y1));
+	
+	for(vline=1;vline<=nlines;vline++)
+		{
+                    if (LINE_ALIVE (&(Map->Line[vline])))
+                      {
+
+			V2_read_line(Map,Points,vline);
+			np=Points->n_points;
+
+			if (dig_in_line_bbox(&(Map->Line[vline]),x,y) || 
+			     box_closer(&(Map->Line[vline]),x,y,d ) )
+			{
+
+			   if (np == 1)
+			   {
+				x1=Points->x[0];
+				y1=Points->y[0];
+				d2=sqrt(dig_distance2_point_to_line(x,y,x1,y1,x1,y1));
+				if(d2<d) d=d2;
+			   }
+			   else
+			   {
+  		   	     for (i=0; i <(np-1); i++) 
+   		    	       {
+/*
+				printf("point %d\n",i);
+*/
+				x1=Points->x[i];
+				y1=Points->y[i];
+				x2=Points->x[i+1];
+				y2=Points->y[i+1];	
+/*
+				printf("point %d ok\n",i);
+*/
+				d2=sqrt(dig_distance2_point_to_line(x,y,x1,y1,x2,y2));
+/*
+				printf("point %d d ok\n",i);
+*/
+				if(d2<d) d=d2;
+   			       }
+			    }
+			
+
+			}
+
+                   }
+/*
+printf("Next Line\n");
+*/
+		}
+	printf("%lf|%lf|%s|%lf\n",x,y,text,d);
+	}
+}

@@ -1,0 +1,2 @@
+retrieve (pg_type.typname) where pg_attribute.atttypid = pg_type.oid
+and pg_class.relname = testi and pg_attribute.attname = koe

@@ -1,3 +1,7 @@
+/*
+ * $Id$
+ */
+
 #include "gis.h"
 
 int readz (fdsite, verbose, z, window, all)
@@ -15,7 +19,7 @@ int readz (fdsite, verbose, z, window, all)
   if (verbose)
     fprintf (stderr, "Reading sites list ...              ");
 
-  mysite = G_site_new_struct (-1,2, 0, 1);
+  mysite = G_site_new_struct (cat,dims,strs,dbls);
 
   if (G_site_describe (fdsite, &dims, &cat, &strs, &dbls)!=0)
     G_fatal_error("failed to guess format");

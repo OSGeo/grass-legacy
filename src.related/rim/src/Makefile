@@ -1,7 +1,14 @@
-# definitions for MIPS RISCos / CDC EP/IX rim
-PILE = /usr/bsd43/bin/f77
-AR = ar ruv
+# definitions for LINUX rim
+RANLIB=ranlib
+F2CLIB=/usr/lib/f2cmain.a -lf2c
+F77=g77
+EXTRA=time_date.o
+LIBEXTRA=time_date.o
+PILE = CC_f2c=$(CC) $(F77)
+LIBRIM=librim.a
+AR = ar rv
 RAN = ranlib
+# $Id: Makefile,v 1.3 2000-02-09 14:11:00 markus Exp $
 # make rim libs (generic instructions)
 
 #------------------------------------------------------------------#
@@ -9,6 +16,9 @@ RAN = ranlib
 # Files used by Rim and associates
 
 # Main programs
+
+# Module not used
+UNUSED=ncodei.o  getloc.o
 
 MAINS = rim.o rime.o lxtest.o helpgen.o
 
@@ -27,7 +37,7 @@ chkfil.o chkrel.o chrasc.o chtype.o datjul.o dbdefn.o \
 dbload.o dbopcl.o dbopen.o deldat.o deldup.o delete.o \
 delrow.o dmsg.o dtfenc.o dtfspl.o dtor.o eq.o eqkeyw.o eqtok.o \
 f1clo.o f1opn.o f2clo.o f2opn.o f3clo.o f3opn.o filch.o fmtdec.o \
-getdat.o getkca.o getloc.o gett.o gtsort.o \
+getdat.o getkca.o gett.o gtsort.o \
 htoi.o iexp.o imsg.o isect.o itoa.o itoh.o \
 join.o joirel.o juldat.o kmpard.o kmpari.o kmparr.o kmpart.o kompxx.o \
 lfind.o lkstr.o lnkadd.o lnkget.o lnkpag.o lnkput.o loadfm.o \
@@ -35,7 +45,7 @@ loadit.o loadmv.o locase.o locatt.o locboo.o loclnk.o locmac.o \
 locprm.o locrel.o locvar.o lodele.o lodlnk.o lodpas.o lodrec.o \
 lodrel.o lstrel.o lstrng.o lxcmnt.o lxdate.o lxedit.o lxfmt.o \
 lxinit.o lxlenw.o lxsrec.o lxwrec.o macdef.o macexp.o motscn.o \
-msg.o msgcmv.o ncodei.o ndigit.o ne.o nxtchr.o nxtchx.o \
+msg.o msgcmv.o ndigit.o ne.o nxtchr.o nxtchx.o \
 nxtcrd.o nxttok.o parse.o parval.o pgbres.o pgbsto.o pgcexp.o \
 pgcomp.o pgcprt.o pgeexp.o pgeprt.o pgexec.o pgstor.o \
 pject.o prckey.o prjtup.o prmset.o prompt.o ptrs.o putdat.o putt.o \
@@ -72,13 +82,13 @@ LIBRIMSUBS = \
  chtype.o datjul.o dbdefn.o dbload.o dbopcl.o dbopen.o deldat.o \
  deldup.o delete.o delrow.o dtfenc.o dtfspl.o dtor.o eq.o eqkeyw.o \
  eqtok.o filch.o fmtdec.o f1clo.o f1opn.o f2clo.o f2opn.o \
- f3clo.o f3opn.o getdat.o getkca.o getloc.o gett.o gtsort.o \
+ f3clo.o f3opn.o getdat.o getkca.o gett.o gtsort.o \
  htoi.o iexp.o isect.o itoa.o itoh.o join.o joirel.o juldat.o \
  kmpard.o kmpari.o kmparr.o kmpart.o kompxx.o lfind.o lkstr.o locase.o \
  locatt.o locboo.o locmac.o locprm.o locrel.o lodele.o lodpas.o \
  lodrec.o lodrel.o lstrel.o lstrng.o lxcmnt.o lxdate.o lxedit.o \
  lxfmt.o lxinit.o lxlenw.o lxsrec.o lxwrec.o macdef.o macexp.o \
- motscn.o ncodei.o ndigit.o ne.o nxtchr.o nxtchx.o nxttok.o \
+ motscn.o ndigit.o ne.o nxtchr.o nxtchx.o nxttok.o \
  parse.o parval.o pilib.o pilibx.o pject.o prckey.o prjtup.o \
  ptrs.o putdat.o putt.o reladd.o relget.o relpag.o relput.o remkey.o \
  remrel.o reuse.o rformt.o rioclo.o rioin.o rioopn.o rioout.o \
@@ -103,28 +113,33 @@ RXFILES = rmxget.o rmxput.o rmxlod.o rmxdel.o
 
 .SUFFIXES = .o .f .c
 .f.o:	;$(PILE) -c -w $*.f
-.c.o:	;cc  -c -w $*.c
+.c.o:	;$(CC)  -c -w $*.c
 
 all::
 		make rim
 		make rime
 		make rimh
-		make rimlib
-		make librim.a
+		make $(LIBRIM)
+rim:		rim.o $(RIMSUBS)
+	$(F77) -o rim rim.o $(RIMSUBS)
 
-rim:		rim.o
-rime:		rime.o
-rimh:		rimh.o
-lxtest:		lxtest.o
+rime:		rime.o $(RIMSUBS)
+	$(F77) -o rime rime.o $(RIMSUBS)
+
+rimh:		rimh.o librim.a
+	$(F77) -o rimh rimh.o librim.a
+
+lxtest:		lxtest.o $(RIMSUBS)
+	$(F77) -o lxtest lxtest.o $(RIMSUBS)
+
 rimlib:		$(RIMSUBS)
 		-rm rimlib
 		$(AR)  rimlib $(RIMSUBS)
 		ranlib rimlib
 		
-librim.a:	$(LIBRIMSUBS)
+librim.a:	$(LIBRIMSUBS) $(LIBEXTRA)
 		-rm librim.a
 		$(AR) librim.a $(LIBRIMSUBS)
 		ranlib librim.a
-
 
 #-------------------------------------------------------------------#

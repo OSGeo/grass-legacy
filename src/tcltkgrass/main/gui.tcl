@@ -2,7 +2,7 @@
 # Name:		gui.tcl
 # Author:	Jacques Bouchard (bouchard@onera.fr)
 #    additions:	Markus Neteler (neteler@geog.uni-hannover.de)
-# Last update:	Mon Jul 12 1999
+# $Id$
 # Description:	Simple interface builder for TCLTKGRASS
 #
 #	2 procedures:
@@ -1369,6 +1369,7 @@ array set featuredir {
 	group		group
 	subgroup	group/$$group($array)/subgroup
 	signature	group/$$group($array)/subgroup/$$subgroup($array)/sig
+	signature2      group/$$group($array)/subgroup/$$subgroup($array)/sigset
 	icon		icons
 	Icon		ps_icons
 	label		paint/labels
@@ -1541,7 +1542,7 @@ if ![catch {open ~/.tcltkgrass r} stream] {
     close $stream
 }
 
-wm title . "TCLTKGRASS 2.9 (1999) - Location: $env(LOCATION_NAME) "
+wm title . "TCLTKGRASS 3.0 (2000) - Location: $env(LOCATION_NAME) "
 
 wm geometry . $main_menu(window_geometry)
 catch {

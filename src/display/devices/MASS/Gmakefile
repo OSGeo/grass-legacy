@@ -18,10 +18,7 @@ OFILES =  \
 	mass_alloc.o\
 	mass_mouse.o
 
-$(GISBASE)/driver/MASS: MASS
-	mv MASS $@
-
-MASS: $(OFILES) ../lib/driverlib.a
+$(GISBASE)/driver/MASS: $(OFILES) ../lib/driverlib.a
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)
 
 ../lib/driverlib.a: #

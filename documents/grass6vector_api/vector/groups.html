@@ -1,0 +1,565 @@
+<html>
+
+<head>
+    <title>
+	GRASS 5.0 Vector API: Group Interface
+    </title>
+<head>
+
+<body>
+<h1>GRASS 5.0 Vector API: Group Interface</h1>
+
+
+<blockquote><i>
+    Status:  Delta<br>
+    This module has been designed, and coded but is currently under review.
+    It is fairly stable but its interface could change.<br>
+    The area of change will be with respect to tiling support.
+</i></blockquote>
+
+
+Groups are the primary container of PIDs for the Vector API.
+Groups are basically SETS, but are called groups to avoid confusion
+with 'Set' which is commonly found in function names.
+
+Groups are a key concept in the API.  They are the primary container
+of object references.  There is a <i><a href="#gvGroupForeach">foreach</a></i>
+operater and a <i><a href="#gvGroupNext">next</a></i> operator available for
+stepping through the items of groups.  These will be the primary
+mechanism for stepping through subsets of objects.  
+<p>
+
+Each map has one special group called the <i>universe group</i>.  This
+read-only group contains a reference to every primitive feature in the
+map.  Other groups are typically generated as a result of a query.
+Both <a href="query.html">spatial</a> and relational type queries are 
+supported, and will typically result in a group of objects which satisfy 
+the query.<p>
+
+There is a full suite of unary and binary set operations which can be 
+perform against groups. These include union, intersection, subtraction,
+and inverse.  So groups can be used to modify other groups. A typical 
+example is to intersect the results of a spatial query (e.g. objects 
+within a specified distance from a given object) and those from a relational 
+query.  <p>
+
+All group operations also take a mask, which can be used to further
+restrict a subset of the groups involved.  The mask specifies which 
+types of objects are to be used in the operation.  The values for the
+mask are the different types of <a href="types.html">primitive objects</a>
+supported by the API (e.g. connecting node, area edge, etc).
+<p>
+
+The supported primitive feature types are:<p>
+
+<pre>
+    Lines		GV_MASK_LINE
+	Line		GV_MASK_LLINE
+	Area		GV_MASK_ALINE
+	Neat		GV_MASK_NLINE
+    Nodes		GV_MASK_NODE
+	Connecting	GV_MASK_CNODE
+	Entity		GV_MASK_ENODE
+    Areas		GV_MASK_AREA
+    Islands		GV_MASK_ISLE
+			GV_MASK_FEATURES       All features except Isles
+			GV_MASK_ALL            All features
+</pre>
+
+All of the group operations take a mask which specifies any combination
+of the above types.  Thus you can specify any subset of types to
+iterate or operate on.<p>
+
+For the interator functions, the mask will also be used to specify if 
+the group function should operate
+on <i>all</i> features in the map or only on those in the current 
+<a href="tile.html">active region</a>.
+
+<hr>
+
+<A NAME="index">
+<h2> Function Index </h2>
+<ul>
+<li>gvGroupP  <a href=#gvGroupCreate>gvGroupCreate</a>   (gvMapP map);
+<li>gvStatus  <a href=#gvGroupDestroy>gvGroupDestroy</a>  (gvGroupP group);
+<li>gvStatus  <a href=#gvGroupAdd>gvGroupAdd</a>      (gvGroupP group, gvPidP pid);
+<li>gvStatus  <a href=#gvGroupDelete>gvGroupDelete</a>   (gvGroupP group, gvPidP pid);
+<li>gvGroupP  <a href=#gvGroupBinaryOp>gvGroupBinaryOp</a> (gvGroupP groupA, gvGroupP groupB,
+                                 int op, gvBoolean onA, int mask);
+<li>gvGroupP  <a href=#gvGroupClone>gvGroupClone</a>    (gvGroupP groupA, int mask);
+<li>gvGroupP  <a href=#gvGroupNegate>gvGroupNegate</a>   (gvGroupP groupA, gvBoolean onA, int mask);
+<li>gvStatus  <a href=#gvGroupForeach>gvGroupForeach</a>  (gvGroupP group,
+                             gvStatus (*func)(gvPidP pid, gvPointer data),
+                             gvPointer data, int mask);
+<li>gvStatus  <a href=#gvGroupNext>gvGroupNext</a>     (gvGroupP group, gvPidP *pid, int mask);
+<li>gvStatus  <a href=#gvGroupRewind>gvGroupRewind</a>   (gvGroupP group);
+<li>gvGroupP  <a href=#gvGroupUniverse>gvGroupUniverse</a> (gvMapP map);
+<li>gvBoolean <a href=#gvGroupContains>gvGroupContains</a> (gvGroupP group, gvPidP pid);
+
+</ul>
+
+<dl {>	<! this starts a dl for the whole file which causes other dl's to
+	be indented>
+
+<HR>  <!---------------------------------------------------------------->
+
+<h2> Function Specifications </h2> 
+
+<A NAME="gvGroupUniverse">
+
+<pre>
+gvGroupP  <strong>gvGroupUniverse</strong> (gvMapP <var>map</var>)
+</pre> <p>
+
+<BLOCKQUOTE {>
+    Every map has one predefined group called the <em>universe group</em>.
+    Thie function returns a pointer to the universe group for that map.
+    The universe
+    group contains all of the features in the map.  This pointer
+    does not need to be destroyed as it is maintained by the API.  It
+    is also good for as long as that map is opened.  It should
+    <strong>not</strong> be modified by the client.<p>
+</BLOCKQUOTE }>
+
+<pre>
+    INPUT
+	gvMapP map	Pointer to map that
+			group will be associated with.
+
+    OUTPUT
+	None
+
+    RETURNS
+	gvGroupP	Pointer to universe group
+	NULL		on error
+
+    NOTE
+	The caller is should NOT call gvGroupDestroy() when done with it.
+</pre>
+
+
+<a href=#index> Index </a>
+<HR>  <!---------------------------------------------------------------->
+<A NAME="gvGroupCreate">
+
+<pre>
+gvGroupP <strong>gvGroupCreate</strong> (gvMapP <var>map</var>)
+</pre><p>
+
+<BLOCKQUOTE>
+    Create and initialized a group.  If the ordered flag is TRUE, then the
+    group will maintain the ordering of the elements inserted into it.<p>
+</BLOCKQUOTE>
+
+<pre>
+    INPUT
+	gvMapP map	Pointer to map that group
+			will be associated with.
+
+    OUTPUT
+	None
+
+    RETURNS
+	gvGroupP	Pointer to modified group
+	NULL		on error.
+
+    NOTE
+	The caller is responsible to call gvGroupDestroy() when done
+	to free up memory.
+
+	Ordering of elements is in the order they are assigned to the
+	group.  There is currently no mechanism to re-order the
+	elements of an ordered group.
+
+    SEE ALSO
+        gvGroupDestroy()
+</pre>
+
+<a href=#index> Index </a> <HR>
+<!----------------------------------------------------------------> <A
+NAME="gvGroupDestroy">
+
+<pre>
+gvStatus <strong>gvGroupDestroy</strong> (gvGroupP <var>group</var>)
+</pre><p>
+
+<BLOCKQUOTE>
+    Destroy an initialized group.<p> </BLOCKQUOTE>
+
+
+<pre>
+    INPUT
+	gvGroupP group    Initialized group to be destroyed.
+
+    OUTPUT
+        None
+
+    RETURN
+	gvStatus			
+		GV_OK
+		GV_FAILED
+
+</pre>
+
+<a href=#index> Index </a>
+<HR>  <!---------------------------------------------------------------->
+
+<A NAME="gvGroupAdd">
+
+<pre>
+gvStatus <strong>gvGroupAdd</strong> (gvGroupP <var>group</var>, gvPidP <var>pid</var>)
+</pre><p>
+
+<BLOCKQUOTE>
+    Add a PID to a group.<p>
+</BLOCKQUOTE>
+
+<pre>
+    INPUT
+	gvGroupP group       	Initialized group
+	gvPidP pid		PID to be added to group
+
+    OUTPUT
+	None
+
+    RETURN
+	gvStatus			
+		GV_OK		PID added
+		GV_FAILED	Failed (Not currently supported)
+		GV_MEMORY_ERR	Out of memory
+
+    CALLS
+	Bm_set()
+</pre>
+
+<a href=#index> Index </a>
+<HR>  <!---------------------------------------------------------------->
+
+<A NAME="gvGroupDelete">
+
+<pre>
+gvStatus <strong>gvGroupDelete</strong> (gvGroupP <var>group</var>, gvPidP <var>pid</var>)
+</pre><p>
+
+<BLOCKQUOTE>
+    Delete a PID from a group.<p>
+</BLOCKQUOTE>
+
+<pre>
+    INPUT
+	gvGroupP group		Initialized group
+	gvPidP   pid		PID to be deleted from group
+
+    OUTPUT
+	None
+
+    RETURN
+	gvStatus			
+		GV_OK		PID deleted
+		GV_FAILED	Failed, PID was not in group
+				    (Not currently supported)
+		GV_MEMORY_ERR	Out of memory
+
+    CALLS
+	Bm_set()
+</pre>
+
+
+<a href=#index> Index </a>
+<HR>  <!---------------------------------------------------------------->
+
+<A NAME="gvGroupContains">
+
+<pre>
+gvBoolean <strong>gvGroupContains</strong> (gvGroupP <var>group</var>, gvPidP <var>pid</var>)
+</pre><p>
+
+<BLOCKQUOTE>
+    Check to see if group contains specified pid.<p>
+</BLOCKQUOTE>
+
+<pre>
+    INPUT
+	gvGroupP group          Initialized group
+	gvPidP   pid		PID to be inquired of
+
+    OUTPUT
+	None
+
+    RETURN
+	gvStatus			
+		GV_OK		PID added
+		GV_FAILED	Failed		
+		GV_MEMORY_ERR	Out of memory
+
+    CALLS
+	Bm_get()
+</pre>
+
+
+<a href=#index> Index </a>
+<HR>  <!---------------------------------------------------------------->
+
+<A NAME="gvGroupBinaryOp">
+
+<pre>
+gvGroupP <strong>gvGroupBinaryOp</strong>
+	(gvGroupP <var>groupA</var>, gvGroupP <var>groupB</var>,
+	 int <var>op</var>, gvBoolean <var>onA</var>, int <var>mask</var>)
+</pre><p>
+
+<BLOCKQUOTE>
+     Perform a binary operation on two groups creating a third.<p>
+</BLOCKQUOTE>
+
+<pre>
+    INPUT
+	gvGroupP groupA  	Group to be modified
+
+	gvGroupP groupB  	Group of elements for deleting.
+				    GroupB is never modified.
+
+	int op	    		Operation to be performed.  One of:
+				    GV_GROUP_AND    GV_GROUP_OR
+				    GV_GROUP_XOR    GV_GROUP_DIFF
+
+	gvBoolean onA    	If TRUE, then A is modified with the
+				result. If FALSE, A is not modified.
+				In either case, return is pointer to
+				modified group.
+
+	int   mask	    	Bit mask of which PID types to work
+				with. Any union of:
+				    GV_MASK_LLINES  GV_MASK_ALINES
+				    GV_MASK_NLINES  GV_MASK_LINES
+				    GV_MASK_AREAS   GV_MASK_ISLES
+				    GV_MASK_CNODES  GV_MASK_ENODES
+				    GV_MASK_FEATURE GV_MASK_ALL
+
+    RETURNS
+	gvGroupP		Pointer to modified group
+	NULL			on error. Check gv_getErrorCode()
+
+    NOTE
+	Caller is responsible to call gvGroupDestroy() when done with the
+	new group to free up memory. (if onA == TRUE, then there is
+	no new group created.)
+</pre>
+
+<a href=#index> Index </a>
+<HR>  <!---------------------------------------------------------------->
+
+<A NAME="gvGroupClone">
+
+<pre>
+gvGroupP <strong>gvGroupClone</strong> (gvGroupP <var>groupA</var>, int <var>mask</var>)
+</pre><p>
+
+<BLOCKQUOTE>
+    Generate a new group which is identical to the original.<p>
+</BLOCKQUOTE>
+
+<pre>
+    INPUT
+	gvGroupP groupA  	Initialized group to be cloned.
+	int mask	    	Bit mask of which PID types to
+				work with.  Any union of:
+				    GV_MASK_LLINES  GV_MASK_ALINES
+				    GV_MASK_NLINES  GV_MASK_LINES
+				    GV_MASK_AREAS   GV_MASK_ISLES
+				    GV_MASK_CNODES  GV_MASK_ENODES
+				    GV_MASK_FEATURE GV_MASK_ALL
+
+    OUTPUT
+	None
+
+    RETURN
+	gvGroupP 		Pointer to new group
+	NULL	 		on error.  See gv_getErrorCode()
+
+    NOTE
+	Caller is responsible to call gvGroupDestroy() when done with the
+	    new group to free up memory.
+</pre>
+
+<a href=#index> Index </a>
+<HR>  <!---------------------------------------------------------------->
+
+<A NAME="gvGroupNegate">
+
+<pre>
+gvGroupP <strong>gvGroupNegate</strong> 
+    (gvGroupP <var>groupA</var>, gvBoolean <var>onA</var>, int <var>mask</var>)
+</pre><p>
+
+<BLOCKQUOTE>
+    Generate a new group which is the negative of the original with
+    respect to the universe.  <p>
+</BLOCKQUOTE>
+
+<pre>
+    INPUT
+	gvGroupP old     	Initialized group to be negated.
+	int	mask	    	Bit mask of which PID types to
+				work with Any union of:
+				    GV_MASK_LLINES  GV_MASK_ALINES
+				    GV_MASK_NLINES  GV_MASK_LINES
+				    GV_MASK_AREAS   GV_MASK_ISLES
+				    GV_MASK_CNODES  GV_MASK_ENODES
+				    GV_MASK_FEATURE GV_MASK_ALL
+
+    OUTPUT
+	gvGroupP *new    	New copy of group.  Caller passes
+				    pointer to gvGroupP.  If new is
+				    NULL, then old will be modified
+				    and contain the result.
+
+    RETURN
+	gvGroupP		    Pointer to new group
+	NULL			    on error.  See gv_getErrorCode()
+
+    NOTE
+	Caller is responsible to call gvGroupDestroy() when done with
+	the new group to free up memory. (if onA == TRUE, then there
+	is no new group created.)
+
+    TODO1
+	use the ZERO entries in the universe group to zero out
+	negated groups.
+</pre>
+
+<a href=#index> Index </a>
+<HR>  <!---------------------------------------------------------------->
+
+<h2>GROUP ITERATORS </h2>
+
+<a NAME="gvGroupForeach">
+
+<pre>
+gvStatus <strong>gvGroupForeach</strong>
+	(gvGroupP <var>group</var>,
+	 gvStatus (*<var>func</var>)(gvPidP pid, gvPointer data),
+	 gvPointer <var>data</var>, int <var>mask</var>)
+</pre><p>
+
+<BLOCKQUOTE>
+    Execute function <var>func</var> for each element of
+    <var>group</var>.  This function loops through each element of the
+    group and calls the specified function.  The arguments to the
+    called function are the PID and a pointer to caller provided
+    data.<p>
+</BLOCKQUOTE>
+
+<pre>
+    INPUT
+	gvGroupP group       	Group of interest
+	gvStatus (*func)()	Function to call for each element.
+				The function should return only:
+				    GV_OK, GV_FAILED, or GV_MEMORY_ERR
+	gvPointer data		Caller provided data
+
+    OUTPUT
+	None
+
+    RETURN
+	gvStatus			
+		GV_OK		Success
+		GV_FAILED	Failed, no elements or failure
+				    return from func.
+		GV_MEMORY_ERR	Out of memory
+</pre>
+
+<a href=#index> Index </a>
+<HR>  <!---------------------------------------------------------------->
+
+<a NAME="gvGroupNext">
+
+
+<pre>
+gvStatus <strong>gvGroupNext</strong>
+	(gvGroupP <var>group</var>, gvPidP *<var>pid</var>, int <var>mask</var>)
+</pre><p>
+
+<BLOCKQUOTE>
+    For those who are intimidated by gvGroupForeach(), this function will
+    return the elements of the group one at a time.<p>
+</BLOCKQUOTE>
+
+<pre>
+    INPUT
+	gvGroupP group    	Group of interest
+
+    OUTPUT
+	gvPidP *pid		Returned PID information
+
+    RETURN
+	gvStatus			
+		GV_OK		Success
+		GV_FAILED	Failed
+		GV_MEMORY_ERR	Out of memory
+
+    SEE ALSO
+	gvGroupRewind(), gvGroupForeach()
+
+    NOTE
+	The behaviour of gvGroupNext() is undefined if any changes to
+	the group have been made between calls to gvGroupNext().  In
+	this case use gvGroupRewind() to reset the iterator. There is
+	no 'seek' option.
+</pre>
+
+<a href=#index> Index </a>
+<HR>  <!---------------------------------------------------------------->
+
+<a NAME="gvGroupRewind">
+
+<pre>
+gvStatus <strong>gvGroupRewind</strong> (gvGroupP <var>group</var>)
+</pre><p>
+
+<BLOCKQUOTE>
+    This function works in conjunction with gvGroupNext().  It can be used
+    to reset the iterator to the beginning.  Thus following calls to
+    gvGroupNext() will walk through the entire group.<p>
+</BLOCKQUOTE>
+
+<pre>
+    INPUT
+	gvGroupP group          Group of interest
+
+    OUTPUT
+	None
+
+    RETURN
+	gvStatus			
+		GV_OK		Success
+		GV_FAILED	Bad group
+
+    SEE ALSO
+	gvGroupNext()
+</pre>
+
+<a href=#index> Index </a>
+
+</dl }>	<! this is the end of the whole file dl >
+
+</body>
+
+
+
+
+<!--hr------------------------------------------------>
+
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

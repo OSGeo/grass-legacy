@@ -1,0 +1,2083 @@
+
+<A NAME="openclose">
+<H2>Opening and Closing G3D Files</H2>
+</A>
+
+<A NAME="G3d_openCellOld">
+<PRE>
+void *
+<H4>G3d_openCellOld (name, mapset, window, type, cache)</H4>
+
+	char *name, *mapset;
+	G3D_Region *window;
+	int type, cache;
+</PRE>
+</A>
+
+Opens existing g3d-file <EM>name</EM> in <EM>mapset</EM>. Tiles are stored in memory 
+with <EM>type</EM> which must be any of G3D_FLOAT, G3D_DOUBLE, or 
+G3D_TILE_SAME_AS_FILE. <EM>cache</EM> specifies the cache-mode used and must 
+be either G3D_NO_CACHE, G3D_USE_CACHE_DEFAULT, 
+G3D_USE_CACHE_X, G3D_USE_CACHE_Y, G3D_USE_CACHE_Z, G3D_USE_CACHE_XY,
+G3D_USE_CACHE_XZ, G3D_USE_CACHE_YZ, G3D_USE_CACHE_XYZ,
+the result of 
+<A HREF="#G3d_cacheSizeEncode">G3d_cacheSizeEncode ()</A>,
+or any positive integer
+which specifies the number of tiles buffered in the cache.
+<EM>window</EM> sets the window-region for the map. It is either a pointer
+to a window structure or G3D_DEFAULT_WINDOW, which uses the window stored
+at initialization time or set via 
+<A HREF="#G3d_setWindow">G3d_setWindow ()</A>.
+To modify the window 
+for the map after it has already been 
+opened use 
+<A HREF="#G3d_setWindowMap">G3d_setWindowMap ()</A>.
+
+<PRE>
+Returns 
+	a pointer to the cell structure ... if successful,
+	NULL ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="G3d_openCellNew">
+<PRE>
+void *
+<H4>G3d_openCellNew (name, type, cache, region)</H4>
+
+	char *name;
+	int type, cache;
+ 	G3D_Region *region;
+</PRE>
+</A>
+
+Opens new g3d-file with <EM>name</EM> in the current mapset. Tiles are stored 
+in 
+memory with <EM>type</EM> which must be one of G3D_FLOAT, G3D_DOUBLE, or 
+G3D_TILE_SAME_AS_FILE. <EM>cache</EM> specifies the cache-mode used and must 
+be either G3D_NO_CACHE, G3D_USE_CACHE_DEFAULT, 
+G3D_USE_CACHE_X, G3D_USE_CACHE_Y, G3D_USE_CACHE_Z, G3D_USE_CACHE_XY,
+G3D_USE_CACHE_XZ, G3D_USE_CACHE_YZ, G3D_USE_CACHE_XYZ,
+the result of 
+<A HREF="#G3d_cacheSizeEncode">G3d_cacheSizeEncode ()</A>,
+or any positive integer which specifies the number of tiles buffered in the
+cache.
+<EM>region</EM> specifies the 3d region.
+
+<PRE>
+Returns 
+	a pointer to the cell structure ... if successful,
+	NULL ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="G3d_openCellNewParam">
+<PRE>
+void *
+<H4>G3d_openCellNewParam (name, typeIntern, cache, region,
+				     type, doLzw, doRle, precision, tileX, tileY, tileZ)</H4>
+
+	char *name;
+	int typeIntern, cache;
+ 	G3D_Region *region;
+	int type, doLzw, doRle, precision, tileX, tileY, tileZ;
+</PRE>
+</A>
+
+Opens new g3d-file with <EM>name</EM> in the current mapset. Tiles are stored 
+in 
+memory with <EM>typeIntern</EM> which must be one of G3D_FLOAT, G3D_DOUBLE, or 
+G3D_TILE_SAME_AS_FILE. <EM>cache</EM> specifies the cache-mode used and must 
+be either G3D_NO_CACHE, G3D_USE_CACHE_DEFAULT, 
+G3D_USE_CACHE_X, G3D_USE_CACHE_Y, G3D_USE_CACHE_Z, G3D_USE_CACHE_XY,
+G3D_USE_CACHE_XZ, G3D_USE_CACHE_YZ, G3D_USE_CACHE_XYZ,
+the result of 
+<A HREF="#G3d_cacheSizeEncode">G3d_cacheSizeEncode ()</A>,
+or any positive integer
+which specifies the number of tiles buffered in the cache.
+<EM>region</EM> specifies the 3d region.
+<P>
+In addition the properties of the new file have to be specified. It is assumed
+by default that compression is used. This function first sets the global 
+default values to the specified values, and then restores the original 
+global defaults. This function can be used in conjunction with 
+<A HREF="#G3d_setStandart3dInputParams">G3d_setStandart3dInputParams ()</A>
+and
+<A HREF="#G3d_getStandart3dParams">G3d_getStandart3dParams ()</A>.
+
+<PRE>
+Returns 
+	a pointer to the cell structure ... if successful,
+	NULL ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="G3d_closeCell">
+<PRE>
+int
+<H4>G3d_closeCell (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Closes g3d-file. If <EM>map</EM> is new and cache-mode is used for <EM>map</EM> then
+every tile which is not flushed before closing is flushed.
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="readwritetile">
+<H2>Reading and Writing Tiles</H2>
+</A>
+
+These functions read or write data directly to the file (after
+performing the appropriate compression) without going through the
+cache. In order to avoid unexpected side-effects the use of these
+functions in cache mode is discouraged. 
+
+<A NAME="G3d_readTile">
+<PRE>
+int
+<H4>G3d_readTile (map, tileIndex, tile, type)</H4>
+
+	void *map;
+	char *tile;
+	int tileIndex, type;
+</PRE>
+</A>
+
+Reads tile with index <EM>tileIndex</EM> into the <EM>tile</EM> buffer. The cells are stored
+with type <EM>type</EM> which must be one of G3D_FLOAT and G3D_DOUBLE. If the
+tile with <EM>tileIndex</EM> is not stored on the file 
+corresponding to <EM>map</EM>, and <EM>tileIndex</EM> is a valid index <EM>tile</EM> is filled with
+NULL-values.
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+<A NAME="G3d_readTileFloat">
+<PRE>
+int
+<H4>G3d_readTileFloat (map, tileIndex, tile)</H4>
+
+</PRE>
+</A>
+
+Is equivalent to G3d_readTile (map, tileIndex, tile, G3D_FLOAT).
+
+<A NAME="G3d_readTileDouble">
+<PRE>
+int
+<H4>G3d_readTileDouble (map, tileIndex, tile)</H4>
+</PRE>
+</A>
+
+Is equivalent to G3d_readTile (map, tileIndex, tile, G3D_DOUBLE).
+
+<HR>
+<A NAME="G3d_writeTile">
+<PRE>
+int
+<H4>G3d_writeTile (map, tileIndex, tile, type)</H4>
+
+	void *map;
+	char *tile;
+	int tileIndex, type;
+</PRE>
+</A>
+
+Writes tile with index <EM>tileIndex</EM> to the file corresponding to
+<EM>map</EM>. It is assumed that the cells in <EM>tile</EM> are of <EM>type</EM>  which
+must be one of G3D_FLOAT and G3D_DOUBLE. 
+The actual type used to write the tile depends on the type specified
+at the time when <EM>map</EM> is initialized.
+A tile can only be written once. Subsequent attempts to write the same
+tile are ignored.
+
+<PRE>
+Returns 
+	1 ... if successful,
+	2 ... if write request was ignored,
+	0 ... otherwise.
+</PRE>
+
+<A NAME="G3d_writeTileFloat">
+<PRE>
+int
+<H4>G3d_writeTileFloat (map, tileIndex, tile)</H4>
+</PRE>
+</A>
+Is equivalent to G3d_writeTile (map, tileIndex, tile, G3D_FLOAT).
+
+<A NAME="G3d_writeTileDouble">
+<PRE>
+int
+<H4>G3d_writeTileDouble (map, tileIndex, tile)</H4>
+</PRE>
+</A>
+Is equivalent to G3d_writeTile (map, tileIndex, tile, G3D_DOUBLE).
+
+
+<HR>
+<A NAME="readwritecell">
+<H2>Reading and Writing Cells</H2>
+</A>
+
+<A NAME="G3d_getValue">
+<PRE>
+void
+<H4>G3d_getValue (map, x, y, z, value, type)</H4>
+
+	void *map;
+	int x, y, z;
+	char *value;	
+	int type;
+</PRE>
+</A>
+
+Returns in <EM>*value</EM> the cell-value of the cell with window-coordinate 
+<EM>(x, y, z)</EM>.
+The value returned is of <EM>type</EM>. 
+
+<P>
+This function invokes a fatal error if an error occurs.
+
+
+<A NAME="G3d_getFloat">
+<PRE>
+float
+<H4>G3d_getFloat (map, x, y, z)</H4>
+</PRE>
+</A>
+
+<PRE>
+Is equivalent to 
+	G3d_getValue (map, x, y, z, &value, G3D_FLOAT);
+	return value.
+</PRE>
+
+<A NAME="G3d_getDouble">
+<PRE>
+double
+<H4>G3d_getDouble (map, x, y, z)</H4>
+</PRE>
+</A>
+
+<PRE>
+Is equivalent to 
+	G3d_getValue (map, x, y, z, &value, G3D_DOUBLE);
+	return value.
+</PRE>
+
+<A NAME="G3d_getValueRegion">
+<PRE>
+void
+<H4>G3d_getValueRegion (map, x, y, z, value, type)</H4>
+
+	void *map;
+	int x, y, z;
+	char *value;	
+	int type;
+</PRE>
+</A>
+
+Returns in <EM>*value</EM> the cell-value of the cell with region-coordinate 
+<EM>(x, y, z)</EM>.
+The value returned is of <EM>type</EM>. 
+Here <EM>region</EM> means the coordinate in the cube of data in the
+file, i.e. ignoring geographic coordinates.
+
+<P>
+This function invokes a fatal error if an error occurs.
+
+
+<A NAME="G3d_getFloatRegion">
+<PRE>
+float
+<H4>G3d_getFloatRegion (map, x, y, z)</H4>
+</PRE>
+</A>
+
+<PRE>
+Is equivalent to 
+	G3d_getValueRegion (map, x, y, z, &value, G3D_FLOAT);
+	return value.
+</PRE>
+
+<A NAME="G3d_getDoubleRegion">
+<PRE>
+double
+<H4>G3d_getDoubleRegion (map, x, y, z)</H4>
+</PRE>
+</A>
+
+<PRE>
+Is equivalent to 
+	G3d_getValueRegion (map, x, y, z, &value, G3D_DOUBLE);
+	return value.
+</PRE>
+
+<HR>
+<A NAME="G3d_putValue">
+<PRE>
+int
+<H4>G3d_putValue (map, x, y, z, value, type)</H4>
+
+	void *map;
+	int x, y, z;
+	char *value;	
+	int type;
+</PRE>
+</A>
+
+After converting <EM>*value</EM> of <EM>type</EM> into the type specified at the
+initialization time (i.e. <EM>typeIntern</EM>) this function writes the value
+into the tile buffer corresponding to cell-coordinate <EM>(x, y, z)</EM>.
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+<A NAME="G3d_putFloat">
+<PRE>
+int
+<H4>G3d_putFloat (map, x, y, z, value)</H4>
+
+	void *map;
+	int x, y, z;
+	float value;	
+
+</PRE>
+Is equivalent to G3d_putValue (map, x, y, z, &value, G3D_FLOAT).
+
+<A NAME="G3d_putDouble">
+<PRE>
+int
+<H4>G3d_putDouble (map, x, y, z, value)</H4>
+
+	void *map;
+	int x, y, z;
+	double value;	
+
+</PRE>
+Is equivalent to G3d_putValue (map, x, y, z, &value, G3D_DOUBLE).
+
+<HR>
+<A NAME="loadremove">
+<H2>Loading and Removing Tiles</H2>
+</A>
+
+<A NAME="G3d_getTilePtr">
+<PRE>
+char *
+<H4>G3d_getTilePtr (map, tileIndex)</H4>
+
+	void *map;
+	int tileIndex;
+</PRE>
+</A>
+This function returns a pointer to a tile which contains the data for
+the tile with index <EM>tileIndex</EM>. 
+The type of the data stored in the tile depends on the type specified
+at the initialization time of <EM>map</EM>.
+The functionality is different
+depending on whether <EM>map</EM> is old or new and depending on the
+cache-mode of <EM>map</EM>.
+<P>
+If <EM>map</EM> is old and the cache is not used the tile with <EM>tileIndex</EM> is
+read from file and stored in the buffer provided by the map structure.
+The pointer to this buffer is returned. If the buffer already
+contains the tile with <EM>tileIndex</EM> reading is skipped. Data which
+was stored in earlier calls to G3d_getTilePtr is destroyed. 
+If the tile with <EM>tileIndex</EM> is not stored on the file 
+corresponding to <EM>map</EM>, and <EM>tileIndex</EM> is a valid index the buffer is
+filled with NULL-values.
+<P>
+If <EM>map</EM> is old and the cache is used the tile with <EM>tileIndex</EM> is
+read from file and stored in one of the cache buffers. 
+The pointer to buffer is returned.
+If no free cache buffer is available an unlocked cache-buffer is freed
+up and the new tile is stored in its place. 
+If the tile with <EM>tileIndex</EM> is not stored on the file 
+corresponding to <EM>map</EM>, and <EM>tileIndex</EM> is a valid index the buffer is
+filled with NULL-values.
+If one of the cache buffers already contains the tile with <EM>tileIndex</EM>
+reading is skipped and the pointer to this buffer is returned.
+<P>
+If <EM>map</EM> is new and the cache is not used the functionality is the
+same as if <EM>map</EM> is old and the cache is not used. 
+If the tile with <EM>tileIndex</EM> is already stored on file, it is read
+into the buffer, if not, the cells are set to null-values.
+If the buffer corresponding to the pointer is used for writing, subsequent
+calls to G3d_getTilePtr may destroy the values already stored in the
+buffer. 
+Use G3d_flushTile to write the buffer to the file before
+reusing it for a different index. 
+The use of this buffer as write buffer is discouraged. 
+<P>
+If <EM>map</EM> is new and the cache is used the functionality is the
+same as if <EM>map</EM> is old and the cache is used with the following
+exception. 
+If <EM>tileIndex</EM> is a valid index and the tile with this index is not
+found in the cache and is not stored on the file corresponding to
+<EM>map</EM>, then the file cache is queried next. If the file-cache contains
+the tile it is loaded into the cache (memory-cache). Only if the
+file-cache does not contain the tile it is filled with NULL-values.
+Tile contents of buffers are never destroyed. If a cache buffer needs
+to be freed 
+up, and the tile stored in the buffer has not been written to the
+file corresponding to <EM>map</EM> yet, the tile is copied into the file-cache.
+<P>
+Care has to be taken if this function is used in non-cache mode since
+it is implicitly invoked every time a read or write request is issued.
+The only I/O-functions for which it is safe to assume that they do not
+invoke G3d_getTilePtr are G3d_readTile () and G3d_writeTile () and their
+corresponding type-specific versions.
+
+
+<PRE>
+Returns 
+	a pointer to a buffer ... if successful,
+	NULL ... otherwise.
+</PRE>
+
+
+<HR>
+<A NAME="G3d_tileLoad">
+<PRE>
+int
+<H4>G3d_tileLoad (map, tileIndex)</H4>
+
+	void *map;
+	int tileIndex;
+</PRE>
+</A>
+
+Same functionality as G3d_getTilePtr () but does not return the pointer.
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="G3d_removeTile">
+<PRE>
+int
+<H4>G3d_removeTile (map, tileIndex)</H4>
+
+	void *map;
+	int tileIndex;
+</PRE>
+</A>
+
+Removes a tile from memory-cache if tile is in memory-cache. 
+For new maps the application does not know whether the tile is in the
+memory-cache or in the file-cache. Therefore, for new maps this
+function should be preceded by G3d_tileLoad ().
+<EM>(Question: Is this a useful function?)</EM>
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+
+
+<HR>
+<A NAME="cachefun">
+<H2>Write Functions used in Cache Mode</H2>
+</A>
+
+<A NAME="G3d_flushTile">
+<PRE>
+int
+<H4>G3d_flushTile (map, tileIndex)</H4>
+
+	void *map;
+	int tileIndex;
+</PRE>
+</A>
+
+Writes the tile with <EM>tileIndex</EM> to the file corresponding to <EM>map</EM>
+and removes the tile from the cache (in non-cache mode the buffer
+provided by the map-structure is written). 
+If this tile has already been written before the write request is
+ignored. 
+If the tile was never referred to before the invokation of
+G3d_flushTile, a tile filled with NULL-values is written.
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="G3d_flushTileCube">
+<PRE>
+int
+<H4>G3d_flushTileCube (map, xMin, yMin, zMin, xMax, yMax, zMax)</H4>
+
+	void *map;
+	int xMin, yMin, zMin; <EM>/* Tile Coordinates */</EM>
+	int xMax, yMax, zMax;
+</PRE>
+</A>
+
+Writes the tiles with tile-coordinates contained in the axis-parallel cube
+with vertices <EM>(xMin, yMin, zMin)</EM> and <EM>(xMax, yMax, zMax</EM>). 
+Tiles which are not stored in the cache are written as NULL-tiles.
+Write attempts for tiles which have already been written earlier are
+ignored. 
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+
+<HR>
+<A NAME="G3d_flushTilesInCube">
+<PRE>
+int
+<H4>G3d_flushTilesInCube (map, xMin, yMin, zMin, xMax, yMax, zMax)</H4>
+
+	void *map;
+	int xMin, yMin, zMin; <EM>/* Cell Coordinates */</EM>
+	int  xMax, yMax, zMax; 
+</PRE>
+</A>
+
+Writes those tiles for which <EM>every</EM> cell has coordinate
+contained in the axis-parallel cube defined by
+the vertices with cell-coordinates <EM>(xMin, yMin, zMin)</EM> and 
+<EM>(xMax, yMax, zMax)</EM>. 
+Tiles which are not stored in the cache are written as NULL-tiles.
+Write attempts for tiles which have already been written earlier are
+ignored. 
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+
+<HR>
+<A NAME="lockunlock">
+<H2>Locking and Unlocking Tiles, and Cycles</H2>
+</A>
+
+<A NAME="G3d_lockTile">
+<PRE>
+int
+<H4>G3d_lockTile (map, tileIndex)</H4>
+
+	void *map;
+	int tileIndex;
+</PRE>
+</A>
+
+Locks tile with <EM>tileIndex</EM> in cache. If after locking 
+fewer than the minimum number of unlocked tiles are unlocked, the lock
+request is ignored.
+
+<PRE>
+Returns 
+	 1 ... if successful,
+	-1 ... if request is ignored,
+	 0 ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="G3d_unlockTile">
+<PRE>
+int
+<H4>G3d_unlockTile (map, tileIndex)</H4>
+
+	void *map;
+	int tileIndex;
+</PRE>
+</A>
+
+Unlocks tile with <EM>tileIndex</EM>.
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="G3d_unlockAll">
+<PRE>
+int
+<H4>G3d_unlockAll (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Unlocks every tile in cache of <EM>map</EM>.
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="G3d_autolockOn">
+<PRE>
+void
+<H4>G3d_autolockOn (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Turns autolock mode on.
+
+<HR>
+<A NAME="G3d_autolockOff">
+<PRE>
+void
+<H4>G3d_autolockOff (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Turns autolock mode Off.
+
+<HR>
+<A NAME="G3d_minUnlocked">
+<PRE>
+void
+<H4>G3d_minUnlocked (map, minUnlocked)</H4>
+
+	void *map;
+	int minUnlocked;
+
+</PRE>
+</A>
+
+Sets the minimum number of unlocked tiles to <EM>minUnlocked</EM>.
+This function should be used in combination with G3d_unlockAll () in
+order to avoid situations where the new minimum is larger than the
+actual number of unlocked tiles. 
+<P>
+<EM>minUnlocked</EM> must be one of 
+G3D_USE_CACHE_X, G3D_USE_CACHE_Y, G3D_USE_CACHE_Z, G3D_USE_CACHE_XY,
+G3D_USE_CACHE_XZ, G3D_USE_CACHE_YZ, G3D_USE_CACHE_XYZ,
+the result of 
+<A HREF="#G3d_cacheSizeEncode">G3d_cacheSizeEncode ()</A>,
+or any positive integer
+which explicitly specifies the number of tiles.
+
+
+<HR>
+<A NAME="G3d_beginCycle">
+<PRE>
+int
+<H4>G3d_beginCycle (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Starts a new cycle.
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+
+<HR>
+<A NAME="G3d_endCycle">
+<PRE>
+int
+<H4>G3d_endCycle (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Ends a cycle.
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+
+<HR>
+<A NAME="G3d_cacheSizeEncode">
+<PRE>
+int
+<H4>G3d_cacheSizeEncode (cacheCode, n)</H4>
+
+	int cacheCode, n;
+</PRE>
+</A>
+
+Returns a number which encodes multiplicity <EM>n</EM> of 
+<EM>cacheCode</EM>. This value can be used to specify the size of the cache.
+<P>
+If <EM>cacheCode</EM> is the size (in tiles) of the cache the function returns
+<EM>cacheCode * n</EM>.
+<P>
+If <EM>cacheCode</EM> is G3D_USE_CACHE_DEFAULT the function returns
+G3D_USE_CACHE_DEFAULT.
+<P>
+If <EM>cacheCode</EM> is G3D_USE_CACHE_??? the function returns a value
+encoding G3D_USE_CACHE_??? and <EM>n</EM>. Here G3D_USE_CACHE_??? is one 
+of 
+G3D_USE_CACHE_X, G3D_USE_CACHE_Y, G3D_USE_CACHE_Z, G3D_USE_CACHE_XY,
+G3D_USE_CACHE_XZ, G3D_USE_CACHE_YZ, or G3D_USE_CACHE_XYZ, where e.g.
+G3D_USE_CACHE_X specifies that the cache should store as many tiles as there
+exist in one row along the x-axis of the tile cube, and 
+G3D_USE_CACHE_XY specifies that the cache should store as many tiles as there
+exist in one slice of the tile cube with constant Z coordinate.
+
+<HR>
+<A NAME="readvolume">
+<H2>Reading Volumes</H2>
+</A>
+
+<A NAME="G3d_getVolumeA">
+<PRE>
+int
+<H4>G3d_getVolume (map, 
+	       	   		   originNorth, originWest, originBottom,
+	           		   vxNorth, vxWest, vxBottom,
+	           		   vyNorth, vyWest, vyBottom,
+	           		   vzNorth, vzWest, vzBottom,
+		   		   nx, ny, nz,
+		   		   volumeBuf, type)</H4>
+
+	void *map;
+	double originNorth, originWest, originBottom;
+	double vxNorth, vxWest, vxBottom;
+	double vyNorth, vyWest, vyBottom;
+	double vzNorth, vzWest, vzBottom;
+	double originNorth, originWest, originBottom;
+	int nx, ny, nz;
+	char *volumeBuf;
+	int type;
+
+</PRE>
+</A>
+
+Resamples the cube defined by <EM>origin</EM> and the 3 vertices
+<EM>vx</EM>, <EM>vy</EM>, and <EM>vz</EM>
+which are incident to the 3 edges adjacent to <EM>origin</EM>.
+The resampled cube is stored in <EM>volumeBuf</EM> which is a cube with
+dimensions <EM>(nx, ny, nz)</EM>. 
+The method of sampling is nearest neighbor sampling.
+The values stored are of <EM>type</EM>. 
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="G3d_getAllignedVolumeA">
+<PRE>
+int
+<H4>G3d_getAllignedVolume (map, 
+						   originNorth, originWest, originBottom,
+		           			   lengthNorth, lengthWest, lengthBottom, 
+			   			   nx, ny, nz,
+			   			   volumeBuf, type)</H4>
+
+	void *map;
+	double originNorth, originWest, originBottom;
+	double lengthNorth, lengthWest, lengthBottom;
+	int nx, ny, nz;
+	char *volumeBuf;
+	int type;
+
+</PRE>
+</A>
+
+Resamples the axis-parallel cube defined by <EM>origin</EM> and the lengths 
+of the 3 edges adjacent to <EM>origin</EM>.
+The resampled cube is stored in <EM>volumeBuf</EM> which is a cube with
+dimensions <EM>(nx, ny, nz)</EM>. 
+The method of sampling is nearest neighbor sampling.
+The values stored are of <EM>type</EM>. 
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+<HR>
+
+<A NAME="allocate">
+<H2>Allocating and Freeing Memory</H2>
+</A>
+
+<A NAME="G3d_malloc">
+<PRE>
+void *
+<H4>G3d_malloc (nBytes)</H4>
+
+	int nBytes;
+</PRE>
+</A>
+
+Same as <em>malloc (nBytes)</em>, except that in case of error
+G3d_error () is invoked. 
+
+<PRE>
+Returns 
+	a pointer ... if successful,
+	NULL ... otherwise.
+</PRE>
+
+
+
+<HR>
+<A NAME="G3d_realloc">
+<PRE>
+void *
+<H4>G3d_realloc (ptr, nBytes)</H4>
+
+	void *ptr;
+	int nBytes;
+</PRE>
+</A>
+
+Same as <em>realloc (ptr, nBytes)</em>, except that in case of error
+G3d_error () is invoked. 
+
+<PRE>
+Returns 
+	a pointer ... if successful,
+	NULL ... otherwise.
+</PRE>
+
+
+
+<HR>
+<A NAME="G3d_free">
+<PRE>
+void
+<H4>G3d_free (ptr)</H4>
+
+	void *ptr;
+</PRE>
+</A>
+
+Same as <em>free (ptr)</em>.
+
+
+<HR>
+<A NAME="G3d_allocTilesType">
+<PRE>
+char *
+<H4>G3d_allocTilesType (map, nofTiles, type)</H4>
+
+	void *mao;
+	int nofTiles, type;
+</PRE>
+</A>
+
+Allocates a vector of <EM>nofTiles</EM> tiles with the same dimensions
+as the tiles of <EM>map</EM> and large enough to store cell-values of
+<EM>type</EM>.
+
+<PRE>
+Returns 
+	a pointer to the vector ... if successful,
+	NULL ... otherwise.
+</PRE>
+
+
+<HR>
+<A NAME="G3d_allocTiles">
+<PRE>
+char *
+<H4>G3d_allocTiles (map, nofTiles)</H4>
+
+	void *mao;
+	int nofTiles;
+</PRE>
+</A>
+
+Is equivalent to G3d_allocTilesType (map, nofTiles, G3d_fileTypeMap (map)).
+
+
+<HR>
+<A NAME="G3d_freeTiles">
+<PRE>
+void
+<H4>G3d_freeTiles (tiles)</H4>
+
+	char *tiles;
+</PRE>
+</A>
+
+Is equivalent to G3d_free (tiles);
+
+
+
+<HR>
+<A NAME="null">
+<H2>G3D Null Value Support</H2>
+</A>
+
+<A NAME="G3d_isNullValueNum">
+<PRE>
+void
+<H4>G3d_isNullValueNum (n, type)</H4>
+
+	void *n;
+	int type;
+</PRE>
+</A>
+
+Returns 1 if the value of <EM>*n</EM> is a NULL-value. Returns 0
+otherwise.
+
+<HR>
+<A NAME="G3d_setNullValue">
+<PRE>
+void
+<H4>G3d_setNullValue (c, nofElts, type)</H4>
+
+	void *c;
+	int nofElts, type;
+</PRE>
+</A>
+
+Fills the vector pointed to by <EM>c</EM> with <EM>nofElts</EM> NULL-values
+of <EM>type</EM>.
+
+
+<HR>
+<A NAME="G3d_setNullTileType">
+<PRE>
+void
+<H4>G3d_setNullTileType (map, tile, type)</H4>
+
+	void *map;
+	int tile, type;
+</PRE>
+</A>
+
+Assumes that <EM>tile</EM> is a tile with the same dimensions as the
+tiles of <EM>map</EM>. Fills <EM>tile</EM> with NULL-values of
+<EM>type</EM>.
+
+
+<HR>
+<A NAME="G3d_setNullTile">
+<PRE>
+void
+<H4>G3d_setNullTile (map, tile)</H4>
+
+	void *map;
+	int tile;
+</PRE>
+</A>
+
+Is equivalent to G3d_setNullTileType (map, tile, G3d_fileTypeMap (map)).
+
+<HR>
+<A NAME="headerinfo">
+<H2>G3D Map Header Information</H2>
+
+<A NAME="G3d_getCoordsMap">
+<PRE>
+void
+<H4>G3d_getCoordsMap (map, rows, cols, depths)</H4>
+
+	void *map;
+	int *rows, *cols, *depths;
+</PRE>
+</A>
+
+Returns the size of the region of <EM>map</EM> in cells.
+
+<HR>
+<A NAME="G3d_getRegionMap">
+<PRE>
+void 
+<H4>G3d_getRegionMap (map, north, south, east, west, top, bottom)</H4>
+
+	void *map;
+	int *north, *south, *east, *west, *top, *bottom;
+</PRE>
+</A>
+
+Returns the size of the region.
+
+<HR>
+<A NAME="G3d_getRegionStructMap">
+<PRE>
+void
+<H4>G3d_getRegionStructMap (map, region)</H4>
+
+	void *map;
+	G3D_Region *region;
+</PRE>
+</A>
+
+Returns in <EM>region</EM> the region of <EM>map</EM>.
+
+<HR>
+<A NAME="G3d_getTileDimensionsMap">
+<PRE>
+void
+<H4>G3d_getTileDimensionsMap (map, x, y, z)</H4>
+
+	void *map;
+	int *x, *y, *z;
+</PRE>
+</A>
+
+Returns the tile dimensions used for <EM>map</EM>.
+
+<HR>
+<A NAME="G3d_getNofTilesMap">
+<PRE>
+void
+<H4>G3d_getNofTilesMap (map, nx, ny, nz)</H4>
+
+	void *map;
+	int *nx, *ny, *nz;
+</PRE>
+</A>
+
+Returns the dimensions of the tile-cube used to tile the region of
+<EM>map</EM>. These numbers include partial tiles.
+
+<HR>
+<A NAME="G3d_tileTypeMap">
+<PRE>
+int
+<H4>G3d_tileTypeMap (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Returns the type in which tiles of <EM>map</EM> are stored in memory.
+
+<HR>
+<A NAME="G3d_fileTypeMap">
+<PRE>
+int
+<H4>G3d_fileTypeMap (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Returns the type with which tiles of <EM>map</EM> are stored on file.
+
+<HR>
+<A NAME="G3d_tilePrecisionMap">
+<PRE>
+int
+<H4>G3d_tilePrecisionMap (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Returns the precision used to store <EM>map</EM>.
+
+<HR>
+<A NAME="G3d_tileUseCacheMap">
+<PRE>
+int
+<H4>G3d_tileUseCacheMap (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Returns 1 if <EM>map</EM> uses cache, returns 0 otherwise.
+
+<HR>
+<A NAME="G3d_printHeader">
+<PRE>
+void
+<H4>G3d_printHeader (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Prints the header information of <EM>map</EM>.
+
+<HR>
+<A NAME="tilemath">
+<H2>G3D Tile Math</H2>
+</A>
+
+<A NAME="G3d_tileIndex2tile">
+<PRE>
+void
+<H4>G3d_tileIndex2tile (map, tileIndex, xTile, yTile, zTile)</H4>
+
+	void *map;
+	int tileIndex;
+	int *xTile, *yTile, *zTile;
+</PRE>
+</A>
+
+Converts index <EM>tileIndex</EM> into tile-coordinates 
+<EM>(xTile, yTile, zTile)</EM>.
+
+<HR>
+<A NAME="G3d_tile2tileIndex">
+<PRE>
+int
+<H4>G3d_tile2tileIndex (map, xTile, yTile, zTile)</H4>
+
+	void *map;
+	int xTile, yTile, zTile;
+</PRE>
+</A>
+
+Returns tile-index corresponding to tile-coordinates 
+<EM>(xTile, yTile, zTile)</EM>.
+
+<HR>
+<A NAME="G3d_coord2tileCoord">
+<PRE>
+void
+<H4>G3d_coord2tileCoord (map, x, y, z, xTile, yTile, zTile, xOffs, yOffs, zOffs)</H4>
+
+	void *map;
+	int x, y, z;
+	int *xTile, *yTile, *zTile, *xOffs, *yOffs, *zOffs;
+</PRE>
+</A>
+
+Converts cell-coordinates <EM>(x, y, z)</EM> into tile-coordinates
+<EM>(xTile, yTile, zTile)</EM> and the coordinate of the cell
+<EM>(xOffs, yOffs, zOffs)</EM> within the tile.
+
+<HR>
+<A NAME="G3d_tileCoordOrigin">
+<PRE>
+void
+<H4>G3d_tileCoordOrigin (map, xTile, yTile, zTile, x, y, z)</H4>
+
+	void *map;
+	int xTile, yTile, zTile;
+	int *x, *y, *z;
+</PRE>
+</A>
+
+Computes the cell-coordinates <EM>(x, y, z)</EM> which correspond to
+the origin of the tile with tile-coordinates <EM>(xTile, yTile, zTile)</EM>.
+
+<HR>
+<A NAME="G3d_tileIndexOrigin">
+<PRE>
+void
+<H4>G3d_tileIndexOrigin (map, tileIndex, x, y, z)</H4>
+
+	void *map;
+	int tileIndex;
+	int *x, *y, *z;
+</PRE>
+</A>
+
+Computes the cell-coordinates <EM>(x, y, z)</EM> which correspond to
+the origin of the tile with <EM>tileIndex</EM>.
+
+<HR>
+<A NAME="G3d_coord2tileIndex">
+<PRE>
+void
+<H4>G3d_coord2tileIndex (map, x, y, z, tileIndex, offset)</H4>
+
+	void *map;
+	int x, y, z;
+	int *tileIndex, *offset;
+</PRE>
+</A>
+
+Converts cell-coordinates <EM>(x, y, z)</EM> into <EM>tileIndex</EM> and
+the <EM>offset</EM> of the cell within the tile.
+
+<HR>
+<A NAME="G3d_coordInRange">
+<PRE>
+int
+<H4>G3d_coordInRange (map, x, y, z)</H4>
+
+	void *map;
+	int x, y, z; <EM>/* cell coordinates */</EM>
+</PRE>
+</A>
+
+Returns 1 if cell-coordinate <EM>(x, y, z)</EM> is a coordinate inside
+the region. Returns 0 otherwise.
+
+<HR>
+<A NAME="G3d_tileInRange">
+<PRE>
+int
+<H4>G3d_tileInRange (map, x, y, z)</H4>
+
+	void *map;
+	int x, y, z; <EM>/* tile coordinates */</EM>
+</PRE>
+</A>
+
+Returns 1 if tile-coordinate <EM>(x, y, z)</EM> is a coordinate inside
+tile cube. Returns 0 otherwise.
+
+<HR>
+<A NAME="G3d_tileIndexInRange">
+<PRE>
+int
+<H4>G3d_tileIndexInRange (map, tileIndex)</H4>
+
+	void *map;
+	int tileIndex;
+</PRE>
+</A>
+
+Returns 1 if <EM>tileIndex</EM> is a valid index for <EM>map</EM>.
+Returns 0 otherwise.
+
+<HR>
+<A NAME="G3d_isValidLocation">
+<PRE>
+int
+<H4>G3d_isValidLocation (map, north, west, bottom)</H4>
+
+	void *map;
+	double north, west, bottom;
+</PRE>
+</A>
+
+Returns 1 if region-coordinates <EM>(north, west, bottom)</EM> are
+inside the region of <EM>map</EM>. Returns 0 otherwise.
+
+<HR>
+<A NAME="G3d_location2coord">
+<PRE>
+void
+<H4>G3d_location2coord (map, tileIndex)</H4>
+
+	void *map;
+	double north, west, bottom;
+	int *x, *y, *z;
+</PRE>
+</A>
+
+Converts region-coordinates <EM>(north, west, bottom)</EM> into
+cell-coordinates <EM>(x, y, z)</EM>.
+
+
+<HR>
+<A NAME="G3d_computeClippedTileDimensions">
+<PRE>
+int
+<H4>G3d_computeClippedTileDimensions (map, tileIndex, 
+						      rows, cols, depths, 
+						      xRedundant, yRedundant, zRedundant)</H4>
+
+	void *map;
+	int tileIndex;
+	int *rows, *cols, *depths;
+	int *xRedundant, *yRedundant, *zRedundant;
+</PRE>
+</A>
+
+
+Computes the dimensions of the tile when clipped to fit the region of
+<EM>map</EM>. The clipped dimensions are returned in <EM>rows</EM>, <EM>cols</EM>, <EM>depths</EM>.
+The complement is returned in <EM>xRedundant</EM>, <EM>yRedundant</EM>, and
+<EM>zRedundant</EM>. This function returns the number of cells in the clipped
+tile.
+
+<HR>
+<A NAME="range">
+<H2>G3D Range Support</H2>
+
+The map structure of g3d provides storage for the range.
+The range of a map is updated every time a cell is written to the
+file. When an old map is opened the range is not automatically
+loaded. The application has to invoke 
+<A HREF="#G3d_range_load">G3d_range_load ()</A> explicitly.
+In addition to these function the application can also use the
+standard grass functions to manipulate the range.
+
+<HR>
+<A NAME="G3d_range_load">
+<PRE>
+int
+<H4>G3d_range_load (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Loads the range into the range structure of <EM>map</EM>.
+
+<PRE>
+Returns
+	1 ... if successful
+	0 ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="G3d_range_min_max">
+<PRE>
+void
+<H4>G3d_range_min_max (map, min, max)</H4>
+
+	void *map;
+	double *min, *max;
+</PRE>
+</A>
+
+Returns in <EM>min</EM> and <EM>max</EM> the minimum and maximum values of the
+range.
+
+<HR>
+<A NAME="G3d_range_write">
+<PRE>
+int
+<H4>G3d_range_write (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Writes the range which is stored in the range structure of <EM>map</EM>. 
+(This function is invoked automatically when a new file is closed).
+
+<PRE>
+Returns
+	1 ... if successful
+	0 ... otherwise.
+</PRE>
+
+
+<HR>
+<A NAME="color">
+<H2>G3D Color Support</H2>
+
+Applications can use the standard grass functions to work with colors, except
+for the file manipulations.
+
+<HR>
+<A NAME="G3d_removeColor">
+<PRE>
+int
+<H4>G3d_removeColor (name)</H4>
+
+	char *name;
+</PRE>
+</A>
+
+Removes the primary and/or secondary color file. See <EM>G_remove_colr</EM> for
+details.
+
+<PRE>
+Returns always 0.
+</PRE>
+
+<HR>
+<A NAME="G3d_readColors">
+<PRE>
+int
+<H4>G3d_readColors (name, mapset, colors)</H4>
+
+	char *name;
+	char *mapset;
+	struct Colors *colors;
+
+</PRE>
+</A>
+
+Reads color file for map <EM>name</EM> in <EM>mapset</EM> into the
+<EM>colors</EM> structure.
+See <EM>G_read_colors</EM> for details and return values.
+
+<HR>
+<A NAME="G3d_writeColors">
+<PRE>
+int
+<H4>G3d_writeColors (name, mapset, colors)</H4>
+
+	char *name;
+	char *mapset;
+	struct Colors *colors;
+
+</PRE>
+</A>
+
+Writes colors stored in <EM>colors</EM> structure into the color file for map 
+<EM>name</EM> in <EM>mapset</EM>.
+See <EM>G_write_colors</EM> for details and return values.
+
+
+<HR>
+<A NAME="categories">
+<H2>G3D Categories Support</H2>
+
+Applications can use the standard grass functions to work with ccategories, 
+except for the file manipulations.
+
+<HR>
+<A NAME="G3d_readCats">
+<PRE>
+int
+<H4>G3d_readCats (name, mapset, cats)</H4>
+
+	char *name;
+	char *mapset;
+	struct Categories *pcats;
+</PRE>
+</A>
+
+Reads the categories file for map <EM>name</EM> in  <EM>mapset</EM> and stores
+the categories in the <EM>pcats</EM> structure.
+See <EM>G_read_cats</EM> for details and return values.
+
+<HR>
+<A NAME="G3d_writeCats">
+<PRE>
+int
+<H4>G3d_writeCats (name, cats)</H4>
+
+	char *name;
+	struct Categories *cats;
+</PRE>
+</A>
+
+Writes the categories stored in the <EM>cats</EM> structure into the categories
+file for map <EM>name</EM> in the current mapset.
+See <EM>G_write_cats</EM> for details and return values.
+
+
+
+
+
+<HR>
+<A NAME="mask">
+<H2>G3D Mask Support</H2>
+
+<A NAME="G3d_maskOn">
+<PRE>
+void
+<H4>G3d_maskOn (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Turns on the mask for <EM>map</EM>. Do not invoke this function after the
+first tile has been read since the result might be inconsistent cell-values.
+
+<HR>
+<A NAME="G3d_maskOff">
+<PRE>
+void
+<H4>G3d_maskOff (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Turns off the mask for <EM>map</EM>. This is the default.
+Do not invoke this function after the
+first tile has been read since the result might be inconsistent cell-values.
+
+<HR>
+<A NAME="G3d_maskIsOn">
+<PRE>
+int
+<H4>G3d_maskIsOn (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Returns 1 if the mask for <EM>map</EM> is turned on. Returns 0 otherwise.
+
+<HR>
+<A NAME="G3d_maskIsOff">
+<PRE>
+int
+<H4>G3d_maskIsOff (map)</H4>
+
+	void *map;
+</PRE>
+</A>
+
+Returns 1 if the mask for <EM>map</EM> is turned off. Returns 0 otherwise.
+
+<HR>
+
+The remaining functions in this section are for the explicit query of
+the mask and the masking of individual cells or tiles. These functions
+are used in the library and might have applications in situations where 
+both the masked and non-masked value of a cell has to be known. 
+
+
+<A NAME="G3d_maskReopen">
+<PRE>
+int
+<H4>G3d_maskReopen (cache)</H4>
+
+	int cache;
+</PRE>
+</A>
+
+This function should be used to adjust the cache size used for the
+3d-mask. First the open 3d-mask is closed and then opened again with 
+a cache size as specified with <EM>cache</EM>.
+
+<PRE>
+Returns
+	1 ... if successful
+	0 ... otherwise.
+</PRE>
+
+
+<HR>
+<A NAME="G3d_maskFileExists">
+<PRE>
+int
+<H4>G3d_maskFileExists ()</H4>
+</PRE>
+</A>
+Returns 1 if the 3d mask file exists.
+
+<HR>
+<A NAME="G3d_maskMapExists">
+<PRE>
+int
+<H4>G3d_maskMapExists ()</H4>
+</PRE>
+</A>
+Returns 1 if the 3d mask is loaded.
+
+<HR>
+<A NAME="G3d_maskFile">
+<PRE>
+char *
+<H4>G3d_maskFile ()</H4>
+
+</PRE>
+</A>
+
+Returns the name of the 3d mask file.
+
+
+<HR>
+<A NAME="G3d_isMasked">
+<PRE>
+int
+<H4>G3d_isMasked (x, y, z)</H4>
+
+	int x, y, z;
+</PRE>
+</A>
+
+Returns 1 if the cell with cell-coordinates <EM>(x, y, z)</EM> is masked
+out. Returns 0 otherwise.
+
+
+<HR>
+<A NAME="G3d_maskNum">
+<PRE>
+void
+<H4>G3d_maskNum (x, y, z, value, type)</H4>
+
+	int x, y, z;
+	void *value;
+	int type;
+</PRE>
+</A>
+
+Replaces the value stored in <EM>value</EM> with the NULL-value if 
+<EM>G3d_isMasked (x, y, z)</EM> returns 1. Does nothing otherwise.
+<EM>value</EM> is assumed to be of<EM>type</EM>. 
+
+<HR>
+<A NAME="G3d_maskFloat">
+<PRE>
+void
+<H4>G3d_maskFloat (x, y, z, value)</H4>
+
+	int x, y, z;
+	float *value;
+</PRE>
+</A>
+
+Same as <EM>G3d_maskNum (x, y, z, value, G3D_FLOAT)</EM>.
+
+
+<HR>
+<A NAME="G3d_maskDouble">
+<PRE>
+void
+<H4>G3d_maskDouble (x, y, z, value)</H4>
+
+	int x, y, z;
+	double *value;
+</PRE>
+</A>
+
+Same as <EM>G3d_maskNum (x, y, z, value, G3D_DOUBLE)</EM>.
+
+
+<HR>
+<A NAME="G3d_maskTile">
+<PRE>
+void
+<H4>G3d_maskTile (map, tileIndex, tile, type)</H4>
+
+     void *map; 
+     int tileIndex;
+     char *tile;
+     int type;
+
+</PRE>
+</A>
+
+Replaces the values stored in <EM>tile</EM> (with <EM>tileIndex</EM>) for 
+which <EM>G3d_isMasked</EM> returns 1 with NULL-values. Does not change
+the remaining values. The values are assumed to be of <EM>type</EM>. 
+Whether replacement is performed or not only depends on location of the
+cells of the tile and not on the status of the mask for <EM>map</EM>
+(i.e. turned on or off).
+
+
+
+
+<HR>
+<A NAME="window">
+<H2>G3D Window Support</H2>
+
+<A NAME="G3d_setWindowMap">
+<PRE>
+void
+<H4>G3d_setWindowMap (map, window)</H4>
+
+	void *map;
+	G3D_Region *window;
+</PRE>
+</A>
+
+Sets the window for <EM>map</EM> to <EM>window</EM>.
+Can be used multiple times for the same map.
+
+<HR>
+<A NAME="G3d_setWindow">
+<PRE>
+void
+<H4>G3d_setWindow (window)</H4>
+
+	G3D_Region *window;
+</PRE>
+</A>
+
+Sets the default window used for every map opened later in the program.
+Can be used multiple times in the same program.
+
+
+<HR>
+<A NAME="G3d_getWindow">
+<PRE>
+void
+<H4>G3d_getWindow (window)</H4>
+
+	G3D_Region *window;
+</PRE>
+</A>
+
+Stores the current default window in <EM>window</EM>.
+
+<HR>
+<A NAME="G3d_windowPtr">
+<PRE>
+G3D_Region *
+<H4>G3d_windowPtr ()</H4>
+</PRE>
+</A>
+
+Returns a pointer to the current default window. This pointer should not be
+(ab)used to modify the current window structure directly. It is
+provided to pass a window pointer when opening a map.
+
+
+<HR>
+<A NAME="G3d_readWindow">
+<PRE>
+int
+<H4>G3d_readWindow (window, windowName)</H4>
+
+	G3D_Region *window;
+	char *windowName;
+</PRE>
+</A>
+
+Reads <EM>window</EM> from the file specified by
+<EM>windowName</EM>. The name is converted by the rules defined in 
+<A HREF="defaults.html#windows"> window defaults</A>. A NULL pointer indicates
+the <EM>WIND3</EM> file in the current mapset.
+<PRE>
+Returns
+	1 ... if successful
+	0 ... otherwise.
+</PRE>
+
+<HR>
+<A NAME="G3d_writeWindow">
+<PRE>
+int
+<H4>G3d_writeWindow (window, windowName)</H4>
+
+	G3D_Region *window;
+	char *windowName;
+</PRE>
+</A>
+
+Writes <EM>window</EM> to the file specified by
+<EM>windowName</EM>. The name is converted by the rules defined in 
+<A HREF="defaults.html#windows"> window defaults</A>. A NULL pointer indicates
+the <EM>WIND3</EM> file in the current mapset.
+<PRE>
+Returns
+	1 ... if successful
+	0 ... otherwise.
+</PRE>
+
+
+<HR>
+<A NAME="G3d_useWindowParams">
+<PRE>
+void
+<H4>G3d_useWindowParams ()</H4>
+</PRE>
+</A>
+Allows the window to be set at run-time via the <EM>region3</EM>
+command line argument. This function has to be called before
+<EM>G_parser ()</EM>. See also
+<A HREF="defaults.html#windows"> window defaults</A>.
+
+<HR>
+<A NAME="G3d_setResamplingFun">
+<PRE>
+void
+<H4>G3d_setResamplingFun (map, resampleFun)</H4>
+
+	void *map;
+	void (*resampleFun) ();
+</PRE>
+</A>
+Sets the resampling function to be used by
+<A HREF="#G3d_getValue">G3d_getValue ()</A>. This function is defined
+as follows:
+
+<PRE>
+	void 
+	G3d_customResampleFun (map, row, col, depth, value, type)
+		void *map;
+		int row, col, depth;
+		char *value;
+		int type;
+</PRE>
+<EM>row</EM>, <EM>col</EM>, and <EM>depth</EM> are in region
+coordinates. The result is returned in <EM>value</EM> as <EM>type</EM>
+which is one of G3D_FLOAT or G3D_DOUBLE. Possible choices include
+<A HREF="#G3d_nearestNeighbor">G3d_nearestNeighbor ()</A> and
+<A HREF="#G3d_getValueRegion">G3d_getValueRegion ()</A>.
+
+<HR>
+
+<A NAME="G3d_nearestNeighbor">
+<PRE>
+void
+<H4>G3d_nearestNeighbor (map, row, col, depth, value, type)</H4>
+	void *map;
+	int row, col, depth;
+	char *value;
+	int type;
+</PRE>
+</A>
+
+The default resampling function which uses nearest neighbor
+resampling.
+
+<HR>
+<A NAME="G3d_getResamplingFun">
+<PRE>
+void
+<H4>G3d_getResamplingFun (map, resampleFun)</H4>
+
+	void *map;
+	void (**resampleFun) ();
+</PRE>
+</A>
+Returns in <EM>resampleFun</EM> a pointer to the resampling function
+used by <EM>map</EM>.
+
+<HR>
+<A NAME="G3d_getNearestNeighborFunPtr">
+<PRE>
+void
+<H4>G3d_getNearestNeighborFunPtr (nnFunPtr)</H4>
+
+	void (**nnFunPtr) ();
+</PRE>
+</A>
+Returns in <EM>nnFunPtr</EM> a pointer to 
+<A HREF="#G3d_nearestNeighbor">G3d_nearestNeighbor ()</A>.
+
+<HR>
+<A NAME="region">
+<H2>Region</H2>
+
+<A NAME="G3d_extract2dRegion">
+<PRE>
+void
+<H4>G3d_extract2dRegion (region3d, region2d)</H4>
+
+	G3D_Region *region3d;
+	struct Cell_head *region2d;
+
+</PRE>
+</A>
+Returns in <EM>region2d</EM> the <EM>2d</EM> portion of
+<EM>region3d</EM>.
+
+<HR>
+<A NAME="G3d_incorporate2dRegion">
+<PRE>
+void
+<H4>G3d_incorporate2dRegion (region2d, region3d)</H4>
+
+	struct Cell_head *region2d;
+	G3D_Region *region3d;
+
+</PRE>
+</A>
+Replaces the <EM>2d</EM> portion of <EM>region3d</EM> with the values stored
+in <EM>region2d</EM>.
+
+<HR>
+<A NAME="G3d_adjustRegion">
+<PRE>
+void
+<H4>G3d_adjustRegion (region)</H4>
+
+	G3D_Region *region;
+
+</PRE>
+</A>
+Computes an adjusts the resolutions in the region structure from the region
+boundaries and number of cells per dimension.
+
+
+<HR>
+<A NAME="G3d_adjustRegionRes">
+<PRE>
+void
+<H4>G3d_adjustRegionRes (region)</H4>
+
+	G3D_Region *region;
+
+</PRE>
+</A>
+Computes an adjusts the number of cells per dimension in the region
+structure from the region boundaries and resolutions.
+
+
+
+
+<HR>
+<A NAME="G3d_regionCopy">
+<PRE>
+void
+<H4>G3d_regionCopy (regionDest, regionSrc)</H4>
+
+	G3D_Region *regionDest, *regionSrc;
+
+</PRE>
+</A>
+Copies the values of <EM>regionSrc</EM> into <EM>regionDst</EM>.
+(The unfortunate order of parameters was chosen in order to conform to the
+order used in <EM>G_copy ()</EM>).
+
+
+<HR>
+<A NAME="G3d_getRegionValue">
+<PRE>
+void
+<H4>G3d_getRegionValue (map, north, east, top, value, type)</H4>
+
+	void *map;
+	double north, east, top;
+	char *value;
+	int type;
+
+</PRE>
+</A>
+Returns in <EM>value</EM> the value of the <EM>map</EM> which 
+corresponds to region coordinates <EM>(north, east, top)</EM>.
+The value is resampled using the resampling function specified
+for <EM>map</EM>. The <EM>value</EM> is of <EM>type</EM>.
+<HR>
+
+<A NAME="G3d_readRegionMap">
+<PRE>
+void
+<H4>G3d_readRegionMap (name, mapset, region)</H4>
+
+	char *name, *mapset;
+	G3D_Region *region;
+
+</PRE>
+</A>
+Returns in <EM>region</EM> the region information for 3d cell <EM>name@mapset</EM>.
+
+
+<HR>
+<A NAME="misc">
+<H2>Miscellaneous Functions</H2>
+</A>
+
+<A NAME="G3d_g3dType2cellType">
+<PRE>
+void
+<H4>G3d_g3dType2cellType (g3dType)</H4>
+
+	int g3dType;
+</PRE>
+</A>
+
+Returns the GRASS floating point type which is equivalent to the G3D
+type of <EM>g3dType</EM>.
+
+
+<HR>
+
+<A NAME="G3d_initDefaults">
+<PRE>
+void
+<H4>G3d_initDefaults ()</H4>
+</PRE>
+</A>
+Initializes the default values described in 
+<A HREF="defaults.html"> G3D Defaults</A>.
+Applications have to use this function only if they need to query the default
+values before the first file (either old or new) has been opened.
+
+<HR>
+
+<A NAME="G3d_setStandart3dInputParams">
+<PRE>
+void
+<H4>G3d_setStandart3dInputParams ()</H4>
+</PRE>
+</A>
+Initializes a parameter structure for the subset of command line arguments 
+which lets the user overwrite the default properties of the new file.
+Applications are encouraged to use this function in order to 
+provide a uniform style.
+The command line arguments provided are the <EM>type</EM> of the cell values,
+the <EM>precision</EM>, the properties of the <EM>compression</EM>, and the 
+dimension of the tiles (<EM>tiledimension</EM>). Every of these values defaults
+to the value described in <A HREF="defaults.html"> G3D Defaults</A>.
+<P>
+This function has to be used in conjunction with 
+<A HREF="#G3d_getStandart3dInputParams">G3d_getStandart3dInputParams ()</A>.
+
+<HR>
+
+
+<A NAME="G3d_getStandart3dInputParams">
+<PRE>
+int
+<H4>G3d_getStandart3dInputParams (useTypeDefault, type, 
+			 			useLzwDefault, doLzw, 
+			 			useRleDefault, doRle, 
+			 			usePrecisionDefault, precision,
+			 			useDimensionDefault, tileX, tileY, tileZ)</H4>
+
+	int *useTypeDefault, *type, *useLzwDefault, *doLzw;
+	int *useRleDefault, *doRle, *usePrecisionDefault, *precision;
+	int *useDimensionDefault, *tileX, *tileY, *tileZ;
+</PRE>
+</A>
+Returns the properties of the new file as chosen by the user via command
+line arguments. If the default is chosen the values of
+<EM>useXxxxDefault</EM> is 1, it is 0 otherwise. In addition, the
+corresponding parameters contain the default value if 
+<EM>useXxxxDefault</EM> is 1, or the value specified by the user if 
+<EM>useXxxxDefault</EM> is 0. 
+<P>
+Function 
+<A HREF="#G3d_setStandart3dInputParams">G3d_setStandart3dInputParams ()</A>
+has to be used to initialize the internal parameter structure.
+
+<PRE>
+Returns 
+	1 ... if successful,
+	0 ... otherwise.
+</PRE>
+
+<HR>
+
+<A NAME="G3d_makeMapsetMapDirectory">
+<PRE>
+int
+<H4>G3d_makeMapsetMapDirectory (mapName)</H4>
+
+	char *mapName;
+
+</PRE>
+Creates the 3d mapset element for map <EM>mapName</EM>.
+
+<HR>
+
+<A NAME="G3d_filename">
+<PRE>
+int
+<H4>G3d_filename (path, elementName, mapName, mapset)</H4>
+
+	char *path, *elementName, *mapName, *mapset;
+</PRE>
+Returns in <EM>path</EM> the path for element <EM>elementName</EM> for map
+<EM>mapName</EM> in <EM>mapset</EM>. Note, an error occurs if <EM>mapName</EM>
+is fully qualified.
+
+<HR>
+

@@ -1,4 +1,3 @@
-/* Status: GRASS 5 beta 5 10/99 */
 /*-
  * These functions and definitions support the site format for 5.0
  * (format proposed by Dave Gerdes):
@@ -14,24 +13,22 @@
 
 /*-
  * $Log$
- * Revision 1.1  1999-12-29 15:10:31  markus
- * Initial revision
+ * Revision 1.3  1999-12-30 10:24:19  markus
+ * G__site_get, G__site_put: added return statements
+ *
+ * Revision 1.2  1999/12/30 10:20:40  markus
+ * added several G_free statements
+ *
+ * Revision 1.1.1.1  1999/12/29 15:10:31  markus
+ * initial CVS import
  *
  * Revision 1.41  1999/10/18  brown
  * Created G__site_put as G_site_put with format option and changed
  * G_site_put into a wrapper (for s.proj).
  *
- * $Log$
- * Revision 1.1  1999-12-29 15:10:31  markus
- * Initial revision
- *
- * Revision 1.40  1997/05/07  brown
+ * Revision 1.40a  1997/05/07  brown
  * changed G_site_get to return 1 on "format mismatch (extra data)" 
  * instead of error
- *
- * $Log$
- * Revision 1.1  1999-12-29 15:10:31  markus
- * Initial revision
  *
  * Revision 1.40  1996/05/23  brown
  * changed DateTime stuff to use TimeStamp instead
@@ -501,6 +498,7 @@ int G__site_put ( FILE *fptr, Site *s, int fmt)
   fprintf (fptr, "%s\n", buf);
   return 0;
 }
+
 
 int G_site_describe ( FILE *ptr,
   int *dims,int *cat,int *strs,int *dbls)

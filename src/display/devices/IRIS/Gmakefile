@@ -22,10 +22,7 @@ OFILES =  \
 	connect.o
 
 
-$(GISBASE)/driver/IRIS: IRIS
-	mv IRIS $@
-
-IRIS: $(OFILES) ../lib/driverlib.a
+$(GISBASE)/driver/IRIS: $(OFILES) ../lib/driverlib.a
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)
 
 ../lib/driverlib.a: #

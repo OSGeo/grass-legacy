@@ -60,7 +60,7 @@ OPTIONS
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			1
+GRASS 5.0beta6	      GRASS Development Team			1
 
 
 
@@ -126,7 +126,7 @@ r.watershed <main>    GRASS Reference Manual   <main> r.watershed
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+2		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -192,7 +192,7 @@ r.watershed <main>    GRASS Reference Manual   <main> r.watershed
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			3
+GRASS 5.0beta6	      GRASS Development Team			3
 
 
 
@@ -258,7 +258,7 @@ NOTES
 
 
 
-4		      GRASS Development Team	   GRASS 5.0beta2
+4		      GRASS Development Team	   GRASS 5.0beta6
 
 
 
@@ -324,7 +324,7 @@ SEE ALSO
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			5
+GRASS 5.0beta6	      GRASS Development Team			5
 
 
 
@@ -390,7 +390,7 @@ AUTHOR
 
 
 
-6		      GRASS Development Team	   GRASS 5.0beta2
+6		      GRASS Development Team	   GRASS 5.0beta6
 
 
 

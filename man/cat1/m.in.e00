@@ -10,19 +10,19 @@ NAME
 
 SYNOPSIS
      m.in.e00
-     m.in.e00  input=name [mapset=name] [action=what to do] [verbose=debug level] [logfile=name]
+     m.in.e00 input=name [mapset=name] [action=what to do] [verbose=debug level] [logfile=name] [-i] [-d]
 
 DESCRIPTION
      The m.in.e00 program is designed to import ESRI Arc/Info e00
-     ascii archives.  The input file must be in ascii (no binary
-     compressed) e00 file.
+     ascii archives.  The input file may be a compressed e00
+     file : m.in.e00 will automatically recognize the format.
 
      The program not only can analyse the content of an Arc/Info
      file, but try to create the objects described (geometry and
      attributes).
      m.in.e00 will be run non-interactively if the user specifies
      program arguments on the command line, using the form:
-     m.in.e00  input=name [mapset=name] [action=what to do] [verbose=debug level] [logfile=name]
+     m.in.e00 input=name [mapset=name] [action=what to do] [verbose=debug level] [logfile=name] [-i] [-d]
 
      Alternately, the user can simply type:
 
@@ -60,7 +60,7 @@ FEATURES
 
 
 
-GRASS 5.0beta2	      GRASS Development Team			1
+GRASS 5.0beta7	      GRASS Development Team			1
 
 
 
@@ -109,24 +109,24 @@ OPTIONS
 		       written. By default log info are directed
 		       to stderr.
 
-BUGS AND CAVEAT
-     Binary files are rejected.	 You must use e00b2a before to
-     convert binary e00 files to ascii.
+     -i	 Use the "feature-ID" of the arc info objects to link
+	 geometry and attribute's tables.  The default is to use
+	 the "feature-#" field (which is an internal link, but
+	 you should not rely on it for linking Arc-Info objects
+	 to an external database.
 
+     -d	 Use a database instead of as many dug_cats files as you
+	 have attributes in the info tables (not yet operational)
+
+BUGS AND CAVEAT
      You must know what to do with all the dig_cats file
      generated when importing a vector coverage.
 
-     No attribute (cats) file is produced when importing a grid.
-
-     The program may crash when unexpexted data (mainly in IFO
-     section) are found, or when the input file is corrupted.
-
-     There is no support for projection. using verbose=1 let you
-     see the parameters of the e00 file, but you must create the
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta2
+
+2		      GRASS Development Team	   GRASS 5.0beta7
 
 
 
@@ -137,21 +137,28 @@ m.in.e00 <main>	      GRASS Reference Manual	  <main> m.in.e00
 
 
 
+     No attribute (cats) file is produced when importing a grid.
+
+     The program may crash when unexpexted data (mainly in IFO
+     section) are found, or when the input file is corrupted.
+
+     There is no support for projection. using verbose=1 let you
+     see the parameters of the e00 file, but you must create the
      DEFAULT_WIND and the PROJ file yourself.
 
      New mapset are allways created with proj=0 zone=99.  If the
      default proj and zone are not the same, g.region complaints
      and d.vect or d.rast refuse to display your data.	The only
-     thing to do is to import in the current mapset.
+     thing to do in those cases is to import in the current
+     mapset, or modify the new mapset projection.
 
 SEE ALSO
-     e00b2a (convert binary e00 file to ascii e00 file), g.mapset
-     , g.region , g.proj , v.support , v.to.rast .
+     g.mapset , g.region , g.proj , v.support , v.to.rast .
 
 AUTHORS
-     Michel J. Wurtz, Laboratoire Territoires & Environnement,
+     Michel J. Wurtz, CEREG
 
-	  Ecole Nationale du Genie de l'Eau et de
+	  Ecole Nationale du Gnie de l'Eau et de
 	  l'Environnement.
 	  mw@engees.u-strasbg.fr
 
@@ -185,14 +192,7 @@ AUTHORS
 
 
 
-
-
-
-
-
-
-
-GRASS 5.0beta2	      GRASS Development Team			3
+GRASS 5.0beta7	      GRASS Development Team			3
 
 
 

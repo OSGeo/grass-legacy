@@ -17,10 +17,7 @@ OFILES =  \
 	Returns.o\
 	i_to_f.o
 
-$(GISBASE)/driver/SUN: SUN
-	mv SUN $@
-
-SUN: $(OFILES) ../lib/driverlib.a
+$(GISBASE)/driver/SUN: $(OFILES) ../lib/driverlib.a
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) ../lib/driverlib.a $(GRAPH)
 
 ../lib/driverlib.a: #

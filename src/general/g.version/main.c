@@ -1,16 +1,18 @@
 #include <stdio.h>
 
+#define QUOTE(x) #x
+
 int main(int argc, char *argv[])
 {
     fprintf (stdout, "GRASS %s (%s) %s\n", 
-	    VERSION_NUMBER, VERSION_DATE, VERSION_UPDATE_PKG );
+       QUOTE(VERSION_NUMBER), QUOTE(VERSION_DATE), QUOTE(VERSION_UPDATE_PKG) );
     fprintf (stdout, "\n");
     fprintf (stdout, "Copyright and License Statement\n");
     fprintf (stdout, "\n");
     fprintf (stdout, "The Geographic Resources Analysis and Support System (GRASS)\n");
     fprintf (stdout, "Geographic Information System (GIS) is Copyright by the\n");
-    fprintf (stdout, "GRASS Development Team headquartered at Baylor University,\n");
-    fprintf (stdout, "in Waco, Texas.\n");
+    fprintf (stdout, "GRASS Development Team headquartered at University of Hannover,\n");
+    fprintf (stdout, "Germany, and Baylor University in Waco, Texas.\n");
     fprintf (stdout, "\n");
     fprintf (stdout, "This program is free software; you can redistribute it and/or modify it\n");
     fprintf (stdout, "under the terms of the GNU General Public License as publishe by the\n");
@@ -38,6 +40,7 @@ int main(int argc, char *argv[])
     fprintf (stdout, "  254-710-6814\n");
     fprintf (stdout, "  grass@baylor.edu\n");
     fprintf (stdout, "  http://www.baylor.edu/~grass/\n");
+    fprintf (stdout, "  http://www.geog.uni-hannover.de/grass/\n");
     fprintf (stdout, "\n");    
     exit(0);
 }

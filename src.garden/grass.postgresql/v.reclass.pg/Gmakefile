@@ -1,0 +1,21 @@
+PGM       = $(BIN_CONTRIB_CMD)/v.reclass.pg
+#PGM       = v.reclass.pg
+#LIBES     = $(GISLIB) 
+# EXTRA_CFLAGS = -Dunlink=puts
+LIBES     = $(DISPLAYLIB) $(GISLIB) $(PQLIB) $(MATHLIB)
+EXTRA_CFLAGS    = $(PQINCPATH)
+
+
+
+OBJS = \
+	main.o \
+        getAllOpts.o \
+        getSopts.o \
+	buildInfxQry.o \
+	runInfxFile.o
+
+
+$(PGM): $(OBJS) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
+
+$(LIBES): #

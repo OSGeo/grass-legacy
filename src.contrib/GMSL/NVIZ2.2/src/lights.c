@@ -1,14 +1,24 @@
-#include "interface.h"
 #include <stdlib.h>
+#include "interface.h"
 
-extern void free();
+static int setlgt_ambient(Nv_data *, Tcl_Interp *, int, char **);
+static int getlgt_bright(Nv_data *, Tcl_Interp *, int, char **);
+static int getlgt_ambient(Nv_data *, Tcl_Interp *, int, char **);
+static int getlgt_color(Nv_data *, Tcl_Interp *, int, char **);
+static int getlgt_position(Nv_data *, Tcl_Interp *, int, char **);
+static int setlgt_bright(Nv_data *, Tcl_Interp *, int, char **);
+static int setlgt_color(Nv_data *, Tcl_Interp *, int, char **);
+static int setlgt_position(Nv_data *, Tcl_Interp *, int, char **);
+static int switchlight(int, char **);
+static int get_light_num(char *);
+static int init_new_light(Nv_data *, int);
 
-int
-Nlight_obj_cmd (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int Nlight_obj_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 {
   if (!strcmp (argv[1], "set_ambient"))
     return(setlgt_ambient (data, interp, argc, argv));
@@ -27,15 +37,15 @@ Nlight_obj_cmd (data, interp, argc, argv)
   else if (!strcmp (argv[1], "get_position"))
     return(getlgt_position (data, interp, argc, argv));
   else if (!strcmp (argv[1], "switch"))
-    return(switchlight(data, interp, argc, argv));
+    return(switchlight(argc, argv));
   else
     return (TCL_ERROR);
 }
 
-int 
-Nnew_light_cmd(data, interp)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
+int Nnew_light_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp                 /* Current interpreter. */
+)
      
 {
   char buf[128];
@@ -53,12 +63,12 @@ Nnew_light_cmd(data, interp)
   return (TCL_OK);
 }
 
-int 
-Nlights_cmd(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+int Nlights_cmd (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
      
 {
   if (argc == 2)
@@ -71,13 +81,12 @@ Nlights_cmd(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-
-int 
-setlgt_ambient(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+static int setlgt_ambient (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
      
 {
   int num;
@@ -93,12 +102,12 @@ setlgt_ambient(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int 
-getlgt_bright(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+static int getlgt_bright (
+    Nv_data *data,
+    Tcl_Interp *interp,
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int num;
@@ -110,12 +119,12 @@ getlgt_bright(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int 
-getlgt_ambient(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+static int getlgt_ambient (
+    Nv_data *data,
+    Tcl_Interp *interp,
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int num;
@@ -136,12 +145,12 @@ getlgt_ambient(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int 
-getlgt_color (data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+static int getlgt_color (
+    Nv_data *data,
+    Tcl_Interp *interp,
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int num;
@@ -161,12 +170,12 @@ getlgt_color (data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int 
-getlgt_position(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+static int getlgt_position (
+    Nv_data *data,
+    Tcl_Interp *interp,
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int num;
@@ -190,12 +199,12 @@ getlgt_position(data, interp, argc, argv)
 }
 
 
-int 
-setlgt_bright(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+static int setlgt_bright (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int num;
@@ -214,12 +223,13 @@ setlgt_bright(data, interp, argc, argv)
   GS_setlight_color(num, r, g, b);
   return (TCL_OK);
 }
-int 
-setlgt_color(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+
+static int setlgt_color (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int num;
@@ -241,12 +251,12 @@ setlgt_color(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int 
-setlgt_position(data, interp, argc, argv)
-     Nv_data *data;
-     Tcl_Interp *interp;                 /* Current interpreter. */
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+static int setlgt_position (
+    Nv_data *data,
+    Tcl_Interp *interp,                 /* Current interpreter. */
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int num, w;
@@ -265,10 +275,10 @@ setlgt_position(data, interp, argc, argv)
   return (TCL_OK);
 }
 
-int 
-switchlight(argc, argv)
-     int argc;                           /* Number of arguments. */
-     char **argv;                        /* Argument strings. */
+static int switchlight (
+    int argc,                           /* Number of arguments. */
+    char **argv                        /* Argument strings. */
+)
 
 {
   int on, num;
@@ -280,18 +290,15 @@ switchlight(argc, argv)
   return (TCL_OK);
 }
 
-int 
-get_light_num (lgt)
-     char *lgt;
+static int get_light_num (char *lgt)
 {
   int num;
   sscanf(lgt, "Nlight%d", &num);
 
   return num;
 }
-init_new_light (data, n)
-     Nv_data *data;
-     int n;
+
+static int init_new_light (Nv_data *data, int n)
 {
   data->light[n].brt = 0.8; 
   data->light[n].ar = 0.3;
@@ -304,6 +311,8 @@ init_new_light (data, n)
   data->light[n].y = 1.0; 
   data->light[n].z = 1.0; 
   data->light[n].w = 1.0; 
+
+  return 0;
 }
 
 

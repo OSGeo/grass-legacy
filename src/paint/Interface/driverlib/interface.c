@@ -363,16 +363,17 @@ static int sendf ( double f)
 static int rec (void *buf,int n)
 {
     int i;
-
+    char *cbuf = buf;
+    
     while (n > 0)
     {
-	i = read (0, buf, n);
+	i = read (0, cbuf, n);
 
 	if (i == 0)
 	    paint_error ("unexpected EOF");
 	if (i < 0)
 	    paint_error ("read error");
-	(char *)buf += i;
+	cbuf += i;
 	n -= i;
     }
 

@@ -1,9 +1,10 @@
 :
 # is a 64bit alpha machine ? if so set sizeoflong to 8.
+#
+# $Id$
 # 
-#    script by Luca Palmeri (lpalmeri@ux1.unipd.it)
-#                                 07 Dec 1999
-#                                 grass 5.0 beta5i
+# script by Luca Palmeri (lpalmeri@ux1.unipd.it)
+# 07 Dec 1999
 #
 # To be executed right before starting compilation,
 # checks for the presence of the string 'alpha' into
@@ -13,7 +14,7 @@
 ###################################################
 
 HEAD_FILE=`dirname $0`"/../head/head"
-PORTABLE="src/libes/vect32/diglib/portable.h"
+GRASSLIST="src/CMD/lists/GRASS"
 
 ####################### Set ARCH and CC variables
 eval `cat ${HEAD_FILE} | grep ARCH | sed "s/ //g"`
@@ -28,7 +29,7 @@ int main()
 }
 EOM
 ########################
-$CC 64test.c
+$CC 64test.c -o a.out
 
 SIZEOFLONG=`./a.out`
 
@@ -40,9 +41,9 @@ ARCHIT=`echo $ARCH | grep -i "alpha"`
 if test $SIZEOFLONG -eq 8 -a \
 	 X$ARCHIT != X ; then
 	 echo "[ 64bit alpha ]"
-	 echo "  --> Setting size of long to 8"
-	 cat $PORTABLE | \
-         sed "s/#define LNG_SIZ  4/#define LNG_SIZ  8/" > $PORTABLE.new
-	 mv $PORTABLE.new $PORTABLE
+	 echo "  --> Using 64-bit PVF library"
+	 cat $GRASSLIST | \
+         sed "s,vect32/diglib$,vect32/diglib64," > $GRASSLIST.new
+	 mv $GRASSLIST.new $GRASSLIST
 fi
 

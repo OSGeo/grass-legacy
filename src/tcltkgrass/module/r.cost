@@ -5,6 +5,10 @@ interface_build {
     {entry output {Output raster map:} 0 raster}
     {entry coordinate {Starting point coordinates (east,north[,east,north,...]):} 0 +xy}
     {entry stop_coordinate {Stoping point coordinates (east,north[,east,north,...]):} 0 +xy}
+    {entry stop_coordinate {Stoping point coordinates (east,north[,east,north,...]):} 0 +xy}
+    {entry max_cost {Maximum cumulative cost:} 0 ""}
+    {entry null_value {Positive floating point value assigned to null cells:} 0 ""}
     {checkbox -v {Run verbosely.} "" -v}
     {checkbox -k {Improved accuracy.} "" -k}
+    {checkbox -n {Retain null cells in output.} "" -n}
 }

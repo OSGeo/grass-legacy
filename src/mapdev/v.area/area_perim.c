@@ -10,7 +10,7 @@ struct line_pnts *Points;
 
 int area_perim (double y, double x, struct Map_info *map,
    struct line_pnts *p, char *mapset, char *name, char *color,
-   int fill, char *Dvect_color)
+   int fill, char *Dvect_color, struct Categories *cats)
 {
  int a_index;
  int num_areas;     
@@ -28,7 +28,12 @@ int area_perim (double y, double x, struct Map_info *map,
  extern struct Cell_head window;
  static int points_first = 1;
 
-
+ CELL *cat_no;
+ P_LINE *Lines;
+ char *label_name;
+ 
+ 
+                  
  if (points_first)
  {
      Points = Vect_new_line_struct ();
@@ -49,7 +54,7 @@ int area_perim (double y, double x, struct Map_info *map,
  a_index = dig_point_to_area(map,x,y);
  if (a_index > 0)
   {
-   fprintf(stderr,"AREA INDEX NUMBER: %d\n",a_index);
+   fprintf(stderr,"Area index number: %d\n",a_index);
   }
  else
   {
@@ -166,7 +171,7 @@ int area_perim (double y, double x, struct Map_info *map,
 
 /* Calculate polygon perimeter and print information */
  tot_perim = perimeter(np,Points->x,Points->y);
- fprintf(stderr,"PERIMETER:  %.2f meters   %.2f feet   %.3f miles\n",
+ fprintf(stderr,"Perimeter:  %.2f meters   %.2f feet   %.3f miles\n",
         tot_perim,(tot_perim*3.2808),((tot_perim*3.2808)/5280.) );
 
 /* Display current polygon if it is not the same as previous polygon displayed*/
@@ -266,11 +271,20 @@ int area_perim (double y, double x, struct Map_info *map,
 /* Calculate polygon area and print information */
 /* dig_find_area(map,&(map->Area[a_index]),&f_area,&x,&y,(double)0.0);*/
  f_area = G_area_of_polygon(Points->x, Points->y, Points->n_points);
- fprintf(stderr,"AREA:  \t%.2f sq meters   \t%.2f hectares\n",
+ fprintf(stderr,"Area:  \t%.2f sq meters   \t%.2f hectares\n",
          f_area,(f_area/10000.) );
  fprintf(stderr,"       \t%.3f acres  \t\t%.4f sq miles\n",
  ((f_area*10.763649)/43560.),(((f_area*10.763649)/43560.)/640.) );
- fprintf(stderr,"AREA CENTROID: %.2f (N) %.2f (E)\n\n",y,x);
+ fprintf(stderr,"Area centroid: %.2f (N) %.2f (E)\n",y,x);
+
+/* added 4/2000 MN: */
+ cat_no = map->Att[a_index].cat;
+ if (cats->num > 0)
+ {
+    label_name = G_get_cat( cat_no, cats);
+    fprintf(stderr,"cat#= %d, label= <%s>\n", cat_no, label_name);
+ }
+                        
  R_flush();
  return(6);
 }

@@ -1,63 +1,55 @@
 #include "gis.h"
 #include "methods.h"
 
-Site **readsites (fdsite, verbose, nsites, window)
+int readsites (fdsite, verbose, xyz)
   FILE *fdsite;
   int verbose;
-  int *nsites;
-  struct Cell_head window;
+  Z ** xyz;
+
+/* Reads a sites list into {\tt xyz}, returning the number of sites found.  */
 {
   char *dum;
-  int i, c, j, alloced = 1000;
-  int dims = 0, cat = 0, strs = 0, dbls = 0;
-  Site **sites;
+  int i, n, c, d, allocated=1000;
+  double east, north, ndesc, atof ();
+  char desc[80];
+  Site *s;
+  extern struct Cell_head window;
 
   G_sleep_on_error (0);
 
   if (verbose)
     fprintf (stderr, "Reading sites list ...              ");
 
-  /* allocate chunk of memory */
-#ifndef lint
-  sites = (Site **) G_malloc (alloced * sizeof (Site *));
-#endif
-  if (sites == NULL)
-    G_fatal_error ("cannot allocate memory");
 
-  if (G_site_describe (fdsite, &dims, &cat, &strs, &dbls) != 0)
-    G_fatal_error ("failed to guess format");
-  if (dbls < 1)
-    dbls = 1;
+  if (G_site_describe (fdsite, &n, &c, &i, &d)!=0)
+    G_fatal_error("failed to guess format");
+  s = G_site_new_struct (c, n, i, d);
+
+  if (d==0)
+  {
+    fprintf(stderr,"\n");
+    G_warning("I'm finding records that do not have a floating point attributes (fields prefixed with '%').");
+  }
+
+  /* allocate chunk of memory */
+  (*xyz) = (Z *) G_malloc (allocated * sizeof (Z));
+  if ((*xyz)==NULL) G_fatal_error("cannot allocate memory");
 
   i = 0;
-  if ((sites[i] = G_site_new_struct (c, dims, strs, dbls)) == NULL)
-    G_fatal_error ("cannot allocate memory");
-
-  while (G_site_get (fdsite, sites[i]) == 0)
+  /* while (G_get_site (fdsite, &east, &north, &dum) > 0) */
+  while (G_site_get (fdsite, s) == 0) 
   {
-  /*  if (sites[i]->east >= window.west &&
-	sites[i]->east < window.east &&
-	sites[i]->north <= window.north &&
-	sites[i]->north > window.south)
-*/
-    if (G_site_in_region(sites[i],&window))
+    if (i == allocated)
     {
-      if (i == alloced - 1)
-      {
-	alloced += 1000;
-	if ((sites = (Site **) G_realloc (sites, alloced * sizeof (Site *)))
-	    == NULL)
-	  G_fatal_error ("cannot allocate memory");
-      }
-      if ((sites[++i] = G_site_new_struct (c, dims, strs, dbls)) == NULL)
-	G_fatal_error ("cannot allocate memory");
+      allocated+=1000;
+      (*xyz) = (Z *) G_realloc ((*xyz), allocated * sizeof (Z));
+      if ((*xyz)==NULL) G_fatal_error("cannot allocate memory");
     }
+    i++;
   }
   fclose (fdsite);
   G_sleep_on_error (1);
   if (verbose)
     G_percent (1, 1, 1);
-  *nsites = i;
-  return sites;
+  return i;
 }
-

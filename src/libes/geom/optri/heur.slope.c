@@ -2,7 +2,14 @@
 #include "internoptri.h"
 #include "geom/lia.h"
 #include "geom/sos.h"
-/* #define MAX(a,b) (a > b ? a : b) */
+
+#ifdef __CYGWIN__
+#define MAX(a,b) (a > b ? a : b)
+#endif
+
+#ifdef sparc
+#define MAX(a,b) (a > b ? a : b)
+#endif
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------*/

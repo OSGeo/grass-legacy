@@ -1,0 +1,11 @@
+PGM=r3.null
+HOME=$(BIN_MAIN_CMD)
+R3MASKDIR=../r3.mask
+
+$(HOME)/$(PGM): main.o $(R3MASKDIR)/mask.o $(G3DLIB) $(GISLIB) 
+	$(CC) $(LDFLAGS) -o $@ $(R3MASKDIR)/mask.o main.o $(G3DLIB) $(GISLIB) $(XDRLIB) $(MATHLIB)
+
+$(G3DLIB): #
+$(GISLIB): #
+
+#main.o: main.c gis.h G3d.h G3d_intern.h

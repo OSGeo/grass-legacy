@@ -1,0 +1,48 @@
+
+<A NAME="r3.in.ascii">
+<H2>r3.in.ascii</H2>
+<H4>[type = default | double | float]
+[precision = default | max | 0 - 52]
+[compression = default | rle | lzw | rle+lzw | none]
+[tiledimension = XxYxZ]
+[nv = none | <EM>double</EM>]
+input = <EM>ascii</EM>-file
+output = <EM>g3d</EM>-map
+</H4>
+
+Imports files in <EM>3d</EM> <EM>ascii</EM> format into G3D.
+<P>
+The command line argument <EM>nv</EM> specifies which value to 
+converted to NULL-value. If the specified value is <EM>none</EM>, no
+conversion is performed. The default is <EM>none</EM>.
+<P>
+The arguments <EM>type</EM>, <EM>precision</EM>, <EM>compression</EM>, and
+<EM>tiledimension</EM> are the standard g3d arguments which allow the user
+to overwrite the default properties of the new file. Note that the 
+<EM>none</EM> value for <EM>compression</EM> only specifies that neither
+<EM>LZW</EM> nor <EM>RLE</EM> is used for compression. It does not turn
+off the compression all together. G3d does not support non-compressed files.
+<P>
+The format for the ascii file:
+<PRE>
+north: <EM>floating point</EM>
+south: <EM>floating point</EM>
+east: <EM>floating point</EM>
+west: <EM>floating point</EM>
+top: <EM>floating point</EM>
+bottom: <EM>floating point</EM>
+rows: <EM>integer</EM>
+cols: <EM>integer</EM>
+levels: <EM>integer</EM>
+</PRE>
+This header is followed by the cell values in <EM>floating point</EM> format 
+organized in rows with constant <EM>col</EM> and <EM>level</EM> coordinate.
+The rows are organized by constant <EM>level</EM> coordinate. Individual cell
+values are separated by <EM>space</EM> or <EM>CR</EM>.
+<P>
+NOTE: Currently, after the file has been imported, the stored values are 
+compared with the original data. This feature is used to find bugs in the
+library at an early stage and will be turned off as soon as confidence has
+built up.
+
+<HR>

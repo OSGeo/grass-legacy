@@ -1,0 +1,12 @@
+interface_build {
+    d.what.s.pg 0
+    {Queries the database on sites inside the cursor radius.}
+    {entry tab {DB table:} 0 ""}
+    {entry xcol  {Column X-coor:} 0 ""}
+    {entry ycol  {Column Y-coor:} 0 ""}
+    {entry xpos  {X-coor search:} 0 ""}
+    {entry ypos  {Y-coor search:} 0 ""}
+    {entry distance  {Radius:} 0 ""}
+    {checkbox -s {SQL file input} "" -s}
+    {entry sql  {Name of SQL file:} 0 file}
+}

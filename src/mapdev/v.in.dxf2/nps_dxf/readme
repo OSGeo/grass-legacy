@@ -1,0 +1,104 @@
+ACTOSAG
+-------
+Use the program UNDXF to convert an ASCII Autocad type dxf format file created 
+by AutoCAD or similar program into an text file for processing by UNWAM11.
+There are certain guidelines that should be followed when creating AutoCAD 
+drawing files that are to be converted by UNDXF to avoid the creation of 
+"spaghetti" files.
+1.   Avoid putting entities into blocks, because blocks are ignored by UNDXF.  
+Any entities in blocks will not be converted.
+2.   Entities that represent polygons or polylines should be created using the 
+commands 'PLINE', or 'POLYGON'.
+3.   Each group of entities representing a certain type should be put in a 
+separate layer.  The layer name is used as the id name in the input text file 
+for UNWAM11.
+Editing AutoCAD drawing files:
+1.   If entities are in blocks, they can be taken out of blocks using the 
+'EXPLODE' command in the 'EDIT' section.  
+     When the 'EXPLODE' command is executed the prompt 
+Select block reference, polyline, or dimension will appear on the screen.  
+Pick the appropriate feature and this feature  will no longer be a block. 
+The entities that were in the block may need to be further edited to create 
+polylines or polygons, etc.
+2.   Entities that are a group of lines that represent a polygon or polyline 
+should be converted using the command 'PEDIT' in the EDIT section.
+     When the 'PEDIT' command is executed, the prompt
+Select polyline: will appear on the screen.  Pick the appropriate feature and 
+if this feature is a line or an arc, the next prompt will be
+     Entity selected is not a polyline. 
+     Do you want to turn it into one? 
+The answer should be 'yes'.  The feature will then be converted into a single 
+segment polyline.  To join the rest of the lines into the polyline use the 
+command 'JOIN'.  The prompt:  "Select objects"  will appear on the screen.  If 
+a single object is chosen, that object will be joined to the last polyline
+edited.  If there are several arcs to be joined to the polyline, at the 
+'select objects' prompt, the command 'WINDOW' can be entered.  The prompts
+     First corner:
+     Other corner:  
+will appear on the screen.  Two opposite corners for a window surrounding the 
+entities to be converted should be chosen, after which the lines touching the 
+last polyline edited will be joined together.
+3.   Entities that belong in a different layer can easily be changed to that 
+layer using the command 'CHANGE'.  The prompt:
+     Select object:  
+will appear on the screen.  Choose the desired object and then the prompt:
+     Properties/ <changepoint>: 
+will appear on the screen.  Enter the property 'LAYER'; the prompt:
+     New LAYER <current layer>:  
+will appear on the screen.  Enter the new layer name for the entity.  If the 
+LAYER does not exist it must be created using the 'NEW' command in the 'LAYER' 
+section.  For detailed instructions on the above procedures see the AutoCAD 
+reference manual.  Although it is recommended that the entities in the AutoCAD 
+drawing files be created or changed as described in the above sections, all 
+features, including lines, polylines, arcs, circles, donuts, sketches, 3D faces,
+3D lines, polygons, and solids will be processed.  The only features not 
+processed are blocks and text.
+     To run UNDXF type 'UNDXF filename'.  If the filename is omitted the prompt.
+     Input filename: 
+will appear on the screen, and the name of the desired filename should be 
+entered.  If an invalid filename is entered, the prompt is
+     Unable to read filename.
+     Enter new filename (q=quit) 
+If a 'q' is entered, the program is terminated.  Otherwise the filename entered
+will be checked, and the above procedure will repeat until a 'q' or valid 
+filename is entered.  Once a valid filename is entered, the file will be 
+processed, and an UNWAM11 format file with the same name as the entered filename
+will be created.  This file can then be processed by UNWAM11.
+
+
+SAGGTOAC
+--------
+1.  In DOS, place the SAGIS-to-AutoCAD software, sagtoac.exe, where it will be 
+accessible.
+2.  In UNIX, use the SAGIS utility mapdraw to create a text file that 
+sagtoac.exe will read and
+convert to .dxf files.  Follow these steps exactly:
+mapdraw>list (CR)    (Starts up mapdraw.  Note the ">list" part of the command.
+                     It will cause all output from mapdraw to go to a file named
+                     "list".)
+             NO PROMPTS WILL APPEAR ON THE SCREEN, BECAUSE ALL
+                       OUTPUT WILL BE SENT TO "LIST"
+Enter name of SAGIS mapfile (CR)      (Be sure you enter a valid mapfile
+                                      name.  No need to enter the .pol
+                                      extension.)
+oldmap (CR)                           (Enters the oldmap section of mapdraw.)
+dump10.0 id [number or name] set 1 * (CR)    (Instructs mapdraw to write the
+                                             specified mapid in an F10.0
+                                             format to file "list".  "set 1 *"
+                                             means sets 1 to the end (i.e.,
+                                             all sets) in the mapid.)
+dump10.0 id [number or name] set 1 * (CR)    (Writes another specified mapid
+                                             to file "list".)
+dump10.0 id [number or name] set 1 * (CR)    (Writes another specified mapid
+                                             to file "list".)
+Continue, as required, until all desired mapids are selected.
+end (CR)
+end (CR)
+3. udcp -a list [DOS destination, e.g., c:list.txt] (CR)(Instructs UNIX to 
+copy the file "list" to DOS.  "-a" means "ASCII".)
+4. dos (CR) Moves from UNIX to DOS.)5.sagtoac (CR)(Starts up sagtoac.exe.)
+[name of DOS file copied from UNIX, e.g., list.txt] (CR)
+Ignore zeros in filenames.  Note that each SAGIS mapid becomes an AutoCAD .dxf 
+file with a single drawing layer in it.
+6.  Use AutoCAD to convert the .dxf files to .dwg files.  Merge  and use the 
+.dwg files as desired.

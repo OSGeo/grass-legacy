@@ -10,7 +10,7 @@ struct zstruct
 };
 typedef struct zstruct Z;
 
-Site ** readsites();
+int readsites();
 double nearest ();
 double bilinear ();
 double scancatlabel ();

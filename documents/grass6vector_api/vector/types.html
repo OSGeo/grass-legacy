@@ -1,0 +1,181 @@
+
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Primitive Feature Types
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Primitive Feature Types
+</h1>
+
+<blockquote>
+    Note, that the terms line and arc are frequently interchanged
+    and denote a connected series of line segments.  The term <em>
+    line segment</em> will always be used when a single line segment
+    is intended.
+</blockquote>
+
+
+The choice of variety of feature types was determined primarily to support
+the masking feature of the group functions.  The client is able to restrict
+the objects of a group to any variety of types.  The usefulness should be
+readily apparent.  For example, to perform an operation on every connecting 
+node, the following call would be used:<p>
+
+<code> 
+    gvGroupForeach (universe_group, operation_function_pointer
+                             user_data, GV_PT_CNODE); 
+</code> <p>
+
+Likewise to display <bold>all</bold> lines in the map, the following would
+be used:<p>
+
+<code> 
+    gvGroupForeach (universe_group, display_function
+                             user_data, GV_PT_LINE); 
+</code><p>
+
+Note the use of GV_PT_LINE, which is a union of the three different line 
+types.<p>
+
+The supported primitive feature types are:<p>
+
+<ul>
+    <li>Line Line		( GV_PT_LLINE )
+    <li>Area Line		( GV_PT_ALINE )
+    <li>Neat Line		( GV_PT_NLINE )
+    <li>Connecting Node		( GV_PT_CNODE )
+    <li>Entity Node		( GV_PT_ENODE )
+    <li>Area			( GV_PT_AREA )
+    <li>Island			( GV_PT_ISLE )
+</ul>
+<p>
+
+There are also predefined groups of the above:
+
+<ul>
+    <li>All Line types	( GV_PT_LINE )
+    <li>All Node types	( GV_PT_NODE )
+    <li>All Proper feature types	( GV_PT_FEATURES )	 
+	<blockquote>
+	    This includes <em>all</em> features types except islands
+	     as islands are not considered a proper feature in and of 
+	     themselves.
+	</blockquote>
+    <li>All map objects ( GV_PT_ALL )
+</ul>
+
+<hr>
+
+<h2> The three line types </h2>
+
+<ul>
+    <li> GV_PT_LLINE
+    <li> GV_PT_ALINE
+    <li> GV_PT_NLINE
+</ul>
+
+Historically GRASS has always supported two distinct types of lines.
+Area edges and lines which don't border areal information, but instead
+simply represent linear type features such as roads, or streams.
+This approach has proven to be very convenient for a number of reasons.
+One is in simplifying the process of checking map consistancy and the
+other in not requiring the processing of extraneous area information
+when there is in fact nothing to be gained by tracking areas which are
+of no interested.  Consider for example a down town street map. In this
+instance, the areas between the roads are not of interest, yet the 
+area topology would still have to be built and maintain for a large number
+of polygon which never adds any information to the map.  By using LINE
+type lines, this extra work can be ignored. <p>
+
+Internal to GRASS there have been no negative affects of this dicotomy of
+line types, but there has been a serious problem when trying exchange 
+data with other GIS. Since this distinction is unique to GRASS, methods
+need to be worked out to make up for the incompatibilies when data are
+exchanged. <p>
+
+To work around this, my design included a new definition of topology
+to be supported by the 5.0 API. This new topology would not distinguish
+between line and area edge types, and all normal lines would be treated
+as area edges.  Note neet lines would still be distinquished, but they would
+simply act as virtual area edges in either case.  The result of this 
+should be more compatiblity with other major GIS. Note that this
+is a lower priority item and the algorithms and specifications have
+not yet been worked out.  The API allows for requesting either topology
+model to be used.
+<p>  
+
+The third line type, the <em>neat line</em> type is to be used for 
+virtual map borders.  The system will treat this line special.  When
+joining maps, these lines will disapear and areas will be joined across
+maps.
+<p>
+
+
+<h2> The two node types </h2>
+
+<ul>
+    <li> GV_PT_CNODE
+    <li> GV_PT_ENODE
+</ul>
+
+GRASS 5.0 will fully support two true node types.  The <em> connecting
+node</em> is the same as nodes in 4.0.  One must exist both ends of every
+arc in the map.  Whever two arcs would cross, they must be broken and a
+connecting node placed at the intersection.  Connecting nodes maintain 
+line connectivity information.  It is not an error for a connecting node
+to have exactly two arcs joining through it.  In the <em>OLD</em> topoplogy
+model it <bold>is</bold> an error for a connecting node to be attached
+to only one end of one area edge.
+<p>
+
+An entity node is a node which does not intersect with any arcs (i.e.
+linear map features).  It is typically used to represent zero dimensional
+objects such as site data.<p>
+
+
+<h2> Areas </h2>
+
+<ul>
+    <li> GV_PT_AREA
+</ul>
+
+In GRASS area boundries are traversed in a clockwise order.  Note this
+says nothing about the individal arcs which make up the border, but when
+treated as elements defining the area [for example 
+<a href="topo_read#gvGetAreaPoints">gvGetAreaPoints()</a>] all coordinates
+are ordered clockwise.
+<p>
+
+<h2> Islands </h2>
+
+<ul>
+    <li> GV_PT_ISLE
+</ul>
+In GRASS area boundries are traversed in an anti-clockwise order. See Areas
+above.
+<p>
+
+
+
+<!--hr------------------------------------------------>
+<p>
+
+<img src=../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

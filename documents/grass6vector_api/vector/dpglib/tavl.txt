@@ -1,0 +1,412 @@
+/*:file:version:date: "%n    V.%v;  %f"
+ * "TAVLTREE.DOC    V.3;  18-Feb-91,15:23:10"
+ *
+ *  Purpose: Documentation for TAVL library.
+ *
+ *      Copyright (c) 1991  Bert C. Hughes
+ *                          200 N.Saratoga
+ *                          St.Paul, MN 55104
+ *                          Compuserve 71211,577
+ */
+
+
+            ------------------------------------------------
+            TAVL library public functions, types & constants
+            ------------------------------------------------
+
+                            ---------
+                            CONSTANTS
+                            ---------
+
+     - Can be used as parameters for function tavl_insert -
+REPLACE ........ 1
+NO_REPLACE ..... 0
+
+     - Return values of function tavl_setdata -
+TAVL_OK ........ 0  No error.
+TAVL_NOMEM ..... 1  Out of memory error.
+TAVL_ILLEGAL_OP  2  Requested operation would disrupt the
+                    tavl_tree structure; operation cancelled.
+
+                               -----
+                               TYPES
+                               -----
+
+TAVL_treeptr        Pointer to a TAVL tree.  Most tavl library
+                    functions require a TAVL_tree pointer as the
+                    first parameter.  A valid TAVL_treeptr can
+                    only be obtained via the function "tavl_init",
+                    which returns a TAVL_treeptr which can then be
+                    used as a parameter for other TAVL functions.
+                    All fields in *TAVL_treeptr are absolutely,
+                    unequivocally PRIVATE.  No point in even
+                    reading them.
+
+TAVL_nodeptr        Pointer to a TAVL tree node.  Many TAVL functions
+                    require a TAVL_nodeptr as parameter, or return a
+                    TAVL_nodeptr.  Fields within *TAVL_nodeptr are
+                    PRIVATE - with one possible, but unnecessary,
+                    exception: TAVL_nodeptr->dataptr - in which case
+                    it is READONLY.
+                        Data should be obtained from a TAVL_nodeptr
+                    via the function "tavl_getdata", rather than
+                    reading "dataptr" directly.
+
+
+                        -----------------
+                            FUNCTIONS
+                        -----------------
+
+TAVL_INIT
+---------
+    purpose:        Creates a new TAVL tree. Returned pointer is used
+                    as a parameter to TAVL routines in subsequent
+                    processing.
+
+    source file:    tavlinit.c
+    returns:        pointer to empty tree, or NULL if
+                    insufficient memory.
+
+    prototype:      TAVL_treeptr tavl_init(
+                            int (*compare)(void *Key1, void *Key2),
+                            void *(*key_of)(void *DataObject),
+                            void *(*make_item)(const void *DataObject),
+                            void (*free_item)(void *DataObject),
+                            void *(*copy_item)(void *Dest_DataObject,
+                                         const void *Source_DataObject),
+                            void *(*alloc)(size_t),
+                            void (*dealloc)(void *)
+                    );
+
+    parameters: All parameters for tavl_init are pointers to functions,
+                so that you can tailor the behavior of the tavltree and
+                the data it stores to fit the needs of your application.
+
+                compare   - Exclusively defines how the tavl library will
+                            make comparisons for this tree.
+                              must return:
+                                        0 - (Key1 == Key2)
+                                       >0 - (Key1 > Key2)
+                                       <0 - (Key1 < Key2)
+
+                key_of    - Must return a pointer to the identifier of
+                            data objects which are being inserted into
+                            this instance of tavl tree. Within the TAVL
+                            library, result of the "key_of" function is
+                            passed directly to the "compare" function.
+
+                            (Identifier - that which distinguishes this
+                            data object from other data objects.
+                            Its "name".)
+
+                make_item - Must create a copy of the data object passed
+                            to it. This function is also responsible for
+                            allocating memory necessary for storing the
+                            copy of the data object.  Library function
+                            tavl_insert uses "make_item" to make a copy
+                            of the item, or object, to insert into the
+                            tree, and library function tavl_setdata uses
+                            "make_item" to create a copy of the data
+                            item passed to it.
+
+                free_item - Opposite of make_item. Function "free_item"
+                            must free or deallocate memory given to
+                            the object by "make_item".
+
+                copy_item - Copies a data object to a buffer.  All memory
+                            necessary to store the object must have been
+                            allocated before "copy_item" is called.
+
+                alloc     - A memory allocator for the tavl library to
+                            use for its private purposes, ie, allocation
+                            of nodes and struct tavltree.
+
+                dealloc   - Counterpart to "alloc".
+
+                  Often "alloc" & "dealloc" will be the complementary
+                  C library functions "malloc" and "free".
+
+
+
+TAVL_INSERT
+-----------
+   purpose:     Inserts data objects into the tree.
+
+   source file: tavl_ins.c
+
+   returns:     A pointer to the node which contains the data object
+                inserted or found.
+
+   prototype:   TAVL_nodeptr tavl_insert(
+                                TAVL_treeptr tree,
+                                void        *item,
+                                int          replace
+                                );
+
+   parameters:  tree -      Pointer to the tree into which data will be
+                            inserted.
+
+                item -      Pointer to the object to insert.
+
+                replace -   Instructs "tavl_insert" on how to behave
+                            if the tree already contains a data object
+                            whose identifier equals key_of(item).
+                            If replace != 0, the new data object will
+                            replace the old, otherwise nothing happens,
+                            tavl_insert simply returns a pointer to
+                            the found node.
+
+    NOTES:      "tavl_insert" requires the private function
+                "rebalance_tavl" contained in source file "tavlrebl.c",
+                so the module "tavlrebl.obj" (or whatever, depending on
+                your system) must be linked to the final executable
+                program.
+
+
+TAVL_DELETE
+-----------
+    purpose:        Deletes node containing item such that
+                    *key_of(node.item) == *key.
+
+    source file:    tavl_del.c
+
+    returns:        1 if successful, otherwise 0.
+
+    prototype:      int tavl_delete(TAVL_treeptr tree, void *key);
+
+    parameters:     tree -  Tree to remove object from.
+                    key  -  Identifier of object to remove.
+
+    NOTES:      "tavl_delete" requires the private function
+                "rebalance_tavl" contained in source file "tavlrebl.c",
+                so the module "tavlrebl.obj" (or whatever, depending on
+                your system) must be linked to the final executable
+                program.
+
+
+
+TAVL_FIND
+---------
+    purpose:        Find node whose data object's identifier
+                    equals *key.
+
+    source file:    tavlfind.c
+
+    prototype:      TAVL_nodeptr tavl_find(TAVL_treeptr tree, void *key);
+
+    parameters:     tree -  Tree to search.
+                    key  -  Identifier of object to find.
+
+
+
+
+TAVL_GETDATA        source file: tavl_gdt.c
+------------
+    purpose:        Copies data object contained in *p to *buffer.
+                    Uses function "copy_item" to accomplish its
+                    mission; see tavl_init.
+
+    returns:        Result of function "copy_item"; if all is OK,
+                    this should be a void pointer to parameter "buffer",
+                    but definition of "copy_item" is left to
+                    the TAVL-library user.
+
+    prototype:      void *tavl_getdata(
+                            TAVL_treeptr tree,
+                            TAVL_nodeptr p,
+                            void *buffer);
+
+
+
+
+TAVL_SETDATA        source file: tavl_sdt.c
+------------
+    purpose:        Directly replace the data object contained in
+                    node "p".  Fails if identifier of object in
+                    node "p" does not equal identifier of "item".
+                    NOTE: this function has same effect as
+                    "tavl_insert(tree,item,REPLACE)" where it is
+                    known that an object exists in the tree such
+                    that *key_of(item) == *key_of(existing_object).
+
+
+    returns:        if successful   ........... TAVL_OK
+                    if insufficient memory .... TAVL_NOMEM
+                    if illegal operation ...... TAVL_ILLEGAL_OP,
+                      where an illegal operation is either
+                      trying to set data on the head node
+                      (returned by tavl_reset), or trying
+                      to replace the existing data object
+                      with an object whose identifier is
+                      not equal to the original object's
+                      identifier.
+
+    prototype:      int tavl_setdata(
+                            TAVL_treeptr tree,
+                            TAVL_nodeptr p,
+                            void *item);
+
+    parameters:     tree -  Pointer to the tree in question.
+                    p    -  Pointer to the node containing
+                            object to replace.
+                    item -  Pointer to replacement item.
+
+
+
+
+TAVL_DELETE_ALL     source file: tavldall.c
+---------------
+    purpose:        Remove all data nodes from the tree and
+                    release memory used by those nodes.
+
+    prototype:      void tavl_delete_all(TAVL_treeptr tree);
+
+    NOTES:      "tavl_delete_all" uses TAVL library functions
+                "tavl_reset" and "tavl_succ", so these
+                modules must be linked to the final executable.
+
+
+
+
+TAVL_DESTROY        source file:    tavlfree.c
+------------
+    purpose:        Release all memory used by the tree and
+                    its data nodes; i.e., destroy the tree.
+
+    prototype:      void tavl_destroy(TAVL_treeptr tree);
+
+    NOTES:      "tavl_destroy" uses TAVL library functions
+                "tavl_reset" and "tavl_succ", so these
+                modules must be linked to the final executable.
+
+
+
+  --------------------------------------------------------------------
+  | Following three functions allow you to treat tavl_trees as a     |
+  | doubly linked sorted list with a head node.  This is the point   |
+  | of threaded trees - it is almost as efficient to move from node  |
+  | to node or back with a threaded tree as it is with a linked list.|
+  --------------------------------------------------------------------
+
+
+TAVL_RESET          source file: tavl_rst.c
+----------
+    purpose:        Used in conjunction with "tavl_succ" & "tavl_pred",
+                    "tavl_reset" returns a pointer to the head node
+                    of the tree. The head node contains no data,
+                    rather it is the begin/end of the tree viewed as
+                    a sorted doubly linked circular list. Subsequent
+                    call to "tavl_succ"/"tavl_pred" returns first/last
+                    (or least/greatest) node of this list.
+
+    prototype:      TAVL_nodeptr tavl_reset(TAVL_treeptr tree);
+
+
+
+TAVL_SUCC           source file: tavlsucc.c
+---------
+    purpose:        Returns pointer to node that is the in-order
+                    successor of node p, or NULL if p is last
+                    element in the list (head doesn't count).
+                    Input parameter "p" may be obtained from
+                    the functions "tavl_reset", "tavl_find",
+                    "tavl_insert", or "tavl_pred".
+
+    prototype:      TAVL_nodeptr tavl_succ(TAVL_nodeptr p);
+
+
+
+TAVL_PRED           source file: tavlpred.c
+---------
+    purpose:        Returns in-order predecessor of "p";
+                    almost the inverse of tavl_succ. I.e.,
+
+                       p == tavl_pred(tavl_succ(p))
+                    and
+                       p == tavl_succ(tavl_pred(p))
+
+                    EXCEPT! when the inner function in
+                    the relationship above returns NULL
+                    because it has reached begin/end of
+                    the list (tree).
+
+    prototype:      TAVL_nodeptr tavl_pred(TAVL_nodeptr p);
+
+
+/****************************************************************************/
+/*                  PRIVATE STUFF - FOR USE OF TAVL-LIBRARY ONLY            */
+/*                  but it's here anyway because C programmers              */
+/*                  want to know...                                         */
+/****************************************************************************/
+
+function:
+
+REBALANCE_TAVL      source-file: tavlrebl.c
+--------------
+
+    purpose:        Used internally by the "tavl_insert"
+                    and "tavl_delete" functions.  Should
+                    NEVER, EVER, be called by an application.
+                    But if it was, it wouldn't harm anything -
+                    since the tree is always balanced at application
+                    level, a call to rebalance would simply return
+                    with no changes or actions taken.
+
+    prototype:      In source file "tavlpriv.h", which must be present
+                    when compiling TAVL library routines.
+
+
+types:
+
+typedef struct tavlnode {
+            void *dataptr;
+            struct tavlnode *Lptr, *Rptr;
+            signed   int bf     : 3;    /* assumes values -2..+2 */
+            unsigned int Lbit   : 1;
+            unsigned int Rbit   : 1;
+        } TAVL_NODE, *TAVL_nodeptr;
+
+    fields:
+
+    dataptr:
+            Pointer to the data object stored in this node.
+
+    Lptr,Rptr:
+            Pointers to either left/right child trees, or predecessor/
+            successor nodes, depending on state of Lbit, Rbit flags.
+
+    bf:     In a balanced tree, -1 <= bf <= +1.  When inserting or deleting,
+            bf may become == abs(2); this signals these routines that the
+            tree must be rebalanced, starting at the unbalanced node.
+
+    Lbit,Rbit:
+            Flags that determine if Rptr, Lptr are links to child trees
+            or threads to in-order predecessor/successor nodes.
+
+
+typedef struct tavltree {
+            TAVL_nodeptr head;
+            int (*cmp)(void *, void *);
+            void *(*key_of)(void *);
+            void *(*make_item)(const void *);
+            void (*free_item)(void *);
+            void *(*copy_item)(void *, const void *);
+            void *(*alloc)(size_t);
+            void (*dealloc)(void *);
+        } TAVL_TREE, *TAVL_treeptr;
+
+
+    fields: "head" is a non-data node created at initialization;
+            algorithms dealing with the tree are simplified by
+            its presence. "head" is also the pointer returned
+            by the TAVL-library function "tavl_reset", and serves
+            as a marker to begin/end of the tree-as-sorted-list.
+
+            All the other fields are function pointers set at
+            initialization time; see "tavl_init".  TAVL library
+            routines perform the functions named by these functions
+            exclusively through the use of these function pointers.
+
+/*****************************************************************************/
+/*                               THE END                                     */
+/*****************************************************************************/

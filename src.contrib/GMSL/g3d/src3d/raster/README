@@ -1,0 +1,5 @@
+r3.showdspf.openGL: openGL version, runs on SUN
+                    and Linux (using MESA 3.1)
+
+r3.showdspf.sgi: SGI version
+

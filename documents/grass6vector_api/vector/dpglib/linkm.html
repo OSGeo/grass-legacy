@@ -1,0 +1,121 @@
+<http>
+
+<head>
+    <title>  
+	GRASS 5.0 Vector API: Link Memory Library
+    </title>
+</head>
+
+<body>
+
+<h1>  
+    Link Memory Library
+</h1>
+
+<blockquote><i>
+    Status:  Gamma<br>
+    This module has been designed, reviewed and coded.
+    It should be considered stable.
+</i></blockquote>
+
+<p>
+This library is useful for fast memory allocation of lost of small objects
+of the same size.  It starts from the assumption that free() is a fairly
+expensive call, and for things like linked lists and trees, there is
+considerable overhead involved.  This library pre-allocates a chunk of 
+memory and allocates and frees memory from and to that chunk.  The chunk
+grows without calling realloc as needed (but it does not shrink).
+<p>
+
+<hr>   <!--------------------------------------------------->
+<a name="index">
+
+<h2> Index of functions </h2>
+
+<ul>
+
+<li> <a href=#>  </a>
+    
+
+<li>dpgLinkmP    <a href=#dpgLinkInit> dpgLinkInit </a>
+    (int size);
+
+
+<li>PTR         <a href=#dpgLinkNew> dpgLinkNew </a>
+    (dpgLinkmP Head);
+
+
+<li>void         <a href=#dpgLinkDispose> dpgLinkDispose </a>
+    (dpgLinkmP Head, PTR p);
+
+
+<li>void         <a href=#dpgLinkCleanup> dpgLinkCleanup </a>
+    (dpgLinkmP Head);
+
+
+<li>void        <a href=#dpgLinkSetChunkSize> dpgLinkSetChunkSize </a>
+    (int size);
+
+
+<li>void        <a href=#dpgLinkExitOnError> dpgLinkExitOnError </a>
+    (int flag);
+
+
+</ul>
+
+<hr>   <!--------------------------------------------------->
+<h2> Function Detail </h2>
+
+
+<a name="dpgLinkInit">
+<pre>
+dpgLinkmP    <strong>dpgLinkInit</strong> (int size);
+
+</pre>
+
+<a name="dpgLinkNew">
+<pre>
+PTR         <strong>dpgLinkNew</strong> (dpgLinkmP Head);
+
+</pre>
+
+<a name="dpgLinkDispose">
+<pre>
+void         <strong>dpgLinkDispose</strong> (dpgLinkmP Head, PTR p);
+
+</pre>
+
+<a name="dpgLinkCleanup">
+<pre>
+void         <strong>dpgLinkCleanup</strong> (dpgLinkmP Head);
+
+</pre>
+
+<a name="dpgLinkSetChunkSize">
+<pre>
+void        <strong>dpgLinkSetChunkSize</strong> (int size);
+
+</pre>
+
+<a name="dpgLinkExitOnError">
+<pre>
+void        <strong>dpgLinkExitOnError</strong> (int flag);
+
+</pre>
+
+
+<!--hr------------------------------------------------>
+
+<img src=../../picts/rules/eyes.gif>
+
+<address> 
+    <a href=http://www.cecer.army.mil/~dpgerdes>
+	David Gerdes 
+    </a>
+	&lt;dpgerdes@diego.cecer.army.mil&gt; <p>
+	Dec 1994
+</address>
+
+</body>
+
+</http>

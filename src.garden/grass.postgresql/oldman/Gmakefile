@@ -1,0 +1,85 @@
+MSEC=4
+MDIR=$(SRC)/../man/man$(MSEC)
+MUTL=$(SRC)/../man/utilities
+
+all: man1 man2 man3 man4 man5 man6 man7 man8 man9 man10 man11 man12 man13
+
+man1:
+	-cp d.rast.pg $(MDIR)/d.rast.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header d.rast.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/d.rast.pg
+
+man2:
+	-cp d.site.pg $(MDIR)/d.site.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header d.site.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/d.site.pg
+
+man3:
+	-cp d.vect.pg $(MDIR)/d.vect.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header d.vect.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/d.vect.pg
+
+man4:
+	-cp d.what.r.pg $(MDIR)/d.what.r.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header d.what.r.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/d.what.r.pg
+
+man5:
+	-cp d.what.s.pg $(MDIR)/d.what.s.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header d.what.s.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/d.what.s.pg
+
+man6:
+	-cp d.what.v.pg $(MDIR)/d.what.v.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header d.what.v.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/d.what.v.pg
+
+man7:
+	-cp g.column.pg $(MDIR)/g.column.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header g.column.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/g.column.pg
+
+man8:
+	-cp g.select.pg $(MDIR)/g.select.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header g.select.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/g.select.pg
+
+man9:
+	-cp g.stats.pg $(MDIR)/g.stats.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header g.stats.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/g.stats.pg
+
+man10:
+	-cp g.table.pg $(MDIR)/g.table.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header g.table.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/g.table.pg
+
+man11:
+ 	-cp r.reclass.pg $(MDIR)/r.reclass.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header r.reclass.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/r.reclass.pg
+
+man12:
+	-cp r.rescale.pg $(MDIR)/r.rescale.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header r.rescale.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/r.rescale.pg
+
+man13:
+ 	-cp v.reclass.pg $(MDIR)/v.reclass.pg
+	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(MUTL)/man.header v.reclass.pg $(MDIR)/.class-notice \
+	> $(GISBASE)/man/$(MSEC)/v.reclass.pg
+
+##

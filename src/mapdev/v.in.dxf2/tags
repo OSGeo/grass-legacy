@@ -1,0 +1,269 @@
+Checkout	../diglib/portable.c	/^Checkout ()$/
+Init_Portable_structs	../Vlib/portable_io.c	/^Init_Portable_structs ()$/
+Mmain	main.c	/^main(argc,argv)$/
+V1__open_update_1	../Vlib/open1.c	/^V1__open_update_1 (Map, name)$/
+V1_close	../Vlib/close.c	/^V1_close (Map)$/
+V1_open_new	../Vlib/open1.c	/^V1_open_new (Map, name)$/
+V1_open_old	../Vlib/open1.c	/^V1_open_old (Map, name, mapset)$/
+V1_read_line	../Vlib/read1.c	/^V1_read_line (Map, Points, offset)$/
+V1_read_next_line	../Vlib/read1.c	/^V1_read_next_line (Map, line_p)$/
+V1_rewind	../Vlib/rewind.c	/^V1_rewind (Map)$/
+V2__init_for_create_plus	../Vlib/open2.c	/^V2__init_for_create_plus (Map, name)	$/
+V2__line_in_constraint	../Vlib/read2.c	/^V2__line_in_constraint (Map, Line)$/
+V2__open_new_1	../Vlib/open2.c	/^V2__open_new_1 (Map, name)		\/* for digit  (unsuppo/
+V2__open_update_1	../Vlib/open2.c	/^V2__open_update_1 (Map, name)$/
+V2__release_file_mem	../Vlib/close.c	/^V2__release_file_mem (Map)$/
+V2__setup_for_digit	../Vlib/open2.c	/^V2__setup_for_digit (Map, name)$/
+V2_area_att	../Vlib/level_two.c	/^V2_area_att (map, area)$/
+V2_close	../Vlib/close.c	/^V2_close (Map)$/
+V2_get_area	../Vlib/level_two.c	/^V2_get_area (map, num, Area)$/
+V2_get_area_bbox	../Vlib/level_two.c	/^V2_get_area_bbox (map, area, N, S, E, W)$/
+V2_get_line_bbox	../Vlib/level_two.c	/^V2_get_line_bbox (map, line, N, S, E, W)$/
+V2_line_att	../Vlib/level_two.c	/^V2_line_att (map, line)$/
+V2_num_areas	../Vlib/level_two.c	/^V2_num_areas (map)$/
+V2_num_lines	../Vlib/level_two.c	/^V2_num_lines (map)$/
+V2_open_new_plus	../Vlib/open2.c	/^V2_open_new_plus (Map, name)		\/* for v.build *\/$/
+V2_open_old	../Vlib/open2.c	/^V2_open_old (Map, name, mapset)$/
+V2_open_update	../Vlib/open2.c	/^V2_open_update (Map, name)		\/* for digit, and v.ca/
+V2_read_line	../Vlib/read2.c	/^V2_read_line (Map, line_p, line)$/
+V2_read_next_line	../Vlib/read2.c	/^V2_read_next_line (Map, line_p)$/
+V2_rewind	../Vlib/rewind.c	/^V2_rewind (Map)$/
+V2_tmp_close	../Vlib/close.c	/^V2_tmp_close (Map)$/
+V2_tmp_open	../Vlib/close.c	/^V2_tmp_open (Map)$/
+Vect_P_init	../Vlib/level_two.c	/^Vect_P_init (name, mapset, map)$/
+Vect__P_init	../Vlib/level_two.c	/^Vect__P_init (map, name, mapset)$/
+Vect__P_init_new_plus	../Vlib/level_two.c	/^Vect__P_init_new_plus (map, name)$/
+Vect__P_writeable	../Vlib/level_two.c	/^Vect__P_writeable (x)$/
+Vect__Read_line	../Vlib/portable_io.c	/^Vect__Read_line (Map, p, offset)$/
+Vect__Rewrite_line	../Vlib/portable_io.c	/^Vect__Rewrite_line (Map, offset, type, points) $/
+Vect__Write_line	../Vlib/portable_io.c	/^Vect__Write_line (Map, type, points) $/
+Vect__copy_portable_info	../Vlib/init_head.c	/^Vect__copy_portable_info (from, to)$/
+Vect__get_default_in_head	../Vlib/portable_io.c	/^Vect__get_default_in_head ()$/
+Vect__get_default_out_head	../Vlib/portable_io.c	/^Vect__get_default_out_head ()$/
+Vect__get_default_port_head	../Vlib/portable_io.c	/^Vect__get_default_port_head ()$/
+Vect__get_window	../Vlib/window.c	/^Vect__get_window (Map, n, s, e, w)$/
+Vect__init_default_heads	../Vlib/portable_io.c	/^Vect__init_default_heads (do_port)$/
+Vect__init_head	../Vlib/init_head.c	/^Vect__init_head (head)$/
+Vect__new_line_struct	../Vlib/line_struct.c	/^Vect__new_line_struct ()$/
+Vect__open_update_1	../Vlib/open.c	/^Vect__open_update_1 (Map, name)$/
+Vect__put_head	../Vlib/head.c	/^Vect__put_head (name, head)$/
+Vect__read_head_binary	../Vlib/portable_io.c	/^Vect__read_head_binary (Map, head)$/
+Vect__write_head_binary	../Vlib/portable_io.c	/^Vect__write_head_binary (Map, head)$/
+Vect_close	../Vlib/close.c	/^Vect_close (Map)$/
+Vect_copy_head_data	../Vlib/init_head.c	/^Vect_copy_head_data (from, to)$/
+Vect_copy_pnts_to_xy	../Vlib/line_struct.c	/^Vect_copy_pnts_to_xy (Points, x, y, n)$/
+Vect_copy_xy_to_pnts	../Vlib/line_struct.c	/^Vect_copy_xy_to_pnts (Points, x, y, n)$/
+Vect_destroy_line_struct	../Vlib/line_struct.c	/^Vect_destroy_line_struct (p)$/
+Vect_get_area_points	../Vlib/get_area.c	/^Vect_get_area_points (Map, area, BPoints)$/
+Vect_get_head	../Vlib/head.c	/^Vect_get_head (name, mapset, head)$/
+Vect_init	../Vlib/portable_io.c	/^Vect_init ()	\/* init vector system *\/$/
+Vect_init_head	../Vlib/head.c	/^Vect_init_head (head)$/
+Vect_level	../Vlib/level.c	/^Vect_level (Map)$/
+Vect_new_line_struct	../Vlib/line_struct.c	/^Vect_new_line_struct ()$/
+Vect_open_new	../Vlib/open.c	/^Vect_open_new (Map, name)$/
+Vect_open_old	../Vlib/open.c	/^Vect_open_old (Map, name, mapset)$/
+Vect_print_header	../Vlib/header.c	/^Vect_print_header (Map)$/
+Vect_put_head	../Vlib/head.c	/^Vect_put_head (name, head)$/
+Vect_read_next_line	../Vlib/read.c	/^Vect_read_next_line (Map, line_p)$/
+Vect_remove_constraints	../Vlib/constraint.c	/^Vect_remove_constraints (Map)$/
+Vect_rewind	../Vlib/rewind.c	/^Vect_rewind (Map)$/
+Vect_set_constraint_region	../Vlib/constraint.c	/^Vect_set_constraint_region (Map, n, s, e, w)$/
+Vect_set_constraint_type	../Vlib/constraint.c	/^Vect_set_constraint_type (Map, type)$/
+Vect_set_open_level	../Vlib/open.c	/^Vect_set_open_level (level)$/
+Vect_write_line	../Vlib/write.c	/^Vect_write_line (Map, type, points)$/
+Vect_x__Mem_Read_line	../Vlib/x_point_io.c	/^Vect_x__Mem_Read_line (p, offset)$/
+Vect_x__Read_line	../Vlib/x_point_io.c	/^Vect_x__Read_line (Map, p, offset)$/
+Vect_x__Rewrite_line	../Vlib/x_point_io.c	/^Vect_x__Rewrite_line (Map, offset, type, points) $/
+Vect_x__Write_line	../Vlib/x_point_io.c	/^Vect_x__Write_line(Map, type, points) $/
+Vect_x_read_head_binary	../Vlib/x_rw_binary.c	/^Vect_x_read_head_binary (Map, dhead)$/
+Vect_x_write_head_binary	../Vlib/x_rw_binary.c	/^Vect_x_write_head_binary (Map, dhead)$/
+ZERO	../diglib/line_dist.c	/^#define ZERO(x) ((x) < tolerance && (x) > -toleran/
+_add_layer	main.c	/^_add_layer (list, num, from, to)$/
+add_att_layer	main.c	/^add_att_layer (str)$/
+add_layer	main.c	/^add_layer (str, list, num)$/
+add_line_layer	main.c	/^add_line_layer (str)$/
+buf_alloc	../diglib/portable.c	/^buf_alloc (needed)$/
+d_atan2	../diglib/calc_angl.c	/^d_atan2 (y, x)$/
+debugf	debug.c	/^debugf (format, a, b, c, d, e, f, g, h, i, j, k, l/
+debuginit	debug.c	/^debuginit ()$/
+dig_Mem_load_file	../diglib/memory_io.c	/^dig_Mem_load_file (fp, ptr)$/
+dig_Mem_release_file	../diglib/memory_io.c	/^dig_Mem_release_file ()$/
+dig_Rd_P_area	../Vlib/portable_io.c	/^dig_Rd_P_area (map, ptr, fp)$/
+dig_Rd_P_att	../Vlib/portable_io.c	/^dig_Rd_P_att (map, ptr, fp)$/
+dig_Rd_P_isle	../Vlib/portable_io.c	/^dig_Rd_P_isle (map, ptr, fp)$/
+dig_Rd_P_line	../Vlib/portable_io.c	/^dig_Rd_P_line (map, ptr, fp)$/
+dig_Rd_P_node	../Vlib/portable_io.c	/^dig_Rd_P_node (map, ptr, fp)$/
+dig_Rd_Plus_head	../Vlib/portable_io.c	/^dig_Rd_Plus_head (map, ptr, fp)$/
+dig_Wr_P_area	../Vlib/portable_io.c	/^dig_Wr_P_area (map, ptr, fp)$/
+dig_Wr_P_att	../Vlib/portable_io.c	/^dig_Wr_P_att (map, ptr, fp)$/
+dig_Wr_P_isle	../Vlib/portable_io.c	/^dig_Wr_P_isle (map, ptr, fp)$/
+dig_Wr_P_line	../Vlib/portable_io.c	/^dig_Wr_P_line (map, ptr, fp)$/
+dig_Wr_P_node	../Vlib/portable_io.c	/^dig_Wr_P_node (map, ptr, fp)$/
+dig_Wr_Plus_head	../Vlib/portable_io.c	/^dig_Wr_Plus_head (map, ptr, fp)$/
+dig__Init_portable_code	../diglib/portable.c	/^dig__Init_portable_code (portable)$/
+dig__alloc_space	../diglib/allocation.c	/^dig__alloc_space(n_wanted, n_elements, chunk_size,/
+dig__check_dist	../diglib/point_t_line.c	/^dig__check_dist (map, points, ux, uy, dist)$/
+dig__convert_buffer	../diglib/portable.c	/^dig__convert_buffer (needed)$/
+dig__del_area	../diglib/area.c	/^dig__del_area (map, area)$/
+dig__del_att	../diglib/attribute.c	/^dig__del_att (map, att)$/
+dig__double_convert	../diglib/portable.c	/^dig__double_convert (in, out, count, head)$/
+dig__falloc	../diglib/allocation.c	/^dig__falloc(nelem, elsize)$/
+dig__fill_head_portable	../diglib/portable.c	/^dig__fill_head_portable (head)$/
+dig__float_convert	../diglib/portable.c	/^dig__float_convert (in, out, count, head)$/
+dig__fread_port_C	../diglib/portable2.c	/^dig__fread_port_C (buf, cnt, fp)	\/* CHAR *\/$/
+dig__fread_port_D	../diglib/portable2.c	/^dig__fread_port_D (buf, cnt, fp)	\/* DOUBLE *\/$/
+dig__fread_port_F	../diglib/portable2.c	/^dig__fread_port_F (buf, cnt, fp)	\/* FLOAT *\/$/
+dig__fread_port_I	../diglib/portable2.c	/^dig__fread_port_I (buf, cnt, fp)	\/* INT *\/$/
+dig__fread_port_L	../diglib/portable2.c	/^dig__fread_port_L (buf, cnt, fp)	\/* LONG *\/$/
+dig__fread_port_P	../diglib/portable2.c	/^dig__fread_port_P (buf, cnt, fp)	\/* PLUS_T *\/$/
+dig__fread_port_S	../diglib/portable2.c	/^dig__fread_port_S (buf, cnt, fp)	\/* SHORT *\/$/
+dig__frealloc	../diglib/allocation.c	/^dig__frealloc(oldptr, nelem, elsize, oldnelem)$/
+dig__fwrite_port_C	../diglib/portable2.c	/^dig__fwrite_port_C (buf, cnt, fp)	\/* CHAR *\/$/
+dig__fwrite_port_D	../diglib/portable2.c	/^dig__fwrite_port_D (buf, cnt, fp)	\/* DOUBLE *\/$/
+dig__fwrite_port_F	../diglib/portable2.c	/^dig__fwrite_port_F (buf, cnt, fp)	\/* FLOAT *\/$/
+dig__fwrite_port_I	../diglib/portable2.c	/^dig__fwrite_port_I (buf, cnt, fp)	\/* INT->LONG *\/$/
+dig__fwrite_port_L	../diglib/portable2.c	/^dig__fwrite_port_L (buf, cnt, fp)	\/* LONG *\/$/
+dig__fwrite_port_P	../diglib/portable2.c	/^dig__fwrite_port_P (buf, cnt, fp)	\/* PLUS_T->LONG /
+dig__fwrite_port_S	../diglib/portable2.c	/^dig__fwrite_port_S (buf, cnt, fp)	\/* SHORT *\/$/
+dig__get_cur_in_head	../diglib/portable2.c	/^struct dig_head *dig__get_cur_in_head () { return /
+dig__get_cur_out_head	../diglib/portable2.c	/^struct dig_head *dig__get_cur_out_head () { return/
+dig__int_convert	../diglib/portable.c	/^dig__int_convert (in, out, count, head)$/
+dig__long_convert	../diglib/portable.c	/^dig__long_convert (in, out, count, head)$/
+dig__long_convert_to_int	../diglib/portable.c	/^dig__long_convert_to_int (in, out, count, head)$/
+dig__long_convert_to_plus_t	../diglib/portable.c	/^dig__long_convert_to_plus_t (in, out, count, head)/
+dig__new_att	../diglib/attribute.c	/^dig__new_att (map, x, y, type, index, cat, offset)/
+dig__plus_t_convert	../diglib/portable.c	/^dig__plus_t_convert (in, out, count, head)$/
+dig__set_cur_in_head	../diglib/portable2.c	/^dig__set_cur_in_head (head) struct dig_head *head;/
+dig__set_cur_out_head	../diglib/portable2.c	/^dig__set_cur_out_head (head) struct dig_head *head/
+dig__short_convert	../diglib/portable.c	/^dig__short_convert (in, out, count, head)$/
+dig_add_line_to_node	../diglib/node_op.c	/^dig_add_line_to_node (num, line, type, map, points/
+dig_alloc_area	../diglib/struct_alloc.c	/^dig_alloc_area (map, add)$/
+dig_alloc_att	../diglib/struct_alloc.c	/^dig_alloc_att (map, add)$/
+dig_alloc_isle	../diglib/struct_alloc.c	/^dig_alloc_isle (map, add)$/
+dig_alloc_line	../diglib/struct_alloc.c	/^dig_alloc_line (map, add)$/
+dig_alloc_node	../diglib/struct_alloc.c	/^dig_alloc_node (map, add)$/
+dig_alloc_points	../diglib/struct_alloc.c	/^dig_alloc_points (points, num)$/
+dig_alloc_space	../diglib/allocation.c	/^dig_alloc_space(n_wanted, n_elements, chunk_size, /
+dig_angle_next_line	../diglib/area.c	/^dig_angle_next_line (map, current_line, direction)/
+dig_area_alloc_isle	../diglib/struct_alloc.c	/^dig_area_alloc_isle (Area, num)$/
+dig_area_alloc_line	../diglib/struct_alloc.c	/^dig_area_alloc_line (area, num)$/
+dig_area_bound_box	../diglib/area.c	/^dig_area_bound_box (map, Area)$/
+dig_bound_box2	../diglib/bound_box.c	/^dig_bound_box2 (points, N, S, E, W, orig_scale)$/
+dig_build_area_with_line	../diglib/area.c	/^dig_build_area_with_line (map, first_line, Area)$/
+dig_by_line_bbox	../diglib/point_t_line.c	/^dig_by_line_bbox (Line, x1, y1, x2, y2)$/
+dig_calc_begin_angle	../diglib/calc_angl.c	/^dig_calc_begin_angle (points, thresh)$/
+dig_calc_end_angle	../diglib/calc_angl.c	/^dig_calc_end_angle(points, thresh)$/
+dig_center_check	../diglib/point_t_line.c	/^dig_center_check(line, a, b, ux, uy)$/
+dig_check_dist	../diglib/point_t_line.c	/^dig_check_dist (map, line, ux, uy, dist)$/
+dig_check_nodes	../diglib/check_node.c	/^dig_check_nodes (map, node, points)$/
+dig_del_area	../diglib/area.c	/^dig_del_area (map, area)$/
+dig_del_att	../diglib/attribute.c	/^dig_del_att (map, att)$/
+dig_del_isle	../diglib/isle.c	/^dig_del_isle (map, isle)$/
+dig_distance2_point_to_line	../diglib/line_dist.c	/^dig_distance2_point_to_line (x,y,x1,y1,x2,y2)$/
+dig_do_file_checks	../diglib/file_checks.c	/^dig_do_file_checks (map, plus, dig, dig_att)$/
+dig_falloc	../diglib/allocation.c	/^dig_falloc (nelem, elsize)$/
+dig_find_area	../diglib/find_area.c	/^dig_find_area (map, Area, totalarea, cent_x, cent_/
+dig_find_area2	../diglib/find_area.c	/^dig_find_area2 (map, Area, totalarea)$/
+dig_find_intersection	../diglib/linecros.c	/^dig_find_intersection (ax1,ay1,ax2,ay2,bx1,by1,bx2/
+dig_float_point	../diglib/format.c	/^dig_float_point (buf, size, num)$/
+dig_frealloc	../diglib/allocation.c	/^dig_frealloc(oldptr, nelem, elsize, oldnelem)$/
+dig_get_cont_lines	../diglib/cont_lines.c	/^dig_get_cont_lines (map, line, angle, twoway)$/
+dig_get_next_cont_line	../diglib/cont_lines.c	/^dig_get_next_cont_line (map, prev_line, angle, two/
+dig_head_to_map	../diglib/map_to_head.c	/^dig_head_to_map (head, map)$/
+dig_in_area_bbox	../diglib/chk_inside.c	/^dig_in_area_bbox (Area, x, y)$/
+dig_in_line_bbox	../diglib/point_t_line.c	/^dig_in_line_bbox(line, x, y)$/
+dig_init_box	../diglib/dig_box.c	/^dig_init_box (n, s, e, w)$/
+dig_is_line_degenerate	../diglib/calc_angl.c	/^dig_is_line_degenerate (points, thresh)$/
+dig_isle_alloc_line	../diglib/struct_alloc.c	/^dig_isle_alloc_line (isle, num)$/
+dig_load_plus	../diglib/load_plus.c	/^dig_load_plus (map, digit, do_checks)$/
+dig_map_to_head	../diglib/map_to_head.c	/^dig_map_to_head (map, phead)$/
+dig_mread	../diglib/memory_io.c	/^dig_mread (buf, size, n_elem, mp)$/
+dig_mseek	../diglib/memory_io.c	/^dig_mseek (mp, offset, code)$/
+dig_mwrite	../diglib/memory_io.c	/^dig_mwrite (buf, size, n_elem, mp)$/
+dig_new_area	../diglib/area.c	/^dig_new_area (map, Area, att)$/
+dig_new_att	../diglib/attribute.c	/^dig_new_att (map, x, y, type, index, cat)	\/* creat/
+dig_new_isle	../diglib/isle.c	/^dig_new_isle (map, Area, area)$/
+dig_new_to_old_type	../diglib/old2new.c	/^dig_new_to_old_type (type)$/
+dig_node_add_line	../diglib/node_op.c	/^dig_node_add_line (map, node, line, points, type)$/
+dig_node_alloc_line	../diglib/struct_alloc.c	/^dig_node_alloc_line (node, add)$/
+dig_node_del_line	../diglib/node_op.c	/^dig_node_del_line (node, line)$/
+dig_old_to_new_type	../diglib/old2new.c	/^dig_old_to_new_type (type)$/
+dig_out_of_memory	../diglib/struct_alloc.c	/^dig_out_of_memory ()$/
+dig_point_by_line	../diglib/point_t_line.c	/^dig_point_by_line (map, ux1, uy1, ux2, uy2, type)$/
+dig_point_in_area	../diglib/chk_inside.c	/^dig_point_in_area(map, X, Y, Area)$/
+dig_point_in_poly	../diglib/chk_inside.c	/^dig_point_in_poly (X, Y, Points)$/
+dig_point_to_area	../diglib/point_t_area.c	/^dig_point_to_area (map, ux, uy)$/
+dig_point_to_line	../diglib/point_t_line.c	/^dig_point_to_line (map, ux, uy, type)$/
+dig_point_to_next_area	../diglib/point_t_area.c	/^dig_point_to_next_area (map, ux, uy, min_dist)$/
+dig_prune	../diglib/prune.c	/^dig_prune (points, thresh)$/
+dig_read_head_ascii	../diglib/rw_ascii.c	/^dig_read_head_ascii(dascii, head)$/
+dig_read_line_in_box	../diglib/dig_box.c	/^dig_read_line_in_box (fp, n_points, x, y)$/
+dig_read_line_struct_in_box	../diglib/dig_box.c	/^dig_read_line_struct_in_box (fp, line_p)$/
+dig_rmcr	../diglib/struct_copy.c	/^dig_rmcr (str)$/
+dig_set_distance_to_line_tolerance	../diglib/line_dist.c	/^dig_set_distance_to_line_tolerance (t)$/
+dig_snap_line_to_node	../diglib/node_op.c	/^dig_snap_line_to_node (map, line, node, points)$/
+dig_start_clock	../diglib/clock.c	/^dig_start_clock (save)$/
+dig_stop_clock	../diglib/clock.c	/^dig_stop_clock (save)$/
+dig_struct_copy	../diglib/struct_copy.c	/^dig_struct_copy (from, to, cnt)$/
+dig_test_for_intersection	../diglib/linecros.c	/^dig_test_for_intersection (ax1,ay1,ax2,ay2,bx1,by1/
+dig_unit_conversion	../diglib/unit_conv.c	/^dig_unit_conversion ()$/
+dig_update_att	../diglib/attribute.c	/^dig_update_att (map, att)$/
+dig_which_node	../diglib/check_node.c	/^dig_which_node (map, x, y, thresh)$/
+dig_write_areas	../diglib/write_file.c	/^dig_write_areas( plus, Map, Plus)$/
+dig_write_atts	../diglib/write_file.c	/^dig_write_atts( plus, Map, Plus)$/
+dig_write_file_checks	../diglib/file_checks.c	/^dig_write_file_checks (fp_plus, map, Plus)$/
+dig_write_head_ascii	../diglib/rw_ascii.c	/^dig_write_head_ascii(dascii, head)$/
+dig_write_isles	../diglib/write_file.c	/^dig_write_isles( plus, Map, Plus)$/
+dig_write_lines	../diglib/write_file.c	/^dig_write_lines( plus, Map, Plus)$/
+dig_write_nodes	../diglib/write_file.c	/^dig_write_nodes( plus, Map, Plus)$/
+dig_write_plus_file	../diglib/write_file.c	/^dig_write_plus_file( fp_plus, Map, Plus)$/
+dig_x_Rd_P_area	../diglib/x_struct_io.c	/^dig_x_Rd_P_area (map, ptr, fp)$/
+dig_x_Rd_P_att	../diglib/x_struct_io.c	/^dig_x_Rd_P_att (map, ptr, fp)$/
+dig_x_Rd_P_isle	../diglib/x_struct_io.c	/^dig_x_Rd_P_isle (map, ptr, fp)$/
+dig_x_Rd_P_line	../diglib/x_struct_io.c	/^dig_x_Rd_P_line (map, ptr, fp)$/
+dig_x_Rd_P_node	../diglib/x_struct_io.c	/^dig_x_Rd_P_node (map, ptr, fp)$/
+dig_x_Rd_Plus_head	../diglib/x_struct_io.c	/^dig_x_Rd_Plus_head (map, ptr, fp)$/
+dig_x_Wr_P_area	../diglib/x_struct_io.c	/^dig_x_Wr_P_area (map, ptr, fp)$/
+dig_x_Wr_P_att	../diglib/x_struct_io.c	/^dig_x_Wr_P_att (map, ptr, fp)$/
+dig_x_Wr_P_isle	../diglib/x_struct_io.c	/^dig_x_Wr_P_isle (map, ptr, fp)$/
+dig_x_Wr_P_line	../diglib/x_struct_io.c	/^dig_x_Wr_P_line (map, ptr, fp)$/
+dig_x_Wr_P_node	../diglib/x_struct_io.c	/^dig_x_Wr_P_node (map, ptr, fp)$/
+dig_x_Wr_Plus_head	../diglib/x_struct_io.c	/^dig_x_Wr_Plus_head (map, ptr, fp)$/
+dig_x_intersect	../diglib/chk_inside.c	/^dig_x_intersect (beg_x, end_x, beg_y, end_y, Y) $/
+dig_xy_distance2_point_to_line	../diglib/line_dist.c	/^dig_xy_distance2_point_to_line (px,py,x1,y1,x2,y2)/
+dig_xy_distance3_point_to_line	../diglib/line_dist.c	/^dig_xy_distance3_point_to_line (px,py,x1,y1,x2,y2,/
+dist_squared	../diglib/check_node.c	/^dist_squared (x1, y1, x2, y2)$/
+dummy	../Vlib/open.c	/^static dummy () {}$/
+dumpflags	../Vlib/portable_io.c	/^dumpflags (fhead)$/
+dxf_add_arc	add_arc.c	/^dxf_add_arc(dxf_file)$/
+dxf_add_boundaries	add_bounds.c	/^dxf_add_boundaries ()$/
+dxf_add_circle	add_circle.c	/^dxf_add_circle (dxf_file)$/
+dxf_add_extents	add_extents.c	/^dxf_add_extents ()$/
+dxf_add_labelbox	label_box.c	/^dxf_add_labelbox (dxf_file)$/
+dxf_add_line	add_line.c	/^dxf_add_line (dxf_file)$/
+dxf_add_point	add_point.c	/^dxf_add_point (dxf_file)$/
+dxf_add_polyline	add_polyline.c	/^dxf_add_polyline (dxf_file)$/
+dxf_check_ext	check_ext.c	/^dxf_check_ext (x, y)$/
+dxf_close_layer	close_layer.c	/^dxf_close_layer (o_count)$/
+dxf_entities	entities.c	/^dxf_entities (dxf_file)$/
+dxf_fgets	main.c	/^dxf_fgets (buf, size, fp)$/
+dxf_find_lines	find_lines.c	/^dxf_find_lines (dxf_file)$/
+dxf_header	header.c	/^dxf_header(dxf_file) $/
+dxf_init_chars	init_chars.c	/^dxf_init_chars ()$/
+dxf_make_header	make_header.c	/^dxf_make_header (vect_file)$/
+dxf_open_layer	open_layer.c	/^dxf_open_layer (type,count)$/
+dxf_readcode	label_box.c	/^dxf_readcode (dxf_file)$/
+dxf_reopen_layer	reopen_layer.c	/^dxf_reopen_layer (type, cl_count, o_count)$/
+dxf_which_layer	which_layer.c	/^dxf_which_layer (layer_name, type)$/
+extra_help	main.c	/^extra_help()$/
+find_highest_status	which_layer.c	/^find_highest_status()$/
+find_offset	../diglib/portable.c	/^find_offset (basis, search_value, size)$/
+load_args	main.c	/^load_args (position, str)$/
+make_arc	add_circle.c	/^make_arc(centerx,centery,radius,start_angle,finish/
+n_index	../diglib/format.c	/^n_index (str, chr)$/
+normalize_angle	../diglib/cont_lines.c	/^normalize_angle (angle)$/
+remap	main.c	/^remap (str, type)$/
+set_status	which_layer.c	/^set_status(count)$/
+tell_delta_size	../diglib/file_checks.c	/^tell_delta_size (file)$/
+tell_delta_time	../diglib/file_checks.c	/^tell_delta_time (file)$/
+write_polylines	add_polyline.c	/^write_polylines(layer_fd,arr_size)$/

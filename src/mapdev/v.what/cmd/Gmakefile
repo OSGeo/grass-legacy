@@ -1,0 +1,17 @@
+PGM = $(BIN_MAIN_CMD)/v.what
+OFILES = \
+	main.o \
+	openvect.o\
+	what.o
+
+EXTRA_CFLAGS = $(VECT_INCLUDE)
+
+
+$(PGM): $(OFILES) $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(VECTLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
+
+
+$(RASTERLIB): #
+$(DISPLAYLIB): #
+$(GISLIB): #
+$(VECTLIB): #

@@ -1,0 +1,17 @@
+PGM      = m.sdts.read
+HOME     = $(BIN_CONTRIB_CMD)
+FIPSLIB = $(LIBDIR)/libf123.a
+EXTRA_CFLAGS = -I../../libes/fips123/f123inc
+OFILE     = m.sdts.read.o
+
+LIBES = 	$(FIPSLIB) $(GISLIB)
+
+$(HOME)/$(PGM): $(OFILE) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILE) $(LIBES) $(MATHLIB) $(XDRLIB)
+
+$(LIBES):	#
+
+
+saber_src:
+	#load $(CFLAGS) m.sdts.read.c $(FIPSLIB) $(GISLIB)
+

@@ -4,9 +4,7 @@ HOME=$(BIN_CONTRIB_CMD)
 LIST = main.o isnumber.o sph.o row_col.o utm_value.o value.o
 
 $(HOME)/$(PGM): $(LIST) $(COORCNVLIB) $(GISLIB) $(ROWIOLIB)
-	rm -f a.out
-	$(CC) $(LDFLAGS) $(LIST) $(COORCNVLIB) $(GISLIB) $(MATHLIB) $(ROWIOLIB) $(XDRLIB)
-	mv a.out $@
+	$(CC) -o $@ $(LDFLAGS) $(LIST) $(COORCNVLIB) $(GISLIB) $(MATHLIB) $(ROWIOLIB) $(XDRLIB)
 
 $(ROWIOLIB): # in case LIB changes
 $(COORCNVLIB): # in case LIB changes

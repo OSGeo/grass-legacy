@@ -1,6 +1,9 @@
 frame .main_menu
 pack .main_menu -expand yes -fill both
 
+# $Id$
+#
+
 # menus used several times in the main menu
 
 set monitors_menu {
@@ -568,6 +571,9 @@ menu_build 1 .main_menu {
             "Trim small spurs" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.trim"
             }
+            "Build polylines" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.build.polylines"
+            }            
             -separator
             "Change projection on ASCII vector" "" {
                 "source $env(TCLTKGRASSBASE)/module/v.proj"
@@ -642,6 +648,9 @@ menu_build 1 .main_menu {
             "TIFF 8bit" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.in.tiff"
             }
+            "PNG (24bit)" "" {
+                "source $env(TCLTKGRASSBASE)/module/r.in.png"
+            }
             "PPM (24bit)" "" {
                 "source $env(TCLTKGRASSBASE)/module/r.in.ppm"
             }
@@ -671,11 +680,8 @@ menu_build 1 .main_menu {
             }
         }
         "Site data" "" {
-            "ASCII file" "" {
+            "ASCII file/spot heights" "" {
                 "source $env(TCLTKGRASSBASE)/module/s.in.ascii"
-            }
-            "ASCII SPOT heights file" "" {
-                "source $env(TCLTKGRASSBASE)/module/s.in.ascii.dem"
             }
         }
     }
@@ -739,6 +745,47 @@ menu_build 1 .main_menu {
         }
         "Xfig (external)" "" {
             "run xfig&"
+        }
+    }
+    Databases "Databases" {
+        "General" "" {
+            "Select DB" "" {
+                "source $env(TCLTKGRASSBASE)/module/g.select.pg"
+            }
+	    "List tables" "" {
+                "source $env(TCLTKGRASSBASE)/module/g.table.pg"
+            }
+	    "List columns" "" {
+                "source $env(TCLTKGRASSBASE)/module/g.column.pg"
+            }
+	    "Column stats" "" {
+                "source $env(TCLTKGRASSBASE)/module/g.stats.pg"
+            }
+        }
+	"Query" "" {
+            "Vector" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.what.v.pg"
+            }
+	    "Sites" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.what.s.pg"
+            }
+	    "Raster" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.what.r.pg"
+            }
+        }
+	"Display" "" {
+            "Vector" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.vect.pg"
+            }
+	    "Sites" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.site.pg"
+            }
+	    "Raster" "" {
+                "source $env(TCLTKGRASSBASE)/module/d.rast.pg"
+            }
+	    "Reclass vector" "" {
+                "source $env(TCLTKGRASSBASE)/module/v.reclass.pg"
+            }
         }
     }
     Help Help {
