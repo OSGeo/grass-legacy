@@ -1,0 +1,216 @@
+.TH imagery 3
+.SH "IMAGE PROCESSING IN GRASS"
+The following discussion is intended to provide a quick overview of
+image processing in GRASS. Some concepts and some hints are provided.
+For a more complete discussion and description of image processing in GRASS
+see
+.I
+"GRASS Tutorial: Image Processing"
+.R
+.SH "EXTRACTING IMAGERY DATA INTO A GRASS DATABASE"
+Remotely sensed images are captured for computer processing
+by filtering radiation emanating from the image into
+various electromagnetic wavelength bands, converting the
+overall intensity for each band to digital
+format, and storing the values on computer compatible
+media such as magnetic tape.
+
+The GRASS programs which extract image data from magnetic tape
+can read
+Landsat multi-spectral scanner data
+(\fIi.tape.mss\fP),
+Landsat thematic mapper data,
+(\fIi.tape.tm\fP),
+and
+other formats, such as scanned aerial photography
+or SPOT satellite data
+(\fIi.tape.other\fP).
+They extract the band data into cell files in a GRASS database.
+Each band becomes a separate cell file, with standard GRASS data
+layer support, and can be displayed
+and analyzed just like any other cell file.
+.SH "UNREGISTERED DATA"
+The band data extracted from tapes is assumed to be
+unregistered data. This means that the GRASS software does
+not know the Earth coordinates for pixels in the image.
+The only coordinates known at the time of extraction are the
+columns and the rows relative to the way the data was stored on the
+tape.
+
+Data can only be extracted into a database which has an x,y
+coordinate system, and not into a projected database (e.g., a UTM database).
+This is to prevent users from mixing the unregistered
+data with registered data in the same database.
+The GRASS system comes with the database
+.I imagery
+which is an x,y database.
+New databases can be created by users during GRASS startup.
+See the manual entry
+.I GRASS
+for instructions on creating a new database.
+.SH "CELL HEADERS"
+The cell headers for the band files in these x,y databases are set
+to reflect the rows and columns of the extracted data.
+The north-south values represent the rows and the east-west
+values represent the columns. The resolution of the unregistered
+data is set to 1.
+
+Note, however, that
+while the row numbers increase from 1 to n from north to
+south, GRASS requires that the window values decrease from
+north to south. The solution adopted was to represent the rows
+with negative values (i.e., -1 to -n). This allows them to
+decrease from north to south and, if the minus sign is
+ignored, to reflect the row numbers.
+
+The cell headers for the layers in x,y databases are set
+so that the coordinates at the center of each pixel
+exactly reflect the row and column for that pixel.
+The northern edge is set to 0.5 less than the first
+row, the southern edge 0.5 larger than the last row, the west to 0.5
+less than the first column, and the east to 0.5 larger than the last
+column.
+When
+the image is displayed on the graphics monitor, the
+.I Dwhere
+command will report rows and columns.
+
+.ne 11
+For example, suppose rows 100-500 and columns 200-800 are extracted.
+Then the cell headers for the extracted data will be given the following
+values:
+
+.RS
+.RS
+.TS
+ln.
+north:	-99.5
+south:	-500.5
+west:	199.5
+east:	800.5
+ns res:	1.0
+ew res:	1.0
+.TE
+.RE
+.RE
+.SH WINDOW AND MASK
+Since the data layers are given essentially contrived cell headers,
+users must exercise extra care when analyzing or displaying unregistered
+images. It is very easy for the user's GRASS window to have absolutely
+no relationship to the data he is trying to display. This could happen when
+the window is set for data extracted from one tape, but the analysis
+is attempted on data extracted from another tape. A good habit to
+develop is to set the window to exactly match one of the band files.
+This can be done using either the GRASS
+.I window
+or
+.I Gwindow
+commands.
+
+Another pitfall is to have a mask set to a band file from one
+data set while trying to read another. Even if the window is set
+properly, the data will appear to be all no-data since the
+mask will effectively knock out any data. Be sure that the mask
+is either set to a related data layer or not set at all. See
+.I mask
+for information on setting and unsetting the mask.
+
+Please note that the tape extraction routines set your database
+window to match the rows and columns of the data that is extracted.
+.SH GROUPS
+Since the band files are individual cell files, it is necessary to
+have a mechanism to maintain a relationship between band files
+from the same image as well as cell files derived from the band files.
+The GRASS
+.I group
+data structure accomplishes this goal. The group is essentially a list
+of names of cell files that belong in the group.
+For user convenience, 
+groups are also created (and updated) by the tape extraction routines.
+The tape extraction programs ask the user to supply a group name as well as
+to specify the bands to be extracted. Suppose that the user extracts
+bands 1, 2, and 3 into a group called
+.I nhap.
+Then the band files will become the cell files 
+.I nhap.1,
+.I nhap.2,
+and
+.I nhap.3
+and the group
+.I nhap
+will list these 3 cell files as members of the group.
+
+Groups can also
+be created and modified by the user using the GRASS command
+.I i.group.
+.SH "IMAGE REGISTRATION AND RECTIFICATION"
+Image registration and image rectification is the process of
+associating Earth coordinates with pixels on the image and then
+converting the unregistered cell files to cell files in a projected
+database.
+
+Image registration
+(\fIi.points\fP)
+is applied to a group, rather than to individual cell files.
+The control points are stored in the group, 
+allowing all related band files to be registered in one step
+rather than individually.
+
+Image rectification
+(\fIi.rectify\fP)
+is applied to individual cell files, with the
+control points for the group used to control the rectification
+and the group target
+(\fIi.target\fP)
+used to specify the database where the rectified layer will live.
+.SH IMAGE CLASSIFICATION
+Image classification methods process all or a subset of the band files
+as a unit. 
+Spectral signatures for the image are generated
+(\fIi.cluster\fP)
+and then used to produce a landcover map
+(\fIi.maxlik\fP).
+
+The signatures must be associated only with the cell files
+actually used in the analysis. This means that with a group
+.I subgroups
+must be created
+(\fIi.group\fP)
+which list the band files to be grouped for classification
+purposes. The signatures are stored with the subgroup.
+
+Note that multiple subroups can be created within a group. This allows
+different classifications to be run with different combinations
+of band files.
+
+Also note that cell files produced by the classification process
+(\fIi.maxlik\fP)
+are automatically listed as part of the group.
+.SH RECTIFIED VS. UNRECTIFIED ANALYSIS
+There are two possible routes for processing image data.
+The first is to register the group (\fIi.points\fP),
+perform the analyses on the unrectified band data (\fIi.maxlik\fP),
+and then rectify the results (\fIi.rectify\fP).
+The second is to register the group (\fIi.points\fP),
+rectify the band data (\fIi.rectify\fP),
+then run analyses on the rectified band data
+in the target location (\fIi.rectify\fP).
+Both routes are permissible in GRASS.
+Users will most likely prefer the first.
+The second route requires leaving GRASS and re-running
+the GRASS under the target location. It also will require
+that a group be created to hold the rectified band files since
+.I i.rectify
+does not create or modify groups.
+Also
+spatial filtering may not be as effective on rectified data
+since the rectifiction of the data requires resampling the original
+data.
+.SH "SEE ALSO"
+\fIi.cluster[1], i.group[1], i.maxlik[1], i.points[1], i.rectify[1],
+\fIi.tape.other[1], i.tape.mss[1], i.tape.tm[1], i.target[1], mask[1],
+\fIwindow[1], Dwhere[2D], GRASS[1], Gwindow[2G]
+.br
+\fIGRASS Tutorial: Image Processing\fR
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
