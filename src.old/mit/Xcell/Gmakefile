@@ -1,0 +1,9 @@
+PGM = Xcell
+OFILES =  main.o Xcell.o command.o get_cur_win.o 
+
+LIBES = $(DISPLAYLIB) $(GISLIB) $(XDISPLAYLIB)
+
+$(BIN)/$(PGM): $(OFILES) $(LIBES)
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) -lX11
+
+$(LIBES):	#
