@@ -81,43 +81,61 @@ Vect_find_node ( struct Map_info *Map,
 int 
 Vect_find_line ( struct Map_info *map,
 		 double ux, double uy, double uz,
-		 int type, double maxdist, int with_z )
+		 int type, double maxdist, int with_z,
+                 int exclude ) /* If > 0 number of line which should be excluded from selection. */
+		             /* May be useful if we need line neares to other one. Should be list? */
 {
   int choice;
   double new_dist;
   double cur_dist;
   int gotone;
-  int i;
+  int i, line;
   static struct line_pnts *Points;
   static int first_time = 1;
   struct Plus_head *Plus;
   P_LINE *Line;
+  struct ilist *List;
+  BOUND_BOX box;
   
-  G_debug ( 3, "Vect_find_line() for %f %f %f type = %d maxdist = %f", ux, uy, uz, type, maxdist);
+  G_debug ( 3, "Vect_find_line() for %f %f %f type = %d maxdist = %f exclude = %d", 
+	                             ux, uy, uz, type, maxdist, exclude);
     
   if (first_time) {
       Points = Vect_new_line_struct ();
       first_time = 0;
   }
   
+  List = Vect_new_list ();
+  
   Plus = &(map->plus);
   gotone = 0;
   choice = 0;
   cur_dist = HUGE_VAL;
 
-  for (i = 1; i <= Plus->n_lines; i++) {
-      Line = Plus->Line[i]; 	
-      if ( Line == NULL ) continue;
-      
-      /* limit searches to specific line types */
-      if ( !(type & Line->type) ) continue;
-
-      /* TODO use bbox */
+  box.N = uy + maxdist; box.S = uy - maxdist;
+  box.E = ux + maxdist; box.W = ux - maxdist;
+  if ( with_z ) {
+      box.T = uz + maxdist; box.B = uz - maxdist;
+  } else {
+      box.T = PORT_DOUBLE_MAX; box.B = -PORT_DOUBLE_MAX;
+  }
   
-      Vect_read_line (map, Points, NULL, i);
+  Vect_select_lines_by_box ( map, &box, type, List );
+  for (i = 0; i < List->n_values; i++) {
+      line = List->value[i];
+      if ( line == exclude ) continue;
+
+      /* No more needed */
+      /*
+      Line = Plus->Line[line]; 	
+      if ( Line == NULL ) continue;
+      if ( !(type & Line->type) ) continue; 
+      */
+
+      Vect_read_line (map, Points, NULL, line);
       
       Vect_line_distance ( Points, ux, uy, uz, with_z, NULL, NULL, NULL, &new_dist, NULL, NULL);
-      G_debug( 3, " line = %d distance = %f", i,  new_dist);
+      G_debug( 3, " line = %d distance = %f", line,  new_dist);
       if ((++gotone == 1) || (new_dist <= cur_dist)) {
 	  if (new_dist == cur_dist)
 	    {
@@ -126,7 +144,7 @@ Vect_find_line ( struct Map_info *map,
 	      continue;
 	    }
 	  
-	  choice = i;
+	  choice = line;
 	  cur_dist = new_dist;
        }
   }
@@ -135,6 +153,7 @@ Vect_find_line ( struct Map_info *map,
   if (cur_dist > maxdist)
       choice = 0;
 
+  Vect_destroy_list ( List );
   return (choice);
 }
 

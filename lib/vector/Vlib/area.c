@@ -126,7 +126,7 @@ Vect_get_isle_points (
       Vect_append_points ( BPoints, Points, dir);  
       if ( i != (Isle->n_lines - 1) ) /* all but not last */
 	 BPoints->n_points--; 
-      G_debug ( 3, "  area n_points = %d", BPoints->n_points );	
+      G_debug ( 3, "  isle n_points = %d", BPoints->n_points );	
     }
 
   return (BPoints->n_points);
@@ -145,6 +145,9 @@ Vect_get_area_centroid (
 
   Plus = &(Map->plus);
   Area = Plus->Area[area];
+
+  if ( Area == NULL ) G_fatal_error ( "Attempt to read topo for dead area (%d)", area);
+  
   return ( Area->centroid );
 }
 
@@ -161,6 +164,11 @@ Vect_get_area_num_isles (
 
   Plus = &(Map->plus);
   Area = Plus->Area[area];
+  
+  if ( Area == NULL ) G_fatal_error ( "Attempt to read topo for dead area (%d)", area);
+  
+  G_debug ( 3, "  n_isles = %d", Area->n_isles );	
+  
   return ( Area->n_isles );
 
 }
@@ -175,10 +183,15 @@ Vect_get_area_isle (
   struct Plus_head *Plus;
   P_AREA *Area;
   
-  G_debug ( 3, "Vect_get_area_isle(): area = %d", area );	
+  G_debug ( 3, "Vect_get_area_isle(): area = %d isle = %d", area, isle );	
 
   Plus = &(Map->plus);
   Area = Plus->Area[area];
+  
+  if ( Area == NULL ) G_fatal_error ( "Attempt to read topo for dead area (%d)", area);
+
+  G_debug ( 3, "  -> isle = %d", Area->isles[isle] );	
+  
   return ( Area->isles[isle] );
 }
 

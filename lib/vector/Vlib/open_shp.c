@@ -43,9 +43,7 @@ V1_open_old_shp ( struct Map_info *Map, int update )
     int       i, j;
     char      col_name[15];
 
-#ifdef GDEBUG
     G_debug ( 1, "V1_open_old_shp(): shp file = %s", Map->fInfo.shp.file );
-#endif
 
     if ( update ) {
         G_warning ( "Shapefile format cannot be updated.");
@@ -107,9 +105,7 @@ V1_open_old_shp ( struct Map_info *Map, int update )
     Map->fInfo.shp.type = ShapeType;
     Map->fInfo.shp.nShapes = nShapes;
 
-#ifdef GDEBUG
-          G_debug ( 1, "V1_open_old_shp(): shptype = %d, nShapes = %d", ShapeType, nShapes );
-#endif
+    G_debug ( 0, "V1_open_old_shp(): shptype = %d, nShapes = %d", ShapeType, nShapes );
     
     Map->head.with_z = WITHOUT_Z;
 

@@ -404,6 +404,8 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
   
   plus = &(Map->plus);
   Line = Map->plus.Line[line]; 
+
+  if ( Line == NULL ) G_fatal_error ("Attempt to delete dead line");
   type = Line->type;
   
   ret = V1_delete_line_nat (Map, Line->offset); 

@@ -93,7 +93,9 @@ Vect_build_line_area ( struct Map_info *Map, int iline, int side ) {
 	return -isle;
     } else { 
 	/* TODO: What to do with such areas? Should be areas/isles of size 0 stored,
-	*        so that may be found and cleaned by some utility */
+	*        so that may be found and cleaned by some utility
+	*  Note: it would be useful for vertical closed polygons, but such would be added twice
+	*        as area */
 	G_warning ("Area of size = 0.0 ignored"); 
     }
     return 0;
