@@ -46,13 +46,13 @@ LFUNC(SetImagePixels1, int, (XImage * image, unsigned int width,
 
 #ifdef NEED_STRCASECMP
 
-LFUNC(strcasecmp, int, (char *s1, char *s2));
+FUNC(strcasecmp, int, (char *s1, char *s2));
 
 /*
  * in case strcasecmp is not provided by the system here is one
  * which does the trick
  */
-static int
+int
 strcasecmp(s1, s2)
     register char *s1, *s2;
 {
