@@ -278,8 +278,8 @@ int area_perim (double y, double x, struct Map_info *map,
  cat_no = map->Att[a_index].cat;
  if (cats->num > 0)
  {
-    label_name = G_get_cat(cat_no, cats);
-    fprintf(stderr,"\ncat#= %d, label= <%s>\n",cat_no, label_name);
+    label_name = G_get_cat( cat_no, cats);
+    fprintf(stderr,"\ncat#= %d, label= <%s>\n", cat_no, label_name);
  }
                         
  fprintf(stderr,"       \t%.3f acres  \t\t%.4f sq miles\n",
