@@ -62,7 +62,7 @@ __BEGIN_DECLS
 
 
 typedef unsigned char gnByte_t;
-typedef unsigned int gnInt32_t;
+typedef long gnInt32_t;
 	
 
 __END_DECLS /* _GN_TYPE_H_ */
