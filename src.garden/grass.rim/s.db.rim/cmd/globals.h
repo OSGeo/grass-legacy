@@ -53,6 +53,7 @@ struct query_site {
    char Prompt[16], RIM_db_mapset[40]="";
    int Site_field, North_field, East_field;
    int Number_of_sites = 0;
+   int Projection;
 #else
    extern char File_name[10], *Tableinfof, RIM_db_path[100];
    extern char *Tempdumpf;
@@ -66,6 +67,7 @@ struct query_site {
    extern char Prompt[16], RIM_db_mapset[40];
    extern int Site_field, North_field, East_field;
    extern int Number_of_sites;
+   extern int Projection;
 #endif
 
 
