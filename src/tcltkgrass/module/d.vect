@@ -3,7 +3,7 @@ interface_build {
     {Displays GRASS vector data.}
     {entry map {Vector map, required:} 0 vector}
     {entry color {Vector display color [white]:} 0 color}
-    {entry catnum {Vector category number(s) to be displayed:} 0 catnum}
+    {entry catnum {Vector category number(s) to be displayed:} 0 ""}
     {checkbox -f {Fill areas of selected polygons.} "" -f}
     {checkbox -v {Run verbosely.} "" -v}
 }
