@@ -1,6 +1,5 @@
 PGM = m.in.e00
 HOME = $(BIN_CONTRIB_CMD)
-LDFLAGS = -g
 LIST = 	main.o \
 	e00read.o \
 	info.o \
