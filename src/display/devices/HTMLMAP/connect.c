@@ -5,6 +5,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+static jmp_buf save;
+static timeout()
+{
+	longjmp(save,-1);
+}
+
+
 get_connection(files,rfd, wfd)
 char *files;
 int *rfd, *wfd ;
@@ -39,7 +46,6 @@ prepare_connection()
 /* channel, 0 otherwise. */
 /* this is the AT&T version. */
 
-static jmp_buf save;
 
 check_connection(me, link)
 	char *me ;
@@ -114,7 +120,3 @@ error:
 
 }
 
-static timeout()
-{
-	longjmp(save,-1);
-}
