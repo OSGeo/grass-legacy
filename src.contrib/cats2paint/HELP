@@ -1,0 +1,3 @@
+Creates a paint labels file from cell category and color information
+which can be used as a "legend" on a paint map, in place of the default
+legend provided by paint.
