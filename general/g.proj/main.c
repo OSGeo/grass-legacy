@@ -135,11 +135,14 @@ int main(int argc, char *argv[])
         old_projinfo = G_get_projinfo();
 	old_projunits = G_get_projunits();
     }
-   
-#ifdef HAVE_OGR
 
+#ifdef HAVE_OGR
     importformats = ((ingeo->answer ? 1 : 0) + (inwkt->answer ? 1 : 0) +
 		     (inproj4->answer ? 1 : 0));
+
+    /* -e implies -w */
+    if(esristyle->answer && ! printwkt->answer)
+	printwkt->answer = 1;
 
     if (importformats == 0) {
 #endif       
