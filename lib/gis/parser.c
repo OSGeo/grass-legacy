@@ -376,6 +376,7 @@ int G_parser (int argc, char **argv)
 	char *ptr ;
 	int i;
 	struct Option *opt ;
+	char *fakestart;
 
 	error = 0 ;
 	need_first_opt = 1 ;
@@ -455,6 +456,13 @@ int G_parser (int argc, char **argv)
 		{
 			G_usage_html();
 			return -1;
+		}
+	
+		/* fake session for HTML generation with parser */
+		fakestart = getenv( "GRASS_FAKE_START" );
+		if ( fakestart != NULL )
+		{
+			exit(0);
 		}
 
 		/* Loop thru all command line arguments */

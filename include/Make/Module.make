@@ -21,7 +21,7 @@ ARCH_INTER_OBJS := $(foreach obj,$(INTER_OBJS),OBJ.$(ARCH)/$(obj))
 
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
-cmd: $(BIN_CMD)/$(PGM)
+cmd: $(BIN_CMD)/$(PGM) html
 
 $(BIN_CMD)/$(PGM): $(ARCH_CMD_OBJS) $(DEPENDENCIES) 
 	$(CC) $(LDFLAGS) $(XTRA_LDFLAGS) -o $@ $(ARCH_CMD_OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
