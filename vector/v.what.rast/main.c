@@ -325,12 +325,12 @@ int main(int argc,char *argv[])
     db_free_string (&stmt);
 
     /* Report */
-    fprintf ( stdout, "%d categories loaded from table\n", select );
-    fprintf ( stdout, "%d categories loaded from vector\n", point_cnt );
-    fprintf ( stdout, "%d categories from vector missing in table\n", norec_cnt );
-    fprintf ( stdout, "%d duplicate categories in vector\n", dupl_cnt );
-    fprintf ( stdout, "%d records updated\n", update_cnt );
-    fprintf ( stdout, "%d update errors\n", upderr_cnt );
+    G_message ( "%d categories loaded from table\n", select );
+    G_message ( "%d categories loaded from vector\n", point_cnt );
+    G_message ( "%d categories from vector missing in table\n", norec_cnt );
+    G_message ( "%d duplicate categories in vector\n", dupl_cnt );
+    G_message ( "%d records updated\n", update_cnt );
+    G_message ( "%d update errors\n", upderr_cnt );
 
     exit(0);
 }
