@@ -1,0 +1,37 @@
+
+MYINCLUDE = ../Gdbsites
+#EXTRA_CFLAGS = -g -DDEBUGIO
+EXTRA_CFLAGS =  -I$(MYINCLUDE) -DDBSITES
+#FFLAGS =  -g
+FFLAGS = 
+MYLIBS = $(SRC).contrib/rim/librim.a
+GPTH = ../Gdbsites/
+
+EXTRNOBJS = clear_value.o fill_value.o fill_field.o add_change.o find_query.o \
+	retr_buf.o fill_buf.o dbio.o val_from_str.o backup.o misc.o \
+	field_info.o rim_text_len.o ret_s_table.o fil_s_table.o ret_f_table.o \
+	fil_f_table.o list.o field_val.o make_init.o make_add.o make_done.o \
+	rim_type.o save_finfo.o res_split_f.o field_offset.o delete.o \
+	print.o my_G_yes.o val_to_str.o site_list.o read_sites.o strip_fields.o
+
+
+OBJFILES = dbsites.o layout.o main_menu.o mgmt_menu.o fnd_qry.o add_chng_del.o \
+	view_show.o site_pgms.o top_lvl.o mgmt_pgms.o parser.o do_open.o \
+	make_new.o
+
+all: $(BIN)/dbsites $(MAN1)/dbsites $(HELP)/dbsites
+
+$(BIN)/dbsites: $(EXTRNOBJS) $(OBJFILES)
+	f77 $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) $(EXTRNOBJS) \
+	     $(MYLIBS) $(GISLIB) $(VASK)
+
+$(EXTRNOBJS): $(GPTH)$(@:.o=.c) $(GPTH)globals.h $(GPTH)make.h $(GPTH)parse.h \
+		  $(GPTH)rim.h
+	$(CC) $(CFLAGS) -c $(GPTH)$(@:.o=.c) -o $@
+
+$(MAN1)/dbsites: Man.pages
+	$(MANROFF)
+
+$(HELP)/dbsites: Help
+	cp Help $@
+
