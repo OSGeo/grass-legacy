@@ -1,3 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>s.vol.rst</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+<body bgcolor="white">
+<h2>NAME</h2>
+<em><b>s.vol.rst</b></em>  - Interpolates point data to a G3D grid volume using regularized spline with tension (RST) algorithm
+<h2>SYNOPSIS</h2>
+<b>s.vol.rst</b><br>
+<b>s.vol.rst help</b><br>
+<b>s.vol.rst</b> <b>input</b>=<em>string</em>  [<b>cellinp</b>=<em>string</em>]   [<b>field</b>=<em>integer</em>]   [<b>tension</b>=<em>float</em>]   [<b>smooth</b>=<em>float</em>]   [<b>devi</b>=<em>string</em>]   [<b>maskmap</b>=<em>string</em>]   [<b>segmax</b>=<em>integer</em>]   [<b>dmin</b>=<em>float</em>]   [<b>npmin</b>=<em>integer</em>]   [<b>wmult</b>=<em>float</em>]   [<b>zmult</b>=<em>float</em>]   [<b>cellout</b>=<em>string</em>]   [<b>elev</b>=<em>string</em>]   [<b>gradient</b>=<em>string</em>]   [<b>aspect1</b>=<em>string</em>]   [<b>aspect2</b>=<em>string</em>]   [<b>ncurv</b>=<em>string</em>]   [<b>gcurv</b>=<em>string</em>]   [<b>mcurv</b>=<em>string</em>]  
+
+
+<h3>Parameters:</h3>
+<DL>
+<DT><b>input</b>=<em>string</em>
+<DD>Name of the vector points file with input x,y,z,w</DD>
+
+<DT><b>cellinp</b>=<em>string</em>
+<DD>Name of the surface cell file</DD>
+
+<DT><b>field</b>=<em>integer</em>
+<DD>Number of z-field attribute to use for calculation</DD>
+<DD>Default: <em>1</em></DD>
+
+<DT><b>tension</b>=<em>float</em>
+<DD>Tension</DD>
+<DD>Default: <em>40.</em></DD>
+
+<DT><b>smooth</b>=<em>float</em>
+<DD>Smoothing parameter</DD>
+<DD>Default: <em>0.1</em></DD>
+
+<DT><b>devi</b>=<em>string</em>
+<DD>Name of the output deviations site file</DD>
+
+<DT><b>maskmap</b>=<em>string</em>
+<DD>Name of the raster file used as mask</DD>
+
+<DT><b>segmax</b>=<em>integer</em>
+<DD>Max number of points in segment (<=700)</DD>
+<DD>Default: <em>50</em></DD>
+
+<DT><b>dmin</b>=<em>float</em>
+<DD>Min distance between points (extra points ignored)</DD>
+<DD>Default: <em>50.000000</em></DD>
+
+<DT><b>npmin</b>=<em>integer</em>
+<DD>Min number of points for interpolation</DD>
+<DD>Default: <em>200</em></DD>
+
+<DT><b>wmult</b>=<em>float</em>
+<DD>Conversion factor for w-values</DD>
+<DD>Default: <em>1.0</em></DD>
+
+<DT><b>zmult</b>=<em>float</em>
+<DD>Conversion factor for z-values</DD>
+<DD>Default: <em>1.0</em></DD>
+
+<DT><b>cellout</b>=<em>string</em>
+<DD>Name of the crossection cell file</DD>
+
+<DT><b>elev</b>=<em>string</em>
+<DD>Elevation g3d-file </DD>
+
+<DT><b>gradient</b>=<em>string</em>
+<DD>Gradient magnitude g3d-file</DD>
+
+<DT><b>aspect1</b>=<em>string</em>
+<DD>G. horizontal angle g3d-file</DD>
+
+<DT><b>aspect2</b>=<em>string</em>
+<DD>G. vertical angle g3d-file</DD>
+
+<DT><b>ncurv</b>=<em>string</em>
+<DD>Change of gradient g3d-file</DD>
+
+<DT><b>gcurv</b>=<em>string</em>
+<DD>Gaussian curvature g3d-file</DD>
+
+<DT><b>mcurv</b>=<em>string</em>
+<DD>Mean curvature g3d-file</DD>
+
+</DL>
+</body></html>
 <H2>DESCRIPTION</H2>
 
 <p><i>s.vol.rst</i> interpolates the values to 3-dimensional grid from point
