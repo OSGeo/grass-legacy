@@ -18,7 +18,8 @@ LIST = 	main.o\
 	svdfitn.o\
 	solve.o\
 	modify.o\
-	errfun.o
+	errfun.o \
+	tscore.c
 
 ./$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
