@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# $Id: r.plane,v 2 2004/04/12 
-#
 ############################################################################
 #
 # MODULE:	r.plane for GRASS 5.7; based on r.plane for GRASS 5
@@ -91,8 +89,9 @@ eval `g.region -g`
 # get directory for r.in.ascii
 CELLDIR=$LOCATION/cell
 
+diptest=`echo $dip | awk '{ printf("%8d", int($1 + 0.5))'}`
 
-if [ $dip -lt -90 -o $dip -gt 90 ]
+if [ $diptest -lt -90 -o $diptest -gt 90 ]
 then
 	echo Sorry, dip must be greater than -90 and less than 90.
 	echo Please enter a valid value.
