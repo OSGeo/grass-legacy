@@ -4,7 +4,7 @@
 
 main(argc, argv) char *argv[];
 {
-    char name[40], mapset[40];
+    char name[100], mapset[100];
     struct Cell_head cellhd;
     int error();
 
@@ -18,6 +18,7 @@ main(argc, argv) char *argv[];
     vect_list = G_tempfile();
     group_list = G_tempfile();
     digit_points = G_tempfile();
+    digit_results = G_tempfile();
 
     R_open_driver();
 
@@ -116,6 +117,7 @@ quit(n)
     unlink (group_list);
     unlink (vect_list);
     unlink (digit_points);
+    unlink (digit_results);
     exit(n);
 }
 
