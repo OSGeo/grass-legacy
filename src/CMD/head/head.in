@@ -9,6 +9,8 @@ exec_prefix         = @exec_prefix@
 
 GISBASE             = @GISBASE@
 UNIX_BIN            = @BINDIR@
+VERSION             = @VERSION@
+NAME_VER            = @NAME_VER@
 
 DEFAULT_DATABASE    =
 DEFAULT_LOCATION    =
