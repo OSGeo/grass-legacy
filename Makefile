@@ -44,6 +44,10 @@ copymix:
 mixclean:
 	 ${SHELL} -c "find . -lname '*' -exec rm {} \; 2>/dev/null ; true"
 
+# Copy binary modules
+binmix:
+	GRASS_PERL=${PERL} sh ./tools/cpbin -old=$(GRASS50)/dist.$(ARCH) -new=dist.$(ARCH) -conf=./tools/cpbin.conf
+
 clean: 
 	@list='$(SUBDIRS)'; \
 	for subdir in $$list; do \
