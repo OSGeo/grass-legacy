@@ -94,8 +94,7 @@ unsigned char **Y)
 
 static int X_copy( unsigned char *a,unsigned char *b, int n)
 {
-    char *ca = a;
     while (n-- > 0)
-        *ca++ = *b++;
+        *a++ = *b++;
     return 0;
 }
