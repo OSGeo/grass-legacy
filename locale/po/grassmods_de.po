@@ -597,7 +597,7 @@ msgstr "FEHLER: Keine Karte ist im GRASS-Monitor angezeigt\n"
 #: ../display/d.zoom/main.c:320
 #, c-format
 msgid "%d raster%s, %d vector%s\n"
-msgstr "%d Raster%sm %d Vektor%s\n"
+msgstr "%d Raster%s, %d Vektor%s\n"
 
 #: ../display/d.zoom/main.c:346
 #, c-format
