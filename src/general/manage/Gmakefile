@@ -1,0 +1,5 @@
+all:
+	$(GMAKE) lib
+	$(GMAKE) cmd
+	$(GMAKE) inter
+	$(GMAKE) lister
