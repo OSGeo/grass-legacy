@@ -14,6 +14,7 @@ SUBDIRS = \
 	image \
 	linkm \
 	ogsf \
+	proj \
 	raster \
 	vask \
 	vector \
