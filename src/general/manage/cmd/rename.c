@@ -1,4 +1,5 @@
 #define MAIN
+#include <string.h>
 #include "list.h"
 #include "local_proto.h"
 
@@ -10,6 +11,8 @@ main (int argc, char *argv[])
     struct Option **parm, *p;
     struct Flag *overwr;
     char *old, *new;
+    int nrmaps;
+    char *mapset, *location_path, **rmaps;
 
     init (argv[0]);
 
@@ -52,6 +55,10 @@ main (int argc, char *argv[])
 	    exit(1);
 	}
     }
+
+    location_path = G__location_path();
+    mapset = G_mapset();
+
     for (n = 0; n < nlist; n++)
     {
 	if (parm[n]->answers == NULL)
@@ -61,7 +68,7 @@ main (int argc, char *argv[])
 	{
 	    old = parm[n]->answers[i++];
 	    new = parm[n]->answers[i++];
-	    if(!find (n, old, G_mapset()))
+	    if(!find (n, old, mapset))
 	    {
 		fprintf (stderr, "<%s> not found\n", old);
 		continue;
@@ -82,6 +89,56 @@ main (int argc, char *argv[])
 		    parm[n]->key,old,new);
 		continue;
 	    }
+
+            if(G_is_reclassed_by(old, mapset, &nrmaps, &rmaps) > 0)
+            {
+		int ptr, l;
+    		char buf1[256], buf2[256], buf3[256], *str;
+		FILE *fp;
+
+		fprintf(stderr, "Renaming in reclass maps...\n");
+
+		for(; *rmaps; rmaps++)
+		{
+                    fprintf(stderr, " %s\n", *rmaps);
+		    sprintf(buf3, "%s", *rmaps);
+		    if((str = strchr(buf3, '@')))
+		    {
+			*str = 0;
+			sprintf(buf2, "%s", str+1);
+		    }
+		    else
+		    {
+			sprintf(buf2, "%s", mapset);
+		    }
+		    sprintf(buf1, "%s/%s/cellhd/%s", location_path, buf2, buf3);
+
+		    fp = fopen(buf1, "r");
+		    if(fp == NULL)
+			continue;
+
+		    fgets(buf2, 255, fp);
+		    fgets(buf2, 255, fp);
+		    fgets(buf2, 255, fp);
+
+		    ptr = ftell(fp);
+		    fseek(fp, 0L, SEEK_END);
+		    l = ftell(fp) - ptr;
+
+		    str = (char *) G_malloc(l);
+		    fseek(fp, ptr, SEEK_SET);
+		    fread(str, l, 1, fp);
+		    fclose(fp);
+
+		    fp = fopen(buf1, "w");
+		    fprintf(fp, "reclass\n");
+		    fprintf(fp, "name: %s\n", new);
+		    fprintf(fp, "mapset: %s\n", mapset);
+		    fwrite(str, l, 1, fp);
+		    free(str);
+		    fclose(fp);
+		}
+            }
 	    do_rename (n, old, new);
 	}
     }
