@@ -1,0 +1,20 @@
+#define  RED        0
+#define  ORANGE     1
+#define  YELLOW     2
+#define  GREEN      3
+#define  BLUE       4
+#define  VIOLET     5
+#define  WHITE      6
+#define  BLACK      7
+#define  GRAY       8
+#define  BROWN      9
+#define  MAGENTA    10
+#define  CYAN       11
+#define  GOLD       12
+#define  KHAKI      13
+#define  TURQUOISE  14
+#define  PINK       15
+
+#define UNTOUCHED   22
+#define NVECTCOLRS  16
+#define COLOR_OFFSET 38
