@@ -75,6 +75,7 @@ int main (int argc, char *argv[])
 	int segments_in_memory ;
 	long n_processed = 0;
 	long total_cells ;
+	struct GModule *module;
 	struct Flag *flag1, *flag2, *flag3;
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5, *opt6, *opt7, *opt8;
 	struct cost *pres_cell, *new_cell;
@@ -86,6 +87,13 @@ int main (int argc, char *argv[])
 	double peak = 0.0;
 	int dsize;
 
+	module = G_define_module();
+	module->description =
+		"Outputs a raster map layer showing the "
+		"cumulative cost of moving between different "
+		"geographic locations on an input raster map "
+		"layer whose cell category values represent cost.";
+							
 	opt2 = G_define_option() ;
 	opt2->key        = "input" ;
 	opt2->type       = TYPE_STRING ;

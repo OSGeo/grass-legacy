@@ -73,8 +73,13 @@ main (int argc, char *argv[])
 	void *cell;
 	POINT *PRES_PT=NULL, *NEW_START_PT, *PRESENT_PT=NULL;
 	double east, north;
+	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5;
 	struct Flag *flag1, *flag2;
+
+	module = G_define_module();
+	module->description =
+		"Traces a flow through an elevation model on a raster map layer.";
 
 	opt2 = G_define_option() ;
 	opt2->key        = "input" ;

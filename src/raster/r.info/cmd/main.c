@@ -31,8 +31,13 @@ main (int argc, char *argv[])
     RASTER_MAP_TYPE data_type;
     struct Reclass reclass;
     char *G_program_name();
+	struct GModule *module;
     struct Option *opt1;
 
+	module = G_define_module();
+	module->description =
+		"Outputs basic information about a " 
+		"user-specified raster map layer.";
 
     opt1 = G_define_option() ;
     opt1->key        = "map" ;
