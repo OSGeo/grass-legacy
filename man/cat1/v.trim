@@ -1,7 +1,7 @@
 
 
 
-v.trim               GRASS Reference Manual                v.trim
+v.trim <main>        GRASS Reference Manual         <main> v.trim
 
 
 
@@ -60,14 +60,14 @@ OPTIONS
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-v.trim               GRASS Reference Manual                v.trim
+v.trim <main>        GRASS Reference Manual         <main> v.trim
 
 
 
@@ -126,7 +126,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
