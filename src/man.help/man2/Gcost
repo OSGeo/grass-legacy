@@ -1,0 +1,93 @@
+.TH Gcost 2G G-language
+.SH NAME
+ Gcost \- Generate a cumulative cost map
+.SH SYNOPSIS
+.IP \fBGcost\fR
+\fInewmap oldmap E,N [E,N] ...\fR
+.IP \fBGcost\fR
+\fInewmap oldmap\fR
+.IP \fBGcost\fR
+output=\fInewmap\fR input=\fIoldmap\fR coor=\fIE,N\fR [coor=\fIE,N\fR] ...
+.SH DESCRIPTION
+.I Gcost
+evaluates an existing cost surface with respect to
+starting locations in grid coordinates.  Each cell of the cost
+surface will contain a value
+which represents the cost of traversing that grid cell.  The
+output result will contain the lowest total cost of traversing
+the space between any of the starting locations and
+each of the grid cells in the current window.
+(Diagonal costs are multiplied by a factor that depends on the dimensions
+of the grid cell.)
+Consider the following example:
+
+.NF
+Input:                            Output:
+   COST SURFACE                      CUMULATIVE COST SURFACE
+ . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+ . 2 . 2 . 1 . 1 . 5 . 5 . 5 .     . 22. 20. 18. 17. 19. 17. 16.
+ . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+ . 2 . 2 . 8 . 8 . 5 . 2 . 1 .     . 22. 21. 26. 22. 16. 12. 11.
+ . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+ . 7 . 1 . 1 . 8 . 2 . 2 . 2 .     . 26. 19. 18. 19. 11. 10. 11.
+ . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+ . 8 . 7 . 8 . 8 . 7 . 5 . 5 .     . 28. 20. 18. 17. 13. 8 . 10.
+ . . . . . . . . . . _____ . .     . . . . . . . . . . . . . . .
+ . 8 . 8 . 1 . 1 . 5 | 3 | 9 .     . 22. 18. 10. 9 . 8 . 0 . 12.
+ . . . . . . . . . . |___| . .     . . . . . . . . . . . . . . .
+ . 8 . 1 . 1 . 2 . 5 . 3 . 9 .     . 19. 11. 10. 11. 10. 6 . 16.
+ . . . . . . . . . . . . . . .     . . . . . . . . . . . . . . .
+.FI
+
+The user-provided starting location in the above example is
+the boxed 3 in the left-hand map.   The costs in the output
+represent the total cost of moving from each box to one or more
+(in this case there is only one) starting location(s).  This
+output map can be viewed as an elevation model where the
+starting location(s) is/are the lowest point(s).  The
+.I Gdrain
+program can now be used to trace the least-cost path in this
+model between any given grid cell and the
+.I Gcost
+starting
+location(s).  The two programs, when used together, generate
+least-cost paths or corridors between any two locations.
+.SH OPTIONS
+.I Gcost
+can be run with two different methods of identifying the
+starting point(s).  One or more points can be provided on
+the command line.  In lieu of command line coordinates, a map of
+starting point (e.g., start_pt_map)
+may already exist.
+Primarily filled with zeros, this map contains non-zero values
+at the starting grid cell(s).  To submit the \fIstart_pt_map\fR, set
+output=\fIstart_pt_map\fR.  Beware: doing this will overwrite
+\fIstart_pt_map \fR with the results of the calculations.
+If start_pt_map does exist and
+points are also given on the command line, the start_pt_map is
+ignored and the coordinates are used instead.  The input options are as follows:
+.IP "input=\fImapname\fR"
+Name of cell map containing grid cell cost information.
+.IP "output=\fImapname\fR"
+Name of cell map to contain results.  Also can be used as the map of
+the input starting points.  If so used, the input starting point map
+will be overwritten by the output.
+.IP "coor=\fIE,N\fR"
+These are the map E and N grid coordinates of a starting
+point.  This option can be repeated for as many points
+as desired.
+.SH BUGS
+If you submit the starting point map on the command line by typing:
+.br
+\fBoutput=start_pt_map\fR
+.br
+the starting point map will be overwritten by the calculated output.  It
+is wise to copy (use the GRASS \fIcopy\fR tool) the starting
+points map to another name before submission in 
+.I Gcost;
+otherwise
+it will disappear.
+.SH "SEE ALSO"
+\fIcopy[1], Gdrain[2G]\fR
+.SH AUTHOR
+Antony Awaida, Intelligent Engineering Systems Laboratory, M.I.T.
