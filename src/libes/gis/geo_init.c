@@ -1608,6 +1608,10 @@ char *str;
 		return WINK2;
 	if (G_strcasecmp(str, "WINTRI") == 0)
 		return WINTRI;
+        if (G_strcasecmp(str, "KROVAK") == 0)
+                return KROVAK;
+        if (G_strcasecmp(str, "KROVAKGIS") == 0) /* KROVAK with -y,-x for GIS data */
+                return KROVAKGIS;
 	return -1;	/* added by M. Shapiro: 22Jan93 */
 }
 
