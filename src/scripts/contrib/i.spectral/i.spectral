@@ -3,7 +3,7 @@
 #            neteler@geog.uni-hannover.de
 #
 # bugfix: 25. Nov.98/20. Jan. 1999
-# this script needs gnuplot (copy to grass42/bin/g.gnuplot)
+# this script needs gnuplot
 
 #--------------------------------------------------
 
@@ -70,6 +70,6 @@ echo "set ylabel 'DN Value'" >> spectrum.gnuplot
 #fi
 
 # display it...
-g.gnuplot -persist spectrum.gnuplot
+gnuplot -persist spectrum.gnuplot
 
 rm -f spectrum.data spectrum.data.dum spectrum.gnuplot
