@@ -1,123 +1,123 @@
 
 
 
-r.report <main>      GRASS Reference Manual       <main> r.report
+r.report <main>	     GRASS Reference Manual	  <main> r.report
 
 
 
 NAME
-     r.report - Reports statistics for raster map layers.
+     r.report -	Reports	statistics for raster map layers.
      (GRASS Raster Program)
 
 SYNOPSIS
      r.report
      r.report help
      r.report [-hmfqe] map=name[,name,...]
-     [units=name[,name,...]] [pl=value] [pw=value] [output=name]
+     [units=name[,name,...]] [pl=value]	[pw=value] [output=name]
 
 DESCRIPTION
-     r.report allows the user to set up a series of report
-     parameters to be applied to a raster map layer, and creates
-     a report.  If invoked with command line arguments, the
-     report will print out to the screen only.  However, output
+     r.report allows the user to set up	a series of report
+     parameters	to be applied to a raster map layer, and creates
+     a report.	If invoked with	command	line arguments,	the
+     report will print out to the screen only.	However, output
      may be redirected to a file or another program using the
      UNIX redirection mechanism.  If invoked without command line
-     arguments, the user is given the option of printing out each
+     arguments,	the user is given the option of	printing out each
      report and/or saving output to a file.
 
-     The program will be run non-interactively, if the user
+     The program will be run non-interactively,	if the user
      specifies the names of raster map layers and any desired
-     options on the command line, using the form
+     options on	the command line, using	the form
 
-          r.report [-hmfqe] map=name[,name,...]
-          [units=name[,name,...]] [pl=value] [pw=value]
+	  r.report [-hmfqe] map=name[,name,...]
+	  [units=name[,name,...]] [pl=value] [pw=value]
 
-     where each map name is the name of a raster map layer on
-     which to report, each unit name is a unit of measure in
+     where each	map name is the	name of	a raster map layer on
+     which to report, each unit	name is	a unit of measure in
      which results are to be reported, the pl value gives the
      page length, the pw value gives the page width, and the
-     (optional) flags -h, -e, -m, -f, and -q have the meanings
+     (optional)	flags -h, -e, -m, -f, and -q have the meanings
      stated below.
 
 
      Flags:
 
-     -h                  Suppress the print-out of page headers.
+     -h			 Suppress the print-out	of page	headers.
 
-     -m                  Report on zero values, because a mask is
-                         being used.
+     -m			 Report	on zero	values,	because	a mask is
+			 being used.
 
-     -f                  Use formfeeds between pages when
-                         printing report output.
+     -f			 Use formfeeds between pages when
+			 printing report output.
 
-     -q                  Run quietly, without printing program
-                         messages to standard output.
+     -q			 Run quietly, without printing program
+			 messages to standard output.
 
-     -e                  Use scientific format for the numbers
-                         that are too long to fit in the tab
-                         table field if their decimal form is
-                         used.
-
-
-
-GRASS 4.1                U.S. Army CERL                         1
+     -e			 Use scientific	format for the numbers
+			 that are too long to fit in the tab
+			 table field if	their decimal form is
+			 used.
 
 
+
+GRASS 4.2		Baylor University			1
 
 
 
 
-r.report <main>      GRASS Reference Manual       <main> r.report
+
+
+r.report <main>	     GRASS Reference Manual	  <main> r.report
 
 
 
-     -z                  Report only non-zero data values.  Zero
-                         data will not be reported.  However, for
-                         multiple map layers this means that if
-                         zero values occur in every map layer,
-                         they will not be reported; if non-zero
-                         category values occur in any map layer
-                         (along with zeros in others), the non-
-                         zero values along with the zero values
-                         will be reported.
+     -z			 Report	only non-zero data values.  Zero
+			 data will not be reported.  However, for
+			 multiple map layers this means	that if
+			 zero values occur in every map	layer,
+			 they will not be reported; if non-zero
+			 category values occur in any map layer
+			 (along	with zeros in others), the non-
+			 zero values along with	the zero values
+			 will be reported.
 
      Parameters:
 
-     map=name,name,...   Names of raster map(s) on which to
-                         report.
+     map=name,name,...	 Names of raster map(s)	on which to
+			 report.
 
-     units=name          Units of measure in which results are to
-                         be reported.  These units are based on
-                         the number of cells in the user's area
-                         of interest (i.e., cells within the
-                         current geographic region definition,
-                         and the current mask [if any]).  These
-                         are established with the programs
-                         g.region and r.mask, respectively.
-                         Options:  Possible units of measurement
-                         are:
-                         mi   (cover measured in square miles)
-                         me   (cover measured in square meters)
-                         k    (cover measured in square
-                         kilometers)
-                         a    (cover measured in acres)
-                         h    (cover measured in hectares)
-                         c    (the number of cells in the area of
-                         interest)
-                         p    (the percent cover, excluding no
-                         data areas)
+     units=name		 Units of measure in which results are to
+			 be reported.  These units are based on
+			 the number of cells in	the user's area
+			 of interest (i.e., cells within the
+			 current geographic region definition,
+			 and the current mask [if any]).  These
+			 are established with the programs
+			 g.region and r.mask, respectively.
+			 Options:  Possible units of measurement
+			 are:
+			 mi   (cover measured in square	miles)
+			 me   (cover measured in square	meters)
+			 k    (cover measured in square
+			 kilometers)
+			 a    (cover measured in acres)
+			 h    (cover measured in hectares)
+			 c    (the number of cells in the area of
+			 interest)
+			 p    (the percent cover, excluding no
+			 data areas)
 
-     pl=value            Page length, in lines, in which report
-                         will be output.
-                         Default:  0   (lines)
+     pl=value		 Page length, in lines,	in which report
+			 will be output.
+			 Default:  0   (lines)
 
-     pw=value            Page width, in characters, in which
-                         report will be output.
-                         Default:  79   (characters)
+     pw=value		 Page width, in	characters, in which
+			 report	will be	output.
+			 Default:  79	(characters)
 
-     output=name         The name of a file to store the report
-                         in. If not specified, the report is
-                         printed on the terminal screen.
+     output=name	 The name of a file to store the report
+			 in. If	not specified, the report is
+			 printed on the	terminal screen.
 
 
      Alternately, the user can simply type r.report on the
@@ -126,44 +126,44 @@ r.report <main>      GRASS Reference Manual       <main> r.report
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
 
 
 
-r.report <main>      GRASS Reference Manual       <main> r.report
+r.report <main>	     GRASS Reference Manual	  <main> r.report
 
 
 
      parameter values.
 
-     The report itself consists of two parts, a header section
+     The report	itself consists	of two parts, a	header section
      and the main body of the report.
 
-     The header section of the report identifies the raster map
+     The header	section	of the report identifies the raster map
      layer(s) (by map layer name and title), location, mapset,
-     report date, and the region of interest.  The area of
+     report date, and the region of interest.  The area	of
      interest is described in two parts:  the user's current
-     geographic region is presented, and the mask is presented
-     (if any is used).
+     geographic	region is presented, and the mask is presented
+     (if any is	used).
 
      The main body of the report consists of from one to three
      tables which present the statistics for each category and
-     the totals for each unit column.
+     the totals	for each unit column.
 
-     Note that, unlike r.stats, r.report allows the user to
-     select the specific units of measure in which statistics
+     Note that,	unlike r.stats,	r.report allows	the user to
+     select the	specific units of measure in which statistics
      will be reported.
 
-     Following is the result of a r.report run on the raster map
-     layer geology (located in the Spearfish, SD sample data
-     base), with the units expressed in square miles and acres.
-     Here, r.report output is directed into the file report.file.
+     Following is the result of	a r.report run on the raster map
+     layer geology (located in the Spearfish, SD sample	data
+     base), with the units expressed in	square miles and acres.
+     Here, r.report output is directed into the	file report.file.
 
 EXAMPLE:
-          r.report  map=geology  units=miles,acres  >  report.file
+	  r.report  map=geology	 units=miles,acres  >  report.file
 
 
 
@@ -192,52 +192,52 @@ EXAMPLE:
 
 
 
-GRASS 4.1                U.S. Army CERL                         3
+GRASS 4.2		Baylor University			3
 
 
 
 
 
 
-r.report <main>      GRASS Reference Manual       <main> r.report
+r.report <main>	     GRASS Reference Manual	  <main> r.report
 
 
 
        ________________________________________________________________________
-      |                       RASTER MAP CATEGORY REPORT                      |
-      | LOCATION: spearfish                                 Fri Sep 2 09:20:09|
+      |			      RASTER MAP CATEGORY REPORT		      |
+      |	LOCATION: spearfish				    Fri	Sep 2 09:20:09|
       |_______________________________________________________________________|
-      |           north:   4928000.00   east:   609000.00                     |
-      | REGION:   south:   4914000.00   west:   590000.00                     |
-      |           res:         100.00   res:       100.00                     |
+      |		  north:   4928000.00	east:	609000.00		      |
+      |	REGION:	  south:   4914000.00	west:	590000.00		      |
+      |		  res:	       100.00	res:	   100.00		      |
       |_______________________________________________________________________|
-      | MASK:     none                                                        |
+      |	MASK:	  none							      |
       |_______________________________________________________________________|
-      | MAP:      geology in PERMANENT                                        |
+      |	MAP:	  geology in PERMANENT					      |
       |_______________________________________________________________________|
-      |         Category Information         |    Acres           Square      |
-      |    #      description                |                    Miles       |
+      |		Category Information	     |	  Acres		  Square      |
+      |	   #	  description		     |			  Miles	      |
       |________|_____________________________|________________________________|
-      |    0   |  no data                    |     415.13|          0.65      |
-      |    1   |  metamorphic                |    2597.02|          4.06      |
-      |    2   |  transition                 |      32.12|          0.05      |
-      |    3   |  igneous                    |    8117.24|         12.68      |
-      |    4   |  sandstone                  |   16691.60|         26.08      |
-      |    5   |  limestone                  |   13681.93|         21.38      |
-      |    6   |  shale                      |   10304.07|         16.10      |
-      |    7   |  sandy shale                |    2517.95|          3.93      |
-      |    8   |  claysand                   |    3229.60|          5.05      |
-      |    9   |  sand                       |    8141.95|         12.72      |
+      |	   0   |  no data		     |	   415.13|	    0.65      |
+      |	   1   |  metamorphic		     |	  2597.02|	    4.06      |
+      |	   2   |  transition		     |	    32.12|	    0.05      |
+      |	   3   |  igneous		     |	  8117.24|	   12.68      |
+      |	   4   |  sandstone		     |	 16691.60|	   26.08      |
+      |	   5   |  limestone		     |	 13681.93|	   21.38      |
+      |	   6   |  shale			     |	 10304.07|	   16.10      |
+      |	   7   |  sandy	shale		     |	  2517.95|	    3.93      |
+      |	   8   |  claysand		     |	  3229.60|	    5.05      |
+      |	   9   |  sand			     |	  8141.95|	   12.72      |
       |______________________________________|___________|____________________|
-      |                 TOTAL                |   65728.60|        102.70      |
+      |			TOTAL		     |	 65728.60|	  102.70      |
       |______________________________________|___________|____________________|
 
 NOTES
-     If the user runs r.report interactively and saves the report
-     output in a file, this file will be placed into the user's
+     If	the user runs r.report interactively and saves the report
+     output in a file, this file will be placed	into the user's
      current working directory.
 
-     If the user runs r.report non-interactively, report output
+     If	the user runs r.report non-interactively, report output
      can be saved by redirecting it to a file or a printer using
      the UNIX redirection mechanism.
 
@@ -245,7 +245,7 @@ SEE ALSO
      g.region, r.coin, r.describe, r.info, r.mask, r.stats
 
 AUTHOR
-     Michael Shapiro, U.S. Army Construction Engineering Research
+     Michael Shapiro, U.S. Army	Construction Engineering Research
      Laboratory
 
 
@@ -258,7 +258,7 @@ AUTHOR
 
 
 
-GRASS 4.1                U.S. Army CERL                         4
+GRASS 4.2		Baylor University			4
 
 
 
