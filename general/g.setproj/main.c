@@ -179,7 +179,7 @@ int main(int argc, char *argv[])
 			        Out_proj = PROJECTION_SP;
 			break;
 		      default:
-			Out_proj = 4;
+			Out_proj = PROJECTION_OTHER;
 		     }
 				break;
 		}
@@ -187,7 +187,8 @@ int main(int argc, char *argv[])
 	default:
 		G_fatal_error("Unknown projection");
 	}
-
+	cellhd.proj = Out_proj;
+   
 	proj_index = G_geo_get_proj_index(proj_out);
 	if (proj_index < 0) {
 		sprintf(buff, "Projection %s is not specified in the table", proj_out);
