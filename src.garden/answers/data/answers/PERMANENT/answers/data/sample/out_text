@@ -1,0 +1,85 @@
+1 DISTRIBUTED HYDROLOGIC AND WATER QUALITY SIMULATION
+                BY ANSWERS VER 4.880215
+ ANSWERS Input File for sample Project                                      
+
+
+     RAINFALL HYETOGRAPH FOR EVENT OF  rain7  
+
+     GAGE NUMBER R1
+     TIME - MIN.       RAINFALL RATE -  MM/H  
+           0.0                    0.00
+          12.0                   10.00
+          24.0                   15.00
+          30.0                   18.00
+          40.0                   32.00
+          50.0                  109.00
+          60.0                   33.00
+          72.0                   23.00
+          84.0                   16.00
+          96.0                   14.00
+         120.0                   12.00
+         300.0                    0.00
+
+ SIMULATION TIME INCREMENT =  60. SECONDS
+
+
+ SOIL PROPERTIES
+ SOIL  POROSITY  FIELD CAP.  INFILTRATION CONSTANTS  CONTROL  ANTECEDENT EROSION
+       (PERCENT   (PERCENT      FC       A      P     ZONE     MOISTURE   CONST.
+         VOL.)      SAT.)      MM/H    MM/H             MM   (PERCENT SAT)
+   1     54.0       87.0      21.00   24.00   0.63    133.0      70.0     0.28
+   2     47.0       93.0      21.00   24.00   0.56    108.0      70.0     0.33
+   3     46.0       74.0       7.00   14.00   0.60     96.0      70.0     0.28
+   4     47.0       68.0       7.00   14.00   0.55     57.0      70.0     0.32
+   5     48.0       96.0      21.00   24.00   0.55     95.0      70.0     0.32
+   6     47.0       93.0      21.00   24.00   0.55    108.0      70.0     0.32
+
+ TILE DRAINAGE COEFF. = 8.20  MM/24H
+ GROUNDWATER RELEASE FRACTION = 0.100E-02
+
+ COVER/MANAGEMENT PRACTICES
+   CROP      MAX. POT.   PERCENT  ROUGH.  ROUGH.  MANNING'S   EROSION
+           INTERCEPTION   COVER   COEFF.  HEIGHT      N        CONST.
+                MM                           MM                  MM
+  1     corn   1.00         45.    0.47    53.0     0.099      0.28
+  2  pasture   0.50         93.    0.50    38.0     0.115      0.08
+  3  alfalfa   0.60         96.    0.53    35.0     0.150      0.04
+  4 farmstea   0.30         70.    0.30    20.0     0.045      0.01
+
+ CHANNEL PROPERTIES
+ TYPE   WIDTH   MANNING'S N
+          M  
+   1     2.0      0.060
+   2     1.5      0.070
+
+      sample Project                             
+     WATERSHED CHARACTERISTICS
+ NUMBER OF  1.00 HA  OVERLAND FLOW ELEMENTS =  324
+ NUMBER OF CHANNEL SEGMENTS =  47
+ AREA OF CATCHMENT =   324.0 HA 
+ CATCHMENT SLOPE: MIN =   0.10  AVE =   0.75  MAX =   1.90 PERCENT
+ CHANNEL SLOPE:   MIN =   0.10  AVE =   0.36  MAX =   0.80 PERCENT
+ PERCENT OF AREA TILED = 100.0 WITH A D.C. OF 8.20  MM/24H
+ MEAN ANTECEDENT SOIL MOISTURE = 70., FIELD CAPACITY = 91. PERCENT SATURATION
+ GROUNDWATER RELEASE FRACTION = 0.0010
+ OUTLET IS ELEMENT  318 AT ROW  16 COL   6
+
+ SURFACE COVER/MANAGEMENT CONDITIONS        SOIL ASSOCIATION PROPERTIES
+   CROP  PERCENT PERCENT  N    C     NO. PERCENT   FC    INITIAL  CONTROL  K
+         PRESENT  COVER                  PRESENT  MM/H    MM/H   DEPTH  MM
+     corn  86.1    45. 0.099  0.28    1   26.2   21.0     32.2   133.0   0.28
+  pasture   5.9    93. 0.115  0.08    2    0.6   21.0     33.2   108.0   0.33
+  alfalfa   6.5    96. 0.150  0.04    3    1.2    7.0     13.8    96.0   0.28
+ farmstea   1.5    70. 0.045  0.01    4    6.5    7.0     14.2    57.0   0.32
+                                      5   47.5   21.0     33.4    95.0   0.32
+                                      6   17.9   21.0     33.4   108.0   0.32
+
+   STRUCTURAL MEASURES INCLUDED
+          TYPE         NUMBER
+      3  G. WATERWAYS    23
+
+               OUTLET HYDROGRAPHS--VER 4.880215
+    RUNOFF VOLUME PREDICTED FROM  51.20  MM OF RAINFALL =  8.236  MM
+               AVERAGE SOIL LOSS =   376.   KG/HA 
+ MAX EROSION RATE =  2146.  KG/HA   MAX DEPOSITION RATE =  4158.  KG/HA 
+                       STD. DEV. =  1042.  KG/HA 
