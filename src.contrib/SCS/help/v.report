@@ -1,0 +1,4 @@
+Lists statistics for vect map layers. 
+For areas: gives category, label, cnt, total area in acres, hectares, and 
+sq. miles.  For lines: gives category, label, cnt, total length in meters,
+ feet, and miles.  For sites: gives category, label, and cnt.
