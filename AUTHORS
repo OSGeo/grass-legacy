@@ -39,7 +39,7 @@ Others making significant contributions:
  Angus Carr      <apcarr@flash.lakeheadu.ca> (ERDAS LAN)
  Huidae Cho      <hdcho@geni.knu.ac.kr>      (FreeBSD, r.topmodel, r.topidx, ...)
  Jaro Hofierka   <hofierka@geomodel.sk>      (NVIZ port, grid3D and related)
- Justin Hickey   <jhickey@impact1.hpcc.nectec.or.th>   (GRASS entry screens, SGI)
+ Justin Hickey   <jhickey@impact1.hpcc.nectec.or.th>   (GRASS initialization, new env var handling, SGI)
  John Huddleston <John.Huddleston@usda.gov>  (Windows/Cygnus port)
  Bill Hughes     <bhughes@grasshoppernet.com> (64bit compliance)
  David D Gray    <ddgray@armadce.demon.co.uk> (Vector, SQL support)
