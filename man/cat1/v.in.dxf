@@ -1,7 +1,7 @@
 
 
 
-v.in.dxf             GRASS Reference Manual              v.in.dxf
+v.in.dxf <main>      GRASS Reference Manual       <main> v.in.dxf
 
 
 
@@ -60,14 +60,14 @@ labels=in_name:out_name[,in_name:out_name,...]
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-v.in.dxf             GRASS Reference Manual              v.in.dxf
+v.in.dxf <main>      GRASS Reference Manual       <main> v.in.dxf
 
 
 
@@ -126,14 +126,14 @@ EXAMPLES
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-v.in.dxf             GRASS Reference Manual              v.in.dxf
+v.in.dxf <main>      GRASS Reference Manual       <main> v.in.dxf
 
 
 
@@ -192,14 +192,14 @@ NOTES
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
 
 
 
-v.in.dxf             GRASS Reference Manual              v.in.dxf
+v.in.dxf <main>      GRASS Reference Manual       <main> v.in.dxf
 
 
 
@@ -228,8 +228,8 @@ SEE ALSO
      v.cadlabel, v.digit, v.in.ascii, v.out.dxf, v.support
 
 AUTHORS
-     Original dxf2dig program written by Chuck Ehlschlaeger, U.S.
-     Army Construction Engineering Research Laboratory (6/89)
+     Original dxf2dig program written by Jan Moorman, U.S. Army
+     Construction Engineering Research Laboratory (6/89)
 
      Revised by Dave Gerdes, U.S. Army Construction Engineering
      Reseach Laboratory (12/89)
@@ -238,7 +238,7 @@ AUTHORS
      Engineering Research Laboratory (7/90)
 
      Code for arcs and circles from National Park Service GIS
-     Division written by Tom Howard
+     Division written by Tom Howard.
 
 
 
@@ -258,7 +258,7 @@ AUTHORS
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
