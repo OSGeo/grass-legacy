@@ -1,0 +1,19 @@
+.TH d.6386.save
+.SH NAME
+\fId.6386.save\fR \- stores screen images to the PC6386 hard disk.
+.br
+.I "(Available for PC6386 UNIX workstations, only)"
+.SH SYNOPSIS
+\fBd.6386.save\fR
+.br
+\fBd.6386.save help\fR
+.SH DESCRIPTION
+allows a user to interactively saves PC6386 screen images produced by "d.display", "d.rast", etc. to the PC6386 hard disk. Program will assign the extension ".GRS" to the filename given, and will store the image file in the current directory. The files are binary image files, representing the red, green, and blue planes of the display board graphic memory.
+
+.SH "INTERACTIVE MODE"
+.SH BUGS
+.SH "SEE ALSO"
+d.6386.delete, d.6386.show
+.SH AUTHOR
+P.W.Carlson, USDA, SCS, NHQ-CGIS
+
