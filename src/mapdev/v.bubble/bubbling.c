@@ -1,10 +1,7 @@
 #include "v.bubble.h"
 
-int  bubbling(bubblesite bsite[], int nsites, struct Map_info *map, double units)
-    /*bubbling : partially taken from v.circle */
-    
+int bubbling(SITE_XYZ *bsite, int nsites, struct Map_info *map, double units)
 {
-
     int i1,i2,i3;
     double max=0,min=0;
     double radfrac,theta;
