@@ -949,14 +949,14 @@ proc kill {signal listpid} {
                 tk_messageBox -type ok -message \
                     {'ps -l' doesn't behave as expected
                      -> STOP/CONT/KILL function can't be used}
-                close $stream
+                catch {close $stream}
                 return
             }
         } else {
             lappend child([lindex $line $ppid]) [lindex $line $pid]
         }
     }
-    close $stream
+    catch {close $stream}
 
     set list ""
     foreach i $listpid {
