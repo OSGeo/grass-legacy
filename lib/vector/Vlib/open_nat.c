@@ -87,6 +87,7 @@ V1_open_new_nat (
   Map->digit_file = G_store (name_buf);		/*need? */
 
   Map->head.size = 0;
+  Map->head.head_size = GV_COOR_HEAD_SIZE;
   Vect__write_head (Map);
 
   /* set conversion matrices */

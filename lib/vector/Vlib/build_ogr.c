@@ -15,21 +15,35 @@
 *   	    	for details.
 *
 *****************************************************************************/
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include "gis.h"
 #include "Vect.h"
 
-/* Rewind vector data file to cause reads to start at beginning.
-** returns 0 on success
-**        -1 on error
+extern FILE *Msgout;
+extern int prnmsg ( char *msg, ...) ;
+
+/*!
+ \fn int Vect_build_ogr ( struct Map_info *Map, FILE *msgout ) 
+ \brief build topology SHAPE
+ \return 1 on success, 0 on error
+ \param Map_info structure, msgout - message output (stdout/stderr for example) or NULL
 */
-int 
-V1_rewind_nat (struct Map_info *Map)
+int
+Vect_build_ogr ( struct Map_info *Map, FILE *msgout )
 {
-    return (fseek (Map->dig_fp,  Map->head.head_size, SEEK_SET ));
+    struct Plus_head *plus ;
+    
+    plus = &(Map->plus);
+    Msgout = msgout;
+
+    Vect_rewind ( Map );
+    
+    G_warning ("Vect_build_ogr() not yet implemented" );
+    return (0);
+    
+    return 1;
 }
 
-int 
-V2_rewind_nat (struct Map_info *Map)
-{
-    Map->next_line = 1;
-    return V1_rewind_nat (Map);	/* make sure level 1 reads are reset too */
-}
+

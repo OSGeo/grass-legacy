@@ -17,19 +17,28 @@
 *****************************************************************************/
 #include "Vect.h"
 
-/* Rewind vector data file to cause reads to start at beginning.
+/* Rewind vector data file to cause reads to start at beginning. 
 ** returns 0 on success
 **        -1 on error
 */
 int 
-V1_rewind_nat (struct Map_info *Map)
+V1_rewind_ogr (struct Map_info *Map)
 {
-    return (fseek (Map->dig_fp,  Map->head.head_size, SEEK_SET ));
+    G_debug (2, "V1_rewind_ogr(): name = %s", Map->name);
+    
+    G_warning ("V1_rewind_ogr() not yet implemented" );
+    return (-1);
+    
+    return 0;
 }
 
 int 
-V2_rewind_nat (struct Map_info *Map)
+V2_rewind_ogr (struct Map_info *Map)
 {
+    G_debug (2, "V2_rewind_ogr(): name = %s", Map->name);
+
     Map->next_line = 1;
-    return V1_rewind_nat (Map);	/* make sure level 1 reads are reset too */
+    
+    return V1_rewind_ogr (Map);	
 }
+

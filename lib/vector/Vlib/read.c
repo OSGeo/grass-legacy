@@ -21,6 +21,7 @@ static int read_next_dummy () { return -1; }
 static long last_offset_dummy () { 
     G_fatal_error("Vect_last_offset_ not available for this format.");
 }
+static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
 
 static int (*Read_next_line_array[][3]) () =
 {
@@ -28,6 +29,13 @@ static int (*Read_next_line_array[][3]) () =
    ,{ read_next_dummy, V1_read_next_line_shp, V2_read_next_line_shp }
 #ifdef HAVE_POSTGRES
    ,{ read_next_dummy, V1_read_next_line_post, V2_read_next_line_post }
+#else
+   ,{ read_old_dummy, format, format }
+#endif
+#ifdef HAVE_OGR
+   ,{ read_next_dummy, V1_read_next_line_ogr, V2_read_next_line_ogr }
+#else
+   ,{ read_old_dummy, format, format }
 #endif
 };
 
@@ -37,6 +45,13 @@ static int (*V1_read_line_array[]) () =
    , V1_read_line_shp 
 #ifdef HAVE_POSTGRES
    , V1_read_line_post 
+#else
+   , format
+#endif
+#ifdef HAVE_OGR
+   , V1_read_line_ogr 
+#else
+   , format
 #endif
 };
 
@@ -46,6 +61,13 @@ static int (*V2_read_line_array[]) () =
    , V2_read_line_shp 
 #ifdef HAVE_POSTGRES
    , V2_read_line_post
+#else
+   , format
+#endif
+#ifdef HAVE_OGR
+   , V2_read_line_ogr
+#else
+   , format
 #endif
 };
 
@@ -55,6 +77,13 @@ static long (*Next_line_offset_array[]) () =
    , Vect_next_line_offset_shp 
 #ifdef HAVE_POSTGRES
    , Vect_next_line_offset_post 
+#else
+   , format
+#endif
+#ifdef HAVE_OGR
+   , Vect_next_line_offset_ogr 
+#else
+   , format
 #endif
 };
 
@@ -64,6 +93,13 @@ static long (*Last_line_offset_array[]) () =
    , Vect_last_line_offset_shp  
 #ifdef HAVE_POSTGRES
    , Vect_last_line_offset_post
+#else
+   , format
+#endif
+#ifdef HAVE_OGR
+   , Vect_last_line_offset_ogr
+#else
+   , format
 #endif
 };
 

@@ -21,12 +21,21 @@
 #include "gis.h"
 #include "Vect.h"
 
+static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
+
 static int (*Build_array[]) () =
 {
       Vect_build_nat
     , Vect_build_shp
 #ifdef HAVE_POSTGRES
     , Vect_build_post
+#else
+    , format
+#endif
+#ifdef HAVE_OGR
+    , Vect_build_ogr
+#else
+    , format
 #endif
 };
 
@@ -69,6 +78,7 @@ Vect_build ( struct Map_info *Map, FILE *msgout )
     prnmsg ("Building topology ...\n") ;
     dig_init_plus ( plus );
     plus->with_z = Map->head.with_z;
+    plus->spidx_with_z = Map->head.with_z;
     
     ret = ( (*Build_array[Map->format]) (Map, msgout) );
 
@@ -85,6 +95,8 @@ Vect_build ( struct Map_info *Map, FILE *msgout )
     prnmsg ("Number of lines     :   %d\n", plus->n_llines) ;
     prnmsg ("Number of boundaries:   %d\n", plus->n_blines) ;
     prnmsg ("Number of centroids :   %d\n", plus->n_clines) ;
+    prnmsg ("Number of faces     :   %d\n", plus->n_flines) ;
+    prnmsg ("Number of kernels   :   %d\n", plus->n_klines) ;
     prnmsg ("Number of areas     :   %d\n", plus->n_areas) ;
     prnmsg ("Number of isles     :   %d\n", plus->n_isles) ;
 
@@ -254,7 +266,7 @@ Vect_save_spatial_index ( struct Map_info *Map )
     }
 
     /* set portable info */
-    dig_init_portable ( &(plus->port), dig__byte_order_out ());
+    dig_init_portable ( &(plus->spidx_port), dig__byte_order_out ());
     
     if ( 0 > dig_write_spidx (fp, plus) ) {
         G_warning ("Error writing out spatial index file.\n");

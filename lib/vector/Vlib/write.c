@@ -30,12 +30,21 @@ static int  delete_dummy () {
     return -1; 
 }
 
+static int format () { G_fatal_error ("Requested format is not compiled in this version"); return 0; }
+
 static long (*Write_line_array[][3]) () =
 {
     { write_dummy, V1_write_line_nat, V2_write_line_nat } 
    ,{ write_dummy, write_dummy, write_dummy }
 #ifdef HAVE_POSTGRES
    ,{ write_dummy, V1_write_line_post, write_dummy } 
+#else
+   ,{ write_dummy, format, format }
+#endif
+#ifdef HAVE_OGR
+   ,{ write_dummy, write_dummy, write_dummy }
+#else
+   ,{ write_dummy, format, format }
 #endif
 };
 
@@ -45,6 +54,13 @@ static int (*Vect_rewrite_line_array[][3]) () =
    ,{ rewrite_dummy, rewrite_dummy, rewrite_dummy }
 #ifdef HAVE_POSTGRES
    ,{ rewrite_dummy, rewrite_dummy, rewrite_dummy } 
+#else
+   ,{ rewrite_dummy, format, format }
+#endif
+#ifdef HAVE_OGR
+   ,{ rewrite_dummy, rewrite_dummy, rewrite_dummy }
+#else
+   ,{ rewrite_dummy, format, format }
 #endif
 };
 
@@ -65,6 +81,13 @@ static int (*Vect_delete_line_array[][3]) () =
    ,{ delete_dummy, delete_dummy, delete_dummy }
 #ifdef HAVE_POSTGRES
    ,{ delete_dummy, delete_dummy, delete_dummy } 
+#else
+   ,{ delete_dummy, format, format }
+#endif
+#ifdef HAVE_OGR
+   ,{ delete_dummy, delete_dummy, delete_dummy } 
+#else
+   ,{ delete_dummy, format, format }
 #endif
 };
 
