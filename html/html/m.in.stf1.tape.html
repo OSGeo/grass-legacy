@@ -114,7 +114,7 @@ pass all tests are written to the output file.
 Null characters are always filtered out; thus, this
 program can be used as a null filter by specifying a <EM>sc=str</EM> condition
 which will always be true (e.g., '1=?').  In the same way, files with lines
-terminated with &lt;LF&gt;<CR> or just <CR> can be "fixed" to have the
+terminated with &lt;LF&gt;&lt;CR&gt; or just &lt;CR&gt; can be "fixed" to have the
 standard Unix &lt;LF&gt; terminator.
 
 
@@ -133,7 +133,7 @@ corrects them so that other programs will be able to read full lines.
 
 <H2>BUGS/FEATURES</H2>
 
-Input lines must be terminated with &lt;LF&gt;, <CR> or <LF><CR>.
+Input lines must be terminated with &lt;LF&gt;, &lt;CR&gt; or &lt;LF&gt;&lt;CR&gt;.
 Output lines will be terminated with &lt;LF&gt; only.
 
 
@@ -152,7 +152,7 @@ terminators and thus cause improper functioning.
 For extracting lines from files, Unix programs such as <EM>grep</EM>,
 or <EM>awk</EM> are somewhat more flexible than <EM>m.in.stf1.tape</EM>,
 but have line length limitations and do not adapt to lines terminated
-with &lt;LF&gt; and <CR>.
+with &lt;LF&gt; and &lt;CR&gt;.
 
 
 <P>

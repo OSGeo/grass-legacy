@@ -1,3 +1,4 @@
+<html>
 <TITLE>r.combine</TITLE>
 
 <body bgcolor="white">
@@ -59,7 +60,7 @@ GROUP     |  category values     |  1-40 (elevation.255)
 __________|______________________|________________________
 AND       |  expression describ- |  (grp 4 (soils)) 
 [and]     |  ing a raster map    |  (grp 2 (owner))
-[&][&&]   |  and categories      |
+[&amp;][&amp;&amp;]   |  and categories      |
 __________|______________________|________________________
 OR        |  expression describ- |  (grp 4 (soils)) 
 [or]      |  ing a raster map    |  (grp 2 (owner))
@@ -207,8 +208,8 @@ Depicts only the area with elevation 1187 meters or less
 <BR>
 Resultant categories: 
 <PRE>
-0  - black: elevation > 1187 m 
-1  - red  : elevation <= 1187 m 
+0  - black: elevation &gt; 1187 m 
+1  - red  : elevation &lt;= 1187 m 
 </PRE>
 
 <P>
@@ -226,8 +227,8 @@ graphic output is saved in the new raster map layer called
 <BR>
 Resultant categories: 
 <PRE>
-0  - black : elevation > 1187 m and < 1787 m 
-1  - red   : elevation <= 1187 m and >= 1787 m 
+0  - black : elevation &gt; 1187 m and &lt; 1787 m 
+1  - red   : elevation &lt;= 1187 m and &gt;= 1787 m 
 </PRE>
 
 <P>
@@ -255,7 +256,7 @@ For example,
 raster map  1   2 2 0
                 2 1 0
                 0 0 0         1 0 0  results
-                       AND--> 1 1 0
+                       AND--&gt; 1 1 0
 raster map  2   1 0 1         0 0 0
                 1 1 0
                 1 1 0
@@ -315,7 +316,7 @@ may be combined at one time. For example:
 raster map  1   2 2 0
                 2 1 0
                 0 0 0          1 1 1  results
-                     OR -->    1 1 0
+                     OR --&gt;    1 1 0
 raster map  2   1 0 1          1 1 0
                 1 1 0
                 1 1 0
@@ -525,10 +526,10 @@ then overlain on <EM>park.or.priv</EM> (generated in the previous example).
 <BR>
 Resultant categories in the new map layer <EM>low.elev</EM> are: 
 <PRE>
-0  - black  : park; > 1123 m 
-1  - red    : private; > 1123m 
-4  - blue   : park; <=</B> 1123 m 
-5  - purple : private; <=</B> 1123m 
+0  - black  : park; &gt; 1123 m 
+1  - red    : private; &gt; 1123m 
+4  - blue   : park; &lt;=</B> 1123 m 
+5  - purple : private; &lt;=</B> 1123m 
 </PRE>
 Note how category 5 is the sum of red (1) + blue (4) (i.e., the 
 intersection of areas containing low elevations and private lands 
@@ -574,7 +575,7 @@ This is what happens:
 Expression           1 1 1 0
  (top raster map)    1 1 0 0
                      0 0 0 0      6 6 6 0   result
-                             -->  6 6 2 0
+                             --&gt;  6 6 2 0
 oldmap               2 5 0 0      5 5 2 2
  (bottom raster map) 0 5 2 0
                      5 5 2 2
@@ -606,9 +607,9 @@ less are placed on top of the existing map layer
 <BR>
 Resultant categories: 
 <PRE>
-1  - red    : private ownership; elev > 1123 m 
-2  - yellow : park property; elev > 1123 m 
-3  - orange : park or private; elev <=</B> 1123 m 
+1  - red    : private ownership; elev &gt; 1123 m 
+2  - yellow : park property; elev &gt; 1123 m 
+3  - orange : park or private; elev &lt;=</B> 1123 m 
 </PRE>
 
 <P>
@@ -623,11 +624,11 @@ The output is saved in <EM>sand.lo</EM>.
 <BR>
 Resultant categories: 
 <PRE>
-1  - red    : private ownership; elev > 1123 m; 
+1  - red    : private ownership; elev &gt; 1123 m; 
               no sandstone 
-2  - yellow : park property; elev > 1123 m ; 
+2  - yellow : park property; elev &gt; 1123 m ; 
               no sandstone 
-3  - orange : park or private; elev <= 1123 m; 
+3  - orange : park or private; elev &lt;= 1123 m; 
               no sandstone 
 4  - blue   : park or private; any elev; sandstone 
 </PRE>
@@ -646,7 +647,7 @@ QUIT   |  quit  q  exit  bye|
 CATS   |  categories  cats  |  existing raster map
 EXP    |  exp  expr         |  number of an expression
 !      |                    |  shell command e.g. vi comb.1
-<      |                    |  existing input file
+&lt;      |                    |  existing input file
 WINDOW |  window            |  existing raster map layer
 HISTORY|  history  hist     |
 HELP   |  help              |  combine command 
@@ -819,5 +820,5 @@ Michael Shapiro,
 James Westervelt, <br>
 U.S. Army Construction Engineering 
 Research Laboratory
-
-
+</body>
+</html>

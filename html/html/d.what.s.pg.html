@@ -73,7 +73,7 @@ The user must also specify the name of the GRASS data layer containing these cat
 
 well.pql:<BR>
 <EM>retrieve unique (well.all)<BR>
-where (((well.utmeast-?) * (well.utmeast-?) + (well.utmnorth-?) * (well.utmnorth-?)) < ?) and well.utmeast > 0 and well.utmnorth >0</EM>
+where (((well.utmeast-?) * (well.utmeast-?) + (well.utmnorth-?) * (well.utmnorth-?)) &lt; ?) and well.utmeast &gt; 0 and well.utmnorth &gt;0</EM>
 <P>
 
 <B>EXAMPLE (two table join)</B><P>
@@ -82,7 +82,7 @@ where (((well.utmeast-?) * (well.utmeast-?) + (well.utmnorth-?) * (well.utmnorth
 
 nri.pql:<BR>
 <EM>retrieve unique (well.all,wellowners.all)<BR>
-where (((well.utmeast-?) * (well.utmeast-?) + (well.utmnorth-?) * (well.utmnorth-?)) < ?) and well.utmeast > 0 and well.utmnorth >0 and wellowners.lastname ~ "SM" and wellowners.wellid=well.wellid</EM>
+where (((well.utmeast-?) * (well.utmeast-?) + (well.utmnorth-?) * (well.utmnorth-?)) &lt; ?) and well.utmeast &gt; 0 and well.utmnorth &gt;0 and wellowners.lastname ~ "SM" and wellowners.wellid=well.wellid</EM>
 
 <H2>NOTE</H2>
 The symbol ? in these examples is a meta character used to evaluate coordinate locations returned by the GRASS pointer against records in the database.  The ? symbols must be included in the pql file.
