@@ -259,6 +259,8 @@ struct Map_info
     double Constraint_S;
     double Constraint_E;
     double Constraint_W;
+    double Constraint_T;
+    double Constraint_B;
     int    Constraint_type;
     int    proj;
 
