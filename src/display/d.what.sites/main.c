@@ -1,12 +1,14 @@
 #define GLOBAL
-#include "what.h"
 #include "local_proto.h"
 
 int main(int argc, char **argv)
 {
 	struct Cell_head window ;
 	char temp[128] ;
-	int i, t, b, l, r ;
+	char *str;
+	int i, j, t, b, l, r ;
+	int ml;
+	int width, mwidth;
 	struct Option *opt1;
 	struct Flag *shh, *once, *terse;
 	struct GModule *module;
@@ -66,8 +68,21 @@ int main(int argc, char **argv)
 	    for(i=0; site[i]; i++);
 	    nsites = i;
 
+	    ml = strlen(G_mapset());
+	    width = mwidth = 0;
 	    for(i=0; i<nsites; i++)
 	    {
+		str = strchr(site[i], '@');
+		if(str) j = str - site[i];
+		else	j = strlen(site[i]);
+		if(j > width)
+			width = j;
+
+		if(str) j = strlen(str+1);
+		else	j = ml;
+		if(j > mwidth)
+			mwidth = j;
+
 	        if(G_find_sites(site[i], "") == NULL)
 		{
 		    char msg[256];
@@ -75,6 +90,8 @@ int main(int argc, char **argv)
 		    G_fatal_error(msg);
 		}
 	    }
+	    Snum = (int *) G_malloc(sizeof(int)*nsites);
+	    CurSites = (Site ***) G_malloc(sizeof(Site **)*nsites);
 	}
 
 	if (R_open_driver() != 0)
@@ -101,10 +118,11 @@ int main(int argc, char **argv)
 	if (D_do_conversions(&window, t, b, l, r))
 		G_fatal_error("Error in calculating conversions") ;
 	
-	if(open_sites(site[0])){
-	    load_sites(&window, !(shh->answer));
-	    what (once->answer, terse->answer) ;
+	for(i=0; i<nsites; i++){
+	    load_sites(i, &window, !(shh->answer));
 	}
+
+	what (once->answer, terse->answer, width, mwidth);
 
 	free_cached_sites();
 
