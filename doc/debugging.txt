@@ -59,6 +59,18 @@ make it an error rather than a warning).
 The linker switch --warn-common (e.g. LDFLAGS='-Wl,--warn-common') might
 be useful for catching multiply-defined symbols.
 ----------------------------------------------------
+C Code debugging:
+
+1) Graphical debugger
+      ddd `which r.plane`
+      RUN -> here enter Parameters/Flags
+
+2) Text/CMD line debugger
+      gdb `which r.plane`
+      r <flags> <parameters>
+      bt
+      
+----------------------------------------------------
 Debugging on Mac OS X
 
  The 'ldd' command doesn't exist, but
