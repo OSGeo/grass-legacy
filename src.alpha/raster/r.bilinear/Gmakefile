@@ -1,0 +1,12 @@
+#BIN_MAIN_CMD=.
+#
+#COMPILE_FLAGS       = -g
+#LDFLAGS             = -g -B/bin/
+#
+
+LIST = main.o bilinear.o parser.o
+
+$(BIN_ALPHA_CMD)/r.bilinear: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB)
+
+$(GISLIB): #
