@@ -1,5 +1,5 @@
 PGM=r.water.fea
-LIBES = $(GISLIB) $(RASTERLIB)
+LIBES = $(RASTERLIB) $(GISLIB) 
 LIST = main.o menu.o choicehand.o shell.o
 
 $(BIN_INTER)/$(PGM): $(LIST) $(LIBES)

@@ -2,7 +2,7 @@ PGM=s.sv
 
 LIST=main.o cdpath.o save.o nbins.o angleok.o plthgpt.o
 
-LIBES=$(GISLIB) $(RASTERLIB) $(DATETIMELIB)
+LIBES=$(RASTERLIB) $(GISLIB) $(DATETIMELIB)
 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
