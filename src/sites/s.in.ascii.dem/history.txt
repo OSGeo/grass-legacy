@@ -1,0 +1,12 @@
+/* Routine for the import of ASCII-sitelists. Original routine s.in.ascii
+   was changed to allow DEM import and later conversion with modules 
+   like s.to.rast. That module needs the categories in
+   the #cat-format (with #-character in first position), s.in.ascii
+   writes out the simple cat-format without # */
+
+/* Modification by Markus Neteler   8. March 1998
+   email: neteler@geog.uni-hannover.de
+   Hannover, Germany */
+
+
+ 
