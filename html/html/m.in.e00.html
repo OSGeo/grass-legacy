@@ -15,7 +15,7 @@ NAME</h2>
 <h2>
 SYNOPSIS</h2>
 <b>m.in.e00</b>
-<br><b>m.in.e00</b> [<b>-ids</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
+<br><b>m.in.e00</b> [<b>-idts</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
 [<b>action=</b><i>what to do</i>] [<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
 <h2>
 DESCRIPTION</h2>
@@ -26,7 +26,7 @@ recognize the format.
 try to create the objects described (geometry and attributes).
 <p>m.in.e00 will be run non-interactively if the user specifies program
 arguments on the command line, using the form:
-<p><b>m.in.e00</b> [<b>-ids</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
+<p><b>m.in.e00</b> [<b>-idts</b>] <b>input=</b><i>name</i> [<b>mapset=</b><i>name</i>]
 [<b>action=</b><i>what to do</i>] [<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
 <p>Alternately, the user can simply type:
 <p><b>m.in.e00</b>
@@ -68,6 +68,13 @@ To "activate" a category label file for the vector map "cover_name", change to:<
 If you want to use another table entry, you have to run above procedure
 accordingly with <tt>cover_name.other_attribute_name</tt>.
 
+<p>
+When importing raster file ("GRID"), cats files are created the same way
+in <tt>$LOCATION/cats</tt>.
+Note that an empty cat file is automaticaly put in this directory when a
+raster file is created, so m.in.e00 allways use the
+<tt>cover_name.attribute_name</tt> form for raster category files.
+
 <h2>
 OPTIONS</h2>
 <i>m.in.e00</i> requires the user to enter the following information:
@@ -81,13 +88,19 @@ Flags:</h3>
 Use the "feature-ID" of the arc info objects to link geometry and attribute's
 tables. The default is to use the "feature-#" field (which is an internal
 link, but you should not rely on it for linking Arc/Info objects to an
-external database. (GRASS 5.0 option)</dd>
+external database.</dd>
 
 <dt>
 <b>-d</b></dt>
 <dd>
 Use a database instead of as many dig_cats files as you have attributes
-in the INFO tables (not yet operational). (GRASS 5.0 option)</dd>
+in the INFO tables (not yet operational).</dd>
+
+<dt>
+<b>-t</b></dt>
+<dd>
+Put all attributes in one category file, separated by tabs
+(not yet operational).</dd>
 
 <dt>
 <b>-s</b></dt>
@@ -146,7 +159,6 @@ threshold is too big, and v.support may fail even on clean data.
 
 You must know what to do with all the dig_cats file generated when importing
 a vector coverage.
-<p>No attribute (cats) file is produced when importing a grid.
 <p>The program may crash when unexpexted data (mainly in INFO section)
 are found, or when the input file is corrupted.
 <p>There is no support for projection. Using verbose=1 lets you see the
