@@ -1,5 +1,7 @@
 #include "glob.h"
 #include "G3d.h"
+#include "local_proto.h"
+int
 cur_to_db()
 {
     char name[30];

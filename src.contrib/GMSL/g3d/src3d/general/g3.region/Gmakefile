@@ -12,7 +12,6 @@ LIST     = main.o\
 	   from_cell.o\
 	   from_3dcell.o\
 	   from_vect.o\
-	   mke_curr.o\
 	   modify_cur.o\
 	   modify_db.o\
 	   new_db.o\

@@ -1,5 +1,8 @@
+#include <stdio.h>
 #include "glob.h"
 #include "G3d.h"
+#include "local_proto.h"
+void
 set_window (window, name)
     G3D_Region *window;
     char * name;
