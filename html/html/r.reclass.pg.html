@@ -13,17 +13,18 @@
 <H2>SYNOPSIS</H2>
 <B>r.reclass.pg</B><BR>
 <B>r.reclass.pg help</B><BR>
-<B>r.reclass.pg pql</B><EM>=file</EM> <B>input</B><EM>=name</EM> <B>key</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>label</B><EM>=name</EM>]
+<B>r.reclass.pg sql</B><EM>=file</EM> <B>input</B><EM>=name</EM> <B>key</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>label</B><EM>=name</EM>]
 
 <H2>DESCRIPTION</H2>
-<EM>r.reclass.pg</EM> generates reclass rules for a new raster map layer based on the results of multiple queries to the currently selected database. The user constructs a series of mutually exclusive postQUEL retrieve statments designed to return groups of records from the database. Each group of records should be interanally consistent in terms of attribute characteristics specified by the user in the retrieve clause.  These groups should also be mutually exclusive, thereby insuring that a row returned by one retrieve clause is not also returned by a subsequent retrieve clause. Each group of records therefore forms the basis for a single category in the resulting GRASS raster reclass map.  <EM>r.reclass.pg</EM> processes each retrieve statement in order generating the GRASS reclass rules needed to create a new raster map. As each retrieve statment is processed the group of records returned receives a common category value. The category value is incremented by one for each subsequent retrieve statment which is processed.  The resulting reclass map will have one category for each of the original retrieve statements and an additional category for no data areas. No data in this case includes actual no data areas and areas for which no rows were returned by the database queries.
+<EM>r.reclass.pg</EM> generates reclass rules for a new raster map layer based on the results of multiple queries to the currently selected database. The user constructs a series of mutually exclusive
+SQL retrieve statments designed to return groups of records from the database. Each group of records should be interanally consistent in terms of attribute characteristics specified by the user in the retrieve clause.  These groups should also be mutually exclusive, thereby insuring that a row returned by one retrieve clause is not also returned by a subsequent retrieve clause. Each group of records therefore forms the basis for a single category in the resulting GRASS raster reclass map.  <EM>r.reclass.pg</EM> processes each retrieve statement in order generating the GRASS reclass rules needed to create a new raster map. As each retrieve statment is processed the group of records returned receives a common category value. The category value is incremented by one for each subsequent retrieve statment which is processed.  The resulting reclass map will have one category for each of the original retrieve statements and an additional category for no data areas. No data in this case includes actual no data areas and areas for which no rows were returned by the database queries.
 
 <H2>COMMAND LINE OPTIONS</H2>
 
 <H3>Parameters:</H3>
 <DL>
-<DT><B>pql=filename</B>
-<DD>Name of file containing postQUEL query statements.
+<DT><B>sql=filename</B>
+<DD>Name of file containing SQL query statements.
 <P>
 
 <DT><B>input=map</B>
@@ -44,10 +45,10 @@
 <P>
 
 <B>EXAMPLE:</B><P>
-<EM>r.reclass.pg pql=dbrr.pql key=grasscat input=seco.soils output=tfact.recl label="Tfact="</EM>
+<EM>r.reclass.pg sql=dbrr.sql key=grasscat input=seco.soils output=tfact.recl label="Tfact="</EM>
 <P>
 
-dbrr.pql:<BR>
+dbrr.sql:<BR>
 <EM>retrieve (secosoilcats.grasscat)<BR>
 where layer.tfact &gt;0 and layer.tfact &lt;=2 and layer.muid=secosoilcats.muid
 <P>

@@ -17,7 +17,7 @@
 
 <H2>ALTERNATE</H2>
 <B>d.what.v.pg -s help</B><BR>
-<B>d.what.v.pg -s pql</B><EM>=filename</EM> <B>map</B><EM>=name</EM> 
+<B>d.what.v.pg -s sql</B><EM>=filename</EM> <B>map</B><EM>=name</EM> 
 <H2>DESCRIPTION</H2>
 Reports database attributes from the currently selected database which are associated with specific vector features identified using the mouse.  The currently selected database is identified by the GRASS environment variable $PGDBASE which is set using the <EM>g.select.pg</EM> GRASS-RDBMS interface tool.  If this environment variable is not set the program terminates with a message to the user.  If no join parameters are provided by the user on the command line the attributes in the table directly linked to the GRASS raster structure via the category value are returned.  However, if a join is specified
 then attributes from a related table are displayed.  If the alternate form of this command is selected with the <EM>-s</EM> flag the user has greater control over the number of relational joins and the manner in which the attribute information is displayed.  Using the <EM>-s</EM> option the attributes from more than one table can be returned and displayed.
@@ -25,7 +25,7 @@ then attributes from a related table are displayed.  If the alternate form of th
 
 <H3>Parameters:</H3>
 Table containing column linked to vector attribute values.  Column associated with vector attribute values.  Name of an existing vector map with attribute values linked to the cur­
-rently selected database.  Tab is the table used to develop the current postQUEL query. Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file.  Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+rently selected database.  Tab is the table used to develop the current SQL query. Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file.  Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
 <P>
 
 For instance, assume that feature is a table containing column values associated with category values in a GRASS vector file (recordnum).  In addition, assume that cfcclookup is a table containing attribute data on the transportation network in the
@@ -38,16 +38,17 @@ same area. In this example cfcclookup.cfcc is the column linking the table cfccl
 Specifying these conditions would insure that all rows from table cfcclookup which satisfy the query criteria would be matched with the corresponding rows in table feature, which are then related to the spatial features in the GRASS data layer via the database column feature.recordnum which is related to the GRASS category values.
 
 <P>
-This syntax is adequate to accomplish 2 table joins. However, if the query demands joins between more than 2 tables it is advisable to use the <EM>-s</EM> option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.  The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line.  When using this flag the user must include the name of a text file on the command line as well.  This file must include a complete, well formed postQUEL retrieve statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
+This syntax is adequate to accomplish 2 table joins. However, if the query demands joins between more than 2 tables it is advisable to use the <EM>-s</EM> option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.  The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line.  When using this flag the user must include the name of a text file on the command line as well.  This file must include a complete, well formed
+SQL retrieve statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
 
 <P>
 The user must also specify the name of the GRASS data layer containing these category values on the command line.  The following example illustrates the syntax which must be used in constructing a retrieve statement for use with the <EM>-s</EM> flag.
 <P>
 
-<DD><EM>d.what.v.pg -s pql=census.pql map=census</EM>
+<DD><EM>d.what.v.pg -s sql=census.sql map=census</EM>
 
 <P>
-census.pql:<BR>
+census.sql:<BR>
 <EM>retrieve unique (cfccatts.all)<BR>
 where cfccatts.tlid=?</EM>
 <P>
@@ -56,10 +57,10 @@ where cfccatts.tlid=?</EM>
 with the vector at current mouse location.
 <P>
 <B>EXAMPLE</B><P>
-<EM>d.what.v.pg -s pql=census.pql map=census</EM>
+<EM>d.what.v.pg -s sql=census.sql map=census</EM>
 
 <P>
-census.pql:<BR>
+census.sql:<BR>
 <EM>retrieve unique (cfccatts.all, cfcc.all)<BR>
 where cfccatts.tlid = ? and cfccatts.cfcode=cfcc.cfcode</EM>
 <P>
@@ -67,8 +68,8 @@ where cfccatts.tlid = ? and cfccatts.cfcode=cfcc.cfcode</EM>
 <B>Result:</B> Reports all attributes from tables cfccatts and cfcc associated with the vector at current mouse location.
 <P>
 
-<B>Flags:</B> postQUEL select statements are input from a prepared file.<P>
-<B>Parameters:</B> postQUEL statements specifying well formed selection criteria.  Name of an existing vector map.
+<B>Flags:</B> SQL select statements are input from a prepared file.<P>
+<B>Parameters:</B> SQL statements specifying well formed selection criteria.  Name of an existing vector map.
 <H2>BUGS</H2>
 None known.
 

@@ -17,7 +17,7 @@
 
 <H2>ALTERNATE</H2>
 <B>d.what.r.pg -s help</B><BR>
-<B>d.what.r.pg -s pql</B><EM>=filename</EM> <B>map</B><EM>=name</EM>
+<B>d.what.r.pg -s sql</B><EM>=filename</EM> <B>map</B><EM>=name</EM>
 
 <H2>DESCRIPTION</H2>
 <EM>d.what.r.pg</EM> reports database attributes from the currently selected database associated with a raster category at a specific location on a raster map.  The currently selected database is identified by the GRASS environment variable $PGDBASE which is set using the <EM>g.select.pg</EM> GRASS-RDBMS interface tool.  If this environment variable is not set the program terminates with a message to the user.  The current raster location is selected by the user with the mouse.  If no join parameters are provided by the user on the command line the attributes in the table directly linked to the GRASS raster structure via the category value are returned.  However, if a join is specified then attributes from a related table are displayed. If the alternate form of this command is selected with the <EM>-s</EM> flag the user has greater control over the number of relational joins and the manner in which the attribute information is displayed.  Using the <EM>-s</EM> option the attributes from more than one table can be returned and displayed.
@@ -39,7 +39,7 @@
 <P>
 
 <DT><B>join=tab,tabkey,pkey</B>
-<DD>Tab is the table used to develop the current postQUEL query.  Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file.  Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
+<DD>Tab is the table used to develop the current SQL query.  Tabkey is the database column used to relate information in this table with data in the table linked to the GRASS category file.  Pkey is the associated column in the table linked to the GRASS category file which is related to tabkey in the current table.
 </DL>
 <P>
 
@@ -55,17 +55,18 @@ Specifying these conditions would insure that all rows from table compyld which 
 This syntax is adequate to accomplish 2 table joins.  However, if the query demands joins between more than 2 tables it is advisable to use the <EM>-s</EM> option [see Alternate Command Line Usage] to read a user prepared query, complete with join requirements, from a file.
 
 <H2>ALTERNATE COMMAND LINE USAGE</H2>
-The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line.  When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed postQUEL SELECT statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
+The alternate command line usage is provided to simplify the process of retrieving information from more than one table in the query criteria. The alternate command line structure is selected using the the <EM>[-s]</EM> flag on the command line.  When using this flag the user must include the name of a text file on the command line as well. This file must include a complete, well formed
+SQL SELECT statement specifying the query criteria and all relevant JOINS needed to retrieve values which correspond to category values in a GRASS data layer.
 <P>
 
 The user must also specify the name of the GRASS data layer containing these category values on the command line.  The following example illustrates the syntax which must be used in constructing a SELECT statement for use with the <EM>-s</EM> flag.
 <P>
 
 <B>EXAMPLE (single table)</B><P>
-<EM>d.what.r.pg -s pql=statsgo.pql map=secosoils</EM>
+<EM>d.what.r.pg -s sql=statsgo.sql map=secosoils</EM>
 <P>
 
-statsgo.pql:<BR>
+statsgo.sql:<BR>
 <EM>retrieve unique (secosoilcats.all)<BR>
 where secosoilcats.tlid=?</EM>
 <P>
@@ -89,13 +90,13 @@ Reports all attributes from the table secosoilcats, mapunit and compyld associat
 <H3>Flag:</H3>
 <DL>
 <DT><B>-s</B>
-<DD>PostQUEL select statements are input from a prepared file.
+<DD>SQL select statements are input from a prepared file.
 </DL>
 
 <H3>Parameters:</H3>
 <DL>
 <DT><B>sql=filename</B>
-<DD>PostQUEL statements specifying well formed selection criteria.
+<DD>SQL statements specifying well formed selection criteria.
 <P>
 
 <DT><B>map=map</B>
