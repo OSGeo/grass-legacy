@@ -61,6 +61,7 @@ int main (int argc, char *argv[])
     double          adfGeoTransform[6];
     int         force_imagery = FALSE;
     char	error_msg[8096];
+    int 	projcomp_error=0;
 
 	struct GModule *module;
     struct
@@ -243,8 +244,8 @@ int main (int argc, char *argv[])
         cellhd.zone = loc_wind.zone;
     } 
     else if( loc_wind.proj != cellhd.proj
-               || !G_compare_projections( loc_proj_info, loc_proj_units, 
-                                          proj_info, proj_units ) )
+               || (projcomp_error=G_compare_projections( loc_proj_info, loc_proj_units, 
+                                          proj_info, proj_units )) != 0 )
     {
         int     i_value;
 
@@ -274,6 +275,14 @@ int main (int argc, char *argv[])
                 sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
                          proj_info->key[i_value],
                          proj_info->value[i_value] );
+            strcat( error_msg, "\nERROR: ");
+            switch(projcomp_error) {
+                  case -1: strcat( error_msg, "proj\n"); break;
+                  case -2: strcat( error_msg, "units\n"); break;
+                  case -3: strcat( error_msg, "datum\n"); break;
+                  case -4: strcat( error_msg, "ellps\n"); break;
+                  case -5: strcat( error_msg, "zone\n"); break;
+            }
         }
         else
         {
