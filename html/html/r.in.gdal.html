@@ -66,7 +66,7 @@ An imagery group is generated if more than one band is imported.<BR>
 <DD>Name of location to read projection info from for GCPs transformation<BR>
 <DT><B>TITLE=</B>"<EM>phrase</EM>"
 <DD>Title to be assigned to resultant raster map layer(s). <BR>
-<DT><B>location=</B><EM>name</B>
+<DT><B>location=</B><EM>name</EM>
 <DD>Name of new location to create based on the file, if so desired.<BR>
 </DL>
 
@@ -76,12 +76,11 @@ Full details on GDAL supported formats are available at:<p>
 
 <a href="http://www.remotesensing.org/gdal/formats_list.html">http://www.remotesensing.org/gdal/formats_list.html</a><P>
 
-<pre>
 Selected formats:
+<pre>
+Format Name					Georeferencing
 
-Format Name					Georeferencing<BR>
-<BR>
-Arc/Info Binary Grid                                 Yes<BR>
+Arc/Info Binary Grid                                 Yes
 CEOS (Spot for instance)                             No
 First Generation USGS DOQ                            Yes
 New Labelled USGS DOQ                                Yes
@@ -108,7 +107,9 @@ installed on the system and accessable (normally via LD_LIBRARY_PATH).  If
 not, r.in.gdal will report <TT>Unable to initialize GDAL bridge</TT>.  If
 this occurs it means that you either don't have GDAL installed (ie.
 libgdal.1.1.so), it isn't in the LD_LIBRARY_PATH, or it is the wrong
-version. 
+version.  Recent builds of libgdal may be available at
+<a href="http://gdal.velocet.ca/projects/grass/">http://gdal.velocet.ca/projects/grass</a>, and the shared library should be copied into $GISBASE/lib. 
+Binary distributions of GRASS will normally include libgdal.
 
 <P> r.in.gdal uses a number of strategies to find the GDAL shared
 library.  It first looks in $GISBASE/lib/.  Then it looks for $GDAL_HOME and
@@ -210,14 +211,12 @@ the points with i.rectify.<BR>
 
 <H2>REFERENCES</H2>
 
-<a href=http://www.remotesensing.org/gdal/>GDAL pages</a>,<br>
-<a href=ftp://gdal.velocet.ca/pub/outgoing/>GDAL precompiled library</a>
-(libgdal-linux-grass.tar.gz, this library is required to run r.in.gdal,
-store in $GISBASE/lib/)
+GDAL Pages: <a href="http://www.remotesensing.org/gdal">http://www.remotesensing.org/gdal/</a>,<br>
+Precompiled libgdal for GRASS: <a href="http://gdal.velocet.ca/projects/grass/">http://gdal.velocet.ca/projects/grass</a>
 
 <H2>AUTHOR</H2>
 
-Frank Warmerdam (<a href="mailto:warmerdam@pobox.com">warmerdam@pobox.com</a>).
+<a href="http://pobox.com/~warmerdam">Frank Warmerdam</a> (<a href="mailto:warmerdam@pobox.com">warmerdam@pobox.com</a>).
 
 <p><i>Last changed: $Date$</i>
 </body>
