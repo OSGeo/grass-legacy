@@ -595,6 +595,8 @@ static const char *papszDatumEquiv[] =
     "European_Terrestrial_Reference_System_1989",
     "European_Reference_System_1989",
     "European_Terrestrial_Reference_System_1989",
+    "NZGD_2000",
+    "New_Zealand_Geodetic_Datum_2000",
     NULL
 };
 
