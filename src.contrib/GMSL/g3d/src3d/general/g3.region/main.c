@@ -15,7 +15,8 @@ format_double (value, buf)
     G_trim_decimal (buf);
 }
 
-main(argc,argv) char *argv[];
+int main(argc,argv) 
+char *argv[];
 {
     char buf[200];
     int (*option)();
