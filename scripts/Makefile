@@ -33,7 +33,8 @@ SUBDIRS = \
 	r.shaded.relief \
 	r.univar.sh \
 	v.build.all \
-	v.in.garmin
+	v.in.garmin \
+	v.in.e00
 
 default: subdirs
 
