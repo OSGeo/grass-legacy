@@ -1,0 +1,16 @@
+LIBES    = $(GISLIB)
+PGM      = cell.stats
+
+LIST     = main.o more_print.o format.o
+
+
+$(BIN)/$(PGM): $(LIST) $(LIBES) $(VASKLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(LIBES) $(VASK) -o $@
+
+#======= include dependencies ==================================
+
+main.o: conv.h
+
+#================================================================
+$(LIBES):   #
+$(VASKLIB): #
