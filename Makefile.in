@@ -17,12 +17,14 @@ SRCDIR=			@SRCDIR@
 SERVERNAME=		`uname -n`
 SYSTEM=			`uname -s`
 ARCH=			@ARCH@
-GISBASE=                @GISBASE@
-VERSION=		@VERSION@ #`cat ${SRCDIR}/src/CMD/VERSION | head -1`
+#GISBASE=                @GISBASE@
+#VERSION=		@VERSION@
+VERSION=		`cat ${SRCDIR}/src/CMD/VERSION | head -1`
 
 # Get the major release number from the version for appending to gmake,
 # gmakelinks, and grass command names eg VERSION = 5.0beta8 NAME_VER = 5
-NAME_VER=   	    	@NAME_VER@ #`cat ${SRCDIR}/src/CMD/VERSION | head -1 | sed 's/\..*//'`
+#NAME_VER=   	    	@NAME_VER@
+NAME_VER=		`cat ${SRCDIR}/src/CMD/VERSION | head -1 | sed 's/\..*//'`
 
 INSTALL=		@INSTALL@
 INSTALL_DATA=		@INSTALL_DATA@ -m 644
@@ -151,7 +153,7 @@ clean: mostlyclean
 	${SHELL} -c "rm -rf ${PREFIX}/bwidget/    	    2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${PREFIX}/dev/        	    2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${PREFIX}/driver/     	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/documents/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${PREFIX}/documents/	    2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${PREFIX}/etc/        	    2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${PREFIX}/fonts/      	    2>/dev/null ; true"
 	${SHELL} -c "rm -rf ${PREFIX}/include/      	    2>/dev/null ; true"
