@@ -77,9 +77,9 @@ main(argc, argv)
     signal(SIGFPE, close_down) ;    /*  in case of floating point error  */
 
     /* Couldn't call G_gisinit () because of UID stuff */
-    G_no_gisinit ("DIGIT3.0");
+    G_no_gisinit (argv[0]);
 
-    putenv ("DPG_LOCK", "LOCKED");
+    G_putenv ("DPG_LOCK", "LOCKED");
 
     if (argc != 5)
     {
