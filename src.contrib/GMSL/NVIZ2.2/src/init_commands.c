@@ -1,3 +1,6 @@
+/*	Alex Shevlakov sixote@yahoo.com 02/2000
+*	function added to handle postgres queries
+*/
 #include "interface.h"
 
 extern int
@@ -39,6 +42,8 @@ extern int
   Nset_fov_cmd(),
   Nget_region_cmd(),
   Nget_point_on_surf_cmd(),
+  Nget_point_on_surf_pg_grass(),
+  Nget_point_on_surf_pg_site(),
   Nget_longdim_cmd(),
   Nget_zrange_cmd(),
   Nget_zextents_cmd(),
@@ -198,6 +203,10 @@ init_commands (Tcl_Interp *interp, Nv_data *data)
   Tcl_CreateCommand(interp, "Nset_fov", Nset_fov_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_region", Nget_region_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_point_on_surf", Nget_point_on_surf_cmd, 
+		    data, NULL);
+  Tcl_CreateCommand(interp, "Nget_point_on_pg_grass", Nget_point_on_surf_pg_grass, 
+		    data, NULL);
+  Tcl_CreateCommand(interp, "Nget_point_on_pg_site", Nget_point_on_surf_pg_site, 
 		    data, NULL);
   Tcl_CreateCommand(interp, "Nget_longdim", Nget_longdim_cmd, data, NULL);
   Tcl_CreateCommand(interp, "Nget_zrange", Nget_zrange_cmd, data, NULL);

@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.2 2000-03-06 09:03:19 markus Exp $
+# $Id: Gmakefile,v 1.3 2000-03-06 17:18:24 markus Exp $
 # updated 2. Nov. 1999 
 # updated 31 octobre 1999 to build libimage.a - Pierre de Mouveaux.
 #                                       (p_de_mouveaux@hotmail.com)
@@ -28,8 +28,8 @@ nvwish:
 	cd src ; $(GMAKE) 
 
 nviz:
-	'rm' -rf $(NV_VER)
-	mkdir $(NV_VER)
+#	'rm' -rf $(NV_VER)
+#	mkdir $(NV_VER)
 	'rm' -rf $(GISBASE)/etc/$(NV_VER)
 	mkdir $(GISBASE)/etc/$(NV_VER)
 

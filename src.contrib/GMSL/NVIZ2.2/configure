@@ -3,7 +3,10 @@
 
 # Revisions:
 #  $Log: configure,v $
-#  Revision 1.3  2000-03-06 09:02:53  markus
+#  Revision 1.4  2000-03-06 17:16:18  markus
+#  Alex Shevlakov: added new fields in WHATS HERE menu for GRASS/PostgreSQL interface
+#
+#  Revision 1.3  2000/03/06 09:02:53  markus
 #  Philip Warner/Markus Neteler: updated to relative paths
 #
 #  11/11/99 - updated GL path
@@ -135,14 +138,29 @@ if ("$found" != "") then
   set install_dir=$found
 endif
 
+# Check for PostgreSQL
+set PQ_OBJS=(openvect.o getCat.o buildInfxQry.o runInfxQry.o)
+'cp' src/query_postgr_orig.c src/query_postgr.c
+echo -n Do you want Postgres support \[y\/n\]:
+set found=$<
+if ("$found" != "y") then
+  echo -n Postgres support disabled.
+  set PQ_OBJS=''
+  'rm' -rf src/query_postgr.c
+  'cp' src/query_postgr_dummy.c src/query_postgr.c
+endif
+
 # Now create the makefile
+echo ""
 echo Creating src/Gmakefile...
 set TK_LIB_PATH=`echo "$TK_LIB_PATH" | sed 's/\//\\\//g'`
 set TK_INCLUDE_PATH=`echo "$TK_INCLUDE_PATH" | sed 's/\//\\\//g'`
+set PQ_OBJS=`echo "$PQ_OBJS" | sed 's/\//\\\//g'`
 'rm' -rf src/Gmakefile
 sed -e "\
 s/TK_LIB_PATH=sed/TK_LIB_PATH=${TK_LIB_PATH}/g;\
 s/TK_INCLUDE_PATH=sed/TK_INCLUDE_PATH=${TK_INCLUDE_PATH}/g;\
+s/PQ_OBJS=sed/PQ_OBJS=${PQ_OBJS}/g;\
 s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g\
 " src/Gmakefile.in > src/Gmakefile
 

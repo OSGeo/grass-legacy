@@ -1,5 +1,8 @@
 # $Log$
-# Revision 1.5  2000-03-06 09:04:07  markus
+# Revision 1.6  2000-03-06 17:17:22  markus
+# Alex Shevlakov: added new fields in WHATS HERE menu for GRASS/PostgreSQL interface
+#
+# Revision 1.5  2000/03/06 09:04:07  markus
 # Philip Warner/Markus Neteler: updated to relative paths
 #
 # Revision 1.4  2000/02/29 14:38:28  markus
@@ -30,6 +33,7 @@
 TK_LIB_PATH=sed
 TK_INCLUDE_PATH=sed
 NVWISH_VER=sed
+PQ_OBJS=sed
 
 OGL_LIBS = -lGLU -lGL $(XLIB) -lXmu -lXext $(MATHLIB) -ldl $(XDRLIB) $(XEXTRALIBS)
 
@@ -41,17 +45,18 @@ SURFLIB = $(LIBDIR)/ogsf/libgsf.a
 # DSPINC = $(LIBDIR)/libes/dspf
 
 EXTRA_CFLAGS= -I${SURF_INCDIR} $(VECT_INCLUDE) -D_NO_PROTO\
-        -D__STDC__ $(TK_INCLUDE_PATH) -I$(DSPINC) $(GISLIB)
+        -D__STDC__ $(TK_INCLUDE_PATH) -I$(DSPINC) $(GISLIB) $(PQINCPATH)
 
 IMGLIB= $(LIBDIR)/libimage/libimage.a
 
-XTRA_LDFLAGS=$(DFLAGS) $(TK_LIB_PATH) $(OGL_LIBS)
+XTRA_LDFLAGS=$(DFLAGS) $(TK_LIB_PATH) $(OGL_LIBS) $(PQLIB)
 
 OBJS = nvizAppInit.o change_view.o draw.o exag.o glwrappers.o \
 	init_commands.o lights.o map_obj.o misc.o nviz_init.o \
 	position.o quick_draw.o anim_support.o cutplane_obj.o \
 	script_support.o \
-	label.o nvizMain.o togl.o togl_cb.o
+	label.o nvizMain.o togl.o togl_cb.o\
+	query_postgr.o $(PQ_OBJS)
 # mkdspf_calc_linefax.o mkdspf_init_file.o mkdspf_main.o \
 # mkdspf_fill_cfax.o mkdspf_iso_surface.o
 
