@@ -1,0 +1,66 @@
+
+
+
+v.out.idrisi <main>  GRASS Reference Manual   <main> v.out.idrisi
+
+
+
+NAME
+     v.out.idrisi - Program to export GRASS data to IDRISI
+     format.  The program works	with binary GRASS vector files to
+     ASCII IDRISI format.  (GRASS Raster Program)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 4.3		Baylor University			1
+
+
+
