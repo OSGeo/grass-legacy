@@ -155,8 +155,8 @@ int G__lookup_colors (raster, red, grn, blu, set, n, colors, mod, rules_only, da
     /* we want min, max for cp, not min, max overall */
     dmin = cp->min;
     dmax = cp->max;
-    min = floor(dmin);
-    max = ceil(dmax);
+    min = (CELL) dmin;
+    max = (CELL) dmax + 1;
 
     cell_type = (data_type == CELL_TYPE);
 
