@@ -1,0 +1,132 @@
+
+
+
+g.stats.db           GRASS Reference Manual            g.stats.db
+
+
+
+NAME
+     g.stats.db - Generate a range of simple statistics for the
+     values in a database column.
+     (GRASS-RDBMS General Interface Program)
+
+SYNOPSIS
+     g.stats.db
+     g.stats.db help
+     g.stats.db table=name column=name
+
+DESCRIPTION
+     g.stats.db generates a series of simple statistics for a
+     numeric column in the specified table of the currently
+     selected database. The currently selected database is
+     identified by the GRASS environment variable $DATABASE which
+     is set using the command g.select.db. If this environment
+     variable is not set the program terminates with a message to
+     the user. g.stats.db generates statistics for any numeric
+     column in the table specified by the user. To identify the
+     data types for individual columns in a table in the
+     currently selected database use the command g.column.db with
+     the -v flag. Statistics generated for the column include
+     count, sum, average, minimum value and maximum value.
+
+
+COMMAND LINE OPTIONS
+     Parameters
+
+     table=database_table_name
+          Name of table in currently selected  database.
+
+     column=database_column_name
+          Column in [table] which is numeric in type.
+
+
+EXAMPLE
+     g.stats.db table=utm column=ukfact
+
+     Statistics for column: ukfact
+      (count(*))            (sum)            (avg) (max) (min)
+
+             171            47.67             0.28  0.49  0.00
+
+
+BUGS
+     None known.
+
+
+SEE ALSO
+     g.column.db, g.select.db, g.table.db, d.rast.db, d.site.db,
+     d.vect.db, d.what.r.db, d.what.s.db, d.what.v.db,
+     r.reclass.db, r.rescale.db, v.reclass.db
+
+
+
+GRASS                    U.S. Army CERL                         1
+
+
+
+
+
+
+g.stats.db           GRASS Reference Manual            g.stats.db
+
+
+
+AUTHOR
+     James A. Farley, Wang Song and W. Fredrick Limp University
+     of Arkansas, CAST
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS                    U.S. Army CERL                         2
+
+
+
