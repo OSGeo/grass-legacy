@@ -1,6 +1,6 @@
                    INSTALL GRASS 5.0 source code
 
-($Id: INSTALL,v 1.20 2002-01-22 04:50:47 glynn Exp $)
+($Id: INSTALL,v 1.21 2002-02-06 17:29:03 markus Exp $)
 
 Welcome to the GRASS GIS source code distribution. This is the installation
 instruction file and contains the following sections:
@@ -53,11 +53,14 @@ of commands work to install GRASS on any platform.
 
 The `configure' command (possibly with options; see below) should
 identify all relevant system dependencies and create several files
-(see below) containing dependency information. The `make' command
-will compile the sources in the current directory. Note that you do not 
-need root access to run `make', and in fact it is HIGHLY recommended that
-you do not compile GRASS as the root user. At this point you should be able
-to run grass by typing 
+(see below) containing dependency information. Eventually have a look
+at
+	./configure --help
+
+The `make' command will compile the sources in the current directory. Note
+that you do not need root access to run `make', and in fact it is HIGHLY
+recommended that you do not compile GRASS as the root user. At this point
+you should be able to run grass by typing
 
 	bin.$ARCH/grass5
 
@@ -347,4 +350,4 @@ should suffice.
 
 
 GRASS Development Team
-$Date: 2002-01-22 04:50:47 $
+$Date: 2002-02-06 17:29:03 $
