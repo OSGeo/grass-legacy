@@ -275,6 +275,7 @@ src/raster/r.null
 src/raster/r.out.arc
 src/raster/r.out.ascii
 src/raster/r.out.mpeg
+src/raster/r.out.png
 src/raster/r.out.ppm
 src/raster/r.out.tga
 src/raster/r.out.xyz
