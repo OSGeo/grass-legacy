@@ -9,6 +9,7 @@ SUBDIRS = \
 	display \
 	general \
 	scripts \
+	tools \
 	vector \
 	visualization
 
