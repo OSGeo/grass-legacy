@@ -1,0 +1,10 @@
+# %W% %G%
+
+OBJ = lock.o unlock.o
+
+$(LOCKLIB): $(OBJ)
+	$(AR)
+
+
+try: try.o $(LOCKLIB)
+	$(CC) try.o $(LOCKLIB) -o try
