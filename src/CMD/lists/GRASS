@@ -273,7 +273,6 @@ src/paint/p.vrml1.1
 # do we need this?:
 src/paint/Tests
 src/ps.map
-src/raster/r.agnps50
 src/raster/r.average
 src/raster/r.basins.fill
 src/raster/r.bilinear
