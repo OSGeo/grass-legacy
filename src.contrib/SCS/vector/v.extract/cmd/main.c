@@ -297,7 +297,7 @@ char *argv[];
      system(buffr);
 
 		       /* give the user this message  */
-     fprintf(stderr, "\n\nSelected vector file <%s> has been created in the 'dig' directory\n\n",output);
+     fprintf(stderr, "\n\nExtracted vector file <%s> has been created in the 'dig' directory\n\n",output);
 
      exit(0);
 }
