@@ -1,0 +1,95 @@
+LIBES = $(D_LIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+OFILES  =\
+	main.o\
+	colors.o\
+	cover_num.o\
+	cry_n_die.o\
+	eval_tree.o\
+	falloc.o\
+	get_cats.o\
+	get_c_win.o\
+	get_win.o\
+	gis_lxcl.o\
+	gis_pars.o\
+	group.o\
+	init_comb.o\
+	r_alc_lbuf.o\
+	r_cls_cell.o\
+	r_find_val.o\
+	r_fre_lbuf.o\
+	r_opn_cell.o\
+	r_pr_hist.o\
+	r_rd_line.o\
+	r_sum_tree.o\
+	r_wr_line.o\
+	r_wr_supp.o\
+	set_sigs.o\
+	sigint.o\
+	write.o
+
+all: remove $(BIN_MAIN_CMD)/r.combine $(ETC)/r.combine text
+
+remove:
+	# rm -f gis_pars.c gis_lxcl.c
+
+$(BIN_MAIN_CMD)/r.combine:
+	rm -f $@
+	cp combine.sh $@
+	chmod 0755 $@
+
+
+$(ETC)/r.combine:      $(OFILES) $(LIBES)
+	rm -f a.out
+	$(CC) $(LDFLAGS) $(OFILES) $(LIBES) $(MATHLIB)
+	mv a.out $@
+
+text:
+	rm -rf $(TXT)/COMBINE
+	mkdir $(TXT)/COMBINE
+	cp HELP_TEXT/* $(TXT)/COMBINE
+
+clean:
+	-rm gis_pars.c gis_pars.h gis_lxcl.c gis_pars.o gis_lxcl.o
+#
+
+main.o: tree.h
+colors.o: colors.h
+cover_num.o: tree.h
+eval_tree.o: tree.h
+eval_tree.o: externs.h
+get_c_win.o: tree.h
+gis_lxcl.o: gis_pars.h
+gis_pars.o: tree.h
+gis_pars.o: lvw.h
+group.o: tree.h
+init_comb.o: tree.h
+r_alc_lbuf.o: tree.h
+r_cls_cell.o: tree.h
+r_find_val.o: tree.h
+r_fre_lbuf.o: tree.h
+r_opn_cell.o: tree.h
+r_pr_hist.o: tree.h
+r_pr_tree.o: tree.h
+r_rd_line.o: lvw.h
+r_rd_line.o: tree.h
+r_sum_tree.o: tree.h
+r_wr_line.o: tree.h
+r_wr_supp.o: tree.h
+set_sigs.o: externs.h
+sigint.o: externs.h
+
+#
+# PARSER
+gis_pars.c:     lvw.h tree.h gis_pars.y
+	yacc -v -d gis_pars.y
+	mv y.tab.c gis_pars.c
+	mv y.tab.h gis_pars.h
+	mv y.output gis_pars.out
+	@echo "See gis_pars.out for review of this parser." 
+
+gis_lxcl.c:     gis_lxcl.l gis_pars.h
+	lex -t gis_lxcl.l > gis_lxcl.c
+
+gis_pars.h:      gis_pars.c
+
+$(LIBES): #
