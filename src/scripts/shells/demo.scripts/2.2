@@ -1,0 +1,141 @@
+#!/bin/sh
+d.frame -e
+d.erase
+d.frame -c f=a a=95,99,1,99
+d.frame -s f=a
+d.text << EOF
+.F romant
+.S 90
+.C green
+                           What is a VECTOR based GIS?
+EOF
+d.frame -c f=graph a=1,40,1,40
+d.frame -c f=text a=41,94,1,40
+d.frame -c f=name a=1,5,41,99
+d.frame -c f=map a=6,94,41,99
+d.frame -s f=text
+d.text << EOF
+.F romans
+.S 7
+.C white
+Features:
+*Data stored by tracing
+ lines and areas using
+.C red
+    * nodes
+.C yellow
+    * lines
+      (made of points)
+EOF
+d.frame -s f=graph
+d.graph << EOF
+color yellow
+move 10 10
+draw 20 20
+draw 20 30
+draw 10 50
+draw 60 80
+move 10 10
+draw 10 90
+draw 90 90
+draw 90 10
+draw 10 10
+move 40 90
+draw 60 80
+draw 90 82
+move 20 20
+draw 33 40
+draw 60 40
+draw 80 10
+color red
+icon o 2 10 10
+icon o 4 10 10
+icon o 2 10 50
+icon o 4 10 50
+icon o 2 20 20
+icon o 4 20 20
+icon o 2 40 90
+icon o 4 40 90
+icon o 2 60 80
+icon o 4 60 80
+icon o 2 80 10
+icon o 4 80 10
+icon o 2 90 82
+icon o 4 90 82
+color yellow
+icon o 2 10 90
+icon o 2 20 30
+icon o 2 33 40
+icon o 2 60 40
+icon o 2 90 10
+icon o 2 90 90
+# Identify areas
+size 5 5
+move 50 50
+text area A
+move 15 75
+text area B
+move 60 85
+text area C
+move 30 20
+text area D
+move 11 20
+text E
+EOF
+
+if ./continue
+then
+	d.erase
+	exit 1
+fi
+
+d.frame -s f=text
+d.text << EOF
+.F romans
+.S 7
+.C white
+
+
+
+
+
+
+*GRASS uses vector
+ data for:
+    * digitizing
+    * display
+EOF
+d.frame -s f=name
+d.erase white
+d.text << EOF
+.C red
+.S 90
+         ROADS
+EOF
+d.frame -s f=map
+d.erase white
+d.vect m=roads c=red
+d.frame -s f=name
+d.text << EOF
+.C blue
+.S 90
+                    WATER
+EOF
+d.frame -s f=map
+d.vect m=streams c=blue
+#d.vect streams.dead blue
+#d.vect streams.spear blue
+
+# d.frame note 42 52 2 39
+# d.frame f=note
+# d.erase yellow
+# d.text << EOF
+# .S 40
+# .C red
+# GRASS CAN NOT DO ANY
+# ANALYSES ON VECTORS
+# EOF
+
+./continue.yes
+
+exit 1
