@@ -8,6 +8,7 @@
 #include <errno.h>
 #include <sys/time.h>
 #include <sys/types.h>
+#include <time.h>
 
 #include "gis.h"
 #include "graph.h"
@@ -94,6 +95,12 @@ process_command(int c)
     LIST *list;
     PAD *pad;
     unsigned char ch;
+    struct timespec delay,remains;
+    
+
+    /* we sleep a bit when querying maps or zooming into - to reduce CPU load */
+    delay.tv_sec=0;
+    delay.tv_nsec=500000; /* 500 milliseconds */
 
     switch(c)
     {
@@ -186,6 +193,7 @@ process_command(int c)
 	        ret = Get_location_with_box2(t, b, &x, &y, &button, 3);
             	break;
 	    }
+	    nanosleep(&delay,&remains); /* sleep to slow down loop */
 	}	
 	break;
     case GET_LOCATION_WITH_LINE:
@@ -209,6 +217,7 @@ process_command(int c)
 	        ret = Get_location_with_line2(t, b, &x, &y, &button, 3);
             	break;
 	    }
+	    nanosleep(&delay,&remains); /* sleep to slow down loop */
 	}	
 	break;
     case GET_LOCATION_WITH_POINTER:
@@ -231,6 +240,7 @@ process_command(int c)
 	        ret = Get_location_with_pointer2(&x, &y, &button, 3);
             	break;
 	    }
+	    nanosleep(&delay,&remains); /* sleep to slow down loop */
 	}	
 	break;
     case GRAPH_CLOSE:
