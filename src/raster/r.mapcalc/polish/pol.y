@@ -34,6 +34,7 @@ exp        : '(' exp ')'
 	   | map '[' index ']'         { mapname ($1,'M',$3,0); }
 	   | map '[' index ',' index ']'
 				       { mapname ($1,'M',$3,$5); }
+	   | map                       { mapname ($1,'M',0,0); }
 	   | mapmod map                { mapname ($2,$1,0,0); }
 	   | mapmod map '[' index ']'  { mapname ($2,$1,$4,0); }
 	   | mapmod map '[' index ',' index ']'
@@ -42,6 +43,14 @@ exp        : '(' exp ')'
 	   | FUNCTION '(' exp_list ')' { function ($1); }
 	   | INTEGER                   { integer ($1); }
 	   | FLOAT                     { floating_point ($1); }
+	   ;
+
+map        : NAME
+	   | NAME '@' NAME
+		          { char buf[1024];
+			    sprintf (buf, "%s@%s", storage[$1], storage[$3]);
+			    $$ = store(buf);
+			  }
 	   ;
 
 mapmod     : '@'          { $$ = '@'; }
@@ -53,10 +62,6 @@ mapmod     : '@'          { $$ = '@'; }
 
 exp_list   : exp                   { another_arg(); }
 	   | exp_list ',' exp      { another_arg(); }
-	   ;
-
-map        : NAME
-	   | STRING
 	   ;
 
 index      : INTEGER       { $$ = $1; }
