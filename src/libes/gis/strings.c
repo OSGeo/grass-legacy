@@ -1,4 +1,3 @@
-#include "gis.h"
 /*
  * string/chring movement functions
  *
@@ -50,6 +49,10 @@
  *
  * Author: Bernhard Reiter (Intevation GmbH, Germany)
  */
+
+#include <string.h>
+#include <stdlib.h>
+#include "gis.h"
 
 static char *G_strend (register char *S)
 {
@@ -213,4 +216,75 @@ char * G_strchg(char* bug, char character, char new) {
 	help++;
 	}
  return bug;
+}
+
+/*--------------------------------------------------------------------
+  \brief Replace all occurencies of old_str in buffer with new_str.
+  \return Returns the newly allocated string, buffer is unchanged 
+  
+   Author Beverly Wallace (LMSSC) 3/11/04, slightly modified RB/MN
+--------------------------------------------------------------------*/
+char * G_str_replace(char* buffer, char* old_str, char* new_str) 
+{
+
+	char *B, *R, *N;
+	char *replace;
+	int count, len;
+
+	/* Make sure old_str and new_str are not NULL */
+	if (old_str == NULL || new_str == NULL)
+		return buffer;
+	/* Make sure buffer is not NULL */
+	if (buffer == NULL)
+		return NULL;
+
+	/* Make sure old_str occurs */
+  	B = strstr (buffer, old_str);
+	if (B == NULL)
+		/* return NULL; */
+		return G_strdup (buffer);
+
+	if (strlen (new_str) > strlen (old_str)) {
+		/* Count occurences of old_str */
+		count = 0;
+		len = strlen (old_str);
+		B = buffer;
+		while(B != NULL && *B != '\0') {
+  			B = G_strstr (B, old_str);
+			if (B != NULL) {
+				B += len;
+				count++;
+			}
+		}
+	
+  		len = count * (strlen(new_str) - strlen(old_str)) 
+			+ strlen(buffer);
+
+	}
+	else 
+		len = strlen(buffer);
+
+	/* Allocate new replacement */
+	replace = G_malloc (len + 1);
+	if (replace == NULL)
+		return NULL;
+
+	/* Replace old_str with new_str */
+	B = buffer;
+	R = replace;
+	len = strlen (old_str);
+	while(*B != '\0') {
+		if (*B == old_str[0] && strncmp (B, old_str, len) == 0) {
+			N = new_str;
+			while (*N != '\0')
+				*R++ = *N++;
+			B += len;
+		}
+		else {
+			*R++ = *B++;
+		}
+	}
+	*R='\0';
+
+	return replace;
 }
