@@ -168,6 +168,17 @@ G_compare_projections( struct Key_Value *proj_info1,
     }
 
 /* -------------------------------------------------------------------- */
+/*      Zone check specially for UTM                                    */
+/* -------------------------------------------------------------------- */
+    {   
+        if(   G_find_key_value( "proj", proj_info1 ) == "utm"
+	   && G_find_key_value( "proj", proj_info2 ) == "utm"
+	   &&    atof(G_find_key_value( "zone", proj_info1 ))
+	      != atof(G_find_key_value( "zone", proj_info2 )) )
+	   return -5;
+    }
+
+/* -------------------------------------------------------------------- */
 /*      Add more details in later.                                      */
 /* -------------------------------------------------------------------- */
 
