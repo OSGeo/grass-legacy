@@ -14,7 +14,7 @@ mask_sites (sites_old, sites_new, fd, mask, ncats)
 
 	int row, col;	/* location of site */
 
-	int north, east;
+	double north, east;
 	char *desc;
 
 	float northing_to_row ();
