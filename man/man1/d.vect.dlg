@@ -1,0 +1,55 @@
+.TH d.vect.dlg
+.SH NAME
+\fId.vect.dlg\fR \- Displays a USGS Digital Line Graph (DLG-3) binary vector file
+in the active frame on the user's graphics monitor.
+.br
+.I "(GRASS Display Program)"
+.SH SYNOPSIS
+\fBd.vect.dlg\fR
+.br
+\fBd.vect.dlg help\fR
+.br
+\fBd.vect.dlg map\*=\fIname\fR [\fBcolor\*=\fIname\fR]
+.SH DESCRIPTION
+.I d.vect.dlg
+displays a user-specified binary vector digital line graph - level 3 (DLG-3) map in
+the active frame on the user's graphics monitor.  The user can (optionally)
+specify the color in which vectors will be drawn.  The map to be drawn must
+exist in the user's current mapset search path.
+.LP
+This program can be run either non-interactively or interactively.
+The user can run this command non-interactively by specifying parameter values
+on the command line.  Alternately, the user can simply type \fBd.vect.dlg\fR on
+the command line;  in this case, the program will prompt the user to enter
+the name of a DLG-3 file and a vector color using the standard interface described
+in the manual entry for \fIparser\fR.
+.SH "COMMAND LINE OPTIONS"
+\fBParameters:\fR
+.IP \fBmap\*=\fIname\fR 18
+Name of an existing DLG-3 map layer to be displayed.
+.IP \fBcolor\*=\fIname\fR 18
+Color in which vectors will be drawn.
+.br
+Options:  white, red, orange, yellow, green, blue, indigo, violet, gray, black
+.br
+Default:  gray
+.SH NOTES
+This program will probably be phased out and is included only to provide some
+backward compatibility with previous GRASS versions (e.g., version 2.0).
+.LP
+The command \fBg.list type\*=vect\fR only lists binary vector files in GRASS format
+(i.e., \fIdig\fR files);  it does not list binary vector DLG-3 files (\fIbdlg\fR files)
+stored under the user's mapset.  However, the user can list the DLG-3 files
+accessible to him by running \fId.vect.dlg\fR interactively.
+.SH SEE ALSO
+.I d.rast,
+.I d.sites,
+.I d.vect,
+.I g.mapsets,
+.I v.import,
+.I v.in.dlg,
+.I v.out.dlg
+and
+.I parser
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
