@@ -1,7 +1,7 @@
 
 
 
-d.ask                GRASS Reference Manual                 d.ask
+d.ask <main>         GRASS Reference Manual          <main> d.ask
 
 
 
@@ -60,14 +60,14 @@ DESCRIPTION
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
 
 
 
-d.ask                GRASS Reference Manual                 d.ask
+d.ask <main>         GRASS Reference Manual          <main> d.ask
 
 
 
@@ -126,14 +126,14 @@ OUTPUT
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
 
 
 
-d.ask                GRASS Reference Manual                 d.ask
+d.ask <main>         GRASS Reference Manual          <main> d.ask
 
 
 
@@ -192,7 +192,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
