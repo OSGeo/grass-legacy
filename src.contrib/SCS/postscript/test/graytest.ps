@@ -1,0 +1,61 @@
+%!PS-Adobe-2.0 EPSF-1.2
+% A postScript program to display 256 gray levels
+% Author: Paul W. Carlson	March 1992
+%%EndComments
+
+% ------ Procedure to construct a box path ------------
+/box
+{
+    30 0 rlineto
+    0 30 rlineto
+    -30 0 rlineto
+    0 -30 rlineto
+    closepath
+} def
+
+/title (PostScript Grayscale Test) def		% title string
+/buf 8 string def				% temporary string
+
+%%EndProlog
+
+% ------ set up font --------------------------
+/Helvetica findfont 6 scalefont setfont
+
+% ------ main for loop ------------------------
+0 1 255 {
+    dup dup dup 				% make copies of counter
+    newpath					% new path for each box
+    16 mod 36 mul 22 add			% box x coordinate
+    exch 16 idiv 45 mul 742 exch sub		% box y coordinate
+    moveto					% move to x, y
+    box						% construct box path
+    gsave					% save box path
+    255 div setgray				% set grey level
+    fill					% fill box with grey
+    grestore					% restore box path
+    gsave					% save box path again
+    0 0 0 setrgbcolor				% set color to black
+    1 setlinewidth				% single line for box border
+    stroke					% draw box border
+    grestore					% restore box path
+    currentpoint				% get lower left box coords.
+    moveto					% move to lower left
+    buf cvs					% convert counter to string
+    dup stringwidth pop				% get width of string
+    30 exch sub 2 div				% compute x offset
+    -7 rmoveto					% position the number
+    show					% display the number
+} for
+
+% ------------ Print title -----------------------
+/Helvetica findfont 15 scalefont setfont	% set font for title
+newpath						% measure from bottom left
+title dup stringwidth pop			% get width of title
+570 exch sub 2 div 28 add			% get x to center title
+30 moveto					% position title
+show						% display the title
+
+showpage
+%%Trailer
+%%EOF
+
