@@ -1,0 +1,8 @@
+PGM=r3.timestamp
+
+OBJ=main.o
+
+$(BIN_CMD)/$(PGM): $(OBJ) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(LINKMLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(G3DLIB) $(GISLIB) $(DATETIMELIB) $(LINKMLIB) $(MATHLIB) $(XDRLIB)
+
+$(GISLIB): #
