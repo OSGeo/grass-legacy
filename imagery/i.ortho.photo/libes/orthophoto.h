@@ -113,7 +113,6 @@ int I_convert_con_points(char *, struct Ortho_Control_Points *,
 /* georef.c */
 int I_compute_ref_equations (struct Ortho_Photo_Points *,
     double *, double *, double *, double *);
-int I_georef (double, double, double *, double *, double *, double *);
 /* orthoref.c */
 int I_compute_ortho_equations(
     struct Ortho_Control_Points *, struct Ortho_Camera_File_Ref *,
