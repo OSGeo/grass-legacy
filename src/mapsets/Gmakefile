@@ -1,0 +1,33 @@
+# %W% %G%
+PGM      = mapsets
+GPGM      = Gmapsets
+
+LIST = \
+	main.o\
+	dsply_path.o\
+	dsply_maps.o\
+	get_maps.o\
+	get_path.o\
+	set_path.o\
+	scan_int.o
+
+GLIST = Gmapsets.o dsply_path.o
+
+
+all:	$(BIN)/$(PGM)  $(BIN)/$(GPGM)
+
+$(BIN)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(VASK) -o $@
+
+$(BIN)/$(GPGM): $(GLIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(GLIST) $(GISLIB) -o $@
+
+#==============================================================
+# include dependencies
+
+$(LIST):        externs.h
+
+#==============================================================
+
+$(GISLIB):      # in case library changes
+$(VASKLIB): #
