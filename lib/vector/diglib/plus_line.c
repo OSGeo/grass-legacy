@@ -58,6 +58,7 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
     }	
     line->N1 = node;
     dig_node_add_line (plus, node, lineid, Points, type );
+    if ( plus->do_uplist ) dig_node_add_updated ( plus, node );
      
     if ( type & GV_LINES ) {
 	lp = Points->n_points - 1;
@@ -72,6 +73,7 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
 	}
         line->N2 = node;
         dig_node_add_line (plus, node, -lineid, Points, type );
+        if ( plus->do_uplist ) dig_node_add_updated ( plus, node );
     } else {
         line->N2 = 0;
     }
@@ -104,6 +106,7 @@ dig_add_line (struct Plus_head *plus, int type, struct line_pnts *Points, long o
     dig_line_box ( Points, &box );
     dig_line_set_box (plus, lineid, &box);
     dig_spidx_add_line ( plus, lineid, &box );    
+    if ( plus->do_uplist ) dig_line_add_updated ( plus, lineid );
     
     return ( lineid );
 }
@@ -125,7 +128,7 @@ dig_del_line (struct Plus_head *plus, int line)
     P_NODE *Node;
   
     /* TODO: free structures */
-    G_debug (3, "dig_del_line() line =  %d", line);
+    G_debug (0, "dig_del_line() line =  %d", line);
     
     Line = plus->Line[line]; 
     dig_spidx_del_line ( plus, line );
@@ -146,8 +149,9 @@ dig_del_line (struct Plus_head *plus, int line)
         G_debug (3, "    node %d has 0 lines -> delete", Line->N1);
 	dig_spidx_del_node ( plus, Line->N1 );
 	plus->Node[Line->N1] = NULL;	
+    } else {
+        if ( plus->do_uplist ) dig_node_add_updated ( plus, Line->N1 );
     }
-	
     
     if ( Line->type & GV_LINES ) {
 	Node = plus->Node[Line->N2];
@@ -165,6 +169,8 @@ dig_del_line (struct Plus_head *plus, int line)
             G_debug (3, "    node %d has 0 lines -> delete", Line->N2);
 	    dig_spidx_del_node ( plus, Line->N2 );
 	    plus->Node[Line->N2] = NULL;	
+	} else {
+	    if ( plus->do_uplist ) dig_node_add_updated ( plus, Line->N2 );
 	}
     }
      

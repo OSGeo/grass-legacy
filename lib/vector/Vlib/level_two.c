@@ -83,6 +83,54 @@ Vect_get_num_islands (struct Map_info *map)
 }
 
 /*!
+ \fn int Vect_get_num_updated_lines (struct Map_info *map)
+ \brief get number of updated lines
+ \return number of updated lines
+ \param Map_info structure
+ */
+int 
+Vect_get_num_updated_lines (struct Map_info *map)
+{
+  return (map->plus.n_uplines);
+}
+
+/*!
+ \fn int Vect_get_updated_line (struct Map_info *map, int idx)
+ \brief get updated line by index
+ \return updated line
+ \param Map_info structure
+ */
+int 
+Vect_get_updated_line (struct Map_info *map, int idx)
+{
+  return (map->plus.uplines[idx]);
+}
+
+/*!
+ \fn int Vect_get_num_updated_nodes (struct Map_info *map)
+ \brief get number of updated nodes
+ \return number of updated nodes
+ \param Map_info structure
+ */
+int 
+Vect_get_num_updated_nodes (struct Map_info *map)
+{
+  return (map->plus.n_upnodes);
+}
+
+/*!
+ \fn int Vect_get_updated_node (struct Map_info *map, int idx)
+ \brief get updated node by index
+ \return updated node
+ \param Map_info structure
+ */
+int 
+Vect_get_updated_node (struct Map_info *map, int idx)
+{
+  return (map->plus.upnodes[idx]);
+}
+
+/*!
  \fn int Vect_get_node_coor (struct Map_info *map, int num, double *x, double *y, double *z)
  \brief get 2D/3D coordinates of node
  \return 2D/3D coordinates of node

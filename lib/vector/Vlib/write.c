@@ -85,12 +85,14 @@ Vect_write_line (
      struct line_pnts *points,
      struct line_cats *cats)
 {
-#ifdef GDEBUG
     G_debug (3, "Vect_write_line(): name = %s, format = %d, level = %d", 
 	           Map->name, Map->format, Map->level);
-#endif
+
     if (!VECT_OPEN (Map))
 	return -1; 
+
+    dig_line_reset_updated ( &(Map->plus) );
+    dig_node_reset_updated ( &(Map->plus) );
 
     return (*Write_line_array[Map->format][Map->level]) (Map, type, points, cats);
 }
@@ -117,9 +119,11 @@ Vect_rewrite_line (
      struct line_pnts *points,
      struct line_cats *cats)
 {
-#ifdef GDEBUG
     G_debug (3, "Vect_rewrite_line(): name = %s", Map->name);
-#endif
+    
+    dig_line_reset_updated ( &(Map->plus) );
+    dig_node_reset_updated ( &(Map->plus) );
+
     return (*Vect_rewrite_line_array[Map->format][Map->level]) (Map, line, type, points, cats);
 }
 
@@ -168,6 +172,9 @@ Vect_delete_line (
 	G_warning ("Cannot delete the line, map '%s' is not in opened in 'write' mode", Map->name );
         return -1;
     }
+    
+    dig_line_reset_updated ( &(Map->plus) );
+    dig_node_reset_updated ( &(Map->plus) );
     
     ret = (*Vect_delete_line_array[Map->format][Map->level]) (Map, line);
 

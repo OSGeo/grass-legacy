@@ -284,11 +284,16 @@ Vect_attach_centroids ( struct Map_info *Map, BOUND_BOX *box )
 	    if ( Area->centroid == 0 ) { /* first centroid */
 		G_debug ( 3, "  first centroid -> attach to area");
 		Area->centroid = centr;
+	        if ( Line->left != sel_area &&  plus->do_uplist ) dig_line_add_updated ( plus, centr );
 		Line->left = sel_area;
 	    } else {  /* duplicate centroid */
 		G_debug ( 3, "  duplicate centroid -> do not attach to area");
+	        if ( Line->left != -sel_area &&  plus->do_uplist ) dig_line_add_updated ( plus, centr );
 		Line->left = -sel_area;
 	    }
+	} else {
+	    if ( Line->left != 0 &&  plus->do_uplist ) dig_line_add_updated ( plus, centr );
+	    Line->left = 0;
 	}
     }
     

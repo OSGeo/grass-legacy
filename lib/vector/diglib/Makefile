@@ -21,7 +21,8 @@ LIB_OBJS = \
     portable.o \
     spindex.o  \
     spindex_rw.o  \
-    struct_alloc.o
+    struct_alloc.o \
+    update.o
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 

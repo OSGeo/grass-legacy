@@ -210,8 +210,18 @@ struct Plus_head
     long coor_size;		/* size of coor file */
     long coor_mtime;		/* time of last coor modification */
 
-    /*int all_areas; */		/* if TRUE, all areas have just been calculated */
-    /*int all_isles; */		/* if TRUE, all islands have just been calculated */
+    /* Level2 update: list of lines and nodes updated (topo info for the line was changed) 
+    *                 by last write/rewrite/delete operation.
+    *                 Lines/nodes in the list may be deleted (e.g. delete boundary: first added for
+    *                 delete area and then delete */
+    int do_uplist;     /* used internaly in diglib to know if list is maintained */
+    
+    int *uplines;      /* array of updated lines */
+    int alloc_uplines; /* allocated array */
+    int n_uplines;     /* number of updated lines */
+    int *upnodes;      /* array of updated nodes */
+    int alloc_upnodes; /* allocated array */
+    int n_upnodes;     /* number of updated nodes */
   };
 
 struct Map_info

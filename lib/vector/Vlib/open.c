@@ -195,6 +195,8 @@ Vect__open_old (
       }
       Vect_set_fatal_error (GV_FATAL_EXIT);
   }
+
+  Map->plus.do_uplist = 0;
       
   return (level);
 }
@@ -232,9 +234,23 @@ Vect_open_update (
 		char *name,
 		char *mapset)
 {
-    return ( Vect__open_old (Map, name, mapset, 1) );
-}
+    int ret;
 
+    ret = Vect__open_old (Map, name, mapset, 1);
+
+    if ( ret > 0 ) {
+	Map->plus.do_uplist = 1;
+
+	Map->plus.uplines = NULL;
+	Map->plus.n_uplines = 0;
+	Map->plus.alloc_uplines = 0;
+	Map->plus.upnodes = NULL;
+	Map->plus.n_upnodes = 0;
+	Map->plus.alloc_upnodes = 0;
+    }
+	
+    return ret;
+}
 
 /*!
  \fn int Vect_open_new ( struct Map_info *Map,
@@ -296,6 +312,7 @@ Vect_open_new (
     Map->Constraint_region_flag = 0;
     Map->Constraint_type_flag = 0;
     Map->head.with_z = with_z;
+    Map->plus.do_uplist = 0;
     
     return 1;
 }
