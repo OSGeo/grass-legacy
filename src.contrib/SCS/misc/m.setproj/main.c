@@ -63,7 +63,7 @@ int argc; char *argv[];
 	else
             sprintf(set_name,"%s",G_mapset());
         sprintf(path,"%s/%s",G_location_path(),set_name);
-									  
+
 	     /* get the output projection parameters, if existing */
         G__file_name (path,"",PROJECTION_FILE,set_name);
         if (access(path,0) == 0)
@@ -148,7 +148,6 @@ int argc; char *argv[];
 	   }
 
 
-
 /*****************   GET spheriod  **************************/
            if (Out_proj != 3) 
 	       {
@@ -180,8 +179,9 @@ int argc; char *argv[];
 			for (i=0; i < strlen(buffb); i++) 
 				if (buffb[i] == ' ') {buffb[i] = '\t';}
              sprintf(cmnd2,"%s\t\n",buffb);
+
 	     }
-		   if (Out_proj == 3) sprintf(cmnd2,"+proj=ll");
+	   if (Out_proj == 3) sprintf(cmnd2,"+proj=ll");
            if (Out_proj >= 4 && Out_proj <= 7)
 	     {
 	     out_zone = i = 0;
@@ -258,10 +258,22 @@ int argc; char *argv[];
 	    G_free_key_value(out_proj_keys);
 		************* End of attempt at keys *****do direct out put******/
 
+	sprintf(buffa,"%s/%s",G_location_path(),set_name);
+	if (access(buffa,0) != 0)
+	   {
+	   fprintf(stderr,
+		 "\nMapset [%s] does NOT exist, creating new mapset\n",set_name);
+	   sprintf(buffb,"mkdir %s\n",buffa);
+	   system(buffb);
+	   }
         if (access(path,0) != 0)
 	   {
-	   FPROJ = fopen(path,"w");
+	   FPROJ = fopen (path,"w");
+	   if ( (FPROJ = fopen(path, "w")) == NULL)
+	      G_fatal_error("Opening new PROJ_INFO file");
+
 	   fprintf(FPROJ,"name: %s\n", proj_name);
+
            if (Out_proj != 3) 
 	   		fprintf(FPROJ,"ellps: %s\n", spheriod);
 
@@ -288,9 +300,11 @@ int argc; char *argv[];
 	      }
           
 	   if (Out_proj == 2)
-	      sprintf(buffb,"units:feet\nfoot:.3048\n");
-	   else
-	      sprintf(buffb,"units:meters\nmeter:1.0\n");
+	      sprintf(buffb,"unit:foot\nfoot:.3048\n");
+	   else if (Out_proj == 3)
+	      sprintf(buffb,"unit:degree\ndegree:1.0\n");
+           else
+	      sprintf(buffb,"unit:meter\nmeter:1.0\n");
            fputs(buffb,out1);
 	   fclose (out1);
 	   }
