@@ -62,6 +62,7 @@ OBJ = \
     find_cell.o\
     find_file.o\
     find_vect.o\
+    flate.o\
     fork.o\
     format.o\
     fpreclass.o\
