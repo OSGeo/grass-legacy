@@ -51,7 +51,6 @@ main(int argc, char **argv)
 	double	**level;
 	short	*dir, **sdir, *select = _select - 1;
 	FILE	*lfile, *sfile, *tmpfp;
-	// EQUIVALENCE(sdir, level);
 
 	i1 = 1;
 	i2 = 2;
