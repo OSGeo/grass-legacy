@@ -7,6 +7,7 @@ extern Display *dpy;
 extern Window grwin;
 extern GC gc;
 extern Pixmap bkupmap;
+extern int backing_store;
 
 int Polyline_abs (int *xarray, int *yarray, int number)
 {
@@ -22,6 +23,8 @@ int Polyline_abs (int *xarray, int *yarray, int number)
     cur_x = xarray[number - 1];
     cur_y = yarray[number - 1];
 
+    if (!backing_store)
+        XDrawLines(dpy, bkupmap, gc, xpnts, number, CoordModeOrigin);
     return 0;
 }
 
@@ -38,6 +41,9 @@ int Polyline_rel (int *xarray, int *yarray, int number)
         xpnts[i].y = (short) yarray[i];
     }
     XDrawLines(dpy, grwin, gc, xpnts, number, CoordModePrevious);
+
+    if (!backing_store)
+        XDrawLines(dpy, bkupmap, gc, xpnts, number, CoordModePrevious);
 
     return 0;
 }
