@@ -201,8 +201,8 @@ main (int argc, char **argv)
 	}
 #endif /*OLD_LIB*/
 
-	G__make_mapset_element("arc") ;
-	G__file_name(full_prefix, "arc", shape_prefix, G_mapset()) ;
+	G__make_mapset_element("arc_tmp") ;
+	G__file_name(full_prefix, "arc_tmp", shape_prefix, G_mapset()) ;
 
 
 	strcpy(lin_filename,shape_prefix);
@@ -228,17 +228,17 @@ main (int argc, char **argv)
 	strcpy(txt_filepath,full_prefix);
 	strcat(txt_filepath,".txt");
 
-	if ( (lin_file = G_fopen_new("arc", lin_filename )) == NULL )
+	if ( (lin_file = G_fopen_new("arc_tmp", lin_filename )) == NULL )
 	{
 		sprintf(errmsg, "Cannot open ARC/INFO lines file <%s>\n", lin_filename) ;
 		G_fatal_error (errmsg);
 	}
-	if ( (lab_file = G_fopen_new("arc", lab_filename )) == NULL )
+	if ( (lab_file = G_fopen_new("arc_tmp", lab_filename )) == NULL )
 	{
 		sprintf(errmsg,"Can't open ARC/INFO label-points file <%s>\n",lab_filename);
 		G_fatal_error (errmsg);
 	}
-	if ( (txt_file = G_fopen_new("arc", txt_filename )) == NULL )
+	if ( (txt_file = G_fopen_new("arc_tmp", txt_filename )) == NULL )
 	{
 		sprintf(errmsg, "Cannot open ARC/INFO label-text file <%s>\n", txt_filename) ;
 		G_fatal_error (errmsg);
@@ -282,10 +282,11 @@ main (int argc, char **argv)
 	}
 
 /* new v.out.shape stuff MN 3/2000 */
-/* usage: /usr/local/grass-5.0b/etc/v.out.shape/gen2shp outfile type < infile
- * reads stdin and creates outfile.shp, outfile.shx and outfile.dbf
- * type must be one of these: points lines polygons
- * infile must be in 'generate' format
+/* usage: 
+ * gen2shp outfile type < infile
+ *  reads stdin and creates outfile.shp, outfile.shx and outfile.dbf
+ *  type must be one of these: points lines polygons
+ *  infile must be in 'generate' format
  */
 	if (strcmp (opt1->answer, "polygon") == 0)
 	{
@@ -302,9 +303,14 @@ main (int argc, char **argv)
 	}
 	/* do we need points ?? */
 
-	fprintf(stdout, "Converting $LOCATION/arc/%s.%s to SHAPE file...\n", shape_prefix, extension);
-	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc/%s.%s", shape_prefix, shape_type, shape_prefix, extension);
+	fprintf(stdout, "Converting $LOCATION/arc_tmp/%s.%s to SHAPE file...\n", shape_prefix, extension);
+	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc_tmp/%s.%s", shape_prefix, shape_type, shape_prefix, extension);
 	G_system(buf);
+	
+	/* remove the temporal ungenerate files */
+	G_remove("arc_tmp", lin_filename);
+	G_remove("arc_tmp", lab_filename);
+	G_remove("arc_tmp", txt_filename);
 
 	exit(0);
 }
