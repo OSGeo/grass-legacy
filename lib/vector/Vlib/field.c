@@ -329,7 +329,7 @@ struct field_info
     int i;
     struct field_info *fi = NULL;
 
-    G_debug (1, "Vect_get_field(): field = %d, nfields: %d", field);
+    G_debug (1, "Vect_get_field(): field = %d", field);
 
     for ( i = 0; i < Map->dblnk->n_fields; i++ ) {
         if ( Map->dblnk->field[i].number == field ) {

@@ -99,7 +99,8 @@ int main (int argc, char **argv)
     newopt->type             =  TYPE_INTEGER;
     newopt->required         =  NO;
     newopt->answer           = "0";
-    newopt->description      = "Enter 0 to keep original category or a desired NEW category value";
+    newopt->description      = "Enter 0 to keep original category or a desired NEW category value. "
+	                       "If new > 0, table is not copied.";
 
     listopt = G_define_option();
     listopt->key             = "list";
@@ -157,6 +158,7 @@ int main (int argc, char **argv)
     Vect_copy_head_data(&In, &Out);
     
     /* Read categoy list */
+    cat_count = 0;
     if ( listopt->answer != NULL ) {
 	/* no file of categories to read, process cat list */
 	/* first check for valid list */
@@ -221,8 +223,8 @@ int main (int argc, char **argv)
     if ( 0 > max_att)
 	G_fatal_error("Error in line/site extraction processing");
 
-    if ( !t_flag->answer ) 
-        Vect_copy_table ( &In, &Out, field, 1, NULL, GV_1TABLE );
+    if ( !t_flag->answer && new_cat == 0 ) 
+        Vect_copy_table_by_cats ( &In, &Out, field, 1, NULL, GV_1TABLE, cat_array, cat_count );
 
     Vect_close (&In);
     Vect_build (&Out, stdout );
