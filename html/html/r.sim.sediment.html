@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//w3c//dtd html 4.0 transitional//en"><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Mozilla/4.79 [en] (Win98; U) [Netscape]"><title>r.sim.sediment</title>
+
+<meta name="author" content="J. Hofierka"></head>
+
+<body bgcolor="#ffffff" link="#0000df" vlink="#006000">
+<img src="grass.smlogo.gif">
+<hr width="100%" align="center" size="6" no="" shade="">            
+<h2> NAME</h2>
+<i><b>r.sim.sediment</b></i> - spatially distributed, 2D water 
+erosion, sediment transport and deposition simulation model based on 
+the continuity equations solved by Green's function Monte Carlo method.                 
+<BR><I>GRASS raster program</I>
+<h2> SYNOPSIS</h2>
+<b>r.sim.sediment</b><br>
+<b>r.sim.sediment help</b><br>
+<b>r.sim.sediment</b> [-tm] <b>elevin</b> =name <b>wdepth=</b>name <b>dxin</b>=name 
+   <b>dyin</b>=name <b>detin</b>=name <b>tranin</b>=name <b>tauin</b>=name
+   <b>manin</b>=name [<b>tc</b>=name] [<b>et</b>=name] [<b>conc</b>=name] [<b>flux</b>=name] 
+   [<b>erdep</b>=name] [<b>nwalk</b>=value] [<b>niter</b>=value] [<b>outiter</b> =value] 
+   [<b>density</b>=value]  [<b>diffc</b>=value]<br>
+             
+<h2>DESCRIPTION</h2>
+<i>r.sim.sediment</i> is a landscape scale, simulation 
+model of soil erosion, sediment transport and deposition caused by flowing 
+water designed for spatially variable terrain, soil, cover and  
+rainfall excess conditions. The soil erosion model is based on the theory
+used in the USDA WEPP hillslope erosion model, but it has been generalized
+to 2D flow. The solution is based on the concept of duality between fields and 
+particles and the underlying equations are solved by Green's 
+function Monte  Carlo method, to provide robustness necessary for 
+spatially variable conditions and high resolutions (Mitas and Mitasova 
+1998).  Key inputs of the model include the following raster files:
+ elevation (<i>  elevin</i>), flow gradient given by the first-order partial 
+derivatives of elevation field (<i> dxin</i> and <i>dyin</i>), 
+overland flow water depth (<i> wdepth</i>), detachment capacity coefficient (<i>detin</i>), 
+transport capacity coefficient (<i>tranin</i>), critical shear stress (<i>tauin</i>) 
+and surface  roughness coefficient called Manning's n (<i>manin</i> raster file). 
+Partial derivatives can be computed by <a href="s.surf.rst.html">
+s.surf.rst</a> or <a href="r.slope.aspect.html">r.slope.aspect</a>
+module. The data are automatically converted data from feet to metric
+system using database/projection information. The water depth file can be
+computed using <a href="r.sim.water.html">r.sim.water</a>
+module. Other parameters must be determined using field measurements or
+reference literature (see suggested values in Notes and References). <br>
+
+<p>
+Output includes transport capacity raster file <i>tc</i>  in [kg/ms],
+transport capacity limited erosion/deposition raster file
+<i>et</i> [kg/m<sup>2</sup>s], sediment flow rate raster file 
+<i>flux</i> [kg/ms], and net erosion/deposition raster file [kg/m<sup>2</sup>s]. 
+Simulation time is controled by <i> niter</i> parameter.  The default value is 1000,
+depending on complexity of terrain, land cover and size of the area, several thousand
+ iterations may be needed to reach the steady state. Output
+files can be saved during simulation using <i>outiter</i> parameter
+defining simulation time step for writing output files. This option requires
+time series flag <i>-t</i>. Files are saved with suffix   containing
+iteration number (e.g. name.500, name.1000, etc.).<br>
+<br>
+<br>
+</p><h2>OPTIONS</h2>
+ The user can run this program either interactively
+or non-interactively. The program will be run non-interactively
+if the user specifies program arguments and flag settings on 
+the command line using the form:            
+<p><b>r.sim.sediment</b> [-tm] <b>elevin</b>=name <b>wdepth</b>=name
+     <b>dxin</b>=name <b>dyin</b>=name <b>detin</b>=name <b>tranin</b>=name <b>tauin</b>=name
+     <b>manin</b>=name [<b>tc</b>=name] [<b>et</b>=name] [<b>conc</b>=name] [<b>flux</b>=name] 
+     [<b>erdep</b>=name] [<b>nwalk</b>=value] [<b>niter</b>=value] [<b>outiter</b>=value] 
+     [<b> density</b> =value]  [<b>diffc</b>=value]</p>             
+<p>Alternately, the user can simply type <b> r.sim.water</b> on the command line
+without program arguments. In this case, the user will be prompted
+for parameter values using the standard GRASS parser interface.
+</p>                     
+<h3> Flag:</h3>                   
+<dl><dt><b>-t</b></dt>
+    <dd>time series output</dd>
+<dt><b> -m</b></dt>
+    <dd>multiscale (not ready yet)        
+  </dd></dl>
+<h3> Parameters:</h3>
+<dl><dt><b>elevin</b> =name</dt>
+    <dd> Use the existing elevation raster file name as input [meters or feet].</dd>
+<dt><b> dxin</b>=name</dt>
+     <dd> Use the existing raster file with x-derivatives as input [-] </dd>
+<dt><b>dyin</b>=name</dt>
+     <dd> Use the existing raster file with y-derivatives as input [-].</dd>
+<dt><b>detin</b>=name</dt>
+     <dd> Use the existing raster file with detachment capacity coefficient</dd>
+<dt><b>train</b>=name</dt>
+     <dd> Use the existing raster file with transport capacity coefficient</dd>
+<dt><b>tauin</b>=name</dt>
+     <dd> Use the existing raster file with critical shear stress </dd>
+<dt><b> manin</b>=name</dt>
+     <dd> Use the existing raster file with Manning's surface roughness n raster file [-].</dd>
+<dt><b>tc</b>=name</dt>
+      <dd>Output transport capacity raster file </dd>
+<dt><b>et</b>=name</dt>
+      <dd>Output transportcapacity limited erosion/deposition raster file </dd>
+<dt><b>conc</b>=name</dt>
+      <dd> Output sediment concentration raster file </dd>
+<dt><b> flux</b>=name</dt>
+      <dd>Output sediment flux raster file </dd>
+ <dt><b>erdep</b>=name</dt>
+      <dd>Output erosion/deposition raster file </dd>
+<dt><b>nwalk</b>=val</dt>
+      <dd>Set the number of walkers to val (default:2000000)</dd>
+<dt><b>niter</b>=val</dt>
+      <dd>Set the number of iterations to val (default:1200)</dd>
+ <dt><b>outiter</b>=val</dt>
+       <dd>Set the time step for  saving output maps to val (default: 300)</dd>
+<dt><b>density</b>=val</dt>
+        <dd>Set the density of output walkers to val (default: 200)</dd>
+<dt> <b>diffc</b>=val</dt> 
+<!--my old man page has diffc=0.05 - was this changed?)-->
+        <dd>Set the diffusion constant to val (default: 0.8)</dd>
+<dt><br></dt></dl>
+<h2>
+NOTES</h2>
+<!--provide a table of suggested parameters for bare soil, grass, forest, pavement
+wetland or pond, provide links to movies that explain the impact of the  parameters-->
+<p></p>
+<p>
+<h2>
+SEE ALSO</h2>
+<a href="s.surf.rst.html">    s.surf.rst</a>
+, <a href="r.slope.aspect.html">r.slope.aspect</a>
+, <a href="r.sim.water.html">r.sim.water</a>
+                                                          
+<h2>
+AUTHORS</h2>
+     Helena Mitasova, Lubos Mitas<br>
+North Carolina State University<br>
+<a href="mailto:hmitaso@unity.ncsu.edu">hmitaso@unity.ncsu.edu</a><br>
+<br>
+Jaroslav Hofierka<br>
+GeoModel, s.r.o. Bratislava, Slovakia<br><address>
+<a href="mailto:hofi@geomodel.sk">
+hofierka@geomodel.sk</a>
+</address>
+<br>
+Chris Thaxton<br>
+North Carolina State University<br>
+csthaxto@unity.ncsu.edu<br>
+<address><a href="mailto:csthaxto@unity.ncsu.edu">
+csthaxto@unity.ncsu.edu</a></address>
+<h2>
+REFERENCES</h2>
+<p>
+Mitas, L., and Mitasova, H., 1998, Distributed soil erosion
+simulation for effective erosion prevention. Water Resources Research,
+34(3), 505-516.</p>
+<p>
+Neteler, M. and Mitasova, H., 2002, Open Source GIS: A GRASS GIS Approach, 
+Kluwer Academic Publishers.</p>
+<p><br>
+Last changed: $Date$</p>
+<i><i>                                                      
+</i></i>                                         
+</</body></html>
