@@ -1,25 +1,97 @@
-ABS	dig_macros.h	/^#define ABS(x)	   ((x) < 0 ? -(x) : (x))$/
-AREA_ALIVE	dig_macros.h	/^#define AREA_ALIVE(p) ((p)->alive)     $/
-AREA_LABELED	dig_macros.h	/^#define AREA_LABELED(p) ((p)->alive && (p)->att)  /
-ATT_ALIVE	dig_macros.h	/^#define ATT_ALIVE(p)  ((p)->type<16)  \/* see LINE_/
 Checkout	portable.c	/^Checkout ()$/
-GREATER	dig_macros.h	/^#define GREATER(x,y) ((x) > (y) ? (x) : (y))$/
-ISLE_ALIVE	dig_macros.h	/^#define ISLE_ALIVE(p) ((p)->alive)     $/
-LESSER	dig_macros.h	/^#define LESSER(x,y)  ((x) < (y) ? (x) : (y))$/
-LINE_ALIVE	dig_macros.h	/^#define LINE_ALIVE(p) ((p)->type<16)   \/* assume D/
-LINE_LABELED	dig_macros.h	/^#define LINE_LABELED(p) (LINE_ALIVE (p) && (p)->at/
-NODE_ALIVE	dig_macros.h	/^#define NODE_ALIVE(p) ((p)->alive)	\/* simple enuf /
-ON_OFF	dig_macros.h	/^#define ON_OFF(x)  ((x) ? "        ON" : "       O/
-TOGGLE	dig_macros.h	/^#define TOGGLE(x)  ((x) = _TOGGLE (x))$/
-XADJ	dig_macros.h	/^#define XADJ(x)		(int)((x - U_west ) * U_to_D_xcon/
-YADJ	dig_macros.h	/^#define YADJ(y)		(int)((y - U_south) * U_to_D_ycon/
+Init_Portable_structs	../Vlib/portable_io.c	/^Init_Portable_structs ()$/
+V1__open_update_1	../Vlib/open1.c	/^V1__open_update_1 (Map, name)$/
+V1_close	../Vlib/close.c	/^V1_close (Map)$/
+V1_open_new	../Vlib/open1.c	/^V1_open_new (Map, name)$/
+V1_open_old	../Vlib/open1.c	/^V1_open_old (Map, name, mapset)$/
+V1_read_line	../Vlib/read1.c	/^V1_read_line (Map, Points, offset)$/
+V1_read_next_line	../Vlib/read1.c	/^V1_read_next_line (Map, line_p)$/
+V1_rewind	../Vlib/rewind.c	/^V1_rewind (Map)$/
+V2__init_for_create_plus	../Vlib/open2.c	/^V2__init_for_create_plus (Map, name)	$/
+V2__open_new_1	../Vlib/open2.c	/^V2__open_new_1 (Map, name)		\/* for digit  (unsuppo/
+V2__open_update_1	../Vlib/open2.c	/^V2__open_update_1 (Map, name)$/
+V2__release_file_mem	../Vlib/close.c	/^V2__release_file_mem (Map)$/
+V2__setup_for_digit	../Vlib/open2.c	/^V2__setup_for_digit (Map, name)$/
+V2_area_att	../Vlib/level_two.c	/^V2_area_att (map, area)$/
+V2_close	../Vlib/close.c	/^V2_close (Map)$/
+V2_get_area	../Vlib/level_two.c	/^V2_get_area (map, num, Area)$/
+V2_get_area_bbox	../Vlib/level_two.c	/^V2_get_area_bbox (map, area, N, S, E, W)$/
+V2_get_line_bbox	../Vlib/level_two.c	/^V2_get_line_bbox (map, line, N, S, E, W)$/
+V2_line_att	../Vlib/level_two.c	/^V2_line_att (map, line)$/
+V2_num_areas	../Vlib/level_two.c	/^V2_num_areas (map)$/
+V2_num_lines	../Vlib/level_two.c	/^V2_num_lines (map)$/
+V2_open_new_plus	../Vlib/open2.c	/^V2_open_new_plus (Map, name)		\/* for v.build *\/$/
+V2_open_old	../Vlib/open2.c	/^V2_open_old (Map, name, mapset)$/
+V2_open_update	../Vlib/open2.c	/^V2_open_update (Map, name)		\/* for digit, and v.ca/
+V2_read_line	../Vlib/read2.c	/^V2_read_line (Map, line_p, line)$/
+V2_read_next_line	../Vlib/read2.c	/^V2_read_next_line (Map, line_p)$/
+V2_rewind	../Vlib/rewind.c	/^V2_rewind (Map)$/
+V2_tmp_close	../Vlib/close.c	/^V2_tmp_close (Map)$/
+V2_tmp_open	../Vlib/close.c	/^V2_tmp_open (Map)$/
+V__map_overlap	../Vlib/read2.c	/^V__map_overlap (Map, n, s, e, w)$/
+Vect_P_init	../Vlib/level_two.c	/^Vect_P_init (name, mapset, map)$/
+Vect__P_init	../Vlib/level_two.c	/^Vect__P_init (map, name, mapset)$/
+Vect__P_init_new_plus	../Vlib/level_two.c	/^Vect__P_init_new_plus (map, name)$/
+Vect__P_writeable	../Vlib/level_two.c	/^Vect__P_writeable (x)$/
+Vect__Read_line	../Vlib/portable_io.c	/^Vect__Read_line (Map, p, offset)$/
+Vect__Rewrite_line	../Vlib/portable_io.c	/^Vect__Rewrite_line (Map, offset, type, points) $/
+Vect__Write_line	../Vlib/portable_io.c	/^Vect__Write_line (Map, type, points) $/
+Vect__copy_portable_info	../Vlib/init_head.c	/^Vect__copy_portable_info (from, to)$/
+Vect__get_default_in_head	../Vlib/portable_io.c	/^Vect__get_default_in_head ()$/
+Vect__get_default_out_head	../Vlib/portable_io.c	/^Vect__get_default_out_head ()$/
+Vect__get_default_port_head	../Vlib/portable_io.c	/^Vect__get_default_port_head ()$/
+Vect__get_window	../Vlib/window.c	/^Vect__get_window (Map, n, s, e, w)$/
+Vect__init_default_heads	../Vlib/portable_io.c	/^Vect__init_default_heads (do_port)$/
+Vect__init_head	../Vlib/init_head.c	/^Vect__init_head (head)$/
+Vect__new_line_struct	../Vlib/line_struct.c	/^Vect__new_line_struct ()$/
+Vect__open_update_1	../Vlib/open.c	/^Vect__open_update_1 (Map, name)$/
+Vect__read_head_binary	../Vlib/portable_io.c	/^Vect__read_head_binary (Map, head)$/
+Vect__write_head_binary	../Vlib/portable_io.c	/^Vect__write_head_binary (Map, head)$/
+Vect_append_point	../Vlib/line_struct.c	/^Vect_append_point (Points, x, y)$/
+Vect_close	../Vlib/close.c	/^Vect_close (Map)$/
+Vect_copy_head_data	../Vlib/init_head.c	/^Vect_copy_head_data (from, to)$/
+Vect_copy_pnts_to_xy	../Vlib/line_struct.c	/^Vect_copy_pnts_to_xy (Points, x, y, n)$/
+Vect_copy_xy_to_pnts	../Vlib/line_struct.c	/^Vect_copy_xy_to_pnts (Points, x, y, n)$/
+Vect_destroy_line_struct	../Vlib/line_struct.c	/^Vect_destroy_line_struct (p)$/
+Vect_get_area_points	../Vlib/get_area.c	/^Vect_get_area_points (Map, area, BPoints)$/
+Vect_init	../Vlib/portable_io.c	/^Vect_init ()	\/* init vector system *\/$/
+Vect_level	../Vlib/level.c	/^Vect_level (Map)$/
+Vect_new_line_struct	../Vlib/line_struct.c	/^Vect_new_line_struct ()$/
+Vect_open_new	../Vlib/open.c	/^Vect_open_new (Map, name)$/
+Vect_open_old	../Vlib/open.c	/^Vect_open_old (Map, name, mapset)$/
+Vect_print_header	../Vlib/header.c	/^Vect_print_header (Map)$/
+Vect_read_next_line	../Vlib/read.c	/^Vect_read_next_line (Map, line_p)$/
+Vect_remove_constraints	../Vlib/constraint.c	/^Vect_remove_constraints (Map)$/
+Vect_reset_line	../Vlib/line_struct.c	/^Vect_reset_line (Points)$/
+Vect_rewind	../Vlib/rewind.c	/^Vect_rewind (Map)$/
+Vect_set_constraint_region	../Vlib/constraint.c	/^Vect_set_constraint_region (Map, n, s, e, w)$/
+Vect_set_constraint_type	../Vlib/constraint.c	/^Vect_set_constraint_type (Map, type)$/
+Vect_set_open_level	../Vlib/open.c	/^Vect_set_open_level (level)$/
+Vect_write_line	../Vlib/write.c	/^Vect_write_line (Map, type, points)$/
+Vect_x__Mem_Read_line	../Vlib/x_point_io.c	/^Vect_x__Mem_Read_line (p, offset)$/
+Vect_x__Read_line	../Vlib/x_point_io.c	/^Vect_x__Read_line (Map, p, offset)$/
+Vect_x__Rewrite_line	../Vlib/x_point_io.c	/^Vect_x__Rewrite_line (Map, offset, type, points) $/
+Vect_x__Write_line	../Vlib/x_point_io.c	/^Vect_x__Write_line(Map, type, points) $/
+Vect_x_read_head_binary	../Vlib/x_rw_binary.c	/^Vect_x_read_head_binary (Map, dhead)$/
+Vect_x_write_head_binary	../Vlib/x_rw_binary.c	/^Vect_x_write_head_binary (Map, dhead)$/
 ZERO	line_dist.c	/^#define ZERO(x) ((x) < tolerance && (x) > -toleran/
-_TOGGLE	dig_macros.h	/^#define _TOGGLE(x) ((x) ? 0 : 1)$/
 buf_alloc	portable.c	/^buf_alloc (needed)$/
 d_atan2	calc_angl.c	/^d_atan2 (y, x)$/
 debugf	debugf.c	/^debugf ()$/
 dig_Mem_load_file	memory_io.c	/^dig_Mem_load_file (fp, ptr)$/
 dig_Mem_release_file	memory_io.c	/^dig_Mem_release_file ()$/
+dig_Rd_P_area	../Vlib/portable_io.c	/^dig_Rd_P_area (map, ptr, fp)$/
+dig_Rd_P_att	../Vlib/portable_io.c	/^dig_Rd_P_att (map, ptr, fp)$/
+dig_Rd_P_isle	../Vlib/portable_io.c	/^dig_Rd_P_isle (map, ptr, fp)$/
+dig_Rd_P_line	../Vlib/portable_io.c	/^dig_Rd_P_line (map, ptr, fp)$/
+dig_Rd_P_node	../Vlib/portable_io.c	/^dig_Rd_P_node (map, ptr, fp)$/
+dig_Rd_Plus_head	../Vlib/portable_io.c	/^dig_Rd_Plus_head (map, ptr, fp)$/
+dig_Wr_P_area	../Vlib/portable_io.c	/^dig_Wr_P_area (map, ptr, fp)$/
+dig_Wr_P_att	../Vlib/portable_io.c	/^dig_Wr_P_att (map, ptr, fp)$/
+dig_Wr_P_isle	../Vlib/portable_io.c	/^dig_Wr_P_isle (map, ptr, fp)$/
+dig_Wr_P_line	../Vlib/portable_io.c	/^dig_Wr_P_line (map, ptr, fp)$/
+dig_Wr_P_node	../Vlib/portable_io.c	/^dig_Wr_P_node (map, ptr, fp)$/
+dig_Wr_Plus_head	../Vlib/portable_io.c	/^dig_Wr_Plus_head (map, ptr, fp)$/
 dig__Init_portable_code	portable.c	/^dig__Init_portable_code (portable)$/
 dig__alloc_space	allocation.c	/^dig__alloc_space(n_wanted, n_elements, chunk_size,/
 dig__check_dist	point_t_line.c	/^dig__check_dist (map, points, ux, uy, dist)$/
@@ -150,6 +222,8 @@ dig_x_intersect	chk_inside.c	/^dig_x_intersect (beg_x, end_x, beg_y, end_y, Y) $
 dig_xy_distance2_point_to_line	line_dist.c	/^dig_xy_distance2_point_to_line (px,py,x1,y1,x2,y2)/
 dig_xy_distance3_point_to_line	line_dist.c	/^dig_xy_distance3_point_to_line (px,py,x1,y1,x2,y2,/
 dist_squared	check_node.c	/^dist_squared (x1, y1, x2, y2)$/
+dummy	../Vlib/open.c	/^static dummy () {}$/
+dumpflags	../Vlib/portable_io.c	/^dumpflags (fhead)$/
 find_offset	portable.c	/^find_offset (basis, search_value, size)$/
 n_index	format.c	/^n_index (str, chr)$/
 normalize_angle	cont_lines.c	/^normalize_angle (angle)$/
