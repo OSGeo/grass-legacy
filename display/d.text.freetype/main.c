@@ -5,7 +5,7 @@
 *
 * MODULE:       d.text.freetype
 *
-* AUTHOR(S):    Huidae Cho <hdcho@water.knu.ac.kr>
+* AUTHOR(S):    Huidae Cho <grass4u@gmail.com>
 *
 * PURPOSE:      d.text with FreeType2 support
 *               http://www.freetype.org
