@@ -14,15 +14,15 @@ Usage:
 Flags:
   -1   List all manual entries, one per line.
   -a   List all manual entries in a more appealing format.
-  -m   Force to use man program rather than MAN_BROWSER, if any.
+  -m   Force to use man program rather than GRASS_TEXT_BROWSER, if any.
 
 Parameters:
-  browser   Override MAN_BROWSER environmental variable to browser html pages.
+  browser   Override GRASS_TEXT_BROWSER env variable to browser html pages.
   entries   Exists for compatibility.
 
 Note:
-  To use hyperlink features of html pages, set environmental variable
-  MAN_BROWSER to any text-based web browser that you want, e.g., lynx, w3m.
+  To use hyperlink features of html pages, set env variable GRASS_TEXT_BROWSER
+  to any text-based web browser that you want, e.g., lynx, w3m.
 "
 
 if [ $# -lt 1 ]
@@ -47,7 +47,7 @@ do
     -m) forceman=1 ;;
 
     b=*|br=*|bro=*|brow=*|brows=*|browse=*|browser=*)
-      MAN_BROWSER=`echo $1 | awk -F '=' '{print $2}'` ;;
+      GRASS_TEXT_BROWSER=`echo $1 | awk -F '=' '{print $2}'` ;;
 
     e=*|en=*|ent=*|entr=*|entri=*|entrie=*|entries=*)
       tentries=`echo $1 | awk -F '=' '{print $2}' | sed 's|, *| |g'` ;;
@@ -57,16 +57,16 @@ do
   shift
 done
 
-which $MAN_BROWSER > /dev/null 2>&1
+which $GRASS_TEXT_BROWSER > /dev/null 2>&1
 if [ $? -ne 0 -o "$forceman" ]
 then
-  if [ "$MAN_BROWSER" -a ! "$forceman" ]
+  if [ "$GRASS_TEXT_BROWSER" -a ! "$forceman" ]
   then
     echo
-    echo Warning: $MAN_BROWSER does not exist. Use man.
+    echo Warning: $GRASS_TEXT_BROWSER does not exist. Use man.
     sleep 1
   fi
-  MAN_BROWSER=
+  GRASS_TEXT_BROWSER=
 fi
 
 msg=
@@ -76,10 +76,10 @@ do
   html=$GISBASE/documents/html/$i.html
   man=$GISBASE/man/man1/$i.1
   
-  if [ -e $html -a "$MAN_BROWSER" ]
+  if [ -e $html -a "$GRASS_TEXT_BROWSER" ]
   then
     entries="$entries $html"
-  elif [ -e $man -a ! "$MAN_BROWSER" ]
+  elif [ -e $man -a ! "$GRASS_TEXT_BROWSER" ]
   then
     entries="$entries $i"
   else
@@ -88,11 +88,11 @@ No entry for $i"
   fi
 done
 
-if [ "$MAN_BROWSER" ]
+if [ "$GRASS_TEXT_BROWSER" ]
 then
   for i in $entries
   do
-    $MAN_BROWSER $i
+    $GRASS_TEXT_BROWSER $i
   done
 else
   man -M $GISBASE/man 1 $entries
