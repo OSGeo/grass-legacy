@@ -1,0 +1,72 @@
+R.LE PROGRAMS - NOTES FOR VERSION 2.2 BETA RELEASE for Solaris - DECEMBER 1, 1997
+
+This directory contains the release of Version 2.2 of the r.le programs. 
+These programs enable calculation of a variety of quantitative measures 
+of the structure of landscapes, following traditions in the field of 
+landscape ecology.  
+The programs work directly with landscape maps in GRASS raster files.  
+The programs can be used for a variety of other purposes as well.
+
+There are 5 subdirectories, each containing the source code for one of 
+the r.le programs.
+
+The best place to install the programs is in $(GISBASE)/src.contrib/UW.  
+If you want to place them somewhere else, you will have to change line 1 
+of the Gmakefile in the r.le.setup subdirectory to correctly specify the 
+location of the r.le.setup/polytocell subdirectory.
+
+The Gmakefile in the present directory will compile all the r.le programs. 
+Before you begin the compilation, make sure you have write permission in 
+directory (GISBASE)/etc/bin/contrib/cmd, which is specified by environment 
+variable $(BIN_CONTRIB_CMD).  This is where the executables resulting from 
+the compilation will reside.  To compile, type "gmake4.1" at the GRASS prompt. 
+Of course, you must have the gmake4.1 script installed, typically in the
+/usr/local/bin directory.  See the GRASS user's manual for information.  The 
+source code is 1.08 Mb of hard disk space and the compiled code is about 930K
+more.  Once you have the 5 compiled programs in (GISBASE)/etc/bin/contrib/cmd,
+you can make these programs generally accessible by rerunning the script
+MAKELINKS.head in (GISBASE)/src/CMD.
+
+There are no manual pages.  The documentation is maintained on-line on my 
+web page, which is where you should be reading this file.  If you would 
+like, I also have the documentation in WordPerfect 6/7/8 format, and I 
+would be happy to send it to you as an attachment to an e-mail message.
+
+These programs were developed in part with funding from the Ecological Research 
+Division, Office of Health and Environmental Research, U.S. Department of
+Energy, and are in the public domain.  They are provided on an "as is" basis. 
+No warranty is expressed or implied.
+
+These programs are supplied free, but if you redistribute the source code, you
+must include the README files.  As one of the conditions of us,
+if you use these programs in any way in your research or in a publication, 
+please cite the scientific journal article in which we first described 
+these programs:
+
+	Baker, W.L. and Y. Cai. 1992. The r.le programs for multiscale
+		analysis of landscape structure using the GRASS GIS.
+		Landscape Ecology 7(4):291-302.
+
+These programs require grass 4.1.  We have only compiled and tested the 
+programs using a Sun Sparcstation 1 under SunOS 4.1.3 and on an Intel 
+Pentium Pro running SunOS 5.5.1 (Solaris 2.5.1).  I would appreciate an 
+E-mail message about your success or failure, particularly with other 
+machines or operating systems (e.g., Linux).
+
+Unfortunately, I cannot provide general support for these programs, but
+please send bug reports and reports of compilation problems to me.  As time
+permits I will try to fix these problems.  Please do not phone me, but 
+send questions via E-mail or regular mail.  I am always looking for ideas
+about how to improve the programs, and welcome your suggestions, whether 
+cosmetic, trivial, or complex.  If anything, I have received too little
+feedback, although I have not always been able to remedy problems right away.
+
+			William L. Baker
+			Department of Geography & Recreation
+			207 Arts & Sciences Bldg.
+			University of Wyoming
+			Laramie, WY 82071
+			U.S.A.
+			BAKERWL@UWYO.EDU
+			December 1, 1997
+ 
