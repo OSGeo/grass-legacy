@@ -35,54 +35,66 @@ if [ $# = 0 ]; then
  exit 1
 fi
 
+ERROR=0
+INFILE_RAW=$1
+
+#create lower case file name:
+INFILE=`echo $INFILE_RAW | tr  [:upper:] [:lower:]`
+
 if [ $# = "help" ]; then
  echo "Script to import German ATKIS-DGM elevation data into sites map"
  echo "  usage: s.in.atkisdgm dgmfile"
+ ERROR=1
+fi
+
+# file existing? (using raw filename!):
+if test ! -f $INFILE_RAW
+ then
+  echo "ERROR: $INFILE_RAW not found."
+  exit 1
+fi
+
+# is it a .dgm file? Just see if .dgm extension is there:
+echo $INFILE | sed 's/\.dgm$//' >/dev/null
+if [ $? != 0 ]; then
+ echo "ERROR: $INFILE_RAW is not a dgmfile (no .dgm extension)"
+ echo "  usage: s.in.atkisdgm dgmfile"
+ ERROR=1
+fi
+
+#summary of errors check
+if [ ERROR == 1 ]
+then
+ echo "Stopped."
  exit 1
 fi
 
-if [ ! -f "*.dgm" ]; then
- echo "ERROR: $1 is not a dgmfile"
- echo "  usage: s.in.atkisdgm dgmfile"
- exit
-else 
-   [ -f ! "*.DGM" ]
- echo "ERROR: $1 is not a dgmfile"
- echo "  usage: s.in.atkisdgm dgmfile"
- exit
-fi
-
-INFILE=$1
-
-# check locally:
-if test ! -f $INFILE
- then
-  echo "ERROR: $INFILE not found."
-  exit
-fi
+#Note: $INFILE contains file name with lower letter extension (.dgm), 
+#      $INFILE_RAW probably with capital letter extension (.DGM)
+#      Therefore this rather complex filename management.
 
 #check for $LOCATION/site_lists
 if test ! -e $LOCATION/site_lists	
 then
- echo "Creating new directory 'site_lists/' in $LOCATION"            
+ #echo "Creating new directory 'site_lists/' in $LOCATION"            
  mkdir -p $LOCATION/site_lists
- echo "Importing $INFILE into $LOCATION/site_lists/$INFILE"
+ echo "Importing $INFILE_RAW into GRASS database: $LOCATION/site_lists/$INFILE"
 fi
 
 #check if sites map already exists:
 if test -f $LOCATION/site_lists/$INFILE
  then
-  echo "ERROR: sites map $INFILE is already existing in GRASS. Please rename."
-  exit
+  echo "ERROR: sites map $INFILE already exists in GRASS. Please rename."
+  exit 1
 fi
 
 # ATKIS.dgm files in /tmp/$INFILE
-echo "Importing $INFILE..."
+echo "Importing $INFILE_RAW..."
 #get map's date:
-`cat ./$INFILE | grep DATUM > /tmp/$INFILE.date`
+`cat ./$INFILE_RAW | grep DATUM > /tmp/$INFILE.date`
 
 # get data
-`cat ./$INFILE | grep -v DATUM > /tmp/$INFILE`
+`cat ./$INFILE_RAW | grep -v DATUM > /tmp/$INFILE`
 
 # converting /tmp/$INFILE in $LOCATION/site_lists/xxx.dgm
 
