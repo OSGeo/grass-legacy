@@ -310,24 +310,24 @@ csh|tcsh)
     echo "GRASS VERSION_NUMBER > '" >> $cshrc
     echo 'set BOGUS=``;unset BOGUS' >> $cshrc
 
-    if [ -r $home/.grass.cshrc ]
+    if [ -r $USERHOME/.grass.cshrc ]
     then
-	cat $home/.grass.cshrc >> $cshrc
+	cat $USERHOME/.grass.cshrc >> $cshrc
     fi
 
-    if [ -r $home/.cshrc ]
+    if [ -r $USERHOME/.cshrc ]
     then
-	grep '^ *set  *mail *= *' $home/.cshrc >> $cshrc
+	grep '^ *set  *mail *= *' $USERHOME/.cshrc >> $cshrc
     fi
 
-    if [ -r $home/.tcshrc ]
+    if [ -r $USERHOME/.tcshrc ]
     then
-	grep '^ *set  *mail *= *' $home/.tcshrc >> $cshrc
+	grep '^ *set  *mail *= *' $USERHOME/.tcshrc >> $cshrc
     fi
 
-    if [ -r $home/.login ]
+    if [ -r $USERHOME/.login ]
     then
-	grep '^ *set  *mail *= *' $home/.login >> $cshrc
+	grep '^ *set  *mail *= *' $USERHOME/.login >> $cshrc
     fi
 
     echo "set path = ( $PATH ) " | sed 's/:/ /'g >> $cshrc
@@ -350,9 +350,9 @@ bash)
     echo "umask 022" >> $bashrc
     echo "PS1='GRASS:\w > '" >> $bashrc
 
-    if [ -r $home/.grass.bashrc ]
+    if [ -r $USERHOME/.grass.bashrc ]
     then
-        cat $home/.grass.bashrc >> $bashrc
+        cat $USERHOME/.grass.bashrc >> $bashrc
     fi
 
     echo "export PATH=$PATH" >> $bashrc
