@@ -5,6 +5,7 @@ SUBDIRS = \
 	drivers \
 	d.barscale \
 	d.erase \
+	d.frame \
 	d.his \
 	d.m \
 	d.mon \
