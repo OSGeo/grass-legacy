@@ -4,8 +4,8 @@ MODULE_TOPDIR = ..
 #order is relevant:
 SUBDIRS = \
 	datetime \
-	gmath \
 	gis \
+	gmath \
 	linkm \
 	raster \
 	bitmap \
