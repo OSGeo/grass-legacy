@@ -1,0 +1,66 @@
+
+
+
+Dlegend(2D)          GRASS Reference Manual           Dlegend(2D)
+
+
+
+NAME
+     Dlegend - Tool for displaying a map legend in the current
+     window
+     (D Language Tool)
+
+SYNOPSIS
+     Dlegend name [color]
+     Dlegend [option=value] [option=value]
+
+DESCRIPTION
+     Dlegend displays a legend for the grid cell map mapname in
+     the current graphics window.  The legend is displayed along
+     the left edge of the current window, at a scale based on the
+     vertical height of this window.  All categories in the map
+     are squeezed into the current window.  The user should
+     therefore take care to create a window of suitable
+     dimensions.  Portions of the map underlying the legend will
+     be overwritten.  Options are name and color:
+
+     name=mapname
+          Name of the grid cell map to be displayed by Dlegend.
+     color=color
+          Sets the legend color to that stated.  Options are red,
+          orange, green, blue, indigo, violet, black, white,
+          gray, yellow, brown, and magenta.  The legend is drawn
+          in white by default if the user does not specify a
+          color.
+
+     If options are stated explicitly, the order in which they
+     are stated is immaterial.  However, if options are stated
+     positionally, map name must be stated before color on the
+     command line (see DINTRO).
+
+SEE ALSO
+     DINTRO[2D]    Introduction to the GRASS D tools
+     Dchoose[2D]   To choose a window as the current window
+     Dcell[2D]     To display a cell file image in the current window
+     Derase[2D]    To erase the contents of the current window
+     Dnew[2D]      To create new windows on the monitor
+
+AUTHOR
+     James Westervelt, U.S. Army Construction Engineering
+     Research Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
