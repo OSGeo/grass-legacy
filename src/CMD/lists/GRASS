@@ -79,7 +79,8 @@ src/display/d.rgb
 src/display/d.rhumbline
 src/display/d.save
 src/display/d.scale
-src/display/d.site.labels
+# the following both modules need to be updated to new sites API:
+#src/display/d.site.labels
 #src/display/d.sites.label
 src/display/d.siter
 src/display/d.sites
@@ -219,6 +220,7 @@ src/paint/Programs
 src/paint/Programs/p.map.new/cmd
 src/paint/Tests
 src/ps.map
+src/ps.map.new
 src/raster/r.average
 src/raster/r.basins.fill
 src/raster/r.bilinear
