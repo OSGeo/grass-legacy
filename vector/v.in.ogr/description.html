@@ -61,6 +61,12 @@ imported with the indicated <b>output</b> name into the PERMANENT mapset.<P>
 <b>v.in.ogr dsn=</b><em>./</em> <b>layer=</b><em>mapinfo_test</em> 
 <b>output=</b><em>grass_map</em> 
 <P>
+<B>Arc Coverage</B><BR>
+We import the Arcs and Label points, the module takes care to
+build areas:<br>
+<b>v.in.ogr dsn=</b><em>gemeinden</em> <b>layer=</b><em>LAB,ARC</em> <b>type=</b><em>centroid,boundary</em>
+<b>output=</b><em>mymap</em> 
+<P>
 <B>SDTS files</B> (you have to select the CATD file)<BR>
 <b>v.in.ogr dsn=</b><em>CITXCATD.DDF</em> <b>output=</b><em>cities</em> 
 <P>
