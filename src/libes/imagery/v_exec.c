@@ -1,4 +1,3 @@
-/* %W%  %G% */
 I_v_exec()
 {
     V_intrpt_ok();
