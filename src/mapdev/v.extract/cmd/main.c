@@ -1,10 +1,6 @@
-/* 
-  $Id$
-  
-  updated GRASS 5 Bill Hughes 9/99
-  main.c    1.0   10/01/89
-  main.c    1.1   1/30/91
-  
+/* updated GRASS 5 Bill Hughes 9/99 */
+/* main.c    1.0   10/01/89
+/* main.c    1.1   1/30/91
 *    Created by : R.L.Glenn , Soil Conservation Service, USDA
 *    Purpose: Productivity tool
 *	      Provides a means of generating vector (digit) files
@@ -51,10 +47,12 @@ struct dig_head Head;
 int main (int argc, char **argv)
 {
 	int i, ier, cat_index, new_cat, max_att;
+	int cat_count, morecats;
+	int result;
 	int dissolve=0, cnt, x, y;
         char buffr[80], file_name[80], text[80];
         char *input, *output, *mapset;
-        struct Categories cats;
+        struct Categories cats, temp_cats;
         struct Option *inopt, *outopt, *fileopt, *newopt, *typopt, *listopt;
         struct Flag *d_flag, *n_flag;
         FILE *in, *catf;
@@ -70,6 +68,13 @@ int main (int argc, char **argv)
     n_flag->key              = 'n';
     n_flag->description      = "Use category names NOT numbers ";
 
+    typopt = G_define_option();
+    typopt->key              = "type";
+    typopt->type             =  TYPE_STRING;
+    typopt->required         =  YES;
+    typopt->options          =  "area,line,site";
+    typopt->description      =  "Select area, line, or site "; 
+
     inopt = G_define_option();
     inopt->key             = "input";
     inopt->type            = TYPE_STRING;
@@ -83,13 +88,6 @@ int main (int argc, char **argv)
     outopt->required        =  YES;
     outopt->gisprompt       = "any,dig,vect";
     outopt->description     = "vector output map name ";
-
-    typopt = G_define_option();
-    typopt->key              = "type";
-    typopt->type             =  TYPE_STRING;
-    typopt->required         =  YES;
-    typopt->options          =  "area,line,site";
-    typopt->description      =  "Select area, line, or site "; 
 
     newopt = G_define_option();
     newopt->key              = "new";
@@ -127,7 +125,7 @@ int main (int argc, char **argv)
     cat_index = 0;
     if (mapset == NULL)
 	{
-		sprintf(buffr,"Vector file [%s] not available",
+		sprintf(buffr,"Vector file [%s] not available in search list",
 		    input);
 		G_fatal_error(buffr) ;
 	}
@@ -256,51 +254,78 @@ int main (int argc, char **argv)
           }
        }
                      /* Open output "dig_cats" file */
-    G__file_name(file_name, CAT_DIR, output, G_mapset()) ;
-    if ( (catf = fopen (file_name, "w")) == NULL)
+    /* G__file_name(file_name, CAT_DIR, output, G_mapset()) ; */
+    result = G_init_cats( (CELL)0, "", &temp_cats);
+    fprintf( stderr, "Result of cats initialisation is %d\n", result );
+    /* if ( (catf = fopen (file_name, "w")) == NULL)
        {
        fprintf(stderr,"Can't create output dig_cats file <%s> \n", file_name) ;
        return (-1);
-       }
+       } */
+    G_set_cats_title( output, &temp_cats );
+    G_set_cat( 0, "no data", &temp_cats);
 
     fprintf (stdout,"\n");
     fprintf (stdout,"    Making category file\n");
 
                       /* make a cats file */
-    if (dissolve)
+    /* if (dissolve)
        sprintf(buffr,"# %d categories\nTitle %s\n",new_cat,output);
     else
        sprintf(buffr,"# %d categories\nTitle %s\n",max_att,output);
     fputs(buffr,catf);
     sprintf(buffr,"\n0.00 0.00 0.00 0.00\n0:no data\n");
     fputs(buffr,catf);
-    if (dissolve)
-       for (i = 1; i <= new_cat; i++)
+    */
+
+    if (dissolve) {
+      /* for (i = 1; i <= new_cat; i++)
            {
            sprintf(buffr,"%d:\n",i);
            fputs(buffr,catf);
            }
+      */
+      if( new_cat == 0 ) new_cat = cat_array[0];
+      if (G_read_vector_cats(input, mapset, &cats) == 0)
+	G_set_cat( new_cat, G_get_cat(new_cat, &cats), &temp_cats);
+      else
+	G_set_cat(new_cat, "", &temp_cats);
+    }
      else
 	 {
 		      /* first try reading parent cat file data */
-         if (G_read_vector_cats(input, mapset, &cats) == 0) 
-            {
-	    for ( i = 1; i <= max_att; i++)
-		{
-                sprintf(buffr,"%d:%s\n",i,cats.labels[i]);
-                fputs(buffr,catf);
-		}
-            }
+	   if (G_read_vector_cats(input, mapset, &cats) == 0) 
+	     {
+	       if(new_cat == 0)
+		 {
+		   cat_count = 0;
+		   while(cat_array[cat_count])
+		     {
+		       G_set_cat( cat_array[cat_count], G_get_cat(cat_array[cat_count],
+								  &cats), &temp_cats );
+		       cat_count++;
+		     }
+		 }
+	       else
+		 G_set_cat(new_cat, G_get_cat(new_cat, &cats), &temp_cats);
+	     }
          else   /* build an empty cat file */
 	    {
-	    for ( i = 1; i <= max_att; i++)
-		{
-                sprintf(buffr,"%d:\n",i);
-                fputs(buffr,catf);
-		}
+	       if(new_cat == 0)
+		 {
+		   cat_count = 0;
+		   while(cat_array[cat_count])
+		     {
+		       G_set_cat( cat_array[cat_count], "", &temp_cats );
+		       cat_count++;
+		     }
+		 }
+	       else
+		 G_set_cat(new_cat, "", &temp_cats);
 	    }
 	 }
-     fclose(catf) ;
+     if( G_write_vector_cats( output, &temp_cats ))
+       fprintf( stderr, "Could not write category file" );
 
      sprintf( buffr, "%s/etc/v.build  map=%s  thresh=no",G_gisbase(),output);
      system(buffr);
