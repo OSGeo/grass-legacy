@@ -12,7 +12,7 @@
 #include <math.h>
 
 
-CELL param(int ptype,		/* Type of terrain parameter to calculate */
+DCELL param(int ptype,		/* Type of terrain parameter to calculate */
 	   double *coeff)	/* Set of six quadratic coefficents.	  */
 {
 
@@ -31,51 +31,51 @@ CELL param(int ptype,		/* Type of terrain parameter to calculate */
     switch(ptype)
     {
 	case ELEV:
-		return((CELL)rint(f));
+		return(f);
 		break;
 
 	case SLOPE:
-		return((CELL)rint(atan(sqrt(d*d + e*e))*RAD2DEG));
+		return(atan(sqrt(d*d + e*e))*RAD2DEG);
 		break;
 
 	case ASPECT:
-		return((CELL)rint(atan2(e,d)*RAD2DEG));
+		return(atan2(e,d)*RAD2DEG);
 		break;
 
 	case PROFC:
 		if ((d == 0) && (e == 0))
-		    return((CELL)0);
+		    return(0.0);
 		else
-		    return((CELL)rint(-200.0*resoln*wsize*(a*d*d + b*e*e + c*e*d) /
-			   	      ((e*e + d*d) * pow(1.0 + d*d + e*e,1.5)) ));
+		    return(-200.0*resoln*wsize*(a*d*d + b*e*e + c*e*d) /
+			   	      ((e*e + d*d) * pow(1.0 + d*d + e*e,1.5)));
 		break;
 
 	case PLANC:
 		if ((d == 0) && (e == 0))
-		    return((CELL)0);
+		    return(0.0);
 		else
-		    return((CELL)rint(200.0*resoln*wsize*(b*d*d + a*e*e - c*d*e) /
-		 		        pow(e*e + d*d,1.5) ));
+		    return(200.0*resoln*wsize*(b*d*d + a*e*e - c*d*e) /
+		 		        pow(e*e + d*d,1.5));
 		break;
 
 	case LONGC:
 		if ((d == 0) && (e ==0))
-		    return((CELL) 0);
+		    return(0.0);
 		else	
-		    return((CELL)rint(-20.0*resoln*wsize*(a*d*d + b*e*e + c*d*e)/(d*d + e*e)));
+		    return(-20.0*resoln*wsize*(a*d*d + b*e*e + c*d*e)/(d*d + e*e));
 	case CROSC:
 		if ((d == 0) && (e ==0))
-		    return((CELL) 0);
+		    return(0.0);
 		else	
-		    return((CELL)rint(-20.0*resoln*wsize*(b*d*d + a*e*e - c*d*e)/(d*d + e*e)));
+		    return(-20.0*resoln*wsize*(b*d*d + a*e*e - c*d*e)/(d*d + e*e));
 
 	case MINIC:
-		return((CELL)rint(20.0*resoln*wsize*(-a-b-sqrt((a-b)*(a-b) + c*c))));
+		return(20.0*resoln*wsize*(-a-b-sqrt((a-b)*(a-b) + c*c)));
 
 	case MAXIC:
-		return((CELL)rint(20.0*resoln*wsize*(-a-b+sqrt((a-b)*(a-b) + c*c))));
+		return(20.0*resoln*wsize*(-a-b+sqrt((a-b)*(a-b) + c*c)));
 
 	default:
-		return((CELL)0);
+		return(0.0);
     }
 }

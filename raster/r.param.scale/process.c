@@ -7,9 +7,11 @@
 /*****************************************************************************/
 
 #include <stdlib.h>
-
 #include "param.h"
 #include "nrutil.h"
+
+/* uncomment for debug output */
+/* #define DEBUG */
 
 void process(void)
 {
@@ -19,14 +21,14 @@ void process(void)
     /*--------------------------------------------------------------------------*/ 
 
 
-    CELL		*row_in,	/* Buffer large enough to hold `wsize' 	*/
-			*row_out,	/* raster rows. When GRASS reads in a	*/
+    DCELL		*row_in,	/* Buffer large enough to hold `wsize' 	*/
+			*row_out=NULL,	/* raster rows. When GRASS reads in a	*/
 					/* raster row, each element is of type	*/
-					/* CELL (probably of type int).		*/
-
+					/* DCELL	*/
 			*window_ptr,	/* Stores local terrain window.		*/
-
 			centre;		/* Elevation of central cell in window.	*/
+
+    CELL                *featrow_out=NULL;   /* store features in CELL */
 
     struct Cell_head	region;		/* Structure to hold region information	*/
 
@@ -75,12 +77,15 @@ void process(void)
     /*--------------------------------------------------------------------------*/ 
 
 
-    row_in = (CELL *) G_malloc(ncols*sizeof(CELL)*wsize);
+    row_in = (DCELL *) G_malloc(ncols*sizeof(DCELL)*wsize);
 					/* Reserve `wsize' rows of memory.	*/
 
-    row_out = G_allocate_cell_buf();	/* Initialise output row buffer. 	*/
+    if(mparam != FEATURE)
+      row_out = G_allocate_raster_buf(DCELL_TYPE); /* Initialise output row buffer. 	*/
+    else
+      featrow_out = G_allocate_raster_buf(CELL_TYPE); /* Initialise output row buffer. 	*/
 
-    window_ptr = (CELL *) G_malloc(wsize*wsize*sizeof(CELL));	
+    window_ptr = (DCELL *) G_malloc(wsize*wsize*sizeof(DCELL));	
 					/* Reserve enough memory for local wind.*/
 
     weight_ptr = (double *) G_malloc(wsize*wsize*sizeof(double));	
@@ -133,12 +138,15 @@ void process(void)
     /*          PROCESS INPUT RASTER AND WRITE OUT RASTER LINE BY LINE		*/
     /*--------------------------------------------------------------------------*/ 
 
-    G_zero_cell_buf(row_out);	
-    for (wind_row=0; wind_row<EDGE; wind_row++)
-	G_put_map_row(fd_out,row_out);	/* Write out the edge cells as zeros.	*/
+    if(mparam != FEATURE)
+      for (wind_row=0; wind_row<EDGE; wind_row++)
+	G_put_raster_row(fd_out,row_out,DCELL_TYPE);	/* Write out the edge cells as NULL.	*/
+    else
+      for (wind_row=0; wind_row<EDGE; wind_row++)
+	G_put_raster_row(fd_out,featrow_out,CELL_TYPE);	/* Write out the edge cells as NULL.	*/
     
     for (wind_row=0; wind_row<wsize-1; wind_row++)
-    	G_get_map_row(fd_in,row_in+(wind_row*ncols),wind_row);
+    	G_get_raster_row(fd_in,row_in+(wind_row*ncols),wind_row,DCELL_TYPE);
 					/* Read in enough of the first rows to	*/
 					/* allow window to be examined.		*/
 
@@ -146,7 +154,7 @@ void process(void)
     { 
 	G_percent(row+1,nrows-EDGE,2);
 
-	G_get_map_row(fd_in,row_in+((wsize-1)*ncols),row+EDGE); 
+	G_get_raster_row(fd_in,row_in+((wsize-1)*ncols),row+EDGE,DCELL_TYPE);
 
 	for (col=EDGE; col<(ncols-EDGE); col++)
 	{
@@ -192,17 +200,23 @@ void process(void)
 	    /*--- Calculate terrain parameter based on quad. coefficients. ---*/
 
 	    if (mparam == FEATURE)
-		*(row_out+col) = feature(obs_ptr);
+		*(featrow_out+col) = (CELL)feature(obs_ptr);
 	    else
 	        *(row_out+col) = param(mparam,obs_ptr);
 
 	    if (mparam == ELEV)
 		*(row_out+col) += centre;	/* Add central elevation back */
-	
-	}				
-	G_put_map_row(fd_out,row_out);	/* Write the row buffer to the output	*/
+#ifdef DEBUG
+ fprintf(stderr,"FEATURE: %i",featrow_out[9]);
+#endif	
+	}
+	if (mparam != FEATURE)
+	   G_put_raster_row(fd_out,row_out,DCELL_TYPE); /* Write the row buffer to the output	*/
 					/* raster.				*/
-         
+	else /* write FEATURE to CELL */
+	   G_put_raster_row(fd_out, featrow_out,CELL_TYPE); /* Write the row buffer to the output	*/
+					/* raster.				*/         
+
 					/* 'Shuffle' rows down one, and read in	*/
 					/*  one new row.			*/
 	for (wind_row=0;wind_row<wsize-1;wind_row++)
@@ -210,17 +224,24 @@ void process(void)
             *(row_in+(wind_row*ncols)+col) = *(row_in+((wind_row+1)*ncols)+col);
     }
 
-    G_zero_cell_buf(row_out);	
     for (wind_row=0; wind_row<EDGE; wind_row++)
-	G_put_map_row(fd_out,row_out);	/* Write out the edge cells as zeros.	*/
+    {
+       if (mparam != FEATURE)
+ 	G_put_raster_row(fd_out,row_out,DCELL_TYPE); /* Write out the edge cells as NULL.*/
+       else
+        G_put_raster_row(fd_out, featrow_out,CELL_TYPE); /* Write out the edge cells as NULL.*/
+    }
 
     /*--------------------------------------------------------------------------*/
     /*     FREE MEMORY USED TO STORE RASTER ROWS, LOCAL WINDOW AND MATRICES	*/
     /*--------------------------------------------------------------------------*/ 
 
-    free(row_in);
-    free(row_out);
-    free(window_ptr);
+    G_free(row_in);
+    if(mparam != FEATURE)
+      G_free(row_out);
+    else
+      G_free(featrow_out);
+    G_free(window_ptr);
     free_dmatrix(normal_ptr,0,5,0,5);
     free_dvector(obs_ptr,0,5);
     free_ivector(index_ptr,0,5);
