@@ -1,8 +1,0 @@
-
-
-r.in.ascii - 
-
-r.in.ascii allows a user to create a GRASS @glossary("raster",16.glossary/rastdata.def) file from an ASCII 
-input file with an optional title designation.
-
-Manual entry for @man("r.in.ascii")

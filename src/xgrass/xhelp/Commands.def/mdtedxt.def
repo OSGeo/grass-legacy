@@ -1,9 +1,0 @@
-
-
-m.dted.extract - 
-
-m.dted.extract extracts digital terrain elevation data (@glossary("DTED",16.glossary/dted.def)- Levels
-1 and 2) produced and supplied by the Defense Mappping Agency (@glossary("DMA",16.glossary/dma.def))
-on 1/2-inch magnetic tapes.
-
-Manual entry for @man("m.dted.extract")

@@ -1,8 +1,0 @@
-
-
-r.describe - 
-
-r.describe prints a terse listing of @glossary("category values",16.glossary/catval.def) found in a
-user-specified @glossary("raster",16.glossary/rastdata.def) @glossary("map layer",16.glossary/maplayer.def).
-
-Manual entry for @man("r.describe")

@@ -1,8 +1,0 @@
-
-
-m.dem.extract - 
-
-m.dem.extract extracts the current geographic region definitions from
-Digital Elevation Model (@glossary("DEM",16.glossary/dem.def)) tapes.
-
-Manual entry for @man("m.dem.extract")

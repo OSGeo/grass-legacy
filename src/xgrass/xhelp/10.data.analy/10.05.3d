@@ -1,9 +1,0 @@
-                       2-D AND 3-D MANIPULATIONS
-
-GRASS programs can be used to perform two- and three-dimensional data
-manipulations on @glossary("raster",16.glossary/rastdata.def) data.  These functions are useful for modeling
-iterative interactions across a landscape.
-
-         @ref("-  r.basins.fill ",Commands.def/rbasfill.def)             @ref("-  r.drain ",Commands.def/rdrain.def)
-         @ref("-  r.surf.contour ",17.manual/Help.pages/r.surf.contour)            @ref("-  r.watershed ",Commands.def/rh20shed.def)
-         @ref("-  r.surf.idw ",Commands.def/rsurfidw.def)                @ref("-  r.surf.idw2 ",17.manual/Help.pages/r.surf.idw2)
