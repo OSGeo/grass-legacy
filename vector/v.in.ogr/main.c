@@ -308,85 +308,91 @@ main (int argc, char *argv[])
 			       &proj_units, Ogr_projection, 0) < 0 )
             G_warning("Unable to convert input map projection information to "
 		      "GRASS format for checking");
-    }
-    OSRDestroySpatialReference(Ogr_projection);
 
-    /* Does the projection of the current location match the dataset? */
-    /* fetch LOCATION PROJ info */
-    loc_proj_info = G_get_projinfo();
-    loc_proj_units = G_get_projunits();
-    /* G_get_window seems to be unreliable if the location has been changed */
-    G__get_window ( &loc_wind, "", "DEFAULT_WIND", "PERMANENT");
-
-    if( over_flag->answer )
-    {
-        cellhd.proj = loc_wind.proj;
-        cellhd.zone = loc_wind.zone;
-    } 
-    else if( loc_wind.proj != cellhd.proj
-               || !G_compare_projections( loc_proj_info, loc_proj_units, 
-                                          proj_info, proj_units ) )
-    {
-        int     i_value;
-
-        strcpy( error_msg, 
-                "Projection of dataset does not"
-                " appear to match current location.\n\n");
-
-/* TODO: output this info sorted by key: */
-        if( loc_proj_info != NULL )
+        /* Does the projection of the current location match the dataset? */
+        /* fetch LOCATION PROJ info */
+        loc_proj_info = G_get_projinfo();
+        loc_proj_units = G_get_projunits();
+        /* G_get_window seems to be unreliable if the location has been changed */
+        G__get_window ( &loc_wind, "", "DEFAULT_WIND", "PERMANENT");
+    
+        if( over_flag->answer )
         {
-            strcat( error_msg, "LOCATION PROJ_INFO is:\n" );
-            for( i_value = 0; 
-                 loc_proj_info != NULL && i_value < loc_proj_info->nitems; 
-                 i_value++ )
-                sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
-                         loc_proj_info->key[i_value],
-                         loc_proj_info->value[i_value] );
-            strcat( error_msg, "\n" );
-        }
-
-        if( proj_info != NULL )
+            cellhd.proj = loc_wind.proj;
+            cellhd.zone = loc_wind.zone;
+	    fprintf(stderr, "Over-riding projection check.\n"
+		            "Proceeding with import...\n");
+        } 
+        else if( loc_wind.proj != cellhd.proj
+                   || !G_compare_projections( loc_proj_info, loc_proj_units, 
+                                              proj_info, proj_units ) )
         {
-            strcat( error_msg, "Dataset PROJ_INFO is:\n" );
-            for( i_value = 0; 
-                 proj_info != NULL && i_value < proj_info->nitems; 
-                 i_value++ )
-                sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
-                         proj_info->key[i_value],
-                         proj_info->value[i_value] );
+            int     i_value;
+    
+            strcpy( error_msg, 
+                    "Projection of dataset does not"
+                    " appear to match current location.\n\n");
+
+    /* TODO: output this info sorted by key: */
+            if( loc_proj_info != NULL )
+            {
+                strcat( error_msg, "LOCATION PROJ_INFO is:\n" );
+                for( i_value = 0; 
+                     loc_proj_info != NULL && i_value < loc_proj_info->nitems; 
+                     i_value++ )
+                    sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                             loc_proj_info->key[i_value],
+                             loc_proj_info->value[i_value] );
+                strcat( error_msg, "\n" );
+            }
+    
+            if( proj_info != NULL )
+            {
+                strcat( error_msg, "Dataset PROJ_INFO is:\n" );
+                for( i_value = 0; 
+                     proj_info != NULL && i_value < proj_info->nitems; 
+                     i_value++ )
+                    sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                             proj_info->key[i_value],
+                             proj_info->value[i_value] );
+            }
+            else
+            {
+                if( cellhd.proj == PROJECTION_XY )
+                    sprintf( error_msg + strlen(error_msg), 
+                             "cellhd.proj = %d (unreferenced)\n", 
+                             cellhd.proj );
+                else if( cellhd.proj == PROJECTION_LL )
+                    sprintf( error_msg + strlen(error_msg), 
+                             "cellhd.proj = %d (lat/long)\n", 
+                             cellhd.proj );
+                else if( cellhd.proj == PROJECTION_UTM )
+                    sprintf( error_msg + strlen(error_msg), 
+                             "cellhd.proj = %d (UTM), zone = %d\n", 
+                             cellhd.proj, cellhd.zone );
+                else if( cellhd.proj == PROJECTION_SP )
+                    sprintf( error_msg + strlen(error_msg), 
+                             "cellhd.proj = %d (State Plane), zone = %d\n", 
+                             cellhd.proj, cellhd.zone );
+                else 
+                    sprintf( error_msg + strlen(error_msg), 
+                             "cellhd.proj = %d (unknown), zone = %d\n", 
+                             cellhd.proj, cellhd.zone );
+            }
+            sprintf( error_msg + strlen(error_msg), 
+    	             "\nYou can use the -o flag to %s to override this check.\n",
+    	    	     G_program_name() );
+            strcat( error_msg, 
+             "Consider to generate a new location with 'location' parameter"
+             " from input data set.\n" );
+            G_fatal_error( error_msg );
         }
         else
-        {
-            if( cellhd.proj == PROJECTION_XY )
-                sprintf( error_msg + strlen(error_msg), 
-                         "cellhd.proj = %d (unreferenced)\n", 
-                         cellhd.proj );
-            else if( cellhd.proj == PROJECTION_LL )
-                sprintf( error_msg + strlen(error_msg), 
-                         "cellhd.proj = %d (lat/long)\n", 
-                         cellhd.proj );
-            else if( cellhd.proj == PROJECTION_UTM )
-                sprintf( error_msg + strlen(error_msg), 
-                         "cellhd.proj = %d (UTM), zone = %d\n", 
-                         cellhd.proj, cellhd.zone );
-            else if( cellhd.proj == PROJECTION_SP )
-                sprintf( error_msg + strlen(error_msg), 
-                         "cellhd.proj = %d (State Plane), zone = %d\n", 
-                         cellhd.proj, cellhd.zone );
-            else 
-                sprintf( error_msg + strlen(error_msg), 
-                         "cellhd.proj = %d (unknown), zone = %d\n", 
-                         cellhd.proj, cellhd.zone );
-        }
-        sprintf( error_msg + strlen(error_msg), 
-	         "\nYou can use the -o flag to %s to override this check.\n",
-		 G_program_name() );
-        strcat( error_msg, 
-         "Consider to generate a new location with 'location' parameter"
-         " from input data set.\n" );
-        G_fatal_error( error_msg );
+	    fprintf(stderr, "Projection of input dataset and current location "
+		            "appear to match.\nProceeding with import...\n");
+   
     }
+    OSRDestroySpatialReference(Ogr_projection);
    
     db_init_string (&sql);
     db_init_string (&strval);
@@ -400,7 +406,7 @@ main (int argc, char *argv[])
     Vect_hist_command ( &Map );
 
     /* Points and lines are written immediately with categories. Boundaries of polygons are
-     * written to the vector then cleaned and centroids are calculated for all areas in clean vector.
+     * written to the vector then cleaned and centroids are calculated for all areas in cleaan vector.
      * Then second pass through finds all centroids in each polygon feature and adds its category
      * to the centroid. The result is that one centroids may have 0, 1 ore more categories
      * of one ore more (more input layers) fields. */
