@@ -23,18 +23,27 @@
 
 /* Write geometry to output map */
 int 
-geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat )
+geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area )
 {
     int    i, j, np, nr, ret;
-    struct line_pnts *Points, **IPoints;
-    struct line_cats *BCats, *Cats ;
+    static int first = 1;
+    static struct line_pnts *Points;
+    struct line_pnts **IPoints;
+    static struct line_cats *BCats, *Cats ;
     OGRwkbGeometryType eType;
     OGRGeometryH hRing;
     double  x, y;
+    double size;
 
-    Points = Vect_new_line_struct ();
-    BCats = Vect_new_cats_struct ();
-    Cats = Vect_new_cats_struct ();
+    if ( first ) {
+	Points = Vect_new_line_struct ();
+	BCats = Vect_new_cats_struct ();
+	Cats = Vect_new_cats_struct ();
+	first = 0;
+    }
+    Vect_reset_line ( Points );
+    Vect_reset_cats ( Cats );
+    Vect_reset_cats ( BCats );
     Vect_cat_set ( Cats, field, cat );
 
     eType = wkbFlatten(OGR_G_GetGeometryType(hGeom));
@@ -70,8 +79,16 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat )
 		    OGR_G_GetY(hRing,j), OGR_G_GetZ(hRing,j) );
 	}
 	
+	/* Degenerate is not ignored because it may be useful to see where it is,
+	 * but may be eliminated by min_area option */
 	if ( Points->n_points < 4 ) 
 	    G_warning ( "Degenerate polygon (%d vertices).", Points->n_points );
+	
+	size = G_area_of_polygon(Points->x, Points->y, Points->n_points);
+	if ( size < min_area ) {
+	    G_warning ( "Area size %.1e, area not imported.", size);
+	    return 0;
+	}
 	
         Vect_write_line ( Map, GV_BOUNDARY, Points, BCats);
 	
@@ -90,7 +107,12 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat )
 	    if ( IPoints[i-1]->n_points < 4 ) 
 	        G_warning ( "Degenerate island (%d vertices).", IPoints[i-1]->n_points );
 	    
-            Vect_write_line ( Map, GV_BOUNDARY, IPoints[i-1], BCats);
+	    size = G_area_of_polygon(Points->x, Points->y, Points->n_points);
+	    if ( size < min_area ) {
+		G_warning ( "Island size %.1e, island not imported.", size);
+	    } else { 
+                Vect_write_line ( Map, GV_BOUNDARY, IPoints[i-1], BCats);
+	    }
         }
 
 	/* Centroid */
@@ -137,7 +159,7 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat )
         for( i = 0; i < nr; i++ ) {
             hRing = OGR_G_GetGeometryRef( hGeom, i );
 
-	    ret = geom( hRing, Map, field, cat );
+	    ret = geom( hRing, Map, field, cat, min_area );
 	    if ( ret == -1 ) {
 		G_warning ("Cannot write part of geometry" );
 	    }
@@ -148,11 +170,5 @@ geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat )
 	G_fatal_error ("Unknown geometry type");
     }
 
-    Vect_destroy_line_struct ( Points );
-    Vect_destroy_cats_struct ( Cats );
-    Vect_destroy_cats_struct ( BCats );
-    
     return 0;
 }
-
-

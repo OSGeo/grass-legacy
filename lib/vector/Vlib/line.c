@@ -130,14 +130,13 @@ Vect_reset_line (struct line_pnts *Points)
   return 0;
 }
 
-
 /*!
  \fn int Vect_append_point (struct line_pnts *Points, double x, double y, double z)
  \brief appends one point to the end of a Points structure returns new
    number of points or -1 on out of memory Note, this will append to
    whatever is in line struct.  If you are re-using a line struct, be
    sure to clear out old data first by calling Vect_reset_line ()
- \return number of points??
+ \return number of points
  \param line_pnts * structure, x, y, z
 */
 int 
@@ -155,6 +154,95 @@ Vect_append_point (struct line_pnts *Points, double x, double y, double z)
   return ++(Points->n_points);
 }
 
+/*!
+ \fn int Vect_line_insert_point (struct line_pnts *Points, int index, double x, double y, double z)
+ \brief insert new point at index position and move all old points at that position and above up
+ \return number of points or -1 on error (alocation)
+ \param Points line structure
+ \param index (from 0 to Points->n_points-1)
+ \param x 
+ \param y
+ \param z
+*/
+int 
+Vect_line_insert_point (struct line_pnts *Points, int index, double x, double y, double z)
+{
+  register int n;
+
+  if ( index < 0 || index > Points->n_points-1 )
+      G_fatal_error ("Index out of range in Vect_line_insert_point()");
+  
+  if (0 > dig_alloc_points (Points, Points->n_points + 1)) 
+      return (-1);
+
+  /* move up */
+  for ( n = Points->n_points; n > index; n-- ) {
+      Points->x[n] = Points->x[n-1];
+      Points->y[n] = Points->y[n-1];
+      Points->z[n] = Points->z[n-1];
+  }
+
+  Points->x[index] = x;
+  Points->y[index] = y;
+  Points->z[index] = z;
+  return ++(Points->n_points);
+}
+
+/*!
+ \fn int Vect_line_delete_point (struct line_pnts *Points, int index)
+ \brief delete point at given index and move all points above down
+ \return number of points
+ \param Points line structure
+ \param index (from 0 to Points->n_points-1)
+*/
+int 
+Vect_line_delete_point (struct line_pnts *Points, int index)
+{
+  register int n;
+
+  if ( index < 0 || index > Points->n_points-1 )
+      G_fatal_error ("Index out of range in Vect_line_delete_point()");
+  
+  if ( Points->n_points == 0 )
+      return 0;
+
+  /* move down */
+  for ( n = index; n < Points->n_points - 1; n++ ) {
+      Points->x[n] = Points->x[n+1];
+      Points->y[n] = Points->y[n+1];
+      Points->z[n] = Points->z[n+1];
+  }
+
+  return --(Points->n_points);
+}
+
+/*!
+ \fn int Vect_line_prune (struct line_pnts *Points)
+ \brief remove duplicate points, i.e. zero length segments
+ \return number of points
+ \param Points line structure
+*/
+int 
+Vect_line_prune (struct line_pnts *Points)
+{
+  int i, j;
+
+  for ( i = 0; i < Points->n_points - 1; i++ ) {
+      if ( Points->x[i] == Points->x[i+1] && Points->y[i] == Points->y[i+1] && 
+	   Points->z[i] == Points->z[i+1])
+      {
+	  for ( j = i; j < Points->n_points - 1; j++ ) {
+	      Points->x[j] = Points->x[j+1];
+	      Points->y[j] = Points->y[j+1];
+	      Points->y[j] = Points->y[j+1];
+	  }
+	  Points->n_points--;
+	  i--; /* to continue at the same index */
+      }
+  }
+
+  return (Points->n_points);
+}
 
 /*!
  \fn int Vect_append_points (struct line_pnts *Points, struct line_pnts *APoints,

@@ -65,6 +65,58 @@ int prnmsg ( char *msg, ...) {
 int
 Vect_build ( struct Map_info *Map, FILE *msgout ) 
 {
+    return Vect_build_partial ( Map, GV_BUILD_ALL, msgout );
+}
+
+
+/*!
+ \fn int Vect_get_built ( struct Map_info *Map ) 
+ \brief return current highest built level (part)
+ \return current highest built level
+ \param Map vector map
+*/
+int
+Vect_get_built ( struct Map_info *Map ) 
+{
+    return ( Map->plus.built );
+}
+
+/*!
+ \fn int Vect_build_partial ( struct Map_info *Map, int top, FILE *msgout ) 
+ \brief build partial topology for vector map
+
+ This functions optionaly builds only some parts of topology. Highest level is specified by build
+ parameter which may be:
+ GV_BUILD_NONE - nothing is build
+ GV_BUILD_BASE - basic topology, nodes, spatial index
+ GV_BUILD_AREAS - build areas and islands, but islands are not attached to areas
+ GV_BUILD_ATTACH_ISLES - attache islands to areas
+ GV_BUILD_CENTROIDS - assign centroids to areas
+ GV_BUILD_ALL - top level, the same as GV_BUILD_CENTROIDS
+
+ If fuctions is called with build lower than current value of the Map, the level is downgraded to 
+ requested value.
+
+ All calls to Vect_write_line, Vect_rewrite_line, Vect_delete_line respect the last value of 
+ build used in this function.
+
+ Values lower than GV_BUILD_ALL are supported only by GV_FORMAT_NATIVE and GV_FORMAT_POSTGIS,
+ other formats ignore build and build always GV_BUILD_ALL
+
+ Note that the functions has effect only if requested level is higher than current level, to rebuild
+ part of topology, call first downgrade and then upgrade, for example:
+    Vect_build()
+    Vect_build_partial(,GV_BUILD_BASE,)
+    Vect_build_partial(,GV_BUILD_AREAS,) 
+ 
+ \return 1 on success, 0 on error
+ \param Map vector map
+ \param build highest level of build
+ \param msgout file pointer for message output (stdout/stderr for example) or NULL
+*/
+int
+Vect_build_partial ( struct Map_info *Map, int build, FILE *msgout ) 
+{
     struct Plus_head *plus ;
     int    ret;
     
@@ -76,31 +128,82 @@ Vect_build ( struct Map_info *Map, FILE *msgout )
     
     plus = &(Map->plus);
     prnmsg ("Building topology ...\n") ;
-    dig_init_plus ( plus );
     plus->with_z = Map->head.with_z;
     plus->spidx_with_z = Map->head.with_z;
     
-    ret = ( (*Build_array[Map->format]) (Map, msgout) );
+    ret = ( (*Build_array[Map->format]) (Map, build, msgout) );
 
     if ( ret == 0 ) { return 0; } 
     
     Map->level = LEVEL_2;
     plus->mode = GV_MODE_WRITE;
     
-    prnmsg ("Topology was built.\n") ;
+    /* prnmsg ("Topology was built.\n") ; */
    
-    prnmsg ("Number of nodes     :   %d\n", plus->n_nodes) ;
-    prnmsg ("Number of primitives:   %d\n", plus->n_lines) ;
-    prnmsg ("Number of points    :   %d\n", plus->n_plines) ;
-    prnmsg ("Number of lines     :   %d\n", plus->n_llines) ;
-    prnmsg ("Number of boundaries:   %d\n", plus->n_blines) ;
-    prnmsg ("Number of centroids :   %d\n", plus->n_clines) ;
-    prnmsg ("Number of faces     :   %d\n", plus->n_flines) ;
-    prnmsg ("Number of kernels   :   %d\n", plus->n_klines) ;
-    prnmsg ("Number of areas     :   %d\n", plus->n_areas) ;
-    prnmsg ("Number of isles     :   %d\n", plus->n_isles) ;
-    prnmsg ("Map is 3D           :   %d\n", Vect_is_3d(Map));
+    prnmsg ("Number of nodes     :   %d\n", plus->n_nodes);
+    prnmsg ("Number of primitives:   %d\n", plus->n_lines);
+    prnmsg ("Number of points    :   %d\n", plus->n_plines);
+    prnmsg ("Number of lines     :   %d\n", plus->n_llines);
+    prnmsg ("Number of boundaries:   %d\n", plus->n_blines);
+    prnmsg ("Number of centroids :   %d\n", plus->n_clines);
 
+    if ( plus->n_flines > 0 )
+        prnmsg ("Number of faces     :   %d\n", plus->n_flines);
+
+    if ( plus->n_klines > 0 )
+        prnmsg ("Number of kernels   :   %d\n", plus->n_klines);
+
+    if ( plus->built >= GV_BUILD_AREAS ) {
+	int line, nlines, area, nareas, err_boundaries, err_centr_out, err_centr_dupl, err_nocentr;
+	P_LINE *Line;
+	struct Plus_head *Plus;
+	
+	/* Count errors (it does not take much time comparing to build process) */
+	Plus = &(Map->plus);
+	nlines = Vect_get_num_lines (Map);
+	err_boundaries = err_centr_out = err_centr_dupl = 0;
+	for ( line = 1; line <= nlines; line++ ){
+	    Line = Plus->Line[line];
+	    if ( !Line ) continue;
+	    if ( Line->type == GV_BOUNDARY && ( Line->left == 0 || Line->right == 0 ) ) {
+		G_debug ( 3, "line = %d left = %d right = %d", line,  Line->left, Line->right);
+		err_boundaries++; 
+	    }
+	    if ( Line->type == GV_CENTROID ) {
+		if ( Line->left == 0 ) 
+		    err_centr_out++;
+		else if ( Line->left < 0 )
+		    err_centr_dupl++;
+	    }
+	}
+
+	err_nocentr = 0;
+	nareas = Vect_get_num_areas (Map);
+	for ( area = 1; area <= nareas; area++ ){
+	    line = Vect_get_area_centroid ( Map, area );
+	    if ( line == 0 ) 
+		err_nocentr++;
+	}
+	    
+	prnmsg ("Number of areas     :   %d\n", plus->n_areas);
+	prnmsg ("Number of isles     :   %d\n", plus->n_isles);
+
+	if ( err_boundaries )
+	    prnmsg ("Number of incorrect boundaries   :   %d\n", err_boundaries);
+
+	if ( err_centr_out )
+	    prnmsg ("Number of centroids outside area :   %d\n", err_centr_out);
+	
+	if ( err_centr_dupl )
+	    prnmsg ("Number of duplicate centroids    :   %d\n", err_centr_dupl);
+
+	if ( err_nocentr )
+	    prnmsg ("Number of areas without centroid :   %d\n", err_nocentr);
+	    
+    } else {
+	prnmsg ("Number of areas     :   -\n");
+	prnmsg ("Number of isles     :   -\n");
+    }
     return 1;
 }
 

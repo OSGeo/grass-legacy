@@ -53,7 +53,6 @@ V2_write_line_nat (  struct Map_info *Map,
 		     struct line_cats *cats)
 {
     int    i, s, n, line, next_line, area, node, side, first, sel_area;
-    struct ilist *List;
     long   offset;
     struct Plus_head *plus;
     BOUND_BOX box, abox;
@@ -65,19 +64,19 @@ V2_write_line_nat (  struct Map_info *Map,
     offset = V1_write_line_nat ( Map, type, points, cats);
     if ( offset < 0 ) return -1;
 
-    List = Vect_new_list ();
-
     /* Update topology */
-    /* Add line */
     plus = &(Map->plus);
-    line = dig_add_line ( plus, type, points, offset );
-    G_debug ( 3, "  line added to topo with id = %d", line );
-    dig_line_box ( points, &box );
-    dig_line_set_box (plus, line, &box);
-    if ( line == 1 )
-        Vect_box_copy (&(plus->box), &box);
-    else
-        Vect_box_extend (&(plus->box), &box);
+    /* Add line */
+    if (  plus->built >= GV_BUILD_BASE ) {
+	line = dig_add_line ( plus, type, points, offset );
+	G_debug ( 3, "  line added to topo with id = %d", line );
+	dig_line_box ( points, &box );
+	dig_line_set_box (plus, line, &box);
+	if ( line == 1 )
+	    Vect_box_copy (&(plus->box), &box);
+	else
+	    Vect_box_extend (&(plus->box), &box);
+    }
 
     /* Update areas. Areas are modified if: 
     *  1) first or/and last point are existing nodes ->
@@ -102,97 +101,103 @@ V2_write_line_nat (  struct Map_info *Map,
     *  Note that 1) and 2) is done by the same code.
     */
     
-    if ( type == GV_BOUNDARY ) {
-        Line = plus->Line[line]; 
-	/* Delete neighbour areas/isles */
-	first = 1;
-	for ( s = 1; s < 3; s++ ) { /* for each node */
-	    if ( s == 1 ) node = Line->N1; /* Node 1 */
-	    else node = Line->N2;
-            G_debug ( 3, "  delete neighbour areas/iseles: side = %d node = %d", s, node );
-	    Node = plus->Node[node];
-	    n = 0;
-	    for (i = 0; i < Node->n_lines; i++) {
-                NLine = plus->Line[abs(Node->lines[i])];
-	       	if ( NLine->type == GV_BOUNDARY ) 
-		    n++;
-	    }
-	    
-            G_debug ( 3, "  number of boundaries at node = %d", n );
-	    if ( n > 2) { /* more than 2 boundaries at node ( >= 2 old + 1 new ) */
-		/* Line above (to the right), it is enough to check to the right, because if area/isle
-		*  exists it is the same to the left */
-		if ( s == 1 )
-		    next_line = dig_angle_next_line (plus, line, GV_RIGHT, GV_BOUNDARY ); 
-		else
-		    next_line = dig_angle_next_line (plus, -line, GV_RIGHT, GV_BOUNDARY ); 
+    if (  plus->built >= GV_BUILD_AREAS ) {
+	if ( type == GV_BOUNDARY ) {
+	    Line = plus->Line[line]; 
+	    /* Delete neighbour areas/isles */
+	    first = 1;
+	    for ( s = 1; s < 3; s++ ) { /* for each node */
+		if ( s == 1 ) node = Line->N1; /* Node 1 */
+		else node = Line->N2;
+		G_debug ( 3, "  delete neighbour areas/iseles: side = %d node = %d", s, node );
+		Node = plus->Node[node];
+		n = 0;
+		for (i = 0; i < Node->n_lines; i++) {
+		    NLine = plus->Line[abs(Node->lines[i])];
+		    if ( NLine->type == GV_BOUNDARY ) 
+			n++;
+		}
+		
+		G_debug ( 3, "  number of boundaries at node = %d", n );
+		if ( n > 2) { /* more than 2 boundaries at node ( >= 2 old + 1 new ) */
+		    /* Line above (to the right), it is enough to check to the right, because if area/isle
+		    *  exists it is the same to the left */
+		    if ( s == 1 )
+			next_line = dig_angle_next_line (plus, line, GV_RIGHT, GV_BOUNDARY ); 
+		    else
+			next_line = dig_angle_next_line (plus, -line, GV_RIGHT, GV_BOUNDARY ); 
 
-		if ( next_line != 0 ) { /* there is a boundary to the right */
-		    NLine = plus->Line[abs(next_line)]; 
-		    if ( next_line > 0 )      /* the boundary is connected by 1. node */
-			area = NLine->right;  /* we are interested just in this side (close to our line) */
-		    else if ( next_line < 0 ) /* the boundary is connected by 2. node */
-			area = NLine->left;   
-		    
-                    G_debug ( 3, "  next_line = %d area = %d", next_line, area);
-		    if ( area > 0 ) {         /* is area */
-			Vect_get_area_box ( Map, area, &box); 
-			if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
-			else  Vect_box_extend ( &abox, &box);
-			dig_del_area ( plus, area );
-		    } else if ( area < 0 ) {  /* is isle */
-		       	dig_del_isle ( plus, -area ); 
+		    if ( next_line != 0 ) { /* there is a boundary to the right */
+			NLine = plus->Line[abs(next_line)]; 
+			if ( next_line > 0 )      /* the boundary is connected by 1. node */
+			    area = NLine->right;  /* we are interested just in this side (close to our line) */
+			else if ( next_line < 0 ) /* the boundary is connected by 2. node */
+			    area = NLine->left;   
+			
+			G_debug ( 3, "  next_line = %d area = %d", next_line, area);
+			if ( area > 0 ) {         /* is area */
+			    Vect_get_area_box ( Map, area, &box); 
+			    if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
+			    else  Vect_box_extend ( &abox, &box);
+			    dig_del_area ( plus, area );
+			} else if ( area < 0 ) {  /* is isle */
+			    dig_del_isle ( plus, -area ); 
+			}
 		    }
 		}
 	    }
-	}
-	/* Build new areas/isles. Thas true that we deleted also adjacent areas/isles, but if
-	*  they form new one our boundary must participate, so we need to build areas/isles
-	*  just for our boundary */
-        for (s = 1; s < 3; s++) {
-	    if ( s == 1 ) side = GV_LEFT;
-	    else side = GV_RIGHT;
-            G_debug ( 3, "  build area/isle on side = %d", side );
-	    
-            G_debug ( 3, "Build area for line = %d, side = %d", line, side );
-	    area = Vect_build_line_area ( Map, line, side );
-            G_debug ( 3, "Build area for line = %d, side = %d", line, side );
-	    if ( area > 0 ) { /* area */
-		Vect_get_area_box ( Map, area, &box); 
-		if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
-		else  Vect_box_extend ( &abox, &box);
-	    } else if ( area < 0 ) { 
-		/* isle -> must be attached -> add to abox */   
-		Vect_get_isle_box ( Map, -area, &box); 
-		if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
-		else  Vect_box_extend ( &abox, &box);
+	    /* Build new areas/isles. Thas true that we deleted also adjacent areas/isles, but if
+	    *  they form new one our boundary must participate, so we need to build areas/isles
+	    *  just for our boundary */
+	    for (s = 1; s < 3; s++) {
+		if ( s == 1 ) side = GV_LEFT;
+		else side = GV_RIGHT;
+		G_debug ( 3, "  build area/isle on side = %d", side );
+		
+		G_debug ( 3, "Build area for line = %d, side = %d", line, side );
+		area = Vect_build_line_area ( Map, line, side );
+		G_debug ( 3, "Build area for line = %d, side = %d", line, side );
+		if ( area > 0 ) { /* area */
+		    Vect_get_area_box ( Map, area, &box); 
+		    if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
+		    else  Vect_box_extend ( &abox, &box);
+		} else if ( area < 0 ) { 
+		    /* isle -> must be attached -> add to abox */   
+		    Vect_get_isle_box ( Map, -area, &box); 
+		    if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
+		    else  Vect_box_extend ( &abox, &box);
+		}
 	    }
-	}
-	/* Reattach all centroids/isles in deleted areas + new area.
-	*  Because isles are selected by box it covers also possible new isle created above */
-	if ( !first ) { /* i.e. old area/isle was deleted or new one created */
-            /* Reattache isles */
-	    Vect_attach_isles ( Map, &abox );
-	    
-	    /* Reattach centroids */
-	    Vect_attach_centroids ( Map, &abox );
+	    /* Reattach all centroids/isles in deleted areas + new area.
+	    *  Because isles are selected by box it covers also possible new isle created above */
+	    if ( !first ) { /* i.e. old area/isle was deleted or new one created */
+		/* Reattache isles */
+		if (  plus->built >= GV_BUILD_ATTACH_ISLES )
+		    Vect_attach_isles ( Map, &abox );
+		
+		/* Reattach centroids */
+		if (  plus->built >= GV_BUILD_CENTROIDS )
+		    Vect_attach_centroids ( Map, &abox );
+	    }
 	}
     }
     
     /* Attach centroid */
-    if ( type == GV_CENTROID ) {
-	sel_area = Vect_find_area ( Map, points->x[0], points->y[0] );
-	G_debug ( 3, "  new centroid %d is in area %d", line, sel_area);
-	if ( sel_area > 0 ) {
-	    Area = plus->Area[sel_area];
-	    Line = plus->Line[line];
-	    if ( Area->centroid == 0 ) { /* first centroid */
-		G_debug ( 3, "  first centroid -> attach to area");
-		Area->centroid = line;
-		Line->left = sel_area;
-	    } else {  /* duplicate centroid */
-		G_debug ( 3, "  duplicate centroid -> do not attach to area");
-		Line->left = -sel_area;
+    if (  plus->built >= GV_BUILD_CENTROIDS ) {
+	if ( type == GV_CENTROID ) {
+	    sel_area = Vect_find_area ( Map, points->x[0], points->y[0] );
+	    G_debug ( 3, "  new centroid %d is in area %d", line, sel_area);
+	    if ( sel_area > 0 ) {
+		Area = plus->Area[sel_area];
+		Line = plus->Line[line];
+		if ( Area->centroid == 0 ) { /* first centroid */
+		    G_debug ( 3, "  first centroid -> attach to area");
+		    Area->centroid = line;
+		    Line->left = sel_area;
+		} else {  /* duplicate centroid */
+		    G_debug ( 3, "  duplicate centroid -> do not attach to area");
+		    Line->left = -sel_area;
+		}
 	    }
 	}
     }
@@ -402,17 +407,21 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
   G_debug ( 3, "V2_delete_line_nat(), line = %d", line );
   
   plus = &(Map->plus);
-  Line = Map->plus.Line[line]; 
-
-  if ( Line == NULL ) G_fatal_error ("Attempt to delete dead line");
-  type = Line->type;
   
+  if (  plus->built >= GV_BUILD_BASE ) {
+      Line = Map->plus.Line[line]; 
+
+      if ( Line == NULL ) G_fatal_error ("Attempt to delete dead line");
+      type = Line->type;
+  }
+  
+  /* delete the line from coor */
   ret = V1_delete_line_nat (Map, Line->offset); 
   
   if ( ret == -1 ) { return ret; }
 
   /* Update topology */
-  if ( type == GV_BOUNDARY ) {
+  if (  plus->built >= GV_BUILD_AREAS && type == GV_BOUNDARY ) {
       /* Store adjacent boundaries at nodes (will be used to rebuild area/isle) */
       /* Adjacent are stored: > 0 - we want right side; < 0 - we want left side */
       n_adjacent = 0;
@@ -445,37 +454,36 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
       /* Delete area(s) and islands this line forms */
       first = 1;
       if ( Line->left > 0 ) { /* delete area */
-          Vect_get_area_box ( Map, Line->left, &box); 
+	  Vect_get_area_box ( Map, Line->left, &box); 
 	  if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
 	  else  Vect_box_extend ( &abox, &box);
-          dig_del_area ( plus, Line->left );
+	  dig_del_area ( plus, Line->left );
       } else if ( Line->left < 0 )  {  /* delete isle */
-          dig_del_isle ( plus, -Line->left );
+	  dig_del_isle ( plus, -Line->left );
       }
       if ( Line->right > 0 ) { /* delete area */
-          Vect_get_area_box ( Map, Line->right, &box); 
+	  Vect_get_area_box ( Map, Line->right, &box); 
 	  if ( first ) { Vect_box_copy ( &abox, &box); first = 0; } 
 	  else  Vect_box_extend ( &abox, &box);
-          dig_del_area ( plus, Line->right );
+	  dig_del_area ( plus, Line->right );
       } else if ( Line->right < 0 )  {  /* delete isle */
-          dig_del_isle ( plus, -Line->right );
+	  dig_del_isle ( plus, -Line->right );
       }
-	  
   }
 
   /* Delete reference from area */
-  if ( type == GV_CENTROID ) {
+  if (  plus->built >= GV_BUILD_CENTROIDS && type == GV_CENTROID ) {
       if ( Line->left > 0 ) {
           Area = Map->plus.Area[Line->left];
 	  Area->centroid = 0;
       }  
   }
   
-  /* Delete line */
+  /* delete the line from topo */
   dig_del_line ( plus, line );
 
   /* Rebuild areas/isles and attach centroids and isles */
-  if ( type == GV_BOUNDARY ) {
+  if ( plus->built >= GV_BUILD_AREAS && type == GV_BOUNDARY ) {
       /* Rebuild areas/isles */
       for (i = 0; i < n_adjacent; i++) {
 	  if ( adjacent[i] > 0 ) side = GV_RIGHT;
@@ -499,10 +507,12 @@ V2_delete_line_nat ( struct Map_info *Map, int  line )
       *  Because isles are selected by box it covers also possible new isle created above */
       if ( !first ) { /* i.e. old area/isle was deleted or new one created */
           /* Reattache isles */
-	  Vect_attach_isles ( Map, &abox );
+	  if (  plus->built >= GV_BUILD_ATTACH_ISLES )
+	      Vect_attach_isles ( Map, &abox );
 	    
 	  /* Reattach centroids */
-	  Vect_attach_centroids ( Map, &abox );
+	  if (  plus->built >= GV_BUILD_CENTROIDS )
+	      Vect_attach_centroids ( Map, &abox );
       }
       
       

@@ -40,6 +40,8 @@ dig_init_plus (struct Plus_head *Plus)
     Plus->box.W = 0;
     Plus->box.T = 0;
     Plus->box.B = 0;
+
+    Plus->built = GV_BUILD_NONE;
     
     Plus->Node = NULL ;
     Plus->Line = NULL ;
@@ -90,17 +92,11 @@ dig_init_plus (struct Plus_head *Plus)
     return 1;
 }
 
-/* Free head structure. 
-*  Structure is not inited and dig_init_plus() should follow.
-*/
-int 
-dig_free_plus (struct Plus_head *Plus)
+void 
+dig_free_plus_nodes (struct Plus_head *Plus)
 {
     int i;    
     P_NODE *Node;
-    P_LINE *Line;
-    P_AREA *Area;
-    P_ISLE *Isle;
 
     /* Nodes */
     for (i = 1; i <= Plus->n_nodes; i++) {
@@ -114,7 +110,19 @@ dig_free_plus (struct Plus_head *Plus)
         free (Node);
     }
     free ( Plus->Node );
-    
+    Plus->Node = NULL ;
+    Plus->n_nodes = 0 ;
+    Plus->alloc_nodes = 0 ;
+
+    dig_spidx_free_nodes ( Plus );
+}
+
+void 
+dig_free_plus_lines (struct Plus_head *Plus)
+{
+    int i;    
+    P_LINE *Line;
+
     /* Lines */
     for (i = 1; i <= Plus->n_lines; i++) {
         Line = Plus->Line[i]; 	
@@ -123,6 +131,26 @@ dig_free_plus (struct Plus_head *Plus)
         free (Line);
     }
     free ( Plus->Line );
+
+    Plus->Line = NULL ;
+    Plus->n_lines = 0 ;
+    Plus->alloc_lines = 0 ;
+    
+    Plus->n_plines = 0 ;
+    Plus->n_llines = 0 ;
+    Plus->n_blines = 0 ;
+    Plus->n_clines = 0 ;
+    Plus->n_flines = 0 ;
+    Plus->n_klines = 0 ;
+
+    dig_spidx_free_lines ( Plus );
+}
+
+void 
+dig_free_plus_areas (struct Plus_head *Plus)
+{
+    int i;    
+    P_AREA *Area;
 
     /* Areas */
     for (i = 1; i <= Plus->n_areas; i++) {
@@ -138,7 +166,19 @@ dig_free_plus (struct Plus_head *Plus)
         free (Area);
     }
     free ( Plus->Area );
-    
+    Plus->Area = NULL ;
+    Plus->n_areas = 0 ;
+    Plus->alloc_areas = 0 ;
+
+    dig_spidx_free_areas ( Plus );
+}
+
+void 
+dig_free_plus_isles (struct Plus_head *Plus)
+{
+    int i;    
+    P_ISLE *Isle;
+
     /* Isles */
     for (i = 1; i <= Plus->n_isles; i++) {
         Isle = Plus->Isle[i]; 	
@@ -151,10 +191,23 @@ dig_free_plus (struct Plus_head *Plus)
     }
     free ( Plus->Isle );
 
-    /* Free spatial index */
-    dig_spidx_free ( Plus );
-    
-    return 1;
+    Plus->Isle = NULL ;
+    Plus->n_isles = 0 ;
+    Plus->alloc_isles = 0 ;
+
+    dig_spidx_free_isles ( Plus );
+}
+
+/* Free head structure. 
+*  Structure is not inited and dig_init_plus() should follow.
+*/
+void 
+dig_free_plus (struct Plus_head *Plus)
+{
+    dig_free_plus_nodes (Plus);
+    dig_free_plus_lines (Plus);
+    dig_free_plus_areas (Plus);
+    dig_free_plus_isles (Plus);
 }
 
 /* dig_load_plus reads topo file to topo structure

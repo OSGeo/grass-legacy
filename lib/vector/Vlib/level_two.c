@@ -232,12 +232,13 @@ Vect_get_node_n_lines ( struct Map_info *Map, int node )
 
 }
 
-/* TODO: fix explanation - difference to Vect_get_node_n_lines? */
 /*!
  \fn int Vect_get_node_line ( struct Map_info *Map, int node, int line )
- \brief returns number of lines for node
- \return numbers of line for a node ??
- \param Map_info structure, node number, line number
+ \brief returns line number for node line index
+ \return line number for node line index 
+ \param Map vector map
+ \param node node number
+ \param line line index, range : 0 - Vect_get_node_n_lines()
 */
 int 
 Vect_get_node_line ( struct Map_info *Map, int node, int line )
@@ -246,6 +247,23 @@ Vect_get_node_line ( struct Map_info *Map, int node, int line )
 	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
     
     return ( Map->plus.Node[node]->lines[line] );
+}
+
+/*!
+ \fn int Vect_get_node_line_angle ( struct Map_info *Map, int node, int line )
+ \brief angle of segment of the line connected to the node
+ \return angle of segment of the line connected to the node
+ \param Map vector map
+ \param node node number
+ \param line line index, range : 0 - Vect_get_node_n_lines()
+*/
+float 
+Vect_get_node_line_angle ( struct Map_info *Map, int node, int line )
+{
+    if ( Map->level < 2 )
+	G_fatal_error ("Map %s@%s is not open on level >= 2\n", Map->name, Map->mapset);
+    
+    return ( Map->plus.Node[node]->angles[line] );
 }
 
 /*!

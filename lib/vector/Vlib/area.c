@@ -264,6 +264,31 @@ Vect_get_area_isle (
 }
 
 /*!
+ \fn int Vect_get_isle_area ( struct Map_info *Map, int isle)
+ \brief returns area for isle
+ \return  area or 0
+ \param Map vector
+ \isle island number
+*/
+int 
+Vect_get_isle_area ( struct Map_info *Map, int isle)
+{
+  struct Plus_head *Plus;
+  P_ISLE *Isle;
+  
+  G_debug ( 3, "Vect_get_isle_area(): isle = %d", isle );	
+
+  Plus = &(Map->plus);
+  Isle = Plus->Isle[isle];
+  
+  if ( Isle == NULL ) G_fatal_error ( "Attempt to read topo for dead isle (%d)", isle);
+
+  G_debug ( 3, "  -> area = %d", Isle->area );	
+  
+  return ( Isle->area );
+}
+
+/*!
  \fn int Vect_point_in_area (
 		       struct Map_info *Map,
 		       int area,
@@ -281,31 +306,20 @@ Vect_point_in_area (
   int    i, isle;
   struct Plus_head *Plus;
   P_AREA *Area;
-  double poly;
-  static struct line_pnts *Points;
-  static int first_time = 1;
+  int poly;
   
   Plus = &(Map->plus);
   Area = Plus->Area[area];
   if ( Area == NULL ) return 0;
 
-  if (first_time == 1)
-    {
-      Points = Vect_new_line_struct ();	
-      first_time = 0;
-    }
-  
-  Vect_get_area_points (Map, area, Points);
-  poly = dig_point_in_poly ( x, y, Points);
-  if (poly <= 0) return 0;
-
+  poly = Vect_point_in_area_outer_ring ( x, y, Map, area);
+  if ( poly == 0) return 0; /* includes area boundary (poly == 2), OK? */
 
   /* check if in islands */
   for (i = 0; i < Area->n_isles; i++) {
       isle = Area->isles[i];
-      Vect_get_isle_points (Map, isle, Points);
-      poly = dig_point_in_poly ( x, y, Points);
-      if (poly > 0) return 0;
+      poly = Vect_point_in_island ( x, y, Map, isle);
+      if (poly >= 1) return 0; /* excludes island boundary (poly == 2), OK? */
   }
 
   return 1;

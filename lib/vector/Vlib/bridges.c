@@ -29,7 +29,7 @@ remove_bridges ( struct Map_info *Map, int chtype, struct Map_info *Err, FILE *m
   Islands and areas must be already clean, i.e. without dangles.
   Bridge may be formed by more lines.
   Optionaly deleted bridges are written to error map. 
-  Input map must be opened on level 2 for update.
+  Input map must be opened on level 2 for update at least on level GV_BUILD_BASE
    
  \param Map input map where bridges are deleted
  \param Err vector map where deleted bridges are written or NULL
@@ -50,7 +50,7 @@ Vect_remove_bridges ( struct Map_info *Map, struct Map_info *Err, FILE *msgout )
   Islands and areas must be already clean, i.e. without dangles.
   Bridge may be formed by more lines.
   Optionaly changed bridges are written to error map. 
-  Input map must be opened on level 2 for update.
+  Input map must be opened on level 2 for update at least on level GV_BUILD_BASE.
    
  \param Map input map where bridges are changed
  \param Err vector map where changed bridges are written or NULL

@@ -33,7 +33,7 @@ extern int prnmsg ( char *msg, ...) ;
  \param Map_info structure, msgout - message output (stdout/stderr for example) or NULL
 */
 int
-Vect_build_ogr ( struct Map_info *Map, FILE *msgout )
+Vect_build_ogr ( struct Map_info *Map, int build, FILE *msgout )
 {
     struct Plus_head *plus ;
     

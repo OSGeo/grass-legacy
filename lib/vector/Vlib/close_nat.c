@@ -75,6 +75,8 @@ V2_close_nat (struct Map_info *Map)
       dig__write_head (Map);
       
       Vect__write_head (Map);
+
+      Vect_write_dblinks ( Map );
  }
 
   /* close coor file */
@@ -82,7 +84,8 @@ V2_close_nat (struct Map_info *Map)
   dig_file_free ( &(Map->dig_fp) );
 
   /* Save topo if necessary */
-  if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW)) {
+  G_debug (2, "  built = %d", Plus->built);
+  if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW) && Plus->built == GV_BUILD_ALL) {
       /* Get coor file checks */
       Vect_coor_info ( Map, &CInfo);
       Plus->coor_size = CInfo.size;
@@ -91,7 +94,6 @@ V2_close_nat (struct Map_info *Map)
       Vect_save_topo ( Map );
       Vect_save_spatial_index ( Map );
 
-      Vect_write_dblinks ( Map );
   }
       
   dig_free_plus ( Plus );

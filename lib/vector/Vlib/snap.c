@@ -15,18 +15,43 @@
  *
  **************************************************************/
 #include <stdlib.h> 
+#include <math.h> 
 #include "gis.h"
 #include "Vect.h"
 
-/*!
- \fn void Vect_snap_vertices ( struct Map_info *Map, int type, double thresh, 
-                              struct Map_info *Err, FILE *msgout)
- \brief Snap vertices of line to other lines.
+/* Vertex */
+typedef struct {
+    double x, y;
+    int    anchor; /* 0 - anchor, do not snap this point, that means snap others to this */
+                   /* >0  - index of anchor to which snap this point */
+                   /* -1  - init value */
+} XPNT;
 
- Snap vertices of line to other lines in given threshold. On the line where vertex
- was snapped is created new vertex with identical coordinates.
+typedef struct {
+    int    anchor; 
+    double along;
+} NEW;
+
+/* This function is called by  RTreeSearch() to add selected node/line/area/isle to thelist */
+int add_item(int id, struct ilist *list)
+{
+        dig_list_add ( list, id );
+	    return 1;
+}
+
+static int sort_new( const void *, const void * );
+
+/*!
+ \fn void Vect_snap_lines ( struct Map_info *Map, int type, double thresh, 
+                              struct Map_info *Err, FILE *msgout)
+ \brief Snap all lines to existing vertex in threshold.
+
+ Snap all lines to existing vertices.
+
+ Warning: Lines are not necessarily snapped to nearest vertex, but to vertex in threshold! 
+
  Lines showing how vertices were snapped may be optionaly written to error map. 
- Input map must be opened on level 2 for update.
+ Input map must be opened on level 2 for update at least on GV_BUILD_BASE.
 
  \param Map input map where verices will be snapped
  \param type type of line to be snap
@@ -35,108 +60,324 @@
  \param msgout file pointer where messages will be written or NULL
  \return
 */
-void 
-Vect_snap_vertices ( struct Map_info *Map, int type, double thresh, struct Map_info *Err, FILE *msgout )
-{
-    struct line_pnts *APoints, *BPoints, *Points;
-    struct line_cats *ACats, *BCats, *Cats;
-    int    i, v, k, ret, atype, btype, bline;
-    int    nlines, snap;
-    int    nsnaps, seg;
-    double dist, x, y, px, py;
 
-    /* TODO: snap to itself, 3D */
-    APoints = Vect_new_line_struct ();
-    BPoints = Vect_new_line_struct ();
+/* As mentioned above, lines are not necessarily snapped to nearest vertex! For example:
+     |                    
+     | 1         line 3 is snapped to line 1,
+     |           then line 2 is not snapped to common node at lines 1 and 3,
+                 because it is already outside of threshold
+----------- 3   
+
+     |
+     | 2
+     |	
+*/
+
+
+void 
+Vect_snap_lines ( struct Map_info *Map, int type, double thresh, struct Map_info *Err, FILE *msgout )
+{
+    struct line_pnts *Points, *NPoints;
+    struct line_cats *Cats;
+    int    nlines, line, ltype;
+    double thresh2;
+    int    printed;
+
+    struct Node *RTree;
+    int    point;   /* index in points array */
+    int    nanchors, ntosnap; /* number of anchors and number of points to be snapped */
+    int    nsnapped, ncreated; /* number of snapped verices, number of new vertices (on segments) */
+    int    apoints, npoints, nvertices; /* number of allocated points, registered points, vertices */
+    XPNT   *XPnts;  /* Array of points */
+    NEW    *New = NULL;    /* Array of new points */
+    int    anew = 0, nnew;   /* allocated new points , number of new points */
+    struct Rect rect;
+    struct ilist *List;
+    int *Index = NULL;  /* indexes of anchors for vertices */
+    int aindex = 0; /* allocated Index */
+
     Points = Vect_new_line_struct ();
-    ACats = Vect_new_cats_struct ();
-    BCats = Vect_new_cats_struct ();
+    NPoints = Vect_new_line_struct ();
     Cats = Vect_new_cats_struct ();
+    List = Vect_new_list();
+    RTree = RTreeNewIndex();
     
+    thresh2 = thresh * thresh;
     nlines = Vect_get_num_lines (Map);
 
-    G_debug (1, "nlines =  %d", nlines );
-    /* Go through all lines in vector, for each vertex find nearest line, 
-    *  if ditance to this line is in threshold snap to that line and optionaly create new vertex 
-    *  at this point on that line */
-    nsnaps = 0;
-    if ( msgout ) fprintf (msgout, "Snaps: %5d", nsnaps ); 
-    for ( i = 1; i <= nlines; i++ ){ 
-	snap = 0;
-	G_debug (1, "i =  %d", i);
-	if ( !Vect_line_alive ( Map, i ) ) continue;
+    G_debug (3, "nlines =  %d", nlines );
+    
+    /* Go through all lines in vector, and add each point to structure of points */
+    apoints = 0;
+    point = 1; /* index starts from 1 !*/
+    nvertices = 0;
+    XPnts = NULL;
+    printed = 0;
 
-	atype = Vect_read_line (Map, APoints, ACats, i);
-	if ( !(atype & type) ) continue;
+    if ( msgout ) fprintf (msgout, "Registering points ..."); 
+    
+    for ( line = 1; line <= nlines; line++ ){ 
+	int v;
+	
+	G_debug (3, "line =  %d", line);
+	if ( !Vect_line_alive ( Map, line ) ) continue;
 
-	for ( v = 0; v <  APoints->n_points; v++ ){ /* for each vertex */
-	    G_debug (1, "  vertex = %d", v);
-	    x = APoints->x[v];
-	    y = APoints->y[v];
-	    bline = Vect_find_line ( Map, x, y, 0, type, thresh, 0, i );
-	    G_debug (1, "  bline = %d", bline);
-	    if ( bline == 0 ) continue;
-	    
-	    btype = Vect_read_line (Map, BPoints, BCats, bline);
+	ltype = Vect_read_line (Map, Points, Cats, line);
+	if ( !(ltype & type) ) continue;
 
-	    seg = Vect_line_distance ( BPoints, x, y, 0, 0, &px, &py, NULL, &dist, NULL, NULL);
-	    
-	    G_debug ( 1, "  dist = %f", dist);
-	    if ( dist > thresh ) continue;
-	    
-	    /* If dist == 0 then the vertex is either on vertex of B line or (almost) exactly
-	    *  at the line. */
-	    if ( dist == 0 ) {
-		if ( ( x == BPoints->x[seg-1] && y == BPoints->y[seg-1] ) ||
-		     ( x == BPoints->x[seg] && y == BPoints->y[seg] ) ) { 
-		    G_debug ( 1, "  identical vertices");
-		    continue; /* identical vertices (no need to snap) */
+	for ( v = 0; v <  Points->n_points; v++ ){ 
+	    G_debug (3, "  vertex v = %d", v);
+	    nvertices++;
+
+            /* Box */
+            rect.boundary[0] = Points->x[v];  rect.boundary[3] = Points->x[v];	    
+            rect.boundary[1] = Points->y[v];  rect.boundary[4] = Points->y[v];	    
+            rect.boundary[2] = 0;  rect.boundary[5] = 0;	    
+
+	    /* Already registered ? */
+	    Vect_reset_list ( List );
+	    RTreeSearch(RTree, &rect, (void *)add_item, List);
+	    G_debug (3, "List : nvalues =  %d", List->n_values);
+
+	    if ( List->n_values == 0 ) { /* Not found */
+		/* Add to tree and to structure */
+	        RTreeInsertRect( &rect, point, &RTree, 0);
+	        if ( (point - 1) == apoints ) {
+		    apoints += 10000;
+		    XPnts = (XPNT *) G_realloc ( XPnts, (apoints + 1) * sizeof (XPNT) );
 		}
-	    }
-
-	    /* Write to Err line connecting original and new coordinates */
-	    if ( Err ) {
-		Vect_reset_line ( Points );
-		Vect_append_point ( Points, APoints->x[v], APoints->y[v], 0 ); 
-		Vect_append_point ( Points, px, py, 0 );            
-		Vect_write_line ( Err, GV_LINE, Points, Cats );
-	    }
-		
-	    
-	    /* Snap vertex of line A */
-	    APoints->x[v] = px;
-	    APoints->y[v] = py;
-	    
-	    G_debug (1, "Snap line %d vertex  %d : %f, %f", i, v, x, y);
-	    G_debug (1, "  to line %d segment %d : %f, %f", bline, seg, px, py);
-	    
-	    ret = Vect_rewrite_line ( Map, i, atype, APoints, ACats );  
-
-	    /* Add vertex to Bline */
-	    Vect_reset_line ( Points );
-	    Vect_copy_xyz_to_pnts ( Points, BPoints->x, BPoints->y, BPoints->z, seg); 
-	    Vect_append_point ( Points, px, py, 0 );
-	    for ( k = seg; k <  BPoints->n_points; k++ ) {
-		Vect_append_point ( Points, BPoints->x[k], BPoints->y[k], BPoints->z[k] );
-	    }
-	    Vect_delete_line (Map, bline); 
-	    ret = Vect_write_line ( Map, btype, Points, BCats );  
-
-	    snap = 1;
-	    nsnaps++;
-	    break;	
+		XPnts[point].x = Points->x[v];
+		XPnts[point].y = Points->y[v];
+		XPnts[point].anchor = -1;
+                point++;		    
+            }
 	}
-	    
-	nlines = Vect_get_num_lines (Map);
-	G_debug (3, "nlines =  %d\n", nlines );
-	if ( msgout ) {
-  	    fprintf (msgout, "\rSnaps: %5d  (line = %d)", nsnaps, i ); 
+	if ( msgout && printed > 1000 ) {
+	    fprintf (msgout, "\rRegistering points ... %d", point - 1); 
 	    fflush ( msgout );
+	    printed = 0;
+	}
+	printed++;
+    }
+    npoints = point - 1;
+    if ( msgout ) {
+	fprintf (msgout, "\r                                               \r" ); 
+	fprintf ( msgout, "All vertices: %5d\n", nvertices ); 
+	fprintf ( msgout, "Registered points (unique coordinates): %5d\n", npoints ); 
+    }
+
+    /* Go through all registered points and if not yet marked mark it as anchor and assign this anchor
+     * to all not yet marked points in threshold */
+    nanchors = ntosnap = 0;
+    for ( point = 1; point <= npoints; point++ ) { 
+	int i;
+	G_debug (3, "  point = %d", point);
+	
+	if ( XPnts[point].anchor >= 0 ) continue;
+
+	XPnts[point].anchor = 0; /* make it anchor */
+	nanchors++;
+
+	/* Find points in threshold */
+	rect.boundary[0] = XPnts[point].x - thresh;  
+	rect.boundary[3] = XPnts[point].x + thresh;	    
+	rect.boundary[1] = XPnts[point].y - thresh;  
+	rect.boundary[4] = XPnts[point].y + thresh;
+	rect.boundary[2] = 0;  rect.boundary[5] = 0;	    
+
+	Vect_reset_list ( List );
+	RTreeSearch(RTree, &rect, (void *)add_item, List);
+	G_debug (4, "  %d points in threshold box", List->n_values);
+	
+	for ( i = 0; i < List->n_values; i++ ) {
+	    int    pointb;
+	    double dx, dy, dist2;
+
+	    pointb = List->value[i];
+	    if ( pointb == point ) continue;
+
+	    dx = XPnts[pointb].x - XPnts[point].x;
+	    dy = XPnts[pointb].y - XPnts[point].y;
+	    dist2 = dx * dx + dy * dy;
+
+	    if ( dist2 <= thresh2 ) {
+		XPnts[pointb].anchor = point;
+		ntosnap++;
+	    }
 	}
     }
     if ( msgout ) {
-        fprintf (msgout, "\rSnaps: %5d                 ", nsnaps); 
-        fprintf (msgout, "\n" ); 
+	fprintf ( msgout, "Nodes marked as anchor     : %5d\n", nanchors ); 
+	fprintf ( msgout, "Nodes marked to be snapped : %5d\n", ntosnap ); 
     }
+
+    /* Go through all lines and: 
+     *   1) for all vertices: if not anchor snap it to its anchor
+     *   2) for all segments: snap it to all anchors in threshold (except anchors of vertices of course) */
+    
+    printed = 0;
+    nsnapped = ncreated = 0;
+    if ( msgout ) fprintf (msgout, "Snaps: %5d", nsnapped + ncreated ); 
+    
+    for ( line = 1; line <= nlines; line++ ){ 
+	int v, spoint, anchor;
+	int changed = 0;
+	
+	G_debug (3, "line =  %d", line);
+	if ( !Vect_line_alive ( Map, line ) ) continue;
+
+	ltype = Vect_read_line (Map, Points, Cats, line);
+	if ( !(ltype & type) ) continue;
+
+	if ( Points->n_points >= aindex ) {
+	    aindex = Points->n_points;
+	    Index = (int *) G_realloc ( Index, aindex * sizeof(int) );
+	}
+
+	/* Snap all vertices */
+	for ( v = 0; v <  Points->n_points; v++ ){ 
+            /* Box */
+            rect.boundary[0] = Points->x[v];  rect.boundary[3] = Points->x[v];	    
+            rect.boundary[1] = Points->y[v];  rect.boundary[4] = Points->y[v];	    
+            rect.boundary[2] = 0;  rect.boundary[5] = 0;	    
+
+	    /* Find point ( should always find one point )*/
+	    Vect_reset_list ( List );
+	    
+	    RTreeSearch(RTree, &rect, (void *)add_item, List);
+
+	    spoint = List->value[0];
+	    anchor = XPnts[spoint].anchor;
+
+	    if ( anchor > 0 ) { /* to be snapped */
+		Points->x[v] = XPnts[anchor].x;
+		Points->y[v] = XPnts[anchor].y;
+                nsnapped++;		    
+		changed = 1;
+	        Index[v] = anchor; /* point on new location */
+            } else {
+	        Index[v] = spoint; /* old point */
+	    }
+	}
+	
+	/* New points */
+	Vect_reset_line (NPoints);
+
+	/* Snap all segments to anchors in threshold */
+	for ( v = 0; v < Points->n_points - 1; v++ ){ 
+	    int    i;
+	    double x1, x2, y1, y2, xmin, xmax, ymin, ymax;
+            
+	    G_debug (3, "  segment = %d end anchors : %d  %d", v, Index[v], Index[v+1]);
+	    
+	    x1 = Points->x[v];
+	    x2 = Points->x[v+1];
+	    y1 = Points->y[v];
+	    y2 = Points->y[v+1];
+
+	    Vect_append_point ( NPoints, Points->x[v], Points->y[v], Points->z[v] );
+
+	    /* Box */
+	    if ( x1 <= x2 ) { xmin = x1; xmax = x2; } else { xmin = x2; xmax = x1; }
+	    if ( y1 <= y2 ) { ymin = y1; ymax = y2; } else { ymin = y2; ymax = y1; }
+	    
+            rect.boundary[0] = xmin - thresh;  
+	    rect.boundary[3] = xmax + thresh;	    
+            rect.boundary[1] = ymin - thresh;  
+	    rect.boundary[4] = ymax + thresh;	    
+            rect.boundary[2] = 0;  rect.boundary[5] = 0;	    
+
+	    /* Find points */
+	    Vect_reset_list ( List );
+	    RTreeSearch(RTree, &rect, (void *)add_item, List);
+	
+	    G_debug (3, "  %d points in box", List->n_values);
+
+	    /* Snap to anchor in threshold different from end points */
+	    nnew = 0;
+	    for ( i = 0; i < List->n_values; i++ ) {
+		double dist2, along;
+		
+	        spoint = List->value[i];
+	        G_debug (4, "    spoint = %d anchor = %d", spoint, XPnts[spoint].anchor);
+
+		if ( spoint == Index[v] || spoint == Index[v+1] ) continue; /* end point */
+		if ( XPnts[spoint].anchor > 0 ) continue; /* point is not anchor */
+
+		/* Check the distance */
+		dist2 = dig_distance2_point_to_line ( XPnts[spoint].x, XPnts[spoint].y, 0,
+			x1, y1, 0, x2, y2, 0, 0, NULL, NULL, NULL, &along, NULL );
+	            
+		G_debug (4, "      distance = %lf", sqrt(dist2));
+
+		if ( dist2 <= thresh2 ) {
+	            G_debug (4, "      anchor in thresh, along = %lf", along);
+
+		    if ( nnew == anew ) {
+			anew += 100;
+			New = (NEW *) G_realloc ( New, anew * sizeof (NEW) );
+		    }
+		    New[nnew].anchor = spoint;
+		    New[nnew].along = along;
+		    nnew++;		    
+		}
+	    }
+	    G_debug (3, "  nnew = %d", nnew);
+	    /* insert new vertices */
+	    if ( nnew > 0 ) {
+		/* sort by distance along the segment */
+		qsort ( New, nnew, sizeof ( NEW), sort_new);
+		
+		for ( i = 0; i < nnew; i++ ) {
+		    anchor = New[i].anchor;
+		    //Vect_line_insert_point ( Points, ++v, XPnts[anchor].x, XPnts[anchor].y, 0); 
+	            Vect_append_point ( NPoints, XPnts[anchor].x, XPnts[anchor].y, 0 );
+		    ncreated++;
+		}
+		changed = 1;
+	    }
+	}
+	/* append end point */
+	v = Points->n_points-1; 
+        Vect_append_point ( NPoints, Points->x[v], Points->y[v], Points->z[v] );
+
+	if ( changed ) { /* rewrite the line */
+	    Vect_line_prune ( Points );  /* remove duplicates */
+	    if ( Points->n_points > 1 || ltype & GV_LINES )
+	        Vect_rewrite_line ( Map, line, ltype, NPoints, Cats );  
+	    else
+		Vect_delete_line ( Map, line);
+	}
+	if ( msgout && printed > 1000 ) {
+  	    fprintf (msgout, "\rSnaps: %5d  (line = %d)", nsnapped + ncreated, line ); 
+	    fflush ( msgout );
+	    printed = 0;
+	}
+	printed++;
+
+    }
+    if ( msgout ) {
+	fprintf ( msgout, "\rSnapped vertices : %5d                             \n", nsnapped ); 
+	fprintf ( msgout, "New vertices     : %5d\n", ncreated ); 
+    }
+    
+    Vect_destroy_line_struct ( Points );
+    Vect_destroy_line_struct ( NPoints );
+    Vect_destroy_cats_struct ( Cats );
+    G_free ( XPnts );
+    G_free (Index);
+    G_free ( New );
+    RTreeDestroyNode ( RTree);
+}
+
+/* for qsort */
+static int sort_new (  const void *pa, const void *pb )
+{
+    NEW *p1 = (NEW *) pa;
+    NEW *p2 = (NEW *) pb;
+
+    if ( p1->along < p2->along ) return -1;
+    if ( p1->along > p2->along ) return 1;
+    return 1;
 }
 

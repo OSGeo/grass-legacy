@@ -460,6 +460,10 @@ Vect_line_intersection (
     *  and we want precision in mm (+ 3) = 14 -> minimum rethresh may be around 0.001
     *  ?Maybe all nonsense? */
 
+    /* Warning: This function is also used to intersect the line by itself i.e. APoints and
+     * BPoints are identical. I am not sure if it is clever, but it seems to work, but
+     * we have to keep this in mind and handle some special cases (maybe) */
+
     /* TODO: 3D, RE threshold, GV_POINTS (line x point) */
     
     /* Take each segment from A and intersect by each segment from B.

@@ -181,28 +181,106 @@ Vect_find_line ( struct Map_info *map,
  \fn int Vect_find_area (
 		    struct Map_info *map,
 		    double x, double y)
- \brief find nearest area
+ \brief find area
  \return area number, 0 if not found
  \param Map_info structure, ux, uy
 */
 
 /* original dig_point_to_area() in grass50 */
 int 
-Vect_find_area (
-		    struct Map_info *map,
-		    double x, double y)
+Vect_find_area ( struct Map_info *Map, double x, double y)
 {
-  int i, ret;
-  struct Plus_head *Plus;
+  int i, ret, area;
+  static int first = 1;
+  BOUND_BOX box;
+  static struct ilist *List;
   
-  Plus = &(map->plus);
-  for (i = 1; i <= Plus->n_areas; i++) {
-      ret = Vect_point_in_area (map, i, x, y);
+  G_debug ( 3, "Vect_find_area() x = %f y = %f", x, y );
+  
+  if ( first ) {
+      List = Vect_new_list ();
+      first = 0;
+  }
+  
+  /* select areas by box */
+  box.E = x; box.W = x; box.N = y; box.S = y; box.T = PORT_DOUBLE_MAX; box.B = -PORT_DOUBLE_MAX;
+  Vect_select_areas_by_box (Map, &box, List);
+  G_debug ( 3, "  %d areas selected by box", List->n_values );
+  
+  for (i = 0; i < List->n_values; i++) {
+      area = List->value[i];
+      ret = Vect_point_in_area (Map, area, x, y);
 
-      if ( ret )
-	  return (i);
+      G_debug ( 3, "    area = %d Vect_point_in_area() = %d", area, ret );
+
+      if ( ret >= 1  )
+	  return ( area );
   }
   
   return 0;
+}
+
+/*!
+ \fn int Vect_find_island (
+		    struct Map_info *map,
+		    double x, double y)
+ \brief find island
+ \return island number, 0 if not found
+ \param map vector 
+ \param ux
+ \param uy
+*/
+
+/* original dig_point_to_area() in grass50 */
+int 
+Vect_find_island ( struct Map_info *Map, double x, double y)
+{
+  int i, ret, island, current, current_size, size;
+  static int first = 1;
+  BOUND_BOX box;
+  static struct ilist *List;
+  static struct line_pnts *Points;
+  
+  G_debug ( 3, "Vect_find_island() x = %f y = %f", x, y );
+  
+  if ( first ) {
+      List = Vect_new_list ();
+      Points = Vect_new_line_struct ();
+      first = 0;
+  }
+  
+  /* select islands by box */
+  box.E = x; box.W = x; box.N = y; box.S = y; box.T = PORT_DOUBLE_MAX; box.B = -PORT_DOUBLE_MAX;
+  Vect_select_isles_by_box (Map, &box, List);
+  G_debug ( 3, "  %d islands selected by box", List->n_values );
+  
+  current_size = -1;
+  current = 0;
+  for (i = 0; i < List->n_values; i++) {
+      island = List->value[i];
+      ret = Vect_point_in_island ( x, y, Map, island);
+
+      if ( ret >= 1  ) { /* inside */
+	  if ( current > 0 ) { /* not first */
+	      if ( current_size == -1 ) { /* second */
+		  G_begin_polygon_area_calculations();
+		  Vect_get_isle_points (Map, current, Points);
+		  current_size = G_area_of_polygon(Points->x, Points->y, Points->n_points);
+	      }
+	      
+	      Vect_get_isle_points (Map, island, Points);
+	      size = G_area_of_polygon(Points->x, Points->y, Points->n_points);
+
+	      if ( size < current_size ) {
+		  current = island;
+		  current_size = size;
+	      }
+	  } else { /* first */
+	      current = island;
+	  }
+      }
+  }
+  
+  return current;
 }
 

@@ -73,7 +73,7 @@ Vect_remove_duplicates ( struct Map_info *Map, int type, struct Map_info *Err, F
 	    
 	    for ( j = 0; j <  List->n_values; j++ ){ 
 		bline = List->value[j];
-                G_debug (1, "  j = %d bline = %d", j, bline);
+                G_debug (3, "  j = %d bline = %d", j, bline);
 		if ( i == bline ) continue; 
 		
 	        btype = Vect_read_line (Map, BPoints, BCats, bline);

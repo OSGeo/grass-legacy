@@ -74,15 +74,13 @@ V2_close_post (struct Map_info *Map)
   Plus = &(Map->plus);
 
   /* Save topo if necessary */
-  if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW)) {
+  if (Plus->mode & (GV_MODE_WRITE | GV_MODE_RW) && Plus->built == GV_BUILD_ALL) {
       Vect_coor_info ( Map, &CInfo); /* Size and time is 0L for PostGIS) */
       Plus->coor_size = CInfo.size;
       Plus->coor_mtime = CInfo.mtime;
       
       Vect_save_topo (Map);
       Vect_save_spatial_index ( Map );
-
-      Vect_write_dblinks ( Map );
   }
   dig_free_plus (Plus);
 
