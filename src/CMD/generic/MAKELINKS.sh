@@ -1,5 +1,5 @@
 
-eval `$GMAKE -sh` || exit 1
+eval `$GMAKE` || exit 1
 : ${GISBASE?} ${SRC?} ${CMD?}
 
 #  Code to create links to front.end
