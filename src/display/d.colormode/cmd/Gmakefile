@@ -2,7 +2,7 @@ PGM=d.colormode
 LIST = main.o
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

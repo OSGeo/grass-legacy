@@ -4,7 +4,7 @@ LIST=main.o readsite.o cdpath.o save.o nbins.o angleok.o plthgpt.o
 
 LIBES=$(GISLIB) $(RASTERLIB) $(DATETIMELIB)
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 main.o		: sv.h 

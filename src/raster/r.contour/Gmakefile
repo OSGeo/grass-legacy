@@ -3,7 +3,7 @@ OBJ=main.o cont.o line_cent.o
 SOURCES=main.c cont.c line_cent.c
 
 LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(DIG_ATTLIB) $(GISLIB) $(VECTLIB): #

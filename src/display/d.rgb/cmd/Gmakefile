@@ -2,7 +2,7 @@ PGM=d.rgb
 OFILES =  main.o rgb.o init_rgb.o
 
 LIBES=$(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
-$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

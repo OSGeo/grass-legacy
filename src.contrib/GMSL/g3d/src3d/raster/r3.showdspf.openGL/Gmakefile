@@ -50,7 +50,7 @@ OBJ	=	\
                 main_ogl.o
 
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(G3DLIB) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(G3DLIB) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(EXTRA_CFLAGS) $(LIBES) $(OGLLIB) $(SUNLDFLAGS) $(MATHLIB) $(XDRLIB)
 
 

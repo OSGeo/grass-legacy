@@ -7,7 +7,7 @@ EXTRA_CFLAGS = -I../bouman/
 
 LIBES = ../bouman/lib.a $(GISLIB) $(IMAGERYLIB)
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): ../bouman/bouman.h

@@ -6,7 +6,7 @@ SOURCE = main.c intro.c com_line.c basin_maps.c file_in.c read.c valid.c \
 LIST =   main.o intro.o com_line.o basin_maps.o file_in.o read.o valid.o \
 	 free.o print.o accum_down.o insert_cat.o
 
-$(BIN_MAIN_INTER)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(ADD_LIBS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

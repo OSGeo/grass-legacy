@@ -21,10 +21,10 @@ CFILES = \
 	SetProj.c
 
 
-all:  START $(BIN_CONTRIB_CMD)/v.out.gef
+all:  START $(BIN_CMD)/v.out.gef
 	
 
-$(BIN_CONTRIB_CMD)/v.out.gef: $(OFILES) v.exp_gef.o
+$(BIN_CMD)/v.out.gef: $(OFILES) v.exp_gef.o
 	$(CC) $(LDFLAGS) -o $@ v.exp_gef.o $(OFILES) $(GISLIB) $(VECTLIB) $(LIBPROJ) $(LIBSUPP) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB)
 
 

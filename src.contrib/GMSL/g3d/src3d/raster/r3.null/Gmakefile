@@ -1,7 +1,7 @@
 PGM=r3.null
 R3MASKDIR=../r3.mask
 
-$(BIN_MAIN_CMD)/$(PGM): main.o $(R3MASKDIR)/mask.o $(G3DLIB) $(GISLIB) 
+$(BIN_CMD)/$(PGM): main.o $(R3MASKDIR)/mask.o $(G3DLIB) $(GISLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(R3MASKDIR)/mask.o main.o $(G3DLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(G3DLIB): #

@@ -6,7 +6,7 @@ LIST = main.o\
 	invert.o
 
 LIBES=$(IMAGERYLIB) $(GISLIB) $(VASKLIB)
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): global.h

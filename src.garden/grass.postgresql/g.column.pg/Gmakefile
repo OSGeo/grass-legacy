@@ -1,4 +1,4 @@
-PGM       = $(BIN_CONTRIB_CMD)/g.column.pg
+PGM       = $(BIN_CMD)/g.column.pg
 LIBES     = $(GISLIB) $(PQLIB) $(XEXTRALIBS)
 EXTRA_CFLAGS = $(PQINCPATH)
 

@@ -13,7 +13,7 @@ OBJ = \
 	amc_conversion.o
 
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	 $(CC) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

@@ -3,7 +3,7 @@ OBJS=v.bubble.o support.o bubbling.o
 
 LIBES=$(GISLIB) $(VECTLIB) $(DATETIMELIB)
 
-$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

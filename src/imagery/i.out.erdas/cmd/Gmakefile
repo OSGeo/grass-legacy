@@ -5,7 +5,7 @@ OFILES = \
 	main.o 
 OFILES = main.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OFILES) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OFILES) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

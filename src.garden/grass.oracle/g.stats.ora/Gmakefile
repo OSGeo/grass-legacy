@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/g.stats.ora
+PGM       = $(BIN_CMD)/g.stats.ora
 LIBES     = $(GISLIB)
 
 #EXTRA_CFLAGS	= -Dunlink=puts

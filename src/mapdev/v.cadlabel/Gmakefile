@@ -11,7 +11,7 @@ OBJ = v.cadlabel.o \
 	line_center.o 
 
 LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
-$(BIN_MAIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(DIG_ATTLIB) $(GISLIB): #

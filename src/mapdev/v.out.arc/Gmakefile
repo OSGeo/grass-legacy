@@ -8,7 +8,7 @@ OBJ =	Vexport_arc.o\
 
 LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB)
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) -o $@  $(LDFLAGS) $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB): #

@@ -6,7 +6,7 @@ OBJ =\
 	compose.o\
 	gen_colors.o
 
-$(BIN_MAIN_INTER)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_INTER)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

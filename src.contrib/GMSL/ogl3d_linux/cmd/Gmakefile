@@ -65,7 +65,7 @@ OFILES =    \
 
 PGM = ogl3d
 
-$(BIN_CONTRIB_CMD)/$(PROG): $(OFILES) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB) $(SURFLIB)
+$(BIN_CMD)/$(PROG): $(OFILES) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB) $(SURFLIB)
 	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(SURFLIB) $(BITMAPLIB) $(LINKMLIB) $(VECTLIB) $(XGILIB) $(GISLIB) $(GLXLIB) $(OGLLIB) $(IMGLIB) $(MATHLIB)  $(XLIBPATH) -lXm  -lXmu -lXt -lX11 -lXext $(XEXTRALIBS) $(DATETIMELIB) $(XDRLIB)
 	if [ ! -d $(GISBASE)/etc/app-defaults ]; then mkdir $(GISBASE)/etc/app-defaults; fi
 	cp app.defaults $(GISBASE)/etc/app-defaults/$(PROGNAME)

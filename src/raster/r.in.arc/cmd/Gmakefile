@@ -2,7 +2,7 @@ PGM    = r.in.arc
 
 LIST   = main.o gethead.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

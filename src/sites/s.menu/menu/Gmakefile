@@ -1,4 +1,4 @@
-$(BIN_MAIN_INTER)/s.menu:	sites.sh
+$(BIN_INTER)/s.menu:	sites.sh
 		rm -f $@
 		cp $? $@
 		chmod 0775 $@

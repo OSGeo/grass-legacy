@@ -25,7 +25,7 @@ LIST = main.o\
 	scan_scale.o\
 	yes.o
 
-$(BIN_CONTRIB_INTER)/$(PGM): $(LIST) $(GISLIB) $(INTERFACE) $(ICONLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB) $(INTERFACE) $(ICONLIB)
 	$(CC) $(LDFLAGS) $(LIST) $(LIBES) -o $@
 
 $(INTERFACE): #

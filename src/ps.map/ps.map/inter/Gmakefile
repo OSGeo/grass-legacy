@@ -23,7 +23,7 @@ OBJ =	main.o\
 	scan_scale.o\
 	yes.o
 
-$(BIN_ALPHA_INTER)/$(PGM): $(OBJ) $(GISLIB) $(DATETIMELIB)
+$(BIN_INTER)/$(PGM): $(OBJ) $(GISLIB) $(DATETIMELIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GISLIB) $(DATETIMELIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB) $(DATETIMELIB): #

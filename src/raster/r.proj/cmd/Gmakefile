@@ -8,7 +8,7 @@ OBJ = \
 	bilinear.o \
 	cubic.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(GPROJLIB) $(GISLIB) 
+$(BIN_CMD)/$(PGM): $(OBJ) $(GPROJLIB) $(GISLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(GPROJLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 

@@ -3,14 +3,14 @@
 SCSFIPS      = $(LIBDIR)/scsfips.a
 
 
-all:  $(BIN_CONTRIB_INTER)/m.get.fips $(BIN_CONTRIB_INTER)/m.stp.proj $(BIN_CONTRIB_INTER)/m.get.stp
+all:  $(BIN_INTER)/m.get.fips $(BIN_INTER)/m.stp.proj $(BIN_INTER)/m.get.stp
 
-$(BIN_CONTRIB_INTER)/m.stp.proj: m.stp.proj.o 
+$(BIN_INTER)/m.stp.proj: m.stp.proj.o 
 	$(CC) $(LDFLAGS) -o $@ m.stp.proj.o $(SCSFIPS) $(GISLIB)
 
-$(BIN_CONTRIB_INTER)/m.get.fips: m.get.fips.o 
+$(BIN_INTER)/m.get.fips: m.get.fips.o 
 	$(CC) $(LDFLAGS) -o $@ m.get.fips.o $(SCSFIPS)  $(GISLIB)
 
-$(BIN_CONTRIB_INTER)/m.get.stp: m.get.stp.o 
+$(BIN_INTER)/m.get.stp: m.get.stp.o 
 	$(CC) $(LDFLAGS) -o $@ m.get.stp.o $(SCSFIPS) $(GISLIB)
 

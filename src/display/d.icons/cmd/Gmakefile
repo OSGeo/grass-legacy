@@ -3,7 +3,7 @@ OFILES = main.o plot_points.o draw_icon.o setup.o
 
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(ICONLIB) $(GISLIB)
 
-$(BIN_MAIN_CMD)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

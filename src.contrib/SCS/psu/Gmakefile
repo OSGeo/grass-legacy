@@ -5,12 +5,12 @@ OFILES = \
 	do_sites.o \
 	psu.vect.o
 
-all: $(BIN_CONTRIB_CMD)/v.psu $(BIN_CONTRIB_CMD)/v.psu.subj $(GISBASE)/scripts/v.psu.fips $(GISBASE)/scripts/v.psu.patch
+all: $(BIN_CMD)/v.psu $(BIN_CMD)/v.psu.subj $(GISBASE)/scripts/v.psu.fips $(GISBASE)/scripts/v.psu.patch
 
-$(BIN_CONTRIB_CMD)/v.psu.subj: psu.subj.o
+$(BIN_CMD)/v.psu.subj: psu.subj.o
 	$(CC) $(LDFLAGS) -o $@ psu.subj.o $(GISLIB) $(VECTLIB) $(XDRLIB) $(MATHLIB)
 
-$(BIN_CONTRIB_CMD)/v.psu: $(OFILES)
+$(BIN_CMD)/v.psu: $(OFILES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(VECTLIB) $(GISLIB) $(XDRLIB) $(MATHLIB)
 
 $(GISBASE)/scripts/v.psu.fips:	psu.fips

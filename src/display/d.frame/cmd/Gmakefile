@@ -1,5 +1,5 @@
 PGM=d.frame
-HOME=$(BIN_MAIN_CMD)
+HOME=$(BIN_CMD)
 all: \
 	$(ETC)/frame.create \
 	$(ETC)/frame.select \

@@ -10,7 +10,7 @@ CFILES = \
 	main.c \
 	plot.c
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB)
 
 $(LIBES): #

@@ -13,7 +13,7 @@ OFILES = \
 	wind_quads.o \
 	write_quads.o
 
-PROG =   $(BIN_CONTRIB_CMD)/v.mkquads
+PROG =   $(BIN_CMD)/v.mkquads
 
 all:  $(PROG)
 

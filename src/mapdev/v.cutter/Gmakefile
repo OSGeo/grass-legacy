@@ -73,7 +73,7 @@ SRCS = \
 
 LIBES=$(VECTLIB) $(LINKMLIB) $(DIG_ATTLIB) $(BITMAPLIB) $(GISLIB)
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 table.o: macros.h

@@ -1,4 +1,4 @@
-PGM       = $(BIN_CONTRIB_CMD)/d.what.s.pg
+PGM       = $(BIN_CMD)/d.what.s.pg
 LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(PQLIB) $(XEXTRALIBS)
 EXTRA_CFLAGS = $(PQINCPATH)
 # EXTRA_CFLAGS 	= -Dunlink=puts

@@ -1,4 +1,4 @@
-# $Id: Gmakefile,v 1.1 2000-12-06 13:23:50 markus Exp $
+# $Id: Gmakefile,v 1.2 2001-01-10 12:46:18 markus Exp $
 
 EXTRA_CFLAGS	=  -I$(SRC)/include/geom
 
@@ -12,7 +12,7 @@ SOURCES = \
 OBJ = \
 	main.o
 
-PROG =   $(BIN_CONTRIB_CMD)/v.geom
+PROG =   $(BIN_CMD)/v.geom
 
 all:  $(PROG)
 

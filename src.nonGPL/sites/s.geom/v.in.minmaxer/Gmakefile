@@ -13,7 +13,7 @@ OBJ = \
 
 
 
-PROG =   $(BIN_CONTRIB_CMD)/v.in.minmaxer
+PROG =   $(BIN_CMD)/v.in.minmaxer
 
 all:  $(PROG)
 

@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/r.rescale.inf
+PGM       = $(BIN_CMD)/r.rescale.inf
 LIBES     = $(GISLIB)
 
 # EXTRA_CFLAGS	= -Dunlink=puts

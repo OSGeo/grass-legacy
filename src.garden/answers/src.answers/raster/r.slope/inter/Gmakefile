@@ -1,5 +1,5 @@
 PGM=r.slope
-HOME=$(BIN_ALPHA_INTER)
+HOME=$(BIN_INTER)
 
 LIST = main.o
 

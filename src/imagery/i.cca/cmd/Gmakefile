@@ -4,7 +4,7 @@ OBJS = main.o allocate.o jacobi.o matrix.o \
 
 LIBES= $(IMAGERYLIB) $(GISLIB)
 
-$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): globals.h

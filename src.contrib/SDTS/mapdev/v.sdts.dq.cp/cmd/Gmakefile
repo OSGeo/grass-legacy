@@ -1,5 +1,5 @@
 PGM      = v.sdts.dq.cp
-HOME     = $(BIN_CONTRIB_CMD)
+HOME     = $(BIN_CMD)
 
 
 LIST     = main.o

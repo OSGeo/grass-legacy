@@ -1,5 +1,5 @@
 PGM=r.in.elas
-HOME=$(BIN_MAIN_INTER)
+HOME=$(BIN_INTER)
 
 $(HOME)/$(PGM): main.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)

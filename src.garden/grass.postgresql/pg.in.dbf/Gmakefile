@@ -1,5 +1,5 @@
 PGM = pg.in.dbf
-HOME = $(BIN_CONTRIB_CMD)
+HOME = $(BIN_CMD)
 EXTRA_CFLAGS = $(PQINCPATH)
 LIST = 	main.o \
 	dbfopen.o \

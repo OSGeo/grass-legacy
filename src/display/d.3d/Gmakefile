@@ -5,12 +5,12 @@ D_OFILES =  Dmain.o command.o threed.o transform.o \
 OFILES =  main.o threed.o transform.o clip.o \
 	get_range.o check_opt.o get_inputs.o sigint.o get_row.o draw_face.o
 
-all: $(BIN_MAIN_CMD)/$(PGM) $(BIN_MAIN_INTER)/$(PGM)
+all: $(BIN_CMD)/$(PGM) $(BIN_INTER)/$(PGM)
 
-$(BIN_MAIN_INTER)/$(PGM): $(OFILES) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(D_LIB)
+$(BIN_INTER)/$(PGM): $(OFILES) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) $(D_LIB)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(D_LIB) $(DISPLAYLIB) ${RASTERLIB} $(GISLIB) $(VASKLIB) $(DISPLAYLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(BIN_MAIN_CMD)/$(PGM): $(D_OFILES) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
+$(BIN_CMD)/$(PGM): $(D_OFILES) $(GISLIB) $(DISPLAYLIB) $(RASTERLIB)
 	$(CC) $(LDFLAGS) -o $@ $(D_OFILES) $(DISPLAYLIB) ${RASTERLIB} $(GISLIB) $(DISPLAYLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB):	#

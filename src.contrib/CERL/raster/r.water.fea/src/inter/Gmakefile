@@ -2,7 +2,7 @@ PGM=r.water.fea
 LIBES = $(GISLIB) $(RASTERLIB)
 LIST = main.o menu.o choicehand.o shell.o
 
-$(BIN_CONTRIB_INTER)/$(PGM): $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(XDRLIB) $(MATHLIB)
 
 $LIBES: #

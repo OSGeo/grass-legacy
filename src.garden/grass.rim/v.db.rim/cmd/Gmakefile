@@ -29,13 +29,13 @@ SRCFILES = dbio.c parser.c toplevel.c misc.c make_init.c \
 	read_vect.c strip_fields.c map.c maps.c m_table.c get_max_map.c \
 	type_to_char.c site_list.c vect_seq_map.c
 
-all: $(BIN_MAIN_CMD)/v.db.rim $(ETC)/rim/v.db.rim.cmd
+all: $(BIN_CMD)/v.db.rim $(ETC)/rim/v.db.rim.cmd
 
 $(ETC)/rim/v.db.rim.cmd: $(OBJFILES)
 	-mkdir $(ETC)/rim
 	$(F77) $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) $(MYLIBS) $(DIG_ATTLIB) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
 
-$(BIN_MAIN_CMD)/v.db.rim: highlevel.o
+$(BIN_CMD)/v.db.rim: highlevel.o
 	$(CC) $(LDFLAGS) -o $@ highlevel.o $(GISLIB) $(MATHLIB) $(XDRLIB) $(DATETIMELIB)
 
 saber_src: $(OBJFILES)

@@ -12,12 +12,12 @@ LIST_INTER = \
 LIST_CMD = main_cmd.o dsply_path.o dsply_maps.o get_maps.o
 
 
-all:  $(BIN_MAIN_INTER)/$(PGM)	$(BIN_MAIN_CMD)/$(PGM)
+all:  $(BIN_INTER)/$(PGM)	$(BIN_CMD)/$(PGM)
 
-$(BIN_MAIN_INTER)/$(PGM): $(LIST_INTER) $(GISLIB) $(VASKLIB)
+$(BIN_INTER)/$(PGM): $(LIST_INTER) $(GISLIB) $(VASKLIB)
 	$(CC) -o $@ $(LDFLAGS) $(LIST_INTER) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST_CMD) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST_CMD) $(GISLIB)
 	$(CC) -o $@ $(LDFLAGS) $(LIST_CMD) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 #==============================================================

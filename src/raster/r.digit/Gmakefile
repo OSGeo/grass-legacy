@@ -7,7 +7,7 @@ OBJ =  main.o digitize.o get_type.o setup_graph.o get_map.o \
 
 LIBS = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(VASKLIB)
 
-$(BIN_ALPHA_INTER)/$(PGM): $(OBJ) $(LIBS)
+$(BIN_INTER)/$(PGM): $(OBJ) $(LIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBS) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBS): #

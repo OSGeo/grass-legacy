@@ -5,7 +5,7 @@ LIST = main.o get_train.o lookup_class.o opencell.o openfiles.o parse.o \
 
 LIBES = $(IMAGERYLIB) $(GISLIB)
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

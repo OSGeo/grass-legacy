@@ -4,7 +4,7 @@ LIST=probplot.o readz.o cdpath.o zstats.o pltsqq.o save.o
 
 LIBES=$(RASTERLIB) $(GISLIB) $(DATETIMELIB) 
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(LIBES) $(MATHLIB) $(XDRLIB)
 
 pltsqq.o	: probplot.h 

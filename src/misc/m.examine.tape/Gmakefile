@@ -5,5 +5,5 @@ LIST =\
 	yes.o\
 	counter.o
 
-$(BIN_MAIN_INTER)/$(PGM): $(LIST)
+$(BIN_INTER)/$(PGM): $(LIST)
 	$(CC) $(LDFLAGS) -o $@ $(LIST)

@@ -2,7 +2,7 @@ PGM=v.out.dxf
 
 LIST = cell.to.dat.o
 
-$(BIN_ALPHA_CMD)/$(PGM): v.out.dxf.o $(GISLIB)
+$(BIN_CMD)/$(PGM): v.out.dxf.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ v.out.dxf.o $(GISLIB) $(TERMLIB) $(MATHLIB)
 
 $(GISLIB): #

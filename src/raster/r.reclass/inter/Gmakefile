@@ -1,4 +1,4 @@
-HOME=$(BIN_MAIN_INTER)
+HOME=$(BIN_INTER)
 
 COMMON  = maketable.o dots.o do_reclass.o
 RECLASS = reclass.o set_cats.o $(COMMON)

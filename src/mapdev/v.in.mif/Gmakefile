@@ -10,7 +10,7 @@ LIST = 	lex.yy.o \
 
 LIBES=$(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(DATETIMELIB) $(VASKLIB)
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 lex.yy.c : mif.l

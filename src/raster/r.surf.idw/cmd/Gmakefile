@@ -1,7 +1,7 @@
 PGM=r.surf.idw
 OBJS = main.o  ll.o  dist.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

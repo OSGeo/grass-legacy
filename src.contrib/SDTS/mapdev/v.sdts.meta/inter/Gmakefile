@@ -1,4 +1,4 @@
-PGM      = $(BIN_CONTRIB_INTER)/v.sdts.meta
+PGM      = $(BIN_INTER)/v.sdts.meta
 
 
 $(PGM):	v.sdts.meta 

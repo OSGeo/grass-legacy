@@ -1,4 +1,4 @@
 all:
-	$(GMAKE) ../r.direct
-	$(MAKEALL)
+#	$(GMAKE) ../r.direct
+#	$(MAKEALL)
 

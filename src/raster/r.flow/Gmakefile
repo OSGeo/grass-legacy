@@ -8,7 +8,7 @@ LIBES=$(GISLIB) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB) $(SEGMENTLIB)
 
 PGM=r.flow
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(OBJS): Gmakefile

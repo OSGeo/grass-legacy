@@ -7,7 +7,7 @@ OBJ =\
 	randsurf.o	\
 	rand1.o 
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

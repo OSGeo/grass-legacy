@@ -1,5 +1,5 @@
 PGM=r.cross
-HOME=$(BIN_MAIN_CMD)
+HOME=$(BIN_CMD)
 
 OBJS = main.o tree.o cross.o cats.o store.o renumber.o
 

@@ -5,7 +5,7 @@ PGM = r.out.mpeg
 OFILES = main.o \
 	 write.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBES)
 	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

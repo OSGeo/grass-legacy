@@ -6,7 +6,7 @@ OFILES = \
 	gui.o \
 	main.o
 
-$(BIN_CONTRIB_CMD)/$(PGM):  $(OFILES) $(GISLIB)
+$(BIN_CMD)/$(PGM):  $(OFILES) $(GISLIB)
 	$(CC) -o $@ $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(XLIBPATH) $(XMLIB) $(XTLIB) $(XLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

@@ -16,7 +16,7 @@ OBJS  = ipw2grass.o headers.o main.o
 
 IPWLIB = $(IPW)/lib/libipw.\a $(IPW)/lib/libunix.\a
 
-ALL:  CHECK $(BIN_CONTRIB_CMD)/ipw.to.grass
+ALL:  CHECK $(BIN_CMD)/ipw.to.grass
 
 CHECK:
 	@if [ -n "$(IPW)" ]; \
@@ -26,7 +26,7 @@ CHECK:
 		exit 1; \
 	fi
 
-$(BIN_CONTRIB_CMD)/ipw.to.grass:	$(OBJS) $(GISLIB)
+$(BIN_CMD)/ipw.to.grass:	$(OBJS) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(IPWLIB) $(GISLIB) $(MATHLIB)
 
 $(GISLIB): #

@@ -11,10 +11,10 @@ IMP_OFILES = \
 DLGCAT = \
 	dlgcat.o
 
-all:	$(BIN_CONTRIB_CMD)/v.in.dlg.scs \
+all:	$(BIN_CMD)/v.in.dlg.scs \
 	$(ETC)/dlgcat 
 
-$(BIN_CONTRIB_CMD)/v.in.dlg.scs:	$(IMP_OFILES)
+$(BIN_CMD)/v.in.dlg.scs:	$(IMP_OFILES)
 	cc $(LDFLAGS) -o $@ $(IMP_OFILES) $(GISLIB) $(MATHLIB)
 
 $(ETC)/dlgcat: $(DLGCAT)

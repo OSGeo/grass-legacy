@@ -20,7 +20,7 @@ LIST =	main.o \
 
 LIBES=$(GISLIB) $(VASKLIB) $(DISPLAYLIB) $(RASTERLIB)
 
-$(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST): config.h

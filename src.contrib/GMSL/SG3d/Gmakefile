@@ -53,9 +53,9 @@ OFILES = main.o \
 	label.o \
 	menu.o
 
-PROG = $(BIN_CONTRIB_CMD)/SG3d
-#PROG = $(BIN_CONTRIB_CMD)/sg3d
-#PROG = $(BIN_CONTRIB_CMD)/sg3dtest
+PROG = $(BIN_CMD)/SG3d
+#PROG = $(BIN_CMD)/sg3d
+#PROG = $(BIN_CMD)/sg3dtest
 #PROG = ./sg3dnew
 
 $(PROG): $(OFILES) $(VECTLIB) $(GISLIB) $(DATETIMELIB)

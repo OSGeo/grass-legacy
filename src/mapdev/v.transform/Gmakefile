@@ -15,7 +15,7 @@ O_FILES = \
 	trans_att.o
 
 LIBES=$(VECTLIB) $(GISLIB) $(DIG_ATTLIB) $(TRANSLIB) $(VASKLIB)
-$(BIN_MAIN_CMD)/$(PGM): $(O_FILES) $(LIBES)
+$(BIN_CMD)/$(PGM): $(O_FILES) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(O_FILES) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(O_FILES):	trans.h

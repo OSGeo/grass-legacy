@@ -17,7 +17,7 @@ OFILES = \
 	write_quads.o \
 	SetProj.o
 
-PROG =   $(BIN_CONTRIB_CMD)/v.mkquads.scs
+PROG =   $(BIN_CMD)/v.mkquads.scs
 
 all:  START $(PROG)
 

@@ -7,7 +7,7 @@ LIST =  main.o \
 	walk.o
 
 LIBES=$(VECTLIB) $(GPROJLIB) $(LIBTRANS) $(RASTERLIB) $(DIG_ATTLIB) $(GISLIB)
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST)  $(LIBES)
+$(BIN_CMD)/$(PGM): $(LIST)  $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB) $(VECTLIB): #

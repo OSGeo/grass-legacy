@@ -5,7 +5,7 @@ OBJS= main.o \
 
 $(OBJS): dtedgis.h
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OBJS) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(OBJS) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

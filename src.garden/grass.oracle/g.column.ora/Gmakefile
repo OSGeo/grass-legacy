@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/g.column.ora
+PGM       = $(BIN_CMD)/g.column.ora
 LIBES     = $(GISLIB)
 
 

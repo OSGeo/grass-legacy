@@ -2,7 +2,7 @@ PGM=r.in.poly
 
 LIST = main.o poly2rast.o raster.o getformat.o get_item.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 getformat.o: format.h

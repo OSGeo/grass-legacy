@@ -12,7 +12,7 @@ OFILES = \
 	proj.o SetProj.o 
 
 
-all:  $(LIBPROJ) $(BIN_CONTRIB_CMD)/v.proj $(ETC)/v.projINV $(ETC)/v.projFOR
+all:  $(LIBPROJ) $(BIN_CMD)/v.proj $(ETC)/v.projINV $(ETC)/v.projFOR
 
 $(ETC)/v.projFOR: $(ETC)/v.projINV
 	ln $(ETC)/v.projINV $(ETC)/v.projFOR
@@ -22,7 +22,7 @@ $(ETC)/v.projINV: START $(OFILES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(SCSFIPS) $(LIBPROJ) $(LIBSUPP) $(DISPLAYLIB) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(MATHLIB)
 
 
-$(BIN_CONTRIB_CMD)/v.proj: $(OMAIN)
+$(BIN_CMD)/v.proj: $(OMAIN)
 	$(CC) $(LDFLAGS) -o $@ $(OMAIN) $(SCSFIPS) $(DISPLAYLIB) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(MATHLIB)
 
 START:

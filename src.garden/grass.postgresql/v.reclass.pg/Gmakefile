@@ -1,4 +1,4 @@
-PGM       = $(BIN_CONTRIB_CMD)/v.reclass.pg
+PGM       = $(BIN_CMD)/v.reclass.pg
 # EXTRA_CFLAGS = -Dunlink=puts
 LIBES     = $(DISPLAYLIB) $(GISLIB) $(PQLIB) $(XEXTRALIBS)
 EXTRA_CFLAGS    = $(PQINCPATH)

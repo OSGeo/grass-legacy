@@ -1,9 +1,9 @@
 OFILES = main.o
 PGM = v.in.poly
 
-all:	$(BIN_CONTRIB_CMD)/$(PGM)
+all:	$(BIN_CMD)/$(PGM)
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES)
+$(BIN_CMD)/$(PGM): $(OFILES)
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(DIG_ATTLIB) $(VECTLIB) \
 		$(GISLIB) $(MATHLIB) $(XDRLIB)
 

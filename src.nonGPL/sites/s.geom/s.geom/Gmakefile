@@ -13,7 +13,7 @@ OBJ =   voroSupport.o \
 
 
 
-PROG =   $(BIN_CONTRIB_CMD)/s.geom 
+PROG =   $(BIN_CMD)/s.geom 
 
 all:  $(PROG)
 

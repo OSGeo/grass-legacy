@@ -18,7 +18,7 @@ LIST = main.o\
 	write.o
 
 LIBES=$(IMAGERYLIB) $(VASKLIB) $(GISLIB)
-$(BIN_ALPHA_INTER)/$(PGM): $(LIST) $(LIBES)
+$(BIN_INTER)/$(PGM): $(LIST) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB)
 $(LIST): global.h rowcol.h crs.h
 

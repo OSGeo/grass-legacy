@@ -3,7 +3,7 @@ PGM = d.mouse
 OBJ = main.o setup.o where.o
 LIBES = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
 
-$(BIN_MAIN_CMD)/$(PGM): $(OBJ) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJ) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES): #

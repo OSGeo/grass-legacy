@@ -2,10 +2,10 @@ PGM      = m.qcalc
 
 LIST =  main.o
 
-all: $(BIN_CONTRIB_CMD)/$(PGM)
+all: $(BIN_CMD)/$(PGM)
 
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(LIST) $(GISLIB) 
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

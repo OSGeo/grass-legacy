@@ -1,5 +1,5 @@
 PGM = 	v.out.sdts
-HOME = $(BIN_CONTRIB_CMD)
+HOME = $(BIN_CMD)
 FIPSLIB	=	$(LIBDIR)/libf123.a
 
 EXTRA_CFLAGS	=  -I../../libes/fips123/f123inc

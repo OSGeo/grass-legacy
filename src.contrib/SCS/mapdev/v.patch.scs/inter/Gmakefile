@@ -5,7 +5,7 @@ EXTRA_CFLAGS	= -I$(MAPDEV)/diglib   -I$(MAPDEV)/libes
 IFILES = \
 	patch.o
 
-all:  $(BIN_CONTRIB_INTER)/v.patch.scs
+all:  $(BIN_INTER)/v.patch.scs
 
-$(BIN_CONTRIB_INTER)/v.patch.scs: $(IFILES)
+$(BIN_INTER)/v.patch.scs: $(IFILES)
 	$(CC) $(LDFLAGS) -o $@ $(IFILES) $(GISLIB) $(CURSES) $(MATHLIB) $(XDRLIB)

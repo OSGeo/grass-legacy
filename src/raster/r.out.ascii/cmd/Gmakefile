@@ -1,6 +1,6 @@
 PGM=r.out.ascii
 
-$(BIN_MAIN_CMD)/$(PGM): main.o $(GISLIB)
+$(BIN_CMD)/$(PGM): main.o $(GISLIB)
 	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

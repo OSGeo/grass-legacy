@@ -4,7 +4,7 @@ LIST=main.o read_sites.o
 
 LIBES=$(GISLIB) $(DATETIMELIB)
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(LIBES) 
+$(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(GISLIB): #

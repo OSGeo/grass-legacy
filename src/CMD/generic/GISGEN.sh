@@ -62,9 +62,7 @@ for i in \
     man man/help man/man1 man/man2 man/man3 man/man4 man/man5 \
     etc etc/paint etc/paint/driver etc/paint/driver.sh etc/paint/driver.uninst \
     etc/sites etc/dig_drivers etc/imagery \
-    etc/bin etc/bin/main etc/bin/contrib \
-    etc/bin/main/inter etc/bin/main/cmd \
-    etc/bin/contrib/inter etc/bin/contrib/cmd \
+    etc/bin etc/bin/inter etc/bin/cmd \
     txt txt/COMBINE txt/DIGIT txt/DIGIT2 txt/WEIGHT txt/MONITOR \
     lib include \
     driver locks dev

@@ -9,7 +9,7 @@ LIST = \
 	perform.o\
 	uppercase.o
 
-$(BIN_MAIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(ROWIOLIB)
+$(BIN_CMD)/$(PGM): $(LIST) $(GISLIB) $(ROWIOLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(ROWIOLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST): filter.h glob.h

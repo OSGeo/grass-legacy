@@ -7,7 +7,7 @@ OFILES = main.o \
 	 put_view.o \
 	 put_grid.o
 
-$(BIN_CONTRIB_CMD)/$(PGM): $(OFILES) $(LIBRARIES) 
+$(BIN_CMD)/$(PGM): $(OFILES) $(LIBRARIES) 
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBRARIES) $(MATHLIB) $(XDRLIB)
 
 main.o: pv.h

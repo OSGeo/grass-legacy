@@ -11,7 +11,7 @@ OBJS = main.o\
 	stats.o\
 	sum.o
 
-$(BIN_ALPHA_CMD)/$(PGM): $(OBJS) $(LIBES)
+$(BIN_CMD)/$(PGM): $(OBJS) $(LIBES)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB) $(EXTRA_FLAGS)
 
 $(LIBES): #

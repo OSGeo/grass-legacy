@@ -1,4 +1,4 @@
-PGM       = $(BIN_MAIN_CMD)/d.what.s.inf
+PGM       = $(BIN_CMD)/d.what.s.inf
 LIBES     = $(GISLIB) $(DISPLAYLIB) $(RASTERLIB) 
 
 # EXTRA_CFLAGS 	= -Dunlink=puts
