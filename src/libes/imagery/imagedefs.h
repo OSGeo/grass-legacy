@@ -1,4 +1,3 @@
-/* %W% %G% */
 
 int *I_ask_bands();
 char *I_bandname();
