@@ -56,21 +56,21 @@ do
 		t=*|ty=*|typ=*|type=*)
 			itype=`echo "$i" | awk -F '=' '{print $2}'`
 			case $itype in
-				rast*)
+				ra|ras|rast*)
 					type=rast;;
-				vect*)
+				v|ve|vec|vect*)
 					type=vect;;
-				icon*)
+				i|ic|ico|icon*)
 					type=icon;;
-				labels*)
+				l|la|lab|labe|label*)
 					type=labels;;
-				site*)
+				s|si|sit|site*)
 					type=sites;;
-				region*)
+				re|reg|regi|regio|region*)
 					type=region;;
-				group*)
+				g|gr|gro|grou|group*)
 					type=group;;
-				3dview*)
+				3|3d|3dv|3dvi|3dvie|3dview*)
 					type=3dview;;
 			esac;;
 		m=*|ma=*|map=*|maps=*|mapse=*|mapset=*)
@@ -80,7 +80,7 @@ do
 		*)
 			if [ ! "$search" ]
 			then
-				search=$i
+				search="$i"
 			else
 				search="$search\|$i"
 			fi;;
@@ -89,8 +89,9 @@ done
 
 if [ "$w" -a "$search" ]
 then
-	search="^`echo $search | sed 's/?/./g; s/*/.*/g; s/|/$|^/g'`$"
+	search="^`echo \"$search\" | sed 's/\./\\\\./g; s/?/./g; s/*/.*/g; s/|/$|^/g'`$"
 fi
+echo $search
 
 for i in `g.list type=$type $mapset | grep -v '^-\+$' | grep -v "files available" | grep -v "available in mapset"`
 do
@@ -98,7 +99,7 @@ do
 	then
 		list="$list $i"
 	else
-		list="$list `echo $i | grep $search`"
+		list="$list `echo $i | grep \"$search\"`"
 	fi
 done
 
@@ -120,7 +121,7 @@ do
 		fi
 	fi
 	start=1
-	printf "%s" $i
+	printf "%s" "$i"
 done
 
 exit 0
