@@ -36,7 +36,7 @@ proc mksurfPanel { BASE } {
     
     #  Initialize panel info
     if [catch {set Nv_($BASE)}] {
-	set panel [St_create {window name size priority} $BASE "Surfaces" 2 5]
+	set panel [St_create {window name size priority} $BASE "Surface" 2 5]
     } else {
 	set panel $Nv_($BASE)
     }
@@ -46,30 +46,7 @@ proc mksurfPanel { BASE } {
     frame $BASE.top -relief groove -borderwidth 2
     frame $BASE.bottom
     
-    set tmp [frame $BASE.top.left]
-    ########### make arrows for surf & grid resolution control ###################
-    Nv_mkArrows $tmp.gridarrows "Grid Resolution" [concat set_res wire] 8
-    set Nv_(WireResWidget) $tmp.gridarrows.f2.entry
-    Nv_mkArrows $tmp.polyarrows "Polygon  Resolution" [concat set_res poly] 8
-    set Nv_(PolyResWidget) $tmp.polyarrows.f2.entry
-   
-#Add bindings for resolution update
-bind $tmp.gridarrows.f2.entry <Motion> "+ update_res wire"
-bind $tmp.gridarrows.f2.entry <Return> "+ update_res wire"
-
-bind $tmp.polyarrows.f2.entry <Motion> "+ update_res poly"
-bind $tmp.polyarrows.f2.entry <Return> "+ update_res poly"
- 
-    ########### make buttons that control scope of changes made ##################
-    radiobutton $tmp.current  -text "Current Surface Only"\
-	-anchor nw -value 1 -variable Nv_(CurrOnly)
-    radiobutton $tmp.all -text "All Surfaces"\
-	-anchor nw -value 0 -variable Nv_(CurrOnly) -command set_drawmode
-    
-    pack $tmp.gridarrows $tmp.polyarrows $tmp.current $tmp.all \
-	-side top -fill x -ipady 5
-    
-    set tmp [frame $BASE.top.right]
+    set tmp [frame $BASE.top.t1]
     ########## make buttons that control surface & drawing style#############
     menubutton $tmp.style -menu $tmp.style.m -relief raised \
 	-text "Surface Style:" -underline 0 -indicatoron 1
@@ -98,8 +75,41 @@ bind $tmp.polyarrows.f2.entry <Return> "+ update_res poly"
 	-variable Nv_(ShadeStyle) -command set_drawmode
 
      pack $tmp.style $tmp.gstyle $tmp.shading \
-	-side top -fill x -pady 3 -expand 0
+	-side left -fill y -padx 4 -pady 4 -expand 0
 
+    
+        
+    set tmp [frame $BASE.top.t2]
+    ########### make arrows for surf & grid resolution control ###################
+    Nv_mkArrows $tmp.gridarrows "Grid Resolution" [concat set_res wire] 8
+    set Nv_(WireResWidget) $tmp.gridarrows.f2.entry
+    Nv_mkArrows $tmp.polyarrows "Polygon  Resolution" [concat set_res poly] 8
+    set Nv_(PolyResWidget) $tmp.polyarrows.f2.entry
+   
+#Add bindings for resolution update
+bind $tmp.gridarrows.f2.entry <Motion> "+ update_res wire"
+bind $tmp.gridarrows.f2.entry <Return> "+ update_res wire"
+
+bind $tmp.polyarrows.f2.entry <Motion> "+ update_res poly"
+bind $tmp.polyarrows.f2.entry <Return> "+ update_res poly"
+
+    pack $tmp.gridarrows \
+	-side left -fill x -ipady 5
+    pack $tmp.polyarrows \
+	-side right -fill x -ipady 5
+ 
+    
+    set tmp [frame $BASE.top.t3]
+    ########### make buttons that control scope of changes made ##################
+    radiobutton $tmp.current  -text "Current Surface Only"\
+	-anchor nw -value 1 -variable Nv_(CurrOnly)
+    radiobutton $tmp.all -text "All Surfaces"\
+	-anchor nw -value 0 -variable Nv_(CurrOnly) -command set_drawmode
+    
+    pack $tmp.current $tmp.all \
+	-side left  -fill y -ipady 5
+    
+    
     ###### make widgets that control which is current surface (menu, new delete)###
     set tmp [frame $BASE.bottom.top]
     label $tmp.current -text "Current:" -anchor nw
@@ -111,39 +121,51 @@ bind $tmp.polyarrows.f2.entry <Return> "+ update_res poly"
     pack $tmp.delete $tmp.new -side right -expand 1
     
     ####### make buttons that control attributes for current surface ########
-    set tmp [frame $BASE.bottom.left]
-    button $tmp.draw_current -text "Draw Current" \
-	-command {Nsurf_draw_one [Nget_current surf]}
-    pack $tmp.draw_current -expand 0 -side bottom -anchor nw
+    set tmp [frame $BASE.bottom.bottom -bd 1 -relief groove]
+    set tmp2 [frame $BASE.bottom.bottom2 -bd 1 -relief groove]
+    menubutton $tmp.menu1 -menu $tmp.menu1.m -text "Surface Attribute" -relief raised \
+    -indicatoron 1 -bd 2
+    pack $tmp.menu1 -side left -fill y -padx 2
+    menu $tmp.menu1.m
     foreach i {topography color mask transparency shininess emission} {
-	pack [Nv_mkAttbutton $tmp $i] -expand 1 -side top -fill x
+    	$tmp.menu1.m add command -label "$i: [get_curr_status $i]" \
+    	-command "mkAttPopup .pop $i 1"
     }
     
-    
-    set tmp [frame $BASE.bottom.right]
-    checkbutton $tmp.nozeros1 -text "No Zeros" \
-	-anchor nw  -variable Nv_(TopNoZeros) -command no_zeros
-    checkbutton $tmp.nozeros2 -text "No Zeros" \
-	-anchor nw -variable Nv_(ColNoZeros) -command no_zeros
-    button $tmp.wireclr -text "Wire Color" -anchor nw \
+    button $tmp.wireclr -text "Wire Color" \
 	-command "change_wirecolor $tmp.wireclr" \
 	-bg [get_curr_wire_color]
-    button $tmp.position -text "Position" -anchor nw -command "mkPositionPanel .pos_surf"
+    pack $tmp.wireclr -side left -fill y -padx 5
+    button $tmp.position -text "Position" -command "mkPositionPanel .pos_surf"
     
-    pack $tmp.nozeros1 $tmp.nozeros2 $tmp.wireclr $tmp.position \
-	-expand 1 -side top -fill x
+    pack $tmp.position -side right -fill y
+    
+    label $tmp2.l1 -text "Mask Zeros by:" -relief flat
+    checkbutton $tmp2.nozeros1 -text "Elevevation" \
+	-variable Nv_(TopNoZeros) -command no_zeros
+    checkbutton $tmp2.nozeros2 -text "Color" \
+	-variable Nv_(ColNoZeros) -command no_zeros
+    
+    pack $tmp2.l1 $tmp2.nozeros1 $tmp2.nozeros2 \
+         -side left -fill y -padx 4 -pady 4
+
     
     ############# manage  frames ################################################
     pack $BASE.top $BASE.bottom -side top -fill x -expand 1
-    pack $BASE.top.left -side left -expand 1
-    pack $BASE.top.right -side right -fill both -expand 1
+    pack $BASE.top.t1 -side top -fill both -expand 1
+    pack $BASE.top.t2 -side top -fill both -expand 1
+    pack $BASE.top.t3 -side top -fill both -expand 1
     pack $BASE.bottom.top -side top -fill x -ipady 5 -expand 1
-    pack $BASE.bottom.left -side left -expand 1
-    pack $BASE.bottom.right -side top
+    pack $BASE.bottom.bottom -side top -fill both -expand 1
+    pack $BASE.bottom.bottom2 -side top -fill both -expand 1
+    
     
     ########## make button to close panel ########################################
-    button $BASE.close -text Close -command "Nv_closePanel $BASE" -anchor s
-    pack $BASE.close -side right 
+    button $BASE.close -text Close -command "Nv_closePanel $BASE" 
+    button $BASE.draw_current -text "Draw Current" \
+	-command {Nsurf_draw_one [Nget_current surf]}
+    pack $BASE.close -side right -fill y
+    pack $BASE.draw_current -side left -fill y
     set_display_from_curr
     
     return $panel
