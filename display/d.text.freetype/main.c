@@ -7,7 +7,7 @@
 *
 * AUTHOR(S):    Huidae Cho <hdcho@geni.cemtlo.com>
 *
-* PURPOSE:      d.text with Freetype2 support
+* PURPOSE:      d.text with FreeType2 support
 *               http://www.freetype.org
 *
 * COPYRIGHT:    (C) 2001 by the GRASS Development Team
@@ -229,7 +229,7 @@ main(int argc, char **argv)
 		fprintf(stdout, " Right:   Quit\n");
 
 		R_get_location_with_pointer(&x, &y, &i);
-		i &= 0xf;
+		i &= 0x0f;
 		if(i != 1){
 			FT_Done_Face(face);
 			FT_Done_FreeType(library);
