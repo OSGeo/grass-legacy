@@ -35,9 +35,10 @@ GRASS 5 Core Team (most have CVS access):
  Andreas Lange   <Andreas.Lange@Rhein-Main.de> (SGI/Irix compliance, 
 						Proj/Datum support)
  Pierre de Mouveaux <pmx@audiovu.com><pmx@free.fr>  (NVIZ)
- Lubos Mitas     <lmitas@ncsa.uiuc.edu>       (grid3D and related)
- Helena Mitasova <helena@gomez.gis.uiuc.edu>  (grid3D and related, 
-						spline interpolation)
+ Lubos Mitas     <lmitas@ncsa.uiuc.edu>       (multivariate spline
+                                               interpolation (RST) and erosion modeling)
+ Helena Mitasova <helena@gomez.gis.uiuc.edu>  (interpolation modules, NVIZ,
+                                               G3D, erosion modelling)
  Eric G. Miller  <egm2@jps.net>               (sites format, new autoconf system, bugfixes etc.)
  Eric Mitchell   <emitchell@altaira.com>      (new Makefile system)
  Markus Neteler  <neteler@geog.uni-hannover.de> (GRASS 5 coordination, ...)
