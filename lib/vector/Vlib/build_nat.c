@@ -573,6 +573,8 @@ Vect_build_nat ( struct Map_info *Map, int build, FILE *msgout )
     for ( area = 1; area <= plus->n_areas; area++ ) {
 	int c;
 
+	if ( plus->Area[area] == NULL ) continue;
+
 	if ( plus->Area[area]->centroid > 0 ) { 
 	    Vect_read_line (Map, NULL, Cats, plus->Area[area]->centroid );
 
