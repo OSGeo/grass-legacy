@@ -7,8 +7,4 @@ int G_make_histogram_log_colors(struct Colors *, struct Cell_stats *, int, int);
 int main(int, char *[]);
 int more_usage(void);
 /* rules.c */
-int read_color_rules(struct Colors *, int, DCELL, DCELL, int);
-int read_rule(double *, int *, int *, int *, int *, int *, int *, DCELL, DCELL);
-int badrule(char *, int);
-int lookup_color(char *, int *, int *, int *);
-int show_colors(FILE *);
+int read_color_rules(FILE *, struct Colors *, int, DCELL, DCELL, int);
