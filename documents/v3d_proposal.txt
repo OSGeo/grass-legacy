@@ -1,3 +1,9 @@
+Note 2001: New vect lib docs at:
+
+http://www.raz-dva.cz/krakonos/grass/vector5.html
+
+--------------------------------------------
+
 Date: Thu, 07 Sep 2000 15:25:20 +0200
 To: grass5@geog.uni-hannover.de
 X-Archive-URL: "http://www.geog.uni-hannover.de/grass/grassdevel.html"
