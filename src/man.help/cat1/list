@@ -1,0 +1,66 @@
+
+
+
+list(1)              GRASS Reference Manual               list(1)
+
+
+
+NAME
+     list  - List available
+     (Available through grass3 menu)
+
+SYNOPSIS
+     list
+
+DESCRIPTION
+     The GRASS tool list prompts the user for the type of data
+     (i.e., the data element) to be listed from the mapsets in
+     the user's search path.  The following data elements may be
+     listed by selecting the appropriate number:
+
+
+            1         cell maps
+
+            2         binary vector maps
+
+            3         paint icon files
+
+            4         paint label files
+
+            5         site maps
+
+            6         window files
+
+            7         imagery group files
+
+          RETURN      exit
+
+
+     After the desired data element number is selected, the
+     available are listed, and the user is returned to the above
+     menu.
+
+
+SEE ALSO
+     mapsets[1], Glist[2G]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
