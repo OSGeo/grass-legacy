@@ -70,7 +70,7 @@ int main(int argc, char **argv)
     color_opt = G_define_option() ;
     color_opt->key        = "color" ;
     color_opt->type       = TYPE_STRING ;
-    color_opt->answer     = "white" ;
+    color_opt->answer     = "black" ;
     color_opt->description= "Original line color" ;
 	
     hcolor_opt = G_define_option() ;
@@ -82,7 +82,7 @@ int main(int argc, char **argv)
     bgcolor_opt = G_define_option() ;
     bgcolor_opt->key        = "bgcolor" ;
     bgcolor_opt->type       = TYPE_STRING ;
-    bgcolor_opt->answer     = "black" ;
+    bgcolor_opt->answer     = "white" ;
     bgcolor_opt->description= "Background color" ;
 
     geo_f = G_define_flag ();
