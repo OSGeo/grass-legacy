@@ -1,0 +1,120 @@
+.TH i.rectify.blk
+.nh
+.SH NAME
+\fIi.rectify.blk\fR \- An imagery function that ortho-rectifies an
+imagery group file.
+.br
+.I (GRASS Image Processing Program)
+.SH SYNOPSIS
+\fBi.rectify.blk\fR
+.SH DESCRIPTION
+.I i.rectify.blk
+allows the user to ortho-rectify an imagery group file. 
+An imagery photo block consists of several scanned aerial photographs
+(raster files) of a common area.  
+An imagery sub-block is a subset of these raster files.
+Block and sub-blocks of imagery groups are created by the 
+GRASS imagery program \fIi.build.blk\fR.
+
+\fIi.rectify.blk\fR guides the user through the steps required to
+ortho-rectify a single sub-block of imagery groups contained in a block.
+
+The first menu in the \fIi.rectify.blk\fR program asks the user to select
+an existing \fIblock\fR and \fIsub-block\fR.
+If the block and sub-block do not yet exist, the user should run
+\fIi.build.blk\fR before running \fIi.rectify.blk\fR.  
+
+If the word \fIlist\fR is entered, blocks or sub-blocks 
+that have already been
+created in the current LOCATION_NAME and MAPSET will be listed.
+
+The next menu in \fIi.rectify.blk\fR provides the user with the following
+options:
+
+.ne 14
+.if t \fB
+.TS
+center, tab(:);
+l l.
+1.: Select another sub-block
+2.: Compute image-to-photo transformation
+3.: Initialize exposure station parameters
+4.: Compute ortho-rectification parameters
+5.: Ortho-rectify the selected imagery sub-block files
+
+  : RETURN to exit
+.TE
+\fR
+
+These options can be described as follows:
+.ne 10
+.IP "\fISelect another sub-block\fR"
+If option number 1 is chosen, the following menu is displayed:
+
+.if t \fB
+.ce 1
+Please enter the sub-block to be selected
+
+.ce 2
+BLOCK:     block.1
+SUB-BLOCK: _____________ (enter 'list' for a list of sub-blocks)
+
+
+.ce 2
+AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+(OR <Ctrl-C> TO CANCEL)
+\fR
+
+If the word \fIlist\fR is entered, sub-blocks that have already been created in
+the current block will be displayed.
+
+.IP "\fICompute image-to-photo transformation\fR"
+If option number 2 is selected, image-to-photo transformation 
+parameters of the imagery group in the selected sub-block are computed.
+The user associates reference points (fiducials, reseau marks, etc.) with
+their known photo coordinates.
+The user must be running the graphics monitor.
+Complete documentation for this option is available under the manual entry
+\fIi.ortho.reference\fR.  (The user must select one imagery group in the sub-block
+to initialize the camera.  \fIi.camera\fR must be used to create a camera reference
+file, and \fIi.build.blk\fR must be run to select a camera reference
+file for the block, before this option can be used.)
+
+.IP "\fISelect initial exposure station parameters\fR"
+If option number 3 is selected, initial camera exposure station 
+parameters are selected or modified.
+Complete documentation for this option is available under the manual entry
+\fIi.ortho.initial\fR.
+
+.IP "\fICompute ortho-rectification parameters\fR"
+If option number 4 is selected,
+ortho-rectification parameters for the imagery sub-block are computed.
+Here control points are marked on one or more sub-block imagery raster files
+and associated with their known UTM coordinates.  
+Complete documentation for this option is available under the manual entry
+\fIi.ortho.control\fR.
+
+.IP "\fIortho-rectify selected sub-block\fR"
+If option number 5 is chosen, the raster files referenced by the 
+imagery sub-block are ortho-rectified.
+Rectified raster files will be created in the target location.
+Complete documentation for this option is available under the manual entry
+\fIi.ortho.rectify\fR.
+.SH NOTES
+The \fIi.rectify.blk\fR options are only available for imagery files
+stored under the user's current LOCATION.
+.SH SEE ALSO
+.I i.build.blk,
+.I i.camera,
+.I i.group,
+.I i.ortho.control,
+.I i.ortho.initial,
+.I i.ortho.rectify,
+.I i.ortho.reference
+.SH AUTHOR
+.nf
+Mike Baba
+DBA Systems, Inc.
+10560 Arrowhead Drive
+Fairfax, Virginia 22030
+.fi
