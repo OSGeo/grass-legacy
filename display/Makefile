@@ -4,6 +4,7 @@ MODULE_TOPDIR = ..
 SUBDIRS = \
 	drivers \
 	d.erase \
+	d.his \
 	d.m \
 	d.mon \
 	d.path \
