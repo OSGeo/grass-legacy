@@ -33,6 +33,35 @@ proc execute {cmd} {
     exec -- $cmd &
 }
 
+
+###############################################################################
+proc spawn {cmd args} {
+    eval exec -- $cmd $args &
+}
+
+
+###############################################################################
+proc run {cmd args} {
+    eval exec -- $cmd $args >@ stdout 2>@ stderr
+}
+
+
+###############################################################################
+proc term {cmd args} {
+    eval exec -- xterm -e $cmd $args &
+}
+
+
+###############################################################################
+proc set_menu_font {} {
+    global main_menu
+    fontsel {Menu font} main_menu(font)
+    setfont .main_menu $main_menu(font)
+    resize_menu
+}
+
+###############################################################################
+
 proc menu_build {initial path description} {
     global env main_menu balloonHelp
 
