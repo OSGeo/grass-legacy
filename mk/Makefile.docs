@@ -18,20 +18,19 @@ HTML2MAN	= GRASS_PERL=${PERL} sh ${SRCDIR}/src/scripts/contrib/g.html2man/g.html
 
 documents:	htmlpages images manpages catpages
 
-htmlpages:	${htmlpages1} ${htmlpages2}
-
 htmlpages1	= $(patsubst ${HTMLSRC1}/%.html,${HTMLDIR1}/%.html,$(wildcard ${HTMLSRC1}/*.html))
 htmlpages2	= $(patsubst ${HTMLSRC2}/%.html,${HTMLDIR2}/%.html,$(wildcard ${HTMLSRC2}/*.html))
 
-images:		${images1} ${images2}
+htmlpages:	${htmlpages1} ${htmlpages2}
 
 images1		= $(patsubst ${HTMLSRC1}/%.gif,${HTMLDIR1}/%.gif,$(wildcard ${HTMLSRC1}/*.gif))
 images2		= $(patsubst ${HTMLSRC2}/%.gif,${HTMLDIR2}/%.gif,$(wildcard ${HTMLSRC2}/*.gif))
 
+images:		${images1} ${images2}
+
 manpages1	= $(patsubst ${HTMLSRC1}/%.html,${MANDIR}/%.${MANSECT},$(wildcard ${HTMLSRC1}/*.html))
 manpages2	= $(patsubst ${HTMLSRC2}/%.html,${MANDIR}/%.${MANSECT},$(filter-out ${HTMLSRC2}/imagery.html ${HTMLSRC2}/paint.html,$(wildcard ${HTMLSRC2}/*.html)))
 manpages	= ${manpages1} ${manpages2}
-
 
 manpages:	${MANDIR} ${manpages}
 
