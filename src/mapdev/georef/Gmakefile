@@ -55,22 +55,23 @@ libgeo.a: $(OBJ)
 
 #  notice that bin_reg becomes geo.reg in the etc directory
 
-$(ETC)/geo.reg: bin_reg.o
+$(ETC)/geo.reg: bin_reg.o $(GISLIB) $(LOCKLIB)
 	$(CC) $(LDFLAGS)  -o bin_reg  bin_reg.o  libgeo.a  $(GISLIB) $(LOCKLIB)
 	mv  bin_reg  $(ETC)/geo.reg
 
 
 #  notice that bin_point becomes geo.point in the etc directory
 
-$(ETC)/geo.point: bin_point.o
+$(ETC)/geo.point: bin_point.o $(GISLIB) $(LOCKLIB)
 	$(CC) $(LDFLAGS)  -o bin_point  bin_point.o  libgeo.a $(GISLIB) $(LOCKLIB)
 	mv  bin_point  $(ETC)/geo.point
 
 
-$(ETC)/geo.quest: geo_quest.o
+$(ETC)/geo.quest: geo_quest.o $(GISLIB) 
 	$(CC) $(LDFLAGS)  -o $@  geo_quest.o  libgeo.a $(GISLIB) 
 
 
-$(ETC)/geo.unlock: geo_unlock.o
+$(ETC)/geo.unlock: geo_unlock.o $(GISLIB) $(LOCKLIB)
 	$(CC) $(LDFLAGS)  -o $@  geo_unlock.o  libgeo.a $(GISLIB)  $(LOCKLIB)
 
+$(GISLIB) $(LOCKLIB): #
