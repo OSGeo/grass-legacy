@@ -166,21 +166,23 @@ directly. We want to go on in hiding structures and replace for example:
 </PRE>by new function<PRE>
     V2_get_area_centroid()
 </PRE>
-Some functions used by modulesin grass5.0 are still in Digit library and often cause
+Some functions used by modules in grass5.0 are still in Digit library and often cause
 circular references because depend on Vector library (VECTLIB must be used twice in Gmakefile). 
 These functions will be moved to Vector library and renamed from dig_*() to Vect_()
 (for example dig_point_to_area(), dig_point_in_area()).
 <P>
-As result of these changes all data should be access only by Vect_*() functions
-by <I>common modules</I>. Common modules are modules which do not write to
-topology file directly i.e. neither build topology nor update files on level2.
-Common modules read from vector on level1 or level2 but writes into coor
-file on level1 only.
+
+As result of these changes there will be <i>common modules</i> which will
+access data only through these Vect_*() functions. Common modules are
+modules which do not write directly to the topology file i.e. neither build
+topology nor update files on level2. They can read vector maps on level 1 or
+level 2 but writes into the coor file (geometry) on level1 only.
 <P>
-But there are few <I>special modules</I> v.build, v.digit (more?) which must write into
-topo file. v.build module will we probably replaced by Vect_build() function???
-v.digit will continue too use dig_*() functions for direct access to topology file
-at least in grass5.1 or in the beginnig of grass5.1.
+But there are few <I>special modules</I> v.build, v.digit (more?) which must
+write into topo file. The v.build module will we probably replaced by
+Vect_build() function??? v.digit will continue too use dig_*() functions for
+direct access to topology file at least in grass5.1 or in the beginning of
+grass5.1.
 
 <HR>
 
