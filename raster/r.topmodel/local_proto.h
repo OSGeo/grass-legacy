@@ -7,11 +7,6 @@
 #include "gis.h"
 
 
-#define	NONE		0
-#define	BKWD		1
-#define	FRWD		2
-#define	AVG		NONE
-
 #define	FILL		0x1
 #define	DIR		0x2
 #define	BELEV		0x4
@@ -21,8 +16,8 @@
 
 #define	BUFSIZE		1024
 #define	ZERO		0.0000001
-#define	TOLERANCE	0.001
-#define	MAXITER		100
+#define	TOLERANCE	0.00001
+#define	MAXITER		20
 #define	NTERMS		10
 
 

@@ -1,12 +1,6 @@
 #include "local_proto.h"
 
 
-#if !defined(AVG) || (AVG != NONE && AVG !=BKWD && AVG != FRWD)
-#	warning "AVG not defined or misdefined.  AVG NONE used."
-#	define	AVG	NONE
-#endif
-
-
 double
 get_lambda(void)
 {
@@ -15,19 +9,9 @@ get_lambda(void)
 
 
 	retval = 0.0;
-
-#if	AVG == NONE
-	for(i=0; i<misc.nidxclass; i++)
-		retval += idxstats.Aatb_r[i] * idxstats.atb[i];
-#elif	AVG == BKWD
 	for(i=1; i<misc.nidxclass; i++)
 		retval += idxstats.Aatb_r[i] * 
 				(idxstats.atb[i] + idxstats.atb[i - 1]) / 2.0;
-#elif	AVG == FRWD
-	for(i=0; i<misc.nidxclass-1; i++)
-		retval += idxstats.Aatb_r[i] * 
-				(idxstats.atb[i] + idxstats.atb[i + 1]) / 2.0;
-#endif
 
 
 	return retval;
@@ -128,7 +112,6 @@ implement(void)
 {
 	int	i, j, k;
 	double	Aatb_r;
-	/* '_' prefix means precalculated one */
 	double	R;
 	double	_qo, _qv;
 
@@ -183,19 +166,10 @@ implement(void)
 		misc.qs[i] = misc.qss * exp(- misc.S_mean[i] / params.m);
 
 		for(j=0; j<misc.nidxclass; j++){
-#if	AVG == NONE
-			Aatb_r = idxstats.Aatb_r[j];
-#elif	AVG == BKWD
-			Aatb_r = (idxstats.Aatb_r[j] + 
-					(j > 0 ?
-					 	idxstats.Aatb_r[j - 1]
-						: 0.0)) / 2.0;
-#elif	AVG == FRWD
 			Aatb_r = (idxstats.Aatb_r[j] + 
 					(j < misc.nidxclass - 1 ?
 					 	idxstats.Aatb_r[j + 1]
 						: 0.0)) / 2.0;
-#endif
 
 			misc.S[i][j] = misc.S_mean[i] +
 				params.m * (misc.lambda - idxstats.atb[j]);
@@ -227,8 +201,9 @@ implement(void)
 				misc.Suz[i][j] -= _qv;
 				if(misc.Suz[i][j] < ZERO)
 					misc.Suz[i][j] = 0.0;
+				_qv *= Aatb_r;
 			}
-			misc.qv[i][j] = _qv * Aatb_r;
+			misc.qv[i][j] = _qv;
 			misc.qv[i][misc.nidxclass] += misc.qv[i][j];
 
 			misc.Ea[i][j] = 0.0;
@@ -242,16 +217,20 @@ implement(void)
 			}
 			misc.Srz[i][j] += misc.Ea[i][j];
 
-#if	AVG == NONE
-			_qo = misc.ex[i][j];
-#elif	AVG == BKWD
-			_qo = (j > 0 ?
-				(misc.ex[i][j] + misc.ex[i][j-1]) / 2.0 : 0.0);
-#elif	AVG == FRWD
-			_qo = (j < misc.nidxclass - 1 ?
-				(misc.ex[i][j] + misc.ex[i][j+1]) / 2.0 : 0.0);
-#endif
-			misc.qo[i][j] = _qo * Aatb_r;
+			_qo = 0.0;
+			if(j > 0){
+				if(misc.ex[i][j] > 0.0)
+					_qo = idxstats.Aatb_r[j] *
+						(misc.ex[i][j-1] +
+						 misc.ex[i][j]) / 2.0;
+				else
+				if(misc.ex[i][j-1] > 0.0)
+					_qo = Aatb_r * misc.ex[i][j-1] /
+						(misc.ex[i][j-1] -
+						 misc.ex[i][j]) *
+						misc.ex[i][j-1] / 2.0;
+			}
+			misc.qo[i][j] = _qo;
 			misc.qo[i][misc.nidxclass] += misc.qo[i][j];
 
 			misc.qt[i][j] = misc.qo[i][j] + misc.qs[i];

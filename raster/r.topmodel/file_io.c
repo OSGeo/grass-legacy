@@ -25,7 +25,8 @@ void
 read_inputs(void)
 {
 	FILE	*fp;
-	int	i;
+	int	i, j;
+	double	x;
 
 
 	/* Read topographic index statistics file */
@@ -48,6 +49,19 @@ read_inputs(void)
 
 	for(i=0; i<misc.nidxclass; i++)
 		idxstats.Aatb_r[i] /= (double) misc.ncell;
+
+	for(i=0; i<misc.nidxclass; i++){
+		for(j=i; j<misc.nidxclass; j++){
+			if(idxstats.atb[i] < idxstats.atb[j]){
+				x = idxstats.atb[i];
+				idxstats.atb[i] = idxstats.atb[j];
+				idxstats.atb[j] = x;
+				x = idxstats.Aatb_r[i];
+				idxstats.Aatb_r[i] = idxstats.Aatb_r[j];
+				idxstats.Aatb_r[j] = x;
+			}
+		}
+	}
 
 
 	/* Read parameters file */
@@ -157,8 +171,7 @@ read_inputs(void)
 		for(i=0; i<input.ntimestep && !feof(fp); ){
 			get_line(fp, buf);
 
-			if(sscanf(buf, "%lf",
-					&(misc.Qobs[i])) == 1)
+			if(sscanf(buf, "%lf", &(misc.Qobs[i])) == 1)
 				i++;
 		}
 
@@ -248,7 +261,7 @@ write_outputs(void)
 		    "# %77s\n", "qs:", "[m/timestep]");
 	fprintf(fp, "# %-15s Vertical flux (or drainage flux)\n"
 		    "# %77s\n", "qv:", "[m/timestep]");
-	fprintf(fp, "# %-15s Mean saturation deficit in a watershed\n"
+	fprintf(fp, "# %-15s Mean saturation deficit in the watershed\n"
 		    "# %77s\n", "S_mean:", "[m]");
 	if(params.infex){
 		fprintf(fp, "# %-15s Infiltration rate\n"
@@ -277,41 +290,41 @@ write_outputs(void)
 	fprintf(fp, "\n");
 
 	if(file.Qobs){
-		fprintf(fp, "%-15s ", "Em:");
+		fprintf(fp, "%-10s ", "Em:");
 		if(!G_is_d_null_value(&misc.Em))
-			fprintf(fp, "%15.5lf\n", misc.Em);
+			fprintf(fp, "%10.5lf\n", misc.Em);
 		else
 			fprintf(fp,
 				"Not resolved due to constant observed Q\n");
-		fprintf(fp, "%-15s %15.5le\n", "Qobs_peak:", misc.Qobs_peak);
-		fprintf(fp, "%-15s %15d\n",
+		fprintf(fp, "%-10s %10.3le\n", "Qobs_peak:", misc.Qobs_peak);
+		fprintf(fp, "%-10s %10d\n",
 					"tobs_peak:",	misc.tobs_peak);
-		fprintf(fp, "%-15s %15.5le\n",
+		fprintf(fp, "%-10s %10.3le\n",
 					"Qobs_mean:",	misc.Qobs_mean);
 	}
-	fprintf(fp, "%-15s %15.5le\n", "Qt_peak:", misc.Qt_peak);
-	fprintf(fp, "%-15s %15d\n", "tt_peak:", misc.tt_peak);
-	fprintf(fp, "%-15s %15.5le\n", "Qt_mean:", misc.Qt_mean);
-	fprintf(fp, "%-15s %15d\n", "ncell:", misc.ncell);
-	fprintf(fp, "%-15s %15d\n", "nidxclass:", misc.nidxclass);
-	fprintf(fp, "%-15s %15d\n", "ndelay:", misc.ndelay);
-	fprintf(fp, "%-15s %15d\n", "nreach:", misc.nreach);
-	fprintf(fp, "%-15s %15.5le\n", "lnTe:", misc.lnTe);
-	fprintf(fp, "%-15s %15.5le\n", "vch:", misc.vch);
-	fprintf(fp, "%-15s %15.5le\n", "vr:", misc.vr	);
-	fprintf(fp, "%-15s %15.5le\n", "lambda:", misc.lambda);
-	fprintf(fp, "%-15s %15.5le\n", "qss:", misc.qss);
-	fprintf(fp, "%-15s %15.5le\n", "qs0:", misc.qs0);
+	fprintf(fp, "%-10s %10.3le\n", "Qt_peak:", misc.Qt_peak);
+	fprintf(fp, "%-10s %10d\n", "tt_peak:", misc.tt_peak);
+	fprintf(fp, "%-10s %10.3le\n", "Qt_mean:", misc.Qt_mean);
+	fprintf(fp, "%-10s %10d\n", "ncell:", misc.ncell);
+	fprintf(fp, "%-10s %10d\n", "nidxclass:", misc.nidxclass);
+	fprintf(fp, "%-10s %10d\n", "ndelay:", misc.ndelay);
+	fprintf(fp, "%-10s %10d\n", "nreach:", misc.nreach);
+	fprintf(fp, "%-10s %10.3le\n", "lnTe:", misc.lnTe);
+	fprintf(fp, "%-10s %10.3le\n", "vch:", misc.vch);
+	fprintf(fp, "%-10s %10.3le\n", "vr:", misc.vr	);
+	fprintf(fp, "%-10s %10.3le\n", "lambda:", misc.lambda);
+	fprintf(fp, "%-10s %10.3le\n", "qss:", misc.qss);
+	fprintf(fp, "%-10s %10.3le\n", "qs0:", misc.qs0);
 	fprintf(fp, "\n");
 
 
-	fprintf(fp, "%-15s\n", "tch:");
+	fprintf(fp, "%10s\n", "tch");
 	for(i=0; i<params.nch; i++)
-		fprintf(fp, "%15.5le\n", misc.tch[i]);
+		fprintf(fp, "%10.3le\n", misc.tch[i]);
 
-	fprintf(fp, "%-15s\n", "Ad:");
+	fprintf(fp, "%10s\n", "Ad");
 	for(i=0; i<misc.nreach; i++)
-		fprintf(fp, "%15.5le\n", misc.Ad[i]);
+		fprintf(fp, "%10.3le\n", misc.Ad[i]);
 
 
 	st = et = si = ei = 0;
@@ -333,20 +346,20 @@ write_outputs(void)
 		}
 	}
 
-	fprintf(fp, "%-15s %-15s %-15s %-15s %-15s %-15s %-15s", "timestep",
-			"Qt:", "qt:", "qo:", "qs:", "qv:", "S_mean:");
+	fprintf(fp, "%10s %10s %10s %10s %10s %10s %10s", "timestep", "Qt",
+			"qt", "qo", "qs", "qv", "S_mean");
 	if(params.infex)
-		fprintf(fp, " %-15s %-15s", "f:", "fex:");
+		fprintf(fp, " %10s %10s", "f", "fex");
 	fprintf(fp, "\n");
 
 	for(i=0; i<input.ntimestep; i++){
-		fprintf(fp, "%15d %15.5le %15.5le %15.5le %15.5le %15.5le "
-				"%15.5le", i + 1, misc.Qt[i],
+		fprintf(fp, "%10d %10.3le %10.3le %10.3le %10.3le %10.3le "
+				"%10.3le", i + 1, misc.Qt[i],
 				misc.qt[i][misc.nidxclass],
 				misc.qo[i][misc.nidxclass], misc.qs[i],
 				misc.qv[i][misc.nidxclass], misc.S_mean[i]);
 		if(params.infex)
-			fprintf(fp, " %15.5le %15.5le", misc.f[i], misc.fex[i]);
+			fprintf(fp, " %10.3le %10.3le", misc.f[i], misc.fex[i]);
 		fprintf(fp, "\n");
 	}
 
@@ -361,28 +374,28 @@ write_outputs(void)
 		fprintf(fp, "\n");
 
 		if(misc.timestep && !misc.idxclass){
-			fprintf(fp, "%-15s ", "idxclass");
+			fprintf(fp, "%10s ", "idxclass");
 		}else
 		if(misc.idxclass && !misc.timestep){
-			fprintf(fp, "%-15s ", "timestep");
+			fprintf(fp, "%10s ", "timestep");
 		}
 
-		fprintf(fp, "%-15s %-15s %-15s %-15s %-15s %-15s %-15s %-15s "
-				"%-15s\n", "qt:", "qo:", "qs:", "qv:", "Srz:",
-				"Suz:", "S:", "Ea:", "ex:");
+		fprintf(fp, "%10s %10s %10s %10s %10s %10s %10s %10s %10s\n",
+				"qt", "qo", "qs", "qv", "Srz", "Suz", "S", "Ea",
+				"ex");
 
 		for(i=st; i<et; i++)
 			for(j=si; j<ei; j++){
 				if(misc.timestep && !misc.idxclass){
-					fprintf(fp, "%15d ", i + 1);
+					fprintf(fp, "%10d ", j + 1);
 				}else
 				if(misc.idxclass && !misc.timestep){
-					fprintf(fp, "%15d ", j + 1);
+					fprintf(fp, "%10d ", i + 1);
 				}
 
-				fprintf(fp, "%15.5le %15.5le %15.5le "
-					    "%15.5le %15.5le %15.5le "
-					    "%15.5le %15.5le %15.5le\n",
+				fprintf(fp, "%10.3le %10.3le %10.3le "
+					    "%10.3le %10.3le %10.3le "
+					    "%10.3le %10.3le %10.3le\n",
 					    misc.qt[i][j], misc.qo[i][j],
 					    misc.qs[i], misc.qv[i][j],
 					    misc.Srz[i][j], misc.Suz[i][j],
