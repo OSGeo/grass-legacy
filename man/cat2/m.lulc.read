@@ -7,60 +7,60 @@ m.lulc.read <alpha>  GRASS Reference Manual   <alpha> m.lulc.read
 
 NAME
      m.lulc.read - Extracts Landuse/Landcover data in the ASCII
-     Composite Theme Grid (CTG) data format distributed by the
-     USGS in to a working file for m.lulc.USGS.
+     Composite Theme Grid (CTG)	data format distributed	by the
+     USGS in to	a working file for m.lulc.USGS.
      (GRASS Data Import/Processing Program)
 
 SYNOPSIS
-     dd [if=tapedev] ibs=input block_size cbs=80 conv=unblock |
+     dd	[if=tapedev] ibs=input block_size cbs=80 conv=unblock |
      m.lulc.read arg1
 
 DESCRIPTION
      m.lulc.read extracts USGS Land Use/Land Cover data
-     distributed in the ASCII CTG format.  Extracted data is
-     placed into a file specified by arg1.  m.lulc.read should be
-     used prior to using the GRASS program m.lulc.USGS.
+     distributed in the	ASCII CTG format.  Extracted data is
+     placed into a file	specified by arg1.  m.lulc.read	should be
+     used prior	to using the GRASS program m.lulc.USGS.
 
-     m.lulc.read reads the data from standard input, allowing the
+     m.lulc.read reads the data	from standard input, allowing the
      user to pipe in the data from a file.
 
      Data can also be read directly from the 1/2-inch magnetic
-     tape distributed by USGS, by using the UNIX command dd.
+     tape distributed by USGS, by using	the UNIX command dd.
 
      Parameters:
 
      if=tapedev
-          The pathname of the input tape drive (usually
-          /dev/rmt0).
+	  The pathname of the input tape drive (usually
+	  /dev/rmt0).
 
      ibs=input
-          The physical blocking value of the data on tape,
-          usually written on the tape spool.  If this value is
-          unknown, run m.examine.tape prior to m.lulc.read.
+	  The physical blocking	value of the data on tape,
+	  usually written on the tape spool.  If this value is
+	  unknown, run m.examine.tape prior to m.lulc.read.
 
      cbs  This is the conversion blocking factor for ASCII CTG
-          file and is by default set to 80.
+	  file and is by default set to	80.
 
-     conv Set conv to unblock when extracting ASCII CTG data.
+     conv Set conv to unblock when extracting ASCII CTG	data.
 
-     arg1 The name of the output file where the data will be
-          stored in binary format.
+     arg1 The name of the output file where the	data will be
+	  stored in binary format.
 
 EXAMPLES
      READING FROM A FILE:
 
-          m.lulc.read outfile < infile
+	  m.lulc.read outfile <	infile
 
      The above command will read the data from infile and place
-     the results into outfile.  Note that infile must be
-     extracted from the USGS CTG 1/2 magnetic tape using the UNIX
-     dd command:
+     the results into outfile.	Note that infile must be
+     extracted from the	USGS CTG 1/2 magnetic tape using the UNIX
+     dd	command:
 
 
 
 
 
-GRASS 4.1                U.S. Army CERL                         1
+GRASS 4.2		Baylor University			1
 
 
 
@@ -71,15 +71,15 @@ m.lulc.read <alpha>  GRASS Reference Manual   <alpha> m.lulc.read
 
 
 
-          dd if=/dev/rmt0 of=infile ibs=32000 cbs=80 conv=unblock
+	  dd if=/dev/rmt0 of=infile ibs=32000 cbs=80 conv=unblock
 
      READING DIRECTLY FROM 1/2 INCH MAGNETIC TAPE:
 
-          dd if=/dev/rmt0 ibs=32000 cbs=80 conv=unblock |
-          m.lulc.read outfile
+	  dd if=/dev/rmt0 ibs=32000 cbs=80 conv=unblock	|
+	  m.lulc.read outfile
 
-     The above command will extract data with a blocksize of
-     32000 from /dev/rmt0, and put the results in the file
+     The above command will extract data with a	blocksize of
+     32000 from	/dev/rmt0, and put the results in the file
      outfile.
 
 SEE ALSO
@@ -93,8 +93,8 @@ AUTHOR
 
 NOTICE
      This program is part of the alpha section of the GRASS
-     distribution.  Unlike the code in the main section of GRASS,
-     the alpha code has not yet been fully tested for one release
+     distribution.  Unlike the code in the main	section	of GRASS,
+     the alpha code has	not yet	been fully tested for one release
      cycle.
 
 
@@ -126,7 +126,7 @@ NOTICE
 
 
 
-GRASS 4.1                U.S. Army CERL                         2
+GRASS 4.2		Baylor University			2
 
 
 
