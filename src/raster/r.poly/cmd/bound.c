@@ -160,8 +160,9 @@ update_list(i)
       v_list[col]->fptr = h_ptr->bptr;	/*   and join it to predecessor */
       h_ptr->bptr->fptr = v_list[col];	/*   of right-growing point */
       free(h_ptr);			/* right-growing point disappears */
+      h_ptr = NULPTR;	                /* turn loose of pointers */
       write_line(v_list[col]);		/* try to write line */
-      v_list[col] = h_ptr = NULPTR;	/* turn loose of pointers */
+      v_list[col] = NULPTR;	        /* turn loose of pointers */
       break;
     case 5:
       /* Top right corner - Add point to line already under construction */
@@ -646,12 +647,12 @@ update_width(ptr,kase)
   int w, j, a;
   struct equiv_table *ep;
 
-  a = ptr - a_list;
-  ep = e_list + a;
-  for (j = col + 1, w = 0; *(buffer[bottom] + j) == br && j < scan_length; j++, w++)
+  a = (ptr - a_list);
+  for (j = col + 1, w = 0; j < scan_length && *(buffer[bottom] + j) == br; j++, w++)
   { }
   if (a < n_equiv)
   {
+    ep = e_list + a;
     if (ep->mapped)
       ptr = a_list + ep->where;
   }
