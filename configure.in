@@ -114,7 +114,7 @@ AC_SUBST(YACC)
 
 AC_PROG_RANLIB
 AC_CHECK_PROGS(ENV, env)
-AC_CHECK_PROGS(F77, f77 g77)
+AC_CHECK_PROGS(F77, g77 f77)
 AC_PATH_XTRA
 AC_HEADER_STDC
 AC_CHECK_HEADERS(curses.h limits.h termio.h termios.h unistd.h values.h)
