@@ -38,35 +38,41 @@ set_window()
 	Write_info(2, "  Locate digitizer cursor on one corner of desired window.") ;
 
 	priority_on = set_priority() ;
+#ifdef CURSORKEYS
 	if( D_cursor_buttons() )
+#endif
 	{
-		Write_info(3, "  Then hit any digitizer <Key>") ;
+		Write_info(3, "  Then hit any number <Key>") ;
 		ask_driver() ;
 	}
+#ifdef CURSORKEYS
 	else
 	{
 		Write_info(3, "  Then hit <RETURN>") ;
 		Get_curses_text(buff) ;
 	}
 
+#endif
 	coll_a_pnt ( &Ux1, &Uy1) ;
 	BEEP;
 
 	Clear_info() ;
 	Write_info(2, "  Now place digitizer cursor on diagonal corner of desired window.") ;
-
+#ifdef CURSORKEYS
 	if( D_cursor_buttons() )
+#endif
 	{
-		Write_info(3, "  Then hit any digitizer <Key>") ;
+		Write_info(3, "  Then hit any number <Key>") ;
 		ask_driver() ;
 	}
+#ifdef CURSORKEYS
 	else
 	{
 		Write_info(3, "  Then hit <RETURN>") ;
 		Get_curses_text(buff) ;
 	}
 
-
+#endif
 	coll_a_pnt ( &Ux2, &Uy2) ;
 	BEEP;
 
