@@ -186,7 +186,7 @@ int main( int argc, char *argv[])
   if (png_ptr == NULL) {
     fclose (fp);
     fprintf(stderr,"cannot allocate LIBPNG structure\n");
-
+    exit (-1);
   }
 
   info_ptr = png_create_info_struct (png_ptr);
@@ -194,14 +194,14 @@ int main( int argc, char *argv[])
     png_destroy_write_struct (&png_ptr, (png_infopp)NULL);
     fclose (fp);
     fprintf(stderr,"cannot allocate LIBPNG structure\n");
-
+    exit (-1);
   }
 
   if (setjmp (pnmtopng_jmpbuf_struct.jmpbuf)) {
     png_destroy_write_struct (&png_ptr, &info_ptr);
     fclose (fp);
     fprintf(stderr,"setjmp returns error condition (1)\n");
-
+    exit (-1);
   }
 
 		depth=8; /*really???*/
@@ -272,6 +272,7 @@ if(1){
     G_free(set);
     G_close_cell(cellfile);
     fprintf(stderr, "out of memory allocating PNG row buffer\n");
+    exit (-1);
   }
     
   for (row = 0; row < w.rows; row++) {
