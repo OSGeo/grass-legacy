@@ -22,8 +22,18 @@ MODULE_TOPDIR = .
 include $(MODULE_TOPDIR)/include/Make/Platform.make
 include $(MODULE_TOPDIR)/include/Make/Grass.make
 
-OPENGLBASED = visualization
+# Install directories
+exec_prefix=            ${prefix}
+BINDIR=			${UNIX_BIN}
+INST_DIR=		${prefix}/grass${VERSION_MAJOR}${VERSION_MINOR}
 
+# Shell commands
+MAKE_DIR_CMD=		mkdir -p -m 755
+MAKE=			make
+INSTALL=    	    	cp
+
+
+OPENGLBASED = visualization
 #compile if OPENGLBASED present:
 ifneq ($(strip $(OPENGLLIB)),)
     SUBDIRS += $(OPENGLBASED)
@@ -108,11 +118,86 @@ distclean: clean
 
 strip: FORCE
 	@ if [ ! -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ] ; then \
-		echo "ERROR: Grass has not been compiled. Try \"make\" first."; \
+		echo "ERROR: GRASS has not been compiled. Try \"make\" first."; \
 		echo "  Strip aborted, exiting Make."; \
 		exit; \
 	fi; \
 	${SHELL} -c "cd ${ARCH_DISTDIR} ; find . -type f -perm +111 -exec strip {} \; ; true"	
+
+install: FORCE
+	@ # The following action MUST be a single action. That is, all lines
+	@ # except the last line must have a backslash (\) at the end to
+	@ # continue the statement. The reason for this is that Make does not
+	@ # have an exit command thus, exit terminates the shell. However, 
+	@ # Make creates a new shell for each action listed for a target.
+	@ # Therefore, the only way exit will quit Make is if there is only
+	@ # a single action for the target.
+	@ # Check if grass has been compiled, if INST_DIR is writable, and if
+	@ # grass is part of INST_DIR
+	echo ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}
+	@ if [ ! -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ] ; then \
+		echo "ERROR: GRASS has not been compiled. Try \"make\" first."; \
+		echo "  Installation aborted, exiting Make."; \
+		exit; \
+	fi; \
+	INST_PATH=`dirname ${INST_DIR}`; \
+	while [ ! -d $$INST_PATH ]; do \
+		INST_PATH=`dirname $$INST_PATH`; \
+	done; \
+	if [ ! -d "${INST_DIR}" -a ! -w "$$INST_PATH" ] ; then \
+		echo "ERROR: Directory $$INST_PATH is a parent directory of your"; \
+		echo "  install directory ${INST_DIR} and is not writable."; \
+		echo "  Perhaps you need root access."; \
+		echo "  Installation aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ -d ${INST_DIR} -a ! -w "${INST_DIR}" ] ; then \
+		echo "ERROR: Your install directory ${INST_DIR} is not writable."; \
+		echo "  Perhaps you need root access."; \
+		echo "  Installation aborted, exiting Make."; \
+		exit; \
+	fi; \
+	result=`echo "${INST_DIR}" | awk '{ if ($$1 ~ /grass/) print $$1 }'`; \
+	if [ "$$result" = "" ] ; then \
+		echo "WARNING: Your install directory ${INST_DIR}"; \
+		echo "  does not contain the word 'grass'."; \
+		echo "  It is highly recommended that the word 'grass' be part"; \
+		echo "  of your install directory to avoid conflicts."; \
+		echo "  Do you want to continue? [y/n]"; \
+		read ans; \
+		ans=`echo "$$ans" | tr A-Z a-z`; \
+		if [ "$$ans" != "y" ] ; then \
+			echo "Installation aborted, exiting Make."; \
+			exit; \
+		fi; \
+	fi; \
+	${MAKE} real-install
+
+real-install: FORCE
+	test -d ${INST_DIR} || ${MAKE_DIR_CMD} ${INST_DIR}
+	@##### test -d ${INST_DIR}/dev || ${MAKE_DIR_CMD} ${INST_DIR}/dev
+	test -d ${BINDIR} || ${MAKE_DIR_CMD} ${BINDIR}
+	${SHELL} -c "sed -e \"s#^GISBASE.*#GISBASE=${INST_DIR}#\" ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} > ${BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ; true"
+	${SHELL} -c "chmod a+x ${BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - bin | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - bwidget | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - docs | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - driver | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - etc | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - fonts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - scripts | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	@##### ${SHELL} -c "cd ${GISBASE} ; tar cBf - locale | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	@ # The man, include, and lib could go to ${PREFIX}/ BUT if this is
+	@ # done, then the corresponding uninstall instructions must delete
+	@ # the grass files BY FILENAME NOT DIRECTORY!! Otherwise there is a
+	@ # high risk of deleteing system files since PREFIX is defined by
+	@ # default to be /usr/local
+	@##### ${SHELL} -c "cd ${GISBASE} ; tar cBf - man | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - include | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "cd ${GISBASE} ; tar cBf - lib | (cd ${INST_DIR} ; tar xBf - ) 2>/dev/null ; true"
+	${SHELL} -c "sed 's#'${GISBASE}'#'${INST_DIR}'#g' ${GISBASE}/etc/monitorcap > ${INST_DIR}/etc/monitorcap ; true"
+	@##### ${SHELL} -c "chmod -R 1777 ${INST_DIR}/locks 2>/dev/null ; true"
+	${SHELL} -c "chmod -R a+rX ${INST_DIR} 2>/dev/null ; true"
 
 install-strip: FORCE
 	${MAKE} strip
@@ -134,7 +219,7 @@ bindist:
 
 # make a source package for distribution (we include the 5.3.0 stuff):
 srcdist: FORCE distclean
-	${SHELL} -c "mkdir ./grass-${VERSION_MAJOR}${VERSION_MINOR}" ; true
+	${SHELL} -c "${MAKE_DIR_CMD} ./grass-${VERSION_MAJOR}${VERSION_MINOR}" ; true
 	@ # needed to store code in package with grass-version path:
 	${SHELL} -c "mv * ./grass-${VERSION_MAJOR}${VERSION_MINOR} " ; true
 	@ #we use -h to get the linked files into as real files:
