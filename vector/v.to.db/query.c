@@ -79,6 +79,15 @@ query (struct Map_info *Map )
 	dbValue *value;
 
 	G_debug (3, "cat %d", Values[i].cat );
+
+	/* Skip if cat is zero and large number of query categories (many features without category).
+	 * It would cause problems on server side and take long time. Postgres limit is 10000 */
+	if ( Values[i].cat == 0 && Values[i].nqcats > 1000 ) {
+	    G_warning ( "Query for category '0' (no category) was not executed because of too many "
+	        "(%d) query categories. All later reported values for cat 0 are not valid.", 
+		Values[i].nqcats ); 
+	    continue;
+	}
 	
 	if ( Values[i].nqcats > 0 ) {
 	    sprintf ( buf, "SELECT %s FROM %s WHERE", options.qcol, Fi->table);
