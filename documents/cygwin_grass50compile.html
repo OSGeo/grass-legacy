@@ -16,7 +16,9 @@ GRASS 5.0 on Win32 with Cygwin 1.x</font></h1></center>
 
 <center>
 <h1>
-<font face="Arial,Helvetica">(arch i686-pc-cygwin)</font></h1></center>
+<font face="Arial,Helvetica">(arch i686-pc-cygwin)</font></h1>
+$Date$
+</center>
 
 <hr SIZE=5 NOSHADE WIDTH="100%">
 <br><font face="Arial,Helvetica">I describe here what i did to compile
@@ -197,7 +199,8 @@ solutions to the GRASS developers mailing list at <a href="mailto:grass5@geog.un
 and make'ing (see paragraph 7), check the header file </font><tt>src/CMD/head/head.i686-pc-cygwin</tt><font face="Arial,Helvetica">.
 This file was created from the template in the file </font><tt>src/CMD/head/head</tt><font face="Arial,Helvetica">
 with the make command. You can find a sample header file under
-</font><tt>src/CMD/head/os-specific/<a href="file:////Danaus/CVS/grass/documents/head.i686-pc-cygwin">head.i686-pc-cygwin</a></tt><font face="Arial,Helvetica">.</font>
+</font><tt>src/CMD/head/os-specific/<a
+href="http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass/src/CMD/head/os_specific/head.i686-pc-cygwin">head.i686-pc-cygwin</a></tt><font face="Arial,Helvetica">.</font>
 <p><font face="Arial,Helvetica">Under some circumstances the X11 header
 files and libraries are not found. The X11 headers are in </font><tt>/usr/X11R6/include</tt><font face="Arial,Helvetica">,
 but some stray files are in </font><tt>/usr/include/X11</tt><font face="Arial,Helvetica">.
@@ -213,8 +216,8 @@ file should read:</font>
 <tt><font size=+0>XCFLAGS = -I/usr/X11R6/include</font></tt>
 <h2>
 <font face="Arial,Helvetica">9. Running GRASS</font></h2>
-<font face="Arial,Helvetica">Please read the <a href="file:////Danaus/CVS/grass/documents/cygwin_grass50bininstall.html#Start GRASS">paragraph
-in the binary installation document</a>.</font>
+<font face="Arial,Helvetica">Please read the <a href="cygwin_grass50bininstall.html#Start GRASS">paragraph
+"Starting GRASS 5" in the binary installation document</a>.</font>
 <p><font face="Arial,Helvetica">Start your X-Server. The Starnet X-Server
 is started from the start menu as:</font>
 <p><font face="Arial,Helvetica">Start->Programs->X-Win32->X-Win32</font>
