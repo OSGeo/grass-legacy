@@ -1,15 +1,11 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
 <html>
 <head>
-   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-   <meta name="GENERATOR" content="Mozilla/4.72 [en] (X11; U; Linux 2.2.16 i686) [Netscape]">
-   <title>v.in.shape</title>
+  <TITLE>v.in.shape</TITLE>
 </head>
-<body bgcolor="#FFFFFF">
-<img SRC="grass.smlogo.gif" >
+<body bgcolor="white">
+<img src="grass.smlogo.gif">
 <hr width=100% align=center size=6 no shade>
-<h2>
-NAME</h2>
+<h2>NAME</h2>
 <font size=+0><i>v.in.shape</i> - Read an ArcView Shapefile</font>
 <br><a NAME="SYNOPSIS"></a>
 <h2>
@@ -18,8 +14,7 @@ NAME</h2>
 <table COLS=2 WIDTH="100%" rules="none" frame="none" >
 <tr ALIGN=LEFT VALIGN=TOP>
 <td ALIGN=LEFT VALIGN=TOP WIDTH="60%"><font size=+0><b>v.in.shape</b> [
-<b>-l</b>
-] <b>in=</b><i>name</i> [<b>mapset=</b><i>name</i>]</font>
+<b>-l</b> ] <b>in=</b><i>name</i> [<b>mapset=</b><i>name</i>]</font>
 <br><font size=+0>[<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
 [<b>snapdist=</b><i>snap distance</i>]</font>
 <br><font size=+0>[<b>sliver=</b><i>min. angle</i>] [<b>scale=</b><i>orig.
@@ -41,9 +36,7 @@ user specifies program arguments on the command line, using the form:</font>
 <table COLS=2 WIDTH="100%" rules="none" frame="none" >
 <tr ALIGN=LEFT VALIGN=TOP>
 <td ALIGN=LEFT VALIGN=TOP WIDTH="60%"><font size=+0><b>v.in.shape</b> [
-<b>-l</b>
-]&nbsp; [<b>-r </b>]&nbsp; [ <b>-p</b> ]&nbsp; [ <b>-n</b> ][<b>in=</b><i>name</i>
-[<b>mapset=</b><i>name</i>]</font>
+<b>-l</b> ] <b>in=</b><i>name</i> [<b>mapset=</b><i>name</i>]</font>
 <br><font size=+0>[<b>verbose=</b><i>debug level</i>] [<b>logfile=</b><i>name</i>]
 [<b>snapdist=</b><i>snap distance</i>]</font>
 <br><font size=+0>[<b>sliver=</b><i>min. angle</i>] [<b>scale=</b><i>orig.
@@ -70,23 +63,7 @@ that are frequently met with in shapefiles.</font>
 <h2>
 <font size=+0>FLAGS</font></h2>
 <font size=+0><b>-l</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; List the fields contained
-in the DBF file associated with the input shapefile, then exit.</font><font size=+0></font>
-<p><font size=+0><b>-r</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Create a reject
-lines file. During import some lines are not imported for a variety of
-reasons.</font>
-<br><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-This option creates a new Level 1 vector map (ie. without topology), which
-can be</font>
-<br><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-used to display these lines.</font><font size=+0></font>
-<p><font size=+0><b>-p</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dump the fields
-of the shapefile from DBF to a postgres table.</font><font size=+0></font>
-<p><font size=+0><b>-n</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Access postgres
-as a normal user (the default is as postgres superuser).</font>
-<br><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Most users will want to select this option. If postgres cannot be accessed</font>
-<br><font size=+0>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-as postgres superuser, an ASCII database is dumped.</font>
+in the DBF file associated with the input shapefile, then exit.</font>
 <br><a NAME="OPTIONS"></a>
 <h2>
 <font size=+0>OPTIONS</font></h2>
@@ -225,13 +202,16 @@ be quite correct if the lines have been adjusted to correct topology problems.</
 <br><a NAME="SEE ALSO"></a>
 <h2>
 <font size=+0>SEE ALSO</font></h2>
-<i><font size=+0><a href="m.in.e00.html">m.in.e00</a>, <a href="g.mapset.html">g.mapset</a>,
-<a href="g.region.html">g.region</a>, <a href="v.digit.html">v.digit</a>,
-<a href="v.proj.html">v.proj</a>,
-<a href="s.in.shape.html">s.in.shape</a>,
-<a href="v.support.html">v.support</a>,
-<a href="v.to.rast.html">v.to.rast</a>,&nbsp;
-<a href="v.out.shape.html">v.out.shape</a></font></i>
+<i><font size=+0>
+<a href=m.in.e00.html>m.in.e00</a>, 
+<a href=g.mapset.html>g.mapset</a>, 
+<a href=g.region.html>g.region</a>, 
+<a href=v.digit.html>v.digit</a>,
+<a href=v.proj.html>v.proj</a>,
+<a href=s.in.shape.html>s.in.shape</a>, 
+<a href=v.support.html>v.support</a>,
+<a href=v.to.rast.html>v.to.rast</a>.
+</font></i>
 <br><a NAME="AUTHORS"></a>
 <h2>
 <font size=+0>AUTHORS</font></h2>
