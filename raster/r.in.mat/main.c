@@ -372,8 +372,9 @@ int main(int argc, char *argv[]) {
     /* set map name */
     if(have_name) {
         if(outfile) {
-	    fprintf(stdout, "Setting map name to <%s> which overrides <%s>\n", 
-		outfile, map_name);
+	    if( 0 != strcmp(outfile, map_name) )
+		fprintf(stdout, "Setting map name to <%s> which overrides <%s>\n",
+		    outfile, map_name);
 	    strncpy(map_name, outfile, 61);
 	}
     }
