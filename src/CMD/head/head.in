@@ -14,6 +14,7 @@ DEFAULT_LOCATION    =
 COMPILE_FLAGS       = @CFLAGS@ @INCLUDE_DIRS@
 LDFLAGS             = @STRIPFLAG@ @LIBRARY_DIRS@
 
+DLLIB               = @DLLIB@
 XCFLAGS             = @X_CFLAGS@
 # XXX - replace SYSV in code with configure results in config.h
 # XXX - need SYSV defined for hpux10
