@@ -36,7 +36,7 @@ static int D_x_beg, D_y_beg, D_x_end, D_y_end ;
 static int cur_D_row ;
 
 static int color_buf_size;
-static unsigned char *r_buf, *g_buf, *b_buf;
+static unsigned char *r_buf, *g_buf, *b_buf, *n_buf;
 static void *r_raster, *g_raster, *b_raster;
 
 static int draw_cell_RGB(
@@ -244,7 +244,6 @@ int D_raster_of_type_RGB (
     int r_size = G_raster_size(r_type);
     int g_size = G_raster_size(g_type);
     int b_size = G_raster_size(b_type);
-    unsigned char *r_ptr, *b_ptr, *g_ptr;
     int i;
 
     /* reallocate color_buf if necessary */
@@ -253,41 +252,33 @@ int D_raster_of_type_RGB (
 	r_buf = (unsigned char *) G_realloc(r_buf, ncols);
 	g_buf = (unsigned char *) G_realloc(g_buf, ncols);
 	b_buf = (unsigned char *) G_realloc(b_buf, ncols);
+	n_buf = (unsigned char *) G_realloc(n_buf, ncols);
 	color_buf_size = ncols;
     }
-
-    r_ptr = r_buf;
-    g_ptr = g_buf;
-    b_ptr = b_buf;
 
     /* convert cell values to bytes */
     for (i = 0; i < ncols; i++)
     {
-	if (G_is_null_value(r_raster, r_type) ||
-	    G_is_null_value(g_raster, g_type) ||
-	    G_is_null_value(b_raster, b_type))
-	    *r_ptr = *g_ptr = *b_ptr = 0;
-	else
-	{
-	    int r, g, b, x;
-	    G_get_raster_color (r_raster, &r, &x, &x, r_colors, r_type);
-	    G_get_raster_color (g_raster, &x, &g, &x, g_colors, g_type);
-	    G_get_raster_color (b_raster, &x, &x, &b, b_colors, b_type);
-	    *r_ptr = r;
-	    *g_ptr = g;
-	    *b_ptr = b;
-	}
+	int r, g, b, x;
+
+	G_get_raster_color (r_raster, &r, &x, &x, r_colors, r_type);
+	G_get_raster_color (g_raster, &x, &g, &x, g_colors, g_type);
+	G_get_raster_color (b_raster, &x, &x, &b, b_colors, b_type);
+	r_buf[i] = r;
+	g_buf[i] = g;
+	b_buf[i] = b;
+
+	n_buf[i] = (G_is_null_value(r_raster, r_type) ||
+		    G_is_null_value(g_raster, g_type) ||
+		    G_is_null_value(b_raster, b_type));
 
 	r_raster = G_incr_void_ptr(r_raster, r_size);
 	g_raster = G_incr_void_ptr(g_raster, g_size);
 	b_raster = G_incr_void_ptr(b_raster, b_size);
-
-	r_ptr++;
-	g_ptr++;
-	b_ptr++;
     }
 
-    R_RGB_raster (ncols, nrows, r_buf, g_buf, b_buf, !D__overlay_mode);
+    R_RGB_raster (ncols, nrows, r_buf, g_buf, b_buf,
+		  D__overlay_mode ? n_buf : NULL);
 
     return 0;
 }

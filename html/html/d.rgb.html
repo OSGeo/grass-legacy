@@ -23,9 +23,10 @@ as red, green, and blue overlays in the active graphics frame.
 <B>d.rgb help</B> 
 <BR>
 <B>d.rgb</B> 
-[<B>red=</B><EM>name</EM>] 
-[<B>green=</B><EM>name</EM>] 
-[<B>blue=</B><EM>name</EM>] 
+[<B>-o</B>]
+<B>red=</B><EM>name</EM>
+<B>green=</B><EM>name</EM>
+<B>blue=</B><EM>name</EM>
 
 <H2>DESCRIPTION</H2>
 
@@ -36,14 +37,24 @@ the layer's color table is used (e.g. for the red layer,
 the red component is used, and so on). In general, the
 layers should use a grey-scale color table.
 
-<P>
-
-WARNING: Maps that are using the "color wave" color table
-appear to be solid grey when using <EM>d.rgb</EM>. The
-average intensity of the colors being used is always 33%.
-
 <H2>OPTIONS</H2>
 
+<H3>Flags:</H3> 
+
+<DL>
+
+<DT><B>-o</B>
+
+<DD>Overlay the resulting raster map layer onto whatever is already
+displayed in the active graphics frame. Any no-data areas in any of
+the named raster maps will seem transparent, and reveal the underlying
+image previously displayed in the graphics frame. If the <B>-o</B>
+flag is set, only cells containing non-null values will be displayed
+from the <EM>overlaid</EM> raster map. All other areas (i.e., the
+portions of the overlaid map that contain null values) will leave the
+underlying display untouched.
+
+</DL>
 
 <H3>Parameters:</H3>
 
