@@ -1,0 +1,6 @@
+mapmask
+    Map generation tool which creates a map containing polygonal
+    areas of interest as designated by the user.  The user may
+    designate CIRCLES, REGULAR POLYGONS, or IRREGULAR POLYGONS.
+    The map will reflect generic areas or 'cookie-cutter' areas
+    from another map layer.
