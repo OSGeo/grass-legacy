@@ -15,6 +15,11 @@ void set_datumshift(
 {
 	char cnv_table[513];
 
+	/* assume no datum shift */
+	proj_f=pj_do_proj;
+	if(!in_datum || !strlen(in_datum) || !out_datum || !strlen(out_datum))
+	    return;
+
 	if(strcmp(in_datum,out_datum)!=0)
 	{
 		if(!strcmp(in_datum,"nad83") && !strcmp(out_datum,"nad27"))
@@ -43,16 +48,8 @@ void set_datumshift(
 		    proj_f=pj_do_proj_nad;
 		    return;
 		}
-		else
-		{
-		/* some other datum shift */
-		    proj_f=pj_do_proj;
-		    return;
-		}
 
 	}
 
-	/* no datum shift */
-	proj_f=pj_do_proj;
 	return;
 }
