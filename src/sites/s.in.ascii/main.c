@@ -146,15 +146,15 @@ G_site_put_new (FILE *fptr, Site *s, int has_cat)
     switch(s->cattype)
     {
      case CELL_TYPE:
-      sprintf (xbuf, "#%d|", s->ccat);
+      sprintf (xbuf, "#%d ", s->ccat);
       G_strcat (buf, xbuf);
       break;
      case FCELL_TYPE:
-      sprintf (xbuf, "#%g|", s->fcat);
+      sprintf (xbuf, "#%g ", s->fcat);
       G_strcat (buf, xbuf);
       break;
      case DCELL_TYPE:
-      sprintf (xbuf, "#%g|", s->dcat);
+      sprintf (xbuf, "#%g ", s->dcat);
       G_strcat (buf, xbuf);
       break;
     }
