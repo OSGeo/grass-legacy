@@ -1,5 +1,6 @@
 OBJ =\
 	get_win.o\
+	color_list.o\
 	clip.o\
 	cnversions.o\
 	draw.o\
@@ -15,8 +16,17 @@ OBJ =\
 	tran_colr.o\
 	window.o
 
+#all: $(LIBDIR)/colors.h $(DISPLAYLIB)
+all: $(DISPLAYLIB)
+
 $(DISPLAYLIB): $(OBJ)
 	$(AR)
 
-tran_colr.o: ../colors.h
-window.o: ../colors.h
+#$(LIBDIR)/colors.h: colors.h
+#	rm -f $@
+#	cp $? $@
+#	chmod 444 $@
+
+color_list.o: $(INCLUDE_DIR)/colors.h
+tran_colr.o: $(INCLUDE_DIR)/colors.h
+window.o: $(INCLUDE_DIR)/colors.h
