@@ -1,3 +1,5 @@
+# %W% %G%
+
 PGM=r.in.erdas
 
 EXTRA_CFLAGS = -DATT_386
