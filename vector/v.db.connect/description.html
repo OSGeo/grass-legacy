@@ -18,12 +18,29 @@ do not need to be spcified each time.
 
 <em>Connect vector map to database</em>
 <br>
-<b>v.db.connect -p map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
+<b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
 <b>field=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
 <b>database=</b><em>/daten/grassdata/fire/PERMANENT/dbf</em>
 
+<p>
+<em>Connect vector map to database with variables</em><br>
+(note: single quotes must be used)<br>
+
+<b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
+<b>field=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
+<b>database=</b><em>'$GISDBASE/$LOCATION_NAME/PERMANENT/dbf'</em>
+
+<p>
+<em>Connect vector map to database with variables</em><br>
+(note: single quotes must be used)<br>
+
+<b>v.db.connect map=</b><em>vectormap</em> <b>table=</b><em>table</em> 
+<b>field=</b>1 <b>key=</b><em>cat</em> <b>driver=</b><em>dbf</em> 
+<b>database=</b><em>'$GISDBASE/$LOCATION_NAME/$MAPSET/dbf'</em>
+
 <h2>SEE ALSO</h2>
 
+<em><a HREF="db.connect.html">db.connect</a></em><br>
 <em><a HREF="db.copy.html">db.copy</a></em><br>
 <em><a HREF="http://grass.itc.it/grass51/tutorial/ex_basic.html#convert">GRASS 5.1
 tutorial pages</a></em>
