@@ -40,7 +40,7 @@ char *G_whoami(void)
 		name = G_store (x);
 	}
     }
-#endif COMMENTED_OUT
+#endif /* COMMENTED_OUT */
 
     if (name == NULL)
     {

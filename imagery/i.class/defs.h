@@ -86,7 +86,7 @@ struct region
         POINT *perimeter;
 
 } ;
-int edge_order(POINT *, POINT *);
+extern int edge_order(const void *, const void *);
 
 /* the mouse buttons and the numbers they return */
 #define LEFT_BUTTON 1

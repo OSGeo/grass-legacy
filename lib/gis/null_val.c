@@ -337,7 +337,7 @@ void G_set_d_null_value (DCELL *dcellVals, int numVals)
 *   	    	data_type   =>	type of raster - CELL, FCELL, DCELL
 * RETURN VAL:	TRUE if raster value is NULL FALSE otherwise
 *****************************************************************************/
-int G_is_null_value (void *rast, RASTER_MAP_TYPE data_type)
+int G_is_null_value (const void *rast, RASTER_MAP_TYPE data_type)
 {
     switch(data_type)
     {
@@ -363,7 +363,7 @@ int G_is_null_value (void *rast, RASTER_MAP_TYPE data_type)
 * INPUT VARS:	cellVal    =>	CELL raster value to check
 * RETURN VAL:	TRUE if CELL raster value is NULL FALSE otherwise
 *****************************************************************************/
-int G_is_c_null_value (CELL *cellVal)
+int G_is_c_null_value (const CELL *cellVal)
 {
     int     i;	    /* counter */
 
@@ -393,7 +393,7 @@ int G_is_c_null_value (CELL *cellVal)
 * INPUT VARS:	fcellVal    =>	FCELL raster value to check
 * RETURN VAL:	TRUE if FCELL raster value is NULL FALSE otherwise
 *****************************************************************************/
-int G_is_f_null_value (FCELL *fcellVal)
+int G_is_f_null_value (const FCELL *fcellVal)
 {
     int     i;	    /* counter */
 
@@ -423,7 +423,7 @@ int G_is_f_null_value (FCELL *fcellVal)
 * INPUT VARS:	dcellVal    =>	DCELL raster value to check
 * RETURN VAL:	TRUE if DCELL raster value is NULL FALSE otherwise
 *****************************************************************************/
-int G_is_d_null_value (DCELL *dcellVal)
+int G_is_d_null_value (const DCELL *dcellVal)
 {
     int     i;	    /* counter */
 

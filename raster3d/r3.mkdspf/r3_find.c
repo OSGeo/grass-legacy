@@ -38,7 +38,7 @@ int ret;
     if(!G_legal_filename (dspf))
 	return(NULL);
 
-    if(NULL == G_find_grid3(g3f, "")){
+    if(!G_find_grid3(g3f, "")){
 	fprintf
 	(stderr, "[%s] Invalid 3dcell file\n", g3f);
 	return(NULL);

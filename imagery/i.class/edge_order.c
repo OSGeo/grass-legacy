@@ -1,8 +1,11 @@
 #include "defs.h"
 
 int 
-edge_order (POINT *a, POINT *b)
+edge_order (const void *aa, const void *bb)
 {
+	const POINT *a = aa;
+	const POINT *b = bb;
+
 	if (a->y < b->y) return (-1);
 	if (a->y > b->y) return (1);
 

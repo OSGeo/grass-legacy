@@ -449,8 +449,8 @@ G3d_flushTilesInCube (map, xMin, yMin, zMin, xMax, yMax, zMax)
   return 1;
 }
 
-#undef MIN(a,b) (a < b ? a : b)
-#undef MAX(a,b) (a > b ? a : b)
+#undef MIN
+#undef MAX
 
 /*---------------------------------------------------------------------------*/
 

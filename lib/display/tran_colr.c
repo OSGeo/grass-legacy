@@ -6,7 +6,7 @@
 #include "display.h"
 #include "colors.h"
 
-int D_translate_color(char *str )
+int D_translate_color(const char *str )
 {
 	if (! strcmp(str, "red"))	return(RED) ;
 	if (! strcmp(str, "orange"))	return(ORANGE) ;
