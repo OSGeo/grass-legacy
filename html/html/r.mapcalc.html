@@ -89,6 +89,7 @@ The following operators are supported:
      <=         less than or equal                  Logical     2
      &&         and                                 Logical     1
      ||         or                                  Logical     1
+     #          color separator operator            Arithmetic
 </PRE>
 
 
@@ -333,8 +334,7 @@ result = #map
 converts each category value in <EM>map</EM> to a value in the range 0-255 which
 represents the grey scale level implied by the color for the category.
 If the map has a grey scale color table, then the grey level is what
-#map
-evaluates to.  Otherwise, it is computed as:
+#map evaluates to.  Otherwise, it is computed as:
 
 
 <P>
@@ -474,6 +474,7 @@ Internal variables:
  y()                    current y-coordinate of moving window
  ewres()                current east-west resolution
  nsres()                current north-south resolution
+ null()                 NULL value
 </PRE>
 
 <H2>FLOATING POINT VALUES IN THE EXPRESSION</H2>
@@ -519,6 +520,12 @@ To mask raster map layer <EM>b</EM> by raster map layer <EM>a</EM>:
 <PRE>
 	result = if(a,b)
 </PRE>
+To change all map values below 5 to NULL:
+<PRE>
+        newmap = if(map&lt;5, null(), 5)
+</PRE>
+
+
 <H2>REGION/MASK</H2>
 
 The user must be aware of the current geographic region
