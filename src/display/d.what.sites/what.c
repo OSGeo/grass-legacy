@@ -1,6 +1,9 @@
-/* Added visual marks allowing to see better
-	what was selected. --alex, nov/02
-*/
+/* $Id$
+ *
+ * Added visual marks allowing to see better
+ *	what was selected. --alex, nov/02
+ */
+
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
@@ -86,12 +89,12 @@ int what (int once, int terse, int graphic, int width, int mwidth)
 	  G_format_northing(north, north_buf, G_projection());
 	  if (!isatty(fileno(stdout)))
 	  {
-	    if(graphic)
+	    if(graphic && !terse)
 	      fprintf(stdout, "\n\"+\" at %s(E) %s(N)\n", east_buf, north_buf);
 	    else
 	      fprintf(stdout, "\n%s(E) %s(N)\n", east_buf, north_buf);
 	  }
-	  if(graphic)
+	  if(graphic && !terse)
 	    fprintf(stderr, "\n\"+\" at %s(E) %s(N)\n", east_buf, north_buf);
 	  else
 	    fprintf(stderr, "\n%s(E) %s(N)\n", east_buf, north_buf);
@@ -151,12 +154,12 @@ int what (int once, int terse, int graphic, int width, int mwidth)
 	  desc =  G_site_format (close, NULL, 0);
 	  if (!isatty(fileno(stdout)))
 	  {
-	    if(graphic)
+	    if(graphic && !terse)
 	      fprintf(stdout, "%s\n  Distance from \"+\":%10.2f\n", desc, cs_rdist);
 	    else
 	      fprintf(stdout, "%s\n", desc);
 	  }
-	  if(graphic)
+	  if(graphic && !terse)
 	    fprintf(stderr, "%s\n  Distance from \"+\":%10.2f\n", desc, cs_rdist);
 	  else
 	    fprintf(stderr, "%s\n", desc);

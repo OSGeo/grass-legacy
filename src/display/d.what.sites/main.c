@@ -1,4 +1,7 @@
+/* $Id$ */
+
 #define GLOBAL
+
 #include <stdlib.h>
 #include "local_proto.h"
 
@@ -80,6 +83,9 @@ int main(int argc, char **argv)
 	if(opt1->answers && opt1->answers[0])
 	    site = opt1->answers;
 
+	if(terse->answer)
+	    shh->answer=1;
+
 	if(site)
 	{
 	    for(i=0; site[i]; i++);
@@ -134,7 +140,7 @@ int main(int argc, char **argv)
 		G_fatal_error("Getting graphics window coordinates") ;
 	if (D_do_conversions(&window, t, b, l, r))
 		G_fatal_error("Error in calculating conversions") ;
-	
+
 	for(i=0; i<nsites; i++){
 	    load_sites(i, &window, !(shh->answer));
 	}
