@@ -8,6 +8,7 @@ SUBDIRS = \
 	db \
 	display \
 	general \
+	scripts \
 	vector \
 	visualization
 
