@@ -38,6 +38,7 @@ int main (int argc, char *argv[])
 	int row, col;
 	int nrows, ncols;
 	int bytes, sflag, swap;
+	int no_coord=0, no_dim=0;
 	short *x_s;
 	int *x_i;
 	float *x_f;
@@ -50,7 +51,7 @@ int main (int argc, char *argv[])
 	{
 		struct Option *input, *output, *title, *bytes,
 			      *north, *south, *east, *west,
-			      *rows, *cols, *subst;
+			      *rows, *cols, *anull;
 	} parm;
 	struct
 	{
@@ -147,11 +148,11 @@ int main (int argc, char *argv[])
 	parm.cols->required = NO;
 	parm.cols->description = "Number of columns";
 
-	parm.subst = G_define_option();
-	parm.subst->key = "subst";
-	parm.subst->type = TYPE_DOUBLE;
-	parm.subst->required = NO;
-	parm.subst->description = "Substitude value with NULL";
+	parm.anull= G_define_option();
+	parm.anull->key = "anull";
+	parm.anull->type = TYPE_DOUBLE;
+	parm.anull->required = NO;
+	parm.anull->description = "Set Value to NULL";
 
 	if (G_parser(argc,argv))
 		exit(1);
@@ -183,19 +184,53 @@ int main (int argc, char *argv[])
 	cellhd.zone = G_zone();
 	cellhd.proj = G_projection();
 
-	if (!flag.gmt_hd->answer) {
+	if (!flag.gmt_hd->answer) { /* NO GMT header */
+
+/* Check for optional parameters */
+	if (!parm.north->answer && !parm.south->answer && !parm.east->answer && !parm.west->answer) {
+		no_coord = 1;
+		/* No coordinates provided */
+		}
+	if (!parm.rows->answer && !parm.cols->answer) {
+		no_dim = 1;
+		/* No dimensions provided */
+		}
+/* Done check */
+	if (no_dim == 1 && no_coord == 1) {
+	char msg[100];
+	sprintf (msg, "Missing parameters ...\nMust provide at least [north= south= east= west=] OR [r=  c=]\n" );
+	G_fatal_error (msg);
+	} 
+	if (no_coord == 0 && no_dim == 0) { /* Get all parmameters */
 	if (! G_scan_northing(parm.north->answer, &cellhd.north, cellhd.proj)) return 1;
 	if (! G_scan_northing(parm.south->answer, &cellhd.south, cellhd.proj)) return 1;
 	if (! G_scan_easting (parm.east->answer,  &cellhd.east,  cellhd.proj)) return 1;
 	if (! G_scan_easting (parm.west->answer,  &cellhd.west,  cellhd.proj)) return 1;
+	}
+	if (no_dim == 0 && no_coord == 1) { /* Get rows and cols only */
 	if (sscanf(parm.rows->answer,"%d%1s",&cellhd.rows, dummy) != 1
 	|| cellhd.rows <= 0) return 1;
 	if (sscanf(parm.cols->answer,"%d%1s",&cellhd.cols, dummy) != 1
 	|| cellhd.cols <= 0) return 1;
+	cellhd.north = (double)cellhd.rows;
+	cellhd.south = 0.;
+	cellhd.east = (double)cellhd.cols;
+	cellhd.west = 0.;
+	fprintf(stderr, "Using N=%f S=%f E=%f W=%f\n", cellhd.north, cellhd.south, cellhd.east, cellhd.west);
+	}
+	if (no_coord == 0 && no_dim == 1) { /* Get n, s, e, w */
+	if (! G_scan_northing(parm.north->answer, &cellhd.north, cellhd.proj)) return 1;
+	if (! G_scan_northing(parm.south->answer, &cellhd.south, cellhd.proj)) return 1;
+        if (! G_scan_easting (parm.east->answer,  &cellhd.east,  cellhd.proj)) return 1;
+        if (! G_scan_easting (parm.west->answer,  &cellhd.west,  cellhd.proj)) return 1;
+	cellhd.rows = (int)cellhd.north-cellhd.south;
+	cellhd.cols = (int)cellhd.east-cellhd.west;
+	fprintf(stderr, "Using rows=%d cols=%d\n", cellhd.rows, cellhd.cols);
+	}
 	}
 
-	if (parm.subst->answer !=NULL) 
-	sscanf(parm.subst->answer, "%lf", &oldval);
+	if (parm.anull->answer !=NULL) 
+	sscanf(parm.anull->answer, "%lf", &oldval);
 	
 	if (strcmp ("-", input) == 0)
 	{
