@@ -36,6 +36,12 @@ for i in "$@" ; do
     # Use a case to check the command line options
     case $i in
     
+    	# Check if the user asked for the version
+	-v|--version)
+	    $GISBASE/bin/g.version
+	    exit
+	    ;;
+
     	# Check if the user asked for help
 	help|-h|-help|--help)
 	    echo "Usage:"
