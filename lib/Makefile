@@ -2,12 +2,17 @@
 MODULE_TOPDIR = ..
 
 SUBDIRS = \
+	bitmap \
 	D \
+	datetime \
 	db \
 	display \
 	external \
 	fonts \
 	gis \
+	image \
+	linkm \
+	ogsf \
 	raster \
 	vask \
 	vector \
