@@ -111,6 +111,10 @@
 #define NULL_FILE_EXISTS FCB.null_file_exists
 
 /*--------------------------------------------------------------------------*/
+/* Until the zlib stuff gets worked out, comment out if you want to try
+ * the G_zlib_*() functions, also do the same in put_row.c
+ */
+#define USE_LZW_COMPRESSION        
 /*--------------------------------------------------------------------------*/
 
 #define DATA_BUF2    G__.work_buf
@@ -225,8 +229,19 @@ read_data_fp_compressed (int fd, int row, unsigned char *data_buf, int *nbytes)
   if (lseek(fd, FCB.row_ptr[row],0) < 0) return -1;
 
   *nbytes = FCB.nbytes;
+#ifdef USE_LZW_COMPRESSION
   if (G_lzw_read (fd, data_buf, DATA_NCOLS * FCB.nbytes) != 
       DATA_NCOLS * FCB.nbytes) 
+#else
+  /* The subtraction of offsets lets G_zlib_read know exactly
+   * how many bytes to read (which in some case may be more than
+   * the output bytes)
+   */
+  if (G_zlib_read (fd, 
+			  FCB.row_ptr[row+1] - FCB.row_ptr[row],
+	               	  data_buf, DATA_NCOLS * FCB.nbytes) !=
+		  DATA_NCOLS * FCB.nbytes)
+#endif
     return -1;
 
   return 0;

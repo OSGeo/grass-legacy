@@ -142,6 +142,11 @@
 #define WORK_BUF     FCB.data
 #define WINDOW       G__.window
 
+/* Needed until zlib stuff gets worked out, comment out if you
+ * want to try G_zlib_*() funcs, also do the same in get_row.c
+ */
+#define USE_LZW_COMPRESSION
+ 
 /* convert type "RASTER_MAP_TYPE" into index */
 #define F2I(map_type) \
         (map_type == CELL_TYPE ? 0 : (map_type == FCELL_TYPE ? 1 : 2))
@@ -650,6 +655,7 @@ int G__write_data_compressed (int fd, int row, int n)
 
 {
   int nwrite;
+#ifdef USE_LZE_COMPRESSION
   int l;
 
   nwrite = FCB.nbytes * n;
@@ -667,7 +673,15 @@ int G__write_data_compressed (int fd, int row, int n)
     write_error (fd, row);
     return -1;
   }
+#else
+  nwrite = FCB.nbytes * n;
 
+  if ((nwrite = G_zlib_write (fd, G__.work_buf, nwrite)) < 0) {
+    write_error (fd, row);
+    return -1;
+  }
+#endif
+  
   return 0;
 }
 
@@ -700,8 +714,13 @@ static void set_file_pointer (int fd, int row)
 static void update_compressed_bits (int fd, int row)
 
 {
+#ifdef USE_LZW_COMPRESSION
   if ((row == 0) || (FCB.compression_bits < G_lzw_max_used_bits ()))
     FCB.compression_bits = G_lzw_max_used_bits ();
+#else
+  /* Not relevant to zlib */
+  FCB.compression_bits = -1;
+#endif
 }
 
 /*--------------------------------------------------------------------------*/
