@@ -20,6 +20,10 @@ int zoomwindow (int quiet, int rotate, double magnify)
 	else
 	    quitonly=make_window_box (&window, magnify);
 
+	/* quitonly = 0: Zoom
+	 * quitonly = 1: Quit
+	 * quitonly = 2: Unzoom
+	 */
 	if (quitonly == 1) 
 	  break; /* no action was taken */
 	else	  
@@ -48,13 +52,6 @@ int zoomwindow (int quiet, int rotate, double magnify)
 	    break;
 	}
     }
-
-    /*
-    if (!quitonly || quitonly == 2)
-    {
-       G_put_window(&window) ;
-    }
-    */
 
     if(!quiet)
     {
