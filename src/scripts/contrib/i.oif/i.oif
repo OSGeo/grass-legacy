@@ -10,9 +10,13 @@
 #            neteler@geog.uni-hannover.de
 
 if test "$GISBASE" = ""; then
-echo "You Must be in GRASS to run this program."
-exit
-fi
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 if [ $# = 0 -o "$1" = "-help" -o "$1" = "help" ]
 then

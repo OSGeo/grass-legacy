@@ -27,12 +27,14 @@
 # 10/2001: modified to paint mirrors in different colors Markus Neteler
 #############################################################################
 
-# check GISBASE for running under GRASS
-
-if test "$GISBASE" = "" ; then
-    echo "You must be running under GRASS to execute $0"
-    exit 1
-fi
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 #don't mail errors
 export GRASS_STDERR=1
@@ -41,11 +43,6 @@ export GRASS_STDERR=1
 # (or /dev/stdout or /dev/fd/1 if supported on your system) for debugging
 out=/dev/null
 out2=/dev/stdout # needed for HTMLMAP, seems to be a bug?!
-
-# get current grass env
-eval `g.gisenv`
-
-: $GISDBASE $LOCATION
 
 # grass web site files
 # format:

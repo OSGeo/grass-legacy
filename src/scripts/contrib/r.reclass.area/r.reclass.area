@@ -6,6 +6,11 @@
 # 2000: updated to GRASS 5
 # 1998 from NRCS, slightly modified for GRASS 4.2.1
 
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+
 infile=$1
 
 if [ "$1" = "help"  -o "$1" = "" -o "$1" = "-help" ] ; then

@@ -3,9 +3,13 @@
 # $Id$
 
 if test "$GISBASE" = ""; then
- echo "You must be in GRASS to run this program."
+ echo "You must be in GRASS GIS to run this program." >&2
  exit 1
-fi
+fi   
+     
+eval `g.gisenv`
+: ${GISBASE?} ${GISDBASE?} ${LOCATION_NAME?} ${MAPSET?}
+LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 
 
 # set defaults
@@ -17,9 +21,6 @@ CWD=`pwd`
 trap 'cd $CWD ; d.frame -s full_screen ; exit 1' 2 3 9 15
 
 
-# set gis variables
-eval `g.gisenv`
-LOCATION=$GISDBASE/$LOCATION_NAME/$MAPSET
 SHOW_VECT=0
 
 # Get list of current mapsets

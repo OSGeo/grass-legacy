@@ -5,17 +5,14 @@
 # updated $ewres to ewres() and $nsres to nsres() 11/99
 # updated number to FP in r.mapcalc statement
 
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+
 # set nsres and ewres
 # eval `g.region -g`
 PROG=`basename $0`
-
-if [ ! "$GISBASE" ]
-then
-	echo
-	echo "ERROR: must be in GRASS to use $PROG"
-	echo
-	exit 1
-fi
 
 if [ "$1" = "-help" -o "$1" = "help" -o "$1" = "-h" -o "$1" = "--help" ]
 then

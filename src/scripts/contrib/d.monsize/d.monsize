@@ -5,6 +5,11 @@
 # $Id$
 # Version 1: Tue, 25 Jan 2000 10:31:37
 
+if test "$GISBASE" = ""; then
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
+
 if [ "$#" -lt 3 -o "$1" = "-help" -o "$1" = "help" ]
 then 
   echo

@@ -1,3 +1,4 @@
+#!/bin/sh
 # calculation of standard deviation of raster file
 
 # written by Markus Neteler 21.July 1998
@@ -5,9 +6,9 @@
 # update: 11/1999
 
 if test "$GISBASE" = ""; then
-echo "You must be in GRASS to run this program."
-exit
-fi
+ echo "You must be in GRASS GIS to run this program." >&2
+ exit 1
+fi   
 
 r.mapcalc aaa_dummy = 1
 r.statistics base=aaa_dummy cover=$1 out=$1.stddev method=stddev
