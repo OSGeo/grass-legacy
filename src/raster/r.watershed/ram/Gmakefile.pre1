@@ -1,0 +1,54 @@
+BIN = $(ETC)/water
+PGN = ram
+
+SOURCE = main.c init_vars.c find_pour.c \
+	close_maps.c ramseg.c \
+	do_astar.c do_cum.c \
+	def_basin.c split_str.c over_cells.c \
+	no_stream.c close_maps2.c haf_side.c \
+	sg_factor.c slope_len.c flag_clr_all.c flag_create.c \
+	flag_destroy.c flag_get.c flag_set.c flag_unset.c \
+	usage.c
+
+LIST =	main.o init_vars.o find_pour.o \
+	close_maps.o ramseg.o \
+	do_astar.o do_cum.o \
+	def_basin.o split_str.o over_cells.o \
+	no_stream.o close_maps2.o haf_side.o \
+	sg_factor.o slope_len.o flag_clr_all.o flag_create.o \
+	flag_destroy.o flag_get.o flag_set.o flag_unset.o\
+	usage.o
+
+$(BIN)/$(PGN): $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(ADD_LIBS) $(GISLIB) $(MATHLIB) -o $@
+
+$(GISLIB): #
+
+saber_src:
+	#load $(CFLAGS)$(ADD_LIBS) $(SOURCE) $(GISLIB) $(MATHLIB)
+
+saber_obj:
+	#load $(LDFLAGS) $(ADD_LIBS) $(LIST) $(GISLIB) $(MATHLIB)
+
+Gwater.h: ramseg.h
+add_pt.o: Gwater.h
+close_maps2.o: Gwater.h
+close_maps.o: Gwater.h
+def_basin.o: Gwater.h
+do_astar.o: Gwater.h
+do_cum.o: Gwater.h
+do_legal.o: Gwater.h
+find_pour.o: Gwater.h
+get_slope.o: Gwater.h
+haf_side.o: Gwater.h
+init_seg.o: Gwater.h
+init_vars.o: Gwater.h
+main.o: Gwater.h
+no_stream.o: Gwater.h
+over_cells.o: Gwater.h
+replace.o: Gwater.h
+seg_step.o: Gwater.h
+sg_factor.o: Gwater.h
+slope_len.o: Gwater.h
+split_str.o: Gwater.h
+usage.o: Gwater.h
