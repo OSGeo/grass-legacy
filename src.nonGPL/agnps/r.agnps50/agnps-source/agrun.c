@@ -298,7 +298,7 @@ int main(
   {
    puts("\nAGNPS SCS version 5.00\n");
    puts("Supply the following command line arguments:\n");
-   puts("     agrun wshed.dat 0 1 1\n");
+   puts("     r.agnps50.run wshed.dat 0 1 1\n");
    puts("Where 'wshed.dat' is the name of the data file to be analyzed.");
    puts("and the 0 or 1 determines whether or not AGNPS should produce.");
    puts("a GIS formatted output file.  The second 0 or 1 flag is an ");
