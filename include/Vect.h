@@ -82,6 +82,7 @@ int V1_open_new_shp (struct Map_info *, char *, int);
 int V1_open_new_post (struct Map_info *, char *, int);
 /*int V1__open_update_1 (struct Map_info *, char *); */
 int V2_open_old_nat (struct Map_info *);
+int V2_open_old_shp (struct Map_info *);
 /*
 int V2__open_new_1 (struct Map_info *, char *, int);
 int V2_open_update (struct Map_info *, char *);
@@ -132,6 +133,11 @@ int V2_read_next_line (struct Map_info *, struct line_pnts *, struct line_cats *
 int V2_read_next_line_nat (struct Map_info *, struct line_pnts *, struct line_cats *);
 int V2_read_next_line_shp (struct Map_info *, struct line_pnts *, struct line_cats *);
 int V2_read_next_line_post (struct Map_info *, struct line_pnts *, struct line_cats *);
+
+long Vect_next_line_offset (struct Map_info *);
+long Vect_next_line_offset_nat (struct Map_info *);
+long Vect_next_line_offset_shp (struct Map_info *);
+long Vect_next_line_offset_post (struct Map_info *);
 
 int V__map_overlap (struct Map_info *, double, double, double, double);
 int Vect_rewind (struct Map_info *);
