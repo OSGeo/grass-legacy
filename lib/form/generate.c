@@ -41,9 +41,10 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
     enc_env = G__getenv("GRASS_DB_ENCODING");
     
     override_form_mode = G__getenv("GRASS_FORM_MODE");
-    if (strcmp( override_form_mode, "VIEW" ) == 0) edit_mode = F_VIEW;
-    if (strcmp( override_form_mode, "EDIT" ) == 0) edit_mode = F_EDIT;
-    
+    if ( override_form_mode != NULL) {    
+    	if (strcmp( override_form_mode, "VIEW" ) == 0) edit_mode = F_VIEW;
+    	if (strcmp( override_form_mode, "EDIT" ) == 0) edit_mode = F_EDIT;
+    }
     /* TODO: support 'format' (txt, html), currently html only */
 
     G_debug ( 2, "F_generate(): drvname = '%s', dbname = '%s'\n      tblname = '%s', key = '%s', keyval = %d\n"
