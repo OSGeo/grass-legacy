@@ -76,6 +76,7 @@ pre-install:
 
 
 do-install:
+	@ rm -f src/CMD/next_step/*
 	${MAKE_ENV} ${SHELL} src/CMD/generic/GISGEN.sh
 	${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
 	${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh
