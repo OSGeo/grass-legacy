@@ -34,8 +34,6 @@ static int add_gyr_colors (struct Colors *colors, DCELL min, DCELL max)
 
     G_add_d_raster_color_rule (&min, 0, 255, 0, &half, 255, 255, 0, colors);
     G_add_d_raster_color_rule (&half, 255, 255, 0, &max, 255, 0, 0, colors);
-    half = 0.;
-    G_add_d_raster_color_rule (&half, 255,255,255, &half, 255,255,255, colors);
 
     return 1;
 }
