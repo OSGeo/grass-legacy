@@ -1,2 +1,0 @@
-rm -rf ./OBJ.HP
-rm -rf ./cmd/OBJ.HP

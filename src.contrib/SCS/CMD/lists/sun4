@@ -1,5 +1,0 @@
-# SUN specific programs to be compiled.  Lines containing # as the
-# first character of a line are comments and ignored.
-#
-# display/devices/XDRIVER
-display/devices/SUNVIEW

@@ -1,6 +1,0 @@
-# %W% %G%
-
-all:
-	$(MAKEALL)
-
-$(GISLIB): #

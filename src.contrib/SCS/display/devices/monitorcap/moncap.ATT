@@ -1,6 +1,0 @@
-HP:/usr/grass3.1/driver/HP:Hewlett Packard 7475 plotter:/usr/grass3.1/dev/HP7475.a /usr/grass3.1/dev/HP7475.b:/dev/ttyxx:
-DEB:/usr/grass3.1/driver/DEB:Paul Carlson's PC6300 graphics terminal:/usr/grass3.1/dev/DEB.a /usr/grass3.1/dev/DEB.b:/dev/ttyxx:
-DVGA:/usr/grass3.1/driver/DVGA:Paul Carlson's Orchid device driver:/usr/grass3.1/dev/DVGA.a /usr/grass3.1/dev/DVGA.b::
-DEGA:/usr/grass3.1/driver/DEGA:Paul Carlson's ATT-750 device driver:/usr/grass3.1/dev/DEGA.a /usr/grass3.1/dev/DEGA.b::
-DUMB:/usr/grass3.1/driver/DUMB:null graphics terminal:/usr/grass3.1/dev/NULL.a /usr/grass3.1/dev/NULL.b::
-DIS1:/usr/grass3.1/driver/DEB:Display 1:/usr/grass3.1/dev/DIS1.a /usr/grass3.1/dev/DIS1.b:/dev/ttyxx:

@@ -1,2 +1,0 @@
-Mmain	main.c	/^main(argc,argv) char *argv[];$/
-grey_scale	grey_scale.c	/^grey_scale(name,mapset)$/

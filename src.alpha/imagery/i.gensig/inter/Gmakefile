@@ -1,8 +1,0 @@
-LIBES = $(IMAGERYLIB) $(GISLIB)
-
-$(BIN_MAIN_INTER)/i.gensig: main.o $(LIBES) $(VASKLIB)	
-	rm -f a.out
-	$(CC) main.o $(LIBES) $(VASK)
-	mv a.out $@
-
-$(LIBES) $(VASKLIB): #

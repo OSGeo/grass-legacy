@@ -1,6 +1,0 @@
-LIST = main.o flip.o
-
-$(BIN_ALPHA_CMD)/m.flip: $(LIST) $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB)
-
-$(GISLIB): #

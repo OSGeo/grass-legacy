@@ -1,8 +1,0 @@
-.TH v.out.idrisi
-.SH NAME
-\fIv.out.idrisi\fR - Program to export GRASS data to IDRISI
-format.  The program works with binary GRASS vector files to
-ASCII IDRISI format.
-.b
-\fI(GRASS Raster Program)\fR
-

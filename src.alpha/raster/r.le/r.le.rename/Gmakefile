@@ -1,7 +1,0 @@
-LIST =  main.o user_input.o
-
-$(BIN_ALPHA_CMD)/r.le.rename: $(LIST)
-	$(CC) $(LDFLAGS) -o $@ $(LIST)  $(GISLIB)
-
-
-

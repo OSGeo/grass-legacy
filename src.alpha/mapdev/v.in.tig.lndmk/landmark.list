@@ -1,3 +1,0 @@
-
-
- cut -c22-24 < $1 | sort |more

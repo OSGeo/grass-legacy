@@ -1,2 +1,0 @@
-cc -O -c Driver.c
-mv Driver.o ../install

@@ -1,6 +1,0 @@
-PGM=r.median
-
-$(BIN_ALPHA_INTER)/$(PGM): main.o $(GISLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB)
-
-$(GISLIB): #

@@ -1,8 +1,0 @@
-#
-Ninputs 2     Nhidden 7     Noutputs 4
-UnitType 2
-Connectcalls 2
-1 2      3 9
-3 9     10 13
-NTrainingPatterns 232
-NTestPatterns 17098

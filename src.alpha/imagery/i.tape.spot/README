@@ -1,5 +1,0 @@
-  This program reads in SPOT imagery files in from CCT tape. User 
-could select the window inside the whole imagery range by typing in
-the number of lines and rows. All parameters needed for 
-rectification are read in by the program. Files include CELL and 
-support files are located in respective directories.

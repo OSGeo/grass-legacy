@@ -1,7 +1,0 @@
-LIST =  main.o user_input.o driver.o trace.o dist.o
-
-$(BIN_ALPHA_CMD)/r.le.dist: $(LIST) $(GISLIB) $(VECTLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(MATHLIB)
-
-$(GISLIB): # in case library changes
-$(VECTLIB): # in case library changes

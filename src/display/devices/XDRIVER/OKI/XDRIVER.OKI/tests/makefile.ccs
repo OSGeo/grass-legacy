@@ -1,2 +1,0 @@
-testy: testy.c
-	/usr/ccs/bin/cc testy.c -o testy.ccs

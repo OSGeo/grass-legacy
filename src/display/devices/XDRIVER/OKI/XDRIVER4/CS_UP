@@ -1,2 +1,0 @@
-#!/bin/sh
-exec cscope XDRIVER/*.[ch] lib/*.[ch]

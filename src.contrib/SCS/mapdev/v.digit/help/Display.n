@@ -1,1 +1,0 @@
- Display nodes (no matter how many lines are attached) 

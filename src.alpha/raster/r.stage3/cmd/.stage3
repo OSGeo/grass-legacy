@@ -1,4 +1,0 @@
-setopt load_flags -I/usr/local/include -I/grass4.1/src/include -I/grass4.1/src/mapdev/Vlib -I/grass4.1/src/mapdev/diglib -I/usr/include/X11R5/X11 -I/usr/include/Motif1.2 -I/usr/include/X11R5  -I/usr/include/Xm -I/usr/include/X11 -L/grass4.1/src/libes/LIB.HP -L/grass4.1/src/mapdev/lib/LIB.HP -L/usr/lib/Motif1.2/ -L/usr/lib/X11R5
-load -lm -ldisplay -lraster -lgis -lXm -lXt -lX11
-setopt make_prog make -f OBJ.HP/make.rules
-unsetopt win_fork

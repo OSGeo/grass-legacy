@@ -1,4 +1,0 @@
-Palpha()
-{
-    end_raster();
-}

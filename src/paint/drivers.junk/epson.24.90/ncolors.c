@@ -1,4 +1,0 @@
-Pncolors()
-{
-    return 125;
-}

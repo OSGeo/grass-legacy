@@ -1,2 +1,0 @@
-#cpio -ov > /dev/rmt/c0s0n < files 
-cpio -ov > /dev/dsk/f0 < files 

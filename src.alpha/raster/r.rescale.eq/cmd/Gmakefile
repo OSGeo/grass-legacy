@@ -1,9 +1,0 @@
-PGM=r.rescale.eq
-LIST = main.o get_stats.o get_range.o
-
-$(BIN_ALPHA_CMD)/$(PGM): $(LIST) $(GISLIB)
-	rm -f a.out
-	$(CC) $(LDFLAGS) $(LIST) $(GISLIB)
-	mv a.out $@
-
-$(GISLIB): #

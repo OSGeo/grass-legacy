@@ -1,8 +1,0 @@
-rm -r OBJ*
-rm -r ./inter/OBJ*
-rm  -r ./programs/OBJ*
-rm  -r ./programs/fea/OBJ*
-rm  -r ./programs/qd/OBJ*
-rm -r ./programs/datafea/OBJ*
-rm -r ./programs/channelfea/OBJ*
-rm -r ./programs/select_basins/OBJ*

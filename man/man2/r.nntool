@@ -1,8 +1,0 @@
-.TH r.nntool
-.SH NAME
-\fIr.nntool\fR - Neural network image classifier.  Due to
-the complex nature of this program, users are referred to the 
-hard-copy manual pages for directions.
-.b
-\fI(GRASS Raster Program)\fR
-

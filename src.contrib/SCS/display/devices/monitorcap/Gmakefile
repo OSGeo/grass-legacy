@@ -1,2 +1,0 @@
-all:
-	sed -e s:BASEDIR:$(GISBASE):g monitorcap > $(ETC)/monitorcap

@@ -1,3 +1,0 @@
-all:
-	$(GMAKE) bouman
-	$(GMAKE) shapiro
