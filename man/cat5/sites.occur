@@ -60,7 +60,7 @@ Site Characteristics         cover   cover   sites    sites  square  freedom
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
@@ -126,7 +126,7 @@ EXPLANATION
 
 
 
-GRASS 4.0                U.S. Army CERL                         2
+GRASS 4.1                U.S. Army CERL                         2
 
 
 
@@ -192,7 +192,7 @@ sites.occur          GRASS Reference Manual           sites.occur
 
 
 
-GRASS 4.0                U.S. Army CERL                         3
+GRASS 4.1                U.S. Army CERL                         3
 
 
 
@@ -209,8 +209,8 @@ NOTE
      in the computation of the chi-square statistics.
 
 SEE ALSO
-     s.db, s.in.ascii, s.menu, s.out.ascii, s.surf.idw, sites.S,
-     sites.format, sites.report
+     s.db.rim, s.in.ascii, s.menu, s.out.ascii, s.surf.idw,
+     sites.S, sites.format, sites.report
 
 
 
@@ -258,7 +258,7 @@ SEE ALSO
 
 
 
-GRASS 4.0                U.S. Army CERL                         4
+GRASS 4.1                U.S. Army CERL                         4
 
 
 
