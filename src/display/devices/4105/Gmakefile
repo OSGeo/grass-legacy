@@ -17,6 +17,7 @@ OFILES =  \
 	Linemod.o \
 	Move_abs.o \
 	Move_rel.o \
+	Panel.o \
 	Plydts_abs.o \
 	Plydts_rel.o \
 	Plylne_abs.o \
@@ -36,14 +37,19 @@ OFILES =  \
 	encode.o \
 	text.o
 
-$(GISBASE)/driver/4105: $(OFILES) ../lib/driverlib.a
-	cc $(CFLAGS) -o $(GISBASE)/driver/4105 $(OFILES) ../lib/driverlib.a -lm
+DR_LIB = ../lib/driverlib.a
+
+$(GISBASE)/driver/4105: $(OFILES) $(DR_LIB)
+	$(CC) $(CFLAGS) -o $(GISBASE)/driver/4105 $(OFILES) $(DR_LIB) $(MATHLIB)
+
+$(DR_LIB): #
 
 Draw_mode.o:	graphics.h
 Get_w_box.o:	graphics.h
 Get_w_line.o:	graphics.h
 Get_w_pnt.o:	graphics.h
 Graph_Set.o:	graphics.h
+Panel.o:	graphics.h
 Raster.o:	graphics.h
 Reset_clrs.o:	graphics.h
 Text_size.o:	graphics.h
