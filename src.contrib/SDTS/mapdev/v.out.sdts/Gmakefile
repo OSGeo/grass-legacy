@@ -50,9 +50,7 @@ CFILES = \
 LIBES = $(FIPSLIB) $(COORCNVLIB) $(VECTLIB) $(DIG_ATTLIB) $(GISLIB)
 
 $(HOME)/$(PGM):	$(OFILES) $(LIBES)
-	rm -f a.out $@
-	$(CC) $(OFILES) $(LIBES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB)
-	mv a.out $@
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(LIBES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(LINKMLIB) $(XDRLIB)
 
 $(LIBES):	#
 

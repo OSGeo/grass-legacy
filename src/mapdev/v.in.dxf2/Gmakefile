@@ -52,9 +52,7 @@ OBJ =	\
 all:	$(PROG)
 
 $(PROG): $(OBJ)  $(GISLIB) $(VECTLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OBJ) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) 
-	mv a.out $@
+	$(CC) $(LDFLAGS) -o $@ $(OBJ) $(VECTLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB) $(GISLIB): #
 

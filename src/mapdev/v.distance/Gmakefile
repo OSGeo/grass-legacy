@@ -7,9 +7,7 @@ PROG = $(BIN_ALPHA_CMD)/v.distance
 all: $(PROG) 
 
 $(PROG): $(OFILES) $(VECTLIB) $(GISLIB)
-	rm -f a.out $@
-	$(CC) $(LDFLAGS) $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB)
-	mv a.out $@
+	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(VECTLIB): #in case of library changes
 $(GISLIB): #

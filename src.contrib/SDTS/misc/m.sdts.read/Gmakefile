@@ -7,7 +7,7 @@ OFILE     = m.sdts.read.o
 LIBES = 	$(FIPSLIB) $(GISLIB)
 
 $(HOME)/$(PGM): $(OFILE) $(LIBES)
-	$(CC) $(LDFLAGS) -o $@ $(OFILE) $(LIBES) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OFILE) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(LIBES):	#
 
