@@ -186,15 +186,16 @@ struct P_area
     double  S;
     double  E;
     double  W;
-    plus_t   att;	/* attribute index number, if labeled */
     plus_t  n_lines;	/* Number of boundary lines */
     plus_t  alloc_lines;
+    plus_t  *lines;	/* Boundary Lines (Negative means N2 to N1 clockwise) */
+    char   alive;	/* deleted or not   0 or !0  */
+    /*********  Above this line is compatible with P_isle **********/
 
+    plus_t   att;	/* attribute index number, if labeled */
     plus_t  n_isles;	/* Number of boundary areas inside */
     plus_t  alloc_isles;
-    plus_t  *lines;	/* Boundary Lines (Negative means N2 to N1 clockwise) */
     plus_t  *isles;	/* 1st generation interior islands */
-    char   alive;	/* deleted or not   0 or !0  */
 };
 
 
@@ -204,11 +205,13 @@ struct P_isle
     double  S;
     double  E;
     double  W;
-    plus_t  area;	/* area it exists w/in, if any */
     plus_t  n_lines;	/* Number of boundary lines */
     plus_t  alloc_lines;
     plus_t  *lines;	/* Boundary Lines (Negative means N2 to N1 clockwise) */
     char   alive;	/* deleted or not   0 or !0  */
+    /*********  Above this line is compatible with P_area **********/
+
+    plus_t  area;	/* area it exists w/in, if any */
 };
 
 struct P_att
