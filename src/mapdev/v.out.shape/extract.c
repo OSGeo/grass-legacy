@@ -163,7 +163,16 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
   cindx = curr_indx + 1;
   if( curr_indx >= Map->n_areas ) return 0;
 
-  
+  if (!V2_area_att(Map, cindx)) {
+    fprintf ( lfp, "Skipping unlabeled area (hole?) #%d\n", cindx);
+    return -1;
+  }
+
+  if( V2_get_area( Map, cindx, &Area ) != 0 ) {
+    fprintf( lfp, "Area %d unassigned\n", cindx );
+    return -1;
+  }
+ 
   logfile_name = (char *)malloc(128);
 
   proc_logfile( GET_VAL, logfile_name );
@@ -177,12 +186,7 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
   Points->n_points = 0;
   Points->x = NULL;
   Points->y = NULL;
-
-  if( V2_get_area( Map, cindx, &Area ) != 0 ) {
-    fprintf( lfp, "Area %d unassigned\n", cindx );
-    return 1;
-  }
-  
+ 
   /* fprintf(lfp, "\nArea %d has %d isles: \n", cindx, Area->n_isles ); */
   
   /* Determine initial information on shape */
@@ -192,7 +196,6 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
     fprintf( lfp, "Could not build area %d\n", cindx );
     return 1;
   }
-
 
   partoffsets = (int *)malloc( numparts * sizeof(int) );
 
@@ -237,10 +240,10 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
     listX = (double *)realloc( listX, totalvertices * sizeof(double) );
     listY = (double *)realloc( listY, totalvertices * sizeof(double) );
     
-    k1 = 0;
+    k1 = numvertices - 1;
     for( k = startOffset; k <= endOffset; ++k ) {
       listX[k] = Points->x[k1];
-      listY[k] = Points->y[k1++];      
+      listY[k] = Points->y[k1--];      
     }
   }
 
