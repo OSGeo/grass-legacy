@@ -70,7 +70,7 @@ The output format lends itself to filtering.  For example, to "see" lines connec
 <P>
 
 <DD><EM>r.distance maps=map1,map2 | \
-<DD>awk -F: '{print "move",$4,$5;"draw",$6,$7}' | d.mapgraph</EM>
+<DD>awk -F: '{print "move",$4,$5,"draw",$6,$7}' | d.mapgraph</EM>
 
 <P>
 To create a site list of all the "map1" coordinates, filter the output into awk and then into <EM>s.in.ascii</EM>:
