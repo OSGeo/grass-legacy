@@ -1,0 +1,5 @@
+PGM = Xnew
+OFILES =  main.o make_clrs.o
+
+$(BIN)/$(PGM): $(OFILES) $(GISLIB) 
+	cc $(LDFLAGS) -o $@ $(OFILES) $(XDISPLAYLIB) $(GISLIB) -lX11
