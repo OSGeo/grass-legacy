@@ -1,0 +1,7 @@
+interface_build {
+    {r.poly} 0
+    {Extracts area edges from a raster map layer and converts data to GRASS vector format.}
+    {entry input {Input raster map:} 0 raster}
+    {entry output {Output vector file:} 0 vector}
+    {checkbox -l {Smooth corners.} "" -l}
+}
