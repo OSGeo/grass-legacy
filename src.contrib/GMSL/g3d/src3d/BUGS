@@ -1,6 +1,13 @@
-$Id: BUGS,v 1.1 2001-02-12 16:24:19 markus Exp $
+$Id: BUGS,v 1.2 2001-02-12 16:28:29 markus Exp $
 
 G3D bugs list
+
+History:
+ - There has been a former grid3d library used by Helena Mitasova, Bill Brown 
+   et al. 
+ - Later Mark Astley developed g3d library now widely used for g3d modules.
+   
+Current situation:
 
 Currently there are severe G3D inconsistencies: 
 The basic problem is that the "for" loops are different. 
@@ -13,11 +20,13 @@ Maybe this was intended by Mark Astely? I can't find anything documented
 except what's in the GRASS Programmer's manual:
 http://www.geog.uni-hannover.de/grass/grassdevel.html#prog
 
-However, if you check these modules:
+Somehow the migration from grid3d to g3d got confused. Check these modules:
+
 
  - s.vol.rst: does not use G3D to read/write data, but seems to
    read as described above (N->S, W->E, T->B)
    Looks good.
+
 
  - src/libes/g3d/writeascii.c (unused sample application):
    G3d_writeAscii()
@@ -99,6 +108,15 @@ General bug:
  In CVS at:
  http://freegis.org/cgi-bin/viewcvs.cgi/~checkout~/grass/src.contrib/GMSL/g3d/src3d/scripts/g3.setregion
 
+-------------------------------------------------------------------
+Specific bugs:
+
+ - see individual BUGS files
+ - r3.showdspf.opengl bugs:
+    no solids, no "p", no fences available...
+    It seems that the port is not yet complete.
+ - r3.out.v5d: only works with rows=cols (square area), otherwise
+   nonsense output. Seems to be related to g3d lib confusion.
 
 Regards
 
