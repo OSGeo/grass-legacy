@@ -1,16 +1,20 @@
 #include <stdio.h>
+#include <string.h>
 #include "Vect.h"
 #include "Vect.h"
 #include "gis.h"
 
 #define BUFFSIZE 128
 
+int err ( char *errstr );
+
 int asc_to_bin(
 	FILE *ascii ,
-	struct Map_info *Map)
+	struct Map_info *Map,
+	int pnt)
 {
 	char ctype ;
-	char buff[BUFFSIZE] ;
+	char buff[BUFFSIZE], *bptr;
 	double *xarray ;
 	double *yarray ;
 	double *zarray ;	
@@ -37,14 +41,15 @@ int asc_to_bin(
 
 	while ( fgets(buff,BUFFSIZE,ascii) != NULL  )
 	{
+	    if ( !pnt ) {
 		n_cats=0;
-		if (  sscanf(buff, "%1c%d%d", &ctype, &n_coors, &n_cats) < 2  || n_coors < 0 || n_cats < 0 ) {
-		    fprintf (stderr,"Error reading ascii file:\n%s\n", buff) ;
-		    return 0;
-		}    
+		if (  sscanf(buff, "%1c%d%d", &ctype, &n_coors, &n_cats) < 2  || n_coors < 0 || n_cats < 0 ) 
+		    return ( err ( buff) );
+
 		if (!n_points)
 		    continue;
 
+		
 		switch(ctype)
 		{
 		case 'A':
@@ -74,12 +79,12 @@ int asc_to_bin(
 			return 0;
 		}
 
-		/* Collect the points */
 		n_points = 0 ;
 		x = xarray ;
 		y = yarray ;
 		z = zarray ;		
 
+	        /* Collect the points */
 		for( i=0; i<n_coors; i++)
 		{
 			if ( fgets(buff,BUFFSIZE,ascii) == NULL) {
@@ -124,7 +129,7 @@ int asc_to_bin(
 		    n_points = 2;
 		}
 
-		/* Collect the cats */
+	        /* Collect the cats */
 		for( i=0; i<n_cats; i++)
 		{
 			if ( fgets(buff,BUFFSIZE,ascii) == NULL) {
@@ -137,16 +142,46 @@ int asc_to_bin(
 			}    
 			Vect_cat_set ( Cats, catn, cat );
 		}
+            } else {  /* points format */
+		type = GV_POINT;
+		if (  sscanf(buff, "%lf|%lf", xarray, yarray) != 2 ) 
+		    return ( err ( buff) );
+		
+		bptr = strchr( buff, '|' );
 
-		/* Allocation is handled for line_pnts */
-		if (0 > Vect_copy_xyz_to_pnts (Points, xarray, yarray, zarray, n_points))
-		    G_fatal_error ("Out of memory");
+		if ( Map->head.with_z ) {
+		    bptr = strchr( bptr + 1, '|' );
+		    if ( bptr == NULL )
+		        return ( err ( buff) );
+		    
+		    if (  sscanf(bptr + 1, "%lf", zarray) != 1 ) 
+		        return ( err ( buff) );
+		} 
+		n_points = 1 ;
+		
+		/* category */
+		bptr = strchr( bptr + 1, '|' );
 
-		if ( type > 0 )
-		    Vect_write_line ( Map, type, Points, Cats );
-	
-    		Vect_reset_cats ( Cats ); 
+		if ( bptr ) {
+		    if (  sscanf(bptr + 1, "%d", &cat) == 1 ) 
+		        Vect_cat_set ( Cats, 1, cat );
+		}	
+	    }
+	    /* Allocation is handled for line_pnts */
+	    if (0 > Vect_copy_xyz_to_pnts (Points, xarray, yarray, zarray, n_points))
+		G_fatal_error ("Out of memory");
+
+	    if ( type > 0 )
+		Vect_write_line ( Map, type, Points, Cats );
+    
+	    Vect_reset_cats ( Cats ); 
 	}
 	return 0;	
+}
+
+int err ( char *errstr ) {
+
+    fprintf (stderr,"Error reading ascii file:\n%s\n", errstr) ;
+    return 0;
 }
 
