@@ -129,8 +129,8 @@ srcdist: veryclean
 	echo "reduce Changelog file... Dont want the initial upload included."
 	head -${CUTLINE} ChangeLog   > ChangeLog.cut
 	echo "   initial CVS import" >> ChangeLog.cut
-	mv ChangeLog.cut ChangeLog
-	rm -f ChangeLog.bak
+	${SHELL} -c "mv ChangeLog.cut ChangeLog"
+	${SHELL} -c "rm -f ChangeLog.bak"
 	tar cvfz grass${VERSION}_src.tar.gz * --exclude=CVS
 	echo "Distribution source package: grass${VERSION}_src.tar.gz ready."
 
