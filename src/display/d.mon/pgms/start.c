@@ -26,6 +26,7 @@
  * prompt back.  For more information, see the comments in SWITCHER.c.
  ****************************************************************/
 
+#include "config.h"
 #include <unistd.h>
 #include <stdio.h>
 #include "raster.h"
@@ -79,10 +80,17 @@ int start_mon (char *name, char *par)
 			execl(mon->path,name,mon->link,(char *) 0);
 #else /* ORIG */
 		{
-			if ( par[0] == '\0')
+#ifdef USE_G_SOCKS
+		if ( par[0] == '\0')
+		    execl(mon->path,name,(char *) 0);
+		else
+	            execl(mon->path,name,par,(char *) 0);
+#else
+		if ( par[0] == '\0')
 			execl(mon->path,name,mon->link,(char *) 0);
 		else
 			 execl(mon->path,name,mon->link,par,(char *) 0);
+#endif
 		}
 #endif /* ORIG */
 		else
