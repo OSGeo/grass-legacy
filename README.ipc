@@ -57,6 +57,10 @@ then
 	exit
 fi
 
+########## MANUAL EXECUTION
+if [ ! "$GRASS_IN_CONFIGURE" ]
+then
+
 if [ ! -f config.status ]
 then
 	echo
@@ -66,8 +70,8 @@ then
 	exit
 fi
 
-#old:
-##GISBASE=`grep "@prefix@" config.status | cut -d '%' -f 3`/grass5
+##old:
+#GISBASE=`grep "@prefix@" config.status | cut -d '%' -f 3`/grass5
 
 GISBASE=`grep GISBASE Makefile | head -1 | tr -s ' ' '|' | cut -d'|' -f2`
 
@@ -102,6 +106,9 @@ then
 	echo "   -m: Compile d.mon only"
 	echo
 	exit
+fi
+
+########## END OF MANUAL EXECUTION
 fi
 
 compile=1
@@ -180,6 +187,10 @@ then
 	done
 fi
 
+if [ "$GRASS_IN_CONFIGURE" ]
+then
+	exit
+fi
 
 if [ ! -f $GISBASE/dev/create_buffers.sh ]
 then
