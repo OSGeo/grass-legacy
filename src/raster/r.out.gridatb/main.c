@@ -35,7 +35,7 @@ main(argc,argv)
 
 	flags.overwr			= G_define_flag();
 	flags.overwr->key		= 'o';
-	flags.overwr->description	= "Overwrite output map";
+	flags.overwr->description	= "Overwrite output map file";
 
 
 	G_gisinit(argv[0]);
