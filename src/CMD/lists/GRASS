@@ -41,6 +41,20 @@ src/display/devices/XDRIVER
 src/display/devices/HTMLMAP
 src/fonts/for_grass
 src/front.end
+##### DBMI DRIVERS #####    
+src/libes/dbmi/lib
+src/libes/dbmi/drivers/stubs
+# requires ODBC:
+# src/libes/dbmi/drivers/odbc
+#
+# requires Informix, needs update?:
+# src/libes/dbmi/drivers/informix
+#
+# requires SQLBASE, needs update?:
+# src/libes/dbmi/drivers/sqlbase
+#
+src/libes/dbmi/clients
+#
 ################
 # start with modules:
 ################
@@ -159,6 +173,7 @@ src/mapdev/v.build.polylines
 src/mapdev/v.cadlabel
 src/mapdev/v.clean
 src/mapdev/v.cutter
+src/mapdev/v.db.reclass
 src/mapdev/v.digit
 src/mapdev/v.distance
 src/mapdev/v.export
