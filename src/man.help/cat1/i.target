@@ -1,0 +1,66 @@
+
+
+
+i.target(1)          GRASS Reference Manual           i.target(1)
+
+
+
+NAME
+     i.target - An imagery function that establishes a target
+                LOCATION for an imagery group
+                (GRASS Imagery Tool)
+
+SYNOPSIS
+     i.target
+
+DESCRIPTION
+     i.target targets an imagery group to a GRASS LOCATION.
+     During the imagery program, i.rectify, a specified LOCATION
+     is required just prior to completion of the program.
+     i.target enables the user to specify this LOCATION.
+     i.target must be run before i.points and  i.rectify.
+
+     The first prompt in the program asks the user for the name
+     of the imagery group that needs a target.  The imagery group
+     must be present in the current LOCATION.
+
+     The following menu asking for the target LOCATION and MAPSET
+     is displayed:
+
+     Please select the target LOCATION and MAPSET for group <spot>
+
+     CURRENT LOCATION:location______
+     CURRENT MAPSET: demo___________
+
+     TARGET LOCATION:_________
+     TARGET MAPSET:___________
+
+     (enter list for a list of locations or mapsets within a location)
+
+
+         AFTER COMPLETING ALL ANSWERS, HIT <ESC> TO CONTINUE
+                        (OR <Ctrl-C> TO CANCEL
+
+
+     An imagery group may be targeted to any GRASS LOCATION.
+
+SEE ALSO
+     Grass Tutorial: Image Processing
+     i.points[1]
+     i.rectify[1]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
