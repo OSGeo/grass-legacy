@@ -209,7 +209,7 @@ Vect_cidx_get_cat_by_index ( struct Map_info *Map, int field_index, int cat_inde
 {
     check_status ( Map ); /* This check is slow ? */
 
-    if ( field_index >= Map->plus.n_cidx ||  cat_index >= Map->plus.cidx[field_index].n_cats )
+    if ( field_index >= Map->plus.n_cidx || field_index < 0 ||  cat_index >= Map->plus.cidx[field_index].n_cats )
 	G_fatal_error("Field/cat index out of range");
 
     *cat = Map->plus.cidx[field_index].cat[cat_index][0];
