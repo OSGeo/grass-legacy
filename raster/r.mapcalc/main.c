@@ -36,7 +36,7 @@ static const char help_text[] =
 
 /****************************************************************************/
 
-static expression *result;
+static expr_list *result;
 
 /****************************************************************************/
 
@@ -89,13 +89,15 @@ main (int argc, char *argv[])
 
 	G_get_window(&current_region);
 
-	if (argc != 2 || (argc > 1 && strcmp(argv[1], "help") == 0))
+	if (argc > 2 || (argc > 1 && strcmp(argv[1], "help") == 0))
 	{
 		fputs(help_text, stderr);
 		return 0;
 	}
 
-	result = parse(argv[1]);
+	result = (argc == 2)
+		? parse_string(argv[1])
+		: parse_stream(stdin);
 
 	pre_exec();
 	ok = execute(result);

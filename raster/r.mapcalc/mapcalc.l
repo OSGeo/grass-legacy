@@ -10,18 +10,37 @@
 static const char *input_string;
 static int input_length;
 static int input_offset;
+static FILE *input_stream;
+
+static int get_input_string(char *buf, int max_size)
+{
+	const char *next = input_string + input_offset;
+	int left = input_length - input_offset;
+	int result;
+
+	if (left <= 0)
+		return YY_NULL;
+
+	result = (left > max_size) ? max_size : left;
+	memcpy(buf, next, result);
+	input_offset += result;
+
+	return result;
+}
+
+static int get_input_stream(char *buf, int max_size)
+{
+	int result = fread(buf, 1, max_size, input_stream);
+	return (result <= 0)
+		? YY_NULL
+		: result;
+}
 
 #define YY_INPUT(buf,result,max_size)				\
 {								\
-	const char *next = input_string + input_offset;		\
-	int left = input_length - input_offset;			\
-	if (left <= 0)						\
-		result = YY_NULL;				\
-	else {							\
-		result = (left > max_size) ? max_size : left;	\
-		memcpy(buf, next, result);			\
-		input_offset += result;				\
-	}							\
+	result = input_string					\
+		? get_input_string(buf, max_size)		\
+		: get_input_stream(buf, max_size);		\
 }
 
 %}
@@ -30,15 +49,22 @@ W		[ \t\r]+
 N		[^ ^#@,"'\000-\037()\[\]+\-*/%><!=&|?:;]+
 I		[0-9]+
 E		[eE][-+]?[0-9]+
+F		[fF]
 
 %%
 
 {W}		;	/* ignore white space */
 
+{I}"."{I}?{E}?{F}	|
+"."{I}{E}?{F}	{
+			yylval.fval = atof(yytext);
+			return FLOAT;
+		}
+
 {I}"."{I}?{E}?	|
 "."{I}{E}?	{
 			yylval.fval = atof(yytext);
-			return FLOAT ;
+			return DOUBLE;
 		}
 
 {I}"."{I}?[eE]	|
@@ -96,6 +122,8 @@ E		[eE][-+]?[0-9]+
 [gG]"#"		{	return 'g';	}
 [bB]"#"		{	return 'b';	}
 "#"		{	return '#';	}
+[yY]"#"		{	return 'y';	}
+[iI]"#"		{	return 'i';	}
 
 "@"		{	return '@';	}
 
@@ -109,6 +137,9 @@ E		[eE][-+]?[0-9]+
 
 ","		{	return ',';	}
 
+";"		|
+"\n"		{	return ';';	}
+
 %%
 
 int yywrap(void)
@@ -116,10 +147,15 @@ int yywrap(void)
     return 1;
 }
 
-void initialize_scanner(const char *s)
+void initialize_scanner_string(const char *s)
 {
 	input_string = s;
 	input_length = strlen(s);
 	input_offset = 0;
+}
+
+void initialize_scanner_stream(FILE *fp)
+{
+	input_stream = fp;
 }
 

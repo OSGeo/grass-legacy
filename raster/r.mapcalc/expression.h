@@ -53,6 +53,7 @@ typedef struct expr_data_func {
 typedef struct expr_data_bind {
 	const char *var;
 	struct expression *val;
+	int fd;
 } expr_data_bind;
 
 typedef struct expression {
