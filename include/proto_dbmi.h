@@ -138,6 +138,8 @@ int         db_get_connection         P((dbConnection *connection ));
 int         db_get_cursor_number_of_columns P((dbCursor *cursor ));
 dbTable *   db_get_cursor_table       P((dbCursor *cursor ));
 dbToken     db_get_cursor_token       P((dbCursor *cursor ));
+char *      db_get_default_driver_name ( void );
+char *      db_get_default_database_name ( void );
 dbDriverState * db__get_driver_state      P((void ));
 int         db_get_error_code         P((void ));
 char *      db_get_error_msg          P((void ));
