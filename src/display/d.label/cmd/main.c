@@ -87,7 +87,8 @@ main (int argc, char **argv)
 
 
 	/* */
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (opt4->answer != NULL)
 		R_font(opt4->answer) ;

@@ -45,7 +45,8 @@ int main(int argc,char *argv[])
 	if (argc > 1 && G_parser(argc, argv))
 		exit(1);
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	err = NULL;
 	if (D_get_cur_wind(name))

@@ -84,7 +84,8 @@ main (int argc, char **argv)
 	}
 
 	/* Setup driver and check important information */
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	D_setup(0);
 

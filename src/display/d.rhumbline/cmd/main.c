@@ -88,7 +88,8 @@ int main (int argc, char *argv[])
 		use_mouse = 0;
 	}
 
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	line_color = D_translate_color (parm.lcolor->answer);
 	if (!line_color)

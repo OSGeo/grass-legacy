@@ -140,7 +140,8 @@ int main( int argc , char **argv )
 		type = TYPE_DIAMOND ;
 
 	/* Setup driver and check important information */
-	R_open_driver();
+	if (R_open_driver() != 0)
+		G_fatal_error ("No graphics device selected");
 
 	if (D_get_cur_wind(window_name))
 		G_fatal_error("No current frame") ;
