@@ -1,0 +1,9 @@
+#!/bin/sh
+# test for d.what.r.db where all required command line args are provided
+# DB=seco_soils, GISdb=SECO
+#
+#
+d.rast.db key=grass_cat input=seco.soils output=seco.soils.recl tab=seco_soil_cats \
+col=cropname join=compyld,compyld.muid,seco_soil_cats.muid
+
+
