@@ -44,6 +44,7 @@ fi
 
 # Make sure GISBASE sub-directories exist
 for i in \
+    scripts \
     bin \
     man man/help man/1 man/2 man/3 man/4 man/5 \
     etc etc/paint etc/paint/driver etc/paint/driver.sh etc/sites \
@@ -74,7 +75,7 @@ do
 	do
 		if test ! -p $GISBASE/dev/fifo.$fifo$i
 		then
-		/etc/mknod $GISBASE/dev/fifo.$fifo$i p
+		mknod $GISBASE/dev/fifo.$fifo$i p
 		chmod 0666 $GISBASE/dev/fifo.$fifo$i
 		echo $GISBASE/dev/fifo.$fifo$i created
 		fi
