@@ -16,13 +16,23 @@ struct fcell_triple   {
       double smooth;
 };
 
-extern struct line_pnts *Pnts;
-extern struct line_cats *Cats2;
-extern dbDriver *driver2;
-extern dbString sql2;
-extern struct Map_info Map2;
-extern struct field_info *ff;
-extern int count;
+#ifdef MAIN
+  struct line_pnts *Pnts;
+  struct line_cats *Cats2;
+  dbDriver *driver2;
+  dbString sql2;
+  struct Map_info Map2;
+  struct field_info *ff;
+  int count;
+#else
+  extern struct line_pnts *Pnts;
+  extern struct line_cats *Cats2;
+  extern dbDriver *driver2;
+  extern dbString sql2;
+  extern struct Map_info Map2;
+  extern struct field_info *ff;
+  extern int count;
+#endif
 
 struct interp_params 
 {
