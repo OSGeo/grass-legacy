@@ -43,7 +43,11 @@ int
 main(int argc, char **argv)
 {
 	char      *setname,		 /* ptr to name of input mapset	 */
-	          errbuf[256];		 /* buffer for error messages	 */
+	          errbuf[256],		 /* buffer for error messages	 */
+		  in_datum[64], 	 /* input datum name */
+		  in_ellipse[64], 	 /* input ellipse name */
+		  out_datum[64], 	 /* output datum name */
+		  out_ellipse[64]; 	 /* output datum name */
 
 	int       permissions,		 /* mapset permissions		 */
 		  oldproj, newproj;
@@ -145,7 +149,9 @@ main(int argc, char **argv)
 	if (pj_get_kv(&oproj, out_proj_info, out_unit_info) < 0)
 		G_fatal_error("Can't get projection key values of output map");
 
-
+   /* for datum conversion, get output datum and ellipse */
+	strncpy(out_datum,G_database_datum_name(),sizeof(out_datum));
+	strncpy(out_ellipse,G_database_ellipse_name(),sizeof(out_ellipse));
 
    /* Change the location 		 */
 	G__create_alt_env();
@@ -154,6 +160,10 @@ main(int argc, char **argv)
 		  : indbase->answer);
 	G__setenv("LOCATION_NAME", inlocation->answer);
 	permissions = G__mapset_permissions(setname);
+
+	/* for datum conversion, get output datum and ellipse */
+	strncpy(in_datum,G_database_datum_name(),sizeof(in_datum));
+	strncpy(in_ellipse,G_database_ellipse_name(),sizeof(in_ellipse));
 
 	if (permissions >= 0) {
 
@@ -248,13 +258,15 @@ main(int argc, char **argv)
 	    si = G_site_new_struct(rtype,ndim,nstr,ndec); 
 	}
 
+	/* find out which do_proj to use */
+	set_datumshift(in_datum,in_ellipse,out_datum,out_ellipse);
 
 	while (G__site_get (infile, si, oldproj) >= 0) {
         
 	    xcoord = si->east;
 	    ycoord = si->north;
 
-	    if(pj_do_proj(&xcoord, &ycoord, &iproj, &oproj) < 0 ) {
+	    if(proj_f(&xcoord, &ycoord, &iproj, &oproj) < 0 ) {
                 fprintf(stderr,"Error in pj_do_proj\n");
                 exit(0);
             }
