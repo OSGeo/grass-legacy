@@ -1,6 +1,7 @@
 PGM       = $(BIN_CMD)/v.reclass.pg
 # EXTRA_CFLAGS = -Dunlink=puts
 LIBES     = $(DISPLAYLIB) $(GISLIB) 
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPGISLIB) 
 PACKAGE = "v.reclass.pg"
 DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
 EXTRA_CFLAGS    = $(PQINCPATH) $(DEFS)
@@ -13,7 +14,7 @@ OBJS = \
 	buildInfxQry.o \
 	runInfxFile.o
 
-$(PGM): $(OBJS) $(LIBES)
+$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

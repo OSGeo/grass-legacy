@@ -3,7 +3,7 @@ PGM=v.report
 LIST=main.o ask_layers.o ask_units.o run_report.o
 
 
-$(BIN_INTER)/$(PGM): $(LIST) $(GISLIB) $(VASKLIB)
+$(BIN_INTER)/$(PGM): $(LIST) $(DEPGISLIB) $(DEPVASKLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 

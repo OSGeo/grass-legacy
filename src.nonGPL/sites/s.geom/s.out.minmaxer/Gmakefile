@@ -4,6 +4,7 @@ TRIANGLIB = $(SRC)/libes/liboptri.a $(SRC)/libes/libsos.a $(SRC)/libes/liblia.a 
 	$(LIB_MALLOC)
 
 LIBES = $(VECTLIB) $(DIG_ATTLIB) $(GISLIB) $(TRIANGLIB) $(XDRLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPVECTLIB) $(DEPDIG_ATTLIB) $(DEPGISLIB) $(TRIANGLIB) $(XDRLIB) $(DEPDATETIMELIB)
 
 SOURCES = \
 	main.c
@@ -17,7 +18,7 @@ PROG =   $(BIN_CMD)/s.out.minmaxer
 
 all:  $(PROG)
 
-$(PROG): $(OBJ) $(LIBES)
+$(PROG): $(OBJ) $(DEPLIBS)
 	$(CC) $(EXTRA_FLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(MATHLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

@@ -23,9 +23,9 @@ LIST = main.o\
 	scan_scale.o\
 	yes.o
 
-$(PGM): $(LIST) $(GISLIB) $(INTERFACE) $(ICONLIB)
+$(PGM): $(LIST) $(DEPGISLIB) $(INTERFACE) $(DEPICONLIB)
 	$(CC) $(LDFLAGS) $(LIST) $(ICONLIB) $(GISLIB) $(TERMLIB) $(INTERFACE) -o $@
 
 $(INTERFACE): #
-$(ICONLIB): #
-$(GISLIB): #
+$(DEPICONLIB): #
+$(DEPGISLIB): #

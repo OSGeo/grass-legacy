@@ -3,7 +3,7 @@ HOME   = $(BIN_CMD)
 
 OBJECTS   = main.o
 
-$(HOME)/$(PGM):  $(OBJECTS) $(GISLIB) 
+$(HOME)/$(PGM):  $(OBJECTS) $(DEPGISLIB) 
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@ $(GISLIB) $(MATHLIB) $(XDRLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -15,6 +15,7 @@ PROG = $(BIN_CMD)/d.param.scale
 
 
 LIBES = $(GISLIB) $(VASKLIB) $(D_LIB) $(RASTERLIB) $(DISPLAYLIB)
+DEPLIBS= $(DEPGISLIB) $(DEPVASKLIB) $(DEPD_LIB) $(DEPRASTERLIB) $(DEPDISPLAYLIB)
 #-----------^ Library necessary for all GRASS programs.
 #---------------------^ Parses keyboard input.
 #------------------------------^ For non arithmetic maths.
@@ -52,7 +53,7 @@ OBJ =\
 
 ######### DEPENDENCIES #########
 
-$(PROG): $(OBJ) $(LIBES)
+$(PROG): $(OBJ) $(DEPLIBS)
 	 $(CC) $(LDFLAGS) -o $@ $(OBJ) $(LIBES) $(LIBES) $(CURSES) $(MATHLIB) $(XDRLIB) 
 #
 #-----^ This compiles the whole program bringing all labels together.
@@ -60,7 +61,7 @@ $(PROG): $(OBJ) $(LIBES)
 $(OBJ): $(INCLUDES)
 
 
-$(LIBES): #
+$(DEPLIBS): #
 #---^ Ignore this line (used for future additions of the library).
 
 

@@ -10,9 +10,9 @@ OBJ = sos.o minor.o primitive.o \
          smaller.o
 
 
-all: $(SOSLIB)
+all: $(DEPSOSLIB)
 
-$(SOSLIB): $(OBJ)
+$(DEPSOSLIB): $(OBJ)
 	$(AR)
 
 

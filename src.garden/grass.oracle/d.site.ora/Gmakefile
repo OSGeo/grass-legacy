@@ -1,5 +1,6 @@
 PGM       = $(BIN_CMD)/d.site.ora
 LIBES     = $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) $(DATETIMELIB)
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPRASTERLIB) $(DEPGISLIB) $(DEPDATETIMELIB)
 
 # EXTRA_CFLAGS = -Dunlink=puts
 
@@ -11,8 +12,8 @@ OBJS = \
         runInfxFile.o \
 	plotsite.o
 
-$(PGM): $(OBJS) $(LIBES)
+$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(MATHLIB) $(XDRLIB)
 
 
-$(LIBES): #
+$(DEPLIBS): #

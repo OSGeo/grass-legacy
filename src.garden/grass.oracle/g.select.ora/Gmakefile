@@ -1,12 +1,13 @@
 PGM       = $(BIN_CMD)/g.select.ora
 LIBES     = $(GISLIB) 
+DEPLIBS= $(DEPGISLIB) 
 
 
 
 OBJS = \
 	main.o
 
-$(PGM): $(OBJS) $(LIBES)
+$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(MATHLIB)
 
-$(LIBES): #
+$(DEPLIBS): #

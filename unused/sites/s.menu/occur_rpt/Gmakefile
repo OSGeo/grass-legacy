@@ -10,10 +10,10 @@ LIST =  main.o\
 	mode.o\
 	title.o
 
-$(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
+$(SITE)/$(PGM): $(LIST) $(SITELIB) $(DEPGISLIB)
 		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(LIST):	$I/report.h
 
 $(SITELIB):	#
-$(GISLIB):	#
+$(DEPGISLIB):	#

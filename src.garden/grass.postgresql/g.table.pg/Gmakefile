@@ -1,6 +1,7 @@
 PGM       = $(BIN_CMD)/g.table.pg
 EXTRA_CFLAGS = $(PQINCPATH) $(DEFS)
 LIBES     = $(GISLIB) 
+DEPLIBS= $(DEPGISLIB) 
 PACKAGE=g.table.pg
 
 DEFS = -Wall -DPACKAGE=\"$(PACKAGE)\"
@@ -9,8 +10,8 @@ OBJS = \
 	main.o \
 	infxTable.o
 
-$(PGM): $(OBJS) $(LIBES)
+$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(PQLIBPATH) $(PQLIB) $(MATHLIB) $(XDRLIB) $(INTLLIB)
 
-$(LIBES): #
+$(DEPLIBS): #
 

@@ -9,8 +9,8 @@ LIST =  main.o\
 	opn_outfle.o\
 	S.o
 
-$(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
+$(SITE)/$(PGM): $(LIST) $(SITELIB) $(DEPGISLIB)
 		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(SITELIB):	#
-$(GISLIB):	#
+$(DEPGISLIB):	#

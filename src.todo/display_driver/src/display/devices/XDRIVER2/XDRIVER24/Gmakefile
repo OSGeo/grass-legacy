@@ -5,7 +5,8 @@
 PGM=XDRIVER
 SWITCHER = SWITCHER.o
 
-LIB = ../lib/driverlib.a $(D_LIB)
+LIBES   = $(DRIVERLIB) $(D_LIB)
+DEPLIBS = $(DEPDRIVERLIB) $(DEPD_LIB)
 
 # if you are compiling under X11R3 add this define
 #R3DEFINE=-DX11R3
@@ -59,8 +60,8 @@ OFILES =  \
 
 all: version.h $(GISBASE)/driver/$(PGM)
 
-$(GISBASE)/driver/$(PGM): $(OFILES) $(LIB)
-	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(OFILES) $(LIB) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
+$(GISBASE)/driver/$(PGM): $(OFILES) $(DEPLIBS)
+	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(OFILES) $(LIBES) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
 
 Graph_Set.o: version.h
 

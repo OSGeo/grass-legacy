@@ -5,11 +5,12 @@ EXTRA_CFLAGS = -I../../libes/fips123/f123inc
 OFILE     = m.sdts.read.o
 
 LIBES = 	$(FIPSLIB) $(GISLIB)
+DEPLIBS= 	$(FIPSLIB) $(DEPGISLIB)
 
-$(HOME)/$(PGM): $(OFILE) $(LIBES)
+$(HOME)/$(PGM): $(OFILE) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OFILE) $(LIBES) $(MATHLIB) $(XDRLIB)
 
-$(LIBES):	#
+$(DEPLIBS):	#
 
 
 saber_src:

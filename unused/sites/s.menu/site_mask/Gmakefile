@@ -10,10 +10,10 @@ LIST =  main.o\
 	mask_sites.o\
 	new_screen.o
 
-$(SITE)/$(PGM): $(LIST) $(SITELIB) $(GISLIB)
+$(SITE)/$(PGM): $(LIST) $(SITELIB) $(DEPGISLIB)
 		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(VASKLIB) $(CURSES) $(MATHLIB) $(XDRLIB)
 
 $(LIST):	$I/site.h
 
 $(SITELIB):	#
-$(GISLIB):	#
+$(DEPGISLIB):	#

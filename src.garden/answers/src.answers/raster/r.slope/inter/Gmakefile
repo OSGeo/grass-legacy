@@ -3,7 +3,7 @@ HOME=$(BIN_INTER)
 
 LIST = main.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
+$(HOME)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) -o $@ $(MATHLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -4,11 +4,11 @@ HOME     = $(BIN_CMD)
 
 LIST     = main.o
 
-$(HOME)/$(PGM): $(LIST) $(GISLIB)
+$(HOME)/$(PGM): $(LIST) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 
-$(GISLIB):   #
+$(DEPGISLIB):   #
 
 saber_src:
 	#load $(CFLAGS) main.c $(GISLIB)

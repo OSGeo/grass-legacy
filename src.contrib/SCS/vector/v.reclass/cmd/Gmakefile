@@ -7,4 +7,4 @@ OFILES = \
 $(BIN_CMD)/v.reclass.scs: $(OFILES) 
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(VECTLIB) $(GISLIB) $(VECTLIB) $(DIG_ATTLIB) $(XDRLIB) $(MATHLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

@@ -13,4 +13,4 @@ all:  $(BIN_CMD)/$(PGM)
 $(BIN_CMD)/$(PGM): $(OFILES) 
 	$(CC) $(LDFLAGS) -o $@ $(OFILES) $(GISLIB) $(XDRLIB) $(MATHLIB)
 
-$(GISLIB): #
+$(DEPGISLIB): #

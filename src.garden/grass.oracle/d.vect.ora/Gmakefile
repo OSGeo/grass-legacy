@@ -1,5 +1,6 @@
 PGM       = $(BIN_CMD)/d.vect.ora
 LIBES     = $(DISPLAYLIB) $(VECTLIB) $(RASTERLIB) $(GISLIB) 
+DEPLIBS= $(DEPDISPLAYLIB) $(DEPVECTLIB) $(DEPRASTERLIB) $(DEPGISLIB) 
 
 
 
@@ -15,6 +16,6 @@ OBJS = \
 
 
 
-$(PGM): $(OBJS) $(LIBES)
+$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES) $(XDRLIB) $(MATHLIB)
-$(LIBES): #
+$(DEPLIBS): #

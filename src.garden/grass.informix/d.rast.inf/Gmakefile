@@ -1,5 +1,6 @@
 PGM       = $(BIN_CMD)/d.rast.inf
 LIBES     = $(GISLIB) 
+DEPLIBS= $(DEPGISLIB) 
 # EXTRA_CFLAGS = -Dunlink=puts
 
 
@@ -15,7 +16,7 @@ OBJS = \
 	row_or_col.o 
 
 
-$(PGM): $(OBJS) $(LIBES)
+$(PGM): $(OBJS) $(DEPLIBS)
 	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBES)
 
-$(LIBES): #
+$(DEPLIBS): #
