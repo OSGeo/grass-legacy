@@ -31,7 +31,8 @@ struct windows windows[] =
         {
         "mou", 85,  100,   0,  50,
         "sta", 85,  100,  50, 100,
-        "map",  0,   85,   0,  50
+        "map",  0,   85,   0,  50,
+	"orig", 0,  100,   0,  1009
         } ;
 
 struct windows profiles[] =
@@ -49,3 +50,5 @@ extern struct windows profiles[];
 #define MOU     windows[0]
 #define STA     windows[1]
 #define MAP     windows[2]
+#define ORIG     windows[3]
+
