@@ -125,7 +125,9 @@ COMPILING INDIVIDUAL MODULES - OWN MODULES
 
 Compiling own GRASS 5.7 modules or modified modules:
 Simply run "make" in the appropriate directory
-and then "make install" from the top source directory.
+and then install with "INST_NOW=y make".
+It is not necessary to install the full distribution.
+You may want to make an alias: alias gmake='INST_NOW=y make'
 
 
 SUPPORT
