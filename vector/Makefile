@@ -11,6 +11,7 @@ SUBDIRS1 = \
 	v.db.connect \
 	v.digit \
 	v.extract \
+	v.format \
 	v.info \
 	v.patch \
 	v.in.sites \
