@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -8,6 +7,21 @@
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Allocates a vector of <em>nofTiles</em> tiles with the same dimensions
+ * as the tiles of <em>map</em> and large enough to store cell-values of
+ * <em>type</em>.
+ *
+ *  \param map
+ *  \param nofTiles
+ *  \param type
+ *  \return char * : a pointer to the vector ... if successful,
+ *                   NULL ... otherwise.
+ */
 
 char *
 G3d_allocTilesType (map, nofTiles, type)
@@ -29,6 +43,17 @@ G3d_allocTilesType (map, nofTiles, type)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Is equivalent to G3d_allocTilesType (map, nofTiles, G3d_fileTypeMap (map)).
+ *
+ *  \param map
+ *  \param nofTiles
+ *  \return char * 
+ */
+
 char *
 G3d_allocTiles (map, nofTiles)
 
@@ -49,6 +74,16 @@ G3d_allocTiles (map, nofTiles)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Is equivalent to <tt>G3d_free (tiles);</tt>
+ *
+ *  \param tiles
+ *  \return void
+ */
+
 void
 G3d_freeTiles (tiles)
 
@@ -57,7 +92,3 @@ G3d_freeTiles (tiles)
 {
   G3d_free (tiles);
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

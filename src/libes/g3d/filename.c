@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -18,8 +17,3 @@ G3d_filename (path, elementName, mapName, mapset)
   sprintf(map, "%s/%s", G3D_DIRECTORY, mapName);
   G__file_name (path, map, elementName, mapset);
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-

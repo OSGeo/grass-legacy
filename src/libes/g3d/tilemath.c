@@ -6,6 +6,21 @@
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Converts index <em>tileIndex</em> into tile-coordinates
+ * <em>(xTile, yTile, zTile)</em>.
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \param xTile
+ *  \param yTile
+ *  \param zTile
+ *  \return void
+ */
+
 void
 G3d_tileIndex2tile (map, tileIndex, xTile, yTile, zTile)
 
@@ -24,6 +39,20 @@ G3d_tileIndex2tile (map, tileIndex, xTile, yTile, zTile)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Returns tile-index corresponding to tile-coordinates <em>(xTile,
+ * yTile, zTile)</em>.
+ *
+ *  \param map
+ *  \param xTile
+ *  \param yTile
+ *  \param zTile
+ *  \return int
+ */
+
 int
 G3d_tile2tileIndex (map, xTile, yTile, zTile)
 
@@ -35,6 +64,24 @@ G3d_tile2tileIndex (map, xTile, yTile, zTile)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Computes the cell-coordinates <em>(x, y, z)</em>
+ * which correspond to the origin of the tile with tile-coordinates <em>(xTile,
+ * yTile, zTile)</em>.
+ *
+ *  \param map
+ *  \param xTile
+ *  \param yTile
+ *  \param zTile
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \return void
+ */
 
 void
 G3d_tileCoordOrigin (map, xTile, yTile, zTile, x, y, z)
@@ -50,6 +97,21 @@ G3d_tileCoordOrigin (map, xTile, yTile, zTile, x, y, z)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Computes the cell-coordinates <em>(x, y, z)</em> which correspond to
+ * the origin of the tile with <em>tileIndex</em>.
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \return void
+ */
 
 void
 G3d_tileIndexOrigin (map, tileIndex, x, y, z)
@@ -67,6 +129,28 @@ G3d_tileIndexOrigin (map, tileIndex, x, y, z)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Converts
+ * cell-coordinates <em>(x, y, z)</em> into tile-coordinates <em>(xTile, yTile,
+ * zTile)</em> and the coordinate of the cell <em>(xOffs, yOffs, zOffs)</em> within
+ * the tile.
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \param xTile
+ *  \param yTile
+ *  \param zTile
+ *  \param xOffs
+ *  \param yOffs
+ *  \param zOffs
+ *  \return void
+ */
+
 void
 G3d_coord2tileCoord (map, x, y, z, xTile, yTile, zTile, xOffs, yOffs, zOffs)
 
@@ -81,6 +165,22 @@ G3d_coord2tileCoord (map, x, y, z, xTile, yTile, zTile, xOffs, yOffs, zOffs)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Converts cell-coordinates <em>(x, y, z)</em> into
+ * <em>tileIndex</em> and the <em>offset</em> of the cell within the tile.
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \param tileIndex
+ *  \param offset
+ *  \return void
+ */
 
 void
 G3d_coord2tileIndex (map, x, y, z, tileIndex, offset)
@@ -100,6 +200,21 @@ G3d_coord2tileIndex (map, x, y, z, tileIndex, offset)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Returns 1 if
+ * cell-coordinate <em>(x, y, z)</em> is a coordinate inside the region. Returns 0
+ * otherwise.
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \return int
+ */
+
 int 
 G3d_coordInRange (map, x, y, z)
 
@@ -113,6 +228,18 @@ G3d_coordInRange (map, x, y, z)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Returns 1 if <em>tileIndex</em> is a valid index for <em>map</em>.
+ *  Returns 0 otherwise.
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \return int
+ */
+
 int
 G3d_tileIndexInRange (map, tileIndex)
 
@@ -124,6 +251,21 @@ G3d_tileIndexInRange (map, tileIndex)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Returns 1 if
+ * tile-coordinate <em>(x, y, z)</em> is a coordinate inside tile cube. Returns 0
+ * otherwise.
+ *
+ *  \param map
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \return int
+ */
 
 int
 G3d_tileInRange (map, x, y, z)
@@ -137,6 +279,27 @@ G3d_tileInRange (map, x, y, z)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Computes the dimensions of the tile when clipped to fit the
+ * region of <em>map</em>. The clipped dimensions are returned in <em>rows</em>, 
+ * <em>cols</em>, <em>depths</em>.  The complement is returned in <em>xRedundant</em>,
+ *  <em>yRedundant</em>, and <em>zRedundant</em>. This function returns the number of
+ * cells in the clipped tile.
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \param rows
+ *  \param cols
+ *  \param depths
+ *  \param xRedundant
+ *  \param yRedundant
+ *  \param zRedundant
+ *  \return int
+ */
 
 int
 G3d_computeClippedTileDimensions (map, tileIndex,
@@ -187,6 +350,20 @@ G3d_computeClippedTileDimensions (map, tileIndex,
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Returns 1 if region-coordinates <em>(north, west, bottom)</em> are
+ * inside the region of <em>map</em>. Returns 0 otherwise.
+ *
+ *  \param map
+ *  \param north
+ *  \param west
+ *  \param bottom
+ *  \return int
+ */
+
 int
 G3d_isValidLocation (map, north, east, top)
 
@@ -201,6 +378,23 @@ G3d_isValidLocation (map, north, east, top)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Converts region-coordinates <em>(north, west,
+ * bottom)</em> into cell-coordinates <em>(x, y, z)</em>.
+ *
+ *  \param map
+ *  \param north
+ *  \param west
+ *  \param bottom
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \return void
+ */
 
 void
 G3d_location2coord (map, north, east, top, x, y, z)
@@ -220,7 +414,3 @@ G3d_location2coord (map, north, east, top, x, y, z)
   *z = (top - map->region.bottom) / (map->region.top - map->region.bottom) * 
        (map->region.depths - 1);
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

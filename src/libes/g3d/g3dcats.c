@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -9,6 +8,20 @@
 #include "G3d_intern.h"
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Writes the
+ * categories stored in the <em>cats</em> structure into the categories file for
+ * map <em>name</em> in the current mapset.  See <em>G_write_cats</em>
+ * (Raster_Category_File) for details and return values.
+ *
+ *  \param name
+ *  \param cats
+ *  \return int
+ */
 
 int
 G3d_writeCats (name, cats) /* adapted from G_write_cats */
@@ -153,6 +166,20 @@ error:
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Reads the categories file for map <em>name</em> in <em>mapset</em> and
+ * stores the categories in the <em>pcats</em> structure.  See <em>G_read_cats</em>
+ * (Raster_Category_File) for details and return values.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param pcats
+ *  \return int
+ */
+
 int
 G3d_readCats (name, mapset, pcats) /* adapted from G_read_cats */
 
@@ -180,7 +207,3 @@ G3d_readCats (name, mapset, pcats) /* adapted from G_read_cats */
   G_warning (err);
   return -1;
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

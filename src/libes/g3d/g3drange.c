@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -109,6 +108,17 @@ error:
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Loads the range into the range structure of <em>map</em>.
+ *
+ *  \param map
+ *  \return 1 ... if successful
+ *          0 ... otherwise.
+ */
+
 int
 G3d_range_load (map) 
 
@@ -124,6 +134,19 @@ G3d_range_load (map)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Returns in <em>min</em> and <em>max</em> the minimum and maximum values of
+ * the range.
+ *
+ *  \param map
+ *  \param min
+ *  \param max
+ *  \return void
+ */
 
 void
 G3d_range_min_max (map, min, max)
@@ -184,6 +207,18 @@ error:
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Writes the range which is stored in the range structure of <em>map</em>. 
+ * (This function is invoked automatically when a new file is closed).
+ *
+ *  \param map
+ *  \return 1 ... if successful
+ *          0 ... otherwise.
+ */
+
 int
 G3d_range_write (map)
 
@@ -213,7 +248,3 @@ G3d_range_init (map)
 {
   return G_init_fp_range (&(map->range));
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

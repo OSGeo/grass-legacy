@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include "gis.h"
 #include "G3d_intern.h"
@@ -53,6 +52,15 @@ G3d_maskClose ()
 }
 
 /*--------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Returns 1 if the 3d mask file exists.
+ *
+ *  \return int
+ */
 
 int
 G3d_maskFileExists ()
@@ -122,6 +130,19 @@ G3d_getMaskFloat (map, x, y, z)
 
 /*--------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  This function should be used to adjust the cache size used for the
+ * 3d-mask. First the open 3d-mask is closed and then opened again with 
+ * a cache size as specified with <em>cache</em>.
+ *  
+ *  \param cache
+ *  \return 1 ... if successful
+ *          0 ... otherwise.
+ */
+
 int
 G3d_maskReopen (cache)
 
@@ -152,6 +173,19 @@ G3d_maskReopen (cache)
 
 /*--------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Returns 1 if the cell with cell-coordinates <em>(x, y, z)</em> is masked
+ *  out. Returns 0 otherwise.
+ *
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \return int
+ */
+
 int
 G3d_isMasked (map, x, y, z)
 
@@ -166,6 +200,22 @@ G3d_isMasked (map, x, y, z)
 }
 
 /*--------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Replaces the value stored in <em>value</em> with the NULL-value if 
+ * <em>G3d_isMasked (x, y, z)</em> returns 1. Does nothing otherwise.
+ * <em>value</em> is assumed to be of<em>type</em>.
+ *
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \param value
+ *  \param type
+ *  \return void
+ */
 
 void
 G3d_maskNum (map, x, y, z, value, type)
@@ -182,6 +232,19 @@ G3d_maskNum (map, x, y, z, value, type)
 
 /*--------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Same as <em>G3d_maskNum (x, y, z, value, G3D_FLOAT)</em>.
+ *
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \param value
+ *  \return void
+ */
+
 void
 G3d_maskFloat (map, x, y, z, value)
 
@@ -196,6 +259,19 @@ G3d_maskFloat (map, x, y, z, value)
 
 /*--------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Same as <em>G3d_maskNum (x, y, z, value, G3D_DOUBLE)</em>.
+ *
+ *  \param x
+ *  \param y
+ *  \param z
+ *  \param value
+ *  \return void
+ */
+
 void
 G3d_maskDouble (map, x, y, z, value)
 
@@ -209,6 +285,24 @@ G3d_maskDouble (map, x, y, z, value)
 }
 
 /*--------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ *  Replaces the values stored in <em>tile</em> (with <em>tileIndex</em>) for 
+ *  which <em>G3d_isMasked</em> returns 1 with NULL-values. Does not change
+ *  the remaining values. The values are assumed to be of <em>type</em>. 
+ *  Whether replacement is performed or not only depends on location of the
+ *  cells of the tile and not on the status of the mask for <em>map</em>
+ *  (i.e. turned on or off).
+ *
+ *  \param map
+ *  \param tileIndex
+ *  \param tile
+ *  \param type
+ *  \return void
+ */
 
 void
 G3d_maskTile (map, tileIndex, tile, type)
@@ -234,8 +328,8 @@ G3d_maskTile (map, tileIndex, tile, type)
 /*AV*/
 /* BEGIN OF ORIGINAL CODE */
 /*
-//    G3d_getTileDimensionsMap (map, &rows, &cols, &depths);
-*/
+ *    G3d_getTileDimensionsMap (map, &rows, &cols, &depths);
+ */
 /*AV*/
 /* BEGIN OF MY CODE*/
     G3d_getTileDimensionsMap (map, &cols, &rows, &depths);
@@ -265,25 +359,83 @@ G3d_maskTile (map, tileIndex, tile, type)
 
 /*--------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ *  Turns on the mask for <em>map</em>. Do
+ * not invoke this function after the first tile has been read since the result
+ * might be inconsistent cell-values.
+ *
+ *  \param map
+ *  \return void
+ */
+
 void
 G3d_maskOn (map) G3D_Map *map; { map->useMask = 1; }
+
+
+/*!
+ * \brief 
+ *
+ *  Turns off the mask for <em>map</em>.
+ * This is the default.  Do not invoke this function after the first tile has
+ * been read since the result might be inconsistent cell-values.
+ *
+ *  \param map
+ *  \return void
+ */
 
 void 
 G3d_maskOff (map) G3D_Map *map; { map->useMask = 0; }
 
+
+/*!
+ * \brief 
+ *
+ *  Returns 1 if the mask for <em>map</em>
+ * is turned on. Returns 0 otherwise.
+ *
+ *  \param map
+ *  \return int
+ */
+
 int
 G3d_maskIsOn (map) G3D_Map *map; { return map->useMask; }
+
+
+/*!
+ * \brief 
+ *
+ * Returns 1 if the mask for <em>map</em> is turned off. Returns 0 otherwise.
+ *
+ *  \param map
+ *  \return int
+ */
 
 int
 G3d_maskIsOff (map) G3D_Map *map; { return ! map->useMask; }
 
+
+/*!
+ * \brief 
+ *
+ * Returns the name of the 3d mask file.
+ *
+ *  \return char * 
+ */
+
 char * 
 G3d_maskFile () { return G3D_MASK_MAP; }
 
+
+/*!
+ * \brief 
+ *
+ * Returns 1 if the 3d mask is loaded.
+ *
+ *  \return int
+ */
+
 int
 G3d_maskMapExists () { return G3d_maskMapExistsVar; }
-
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------*/
-

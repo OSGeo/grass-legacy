@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
@@ -79,6 +78,27 @@ G3d_getBlockNocache (map, x0, y0, z0, nx, ny, nz, block, type)
 
 /*---------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief 
+ *
+ * Copies the cells contained in the block (cube) with vertices 
+ * <em>(x0, y0, z0)</em> and <em>(x0 + nx - 1, y0 + ny - 1, z0 + nz - 1)</em>
+ * into <em>block</em>. The cell-values in <em>block</em> are of <em>type</em>.
+ * The source code can be found in <em>getblock.c</em>.
+ *
+ *  \param map
+ *  \param x0
+ *  \param y0
+ *  \param z0
+ *  \param nx
+ *  \param ny
+ *  \param nz
+ *  \param block
+ *  \param type
+ *  \return void
+ */
+
 void
 G3d_getBlock (map, x0, y0, z0, nx, ny, nz, block, type)
 
@@ -118,7 +138,3 @@ G3d_getBlock (map, x0, y0, z0, nx, ny, nz, block, type)
   nNull = (z0 + nz - z) * ny * nx;
   G3d_setNullValue (block, nNull, type);
 }	
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/

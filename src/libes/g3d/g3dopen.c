@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -56,6 +55,34 @@ G3d_openCellOldNoHeader (name, mapset)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Opens existing g3d-file <em>name</em> in <em>mapset</em>.
+ * Tiles are stored in memory with <em>type</em> which must be any of G3D_FLOAT,
+ * G3D_DOUBLE, or G3D_TILE_SAME_AS_FILE. <em>cache</em> specifies the
+ * cache-mode used and must be either G3D_NO_CACHE, G3D_USE_CACHE_DEFAULT,
+ * G3D_USE_CACHE_X, G3D_USE_CACHE_Y, G3D_USE_CACHE_Z,
+ * G3D_USE_CACHE_XY, G3D_USE_CACHE_XZ, G3D_USE_CACHE_YZ,
+ * G3D_USE_CACHE_XYZ, the result of <tt>G3d_cacheSizeEncode ()</tt> (cf.{g3d:G3d.cacheSizeEncode}), or any positive integer which
+ * specifies the number of tiles buffered in the cache.  <em>window</em> sets the
+ * window-region for the map. It is either a pointer to a window structure or
+ * G3D_DEFAULT_WINDOW, which uses the window stored at initialization time or
+ * set via <tt>G3d_setWindow ()</tt> (cf.{g3d:G3d.setWindow}).
+ * To modify the window for the map after it has already been opened use
+ * <tt>G3d_setWindowMap ()</tt> (cf.{g3d:G3d.setWindowMap}).
+ * Returns a pointer to the cell structure ... if successful, NULL ...
+ * otherwise.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param window
+ *  \param type
+ *  \param cache
+ *  \return void * 
+ */
 
 void *
 G3d_openCellOld (name, mapset, window, typeIntern, cache)
@@ -166,6 +193,30 @@ G3d_openCellOld (name, mapset, window, typeIntern, cache)
 }
 
 /*---------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Opens new g3d-file with <em>name</em> in the current mapset. Tiles
+ * are stored in memory with <em>type</em> which must be one of G3D_FLOAT,
+ * G3D_DOUBLE, or G3D_TILE_SAME_AS_FILE. <em>cache</em> specifies the
+ * cache-mode used and must be either G3D_NO_CACHE, G3D_USE_CACHE_DEFAULT,
+ * G3D_USE_CACHE_X, G3D_USE_CACHE_Y, G3D_USE_CACHE_Z,
+ * G3D_USE_CACHE_XY, G3D_USE_CACHE_XZ, G3D_USE_CACHE_YZ,
+ * G3D_USE_CACHE_XYZ, the result of <tt>G3d_cacheSizeEncode ()</tt>
+ * (cf.{g3d:G3d.cacheSizeEncode}), or any positive integer which
+ * specifies the number of tiles buffered in the cache.  <em>region</em> specifies
+ * the 3d region.  
+ * Returns a pointer to the cell structure ... if successful,
+ * NULL ... otherwise.
+ *
+ *  \param name
+ *  \param type
+ *  \param cache
+ *  \param region
+ *  \return void * 
+ */
 
 void *
 G3d_openCellNew (name, typeIntern, cache, region)
@@ -282,7 +333,3 @@ G3d_openCellNew (name, typeIntern, cache, region)
 
   return (void *) map;
 }
-
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
-/*---------------------------------------------------------------------------*/
