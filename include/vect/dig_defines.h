@@ -200,8 +200,6 @@ typedef enum {
 
 #define GV_NCATS_MAX PORT_INT_MAX  /* maximum number of categories for one element */
 #define GV_FIELD_MAX PORT_INT_MAX /* maximum field */
-#define GV_NCATS_MAX PORT_CHAR_MAX  /* maximum number of categories for one element */
-#define GV_FIELD_MAX PORT_SHORT_MAX /* maximum field */
 #define GV_CAT_MAX   PORT_INT_MAX   /* maximum category value */
 
 #define BUILD_PROG "v.build"
