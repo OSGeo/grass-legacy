@@ -128,41 +128,41 @@ exp_atom	: '(' exp ')'		{ $$ = $2;			}
 		;
 
 exp_neg		: exp_atom
-		| '-' exp_atom		{ $$ = function("neg",singleton($2));	}
+		| '-' exp_atom		{ $$ = operator("neg","-",1,singleton($2));	}
 		;
 
 exp_pow		: exp_neg
-		| exp_neg '^' exp_pow	{ $$ = function("pow",pair($1,$3));	}
+		| exp_neg '^' exp_pow	{ $$ = operator("pow","^",2,pair($1,$3));	}
 		;
 
 exp_mul		: exp_pow
-		| exp_mul '*' exp_pow	{ $$ = function("mul",pair($1,$3));	}
-		| exp_mul '/' exp_pow	{ $$ = function("div",pair($1,$3));	}
-		| exp_mul '%' exp_pow	{ $$ = function("mod",pair($1,$3));	}
+		| exp_mul '*' exp_pow	{ $$ = operator("mul","*",3,pair($1,$3));	}
+		| exp_mul '/' exp_pow	{ $$ = operator("div","/",3,pair($1,$3));	}
+		| exp_mul '%' exp_pow	{ $$ = operator("mod","%",3,pair($1,$3));	}
 		;
 
 exp_add		: exp_mul
-		| exp_add '+' exp_mul	{ $$ = function("add",pair($1,$3));	}
-		| exp_add '-' exp_mul	{ $$ = function("sub",pair($1,$3));	}
+		| exp_add '+' exp_mul	{ $$ = operator("add","+",4,pair($1,$3));	}
+		| exp_add '-' exp_mul	{ $$ = operator("sub","-",4,pair($1,$3));	}
 		;
 
 exp_cmp		: exp_add
-		| exp_cmp GT exp_add	{ $$ = function("gt", pair($1,$3));	}
-		| exp_cmp GE exp_add	{ $$ = function("ge", pair($1,$3));	}
-		| exp_cmp LT exp_add	{ $$ = function("lt", pair($1,$3));	}
-		| exp_cmp LE exp_add	{ $$ = function("le", pair($1,$3));	}
-		| exp_cmp EQ exp_add	{ $$ = function("eq", pair($1,$3));	}
-		| exp_cmp NE exp_add	{ $$ = function("ne", pair($1,$3));	}
+		| exp_cmp GT exp_add	{ $$ = operator("gt",">", 5,pair($1,$3));	}
+		| exp_cmp GE exp_add	{ $$ = operator("ge",">=",5,pair($1,$3));	}
+		| exp_cmp LT exp_add	{ $$ = operator("lt","<", 5,pair($1,$3));	}
+		| exp_cmp LE exp_add	{ $$ = operator("le","<=",5,pair($1,$3));	}
+		| exp_cmp EQ exp_add	{ $$ = operator("eq","==",5,pair($1,$3));	}
+		| exp_cmp NE exp_add	{ $$ = operator("ne","!=",5,pair($1,$3));	}
 		;
 
 exp_log		: exp_cmp
-		| exp_log OR exp_cmp	{ $$ = function("or", pair($1,$3));	}
-		| exp_log AND exp_cmp	{ $$ = function("and",pair($1,$3));	}
+		| exp_log OR exp_cmp	{ $$ = operator("or", "||",6,pair($1,$3));	}
+		| exp_log AND exp_cmp	{ $$ = operator("and","&&",6,pair($1,$3));	}
 		;
 
 exp_cond	: exp_log
 		| exp_log '?' exp_cond ':' exp_cond
-					{ $$ = function("if",triple($1,$3,$5));	}
+					{ $$ = operator("if","?:",7,triple($1,$3,$5));	}
 		;
 
 exp_let		: exp_cond

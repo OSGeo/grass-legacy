@@ -29,7 +29,7 @@ extern void syntax_error(const char *fmt, ...);
 /* expression.c */
 
 extern int is_var(const char *);
-extern void print_expression(FILE *, const expression *);
+extern char *format_expression(const expression *);
 
 /* evaluate.c */
 
@@ -50,6 +50,7 @@ extern void close_output_map(int fd);
 extern void copy_cats(const char *dst, int idx);
 extern void copy_colors(const char *dst, int idx);
 extern void copy_history(const char *dst, int idx);
+extern void create_history(const char *dst, expression *e);
 
 /****************************************************************************/
 
