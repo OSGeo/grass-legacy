@@ -1,4 +1,4 @@
-EXTRA_CFLAGS=$(CAN_CLEAR)
+EXTRA_CFLAGS=$(CAN_CLEAR) $(GETHOSTNAME)
 OBJ = \
     adj_cellhd.o\
     align_window.o\
@@ -14,25 +14,40 @@ OBJ = \
     ask_cell.o\
     ask_vctrs.o\
     auto_mask.o\
+    bres_line.o\
     cats.o\
     cell_stats.o\
     cell_title.o\
     clear_scrn.o\
     closecell.o\
-    color_asp.o\
-    color_grey.o\
-    color_hist.o\
-    color_rain.o\
-    color_ramp.o\
-    color_rand.o\
-    color_ryg.o\
-    color_wave.o\
-    colors.o\
+    color_asp.o \
+    color_free.o \
+    color_get.o \
+    color_grey.o \
+    color_gyr.o \
+    color_hist.o \
+    color_init.o \
+    color_insrt.o \
+    color_invrt.o \
+    color_look.o \
+    color_org.o \
+    color_rain.o \
+    color_ramp.o \
+    color_rand.o \
+    color_range.o \
+    color_read.o \
+    color_rule.o \
+    color_ryg.o \
+    color_set.o \
+    color_shift.o \
+    color_wave.o \
+    color_write.o \
     commas.o\
     copy.o\
     date.o\
     def_window.o\
     distance.o\
+    done_msg.o\
     edit_cats.o\
     edit_cellhd.o\
     edit_hist.o\
@@ -62,11 +77,17 @@ OBJ = \
     home.o\
     index.o\
     intr_char.o\
+    key_value1.o\
+    key_value2.o\
+    key_value3.o\
+    key_value4.o\
     legal_name.o\
     list.o\
+    line_dist.o\
     ll_format.o\
     ll_scan.o\
     location.o\
+    mach_name.o\
     make_colr.o\
     mapcase.o\
     mapset.o\
@@ -79,13 +100,15 @@ OBJ = \
     nme_in_mps.o\
     open.o\
     opencell.o\
-    openvect.o\
-    parse.o\
+    parser.o\
     percent.o\
     plot.o\
     popen.o\
     pole_in_poly.o\
     progrm_nme.o\
+    proj1.o\
+    proj2.o\
+    proj3.o\
     put_cellhd.o\
     put_row.o\
     put_title.o\
@@ -271,8 +294,6 @@ opencell.o: gisdefs.h
 openvect.o: G.h
 openvect.o: gis.h
 openvect.o: gisdefs.h
-parse.o: gis.h
-parse.o: gisdefs.h
 plot.o: gis.h
 plot.o: gisdefs.h
 put_cellhd.o: gis.h
