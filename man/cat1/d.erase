@@ -1,7 +1,7 @@
 
 
 
-d.erase              GRASS Reference Manual               d.erase
+d.erase <main>       GRASS Reference Manual        <main> d.erase
 
 
 
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
