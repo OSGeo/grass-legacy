@@ -54,7 +54,8 @@ while ($r=<MAP>)
 	    {
 		# ignore subdirs
 		if ( -d "$o" ) { 
-		    print "Subdir ignored: $o\n";  
+		   # message commented, seems to be confusing:
+		   # print "Subdir ignored: $o\n";  
 		    next; 
 		}
 
@@ -62,6 +63,7 @@ while ($r=<MAP>)
 		$n = $o;
 		$n =~ s/.+\///; 
 		lnk ( "$o", "$newdir/$new/$n" );
+		print "Linked $o\n";
 	    }
 	}    
     }	
