@@ -1,0 +1,8 @@
+This file contains notes on compiling the code for different platforms.
+
+The Makefile contains comments to support many platforms.  You should
+modify it to set the parameters for your platform.  Some common problems
+people run into are discussed below.
+
+On an SGI IRIX 4, make sure to set the environment variable SGI_IRIX4
+to 1, and remove none of the commented out CFLAGS.
