@@ -28,7 +28,7 @@ OBJ6 = ppupdate.o
 all: $(PGM) $(PGM1) $(PGM2) $(PGM3) $(PGM4) $(PGM5) $(PGM6) 
 
 $(PGM): $(OBJ) $(GISLIB)
-	$(CC) $(LDFLAGS) $(OBJ) $(GISLIB) $(MATHLIB) -o $@ $(XDRLIB)
+	$(CC) $(LDFLAGS) $(OBJ) -o $@ $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(PGM1): $(OBJ1) $(FILL)
 	$(FC) $(LDFLAGS) $(OBJ1) -o $@ $(XDRLIB)
