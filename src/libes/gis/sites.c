@@ -13,7 +13,10 @@
 
 /*-
  * $Log$
- * Revision 1.2  1999-12-30 10:20:40  markus
+ * Revision 1.3  1999-12-30 10:24:19  markus
+ * G__site_get, G__site_put: added return statements
+ *
+ * Revision 1.2  1999/12/30 10:20:40  markus
  * added several G_free statements
  *
  * Revision 1.1.1.1  1999/12/29 15:10:31  markus
@@ -495,6 +498,7 @@ int G__site_put ( FILE *fptr, Site *s, int fmt)
   fprintf (fptr, "%s\n", buf);
   return 0;
 }
+
 
 int G_site_describe ( FILE *ptr,
   int *dims,int *cat,int *strs,int *dbls)
