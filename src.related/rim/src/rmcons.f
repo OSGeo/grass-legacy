@@ -88,7 +88,7 @@ C     /FLAGS/
       KRMINF = 8
       KRMRNF = 8 + 100*2
       KRMRMF = -(15 + 100*8)
-      KRMDMF = -(24 + 100*17)
+      KRMDMF = -(21 + 100*14)
       HXFLAG = 0
       PIFLAG = .FALSE.
       MRINDX = 0
