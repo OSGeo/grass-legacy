@@ -49,9 +49,13 @@
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
+#include <stdarg.h>
+#include "glocale.h"
 #include "gis.h"
 
-#include <stdarg.h>
+#define MSG  0
+#define WARN 1
+#define ERR  2
 
 /* static int (*error)() = 0; */
 static int (*ext_error)() = 0; /* Roger Bivand 17 June 2000 */
@@ -59,11 +63,29 @@ static int no_warn = 0;
 static int no_sleep = 1;
 
 extern char *getenv();
-static int print_word (FILE *,char **,int *,int);
+static int print_word ( FILE *,char **,int *,int);
+static void print_sentence ( FILE *, char *, char *);
 static int print_error(char *,int);
 static int mail_msg (char *,int);
 static int write_error(char *, int,char *,long,char *);
 static int log_error (char *,int);
+
+/*!
+ * \brief Print a message to stderr
+ *
+ * The output format depends on enviroment variable GRASS_MESSAGE_FORMAT
+*/
+void G_message (char *msg,...)
+{
+    char buffer[2000];  /* G_asprintf does not work */
+    va_list ap;
+
+    va_start(ap, msg);
+    vsprintf(buffer,msg,ap);
+    va_end(ap);
+
+    print_error (buffer,MSG);
+}
 
 int G_fatal_error ( char *msg,...)
 {
@@ -74,7 +96,7 @@ int G_fatal_error ( char *msg,...)
     vsprintf(buffer,msg,ap);
     va_end(ap);
 
-    print_error (buffer,1);
+    print_error (buffer,ERR);
 
     if ( ext_error ) return 0; /* do not exit error routine is specified */
     
@@ -91,7 +113,7 @@ int G_warning ( char *msg, ...)
     va_start(ap,msg);
     vsprintf(buffer,msg,ap);
     va_end(ap);
-    print_error (buffer,0);
+    print_error (buffer,WARN);
 
     return 0;
 }
@@ -116,68 +138,70 @@ int G_sleep_on_error (int flag)
 
 int G_set_error_routine ( int (*error_routine)())
 {
-    /* error = error_routine; */
     ext_error = error_routine; /* Roger Bivand 17 June 2000 */
     return 0;
 }
 
 int G_unset_error_routine ()
 {
-    /* error = 0; */
     ext_error = 0; /* Roger Bivand 17 June 2000 */
 
     return 0;
 }
 
-static int print_error(char *msg,int fatal)
+/* Print info to stderr and optionaly to log file and optionaly send mail */
+static int print_error(char *msg,int type)
 {
-    static int active = 0;	/* to avoid recursion */
-
-    if (active)
-    {
-	/* fprintf(stderr,"%s: ",fatal?"ERROR":"WARNING");
-	fprintf (stderr, "%s\n", msg);
-	return -1; */
-	if (ext_error) { /* Roger Bivand 18 June 2000 */
-	    ext_error(msg, fatal);
-	    return -1;
-	}
-	else {
-	    fprintf(stderr,"%s: ",fatal?"ERROR":"WARNING");
-	    fprintf (stderr, "%s\n", msg);
-	    return -1;
-	}
+    static char *prefix_std[3];
+    static char *prefix_gui[3];
+    int fatal, format;
+    
+    if ( !prefix_std[0] ) { /* First time: set prefixes  */
+        prefix_std[0] = "";
+	prefix_std[1] = _("WARNING: ");
+	prefix_std[2] = _("ERROR: ");
+        prefix_gui[0] = "GRASS_INFO_MESSAGE: ";
+	prefix_gui[1] = "GRASS_INFO_WARNING: ";
+	prefix_gui[2] = "GRASS_INFO_ERROR: ";
     }
-    active = 1;
+    
+    if ( type == ERR )
+	fatal = 1;
+    else /* WARN */
+	fatal = 0;
 
-    log_error (msg, fatal);
-
-    /* if (error)
-	error (msg, fatal); */
-    if (ext_error) /* Roger Bivand 17 June 2000 */
+    if ( (type == WARN || type == ERR) && ext_error) { /* Function defined by application */
 	ext_error (msg, fatal);
-    else
-    {
+    } else {
 	char *w;
 	int len, lead;
 
-	fprintf(stderr,"%s:",fatal?"ERROR":"WARNING");
-	len = lead = strlen (fatal?"ERROR":"WARNING")+1;
-	w = msg;
-	while (print_word(stderr,&w,&len,lead))
-		;
-	if (isatty(fileno(stderr)))
-	{
-	    fprintf(stderr,"\7");
-	    fflush (stderr);
-	    if (!no_sleep)
-		sleep (5);
+        format = G_info_format();
+
+	if ( format == G_INFO_FORMAT_STANDARD ) {
+	    if ( type == WARN || type == ERR ) { 
+		log_error (msg, fatal);
+	    }
+
+	    fprintf(stderr,"%s", prefix_std[type] );
+	    len = lead = strlen ( prefix_std[type] );
+	    w = msg;
+
+	    while (print_word(stderr,&w,&len,lead))
+		    ;
+
+	    if (isatty(fileno(stderr))) { /* Bell */
+		fprintf(stderr,"\7");
+		fflush (stderr);
+		if (!no_sleep)
+		    sleep (5);
+	    } else if ( (type == WARN || type == ERR) && getenv("GRASS_ERROR_MAIL")) { /* Mail */
+		mail_msg (msg, fatal);
+	    }
+	} else { /* GUI */
+	    print_sentence ( stderr, prefix_gui[type], msg );
 	}
-	/* else if (!getenv("GRASS_STDERR")) */
-	else if (getenv("GRASS_ERROR_MAIL"))
-	    mail_msg (msg, fatal);
     }
-    active = 0;
 
     return 0;
 }
@@ -195,7 +219,7 @@ static int log_error ( char *msg,int fatal)
 
 /* get current working directory */
     sprintf(cwd,"?");
-    if (pwd = G_popen ("pwd","r"))
+    if ( (pwd = G_popen ("pwd","r")) )
     {
 	if (fgets(cwd, sizeof cwd, pwd))
 	{
@@ -209,7 +233,7 @@ static int log_error ( char *msg,int fatal)
     }
 
 /* write the 2 possible error log files */
-    if(gisbase = G_gisbase ())
+    if( (gisbase = G_gisbase ()) )
 	write_error (msg, fatal, gisbase, clock, cwd);
     home = G__home();
     if (home && gisbase && strcmp (home, gisbase))
@@ -261,7 +285,7 @@ static int mail_msg ( char *msg,int fatal)
 	return 1;
 
     sprintf (command, "mail '%s'", G_whoami());
-    if (mail = G_popen (command, "w"))
+    if ( (mail = G_popen (command, "w")) )
     {
 	fprintf(mail,"GIS %s: %s\n",fatal?"ERROR":"WARNING",msg);
 	G_pclose (mail);
@@ -270,39 +294,98 @@ static int mail_msg ( char *msg,int fatal)
     return 0;
 }
 
-static int print_word ( FILE *fd, char **word, int *len,int lead)
+/* Print one word, new line if necessary */
+static int print_word ( FILE *fd, char **word, int *len, int lead)
 {
-    int i,n;
-    int nl;
+    int  wlen, start, totlen;
+    int  nl;
     char *w,*b;
 
-    n = *len;
+    start = *len;
     w = *word;
 
     nl = 0;
     while (*w == ' ' || *w == '\t' || *w == '\n')
 	if(*w++ == '\n')
 	    nl++;
-    i = 0;
+
+    wlen = 0;
     for (b = w; *b != 0 && *b != ' ' && *b != '\t' && *b != '\n'; b++)
-	i++;
-    if (i == 0)
+	wlen++;
+
+    if (wlen == 0)
     {
 	fprintf (fd, "\n");
 	return 0;
     }
-    n += i + 1;
-    if (nl != 0 || n > 75)
+
+    if ( start > lead ) { /* add space */
+	totlen = start + wlen + 1;
+    } else {
+	totlen = start + wlen; 
+    }
+    
+    if ( nl != 0 || totlen > 75)
     {
 	while (--nl > 0)
 	    fprintf (fd, "\n");
 	fprintf (fd, "\n%*s",lead,"");
-	n = lead + 1;
+	start = lead;
     }
-    fprintf (fd, " ");
-    while (i-- > 0)
+
+    if ( start > lead ) {
+      fprintf (fd, " ");
+      start++;
+    }
+
+    *len = start + wlen;
+
+    while (wlen-- > 0)
 	fprintf (fd, "%c", *w++);
-    *len = n;
+
     *word = w;
     return 1;
 }
+
+/* Print one message, prefix inserted before each new line */
+static void print_sentence ( FILE *fd, char *prefix, char *msg )
+{
+    int  i;
+    char *start, *end;
+    int  len; /*length of one row */
+
+    start = msg;
+
+    while ( *start != '\0' ) {
+	fprintf ( fd, "%s", prefix);
+
+	while ( *start != '\0' ) {
+	    fprintf (fd, "%c", *start++);
+		
+	    if ( *start == '\n' ) {
+	        *start++;
+		break;
+	    }
+	}
+	
+	fprintf (fd, "\n" );
+    }
+}
+    
+int G_info_format ( void ) 
+{
+    static int grass_info_format = -1;
+    char    *fstr;
+    
+    if ( grass_info_format < 0) {
+        fstr = getenv( "GRASS_MESSAGE_FORMAT" );
+
+        if ( fstr && G_strcasecmp(fstr,"gui") == 0 )
+	    grass_info_format = G_INFO_FORMAT_GUI;
+        else
+	    grass_info_format = G_INFO_FORMAT_STANDARD;
+    }
+
+    return grass_info_format;
+}
+

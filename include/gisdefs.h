@@ -449,6 +449,8 @@ int G__create_alt_env(void);
 int G__switch_env(void);
 
 /* error.c */
+int G_info_format ( void );
+void G_message(char *,...);
 int G_fatal_error(char *,...) __attribute__((format(printf,1,2)));
 int G_warning(char *,...) __attribute__((format(printf,1,2)));
 int G_suppress_warnings(int);
@@ -845,6 +847,7 @@ char *G_recreate_command(void);
 
 /* percent.c */
 int G_percent(int, int, int);
+int G_percent2(int, int, int, FILE *);
 
 /* plot.c */
 int G_setup_plot(double, double, double, double, int (*)(), int (*)());

@@ -7,8 +7,11 @@ set env(GISDBASE) [exec g.gisenv get=GISDBASE]
 set env(LOCATION_NAME) [exec g.gisenv get=LOCATION_NAME]
 set env(MAPSET) [exec g.gisenv get=MAPSET]
 
+set env(GRASS_MESSAGE_FORMAT) gui
+
 set dlg 0
 set path {}
+set imagepath $env(GISBASE)/bwidget/images/
 
 ################################################################################
 
@@ -49,13 +52,15 @@ proc mkcmd {dlg} {
 }
 
 proc prnout {dlg fh} {
-	global opt
+	global opt imagepath
 	set outtext $opt($dlg,outtext)
 
 	if [eof $fh] {
 		close $fh
 	} else {
-		set str [read $fh]
+		set str [gets $fh]
+		append str "\n"
+		if { [fblocked $fh] } { set str [read $fh] }
 		while {[set idx [string first "\b" $str]] != -1} {
 			set last [expr $idx - 1]
 			set str1 [string range $str 1 $last]
@@ -65,7 +70,28 @@ proc prnout {dlg fh} {
 			$outtext delete $pos
 			$outtext insert end $str1
 		}
-		$outtext insert end $str
+		if { [regexp -- {^GRASS_INFO_([^ ]+): (.+)$} $str match key val rest] } {
+			if { $key == "PERCENT" } { 
+                                progress $dlg $val
+				if { $val >= 100 } { 
+                                	progress $dlg -1
+		    			$outtext insert end "\n"
+				}
+			} else { 
+			    if { $key == "MESSAGE" } {
+				$outtext image create end -image [image create photo -file "$imagepath/info.gif"] 
+			    } 
+			    if { $key == "WARNING" } {
+				$outtext image create end -image [image create photo -file "$imagepath/warning.gif"] 
+			    } 
+			    if { $key == "ERROR" } {
+				$outtext image create end -image [image create photo -file "$imagepath/error.gif"] 
+			    }
+			    $outtext insert end $val
+			}
+		} else {
+		    $outtext insert end $str
+                }
 		$outtext yview end
 	}
 }
@@ -97,6 +123,7 @@ proc get_map {dlg optn elem} {
 proc run_cmd {dlg} {
 	global opt
 	set outtext $opt($dlg,outtext)
+        progress $dlg -1
 
 	set cmd [mkcmd $dlg]
 	set cmd_string {}
@@ -130,6 +157,7 @@ proc help_cmd {dlg} {
 proc clear_cmd {dlg} {
 	global opt
 	set outtext $opt($dlg,outtext)
+        progress $dlg -1
 
 	$outtext delete 1.0 end
 }
@@ -139,6 +167,15 @@ proc close_cmd {dlg} {
 	set root $opt($dlg,root)
 
 	destroy $root
+}
+
+proc progress {dlg percent} {
+	global opt
+	
+	set opt($dlg,percent) $percent
+	
+	# it seems that there is a bug in ProgressBar and it is not always updated ->
+	$opt($dlg,progress) _modify
 }
 
 ################################################################################
@@ -162,11 +199,16 @@ proc make_dialog {dlg path root} {
 	set outtext [text $outwin.text -height 5 -width 30] 
 	$outwin setwidget $outtext
 	pack $outwin $outtext -expand yes -fill both
+    
+        set opt($dlg,percent) -1
+        set progress [ProgressBar $path.progress -fg green -height 20 -relief raised -maximum 100 -variable opt($dlg,percent) ]
+	pack $progress -expand no -fill x
 
 	set opt($dlg,path) $path
 	set opt($dlg,root) $root
 	set opt($dlg,suf) $suf
 	set opt($dlg,outtext) $outtext
+	set opt($dlg,progress) $progress
 }
 
 proc module_description {dlg desc} {
