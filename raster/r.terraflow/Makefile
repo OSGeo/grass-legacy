@@ -52,20 +52,20 @@ LDFLAGS += -L$(IOSTREAM_LIBDIR)
 LIBS = $(GISLIB) 
 DEPLIBS = $(DEPGISLIB)
 
+PGM = r.terraflow
 
-
-default: dofirst $(BIN_CMD)/r.terraflow $(BIN_CMD)/r.terraflow.short
+default: dofirst $(BIN_CMD)/$(PGM) $(BIN_CMD)/$(PGM).short htmlcmd
 
 dofirst:
 	-mkdir -p $(OBJARCH)/FLOAT ; true
 	-mkdir -p $(OBJARCH)/SHORT ; true
 
-$(BIN_CMD)/r.terraflow: $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
+$(BIN_CMD)/$(PGM): $(FLOAT_OBJ) $(GISLIB)  $(DEPLIBS)
 	(cd IOStream/lib ; make)
 	$(CXX) -DELEV_FLOAT $(LDFLAGS) -o $@ $(FLOAT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
 
-$(BIN_CMD)/r.terraflow.short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
+$(BIN_CMD)/$(PGM).short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
 	(cd IOStream/lib ; make)
 	$(CXX) -DELEV_SHORT $(LDFLAGS) -o $@ $(SHORT_OBJ) $(LIBS) $(MATHLIB) \
 	$(XDRLIB) $(IOSTREAM_LIB)
@@ -75,6 +75,14 @@ $(BIN_CMD)/r.terraflow.short: $(SHORT_OBJ) $(GISLIB)  $(DEPLIBS)
 $(GISLIB):	#
 $(DEPGISLIB):	#
 
+htmlcmd:
+	@test ! -f description.html || ( cat description.html >> $(PGM).html )
+	echo "<HR>" >> $(PGM).html
+	echo "<P><a href=index.html>Help Index</a>" >> $(PGM).html
+	echo "</body></html>" >> $(PGM).html
+	mkdir -p $(GISBASE)/docs/html
+	mv $(PGM).html $(GISBASE)/docs/html
+	cp *.png $(GISBASE)/docs/html
 
 clean: 
 	(cd IOStream/lib ; make clean )
