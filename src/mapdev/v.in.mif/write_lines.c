@@ -410,6 +410,11 @@ int line_data_write(site_array *s0, line_array *l0, line_array *a0, ring_offsets
   if(tmp_rings) free(tmp_rings);
 
 
+  /* Remove duplicate line tracks */
+
+  strip_duplicate_tracks(hVB);
+
+
   /* Extract the lines to the vector map */
 
   if(with_areas)
@@ -856,6 +861,107 @@ int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
 
 }
 
+int strip_duplicate_tracks( BTREE *btr ) {
+
+  /* local */
+
+  int i, j;   /* loop */
+  int pass_num = 0;
+  double tol;
+
+  char *key0;
+  void *data0;
+  pntDescript **data1, *pc, *pt1, *pt2, *pt3;
+  double pt1_len, pt2_len;
+
+  int passing = 1; /* Flag to indicate that we are still executing passes 
+		      through the database
+		   */
+  int do_continue = 1;
+
+
+  fprintf(stderr, "Processing network: cleaning lines. . .\n");
+
+  if(G_process_colinear_tolerance(GET_VAL, &tol) < 0)
+    tol = 2.0 * M_PI / 180.0;
+
+  while(passing) {
+
+    fprintf(stderr, "    Pass Number  %d\n", ++pass_num);
+
+    btree_rewind(btr);
+    passing = 0;
+  
+    while(btree_next(btr, &key0, &data0)) {
+
+      /* Examine each node */
+
+      data1 = (pntDescript **)data0;
+
+      pc = *data1;  /* Find current vertex */
+
+      if(pc->linknum < 3)
+	continue;
+
+      do_continue = 1;
+
+      for( i = 0; i < pc->linknum; i++ ) {
+
+	if(!do_continue)
+	  break;
+
+	for( j = i + 1; j < pc->linknum; j++ ) {
+
+	  if(!do_continue)
+	    break;	  
+
+	  if( fabs(pc->linkdirect[i] - pc->linkdirect[j]) < tol ) {
+
+	    /* These two tracks are colinear */
+	    passing  = 1;
+	    do_continue = 0; /* Do just one pair in each pass for each vertex */
+
+	    /* Track the lines until they move off the current linear trajectory 
+	       (or hit a node)
+	    */
+	    pt1 = track_to_end(pc, i);
+	    pt2 = track_to_end(pc, j);
+
+	    /* If the end points are the same we have a degenerate link, simply strip
+	       out line 2
+	    */
+
+	    if( pt1 == pt2 ) {
+	      delete_track(pc, pt1, j);
+	    }
+
+	    /* If the track deviates at a certain point we have a snap-back line. 
+	       Make the snap-back length into a single track.
+	    */
+
+	    else {
+	      pt1_len = linear_track_length(pc, pt1, i);
+	      pt2_len = linear_track_length(pc, pt2, j);
+
+	      if(pt1_len < pt2_len) {
+		pt3 = delete_track_in_circle(pc, j, pt2_len);
+		add_link(pt1, pt3);
+	      }
+	      
+	      else {
+		pt3 = delete_track_in_circle(pc, i, pt1_len);
+		add_link(pt2, pt3);
+	      }
+	    }
+	    
+	  }
+	}
+      }
+    }
+  }
+
+  fprintf(stderr, "\nFinished cleaning.\n");
+}
 
 
 int vbase_extract_lines(BTREE *btr, struct Map_info *map) {
@@ -1206,3 +1312,480 @@ int btree_compare( char *key1, char *key2 ) {
   return strncmp( key1, key2, 32 );
 }
 
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+
+   Cleaning routines
+
+   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+pntDescript *delete_track_in_circle(pntDescript *pt0, int track, double radius) {
+
+  /* Delete the first part of a track lying within a given radius 
+     of a starting point
+  */
+
+  pntDescript *p1, *p2, *pb;
+
+  double rlen;
+
+  p1 = pt0;
+  p2 = pt0->linkverts[track];
+
+  delete_link(p1, p2);
+
+  rlen = hypot(p1->xPosn - p2->xPosn, p1->yPosn - p2->yPosn);
+
+  while(rlen <= radius) {
+
+    if(p2->linknum != 2)
+      break;
+
+    p1 = p2;
+    p2 = p1->linkverts[0];
+    delete_link(p1, p2);
+    rlen = hypot(pt0->xPosn - p2->xPosn, pt0->yPosn - p2->yPosn);
+    
+  }
+
+  return p2;
+}
+
+
+int add_link(pntDescript *p1, pntDescript *p2) {
+
+  /* local */
+
+  int i; /* loop */
+
+  double snap;
+  double dist, outset;
+
+  int nlinks;
+  pntDescript **ppPt;
+  double *pd;
+
+  if(G_process_snap_distance(GET_VAL, &snap) < 0)
+    snap = 1.0e-7;
+
+  dist = hypot(p1->xPosn - p2->xPosn, p1->yPosn - p2->yPosn);
+
+  if(dist < snap){
+    fprintf(stderr, "WARNING: Not building link as the two target points are effectively the same to within the snap distance.\n");
+    return 1;
+  }
+
+  outset = atan2(p2->yPosn - p1->yPosn, p2->xPosn - p1->xPosn);
+  
+  if(outset < 0.0)
+    outset += 2 * M_PI;
+
+
+  /* Check if the link already exists */
+
+  for( i = 0; i < p1->linknum; i++ ) {
+    
+    if(p1->linkverts[i] == p2) {
+      
+      /* This link already exists. Do not build (or report). Return NO_ACTION. */
+      return 1;
+    }
+    
+  }
+
+  /* Might as well check the other way */
+
+  for( i = 0; i < p2->linknum; i++ ) {
+    
+    if(p2->linkverts[i] == p1) {
+      
+      /* This link already exists. Do not build (or report). Return NO_ACTION. */
+      return 1;
+    }
+    
+  }
+
+
+
+  /* Add links */
+
+  nlinks = p1->linknum;
+
+  ppPt = (pntDescript **)realloc(p1->linkverts, ++nlinks * sizeof(pntDescript *));
+
+  if(ppPt == NULL) {
+    fprintf(stderr, "Error allocating a new link to a vertex.\n");
+    return -1;
+  }
+
+  else {
+    p1->linkverts = ppPt;
+    p1->linkverts[nlinks - 1] = p2;
+  }
+
+  pd = (double *)realloc(p1->linkdirect, nlinks * sizeof(double));
+
+  if(pd == NULL) {
+    fprintf(stderr, "Error allocating a new directional link to a vertex.\n");
+    return -1;
+  }
+
+  else {
+    p1->linkdirect = pd;
+    p1->linkdirect[nlinks - 1] = outset;
+  }
+
+  p1->linknum = nlinks;
+
+
+  outset -= M_PI;
+  
+  if(outset < 0.0)
+    outset += 2 * M_PI;
+
+  nlinks = p2->linknum;
+
+  ppPt = (pntDescript **)realloc(p2->linkverts, ++nlinks * sizeof(pntDescript *));
+
+  if(ppPt == NULL) {
+    fprintf(stderr, "Error allocating a new link to a vertex.\n");
+    return -1;
+  }
+
+  else {
+    p2->linkverts = ppPt;
+    p2->linkverts[nlinks - 1] = p1;
+  }
+
+  pd = (double *)realloc(p2->linkdirect, nlinks * sizeof(double));
+
+  if(pd == NULL) {
+    fprintf(stderr, "Error allocating a new directional link to a vertex.\n");
+    return -1;
+  }
+
+  else {
+    p2->linkdirect = pd;
+    p2->linkdirect[nlinks - 1] = outset;
+  }
+
+  p2->linknum = nlinks;
+
+
+  return 0;
+  
+}
+
+
+int delete_link(pntDescript *p1, pntDescript *p2) {
+
+  /* Remove the link between the two points */
+
+  int i;   /* loop */
+
+  /* local */
+
+  pntDescript **ppPt;
+  double *pd;
+  int link1, link2;
+
+
+  /* Find the index of 1->2 */
+
+  link1 = -1;
+
+  for( i = 0; i < p1->linknum; i++ ) {
+
+    if(p1->linkverts[i] == p2)
+      link1 = i;
+  }
+
+  if(link1 < 0) {
+    
+    /* The points are not linked: can't unlink */
+    return 1;
+  }
+
+  /* Find the index of 2->1 */
+
+  link2 = -1;
+
+  for( i = 0; i < p2->linknum; i++ ) {
+
+    if(p2->linkverts[i] == p1)
+      link2 = i;
+  }
+
+  if(link2 < 0) {
+    
+    /* The points are not linked: can't unlink */
+    return 1;
+  }
+
+  
+  /* Got here, so the points are linked symmetrically. OK. */
+
+  if(link1 < p1->linknum) {
+
+    for( i = link1; i < p1->linknum; i++ ) {
+
+      p1->linkverts[i] = p1->linkverts[i + 1];
+      p1->linkdirect[i] = p1->linkdirect[i + 1];
+    }
+  }
+
+  if(p1->linknum > 1) {
+    ppPt = (pntDescript **)realloc(p1->linkverts, (p1->linknum - 1) * sizeof(pntDescript *));
+
+    if(ppPt == NULL) {
+      fprintf(stderr, "Error reallocating space for vertex links.\n");
+      return -1;
+    }
+
+    else {
+      p1->linkverts = ppPt;
+    }
+
+    pd = (double *)realloc(p1->linkdirect, (p1->linknum - 1) * sizeof(double));
+
+    if(pd == NULL) {
+      fprintf(stderr, "Error reallocating space for directional vertex links.\n");
+      return -1;
+    }
+
+    else {
+      p1->linkdirect = pd;
+    }
+
+    p1->linknum--;
+
+  }
+
+  else {
+    free(p1->linkverts);
+    free(p1->linkdirect);
+    p1->linknum = 0;
+  }
+
+
+
+  if(link2 < p2->linknum) {
+
+    for( i = link2; i < p2->linknum; i++ ) {
+
+      p2->linkverts[i] = p2->linkverts[i + 1];
+      p2->linkdirect[i] = p2->linkdirect[i + 1];
+    }
+  }
+
+  if(p2->linknum > 1) {
+    ppPt = (pntDescript **)realloc(p2->linkverts, (p2->linknum - 1) * sizeof(pntDescript *));
+
+    if(ppPt == NULL) {
+      fprintf(stderr, "Error reallocating space for vertex links.\n");
+      return -1;
+    }
+
+    else {
+      p2->linkverts = ppPt;
+    }
+
+    pd = (double *)realloc(p2->linkdirect, (p2->linknum - 1) * sizeof(double));
+
+    if(pd == NULL) {
+      fprintf(stderr, "Error reallocating space for directional vertex links.\n");
+      return -1;
+    }
+
+    else {
+      p2->linkdirect = pd;
+    }
+
+    p2->linknum--;
+  }
+
+  else {
+    free(p2->linkverts);
+    free(p2->linkdirect);
+    p2->linknum = 0;
+  }
+
+
+  /* Deletion process finished */
+
+  return 0;
+
+
+}
+
+
+double linear_track_length(pntDescript *p1, pntDescript *p2, int track) {
+
+  /* Find the track length along a track
+     - not the direct distance - 
+  */
+
+  /* A negative return indicates that the track is not valid
+     or has intervening nodes
+  */
+
+  /* local */
+
+  pntDescript *pb, *pc, *p0;
+  double dist = 0.0;
+
+  pb = p1;
+  pc = p1->linkverts[track];
+
+  dist += hypot(pc->xPosn - pb->xPosn, pc->yPosn - pb->yPosn);
+
+  while(pc != p2) {
+    
+    if(pc->linknum != 2)
+      return -1.0;
+
+    p0 = pb;
+    pb = pc;
+
+    if(pb->linkverts[0] == p0)
+      pc = pb->linkverts[1];
+    else
+      pc = pb->linkverts[0];
+
+    dist += hypot(pc->xPosn - pb->xPosn, pc->yPosn - pb->yPosn);
+  }
+
+  return dist;
+}
+
+
+pntDescript *track_to_end(pntDescript *pt0, int track) {
+
+  /* Follow a track and stick with it until the track deflects from
+     the current colinear 
+  */
+
+  /* local */
+
+  int continuing = 1;
+  double direct0, direct, tol0;
+
+  pntDescript *pb, *pc, *p0;
+
+
+  if(G_process_colinear_tolerance(GET_VAL, &tol0) < 0)
+    tol0 = 2.0 * M_PI / 180.0;
+
+  pb = pt0;
+  pc = pb->linkverts[track];
+
+  direct0 = atan2(pc->yPosn - pb->yPosn, pc->xPosn - pb->xPosn);
+
+  if(direct0 < 0.0)
+    direct0 += 2 * M_PI;
+
+  direct = direct0;
+
+  while( continuing ) {
+
+    if(pc->linknum != 2) {
+      pb = pc;
+      break;
+    }
+
+    p0 = pb;
+    pb = pc;
+
+    if(pb->linkverts[0] == p0)
+      pc = pb->linkverts[1];
+    else
+      pc = pb->linkverts[0];
+
+    direct = atan2(pc->yPosn - pb->yPosn, pc->xPosn - pb->xPosn);
+
+    if( fabs(direct0 - direct) < tol0 )
+      continuing = 0;
+  }
+
+  return pb;
+}
+
+
+int delete_track(pntDescript *p1, pntDescript *p2, int track) {
+
+  /* Delete from p1 to p2, along `track' if valid. If the terminal
+     vertex is not encountered before a node, no action is taken
+  */
+
+  int i; /* loop */
+
+  /* local */
+
+  pntDescript *pb, *pc, *p0;
+  pntDescript **ppPt, **ppPt0;
+
+  int size = 1000, incr = 200;
+  int track_size = 0;
+
+  ppPt = (pntDescript **)malloc( size * sizeof(pntDescript *));
+
+  if(ppPt == NULL) {
+    fprintf(stderr, "Couldn't allocate space for processing.\n");
+    return -1;
+  }
+     
+
+  pb = p1;
+  pc = pb->linkverts[track];
+
+  /* Is this a simple single link? */
+
+  if(pc == p2) {
+
+    return delete_link(p1, p2);
+  }
+
+  while(pc != p2) {
+
+    if(pc->linknum != 2)
+      return 1;
+
+    p0 = pb;
+    pb = pc;
+
+    if(pb->linkverts[0] == p0)
+      pc = pb->linkverts[1];
+    else
+      pc = pb->linkverts[0];
+
+    if(track_size + 1 > size) {
+      size += incr;
+      ppPt0 = (pntDescript **)realloc(ppPt, size * sizeof(pntDescript *));
+
+      if(ppPt0 == NULL) {
+	fprintf(stderr, "Error allocating memory for processing.\n");
+	return -1;
+      }
+
+      else {
+	ppPt = ppPt0;
+      }
+    }
+
+    ppPt[track_size++] = pb;
+
+  }
+
+  /* Transaction successful. Now process. */
+
+  delete_link(p1, ppPt[0]);
+
+  for( i = 0; i < track_size - 1; i++ ) {
+
+    delete_link(ppPt[i], ppPt[i + 1]);
+  }
+
+  delete_link(ppPt[track_size - 1], p2);
+
+  free(ppPt);
+  return 0;
+}
