@@ -132,16 +132,6 @@ int make_window_box ( struct Cell_head *window, double magnify)
 	}
 
 	strcpy (buffer, "?");
-	G_format_easting(east, buffer, window->proj)  ;
-	len_e = max (len_e, strlen(buffer));
-	fprintf(stderr,"east: %-*s  ", len_e, buffer);
-
-	strcpy (buffer, "?");
-	G_format_easting(west, buffer, window->proj)  ;
-	len_w = max (len_w, strlen(buffer));
-	fprintf(stderr,"west: %-*s  ", len_w, buffer);
-
-	strcpy (buffer, "?");
 	G_format_northing(north, buffer, window->proj)  ;
 	len_n = max (len_n, strlen(buffer));
 	fprintf(stderr,"north: %-*s  ", len_n, buffer);
@@ -150,6 +140,16 @@ int make_window_box ( struct Cell_head *window, double magnify)
 	G_format_northing(south, buffer, window->proj)  ;
 	len_s = max (len_s, strlen(buffer));
 	fprintf(stderr,"south: %-*s  ", len_s, buffer);
+
+	strcpy (buffer, "?");
+	G_format_easting(east, buffer, window->proj)  ;
+	len_e = max (len_e, strlen(buffer));
+	fprintf(stderr,"east: %-*s  ", len_e, buffer);
+
+	strcpy (buffer, "?");
+	G_format_easting(west, buffer, window->proj)  ;
+	len_w = max (len_w, strlen(buffer));
+	fprintf(stderr,"west: %-*s  ", len_w, buffer);
 
 	fprintf (stderr,"\r");
 	fflush (stderr);
