@@ -184,12 +184,12 @@ main (int argc, char **argv)
     G_fatal_error (errmsg);
   }
   
-  nsites = readsites (fdsite, 0, verbose, field, &z);
+  nsites = G_readsites (fdsite, 0, verbose, field, &z);
   }
   else
   {
     fdsite = stdin;
-    nsites = readsites (fdsite, 0, verbose, field, &z);
+    nsites = G_readsites (fdsite, 0, verbose, field, &z);
   }
   if (nsites==0)
     G_fatal_error ("No sites found. Check your region.");

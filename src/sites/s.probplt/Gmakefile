@@ -1,6 +1,6 @@
 PGM=s.probplt
 
-LIST=probplot.o readz.o cdpath.o zstats.o pltsqq.o save.o
+LIST=probplot.o cdpath.o zstats.o pltsqq.o save.o
 
 LIBES=$(RASTERLIB) $(GISLIB) $(DATETIMELIB) 
 

@@ -10,12 +10,10 @@ LIBES = $(GISLIB) $(DATETIMELIB) $(CDHCLIB)
 
 SOURCE  = \
 	main.c \
-	readz.c \
 	scancats.c
 
 LIST  = \
 	main.o \
-	readz.o \
 	scancats.o
 
 $(BIN_CMD)/$(PGM): $(LIST) $(LIBES) 

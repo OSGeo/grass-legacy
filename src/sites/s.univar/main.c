@@ -113,7 +113,7 @@ int main ( int argc, char **argv)
     G_fatal_error (errmsg);
   }
 
-  nsites = readsites (fdsite, all, verbose, field, &z);
+  nsites = G_readsites (fdsite, all, verbose, field, &z);
 
   stats = univariate (z, nsites, verbose, field);
 

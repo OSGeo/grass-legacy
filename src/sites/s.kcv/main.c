@@ -46,6 +46,10 @@ double drand48()
 double drand48 ();
 void srand48 ();
 #endif
+
+struct Cell_head window;
+
+
 int 
 main (int argc, char **argv)
 {
@@ -53,17 +57,18 @@ main (int argc, char **argv)
   double east, north, (*rng) (), max, myrand ();
   int i, j, k, m, n, a, b, nsites, verbose, np, *p, dcmp ();
   FILE *fdsite, *fdtest, *fdtrain;
+  int all, field;
   D *d;
   Z *z;
-  struct Cell_head window;
+  extern struct Cell_head window;
   struct GModule *module;
   struct
   {
-    struct Option *output, *npartitions;
+    struct Option *output, *npartitions, *dfield;
   } parm;
   struct
   {
-    struct Flag *drand48, *q;
+    struct Flag *drand48, *q, *all;
   } flag;
 
   G_gisinit (argv[0]);
@@ -86,10 +91,22 @@ main (int argc, char **argv)
   parm.output->description = "sites list to be sampled";
   parm.output->gisprompt = "old,site_lists,sites";
 
+  parm.dfield = G_define_option ();
+  parm.dfield->key = "field";
+  parm.dfield->type = TYPE_INTEGER;
+  parm.dfield->answer = "1";
+  parm.dfield->multiple = NO;
+  parm.dfield->required = NO;
+  parm.dfield->description = "which decimal attribute (if multiple)";
+
   flag.drand48 = G_define_flag ();
   flag.drand48->key = 'd';
   flag.drand48->description = "Use drand48()";
 
+  flag.all = G_define_flag ();
+  flag.all->key = 'a';
+  flag.all->description = "Use all sites (do not limit to current region)";
+      
   flag.q = G_define_flag ();
   flag.q->key = 'q';
   flag.q->description = "Quiet";
@@ -99,7 +116,9 @@ main (int argc, char **argv)
     exit (1);
 
   G_strcpy (siteslist, parm.output->answer);
+  sscanf(parm.dfield->answer,"%d", &field);
   verbose = (!flag.q->answer);
+  all = flag.all->answer;
   np = atoi (parm.npartitions->answer);
   b = (flag.drand48->answer == '\0') ? 0 : 1;
 
@@ -124,7 +143,16 @@ main (int argc, char **argv)
     G_fatal_error (errmsg);
   }
 
-  G_get_window (&window);
+  if (field < 1)
+  {
+    sprintf (errmsg, "Decimal attribute field 0 doesn't exist.");
+    G_fatal_error (errmsg);
+  }
+              
+  if (!all)
+    G_get_window (&window);   
+  else
+    G_get_default_window (&window);
   fdsite = G_fopen_sites_old (siteslist, mapset);
   if (fdsite == NULL)
   {
@@ -132,7 +160,7 @@ main (int argc, char **argv)
     G_fatal_error (errmsg);
   }
 
-  nsites = readsites (fdsite, verbose, &z, window);
+  nsites = G_readsites (fdsite, all, verbose, field, &z);
 
   if (nsites < np)
     G_fatal_error ("More partitions than sites");
