@@ -13,19 +13,21 @@
 int 
 main (int argc, char **argv)
 {
-    char name[128] ;
+    char name[128] = "";
     struct Option *map;
     char *mapset;
     char buff[500];
 
 /* Initialize the GIS calls */
     G_gisinit(argv[0]) ;
-    if (R_open_driver() != 0)
-	G_fatal_error ("No graphics device selected");
 
-    if(D_get_cell_name (name) < 0)
-	*name = 0;
-    R_close_driver();
+    /* Try to get default raster name, don't fail so --interface-description works */
+    if (R_open_driver() == 0)
+    {
+        if(D_get_cell_name (name) < 0)
+	    *name = 0;
+        R_close_driver();
+    }
 
     map = G_define_option();
     map->key = "map";
