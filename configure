@@ -4,7 +4,7 @@
 # Generated automatically using autoconf version 2.13 
 # Copyright (C) 1992, 93, 94, 95, 96 Free Software Foundation, Inc.
 #
-# $Id: configure,v 1.18 2000-10-04 17:28:45 cho Exp $
+# $Id: configure,v 1.19 2000-10-04 17:56:33 cho Exp $
 # This configure script is free software; the Free Software Foundation
 # gives unlimited permission to copy, distribute and modify it.
 #
@@ -41,9 +41,11 @@ ac_help="$ac_help
 ac_help="$ac_help
   --with-USE_TERMIO       define the compiler macro USE_TERMIO"
 ac_help="$ac_help
-  --with-tkdir=DIR        Change default top-level TK directory"
+  --with-tktcl=DIR        Change default top-level Tk/Tcl directory"
 ac_help="$ac_help
-  --with-tcldir=DIR       Change default top-level TCL directory"
+  --with-tkdir=DIR        Change default top-level Tk directory"
+ac_help="$ac_help
+  --with-tcldir=DIR       Change default top-level Tcl directory"
 ac_help="$ac_help
   --with-opengl=DIR       Path to OpenGL directory"
 
@@ -3342,21 +3344,33 @@ fi
 #
 
 # Check whether --with-tkdir or --without-tkdir was given.
+tkdirdone=0
 if test "${with_tkdir+set}" = set; then
   withval="$with_tkdir"
   TKDIR=$withval
+  tkdirdone=1
 fi
 
 # Check whether --with-tcldir or --without-tcldir was given.
+tcldirdone=0
 if test "${with_tcldir+set}" = set; then
   withval="$with_tcldir"
   TCLDIR=$withval
+  tcldirdone=1
 fi
 
 # Check whether --with-tktcl or --without-tktcl was given.
 if test "${with_tktcl+set}" = set; then
   withval="$with_tktcl"
-  WANT_TKTCL=$withval
+  if test "$withval" = "no"; then
+    WANT_TKTCL=$withval
+  else
+    WANT_TKTCL=yes
+    if test $tkdirdone -eq 0 -a $tcldirdone -eq 0; then
+      TKDIR=$withval
+      TCLDIR=$withval
+    fi
+  fi
 fi
 
 if test "${TKDIR}" = "no" -a "${TCLDIR}" = "no"; then
@@ -3451,10 +3465,13 @@ echo "configure:2632: checking for matching Tk/Tcl libraries" >&5
 
     if test "$FOUND" = "0"; then
 	echo "$ac_t""not found" 1>&6
-	{ echo "configure: error: tcltkgrass and nviz2.2 won't run!" 1>&2; }
+	echo "configure: error: tcltkgrass and nviz2.2 won't run!" 1>&2;
     fi
 
     echo "$ac_t""$TCLTKLIBS" 1>&6
+else
+	echo "configure: *** You did not supply an argument to the --with-tkdir, --with-tcldir or --with-tcltk option." 1>&2;
+	echo "configure: tcltkgrass and nviz2.2 won't run!" 1>&2;
 fi
 
 
