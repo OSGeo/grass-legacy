@@ -241,6 +241,7 @@ typedef struct{        /* need to add elements here for off_screen drawing */
     int bgcol;
 } geodisplay;
 
+#ifdef ID_MATRIX
 const GLfloat ID_matrix[4][4] = 
 {
     {1.0, 0.0, 0.0, 0.0},
@@ -248,6 +249,9 @@ const GLfloat ID_matrix[4][4] =
     {0.0, 0.0, 1.0, 0.0},
     {0.0, 0.0, 0.0, 1.0}
 }; 
+#else
+extern GLfloat ID_matrix[4][4];
+#endif
 
 void (*Cxl_func)();
 void (*Swap_func)();

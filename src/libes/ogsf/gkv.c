@@ -1,5 +1,5 @@
 
-#include <keyframe.c>
+#include <keyframe.h>
 
 float OWsize, Vmax[3], Vmin[3], Vmid[3]; /*ortho window size and view bounds*/
 
