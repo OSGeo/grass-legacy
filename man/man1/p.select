@@ -10,7 +10,7 @@
 .br
 \fBp.select\fR [\fB\-lpq\fR] [\fBpainter\fR\*=\fIname\fR]
 .SH DESCRIPTION
-.B p.select
+.I p.select
 allows the user to select the device for GRASS hardcopy output.
 The user must select a device
 .I before
@@ -35,6 +35,11 @@ and also \fIpreview\fR, the user's graphics monitor)
 If the user runs \fIp.select\fR without specifying program arguments on the
 command line, the program will prompt the user for the name of a hardcopy output
 device to select.
+.br
+.SH NOTE
+The options available with \fIp.select\fR vary from system to system and depend
+upon which drivers have been compiled.
+.br
 .SH "SEE ALSO"
 .I p.chart,
 .I p.labels,
