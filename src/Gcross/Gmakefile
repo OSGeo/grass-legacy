@@ -1,0 +1,10 @@
+# %W%  %G%
+
+OBJS = main.o tree.o cross.o cats.o store.o renumber.o
+
+$(BIN)/Gcross: $(OBJS) $(GISLIB)
+	$(CC) $(LDFLAGS) $(OBJS) $(GISLIB) -o $@
+
+$(OBJS): glob.h
+
+$(GISLIB): #
