@@ -85,6 +85,8 @@ main (int argc, char *argv[])
 	asc_to_bin(ascii, &Map) ;
 
 	fclose(ascii) ;
+
+	Vect_build ( &Map, stdout );
 	Vect_close (&Map);
 
 	exit(0) ;
