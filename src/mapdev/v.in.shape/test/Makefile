@@ -6,9 +6,7 @@ CFLAGS= -g
 INCLUDEDIRS= -I.. -I. -I../btree -I/usr/include
 LIBS= -L/usr/lib -lm 
 
-OBJS= shpopen.o dbfopen.o shp2dig.o dbutils.o writelin.o arctest1.o
-BTREEDIR= ../btree
-BTREE= create.o find.o free.o next.o rewind.o update.o
+OBJS= shpopen.o dbfopen.o shp2dig.o dbutils.o writelin.o gbtree.o arctest1.o
 
 all: arctest1
 
@@ -26,20 +24,10 @@ dbutils.o: ../dbutils.c
 	$(CC) $(CFLAGS) $(INCLUDEDIRS) -c ../dbutils.c
 writelin.o: ../writelin.c
 	$(CC) $(CFLAGS) $(INCLUDEDIRS) -c ../writelin.c
+gbtree.o: ../gbtree.c
+	$(CC) $(CFLAGS) $(INCLUDEDIRS) -c ../gbtree.c
 arctest1.o: arctest1.c
 	$(CC) $(CFLAGS) $(INCLUDEDIRS) -c arctest1.c
-create.o:  ../btree/create.c
-	$(CC) $(CFLAGS) $(INCLUDEDIRS) -c ../btree/create.c
-find.o: ../btree/find.c
-	$(CC) $(CFLAGS) $(INCLUDEDIRS) -c ../btree/find.c
-free.o:  ../btree/free.c
-	$(CC) $(CFLAGS) $(INCLUDEDIRS) -c ../btree/free.c
-next.o:  ../btree/next.c
-	$(CC) $(CFLAGS) $(INCLUDEDIRS) -c ../btree/next.c
-rewind.o:  ../btree/rewind.c
-	$(CC) $(CFLAGS) $(INCLUDEDIRS) -c ../btree/rewind.c
-update.o:  ../btree/update.c
-	$(CC) $(CFLAGS) $(INCLUDEDIRS) -c ../btree/update.c
 
 
 clean:

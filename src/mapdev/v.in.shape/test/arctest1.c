@@ -32,7 +32,7 @@
 #include "dbutils.h"
 #include "shapefil.h"
 #include "shp2dig.h"
-#include "btree.h"
+#include "gbtree.h"
 
 
 int main( int argc, char **argv ) {
