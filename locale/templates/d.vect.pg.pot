@@ -1,0 +1,262 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: getAllOpts.c:89 getSopts.c:101 runPg.c:36 runPg.c:41
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-27 11:28+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: buildPg.c:22
+msgid " where "
+msgstr ""
+
+#: buildPg.c:25
+#, c-format
+msgid "SELECT Distinct %s from %s %s %s and %s is not null"
+msgstr ""
+
+#: buildPg.c:30
+#, c-format
+msgid "SELECT Distinct %s from %s where %s is not null"
+msgstr ""
+
+#: getAllOpts.c:29 getSopts.c:44
+msgid "map"
+msgstr ""
+
+#: getAllOpts.c:30 getSopts.c:46
+msgid "old,dig,vector"
+msgstr ""
+
+#: getAllOpts.c:34
+msgid "Vector map:"
+msgstr ""
+
+#: getAllOpts.c:37
+msgid "key"
+msgstr ""
+
+#: getAllOpts.c:41
+msgid "Column with category IDs from the table:"
+msgstr ""
+
+#: getAllOpts.c:45
+msgid "tab"
+msgstr ""
+
+#: getAllOpts.c:49
+msgid "Table containing this column:"
+msgstr ""
+
+#: getAllOpts.c:52
+msgid "where"
+msgstr ""
+
+#: getAllOpts.c:56
+msgid "Query clause (e.g. obj='paved'):"
+msgstr ""
+
+#: getAllOpts.c:59 getSopts.c:60
+msgid "color"
+msgstr ""
+
+#: getAllOpts.c:63
+msgid "Color to draw selected vectors:"
+msgstr ""
+
+#: getAllOpts.c:67 getSopts.c:68
+msgid "Fill polygons"
+msgstr ""
+
+#: getAllOpts.c:71 getSopts.c:72
+msgid "Extract vector objects to new map"
+msgstr ""
+
+#: getAllOpts.c:75
+msgid "d.vect.pg -s help"
+msgstr ""
+
+#: getAllOpts.c:80 getSopts.c:91
+msgid "white"
+msgstr ""
+
+#: getAllOpts.c:89 getSopts.c:101 runPg.c:101
+msgid "dig"
+msgstr ""
+
+#: getAllOpts.c:90
+#, c-format
+msgid "Vector map %s not found.\n"
+msgstr ""
+
+#: getSopts.c:41
+msgid "Use [s] flag to select db records using an input file."
+msgstr ""
+
+#: getSopts.c:49
+msgid "Name of existing vector file."
+msgstr ""
+
+#: getSopts.c:52
+msgid "sql"
+msgstr ""
+
+#: getSopts.c:53
+msgid "file"
+msgstr ""
+
+#: getSopts.c:57
+msgid "SQL statements specifying selection criteria. "
+msgstr ""
+
+#: getSopts.c:64
+msgid "Color for vector draw."
+msgstr ""
+
+#: getSopts.c:78 getSopts.c:79
+msgid "help"
+msgstr ""
+
+#: getSopts.c:81 main.c:60
+msgid "-s"
+msgstr ""
+
+#: getSopts.c:102
+#, c-format
+msgid "Vector file %s not found.\n"
+msgstr ""
+
+#: getSopts.c:106
+msgid "r"
+msgstr ""
+
+#: getSopts.c:107
+#, c-format
+msgid "File read error on %s\n"
+msgstr ""
+
+#: main.c:51 runPg.c:69
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:53
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr ""
+
+#: plotCat.c:137
+#, c-format
+msgid ""
+"\n"
+"WARNING: vector file [%s]-read error\n"
+msgstr ""
+
+#: plotCat.c:147
+msgid "Read error - EOF\n"
+msgstr ""
+
+#: plotCat.c:151
+msgid "Read error\n"
+msgstr ""
+
+#: runPg.c:59
+#, c-format
+msgid "Error opening vector map %s in mapset %s\n"
+msgstr ""
+
+#: runPg.c:65
+#, c-format
+msgid ""
+"Executing\n"
+"%s;\n"
+"\n"
+msgstr ""
+
+#: runPg.c:67
+msgid "PG_HOST"
+msgstr ""
+
+#: runPg.c:71
+#, c-format
+msgid "Error Connecting to Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:79
+#, c-format
+msgid "Error Selecting from Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:85
+#, c-format
+msgid "%d Rows\n"
+msgstr ""
+
+#: runPg.c:91
+msgid ""
+"\n"
+" Extract areas [y]/lines[n]:"
+msgstr ""
+
+#: runPg.c:94
+msgid "line"
+msgstr ""
+
+#: runPg.c:96
+msgid "area"
+msgstr ""
+
+#: runPg.c:99
+msgid "Enter name for new vector map:"
+msgstr ""
+
+#: runPg.c:101
+msgid "vector"
+msgstr ""
+
+#: runPg.c:105
+msgid ""
+"\n"
+"\n"
+" Dissolve common boundaries?"
+msgstr ""
+
+#: runPg.c:108
+msgid "Module v.extract loaded:\n"
+msgstr ""
+
+#: runPg.c:109
+msgid "w"
+msgstr ""
+
+#: runPg.c:110
+msgid "File write error on temporary file\n"
+msgstr ""
+
+#: runPg.c:121
+#, c-format
+msgid "%d\n"
+msgstr ""
+
+#: runPg.c:129
+#, c-format
+msgid "Error plotting category %d\n"
+msgstr ""
+
+#: runPg.c:139
+#, c-format
+msgid "v.extract -d input=%s output=%s type=%s new=0 file=%s\n"
+msgstr ""
+
+#: runPg.c:143
+#, c-format
+msgid "v.extract input=%s output=%s type=%s new=0 file=%s\n"
+msgstr ""

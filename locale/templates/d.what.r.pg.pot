@@ -1,0 +1,219 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: getSopts.c:107 opencell.c:12
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-27 11:27+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: buildPg.c:14
+#, c-format
+msgid "SELECT * from %s where %s=%d"
+msgstr ""
+
+#: getAllOpts.c:28 getSopts.c:49
+msgid "map"
+msgstr ""
+
+#: getAllOpts.c:29 getSopts.c:50
+msgid "old,cell,raster"
+msgstr ""
+
+#: getAllOpts.c:33 getSopts.c:54
+msgid "Raster map to query:"
+msgstr ""
+
+#: getAllOpts.c:36
+msgid "tab"
+msgstr ""
+
+#: getAllOpts.c:40
+msgid "Table with categories:"
+msgstr ""
+
+#: getAllOpts.c:43
+msgid "col"
+msgstr ""
+
+#: getAllOpts.c:47
+msgid "Column with categories:"
+msgstr ""
+
+#: getAllOpts.c:50 getSopts.c:65
+msgid "hv"
+msgstr ""
+
+#: getAllOpts.c:52 getSopts.c:67 runPg.c:28
+msgid "v"
+msgstr ""
+
+#: getAllOpts.c:53 getSopts.c:68
+msgid "Database output format - [v(ert)/h(oriz)]:"
+msgstr ""
+
+#: getAllOpts.c:58
+msgid "d.what.r.pg -s help"
+msgstr ""
+
+#: getCat.c:32
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr ""
+
+#: getCat.c:33
+msgid "Left:  Choose location.\n"
+msgstr ""
+
+#: getCat.c:34
+msgid ""
+"Right: Finish. \n"
+"\n"
+"\n"
+msgstr ""
+
+#: getCat.c:50
+#, c-format
+msgid "Error read cell file %s."
+msgstr ""
+
+#: getSopts.c:46
+msgid "Use [s] for input from SQL-file."
+msgstr ""
+
+#: getSopts.c:57
+msgid "sql"
+msgstr ""
+
+#: getSopts.c:58
+msgid "file"
+msgstr ""
+
+#: getSopts.c:62
+msgid "SQL command file:"
+msgstr ""
+
+#: getSopts.c:72 getSopts.c:73
+msgid "help"
+msgstr ""
+
+#: getSopts.c:76 main.c:50
+msgid "-s"
+msgstr ""
+
+#: getSopts.c:99
+msgid "r"
+msgstr ""
+
+#: getSopts.c:100
+#, c-format
+msgid "File read error on %s\n"
+msgstr ""
+
+#: getSopts.c:113
+#, c-format
+msgid "%d"
+msgstr ""
+
+#: getSopts.c:117
+#, c-format
+msgid "%c"
+msgstr ""
+
+#: main.c:41 runPg.c:33
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:44
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr ""
+
+#: opencell.c:14
+#, c-format
+msgid "warning: %s - raster map not found.\n"
+msgstr ""
+
+#: opencell.c:23
+#, c-format
+msgid "warning: can not open [%s] in [%s]\n"
+msgstr ""
+
+#: runPg.c:26 runPg.c:64
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: runPg.c:30
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Executing\n"
+"%s\n"
+"---------------------\n"
+msgstr ""
+
+#: runPg.c:32
+msgid "PG_HOST"
+msgstr ""
+
+#: runPg.c:36
+#, c-format
+msgid "Error: connect Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:44
+msgid "select"
+msgstr ""
+
+#: runPg.c:44
+msgid "SELECT"
+msgstr ""
+
+#: runPg.c:47
+#, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:60
+#, c-format
+msgid "%10s I %s\n"
+msgstr ""
+
+#: runPg.c:66
+#, c-format
+msgid ",%s"
+msgstr ""
+
+#: runPg.c:68 runPg.c:75
+msgid "\n"
+msgstr ""
+
+#: runPg.c:73
+#, c-format
+msgid "%s,"
+msgstr ""
+
+#: runPg.c:78
+#, c-format
+msgid ""
+"\n"
+"%d rows selected\n"
+"\n"
+msgstr ""
+
+#: runPg.c:84
+#, c-format
+msgid "Error:%s\n"
+msgstr ""

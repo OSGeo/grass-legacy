@@ -1,0 +1,218 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-11-27 11:26+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: buildPg.c:11
+#, c-format
+msgid "SELECT * from %s where point(%s,%s)"
+msgstr ""
+
+#: getAllOpts.c:31
+msgid "tab"
+msgstr ""
+
+#: getAllOpts.c:35
+msgid "Name of the table with X,Y coord.:"
+msgstr ""
+
+#: getAllOpts.c:38
+msgid "xcol"
+msgstr ""
+
+#: getAllOpts.c:42
+msgid "X coord. (E/W) column:"
+msgstr ""
+
+#: getAllOpts.c:45
+msgid "ycol"
+msgstr ""
+
+#: getAllOpts.c:49
+msgid "Y coord. (N/S) column:"
+msgstr ""
+
+#: getAllOpts.c:52
+msgid "xpos"
+msgstr ""
+
+#: getAllOpts.c:56
+msgid "X coord. (E/W) of search:"
+msgstr ""
+
+#: getAllOpts.c:59
+msgid "ypos"
+msgstr ""
+
+#: getAllOpts.c:63
+msgid "Y coord. (N/S) of search:"
+msgstr ""
+
+#: getAllOpts.c:67 getSopts.c:55
+msgid "distance"
+msgstr ""
+
+#: getAllOpts.c:71
+msgid "Radius of cursor:"
+msgstr ""
+
+#: getAllOpts.c:74 getSopts.c:66
+msgid "hv"
+msgstr ""
+
+#: getAllOpts.c:76 getSopts.c:68 runPg.c:65
+msgid "v"
+msgstr ""
+
+#: getAllOpts.c:77 getSopts.c:69
+msgid "DB output type - [v(ert)/h(oriz)]:"
+msgstr ""
+
+#: getAllOpts.c:83
+msgid "d.what.s.pg help -s"
+msgstr ""
+
+#: getArea.c:28
+msgid ""
+"\n"
+"\n"
+"Buttons:\n"
+msgstr ""
+
+#: getArea.c:29
+msgid "Left:  Select site for DB query.\n"
+msgstr ""
+
+#: getArea.c:30
+msgid ""
+"Right: Finish. \n"
+"\n"
+"\n"
+msgstr ""
+
+#: getArea.c:33
+msgid "red"
+msgstr ""
+
+#: getSopts.c:42
+msgid "Use [s] for query with a command file."
+msgstr ""
+
+#: getSopts.c:46
+msgid "sql"
+msgstr ""
+
+#: getSopts.c:47
+msgid "file"
+msgstr ""
+
+#: getSopts.c:51
+msgid "SQL query. "
+msgstr ""
+
+#: getSopts.c:59
+msgid "Cursor radius."
+msgstr ""
+
+#: getSopts.c:74 getSopts.c:75
+msgid "help"
+msgstr ""
+
+#: getSopts.c:78 main.c:62
+msgid "-s"
+msgstr ""
+
+#: getSopts.c:89
+msgid "r"
+msgstr ""
+
+#: getSopts.c:90
+#, c-format
+msgid "File read error on %s\n"
+msgstr ""
+
+#: main.c:53 runPg.c:46
+msgid "PG_DBASE"
+msgstr ""
+
+#: main.c:56
+msgid "Please run g.select.pg to identify a current database.\n"
+msgstr ""
+
+#: runPg.c:35
+#, c-format
+msgid "%s @ '(%f,%f,%f,%f)'::box"
+msgstr ""
+
+#: runPg.c:42
+#, c-format
+msgid ""
+"\n"
+"\n"
+"Executing\n"
+"%s;\n"
+" clause  @ '( )'::box addded automatically.\n"
+"\n"
+msgstr ""
+
+#: runPg.c:44
+msgid "PG_HOST"
+msgstr ""
+
+#: runPg.c:48
+#, c-format
+msgid "Error: connect Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:56
+#, c-format
+msgid "Error: select Postgres:%s\n"
+msgstr ""
+
+#: runPg.c:68
+#, c-format
+msgid "%10s I %s\n"
+msgstr ""
+
+#: runPg.c:72
+#, c-format
+msgid "%s"
+msgstr ""
+
+#: runPg.c:74
+#, c-format
+msgid ",%s"
+msgstr ""
+
+#: runPg.c:76 runPg.c:82
+msgid "\n"
+msgstr ""
+
+#: runPg.c:80
+#, c-format
+msgid "%s,"
+msgstr ""
+
+#: runPg.c:86
+#, c-format
+msgid ""
+"\n"
+"%d rows selected\n"
+msgstr ""
+
+#: runPg.c:116
+#, c-format
+msgid "Error converting %s, have %f \n"
+msgstr ""
