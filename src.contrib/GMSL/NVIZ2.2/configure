@@ -146,18 +146,19 @@ s/NVWISH_VER=sed/NVWISH_VER=${NVWISH_VER}/g\
 " src/Gmakefile.in > src/Gmakefile
 
 # Now figure out how we need to configure the tcl scripts
-set panel_path=${install_dir}/scripts
-set bit_maps=${install_dir}/bitmaps
+# set panel_path=${install_dir}/scripts
+# set bit_maps=${install_dir}/bitmaps
 
 # Looks good, now lets make the config file in the scripts directory
-echo Configuring nviz scripts...
-set panel_path=`echo "$panel_path" | sed 's/\//\\\//g'`
-set bit_maps=`echo "$bit_maps" | sed 's/\//\\\//g'`
-'rm' -rf scripts/config.tcl
-sed -e "\
-s/default_panel_path=sed/default_panel_path ${panel_path}/g;\
-s/bit_map_path=sed/bit_map_path ${bit_maps}/g\
-" scripts/config.tcl.in > scripts/config.tcl
+# echo Configuring nviz scripts...
+# set panel_path=`echo "$panel_path" | sed 's/\//\\\//g'`
+# set bit_maps=`echo "$bit_maps" | sed 's/\//\\\//g'`
+# 'rm' -rf scripts/config.tcl
+# sed -e "\
+# s/default_panel_path=sed/default_panel_path ${panel_path}/g;\
+# s/bit_map_path=sed/bit_map_path ${bit_maps}/g\
+# " scripts/config.tcl.in > scripts/config.tcl
+#   WBH - don't hard-code these paths
 
 # Finally create the toplevel makefile
 echo Creating top-level makefile
