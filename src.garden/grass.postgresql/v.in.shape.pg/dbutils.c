@@ -28,6 +28,7 @@
 #include <setjmp.h>
 #include "dbutils.h"
 /* #include "gis.h" */
+#include <stdio.h> 
 
 
 int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {

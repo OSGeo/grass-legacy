@@ -1,6 +1,7 @@
 #include <dbmi.h>
 #include "odbc.h"
 #include "globals.h"
+#include <stdio.h>
 
 void
 report_error (err)

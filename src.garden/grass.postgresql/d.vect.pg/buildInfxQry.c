@@ -6,6 +6,8 @@
 
 #include "gis.h"
 #include "Vect.h"
+#include <stdio.h> 
+
 #define TRUE 0
 #define FALSE 1
 

@@ -1,6 +1,7 @@
 #include <string.h>
 #include "vask.h"
 #include "tape.h"
+#include <stdio.h>
 
 #define TITLE_SIZE 75
 

@@ -1,6 +1,7 @@
 #include "gis.h"
+#include <stdio.h> 
 
-//------------ A.Sh. 29.12.99
+/*------------ A.Sh. 29.12.99 */
 
 buildInfxQry(ktab,keycat,curcat)
 	struct Option *ktab, *keycat; 

@@ -7,6 +7,7 @@
 #include "display.h" 
 #include "dbmi.h"
 #include "proto.h"
+#include <stdio.h>
 
 int main(int argc ,char **argv )
 {

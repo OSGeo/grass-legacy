@@ -29,7 +29,7 @@
 #include "dbutils.h"
 #include "shapefil.h"
 /* #include "gis.h" */
-
+#include <stdio.h>
 
 int vertRegister( BTREE *hDB, partDescript *part1, int pt_indx ) {
 

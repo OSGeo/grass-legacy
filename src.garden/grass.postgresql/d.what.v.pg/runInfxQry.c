@@ -1,6 +1,7 @@
 #include "gis.h"
 #include "what.h"
 #include <libpq-fe.h>
+#include <stdio.h>
 
 runInfxQry(SQL_stmt,print_out)
 	char *SQL_stmt;

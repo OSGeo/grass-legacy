@@ -1,5 +1,6 @@
 #include "global.h"
 #include "dbmi.h"
+#include <stdio.h>
 
 static int srch(); 
 

@@ -29,6 +29,7 @@ May 20, 1993
 #include "gis.h"
 #include "site.h"
 #include "local_proto.h"
+#include <stdio.h>
 
 int main (int argc, char *argv[])
 {

@@ -1,6 +1,6 @@
 /* d.rast.pg   */
 /* buildInfxQry.c  */
-//----------- A.Sh - 13.09.2000
+/*----------- A.Sh - 13.09.2000 */
 
 #include <stdlib.h>
 #include "gis.h"

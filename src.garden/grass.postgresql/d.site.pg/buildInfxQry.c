@@ -1,11 +1,12 @@
 /* d.site.pg   */
 /* buildInfxQry.c  */
-//-----------  A.Sh.
+/*-----------  A.Sh. */
 
 #include <stdlib.h>
 #include "gis.h"
 #include <stdio.h>
 #include "dbsite.h"
+
 #define TRUE 0
 #define FALSE 1
 

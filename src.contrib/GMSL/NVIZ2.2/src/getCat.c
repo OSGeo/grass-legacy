@@ -2,6 +2,7 @@
 #include "display.h"
 #include "Vect.h"
 #include "infx.h"
+#include <stdio.h>
 
 char* getCat (Map,x,y,i)
 
