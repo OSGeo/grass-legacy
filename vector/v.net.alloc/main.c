@@ -75,19 +75,19 @@ int main(int argc, char **argv)
     nfield_opt->description = "Node layer";
     
     afcol = G_define_option() ;
-    afcol->key         = "afcol" ;
+    afcol->key         = "afcolumn" ;
     afcol->type        = TYPE_STRING ;
     afcol->required    = NO ; 
     afcol->description = "Arc forward/both direction(s) cost column (number)" ;
     
     abcol = G_define_option() ;
-    abcol->key         = "abcol" ;
+    abcol->key         = "abcolumn" ;
     abcol->type        = TYPE_STRING ;
     abcol->required    = NO ; 
     abcol->description = "Arc backward direction cost column (number)" ;
     
     ncol = G_define_option() ;
-    ncol->key         = "ncol" ;
+    ncol->key         = "ncolumn" ;
     ncol->type        = TYPE_STRING ;
     ncol->required    = NO ;
     ncol->description = "Node cost column (number)" ;

@@ -95,7 +95,7 @@ int main (argc, argv)
   parm.input->gisprompt = "old,vector,vector";
 
   parm.column = G_define_option();
-  parm.column->key = "col";
+  parm.column->key = "column";
   parm.column->type = TYPE_STRING;
   parm.column->required = YES;
   parm.column->description = "Attribute column";

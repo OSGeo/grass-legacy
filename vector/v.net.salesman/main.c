@@ -110,7 +110,7 @@ int main(int argc, char **argv)
     tfield_opt->description = "Node layer (used for cities)";
     
     afcol = G_define_option() ;
-    afcol->key         = "acol" ;
+    afcol->key         = "acolumn" ;
     afcol->type        = TYPE_STRING ;
     afcol->required    = NO ; 
     afcol->description = "Arcs' cost column (for both directions)";

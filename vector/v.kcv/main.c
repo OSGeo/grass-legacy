@@ -85,7 +85,7 @@ main (int argc, char *argv[])
     npart_opt->options = "1-32767";
     
     col_opt = G_define_option();
-    col_opt->key = "col";
+    col_opt->key = "column";
     col_opt->type =  TYPE_STRING;
     col_opt->required = YES;
     col_opt->multiple = NO;
