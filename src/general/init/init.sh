@@ -284,17 +284,23 @@ echo
 echo "This version running thru the $shellname ($SHELL)"
 echo "Help is available with the command:      g.help"
 echo "See the licence terms with:              g.version"
+
+if [ $GRASS_GUI = "text" ] ; then
+    echo "Start the graphical user interface with: tcltkgrass&"
+fi
+
 echo "When ready to quit enter:                exit"
 
 case "$sh" in
 
 csh|tcsh)
+    USERHOME=$HOME      # save original home
     HOME=$LOCATION
     export HOME
     cshrc=$HOME/.cshrc
     tcshrc=$HOME/.tcshrc
     rm -f $cshrc $tcshrc
-    echo "set home = $home" > $cshrc
+    echo "set home = $USERHOME" > $cshrc
     echo "set history = 30 noclobber ignoreeof" >> $cshrc
 
     echo "set prompt = '\\" >> $cshrc
@@ -327,12 +333,12 @@ csh|tcsh)
     cp $cshrc $tcshrc
     $ETC/run $SHELL
 
-    HOME=$home
+    HOME=$USERHOME
     export HOME
     ;;
 
 bash)
-    USERHOME=$home      # save original home
+    USERHOME=$HOME      # save original home
     HOME=$LOCATION      # save .bashrc in $LOCATION
     export HOME
     bashrc=$HOME/.bashrc
