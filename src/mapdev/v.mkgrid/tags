@@ -1,0 +1,11 @@
+Mmain	main.c	/^main (argc, argv)$/
+Mmkgrid_cmd	mkgrid_cmd.c	/^main (argc, argv)$/
+Mmkgrid_inter	mkgrid_inter.c	/^main (argc, argv)$/
+Mtryit	tryit.c	/^main()$/
+ask_for_double	ask_for.c	/^ask_for_double( num, quest)$/
+ask_for_int	ask_for.c	/^ask_for_int( num, quest)$/
+ask_for_name	ask_for.c	/^ask_for_name( file_name, header, name, dir, file_d/
+init_header	init_head.c	/^init_header (fp_digit, window, d_head)$/
+welcome_mat	ask_for.c	/^welcome_mat() $/
+write_grid	write_grid.c	/^write_grid (fp_digit, grid_info)$/
+write_vect	write_grid.c	/^write_vect( fp_digit, x1, y1, x2, y2 )$/
