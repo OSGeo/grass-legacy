@@ -1,4 +1,3 @@
-# %W% %G%
 
 LIBES = $(IMAGERYLIB) $(GISLIB)
 LIST = main.o\
