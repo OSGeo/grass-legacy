@@ -1,0 +1,21 @@
+
+ Spheroid type being used: clark66
+
+  ------  Printing window: ' window of utm's'
+  Zone: 13
+  north: 4928000.000000,  and  south 4912000.000000
+  east: 609000.000000,  and  west 588000.000000
+
+  ------  Printing window: ' window of ll'
+  Zone: 13
+  north: 160196.544458,  and  south 159688.388707
+  east: 373064.245315,  and  west 374024.747485
+
+  ------  Printing quad ---- 
+  Zone: 13
+  Spher. num: 2,  and  name 'clark66'
+  north: 1,  and  east 0
+  origin_lat: 159750.000000,  and  origin_lon 373950.000000
+  origin_x: 589628.584236,  and  origin_y 4913923.462560
+
+  ERROR: Current window isn't large enough for a quad from the point given.
