@@ -1,14 +1,16 @@
 #include "gis.h"
 #include "includes.h"
 
-#include <unistd.h>
-#include <fcntl.h>
+#include <stdio.h>
 
 int Panel_save(char *name, int top, int bottom, int left, int right)
 {
-    int fd;
+    Pixmap pix;
+    Window root;
+    int dummy;
+    unsigned int depth;
+    FILE *fp;
     int width, height;
-    XImage *im;
     
     /* Adjust panel edges if outside window necessary */
     if (top < screen_top)
@@ -23,79 +25,52 @@ int Panel_save(char *name, int top, int bottom, int left, int right)
     height = bottom - top;
     width = right - left;
 
-    /* Get the image off the pixmap */
-    im = XGetImage(dpy, bkupmap, left, top, width, height,
-		   AllPlanes, ZPixmap);
+    if (!XGetGeometry(dpy, bkupmap, &root, &dummy, &dummy, &dummy, &dummy, &dummy, &depth))
+    {
+	perror("Panel_Save: cannot get depth");
+	return -1;
+    }
+
+    pix = XCreatePixmap(dpy, bkupmap, width, height, depth);
+    XCopyArea(dpy, bkupmap, pix, gc, left, top, width, height, 0, 0);
 
     /* open the file */
-    fd = creat(name, 0644);
-    if (fd < 0)
+    fp = fopen(name, "w");
+    if (!fp)
     {
 	perror("unable to create panel file");
 	return -1;
     }
 
-    /* write the lower coordinates and size of image */
-    write(fd, &left,   sizeof(left));
-    write(fd, &top,    sizeof(top));
-    write(fd, &width,  sizeof(width));
-    write(fd, &height, sizeof(height));
-    write(fd, &im->bytes_per_line, sizeof(im->bytes_per_line));
-    write(fd, &im->xoffset, sizeof(im->xoffset));
-    write(fd, &im->depth, sizeof(im->depth));
-
-    /* write the data */
-    write(fd, im->data, height * im->bytes_per_line);
-
-    close(fd);
-
-    XDestroyImage(im);
+    fprintf(fp, "%lx %d %d %d %d\n", (unsigned long) pix, left, top, width, height);
+    fclose(fp);
 
     return 0;
 }
 
 int Panel_restore(char *name)
 {
-    int fd;
-    int top, left, width, height, bytes_per_line, xoffset, depth;
-    char *data;
-    XImage *newimage;
-    XWindowAttributes xwa;
+    FILE *fp;
+    unsigned long pix;
+    int top, left, width, height;
 
-    /* open the file */
-    fd = open(name, O_RDONLY);
-    if (fd < 0)
+    fp = fopen(name, "r");
+    if (!fp)
     {
 	perror("unable to open panel file");
 	return -1;
     }
 
-    read(fd, &left,   sizeof(left));
-    read(fd, &top,    sizeof(top));
-    read(fd, &width,  sizeof(width));
-    read(fd, &height, sizeof(height));
-    read(fd, &bytes_per_line, sizeof(bytes_per_line));
-    read(fd, &xoffset, sizeof(xoffset));
-    read(fd, &depth, sizeof(depth));
+    if (fscanf(fp, "%lx %d %d %d %d", &pix, &left, &top, &width, &height) != 5)
+    {
+	fprintf(stderr, "error reading panel file\n");
+	fclose(fp);
+	return -1;
+    }
 
-    data = G_malloc(bytes_per_line * height);
+    fclose(fp);
 
-    /* read the data */
-    read(fd, data, bytes_per_line * height);
-
-    close(fd);
-
-    /* now that data is in memory, get the window's attributes and turn
-     * it into an image, then draw it. */
-    if (XGetWindowAttributes(dpy, grwin, &xwa) == 0)
-        return -1;
-
-    newimage = XCreateImage(dpy, xwa.visual, depth, ZPixmap, xoffset,
-			    data, width, height, 8, bytes_per_line);
-    XPutImage(dpy, bkupmap, gc, newimage, 0, 0, left, top, width, height);
-
-    /* free the XImage structure; also frees the data */
-    XDestroyImage(newimage);
+    XCopyArea(dpy, (Pixmap) pix, bkupmap, gc, 0, 0, width, height, left, top);
 
     needs_flush = 1;
     return 0;
@@ -103,7 +78,30 @@ int Panel_restore(char *name)
 
 int Panel_delete(char *name)
 {
-    unlink(name);
+    FILE *fp = NULL;
+    unsigned long pix = 0;
+
+    fp = fopen(name, "r");
+    if (!fp)
+    {
+	perror("unable to open panel file");
+	goto done;
+    }
+
+    if (fscanf(fp, "%lx", &pix) != 1)
+    {
+	fprintf(stderr, "error reading panel file\n");
+	goto done;
+    }
+
+done:
+    if (fp)
+	fclose(fp);
+
+    if (pix)
+	XFreePixmap(dpy, (Pixmap) pix);
+
+    remove(name);
     return 0;
 }
 
