@@ -160,8 +160,7 @@ G3d_setWindowParams ()
 
 /*----------------------------------------------------------------------------*/
 
-char *
-G3d_getWindowParams ()
+char * G3d_getWindowParams ()
 
 {
   if (windowParam == NULL) return NULL;
