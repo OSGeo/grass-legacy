@@ -2,8 +2,8 @@
 static const char SCCSID[]="@(#)PJ_mbtfpp.c	4.1 94/02/15     GIE     REL";
 #endif
 #define PJ_LIB__
-#include	<projects.h>
-PROJ_HEAD(mbtfpp, "McBryde-Thomas Flat-Polar Parabolic") "\n\tCyl., Sph.";
+#include	"projects.h"
+PROJ_HEAD(mbtfpp, "McBride-Thomas Flat-Polar Parabolic") "\n\tCyl., Sph.";
 #define CS	.95257934441568037152
 #define FXC	.92582009977255146156
 #define FYC	3.40168025708304504493

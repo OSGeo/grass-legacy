@@ -4,7 +4,7 @@ static const char SCCSID[]="@(#)PJ_mpoly.c	4.1	94/05/22	GIE	REL";
 #define PROJ_PARMS__ \
 	double	rho_0;
 #define PJ_LIB__
-#include	<projects.h>
+#include	"projects.h"
 PROJ_HEAD(mpoly, "Modified Polyconic")
 	"\n\tPolyconic, Sph\n\tlat_1= and lat_2= lotsa";
 FORWARD(s_forward); /* spheroid */

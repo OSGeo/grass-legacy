@@ -2,9 +2,7 @@
 #ifndef lint
 static const char SCCSID[]="@(#)biveval.c	4.4	93/06/12	GIE	REL";
 #endif
-# include <projects.h>
-
-#define projUV  UV
+# include "projects.h"
 # define NEAR_ONE	1.00001
 	static projUV
 w2, w;
