@@ -1,3 +1,5 @@
+/* $Id$ */
+
 #include <string.h>
 #include <stdlib.h>
 #include "gis.h"
@@ -13,21 +15,22 @@ int main (int argc, char *argv[])
     int projection;
     char *name, *mapset;
 
-	struct GModule *module;
+    struct GModule *module;
     struct
     {
 	struct Option *map;
 	struct Option *line;
+	struct Option *null_str;
 /*	struct Option *width;
 	struct Option *result; */
     } parms;
 
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->description =
-		"Outputs raster map layer values lying along "
-		"user defined transect line(s).";
+    module = G_define_module();
+    module->description =
+	"Outputs raster map layer values lying along "
+	"user defined transect line(s).";
 
     parms.map = G_define_option();
     parms.map->key = "map";
@@ -53,6 +56,13 @@ int main (int argc, char *argv[])
     parms.line->description = "Transect definition";
     parms.line->required = YES;
     parms.line->multiple = YES;
+
+    parms.null_str = G_define_option() ;
+    parms.null_str->key        = "null";
+    parms.null_str->type       = TYPE_STRING;
+    parms.null_str->required   = NO;
+    parms.null_str->answer     = "*";
+    parms.null_str->description= "Char string to represent no data cell" ;
 
 /*  parms.width = G_define_option();
     parms.width->key = "width";
@@ -82,7 +92,8 @@ int main (int argc, char *argv[])
 		G_program_name(), name);
 	exit(1);
     }
-    sprintf (command, "r.profile input='%s' output='-' profile=", parms.map->answer);
+    sprintf (command, "r.profile input='%s' output='-' null='%s' profile=", 
+		parms.map->answer, parms.null_str->answer);
     err = 0;
     for (n=0; parms.line->answers[n]; n+=4)
     {
