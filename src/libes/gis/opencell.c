@@ -73,7 +73,7 @@ G_open_cell_old (name, mapset)
     {
         char msg[128];
 
-        sprintf (msg, "unable to open data layer [%s] in mapset [%s]",
+        sprintf (msg, "unable to open raster map [%s] in mapset [%s]",
             name, mapset);
         G_warning (msg);
         return fd;
@@ -176,7 +176,7 @@ G__open_cell_old (name, mapset)
     {
         char msg[100];
         sprintf (msg,
-            "[%s] in mapset [%s] - in different projection than current window",
+            "[%s] in mapset [%s] - in different projection than current region",
             name, mapset);
         G_warning (msg);
         return -1;
@@ -185,7 +185,7 @@ G__open_cell_old (name, mapset)
     {
         char msg[100];
         sprintf (msg,
-            "[%s] in mapset [%s] - in different zone than current window",
+            "[%s] in mapset [%s] - in different zone than current region",
             name, mapset);
         G_warning (msg);
         return -1;
@@ -209,7 +209,7 @@ G__open_cell_old (name, mapset)
     if (fd >= MAXFILES)
     {
         close (fd);
-        G_warning("Too many open cell files");
+        G_warning("Too many open raster files");
         return -1;
     }
 
@@ -218,8 +218,8 @@ G__open_cell_old (name, mapset)
 
 /* save name and mapset */
     {
-    char xname[256],xmapset[256];
-    if (G__name_in_mapset(name, xname, xmapset))
+    char xname[512], xmapset[512];
+    if (G__name_is_fully_qualified(name, xname, xmapset))
 	FCB.name   = G_store (xname);
     else
 	FCB.name   = G_store (name);
@@ -326,7 +326,7 @@ G__open_cell_new (name, open_mode)
     {
 	char msg[100];
 
-	sprintf (msg, "opencell: %s - illegal cell file name", name);
+	sprintf (msg, "opencell: %s - illegal file name", name);
 	G_warning (msg);
 	return -1;
     }
@@ -348,7 +348,7 @@ G__open_cell_new (name, open_mode)
     {
         free (tempname);
         close (fd);
-        G_warning("opencell: too many open cell files");
+        G_warning("opencell: too many open files");
         return -1;
     }
 
