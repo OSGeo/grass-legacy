@@ -45,12 +45,16 @@ then
     export HOME
     cshrc=$HOME/.cshrc
     rm -f $cshrc
-    echo "set home = $home" > $cshrc
+    
+    cp $home/.cshrc $cshrc        # added RL Glenn, SCS
+    echo "setenv PATH $PATH" >> $cshrc
 
-    if [ -r $home/.cshrc ]
-    then
-	grep '^ *set  *mail *= *' $home/.cshrc >> $cshrc
-    fi
+    echo "set home = $home" >> $cshrc
+
+#   if [ -r $home/.cshrc ]
+#   then
+#       grep '^ *set  *mail *= *' $home/.cshrc >> $cshrc
+#   fi
 
     if [ -r $home/.login ]
     then
@@ -60,8 +64,9 @@ then
     echo "set history=30 noclobber ignoreeof" >> $cshrc
     echo "set prompt='\\" >> $cshrc
     echo "Mapset <$MAPSET> in Location <$LOCATION_NAME>\\" >> $cshrc
-    echo "GRASS VERSION_NUMBER > '" >> $cshrc
+    echo "GRASS-GRID > '" >> $cshrc
 
+    cd $LOCATION                  # added RL Glenn, SCS
     $ETC/run csh
 
     HOME=$home
@@ -75,6 +80,16 @@ GRASS-GRID > "
 
     export PS1
     cd $LOCATION                  # added RL Glenn, SCS
+
+    if [ ! -r PROJ_INFO ]           # check for PROJ_INFO file
+    then                          # ask user to run m.setproj
+	 echo ""
+	 echo "		********   W A R N I N G ************"
+ 	 echo "	Projection information is NOT available for this mapset"
+	 echo "     One moment, Please"; 
+	 sleep 2
+	 /bin/sh $GISBASE/scripts/do_PROJ
+    fi
     $ETC/run sh
 fi
 
