@@ -151,7 +151,6 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
     return 1;
   }
 
-  /* fprintf(lfp, "Main ring has %d vertices\n", numvertices ); */
 
   partoffsets = (int *)malloc( numparts * sizeof(int) );
 
@@ -189,10 +188,6 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
 	       i, cindx );
       G_fatal_error(buf);
     }
-
-    /* fprintf(lfp, "Isle %d has index %d and %d vertices\n", i+1, j, numvertices ); */
-    
-    invert_point_sequence(Points);
 
     partoffsets[i+1] = startOffset = endOffset + 1;
     endOffset += numvertices;
@@ -259,31 +254,3 @@ int extract_ring( SHPObject **sh1, struct Map_info *Map, int *indx_list, int *nI
 
 
 
-
-int invert_point_sequence( struct line_pnts *l1 ) {
-
-  /* Reverse the order of the point listing in fields x and y */
-
-  int ix;
-  double *lX, *lY;
-  if( (lX = (double *)malloc( l1->n_points * sizeof(double) )) == NULL)
-    return -1;
-  if( (lY = (double *)malloc( l1->n_points * sizeof(double) )) == NULL)
-    return -1;
-
-  for( ix = 0; ix < l1->n_points; ++ix ) {
-    lX[l1->n_points-1-ix] = l1->x[ix];
-    lY[l1->n_points-1-ix] = l1->y[ix];
-  }
-
-  for( ix = 0; ix < l1->n_points; ++ix ) {
-    l1->x[ix] = lX[ix];
-    l1->y[ix] = lY[ix];
-  }
-
-  free(lX);
-  free(lY);
-
-  return 0;
-  
-}
