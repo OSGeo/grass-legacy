@@ -1,0 +1,132 @@
+
+
+
+Grescale(2G)         GRASS Reference Manual          Grescale(2G)
+
+
+
+NAME
+     Grescale - Rescales the in a
+     (G Language Tool)
+
+SYNOPSIS
+     Grescale  old_layer new_layer old_min old_max new_min
+               new_max [title]
+
+DESCRIPTION
+     Grescale creates a new that is a rescaling of an existing
+     This command is useful for producing representations with a
+     reduced number of categories from a with a large range of
+     category values (e.g., an elevation Rescaled are appropriate
+     for use in such programs as cell.stats(1), report(1), and
+     coin(1).
+
+     The user specifies the name of the to be rescaled
+     (old_layer) and the resulting name (new_layer). The user
+     also specifes the minimum (old_min) and maximum (old_max)
+     range of the to be rescaled, as well as the desired minimum
+     (new_min) and maximum (new_max) output range of the
+     resultant rescaled These ranges determine the scaling to be
+     performed.  An optional title may also be specified for the
+     new
+
+     which falls outside of the specified input range of the to
+     be rescaled will become zero.  This allows the user to
+     select a subset of the full range for rescaling.  The user
+     should know the range of the input before invoking Grescale.
+     This can be determined by using either the GRASS describe or
+     Gdescribe commands.
+
+     An appropriate category file and color table, based upon the
+     original are generated with category labels that reflect the
+     original used to produce each category.
+
+
+EXAMPLE
+     If you want to rescale an elevation with ranging from 1090
+     meters to 1800 meters into the range 1-255, the following
+     command line could be used:
+
+
+          Grescale elevation elevation.255 1090 1800 1 255
+
+NOTES
+     The rescaled range is actually unlimited, but the range 1 to
+     255 is used frequently due to limitations of
+
+     Grescale actually runs Greclass to represent the rescaled
+     categories.
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+Grescale(2G)         GRASS Reference Manual          Grescale(2G)
+
+
+
+SEE ALSO
+     cell.stats[1], coin[1], describe[1], reclass[1], report[1],
+     Gdescribe[2], Greclass[2]
+
+AUTHOR
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
