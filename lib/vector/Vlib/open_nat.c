@@ -25,6 +25,7 @@
 #include <sys/stat.h>
 
 static char name_buf[1024];
+int check_coor ( struct Map_info *Map );
 
 /* Open old file.
 *  Map->name and Map->mapset must be set before
@@ -38,6 +39,7 @@ V1_open_old_nat ( struct Map_info *Map )
   char buf[500];
   FILE *fp;
 
+  G_debug (1, "V1_open_old_nat(): name = %s mapset = %s", Map->name, Map->mapset);
   
   sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
   Map->dig_fp = G_fopen_old (buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
@@ -45,6 +47,7 @@ V1_open_old_nat ( struct Map_info *Map )
   if ( Map->dig_fp == NULL ) return -1;
 
   if ( !(dig__read_head (Map)) ) return (-1);
+  check_coor ( Map );
 
   /* set conversion matrices */
   dig_init_portable ( &(Map->head.port), Map->head.port.byte_order );
@@ -66,6 +69,7 @@ V1_open_new_nat (
   FILE *fp;
   struct stat info;
 
+  G_debug (1, "V1_open_new_nat(): name = %s", name);
 
   sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, name);
 
@@ -94,6 +98,7 @@ V1_open_new_nat (
 
   Vect__init_head (&(Map->head));
   Map->head.with_z = with_z;
+  Map->head.size = 0;
   Vect__write_head (Map);
 
   /* set conversion matrices */
@@ -115,15 +120,13 @@ V2_open_old_nat (struct Map_info *Map)
 {
     int  ret;
     char buf[500];
-    FILE *fp;
     
-    G_debug (1, "V2_open_old_nat(): name = %s mapset= %s", Map->name, Map->mapset);
+    G_debug (1, "V2_open_old_nat(): name = %s mapset = %s", Map->name, Map->mapset);
 
-    /* check if topo is available */
-    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
-    fp = G_fopen_old (buf, GV_TOPO_ELEMENT, Map->mapset);
+    /* open topo */
+    ret = Vect_open_topo ( Map );
 
-    if ( fp == NULL ) { /* topo file is not available */
+    if ( ret == -1 ) { /* topo file is not available */
 	G_debug( 1, "Cannot open topo file for vector '%s@%s'.\n", 
 		      Map->name, Map->mapset);
 	return -1;
@@ -133,25 +136,15 @@ V2_open_old_nat (struct Map_info *Map)
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
     Map->dig_fp = G_fopen_old (buf, GRASS_VECT_COOR_ELEMENT, Map->mapset);
     if ( Map->dig_fp == NULL ) {
-        fclose ( fp );  
+	dig_free_plus ( &(Map->plus) ); 
 	return -1;
     }
     if ( !(dig__read_head (Map)) ) return (-1);
+    check_coor ( Map );
+  
     /* set conversion matrices */
     dig_init_portable ( &(Map->head.port), Map->head.port.byte_order );
     
-
-    /* load topo to memory */
-    dig_init_plus ( &(Map->plus) );    
-    dig_load_plus ( &(Map->plus), fp );    
-   
-    fclose ( fp );  
-    /*
-    if (NULL != Vect__P_init (Map, name, mapset))
-    {
-      return -1;
-    }
-    */
     Map->open = VECT_OPEN_CODE;
     Map->level = LEVEL_2;
     Map->mode = MODE_READ;
@@ -163,3 +156,23 @@ V2_open_old_nat (struct Map_info *Map)
     return 0;
 }
 
+/* check file size */
+int check_coor ( struct Map_info *Map )
+{
+    struct Coor_info CInfo;
+    long  dif;
+  
+    Vect_coor_info ( Map, &CInfo);
+    dif = CInfo.size - Map->head.size;
+    G_debug ( 1, "coor size in head = %ld, real coor file size= %ld", 
+	                     Map->head.size, CInfo.size);
+
+    if ( dif > 0 ) {
+        G_warning ( "coor files of vector '%s@%s' is larger than it should be "
+	            "(%ld bytes excess).", Map->name, Map->mapset, dif);
+    } else if ( dif < 0 ) {
+        G_warning ( "coor files of vector '%s@%s' is shorter than it should be "
+	            "(%ld bytes missing).", Map->name, Map->mapset, -dif);
+    }
+    return 1;
+}

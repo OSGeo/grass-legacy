@@ -123,8 +123,11 @@ V2_open_old_shp ( struct Map_info *Map )
     int ret;    
     char buf[500];
     FILE *fp;
+    struct Coor_info CInfo;
  
     /* check if topo is available */
+    Vect_coor_info ( Map, &CInfo);
+    
     sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
     fp = G_fopen_old (buf, GV_TOPO_ELEMENT, Map->mapset);
 

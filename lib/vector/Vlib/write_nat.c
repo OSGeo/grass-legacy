@@ -87,28 +87,7 @@ V1_rewrite_line_nat (
   } else {
       /* differ -> delete the old and append new */
       /* delete old */
-      switch (old_type) {
-	  case GV_POINT:
-	  case GV_DEAD_POINT:
-	      del_type = GV_DEAD_POINT;
-	      break;
-	  case GV_LINE:
-	  case GV_DEAD_LINE:
-	      del_type = GV_DEAD_LINE;
-	      break;
-	  case GV_BOUNDARY:
-	  case GV_DEAD_BOUNDARY:
-	      del_type = GV_DEAD_BOUNDARY;
-	      break;
-	  case GV_CENTROID:
-	  case GV_DEAD_CENTROID:
-	      del_type = GV_DEAD_CENTROID;
-	      break;
-      }
-      
-      if ( old_type != -2 ) /* EOF -> write new line */
-          if (-1 == V1__rewrite_line_nat (Map, offset, del_type, old_points, old_cats) )
-              return (-1);
+      V1_delete_line_nat ( Map, offset);
       
       /* write new */
       fseek (Map->dig_fp, 0L, SEEK_END);	/*  end of file */
@@ -131,48 +110,95 @@ V1__rewrite_line_nat (
 		       struct line_pnts *points,
 		       struct line_cats *cats)
 {
-  int  n_points;
+  int  i, n_points;
+  char rhead, nc;
+  short field;
   FILE *dig_fp;
   
   dig_set_cur_port (&(Map->head.port));
   dig_fp = Map->dig_fp;
   fseek (dig_fp, offset, 0);
 
-  if (0 >= dig__fwrite_port_I (&type, 1, dig_fp))
+  /* first byte:   0 bit: 1 - alive, 0 - dead
+  *                1 bit: 1 - categories, 0 - no category
+  *              2-3 bit: store type
+  *              4-5 bit: reserved for store type expansion
+  *              6-7 bit: not used  
+  */
+  
+  rhead = (char) Vect_type_to_store ( type );
+  rhead <<= 2;
+  if (cats->n_cats > 0) {
+      rhead |=  0x02;
+  }
+  rhead |= 0x01; /* written/rewritten is always alive */
+  
+  if (0 >= dig__fwrite_port_C (&rhead, 1, dig_fp))
     return -1;
 
-  if (0 >= dig__fwrite_port_C (&cats->n_cats, 1, dig_fp))
-    return -1;
-
-  if (cats->n_cats > 0)
-    {
-      if (0 >= dig__fwrite_port_I (cats->field, cats->n_cats, dig_fp))
+  if (cats->n_cats > 0) {
+      nc = (char) cats->n_cats;
+      if (0 >= dig__fwrite_port_C (&nc, 1, dig_fp))
 	return -1;
-      if (0 >= dig__fwrite_port_I (cats->cat, cats->n_cats, dig_fp))
-	return -1;
-    }
-  
-  if ( type & ( DOT | DEAD_DOT | CENTROID | DEAD_CENTROID ) )
-    n_points = 1;
-  else  
-    n_points = points->n_points;	  
-  
-  dig__fwrite_port_I (&n_points, 1, dig_fp);
 
+      if (cats->n_cats > 0) {
+	  for (i = 0; i < cats->n_cats; i++) { 
+	      field = (short) cats->field[i];
+	      if (0 >= dig__fwrite_port_S (&field, 1, dig_fp))
+		return -1;
+	  }
+	  if (0 >= dig__fwrite_port_I (cats->cat, cats->n_cats, dig_fp))
+	    return -1;
+      }	
+  }
   
+  if ( type & GV_POINTS ) {
+      n_points = 1;	  
+  } else {
+      n_points = points->n_points;
+      dig__fwrite_port_I (&n_points, 1, dig_fp);
+  }
+
   if (0 >= dig__fwrite_port_D (points->x, n_points, dig_fp))
     return -1;
   if (0 >= dig__fwrite_port_D (points->y, n_points, dig_fp))
     return -1;
 
-  if (Map->head.with_z == WITH_Z)
-    {
+  if ( Map->head.with_z ) {
       if (0 >= dig__fwrite_port_D (points->z, n_points, dig_fp))
           return -1;
-    }
+  }
   
   fflush (dig_fp);
 
   return offset;
 }
 
+/* Deletes line at the given offset.
+*
+*  Returns:  0 ok
+*           -1 on error
+*/
+int 
+V1_delete_line_nat (
+		       struct Map_info *Map,
+		       long   offset )
+{
+  char rhead;
+  FILE *dig_fp;
+  
+  dig_set_cur_port (&(Map->head.port));
+  dig_fp = Map->dig_fp;
+  fseek (dig_fp, offset, 0);
+
+  /* read old */
+  if (0 >= dig__fread_port_C (&rhead, 1, dig_fp))
+      return (-1);
+  
+  rhead &= 0xFE; 
+  
+  if (0 >= dig__fwrite_port_C (&rhead, 1, dig_fp))
+    return -1;
+
+  return 0;
+}

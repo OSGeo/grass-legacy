@@ -1,9 +1,24 @@
+/*
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       Vector library 
+*   	    	
+* AUTHOR(S):    Dave Gerdes, CERL.
+*               Update to GRASS 5.1 Radim Blazek.
+*
+* PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
 #include <stdlib.h>
 #include "Vect.h"
-/*
-**  Written by Dave Gerdes  5/1988
-**  US Army Construction Engineering Research Lab
-*/
 
 /*
 ** build_area_with_line ()
@@ -30,6 +45,7 @@
 **           number  of lines
 **
 */
+
 int 
 dig_build_area_with_line ( struct Plus_head *plus, 
 	plus_t first_line, /* always positive */

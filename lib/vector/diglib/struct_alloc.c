@@ -1,7 +1,22 @@
 /*
-   **  Written by: Dave Gerdes 5 1988
-   **  US Army Construction Engineering Research Lab
- */
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       Vector library 
+*   	    	
+* AUTHOR(S):    Dave Gerdes, CERL.
+*               Update to GRASS 5.1 Radim Blazek.
+*
+* PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
 
 #include <stdlib.h>
 #include "Vect.h"
@@ -176,13 +191,11 @@ dig_alloc_area (){
     Area->alloc_lines = 0;
     Area->lines = NULL;
 
-    Area->alloc_centroids = 0;
-    Area->n_centroids = 0;
-    Area->centroids = NULL;
-
     Area->alloc_isles = 0;
     Area->n_isles = 0;
     Area->isles = NULL;
+    
+    Area->centroid = 0;
 
     return (Area);
 }
@@ -266,21 +279,21 @@ dig_alloc_cats (
   /* alloc_space will just return if no space is needed */
   alloced = cats->alloc_cats;
   if (!(p =
-	dig__alloc_space (num, &alloced, 1, (char *) cats->field,
-			  sizeof (GRASS_V_FIELD))))
+	dig__alloc_space (num, &alloced, 1, (int *) cats->field,
+			  sizeof (int))))
     {
       return (dig_out_of_memory ());
     }
-  cats->field = (GRASS_V_FIELD *) p;
+  cats->field = (int *) p;
 
   alloced = cats->alloc_cats;
   if (!(p =
-	dig__alloc_space (num, &alloced, 1, (char *) cats->cat,
-			  sizeof (GRASS_V_CAT))))
+	dig__alloc_space (num, &alloced, 1, (int *) cats->cat,
+			  sizeof (int))))
     {
       return (dig_out_of_memory ());
     }
-  cats->cat = (GRASS_V_CAT *) p;
+  cats->cat = (int *) p;
 
   cats->alloc_cats = alloced;
   return (0);
@@ -324,26 +337,6 @@ dig_area_alloc_isle ( P_AREA * area, int add) {
   area->isles = (plus_t *) p;
 
   area->alloc_isles = num;
-  return (0);
-}
-
-/* area_alloc_centroid (area, add)
-**     allocate space in  P_area for add new centroids
-**
-**  Returns   0 ok    or    -1 on error
-*/
-int 
-dig_area_alloc_centroid ( P_AREA * area, int add) {
-  int num;
-  char *p;
-
-  num = area->alloc_centroids + add;
-
-  p = realloc ( area->centroids, num * sizeof(plus_t) );
-  if ( p == NULL ) return -1; 
-  area->centroids = (plus_t *) p;
-
-  area->alloc_centroids = num;
   return (0);
 }
 

@@ -138,11 +138,7 @@ Vect_get_area_centroid (
 
   Plus = &(Map->plus);
   Area = Plus->Area[area];
-  if ( Area->n_centroids > 0 )
-      return ( Area->centroids[0] );
-  else
-      return 0;
-
+  return ( Area->centroid );
 }
 
 /* Returns number of isles */ 

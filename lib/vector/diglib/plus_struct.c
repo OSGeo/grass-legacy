@@ -1,13 +1,24 @@
 /*
-   ** Written by: Dave Gerdes 5 1988
-   ** US Army Construction Engineering Research Lab
-   ** Modified by: Dave Gerdes 9 1988   portable
-   ** Modified by: Dave Gerdes 1 1990   more portable
- */
-
+* $Id$
+*
+****************************************************************************
+*
+* MODULE:       Vector library 
+*   	    	
+* AUTHOR(S):    Dave Gerdes, CERL.
+*               Update to GRASS 5.1 Radim Blazek.
+*
+* PURPOSE:      Lower level functions for reading/writing/manipulating vectors.
+*
+* COPYRIGHT:    (C) 2001 by the GRASS Development Team
+*
+*               This program is free software under the GNU General Public
+*   	    	License (>=v2). Read the file COPYING that comes with GRASS
+*   	    	for details.
+*
+*****************************************************************************/
 #include "Vect.h"
 
-// #define SUPPORT_PROG "v.support"
 /*
 * Routines for reading and writing Dig+ structures.
 * return 0 on success, -1 on failure of whatever kind
@@ -53,21 +64,29 @@ dig_Rd_P_node (
     return (-1);
   if (0 >= dig__fread_port_D (&(ptr->y), 1, fp))
     return (-1);
+
+  if ( Plus->with_z )
+    if (0 >= dig__fread_port_D (&(ptr->z), 1, fp))
+      return (-1);
+  
   if (0 >= dig__fread_port_P (&(ptr->n_lines), 1, fp))
     return (-1);
 
   if ( dig_node_alloc_line ( ptr, ptr->n_lines) == -1)
      return -1; 
 
-  if (ptr->n_lines)		/* Not guaranteed what fread does w/ 0 */
-    {
+  if (ptr->n_lines) {
       if (0 >= dig__fread_port_P (ptr->lines, ptr->n_lines, fp))
 	return (-1);
       if (0 >= dig__fread_port_F (ptr->angles, ptr->n_lines, fp))
 	return (-1);
-    }
+  }
   
   Plus->Node[n] = ptr;
+
+  /* TODO - save to file instead of rebuilding
+  *         It takes 50% of time for d.vect!!! */ 
+  dig_spidx_add_node (Plus, n, ptr->x, ptr->y, ptr->z);
   
   return (0);
 }
@@ -86,6 +105,11 @@ dig_Wr_P_node (
     return (-1);
   if (0 >= dig__fwrite_port_D (&(ptr->y), 1, fp))
     return (-1);
+
+  if ( Plus->with_z )
+    if (0 >= dig__fwrite_port_D (&(ptr->z), 1, fp))
+      return (-1);
+  
   if (0 >= dig__fwrite_port_P (&(ptr->n_lines), 1, fp))
     return (-1);
 
@@ -112,14 +136,23 @@ dig_Rd_P_line (
 
   ptr = dig_alloc_line();
 
+  if (0 >= dig__fread_port_C (&(ptr->type), 1, fp))
+    return (-1);
+  if (0 >= dig__fread_port_L (&(ptr->offset), 1, fp))
+    return (-1);
+
   if (0 >= dig__fread_port_P (&(ptr->N1), 1, fp))
     return -1;
   if (0 >= dig__fread_port_P (&(ptr->N2), 1, fp))
     return -1;
-  if (0 >= dig__fread_port_P (&(ptr->left), 1, fp))
-    return -1;
-  if (0 >= dig__fread_port_P (&(ptr->right), 1, fp))
-    return -1;
+  
+  if ( ptr->type & (GV_BOUNDARY | GV_CENTROID) ) 
+    if (0 >= dig__fread_port_P (&(ptr->left), 1, fp))
+      return -1;
+
+  if ( ptr->type & GV_BOUNDARY ) 
+    if (0 >= dig__fread_port_P (&(ptr->right), 1, fp))
+      return -1;
 
   if (0 >= dig__fread_port_D (&(ptr->N), 1, fp))
     return -1;
@@ -130,11 +163,12 @@ dig_Rd_P_line (
   if (0 >= dig__fread_port_D (&(ptr->W), 1, fp))
     return -1;
 
-  if (0 >= dig__fread_port_L (&(ptr->offset), 1, fp))
-    return (-1);
-
-  if (0 >= dig__fread_port_C (&(ptr->type), 1, fp))
-    return (-1);
+  if ( Plus->with_z ) {
+    if (0 >= dig__fread_port_D (&(ptr->T), 1, fp))
+      return -1;
+    if (0 >= dig__fread_port_D (&(ptr->B), 1, fp))
+      return -1;
+  }
 
   Plus->Line[n] = ptr;
   return (0);
@@ -150,14 +184,23 @@ dig_Wr_P_line (
 
   ptr = Plus->Line[n];
   
+  if (0 >= dig__fwrite_port_C (&(ptr->type), 1, fp))
+    return (-1);
+  if (0 >= dig__fwrite_port_L (&(ptr->offset), 1, fp))
+    return (-1);
+
   if (0 >= dig__fwrite_port_P (&(ptr->N1), 1, fp))
     return (-1);
   if (0 >= dig__fwrite_port_P (&(ptr->N2), 1, fp))
     return (-1);
-  if (0 >= dig__fwrite_port_P (&(ptr->left), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_P (&(ptr->right), 1, fp))
-    return (-1);
+  
+  if ( ptr->type & (GV_BOUNDARY | GV_CENTROID) ) 
+    if (0 >= dig__fwrite_port_P (&(ptr->left), 1, fp))
+      return (-1);
+
+  if ( ptr->type & GV_BOUNDARY ) 
+    if (0 >= dig__fwrite_port_P (&(ptr->right), 1, fp))
+      return (-1);
 
   if (0 >= dig__fwrite_port_D (&(ptr->N), 1, fp))
     return (-1);
@@ -168,10 +211,12 @@ dig_Wr_P_line (
   if (0 >= dig__fwrite_port_D (&(ptr->W), 1, fp))
     return (-1);
 
-  if (0 >= dig__fwrite_port_L (&(ptr->offset), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_C (&(ptr->type), 1, fp))
-    return (-1);
+  if ( Plus->with_z ) {
+    if (0 >= dig__fwrite_port_D (&(ptr->T), 1, fp))
+      return (-1);
+    if (0 >= dig__fwrite_port_D (&(ptr->B), 1, fp))
+      return (-1);
+  }
 
   return (0);
 }
@@ -198,35 +243,38 @@ dig_Rd_P_area (
   if (0 >= dig__fread_port_D (&(ptr->W), 1, fp))
     return -1;
 
+  if ( Plus->with_z ) {
+    if (0 >= dig__fread_port_D (&(ptr->T), 1, fp))
+      return -1;
+    if (0 >= dig__fread_port_D (&(ptr->B), 1, fp))
+      return -1;
+  }
+
+  /* lines */
   if (0 >= dig__fread_port_P (&(ptr->n_lines), 1, fp))
     return -1;
-  
-  if (0 >= dig__fread_port_P (&(ptr->n_centroids), 1, fp))
-    return -1;
-  
-  if (0 >= dig__fread_port_P (&(ptr->n_isles), 1, fp))
-    return -1;
-
+   
   if ( dig_area_alloc_line ( ptr, ptr->n_lines) == -1)
      return -1; 
-
-  if ( dig_area_alloc_centroid ( ptr, ptr->n_centroids) == -1)
-     return -1; 
-
-  if ( dig_area_alloc_isle ( ptr, ptr->n_isles) == -1)
-     return -1; 
-
+  
   if (ptr->n_lines)
     if (0 >= dig__fread_port_P (ptr->lines, ptr->n_lines, fp))
       return -1;
 
-  if (ptr->n_centroids)
-    if (0 >= dig__fread_port_P (ptr->centroids, ptr->n_centroids, fp))
-      return -1;
+  /* isles */
+  if (0 >= dig__fread_port_P (&(ptr->n_isles), 1, fp))
+    return -1;
+
+  if ( dig_area_alloc_isle ( ptr, ptr->n_isles) == -1)
+     return -1; 
 
   if (ptr->n_isles)
     if (0 >= dig__fread_port_P (ptr->isles, ptr->n_isles, fp))
       return -1;
+
+  /* centroid */
+  if (0 >= dig__fread_port_P (&(ptr->centroid), 1, fp))
+     return -1;
 
   Plus->Area[n] = ptr;
   
@@ -252,24 +300,32 @@ dig_Wr_P_area (
   if (0 >= dig__fwrite_port_D (&(ptr->W), 1, fp))
     return (-1);
 
+  if ( Plus->with_z ) {
+    if (0 >= dig__fwrite_port_D (&(ptr->T), 1, fp))
+      return (-1);
+    if (0 >= dig__fwrite_port_D (&(ptr->B), 1, fp))
+      return (-1);
+  }
+
+  /* lines */
   if (0 >= dig__fwrite_port_P (&(ptr->n_lines), 1, fp))
     return (-1);
-  if (0 >= dig__fwrite_port_P (&(ptr->n_centroids), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_P (&(ptr->n_isles), 1, fp))
-    return (-1);
-
+  
   if (ptr->n_lines)
     if (0 >= dig__fwrite_port_P (ptr->lines, ptr->n_lines, fp))
       return -1;
 
-  if (ptr->n_centroids)
-    if (0 >= dig__fwrite_port_P (ptr->centroids, ptr->n_centroids, fp))
-      return -1;
+  /* isles */
+  if (0 >= dig__fwrite_port_P (&(ptr->n_isles), 1, fp))
+    return (-1);
 
   if (ptr->n_isles)
     if (0 >= dig__fwrite_port_P (ptr->isles, ptr->n_isles, fp))
       return -1;
+
+  /* centroid */
+  if (0 >= dig__fwrite_port_P (&(ptr->centroid), 1, fp))
+    return (-1);
 
   return (0);
 }
@@ -296,9 +352,17 @@ dig_Rd_P_isle (
   if (0 >= dig__fread_port_D (&(ptr->W), 1, fp))
     return -1;
 
+  if ( Plus->with_z ) {
+    if (0 >= dig__fread_port_D (&(ptr->T), 1, fp))
+      return -1;
+    if (0 >= dig__fread_port_D (&(ptr->B), 1, fp))
+      return -1;
+  }
+
   if (0 >= dig__fread_port_P (&(ptr->area), 1, fp))
     return -1;
   
+  /* lines */
   if (0 >= dig__fread_port_P (&(ptr->n_lines), 1, fp))
     return -1;
 
@@ -333,9 +397,16 @@ dig_Wr_P_isle (
   if (0 >= dig__fwrite_port_D (&(ptr->W), 1, fp))
     return (-1);
 
+  if ( Plus->with_z ) {
+    if (0 >= dig__fwrite_port_D (&(ptr->T), 1, fp))
+      return (-1);
+    if (0 >= dig__fwrite_port_D (&(ptr->B), 1, fp))
+      return (-1);
+  }
   if (0 >= dig__fwrite_port_P (&(ptr->area), 1, fp))
     return (-1);
 
+  /* lines */
   if (0 >= dig__fwrite_port_P (&(ptr->n_lines), 1, fp))
     return (-1);
 
@@ -408,42 +479,20 @@ dig_Rd_Plus_head (   FILE * fp,
     return (-1);
   if (0 >= dig__fread_port_L (&(ptr->Isle_offset), 1, fp))
     return (-1);
-
-  if (0 >= dig__fread_port_L (&(ptr->Dig_size), 1, fp))
+  
+  if (0 >= dig__fread_port_L (&(ptr->Node_spidx_offset), 1, fp))
     return (-1);
-  if (0 >= dig__fread_port_L (&(ptr->Dig_code), 1, fp))
+  if (0 >= dig__fread_port_L (&(ptr->Line_spidx_offset), 1, fp))
     return (-1);
-
-  /*
-  if (0 >= dig__fread_port_I (&(ptr->all_areas), 1, fp))
+  if (0 >= dig__fread_port_L (&(ptr->Area_spidx_offset), 1, fp))
     return (-1);
-  if (0 >= dig__fread_port_I (&(ptr->all_isles), 1, fp))
+  if (0 >= dig__fread_port_L (&(ptr->Isle_spidx_offset), 1, fp))
     return (-1);
 
-  if (0 >= dig__fread_port_D (&(ptr->snap_thresh), 1, fp))
+  if (0 >= dig__fread_port_L (&(ptr->coor_size), 1, fp))
     return (-1);
-  if (0 >= dig__fread_port_D (&(ptr->prune_thresh), 1, fp))
+  if (0 >= dig__fread_port_L (&(ptr->coor_mtime), 1, fp))
     return (-1);
-
-  if (0 >= dig__fread_port_L (&(ptr->future3), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_L (&(ptr->future4), 1, fp))
-    return (-1);
-
-  if (0 >= dig__fread_port_D (&(ptr->F1), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_D (&(ptr->F2), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_D (&(ptr->F3), 1, fp))
-    return (-1);
-  if (0 >= dig__fread_port_D (&(ptr->F4), 1, fp))
-    return (-1);
-
-  if (0 >= dig__fread_port_C (ptr->Dig_name, HEADSTR, fp))
-    return (-1);
-  if (0 >= dig__fread_port_C (ptr->filler, HEADSTR, fp))
-    return (-1);
-  */
 
   return (0);
 }
@@ -462,7 +511,7 @@ dig_Wr_Plus_head ( FILE * fp,
   buf[2] = GRASS_V_EARLIEST_MAJOR;
   buf[3] = GRASS_V_EARLIEST_MINOR;
   buf[4] = ptr->port.byte_order;
-  //buf[5] = ???.with_z;
+  buf[5] = ptr->with_z;
   if (0 >= dig__fwrite_port_C (buf, 6, fp))
     return (-1);
   
@@ -492,43 +541,19 @@ dig_Wr_Plus_head ( FILE * fp,
   if (0 >= dig__fwrite_port_L (&(ptr->Isle_offset), 1, fp))
     return (-1);
 
-  if (0 >= dig__fwrite_port_L (&(ptr->Dig_size), 1, fp))
+  if (0 >= dig__fwrite_port_L (&(ptr->Node_spidx_offset), 1, fp))
     return (-1);
-  if (0 >= dig__fwrite_port_L (&(ptr->Dig_code), 1, fp))
+  if (0 >= dig__fwrite_port_L (&(ptr->Line_spidx_offset), 1, fp))
     return (-1);
-
-  //if (0 >= dig__fwrite_port_I (&(ptr->all_areas), 1, fp))
-  //  return (-1);
-
-  /*if (0 >= dig__fwrite_port_I (&(ptr->all_areas   ), 1, fp)) return(-1);3.1? */
-  /*
-  if (0 >= dig__fwrite_port_I (&(ptr->all_isles), 1, fp))
+  if (0 >= dig__fwrite_port_L (&(ptr->Area_spidx_offset), 1, fp))
     return (-1);
-
-  if (0 >= dig__fwrite_port_D (&(ptr->snap_thresh), 1, fp))
+  if (0 >= dig__fwrite_port_L (&(ptr->Isle_spidx_offset), 1, fp))
     return (-1);
-  if (0 >= dig__fwrite_port_D (&(ptr->prune_thresh), 1, fp))
+  
+  if (0 >= dig__fwrite_port_L (&(ptr->coor_size), 1, fp))
     return (-1);
-    
-  if (0 >= dig__fwrite_port_L (&(ptr->future3), 1, fp))
+  if (0 >= dig__fwrite_port_L (&(ptr->coor_mtime), 1, fp))
     return (-1);
-  if (0 >= dig__fwrite_port_L (&(ptr->future4), 1, fp))
-    return (-1);
-
-  if (0 >= dig__fwrite_port_D (&(ptr->F1), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_D (&(ptr->F2), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_D (&(ptr->F3), 1, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_D (&(ptr->F4), 1, fp))
-    return (-1);
-
-  if (0 >= dig__fwrite_port_C (ptr->Dig_name, HEADSTR, fp))
-    return (-1);
-  if (0 >= dig__fwrite_port_C (ptr->filler, HEADSTR, fp))
-    return (-1);
-  */
 
   return (0);
 }

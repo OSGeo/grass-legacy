@@ -91,12 +91,12 @@ Vect_destroy_cats_struct (struct line_cats *p)
    **  cat - category 
    **
    **  returns:  new number of categories
-   **            0 if no space for new category in structure, n_cats would be > GRASS_V_NCATS_MAX
+   **            0 if no space for new category in structure, n_cats would be > GV_NCATS_MAX
    **           -1 on out of memory
-   **           -2 if field out of range: 1 - GRASS_V_FIELD_MAX or cat out of range:  1 - GRASS_V_CAT_MAX
+   **           -2 if field out of range: 1 - GV_FIELD_MAX or cat out of range:  1 - GV_CAT_MAX
  */
 int 
-Vect_cat_set (struct line_cats *Cats, GRASS_V_FIELD field, GRASS_V_CAT cat)
+Vect_cat_set (struct line_cats *Cats, int field, int cat)
 {
   register int n;
 
@@ -106,7 +106,7 @@ Vect_cat_set (struct line_cats *Cats, GRASS_V_FIELD field, GRASS_V_CAT cat)
    * but remember that limit is set to portable data type length
    * and machine native size may be longer */
   /*
-  if (field < 1 || field > GRASS_V_FIELD_MAX || cat < 1 || cat > GRASS_V_CAT_MAX)
+  if (field < 1 || field > GV_FIELD_MAX || cat < 1 || cat > GV_CAT_MAX)
     return (-2);
    */
     
@@ -122,7 +122,7 @@ Vect_cat_set (struct line_cats *Cats, GRASS_V_FIELD field, GRASS_V_CAT cat)
 
   /* field was not found so we shall append new cat */
   /* test if space exist */
-  if (n >= GRASS_V_NCATS_MAX)
+  if (n >= GV_NCATS_MAX)
     return (0);
 
   if (0 > dig_alloc_cats (Cats, Cats->n_cats + 1))
@@ -145,13 +145,13 @@ Vect_cat_set (struct line_cats *Cats, GRASS_V_FIELD field, GRASS_V_CAT cat)
    **            0 field does not exist
  */
 int 
-Vect_cat_get (struct line_cats *Cats, GRASS_V_FIELD field, GRASS_V_CAT * cat)
+Vect_cat_get (struct line_cats *Cats, int field, int *cat)
 {
   register int n;
 
   /* check input value */
   /*
-  if (field < 1 || field > GRASS_V_FIELD_MAX)
+  if (field < 1 || field > GV_FIELD_MAX)
     return (0);
   */
     
@@ -178,13 +178,13 @@ Vect_cat_get (struct line_cats *Cats, GRASS_V_FIELD field, GRASS_V_CAT * cat)
    **            0 category number does not exist
  */
 int 
-Vect_cat_del (struct line_cats *Cats, GRASS_V_FIELD field)
+Vect_cat_del (struct line_cats *Cats, int field)
 {
   register int n;
 
   /* check input value */
   /*
-  if (field < 1 || field > GRASS_V_FIELD_MAX)
+  if (field < 1 || field > GV_FIELD_MAX)
     return (0);
    */
     
@@ -289,15 +289,15 @@ Vect_str_to_cat_list (char *str, struct cat_list *list)
   /* allocate space */
   if ( list->alloc_ranges == 0 )
     {	    
-      list->min = (GRASS_V_CAT *) G_malloc (nr * sizeof(GRASS_V_CAT));
-      list->max = (GRASS_V_CAT *) G_malloc (nr * sizeof(GRASS_V_CAT));
+      list->min = (int *) G_malloc (nr * sizeof(int));
+      list->max = (int *) G_malloc (nr * sizeof(int));
     }
   else if (nr > list->alloc_ranges)
     {
-      list->min = (GRASS_V_CAT *) G_realloc ((void *)list->min, 
-	                                nr * sizeof(GRASS_V_CAT));
-      list->max = (GRASS_V_CAT *) G_realloc ((void *)list->max, 
-	                                nr * sizeof(GRASS_V_CAT));
+      list->min = (int *) G_realloc ((void *)list->min, 
+	                                nr * sizeof(int));
+      list->max = (int *) G_realloc ((void *)list->max, 
+	                                nr * sizeof(int));
     }
     
   /* go through string and read ranges */
@@ -358,10 +358,10 @@ Vect_array_to_cat_list (int *vals, int nvals, struct cat_list *list)
             if ( range == list->alloc_ranges)
               {
 	        list->alloc_ranges += 1000;	  
-                list->min = (GRASS_V_CAT *) G_realloc ((void *)list->min, 
-	                                list->alloc_ranges * sizeof(GRASS_V_CAT));
-                list->max = (GRASS_V_CAT *) G_realloc ((void *)list->max, 
-	                                list->alloc_ranges * sizeof(GRASS_V_CAT));
+                list->min = (int *) G_realloc ((void *)list->min, 
+	                                list->alloc_ranges * sizeof(int));
+                list->max = (int *) G_realloc ((void *)list->max, 
+	                                list->alloc_ranges * sizeof(int));
               }
 	    list->min[range] = vals[i];
 	    list->max[range] = vals[i];
@@ -385,7 +385,7 @@ Vect_array_to_cat_list (int *vals, int nvals, struct cat_list *list)
    **            FALSE if it is not
  */
 int 
-Vect_cat_in_cat_list (GRASS_V_CAT cat, struct cat_list *list)
+Vect_cat_in_cat_list (int cat, struct cat_list *list)
 {
   int i;
   
@@ -404,7 +404,7 @@ Vect_cat_in_cat_list (GRASS_V_CAT cat, struct cat_list *list)
    **            FALSE if it is not
  */
 int 
-Vect_cat_in_array (GRASS_V_CAT cat, int *array, int ncats)
+Vect_cat_in_array (int cat, int *array, int ncats)
 {
   int *i;
   
