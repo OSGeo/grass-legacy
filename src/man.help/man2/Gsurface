@@ -1,0 +1,67 @@
+.\" %W% %G%
+.TH Gsurface 2G G-language
+.SH NAME
+Gsurface \- Surface generation tool
+.br
+.I
+(G Language Tool)
+.SH SYNOPSIS
+\fBGsurface input\fR\*=\fIname\fR \fBoutput\fR\*=\fIname\fR
+.SH DESCRIPTION
+\fIGsurface\fR fills a 
+.CT "grid cell matrix" "cell map"
+with interpolated 
+.CT values "category values"
+generated
+from a set of irregularly spaced 
+.CT "data points" "cells with non-zero category values"
+using numerical
+approximation (weighted averaging) techniques. The interpolated
+.CT value "category value"
+of a cell is determined by 
+.CT values "the category values"
+of nearby
+.CT "data points" "cells with non-zero category values"
+and the distance of the cell from those 
+.CT "input points." "cells."
+In comparison with other methods, numerical
+approximation allows representation of more complex surfaces
+(particularly those with anomalous features), restricts the spatial
+influence of any errors, and generates the interpolated surface from the
+.CT "data points." "input cell map."
+It is the most appropriate method to apply to most spatial data.
+.LP
+The command line input is as follows:
+.IP \fBinput\fR 8
+.XT grid 
+cell map that contains a set of irregularly spaced 
+.CT "data values." "initial category values."
+(i.e., some 
+.XT grid 
+cells contain known 
+.CT data category
+values while the rest
+contain zero (0)).
+.IP \fBoutput\fR
+.XT grid 
+cell map that represents a smooth surface generated from the known
+.CT data category
+values in the input 
+.CT "layer." "cell map."
+.SH NOTES
+The amount of memory used by this program is related to the number of
+non-zero 
+.CT data category
+values in the input 
+.CT "map." "cell map."
+If the input 
+.CT map "cell map"
+is very dense, ie, contains a lot of 
+.CT "" "cells with"
+non-zero 
+.CT "data points," "category values"
+the program may not be able to get all the memory it needs from the system.
+The time required to execute increases with the number of 
+.CT "input data points." "initial non-zero cells."
+.SH AUTHOR
+Kewan Q. Khawaja, Intelligent Engineering Systems Laboratory, M.I.T.
