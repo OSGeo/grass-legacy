@@ -1,0 +1,330 @@
+
+
+
+sites(1)             GRASS Reference Manual              sites(1)
+
+
+
+NAME
+     sites - Accesses information regarding sites
+
+SYNOPSIS
+     sites
+
+OVERVIEW
+     The sites program provides the user with the capability of
+     interfacing site data with the geographic data in Two
+     spatial analysis reports of the sites are available, as well
+     as an interface to the S statistical package.
+
+DESCRIPTION
+     The sites program is a site server, providing options for
+     the manipulation of site A site is a list of eastings and
+     northings describing the of some point feature.  The user
+     selects functions from a menu of functions.
+
+     The main menu is:
+
+        SITES MAIN MENU    (current list: no sites)
+
+        LOCATION: spearfish    WINDOW 4928000.00(N)  4914000.00(S) 100.00 (RES)
+        MAPSET:   PERMANENT            609000.00(E)   590000.00(W) 100.00 (RES)
+        MASK:  none
+
+        Please select one of the following
+
+           1  Get an existing site map
+           2  Mask current site map
+           3  Save the current site map in your mapset
+
+           4  Check site map for duplicate sites
+           5  Edit site map using a UNIX editor
+
+           6  Convert site map to cell map (0/1)
+           7  Convert site map to cell map (frequency of occurrence)
+
+           8  Run reports on the current site map
+
+
+        stop  Leave the SITES program
+
+   At the top of the menu is general information about the
+   MAPSET, LOCATION, etc.  Note the above message in parentheses
+   "current list:  no sites."  This message will vary depending
+   on the status of the list. For example, after getting the
+   existing site "arch_sites," the message would read (given the
+   window indicated): "current list: 25 sites, 24 in current
+   window."
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         1
+
+
+
+
+
+
+sites(1)             GRASS Reference Manual              sites(1)
+
+
+
+   1  Get an existing site map
+      This option will copy an existing site into the current
+      site within the sites server.  Existing site are stored in
+      the GRASS and are pulled into the sites server via this
+      option.
+      Note: site can be created and placed into a GRASS using
+      option 5 (edit) followed by option 3 (save), or they can be
+      created using other programs.
+
+   2  Mask current site map
+      The site can be reduced to a subset which includes only
+      sites which fall in specific categories within a specified
+      The user will be asked for the name of a to form the basis
+      for the mask, and will then be allowed to specify
+      categories from this which will limit the site As with
+      mask[1], the categories selected are the ones where
+      information will remain.  Those categories not selected
+      will be set to "0."
+      Note: this masking operation is performed only against the
+      site itself and not against other If the user desires to
+      analyze masked a mask should be create using the mask[1]
+      program.
+
+   3  Save the current site map in your mapset
+      The current site can be stored permanently in your mapset
+      with this option.  You will be asked to name the saved and
+      to provide a short description.  Saved can be retrieved
+      (option 1) during later runs of sites.
+      Note: saved will be removed if the GRASS mapset is removed.
+
+   4  Check site map for duplicate sites
+      It is not desirable that a site contain multiple references
+      to the same site.  This option attempts to recognize
+      duplicate sites.  Duplicates are displayed to the user and
+      can be removed automatically if the user desires.
+      Duplicates can also be removed by hand using option 5
+      (edit).
+
+   5  Edit site map using a UNIX editor
+      The user can modify the current site or create a new site
+      by hand using a UNIX editor.  You will be asked to specify
+      the editor you prefer to use.  You should exercise some
+      care if you select this option.  Lines in the site which
+      have invalid formats will be (silently) ignored by the
+      sites server.  See the GRASS manual entry sites.format[3]
+      for a description of the site format.
+      Note: this will only modify the server list. It does not
+      modify stored site If you wish to modify a stored you will
+      have to combine options 1 (get), 5 (edit) and 3 (save).
+
+   6  Convert site map to cell map (0/1)
+      You can create a representation of the site in your GRASS
+
+
+
+GRASS 3.2                U.S. Army CERL                         2
+
+
+
+
+
+
+sites(1)             GRASS Reference Manual              sites(1)
+
+
+
+      mapset.
+      This can be used with other cell in further analyses.
+      Allowing the user to create a of sites opens up the full
+      analysis capabilities for site that are available for
+      You have the option of specifying the number of cells to
+      represent a site.  The minimum is one cell per site.  The
+      alternatives are squares around the site: 3x3, 5x5, 7x7,
+      etc.
+      The number of categories present in the new will depend on
+      the format of your site (see sites.format[3]).  You can
+      create a non-binary representation of your site by creating
+      the site in the format:
+        E|N| #n label
+      where E is the Easting, N is the Northing, and #n label is
+      the description field.  The description field consists of a
+      pound sign # followed by the category n to be associated
+      with the site's and the category label label for n.
+      If the user does not include a description field starting
+      with
+        #n
+      beside the Easting and Northing on every line in the sites
+      a binary cell will be created instead.  In the binary cell
+      each site will be represented as the category value 1.
+      Non-site cells will be coded as category value 0.
+
+      Note that only sites within the current window will be
+      considered.  However, if the size of the sites is more than
+      one cell ( 3x3, 5x5, etc.) and a site lies near an edge of
+      the window, some of the cells for the site may fall outside
+      the window. These cells will not appear in the cell and the
+      site will no longer be 3x3 or 5x5 but will be clipped to
+      fit the window.
+
+   7  Convert site map to cell map (frequency of occurrence)
+      You can also create a frequency of occurrence
+      representation of the site
+      The cell values will be coded as the number of sites which
+      fall within the cell.
+      In this function, you do NOT have the option of specifying
+      the number of cells to represent a site.
+
+   8  Run reports on the current site map
+      The current is passed to the report server after removing
+      sites which do not fall within the GRASS mapset window.
+      The user then selects one or more to analyze.  Data at (or
+      near) the sites extracted from these form the basis for all
+      reports.
+      The user specifies the 'size' of a site in cells.  The
+      'size' may be specified as a single cell, or as a 3x3
+      square around the site, or 5x5, or 7x7, etc (where the size
+      is an odd integer).
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         3
+
+
+
+
+
+
+sites(1)             GRASS Reference Manual              sites(1)
+
+
+
+   The following menu of reports is then presented:
+
+        SITES REPORT MENU
+
+
+        Please select one of the following
+
+           1  Site characteristics report
+           2  Site occurrence report
+
+           3  Convert data to S input format
+           4  Produce machine readable data file
+
+        stop  return to SITES MAIN MENU
+
+   1  Site characteristics report
+      This report provides geographic information about each
+      site.
+      Each site is identified by description and information.
+      The 'description' is an identification of the site.  The
+      site is an easting and a northing.  (The does not denote
+      the extent of the site, since, for example, an archeologic
+      site which takes up two hectares would be represented as a
+      single point).
+      The information reported for each site is displayed by and,
+      within each gives the categories (i.e., characteristics)
+      that occurred at the site (as well as a count of the number
+      of cells in each category).
+      This can easily generate a massive amount of information,
+      which is difficult to handle or digest quickly.  Therefore,
+      option 2 produces a synopsis of the information.
+
+   2  Site occurrence report
+      This report provides aggregate site characteristic
+      information organized by The report produces chi-square
+      statistics for each measuring number of expected sites
+      (assuming a random distribution of sites) against actual
+      site occurrence.  The site characteristic is the most
+      frequently occurring cell category in the site (i.e., the
+      statistical mode).  See the GRASS manual entry for
+      sites.occur[3] for details on this report.
+
+   3  Convert data to S input format
+      This function converts the GRASS data extracted for the
+      sites into a form usable by the S statistical package.  The
+      user provides a file to contain the information.  Once the
+      file is written, the user must exit sites, run S on an S
+      and issue the S command
+
+      source ("<file >")
+
+      to bring the data into the S (Of course, <file> would be
+
+
+
+GRASS 3.2                U.S. Army CERL                         4
+
+
+
+
+
+
+sites(1)             GRASS Reference Manual              sites(1)
+
+
+
+      the name of the actual file supplied by the user.) See
+      manual entry sites.S[3] for an explanation of the S data
+      structures created by this interface.
+
+   4  Produce machine readable data file
+      This option provides a mechanism for the user to write
+      his/her own reports.  The data is written into a user-
+      specified file as a text file, which has a format readable
+      by UNIX utilities (e.g., awk) or user-written programs.
+      See GRASS manual entry sites.report[3] for details on this
+      format.
+
+FILES
+     $LOCATION/site_list/<file >
+
+SEE ALSO
+     sites.format[3]   Format of the site maps
+     sites.report[3]   Format of the machine readable report
+     sites.occur[3]    Discussion of the site occurrence report
+     sites.S[3]        Discussion of the S interface
+
+AUTHORS
+     Michael Shapiro, U.S. Army Construction Engineering Research
+     Laboratory
+     James Farley, Arkansas Archeological Survey, University of
+     Arkansas
+        contributed the frequency of occurrence sites to cell
+        function
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 3.2                U.S. Army CERL                         5
+
+
+
