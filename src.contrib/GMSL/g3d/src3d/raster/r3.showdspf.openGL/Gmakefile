@@ -7,7 +7,7 @@ SUNLDFLAGS   = $(XMLIBPATH) $(XLIBPATH) -L/lib
 OGLLIB	     = $(OPENGLULIB) -lGL $(LGLWM) -lXm -lX11 -lXt -lXext
 LIBES        = $(DSPLIB) $(G3DLIB) $(DATETIMELIB) $(GISLIB)
 
-PGM	=	r3.showdspf
+PGM = r3.showdspf
 
 SOURCES	=	\
                 new_init_graphics.c \
@@ -94,7 +94,7 @@ saber_src:
 saber_obj:
 	#load $(OBJ)
 
-ctags:
-	ctags *.[ch]
-	sed 's/\?/\//g' tags > tags.tmp
-	mv tags.tmp tags
+#ctags:
+#	ctags *.[ch]
+#	sed 's/\?/\//g' tags > tags.tmp
+#	mv tags.tmp tags

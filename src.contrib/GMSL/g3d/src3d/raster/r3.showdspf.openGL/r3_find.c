@@ -6,7 +6,7 @@
 #include "gis.h"
 
 
-g3_find_dsp_file (cell, file, mset)
+int g3_find_dsp_file (cell, file, mset)
     char *cell, *mset;
     char *file;
 {
@@ -33,7 +33,6 @@ char *dspf, *g3f, *mset;
 {
 char element[200], question[200];
 static char dspout[200];
-int ret;
 
     if(!G_legal_filename (dspf))
 	return(NULL);
@@ -62,4 +61,3 @@ int ret;
     strcpy(dspout,dspf);
     return(dspout);
 }
-

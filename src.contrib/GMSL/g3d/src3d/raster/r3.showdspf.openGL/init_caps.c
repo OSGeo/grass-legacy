@@ -9,14 +9,13 @@
 #define DEBUG1
 */
 
-init_caps(D_Cap,g3reg)
+int init_caps(D_Cap,g3reg)
 struct Cap *D_Cap;
 G3D_Region *g3reg;
 /* this subroutine only needs to be called once */
 {
    int		min; /*the smallest dimension*/
    int		dim1,dim2; /* the two largest dimensions */
-   int		ret;
 
 
 /* In order to determine how much memory to malloc for a D_buff

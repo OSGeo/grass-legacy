@@ -85,7 +85,6 @@ void get_trackball_rotation_matrix(float mat[4][4])
 void set_trackball_rotations(struct dspec *D_spec)
 {
     GLfloat tranmat[4][4];
-    int i,j;
     glPushMatrix();
     glLoadIdentity();
     glRotatef(.1*(D_spec->yrot * 10),0.,1.,0.);
@@ -428,7 +427,7 @@ void init_graphics(char *name,int argc,char **argv,struct dspec *dspecptr)
    char buffer[20];
    Widget separator;
    Widget gl_shell;
-   Widget buttonrowcol,label1,label2,button,radio;
+   Widget buttonrowcol,label1,radio;
    Widget frame;
    MainOGLWindow.ptr_D_spec = dspecptr;
 
@@ -724,7 +723,6 @@ void set_threshold_button(int iset)
 */
 void unset_threshold_button(int iset)
 {
-  int i;
   if(iset <= MAXTHRESHOLDS)
       XmToggleButtonSetState(Threshbutton[iset-1],False,False);
 }
@@ -740,7 +738,6 @@ void rotateLoop()
 {
    XEvent event;
    XKeyPressedEvent *K;
-   XKeyPressedEvent *L;
    KeySym sym;
    int thresh = 1;
    for(;;)
@@ -909,16 +906,12 @@ HVect vNowLast;
 void glinputCB(Widget widget,XtPointer client_data,XtPointer cdata)
 {
    long xpos, ypos;
-   int tr_xmouse, tr_ymouse;
-   int rot_xmouse, rot_ymouse;
    
    static int tr_first = 0;
    static int rot_first = 0;
-   static int tr_oxmouse, tr_oymouse;
+   static int tr_oymouse;
    static int rot_oxmouse, rot_oymouse;
-   int dxmouse,dymouse;
-   XEvent nextEvent;
-   XEvent event;
+   int dymouse;
 
 
    GLwDrawingAreaCallbackStruct *call_data = 
@@ -1122,8 +1115,6 @@ void glinitCB(Widget widget,XtPointer client_data,XtPointer cdata)
 */
 void glexposeCB(Widget widget,XtPointer client_data,XtPointer cdata)
 {
-   Position x, y;
-   long xp,yp;
    Window wind;
    static int First = 1;
    GLwDrawingAreaCallbackStruct *call_data = 
@@ -1160,7 +1151,6 @@ void glresizeCB(Widget widget,XtPointer client_data,XtPointer cdata)
    GLdouble aspect;
    GLwDrawingAreaCallbackStruct *call_data = 
       (GLwDrawingAreaCallbackStruct *)cdata;
-   float xd,yd,zd,trd; 
    
    wind = XtWindow(widget);
    glXMakeCurrent(XtDisplay(widget),wind,MainOGLWindow.glx_context);
@@ -1203,8 +1193,6 @@ void clear_screen2()
 */
 void glexpose2CB(Widget widget,XtPointer client_data,XtPointer cdata)
 {
-   Position x, y;
-   long xp,yp;
    Window wind;
    GLwDrawingAreaCallbackStruct *call_data = 
                   (GLwDrawingAreaCallbackStruct *)cdata;
@@ -1243,7 +1231,6 @@ void glexpose2CB(Widget widget,XtPointer client_data,XtPointer cdata)
 void glresize2CB(Widget widget,XtPointer client_data,XtPointer cdata)
 {
    Window wind;
-   GLdouble aspect;
    GLwDrawingAreaCallbackStruct *call_data = 
       (GLwDrawingAreaCallbackStruct *)cdata;
    

@@ -422,6 +422,7 @@ fprintf(stderr,"check keyboard entry instructions \n");
 		    D_spec.low--;	/* convert from user to internal #s */
 		    D_spec.hi--;
 		}
+		drawable_cmd = 1;
 		*p = 0;	/* throw away rest of line */
 		break;
 
@@ -727,7 +728,6 @@ void
 do_draw (file_info *Headp, file_info *G3p, struct dspec *D_spec, struct Cap *Cap, 
          unsigned int type)
 {
-    static int first = 1;
     static double x, y, z;
     float mat[4][4];
 
@@ -828,7 +828,6 @@ void do_draw_immediate_mode()
 void
 do_draw_with_display_list (struct dspec *D_spec)
 {
-    static int first = 1;
     static double x, y, z;
     float mat[4][4];
 
@@ -874,10 +873,6 @@ do_draw_with_display_list (struct dspec *D_spec)
 void
 do_draw_no_transformations (file_info *Headp, file_info *G3p, struct dspec *D_spec, struct Cap *Cap, unsigned int type)
 {
-    static int first = 1;
-    static double x, y, z;
-
-   
 
   	if (type & DRAW_BBOX)
 	    do__bbox (D_spec);
@@ -951,8 +946,7 @@ void do__bbox (struct dspec *D_spec)
     static float	x,y,z;
     static float	c[8][3];/*holds the corner points for bounding box */
     static float	gxl[100][3],gxh[100][3],gyl[100][3],gyh[100][3];
-    int			gx,gy,gz;
-    char 		label[20];
+    int			gx,gy;
 
     glDisable(GL_LIGHTING);    
     
@@ -1128,9 +1122,8 @@ do__draw_solid (file_info *Headp, file_info *G3header, struct dspec *D_spec, str
     D_spec->Thresh = max; do__draw (Headp, D_spec); /* Draw hi  thresh */
 
     build_thresh_arrays (D_spec, Headp);
-/*
-    draw_cap_side (D_spec, Headp, G3header, Cap, -1);
-*/
+/*  draw_cap_side (D_spec, Headp, G3header, Cap, -1); */
+    /* hey - so we cannot watch solids! MN 2001 */
 }
 
 

@@ -3,7 +3,7 @@
 
 #define	XDIMYDIM	(Headfax->xdim)*(Headfax->ydim)
 
-r3read_level (g3map, Headfax, data, n_lev)
+int r3read_level (g3map, Headfax, data, n_lev)
     void      *g3map;
     file_info *Headfax;
     float     *data;
@@ -15,6 +15,3 @@ r3read_level (g3map, Headfax, data, n_lev)
 
     return 0;
 }
-
-
-
