@@ -3,8 +3,6 @@
  *
  */
 
-#include <ctype.h>
-
 char *
 G_tolcase (string)
     char *string;
@@ -12,10 +10,17 @@ G_tolcase (string)
     register char *p;
 
     for (p = string; *p; p++)
-        if (isupper (*p))
-            *p = tolower (*p);
+	*p = tolower (*p);
 
     return (string);
+}
+static
+tolower(c)
+    char c;
+{
+    if (c >= 'A' && c <= 'Z')
+	c -= 'A' - 'a';
+    return c;
 }
 
 /*
@@ -30,8 +35,15 @@ G_toucase (string)
     register char *p;
 
     for (p = string; *p; p++)
-        if (islower (*p))
-            *p = toupper (*p);
+	*p = toupper (*p);
 
     return (string);
+}
+static
+toupper(c)
+    char c;
+{
+    if (c >= 'a' && c <= 'z')
+	c += 'A' - 'a';
+    return c;
 }
