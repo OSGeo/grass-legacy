@@ -28,7 +28,10 @@
  ******************************************************************************
  *
  * $Log$
- * Revision 1.2  2003-04-16 12:09:26  paul
+ * Revision 2.0  2004-11-09 13:05:07  bernhard
+ * copied within CVS repository from grass/src/include/gproj_api.h
+ *
+ * Revision 1.2  2003/04/16 12:09:26  paul
  * New function to report actual projection parameters being used by proj
  *
  * Revision 1.1  2003/04/07 15:15:19  paul
