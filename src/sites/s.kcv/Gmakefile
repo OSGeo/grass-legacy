@@ -19,7 +19,7 @@ $(PROG): $(LIST) $(LIBES)
 
 man:  
 	-cp s.kcv.man $(MDIR)/s.kcv
-	nroff $(MUTL)/man.version $(MDIR)/.class-header \
+	$(NROFF) $(MUTL)/man.version $(MDIR)/.class-header \
 	   $(MUTL)/man.header s.kcv.man $(MDIR)/.class-notice \
 	   > $(GISBASE)/man/$(MSEC)/s.kcv
 lint:
