@@ -1,0 +1,24 @@
+Mmain	main.c	/^main()$/
+Pmap	Pmap.c	/^Pmap (scriptfile)$/
+add_record	record.c	/^add_record (name)$/
+ask_cell	ask_cell.c	/^ask_cell (fd)$/
+ask_color	ask_color.c	/^ask_color (name,fd)$/
+ask_for_icon	ask_icon.c	/^ask_for_icon (name, fd)$/
+ask_grid	ask_grid.c	/^ask_grid (fd)$/
+ask_icon_size	ask_icon.c	/^ask_icon_size ()$/
+ask_labels	ask_labels.c	/^ask_labels (fd)$/
+ask_legend	ask_legend.c	/^ask_legend (fd,cf)$/
+ask_masked	ask_masked.c	/^ask_masked (name,fd)$/
+ask_scale	ask_scale.c	/^ask_scale (fd)$/
+ask_sites	ask_sites.c	/^ask_sites (fd)$/
+ask_vectors	ask_vect.c	/^ask_vectors (fd)$/
+ask_width	ask_width.c	/^ask_width(name,fd)$/
+begin_record	record.c	/^begin_record (label)$/
+end_record	record.c	/^end_record()$/
+hitreturn	hitreturn.c	/^hitreturn()$/
+input	input.c	/^input (buf)$/
+newscreen	newscreen.c	/^newscreen (pflag)$/
+print_record	record.c	/^print_record()$/
+scan_color	scan_color.c	/^scan_color (color, ncolors)$/
+scan_scale	scan_scale.c	/^scan_scale (text)$/
+yes	yes.c	/^yes(question)$/
