@@ -14,6 +14,7 @@ SUBDIRS = \
 	r.colors \
 	r.composite \
 	r.compress \
+	r.contour \
 	r.cost \
 	r.covar \
 	r.cross \
