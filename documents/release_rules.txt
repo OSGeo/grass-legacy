@@ -14,6 +14,9 @@ How to release GRASS 5 binaries:
  o compile PostgreSQL modules:
      gmake5 src.garden/grass.postgresql
 
+ o compile G3D tools
+     gmake5 src.contrib/GMSL/g3d
+
  o compile NVIZ *without* PostgreSQL support
    for distribution:
      configure --enable-postgres=no
