@@ -340,9 +340,7 @@ msgstr ""
 msgid ""
 "Selects the font in which text will be displayed on the user's graphics "
 "monitor."
-msgstr ""
-"テキストに使用する"
-"フォントを選択します"
+msgstr "テキストに使用するフォントを選択します"
 
 #: ../display/d.font.freetype/main.c:60
 msgid ""
@@ -424,7 +422,8 @@ msgid "Plotting ... "
 msgstr ""
 
 #: ../display/d.vect/main.c:510
-msgid "The bounding box of the map outside current region, nothing displayed.\n"
+msgid ""
+"The bounding box of the map outside current region, nothing displayed.\n"
 msgstr ""
 
 #: ../display/d.vect/main.c:567
@@ -440,8 +439,7 @@ msgid "Done.\n"
 msgstr ""
 
 #: ../display/d.what.vect/openvect.c:12
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "warning: %s - vector file not found\n"
 msgstr "�������: %s - ��������� ����n"
 
@@ -450,8 +448,7 @@ msgid "Nothing Found.\n"
 msgstr ""
 
 #: ../display/d.what.vect/what.c:203
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Line: %d  Type: %s  Left: %d  Right: %d  "
 msgstr "��� "
 
@@ -466,8 +463,7 @@ msgid "  Node[%d]: %d  Number of lines: %d\n"
 msgstr ""
 
 #: ../display/d.what.vect/what.c:221
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "    Line: %5d  Angle: %.8f\n"
 msgstr "���"
 
@@ -482,14 +478,12 @@ msgid "Point height: %f\n"
 msgstr ""
 
 #: ../display/d.what.vect/what.c:257
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Line height: %f\n"
 msgstr "���"
 
 #: ../display/d.what.vect/what.c:263
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "Line height min: %f max: %f\n"
 msgstr "���"
 
@@ -584,8 +578,7 @@ msgid "ERROR: No map is displayed in GRASS monitor\n"
 msgstr "モニターに表示されているマップ"
 
 #: ../display/d.zoom/main.c:324
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%d raster%s, %d vector%s\n"
 msgstr "���"
 
@@ -688,8 +681,7 @@ msgid ""
 "Finds the average of values in a cover map within areas assigned the same "
 "category value in a user-specified base map."
 msgstr ""
-"ベースマップにおける同一カテゴリー内での"
-"カバーマップの平均値を計算します"
+"ベースマップにおける同一カテゴリー内でのカバーマップの平均値を計算します"
 
 #: ../raster/r.average/main.c:40
 #, fuzzy
@@ -774,9 +766,7 @@ msgstr ""
 msgid ""
 "Creates a raster map layer showing buffer zones surrounding cells that "
 "contain non-NULL category values."
-msgstr ""
-"バッファーゾーンを示す"
-"新しいラスターマップを作成します"
+msgstr "バッファーゾーンを示す新しいラスターマップを作成します"
 
 #: ../raster/r.buffer/main.c:56
 #, fuzzy
@@ -808,9 +798,7 @@ msgstr "NULL値の代わりに値0を無視する"
 msgid ""
 "Prints category values and labels associated with user-specified raster map "
 "layers."
-msgstr ""
-"ラスターマップのカテゴリー値や"
-"カテゴリーラベルを表示します"
+msgstr "ラスターマップのカテゴリー値やカテゴリーラベルを表示します"
 
 #: ../raster/r.cats/main.c:38
 #, fuzzy
@@ -837,9 +825,7 @@ msgstr "区切り(デフォルト:タブ)"
 msgid ""
 "Recategorizes data in a raster map layer by grouping cells that form "
 "physically discrete areas into unique categories."
-msgstr ""
-"同一カテゴリーセルのグルーピングにより"
-"新しいラスターマップを作成します"
+msgstr "同一カテゴリーセルのグルーピングにより新しいラスターマップを作成します"
 
 #: ../raster/r.clump/main.c:41
 #, fuzzy
@@ -994,7 +980,8 @@ msgstr ""
 
 #: ../raster/r.composite/main.c:71
 #, fuzzy
-msgid "Combines red, green and blue map layers into a single composite map layer."
+msgid ""
+"Combines red, green and blue map layers into a single composite map layer."
 msgstr "ベクトルマップをラスターマップに変換します"
 
 #: ../raster/r.composite/main.c:89
@@ -1055,9 +1042,7 @@ msgstr "説明なし"
 msgid ""
 "Produces a GRASS binary vector map of specified contours from GRASS raster "
 "map layer."
-msgstr ""
-"ラスターマップから指定された"
-"高さのコンターマップを作成します"
+msgstr "ラスターマップから指定された高さのコンターマップを作成します"
 
 #: ../raster/r.contour/main.c:79 ../raster/r.out.ascii/main.c:70
 #: ../raster/r.out.bin/main.c:78 ../raster/r.out.mat/main.c:75
@@ -1112,10 +1097,7 @@ msgid ""
 "Outputs a raster map layer showing the cumulative cost of moving between "
 "different geographic locations on an input raster map layer whose cell "
 "category values represent cost."
-msgstr ""
-"累積コストを表す"
-"ラスターマップを"
-"作成します"
+msgstr "累積コストを表すラスターマップを作成します"
 
 #: ../raster/r.cost/main.c:108
 #, fuzzy
@@ -1187,9 +1169,7 @@ msgstr "出力するファイル"
 msgid ""
 "Outputs a covariance/correlation matrix for user-specified raster map layer"
 "(s)."
-msgstr ""
-"ラスターマップの"
-"共分散と相関を求めます"
+msgstr "ラスターマップの共分散と相関を求めます"
 
 #: ../raster/r.covar/main.c:45
 #, fuzzy
@@ -1206,9 +1186,7 @@ msgstr "共分散行列の代わりに相関行列を出力"
 msgid ""
 "Creates a cross product of the category values from multiple raster map "
 "layers."
-msgstr ""
-"カテゴリー値を掛け合わせて"
-"新たなラスターマップを作成します"
+msgstr "カテゴリー値を掛け合わせて新たなラスターマップを作成します"
 
 #: ../raster/r.cross/main.c:55
 #, fuzzy, c-format
@@ -1436,9 +1414,7 @@ msgstr "NULL値を考慮する"
 msgid ""
 "Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
 "layer."
-msgstr ""
-"ESRI ARC/INFOファイルを"
-"ラスターマップとしてインポートします"
+msgstr "ESRI ARC/INFOファイルをラスターマップとしてインポートします"
 
 #: ../raster/r.in.arc/main.c:48
 #, fuzzy
@@ -1781,7 +1757,8 @@ msgstr "視界の半径"
 msgid ""
 "Finds the median of values in a cover map within areas assigned the same "
 "category value in a user-specified base map."
-msgstr "ベースマップにおける同一カテゴリー内でのカバーマップの平均値を計算します"
+msgstr ""
+"ベースマップにおける同一カテゴリー内でのカバーマップの平均値を計算します"
 
 #: ../raster/r.median/main.c:35 ../raster/r.statistics/main.c:50
 #, fuzzy
@@ -1838,7 +1815,8 @@ msgstr "値0にのみフィルタを適用"
 msgid ""
 "Finds the mode of values in a cover map within areas assigned the same "
 "category value in a user-specified base map."
-msgstr "ベースマップにおける同一カテゴリー内でのカバーマップの平均値を計算します"
+msgstr ""
+"ベースマップにおける同一カテゴリー内でのカバーマップの平均値を計算します"
 
 #: ../raster/r.mode/main.c:33
 #, fuzzy
@@ -1856,10 +1834,7 @@ msgid ""
 "Makes each cell category value a function of the category values assigned to "
 "the cells around it, and stores new cell values in an output raster map "
 "layer."
-msgstr ""
-"近傍点解析を行い"
-"新しいラスターマップ"
-"を作成します"
+msgstr "近傍点解析を行い新しいラスターマップを作成します"
 
 #: ../raster/r.neighbors/main.c:66
 #, fuzzy
@@ -1894,7 +1869,8 @@ msgstr "現在の地域設定の使用"
 #: ../raster/r.out.arc/main.c:59
 #, fuzzy
 msgid "Converts a raster map layer into an ESRI ARCGRID file."
-msgstr "ラスターマップをESRI ARC/INFO ASCII-GRIDファイルとしてエクスポートします"
+msgstr ""
+"ラスターマップをESRI ARC/INFO ASCII-GRIDファイルとしてエクスポートします"
 
 #: ../raster/r.out.arc/main.c:68
 #, fuzzy
@@ -2089,9 +2065,7 @@ msgstr "サイズ"
 msgid ""
 "Converts a GRASS raster file to a PPM image file at the pixel resolution of "
 "the CURRENTLY DEFINED REGION."
-msgstr ""
-"ラスターマップをPPMファイルとして"
-"エクスポートします"
+msgstr "ラスターマップをPPMファイルとしてエクスポートします"
 
 #: ../raster/r.out.ppm/main.c:51
 #, fuzzy
@@ -2170,9 +2144,7 @@ msgstr ""
 msgid ""
 "Creates a composite raster map layer by using known category values from one "
 "(or more) map layer(s) to fill in areas of \"no data\" in another map layer."
-msgstr ""
-"他のラスターマップによって"
-"パッチを作成します"
+msgstr "他のラスターマップによってパッチを作成します"
 
 #: ../raster/r.patch/main.c:51
 #, fuzzy
@@ -2349,8 +2321,8 @@ msgid ""
 "Creates a new map layer whose category values are based upon the user's "
 "reclassification of categories in an existing raster map layer."
 msgstr ""
-"現在あるラスターマップを再分類して、再分類ファイルを作成します"
-"再分類ファイルを作成します"
+"現在あるラスターマップを再分類して、再分類ファイルを作成します再分類ファイル"
+"を作成します"
 
 #: ../raster/r.reclass/main.c:39
 #, fuzzy
@@ -2389,7 +2361,8 @@ msgstr ""
 #: ../raster/r.region/main.c:53
 #, fuzzy
 msgid "Sets the boundary definitions for a raster map."
-msgstr "対象地域の範囲や分解能を変更したり、デフォルトに戻すなどの管理を行います"
+msgstr ""
+"対象地域の範囲や分解能を変更したり、デフォルトに戻すなどの管理を行います"
 
 #: ../raster/r.region/main.c:71
 #, fuzzy
@@ -2499,8 +2472,7 @@ msgid "vector map <%s> not found"
 msgstr "���"
 
 #: ../raster/r.region/main.c:240
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "can't open vector file <%s> in <%s>"
 msgstr "���"
 
@@ -2767,9 +2739,8 @@ msgid ""
 "derivatives from a raster map layer of true elevation values. Aspect is "
 "calculated counterclockwise from east."
 msgstr ""
-"ラスターマップから"
-"傾斜の大きさと方位についての"
-"新たなラスターマップを作成します"
+"ラスターマップから傾斜の大きさと方位についての新たなラスターマップを作成しま"
+"す"
 
 #: ../raster/r.slope.aspect/main.c:143
 #, fuzzy
@@ -3598,7 +3569,8 @@ msgstr ""
 
 #: ../raster/r.transect/main.c:34
 #, fuzzy
-msgid "Outputs raster map layer values lying along user defined transect line(s)."
+msgid ""
+"Outputs raster map layer values lying along user defined transect line(s)."
 msgstr "指定した直線上でのラスターマップの値を出力します"
 
 #: ../raster/r.transect/main.c:40
@@ -3617,7 +3589,8 @@ msgid "Char string to represent no data cell"
 msgstr "データのないセルに代入する記号"
 
 #: ../raster/r.univar2/main.c:55
-msgid "Calculates univariate statistics from the non-null cells of a raster map."
+msgid ""
+"Calculates univariate statistics from the non-null cells of a raster map."
 msgstr ""
 
 #: ../raster/r.univar2/main.c:68
@@ -3862,12 +3835,14 @@ msgid "Name of raster map containing STARTing sources"
 msgstr "入力するファイル"
 
 #: ../raster/wildfire/r.spread/main.c:156
-msgid "Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
+msgid ""
+"Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
 msgstr ""
 
 #: ../raster/wildfire/r.spread/main.c:162
 #, fuzzy
-msgid "Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
+msgid ""
+"Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
 msgstr "入力するファイル"
 
 #: ../raster/wildfire/r.spread/main.c:168
@@ -4319,8 +4294,7 @@ msgid ""
 msgstr ""
 
 #: ../vector/v.transform/main.c:224
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "New vector map <%s> boundary coordinates:\n"
 msgstr "���"
 
@@ -7203,4 +7177,3 @@ msgstr ""
 #, fuzzy
 #~ msgid "print current mapset search path"
 #~ msgstr "現在のマップセットを表示"
-

@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-15 17:15+0100\n"
+"POT-Creation-Date: 2005-01-20 18:31+0100\n"
 "PO-Revision-Date: 2005-01-30 16:06+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-15\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Report-Msgid-Bugs-To: \n"
 "X-Generator: KBabel 1.9.1\n"
 
 #: ../db/base/columns.c:33 ../db/base/createdb.c:24 ../db/base/describe.c:34
@@ -22,7 +22,9 @@ msgstr ""
 #: ../db/base/select.c:63 ../db/base/tables.c:34
 #, c-format
 msgid "No db connection for driver <%s> defined. Run db.connect"
-msgstr "Keine Datenbankverbindung für Treiber <%s> definiert. Benutzen Sie db.connect."
+msgstr ""
+"Keine Datenbankverbindung für Treiber <%s> definiert. Benutzen Sie db."
+"connect."
 
 #: ../db/base/columns.c:69 ../db/base/describe.c:87
 msgid "table name"
@@ -204,7 +206,8 @@ msgstr "Tabellenname, selektiere alles aus dieser Tabelle."
 msgid ""
 "SQL select statement, for example: 'select * from rybniky where kapri = "
 "'hodne'"
-msgstr "SQL-Select Statement, z.B: 'SELECT * FROM rybniky WHERE kapri = 'hodne'"
+msgstr ""
+"SQL-Select Statement, z.B: 'SELECT * FROM rybniky WHERE kapri = 'hodne'"
 
 #: ../db/base/select.c:209 ../vector/v.db.select/main.c:52
 msgid "output field separator"
@@ -365,7 +368,6 @@ msgid "No graphics device selected"
 msgstr "Keine Graphik-Augabe ausgewählt."
 
 #: ../display/d.font.freetype/main.c:170
-#, c-format
 msgid ""
 "\n"
 "Setting release of FreeType\n"
@@ -379,17 +381,16 @@ msgid "Error: %s\n"
 msgstr "Fehler: %s\n"
 
 #: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:295
-#, c-format
 msgid "Region size is lower than minreg, nothing displayed.\n"
-msgstr "Region-Größe ist kleiner als die Minimal-Region; es wird nichts angezeigt.\n"
+msgstr ""
+"Region-Größe ist kleiner als die Minimal-Region; es wird nichts angezeigt.\n"
 
 #: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:304
-#, c-format
 msgid "Region size is greater than maxreg, nothing displayed.\n"
-msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
+msgstr ""
+"Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
 
 #: ../display/d.path/select.c:32
-#, c-format
 msgid "L: from  M: to R: quit\n"
 msgstr "L: Startpunkt M: Zielpunkt R: Beenden\n"
 
@@ -399,7 +400,6 @@ msgid "Node %d: %f %f\n"
 msgstr "Knoten %d: %f %f\n"
 
 #: ../display/d.path/select.c:133
-#, c-format
 msgid "Destination unreachable\n"
 msgstr "Ziel unerreichbar\n"
 
@@ -416,7 +416,6 @@ msgstr "Abstand zum Netzwerk = %f, Abstand vom Netzwerk = %f\n"
 #: ../display/d.vect/attr.c:53 ../display/d.vect/dir.c:34
 #: ../display/d.vect/label.c:32 ../display/d.vect/plot1.c:51
 #: ../display/d.vect/topo.c:38
-#, c-format
 msgid ""
 "\n"
 "ERROR: vector file - can't read\n"
@@ -425,17 +424,16 @@ msgstr ""
 " FEHLER: Kann Vektordatei nicht lesen.\n"
 
 #: ../display/d.vect/main.c:501
-#, c-format
 msgid "Plotting ... "
 msgstr "Zeichne..."
 
 #: ../display/d.vect/main.c:510
-#, c-format
-msgid "The bounding box of the map outside current region, nothing displayed.\n"
-msgstr "Die Karte liegt außerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
+msgid ""
+"The bounding box of the map outside current region, nothing displayed.\n"
+msgstr ""
+"Die Karte liegt außerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
 
 #: ../display/d.vect/main.c:567
-#, c-format
 msgid "Done\n"
 msgstr "Fertig\n"
 
@@ -444,7 +442,6 @@ msgid "Building spatial index ..."
 msgstr "Baue räumlichen Index..."
 
 #: ../display/d.what.vect/main.c:157
-#, c-format
 msgid "Done.\n"
 msgstr "Fertig\n"
 
@@ -454,7 +451,6 @@ msgid "warning: %s - vector file not found\n"
 msgstr "Warnung: Vektorkarte '%s' wurde nicht gefunden.\n"
 
 #: ../display/d.what.vect/what.c:154 ../display/d.what.vect/what.c:155
-#, c-format
 msgid "Nothing Found.\n"
 msgstr "Nichts gefunden.\n"
 
@@ -504,7 +500,6 @@ msgid "Area height: %f\n"
 msgstr "Höhe der Fläche: %f\n"
 
 #: ../display/d.what.vect/what.c:287
-#, c-format
 msgid "Area\n"
 msgstr "Fläche:\n"
 
@@ -543,7 +538,6 @@ msgstr ""
 "Kategorie: %d\n"
 
 #: ../display/d.what.vect/what.c:362
-#, c-format
 msgid "Database connection not defined\n"
 msgstr "Datenbankverbindung ist nicht definiert.\n"
 
@@ -561,7 +555,6 @@ msgstr ""
 "Key-Spalte: %s\n"
 
 #: ../display/d.what.vect/what.c:421
-#, c-format
 msgid ""
 "\n"
 "Click mouse button on desired location\n"
@@ -572,39 +565,32 @@ msgstr ""
 "\n"
 
 #: ../display/d.what.vect/what.c:426
-#, c-format
 msgid "Buttons\n"
 msgstr "Mausknopfbelegung:\n"
 
 #: ../display/d.what.vect/what.c:427
-#, c-format
 msgid " Left:  what's here\n"
 msgstr " Links:  Was ist hier?\n"
 
 #: ../display/d.what.vect/what.c:429
-#, c-format
 msgid " Middle: toggle flash color\n"
 msgstr ""
 " Mitte: wechselt zwischen den Farben, die auf dem Bildschirm aufleuchten "
 "sollen.\n"
 
 #: ../display/d.what.vect/what.c:434
-#, c-format
 msgid " Right: quit\n"
 msgstr " Rechts:  Beenden\n"
 
 #: ../display/d.zoom/main.c:161
-#, c-format
 msgid "ERROR: can not get \"list\" items\n"
 msgstr "FEHLER: Kann keine \"list\" Werte finden\n"
 
 #: ../display/d.zoom/main.c:162
-#, c-format
 msgid "-j flag forced\n"
 msgstr "Benutzung des -j Flags erzwungen.\n"
 
 #: ../display/d.zoom/main.c:200
-#, c-format
 msgid "ERROR: No map is displayed in GRASS monitor\n"
 msgstr "FEHLER: Keine Karte ist im GRASS-Monitor angezeigt.\n"
 
@@ -614,19 +600,16 @@ msgid "%d raster%s, %d vector%s\n"
 msgstr "%d Raster%s, %d Vektor%s\n"
 
 #: ../display/d.zoom/main.c:334
-#, c-format
 msgid "this is the first d.zoom run; no previous zoom availible\n"
 msgstr ""
 "Das ist das erste Mal, dass 'd.zoom' benutzt wird; keine vorherigen "
 "Zoomstufen vorhanden.\n"
 
 #: ../display/d.zoom/main.c:380
-#, c-format
 msgid "Zooming finished.\n"
 msgstr "Zoomfunktion beendet.\n"
 
 #: ../display/d.zoom/pan.c:20 ../display/d.zoom/zoom.c:15
-#, c-format
 msgid ""
 "\n"
 "\n"
@@ -657,7 +640,6 @@ msgid "%s Quit menu\n"
 msgstr "%s Beende Menü \n"
 
 #: ../display/d.zoom/zoom.c:41
-#, c-format
 msgid ""
 "This region now saved as current region.\n"
 "\n"
@@ -666,7 +648,6 @@ msgstr ""
 "\n"
 
 #: ../display/d.zoom/zoom.c:42
-#, c-format
 msgid "Note: run 'd.erase' for the new region to affect the graphics.\n"
 msgstr ""
 "Hinweis: Bitte benutzen Sie 'd.erase', um den Graphik-Monitor auf die neue "
@@ -675,7 +656,6 @@ msgstr ""
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_box.c:40
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_line.c:39
 #: ../display/drivers/XDRIVER/XDRIVER24/Get_w_pnt.c:23
-#, c-format
 msgid "Monitor: interactive command in redraw\n"
 msgstr "Monitor: Interaktives Kommando zum erneuten Zeichnen\n"
 
@@ -685,7 +665,6 @@ msgid "found %d visuals of type TrueColor\n"
 msgstr "Habe %d Ansichten vom Typ TrueColor gefunden\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Graph_Set.c:118
-#, c-format
 msgid "searching for highest bit depth\n"
 msgstr "Suche die höchste Bit-Tiefe...\n"
 
@@ -705,12 +684,10 @@ msgid "Monitor: waitpid: expected %d but got %d\n"
 msgstr "Monitor: Waitpid: erwarte %d, habe aber %d bekommen\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:338
-#, c-format
 msgid "Monitor: XGetWMName failed\n"
 msgstr "Monitor: XGetWMName fehlgeschlagen\n"
 
 #: ../display/drivers/XDRIVER/XDRIVER24/Serve_Xevent.c:344
-#, c-format
 msgid "Monitor: XGetWMName: bad result\n"
 msgstr "Monitor: XGetWMName: Falsches Ergebnis\n"
 
@@ -722,7 +699,9 @@ msgstr "Keine Eingabekarte(n) angegeben."
 msgid ""
 "Finds the average of values in a cover map within areas assigned the same "
 "category value in a user-specified base map."
-msgstr "Findet den Durchschnitt der Werte in einer Überlagerungskarte innerhalb gleicher Kategorien in einer benutzer-angegebenen Ausgangskarte."
+msgstr ""
+"Findet den Durchschnitt der Werte in einer Überlagerungskarte innerhalb "
+"gleicher Kategorien in einer benutzer-angegebenen Ausgangskarte."
 
 #: ../raster/r.average/main.c:40
 msgid "base raster map"
@@ -738,7 +717,8 @@ msgstr "Resultierende Rasterkarte"
 
 #: ../raster/r.average/main.c:58
 msgid "cover values extracted from the category labels of the cover map"
-msgstr "Überlagerungswerte von den Kategorie-Labels der Überlagerungskarte extrahiert"
+msgstr ""
+"Überlagerungswerte von den Kategorie-Labels der Überlagerungskarte extrahiert"
 
 #: ../raster/r.basins.fill/main.c:34
 msgid "Generates a raster map layer showing watershed subbasins."
@@ -776,7 +756,9 @@ msgstr "Name einer neuen Rasterkarte."
 msgid ""
 "specific input value to be assigned to the north and/or south poles for "
 "longitude-latitude grids"
-msgstr "Spezieller Eingabewert, welcher zum Nord- und/oder Südpol bei Lat-Long-Rastern zugewiesen werden soll."
+msgstr ""
+"Spezieller Eingabewert, welcher zum Nord- und/oder Südpol bei Lat-Long-"
+"Rastern zugewiesen werden soll."
 
 #: ../raster/r.bilinear/main.c:72 ../raster/r.sum/main.c:46
 #, c-format
@@ -793,7 +775,9 @@ msgstr "Kann Cellfile [%s] nicht öffnen."
 msgid ""
 "Creates a raster map layer showing buffer zones surrounding cells that "
 "contain non-NULL category values."
-msgstr "Erzeugt eine Rasterkarte mit Pufferzonen um Pixel, die keine NULL-Werte haben."
+msgstr ""
+"Erzeugt eine Rasterkarte mit Pufferzonen um Pixel, die keine NULL-Werte "
+"haben."
 
 #: ../raster/r.buffer/main.c:56
 msgid "Name of input map"
@@ -841,7 +825,9 @@ msgstr "Trennzeichen zur Ausgabe (Standard: Tabulator)"
 msgid ""
 "Recategorizes data in a raster map layer by grouping cells that form "
 "physically discrete areas into unique categories."
-msgstr "Rekategorisiert Daten innerhalb einer Rasterkarte, indem Zellen physikalisch diskreter Areale zu eindeutigen Kategorie gruppiert werden."
+msgstr ""
+"Rekategorisiert Daten innerhalb einer Rasterkarte, indem Zellen physikalisch "
+"diskreter Areale zu eindeutigen Kategorie gruppiert werden."
 
 #: ../raster/r.clump/main.c:41
 msgid "Input layer name"
@@ -898,7 +884,6 @@ msgid "List rules"
 msgstr "Zeige Regeln"
 
 #: ../raster/r.colors/rules.c:45
-#, c-format
 msgid "Enter rules, \"end\" when done, \"help\" if you need it.\n"
 msgstr ""
 "Eingabe der Regeln. Bitte am Ende \"end\" eingeben. \"help\" liefert eine "
@@ -921,12 +906,10 @@ msgstr ""
 "Datenspanne!"
 
 #: ../raster/r.colors/rules.c:188
-#, c-format
 msgid "Enter a rule in one of these formats:\n"
 msgstr "Bitte geben Sie eine Regel in einem der folgende Formate ein:\n"
 
 #: ../raster/r.colors/rules.c:190
-#, c-format
 msgid " val color\n"
 msgstr "Wert Farbe\n"
 
@@ -936,35 +919,31 @@ msgid " n%% color\n"
 msgstr "n%% Farbe\n"
 
 #: ../raster/r.colors/rules.c:192
-#, c-format
 msgid " nv color\n"
 msgstr "nv Farbe\n"
 
 #: ../raster/r.colors/rules.c:193
-#, c-format
 msgid " default color\n"
 msgstr "Standard-Farbe\n"
 
 #: ../raster/r.colors/rules.c:194
-#, c-format
 msgid "color can be one of:\n"
 msgstr "Farben können sich wie folgt zusammensetzen:\n"
 
 #: ../raster/r.colors/rules.c:196
-#, c-format
 msgid "or an R:G:B triplet, e.g.: 0:127:255\n"
 msgstr "oder ein R:G:B Tripel, zum Beispiel 0:127:255\n"
 
 #: ../raster/r.colors/rules.c:237
 #, c-format
 msgid "** warning: R:G:B value(s) out of range [0..255]: %d:%d:%d **\n"
-msgstr "** Warnung: R:G:B Werte liegen außerhalb der Spanne [0...255]: %d:%d:%d **\n"
+msgstr ""
+"** Warnung: R:G:B Werte liegen außerhalb der Spanne [0...255]: %d:%d:%d **\n"
 
 #: ../raster/r.colors/rules.c:238 ../raster/r.colors/rules.c:254
 #: ../raster/r.colors/rules.c:267 ../raster/r.colors/rules.c:279
 #: ../raster/r.colors/rules.c:289 ../raster/r.colors/rules.c:301
 #: ../raster/r.colors/rules.c:376 ../raster/r.colors/rules.c:404
-#, c-format
 msgid "** rule is not added **\n"
 msgstr "** Regel nicht hinzugefügt **\n"
 
@@ -976,7 +955,6 @@ msgstr ""
 "%d:%d **\n"
 
 #: ../raster/r.colors/rules.c:266 ../raster/r.colors/rules.c:288
-#, c-format
 msgid "** warning: no such value **\n"
 msgstr "** Warnung: Solche Werte sind nicht vorhanden **\n"
 
@@ -986,7 +964,6 @@ msgid "%s:line %d:%s\n"
 msgstr "%s:Linie %d:%s\n"
 
 #: ../raster/r.colors/rules.c:403
-#, c-format
 msgid "** bad color specification **\n"
 msgstr "** Falsche Farbspezifikation **\n"
 
@@ -996,12 +973,12 @@ msgid "%s - unknown color\n"
 msgstr "%s - unbekannte Farbe\n"
 
 #: ../raster/r.colors/rules.c:425
-#, c-format
 msgid "Valid colors are:\n"
 msgstr "Mögliche Farben sind:\n"
 
 #: ../raster/r.composite/main.c:71
-msgid "Combines red, green and blue map layers into a single composite map layer."
+msgid ""
+"Combines red, green and blue map layers into a single composite map layer."
 msgstr "Kombiniert Farbkanäle rot, grün und blau zu einer Komposit-Karte"
 
 #: ../raster/r.composite/main.c:89
@@ -1055,7 +1032,9 @@ msgstr "Arbeite leise."
 msgid ""
 "Produces a GRASS binary vector map of specified contours from GRASS raster "
 "map layer."
-msgstr "Erzeugt eine GRASS Binär-Vektorkarte mit Kontourlinien einer GRASS Rasterkarte."
+msgstr ""
+"Erzeugt eine GRASS Binär-Vektorkarte mit Kontourlinien einer GRASS "
+"Rasterkarte."
 
 #: ../raster/r.contour/main.c:79 ../raster/r.out.ascii/main.c:70
 #: ../raster/r.out.bin/main.c:78 ../raster/r.out.mat/main.c:75
@@ -1100,11 +1079,15 @@ msgid ""
 "Outputs a raster map layer showing the cumulative cost of moving between "
 "different geographic locations on an input raster map layer whose cell "
 "category values represent cost."
-msgstr "Erzeugt eine Rasterkarte, die die kumulativen Kosten, die beim Bewegen zwischen unterschiedlichen geographischen Orten entstehen, zeigt. Die Kategoriewerte der Eingabekarte repräsentieren die Kosten."
+msgstr ""
+"Erzeugt eine Rasterkarte, die die kumulativen Kosten, die beim Bewegen "
+"zwischen unterschiedlichen geographischen Orten entstehen, zeigt. Die "
+"Kategoriewerte der Eingabekarte repräsentieren die Kosten."
 
 #: ../raster/r.cost/main.c:108
 msgid "Name of raster map containing grid cell cost information"
-msgstr "Name der Rasterkarte, deren Kategoriewerte Kosteninformationen enthalten."
+msgstr ""
+"Name der Rasterkarte, deren Kategoriewerte Kosteninformationen enthalten."
 
 #: ../raster/r.cost/main.c:122
 msgid "Starting points vector map"
@@ -1132,7 +1115,9 @@ msgstr "Ein optionales kumulatives Kostenmaximum."
 
 #: ../raster/r.cost/main.c:167
 msgid "Cost assigned to null cells. By default, null cells are excluded"
-msgstr "Kosten, welche Zellen mit NULL-Werten zugewiesen werden soll. Standardmäßig werden NULL-Zellen ignoriert."
+msgstr ""
+"Kosten, welche Zellen mit NULL-Werten zugewiesen werden soll. Standardmäßig "
+"werden NULL-Zellen ignoriert."
 
 #: ../raster/r.cost/main.c:176
 msgid "Percent of map to keep in memory"
@@ -1158,7 +1143,9 @@ msgstr "Start mit den Werten in der Rasterkarte"
 msgid ""
 "Outputs a covariance/correlation matrix for user-specified raster map layer"
 "(s)."
-msgstr "Gibt eine Kovarianz/Korrelations-Matrix für (eine) benutzerdefinierte Rasterkarte(n) aus."
+msgstr ""
+"Gibt eine Kovarianz/Korrelations-Matrix für (eine) benutzerdefinierte "
+"Rasterkarte(n) aus."
 
 #: ../raster/r.covar/main.c:45
 msgid "Raster map(s) to be read"
@@ -1172,7 +1159,8 @@ msgstr "Gebe Korrelations-Matrix aus"
 msgid ""
 "Creates a cross product of the category values from multiple raster map "
 "layers."
-msgstr "Erzeugt ein Kreuzprodukt von Kategoriewerten auf Basis mehrerer Rasterkarten."
+msgstr ""
+"Erzeugt ein Kreuzprodukt von Kategoriewerten auf Basis mehrerer Rasterkarten."
 
 #: ../raster/r.cross/main.c:55
 #, c-format
@@ -1223,7 +1211,9 @@ msgstr "Lese FP-Karte als Integerkarte"
 msgid ""
 "Interactive tool used to draw and save vector features on a graphics monitor "
 "using a pointing device (mouse)."
-msgstr "Interaktives Werkzeug, welches Vektorobjekte auf einem Monitor mit der Maus zeichnet und speichert."
+msgstr ""
+"Interaktives Werkzeug, welches Vektorobjekte auf einem Monitor mit der Maus "
+"zeichnet und speichert."
 
 #: ../raster/r.distance/main.c:22
 msgid "Locates the closest points between objects in two raster maps."
@@ -1273,7 +1263,9 @@ msgstr "Zähle Zellenanzahl entlang des Pfades."
 msgid ""
 "Filters and generates a depressionless elevation map and a flow direction "
 "map from a given elevation layer"
-msgstr "Filtere und generiere ein depressionsloses Höhenmodell und eine Fließrichtungskarte auf Basis eines gegebenen Höhenmodells"
+msgstr ""
+"Filtere und generiere ein depressionsloses Höhenmodell und eine "
+"Fließrichtungskarte auf Basis eines gegebenen Höhenmodells"
 
 #: ../raster/r.fill.dir/main.c:101
 msgid "Output elevation raster map after filling"
@@ -1301,7 +1293,9 @@ msgstr "Finde nur unaufgelöste Flächen."
 
 #: ../raster/r.grow2/main.c:116
 msgid "Generates a raster map layerwith contiguous areas grown by one cell."
-msgstr "Erzeugt eine Rasterkarte mit kontinuierlich um eine Zelle gewachsenen Flächen."
+msgstr ""
+"Erzeugt eine Rasterkarte mit kontinuierlich um eine Zelle gewachsenen "
+"Flächen."
 
 #: ../raster/r.grow2/main.c:124
 msgid "Name of existing input raster file"
@@ -1331,7 +1325,9 @@ msgstr "Wert für die \"gewachsenen\" Zellen."
 msgid ""
 "Generates red, green and blue raster map layers combining hue, intensity, "
 "and saturation (his) values from user-specified input raster map layers."
-msgstr "Erzeugt rot, grün und blaue (RGB) Karten aus einer benutzerspezifizierten  Kombination von Wert-, Intensitäts- und Sättigungs-Karten (HIS)."
+msgstr ""
+"Erzeugt rot, grün und blaue (RGB) Karten aus einer benutzerspezifizierten  "
+"Kombination von Wert-, Intensitäts- und Sättigungs-Karten (HIS)."
 
 #: ../raster/r.his/main.c:73
 msgid "Name of layer to be used for HUE"
@@ -1339,11 +1335,13 @@ msgstr "Name der Karte, die für den Farbton (HUE) verwendet werden soll"
 
 #: ../raster/r.his/main.c:80
 msgid "Name of layer to be used for INTENSITY"
-msgstr "Name der Karte, die für die Intensität (INTENSITY) verwendet werden soll."
+msgstr ""
+"Name der Karte, die für die Intensität (INTENSITY) verwendet werden soll."
 
 #: ../raster/r.his/main.c:87
 msgid "Name of layer to be used for SATURATION"
-msgstr "Name der Karte, die für die Sättigung (SATURATION) verwendet werden soll"
+msgstr ""
+"Name der Karte, die für die Sättigung (SATURATION) verwendet werden soll"
 
 #: ../raster/r.his/main.c:94
 msgid "Name of output layer to be used for RED"
@@ -1358,10 +1356,6 @@ msgid "Name of output layer to be used for BLUE"
 msgstr "Name der Ausgabe-Karte, die den BLAUEN Kanal enthalten soll"
 
 #: ../raster/r.his/main.c:112
-msgid "Overwrite output maps"
-msgstr "Überschreibe Ausgabe-Karten"
-
-#: ../raster/r.his/main.c:116
 msgid "Respect NULL values while drawing"
 msgstr "Respektiere NULL-Werte während des Zeichnens."
 
@@ -1369,7 +1363,8 @@ msgstr "Respektiere NULL-Werte während des Zeichnens."
 msgid ""
 "Convert an ESRI ARC/INFO ascii raster file (GRID) into a (binary) raster map "
 "layer."
-msgstr "Konvertiert ein ESRI ARC/INFO ascii-GRID in eine (binäre) GRASS Rasterkarte."
+msgstr ""
+"Konvertiert ein ESRI ARC/INFO ascii-GRID in eine (binäre) GRASS Rasterkarte."
 
 #: ../raster/r.in.arc/main.c:48
 msgid "ARC/INFO ascii raster file (GRID) to be imported"
@@ -1485,7 +1480,9 @@ msgstr "Setze Wert auf NULL"
 
 #: ../raster/r.in.gdal/main.c:71
 msgid "Import GDAL supported raster file into a binary raster map layer."
-msgstr "Importiert eine durch GDAL unterstützte Rasterdatei in eine binäre GRASS Rasterdatei."
+msgstr ""
+"Importiert eine durch GDAL unterstützte Rasterdatei in eine binäre GRASS "
+"Rasterdatei."
 
 #: ../raster/r.in.gdal/main.c:80
 msgid "Raster file to be imported"
@@ -1497,7 +1494,9 @@ msgstr "Ausgewählte Bänder (standardmäßig werden alle Bänder ausgewählt)"
 
 #: ../raster/r.in.gdal/main.c:100
 msgid "Name of location to read projection from for GCPs transformation"
-msgstr "Name der Location, von der Projektionsinformationen für eine GCP-Transformation gelesen werden soll."
+msgstr ""
+"Name der Location, von der Projektionsinformationen für eine GCP-"
+"Transformation gelesen werden soll."
 
 #: ../raster/r.in.gdal/main.c:113
 msgid "Name for new location to create"
@@ -1509,7 +1508,8 @@ msgstr "Überschreibe Datenprojekten (benutzte Projektion der Location)."
 
 #: ../raster/r.in.gdal/main.c:121
 msgid "Extend location extents based on new dataset"
-msgstr "Vergrößere Locationausmaße basierend auf dem zu importierenden Datensatz."
+msgstr ""
+"Vergrößere Locationausmaße basierend auf dem zu importierenden Datensatz."
 
 #: ../raster/r.in.gdal/main.c:125
 msgid "List supported formats then exit"
@@ -1519,21 +1519,17 @@ msgstr "Zeige unterstützte Dateiformate und beende das Modul."
 msgid "Keep band numbers instead of using band color names"
 msgstr "Behalte Bandnummern bei anstatt der Bandfarben."
 
-#: ../raster/r.in.gridatb/main.c:49
+#: ../raster/r.in.gridatb/main.c:45
 msgid "Imports GRIDATB.FOR map file (TOPMODEL) into GRASS raster map"
 msgstr "Importiert GRIDATB.FOR Karte (TOPMODEL) als GRASS Rasterdatei."
 
-#: ../raster/r.in.gridatb/main.c:53 ../raster/r.out.gridatb/main.c:59
+#: ../raster/r.in.gridatb/main.c:49 ../raster/r.out.gridatb/main.c:59
 msgid "GRIDATB i/o map file"
 msgstr "GRIDATB i/o Kartenname"
 
-#: ../raster/r.in.gridatb/main.c:59 ../raster/r.mode/main.c:47
+#: ../raster/r.in.gridatb/main.c:55 ../raster/r.mode/main.c:47
 msgid "Output map"
 msgstr "Ausgabekarte"
-
-#: ../raster/r.in.gridatb/main.c:66 ../raster/r.topidx/main.c:65
-msgid "Overwrite output map"
-msgstr "Überschreibe Ausgabekarte."
 
 #: ../raster/r.in.mat/main.c:95
 msgid "Import a binary MAT-File(v4) to a GRASS raster."
@@ -1555,7 +1551,9 @@ msgstr "Ausführlicher Modus"
 msgid ""
 "Create raster maps from ascii polygon/line data files in the current "
 "directory."
-msgstr "Erstelle Rasterkarten von ASCII-Polygon/Linien-Daten im aktuellen Verzeichnis."
+msgstr ""
+"Erstelle Rasterkarten von ASCII-Polygon/Linien-Daten im aktuellen "
+"Verzeichnis."
 
 #: ../raster/r.in.poly/main.c:24
 msgid "Input file"
@@ -1594,7 +1592,9 @@ msgstr "Gebe nur Rasterkartentyp aus."
 msgid ""
 "Calculate error matrix and kappa parameter for accuracy assessment of "
 "classification result."
-msgstr "Berechnet Fehlermatrix und Kappa-Parameter für die Genauigkeitsberechnung der Klassifikationsergebnisse."
+msgstr ""
+"Berechnet Fehlermatrix und Kappa-Parameter für die Genauigkeitsberechnung "
+"der Klassifikationsergebnisse."
 
 #: ../raster/r.kappa/main.c:36
 msgid "File name of classification result"
@@ -1656,7 +1656,9 @@ msgstr "Maximale Distanz vom Standpunkt (in Meter) "
 msgid ""
 "Finds the median of values in a cover map within areas assigned the same "
 "category value in a user-specified base map."
-msgstr "Findet den Median der Werte einer Coverkarte innerhalb der Flächen mit gleichen Werten in einer benutzerdefinierten Basiskarte."
+msgstr ""
+"Findet den Median der Werte einer Coverkarte innerhalb der Flächen mit "
+"gleichen Werten in einer benutzerdefinierten Basiskarte."
 
 #: ../raster/r.median/main.c:35 ../raster/r.statistics/main.c:50
 msgid "Base raster map"
@@ -1702,7 +1704,9 @@ msgstr "Filter nur auf 0-Werte anwenden."
 msgid ""
 "Finds the mode of values in a cover map within areas assigned the same "
 "category value in a user-specified base map."
-msgstr "Findet den Modus der Werte einer Coverkarte innerhalb der Flächen mit gleichen Werten in einer benutzerdefinierten Basiskarte."
+msgstr ""
+"Findet den Modus der Werte einer Coverkarte innerhalb der Flächen mit "
+"gleichen Werten in einer benutzerdefinierten Basiskarte."
 
 #: ../raster/r.mode/main.c:33
 msgid "Base map to be reclassified"
@@ -1783,7 +1787,9 @@ msgstr "Anzahl der signifikanten Stellen (nur Fließkommazahlen)"
 msgid ""
 "Number of values printed before wrapping a line (only SURFER or MODFLOW "
 "format)"
-msgstr "Anzahl der ausgegebenen Werte, bevor ein Zeilenumbruch eingefügt wird (nur beim SURFER oder MODFLOW-Format)"
+msgstr ""
+"Anzahl der ausgegebenen Werte, bevor ein Zeilenumbruch eingefügt wird (nur "
+"beim SURFER oder MODFLOW-Format)"
 
 #: ../raster/r.out.ascii/main.c:96
 msgid "String to represent null cell (GRASS grid only)"
@@ -1912,7 +1918,9 @@ msgstr "Vertikaler Skalierfaktor"
 msgid ""
 "Converts a GRASS raster file to a PPM image file at the pixel resolution of "
 "the CURRENTLY DEFINED REGION."
-msgstr "Exportiert eine GRASS Rasterdatei als PPM-Datei mit einer Pixel-Auflösung der DERZEITIG DEFINIERTEN REGION."
+msgstr ""
+"Exportiert eine GRASS Rasterdatei als PPM-Datei mit einer Pixel-Auflösung "
+"der DERZEITIG DEFINIERTEN REGION."
 
 #: ../raster/r.out.ppm/main.c:51
 msgid "Raster input map"
@@ -1930,7 +1938,9 @@ msgstr "Ausgabe in Graustufen anstatt Farbe."
 msgid ""
 "Converts 3 GRASS raster layers (R,G,B) to a PPM image file at the pixel "
 "resolution of the CURRENTLY DEFINED REGION."
-msgstr "Exportiert 3 GRASS Rasterkarten (R,G,B) als PPM-Bild mit der Pixel-Auflösung der DERZEITIG EINGESTELLTEN REGION."
+msgstr ""
+"Exportiert 3 GRASS Rasterkarten (R,G,B) als PPM-Bild mit der Pixel-Auflösung "
+"der DERZEITIG EINGESTELLTEN REGION."
 
 #: ../raster/r.out.ppm3/main.c:53
 #, c-format
@@ -1945,7 +1955,10 @@ msgstr "Füge Kommentare zur Regionsbeschreibung hinzu. "
 msgid ""
 "Extracts terrain parameters from a DEM. Uses a multi-scalar approach by "
 "taking fitting quadratic parameters to any size window (via least squares)"
-msgstr "Extrahiert Reliefinformationen aus einem DEM. Dazu benutzt das Modul einen multi-skalaren Ansatz indem quadratische Parameter auf jede Fenstergröße angepasst werden (über Annährung der kleinsten Quadrate)."
+msgstr ""
+"Extrahiert Reliefinformationen aus einem DEM. Dazu benutzt das Modul einen "
+"multi-skalaren Ansatz indem quadratische Parameter auf jede Fenstergröße "
+"angepasst werden (über Annährung der kleinsten Quadrate)."
 
 #: ../raster/r.param.scale/interface.c:64
 msgid "Raster surface layer to process"
@@ -1957,7 +1970,8 @@ msgstr "Ausgaberasterkarte, die die morphometrischen Parameter enthalten."
 
 #: ../raster/r.param.scale/interface.c:75
 msgid "Slope tolerance that defines a 'flat' surface (degrees)"
-msgstr "Hangneigungstoleranz, die eine 'flache' Oberfläche definiert (in Grad)."
+msgstr ""
+"Hangneigungstoleranz, die eine 'flache' Oberfläche definiert (in Grad)."
 
 #: ../raster/r.param.scale/interface.c:81
 msgid "Curvature tolerance that defines 'planar' surface"
@@ -1970,7 +1984,9 @@ msgstr "Größe des Bearbeitungsfensters (nur ungerade Zahlen, max.: %i)."
 
 #: ../raster/r.param.scale/interface.c:94
 msgid "Morphometric parameter in 'size' window to calculate"
-msgstr "Morphometrische Parameter, die innerhalb der Fenstergröße berechnet werden sollen."
+msgstr ""
+"Morphometrische Parameter, die innerhalb der Fenstergröße berechnet werden "
+"sollen."
 
 #: ../raster/r.param.scale/interface.c:101
 msgid "Exponent for distance weighting (0.0-4.0)"
@@ -1984,7 +2000,10 @@ msgstr "Einschränkungsmodell durch die zentrale Fensterzelle."
 msgid ""
 "Creates a composite raster map layer by using known category values from one "
 "(or more) map layer(s) to fill in areas of \"no data\" in another map layer."
-msgstr "Erstellt eine Komposit-Karte, indem bekannte Kategorie-Werte einer (oder mehrerer) Rasterkarte(n) in \"NO DATA\"-Bereiche einer anderen Rasterkarte gefüllt werden."
+msgstr ""
+"Erstellt eine Komposit-Karte, indem bekannte Kategorie-Werte einer (oder "
+"mehrerer) Rasterkarte(n) in \"NO DATA\"-Bereiche einer anderen Rasterkarte "
+"gefüllt werden."
 
 #: ../raster/r.patch/main.c:51
 msgid "Name of raster maps to be patched together"
@@ -2000,7 +2019,9 @@ msgstr "Benutzte Null (0) für Transparenz anstelle von NULL (NO-DATA)."
 
 #: ../raster/r.profile/main.c:56
 msgid "Outputs the raster map layer values lying on user-defined line(s)."
-msgstr "Gibt eine Rasterkarte aus, deren Werte entlang einer (oder mehrerer) benutzerdefinierter Linien liegt."
+msgstr ""
+"Gibt eine Rasterkarte aus, deren Werte entlang einer (oder mehrerer) "
+"benutzerdefinierter Linien liegt."
 
 #: ../raster/r.profile/main.c:72
 msgid "Name of file for output (use output=- for stdout)"
@@ -2028,7 +2049,8 @@ msgstr ""
 
 #: ../raster/r.proj/main.c:138
 msgid "Re-project a raster map from one location to the current location."
-msgstr "Reprojiziert eine Rasterkarte von einer Location in die aktuelle Location."
+msgstr ""
+"Reprojiziert eine Rasterkarte von einer Location in die aktuelle Location."
 
 #: ../raster/r.proj/main.c:144 ../raster/r.surf.idw/main.c:57
 msgid "Input raster map"
@@ -2068,7 +2090,9 @@ msgstr "Führe kein Optimierung der Region durch."
 
 #: ../raster/r.quant/main.c:26
 msgid "This routine produces the quantization file for a floating-point map."
-msgstr "Diese Routine produziert eine Quantisierungsdatei für eine Fließkommazahl-Karte."
+msgstr ""
+"Diese Routine produziert eine Quantisierungsdatei für eine Fließkommazahl-"
+"Karte."
 
 #: ../raster/r.quant/main.c:34
 msgid "Base map to take quant rules from"
@@ -2098,7 +2122,9 @@ msgstr "Runde Fließkomma-Werte."
 msgid ""
 "Creates a raster map layer and vector point map containing randomly located "
 "sites."
-msgstr "Erstellt eine Rasterkarte und eine Vektorpunktkarte, die zufällig angeordnete Punkte enthalten."
+msgstr ""
+"Erstellt eine Rasterkarte und eine Vektorpunktkarte, die zufällig "
+"angeordnete Punkte enthalten."
 
 #: ../raster/r.random/main.c:51
 msgid "The number of points to allocate"
@@ -2132,7 +2158,9 @@ msgstr "Erzeugt zufällige Oberfläche(n) mit räumlicher Abhängigkeit."
 msgid ""
 "Creates a new map layer whose category values are based upon the user's "
 "reclassification of categories in an existing raster map layer."
-msgstr "Erzeugt eine neue Karte basierend auf nutzereigenen Reklassifizierungsregeln der Kategoriewerte von einer existierenden Rasterkarte."
+msgstr ""
+"Erzeugt eine neue Karte basierend auf nutzereigenen Reklassifizierungsregeln "
+"der Kategoriewerte von einer existierenden Rasterkarte."
 
 #: ../raster/r.reclass/main.c:39
 msgid "Raster map to be reclassified"
@@ -2311,7 +2339,8 @@ msgstr "Name der Ausgabedatei zum Speichern des Reports."
 
 #: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:112
 msgid "Number of fp subranges to collect stats from"
-msgstr "Anzahl der Kategoriewerte, für die Statistiken eingeholt werden sollen."
+msgstr ""
+"Anzahl der Kategoriewerte, für die Statistiken eingeholt werden sollen."
 
 #: ../raster/r.report/parse.c:91
 msgid "Suppress page headers"
@@ -2339,7 +2368,8 @@ msgstr "Gebe Fließkomma-Spannen der Cats aus. (nur bei Fließkomma-Karten)"
 
 #: ../raster/r.report/parse.c:119
 msgid "Read fp map as integer (use map's quant rules"
-msgstr "Lese Fließkommakarten als Integer (benutze die Quantisier-Regeln der Karte)"
+msgstr ""
+"Lese Fließkommakarten als Integer (benutze die Quantisier-Regeln der Karte)"
 
 #: ../raster/r.resamp.rst/main.c:161
 #, fuzzy
@@ -2347,7 +2377,10 @@ msgid ""
 "Reinterpolates and computes topographic analysis from input raster file to a "
 "new raster file (possibly with different resolution) using regularized "
 "spline with tension and smoothing."
-msgstr "Reinterpoliert und berechnet topgraphische Analysen basierend auf einer Eingabekarte in eine neue Rasterkarte unter Benutzung von regularized splines with tension und Glättung (RST)."
+msgstr ""
+"Reinterpoliert und berechnet topgraphische Analysen basierend auf einer "
+"Eingabekarte in eine neue Rasterkarte unter Benutzung von regularized "
+"splines with tension und Glättung (RST)."
 
 #: ../raster/r.resamp.rst/main.c:175
 msgid "Do zeroes in input map represent elevation?"
@@ -2445,7 +2478,9 @@ msgstr "Name der Rasterkarte, die reskaliert werden soll."
 
 #: ../raster/r.rescale/main.c:52 ../raster/r.rescale.eq/main.c:53
 msgid "The input data range to be rescaled (default: full range of input map)"
-msgstr "Wertespanne der Eingangsdaten, die reskaliert werden soll (Standard: volle Spanne der Eingabekarte)"
+msgstr ""
+"Wertespanne der Eingangsdaten, die reskaliert werden soll (Standard: volle "
+"Spanne der Eingabekarte)"
 
 #: ../raster/r.rescale/main.c:59 ../raster/r.rescale.eq/main.c:60
 msgid "The resulting raster map name"
@@ -2490,7 +2525,8 @@ msgid ""
 "derivatives from a raster map layer of true elevation values. Aspect is "
 "calculated counterclockwise from east."
 msgstr ""
-"Erzeugt Hangneigungs-, Hangexpositions-, Wölbungs- und partielle Ableitungskarten von einer Rasterkarte mit Höheninformationen."
+"Erzeugt Hangneigungs-, Hangexpositions-, Wölbungs- und partielle "
+"Ableitungskarten von einer Rasterkarte mit Höheninformationen."
 "Hangexpositionen werden von Osten im Uhrzeigersinn berechnet."
 
 #: ../raster/r.slope.aspect/main.c:143
@@ -2523,11 +2559,13 @@ msgstr "Ausgabekarte mit Horizontal-Wölbung."
 
 #: ../raster/r.slope.aspect/main.c:199
 msgid "Output first order partial derivative dx (E-W slope) filename"
-msgstr "Ausgabekarte der ersten partiellen Ableitung dx (Ost-West Hangneigung)."
+msgstr ""
+"Ausgabekarte der ersten partiellen Ableitung dx (Ost-West Hangneigung)."
 
 #: ../raster/r.slope.aspect/main.c:207
 msgid "Output first order partial derivative dy (N-S slope) filename"
-msgstr "Ausgabekarte der ersten partiellen Ableitung dy (Nord-Süd Hangneigung)."
+msgstr ""
+"Ausgabekarte der ersten partiellen Ableitung dy (Nord-Süd Hangneigung)."
 
 #: ../raster/r.slope.aspect/main.c:215
 msgid "Output second order partial derivative dxx filename"
@@ -2547,11 +2585,15 @@ msgstr "Multiplikator, um Höheneinheiten in Meter umzurechnen."
 
 #: ../raster/r.slope.aspect/main.c:242
 msgid "Minimum slope val. (in percent) for which aspect is computed"
-msgstr "Minimale Hangneigung (in Prozent), für die eine Hangexposition berechnet werden soll."
+msgstr ""
+"Minimale Hangneigung (in Prozent), für die eine Hangexposition berechnet "
+"werden soll."
 
 #: ../raster/r.slope.aspect/main.c:249
 msgid "Do not align the current region to the elevation layer"
-msgstr "Die aktuelle Region nicht an die Rasterkarte mit den Höheninformationen anpassen."
+msgstr ""
+"Die aktuelle Region nicht an die Rasterkarte mit den Höheninformationen "
+"anpassen."
 
 #: ../raster/r.statistics/main.c:43
 msgid "Category or object oriented statistics."
@@ -2563,7 +2605,9 @@ msgstr "Methode der objektbasierten Statistik."
 
 #: ../raster/r.statistics/main.c:79
 msgid "Resultant raster map (not used with 'distribution')"
-msgstr "Resultierende Rasterkarte (wird nicht benutzt, wenn Methode 'Verteilung' gewählt wurde)."
+msgstr ""
+"Resultierende Rasterkarte (wird nicht benutzt, wenn Methode 'Verteilung' "
+"gewählt wurde)."
 
 #: ../raster/r.statistics/main.c:84
 msgid "Cover values extracted from the category labels of the cover map"
@@ -2599,7 +2643,8 @@ msgstr "Gebe Zellenanzahlen aus."
 
 #: ../raster/r.stats/main.c:133
 msgid "Print APPROXIMATE percents (total percent may not be 100%)"
-msgstr "Gebe ungefähre Prozente aus (Gesamtprozente müssen nicht 100% ergeben)."
+msgstr ""
+"Gebe ungefähre Prozente aus (Gesamtprozente müssen nicht 100% ergeben)."
 
 #: ../raster/r.stats/main.c:137
 msgid "Print category labels"
@@ -2627,7 +2672,9 @@ msgstr "Gebe rohe Indizes der Fließkomma-Spannen aus (nur Fließkommakarten)."
 
 #: ../raster/r.stats/main.c:169
 msgid "Read fp map as integer (use map's quant rules)"
-msgstr "Lese Fließkommakarte als Integerkarte (benutze Quantisierungsregeln der Karte)."
+msgstr ""
+"Lese Fließkommakarte als Integerkarte (benutze Quantisierungsregeln der "
+"Karte)."
 
 #: ../raster/r.sum/main.c:31
 msgid "Sums up the raster cell values."
@@ -2646,7 +2693,14 @@ msgid ""
 "a local time can be specified to compute solar incidence angle and/or "
 "irradiance raster maps. The shadowing effect of the topography is optionally "
 "incorporated."
-msgstr "Berechnet die direkte, diffuse und reflektierte Sonneneinstrahlung für einen gegebenen Tag, Breitengrad, Oberfläche und atmosphärische Bedinungen. Solarparameter (z.B.: Sonnenaufgangs- und Sonnenuntergangszeiten, extraterrestrische Strahlung, Neigung, Tageslänge) werden in einer lokalen Textdatei gespeichert. Alternativ kann eine lokale Zeit zur Berechnung des Sonneneinstrahlwinkels und/oder der Sonneneinstrahlung angegeben werden. Die Abschattung der Topographie kann optional berücksichtigt werden."
+msgstr ""
+"Berechnet die direkte, diffuse und reflektierte Sonneneinstrahlung für einen "
+"gegebenen Tag, Breitengrad, Oberfläche und atmosphärische Bedinungen. "
+"Solarparameter (z.B.: Sonnenaufgangs- und Sonnenuntergangszeiten, "
+"extraterrestrische Strahlung, Neigung, Tageslänge) werden in einer lokalen "
+"Textdatei gespeichert. Alternativ kann eine lokale Zeit zur Berechnung des "
+"Sonneneinstrahlwinkels und/oder der Sonneneinstrahlung angegeben werden. Die "
+"Abschattung der Topographie kann optional berücksichtigt werden."
 
 #: ../raster/r.sun/main.c:184
 msgid "Name of the elevation raster file"
@@ -2865,7 +2919,8 @@ msgstr ""
 #: ../raster/r.sunmask/main.c:338
 #, c-format
 msgid " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"
-msgstr " %d.%02d.%02d, Tagnummer %d, Zeit: %02i:%02i:%02i (dezimale Zeit: %f)\n"
+msgstr ""
+" %d.%02d.%02d, Tagnummer %d, Zeit: %02i:%02i:%02i (dezimale Zeit: %f)\n"
 
 #: ../raster/r.sunmask/main.c:342
 #, c-format
@@ -3206,21 +3261,21 @@ msgstr "Geglättet Ecken"
 msgid "Use raster values as categories instead of unique sequence (CELL only)"
 msgstr "von unique sequence"
 
-#: ../raster/r.topidx/main.c:47
+#: ../raster/r.topidx/main.c:46
 #, fuzzy
 msgid "Creates topographic index, ln(a/tan(beta)), map from elevation map."
 msgstr "index a beta von."
 
-#: ../raster/r.topidx/main.c:51
+#: ../raster/r.topidx/main.c:50
 msgid "Elevation map"
 msgstr ""
 
-#: ../raster/r.topidx/main.c:58
+#: ../raster/r.topidx/main.c:57
 #, fuzzy
 msgid "Topographic index ln(a/tanB) map"
 msgstr "index a"
 
-#: ../raster/r.topidx/main.c:69
+#: ../raster/r.topidx/main.c:64
 #, fuzzy
 msgid "Output verbosely"
 msgstr "Ausgabe-Treibername"
@@ -3313,7 +3368,8 @@ msgstr "Ausgabe"
 
 #: ../raster/r.transect/main.c:34
 #, fuzzy
-msgid "Outputs raster map layer values lying along user defined transect line(s)."
+msgid ""
+"Outputs raster map layer values lying along user defined transect line(s)."
 msgstr "Linie."
 
 #: ../raster/r.transect/main.c:40
@@ -3331,7 +3387,8 @@ msgstr "Nein"
 
 #: ../raster/r.univar2/main.c:55
 #, fuzzy
-msgid "Calculates univariate statistics from the non-null cells of a raster map."
+msgid ""
+"Calculates univariate statistics from the non-null cells of a raster map."
 msgstr "von von a."
 
 #: ../raster/r.univar2/main.c:68
@@ -3575,12 +3632,14 @@ msgstr "von"
 
 #: ../raster/wildfire/r.spread/main.c:156
 #, fuzzy
-msgid "Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
+msgid ""
+"Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
 msgstr "von m"
 
 #: ../raster/wildfire/r.spread/main.c:162
 #, fuzzy
-msgid "Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
+msgid ""
+"Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
 msgstr "von Wind"
 
 #: ../raster/wildfire/r.spread/main.c:168
@@ -4151,3 +4210,8 @@ msgstr "Kann Datenbank '%s' nicht öffnen."
 msgid "Cannot fetch data"
 msgstr "Kann Datenbanken nicht auflisten."
 
+#~ msgid "Overwrite output maps"
+#~ msgstr "Überschreibe Ausgabe-Karten"
+
+#~ msgid "Overwrite output map"
+#~ msgstr "Überschreibe Ausgabekarte."
