@@ -45,10 +45,10 @@ get_screen_parameters( desc)
 	find_primary_screen(desc) ;
 	SCREEN_VS  =  desc->primary_vs_no  ;
 
-	SCREEN_LEFT =  0	;
-	SCREEN_TOP =  0 ;
+	SCREEN_LEFT =  1	;
+	SCREEN_TOP =  29 ;
 
-	SCREEN_BOTTOM = info[SCREEN_VS].vsi_y - 1 ;
+	SCREEN_BOTTOM = info[SCREEN_VS].vsi_y - 29 ;
 
 	SCREEN_RIGHT = info[SCREEN_VS].vsi_x - 1 ;
 
@@ -68,7 +68,7 @@ get_screen_parameters( desc)
 		value = -1 ;
 		value = atoi(env_value) ;
 
-		if ( value >= SCREEN_TOP && value <= SCREEN_BOTTOM )
+		if ( value >= SCREEN_TOP && value <= SCREEN_BOTTOM - 50 )
 			SCREEN_TOP = value ;
 	}
 
@@ -77,37 +77,38 @@ get_screen_parameters( desc)
 		value = -1 ;
 		value = atoi(env_value) ;
 
-		if ( value > SCREEN_TOP && value <= SCREEN_BOTTOM
+		if ( value > (SCREEN_TOP + 50) && value <= SCREEN_BOTTOM
 		&&   value > 5)
 			SCREEN_BOTTOM = value ;
-		else
-			SCREEN_BOTTOM = info[SCREEN_VS].vsi_y - ADJUST_Y_BORDER ;
 	}
 	else
-		SCREEN_BOTTOM = info[SCREEN_VS].vsi_y - ADJUST_Y_BORDER ;
+		SCREEN_BOTTOM = (SCREEN_BOTTOM - SCREEN_TOP)/2 - 10;
 
 	if (( env_value = G__getenv ("IGRAPH_LEFT")) != NULL )
 	{
 		value = -1 ;
 		value = atoi(env_value) ;
 
-		if ( value >= SCREEN_LEFT && value < SCREEN_RIGHT )
+		if ( value >= SCREEN_LEFT && value <= (SCREEN_RIGHT - 50) )
 			SCREEN_LEFT = value ;
 	}
+    else
+    {
+        /*if IGRAPH_LEFT not set, set small screen size:
+           with left edge at slightly right of mid-screen*/
+           SCREEN_LEFT = (SCREEN_RIGHT - SCREEN_LEFT)/2 + 10;
+    }
+
 
 	if (( env_value = G__getenv ("IGRAPH_RIGHT")) != NULL )
 	{
 		value = -1 ;
 		value = atoi(env_value) ;
 
-		if ( value > SCREEN_LEFT && value <= SCREEN_RIGHT
+		if ( value > (SCREEN_LEFT + 50) && value <= SCREEN_RIGHT
 		&&   value > 5)
 			SCREEN_RIGHT = value ;
-		else
-			SCREEN_RIGHT = info[SCREEN_VS].vsi_x - ADJUST_X_BORDER ;
 	}
-	else
-		SCREEN_RIGHT = info[SCREEN_VS].vsi_x - ADJUST_X_BORDER ;
 
 	if (( env_value = G__getenv ("IGRAPH_COLORS")) != NULL )
 	{
