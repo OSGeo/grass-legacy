@@ -11,7 +11,7 @@
 
 <H2>NAME</H2>
 
-<EM><b>db.connect</b></EM> - Connect to the database through DBMI.
+<EM><b>db.connect</b></EM> - Set up connection to the database through DBMI.
 
 <BR>
 
@@ -61,26 +61,9 @@ parameters are described below.
 <DL>
 
 <DT><B>driver=</B><EM>name</EM> 
-<DD>The name of a DBMI driver. Drivers are specified in dbmscap file. Each driver
-is specified in dmbscap file on one row in following format: <BR> 
-<PRE>driver_name:full_path_to_the_driver:driver_description</PRE> 
-for example:  <BR>
-<PRE>
-odbc:/usr/local/grass5/driver/odbc:odbc driver
-local:/tmp/dbmi/driver/informix:informix
-diego:/usr/ucb/rsh diego /tmp/dbmi/driver/informix:informix    
-</PRE>
-db.connect searches for the dbmscap file in locations in following order:  
-<PRE>
-value of variable DBMSCAP
-/etc/dbmscap
-/lib/dbmscap
-/usr/lib/dbmscap
-/usr/local/lib/dbmscap
-/usr/local/dbmi/lib/dbmscap
-</PRE>
-and uses first one found. You can use <EM><A HREF="db.drivers.html">db.drivers</A></EM>
-to list drivers defined in dbmscap file.
+<DD>The name of a DBMI driver. Currently only the <B>odbc</B> driver is available. 
+You can use <EM><A HREF="db.drivers.html">db.drivers</A></EM>
+to list available drivers.
 <BR><BR>
 
 <DT><B>database=</B><EM>name</EM> 
