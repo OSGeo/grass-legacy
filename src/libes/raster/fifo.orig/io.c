@@ -312,30 +312,45 @@ int R__open_quiet()
 *      open fifo pipes for read/write.
 *************************************************/
 
-#define READ  0
-#define WRITE 1
-
 static int fifoto( char *input,char *output,int alarm_time)
 {
+    int oldflags;
     no_mon = 0;
     sigalarm = signal(SIGALRM, dead);
     alarm(alarm_time);
-    _wfd = open(output, WRITE) ;
+    /* Open in non blocking mode, so this doesn't hang */
+    _wfd = open (output, O_WRONLY | O_NONBLOCK);
     alarm(0);
     signal(SIGALRM, sigalarm);
     if (no_mon)
         return 0 ;
 
+    /* Set back to blocking mode */
+    oldflags = fcntl (_wfd, F_GETFL, 0);
+    if (oldflags == -1)
+	return -1;
+    oldflags &= ~O_NONBLOCK;
+    if (fcntl(_wfd, F_SETFL, oldflags) == -1)
+	return -1;
+    
     no_mon = 0;
     signal(SIGALRM, dead);
     alarm(alarm_time);
-    _rfd = open(input, READ) ;
+    /* Open inf non blocking mode so this doesn't hang */
+    _rfd = open (input, O_RDONLY | O_NONBLOCK);
     alarm(0);
     signal(SIGALRM, sigalarm);
     if (no_mon)
         return 0 ;
 
-
+    /* Set back to blocking mode */
+    oldflags = fcntl (_rfd, F_GETFL, 0);
+    if (oldflags == -1)
+	return -1;
+    oldflags &= ~O_NONBLOCK;
+    if (fcntl (_rfd, F_SETFL, oldflags) == -1 )
+	return -1;
+    
     if( (_wfd == -1) || (_rfd == -1) )
         return -1;
 
