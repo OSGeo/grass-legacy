@@ -11,6 +11,8 @@
  *    no shadow: null()
  *    shadow:    1
  *
+ * Algorithm source: unknown
+ *
  * Author: Janne Soimasuo, Finland 1994
  *
  * GPL >= 2
