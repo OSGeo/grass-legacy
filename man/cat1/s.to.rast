@@ -34,24 +34,24 @@ Parameters:
 
      default: 1
 
+NOTES
+     When converting from a sites layer to a raster layer with
+     size=0, the site is converted into a single cell
+     representing the location of the site, which can be hard to
+     see (depending on the raster resolution).
+
+     size=2 (or higher) makes the sites show up as fatter in the
+     raster layer.
+
+     Alternaticely the user can convert the sites to vector
+     format and use v.bubble or v.circle to represent the
+     location.
+
 SEE ALSO
-     s.menu
+     g.region, s.menu, s.to.vect, v.bubble, v.circle,
 
 AUTHOR
      Katarina Johnsson, CCRS
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
