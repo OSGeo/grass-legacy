@@ -1,37 +1,44 @@
-GRASS_MANDIR=./man_new
-HTML_DIR=./html
-
-# the files we want to create/update are now MAN_FILES
-all: copy $(GRASS_MANDIR) $(MAN_FILES)
-
-#copy the HTML pages
-copy:
-	if [ ! -d $(GISBASE)/html ]; then mkdir $(GISBASE)/html; fi
-	(tar -cf - * | (cd $(GISBASE)/html; tar -xf - 2>/dev/null ); true )
-
-
-# process the html pages into man pages
-%.man: %.html
-	$SRCDIR/scripts/contrib/g.html2man/g.html2man $< > $@
-
-# make sure the man directory exists
-$(GRASS_MANDIR):
-	test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
-
-# copy the man pages
-$(GRASS_MANDIR)/%:% $(GRASS_MANDIR)
-	cp $< $@
-
+# Creates all manpages in $(GISBASE)/man/1
+# (Think to add grass programmer's manual pages in $(GISBASE)/man/3
+# and file format in $(GISBASE)/man/5 later...)
+# Copy html tree (without the other files) in $(GISBASE)/documents
+# The manual in html format will be in $(GISBASE)/documents/html
+# (default in tcltkgrass ?)
+#
+SECT = 1		# default manual section number
+GRASS_MANDIR=$(GISBASE)/man/$(SECT)
+GRASS_HTMLDIR=$(GISBASE)/documents
+HTML_DIR = ./html
+HTML2MAN = $(SRC)/scripts/contrib/g.html2man/g.html2man
 
 # set HTML_FILES to the set of .html files in HTML_DIR
 HTML_FILES = $(wildcard $(HTML_DIR)/*.html)
 
 # transform HTML_FILES to MAN_FILES
 # substitute .man for .html in HTML_FILES
-MAN_TMP = $(subst .html,.man,$(HTML_FILES))
+MAN_TMP = $(patsubst %.html,%.$(SECT),$(HTML_FILES))
 
 # substitute MAN_DIR for HTML_DIR in MAN_TMP
-MAN_FILES = $(subst $(HTML_DIR),$(MAN_DIR),$(MAN_TMP))
-	%.man
+MAN_FILES = $(subst $(HTML_DIR),$(GRASS_MANDIR),$(MAN_TMP))
 
 #
+# the files we want to create/update are now MAN_FILES
+all: htmlpages manpages
+
+#copy the HTML pages only and related images
+htmlpages:
+	@test -d $(GRASS_HTMLDIR) || mkdir $(GRASS_HTMLDIR)
+	@(echo Copying html pages; tar -cf - $(HTML_DIR) nviz *.html *.gif | (cd $(GRASS_HTMLDIR); tar -xf - ); true )
+
+manpages: mandir $(MAN_FILES)
+
+# make sure the man directory exists
+mandir:
+	@test -d $(GRASS_MANDIR) || mkdir -p $(GRASS_MANDIR)
+	@echo " "; echo Creating man pages; echo " "
+
+# horrible rule, but it works ;-)
+$(MAN_FILES): $(HTML_FILES)
+	@( cd $(HTML_DIR); h="`basename $@ .$(SECT)`.html" ; \
+	  if [ ! -f $@ -o $@ -ot $$h ] ; then $(HTML2MAN) $$h $@ $(SECT); fi )
+
