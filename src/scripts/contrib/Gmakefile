@@ -19,7 +19,6 @@ all:
 	cp ps.add.pagesize/ps.add.pagesize $(SCRIPTS)
 	cp r.edge.dig/r.edge.dig $(SCRIPTS)
 	cp r.fillnulls/r.fillnulls $(SCRIPTS)
-	cp r.in.globedem/r.in.globedem $(SCRIPTS)
 	cp r.mpatch/r.mpatch $(SCRIPTS)
 	cp r.out.bil/r.out.bil $(SCRIPTS)
 	cp r.plane/r.plane $(SCRIPTS)
