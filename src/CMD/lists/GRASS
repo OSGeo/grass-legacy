@@ -270,6 +270,7 @@ src/paint/Drivers/preview
 src/paint/Drivers/preview2
 src/paint/Programs
 src/paint/Programs/p.map.new/cmd
+src/paint/p.vrml1.1
 # do we need this?:
 src/paint/Tests
 src/ps.map
