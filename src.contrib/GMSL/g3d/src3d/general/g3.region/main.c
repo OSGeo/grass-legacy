@@ -77,7 +77,7 @@ char *argv[];
 	fprintf (stderr, "PROJECTION: %d (%s)\n", window3d.proj, prj);
 	fprintf (stderr, "ZONE:       %d\n", window3d.zone);
 
-	fprintf (stderr, "\n\nPlease select one of the following options\n\n");
+	fprintf (stderr, "\n\nPlease select one of the following options\n");
 	fprintf (stderr, "   Current 3d Region                        3d Region Database\n\n");
 	fprintf (stderr, "1  Modify current 3d region directly    10  Save current region in 3d database\n");
 	fprintf (stderr, "2  Set from default region              11  Create a new 3d region\n");
