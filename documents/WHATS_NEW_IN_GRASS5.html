@@ -22,11 +22,14 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
 <p>
 <b>Modules</b>
 <menu>
+<li> r.agnps.*: updated to make it work within GRASS 5 (Markus Neteler)
+<li> r.cn, r.cn2: updated (Markus Neteler, John Huddleston)
 <li> r.cost: accepts sites files as start and stop points (Pierre de Mouveaux)
 <li> r.drain: corrected lat-lon projection issues, 3 selectable output modes (Pierre de Mouveaux)
 <li> r.in.globedem added for importing GLOBE DEM data (Markus Neteler)
 <li> r.in.dem added to read USGS DEMs (Eric Buddington)
 <li> r.in.tiff: bugfix for seg. fault (Carl Anderson)
+<li> r.in.shape: added (Radim Blazek)
 <li> r.line working now with Grass5 (Pierre de Mouveaux)
 <li> r.timestamp: fixed library function (Bill Hughes, Bill Brown)
 <li> s.in.shape: added, reads an ArcView Shapefile with points or
@@ -37,11 +40,14 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
       Correction (through options) of some common topological problems with imported
      data, Removal of duplicate rings and line segments, label bug
      fix  (David D. Gray)
-<li> v.in.ascii fixed to read DIGIT DATE properly (Huidae Cho)
-<li> v.in.dxf fixed to read DXF header correctly (Huidae Cho)
-<li> v.in.dxf2 fixed to read DXF header correctly (Huidae Cho)
+<li> v.in.ascii: fixed to read DIGIT DATE properly (Huidae Cho)
+<li> v.in.dxf: fixed to read DXF header correctly (Huidae Cho)
+<li> v.in.dxf2: fixed to read DXF header correctly (Huidae Cho)
+<li> v.in.dxf3d: fixed to handle file names correctly (Huidae Cho)
 <li> v.out.arc: small fix for importing into ARC/INFO (Markus Neteler)
+<li> v.spag: fixed loop error, new flags (Radim Blazek)
 <li> v.timestamp: added (Markus Neteler, based on r.timestamp)
+<li> v.to.db: added to load values from vector to database (Radim Blazek)
 </menu>
 
 <b>G3D-support</b> (new 3D raster format "voxels")
@@ -68,6 +74,7 @@ href=http://www.geog.uni-hannover.de/grass/grasscvs.html>CVS server</a>]
  cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src.related<br>
  cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src/xgrass<br>
  cvs -z3 co -r "release_grass5beta7_20_april_2000" grass/src/include
+<li> WINDOWS/NT: improved portability (John Huddleston)
 </menu>
 
 <hr>
