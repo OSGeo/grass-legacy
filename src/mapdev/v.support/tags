@@ -1,0 +1,6 @@
+Msupport	support.c	/^main (argc, argv)$/
+ask_for_name	support.c	/^ask_for_name( file_name, header, name, dir, file_d/
+ask_which_level	support.c	/^ask_which_level(map)$/
+go_interactive	support.c	/^go_interactive (argc, argv, PROG, fname)$/
+run_cats	support.c	/^run_cats (name)$/
+run_support_vect	support.c	/^run_support_vect( command, name, ram)$/
