@@ -66,9 +66,6 @@ i.ortho.photo
 i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
 - Attempting to change the default Title causes a segfault.
 
-g.manual
-  bug if $PAGER variable is not set on system
-
 p.map.new:
  - p.map.new now works but only with the grass4.2 raster files
    With the GRASS5.0 floating point raster files it gives the following
@@ -122,13 +119,9 @@ r.los
 
 r.mapcalc
  - Values -129 in GRASS raster files are treated as Null
-   This is bug in the new and older version of GRASS5.0beta.
-   For example, I create a map test with r.mapcalc as follows;                                                                        
-   > r.mapcalc test=-129
-   and test with d.what.rast which gives me the result
-   as follows:
-   602310(E) 4922750(N)
-    test in PERMANENT  (Null)no data
+ - fixed for FreeBSD/Linux. Check for others, correction goes
+   here:
+   src/libes/gis/null_val.c
 
  - r.mapcalc/polish: (when compiling)
 make[2]: Entering directory
@@ -297,7 +290,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.9  2000-07-28 08:27:25  markus
+ Revision 1.10  2000-08-20 15:44:40  markus
+ g.manual bug fixed, r.mapcalc bug fixed on FreeBSD and Linux
+
+ Revision 1.9  2000/07/28 08:27:25  markus
  g.version bug fixed, new reports on r.mapcalc and g.manual
 
  Revision 1.8  2000/07/26 13:10:44  markus
