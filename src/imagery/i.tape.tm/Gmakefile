@@ -1,0 +1,26 @@
+LIBES = $(IMAGERYLIB) $(GISLIB)
+
+LIST = main.o\
+	ask_window.o\
+	bil.o\
+	bsq.o\
+	find_image.o\
+	mnt_tape.o\
+	mnt_vol.o\
+	number.o\
+	put_image.o\
+	put_row.o\
+	read_tape.o\
+	rec_type.o\
+	tape_item.o\
+	tapename.o\
+	text_rec.o\
+	unmnt_tape.o\
+	header.o
+
+$(BIN)/i.tape.tm: $(LIST) $(LIBES) $(VASKLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES) $(VASK)
+
+$(LIST): tape.h
+
+$(LIBES) $(VASKLIB): #
