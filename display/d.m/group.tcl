@@ -106,3 +106,6 @@ proc DmGroup::close { id } {
     $DmGroup::opt($id,treeimagepath) configure -image [Bitmap::get folder]
 }
 
+proc DmGroup::duplicate { tree parent_node sel id } {
+    puts "Duplicate for Groups not yet implemented."
+}

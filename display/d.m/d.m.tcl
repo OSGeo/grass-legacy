@@ -510,7 +510,7 @@ proc Dm::print_node { file node } {
 
 # query selected map
 proc Dm::query { } {
-    variable tree
+    Variable tree
     variable options
 
     set sel [ lindex [$tree selection get] 0 ]
@@ -532,9 +532,53 @@ proc Dm::query { } {
             DmCmd::query $sel
         }
     }
-
 }
 
+# duplicate selected layer
+proc Dm::duplicate { } {
+    variable tree
+    variable options
+    variable id
+    global new_root_node
+
+    if { [catch {match string {} $new_root_node}] } {
+    set new_root_node root
+    }
+    # selected node
+    set parent_node [ lindex [$tree selection get] 0 ]
+    if { $parent_node == "" } {
+       set parent_node $new_root_node
+    } 
+
+    set parent_type [Dm::node_type $parent_node]
+    if { $parent_type != "group" } {
+        set parent_node [$tree parent $parent_node]
+    }
+
+    set sel [ lindex [$tree selection get] 0 ]
+    if { $sel == "" } { return }
+    
+    set type [Dm::node_type $sel]
+    set id [Dm::node_id $sel]
+
+    switch $type {
+        raster {
+            DmRaster::duplicate $tree $parent_node $sel $id
+        }
+        labels {
+            DmLabels::duplicate $tree $parent_node $sel $id
+        }
+        vector {
+            DmVector::duplicate $tree $parent_node $sel $id
+        }
+        cmd {
+            DmCmd::duplicate $tree $parent_node $sel $id
+        }
+        group {
+            DmGroup::duplicate $tree $parent_node $sel $id
+        }
+    }
+}
 
 # save tree/options to file
 proc Dm::save { spth } {
