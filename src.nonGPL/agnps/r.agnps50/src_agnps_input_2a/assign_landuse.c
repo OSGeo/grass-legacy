@@ -26,14 +26,14 @@
 */
 
 #include "agnps_input.h"
-
+#include "gis.h"
 
 int assign_landuse(land_use_label)
 char	*land_use_label;
 
 {
-
-
+        G_chop(land_use_label); /* added 6/2000 */
+                  
 	if (strcmp("fallow",land_use_label) == 0)  return(fallow);
 
 	else if ((strcmp("row crops",land_use_label) == 0) ||
