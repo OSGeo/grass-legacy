@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 
 /* compute sum of squares for each class */
