@@ -6,7 +6,10 @@
  * $Id$
  *
  * $Log$
- * Revision 1.1  2000-08-20 05:57:21  cho
+ * Revision 1.2  2000-08-20 06:35:19  cho
+ * cosmetics
+ *
+ * Revision 1.1  2000/08/20 05:57:21  cho
  * Huidae Cho <hdcho@geni.knu.ac.kr>: TOPMODEL simulation and other stuff
  *
  *
@@ -138,14 +141,14 @@ main(argc, argv)
 	param.timestep			= G_define_option();
 	param.timestep->key		= "timestep";
 	param.timestep->description	=
-	       "       Time step for output";
+		"      Time step for output";
 	param.timestep->type		= TYPE_INTEGER;
 	param.timestep->required	= NO;
 
 	param.idxclass			= G_define_option();
 	param.idxclass->key		= "idxclass";
 	param.idxclass->description	=
-	       "       Topographic index class for output";
+		"      Topographic index class for output";
 	param.idxclass->type		= TYPE_INTEGER;
 	param.idxclass->required	= NO;
 
