@@ -2,10 +2,10 @@
  * Our "standard" includes
  */
 
+#include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
 #include <gis.h>
-#include <malloc.h>
 #include <string.h>
 
 /*
