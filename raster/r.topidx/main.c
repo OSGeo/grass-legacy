@@ -64,6 +64,10 @@ main(int argc, char **argv)
 	        exit(-1);
 	}
 
+	/* Make sure that the current projection is not lat/long */
+	if ((G_projection() == PROJECTION_LL))
+		G_fatal_error ("lat/long databases not supported by r.topidx. Please reproject map first.");
+
 	iname   = params.input->answer;
 	mapset  = G_find_cell2 (iname, "");
 	oname   = params.output->answer;
