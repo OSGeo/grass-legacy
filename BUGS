@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.25 2000-10-12 08:19:16 markus Exp $
+$Id: BUGS,v 1.26 2000-10-13 15:19:40 markus Exp $
 
 Maintained by
    Markus Neteler
@@ -149,6 +149,16 @@ r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
  lines of one point which r.contour creates occasionally.) I have added  
  this as an extension, though I stress it is just a temporary fix.
  (script: v.asc.degen)
+
+r.flow
+ bugreport: Issuing the command (-M switch is the problem):
+ r.flow -M elevin=fill aspin=dir flout=flowout_M dsout=density_M
+ [...] Writing density file...ERROR: r.flow: cannot write segment file for
+       density_M
+ r.flow seems to work OK with no switch and with the -m switch.
+ (david_finlayson@yahoo.com)
+ -> floating point exception fix already done, -M to be tested
+
 
 r.in.hdf/r.out.hdf (src.garden/grass.hdf)
  - needs updating to HDF4.x lib (already there)
@@ -304,7 +314,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log: BUGS,v $
- Revision 1.25  2000-10-12 08:19:16  markus
+ Revision 1.26  2000-10-13 15:19:40  markus
+ added r.flow BUG
+
+ Revision 1.25  2000/10/12 08:19:16  markus
  removed d.legend, d.site.labels, d.sites.label as being fixed
 
  Revision 1.24  2000/10/11 16:51:17  markus
