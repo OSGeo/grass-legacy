@@ -77,7 +77,7 @@ int
 submit ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 {
     int i, first, ncols, found, col, sqltype, keyval = 0, ret;
-    char buf[2000];
+    char buf[2001];
     dbString sql, table_name, strval;
     dbDriver *driver;
     dbHandle handle;
@@ -200,14 +200,19 @@ submit ( ClientData cdata, Tcl_Interp *interp, int argc, char *argv[])
 	if ( Cols[i].ctype == DB_C_TYPE_INT || Cols[i].ctype == DB_C_TYPE_DOUBLE ) {
             sprintf (buf, "%s = %s", Cols[i].name, Cols[i].value );
 	} else {
-		memset(buf, '\0', strlen(buf));
-	    	Tcl_UtfToExternal(interp,
-		Tcl_GetEncoding(interp, G__getenv("GRASS_DB_ENCODING")),
-		Cols[i].value, strlen(Cols[i].value), 0, NULL,
-		buf, strlen(Cols[i].value) * 2, NULL, NULL,
-			NULL);
+	    memset(buf, '\0', strlen(buf));
+	    ret = Tcl_UtfToExternal(interp,
+	    		      Tcl_GetEncoding(interp, G__getenv("GRASS_DB_ENCODING")),
+	                      Cols[i].value, strlen(Cols[i].value), 0, NULL,
+	                      buf, 2000, NULL, NULL, NULL);
+	    
+	    if ( ret != TCL_OK ) {
+		G_warning ("Could not convert UTF to external.");
+		db_set_string ( &strval, Cols[i].value );
+	    } else {
+	        db_set_string ( &strval, buf );
+	    }
 
-	    db_set_string ( &strval, buf );
 	    db_double_quote_string (&strval);
             sprintf (buf, "%s = '%s'", Cols[i].name, db_get_string(&strval) );
 	}
