@@ -22,45 +22,56 @@ Many thanks to all contributors!
 </ul>
 
 <hr>
-<h3><font color="#00A000">What's new in GRASS 5.3.0/CVS comparing to 5.0.3</font></h3>
+<h3><font color="#00A000">What's new in GRASS 5.3/CVS comparing to 5.0.3</font></h3>
 <b>Modules fixed/updated</b> (major changes only)
 <ul>
-<li>d.legend: new parameters added (Hamish Bowman)
-<li>g.setproj: Supports State Plane 83 as well as 27 and prompts for units, 
-improved datum support (Paul Kelly)</li>
-<li>GUI startup: 'grass5 -gui' alias added, create mapset support added
-    (Markus Neteler)
-<li>all re-projection modules support datum transformations now:
+<li>All re-projection modules support datum transformations now:
     r.proj, s.proj, v.proj (Paul Kelly)</li>
-<li>r.proj: copies colour table when re-projecting maps (Paul Kelly)</li>
 <li>d.grid: added optional border marks plotting (Markus Neteler)
+<li>d.legend: new parameters added, better horizontal legends (Hamish Bowman)
+<li>d.scale: DEPRECIATED. Use 'd.barscale -l' instead (Hamish Bowman)
+<li>d.site.labels: add precision option for numerical attributes (Hamish Bowman)
+<li>d.text: new placement option, bold option (Hamish Bowman)
+<li>d.text.freetype: new placement option (Hamish Bowman)
 <li>d.where: Can now report lat/long co-ordinates for projected locations
-   other than UTM (Paul Kelly)</li>
+    other than UTM (Paul Kelly)</li>
+<li>Update remaining core display modules for TrueColor support (Hamish Bowman)
+<li>g.setproj: Supports State Plane 83 as well as 27 and prompts for units, 
+    improved datum support (Paul Kelly)</li>
+<li>GUI startup: 'grass5 -gui' alias added, support for creating new mapset added
+    (Markus Neteler)
 <li>m.kappa: fix bug 2076 (Paul Kelly)</li>
+<li>m.proj2: updated for easy WGS84 input/output (Hamish Bowman)
 <li>NVIZ: various updates and add-ons in kanimator and main window (Bob
     Covill)
+<li>pg.in.dbf: fixes and improvements (Thierry Laronde)
+<li>r.in.gdal: fix several longstanding bugs (Paul Kelly, Andrey Kiselev)
+<li>r.proj: copies colour table when re-projecting maps (Paul Kelly)</li>
+<li>r.sun: NULL data support, much faster (Jaro Hofierka, Marcel Suri)
 <li>RST modules (s.surf.rst, v.surf.rst, r.resamp.rst): Now honour the MASK
    (Paul Kelly)</li>
-<li>r.sun: NULL data support, much faster (Jaro Hofierka, Marcel Suri)
-<li>shade.cls.sh: fixes for Lat/Long (Gordon Keith, Hamish Bowman)
+<li>s.in.garmin.sh: automatic transformation from WGS84 to current projection (Hamish Bowman)
 <li>s.surf.idw: improved efficiency with sites index (Paul Kelly)
 <li>v.out.e00: Number of areas corrected to number of active areas,
-  unlabeled areas will only optionally be exported  (option -A) like in
-  v.out.shape (H. Wziontek)
+    unlabeled areas will only optionally be exported  (option -A) like in
+    v.out.shape (H. Wziontek)
 <li>v.what: substract islands (Thierry Laronde)
-<li>tcltkgrass: updated (Hamish Bowman)
+<li>tcltkgrass: some updates (Hamish Bowman, others)
 </ul>
 
 <b>Source Code:</b><br>
 <ul>
+<li>GD dependency removed (Glynn Clements)
 <li>GLw fixes for SUN/Solaris (Beverly Wallace, Glynn Clements)
 <li>added GIPs - GRASS Improvement Proposals in grass5/gip/
 <li>C++ compilation support added (Glynn Clements)
+<li>GCC 3.3 support for r.terraflow (Laura I. Toma)
 <li>Fixes to alternate build system for gcc 3.x (Glynn Clements)
+<li>Build with shared libraries resulting in a much smaller binary package (Paul Kelly)
 <li>proj: major overhaul, datum transformation cleaned and general support added (Paul Kelly)
 <li>proj: external PROJ.4 (libproj) support added (Paul Kelly)
-<li>coorcnv library: use deprecated and replaced by gislib and proj in all 
-    modules that appear to be in current use (Paul Kelly)</li>
+<li>coorcnv library: DEPRECATED.  Replaced by gislib and proj in all modules that appear 
+    to be in current use (Paul Kelly)</li>
 <li>parser: added G_html_usage() for g.parser and scripts convenience to
     write new HTML pages (Markus Neteler)
 <li>SGI IRIS GL modules (SG3d and panellib): Compilation now controlled 
@@ -70,7 +81,7 @@ improved datum support (Paul Kelly)</li>
 
 <hr>
 <h3><font color="#00A000">What's new in GRASS 5.0.3 comparing to 5.0.2</font></h3>
-[GRASS 5.0.3 released XX September 2003]<p>
+[GRASS 5.0.3 released 3 November 2003]<p>
 
 <b>Modules fixed/updated</b> (major changes only)
 <ul>
@@ -79,15 +90,17 @@ improved datum support (Paul Kelly)</li>
 <li>d.histogram: bugfix (Eric Miller)
 <li>d.sites: fix to handle a window spanning the date line (Eric Miller)
 <li>g.parser: made usable (Glynn Clements)
+<li>nviz: fixed crash (Hamish Bowman)
+<li>r.bilinear: fixed 0/NULL bug (Glynn Clements)
 <li>r.in.gdal: color names written as names now instead of numbers (Markus Neteler)
-<li>r.fill.dir: segfaults bug #1969 fixed (Hamish Bowman)
+<li>r.fill.dir: segfaults bug #1969 (Hamish Bowman)
 <li>r.los: updated to floating point (Markus Neteler)
 <li>r.mapcalc3: fix bug in #colour modifiers (Glynn Clements)
 <li>r.spread: several fixes (Eric Miller)
 <li>r.timestamp: timestamp writing fix (Hamish Bowman)
 <li>s.in.ascii: timestamp writing fix (Hamish Bowman)
 <li>s.in.dbf: timestamp writing fix (Hamish Bowman)
-<li>shade.rel.sh: fixes for Lat/Long (Gordon Keith)
+<li>shade.rel.sh/shade.clr.sh: fixes for Lat/Long (Gordon Keith)
 <li>s.vol.rst: added deviation sites map (Jaro Hofierka)
 <li>v.digit: print map scale in snapping threshold menu (Markus Neteler)
 <li>v.label: added to compile list
