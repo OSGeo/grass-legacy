@@ -22,15 +22,16 @@
 #define  STAT_Q3   10
 #define  STAT_MAX  11
 #define  STAT_SUM  12
-#define  STAT_ALL  13
+#define  STAT_N    13
+#define  STAT_ALL  14
 
 static const char stat_keys[STAT_ALL][4] = {
-    "m","s","cv","skw","kur","mse","mav","min","q1","med","q3","max","sum"
+    "m","s","cv","skw","kur","mse","mav","min","q1","med","q3","max","sum","n"
 };
 
 static int stat_order[] = {
     STAT_M, STAT_S, STAT_CV, STAT_SKW, STAT_KUR, STAT_MSE, STAT_MAV,
-    STAT_MIN, STAT_Q1, STAT_MED, STAT_Q3, STAT_MAX, STAT_SUM};
+    STAT_MIN, STAT_Q1, STAT_MED, STAT_Q3, STAT_MAX, STAT_SUM, STAT_N};
 
 static int
 setup_report_stats (char **answers)
@@ -96,6 +97,8 @@ write_report_stats (Site *theSite, UNIV *stats,
                 theSite->dbl_att[i] = stats->max; break;
             case STAT_SUM:
                 theSite->dbl_att[i] = stats->sum; break;
+            case STAT_N:
+                theSite->dbl_att[i] = stats->n; break;
             default:
                 G_fatal_error ("%s:%s:%d: programmer error in output ordering",
                                 __FILE__, "write_report_stats", __LINE__);
@@ -230,7 +233,7 @@ int main (int argc, char *argv[])
     option.stats->required      = NO;
     option.stats->type          = TYPE_STRING;
     option.stats->multiple      = YES;
-    option.stats->options       = "m,s,cv,skw,kur,mse,mav,min,q1,med,q3,max,sum";
+    option.stats->options       = "m,s,cv,skw,kur,mse,mav,min,q1,med,q3,max,sum,n";
     option.stats->description   = "report only selected statistics";
     
     if (G_parser(argc,argv))
