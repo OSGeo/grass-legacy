@@ -1,0 +1,15 @@
+Mclean_temp	clean_temp.c	/^main (argc, argv)	char *argv[];$/
+Mecho	echo.c	/^main(argc, argv) char *argv[];$/
+Mgis_set	gis_set.c	/^main(argc, argv) $/
+Mlock	lock.c	/^main (argc, argv) char *argv[];$/
+Mrun	run.c	/^main(argc,argv) char *argv[];$/
+check_info	chk_info.c	/^check_info (title, window)$/
+find_process	clean_temp.c	/^find_process (pid)$/
+first_word	gis_set.c	/^first_word (buf)$/
+hit_return	gis_set.c	/^hit_return()$/
+list_locations	gis_set.c	/^list_locations (gisdbase)$/
+list_mapsets	gis_set.c	/^list_mapsets (location_name, location)$/
+make_location	mke_loc.c	/^make_location (gisdbase, location_name)$/
+make_mapset	mke_mapset.c	/^make_mapset(location, mapset, name)$/
+visually_equal	chk_info.c	/^visually_equal (x, y)$/
+yes_no	gis_set.c	/^yes_no()$/
