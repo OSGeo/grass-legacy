@@ -20,14 +20,14 @@
 #%  description: display index
 #%END
 #%option
-#% key:entry
-#% type:string
+#% key: entry
+#% type: string
 #% description: manual entry to be displayed
 #% required : no
 #%End
 
 if [ "$1" != "@ARGS_PARSED@" ] ; then
-  exec "g.parser "$0" "$@"
+  exec g.parser "$0" "$@"
 fi
 
 #hack for MacOSX:
