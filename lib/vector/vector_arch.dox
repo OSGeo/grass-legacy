@@ -75,5 +75,9 @@ Text based on: R. Blazek, M. Neteler, and R. Micarelli. The new GRASS 5.1
  Trento, Italy, 11-13 September 2002. University of Trento, Italy, 2002.
  http://www.ing.unitn.it/~grass/proceedings/proceedings/pdfs/Blazek_Radim.pdf
 
+\section seealso See Also
+
+<a href="../../db/html/index.html">DBMI - Database Management Interface</a>
+
 Last change: $Date$
 */
