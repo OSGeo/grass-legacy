@@ -10,8 +10,8 @@
 
 <H2>NAME</H2>
 
-<EM><b>d.pan</b></EM>  - Allows the user to change the current geographic region 
-settings interactively, with a mouse. 
+<EM><b>d.pan</b></EM>  - Allows the user to change the current geographic 
+region settings interactively, with a mouse. 
 <BR>
 <EM>(GRASS Display Program)</EM>
 
@@ -21,7 +21,10 @@ settings interactively, with a mouse.
 <BR>
 <B>d.pan help</B> 
 <BR>
-<B>d.pan</B> [<B>-q</B>] [<B>rast=</B><EM>name</EM>] [<B>vector=</B><EM>name</EM>] [<B>zoom=</B><EM>value</EM>] 
+<B>d.pan</B> [<B>-q</B>] 
+[<B>rast=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>vector=</B><EM>name</EM>[,<EM>name</EM>,...]] 
+[<B>zoom=</B><EM>value</EM>] 
 <BR>
 
 <H2>DESCRIPTION</H2>
@@ -50,10 +53,10 @@ messages to standard output.
 <H3>Parameter:</H3> 
 
 <DL>
-<DT><B>rast=</B><EM>name</EM>
-<DD>Name of raster map
-<DT><B>vector=</B><EM>name</EM>
-<DD>Name of vector map
+<DT><B>rast=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name of raster map(s)
+<DT><B>vector=</B><EM>name</EM>[,<EM>name</EM>,...]
+<DD>Name of vector map(s)
 <DT><B>zoom=</B><EM>value</EM>
 <DD>magnification: >1.0 zooms in, <1.0 zooms out<br>
            options: 0.001-1000.0<br>
