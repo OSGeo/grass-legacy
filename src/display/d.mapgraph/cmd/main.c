@@ -20,6 +20,7 @@ char **argv ;
 	char *G_find_file() ;
 	char *mapset ;
 	char buf[128] ;
+	char *D_color_list();
 	extern int stash_away() ;
 	double temp ;
 	int color ;
@@ -36,7 +37,7 @@ char **argv ;
 	opt2->key        = "color" ;
 	opt2->type       = TYPE_STRING ;
 	opt2->answer     = "white" ;
-	opt2->options="red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black";
+	opt2->options    = D_color_list();
 	opt2->description= "Starting color desired for graphics" ;
 
 /*
@@ -91,7 +92,7 @@ char **argv ;
 	else
 	{
 		Infile = stdin ;
-		if (isatty())
+		if (isatty(0))
 			printf("\nEnter mapgraph commands; terminate with a ^D\n\n") ;
 	}
 	color = D_translate_color(opt2->answer) ;
