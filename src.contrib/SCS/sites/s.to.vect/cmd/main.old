@@ -1,0 +1,260 @@
+/*  @(#)main.c    1.0  2/26/91  */
+/*
+**  Created by R.L.Glenn
+**  USDA, Soil Conservation Service
+**
+**  Input arguements:
+**        s.to.vect input=site_list file to read
+**                  output=vector (digit) file to create
+*/
+
+#include "gis.h"
+#include "Vect.h"
+
+#define MAIN
+#define	B_DIG		"dig"
+#define	SITE_DIR	"site_lists"
+
+static char  *current_mapset ;
+static char  *gbase ;
+static char  *location ;
+
+static char *N_dig_file;
+static char *O_att_file;
+static char *N_att_file;
+static char *N_site_file;
+static char *N_ascii_file;
+static char *N_path;
+static char *N_name;
+static char *S_name;
+
+struct Map_info Map;
+struct line_pnts *Points ;
+
+
+main (argc, argv)
+int argc;
+char *argv[];
+{
+    struct Cell_head window;
+    char sname[40], *mapset, *desc;
+    char prompt[40], path[128], map_name[20], buf[200], command[256];
+    char *ptr, current[200], *cptr;
+    int quad, cellfd, n;
+    int zero_one, some_ok, ret, cat;
+    int have_old, have_attr, have_ascii, have_site;
+    double east, north;
+    FILE *digit, *fopen(), *attr, *site, *ascii, *attr2;
+    struct Option *sitein, *outvect;
+
+    sitein = G_define_option();
+    sitein->key          = "input";
+    sitein->description  = "Name of site input file";
+    sitein->type         = TYPE_STRING;
+    sitein->required     = YES;
+    sitein->multiple     = NO;
+
+    outvect = G_define_option();
+    outvect->key          = "output";
+    outvect->description  = "Name of vector output file";
+    outvect->type         = TYPE_STRING;
+    outvect->required     = YES;
+    outvect->multiple     = NO;
+    outvect->gisprompt    = "new,dig,vector";
+
+    G_gisinit(argv[0]);
+    if (G_parser(argc, argv)) exit(-1);
+
+    new_screen();
+
+    G_get_window (&window);
+
+    new_screen();
+    gbase = G_gisbase() ;
+    sprintf(path,"%s/%s",G_location_path(),G_mapset());
+    N_path = path;
+
+    sprintf(map_name,"%s",outvect->answer);
+    sprintf(sname,"%s",sitein->answer);
+    mapset = G_find_vector (map_name, G_mapset());
+    if (mapset != NULL)
+	{
+	sprintf(buf,"[%s] exits. ok to overwrite? ", map_name);
+	if (!G_yes (buf,0) exit(0);
+	}
+    N_name = map_name;
+
+    mapset = G_find_file (SITE_DIR,sname,"");
+    if (mapset == NULL)
+	{
+	sprintf(buf,"Site file file [%s] not available",sname);
+	G_fatal_error(buf) ;
+	}
+    S_name = sname;
+    
+    /* store the original file names */
+    {
+
+	sprintf (buf, "%s/%s/%s", N_path, "dig", N_name);
+	N_dig_file= G_store (buf);
+
+	sprintf (buf, "%s/%s/%s", N_path, "dig_att", N_name);
+	O_att_file = G_store (buf);
+
+	sprintf (buf, "/tmp/%s", N_name);
+	N_att_file = G_store (buf);
+
+	sprintf (buf, "%s/%s/%s", N_path, "site_lists", S_name);
+	N_site_file = G_store (buf);
+    }
+
+    have_old = have_attr = have_site = 0;
+    if ( (digit = fopen(N_dig_file, "r+")) != NULL )
+	have_old = 1;
+    else
+    {
+	if ( (digit = fopen(N_dig_file, "w+") ) == NULL )
+	{
+	    sprintf (buf, "Not able to open dig file <%s>\n", N_dig_file);
+	    G_fatal_error (buf);
+	}
+	printf ( "\nCreating a new vector file\n");
+	have_old = 0;
+    }
+
+    if ((attr = fopen (O_att_file, "r+")) != NULL)
+	have_attr = 1;
+    else
+    {
+	if ( (attr = fopen(O_att_file, "w+") ) == NULL )
+	{
+	    sprintf (buf, "Not able to open dig_att <%s>\n", O_att_file);
+	    G_fatal_error (buf);
+	}
+	have_attr = 0;
+    }
+
+    if ( (attr2 = fopen(N_att_file, "w+") ) == NULL )
+       {
+       sprintf (buf, "Not able to open temporary <%s>\n", N_att_file);
+       G_fatal_error (buf);
+       }
+
+    if ((ascii = fopen (N_ascii_file, "r+")) != NULL)
+	have_ascii = 1;
+    else
+    {
+	if ( (ascii = fopen(N_ascii_file, "w+") ) == NULL )
+	{
+	    sprintf (buf, "Not able to open <%s>\n", N_ascii_file);
+	    G_fatal_error (buf);
+	}
+	have_ascii = 0;
+    }
+
+    if ((site = fopen (N_site_file, "r+")) != NULL)
+	have_site = 1;
+    else
+    {
+	sprintf (buf, "Not able to open site file <%s>\n", N_site_file);
+	G_fatal_error (buf);
+    }
+
+    if (have_old)
+	dig_read_head_binary(digit, &head);
+
+    get_head_info(have_old);
+
+    write_head_ascii(ascii) ;
+
+    if (have_old)
+        {
+	bin_to_asc(digit, ascii) ;
+	fclose(digit) ;
+        }
+
+    if (have_attr)
+        {
+        while (fgets (buf, 80, attr) != NULL)
+  	    fprintf(attr2,"%s",buf); 
+        fclose(attr);
+        }
+
+    printf ("transfering sites to vect file ...\n");
+
+    while (fgets (buf, 80, site) != NULL)
+            {
+            ptr = buf;
+            cptr = current;
+            for (;;)
+               {
+               while (*ptr == ' ' || *ptr == '\t') ptr++;
+               if (*ptr == 0) break;
+               if (*ptr == '\174') *(ptr) = '\040';
+               if (*ptr == '\043') *(ptr) = '\040';
+               *(cptr) = *(ptr);
+               ptr++; cptr++;
+               }
+  	    if (3 != sscanf (current, "%lf%lf%d", &east, &north, &cat))
+	        {
+	        fprintf (stderr, "Bad line '%s'\n", current);
+	        continue;
+	        }
+
+  	    fprintf(attr2,"P %15.7lf %15.7lf%7d\n",east,north,cat); 
+	    fprintf(ascii,"P  2\n");
+	    fprintf(ascii,"%13.2lf%13.2lf\n%13.2lf%13.2lf\n",
+                                            north,east,north,east); 
+	    }
+
+    fclose(ascii);
+    fclose(attr2);
+    fclose(site);
+
+    sprintf( command, "mv %s %s", N_att_file, O_att_file) ;
+
+/*    fprintf(stderr,"%s\n",command);   */
+    if (system( command) )
+	{
+	fprintf(stderr, "ERROR(%s):  Could not move temp file <%s> to <%s>\n"
+			, "rm", N_att_file, O_att_file) ;
+	exit(-1) ;
+	}
+
+    printf ("Processing file ...\n");
+    sprintf( command, "%s/etc/a.b.vect %s %s ", gbase, N_ascii_file,
+		N_dig_file) ;
+
+/*    fprintf(stderr,"%s\n",command);  */
+    if (system( command) )
+	{
+	fprintf(stderr, "ERROR(%s):  Could not convert ascii digit file: '%s' to binary digit file: '%s'\n", "a.b.vect", N_ascii_file, N_dig_file) ;
+	exit(-1) ;
+	}
+
+    printf ("creating support files ...\n");
+    sprintf( command, "%s/etc/build.vect %s %s snap=no ram=no thresh=no", 
+                 gbase, G_mapset(), N_name) ;
+
+/*  fprintf(stderr,"%s\n",command);   */
+    if (system( command) )
+	{
+	fprintf(stderr, "ERROR(%s):  Could not build digit file: '%s'\n"
+			, "build.vect", N_name) ;
+	exit(-1) ;
+	}
+
+    sprintf( command, "rm %s", N_ascii_file) ;
+
+/*  fprintf(stderr,"%s\n",command);  */
+    if (system( command) )
+	{
+	fprintf(stderr, "ERROR(%s):  Could not remove ascii file <%s> \n"
+			, "rm", N_ascii_file) ;
+	exit(-1) ;
+	}
+
+
+    printf("\n<%s> vector file complete\n", N_name); 
+    exit (1);
+}
