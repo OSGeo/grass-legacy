@@ -49,6 +49,17 @@ i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
 g.version
  - outputs GRASS VERSION_NUMBER (VERSION_DATE) VERSION_UPDATE_PKG
 
+p.map.new:
+ - p.map.new now works but only with the grass4.2 raster files
+   With the GRASS5.0 floating point raster files it gives the following
+   error.
+   WARNING: [desi] in mapset [PERMANENT] - format field in header file
+   invalid
+   WARNING: unable to open raster map [desi] in mapset [PERMANENT]
+   desi in PERMANENT : can't open raster file
+   I think it is to do with the new format of GRASS5.0 raster files.
+ -> 5/2000: still a problem??
+
 r.binfer
   bug in table.c causing segfault
 
@@ -251,7 +262,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.12  2000-05-09 13:37:26  markus
+ Revision 1.13  2000-05-11 17:57:26  markus
+ added p.map.new bug (is it still there?)
+
+ Revision 1.12  2000/05/09 13:37:26  markus
  added d.legend and g.version bug
 
  Revision 1.11  2000/05/04 13:45:45  markus
