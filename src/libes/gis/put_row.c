@@ -17,6 +17,9 @@
  *
  *   Return setting values in all cases.
  *
+ *   *** NOTE *** 
+ *   Use only to change a default behavior for zero of G_put_map_row[_random].
+ *
  ********************************************************************** 
  *
  *   G_put_[f/d_]raster_row (fd, buf)
