@@ -14,7 +14,7 @@ int make_window_center (struct Cell_head *window, double mag)
     double east_west, north_south;
     int len_n, len_e;
     int t;
-    int button ;
+    int button;
 
     screen_y = (get_map_top() + get_map_bot()) / 2;
     screen_x = (get_map_left() + get_map_rite()) / 2;
@@ -22,8 +22,13 @@ int make_window_center (struct Cell_head *window, double mag)
     fprintf(stderr, "\n\n");
     fprintf(stderr, "Buttons:\n") ;
     fprintf(stderr, "Left:   Where am I?\n") ;
-    fprintf(stderr, "Middle: Where am I?\n") ;
+#ifdef ANOTHER_BUTTON
+    fprintf(stderr, "Middle: Quit\n") ;
     fprintf(stderr, "Right:  Mark point to be at the center of the new region\n\n") ;
+#else
+    fprintf(stderr, "Middle: Mark point to be at the center of the new region\n") ;
+    fprintf(stderr, "Right:  Quit\n\n") ;
+#endif
 
     len_n = len_e = 0;
     do
@@ -61,9 +66,12 @@ int make_window_center (struct Cell_head *window, double mag)
 	fprintf (stderr,"\r");
 	fflush (stderr);
 
-    } while (button != 3) ;
+    } while (button == LEFTB) ;
 
     fprintf (stderr, "\n\n");
+
+    if (button == RIGHTB)
+	return 1;
 
 /* added for panning */
     east_west = (window->east - window->west)/mag;
