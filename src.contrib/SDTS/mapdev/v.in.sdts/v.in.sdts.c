@@ -1032,7 +1032,7 @@ make_dig_head (S_globals, sdts_prefix, bounds, head, cur_mfold)
 	   G_strncpy (head->line_3, tmpstr, 72);
 	}
 	else
-	   G_strncpy (head->line_3, "\0");
+	   G_strncpy (head->line_3, "\0", 72);
 
 	head->orig_scale = S_globals->Iden_scal;
 	head->plani_zone = S_globals->Xref_zone;
