@@ -13,7 +13,7 @@
 
 int main (int argc, char *argv[])
 {
-    int i, type, stat, cnt;
+    int i, type, stat;
     int day, yr, Out_proj;
     int out_zone = 0;
     char buffb[1024];
@@ -27,7 +27,6 @@ int main (int argc, char *argv[])
     struct Option *omapopt, *mapopt, *isetopt, *ilocopt, *ibaseopt;
     struct Key_Value *in_proj_keys, *in_unit_keys;
     struct Key_Value *out_proj_keys, *out_unit_keys;
-    double X, Y;
     struct line_pnts *Points;
     struct line_cats *Cats;
     struct Map_info Map;
@@ -201,15 +200,11 @@ int main (int argc, char *argv[])
 
 	if (type == -1) G_fatal_error("Reading input dig file.") ;
 	if ( type == -2) break;
-	for (cnt=0; cnt<Points->n_points; cnt++) {
-	  X = Points->x[cnt];
-	  Y = Points->y[cnt];
-	  if(pj_do_proj(&X,&Y,&info_in,&info_out)<0) { 
-	    fprintf(stderr,"Error in pj_do_proj\n");
+	if(pj_do_transform( Points->n_points, Points->x, Points->y, Points->z,
+		              &info_in,&info_out)<0) 
+	{ 
+	    fprintf(stderr,"Error in pj_do_transform\n");
 	    exit(0);
-	  }
-	  Points->x[cnt] = X;
-	  Points->y[cnt] = Y;
 	}
 
 	Vect_write_line (&Out_Map, type, Points, Cats); /* write line */
