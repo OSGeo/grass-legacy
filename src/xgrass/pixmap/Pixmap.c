@@ -63,10 +63,10 @@ static char rcsid[] = "$Id: Pixmap.c,v 1.5 1991/09/27 17:32:23 mallet Exp $";
 #include <X11/Xatom.h>
 #include <X11/Xos.h>
 #include <X11/cursorfont.h>
-#include "PixmapP.h"
 #include "xgrass.h"
     
 #define XtStrlen(s)                   ((s) ? strlen(s) : 0)
+#include "PixmapP.h"
 #define abs(x)                        (((x) > 0) ? (x) : -(x))
 #define min(x, y)                     (((x) < (y)) ? (x) : (y))
 #define max(x, y)                     (((x) > (y)) ? (x) : (y))
