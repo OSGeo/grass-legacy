@@ -1,0 +1,86 @@
+#COMPILE_FLAGS = -g -DDEBUGIO
+COMPILE_FLAGS =
+#LDFLAGS = -Bstatic
+FFLAGS =
+#FFLAGS =
+MYLIBS = $(SRC).related/rim/librim.a
+EXTRA_CFLAGS = -I$(SRC)/mapdev/lib $(VECT_INCLUDE)
+
+OBJFILES = v.db.rim.o dbio.o parser.o toplevel.o misc.o make_init.o \
+	make_add.o make_done.o use_table.o fill_buf.o f_table.o \
+	save_finfo.o rim_type.o rim_text_len.o res_split_f.o \
+	show.o retr_buf.o input_file.o output_file.o get_max_seq.o \
+	vect_map.o input_stack.o remove.o tables.o field_info.o \
+	s_table.o list.o backup.o field_offset.o field_val.o \
+	fill_field.o clear_value.o add_change.o val_from_str.o delete.o \
+	my_G_yes.o find_query.o fill_value.o val_to_str.o print.o \
+	read_vect.o strip_fields.o map.o maps.o m_table.o get_max_map.o \
+	type_to_char.o site_list.o vect_seq_map.o
+
+SRCFILES = dbio.c parser.c toplevel.c misc.c make_init.c \
+	make_add.c make_done.c use_table.c fill_buf.c f_table.c \
+	save_finfo.c rim_type.c rim_text_len.c res_split_f.c \
+	show.c retr_buf.c input_file.c output_file.c get_max_seq.c \
+	vect_map.c input_stack.c remove.c tables.c field_info.c \
+	s_table.c list.c backup.c field_offset.c field_val.c \
+	fill_field.c clear_value.c add_change.c val_from_str.c delete.c \
+	my_G_yes.c find_query.c fill_value.c val_to_str.c print.c \
+	read_vect.c strip_fields.c map.c maps.c m_table.c get_max_map.c \
+	type_to_char.c site_list.c vect_seq_map.c
+
+all: $(BIN_MAIN_CMD)/v.db.rim $(ETC)/rim/v.db.rim.cmd
+
+$(ETC)/rim/v.db.rim.cmd: $(OBJFILES)
+	-mkdir $(ETC)/rim
+	f77 $(LDFLAGS) -o $@ $(FFLAGS) $(OBJFILES) $(MYLIBS) $(DIG_ATTLIB) $(VECTLIB) $(GISLIB)
+
+$(BIN_MAIN_CMD)/v.db.rim: highlevel.o
+	cc $(LDFLAGS) -o $@ highlevel.o $(GISLIB)
+
+saber_src: $(OBJFILES)
+	#load $(EXTRA_CFLAGS) $(CFLAGS) $(SRCFILES) v.db.rim.o $(MYLIBS) $(SRC)/libes/dig_atts/read_att.c $(SRC)/libes/dig_atts/write_att.c $(VECTLIB) $(GISLIB) $(SRC)/libes/gis/wind_overlap.c /usr/lang/SC0.0/libF77.a /usr/lang/SC0.0/cg89/libm.a
+
+dbio.o: globals.h parse.h rim.h
+parser.o: globals.h parse.h opcode.h
+top_level.o: globals.h opcode.h parse.h
+misc.o: globals.h
+make_init.o: globals.h make.h rim.h
+make_add.o: globals.h make.h
+make_done.o: globals.h parse.h make.h
+use_table.o: globals.h
+fill_buf.o:
+fil_f_table.o:
+fil_s_table.o:
+save_finfo.o: globals.h
+rim_type.o: make.h
+rim_text_length.o: globals.h make.h
+res_split_f.o: globals.h
+retr_buf.o:
+show.o: globals.h rim.h
+input_file.o: globals.h
+output_file.o: globals.h
+vect_map.o: globals.h vect.h
+vect_seq_map.o: globals.h vect.h
+input_stack.o: globals.h
+remove.o: globals.h
+tables.o: globals.h
+field_info.o: globals.h rim.h
+backup.o: globals.h
+list.o: globals.h
+field_offset.o: globals.h rim.h make.h
+field_val.o: globals.h rim.h make.h
+fill_field.o: globals.h rim.h make.h
+fill_value.o: globals.h rim.h make.h
+clear_value.o: globals.h rim.h make.h
+add_change.o: globals.h rim.h make.h
+val_from_str.o: globals.h rim.h make.h
+val_to_str.o: globals.h rim.h make.h
+delete.o: globals.h rim.h
+my_G_yes.o:
+find_query.o: globals.h rim.h
+print.o: globals.h rim.h make.h
+read_vect.o: globals.h rim.h make.h vect.h
+map.o: globals.h rim.h
+maps.o: globals.h rim.h
+type_to_char.o: vect.h
+site_list.o: globals.h rim.h
