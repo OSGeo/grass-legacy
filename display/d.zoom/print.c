@@ -37,6 +37,8 @@ int print_coor ( struct Cell_head *window, double north, double east )
 
     fprintf (stderr,"\r");
     fflush (stderr);
+
+    return 1;
 }
 
 int print_win ( struct Cell_head *window, double north, double south, double east, double west )
