@@ -37,7 +37,7 @@ main(argc, argv) char *argv[];
     allocate_color_bars();
     display_title();
     display_color_assignment();
-    draw_image(VIEW_IMAGE);
+    draw_image(VIEW_IMAGE, 0);
 
 
 /* go do the work */
