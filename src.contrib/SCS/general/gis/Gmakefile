@@ -1,8 +1,10 @@
 shell=grass$(VERSION_NUMBER)
+SCSFIPS      = $(LIBDIR)/scsfips.a
 
 EXTRA_CFLAGS = -DD_LOCATION_NAME=\"$(DEFAULT_LOCATION)\" -DD_GISDBASE=\"$(DEFAULT_DATABASE)\" -DVERSION_NUMBER=\"'$(VERSION_NUMBER)'\"
 
 all: unix \
+     $(ETC)/gis_set \
      $(ETC)/GIS.sh
 
 unix:
@@ -24,6 +26,11 @@ $(ETC)/GIS.sh: gis.head gis.shell gis.tail
 	sh ./version.sed "$(VERSION_NUMBER)" "$(VERSION_DATE)" gis.shell >> $@
 	cat gis.tail >> $@
 	chmod +x $@
+	@echo ""
+
+$(ETC)/gis_set: gis_set.o mke_mapset.o mke_loc.o chk_dbase.o $(SCSFIPS)
+	@echo making $@
+	$(CC) $(LDFLAGS) -o $@ gis_set.o mke_mapset.o mke_loc.o chk_dbase.o $(SCSFIPS) $(GISLIB) $(VASK)
 	@echo ""
 
 $(GISLIB): # in case library changes
