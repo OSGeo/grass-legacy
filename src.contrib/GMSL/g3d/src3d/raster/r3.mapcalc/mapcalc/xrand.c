@@ -7,14 +7,16 @@
  * g_randseed(): it does nothing at present
  */
 
-#if defined(__CYGWIN__) || defined(__APPLE__) 
+#if defined(__CYGWIN__)
 extern double drand48();
 #else
 double drand48()
 {
 	return(rand()/32767.0);
 }
+#if defined(__APPLE__)
 #define srand48(sv) (srand((unsigned)(sv)))
+#endif
 #endif
 
 g_randseed()
