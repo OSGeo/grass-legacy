@@ -440,10 +440,11 @@ AC_CHECK_LIB(dl, dlsym, DLLIB=-ldl, [
 AC_SUBST(DLLIB)
 
 AC_CHECK_FUNC(iconv, ICONVLIB=, [
+AC_CHECK_LIB(iconv, iconv, ICONVLIB=-liconv, [
 AC_CHECK_LIB(giconv, iconv, ICONVLIB=-lgiconv, [
     AC_MSG_WARN([*** Unable to locate iconv() function.])
     ICONVLIB=
-])])
+])])])
 AC_SUBST(ICONVLIB)
 
 # Mandatory zlib dependency
