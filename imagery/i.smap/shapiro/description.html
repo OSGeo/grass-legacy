@@ -143,6 +143,14 @@ often change class, then the algorithm will adaptively
 reduce the amount of smoothing.  This ensures that
 excessively large regions are not formed.
 
+<P>
+
+The module i.smap does not support MASKed or NULL cells. Therefore 
+it might be necessary to create a copy of the classification results 
+using e.g. r.mapcalc. 
+<p>
+r.mapcalc  MASKed_map=classification results 
+
 <H2>REFERENCES</H2>
 
 <OL>
@@ -166,6 +174,11 @@ Model for Bayesian Image Segmentation",
 
 <EM><A HREF="i.group.html">i.group</A></EM>
 for creating groups and subgroups
+
+<P>
+
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+to copy classification result in order to cut out MASKed subareas
 
 <P>
 
