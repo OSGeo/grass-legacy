@@ -1,0 +1,40 @@
+/*  %W%  %G%  */
+
+double sample_thresh;
+
+/*
+** For GRASS 4.0, I added two fields to the 2.0 header
+**    Map Threshold and Snap Threshold
+** To do this I shortened the line_3 array by 15 bytes
+**    1 for a unique character to identify it as 4.0 format  '~'
+**    and 7 for each threshold value to be represented in ASCII
+**
+*/
+
+
+#define DIG_HD_SIZE_ORGAN 30
+#define DIG_HD_SIZE_DATE1 20
+#define DIG_HD_SIZE_NAME 20
+#define DIG_HD_SIZE_MAPNM 41
+#define DIG_HD_SIZE_DATE2 11
+/*  GRASS 3.0 size
+#define DIG_HD_SIZE_OTHER 73
+*/
+#define DIG_HD_SIZE_OTHER 58
+#define DIG_HD_SIZE_THRESH_MAP   7
+#define DIG_HD_SIZE_THRESH_SNAP  7
+
+struct head
+{
+	char organization	[DIG_HD_SIZE_ORGAN] ;
+	char date		[DIG_HD_SIZE_DATE1] ;
+	char your_name		[DIG_HD_SIZE_NAME] ;
+	char map_name		[DIG_HD_SIZE_MAPNM] ;
+	char source_date	[DIG_HD_SIZE_DATE2] ;
+	long  orig_scale ;
+	char line_3		[DIG_HD_SIZE_OTHER] ;
+	int plani_zone ;
+	double W, E, S, N ;
+	double digit_thresh ;	/* thinning */
+	double map_thresh ;	/* Snapping */
+} head ;
