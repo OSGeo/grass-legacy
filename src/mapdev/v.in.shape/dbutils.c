@@ -282,7 +282,7 @@ int procSnapDistance( int iswitch, float *sd ) {
   
   /* Set or get the SNAP_DISTANCE variable */
 
-  static float snap_distance = 0.0;
+  static float snap_distance = 1.0e-6;
 
   if( iswitch == SET_VAL ) {
     if(sd) {
@@ -305,7 +305,7 @@ int procMinSubtend( int iswitch, float *dphi ) {
      are considered to be separate (non-colinear)
   */
 
-  static float minimum_angle = 1.745e-4;
+  static float minimum_angle = 1.74533e-6;
 
   if( iswitch == SET_VAL ) {
     if(dphi) {

@@ -146,15 +146,15 @@ int main( int   argc, char *argv[])
     parm.snapd->key        = "snapdist";
     parm.snapd->type       = TYPE_STRING;
     parm.snapd->required   = NO;
-    parm.snapd->description= "Snap distance in ground units (Default = 0.000001)";
-    parm.snapd->answer     = "0.000001";
+    parm.snapd->description= "Snap distance in ground units (Default = 10^-10)";
+    parm.snapd->answer     = "1.0e-10";
 
     parm.minangle = G_define_option() ;
     parm.minangle->key        = "sliver";
     parm.minangle->type       = TYPE_STRING;
     parm.minangle->required   = NO;
-    parm.minangle->description= "Min. angle subtended by a wedge at node (radians)";
-    parm.minangle->answer     = "1.745e-4";
+    parm.minangle->description= "Min. angle subtended by a wedge at node (degrees - default 0.0001)";
+    parm.minangle->answer     = "0.0001";
 
     parm.scale = G_define_option() ;
     parm.scale->key        = "scale";
@@ -242,7 +242,7 @@ int main( int   argc, char *argv[])
     strncpy( sdc, parm.snapd->answer, 19 );
     sd0 = (float)atof(sdc);
     if( sd0 < 0 ) sd0 = -sd0;
-    if( fabs( (double)sd0 ) < 0.000001 ) sd0 = 0.000001;
+    if( fabs( (double)sd0 ) < 1.0e-10 ) sd0 = 1.0e-10;
 
     free(sdc);
 
@@ -252,9 +252,9 @@ int main( int   argc, char *argv[])
 
     cpsi = (char *)malloc(20);
     strncpy( cpsi, parm.minangle->answer, 19 );
-    psi = (float)atof(cpsi);
+    psi = M_PI * (float)atof(cpsi) / 180.0;
     if( psi < 0 || psi > 1.5708 )
-      psi = 1.745e-4;
+      psi = 1.74533e-6;
 
     free(cpsi);
 
