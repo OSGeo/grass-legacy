@@ -10,17 +10,18 @@ RETURN key, then press ESC.
  \d.colors help\          \d.colortable help\        \d.display help\ 
  \d.erase help\           \d.font help\              \d.frame help\ 
  \d.geodesic help\        \d.graph help\             \d.grid help\
- \d.his help\             \d.histogram help\         \d.icons help\  
- \d.label help\           \d.labels help\            \d.legend help\  
- \d.mapgraph help\        \d.measure help\           \d.menu help\  
- \d.mon help\             \d.paint.labels help\      \d.points help\ 
- \d.profile help\         \d.rast help\              \d.rast.arrow help\
- \d.rast.edit help\       \d.rast.num help\          \d.rast.zoom help\
- \d.rgb help\             \d.rhumbline help\         \d.save help\
- \d.savescreen help\      \d.scale help\             \d.sites help\
- \d.text help\            \d.title help\             \d.vect help\
- \d.vect.dlg help\        \d.what.rast help\         \d.what.vect help\
- \d.where help\           \d.zoom help\ 
+ \d.his help\             \d.histogram help\         \d.igraph help\
+ \d.icons help\           \d.label help\             \d.labels help\
+ \d.legend help\          \d.mapgraph help\          \d.measure help\
+ \d.measure.old help\     \d.menu help\              \d.mon help\
+ \d.p.labels help\        \d.points help\            \d.profile help\
+ \d.rast help\            \d.rast.arrow help\        \d.rast.edit help\
+ \d.rast.num help\        \d.rast.zoom help\         \d.rgb help\
+ \d.rhumbline help\       \d.save help\              \d.savescreen help\
+ \d.scale help\           \d.sites help\             \d.text help\
+ \d.title help\           \d.vect help\              \d.vect.dlg help\
+ \d.what.rast help\       \d.what.vect help\         \d.where help\
+ \d.zoom help\ 
 
  \3d.view.sh help\        \dcorrelate.sh help\       \grass.logo.sh help\
  \show.color.sh help\     \show.fonts.sh help\       \slide.show.sh help\
