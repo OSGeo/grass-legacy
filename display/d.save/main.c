@@ -43,6 +43,7 @@ int main (int argc, char **argv)
 	struct list_struct *temp_list;
 	struct Flag *all_flag;
 	struct Flag *cur_frame;
+	struct Flag *only_object;
 	struct Option *opt1;
 	char buff[1024];
 	char current_frame[64] ;
@@ -89,6 +90,11 @@ int main (int argc, char **argv)
 	all_flag->description = "Save all the frames";
 	all_flag->answer = 0;
 
+	only_object = G_define_flag();
+	only_object->key = 'o';
+	only_object->description = "Only map objects without extra header and tailer";
+	only_object->answer = 0;
+
 	if (G_parser(argc, argv))
 		exit(1);
 
@@ -98,13 +104,14 @@ int main (int argc, char **argv)
 		opt1->answer = current_frame ;
 	}
 
-	fprintf (stdout,":\n#Shell Script created by d.save %s\n\n", G_date());
+	if(!only_object->answer)
+		fprintf (stdout,":\n#Shell Script created by d.save %s\n\n", G_date());
 
 	/* now start at the end (the earliest made window) and process them */
 	for (p = npads-1; p >= 0; p--) {
 		if (all_flag->answer || in_frame_list(opt1, pads[p]))
 		{
-			if(! cur_frame->answer)
+			if(!cur_frame->answer && !only_object->answer)
 				fprintf (stdout,"\n#Here are the commands to create window: %s\n", pads[p]);
 			stat = R_pad_select (pads[p]);
 			if (stat) {
@@ -123,7 +130,7 @@ int main (int argc, char **argv)
 			if (Wleft<0) Wleft=0;
 			if (Wright<0) Wright=0;
 
-			if(! cur_frame->answer)
+			if(!cur_frame->answer && !only_object->answer)
 			{
 				if (all_flag->answer && p==npads-1)
 					fprintf (stdout,"d.frame -ec frame=%s at=%d,%d,%d,%d\n", pads[p],
@@ -133,14 +140,17 @@ int main (int argc, char **argv)
 						100-Wbot, 100-Wtop, Wleft, Wright);
 			}
 
-			if (Wcolor[0] == '\0')
-				fprintf (stdout,"d.erase\n");
-			else
-				fprintf (stdout,"d.erase color=%s\n", Wcolor);
+			if(!only_object->answer) {
+				if (Wcolor[0] == '\0')
+					fprintf (stdout,"d.erase\n");
+				else
+					fprintf (stdout,"d.erase color=%s\n", Wcolor);
 
-			if (Mtype != -1) {
-				fprintf (stdout,"g.region n=%s s=%s e=%s w=%s nsres=%s ewres=%s\n",
-				    Nstr, Sstr, Estr, Wstr, NSRESstr, EWRESstr);
+				if (Mtype != -1) {
+					fprintf (stdout,"g.region n=%s s=%s e=%s w=%s nsres=%s ewres=%s\n",
+					    Nstr, Sstr, Estr, Wstr, NSRESstr, EWRESstr);
+				}
+				fprintf (stdout,"\n");
 			}
 
 /* List already has commands to draw these maps.
@@ -167,7 +177,7 @@ int main (int argc, char **argv)
 		}
 		if (! all_flag->answer && ! strcmp(opt1->answer, pads[p])) break;
 	}
-	if (all_flag->answer || in_frame_list(opt1, Scurwin))
+	if (!only_object->answer && (all_flag->answer || in_frame_list(opt1, Scurwin)))
 		fprintf (stdout,"\nd.frame -s frame=%s\n", Scurwin);
 
 	R_close_driver();
