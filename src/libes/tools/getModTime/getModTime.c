@@ -3,7 +3,7 @@
 *
 *****************************************************************************
 *
-* MODULE:   	Grass Initialization
+* MODULE:   	Grass Tools
 * AUTHOR(S):	Justin Hickey - Thailand - jhickey@hpcc.nectec.or.th
 * PURPOSE:  	To print the last modification time for the given file. This
 *   	    	program is strictly a UNIX program and does not need any links
