@@ -920,8 +920,7 @@ dnl AC_CHECK_TOOL(AR, ar)
 	Rhapsody-*|Darwin-*)
 # see: http://fink.sourceforge.net/doc/porting/shared.php
 	    SHLIB_CFLAGS=""
-#	    SHLIB_LD="-dynamiclib -flat_namespace -undefined suppress \${LDFLAGS}"
-	    SHLIB_LD="-dylib -flat_namespace -undefined suppress -fno-common -framework System \${LDFLAGS}"
+	    SHLIB_LD="-dynamiclib -flat_namespace -undefined suppress -fno-common \${LDFLAGS}"
 	
 	    GRASS_SHLIB_LD_EXTRAS=""
 	    SHLIB_LD_LIBS='${LIBS}'
