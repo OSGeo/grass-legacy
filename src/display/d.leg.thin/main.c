@@ -407,7 +407,7 @@ int main( int argc, char **argv )
 	    {
 	      int lleg, dx, dy, horiz, txsiz;
 
-	      /* set legend box according to nouse settings */
+	      /* set legend box according to mouse settings */
 	      t=x0;
 	      l=y0;
 	      b=x1;
@@ -429,10 +429,10 @@ int main( int argc, char **argv )
 	      /* adjust text size */
 	      txsiz = (int)((y1-y0)/20);
 	      R_text_size(txsiz, txsiz);
-	      
+
 	      /* smaller boxes */
-	      dots_per_line = (b - t) / lines ;
-	    }
+	      dots_per_line = (int) ((b - t) * ((float) txsiz / (float)cats_num)) ;
+	    } /* mouse */
 	    
 	    /* Set up box arrays */
 	    x_box[0] = 0                 ;
