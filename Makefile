@@ -38,21 +38,17 @@ SUBDIRS = \
 	db \
 	display \
 	general \
+	gui \
 	imagery \
 	ps \
 	raster \
 	scripts \
 	sites \
 	tools \
-	vector
+	vector \
+	visualization
 
-OPENGLBASED = visualization
-#compile if OPENGLBASED present:
-ifneq ($(strip $(OPENGLLIB)),)
-    SUBDIRS += $(OPENGLBASED)
-endif
-
-FILES = COPYING README 
+FILES = COPYING README REQUIREMENTS.html
 
 BIN_DIST_FILES = $(FILES) \
 	grass${VERSION_MAJOR}${VERSION_MINOR}.tmp \
