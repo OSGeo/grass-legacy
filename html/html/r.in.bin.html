@@ -11,7 +11,7 @@
 
 <H2>NAME</H2>
 
-<EM><b>r.in.bin</b></EM>  - Import a binary raster file into a GRASS raster map layer. 
+<EM><b>r.in.bin</b></EM>  - Import a binary raster file into a GRASS raster map layer.
 <BR>
 <EM>(GRASS Raster Data Import Program)</EM>
 
@@ -21,24 +21,23 @@
 <BR>
 <B>r.in.bin help</B> 
 <BR>
-<B>r.in.bin [-s] input=</B><EM>name</EM> 
-<B>output=</B><EM>name</EM> 
-[<B>TITLE=</B>"<EM>phrase</EM>"] 
-[<B>mult=</B><EM>value</EM>] 
-[<B>bytes=</B><EM>value</EM>]
-<B>north=</B><EM>value </EM>
-<B>south=</B><EM>value </EM>
-<B>east=</B><EM>value </EM>
-<B>west=</B><EM>value </EM>
-<B>r=</B><EM>value</EM>
-<B>c=</B><EM>value </EM>
+<B>r.in.bin [-s] [-f] [-b] [-h] input=</B><EM>name</EM> 
+<B>output=</B><EM>name</EM>
+<B>bytes=</B><EM>value</EM>
+[<B>title=</B>"<EM>phrase</EM>"] 
+[<B>north=</B><EM>value </EM>]
+[<B>south=</B><EM>value </EM>]
+[<B>east=</B><EM>value </EM>]
+[<B>west=</B><EM>value </EM>]
+[<B>r=</B><EM>value</EM>]
+[<B>c=</B><EM>value </EM>]
 [<B>subst=</B><EM>old,new</EM>]
 
 
 <H2>DESCRIPTION</H2>
 
 <EM>r.in.bin</EM> allows a user to create a (binary) GRASS raster map layer 
-from a binary raster input file with (optional) TITLE. 
+from a variety of binary raster data formats. 
 
 <H2>OPTIONS</H2>
 
@@ -46,22 +45,26 @@ from a binary raster input file with (optional) TITLE.
 <DL>
 <DT><B> -s</B>
 <DD>   Signed data (high bit means negative value)
+<DT><B> -f</B>
+<DD>   Import the data to a Float type GRASS raster map layer (default is Integer)
+<DT><B> -b</B>
+<DD>   Byte swap the binary data during import. This includes the header if -h specified.
+<DT><B> -h</B>
+<DD>   Read region information from a Generic Mapping Tools (GMT) type binary header.
+<DD>   Is compatible with GMT binary grid types 1 and 2.
 </DL>
 
 <H3>Parameters:</H3>
 
 <DL>
 <DT><B>input=</B><EM>name</EM>
-<DD>Name of an existing ASCII raster file to be imported. 
+<DD>Name of an existing binary raster file to be imported. 
 <DT><B>output=</B><EM>name</EM>
-<DD>Name to be assigned to resultant binary raster map layer. 
-<DT><B>TITLE=</B>"<EM>phrase</EM>"
-<DD>Title to be assigned to resultant raster map layer. 
-<DT><B>mult=</B><EM>value</B>
-<DD>Multiply all raster cell values by <EM>value</EM>. 
-<EM>value</EM> is a floating point value, and has a default value of 1.0.
+<DD>Name to be assigned to resultant GRASS raster map layer. 
 <DT><B>bytes=</B><EM>value</EM>
-<DD>Number of bytes per cell (1, 2, 4), default: 1
+<DD>Number of bytes per cell (2, 4, 8)
+<DT><B>title=</B>"<EM>phrase</EM>"
+<DD>Title to be assigned to resultant raster map layer. 
 <DT><B>north=</B><EM>value </EM> 
 <DD>Northern limit of geographic region
 <DT><B>south=</B><EM>value </EM> 
@@ -74,16 +77,21 @@ from a binary raster input file with (optional) TITLE.
 <DD>Number of rows
 <DT><B>c=</B><EM>value </EM> 
 <DD>Number of columns
-<DT><B>subst=</B><EM>old,new</EM> 
-<DD>Replace 1st value by 2nd one, default: 0,0
+<DT><B>subst=</B><EM>val</EM> 
+<DD>Substitute val with NULL 
 
 </DL>
 
 The north, south, east, and west field values entered 
 are the coordinates of the edges of the geographic region. 
 The rows and cols field values entered describe the dimensions 
-of the matrix of data to follow. 
-The data which follows is <EM>r</EM> rows of <EM>c</EM> integers. 
+of the matrix of data to follow. These six fields are not required 
+if input is a GMT binary array, with flag -h. If the bytes field is
+entered incorrectly an error will be generated suggesting a closer bytes
+value. 
+<p>
+<EM>r.in.bin</EM> can be used to import numerous binary arrays including:
+etopo30, etopo-5, Globe DEM, BIL, and GMT binary arrays (ID 1 & 2)
 <p>
 
 <H2>EXAMPLE</H2>
@@ -96,7 +104,17 @@ r.in.bin -s input=E020N90.DEM output=gtopo30 bytes=2 north=90 south=40
 east=60 west=20 r=6000 c=4800
 </TT>
 <P>
-(you can add "subst=-9999,0" if you want sea level to have 0 value)
+(you can add "subst=-9999" if you want sea level to have a NULL value)
+
+<P>
+The following is a sample call of <EM>r.in.bin</B> to import a GMT 
+type 1 (float) binary array:</EM>
+<P>
+<TT>
+r.in.bin -hf input=sample.grd output=sample.grass bytes=4
+</TT>
+<P>
+(-b could be used to swap bytes if required)
 
 
 <H2>NOTES</H2>
@@ -132,8 +150,9 @@ And of course the value zero has a positive sign.
 <A HREF="r.in.arc.html">r.in.arc</A>, 
 <A HREF="r.out.arc.html">r.out.arc</A></EM>
 
-<H2>AUTHOR</H2>
+<H2>AUTHORS</H2>
 
 Jacques Bouchard, France (bouchard@onera.fr)<BR>
+Bob Covill, Canada (bcovill@tekmap.ns.ca)<BR>
 Man page: Zsolt Felker (felker@c160.pki.matav.hu)
 </HTML>

@@ -12,18 +12,25 @@
 <EM>(GRASS Raster Export Program)</EM>
 
 <H2>SYNOPSIS</H2>
-<B>r.out.bin [-i] input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>null</B><EM>=value</EM>]
+<B>r.out.bin [-i] [-h] [-b] [-s] input</B><EM>=name</EM> <B>output</B><EM>=name</EM> [<B>null</B><EM>=value</EM>]
 
 <H2>DESCRIPTION</H2>
-The <EM>r.out.bin</EM> program exports a GRASS raster map to a binary array file. Optionally, output can be sent to standard output (stdout) for direct input (pipe) into other applications.
-Data is exported according to the original GRASS raster type (e.g. float). If the "-i" flag is specified, an integer array is output. The region parameters are printed to stderr. 
-The output is compatible with the Generic Mapping Tools (GMT) 
-program xyz2grd (see below). 
+The <EM>r.out.bin</EM> program exports a GRASS raster map to a binary array file. Optionally, 
+output can be sent to standard output (stdout) for direct input (pipe) into other applications.
+Data is exported according to the original GRASS raster type (e.g. float). If the "-i" flag 
+is specified, an integer array is output. The region parameters are printed to stderr. 
 
-<H3>Flag:</H3>
+
+<H3>Flags:</H3>
 <DL>
 <DT><B>-i</B>
 <DD>Output integer category values, not raster cell values
+<DT><B>-h</B>
+<DD>Include a Generic Mapping Tools (GMT) binary header on the file
+<DT><B>-b</B>
+<DD>Generate seperate BIL world and header description files
+<DT><B>-s</B>
+<DD>Byte swap the data and optional header during output
 </DL>
 
 <H3>Parameters:</H3>
@@ -39,23 +46,26 @@ program xyz2grd (see below).
 <DD>Default: 0
 </DL>
 
+<H2>NOTES</H2>
+With the -h flag, data can be directly used by GMT as Grid Format 1 (float) or 
+2 (short). For example:
+<pre>
+r.out.bin -h input=grass.raster output=new.grd
+grdinfo new.grd=1 (if float)
+</pre>
+<P>
+Exported data can be piped directly into the GMT program xyz2grd.
+<pre>r.out.bin input=grass.raster output=- | xyz2grd -R....  -ZTLf -F
+</pre>
+The example uses the GMT program xyz2grd with the -ZTLf flag indicating that a float 
+array was output.
+
+
 <H2>AUTHOR</H2>
 This program is derived from <EM><A HREF="r.out.ascii.html">r.out.ascii</A></EM> 
 with a few modifications. <BR>
 Author: <A HREF=mailto:bcovill@tekmap.ns.ca>Bob Covill</A>
 <P>
-
-<H2>NOTE</H2>
-If exported data is moved between platforms, byte swapping may be required.
-<P>
-Exported data can be piped directly into the GMT program xyz2grd.
-<pre>r.out.bin input=grass.raster output=- | xyz2grd -R....  -ZTLf -F
-</pre>
-The example uses the GMT program xyz2grd with the -ZTLf flag indicating that a float array was output.
-
-<H2>TODO</H2>
-- Add optional fixed size header (1024) with region specs.<P>
-- Add byte swapping export routine.
 
 <H2>SEE ALSO</H2>
 <EM><A HREF="r.in.bin.html">r.in.bin</A>,
