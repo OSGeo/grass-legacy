@@ -1,0 +1,11 @@
+Taken from
+
+http://www.geog.uni-heidelberg.de/usr/data2/WWW/arb94/
+
+	r.statistics 	- Statistics on objects
+	r.aggreg   	- neighborhood analysis
+	r.in.arc	- Import of ARC/Info ASCII-Files
+	r.out.arc	- Export     "         "
+	r.read		- Import of MilGeo-Data in GRASS
+
+and local ftp-server there.
