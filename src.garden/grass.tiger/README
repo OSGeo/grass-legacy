@@ -1,0 +1,201 @@
+
+              Status of the TIGER to GRASS Project
+                at Central Washington University
+                        (for GRASS4.0)
+
+                              by
+                     Dr. James R. Hinthorne
+                  Assoc. Director for Research
+                and Development, GIS Laboratory
+                           June 1991
+
+
+INTRODUCTION
+
+The project began in Fall 1989 in response to inquires  from  Dr.
+David  Kaufman  of  the  Applied  Social  Science  Data Center at
+Central Washington University.  Kittitas  County,  in  which  the
+University  is  located,  was  one  of  the  1990 pre-census test
+counties in Washington State, and Dr. Kaufman had received  Tiger
+Files  (Types  1-5)  and  the  PL94 Data File and put them on the
+campus VAX/VMS computer for downloading subsets to an IBM/386  PC
+for  which he had acquired a BASIC program to read the coordinate
+information and plot maps on the screen.  This was painfully slow
+and  the maps generated could not be saved, so import of the data
+to the campus GIS (GRASS) was investigated.
+
+Our GIS lab had just finished developing the preliminary versions
+of  interface  programs  between GRASS and a Relational Data Base
+Management System called RIM (public domain program  distributed,
+supported  and  used  by  the  University  of Washington Academic
+Computing Center) under  a  contract  from  CERL;  the  interface
+programs   are  called v.db.rim and s.db.rim (in GRASS3, Gdbvect,
+dbvect,  Gdbsites  and  dbsites).  These interfaces  are intended
+for  vector and point data, respectively.  Recent improvements in
+these GRASS programs have been  driven  by the need to deal  more
+efficiently with Tiger data.
+
+These routines presently build maps only in locations with UTM
+coordinates.  Latitude-longitude will be accomodated in the next
+version.
+
+INITIAL PROCESSING
+
+The RIM data base for v.db.rim and the master Tiger  vector  file
+for  one  county  are   created   by  the following  steps  in  a
+Shell-script  (Gen.Vect).  Kittitas Co.  WA  with  25424  Type  1
+records has been the  principal test  set  used  during  develop-
+ment;  Yakima  Co. WA with about 54000 records, and Lawrence  Co.
+SD  (which includes the Spearfish test data base) with about 8900
+records have also been used.
+
+   Note:  See 7 below.
+
+   1.  Sort Type 1 records by record number.
+
+   2.  Use v.db.rim to define a RIM data base,  columns  (fields)
+and   record  layout,  for  the Type 1 records (all Census fields
+plus several for UTM coordinates and bookkeeping).
+
+   3.  Use RIM to load data from the sorted Type 1 records.
+
+   4.  Run a special C program, c12.to.v, which  builds  a  GRASS
+vector  file (in  a  UTM  location) containing  all  of  the Type
+1 lines integrated with the shape points  from  the   appropriate
+Type   2  records.    This  is  called  the  co.Master vector map
+(co is the abbreviation for the county).  The attribute given  to
+each  line  is  the  Type  1 record number.  Modifications to the
+v.db.rim data base are written to a  text  file   for   Step   5;
+these  are fields such as beginning and ending UTM coordinates, a
+representative midpoint for the line, the left  and  right  block
+group numbers and the byte offset for the vector in the co.Master
+"dig" file.
+
+   5.  Run v.db.rim to update the  RIM  data  base  with  changes
+from step 4 for each record.
+
+   6.  Run RIM to build lookup keys for several  fields:  RECNUM,
+CFCC, CTBNAL, CTBNAR, BGL, BGR.
+
+   7.  Run v.support to  build  the   topology   (dig_plus)  file
+for co.Master.  (Currently done manually after script finishes.)
+
+
+CREATING GRASS VECTOR MAPS FOR COUNTY, TRACT AND BLOCK GROUPS.
+
+The Shell-script Gen.Maps does this by  appropriate  use  of  the
+.query  and  .vect commands in v.db.rim.  The user must input, on
+the command line, the numbers of the census tracts to build  maps
+for.
+
+This list of tract numbers can be  generated  by  the  following,
+where la is the name of the data base:
+
+      GRASS4> v.db.rim la
+      v.db> .query
+      query> where ctbnal ne ctbnar
+      query> .end
+      v.db> .out | grep ctbnal | sort -u +1 > tract.file
+      v.db> .p -l
+      v.db> .exit
+      GRASS4>
+
+
+CREATING OTHER GRASS VECTOR MAPS--EXAMPLE
+
+Creating a GRASS vector map  for  major  powerlines  in  Lawrence
+County,  SD.   Assume  the v.db.rim data base (built in Steps 2-6
+above) is named la and C20 is the census  feature  classification
+code for powerlines.
+
+      GRASS4> v.db.rim kt
+      v.db> .query
+      query> where CFCC = C20
+      query> .end
+      v.db> .vect -s vectoff powerlines recnum
+      v.db> .exit
+      GRASS4>
+
+The new GRASS vector map will be named powerlines  and  the   at-
+tribute  for each  line segment will be the Type 1 record number.
+Any numeric constant or numeric field name (or none) could  have
+been chosen for the attribute.
+
+
+TIMING
+
+The script Gen.Vect generally takes from 0.5  to  5+   hours   to
+run,  depending   on   machine   and  the number of records.  The
+Gen.Maps script requires about the same  length  of  time  for  a
+county  with 12  tracts.   The  powerlines  example,  above,  re-
+quires about 1 minute; it could be up to 10 minutes  or  more  if
+the  fields used in the SQL where  clause  did  not  have  a  key
+built for it or if the Boolean 'or' operator were used in a  com-
+plex  where  clause.   Using  v.db.rim a Type 1 record can be re-
+trieved by record number  in  approximately  1  second  and   the
+various  fields read or edited on the screen.
+
+
+
+NOTES
+
+  1.  v.db.rim and s.db.rim data bases are created in a  rim/vect
+or  rim/sites  subdirectory  in  the GRASS user's current mapset.
+These data bases can be shared (read-only) by users of other map-
+sets in the same location, and they will be removed if the entire
+mapset is removed.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
