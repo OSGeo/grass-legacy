@@ -8,19 +8,6 @@
 
 extern char *getenv();
 
-/* setenv() is not portable, putenv() is POSIX */
-int setenv_ (const char *name, const char *value, int overwrite) {
-    /* Allocate more space each call */
-    char *buffer;
-    int len;
-
-    if (!overwrite && getenv(name)) return 0;
-    len = strlen(name) + strlen(value) + 2;
-    buffer = (char *) G_malloc (len);
-    sprintf (buffer, "%s=%s", name, value);
-    return putenv (buffer);
-}
-
 /*!
  \fn 
  \brief 
