@@ -130,7 +130,7 @@ prune ( struct Map_info *Out, int otype, double thresh )
 			G_free ( BXLines );
 		    }
 
-		    if ( naxlines > 0 ||  nbxlines > 0 ) {
+		    if ( naxlines > 1 ||  nbxlines > 1 ) {
 			intersect =  1;
 			break;
 		    }
