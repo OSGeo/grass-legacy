@@ -1,5 +1,6 @@
 %{
 #define _ISOC99_SOURCE			/* isfinite() */
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #if 0
