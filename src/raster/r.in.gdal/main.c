@@ -623,7 +623,7 @@ static void ImportBand( GDALRasterBandH hBand, const char *output,
         eGDT = GDT_Int32;
         complex = FALSE;
         G_set_cell_format(1);
-        raster_open_new_func = G_open_raster_new_uncompressed;
+        /* raster_open_new_func = G_open_raster_new_uncompressed;*/ /* ?? */
         break;
 
       default:
