@@ -6,8 +6,15 @@
  * a hook is provided for seeding the random numbers by the main()
  * g_randseed(): it does nothing at present
  */
-
+#ifndef __CYGWIN__
 extern double drand48();
+#else
+double drand48()
+{
+	return(rand()/32767.0);
+}
+#define srand48(sv) (srand((unsigned)(sv)))
+#endif
 
 g_randseed()
 {
