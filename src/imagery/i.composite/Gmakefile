@@ -5,7 +5,7 @@ OBJ =\
 	compose.o\
 	gen_colors.o
 
-$(BIN)/i.composite: ${OBJ} ${LIBES} ${VASKLIB}
+$(BIN_MAIN_INTER)/i.composite: ${OBJ} ${LIBES} ${VASKLIB}
 	$(CC) ${LDFLAGS} -o $@ ${OBJ} ${LIBES} ${VASK}
 
 ${LIBES} ${VASKLIB}: #
