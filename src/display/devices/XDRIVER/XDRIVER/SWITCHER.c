@@ -6,8 +6,8 @@
 #include <stdio.h>
 #include <signal.h>
 #include <setjmp.h>
-#include <X11/Xos.h>
-#include <X11/Xlib.h>
+#include "includes.h"
+
 #include "../lib/graph.h"
 #define SWITCHER
 #include "../lib/driver.h"
@@ -18,6 +18,12 @@
 #define REC(a,b)    if (eof=rec((char*)(a),(int)(b))) break
 #define SEND(a,b)   send((char*)(a),(int)(b))
 #define RECTEXT(x)  if (eof=rectext(x)) break
+
+#ifdef DEBUG
+#define debug(x) fprintf (stderr,"%s\n",x)
+#else
+#define debug(x)
+#endif  /* DEBUG */
 
 typedef struct _list {
     char *value;
@@ -51,6 +57,7 @@ static char current_command;
 PAD *padlist;            /* user created pads */
 PAD *curpad;             /* current selected pad */
 static jmp_buf savenv;
+#define LOOP_PER_SERVICE 15
 
 main(argc, argv)
 int argc;
@@ -76,6 +83,9 @@ char *argv[];
     ITEM *item;
     LIST *list;
     PAD *pad;
+    /* How many commands for each check of Xevents?? */
+    static int cmd_loop_count;  
+
 
     /* whoami */
     me = argv[0];
@@ -120,6 +130,16 @@ char *argv[];
     if (check_connection(me, argv[fifos]))      /* are our fifos in use? */
         exit(-1);               /* if so, we can't run now */
 
+    /* initialize graphics.  */
+    debug("Initialize Graphics");
+    if (!Graph_Set(argc, argv))
+        exit(-1);
+
+    /* Initialize color map stuff */
+    debug("Initialize color map");
+    Color_table_fixed();
+    waitime = 1;
+
     /* We are free to run now.  No one is using our fifo files.  If we
      * are to run in background, we will have fifos == 1 from the
      * syntax check above. */
@@ -136,28 +156,15 @@ char *argv[];
 	/* change process groups to be shielded from keyborad
 	 * signals note: use BSD form of call, which will also work
 	 * for ATT */
-	setpgrp(0, getpid());
+	/* setpgrp(0, getpid());*/
+	   setsid();
     }                           /* monitor runs */
 #ifdef SIGPIPE
     signal(SIGPIPE, catch);
 #endif
     signal(SIGTERM, close_mon); /* exit gracefully if terminated */
 
-#ifdef DEBUG
-#define debug(x) fprintf (stderr,"%s\n",x)
-#else
-#define debug(x)
-#endif  /* DEBUG */
 
-    /* initialize graphics.  */
-    debug("Initialize Graphics");
-    if (!Graph_Set(argc, argv))
-        exit(-1);
-
-    /* Initialize color map stuff */
-    debug("Initialize color map");
-    Color_table_fixed();
-    waitime = 1;
 
     def = signal(SIGALRM, SIG_IGN);
     signal(SIGALRM, def);
@@ -170,7 +177,8 @@ char *argv[];
         while (!opened) {
             if (setjmp(savenv)) {
 		signal(SIGALRM, def);
-                Service_Xevent(1);      /* alarm went off */
+                Service_Xevent();      /* alarm went off */
+		XNoOp(dpy);            /* see if X is still running */
 	    }
             else {
 		signal(SIGALRM, timeout);
@@ -191,18 +199,27 @@ char *argv[];
 
         eof = broken_pipe = 0;
         current_command = 0;
+        cmd_loop_count  = 1;
+
 
         /* loop until getting an eof on the fifo, checking alternately
          * for an X event to handle and for something to read on the
          * fifo. */
         while (eof <= 0 && !broken_pipe) {
-            Service_Xevent(1);  /* take care of any events */
+
+            if(--cmd_loop_count==0) {
+                Service_Xevent();  /* take care of any events */
+                cmd_loop_count = LOOP_PER_SERVICE;
+            }
+
             sts = get_command(&c);
             if (sts == 1) {     /* see if EOF from fifo */
                 debug("get_command failed!");
                 break;
-            } else if (sts == -1)
+            } else if (sts == -1) {
+                Service_Xevent();  /* take care of any events */
                 continue;       /* if timed out repeat the loop */
+	    }
 
             /* if we get this far we have received something */
 #ifdef DEBUG
@@ -399,6 +416,7 @@ char *argv[];
                 SEND(&c, 1);
                 break;
             case RESPOND:
+		XSync(dpy, 1);	
                 SEND(&c, 1);
                 break;
             case GET_NUM_COLORS:
