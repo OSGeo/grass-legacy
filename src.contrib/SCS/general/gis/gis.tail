@@ -128,7 +128,7 @@ esac
 clear
 rm -f $lockfile
 	     echo ""
-	     $GISBASE/etc/echo -n "Do you wish to move to another location? y/n [n]"
+	     $GISBASE/etc/echo -n "Do you wish to move to another location? y/n [n] "
 	     read ans
 	     case $ans in
 		 y|yes|Y|YES)
