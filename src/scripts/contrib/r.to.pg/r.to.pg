@@ -2,7 +2,7 @@
 
 # r.to.pg:
 # exports GRASS raster map to PostgreSQL database
-# supports only one value, no attribute cats
+# supports only one value, no attribute cats (yet)
 #
 #
 # $Id$
@@ -23,12 +23,27 @@ if [ $? != 0 ]; then
  exit
 fi
 
+if [ "$1" = "help" ]; then
+ echo "r.to.pg exports GRASS raster map to PostgreSQL database"
+ echo "        into a one column table (raster values only)."
+ echo "Usage:"
+ echo "        r.to.pg rastermap [celltable]"
+ exit
+fi
+
 if [ "$#" -lt 1 ]; then
  echo "r.to.pg exports GRASS raster map to PostgreSQL database"
  echo "        into a one column table (raster values only)."
  echo "Usage:"
  echo "        r.to.pg rastermap [celltable]"
  exit
+fi
+
+#check if map exists:
+test -f $LOCATION/cell/$1
+if [ $? != 0 ]; then
+ echo "ERROR: Raster map $1 does not exit."
+ exit 1
 fi
 
 #replacing eventual dots from table name to avoid name conflicts:
@@ -54,17 +69,25 @@ then
  echo "Please select database with g.select.pg or db.connect"
  exit
 fi
-echo "Import into PostgreSQL database: $DB_DATABASE..."
+echo "Importing raster map $1 into PostgreSQL database: $DB_DATABASE..."
 echo ""
 
-#BUG: "celltable" should be a selectable name. But how to manage in awk
-#     below???
+#create DB if not existing:
+# mhhh, error check is not very elegant:
+createdb $DB_DATABASE > /dev/null
+if [ $? != 0 ]; then
+ echo "... ignoring error..."
+ echo ""
+else
+ echo "Created database $DB_DATABASE"
+ echo ""
+fi
 
 # start writing SQL file:
 echo "CREATE TABLE $CELLTABLE (" > $TMP/pgimport.sql
 echo "    $FIELDNAME float );"  >> $TMP/pgimport.sql
 
-psql -q -d $DB_DATABASE < $TMP/pgimport.sql
+psql -q  -d $DB_DATABASE < $TMP/pgimport.sql
 if [ $? != 0 ]; then
  echo "Table $CELLTABLE already exists."
  echo "Replace existing table [y/n]?"
@@ -84,9 +107,11 @@ if [ $? != 0 ]; then
 fi
 
 #get the raster values and write out SQL:
+# (needs awk=gawk)
+export CELLTABLE TMP
 r.stats -1 nv='-9999' in=$1 | awk 'BEGIN{}
   NR == 1{}
-         {printf "INSERT INTO %s VALUES ( %.5f);\n", "'$CELLTABLE'", $1  >> "'$TMP'/pgimport.sql"}
+         {printf "INSERT INTO %s VALUES ( %.5f);\n", "'$CELLTABLE'" , $1  >> "'$TMP'/pgimport.sql"}
 END{}'
 
 # proceeding with field entries:
@@ -99,11 +124,11 @@ if [ $? != 0 ]; then
 fi
 rm -f $TMP/pgimport.sql
 
-echo "Finished import into PostgreSQL."
-echo "Created table $CELLTABLE with column $FIELDNAME"
-
 #check number of imported values:
 #not working yet (some shell problem with asterix)
 echo "Number of imported cell values (= rows in $CELLTABLE):"
 SQL_COMMAND="select count(*) from $CELLTABLE;"
 echo $SQL_COMMAND | psql -q -d $DB_DATABASE
+
+echo "Finished import into PostgreSQL."
+echo "Created table $CELLTABLE with column $FIELDNAME"
