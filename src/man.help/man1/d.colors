@@ -1,0 +1,185 @@
+.\" %W% %G%
+.TH d.colors 1
+.SH NAME
+d.colors \- Interactive program for changing category colors of a cell 
+.CT file map
+.br
+\fI(Available through\fR \fBgrass3\fR \fImenu)\fR
+.SH SYNOPSIS
+\fBd.colors\fR [\fIcell_file\fR]
+.SH DESCRIPTION
+The GRASS tool \fId.colors\fR
+is used to change the colors associated with the categories of a cell 
+.CT "file." "map."
+Before running \fId.colors\fR, the cell 
+.CT file map
+of interest should be displayed
+using \fIDcell\fR.  If \fIDcolormode\fR is set to "float" the colors
+on the display will change interactively.  Otherwise, if \fIDcolormode\fR
+is "fixed", colors will not change as you run \fId.colors\fR;  however, you
+can save changed colors (which will then appear next time the 
+.CT map "cell map"
+is 
+.CT "replotted)." "redisplayed)."
+Note that some 
+.CT "color devices" "graphic monitors"
+or drivers cannot interactively
+change color.
+.PP
+The user can enter the name of the cell 
+.CT file map
+whose
+color table is to be changed on the command line (e.g., \fBd.colors soils\fR).
+If the cell 
+.CT file map
+name is not entered on the command line, \fId.colors\fR will
+ask the user to enter the name of an existing cell 
+.CT "file." "map."
+The \fId.colors\fR command menu is listed below. The command menu for
+\fId.colors\fR is the same as the category and color changing portion of
+the \fIdisplay\fR menu.
+The \fId.colors\fR commands are listed beneath the Category Pointer Movement,
+Color Modification, Replotting Screen, and Quitting sections below.
+Commands are invoked by typing in the single-key response shown to the left
+below.  (Longer descriptions of these commands appear to the right.)
+Results from invoking these commands will be reflected in the Category
+and Category Number sections of the \fId.colors\fR screen.  On the
+\fId.colors\fR screen menu, commands appear in the right half of the screen,
+and the current status of categories appears in the left half of the screen.
+.in +2
+.TS
+ll.
+CATEGORIES
+   0    No Data
+   1    (Category 1 description)
+   2    (Category 2 description)
+   .    ....
+   .    ....
+CATEGORY NUMBER:  
+   RED        0   0%
+   GREEN      0   0%
+   BLUE       0   0%
+Shift Incr:  10   3%
+CATEGORY POINTER MOVEMENT
+   D/d  down (cats)	Move pointer to next category
+   U/u  up   (cats)	Move pointer to previous category
+COLOR MODIFICATIONS
+   R/r  RED	Increase/decrease RED intensity
+   G/g  GREEN	Increase/decrease GREEN intensity
+   B/b  BLUE	Increase/decrease BLUE intensity
+   I/i  increment	Increase/decrease increment (of intensity shift)
+   h    highlight	Highlight current color
+   +/-  shift colors	Shift entire color table (up/down)
+   c    save color	Save color table
+   t    toggle table	Toggle to different color table
+REPLOTTING SCREEN
+   *    Replot screen   Replots the screen
+QUITTING 
+   Q    quit	Quits program
+.TE
+.in -2
+
+Changing categories - The keys 
+.B "d, D, u,"
+and 
+.B "U"
+are used to move to a different category.  The lower case letters move up,
+.B u,
+and down,
+.B d,
+the category list one category at a time.  The upper case letters move 10
+categories at a time for fast movement.  The cursor does wrap between the 
+first and last categories.  The current category is noted on the text screen
+with an arrow, and is indicated on the graphics screen by a box around the
+current color.
+
+Changing colors - The color associated with the current category can be
+changed with the 
+.B "R, r, G, g, B,"
+and 
+.B b
+keys.  The upper case letters increase the intensities of 
+red
+.B R,
+green 
+.B G,
+and blue 
+.B B
+for the current category; the lower case letters decrease the intensities of
+these same colors for the current category.  Video devices make all the
+colors of the spectrum by mixing red, green, and blue.  For those
+accustomed to red, yellow, and blue being the primary colors, this can
+be confusing.  For starters, yellow is made by mixing red and green.  The
+intensities are listed on the text screen in as percentages.
+
+Keys 
+.B I
+and 
+.B i
+increase and decrease the percentage change that each keystroke of
+one of the color keys (\fIR, r, G, g, B, b\fR) causes in its respective
+color.  The increase increment is initially set to 10%.  Thus, pressing
+the \fIR\fR key would will increase the red component of the current category
+by 10%.
+
+Highlight - The 
+.B h
+key toggles between the current category color and the current
+highlight color. This color is initially black but can be modified as
+above while in highlight mode.  Blinking can be accomplished by repeatedly
+striking the
+.B h
+key. When changing to different categories using the movement keys as 
+described above, while in highlight mode the category colors will be
+always left showing their actual colors.  Only one category is highlighted
+at any one time.
+
+Saving the current color table -
+Pressing the \fBc\fR key will save the current color table as you have
+modified it.  This table will then be used next time you  
+.I display
+or
+.I paint
+this 
+.CT "map." "cell map."
+
+Color table toggle - Different types of color tables are suitable for 
+different 
+.CT "maps." "cell maps."
+The key
+.B t
+flips between the following color tables: red, green, blue color ramp; gray
+scale; smooth changing color wave; random colors; and the saved color table.
+
+Color table shift - The entire table is shifted up and down using the
+.B +
+and 
+.B -
+keys.
+
+Quitting the \fId.colors\fR program -
+Pressing the \fBQ\fR key will cause you to quit the \fId.colors\fR program.
+If colors have been modified but not saved, \fId.colors\fR will ask:
+\fBColors changed but not saved
+.br
+OK to quit?\fR
+The user should type in \fBy\fR if yes, or \fBn\fR if no, at this point.
+.SH "SEE ALSO"
+.TS
+ll.
+\fIDINTRO[2D]\fR	Introduction to the \fBGRASS\fR \fID\fR tools
+.br
+.sp
+\fIdisplay[1]\fR	To display and generate final map products
+.br
+\fIDcell[2D]\fR	To display 
+.XT grid 
+cell 
+.CT files maps
+on the 
+.CT monitor "graphics monitor"
+.br
+\fIDcolormode[2D]\fR	Tool for map viewing
+.TE
+.SH "AUTHOR"
+James Westervelt, U.S. Army Construction Engineering Research Laboratory
