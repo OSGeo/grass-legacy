@@ -8,7 +8,12 @@
 #include	<stdlib.h>
 #include	"image.h"
 
+/* reverse byte order for header ? */
 #ifdef __FreeBSD__
+#	define	DOREV
+#endif
+
+#ifdef __linux__
 #	define	DOREV
 #endif
 
