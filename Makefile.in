@@ -150,20 +150,20 @@ clean: mostlyclean
 	${SHELL} -c "rm -f ${BINDIR}/gmake${NAME_VER}	    2>/dev/null ; true"
 	${SHELL} -c "rm -f ${BINDIR}/gmakelinks${NAME_VER}  2>/dev/null ; true"
 	${SHELL} -c "rm -f ${BINDIR}/grass${NAME_VER}       2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/bin/	    	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/bwidget/    	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/dev/        	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/driver/     	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/documents/	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/etc/        	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/fonts/      	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/include/      	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/lib/      	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/man/	   	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/locks/      	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/scripts/    	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/tcltkgrass/ 	    2>/dev/null ; true"
-	${SHELL} -c "rm -rf ${PREFIX}/txt/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/bin/	    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/bwidget/    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/dev/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/driver/     	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/documents/	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/etc/        	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/fonts/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/include/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/lib/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/man/	   	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/locks/      	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/scripts/    	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/tcltkgrass/ 	    2>/dev/null ; true"
+	${SHELL} -c "rm -rf ${GISBASE}/txt/        	    2>/dev/null ; true"
 	${SHELL} -c "rm -f error.log     	    	    2>/dev/null ; true"
 
 distclean: clean
@@ -176,18 +176,18 @@ distclean: clean
 
 maintainer-clean: distclean
 	@ echo "Performing maintainer-clean step..."
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.binfer/gram.c    	    2>/dev/null ; true"
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.binfer/lex.c     	    2>/dev/null ; true"
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.combine/cmd/gis_lxcl.c    2>/dev/null ; true"
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.combine/cmd/gis_pars.c    2>/dev/null ; true"
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.combine/cmd/gis_pars.h    2>/dev/null ; true"
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.combine/cmd/gis_pars.out  2>/dev/null ; true"
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.mapcalc/polish/lex.yy.c   2>/dev/null ; true"
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.mapcalc/polish/y.tab.c    2>/dev/null ; true"
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.weight/inter/gis_lxcl.c   2>/dev/null ; true"
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.weight/inter/gis_pars.c   2>/dev/null ; true"
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.weight/inter/gis_pars.h   2>/dev/null ; true"
-	${SHELL} -c "rm -f ${PREFIX}/src/raster/r.weight/inter/gis_pars.out 2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.binfer/gram.c    	    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.binfer/lex.c     	    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.combine/cmd/gis_lxcl.c    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.combine/cmd/gis_pars.c    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.combine/cmd/gis_pars.h    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.combine/cmd/gis_pars.out  2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.mapcalc/polish/lex.yy.c   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.mapcalc/polish/y.tab.c    2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.weight/inter/gis_lxcl.c   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.weight/inter/gis_pars.c   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.weight/inter/gis_pars.h   2>/dev/null ; true"
+	${SHELL} -c "rm -f ${SRCDIR}/src/raster/r.weight/inter/gis_pars.out 2>/dev/null ; true"
 
 savebinclean: mostlyclean
 	@ echo "Performing savebinclean step..."
@@ -234,5 +234,5 @@ check: install
 	EXPECT=${EXPECT} ; export EXPECT; \
 	if [ -f $${SRCDIR}/../../expect/expect ] ; then \
 	  TCL_LIBRARY=$${SRCDIR}/../../tcl/library ; \
-	  export TCL_LIBRARY; fi; export GISBASE=${PREFIX} ; export SRCDIR=${SRCDIR} ; \
+	  export TCL_LIBRARY; fi; export GISBASE=${GISBASE} ; export SRCDIR=${SRCDIR} ; \
 	(cd ${SRCDIR}/testsuite && ${RUNTEST} ${RUNTESTFLAGS} --tool grass --srcdir .  || exit 0)
