@@ -331,5 +331,7 @@ do_plot(row_beg,row_end,row_dir,col_beg,col_end,col_dir, interactive,colors)
 			break ;
 	}
 
-	printf("\n") ;
+/*      printf("\n") ;
+
+	printf("\n") ;*/
 }
