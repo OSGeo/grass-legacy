@@ -455,6 +455,9 @@ int main (int argc, char *argv[])
 	x_s = (short *) x_v;
 	x_c = (char *)  x_v;
 
+	if( cellhd.proj == PROJECTION_LL && cellhd.ew_res/cellhd.ns_res > 50. ) /* TODO: find a reasonable value */
+		G_warning("East-West (ewres: %f) and North-South (nwres: %f) resolution differ significantly. Did you assign east= and west= correctly?", cellhd.ew_res, cellhd.ns_res);
+
 	fprintf(stderr, "Percent Complete: ");
 	for (row = 0; row < grass_nrows; row++)
 	{
