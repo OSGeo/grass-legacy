@@ -7,6 +7,7 @@ SUBDIRS = \
 	g.filename \
 	g.findfile \
 	g.gisenv \
+	g.mapset \
 	g.mapsets \
 	g.parser \
 	g.proj \
