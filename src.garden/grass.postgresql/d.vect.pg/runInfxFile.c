@@ -60,14 +60,14 @@ int runInfxFile(SQL_stmt, map, mapset, color, fillcolor )
         
     pg_conn = PQsetdb(pghost,NULL, NULL,NULL,G_getenv("PG_DBASE"));
     if (PQstatus (pg_conn) == CONNECTION_BAD) {
-      printf (_("Error Selecting from Postgres:%s\n"),PQerrorMessage(pg_conn));
+      printf (_("Error Connecting to Postgres:%s\n"),PQerrorMessage(pg_conn));
       PQfinish(pg_conn);
       exit (-1); 
     }
   	      
     res = PQexec (pg_conn, SQL_stmt);
     if ( PQresultStatus (res) != PGRES_TUPLES_OK ) {
-      printf (_("Error Connecting to Postgres:%s\n"),PQerrorMessage(pg_conn)); 
+      printf (_("Error Selecting from Postgres:%s\n"),PQerrorMessage(pg_conn)); 
       PQfinish(pg_conn);
       exit (-1);      
     }
