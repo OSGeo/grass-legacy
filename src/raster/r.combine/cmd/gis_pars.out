@@ -653,16 +653,16 @@ state 81
 
 Rule not reduced:   help_expr :  HLP_TKN HLP_TKN 
 
-22/300 terminals, 10/300 nonterminals
-50/600 grammar rules, 82/1000 states
+22/127 terminals, 10/600 nonterminals
+50/300 grammar rules, 82/1000 states
 0 shift/reduce, 1 reduce/reduce conflicts reported
-46/350 working sets used
-memory: states,etc. 511/24000, parser 20/12000
-16/600 distinct lookahead sets
+46/601 working sets used
+memory: states,etc. 217/2000, parser 20/4000
+16/601 distinct lookahead sets
 16 extra closures
 89 shift entries, 1 exceptions
 21 goto entries
 0 entries saved by goto default
-Optimizer space used: input 212/24000, output 135/12000
+Optimizer space used: input 212/2000, output 135/4000
 135 table entries, 41 zero
 maximum spread: 275, maximum offset: 275
