@@ -1,0 +1,88 @@
+<html>
+
+<TITLE>d.where</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.where</b></EM>  - Identifies the geographic coordinates associated with 
+point locations in the active frame on the graphics monitor. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.where</B> 
+<BR>
+<B>d.where help</B> 
+<BR>
+<B>d.where</B> [<B>-1</B>] [<B>spheroid=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.where</EM> is an <EM>interactive</EM> program that
+allows the user, using the pointing device (mouse), to
+identify the geographic coordinates associated with point
+locations within the current geographic region in the
+active display frame on the graphics monitor.
+
+<P>
+
+If the user runs <EM>d.where</EM> without specifying the
+name of a spheroid on the command line, each mouse click
+will output the UTM easting and northing of the point
+currently located beneath the mouse pointer.  A
+mouse-button menu is presented so the user knows which
+mouse buttons to use. The output is always printed to the
+terminal screen; if the output is redirected into a file,
+it will be written to the file as well.
+
+<H3>Flag:</H3> 
+
+<DL>
+<DT><B>-1</B>
+<DD>Only one mouse click is executed. 
+<BR>
+This option is provided for shell scripts and programs which want to 
+obtain only one point from the user. The output is only written 
+to stdout, unless redirected into a file. The geographic location and 
+mouse button pressed are output. 
+</DL>
+
+<H3>Parameter:</H3> 
+
+<DL>
+<DT><B>spheroid=</B><EM>name</EM>
+<DD>Name of a spheroid (for latitude/longitude coordinate conversion). 
+<BR>
+Options: australian, bessel, clark66, clark80, everest, international, 
+wgs72, wgs84 
+</DL>
+
+<H2>NOTES</H2>
+
+This program uses the current geographic region setting and active frame. 
+It is not necessary, although useful, to have displayed a map in the current 
+frame before running <EM>d.where</EM>.
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="d.what.rast.html">d.what.rast</A></EM><br>
+<EM><A HREF="d.what.vect.html">d.what.vect</A></EM><br>
+<EM><A HREF="g.region.html">g.region</A></EM>
+
+<H2>AUTHORS</H2>
+
+James Westervelt, <br>
+Michael Shapiro, <BR>
+U.S. Army Construction Engineering 
+Research Laboratory
+
+</body>
+</html>
+

@@ -1,0 +1,185 @@
+<TITLE>d.histogram</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.histogram</b></EM>  - Displays a histogram in the form of a pie or bar chart 
+for a user-specified raster file. 
+<BR>
+<EM>(GRASS Display Program)</EM> 
+
+<H2>SYNOPSIS</H2>
+
+<B>d.histogram</B> 
+<BR>
+<B>d.histogram help</B> 
+<BR>
+<B>d.histogram</B> [<B>-zqnC</B>] <B>map=</B><EM>name</EM> 
+[<B>color=</B><EM>name</EM>] [<B>style=</B><EM>name</EM>]
+ [<B>nsteps=</B><EM>value</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.histogram</EM>
+displays the category-value distribution for 
+a user-specified raster map layer, in the form of 
+a bar chart or a pie chart. 
+The display will be displayed in the active display frame 
+on the graphics monitor, using the colors in the raster map layer's 
+color table. 
+The program determines the raster file's category value distribution by 
+counting cells. 
+
+<H2>OPTIONS</H2>
+
+The user can run this program either non-interactively or interactively. 
+The program will be run non-interactively if the user specifies 
+the name of a raster map layer and (optionally) any other desired parameters 
+and flags on the command line, using the form: 
+
+<DL>
+<DD>
+<B>d.histogram</B> [<B>-zqnC</B>] <B>map=</B><EM>name</EM> 
+[<B>color=</B><EM>name</EM>] [<B>style=</B><EM>name</EM>] 
+[<B>nsteps=</B><EM>value</EM>]
+</DL>
+
+If a map name is given on the command line, any other parameter values left 
+unspecified on the command line will be set to their default values 
+(see below). 
+Alternately, the user can simply type 
+<B>d.histogram</B> on the command line, 
+without program arguments. In this case, the user will be prompted for 
+needed inputs and option choices using the standard GRASS  
+<EM><A HREF="parser.html">parser</A></EM> interface.
+
+<P>
+
+<H3>Flags:</H3>
+
+<DL>
+
+<DT><B>-z</B>
+<DD>Display zero-data information (cells with category value zero) 
+in the histogram. 
+If the <B>-z</B> flag is set, then cells with category 
+value 0 in the named raster 
+map layer will be included in the pie or bar chart. 
+If this flag is not set, then cells with category value 0 will be 
+excluded from the bar chart. 
+
+<DT><B>-q</B>
+<DD>Gather the histogram quietly, without printing messages on 
+program progress 
+to the user's terminal. 
+
+<DT><B>-n</B>
+<DD>Display information for null cells.
+
+<DT><B>-C</B>
+<DD>Report for ranges defined in cats file (fp maps only).
+</DL>
+
+<P>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>map=</B><EM>name</EM>
+<DD>The name of an existing raster map layer in the user's current mapset 
+search path for which a histogram is to be displayed. 
+
+<DT><B>color=</B><EM>name</EM>
+<DD>The name of the color to be used for the axis, text-labels, 
+and tic-marks on the pie or bar chart. 
+<BR>
+Options: 
+<EM>white</EM>,
+<EM>red</EM>,
+<EM>orange</EM>,
+<EM>yellow</EM>,
+<EM>green</EM>,
+<EM>blue</EM>,
+<EM>indigo</EM>,
+<EM>magenta</EM>,
+<EM>violet</EM>,
+<EM>brown</EM>,
+<EM>gray</EM>,
+and 
+<EM>black</EM>
+<BR>
+Default: <EM>white</EM> 
+
+<DT><B>style=</B><EM>name</B>
+<DD>The style of the histogram. 
+If <B>style=</B><EM>bar</EM>, 
+then <EM>d.histogram</EM> will displays the statistics in 
+the form of a bar chart. If <B>style=</B><EM>pie</EM>, then 
+<EM>d.histogram</EM>
+will display the statistics in the form of a pie chart. 
+<BR>
+Options: <EM>bar</EM> or <EM>pie</EM> 
+<BR>
+Default: <EM>bar</EM> 
+
+<DT><B>nsteps=</B><EM>value</EM>
+<DD>Number of steps to divide the data range into (FP maps only).
+<BR>
+Default: <EM>255</EM>
+</DL>
+
+<H2>NOTES</H2>
+
+<EM>d.histogram</EM>
+uses the current geographic region settings 
+and the current mask (if one exists). 
+
+<P>
+<EM>d.histogram</EM>
+uses the colors in the map's color look-up table (i.e., the map's 
+<EM>colr</EM> or <EM>colr2</EM> file). To view results 
+correctly on the display monitor, make sure the color mode is correctly 
+set before running 
+<EM>d.histogram</EM>
+(i.e., execute 
+<B><A HREF="d.colormode.html">d.colormode</A> mode=float</B>).
+
+<P>
+<EM>d.histogram</EM>
+does not erase the active frame before displaying output. 
+
+<H2>SEE ALSO</H2>
+
+<table width=650>
+<tr>
+        <td><em><a href="d.colormode.html">d.colormode</a></em></td>
+        <td><em><a href="d.colors.html">d.colors</a></em></td>
+        <td><em><a href="d.colortable.html">d.colortable</a></em></td>
+
+</tr>
+<tr>
+        <td><em><a href="d.display.html">d.display</a></em></td>
+        <td><em><a href="d.erase.html">d.erase</a></em></td>
+        <td><em><a href="g.region.html">g.region</a></em></td>
+
+</tr>
+<tr>
+        <td><em><a href="r.mask.html">r.mask</a></em></td>
+        <td><em><a href="r.stats.html">r.stats</a></em></td>
+        <td><em><a href="parser.html">parser</a></em></td>
+
+</tr>
+</table>
+
+<H2>AUTHOR</H2>
+
+Dave Johnson
+<BR> DBA Systems, Inc. 
+<BR> 10560 Arrowhead Drive 
+<BR> Fairfax, Virginia 22030

@@ -1,0 +1,164 @@
+<TITLE>r.weight</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.weight</b></EM>  - Raster map overlay program.
+
+<BR>
+
+<EM>(GRASS Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.weight</B>
+
+<BR>
+
+
+<H2>DESCRIPTION</H2>
+
+<EM>r.weight</EM> is a language driven raster map overlay
+program.  It provides a means for performing geographical
+analyses using several raster maps.  <EM>r.weight</EM> asks
+the user to weight (assign numeric values to) the raster
+map categories of interest.  The assignment of weighted
+values requires that the user intimately understand the
+analysis being undertaken.  How important is the slope of
+the land in comparison with the current land use, or the
+depth to bedrock?  The assignment of values to the land's
+characteristics allows <EM>r.weight</EM> to mix and compare
+apples and oranges, such as slopes and land uses, and soil
+types and vegetation.
+
+<P>
+
+<EM>r.weight</EM> is a language-driven analysis tool.  It
+responds to worded commands typed at the terminal.  Help is
+always available via the one word command:  <B>help</B>.
+Commands available in <EM>r.weight</EM> are listed below.
+
+<P>
+
+Note that raster map names appear in parentheses.  The use of parentheses
+is now optional in <EM>r.weight</EM>.
+
+<DL>
+
+<DT><EM>list maps</EM>
+<DD>List available raster maps
+<DT><EM>list categories (name)</EM>
+<DD>List categories for raster map (name)
+<DT><EM>list save</EM>
+<DD>List saved analyses
+<DT><EM>list analysis</EM>
+<DD>Display current analysis request
+<DT><EM>print analysis</EM>
+<DD>Send current analysis request to printer
+<DT><EM>choose (name)</EM>
+<DD>Choose raster map (name) for analysis
+<DT><EM>assign (name)</EM>
+<DD>Interactive way to assign weights for raster map (name)
+<DT><EM>assign (name) (cat) (val)</EM>
+<DD>Assign weight (val) to category (cat) for raster map (name)
+<DT><EM>assign (name) (cat) (cat) (val)</EM>
+<DD>Assign weight (val) to categories (cat) (cat) for raster map (name)
+<DT><EM>save</EM>
+<DD>Save the current analysis
+<DT><EM>recover</EM>
+<DD>Recover old analysis
+<DT><EM>add</EM>
+<DD>Request that weights be added (this is the default)
+<DT><EM>mult</EM>
+<DD>Request that weights be multiplied
+<DT><EM>execute</EM>
+<DD>Run analysis 
+<DT><EM>erase</EM>
+<DD>Erase the screen
+<DT><EM>color grey</EM>
+<DD>Set the graphics montior colors to a grey scale (this is the default)
+<DT><EM>color wave</EM>
+<DD>Set the graphics monitor colors to a color wave.
+<DT><EM>color ramp</EM>
+<DD>Set the graphics monitor colors to a color ramp.
+<DT><EM>quit</EM>
+<DD>Leave <EM>r.weight</EM>
+</DL>
+
+
+A more detailed explanation of a command can be obtained by typing:
+<DL>
+<DD><B>help (command)</B>
+</DL>
+
+<H2>SUGGESTED APPROACH</H2>
+
+In order for <EM>r.weight</EM> to generate raster maps
+useful for analysis, the user must make a reasonable and
+defensible request.  While much more powerful than 
+<EM><A HREF="r.combine.html">r.combine</A></EM>,
+<EM>r.weight</EM> is also more dangerous.  The user
+provides the necessary value judgements which are
+registered as weights.  Only well-conceived value
+judgements will result in defensible results.  We suggest
+the following approach to a weighted overlay analysis:
+
+<DL>
+<DT>STEP 1: BEFORE RUNNING WEIGHT
+
+<DD><DL COMPACT>
+<DT>a) <DD>Define the question to be answered.  e.g., "Locate 
+sites suitable for building apartments."
+<DT>b) <DD>Determine what mapped information is useful for 
+answering the question.  e.g., geology, soils,
+land_use, flood_potential.
+<DT>c) <DD>Based on professional judgement, statistical 
+inference, and engineering principals, assign 
+weights to the categories in the chosen raster maps.
+</DL>
+
+<DT>STEP 2: CHOOSE CELL MAPS<P>
+
+<DD>In <EM>r.weight</EM>, use the command <EM>choose</EM>
+to identify up to six raster maps of interest.<P>
+
+<DT>STEP 3: ASSIGN WEIGHTS<P>
+
+<DD>Using the <EM>r.weight</EM> command <EM>assign</EM>,
+assign specific weights to raster map categories.<P>
+
+<DT>STEP 4: SAVE ANALYSIS<P>
+
+<DD>Use the <EM>save</EM> command to save a copy of the
+analysis requested for later use.<P>
+
+<DT>STEP 5: RUN ANALYSIS<P>
+<DD>Use <EM>execute</EM> to run the analysis.<P>
+
+<DT>STEP 6: EVALUATE RESULTS<P>
+
+<DD>To modify an existing analysis request, use the
+<EM>recover</EM> command to retrieve the analysis and then
+go to STEP 3.
+
+</DL>
+
+<H2>SEE ALSO</H2>
+
+<B>GRASS Tutorial: r.weight</B>
+
+<P>
+
+<EM><A HREF="r.infer.html">r.infer</A></EM><br>
+<EM><A HREF="r.combine.html">r.combine</A></EM><br>
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S.Army Construction Engineering 
+Research Laboratory

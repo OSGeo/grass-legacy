@@ -1,0 +1,82 @@
+<html>
+
+<TITLE>m.bsplit</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>m.bsplit</b></EM>  - Splits a large (greater than 1,048,000 megabyte) file
+into smaller portions.
+
+<BR>
+
+<EM>(SCS GRASS File Management Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>m.bsplit</B>
+
+<BR>
+
+<B>m.bsplit help</B>
+
+<BR>
+
+<B>m.bsplit input=</B><EM>name [</EM><B>size=</B><EM>value</EM>] [<B>prefix=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>m.bsplit</EM> works much like the UNIX command <EM>csplit</EM>;  however,
+it was developed to be used on binary, not ASCII, files. 
+     
+The first parameter, <EM>size</EM>, has a default value of 500000.
+The user may assign larger or smaller values, as long as 1000000
+is not exceeded.
+
+
+<P>
+
+The second parameter, <EM>prefix</EM>, is comparable to the UNIX
+<EM>csplit </EM> command use of "x" as a prefix to output files.
+<EM>m.bsplit</EM> uses the default of "bx" as a prefix on output.
+
+<H2>COMMAND LINE OPTIONS</H2>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>input=</B><EM>name</EM> 
+
+<DD>The name of the binary <EM>input</EM> file to be split.
+
+<DT><B>size=</B><EM>value</EM> 
+
+<DD>The value, in megabytes, of one of the new, split-up files created
+from the <EM>input</EM> file.
+
+<DT><B>prefix=</B><EM>name</EM> 
+
+<DD>File name prefix assigned to the new (split) files.
+</DL>
+
+<H2>SEE ALSO</H2>
+
+The UNIX <EM>csplit</EM> command.
+
+<H2>AUTHOR</H2>
+
+R.L.Glenn, USDA, SCS, NHQ-CGIS
+
+
+</body>
+
+</html>

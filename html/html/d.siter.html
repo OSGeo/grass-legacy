@@ -1,0 +1,88 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (Win98; I) [Netscape]">
+   <TITLE>d.siter</TITLE>
+</head>
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<h2>
+NAME</h2>
+<b><i>d.siter</i></b> - Interactively displays subsets of a sites list
+based on site attributes (<i>GRASS Display Program</i>)
+<h2>
+SYNOPSIS</h2>
+<b>d.siter</b>
+<br><b>d.siter help</b>
+<br><b>d.siter</b> <i>name</i>
+<h2>
+<b>DESCRIPTION</b></h2>
+<i>d.siter</i> is a script which calls <a href="s.info.html">s.info</a>
+to determine the number, types and ranges of site attributes, then calls
+a tcl script which presents a user interface. On the interface there are
+two sliders for each dimension, category, or decimal attribute in the sites
+file. If a header with labels is in the file, the sliders will be labeled.
+The value range for each slider pair is determined by the range for the
+corresponding attribute found in the sites file for sites within the current
+region. At startup one slider in each pair is set at the minimum value
+and the other slider is set at the maximum value. The user adjusts sliders
+as needed to set ranges of desired values for each attribute, dimension,
+or category. The interface also has controls for setting the size, color,
+and type of marker, and buttons for <b>display</b>, <b>erase</b>, <b>reset
+scales</b>, and <b>quit</b>.
+<br>&nbsp;
+<li>
+When the <b>display</b> button is chosen, the GRASS program
+<a href="d.sites.qual.html">d.sites.qual</a>
+is called with rules derived from the current state of the interface and
+the specified subset is drawn in the active GRASS monitor. By adjusting
+the size, color and type of marker and drawing multiple subsets, the user
+may more easily visualize spatial relationships of various subsets or determine
+inconsistant attribute values.</li>
+
+<li>
+Subsets may be saved by entering a filename in the text entry box of the
+interface and choosing <b>save as:</b>.</li>
+
+<li>
+Due to the limited resolution of sliders and considering the wide range
+and distribution often found in site attribute data, a <b>rescale</b> button
+is provided. Choosing <b>rescale</b> results in the currently defined ranges
+becoming the new min and max and the sliders being reset to their left
+and right extremes, allowing further refinement of the range.</li>
+
+<li>
+To undo the <b>rescale</b> operation, the user may select <b>reset scales</b>
+which resets all scales to their startup values (loosing any ranges already
+specified).</li>
+
+<br>&nbsp;</ul>
+
+<h2>
+OPTIONS</h2>
+This program can be run non-interactively or interactively. If the user
+gives the name of a GRASS site_lists map on the command line the program
+will be run non-interactively. Alternately, the user can type simply d.siter
+on the command line; in this case, the program will prompt the user for
+a site_lists map.
+<h2>
+BUGS</h2>
+Due to pixel rounding, startup ranges for sliders may be slightly off for
+floating point attributes. The slider min value will be slightly lower
+than the min value found in the file and the slider max value will be slightly
+higher.
+<h2>
+SEE ALSO</h2>
+<a href="d.mon.html">d.mon</a>, <a href="d.sites.html">d.sites</a>, <a href="d.sites.qual.html">d.sites.qual</a>,
+<a href="s.info.html">s.info</a>
+<h2>
+AUTHOR</h2>
+Bill Brown, UI GMS Laboratory</ul>
+
+</body>
+</html>

@@ -1,0 +1,110 @@
+<TITLE>bug.report.sh</TITLE>
+
+<BODY BGCOLOR="white">
+
+<img src="grass.smlogo.gif">
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>bug.report.sh</b></EM>  - A mechanism for writing, storing,
+and e-mailing to USACERL users' bug reports on GRASS 4.1
+commands.
+
+<BR>
+
+<EM>(GRASS Shell Script)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>bug.report.sh </B><EM>4.1_program.name</EM> [<EM>program_arguments</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>bug.report.sh</EM>
+is a Bourne shell (sh(1)) script which, when given a GRASS 4.1 program name,
+allows the user to complete a bug report for that program.
+Completed bug reports can be e-mailed to the GRASS development group
+at USACERL, saved to a file in the user's home directory, or discarded.
+
+<H2>OPTIONS</H2>
+
+This program is not interactive;  the user must specify the name of a
+4.1 program on the command line.  Program arguments can optionally be
+entered by the user.
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><EM>4.1_program.name</EM> 
+
+<DD>The name of an existing GRASS version 4.1 program tested by the user.
+
+<DT><EM>program_argument(s)</EM> 
+
+<DD>Program arguments (parameters and/or flags) for the
+<EM>4.1_program.name</EM> tested by the user.  The user
+should enter whatever command arguments were actually run
+when the program bug occurred.
+
+</DL>
+
+<H2>EXAMPLE</H2>
+
+For example, if the user wished to complete a bug report on 
+<EM><A HREF="../html/v.to.rast.html">v.to.rast</A></EM>
+after running the program, the user might then type:
+
+<DL>
+<DD>
+<B>bug.report.sh </B>v.to.rast 
+</DL>
+
+A standard bug report form would then be displayed on the
+user's text terminal, containing the user's current GRASS
+region settings, and the machine name, GRASS data base,
+location, and mapset, on which the user is currently
+running GRASS.  Program parameters and flag settings, and
+the command entered by the user on the command line, are
+also automatically entered on the bug report form.  The
+user is put into a text editor and expected to enter
+additional information describing the nature of the bug
+found or the results of program testing.
+
+<P>
+
+The user is then asked whether the completed bug report is to be:
+<DL>
+<DD>
+1 - mailed to westerve@zorro.cecer.army.mil
+<BR>
+2 - added to the file <KBD>grass.bugs</KBD> in the user's home directory
+<BR>
+3 - both 1 and 2
+<BR>
+4 - thrown away
+</DL>
+
+<H2>NOTES</H2>
+
+This program prints whatever region settings, GRASS data
+base, location, and mapset are current when the user runs
+<EM>bug.report.sh</EM>.  The user is therefore advised to
+run <EM>bug.report.sh</EM> immediately after experiencing a
+program bug, to ensure that the settings current when the
+bug occurred are reported on the bug report form.
+
+<H2>FILES</H2>
+
+This shell script is stored under the <KBD>$GISBASE/scripts</KBD>
+directory on the user's system.  The user is encouraged to
+examine the shell script commands stored in this directory
+and to produce similar scripts for their own use.  Users
+might modify this shell script to e-mail reports of program
+bugs to a local systems' administrator in addition to
+someone at USACERL.
+
+<H2>AUTHOR</H2>
+
+James Westervelt, U.S.Army Construction Engineering Research Laboratory

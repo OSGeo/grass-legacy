@@ -1,0 +1,79 @@
+<TITLE>p.select</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>p.select</b></EM>  - Selects a device (printer) for GRASS hardcopy output. 
+<BR>
+<EM>(GRASS Hardcopy Output Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>p.select</B> 
+<BR>
+<B>p.select help</B> 
+<BR>
+<B>p.select</B> [<B>-lpq</B>] [<B>painter=</B><EM>name</EM>] 
+
+<H2>DESCRIPTION</H2>
+
+<EM>p.select</EM>
+allows the user to select the device for GRASS hardcopy output. 
+The user must select a device 
+<EM>before</EM>
+running the other GRASS hardcopy output functions 
+(e.g., <EM><A HREF="p.map.html">p.map</A></EM>, 
+<EM><A HREF="p.labels.html">p.labels</A></EM>,
+<EM><A HREF="p.chart.html">p.chart</A></EM>).
+
+<H2>OPTIONS</H2>
+
+<H3>Flags:</H3>
+
+<DL>
+<DT><B>-l</B>
+<DD>List all available painters. 
+<DT><B>-p</B>
+<DD>Print name of currently selected painter. 
+<DT><B>-q</B>
+<DD>Quietly select painter. 
+</DL>
+
+<H3>Parameter:</H3> 
+
+<DL>
+<DT><B>painter=</B><EM>name</B></EM>
+<DD>Name of painter to select. 
+<BR>
+Options: (this will be a list of available hardcopy output devices, 
+and also <EM>preview</EM>, the user's graphics monitor) 
+</DL>
+
+<H2>INTERACTIVE MODE</H2>
+
+If the user runs <EM>p.select</EM> without specifying
+program arguments on the command line, the program will
+prompt the user for the name of a hardcopy output device to
+select.  
+
+<H2>NOTE</H2>
+
+The options available with <EM>p.select</EM> vary from
+system to system and depend upon which drivers have been
+compiled.  
+
+<H2>SEE ALSO</H2>
+
+<EM><A HREF="p.chart.html">p.chart</A></EM><br>
+<EM><A HREF="p.labels.html">p.labels</A></EM><br>
+<EM><A HREF="p.map.html">p.map</A></EM>
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S. Army Construction Engineering 
+Research Laboratory

@@ -1,0 +1,79 @@
+<TITLE>r.null</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 no shade>
+
+<H2>NAME</H2>
+
+<EM><b>r.null</b></EM>  - The function of r.null is to explicitly create the NULL-value 
+bitmap file. 
+
+<BR>
+
+<EM>(GRASS 5 Raster Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>r.null</B><br>
+<b>r.null -fincr map=</b><em>name</em>
+[<b>setnull=</b><em>val</em>[<em>-val</em>]</em>[,<em>val</em>[<em>-val</em></em>],...]] [<b>null=</b><em>value</em>]
+
+
+<H2>DESCRIPTION</H2>
+
+The function of <EM>r.null</EM> is to explicitly create the NULL-value bitmap file. The intended usage is to fix "old"  maps that don't have a NULL-value bitmap file (i.e. to indicate if zero is valid value or is to be converted to  NULL).
+
+<P>
+
+The design is flexible. Ranges of values can be set to NULL and/or the NULL value can be 
+eliminated and replace with a specified value. 
+
+<H3>Flags:</H3>
+<DL>
+<dt><b><em>-f</em></b>
+<dd>Only do the work if the map is floating-point.
+<dt><b><em>-i</em></b>
+<dd>Only do the work if the map is integer.
+<dt><b><em>-n</em></b>
+<dd>Only do the work if the map doesn't have a NULL-value bitmap file.
+<dt><b><em>-c</em></b>
+<dd>Create NULL-value bitmap file which validates all data cells.
+<dt><b><em>-r</em></b>
+<dd>Remove NULL-value bitmap file.
+</DL>
+
+<H3>Parameters:</H3>
+<DL>
+<DT><b>map</b>
+<DD>raster map for which to edit null file
+<DT><b>setnull=</b><em>range[,range...]</em>
+<DD>The values specified in the ranges are to be set to NULL. 
+A range is either a single value (e.g., 5.3), or a pair of values (e.g., 4.76-34.56). 
+Existing NULL-values are left NULL, unless the null argument is requested.
+<DT><b>null=</b><em>value </em>
+<DD>Eliminate the NULL value and replace it with value. 
+This argument is applied only to existing NULL values, and not to the NULLs created 
+by the setnull argument.
+</DL>
+
+<H2>NOTE</H2>
+ Note that value is restricted to integer if the map is an integer map. 
+
+
+<H2>SEE ALSO</H2>
+
+<EM>
+<A HREF="r.support.html">r.support</A>
+</EM>
+and
+<EM>
+<A HREF="r.quant.html">r.quant</A>
+</EM>
+
+<H2>AUTHOR</H2>
+
+U.S.Army Construction Engineering 
+Research Laboratory

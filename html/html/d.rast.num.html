@@ -1,0 +1,135 @@
+<html>
+
+<TITLE>d.rast.num</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>d.rast.num</b></EM>  - Overlays cell category values on a raster map layer
+displayed to the graphics monitor.
+
+<BR>
+
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.rast.num</B>
+
+<BR>
+
+<B>d.rast.num help</B>
+
+<BR>
+
+<B>d.rast.num</B> [<B>map=</B><EM>name</EM>] [<B>grid_color=</B><EM>name</EM>]
+
+<H2>DESCRIPTION</H2>
+
+<EM>d.rast.num</EM>
+overlays cell category values onto a raster map layer displayed
+to the user's graphics monitor.
+Category values will be displayed in white and/or black,
+based on the colors in which underlying cells are displayed.
+A grid outlining each map cell will also be overlain in a user-specified
+color.
+
+
+<P>
+
+The user should run <EM> <A HREF="d.rast.html">d.rast</A> </EM> to display the desired map layer
+on the graphics monitor before running this program.
+
+
+<P>
+
+<EM>d.rast.num</EM> can be run non-interactively or interactively.
+If the user specifies the map whose category values are to be displayed
+and/or the grid color on the command line, the program
+will run non-interactively.
+Alternately, the user may simply type <B>d.rast.num</B> on the command line;
+in this case, the program will prompt the user for parameter values
+using the standard GRASS user interface described in the manual entry
+for <EM>
+<A HREF="parser.html">parser</A>
+</EM>.
+If no grid color is given the default will be used.  If no map layer
+is specified, the program will use whatever raster map layer is
+currently displayed in the active frame on the graphics monitor.
+
+<H2>OPTIONS</H2>
+
+
+<H3>Parameters:</H3>
+
+
+<DL>
+
+
+<DT><B>map=</B><EM>name</EM> 
+
+<DD>Name of existing raster map layer whose category values will be displayed.
+
+<BR>
+
+Default:  (whatever raster map layer is currently displayed)
+
+<DT><B>grid_color=</B><EM>name</EM> 
+
+<DD>Color in which an overlain grid will be displayed.
+
+<BR>
+
+Options:  white, red, orange, yellow, green, blue, indigo, violet, 
+magenta, brown, gray, black
+.
+
+<BR>
+
+Default:  gray
+</DL>
+
+<H2>NOTES</H2>
+
+The user is advised to set the current region to a relatively
+small area (i.e., less than 100 rows by 100 columns);
+otherwise, the individual cells being displayed will be small
+and the category value associated with each will be difficult to see.
+
+<H2>SEE ALSO</H2>
+
+<table width=500>
+<tr>
+	<td><em><a href="d.erase.html">d.erase</a></em></td>
+	<td><em><a href="d.frame.html">d.frame</a></em></td>
+	<td><em><a href="d.grid.html">d.grid</a></em></td>
+	<td><em><a href="d.mon.html">d.mon</a></em></td>
+</tr>
+<tr>
+	<td><em><a href="d.rast.html">d.rast</a></em></td>
+	<td><em><a href="d.rast.arrow.html">d.rast.arrow</a></em></td>
+	<td><em><a href="d.rast.edit.html">d.rast.edit</a></em></td>
+	<td><em><a href="d.rast.zoom.html">d.rast.zoom</a></em></td>
+</tr>
+<tr>
+	<td><em><a href="d.zoom.html">d.zoom</a></em></td>
+	<td><em><a href="g.region.html">g.region</a></em></td>
+	<td><em><a href="r.mask.html">r.mask</a></em></td>
+	<td><em><a href="r.slope.aspect.html">r.slope.aspect</a></em></td>
+</tr>
+</table>
+
+
+<H2>AUTHORS</H2>
+
+Raghavan Srinivasan,
+and Chris Rewerts,
+Agricultural Engineering, Purdue University
+
+</body>
+</html>

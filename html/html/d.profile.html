@@ -1,0 +1,109 @@
+<TITLE>d.profile</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<h2>NAME</h2>
+
+<EM><b>d.profile</b></EM>  - Displays profiles of a user-specified raster map layer. 
+<BR>
+<EM>(GRASS Display Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>d.profile</B> 
+
+<H2>DESCRIPTION</H2>
+
+This command works only interactively. It clears the entire
+graphics screen and provides a graphical interaction
+allowing the selection of transects for which profiles are
+then generated.
+
+<H2>USER PROMPTS</H2>
+
+First, you will be presented with a prompt asking you to
+choose a raster map layer to be profiled. Once you specify
+a valid raster map layer name, the map layer will be
+displayed in the left half of the graphics display, and the
+right half of the dispay will be divided into four display
+frames. There will also be two frames along the top of the
+display: a mouse-button menu frame on the left, and a
+status frame on the right.
+
+<P>
+
+The mouse-button menu initially offers you three options: 
+
+<DL>
+<DD>
+Mouse Buttons: <BR>
+Left: Where am I? <BR>
+Middle: Mark FIRST Point of Profile Line. <BR>
+Right: QUIT this. <BR>
+</DL>
+
+You may query the displayed raster map layer by indicating
+points with the left mouse-button. The coordinates and
+category value of each point that you indicate will be
+displayed on in the status frame.  If you mark the first
+point of the profile line you will be presented with the
+following mouse-button menu:
+
+<DL>
+<DD>
+Mouse Buttons: <BR>
+Left: Where am I? <BR>
+Middle: Mark SECOND Point of Profile Line. <BR>
+Right: QUIT this. <BR>
+</DL>
+
+Once you mark the second point of the profile line, the
+profile line will be labeled (with a letter from A to D)
+and displayed in one of the four display frames on the
+right hand side of the screen. You will then be presented
+with a third mouse-button menu:
+
+<DL>
+<DD>
+Mouse Buttons: <BR>
+Left: DO ANOTHER <BR>
+Middle: CLEAR DISPLAY <BR>
+Right: QUIT this. <BR>
+</DL>
+
+If you would like to view another profile, click on the
+left mouse-button.  If you would like to redisplay the
+raster map layer and clear out the four profile frames,
+click on the middle mouse-button. If you would like to
+quit, then click on the right button.
+
+<H2>NOTES</H2>
+
+Useful enhancements to <EM>d.profile</EM> would include: 
+
+<OL>
+
+<LI>Adding an option to display profiles using category
+colors, like a bar-chart.
+
+<LI>Allowing profile lines to be defined by a series of
+points, not just two.
+
+<LI>Allowing profiles to be saved in a file, for later
+viewing.
+
+<LI>Allowing the user to enter profile line points by
+typing coordinates.
+
+</OL>
+
+<H2>AUTHOR</H2>
+
+Dave Johnson
+<BR> DBA Systems, Inc. <BR>
+10560 Arrowhead Drive <BR>
+Fairfax, Virginia 22030 

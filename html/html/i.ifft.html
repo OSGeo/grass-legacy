@@ -1,0 +1,122 @@
+<TITLE>i.ifft</TITLE>
+
+<body bgcolor="white">
+
+<img src="grass.smlogo.gif">
+
+<hr width=100% align=center size=6 noshade>
+
+<H2>NAME</H2>
+
+<EM><b>i.ifft</b></EM>  - Inverse Fast Fourier Transform (ifft) for image processing.
+
+<BR>
+
+<EM>(GRASS Image Processing Program)</EM>
+
+<H2>SYNOPSIS</H2>
+
+<B>i.ifft</B>
+
+<BR>
+
+<B>i.ifft help</B>
+
+<BR>
+
+<B>i.ifft real_image=</B><EM>name </EM>
+<B>imaginary_image=</B><EM>name</EM> <B>output_image=</B><EM>name</EM>
+
+<H2>DESCRIPTION</H2>
+
+<EM>i.ifft</EM> is an image processing program based on the
+algorithm given by Press (1988), and modified by Vali
+(1990), that converts real and imaginary frequency space
+images (produced by
+
+<EM><A HREF="i.fft.html">i.fft</A></EM>) into a normal image.
+
+
+<H2>OPTIONS</H2>
+
+<H3>Parameters:</H3>
+
+<DL>
+
+<DT><B>real_image=</B><EM>name</EM> 
+
+<DD>Input raster map layer for inversion fast Fourier transform, real part.
+
+<DT><B>imaginary_image=</B><EM>name</EM> 
+
+<DD>Input raster map layer for inversion fast Fourier transform, imaginary.
+
+<DT><B>output_image=</B><EM>name</EM> 
+
+<DD>Output inversion raster map layer after fast Fourier transformation.
+
+</DL>
+
+<H2>NOTES</H2>
+
+The current mask is respected when reading the real and
+imaginary component files;  thus, 
+
+
+<EM><A HREF="r.mask.html">r.mask</A></EM> become a primary program
+for selecting the portion of the frequency space data to be included
+in the inverse transform.  The GRASS program <EM>d.digit</EM> can be used to
+create masks while viewing the real or imaginary component image.
+When <EM>i.ifft</EM> is executed, it (automatically) uses the same GRASS region
+definition setting that was used during the original transformation
+done with 
+
+<EM><A HREF="i.fft.html">i.fft</A></EM>.
+
+
+<P>
+
+The real and imaginary components are read from arrays of
+doubles in the <EM>cell_misc</EM> directory (produced by
+the forward transform program,
+
+<EM><A HREF="i.fft.html">i.fft</A></EM>),
+
+and the reconstructed image will preserve the cell value
+scaling of the original image processed by
+
+<EM><A HREF="i.fft.html">i.fft</A></EM>.  No color
+table is assigned to the output map;  one should be created
+before viewing the <EM>output_image</EM>.
+
+<H2>SEE ALSO</H2>
+
+<B>Numerical Recipes in C</B>,
+by William H. Press,
+Cambridge University Press, 1988.
+
+<P>
+
+<B>Remote Sensing Digital Image Analysis</B>,
+by John A. Richards,
+Springer-Verlag, 1986.
+
+<P>
+
+Personal communication,
+between program author and Ali R. Vali, Space Research Center,
+University of Texas, Austin, 1990.
+
+<P>
+
+<EM><A HREF="i.cca.html">i.cca</A></EM><br>
+<EM><A HREF="i.class.html">i.class</A></EM><br>
+<EM><A HREF="i.fft.html">i.fft</A></EM><br>
+<EM><A HREF="i.pca.html">i.pca</A></EM>
+
+<H2>AUTHOR</H2>
+
+David Satnik, GIS Laboratory, 
+Central Washington University
+
+</body>
