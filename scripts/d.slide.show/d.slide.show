@@ -65,16 +65,16 @@ else
 	MAPSETS=`echo $MAPSET PERMANENT`
 fi
 
-if [ "$GIS_OPT_prefix" != "(null)" ] ; then
+if [ -n "$GIS_OPT_prefix" ] ; then
    PREFIX=$GIS_OPT_prefix
 fi
-if [ "$GIS_OPT_down" != "(null)" ] ; then
+if [ -n "$GIS_OPT_down" ] ; then
    DOWN=$GIS_OPT_down
 fi
-if [ "$GIS_OPT_across" != "(null)" ] ; then
+if [ -n "$GIS_OPT_across" ] ; then
    ACROSS=$GIS_OPT_across
 fi
-if [ "$GIS_OPT_mapsets" != "(null)" ] ; then
+if [ -n "$GIS_OPT_mapsets" ] ; then
    MAPSETS=$GIS_OPT_mapsets
 fi
 
