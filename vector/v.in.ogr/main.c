@@ -17,6 +17,7 @@
  * TODO: make fixed field length of OFTIntegerList dynamic
  **************************************************************/
 #define MAIN
+#include "config.h"
 #include <stdlib.h> 
 #include <string.h> 
 #include "gis.h"
@@ -24,6 +25,7 @@
 #include "Vect.h"
 #include "ogr_api.h"
 #include "global.h"
+#include "gprojects.h"
 
 int geom(OGRGeometryH hGeom, struct Map_info *Map, int field, int cat, double min_area, int type, int mk_centr );
 int centroid(OGRGeometryH hGeom, CENTR *Centr, SPATIAL_INDEX *Sindex, int field, int cat, double min_area, int type);
@@ -36,11 +38,15 @@ main (int argc, char *argv[])
     int    ncols, type;
     struct GModule *module;
     double min_area, snap;
-    struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *min_area_opt, *snap_opt, *type_opt;
-    struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag;
+    struct Option *dsn_opt, *out_opt, *layer_opt, *spat_opt, *min_area_opt, *snap_opt, *type_opt, *outloc_opt;
+    struct Flag *list_flag, *no_clean_flag, *z_flag, *notab_flag, *over_flag, *extend_flag;
     char   buf[2000], namebuf[2000];
     char   *separator;
-    
+    struct Key_Value *loc_proj_info, *loc_proj_units;
+    struct Key_Value *proj_info, *proj_units;
+    struct Cell_head cellhd, loc_wind;
+    char   error_msg[8192];
+
     /* Vector */
     struct Map_info Map;
     int    cat;
@@ -62,6 +68,8 @@ main (int argc, char *argv[])
     OGRFeatureDefnH Ogr_featuredefn;
     OGRGeometryH Ogr_geometry;
     OGRGeometryH Ogr_oRing=NULL, poSpatialFilter=NULL;
+    OGRSpatialReferenceH Ogr_projection;
+    OGREnvelope oExt;
     char **layer_names; /* names of layers to be imported */
     int *layers;  /* layer indexes */
     int nlayers; /* number of layers to import */
@@ -133,6 +141,12 @@ main (int argc, char *argv[])
     snap_opt->answer = "0.001";
     snap_opt->description = "Snapping threshold for boundaries. -1 for no snap.";
 
+    outloc_opt = G_define_option();
+    outloc_opt->key = "location";
+    outloc_opt->type = TYPE_STRING;
+    outloc_opt->required = NO;
+    outloc_opt->description = "Name for new location to create";
+
     list_flag = G_define_flag ();
     list_flag->key             = 'l';
     list_flag->description     = "List available layers in data source.";
@@ -148,6 +162,14 @@ main (int argc, char *argv[])
     notab_flag = G_define_flag ();
     notab_flag->key             = 't';
     notab_flag->description     = "Do not create attribute table.";
+
+    over_flag = G_define_flag();
+    over_flag->key = 'o';
+    over_flag->description = "Override projection (use locations projection)";
+
+    extend_flag = G_define_flag();
+    extend_flag->key = 'e';
+    extend_flag->description = "Extend location extents based on new dataset.";
 
     if (G_parser (argc, argv)) exit(-1); 
 
@@ -239,6 +261,133 @@ main (int argc, char *argv[])
         OGR_L_SetSpatialFilter(Ogr_layer, poSpatialFilter );
      }
 
+    /* fetch boundaries */
+    if ( (OGR_L_GetExtent (Ogr_layer , &oExt, 1 )) == OGRERR_NONE ) {
+        cellhd.north  = oExt.MaxY;
+        cellhd.south  = oExt.MinY;
+        cellhd.west   = oExt.MinX;
+        cellhd.east   = oExt.MaxX;
+        cellhd.rows   = 20 ; /* TODO - calculate useful values */
+        cellhd.cols   = 20 ;
+        cellhd.ns_res = (cellhd.north-cellhd.south)/cellhd.rows;
+        cellhd.ew_res = (cellhd.east-cellhd.west)/cellhd.cols;
+    }
+    else {
+        cellhd.north  = 1.;
+        cellhd.south  = 0.;
+        cellhd.west   = 0.;
+        cellhd.east   = 1.;
+        cellhd.rows   = 1 ;
+        cellhd.cols   = 1 ;
+        cellhd.ns_res = 1.;
+        cellhd.ew_res = 1.;
+    }
+   
+    /* Fetch input map projection in GRASS form. */
+    proj_info = NULL;
+    proj_units = NULL;
+    Ogr_projection = OGR_L_GetSpatialRef(Ogr_layer);
+ 
+    /* Do we need to create a new location? */
+    if( outloc_opt->answer != NULL )
+    {
+        /* Convert projection information interactively as it is important
+	 * to set up datum etc. */
+        if ( GPJ_osr_to_grass( &cellhd, &proj_info, 
+			       &proj_units, Ogr_projection, 1) < 0 )
+	    G_fatal_error("Unable to convert input map projection to GRASS "
+			  "format; cannot create new location.");
+	else		  
+            G_make_location( outloc_opt->answer, &cellhd,
+			     proj_info, proj_units, NULL );
+    }
+    else
+    {
+        /* Projection only required for checking so convert non-interactively */
+        if ( GPJ_osr_to_grass( &cellhd, &proj_info, 
+			       &proj_units, Ogr_projection, 0) < 0 )
+            G_warning("Unable to convert input map projection information to "
+		      "GRASS format for checking");
+    }
+    OSRDestroySpatialReference(Ogr_projection);
+
+    /* Does the projection of the current location match the dataset? */
+    /* fetch LOCATION PROJ info */
+    loc_proj_info = G_get_projinfo();
+    loc_proj_units = G_get_projunits();
+    /* G_get_window seems to be unreliable if the location has been changed */
+    G__get_window ( &loc_wind, "", "DEFAULT_WIND", "PERMANENT");
+
+    if( over_flag->answer )
+    {
+        cellhd.proj = loc_wind.proj;
+        cellhd.zone = loc_wind.zone;
+    } 
+    else if( loc_wind.proj != cellhd.proj
+               || !G_compare_projections( loc_proj_info, loc_proj_units, 
+                                          proj_info, proj_units ) )
+    {
+        int     i_value;
+
+        strcpy( error_msg, 
+                "Projection of dataset does not"
+                " appear to match current location.\n\n");
+
+/* TODO: output this info sorted by key: */
+        if( loc_proj_info != NULL )
+        {
+            strcat( error_msg, "LOCATION PROJ_INFO is:\n" );
+            for( i_value = 0; 
+                 loc_proj_info != NULL && i_value < loc_proj_info->nitems; 
+                 i_value++ )
+                sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                         loc_proj_info->key[i_value],
+                         loc_proj_info->value[i_value] );
+            strcat( error_msg, "\n" );
+        }
+
+        if( proj_info != NULL )
+        {
+            strcat( error_msg, "Dataset PROJ_INFO is:\n" );
+            for( i_value = 0; 
+                 proj_info != NULL && i_value < proj_info->nitems; 
+                 i_value++ )
+                sprintf( error_msg + strlen(error_msg), "%s: %s\n", 
+                         proj_info->key[i_value],
+                         proj_info->value[i_value] );
+        }
+        else
+        {
+            if( cellhd.proj == PROJECTION_XY )
+                sprintf( error_msg + strlen(error_msg), 
+                         "cellhd.proj = %d (unreferenced)\n", 
+                         cellhd.proj );
+            else if( cellhd.proj == PROJECTION_LL )
+                sprintf( error_msg + strlen(error_msg), 
+                         "cellhd.proj = %d (lat/long)\n", 
+                         cellhd.proj );
+            else if( cellhd.proj == PROJECTION_UTM )
+                sprintf( error_msg + strlen(error_msg), 
+                         "cellhd.proj = %d (UTM), zone = %d\n", 
+                         cellhd.proj, cellhd.zone );
+            else if( cellhd.proj == PROJECTION_SP )
+                sprintf( error_msg + strlen(error_msg), 
+                         "cellhd.proj = %d (State Plane), zone = %d\n", 
+                         cellhd.proj, cellhd.zone );
+            else 
+                sprintf( error_msg + strlen(error_msg), 
+                         "cellhd.proj = %d (unknown), zone = %d\n", 
+                         cellhd.proj, cellhd.zone );
+        }
+        sprintf( error_msg + strlen(error_msg), 
+	         "\nYou can use the -o flag to %s to override this check.\n",
+		 G_program_name() );
+        strcat( error_msg, 
+         "Consider to generate a new location with 'location' parameter"
+         " from input data set.\n" );
+        G_fatal_error( error_msg );
+    }
+   
     db_init_string (&sql);
     db_init_string (&strval);
 	
@@ -488,10 +637,10 @@ main (int argc, char *argv[])
         fprintf ( stderr, separator );
 	if ( type & GV_BOUNDARY ) { /* that means lines were converted boundaries */
 	    fprintf ( stderr, "Change boundary dangles to lines:\n" );
-	    Vect_chtype_dangles ( &Map, -1, NULL, stderr ); 
+	    Vect_chtype_dangles ( &Map, -1.0, NULL, stderr ); 
 	} else {
 	    fprintf ( stderr, "Change dangles to lines:\n" );
-	    Vect_remove_dangles ( &Map, GV_BOUNDARY, -1, NULL, stderr ); 
+	    Vect_remove_dangles ( &Map, GV_BOUNDARY, -1.0, NULL, stderr ); 
 	}
 
         fprintf ( stderr, separator );
@@ -607,7 +756,9 @@ main (int argc, char *argv[])
 	Vect_hist_write ( &Map, buf );
     }
     
-    OGR_DS_Destroy( Ogr_ds );
+    /* needed?
+    * OGR_DS_Destroy( Ogr_ds );
+    */
 
     Vect_close ( &Map );
 
