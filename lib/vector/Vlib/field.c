@@ -41,7 +41,7 @@ struct field_info
     FILE *fd;
     char files[2][1024],msets[2][200];
     char buf[1024];
-    char *map, tmp1[1024], tmp2[1024];
+    char map[1024], tmp1[1024], tmp2[1024];
     char md[1024], mp[1024], mpset[1024];
     char tab[1024], col[1024], db[1024], drv[1024];
     char m_tab[1024], m_col[1024], m_db[1024], m_drv[1024];
@@ -49,6 +49,9 @@ struct field_info
     char *c;
     int  ndef, row, rule, nfiles;
     int  matched;
+    FILE *fp;
+    int  format = GV_FORMAT_NATIVE;
+    struct Format_info Forminfo;
     
     G_debug (1, "Vect_get_field_info(): map = %s, mapset = %s", m, ms);
     
@@ -56,9 +59,37 @@ struct field_info
     
     if ( ms == NULL || strlen(ms) == 0 )
        ms = G_mapset();	    
-    
+
     if ( !(G__name_is_fully_qualified(m, tmp1, tmp2)) )
-        map = G_fully_qualified_name ( m, ms );
+        strcpy (map, G_fully_qualified_name ( m, ms ) );
+    else 
+	strcpy (map, m);
+    
+    /* Find format first */
+    sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, m);
+    G_debug (3, "open format file: '%s/%s/%s'", ms, buf, GRASS_VECT_FRMT_ELEMENT);
+    fp = G_fopen_old (buf, GRASS_VECT_FRMT_ELEMENT, ms);
+    if ( fp == NULL) {
+        G_debug ( 3, "Vector format: %d (native)", format);
+        format = GV_FORMAT_NATIVE;
+    } else {
+        format = dig_read_frmt_ascii ( fp, &Forminfo );
+        fclose (fp);
+        G_debug ( 3, "Vector format: %d (non-native)", format);
+	if ( format == GV_FORMAT_SHAPE ) {
+	    fi = (struct field_info *) malloc( sizeof(struct field_info) );
+            
+	    /* Table is name of shape */
+	    fi->table = G_store ( Forminfo.shp.baseName );
+	    fi->key = G_store ( "shp_fid" );
+	    /* Path to the shape directory */
+	    fi->database = G_store ( Forminfo.shp.dirName );
+	    fi->driver = G_store ( "shp" );
+
+	    G_debug (1, "Field info for shapefile is read");
+	    return (fi);
+	}
+    }
     
     G_debug (1, "map = %s", map);
     sprintf ( files[0], "%s/%s/DB", G_location_path(), G_mapset());

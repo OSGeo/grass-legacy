@@ -121,7 +121,7 @@ V2_read_line_shp (
 	       struct line_cats *line_c,
 	       int line)
 {
-    int    node, shape, cat;
+    int    node, shape;
     long   offset;
     P_LINE *Line; 
     P_NODE *Node;
@@ -148,11 +148,7 @@ V2_read_line_shp (
 	    Vect_reset_cats ( line_c );
 	    offset = Line->offset;
 	    shape = ( offset >> 11 ) & 0x1FFFFF ;
-	    if ( Map->fInfo.shp.cat_col_num >= 0  ) {
-		cat = DBFReadIntegerAttribute( Map->fInfo.shp.hDbf, shape, 
-					       Map->fInfo.shp.cat_col_num );
-		Vect_cat_set ( line_c, 1, cat );
-	    }
+	    Vect_cat_set ( line_c, 1, shape + 1 );
 	}
 	
         return (GV_CENTROID);
@@ -230,7 +226,6 @@ Vect__Read_line_shp (
   int shape, part;
   int first, last; 
   SHPObject *pShape;
-  int cat;
   
   G_debug (3, "Vect__Read_line_shp() offset = %d", offset);
   
@@ -274,11 +269,8 @@ Vect__Read_line_shp (
   
   if ( c != NULL ) {
       Vect_reset_cats ( c );
-      if ( Map->fInfo.shp.cat_col_num >= 0 &&
-	   ( type == GV_POINT || type == GV_LINE ) ) {
-	  cat = DBFReadIntegerAttribute( Map->fInfo.shp.hDbf, shape, 
-		        Map->fInfo.shp.cat_col_num );
-          Vect_cat_set ( c, 1, cat );
+      if ( type == GV_POINT || type == GV_LINE )  {
+          Vect_cat_set ( c, 1, shape + 1 );
       }
   }
  
@@ -359,8 +351,6 @@ Vect_next_line_offset_shp ( struct Map_info *Map )
 long
 Vect_last_line_offset_shp ( struct Map_info *Map )
 {
-    long offset;
-
     G_debug ( 3, "Vect_last_line_offset_shp()" );
     G_debug ( 3, "  offset = %d", Map->head.last_offset );
     

@@ -67,6 +67,7 @@ V2_close_shp (struct Map_info *Map)
 	Plus->coor_mtime = CInfo.mtime;
 
 	Vect_save_topo ( Map );
+	Vect_save_spatial_index ( Map );
         dig_free_plus ( Plus );
     } 
 
