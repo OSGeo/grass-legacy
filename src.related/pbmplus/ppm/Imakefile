@@ -1,0 +1,90 @@
+# Imakefile for ppm tools.
+#
+# Copyright (C) 1989, 1991 by Jef Poskanzer.
+#
+# Permission to use, copy, modify, and distribute this software and its
+# documentation for any purpose and without fee is hereby granted, provided
+# that the above copyright notice appear in all copies and that both that
+# copyright notice and this permission notice appear in supporting
+# documentation.  This software is provided "as is" without express or
+# implied warranty.
+
+PGMDIR =	../pgm
+INCLUDEPGM =	-I$(PGMDIR)
+LIBPGM =	$(PGMDIR)/libpgm.a
+DEFPGM =	$(PGMDIR)/pgm.h
+DEFLIBPGM =	$(PGMDIR)/libpgm.h
+
+PBMDIR =	../pbm
+INCLUDEPBM =	-I$(PBMDIR)
+LIBPBM =	$(PBMDIR)/libpbm.a
+DEFPBM =	$(PBMDIR)/pbm.h ../pbmplus.h
+DEFLIBPBM =	$(PBMDIR)/libpbm.h
+
+INCLUDE =	$(INCLUDEPGM) $(INCLUDEPBM)
+RGBDEF =	-DRGB_DB=\"DefaultRGBDatabase\"
+ALLCFLAGS =	$(CFLAGS) $(RGBDEF) $(INCLUDE)
+LIBPPM =	libppm.a
+
+PORTBINARIES =	giftoppm gouldtoppm ilbmtoppm imgtoppm mtvtoppm \
+		pcxtoppm pgmtoppm pi1toppm picttoppm \
+		ppmhist ppmmake ppmquant \
+		ppmrelief ppmtogif ppmtoicr ppmtoilbm \
+		ppmtopcx ppmtopgm ppmtopi1 ppmtopict ppmtops \
+		ppmtopuzz ppmtorgb3 ppmtouil \
+		ppmtoxpm qrttoppm rawtoppm rgb3toppm \
+		spctoppm sputoppm tgatoppm ximtoppm \
+		xpmtoppm 
+MATHBINARIES =	ppmpat
+BINARIES =	$(PORTBINARIES) $(MATHBINARIES)
+SCRIPTS =	ppmquantall
+
+MANUALS1 =	giftoppm.1 gouldtoppm.1 ilbmtoppm.1 imgtoppm.1 mtvtoppm.1 \
+		pcxtoppm.1 pgmtoppm.1 pi1toppm.1 picttoppm.1 \
+		ppmhist.1 ppmmake.1 ppmquant.1 \
+		ppmrelief.1  ppmtogif.1 ppmtoicr.1 ppmtoilbm.1 \
+		ppmtopcx.1 ppmtopgm.1 ppmtopi1.1 ppmtopict.1 ppmtops.1 \
+		ppmtopuzz.1 ppmtorgb3.1 ppmtouil.1 \
+		ppmtoxpm.1 qrttoppm.1 rawtoppm.1 rgb3toppm.1 \
+		spctoppm.1 sputoppm.1 tgatoppm.1 ximtoppm.1 \
+		xpmtoppm.1 \
+		ppmpat.1 \
+		ppmquantall.1
+MANUALS3 =	libppm.3
+MANUALS5 =	ppm.5
+
+all:		$(BINARIES)
+
+install::	all
+	cp $(BINARIES) $(BINDIR)
+	cp $(SCRIPTS) $(BINDIR)
+	cd $(BINDIR) ; chmod +x $(SCRIPTS)
+
+install.man::
+	cp $(MANUALS1) $(MANUALS3) $(MANUALS5) $(MANDIR)
+
+# Rule for plain programs.
+$(PORTBINARIES):	ppm.h $(DEFPGM) $(DEFPBM) $(LIBPPM) $(LIBPGM) $(LIBPBM)
+	$(CC) $(ALLCFLAGS) $(LDFLAGS) -o $@ $@.c $(LIBPPM) $(LIBPGM) $(LIBPBM)
+
+# Rule for math-dependent programs.
+$(MATHBINARIES):	ppm.h $(DEFPGM) $(DEFPBM) $(LIBPPM) $(LIBPGM) $(LIBPBM)
+	$(CC) $(ALLCFLAGS) $(LDFLAGS) -o $@ $@.c -lm $(LIBPPM) $(LIBPGM) $(LIBPBM)
+
+# And library.
+$(LIBPPM):	libppm1.o libppm2.o libppm3.o libppm4.o libppm5.o
+	-rm $(LIBPPM)
+	$(AR) $(LIBPPM) libppm1.o libppm2.o libppm3.o libppm4.o libppm5.o
+	-$(RANLIB) $(LIBPPM)
+
+libppm1.o:	ppm.h $(DEFPGM) $(DEFPBM) libppm.h libppm1.c
+	$(CC) $(ALLCFLAGS) -c libppm1.c
+libppm2.o:	ppm.h $(DEFPGM) $(DEFPBM) libppm.h libppm2.c $(DEFLIBPGM) \
+		$(DEFLIBPBM)
+	$(CC) $(ALLCFLAGS) -c libppm2.c
+libppm3.o:	ppm.h $(DEFPGM) $(DEFPBM) libppm.h libppm3.c
+	$(CC) $(ALLCFLAGS) -c libppm3.c
+libppm4.o:	ppm.h $(DEFPGM) $(DEFPBM) ppmcmap.h libppm4.c
+	$(CC) $(ALLCFLAGS) -c libppm4.c
+libppm5.o:	ppm.h $(DEFPGM) $(DEFPBM) ppmdraw.h libppm5.c
+	$(CC) $(ALLCFLAGS) -c libppm5.c
