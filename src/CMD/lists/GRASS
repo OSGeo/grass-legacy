@@ -1,6 +1,5 @@
-#The man stuff is generated from HTML now:
-#man
-html
+man
+#html
 src/libes/vask
 src/libes/segment
 src/libes/rowio
