@@ -33,7 +33,7 @@ int n;
 	int i,k;
 	double p,qn,sig,un,*u;
 	
-	u=(double *)calloc(n-1,sizeof(double));
+	u=(double *)calloc(n,sizeof(double));
 	if (yp1 > 0.99e30)
 		y2[1]=u[1]=0.0;
  	else {
