@@ -54,9 +54,9 @@ int main (int argc, char *argv[])
 /* -------------------------------------------------------------------- */
     G_gisinit (argv[0]);
 
-	module = G_define_module();
-	module->description =
-		"Import GDAL supported raster file into a binary raster map layer.";
+    module = G_define_module();
+    module->description =
+        "Import GDAL supported raster file into a binary raster map layer.";
 
 /* -------------------------------------------------------------------- */
 /*      Setup and fetch parameters.                                     */
@@ -218,6 +218,8 @@ int main (int argc, char *argv[])
                          "cellhd.proj = %d (unknown), zone = %d\n", 
                          cellhd.proj, cellhd.zone );
         }
+        strcat( error_msg, 
+         "\nYou can use the -o flag to r.in.gdal to override this check.\n" );
         G_fatal_error( error_msg );
     }
     
@@ -293,65 +295,139 @@ static void ImportBand( GDALRasterBandH hBand, const char *output )
 
 {
     RASTER_MAP_TYPE data_type;
-    GDALDataType    eGDT;
-    int row, col, nrows, ncols;
-    int cf;
-    CELL *cell;
+    GDALDataType    eGDT, eRawGDT;
+    int row, col, nrows, ncols, complex;
+    int cf, cfR, cfI;
+    int indx;
+    CELL *cell,*cellReal,*cellImg;
+    float *bufComplex;
+    char msg[100];
+    char outputReal[200], outputImg[200];
 
 /* -------------------------------------------------------------------- */
 /*      Select a cell type for the new cell.                            */
 /* -------------------------------------------------------------------- */
-    if( GDALGetRasterDataType( hBand ) == GDT_Float32
-        || GDALGetRasterDataType( hBand ) == GDT_Float64 )
-    {
+    eRawGDT = GDALGetRasterDataType( hBand );
+    
+    switch(eRawGDT) {
+      case GDT_Float32:
+      case GDT_Float64:
         data_type = FCELL_TYPE;
         eGDT = GDT_Float32;
-    }
-    else
-    {
+        complex = FALSE;
+        break;
+
+      case GDT_CInt16:
+      case GDT_CInt32:
+      case GDT_CFloat32:
+      case GDT_CFloat64:
+        data_type = FCELL_TYPE;
+        eGDT = GDT_CFloat32;
+        complex = TRUE;
+        break;	
+
+      default:
         data_type = CELL_TYPE;
         eGDT = GDT_Int32;
+        complex = FALSE;
+        break;
     }
     
 /* -------------------------------------------------------------------- */
-/*      Create the new raster                                           */
+/*      Create the new raster(s)                                          */
 /* -------------------------------------------------------------------- */
-    cf = G_open_raster_new((char *)output, data_type);
-    if (cf < 0)
+    ncols = GDALGetRasterBandXSize(hBand);
+    nrows = GDALGetRasterBandYSize(hBand);
+
+    if( complex )
     {
-        char msg[100];
-        sprintf (msg, "unable to create raster map %s", output);
-        G_fatal_error (msg);
-        exit(1);
+        sprintf( outputReal, "%s.real", output);
+        cfR = G_open_raster_new((char *)outputReal, data_type);
+        if (cfR < 0)
+	{
+            sprintf (msg, "unable to create raster map %s", outputReal);
+            G_fatal_error (msg);
+            exit(1);
+	}
+        sprintf( outputImg, "%s.imaginary", output);
+
+        cfI = G_open_raster_new((char *)outputImg, data_type);
+        if (cfI < 0)
+	{
+            sprintf (msg, "unable to create raster map %s", outputImg);
+            G_fatal_error (msg);
+            exit(1);
+	}
+
+        cellReal = G_allocate_raster_buf(data_type);
+        cellImg = G_allocate_raster_buf(data_type);
+        bufComplex = (float *) G_malloc(sizeof(float) * ncols * 2);
+    }
+    else
+    {
+        cf = G_open_raster_new((char *)output, data_type);
+        if (cf < 0)
+	{
+            sprintf (msg, "unable to create raster map %s", output);
+            G_fatal_error (msg);
+            exit(1);
+	}
+
+        cell = G_allocate_raster_buf(data_type);
     }
 
 /* -------------------------------------------------------------------- */
 /*      Write the raster one scanline at a time.                        */
 /* -------------------------------------------------------------------- */
-    ncols = GDALGetRasterBandXSize(hBand);
-    nrows = GDALGetRasterBandYSize(hBand);
-
-    cell = G_allocate_raster_buf(data_type);
-
     for (row = 1; row <= nrows; row++)
     {
-        GDALRasterIO( hBand, GF_Read, 0, row-1, ncols, 1, 
-                      cell, ncols, 1, eGDT, 0, 0 );
+        if( complex ) 
+        {
+            GDALRasterIO( hBand, GF_Read, 0, row-1, ncols, 1, 
+                          bufComplex, ncols, 1, eGDT, 0, 0 );
+            
+            for( indx=0; indx < ncols; indx++ ) 
+            {
+                ((float *) cellReal)[indx] = bufComplex[indx*2];
+                ((float *) cellImg)[indx]  = bufComplex[indx*2+1];
+            }
+            G_put_raster_row (cfR, cellReal, data_type);
+            G_put_raster_row (cfI, cellImg, data_type);
+        }
+        else
+        {
+            GDALRasterIO( hBand, GF_Read, 0, row-1, ncols, 1, 
+                          cell, ncols, 1, eGDT, 0, 0 );
+            
+            G_put_raster_row (cf, cell, data_type);
+        }
 
         G_percent(row, nrows, 2);
-        G_put_raster_row (cf, cell, data_type);
-    }
+    }	
 
 /* -------------------------------------------------------------------- */
 /*      Cleanup                                                         */
 /* -------------------------------------------------------------------- */
-    fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", output);
-    G_close_cell (cf);
+    if( complex ) 
+    {
+        fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", outputReal);
+        G_close_cell (cfR);
+
+        fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", outputImg);
+        G_close_cell (cfI);
+
+        G_free( bufComplex );
+    }
+    else
+    {
+        fprintf (stderr, "CREATING SUPPORT FILES FOR %s\n", output);
+        G_close_cell (cf);
+    }
 
 /* -------------------------------------------------------------------- */
 /*      Transfer colormap, if there is one.                             */
 /* -------------------------------------------------------------------- */
-    if( GDALGetRasterColorTable( hBand ) != NULL )
+    if( !complex && GDALGetRasterColorTable( hBand ) != NULL )
     {
         GDALColorTableH  hCT;
         struct Colors    colors;
