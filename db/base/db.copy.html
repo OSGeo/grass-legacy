@@ -9,8 +9,9 @@ Attribute tables can be copied manually using db.copy and
 <em><a HREF="v.db.connect.html">v.db.connect</a></em>. Current connection 
 settings are saved in <em>$LOCATION/vector_map/dbln</em>.  
 
-<h2>EXAMPLE</h2>
+<h2>EXAMPLES</h2>
 
+<b>DBF ->PG</a><P>
 <em>storing table 'markveggy.dbf' (in current directory) into PostgreSQL 
 through ODBC:</em><br>
 <b>db.copy from_driver=</b><em>dbf</em> <b>from_database=</b><em>./</em> 
@@ -18,9 +19,16 @@ through ODBC:</em><br>
 <b>to_database=</b><em>"host=pgserver,dbname=grass51test,user=neteler"</em>  
 <b>to_table=</b><em>markveggy</em>
 
+<P>
+<P>
+<b>PG -> DBF</a><P>
+
+<tt>db.copy from_driver=pg  from_database="host=pgserver.itc.it,dbname=testdb,user=postgres" 
+   from_table=origtable to_driver=dbf to_database=./ to_table=origtable</tt>
+   
 <h2>SEE ALSO</h2>
 
-<em><a HREF="http://grass.itc.it/grass51/tutorial/attrib_storage.html">GRASS 5.1
+<em><a HREF="http://grass.itc.it/grass51/tutorial/attrib_storage.html">GRASS 5.7
 tutorial pages</a></em><br>
 <em><a HREF="v.db.connect.html">v.db.connect</a></em><br>
 <em><a HREF="db.drivers.html">db.drivers</a></em><br>
@@ -30,3 +38,5 @@ tutorial pages</a></em><br>
 <h2>AUTHOR</h2>
 
 Radim Blazek, ITC-Irst, Trento, Italy
+
+<p><i>Last changed: $Date$</i>
