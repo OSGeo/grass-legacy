@@ -26,6 +26,9 @@ cp $GISBASE/etc/digcap.sample $GISBASE/etc/digcap
 cp src/scripts/shells/create_fifos.sh $GISBASE/dev
 chmod ugo+x $GISBASE/dev/create_fifos.sh
 
+cp src/scripts/shells/create_buffers.sh $GISBASE/dev
+chmod ugo+x $GISBASE/dev/create_buffers.sh
+
 # create locks directory for GRASS MONITORS and set permissions
 SERVERNAME=`uname -n`
 if [ ! -d $GISBASE/locks ]; then mkdir $GISBASE/locks ; fi
