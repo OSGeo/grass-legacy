@@ -1,0 +1,11 @@
+LIBES = $(IMAGERYLIB) $(GISLIB)
+OBJ =\
+	main.o\
+	ask_levels.o\
+	compose.o\
+	gen_colors.o
+
+$(BIN)/i.composite: ${OBJ} ${LIBES} ${VASKLIB}
+	$(CC) ${LDFLAGS} -o $@ ${OBJ} ${LIBES} ${VASK}
+
+${LIBES} ${VASKLIB}: #
