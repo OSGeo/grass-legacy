@@ -4,11 +4,6 @@
 ##		 libraries.				    ##
 ##############################################################
 
-ifeq (\$(UNIX_SYS), CYGWIN)
-#required for Windows/Cygnus (12/99)
-XDRLIB = /usr/local/lib/librpclib.a
-endif
-
 PROG = $(BIN_CONTRIB_CMD)/d.param.scale
 #--------------------------^ Name of the GRASS module here.
 
