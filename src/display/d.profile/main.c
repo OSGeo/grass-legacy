@@ -108,9 +108,14 @@ if (max < 0) max = 0;
 		R_flush();
 		DrawText(25,1,1,"GRASS PROGRAM: profile");
 		R_standard_color(D_translate_color("white"));
-		DrawText(15,3,1,"MOUSE  | Left:   Where am I?");
-		DrawText(15,4,1,"BUTTON | Middle: Set FIRST point");
-		DrawText(15,5,1,"MENU   | Right:  Quit this\n");
+		DrawText(15,3,1,"MOUSE   | Left:   Where am I?");
+#ifdef ANOTHER_BUTTON
+		DrawText(15,4,1,"BUTTON  | Middle: Quit this");
+		DrawText(15,5,1,"MENU    | Right:  Set FIRST point\n");
+#else
+		DrawText(15,4,1,"BUTTON  | Middle: Set FIRST point");
+		DrawText(15,5,1,"MENU    | Right:  Quit this\n");
+#endif
 
 		/* LOOP to get first point of line */
 		do
@@ -128,7 +133,7 @@ if (max < 0) max = 0;
 			R_get_location_with_pointer(&screen_x, &screen_y, &button);
 
 			/* exit if user hit left mouse button */
-			if(button == 3)
+			if(button == RIGHT)
 			{
 				Dchoose(ORIG.name);
 				return(0) ;
@@ -147,7 +152,7 @@ if (max < 0) max = 0;
 				R_standard_color(D_translate_color("red"));
 				R_flush();
 				DrawText(25,1,1,"OUTSIDE CURRENT WINDOW");
-				button = 1;
+				button = LEFT;
 			}
 			else
 			{
@@ -157,7 +162,7 @@ if (max < 0) max = 0;
 
 			}
 
-		}   while (button != 2);
+		}   while (button != MIDDLE);
 
 		/* display mouse-menu in mouse-menu window */
 		Dchoose(MOU.name);
@@ -168,8 +173,13 @@ if (max < 0) max = 0;
 		DrawText(25,1,1,"GRASS PROGRAM: profile");
 		R_standard_color(D_translate_color("white"));
 		DrawText(15,3,1,"MOUSE   | Left:   Where am I?");
+#ifdef ANOTHER_BUTTON
+		DrawText(15,4,1,"BUTTON  | Middle: Quit this");
+		DrawText(15,5,1,"MENU    | Right:  Set SECOND point\n");
+#else
 		DrawText(15,4,1,"BUTTON  | Middle: Set SECOND point");
 		DrawText(15,5,1,"MENU    | Right:  Quit this\n");
+#endif
 
 		/* move graphics position to first point chosen */
 		R_move_abs(screen_x, screen_y) ;
@@ -198,18 +208,18 @@ if (max < 0) max = 0;
 				R_standard_color(D_translate_color("red"));
 				R_flush();
 				DrawText(25,1,1,"OUTSIDE CURRENT WINDOW");
-				button = 1;
+				button = LEFT;
 			}
 			else
 			{
 				switch (button)
 				{
-				case 1:
+				case LEFT:
 					/* print "earth" coords. and category info. in status window */
 					Dchoose(STA.name);
 					What(old_mapname,old_mapset,window,ux,uy);
 					break;
-				case 2:
+				case MIDDLE:
 					/* get profile data */
 					InitProfile(&profile,window,cur_uy,cur_ux,uy,ux);
 					if (err=ExtractProfile(&profile,old_mapname,old_mapset)==-1)
@@ -320,7 +330,7 @@ if (max < 0) max = 0;
 					break;
 				}
 			}
-		}   while (button != 3 && button != 2);
+		}   while (button != RIGHT && button != MIDDLE);
 
 		/* display mouse-menu in mouse-menu window */
 		Dchoose(MOU.name);
@@ -331,16 +341,21 @@ if (max < 0) max = 0;
 		DrawText(25,1,1,"GRASS PROGRAM: profile");
 		R_standard_color(D_translate_color("white"));
 		DrawText(15,3,1,"MOUSE   | Left:   DO ANOTHER");
+#ifdef ANOTHER_BUTTON
+		DrawText(15,4,1,"BUTTON  | Middle: QUIT");
+		DrawText(15,5,1,"MENU    | Right:  CLEAR DISPLAY");
+#else
 		DrawText(15,4,1,"BUTTON  | Middle: CLEAR DISPLAY");
 		DrawText(15,5,1,"MENU    | Right:  QUIT");
+#endif
 
 		R_get_location_with_pointer(&screen_x, &screen_y, &button) ;
-		if (button == 3)
+		if (button == RIGHT)
 		{
 			Dchoose(ORIG.name);
 			return(0);
                 }
-		else if (button == 2)
+		else if (button == MIDDLE)
 		{
 			Dchoose(MAP.name);
 			Derase("black") ;
