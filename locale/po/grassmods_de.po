@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-04 20:14+0100\n"
-"PO-Revision-Date: 2005-02-12 17:51+0100\n"
+"POT-Creation-Date: 2005-03-20 17:10+0100\n"
+"PO-Revision-Date: 2005-03-20 17:35+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -265,12 +265,12 @@ msgstr ""
 msgid "Unknown option in database definition for mysql: '%s'"
 msgstr "Unbekannte Option in der Datenbankdefinition für mysql: '%s'"
 
-#: ../db/drivers/ogr/describe.c:87
+#: ../db/drivers/ogr/describe.c:88
 #, c-format
 msgid "OGR driver: column '%s', OGR type %d  is not supported"
 msgstr "OGR-Treiber: Spalte '%s', OGR Typ %d wird nicht unterstützt."
 
-#: ../db/drivers/ogr/describe.c:143
+#: ../db/drivers/ogr/describe.c:144
 #, c-format
 msgid ""
 "column '%s', type 'string': unknown width -> stored as varchar(250) some "
@@ -279,7 +279,7 @@ msgstr ""
 "Spalte '%s' mit Typ 'string': unbekannte Breite -> als Datentyp varchar(250) "
 "abgespeichert. Einige Daten können u.U verloren sein."
 
-#: ../db/drivers/ogr/describe.c:151 ../db/drivers/ogr/fetch.c:124
+#: ../db/drivers/ogr/describe.c:152 ../db/drivers/ogr/fetch.c:124
 msgid "Unknown type"
 msgstr "Unbekannter Typ"
 
@@ -870,7 +870,7 @@ msgstr "Titel, in Gänsefüßchen"
 #: ../raster/r.grow2/main.c:162 ../raster/r.mfilter/main.c:79
 #: ../raster/r.patch/main.c:64 ../raster/r.report/parse.c:99
 #: ../raster/r.resample/main.c:57 ../raster/r.rescale.eq/main.c:78
-#: ../raster/r.slope.aspect/main.c:253 ../raster/r.stats/main.c:141
+#: ../raster/r.slope.aspect/main.c:253 ../raster/r.stats/main.c:146
 #: ../raster/r.texture/main.c:114
 msgid "Quiet"
 msgstr "schweigsam"
@@ -1034,7 +1034,6 @@ msgid "Name of raster map to contain results"
 msgstr "Name der Ergebniskarte"
 
 #: ../raster/r.composite/main.c:130
-#, fuzzy
 msgid "Dither"
 msgstr "schwankend"
 
@@ -1057,7 +1056,7 @@ msgstr "Entkomprimiert die Karte"
 #: ../raster/r.compress/main.c:59 ../raster/r.distance/parse.c:38
 #: ../raster/r.neighbors/main.c:110 ../raster/r.out.ppm/main.c:64
 #: ../raster/r.out.ppm3/main.c:76 ../raster/r.random/main.c:69
-#: ../raster/r.series/main.c:112
+#: ../raster/r.series/main.c:114
 msgid "Run quietly"
 msgstr "Arbeite leise."
 
@@ -1254,7 +1253,7 @@ msgstr "Findet die dichtesten Punkte zweier Objekte in zwei Rasterkarten."
 msgid "Maps for computing inter-class distances"
 msgstr "Karten für die Berechnung von Inter-class-Entfernungen"
 
-#: ../raster/r.distance/parse.c:30 ../raster/r.stats/main.c:89
+#: ../raster/r.distance/parse.c:30 ../raster/r.stats/main.c:90
 msgid "Output field separator"
 msgstr "Ausgabe Feld-Trennzeichen"
 
@@ -1450,7 +1449,6 @@ msgid "Import a binary raster file into a GRASS raster map layer."
 msgstr "Importiert eine binäre Rasterkarte in eine GRASS Rasterkarte."
 
 #: ../raster/r.in.bin/main.c:116
-#, fuzzy
 msgid "Signed data (high bit means negative value)"
 msgstr "Signed Daten (hohes Bit meint negative Werte)"
 
@@ -1748,13 +1746,16 @@ msgid ""
 "Makes each cell category value a function of the category values assigned to "
 "the cells around it, and stores new cell values in an output raster map "
 "layer."
-msgstr "Weist für jeden Zellenkategoriewert eine Funktion der umgebenden Kategoriewerte basierend auf einer Fenstergröße zu und erstellt neue Zellenwerte in einer Ausgaberasterkarte."
+msgstr ""
+"Weist für jeden Zellenkategoriewert eine Funktion der umgebenden "
+"Kategoriewerte basierend auf einer Fenstergröße zu und erstellt neue "
+"Zellenwerte in einer Ausgaberasterkarte."
 
 #: ../raster/r.neighbors/main.c:66
 msgid "Name of existing raster file"
 msgstr "Name einer existenten Rasterkarte."
 
-#: ../raster/r.neighbors/main.c:73 ../raster/r.series/main.c:101
+#: ../raster/r.neighbors/main.c:73 ../raster/r.series/main.c:103
 msgid "Name of the new raster file"
 msgstr "Name einer neuen Rasterkarte"
 
@@ -2362,7 +2363,7 @@ msgstr "Seitenbreite (Standard: %d Zeichen)."
 msgid "Name of an output file to hold the report"
 msgstr "Name der Ausgabedatei zum Speichern des Reports."
 
-#: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:112
+#: ../raster/r.report/parse.c:87 ../raster/r.stats/main.c:113
 msgid "Number of fp subranges to collect stats from"
 msgstr "Anzahl der Kategoriewerte, für die Statistiken eingeholt werden sollen."
 
@@ -2386,7 +2387,7 @@ msgstr "Alle NODATA-Werte herausfiltern."
 msgid "Filter out cells where all maps have no data"
 msgstr "Filtere alle Zellen heraus, wo alle Karten NODATA-Werte haben."
 
-#: ../raster/r.report/parse.c:115 ../raster/r.stats/main.c:161
+#: ../raster/r.report/parse.c:115 ../raster/r.stats/main.c:166
 msgid "Report for cats fp ranges (fp maps only)"
 msgstr "Gebe Fließkomma-Spannen der Cats aus. (nur bei Fließkomma-Karten)"
 
@@ -2404,75 +2405,71 @@ msgstr ""
 "Eingabekarte in eine neue Rasterkarte unter Benutzung von regularized "
 "splines with tension und Glättung (RST)."
 
-#: ../raster/r.resamp.rst/main.c:175
-msgid "Do zeroes in input map represent elevation?"
-msgstr "Repräsentieren die 0-Werte der Eingabekarte Höheninformationen?"
-
-#: ../raster/r.resamp.rst/main.c:181
+#: ../raster/r.resamp.rst/main.c:177
 msgid "Desired east-west resolution"
 msgstr "Gewünschte Ost-West Auflösung."
 
-#: ../raster/r.resamp.rst/main.c:187
+#: ../raster/r.resamp.rst/main.c:183
 msgid "Desired north-south resolution"
 msgstr "Gewünschte Nord-Süd Auflösung."
 
-#: ../raster/r.resamp.rst/main.c:194
+#: ../raster/r.resamp.rst/main.c:190
 msgid "Output z-file (elevation)"
 msgstr "Ausgabekarte derz-Werte (Höheninformationen)."
 
-#: ../raster/r.resamp.rst/main.c:201
+#: ../raster/r.resamp.rst/main.c:197
 msgid "Slope"
 msgstr "Hangneigung"
 
-#: ../raster/r.resamp.rst/main.c:208
+#: ../raster/r.resamp.rst/main.c:204
 msgid "Aspect"
 msgstr "Hangexposition"
 
-#: ../raster/r.resamp.rst/main.c:215
+#: ../raster/r.resamp.rst/main.c:211
 msgid "Profile curvature"
 msgstr "Vertikal-Wölbung"
 
-#: ../raster/r.resamp.rst/main.c:222
+#: ../raster/r.resamp.rst/main.c:218
 msgid "Tangential curvature"
 msgstr "Horizontal-Wölbung"
 
-#: ../raster/r.resamp.rst/main.c:229
+#: ../raster/r.resamp.rst/main.c:225
 msgid "Mean curvature"
 msgstr "Mittlere Wölbung"
 
-#: ../raster/r.resamp.rst/main.c:233
+#: ../raster/r.resamp.rst/main.c:229
 msgid "Output partial derivatives instead"
 msgstr "Gebe stattdessen partielle Ableitung aus."
 
-#: ../raster/r.resamp.rst/main.c:240
+#: ../raster/r.resamp.rst/main.c:236
 msgid "Name of the cell file containing smoothing"
 msgstr "Name der Datei, die die Glättung enthält."
 
-#: ../raster/r.resamp.rst/main.c:247
+#: ../raster/r.resamp.rst/main.c:243
 msgid "Name of the raster file used as mask"
 msgstr "Name der Rasterkarte, die als Maske benutzt werden soll."
 
-#: ../raster/r.resamp.rst/main.c:254
+#: ../raster/r.resamp.rst/main.c:250
 msgid "Rows/columns overlap for segmentation"
 msgstr "Reihen/Spalte Überlappung für Segmentierung."
 
-#: ../raster/r.resamp.rst/main.c:261
+#: ../raster/r.resamp.rst/main.c:257
 msgid "Conversion factor for z-values"
 msgstr "Konvertierungsfaktor ür z-Werte."
 
-#: ../raster/r.resamp.rst/main.c:268
+#: ../raster/r.resamp.rst/main.c:264
 msgid "Tension"
 msgstr "Spannung (Tension)"
 
-#: ../raster/r.resamp.rst/main.c:274
+#: ../raster/r.resamp.rst/main.c:270
 msgid "Anisotropy angle (in degrees)"
 msgstr "Anisotropie-Winkel (in Grad)"
 
-#: ../raster/r.resamp.rst/main.c:280
+#: ../raster/r.resamp.rst/main.c:276
 msgid "Anisotropy scaling factor"
 msgstr "Anisotropie Skalierfaktor"
 
-#: ../raster/r.resamp.rst/main.c:284
+#: ../raster/r.resamp.rst/main.c:280
 msgid "Use dnorm independent tension"
 msgstr "Benutze dnorm unabhängige Spannung."
 
@@ -2518,23 +2515,27 @@ msgstr "Titel für die neue Rasterkarte."
 msgid ""
 "Rescales histogram equalized the range of categoryvalues in a raster map "
 "layer."
-msgstr "Reskaliert ein normalisiertes Histogram basierend auf der Spanne der Kategoriewerte einer Rasterkarte."
+msgstr ""
+"Reskaliert ein normalisiertes Histogram basierend auf der Spanne der "
+"Kategoriewerte einer Rasterkarte."
 
-#: ../raster/r.series/main.c:84
+#: ../raster/r.series/main.c:86
 msgid ""
 "Makes each output cell value a function of the values assigned to the "
 "corresponding cells in the input raster map layers."
-msgstr "Macht aus jeder Ausgabezelle eine Funktion der Werte, die einer korrespondierenden Zelle einer Eingabekarte zugewiesen ist."
+msgstr ""
+"Macht aus jeder Ausgabezelle eine Funktion der Werte, die einer "
+"korrespondierenden Zelle einer Eingabekarte zugewiesen ist."
 
-#: ../raster/r.series/main.c:94
+#: ../raster/r.series/main.c:96
 msgid "Names of existing raster files"
 msgstr "Name einer existierenden Rasterkarte."
 
-#: ../raster/r.series/main.c:108
+#: ../raster/r.series/main.c:110
 msgid "Aggregate operation"
 msgstr "Durchzuführende Operation"
 
-#: ../raster/r.series/main.c:116
+#: ../raster/r.series/main.c:118
 msgid "Propagate NULLs"
 msgstr "Vermehre NULLs"
 
@@ -2630,63 +2631,67 @@ msgstr ""
 msgid "Cover values extracted from the category labels of the cover map"
 msgstr "Benutze die Kategorie-Werte, die von der Coverkarte bedeckt sind."
 
-#: ../raster/r.stats/main.c:70
+#: ../raster/r.stats/main.c:71
 msgid "Generates area statistics for raster map layers."
 msgstr "Erzeugt Flächenstatistiken für Rasterkarten."
 
-#: ../raster/r.stats/main.c:80
+#: ../raster/r.stats/main.c:81
 msgid "Raster input maps(s)"
 msgstr "Rastereingabekarte(n)"
 
-#: ../raster/r.stats/main.c:97
+#: ../raster/r.stats/main.c:98
 msgid "String representing no data cell value"
 msgstr "Zeichenkette, die NODATA-Werte repräsentiert."
 
-#: ../raster/r.stats/main.c:104
+#: ../raster/r.stats/main.c:105
 msgid "Output file name"
 msgstr "Ausgabedateiname"
 
-#: ../raster/r.stats/main.c:121
+#: ../raster/r.stats/main.c:122
 msgid "One cell (range) per line"
 msgstr "Eine Zelle(nspanne) pro Linie."
 
-#: ../raster/r.stats/main.c:125
+#: ../raster/r.stats/main.c:126
+msgid "Print averaged values instead of intervals"
+msgstr "Gib gemittelte Werte anstatt Intervalle aus."
+
+#: ../raster/r.stats/main.c:130
 msgid "Print area totals"
 msgstr "Gebe Flächensummen aus."
 
-#: ../raster/r.stats/main.c:129
+#: ../raster/r.stats/main.c:134
 msgid "Print cell counts"
 msgstr "Gebe Zellenanzahlen aus."
 
-#: ../raster/r.stats/main.c:133
+#: ../raster/r.stats/main.c:138
 msgid "Print APPROXIMATE percents (total percent may not be 100%)"
 msgstr "Gebe ungefähre Prozente aus (Gesamtprozente müssen nicht 100% ergeben)."
 
-#: ../raster/r.stats/main.c:137
+#: ../raster/r.stats/main.c:142
 msgid "Print category labels"
 msgstr "Gebe Kategorielabel aus."
 
-#: ../raster/r.stats/main.c:145
+#: ../raster/r.stats/main.c:150
 msgid "Suppress reporting of any NULLs"
 msgstr "Unterdrücke die Ausgabe von NULL-Werten."
 
-#: ../raster/r.stats/main.c:149
+#: ../raster/r.stats/main.c:154
 msgid "Suppress reporting of NULLs when all values are NULL"
 msgstr "Unterdrücke die Ausgabe von NULL-Werten, wenn alle Werte NULL sind."
 
-#: ../raster/r.stats/main.c:153
+#: ../raster/r.stats/main.c:158
 msgid "Print grid coordinates (east and north)"
 msgstr "Gebe Rasterkoordinaten aus (Ost und Nord)."
 
-#: ../raster/r.stats/main.c:157
+#: ../raster/r.stats/main.c:162
 msgid "Print x and y (column and row)"
 msgstr "Gebe x und y aus (Spalten und Reihen)."
 
-#: ../raster/r.stats/main.c:165
+#: ../raster/r.stats/main.c:170
 msgid "Print raw indexes of fp ranges (fp maps only)"
 msgstr "Gebe rohe Indizes der Fließkomma-Spannen aus (nur Fließkommakarten)."
 
-#: ../raster/r.stats/main.c:169
+#: ../raster/r.stats/main.c:174
 msgid "Read fp map as integer (use map's quant rules)"
 msgstr ""
 "Lese Fließkommakarte als Integerkarte (benutze Quantisierungsregeln der "
@@ -2719,84 +2724,94 @@ msgstr ""
 "Abschattung der Topographie kann optional berücksichtigt werden."
 
 #: ../raster/r.sun/main.c:184
-msgid "Name of the elevation raster file"
-msgstr "Name der Datei mit Höheninformationen."
+msgid "Name of the input elevation raster map [meters]"
+msgstr "Name der Datei mit Höheninformationen [in Meter]."
 
 #: ../raster/r.sun/main.c:191
-msgid "Name of the aspect raster file"
-msgstr "Name der Hangexpositionskarte."
+msgid ""
+"Name of the input aspect map (terrain aspect or azimuth of the solar panel) "
+"[decimal degrees]"
+msgstr "Eingabedatei der Hangexposition (Geländeexposition oder Azimuth des Sonnenstandes) [in Grad]."
 
 #: ../raster/r.sun/main.c:198
-msgid "Name of the slope raster file"
-msgstr "Name der Hangneigungskarte."
+msgid ""
+"Name of the input slope raster map (terrain slope or solar panel "
+"inclination) [decimal degrees]"
+msgstr "Eingabekarte der Hangneigung (Geländeneigung oder Sonnenstandsinklination) [in Grad]."
 
 #: ../raster/r.sun/main.c:206
-msgid "Name of the Linke turbidity coefficient raster file"
-msgstr "Name der Karte des Linke Trübungskoeffizienten."
+msgid "Name of the Linke atmospheric turbidity coefficient input raster map [-]"
+msgstr "Eingabekarte des Linke Trübungskoeffizienten der Atmosphäre [-]."
 
 #: ../raster/r.sun/main.c:215
-msgid "A single value of the Linke turbidity coefficient"
-msgstr "Ein einfacher Wert des Linke Trübungskoeffizients."
+msgid "A single value of the Linke atmospheric turbidity coefficient [-]"
+msgstr "Ein einfacher Wert des Linke Trübungskoeffizients der Atmosphäre [-]."
 
 #: ../raster/r.sun/main.c:223
-msgid "Name of the albedo coefficient raster file"
-msgstr "Name der Albedokoeffizientkarte."
+msgid "Name of the ground albedo coefficient input raster map [-]"
+msgstr "Einabekarte des Grund-Albedokoeffizients [-]."
 
 #: ../raster/r.sun/main.c:231
-msgid "A single value of the albedo coefficient"
-msgstr "Ein einfacher Wert des Albedokoeffizients."
+msgid "A single value of the ground albedo coefficient [-]"
+msgstr "Ein einfacher Wert des Grund-Albedokoeffizients [-]."
 
 #: ../raster/r.sun/main.c:239
-msgid "Name of the latitude raster file"
-msgstr "Name der Breitengradkarte."
+msgid "Name of the latitudes input raster map [decimal degrees]"
+msgstr "Eingabekarte des Breitengrads [in Grad]."
 
 #: ../raster/r.sun/main.c:246
-msgid "A single value of latitude"
-msgstr "Ein einfacher Wert des Breitengrads."
+msgid "A single value of latitude [decimal degrees]"
+msgstr "Ein einfacher Wert des Breitengrads [in Grad]."
 
 #: ../raster/r.sun/main.c:254
-msgid "The real-sky beam radiation coefficient file"
-msgstr "Die Karte mit dem Koeffizient der direkten Sonneneinstrahlung."
+msgid "Name of real-sky beam radiation coefficient raster map [-]"
+msgstr "Die Karte mit dem Koeffizient der direkten Sonneneinstrahlung [-]."
 
 #: ../raster/r.sun/main.c:262
-msgid "The real-sky diffuse radiation coefficient file"
-msgstr "Die Karte mit dem Koeffizient der diffusen Sonneneinstrahlung."
+msgid "Name of real-sky diffuse radiation coefficient raster map [-]"
+msgstr "Die Karte mit dem Koeffizient der diffusen Sonneneinstrahlung [-]."
 
 #: ../raster/r.sun/main.c:269
-msgid "Output incidence angle file (raster)"
-msgstr "Ausgabekarte des Einfallswinkels (Raster)."
+msgid "Output incidence angle raster map (mode 1 only)"
+msgstr "Ausgabekarte des Einfallswinkels (nur Modus 1)."
 
 #: ../raster/r.sun/main.c:277
-msgid "Output direct (beam) irradiance/irradiation file (raster)"
-msgstr "Ausgabekarte der direkten Sonneneinstrahlung (Raster)."
+msgid ""
+"Output beam irradiance [W.m-2] (mode 1) or irradiation raster file [Wh.m-2."
+"day-1] (mode 2)"
+msgstr "Ausgabe der gerichteten [W.m-2] (Modus 1) Strahlung oder der Abstrahlung [Wh.m-2.day-1] (Modus 2)."
 
 #: ../raster/r.sun/main.c:284
-msgid "Output insolation time file (raster)"
-msgstr "Ausgabekarte der Sonneneinstrahlungszeit (Raster)."
+msgid "Output insolation time raster map [h] (mode 2 only)"
+msgstr "Ausgabekarte der Sonneneinstrahlungszeit [in h] (nur Modus 2)."
 
 #: ../raster/r.sun/main.c:292
-msgid "Output diffuse irradiance/irradiation file (raster)"
-msgstr "Ausgabekarte der diffusen Sonneneinstrahlung (Raster)."
+msgid ""
+"Output diffuse irradiance [W.m-2] (mode 1) or irradiation raster map [Wh.m-2."
+"day-1] (mode 2)"
+msgstr "Ausgabekarte der diffusen Sonneneinstrahlung [W.m-2] (Modus 1) oder der Abstrahlung [Wh.m-2.day-1] (Modus 2)."
 
 #: ../raster/r.sun/main.c:300
-msgid "Output reflected irradiance/irradiation file (raster)"
-msgstr "Ausgabe der reflektierten Sonneneinstrahlung (Raster)."
+msgid ""
+"Output ground reflected irradiance [W.m-2] (mode 1) or irradiation raster "
+"map [Wh.m-2.day-1] (mode 2)"
+msgstr "Ausgabekarte der Grund-Ausstrahlung [W.m-2] (Modus 1) oder Intensität [Wh.m-2.day1] (Modus 2)."
 
 #: ../raster/r.sun/main.c:306
 msgid "No. of day of the year (1-365)"
 msgstr "Nummer des Tages im Jahr (1-365)"
 
 #: ../raster/r.sun/main.c:313
-msgid "Time step computing all-day radiation"
-msgstr "Zeitschritt für die Berechnung der ganztägigen Strahlung."
+msgid "Time step when computing all-day radiation sums [decimal hours]"
+msgstr "Zeitschritt für die Berechnung der ganztägigen Strahlung [in Dezimal-Stunden]."
 
 #: ../raster/r.sun/main.c:320
-msgid "Required declination value (overriding the internal value)"
-msgstr "Erforderlicher Deklinationswert (überschreibt den internen Wert)."
+msgid "Declination value (overriding the internally computed value) [radians]"
+msgstr "Erforderlicher Deklinationswert (überschreibt den intern berechneten Wert) [als Bogenmaß]."
 
 #: ../raster/r.sun/main.c:327
-msgid "Local (solar) time [decimal hours]"
-msgstr "Lokale (Sonnen-)Zeit [Dezimal-Stunden]"
+msgid "Local (solar) time (to be set for mode 1 only) [decimal hours]"
+msgstr "Lokale (Sonnen-)Zeit (muss für Modus 1 gesetzt werden) [Dezimal-Stunden]"
 
 #: ../raster/r.sun/main.c:334
 msgid "Sampling distance step coefficient (0.5-1.5)"
@@ -2811,7 +2826,10 @@ msgid ""
 "Calculates cast shadow areas from sun position and DEM. Either A: exact sun "
 "position is specified, or B: date/time to calculate the sun position by r."
 "sunmask itself."
-msgstr "Berechnet Schlagschattenbereiche zwischen Sonnenstand und DEM. Es können entweder A: exakte Sonnenposition, oder B: Datum/Uhrzeit zur selbständigen Berechnung durch r.sunmask, angegeben werden."
+msgstr ""
+"Berechnet Schlagschattenbereiche zwischen Sonnenstand und DEM. Es können "
+"entweder A: exakte Sonnenposition, oder B: Datum/Uhrzeit zur selbständigen "
+"Berechnung durch r.sunmask, angegeben werden."
 
 #: ../raster/r.sunmask/main.c:119
 msgid "Name of elevation raster map"
@@ -2857,7 +2875,9 @@ msgstr "B: Sekunden (0..60)"
 msgid ""
 "B: timezone (east positive, offset from GMT, also use to adjust daylight "
 "savings)"
-msgstr "B: Zeitzone (Ost positiv, Abstand von GMT; wird auch zur Anpassung an die Winterzeit genutzt)."
+msgstr ""
+"B: Zeitzone (Ost positiv, Abstand von GMT; wird auch zur Anpassung an die "
+"Winterzeit genutzt)."
 
 #: ../raster/r.sunmask/main.c:190
 msgid "east coordinate (point of interest, default: map center)"
@@ -3021,7 +3041,9 @@ msgstr "Vertikaler Maßstab."
 
 #: ../raster/r.surf.contour/main.c:34
 msgid "Surface generation program from rasterized contours."
-msgstr "Erzeugt eine Rasteroberfläche aus gerasterten Konturlinien mit Höheninformationen."
+msgstr ""
+"Erzeugt eine Rasteroberfläche aus gerasterten Konturlinien mit "
+"Höheninformationen."
 
 #: ../raster/r.surf.contour/main.c:41
 msgid "Name of existing raster map containing contours"
@@ -3042,7 +3064,13 @@ msgid ""
 "up of different spectral coefficients (see Saupe, pp.106-107 for an example "
 "of this). Use this module to generate naturally looking synthetical "
 "elevation models (DEM)."
-msgstr "GRASS Modul zum Erstellen einer fraktalen Oberfläche aus einer gegebenen fraktalen Dimension. Dabei wird die Spectral synthesis Methode benutzt. Es können Zwischenschritte mit unterschiedlichen spektralen Koeffizienten erstellt werden (vgl. Saupe S. 106-107 für ein Beispiel). Das Modul kann zur Erstellung eines natürlich aussehenden synthetischen Höhenmodells (DEM) benutzt werden."
+msgstr ""
+"GRASS Modul zum Erstellen einer fraktalen Oberfläche aus einer gegebenen "
+"fraktalen Dimension. Dabei wird die Spectral synthesis Methode benutzt. Es "
+"können Zwischenschritte mit unterschiedlichen spektralen Koeffizienten "
+"erstellt werden (vgl. Saupe S. 106-107 für ein Beispiel). Das Modul kann zur "
+"Erstellung eines natürlich aussehenden synthetischen Höhenmodells (DEM) "
+"benutzt werden."
 
 #: ../raster/r.surf.fractal/interface.c:54
 msgid "Name of fractal surface raster layer"
@@ -3061,7 +3089,10 @@ msgid ""
 "GRASS module to produce a raster map layer of gaussian deviates whose mean "
 "and standard deviation can be expressed by the user. It uses a gaussian "
 "random number generator."
-msgstr "GRASS Modul zum Erstellen einer Gauß 'schen Verteilung, wobei das arithmetisches Mittel und Standardabweichung vom Benutzer angegeben werden können. Ein Gauß 'scher Zufallsgenerator wird benutzt."
+msgstr ""
+"GRASS Modul zum Erstellen einer Gauß 'schen Verteilung, wobei das "
+"arithmetisches Mittel und Standardabweichung vom Benutzer angegeben werden "
+"können. Ein Gauß 'scher Zufallsgenerator wird benutzt."
 
 #: ../raster/r.surf.gauss/main.c:54 ../raster/r.surf.random/main.c:49
 msgid "Name of the random surface to be produced"
@@ -3103,7 +3134,9 @@ msgstr "Name der Ausgaberasterkarte."
 msgid ""
 "Produces a raster map layer of uniform random deviates whose range can be "
 "expressed by the user."
-msgstr "Erzeugt eine Rasterkarte mit zufälligen Werten, die vom Benutzer festgelegt werden können."
+msgstr ""
+"Erzeugt eine Rasterkarte mit zufälligen Werten, die vom Benutzer festgelegt "
+"werden können."
 
 #: ../raster/r.surf.random/main.c:54
 msgid "Minimum random value"
@@ -3223,99 +3256,101 @@ msgstr "Glätte Ecken."
 
 #: ../raster/r.to.vect/main.c:55
 msgid "Use raster values as categories instead of unique sequence (CELL only)"
-msgstr "Benutze Rasterzellenwerte als Kategoriewerte anstelle von eindeutigen Sequenzen (nur bei CELL-Karten)."
+msgstr ""
+"Benutze Rasterzellenwerte als Kategoriewerte anstelle von eindeutigen "
+"Sequenzen (nur bei CELL-Karten)."
 
-#: ../raster/r.topidx/main.c:46
+#: ../raster/r.topidx/main.c:43
 msgid "Creates topographic index, ln(a/tan(beta)), map from elevation map."
-msgstr "Erstellt Topographischen Index (ln(a/tan(beta))) auf Basis einer Höhenkarte (DEM)."
+msgstr ""
+"Erstellt Topographischen Index (ln(a/tan(beta))) auf Basis einer Höhenkarte "
+"(DEM)."
 
-#: ../raster/r.topidx/main.c:50
+#: ../raster/r.topidx/main.c:47
 msgid "Elevation map"
 msgstr "Höhenkarte (DEM)"
 
-#: ../raster/r.topidx/main.c:57
+#: ../raster/r.topidx/main.c:54
 msgid "Topographic index ln(a/tanB) map"
 msgstr "Ausgabekarte des Topographischen Index ln(a/tanB)."
 
-#: ../raster/r.topidx/main.c:64
+#: ../raster/r.topidx/main.c:61
 msgid "Output verbosely"
 msgstr "Ausführliche Ausgabe"
 
-#: ../raster/r.topmodel/main.c:63
-msgid "Simulates TOPMODEL which is physically based hydrologic model."
+#: ../raster/r.topmodel/main.c:62
+msgid "Simulates TOPMODEL which is a physically based hydrologic model."
 msgstr "Modul zur TOPMODEL Simulation (physikalisch basiertes hydrologisches Modell)."
 
-#: ../raster/r.topmodel/main.c:69
+#: ../raster/r.topmodel/main.c:68
 msgid "(i)   Rectangular elevation map"
 msgstr "(i)   Rechteckige Höhenkarte."
 
-#: ../raster/r.topmodel/main.c:77
+#: ../raster/r.topmodel/main.c:76
 msgid "(i)   Basin map created by r.water.outlet"
 msgstr "(i)   Einzugsgebietskarte, durch r.water.outlet erstellt."
 
-#: ../raster/r.topmodel/main.c:85
+#: ../raster/r.topmodel/main.c:84
 msgid "(o)   Depressionless elevation map"
 msgstr "(o)   Senkenloses Höhenmodell"
 
-#: ../raster/r.topmodel/main.c:93
+#: ../raster/r.topmodel/main.c:92
 msgid "(o)   Direction map with depressionless elevation map"
 msgstr "(o)   Fließrichtungskarte vom senkenlosen Höhenmodell."
 
-#: ../raster/r.topmodel/main.c:101
-msgid "(i/o) Basin elevation map (extracted)"
-msgstr "(i/o) Extrahiertes Höhenmodell des Einzugsgebiets."
+#: ../raster/r.topmodel/main.c:100
+msgid "(o) Basin elevation map (extracted)"
+msgstr "(o) Extrahiertes Höhenmodell des Einzugsgebiets."
 
-#: ../raster/r.topmodel/main.c:109
-msgid "(i/o) Topographic index ln(a/tanB) map (extracted)"
-msgstr "(i/o) Extrahierter Topographischer Index ln(a/tanB)"
+#: ../raster/r.topmodel/main.c:108
+msgid "(o) Topographic index ln(a/tanB) map (extracted)"
+msgstr "(o) Extrahierter Topographischer Index ln(a/tanB)"
 
-#: ../raster/r.topmodel/main.c:117
+#: ../raster/r.topmodel/main.c:116
 msgid "(i)   Number of topographic index classes"
 msgstr "(i)   Anzahl der Klassen des Topgraphischen Indexes."
 
-#: ../raster/r.topmodel/main.c:125
-msgid "(i/o) Topographic index statistics file"
+#: ../raster/r.topmodel/main.c:124
+msgid "(o/i) Topographic index statistics file"
 msgstr "(i/o) Statistik-Datei des Topographischen Indexes."
 
-#: ../raster/r.topmodel/main.c:132
+#: ../raster/r.topmodel/main.c:131
 msgid "(i)   TOPMODEL Parameters file"
 msgstr "(i)   Parameterdatei für TOPMODEL"
 
-#: ../raster/r.topmodel/main.c:139
+#: ../raster/r.topmodel/main.c:138
 msgid "(i)   Rainfall and potential evapotranspiration data file"
 msgstr "(i)    Datei mir Niederschlag und potentieller Evapotranspiration."
 
-#: ../raster/r.topmodel/main.c:146
+#: ../raster/r.topmodel/main.c:145
 msgid "(o)   Output file"
 msgstr "(o)   Ausgabedatei"
 
-#: ../raster/r.topmodel/main.c:153
+#: ../raster/r.topmodel/main.c:152
 msgid "      Observed Q file"
 msgstr "Untersuchte Q-Datei."
 
-#: ../raster/r.topmodel/main.c:160
+#: ../raster/r.topmodel/main.c:159
 msgid "      output for given time step"
 msgstr "      Ausgabe für ein gegebenes Zeitintervall."
 
-#: ../raster/r.topmodel/main.c:167
+#: ../raster/r.topmodel/main.c:166
 msgid "      output for given topographic index class"
 msgstr "      Ausgabe für eine gegebene Klasse des Topgraphischen Index."
 
-#: ../raster/r.topmodel/main.c:176
-msgid "Input data given for (i/o)"
+#: ../raster/r.topmodel/main.c:175
+msgid "Input data given for (o/i)"
 msgstr "Eingabedaten für Eingabe/Ausgabe (i/o)"
 
-#: ../raster/r.topmodel/main.c:181
+#: ../raster/r.topmodel/main.c:180
 msgid "Overwrite outputs"
 msgstr "Überschreibe Ausgabedateien."
 
-#: ../raster/r.topmodel/main.c:186
-msgid "Wide output"
-msgstr "Breite Ausgabe."
-
 #: ../raster/r.transect/main.c:34
 msgid "Outputs raster map layer values lying along user defined transect line(s)."
-msgstr "Gibt die Werte einer Rasterkarte aus, die entlang einer/mehrerer durch den Benutzer festgelegten Linie(n) liegen."
+msgstr ""
+"Gibt die Werte einer Rasterkarte aus, die entlang einer/mehrerer durch den "
+"Benutzer festgelegten Linie(n) liegen."
 
 #: ../raster/r.transect/main.c:40
 msgid "Raster map to be queried"
@@ -3331,7 +3366,9 @@ msgstr "Zeichenkette, die NODATA-Zellen repräsentiert."
 
 #: ../raster/r.univar2/main.c:55
 msgid "Calculates univariate statistics from the non-null cells of a raster map."
-msgstr "Berechnet univariate Statistikparameter einer Rasterkarte (nur Nicht-Null-Zellen)."
+msgstr ""
+"Berechnet univariate Statistikparameter einer Rasterkarte (nur Nicht-Null-"
+"Zellen)."
 
 #: ../raster/r.univar2/main.c:68
 msgid "Quiet mode"
@@ -3359,7 +3396,9 @@ msgstr "Modul zur Analyse von Wassereinzugsgebieten."
 
 #: ../raster/r.watershed/front/main.c:39
 msgid "Input map: elevation on which entire analysis is based"
-msgstr "Eingabekarte: Höhenmodell, welches Grundlage dieser gesamten Analyse sein wird."
+msgstr ""
+"Eingabekarte: Höhenmodell, welches Grundlage dieser gesamten Analyse sein "
+"wird."
 
 #: ../raster/r.watershed/front/main.c:46
 msgid "Input map: locations of real depressions"
@@ -3375,7 +3414,9 @@ msgstr "Eingabekarte oder Wert: Prozent von gestörtem Land, (für ABAG/USLE)."
 
 #: ../raster/r.watershed/front/main.c:67
 msgid "Input map: terrain blocking overland surface flow, for USLE"
-msgstr "Eingabekarte: Linienhafte Strukturen, die Oberflächenabfluss blockieren (für ABAG/USLE)."
+msgstr ""
+"Eingabekarte: Linienhafte Strukturen, die Oberflächenabfluss blockieren (für "
+"ABAG/USLE)."
 
 #: ../raster/r.watershed/front/main.c:74
 msgid "Input value: minimum size of exterior watershed basin"
@@ -3455,7 +3496,11 @@ msgid ""
 "(perpendicular) rate of spread (ROS), 2) the maximum (forward) ROS, 3) the "
 "direction of the maximum ROS, and optionally 4) the maximum potential "
 "spotting distance."
-msgstr "Erstellt drei oder optional vier Rasterkarten, die 1) die Basisrate der (lotrechten) Ausbreitung (ROS), 2) die maximale (Vorwärts-) Ausbreitung, 3) die Richtung der größten Ausbreitung, und optional 4) die maximal zu erkennende potentielle Ausbreitung, zeigen."
+msgstr ""
+"Erstellt drei oder optional vier Rasterkarten, die 1) die Basisrate der "
+"(lotrechten) Ausbreitung (ROS), 2) die maximale (Vorwärts-) Ausbreitung, 3) "
+"die Richtung der größten Ausbreitung, und optional 4) die maximal zu "
+"erkennende potentielle Ausbreitung, zeigen."
 
 #: ../raster/wildfire/r.ros/main.c:231
 msgid "Name of raster map containing fuel MODELs"
@@ -3491,7 +3536,9 @@ msgstr "Name der Rasterkarte, die die Hangneigung enthält (in Grad)."
 
 #: ../raster/wildfire/r.ros/main.c:280
 msgid "Name of raster map containing ASPECT (degree, anti-clockwise from E)"
-msgstr "Name der Rasterkarte, die die Hangexposition enthält (in Grad, entgegen den Uhrzeigersinn angefangen von Osten)."
+msgstr ""
+"Name der Rasterkarte, die die Hangexposition enthält (in Grad, entgegen den "
+"Uhrzeigersinn angefangen von Osten)."
 
 #: ../raster/wildfire/r.ros/main.c:286
 msgid "Name of raster map containing ELEVATION (m) (required w/ -s)"
@@ -3499,7 +3546,9 @@ msgstr "Name der Rasterkarte, die die Höheninformationen (m) enthält (benötigt w
 
 #: ../raster/wildfire/r.ros/main.c:293
 msgid "Name of raster map to contain results (several new layers)"
-msgstr "Name der Rasterkarten, die die Ergebnisse enthält/enthalten (mehrere neue Karten möglich)."
+msgstr ""
+"Name der Rasterkarten, die die Ergebnisse enthält/enthalten (mehrere neue "
+"Karten möglich)."
 
 #: ../raster/wildfire/r.ros/main.c:301
 msgid "Also produce maximum SPOTTING distance"
@@ -3512,11 +3561,18 @@ msgid ""
 "the rates of spread (ROS), the ROS directions and the spread origins. It "
 "optionally produces raster maps to contain backlink UTM coordinates for "
 "tracing spread paths."
-msgstr "Simuliert die elliptische anisotrophe Ausbreitung in einem Monitor und generiert eine Rasterkarte mit der kumulativen Zeit der Ausbreitung. Als Ausgangskarten dienen die Ausbreitungsrate (ROS), Ausbreitungsrichtung und Ausbreitungsursprung. Optional können Rasterkarten mit Rückverweisen auf UTM-Koordinaten zur Findung der Ausbreitungspfade erstellt werden."
+msgstr ""
+"Simuliert die elliptische anisotrophe Ausbreitung in einem Monitor und "
+"generiert eine Rasterkarte mit der kumulativen Zeit der Ausbreitung. Als "
+"Ausgangskarten dienen die Ausbreitungsrate (ROS), Ausbreitungsrichtung und "
+"Ausbreitungsursprung. Optional können Rasterkarten mit Rückverweisen auf UTM-"
+"Koordinaten zur Findung der Ausbreitungspfade erstellt werden."
 
 #: ../raster/wildfire/r.spread/main.c:129
 msgid "Name of raster map containing MAX rate of spread (ROS) (cm/min)"
-msgstr "Name der Rasterkarte, die die maximale Ausbreitungsrate (ROS) beinhaltet (in cm/min)."
+msgstr ""
+"Name der Rasterkarte, die die maximale Ausbreitungsrate (ROS) beinhaltet (in "
+"cm/min)."
 
 #: ../raster/wildfire/r.spread/main.c:136
 msgid "Name of raster map containing DIRections of max ROS (degree)"
@@ -3532,17 +3588,23 @@ msgstr "Name der Rasterkarte, die die Startpunkte der Ausbreitung enthalten."
 
 #: ../raster/wildfire/r.spread/main.c:156
 msgid "Name of raster map containing max SPOTting DISTance (m) (required w/ -s)"
-msgstr "Name der Rasterkarte, die die maximale Ausdehnungsentfernung (m) beinhaltet (benötigt w/-s)."
+msgstr ""
+"Name der Rasterkarte, die die maximale Ausdehnungsentfernung (m) beinhaltet "
+"(benötigt w/-s)."
 
 #: ../raster/wildfire/r.spread/main.c:162
 msgid "Name of raster map containing midflame Wind SPEED (ft/min) (required w/ -s)"
-msgstr "Name der Rasterkarte, die die mittlere Windgeschwindigkeit beinhaltet (in ft/min) (benötigt w/-s)."
+msgstr ""
+"Name der Rasterkarte, die die mittlere Windgeschwindigkeit beinhaltet (in ft/"
+"min) (benötigt w/-s)."
 
 #: ../raster/wildfire/r.spread/main.c:168
 msgid ""
 "Name of raster map containing fine Fuel MOISture of the cell receiving a "
 "spotting firebrand (%) (required w/ -s)"
-msgstr "Name der Rasterkarte, die die feine Benzinfeuchtigkeit für eine Zelle enthält, die durch einen Brand erreicht wird (%) (benötigt w/-s)."
+msgstr ""
+"Name der Rasterkarte, die die feine Benzinfeuchtigkeit für eine Zelle "
+"enthält, die durch einen Brand erreicht wird (%) (benötigt w/-s)."
 
 #: ../raster/wildfire/r.spread/main.c:175
 msgid "Basic sampling window SIZE needed to meet certain accuracy (3)"
@@ -3563,7 +3625,9 @@ msgstr "Simulationszeitverzögerung (in min)."
 
 #: ../raster/wildfire/r.spread/main.c:199
 msgid "Name of raster map as a display backdrop"
-msgstr "Name der Rasterkarte, die als Hintergrundkarte für die Darstellung im Monitor benutzt werden soll."
+msgstr ""
+"Name der Rasterkarte, die als Hintergrundkarte für die Darstellung im "
+"Monitor benutzt werden soll."
 
 #: ../raster/wildfire/r.spread/main.c:206
 msgid "Name of raster map to contain OUTPUT spread time (min)"
@@ -3593,7 +3657,9 @@ msgstr "Bei Lauffeuern: beachte den Spotting-Effekt."
 msgid ""
 "Recursively traces the least cost path backwards to cells from which the "
 "cumulative cost was determined."
-msgstr "Das Modul verfolgt den kürzesten Weg rekursiv zurück zu den Zellen, von denen der kumulative Weg bestimmt wurde."
+msgstr ""
+"Das Modul verfolgt den kürzesten Weg rekursiv zurück zu den Zellen, von "
+"denen der kumulative Weg bestimmt wurde."
 
 #: ../raster/wildfire/r.spreadpath/main.c:64
 msgid "Name of raster map containing back-path easting information"
