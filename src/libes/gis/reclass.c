@@ -24,7 +24,7 @@ int G_is_reclass (char *name, char *mapset, char *rname, char *rmapset)
 	return type != 0;
 }
 
-int G_is_reclassed_by (char *name, char *mapset, int *nrmaps, char ***rmaps)
+int G_is_reclassed_to (char *name, char *mapset, int *nrmaps, char ***rmaps)
 {
     FILE *fd;
     int i, j, k, l;
@@ -34,7 +34,7 @@ int G_is_reclassed_by (char *name, char *mapset, int *nrmaps, char ***rmaps)
     if ((p = strchr(buf2, '@')))
         *p = 0;
 
-    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_by",
+    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_to",
     		G__location_path(), mapset, buf2);
 
     fd = fopen(buf1, "r");
@@ -251,7 +251,7 @@ int G_put_reclass (char *name, struct Reclass *reclass)
     if ((p = strchr(buf2, '@')))
         *p = 0;
 
-    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_by",
+    sprintf (buf1, "%s/%s/cell_misc/%s/reclassed_to",
     		G__location_path(), reclass->mapset, buf2);
 
     fd = fopen(buf1, "a+");
