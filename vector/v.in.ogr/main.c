@@ -447,8 +447,8 @@ main (int argc, char *argv[])
 		G_debug(3, "Ogr_ftype: %i", Ogr_ftype); /* look up below */
 		
 		/* auto-replace '#', '-' and '.' characters in columns with underscore for DBMI
-		 * allowed are: [A-Za-z][A-Za-z0-9_]*
-		 */
+		* allowed are: [A-Za-z][A-Za-z0-9_]*
+		*/
 		sprintf(namebuf, "%s", OGR_Fld_GetNameRef( Ogr_field ));
 		G_debug(3, "namebuf = '%s'", namebuf);
 		G_strchg(namebuf , '#', '_');
@@ -461,9 +461,15 @@ main (int argc, char *argv[])
 		    Ogr_fieldname++;
 
 		G_debug(3, "Ogr_fieldname = '%s'", Ogr_fieldname);
-
+		
+		/* avoid that we get the 'cat' column twice */
+		if ( strcmp(Ogr_fieldname, "cat") == 0 ) {
+		    sprintf(namebuf, "%s_pg", Ogr_fieldname);
+		    sprintf(Ogr_fieldname, "%s", namebuf);
+		}
+		    
 		if ( strcmp(OGR_Fld_GetNameRef(Ogr_field), Ogr_fieldname) != 0 ) {
-		    G_warning("Column name changed from '%s' to '%s'", 
+		    G_warning("Column name changed from '%s' to '%s' (to avoid SQL problems)", 
 			                OGR_Fld_GetNameRef(Ogr_field), Ogr_fieldname);
 		}
 		
