@@ -1,6 +1,7 @@
 MODULE_TOPDIR = ../..
 
 LIB_NAME = $(GIS_LIBNAME)
+EXTRA_LIBS = $(XDRLIB) $(DATETIMELIB)
 
 LIB_OBJS = \
 	adj_cellhd.o\

@@ -49,5 +49,5 @@ LIB_OBJS =\
 
 include $(MODULE_TOPDIR)/include/Make/Lib.make
 
-default: lib
+default: stlib
 

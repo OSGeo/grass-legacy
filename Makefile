@@ -150,7 +150,7 @@ strip: FORCE
 		echo "  Strip aborted, exiting Make."; \
 		exit; \
 	fi; \
-	-cd ${ARCH_DISTDIR} ; find . -type f -perm +111 -exec strip {} \;
+	cd ${ARCH_DISTDIR} ; find . -type f -perm +111 -exec strip {} \;
 
 install: FORCE
 	@ # The following action MUST be a single action. That is, all lines
