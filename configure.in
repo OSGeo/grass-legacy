@@ -159,7 +159,7 @@ LOC_ARG_WITH(freetype, FreeType, no)
 LOC_ARG_WITH(glw, GLw, no)
 LOC_ARG_WITH(nls, NLS, no)
 LOC_ARG_WITH(readline, Readline, no)
-LOC_ARG_WITH(proj, External PROJ.4, no)
+LOC_ARG_WITH(proj, External PROJ.4)
 
 # With includes and libs options
 
