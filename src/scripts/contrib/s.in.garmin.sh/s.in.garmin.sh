@@ -16,6 +16,53 @@
 #      -  unix tools: grep, cat, cut, paste, sed
 #
 
+#%Module
+#%  description: Upload Waypoints, Routes and Tracks from a Garmin GPS reciever into a GRASS sites file, transformed into the current projection.
+#%End
+#%flag
+#%  key: v
+#%  description: verbose mode (version info)
+#%end
+#%flag
+#%  key: w
+#%  description: upload Waypoints
+#%end
+#%flag
+#%  key: r
+#%  description: upload Routes
+#%end
+#%flag
+#%  key: t
+#%  description: upload Track
+#%end
+##%flag
+##%  key: s
+##%  description: swap easting/northing (for tmerc projection)
+##%end
+#%flag
+#%  key: k
+#%  description: do not attempt projection transform from WGS84
+#%end
+#%option
+#% key: sites
+#% type: string
+#% gisprompt: new,site_lists,sites
+#% description: name for new sites file (omit for display to stdout)
+#% required : no
+#%end
+#%option
+#% key: port
+#% type: string
+#% description: port Garmin receiver is connected to
+#% answer: /dev/gps
+#% required : no
+#%end
+
+if [ "$1" != "@ARGS_PARSED@" ] ; then
+  exec $GISBASE/etc/bin/cmd/g.parser "$0" "$@"
+fi
+
+
 PROG=`basename $0`
 VERSION="$PROG c) 2000 Andreas Lange, andreas.lange@rhein-main.de"
 GRASS4="#"
@@ -57,68 +104,36 @@ trap 'rm -f ${TMP}*' 2 3 15
 
 
 #### process command line arguments 
-WPT=0 ; RTE=0 ; TRK=0 ; OK=0 ; SWP=0 ; KEEP_WGS84=0
-while [ $# -ge 1 ] ; do
+WPT=0 ; RTE=0 ; TRK=0 ; SWP=0 ; KEEP_WGS84=0
 
-    case "$1" in
-    -h) OK=0
-       ;;    
-    h*) OK=0
-       ;;
-    n*) NAME=`echo "$1" | sed 's/.*=//g'` 1>&2 > /dev/null
-	echo "sites=$NAME" 1>&2
-       ;;
-    p*) GPSPORT=`echo "$1" | sed 's/.*=//g'` 1>&2 > /dev/null
-	echo "port=$GPSPORT" 1>&2
-	GPSPORT="-p$GPSPORT"
-       ;;
-    -v) echo $VERSION 1>&2
-	echo " " 1>&2
-       ;;
-    -w) WPT=1 ; OK=1
-       ;;
-    -r) RTE=1 ; OK=1
-       ;;
-    -t) TRK=1 ; OK=1
-       ;;
-    -s) SWP=1
-       ;;
-    -k) KEEP_WGS84=1
-       ;;
-    *)  OK=0
-       ;;
-    esac
-    shift
-done
-
-
-#### print usage and exit
-if [ $OK -ne 1 ] ; then
-    echo "Description: " 1>&2
-    echo " Upload Waypoints, Routes and Tracks from a Garmin GPS reciever into" 1>&2
-    echo " a GRASS sites file, transformed into the current projection." 1>&2
-    echo " " 1>&2
-    echo "Usage: " 1>&2
-    echo " $PROG name=sites port=/dev/gps [-v] [-w] [-r] [-t] [-k] [-h]" 1>&2
-    echo " " 1>&2
-    echo "Flags: " 1>&2
-    echo "   -v      verbose output" 1>&2
-    echo "   -w      upload Waypoints" 1>&2
-    echo "   -r      upload Routes" 1>&2
-    echo "   -t      upload Track" 1>&2
-#   echo "   -s      swap easting/northing (for tmerc projection)" 1>&2
-    echo "   -k      do not attempt projection transform from WGS84" 1>&2
-    echo "   -h      print this message" 1>&2
-    echo " " 1>&2
-    echo "Parameters: " 1>&2
-    echo "   name=sites     name for new sites file" 1>&2
-    echo "   port=/dev/gps  port garmin receiver is connected to" 1>&2
-    echo " " 1>&2
-    echo $VERSION 1>&2
-    echo " " 1>&2   
-    rm -f ${TMP}*
-    exit 0
+if [ "$GIS_OPT_sites" != "(null)" ] ; then
+    NAME="$GIS_OPT_sites"
+    echo "sites=$NAME" 1>&2
 fi
+if [ "$GIS_OPT_port" != "(null)" ] ; then
+    GPSPORT="-p$GIS_OPT_port"
+    echo "port=$GIS_OPT_port" 1>&2
+fi
+if [ $GIS_FLAG_v -eq 1 ] ; then
+    echo $VERSION 1>&2
+    echo " " 1>&2
+fi
+if [ $GIS_FLAG_w -eq 1 ] ; then
+    WPT=1
+fi
+if [ $GIS_FLAG_r -eq 1 ] ; then
+    RTE=1
+fi
+if [ $GIS_FLAG_t -eq 1 ] ; then
+    TRK=1
+fi
+#if [ $GIS_FLAG_s -eq 1 ] ; then
+#    SWP=1
+#fi
+if [ $GIS_FLAG_k -eq 1 ] ; then
+    KEEP_WGS84=1
+fi
+
 
 
 #### check that receiver is responding on $GPSPORT
