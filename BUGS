@@ -1,5 +1,5 @@
 Known bugs in GRASS 5
-$Id: BUGS,v 1.45 2000-10-23 07:17:09 markus Exp $
+$Id: BUGS,v 1.46 2000-10-23 08:45:18 markus Exp $
 [In sync with GRASS 5 beta CVS version]
 
 Maintained by
@@ -313,7 +313,7 @@ r.rescale:
   switches this behaviour from writing NULL to writing "0" (zero).
   (being worked on by Andreas Lange)
 
-r.surf.contour
+[RC]r.surf.contour
   (supports currently CELL type only)
   (being worked on by ?)
 
