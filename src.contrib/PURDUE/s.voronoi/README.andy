@@ -1,0 +1,230 @@
+
+Notes:
+
+----------------------------------------------------------------------
+	Looks like the code is implicitly constrained to sets with <= 1000 points.
+
+----------------------------------------------------------------------
+
+	Per the problem below: I believe that the problem is in the file
+vo_extend.c
+
+	I'm going to have a go at editting it....
+
+	Actually started with vo_polygons.c, where I found the extend_line
+command. I just said to hell with extending lines, and pithed it. The result,
+in a way, looks better, and proves that the problem is in the extenions of 
+lines. So now I can go into vo_extend.c and try to figure out what's wrong....
+
+	By the way, I used no options in creating the maps, but got a
+segmentation fault when I used options. So vo_extend.c isn't the only problem.
+
+	I swapped a condition in vo_extend.c and I got new but complementary
+problems: One way gets it wrong in certain cases, the second gets it wrong in
+others. I need to figure out what's special about those cases where everything
+goes awry...
+
+	 Here's the problem: the midpoint of the two sites separated by the
+line can fall either on the "left" or "right": we need to know also the angle
+of the two lines which intersect at that vertex (i.e., their a and b).  With
+that, we can decide definitively...
+
+	A vertex has three lines running in (or out) of it. We need to figure
+out what the other two lines are, and then we'll be able to get their a and b
+values, which will allow us to figure out if we want to take the left or right
+point.... 
+
+----------------------------------------------------------------------
+
+	Trying to create theissen polygons using GRASS command s.voronoi
+
+/usr/local/data/grass/ftp/src421/src.contrib/PURDUE/s.voronoi
+
+	I ran into two different problems:
+
+	1) First, on class.sites with 269 sites, I experienced a
+segmentation fault and got no map. So I subselected some points to create
+theissen.
+
+	2) That time it ran, but it contained spurious paths.
+
+	s.voronoi -a -l theissen vect=tout2
+
+In class/PERMANENT,
+
+	g.region vect=theissen; d.erase; d.sites theissen; d.vect theissen
+
+I'm going to try to remove some of the spurious ones (I say that they're
+spurious, but what's happening is that they are being drawn to the wrong side
+(opposite side) of a bounding box).
+
+	v.support tout
+	v.digit
+
+GRASS 4.2.1 > g.region -p
+projection: 0 (x,y)
+zone:       0
+north:      37.3802855
+south:      37.31531
+east:       -121.844
+west:       -121.94544
+nsres:      0.0024065
+ewres:      0.00317
+rows:       27
+cols:       32
+
+	That worked, but was somewhat tedious (and would be very tedious if
+there were lots of sites). I'll have to look into that some more: the optimal
+thing would be to fix the code of v.sweep....
+
+	g.region vect=theissen; d.erase; d.sites theissen; d.vect theissen
+
+
+----------------------------------------------------------------------
+
+	Looking at the raw.data file now:
+
+line(10) is a problem
+
+line(9) 1x+-0.185444y=-128.515, bisecting 255 253
+site (254) at -121.616997 37.137901
+line(10) -0.662581x+1y=117.683, bisecting 255 254
+circle through left=253 right=254 bottom=255
+vertex(5) at -121.637154 37.088715
+e 9 4 5
+
+line(0):
+
+site (257) at -121.584999 36.978401
+site (258) at -121.527000 36.996799
+line(0) 1x+0.317219y=-109.823, bisecting 257 258
+site (256) at -121.596001 37.027401
+line(1) -0.224523x+1y=64.3028, bisecting 257 256
+site (252) at -121.696999 37.039600
+line(2) 1x+-0.546424y=-141.864, bisecting 257 252
+circle through left=256 right=258 bottom=257
+vertex(0) at -121.562828 37.009109
+line(3) 1x+-0.443498y=-137.976, bisecting 258 256
+circle through left=252 right=256 bottom=257
+vertex(1) at -121.651848 36.989120
+e 1 1 0
+
+line(6):
+
+line(6) -0.6243x+1y=112.93, bisecting 258 255
+site (253) at -121.686996 37.107201
+line(7) 0.14796x+1y=19.0678, bisecting 252 253
+circle through left=253 right=256 bottom=252
+vertex(3) at -121.642570 37.066086
+e 4 1 3
+
+
+**************************************************************************
+Entry of Wed Dec 16 15:43:53 EST 1998
+
+	Fixed one bug, only to find another: somewhere around
+
+     -122.03021808        37.39559643
+     -122.03021808        37.39197458
+     -122.03705935        37.39479157
+
+there's a different problem... extent of the region:
+
+w/e -122.06576586	-122.00567
+n/s   37.42135179	37.36796306
+
+This one's it!
+DIAG: x=-122.037 y=37.3949 mx=-122.014 my=37.392 nx=-122.161 ny=37.4104
+747 387 418 -122.015 37.3852 -122.013 37.3976 
+
+e 747 489 494
+
+vertex(489) at -122.110222 37.463764
+vertex(494) at -122.102859 37.578800
+vertex(420) at -122.037254 37.394920
+e 592 420 387
+e 629 420 418
+vertex(387) at -122.014572 37.385204
+vertex(418) at -122.012650 37.397625
+
+**************************************************************************
+Entry of Thu Dec 17 09:02:09 EST 1998
+
+Three problems left:
+
+	1) the problem from yesterday, of a region which contains no site
+
+		I was "lucky" to see that bug: no other map has shown that type
+of error again, and I've tried a bunch in my usgs directory.
+
+	2) If there's a point on a corner
+
+	3) There's also a segmentation fault when the program tries to write
+the category/attribute information from the sites to the vector file.
+
+	I spent a lot of time looking at the file cats.c in 
+
+/usr/local/data/grass/ftp/src421/src/libes/gis
+
+but without success. I discovered that the calling sequence in vo_cats_att.c
+wasn't right for several functions, but don't know if the problem is in cats or
+in one of the vo programs. Rats! The problem may be in the realloc step below,
+but I'm not sure.
+
+G_set_cat (num, label, pcats)
+    CELL num ;
+    char *label ;
+    struct Categories *pcats ;
+{
+    int n;
+
+    if (find_cat (num, pcats, &n))
+    {
+	if (pcats->list[n].label != NULL)
+	    free (pcats->list[n].label) ;
+    }
+    else
+    {
+        n = pcats->count++;
+	if (pcats->count > pcats->nalloc)
+	{
+	    long len;
+	    long nalloc;
+
+	    nalloc = pcats->nalloc + 256;
+	    len = (long) nalloc * sizeof(struct Cat_List) ;
+
+	    if (len != (int) len) /* make sure len doesn't overflow int */
+	    {
+		pcats->count--;
+		return -1;
+	    }
+	    /* ael: I've had things blow up at this point, in s.voronoi */
+	    pcats->list = (struct Cat_List *) G_realloc(pcats->list, (int)len);
+	    /* lea */
+	    pcats->nalloc = nalloc;
+	}
+    }
+    
+    pcats->list[n].num = num;
+    pcats->list[n].label = G_store(label) ;
+    G_newlines_to_spaces (pcats->list[n].label);
+    G_strip (pcats->list[n].label);
+    if (num > pcats->num)
+	pcats->num = num;
+    return 1;
+}
+
+	4) the -a option doesn't work at all, but I'm not going to waste any
+time on it.
+
+
+
+One problem was "resolved", in the sense that it belongs to another program:
+
+	2) I've discovered another small problem: the boundary doesn't print on
+certain maps (just the southern boundary so far). 
+
+	Actually, that error must be in g.region. When I grew the region a
+little to the south, the edge magically appeared!
+
