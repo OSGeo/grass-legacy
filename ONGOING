@@ -1,15 +1,17 @@
 This file lists most of ongoing GRASS 5 Projects
 
-$Id: ONGOING,v 1.10 2001-01-16 17:52:37 markus Exp $
+$Id: ONGOING,v 1.11 2001-02-07 10:48:22 markus Exp $
 
 
-GRASS 5.0 (stable) is scheduled for Autumn 2000.
+GRASS 5.0 (stable) is scheduled for spring 2001.
+The more participate - the faster we can release it :-)
+
 
 --------------------------------------------------------------------------
 What's currently going on (you are encouraged to assist):
 
-auto-conf:
-- extended "autoconf" for entire package:
+auto-make:
+- automake for entire package:
   new Makefile system
   (Being worked on by Eric Mitchell <emitchell@altaira.com>)
   -> will go into GRASS 5.1
@@ -43,8 +45,7 @@ Libraries:
 
 XDRIVER
 - remove fifos, use sockets (required for faster XDRIVER and WINDOWS port)
-  (Being worked on by Carl Anderson <candrsn@mindspring.com>)
-  -> will go into GRASS 5.1
+  (Being worked on by Eric Miller)
 
 
 Modules:
@@ -62,7 +63,7 @@ Modules:
 - vector network analysis
   (Being worked on by Roberto Micarelli <mi.ro@iol.it>)
  
-- v.out.e00: make it working
+- v.out.e00: add datum/projection info
   (Being worked on by Michel Wurtz <mw@engees.u-strasbg.fr>)
 
 - Reorganize initialization routines and write a Tcl/Tk interface
@@ -75,19 +76,16 @@ Modules:
   -> will go into GRASS 5.1
 
 - Stereo Visualization/Analysis (aerial photos)
-  (Being worked on by Cesare Furlanello/IRST <furlan@itc.it>)
-  Buciu Claudiu <claudiub@rol.ro>
+  (Being worked on by Buciu Claudiu <claudiub@rol.ro>)
   -> will go into GRASS 5.1
-
-- bug fixes
 
 - testsuite
    (Being worked on by Andreas Lange <Andreas.Lange@Rhein-Main.de>)
   -> initial testsuite done.
 
+
 External projects:
 
-  OSSIM (www.ossim.org) and 
-  OpenEV (http://openev.sourceforge.net/) will get a GRASS interface
-  to access the GRASS database
-
+ o OSSIM (www.ossim.org) GRASS Bridge and 
+ o OpenEV (http://openev.sourceforge.net/) will get a GRASS interface
+   to access the GRASS database using libgrassio
