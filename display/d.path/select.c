@@ -53,8 +53,7 @@ int path ( struct Map_info *Map, int color, int hcolor, int bgcolor )
 
 	if ( node > 0 ) {
 	    Vect_get_node_coor ( Map, node, &nx, &ny, NULL); 
-    	    /* fprintf (stderr, "Node %d: %f %f\n", node, nx, ny); */
-    	    fprintf (stderr, "Node selected\n");
+    	    fprintf (stderr, "Node %d: %f %f\n", node, nx, ny);
 	}
 
 	if ( sp_disp ) { /* erase old */
