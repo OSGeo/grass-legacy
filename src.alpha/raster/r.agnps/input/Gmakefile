@@ -1,0 +1,59 @@
+LIBES  = $(GISLIB) $(VASK) $(MATHLIB)
+
+
+#PGM = $(BIN_ALPHA_CMD)/aggrs_input
+PGM = $(BIN_ALPHA_CMD)/r.agnps.input
+
+LIST = \
+	cell_open.o\
+	cell_open_new.o\
+	get_mapset.o\
+	get_old_name.o\
+	find_old_map.o\
+	cell_num_id.o\
+	get_input_map_names.o\
+	get_new_name.o\
+	save_cell_maps.o\
+	slope_aspect.o\
+	get_wshd_input.o\
+	assign_landuse.o\
+	drain_num.o\
+	clean_up.o\
+	rules_sur_cond.o\
+	rules_man_n.o\
+	rules_ch_side_slope.o\
+	rules_soil_texture.o\
+	rules_fert_aval.o\
+	rules_cod.o\
+	misc_routines.o\
+	op_cel_fls.o\
+	chkdata.o\
+	remove_maps.o\
+	agnps_input.o
+
+
+$(PGM): $(LIST) $(LIBES)
+			$(CC) $(LDFLAGS) -o $@ $(LIST) $(LIBES)
+
+clean :
+	-rm -rf OBJ*
+
+agnps_input.o: agnps_input.h 
+assign_landuse.o: agnps_input.h
+cell_num_id.o: agnps_input.h
+chkdata.o: agnps_input.h
+clean_up.o: agnps_input.h
+drain_num.o: agnps_input.h
+get_input_map_names.o: agnps_input.h
+get_wshd_input.o: agnps_input.h
+misc_routines.o: agnps_input.h
+op_cel_fls.o: agnps_input.h
+rules_ch_side_slope.o: agnps_input.h
+rules_cod.o: agnps_input.h
+rules_fert_aval.o: agnps_input.h
+rules_man_n.o: agnps_input.h
+rules_sur_cond.o: agnps_input.h
+slope_aspect.o: agnps_input.h
+
+
+$(LIBES): #
