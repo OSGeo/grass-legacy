@@ -1,0 +1,4 @@
+Linemod(type)
+	char *type ;
+{
+}
