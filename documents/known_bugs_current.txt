@@ -39,15 +39,7 @@ i.ortho.photo
  - if second control point is set by mouse, it is not indicated
    immediately in orange color (right window)
 
-i.rectify/i.rectify2
- - do not work properly
-
 i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
-bugreport: 
- * After entering the device name and selecting the bands to load,
- the dialog which asks for the Group is not visible.  The window goes 
- blank, but text can still be entered correctly, so it is merely an 
- annoyance rather than a showstopper.
 * Attempting to change the default Title causes a segfault.
 
 r.binfer
@@ -69,9 +61,6 @@ r.contour: (reported by D D Gray <ddgray@armadce.demon.co.uk>)
  lines of one point which r.contour creates occasionally.) I have added  
  this as an extension, though I stress it is just a temporary fix.
  (script: v.asc.degen)
-
-r.drain
-  fixed by Pierre de Mouveaux <pmx@audiovu.com>
 
 r.in.hdf/r.out.hdf (src.garden/grass.hdf)
  - needs updating to HDF4.x lib (already there)
@@ -258,7 +247,10 @@ else within Grass, though.
 ---------------------------------------------------------------------
 
  $Log$
- Revision 1.9  2000-04-17 13:51:37  markus
+ Revision 1.10  2000-04-17 19:35:13  markus
+ added i.rectify and i.rectify2 fix (Pierre de Mouveaux <pmx@audiovu.com>), i.tape.tm.fast fixed (Markus Neteler)
+
+ Revision 1.9  2000/04/17 13:51:37  markus
  r.surf.contour fixed by Pierre de Mouveaux <pmx@audiovu.com>
 
  Revision 1.8  2000/04/16 11:28:32  markus
