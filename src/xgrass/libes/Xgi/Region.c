@@ -27,6 +27,7 @@ static char rcsid[] = "@(#)XGRASS $Id: Region.c,v 0.0 1992/05/05 14:56:07 sink E
 #include <Xm/Form.h>
 #include <X11/Xlib.h>
 #include <Xm/DialogS.h>
+#include "XmLinux.h"
 
 #include <stdio.h>
 #include <string.h>
