@@ -312,7 +312,9 @@ Vect__open_old ( struct Map_info *Map, char *name, char *mapset, int update, int
       }
   }
 
-  Vect_rewind ( Map );
+  if ( !head_only ) { /* Cannot rewind if not fully opened */
+      Vect_rewind ( Map );
+  }
   
   return (level);
 }
