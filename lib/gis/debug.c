@@ -4,17 +4,21 @@
 #include <stdarg.h>
 #include "gis.h"
 
-/*
+/*!
  *
- * G_debug (int level, char *msg)
+ * \brief print debugging message
  * 
  * Print debugging message if environment variable GRASS_DEBUG_LEVEL
  * is set to level equal or greater  
  *
- * Levels: (recommended levels) 
- * 1 - message is printed once or few times per module
- * 3 - each row (raster) or line (vector)
+ * Levels: (recommended levels)<br>
+ * 1 - message is printed once or few times per module<br>
+ * 3 - each row (raster) or line (vector)<br>
  * 5 - each cell (raster) or point (vector) 
+ *
+ * \param int level
+ * \param char *msg
+ *
 */
 
 static int grass_debug_level = -1;
