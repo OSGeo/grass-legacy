@@ -721,7 +721,7 @@ if test -n "$USE_POSTGRES"; then
     	my_pglib_path="/usr/lib /usr/local/lib /usr/local/pgsql/lib /usr/lib/pgsql /usr/lib/postgres /opt/pgsql/lib"
         AC_MSG_CHECKING(libpq paths)
         for dir in $my_pglib_path; do
-            if test -d "$dir"; then
+            if test -d "$dir" && ( test -f "$dir/libpq.a" || test -f "$dir/libpq.so" ) ; then
             	PQLIBPATH="$PQLIBPATH -L$dir"
 		break
             fi
