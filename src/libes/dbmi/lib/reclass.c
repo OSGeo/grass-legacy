@@ -69,7 +69,7 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
     /* find size of array needed for categories to avoid reallocating */
     for(i=0;i<rule->count;i++)
     {
-	snprintf(sel,1024,
+	sprintf(sel,
 	    "SELECT COUNT(*) FROM %s WHERE %s > 0 and %s",rule->table,key,rule->where[i]);
 
 #ifdef DEBUG
@@ -110,7 +110,7 @@ int db_rcls (dbRclsRule *rule, dbCatValI **rcl, int *num)
     for(i=0;i<rule->count;i++)
     {
 	fcat[i+1] = fcat[i];  /* index for first structere used for next rule */
-	snprintf(sel,1024,
+	sprintf(sel,
 	    "SELECT DISTINCT %s FROM %s WHERE %s > 0 and ( %s ) ORDER BY %s",key,rule->table,key,rule->where[i], key);
 #ifdef DEBUG
 	printf ("SQL: %s\n", sel);
