@@ -140,5 +140,5 @@ everest_m	"Modified Everest"		a=6377304.063	f=1/300.8017
 everest_p	"Everest (Pakistan)"		a=6377309.613	f=1/300.8017
 # earth as a sphere:
 sphere  	"Spherical Earth"		a=6370997.000   e=0.0
-# Bessel modified (Norway) http://crs.ifrag.de/
+# Bessel modified (Norway) http://crs.ifag.de/
 modif_bessel    "Bessel Modified (Norway)"      a=6377492.0176  f=1/299.15281285
