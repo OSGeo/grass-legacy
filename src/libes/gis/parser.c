@@ -277,6 +277,19 @@ int G_parser (int argc, char **argv)
 	opt= &first_option;
 	while(opt != NULL)
 	{
+		if(opt->multiple && opt->answers)
+		{
+			opt->answer = (char *)G_malloc(strlen(opt->answers[0])+1);
+			strcpy(opt->answer, opt->answers[0]);
+			for(i=1; opt->answers[i]; i++)
+			{
+				opt->answer = G_realloc (opt->answer,
+						strlen(opt->answer)+
+						strlen(opt->answers[i])+2);
+				strcat(opt->answer, ",");
+				strcat(opt->answer, opt->answers[i]);
+			}
+		}
 		opt->def = opt->answer ;
 		opt = opt->next_opt ;
 	}
@@ -532,7 +545,7 @@ int G_usage_xml (void)
 
 			if(opt->options) {
 				fprintf(stdout, "\t\t\t<values>\n");
-				s = calloc(strlen(opt->options),1);
+				s = (char *)calloc(strlen(opt->options),1);
 				strcpy(s, opt->options);
 				s = strtok(s, ",");
 				while (s) {
