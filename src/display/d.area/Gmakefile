@@ -23,3 +23,5 @@ $(ETC)/rgb.txt: rgb.txt
 	cp -f $? $@
 
 $(DEPLIBS): #
+
+plot.o screenpoly.o: screenpoly.h
