@@ -1,0 +1,6 @@
+:
+# test for d.what.r.db where all required command line args are provided
+# DB=seco_soils, GISdb=SECO
+#
+
+d.what.r.db  map=seco.soils tab=seco_soil_cats col=grass_cat 
