@@ -1,4 +1,4 @@
-$Id: TODO,v 1.20 2000-09-25 14:08:27 markus Exp $
+$Id: TODO,v 1.21 2000-10-02 17:16:18 markus Exp $
 
 TODO for GRASS GIS:
 
@@ -131,7 +131,8 @@ Modules:
       (Being worked on by )
 
     - high resolution output (definable extent like CELL driver)
-      (Being worked on by )
+      (Being worked on by 
+       probably Bob Covill <bcovill@tekmap.ns.ca>)
 
     - fix legend, scale and box drawings
 
