@@ -125,11 +125,8 @@ V2_read_line_nat (
 {
     P_LINE *Line;
 
-    G_debug (3, "V2_read_line_nat()"); 
+    G_debug (3, "V2_read_line_nat(): line = %d", line); 
     
-    if (line < 1 || line > Map->plus.n_lines)	
-        return -2;
-
     Line = Map->plus.Line[line]; 
     return Vect__Read_line_nat (Map, line_p, line_c, Line->offset);
 }

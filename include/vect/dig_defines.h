@@ -148,6 +148,15 @@
 #define GV_STORE_BOUNDARY 3
 #define GV_STORE_CENTROID 4
 
+/* Overlay operators */
+#define GV_ON_AND     "AND"     /* intersect */
+#define GV_ON_OVERLAP "OVERLAP"
+
+typedef enum { 
+    GV_O_AND,
+    GV_O_OVERLAP,
+} OVERLAY_OPERATOR;
+
 
 #define ESC	033
 
