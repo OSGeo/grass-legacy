@@ -1,6 +1,5 @@
 PGM=r.patch
 GPATCH = main.o do_patch.o support.o
-PATCH  = patch.o
 
 $(BIN_CMD)/$(PGM): $(GPATCH) $(DEPGISLIB)
 	$(CC) $(LDFLAGS) -o $@ $(GPATCH) $(GISLIB) $(MATHLIB) $(XDRLIB)
