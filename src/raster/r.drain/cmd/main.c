@@ -59,6 +59,8 @@ int mode=0;
 int cum = 0;
 float fcum =0.0;
 double dcum = 0.0;
+double count = 0.0 ;
+int count2 = 0;
 
 struct metrics* m = NULL;
 
@@ -82,7 +84,7 @@ main (int argc, char *argv[])
 	double east, north;
 	struct GModule *module;
 	struct Option *opt1, *opt2, *opt3, *opt4, *opt5;
-	struct Flag *flag1, *flag2;
+	struct Flag *flag1, *flag2, *flag3;
 
 	module = G_define_module();
 	module->description =
@@ -132,6 +134,10 @@ main (int argc, char *argv[])
 	flag2 = G_define_flag();
 	flag2->key = 'a';
 	flag2->description = "Accumulate input values along the path";
+
+	flag3 = G_define_flag();
+	flag3->key = 'n';
+	flag3->description = "Accumulate cell numbers along the path";
 
 	G_gisinit (argv[0]);
 
@@ -240,6 +246,17 @@ main (int argc, char *argv[])
 			G_warning("Both -c and -a flags specified! r.drain will use the -a flag");
 		mode = 2;
 	}
+	if (flag3->answer && flag2->answer && flag1->answer) {
+		sprintf(buf, "Don't specify -n with other flags!");
+		G_fatal_error (buf);
+	}
+	if (flag3->answer && (flag2->answer || flag1->answer)) {
+		sprintf(buf, "Don't specify -n with other flags!");
+		G_fatal_error (buf);
+	}
+	if (flag3->answer) {
+		mode = 3;
+	}
 
 
 /*  Check if elevation layer exists in data base  */
@@ -325,7 +342,7 @@ main (int argc, char *argv[])
 		exit(1);
 	}
 
-	
+	/* input */
 	data_type = G_raster_map_type(elevation_layer, elevation_mapset);
 	cell = G_allocate_raster_buf(data_type); 
 	len = G_raster_size(data_type);
@@ -333,8 +350,8 @@ main (int argc, char *argv[])
 #ifdef DEBUG
 fprintf(stderr,"Mode type: %i\n", mode);
 #endif
-
-	data_type2 = data_type;
+	/* output */
+        data_type2 = data_type;  /* would be better to store CELL_TYPE when mode == 3 */
 	len2 = G_raster_size(data_type2);
 
 /*   Parameters for map submatrices   */
@@ -386,7 +403,7 @@ fprintf(stderr,"Mode type: %i\n", mode);
 
 /*	G_close_cell(elevation_fd); */
 
-/*	G_free(cell); */
+	G_free(cell);
 
 	cell = G_allocate_raster_buf(data_type2); 
 	G_set_null_value(cell,ncols,data_type2);
@@ -464,7 +481,7 @@ fprintf(stderr,"Mode type: %i\n", mode);
 	PRES_PT = head_start_pt;
 	while(PRES_PT != NULL)
 	{
-		if (mode == 2) {
+		if (mode == 2 || mode == 3) {
 			cum = 0;
 			fcum= 0.0;
 			dcum = 0.0;
@@ -552,6 +569,11 @@ fprintf(stderr, "p_elev: %g\n", p_elev);
 						segment_put(&out_seg, &cum, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
 						break;
 					}
+					case 3: {                  /* added MN 12/2000 */
+						count2+=1;
+						segment_put(&out_seg, &count2, PRES_PT_ROW, PRES_PT_COL);
+						break;
+					}
 				}						
 					
 				/* check the elevations of neighbouring pts to determine the	*/
@@ -617,6 +639,12 @@ fprintf(stderr, "f: %g\n", f);
 						dcum+=f;
 						segment_put(&out_seg, &fcum, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
 						break;
+					case 3: {                  /* added MN 12/2000 */
+						count+=1;
+						segment_put(&out_seg, &count, PRES_PT_ROW, PRES_PT_COL);
+						break;
+					}
+
 				}						
 				for (row = PRES_PT_ROW -1;
 					 row <= (PRES_PT_ROW +1) && row < nrows; row++)
@@ -682,6 +710,12 @@ fprintf(stderr, "fdata: %g\n", fdata);
 						dcum+=fdata;
 						segment_put(&out_seg, &dcum, PRES_PT_ROW, PRES_PT_COL); /* (pmx - for Markus 20 april 2000 */
 						break;
+					case 3: {                  /* added MN 12/2000 */
+						count+=1;
+						segment_put(&out_seg, &count, PRES_PT_ROW, PRES_PT_COL);
+						break;
+					}
+
 				}						
 				for (row = PRES_PT_ROW -1;
 					 row <= (PRES_PT_ROW +1) && row < nrows; row++)
