@@ -191,6 +191,10 @@ gsd_put_legend(char *name, GLuint * fontbase, int size, int *flags,
     if (flags[4] && rangef[0] != -9999. && rangef[1] != -9999.) {
 	fmin = rangef[0];
 	fmax = rangef[1];
+	if (!is_fp) {
+		min = (int)fmin;
+		max = (int)fmax;
+	}
     }
     else {
 	if (is_fp) {
@@ -219,8 +223,7 @@ gsd_put_legend(char *name, GLuint * fontbase, int size, int *flags,
 	}
     }
 
-
-    if (min == max)
+    if (fmin == fmax)
 	Gs_warning("Range request error for legend");
 
     /* set a reasonable precision */
