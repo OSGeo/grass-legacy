@@ -21,6 +21,7 @@ main(argc, argv)
     int color;
     FILE *infile;
     char *name, *mapset;
+    char *D_color_list();
     ICON icon1, icon2;
 
     /* Define the different options */
@@ -37,8 +38,7 @@ main(argc, argv)
     parm.color->type       = TYPE_STRING;
     parm.color->required   = NO;
     parm.color->answer     = "white";
-    parm.color->options    =
-        "red,orange,yellow,green,blue,indigo,violet,magenta,brown,gray,white,black";
+    parm.color->options    = D_color_list();
     parm.color->description= "set the color" ;
 
     parm.size = G_define_option() ;
