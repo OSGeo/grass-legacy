@@ -20,6 +20,16 @@ be found by specifying <tt>afcol=length/max_speed</tt> (pg driver). If needed,
 the line length can be calculated and written to the attributes table 
 by <em>v.to.db</em>.
 
+<h2>EXAMPLE</h2>
+
+Shortest path from node 9 to 11:
+
+<pre>
+  # nlayer=1 if no extra table for nodes:
+    echo "9 11" | v.net.path network afcol=forward abcol=backward out=mypath nlayer=1
+    d.vect mypath col=red
+</pre>
+
 
 <h2>SEE ALSO</h2>
 
