@@ -687,6 +687,19 @@ void GS_draw_flowline_at_xy(int id, float x, float y)
     return;
 }
 
+/*****************************************************************
+ *  * draw fringe around data at selected corners
+ *  *****************************************************************/
+int GS_draw_fringe(int id, int *where)
+{
+geosurf *gs;
+
+  if (gs = gs_get_surf(id)) 
+             gsd_display_fringe(gs, where);
+
+}
+
+
 /***********************************************************************/
 int
 GS_draw_legend(char *name, GLuint * fontbase, int size, int *flags,
@@ -1303,6 +1316,7 @@ int GS_load_att_map(int id, char *filename, int att)
     unsigned int changed;
     unsigned int atty;
     char *mapset;
+    struct Cell_head rast_head;
     int reuse = 0, begin, hdata, ret, neg = 0, has_null = 0;
     typbuff *tbuff;
 
@@ -1339,7 +1353,25 @@ int GS_load_att_map(int id, char *filename, int att)
 
     /* Get MAPSET to ensure names are fully qualified */
     mapset = G_find_cell2(filename, "");
+    if (mapset == NULL) {
+	    /* Check for valid filename */
+	    fprintf(stderr, "Error: Raster %s does not exist in current Mapset\n", filename);
+	    fprintf(stderr, "Load Failed\n");
+	    exit (-1);
+    }
     filename = G_fully_qualified_name(filename, mapset);
+
+    /* Check to see if map is in Region */
+    G_get_cellhd(filename, mapset, &rast_head);
+    if (rast_head.north <= wind.south ||
+		    rast_head.south >= wind.north ||
+		    rast_head.east <= wind.west ||
+		    rast_head.west >= wind.east)
+    {
+	    fprintf(stderr, "Error: Raster %s is outside of current region\n",filename);
+	    fprintf(stderr, "Load Failed\n");
+	    exit (-1);
+    }
 
     while (!reuse && (0 < hdata)) {
 	changed = CF_COLOR_PACKED;
