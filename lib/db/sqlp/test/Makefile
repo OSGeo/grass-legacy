@@ -13,5 +13,5 @@ default: sqlptest
 
 
 sqlptest: sqlptest.c 
-	$(CC) $(CFLAGS) -static -o $@ sqlptest.c $(LIBES)  
+	$(CC) $(CFLAGS) -o $@ sqlptest.c $(LIBES)  
 
