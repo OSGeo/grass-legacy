@@ -1,7 +1,7 @@
 
 MODULE_TOPDIR = ../../..
 
-LIB_NAME = manage
+LIB_NAME = $(MANAGE_LIBNAME)
 
 LIB_OBJS = add_elem.o ask.o copyfile.o do_copy.o do_list.o do_remove.o \
            do_rename.o empty.o find.o get_len.o menu.o read_list.o \
