@@ -206,8 +206,8 @@ dig_add_area (struct Plus_head *plus,
 	    Line->right = area;
 	}
 	dig_line_get_box ( plus, abs(line), &box );
-	if ( i == 0 ) Vect_box_copy (&abox, &box); 
-	else Vect_box_extend (&abox, &box); 
+	if ( i == 0 ) dig_box_copy (&abox, &box); 
+	else dig_box_extend (&abox, &box); 
     }
     Area->n_lines = n_lines;
     Area->centroid = 0;
@@ -597,8 +597,8 @@ dig_add_isle (struct Plus_head *plus,
 	    Line->right = -isle;
 	}
 	dig_line_get_box ( plus, abs(line), &box );
-	if ( i == 0 ) Vect_box_copy (&abox, &box); 
-	else Vect_box_extend (&abox, &box); 
+	if ( i == 0 ) dig_box_copy (&abox, &box); 
+	else dig_box_extend (&abox, &box); 
     }
 
     Isle->n_lines = n_lines;

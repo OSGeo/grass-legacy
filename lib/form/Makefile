@@ -24,6 +24,6 @@ $(FORM): form.tcl
 	cp form.tcl $(FORM)
 
 $(FORMPROG): $(OBJDIR)/form.o
-	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/form.o $(DBMILIB) $(GISLIB) $(TCLTKLIBPATH) $(TCLTKLIBS) \
-				 $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/form.o $(DBMILIB) $(GISLIB) $(DATETIMELIB) \
+				$(TCLTKLIBPATH) $(TCLTKLIBS) $(MATHLIB) $(XDRLIB)
 

@@ -8,5 +8,5 @@ include $(MODULE_TOPDIR)/include/Make/Rules.make
 default: $(ETC)/front.end
 
 $(ETC)/front.end: $(OBJDIR)/main.o
-	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJDIR)/main.o $(GISLIB) $(DATETIMELIB) $(MATHLIB) $(XDRLIB)
 

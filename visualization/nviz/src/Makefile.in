@@ -45,7 +45,7 @@ default: nvwish
 #	cd $(SURF_INCDIR) ; $(GMAKE)
 #	touch nviz_init.c
 
-nvwish: $(ARCH_OBJS) $(VECTLIB) $(BITMAPLIB) $(LINKMLIB)
+nvwish: $(ARCH_OBJS) $(VECTDEP) $(BITMAPDEP) $(LINKMDEP)
 	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(SURFLIB) $(IMGLIB) \
 	$(BITMAPLIB) $(LINKMLIB) $(VECTLIB) \
 	$(GISLIB) $(MATHLIB) $(XDRLIB) \
