@@ -1,73 +1,57 @@
 .TH v.export
 .SH NAME
-\fIv.export\fR \- Converts binary vector files into formatted ASCII files
-for transfer to other computer systems.
+\fIv.export\fR \- Converts binary vector files into formatted ascii files for transfer to other computer systems.
 .br
-.I "(SCS GRASS Vector Program)"
+.I "(GRASS Vector Program)"
 .SH SYNOPSIS
 \fBv.export\fR
 .br
 \fBv.export help\fR
 .SH DESCRIPTION
-This program performs all of the processes that are needed to convert
-binary vector files into formatted ASCII files.
+This program performs all of the processes that are needed to convert binary vector files into formatted ascii files.
 
 It also creates support files:
 .IP
-- an attribute flat file, which contains information for each area in the
-DLG file -- i.e., the DLG area number, the GRASS area label, and the
-GRASS category code (only created when exporting in DLG format);
+- an attribute flat file, which contains information for each area in the DLG file, ie. the DLG area number, the GRASS area label, and the GRASS category code (only created when exporting in DLG format);
 .br
 .IP
-- an attribute file which contains the information from the \fIdig_att\fR
-file (only created when exporting ASCII vector format).
+- an attribute file which contains the information from the dig_att file (only created when exporting ascii vector format).
 .LP
 EXPORT FILES
 .br
-After entering the command \fBv.export\fR, the user will be asked
-which type of file to export:
+After entering the command v.export, the user will be asked which type of file to export	:
 .IP
-Exports from GRASS Vector (\fIv.digit\fR) Format
+Exports from GRASS Vector(digit) Format
 .LP
 .IP
-1  -	  ASCII DLG file from GRASS Vector Format
+1  -	  Ascii	DLG file from GRASS Vector Format
 .br
 .IP
-2  -	  ASCII	DIGIT file from GRASS Vector Format
+2  -	  Ascii	DIGIT file from GRASS Vector Format
 .br
 .IP
-3  -	  ASCII	SCS-GEF file from GRASS Vector Format
+3  -	  Ascii	SCS-GEF file from GRASS Vector Format
 .br
 .IP
-4  -	  ASCII	ARC/INFO file from GRASS Vector Format
+4  -	  Ascii	ARC/INFO file from GRASS Vector Format
 .br
 .IP
-5  -	  ASCII	DXF file from GRASS Vector Format
+5  -	  Ascii	DXF file from GRASS Vector Format
 .br
 .LP
-If numbers 1-4 are chosen, \fIv.export\fR will respond with a request for the
-vector file name.  After the user enters the file name the program
-proceeds to create the respective output format files.
+If numbers 1-4 are chosen, v.export will respond with a request for the vector file name. After the user enters the file name the program proceeds to create the respective output format files.
 .LP
 GRASS Vector to DLG File
 .br
-Converts binary vector files (such as those created by \fIv.digit\fR) to a DLG
-file and creates the attribute file.  Both files are placed in the \fIdlg\fR
-directory under a user selected name;  the attribute file has .att
-appended.
+Converts binary vector files (such as those created in digit) to a DLG file and creates the attribute file. Both files are placed in the dlg directory under a user selected name, the attribute file has .att appended.
 .LP
-GRASS Vector File into ASCII Vector File
+GRASS Vector File into ascii Vector File
 .br
-Converts a binary vector file into a readable ASCII file.  Both files
-are placed int the \fIdig_ascii\fR directory under the same name as the given
-vector file, the attribute file has .att appended.
+Converts a binary vector file into a readable ascii file.  Both files are placed int the dig_ascii directory under the same name as the given vector file, the attribute file has .att appended.
 .LP
 GRASS Vector to SCS-GEF File
 .br
-Converts binary vector files to SCS-GEF files.  Creates the SCS-GEF
-header, lines, text, and feature files.  All files are created and
-placed in a $LOCATION/gef directory as a single UNIX file under a user
-selected name.
+Converts binary vector files to SCS-GEF files. Creates the SCS-GEF header, lines, text, and feature files. All files are created and placed in a $LOCATION/gef directory as a single UNIX file under a user selected name.
 .br
 The following is the SCS-GEF file structure:
 .IP
@@ -103,30 +87,17 @@ feature record n
 .br
 -feat
 .LP
-The user will be required to use standard UNIX commands to separate
-this file into individual files as required by SCS-GEF specifications.
+The user will be required to use standard UNIX commands to separate this file into individual files as required by SCS-GEF specifications.
 .LP
 GRASS Vector to ARC/INFO(generated) File
 .br
-Converts binary vector files to a "ARC ungenerate" format.  A GRASS
-vector file to be exported to ARC/INFO must be either a line coverage
-(must contain only lines) or a polygon coverage (must contain only area
-edges).  Both "ungenerate lines and points" files are created and are
-placed in a $LOCATION/arc directory under a user selected name.
+Converts binary vector files to a "ARC ungenerate" format.  A GRASS vector file to be exported to ARC/INFO must be either a line coverage (must contain only lines) or a polygon coverage (must contain only area edges). Both "ungenerate lines and points" files are created and are placed in a $LOCATION/arc directory under a user selected name.
 .LP
-The binary vector name will be used to name the various files that will
-be created for export to ARC/INFO.  In the case of a labelled polygon
-coverage, the following three files will be created:  a lines file with
-the suffix .lin, a label-points file with the suffix .lab, and a
-label-text file with the suffix .txt.
+The binary vector name will be used to name the various files that will be created for export to ARC/INFO.  In the case of a labelled polygon coverage, the following three files will be created: a lines file with the suffix .lin, a label-points file with the suffix .lab, and a label-text file with the suffix .txt.  
 .LP
-In the case of a line coverage the following two files will be created:
-a lines file with the suffix .lin, and a label-text file with the
-suffix .txt.
+In the case of a line coverage the following two files will be created: a lines file with the suffix .lin, and a label-text file with the suffix .txt.  
 .LP
-An unlabelled polygon or line coverage will result in a lines file
-(.lin suffix) only.  See the DATA FILE FORMATS section of v.import for
-more information on these files.
+An unlabelled polygon or line coverage will result in a lines file (.lin suffix) only.  See the DATA FILE FORMATS section of v.import for more information on these files.
 .LP
 GRASS Vector to DXF file
 .br
@@ -136,21 +107,17 @@ NOTES
 .br
 .IP
 Support files must be built using the GRASS program 
-\fIv.support\fR before exporting any vector file. 
+v.support before exporting any vector file. 
 
-Other ASCII formats are useful when importing/exporting data 
-into and from GRASS.  Such data files should be in ASCII 
+Other ascii formats are useful when importing/exporting data 
+into and from GRASS. Such data files should be in ascii 
 format when transferred.
+
+.SH "INTERACTIVE MODE"
+.SH BUGS
 .SH "SEE ALSO"
-.I v.digit,
-.I v.import
-.I v.out.arc,
-.I v.out.ascii,
-.I v.out.dlg,
-.I v.out.dlg.scs,
-.I v.out.dxf,
-.I v.out.scsgef,
-.I v.support,
+v.out.ascii, v.out.dlg, v.out.dlg.scs, v.out.arc, v.out.dxf,
+v.out.scsgef, v.support, v.import
 .SH AUTHOR
-R.L. Glenn, USDA, SCS, NHQ-CGIS
+R.L.Glenn, USDA, SCS, NHQ-CGIS
 
