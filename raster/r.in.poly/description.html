@@ -1,0 +1,65 @@
+<H2>DESCRIPTION</H2>
+
+
+<EM>r.in.poly</EM> allows the creation of GRASS binary
+raster maps from ASCII files in the current directory
+containing polygon and linear features.
+
+The <B>input</B> file is a Unix input file, in ascii format, containing the
+polygon and linear features.  The format of this file is
+described in the section <A HREF="#format.html"><B>INPUT
+FORMAT</B></A> below.
+
+<P>Number of rows to hold in memory is per default 512.  This
+parameter allows users with less memory (or more) on their
+system to control how much memory <EM>r.in.poly</EM> uses.
+
+
+<A NAME="format.html">
+<H2>INPUT FORMAT</H2></A>
+
+The input format for the <B>input</B> file consists of
+sections describing either polygonal areas or linear
+features.  The basic format is:
+
+<PRE>
+A                      &lt;for polygonal areas&gt;
+    easting northing
+    .
+    .
+    .
+=   cat# label
+L                      &lt;for linear features&gt;
+    easting northing
+    .
+    .
+    .
+=   cat# label
+</PRE>
+
+The <EM>A</EM> signals the beginning of a polygon. It must
+appear in the first column.  The <EM>L</EM> signal the
+beginning of a linear feature. It also must appear in the
+first column. The coordinates of the vertices of the
+polygon, or the coordinates defining the linear feature
+follow and must have a space in the first column and at
+least one space between the <EM>easting</EM> and the
+<EM>northing.</EM> To give meaning to the features, the
+<EM>=</EM> indicates that the feature currently being
+processed has category value <EM>cat#</EM> (which must be
+an integer) and a <EM>label</EM> (which may be more than
+one word, or which may be omitted).
+
+<H2>SEE ALSO</H2>
+
+<A HREF="r.digit.html">r.digit</A> for
+interactive on-screen polygon/line digitizing for raster maps
+<P>
+<A HREF="r.colors.html">r.colors</A>
+for creates color tables for raster maps
+
+<H2>AUTHOR</H2>
+
+Michael Shapiro, U.S.Army Construction Engineering Research Laboratory
+
+<p><i>Last changed: $Date$</i>
