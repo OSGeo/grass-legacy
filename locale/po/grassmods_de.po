@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: grassmods_de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-05 15:40+0100\n"
-"PO-Revision-Date: 2004-12-05 15:58+0100\n"
+"POT-Creation-Date: 2004-12-09 21:47+0100\n"
+"PO-Revision-Date: 2004-12-10 15:04+0100\n"
 "Last-Translator: Stephan Holl <holl@gdf-hannover.de>\n"
 "Language-Team: Deutsch <translations@grass.itc.it>\n"
 "MIME-Version: 1.0\n"
@@ -17,145 +17,310 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.9.1\n"
 
-#: ../db/base/connect.c:123
+#: ../db/base/columns.c:33 ../db/base/createdb.c:24 ../db/base/describe.c:34
+#: ../db/base/dropdb.c:24 ../db/base/droptable.c:25 ../db/base/execute.c:52
+#: ../db/base/select.c:63 ../db/base/tables.c:34
 #, c-format
-msgid "driver:%s\n"
-msgstr "Treiber: %s\n"
+msgid "No db connection for driver <%s> defined. Run db.connect"
+msgstr "Keine Datenbankverbindung für Treiber <%s> definiert. Benutze db.connect."
 
-#: ../db/base/connect.c:124
-#, c-format
-msgid "database:%s\n"
-msgstr "Datenbank: %s\n"
+#: ../db/base/columns.c:69 ../db/base/describe.c:87
+msgid "table name"
+msgstr "Tabellenname"
 
-#: ../db/base/connect.c:125
-#, c-format
-msgid "schema:%s\n"
-msgstr "Schema: %s\n"
+#: ../db/base/columns.c:76 ../db/base/databases.c:62 ../db/base/describe.c:94
+#: ../db/base/select.c:195 ../db/base/tables.c:69
+msgid "driver name"
+msgstr "Treibername"
 
-#: ../db/base/connect.c:126
-#, c-format
-msgid "group:%s\n"
-msgstr "Gruppe: %s\n"
+#: ../db/base/columns.c:84 ../db/base/describe.c:102 ../db/base/select.c:186
+#: ../db/base/tables.c:77
+msgid "database name"
+msgstr "Datenbankname"
 
-#: ../db/base/databases.c:42 ../db/base/drivers.c:29 ../db/base/printtab.c:45
-#: ../db/base/select.c:126 ../vector/v.transform/creat_trans.c:90
-#, c-format
-msgid "%s"
-msgstr "%s"
+#: ../db/base/columns.c:90
+msgid "list all columns for a given table."
+msgstr "Listet alle Spalten einer angegebenen Tabelle."
 
-#: ../db/base/databases.c:43 ../db/base/printtab.c:21 ../db/base/printtab.c:66
-#, c-format
-msgid "\n"
-msgstr "\n"
+#: ../db/base/connect.c:27
+msgid "print current connection parameters and exit"
+msgstr "Gibt derzeitige Verbindungsparameter aus und beendet sich."
 
-#: ../db/base/describe.c:54 ../db/base/printtab.c:17
-#, c-format
-msgid "ncols:%d\n"
-msgstr "ncols:%d\n"
+#: ../db/base/connect.c:35
+msgid "driver name:"
+msgstr "Treibername"
 
-#: ../db/base/describe.c:58
+#: ../db/base/connect.c:43
+msgid "Database name:"
+msgstr "Datenbankname"
+
+#: ../db/base/connect.c:52
+msgid ""
+"Database schema. Don't use this option if schemas are not supported by "
+"driver/database server."
+msgstr ""
+"Datenbankschema. Bitte benutzen Sie diese Option nicht, wenn Schemas nicht "
+"durch die Datenbank / Server unterstützt werden."
+
+#: ../db/base/connect.c:61
+msgid "Default group of database users to which select privilege is granted."
+msgstr "Standardgruppe der Datenbankbenutzer mit 'SELECT'-Privilegien."
+
+#: ../db/base/connect.c:81
+msgid "Connect to the database through DBMI."
+msgstr "Verbinde zur Datenbank mit DBMI."
+
+#: ../db/base/connect.c:117
+msgid "No db connection settings defined. Set with db.connect"
+msgstr ""
+"Keine Datenbankverbindung definiert. Bitte setzen Sie eine Verbindung mit db."
+"connect."
+
+#: ../db/base/copy.c:27
+msgid ""
+"Copy a table. Either 'from_table' (optionaly with 'where') can be used or "
+"'select' option, but not 'from_table' and 'select' at the same time."
+msgstr ""
+"Kopieren einer Tabelle. Entweder kann die Option 'from_table' (auch mit "
+"'WHERE'-Statement) oder die 'select'-Option benutzt werden. 'Select' und "
+"'from_table' können aber nicht zur gleichen Zeit benutzt werden."
+
+#: ../db/base/copy.c:35
+msgid "Input driver name"
+msgstr "Eingabe-Treibername"
+
+#: ../db/base/copy.c:43
+msgid "Input database name"
+msgstr "Eingabe-Datenbankname"
+
+#: ../db/base/copy.c:51
+msgid "Input table name (only if select is not specified)"
+msgstr "Eingabe-Tabellenname (nur, wenn 'select' nicht gegeben ist)."
+
+#: ../db/base/copy.c:58
+msgid "Output driver name"
+msgstr "Ausgabe-Treibername"
+
+#: ../db/base/copy.c:66
+msgid "Output database name"
+msgstr "Ausgabe-Datenbankname"
+
+#: ../db/base/copy.c:74
+msgid "Output table name"
+msgstr "Ausgabe-Tabellenname"
+
+#: ../db/base/copy.c:80
+msgid ""
+"Optional where condition (without WHERE key word), e.g.:\n"
+"\t\tobec = 'Liptakov'"
+msgstr ""
+"Optionale 'where'-Angabe (ohne 'WHERE' Schlüsselwort), z.B.:\n"
+"\t\tobec = 'Liptakov'"
+
+#: ../db/base/copy.c:87
+msgid ""
+"Full select statement (only if from_table and where is not used), e.g.:\n"
+"\t\tSELECT dedek FROM starobince WHERE obec = 'Frimburg'"
+msgstr ""
+"Komplettes Select-Statement (Nur, wenn 'from_table' und 'where' nicht benutzt werden), z.B.:\n"
+"\t\tSELECT dedek FROM starobine WHERE obec = 'Frimburg'"
+
+#: ../db/base/copy.c:95
+msgid "Cannot combine 'from_table' and 'select' options"
+msgstr "Kann 'from_table' und 'select' nicht miteinander kombinieren."
+
+#: ../db/base/copy.c:107
+msgid "Either 'from_table' or 'select' option must be given."
+msgstr "Entweder 'from_table' oder 'select'-Option muss angegeben werden. "
+
+#: ../db/base/copy.c:110
+msgid "Cannot combine 'select' and 'where' options"
+msgstr "Kann 'select' und 'where'-Optionen nicht kombinieren."
+
+#: ../db/base/copy.c:118
+msgid "Copy table failed"
+msgstr "Tabellenkopie fehlgeschlagen."
+
+#: ../db/base/databases.c:34
 #, c-format
-msgid "Column %d: %s\n"
-msgstr "Zeile %d: %s\n"
+msgid "Cannot start driver '%s'."
+msgstr "Kann Treiber '%s' nicht starten."
+
+#: ../db/base/databases.c:37
+msgid "Cannot list databases."
+msgstr "Kann Datenbanken nicht auflisten."
+
+#: ../db/base/databases.c:69
+msgid "database location"
+msgstr "Datenbanklocation"
+
+#: ../db/base/databases.c:74
+msgid "List all databases for a given driver and location."
+msgstr "Listet alle Datenbanken für den angegebenen Treiber und Location."
+
+#: ../db/base/describe.c:45
+msgid "Cannot describe table"
+msgstr "Kann die Tabelle nicht beschreiben."
+
+#: ../db/base/describe.c:81
+msgid "print column names only instead of full column descriptions"
+msgstr "Gebe nur kurze Spaltennamen anstatt der vollen Spaltenbeschreibung aus."
+
+#: ../db/base/describe.c:108
+msgid "Describe a table (in detail)."
+msgstr "Beschreibe eine Tabelle (im Detail)."
 
 #: ../db/base/drivers.c:24
-#, c-format
 msgid "Error trying to read dbmscap file\n"
 msgstr "Fehler beim Lesen der Datei dbmscap\n"
 
-#: ../db/base/drivers.c:30
-#, c-format
-msgid ":%s"
-msgstr ":%s"
+#: ../db/base/drivers.c:47
+msgid "Full output"
+msgstr "Komplette Ausgabe."
 
-#: ../db/base/printtab.c:11
-#, c-format
-msgid "table:%s\n"
-msgstr "Tabelle: %s\n"
+#: ../db/base/drivers.c:51 ../db/base/tables.c:83
+msgid "print tables and exit"
+msgstr "Gebe Tabelle aus und beende das Modul."
 
-#: ../db/base/printtab.c:12 ../db/base/printtab.c:35
-#, c-format
-msgid "description:%s\n"
-msgstr "Beschreibung: %s\n"
+#: ../db/base/drivers.c:55
+msgid "List all database drivers."
+msgstr "Liste alle verfügbaren Datenbanktreiber auf."
 
-#: ../db/base/printtab.c:34
+#: ../db/base/execute.c:66 ../db/base/execute.c:70
 #, c-format
-msgid "column:%s\n"
-msgstr "Spalte: %s\n"
+msgid "Error while executing: \"%s\"\n"
+msgstr "Fehler beim Ausführen von: \"%s\"\n"
 
-#: ../db/base/printtab.c:36
-#, c-format
-msgid "type:%s\n"
-msgstr "Typ: %s\n"
+#: ../db/base/execute.c:119
+msgid "ignore SQL errors and continue"
+msgstr "Ignoriere SQL-Fehler und fahre fort."
 
-#: ../db/base/printtab.c:37
-#, c-format
-msgid "len:%d\n"
-msgstr "Länge: %d\n"
+#: ../db/base/select.c:180
+msgid "Table name, select all from this table"
+msgstr "Tabellenname, selektiere alles aus dieser Tabelle."
 
-#: ../db/base/printtab.c:38
-#, c-format
-msgid "scale:%d\n"
-msgstr "Maßstab: %d\n"
+#: ../db/base/select.c:203
+msgid ""
+"SQL select statement, for example: 'select * from rybniky where kapri = "
+"'hodne'"
+msgstr "SQL-Select Statement, z.B: 'SELECT * FROM rybniky WHERE kapri = 'hodne'"
 
-#: ../db/base/printtab.c:39
-#, c-format
-msgid "precision:%d\n"
-msgstr "Präzision: %d\n"
+#: ../db/base/select.c:209
+msgid "output field separator"
+msgstr "Ausgabe Feld-Trennzeichen"
 
-#: ../db/base/printtab.c:40
-#, c-format
-msgid "default:"
-msgstr "Standard:"
+#: ../db/base/select.c:216
+msgid "output vertical record separator"
+msgstr "Vertikales Trennzeichen für die Ausgabe"
 
-#: ../db/base/printtab.c:48
-#, c-format
-msgid "nullok:%s\n"
-msgstr "nullok:%s\n"
+#: ../db/base/select.c:222
+msgid "null value indicator"
+msgstr "Nullwert-Indikator"
 
-#: ../db/base/printtab.c:62
-#, c-format
-msgid "yes"
-msgstr "Ja"
+#: ../db/base/select.c:229
+msgid "filename with sql statement"
+msgstr "Dateiname mit SQL-Statement"
 
-#: ../db/base/printtab.c:63
-#, c-format
-msgid "no"
-msgstr "Nein"
+#: ../db/base/select.c:234
+msgid "do not include column names in output"
+msgstr "in der Ausgabe kein Spaltennamen ausgeben"
 
-#: ../db/base/printtab.c:64
-#, c-format
-msgid "?"
-msgstr "?"
+#: ../db/base/select.c:238
+msgid "describe query only (don't run it)"
+msgstr "Beschreibe nur die Abfrage (führe sie nicht aus!)"
 
-#: ../db/base/select.c:308
-#, c-format
-msgid "column%s%s\n"
-msgstr "Spalte%s%s\n"
+#: ../db/base/select.c:242
+msgid "vertical output (instead of horizontal)"
+msgstr "Vertikale Ausgabe (anstatt horizontal)"
 
-#: ../db/base/select.c:309
-#, c-format
-msgid "type%s%s\n"
-msgstr "Type%s%s\n"
+#: ../db/base/select.c:246
+msgid "Select data from database."
+msgstr "Slektiere Daten aus der Datenbank."
 
-#: ../db/base/select.c:310
-#, c-format
-msgid "len%s%d\n"
-msgstr "Länge%s%d\n"
+#: ../db/base/tables.c:87
+msgid "system tables instead of user tables"
+msgstr "Systemtabellen anstatt Benutzertabellen"
 
-#: ../db/base/select.c:311
-#, c-format
-msgid "scale%s%d\n"
-msgstr "Maßstab%s%d\n"
+#: ../db/base/tables.c:91
+msgid "List all tables for a given database."
+msgstr "Listet alle Tabellen für eine angegebene Datenbank auf."
 
-#: ../db/base/select.c:312
+#: ../db/drivers/mysql/db.c:69 ../db/drivers/postgres/parse.c:52
+msgid "'user' in database definition is not supported, use db.login"
+msgstr "'user' in der Datenbankdefinition wird nicht unterstützt. Bitte 'db.login' benutzen."
+
+#: ../db/drivers/mysql/db.c:72 ../db/drivers/postgres/parse.c:56
+msgid "'password' in database definition is not supported, use db.login"
+msgstr "'Password' in der Datenbankdefinition wird nicht unterstützt. Bitte 'db.login' benutzen."
+
+#: ../db/drivers/mysql/db.c:75
 #, c-format
-msgid "precision%s%d\n"
-msgstr "Präzision%s%d\n"
+msgid "Unknown option in database definition for mysql: '%s'"
+msgstr "Unbekannte Option in der Datenbankdefinition für mysql: '%s'"
+
+#: ../db/drivers/ogr/describe.c:87
+#, c-format
+msgid "OGR driver: column '%s', OGR type %d  is not supported"
+msgstr "OGR-Treiber: Spalte '%s', OGR Typ %d wird nicht unterstützt."
+
+#: ../db/drivers/ogr/describe.c:143
+#, c-format
+msgid ""
+"column '%s', type 'string': unknown width -> stored as varchar(250) some "
+"data may be lost"
+msgstr "Spalte '%s' mit Typ 'string': unbekannte Breite -> als Datentyp varchar(250) abgespeichert; eine Daten können u.U verloren sein."
+
+#: ../db/drivers/ogr/describe.c:151 ../db/drivers/ogr/fetch.c:124
+msgid "Unknown type"
+msgstr "Unbekannter Typ"
+
+#: ../db/drivers/postgres/describe.c:102
+#, c-format
+msgid "pg driver: column '%s', type %d  is not supported"
+msgstr "PG-Treiber: Spalte '%s', Typ %d wird nicht unterstützt."
+
+#: ../db/drivers/postgres/describe.c:107
+#, c-format
+msgid ""
+"column '%s' : type int8 (bigint) is stored as integer (4 bytes) some data "
+"may be damaged"
+msgstr "Spalte '%s' vom Typ int8 (bigint) wird als integer (4 bytes) abgespeichert. Einige Daten können u.U. verloren sein."
+
+#: ../db/drivers/postgres/describe.c:111
+#, c-format
+msgid "column '%s' : type text is stored as varchar(250) some data may be lost"
+msgstr "Spalte '%s' vom Type Text wird als varchar(250) abgespeichert. Einige Daten können u.U. verloren sein."
+
+#: ../db/drivers/postgres/describe.c:117
+#, c-format
+msgid ""
+"column '%s' : type character varying is stored as varchar(250) some data may "
+"be lost"
+msgstr "Spalte '%s' vom Typ Character ist als Typ varchar(250) abgespeichert. Einige Daten können u.U verloren sein."
+
+#: ../db/drivers/postgres/describe.c:123
+#, c-format
+msgid ""
+"column '%s' : type bool (boolean) is stored as char(1), values: 0 (false), 1 "
+"(true)"
+msgstr "Spalte '%s' vom Typ bool (boolean) ist als Typ char(1) abgespeichert. Werte: 0 (falsch), 1 (wahr)"
+
+#: ../db/drivers/postgres/fetch.c:163
+#, fuzzy
+msgid "Cannot recognize boolean value"
+msgstr "Kann die Tabelle nicht kopieren."
+
+#: ../db/drivers/postgres/parse.c:58
+msgid "Unknown option in database definition for PostgreSQL: "
+msgstr "Unbekannte Option in der Datenbankdefinition für PostgreSQL."
 
 #: ../db/db.login/main.c:56
 msgid "Cannot set user/password"
 msgstr "Kann Benutzer/Passwort nicht setzen."
+
+#: ../db/db.login/main.c:60
+msgid "The password was stored in file."
+msgstr "Das Passwort ist in einer Datei gespeichert."
 
 #: ../display/d.font.freetype/main.c:52
 msgid ""
@@ -199,12 +364,12 @@ msgstr ""
 msgid "Error: %s\n"
 msgstr "Fehler: %s\n"
 
-#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:215
+#: ../display/d.paint.labels/main.c:75 ../display/d.vect/main.c:217
 #, c-format
 msgid "Region size is lower than minreg, nothing displayed.\n"
-msgstr "Region-Größe ist kleiner als die Minimal-Region; es wird nichts angzeigt.\n"
+msgstr "Region-Größe ist kleiner als die Minimal-Region; es wird nichts angezeigt.\n"
 
-#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:224
+#: ../display/d.paint.labels/main.c:84 ../display/d.vect/main.c:226
 #, c-format
 msgid "Region size is greater than maxreg, nothing displayed.\n"
 msgstr "Region-Größe ist größer als die Maximal-Region; es wird nichts angezeigt.\n"
@@ -245,17 +410,17 @@ msgstr ""
 "\n"
 " FEHLER: Kann Vektordatei nicht lesen.\n"
 
-#: ../display/d.vect/main.c:421
+#: ../display/d.vect/main.c:423
 #, c-format
 msgid "Plotting ... "
 msgstr "Zeichne..."
 
-#: ../display/d.vect/main.c:430
+#: ../display/d.vect/main.c:432
 #, c-format
 msgid "The bounding box of the map outside current region, nothing displayed.\n"
 msgstr "Die Karte liegt außerhalb der derzeitigen Region, es wird nichts angezeigt.\n"
 
-#: ../display/d.vect/main.c:487
+#: ../display/d.vect/main.c:489
 #, c-format
 msgid "Done\n"
 msgstr "Fertig\n"
@@ -630,132 +795,127 @@ msgstr "%s - unbekannte Farbe\n"
 msgid "Valid colors are:\n"
 msgstr "Mögliche Farben sind:\n"
 
-#: ../raster/r.sunmask/main.c:226
+#: ../raster/r.sunmask/main.c:225
 msgid "Using map center coordinates\n"
 msgstr "Benutzte Koordinaten der Kartenmitte.\n"
 
-#: ../raster/r.sunmask/main.c:235
+#: ../raster/r.sunmask/main.c:234
 msgid "Empty east coordinate specified!"
 msgstr "Leere Ostkoordinate definiert!"
 
-#: ../raster/r.sunmask/main.c:237
+#: ../raster/r.sunmask/main.c:236
 msgid "Empty north coordinate specified!"
 msgstr "Leere Nordkoordinate definiert!"
 
-#: ../raster/r.sunmask/main.c:256
+#: ../raster/r.sunmask/main.c:255
 msgid "Either define sun position or location/date/time parameters."
 msgstr "Definiere entweder Sonnenposition oder Ort/Datum/Zeit."
 
-#: ../raster/r.sunmask/main.c:259
+#: ../raster/r.sunmask/main.c:258
 msgid ""
 "Neither sun position nor east/north, date/time/timezone definition are "
 "complete."
-msgstr "Weder Sonnenposition noch Ost/Nord, Datum/Uhrzeit/Zeitzone sind komplett angeben."
+msgstr ""
+"Weder Sonnenposition noch Ost/Nord, Datum/Uhrzeit/Zeitzone sind komplett "
+"angeben."
 
-#: ../raster/r.sunmask/main.c:264
+#: ../raster/r.sunmask/main.c:263
 #, c-format
 msgid "Calculating sun position... (using solpos (V. %s) from NREL)\n"
-msgstr "Berechne Sonnenposition... (benutze solpos (V, %s) vom NREL)\n"
+msgstr "Berechne Sonnenposition... (benutze solpos (V. %s) vom NREL)\n"
 
-#: ../raster/r.sunmask/main.c:269
+#: ../raster/r.sunmask/main.c:268
 msgid ""
 "Using user defined sun azimuth, altitude settings (ignoring eventual other "
 "values)\n"
-msgstr "Benutze die durch den Nutzer angegebenen Angaben für Sonnenazimuth und Höhe (ignoriere eventuelle anderen Werte)\n"
-
-#: ../raster/r.sunmask/main.c:307
-#, c-format
-msgid ""
-"\n"
-"lat:%f  long:%f\n"
 msgstr ""
-"\n"
-"geogr. Breite:%f  geogr. Länge:%f\n"
+"Benutze die durch den Nutzer angegebenen Angaben für Sonnenazimuth und Höhe "
+"(ignoriere eventuelle anderen Werte)\n"
 
-#: ../raster/r.sunmask/main.c:330
+#: ../raster/r.sunmask/main.c:338
 #, c-format
 msgid " %d.%02d.%02d, daynum %d, time: %02i:%02i:%02i (decimal time: %f)\n"
 msgstr " %d.%02d.%02d, Tagnummer %d, Zeit: %02i:%02i:%02i (dezimale Zeit: %f)\n"
 
-#: ../raster/r.sunmask/main.c:334
+#: ../raster/r.sunmask/main.c:342
 #, c-format
 msgid " long: %f, lat: %f, timezone: %f\n"
 msgstr "geogr. Länge: %f, geogr. Breite: %f, Zeitzone: %f\n"
 
-#: ../raster/r.sunmask/main.c:335
+#: ../raster/r.sunmask/main.c:343
 #, c-format
 msgid ""
 " Solar position: sun azimuth: %f,\n"
 "   sun angle above horz.(refraction corrected): %f\n"
 msgstr ""
 "Solare Position: Sonnenazimuth: %f,\n"
-"   Sonnenwinkel über Horizont (Brechung korrigiert: %f\n"
+"   Sonnenwinkel über Horizont (mit Lichtbrechungskorrektur): %f\n"
 
-#: ../raster/r.sunmask/main.c:337
+#: ../raster/r.sunmask/main.c:347
 #, c-format
-msgid " Sunrise time (without refraction): %02.0f:%02.0f\n"
-msgstr " Sonnenaufgang (ohne Brechung): %02.0f:%02.0f\n"
+msgid " Sunrise time (without refraction): %02d:%02d:%02d\n"
+msgstr " Sonnenaufgang (ohne Lichtbrechungskorrektur): %02d:%02d:%02d\n"
 
-#: ../raster/r.sunmask/main.c:338
+#: ../raster/r.sunmask/main.c:348
 #, c-format
-msgid " Sunset time  (without refraction): %02.0f:%02.0f\n"
-msgstr "Sonnenuntergang (ohne Brechung): %02.0f: %02.0f\n"
+msgid " Sunset time  (without refraction): %02d:%02d:%02d\n"
+msgstr "Sonnenuntergang (ohne Lichtbrechungskorrektur): %02d:%02d:%02d\n"
 
-#: ../raster/r.sunmask/main.c:346
+#: ../raster/r.sunmask/main.c:357
 msgid "Please correct settings."
 msgstr "Bitte korrigieren Sie die Eingaben."
 
-#: ../raster/r.sunmask/main.c:361
+#: ../raster/r.sunmask/main.c:374
 #, c-format
-msgid "Time (%02i:%02i:%02i) is before sunrise (%02.0f:%02.0f)!\n"
-msgstr "Zeit (%02i:%02i:%02i) ist vor dem Sonnenaufgang (%02.0f:%02.0f)!\n"
+msgid "Time (%02i:%02i:%02i) is before sunrise (%02d:%02d:%02d)!\n"
+msgstr "Zeit (%02i:%02i:%02i) ist vor dem Sonnenaufgang (%02d:%02d:%02d)!\n"
 
-#: ../raster/r.sunmask/main.c:363 ../raster/r.sunmask/main.c:369
-msgid "Please correct time settings."
-msgstr "Bitte korrigieren Sie die Zeitangaben."
-
-#: ../raster/r.sunmask/main.c:367
+#: ../raster/r.sunmask/main.c:377
 #, c-format
-msgid "Time (%02i:%02i:%02i) is after sunset (%02.0f:%02.0f)!\n"
-msgstr "Zeit (%02i:%02i:%02i) ist nach dem Sonnenuntergang (%02.0f:%02.0f)!\n"
+msgid "Time (%02i:%02i:%02i) is before sunrise!\n"
+msgstr "Zeit (%02i:%02i:%02i) ist vor dem Sonnenaufgang!\n"
 
-#: ../raster/r.sunmask/main.c:375
+#: ../raster/r.sunmask/main.c:379 ../raster/r.sunmask/main.c:388
+msgid "Nothing to calculate. Please verify settings."
+msgstr "Nichts zu berechnen. Bitte überprüfen Sie die Einstellungen."
+
+#: ../raster/r.sunmask/main.c:384
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset (%02d:%02d:%02d)!\n"
+msgstr "Zeit (%02i:%02i:%02i) ist nach dem Sonnenuntergang (%02d:%02d:%02d)!\n"
+
+#: ../raster/r.sunmask/main.c:387
+#, c-format
+msgid "Time (%02i:%02i:%02i) is after sunset!\n"
+msgstr "Zeit (%02i:%02i:%02i) ist nach dem Sonnenuntergang!\n"
+
+#: ../raster/r.sunmask/main.c:394
 msgid "No map calculation requested. Finished.\n"
 msgstr "Keine Kartenberechnung gefragt. Fertig!\n"
 
-#: ../raster/r.sunmask/main.c:382
+#: ../raster/r.sunmask/main.c:401
 msgid "You already know the sun position.\n"
 msgstr "Sie wissen bereits die Sonnenposition.\n"
 
-#: ../raster/r.sunmask/main.c:390 ../raster/r.sunmask/main.c:392
+#: ../raster/r.sunmask/main.c:409 ../raster/r.sunmask/main.c:411
 #, c-format
 msgid "can't open %s"
 msgstr "Kann '%s' nicht öffnen."
 
-#: ../raster/r.sunmask/main.c:402
+#: ../raster/r.sunmask/main.c:421
 #, c-format
 msgid "can't open range file for %s"
 msgstr "Kann Range-Datei für Karte %s nicht öffnen."
 
-#: ../raster/r.sunmask/main.c:419
+#: ../raster/r.sunmask/main.c:438
 msgid "Calculating shadows from DEM..."
 msgstr "Berechne Schatten des DHM..."
 
-#: ../raster/r.sunmask/main.c:427
+#: ../raster/r.sunmask/main.c:446
 msgid "can't read row in input elevation map"
 msgstr "Kann Reihe im Eingabehöhenmodell nicht lesen."
 
-#: ../raster/r.sunmask/main.c:473
-#, c-format
-msgid "Analysing col %i\n"
-msgstr "Analysiere Spalte %i.\n"
-
-#: ../raster/r.sunmask/main.c:478
-#, c-format
-msgid "Writing result row %i of %i\n"
-msgstr "Schreibe Ergebnisreihe %i von %i.\n"
-
-#: ../raster/r.sunmask/main.c:496
+#: ../raster/r.sunmask/main.c:511
 msgid "Finished.\n"
 msgstr "Zoomfunktion beendet.\n"
 
@@ -788,7 +948,7 @@ msgstr "Kann dig_cats Datei nicht öffnen."
 msgid "Cannot open database %s"
 msgstr "Kann Datenbank '%s' nicht öffnen."
 
-#: ../vector/v.convert/att.c:74
+#: ../vector/v.convert/att.c:74 ../vector/v.to.points/main.c:246
 #, c-format
 msgid "Cannot create table: %s"
 msgstr "Kann Tabelle '%s' nicht erstellen."
@@ -991,7 +1151,7 @@ msgstr "Wähle Typ aus: Linie oder Fläche"
 msgid "Cannot read field info"
 msgstr "Kann Feld-Information nicht lesen."
 
-#: ../vector/v.surf.idw/read_sites.c:38
+#: ../vector/v.surf.idw/read_sites.c:38 ../vector/v.to.points/main.c:239
 #, c-format
 msgid "Cannot open database %s by driver %s"
 msgstr "Kann Datenbank '%s' mit Treiber '%s' nicht öffnen."
@@ -1019,6 +1179,62 @@ msgstr "Kein Eintrag für Linie (cat = %d)."
 msgid "%d points loaded\n"
 msgstr "%d Punkte geladen.\n"
 
+#: ../vector/v.to.points/main.c:54
+#, c-format
+msgid "Cannot insert new row: %s"
+msgstr "Kann neu Reihe '%s' nicht einfügen."
+
+#: ../vector/v.to.points/main.c:152
+msgid "Create points along input lines."
+msgstr "Erzeuge Punkte entlang der Eingabelinie."
+
+#: ../vector/v.to.points/main.c:155
+msgid "Input map containing lines"
+msgstr "Eingabekarte entält Linien."
+
+#: ../vector/v.to.points/main.c:161
+msgid "Output map where points will be written"
+msgstr "Ausgabekarte mit den Punkten wird geschrieben."
+
+#: ../vector/v.to.points/main.c:170
+msgid "Write line vertices."
+msgstr "Schreibe Linienvertices."
+
+#: ../vector/v.to.points/main.c:174
+msgid "Interpolate points between line vertices."
+msgstr "Interpoliere Punkte zwischen den Linienvertices."
+
+#: ../vector/v.to.points/main.c:181
+msgid "Maximum distance between points in map units."
+msgstr "Maximale Distanz zwischen den Punkten in Karteneinheiten (mapunits)."
+
+#: ../vector/v.to.points/main.c:185
+msgid "Do not create attribute table."
+msgstr "Erstelle keine Attributtabelle."
+
+#: ../vector/v.to.points/main.c:203
+#, c-format
+msgid "Could not find input %s\n"
+msgstr "Kann die Eingabedatei <%s> nicht finden.\n"
+
+#: ../vector/v.to.points/main.c:229 ../vector/v.voronoi/vo_main.c:251
+msgid "Cannot copy table"
+msgstr "Kann die Tabelle nicht kopieren."
+
+#: ../vector/v.to.points/main.c:250
+msgid "Cannot create index"
+msgstr "Kann keinen Index erstellen."
+
+#: ../vector/v.to.points/main.c:253
+#, c-format
+msgid "Cannot grant privileges on table %s"
+msgstr "Kann Privilegien für die Tabelle '%s' nicht zuweisen."
+
+#: ../vector/v.to.points/main.c:321
+#, c-format
+msgid "%d points written to output map\n"
+msgstr "%d Punkte in die Ausgabedatei geschrieben.\n"
+
 #: ../vector/v.transform/ask_trans.c:83
 msgid "ask_transform_coor():  Leaving session.. \n"
 msgstr "ask_transform_coor():  Verlasse session.. \n"
@@ -1027,6 +1243,11 @@ msgstr "ask_transform_coor():  Verlasse session.. \n"
 #, c-format
 msgid " Number of points that have been entered: %d\n"
 msgstr "Anzahl der Punkte, die eingegeben wurden: %d\n"
+
+#: ../vector/v.transform/creat_trans.c:90
+#, c-format
+msgid "%s"
+msgstr "%s"
 
 #: ../vector/v.transform/creat_trans.c:100
 #, fuzzy
@@ -1128,10 +1349,6 @@ msgstr "Sie müssen mindestens %d Punkte eingeben."
 #: ../vector/v.voronoi/dt_main.c:116
 msgid "Cannot calculate area centroid"
 msgstr "Kann den Flächenzentroiden nicht berechnen."
-
-#: ../vector/v.voronoi/vo_main.c:251
-msgid "Cannot copy table"
-msgstr "Kann die Tabelle nicht kopieren."
 
 #: ../vector/v.what.rast/main.c:330
 #, c-format
