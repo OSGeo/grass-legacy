@@ -74,7 +74,7 @@ static char *G__find_file (
 */
     if (pmapset == NULL || *pmapset == 0)
     {
-	for (n = 0; pmapset = G__mapset_name(n); n++)
+	for (n = 0; (pmapset = G__mapset_name(n)); n++)
 	    if (access(G__file_name (path, element, pname, pmapset), 0) == 0)
 		    return pmapset;
     }

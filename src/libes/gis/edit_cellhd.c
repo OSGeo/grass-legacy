@@ -30,7 +30,10 @@
 #include "vask.h"
 #include "gis.h"
 
+#if 0
+/* never used...? */
 static int max(int,int);
+#endif
 static int hitreturn(void);
 
 static char *cellhd_screen[] = {
@@ -343,7 +346,7 @@ while(1)
     nsres = cellhd->ns_res;
     ewres = cellhd->ew_res;
 
-    if (err = G_adjust_Cell_head(cellhd,type==AS_CELLHD,type==AS_CELLHD))
+    if ((err = G_adjust_Cell_head(cellhd,type==AS_CELLHD,type==AS_CELLHD)))
     {
 	fprintf (stderr, "%s\n", err);
 	hitreturn();
@@ -495,8 +498,11 @@ static int hitreturn()
     return 0;
 }
 
+#if 0
+/* not used ? */
 static int max(a,b)
 {
     return a>b?a:b;
 }
+#endif
 

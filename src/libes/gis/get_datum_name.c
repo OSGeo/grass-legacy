@@ -41,7 +41,7 @@ G_ask_datum_name(char *datum)
 	    G_fatal_error("Cannot open temp file") ;
         }
         fprintf(Tmp_fd,"datum\n");
-        for (i=0; dat = CC_datum_name(i); i++) {
+        for (i=0; (dat = CC_datum_name(i)); i++) {
           fprintf(Tmp_fd,"%s\n",dat);
         }
 
