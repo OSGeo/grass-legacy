@@ -28,7 +28,7 @@ F_generate (char *drvname, char *dbname, char *tblname, char *key, int keyval,
 
     int i = 0;
     static char *encoding_list[] = {
-	"utf",
+	"utf-8",
 	"ascii",
 	"iso8859-1",
 	"koi8-r",
