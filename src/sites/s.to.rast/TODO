@@ -1,0 +1,11 @@
+Should accept site list without #cats field:
+
+Example:
+x-coord|y-coord|%decimals
+x-coord|y-coord|%decimals
+x-coord|y-coord|%decimals
+
+Currently just a binary map is created instead of
+a floating point raster map.
+
+1/2000
