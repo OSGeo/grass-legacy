@@ -9,6 +9,6 @@ LIST =  main.o\
 	scan_int.o
 
 $(BIN_INTER)/$(PGM):  $(LIST) $(DEPGISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(DEPGISLIB):      # in case this changes

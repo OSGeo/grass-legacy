@@ -23,7 +23,7 @@ LIST = main.o\
 	yes.o
 
 $(PGM): $(LIST) $(DEPGISLIB) $(INTERFACE) $(DEPICONLIB)
-	$(CC) $(LDFLAGS) $(LIST) $(ICONLIB) $(GISLIB) $(TERMLIB) $(INTERFACE) -o $@
+	$(CC) $(LDFLAGS) $(LIST) $(ICONLIB) $(GISLIB) $(INTERFACE) -o $@
 
 $(INTERFACE): #
 $(DEPICONLIB): #

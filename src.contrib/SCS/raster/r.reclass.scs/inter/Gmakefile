@@ -5,6 +5,6 @@ RECLASS = main.o
 all: $(BIN_INTER)/$(PGM)
 
 $(BIN_INTER)/$(PGM): $(RECLASS) $(DEPGISLIB) 
-	$(CC) $(LDFLAGS) -o $@ $(RECLASS) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(RECLASS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(DEPGISLIB): #

@@ -12,7 +12,7 @@ LIST =  main.o\
 	  unix_cmd.o
 
 $(SITE)/$(PGM): $(LIST) $(SITELIB) $(DEPGISLIB)
-		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+		$(CC) ${LDFLAGS} -o $(SITE)/$(PGM) $(LIST) $(SITELIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 main.o:		$I/local_menu.h
 

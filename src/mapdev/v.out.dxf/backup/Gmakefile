@@ -3,6 +3,6 @@ PGM=v.out.dxf
 LIST = cell.to.dat.o
 
 $(BIN_CMD)/$(PGM): v.out.dxf.o $(DEPGISLIB)
-	$(CC) $(LDFLAGS) -o $@ v.out.dxf.o $(GISLIB) $(TERMLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ v.out.dxf.o $(GISLIB) $(MATHLIB)
 
 $(DEPGISLIB): #

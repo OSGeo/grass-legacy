@@ -7,12 +7,12 @@ DEPLIBS = ../lib.a $(DEPGISLIB)
 all: $(HOME)/g.copy $(HOME)/g.list $(HOME)/g.rename $(HOME)/g.remove
 
 $(HOME)/g.copy: copy.o $(DEPLIBS)
-	$(CC) $(LDFLAGS) -o $@ copy.o $(LIBES) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ copy.o $(LIBES) $(MATHLIB) $(XDRLIB)
 $(HOME)/g.list: list.o $(DEPLIBS)
-	$(CC) $(LDFLAGS) -o $@ list.o $(LIBES) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ list.o $(LIBES) $(MATHLIB) $(XDRLIB)
 $(HOME)/g.rename: rename.o $(DEPLIBS)
-	$(CC) $(LDFLAGS) -o $@ rename.o $(LIBES) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ rename.o $(LIBES) $(MATHLIB) $(XDRLIB)
 $(HOME)/g.remove: remove.o $(DEPLIBS)
-	$(CC) $(LDFLAGS) -o $@ remove.o $(LIBES) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ remove.o $(LIBES) $(MATHLIB) $(XDRLIB)
 
 $(DEPLIBS): #

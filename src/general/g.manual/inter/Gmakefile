@@ -3,6 +3,6 @@ PGM    = g.manual
 OBJECTS   = main.o
 
 $(BIN_INTER)/$(PGM):  $(OBJECTS) $(DEPGISLIB) 
-	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJECTS) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(DEPGISLIB): #

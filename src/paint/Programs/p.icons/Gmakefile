@@ -2,7 +2,7 @@ PGM=p.icons
 OBJS = main.o menu.o edit.o preview.o divider.o
 
 $(BIN_INTER)/$(PGM): $(OBJS) $(DEPICONLIB) $(DEPGISLIB)
-	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(ICONLIB) $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(ICONLIB) $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(DEPICONLIB): #
 $(DEPGISLIB): #

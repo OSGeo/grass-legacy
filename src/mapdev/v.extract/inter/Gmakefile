@@ -1,5 +1,5 @@
 PGM=v.extract
 $(BIN_INTER)/$(PGM): main.o $(DEPGISLIB)
-	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(TERMLIB) $(MATHLIB) $(XDRLIB)
+	$(CC) $(LDFLAGS) -o $@ main.o $(GISLIB) $(MATHLIB) $(XDRLIB)
 
 $(DEPGISLIB): #
