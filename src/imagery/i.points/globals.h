@@ -34,6 +34,7 @@ GLOBAL char interrupt_char;
 GLOBAL char *tempfile1;
 GLOBAL char *tempfile2;
 GLOBAL char *digit_points;            /* digitizer control points */
+GLOBAL char *digit_results;           /* digitizer results */
 GLOBAL int  use_digitizer INIT(0);    /* is there a digitizer out there? */
 
 /* group file list, target cell,vector files */
@@ -49,17 +50,17 @@ GLOBAL int  from_flag      INIT(0);
 GLOBAL int  dotsize INIT(4);
 
 
-GLOBAL int COLORS[10];
-#define BLACK	COLORS[0]
-#define BLUE	COLORS[1]
-#define BROWN	COLORS[2]
-#define GREEN	COLORS[3]
-#define GREY	COLORS[4]
-#define ORANGE	COLORS[5]
-#define PURPLE	COLORS[6]
-#define RED	COLORS[7]
-#define WHITE	COLORS[8]
-#define YELLOW	COLORS[9]
+GLOBAL int THE_COLORS[10];
+#define BLACK	THE_COLORS[0]
+#define BLUE	THE_COLORS[1]
+#define BROWN	THE_COLORS[2]
+#define GREEN	THE_COLORS[3]
+#define GREY	THE_COLORS[4]
+#define ORANGE	THE_COLORS[5]
+#define PURPLE	THE_COLORS[6]
+#define RED	THE_COLORS[7]
+#define WHITE	THE_COLORS[8]
+#define YELLOW	THE_COLORS[9]
 
 double row_to_northing();
 double col_to_easting();
