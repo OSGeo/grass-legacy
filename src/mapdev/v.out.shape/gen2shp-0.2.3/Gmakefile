@@ -3,3 +3,4 @@ all:
 	make
 	if [ ! -d $(GISBASE)/etc/v.out.shape ]; then mkdir $(GISBASE)/etc/v.out.shape; fi	
 	mv gen2shp $(GISBASE)/etc/v.out.shape
+	mv txt2dbf $(GISBASE)/etc/v.out.shape
