@@ -801,7 +801,7 @@ if test -n "$USE_POSTGRES"; then
 
 LOC_CHECK_LIB_PATH(postgres,PostgreSQL,PQLIBPATH)
 
-LOC_CHECK_LIBS(pq,PQsetdbLogin,PostgreSQL,$PQLIBPATH,PQLIB,,,,-lcrypt)
+LOC_CHECK_LIBS(pq,PQsetdbLogin,PostgreSQL,$PQLIBPATH,PQLIB,,,,-lcrypt,-lssl -lcrypto)
 
 ac_save_ldflags="$LDFLAGS"
 LDFLAGS="$LDFLAGS $PQLIBPATH"

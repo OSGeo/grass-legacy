@@ -2,12 +2,12 @@
 static const char SCCSID[]="@(#)geod.c	4.8	95/09/23	GIE	REL";
 #endif
 /* <<<< Geodesic filter program >>>> */
-# include "projects.h"
 # include <stdio.h>
-# include "geodesic.h"
-# include "emess.h"
 # include <ctype.h>
 # include <string.h>
+# include "projects.h"
+# include "emess.h"
+# include "geodesic.h"
 
 # define MAXLINE 200
 # define MAX_PARGS 50
