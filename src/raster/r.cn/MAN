@@ -1,0 +1,87 @@
+.TH r.cn
+.SH NAME
+\fIr.cn\fR \- Generates a curve number map layer
+.br
+.I "(GRASS Raster Program)"
+.SH SYNOPSIS
+\fBr.cn\fR
+.br
+\fBr.cn help\fR
+.br
+\fBr.cn\fR
+\fBsg\fR\*=\fIname\fR
+\fBlu\fR\*=\fIname\fR
+\fBpr\fR\*=\fIname\fR
+\fBhc\fR\*=\fIname\fR
+\fBcn\fR\*=\fIname\fR
+\fBamc\fR\*=\fIvalue\fR
+.SH DESCRIPTION
+.B r.cn
+generates a SCS Curve Number map.
+.SH OPTIONS
+\fBParameters:\fR
+.IP \fBsg\*=\fIname\fR 18
+Raster input map of hydrologic soil groups.
+.IP \fBlu\*=\fIname\fR 18
+Raster input map of landuse.
+.IP \fBpr\*=\fIname\fR 18
+Raster input map of cultural practice or management.
+.IP \fBhc\*=\fIname\fR 18
+Raster input map of hydrologic condition.
+.IP \fBcn\*=\fIname\fR 18
+Raster output map of curve numbers.
+.IP \fBamc\*=\fIvalue\fR 18
+Equivalent AMC condition number for the curve number output.
+.br
+Options: 1-3
+
+.LP
+
+.I r.cn
+uses information from the four map layers by reading the cell layer and its
+category files. So it is important to update the category files
+for all four layers and it expects the categories of the map
+layer exactly as shown below:
+.LP
+For the hydrologic soil group map (\fBsg=\fR), the categories may be either 
+\fBA, B, C or D\fR.
+.LP
+For the landuse map (\fBlu=\fR), the categories may be either 
+\fBfallow\fR, 
+\fBrow crops\fR, 
+\fBsmall grain\fR, 
+\fBclose-seeded legumes\fR, 
+\fBrotation meadow\fR, 
+\fBpasture\fR, 
+\fBrange\fR, 
+\fBmeadow\fR, 
+\fBwoods\fR, 
+\fBfarmsteads\fR, 
+\fBroads\fR (dirt)
+or 
+\fBhard surface\fR.
+.LP
+For the cultural practice or management map layer the categories may be 
+\fBstraight row\fR, \fBcontoured\fR, or 
+\fBcontoured and terraced\fR.
+.LP
+For the hydrological condition map the categories may be \fBpoor\fR, 
+\fBfair\fR, or \fBgood\fR.
+
+.br
+If the combination of the four layers categories does not exist in the
+SCS CN table, an error message is printed and the program quits.
+
+.SH NOTE
+The \fIr.cn\fR
+program is sensitive to the \fBcurrent window setting\fR. Thus the
+program can be used to generate a CN map of any sub-area within the
+full map layer. Also, \fIr.cn\fR is sensitive to
+any \fImask\fR in effect.
+
+.SH SEE ALSO
+.I r.cn.urban
+
+.SH "AUTHORS"
+Raghavan Srinivasan, Bernie Engel, and James Darrell McCauley,
+Agricultural Engineering, Purdue University
