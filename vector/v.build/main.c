@@ -70,7 +70,7 @@ main (int argc, char *argv[])
     if ( build ) { 
 	/* open input vector */
 	if ( G_find_vector2 (map_opt->answer, G_mapset()) == NULL)
-	     G_fatal_error ("Could not find input map <%s>\n", map_opt->answer);
+	     G_fatal_error ("Could not find input map <%s> in current mapset.", map_opt->answer);
 	
 	Vect_set_open_level (1); 
 	Vect_open_old (&Map, map_opt->answer, G_mapset()); 
