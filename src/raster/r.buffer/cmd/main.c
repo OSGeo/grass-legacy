@@ -22,7 +22,9 @@ char *argv[];
     int offset;
     int count;
     int step, nsteps;
+    int quiet;
     struct Option *opt1, *opt2, *opt3, *opt4;
+    struct Flag *flag1;
 
 	/* initialize GRASS */
 
@@ -58,6 +60,10 @@ char *argv[];
     opt4->description= "Units of distance" ;
     opt4->answer     = "meters";
 
+    flag1 = G_define_flag() ;
+    flag1->key         = 'q';
+    flag1->description = "Run quietly";
+
 
     if (G_parser(argc, argv))
         exit(-1);
@@ -69,6 +75,8 @@ char *argv[];
     output    = opt2->answer; 
     zone_list = opt3->answers;
     units     = opt4->answer;
+
+    quiet = flag1->answer;
 
     mapset = G_find_cell (input, "");
     if (mapset == NULL)
@@ -122,7 +130,7 @@ char *argv[];
 	 *         2 == distance zone #1,   3 == distance zone #2, etc.
 	 */
 
-    read_input_map (input, mapset);
+    read_input_map (input, mapset, quiet);
 
     offset = 0;
 
@@ -131,12 +139,14 @@ char *argv[];
     pd = distances;
     for (step = 1; count > 0; step++)
     {
-	if (nsteps > 1) fprintf (stderr, "Pass %d (of %d)\n", step, nsteps);
-	ndist = count;
+       if ( ! quiet)
+	  if (nsteps > 1) fprintf (stderr, "Pass %d (of %d)\n", step, nsteps);
+        ndist = count;
 	if (ndist > MAX_DIST)
 	    ndist = MAX_DIST;
-	execute_distance();
-	write_output_map(output, offset);
+	if(count_rows_with_data > 0) 
+	      execute_distance(quiet);
+	write_output_map(output, offset, quiet);
 	offset += ndist;
 	distances += ndist;
 	count -= ndist;
