@@ -1,0 +1,12 @@
+#  %W%  %G%
+GRAPH=$(GISBASE)/mapgen
+MAPGEN_BIN = $(GRAPH)/interface
+
+OFILES = d_get_cord.o get_margin.o get_pwin.o p_get_cord.o ask.o 
+EXTRA_CFLAGS = -I../include
+
+
+gmaplib.a: $(OFILES)
+	if [ ! -d $(LIBARCH) ];then mkdir $(LIBARCH);fi
+	ar  r  $@ $(OFILES)
+	$(RANLIB) $@
