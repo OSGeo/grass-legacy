@@ -1,0 +1,23 @@
+
+Hi,                     30. August 1998
+
+the GRASS Postgres interface modules need some updating...
+
+There were changes in commands:
+
+   Postgres 4.x      Postgres 6.x
+   retrieve      ->  select
+      ...        ->   ...
+
+
+You find Postgres 6.x at
+ http://www.postgresql.org
+
+and a NICE graphical user "PGACCESS" interface at
+ ftp://ftp.flex.ro/pub/pgaccess/
+
+
+Any voluneers to update the GRASS interface?
+
+Markus Neteler
+neteler@geog.uni-hannover.de
