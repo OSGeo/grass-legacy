@@ -8,12 +8,14 @@ RETURN key, then press ESC.
 
   \i.build.blk help\     \i.camera help\         \i.cca help\
   \i.class help\         \i.cluster help\        \i.colors help\  
-  \i.composite help\     \i.fft help\            \i.grey.scale help\   
-  \i.group help\         \i.his.rgb help\        \i.ifft help\  
-  \i.maxlik help\        \i.median help\         \i.mod.camera help\  
-  \i.pca help\           \i.points help\         \i.rectify help\
-  \i.rectify.blk help\   \i.rgb.his help\        \i.tape.mss help\  
-  \i.tape.mss.h help\    \i.tape.other help\     \i.tape.tm help\  
+  \i.composite help\     \i.fft help\            \i.gensig help\
+  \i.grey.scale help\    \i.group help\          \i.his.rgb help\
+  \i.ifft help\          \i.maxlik help\         \i.maxlik.orig help\
+  \i.mod.camera help\    \i.ortho.photo help\    \i.pca help\
+  \i.ortho.photo help\   \i.points help\         \i.quantize help\
+  \i.rectify help\       \i.rectify.blk help\    \i.rgb.his help\
+  \i.tape.mss help\      \i.tape.mss.h help\     \i.tape.other help\
+  \i.tape.spot help\     \i.tape.tm help\        \i.tape.tm.fast help\
   \i.target help\        \i.zc help\
 
   \hsv.rgb.sh help\      \rgb.hsv.sh help\
