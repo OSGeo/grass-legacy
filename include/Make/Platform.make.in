@@ -187,6 +187,9 @@ OPENDWGLIBPATH      = @OPENDWGLIBPATH@
 OPENDWGLIB          = @OPENDWGLIB@
 USE_OPENDWG         = @USE_OPENDWG@
 
+#i18N
+HAVE_NLS            = @HAVE_NLS@
+
 # Uncomment below to input Korean(Asian?) characters in v.digit or etc.
 #DASIAN_CHARS        = -DASIAN_CHARS
 
