@@ -185,6 +185,12 @@
 /* define if setenv() exists */
 #undef HAVE_SETENV
 
+/* define if glXCreatePbuffer exists */
+#undef HAVE_PBUFFERS
+
+/* define if glXCreateGLXPixmap exists */
+#undef HAVE_PIXMAPS
+
 /*
  * It's hard to click two buttons simultaneously with two button mouse.
  * Situation is worse, if it requires continuous clicking.
