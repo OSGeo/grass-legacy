@@ -101,6 +101,8 @@ proc DmVector::create { tree parent } {
     set opt($count,where) "" 
 
     set opt($count,attribute) "" 
+    set opt($count,xref) "left"
+    set opt($count,yref) "center"
     set opt($count,lsize) 8
 
     set opt($count,minreg) "" 
@@ -211,7 +213,15 @@ proc DmVector::options { id frm } {
     set row [ frame $frm.field ]
     LabelEntry $row.a -label "Field" -textvariable DmVector::opt($id,field) -width 5
     LabelEntry $row.b -label "Label Field" -textvariable DmVector::opt($id,lfield) -width 5
-    pack $row.a $row.b -side left
+    ComboBox $row.c -label "Label xpos" \
+                    -width 6  -textvariable DmVector::opt($id,xref) \
+                    -values {"left" "center" "right"} \
+                    -modifycmd "DmVector::legend $id"
+    ComboBox $row.d -label "Label ypos" \
+                    -width 6  -textvariable DmVector::opt($id,yref) \
+                    -values {"top" "center" "bottom"} \
+                    -modifycmd "DmVector::legend $id"
+    pack $row.a $row.b $row.c $row.d -side left
     pack $row -side top -fill both -expand yes
 
     # attribute column
@@ -264,8 +274,8 @@ proc DmVector::save { tree depth node } {
 
     foreach key { _check map display_shape display_cat display_topo display_dir display_attr
                   type_point type_line type_boundary type_centroid type_area type_face
-                  color fcolor _use_fcolor lcolor icon size field lfield attribute lsize cat where 
-                  _query_text _use_query_text minreg maxreg } {
+                  color fcolor _use_fcolor lcolor icon size field lfield attribute
+                  xref yref lsize cat where _query_text _use_query_text minreg maxreg } {
         Dm::rc_write $depth "$key $opt($id,$key)"
 
     } 
@@ -336,6 +346,9 @@ proc DmVector::display { node } {
     if { $opt($id,attribute) != "" && $opt($id,display_attr) } { 
         append cmd " {att=$opt($id,attribute)} lsize=$opt($id,lsize)" 
     } 
+    
+    append cmd " xref=$opt($id,xref) yref=$opt($id,yref)"
+
     if { $opt($id,lfield) != "" } { 
         append cmd " lfield=$opt($id,lfield)" 
     } 
@@ -391,6 +404,9 @@ proc DmVector::print { file node } {
 
         puts $file "  symbol $opt($id,icon)"
         puts $file "  size $opt($id,size)"
+
+        puts $file "  symbol $opt($id,xref)"
+        puts $file "  symbol $opt($id,yref)"
 
 	puts $file "end"
     } 
