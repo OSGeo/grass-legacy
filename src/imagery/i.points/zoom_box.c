@@ -15,7 +15,7 @@ zoom_box()
     static Objects objects[]=
     {
 	MENU("CANCEL",cancel,&use),
-	INFO(" Mark first corner of window ",&use),
+	INFO(" Mark first corner of region ",&use),
 	OTHER(zoom1,&use),
 	{0}
     };
@@ -32,7 +32,7 @@ zoom1(x,y)	/* called by Input_pointer */
     static Objects objects[] =
     {
 	MENU("CANCEL",cancel,&use),
-	INFO(" Define the window ",&use),
+	INFO(" Define the region ",&use),
 	OTHER(zoom2,&use),
 	{0}
     };
@@ -98,7 +98,7 @@ zoom2 (x, y)
     if (!In_view (pick_view,x2,y2)) return 0;
 /*
  * ok, erase menu messages
- *
+ */
     Menu_msg("");
 
 /*
