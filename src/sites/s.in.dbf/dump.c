@@ -32,6 +32,7 @@
  *			      
  ******************************************************************************/
 
+/* uncomment to get some debug output */
 /*#define DEBUG2*/
 
 #include <stdio.h>
@@ -41,9 +42,10 @@
 #include "site.h"
 #include "shapefil.h"
 
-typedef unsigned char uchar;
+#define BSLASH 92  /* as long as sites format doesn't accept backslashes in strings */
+#define PIPE '|'   /* used as replacement character for backslash */
 
-/* ok... i guess someone invented C++ just for this...*/
+typedef unsigned char uchar;
 
 struct my_string {
   char *data;
@@ -303,6 +305,8 @@ static void * SfRealloc( void * pMem, int nNewSize )
         single_line[0]='\0';  
   	interim_lineN[0]='\0';
 	interim_lineS[0]='\0';
+	fbuf[0]='0';
+	fbuf[1]='\0';
 		
 	nRecordOffset = psDBF->nRecordLength * hEntity + psDBF->nHeaderLength;
 
@@ -336,6 +340,10 @@ static void * SfRealloc( void * pMem, int nNewSize )
 
     /* Convert float numbers to non-scientifically (no exponents)
        and add site list related characters*/
+#ifdef DEBUG2
+ if (iField == 8)
+   fprintf(stderr, "A: %i-line %i: %s\n",iField, hEntity, pszStringField);
+#endif 
     ftype=DBFGetFieldInfo( psDBF, iField, buf, &field_width, NULL );
     switch (ftype) {
 	case 0: /*text*/
@@ -343,14 +351,20 @@ static void * SfRealloc( void * pMem, int nNewSize )
 		break;
 	case 1: /*int*/
 		if (iField < 2) /* treat the first coordinate columns differently */
-			sprintf(fbuf,"%.1f", atof(pszStringField));
+			sprintf(fbuf,"%s", pszStringField);
 		else
-			sprintf(fbuf,"%%%.1f ", atof(pszStringField)); /* bug, should be %int*/
+			sprintf(fbuf,"%%%s ", pszStringField);
 		sprintf(pszStringField, fbuf);
+		if(strlen(pszStringField) == 0)  /* this is crazy, but I don't know how to fix MN */
+			sprintf(pszStringField,"%%0 ");
+#ifdef DEBUG2
+ if (iField == 8)
+  fprintf(stderr, "B: %i-line %i: %s\n",iField, hEntity, pszStringField);
+#endif
 		break;
 	case 2: /* float */
 		if (iField < 2) /* treat the first coordinate columns differently */
-			sprintf(fbuf,"%.1f", atof(pszStringField));
+			sprintf(fbuf,"%f", atof(pszStringField));
 		else
 			sprintf(fbuf,"%%%f ", atof(pszStringField));
 		sprintf(pszStringField,fbuf);
@@ -359,10 +373,13 @@ static void * SfRealloc( void * pMem, int nNewSize )
 		break;
 	} /* switch */
 #ifdef DEBUG2
- if (iField == 5)
-  fprintf(stderr, "%i-line %i: %s\n",iField, hEntity, pszStringField);
+ if (iField == 8)
+  fprintf(stderr, "C: %i-line %i: %s\n",iField, hEntity, pszStringField);
 #endif
- 	
+
+        /* replace backslash with something else: here: PIPE */
+ 	G_strchg(pszStringField, BSLASH, PIPE);
+
     	/*Remove white spaces if any*/
 #ifdef TRIM_DBF_WHITESPACE
     	if (1)
@@ -456,6 +473,9 @@ static void * SfRealloc( void * pMem, int nNewSize )
 	case 3: /* error */
 		break;
 	} /* switch */
+
+        /* replace backslash with something else: here: PIPE */
+ 	G_strchg(pszStringField, BSLASH, PIPE);
 	
     	/*Remove white spaces if any*/
 #ifdef TRIM_DBF_WHITESPACE
