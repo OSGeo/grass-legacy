@@ -1,0 +1,10 @@
+#   %W%  %G%
+
+Dstatus: $(BIN)/Dstatus
+
+$(BIN)/Dstatus: dumper.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+	$(CC) $(LDFLAGS) dumper.o $(DISPLAYLIB) $(RASTERLIB) $(GISLIB) -o $@
+
+$(DISPLAYLIB): #
+$(RASTERLIB): #
+$(GISLIB): #
