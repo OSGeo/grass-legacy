@@ -13,6 +13,7 @@
 #define USE_ATTR  1
 #define USE_CAT   2
 #define USE_VAL   3
+#define USE_Z     4
 
 
 /* clock.c */
