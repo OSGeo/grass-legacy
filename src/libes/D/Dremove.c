@@ -22,7 +22,7 @@ int Dremove(char *new_wind)
 		return(-1) ;
 
 /* Do the plotting */
-	R_standard_color(D_translate_color("black")) ;
+	R_standard_color(D_translate_color(DEFAULT_BG_COLOR)) ;
 	for(line=t-1; line<b+2; line++)
 	{
 		R_move_abs(l-1, line) ;
