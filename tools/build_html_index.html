@@ -133,7 +133,7 @@ do
   for i in `ls -1 $i.*.html | grep -v $EXCLUDEHTML`
   do
     BASENAME=`basename $i .html`
-    SHORTDESC="`cat $i | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | head -1`"
+    SHORTDESC="`cat $i | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -1`"
     echo "<li><a href=\"$i\">$BASENAME</a> - $SHORTDESC" >> $FULLINDEX
   done
   echo "</ul>" >> $FULLINDEX
@@ -157,7 +157,7 @@ do
   for k in `ls -1 $k.*.html | grep -v $EXCLUDEHTML`
   do
     BASENAME=`basename $k .html`
-    SHORTDESC="`cat $k | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | head -1`"
+    SHORTDESC="`cat $k | awk '/NAME/,/SYNOPSIS/' | grep '<em>' | cut -d'-' -f2- | sed 's+^ ++g' | grep -vi 'SYNOPSIS' | head -1`"
     echo "<li><a href=\"$k\">$BASENAME</a> - $SHORTDESC" >> $FILENAME
   done
   echo "</ul>" >> $FILENAME
