@@ -1,0 +1,42 @@
+# this file contains ellipsoid parameters
+# format of the file is
+#  name  a=value   x=value     comments
+#
+# where name is a single word elliposid name, a is the equatorial radius
+# and x is one of
+#   b polar radius, f flattening, or e eccentricity squared
+#
+# x should be a defining parameter (as opposed to a derived parameter)
+# no spaces before or after the =
+
+
+# these are from [Synder, Table 1, p.12]
+australian     a=6378160     f=1/298.25
+clark66       a=6378206.4   b=6356583.8
+grs80         a=6378137     f=1/298.257
+hayford       a=6378388     f=1/297
+international a=6378388     f=1/297
+krasovsky     a=6378245     f=1/298.3
+wgs72         a=6378135     f=1/298.26
+
+# this is from naval oceanographic lab
+wgs84         a=6378137     f=1/298.257223563
+
+
+# these are from [Seppelin, Table 9, p.35]
+bessel        a=6377397.155 e=.006674372
+airy          a=6377563.396 e=.006670540
+everest       a=6377276.345 e=.0066378466
+wgs66         a=6378145     f=1/298.25
+
+# Synder.
+#      John P. Synder, "Map Projections - A  Working  Manual,"
+#      U.S.  Government  Printing Office, Washington DC, 1989.
+#      U.S. Geological Survey Professional Paper 1395
+
+# Seppelin.
+#      Thomas O. Seppelin, "The  Department  of Defense World
+#      Geodetic System 1972," presented at the International
+#      Symposium  on Problems Related to the Redefinition if
+#      North American Geodetic Networks, Fredericton, New 
+#      Brunswick,Canada in May, 1974.
