@@ -1,4 +1,6 @@
 :
+ARCH=$1
+
 # copy the standard digcap file
 cp $GISBASE/etc/digcap.sample $GISBASE/etc/digcap
 
@@ -19,7 +21,7 @@ echo "GRASS GIS source code compiled successfully."
 echo "HINT for ps.map on Linux: "
 echo "  You have to recompile this module with additional compile flag:"
 echo "  COMPILE_FLAGS = -fwritable-strings"
-echo "Add the flag in src/CMD/head/head and clean ps.map OBJ-files before"
+echo "Add the flag in src/CMD/head/head.$ARCH and clean ps.map OBJ-files before"
 echo "recompiling."
 echo ""
 

@@ -10,8 +10,8 @@ BINDIR=			@BINDIR@
 SRCDIR=			`pwd`
 SERVERNAME=		`uname -n`
 SYSTEM=			`uname -s`
-VERSION=		`cat src/CMD/VERSION | head -1`
 ARCH=			`grep ARCH src/CMD/head/head | cut -d'=' -f2 | sed -e 's/\ //g'`
+VERSION=		`cat src/CMD/VERSION | head -1`
 
 # Get the major release number from the version for appending to gmake,
 # gmakelinks, and grass command names eg VERSION = 5.0beta8 NAME_VER = 5
@@ -37,7 +37,7 @@ MAKE_GMAKE_ENV=		UNIX_BIN=${BINDIR} SRC=${SRCDIR} MAKE=${MAKE} NAME_VER=${NAME_V
 MAKE_POST_ENV=		GISBASE=${PREFIX} MACHINENAME=${SERVERNAME}
 
 # the cutline we need to find out to shorten the ChangeLog:
-CUTLINE=		`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1 | head -1`
+CUTLINE=		`grep -n '1999-12-29 16:12' ChangeLog |cut -d':' -f1 | head.${ARCH} -1`
 
 # Variables for the DejaGNU testing suite:
 EXPECT=` \
@@ -82,8 +82,10 @@ install: pre-install do-install
 pre-install:
 	test -d ${PREFIX} || ${INSTALL_DATA_DIR} ${PREFIX}
 	test -d src/CMD/next_step || mkdir -p src/CMD/next_step
-	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh
-	${SHELL} ${IS64BIT}
+	cp src/CMD/head/head src/CMD/head/head.${ARCH}
+	${MAKE_GMAKE_ENV} ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/CREATE_GMAKE.sh ${ARCH}
+	echo ping.
+	${SHELL} ${IS64BIT} ${ARCH}
 	@ echo "Now proceed with make install"
 
 
@@ -91,7 +93,7 @@ do-install:
 	@ rm -f src/CMD/next_step/${ARCH}
 	${MAKE_ENV} ${SHELL} src/CMD/generic/GISGEN.sh
 	${MAKE_ENV} ${SHELL} src/CMD/generic/MAKELINKS.sh
-	${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh
+	${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh ${ARCH}
 
 
 # GRASS source code cleaning options:
@@ -111,7 +113,7 @@ do-install:
 # 		      	  generated directories like etc/ and dev/ - good for
 #                     	  recompiling on the same system (keep configure files)
 # make distclean    	- delete object files, next step file, libraries,
-#   	    	    	  generated directories, head file, configure files,
+#   	    	    	  generated directories, head.${ARCH} file, configure files,
 #   	    	    	  and Makefile - good for starting the whole
 #   	    	    	  installation from scratch
 # make maintainer-clean - delete object files, next step file, libraries,
@@ -120,13 +122,13 @@ do-install:
 #   	    	    	  system and also generating the lex/flex and
 #   	    	    	  yacc/bison files again
 # make savebinclean    	- delete object files, next step file, the binary
-#   	    	    	  install script if it exists, libraries, head file,
+#   	    	    	  install script if it exists, libraries, head.${ARCH} file,
 #   	    	    	  configure files, and Makefile - good for deleting
 #   	    	    	  everything but the binary files
 mostlyclean:
 	@ echo "Performing mostlyclean step..."
 	${SHELL} -c "find . -name 'OBJ*' -exec rm -rf {} \; 2>/dev/null ; true"
-	${SHELL} -c "rm -f src/CMD/next_step/*   	    2>/dev/null ; true"
+	${SHELL} -c "rm -f src/CMD/next_step/${ARCH}   	    2>/dev/null ; true"
 	${SHELL} -c "rm -f grass*install.sh   	    	    2>/dev/null ; true"
 	${SHELL} -c "rm -f testsuite/*log                   2>/dev/null ; true"
 	${SHELL} -c "rm -f testsuite/*.sum                  2>/dev/null ; true"
@@ -161,7 +163,7 @@ clean: mostlyclean
 
 distclean: clean
 	@ echo "Performing distclean step..."
-	${SHELL} -c "rm -f src/CMD/head/head                     2>/dev/null ; true"
+	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head 2>/dev/null ; true"
 	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
 	${SHELL} -c "rm -f src/scripts/shells/create_fifos.sh    2>/dev/null ; true"
 	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
@@ -186,7 +188,7 @@ savebinclean: mostlyclean
 	@ echo "Performing savebinclean step..."
 	${SHELL} -c "find . -name 'LIB*' -exec rm -rf {} \; 2>/dev/null ; true"
 	${SHELL} -c "rm -f src.garden/grass.hdf/HDF4.1r3/hdf/src/libdf.a 2>/dev/null ; true"
-	${SHELL} -c "rm -f src/CMD/head/head                     2>/dev/null ; true"
+	${SHELL} -c "rm -f src/CMD/head/head.${ARCH} src/CMD/head/head  2>/dev/null ; true"
 	${SHELL} -c "rm -f config.cache config.log config.status 2>/dev/null ; true"
 	${SHELL} -c "rm -f src/scripts/shells/create_fifos.sh    2>/dev/null ; true"
 	${SHELL} -c "rm -f src/include/config.h                  2>/dev/null ; true"
@@ -199,7 +201,7 @@ srcdist: distclean
 # http://www.red-bean.com/~kfogel/cvs2cl.shtml
 	cvs2cl.pl
 	@ echo "reduce Changelog file... Dont want the initial upload included."
-	head -${CUTLINE} ChangeLog   > ChangeLog.cut
+	head.${ARCH} -${CUTLINE} ChangeLog   > ChangeLog.cut
 	echo "   initial CVS import" >> ChangeLog.cut
 	${SHELL} -c "mv ChangeLog.cut ChangeLog"
 	${SHELL} -c "rm -f ChangeLog.bak"
