@@ -15,6 +15,7 @@ PO_DIR = po
 #distinguish between library messages and modules:
 LIBDOMAIN = grasslibs
 MODDOMAIN = grassmods
+DOMAINS = $(LIBDOMAIN) $(MODDOMAIN)
 
 LIB_POTFILES = find ../lib -name '*.c' | xargs grep -l "_(\""
 MOD_POTFILES = find ../ -name '*.c' | grep -v '../lib' | xargs grep -l "_(\""
@@ -27,16 +28,15 @@ pot:
 
 #merge already existing translations with new messages in POT template file and create new po files:
 update-po:
-	@if [ "`ls ./po/*.po 2> /dev/null`" = "" ] ; then \
-		echo "No .po file(s) found in this directory. Will create new po files from templates." ; \
-		cp ./templates/$(LIBDOMAIN).pot ./po/$(LIBDOMAIN).po ; \
-		echo "Created ./po/$(LIBDOMAIN).po - Rename to ./po/$(LIBDOMAIN)_LANG.po (with LANG: de, ru, ...)" ; \
-		cp ./templates/$(MODDOMAIN).pot ./po/$(MODDOMAIN).po ; \
-		echo "Created ./po/$(MODDOMAIN).po - Rename to ./po/$(MODDOMAIN)_LANG.po (with LANG: de, ru, ...)" ; \
-		echo "Then you can translate the messages in these files (e.g with kbabel)" ; \
-		exit 0 ; \
-	else \
-	cd ./po/ ; for po in *.po; do \
+	@for i in $(DOMAINS) ; do \
+		if [ "`ls ./po/$$i\_*.po 2>/dev/null`" = "" ] ; then \
+		 echo "No $$i.po file found in ./po/ directory. Will create new po files from template." ; \
+		 cp ./templates/$$i.pot ./po/$$i.po ; \
+		 echo "Created ./po/$$i.po - Rename to ./po/$$i\_LANG.po (with LANG: de, ru, ...)" ; \
+		 echo "Then you can translate the messages in this file (e.g with kbabel)" ; \
+		fi ;\
+	done
+	@cd ./po/ ; for po in `ls *_??.po 2>/dev/null` ; do \
 		suffix=`echo $$po | cut -d'_' -f2`; \
 		lingua=`basename $$suffix .po`; \
 		prefix=`echo $$po | cut -d'_' -f1`; \
@@ -46,12 +46,11 @@ update-po:
 		else \
 		    echo "Merging failed"; \
 		fi \
-		done \
-	fi
+		done
 
 #create binary messages files
 mo:
-	@(cd ./po/ ; for po in *.po; do\
+	@(cd ./po/ ; for po in `ls *_??.po 2>/dev/null` ; do\
 		suffix=`echo $$po | cut -d'_' -f2`; \
 		lingua=`basename $$suffix .po`; \
 		prefix=`echo $$po | cut -d'_' -f1`; \
