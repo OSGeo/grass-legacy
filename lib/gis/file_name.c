@@ -37,8 +37,8 @@ char *G__file_name (
 	if (name && *name)
 		if (G__name_is_fully_qualified(name, xname, xmapset))
 		{
-			name = xname;
-			mapset = xmapset;
+			strcpy(name, xname);
+			strcpy(mapset, xmapset);
 		}
 
 	sprintf(path,"%s/%s", G__location_path(), mapset);
