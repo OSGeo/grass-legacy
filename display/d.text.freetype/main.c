@@ -201,14 +201,15 @@ main(int argc, char **argv)
 
 	fprintf(stdout, "Font=<%s:%s:%s:%d>\n\n", path, charset, tcolor, size);
 
+	align = opt8->answer;
+
 	rotation = atof(opt9->answer);
 	if(!flag1->answer)
 		rotation *= M_PI / 180.0;
+
 	rotation = fmod(rotation, 2 * M_PI);
 	if(rotation < 0.0)
 		rotation = 2 * M_PI + rotation;
-
-	align = opt8->answer;
 
 	if(R_open_driver() != 0)
 		error("No graphics device selected");
