@@ -1,6 +1,6 @@
 MDmain	Dmain.c	/^main(argc, argv)  char *argv[] ;$/
 Mcube	cube.c	/^main()$/
-Mmain	main.c	/^main()$/
+Mmain	main.c	/^main(argc,argv) char *argv[];$/
 Reset_color	cube.c	/^Reset_color(red, grn, blu, number)$/
 Reset_colors	cube.c	/^Reset_colors(red, grn, blu, tot_colr)$/
 Screen_calc	transform.c	/^Screen_calc(carray, z_adj, scr_x, scr_y, atrow, wi/
@@ -22,9 +22,10 @@ establish_view	transform.c	/^establish_view(fx,fy,fz,tx,ty,tz, view_angle)$/
 get_corners	get_row.c	/^get_corners(row, scr_x1, scr_y1, scr_x2, scr_y2)$/
 get_defaults	get_inputs.c	/^get_defaults()$/
 get_inputs	get_inputs.c	/^get_inputs(do_it, erase_color)$/
-get_range	draw_face.c	/^get_range(elevfile, elevfile_mapset, min, max)$/
+get_range	get_range.c	/^get_range(min, max)$/
 get_row	get_row.c	/^get_row(row)$/
 initialize_arrays	get_row.c	/^initialize_arrays()$/
+no_avg_rows	get_row.c	/^no_avg_rows(avg, a1)$/
 point_calc	transform.c	/^point_calc(y, z, x, scr_x, scr_y)$/
 save_defaults	get_inputs.c	/^save_defaults()$/
 save_edges	clip.c	/^save_edges(T, B, L, R)$/
