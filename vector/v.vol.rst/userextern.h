@@ -11,10 +11,12 @@ extern int             nsizr, nsizc, nsizl, total;
 extern char           *input;
 extern char           *cellinp;
 extern char           *cellout;
+extern char           *scol;
 extern char           *maskmap;
 extern char           *mapset;
 extern char	      *devi;
 extern char           *outz,*gradient,*aspect1,*aspect2,*ncurv,*gcurv,*mcurv;
+extern char           *cvdev;
 
 
 extern double ns_res, ew_res, tb_res;
