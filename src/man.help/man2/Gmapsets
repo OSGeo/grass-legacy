@@ -1,0 +1,27 @@
+.TH Gmapsets 2G G-language
+.SH NAME
+Gmapsets \- Choose mapsets to be accessed
+.br
+.I "(G Language Tool)"
+.SH SYNOPSIS
+.B Gmapsets
+[\fImapset1\fR] [\fImapset2\fR] ...
+.SH DESCRIPTION
+.I Gmapsets
+sets the current
+.I mapset\ search\ path
+to the 
+.I mapsets
+named on the command line.
+If no
+.I mapsets
+are specified, the current
+.I mapset\ search\ path
+is printed.
+.SH SEE ALSO
+.TS
+ll.
+\fImapsets[1]\fR	For a discussion of the \fImapset search path\fR.
+.TE
+.SH AUTHOR
+Michael Shapiro, U.S. Army Construction Engineering Research Laboratory
