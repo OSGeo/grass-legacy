@@ -1,7 +1,7 @@
 .TH r.transect
 .SH NAME
 \fIr.transect\fR \- Outputs raster map layer values lying along
-user-defined transect line(s).
+user defined transect line(s).
 .br
 .I "(GRASS Raster Program)"
 .SH SYNOPSIS
