@@ -1,6 +1,6 @@
 Known bugs in current GRASS GIS version 5.0 CVS
 
-$Id: BUGS,v 1.103 2001-01-12 15:46:29 markus Exp $
+$Id: BUGS,v 1.104 2001-01-13 08:57:51 markus Exp $
 [In sync with GRASS 5.0 beta CVS version]
 
 Maintained by
@@ -81,13 +81,10 @@ G3D libraries bug:
 
 ----------- modules ---------------------------------------------
 
-d.param.scale
+d.param.scale (at src.nonGPL/display/d.param.scale/)
+ - replace numerical recipes functions with src/libes/gmath/ functions
  - lower axis description not readable
  - sometimes "floating point exeption", especially in par=geary
-    (being worked on by ?)
-
-d.rast.edit:
- - update to edit float or double maps
     (being worked on by ?)
 
 d.rast.num: some numbers are displayed in wrong (unreadable) color
@@ -96,46 +93,11 @@ d.rast.num: some numbers are displayed in wrong (unreadable) color
 d.rgb: Is there a difference between d.rgb and i.composite?
   (being worked on by ?)  
 
-d.sites.qual: not all the sites are used/displayed
-  d.sites.qual doesn't work properly: not all the sites 
-  are used/displayed if the number of fields of the input site file is 
-  not constant. Compare with d.sites.
- Comment from Eric G Miller:
-    However, I do not believe this is a bug.  d.sites.qual needs consistent
-    dimension, category and attribute data to work.  Besides, I think the  
-    site_list is broken if it doesn't have a constant number and type of   
-    fields (We're looking at allowing null fields for 5.1...). 
-  (being worked on by ?)  
-
-g.select.pg
- > When trying to run g.select.pg I get the classic error message :
- > Error: select Postgres:PQconnectPoll() -- connect() failed: Connection
- >  refused
- >         Is the postmaster running (with -i) at 'localhost'
- >         and accepting connections on TCP/IP port '5432'? 
- > However, postmaster is running on 5432. I can see the databases with
- > 'g.select.pg -l' and I can connect to them with pg_access. The only thing
- > that seems a bit bizarre is that I cannot enter a host name when
- > connecting through pg_access. If I do I get the same message as above. 
- > But when I don't I can connect without any trouble. I remember getting
- > this hint from the pg_access web page or mailing list, so it seems to be
- > a known phenomenon.  Could this be the same problem with g.select.pg ?
- (reported by Moritz Lennert  mlennert@club.worldonline.be)
- Eric Miller:
- Yes, I brought this up before.  Seems the code hasn't been changed (I           
- didn't want to change others code).  The problem is the the interface with
- username/password pairs.  The code should be sending user=NULL,
- password=NULL, hostname=NULL, but instead sends hostname="localhost", which
- causes a TCP/IP connection vs. a UNIX socket, which will probably make your
- configuration demand a valid username/password pair.  It's definitely a bug,
- IMHO.
-  (being worked on by ?)
-
 i.in.gtc/i.in.pri
   i.in.gtc, putting in input leadername voldirname and dataname        
   as required but....I get core dumped.
   (reported by Stefano Merler <merler@itc.it>)
-  -> r.in.gdal offers SAR import
+  -> NOTE: r.in.gdal offers SAR import, shall we remove i.in.gtc/i.in.pri?
   (being worked on by ?)
 
 i.ortho.photo
@@ -143,10 +105,6 @@ i.ortho.photo
    immediately in orange color (right window)
  - GIS WARNING: Can't write embedded null values for map open for random
    access: i.ortho.photo/photo.rectify/write.c needs to be updated.
-  (being worked on by ?)  
-
-i.tape.tm.fast: (Todd Shoemaker, jtshoe@datasync.com)
- - Attempting to change the default Title causes a segfault.
   (being worked on by ?)  
 
 g.help:
@@ -238,12 +196,12 @@ p.map.new:
  Perhaps some carried sum exceeds the MAXINT value, or some such.  I have
  no more good ideas.
  Chris Cornuelle <bob@math.umn.edu> 
- -> r.cost works fine in Gauss-Krueger-locations (tmerc proj)
+ -> NOTE: r.cost works fine in Gauss-Krueger-locations (tmerc proj)
   (being worked on by ?)
 
 r.fill.dir:
- -  stops working somewhere in the map if DEM contains NULL holes
-    (reported by Markus Neteler)
+ - stops working somewhere in the map if DEM contains NULL holes
+   (reported by Markus Neteler)
  - requires FP update
    (being worked on by Markus, Fortran help needed)
 
@@ -253,7 +211,7 @@ r.in.bin:
    -> put a note in html/html/r.in.bin.html
 
 r.in.hdf/r.out.hdf (src.garden/grass.hdf)
- - needs updating to HDF5.x lib (already there)
+ - needs updating to HDF5.x lib
  -> or add this to r.in.gdal
   (being worked on by ?)
 
@@ -311,17 +269,11 @@ r.null:
    The problem is, if r.null was run on the reclass raster it would alter    
    the original and any other reclass rasters of the original.  So, there are
    two basic approaches, let the user make a raster out of the reclass that  
-   isn't a reclass (e.g. cho 'newmap = reclass' | r.mapcalc) or have        
+   isn't a reclass (e.g. echo 'newmap = reclass' | r.mapcalc) or have        
    r.null do this for them.  With the second, a new raster has to be made     
    and what do you name it?  If you name it the same as the reclass and      
    blow away the reclass, is that okay? 
  (being worked on by ?)
-
-
-[RC]r.out.tiff
- - the flag -t does not produce correct file extensions (neither .tfw 
-   nor .tif)
- - NULL color should be changed to white during export (currently red)
 
 
 [RC]r.poly
