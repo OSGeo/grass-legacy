@@ -6,7 +6,7 @@ include $(MODULE_TOPDIR)/include/Make/Grass.make
 include $(MODULE_TOPDIR)/include/Make/Rules.make
 
 
-EXTRA_CFLAGS = $(GDINC) -I../lib
+EXTRA_CFLAGS = $(PNGINC) -I../lib
 
 OBJS =  \
 	Can_do.o\
@@ -23,8 +23,8 @@ OBJS =  \
 
 ARCH_OBJS := $(foreach obj,$(OBJS),OBJ.$(ARCH)/$(obj))
 
-LIBES = $(DRIVERLIB) $(GISLIB)
-DEPENDENCIES = $(DRIVERLIBDEP) $(GISLIBDEP)
+LIBES = $(DRIVERLIB) $(DISPLAYLIB) $(RASTERLIB) $(GISLIB)
+DEPENDENCIES = $(DRIVERLIBDEP) $(DRIVERDEP) $(RASTERDEP) $(GISLIBDEP)
 HTMLPGM=pngdriver
 
 default: $(DRIVERDIR)/PNG
@@ -43,5 +43,5 @@ default: $(DRIVERDIR)/PNG
 
 
 $(DRIVERDIR)/PNG: $(ARCH_OBJS) $(DEPENDENCIES)
-	$(CC) $(LDFLAGS) -o $@ $(ARCH_OBJS) $(LIBES) $(XDRLIB) $(GDLIB) $(MATHLIB)
+	$(CC) $(LDFLAGS) -o $@ $(XLDFLAGS) $(LIBPATH) $(ARCH_OBJS) $(LIBES) $(PNGLIB) $(XLIBPATH) $(XLIB) $(XEXTRALIBS) $(MATHLIB)
 
