@@ -12,7 +12,7 @@ NAME
 SYNOPSIS
      s.to.rast
      s.to.rast help
-     s.to.rast [-v] input=name output=name
+     s.to.rast [-qs] input=name output=name title="phrase"
 
 DESCRIPTION
      s.to.rast converts a GRASS site file to a GRASS cell file.
@@ -24,10 +24,15 @@ DESCRIPTION
 
 OPTIONS
 Flag:
-     Run the program verbosely.
+     Run the module quietly.  Create a single-valued (0/1) raster
+     map
 
 Parameters:
-     Name of input site list Name of output cell file
+     Name of input site list Name of output cell file Number of
+     cells to surround site cell Title for the resulting raster
+     map Attribute field number to use for operation
+
+     default: 1
 
 SEE ALSO
      s.menu
@@ -55,12 +60,7 @@ AUTHOR
 
 
 
-
-
-
-
-
-GRASS 5.0beta6	      GRASS Development Team			1
+GRASS 5.0beta9	      GRASS Development Team			1
 
 
 
