@@ -89,7 +89,7 @@ int delete(struct my_string *str) {
 }
 
 
-int DumpFromDBF (char *infile, char *outfile, char *timestamp) {
+int DumpFromDBF (char *infile, char *outfile, char *timestamp, int third) {
 	
 	DBFHandle   hDBF;
 	char buf[256]="";
@@ -105,7 +105,7 @@ int DumpFromDBF (char *infile, char *outfile, char *timestamp) {
 
 	static char name[128]="";
 	char  fname[15];
-	int k;
+	int k, dimension;
 
 	FILE *sites;
     	char *sitesname;
@@ -116,6 +116,12 @@ int DumpFromDBF (char *infile, char *outfile, char *timestamp) {
 		fprintf (stderr, " Can't create sites file [%s]", outfile);
 		exit(1);
 	}
+
+	/* check if third column shall be used as third dimension coordinate */
+	if (third)
+		dimension=3;
+	else
+		dimension=2;
 
         /* generate some strings */
 	init(&SQL_create);
@@ -239,7 +245,7 @@ int DumpFromDBF (char *infile, char *outfile, char *timestamp) {
 
         /* dump the fields */
 
-	DBFDumpASCII(hDBF, sites);
+	DBFDumpASCII(hDBF, sites, dimension);
 	
 	fprintf(stdout,"\nTable %s successfully imported into %s.\n",infile, outfile);
 
@@ -272,7 +278,7 @@ static void * SfRealloc( void * pMem, int nNewSize )
 /*     		 Dumps DBF to comma-separated list. 			*/
 /************************************************************************/
 
- int DBFDumpASCII(DBFHandle psDBF, FILE *fp)
+ int DBFDumpASCII(DBFHandle psDBF, FILE *fp, int dimension)
 
 {
     int	       	nRecordOffset;
@@ -350,7 +356,7 @@ static void * SfRealloc( void * pMem, int nNewSize )
 		/*ignore, do later */
 		break;
 	case 1: /*int*/
-		if (iField < 2) /* treat the first coordinate columns differently */
+		if (iField < dimension) /* treat coordinate columns differently */
 			sprintf(fbuf,"%s", pszStringField);
 		else
 			sprintf(fbuf,"%%%s ", pszStringField);
@@ -363,7 +369,7 @@ static void * SfRealloc( void * pMem, int nNewSize )
 #endif
 		break;
 	case 2: /* float */
-		if (iField < 2) /* treat the first coordinate columns differently */
+		if (iField < dimension) /* treat coordinate columns differently */
 			sprintf(fbuf,"%f", atof(pszStringField));
 		else
 			sprintf(fbuf,"%%%f ", atof(pszStringField));
@@ -408,7 +414,7 @@ static void * SfRealloc( void * pMem, int nNewSize )
        		snprintf(tmp_buf,1024," %s\n",pszStringField);
 	   else
 	   {
-	     if (iField > 2) /* coordinates */
+	     if (iField > dimension) /* coordinates */
     		snprintf(tmp_buf,1024," %s",pszStringField);
      	     else             /* something else */
     		snprintf(tmp_buf,1024,"|%s",pszStringField);
@@ -505,7 +511,7 @@ static void * SfRealloc( void * pMem, int nNewSize )
        		snprintf(tmp_buf,1024," %s\n",pszStringField);
 	  else
 	  {
-	   if (iField > 2) /* coordinates */
+	   if (iField > dimension) /* coordinates */
     		snprintf(tmp_buf,1024," %s",pszStringField);
     	   else             /* something else */
     		snprintf(tmp_buf,1024,"|%s",pszStringField);

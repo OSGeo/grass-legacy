@@ -30,7 +30,7 @@ int main( int   argc, char *argv[])
 	/*struct Option *date, *order;*/
     } parm;
     struct GModule *module;
-    struct Flag *listflag;
+    struct Flag *listflag, *third;
     struct TimeStamp ts;
     DBFHandle   hDBF;
     char *buf;
@@ -84,6 +84,10 @@ int main( int   argc, char *argv[])
     listflag->key     = 'l';
     listflag->description = "List fields of DBF file";
 
+    /* treat third column as third dimension */
+    third = G_define_flag();
+    third->key      = 'z';
+    third->description = "treat third column as third dimension (z)";
 
 
     /* get options and test their validity */
@@ -123,8 +127,9 @@ int main( int   argc, char *argv[])
 
     }
     else
-        DumpFromDBF(infile, outfile, "none" ); /* timestamp not yet implemented */
-    
+	/* timestamp not yet implemented */    
+	DumpFromDBF(infile, outfile, "none",  third->answer);
+
     exit(0);
 }
 
