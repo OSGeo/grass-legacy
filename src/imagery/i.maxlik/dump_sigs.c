@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 
 main(argc,argv) char *argv[];
