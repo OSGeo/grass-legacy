@@ -1,0 +1,61 @@
+D_a_to_d_col	cnversions.c	/^double $/
+D_a_to_d_row	cnversions.c	/^double $/
+D_add_to_list	list.c	/^D_add_to_list(string)$/
+D_cell_draw_setup	raster.c	/^D_cell_draw_setup(t, b, l, r)$/
+D_check_map_window	window.c	/^D_check_map_window(wind)$/
+D_claim_offset_is	list.c	/^D_claim_offset_is(num)$/
+D_claim_type_is	list.c	/^D_claim_type_is(type)$/
+D_clear_window	list.c	/^D_clear_window()$/
+D_clip	clip.c	/^D_clip( s, n, w, e, x, y, c_x, c_y)$/
+D_d_to_a_col	cnversions.c	/^double $/
+D_d_to_a_row	cnversions.c	/^double $/
+D_d_to_u_col	cnversions.c	/^D_d_to_u_col(D_col) $/
+D_d_to_u_row	cnversions.c	/^D_d_to_u_row(D_row) $/
+D_do_conversions	cnversions.c	/^D_do_conversions(window, t, b, l, r)$/
+D_draw_cell_row	raster.c	/^D_draw_cell_row(A_row, xarray)$/
+D_erase_window	window.c	/^D_erase_window()$/
+D_get_a_east	cnversions.c	/^double $/
+D_get_a_north	cnversions.c	/^double $/
+D_get_a_south	cnversions.c	/^double $/
+D_get_a_to_d_xconv	cnversions.c	/^double $/
+D_get_a_to_d_yconv	cnversions.c	/^double $/
+D_get_a_west	cnversions.c	/^double $/
+D_get_cell_name	list.c	/^D_get_cell_name(name)$/
+D_get_cur_wind	window.c	/^D_get_cur_wind(name)$/
+D_get_d_east	cnversions.c	/^double $/
+D_get_d_north	cnversions.c	/^double $/
+D_get_d_south	cnversions.c	/^double $/
+D_get_d_west	cnversions.c	/^double $/
+D_get_ew_resolution	cnversions.c	/^double $/
+D_get_ns_resolution	cnversions.c	/^double $/
+D_get_screen_window	window.c	/^D_get_screen_window(t, b, l, r)$/
+D_get_u_east	cnversions.c	/^double $/
+D_get_u_north	cnversions.c	/^double $/
+D_get_u_south	cnversions.c	/^double $/
+D_get_u_to_a_xconv	cnversions.c	/^double $/
+D_get_u_to_a_yconv	cnversions.c	/^double $/
+D_get_u_to_d_xconv	cnversions.c	/^double $/
+D_get_u_to_d_yconv	cnversions.c	/^double $/
+D_get_u_west	cnversions.c	/^double $/
+D_have_equal	parse.c	/^D_have_equal(str)$/
+D_new_window	window.c	/^D_new_window(name, t, b, l, r)$/
+D_offset_is	list.c	/^D_offset_is(num)$/
+D_overlay_cell_row	raster.c	/^D_overlay_cell_row(A_row, xarray)$/
+D_parse_command	parse.c	/^D_parse_command(argc, argv, variables, n_variables/
+D_remove_window	window.c	/^D_remove_window()$/
+D_reset_screen_window	window.c	/^D_reset_screen_window(t, b, l, r)$/
+D_scan_double	scan_dbl.c	/^D_scan_double (buf, f)$/
+D_scan_float	scan_float.c	/^D_scan_float (buf, f)$/
+D_scan_int	scan_int.c	/^D_scan_int (buf, f)$/
+D_set_cell_name	list.c	/^D_set_cell_name(name)$/
+D_set_cur_wind	window.c	/^D_set_cur_wind(name)$/
+D_show_window	window.c	/^D_show_window(color)$/
+D_timestamp	window.c	/^D_timestamp()$/
+D_translate_color	tran_colr.c	/^D_translate_color(str)$/
+D_type_is	list.c	/^D_type_is(type)$/
+D_u_to_a_col	cnversions.c	/^double $/
+D_u_to_a_row	cnversions.c	/^double $/
+D_u_to_d_col	cnversions.c	/^D_u_to_d_col(U_col) $/
+D_u_to_d_row	cnversions.c	/^D_u_to_d_row(U_row) $/
+D_usage	usage.c	/^D_usage (me, rule)$/
+draw_cell_row	raster.c	/^draw_cell_row(A_row, xarray, all)$/
