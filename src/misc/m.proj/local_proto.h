@@ -1,3 +1,4 @@
+#include "geo.h"
 void get_stp_proj(char[]);
 int get_stp_code(int, char[]);
 int get_stp_num(void);
@@ -11,6 +12,12 @@ int proj_index_in, proj_index_out;
 #else
 #define GLOBAL extern
 #endif
+struct  used_opt {
+	int was;
+	double val;
+};
+GLOBAL struct used_opt USED_in[NOPTIONS];
+GLOBAL struct used_opt USED_out[NOPTIONS];
 GLOBAL FILE *In_file, *Out_file, *Mem_file;
 /* GLOBAL static char aline[80], answer[24], null = '\0';
 GLOBAL static char command[1024], sav_comd[1024], parms_in[256], parms_out[256];*/
@@ -22,8 +29,7 @@ GLOBAL char units_in[50], units_out[50];
 GLOBAL double unit_fact_in, unit_fact_out;
 GLOBAL char ellps_name_in[20], ellps_name_out[20], proj_name_in[20], proj_name_out[20];
 GLOBAL char proj_title_in[100], proj_title_out[100];
-/* int ier, icode, SFIPS, CFIPS, fipscode, COzone, NUM_ZON, lookup; */
-GLOBAL int icode, SFIPS, CFIPS, fipscode, COzone, NUM_ZON, lookup;
+GLOBAL int ier, icode, SFIPS, CFIPS, fipscode, COzone, NUM_ZON, lookup;
 GLOBAL int record, reccnt;
 GLOBAL int i, conv_typ, conv_way;
 GLOBAL int input_typ, output_typ, rec_cnt;
@@ -60,7 +66,4 @@ int min1(int, int);
 /* process.c */
 int process(int, char *, char *, char *, char *, double *, struct used_opt *, char *);
 /* table.c */
-int init_table(void);
-int get_proj_index(char *);
-int init_unit_table(void);
 int get_sphere_radius(double *);
