@@ -99,7 +99,6 @@ static int _ParseShortOption( GnoOption_s * pOpt, char * pszArg, char * pszPar )
 {
 	char *		pszShort;
 	int			ich;
-	Boolean		fOptional = False;
 
 	if ( pOpt->pszShort == NULL ) return 0;
 
@@ -192,8 +191,6 @@ int GnoParse( int argc , char ** argv , GnoOption_s * pOpt )
 {
 	char *	pszArgv;
 	char *	pszArgvNxt;
-	char *	pszLong;
-	char *	psz;
 	int		iArg, iOpt, cOrphan = 0;
 	int		nret, cret;
 	Boolean	fParseError = False;
@@ -429,14 +426,14 @@ void GnoHelp( char *pszHead, GnoOption_s * pOpt )
 			{
 				fprintf( stderr, "-%s ", pOpt[ iOpt ].pszShort );
 
-				fprintf( stderr, "<value> ", pOpt[ iOpt ].pszShort );
+				fprintf( stderr, "<value> " );
 			}
 
 			if ( pOpt[ iOpt ].pszLong )
 			{
 				fprintf( stderr, "--%s", pOpt[ iOpt ].pszLong );
 
-				fprintf( stderr, "=<value>", pOpt[ iOpt ].pszShort );
+				fprintf( stderr, "=<value>" );
 			}
 
 			fprintf( stderr, "\n\t%s\n",
