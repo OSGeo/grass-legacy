@@ -2,6 +2,7 @@
 **
 ** Author: Paul W. Carlson	April 1992
 ** Modified by: Radim Blazek Jan 2000 area, label added 
+** Modified by: Morten Hulden Mar 2004, support for legend in columns added 
 */
 
 #include "vector.h"
@@ -10,8 +11,8 @@
 
 int PS_vlegend (void)
 {
-    int i, j, k, l, lcount, nopos;
-    double x, y, fontsize, dy, xo, yo, margin, width;
+    int h, i, j, k, l, lc, st, lcount, nopos;
+    double x, y, fontsize, dx, dy, xo, yo, xs, ys, margin, width;
     int **vec, *nvec;
 
     G_debug (2, "vect_legend(): count = %d", vector.count );
@@ -71,103 +72,121 @@ int PS_vlegend (void)
     margin = 0.4 * fontsize;
     if (x < PS.map_left + margin) x = PS.map_left + margin;
 
-    /* make PostScript array "a" of name-mapset strings */
-    fprintf(PS.fp, "/a [\n");
-    for ( i = 0; i < lcount; i++ ) {
-        G_debug (4, "  row = %d", i );
-	if ( nvec[i] > 0 ) { /* used position */
-	    j = vec[i][nvec[i]-1]; /* vector with label */
-	    if ( vector.layer[j].label == NULL )
-		fprintf(PS.fp, "( %s (%s))\n", vector.layer[j].name, vector.layer[j].mapset);
-	    else		
-		fprintf(PS.fp, "( %s)\n", vector.layer[j].label);
-	} else { /* not used -> empty string */
-	    fprintf(PS.fp, "( )\n" );
-	}
-    }
-    fprintf(PS.fp, "] def\n");
+    if (lcount < vector.cols) vector.cols = lcount;
+    dx = (PS.map_right - x) / vector.cols;
+    xs = x; /*save x and y*/
+    ys = y;
+    lc = (int) lcount/vector.cols; /* lines per column */
+    if (lcount%vector.cols) lc++;
+    
+    for ( h = 0; h < vector.cols; h++) { 
 
-    width = 72.0 * vector.width;
-    /* if vector legend is on map... */
-    if (y > PS.map_bot && y <= PS.map_top && x < PS.map_right)
-    {
-	fprintf(PS.fp, "/mg %.1f def\n", margin);
+	y = ys;
+	if (h) x+=dx;
+	st = ((h+1)*lc < lcount) ? ((h+1)*lc) : lcount;
 
-        /* get width of widest string in PostScript variable "w" */
-        fprintf(PS.fp, "/w 0 def 0 1 a length 1 sub { /i XD\n");
-        fprintf(PS.fp, "a i get SW pop /t XD t w gt {/w t def} if } for\n");
-    	fprintf(PS.fp, "/w w %.1f add mg add %.1f add def\n", x, width);
+	/* make PostScript array "a" of name-mapset strings */
+	fprintf(PS.fp, "/a [\n");
 
-    	/* make white background for text */
-    	fprintf(PS.fp, "1 1 1 C ");
-    	fprintf(PS.fp, "%.1f %.1f w %.1f B fill \n", 
-		x - margin,  y - lcount * dy - margin, y);
-    }
-
-    /* make the legend */
-    for ( j = 0; j < lcount; j++ ) { /* each row */
-        G_debug (4, "  row = %d", j );
-	y -= dy; /* set position of next row */
-	for (k = 0; k < nvec[j]; k++) {
-	    i = vec[j][k]; 
-
-	    /* make a grey box if needed */
-	    /* TODO */
-	    /*
-	    if ((vector.layer[i].hwidth > 0. && vector.layer[i].hcolor == WHITE) ||
-		(vector.layer[i].hwidth < 1. && vector.layer[i].colors[0]  == WHITE))
-	    {
-		fprintf(PS.fp, "0.5 setgray ");
-		fprintf(PS.fp, "%.1f %.1f %.1f %.1f B fill \n", 
-		    x, y, x + 72.0, y + fontsize);
+	for ( i = h*lc; i < st; i++ ) {
+    	    G_debug (4, "  row = %d", i );
+	    if ( nvec[i] > 0 ) { /* used position */
+		j = vec[i][nvec[i]-1]; /* vector with label */
+		if ( vector.layer[j].label == NULL )
+		    fprintf(PS.fp, "( %s (%s))\n", vector.layer[j].name, vector.layer[j].mapset);
+		else		
+		    fprintf(PS.fp, "( %s)\n", vector.layer[j].label);
+	    } else { /* not used -> empty string */
+		fprintf(PS.fp, "( )\n" );
 	    }
-	    */
+	}
+	fprintf(PS.fp, "] def\n");
 
-	    if ( vector.layer[i].type == VAREAS ) {  /* added for areas */
-		/* plot rectangle */
-		yo = y - 0.1 * fontsize; 
-		if ( !color_none ( &vector.layer[i].fcolor) ) {
-		    set_ps_color( &(vector.layer[i].fcolor) );
-		    fprintf(PS.fp, "%.1f %.1f %.1f %.1f rectfill\n",
-		        x + width/5, yo , 3 * width / 5, 0.8 * fontsize);
-		}
-		if ( !color_none( &vector.layer[i].color) && vector.layer[i].width > 0 ) {	
-		    fprintf(PS.fp, "%.8f W\n", vector.layer[i].width );
-		    set_ps_color( &(vector.layer[i].color) );
-		    fprintf(PS.fp, "[] 0 setdash\n");
-		    fprintf(PS.fp, "%.1f %.1f %.1f %.1f rectstroke\n",
-			x + width/5, yo, 3 * width / 5, 0.8 * fontsize);
-		}	    
-	    } else if ( vector.layer[i].type == VLINES ) {
-		yo = y + 0.35 * fontsize - vector.layer[i].offset; 
-		/* do highlight, if any */
-		if (vector.layer[i].hwidth) {
-		    set_ps_color( &(vector.layer[i].hcolor) );
-		    fprintf(PS.fp, "%.8f W\n",  
-			  vector.layer[i].width + 2 * vector.layer[i].hwidth);
-		    fprintf(PS.fp, "[] 0 setdash\n");
-		    fprintf(PS.fp, "%.1f %.1f %.1f %.1f L\n", x + width, yo, x, yo);
-		}
+	width = 72.0 * vector.width;
+	/* if vector legend is on map... */
+	if (y > PS.map_bot && y <= PS.map_top && x < PS.map_right)
+	{
+	    fprintf(PS.fp, "/mg %.1f def\n", margin);
 
-		/* plot the primary color line */
-		set_ps_color( &(vector.layer[i].color) );
-		fprintf(PS.fp, "%.8f W\n", vector.layer[i].width );
-		fprintf(PS.fp, "%s setdash\n", vector.layer[i].setdash);
-		fprintf(PS.fp, "%.1f %.1f %.1f %.1f L\n", x + width, yo, x, yo);
-	    } else if ( vector.layer[i].type == VPOINTS ) {
+    	    /* get width of widest string in PostScript variable "w" */
+    	    fprintf(PS.fp, "/w 0 def 0 1 a length 1 sub { /i XD\n");
+    	    fprintf(PS.fp, "a i get SW pop /t XD t w gt {/w t def} if } for\n");
+    	    fprintf(PS.fp, "/w w %.1f add mg add %.1f add def\n", x, width);
+
+    	    /* make white background for text */
+    	    fprintf(PS.fp, "1 1 1 C ");
+    	    fprintf(PS.fp, "%.1f %.1f w %.1f B fill \n", 
+		x - margin,  y - lc * dy - margin, y);
+	}
+
+	/* make the legend */
+	for ( j = h*lc; j < st; j++ ) { /*each row */
+    	    G_debug (4, "  row = %d", j );
+	    y -= dy; /* set position of next row */
+	    for (k = 0; k < nvec[j]; k++) {
+		i = vec[j][k]; 
+
+		/* make a grey box if needed */
 		/* TODO */
-		yo = y + 0.5 * fontsize - vector.layer[i].offset; 
-                xo = x + width / 2;
-		symbol_draw ( vector.layer[i].symbol_ps, xo, yo, vector.layer[i].size, 
+		/*
+		if ((vector.layer[i].hwidth > 0. && vector.layer[i].hcolor == WHITE) ||
+		    (vector.layer[i].hwidth < 1. && vector.layer[i].colors[0]  == WHITE))
+		{
+		    fprintf(PS.fp, "0.5 setgray ");
+		    fprintf(PS.fp, "%.1f %.1f %.1f %.1f B fill \n", 
+			x, y, x + 72.0, y + fontsize);
+		}
+		*/
+
+		if ( vector.layer[i].type == VAREAS ) {  /* added for areas */
+		    /* plot rectangle */
+		    yo = y - 0.1 * fontsize; 
+		    if ( !color_none ( &vector.layer[i].fcolor) ) {
+			set_ps_color( &(vector.layer[i].fcolor) );
+			fprintf(PS.fp, "%.1f %.1f %.1f %.1f rectfill\n",
+		    	    x + width/5, yo , 3 * width / 5, 0.8 * fontsize);
+		    }
+		    if ( !color_none( &vector.layer[i].color) && vector.layer[i].width > 0 ) {	
+			fprintf(PS.fp, "%.8f W\n", vector.layer[i].width );
+			set_ps_color( &(vector.layer[i].color) );
+			fprintf(PS.fp, "[] 0 setdash\n");
+			fprintf(PS.fp, "%.1f %.1f %.1f %.1f rectstroke\n",
+			    x + width/5, yo, 3 * width / 5, 0.8 * fontsize);
+		    }	    
+		} else if ( vector.layer[i].type == VLINES ) {
+		    yo = y + 0.35 * fontsize - vector.layer[i].offset; 
+		    /* do highlight, if any */
+		    if (vector.layer[i].hwidth) {
+			set_ps_color( &(vector.layer[i].hcolor) );
+			fprintf(PS.fp, "%.8f W\n",  
+			  vector.layer[i].width + 2 * vector.layer[i].hwidth);
+			fprintf(PS.fp, "[] 0 setdash\n");
+			fprintf(PS.fp, "%.1f %.1f %.1f %.1f L\n", x + width, yo, x, yo);
+		    }
+
+		    /* plot the primary color line */
+		    set_ps_color( &(vector.layer[i].color) );
+		    fprintf(PS.fp, "%.8f W\n", vector.layer[i].width );
+		    fprintf(PS.fp, "%s setdash\n", vector.layer[i].setdash);
+		    fprintf(PS.fp, "%.1f %.1f %.1f %.1f L\n", x + width, yo, x, yo);
+		} else if ( vector.layer[i].type == VPOINTS ) {
+		    /* TODO */
+		    yo = y + 0.5 * fontsize - vector.layer[i].offset; 
+            	    xo = x + width / 2;
+		    symbol_draw ( vector.layer[i].symbol_ps, xo, yo, vector.layer[i].size, 
 			      vector.layer[i].rotate, vector.layer[i].width);
+		}
+
 	    }
 
+	    /* plot the text */
+	    set_rgb_color(BLACK);
+    	    fprintf(PS.fp, "a %d get %.1f %.1f MS\n", j - h*lc, x + width, y);
 	}
+    } /*h*/
+    x = xs;
+    y = ys - lc*dy;
 
-	/* plot the text */
-	set_rgb_color(BLACK);
-        fprintf(PS.fp, "a %d get %.1f %.1f MS\n", j, x + width, y);
-    }
     fprintf(PS.fp, "[] 0 setdash\n");
 
     if (PS.min_y > y) PS.min_y = y;

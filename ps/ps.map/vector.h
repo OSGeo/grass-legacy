@@ -1,5 +1,6 @@
 /** Modified by: Janne Soimasuo August 1994 line_cat added **/
 /** Modified by: Radim Blazek Jan 2000 acolor, label added **/
+/** Modified by: Morten Hulden Mar 2004 cols added to vector **/
 #include "clr.h"
 #define PI 3.14159265   
 /* #define MAXVECTORS 20 */
@@ -81,6 +82,7 @@ struct vector {
     int fontsize; /* legend font size */
     char *font;    /* legend font */
     double width;  /* width of legend symbols */
+    int cols; /* number of colums  */
     LAYER *layer;
 } ;
 
