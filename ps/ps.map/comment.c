@@ -156,7 +156,8 @@ int do_comment (void)
     /* set start of first line */
     dy = 1.2 * fontsize;
     y = 72.0 * (PS.page_height - cmt.y);
-    if (cmt.y > PS.min_y - dy) y = PS.min_y - dy;
+    if (cmt.y > PS.page_height) y = PS.min_y - dy;
+
     x = 72.0 * PS.left_marg + 1.5;
     if (72.0 * cmt.x > x) x = 72.0 * cmt.x;
 
