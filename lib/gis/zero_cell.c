@@ -10,6 +10,17 @@
 
 #include "gis.h"
 
+/*!
+ * \brief zero a raster buffer
+ *
+ * This routines assigns each member of the raster buffer array <b>buf</b> to zero.
+ * It assumes that <b>buf</b> has been allocated using
+ * <i>G_allocate_cell_buf.</i>
+ *
+ *  \param buf
+ *  \return int
+ */
+
 int G_zero_cell_buf (register CELL *buf)
 {
     register int i ;

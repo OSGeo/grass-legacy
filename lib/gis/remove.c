@@ -18,6 +18,22 @@
 #include <stdlib.h>
 #include "gis.h"
 
+
+/*!
+ * \brief remove a database file
+ *
+ * The file or directory <b>name</b> under the database <b>element</b> directory
+ * in the current mapset is removed.
+ * Returns 1 if successful, 0 if <b>name</b> does not exist, and -1 if there
+ * was an error.
+ * <b>Note.</b> If <b>name</b> is a directory, everything within the
+ * directory is removed as well.
+ *
+ *  \param element
+ *  \param name
+ *  \return int
+ */
+
 int G_remove ( char *element, char *name)
 {
     char path[1040];

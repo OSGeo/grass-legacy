@@ -3,7 +3,7 @@
 /*
  * squeeze - edit superfluous white space out of strings
  *
- * char *G_squeeze (s)
+ *  char *G_squeeze (s)
  *     char *s;
  *
  * scan a string of text, converting tabs to spaces and
@@ -21,6 +21,19 @@
  */
 
 #include <ctype.h>
+
+
+/*!
+ * \brief remove unnecessary white space
+ *
+ * Leading and trailing white space is removed from the string <b>s</b> and internal
+ * white space which is more than one character is reduced to a single space
+ * character. White space here means spaces, tabs, linefeeds, newlines, and
+ * formfeeds. Returns <b>s.</b>
+ *
+ *  \param s
+ *  \return char * 
+ */
 
 char *G_squeeze (char *line)
 {

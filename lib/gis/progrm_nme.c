@@ -17,6 +17,17 @@
 #include <string.h>
 static char *name = "?" ;
 
+
+/*!
+ * \brief return module name
+ *
+ * Routine returns the name
+ * of the module as set by the call to <i>G_gisinit.</i>
+ *
+ *  \param ~
+ *  \return char * 
+ */
+
 char *G_program_name()
 {
     return name;

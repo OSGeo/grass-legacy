@@ -100,6 +100,16 @@ int G__remove_fp_range ( char *name)
     return 0;
 }
 
+
+/*!
+ * \brief 
+ *
+ * Sets the integer range <em>r</em> to [1,255]
+ *
+ *  \param r
+ *  \return int
+ */
+
 int G_construct_default_range ( struct Range *range)
 {
     G_update_range (DEFAULT_CELL_MIN, range);
@@ -107,6 +117,25 @@ int G_construct_default_range ( struct Range *range)
 
     return 0;
 }
+
+
+/*!
+ * \brief 
+ *
+ * Read the floating point range file <tt>f_range</tt>. This file is
+ * written in binary using XDR format. If there is no defined min/max in <em>r</em>, 
+ * an empty <tt>f_range</tt>file is created.
+ * An empty range file indicates that the min, max are undefined. This is a
+ * valid case, and the result should be an initialized range struct with no
+ * defined min/max.
+ * If the range file is missing and the map is a floating-point map, this
+ * function will create a default range by calling <tt>G_construct_default_range()</tt>.
+ *
+ *  \param r
+ *  \param name
+ *  \param mapset
+ *  \return int
+ */
 
 int G_read_fp_range (
     char *name,char *mapset,
@@ -180,6 +209,39 @@ error:
 }
 
 /*-------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief read raster range
+ *
+ * This routine reads the range information for the
+ * raster file <b>name</b> in <b>mapset</b> into the <b>range</b>
+ * structure.
+ * A diagnostic message is printed and -1 is returned if there is an error
+ * reading the range file. Otherwise, 0 is returned.
+ *
+ *  \param name
+ *  \param mapset
+ *  \param range
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Old range file (those with 4 numbers) should
+ * treat zeros in this file as NULL-values. New range files (those with just 2
+ * numbers) should treat these numbers as real data (zeros are real data in this
+ * case).
+ * An empty range file indicates that the min, max are undefined. This is a
+ * valid case, and the result should be an initialized range struct with no
+ * defined min/max.
+ * If the range file is missing and the map is a floating-point map, this
+ * function will create a default range by calling <tt>G_construct_default_range()</tt>.
+ *
+ *  \return int
+ */
 
 int G_read_range (
     char *name,char *mapset,
@@ -272,6 +334,31 @@ error:
 
 /*-------------------------------------------------------------------------*/
 
+
+/*!
+ * \brief write raster range file
+ *
+ * This routine writes the range information for the raster file
+ * <b>name</b> in the current mapset from the <b>range</b> structure.
+ * A diagnostic message is printed and -1 is returned if there is an error
+ * writing the range file. Otherwise, 0 is returned.
+ *
+ *  \param name
+ *  \param range
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * This routine only writes 2 numbers (min,max) to the range
+ * file, instead of the 4 (pmin,pmax,nmin,nmax) previously written. If there is no defined
+ * min,max, an empty file is written.
+ *
+ *  \return int
+ */
+
 int G_write_range ( char *name, struct Range *range)
 {
     FILE *fd;
@@ -307,6 +394,19 @@ error:
 }
 
 /*-------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Write the floating point range
+ * file <tt>f_range</tt>. This file is written in binary using XDR format. If
+ * there is no defined min/max in <em>r</em>, an empty <tt>f_range</tt>file is
+ * created.
+ *
+ *  \param r
+ *  \return int
+ */
 
 int G_write_fp_range ( char *name, struct FPRange *range)
 {
@@ -345,6 +445,28 @@ error:
 }
 
 /*-------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief update range structure
+ *
+ * Compares the <b>cat</b> value with the minimum and maximum
+ * values in the <b>range</b> structure, modifying the range if <b>cat</b>
+ * extends the range.
+ *
+ *  \param cat
+ *  \param range
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * NULL-values must be detected and ignored.
+ *
+ *  \return int
+ */
 
 int G_update_range ( CELL cat, struct Range *range)
 {
@@ -388,6 +510,20 @@ int G_update_fp_range ( DCELL val, struct FPRange *range)
 }
 
 /*-------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief update range structure
+ *
+ * This routine updates the <b>range</b> data
+ * just like <i>G_update_range</i>, but for <b>n</b> values from the
+ * <b>cell</b> array.
+ *
+ *  \param cell
+ *  \param n
+ *  \param range
+ *  \return int
+ */
 
 int G_row_update_range ( CELL *cell,int n, struct Range *range)
 {
@@ -468,6 +604,27 @@ int G_row_update_fp_range (
 }
 
 /*-------------------------------------------------------------------------*/
+
+/*!
+ * \brief initialize range structure
+ *
+ * Initializes the <b>range</b> structure for updates by
+ * <i>G_update_range</i> and <i>G_row_update_range.</i>
+ *
+ *  \param range
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * Must set a flag in the range structure that indicates that
+ * no min/max have been defined - probably a <tt>"first"</tt> boolean flag.
+ *
+ *  \return int
+ */
+
 int G_init_range (struct Range *range)
 {
     G_set_c_null_value(&(range->min),1);
@@ -478,6 +635,30 @@ int G_init_range (struct Range *range)
 }
 
 /*-------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief get range min and max
+ *
+ * The <b>min</b>inum and <b>max</b>imum CELL
+ * values are extracted from the <b>range</b> structure.
+ *
+ *  \param range
+ *  \param min
+ *  \param max
+ *  \return int
+ */
+
+ 
+/*!
+ * \brief 
+ *
+ * If the range structure has no defined min/max
+ * (first!=0) there will not be a valid range. In this case the min and max returned must
+ * be the NULL-value.
+ *
+ *  \return int
+ */
 
 int G_get_range_min_max(
     struct Range *range,
@@ -505,6 +686,18 @@ int G_get_range_min_max(
 }
 
 /*-------------------------------------------------------------------------*/
+
+/*!
+ * \brief 
+ *
+ * Must set a flag in the range
+ * structure that indicates that no min/max have been defined - probably a
+ * <tt>"first"</tt> boolean flag.
+ *
+ *  \param r
+ *  \return int
+ */
+
 int G_init_fp_range ( struct FPRange *range)
 {
    G_set_d_null_value(&(range->min),1);
@@ -515,6 +708,20 @@ int G_init_fp_range ( struct FPRange *range)
 }
 
 /*-------------------------------------------------------------------------*/
+
+
+/*!
+ * \brief 
+ *
+ * Extract the min/max from the range structure <em>r</em>.
+ * If the range structure has no defined min/max (first!=0) there will not be a
+ * valid range. In this case the min and max returned must be the NULL-value.
+ *
+ *  \param r
+ *  \param min
+ *  \param max
+ *  \return int
+ */
 
 int G_get_fp_range_min_max(
     struct FPRange *range,

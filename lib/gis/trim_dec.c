@@ -2,6 +2,17 @@
 /* this routine remove trailing zeros from decimal number
  * for example: 23.45000 would come back as 23.45
  */
+
+/*!
+ * \brief trim
+ *
+ * this routine remove trailing
+ * zeros from decimal number for example: 23.45000 would come back as 23.45
+ *
+ *  \param buf
+ *  \return int
+ */
+
 int G_trim_decimal (char *buf)
 {
     char *mark;
