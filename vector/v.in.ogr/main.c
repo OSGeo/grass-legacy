@@ -558,6 +558,9 @@ main (int argc, char *argv[])
 		db_shutdown_driver(driver);
 		G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
 	    }
+
+	    if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
+		G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
 	    
 	    db_begin_transaction ( driver );
 	}

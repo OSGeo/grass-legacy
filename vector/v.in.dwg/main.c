@@ -184,6 +184,9 @@ main (int argc, char *argv[])
 	G_fatal_error ( "Cannot create table: %s", db_get_string ( &sql )  );
     }
 
+    if (db_grant_on_table (driver, Fi->table, DB_PRIV_SELECT, DB_GROUP|DB_PUBLIC ) != DB_OK )
+	G_fatal_error ( "Cannot grant privileges on table %s", Fi->table );
+
     cat = 1;
     n_elements = n_skipped = 0;
     /* Write each entity. Some entities may be composed by other entities (like INSERT or BLOCK) */
