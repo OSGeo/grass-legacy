@@ -15,7 +15,7 @@ fi
 DOWN=3
 ACROSS=4
 
-if [ "$1" == "help" ] 
+if [ "$1" = "help" ] 
 then
   echo "Slide show of GRASS raster maps."
   echo "Options: [across=#maps_across] [down=#_maps_down] [prefix=character[s]]"
