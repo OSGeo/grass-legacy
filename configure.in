@@ -175,7 +175,6 @@ LOC_ARG_WITH(freetype, FreeType, no)
 LOC_ARG_WITH(glw, GLw, no)
 LOC_ARG_WITH(nls, NLS, no)
 LOC_ARG_WITH(readline, Readline, no)
-LOC_ARG_WITH(proj, External PROJ.4, yes)
 LOC_ARG_WITH(opendwg, openDWG, no)
 
 # With includes and libs options
@@ -519,6 +518,36 @@ AC_SUBST(ZLIBLIBPATH)
 AC_SUBST(ZLIB)
 
 # Done checking zlib
+
+# Mandatory PROJ dependency
+
+PROJINC=
+PROJLIB=
+
+# With PROJ includes directory
+
+LOC_CHECK_INC_PATH(proj,External PROJ.4,PROJINC)
+
+LOC_CHECK_INCLUDES(proj_api.h,External PROJ.4,$PROJINC)
+
+# PROJ version check
+
+LOC_CHECK_VERSION(proj_api.h,PJ_VERSION,External PROJ.4,proj_ver,$PROJINC,UNKNOWN)
+
+if test `expr "$proj_ver" \< 446` = 1 ; then
+    AC_MSG_ERROR([*** PROJ.4.4.6 or later is required.])
+fi
+
+# With PROJ library directory
+
+LOC_CHECK_LIB_PATH(proj,External PROJ.4,PROJLIB)
+
+LOC_CHECK_LIBS(proj,pj_get_def,External PROJ.4,$PROJLIB,PROJLIB,,,)
+
+AC_SUBST(PROJINC)
+AC_SUBST(PROJLIB)
+
+# Done checking PROJ
 
 # Enable DBM option
 
@@ -1175,42 +1204,6 @@ fi
 
 # Done checking C++
 
-# Enable PROJ option
-
-LOC_CHECK_USE(proj,PROJ.4,USE_PROJ)
-
-PROJINC=
-PROJLIB=
-
-if test -n "${USE_PROJ}"; then
-
-# With PROJ includes directory
-
-LOC_CHECK_INC_PATH(proj,External PROJ.4,PROJINC)
-
-LOC_CHECK_INCLUDES(proj_api.h,External PROJ.4,$PROJINC)
-
-# PROJ version check
-
-LOC_CHECK_VERSION(proj_api.h,PJ_VERSION,External PROJ.4,proj_ver,$PROJINC,UNKNOWN)
-
-if test `expr "$proj_ver" \< 446` = 1 ; then
-    AC_MSG_ERROR([*** PROJ.4.4.6 or later is required.])
-fi
-
-# With PROJ library directory
-
-LOC_CHECK_LIB_PATH(proj,External PROJ.4,PROJLIB)
-
-LOC_CHECK_LIBS(proj,pj_get_def,External PROJ.4,$PROJLIB,PROJLIB,,,)
-
-fi # $USE_PROJ
-
-AC_SUBST(PROJINC)
-AC_SUBST(PROJLIB)
-
-# Done checking PROJ
-
 # Enable openDWG option
 
 LOC_CHECK_USE(opendwg,openDWG,USE_OPENDWG)
@@ -1309,7 +1302,6 @@ LOC_MSG_USE(GLw support,USE_GLW)
 LOC_MSG_USE(NLS support,USE_NLS)
 LOC_MSG_USE(Readline support,USE_READLINE)
 LOC_MSG_USE(C++ support,USE_CXX)
-LOC_MSG_USE(PROJ.4 support,USE_PROJ)
 LOC_MSG_USE(openDWG support,USE_OPENDWG)
 LOC_MSG_USE(GDAL support,USE_GDAL)
 LOC_MSG_USE(OGR support,USE_OGR)
