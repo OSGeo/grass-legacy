@@ -13,7 +13,7 @@ NAME
 SYNOPSIS
      r.drain
      r.drain help
-     r.drain input=name site=name output=name
+     r.drain [-c] [-a] input=name output=name [site=name]
      [coordinate=x,y,...]]  null_value=value
 
 DESCRIPTION
@@ -23,22 +23,53 @@ DESCRIPTION
      r.cost program.  The output result (also a raster map layer)
      will show one or more least-cost paths between each user-
      provided location(s) and the low spot (low category values)
-     in the input model.
+     in the input model. By default, the output will be an
+     integer cell map with 1 along the least cost path, and null
+     cells elsewhere.
+
+      With the -c (copy) flag, the input map cells values are
+     copied verbatim along the path. With the -a (accumulate)
+     flag, the accumulated cells value from the starting point up
+     to the current cell is written on output. With the -c and
+     the -a flags, the output map is created withe the same cell
+     type than the input map (integer, float or double).  The -c
+     and -a flags are mutually incompatible. If both are
+     specified, the -a flag will superceed the -c flag, and a
+     warning message will be issued.
+
+     The path is calculated by choosing the stepper "slope"
+     beetwen adjacent cells.  The slope calculation accurately
+     acounts for the variable scale in lat-lon projections.
 
      The program will be run non-interactively, if the user
      specifies the names of raster map layers and any desired
-     options on the command line, using the form r.drain
-     input=name site=name output=name [coordinate=x,y,...]]
-     null_value=value where the input name is the name of a
-     raster map layer to be used in calculating drainage, the
-     output name is the name of the raster map layer to contain
-     output, and each x,y coordinate pair is the geographic
-     location of a point from which drainage is to be calculated.
-     If site is given, this site file will be read for starting
-     points coordinates. By default, null cells in the input map
-     are excluded from the path evaluation. Alternately, a
-     floating point value can be assigned to null cells with
-     null_value.
+     options on the command line, using the form r.drain [-c]
+     [-a] input=name output=name [site=name]
+     [coordinate=x,y,...]]  null_value=value where the input name
+     is the name of a raster map layer to be used in calculating
+     drainage, the output name is the name of the raster map
+     layer to contain output, and each x,y coordinate pair is the
+     geographic location of a point from which drainage is to be
+     calculated. If site is given, this site file will be read
+     for starting points coordinates. By default, null cells in
+     the input map are excluded from the path evaluation.
+     Alternately, a floating point value can be assigned to null
+     cells with null_value.
+
+
+
+
+
+GRASS 5.0beta8	      GRASS Development Team			1
+
+
+
+
+
+
+r.drain <main>	      GRASS Reference Manual	   <main> r.drain
+
+
 
      Alternately, the user can simply type r.drain on the command
      line, without program arguments. In this case, the user will
@@ -50,30 +81,18 @@ OPTIONS
 
 Parameters:
      Name of raster map layer containing cell cost information.
-     Name of site file containing starting points coordinates.
-     Name of raster map layer to contain program output.  Each
-     x,y pair is the easting and northing (respectively) of a
+     Name of raster map layer to contain program output.  Name of
+     site file containing starting points coordinates.	Each x,y
+     pair is the easting and northing (respectively) of a
      starting point from which a least-cost corridor will be
      developed.	 As many points as desired can be input.  (But,
      see BUGS below.)  Floating point value assign to null cells.
      By defaults, null cells are excluded from the path
+     evaluation.  Input map cells values are copied verbatim
+     along the least cost path.	 Accumulated input map cells
+     values along the least cost path are written on output.
 
-
-
-GRASS 5.0beta7	      GRASS Development Team			1
-
-
-
-
-
-
-r.drain <main>	      GRASS Reference Manual	   <main> r.drain
-
-
-
-     evaluation.
-
-EXAMPLE
+EXAMPLES
      Consider the following example:
 
      Input:			     Output:
@@ -86,28 +105,51 @@ EXAMPLE
      box to the lowest (smallest) possible point. This is the
      path a raindrop would take in this landscape.
 
-BUGS
-     Currently, r.drain will not actually provide output for more
-     than one pair of input coordinates stated on the command
-     line.
+     With the -c (copy) flag, you get the following result:
 
-     r.drain also currently finds only the lowest point (the cell
+     Input:			     Output:
+       ELEVATION SURFACE	       LEAST COST PATH
+
+     Note that the last <EM>0 will not be put in the null values
+     map.
+
+
+     With the -a (accumulate) flag, you get the following result:
+
+     Input:			     Output:
+       ELEVATION SURFACE	       LEAST COST PATH
+
+
+BUGS
+     r.drain currently finds only the lowest point (the cell
      having the smallest category value) in the input file that
+
+
+
+2		      GRASS Development Team	   GRASS 5.0beta8
+
+
+
+
+
+
+r.drain <main>	      GRASS Reference Manual	   <main> r.drain
+
+
+
      can be reached through directly adjacent cells that are less
      than or equal in value to the cell reached immediately prior
      to it; therefore, it will not necessarily reach the lowest
      point in the input file. It currently finds pits in the
      data, rather than the lowest point present.
 
-     Only one least-cost path is currently printed to the output
-     file for the user.
-
-     Sometimes, when the differences among cell category values
-     in the r.cost cumulative cost surface output are small, this
-     cumulative cost output cannot accurately be used as input to
-     r.drain (r.drain will output bad results).	 This problem can
-     be circumvented by making the differences between cell
-     category values in the cumulative cost output bigger.  It is
+     Sometimes, when using an integer cell map and the
+     differences among cell category values in the r.cost
+     cumulative cost surface output are small, this cumulative
+     cost output cannot accurately be used as input to r.drain
+     (r.drain will output bad results).	 This problem can be
+     circumvented by making the differences between cell category
+     values in the cumulative cost output bigger.  It is
      recommended that, if the output from r.cost is to be used as
      input to r.drain, the user multiply the input cost surface
      map to r.cost by the value of the map resolution, before
@@ -126,7 +168,31 @@ AUTHOR
 
 
 
-2		      GRASS Development Team	   GRASS 5.0beta7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GRASS 5.0beta8	      GRASS Development Team			3
 
 
 
