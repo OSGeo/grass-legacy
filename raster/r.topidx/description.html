@@ -1,0 +1,33 @@
+<H2>DESCRIPTION</H2>
+
+<EM>r.topidx</EM> creates topographic index, ln(a/tan(beta)), map from
+elevation map
+<P>
+where
+<DD>a: the area of the hillslope per unit contour length that drains through any point
+<P>
+<DD>tan(beta): the local surface topographic slope (delta vertical) / (delta horizontal)
+<P>
+Elevation map need not to be rectangular if study basin was already determined.  Non-interesting region may have NULL values.  Study basin map can be taken from <EM>r.water.outlet</EM> then the following <EM>r.mapcalc</EM> statements will create study basin extracted elevation map.
+<P>
+<DD>r.mapcalc "belev = if(isnull(basin), basin, elev)"
+<P>
+
+<EM>r.avgstats</EM> prints out averaged statistics for topographic index.
+
+<H2>SEE ALSO</H2>
+<EM><A HREF="r.topmodel.html">r.topmodel</A></EM>,
+<EM><A HREF="r.water.outlet.html">r.water.outlet</A></EM>,
+<EM><A HREF="r.mapcalc.html">r.mapcalc</A></EM>
+
+<H2>AUTHORS</H2>
+Main algorithm sources are rewritten from GRIDATB.FOR.<BR>
+GRIDATB.FOR is available from <A HREF=http://www.es.lancs.ac.uk/hfdg/topmodel.html>
+www.es.lancs.ac.uk/hfdg/topmodel.html</A>.
+<BR>
+Thanks to Keith Beven.
+<P>
+GRASS port by <A HREF=mailto:grass@geni.cemtlo.com>Huidae Cho</A><BR>
+Hydro Laboratory, Kyungpook National University, South Korea
+
+<p><i>Last changed: $Date$</i>
