@@ -61,7 +61,7 @@ static int lock_driver (int);
 
 static int unlock_driver (int);
 static int sync_driver(char *);
-static void dead(int);
+static RETSIGTYPE dead(int);
 
 int _get(char *,int);
 int flushout (void);
