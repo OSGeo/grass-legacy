@@ -1,0 +1,31 @@
+/* Prototypes for all user accessible RANLIB routines */
+
+extern void advnst();
+extern float genbet();
+extern float genchi();
+extern float genexp();
+extern float genf();
+extern float gengam();
+extern void genmn();
+extern float gennch();
+extern float gennf();
+extern float gennor();
+extern void genprm();
+extern float genunf();
+extern void getsd();
+extern void gscgn();
+extern long ignbin();
+extern long ignlgi();
+extern long ignpoi();
+extern long ignuin();
+extern void initgn();
+extern long mltmod();
+extern void phrtsd();
+extern float ranf();
+extern void setall();
+extern void setant();
+extern void setgmn();
+extern void setsd();
+extern float sexpo();
+extern float sgamma();
+extern float snorm();
