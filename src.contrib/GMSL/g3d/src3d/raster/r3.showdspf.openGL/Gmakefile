@@ -1,14 +1,11 @@
-MYLIBDIR =	$(SRC)/libes/dspf
-DSPLIB	=	$(SRC)/libes/dspf/libdsp3.a
+MYLIBDIR = $(SRC)/libes/dspf
+DSPLIB	 = $(SRC)/libes/dspf/libdsp3.a
 
-XMINCPATH = -I/usr/X11R6/include -I/usr/X11R6/include/GL -I/usr/X11R6/include/X11/GLw -I/usr/include/GL
-XINCPATH = -I/usr/X11R6/include -I/usr/X11R6/include/GL -I/usr/X11R6/include/X11/GLw -I/usr/include/GL
-
-OGLHOME = /usr
-OGLINCLUDES = $(XMINCPATH)  $(XINCPATH) -I$(OGLHOME)/include -I/usr/openwin/include/X11/GLw
+XINCPATH     = /usr/include
+OGLINCLUDES  = -I$(XINCPATH) -I$(XINCPATH)/GL -I$(XINCPATH)/X11/GLw
 EXTRA_CFLAGS = -I$(MYLIBDIR) -I$(OGSF_DIR) $(OGLINCLUDES) $(XCFLAGS)
-SUNLDFLAGS = $(XMLIBPATH) $(XLIBPATH) -L$(OGLHOME)/lib -L/lib
-OGLLIB	= 	-lGLU -lGL -lGLw -lXm -lX11 -lXt -lXext
+SUNLDFLAGS   = $(XMLIBPATH) $(XLIBPATH) -L/lib
+OGLLIB	     = -lGLU -lGL -lGLw -lXm -lX11 -lXt -lXext
 
 PGM	=	$(BIN_CONTRIB_CMD)/r3.showdspf
 
