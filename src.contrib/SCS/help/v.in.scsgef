@@ -1,0 +1,17 @@
+import.gef
+    An SCS developed program for reading SCS Geographic Export 
+    Format(SCS-GEF) digitial data files and converting them to 
+    GRASS digit files. The program will require some additional
+    information as it executes :
+       1. the FIPS state and county codes,
+       2. the import data format (old - 24 character records or
+            new - 40 character records),
+       3. the input coordinate system, and
+       4. the desired output coordinate system.
+    The user is expected to have this information prior to using
+    the program.
+    This program stands alone, however, conversion to GRASS use
+    requires using the macro "make_1_gef" prior to import.gef.
+
+    make_1_gef - combines the normal 3 file SCS-GEF data into 1
+               data file.
