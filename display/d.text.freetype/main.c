@@ -413,11 +413,7 @@ main(int argc, char **argv)
 				{
 					case 'F':
 						if((c = strchr(p, ':')))
-						{
 							*c = 0;
-							c++;
-							charset = transform_string(c, toupper);
-						}
 						if(*p != '/')
 						{
 							if(!fonts_count)
@@ -443,6 +439,8 @@ main(int argc, char **argv)
 								break;
 							}
 						}
+						if(c)
+							charset = transform_string(c+1, toupper);
 						if(set_font(library, &face, path))
 							error("Unable to create face");
 						if(FT_Set_Pixel_Sizes(face, size, 0))
