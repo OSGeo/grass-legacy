@@ -1,0 +1,13 @@
+PGM=cell.to.dat
+
+LIST = cell.to.dat.o
+
+all:  $(BIN)/cell.to.dat $(BIN)/dig2dxf
+
+$(BIN)/dig2dxf: vect.to.dxf.o $(GISLIB)
+	$(CC) $(LDFLAGS) vect.to.dxf.o $(GISLIB) $(TERMLIB) $(MATHLIB) -o $@
+
+$(BIN)/cell.to.dat: $(LIST) $(GISLIB)
+	$(CC) $(LDFLAGS) $(LIST) $(GISLIB) $(TERMLIB) $(MATHLIB) -o $@
+
+$(GISLIB): #
