@@ -8,7 +8,7 @@ static const char SCCSID[]="@(#)nad2bin.c	4.2 93/08/25 GIE REL";
 #include <projects.h>
 #define U_SEC_TO_RAD 4.848136811095359935899141023e-12
 	static char
-*usage = "<ASCII_dist_table local_bin_table>";
+*usage = "<ASCII_dist_table local_bin_table";
 	void
 main(int argc, char **argv) {
 	struct CTABLE ct;
