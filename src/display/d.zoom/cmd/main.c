@@ -18,7 +18,10 @@ main (int argc, char **argv)
 {
     int stat;
     int rotate;
-    struct Flag *quiet, *just, *pan;
+#ifdef DEPRECATED
+    struct Flag *quiet;
+#endif
+    struct Flag *just, *pan;
     struct Option *action;
     struct Option *rmap, *vmap, *smap, *zoom;
     double magnify;
@@ -101,9 +104,11 @@ main (int argc, char **argv)
     zoom->options    = "0.001-1000.0" ;
     zoom->description= "magnification: >1.0 zooms in, <1.0 zooms out" ;
 
+#ifdef DEPRECATED
     quiet = G_define_flag();
     quiet->key = 'q';
     quiet->description = "Quiet";
+#endif
 
     just = G_define_flag();
     just->key = 'j';
@@ -124,9 +129,11 @@ main (int argc, char **argv)
 
     sscanf(zoom->answer,"%lf", &magnify);
 
+#ifdef DEPRECATED
     /* if map was found in monitor: */
     if (rast || vect || site) 
        quiet->answer=1;
+#endif
 
     cmd = NULL;
     if (!just->answer)
@@ -398,7 +405,11 @@ main (int argc, char **argv)
 		    nvects, (nvects > 1 ? "s":""),
 		    nsites, (nsites > 1 ? "s":""));
     /* Do the zoom */
+#ifndef DEPRECATED
+        stat = zoomwindow(1, rotate, magnify, pan->answer);
+#else
         stat = zoomwindow(quiet->answer, rotate, magnify, pan->answer);
+#endif
     
     } while(stat == 2);
 
