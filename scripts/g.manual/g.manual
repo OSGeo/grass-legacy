@@ -43,6 +43,23 @@ else
     BROWSERNAME="$GRASS_HTML_BROWSER"
 fi
 
+#hack for Cygwin:
+if [ "$OSTYPE" = "cygwin" ] ; then
+    for i in C D E F G H I J K L M N O P Q R S T U V W X Y Z NOT_FOUND
+    do
+        j="$i:$CYGWIN_ROOT$GRASS_DOC_BASE"
+        if [ -f "$j"/docs/html/index.html ] ; then
+            GRASS_DOC_BASE=$j
+            break
+        fi
+    done
+    if [ "$i" = "NOT_FOUND" ] ; then
+        echo "ERROR: cannot find grass document base."
+        exit 1
+    fi
+    BROWSERNAME=`basename "$BROWSERNAME" | sed 's/\.exe//i'`
+fi
+
 
 start_browser()
 {
@@ -51,7 +68,7 @@ start_browser()
     exit 1
   else
     echo "Starting browser <$BROWSERNAME> for module $1..."
-    $GRASS_HTML_BROWSER "$GRASS_DOC_BASE"/docs/html/$1.html
+    "$GRASS_HTML_BROWSER" "file://$GRASS_DOC_BASE"/docs/html/$1.html
   fi
 }
 

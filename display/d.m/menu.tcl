@@ -495,8 +495,8 @@
 			}}
  } 
  "&Help" all options 1 {
- {command "GRASS help" {} "g.manual" {} -command { exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/index.html & } }
- {command "d.m &help" {} "d.m help" {} -command { exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/d.m.html & } }
+ {command "GRASS help" {} "g.manual" {} -command { exec g.manual -i > /dev/null & } }
+ {command "d.m &help" {} "d.m help" {} -command { exec g.manual d.m > /dev/null & } }
  {command "About &GRASS" {} "About GRASS" {} -command { source $env(GISBASE)/etc/dm/grassabout.tcl} }
  {command "About &System" {} "About System" {} -command { exec $env(GRASS_WISH) $env(GISBASE)/etc/dm/tksys.tcl --tcltk } }
  }
