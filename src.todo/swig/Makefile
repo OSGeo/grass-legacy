@@ -1,14 +1,34 @@
+# Where swig executable lives
 SWIGBIN = /c/lang/SWIG-1.3.19
+
+# Top of Grass hierarchy
 GRASSTOP = ../..
 GRASSPLAT = dist.i686-pc-mingw32
-TCLHOME = /e/lang/Tcl
+
+# Where TCL lives
+#TCLHOME = /e/lang/Tcl
+TCLHOME = /c/lang/Tcl-8.4.1.0
+
+# TCL lib and include dirs
 TCLINC = $(TCLHOME)/include
 TCLLIB = $(TCLHOME)/bin
 
-all: libgis.dll
+# File names
+DLLEXT = dll
+BINDNAME = libgis
 
-libgis.dll: libgis_wrap.c $(GRASSTOP)/$(GRASSPLAT)/lib/libgis.a
-	gcc --share -I$(GRASSTOP)/src/include -I$(TCLINC) libgis_wrap.c -L$(GRASSTOP)/$(GRASSPLAT)/lib -lgis -ldatetime -L$(TCLLIB) -ltcl84 -loncrpc -lz -o libgis.dll >make.log 2>&1
+all: $(BINDNAME).$(DLLEXT)
 
-libgis_wrap.c: libgis.i $(GRASSTOP)/src/include/gis.h $(GRASSTOP)/src/include/gisdefs.h
-	$(SWIGBIN)/swig -I$(GRASSTOP)/src/include -tcl libgis.i
+$(BINDNAME).$(DLLEXT): $(BINDNAME)_wrap.c $(GRASSTOP)/$(GRASSPLAT)/lib/$(BINDNAME).a
+	gcc --shared -I$(GRASSTOP)/src/include -I$(TCLINC) $(BINDNAME)_wrap.c \
+	   -L$(GRASSTOP)/$(GRASSPLAT)/lib -lgis -ldatetime \
+	   -L$(TCLLIB) -ltcl84 -lrpclib -lz -o $(BINDNAME).$(DLLEXT) >make.log 2>&1
+
+$(BINDNAME)_wrap.c: $(BINDNAME).i $(GRASSTOP)/src/include/gis.h $(GRASSTOP)/src/include/gisdefs.h
+	$(SWIGBIN)/swig -I$(GRASSTOP)/src/include -tcl $(BINDNAME).i
+
+binary-clean:
+	rm -f *.a *.o $(BINDNAME)_wrap.c $(BINDNAME).$(DLLEXT)
+
+clean : binary-clean
+	rm -f *.log *~
