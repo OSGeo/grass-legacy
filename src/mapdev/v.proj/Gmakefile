@@ -1,4 +1,5 @@
 PGM=v.proj
+EXTRA_CFLAGS=-g
 
 OFILES = \
 	main.o setenv.o 

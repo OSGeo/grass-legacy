@@ -36,6 +36,7 @@ int main (int argc, char *argv[])
         char *gbase;
         static char *oform = (char *)0;
 	char opath[1024];
+	char *hold;
 	char att_file[100], cat_file[100], date[40], mon[4];
 	FILE *wnd;
 		struct GModule *module;
@@ -232,8 +233,12 @@ int main (int argc, char *argv[])
 	         }
 
 		/*for datum conversion find input location datum and ellipse */
-		strncpy(in_datum,G_database_datum_name(),sizeof(in_datum));
-		strncpy(in_ellipse,G_database_ellipse_name(),sizeof(in_ellipse));
+		*in_datum='\0';
+		if((hold=G_database_datum_name()))
+		   strncpy(in_datum,hold,sizeof(in_datum));
+		*in_ellipse='\0';
+		if((hold=G_database_ellipse_name()))
+		   strncpy(in_ellipse,hold,sizeof(in_ellipse));
 
            /*** Get projection info for input mapset ***/
                  in_proj_keys = G_get_projinfo();
@@ -280,8 +285,12 @@ int main (int argc, char *argv[])
 
 
 	    /* for datum conversion find output location datum and ellipse */
-	    strncpy(out_datum,G_database_datum_name(),sizeof(out_datum));
-	    strncpy(out_ellipse,G_database_ellipse_name(),sizeof(out_ellipse));
+	    *out_datum='\0';
+	    if((hold=G_database_datum_name()))
+	       strncpy(out_datum,hold,sizeof(out_datum));
+	    *in_datum='\0';
+	    if((hold=G_database_datum_name()))
+	       strncpy(in_datum,hold,sizeof(in_datum));
 
 	     /****** get the output projection parameters ******/
            Out_proj = G_projection();
@@ -533,7 +542,7 @@ int main (int argc, char *argv[])
    /* newly created vector file (output).                        */
    if (flag.support->answer)
     {
-     sprintf(buf,"%s/bin/v.support -r map=%s", G_gisbase(), omap_name);
+     sprintf(buf,"%s/bin/v.support map=%s", G_gisbase(), omap_name);
      G_system(buf);
      fprintf(stderr, "Done.\n");
     }
