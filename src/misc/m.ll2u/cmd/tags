@@ -1,0 +1,6 @@
+Mmain	main.c	/^main (argc, argv) char *argv[];$/
+input	input.c	/^input(blank1, word1, blank2, word2, rest)$/
+might_be_number	number.c	/^might_be_number(s) char *s;$/
+output	output.c	/^output(buf)$/
+spheroid_list	sph.c	/^spheroid_list()$/
+warning	warning.c	/^warning(buf, line, msg)$/
