@@ -111,11 +111,11 @@ main (int argc, char **argv)
   init_header (Map.dig_fp, &window, &Map.head);
 
   tmpfiled = G_tempfile ();
-  sprintf(buf, "s.out.ascii %s sites=%s | s.sweep -d > %s", aflag,
+  sprintf(buf, "s.out.ascii %s sites=%s | $GISBASE/etc/s.sweep -d > %s", aflag,
           sitefile, tmpfiled);
   G_system(buf);
   tmpfilet = G_tempfile ();
-  sprintf(buf, "s.out.ascii %s sites=%s | s.sweep -t > %s", aflag,
+  sprintf(buf, "s.out.ascii %s sites=%s | $GISBASE/etc/s.sweep -t > %s", aflag,
           sitefile, tmpfilet);
   G_system(buf);
   write_triangles (&Map, tmpfiled, tmpfilet,  verbose);

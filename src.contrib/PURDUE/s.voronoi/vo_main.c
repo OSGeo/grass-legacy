@@ -151,7 +151,7 @@ main (int argc, char **argv)
 
   init_header (Map.dig_fp, &window, &Map.head);
   tmpfile = G_tempfile ();
-  sprintf(buf, "s.out.ascii %s | s.sweep -d > %s", sitefile, tmpfile);
+  sprintf(buf, "s.out.ascii %s | $GISBASE/etc/s.sweep -d > %s", sitefile, tmpfile);
   G_system(buf);
   write_polygons (&Map, tmpfile, verbose);
   if (label)
