@@ -8,6 +8,7 @@
 #define MAIN
 #include <stdlib.h>
 #include <string.h>
+#include "glocale.h"
 #include "gis.h"
 #include "display.h"
 #include "Vect.h"
@@ -131,6 +132,9 @@ int main(int argc, char **argv)
     	      sprintf(temp, "%s: You must build topology on vector file", vect[i]);
               G_fatal_error (temp);
     	  }
+
+	  G_message ( _("Building spatial index ...") );
+	  Vect_build_spatial_index ( &Map[i], stderr );
         }
     }
 

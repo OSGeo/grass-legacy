@@ -15,6 +15,7 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <string.h>
+#include "glocale.h"
 #include "gis.h"
 #include "Vect.h"
 
@@ -90,6 +91,119 @@ Vect_spatial_index_del_item ( SPATIAL_INDEX *si, int id )
     ret = RTreeDeleteRect( &rect, id, &(si->root) ); 
 
     if ( ret ) G_fatal_error ( "Cannot delete item %d from spatial index", id );
+}
+
+/*!
+  \brief Create spatial index if necessary. To be used in modules.
+         Map must be opened on level 2.
+  \param Map pointer to map
+  \param out print progress here
+  \return 0 OK
+  \return 1 error
+*/
+int 
+Vect_build_spatial_index ( struct Map_info *Map, FILE *msgout ) 
+{
+    if ( Map->level < 2 ) {
+	G_fatal_error ( _( "Cannot build spatial index from topology, the map is not opened on level2"));
+    }
+    if ( !(Map->plus.Spidx_built) ) {
+	return ( Vect_build_sidx_from_topo ( Map, msgout ) );
+    }
+    return 0;
+}
+
+/*!
+  \brief Create spatial index from topo if necessary
+  \param Map pointer to map
+  \param out print progress here
+  \return 0 OK
+  \return 1 error
+*/
+int 
+Vect_build_sidx_from_topo ( struct Map_info *Map, FILE *msgout ) 
+{
+    int  i, total, done;
+    struct Plus_head *plus;
+    BOUND_BOX box;
+    P_LINE *Line;
+    P_NODE *Node;
+    P_AREA *Area;
+    P_ISLE *Isle;
+
+    G_debug ( 3, "Vect_build_sidx_from_topo()" );
+
+    plus = &(Map->plus);
+
+    dig_spidx_init ( plus );
+
+    total = plus->n_nodes + plus->n_lines + plus->n_areas + plus->n_isles;
+
+    /* Nodes */
+    for (i = 1; i <= plus->n_nodes; i++) {
+	G_percent2 ( i, total, 1, msgout );
+	
+	Node = plus->Node[i];
+
+	dig_spidx_add_node ( plus, i, Node->x, Node->y, Node->z );
+    }
+
+    /* Lines */
+    done = plus->n_nodes;
+    for (i = 1; i <= plus->n_lines; i++) {
+	G_percent2 ( done+i, total, 1, msgout );
+
+	Line = plus->Line[i];
+
+	box.N = Line->N;
+	box.S = Line->S;
+	box.E = Line->E;
+	box.W = Line->W;
+	box.T = Line->T;
+	box.B = Line->B;
+
+	dig_spidx_add_line ( plus, i, &box );
+    }
+    
+    /* Areas */
+    done += plus->n_lines;
+    for (i = 1; i <= plus->n_areas; i++) {
+	G_percent2 ( done+i, total, 1, msgout );
+	
+	Area = plus->Area[i];
+
+	box.N = Area->N;
+	box.S = Area->S;
+	box.E = Area->E;
+	box.W = Area->W;
+	box.T = Area->T;
+	box.B = Area->B;
+
+	dig_spidx_add_area ( plus, i, &box );
+    }
+
+    /* Isles */
+    done += plus->n_areas;
+    for (i = 1; i <= plus->n_isles; i++) {
+	G_percent2 ( done+i, total, 1, msgout );
+
+	Isle = plus->Isle[i];
+
+	box.N = Isle->N;
+	box.S = Isle->S;
+	box.E = Isle->E;
+	box.W = Isle->W;
+	box.T = Isle->T;
+	box.B = Isle->B;
+
+	dig_spidx_add_area ( plus, i, &box );
+    }
+
+    Map->plus.Spidx_built = 1;
+    
+    G_debug ( 3, "Spatial index was built" );
+
+    return 0;
 }
 
 /************************* SELECT BY BOX *********************************/

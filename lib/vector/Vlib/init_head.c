@@ -45,6 +45,9 @@ Vect__init_head (struct Map_info *Map)
     Vect_set_zone ( Map, 0 );
     Vect_set_thresh ( Map, 0.0 );
 
+    Map->plus.Spidx_built = 0;
+    Map->plus.release_support = 0;
+
     return 0;
 }
 

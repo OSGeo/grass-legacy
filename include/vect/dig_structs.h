@@ -239,6 +239,8 @@ struct Plus_head
     long head_size;             /* topo header size */
     long spidx_head_size;       /* spatial index header size */
     long cidx_head_size;        /* category index header size */
+    
+    int  release_support;      /* release memory occupied by support (topo, spatial, category) */
 
     struct Port_info port;        /* Portability information */
     struct Port_info spidx_port;  /* Portability information for spatial index */
@@ -287,6 +289,12 @@ struct Plus_head
     long Hole_offset;
 
     /* Spatial index */
+    /* Spatial index is never saved, it is built automaticaly for new and updated vectors.
+     * It is not built for old vectors until it is needed, i.e. until Vect_select is called. 
+     * or until Vect_build is called */
+    
+    int Spidx_built;   /* set to 1 if spatial index is available and to 0 if it is not */
+
     long Node_spidx_offset;     /* offset of spindex */
     long Edge_spidx_offset;
     long Line_spidx_offset;

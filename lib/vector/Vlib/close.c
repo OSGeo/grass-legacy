@@ -17,6 +17,9 @@
 *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "Vect.h"
 
 static int
@@ -53,12 +56,34 @@ Vect_close (struct Map_info *Map)
     
     /* Store support files if in write mode on level 2 */
     if ( strcmp(Map->mapset,G_mapset()) == 0 && Map->support_updated && Map->plus.built == GV_BUILD_ALL) {
+        char buf[1000];
+        char file_path[2000];
+        struct stat info;
+
+	/* Delete old support files if available */
+        sprintf (buf, "%s/%s", GRASS_VECT_DIRECTORY, Map->name);
+
+        G__file_name ( file_path, buf, GV_TOPO_ELEMENT, G_mapset ());
+        if (stat (file_path, &info) == 0)      /* file exists? */
+	    unlink (file_path);
+
+        G__file_name ( file_path, buf, GV_SIDX_ELEMENT, G_mapset ());
+        if (stat (file_path, &info) == 0)      /* file exists? */
+	    unlink (file_path);
+
+        G__file_name ( file_path, buf, GV_CIDX_ELEMENT, G_mapset ());
+        if (stat (file_path, &info) == 0)      /* file exists? */
+	    unlink (file_path);
+
 	Vect_coor_info ( Map, &CInfo);
 	Map->plus.coor_size = CInfo.size;
 	Map->plus.coor_mtime = CInfo.mtime;
 
 	Vect_save_topo ( Map );
-	Vect_save_spatial_index ( Map );
+
+	/* Spatial index is not saved */
+	/* Vect_save_spatial_index ( Map ); */
+
 	Vect_cidx_save ( Map );
 
 #ifdef HAVE_OGR
@@ -67,7 +92,7 @@ Vect_close (struct Map_info *Map)
 #endif
     }
     
-    if ( Map->level == 2 ) {
+    if ( Map->level == 2 && Map->plus.release_support ) {
         G_debug (1, "free topology" );
 	dig_free_plus ( &(Map->plus) );
 

@@ -42,6 +42,12 @@ Vect_select_lines_by_box (struct Map_info *Map, BOUND_BOX *Box,
     G_debug ( 3, "  Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
                            Box->E, Box->W, Box->T, Box->B);
     plus = &(Map->plus);
+
+    if ( !(plus->Spidx_built) ) {
+	G_debug ( 3, "Building spatial index." );
+	Vect_build_sidx_from_topo ( Map, NULL );
+    }
+    
     list->n_values = 0; 
     if ( !LocList ) LocList = Vect_new_list();
     
@@ -80,6 +86,11 @@ Vect_select_areas_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
     G_debug ( 3, "Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
                            Box->E, Box->W, Box->T, Box->B);
 
+    if ( !(Map->plus.Spidx_built) ) {
+	G_debug ( 3, "Building spatial index." );
+	Vect_build_sidx_from_topo ( Map, NULL );
+    }
+
     dig_select_areas ( &(Map->plus), Box, list );
     G_debug ( 3, "  %d areas selected", list->n_values );
     for ( i = 0; i < list->n_values; i++ ) {
@@ -106,6 +117,11 @@ Vect_select_isles_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
     G_debug ( 3, "Vect_select_isles_by_box()" );
     G_debug ( 3, "Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
                            Box->E, Box->W, Box->T, Box->B);
+
+    if ( !(Map->plus.Spidx_built) ) {
+	G_debug ( 3, "Building spatial index." );
+	Vect_build_sidx_from_topo ( Map, NULL );
+    }
     
     dig_select_isles ( &(Map->plus), Box, list );
     G_debug ( 3, "  %d isles selected", list->n_values );
@@ -129,7 +145,14 @@ Vect_select_nodes_by_box (struct Map_info *Map, BOUND_BOX *Box, struct ilist *li
     G_debug ( 3, "Vect_select_nodes_by_box()" );
     G_debug ( 3, "Box(N,S,E,W,T,B): %e, %e, %e, %e, %e, %e", Box->N, Box->S,
                            Box->E, Box->W, Box->T, Box->B);
+
     plus = &(Map->plus);
+
+    if ( !(plus->Spidx_built) ) {
+	G_debug ( 3, "Building spatial index." );
+	Vect_build_sidx_from_topo ( Map, NULL );
+    }
+
     list->n_values = 0; 
     
     dig_select_nodes ( plus, Box, list );
