@@ -49,6 +49,7 @@ __BEGIN_DECLS
 #define GNGRP_NODE_STATUS(p)				((p)[GNGRP_IN_STATUS])
 #define GNGRP_NODE_LINKAREA_OFFSET(p)		((p)[GNGRP_IN_OFFSET])
 #define GNGRP_NODE_ATTR_PTR(p)				((p) + GNGRP_IN_ATTR)
+#define GNGRP_NODE_BUFFER_OFFSET(pgrp,p)	((gnInt32_t)p - (gnInt32_t)(pgrp)->pNodeBuffer)
 
 /*
  * LinkArea macros - addresses in a flat link-area
@@ -65,6 +66,7 @@ __BEGIN_DECLS
 #define GNGRP_LINKAREA_LINKCOUNT(p)			((p)[GNGRP_ILA_TOCNT])
 #define GNGRP_LINKAREA_LINKARRAY_PTR(p)		((p) + GNGRP_ILA_TOARR)
 #define GNGRP_LINKAREA_LINK_PTR(p,i,C)		(((p) + GNGRP_ILA_TOARR) + (i) * GNGRP_LINK_WSIZE(C))
+#define GNGRP_LINKAREA_BUFFER_OFFSET(pgrp,pla)	((gnInt32_t)pla - (gnInt32_t)(pgrp)->pLinkBuffer)
 
 /*
  * Link macros - addresses in a flat link
@@ -83,10 +85,14 @@ __BEGIN_DECLS
 #define GNGRP_LINK_COST(p)					((p)[GNGRP_IL_COST])
 #define GNGRP_LINK_USER(p)					((p)[GNGRP_IL_USER])
 #define GNGRP_LINK_ATTR_PTR(p)				((p) + GNGRP_IL_ATTR)
+#define GNGRP_LINK_TONODE_ID(pgrp,pl)		((pgrp->Flags&1)?\
+												GNGRP_NODE_ID(pgrp->pNodeBuffer+GNGRP_LINK_TONODE_OFFSET(pl)):\
+												GNGRP_LINK_TONODE_OFFSET(pl))
+#define GNGRP_LINK_BUFFER_OFFSET(pgrp,pl)	((gnInt32_t)pl - (gnInt32_t)(pgrp)->pLinkBuffer)
 
 
 /*
- * Node Buffer Macros
+ * Node Buffer Utilities
  */
 #define GNGRP_NB_FOREACH_NODE(pgrp,pn)		for((pn)=(gnInt32_t*)(pgrp)->pNodeBuffer;\
 												(pn)<(gnInt32_t*)((pgrp)->pNodeBuffer+(pgrp)->iNodeBuffer);\
@@ -96,37 +102,33 @@ __BEGIN_DECLS
 #define GNGRP_NB_NODE_OFF(pgrp,o)			((gnInt32_t*)((pgrp)->pNodeBuffer + (o)))
 
 /*
- * Link Area Scan
+ * Link Buffer Utilities
  */
-#define GNGRP_LA_FOREACH_LINK(pgrp,pla,pl)	for((pl)=GNGRP_LINKAREA_LINKARRAY_PTR(pla);\
+#define GNGRP_LB_FOREACH_LINK(pgrp,pla,pl)	for((pl)=GNGRP_LINKAREA_LINKARRAY_PTR(pla);\
 												(pl)<(pla)+GNGRP_LINK_WSIZE((pgrp)->LinkAttrSize)*GNGRP_LINKAREA_LINKCOUNT(pla);\
 												(pl)+=GNGRP_LINK_WSIZE((pgrp)->LinkAttrSize))
 
+
+
 /*
- * node status
+ * Graph State bitmask - returned by gnGrpGet_GraphState() function
  */
-#define GNGRP_NF_FROM			0x1		/* node exists as 'from' (static) */
-#define GNGRP_NF_TO				0x2		/* node exists as 'to' (static) */
+#define GNGRP_GS_FLAT			0x1		/* otherwise is TREE */
 
 
 /*
- * header fields
+ * Node Status bitmask - returned by GNGRP_NODE_STATUS() macro
  */
-#define GNGRP_HEAD_VERSION		0
-#define GNGRP_HEAD_ENDIAN		1
-#define GNGRP_HEAD_NODETYPE		2
-#define GNGRP_HEAD_UNUSED		3
+#define GNGRP_NS_FROM			0x1		/* node exists as 'from' (static) */
+#define GNGRP_NS_TO				0x2		/* node exists as 'to' (static) */
 
 
 /*
- * graph header values
+ * Endianess Values - returned by gnGrpGet_Endianess() function
  */
 #define GNGRP_ENDIAN_BIG		1
 #define GNGRP_ENDIAN_LITTLE		2
-#define GNGRP_NODETYPE_1		1
-#define GNGRP_NODETYPE_2		2
-#define GNGRP_CURRENT_VERSION	1
-#define GNGRP_NODETYPE_MAX		2
+
 
 #ifdef GNGRP_NEWCLIP
 /*
@@ -375,18 +377,15 @@ extern gnGrpSPReport_s *gnGrpShortestPath	(
 					 						void * 			pvcliparg				/* caller's pointer (passed back to clip) */
 					 						);
 
+extern int				gnGrpDepthSpanning	(
+											gnGrpGraph_s *  pgraphInput,
+											gnGrpGraph_s *  pgraphOutput,
+											gnInt32_t		nVertexNode
+											);
+
 extern void 			gnGrpFreeSPReport	(
 											gnGrpGraph_s * 	pgraph,
 											gnGrpSPReport_s * pSPReport
-											);
-
-extern void				gnGrpSetOpaque		(
-											gnGrpGraph_s * 	pgraph,
-											gnInt32_t *		pOpaque
-											);
-
-extern gnInt32_t *		gnGrpGetOpaque		(
-											gnGrpGraph_s * 	pgraph
 											);
 
 extern int	 			gnGrpErrno			(
@@ -396,6 +395,25 @@ extern int	 			gnGrpErrno			(
 extern char * 			gnGrpStrerror		(
 											gnGrpGraph_s * 	pgraph
 											);
+
+
+/*
+ * Hide explicit access to gnGrpGraph_s properties
+ */
+extern int				gnGrpGet_Version		(gnGrpGraph_s *  pgraph);
+extern int				gnGrpGet_Endianess		(gnGrpGraph_s *  pgraph); /* return value: GNGRP_ENDIAN_* macros */
+extern int				gnGrpGet_NodeAttrSize	(gnGrpGraph_s *  pgraph);
+extern int				gnGrpGet_LinkAttrSize	(gnGrpGraph_s *  pgraph);
+extern int				gnGrpGet_NodeCount		(gnGrpGraph_s *  pgraph);
+extern int				gnGrpGet_FromNodeCount	(gnGrpGraph_s *  pgraph);
+extern int				gnGrpGet_ToNodeCount	(gnGrpGraph_s *  pgraph);
+extern int				gnGrpGet_LinkCount		(gnGrpGraph_s *  pgraph);
+extern int				gnGrpGet_GraphState		(gnGrpGraph_s *  pgraph); /* return value: GNGRP_GS_* bit flags */
+extern gnInt32_t *		gnGrpGet_Opaque			(gnGrpGraph_s *  pgraph);
+extern void				gnGrpSet_Opaque			(
+												gnGrpGraph_s * 	pgraph,
+												gnInt32_t *		pOpaque
+												);
 
 __END_DECLS
 #endif
