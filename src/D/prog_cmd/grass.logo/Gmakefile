@@ -1,0 +1,4 @@
+$(BIN)/Dgrass.logo: logo.sh
+	rm -f $@
+	cp $? $@
+	chmod +rx $@
