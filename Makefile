@@ -83,7 +83,7 @@ default:
 	-cp -f ${ARCH_BINDIR}/grass${VERSION_MAJOR}${VERSION_MINOR} ${ARCH_DISTDIR}/grass${VERSION_MAJOR}${VERSION_MINOR}.tmp
 	@(cd tools ; sh -c "./build_html_index.html")
 	@echo "Finished compilation: `date`" >> $(GRASS_HOME)/error.log
-	@echo "See $(GRASS_HOME)/error.log for potential compilation errors."
+	@cat $(GRASS_HOME)/error.log
 
 LIBDIRS = \
 	lib/external/shapelib \
