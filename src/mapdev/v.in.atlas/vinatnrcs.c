@@ -1,5 +1,22 @@
-/* Single program that converts ATLAS ASCII files to GRASS files.  Messages are
-   sent to the log file. */
+/***************************************************************************
+ * $Id$
+ *
+ * MODULE: 	v.in.atlas (of NRCS?)
+ * AUTHOR(S):	R. L. Glenn ?, unknown GRASS author
+ * PURPOSE: 	Single program that converts ATLAS ASCII files to 
+ *              GRASS vector files.
+ *              Creates a logfile in the working directory. 
+ *
+ * COPYRIGHT:  	(C) 2000 by the GRASS Development Team
+ *
+ *   	    	This program is free software under the GPL (>=v2)
+ *   	    	Read the file COPYING that comes with GRASS for details.
+ ****************************************************************************
+ * $Log$
+ * Revision 1.3  2000-11-06 19:42:22  andreas
+ * changed sequence of call to G_parser and opening log file
+ *
+ */
 
 /* vinatnrcs.c */
 
@@ -18,10 +35,7 @@ char *argv[];
 	struct Option *input, *type, *globe;
 	struct Flag *flag;
 
-	if((log=fopen("log","a"))==NULL)
-		exit(-1);
-
-	G_gisinit("Import from ATLAS");
+	G_gisinit(argv[0]);
 
 	input = G_define_option();
 	input->key = "input";
@@ -42,8 +56,14 @@ char *argv[];
 	flag->description = "Do areas or lines adjoin creating duplicate arcs";
 	
 	if (G_parser(argc,argv))
-		exit(1);
-            
+		exit(-1);
+		
+  	if((log=fopen("log","a"))==NULL)
+  	{
+		G_fatal_error("Can not open log file");
+		exit(-1);
+	}
+          
 	G_strcpy(atl_file,input->answer);
 	G_strcat(atl_file,".bna");
 	G_strcpy(tmpi,"tmpi23");
