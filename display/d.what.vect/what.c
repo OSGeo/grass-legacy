@@ -4,6 +4,7 @@
 #include "gis.h"
 #include "raster.h"
 #include "display.h"
+#include "colors.h"
 #include "Vect.h"
 #include "what.h"
 
@@ -170,9 +171,8 @@ int what(int once, int terse, int width, int mwidth, int dodbmi)
 		}
 		nlines++;
 
-		flash_line(&Map[i], line, Points, D_translate_color("black"));
-		flash_line(&Map[i], line, Points,
-			   D_translate_color("yellow"));
+		flash_line(&Map[i], line, Points, BLACK);
+		flash_line(&Map[i], line, Points, YELLOW);
 
 	    }
 
@@ -212,9 +212,8 @@ int what(int once, int terse, int width, int mwidth, int dodbmi)
 		    }
 		}
 
-		flash_area(&Map[i], area, Points, D_translate_color("black"));
-		flash_area(&Map[i], area, Points,
-			   D_translate_color("yellow"));
+		flash_area(&Map[i], area, Points, BLACK);
+		flash_area(&Map[i], area, Points, YELLOW);
 
 		sq_meters = Vect_get_area_area(&Map[i], area);
 
