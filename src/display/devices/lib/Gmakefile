@@ -30,7 +30,7 @@ OBJ =\
 	connect.o\
 	font.o\
 	RGB.o\
-	text.o
+	Text2.o
 
 all: driverlib.a
 
