@@ -64,8 +64,11 @@ void wtrshed(int fm, int fd, int nl, int ns, int mxbuf)
    int sline, nline, rdline;
 
    struct whereandwhat hold;
-   struct whereandwhat dir[mxbuf];
-   struct whereandwhat bas[mxbuf];
+   struct whereandwhat *dir;
+   struct whereandwhat *bas;
+
+   dir = G_malloc(mxbuf * sizeof(struct whereandwhat));
+   bas = G_malloc(mxbuf * sizeof(struct whereandwhat));
 
    bufsz=ns*sizeof(CELL);
 
@@ -209,7 +212,9 @@ void wtrshed(int fm, int fd, int nl, int ns, int mxbuf)
    }while(repeat);
 
 /* allocate buffers for drainage directions and basin areas */
-   for(i=0;i<mxbuf;i+=1)free(bas[i].p);
-   for(i=0;i<mxbuf;i+=1)free(dir[i].p);
+   for(i=0;i<mxbuf;i+=1) G_free(bas[i].p);
+   for(i=0;i<mxbuf;i+=1) G_free(dir[i].p);
 
+   G_free(dir);
+   G_free(bas);
 }
