@@ -193,7 +193,7 @@ proc sys_wininfo { } \
 
     button .frame2.ok -text "Quit" -padx 10 -command { exit }
     button .frame2.save -text "Save" -padx 10 -command { sys_save }
-    button .frame2.clear -text "Clear" -padx 10 -command { update }
+    button .frame2.clear -text "Update" -padx 10 -command { update }
 
     pack .frame2 -side top -fill x
     pack .frame2.ok .frame2.save .frame2.clear -side left -expand yes
