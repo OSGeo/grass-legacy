@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "P.h"
 static unsigned char pattern[2][5] =
 /*    0%   25%   50%   75%  100%   */
