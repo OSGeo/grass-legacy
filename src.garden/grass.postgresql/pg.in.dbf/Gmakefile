@@ -6,6 +6,6 @@ LIST = 	main.o \
 	pgdump.o
 
 $(HOME)/$(PGM): $(LIST) $(GISLIB) $(DATETIMELIB)
-	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(MATHLIB) $(DATETIMELIB) $(XDRLIB) $(PQLIB)
+	$(CC) $(LDFLAGS) -o $@ $(LIST) $(GISLIB) $(VECTLIB) $(VASK) $(DATETIMELIB) $(MATHLIB) $(XDRLIB) $(PQLIB)
 
 $(GISLIB): # 
