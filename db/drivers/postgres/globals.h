@@ -63,6 +63,7 @@
 #define NUMERICOID              1700
 #define REFCURSOROID    	1790
 #define POSTGISPOINTOID		17409 /* PostGIS */
+#define POSTGISUNKNOWNOID	7405753 /* PostGIS, appears in geometry_column */
 
 typedef struct
 {

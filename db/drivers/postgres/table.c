@@ -144,6 +144,8 @@ int load_table(int t, char *stmt)
 	case INT8OID:
 	case INT2OID:
 	case INT4OID:
+	case OIDOID:
+	case POSTGISUNKNOWNOID:
 	    type = PG_INT;
 	    fsize = PQfsize(res, i);
 	    break;
