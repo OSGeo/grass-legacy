@@ -46,8 +46,11 @@ int db_driver_open_database(handle)
     }
 
     strcpy(db.name, name);
-
-    mysqlhost = G__getenv("DB_HOST");
+    
+    mysqlhost = connection.hostName;
+    
+    G_debug(3, "db_driver_open_database() - mysql host is %s, driver is %s", 
+    		mysqlhost, G__getenv("DB_DRIVER"));
 
     mysql_init(&mysql_conn);
     if (mysql_real_connect

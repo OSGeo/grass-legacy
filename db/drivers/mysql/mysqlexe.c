@@ -141,6 +141,8 @@ int sel(SQLPSTMT * st, int tab, int **selset, int *n_cols, int **colset)
 
     int nflds = 0;
 
+    make_table_brand_new(tab);
+
     if (load_table(tab, st->stmt) == DB_FAILED)
 	return -1;
 
@@ -151,6 +153,8 @@ int sel(SQLPSTMT * st, int tab, int **selset, int *n_cols, int **colset)
 	for (i = 0; i < nflds; i++)
 	    cols[i] = i;
     }
+    else 
+        return -1;
 
 
     nrws = db.tables[tab].nrows;
