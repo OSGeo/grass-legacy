@@ -1,4 +1,4 @@
-#include "viz.h"
+#include "vizual.h"
 extern GLuint Material_1_Dlist;
 void winset_main();
 void winset_colortable();

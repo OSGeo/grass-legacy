@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "viz.h"
+#include "vizual.h"
 /*
 **  return an array of struct cmndln_info of resulting
 **   thresholds based on  in_out flag

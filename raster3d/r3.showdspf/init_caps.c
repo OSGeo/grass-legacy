@@ -3,7 +3,7 @@
 ** and drawn to the screen not being stored at this time
 */
 
-#include "viz.h"
+#include "vizual.h"
 #include "G3d.h"
 /*
 #define DEBUG1
