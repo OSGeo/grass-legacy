@@ -300,5 +300,6 @@ Publish the new official GRASS 5 release:
    http://www.freegis.org
    http://www.directionsmag.com/pressreleases.php (click on 'Contact Us')
    http://www.gisdevelopment.net (click on 'Submit Press Release')
+   http://www.gnu.org/directory/science/geography/grass.html
 
    ... anywhere else?
