@@ -27,7 +27,7 @@ exit 1
 fi
 
 # create gmake5 script to be used for local compiling
-echo ":"                                   > $GRASS_BIN/gmake$NAME_VER
+echo "#!/bin/sh"                          > $GRASS_BIN/gmake$NAME_VER
 echo "SRC=$SRC/src"                       >> $GRASS_BIN/gmake$NAME_VER
 echo "CMD=$SRC/src/CMD"                   >> $GRASS_BIN/gmake$NAME_VER
 echo "HEADER=head.$ARCH"                  >> $GRASS_BIN/gmake$NAME_VER
