@@ -28,6 +28,7 @@ BIN_DIST_FILES = $(FILES) \
 	etc \
 	fonts \
 	include \
+	lib \
 	scripts 
 
 default:
