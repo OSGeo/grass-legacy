@@ -1,0 +1,56 @@
+##############################################################
+## A Gmakefile - This is necessary for all GRASS programs   ##
+##  		 and links all necessary functions and      ##
+##		 libraries.				    ##
+##############################################################
+
+
+PROG = $(ETC)/hull
+#------------^ This is the executable version of Ken Clarkson's
+#              program hull which will be placed in GRASS' etc
+#              directory.
+
+LIBHULL = libhull.a
+#--------^ Delaunay library.
+
+INCLUDES =\
+	hull.h 		\
+	points.h	\
+	pointsites.h	\
+	stormacs.h
+#------------^  Any include files go here.
+#
+
+ COMPILE_FLAGS = -O -fullwarn
+#-----------------^ For optimising the code.
+
+
+OBJ =\
+	hullmain.o	\
+	hull.o		\
+	ch.o		\
+	io.o		\
+	rand.o		\
+	pointops.o	\
+	fg.o
+#--------^   These are the names of all seperate files that
+#	     the programmer creates. Must have ONE tab in
+#	     front of each line.
+
+######### DEPENDENCIES #########
+
+all:	$(PROG) rsites
+	mv rsites $(ETC)/.
+
+$(OBJ): ${INCLUDES}
+
+$(PROG): ${OBJ} 
+	 ${CC} $(COMPILER_FLAGS) -o $@ ${OBJ} -lm 
+	 ${AR} rcv $(LIBHULL) $(OBJ)
+
+rsites:	rsites.c
+	${CC} $(COMPILER_FLAGS) -o rsites rsites.c -lm
+#
+#-----^ This compiles the whole program bringing all labels together.
+
+
