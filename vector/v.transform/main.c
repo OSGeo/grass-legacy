@@ -3,7 +3,7 @@
 * MODULE:       v.transform
 * AUTHOR(S):    See below also.
 *               Eric G. Miller <egm2@jps.net>
-*               Upgrade to 5.1 Radim Blaze
+*               Upgrade to 5.1 Radim Blazek
 * PURPOSE:      To transform a vector layer's coordinates via a set of tie
 *               points.
 * COPYRIGHT:    (C) 2002 by the GRASS Development Team
@@ -37,7 +37,7 @@ int main (int argc, char *argv[])
     int    i, n, tbtype, ret;
     struct file_info  Current, Trans, Coord ;
     struct GModule *module;
-    struct Option *old, *new, *pointsfile;
+    struct Option *old, *new, *pointsfile, *zscale, *zshift;
     struct Flag *quiet_flag;
     char   *mapset, mon[4], date[40], buf[1000];
     struct Map_info Old, New;
@@ -57,25 +57,41 @@ int main (int argc, char *argv[])
     old = G_define_option();
     old->key			= "input";
     old->type			= TYPE_STRING;
-    old->required			= YES;
-    old->multiple			= NO;
-    old->gisprompt			= "old,dig,vector";
+    old->required		= YES;
+    old->multiple		= NO;
+    old->gisprompt		= "old,dig,vector";
     old->description		= "vector map to be transformed";
     
     new = G_define_option();
     new->key			= "output";
     new->type			= TYPE_STRING;
-    new->required			= YES;
-    new->multiple			= NO;
-    new->gisprompt			= "new,dig,vector";
+    new->required		= YES;
+    new->multiple		= NO;
+    new->gisprompt		= "new,dig,vector";
     new->description		= "resultant vector map";
 
     pointsfile = G_define_option();
-    pointsfile->key			= "pointsfile";
-    pointsfile->type			= TYPE_STRING;
-    pointsfile->required		= NO;
-    pointsfile->multiple		= NO;
-    pointsfile->description		= "file holding transform coordinates";
+    pointsfile->key		= "pointsfile";
+    pointsfile->type		= TYPE_STRING;
+    pointsfile->required	= NO;
+    pointsfile->multiple	= NO;
+    pointsfile->description	= "file holding transform coordinates";
+
+    zscale = G_define_option();
+    zscale->key		= "zscale";
+    zscale->type	= TYPE_DOUBLE;
+    zscale->required	= NO;
+    zscale->multiple	= NO;
+    zscale->description	= "scaling factor for z coordinates";
+    zscale->answer     = "0.0";
+
+    zshift = G_define_option();
+    zshift->key		= "zshift";
+    zshift->type	= TYPE_DOUBLE;
+    zshift->required	= NO;
+    zshift->multiple	= NO;
+    zshift->description	= "shifting value for z coordinates";
+    zshift->answer     = "0.0";
     
     if (G_parser (argc, argv))
 	exit (-1);
@@ -131,7 +147,7 @@ int main (int argc, char *argv[])
     
     if (!quiet_flag->answer) fprintf (stdout,"\nNow transforming the vectors ...\n") ;
     
-    transform_digit_file( &Old, &New) ;
+    transform_digit_file( &Old, &New, atof(zscale->answer), atof(zshift->answer)) ;
 
     /* Copy tables */
     if (!quiet_flag->answer) fprintf (stdout,"Copying tables ...\n") ;
