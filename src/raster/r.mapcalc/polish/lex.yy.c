@@ -6,7 +6,7 @@
 # define YYLERR yysvec
 # define YYSTATE (yyestate-yysvec-1)
 # define YYOPTIM 1
-# define YYLMAX 200
+# define YYLMAX BUFSIZ
 # define output(c) putc(c,yyout)
 # define input() (((yytchar=yysptr>yysbuf?U(*--yysptr):getc(yyin))==10?(yylineno++,yytchar):yytchar)==EOF?0:yytchar)
 # define unput(c) {yytchar= (c);if(yytchar=='\n')yylineno--;*yysptr++=yytchar;}
@@ -497,8 +497,10 @@ char yyextra[] = {
 0,0,0,0,0,0,0,0,
 0,1,0,0,0,0,0,0,
 0};
-/* #ident	"@(#)libl:lib/ncform	1.3" */
-#ident	"$Header: /net/siouxsie/d2/3.2A/source/root/usr/src/lib/libl/RCS/ncform,v 1.4 86/09/30 14:55:39 bruce Exp $"
+#ifndef lint
+static	char ncform_sccsid[] = "@(#)ncform 1.6 88/02/08 SMI"; /* from S5R2 1.2 */
+#endif
+
 int yylineno =1;
 # define YYU(x) x
 # define NLSTATE yyprevious=YYNEWLINE
