@@ -93,6 +93,8 @@ int darea ( struct Map_info *Map, struct cat_list *Clist, int bcolor, int fcolor
 	    if ( window->proj != PROJECTION_LL )
 		continue;
 	    else {   /* out of bounds for -180 to 180, try 0 to 360 as well */
+		if ( box.N < window->south || box.S > window->north )
+		    continue;
 		if ( box.E+360 < window->west || box.W+360 > window->east )
 		    continue;
 	    }
