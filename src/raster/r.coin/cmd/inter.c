@@ -36,7 +36,7 @@ interactive_version()
 	fprintf(stderr,
 "Please choose a unit by entering one of the following letter codes:\n");
 	fprintf(stderr,"     'c': cells\n");
-	fprintf(stderr,"     'p': percent cover of window\n");
+	fprintf(stderr,"     'p': percent cover of region\n");
 	fprintf(stderr,"     'x': percent of '%s' category (column)\n",map1name);
 	fprintf(stderr,"     'y': percent of '%s' category (row)\n",map2name);
 	fprintf(stderr,"     'a': acres\n");
