@@ -29,7 +29,8 @@ SUBDIRS = \
 	g3d \
 	dspf \
 	symbol \
-	init
+	init \
+	cdhc
 
 include $(MODULE_TOPDIR)/include/Make/Dir.make
 
