@@ -132,6 +132,12 @@ ULXMAP=`echo $LL_LONGITUDE | awk '{printf "%.1f", $1}'`
 # SRTM90 tile size is 1 deg:
 ULYMAP=`echo $LL_LATITUDE  | awk '{printf "%.1f", $1 + 1.0}'`
 
+#make & change to a temporary directory
+TMPDIR="`g.tempfile pid=$$`"
+rm -f "$TMPDIR"
+mkdir "$TMPDIR"
+cd "$TMPDIR"
+
 echo "BYTEORDER M
 LAYOUT BIL
 NROWS 1201
@@ -157,6 +163,7 @@ echo "GEOGCS["wgs84",DATUM["WGS_1984",SPHEROID["wgs84",6378137,298.257223563],TO
 r.in.gdal in=$TILE.bil out=$TILEOUT
 
 rm $TILE.bil $TILE.hdr $TILE.prj
+rmdir "$TMPDIR"
 
 #nice color table and zoom to tile
 r.colors rul=srtm map=$TILEOUT
