@@ -1,4 +1,3 @@
-/* %W%  %G% */
 #include "gis.h"
 /******************************************************
 * I_open_group_file_new()
@@ -6,6 +5,18 @@
 *
 * open new and old imagery group files in the current mapset
 *******************************************************/
+
+static error (group, file, msga, msgb)
+    char *group;
+    char *file;
+    char *msga;
+    char *msgb;
+{
+    char buf[100];
+    sprintf (buf, "%sfile [%s] of group [%s in %s]%s",
+	msga, file, group, G_mapset(), msgb);
+    G_warning (buf);
+}
 
 I_open_group_file_new (group, file)
     char *group;
@@ -44,16 +55,4 @@ I_open_group_file_old (group, file)
     if (fd < 0)
 	error (group, file, "can't open ", "");
     return fd;
-}
-
-static error (group, file, msga, msgb)
-    char *group;
-    char *file;
-    char *msga;
-    char *msgb;
-{
-    char buf[100];
-    sprintf (buf, "%sfile [%s] of group [%s in %s]%s",
-	msga, file, group, G_mapset(), msgb);
-    G_warning (buf);
 }
