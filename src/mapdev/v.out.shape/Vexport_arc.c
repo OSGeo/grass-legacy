@@ -301,7 +301,7 @@ main (int argc, char **argv)
 			extension = "lin";
 		}
 	}
-	/* do we need points ?? */
+	/* do we need points ??: see v.out.idrisi for implementation */
 
 	fprintf(stdout, "Converting $LOCATION/arc_tmp/%s.%s to SHAPE file...\n", shape_prefix, extension);
 	sprintf(buf, "$GISBASE/etc/v.out.shape/gen2shp %s %s < $LOCATION/arc_tmp/%s.%s", shape_prefix, shape_type, shape_prefix, extension);
