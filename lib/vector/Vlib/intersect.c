@@ -324,6 +324,9 @@ void add_cross ( int asegment, double adistance, int bsegment, double bdistance,
         use_cross = (int *) G_realloc ( (void *) use_cross, (a_cross + 101) * sizeof(int) );
 	a_cross += 100;
     }
+    
+    G_debug(5, "  add new cross: aseg/dist = %d/%f bseg/dist = %d/%f, x = %f y = %f",
+	          asegment, adistance, bsegment, bdistance, x, y );
     cross[n_cross].segment[0] = asegment;
     cross[n_cross].distance[0] = adistance;
     cross[n_cross].segment[1] = bsegment;
@@ -388,14 +391,14 @@ int cross_seg(int id, int *arg)
     /* add ALL (including end points and duplicates), clean later */
     if ( ret > 0 ) {
 	G_debug(2, "  -> %d x %d: intersection type = %d", i, j, ret );
-	G_debug(2, "    in %f, %f",  x1, y1 );
-	G_debug(2, "       %f, %f",  x2, y2 );
 	if ( ret == 1 || ret == 2 ) { /* one intersection on segment A */
+	    G_debug(3, "    in %f, %f ",  x1, y1 );
 	    add_cross ( i, 0, j, 0, x1, y1 );
 	} else if ( ret == 3 || ret == 4 || ret == 5 ) { 
 	    /* a contains b; a is broken in 2 points (but 1 may be end)
 	     *  or b contains a; b is broken in 2 points (but 1 may be end) 
 	     *  or identical */ 
+	    G_debug(3, "    in %f, %f; %f, %f",  x1, y1, x2, y2 );
 	    add_cross ( i, 0, j, 0, x1, y1 );
 	    add_cross ( i, 0, j, 0, x2, y2 );
 	}
@@ -425,7 +428,7 @@ Vect_line_intersection (
     struct line_pnts **XLines, *Points; 
     struct Node *RTree;
     struct line_pnts *Points1, *Points2; /* first, second points */
-    int    seg1, seg2, vert2;
+    int    seg1, seg2, vert1, vert2;
 
     n_cross = 0;
     rethresh = 0.000001; /* TODO */
@@ -606,10 +609,94 @@ Vect_line_intersection (
 
 	/* Print all (raw) breaks */
 	for ( i = 0; i < n_cross; i++ ) {
-	    G_debug ( 3, "  cross = %d segment = %d distance = %f x = %f y = %f",
-	            i, cross[i].segment[current], sqrt(cross[i].distance[current]), cross[i].x, cross[i].y );
+	    G_debug ( 3, "  cross = %d seg1/dist1 = %d/%f seg2/dist2 = %d/%f x = %f y = %f",
+	            i, cross[i].segment[current], sqrt(cross[i].distance[current]),
+	            cross[i].segment[second], sqrt(cross[i].distance[second]),
+		    cross[i].x, cross[i].y );
+	}
+
+	/* Remove breaks on first/last line vertices */
+	for ( i = 0; i < n_cross; i++ ) {
+	    if ( use_cross[i] == 1 ) { 
+		j = Points1->n_points - 1;
+
+		/* Note: */ 
+		if ((cross[i].segment[current] == 0 && cross[i].x == Points1->x[0] && cross[i].y == Points1->y[0]) ||
+		    (cross[i].segment[current] == j-1 && cross[i].x == Points1->x[j] && cross[i].y == Points1->y[j])) 
+		{
+		    use_cross[i] = 0; /* first/last */
+	            G_debug ( 3, "cross %d deleted (first/last point)", i );
+		}
+	    }
 	}
 	
+	/* Remove breaks with collinear previous and next segments on 1 and 2 */
+	/* Note: breaks with collinear previous and nex must be remove duplicates,
+	*        otherwise some cross may be lost. Example (+ is vertex):
+	*             B          first cross intersections: A/B  segment:
+	*             |               0/0, 0/1, 1/0, 1/1 - collinear previous and next
+	*     AB -----+----+--- A     0/4, 0/5, 1/4, 1/5 - OK        
+	*              \___|                   
+	*                B                    
+	*  This should not inluence that break is always on first segment, see below (I hope)
+	*/                                     
+	/* TODO: this doesn't find identical with breaks on revious/next */ 
+	for ( i = 0; i < n_cross; i++ ) {
+	    if ( use_cross[i] == 0 ) continue;
+	    G_debug ( 3, "  is %d between colinear?", i);
+	    
+	    seg1 = cross[i].segment[current];
+	    seg2 = cross[i].segment[second];
+	    
+	    /* Is it vertex on 1, which? */
+	    if (  cross[i].x == Points1->x[seg1] && cross[i].y == Points1->y[seg1] ) {
+		vert1 = seg1;
+	    } else if ( cross[i].x == Points1->x[seg1+1] && cross[i].y == Points1->y[seg1+1] ) {
+		vert1 = seg1 + 1;
+	    } else {
+		G_debug ( 3, "  -> is not vertex on 1. line");
+		continue;
+	    }
+	    
+	    /* Is it vertex on 2, which? */
+	    /* For 1. line it is easy, because breaks on vertex are always at end vertex
+	    *  for 2. line we need to find which vertex is on break if any (vert2 starts from 0) */
+	    if (  cross[i].x == Points2->x[seg2] && cross[i].y == Points2->y[seg2] ) {
+		vert2 = seg2;
+	    } else if ( cross[i].x == Points2->x[seg2+1] && cross[i].y == Points2->y[seg2+1] ) {
+		vert2 = seg2 + 1;
+	    } else {
+		G_debug ( 3, "  -> is not vertex on 2. line");
+		continue;
+	    }
+	    G_debug ( 3, "    seg1/vert1 = %d/%d  seg2/ver2 = %d/%d", seg1, vert1, seg2, vert2);
+
+	    /* Check if the second vertex is not first/last */
+	    if ( vert2 == 0 || vert2 == Points2->n_points - 1 ) {
+		G_debug ( 3, "  -> vertex 2 (%d) is first/last", vert2);
+		continue;
+	    }
+	    
+	    /* Are there first vertices of this segment identical */
+	    if ( !( ( Points1->x[vert1-1] == Points2->x[vert2-1] && 
+		      Points1->y[vert1-1] == Points2->y[vert2-1] &&
+	              Points1->x[vert1+1] == Points2->x[vert2+1] && 
+		      Points1->y[vert1+1] == Points2->y[vert2+1]) ||
+		    ( Points1->x[vert1-1] == Points2->x[vert2+1] && 
+		      Points1->y[vert1-1] == Points2->y[vert2+1] &&
+		      Points1->x[vert1+1] == Points2->x[vert2-1] && 
+		      Points1->y[vert1+1] == Points2->y[vert2-1])
+		  ) 
+		) {
+		G_debug ( 3, "  -> previous/next are not identical");
+		continue;
+	    }
+
+	    use_cross[i] = 0; 
+
+	    G_debug (3, "    -> collinear -> remove");
+	}
+
 	/* Remove duplicates, i.e. merge all identical breaks to one.
 	*  We must be careful because two points with identical coordinates may be distant if measured along
 	*  the line:
@@ -625,8 +712,13 @@ Vect_line_intersection (
 	*  Note: if duplicate is on a vertex, the break is removed from next segment =>
 	*        break on vertex is always on first segment of this vertex (used below) 
 	*/
-	last = 0;
+	last = -1;
 	for ( i = 1; i < n_cross; i++ ) {
+	    if ( use_cross[i] == 0 ) continue;
+	    if ( last == -1 ) { /* set first alive */
+		last = i;
+		continue;
+	    }
 	    seg = cross[i].segment[current];
 	    /* compare with last */
 	    G_debug (3, "  duplicate ?: cross = %d seg = %d dist = %f", i, cross[i].segment[current] ,
@@ -641,73 +733,16 @@ Vect_line_intersection (
 		last = i;
 	    }
 	}
-
-	/* Remove breaks on first/last line vertices */
-	for ( i = 0; i < n_cross; i++ ) {
-	    if ( use_cross[i] == 1 ) { 
-		j = Points1->n_points - 1;
-
-		if ((cross[i].segment[current] == 0 && cross[i].x == Points1->x[0] && cross[i].y == Points1->y[0]) ||
-		    (cross[i].segment[current] == j-1 && cross[i].x == Points1->x[j] && cross[i].y == Points1->y[j])) 
-		{
-		    use_cross[i] = 0; /* first/last */
-	            G_debug ( 3, "cross %d deleted (first/last point)", i );
-		}
-	    }
-	}
-	
-	/* Remove breaks with collinear previous and next segments on 1 and 2 */
-	/* TODO: this doesn't find identical with breaks on revious/next */ 
-	for ( i = 0; i < n_cross; i++ ) {
-	    if ( use_cross[i] == 0 ) continue;
-	    
-	    seg1 = cross[i].segment[current];
-	    seg2 = cross[i].segment[second];
-	    
-	    /* Is it vertex on 1 ? */
-	    if (  !( cross[i].x == Points1->x[seg1+1] && cross[i].y == Points1->y[seg1+1] ) )
-	    {
-		G_debug ( 3, "  -> is not vertex on A\n");
-		continue;
-	    }
-	    
-	    /* Is it vertex on 2, which */
-	    /* For 1 it is easy, because breaks on vertex are always at end vertex
-	    *  for 2 need to find which vertex is on break if any */
-	    if (  cross[i].x == Points2->x[seg2] && cross[i].y == Points2->y[seg2] ) {
-		vert2 = seg2;
-	    } else if ( cross[i].x == Points2->x[seg2+1] && cross[i].y == Points2->y[seg2+1] ) {
-		vert2 = seg2 + 1;
-	    } else {
-		G_debug ( 3, "  -> is not vertex on B\n");
-		continue;
-	    }
-	    
-	    /* Are there first vertices of this segment identical */
-	    if ( !( ( Points1->x[seg1] == Points2->x[vert2-1] && Points1->y[seg1] == Points2->y[vert2-1] ) ||
-		    ( Points1->x[seg1] == Points2->x[vert2+1] && Points1->y[seg1] == Points2->y[vert2+1] ) 
-		  ) ) {
-		G_debug ( 3, "  -> first are not identical\n");
-		continue;
-	    }
-
-	    /* Are there second vertices of next segment identical */
-	    if ( !( (Points1->x[seg1+2] == Points2->x[vert2+1] && Points1->y[seg1+2] == Points2->y[vert2+1]) ||
-		    (Points1->x[seg1+2] == Points2->x[vert2-1] && Points1->y[seg1+2] == Points2->y[vert2-1])
-		  ) ){
-		continue;
-	    }
-	    
-	    use_cross[i] = 0; 
-
-	    G_debug (3, "    -> collinear -> remove \n");
-	}
 	
         /* Create array of new lines */
 	/* Count alive crosses */
        	n_alive_cross = 0;
+	G_debug (3, "  alive crosses:");
 	for ( i = 0; i < n_cross; i++ ) { 
-	    if ( use_cross[i] == 1 ) n_alive_cross++;
+	    if ( use_cross[i] == 1 ) {
+	        G_debug (3, "  %d", i);
+		n_alive_cross++;
+	    }
 	} 
        
 	k = 0;
