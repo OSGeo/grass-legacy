@@ -1,10 +1,6 @@
-GRASS 5 - ongoing projects
+This file lists most of ongoing GRASS 5 Projects
 
-$Id: ONGOING,v 1.4 2000-09-09 13:48:13 markus Exp $
-
-Developers: Please add your project below.
-
-Honorable programmers: Nothing to do? See TODO file for interesting work!
+$Id: ONGOING,v 1.5 2000-10-14 17:00:32 markus Exp $
 
 --------------------------------------------------------------------------
 What's currently going on (you are encouraged to assist):
@@ -13,20 +9,23 @@ auto-conf:
 - extended "autoconf" for entire package:
   new Makefile system
   (Being worked on by Eric Mitchell <emitchell@altaira.com>)
-
+  -> will go into GRASS 5.1
 
 GRASS initialization:
 - GRASS initialization (startup screens, location settings etc)
+  -> will go into GRASS 5.1
 - new env var handling
   (Being worked on by Justin <jhickey@impact1.hpcc.nectec.or.th>)
+  -> will go into GRASS 5.0stable
 
 
 Libraries:
 - projection datum support for maps
   (Being worked on by Andreas Lange <Andreas.Lange@Rhein-Main.de>)
+  -> will go into GRASS 5.0stable
 
 - release import/export routines separately under LGPL
-  add GDAL support
+  add GDAL support (for OSSIM and OpenEV projects)
   (Being worked on by Frank Warmerdam <warmerda@home.com> /
    Bernhard Reiter <bernhard@intevation.de>)
 
@@ -35,15 +34,18 @@ Libraries:
   David D Gray, Radim Blazek
    <ddgray@armadce.demon.co.uk>
    <Radim.Blazek@dhv.cz>
+  -> will go into GRASS 5.1
 
 XDRIVER
 - remove fifos, use sockets (required for faster XDRIVER and WINDOWS port)
   (Being worked on by Carl Anderson <candrsn@mindspring.com>)
+  -> will go into GRASS 5.1
 
 
 Modules:
 - full RGB support to all display modules
   (Pierre de Mouveaux <pmx@audiovu.com> <pmx@free.fr>)
+  -> will go into GRASS 5.1
  
 - v.out.e00: make it working
   (Being worked on by Michel Wurtz <mw@engees.u-strasbg.fr>)
@@ -54,9 +56,20 @@ Modules:
 - Reorganize initialization routines and write a Tcl/Tk interface
   for initialization
   (Being worked on by Justin <jhickey@impact1.hpcc.nectec.or.th>)
+  -> will go into GRASS 5.1
 
 - Create a Tcl/Tk interface for v.digit
   (Being worked on by Justin <jhickey@impact1.hpcc.nectec.or.th>)
+  -> will go into GRASS 5.1
 
 - Stereo Visualization/Analysis (aerial photos)
   (Being worked on by Cesare Furlanello/IRST <furlan@itc.it>)
+  -> will go into GRASS 5.1
+
+
+External projects:
+
+  OSSIM (www.ossim.org) and 
+  OpenEV (http://openev.sourceforge.net/) will get a GRASS interface
+  to access the GRASS database
+
