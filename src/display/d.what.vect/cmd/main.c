@@ -26,7 +26,7 @@ int main(int argc, char **argv)
   struct GModule *module;
   char *mapset;
   char temp[128], *str;
-  int i, j, level, width, mwidth;
+  int i, j, level, width = 0, mwidth = 0;
   int dodbmi;  
   
   /* Initialize the GIS calls */

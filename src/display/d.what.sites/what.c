@@ -15,15 +15,16 @@ int what (int once, int terse, int graphic, int width, int mwidth)
   int nrows, ncols;
   struct Cell_head window;
   int screen_x, screen_y ;
-  double east, north, cs_distance, cs_rdist, cs_rad, sina, cosa;
+  double east, north, cs_distance, cs_rdist = 0.0, cs_rad, sina, cosa;
+  int flash_colr = 0, flash_basecolr = 0;
   int button ;
   Site *close;
   char *desc;
   char east_buf[40], north_buf[40];
-  char temp[512], *str, *mapset, *Gmapset;
+  char temp[512], *str, *mapset;
   int i,j;
-  char *paneli, *panelm;
-  int flash_colr, flash_basecolr, D_X, D_Y;
+  char *paneli='\0';
+  int D_X, D_Y;
   
   G_get_set_window (&window);
   nrows = window.rows;
@@ -94,14 +95,13 @@ int what (int once, int terse, int graphic, int width, int mwidth)
 	    fprintf(stderr, "\n\"+\" at %s(E) %s(N)\n", east_buf, north_buf);
 	  else
 	    fprintf(stderr, "\n%s(E) %s(N)\n", east_buf, north_buf);
-	  Gmapset = G_mapset();
 	}
 	strcpy(temp, site[i]);
 	if((str = strchr(temp, '@'))){
 	  *str = 0;
 	  mapset = str+1;
 	}else{
-	  mapset = Gmapset;
+	  mapset = G_mapset();
 	}
 	if (!isatty(fileno(stdout)))
 	  fprintf(stdout, "%*s in %-*s  ", width, temp, mwidth, mapset);

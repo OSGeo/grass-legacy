@@ -4,7 +4,7 @@
 #include "gis.h"
 #include "dbmi.h"
 
-int disp_attr(char *tabname, char *key, int *keyval )
+int disp_attr(char *tabname, char *key, int keyval )
 {
 	int      col, ncols, ctype, sqltype, more; 
         char     buf[5001], *colname;
