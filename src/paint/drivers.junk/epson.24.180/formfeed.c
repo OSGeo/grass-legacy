@@ -1,4 +1,3 @@
-/* %W% %G% */
 formfeed()
 {
     Poutc ('\r');
