@@ -27,9 +27,9 @@ int horiz_line (int y, int x1, int x2)
 {
     register int i, len;
 
-    if (( y < SCREEN_TOP  || y > SCREEN_BOTTOM ) ||
-	(( x1 < SCREEN_LEFT || x1 > SCREEN_RIGHT ) &&
-	 ( x2 < SCREEN_LEFT || x2 > SCREEN_RIGHT )))
+    if (( y  < SCREEN_TOP   || y  > SCREEN_BOTTOM ) ||
+	( x1 < SCREEN_LEFT  && x2 < SCREEN_LEFT   ) ||
+	( x1 > SCREEN_RIGHT && x2 > SCREEN_RIGHT  ))
 	    return 0;
 
     x1 = (x1 < SCREEN_LEFT ?
