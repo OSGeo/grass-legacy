@@ -1,12 +1,14 @@
 
 include @DSTDIR@/mk/vars.mk
 
+BINDIR          = @BINDIR@
 INST_DIR	= ${prefix}/grass${NAME_VER}
 ERROR_LOG	= error.log
 
-SERVERNAME=		`uname -n`
-ARCH=			@ARCH@
-MAKE_POST_ENV=		GISBASE=${GISBASE}  MACHINENAME=${SERVERNAME}
+SERVERNAME      = `uname -n`
+VERSION         = @VERSION_NUMBER@
+ARCH            = @ARCH@
+MAKE_POST_ENV   = GISBASE=${GISBASE} MACHINENAME=${SERVERNAME} SRCDIR=${SRCDIR}
 
 all: makefiles dirs gmake docs binaries links post-compile
 
@@ -75,8 +77,7 @@ post-compile:
 ifeq ($(GRASS_LIBRARY_TYPE),shlib)
 	cp -af ${DSTDIR}/src/libes/${SHLIB_PREFIX}*${SHLIB_SUFFIX} ${GISBASE}/lib
 endif	
-	@( cd ${SRCDIR}; \
-	   ${MAKE_POST_ENV} ${SHELL} src/CMD/generic/POST_INSTALL.sh ${ARCH}; )
+	@${MAKE_POST_ENV} ${SHELL} ${SRCDIR}/src/CMD/generic/POST_INSTALL.sh ${ARCH}
 
 docs:
 	${MAKE} -I${DSTDIR}/mk -I${SRCDIR}/mk -f ${SRCDIR}/mk/Makefile.docs documents
@@ -108,4 +109,129 @@ clean-makefiles:
 
 %/makefile: %/Gmakefile
 	sed -f ${SRCDIR}/mk/genmake.sed < $< > $@
+
+# Files to include in a binary distribution
+BIN_DIST_FILES =    	AUTHORS \
+	    	    	BUGS \
+	    	    	COPYING \
+			NEWS.html \
+			README \
+			REQUIREMENTS.html \
+			TODO.txt \
+			grass${NAME_VER} \
+	    	    	bin \
+			bwidget \
+			dev \
+			driver \
+			etc \
+			fonts \
+			documents \
+			include \
+			lib \
+			man \
+			scripts \
+			tcltkgrass \
+			txt
+
+# make a source package for distribution:
+srcdist: ChangeLog
+	ln -s ${SRCDIR} grass-${VERSION}
+	# Next line needs write permission to ${SRCDIR}...
+	mv ChangeLog grass-${VERSION} ; true
+	# ...and next line only works with GNU tar
+	tar cf - grass-${VERSION} --exclude=CVS --dereference | \
+	gzip -fc > grass-${VERSION}.tar.gz	
+	rm grass-${VERSION} ; true
+	@ echo "Distribution source package: grass-${VERSION}.tar.gz ready."
+
+# make a binary package for distribution:
+bindist:
+	@ # The following action MUST be a single action. That is, all lines
+	@ # except the last line must have a backslash (\) at the end to
+	@ # continue the statement. The reason for this is that Make does not
+	@ # have an exit command thus, exit terminates the shell. However, 
+	@ # Make creates a new shell for each action listed for a target.
+	@ # Therefore, the only way exit will quit Make is if there is only
+	@ # a single action for the target.
+	@ # Check if the user needs root permission and check if grass has
+	@ # been installed
+	@ if [ ! -d ${INST_DIR} ] ; then \
+		echo "ERROR: It seems your install directory ${INST_DIR} does not exist."; \
+		echo "  Grass has not been installed yet. Try \"make install\" first."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ ! -w ${INST_DIR} ] ; then \
+		echo "ERROR: It seems you do not have the correct permissions to create"; \
+		echo "  a binary distribution. Perhaps you need root access."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ ! -f ${BINDIR}/grass${NAME_VER} ] ; then \
+		echo "ERROR: Grass has not been installed yet. Try \"make install\" first."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	INST_MOD_TIME=`${INST_DIR}/etc/getModTime ${BINDIR}/grass${NAME_VER}`; \
+	if [ "$$INST_MOD_TIME" = "-1" ]; then \
+		echo "ERROR: Invalid file: ${BINDIR}/grass${NAME_VER}"; \
+		echo "  Please advise the GRASS developers of this error."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	COMP_MOD_TIME=`${INST_DIR}/etc/getModTime ${GRASS_BIN}/grass${NAME_VER}`; \
+	if [ "$$COMP_MOD_TIME" = "-1" ]; then \
+		echo "ERROR: Invalid file: ${GRASS_BIN}/grass${NAME_VER}"; \
+		echo "  Please advise the GRASS developers of this error."; \
+		echo "  Creation of binary distribution aborted, exiting Make."; \
+		exit; \
+	fi; \
+	if [ "$$COMP_MOD_TIME" -gt "$$INST_MOD_TIME" ] ; then \
+		echo "WARNING: The GRASS installation is not up to date."; \
+		echo "  Do you want to exit and run 'make install'? [y/n]"; \
+		read ans; \
+		ans=`echo "$$ans" | tr A-Z a-z`; \
+		if [ "$$ans" != "n" ] ; then \
+			echo "Creation of binary distribution aborted, exiting Make."; \
+			exit; \
+		fi; \
+	fi; \
+	${MAKE} real-bindist
+
+real-bindist:
+	(cd ${SRCDIR}; ${SHELL} -c "cp -f AUTHORS BUGS COPYING NEWS.html \
+	README REQUIREMENTS.html TODO.txt ${INST_DIR} ; true")
+	${SHELL} -c "cp -f ${BINDIR}/grass${NAME_VER} ${INST_DIR}"
+	${SHELL} -c "mkdir -p ${INST_DIR}/etc/nad/src ; \
+	             cp -f ${SRCDIR}/src/libes/proj/*.lla ${INST_DIR}/etc/nad/src ; true"
+	(cd ${INST_DIR}; tar cBf - ${BIN_DIST_FILES}) | gzip -fc > grass${VERSION}_${ARCH}_bin.tar.gz
+	@ name=grass${VERSION}_${ARCH}_bin.tar.gz; \
+	    size=`ls -l $$name | awk '{print $$5}'`; \
+	    sed -e "s/BIN_DIST_VERSION/${NAME_VER}/" \
+	    -e "s/SIZE_TAR_FILE/$$size/" -e "s#BIN_DIST_DIR#'${INST_DIR}'#" \
+	    -e "s/TEST_STR=/TEST_STR=executable/" \
+	    -e "s#IMPORTANT.*#Generated from the binaryInstall.src file using the command make bindist#" \
+	    -e "s/# executable shell.*//" -e "s/# make bindist.*//" \
+	    ${SRCDIR}/binaryInstall.src > grass${VERSION}_${ARCH}_install.sh
+	${SHELL} -c "chmod a+x grass${VERSION}_${ARCH}_install.sh  2>/dev/null ; true"
+	${SHELL} -c "rm -f ${INST_DIR}/AUTHORS ${INST_DIR}/BUGS ${INST_DIR}/COPYING ${INST_DIR}/NEWS.html ${INST_DIR}/README ${INST_DIR}/REQUIREMENTS.html ${INST_DIR}/TODO.txt ; true"
+	${SHELL} -c "rm -f ${INST_DIR}/grass${NAME_VER} ; true"
+	${SHELL} -c "rm -rf ${INST_DIR}/etc/nad/src ; true"
+	@ echo "Distribution binary package: grass${VERSION}_${ARCH}_bin.tar.gz ready."
+	@ echo "DO NOT FORGET!! Upload BOTH grass${VERSION}_${ARCH}_bin.tar.gz and grass${VERSION}_${ARCH}_install.sh to the GRASS ftp server."
+	@ echo "Both files are required!!."
+	@ echo "The binary package is stored at ${DSTDIR}."
+
+BRANCH=`cat ${SRCDIR}/src/CMD/BRANCH`
+LASTRELEASE=`cat ${SRCDIR}/src/CMD/LASTRELEASE`
+RELEASE=`cat ${SRCDIR}/src/CMD/RELEASE`
+
+ChangeLog:
+	@ echo "creating ChangeLog file following ${BRANCH}"
+	@ echo "from tag ${LASTRELEASE} up to tag ${RELEASE}"
+	@ # cvs2cl.pl creates a GNU style ChangeLog file:
+	@ # http://www.red-bean.com/cvs2cl
+	@(cd ${SRCDIR}; GRASS_PERL=${PERL} sh tools/cvs2cl.pl \
+	-f ${DSTDIR}/ChangeLog \
+	-F ${BRANCH} --delta ${LASTRELEASE}:${RELEASE} )
 

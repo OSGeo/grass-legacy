@@ -57,7 +57,7 @@ CUTLINE=		`grep -n '1999-12-29 16:13' ChangeLog |cut -d':' -f1 | head -1`
 # These variables will be passed to the scripts below:
 MAKE_ENV=		GRASSSRC=${SRCDIR}/src GMAKE=${SRCDIR}/src/CMD/gmake5.0 HEADER=head.${ARCH} MAKE=${MAKE}
 MAKE_GMAKE_ENV=		GRASS_BIN=${GRASS_BIN} SRC=${SRCDIR} MAKE=${MAKE} NAME_VER=${NAME_VER}
-MAKE_POST_ENV=		GISBASE=${GISBASE}  MACHINENAME=${SERVERNAME}
+MAKE_POST_ENV=		GISBASE=${GISBASE} MACHINENAME=${SERVERNAME} SRCDIR=${SRCDIR}
 IS64BIT=		${SRCDIR}/src/CMD/generic/is64bit.sh
 
 # Variables for the DejaGNU testing suite:
