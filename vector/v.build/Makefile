@@ -3,7 +3,8 @@ MODULE_TOPDIR = ../..
 
 PGM=v.build
 
-LIBES     = $(VECTLIB) $(VECTLIB_REAL) $(GISLIB)
+LIBES     = $(VECTLIB) $(GISLIB)
+DEPENDENCIES = $(VECTDEP) $(GISDEP)
  
 include $(MODULE_TOPDIR)/include/Make/Module.make
 
