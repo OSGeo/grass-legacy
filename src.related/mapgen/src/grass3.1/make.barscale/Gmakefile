@@ -1,0 +1,29 @@
+
+###########################################################
+
+
+###########################################################
+#  %W%  %G%
+
+
+UNIX_BIN = $(GRAPH)/macros
+
+EXTRA_CFLAGS = -I$(GRAPH)/src/grass3.1/include -lm
+GMAPLIB = $(GRAPH)/src/grass3.1/libes/gmaplib.a
+INCLIB = $(DISPLAYLIB) $(RASTERLIB)  $(GISLIB)
+
+
+
+
+CFILE = make_bscale.c
+
+all:  $(UNIX_BIN)/make_bscale $(UNIX_BIN)/make.barscale
+
+$(UNIX_BIN)/make_bscale: $(CFILE)
+	$(CC) -o $@ $(CFILE) $(EXTRA_CFLAGS) $(GMAPLIB) $(INCLIB)
+
+$(UNIX_BIN)/make.barscale: make.barscale
+	cp make.barscale $(UNIX_BIN)/make.barscale
+
+
+$(GMAPLIB): #
