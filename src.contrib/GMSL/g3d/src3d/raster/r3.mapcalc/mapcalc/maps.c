@@ -219,7 +219,7 @@ translate_from_cats (dcell, xcell, ncols, k)
     }
 }
 
-static
+extern
 compare_ints (a, b)
     int *a, *b;
 {
