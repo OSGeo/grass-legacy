@@ -15,14 +15,12 @@ INSTALL_DIR=$(GISBASE)/etc/$(NV_VER)
 
 SCRIPTDIR=$(NV_VER)/scripts
 
-default: configure nvwish nviz install 
+default: nvwish nviz install 
 
 #
 # DO NOT CHANGE configure: TARGET TO doconfigure:
 # SOME make WON'T WORK IF TARGET AND SHELL NAME ARE EQUAL.
 #
-configure:
-	@GRASS_IN_GMAKEFILE=yes ./doconfigure $(VER) "$(PQLIB)"
 
 nvwish:
 	cd src ; make
