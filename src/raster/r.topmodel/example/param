@@ -18,14 +18,17 @@ Subcatchment 1
 # Srmax:	Maximum root zone storage deficit
 #									    [m]
 # td:		Unsaturated zone time delay per unit storage deficit
-#									    [h]
+#		   ( > 0.0)						    [h]
+#  OR
+# -alpha:	Effective vertical hydraulic gradient
+#		   ( <= 0.0)	-10 means that alpha = 10
 # vch:		Main channel routing velocity
 #									  [m/h]
 # vr:		Internal subcatchment routing velocity
 #									  [m/h]
 #
 # infex:	Calculate infiltration excess if not zero (integer)
-# K:		Surface hydraulic conductivity
+# K0:		Surface hydraulic conductivity
 #									  [m/h]
 # psi:		Wetting front suction
 #									    [m]
@@ -45,8 +48,8 @@ Subcatchment 1
 # [m^2]
       1
 
-#    qs0  lnTe      m    Sr0  Srmax   td    vch     vr 
-3.28e-05    5.  0.032  0.002   0.05  50.  3600.  3600. 
+#    qs0  lnTe      m    Sr0  Srmax   td/alpha    vch     vr 
+3.28e-05    5.  0.032  0.002   0.05        50.  3600.  3600. 
 
 # infex   K   psi  dtheta
       1  1.  0.02     0.1
