@@ -1,11 +1,11 @@
 all:
 	sh ./utilities/Nroff "$(VERSION_NUMBER)" "$(VERSION_DATE)" $(SRC)/..
-	rm -f $(HELP)/*
-	rm -f $(MAN1)/* $(MAN1)/.class-title
-	rm -f $(MAN2)/* $(MAN2)/.class-title
-	rm -f $(MAN3)/* $(MAN3)/.class-title
-	rm -f $(MAN4)/* $(MAN4)/.class-title
-	rm -f $(MAN5)/* $(MAN5)/.class-title
+	rm -rf $(HELP)/*
+	rm -rf $(MAN1)/* $(MAN1)/.class-title
+	rm -rf $(MAN2)/* $(MAN2)/.class-title
+	rm -rf $(MAN3)/* $(MAN3)/.class-title
+	rm -rf $(MAN4)/* $(MAN4)/.class-title
+	rm -rf $(MAN5)/* $(MAN5)/.class-title
 	(cd help.src/ ; tar --exclude=CVS -cvf - * | tar -C $(HELP) -xvf - 2>/dev/null ; true )
 	(cd cat1/     ; tar --exclude=CVS -cvf - * | tar -C $(MAN1) -xvf - 2>/dev/null ; true )
 	(cd man1/     ; tar --exclude=CVS -cvf - .class-title | tar -C $(MAN1) -xvf - 2>/dev/null ; true )
