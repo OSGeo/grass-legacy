@@ -1,0 +1,59 @@
+#!/bin/sh
+
+if [ $# -ne 3 ]
+then
+   echo " "
+   echo "incorrect number of arguments"
+   echo "usage: Gdivide basins streams output-layer"
+   echo " "
+   exit
+fi
+
+# window must be set correctly
+
+Gwindow layer=$1
+
+# get maximum category number existing in watershed file
+
+Gdescribe -1r $1 > $$.tmp
+max=`tail -1 $$.tmp`
+rm -f $$.tmp
+
+#
+# need to save MASK file if one exists
+#
+
+eval `gisenv -sh`
+
+dir=$GISDBASE/$LOCATION_NAME/$MAPSET
+celldir=$dir/cell
+
+if [ -s $celldir/MASK ]
+then
+  Grename cell MASK MASK.$$
+fi
+
+# set MASK to opposite of stream network, then clump watershed file,
+# thus causing clumps based on stream "divides"
+
+echo "0=1" | Greclass $2 MASK
+
+echo "Performing clump..."
+Gclump $1 tmp.$$ > /dev/null 2>&1
+echo "Clump finished"
+echo " "
+
+echo "Performing mapcalc..."
+Gmapcalc $3="tmp.$$ * ($max + 1) + $1" > /dev/null
+echo "Mapcalc finished"
+echo " "
+
+# remove temporary file, and restore prexisting MASK, if any
+
+echo "Cleaning up..."
+Gremove cell tmp.$$ > /dev/null
+Gremove cell MASK > /dev/null
+if [ -s $celldir/MASK.$$ ]
+then
+  Grename cell MASK.$$ MASK
+fi
