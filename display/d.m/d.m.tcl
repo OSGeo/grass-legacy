@@ -12,6 +12,7 @@ set env(MAPSET) [exec g.gisenv get=MAPSET]
 set gisdbase [exec g.gisenv get=GISDBASE]
 set location_name [exec g.gisenv get=LOCATION_NAME]
 set mapset [exec g.gisenv get=MAPSET]
+set form_mode [exec g.gisenv get=GRASS_FORM_MODE]
 
 set dmpath $env(GISBASE)/etc/dm/
 
@@ -66,6 +67,7 @@ proc Dm::create { } {
             {command "E&xit" {} "Exit d.m" {} -accelerator Ctrl-Q -command { DmPrint::clean;  exit } }
         }
         "&Options" all options 0 {
+	    {command "Toggle Form Mode" {} "Form displays / accepts input" {} -accelerator Ctrl-T -command { Dm::toggleformmode}}
         }
         "&Help" all options 0 {
             {command "d.m &help" {} "d.m help" {} -command { exec $env(GRASS_HTML_BROWSER) $env(GISBASE)/docs/html/d.m.html & } }
@@ -726,6 +728,18 @@ proc Dm::SaveFileBox {w} {
     }
 };
 
+# toggle form mode
+proc Dm::toggleformmode { } {
+    global form_mode
+    variable mode cmd
+	set mode $form_mode
+	if { $mode == "VIEW"} {set mode "EDIT"} else { set mode "VIEW" }
+	
+    set cmd "g.gisenv set=GRASS_FORM_MODE=$mode"
+    Dm::execute $cmd
+    set form_mode $mode
+}
+
 proc main {} {
     global auto_path
 
@@ -749,6 +763,9 @@ proc main {} {
     }
     bind . <Control-Key-w> {
 	Dm::FileClose {}
+    }
+    bind . <Control-Key-t> {
+	Dm::toggleformmode
     }
 
     Dm::create
