@@ -1,0 +1,15 @@
+.B 1
+.S 7
+
+.S 17
+.C red
+Sediment Loss:               (Map: sample.loss)
+.C white
+ Total: 202202 KG Average: 792.95 KG Max: 2146 KG No. Cells: 255
+.S 7
+
+.S 17
+.C indigo
+Sediment Deposition:         (Map: sample.deposit)
+.C white
+ Total: 78800 KG Average: 1142.03 KG Max: 4158 KG No. Cells: 69
