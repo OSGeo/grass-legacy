@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "tape.h"
 
 ask_window ()
@@ -14,7 +13,7 @@ ask_window ()
 	V_clear ();
 	V_line (1,"EXTRACT");
 
-	V_line (3, "please select desired tape window to extract");
+	V_line (3, "please select region of the image to extract");
 	V_line (6, "start row:");
 	V_line (7, "end row:");
 	V_line (9, "start col:");
@@ -69,7 +68,7 @@ ask_window ()
 
     if(I_set_window (firstrow, lastrow, firstcol, lastcol) < 0)
     {
-	printf ("OOPS window is invalid\n");
+	printf ("OOPS region is invalid\n");
 	exit(1);
     }
     nrows = G_window_rows();
