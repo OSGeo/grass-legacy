@@ -1,17 +1,25 @@
 How to release GRASS 5 binaries
 
+Note: This text contains some rules only applicable by Markus.
+
+Generally the binaries shall be produced from a published
+source code tarball:
+http://www.geog.uni-hannover.de/grass/grass5/source/
+
+
 0. Check & docs:
 
  o Check version string:
+     src/CMD/VERSION
 
-   src/CMD/VERSION
+ o Markus:
+   Check if no M/C CVS conflicts have been there before tagging.
 
-   Check if no M/C conflicts are there before tagging.
-
- o Update the PDF-docs on server (needs "htmldoc" tool):
+ o Markus:
+   Update the PDF-docs on server (needs "htmldoc" tool):
       ftp://ftp.funet.fi/pub/mirrors/ftp.easysw.com/pub/htmldoc/
 
-   gmake5 html/ pdf-docs
+     gmake5 html/ pdf-docs
 
    upload result from dist.$ARCH/documents/pdf to GRASS web server,
    remove here (makes binaries too big).
@@ -33,33 +41,41 @@ How to release GRASS 5 binaries
      make pre-compile
      gmake5 src.garden/grass.postgresql
 
- o compile s.vol.rst from extra directory (if you have..., it is not 
+ o Markus:
+   compile s.vol.rst from extra directory (if you have..., it is not 
    distributed with sources)
 
  o check, if libgdal is in place in $GISBASE/lib/
    Get Linux version here:
      ftp://gdal.velocet.ca/pub/outgoing/libgdal-linux-grass.tar.gz
-    (Note: check ldd libgdal.1.1.so:
+    (Note: check ldd libgdal.1.1.so dependency, get if required:
      ftp://gdal.velocet.ca/pub/outgoing/libstdc++-libc6.2-2.so.3)
    Get GDAL sources at:
     http://www.remotesensing.org/gdal/
 
-   Run again
+ o Run again
     gmakelinks5
    or 
     gmakelinks5 |wc -l
    
    Should be > 400 modules.
 
+ o Finally run
+    make install
+
 
 2. Package GRASS bins with
 
-   make bindist
+    make bindist
 
 
 3. Publish it on web site:
  - grass5x_y_bin.tar.gz
  - grass5install.sh
+ - grass5uninstall.sh (if tested)
+
+ - grass5x_y_src.tar.gz
+
 
 4. Tell others about it:
  - related announcement press release at:
