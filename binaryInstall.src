@@ -321,7 +321,7 @@ echo""
 
 # Print out some messages
 echo "Installation finished. Start GRASS $NAME_VER with"
-echo "    $GRASSPRG"
+echo "    $BINDIR/grass$NAME_VER"
 echo ""
 #echo "The graphical user interface can be started within GRASS GIS."
 #echo ""
