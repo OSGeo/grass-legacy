@@ -113,3 +113,8 @@ G__switch_search_path()
     nmapset = n;
     mapset_name = names;
 }
+
+G_reset_mapsets()
+{
+    nmapset=0;
+}
