@@ -5,7 +5,7 @@
 
  * @Copyright David D.Gray <ddgray@armadce.demon.co.uk>
  * 26th. Sep. 2000
- * Last updated 27th. Sep. 2000
+ * Last updated 28th. Sep. 2000
  *
 
  * This file is part of GRASS GIS. It is free software. You can 
@@ -51,6 +51,8 @@ G_matrix_init(int rows, int cols, int ldim ) {
   tmp_arry->rows = rows;
   tmp_arry->cols = cols;
   tmp_arry->ldim = ldim;
+  tmp_arry->type = MATRIX_;
+  tmp_arry->v_indx = -1;
   
   tmp_arry->vals = (doublereal *)G_calloc( ldim * cols,
 					   sizeof(doublereal) );
@@ -81,6 +83,8 @@ G_matrix_set(mat_struct *A, int rows, int cols, int ldim) {
   A->rows = rows;
   A->cols = cols;
   A->ldim = ldim;
+  A->type = MATRIX_;
+  A->v_indx = -1;
   
   A->vals = (doublereal *)G_calloc( ldim * cols,
 					   sizeof(doublereal) );
@@ -112,7 +116,7 @@ G_matrix_add(mat_struct *mt1, mat_struct *mt2) {
   int i, j; /* loop variables */
 
   if( (mt1->is_init) || (mt2->is_init) ) {
-    fprintf(stderr, "Error: One or both input matrices uniinitialised\n");
+    fprintf(stderr, "Error: One or both input matrices uninitialised\n");
     return NULL;
   }
 
@@ -196,8 +200,8 @@ G_matrix_product(mat_struct *mt1, mat_struct *mt2) {
 /*** NOT YET COMPLETE: only some solutions' options available ***/
 
 int
-G_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
-	   mat_type mtype) {
+G_matrix_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
+		  mat_type mtype) {
 
   int i; /* loop */
   mat_struct *wmat;  /* ptr to working matrix */
@@ -298,12 +302,11 @@ G_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
       }
       break;
     }
-    /*
-  case default:
+  default:
     {
       fprintf(stderr, "Procedure not yet available for selected matrix type\n");
       return -1;
-      } */
+    }
   }  /* end switch */
 
   return 0;
@@ -318,7 +321,7 @@ G_LU_solve(mat_struct *mt1, mat_struct *xmat, mat_struct *bmat,
  *                                                          *
  * G_matrix_inverse()                                       *
  *                                                          *
- * Calls G_LU_solve() to obtain matrix inverse using        *
+ * Calls G_matrix_LU_solve() to obtain matrix inverse using *
  * LU decomposition. Returns NULL on failure.               *
  *                                                          *
  ************************************************************/
@@ -359,7 +362,7 @@ G_matrix_inverse(mat_struct *mt) {
 
   /* Solve system */
 
-  if( (k = G_LU_solve(mt, res, mt0, NONSYM)) == 1 ) {
+  if( (k = G_matrix_LU_solve(mt, res, mt0, NONSYM)) == 1 ) {
       fprintf(stderr, "Error: matrix is singular\n");
       G_matrix_free(mt0);
       return NULL;        
@@ -408,7 +411,7 @@ G_matrix_free(mat_struct *mt) {
 
 /************************************************************
  *                                                          *
- * G_set_matrix_element()                                   *
+ * G_matrix_set_element()                                   *
  *                                                          *
  * Set the value of the (i,j)th element to a double         *
  * value. Index values are C-like ie. zero-based            *
@@ -417,7 +420,7 @@ G_matrix_free(mat_struct *mt) {
 
 
 int
-G_set_matrix_element(mat_struct *mt, int rowval, int colval,
+G_matrix_set_element(mat_struct *mt, int rowval, int colval,
 		     double val) {
 
   if(!mt->is_init) {
@@ -443,7 +446,7 @@ G_set_matrix_element(mat_struct *mt, int rowval, int colval,
 
 /************************************************************
  *                                                          *
- * G_get_matrix_element()                                   *
+ * G_matrix_get_element()                                   *
  *                                                          *
  * Retrieve the value of the (i,j)th element to a double    *
  * value. Index values are C-like ie. zero-based            *
@@ -452,7 +455,7 @@ G_set_matrix_element(mat_struct *mt, int rowval, int colval,
 
 
 double
-G_get_matrix_element(mat_struct *mt, int rowval, int colval) {
+G_matrix_get_element(mat_struct *mt, int rowval, int colval) {
 
   /* Should do some checks, but this would require an error control
      system: later?
@@ -465,3 +468,268 @@ G_get_matrix_element(mat_struct *mt, int rowval, int colval) {
 }
 
 /* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+
+
+
+
+/************************************************************
+ *                                                          *
+ * G_matvect_get_column()                                   *
+ *                                                          *
+ * Retrieve a column  of the matrix to a vector structure   *
+ *                                                          *
+ ************************************************************/
+
+vec_struct *
+G_matvect_get_column(mat_struct *mt, int col) {
+
+  int i; /* loop */
+  vec_struct vc1;
+
+  if(col < 0 || col >= mt->cols) {
+    fprintf(stderr, "Specified matrix column index is outside range\n");
+    return NULL;
+  }
+
+  if(!mt->is_init) {
+    fprintf(stderr, "Error: matrix is not initialised\n");
+    return NULL;
+  }
+
+  if( (vc1 = G_vector_init(mt->rows, mt->ldim, CVEC)) == NULL ) {
+    fprintf(stderr, "Couldn't allocate space for vector structure\n");
+    return NULL;
+  }
+
+  for ( i = 0; i < mt->rows; i++ )
+    G_matrix_set_element( (mat_struct *)vc1, i, 0, 
+			  G_matrix_get_element(mt, i, col) );
+
+  return vc1;
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+
+/************************************************************
+ *                                                          *
+ * G_vector_init()                                          *
+ *                                                          *
+ * Initialise a vector structure                            *
+ *                                                          *
+ ************************************************************/
+
+vec_struct *
+G_vector_init(int cells, int ldim, vtype vt) {
+
+  vec_struct *tmp_arry;
+
+  if( (cells < 1) || (vt == RVEC && ldim < 1)
+      || (vt == CVEC && ldim < cells) || ldim < 0 ) {
+    fprintf(stderr, "Error: Vector dimensions out of range\n");
+    return NULL;
+  }
+
+  tmp_arry = (vec_struct *)G_malloc( sizeof(vec_struct) );
+
+  if(vt = RVEC) {
+    tmp_arry->rows = 1;
+    tmp_arry->cols = cells;
+    tmp_arry->ldim = ldim;
+    tmp_arry->type = ROWVEC_;
+  }
+
+  else if(vt = CVEC) {
+    tmp_arry->rows = cells;
+    tmp_arry->cols = 1;
+    tmp_arry->ldim = ldim;
+    tmp_arry->type = COLVEC_;
+  }
+
+  tmp_arry->v_indx = -1;
+  
+  tmp_arry->vals = (doublereal *)G_calloc( ldim * tmp_arry->cols,
+					   sizeof(doublereal) );
+  tmp_arry->is_init = 1;
+
+  return tmp_arry;
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+/************************************************************
+ *                                                          *
+ * G_vector_set()                                           *
+ *                                                          *
+ * Set parameters for a vector structure that is            *
+ * allocated but not yet initialised fully                  *
+ *                                                          *
+ ************************************************************/
+
+int
+G_vector_set(vec_struct *A, int cells, int ldim, vtype vt) {
+
+  if( (cells < 1) || (vt == RVEC && ldim < 1)
+      || (vt == CVEC && ldim < cells) || ldim < 0 ) {
+    fprintf(stderr, "Error: Vector dimensions out of range\n");
+    return -1;
+  }
+
+  if (vt == RVEC) {
+    A->rows = 1;
+    A->cols = cells;
+    A->ldim = ldim;
+    A->type = ROWVEC_;
+  }
+  else {
+    A->rows = cells;
+    A->cols = 1;
+    A->ldim = ldim;
+    A->type = COLVEC_;
+  }
+
+  A->v_indx = -1;
+  
+  A->vals = (doublereal *)G_calloc( ldim * A->cols,
+					   sizeof(doublereal) );
+  A->is_init = 1;
+
+  return 0;
+  
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+
+
+/************************************************************
+ *                                                          *
+ * G_vector_norm_euclid()                                   *
+ *                                                          *
+ * Calculates the euclidean norm of a row or column         *
+ * vector, using BLAS routine dnrm2_()                      *
+ *                                                          *
+ ************************************************************/
+
+double
+G_vector_norm_euclid(vec_struct *vc) {
+
+  integer incr, Nval;
+  doublereal *startpt;
+
+  if(!mt->is_init) {
+    fprintf(stderr, "Error: matrix is not initialised\n");
+    return NULL;
+  }
+
+
+  if(vc->mat_spec == ROWVEC_) {
+    Nval = (integer)vc->cols;
+    incr = (integer)vc->ldim;
+    if(vc->v_indx < 0)
+      startpt = vc->vals;
+    else
+      startpt = vc->vals + v_indx;
+  }
+  else {
+    Nval = (integer)vc->rows;
+    incr = 1;
+    if(vc->v_indx < 0)
+      startpt = vc->vals;
+    else
+      startpt = vc->vals + v_indx * vc->ldim;
+  }
+
+  /* Call the BLAS routine dnrm2_() */
+
+  return (double)f77_dnrm2(&Nval, startpt, &incr);
+
+}
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+
+
+
+/************************************************************
+ *                                                          *
+ * G_vector_norm_maxval()                                   *
+ *                                                          *
+ * Calculates the maximum value of a row or column          *
+ * vector.                                                  *
+ *                                                          *
+ ************************************************************/
+
+double
+G_vector_norm_maxval(vec_struct *vc, int vflag) {
+
+  doublereal xval, *startpt, *curpt;
+  double cellval;
+  int ix;       /* loop */
+  int ncells, incr, cnt;
+
+  if(!mt->is_init) {
+    fprintf(stderr, "Error: matrix is not initialised\n");
+    return NULL;
+  }
+
+  if(vc->mat_spec == ROWVEC_) {
+    ncells = (integer)vc->cols;
+    incr = (integer)vc->ldim;
+    if(vc->v_indx < 0)
+      startpt = vc->vals;
+    else
+      startpt = vc->vals + v_indx;
+  }
+  else {
+    ncells = (integer)vc->rows;
+    incr = 1;
+    if(vc->v_indx < 0)
+      startpt = vc->vals;
+    else
+      startpt = vc->vals + v_indx * vc->ldim;
+  }
+
+  xval = *startpt;
+  curpt = startpt;
+
+  while(ncells > 0) {
+    if(curpt != startpt) {
+      switch(vflag) {
+
+      case MAX_POS:
+	{
+	  if(*curpt > xval) xval = *curpt;
+	  break;
+	}
+
+      case MAX_NEG:
+	{
+	  if(*curpt < xval) xval = *curpt;
+	  break;
+	}
+
+      case MAX_ABS:
+	{
+	  cellval = (double)(*curpt);
+	  if(hypot(cellval, cellval) > (double)xval)
+	    xval = *curpt;
+	}
+
+
+      }  /* switch */
+    }  /* if(curpt != startpt) */
+
+    curpt += incr;
+    ncells--;
+  }
+
+  return (double)xval;
+}
+
+
+
