@@ -1,0 +1,98 @@
+8.1	NCSA HDF Calling Interfaces and Utilities
+
+Error Handling in HDF	8.1
+
+National Center for Supercomputing Applications
+
+July 1990
+
+                                                                
+
+
+
+
+8.1	NCSA HDF Calling Interfaces and Utilities
+
+Error Handling in HDF	8.1
+
+National Center for Supercomputing Applications
+
+July 1990
+
+                                                                
+
+
+
+
+
+
+
+Chapter 8	Error Handling in HDF
+
+
+
+Chapter Overview
+Error Handling in HDF
+
+Chapter Overview
+
+This chapter discusses the error reporting procedures of HDF.
+
+
+Error Handling in HDF
+
+Execution errors are reported in two ways: (1) in the values 
+returned by HDF calls, and (2) in the form of an error code stored 
+in a global integer variable called DFerror. 
+
+In the case of (1), the meanings of the values reported are described 
+in the specifications for the individual routines. When the error is 
+closely related to the function of the routine, this value is often 
+sufficient to diagnose the error.
+
+However, many times the error that causes a routine to fail is more 
+general, or occurs at a level that is not easily reflected in the return 
+value. In this case, the error code returned in DFerror can often be 
+useful. Since the variable DFerror is global, you can include it in 
+a C program by declaring DFerror to be external, or by including 
+the file df.h with your code. For Fortran, there is a routine called 
+dferrno that returns the value of DFerror.
+
+Error codes for DFerror are included in the listing of df.h, which 
+can be found in Appendix B, ÒHeader Files.Ó
+
+The following programs, the first in FORTRAN and the second in 
+C, illustrate the use of DFerror. If you assume that the file called 
+"textfile" is not an HDF file, the call to DFSDgetdims (dsgdims) 
+produces an error, the value of ret is set to -1, and DFerror is 
+assigned the value -14, which means "Not an HDF file."
+
+FORTRAN:
+
+      PROGRAM errexample
+
+      INTEGER  dsgdims, dferrno
+      INTEGER ret, rank, sizes(3)
+
+      ret = dsgdims('textfile', rank, sizes, 3)
+      if (ret .lt. 0) then
+          print *, 'Error...DFerror = ', dferrno()
+      end if
+      stop
+      end
+
+C :
+
+extern int DFerror;
+
+main()
+{
+	int ret, rank, sizes[3];
+	
+	ret = DFSDgetdims("textfile", &rank, sizes, 3);
+	if (ret < 0) 
+		printf("Error...DFerror = %d\n", DFerror);
+}
+
+
+
