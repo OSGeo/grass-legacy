@@ -4,6 +4,9 @@
 #include "raster.h"
 #include "gis.h"
 
+#define	VAL	0x1
+#define	CAT	0x10
+
 /*********
   $Id$
  
@@ -33,9 +36,10 @@ int main(int argc,char **argv)
 	int white ;
 	int x_box[5] , px_box[5];
 	int y_box[5] , py_box[5];
+	int show ;
 	struct Categories cats ;
 	struct Colors colors ;
-	struct Option *opt1, *opt2, *opt3, *opt4 ;
+	struct Option *opt1, *opt2, *opt3, *opt4, *opt5 ;
 	struct Range range ;
 	struct Flag *flag1;
 	struct FPRange fp_range ;
@@ -71,6 +75,14 @@ int main(int argc,char **argv)
 	opt4->answer     = "0" ;
 	opt4->options    = "0-1000" ;
 	opt4->description= "Number of text lines (useful for truncating long legends)" ;
+
+	opt5 = G_define_option() ;
+	opt5->key        = "show" ;
+	opt5->type       = TYPE_STRING ;
+	opt5->multiple   = YES ;
+	opt5->answer     = "val,cat" ;
+	opt5->options    = "val,cat" ;
+	opt5->description= "Show either values or categories. Or both" ;
 
         flag1 = G_define_flag();
         flag1->key      = 'n';
@@ -109,6 +121,16 @@ int main(int argc,char **argv)
 	if (opt4->answer != NULL)
 		sscanf(opt4->answer,"%d",&lines);
 	
+	show = 0;
+	for(i=0; opt5->answers[i]; i++)
+	{
+		if(!strncmp(opt5->answers[i],"val",3))
+			show |= VAL;
+		else
+		if(!strncmp(opt5->answers[i],"cat",3))
+			show |= CAT;
+	}
+
 	lines ++ ;
 
 	/* Make sure map is available */
@@ -354,31 +376,70 @@ int main(int argc,char **argv)
 		   } /*fp map */
                 } /* drawing box */
 
+		buff[0] = 0;
+		tmp_buf1[0] = 0;
+		tmp_buf2[0] = 0;
 		/* Draw text */
 		R_standard_color(color) ;
 		if(i==min_ind-1) /* no data cell */
 		{
 		 if (!flag1->answer)
 		 {
-		   sprintf(buff, " no data");
+		   sprintf(tmp_buf2, " no data");
 		 }
 		}
                 else if(!fp)
-		   sprintf(buff, "%2d) %s", i, G_get_cat(i, &cats)) ;
+		{
+		   if(show & VAL)
+		      sprintf(tmp_buf1, " %d)", i);
+		   if(show & CAT)
+		   {
+/*
+		      if(show & VAL)
+		         strcat(tmp_buf1, " ");
+*/
+		      sprintf(tmp_buf2, " %s", G_get_cat(i, &cats));
+		   }
+		}
                 else if(dmin==dmax)
 		{
-		   sprintf(tmp_buf1, "%.10f", dmin);
-		   G_trim_decimal(tmp_buf1);
-		   sprintf(buff, "%s) %s", tmp_buf1, descr);
+		   if(show & VAL)
+		   {
+		      sprintf(buff, "%.10f", dmin);
+		      G_trim_decimal(buff);
+		      sprintf(tmp_buf1, " %s)", buff);
+		   }
+		   if(show & CAT)
+		   {
+/*
+		      if(show & VAL)
+		         strcat(tmp_buf1, " ");
+*/
+		      sprintf(tmp_buf2, " %s", descr);
+		   }
 		}
 		else
 		{  
-		   sprintf(tmp_buf1, "%.10f", dmin);
-		   G_trim_decimal(tmp_buf1);
-		   sprintf(tmp_buf2, "%.10f", dmax);
-		   G_trim_decimal(tmp_buf2);
-		   sprintf(buff, "%s - %s) %s", tmp_buf1, tmp_buf2, descr);
+		   if(show & VAL)
+		   {
+		      sprintf(buff, "%.10f", dmin);
+		      G_trim_decimal(buff);
+		      sprintf(tmp_buf2, "%.10f", dmax);
+		      G_trim_decimal(tmp_buf2);
+		      sprintf(tmp_buf1, " %s - %s)", buff, tmp_buf2);
+		   }
+		   tmp_buf2[0] = 0;
+		   if(show & CAT)
+		   {
+/*
+		      if(show & VAL)
+			 strcat(tmp_buf1, " ");
+*/
+		      sprintf(tmp_buf2, " %s", descr);
+		   }
                 }
+		sprintf(buff, "%s%s", tmp_buf1, tmp_buf2) ;
+
 		R_move_abs((l+3+x_dots_per_line), (cur_dot_row)) ;
 		R_text(buff) ;
 	}
