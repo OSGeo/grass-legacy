@@ -1,15 +1,16 @@
-/* Added flag to write a TIFF World file like r.out.arctiff
+/* 
+ * $Id$
+ *
+ * Added flag to write a TIFF World file like r.out.arctiff
  * Eric G. Miller 4-Nov-2000
- */
-
-/* removed LZW support 5/5000 */
-
-/* Corrected G_set_window to G_get_window to make r.out.tiff sensitive
+ *
+ * removed LZW support 5/5000
+ *
+ * Corrected G_set_window to G_get_window to make r.out.tiff sensitive
  * to region settings.   - Markus Neteler  (neteler@geog.uni-hannover.de
  * 8/98        
- */
-
-/*
+ *
+ *
  * Portions Copyright (c) 1988, 1990 by Sam Leffler.
  * All rights reserved.
  *
@@ -130,7 +131,7 @@ main (int argc, char *argv[])
 	len = strlen (inopt->answer) + 5 ;
 	if ((filename = G_malloc (len)) == NULL)
 		G_fatal_error ("Memory Allocation failed.");
-	snprintf (filename, len, "%s.tif", outopt->answer);
+	sprintf (filename, "%s.tif", outopt->answer);
 	out = TIFFOpen(filename, "w");
 	if (out == NULL)
 		exit(-4);
@@ -228,7 +229,7 @@ main (int argc, char *argv[])
 	
 	if (tflag->answer)
 	{
-		snprintf (filename, len, "%s.tfw", outopt->answer);
+		sprintf (filename, "%s.tfw", outopt->answer);
 		write_tfw(filename, &cellhd, verbose);
 	}
 	
