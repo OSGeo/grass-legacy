@@ -1,0 +1,28 @@
+INIT	global.h	/^# define INIT(x)$/
+Mmain	main.c	/^main(argc, argv) char *argv[];$/
+append	maskinfo.c	/^append (results, text)$/
+area_sum	sums.c	/^area_sum (ns,nl)$/
+cmp	stats.c	/^cmp (a, b)$/
+count_sum	sums.c	/^count_sum (ns,nl)$/
+die	stats.c	/^die()$/
+divider	header.c	/^divider(edge)$/
+do_text	maskinfo.c	/^do_text (text, first, last)$/
+format_double	format.c	/^format_double (v, buf, n, eformat, dp)$/
+format_parms	format.c	/^format_parms (v,n,eformat,dp)$/
+get_stats	stats.c	/^get_stats()$/
+header	header.c	/^header(unit1, unit2)$/
+lcr	header.c	/^lcr(left,center,right,buf,n)$/
+maskinfo	maskinfo.c	/^maskinfo()$/
+max	header.c	/^max(a,b)$/
+newline	header.c	/^newline()$/
+parse_command_line	parse.c	/^parse_command_line (argc, argv)$/
+parse_layer	parse.c	/^parse_layer(s)$/
+parse_units	parse.c	/^parse_units (s)$/
+pbuf	header.c	/^pbuf(buf)$/
+print_label	label.c	/^print_label (s, len, pflag, spacing, dot)$/
+print_report	prt_report.c	/^print_report(unit1, unit2)$/
+print_unit	prt_unit.c	/^print_unit(i,ns,nl)$/
+reclass_text	maskinfo.c	/^reclass_text (text, reclass, next)$/
+report	report.c	/^report()$/
+same_cats	sums.c	/^same_cats (a,b,nl)$/
+trailer	header.c	/^trailer()$/
