@@ -38,7 +38,7 @@ void ppupdate(int fe, int fb, int nl, int nbasins, struct band3 *elev, struct ba
 
    struct links *list;
 
-   list = G_malloc(nbasins * sizeof(struct links));
+   list = G_malloc((nbasins+1) * sizeof(struct links));
 
    for(i=1;i<=nbasins;i+=1)
    {
