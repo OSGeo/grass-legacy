@@ -1,4 +1,3 @@
-/* %W% %G% */
 #include "imagery.h"
 I_clear_tape_info (t)
     struct Tape_Info *t;
