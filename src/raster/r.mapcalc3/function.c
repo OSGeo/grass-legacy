@@ -59,11 +59,14 @@ func_desc func_descs[] = {
 
 	{"col",		c_int0,		f_col		},
 	{"row",		c_int0,		f_row		},
+	{"depth",	c_int0,		f_depth		},
 
 	{"x",		c_double0,	f_x		},
 	{"y",		c_double0,	f_y		},
+	{"z",		c_double0,	f_z		},
 	{"ewres",	c_double0,	f_ewres		},
 	{"nsres",	c_double0,	f_nsres		},
+	{"tbres",	c_double0,	f_tbres		},
 	{NULL}
 };
 

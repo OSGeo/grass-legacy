@@ -112,15 +112,19 @@ atom_var	: VARSTRING		{ $$ = variable($1);		}
 		| VARNAME		{ $$ = variable($1);		}
 		;
 
-atom_map	: map '[' index ']'	{ $$ = mapname($1,'M',$3,0);	}
+atom_map	: map '[' index ']'	{ $$ = mapname($1,'M',$3,0,0);	}
 		| map '[' index ',' index ']'
-					{ $$ = mapname($1,'M',$3,$5);	}
-		| map			{ $$ = mapname($1,'M',0,0);	}
+					{ $$ = mapname($1,'M',$3,$5,0);	}
+		| map '[' index ',' index ',' index ']'
+					{ $$ = mapname($1,'M',$3,$5,$7);}
+		| map			{ $$ = mapname($1,'M',0,0,0);	}
 		| mapmod map '[' index ']'
-					{ $$ = mapname($2,$1,$4,0);	}
+					{ $$ = mapname($2,$1,$4,0,0);	}
 		| mapmod map '[' index ',' index ']'
-					{ $$ = mapname($2,$1,$4,$6);	}
-		| mapmod map		{ $$ = mapname($2,$1,0,0);	}
+					{ $$ = mapname($2,$1,$4,$6,0);	}
+		| mapmod map '[' index ',' index ',' index ']'
+					{ $$ = mapname($2,$1,$4,$6,$8);	}
+		| mapmod map		{ $$ = mapname($2,$1,0,0,0);	}
 		;
 
 atom_func	: name '(' ')'		{ $$ = function($1, NULL);	}
