@@ -141,6 +141,8 @@ main (int argc, char *argv[])
 
 	fs = delim_opt->answer;
 	if ( strcmp(fs,"\\t") == 0 ) fs = "\t";
+	if ( strcmp(fs,"tab") == 0 ) fs = "\t";
+	if ( strcmp(fs,"space") == 0 ) fs = " ";
 
 	/* check dimension */
 	if (zcoorf->answer) {
