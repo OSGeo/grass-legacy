@@ -23,7 +23,7 @@ that exists in a vector file will have the same HREF tag.
 
   The only GRASS display commands that should be used with this driver are:
 	d.text	 - pass href information for resulting image maps.
-	d.area	 - draw polygons from a vector file.
+	d.vect.area	 - draw polygons from a vector file.
     
 
     0. Set environment variables:
@@ -90,9 +90,9 @@ that exists in a vector file will have the same HREF tag.
     2. Display text strings (href's) and area polygons:
 
          echo "http://www.no-such-place.net/area51/" | d.text
-	 d.area map=area51
+	 d.vect.area map=area51
          echo "http://www.roswell-nm.net/little/green/men.html" | d.text
-	 d.area map=roswell
+	 d.vect.area map=roswell
 
     3. When done displaying stuff to HTMLMAP driver, use
 
@@ -109,8 +109,8 @@ that exists in a vector file will have the same HREF tag.
          d.mon start=CELL
          d.mon select=CELL
          d.rast map=terrain
-         d.area map=area51  fillcolor=white  linecolor=blue
-         d.area map=roswell fillcolor=yellow linecolor=blue
+         d.vect.area map=area51  fillcolor=white  linecolor=blue
+         d.vect.area map=roswell fillcolor=yellow linecolor=blue
          d.vect map=states  color=green
          d.vect map=roads   color=blue
          d.mon stop=CELL
