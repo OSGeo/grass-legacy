@@ -1,6 +1,9 @@
-/** Modified by: Janne Soimasuo August 1994 line_cat added **/
-/** Modified by: Radim Blazek Jan 2000 acolor, label added **/
-#include "color.h"
+/* $Id$ */
+
+typedef	struct _RGB {
+	unsigned short r, g, b;
+} RGB;
+
 #define PI 3.14159265   
 #define MAXVECTORS 20
 
