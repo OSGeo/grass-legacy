@@ -1,7 +1,7 @@
 
 
 
-g.version            GRASS Reference Manual             g.version
+g.version <main>     GRASS Reference Manual      <main> g.version
 
 
 
@@ -60,7 +60,7 @@ AUTHOR
 
 
 
-GRASS 4.0                U.S. Army CERL                         1
+GRASS 4.1                U.S. Army CERL                         1
 
 
 
