@@ -1,0 +1,10 @@
+interface_build {
+    {r.random} 0
+    {Creates a raster map and site list containing randomly located sites.}
+    {entry input {Input raster map:} 0 raster}
+    {entry nsites {Quantity of sites to generate (number | number%):} 0 ""}
+    {entry raster_output {Output raster map:} 0 raster}
+    {entry sites_output {Output site list:} 0 sites}
+    {checkbox -q {Run quietly.} "" -q}
+    {checkbox -z {Generate sites for category zero also.} "" -z}
+}
