@@ -1,6 +1,7 @@
 Degrees	pi.h	/^#define Degrees(x) ((x) * 180.0\/PI)$/
 EAST	plot.c	/^#define EAST(x) (window.west + ((x)-left)\/xconv)$/
 ERROR	rd_cellhd.c	/^#define ERROR(x,line) return error(x,line)$/
+G_3dview_warning	view.c	/^G_3dview_warning(b)$/
 G__check_for_auto_masking	auto_mask.c	/^G__check_for_auto_masking ()$/
 G__check_format	format.c	/^G__check_format (fd)$/
 G__check_gisinit	gisinit.c	/^G__check_gisinit()$/
@@ -12,6 +13,7 @@ G__create_alt_search_path	mapset_nme.c	/^G__create_alt_search_path()$/
 G__create_window_mapping	window_map.c	/^G__create_window_mapping (fd)$/
 G__env_name	env.c	/^G__env_name (n)$/
 G__file_name	file_name.c	/^G__file_name (path, element, name, mapset)$/
+G__find_file	find_file.c	/^G__find_file (element, name, mapset)$/
 G__get_gisrc_file	env.c	/^G__get_gisrc_file()$/
 G__get_window	get_window.c	/^G__get_window (window, element, name, mapset)$/
 G__getenv	env.c	/^G__getenv (name)$/
@@ -44,6 +46,7 @@ G__setenv	env.c	/^G__setenv (name, value)$/
 G__switch_env	env.c	/^G__switch_env()$/
 G__switch_search_path	mapset_nme.c	/^G__switch_search_path()$/
 G__temp_element	tempfile.c	/^G__temp_element(element)$/
+G__tempfile	tempfile.c	/^G__tempfile (pid)$/
 G__unit_name	proj2.c	/^G__unit_name (unit, plural)$/
 G__write_Cell_head	wr_cellhd.c	/^G__write_Cell_head (fd, cellhd, is_cellhd)$/
 G__write_cats	cats.c	/^G__write_cats (element, name, cats)$/
@@ -65,6 +68,10 @@ G_adjust_east_longitude	window_map.c	/^double G_adjust_east_longitude (east, wes
 G_adjust_easting	window_map.c	/^double G_adjust_easting (east, window)$/
 G_adjust_window_to_box	wind_2_box.c	/^G_adjust_window_to_box (src, dst, rows, cols)$/
 G_align_window	align_window.c	/^G_align_window (window, ref)$/
+G_alloc_imatrix	ialloc.c	/^G_alloc_imatrix(rows, cols)$/
+G_alloc_ivector	ialloc.c	/^G_alloc_ivector(n)$/
+G_alloc_matrix	dalloc.c	/^G_alloc_matrix(rows, cols)$/
+G_alloc_vector	dalloc.c	/^G_alloc_vector(n)$/
 G_allocate_cell_buf	alloc_cell.c	/^G_allocate_cell_buf ()$/
 G_area_for_zone_on_ellipsoid	area_ellipse.c	/^G_area_for_zone_on_ellipsoid (north, south)$/
 G_area_for_zone_on_sphere	area_sphere.c	/^G_area_for_zone_on_sphere (north, south)$/
@@ -102,6 +109,7 @@ G_begin_zone_area_on_ellipsoid	area_ellipse.c	/^G_begin_zone_area_on_ellipsoid (
 G_begin_zone_area_on_sphere	area_sphere.c	/^G_begin_zone_area_on_sphere (r, s)$/
 G_bresenham_line	bres_line.c	/^G_bresenham_line (x0,y0,x1,y1,point)$/
 G_calloc	alloc.c	/^G_calloc (m,n)$/
+G_cell_stats_histo_eq	cell_stats_eq.c	/^G_cell_stats_histo_eq (statf, min1, max1, min2, ma/
 G_cellvalue_format	opencell.c	/^G_cellvalue_format (v)$/
 G_chrcat	strings.c	/^G_chrcat (T, F, n)$/
 G_chrcpy	strings.c	/^G_chrcpy (T, F, n)$/
@@ -146,6 +154,7 @@ G_find_sites2	sites.c	/^G_find_sites2 (name, mapset)$/
 G_find_vector	find_vect.c	/^G_find_vector (name, mapset)$/
 G_find_vector2	find_vect.c	/^G_find_vector2 (name, mapset)$/
 G_fopen_append	open.c	/^G_fopen_append (element, name)$/
+G_fopen_modify	open.c	/^G_fopen_modify (element, name)$/
 G_fopen_new	open.c	/^G_fopen_new (element, name)$/
 G_fopen_old	open.c	/^G_fopen_old (element, name, mapset)$/
 G_fopen_sites_new	sites.c	/^G_fopen_sites_new (name)$/
@@ -163,14 +172,20 @@ G_free_cats	cats.c	/^G_free_cats (pcats)$/
 G_free_cell_stats	cell_stats.c	/^G_free_cell_stats (s)$/
 G_free_colors	color_free.c	/^G_free_colors (colors)$/
 G_free_histogram	histogram.c	/^G_free_histogram (histogram)$/
+G_free_imatrix	ialloc.c	/^G_free_imatrix(m)$/
+G_free_ivector	ialloc.c	/^G_free_ivector(v)$/
 G_free_key_value	key_value1.c	/^G_free_key_value(kv)$/
+G_free_matrix	dalloc.c	/^G_free_matrix(m)$/
 G_free_reclass	reclass.c	/^G_free_reclass (reclass)$/
 G_free_tokens	token.c	/^G_free_tokens (tokens)$/
+G_free_vector	dalloc.c	/^G_free_vector(v)$/
 G_fully_qualified_name	nme_in_mps.c	/^G_fully_qualified_name (name, mapset)$/
 G_fwrite_key_value	key_value2.c	/^G_fwrite_key_value (fd, kv)$/
 G_geodesic_distance	geodist.c	/^G_geodesic_distance (lon1, lat1, lon2, lat2)$/
 G_geodesic_distance_lon_to_lon	geodist.c	/^G_geodesic_distance_lon_to_lon (lon1, lon2)$/
 G_geodesic_lat_from_lon	geodesic.c	/^G_geodesic_lat_from_lon (lon)$/
+G_get_3dview	view.c	/^G_get_3dview(fname, mapset, View)$/
+G_get_3dview_defaults	view.c	/^G_get_3dview_defaults(v,w)$/
 G_get_ask_return_msg	ask.c	/^G_get_ask_return_msg()$/
 G_get_cat	cats.c	/^G_get_cat (num, pcats)$/
 G_get_cats_title	cats.c	/^G_get_cats_title (pcats)$/
@@ -186,6 +201,7 @@ G_get_histogram_count	histogram.c	/^G_get_histogram_count (n, histogram)$/
 G_get_histogram_num	histogram.c	/^G_get_histogram_num (histogram)$/
 G_get_map_row	get_row.c	/^G_get_map_row (fd, buf, row)$/
 G_get_map_row_nomask	get_row.c	/^G_get_map_row_nomask (fd, cell, row)$/
+G_get_range_min_max	range.c	/^G_get_range_min_max(range, min, max)$/
 G_get_reclass	reclass.c	/^G_get_reclass (name, mapset, reclass)$/
 G_get_set_window	set_window.c	/^G_get_set_window (window)$/
 G_get_site	sites.c	/^G_get_site (fd, east, north, desc)$/
@@ -229,6 +245,8 @@ G_lon_parts	ll_format.c	/^G_lon_parts (lon, d, m, s, h)$/
 G_lon_scan	ll_scan.c	/^G_lon_scan (buf, lon)$/
 G_lookup_colors	color_look.c	/^G_lookup_colors (cell, red, grn, blu, set, n, colo/
 G_lookup_key_value_from_file	key_value4.c	/^G_lookup_key_value_from_file(file, key, value, n)$/
+G_lubksb	lu.c	/^G_lubksb(a,n,indx,b)$/
+G_ludcmp	lu.c	/^G_ludcmp(a,n,indx,d)$/
 G_make_aspect_colors	color_asp.c	/^G_make_aspect_colors (colors,min,max)$/
 G_make_color_ramp	color_ramp.c	/^G_make_color_ramp  (colors,min,max) \/* for 3.0 com/
 G_make_color_wave	color_wave.c	/^G_make_color_wave  (colors,min,max) \/* for 3.0 com/
@@ -237,7 +255,7 @@ G_make_grey_scale	color_grey.c	/^G_make_grey_scale  (colors,min,max) \/* for 3.0
 G_make_grey_scale_colors	color_grey.c	/^G_make_grey_scale_colors (colors,min,max)$/
 G_make_gyr_colors	color_gyr.c	/^G_make_gyr_colors (colors, min, max)$/
 G_make_histogram_cs	histogram.c	/^G_make_histogram_cs (statf, histogram)$/
-G_make_histogram_eq_colors	color_hist.c	/^G_make_histogram_eq_colors (statf, colors)$/
+G_make_histogram_eq_colors	color_hist.c	/^G_make_histogram_eq_colors (colors, statf)$/
 G_make_rainbow_colors	color_rain.c	/^G_make_rainbow_colors (colors, min, max)$/
 G_make_ramp_colors	color_ramp.c	/^G_make_ramp_colors  (colors,min,max)$/
 G_make_random_colors	color_rand.c	/^G_make_random_colors (colors,min,max)$/
@@ -250,6 +268,7 @@ G_mask_info	mask_info.c	/^G_mask_info ()$/
 G_maskfd	maskfd.c	/^G_maskfd ()$/
 G_meridional_radius_of_curvature	radii.c	/^G_meridional_radius_of_curvature (lon, a, e2)$/
 G_myname	myname.c	/^G_myname()$/
+G_newlines_to_spaces	nl_to_spaces.c	/^G_newlines_to_spaces(s)$/
 G_next_cell_stat	cell_stats.c	/^G_next_cell_stat (cat, count, s)$/
 G_no_gisinit	gisinit.c	/^G_no_gisinit()$/
 G_northing_to_row	window_map.c	/^G_northing_to_row (north, window)$/
@@ -268,12 +287,15 @@ G_percent	percent.c	/^G_percent (n,d,s)$/
 G_planimetric_polygon_area	area_poly2.c	/^G_planimetric_polygon_area(x,y,n)$/
 G_plot_fx	plot.c	/^G_plot_fx (f, east1, east2)$/
 G_plot_line	plot.c	/^G_plot_line (east1, north1, east2, north2)$/
+G_plot_line2	plot.c	/^G_plot_line2 (east1, north1, east2, north2)$/
+G_plot_point	plot.c	/^G_plot_point (east, north)$/
 G_plot_polygon	plot.c	/^G_plot_polygon (x,y,n)$/
 G_plot_where_en	plot.c	/^G_plot_where_en (x, y, east, north)$/
 G_plot_where_xy	plot.c	/^G_plot_where_xy (east, north, x, y)$/
 G_pole_in_polygon	pole_in_poly.c	/^G_pole_in_polygon(x, y, n)$/
 G_program_name	progrm_nme.c	/^G_program_name()$/
 G_projection	proj1.c	/^G_projection ()$/
+G_put_3dview	view.c	/^G_put_3dview(fname, mapset, View, Win)$/
 G_put_cell_title	put_title.c	/^G_put_cell_title (name, title)$/
 G_put_cellhd	put_cellhd.c	/^G_put_cellhd (name, cellhd)$/
 G_put_map_row	put_row.c	/^G_put_map_row (fd, buf)$/
@@ -281,6 +303,7 @@ G_put_map_row_random	put_row.c	/^G_put_map_row_random (fd, buf, row, col, n)$/
 G_put_reclass	reclass.c	/^G_put_reclass (name, reclass)$/
 G_put_site	sites.c	/^G_put_site (fd, east, north, desc)$/
 G_put_window	put_window.c	/^G_put_window (window)$/
+G_putenv	putenv.c	/^G_putenv (name, value)$/
 G_radius_of_conformal_tangent_sphere	radii.c	/^G_radius_of_conformal_tangent_sphere (lon, a, e2)$/
 G_read_cats	cats.c	/^G_read_cats (name, mapset, pcats)$/
 G_read_colors	color_read.c	/^G_read_colors (name, mapset, colors)$/
@@ -290,8 +313,10 @@ G_read_key_value_file	key_value3.c	/^G_read_key_value_file(file, stat)$/
 G_read_range	range.c	/^G_read_range (name, mapset, range)$/
 G_read_vector_cats	cats.c	/^G_read_vector_cats (name, mapset, pcats)$/
 G_realloc	alloc.c	/^G_realloc (buf,n)$/
+G_recreate_command	parser.c	/^G_recreate_command()$/
 G_remove	remove.c	/^G_remove (element, name)$/
 G_remove_colr	rm_colr.c	/^G_remove_colr (name)$/
+G_remove_commas	commas.c	/^G_remove_commas(buf)$/
 G_rename	rename.c	/^G_rename (element,oldname,newname)$/
 G_rewind_cell_stats	cell_stats.c	/^G_rewind_cell_stats (s)$/
 G_rhumbline_lat_from_lon	rhumbline.c	/^G_rhumbline_lat_from_lon (lon)$/
@@ -336,8 +361,11 @@ G_strmov	strings.c	/^G_strmov (T, F)$/
 G_strncpy	strings.c	/^G_strncpy (T, F, n)$/
 G_suppress_masking	auto_mask.c	/^G_suppress_masking()$/
 G_suppress_warnings	error.c	/^G_suppress_warnings (flag)$/
+G_svbksb	svd.c	/^G_svbksb(u,w,v,m,n,b,x)$/
+G_svdcmp	svd.c	/^G_svdcmp(a,m,n,w,v)$/
+G_svelim	svd.c	/^G_svelim(w,n)$/
 G_system	system.c	/^G_system (command)$/
-G_tempfile	tempfile.c	/^G_tempfile ()$/
+G_tempfile	tempfile.c	/^G_tempfile()$/
 G_tokenize	token.c	/^G_tokenize (buf, delim)$/
 G_tolcase	mapcase.c	/^G_tolcase (string)$/
 G_toucase	mapcase.c	/^G_toucase (string)$/
@@ -373,11 +401,14 @@ G_zero_cell_buf	zero_cell.c	/^G_zero_cell_buf (buf)$/
 G_zero_histogram	histogram.c	/^G_zero_histogram (histogram)$/
 G_zone	zone.c	/^G_zone ()$/
 LIMIT	color_insrt.c	/^#define LIMIT(x) if (x < 0) x = 0; else if (x > 25/
+MAX	svd.c	/^#define MAX(a,b) (maxarg1=(a),maxarg2=(b),(maxarg1/
 NORTH	plot.c	/^#define NORTH(y) (window.north - ((y)-top)\/xconv)$/
+PYTHAG	svd.c	/^#define PYTHAG(a,b) ((at=fabs(a)) > (bt=fabs(b)) //
 Q	area_poly1.c	/^static double Q(x)$/
 Qbar	area_poly1.c	/^static double Qbar(x)$/
 Radians	pi.h	/^#define Radians(x) ((x) * PI\/180.0)$/
 SET	rd_cellhd.c	/^#define SET(x) flags|=(1<<x)$/
+SIGN	svd.c	/^#define SIGN(a,b) ((b) >= 0.0 / fabs(a) : -fabs(a)/
 TEST	rd_cellhd.c	/^#define TEST(x) (flags&(1<<x))$/
 X	plot.c	/^#define X(e) (left + xconv * ((e) - window.west))$/
 Y	plot.c	/^#define Y(n) (top + yconv * (window.north - (n)))$/
@@ -407,14 +438,18 @@ close_old	closecell.c	/^close_old (fd)$/
 cmp	cats.c	/^cmp (a, b)$/
 cmp_count	histogram.c	/^cmp_count (a,b)$/
 compare_table_names	get_ellipse.c	/^compare_table_names(a,b)$/
+compare_wind	view.c	/^compare_wind(savedwin,curwin)$/
+compute_bigint	color_look.c	/^compute_bigint()$/
 contains	parser.c	/^contains(s, c)$/
 edge	plot.c	/^edge (x0,y0,x1,y1)$/
 edge_order	plot.c	/^edge_order (a, b)$/
 edge_point	plot.c	/^edge_point (x, y)$/
+edge_sort	view.c	/^edge_sort (sides)$/
 ellipsoid_table_file	get_ellipse.c	/^ellipsoid_table_file(file)$/
 equal	proj3.c	/^equal(a,b)$/
 error	rd_cellhd.c	/^error(msg,line)$/
 fabs	plot.c	/^static double fabs(x)$/
+fastline	plot.c	/^fastline(x1,y1,x2,y2)$/
 find_cat	cats.c	/^find_cat (num, pcats, i)$/
 fopen_cellhd_new	reclass.c	/^fopen_cellhd_new (name)$/
 fopen_cellhd_old	reclass.c	/^fopen_cellhd_old (name, mapset)$/
@@ -423,6 +458,7 @@ forced_write_old_colors	color_write.c	/^forced_write_old_colors (fd, colors)$/
 format	ll_format.c	/^format (buf, d,m,s,h)$/
 format_double	wind_format.c	/^format_double (value, buf)$/
 get_a_e2	get_ellipse.c	/^get_a_e2 (s1, s2, a, e2)$/
+get_bool	view.c	/^get_bool(str)$/
 get_cond	cats.c	/^get_cond (f, value, num)$/
 get_env	env.c	/^get_env(name)$/
 get_fmt	cats.c	/^get_fmt (f, fmt, i)$/
@@ -431,7 +467,9 @@ get_reclass_table	reclass.c	/^get_reclass_table (fd, reclass)$/
 gis_prompt	parser.c	/^gis_prompt(opt, buff)$/
 gisinit	gisinit.c	/^gisinit()$/
 hitreturn	edit_cellhd.c	/^hitreturn()$/
+iceil	plot.c	/^iceil(x) double x;$/
 if	closecell.c	/^	if (FCB.open_mode != OPEN_NEW_RANDOM && FCB.cur_r/
+ifloor	plot.c	/^ifloor(x) double x;$/
 index	index.c	/^index (str, delim)$/
 init_node	cell_stats.c	/^init_node (node, idx, offset)$/
 interactive	parser.c	/^interactive(command)$/
@@ -451,22 +489,24 @@ new_mapset	mapset_nme.c	/^new_mapset(name)$/
 next_node	cell_stats.c	/^next_node (s)$/
 open_env	env.c	/^open_env (mode)$/
 organize_lookup	color_org.c	/^organize_lookup(colors, mod)$/
-out	clear_scrn.c	/^out (c)$/
 parselist	ask.c	/^parselist (input, option, mapset)$/
 pclose	popen.c	/^pclose(ptr)$/
+plot_line	plot.c	/^plot_line (east1, north1, east2, north2, line)$/
 popen	popen.c	/^popen(cmd,mode)$/
+pr_winerr	view.c	/^pr_winerr (vis, viewname)$/
 print_error	error.c	/^static print_error (msg, fatal)$/
 print_word	error.c	/^print_word (fd, word, len, lead)$/
 put_data	put_row.c	/^put_data (fd, cell, row, col, n)$/
-putenv	putenv.c	/^putenv (name, value)$/
 read_colors	color_read.c	/^read_colors (element, name, mapset, colors)$/
 read_data	get_row.c	/^read_data (fd, row, data_buf, nbytes)$/
 read_ellipsoid_table	get_ellipse.c	/^read_ellipsoid_table(fatal)$/
 read_env	env.c	/^read_env()$/
 read_new_colors	color_read.c	/^read_new_colors (fd, colors)$/
 read_old_colors	color_read.c	/^read_old_colors (fd, colors)$/
+read_old_format	view.c	/^read_old_format(v, fp)$/
 reclass_type	reclass.c	/^reclass_type (fd, rname, rmapset)$/
 rindex	index.c	/^rindex (str, delim)$/
+row_fill	plot.c	/^row_fill (y, x1, x2)$/
 same	get_ellipse.c	/^same (a, b)$/
 sc	grid_dist1.c	/^static double sc(A,B,C,D,lat,s,c)$/
 scan_double	wind_scan.c	/^scan_double (buf, value)$/
@@ -477,11 +517,14 @@ set_env	env.c	/^set_env (name, value)$/
 set_flag	parser.c	/^set_flag(f)$/
 set_option	parser.c	/^set_option(string)$/
 show	parser.c	/^show(item,len)$/
+show_options	parser.c	/^show_options(maxlen, str)$/
 sigpipe_catch	list.c	/^sigpipe_catch(n)$/
+slowline	plot.c	/^slowline(x1,y1,x2,y2)$/
 split_opts	parser.c	/^split_opts()$/
-sprintf	closecell.c	/^	sprintf (buf,"mv %s %s", FCB.temp_name,$/
 store	putenv.c	/^store (buf)$/
 swap	geodesic.c	/^#define swap(a,b) temp=a;a=b;b=temp$/
+tolower	mapcase.c	/^tolower(c)$/
+toupper	mapcase.c	/^toupper(c)$/
 tst	popen.c	/^#define tst(a,b)        (*mode == 'r'/ (b) : (a))$/
 umalloc	color_insrt.c	/^#define umalloc(n) (unsigned char *) G_malloc((int/
 unsetenv	env.c	/^unsetenv (name)$/
