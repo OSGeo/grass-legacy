@@ -1,4 +1,3 @@
-/* %W% %G% */
 
 typedef struct
 {
