@@ -389,10 +389,15 @@ void G_tred2(double **, int, double [], double []);
 
 /* env.c */
 char *G_getenv(char *);
+char *G_getenv2(char *, int);
 char *G__getenv(char *);
+char *G__getenv2(char *, int);
 int G_setenv(char *, char *);
+int G_setenv2(char *, char *, int);
 int G__setenv(char *, char *);
+int G__setenv2(char *, char *, int);
 int G_unsetenv(char *);
+int G_unsetenv2(char *, int);
 int G__write_env(void);
 char *G__env_name(int);
 int G__read_env(void);
