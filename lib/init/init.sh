@@ -135,13 +135,26 @@ export PATH
 # r.in.gdal may use it to find some things.  Over time we intend to put
 # more GRASS related shared libraries in $GISBASE/lib.
 # first search local libs, then in GRASS lib/
-if [ ! "$LD_LIBRARY_PATH" ] ; then
-  LD_LIBRARY_PATH=$GISBASE/lib
+#
+# Of course MacOSX wants it's private solution:
+if [ "$HOSTTYPE" != "macintosh" ] ; then
+  if [ ! "$LD_LIBRARY_PATH" ] ; then
+    LD_LIBRARY_PATH=$GISBASE/lib
+    export LD_LIBRARY_PATH
+  else
+    LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GISBASE/lib
+    export LD_LIBRARY_PATH
+  fi
 else
-  LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$GISBASE/lib
+  if [ ! "$DYLD_LIBRARY_PATH" ] ; then
+    DYLD_LIBRARY_PATH=$GISBASE/lib
+    export DYLD_LIBRARY_PATH
+  else
+    DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$GISBASE/lib
+    export DYLD_LIBRARY_PATH
+  fi
 fi
-  
-export LD_LIBRARY_PATH
+   
 
 # Check for concurrent use
 "$ETC/lock" "$lockfile" $$
